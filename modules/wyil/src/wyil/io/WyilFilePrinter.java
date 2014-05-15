@@ -68,7 +68,7 @@ public final class WyilFilePrinter implements Transform<WyilFile> {
 	}
 	
 	public static boolean getLabels() {
-		return true;
+		return false;
 	}
 	
 	public static String describeLabels() {

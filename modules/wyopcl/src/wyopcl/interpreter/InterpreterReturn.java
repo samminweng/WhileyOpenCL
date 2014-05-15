@@ -1,5 +1,7 @@
 package wyopcl.interpreter;
 
+import static wycc.lang.SyntaxError.internalFailure;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -25,16 +27,19 @@ public class InterpreterReturn extends Interpreter {
 		
 		int linenumber = stackframe.getLine();
 		Code.Return return_code = (Code.Return) code;
+		
 		blockstack.pop();
 		String msg = "";
-		int reg = code.operand;
-		if (code.type == Type.T_VOID) {
-			msg += code.type;
+		int reg = return_code.operand;
+		if (return_code.type == Type.T_VOID) {
+			msg += return_code.type;
 		} else {
+			
+			if(return_code.type == Type.T_INT){
 			Constant return_value = stackframe.getRegister(reg);
 			int return_reg = stackframe.getReturn_reg();
-			msg += "%" + reg +"("+return_value+")"+ " Type:(" + code.type+")";
-			msg += "\n====Finish \""+stackframe.getName()+"\"====";
+			msg += "%" + reg +"("+return_value+")"+ " Type:(" + return_code.type+")";
+			//msg += "\n====Finish \""+stackframe.getName()+"\"====";
 			
 			//Get the previous block
 			if(!blockstack.isEmpty()){				
@@ -43,9 +48,13 @@ public class InterpreterReturn extends Interpreter {
 					linenumber = stackframe.getLine();
 					//Update the value
 					stackframe.setRegister(return_reg, return_value);
-					msg += "\n====Return to \""+stackframe.getName()+"\"====";
+					msg += "\n====Return to \""+stackframe.getName()+"\" with "+
+					"%"+return_reg + "("+((Constant.Integer)return_value).value+")";
 					stackframe.setLine(++linenumber);
 				}
+			}
+			}else{
+				internalFailure("Not implemented!", null, null);
 			}
 			
 		}

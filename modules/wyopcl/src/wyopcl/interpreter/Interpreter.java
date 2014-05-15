@@ -73,6 +73,11 @@ public abstract class Interpreter {
 			
 			registers[reg] = constant;
 		}
+		
+		
+		public int getRegisterLength(){
+			return registers.length;
+		}
 
 		@Override
 		public String toString() {			
