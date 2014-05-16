@@ -1,7 +1,5 @@
 package wyopcl.interpreter;
 
-import static wycc.lang.SyntaxError.internalFailure;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -9,8 +7,6 @@ import java.util.Map.Entry;
 
 import wyil.lang.Code;
 import wyil.lang.Constant;
-import wyil.lang.Constant.Type;
-import wyil.lang.Type.EffectiveRecord;
 
 public class InterpreterFieldLoad extends Interpreter {
 	private static InterpreterFieldLoad instance;	

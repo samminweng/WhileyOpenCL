@@ -1,7 +1,6 @@
 package wyopcl.interpreter;
 
 import wyil.lang.Code;
-import wyopcl.interpreter.Interpreter.StackFrame;
 
 public class InterpreterNop extends Interpreter {
 	private static InterpreterNop instance;	

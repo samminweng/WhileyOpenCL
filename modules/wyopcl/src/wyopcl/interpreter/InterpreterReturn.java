@@ -1,10 +1,6 @@
 package wyopcl.interpreter;
 
 import static wycc.lang.SyntaxError.internalFailure;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import wyil.lang.Code;
 import wyil.lang.Constant;
 import wyil.lang.Type;

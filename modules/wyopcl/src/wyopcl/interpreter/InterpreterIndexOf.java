@@ -1,9 +1,5 @@
 package wyopcl.interpreter;
 
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import wyil.lang.Code;
 import wyil.lang.Constant;
 import wyil.lang.Type;

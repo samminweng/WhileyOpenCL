@@ -1,19 +1,11 @@
 package wyopcl.interpreter;
 
-import static wycc.lang.SyntaxError.internalFailure;
-
-import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 
 import wyil.lang.Code;
 import wyil.lang.CodeBlock;
 import wyil.lang.Constant;
-import wyil.lang.Constant.Strung;
-import wyil.lang.Type;
-import wyil.lang.Type.EffectiveCollection;
-import wyjc.runtime.WyCollection;
 
 
 public class InterpreterForAll extends Interpreter {

@@ -1,9 +1,5 @@
 package wyopcl.interpreter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import wycc.lang.NameID;
 import wyil.lang.Code;
 import wyil.lang.CodeBlock;

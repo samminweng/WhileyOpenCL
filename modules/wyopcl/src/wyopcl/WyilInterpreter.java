@@ -4,11 +4,8 @@ import static wycc.lang.SyntaxError.internalFailure;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.Stack;
 
 import wybs.lang.Build;
 import wybs.lang.Build.Project;
@@ -21,9 +18,7 @@ import wyfs.lang.Path.Root;
 import wyil.lang.Code;
 import wyil.lang.CodeBlock;
 import wyil.lang.CodeBlock.Entry;
-import wyil.lang.Constant;
 import wyil.lang.WyilFile;
-import wyil.lang.WyilFile.Block;
 import wyil.lang.WyilFile.Case;
 import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
 import wyopcl.interpreter.Interpreter;
@@ -46,7 +41,6 @@ import wyopcl.interpreter.InterpreterLoopEnd;
 import wyopcl.interpreter.InterpreterNewList;
 import wyopcl.interpreter.InterpreterNop;
 import wyopcl.interpreter.InterpreterReturn;
-import wyopcl.interpreter.Interpreter.StackFrame;
 
 public class WyilInterpreter extends Interpreter implements Builder{
 	protected final Build.Project project;

@@ -1,24 +1,11 @@
 package wyopcl.interpreter;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.PriorityQueue;
 import java.util.Stack;
 
-import sun.misc.Queue;
-import wybs.lang.Build;
-import wycc.util.Logger;
-import wyil.lang.Code;
-import wyil.lang.Code.Label;
-import wyil.lang.CodeBlock.Entry;
 import wyil.lang.CodeBlock;
 import wyil.lang.Constant;
-import wyil.lang.Constant.Strung;
-import wyil.lang.WyilFile;
-import wyil.lang.WyilFile.Block;
 
 /*Declare the abstract class, methods and variables. */
 public abstract class Interpreter {

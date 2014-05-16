@@ -9,8 +9,6 @@ import wycc.util.Logger;
 import wyfs.lang.Content;
 import wyfs.lang.Path;
 import wyfs.util.DirectoryRoot;
-import wyfs.util.VirtualRoot;
-import wyil.lang.WyilFile;
 import wyopcl.WyilInterpreter;
 import jasm.io.ClassFileReader;
 import jasm.io.ClassFileWriter;

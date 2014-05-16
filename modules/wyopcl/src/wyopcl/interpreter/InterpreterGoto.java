@@ -1,11 +1,7 @@
 package wyopcl.interpreter;
 
-import java.util.HashMap;
-
 import wyil.lang.Code;
 import wyil.lang.CodeBlock;
-import wyil.lang.Constant;
-import wyil.lang.Constant.Strung;
 
 public class InterpreterGoto extends Interpreter {
 	private static InterpreterGoto instance;	

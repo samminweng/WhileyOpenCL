@@ -2,12 +2,9 @@ package wyopcl.interpreter;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 
 import wyil.lang.Code;
 import wyil.lang.Constant;
-import wyil.lang.Constant.Integer;
 
 public class InterpreterBinArithOp extends Interpreter {
 

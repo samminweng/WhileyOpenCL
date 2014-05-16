@@ -1,9 +1,6 @@
 package wyopcl.interpreter;
-import java.util.HashMap;
-
 import wyil.lang.Code;
 import wyil.lang.CodeBlock;
-import wyil.lang.Constant;
 
 public class InterpreterLoopEnd extends Interpreter {
 	private static InterpreterLoopEnd instance;	
