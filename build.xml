@@ -15,7 +15,8 @@
       <fileset dir="modules" includes="wyrt/build.xml"/>
       <fileset dir="modules" includes="wyjc/build.xml"/>
       <fileset dir="modules" includes="wycc/build.xml"/>
-      <fileset dir="modules" includes="wyopcl/build.xml"/>	
+      <!--wyopcl-->
+      <fileset dir="modules" includes="wyopcl/build.xml"/>
     </subant>
   </target>
  
@@ -54,16 +55,17 @@
       <packageset dir="modules/wyc/src">
 	<include name="wyc/**"/>
 	<exclude name="wyc/testing/**"/>
-    </packageset>
-    <packageset dir="modules/wyjc/src">
-	  <include name="wyjc/**"/>
-	  <include name="wyjvm/**"/>
-	  <exclude name="wyjc/testing/**"/>
-    </packageset>
-    <packageset dir="modules/wyopcl/src">
-      <include name="wyopcl/**"/>
-      <!--<exclude name="wyopcl/testing/**"/>-->
-    </packageset>
+      </packageset>
+      <packageset dir="modules/wyjc/src">
+	<include name="wyjc/**"/>
+	<include name="wyjvm/**"/>
+	<exclude name="wyjc/testing/**"/>
+      </packageset>
+      <!-- Wyopcl -->
+      <packageset dir="modules/wyopcl/src">
+        <include name="wyopcl/**"/>
+        <!--<exclude name="wyopcl/testing/**"/>-->
+      </packageset>
       <!--
       <packageset dir="modules/wycc/src">
 	<include name="wycc/**"/>
@@ -77,8 +79,8 @@
       <!--<group title="Whiley-2-C Compiler (WYCC)" packages="wycc:wycc.*"/>-->
       <group title="Whiley Constraint Solver (WYCS)" packages="wycs:wycs.*"/>
       <group title="Whiley Rewrite Language (WYRL)" packages="wyrl:wyrl.*:wyautl.*"/>
-      <group title="Whiley-2-OpenCL (WyOpCL)" packages="wyopcl:wyopcl.*"/>  
-    </javadoc>
+      <group title="Whiley-2-OpenCL (WyOpCL)" packages="wyopcl:wyopcl.*"/>
+      </javadoc>
   </target>
 
   <!-- ============================================== -->
@@ -115,7 +117,8 @@
       <include name="bin/wycc"/>
       <include name="bin/wycs"/>
       <include name="bin/wyrl"/>
-      <include name="bin/wyopcl"/>	
+      <!-- wyopcl -->
+      <include name="bin/wyopcl"/>
       <include name="bin/wy_common.bash"/>
       <include name="lib/*-v${version}.jar"/>
       <include name="lib/jasm-v*.jar"/>

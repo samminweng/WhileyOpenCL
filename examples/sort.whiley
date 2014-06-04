@@ -35,10 +35,10 @@ function sort([int] items) => [int]:
     return items
 
 method main(System.Console sys):
-    sys.out.println(sort([]))
-    sys.out.println(sort([4,3,5,2,1]))
-    sys.out.println(sort([3,4,7,1,2]))
+    //sys.out.println(sort([]))
+    //sys.out.println(sort([4,3,5,2,1]))
+    //sys.out.println(sort([3,4,7,1,2]))
     sys.out.println(sort([3,4,7,2]))
-    sys.out.println(sort([2,3,4,2]))
-    sys.out.println(sort([1,2,3,4]))
-    sys.out.println(sort([1,2,3,4,5]))
+    //sys.out.println(sort([2,3,4,2]))
+    //sys.out.println(sort([1,2,3,4]))
+    //sys.out.println(sort([1,2,3,4,5]))

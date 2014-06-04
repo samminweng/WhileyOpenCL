@@ -23,12 +23,9 @@ public class InterpreterIndirectInvoke extends Interpreter {
 	
 	public void interpret(Code.IndirectInvoke code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
-		int target = code.target;
-		//int operand = code.operand;
+				
 		Constant.Record fieldType = (Constant.Record)stackframe.getRegister(code.operand);
-		//int[] operands = code.operands;
-		FunctionOrMethod func = code.type;
-		
+		FunctionOrMethod func = code.type;		
 		ArrayList<Type> paramTypes = func.params();
 	
 		String msg="";
@@ -38,7 +35,8 @@ public class InterpreterIndirectInvoke extends Interpreter {
 			Type paramType = paramTypes.get(i);
 			msg += "%"+code.operands[i];
 			Constant paramValue = stackframe.getRegister(code.operands[i]);
-			if(paramType instanceof Type.Any){
+			msg += "("+paramValue+")";
+			/*if(paramType instanceof Type.Any){
 				if(paramValue instanceof Constant.Integer){
 					msg += "("+((Constant.Integer)paramValue).value+")";
 				} else if(paramValue instanceof Constant.Strung){
@@ -46,9 +44,12 @@ public class InterpreterIndirectInvoke extends Interpreter {
 				} else{	
 					throw new RuntimeException("Not implemented!");
 				}				
+			}else if (paramType instanceof Type.List){
+				
+				
 			}else{
 				throw new RuntimeException("Not implemented!");
-			}
+			}*/
 		}
 		
 		

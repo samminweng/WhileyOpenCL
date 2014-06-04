@@ -17,7 +17,6 @@ import wyfs.lang.Path;
 import wyfs.lang.Path.Root;
 import wyil.lang.Code;
 import wyil.lang.CodeBlock;
-import wyil.lang.CodeBlock.Entry;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.Case;
 import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
@@ -41,6 +40,8 @@ import wyopcl.interpreter.InterpreterLoopEnd;
 import wyopcl.interpreter.InterpreterNewList;
 import wyopcl.interpreter.InterpreterNop;
 import wyopcl.interpreter.InterpreterReturn;
+import wyopcl.interpreter.InterpreterSubList;
+import wyopcl.interpreter.InterpreterUpdate;
 
 public class WyilInterpreter extends Interpreter implements Builder{
 	protected final Build.Project project;
@@ -96,13 +97,14 @@ public class WyilInterpreter extends Interpreter implements Builder{
 		for(WyilFile.FunctionOrMethodDeclaration method : module.functionOrMethods()) {
 			String name = method.name();
 			for(Case mcase : method.cases()){
-				for(CodeBlock blk : mcase.body()){
+				CodeBlock blk = mcase.body();
+				//for(CodeBlock blk : mcase.body()){
 					blocktable.put(name, blk);
 					//Get the CodeBlock object from the symboltable.
 					SymbolTable symbol = new SymbolTable(blk);					
 					//Pre-scan the code block and keep the symbol label map.					
 					for(int pos = 0; pos <blk.size(); pos++){
-						Entry entry = blk.get(pos);
+						CodeBlock.Entry entry = blk.get(pos);
 						Code code = entry.code;
 						if(code instanceof Code.LoopEnd){
 							String label = ((Code.LoopEnd)code).label;							
@@ -128,7 +130,7 @@ public class WyilInterpreter extends Interpreter implements Builder{
 					symboltable.put(blk, symbol);
 
 
-				}
+				//}
 			}
 		}
 
@@ -140,10 +142,11 @@ public class WyilInterpreter extends Interpreter implements Builder{
 		//Get the main method
 		for(FunctionOrMethodDeclaration method: module.functionOrMethod("main")){
 			for(Case mcase:method.cases()){
-				for(CodeBlock block : mcase.body()){
+				CodeBlock block = mcase.body();
+				//for(CodeBlock block : mcase.body()){
 					//this.interpret(block);
 					blockstack.push(new StackFrame(block,0, method.name(), -1));
-				}
+				//}
 			}
 		}
 
@@ -153,7 +156,7 @@ public class WyilInterpreter extends Interpreter implements Builder{
 			//SymbolTable symbol = symboltable.get(block);
 			int linenumber = frame.getLine();
 			if(linenumber < block.size()){
-				Entry entry = block.get(linenumber);				
+				CodeBlock.Entry entry = block.get(linenumber);				
 				this.dispatch(entry, frame);
 			}else{
 				//Finish this block and pop it up from the stack.
@@ -163,7 +166,7 @@ public class WyilInterpreter extends Interpreter implements Builder{
 	}
 
 
-	private void dispatch(Entry entry, StackFrame stackframe) {	
+	private void dispatch(CodeBlock.Entry entry, StackFrame stackframe) {	
 		Code code = entry.code;
 
 		try{
@@ -234,7 +237,7 @@ public class WyilInterpreter extends Interpreter implements Builder{
 			} else if (code instanceof Code.Nop) {
 				InterpreterNop.getInstance().interpret((Code.Nop)code, stackframe);
 			} else if (code instanceof Code.SubList) {
-				internalFailure("Not implemented!", filename, entry);
+				InterpreterSubList.getInstance().interpret((Code.SubList)code, stackframe);
 			} else if (code instanceof Code.SubString) {
 				internalFailure("Not implemented!", filename, entry);
 			} else if (code instanceof Code.Switch) {
@@ -248,7 +251,7 @@ public class WyilInterpreter extends Interpreter implements Builder{
 			} else if (code instanceof Code.UnArithOp) {
 				internalFailure("Not implemented!", filename, entry);
 			} else if (code instanceof Code.Update) {
-				internalFailure("Not implemented!", filename, entry);
+				InterpreterUpdate.getInstance().interpret((Code.Update)code, stackframe);
 			} else {
 				internalFailure("unknown wyil code encountered (" + code + ")", filename, entry);
 			}

@@ -20,20 +20,16 @@ public class InterpreterInvoke extends Interpreter {
 		return instance;
 	}
 	
-	
-	//public void interpret(Code.Invoke code, HashMap<String, Constant> registers) {
 	public void interpret(Code.Invoke code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
-		Code.Invoke invoke = (Code.Invoke)code;
+		String msg = "";
 		NameID methodorFunc = code.name;		
-		FunctionOrMethod type = code.type;
+		
 		//Get the symbol
 		CodeBlock blk = blocktable.get(methodorFunc.name());
 		//Create a new StackFrame
-		StackFrame stackFrame = new StackFrame(blk, 0, methodorFunc.name(), invoke.target);
-		
-		
-		String msg = methodorFunc.name()+"("+type+")";
+		StackFrame stackFrame = new StackFrame(blk, 0, methodorFunc.name(), code.target);
+	
 		//Pass the input parameters.
 		int index = 0;
 		msg += " %"+code.target+"("+null+")";
@@ -46,16 +42,13 @@ public class InterpreterInvoke extends Interpreter {
 			
 		//Start invoking a new block.		
 		blockstack.push(stackFrame);
-		msg += "\n===Invoke \""+stackFrame.getName()+"\" with [";
+		msg += "\n\n===Invoke \""+stackFrame.getName()+"\" with [ ";
 		
 		for(int reg= 0; reg<stackFrame.getRegisterLength();reg++){
-			if(reg > 0){
-				msg += ", ";
-			}
-			msg += "%"+reg + "("+stackFrame.getRegister(reg)+")";
+			msg += "%"+reg + "("+stackFrame.getRegister(reg)+") ";
 		}		
 		msg += "]\n";
-		System.out.println("#"+linenumber+" ["+code+"]\n>"
+		System.out.println("\n#"+linenumber+" ["+code+"]\n>"
 				+msg);
 		
 		

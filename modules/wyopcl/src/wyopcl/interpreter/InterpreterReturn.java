@@ -1,6 +1,5 @@
 package wyopcl.interpreter;
 
-import static wycc.lang.SyntaxError.internalFailure;
 import wyil.lang.Code;
 import wyil.lang.Constant;
 import wyil.lang.Type;
@@ -9,7 +8,7 @@ public class InterpreterReturn extends Interpreter {
 	private static InterpreterReturn instance;	
 	public InterpreterReturn(){		
 	}
-	
+
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
 	public static InterpreterReturn getInstance(){
 		if (instance == null){
@@ -17,45 +16,36 @@ public class InterpreterReturn extends Interpreter {
 		}
 		return instance;
 	}
-	
-	
+
+
 	public void interpret(Code.Return code, StackFrame stackframe) {
-		
+
 		int linenumber = stackframe.getLine();
-		Code.Return return_code = (Code.Return) code;
-		
+		int return_reg = stackframe.getReturn_reg();
 		blockstack.pop();
 		String msg = "";
-		int reg = return_code.operand;
-		if (return_code.type == Type.T_VOID) {
-			msg += return_code.type;
-		} else {
+		//Check if the results are returned.
+		if (code.type != Type.T_VOID) {
+			//Read the values from the operand register.
+			Constant return_value = stackframe.getRegister(code.operand);
+			msg += "%" + code.operand +"("+return_value+")";
+			//Get the previous block							
+			stackframe = blockstack.peek();				
+			linenumber = stackframe.getLine();
+			//Return the result by updating the register. 
+			stackframe.setRegister(return_reg, return_value);
+			msg += "\n\n====Return to \""+stackframe.getName()+"\" with "+
+					"%"+stackframe.getReturn_reg() + "("+return_value+")";
 			
-			if(return_code.type == Type.T_INT){
-			Constant return_value = stackframe.getRegister(reg);
-			int return_reg = stackframe.getReturn_reg();
-			msg += "%" + reg +"("+return_value+")"+ " Type:(" + return_code.type+")";
-			//msg += "\n====Finish \""+stackframe.getName()+"\"====";
-			
-			//Get the previous block
-			if(!blockstack.isEmpty()){				
-				stackframe = blockstack.peek();
-				if(return_reg != -1){
-					linenumber = stackframe.getLine();
-					//Update the value
-					stackframe.setRegister(return_reg, return_value);
-					msg += "\n====Return to \""+stackframe.getName()+"\" with "+
-					"%"+return_reg + "("+((Constant.Integer)return_value).value+")";
-					stackframe.setLine(++linenumber);
-				}
-			}
-			}else{
-				internalFailure("Not implemented!", null, null);
-			}
-			
+			stackframe.setLine(++linenumber);
+
+		}else{
+			msg += "("+code.type+")";
 		}
+
+
 		System.out.println("#"+linenumber+" ["+code+"]\n>"+msg+"\n");
-		
+
 	}
 
 }

@@ -35,76 +35,36 @@ import wyil.util.*;
 /**
  * <p>
  * Represents a complete sequence of bytecode instructions. For example, every
- * method body is a single Block. Likewise, the constraint for a give type is a
- * Block. Finally, a Block permits attributes to be attached to every bytecode
- * it contains. An example attribute is one for holding the location of the
- * source code which generated the bytecode.
+ * function or method body is a single Block. Likewise, the invariant for a give
+ * type is a Block. Finally, a Block permits attributes to be attached to every
+ * bytecode it contains. An example attribute is one for holding the location of
+ * the source code which generated the bytecode.
  * </p>
  * 
  * <p>
- * Every Block has a number of dedicated set input variables, and an arbitrary
+ * Every Block has a number of dedicated input variables, and an arbitrary
  * number of additional temporary variables. Each variable is allocated to a
- * slot number, starting from zero and with all inputs coming first. Slot zero
- * is reserved for the special variable "$". Likewise, slot one is reserved for
- * the special variable this for blocks which require it. For example, the body
- * of a normal method requires a receiver, whilst functions or headless methods
- * don't.
- * </p>
- * 
- * <p>
- * The main operations on a block are <i>append</i> and <i>append</i>. The
- * former is used in the process of constructing a block. In such case,
- * bytecodes are appended on to the block assuming an identical slot allocation
- * (called the <i>environment</i>). There are two considerations when importing
- * one block into another:
- * </p>
- * 
- * <ul>
- * <li>Firstly, we cannot assume identical slot allocations. For example, the
- * block representing a constraint on some type might have a single input mapped
- * to slot zero, and a temporary mapped to slot one. When this block is imported
- * into the pre-condition of some function, a collision would occur if e.g. that
- * function has multiple parameters. This is because the second parameter would
- * be mapped to the same register as the temporary in the constraint. We have to
- * <i>shift</i> the slot number of that temporary variable up in order to avoid
- * this collision.</li>
- * <li>
- * Secondly, we cannot all labels are distinct across both blocks. In otherwise,
- * both blocks may contain two identical labels. In such case, we need to
- * relabel one of the blocks in order to avoid this collision.</li>
- * </ul>
+ * slot number, starting from zero and with all inputs coming first. 
  * </p>
  * 
  * @author David J. Pearce
  * 
  */
-public final class CodeBlock implements Iterable<CodeBlock.Entry> {
-	private final ArrayList<Entry> stmts;
+public final class CodeBlock extends ArrayList<CodeBlock.Entry> implements List<CodeBlock.Entry> {
 	private final int numInputs;
 			
-	public CodeBlock(int numInputs) {
-		this.stmts = new ArrayList<Entry>();
+	public CodeBlock(int numInputs) {		
 		this.numInputs = numInputs;
 	}
 	
-	public CodeBlock(int numInputs, Collection<Entry> stmts) {
-		this.stmts = new ArrayList<Entry>();
-		for(Entry s : stmts) {
-			append(s.code,s.attributes());
-		}
+	public CodeBlock(int numInputs, Collection<Entry> entries) {
+		super(entries);		
 		this.numInputs = numInputs;
 	}
 
 	// ===================================================================
 	// Accessor Methods
 	// ===================================================================
-
-	/**
-	 * Return the number of bytecodes in this block.
-	 */
-	public int size() {
-		return stmts.size();
-	}
 
 	/**
 	 * Return the number of input variables for this block.
@@ -122,7 +82,7 @@ public final class CodeBlock implements Iterable<CodeBlock.Entry> {
 	 */
 	public int numSlots() {		
 		HashSet<Integer> slots = new HashSet<Integer>();
-		for(Entry s : stmts) {
+		for(Entry s : this) {
 			s.code.registers(slots);
 		}
 		int r = 0;
@@ -139,146 +99,27 @@ public final class CodeBlock implements Iterable<CodeBlock.Entry> {
 	 */
 	public Set<Integer> slots() {
 		HashSet<Integer> slots = new HashSet<Integer>();
-		for(Entry s : stmts) {
+		for(Entry s : this) {
 			s.code.registers(slots);
 		}
 		return slots;
 	}
-	
-	/**
-	 * Return block entry at the given position.
-	 * 
-	 * @param index --- position to return entry of.
-	 * @return
-	 */
-	public Entry get(int index) {
-		return stmts.get(index);
-	}
-
-	public Iterator<Entry> iterator() {
-		return stmts.iterator();
-	}		
-	
-	/**
-	 * Generate a typing for this block, from which the type of every register
-	 * at every point can be determined. Note that this typing is valid for the
-	 * block as it currently is, and will become invalid if the block is changed
-	 * in any way.
-	 * 
-	 * @param inputs
-	 *            --- the types of all input parameters to this block.
-	 * 
-	 * @return
-	 */
-	public Typing typing(Type[] inputs) {
-		return new Typing(inputs,stmts,numSlots());
-	}
-	
-	// ===================================================================
-	// Import Methods
-	// ===================================================================
-
-	/**
-	 * <p>
-	 * Import an external block into this one, using a given <i>binding</i>. The
-	 * binding indicates how the input variables for the external block should
-	 * be mapped into the variables of this block.
-	 * </p>
-	 * <p>
-	 * <p>
-	 * Every input variable in the block must be bound to something in the
-	 * binding. Otherwise, an IllegalArgumentException is raised. In the case of
-	 * an input bound to a slot >= numSlots(), then the number of slots is
-	 * increased automatically.
-	 * </p>
-	 * <b>NOTE:</b> temporary variables used in the external block will be
-	 * mapped automatically to unused slots in this environment to prevent
-	 * collisions. Therefore, temporary variables should not be specified in the
-	 * binding. </p>
-	 */
-	public void importExternal(CodeBlock block, Map<Integer,Integer> binding) {
-		int freeSlot = numSlots();
-		
-		// First, sanity check that all input variables are bound
-		HashMap<Integer,Integer> nbinding = new HashMap<Integer,Integer>();
-		for(int i=0;i!=block.numInputs;++i) {
-			Integer target = binding.get(i);
-			if(target == null) {
-				throw new IllegalArgumentException("Input not mapped by input");
-			}
-			nbinding.put(i,target);
-			freeSlot = Math.max(target+1,freeSlot);
-		}
-		
-		// Second, determine binding for temporary variables		
-		for(int i=block.numInputs;i!=block.numSlots();++i) {
-			nbinding.put(i,i+freeSlot);			
-		}
-		
-		// Third, determine relabelling
-		HashMap<String,String> labels = new HashMap<String,String>();
-		
-		for (Entry s : block) {
-			if (s.code instanceof Code.Label) {
-				Code.Label l = (Code.Label) s.code;
-				labels.put(l.label, freshLabel());
-			}
-		}
-		
-		// Finally, apply the binding and relabel any labels as well.
-		for(Entry s : block) {
-			Code ncode = s.code.remap(nbinding).relabel(labels);
-			append(ncode,s.attributes());
-		}
-	}
-
-	public CodeBlock relabel() {
-		HashMap<String,String> labels = new HashMap<String,String>();
-		
-		for (Entry s : this) {
-			if (s.code instanceof Code.Label) {
-				Code.Label l = (Code.Label) s.code;
-				labels.put(l.label, freshLabel());
-			}
-		}
-		
-		CodeBlock block = new CodeBlock(numInputs);
-		// Finally, apply the binding and relabel any labels as well.
-		for(Entry s : this) {
-			Code ncode = s.code.relabel(labels);
-			block.append(ncode,s.attributes());
-		}
-		
-		return block;
-	}
-	
-	
-	/**
-	 * This method updates the source attributes for all statements in a block.
-	 * This is typically done in conjunction with a substitution, when we're
-	 * inlining constraints from e.g. pre- and post-conditions.
-	 * 
-	 * @param block
-	 * @param nsrc
-	 * @return
-	 */
-	public static CodeBlock resource(CodeBlock block, Attribute.Source nsrc) {
-		if(block == null) {
-			return null;
-		}
-		CodeBlock nblock = new CodeBlock(block.numInputs());
-		for(Entry e : block) {
-			nblock.append(e.code,nsrc);
-		}
-		return nblock;
-	}
-	
+					
 	// ===================================================================
 	// Append Methods
-	// ===================================================================
-	
-	public void append(CodeBlock.Entry entry) {
-		stmts.add(new Entry(entry.code,entry.attributes()));
+	// ===================================================================	
+
+	/**
+	 * Append a bytecode onto the end of this block. It is assumed that the
+	 * bytecode employs the same environment as this block.
+	 * 
+	 * @param code
+	 *            --- bytecode to append
+	 * @param attributes
+	 *            --- attributes associated with bytecode.
+	 */
+	public boolean add(Code code, Attribute... attributes) {
+		return add(new Entry(code,attributes));
 	}
 
 	/**
@@ -290,41 +131,8 @@ public final class CodeBlock implements Iterable<CodeBlock.Entry> {
 	 * @param attributes
 	 *            --- attributes associated with bytecode.
 	 */
-	public void append(Code code, Attribute... attributes) {
-		stmts.add(new Entry(code,attributes));
-	}
-
-	/**
-	 * Append a bytecode onto the end of this block. It is assumed that the
-	 * bytecode employs the same environment as this block.
-	 * 
-	 * @param code
-	 *            --- bytecode to append
-	 * @param attributes
-	 *            --- attributes associated with bytecode.
-	 */
-	public void append(Code code, Collection<Attribute> attributes) {
-		stmts.add(new Entry(code,attributes));		
-	}
-
-	/**
-	 * <p>
-	 * Append another block onto the end of this block. It is assumed that the
-	 * block in question employs the same environment.
-	 * </p>
-	 * 
-	 * <p>
-	 * <b>NOTE</b>In the case of the block being appended having more input
-	 * variables, it is assumed those additional ones correspond to temporaries
-	 * in this block.
-	 * </p>
-	 * 
-	 * @param block --- block to append
-	 */	
-	public void append(CodeBlock block) {
-		for(Entry s : block) {
-			append(s.code,s.attributes());
-		}
+	public boolean add(Code code, Collection<Attribute> attributes) {
+		return add(new Entry(code,attributes));		
 	}
 	
 	// ===================================================================
@@ -340,8 +148,8 @@ public final class CodeBlock implements Iterable<CodeBlock.Entry> {
 	 * @param code --- bytecode to insert at the given position.
 	 * @param attributes
 	 */
-	public void insert(int index, Code code, Attribute... attributes) {
-		stmts.add(index,new Entry(code,attributes));
+	public void add(int index, Code code, Attribute... attributes) {
+		add(index,new Entry(code,attributes));
 	}
 	
 	/**
@@ -353,26 +161,8 @@ public final class CodeBlock implements Iterable<CodeBlock.Entry> {
 	 * @param code --- bytecode to insert at the given position.
 	 * @param attributes
 	 */
-	public void insert(int index, Code code, Collection<Attribute> attributes) {
-		stmts.add(index,new Entry(code,attributes));
-	}
-
-	/**
-	 * <p>
-	 * Insert a block at a given position in this block. It is assumed that the
-	 * bytecode employs the same environment as this block. The bytecode at the
-	 * given position (and any after it) are shifted one or more positions down.
-	 * </p>
-	 * 
-	 * @param index
-	 *            --- position to insert block at.
-	 * @param block
-	 *            --- block to insert.
-	 */
-	public void insert(int index, CodeBlock block) {
-		for(Entry s : block) {
-			insert(index++, s.code,s.attributes());
-		}
+	public void add(int index, Code code, Collection<Attribute> attributes) {
+		add(index,new Entry(code,attributes));
 	}
 
 	// ===================================================================
@@ -389,8 +179,8 @@ public final class CodeBlock implements Iterable<CodeBlock.Entry> {
 	 * @param code --- bytecode to replace with.
 	 * @param attributes
 	 */
-	public void replace(int index, Code code, Attribute... attributes) {
-		stmts.set(index,new Entry(code,attributes));
+	public void set(int index, Code code, Attribute... attributes) {
+		set(index,new Entry(code,attributes));
 	}
 	
 	/**
@@ -403,46 +193,13 @@ public final class CodeBlock implements Iterable<CodeBlock.Entry> {
 	 * @param code --- bytecode to replace with.
 	 * @param attributes
 	 */
-	public void replace(int index, Code code, Collection<Attribute> attributes) {
-		stmts.set(index, new Entry(code, attributes));
+	public void set(int index, Code code, Collection<Attribute> attributes) {
+		set(index, new Entry(code, attributes));
 	}
-
-	/**
-	 * <p>
-	 * Remove the bytecode at a given position in this block. Those bytecodes
-	 * after this position will then be shifted up one position in the block.
-	 * </p>
-	 * 
-	 * @param index
-	 *            --- index of bytecode to remove.
-	 */
-	public void remove(int index) {
-		stmts.remove(index);
-	}
-
+	
 	// ===================================================================
 	// Miscellaneous
 	// =================================================================== 
-	
-	public String toString() {
-		String r = "[";
-		
-		boolean firstTime=true;
-		for(Entry s : stmts) {
-			if(!firstTime) {
-				r += ", ";
-			}
-			firstTime=false;
-			r += s.toString();
-		}
-		
-		return r + "]";
-	}
-
-	private static int _idx=0;
-	public static String freshLabel() {
-		return "blklab" + _idx++;
-	}
 
 	/**
 	 * Represents an individual bytecode and those attributes currently
@@ -479,113 +236,5 @@ public final class CodeBlock implements Iterable<CodeBlock.Entry> {
 			}
 			return r;
 		}
-	}	
-	
-	/**
-	 * Represents complete typing information for a block. The calculation is
-	 * done lazily to avoid unnecessary recomputation.
-	 * 
-	 * @author djp
-	 * 
-	 */
-	public static final class Typing {
-		private final ArrayList<Entry> stmts;
-		private final HashMap<String,Type[]> cache;
-		private final int numSlots;
-		private int position;
-		private Type[][] environments;
-		
-		public Typing(Type[] inputs, List<Entry> stmts, int numSlots) {
-			this.stmts = new ArrayList<Entry>(stmts);
-			this.cache = new HashMap<String,Type[]>();
-			this.environments = new Type[stmts.size()][];
-			this.environments[0] = Arrays.copyOf(inputs,numSlots);
-			this.numSlots = numSlots;
-		}
-		
-		/**
-		 * Return the type of a given register immediately before the given
-		 * index position.
-		 * 
-		 * @param index
-		 * @return
-		 */
-		public Type getTypeBefore(int index, int register) {
-			if(position <= index) {
-				determineTypesUpto(index+1);
-			}
-			return environments[index][register];			
-		}
-		
-		private void determineTypesUpto(int end) {
-			Type[] environment = environments[0];
-			
-			for(int i=position;i<end;++i) {
-				Code code = stmts.get(i).code;
-				if(code instanceof Code.Label) {
-					Code.Label label = (Code.Label) code;
-					Type[] nEnv = cache.get(label.label);
-					environment = join(environment,nEnv);
-				} else if(code instanceof Code.AbstractAssignable) {
-					Code.AbstractAssignable c = (Code.AbstractAssignable) code;
-					environment = Arrays.copyOf(environment, environment.length);
-					environment[c.target] = c.assignedType(); 
-				} else if(code instanceof Code.Goto) {
-					Code.Goto gto = (Code.Goto) code;
-					cache.put(gto.target, environment);
-					environment = null;
-				} else if(code instanceof Code.If) {
-					Code.If gto = (Code.If) code;
-					cache.put(gto.target, environment);
-				} else if(code instanceof Code.IfIs) {
-					Code.IfIs gto = (Code.IfIs) code;
-					Type[] trueEnv = Arrays.copyOf(environment, environment.length);
-					trueEnv[gto.operand] = Type.intersect(trueEnv[gto.operand],
-							gto.rightOperand);
-					cache.put(gto.target, trueEnv);
-					environment[gto.operand] = Type.intersect(
-							trueEnv[gto.operand],
-							Type.Negation(gto.rightOperand));					
-				} else if(code instanceof Code.Switch) {
-					Code.Switch sw = (Code.Switch) code;
-					for(Pair<Constant,String> c : sw.branches) {
-						cache.put(c.second(), environment);
-					}
-					cache.put(sw.defaultTarget, environment);
-				} else if(code instanceof Code.ForAll) {
-					// FIXME: what this need to do is update the type for the
-					// index variable, and then invalidate it afterwards.
-					throw new RuntimeException("need to implement for-all loop!");
-				} else if (code instanceof Code.Return
-						|| code instanceof Code.Throw) {
-					environment = null;
-				}
-				
-				environments[i] = environment; 
-			}
-		}
-		
-		private static Type[] join(Type[] env1, Type[] env2) {
-			if(env1 == null) {
-				return env2;
-			} else if(env2 == null) {
-				return env1;
-			} 
-			Type[] result = new Type[env1.length];
-			for(int i=0;i!=env1.length;++i) {
-				Type t1 = env1[i];
-				Type t2 = env2[i];
-				if(t1 == null && t2 == null) {
-					result[i] = null;	
-				} else if(t1 == null) {
-					result[i] = t2;
-				} else if(t2 == null) {
-					result[i] = t1;
-				} else {				
-					result[i] = Type.Union(t1,t2);
-				}				
-			}
-			return result;
-		}
-	}
+	}			
 }

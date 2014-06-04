@@ -20,7 +20,6 @@ public class InterpreterConvert extends Interpreter {
 	public void interpret(Code.Convert code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
 		Constant operand = stackframe.getRegister(code.operand);
-		int target = code.target;
 		Type assignedType = code.assignedType();
 		Type resultType = code.result;
 		Constant result = null;
@@ -28,12 +27,16 @@ public class InterpreterConvert extends Interpreter {
 		if (resultType instanceof Type.Any) {
 			//No needs to convert the type of the operand.
 			result = operand;
-			stackframe.setRegister(target, result);
-			msg += "%"+target+"("+result+") assignedType:("+assignedType+")"
-					+ " resultType:("+resultType+")";
-		}else{
+		} else if (resultType instanceof Type.List){
+			result = (Constant.List) operand;
+		} else{
 			throw new RuntimeException("Not implemented!");
 		}
+		
+		stackframe.setRegister(code.target, result);
+		msg += "%"+code.target+"("+result+") assigned Type:("+assignedType+")"
+				+ " result Type:("+resultType+")";
+		
 		System.out.println("#"+linenumber+" ["+code+"]\n>"+msg+"\n");
 		
 		stackframe.setLine(++linenumber);

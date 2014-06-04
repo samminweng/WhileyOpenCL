@@ -120,19 +120,23 @@ public final class BackPropagation extends BackwardFlowAnalysis<BackPropagation.
 		
 		methodCase = mcase;
 		
-		List<CodeBlock> nprecondition = propagate(mcase.precondition());
-		List<CodeBlock> npostcondition = propagate(mcase.postcondition());
-		List<CodeBlock> nbody = propagate(mcase.body());
-		
-		return new WyilFile.Case(nbody, nprecondition,
-				npostcondition, mcase.attributes());
+		CodeBlock precondition = mcase.precondition();
+		if (precondition != null) {
+			precondition = propagate(precondition);
+		}
+		CodeBlock postcondition = mcase.postcondition();
+		if (postcondition != null) {
+			postcondition = propagate(postcondition);
+		}
+		CodeBlock body = mcase.body();
+		if (body != null) {
+			body = propagate(body);
+		}
+		return new WyilFile.Case(body, precondition, postcondition,
+				mcase.attributes());
 	}
 
-	protected List<CodeBlock> propagate(List<CodeBlock> blocks) {
-		// Quick sanity check		
-		if(blocks.size() == 0) { return Collections.EMPTY_LIST; }
-		// FIXME: this is broken
-		CodeBlock block = blocks.get(0);
+	protected CodeBlock propagate(CodeBlock block) {
 		
 		// Setup global items
 		stores = new HashMap<String,Env>();
@@ -149,19 +153,17 @@ public final class BackPropagation extends BackwardFlowAnalysis<BackPropagation.
 		for(int i=0;i!=block.size();++i) {
 			CodeBlock.Entry rewrite = rewrites.get(i);			
 			if(rewrite != null) {								
-				nblock.append(rewrite);				
+				nblock.add(rewrite);				
 			} else {
-				nblock.append(block.get(i));
+				nblock.add(block.get(i));
 			}
 			CodeBlock afters = afterInserts.get(i);			
 			if(afters != null) {								
-				nblock.append(afters);				
+				nblock.addAll(afters);				
 			} 							
 		}
 		
-		ArrayList<CodeBlock> nblocks = new ArrayList<CodeBlock>();
-		nblocks.add(nblock);
-		return nblocks;
+		return nblock;
 	}
 	
 	@Override
@@ -826,16 +828,16 @@ public final class BackPropagation extends BackwardFlowAnalysis<BackPropagation.
 
 			CodeBlock block = new CodeBlock(0);
 			if (!from.equals(to)) {
-				block.append(Code.Convert(from, target, target, to),
+				block.add(Code.Convert(from, target, target, to),
 						elem.attributes());
 			}
-			block.append(
+			block.add(
 					Code.Invoke(p.first(), target, new int[] { target },
 							p.second()), elem.attributes());
 			afterInserts.put(index, block);
 		} else {
 			CodeBlock block = new CodeBlock(0);
-			block.append(Code.Convert(from, target, target, to), elem.attributes());
+			block.add(Code.Convert(from, target, target, to), elem.attributes());
 			afterInserts.put(index,block);
 		}
 		

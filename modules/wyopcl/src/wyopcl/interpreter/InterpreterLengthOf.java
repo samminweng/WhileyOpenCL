@@ -21,14 +21,18 @@ public class InterpreterLengthOf extends Interpreter{
 	
 	public void interpret(Code.LengthOf code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
-		int target = code.target;
-		int operand = code.operand;
-		Constant.List list = (Constant.List) stackframe.getRegister(operand);
-		Constant.Integer length = Constant.V_INTEGER(BigInteger.valueOf(list.values.size()));
+		Constant.List list = (Constant.List) stackframe.getRegister(code.operand);
+		Constant.Integer length;
+		//if(list != null){
+		length = Constant.V_INTEGER(BigInteger.valueOf(list.values.size()));
+		//}else{
+		//	length = Constant.V_INTEGER(BigInteger.ZERO);
+		//}
 		
-		stackframe.setRegister(target, length);
+		
+		stackframe.setRegister(code.target, length);
 		System.out.println("#"+linenumber+" ["+code+"]\n>"+
-						"%"+ target + "(" + length +") %" + operand+"("+ list+")\n");
+						"%"+ code.target + "(" + length +") %" + code.operand+"("+ list+")\n");
 		stackframe.setLine(++linenumber);
 	}
 }
