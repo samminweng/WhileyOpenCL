@@ -56,7 +56,7 @@ public class InterpreterInvoke extends Interpreter {
 			//Directly invoke the function/method.
 			code.name.module();
 			stackframe.setLine(++linenumber);
-			//internalFailure("Not implemented!", "InterpreterInvoke.java", null);
+			internalFailure("Not implemented!", "InterpreterInvoke.java", null);
 		}
 		
 		
