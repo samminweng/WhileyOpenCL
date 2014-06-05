@@ -42,6 +42,7 @@ import wyopcl.interpreter.InterpreterNewList;
 import wyopcl.interpreter.InterpreterNop;
 import wyopcl.interpreter.InterpreterReturn;
 import wyopcl.interpreter.InterpreterSubList;
+import wyopcl.interpreter.InterpreterTryCatch;
 import wyopcl.interpreter.InterpreterUpdate;
 
 public class WyilInterpreter extends Interpreter implements Builder{
@@ -246,7 +247,7 @@ public class WyilInterpreter extends Interpreter implements Builder{
 			} else if (code instanceof Code.Throw) {
 				internalFailure("Not implemented!", filename, entry);
 			} else if (code instanceof Code.TryCatch) {
-				internalFailure("Not implemented!", filename, entry);
+				InterpreterTryCatch.getInstance().interpret((Code.TryCatch)code, stackframe);
 			} else if (code instanceof Code.TupleLoad) {
 				internalFailure("Not implemented!", filename, entry);
 			} else if (code instanceof Code.UnArithOp) {
