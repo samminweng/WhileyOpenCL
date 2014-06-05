@@ -44,5 +44,5 @@ function sieve(int limit) => int:
 //The total number of primes is shown on the following website: 
 //http://primes.utm.edu/howmany.shtml
 method main(System.Console console):
-	console.out.println(sieve(10))		
-	//console.out.println(sieve(100))		
+	console.out.println(sieve(100))		
+	//console.out.println(sieve(1000))		

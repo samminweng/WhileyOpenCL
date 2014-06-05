@@ -22,10 +22,7 @@ throws SyntaxError:
 	return Int.parse(input[start..pos])
 
 method main(System.Console console):
-	if(|console.args| == 0):
-		console.out.println("No parameter provided! Please enter a number.")
-	else:
 		try:		
-			console.out.println(parseNumber(console.args[0]))				
+			console.out.println(Int.parse("as"))				
 		catch(SyntaxError ex):
 			console.out.println("Missing number")
