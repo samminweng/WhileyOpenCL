@@ -20,9 +20,14 @@ Installation
 1. The Whiley Intermediate Language Interpreter (WyIL Interpreter)
 ----------------------------------------------------------------------
 To run WyIL interpreter on command line, please follow the below steps.
-
+% ant
 % cd examples
-% ./../bin/wyopcl test-factorial.whiley
+% ./../bin/wyopcl sieve.whiley
 
-
+2. Whiley-to-OpenCL translator
+The Whiley-to-OpenCL translator is written in Java and aims to generate
+C/OpenCL code and proof obligation. At this stage, we will use the prime
+example as the main test case (perhaps we need more) to manually generate
+its OpenCL code and produce the proof obligations in SMT syntax, which
+allows us to make use of different SMT solvers (e.g. Z3). 
 
