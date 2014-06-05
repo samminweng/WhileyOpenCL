@@ -33,6 +33,8 @@ public class InterpreterLengthOf extends Interpreter{
 			length = ((Constant.List)collection).values.size();
 		}else if (collection instanceof Constant.Record){
 			length = ((Constant.Record)collection).values.size();
+		}else if (collection instanceof Constant.Strung){
+			length = ((Constant.Strung)collection).value.length();
 		}else{
 			internalFailure("Not implemented!", "InterpreterLengthOf.java", null);
 		}

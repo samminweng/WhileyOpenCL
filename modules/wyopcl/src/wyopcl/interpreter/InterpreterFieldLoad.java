@@ -1,12 +1,18 @@
 package wyopcl.interpreter;
 
+import static wycc.lang.SyntaxError.internalFailure;
+
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import wyil.lang.Code;
 import wyil.lang.Constant;
+import wyil.lang.Type;
+import wyil.lang.Type.EffectiveRecord;
 
 public class InterpreterFieldLoad extends Interpreter {
 	private static InterpreterFieldLoad instance;	
@@ -21,44 +27,33 @@ public class InterpreterFieldLoad extends Interpreter {
 		return instance;
 	}
 	
-	/*
-	 * Read the field and its field type from Code.FieldLoad object, construct a Constant.Record
-	 * object and put it into the registers.
-	 */
+	
 	public void interpret(Code.FieldLoad code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
 		String msg = "";
-		int operand = code.operand;
+		//Reads a record value from an operand register
 		Constant.Record record = (Constant.Record)stackframe.getRegister(code.operand);
-		if(record == null){
-			//Convert the wyil.lang.type to Constant.Type
-			Map<String, Constant> values = new HashMap<String, Constant>();
-			Iterator<Entry<String, wyil.lang.Type>> iterator = code.type.fields().entrySet().iterator();
-			while(iterator.hasNext()){
-				Entry<String, wyil.lang.Type> next = iterator.next();
-				String field = next.getKey();
-				wyil.lang.Type type = next.getValue();
-				//msg += " Field: "+ field+" FieldType:" + fieldtype;
-				values.put(field, Constant.V_TYPE(type));
-			}
-			record = Constant.V_RECORD(values);
-			//Push the field values in the registers.
-			stackframe.setRegister(code.operand, record);
-		}else{
-			//internalFailure("Not implemented!", null, null);
-		}
+		msg += "%"+code.operand+"("+record+")";
+		HashMap<String, Type> fields = code.type.fields();
+		Map<String, Constant> values = new HashMap<String, Constant>();
+		//Extract the value of a given field.		
+		Set<Entry<String, Type>> entrySet = fields.entrySet();
+		Iterator<Entry<String, Type>> iterator = entrySet.iterator();
 		
-		//Write the given field type to the target register.
-		int target = code.target;
-		//The given field type.
-		Map<String,Constant> givenField = new HashMap<String, Constant>();
-		givenField.put(code.field, Constant.V_TYPE(code.fieldType()));
-		Constant.Record givenFieldType = Constant.V_RECORD(givenField);
-		stackframe.setRegister(target, givenFieldType);		
-		msg += "%" + target +"(" +givenFieldType+") %" + operand + "(" + record +")";
+		while(iterator.hasNext()){
+			 Entry<String, Type> next = iterator.next();
+			if(next.getKey().equals(code.field)){
+				Type value = next.getValue();
+				values.put(next.getKey(), Constant.V_TYPE(value));					
+				break;
+			}
+		}	
+	
+		//Write the given value to the target register.
+		stackframe.setRegister(code.target, Constant.V_RECORD(values));
+		msg += "%" + code.target + "("+values+")";
 		
 		System.out.println("#"+linenumber+" ["+code+"]\n>"+msg+"\n");
-		
 		stackframe.setLine(++linenumber);
 		
 	}

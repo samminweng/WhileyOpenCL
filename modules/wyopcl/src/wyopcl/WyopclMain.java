@@ -2,18 +2,22 @@ package wyopcl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 import wyc.WycMain;
 import wyc.util.WycBuildTask;
+import wycc.lang.SyntaxError;
+import wycc.lang.SyntaxError.InternalFailure;
 import wycc.util.OptArg;
 import wyopcl.util.WyopclBuildTask;
 
 public class WyopclMain extends WycMain{
 
 	public static final OptArg[] EXTRA_OPTIONS = { 
-		new OptArg("classdir", "cd", OptArg.FILEDIR, "Specify where to place generated class files",
-			new File("."))
+//		new OptArg("classdir", "cd", OptArg.FILEDIR, "Specify where to place generated class files",
+//			new File("."))
 	};
 	
 	public static OptArg[] DEFAULT_OPTIONS;
@@ -36,12 +40,87 @@ public class WyopclMain extends WycMain{
 	@Override
 	public void configure(Map<String, Object> values) throws IOException {
 		super.configure(values);
+		
+		
 
-		File classDir = (File) values.get("classdir");
-		if (classDir != null) {
-			((WyopclBuildTask) builder).setClassDir(classDir);
-		}
+//		File classDir = (File) values.get("classdir");
+//		if (classDir != null) {
+//			((WyopclBuildTask) builder).setClassDir(classDir);
+//		}
 	}
+	
+	@Override
+	public int run(String[] _args) {
+		boolean verbose = false;
+		boolean brief = false;
+		
+		try {
+			// =====================================================================
+			// Process Options
+			// =====================================================================
+
+			ArrayList<String> args = new ArrayList<String>(Arrays.asList(_args));
+			Map<String, Object> values = OptArg.parseOptions(args, options);
+
+			// Second, check if we're printing version
+			if (values.containsKey("version")) {
+				version();
+				return SUCCESS;
+			}
+
+			// Otherwise, if no files to compile specified, then print usage
+			if (args.isEmpty() || values.containsKey("help")) {
+				usage();
+				return SUCCESS;
+			}
+
+			brief = values.containsKey("brief");
+			
+			// =====================================================================
+			// Configure Build Task & Sanity Check
+			// =====================================================================
+			verbose = values.containsKey("verbose");
+			
+			configure(values);
+						
+			ArrayList<File> delta = new ArrayList<File>();
+			for (String arg : args) {
+				File f = new File(arg);
+				if(f.exists()){
+					delta.add(f);
+				}				
+			}		
+					
+			// =====================================================================
+			// Run Build Task
+			// =====================================================================
+
+			builder.build(delta);
+
+		} catch (InternalFailure e) {
+			e.outputSourceError(errout,brief);
+			if (verbose) {
+				e.printStackTrace(errout);
+			}
+			return INTERNAL_FAILURE;
+		} catch (SyntaxError e) {
+			e.outputSourceError(errout,brief);
+			if (verbose) {
+				e.printStackTrace(errout);
+			}
+			return SYNTAX_ERROR;
+		} catch (Throwable e) {
+			errout.println("internal failure (" + e.getMessage() + ")");
+			if (verbose) {
+				e.printStackTrace(errout);
+			}
+			return INTERNAL_FAILURE;
+		}
+
+		return SUCCESS;
+	}
+	
+	
 	
 	public static void main(String[] args) {
 		

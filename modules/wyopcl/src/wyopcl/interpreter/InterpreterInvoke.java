@@ -1,5 +1,6 @@
 package wyopcl.interpreter;
 
+import static wycc.lang.SyntaxError.internalFailure;
 import wycc.lang.NameID;
 import wyil.lang.Code;
 import wyil.lang.CodeBlock;
@@ -23,33 +24,42 @@ public class InterpreterInvoke extends Interpreter {
 	public void interpret(Code.Invoke code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
 		String msg = "";
-		NameID methodorFunc = code.name;		
 		
-		//Get the symbol
-		CodeBlock blk = blocktable.get(methodorFunc.name());
-		//Create a new StackFrame
-		StackFrame stackFrame = new StackFrame(blk, 0, methodorFunc.name(), code.target);
-	
-		//Pass the input parameters.
-		int index = 0;
-		msg += " %"+code.target+"("+null+")";
-		for(int operand: code.operands){
-			Constant constant = stackframe.getRegister(operand);			
-			msg += " %"+operand+"("+constant.toString()+")";
-			stackFrame.setRegister(index, constant);
-			index++;
-		}
+		//Get the CodeBlock for the corresponding function/method. 
+		CodeBlock blk = blocktable.get(code.name.name());
+		if(blk != null){
+			//Create a new StackFrame
+			StackFrame stackFrame = new StackFrame(blk, 0,
+					code.name.name(), code.target);
+		
+			//Pass the input parameters.
+			int index = 0;
+			msg += " %"+code.target+"("+null+")";
+			for(int operand: code.operands){
+				Constant constant = stackframe.getRegister(operand);			
+				msg += " %"+operand+"("+constant.toString()+")";
+				stackFrame.setRegister(index, constant);
+				index++;
+			}
+				
+			//Start invoking a new block.		
+			blockstack.push(stackFrame);
+			msg += "\n\n===Invoke \""+stackFrame.getName()+"\" with [ ";
 			
-		//Start invoking a new block.		
-		blockstack.push(stackFrame);
-		msg += "\n\n===Invoke \""+stackFrame.getName()+"\" with [ ";
+			for(int reg= 0; reg<stackFrame.getRegisterLength();reg++){
+				msg += "%"+reg + "("+stackFrame.getRegister(reg)+") ";
+			}		
+			msg += "]\n";
+			System.out.println("\n#"+linenumber+" ["+code+"]\n>"+msg);
 		
-		for(int reg= 0; reg<stackFrame.getRegisterLength();reg++){
-			msg += "%"+reg + "("+stackFrame.getRegister(reg)+") ";
-		}		
-		msg += "]\n";
-		System.out.println("\n#"+linenumber+" ["+code+"]\n>"
-				+msg);
+		}else{
+			//Directly invoke the function/method.
+			code.name.module();
+			stackframe.setLine(++linenumber);
+			//internalFailure("Not implemented!", "InterpreterInvoke.java", null);
+		}
+		
+		
 		
 		
 	}

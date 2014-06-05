@@ -21,18 +21,29 @@ public class InterpreterIndexOf extends Interpreter {
 	public void interpret(Code.IndexOf code, StackFrame stackframe) {		
 		int linenumber = stackframe.getLine();
 		String msg = ">";
-		//Read the list from the leftOperand register.
-		Constant.List list = (Constant.List) stackframe.getRegister(code.leftOperand);
 		//Read the key value from the rightOperand register.
 		Constant.Integer key = (Constant.Integer)stackframe.getRegister(code.rightOperand);
-		//Return the value associated with the key.
-		Constant value = list.values.get(key.value.intValue());
-		stackframe.setRegister(code.target, value);
-		
-		msg += " %"+code.leftOperand +"("+list+") "+
-		       " %"+code.rightOperand +"(" + key +") "+
-		       " %"+code.target + "("+value+")";	
-		
+		//Read the list from the leftOperand register.
+		Constant left = stackframe.getRegister(code.leftOperand);
+		Constant value = null;
+		int keyvalue = key.value.intValue();
+		if(left instanceof Constant.List){
+			//Cast the left to Constant.List type.
+			//Get the value associated with the key.
+			value = ((Constant.List) left).values.get(keyvalue);
+		}else if(left instanceof Constant.Record){
+			//Cast the left object to Constant.Record type.
+			value = ((Constant.Record) left).values.get(keyvalue);
+		}else if(left instanceof Constant.Strung){
+			//Get the char at 'keyvalue' index and returns the Constant.Char object.
+			value = Constant.V_CHAR(((Constant.Strung)left).value.charAt(keyvalue));
+		}else{
+			internalFailure("Not implemented!", "InterpreterIndexOf.java", null);
+		}
+		stackframe.setRegister(code.target, value);	
+		msg += " %"+code.leftOperand +"("+left+") "+
+			       " %"+code.rightOperand +"(" + key +") "+
+			       " %"+code.target + "("+value+")";
 		System.out.println("#"+linenumber+" ["+code+"]\n"+msg+"\n");
 		stackframe.setLine(++linenumber);
 	}

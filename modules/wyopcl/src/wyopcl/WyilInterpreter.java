@@ -48,6 +48,7 @@ import wyopcl.interpreter.InterpreterUpdate;
 public class WyilInterpreter extends Interpreter implements Builder{
 	protected final Build.Project project;
 	protected String filename;
+	//protected String[] args;
 	/**
 	 * For logging information.
 	 */
@@ -55,6 +56,7 @@ public class WyilInterpreter extends Interpreter implements Builder{
 
 	public WyilInterpreter(Build.Project project) {
 		this.project = project;
+		//this.args = args;
 	}
 
 	@Override
@@ -75,7 +77,7 @@ public class WyilInterpreter extends Interpreter implements Builder{
 		Runtime runtime = Runtime.getRuntime();
 		long start = System.currentTimeMillis();
 		long memory = runtime.freeMemory();
-
+		
 		HashSet<Path.Entry<?>> generatedFiles = new HashSet<Path.Entry<?>>();
 		for(Pair<Path.Entry<?>,Path.Root> p : delta) {
 			//Path.Root dst = p.second();
@@ -130,9 +132,6 @@ public class WyilInterpreter extends Interpreter implements Builder{
 					}
 
 					symboltable.put(blk, symbol);
-
-
-				//}
 			}
 		}
 
@@ -144,11 +143,8 @@ public class WyilInterpreter extends Interpreter implements Builder{
 		//Get the main method
 		for(FunctionOrMethodDeclaration method: module.functionOrMethod("main")){
 			for(Case mcase:method.cases()){
-				CodeBlock block = mcase.body();
-				//for(CodeBlock block : mcase.body()){
-					//this.interpret(block);
-					blockstack.push(new StackFrame(block,0, method.name(), -1));
-				//}
+				CodeBlock block = mcase.body();				
+				blockstack.push(new StackFrame(block,0, method.name(), -1));				
 			}
 		}
 
