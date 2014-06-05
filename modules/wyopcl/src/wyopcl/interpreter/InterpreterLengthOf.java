@@ -1,9 +1,12 @@
 package wyopcl.interpreter;
 
+import static wycc.lang.SyntaxError.internalFailure;
+
 import java.math.BigInteger;
 
 import wyil.lang.Code;
 import wyil.lang.Constant;
+import wyil.lang.Type;
 
 public class InterpreterLengthOf extends Interpreter{
 	private static InterpreterLengthOf instance;	
@@ -21,18 +24,24 @@ public class InterpreterLengthOf extends Interpreter{
 	
 	public void interpret(Code.LengthOf code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
-		Constant.List list = (Constant.List) stackframe.getRegister(code.operand);
-		Constant.Integer length;
-		//if(list != null){
-		length = Constant.V_INTEGER(BigInteger.valueOf(list.values.size()));
-		//}else{
-		//	length = Constant.V_INTEGER(BigInteger.ZERO);
-		//}
 		
+		//Read a effective collection (list, set or map) from the operand register.
+		Constant collection = stackframe.getRegister(code.operand);
+		int length = 0;
+		if(collection instanceof Constant.List){
+			//Cast the collection to a List.
+			length = ((Constant.List)collection).values.size();
+		}else if (collection instanceof Constant.Record){
+			length = ((Constant.Record)collection).values.size();
+		}else{
+			internalFailure("Not implemented!", "InterpreterLengthOf.java", null);
+		}
 		
-		stackframe.setRegister(code.target, length);
+		//Write the length to register.
+		stackframe.setRegister(code.target, Constant.V_INTEGER(BigInteger.valueOf(length)));
 		System.out.println("#"+linenumber+" ["+code+"]\n>"+
-						"%"+ code.target + "(" + length +") %" + code.operand+"("+ list+")\n");
+						   " %"+ code.target + "(" + length +")"+
+						   " %" + code.operand+"("+ collection+")\n");
 		stackframe.setLine(++linenumber);
 	}
 }
