@@ -22,8 +22,8 @@ public class InterpreterIf extends Interpreter {
 
 	public void interpret(Code.If code, StackFrame stackframe) {				
 		int linenumber = stackframe.getLine();
-		Constant.Integer left = (Constant.Integer) stackframe.getRegister(code.leftOperand);
-		Constant.Integer right = (Constant.Integer) stackframe.getRegister(code.rightOperand);
+		Constant left = stackframe.getRegister(code.leftOperand);
+		Constant right = stackframe.getRegister(code.rightOperand);
 		
 		String msg = "%" + code.leftOperand + "(" + left+") ";	
 		boolean satisfiable = false;
@@ -70,11 +70,7 @@ public class InterpreterIf extends Interpreter {
 			
 		}
 		
-		msg += "%" + code.rightOperand + "(" + right + ") => "+satisfiable;
-		//Store the result
-		//Constant.Bool result = Constant.V_BOOL(satisfiable);
-		//stackframe.setRegister(Integer.parseInt(code.target), result);
-		
+		msg += "%" + code.rightOperand + "(" + right + ") => "+satisfiable;		
 		System.out.println("#"+linenumber+" ["+code+"]\n>"+msg+"\n");
 		
 		

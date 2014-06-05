@@ -1,5 +1,6 @@
 package wyopcl.interpreter;
 
+import static wycc.lang.SyntaxError.internalFailure;
 import wyil.lang.Code;
 import wyil.lang.Constant;
 import wyil.lang.Type;
@@ -19,20 +20,20 @@ public class InterpreterIndexOf extends Interpreter {
 	
 	public void interpret(Code.IndexOf code, StackFrame stackframe) {		
 		int linenumber = stackframe.getLine();
-		String msg = "";
-		Constant.List left = (Constant.List) stackframe.getRegister(code.leftOperand);
-		Constant item = null;
-		Constant right = null;
-		if (code.assignedType() instanceof Type.Int){
-			right = (Constant.Integer) stackframe.getRegister(code.rightOperand);
-			item = left.values.get(((Constant.Integer)right).value.intValue());
-		}
-		stackframe.setRegister(code.target, item);
+		String msg = ">";
+		//Read the list from the leftOperand register.
+		Constant.List list = (Constant.List) stackframe.getRegister(code.leftOperand);
+		//Read the key value from the rightOperand register.
+		Constant.Integer key = (Constant.Integer)stackframe.getRegister(code.rightOperand);
+		//Return the value associated with the key.
+		Constant value = list.values.get(key.value.intValue());
+		stackframe.setRegister(code.target, value);
 		
-		msg += " %"+code.leftOperand+" ("+left+") %"+code.rightOperand +" (" +right
-				+") %"+code.target + "("+item+")";	
+		msg += " %"+code.leftOperand +"("+list+") "+
+		       " %"+code.rightOperand +"(" + key +") "+
+		       " %"+code.target + "("+value+")";	
 		
-		System.out.println("#"+linenumber+" ["+code+"]\n>"+msg+"\n");
+		System.out.println("#"+linenumber+" ["+code+"]\n"+msg+"\n");
 		stackframe.setLine(++linenumber);
 	}
 
