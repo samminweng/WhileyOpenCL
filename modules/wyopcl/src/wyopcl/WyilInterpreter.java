@@ -24,6 +24,7 @@ import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.InterpreterAssertOrAssume;
 import wyopcl.interpreter.InterpreterAssign;
 import wyopcl.interpreter.InterpreterBinArithOp;
+import wyopcl.interpreter.InterpreterBinListOp;
 import wyopcl.interpreter.InterpreterConst;
 import wyopcl.interpreter.InterpreterConvert;
 import wyopcl.interpreter.InterpreterFieldLoad;
@@ -177,7 +178,7 @@ public class WyilInterpreter extends Interpreter implements Builder{
 			} else if (code instanceof Code.BinArithOp) {			
 				InterpreterBinArithOp.getInstance().interpret((Code.BinArithOp)code, stackframe);
 			} else if (code instanceof Code.BinListOp) {
-				internalFailure("Not implemented!", filename, entry);
+				InterpreterBinListOp.getInstance().interpret((Code.BinListOp)code, stackframe);
 			} else if (code instanceof Code.BinSetOp) {
 				internalFailure("Not implemented!", filename, entry);
 			} else if (code instanceof Code.BinStringOp) {
