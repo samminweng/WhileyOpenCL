@@ -19,26 +19,24 @@ function sieve(int limit) => int:
 	[bool] nonPrimes = [false, false]
 	for i in 2..limit:
 		nonPrimes = nonPrimes ++ [true]
-	int max = |nonPrimes|
-	int n = sqrt(max)
-	int p = 3	
+	int n = sqrt(limit)
+	int p = 2	
 	//Mark the no-prime numbers.
 	while p <= n:
 		//Find the prime number
 		if nonPrimes[p] == true:		
 			//Increment this prime number.
 			int i = p * p			
-			while i<max:
+			while i<limit:
 				nonPrimes[i]=false
 				i = i + p
-		p = p + 2
+		p = p + 1
 	//Calculate the total number of primes in a list.
-	int numberOfPrimes = 1
-	int i = 3	
-	while i <= max:
+	int numberOfPrimes = 0
+	for i in 2..limit:
 		if nonPrimes[i] == true:
 			numberOfPrimes = numberOfPrimes + 1
-		i = i + 2
+	
 	return numberOfPrimes
 	
 //The total number of primes is shown on the following website: 
