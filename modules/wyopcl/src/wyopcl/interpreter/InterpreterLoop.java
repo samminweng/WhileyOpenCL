@@ -1,6 +1,6 @@
 package wyopcl.interpreter;
 
-import wyil.lang.Code;
+import wyil.lang.Codes;
 import wyil.lang.Constant;
 
 public class InterpreterLoop extends Interpreter {
@@ -17,7 +17,7 @@ public class InterpreterLoop extends Interpreter {
 	}
 	
 	
-	public void interpret(Code.Loop code, StackFrame stackframe) {
+	public void interpret(Codes.Loop code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
 		String label = code.target;
 		//int target = Integer.parseInt(code.target);

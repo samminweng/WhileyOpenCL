@@ -1,7 +1,7 @@
 package wyopcl.interpreter;
 
-import wyil.lang.Code;
-import wyil.lang.CodeBlock;
+import wyil.lang.Codes;
+import wyil.lang.Code.Block;
 import wyil.lang.Constant;
 
 public class InterpreterIf extends Interpreter {
@@ -20,7 +20,7 @@ public class InterpreterIf extends Interpreter {
 	
 	
 
-	public void interpret(Code.If code, StackFrame stackframe) {				
+	public void interpret(Codes.If code, StackFrame stackframe) {				
 		int linenumber = stackframe.getLine();
 		Constant left = stackframe.getRegister(code.leftOperand);
 		Constant right = stackframe.getRegister(code.rightOperand);
@@ -76,7 +76,7 @@ public class InterpreterIf extends Interpreter {
 		
 		if(satisfiable){
 			//Go to the branch
-			CodeBlock block = stackframe.getBlock();
+			Block block = stackframe.getBlock();
 			String label = code.target;
 			linenumber = symboltable.get(block).getBlockPosByLabel(label);
 		}else{

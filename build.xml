@@ -72,7 +72,7 @@
 	<exclude name="wycc/testing/**"/>
       </packageset>
       -->
-      <group title="Whiley Build System (WYBS)" packages="wybs:wyfs.*:wybs.*:wycc.*"/>
+       <group title="Whiley Build System (WYBS)" packages="wybs:wyfs.*:wybs.*:wycc.*"/>
       <group title="Whiley Compiler (WYC)" packages="wyc:wyc.*"/>
       <group title="Whiley Intermediate Language (WYIL)" packages="wyil:wyil.*"/>
       <group title="Whiley-2-Java Compiler (WYJC)" packages="wyjc:wyjc.*:wyjvm.*"/>
@@ -97,7 +97,7 @@
   <mkdir dir="wdk-v${version}"/>
   <copy todir="wdk-v${version}">
     <fileset dir=".">
-      <include name="LICENSE"/>
+    <include name="LICENSE"/>
       <include name="README"/>
       <include name="CONTRIBUTORS"/>
       <include name="build.xml"/>
@@ -117,11 +117,11 @@
       <include name="bin/wycc"/>
       <include name="bin/wycs"/>
       <include name="bin/wyrl"/>
-      <!-- wyopcl -->
-      <include name="bin/wyopcl"/>
       <include name="bin/wy_common.bash"/>
       <include name="lib/*-v${version}.jar"/>
       <include name="lib/jasm-v*.jar"/>
+      <!-- wyopcl -->
+      <include name="bin/wyopcl"/>
     </fileset>
   </copy>
   <tar destfile="dist/wdk-src-v${version}.tar" longfile="gnu">  

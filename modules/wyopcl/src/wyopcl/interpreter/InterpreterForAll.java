@@ -3,8 +3,8 @@ package wyopcl.interpreter;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import wyil.lang.Code;
-import wyil.lang.CodeBlock;
+import wyil.lang.Code.Block;
+import wyil.lang.Codes;
 import wyil.lang.Constant;
 
 
@@ -22,7 +22,7 @@ public class InterpreterForAll extends Interpreter {
 		return instance;
 	}
 
-	public void interpret(Code.ForAll code, StackFrame stackframe) {		
+	public void interpret(Codes.ForAll code, StackFrame stackframe) {		
 		int linenumber = stackframe.getLine();
 		String msg;
 		//Type element = code.type.element(); 
@@ -54,7 +54,7 @@ public class InterpreterForAll extends Interpreter {
 			//Empty the indexoperand
 			stackframe.setRegister(code.indexOperand, null);
 			String label = code.target+"LoopEnd";
-			CodeBlock block = stackframe.getBlock();
+			Block block = stackframe.getBlock();
 			linenumber = symboltable.get(block).getBlockPosByLabel(label);
 			stackframe.setLine(linenumber);
 			return;

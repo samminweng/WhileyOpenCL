@@ -1,6 +1,6 @@
 package wyopcl.interpreter;
 
-import wyil.lang.Code;
+import wyil.lang.Codes;
 import wyopcl.interpreter.Interpreter.StackFrame;
 
 public class InterpreterTryCatch extends Interpreter{
@@ -16,7 +16,7 @@ public class InterpreterTryCatch extends Interpreter{
 		return instance;
 	}
 
-	public void interpret(Code.TryCatch code, StackFrame stackframe) {
+	public void interpret(Codes.TryCatch code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
 		System.out.println("#"+linenumber+" ["+code+"]\n>\n");
 		stackframe.setLine(++linenumber);

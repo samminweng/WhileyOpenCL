@@ -1,6 +1,7 @@
 package wyopcl.interpreter;
 import wyil.lang.Code;
-import wyil.lang.CodeBlock;
+import wyil.lang.Codes;
+
 
 public class InterpreterLoopEnd extends Interpreter {
 	private static InterpreterLoopEnd instance;	
@@ -15,12 +16,12 @@ public class InterpreterLoopEnd extends Interpreter {
 		return instance;
 	}
 	
-	public void interpret(Code.LoopEnd code, StackFrame stackframe) {
+	public void interpret(Codes.LoopEnd code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
 		String label = code.label;	
 		System.out.println("#"+linenumber+" ["+code+"]\n>"
 				 + label +"\n");
-		CodeBlock block = stackframe.getBlock();
+		Code.Block block = stackframe.getBlock();
 		linenumber = symboltable.get(block).getBlockPosByLabel(label);
 		stackframe.setLine(linenumber);
 	}

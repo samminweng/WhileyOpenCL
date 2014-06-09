@@ -1,6 +1,6 @@
 package wyopcl.interpreter;
 
-import wyil.lang.Code;
+import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyil.lang.Type;
 
@@ -18,7 +18,7 @@ public class InterpreterReturn extends Interpreter {
 	}
 
 
-	public void interpret(Code.Return code, StackFrame stackframe) {
+	public void interpret(Codes.Return code, StackFrame stackframe) {
 
 		int linenumber = stackframe.getLine();
 		int return_reg = stackframe.getReturn_reg();

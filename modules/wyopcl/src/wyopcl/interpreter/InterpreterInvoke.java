@@ -2,8 +2,8 @@ package wyopcl.interpreter;
 
 import static wycc.lang.SyntaxError.internalFailure;
 import wycc.lang.NameID;
-import wyil.lang.Code;
-import wyil.lang.CodeBlock;
+import wyil.lang.Codes;
+import wyil.lang.Code.Block;
 import wyil.lang.Constant;
 import wyil.lang.Type.FunctionOrMethod;
 
@@ -21,12 +21,12 @@ public class InterpreterInvoke extends Interpreter {
 		return instance;
 	}
 	
-	public void interpret(Code.Invoke code, StackFrame stackframe) {
+	public void interpret(Codes.Invoke code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
 		String msg = "";
 		
 		//Get the CodeBlock for the corresponding function/method. 
-		CodeBlock blk = blocktable.get(code.name.name());
+		Block blk = blocktable.get(code.name.name());
 		if(blk != null){
 			//Create a new StackFrame
 			StackFrame stackFrame = new StackFrame(blk, 0,

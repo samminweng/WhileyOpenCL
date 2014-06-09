@@ -2,7 +2,7 @@ package wyopcl.interpreter;
 
 import java.util.ArrayList;
 
-import wyil.lang.Code;
+import wyil.lang.Codes;
 import wyil.lang.Constant;
 
 public class InterpreterNewList extends Interpreter {
@@ -19,7 +19,7 @@ public class InterpreterNewList extends Interpreter {
 	}
 	
 
-	public void interpret(Code.NewList code, StackFrame stackframe) {
+	public void interpret(Codes.NewList code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
 		ArrayList<Constant> values = new ArrayList<Constant>();
 		for (int operand : code.operands) {

@@ -1,6 +1,6 @@
 package wyopcl.interpreter;
 
-import wyil.lang.Code;
+import wyil.lang.Codes;
 
 public class InterpreterNop extends Interpreter {
 	private static InterpreterNop instance;	
@@ -16,7 +16,7 @@ public class InterpreterNop extends Interpreter {
 	}
 	
 
-	public void interpret(Code.Nop code, StackFrame stackframe) {		
+	public void interpret(Codes.Nop code, StackFrame stackframe) {		
 		int linenumber = stackframe.getLine();
 		System.out.println("#"+linenumber+" ["+code+"]\n>\n");
 		stackframe.setLine(++linenumber);

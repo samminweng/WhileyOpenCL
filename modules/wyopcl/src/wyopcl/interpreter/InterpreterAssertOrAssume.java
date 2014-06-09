@@ -1,6 +1,6 @@
 package wyopcl.interpreter;
 
-import wyil.lang.Code;
+import wyil.lang.Codes;
 import wyil.lang.Constant;
 
 public class InterpreterAssertOrAssume extends Interpreter {
@@ -17,7 +17,7 @@ public class InterpreterAssertOrAssume extends Interpreter {
 	}
 	
 	
-	public void interpret(Code.AssertOrAssume code, StackFrame stackframe) {				
+	public void interpret(Codes.AssertOrAssume code, StackFrame stackframe) {				
 		
 		int linenumber = stackframe.getLine();
 		Constant left = stackframe.getRegister(code.leftOperand);

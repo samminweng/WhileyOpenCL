@@ -3,6 +3,7 @@ package wyopcl.interpreter;
 import java.util.List;
 
 import wyil.lang.Code;
+import wyil.lang.Codes;
 import wyil.lang.Constant;
 
 public class InterpreterSubList extends Interpreter{
@@ -18,7 +19,7 @@ public class InterpreterSubList extends Interpreter{
 		return instance;
 	}
 	
-	public void interpret(Code.SubList code, StackFrame stackframe) {
+	public void interpret(Codes.SubList code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
 		
 		//Get the list from the operand register (index=0).

@@ -158,13 +158,13 @@ public final class WyilFilePrinter implements Transform<WyilFile> {
 		}
 		out.println("):");							
 
-		CodeBlock precondition = mcase.precondition();
+		Code.Block precondition = mcase.precondition();
 		if(precondition != null) {
 			out.println("requires:");				
 			write(0,precondition,out);
 		}
 		
-		CodeBlock postcondition = mcase.postcondition();
+		Code.Block postcondition = mcase.postcondition();
 		if(postcondition != null) {				
 			out.println("ensures:");				
 			write(0,postcondition,out);
@@ -176,19 +176,20 @@ public final class WyilFilePrinter implements Transform<WyilFile> {
 		}
 	}
 	
-	private void write(int indent, CodeBlock blk, PrintWriter out) {
-		for(CodeBlock.Entry s : blk) {
-			if(s.code instanceof Code.LoopEnd) {				
+	private void write(int indent, Code.Block blk, PrintWriter out) {
+		if(blk == null) { return; }
+		for(Code.Block.Entry s : blk) {			
+			if(s.code instanceof Codes.LoopEnd) {				
 				--indent;
-			} else if(s.code instanceof Code.Label) { 
+			} else if(s.code instanceof Codes.Label) { 
 				write(indent-1,s.code,s.attributes(),out);
 			} else {
 				write(indent,s.code,s.attributes(),out);
 			}
-			if(s.code instanceof Code.Loop) {
-				Code.Loop loop = (Code.Loop) s.code; 
+			if(s.code instanceof Codes.Loop) {
+				Codes.Loop loop = (Codes.Loop) s.code; 
 				indent++;								
-			} else if(s.code instanceof Code.Loop) {
+			} else if(s.code instanceof Codes.Loop) {
 				indent++;
 			}
 		}
@@ -199,8 +200,8 @@ public final class WyilFilePrinter implements Transform<WyilFile> {
 		tabIndent(indent+1,out);
 	
 		// First, write out code	
-		if(c instanceof Code.LoopEnd) {
-			Code.LoopEnd cend = (Code.LoopEnd)c;
+		if(c instanceof Codes.LoopEnd) {
+			Codes.LoopEnd cend = (Codes.LoopEnd)c;
 			if(writeLabels) {
 				line = "end " + cend.label;
 			} else {

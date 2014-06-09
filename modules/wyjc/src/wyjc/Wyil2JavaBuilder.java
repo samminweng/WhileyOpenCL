@@ -43,7 +43,6 @@ import wyfs.lang.Path;
 import wyil.lang.*;
 import wyil.lang.Constant;
 import wyjc.util.WyjcBuildTask;
-import static wyil.lang.CodeBlock.*;
 import jasm.attributes.Code.Handler;
 import jasm.attributes.LineNumberTable;
 import jasm.attributes.SourceFile;
@@ -418,7 +417,7 @@ public class Wyil2JavaBuilder implements Builder {
 			ArrayList<Handler> handlers,
 			ArrayList<LineNumberTable.Entry> lineNumbers) {
 		ArrayList<Bytecode> bytecodes = new ArrayList<Bytecode>();
-		CodeBlock block = mcase.body();
+		Code.Block block = mcase.body();
 		translate(block, block.numSlots(), constants, lambdas, handlers,
 				lineNumbers, bytecodes);
 		return bytecodes;
@@ -434,7 +433,7 @@ public class Wyil2JavaBuilder implements Builder {
 	 * @param bytecodes
 	 *            --- list to insert bytecodes into *
 	 */
-	private void translate(CodeBlock blk, int freeSlot,
+	private void translate(Code.Block blk, int freeSlot,
 			HashMap<JvmConstant, Integer> constants,
 			ArrayList<ClassFile> lambdas,
 			ArrayList<Handler> handlers,
@@ -442,7 +441,7 @@ public class Wyil2JavaBuilder implements Builder {
 			ArrayList<Bytecode> bytecodes) {
 		
 		ArrayList<UnresolvedHandler> unresolvedHandlers = new ArrayList<UnresolvedHandler>();
-		for (Entry s : blk) {
+		for (Code.Block.Entry s : blk) {
 			Attribute.Source loc = s.attribute(Attribute.Source.class);
 			if(loc != null) {				
 				lineNumbers.add(new LineNumberTable.Entry(bytecodes.size(),loc.line));
@@ -474,95 +473,95 @@ public class Wyil2JavaBuilder implements Builder {
 		// here, we need to resolve the handlers.
 	}
 	
-	private int translate(Entry entry, int freeSlot,
+	private int translate(Code.Block.Entry entry, int freeSlot,
 			HashMap<JvmConstant, Integer> constants,
 			ArrayList<ClassFile> lambdas,
 			ArrayList<UnresolvedHandler> handlers, 
 			ArrayList<Bytecode> bytecodes) {
 		try {
 			Code code = entry.code;
-			if(code instanceof Code.BinArithOp) {
-				 translate((Code.BinArithOp)code,entry,freeSlot,bytecodes);
-			} else if(code instanceof Code.Convert) {
-				 translate((Code.Convert)code,freeSlot,constants,bytecodes);
-			} else if(code instanceof Code.Const) {
-				translate((Code.Const) code, freeSlot, constants, lambdas, bytecodes);
-			} else if(code instanceof Code.Debug) {
-				 translate((Code.Debug)code,freeSlot,bytecodes);
-			} else if(code instanceof Code.LoopEnd) {
-				 translate((Code.LoopEnd)code,freeSlot,bytecodes);
-			} else if(code instanceof Code.AssertOrAssume) {
-				 translate((Code.AssertOrAssume)code,entry,freeSlot,bytecodes);
-			} else if(code instanceof Code.FieldLoad) {
-				 translate((Code.FieldLoad)code,freeSlot,bytecodes);
-			} else if(code instanceof Code.ForAll) {
-				 freeSlot = translate((Code.ForAll)code,freeSlot,bytecodes);
-			} else if(code instanceof Code.Goto) {
-				 translate((Code.Goto)code,freeSlot,bytecodes);
-			} else if(code instanceof Code.If) {				
-				translateIfGoto((Code.If) code, entry, freeSlot, bytecodes);
-			} else if(code instanceof Code.IfIs) {
-				translate((Code.IfIs) code, entry, freeSlot, constants, bytecodes);
-			} else if(code instanceof Code.IndirectInvoke) {
-				 translate((Code.IndirectInvoke)code,freeSlot,bytecodes);
-			} else if(code instanceof Code.Invoke) {
-				 translate((Code.Invoke)code,freeSlot,bytecodes);
-			} else if(code instanceof Code.Invert) {
-				 translate((Code.Invert)code,freeSlot,bytecodes);
-			} else if(code instanceof Code.Label) {
-				translate((Code.Label)code,freeSlot,bytecodes);
-			} else if(code instanceof Code.BinListOp) {
-				 translate((Code.BinListOp)code,entry,freeSlot,bytecodes);
-			} else if(code instanceof Code.Lambda) {
-				 translate((Code.Lambda)code,freeSlot,lambdas,bytecodes);
-			} else if(code instanceof Code.LengthOf) {
-				 translate((Code.LengthOf)code,entry,freeSlot,bytecodes);
-			} else if(code instanceof Code.SubList) {
-				 translate((Code.SubList)code,entry,freeSlot,bytecodes);
-			} else if(code instanceof Code.IndexOf) {
-				 translate((Code.IndexOf)code,freeSlot,bytecodes);
-			} else if(code instanceof Code.Assign) {
-				 translate((Code.Assign)code,freeSlot,bytecodes);
-			} else if(code instanceof Code.Loop) {
-				 translate((Code.Loop)code,freeSlot,bytecodes);
-			} else if(code instanceof Code.Move) {
-				 translate((Code.Move)code,freeSlot,bytecodes);
-			} else if(code instanceof Code.Update) {
-				 translate((Code.Update)code,freeSlot,bytecodes);
-			} else if(code instanceof Code.NewMap) {
-				 translate((Code.NewMap)code,freeSlot,bytecodes);
-			} else if(code instanceof Code.NewList) {
-				 translate((Code.NewList)code,freeSlot,bytecodes);
-			} else if(code instanceof Code.NewRecord) {
-				 translate((Code.NewRecord)code,freeSlot,bytecodes);
-			} else if(code instanceof Code.NewSet) {
-				 translate((Code.NewSet)code,freeSlot,bytecodes);
-			} else if(code instanceof Code.NewTuple) {
-				 translate((Code.NewTuple)code,freeSlot,bytecodes);
-			} else if(code instanceof Code.UnArithOp) {
-				 translate((Code.UnArithOp)code,freeSlot,bytecodes);
-			} else if(code instanceof Code.Dereference) {
-				 translate((Code.Dereference)code,freeSlot,bytecodes);
-			} else if(code instanceof Code.Return) {
-				 translate((Code.Return)code,freeSlot,bytecodes);
-			} else if(code instanceof Code.Nop) {
+			if(code instanceof Codes.BinaryOperator) {
+				 translate((Codes.BinaryOperator)code,entry,freeSlot,bytecodes);
+			} else if(code instanceof Codes.Convert) {
+				 translate((Codes.Convert)code,freeSlot,constants,bytecodes);
+			} else if(code instanceof Codes.Const) {
+				translate((Codes.Const) code, freeSlot, constants, lambdas, bytecodes);
+			} else if(code instanceof Codes.Debug) {
+				 translate((Codes.Debug)code,freeSlot,bytecodes);
+			} else if(code instanceof Codes.LoopEnd) {
+				 translate((Codes.LoopEnd)code,freeSlot,bytecodes);
+			} else if(code instanceof Codes.AssertOrAssume) {
+				 translate((Codes.AssertOrAssume)code,entry,freeSlot,bytecodes);
+			} else if(code instanceof Codes.FieldLoad) {
+				 translate((Codes.FieldLoad)code,freeSlot,bytecodes);
+			} else if(code instanceof Codes.ForAll) {
+				 freeSlot = translate((Codes.ForAll)code,freeSlot,bytecodes);
+			} else if(code instanceof Codes.Goto) {
+				 translate((Codes.Goto)code,freeSlot,bytecodes);
+			} else if(code instanceof Codes.If) {				
+				translateIfGoto((Codes.If) code, entry, freeSlot, bytecodes);
+			} else if(code instanceof Codes.IfIs) {
+				translate((Codes.IfIs) code, entry, freeSlot, constants, bytecodes);
+			} else if(code instanceof Codes.IndirectInvoke) {
+				 translate((Codes.IndirectInvoke)code,freeSlot,bytecodes);
+			} else if(code instanceof Codes.Invoke) {
+				 translate((Codes.Invoke)code,freeSlot,bytecodes);
+			} else if(code instanceof Codes.Invert) {
+				 translate((Codes.Invert)code,freeSlot,bytecodes);
+			} else if(code instanceof Codes.Label) {
+				translate((Codes.Label)code,freeSlot,bytecodes);
+			} else if(code instanceof Codes.ListOperator) {
+				 translate((Codes.ListOperator)code,entry,freeSlot,bytecodes);
+			} else if(code instanceof Codes.Lambda) {
+				 translate((Codes.Lambda)code,freeSlot,lambdas,bytecodes);
+			} else if(code instanceof Codes.LengthOf) {
+				 translate((Codes.LengthOf)code,entry,freeSlot,bytecodes);
+			} else if(code instanceof Codes.SubList) {
+				 translate((Codes.SubList)code,entry,freeSlot,bytecodes);
+			} else if(code instanceof Codes.IndexOf) {
+				 translate((Codes.IndexOf)code,freeSlot,bytecodes);
+			} else if(code instanceof Codes.Assign) {
+				 translate((Codes.Assign)code,freeSlot,bytecodes);
+			} else if(code instanceof Codes.Loop) {
+				 translate((Codes.Loop)code,freeSlot,bytecodes);
+			} else if(code instanceof Codes.Move) {
+				 translate((Codes.Move)code,freeSlot,bytecodes);
+			} else if(code instanceof Codes.Update) {
+				 translate((Codes.Update)code,freeSlot,bytecodes);
+			} else if(code instanceof Codes.NewMap) {
+				 translate((Codes.NewMap)code,freeSlot,bytecodes);
+			} else if(code instanceof Codes.NewList) {
+				 translate((Codes.NewList)code,freeSlot,bytecodes);
+			} else if(code instanceof Codes.NewRecord) {
+				 translate((Codes.NewRecord)code,freeSlot,bytecodes);
+			} else if(code instanceof Codes.NewSet) {
+				 translate((Codes.NewSet)code,freeSlot,bytecodes);
+			} else if(code instanceof Codes.NewTuple) {
+				 translate((Codes.NewTuple)code,freeSlot,bytecodes);
+			} else if(code instanceof Codes.UnaryOperator) {
+				 translate((Codes.UnaryOperator)code,freeSlot,bytecodes);
+			} else if(code instanceof Codes.Dereference) {
+				 translate((Codes.Dereference)code,freeSlot,bytecodes);
+			} else if(code instanceof Codes.Return) {
+				 translate((Codes.Return)code,freeSlot,bytecodes);
+			} else if(code instanceof Codes.Nop) {
 				// do nothing
-			} else if(code instanceof Code.BinSetOp) {
-				 translate((Code.BinSetOp)code,entry,freeSlot,bytecodes);
-			} else if(code instanceof Code.BinStringOp) {
-				 translate((Code.BinStringOp)code,entry,freeSlot,bytecodes);
-			} else if(code instanceof Code.SubString) {
-				 translate((Code.SubString)code,entry,freeSlot,bytecodes);
-			} else if(code instanceof Code.Switch) {
-				 translate((Code.Switch)code,entry,freeSlot,lambdas,bytecodes);
-			} else if(code instanceof Code.TryCatch) {
-				 translate((Code.TryCatch)code,entry,freeSlot,handlers,constants,bytecodes);
-			} else if(code instanceof Code.NewObject) {
-				 translate((Code.NewObject)code,freeSlot,bytecodes);
-			} else if(code instanceof Code.Throw) {
-				 translate((Code.Throw)code,freeSlot,bytecodes);
-			} else if(code instanceof Code.TupleLoad) {
-				 translate((Code.TupleLoad)code,freeSlot,bytecodes);
+			} else if(code instanceof Codes.SetOperator) {
+				 translate((Codes.SetOperator)code,entry,freeSlot,bytecodes);
+			} else if(code instanceof Codes.StringOperator) {
+				 translate((Codes.StringOperator)code,entry,freeSlot,bytecodes);
+			} else if(code instanceof Codes.SubString) {
+				 translate((Codes.SubString)code,entry,freeSlot,bytecodes);
+			} else if(code instanceof Codes.Switch) {
+				 translate((Codes.Switch)code,entry,freeSlot,lambdas,bytecodes);
+			} else if(code instanceof Codes.TryCatch) {
+				 translate((Codes.TryCatch)code,entry,freeSlot,handlers,constants,bytecodes);
+			} else if(code instanceof Codes.NewObject) {
+				 translate((Codes.NewObject)code,freeSlot,bytecodes);
+			} else if(code instanceof Codes.Throw) {
+				 translate((Codes.Throw)code,freeSlot,bytecodes);
+			} else if(code instanceof Codes.TupleLoad) {
+				 translate((Codes.TupleLoad)code,freeSlot,bytecodes);
 			} else {
 				internalFailure("unknown wyil code encountered (" + code + ")", filename, entry);
 			}
@@ -576,7 +575,7 @@ public class Wyil2JavaBuilder implements Builder {
 		return freeSlot;
 	}
 	
-	private void translate(Code.Const c, int freeSlot, HashMap<JvmConstant,Integer> constants,	
+	private void translate(Codes.Const c, int freeSlot, HashMap<JvmConstant,Integer> constants,	
 			ArrayList<ClassFile> lambdas, ArrayList<Bytecode> bytecodes) {
 		Constant constant = c.constant;
 		JvmType jt = convertType(constant.type());
@@ -595,14 +594,14 @@ public class Wyil2JavaBuilder implements Builder {
 		bytecodes.add(new Bytecode.Store(c.target, jt));
 	}
 	
-	private void translate(Code.Convert c, int freeSlot,
+	private void translate(Codes.Convert c, int freeSlot,
 			HashMap<JvmConstant, Integer> constants, ArrayList<Bytecode> bytecodes) {
 		bytecodes.add(new Bytecode.Load(c.operand, convertType(c.type)));
 		addCoercion(c.type, c.result, freeSlot, constants, bytecodes);
 		bytecodes.add(new Bytecode.Store(c.target, convertType(c.result)));
 	}
 	
-	private void translate(Code.Update code, int freeSlot,
+	private void translate(Codes.Update code, int freeSlot,
 			ArrayList<Bytecode> bytecodes) {
 		bytecodes.add(new Bytecode.Load(code.target, convertType(code.type)));
 		translateUpdate(code.iterator(), code, bytecodes);
@@ -621,11 +620,11 @@ public class Wyil2JavaBuilder implements Builder {
 	 * @param bytecodes
 	 *            --- list of bytecodes to append to.
 	 */
-	private void translateUpdate(Iterator<Code.LVal> iterator, Code.Update code,
+	private void translateUpdate(Iterator<Codes.LVal> iterator, Codes.Update code,
 			ArrayList<Bytecode> bytecodes) {
-		Code.LVal lv = iterator.next();
-		if(lv instanceof Code.ListLVal) {
-			Code.ListLVal l = (Code.ListLVal) lv;
+		Codes.LVal lv = iterator.next();
+		if(lv instanceof Codes.ListLVal) {
+			Codes.ListLVal l = (Codes.ListLVal) lv;
 			if(iterator.hasNext()) {
 				// In this case, we're partially updating the element at a
 				// given position. 
@@ -641,7 +640,7 @@ public class Wyil2JavaBuilder implements Builder {
 				bytecodes.add(new Bytecode.Swap());
 			} else {
 				bytecodes.add(new Bytecode.Load(l.indexOperand,WHILEYINT));
-				bytecodes.add(new Bytecode.Load(code.operand, convertType(l
+				bytecodes.add(new Bytecode.Load(code.result(), convertType(l
 						.rawType().element())));	
 				addWriteConversion(code.rhs(),bytecodes);
 			}
@@ -651,18 +650,18 @@ public class Wyil2JavaBuilder implements Builder {
 			bytecodes.add(new Bytecode.Invoke(WHILEYLIST, "set", ftype,
 					Bytecode.InvokeMode.STATIC));	
 
-		} else if(lv instanceof Code.StringLVal) {
-			Code.StringLVal l = (Code.StringLVal) lv;
+		} else if(lv instanceof Codes.StringLVal) {
+			Codes.StringLVal l = (Codes.StringLVal) lv;
 			// assert: level must be zero here
 			bytecodes.add(new Bytecode.Load(l.indexOperand, WHILEYINT));
-			bytecodes.add(new Bytecode.Load(code.operand, T_CHAR));
+			bytecodes.add(new Bytecode.Load(code.result(), T_CHAR));
 
 			JvmType.Function ftype = new JvmType.Function(JAVA_LANG_STRING,
 					JAVA_LANG_STRING, WHILEYINT, T_CHAR);
 			bytecodes.add(new Bytecode.Invoke(WHILEYUTIL, "set", ftype,
 					Bytecode.InvokeMode.STATIC));
-		} else if(lv instanceof Code.MapLVal) {
-			Code.MapLVal l = (Code.MapLVal) lv;
+		} else if(lv instanceof Codes.MapLVal) {
+			Codes.MapLVal l = (Codes.MapLVal) lv;
 			JvmType keyType = convertType(l.rawType().key());
 			JvmType valueType = convertType(l.rawType().value());
 			if(iterator.hasNext()) {
@@ -683,7 +682,7 @@ public class Wyil2JavaBuilder implements Builder {
 			} else {				
 				bytecodes.add(new Bytecode.Load(l.keyOperand,keyType));	
 				addWriteConversion(l.rawType().key(),bytecodes);		
-				bytecodes.add(new Bytecode.Load(code.operand, valueType));	
+				bytecodes.add(new Bytecode.Load(code.result(), valueType));	
 				addWriteConversion(l.rawType().value(),bytecodes);
 			}
 						
@@ -692,8 +691,8 @@ public class Wyil2JavaBuilder implements Builder {
 			bytecodes.add(new Bytecode.Invoke(WHILEYMAP, "put", ftype,
 					Bytecode.InvokeMode.STATIC));			
 				
-		} else if(lv instanceof Code.RecordLVal) {
-			Code.RecordLVal l = (Code.RecordLVal) lv;
+		} else if(lv instanceof Codes.RecordLVal) {
+			Codes.RecordLVal l = (Codes.RecordLVal) lv;
 			Type.EffectiveRecord type = l.rawType();
 			
 			if (iterator.hasNext()) {
@@ -709,7 +708,7 @@ public class Wyil2JavaBuilder implements Builder {
 				bytecodes.add(new Bytecode.Swap());
 			} else {
 				bytecodes.add(new Bytecode.LoadConst(l.field));
-				bytecodes.add(new Bytecode.Load(code.operand, convertType(type
+				bytecodes.add(new Bytecode.Load(code.result(), convertType(type
 						.field(l.field))));
 				addWriteConversion(type.field(l.field), bytecodes);
 			}
@@ -717,7 +716,7 @@ public class Wyil2JavaBuilder implements Builder {
 			JvmType.Function ftype = new JvmType.Function(WHILEYRECORD,WHILEYRECORD,JAVA_LANG_STRING,JAVA_LANG_OBJECT);						
 			bytecodes.add(new Bytecode.Invoke(WHILEYRECORD,"put",ftype,Bytecode.InvokeMode.STATIC));	
 		} else {
-			Code.ReferenceLVal l = (Code.ReferenceLVal) lv;
+			Codes.ReferenceLVal l = (Codes.ReferenceLVal) lv;
 			bytecodes.add(new Bytecode.Dup(WHILEYOBJECT));
 			JvmType.Function ftype = new JvmType.Function(JAVA_LANG_OBJECT);
 			bytecodes.add(new Bytecode.Invoke(WHILEYOBJECT, "state", ftype,
@@ -730,7 +729,7 @@ public class Wyil2JavaBuilder implements Builder {
 		}
 	}
 	
-	private void translate(Code.Return c, int freeSlot,
+	private void translate(Codes.Return c, int freeSlot,
 			ArrayList<Bytecode> bytecodes) {
 		if (c.type == Type.T_VOID) {
 			bytecodes.add(new Bytecode.Return(null));
@@ -741,7 +740,7 @@ public class Wyil2JavaBuilder implements Builder {
 		}
 	}
 
-	private void translate(Code.Throw c, int freeSlot,
+	private void translate(Codes.Throw c, int freeSlot,
 			ArrayList<Bytecode> bytecodes) {			
 		bytecodes.add(new Bytecode.New(WHILEYEXCEPTION));
 		bytecodes.add(new Bytecode.Dup(WHILEYEXCEPTION));
@@ -752,7 +751,7 @@ public class Wyil2JavaBuilder implements Builder {
 		bytecodes.add(new Bytecode.Throw());
 	}
 	
-	private void translate(Code.TupleLoad c, int freeSlot,
+	private void translate(Codes.TupleLoad c, int freeSlot,
 			ArrayList<Bytecode> bytecodes) {
 		JvmType.Function ftype = new JvmType.Function(JAVA_LANG_OBJECT,
 				WHILEYTUPLE, T_INT);
@@ -765,7 +764,7 @@ public class Wyil2JavaBuilder implements Builder {
 				.element(c.index))));
 	}
 	
-	private void translate(Code.Switch c, CodeBlock.Entry entry, int freeSlot,
+	private void translate(Codes.Switch c, Code.Block.Entry entry, int freeSlot,
 			ArrayList<ClassFile> lambdas, ArrayList<Bytecode> bytecodes) {
 
 		ArrayList<jasm.util.Pair<Integer, String>> cases = new ArrayList();
@@ -803,14 +802,14 @@ public class Wyil2JavaBuilder implements Builder {
 				translate(value, freeSlot, lambdas, bytecodes);
 				bytecodes
 						.add(new Bytecode.Load(c.operand, convertType(c.type)));				
-				translateIfGoto(value.type(), Code.Comparator.EQ, target, entry,
+				translateIfGoto(value.type(), Codes.Comparator.EQ, target, entry,
 						freeSlot + 1, bytecodes);
 			}
 			bytecodes.add(new Bytecode.Goto(c.defaultTarget));
 		}
 	}
 
-	private void translate(Code.TryCatch c, CodeBlock.Entry entry, int freeSlot,
+	private void translate(Codes.TryCatch c, Code.Block.Entry entry, int freeSlot,
 			ArrayList<UnresolvedHandler> handlers,
 			HashMap<JvmConstant, Integer> constants, ArrayList<Bytecode> bytecodes) {
 		
@@ -854,7 +853,7 @@ public class Wyil2JavaBuilder implements Builder {
 		handlers.add(trampolineHandler);
 	}
 	
-	private void translateIfGoto(Code.If code, Entry stmt, int freeSlot,
+	private void translateIfGoto(Codes.If code, Code.Block.Entry stmt, int freeSlot,
 			ArrayList<Bytecode> bytecodes) {	
 		JvmType jt = convertType(code.type);
 		bytecodes.add(new Bytecode.Load(code.leftOperand,jt));
@@ -862,7 +861,7 @@ public class Wyil2JavaBuilder implements Builder {
 		translateIfGoto(code.type,code.op,code.target,stmt,freeSlot,bytecodes);
 	}
 	
-	private void translateIfGoto(Type c_type, Code.Comparator cop, String target, Entry stmt, int freeSlot,
+	private void translateIfGoto(Type c_type, Codes.Comparator cop, String target, Code.Block.Entry stmt, int freeSlot,
 			ArrayList<Bytecode> bytecodes) {	
 				
 		JvmType type = convertType(c_type);
@@ -1016,7 +1015,7 @@ public class Wyil2JavaBuilder implements Builder {
 		}
 	}
 	
-	private void translate(Code.IfIs c, Entry stmt, int freeSlot,
+	private void translate(Codes.IfIs c, Code.Block.Entry stmt, int freeSlot,
 			HashMap<JvmConstant,Integer> constants, ArrayList<Bytecode> bytecodes) {						
 		
 		// In this case, we're updating the type of a local variable. To
@@ -1086,18 +1085,18 @@ public class Wyil2JavaBuilder implements Builder {
 		}
 	}	
 
-	private void translate(Code.Loop c, int freeSlot,
+	private void translate(Codes.Loop c, int freeSlot,
 			ArrayList<Bytecode> bytecodes) {
 		bytecodes.add(new Bytecode.Label(c.target + "$head"));
 	}
 	
-	protected void translate(Code.LoopEnd end,			
+	protected void translate(Codes.LoopEnd end,			
 			int freeSlot, ArrayList<Bytecode> bytecodes) {
 		bytecodes.add(new Bytecode.Goto(end.label + "$head"));
 		bytecodes.add(new Bytecode.Label(end.label));
 	}
 	
-	private int translate(Code.ForAll c, int freeSlot,
+	private int translate(Codes.ForAll c, int freeSlot,
 			ArrayList<Bytecode> bytecodes) {	
 		
 		Type elementType = c.type.element();		
@@ -1126,16 +1125,16 @@ public class Wyil2JavaBuilder implements Builder {
 		return freeSlot + 1;
 	}
 	
-	private void translate(Code.Goto c, int freeSlot,
+	private void translate(Codes.Goto c, int freeSlot,
 			ArrayList<Bytecode> bytecodes) {
 		bytecodes.add(new Bytecode.Goto(c.target));
 	}
-	private void translate(Code.Label c, int freeSlot,
+	private void translate(Codes.Label c, int freeSlot,
 			ArrayList<Bytecode> bytecodes) {
 		bytecodes.add(new Bytecode.Label(c.label));
 	}
 	
-	private void translate(Code.Debug c, int freeSlot,
+	private void translate(Codes.Debug c, int freeSlot,
 			ArrayList<Bytecode> bytecodes) {
 		JvmType.Function ftype = new JvmType.Function(T_VOID,JAVA_LANG_STRING);
 		bytecodes.add(new Bytecode.Load(c.operand, JAVA_LANG_STRING));
@@ -1143,7 +1142,7 @@ public class Wyil2JavaBuilder implements Builder {
 				Bytecode.InvokeMode.STATIC));
 	}
 	
-	private void translate(Code.AssertOrAssume c, CodeBlock.Entry entry, int freeSlot,
+	private void translate(Codes.AssertOrAssume c, Code.Block.Entry entry, int freeSlot,
 			ArrayList<Bytecode> bytecodes) {
 		String lab = freshLabel();
 		JvmType jt = convertType(c.type);
@@ -1160,20 +1159,20 @@ public class Wyil2JavaBuilder implements Builder {
 		bytecodes.add(new Bytecode.Label(lab));
 	}
 	
-	private void translate(Code.Assign c, int freeSlot, ArrayList<Bytecode> bytecodes) {
+	private void translate(Codes.Assign c, int freeSlot, ArrayList<Bytecode> bytecodes) {
 		JvmType jt = convertType(c.type);
 		bytecodes.add(new Bytecode.Load(c.operand, jt));
 		addIncRefs(c.type,bytecodes);
 		bytecodes.add(new Bytecode.Store(c.target, jt));
 	}
 	
-	private void translate(Code.Move c, int freeSlot, ArrayList<Bytecode> bytecodes) {
+	private void translate(Codes.Move c, int freeSlot, ArrayList<Bytecode> bytecodes) {
 		JvmType jt = convertType(c.type);
 		bytecodes.add(new Bytecode.Load(c.operand, jt));
 		bytecodes.add(new Bytecode.Store(c.target, jt));
 	}
 		
-	private void translate(Code.BinListOp c, Entry stmt, int freeSlot,
+	private void translate(Codes.ListOperator c, Code.Block.Entry stmt, int freeSlot,
 			ArrayList<Bytecode> bytecodes) {						
 		JvmType leftType;
 		JvmType rightType;
@@ -1210,7 +1209,7 @@ public class Wyil2JavaBuilder implements Builder {
 		bytecodes.add(new Bytecode.Store(c.target, WHILEYLIST));
 	}
 	
-	private void translate(Code.LengthOf c, Entry stmt, int freeSlot,
+	private void translate(Codes.LengthOf c, Code.Block.Entry stmt, int freeSlot,
 			ArrayList<Bytecode> bytecodes) {
 		bytecodes.add(new Bytecode.Load(c.operand, convertType((Type) c.type)));
 		JvmType.Clazz ctype = JAVA_LANG_OBJECT;
@@ -1220,7 +1219,7 @@ public class Wyil2JavaBuilder implements Builder {
 		bytecodes.add(new Bytecode.Store(c.target, WHILEYINT));
 	}
 	
-	private void translate(Code.SubList c, Entry stmt, int freeSlot,
+	private void translate(Codes.SubList c, Code.Block.Entry stmt, int freeSlot,
 			ArrayList<Bytecode> bytecodes) {
 		bytecodes.add(new Bytecode.Load(c.operands[0], WHILEYLIST));
 		bytecodes.add(new Bytecode.Load(c.operands[1], WHILEYINT));
@@ -1234,7 +1233,7 @@ public class Wyil2JavaBuilder implements Builder {
 		bytecodes.add(new Bytecode.Store(c.target, WHILEYLIST));
 	}	
 	
-	private void translate(Code.IndexOf c, int freeSlot,
+	private void translate(Codes.IndexOf c, int freeSlot,
 			ArrayList<Bytecode> bytecodes) {
 		
 		bytecodes.add(new Bytecode.Load(c.leftOperand, WHILEYLIST));
@@ -1250,7 +1249,7 @@ public class Wyil2JavaBuilder implements Builder {
 				convertType(c.type.element())));
 	}
 	
-	private void translate(Code.FieldLoad c, int freeSlot,
+	private void translate(Codes.FieldLoad c, int freeSlot,
 			ArrayList<Bytecode> bytecodes) {
 		
 		bytecodes.add(new Bytecode.Load(c.operand, WHILEYRECORD));
@@ -1263,7 +1262,7 @@ public class Wyil2JavaBuilder implements Builder {
 		bytecodes.add(new Bytecode.Store(c.target, convertType(c.fieldType())));
 	}
 
-	private void translate(Code.BinArithOp c, CodeBlock.Entry stmt, int freeSlot,
+	private void translate(Codes.BinaryOperator c, Code.Block.Entry stmt, int freeSlot,
 			ArrayList<Bytecode> bytecodes) {				
 						
 		JvmType type = convertType(c.type);
@@ -1346,7 +1345,7 @@ public class Wyil2JavaBuilder implements Builder {
 		bytecodes.add(new Bytecode.Store(c.target, type));
 	}
 
-	private void translate(Code.BinSetOp c, Entry stmt, int freeSlot,
+	private void translate(Codes.SetOperator c, Code.Block.Entry stmt, int freeSlot,
 			ArrayList<Bytecode> bytecodes) {		
 		
 		JvmType leftType;
@@ -1414,7 +1413,7 @@ public class Wyil2JavaBuilder implements Builder {
 		bytecodes.add(new Bytecode.Store(c.target, WHILEYSET));
 	}	
 		
-	private void translate(Code.BinStringOp c, Entry stmt, int freeSlot,
+	private void translate(Codes.StringOperator c, Code.Block.Entry stmt, int freeSlot,
 			ArrayList<Bytecode> bytecodes) {						
 		JvmType leftType;
 		JvmType rightType;
@@ -1447,7 +1446,7 @@ public class Wyil2JavaBuilder implements Builder {
 		bytecodes.add(new Bytecode.Store(c.target, JAVA_LANG_STRING));
 	}
 		
-	private void translate(Code.SubString c, Entry stmt, int freeSlot,
+	private void translate(Codes.SubString c, Code.Block.Entry stmt, int freeSlot,
 			ArrayList<Bytecode> bytecodes) {					
 		bytecodes.add(new Bytecode.Load(c.operands[0], JAVA_LANG_STRING));
 		bytecodes.add(new Bytecode.Load(c.operands[1], WHILEYINT));
@@ -1462,7 +1461,7 @@ public class Wyil2JavaBuilder implements Builder {
 		bytecodes.add(new Bytecode.Store(c.target, JAVA_LANG_STRING));
 	}	
 	
-	private void translate(Code.Invert c, int freeSlot,
+	private void translate(Codes.Invert c, int freeSlot,
 			ArrayList<Bytecode> bytecodes) {
 		JvmType type = convertType(c.type);
 		bytecodes.add(new Bytecode.Load(c.operand, type));
@@ -1471,7 +1470,7 @@ public class Wyil2JavaBuilder implements Builder {
 		bytecodes.add(new Bytecode.Store(c.target, type));
 	}
 	
-	private void translate(Code.UnArithOp c, int freeSlot,
+	private void translate(Codes.UnaryOperator c, int freeSlot,
 			ArrayList<Bytecode> bytecodes) {										
 		JvmType srcType = convertType(c.type);
 		JvmType targetType = null;
@@ -1497,7 +1496,7 @@ public class Wyil2JavaBuilder implements Builder {
 		bytecodes.add(new Bytecode.Store(c.target, targetType));
 	}
 	
-	private void translate(Code.NewObject c, int freeSlot,
+	private void translate(Codes.NewObject c, int freeSlot,
 			ArrayList<Bytecode> bytecodes) {			
 		JvmType type = convertType(c.type);		
 		bytecodes.add(new Bytecode.New(WHILEYOBJECT));			
@@ -1510,7 +1509,7 @@ public class Wyil2JavaBuilder implements Builder {
 		bytecodes.add(new Bytecode.Store(c.target, type));
 	}
 	
-	private void translate(Code.Dereference c, int freeSlot,
+	private void translate(Codes.Dereference c, int freeSlot,
 			ArrayList<Bytecode> bytecodes) {
 		JvmType type = convertType(c.type);
 		JvmType.Function ftype = new JvmType.Function(JAVA_LANG_OBJECT);		
@@ -1523,7 +1522,7 @@ public class Wyil2JavaBuilder implements Builder {
 		bytecodes.add(new Bytecode.Store(c.target, convertType(c.type.element())));
 	}
 	
-	protected void translate(Code.NewList c, int freeSlot, ArrayList<Bytecode> bytecodes) {
+	protected void translate(Codes.NewList c, int freeSlot, ArrayList<Bytecode> bytecodes) {
 		bytecodes.add(new Bytecode.New(WHILEYLIST));		
 		bytecodes.add(new Bytecode.Dup(WHILEYLIST));
 		bytecodes.add(new Bytecode.LoadConst(c.operands.length));
@@ -1543,7 +1542,7 @@ public class Wyil2JavaBuilder implements Builder {
 		bytecodes.add(new Bytecode.Store(c.target, WHILEYLIST));
 	}
 		
-	protected void translate(Code.NewMap c, int freeSlot,
+	protected void translate(Codes.NewMap c, int freeSlot,
 			ArrayList<Bytecode> bytecodes) {
 		
 		construct(WHILEYMAP, freeSlot, bytecodes);
@@ -1566,7 +1565,7 @@ public class Wyil2JavaBuilder implements Builder {
 		bytecodes.add(new Bytecode.Store(c.target, WHILEYMAP));		
 	}
 	
-	private void translate(Code.NewRecord code, int freeSlot,
+	private void translate(Codes.NewRecord code, int freeSlot,
 			ArrayList<Bytecode> bytecodes) {
 		construct(WHILEYRECORD, freeSlot, bytecodes);				
 		JvmType.Function ftype = new JvmType.Function(JAVA_LANG_OBJECT,
@@ -1590,7 +1589,7 @@ public class Wyil2JavaBuilder implements Builder {
 		bytecodes.add(new Bytecode.Store(code.target, WHILEYRECORD));
 	}
 	
-	protected void translate(Code.NewSet c, int freeSlot, ArrayList<Bytecode> bytecodes) {
+	protected void translate(Codes.NewSet c, int freeSlot, ArrayList<Bytecode> bytecodes) {
 		construct(WHILEYSET, freeSlot, bytecodes);		
 		JvmType.Function ftype = new JvmType.Function(WHILEYSET,
 				WHILEYSET,JAVA_LANG_OBJECT);
@@ -1605,7 +1604,7 @@ public class Wyil2JavaBuilder implements Builder {
 		bytecodes.add(new Bytecode.Store(c.target, WHILEYSET));
 	}
 	
-	protected void translate(Code.NewTuple c, int freeSlot, ArrayList<Bytecode> bytecodes) {
+	protected void translate(Codes.NewTuple c, int freeSlot, ArrayList<Bytecode> bytecodes) {
 		bytecodes.add(new Bytecode.New(WHILEYTUPLE ));		
 		bytecodes.add(new Bytecode.Dup(WHILEYTUPLE ));
 		bytecodes.add(new Bytecode.LoadConst(c.operands.length));
@@ -1625,7 +1624,7 @@ public class Wyil2JavaBuilder implements Builder {
 		bytecodes.add(new Bytecode.Store(c.target, WHILEYTUPLE));		
 	}
 	
-	private void translate(Code.Lambda c, int freeSlot,
+	private void translate(Codes.Lambda c, int freeSlot,
 			ArrayList<ClassFile> lambdas,
 			ArrayList<Bytecode> bytecodes) {
 		
@@ -1651,7 +1650,7 @@ public class Wyil2JavaBuilder implements Builder {
 		boolean hasBinding = false;
 		
 		for(int operand : c.operands) {
-			if(operand != Code.NULL_REG) {
+			if(operand != Codes.NULL_REG) {
 				hasBinding = true;
 				break;
 			}
@@ -1667,7 +1666,7 @@ public class Wyil2JavaBuilder implements Builder {
 				bytecodes.add(new Bytecode.LoadConst(i));
 				int operand = c.operands[i];
 
-				if (operand != Code.NULL_REG) {
+				if (operand != Codes.NULL_REG) {
 					Type pt = c.type.params().get(i);
 					bytecodes.add(new Bytecode.Load(operand, convertType(pt)));
 					addWriteConversion(pt, bytecodes);
@@ -1691,7 +1690,7 @@ public class Wyil2JavaBuilder implements Builder {
 		bytecodes.add(new Bytecode.Store(c.target, clazz));
 	}
 	
-	private void translate(Code.Invoke c, int freeSlot,
+	private void translate(Codes.Invoke c, int freeSlot,
 			ArrayList<Bytecode> bytecodes) {
 		
 		for (int i = 0; i != c.operands.length; ++i) {
@@ -1710,24 +1709,25 @@ public class Wyil2JavaBuilder implements Builder {
 
 		// now, handle the case of an invoke which returns a value that should
 		// be discarded. 
-		if(c.target != Code.NULL_REG){
+		if(c.target != Codes.NULL_REG){
 			bytecodes.add(new Bytecode.Store(c.target, convertType(c.type.ret())));
-		} else if(c.target == Code.NULL_REG && c.type.ret() != Type.T_VOID) {
+		} else if(c.target == Codes.NULL_REG && c.type.ret() != Type.T_VOID) {
 			bytecodes.add(new Bytecode.Pop(convertType(c.type.ret())));
 		}
 	}
 	
-	private void translate(Code.IndirectInvoke c, int freeSlot,
+	private void translate(Codes.IndirectInvoke c, int freeSlot,
 			ArrayList<Bytecode> bytecodes) {				
 		
 		Type.FunctionOrMethod ft = c.type;		
 		JvmType.Clazz owner = (JvmType.Clazz) convertType(ft);
-		bytecodes.add(new Bytecode.Load(c.operand,convertType(ft)));
+		bytecodes.add(new Bytecode.Load(c.reference(),convertType(ft)));
 		bytecodes.add(new Bytecode.LoadConst(ft.params().size()));
 		bytecodes.add(new Bytecode.New(JAVA_LANG_OBJECT_ARRAY));
 				
-		for (int i = 0; i != c.operands.length; ++i) {			
-			int register = c.operands[i];
+		int[] parameters = c.parameters();
+		for (int i = 0; i != parameters.length; ++i) {			
+			int register = parameters[i];
 			Type pt = c.type.params().get(i);
 			JvmType jpt = convertType(pt);
 			bytecodes.add(new Bytecode.Dup(JAVA_LANG_OBJECT_ARRAY));
@@ -1744,11 +1744,11 @@ public class Wyil2JavaBuilder implements Builder {
 		
 		// now, handle the case of an invoke which returns a value that should
 		// be discarded.
-		if (c.target != Code.NULL_REG) {
+		if (c.target != Codes.NULL_REG) {
 			addReadConversion(ft.ret(),bytecodes);
 			bytecodes.add(new Bytecode.Store(c.target,
 					convertType(c.type.ret())));
-		} else if (c.target == Code.NULL_REG) {
+		} else if (c.target == Codes.NULL_REG) {
 			bytecodes.add(new Bytecode.Pop(JAVA_LANG_OBJECT));
 		}
 	}

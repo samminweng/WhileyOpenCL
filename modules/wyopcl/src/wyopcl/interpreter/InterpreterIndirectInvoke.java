@@ -1,7 +1,7 @@
 package wyopcl.interpreter;
 
 import java.util.ArrayList;
-import wyil.lang.Code;
+import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyil.lang.Type.FunctionOrMethod;
@@ -21,18 +21,18 @@ public class InterpreterIndirectInvoke extends Interpreter {
 	}
 	
 	
-	public void interpret(Code.IndirectInvoke code, StackFrame stackframe) {
+	public void interpret(Codes.IndirectInvoke code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
 				
-		Constant.Record fieldType = (Constant.Record)stackframe.getRegister(code.operand);
+		Constant.Record fieldType = (Constant.Record)stackframe.getRegister(code.reference());
 		FunctionOrMethod func = code.type;		
 		ArrayList<Type> paramTypes = func.params();
 	
 		String msg="";
-		msg += "%"+code.operand+"("+fieldType+") ";
+		msg += "%"+code.reference()+"("+fieldType+") ";
 		
 		for (int i = 0; i< code.operands.length; i++) {
-			Type paramType = paramTypes.get(i);
+			//Type paramType = paramTypes.get(i);
 			msg += "%"+code.operands[i];
 			Constant paramValue = stackframe.getRegister(code.operands[i]);
 			msg += "("+paramValue+")";

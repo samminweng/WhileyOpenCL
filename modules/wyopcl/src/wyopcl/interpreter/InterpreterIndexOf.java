@@ -1,9 +1,8 @@
 package wyopcl.interpreter;
 
 import static wycc.lang.SyntaxError.internalFailure;
-import wyil.lang.Code;
+import wyil.lang.Codes;
 import wyil.lang.Constant;
-import wyil.lang.Type;
 
 public class InterpreterIndexOf extends Interpreter {
 	private static InterpreterIndexOf instance;	
@@ -18,7 +17,7 @@ public class InterpreterIndexOf extends Interpreter {
 		return instance;
 	}
 	
-	public void interpret(Code.IndexOf code, StackFrame stackframe) {		
+	public void interpret(Codes.IndexOf code, StackFrame stackframe) {		
 		int linenumber = stackframe.getLine();
 		String msg = ">";
 		//Read the key value from the rightOperand register.

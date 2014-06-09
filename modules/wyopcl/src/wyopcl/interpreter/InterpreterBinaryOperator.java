@@ -3,25 +3,25 @@ package wyopcl.interpreter;
 import java.math.BigInteger;
 import java.util.ArrayList;
 
-import wyil.lang.Code;
+import wyil.lang.Codes;
 import wyil.lang.Constant;
 
-public class InterpreterBinArithOp extends Interpreter {
+public class InterpreterBinaryOperator extends Interpreter {
 
-	private static InterpreterBinArithOp instance;	
-	public InterpreterBinArithOp(){
+	private static InterpreterBinaryOperator instance;	
+	public InterpreterBinaryOperator(){
 	}
 
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
-	public static InterpreterBinArithOp getInstance(){
+	public static InterpreterBinaryOperator getInstance(){
 		if (instance == null){
-			instance = new InterpreterBinArithOp();
+			instance = new InterpreterBinaryOperator();
 		}
 		return instance;
 	}
 
 
-	public void interpret(Code.BinArithOp code, StackFrame stackframe) {
+	public void interpret(Codes.BinaryOperator code, StackFrame stackframe) {
 		//System.out.println("code.target"+code.target);
 		int linenumber = stackframe.getLine();
 		Constant result = null;

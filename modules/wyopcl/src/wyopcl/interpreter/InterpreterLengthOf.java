@@ -5,6 +5,7 @@ import static wycc.lang.SyntaxError.internalFailure;
 import java.math.BigInteger;
 
 import wyil.lang.Code;
+import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyil.lang.Type;
 
@@ -22,7 +23,7 @@ public class InterpreterLengthOf extends Interpreter{
 	}
 
 	
-	public void interpret(Code.LengthOf code, StackFrame stackframe) {
+	public void interpret(Codes.LengthOf code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
 		
 		//Read a effective collection (list, set or map) from the operand register.

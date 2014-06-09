@@ -1,6 +1,7 @@
 package wyopcl.interpreter;
 
 import wyil.lang.Code;
+import wyil.lang.Codes;
 
 public class InterpreterConst extends Interpreter {
 	private static InterpreterConst instance;	
@@ -16,7 +17,7 @@ public class InterpreterConst extends Interpreter {
 	}
 
 
-	public void interpret(Code.Const code, StackFrame stackframe) {		
+	public void interpret(Codes.Const code, StackFrame stackframe) {		
 		// Add the register
 		int linenumber = stackframe.getLine();
 		stackframe.setRegister(code.target, code.constant);

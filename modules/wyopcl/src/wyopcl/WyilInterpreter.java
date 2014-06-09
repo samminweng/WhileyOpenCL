@@ -16,15 +16,16 @@ import wycc.util.Pair;
 import wyfs.lang.Path;
 import wyfs.lang.Path.Root;
 import wyil.lang.Code;
-import wyil.lang.CodeBlock;
+import wyil.lang.Code.Block;
+import wyil.lang.Codes;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.Case;
 import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.InterpreterAssertOrAssume;
 import wyopcl.interpreter.InterpreterAssign;
-import wyopcl.interpreter.InterpreterBinArithOp;
-import wyopcl.interpreter.InterpreterBinListOp;
+import wyopcl.interpreter.InterpreterBinaryOperator;
+import wyopcl.interpreter.InterpreterListOperator;
 import wyopcl.interpreter.InterpreterConst;
 import wyopcl.interpreter.InterpreterConvert;
 import wyopcl.interpreter.InterpreterFieldLoad;
@@ -101,30 +102,30 @@ public class WyilInterpreter extends Interpreter implements Builder{
 		for(WyilFile.FunctionOrMethodDeclaration method : module.functionOrMethods()) {
 			String name = method.name();
 			for(Case mcase : method.cases()){
-				CodeBlock blk = mcase.body();
+				Block blk = mcase.body();
 				//for(CodeBlock blk : mcase.body()){
 					blocktable.put(name, blk);
 					//Get the CodeBlock object from the symboltable.
 					SymbolTable symbol = new SymbolTable(blk);					
 					//Pre-scan the code block and keep the symbol label map.					
 					for(int pos = 0; pos <blk.size(); pos++){
-						CodeBlock.Entry entry = blk.get(pos);
+						Block.Entry entry = blk.get(pos);
 						Code code = entry.code;
-						if(code instanceof Code.LoopEnd){
-							String label = ((Code.LoopEnd)code).label;							
+						if(code instanceof Codes.LoopEnd){
+							String label = ((Codes.LoopEnd)code).label;							
 							//Go to the next statement after the loop end.
 							int line = pos+1;
 							symbol.addLabelLoc(label+"LoopEnd", line);
 							//Display the message.
 							System.out.println(label+"LoopEnd--->"+line);
-						}else if(code instanceof Code.Label){
+						}else if(code instanceof Codes.Label){
 							//Put the label map into the queue.
-							String label = ((Code.Label)code).label;
+							String label = ((Codes.Label)code).label;
 							symbol.addLabelLoc(label, pos);
 							System.out.println(label+"--->"+pos);
-						}else if(code instanceof Code.Loop){								
+						}else if(code instanceof Codes.Loop){								
 							//This case includes Code.Loop and Code.ForAll
-							String label = ((Code.Loop)code).target;
+							String label = ((Codes.Loop)code).target;
 							symbol.addLabelLoc(label, pos);
 							System.out.println(label+"--->"+pos);
 						}
@@ -143,18 +144,18 @@ public class WyilInterpreter extends Interpreter implements Builder{
 		//Get the main method
 		for(FunctionOrMethodDeclaration method: module.functionOrMethod("main")){
 			for(Case mcase:method.cases()){
-				CodeBlock block = mcase.body();				
+				Block block = mcase.body();				
 				blockstack.push(new StackFrame(block,0, method.name(), -1));				
 			}
 		}
 
 		while(!blockstack.isEmpty()){
 			StackFrame frame = blockstack.peek();
-			CodeBlock block = frame.getBlock();			
+			Block block = frame.getBlock();			
 			//SymbolTable symbol = symboltable.get(block);
 			int linenumber = frame.getLine();
 			if(linenumber < block.size()){
-				CodeBlock.Entry entry = block.get(linenumber);				
+				Block.Entry entry = block.get(linenumber);				
 				this.dispatch(entry, frame);
 			}else{
 				//Finish this block and pop it up from the stack.
@@ -164,92 +165,93 @@ public class WyilInterpreter extends Interpreter implements Builder{
 	}
 
 
-	private void dispatch(CodeBlock.Entry entry, StackFrame stackframe) {	
+	private void dispatch(Block.Entry entry, StackFrame stackframe) {	
 		Code code = entry.code;
 
 		try{
-			if (code instanceof Code.AssertOrAssume) {			
-				InterpreterAssertOrAssume.getInstance().interpret((Code.AssertOrAssume)code, stackframe);
-			} else if (code instanceof Code.Assign) {			
-				InterpreterAssign.getInstance().interpret((Code.Assign)code, stackframe);
-			} else if (code instanceof Code.BinArithOp) {			
-				InterpreterBinArithOp.getInstance().interpret((Code.BinArithOp)code, stackframe);
-			} else if (code instanceof Code.BinListOp) {
-				InterpreterBinListOp.getInstance().interpret((Code.BinListOp)code, stackframe);
-			} else if (code instanceof Code.BinSetOp) {
+			if (code instanceof Codes.AssertOrAssume) {			
+				InterpreterAssertOrAssume.getInstance().interpret((Codes.AssertOrAssume)code, stackframe);
+			} else if (code instanceof Codes.Assign) {			
+				InterpreterAssign.getInstance().interpret((Codes.Assign)code, stackframe);
+			} else if (code instanceof Codes.BinaryOperator) {			
+				InterpreterBinaryOperator.getInstance().interpret((Codes.BinaryOperator)code, stackframe);
+			} else if (code instanceof Codes.ListOperator) {
+				InterpreterListOperator.getInstance().interpret((Codes.ListOperator)code, stackframe);
+			} /*else if (code instanceof Codes.BinSetOp) {
 				internalFailure("Not implemented!", filename, entry);
-			} else if (code instanceof Code.BinStringOp) {
+			} else if (code instanceof Codes.BinStringOp) {
 				internalFailure("Not implemented!", filename, entry);
-			} else if (code instanceof Code.Convert) {			
-				InterpreterConvert.getInstance().interpret((Code.Convert)code, stackframe);
-			} else if (code instanceof Code.Const) {			
-				InterpreterConst.getInstance().interpret((Code.Const)code, stackframe);
-			} else if (code instanceof Code.Debug) {
+			} */else if (code instanceof Codes.Convert) {			
+				InterpreterConvert.getInstance().interpret((Codes.Convert)code, stackframe);
+			} else if (code instanceof Codes.Const) {			
+				InterpreterConst.getInstance().interpret((Codes.Const)code, stackframe);
+			} else if (code instanceof Codes.Debug) {
 				internalFailure("Not implemented!", filename, entry);
-			} else if (code instanceof Code.Dereference) {
+			} else if (code instanceof Codes.Dereference) {
 				internalFailure("Not implemented!", filename, entry);
-			} else if (code instanceof Code.FieldLoad) {		
-				InterpreterFieldLoad.getInstance().interpret((Code.FieldLoad)code, stackframe);			
-			} else if (code instanceof Code.ForAll) {				
-				InterpreterForAll.getInstance().interpret((Code.ForAll)code, stackframe);
-			} else if (code instanceof Code.Goto) {	
-				InterpreterGoto.getInstance().interpret((Code.Goto)code, stackframe);
-			} else if (code instanceof Code.If) {
-				InterpreterIf.getInstance().interpret((Code.If)code, stackframe);			
-			} else if (code instanceof Code.IfIs) {
+			} else if (code instanceof Codes.FieldLoad) {		
+				InterpreterFieldLoad.getInstance().interpret((Codes.FieldLoad)code, stackframe);			
+			} else if (code instanceof Codes.ForAll) {				
+				InterpreterForAll.getInstance().interpret((Codes.ForAll)code, stackframe);
+			} else if (code instanceof Codes.Goto) {	
+				InterpreterGoto.getInstance().interpret((Codes.Goto)code, stackframe);
+			} else if (code instanceof Codes.If) {
+				InterpreterIf.getInstance().interpret((Codes.If)code, stackframe);			
+			} else if (code instanceof Codes.IfIs) {
 				internalFailure("Not implemented!", filename, entry);
-			} else if (code instanceof Code.IndirectInvoke) {			
-				InterpreterIndirectInvoke.getInstance().interpret((Code.IndirectInvoke)code, stackframe);
-			} else if (code instanceof Code.Invoke) {			
-				InterpreterInvoke.getInstance().interpret((Code.Invoke)code, stackframe);
-			} else if (code instanceof Code.Invert) {
+			} else if (code instanceof Codes.IndirectInvoke) {			
+				InterpreterIndirectInvoke.getInstance().interpret((Codes.IndirectInvoke)code, stackframe);
+			} else if (code instanceof Codes.Invoke) {			
+				InterpreterInvoke.getInstance().interpret((Codes.Invoke)code, stackframe);
+			} else if (code instanceof Codes.Invert) {
 				internalFailure("Not implemented!", filename, entry);
-			} else if (code instanceof Code.LoopEnd) {
-				InterpreterLoopEnd.getInstance().interpret((Code.LoopEnd)code, stackframe);									
-			} else if (code instanceof Code.Label) {
-				InterpreterLabel.getInstance().interpret((Code.Label)code, stackframe);
-			} else if (code instanceof Code.Lambda) {
+			} else if (code instanceof Codes.LoopEnd) {
+				InterpreterLoopEnd.getInstance().interpret((Codes.LoopEnd)code, stackframe);									
+			} else if (code instanceof Codes.Label) {
+				InterpreterLabel.getInstance().interpret((Codes.Label)code, stackframe);
+			} else if (code instanceof Codes.Lambda) {
 				internalFailure("Not implemented!", filename, entry);
-			} else if (code instanceof Code.LengthOf) {			
-				InterpreterLengthOf.getInstance().interpret((Code.LengthOf)code, stackframe);
-			} else if (code instanceof Code.IndexOf) {			
-				InterpreterIndexOf.getInstance().interpret((Code.IndexOf)code, stackframe);
-			} else if (code instanceof Code.Loop) {			
-				InterpreterLoop.getInstance().interpret((Code.Loop)code, stackframe);			
-			} else if (code instanceof Code.Move) {
+			} else if (code instanceof Codes.LengthOf) {			
+				InterpreterLengthOf.getInstance().interpret((Codes.LengthOf)code, stackframe);
+			} else if (code instanceof Codes.IndexOf) {			
+				InterpreterIndexOf.getInstance().interpret((Codes.IndexOf)code, stackframe);
+			} else if (code instanceof Codes.Loop) {			
+				InterpreterLoop.getInstance().interpret((Codes.Loop)code, stackframe);			
+			} else if (code instanceof Codes.Move) {
 				internalFailure("Not implemented!", filename, entry);
-			} else if (code instanceof Code.NewMap) {
+			} else if (code instanceof Codes.NewMap) {
 				internalFailure("Not implemented!", filename, entry);
-			} else if (code instanceof Code.NewList) {			
-				InterpreterNewList.getInstance().interpret((Code.NewList)code, stackframe);
-			} else if (code instanceof Code.NewRecord) {
+			} else if (code instanceof Codes.NewList) {			
+				InterpreterNewList.getInstance().interpret((Codes.NewList)code, stackframe);
+			} else if (code instanceof Codes.NewRecord) {
 				internalFailure("Not implemented!", filename, entry);
-			} else if (code instanceof Code.NewSet) {
+			} else if (code instanceof Codes.NewSet) {
 				internalFailure("Not implemented!", filename, entry);
-			} else if (code instanceof Code.NewTuple) {
+			} else if (code instanceof Codes.NewTuple) {
 				internalFailure("Not implemented!", filename, entry);
-			} else if (code instanceof Code.Return) {			
-				InterpreterReturn.getInstance().interpret((Code.Return)code, stackframe);
-			} else if (code instanceof Code.NewObject) {
+			} else if (code instanceof Codes.Return) {			
+				InterpreterReturn.getInstance().interpret((Codes.Return)code, stackframe);
+			} else if (code instanceof Codes.NewObject) {
 				internalFailure("Not implemented!", filename, entry);
-			} else if (code instanceof Code.Nop) {
-				InterpreterNop.getInstance().interpret((Code.Nop)code, stackframe);
-			} else if (code instanceof Code.SubList) {
-				InterpreterSubList.getInstance().interpret((Code.SubList)code, stackframe);
-			} else if (code instanceof Code.SubString) {
+			} else if (code instanceof Codes.Nop) {
+				InterpreterNop.getInstance().interpret((Codes.Nop)code, stackframe);
+			} else if (code instanceof Codes.SubList) {
+				InterpreterSubList.getInstance().interpret((Codes.SubList)code, stackframe);
+			} else if (code instanceof Codes.SubString) {
 				internalFailure("Not implemented!", filename, entry);
-			} else if (code instanceof Code.Switch) {
+			} else if (code instanceof Codes.Switch) {
 				internalFailure("Not implemented!", filename, entry);
-			} else if (code instanceof Code.Throw) {
+			} else if (code instanceof Codes.Throw) {
 				internalFailure("Not implemented!", filename, entry);
-			} else if (code instanceof Code.TryCatch) {
-				InterpreterTryCatch.getInstance().interpret((Code.TryCatch)code, stackframe);
-			} else if (code instanceof Code.TupleLoad) {
+			} else if (code instanceof Codes.TryCatch) {
+				InterpreterTryCatch.getInstance().interpret((Codes.TryCatch)code, stackframe);
+			} else if (code instanceof Codes.TupleLoad) {
 				internalFailure("Not implemented!", filename, entry);
-			} else if (code instanceof Code.UnArithOp) {
+			} /*else if (code instanceof Codes.UnArithOp) {
 				internalFailure("Not implemented!", filename, entry);
-			} else if (code instanceof Code.Update) {
-				InterpreterUpdate.getInstance().interpret((Code.Update)code, stackframe);
+			}*/
+			else if (code instanceof Codes.Update) {
+				InterpreterUpdate.getInstance().interpret((Codes.Update)code, stackframe);
 			} else {
 				internalFailure("unknown wyil code encountered (" + code + ")", filename, entry);
 			}

@@ -1,25 +1,25 @@
 package wyopcl.interpreter;
 
 import static wycc.lang.SyntaxError.internalFailure;
-import wyil.lang.Code;
+import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyopcl.interpreter.Interpreter.StackFrame;
 
-public class InterpreterBinListOp extends Interpreter{
-	private static InterpreterBinListOp instance;	
-	public InterpreterBinListOp(){
+public class InterpreterListOperator extends Interpreter{
+	private static InterpreterListOperator instance;	
+	public InterpreterListOperator(){
 	}
 
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
-	public static InterpreterBinListOp getInstance(){
+	public static InterpreterListOperator getInstance(){
 		if (instance == null){
-			instance = new InterpreterBinListOp();
+			instance = new InterpreterListOperator();
 		}
 		return instance;
 	}
 
 
-	public void interpret(Code.BinListOp code, StackFrame stackframe) {
+	public void interpret(Codes.ListOperator code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
 		String msg ="";
 		//Read the list from two operands.
@@ -28,7 +28,7 @@ public class InterpreterBinListOp extends Interpreter{
 		msg += "%"+code.leftOperand+"("+left+") "+
 			   "%"+code.rightOperand+"("+right+") ";
 		//Perform the list operation (e.g. append two lists)
-		if (code.kind == Code.BinListKind.APPEND){
+		if (code.kind == Codes.ListOperatorKind.APPEND){
 			left.values.addAll(right.values);			
 			Constant.List result = Constant.V_LIST(left.values);
 			//Set the result to the target register.

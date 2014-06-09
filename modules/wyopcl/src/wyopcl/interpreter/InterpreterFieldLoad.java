@@ -9,10 +9,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import wyil.lang.Code;
+import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyil.lang.Type;
-import wyil.lang.Type.EffectiveRecord;
 
 public class InterpreterFieldLoad extends Interpreter {
 	private static InterpreterFieldLoad instance;	
@@ -28,7 +27,7 @@ public class InterpreterFieldLoad extends Interpreter {
 	}
 	
 	
-	public void interpret(Code.FieldLoad code, StackFrame stackframe) {
+	public void interpret(Codes.FieldLoad code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
 		String msg = "";
 		//Reads a record value from an operand register

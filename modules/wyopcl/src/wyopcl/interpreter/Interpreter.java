@@ -4,20 +4,20 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Stack;
 
-import wyil.lang.CodeBlock;
+import wyil.lang.Code.Block;
 import wyil.lang.Constant;
 
 /*Declare the abstract class, methods and variables. */
 public abstract class Interpreter {
 	
 	public class StackFrame {
-		private final CodeBlock block;
+		private final Block block;
 		private String name;// Remove it
 		private int line;				
 		private final int return_reg;
 		private Constant[] registers  = new Constant[0];
 		
-		public StackFrame(CodeBlock block, int line, String name, int return_reg){
+		public StackFrame(Block block, int line, String name, int return_reg){
 			this.block = block;
 			this.name = name;
 			this.line = line;			
@@ -32,7 +32,7 @@ public abstract class Interpreter {
 			this.line = line;
 		}		
 		
-		public CodeBlock getBlock(){
+		public Block getBlock(){
 			return block;
 		}
 		
@@ -75,11 +75,11 @@ public abstract class Interpreter {
 	
 	
 	public class SymbolTable implements Comparable<SymbolTable>{
-		private final CodeBlock block;
+		private final Block block;
 		//private HashMap<String, Constant> registers = new HashMap<String, Constant>();
 		private HashMap<String, Integer> labelLocMap = new HashMap<String, Integer>();		
 		
-		public SymbolTable(CodeBlock blk){
+		public SymbolTable(Block blk){
 			this.block = blk;
 		}	
 			
@@ -108,8 +108,8 @@ public abstract class Interpreter {
 	
 	
 	
-	protected static HashMap<String, CodeBlock> blocktable = new HashMap<String, CodeBlock>();
+	protected static HashMap<String, Block> blocktable = new HashMap<String, Block>();
 	protected static Stack<StackFrame> blockstack = new Stack<StackFrame>();
-	protected static HashMap<CodeBlock, SymbolTable> symboltable = new HashMap<CodeBlock, SymbolTable>();
+	protected static HashMap<Block, SymbolTable> symboltable = new HashMap<Block, SymbolTable>();
 	
 }

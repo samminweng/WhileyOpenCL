@@ -5,9 +5,7 @@ import static wycc.lang.SyntaxError.internalFailure;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import wyil.lang.Code;
-import wyil.lang.Code.LVal;
-import wyil.lang.Code.ListLVal;
+import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyopcl.interpreter.Interpreter.StackFrame;
@@ -25,7 +23,7 @@ public class InterpreterUpdate extends Interpreter{
 		return instance;
 	}
 	
-	public void interpret(Code.Update code, StackFrame stackframe) {
+	public void interpret(Codes.Update code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
 		//Popup the compound type (lists, dictionaries, strings, records and references
 		Type afterType = code.afterType;
@@ -34,8 +32,8 @@ public class InterpreterUpdate extends Interpreter{
 			//Pops the list.
 			Constant.List list = (Constant.List)stackframe.getRegister(code.target);
 			//Read the value from the register.
-			Constant value = stackframe.getRegister(code.operand);
-			msg += "%"+code.operand+"("+value+")";
+			Constant value = stackframe.getRegister(code.result());
+			msg += "%"+code.result()+"("+value+")";
 			//Get the indices
 			Constant.Integer index;
 			for (int indexoperand : code.operands) {

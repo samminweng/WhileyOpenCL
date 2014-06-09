@@ -1,6 +1,6 @@
 package wyopcl.interpreter;
 
-import wyil.lang.Code;
+import wyil.lang.Codes;
 
 public class InterpreterLabel extends Interpreter {
 	private static InterpreterLabel instance;	
@@ -15,7 +15,7 @@ public class InterpreterLabel extends Interpreter {
 		return instance;
 	}
 	
-	public void interpret(Code.Label code, StackFrame stackframe) {
+	public void interpret(Codes.Label code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
 		System.out.println("#"+linenumber+" ["+code+"]\n>"
 				+"("+ code.label+")\n");

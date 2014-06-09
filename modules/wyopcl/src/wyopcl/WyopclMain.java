@@ -41,12 +41,10 @@ public class WyopclMain extends WycMain{
 	public void configure(Map<String, Object> values) throws IOException {
 		super.configure(values);
 		
-		
-
-//		File classDir = (File) values.get("classdir");
-//		if (classDir != null) {
-//			((WyopclBuildTask) builder).setClassDir(classDir);
-//		}
+		File classDir = (File) values.get("classdir");
+		if (classDir != null) {
+			((WyopclBuildTask) builder).setClassDir(classDir);
+		}
 	}
 	
 	@Override
