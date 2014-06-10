@@ -26,11 +26,12 @@ public class InterpreterNewList extends Interpreter {
 			Constant elem = stackframe.getRegister(operand);			
 			values.add(elem);
 		}
-		Constant.List list = Constant.V_LIST(values);
-		int reg = code.target;
-		stackframe.setRegister(reg, list);
-		System.out.println("#"+linenumber+" ["+code+"]\n>"
-				+"%" + reg + "(" + list+")\n");
+		Constant.List result = Constant.V_LIST(values);
+		stackframe.setRegister(code.target, result);
+		printMessage(stackframe, code.toString(),
+				 "%"+ code.target + "("+result+")\n");
+		//System.out.println("#"+linenumber+" ["+code+"]\n>"
+		//		+"%" + reg + "(" + list+")\n");
 		stackframe.setLine(++linenumber);
 	}
 

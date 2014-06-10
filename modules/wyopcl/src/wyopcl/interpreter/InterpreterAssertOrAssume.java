@@ -10,9 +10,11 @@ public class InterpreterAssertOrAssume extends Interpreter {
 	
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
 	public static InterpreterAssertOrAssume getInstance(){
+		
 		if (instance == null){
 			instance = new InterpreterAssertOrAssume();
 		}
+	
 		return instance;
 	}
 	
@@ -20,6 +22,7 @@ public class InterpreterAssertOrAssume extends Interpreter {
 	public void interpret(Codes.AssertOrAssume code, StackFrame stackframe) {				
 		
 		int linenumber = stackframe.getLine();
+		stackframe.getName();
 		Constant left = stackframe.getRegister(code.leftOperand);
 		Constant right = stackframe.getRegister(code.rightOperand);
 		
@@ -82,7 +85,7 @@ public class InterpreterAssertOrAssume extends Interpreter {
 		}
 		
 		msg += "%"+ code.rightOperand+"(" + right+") => "+isSatisfied;
-		System.out.println("#"+linenumber+" ["+code+"]\n>"+msg+"\n");
+		printMessage(stackframe, code.toString(), msg);
 		stackframe.setLine(++linenumber);
 	}
 	

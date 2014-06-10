@@ -40,10 +40,12 @@ public class InterpreterIndexOf extends Interpreter {
 			internalFailure("Not implemented!", "InterpreterIndexOf.java", null);
 		}
 		stackframe.setRegister(code.target, value);	
-		msg += " %"+code.leftOperand +"("+left+") "+
-			       " %"+code.rightOperand +"(" + key +") "+
-			       " %"+code.target + "("+value+")";
-		System.out.println("#"+linenumber+" ["+code+"]\n"+msg+"\n");
+		//msg += " %"+code.leftOperand +"("+left+") "+
+		//	       " %"+code.rightOperand +"(" + key +") "+
+		//	       " %"+code.target + "("+value+")";
+		//System.out.println("#"+linenumber+" ["+code+"]\n"+msg+"\n");
+		printMessage(stackframe, code.toString(),
+				 "%"+ code.target + "("+value+")\n");
 		stackframe.setLine(++linenumber);
 	}
 

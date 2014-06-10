@@ -34,11 +34,11 @@ public class InterpreterConvert extends Interpreter {
 		}
 		
 		stackframe.setRegister(code.target, result);
-		msg += "%"+code.target+"("+result+") assigned Type:("+assignedType+")"
-				+ " result Type:("+resultType+")";
+		//msg += "%"+code.target+"("+result+") assigned Type:("+assignedType+")"
+		//		+ " result Type:("+resultType+")";
 		
-		System.out.println("#"+linenumber+" ["+code+"]\n>"+msg+"\n");
-		
+		//System.out.println("#"+linenumber+" ["+code+"]\n>"+msg+"\n");
+		printMessage(stackframe, code.toString(), "%"+ code.target + "("+result+")\n");
 		stackframe.setLine(++linenumber);
 	}
 

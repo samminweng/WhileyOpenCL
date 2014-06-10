@@ -25,7 +25,7 @@ public class InterpreterInvoke extends Interpreter {
 		int linenumber = stackframe.getLine();
 		String msg = "";
 		
-		//Get the CodeBlock for the corresponding function/method. 
+		//Get the Block for the corresponding function/method. 
 		Block blk = blocktable.get(code.name.name());
 		if(blk != null){
 			//Create a new StackFrame
@@ -50,7 +50,7 @@ public class InterpreterInvoke extends Interpreter {
 				msg += "%"+reg + "("+stackFrame.getRegister(reg)+") ";
 			}		
 			msg += "]\n";
-			System.out.println("\n#"+linenumber+" ["+code+"]\n>"+msg);
+			printMessage(stackframe, code.toString(),"\n");
 		
 		}else{
 			//Directly invoke the function/method.

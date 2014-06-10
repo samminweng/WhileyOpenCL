@@ -84,11 +84,11 @@ public class InterpreterBinaryOperator extends Interpreter {
 			//break;
 		}
 		stackframe.setRegister(code.target, result);
-		msg += "%"+code.leftOperand+"(" + left + ") %" +code.rightOperand+"("+ right 
-				+") %" + code.target + "(" + result + ")";
+		//msg += "%"+code.leftOperand+"(" + left + ") %" +code.rightOperand+"("+ right 
+		//		+") %" + code.target + "(" + result + ")";
 		
-		System.out.println("#"+linenumber+" ["+code+"]\n>"+msg+ "\n");
-
+		//System.out.println("#"+linenumber+" ["+code+"]\n>"+msg+ "\n");
+		printMessage(stackframe, code.toString(), "%"+ code.target + "("+result+")\n");
 		stackframe.setLine(++linenumber);
 	}
 

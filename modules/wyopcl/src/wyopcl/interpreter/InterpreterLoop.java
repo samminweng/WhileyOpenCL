@@ -19,7 +19,7 @@ public class InterpreterLoop extends Interpreter {
 	
 	public void interpret(Codes.Loop code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
-		String label = code.target;
+		//String label = code.target;
 		//int target = Integer.parseInt(code.target);
 		String str ="";
 		for (int modifiedOperand:code.modifiedOperands){
@@ -30,8 +30,9 @@ public class InterpreterLoop extends Interpreter {
 		
 		//Constant.Strung label = Constant.V_STRING(code.target);		
 		//stackframe.setRegister(target, label);
-		System.out.println("#"+linenumber+" ["+code+"]\n>"
-				 + "(" + label +")"+ str+"\n");
+		//System.out.println("#"+linenumber+" ["+code+"]\n>"
+		//		 + "(" + label +")"+ str+"\n");
+		printMessage(stackframe, code.toString(), "("+code.target+")\n");
 		
 		stackframe.setLine(++linenumber);
 	}

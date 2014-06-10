@@ -36,32 +36,10 @@ public class InterpreterIndirectInvoke extends Interpreter {
 			msg += "%"+code.operands[i];
 			Constant paramValue = stackframe.getRegister(code.operands[i]);
 			msg += "("+paramValue+")";
-			/*if(paramType instanceof Type.Any){
-				if(paramValue instanceof Constant.Integer){
-					msg += "("+((Constant.Integer)paramValue).value+")";
-				} else if(paramValue instanceof Constant.Strung){
-					msg += "("+((Constant.Strung)paramValue).value+")";					
-				} else{	
-					throw new RuntimeException("Not implemented!");
-				}				
-			}else if (paramType instanceof Type.List){
-				
-				
-			}else{
-				throw new RuntimeException("Not implemented!");
-			}*/
 		}
 		
-		
-		/*if (target != Code.NULL_REG) {
-			System.out.println("indirectinvoke " + target + " = " + operand + " "
-					+ str + "\tResult: " + func);
-		} else {
-			System.out.println( "indirectinvoke %" + operand + " "+ str	+ "\tResult: " + func);
-		}*/
-		
-		System.out.println("#"+linenumber+" ["+code+"]\n>"+msg+"\n");
-		
+		//System.out.println("#"+linenumber+" ["+code+"]\n>"+msg+"\n");
+		printMessage(stackframe, code.toString(), "");
 		stackframe.setLine(++linenumber);
 	}
 

@@ -30,13 +30,12 @@ public class InterpreterSubList extends Interpreter{
 		//Computes the sublist from index1 to index2.
 		List<Constant> sublist = list.values.subList(fromIndex.value.intValue(), toIndex.value.intValue());
 		//Write the result to the target register.
-		stackframe.setRegister(code.target, Constant.V_LIST(sublist));
+		Constant result = Constant.V_LIST(sublist);
+		stackframe.setRegister(code.target, result);
 		
-		System.out.println("#"+linenumber+" ["+code+"]");
-		System.out.println("> "+code.target+"("+Constant.V_LIST(sublist)+")"
-				+" " +code.operands[0]+"("+list+")"
-				+" " +code.operands[1]+"("+fromIndex+")"
-				+" " +code.operands[2]+"("+toIndex+")");
+		printMessage(stackframe, code.toString(),
+				"%"+code.target + "("+result+")");
+		
 		stackframe.setLine(++linenumber);
 	}
 	

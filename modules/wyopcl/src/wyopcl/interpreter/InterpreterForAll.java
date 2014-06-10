@@ -24,10 +24,8 @@ public class InterpreterForAll extends Interpreter {
 
 	public void interpret(Codes.ForAll code, StackFrame stackframe) {		
 		int linenumber = stackframe.getLine();
-		String msg;
-		//Type element = code.type.element(); 
+		String msg; 
 		//Get the index 
-		//
 		Constant.List sourceOperand = (Constant.List) stackframe.getRegister(code.sourceOperand);
 		ArrayList<Constant> values = sourceOperand.values;
 
@@ -43,10 +41,7 @@ public class InterpreterForAll extends Interpreter {
 					break;
 				}
 			}
-		}
-		
-		
-		
+		}		
 			
 		//Check if the index is out-of-boundary. If so, then return.
 		if(index == values.size()){
@@ -60,21 +55,25 @@ public class InterpreterForAll extends Interpreter {
 			return;
 		}else{
 			//Put the element into the register of the index operand.
-			stackframe.setRegister(code.indexOperand, values.get(index));
+			Constant result = values.get(index);
+			stackframe.setRegister(code.indexOperand, result);
 			//Modified operands.
-			msg = "%" + code.indexOperand + "(" + values.get(index)
-					+ ") %" + code.sourceOperand + "(" + sourceOperand + ")";
+			//msg = "%" + code.indexOperand + "(" + values.get(index)
+			//		+ ") %" + code.sourceOperand + "(" + sourceOperand + ")";
+			printMessage(stackframe, code.toString(),
+						 "%"+ code.target + "("+result+")\n");
+			stackframe.setLine(++linenumber);
 		}
 
 		
-		int[] modifiedOperands = code.modifiedOperands;
-		for (int modifiedOperand : modifiedOperands){
-			Constant modified = stackframe.getRegister(modifiedOperand);
-			msg += " %"+modifiedOperand+"("+ modified+")";
-		}	
-		System.out.println("#"+linenumber+" ["+code+"]\n>"+msg+"\n");
+		//int[] modifiedOperands = code.modifiedOperands;
+		//for (int modifiedOperand : modifiedOperands){
+		//	Constant modified = stackframe.getRegister(modifiedOperand);
+			//msg += " %"+modifiedOperand+"("+ modified+")";
+		//}	
+		//System.out.println("#"+linenumber+" ["+code+"]\n>"+msg+"\n");
 		
-		stackframe.setLine(++linenumber);
+		
 
 	}
 

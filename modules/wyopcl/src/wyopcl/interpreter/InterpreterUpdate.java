@@ -27,30 +27,32 @@ public class InterpreterUpdate extends Interpreter{
 		int linenumber = stackframe.getLine();
 		//Popup the compound type (lists, dictionaries, strings, records and references
 		Type afterType = code.afterType;
-		String msg = "\n>";
+		//String msg = "\n>";
 		if(afterType instanceof Type.List){
 			//Pops the list.
-			Constant.List list = (Constant.List)stackframe.getRegister(code.target);
+			Constant.List result = (Constant.List)stackframe.getRegister(code.target);
 			//Read the value from the register.
 			Constant value = stackframe.getRegister(code.result());
-			msg += "%"+code.result()+"("+value+")";
+			//msg += "%"+code.result()+"("+value+")";
 			//Get the indices
 			Constant.Integer index;
 			for (int indexoperand : code.operands) {
 				index = (Constant.Integer)stackframe.getRegister(indexoperand);
-				list.values.set(index.value.intValue(), value);
-				msg += "%"+indexoperand+"("+index+") ";
+				result.values.set(index.value.intValue(), value);
+				//msg += "%"+indexoperand+"("+index+") ";
 			}
 			
 			//Update the result to the list.
-			stackframe.setRegister(code.target, list);
-			msg += "%"+code.target+"("+list+")";
+			stackframe.setRegister(code.target, result);
+			printMessage(stackframe, code.toString(),
+					"%"+code.target + "("+result+")");
+			//msg += "%"+code.target+"("+list+")";
 			
 		}else{
 			internalFailure("Not implemented!", "IntepreterUpdate.java", null);
 		}
 		
-		System.out.println("#"+linenumber+" ["+code+"]"+msg);
+		//System.out.println("#"+linenumber+" ["+code+"]"+msg);
 		
 		stackframe.setLine(++linenumber);
 	}

@@ -133,6 +133,7 @@ public class WyopclBuildTask extends wyc.util.WycBuildTask {
 		
 		if (verbose) {
 			wyilInterpreter.setLogger(new Logger.Default(System.err));
+			wyilInterpreter.setVerbose(verbose);
 		}
 		
 		

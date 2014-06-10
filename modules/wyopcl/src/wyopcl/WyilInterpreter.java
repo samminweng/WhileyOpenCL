@@ -49,7 +49,7 @@ import wyopcl.interpreter.InterpreterUpdate;
 public class WyilInterpreter extends Interpreter implements Builder{
 	protected final Build.Project project;
 	protected String filename;
-	//protected String[] args;
+	protected String[] args;
 	/**
 	 * For logging information.
 	 */
@@ -57,7 +57,6 @@ public class WyilInterpreter extends Interpreter implements Builder{
 
 	public WyilInterpreter(Build.Project project) {
 		this.project = project;
-		//this.args = args;
 	}
 
 	@Override
@@ -68,7 +67,10 @@ public class WyilInterpreter extends Interpreter implements Builder{
 	public void setLogger(Logger logger) {
 		this.logger = logger;
 	}
-
+	
+	public void setVerbose(boolean verbose) {
+		this.verbose = verbose;		
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -87,7 +89,8 @@ public class WyilInterpreter extends Interpreter implements Builder{
 			this.filename = module.filename();
 			this.preprocessor(module);
 			//Get started with the main method.
-			this.interpret(module);			
+			this.interpret(module);	
+			
 
 		}
 
@@ -262,6 +265,8 @@ public class WyilInterpreter extends Interpreter implements Builder{
 		}
 
 	}
+
+	
 
 
 

@@ -29,10 +29,10 @@ public class InterpreterFieldLoad extends Interpreter {
 	
 	public void interpret(Codes.FieldLoad code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
-		String msg = "";
+		//String msg = "";
 		//Reads a record value from an operand register
 		Constant.Record record = (Constant.Record)stackframe.getRegister(code.operand);
-		msg += "%"+code.operand+"("+record+")";
+		//msg += "%"+code.operand+"("+record+")";
 		HashMap<String, Type> fields = code.type.fields();
 		Map<String, Constant> values = new HashMap<String, Constant>();
 		//Extract the value of a given field.		
@@ -49,10 +49,12 @@ public class InterpreterFieldLoad extends Interpreter {
 		}	
 	
 		//Write the given value to the target register.
-		stackframe.setRegister(code.target, Constant.V_RECORD(values));
-		msg += "%" + code.target + "("+values+")";
+		Constant result = Constant.V_RECORD(values);
+		stackframe.setRegister(code.target, result);
+		//msg += "%" + code.target + "("+values+")";
 		
-		System.out.println("#"+linenumber+" ["+code+"]\n>"+msg+"\n");
+		//System.out.println("#"+linenumber+" ["+code+"]\n>"+msg+"\n");
+		printMessage(stackframe, code.toString(), "%"+ code.target + "("+result+")\n");
 		stackframe.setLine(++linenumber);
 		
 	}

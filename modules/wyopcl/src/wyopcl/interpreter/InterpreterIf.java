@@ -70,19 +70,16 @@ public class InterpreterIf extends Interpreter {
 			
 		}
 		
-		msg += "%" + code.rightOperand + "(" + right + ") => "+satisfiable;		
-		System.out.println("#"+linenumber+" ["+code+"]\n>"+msg+"\n");
-		
+		msg += "%" + code.rightOperand + "(" + right + ") => "+satisfiable;
 		
 		if(satisfiable){
 			//Go to the branch
 			Block block = stackframe.getBlock();
-			String label = code.target;
-			linenumber = symboltable.get(block).getBlockPosByLabel(label);
+			linenumber = symboltable.get(block).getBlockPosByLabel(code.target);
 		}else{
 			linenumber++;
 		}
-		
+		printMessage(stackframe, code.toString(), code.target + "("+linenumber+")\n");
 		stackframe.setLine(linenumber);
 
 	}

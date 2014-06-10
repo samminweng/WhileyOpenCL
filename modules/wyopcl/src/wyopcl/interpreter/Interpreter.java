@@ -4,12 +4,23 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Stack;
 
+import wycc.util.Logger;
 import wyil.lang.Code.Block;
+import wyil.lang.Codes;
 import wyil.lang.Constant;
 
-/*Declare the abstract class, methods and variables. */
+/*Declare the abstract Interpreter class, methods and variables. */
 public abstract class Interpreter {
+	protected static HashMap<String, Block> blocktable = new HashMap<String, Block>();
+	protected static Stack<StackFrame> blockstack = new Stack<StackFrame>();
+	protected static HashMap<Block, SymbolTable> symboltable = new HashMap<Block, SymbolTable>();
+	protected boolean verbose = true;
 	
+	public void setVerbose(boolean verbose) {
+		this.verbose = verbose;
+	}
+
+
 	public class StackFrame {
 		private final Block block;
 		private String name;// Remove it
@@ -72,11 +83,8 @@ public abstract class Interpreter {
 		}		
 	}
 	
-	
-	
 	public class SymbolTable implements Comparable<SymbolTable>{
 		private final Block block;
-		//private HashMap<String, Constant> registers = new HashMap<String, Constant>();
 		private HashMap<String, Integer> labelLocMap = new HashMap<String, Integer>();		
 		
 		public SymbolTable(Block blk){
@@ -107,9 +115,13 @@ public abstract class Interpreter {
 	}
 	
 	
-	
-	protected static HashMap<String, Block> blocktable = new HashMap<String, Block>();
-	protected static Stack<StackFrame> blockstack = new Stack<StackFrame>();
-	protected static HashMap<Block, SymbolTable> symboltable = new HashMap<Block, SymbolTable>();
-	
+	public void printMessage(StackFrame stackframe, String code, String output){
+		if(verbose){
+			System.out.println(stackframe.getName()+"."+stackframe.getLine()
+					+" ["+code+"] "+output);
+		}
+		
+	}
+
+
 }

@@ -18,7 +18,8 @@ public class InterpreterTryCatch extends Interpreter{
 
 	public void interpret(Codes.TryCatch code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
-		System.out.println("#"+linenumber+" ["+code+"]\n>\n");
+		//System.out.println("#"+linenumber+" ["+code+"]\n>\n");
+		printMessage(stackframe, code.toString(),"");
 		stackframe.setLine(++linenumber);
 		
 	}
