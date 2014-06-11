@@ -18,9 +18,7 @@ public class InterpreterNop extends Interpreter {
 
 	public void interpret(Codes.Nop code, StackFrame stackframe) {		
 		int linenumber = stackframe.getLine();
-		
 		printMessage(stackframe, code.toString(),"");
-		//System.out.println("#"+linenumber+" ["+code+"]\n>\n");
 		stackframe.setLine(++linenumber);
 	}
 }

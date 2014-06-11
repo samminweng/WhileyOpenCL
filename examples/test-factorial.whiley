@@ -5,5 +5,4 @@ function factorial(int n) => int:
 		return n * factorial(n -1)
 
 method main(System.Console sys):
-	//sys.out.println(factorial(2))
-	sys.out.println(factorial(7))
+	sys.out.println("factorial(7)="++factorial(7))

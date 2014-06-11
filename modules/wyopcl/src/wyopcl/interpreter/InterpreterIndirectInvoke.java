@@ -1,10 +1,21 @@
 package wyopcl.interpreter;
 
+import static wycc.lang.SyntaxError.internalFailure;
+import jasm.lang.ClassFile.Field;
+
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map.Entry;
+
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyil.lang.Type;
+import wyil.lang.Type.Function;
 import wyil.lang.Type.FunctionOrMethod;
+import wyil.lang.Type.Method;
 
 public class InterpreterIndirectInvoke extends Interpreter {
 	
@@ -23,22 +34,47 @@ public class InterpreterIndirectInvoke extends Interpreter {
 	
 	public void interpret(Codes.IndirectInvoke code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
-				
-		Constant.Record fieldType = (Constant.Record)stackframe.getRegister(code.reference());
-		FunctionOrMethod func = code.type;		
-		ArrayList<Type> paramTypes = func.params();
-	
-		String msg="";
-		msg += "%"+code.reference()+"("+fieldType+") ";
+		Constant.Record field = (Constant.Record)stackframe.getRegister(code.reference());
 		
-		for (int i = 0; i< code.operands.length; i++) {
-			//Type paramType = paramTypes.get(i);
-			msg += "%"+code.operands[i];
-			Constant paramValue = stackframe.getRegister(code.operands[i]);
-			msg += "("+paramValue+")";
+		FunctionOrMethod func = code.type;
+		List<Object> values = new ArrayList<Object>();
+		if(func instanceof FunctionOrMethod){		
+			//Get the parameter values.			
+			for(int i=0;i<code.parameters().length;i++){
+				Type paramType = func.params().get(i);
+				//Check the parameter type
+				if(paramType instanceof Type.Any){
+					Constant constant = stackframe.getRegister(code.parameter(i));
+					values.add(constant);
+				} else	if(paramType instanceof Type.Int){
+					Constant.Integer const_value = (Constant.Integer)stackframe.getRegister(code.parameter(i));
+					values.add(const_value.value.intValue());
+				}else{
+					internalFailure("Not implemented!", "InterpreterIndirectInvoke.java", null);
+				}
+			}			
+			
+		}else{
+			internalFailure("Not implemented!", "InterpreterIndirectInvoke.java", null);
 		}
 		
-		//System.out.println("#"+linenumber+" ["+code+"]\n>"+msg+"\n");
+		
+		try {
+			
+			
+			Class<?> systemClass = java.lang.Class.forName("java.lang.System");
+			java.lang.reflect.Field outField = systemClass.getDeclaredField("out");
+			Class<?> printStreamClass = outField.getType();
+			java.lang.reflect.Method printlnMethod = printStreamClass.getDeclaredMethod("println", String.class);
+			Object object = outField.get(null);
+			printlnMethod.invoke(object, values.get(0).toString());
+			
+		} catch (ClassNotFoundException | NoSuchFieldException | SecurityException | NoSuchMethodException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
 		printMessage(stackframe, code.toString(), "");
 		stackframe.setLine(++linenumber);
 	}

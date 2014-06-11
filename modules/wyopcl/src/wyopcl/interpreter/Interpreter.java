@@ -14,10 +14,10 @@ public abstract class Interpreter {
 	protected static HashMap<String, Block> blocktable = new HashMap<String, Block>();
 	protected static Stack<StackFrame> blockstack = new Stack<StackFrame>();
 	protected static HashMap<Block, SymbolTable> symboltable = new HashMap<Block, SymbolTable>();
-	protected boolean verbose = true;
+	protected static boolean verbose = false;
 	
 	public void setVerbose(boolean verbose) {
-		this.verbose = verbose;
+		Interpreter.verbose = verbose;
 	}
 
 
@@ -25,10 +25,13 @@ public abstract class Interpreter {
 		private final Block block;
 		private String name;// Remove it
 		private int line;				
-		private final int return_reg;
+		private int return_reg;
+		private int depth;
 		private Constant[] registers  = new Constant[0];
 		
-		public StackFrame(Block block, int line, String name, int return_reg){
+		public StackFrame(int depth, Block block, int line,
+				String name, int return_reg){
+			this.depth = depth;
 			this.block = block;
 			this.name = name;
 			this.line = line;			
@@ -45,6 +48,10 @@ public abstract class Interpreter {
 		
 		public Block getBlock(){
 			return block;
+		}
+		
+		public void setReturn_reg(int return_reg) {
+			this.return_reg = return_reg;
 		}
 		
 		public int getReturn_reg() {
@@ -80,6 +87,14 @@ public abstract class Interpreter {
 		@Override
 		public String toString() {			
 			return "Block:"+block.hashCode()+" Line:"+line;
+		}
+
+		public int getDepth() {
+			return depth;
+		}
+
+		public void setDepth(int depth) {
+			this.depth = depth;
 		}		
 	}
 	
@@ -117,7 +132,7 @@ public abstract class Interpreter {
 	
 	public void printMessage(StackFrame stackframe, String code, String output){
 		if(verbose){
-			System.out.println(stackframe.getName()+"."+stackframe.getLine()
+			System.out.println(stackframe.getDepth()+" "+stackframe.getName()+"."+stackframe.getLine()
 					+" ["+code+"] "+output);
 		}
 		

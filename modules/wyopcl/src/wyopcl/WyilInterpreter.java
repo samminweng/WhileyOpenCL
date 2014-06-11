@@ -42,6 +42,7 @@ import wyopcl.interpreter.InterpreterLoopEnd;
 import wyopcl.interpreter.InterpreterNewList;
 import wyopcl.interpreter.InterpreterNop;
 import wyopcl.interpreter.InterpreterReturn;
+import wyopcl.interpreter.InterpreterStringOperator;
 import wyopcl.interpreter.InterpreterSubList;
 import wyopcl.interpreter.InterpreterTryCatch;
 import wyopcl.interpreter.InterpreterUpdate;
@@ -66,10 +67,6 @@ public class WyilInterpreter extends Interpreter implements Builder{
 
 	public void setLogger(Logger logger) {
 		this.logger = logger;
-	}
-	
-	public void setVerbose(boolean verbose) {
-		this.verbose = verbose;		
 	}
 
 	@SuppressWarnings("unchecked")
@@ -102,11 +99,11 @@ public class WyilInterpreter extends Interpreter implements Builder{
 
 	/*Scans the methods*/
 	protected void preprocessor(WyilFile module){
+			
 		for(WyilFile.FunctionOrMethodDeclaration method : module.functionOrMethods()) {
 			String name = method.name();
 			for(Case mcase : method.cases()){
-				Block blk = mcase.body();
-				//for(CodeBlock blk : mcase.body()){
+				Block blk = mcase.body();			
 					blocktable.put(name, blk);
 					//Get the CodeBlock object from the symboltable.
 					SymbolTable symbol = new SymbolTable(blk);					
@@ -148,7 +145,7 @@ public class WyilInterpreter extends Interpreter implements Builder{
 		for(FunctionOrMethodDeclaration method: module.functionOrMethod("main")){
 			for(Case mcase:method.cases()){
 				Block block = mcase.body();				
-				blockstack.push(new StackFrame(block,0, method.name(), -1));				
+				blockstack.push(new StackFrame(1, block,0, method.name(), -1));				
 			}
 		}
 
@@ -180,11 +177,9 @@ public class WyilInterpreter extends Interpreter implements Builder{
 				InterpreterBinaryOperator.getInstance().interpret((Codes.BinaryOperator)code, stackframe);
 			} else if (code instanceof Codes.ListOperator) {
 				InterpreterListOperator.getInstance().interpret((Codes.ListOperator)code, stackframe);
-			} /*else if (code instanceof Codes.BinSetOp) {
-				internalFailure("Not implemented!", filename, entry);
-			} else if (code instanceof Codes.BinStringOp) {
-				internalFailure("Not implemented!", filename, entry);
-			} */else if (code instanceof Codes.Convert) {			
+			} else if (code instanceof Codes.StringOperator) {
+				InterpreterStringOperator.getInstance().interpret((Codes.StringOperator)code, stackframe);
+			} else if (code instanceof Codes.Convert) {			
 				InterpreterConvert.getInstance().interpret((Codes.Convert)code, stackframe);
 			} else if (code instanceof Codes.Const) {			
 				InterpreterConst.getInstance().interpret((Codes.Const)code, stackframe);

@@ -22,22 +22,20 @@ public class InterpreterReturn extends Interpreter {
 
 		int linenumber = stackframe.getLine();
 		int return_reg = stackframe.getReturn_reg();
-		blockstack.pop();
-		String msg = "";
+		blockstack.pop();	
 		//Check if the results are returned.
 		if (code.type != Type.T_VOID) {
 			//Read the values from the operand register.
-			Constant return_value = stackframe.getRegister(code.operand);
-			msg += "%" + code.operand +"("+return_value+")";
+			Constant return_value = stackframe.getRegister(code.operand);			
 			//Get the previous block							
 			stackframe = blockstack.peek();				
 			linenumber = stackframe.getLine();
-			//Return the result by updating the register. 
+			//Return the result by updating the register.
 			stackframe.setRegister(return_reg, return_value);
 			//msg += "\n\n====Return to \""+stackframe.getName()+"\" with "+
 			//		"%"+stackframe.getReturn_reg() + "("+return_value+")";
 			printMessage(stackframe, code.toString(),
-					"%"+stackframe.getReturn_reg() + "("+return_value+")\n");
+					"%"+return_reg + "("+return_value+")\n");
 			
 			stackframe.setLine(++linenumber);
 
