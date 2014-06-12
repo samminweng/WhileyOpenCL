@@ -23,8 +23,7 @@ public class InterpreterForAll extends Interpreter {
 	}
 
 	public void interpret(Codes.ForAll code, StackFrame stackframe) {		
-		int linenumber = stackframe.getLine();
-		String msg; 
+		int linenumber = stackframe.getLine();		
 		//Get the index 
 		Constant.List sourceOperand = (Constant.List) stackframe.getRegister(code.sourceOperand);
 		ArrayList<Constant> values = sourceOperand.values;
@@ -45,7 +44,7 @@ public class InterpreterForAll extends Interpreter {
 			
 		//Check if the index is out-of-boundary. If so, then return.
 		if(index == values.size()){
-			System.out.println("No elements in the list.");
+			//System.out.println("No elements in the list.");
 			//Empty the indexoperand
 			stackframe.setRegister(code.indexOperand, null);
 			String label = code.target+"LoopEnd";

@@ -1,11 +1,12 @@
 package wyopcl.interpreter;
 
 import static wycc.lang.SyntaxError.internalFailure;
-import wycc.lang.NameID;
+import whiley.lang.*;
 import wyil.lang.Codes;
 import wyil.lang.Code.Block;
 import wyil.lang.Constant;
-import wyil.lang.Type.FunctionOrMethod;
+
+import java.lang.String;
 
 public class InterpreterInvoke extends Interpreter {
 	
@@ -49,11 +50,11 @@ public class InterpreterInvoke extends Interpreter {
 			//Directly invoke the function/method.
 			Constant operand = stackframe.getRegister(code.operands[0]);
 			Constant result = null;
-			if(code.name.module().toString().equalsIgnoreCase("Whiley/lang/Any")){
+			if(code.name.module().toString().equalsIgnoreCase("Whiley/lang/Any")){				
 				switch(code.name.name()){
 				case "toString":
-					try {
-						String value = whiley.lang.Any.toString$Z9bFaB1F71E(operand);
+					try {						
+						String value = Any.toString$Z9bFaB1F71E(operand);
 						result = Constant.V_STRING(value);
 						stackframe.setRegister(code.target, result);
 					} catch (SecurityException e) {

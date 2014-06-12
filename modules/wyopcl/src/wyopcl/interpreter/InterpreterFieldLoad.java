@@ -1,13 +1,6 @@
 package wyopcl.interpreter;
 
-import static wycc.lang.SyntaxError.internalFailure;
-
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 import wyil.lang.Codes;
 import wyil.lang.Constant;
@@ -31,21 +24,12 @@ public class InterpreterFieldLoad extends Interpreter {
 		int linenumber = stackframe.getLine();		
 		//Reads a record value from an operand register
 		Constant.Record record = (Constant.Record)stackframe.getRegister(code.operand);
-		HashMap<String, Type> fields = code.type.fields();
-		Map<String, Constant> values = new HashMap<String, Constant>();
-		//Extract the value of a given field.		
-		Set<Entry<String, Type>> entrySet = fields.entrySet();
-		Iterator<Entry<String, Type>> iterator = entrySet.iterator();
+		String givenfield = code.field;
+		HashMap<String, Constant> values = new HashMap<String, Constant>();
 		
-		while(iterator.hasNext()){
-			 Entry<String, Type> next = iterator.next();
-			if(next.getKey().equals(code.field)){
-				Type value = next.getValue();
-				values.put(next.getKey(), Constant.V_TYPE(value));					
-				break;
-			}
-		}	
-	
+		//Extract the value of a given field.
+		Type fieldType = code.type.field(givenfield);
+		values.put(givenfield, Constant.V_TYPE(fieldType));	
 		//Write the given value to the target register.
 		Constant result = Constant.V_RECORD(values);
 		stackframe.setRegister(code.target, result);	

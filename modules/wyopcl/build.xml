@@ -2,13 +2,13 @@
   <import file="../../config.xml"/>  
 
   <target name="compile-wyopcl">
-    <javac debug="true" debuglevel="vars,lines,source" source="1.6" includeantruntime="true" classpath="../wyrl/src:../wyil/src:../wyc/src:../wybs/src/:../../${JASM_JAR}"> 
+    <javac debug="true" debuglevel="vars,lines,source" source="1.7" includeantruntime="true" classpath="../wyrl/src:../wyil/src:../wyc/src:../wybs/src/:../wyjc/src/:../../${JASM_JAR}"> 
       <src path="src"/>
       <include name="*/**"/>
       <!--<exclude name="wyjc/testing/**"/> 
       <exclude name="*/**/package-info.java"/>--> 
     </javac>
-    <taskdef name="wyopcl" classname="wyopcl.util.WyopclAntTask" classpath="src/:../wyil/src/:../wyc/src:../wyrl/src:../wycs/src:../wybs/src/:../../${JASM_JAR}"/>
+    <taskdef name="wyopcl" classname="wyopcl.util.WyopclAntTask" classpath="src/:../wyil/src/:../wyc/src:../wyrl/src:../wycs/src:../wybs/src/:../wyjc/src/:../../${JASM_JAR}"/>
     <wyopcl verbose="false" wyildir="../wyrt/src" includes="whiley/**/*.wyil"/>
   </target>
 
@@ -61,10 +61,13 @@
       <fileset dir="../wyrt/src">
 	<include name="whiley/**/*.wyil"/>
       </fileset>
-      <fileset dir="src">
-	<!--<include name="whiley/**/*.class"/>-->
-	<include name="wyopcl/**/*.class"/>
-	<!--<include name="wyjvm/**/*.class"/>-->
+    <fileset dir="../wyjc/src">
+    	<include name="whiley/**/*.class"/>
+    	<include name="wyjc/**/*.class"/>
+    	<include name="wyjvm/**/*.class"/>
+     </fileset>
+      <fileset dir="src">	
+		<include name="wyopcl/**/*.class"/>	
       </fileset>
       <fileset dir="tmp">
 	<include name="jasm/**/*.class"/>

@@ -117,17 +117,17 @@ public class WyilInterpreter extends Interpreter implements Builder{
 							int line = pos+1;
 							symbol.addLabelLoc(label+"LoopEnd", line);
 							//Display the message.
-							System.out.println(label+"LoopEnd--->"+line);
+							//System.out.println(label+"LoopEnd--->"+line);
 						}else if(code instanceof Codes.Label){
 							//Put the label map into the queue.
 							String label = ((Codes.Label)code).label;
 							symbol.addLabelLoc(label, pos);
-							System.out.println(label+"--->"+pos);
+							//System.out.println(label+"--->"+pos);
 						}else if(code instanceof Codes.Loop){								
 							//This case includes Code.Loop and Code.ForAll
 							String label = ((Codes.Loop)code).target;
 							symbol.addLabelLoc(label, pos);
-							System.out.println(label+"--->"+pos);
+							//System.out.println(label+"--->"+pos);
 						}
 
 					}
@@ -245,10 +245,7 @@ public class WyilInterpreter extends Interpreter implements Builder{
 				InterpreterTryCatch.getInstance().interpret((Codes.TryCatch)code, stackframe);
 			} else if (code instanceof Codes.TupleLoad) {
 				internalFailure("Not implemented!", filename, entry);
-			} /*else if (code instanceof Codes.UnArithOp) {
-				internalFailure("Not implemented!", filename, entry);
-			}*/
-			else if (code instanceof Codes.Update) {
+			} else if (code instanceof Codes.Update) {
 				InterpreterUpdate.getInstance().interpret((Codes.Update)code, stackframe);
 			} else {
 				internalFailure("unknown wyil code encountered (" + code + ")", filename, entry);

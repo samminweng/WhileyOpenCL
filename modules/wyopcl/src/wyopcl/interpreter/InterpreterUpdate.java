@@ -26,27 +26,30 @@ public class InterpreterUpdate extends Interpreter{
 	public void interpret(Codes.Update code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
 		//Popup the compound type (lists, dictionaries, strings, records and references
-		Type afterType = code.afterType;
-		//String msg = "\n>";
+		Type afterType = code.afterType;		
 		if(afterType instanceof Type.List){
 			//Pops the list.
 			Constant.List result = (Constant.List)stackframe.getRegister(code.target);
-			//Read the value from the register.
-			Constant value = stackframe.getRegister(code.result());
-			//msg += "%"+code.result()+"("+value+")";
+			//Read the rhs from the register.
+			Constant rhs = stackframe.getRegister(code.result());
+			//Copy the arrayList
+			ArrayList<Constant> values = result.values;
 			//Get the indices
-			Constant.Integer index;
-			for (int indexoperand : code.operands) {
-				index = (Constant.Integer)stackframe.getRegister(indexoperand);
-				result.values.set(index.value.intValue(), value);
-				//msg += "%"+indexoperand+"("+index+") ";
+			int index;
+			for (int key : code.keys()) {
+				index = ((Constant.Integer)stackframe.getRegister(key)).value.intValue();
+				//int i = index.value.intValue();
+				if(values.size()<index){
+					values.add(rhs);
+				}else{
+					values.set(index, rhs);
+				}
 			}
-			
+
 			//Update the result to the list.
 			stackframe.setRegister(code.target, result);
 			printMessage(stackframe, code.toString(),
 					"%"+code.target + "("+result+")");
-			//msg += "%"+code.target+"("+list+")";
 			
 		}else{
 			internalFailure("Not implemented!", "IntepreterUpdate.java", null);

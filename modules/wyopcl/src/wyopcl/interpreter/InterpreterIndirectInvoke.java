@@ -18,11 +18,11 @@ import wyil.lang.Type.FunctionOrMethod;
 import wyil.lang.Type.Method;
 
 public class InterpreterIndirectInvoke extends Interpreter {
-	
+
 	private static InterpreterIndirectInvoke instance;	
 	public InterpreterIndirectInvoke(){		
 	}
-	
+
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
 	public static InterpreterIndirectInvoke getInstance(){
 		if (instance == null){
@@ -30,15 +30,16 @@ public class InterpreterIndirectInvoke extends Interpreter {
 		}
 		return instance;
 	}
-	
-	
+
+
 	public void interpret(Codes.IndirectInvoke code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
 		Constant.Record field = (Constant.Record)stackframe.getRegister(code.reference());
-		
+
 		FunctionOrMethod func = code.type;
 		List<Object> values = new ArrayList<Object>();
-		if(func instanceof FunctionOrMethod){		
+		
+		if(func instanceof Method){		
 			//Get the parameter values.			
 			for(int i=0;i<code.parameters().length;i++){
 				Type paramType = func.params().get(i);
@@ -53,27 +54,26 @@ public class InterpreterIndirectInvoke extends Interpreter {
 					internalFailure("Not implemented!", "InterpreterIndirectInvoke.java", null);
 				}
 			}			
+
+			try {
+				
+				Class<?> systemClass = java.lang.Class.forName("java.lang.System");
+				java.lang.reflect.Field outField = systemClass.getDeclaredField("out");
+				Class<?> printStreamClass = outField.getType();
+				java.lang.reflect.Method printlnMethod = printStreamClass.getDeclaredMethod("println", String.class);
+				Object object = outField.get(null);
+				printlnMethod.invoke(object, values.get(0).toString());
+			} catch (ClassNotFoundException | NoSuchFieldException | SecurityException | NoSuchMethodException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
+				e.printStackTrace();
+			}
 			
 		}else{
 			internalFailure("Not implemented!", "InterpreterIndirectInvoke.java", null);
 		}
+
+
 		
-		
-		try {
-			
-			
-			Class<?> systemClass = java.lang.Class.forName("java.lang.System");
-			java.lang.reflect.Field outField = systemClass.getDeclaredField("out");
-			Class<?> printStreamClass = outField.getType();
-			java.lang.reflect.Method printlnMethod = printStreamClass.getDeclaredMethod("println", String.class);
-			Object object = outField.get(null);
-			printlnMethod.invoke(object, values.get(0).toString());
-			
-		} catch (ClassNotFoundException | NoSuchFieldException | SecurityException | NoSuchMethodException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+
 
 		printMessage(stackframe, code.toString(), "");
 		stackframe.setLine(++linenumber);
