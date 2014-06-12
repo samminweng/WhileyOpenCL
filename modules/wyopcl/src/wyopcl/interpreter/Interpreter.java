@@ -16,13 +16,22 @@ public abstract class Interpreter {
 	protected static Stack<StackFrame> blockstack = new Stack<StackFrame>();
 	protected static HashMap<Block, SymbolTable> symboltable = new HashMap<Block, SymbolTable>();
 	protected static boolean verbose = false;
+	protected static boolean verify = false;
 	protected static WyilFile module;
+	
+	public static boolean isVerify() {
+		return verify;
+	}
+
+	public void setVerify(boolean verify) {
+		Interpreter.verify = verify;
+	}
 	
 	public static WyilFile getModule() {
 		return module;
 	}
 	
-	public static void setModule(WyilFile module) {
+	public void setModule(WyilFile module) {
 		Interpreter.module = module;
 	}
 

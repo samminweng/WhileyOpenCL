@@ -136,6 +136,10 @@ public class WyopclBuildTask extends wyc.util.WycBuildTask {
 			wyilInterpreter.setVerbose(verbose);
 		}
 		
+		if(verification){
+			wyilInterpreter.setVerify(verification);
+		}
+		
 		
 		project.add(new StdBuildRule(wyilInterpreter, wyilDir, wyilIncludes,
 				wyilExcludes, classDir));

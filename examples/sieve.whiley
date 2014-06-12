@@ -43,4 +43,4 @@ function sieve(int limit) => int:
 //http://primes.utm.edu/howmany.shtml
 method main(System.Console console):
 	console.out.println("sieve(100)="++sieve(100))		
-	//console.out.println(sieve(1000))		
+	console.out.println("sieve(1000)="++sieve(1000))		
