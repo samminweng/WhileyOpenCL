@@ -8,6 +8,7 @@ import wycc.util.Logger;
 import wyil.lang.Code.Block;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
+import wyil.lang.WyilFile;
 
 /*Declare the abstract Interpreter class, methods and variables. */
 public abstract class Interpreter {
@@ -15,6 +16,20 @@ public abstract class Interpreter {
 	protected static Stack<StackFrame> blockstack = new Stack<StackFrame>();
 	protected static HashMap<Block, SymbolTable> symboltable = new HashMap<Block, SymbolTable>();
 	protected static boolean verbose = false;
+	protected static WyilFile module;
+	
+	public static WyilFile getModule() {
+		return module;
+	}
+	
+	public static void setModule(WyilFile module) {
+		Interpreter.module = module;
+	}
+
+
+	public static boolean isVerbose() {
+		return verbose;
+	}
 	
 	public void setVerbose(boolean verbose) {
 		Interpreter.verbose = verbose;

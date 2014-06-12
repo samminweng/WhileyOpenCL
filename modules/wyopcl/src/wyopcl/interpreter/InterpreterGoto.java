@@ -26,7 +26,7 @@ public class InterpreterGoto extends Interpreter {
 		stackframe.setLine(linenumber);
 		
 		printMessage(stackframe, code.toString(),
-				 "%"+ code.target + "("+linenumber+")\n");
+				  code.target + "("+linenumber+")\n");
 		
 	}
 	

@@ -40,6 +40,7 @@ import wyopcl.interpreter.InterpreterLengthOf;
 import wyopcl.interpreter.InterpreterLoop;
 import wyopcl.interpreter.InterpreterLoopEnd;
 import wyopcl.interpreter.InterpreterNewList;
+import wyopcl.interpreter.InterpreterNewRecord;
 import wyopcl.interpreter.InterpreterNop;
 import wyopcl.interpreter.InterpreterReturn;
 import wyopcl.interpreter.InterpreterStringOperator;
@@ -83,12 +84,11 @@ public class WyilInterpreter extends Interpreter implements Builder{
 			//Path.Root dst = p.second();
 			Path.Entry<WyilFile> sf = (Path.Entry<WyilFile>) p.first();
 			WyilFile module = sf.read();
+			setModule(module);
 			this.filename = module.filename();
 			this.preprocessor(module);
 			//Get started with the main method.
-			this.interpret(module);	
-			
-
+			this.interpret(module);
 		}
 
 		long endTime = System.currentTimeMillis();
@@ -117,17 +117,25 @@ public class WyilInterpreter extends Interpreter implements Builder{
 							int line = pos+1;
 							symbol.addLabelLoc(label+"LoopEnd", line);
 							//Display the message.
-							//System.out.println(label+"LoopEnd--->"+line);
+							if(verbose){
+								System.out.println(label+"LoopEnd--->"+line);
+							}
+							
 						}else if(code instanceof Codes.Label){
 							//Put the label map into the queue.
 							String label = ((Codes.Label)code).label;
 							symbol.addLabelLoc(label, pos);
-							//System.out.println(label+"--->"+pos);
+							if(verbose){
+								System.out.println(label+"--->"+pos);
+							}
+							
 						}else if(code instanceof Codes.Loop){								
 							//This case includes Code.Loop and Code.ForAll
 							String label = ((Codes.Loop)code).target;
 							symbol.addLabelLoc(label, pos);
-							//System.out.println(label+"--->"+pos);
+							if(verbose){
+								System.out.println(label+"--->"+pos);
+							}							
 						}
 
 					}
@@ -222,7 +230,7 @@ public class WyilInterpreter extends Interpreter implements Builder{
 			} else if (code instanceof Codes.NewList) {			
 				InterpreterNewList.getInstance().interpret((Codes.NewList)code, stackframe);
 			} else if (code instanceof Codes.NewRecord) {
-				internalFailure("Not implemented!", filename, entry);
+				InterpreterNewRecord.getInstance().interpret((Codes.NewRecord)code, stackframe);
 			} else if (code instanceof Codes.NewSet) {
 				internalFailure("Not implemented!", filename, entry);
 			} else if (code instanceof Codes.NewTuple) {

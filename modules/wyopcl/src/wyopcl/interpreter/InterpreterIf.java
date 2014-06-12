@@ -79,7 +79,7 @@ public class InterpreterIf extends Interpreter {
 		}else{
 			linenumber++;
 		}
-		printMessage(stackframe, code.toString(), code.target +")\n");
+		printMessage(stackframe, code.toString(), code.target+"(" +linenumber+")\n");
 		stackframe.setLine(linenumber);
 
 	}

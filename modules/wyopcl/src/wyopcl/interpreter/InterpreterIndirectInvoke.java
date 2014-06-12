@@ -12,6 +12,7 @@ import java.util.Map.Entry;
 
 import wyil.lang.Codes;
 import wyil.lang.Constant;
+import wyil.lang.Constant.Record;
 import wyil.lang.Type;
 import wyil.lang.Type.Function;
 import wyil.lang.Type.FunctionOrMethod;
@@ -34,8 +35,7 @@ public class InterpreterIndirectInvoke extends Interpreter {
 
 	public void interpret(Codes.IndirectInvoke code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
-		Constant.Record field = (Constant.Record)stackframe.getRegister(code.reference());
-
+		Constant.Lambda reference = (Constant.Lambda)stackframe.getRegister(code.reference());
 		FunctionOrMethod func = code.type;
 		List<Object> values = new ArrayList<Object>();
 		
@@ -53,29 +53,31 @@ public class InterpreterIndirectInvoke extends Interpreter {
 				}else{
 					internalFailure("Not implemented!", "InterpreterIndirectInvoke.java", null);
 				}
-			}			
-
-			try {
-				
-				Class<?> systemClass = java.lang.Class.forName("java.lang.System");
-				java.lang.reflect.Field outField = systemClass.getDeclaredField("out");
-				Class<?> printStreamClass = outField.getType();
-				java.lang.reflect.Method printlnMethod = printStreamClass.getDeclaredMethod("println", String.class);
-				Object object = outField.get(null);
-				printlnMethod.invoke(object, values.get(0).toString());
-			} catch (ClassNotFoundException | NoSuchFieldException | SecurityException | NoSuchMethodException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
-				e.printStackTrace();
-			}
-			
+			}	
 		}else{
 			internalFailure("Not implemented!", "InterpreterIndirectInvoke.java", null);
 		}
 
-
+		//Invoke the function
 		
-
-
-		printMessage(stackframe, code.toString(), "");
+		if(reference.name.name().equalsIgnoreCase("println")){
+			try {
+				Class<?> systemClass = java.lang.Class.forName("java.lang.System");
+				java.lang.reflect.Field outField = systemClass.getDeclaredField("out");
+				Class<?> printStreamClass = outField.getType();
+				java.lang.reflect.Method printlnMethod = printStreamClass.getDeclaredMethod("println", String.class);
+				Object object = outField.get(null);			
+				printlnMethod.invoke(object, values.get(0).toString());
+			} catch (ClassNotFoundException | NoSuchFieldException | SecurityException | NoSuchMethodException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
+				e.printStackTrace();
+			}
+		}else{
+			internalFailure("Not implemented!", "InterpreterIndirectInvoke.java", null);
+		}
+		
+		
+		
+		printMessage(stackframe, code.toString(), reference+"");
 		stackframe.setLine(++linenumber);
 	}
 
