@@ -1,5 +1,6 @@
 package wyopcl.interpreter;
 
+import static wycc.lang.SyntaxError.internalFailure;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 
@@ -26,66 +27,51 @@ public class InterpreterAssertOrAssume extends Interpreter {
 		Constant left = stackframe.getRegister(code.leftOperand);
 		Constant right = stackframe.getRegister(code.rightOperand);
 		
-		String msg = "%"+ code.leftOperand+"(" + left+")";
-		boolean isSatisfied = false;
+		boolean result = false;
 		switch (code.op) {
 		case EQ:
-			msg += " == ";
 			if(left.compareTo(right)==0){
-				isSatisfied = true;				
-			}else{
-				//Stop the loop.
-				
+				result = true;				
 			}
 			break;
 		case NEQ:
-			msg += " != ";
 			if(left.compareTo(right)==0){
-				isSatisfied = true;
-			}else{
-				//Stop the loop.
-				
+				result = true;
 			}			
 			break;
 		case LT:
-			msg += " < ";
 			if (left.compareTo(right) < 0) {
-				isSatisfied = true;
-			}else{
-				//Stop the loop.				
+				result = true;
 			}
 			break;
 		case LTEQ:
-			msg += " <= ";
 			if (left.compareTo(right) <= 0) {
-				isSatisfied = true;
-			}else{
-				//Stop the loop.				
-			} 
+				result = true;
+			}
 			break;
-		case GT:
-			msg += " > ";
+		case GT:			
 			if (left.compareTo(right) > 0) {
-				isSatisfied = true;
-			}else{
-				//Stop the loop.				
+				result = true;
 			}
 			break;
 		case GTEQ:
-			msg += " >= ";
+			//msg += " >= ";
 			if (left.compareTo(right) >= 0) {
-				isSatisfied = true;				
-			}else{
-				
+				result = true;				
 			}
 			break;
 		default:
-			// internalFailure("unknown if condition encountered",filename,stmt);
-			return;
+			internalFailure("unknown if condition encountered","InterpreterAssertOrAssume.java",null);
+		}
+		printMessage(stackframe, code.toString(), result+"\n");
+		
+		//Check if result is true. 
+		if(result){
+			//If so, then the assertion is violated. Then the program should stop.
+			System.err.println(code.msg);
+			System.exit(-1);
 		}
 		
-		msg += "%"+ code.rightOperand+"(" + right+") => "+isSatisfied;
-		printMessage(stackframe, code.toString(), msg);
 		stackframe.setLine(++linenumber);
 	}
 	

@@ -22,9 +22,7 @@ public class InterpreterAssign extends Interpreter {
 		int operand = code.operand;
 		int target = code.target;
 		Constant result = stackframe.getRegister(operand);
-		stackframe.setRegister(target, result);
-		//System.out.println("#"+linenumber+" ["+code+"]\n>"
-		//		+"%" + operand+ "("+ result +") %"+ target + "("+result+")\n");
+		stackframe.setRegister(target, result);		
 		printMessage(stackframe, code.toString(), "%"+ target + "("+result+")\n");
 		stackframe.setLine(++linenumber);
 	}

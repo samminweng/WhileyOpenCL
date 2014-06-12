@@ -34,9 +34,7 @@ public class InterpreterFieldLoad extends Interpreter {
 		String givenfield = code.field;
 		Constant result = null;
 		Type fieldType = code.fieldType();
-		if(fieldType instanceof Type.Bool){
-			result = record.values.get(givenfield);
-		}else if(fieldType instanceof Type.Record){
+		if(fieldType instanceof Type.Record){
 			HashMap<String, Constant> values = new HashMap<String, Constant>();
 			//Extract the value of a given field.			
 			if(record != null){
@@ -59,7 +57,8 @@ public class InterpreterFieldLoad extends Interpreter {
 			}
 			result = Constant.V_LAMBDA(name, (Type.Method)fieldType);
 		}else{
-			internalFailure("Not implemented!", "InterpreterFieldLoad.java", null);
+			result = record.values.get(givenfield);
+			//internalFailure("Not implemented!", "InterpreterFieldLoad.java", null);
 		}
 		
 		stackframe.setRegister(code.target, result);	

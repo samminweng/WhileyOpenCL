@@ -58,8 +58,7 @@ public class InterpreterIndirectInvoke extends Interpreter {
 			internalFailure("Not implemented!", "InterpreterIndirectInvoke.java", null);
 		}
 
-		//Invoke the function
-		
+		//Invoke the function		
 		if(reference.name.name().equalsIgnoreCase("println")){
 			try {
 				Class<?> systemClass = java.lang.Class.forName("java.lang.System");

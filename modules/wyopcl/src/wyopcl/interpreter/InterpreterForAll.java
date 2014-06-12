@@ -44,8 +44,7 @@ public class InterpreterForAll extends Interpreter {
 			
 		//Check if the index is out-of-boundary. If so, then return.
 		if(index == values.size()){
-			//System.out.println("No elements in the list.");
-			//Empty the indexoperand
+			//No elements in the list.
 			stackframe.setRegister(code.indexOperand, null);
 			String label = code.target+"LoopEnd";
 			Block block = stackframe.getBlock();
@@ -57,10 +56,8 @@ public class InterpreterForAll extends Interpreter {
 			Constant result = values.get(index);
 			stackframe.setRegister(code.indexOperand, result);
 			//Modified operands.
-			//msg = "%" + code.indexOperand + "(" + values.get(index)
-			//		+ ") %" + code.sourceOperand + "(" + sourceOperand + ")";
 			printMessage(stackframe, code.toString(),
-						 "%"+ code.target + "("+result+")\n");
+						 "%"+ code.indexOperand + "("+result+")\n");
 			stackframe.setLine(++linenumber);
 		}
 
