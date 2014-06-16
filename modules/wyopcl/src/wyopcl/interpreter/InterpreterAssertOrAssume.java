@@ -35,7 +35,7 @@ public class InterpreterAssertOrAssume extends Interpreter {
 			}
 			break;
 		case NEQ:
-			if(left.compareTo(right)==0){
+			if(left.compareTo(right)!=0){
 				result = true;
 			}			
 			break;

@@ -6,7 +6,7 @@ function sqrt(int n) => int:
 		int mid = low + (high-low)/2
 		int square = mid*mid
 		if square == n:
-			return mid
+			return mid	
 		else if square < n:
 			low = mid
 		else:
