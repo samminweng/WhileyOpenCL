@@ -1,7 +1,8 @@
-method main(System.Console sys):
+method main(System.Console console):
 	int a = 5
 	int b = 10
-	if a == 5:
-		sys.out.println(a)
+	console.out.println("a="++a++", b="++b)
+	if a > b:
+		console.out.println("a>b")
 	else:
-		sys.out.println(b)
+		console.out.println("a<=b")

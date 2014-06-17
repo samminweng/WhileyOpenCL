@@ -1,8 +1,12 @@
-method main(System.Console sys):
-	int sum = 42
-	[int] a = [50, 51, 52, 53, 54]
-	[int] b = [1, 2, 3]
-	for i in a:
-		for j in b:
-				sum = sum + i*j	
-	sys.out.println(sum)
+method main(System.Console console):
+	console.out.print(" ")
+	for i in 1..9:
+		console.out.print(" "++i)
+	console.out.print("\n")
+	console.out.println("-------------------------------------------------------")
+	for i in 1..9:
+		console.out.print(i++"|")
+		for j in 1..9:
+			console.out.print(" "++i*j)
+		console.out.println("")
+				

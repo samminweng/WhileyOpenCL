@@ -22,7 +22,7 @@ public class InterpreterConvert extends Interpreter {
 		Constant operand = stackframe.getRegister(code.operand);
 		//Type assignedType = code.assignedType();
 		Type resultType = code.result;
-		Constant result = Converter.ConvertObject(operand, resultType);
+		Constant result = Converter.convertToConstant(operand, resultType);
 		stackframe.setRegister(code.target, result);
 		printMessage(stackframe, code.toString(), "%"+ code.target + "("+result+")");
 		stackframe.setLine(++linenumber);

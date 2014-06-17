@@ -4,7 +4,9 @@ import static wycc.lang.SyntaxError.internalFailure;
 import jasm.lang.ClassFile.Field;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -37,45 +39,48 @@ public class InterpreterIndirectInvoke extends Interpreter {
 		int linenumber = stackframe.getLine();
 		Constant.Lambda reference = (Constant.Lambda)stackframe.getRegister(code.reference());
 		FunctionOrMethod func = code.type;
-		List<Object> values = new ArrayList<Object>();
-		
-		if(func instanceof Method){		
-			//Get the parameter values.			
-			for(int i=0;i<code.parameters().length;i++){
-				Type paramType = func.params().get(i);
-				//Check the parameter type
-				if(paramType instanceof Type.Any){
-					Constant constant = stackframe.getRegister(code.parameter(i));
-					values.add(constant);
-				} else	if(paramType instanceof Type.Int){
-					Constant.Integer const_value = (Constant.Integer)stackframe.getRegister(code.parameter(i));
-					values.add(const_value.value.intValue());
-				}else{
-					internalFailure("Not implemented!", "InterpreterIndirectInvoke.java", null);
-				}
-			}	
-		}else{
-			internalFailure("Not implemented!", "InterpreterIndirectInvoke.java", null);
+		List<Constant> values = new ArrayList<Constant>();
+
+
+		//Get the parameter values.			
+		for(int i=0;i<code.parameters().length;i++){
+			//Check the parameter type
+			Constant constant = stackframe.getRegister(code.parameter(i));
+			values.add(constant);
 		}
+
+		
+
 
 		//Invoke the function		
 		String name = reference.name.name();
+		java.lang.reflect.Method method = null;
 		if(name.equalsIgnoreCase("println") || name.equalsIgnoreCase("print")){
 			try {
 				Class<?> systemClass = java.lang.Class.forName("java.lang.System");
 				java.lang.reflect.Field outField = systemClass.getDeclaredField("out");
-				Class<?> printStreamClass = outField.getType();
-				java.lang.reflect.Method printlnMethod = printStreamClass.getDeclaredMethod(name, String.class);
-				Object object = outField.get(null);			
-				printlnMethod.invoke(object, values.get(0).toString());
-			} catch (ClassNotFoundException | NoSuchFieldException | SecurityException | NoSuchMethodException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
+				Class<?> printClass = outField.getType();
+				Class<?>[] parameterTypes = new Class[code.type.params().size()];
+				//Iterate the parameter types
+				for(int i=0;i<code.type.params().size();i++){
+					parameterTypes[i]= Converter.ConvertToClass(code.type.params().get(i));
+				}
+				method = printClass.getMethod(name, parameterTypes);
+				ArrayList<Object> arguments = new ArrayList<Object> ();
+				int index = 0;
+				for(Class<?> paramType: method.getParameterTypes()){
+					arguments.add(Converter.convertToObject(values.get(index), paramType));
+				}
+				method.invoke(outField.get(null), arguments.toArray());
+				
+			} catch (ClassNotFoundException | NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
 				e.printStackTrace();
 			}
 		}else{
 			internalFailure("Not implemented!", "InterpreterIndirectInvoke.java", null);
 		}
-		
-		printMessage(stackframe, code.toString(), "("+reference+")");
+
+		printMessage(stackframe, code.toString(), "("+method+")");
 		stackframe.setLine(++linenumber);
 	}
 

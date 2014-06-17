@@ -1,12 +1,12 @@
-function test_func_1(int sum, int x) => int:	
-	sum = sum + 1000
-	sum = sum + x
-	return sum
+function sum_func(int x, int y) => int:
+	return x + y
 
-function test_func_2(int sum) => int:	
-	sum = sum + 2000
-	return sum
+function sum_func_1(int x, int y, int z) => int:
+	return x + y + z
 
-method main(System.Console sys):
-	sys.out.println(test_func_1(42, 0))
-	sys.out.println(test_func_2(42))
+method main(System.Console console):
+	int x = 10
+	int y = 20
+	int z = 30
+	console.out.println("sum("++x++", "++y++")="++sum_func(x, y))
+	console.out.println("sum("++x++", "++y++", "++z++")="++sum_func_1(x, y, z))

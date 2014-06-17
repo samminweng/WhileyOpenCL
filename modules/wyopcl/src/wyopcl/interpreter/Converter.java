@@ -2,14 +2,23 @@ package wyopcl.interpreter;
 
 import static wycc.lang.SyntaxError.internalFailure;
 
+import java.lang.reflect.TypeVariable;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import wyil.lang.Constant;
 import wyil.lang.Type;
 
 public class Converter {
-
-	public static Object ConvertObject(Constant from, Class<?> paramType){
+	
+	/**
+	 * Convert the Constant object to Java Object.
+	 * @param from
+	 * @param paramType
+	 * @return
+	 */
+	public static Object convertToObject(Constant from, Class<?> paramType){
 		Object to = null;
 		if(from instanceof Constant.Strung){
 			to = ((Constant.Strung)from).value;
@@ -22,10 +31,15 @@ public class Converter {
 		}
 
 		return paramType.cast(to);
-	}
-
-
-	public static Constant ConvertObject(Object from, wyil.lang.Type assignedType){
+	}	
+	
+	/***
+	 * Convert the Java object to Constant object.
+	 * @param from
+	 * @param assignedType
+	 * @return
+	 */
+	public static Constant convertToConstant(Object from, wyil.lang.Type assignedType){
 		Constant to = null;
 
 		if(assignedType instanceof Type.Strung){
@@ -39,8 +53,13 @@ public class Converter {
 		return to;
 	}
 
-
-	public static Constant ConvertObject(Constant from, wyil.lang.Type resultType){
+	/***
+	 * Convert Constant object to Constant object.
+	 * @param from
+	 * @param resultType
+	 * @return
+	 */
+	public static Constant convertToConstant(Constant from, wyil.lang.Type resultType){
 		Constant to = null;
 
 		if (resultType instanceof Type.Any) {
@@ -55,5 +74,17 @@ public class Converter {
 		return to;
 	}
 
-
+	public static Class<?> ConvertToClass(Type paramType){
+		if(paramType instanceof Type.Any){
+			return Object.class;
+		}else if(paramType instanceof Type.Strung){
+			return String.class;
+		}else if(paramType instanceof Type.Int){
+			return Integer.class;
+		} else{
+			internalFailure("Not implemented!", "Converter.java", null);
+		}
+		return null;
+		
+	}
 }

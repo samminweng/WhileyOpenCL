@@ -78,12 +78,12 @@ public class InterpreterInvoke extends Interpreter {
 						for( Class<?> paramType : method.getParameterTypes()){
 							//The 'paramType' is Java data type.				    		
 							//Thus, we need a conversion from Constant to Java 
-							params.add(Converter.ConvertObject(operand, paramType));
+							params.add(Converter.convertToObject(operand, paramType));
 						}
 						Object returned_obj = method.invoke(null, params.toArray());
 						//The returned_obj is a Java data type, so we need to convert
 						// returned_obj into Constant.
-						result = Converter.ConvertObject(returned_obj, code.assignedType());
+						result = Converter.convertToConstant(returned_obj, code.assignedType());
 						stackframe.setRegister(code.target, result);
 						break;
 					}
