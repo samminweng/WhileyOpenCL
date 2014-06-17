@@ -15,6 +15,8 @@ public class Converter {
 			to = ((Constant.Strung)from).value;
 		}else if(from instanceof Constant.Integer){
 			to = ((Constant.Integer)from).value;
+		}else if (from instanceof Constant.List){
+			to = (Constant.List)from;
 		}else{
 			internalFailure("Not implemented!", "Converter.java", null);
 		}

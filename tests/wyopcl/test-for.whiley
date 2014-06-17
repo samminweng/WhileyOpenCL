@@ -3,5 +3,5 @@ method main(System.Console sys):
 	int sum = 42
 	for i in a:
 		sum = sum + (1*i + 2*i + 3*i)
-	sys.out.println(sum)
+	sys.out.println("sum("++a++")="++sum)
 	
