@@ -88,7 +88,7 @@ public class InterpreterBinaryOperator extends Interpreter {
 		//		+") %" + code.target + "(" + result + ")";
 		
 		//System.out.println("#"+linenumber+" ["+code+"]\n>"+msg+ "\n");
-		printMessage(stackframe, code.toString(), "%"+ code.target + "("+result+")\n");
+		printMessage(stackframe, code.toString(), "%"+ code.target + "("+result+")");
 		stackframe.setLine(++linenumber);
 	}
 

@@ -31,20 +31,14 @@ public class InterpreterReturn extends Interpreter {
 			stackframe = blockstack.peek();				
 			linenumber = stackframe.getLine();
 			//Return the result by updating the register.
-			stackframe.setRegister(return_reg, return_value);
-			//msg += "\n\n====Return to \""+stackframe.getName()+"\" with "+
-			//		"%"+stackframe.getReturn_reg() + "("+return_value+")";
+			stackframe.setRegister(return_reg, return_value);		
 			printMessage(stackframe, code.toString(),
 					"%"+return_reg + "("+return_value+")\n");
 			
 			stackframe.setLine(++linenumber);
-
-		}/*else{
-			msg += "("+code.type+")";
-		}*/
-
-
-		//System.out.println("#"+linenumber+" ["+code+"]\n>"+msg+"\n");
+		}else{
+			//Do nothing.
+		}
 
 	}
 

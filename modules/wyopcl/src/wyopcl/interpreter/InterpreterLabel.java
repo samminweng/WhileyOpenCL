@@ -17,7 +17,7 @@ public class InterpreterLabel extends Interpreter {
 	
 	public void interpret(Codes.Label code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
-		printMessage(stackframe, code.toString(), code.label+"\n");
+		printMessage(stackframe, code.toString(), "("+code.label+")");
 		stackframe.setLine(++linenumber);
 	}
 

@@ -55,8 +55,6 @@ public class InterpreterUpdate extends Interpreter{
 			internalFailure("Not implemented!", "IntepreterUpdate.java", null);
 		}
 		
-		//System.out.println("#"+linenumber+" ["+code+"]"+msg);
-		
 		stackframe.setLine(++linenumber);
 	}
 	

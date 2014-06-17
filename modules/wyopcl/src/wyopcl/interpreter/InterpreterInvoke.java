@@ -2,18 +2,28 @@ package wyopcl.interpreter;
 
 import static wycc.lang.SyntaxError.internalFailure;
 import whiley.lang.*;
+
+import java.lang.System;
+
 import wyil.lang.Codes;
 import wyil.lang.Code.Block;
 import wyil.lang.Constant;
 
 import java.lang.String;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class InterpreterInvoke extends Interpreter {
-	
+
 	private static InterpreterInvoke instance;	
 	public InterpreterInvoke(){		
 	}
-	
+
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
 	public static InterpreterInvoke getInstance(){
 		if (instance == null){
@@ -21,10 +31,12 @@ public class InterpreterInvoke extends Interpreter {
 		}
 		return instance;
 	}
-	
+
+
+
 	public void interpret(Codes.Invoke code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
-				
+
 		//Get the Block for the corresponding function/method. 
 		Block blk = blocktable.get(code.name.name());
 		if(blk != null){
@@ -33,7 +45,7 @@ public class InterpreterInvoke extends Interpreter {
 			//Create a new StackFrame
 			StackFrame stackFrame = new StackFrame(depth+1, blk, 0,
 					code.name.name(), code.target);
-		
+
 			//Pass the input parameters.
 			int index = 0;			
 			for(int operand: code.operands){
@@ -41,40 +53,55 @@ public class InterpreterInvoke extends Interpreter {
 				stackFrame.setRegister(index, constant);
 				index++;
 			}
-				
+
 			//Start invoking a new block.		
 			blockstack.push(stackFrame);
 			printMessage(stackframe, code.toString(),"\n");
-		
+
 		}else{
 			//Directly invoke the function/method.
 			Constant operand = stackframe.getRegister(code.operands[0]);
 			Constant result = null;
-			if(code.name.module().toString().equalsIgnoreCase("Whiley/lang/Any")){				
-				switch(code.name.name()){
-				case "toString":
-					try {						
-						String value = Any.toString$Z9bFaB1F71E(operand);
-						result = Constant.V_STRING(value);
+			String module_name = code.name.module().toString().replace('/', '.');
+			String method_name = code.name.name();
+
+			//Load the Class
+			try {
+				ClassLoader classLoader = this.getClass().getClassLoader();
+				Class<?> whileyclass = Class.forName(module_name, true, classLoader);
+				//Object whileyinstance = whileyclass.newInstance();
+				for(Method method: whileyclass.getMethods()){
+					//Find the method by checking the method name.
+					if(method.getName().startsWith(method_name)){
+						//Get the parameter types.
+						ArrayList<Object> params = new ArrayList<Object>();
+						for( Class<?> paramType : method.getParameterTypes()){
+							//The 'paramType' is Java data type.				    		
+							//Thus, we need a conversion from Constant to Java 
+							params.add(Converter.ConvertObject(operand, paramType));
+						}
+						Object returned_obj = method.invoke(null, params.toArray());
+						//The returned_obj is a Java data type, so we need to convert
+						// returned_obj into Constant.
+						result = Converter.ConvertObject(returned_obj, code.assignedType());
 						stackframe.setRegister(code.target, result);
-					} catch (SecurityException e) {
-						e.printStackTrace();
+						break;
 					}
-					break;
-				default:
-					internalFailure("Not implemented!", "InterpreterInvoke.java", null);
+
 				}
-				
-			}else{
-				internalFailure("Not implemented!", "InterpreterInvoke.java", null);
+
+			} catch (ClassNotFoundException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			printMessage(stackframe, code.toString(),"%"+code.target+"("+result+")\n");
+
+			printMessage(stackframe, code.toString(),"%"+code.target+"("+result+")");
 			stackframe.setLine(++linenumber);
 		}
-		
-		
-		
-		
+
+
+
+
 	}
 
 }

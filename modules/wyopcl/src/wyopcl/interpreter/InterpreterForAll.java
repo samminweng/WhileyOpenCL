@@ -57,19 +57,9 @@ public class InterpreterForAll extends Interpreter {
 			stackframe.setRegister(code.indexOperand, result);
 			//Modified operands.
 			printMessage(stackframe, code.toString(),
-						 "%"+ code.indexOperand + "("+result+")\n");
+						 "%"+ code.indexOperand + "("+result+")");
 			stackframe.setLine(++linenumber);
-		}
-
-		
-		//int[] modifiedOperands = code.modifiedOperands;
-		//for (int modifiedOperand : modifiedOperands){
-		//	Constant modified = stackframe.getRegister(modifiedOperand);
-			//msg += " %"+modifiedOperand+"("+ modified+")";
-		//}	
-		//System.out.println("#"+linenumber+" ["+code+"]\n>"+msg+"\n");
-		
-		
+		}	
 
 	}
 

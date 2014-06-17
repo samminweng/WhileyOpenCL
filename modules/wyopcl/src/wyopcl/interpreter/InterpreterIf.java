@@ -24,42 +24,34 @@ public class InterpreterIf extends Interpreter {
 		int linenumber = stackframe.getLine();
 		Constant left = stackframe.getRegister(code.leftOperand);
 		Constant right = stackframe.getRegister(code.rightOperand);
-		
-		String msg = "%" + code.leftOperand + "(" + left+") ";	
 		boolean satisfiable = false;
 		switch (code.op) {
-		case EQ:
-			msg += " == ";	
+		case EQ:			
 			if (left.compareTo(right) == 0){
 				satisfiable = true;		
 			}
 			break;
-		case NEQ:
-			msg += " != ";		
+		case NEQ:				
 			if (left.compareTo(right) != 0) {				
 				satisfiable = true;
 			}
 			break;
-		case LT:
-			msg += " < ";
+		case LT:			
 			if (left.compareTo(right) < 0) {				
 				satisfiable = true;
 			}
 			break;
-		case LTEQ:
-			msg += " <= ";
+		case LTEQ:			
 			if (left.compareTo(right) <= 0) {				
 				satisfiable = true;
 			}
 			break;
-		case GT:
-			msg += " > ";			
+		case GT:					
 			if (left.compareTo(right) > 0) {				
 				satisfiable = true;
 			}
 			break;
-		case GTEQ:
-			msg += " >= ";
+		case GTEQ:			
 			if (left.compareTo(right) >= 0) {				
 				satisfiable = true;				
 			}
@@ -70,8 +62,6 @@ public class InterpreterIf extends Interpreter {
 			
 		}
 		
-		msg += "%" + code.rightOperand + "(" + right + ") => "+satisfiable;
-		
 		if(satisfiable){
 			//Go to the branch
 			Block block = stackframe.getBlock();
@@ -79,7 +69,7 @@ public class InterpreterIf extends Interpreter {
 		}else{
 			linenumber++;
 		}
-		printMessage(stackframe, code.toString(), code.target+"(" +linenumber+")\n");
+		printMessage(stackframe, code.toString(), "(" +satisfiable+")");
 		stackframe.setLine(linenumber);
 
 	}

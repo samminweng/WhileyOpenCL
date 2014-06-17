@@ -25,7 +25,7 @@ public class InterpreterConst extends Interpreter {
 		stackframe.setRegister(code.target, code.constant);
 		//System.out.println("#"+linenumber+" ["+code+"]\n>"
 		//		+ "%"+ code.target + "(" + code.constant+")\n");
-		printMessage(stackframe, code.toString(), "%"+ code.target + "("+result+")\n");
+		printMessage(stackframe, code.toString(), "%"+ code.target + "("+result+")");
 		//Set the next line number
 		stackframe.setLine(++linenumber);
 	}

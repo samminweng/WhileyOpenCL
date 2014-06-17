@@ -1,6 +1,7 @@
 package wyopcl.util;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import wybs.util.StdBuildRule;
@@ -16,11 +17,18 @@ import jasm.lang.ClassFile;
 import jasm.io.ClassFileWriter;
 
 public class WyopclBuildTask extends wyc.util.WycBuildTask {
-
+	
+	// ===================================================
+	// Runtime Arguments
+	// ===================================================
+	protected String[] arguments;
+	public void setArguments(String[] arguments) {
+		this.arguments = arguments;
+	}
+	
 	// =========================================================================
 	// Content Type
 	// =========================================================================
-
 	public static final Content.Type<ClassFile> ContentType = new Content.Type<ClassFile>() {
 		public Path.Entry<ClassFile> accept(Path.Entry<?> e) {
 			if (e.contentType() == this) {
@@ -140,9 +148,11 @@ public class WyopclBuildTask extends wyc.util.WycBuildTask {
 			wyilInterpreter.setVerify(verification);
 		}
 		
+		wyilInterpreter.setArgs(this.arguments);
 		
 		project.add(new StdBuildRule(wyilInterpreter, wyilDir, wyilIncludes,
 				wyilExcludes, classDir));
+		
 	}
 	
 	@Override

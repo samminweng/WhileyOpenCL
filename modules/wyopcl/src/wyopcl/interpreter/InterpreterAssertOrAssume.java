@@ -63,7 +63,7 @@ public class InterpreterAssertOrAssume extends Interpreter {
 		default:
 			internalFailure("unknown if condition encountered","InterpreterAssertOrAssume.java",null);
 		}
-		printMessage(stackframe, code.toString(), result+"\n");
+		printMessage(stackframe, code.toString(), "("+result+")");
 		
 		//Check if result is false. 
 		if(!result && isVerify()){

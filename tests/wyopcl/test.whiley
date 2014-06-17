@@ -23,6 +23,6 @@ throws SyntaxError:
 
 method main(System.Console console):
 		try:		
-			console.out.println(Int.parse("as"))				
+			console.out.println(Int.parse("10"))				
 		catch(SyntaxError ex):
 			console.out.println("Missing number")

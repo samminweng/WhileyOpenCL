@@ -39,13 +39,8 @@ public class InterpreterIndexOf extends Interpreter {
 		}else{
 			internalFailure("Not implemented!", "InterpreterIndexOf.java", null);
 		}
-		stackframe.setRegister(code.target, value);	
-		//msg += " %"+code.leftOperand +"("+left+") "+
-		//	       " %"+code.rightOperand +"(" + key +") "+
-		//	       " %"+code.target + "("+value+")";
-		//System.out.println("#"+linenumber+" ["+code+"]\n"+msg+"\n");
-		printMessage(stackframe, code.toString(),
-				 "%"+ code.target + "("+value+")\n");
+		stackframe.setRegister(code.target, value);			
+		printMessage(stackframe, code.toString(), "%"+ code.target + "("+value+")");
 		stackframe.setLine(++linenumber);
 	}
 

@@ -43,11 +43,7 @@ public class InterpreterLengthOf extends Interpreter{
 		//Write the length to register.
 		Constant result =  Constant.V_INTEGER(BigInteger.valueOf(length));
 		stackframe.setRegister(code.target, result);
-		printMessage(stackframe, code.toString(),
-				 "%"+ code.target + "("+result+")\n");
-		//System.out.println("#"+linenumber+" ["+code+"]\n>"+
-		//				   " %"+ code.target + "(" + length +")"+
-		//				   " %" + code.operand+"("+ collection+")\n");
+		printMessage(stackframe, code.toString(), "%"+ code.target + "("+result+")");
 		stackframe.setLine(++linenumber);
 	}
 }

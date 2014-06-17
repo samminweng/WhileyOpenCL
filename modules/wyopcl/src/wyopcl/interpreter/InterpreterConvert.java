@@ -20,25 +20,11 @@ public class InterpreterConvert extends Interpreter {
 	public void interpret(Codes.Convert code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
 		Constant operand = stackframe.getRegister(code.operand);
-		Type assignedType = code.assignedType();
+		//Type assignedType = code.assignedType();
 		Type resultType = code.result;
-		Constant result = null;
-		String msg = "";
-		if (resultType instanceof Type.Any) {
-			//No needs to convert the type of the operand.
-			result = operand;
-		} else if (resultType instanceof Type.List){
-			result = (Constant.List) operand;
-		} else{
-			throw new RuntimeException("Not implemented!");
-		}
-		
+		Constant result = Converter.ConvertObject(operand, resultType);
 		stackframe.setRegister(code.target, result);
-		//msg += "%"+code.target+"("+result+") assigned Type:("+assignedType+")"
-		//		+ " result Type:("+resultType+")";
-		
-		//System.out.println("#"+linenumber+" ["+code+"]\n>"+msg+"\n");
-		printMessage(stackframe, code.toString(), "%"+ code.target + "("+result+")\n");
+		printMessage(stackframe, code.toString(), "%"+ code.target + "("+result+")");
 		stackframe.setLine(++linenumber);
 	}
 

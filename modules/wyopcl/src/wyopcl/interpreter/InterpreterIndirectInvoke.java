@@ -59,12 +59,13 @@ public class InterpreterIndirectInvoke extends Interpreter {
 		}
 
 		//Invoke the function		
-		if(reference.name.name().equalsIgnoreCase("println")){
+		String name = reference.name.name();
+		if(name.equalsIgnoreCase("println") || name.equalsIgnoreCase("print")){
 			try {
 				Class<?> systemClass = java.lang.Class.forName("java.lang.System");
 				java.lang.reflect.Field outField = systemClass.getDeclaredField("out");
 				Class<?> printStreamClass = outField.getType();
-				java.lang.reflect.Method printlnMethod = printStreamClass.getDeclaredMethod("println", String.class);
+				java.lang.reflect.Method printlnMethod = printStreamClass.getDeclaredMethod(name, String.class);
 				Object object = outField.get(null);			
 				printlnMethod.invoke(object, values.get(0).toString());
 			} catch (ClassNotFoundException | NoSuchFieldException | SecurityException | NoSuchMethodException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
@@ -74,9 +75,7 @@ public class InterpreterIndirectInvoke extends Interpreter {
 			internalFailure("Not implemented!", "InterpreterIndirectInvoke.java", null);
 		}
 		
-		
-		
-		printMessage(stackframe, code.toString(), reference+"");
+		printMessage(stackframe, code.toString(), "("+reference+")");
 		stackframe.setLine(++linenumber);
 	}
 

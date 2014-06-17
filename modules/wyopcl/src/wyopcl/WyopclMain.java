@@ -47,6 +47,7 @@ public class WyopclMain extends WycMain{
 		}
 	}
 	
+	
 	@Override
 	public int run(String[] _args) {
 		boolean verbose = false;
@@ -82,17 +83,22 @@ public class WyopclMain extends WycMain{
 			configure(values);
 						
 			ArrayList<File> delta = new ArrayList<File>();
+			//Additional arguments
+			ArrayList<String> arguments = new ArrayList<String>();
 			for (String arg : args) {
 				File f = new File(arg);
 				if(f.exists()){
 					delta.add(f);
-				}				
-			}		
-					
+				}else{
+					arguments.add(arg);
+				}
+			}
+			
+			((WyopclBuildTask) builder).setArguments(arguments.toArray(new String[arguments.size()]));
+			
 			// =====================================================================
 			// Run Build Task
 			// =====================================================================
-
 			builder.build(delta);
 
 		} catch (InternalFailure e) {

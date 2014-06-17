@@ -43,7 +43,7 @@ public class InterpreterNewRecord extends Interpreter{
 		//Construct the Record value
 		Constant.Record result = Constant.V_RECORD(values);
 		stackframe.setRegister(code.target, result);
-		printMessage(stackframe, code.toString(),"%"+code.target+"("+result+")\n");
+		printMessage(stackframe, code.toString(),"%"+code.target+"("+result+")");
 		stackframe.setLine(++linenumber);
 	}
 	

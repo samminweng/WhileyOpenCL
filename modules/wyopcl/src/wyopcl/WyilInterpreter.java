@@ -2,22 +2,36 @@ package wyopcl;
 
 import static wycc.lang.SyntaxError.internalFailure;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import wybs.lang.Build;
 import wybs.lang.Build.Project;
 import wybs.lang.Builder;
+import wycc.lang.NameID;
 import wycc.lang.SyntaxError;
 import wycc.util.Logger;
 import wycc.util.Pair;
 import wyfs.lang.Path;
+import wyfs.lang.Path.ID;
 import wyfs.lang.Path.Root;
+import wyil.io.WyilFileReader;
 import wyil.lang.Code;
 import wyil.lang.Code.Block;
 import wyil.lang.Codes;
+import wyil.lang.Constant;
+import wyil.lang.Type;
+import wyil.lang.Type.FunctionOrMethod;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.Case;
 import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
@@ -51,7 +65,7 @@ import wyopcl.interpreter.InterpreterUpdate;
 public class WyilInterpreter extends Interpreter implements Builder{
 	protected final Build.Project project;
 	protected String filename;
-	protected String[] args;
+	
 	/**
 	 * For logging information.
 	 */
@@ -69,6 +83,9 @@ public class WyilInterpreter extends Interpreter implements Builder{
 	public void setLogger(Logger logger) {
 		this.logger = logger;
 	}
+	
+	
+	
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -136,6 +153,8 @@ public class WyilInterpreter extends Interpreter implements Builder{
 							if(verbose){
 								System.out.println(label+"--->"+pos);
 							}							
+						}else{
+							//Do nothing
 						}
 
 					}
@@ -145,7 +164,8 @@ public class WyilInterpreter extends Interpreter implements Builder{
 		}
 
 	}
-
+	
+	
 	
 
 	protected void interpret(WyilFile module){
@@ -153,14 +173,40 @@ public class WyilInterpreter extends Interpreter implements Builder{
 		for(FunctionOrMethodDeclaration method: module.functionOrMethod("main")){
 			for(Case mcase:method.cases()){
 				Block block = mcase.body();				
-				blockstack.push(new StackFrame(1, block,0, method.name(), -1));				
+				StackFrame mainframe = new StackFrame(1, block,0, method.name(), -1);
+				
+				//Put a Constant.Record to the regiter 0.				
+				int index = 0;
+				for(Type param : method.type().params()){
+					//The values are used to create the Constant.Record.
+					HashMap<String, Constant> values = new HashMap<String, Constant>();
+					//put 'args' and 'out' fields into values.
+					Iterator<Entry<String, Type>> iterator = ((Type.Record)param).fields().entrySet().iterator();
+					while(iterator.hasNext()){
+						Entry<String, Type> next = iterator.next();
+						values.put(next.getKey(), Constant.V_TYPE(next.getValue()));
+					}
+					//Values = {[string] args,{method(any) => void print,method(any) => void println} out} 
+					if(args.length > 0 ){
+						ArrayList<Constant> arguments = new ArrayList<Constant>();
+						for(String arg: args){
+							arguments.add(Constant.V_STRING(arg));
+						}
+						//Replace the value of args with the argument list.
+						values.put("args", Constant.V_LIST(arguments));
+					}
+					
+					mainframe.setRegister(index, Constant.V_RECORD(values));
+					index++;
+				}
+				
+				blockstack.push(mainframe);				
 			}
 		}
 
 		while(!blockstack.isEmpty()){
 			StackFrame frame = blockstack.peek();
-			Block block = frame.getBlock();			
-			//SymbolTable symbol = symboltable.get(block);
+			Block block = frame.getBlock();
 			int linenumber = frame.getLine();
 			if(linenumber < block.size()){
 				Block.Entry entry = block.get(linenumber);				
@@ -266,6 +312,10 @@ public class WyilInterpreter extends Interpreter implements Builder{
 
 	}
 
+
+
+
+	
 	
 
 

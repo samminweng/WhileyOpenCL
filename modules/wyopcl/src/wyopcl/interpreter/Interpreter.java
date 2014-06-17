@@ -18,6 +18,19 @@ public abstract class Interpreter {
 	protected static boolean verbose = false;
 	protected static boolean verify = false;
 	protected static WyilFile module;
+	protected String[] args;
+	
+	/**
+	 * Passing the additional arguments from console to the interpreter.
+	 */
+	public String[] getArgs() {
+		return args;
+	}
+
+	public void setArgs(String[] args) {
+		this.args = args;
+	}
+	
 	
 	public static boolean isVerify() {
 		return verify;
@@ -157,7 +170,7 @@ public abstract class Interpreter {
 	public void printMessage(StackFrame stackframe, String code, String output){
 		if(verbose){
 			System.out.println(stackframe.getDepth()+" "+stackframe.getName()+"."+stackframe.getLine()
-					+" ["+code+"] "+output);
+					+" ["+code+"] "+output+"\n");
 		}
 		
 	}

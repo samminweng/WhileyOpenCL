@@ -28,10 +28,7 @@ public class InterpreterNewList extends Interpreter {
 		}
 		Constant.List result = Constant.V_LIST(values);
 		stackframe.setRegister(code.target, result);
-		printMessage(stackframe, code.toString(),
-				 "%"+ code.target + "("+result+")\n");
-		//System.out.println("#"+linenumber+" ["+code+"]\n>"
-		//		+"%" + reg + "(" + list+")\n");
+		printMessage(stackframe, code.toString(), "%"+ code.target + "("+result+")");	
 		stackframe.setLine(++linenumber);
 	}
 

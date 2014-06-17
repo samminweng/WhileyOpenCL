@@ -17,16 +17,14 @@ public class InterpreterGoto extends Interpreter {
 	}
 	
 	public void interpret(Codes.Goto code, StackFrame stackframe){		
-		int linenumber = stackframe.getLine();
-		//msg += "%"+code.target + "("+label+")";
-		//System.out.println("#"+linenumber+" ["+code+"]\n>"+msg+"\n");
+		int linenumber = stackframe.getLine();	
 		
 		Block block = stackframe.getBlock();
 		linenumber = symboltable.get(block).getBlockPosByLabel(code.target);
 		stackframe.setLine(linenumber);
 		
 		printMessage(stackframe, code.toString(),
-				  code.target + "("+linenumber+")\n");
+				  code.target + "("+linenumber+")");
 		
 	}
 	
