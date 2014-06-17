@@ -8,6 +8,7 @@ import java.lang.System;
 import wyil.lang.Codes;
 import wyil.lang.Code.Block;
 import wyil.lang.Constant;
+import wyil.lang.Type.FunctionOrMethod;
 
 import java.lang.String;
 import java.lang.reflect.Field;
@@ -36,15 +37,14 @@ public class InterpreterInvoke extends Interpreter {
 
 	public void interpret(Codes.Invoke code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
-
+		 wyil.lang.Type throwsClause = code.type.throwsClause();
 		//Get the Block for the corresponding function/method. 
 		Block blk = blocktable.get(code.name.name());
 		if(blk != null){
 			//Get the depth
 			int depth = stackframe.getDepth();
 			//Create a new StackFrame
-			StackFrame stackFrame = new StackFrame(depth+1, blk, 0,
-					code.name.name(), code.target);
+			StackFrame stackFrame = new StackFrame(depth+1, blk, 0,	code.name.name(), code.target);
 
 			//Pass the input parameters.
 			int index = 0;			
@@ -64,12 +64,10 @@ public class InterpreterInvoke extends Interpreter {
 			Constant result = null;
 			String module_name = code.name.module().toString().replace('/', '.');
 			String method_name = code.name.name();
-
 			//Load the Class
 			try {
 				ClassLoader classLoader = this.getClass().getClassLoader();
 				Class<?> whileyclass = Class.forName(module_name, true, classLoader);
-				//Object whileyinstance = whileyclass.newInstance();
 				for(Method method: whileyclass.getMethods()){
 					//Find the method by checking the method name.
 					if(method.getName().startsWith(method_name)){
@@ -91,8 +89,11 @@ public class InterpreterInvoke extends Interpreter {
 				}
 
 			} catch (ClassNotFoundException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | SecurityException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//Go to throw clause
+				printMessage(stackframe, code.toString(),"%"+code.target+"("+throwsClause+")");
+				linenumber = symboltable.get(stackframe.getBlock()).getThrowPos(linenumber);
+				stackframe.setLine(linenumber);
+				return;
 			}
 
 			printMessage(stackframe, code.toString(),"%"+code.target+"("+result+")");

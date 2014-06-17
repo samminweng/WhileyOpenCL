@@ -84,8 +84,6 @@ public class WyilInterpreter extends Interpreter implements Builder{
 		this.logger = logger;
 	}
 	
-	
-	
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -128,35 +126,32 @@ public class WyilInterpreter extends Interpreter implements Builder{
 					for(int pos = 0; pos <blk.size(); pos++){
 						Block.Entry entry = blk.get(pos);
 						Code code = entry.code;
+						String label = null;
+						int line = pos;
 						if(code instanceof Codes.LoopEnd){
-							String label = ((Codes.LoopEnd)code).label;							
+							label = ((Codes.LoopEnd)code).label;							
 							//Go to the next statement after the loop end.
-							int line = pos+1;
-							symbol.addLabelLoc(label+"LoopEnd", line);
-							//Display the message.
-							if(verbose){
-								System.out.println(label+"LoopEnd--->"+line);
-							}
-							
+							line = pos+1;
+							symbol.addLabelLoc(label+"LoopEnd", line);														
+						}else if(code instanceof Codes.TryEnd){
+							label = ((Codes.TryEnd)code).label;
+							symbol.addTryCatchLoc(label, line);
 						}else if(code instanceof Codes.Label){
 							//Put the label map into the queue.
-							String label = ((Codes.Label)code).label;
-							symbol.addLabelLoc(label, pos);
-							if(verbose){
-								System.out.println(label+"--->"+pos);
-							}
-							
+							label = ((Codes.Label)code).label;
+							symbol.addLabelLoc(label, line);							
 						}else if(code instanceof Codes.Loop){								
 							//This case includes Code.Loop and Code.ForAll
-							String label = ((Codes.Loop)code).target;
-							symbol.addLabelLoc(label, pos);
-							if(verbose){
-								System.out.println(label+"--->"+pos);
-							}							
-						}else{
+							label = ((Codes.Loop)code).target;
+							symbol.addLabelLoc(label, line);							
+						}else if(code instanceof Codes.TryCatch){
+							Codes.TryCatch trycatch = ((Codes.TryCatch)code);
+							label = trycatch.target;
+							symbol.addTryCatchLoc(label, line);
+						} else{
 							//Do nothing
 						}
-
+						printPreprocessorMessage(label, line);
 					}
 
 					symboltable.put(blk, symbol);

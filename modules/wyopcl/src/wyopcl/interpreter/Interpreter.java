@@ -2,6 +2,7 @@ package wyopcl.interpreter;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Stack;
 
 import wycc.util.Logger;
@@ -139,6 +140,12 @@ public abstract class Interpreter {
 		private final Block block;
 		private HashMap<String, Integer> labelLocMap = new HashMap<String, Integer>();		
 		
+		public class TryCatchBlock{
+			int start;
+			int end;
+		}
+		private HashMap<String, TryCatchBlock> trycatchMap = new HashMap<String, TryCatchBlock>(); 
+		
 		public SymbolTable(Block blk){
 			this.block = blk;
 		}	
@@ -156,6 +163,30 @@ public abstract class Interpreter {
 			return line;
 		}
 		
+		public void addTryCatchLoc(String label, int line){
+			TryCatchBlock trycatchblk = null;
+			if(trycatchMap.get(label)==null){
+				trycatchblk = new TryCatchBlock();
+				trycatchblk.start = line;
+			}else{
+				trycatchblk = trycatchMap.get(label);
+				trycatchblk.end = line;
+			}
+			
+			trycatchMap.put(label, trycatchblk);
+		}
+		
+		public int getThrowPos(int linenumber){
+			Iterator<TryCatchBlock> iterator = trycatchMap.values().iterator();
+			while(iterator.hasNext()){
+				TryCatchBlock next = iterator.next();
+				if(linenumber >= next.start && linenumber <=next.end){
+					return next.end;
+				}
+			}
+			
+			return -1;
+		}
 
 		@Override
 		public int compareTo(SymbolTable symbol) {
@@ -175,5 +206,9 @@ public abstract class Interpreter {
 		
 	}
 
-
+	public void printPreprocessorMessage(String label, int pos){
+		if(verbose & label != null){
+			System.out.println(label+"--->"+pos);
+		}
+	}
 }
