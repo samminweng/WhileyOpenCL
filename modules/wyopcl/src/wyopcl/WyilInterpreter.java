@@ -181,15 +181,14 @@ public class WyilInterpreter extends Interpreter implements Builder{
 						Entry<String, Type> next = iterator.next();
 						values.put(next.getKey(), Constant.V_TYPE(next.getValue()));
 					}
-					//Values = {[string] args,{method(any) => void print,method(any) => void println} out} 
-					if(args.length > 0 ){
-						ArrayList<Constant> arguments = new ArrayList<Constant>();
-						for(String arg: args){
-							arguments.add(Constant.V_STRING(arg));
-						}
-						//Replace the value of args with the argument list.
-						values.put("args", Constant.V_LIST(arguments));
+					//Create a List of Constant objects.
+					ArrayList<Constant> arguments = new ArrayList<Constant>();
+					for(String arg: args){
+						arguments.add(Constant.V_STRING(arg));
 					}
+					//Replace the value of args with the argument list.
+					values.put("args", Constant.V_LIST(arguments));
+					
 					
 					mainframe.setRegister(index, Constant.V_RECORD(values));
 					index++;
