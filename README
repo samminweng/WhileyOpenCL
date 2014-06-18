@@ -19,13 +19,19 @@ Installation
 
 1. The Whiley Intermediate Language Interpreter (WyIL Interpreter)
 ----------------------------------------------------------------------
-To run WyIL interpreter on command line, please follow the below steps.
-% ant
-% cd examples
-% ./../bin/wyopcl sieve.whiley
+To play with WyIL interpreter, please Open Cygwin/terminal and follow
+the below instructions.
+$ git clone https://github.com/samminweng/WhileyOpenCL
+$ cd WhileyOpenCL/
+$ ant  
+$ cd examples/
+$ ./../bin/wyopcl sieve.whiley
+or add the verbose option to print out the interpretation.
+$ ./../bin/wyopcl -verbose sieve.whiley
 
-Or enable the verbose option to print out the interpretation:
-% ./../bin/wyopcl -verbose sieve.whiley
+PS. If you encounter the permission problem while running the wyopcl
+shell script, use the below command:
+$ chmod a+x ../bin/*
 
 2. Whiley-to-OpenCL translator
 The Whiley-to-OpenCL translator is written in Java and aims to generate
