@@ -1,25 +1,12 @@
-// Find the square root of a number (N).
-function sqrt(int n) => int:
-	int low = 0
-	int high = 1+ n/2
-	while 1 < (high - low) :
-		int mid = low + (high-low)/2
-		int square = mid*mid
-		if square == n:
-			return mid	
-		else if square < n:
-			low = mid
-		else:
-			high = mid
-	return low
-
+import * from whiley.lang.Errors
 //Sieve of Eratosthenes algorithm finds the prime numbers upto a given number.
 function sieve(int limit) => int:
 	//Store the prime flags with the nonPrimes list.
 	[bool] nonPrimes = [false, false]
 	for i in 2..limit:
 		nonPrimes = nonPrimes ++ [true]
-	int n = sqrt(limit)
+	//int n = sqrt(limit)
+	int n = Math.isqrt(limit)
 	int p = 2	
 	//Mark the no-prime numbers.
 	while p <= n:
@@ -42,5 +29,11 @@ function sieve(int limit) => int:
 //The total number of primes is shown on the following website: 
 //http://primes.utm.edu/howmany.shtml
 method main(System.Console console):
-	console.out.println("sieve(100)="++sieve(100))		
-	console.out.println("sieve(1000)="++sieve(1000))		
+	if(|console.args| == 0):
+		console.out.println("Add an number to the arguments.")
+	else:
+		try:
+			int limit = Int.parse(console.args[0])
+			console.out.println("sieve("++limit++")="++sieve(limit))
+		catch(SyntaxError ex):
+			console.out.println("Missing number")		
