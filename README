@@ -25,9 +25,9 @@ $ git clone https://github.com/samminweng/WhileyOpenCL
 $ cd WhileyOpenCL/
 $ ant  
 $ cd examples/
-$ ./../bin/wyopcl sieve.whiley
+$ ./../bin/wyopcl sieve.whiley 100
 or add the verbose option to print out the interpretation.
-$ ./../bin/wyopcl -verbose sieve.whiley
+$ ./../bin/wyopcl -verbose sieve.whiley 100
 
 PS. If you encounter the permission problem while running the wyopcl
 shell script, use the below command:
