@@ -39,6 +39,8 @@ import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.InterpreterAssertOrAssume;
 import wyopcl.interpreter.InterpreterAssign;
 import wyopcl.interpreter.InterpreterBinaryOperator;
+import wyopcl.interpreter.InterpreterDebug;
+import wyopcl.interpreter.InterpreterIfIs;
 import wyopcl.interpreter.InterpreterListOperator;
 import wyopcl.interpreter.InterpreterConst;
 import wyopcl.interpreter.InterpreterConvert;
@@ -55,11 +57,13 @@ import wyopcl.interpreter.InterpreterLoop;
 import wyopcl.interpreter.InterpreterLoopEnd;
 import wyopcl.interpreter.InterpreterNewList;
 import wyopcl.interpreter.InterpreterNewRecord;
+import wyopcl.interpreter.InterpreterNewTuple;
 import wyopcl.interpreter.InterpreterNop;
 import wyopcl.interpreter.InterpreterReturn;
 import wyopcl.interpreter.InterpreterStringOperator;
 import wyopcl.interpreter.InterpreterSubList;
 import wyopcl.interpreter.InterpreterTryCatch;
+import wyopcl.interpreter.InterpreterTupleLoad;
 import wyopcl.interpreter.InterpreterUpdate;
 
 public class WyilInterpreter extends Interpreter implements Builder{
@@ -232,7 +236,7 @@ public class WyilInterpreter extends Interpreter implements Builder{
 			} else if (code instanceof Codes.Const) {			
 				InterpreterConst.getInstance().interpret((Codes.Const)code, stackframe);
 			} else if (code instanceof Codes.Debug) {
-				internalFailure("Not implemented!", filename, entry);
+				InterpreterDebug.getInstance().interpret((Codes.Debug)code, stackframe);
 			} else if (code instanceof Codes.Dereference) {
 				internalFailure("Not implemented!", filename, entry);
 			} else if (code instanceof Codes.FieldLoad) {		
@@ -244,7 +248,7 @@ public class WyilInterpreter extends Interpreter implements Builder{
 			} else if (code instanceof Codes.If) {
 				InterpreterIf.getInstance().interpret((Codes.If)code, stackframe);			
 			} else if (code instanceof Codes.IfIs) {
-				internalFailure("Not implemented!", filename, entry);
+				InterpreterIfIs.getInstance().interpret((Codes.IfIs)code, stackframe);
 			} else if (code instanceof Codes.IndirectInvoke) {			
 				InterpreterIndirectInvoke.getInstance().interpret((Codes.IndirectInvoke)code, stackframe);
 			} else if (code instanceof Codes.Invoke) {			
@@ -274,7 +278,7 @@ public class WyilInterpreter extends Interpreter implements Builder{
 			} else if (code instanceof Codes.NewSet) {
 				internalFailure("Not implemented!", filename, entry);
 			} else if (code instanceof Codes.NewTuple) {
-				internalFailure("Not implemented!", filename, entry);
+				InterpreterNewTuple.getInstance().interpret((Codes.NewTuple)code, stackframe);
 			} else if (code instanceof Codes.Return) {			
 				InterpreterReturn.getInstance().interpret((Codes.Return)code, stackframe);
 			} else if (code instanceof Codes.NewObject) {
@@ -292,7 +296,7 @@ public class WyilInterpreter extends Interpreter implements Builder{
 			} else if (code instanceof Codes.TryCatch) {
 				InterpreterTryCatch.getInstance().interpret((Codes.TryCatch)code, stackframe);
 			} else if (code instanceof Codes.TupleLoad) {
-				internalFailure("Not implemented!", filename, entry);
+				InterpreterTupleLoad.getInstance().interpret((Codes.TupleLoad)code, stackframe);
 			} else if (code instanceof Codes.Update) {
 				InterpreterUpdate.getInstance().interpret((Codes.Update)code, stackframe);
 			} else {

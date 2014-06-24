@@ -3,6 +3,7 @@ package wyopcl.interpreter;
 import static wycc.lang.SyntaxError.internalFailure;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
+import wyil.lang.Constant.Set;
 
 public class InterpreterAssertOrAssume extends Interpreter {
 	private static InterpreterAssertOrAssume instance;	
@@ -23,7 +24,6 @@ public class InterpreterAssertOrAssume extends Interpreter {
 	public void interpret(Codes.AssertOrAssume code, StackFrame stackframe) {				
 		
 		int linenumber = stackframe.getLine();
-		stackframe.getName();
 		Constant left = stackframe.getRegister(code.leftOperand);
 		Constant right = stackframe.getRegister(code.rightOperand);
 		
@@ -54,11 +54,18 @@ public class InterpreterAssertOrAssume extends Interpreter {
 				result = true;
 			}
 			break;
-		case GTEQ:
-			//msg += " >= ";
+		case GTEQ:			
 			if (left.compareTo(right) >= 0) {
 				result = true;				
 			}
+			break;
+		case IN:			
+			Constant.Set set = (Constant.Set)right;
+			//Check if the left is one of elements in the right.
+			if(set.values.contains(left)){
+				result = true;
+			}
+			//System.out.println(code);
 			break;
 		default:
 			internalFailure("unknown if condition encountered","InterpreterAssertOrAssume.java",null);

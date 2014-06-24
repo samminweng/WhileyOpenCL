@@ -67,6 +67,11 @@ public class Converter {
 			to = from;
 		} else if (resultType instanceof Type.List){
 			to = (Constant.List) from;
+		} else if (resultType instanceof Type.Record){
+			to = (Constant.Record) from;
+		}else if (resultType instanceof Type.Real){
+			//to =  from.;
+			internalFailure("Not implemented!", "Converter.java", null);
 		} else{
 			internalFailure("Not implemented!", "Converter.java", null);
 		}
@@ -87,4 +92,21 @@ public class Converter {
 		return null;
 		
 	}
+	
+	
+	public static Constant.Type ConvertToConstantType(Type from){
+		
+//		if(from instanceof Constant.Record){
+//			
+//			Type type = Type.Union.;
+//			return Constant.Type.V_TYPE(type);
+//			
+//		}
+		
+		
+		
+		return null;
+	}
+	
+	
 }

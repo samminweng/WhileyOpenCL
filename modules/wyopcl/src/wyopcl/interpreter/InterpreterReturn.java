@@ -33,7 +33,7 @@ public class InterpreterReturn extends Interpreter {
 			//Return the result by updating the register.
 			stackframe.setRegister(return_reg, return_value);		
 			printMessage(stackframe, code.toString(),
-					"%"+return_reg + "("+return_value+")\n");
+					"%"+return_reg + "("+return_value+")");
 			
 			stackframe.setLine(++linenumber);
 		}else{
