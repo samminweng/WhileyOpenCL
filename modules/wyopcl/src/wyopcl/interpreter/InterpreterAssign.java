@@ -19,11 +19,12 @@ public class InterpreterAssign extends Interpreter {
 
 	public void interpret(Codes.Assign code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
-		int operand = code.operand;
-		int target = code.target;
-		Constant result = stackframe.getRegister(operand);
-		stackframe.setRegister(target, result);		
-		printMessage(stackframe, code.toString(), "%"+ target + "("+result+")");
+		Constant value = stackframe.getRegister(code.operand);
+		
+		//Copy the value 
+		Constant result = Converter.copyConstant(value);
+		stackframe.setRegister(code.target, result);		
+		printMessage(stackframe, code.toString(), "%"+ code.target + "("+result+")");
 		stackframe.setLine(++linenumber);
 	}
 

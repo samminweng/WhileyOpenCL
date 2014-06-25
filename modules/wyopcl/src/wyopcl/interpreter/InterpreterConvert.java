@@ -19,10 +19,12 @@ public class InterpreterConvert extends Interpreter {
 	
 	public void interpret(Codes.Convert code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
-		Constant operand = stackframe.getRegister(code.operand);
-		//Type assignedType = code.assignedType();
+		//Read a value from the operand register.
+		Constant value = stackframe.getRegister(code.operand);
+		//Convert it to the given type.
+		Type assignedType = code.assignedType();
 		Type resultType = code.result;
-		Constant result = Converter.convertToConstant(operand, resultType);
+		Constant result = Converter.convertToConstant(value, assignedType, resultType);
 		stackframe.setRegister(code.target, result);
 		printMessage(stackframe, code.toString(), "%"+ code.target + "("+result+")");
 		stackframe.setLine(++linenumber);

@@ -28,7 +28,7 @@ public class InterpreterUpdate extends Interpreter{
 		int linenumber = stackframe.getLine();
 		//Popup the compound type (lists, dictionaries, strings, records and references
 		Type afterType = code.afterType;
-		Constant result;
+		Constant result = null;
 		if(afterType instanceof Type.List){
 			//Pops the list.
 			Constant.List list = (Constant.List)stackframe.getRegister(code.target);
@@ -56,17 +56,33 @@ public class InterpreterUpdate extends Interpreter{
 			
 		}else if(afterType instanceof Type.Record){
 			Constant.Record record = (Constant.Record)stackframe.getRegister(code.target);
-			Constant rhs = stackframe.getRegister(code.result());
+			Constant assignedValue = stackframe.getRegister(code.result());
 			HashMap<String, Constant> values = record.values;
-			String key = code.fields.get(0);
-			values.put(key, rhs);
+			String field = code.fields.get(0);
+			
+			//Get the field value
+			Constant constant = values.get(field);			
+			if(constant instanceof Constant.List){
+				Constant.List list = (Constant.List)constant;				
+				int index = ((Constant.Integer)stackframe.getRegister(code.key(0))).value.intValue();
+				list.values.set(index, assignedValue);				
+			}else if(constant instanceof Constant.Integer){
+				//Constant.Integer value = (Constant.Integer)constant;
+				values.put(field, assignedValue);
+			} else {
+				internalFailure("Not implemented!", "IntepreterUpdate.java", null);
+			}
 			
 			result= Constant.V_RECORD(values);
 			//Update the result to the list.
-			stackframe.setRegister(code.target, result);
+			stackframe.setRegister(code.target, result);			
+			
 		}else{
 			internalFailure("Not implemented!", "IntepreterUpdate.java", null);
 		}
+		
+		printMessage(stackframe, code.toString(),
+				"%"+code.target + "("+result+")");
 		
 		stackframe.setLine(++linenumber);
 	}

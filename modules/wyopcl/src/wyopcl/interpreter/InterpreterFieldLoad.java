@@ -29,6 +29,7 @@ public class InterpreterFieldLoad extends Interpreter {
 
 	public void interpret(Codes.FieldLoad code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
+		Constant opeand = stackframe.getRegister(code.operand);
 		String givenfield = code.field;
 		Constant result = null;
 		if (code.fieldType() instanceof Type.Method){
@@ -36,13 +37,16 @@ public class InterpreterFieldLoad extends Interpreter {
 			NameID name = new NameID(getModule().id(), givenfield);
 			result = Constant.V_LAMBDA(name, (Type.Method)code.fieldType());
 		}else{
-			Constant.Record record = (Constant.Record)stackframe.getRegister(code.operand);
+			
+			Constant.Record record = (Constant.Record)opeand;
 			//Reads a record value from an operand register	
-			result = record.values.get(givenfield);
+			Constant field = record.values.get(givenfield);			
+			result = Converter.copyConstant(field);
 		}
 
 		stackframe.setRegister(code.target, result);	
 		printMessage(stackframe, code.toString(), "%"+ code.target + "("+result+")");
+												   //"%"+code.operand+ "("+opeand+")");
 		stackframe.setLine(++linenumber);
 
 

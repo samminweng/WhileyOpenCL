@@ -1,5 +1,7 @@
 package wyopcl.interpreter;
 
+import static wycc.lang.SyntaxError.internalFailure;
+
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -7,6 +9,7 @@ import java.util.Iterator;
 import wyil.lang.Code.Block;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
+import wyil.lang.Type;
 
 
 public class InterpreterForAll extends Interpreter {
@@ -25,10 +28,17 @@ public class InterpreterForAll extends Interpreter {
 
 	public void interpret(Codes.ForAll code, StackFrame stackframe) {		
 		int linenumber = stackframe.getLine();
-		//Get the index 
-		Constant.List list = (Constant.List) stackframe.getRegister(code.sourceOperand);
-		ArrayList<Constant> values = new ArrayList();
-		values.addAll(list.values);
+		//Get the index
+		Constant source = stackframe.getRegister(code.sourceOperand);
+		ArrayList<Constant> values = new ArrayList<Constant>();
+		if(source instanceof Constant.List){
+			Constant.List list = (Constant.List) source;
+			values.addAll(list.values);
+		}else{
+			internalFailure("Not implemented!", "InterpreterForAll.java", null);
+		}
+		
+	
 		//Check if the index is out-of-boundary. If so, then return.
 		if(values.isEmpty()){
 			//No elements in the list.
@@ -39,9 +49,12 @@ public class InterpreterForAll extends Interpreter {
 			stackframe.setLine(linenumber);
 			return;
 		}
-		//Put the element into the register of the index operand.
+		//Put the element into the register of the index operand.		
 		Constant result = values.remove(0);
+		
 		stackframe.setRegister(code.indexOperand, result);
+		
+		
 		stackframe.setRegister(code.sourceOperand, Constant.V_LIST(values));
 		
 		printMessage(stackframe, code.toString(),

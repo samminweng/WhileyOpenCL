@@ -60,6 +60,7 @@ import wyopcl.interpreter.InterpreterNewRecord;
 import wyopcl.interpreter.InterpreterNewTuple;
 import wyopcl.interpreter.InterpreterNop;
 import wyopcl.interpreter.InterpreterReturn;
+import wyopcl.interpreter.InterpreterSetOperator;
 import wyopcl.interpreter.InterpreterStringOperator;
 import wyopcl.interpreter.InterpreterSubList;
 import wyopcl.interpreter.InterpreterTryCatch;
@@ -203,12 +204,12 @@ public class WyilInterpreter extends Interpreter implements Builder{
 		}
 
 		while(!blockstack.isEmpty()){
-			StackFrame frame = blockstack.peek();
-			Block block = frame.getBlock();
-			int linenumber = frame.getLine();
+			StackFrame stackframe = blockstack.peek();
+			Block block = stackframe.getBlock();
+			int linenumber = stackframe.getLine();
 			if(linenumber < block.size()){
 				Block.Entry entry = block.get(linenumber);				
-				this.dispatch(entry, frame);
+				this.dispatch(entry, stackframe);
 			}else{
 				//Finish this block and pop it up from the stack.
 				blockstack.pop();
@@ -285,6 +286,8 @@ public class WyilInterpreter extends Interpreter implements Builder{
 				internalFailure("Not implemented!", filename, entry);
 			} else if (code instanceof Codes.Nop) {
 				InterpreterNop.getInstance().interpret((Codes.Nop)code, stackframe);
+			} else if (code instanceof Codes.SetOperator){
+				InterpreterSetOperator.getInstance().interpret((Codes.SetOperator)code, stackframe);
 			} else if (code instanceof Codes.SubList) {
 				InterpreterSubList.getInstance().interpret((Codes.SubList)code, stackframe);
 			} else if (code instanceof Codes.SubString) {

@@ -61,12 +61,20 @@ public class Converter {
 	 * @param resultType
 	 * @return
 	 */
-	public static Constant convertToConstant(Constant from, wyil.lang.Type resultType){
+	public static Constant convertToConstant(Constant from, wyil.lang.Type assignedType, wyil.lang.Type resultType){
 		Constant to = null;
 
 		if (resultType instanceof Type.Any) {
 			//No needs to convert the type of the operand.
 			to = from;
+		}else if (resultType instanceof Type.Int){
+			if(assignedType instanceof Type.List){
+				Constant.List value = (Constant.List)from;
+				to = value.values.get(0);
+			}else{
+				internalFailure("Not implemented!", "Converter.java", null);
+			}
+			
 		} else if (resultType instanceof Type.List){
 			to = (Constant.List) from;
 		} else if (resultType instanceof Type.Record){
@@ -95,20 +103,34 @@ public class Converter {
 		
 	}
 	
-	
-	public static Constant.Type ConvertToConstantType(Type from){
+	/**
+	 * Copy and return the Constant object 
+	 * @param value
+	 * @return
+	 */
+	public static Constant copyConstant(Constant value){
+		Constant result = null;
 		
-//		if(from instanceof Constant.Record){
-//			
-//			Type type = Type.Union.;
-//			return Constant.Type.V_TYPE(type);
-//			
-//		}
+		if (value instanceof Constant.Integer){
+			result = Constant.V_INTEGER(((Constant.Integer) value).value);
+		}else if(value instanceof Constant.List){
+			result = Constant.V_LIST(((Constant.List)value).values);
+		}else if (value instanceof Constant.Record){
+			result = Constant.V_RECORD(((Constant.Record)value).values);
+		}else if (value instanceof Constant.Strung){
+			result = Constant.V_STRING(((Constant.Strung)value).value);
+		}else if (value instanceof Constant.Set){
+			result = Constant.V_SET(((Constant.Set)value).values);
+		}else if (value instanceof Constant.Type){
+			result = Constant.V_TYPE(((Constant.Type)value).type);
+		}else {
+			internalFailure("Not implemented!", "Converter.java", null);
+		}		
+		
+		return result;
 		
 		
 		
-		return null;
 	}
-	
 	
 }

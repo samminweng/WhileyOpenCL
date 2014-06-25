@@ -1,5 +1,5 @@
 method main(System.Console sys):
-	[int] a = [50, 51, 52, 53, 54]
+	[int] a = [5, 1, 2, 5, 4]
 	int sum = 0
 	int i = 0
 	while i <|a|:
