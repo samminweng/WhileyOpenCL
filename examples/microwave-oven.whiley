@@ -1,11 +1,10 @@
-//type nat is (int x) where x >= 0
+type nat is (int x) where x >= 0
 
 // First, define the state of the microwave.
 type Microwave is {
 	bool heatOn, // if true, the oven is cooking
     bool doorOpen, // if true, the door is open
-    int timer
-    //nat timer // timer setting (in seconds)
+    nat timer // timer setting (in seconds)
 } where !doorOpen || !heatOn
 
 // A door closed event is triggered when the sensor detects that the door is closed.
@@ -19,7 +18,7 @@ requires m.doorOpen:
 // A door opened event is triggered when the sensor detects that the door is opened.
 function doorOpened(Microwave m) => Microwave
 requires !m.doorOpen:
-        //
+    //
     m.doorOpen = true
     m.heatOn = false
     m.timer = m.timer + 1
@@ -42,8 +41,7 @@ function finishCooking(Microwave m) => Microwave:
 
 
 method main(System.Console console):
-	int timer = 0
-	Microwave m1 = {heatOn: false, doorOpen: false, timer: timer}
+	Microwave m1 = {heatOn: false, doorOpen: false, timer: 0}
 	m1 = doorOpened(m1)
 	console.out.println("doorOpened: "++m1)
 	m1 = doorClosed(m1)
