@@ -123,6 +123,8 @@ public class Converter {
 			result = Constant.V_SET(((Constant.Set)value).values);
 		}else if (value instanceof Constant.Type){
 			result = Constant.V_TYPE(((Constant.Type)value).type);
+		}else if (value instanceof Constant.Bool){
+			result = Constant.V_BOOL(((Constant.Bool)value).value);
 		}else {
 			internalFailure("Not implemented!", "Converter.java", null);
 		}		
