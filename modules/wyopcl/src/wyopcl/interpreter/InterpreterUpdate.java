@@ -4,6 +4,7 @@ import static wycc.lang.SyntaxError.internalFailure;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 
 import wyil.lang.Codes;
 import wyil.lang.Constant;
@@ -26,14 +27,15 @@ public class InterpreterUpdate extends Interpreter{
 	public void interpret(Codes.Update code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
 		//Popup the compound type (lists, dictionaries, strings, records and references
-		Type afterType = code.afterType;		
+		Type afterType = code.afterType;
+		Constant result;
 		if(afterType instanceof Type.List){
 			//Pops the list.
-			Constant.List result = (Constant.List)stackframe.getRegister(code.target);
+			Constant.List list = (Constant.List)stackframe.getRegister(code.target);
 			//Read the rhs from the register.
 			Constant rhs = stackframe.getRegister(code.result());
 			//Copy the arrayList
-			ArrayList<Constant> values = result.values;
+			ArrayList<Constant> values = list.values;
 			//Get the indices
 			int index;
 			for (int key : code.keys()) {
@@ -47,10 +49,21 @@ public class InterpreterUpdate extends Interpreter{
 			}
 
 			//Update the result to the list.
+			result = list;
 			stackframe.setRegister(code.target, result);
 			printMessage(stackframe, code.toString(),
 					"%"+code.target + "("+result+")");
 			
+		}else if(afterType instanceof Type.Record){
+			Constant.Record record = (Constant.Record)stackframe.getRegister(code.target);
+			Constant rhs = stackframe.getRegister(code.result());
+			HashMap<String, Constant> values = record.values;
+			String key = code.fields.get(0);
+			values.put(key, rhs);
+			
+			result= Constant.V_RECORD(values);
+			//Update the result to the list.
+			stackframe.setRegister(code.target, result);
 		}else{
 			internalFailure("Not implemented!", "IntepreterUpdate.java", null);
 		}
