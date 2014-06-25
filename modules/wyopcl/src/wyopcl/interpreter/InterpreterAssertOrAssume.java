@@ -73,9 +73,9 @@ public class InterpreterAssertOrAssume extends Interpreter {
 		printMessage(stackframe, code.toString(), "("+result+")");
 		
 		//Check if result is false. 
-		if(!result && isVerify()){
+		if(!result){
 			//If so, then the assertion is violated. Then display the messages.
-			System.err.println(code.msg);
+			printVerificationMessage(stackframe, code.toString(), code.msg);			
 		}
 		
 		stackframe.setLine(++linenumber);

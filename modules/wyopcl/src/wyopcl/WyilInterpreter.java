@@ -70,7 +70,7 @@ import wyopcl.interpreter.InterpreterUpdate;
 public class WyilInterpreter extends Interpreter implements Builder{
 	protected final Build.Project project;
 	protected String filename;
-	
+
 	/**
 	 * For logging information.
 	 */
@@ -88,7 +88,7 @@ public class WyilInterpreter extends Interpreter implements Builder{
 	public void setLogger(Logger logger) {
 		this.logger = logger;
 	}
-	
+
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -98,7 +98,7 @@ public class WyilInterpreter extends Interpreter implements Builder{
 		Runtime runtime = Runtime.getRuntime();
 		long start = System.currentTimeMillis();
 		long memory = runtime.freeMemory();
-		
+
 		HashSet<Path.Entry<?>> generatedFiles = new HashSet<Path.Entry<?>>();
 		for(Pair<Path.Entry<?>,Path.Root> p : delta) {
 			//Path.Root dst = p.second();
@@ -116,57 +116,74 @@ public class WyilInterpreter extends Interpreter implements Builder{
 				(endTime - start), memory - runtime.freeMemory());
 		return generatedFiles;
 	}
+	
+	private void scanLabelsinBlock(Block blk){
+		//Create the Symbol table from the symboltable.
+		SymbolTable symbol = new SymbolTable(blk);					
+		//Pre-scan the code block and keep the symbol label map.
+		for(int pos = 0; pos <blk.size(); pos++){
+			Block.Entry entry = blk.get(pos);
+			Code code = entry.code;
+			String label = null;
+			int line = pos;
+			if(code instanceof Codes.LoopEnd){
+				label = ((Codes.LoopEnd)code).label;							
+				//Go to the next statement after the loop end.
+				line = pos+1;
+				symbol.addLabelLoc(label+"LoopEnd", line);														
+			}else if(code instanceof Codes.TryEnd){
+				label = ((Codes.TryEnd)code).label;
+				symbol.addTryCatchLoc(label, line);
+			}else if(code instanceof Codes.Label){
+				//Put the label map into the queue.
+				label = ((Codes.Label)code).label;
+				symbol.addLabelLoc(label, line);							
+			}else if(code instanceof Codes.Loop){								
+				//This case includes Code.Loop and Code.ForAll
+				label = ((Codes.Loop)code).target;
+				symbol.addLabelLoc(label, line);							
+			}else if(code instanceof Codes.TryCatch){
+				Codes.TryCatch trycatch = ((Codes.TryCatch)code);
+				label = trycatch.target;
+				symbol.addTryCatchLoc(label, line);
+			} else{
+				//Do nothing
+			}
+			printPreprocessorMessage(label, line);
+		}
+
+		symboltable.put(blk, symbol);
+	}
+	
 
 	/*Scans the methods*/
 	protected void preprocessor(WyilFile module){
-			
+
 		for(WyilFile.FunctionOrMethodDeclaration method : module.functionOrMethods()) {
 			String name = method.name();
 			for(Case mcase : method.cases()){
-				Block blk = mcase.body();			
-					blocktable.put(name, blk);
-					//Get the CodeBlock object from the symboltable.
-					SymbolTable symbol = new SymbolTable(blk);					
-					//Pre-scan the code block and keep the symbol label map.					
-					for(int pos = 0; pos <blk.size(); pos++){
-						Block.Entry entry = blk.get(pos);
-						Code code = entry.code;
-						String label = null;
-						int line = pos;
-						if(code instanceof Codes.LoopEnd){
-							label = ((Codes.LoopEnd)code).label;							
-							//Go to the next statement after the loop end.
-							line = pos+1;
-							symbol.addLabelLoc(label+"LoopEnd", line);														
-						}else if(code instanceof Codes.TryEnd){
-							label = ((Codes.TryEnd)code).label;
-							symbol.addTryCatchLoc(label, line);
-						}else if(code instanceof Codes.Label){
-							//Put the label map into the queue.
-							label = ((Codes.Label)code).label;
-							symbol.addLabelLoc(label, line);							
-						}else if(code instanceof Codes.Loop){								
-							//This case includes Code.Loop and Code.ForAll
-							label = ((Codes.Loop)code).target;
-							symbol.addLabelLoc(label, line);							
-						}else if(code instanceof Codes.TryCatch){
-							Codes.TryCatch trycatch = ((Codes.TryCatch)code);
-							label = trycatch.target;
-							symbol.addTryCatchLoc(label, line);
-						} else{
-							//Do nothing
-						}
-						printPreprocessorMessage(label, line);
-					}
-
-					symboltable.put(blk, symbol);
+				Block pre = mcase.precondition();
+				if(pre != null){
+					blocktable.put(name+"pre", pre);
+					scanLabelsinBlock(pre);
+				}
+				
+				Block blk = mcase.body();
+				blocktable.put(name, blk);
+				scanLabelsinBlock(blk);
+				Block post = mcase.postcondition();
+				if(post != null){
+					blocktable.put(name+"post", post);
+					scanLabelsinBlock(post);
+				}
+			
 			}
 		}
 
 	}
-	
-	
-	
+
+
+
 
 	protected void interpret(WyilFile module){
 		//Get the main method
@@ -174,7 +191,7 @@ public class WyilInterpreter extends Interpreter implements Builder{
 			for(Case mcase:method.cases()){
 				Block block = mcase.body();				
 				StackFrame mainframe = new StackFrame(1, block,0, method.name(), -1);
-				
+
 				//Put a Constant.Record to the regiter 0.				
 				int index = 0;
 				for(Type param : method.type().params()){
@@ -193,12 +210,12 @@ public class WyilInterpreter extends Interpreter implements Builder{
 					}
 					//Replace the value of args with the argument list.
 					values.put("args", Constant.V_LIST(arguments));
-					
-					
+
+
 					mainframe.setRegister(index, Constant.V_RECORD(values));
 					index++;
 				}
-				
+
 				blockstack.push(mainframe);				
 			}
 		}
@@ -316,8 +333,8 @@ public class WyilInterpreter extends Interpreter implements Builder{
 
 
 
-	
-	
+
+
 
 
 

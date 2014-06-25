@@ -50,3 +50,5 @@ method main(System.Console console):
 	console.out.println("startCooking: " ++ m1)
 	m1 = finishCooking(m1)
 	console.out.println("finishCooking: " ++ m1)
+	m1 = startCooking(doorClosed(m1))
+	console.out.println("startCooking(doorClosed(m1)): " ++ m1)

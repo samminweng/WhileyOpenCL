@@ -198,14 +198,20 @@ public abstract class Interpreter {
 	}
 	
 	
-	public void printMessage(StackFrame stackframe, String code, String output){
+	public void printMessage(StackFrame stackframe, String input, String output){
 		if(verbose){
 			System.out.println(stackframe.getDepth()+" "+stackframe.getName()+"."+stackframe.getLine()
-					+" ["+code+"] "+output+"\n");
+					+" ["+input+"] "+output+"\n");
 		}
 		
 	}
 
+	public void printVerificationMessage(StackFrame stackframe, String input, String output){
+		System.err.println(stackframe.getDepth()+" "+stackframe.getName()+"."+stackframe.getLine()
+					+" ["+input+"] "+output+"\n");
+		System.exit(-1);
+	}
+	
 	public void printPreprocessorMessage(String label, int pos){
 		if(verbose & label != null){
 			System.out.println(label+"--->"+pos);

@@ -33,6 +33,24 @@ public class InterpreterInvoke extends Interpreter {
 		return instance;
 	}
 
+	private void pushBlockToStackFrame(Block blk, Codes.Invoke code, StackFrame stackframe){
+		//Get the depth
+		int depth = stackframe.getDepth();
+		//Create a new StackFrame
+		StackFrame stackFrame = new StackFrame(depth+1, blk, 0,	code.name.name(), code.target);
+		
+		//Pass the input parameters.
+		int index = 0;			
+		for(int operand: code.operands){
+			Constant constant = stackframe.getRegister(operand);
+			stackFrame.setRegister(index, constant);
+			index++;
+		}
+
+		//Start invoking a new block.		
+		blockstack.push(stackFrame);
+	}
+	
 
 
 	public void interpret(Codes.Invoke code, StackFrame stackframe) {
@@ -41,21 +59,15 @@ public class InterpreterInvoke extends Interpreter {
 		//Get the Block for the corresponding function/method. 
 		Block blk = blocktable.get(code.name.name());
 		if(blk != null){
-			//Get the depth
-			int depth = stackframe.getDepth();
-			//Create a new StackFrame
-			StackFrame stackFrame = new StackFrame(depth+1, blk, 0,	code.name.name(), code.target);
 			
-			//Pass the input parameters.
-			int index = 0;			
-			for(int operand: code.operands){
-				Constant constant = stackframe.getRegister(operand);
-				stackFrame.setRegister(index, constant);
-				index++;
+			//Push the body block to the stack. 
+			pushBlockToStackFrame(blk, code, stackframe);
+			
+			Block pre = blocktable.get(code.name.name()+"pre");
+			if(pre != null){
+				pushBlockToStackFrame(pre, code, stackframe);
 			}
-
-			//Start invoking a new block.		
-			blockstack.push(stackFrame);
+			
 			printMessage(stackframe, code.toString(),"\n");
 
 		}else{
