@@ -67,7 +67,8 @@ public class InterpreterUpdate extends Interpreter{
 				int index = ((Constant.Integer)stackframe.getRegister(code.key(0))).value.intValue();
 				list.values.set(index, assignedValue);				
 			}else if(constant instanceof Constant.Integer){
-				//Constant.Integer value = (Constant.Integer)constant;
+				values.put(field, assignedValue);
+			} else if (constant instanceof Constant.Bool){
 				values.put(field, assignedValue);
 			} else {
 				internalFailure("Not implemented!", "IntepreterUpdate.java", null);
