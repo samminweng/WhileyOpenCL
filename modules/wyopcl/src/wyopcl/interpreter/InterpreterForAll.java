@@ -1,5 +1,6 @@
 package wyopcl.interpreter;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -23,27 +24,13 @@ public class InterpreterForAll extends Interpreter {
 	}
 
 	public void interpret(Codes.ForAll code, StackFrame stackframe) {		
-		int linenumber = stackframe.getLine();		
+		int linenumber = stackframe.getLine();
 		//Get the index 
-		Constant.List sourceOperand = (Constant.List) stackframe.getRegister(code.sourceOperand);
-		ArrayList<Constant> values = sourceOperand.values;
-
-		int index = 0;
-		Constant indexOperand = stackframe.getRegister(code.indexOperand);
-		if(indexOperand != null){			
-			//Find the index of the indexOperand value.
-			Iterator<Constant> iterator = values.iterator();
-			while(iterator.hasNext()){
-				Constant elem = iterator.next();
-				index++;
-				if(elem.equals(indexOperand)){
-					break;
-				}
-			}
-		}		
-			
+		Constant.List list = (Constant.List) stackframe.getRegister(code.sourceOperand);
+		ArrayList<Constant> values = new ArrayList();
+		values.addAll(list.values);
 		//Check if the index is out-of-boundary. If so, then return.
-		if(index == values.size()){
+		if(values.isEmpty()){
 			//No elements in the list.
 			stackframe.setRegister(code.indexOperand, null);
 			String label = code.target+"LoopEnd";
@@ -51,15 +38,16 @@ public class InterpreterForAll extends Interpreter {
 			linenumber = symboltable.get(block).getBlockPosByLabel(label);
 			stackframe.setLine(linenumber);
 			return;
-		}else{
-			//Put the element into the register of the index operand.
-			Constant result = values.get(index);
-			stackframe.setRegister(code.indexOperand, result);
-			//Modified operands.
-			printMessage(stackframe, code.toString(),
-						 "%"+ code.indexOperand + "("+result+")");
-			stackframe.setLine(++linenumber);
-		}	
+		}
+		//Put the element into the register of the index operand.
+		Constant result = values.remove(0);
+		stackframe.setRegister(code.indexOperand, result);
+		stackframe.setRegister(code.sourceOperand, Constant.V_LIST(values));
+		
+		printMessage(stackframe, code.toString(),
+				"%"+ code.indexOperand + "("+result+")");
+		stackframe.setLine(++linenumber);
+
 
 	}
 
