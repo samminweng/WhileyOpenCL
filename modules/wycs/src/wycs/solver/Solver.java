@@ -1093,7 +1093,7 @@ public final class Solver {
 		public final int minimum() { return 10; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// AndT({SetT([bool, $11<Type>]) s, $33<Proton> p, $11<Type> ts...})
+	// AndT({SetT([bool, $11<Type>]) s, $36<Proton> p, $11<Type> ts...})
 	private final static class Reduction_17 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_17(Pattern.Term pattern) { super(pattern); }
@@ -1265,24 +1265,28 @@ public final class Solver {
 	public final static int K_VoidT = 6;
 	public final static Automaton.Term VoidT = new Automaton.Term(K_VoidT);
 
+	// term NullT
+	public final static int K_NullT = 7;
+	public final static Automaton.Term NullT = new Automaton.Term(K_NullT);
+
 	// term BoolT
-	public final static int K_BoolT = 7;
+	public final static int K_BoolT = 8;
 	public final static Automaton.Term BoolT = new Automaton.Term(K_BoolT);
 
 	// term IntT
-	public final static int K_IntT = 8;
+	public final static int K_IntT = 9;
 	public final static Automaton.Term IntT = new Automaton.Term(K_IntT);
 
 	// term RealT
-	public final static int K_RealT = 9;
+	public final static int K_RealT = 10;
 	public final static Automaton.Term RealT = new Automaton.Term(K_RealT);
 
 	// term StringT
-	public final static int K_StringT = 10;
+	public final static int K_StringT = 11;
 	public final static Automaton.Term StringT = new Automaton.Term(K_StringT);
 
 	// term VarT(^string)
-	public final static int K_VarT = 11;
+	public final static int K_VarT = 12;
 	public final static int VarT(Automaton automaton, String r0) {
 		int r1 = automaton.add(new Automaton.Strung(r0));
 		return automaton.add(new Automaton.Term(K_VarT, r1));
@@ -1389,7 +1393,7 @@ public final class Solver {
 		public final int minimum() { return 2; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// AndT({$33<Proton> a1, $33<Proton> a2, $11<Type> ts...})
+	// AndT({$36<Proton> a1, $36<Proton> a2, $11<Type> ts...})
 	private final static class Reduction_21 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_21(Pattern.Term pattern) { super(pattern); }
@@ -1457,7 +1461,7 @@ public final class Solver {
 		public final int minimum() { return 0; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// AndT({$33<Proton> a1, NotT($33<Proton> a2), $11<Type> ts...})
+	// AndT({$36<Proton> a1, NotT($36<Proton> a2), $11<Type> ts...})
 	private final static class Reduction_22 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_22(Pattern.Term pattern) { super(pattern); }
@@ -1639,7 +1643,7 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term $8<FunctionT(^[$2<^Type>,$2,$2...])>
-	public final static int K_FunctionT = 12;
+	public final static int K_FunctionT = 13;
 	public final static int FunctionT(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
 		return automaton.add(new Automaton.Term(K_FunctionT, r1));
@@ -1650,15 +1654,15 @@ public final class Solver {
 	}
 
 	// term True
-	public final static int K_True = 13;
+	public final static int K_True = 14;
 	public final static Automaton.Term True = new Automaton.Term(K_True);
 
 	// term False
-	public final static int K_False = 14;
+	public final static int K_False = 15;
 	public final static Automaton.Term False = new Automaton.Term(K_False);
 
 	// term Num(^real)
-	public final static int K_Num = 15;
+	public final static int K_Num = 16;
 	public final static int Num(Automaton automaton, long r0) {
 		int r1 = automaton.add(new Automaton.Real(r0));
 		return automaton.add(new Automaton.Term(K_Num, r1));
@@ -1669,14 +1673,14 @@ public final class Solver {
 	}
 
 	// term Var(^string)
-	public final static int K_Var = 16;
+	public final static int K_Var = 17;
 	public final static int Var(Automaton automaton, String r0) {
 		int r1 = automaton.add(new Automaton.Strung(r0));
 		return automaton.add(new Automaton.Term(K_Var, r1));
 	}
 
 	// term $7<Tuple(^[$2<^Expr>...])>
-	public final static int K_Tuple = 17;
+	public final static int K_Tuple = 18;
 	public final static int Tuple(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
 		return automaton.add(new Automaton.Term(K_Tuple, r1));
@@ -1687,7 +1691,7 @@ public final class Solver {
 	}
 
 	// term $9<Load(^[$2<^Expr>,^int])>
-	public final static int K_Load = 18;
+	public final static int K_Load = 19;
 	public final static int Load(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
 		return automaton.add(new Automaton.Term(K_Load, r1));
@@ -1756,7 +1760,7 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term $4<LengthOf($2<^Expr>)>
-	public final static int K_LengthOf = 19;
+	public final static int K_LengthOf = 20;
 	public final static int LengthOf(Automaton automaton, int r0) {
 		return automaton.add(new Automaton.Term(K_LengthOf, r0));
 	}
@@ -1993,7 +1997,7 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term $9<Fn(^[^string,$3<^Expr>...])>
-	public final static int K_Fn = 20;
+	public final static int K_Fn = 21;
 	public final static int Fn(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
 		return automaton.add(new Automaton.Term(K_Fn, r1));
@@ -2004,14 +2008,14 @@ public final class Solver {
 	}
 
 	// term String(^string)
-	public final static int K_String = 21;
+	public final static int K_String = 22;
 	public final static int String(Automaton automaton, String r0) {
 		int r1 = automaton.add(new Automaton.Strung(r0));
 		return automaton.add(new Automaton.Term(K_String, r1));
 	}
 
 	// term $4<Not($2<^$28<BExpr>>)>
-	public final static int K_Not = 22;
+	public final static int K_Not = 23;
 	public final static int Not(Automaton automaton, int r0) {
 		return automaton.add(new Automaton.Term(K_Not, r0));
 	}
@@ -2211,7 +2215,7 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term $7<And($5<^{$2<^$31<BExpr>>...}>)>
-	public final static int K_And = 23;
+	public final static int K_And = 24;
 	public final static int And(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.Set(r0));
 		return automaton.add(new Automaton.Term(K_And, r1));
@@ -2561,7 +2565,7 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term $7<Or($5<^{$2<^$31<BExpr>>...}>)>
-	public final static int K_Or = 24;
+	public final static int K_Or = 25;
 	public final static int Or(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.Set(r0));
 		return automaton.add(new Automaton.Term(K_Or, r1));
@@ -2839,7 +2843,7 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term $14<Equals(^[$2<^Type>,^{|$4<^Expr>,$4|}[$4<^Expr>,$4]])>
-	public final static int K_Equals = 25;
+	public final static int K_Equals = 26;
 	public final static int Equals(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
 		return automaton.add(new Automaton.Term(K_Equals, r1));
@@ -3099,7 +3103,7 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term $12<Mul($10<^[^real,^{|$3<^$20<AExpr>>...|}[$3<^$20<AExpr>>...]]>)>
-	public final static int K_Mul = 26;
+	public final static int K_Mul = 27;
 	public final static int Mul(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
 		return automaton.add(new Automaton.Term(K_Mul, r1));
@@ -3408,7 +3412,7 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term $8<Div(^[$2<^$16<AExpr>>,$2])>
-	public final static int K_Div = 27;
+	public final static int K_Div = 28;
 	public final static int Div(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
 		return automaton.add(new Automaton.Term(K_Div, r1));
@@ -3880,7 +3884,7 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term $12<Sum($10<^[^real,^{|$3<^$20<AExpr>>...|}[$3<^$20<AExpr>>...]]>)>
-	public final static int K_Sum = 28;
+	public final static int K_Sum = 29;
 	public final static int Sum(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
 		return automaton.add(new Automaton.Term(K_Sum, r1));
@@ -4251,7 +4255,7 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term $10<Equation($8<^[^AType,$4<^$29<AExpr>>]>)>
-	public final static int K_Equation = 29;
+	public final static int K_Equation = 30;
 	public final static int Equation(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
 		return automaton.add(new Automaton.Term(K_Equation, r1));
@@ -4689,7 +4693,7 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term $10<Inequality($8<^[^AType,$4<^$29<AExpr>>]>)>
-	public final static int K_Inequality = 30;
+	public final static int K_Inequality = 31;
 	public final static int Inequality(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
 		return automaton.add(new Automaton.Term(K_Inequality, r1));
@@ -5086,7 +5090,7 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term $7<Set(^{$2<^Expr>...})>
-	public final static int K_Set = 31;
+	public final static int K_Set = 32;
 	public final static int Set(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.Set(r0));
 		return automaton.add(new Automaton.Term(K_Set, r1));
@@ -5411,8 +5415,8 @@ public final class Solver {
 		public final int minimum() { return 0; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $10<SubsetEq(^[^$19<SetT(^[^bool,$13<^Type>])>,^$94<SExpr>,^$94])>
-	public final static int K_SubsetEq = 32;
+	// term $10<SubsetEq(^[^$19<SetT(^[^bool,$13<^Type>])>,^$97<SExpr>,^$97])>
+	public final static int K_SubsetEq = 33;
 	public final static int SubsetEq(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
 		return automaton.add(new Automaton.Term(K_SubsetEq, r1));
@@ -5501,7 +5505,7 @@ public final class Solver {
 			Automaton.Int r19 = r5.lengthOf(); // |xs|
 			Automaton.Int r20 = r8.lengthOf(); // |ys|
 			boolean r21 = r19.compareTo(r20)<=0; // |xs| le |ys|
-			boolean r22 = false;           // |xs| le |ys| && wyrl.core.Expr$Comprehension@4a1daaa
+			boolean r22 = false;           // |xs| le |ys| && wyrl.core.Expr$Comprehension@44ca96de
 			if(r21) {
 				Automaton.List t23 = new Automaton.List();
 				boolean r23 = true;
@@ -6143,8 +6147,8 @@ public final class Solver {
 		public final int minimum() { return 0; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $19<ForAll($17<^[^{^[^Var(^string),$4<^Type>]...},$13<^$122<BExpr>>]>)>
-	public final static int K_ForAll = 33;
+	// term $19<ForAll($17<^[^{^[^Var(^string),$4<^Type>]...},$13<^$125<BExpr>>]>)>
+	public final static int K_ForAll = 34;
 	public final static int ForAll(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
 		return automaton.add(new Automaton.Term(K_ForAll, r1));
@@ -6215,10 +6219,70 @@ public final class Solver {
 		public final int minimum() { return 0; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// ForAll([{[Var(^string), $11<Type>]...} xs, ForAll([{[Var(^string), $11<Type>]...} ys, $25<BExpr> e])])
+	// Not(ForAll([{[Var(^string), $11<Type>]...} vars, $25<BExpr> be]))
 	private final static class Reduction_76 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_76(Pattern.Term pattern) { super(pattern); }
+
+		public final void probe(Automaton automaton, int root, List<Activation> activations) {
+			int r0 = root;
+			Automaton.State s0 = automaton.get(r0);
+			if(s0.kind == K_Not) {
+				Automaton.Term t0 = (Automaton.Term) s0;
+				int r1 = t0.contents;
+				Automaton.State s1 = automaton.get(r1);
+				if(s1.kind == K_ForAll) {
+					Automaton.Term t1 = (Automaton.Term) s1;
+					int r2 = t1.contents;
+					Automaton.State s2 = automaton.get(r2);
+					Automaton.List l2 = (Automaton.List) s2;
+					int r3 = l2.get(0);
+					Automaton.State s3 = automaton.get(r3);
+					Automaton.Collection c3 = (Automaton.Collection) s3;
+					boolean m3_0 = true;
+					for(int i4=0;i4!=c3.size();++i4) {
+						int r4 = c3.get(i4);
+						Automaton.State s4 = automaton.get(r4);
+						Automaton.List l4 = (Automaton.List) s4;
+						int r5 = l4.get(0);
+						int r6 = l4.get(1);
+					}
+					if(m3_0) {
+						int r5 = l2.get(1);
+						int[] state = {r0, r1, r2, r3, 0, r5};
+						activations.add(new Activation(this,null,state));
+					}
+				}
+			}
+		}
+
+		public final boolean apply(Automaton automaton, Object _state) {
+			int nStates = automaton.nStates();
+			int[] state = (int[]) _state;
+			int r0 = state[0];
+			int r3 = state[3]; // vars
+			int r5 = state[5]; // be
+			Automaton.Term r6 = new Automaton.Term(K_Not, r5);
+			int r7 = automaton.add(r6);
+			Automaton.List r8 = new Automaton.List(r3, r7); // [varsNot(be)]
+			int r9 = automaton.add(r8);
+			Automaton.Term r10 = new Automaton.Term(K_Exists, r9);
+			int r11 = automaton.add(r10);
+			if(r0 != r11) {
+				automaton.rewrite(r0, r11);
+				return true;
+			}
+			automaton.resize(nStates);
+			return false;
+		}
+
+		public final int minimum() { return 4; }
+		public final int maximum() { return Integer.MAX_VALUE; }
+	}
+	// ForAll([{[Var(^string), $11<Type>]...} xs, ForAll([{[Var(^string), $11<Type>]...} ys, $25<BExpr> e])])
+	private final static class Reduction_77 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_77(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -6294,67 +6358,7 @@ public final class Solver {
 		public final int minimum() { return 6; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Not(ForAll([{[Var(^string), $11<Type>]...} vars, $25<BExpr> be]))
-	private final static class Reduction_77 extends AbstractRewriteRule implements ReductionRule {
-
-		public Reduction_77(Pattern.Term pattern) { super(pattern); }
-
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
-			Automaton.State s0 = automaton.get(r0);
-			if(s0.kind == K_Not) {
-				Automaton.Term t0 = (Automaton.Term) s0;
-				int r1 = t0.contents;
-				Automaton.State s1 = automaton.get(r1);
-				if(s1.kind == K_ForAll) {
-					Automaton.Term t1 = (Automaton.Term) s1;
-					int r2 = t1.contents;
-					Automaton.State s2 = automaton.get(r2);
-					Automaton.List l2 = (Automaton.List) s2;
-					int r3 = l2.get(0);
-					Automaton.State s3 = automaton.get(r3);
-					Automaton.Collection c3 = (Automaton.Collection) s3;
-					boolean m3_0 = true;
-					for(int i4=0;i4!=c3.size();++i4) {
-						int r4 = c3.get(i4);
-						Automaton.State s4 = automaton.get(r4);
-						Automaton.List l4 = (Automaton.List) s4;
-						int r5 = l4.get(0);
-						int r6 = l4.get(1);
-					}
-					if(m3_0) {
-						int r5 = l2.get(1);
-						int[] state = {r0, r1, r2, r3, 0, r5};
-						activations.add(new Activation(this,null,state));
-					}
-				}
-			}
-		}
-
-		public final boolean apply(Automaton automaton, Object _state) {
-			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
-			int r0 = state[0];
-			int r3 = state[3]; // vars
-			int r5 = state[5]; // be
-			Automaton.Term r6 = new Automaton.Term(K_Not, r5);
-			int r7 = automaton.add(r6);
-			Automaton.List r8 = new Automaton.List(r3, r7); // [varsNot(be)]
-			int r9 = automaton.add(r8);
-			Automaton.Term r10 = new Automaton.Term(K_Exists, r9);
-			int r11 = automaton.add(r10);
-			if(r0 != r11) {
-				automaton.rewrite(r0, r11);
-				return true;
-			}
-			automaton.resize(nStates);
-			return false;
-		}
-
-		public final int minimum() { return 4; }
-		public final int maximum() { return Integer.MAX_VALUE; }
-	}
-	// And({Not(SubsetEq([$9<SetT(^[^bool,$3<^Type>])> t1, Set({$14<Expr> w, $14<Expr>...}), $14<Expr> r1])) s, ForAll([{[Var(^string) v, $11<Type>], [Var(^string), $11<Type>]...} vars, Or({And({SubsetEq([$9<SetT(^[^bool,$3<^Type>])> t2, Set({Var(^string) u, $14<Expr>...}), $14<Expr> r2]), $25<BExpr>...}), $25<BExpr>...}) f]), $25<BExpr> rs...})
+	// And({$10<SubsetEq(^[^$19<SetT(^[^bool,$13<^Type>])>,^$97<SExpr>,^$97])> e1, ForAll([{[Var(^string), $11<Type>], [Var(^string), $11<Type>]...} vs, $25<BExpr> e2]) qf, $25<BExpr> es...})
 	private final static class Inference_6 extends AbstractRewriteRule implements InferenceRule {
 
 		public Inference_6(Pattern.Term pattern) { super(pattern); }
@@ -6370,112 +6374,39 @@ public final class Solver {
 				if(c1.size() >= 2) {
 					for(int r3=0;r3!=c1.size();++r3) {
 						int r2 = c1.get(r3);
-						Automaton.State s2 = automaton.get(r2);
-						if(s2.kind == K_Not) {
-							Automaton.Term t2 = (Automaton.Term) s2;
-							int r4 = t2.contents;
-							Automaton.State s4 = automaton.get(r4);
-							if(s4.kind == K_SubsetEq) {
-								Automaton.Term t4 = (Automaton.Term) s4;
-								int r5 = t4.contents;
-								Automaton.State s5 = automaton.get(r5);
-								Automaton.List l5 = (Automaton.List) s5;
-								int r6 = l5.get(0);
-								int r7 = l5.get(1);
-								Automaton.State s7 = automaton.get(r7);
-								if(s7.kind == K_Set) {
-									Automaton.Term t7 = (Automaton.Term) s7;
-									int r8 = t7.contents;
-									Automaton.State s8 = automaton.get(r8);
-									Automaton.Collection c8 = (Automaton.Collection) s8;
-									if(c8.size() >= 1) {
-										for(int r10=0;r10!=c8.size();++r10) {
-											int r9 = c8.get(r10);
-											int r12 = l5.get(2);
-											for(int r14=0;r14!=c1.size();++r14) {
-												if(r14 == r3) { continue; }
-												int r13 = c1.get(r14);
-												Automaton.State s13 = automaton.get(r13);
-												if(s13.kind == K_ForAll) {
-													Automaton.Term t13 = (Automaton.Term) s13;
-													int r15 = t13.contents;
-													Automaton.State s15 = automaton.get(r15);
-													Automaton.List l15 = (Automaton.List) s15;
-													int r16 = l15.get(0);
-													Automaton.State s16 = automaton.get(r16);
-													Automaton.Collection c16 = (Automaton.Collection) s16;
-													if(c16.size() >= 1) {
-														for(int r18=0;r18!=c16.size();++r18) {
-															int r17 = c16.get(r18);
-															Automaton.State s17 = automaton.get(r17);
-															Automaton.List l17 = (Automaton.List) s17;
-															int r19 = l17.get(0);
-															int r20 = l17.get(1);
-															boolean m16_1 = true;
-															for(int i21=0;i21!=c16.size();++i21) {
-																if(i21 == r18) { continue; }
-																int r21 = c16.get(i21);
-																Automaton.State s21 = automaton.get(r21);
-																Automaton.List l21 = (Automaton.List) s21;
-																int r22 = l21.get(0);
-																int r23 = l21.get(1);
-															}
-															if(m16_1) {
-																int r22 = l15.get(1);
-																Automaton.State s22 = automaton.get(r22);
-																if(s22.kind == K_Or) {
-																	Automaton.Term t22 = (Automaton.Term) s22;
-																	int r23 = t22.contents;
-																	Automaton.State s23 = automaton.get(r23);
-																	Automaton.Collection c23 = (Automaton.Collection) s23;
-																	if(c23.size() >= 1) {
-																		for(int r25=0;r25!=c23.size();++r25) {
-																			int r24 = c23.get(r25);
-																			Automaton.State s24 = automaton.get(r24);
-																			if(s24.kind == K_And) {
-																				Automaton.Term t24 = (Automaton.Term) s24;
-																				int r26 = t24.contents;
-																				Automaton.State s26 = automaton.get(r26);
-																				Automaton.Collection c26 = (Automaton.Collection) s26;
-																				if(c26.size() >= 1) {
-																					for(int r28=0;r28!=c26.size();++r28) {
-																						int r27 = c26.get(r28);
-																						Automaton.State s27 = automaton.get(r27);
-																						if(s27.kind == K_SubsetEq) {
-																							Automaton.Term t27 = (Automaton.Term) s27;
-																							int r29 = t27.contents;
-																							Automaton.State s29 = automaton.get(r29);
-																							Automaton.List l29 = (Automaton.List) s29;
-																							int r30 = l29.get(0);
-																							int r31 = l29.get(1);
-																							Automaton.State s31 = automaton.get(r31);
-																							if(s31.kind == K_Set) {
-																								Automaton.Term t31 = (Automaton.Term) s31;
-																								int r32 = t31.contents;
-																								Automaton.State s32 = automaton.get(r32);
-																								Automaton.Collection c32 = (Automaton.Collection) s32;
-																								if(c32.size() >= 1) {
-																									for(int r34=0;r34!=c32.size();++r34) {
-																										int r33 = c32.get(r34);
-																										if(Runtime.accepts(type31,automaton,automaton.get(r33), SCHEMA)) {
-																											int r36 = l29.get(2);
-																											int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, 0, r12, r13, r14, r15, r16, r17, r18, r19, r20, 0, r22, r23, r24, r25, r26, r27, r28, r29, r30, r31, r32, r33, r34, 0, r36, 0, 0, 0};
-																											activations.add(new Activation(this,null,state));
-																										}
-																									}
-																								}
-																							}
-																						}
-																					}
-																				}
-																			}
-																		}
-																	}
-																}
-															}
-														}
-													}
-												}
+						if(Runtime.accepts(type33,automaton,automaton.get(r2), SCHEMA)) {
+							for(int r5=0;r5!=c1.size();++r5) {
+								if(r5 == r3) { continue; }
+								int r4 = c1.get(r5);
+								Automaton.State s4 = automaton.get(r4);
+								if(s4.kind == K_ForAll) {
+									Automaton.Term t4 = (Automaton.Term) s4;
+									int r6 = t4.contents;
+									Automaton.State s6 = automaton.get(r6);
+									Automaton.List l6 = (Automaton.List) s6;
+									int r7 = l6.get(0);
+									Automaton.State s7 = automaton.get(r7);
+									Automaton.Collection c7 = (Automaton.Collection) s7;
+									if(c7.size() >= 1) {
+										for(int r9=0;r9!=c7.size();++r9) {
+											int r8 = c7.get(r9);
+											Automaton.State s8 = automaton.get(r8);
+											Automaton.List l8 = (Automaton.List) s8;
+											int r10 = l8.get(0);
+											int r11 = l8.get(1);
+											boolean m7_1 = true;
+											for(int i12=0;i12!=c7.size();++i12) {
+												if(i12 == r9) { continue; }
+												int r12 = c7.get(i12);
+												Automaton.State s12 = automaton.get(r12);
+												Automaton.List l12 = (Automaton.List) s12;
+												int r13 = l12.get(0);
+												int r14 = l12.get(1);
+											}
+											if(m7_1) {
+												int r13 = l6.get(1);
+												int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, 0, r13, 0};
+												activations.add(new Activation(this,null,state));
 											}
 										}
 									}
@@ -6491,49 +6422,34 @@ public final class Solver {
 			int nStates = automaton.nStates();
 			int[] state = (int[]) _state;
 			int r0 = state[0];
-			int r2 = state[2]; // s
+			int r2 = state[2]; // e1
 			int r3 = state[3];
-			int r6 = state[6]; // t1
-			int r9 = state[9]; // w
-			int r10 = state[10];
-			int r12 = state[12]; // r1
-			int r14 = state[14];
-			int r16 = state[16]; // vars
-			int r18 = state[18];
-			int r19 = state[19]; // v
-			int r22 = state[22]; // f
-			int r25 = state[25];
-			int r28 = state[28];
-			int r30 = state[30]; // t2
-			int r33 = state[33]; // u
-			int r34 = state[34];
-			int r36 = state[36]; // r2
+			int r4 = state[4]; // qf
+			int r5 = state[5];
+			int r7 = state[7]; // vs
+			int r9 = state[9];
+			int r13 = state[13]; // e2
 			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
 			int[] s1children = new int[s1.size() - 2];
 			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
-				if(s1i == r3 || s1i == r14) { continue; }
+				if(s1i == r3 || s1i == r5) { continue; }
 				s1children[s1j++] = s1.get(s1i);
 			}
-			Automaton.Set r39 = new Automaton.Set(s1children);
-			boolean r40 = r33 == r19;      // u eq v
-			boolean r41 = false;           // u eq v && r1 eq r2
-			if(r40) {
-				boolean r42 = r12 == r36;      // r1 eq r2
-				r41 = r42;
-			}
-			if(r41) {
-				Automaton.List r43 = new Automaton.List(r16, r22); // [varsf]
-				int r44 = automaton.add(r43);
-				Automaton.Term r45 = new Automaton.Term(K_ForAll, r44);
-				int r46 = automaton.add(r45);
-				int r47 = automaton.substitute(r22, r19, r9);
-				Automaton.Set r48 = new Automaton.Set(r2, r46, r47); // {sForAll([varsf])f[v \ w]}
-				Automaton.Set r49 = r48.append(r39); // {sForAll([varsf])f[v \ w]} append rs
-				int r50 = automaton.add(r49);
-				Automaton.Term r51 = new Automaton.Term(K_And, r50);
-				int r52 = automaton.add(r51);
-				if(r0 != r52) {
-					automaton.rewrite(r0, r52);
+			Automaton.Set r14 = new Automaton.Set(s1children);
+			Automaton.List r15 = new Automaton.List(r2, r7, r13); // [e1vse2]
+			Automaton.Set r16 = Solver$native.instantiate(automaton, r15);
+			Automaton.Int r17 = r16.lengthOf(); // |instantiations|
+			Automaton.Int r18 = new Automaton.Int(0); // 0
+			boolean r19 = r17.compareTo(r18)>0; // |instantiations| gt 0
+			if(r19) {
+				Automaton.Set r20 = new Automaton.Set(r2, r4); // {e1qf}
+				Automaton.Set r21 = r14.append(r16); // es append instantiations
+				Automaton.Set r22 = r20.append(r21); // {e1qf} append es append instantiations
+				int r23 = automaton.add(r22);
+				Automaton.Term r24 = new Automaton.Term(K_And, r23);
+				int r25 = automaton.add(r24);
+				if(r0 != r25) {
+					automaton.rewrite(r0, r25);
 					return true;
 				}
 			}
@@ -6544,7 +6460,7 @@ public final class Solver {
 		public final int minimum() { return 0; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// And({Not(SubsetEq([$9<SetT(^[^bool,$3<^Type>])> t1, Set({$14<Expr> w, $14<Expr>...}), $14<Expr> r1])) s, ForAll([{[Var(^string) v, $11<Type>], [Var(^string), $11<Type>]...} vars, Or({SubsetEq([$9<SetT(^[^bool,$3<^Type>])> t2, Set({Var(^string) u, $14<Expr>...}), $14<Expr> r2]), $25<BExpr>...}) f]), $25<BExpr> rs...})
+	// And({Not($10<SubsetEq(^[^$19<SetT(^[^bool,$13<^Type>])>,^$97<SExpr>,^$97])> e1) ne1, ForAll([{[Var(^string), $11<Type>], [Var(^string), $11<Type>]...} vs, $25<BExpr> e2]) qf, $25<BExpr> es...})
 	private final static class Inference_7 extends AbstractRewriteRule implements InferenceRule {
 
 		public Inference_7(Pattern.Term pattern) { super(pattern); }
@@ -6564,95 +6480,39 @@ public final class Solver {
 						if(s2.kind == K_Not) {
 							Automaton.Term t2 = (Automaton.Term) s2;
 							int r4 = t2.contents;
-							Automaton.State s4 = automaton.get(r4);
-							if(s4.kind == K_SubsetEq) {
-								Automaton.Term t4 = (Automaton.Term) s4;
-								int r5 = t4.contents;
-								Automaton.State s5 = automaton.get(r5);
-								Automaton.List l5 = (Automaton.List) s5;
-								int r6 = l5.get(0);
-								int r7 = l5.get(1);
-								Automaton.State s7 = automaton.get(r7);
-								if(s7.kind == K_Set) {
-									Automaton.Term t7 = (Automaton.Term) s7;
-									int r8 = t7.contents;
-									Automaton.State s8 = automaton.get(r8);
-									Automaton.Collection c8 = (Automaton.Collection) s8;
-									if(c8.size() >= 1) {
-										for(int r10=0;r10!=c8.size();++r10) {
-											int r9 = c8.get(r10);
-											int r12 = l5.get(2);
-											for(int r14=0;r14!=c1.size();++r14) {
-												if(r14 == r3) { continue; }
-												int r13 = c1.get(r14);
-												Automaton.State s13 = automaton.get(r13);
-												if(s13.kind == K_ForAll) {
-													Automaton.Term t13 = (Automaton.Term) s13;
-													int r15 = t13.contents;
-													Automaton.State s15 = automaton.get(r15);
-													Automaton.List l15 = (Automaton.List) s15;
-													int r16 = l15.get(0);
-													Automaton.State s16 = automaton.get(r16);
-													Automaton.Collection c16 = (Automaton.Collection) s16;
-													if(c16.size() >= 1) {
-														for(int r18=0;r18!=c16.size();++r18) {
-															int r17 = c16.get(r18);
-															Automaton.State s17 = automaton.get(r17);
-															Automaton.List l17 = (Automaton.List) s17;
-															int r19 = l17.get(0);
-															int r20 = l17.get(1);
-															boolean m16_1 = true;
-															for(int i21=0;i21!=c16.size();++i21) {
-																if(i21 == r18) { continue; }
-																int r21 = c16.get(i21);
-																Automaton.State s21 = automaton.get(r21);
-																Automaton.List l21 = (Automaton.List) s21;
-																int r22 = l21.get(0);
-																int r23 = l21.get(1);
-															}
-															if(m16_1) {
-																int r22 = l15.get(1);
-																Automaton.State s22 = automaton.get(r22);
-																if(s22.kind == K_Or) {
-																	Automaton.Term t22 = (Automaton.Term) s22;
-																	int r23 = t22.contents;
-																	Automaton.State s23 = automaton.get(r23);
-																	Automaton.Collection c23 = (Automaton.Collection) s23;
-																	if(c23.size() >= 1) {
-																		for(int r25=0;r25!=c23.size();++r25) {
-																			int r24 = c23.get(r25);
-																			Automaton.State s24 = automaton.get(r24);
-																			if(s24.kind == K_SubsetEq) {
-																				Automaton.Term t24 = (Automaton.Term) s24;
-																				int r26 = t24.contents;
-																				Automaton.State s26 = automaton.get(r26);
-																				Automaton.List l26 = (Automaton.List) s26;
-																				int r27 = l26.get(0);
-																				int r28 = l26.get(1);
-																				Automaton.State s28 = automaton.get(r28);
-																				if(s28.kind == K_Set) {
-																					Automaton.Term t28 = (Automaton.Term) s28;
-																					int r29 = t28.contents;
-																					Automaton.State s29 = automaton.get(r29);
-																					Automaton.Collection c29 = (Automaton.Collection) s29;
-																					if(c29.size() >= 1) {
-																						for(int r31=0;r31!=c29.size();++r31) {
-																							int r30 = c29.get(r31);
-																							if(Runtime.accepts(type31,automaton,automaton.get(r30), SCHEMA)) {
-																								int r33 = l26.get(2);
-																								int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, 0, r12, r13, r14, r15, r16, r17, r18, r19, r20, 0, r22, r23, r24, r25, r26, r27, r28, r29, r30, r31, 0, r33, 0, 0};
-																								activations.add(new Activation(this,null,state));
-																							}
-																						}
-																					}
-																				}
-																			}
-																		}
-																	}
-																}
-															}
-														}
-													}
+							if(Runtime.accepts(type33,automaton,automaton.get(r4), SCHEMA)) {
+								for(int r6=0;r6!=c1.size();++r6) {
+									if(r6 == r3) { continue; }
+									int r5 = c1.get(r6);
+									Automaton.State s5 = automaton.get(r5);
+									if(s5.kind == K_ForAll) {
+										Automaton.Term t5 = (Automaton.Term) s5;
+										int r7 = t5.contents;
+										Automaton.State s7 = automaton.get(r7);
+										Automaton.List l7 = (Automaton.List) s7;
+										int r8 = l7.get(0);
+										Automaton.State s8 = automaton.get(r8);
+										Automaton.Collection c8 = (Automaton.Collection) s8;
+										if(c8.size() >= 1) {
+											for(int r10=0;r10!=c8.size();++r10) {
+												int r9 = c8.get(r10);
+												Automaton.State s9 = automaton.get(r9);
+												Automaton.List l9 = (Automaton.List) s9;
+												int r11 = l9.get(0);
+												int r12 = l9.get(1);
+												boolean m8_1 = true;
+												for(int i13=0;i13!=c8.size();++i13) {
+													if(i13 == r10) { continue; }
+													int r13 = c8.get(i13);
+													Automaton.State s13 = automaton.get(r13);
+													Automaton.List l13 = (Automaton.List) s13;
+													int r14 = l13.get(0);
+													int r15 = l13.get(1);
+												}
+												if(m8_1) {
+													int r14 = l7.get(1);
+													int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, 0, r14, 0};
+													activations.add(new Activation(this,null,state));
 												}
 											}
 										}
@@ -6669,48 +6529,35 @@ public final class Solver {
 			int nStates = automaton.nStates();
 			int[] state = (int[]) _state;
 			int r0 = state[0];
-			int r2 = state[2]; // s
+			int r2 = state[2]; // ne1
 			int r3 = state[3];
-			int r6 = state[6]; // t1
-			int r9 = state[9]; // w
+			int r4 = state[4]; // e1
+			int r5 = state[5]; // qf
+			int r6 = state[6];
+			int r8 = state[8]; // vs
 			int r10 = state[10];
-			int r12 = state[12]; // r1
-			int r14 = state[14];
-			int r16 = state[16]; // vars
-			int r18 = state[18];
-			int r19 = state[19]; // v
-			int r22 = state[22]; // f
-			int r25 = state[25];
-			int r27 = state[27]; // t2
-			int r30 = state[30]; // u
-			int r31 = state[31];
-			int r33 = state[33]; // r2
+			int r14 = state[14]; // e2
 			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
 			int[] s1children = new int[s1.size() - 2];
 			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
-				if(s1i == r3 || s1i == r14) { continue; }
+				if(s1i == r3 || s1i == r6) { continue; }
 				s1children[s1j++] = s1.get(s1i);
 			}
-			Automaton.Set r35 = new Automaton.Set(s1children);
-			boolean r36 = r30 == r19;      // u eq v
-			boolean r37 = false;           // u eq v && r1 eq r2
-			if(r36) {
-				boolean r38 = r12 == r33;      // r1 eq r2
-				r37 = r38;
-			}
-			if(r37) {
-				Automaton.List r39 = new Automaton.List(r16, r22); // [varsf]
-				int r40 = automaton.add(r39);
-				Automaton.Term r41 = new Automaton.Term(K_ForAll, r40);
-				int r42 = automaton.add(r41);
-				int r43 = automaton.substitute(r22, r19, r9);
-				Automaton.Set r44 = new Automaton.Set(r2, r42, r43); // {sForAll([varsf])f[v \ w]}
-				Automaton.Set r45 = r44.append(r35); // {sForAll([varsf])f[v \ w]} append rs
-				int r46 = automaton.add(r45);
-				Automaton.Term r47 = new Automaton.Term(K_And, r46);
-				int r48 = automaton.add(r47);
-				if(r0 != r48) {
-					automaton.rewrite(r0, r48);
+			Automaton.Set r15 = new Automaton.Set(s1children);
+			Automaton.List r16 = new Automaton.List(r4, r8, r14); // [e1vse2]
+			Automaton.Set r17 = Solver$native.instantiate(automaton, r16);
+			Automaton.Int r18 = r17.lengthOf(); // |instantiations|
+			Automaton.Int r19 = new Automaton.Int(0); // 0
+			boolean r20 = r18.compareTo(r19)>0; // |instantiations| gt 0
+			if(r20) {
+				Automaton.Set r21 = new Automaton.Set(r2, r5); // {ne1qf}
+				Automaton.Set r22 = r15.append(r17); // es append instantiations
+				Automaton.Set r23 = r21.append(r22); // {ne1qf} append es append instantiations
+				int r24 = automaton.add(r23);
+				Automaton.Term r25 = new Automaton.Term(K_And, r24);
+				int r26 = automaton.add(r25);
+				if(r0 != r26) {
+					automaton.rewrite(r0, r26);
 					return true;
 				}
 			}
@@ -6721,375 +6568,8 @@ public final class Solver {
 		public final int minimum() { return 0; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// And({SubsetEq([$9<SetT(^[^bool,$3<^Type>])> t1, Set({$14<Expr> w, $14<Expr>...}), $14<Expr> r1]) s, ForAll([{[Var(^string) v, $11<Type>], [Var(^string), $11<Type>]...} vars, Or({And({Not(SubsetEq([$9<SetT(^[^bool,$3<^Type>])> t2, Set({Var(^string) u, $14<Expr>...}), $14<Expr> r2])), $25<BExpr>...}), $25<BExpr>...}) f]), $25<BExpr> rs...})
-	private final static class Inference_8 extends AbstractRewriteRule implements InferenceRule {
-
-		public Inference_8(Pattern.Term pattern) { super(pattern); }
-
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
-			Automaton.State s0 = automaton.get(r0);
-			if(s0.kind == K_And) {
-				Automaton.Term t0 = (Automaton.Term) s0;
-				int r1 = t0.contents;
-				Automaton.State s1 = automaton.get(r1);
-				Automaton.Collection c1 = (Automaton.Collection) s1;
-				if(c1.size() >= 2) {
-					for(int r3=0;r3!=c1.size();++r3) {
-						int r2 = c1.get(r3);
-						Automaton.State s2 = automaton.get(r2);
-						if(s2.kind == K_SubsetEq) {
-							Automaton.Term t2 = (Automaton.Term) s2;
-							int r4 = t2.contents;
-							Automaton.State s4 = automaton.get(r4);
-							Automaton.List l4 = (Automaton.List) s4;
-							int r5 = l4.get(0);
-							int r6 = l4.get(1);
-							Automaton.State s6 = automaton.get(r6);
-							if(s6.kind == K_Set) {
-								Automaton.Term t6 = (Automaton.Term) s6;
-								int r7 = t6.contents;
-								Automaton.State s7 = automaton.get(r7);
-								Automaton.Collection c7 = (Automaton.Collection) s7;
-								if(c7.size() >= 1) {
-									for(int r9=0;r9!=c7.size();++r9) {
-										int r8 = c7.get(r9);
-										int r11 = l4.get(2);
-										for(int r13=0;r13!=c1.size();++r13) {
-											if(r13 == r3) { continue; }
-											int r12 = c1.get(r13);
-											Automaton.State s12 = automaton.get(r12);
-											if(s12.kind == K_ForAll) {
-												Automaton.Term t12 = (Automaton.Term) s12;
-												int r14 = t12.contents;
-												Automaton.State s14 = automaton.get(r14);
-												Automaton.List l14 = (Automaton.List) s14;
-												int r15 = l14.get(0);
-												Automaton.State s15 = automaton.get(r15);
-												Automaton.Collection c15 = (Automaton.Collection) s15;
-												if(c15.size() >= 1) {
-													for(int r17=0;r17!=c15.size();++r17) {
-														int r16 = c15.get(r17);
-														Automaton.State s16 = automaton.get(r16);
-														Automaton.List l16 = (Automaton.List) s16;
-														int r18 = l16.get(0);
-														int r19 = l16.get(1);
-														boolean m15_1 = true;
-														for(int i20=0;i20!=c15.size();++i20) {
-															if(i20 == r17) { continue; }
-															int r20 = c15.get(i20);
-															Automaton.State s20 = automaton.get(r20);
-															Automaton.List l20 = (Automaton.List) s20;
-															int r21 = l20.get(0);
-															int r22 = l20.get(1);
-														}
-														if(m15_1) {
-															int r21 = l14.get(1);
-															Automaton.State s21 = automaton.get(r21);
-															if(s21.kind == K_Or) {
-																Automaton.Term t21 = (Automaton.Term) s21;
-																int r22 = t21.contents;
-																Automaton.State s22 = automaton.get(r22);
-																Automaton.Collection c22 = (Automaton.Collection) s22;
-																if(c22.size() >= 1) {
-																	for(int r24=0;r24!=c22.size();++r24) {
-																		int r23 = c22.get(r24);
-																		Automaton.State s23 = automaton.get(r23);
-																		if(s23.kind == K_And) {
-																			Automaton.Term t23 = (Automaton.Term) s23;
-																			int r25 = t23.contents;
-																			Automaton.State s25 = automaton.get(r25);
-																			Automaton.Collection c25 = (Automaton.Collection) s25;
-																			if(c25.size() >= 1) {
-																				for(int r27=0;r27!=c25.size();++r27) {
-																					int r26 = c25.get(r27);
-																					Automaton.State s26 = automaton.get(r26);
-																					if(s26.kind == K_Not) {
-																						Automaton.Term t26 = (Automaton.Term) s26;
-																						int r28 = t26.contents;
-																						Automaton.State s28 = automaton.get(r28);
-																						if(s28.kind == K_SubsetEq) {
-																							Automaton.Term t28 = (Automaton.Term) s28;
-																							int r29 = t28.contents;
-																							Automaton.State s29 = automaton.get(r29);
-																							Automaton.List l29 = (Automaton.List) s29;
-																							int r30 = l29.get(0);
-																							int r31 = l29.get(1);
-																							Automaton.State s31 = automaton.get(r31);
-																							if(s31.kind == K_Set) {
-																								Automaton.Term t31 = (Automaton.Term) s31;
-																								int r32 = t31.contents;
-																								Automaton.State s32 = automaton.get(r32);
-																								Automaton.Collection c32 = (Automaton.Collection) s32;
-																								if(c32.size() >= 1) {
-																									for(int r34=0;r34!=c32.size();++r34) {
-																										int r33 = c32.get(r34);
-																										if(Runtime.accepts(type31,automaton,automaton.get(r33), SCHEMA)) {
-																											int r36 = l29.get(2);
-																											int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, 0, r11, r12, r13, r14, r15, r16, r17, r18, r19, 0, r21, r22, r23, r24, r25, r26, r27, r28, r29, r30, r31, r32, r33, r34, 0, r36, 0, 0, 0};
-																											activations.add(new Activation(this,null,state));
-																										}
-																									}
-																								}
-																							}
-																						}
-																					}
-																				}
-																			}
-																		}
-																	}
-																}
-															}
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-
-		public final boolean apply(Automaton automaton, Object _state) {
-			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
-			int r0 = state[0];
-			int r2 = state[2]; // s
-			int r3 = state[3];
-			int r5 = state[5]; // t1
-			int r8 = state[8]; // w
-			int r9 = state[9];
-			int r11 = state[11]; // r1
-			int r13 = state[13];
-			int r15 = state[15]; // vars
-			int r17 = state[17];
-			int r18 = state[18]; // v
-			int r21 = state[21]; // f
-			int r24 = state[24];
-			int r27 = state[27];
-			int r30 = state[30]; // t2
-			int r33 = state[33]; // u
-			int r34 = state[34];
-			int r36 = state[36]; // r2
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 2];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
-				if(s1i == r3 || s1i == r13) { continue; }
-				s1children[s1j++] = s1.get(s1i);
-			}
-			Automaton.Set r39 = new Automaton.Set(s1children);
-			boolean r40 = r33 == r18;      // u eq v
-			boolean r41 = false;           // u eq v && r1 eq r2
-			if(r40) {
-				boolean r42 = r11 == r36;      // r1 eq r2
-				r41 = r42;
-			}
-			if(r41) {
-				Automaton.List r43 = new Automaton.List(r15, r21); // [varsf]
-				int r44 = automaton.add(r43);
-				Automaton.Term r45 = new Automaton.Term(K_ForAll, r44);
-				int r46 = automaton.add(r45);
-				int r47 = automaton.substitute(r21, r18, r8);
-				Automaton.Set r48 = new Automaton.Set(r2, r46, r47); // {sForAll([varsf])f[v \ w]}
-				Automaton.Set r49 = r48.append(r39); // {sForAll([varsf])f[v \ w]} append rs
-				int r50 = automaton.add(r49);
-				Automaton.Term r51 = new Automaton.Term(K_And, r50);
-				int r52 = automaton.add(r51);
-				if(r0 != r52) {
-					automaton.rewrite(r0, r52);
-					return true;
-				}
-			}
-			automaton.resize(nStates);
-			return false;
-		}
-
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
-	}
-	// And({SubsetEq([$9<SetT(^[^bool,$3<^Type>])> t1, Set({$14<Expr> w, $14<Expr>...}), $14<Expr> r1]) s, ForAll([{[Var(^string) v, $11<Type>], [Var(^string), $11<Type>]...} vars, Or({Not(SubsetEq([$9<SetT(^[^bool,$3<^Type>])> t2, Set({Var(^string) u, $14<Expr>...}), $14<Expr> r2])), $25<BExpr>...}) f]), $25<BExpr> rs...})
-	private final static class Inference_9 extends AbstractRewriteRule implements InferenceRule {
-
-		public Inference_9(Pattern.Term pattern) { super(pattern); }
-
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
-			Automaton.State s0 = automaton.get(r0);
-			if(s0.kind == K_And) {
-				Automaton.Term t0 = (Automaton.Term) s0;
-				int r1 = t0.contents;
-				Automaton.State s1 = automaton.get(r1);
-				Automaton.Collection c1 = (Automaton.Collection) s1;
-				if(c1.size() >= 2) {
-					for(int r3=0;r3!=c1.size();++r3) {
-						int r2 = c1.get(r3);
-						Automaton.State s2 = automaton.get(r2);
-						if(s2.kind == K_SubsetEq) {
-							Automaton.Term t2 = (Automaton.Term) s2;
-							int r4 = t2.contents;
-							Automaton.State s4 = automaton.get(r4);
-							Automaton.List l4 = (Automaton.List) s4;
-							int r5 = l4.get(0);
-							int r6 = l4.get(1);
-							Automaton.State s6 = automaton.get(r6);
-							if(s6.kind == K_Set) {
-								Automaton.Term t6 = (Automaton.Term) s6;
-								int r7 = t6.contents;
-								Automaton.State s7 = automaton.get(r7);
-								Automaton.Collection c7 = (Automaton.Collection) s7;
-								if(c7.size() >= 1) {
-									for(int r9=0;r9!=c7.size();++r9) {
-										int r8 = c7.get(r9);
-										int r11 = l4.get(2);
-										for(int r13=0;r13!=c1.size();++r13) {
-											if(r13 == r3) { continue; }
-											int r12 = c1.get(r13);
-											Automaton.State s12 = automaton.get(r12);
-											if(s12.kind == K_ForAll) {
-												Automaton.Term t12 = (Automaton.Term) s12;
-												int r14 = t12.contents;
-												Automaton.State s14 = automaton.get(r14);
-												Automaton.List l14 = (Automaton.List) s14;
-												int r15 = l14.get(0);
-												Automaton.State s15 = automaton.get(r15);
-												Automaton.Collection c15 = (Automaton.Collection) s15;
-												if(c15.size() >= 1) {
-													for(int r17=0;r17!=c15.size();++r17) {
-														int r16 = c15.get(r17);
-														Automaton.State s16 = automaton.get(r16);
-														Automaton.List l16 = (Automaton.List) s16;
-														int r18 = l16.get(0);
-														int r19 = l16.get(1);
-														boolean m15_1 = true;
-														for(int i20=0;i20!=c15.size();++i20) {
-															if(i20 == r17) { continue; }
-															int r20 = c15.get(i20);
-															Automaton.State s20 = automaton.get(r20);
-															Automaton.List l20 = (Automaton.List) s20;
-															int r21 = l20.get(0);
-															int r22 = l20.get(1);
-														}
-														if(m15_1) {
-															int r21 = l14.get(1);
-															Automaton.State s21 = automaton.get(r21);
-															if(s21.kind == K_Or) {
-																Automaton.Term t21 = (Automaton.Term) s21;
-																int r22 = t21.contents;
-																Automaton.State s22 = automaton.get(r22);
-																Automaton.Collection c22 = (Automaton.Collection) s22;
-																if(c22.size() >= 1) {
-																	for(int r24=0;r24!=c22.size();++r24) {
-																		int r23 = c22.get(r24);
-																		Automaton.State s23 = automaton.get(r23);
-																		if(s23.kind == K_Not) {
-																			Automaton.Term t23 = (Automaton.Term) s23;
-																			int r25 = t23.contents;
-																			Automaton.State s25 = automaton.get(r25);
-																			if(s25.kind == K_SubsetEq) {
-																				Automaton.Term t25 = (Automaton.Term) s25;
-																				int r26 = t25.contents;
-																				Automaton.State s26 = automaton.get(r26);
-																				Automaton.List l26 = (Automaton.List) s26;
-																				int r27 = l26.get(0);
-																				int r28 = l26.get(1);
-																				Automaton.State s28 = automaton.get(r28);
-																				if(s28.kind == K_Set) {
-																					Automaton.Term t28 = (Automaton.Term) s28;
-																					int r29 = t28.contents;
-																					Automaton.State s29 = automaton.get(r29);
-																					Automaton.Collection c29 = (Automaton.Collection) s29;
-																					if(c29.size() >= 1) {
-																						for(int r31=0;r31!=c29.size();++r31) {
-																							int r30 = c29.get(r31);
-																							if(Runtime.accepts(type31,automaton,automaton.get(r30), SCHEMA)) {
-																								int r33 = l26.get(2);
-																								int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, 0, r11, r12, r13, r14, r15, r16, r17, r18, r19, 0, r21, r22, r23, r24, r25, r26, r27, r28, r29, r30, r31, 0, r33, 0, 0};
-																								activations.add(new Activation(this,null,state));
-																							}
-																						}
-																					}
-																				}
-																			}
-																		}
-																	}
-																}
-															}
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-
-		public final boolean apply(Automaton automaton, Object _state) {
-			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
-			int r0 = state[0];
-			int r2 = state[2]; // s
-			int r3 = state[3];
-			int r5 = state[5]; // t1
-			int r8 = state[8]; // w
-			int r9 = state[9];
-			int r11 = state[11]; // r1
-			int r13 = state[13];
-			int r15 = state[15]; // vars
-			int r17 = state[17];
-			int r18 = state[18]; // v
-			int r21 = state[21]; // f
-			int r24 = state[24];
-			int r27 = state[27]; // t2
-			int r30 = state[30]; // u
-			int r31 = state[31];
-			int r33 = state[33]; // r2
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 2];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
-				if(s1i == r3 || s1i == r13) { continue; }
-				s1children[s1j++] = s1.get(s1i);
-			}
-			Automaton.Set r35 = new Automaton.Set(s1children);
-			boolean r36 = r30 == r18;      // u eq v
-			boolean r37 = false;           // u eq v && r1 eq r2
-			if(r36) {
-				boolean r38 = r11 == r33;      // r1 eq r2
-				r37 = r38;
-			}
-			if(r37) {
-				Automaton.List r39 = new Automaton.List(r15, r21); // [varsf]
-				int r40 = automaton.add(r39);
-				Automaton.Term r41 = new Automaton.Term(K_ForAll, r40);
-				int r42 = automaton.add(r41);
-				int r43 = automaton.substitute(r21, r18, r8);
-				Automaton.Set r44 = new Automaton.Set(r2, r42, r43); // {sForAll([varsf])f[v \ w]}
-				Automaton.Set r45 = r44.append(r35); // {sForAll([varsf])f[v \ w]} append rs
-				int r46 = automaton.add(r45);
-				Automaton.Term r47 = new Automaton.Term(K_And, r46);
-				int r48 = automaton.add(r47);
-				if(r0 != r48) {
-					automaton.rewrite(r0, r48);
-					return true;
-				}
-			}
-			automaton.resize(nStates);
-			return false;
-		}
-
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
-	}
-	// term $19<Exists($17<^[^{^[^Var(^string),$4<^Type>]...},$13<^$122<BExpr>>]>)>
-	public final static int K_Exists = 34;
+	// term $19<Exists($17<^[^{^[^Var(^string),$4<^Type>]...},$13<^$125<BExpr>>]>)>
+	public final static int K_Exists = 35;
 	public final static int Exists(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
 		return automaton.add(new Automaton.Term(K_Exists, r1));
@@ -7160,10 +6640,70 @@ public final class Solver {
 		public final int minimum() { return 0; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Exists([{[Var(^string), $11<Type>]...} xs, Exists([{[Var(^string), $11<Type>]...} ys, $25<BExpr> e])])
+	// Not(Exists([{[Var(^string), $11<Type>]...} vars, $25<BExpr> be]))
 	private final static class Reduction_79 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_79(Pattern.Term pattern) { super(pattern); }
+
+		public final void probe(Automaton automaton, int root, List<Activation> activations) {
+			int r0 = root;
+			Automaton.State s0 = automaton.get(r0);
+			if(s0.kind == K_Not) {
+				Automaton.Term t0 = (Automaton.Term) s0;
+				int r1 = t0.contents;
+				Automaton.State s1 = automaton.get(r1);
+				if(s1.kind == K_Exists) {
+					Automaton.Term t1 = (Automaton.Term) s1;
+					int r2 = t1.contents;
+					Automaton.State s2 = automaton.get(r2);
+					Automaton.List l2 = (Automaton.List) s2;
+					int r3 = l2.get(0);
+					Automaton.State s3 = automaton.get(r3);
+					Automaton.Collection c3 = (Automaton.Collection) s3;
+					boolean m3_0 = true;
+					for(int i4=0;i4!=c3.size();++i4) {
+						int r4 = c3.get(i4);
+						Automaton.State s4 = automaton.get(r4);
+						Automaton.List l4 = (Automaton.List) s4;
+						int r5 = l4.get(0);
+						int r6 = l4.get(1);
+					}
+					if(m3_0) {
+						int r5 = l2.get(1);
+						int[] state = {r0, r1, r2, r3, 0, r5};
+						activations.add(new Activation(this,null,state));
+					}
+				}
+			}
+		}
+
+		public final boolean apply(Automaton automaton, Object _state) {
+			int nStates = automaton.nStates();
+			int[] state = (int[]) _state;
+			int r0 = state[0];
+			int r3 = state[3]; // vars
+			int r5 = state[5]; // be
+			Automaton.Term r6 = new Automaton.Term(K_Not, r5);
+			int r7 = automaton.add(r6);
+			Automaton.List r8 = new Automaton.List(r3, r7); // [varsNot(be)]
+			int r9 = automaton.add(r8);
+			Automaton.Term r10 = new Automaton.Term(K_ForAll, r9);
+			int r11 = automaton.add(r10);
+			if(r0 != r11) {
+				automaton.rewrite(r0, r11);
+				return true;
+			}
+			automaton.resize(nStates);
+			return false;
+		}
+
+		public final int minimum() { return 4; }
+		public final int maximum() { return Integer.MAX_VALUE; }
+	}
+	// Exists([{[Var(^string), $11<Type>]...} xs, Exists([{[Var(^string), $11<Type>]...} ys, $25<BExpr> e])])
+	private final static class Reduction_80 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_80(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -7237,66 +6777,6 @@ public final class Solver {
 		}
 
 		public final int minimum() { return 6; }
-		public final int maximum() { return Integer.MAX_VALUE; }
-	}
-	// Not(Exists([{[Var(^string), $11<Type>]...} vars, $25<BExpr> be]))
-	private final static class Reduction_80 extends AbstractRewriteRule implements ReductionRule {
-
-		public Reduction_80(Pattern.Term pattern) { super(pattern); }
-
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
-			Automaton.State s0 = automaton.get(r0);
-			if(s0.kind == K_Not) {
-				Automaton.Term t0 = (Automaton.Term) s0;
-				int r1 = t0.contents;
-				Automaton.State s1 = automaton.get(r1);
-				if(s1.kind == K_Exists) {
-					Automaton.Term t1 = (Automaton.Term) s1;
-					int r2 = t1.contents;
-					Automaton.State s2 = automaton.get(r2);
-					Automaton.List l2 = (Automaton.List) s2;
-					int r3 = l2.get(0);
-					Automaton.State s3 = automaton.get(r3);
-					Automaton.Collection c3 = (Automaton.Collection) s3;
-					boolean m3_0 = true;
-					for(int i4=0;i4!=c3.size();++i4) {
-						int r4 = c3.get(i4);
-						Automaton.State s4 = automaton.get(r4);
-						Automaton.List l4 = (Automaton.List) s4;
-						int r5 = l4.get(0);
-						int r6 = l4.get(1);
-					}
-					if(m3_0) {
-						int r5 = l2.get(1);
-						int[] state = {r0, r1, r2, r3, 0, r5};
-						activations.add(new Activation(this,null,state));
-					}
-				}
-			}
-		}
-
-		public final boolean apply(Automaton automaton, Object _state) {
-			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
-			int r0 = state[0];
-			int r3 = state[3]; // vars
-			int r5 = state[5]; // be
-			Automaton.Term r6 = new Automaton.Term(K_Not, r5);
-			int r7 = automaton.add(r6);
-			Automaton.List r8 = new Automaton.List(r3, r7); // [varsNot(be)]
-			int r9 = automaton.add(r8);
-			Automaton.Term r10 = new Automaton.Term(K_ForAll, r9);
-			int r11 = automaton.add(r10);
-			if(r0 != r11) {
-				automaton.rewrite(r0, r11);
-				return true;
-			}
-			automaton.resize(nStates);
-			return false;
-		}
-
-		public final int minimum() { return 4; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// And({Exists([{[Var(^string), $11<Type>]...} vs, $25<BExpr> e]), $25<BExpr> es...})
@@ -7382,7 +6862,7 @@ public final class Solver {
 
 	public static final Schema SCHEMA = new Schema(new Schema.Term[]{
 		// $4<NotT($2<^Type>)>
-		Schema.Term("NotT",Schema.Or(Schema.Any, Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("AnyT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("TupleT",Schema.List(true)), Schema.Term("VarT",Schema.String))), Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any)))),
+		Schema.Term("NotT",Schema.Or(Schema.Any, Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("TupleT",Schema.List(true)), Schema.Term("VarT",Schema.String))), Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any)))),
 		// $7<AndT($5<^{$2<^Type>...}>)>
 		Schema.Term("AndT",Schema.Set(true)),
 		// $7<OrT($5<^{$2<^Type>...}>)>
@@ -7390,11 +6870,13 @@ public final class Solver {
 		// $7<TupleT(^[$2<^Type>...])>
 		Schema.Term("TupleT",Schema.List(true)),
 		// $9<SetT(^[^bool,$3<^Type>])>
-		Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Or(Schema.Any, Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("AnyT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("TupleT",Schema.List(true)), Schema.Term("VarT",Schema.String))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))))),
+		Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Or(Schema.Any, Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("TupleT",Schema.List(true)), Schema.Term("VarT",Schema.String))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))))),
 		// AnyT
 		Schema.Term("AnyT"),
 		// VoidT
 		Schema.Term("VoidT"),
+		// NullT
+		Schema.Term("NullT"),
 		// BoolT
 		Schema.Term("BoolT"),
 		// IntT
@@ -7406,7 +6888,7 @@ public final class Solver {
 		// VarT(^string)
 		Schema.Term("VarT",Schema.String),
 		// $8<FunctionT(^[$2<^Type>,$2,$2...])>
-		Schema.Term("FunctionT",Schema.List(true,Schema.Or(Schema.Any, Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("AnyT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("TupleT",Schema.List(true)), Schema.Term("VarT",Schema.String))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Term("TupleT",Schema.List(true))),Schema.Any)),
+		Schema.Term("FunctionT",Schema.List(true,Schema.Or(Schema.Any, Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("TupleT",Schema.List(true)), Schema.Term("VarT",Schema.String))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Term("TupleT",Schema.List(true))),Schema.Any)),
 		// True
 		Schema.Term("True"),
 		// False
@@ -7418,39 +6900,39 @@ public final class Solver {
 		// $7<Tuple(^[$2<^Expr>...])>
 		Schema.Term("Tuple",Schema.List(true)),
 		// $9<Load(^[$2<^Expr>,^int])>
-		Schema.Term("Load",Schema.List(true,Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("Num",Schema.Real), Schema.Term("String",Schema.String)), Schema.Term("Set",Schema.Set(true))), Schema.Term("Tuple",Schema.List(true)), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Any, Schema.Any, Schema.Term("Var",Schema.Any)), Schema.Term("LengthOf",Schema.Any)), Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("AnyT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("TupleT",Schema.List(true)), Schema.Term("VarT",Schema.Any))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Or(Schema.Any, Schema.Any, Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any))))), Schema.Term("Equation",Schema.Any))), Schema.Term("SubsetEq",Schema.List(true,Schema.Any,Schema.Or(Schema.Any, Schema.Term("Set",Schema.Set(true))),Schema.Any))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any)))), Schema.Any), Schema.Any),Schema.Int)),
+		Schema.Term("Load",Schema.List(true,Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("Num",Schema.Real), Schema.Term("String",Schema.String)), Schema.Term("Set",Schema.Set(true))), Schema.Term("Tuple",Schema.List(true)), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Any, Schema.Any, Schema.Term("Var",Schema.Any)), Schema.Term("LengthOf",Schema.Any)), Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("TupleT",Schema.List(true)), Schema.Term("VarT",Schema.Any))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Or(Schema.Any, Schema.Any, Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any))))), Schema.Term("Equation",Schema.Any))), Schema.Term("SubsetEq",Schema.List(true,Schema.Any,Schema.Or(Schema.Any, Schema.Term("Set",Schema.Set(true))),Schema.Any))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any)))), Schema.Any), Schema.Any),Schema.Int)),
 		// $4<LengthOf($2<^Expr>)>
-		Schema.Term("LengthOf",Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("Num",Schema.Real), Schema.Term("String",Schema.String)), Schema.Term("Set",Schema.Set(true))), Schema.Term("Tuple",Schema.List(true)), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Any, Schema.Or(Schema.Any, Schema.Term("Var",Schema.Any), Schema.Term("Load",Schema.List(true,Schema.Any,Schema.Int)))), Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("AnyT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("TupleT",Schema.List(true)), Schema.Term("VarT",Schema.Any))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Or(Schema.Any, Schema.Any, Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any))))), Schema.Term("Equation",Schema.Any))), Schema.Term("SubsetEq",Schema.List(true,Schema.Any,Schema.Or(Schema.Any, Schema.Term("Set",Schema.Set(true))),Schema.Any))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any)))), Schema.Any), Schema.Any)),
+		Schema.Term("LengthOf",Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("Num",Schema.Real), Schema.Term("String",Schema.String)), Schema.Term("Set",Schema.Set(true))), Schema.Term("Tuple",Schema.List(true)), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Any, Schema.Or(Schema.Any, Schema.Term("Var",Schema.Any), Schema.Term("Load",Schema.List(true,Schema.Any,Schema.Int)))), Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("TupleT",Schema.List(true)), Schema.Term("VarT",Schema.Any))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Or(Schema.Any, Schema.Any, Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any))))), Schema.Term("Equation",Schema.Any))), Schema.Term("SubsetEq",Schema.List(true,Schema.Any,Schema.Or(Schema.Any, Schema.Term("Set",Schema.Set(true))),Schema.Any))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any)))), Schema.Any), Schema.Any)),
 		// $9<Fn(^[^string,$3<^Expr>...])>
 		Schema.Term("Fn",Schema.List(true,Schema.String)),
 		// String(^string)
 		Schema.Term("String",Schema.String),
 		// $4<Not($2<^$28<BExpr>>)>
-		Schema.Term("Not",Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Term("Var",Schema.String), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("Load",Schema.List(true,Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Any, Schema.Or(Schema.Or(Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("Num",Schema.Real), Schema.Term("String",Schema.Any)), Schema.Term("Set",Schema.Set(true))), Schema.Term("Tuple",Schema.List(true))), Schema.Or(Schema.Any, Schema.Any, Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Any, Schema.Term("Set",Schema.Set(true)))),Schema.Int))), Schema.Term("LengthOf",Schema.Any)), Schema.Any, Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("AnyT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("TupleT",Schema.List(true)), Schema.Term("VarT",Schema.Any))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Any)), Schema.Term("Equation",Schema.Any))), Schema.Term("SubsetEq",Schema.List(true,Schema.Any,Schema.Any,Schema.Any))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any)))),
+		Schema.Term("Not",Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Term("Var",Schema.String), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("Load",Schema.List(true,Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Any, Schema.Or(Schema.Or(Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("Num",Schema.Real), Schema.Term("String",Schema.Any)), Schema.Term("Set",Schema.Set(true))), Schema.Term("Tuple",Schema.List(true))), Schema.Or(Schema.Any, Schema.Any, Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Any, Schema.Term("Set",Schema.Set(true)))),Schema.Int))), Schema.Term("LengthOf",Schema.Any)), Schema.Any, Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("TupleT",Schema.List(true)), Schema.Term("VarT",Schema.Any))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Any)), Schema.Term("Equation",Schema.Any))), Schema.Term("SubsetEq",Schema.List(true,Schema.Any,Schema.Any,Schema.Any))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any)))),
 		// $7<And($5<^{$2<^$31<BExpr>>...}>)>
 		Schema.Term("And",Schema.Set(true)),
 		// $7<Or($5<^{$2<^$31<BExpr>>...}>)>
 		Schema.Term("Or",Schema.Set(true)),
 		// $14<Equals(^[$2<^Type>,^{|$4<^Expr>,$4|}[$4<^Expr>,$4]])>
-		Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("AnyT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("TupleT",Schema.List(true)), Schema.Term("VarT",Schema.String))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("Num",Schema.Real), Schema.Term("String",Schema.Any)), Schema.Term("Set",Schema.Set(true))), Schema.Term("Tuple",Schema.List(true)), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Any, Schema.Or(Schema.Or(Schema.Any, Schema.Term("Var",Schema.Any), Schema.Term("Load",Schema.List(true,Schema.Any,Schema.Int))), Schema.Term("LengthOf",Schema.Any)), Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any)), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Or(Schema.Any, Schema.Any, Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any))))), Schema.Term("Equation",Schema.Any))), Schema.Term("SubsetEq",Schema.List(true,Schema.Any,Schema.Or(Schema.Any, Schema.Term("Set",Schema.Set(true))),Schema.Any))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any)))), Schema.Any), Schema.Any),Schema.Any))),
+		Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("TupleT",Schema.List(true)), Schema.Term("VarT",Schema.String))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("Num",Schema.Real), Schema.Term("String",Schema.Any)), Schema.Term("Set",Schema.Set(true))), Schema.Term("Tuple",Schema.List(true)), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Any, Schema.Or(Schema.Or(Schema.Any, Schema.Term("Var",Schema.Any), Schema.Term("Load",Schema.List(true,Schema.Any,Schema.Int))), Schema.Term("LengthOf",Schema.Any)), Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any)), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Or(Schema.Any, Schema.Any, Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any))))), Schema.Term("Equation",Schema.Any))), Schema.Term("SubsetEq",Schema.List(true,Schema.Any,Schema.Or(Schema.Any, Schema.Term("Set",Schema.Set(true))),Schema.Any))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any)))), Schema.Any), Schema.Any),Schema.Any))),
 		// $12<Mul($10<^[^real,^{|$3<^$20<AExpr>>...|}[$3<^$20<AExpr>>...]]>)>
 		Schema.Term("Mul",Schema.List(true,Schema.Real,Schema.Bag(true))),
 		// $8<Div(^[$2<^$16<AExpr>>,$2])>
-		Schema.Term("Div",Schema.List(true,Schema.Or(Schema.Any, Schema.Term("Num",Schema.Real), Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Or(Schema.Or(Schema.Term("Var",Schema.String), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("Load",Schema.List(true,Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Any, Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("String",Schema.Any)), Schema.Term("Set",Schema.Set(true))), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Any, Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("AnyT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("TupleT",Schema.List(true)), Schema.Term("VarT",Schema.Any))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Any)), Schema.Term("Equation",Schema.Any))), Schema.Term("SubsetEq",Schema.List(true,Schema.Any,Schema.Or(Schema.Any, Schema.Term("Set",Schema.Set(true))),Schema.Any))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any))))), Schema.Any),Schema.Int))), Schema.Term("LengthOf",Schema.Any))),Schema.Any)),
+		Schema.Term("Div",Schema.List(true,Schema.Or(Schema.Any, Schema.Term("Num",Schema.Real), Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Or(Schema.Or(Schema.Term("Var",Schema.String), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("Load",Schema.List(true,Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Any, Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("String",Schema.Any)), Schema.Term("Set",Schema.Set(true))), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Any, Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("TupleT",Schema.List(true)), Schema.Term("VarT",Schema.Any))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Any)), Schema.Term("Equation",Schema.Any))), Schema.Term("SubsetEq",Schema.List(true,Schema.Any,Schema.Or(Schema.Any, Schema.Term("Set",Schema.Set(true))),Schema.Any))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any))))), Schema.Any),Schema.Int))), Schema.Term("LengthOf",Schema.Any))),Schema.Any)),
 		// $12<Sum($10<^[^real,^{|$3<^$20<AExpr>>...|}[$3<^$20<AExpr>>...]]>)>
 		Schema.Term("Sum",Schema.List(true,Schema.Real,Schema.Bag(true))),
 		// $10<Equation($8<^[^AType,$4<^$29<AExpr>>]>)>
-		Schema.Term("Equation",Schema.List(true,Schema.Or(Schema.Term("IntT"), Schema.Term("RealT")),Schema.Or(Schema.Term("Num",Schema.Real), Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any)), Schema.Or(Schema.Or(Schema.Term("Var",Schema.String), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("Load",Schema.List(true,Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Any, Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("String",Schema.Any)), Schema.Term("Set",Schema.Set(true))), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Any, Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Any, Schema.Any, Schema.Term("AnyT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("StringT"), Schema.Term("TupleT",Schema.List(true)), Schema.Term("VarT",Schema.Any))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Any, Schema.Term("Inequality",Schema.Any))), Schema.Term("SubsetEq",Schema.List(true,Schema.Any,Schema.Or(Schema.Any, Schema.Term("Set",Schema.Set(true))),Schema.Any))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any))))), Schema.Any),Schema.Int))), Schema.Term("LengthOf",Schema.Any))))),
+		Schema.Term("Equation",Schema.List(true,Schema.Or(Schema.Term("IntT"), Schema.Term("RealT")),Schema.Or(Schema.Term("Num",Schema.Real), Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any)), Schema.Or(Schema.Or(Schema.Term("Var",Schema.String), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("Load",Schema.List(true,Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Any, Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("String",Schema.Any)), Schema.Term("Set",Schema.Set(true))), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Any, Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Any, Schema.Any, Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("StringT"), Schema.Term("TupleT",Schema.List(true)), Schema.Term("VarT",Schema.Any))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Any, Schema.Term("Inequality",Schema.Any))), Schema.Term("SubsetEq",Schema.List(true,Schema.Any,Schema.Or(Schema.Any, Schema.Term("Set",Schema.Set(true))),Schema.Any))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any))))), Schema.Any),Schema.Int))), Schema.Term("LengthOf",Schema.Any))))),
 		// $10<Inequality($8<^[^AType,$4<^$29<AExpr>>]>)>
-		Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Term("IntT"), Schema.Term("RealT")),Schema.Or(Schema.Term("Num",Schema.Real), Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any)), Schema.Or(Schema.Or(Schema.Term("Var",Schema.String), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("Load",Schema.List(true,Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Any, Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("String",Schema.Any)), Schema.Term("Set",Schema.Set(true))), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Any, Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Any, Schema.Any, Schema.Term("AnyT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("StringT"), Schema.Term("TupleT",Schema.List(true)), Schema.Term("VarT",Schema.Any))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Any, Schema.Term("Equation",Schema.Any))), Schema.Term("SubsetEq",Schema.List(true,Schema.Any,Schema.Or(Schema.Any, Schema.Term("Set",Schema.Set(true))),Schema.Any))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any))))), Schema.Any),Schema.Int))), Schema.Term("LengthOf",Schema.Any))))),
+		Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Term("IntT"), Schema.Term("RealT")),Schema.Or(Schema.Term("Num",Schema.Real), Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any)), Schema.Or(Schema.Or(Schema.Term("Var",Schema.String), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("Load",Schema.List(true,Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Any, Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("String",Schema.Any)), Schema.Term("Set",Schema.Set(true))), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Any, Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Any, Schema.Any, Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("StringT"), Schema.Term("TupleT",Schema.List(true)), Schema.Term("VarT",Schema.Any))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Any, Schema.Term("Equation",Schema.Any))), Schema.Term("SubsetEq",Schema.List(true,Schema.Any,Schema.Or(Schema.Any, Schema.Term("Set",Schema.Set(true))),Schema.Any))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any))))), Schema.Any),Schema.Int))), Schema.Term("LengthOf",Schema.Any))))),
 		// $7<Set(^{$2<^Expr>...})>
 		Schema.Term("Set",Schema.Set(true)),
-		// $10<SubsetEq(^[^$19<SetT(^[^bool,$13<^Type>])>,^$94<SExpr>,^$94])>
-		Schema.Term("SubsetEq",Schema.List(true,Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Or(Schema.Any, Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("AnyT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("TupleT",Schema.List(true)), Schema.Term("VarT",Schema.String))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))))),Schema.Or(Schema.Or(Schema.Or(Schema.Term("Var",Schema.Any), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("Load",Schema.List(true,Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("Num",Schema.Real), Schema.Term("String",Schema.Any)), Schema.Term("Set",Schema.Set(true))), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Any, Schema.Any, Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Any,Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Or(Schema.Any, Schema.Any, Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any))))), Schema.Term("Equation",Schema.Any)))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any)))), Schema.Any)),Schema.Int))), Schema.Term("LengthOf",Schema.Any)), Schema.Term("Set",Schema.Set(true))),Schema.Any)),
-		// $19<ForAll($17<^[^{^[^Var(^string),$4<^Type>]...},$13<^$122<BExpr>>]>)>
-		Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Term("Var",Schema.String), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("Load",Schema.List(true,Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Any, Schema.Or(Schema.Or(Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("Num",Schema.Real), Schema.Term("String",Schema.Any)), Schema.Term("Set",Schema.Set(true))), Schema.Term("Tuple",Schema.List(true))), Schema.Or(Schema.Any, Schema.Any, Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Any, Schema.Term("Set",Schema.Set(true)))),Schema.Int))), Schema.Term("LengthOf",Schema.Any)), Schema.Any, Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("AnyT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("TupleT",Schema.List(true)), Schema.Term("VarT",Schema.Any))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Any)), Schema.Term("Equation",Schema.Any))), Schema.Term("SubsetEq",Schema.List(true,Schema.Any,Schema.Any,Schema.Any))), Schema.Or(Schema.Any, Schema.Term("Exists",Schema.Any))))),
-		// $19<Exists($17<^[^{^[^Var(^string),$4<^Type>]...},$13<^$122<BExpr>>]>)>
-		Schema.Term("Exists",Schema.List(true,Schema.Set(true),Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Term("Var",Schema.String), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("Load",Schema.List(true,Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Any, Schema.Or(Schema.Or(Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("Num",Schema.Real), Schema.Term("String",Schema.Any)), Schema.Term("Set",Schema.Set(true))), Schema.Term("Tuple",Schema.List(true))), Schema.Or(Schema.Any, Schema.Any, Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Any, Schema.Term("Set",Schema.Set(true)))),Schema.Int))), Schema.Term("LengthOf",Schema.Any)), Schema.Any, Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("AnyT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("TupleT",Schema.List(true)), Schema.Term("VarT",Schema.Any))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Any)), Schema.Term("Equation",Schema.Any))), Schema.Term("SubsetEq",Schema.List(true,Schema.Any,Schema.Any,Schema.Any))), Schema.Or(Schema.Any, Schema.Term("ForAll",Schema.Any)))))
+		// $10<SubsetEq(^[^$19<SetT(^[^bool,$13<^Type>])>,^$97<SExpr>,^$97])>
+		Schema.Term("SubsetEq",Schema.List(true,Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Or(Schema.Any, Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("TupleT",Schema.List(true)), Schema.Term("VarT",Schema.String))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))))),Schema.Or(Schema.Or(Schema.Or(Schema.Term("Var",Schema.Any), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("Load",Schema.List(true,Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("Num",Schema.Real), Schema.Term("String",Schema.Any)), Schema.Term("Set",Schema.Set(true))), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Any, Schema.Any, Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Any,Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Or(Schema.Any, Schema.Any, Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any))))), Schema.Term("Equation",Schema.Any)))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any)))), Schema.Any)),Schema.Int))), Schema.Term("LengthOf",Schema.Any)), Schema.Term("Set",Schema.Set(true))),Schema.Any)),
+		// $19<ForAll($17<^[^{^[^Var(^string),$4<^Type>]...},$13<^$125<BExpr>>]>)>
+		Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Term("Var",Schema.String), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("Load",Schema.List(true,Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Any, Schema.Or(Schema.Or(Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("Num",Schema.Real), Schema.Term("String",Schema.Any)), Schema.Term("Set",Schema.Set(true))), Schema.Term("Tuple",Schema.List(true))), Schema.Or(Schema.Any, Schema.Any, Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Any, Schema.Term("Set",Schema.Set(true)))),Schema.Int))), Schema.Term("LengthOf",Schema.Any)), Schema.Any, Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("TupleT",Schema.List(true)), Schema.Term("VarT",Schema.Any))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Any)), Schema.Term("Equation",Schema.Any))), Schema.Term("SubsetEq",Schema.List(true,Schema.Any,Schema.Any,Schema.Any))), Schema.Or(Schema.Any, Schema.Term("Exists",Schema.Any))))),
+		// $19<Exists($17<^[^{^[^Var(^string),$4<^Type>]...},$13<^$125<BExpr>>]>)>
+		Schema.Term("Exists",Schema.List(true,Schema.Set(true),Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Term("Var",Schema.String), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("Load",Schema.List(true,Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Any, Schema.Or(Schema.Or(Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("Num",Schema.Real), Schema.Term("String",Schema.Any)), Schema.Term("Set",Schema.Set(true))), Schema.Term("Tuple",Schema.List(true))), Schema.Or(Schema.Any, Schema.Any, Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Any, Schema.Term("Set",Schema.Set(true)))),Schema.Int))), Schema.Term("LengthOf",Schema.Any)), Schema.Any, Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("TupleT",Schema.List(true)), Schema.Term("VarT",Schema.Any))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Any)), Schema.Term("Equation",Schema.Any))), Schema.Term("SubsetEq",Schema.List(true,Schema.Any,Schema.Any,Schema.Any))), Schema.Or(Schema.Any, Schema.Term("ForAll",Schema.Any)))))
 	});
 
 	// =========================================================================
@@ -7462,23 +6944,23 @@ public final class Solver {
 	// VoidT
 	private static Type type1 = Runtime.Type("2KLxLPZGp3ukmD0E");
 	// $11<Type>
-	private static Type type2 = Runtime.Type("U53GKTkK5G0GrQhGZIjG6KowZRJGJFiG5K3CKOoG4OJK6RgK5KJ55KbQYGMPjt5Klppb0fWfGjWm0ql59CXDAp1IZ0_RjGrQid1bl7ww3AN4HLR5Qcp7vgKARGJFi_6KIs4AUG_Kj_5OJCGPgc5K1xqQgGp3glHQ3_ZQoGp3jl1TJ8KOWl5KIc6AvGrJo8MPiS5KIo6AyCmIgZ2XW985YVZX0AA53OKNmG_9OBHYWY0AE505chaQtlrUB5N5QZOBXIP5hgOcHIYkIb0AT5YoOgmAc5eZPBHEe5ggPBXEe5goPc16YwPoOBH6s5tZQcXil7zgQk1jl7S5gZYjW9z5YV3m0A86YoOoOBHblmGDB6eoRBHHD6gwR3Cx");
+	private static Type type2 = Runtime.Type("e53GKTkK5G0GrQhGZIjG6KowZRJGJFiG5K3CKOoG4OJK6RgK5KJ55KbQYGMPjt5Klp_elfGi0mGnlql59CXDAp1IZ0_RjGrQidmbl7ww3AN4HLU5Qcp7vgKARGJFi_6KIs4AUG_Ipl5QJCGPgc5KLxLPZGp3glHQJ8oQjl5KIw5AsGJHiG6KIc6AvG_J_45QJCGUgs6SIGbRdtqOJC0X0A85Yw3AtgNc1Yl77pNkXY0GL4aRJdH5YVOZOkXaGZ0PftLTwxbXlYlal5R5YsJbGAT5eoo7wVPkHel7c5fwmeW9g5YoIf0Ai5YsIf0As5ekl7u5c5YoliGDw5eoQBmEy5gwQB1e0AtZRcXml77hRk1nl7c5c5YVPsRZnnW9N6YZJq0AP6GI");
 	// bool
 	private static Type type3 = Runtime.Type("Fk0");
-	// $33<Proton>
-	private static Type type4 = Runtime.Type("9G5Jmx5Sjt5G0tLTJClDgk2KLxLPZGp3ykmEJ8oQjl5KIZ3A9GJHiG6KIk3ACG_J_45QJClIgV4SIGbRdtqOJCWLgg4OJK6RgK5Kegr7TlHDUd1PYoKPgc5GL4aRJdH5YkLQgsLVGE7hZIOlpPjh0TYcIThcMg6");
+	// $36<Proton>
+	private static Type type4 = Runtime.Type("CG5Jmx5Sjt5G0tLTJClDgk2KDK6QgGp3ykmEJOpQdG5KIZ3A9G_Fjx5QJC0Igo3G8t5SJClIgV4KHKLNgGp3PlmLoC4Sm_aQbGp3SlXMZGKSklLOJdXUYZ5Atca9fC1PglHQ3OKNmG_9OBmQslHTG5xVoHD_4MUtaTQgr7ukMAx4y0");
 	// ^AnyT
 	private static Type type5 = Runtime.Type("3G0tLTJCWDggY9w3x$");
 	// $14<Expr>
-	private static Type type6 = Runtime.Type("iH3K3Tk86KL45QpK5KJK6RgK585t5K1K3Tk8MFxhPZQZTglEJ4JGs0bRWVoyn59GpJ4W6Rm4mHuHQoo7usJAEGZFjx5QosJShGqJo8MPiSa9xC1MgZIMesp7ww4Ac4JPE5P5S5Qc5CIK5SYkp9joa9iC1Qjl1TWgLTQcr7vgMAwG3KmKMOIs6AzG_GWlqR_CGX0A95WVNgNg0Yl7OpNoXYW9PBXLN5gZOcH5Ygpa0AR5eVp7T5gZnbW9c5YkIe0Ae5IgOBXb0fGDh5esPBHEj5gVQF_K4W6RmGIFiG58E86CDx5SZKJRp45Qn4qYWylaHbmbmim5z5Z58tLOlKMNg_5StGNJJRp45SdxaQWVys8hlmG776B6QoRFNBKSXCMOoKJRWsRs9h0q0O5xaR0l5QZK3TdC6Sn4Hroro5R6WZSoSgWrl7ywSo1u0CL4aR3loQWGLBt5w6A9QkTFNkJOiS5ScxZOWoTocglvl7u5s6hZUBXula0Av6egl7T5x6YoWzGDz6eVcBmuGX1A99YsTsOk1YX9d6YscgmAE9eVdBmiGa1AP9YkQZdk1bm7x5D9gsdF3Kt0MOesg7XbWbl7SceVneX9g9YZeoeBH6i9twec1im7y5t9gcfFJFoxLQ3toQoG4CE86K34ZQZG4GIK5SJG5Kp06Q_G4_WGptqNo_qQiGKRTATDfDhDwD8EEEQggB1e1nHACAZ0_RjGrQid1bn7x9NAgZh3Xq1bn5QAYkfkhoHr1G0tLTJClr1AcAJOpQdG5KIcikmu1K1xqQgGp3hAgsiFJHiG6KIVjkHy1KHKLNgGp3vAgkjFrJo8MPiS5KIsjkmzm7NAgZIXY99DYZggsk1Y2GL4aRJCXYna0AED05dAgAjAuAxA7DCDNDQZtBmnXaIAQDYofZekHbn7d9fwmbY9cDYsfZukXen7z9dDgkuc16YsuZeBH6jDtVvcHin77AuDggvBHe1AtovcXjn78AzDgVwBHeHem7d99Etgwc1nn79ACEgswFKFJ_6R_d1vY9vEYZxcxBH6QEtkxcHrn786TEgwx3XyHzm5dEYVxcyomu2CIKMQooJSgG2GdOMJP5u6BHDHRHQVzBHHtEhczBXqn9skzcHzn7N5yEYolzID7HeZ7CHvYX3AAHYsyc7lHYo7PEPEYolYJDNHeZ8CmvYa3AQHYcRsxkHbZ9wDecACnb3e3eo7SZ9_YeZ9fHYwRk9lHfJ7u6zHQw9C1IsHhZACXbl9jgAd1jo7gpAlXjZ9w6YVB_eBH68ItcBdmmo7BIfwHnZ9DIYwBtcBH6NItZCdXqo7P6QIgkCCmqlq3ATI0LE");
+	private static Type type6 = Runtime.Type("tH3K3Tk86KL45QpK5KJK6RgK585t5K1K3Tk8MFxhPZQZTglEJ4JGs0bRWVZzn59GpJ4W6Rm4mHxHQoo7usJAEGZFjx5QosJShGqJo8MPiSa9xC1MgZIMesp7ww4Ac4JPE5P5S5Qc5CIK5SYkp9joa9iC1Qjl1TWgLTQcr7vgMAwG3KmKMOIs6AzG_GWlqR_CGX0A95WVNgNg0Yl7OpNoXYW9PBXLN5gZOcH5Ygpa0AR5eVp7T5gZnbW9c5YkIe0Ae5IgOBXb0fGDh5esPBHEj5gVQF_K4W6RmGIFiG58E86CDx5SZKJRp45Qn4qYWylaHbmbmim5z5Z58tLOlKMNg_5StGNJJRp45SdxaQWgyZ9hlmG776B6QoRFNBKSXCMOoKJRWsRZAh0q0O5xaR0l5QZK3TdC6Sn41uZuo5R6WZSoSgWrl7ywSo1u0CL4aR3loQWGLBt5w6A9QkTFNkJOiS5ScxZOWoTocglvl7u5s6hZUBXula0Av6egl7T5x6YoWzGDz6eVcBmuGX1A99YsTsOk1YX9d6YscgmAE9eVdBmiGa1AP9YkQZdk1bm7x5D9gsdF3Kt0MOesg7XbWbl7SceVneX9g9YZeoeBH6i9twec1im7y5t9gcfFJFoxLQ3toQoG4CE86K34ZQZG4GIK5SJG5Kp06Q_G4_WGptqNo_qQiGKRTAdDiDsDzDBEPEQggB1e1nHACAZ0_RjGrQidmbn7x9NAgZh3Xqmbn5QAYkfkhoHr1G0tLTJClr1AcAJtJSgl5KIcikmu1KLxLPZGp3hAgsiF_Fjx5QJC0y1AtA3_ZQoGp3vAgkjF_J_45QJCWz1AzAoC4Sm_aQbGp38DgcsB1q1AtkscHYn78ADDgwsFZKW86KYZtgOkXaIZGu1vmvXyHz1XnX2anan5RDYwgotoXbn7x9d9gVuBHem9jcucmen7y9gDgouBmj1f2AjDekl7tDd9YoWiIDvDekvB1mHj2AyDYZekHD7EeZwBHmXm2AAEYZeZeBHeHnIDDEewwBXm1q2AOEJ43Kt0MOewycXzn7RESEYoWrIDUEeVyBHmGu2AeEWojVsg0vn7QEhEhsyFnJpp5CCK6QoFJPq4_aWylYJaobo5vEYZ3zIAxEYoxg1DzEeV7C1aGXo7Sc7_nXZ9BHYVzo7lXYo7tECHgV8CHrIrn7Sc8_naZ9RHYczo8lXbo796dEgV9dmjY9xHnc9h9h9CH6gHto9dXfo7E6jHgVA4XyWmo5uHYkoiJAwHYsOgmAyHewAC1Q7IgZBd1zl7AId9Yo0nJDCIesBCmno9jVCdHqo7PID9YolqJDRIeoCCXqWr3AUIYgSsClHuJV4");
 	// int
 	private static Type type7 = Runtime.Type("Fg0");
 	// $10<VExpr>
-	private static Type type8 = Runtime.Type("iHJOKGs0bRoNKNmGXGiG3Ij45OlwoMSIQs2W0I_tqOoWqIa4mEUIQZo7ucJAAdH5YgIIgs3G4W6Rmd1UIoo7OdKDQd1MYkIMgs4KL45QpK5KJK6RgK5K1K3Tk8MFU_PoRkUglPJ4JGs0bRWkaun5iGpJ4W6Rm4mQdHQZr7NdMAvGZFjx5QosJShGqJo8MPiSa9d5YVNkHD85ecNBHPA5gkN3JYliWj0ml5D5oBKOoC1Xl9jZOcXal7N5Q5gkO3mYGbl5T5YVqbGAc53G_RpKq3e5ggPF_GWlqR_CGf0Ai5WkPwPg0il7x_QoXiW9PBXUw5goQBmUClmjl7OlHD86ecRBHPA6gkRFIFiG58E86CDx5SZKJRp45Qn45Iv599B9D9e9QcSFPZZQ_4MSWlLPo_6WGGlKMNo_qQi4mnIYo5T6WgSwSg0u0WlJp8qR_GMGl4HuGbo5f6ZOoQm43QgGLGs_qRoCM7BIDIQwT31v0yl5t6YcayGAv6ekUBHzl9jsUcmzl7D679gZcBmn0X1AA9YVSoUkHY1GJ_6R_dHjX7O_p7SZdVYaX9Q9YVdkdBH6S9tsdcmbm7O6c9gZeFJFoxLQ3toQoG4CE86K34ZQZG4GIK5SJG5Kp06Q_G4_WGptqNo_qQiGKRCACDPDRDfDsDyDQcfBmYmiHAw9Z0_RjGrQidmXn7g9z9gVg3HmmXn59AYgeggo1n1G0tLTJCWn1AEAJOpQdG5KIZhkXq1K1xqQgGp3RAgohFJHiG6KIwhk1u1KHKLNgGp3eAggiFrJo8MPiS5KIoikXvm7z9gZ2yX9tAYVfcjkmy1GL4aRJCHzHIgsj3NVhghshZikiwikjwjg0Xn7y98DhcsB1f1a1ABDYVdgmADDewsBHf1a2AODYseVtkmaY9RBHb2am7SstZnbY9cDYweZukXen7N9gZ2fY9hDYVfsukmfn7N9N9YVdZvZYiY9vDYZfkvkHj2K0GKTkKa9QEecyB1mImn7ScwZnmY9BEYkSowkXnI7dAgAQVxBmjIqIAPEoBKShGIIpl5C3_aSGlZjlyIznXo5UEYo5uIAdEYZwg1DfEekyB1jGvn7SsyZnvY9sEYkxZzkXyn7SEtEgkzBHmImn7SszZnzY97HYsxZ7lXXo7S6CEgk7dmeY9dHns7x7x7CH6NHtZ8dXao7e6QHgk841IiHQs8C1TUHhV9CHLfwXeZ9fHYVOk9lHfZ9ECmf3am7SVA_IiZ9uHYgAhmAwHeoACXjJzl7SwA_2mZ98IYoTcBlmmo7i69IgoBdm5YZpno7SVC_IqZ9PIYonq3ARIYVJLgsC4Bx");
+	private static Type type8 = Runtime.Type("tHJOKGs0bRoNKNmGXGiG3Ij45OlwoMcIQs2W0I_tqOoWqIa4mEeIQZo7ucJAAdH5YgIIgs3G4W6Rmd1UIoo7OdKDQd1MYkIMgs4KL45QpK5KJK6RgK5K1K3Tk8MFU_PoRkUglPJ4JGs0bRWkLvn5iGpJ4W6Rm4mQgHQZr7NdMAvGZFjx5QosJShGqJo8MPiSa9d5YVNkHD85ecNBHPA5gkN3JYliWj0ml5D5oBKOoC1Xl9jZOcXal7N5Q5gkO3mYGbl5T5YVqbGAc53G_RpKq3e5ggPF_GWlqR_CGf0Ai5WkPwPg0il7x_QoXiW9PBXUw5goQBmUClmjl7OlHD86ecRBHPA6gkRFIFiG58E86CDx5SZKJRp45Qn45Iv599B9D9e9QcSFPZZQ_4MSWlLPo_6WGGlKMNo_qQi4Xq2ao5T6WgSwSg0u0WlJp8qR_GMGl4Hu0eo5f6ZOoQm43QgGLGs_qRoCM7EIOIQwT31v0yl5t6YcayGAv6ekUBHzl9jsUcmzl7D679gZcBmn0X1AA9YVSoUkHY1GJ_6R_dHjX7O_p7SZdVYaX9Q9YVdkdBH6S9tsdcmbm7O6c9gZeFJFoxLQ3toQoG4CE86K34ZQZG4GIK5SJG5Kp06Q_G4_WGptqNo_qQiGKRCANDSDUDiDvD8EQcfBmYmiHAw9Z0_RjGrQidXYn7g9z9gVg3HmXYn59AYgeggo1n1G0tLTJCWn1AEAJtJSgl5KIZhkXq1KLxLPZGp3RAgohF_Fjx5QJClr1AcA3_ZQoGp3eAggiF_J_45QJCGv1AiAoC4Sm_aQbGp3sAgZjBmj1Atgjc1zm7s9xAgsjFZKW86KYVso3A8DG5NAQATAdAgAjAuAzA9DQgsBXj1YIACDYkeVdkmYn7N9fwHaY9PDYoegtk1bn7i9QDgstc16YVuVdBH6dDtcucmen7j9gDgouB1a1Atwuc1in7s9tDgcvB1a1am7N9wDtovcXjn7t9zDgVwFKFJ_6R_dXrY9hEYgwkwBH6CEtswcmnn7R6NEgZx31vmvm5QEYcwkxoHr2CIKMQooJSgG2GdOMJBtQszV7t7hWun7hhyo1vn7BEfVYvY9jEYkQVzBH6tEtczcmyn7UEwEgozB1u2z2AzEYkwkwBH68Htc7dmXo7dEBHgo7CHr0q2AEHesuc1foBOHPHPHYolaJDRHeo8CXuWb3AUHWkJio5dHYVbeJAfHYZp9jo9dXfo7N5jHgVAdmIYcAWdBH6vHtkAdHjo7yHfwmjZ97IYZBpUBH69ItgBd1no7h6CIgsBCXvGn3ANIegl7OdCCH6QItkCdHro7xsClmro77_4AdI0I");
 	// $7<Tuple(^[$2<^Expr>...])>
-	private static Type type9 = Runtime.Type("iHJGKSklLO3K3Tk8b9TC1EgZIEesn7uw2A7G_KWlLS_GXGiG_F4W6Rm4JHA5t5d6Qo3K0K3Tk8M7Dhzg0LJCKGs0bRWZ_io5QCmDRpHM38oQjl5CDKMQZC4Sm_aQbdmXl7elHDfd1QYcIQgsLFjpOVPgPg0ToBKOoCXPfwmTekr7up6Ay4HTzh0Xl79_NoXX0GJ8MS_C0Y0AC5JOJNgCMOIwNk1aG7D5O5QcOBmMQ5hkOcX5YVab0AU5eZl7d_PkXel3d5Yk2fGDh5esPBmHj5gVQF_K4W6RmGIFiG58E86CDx5SZKJRp45Qn4LbWylaHbmbmim5z5Z58tLOlKMNg_5StGNJJRp45SdxaQWVys8hlmG776B6QoRFNBKSXCMOoKJRWsRs9h0q0O5xaR0l5QZK3TdC6Sn4Hroro5R6WZSoSgWrl7BxSo1u0CL4aR3loQWGLBt5w6A9QkTFNkJOiS5ScxZOWoTocglvl7u5s6hZUBXuGe0Av6egl7woUBH6y6twUc1Xm7f689gccBXv0EgkccHul7D9fwmYX9N9YgQZdkXam7w5O9gkdBHjWY1AT93GKTkKa9DAXk2EYoWe1Df9ekeBHeHfm7SseZnfX9s9YsQZfkXi1G0GrQhGZIjG6KowZRJGJFiG5K3CKOoG4OJK6RgK5KJ55KbQYGMPjt5KlthstguoukvZwwwglmm7c9BAhogF5Jmx5Sjta9RDYofVhkHqH7PARDQghB1j1rHASA34ZQtGp3UAgViF_Kj_5OJCWu1AfAJ8oQjl5KIoikXv1G8t5SJC0y1AtAJ8KOWl5KIgjk1z1SIGbRdtqOJCWz1AzAYVhkHD8DecsBHmmX2ABD3OKNmGp7DDd5gws3NZikiwicjojVsosVtgGan7EAPDhgtBHjHe1ASDYZegmAUDeVuBXjHe2AeDYwfZuk1fY9RBXfIem7SwuZ2iY9tDYVgcvkmin7d9gZIjY9yDYZgwvk1mn7d9d9YZecwZnmY9BEYcgowkXn2K0GKTkKa9gEegzBHqYqn7SgxZ2rY9SEYZRsxkmrI7uAxAQZyB1qYuIAfEoBKShGIIpl5C3_aSGWPcUk7t7l8h0yn7E_zoXyn7PEfV2zY9xEYsOszBH6zEtV7dHXo7hE9Hgg7CXvYX3ACHYcxcxBH6EHtV8dHao7jEPHgg8CXmWr2ASHekvcXioBUHcHcHYoGeJDeHeg9Cmn0f3AhHWcUwAhlfo7PWApHio7wgmAvHekACXTxHgsAd1zl77Id9YoGmJD9IegBC1no9joBdXno7EID9Yo0qJDOIecCCXqlq3ARIYgSgClXrJZ3");
+	private static Type type9 = Runtime.Type("tHJGKSklLO3K3Tk8b9TC1EgZIEesn7uw2A7G_KWlLS_GXGiG_F4W6Rm4JHA5t5d6Qo3K0K3Tk8M7Dtzg0LJCKGs0bRWZKjo5QCmDRpHM38oQjl5CDKMQZC4Sm_aQbdmXl7elHDfd1QYcIQgsLFjpOVPgPg0ToBKOoCXPfwmTekr7up6Ay4HTzh0Xl79_NoXX0GJ8MS_C0Y0AC5JOJNgCMOIwNk1aG7D5O5QcOBmMQ5hkOcX5YVab0AU5eZl7d_PkXel3d5Yk2fGDh5esPBmHj5gVQF_K4W6RmGIFiG58E86CDx5SZKJRp45Qn4LbWylaHbmbmim5z5Z58tLOlKMNg_5StGNJJRp45SdxaQWgyZ9hlmG776B6QoRFNBKSXCMOoKJRWsRZAh0q0O5xaR0l5QZK3TdC6Sn41uZuo5R6WZSoSgWrl7BxSo1u0CL4aR3loQWGLBt5w6A9QkTFNkJOiS5ScxZOWoTocglvl7u5s6hZUBXuGe0Av6egl7woUBH6y6twUc1Xm7f689gccBXv0EgkccHul7D9fwmYX9N9YgQZdkXam7w5O9gkdBHjWY1AT93GKTkKa9DAXk2EYoWe1Df9ekeBHeHfm7SseZnfX9s9YsQZfkXi1G0GrQhGZIjG6KowZRJGJFiG5K3CKOoG4OJK6RgK5KJ55KbQYGMPjt5KlthZusuVvwvkwcxglmm7c9BAhogF5Jmx5Sjta9UDYofVhkHqH7PAUDQghB1j1rHASA34ZQtGp3UAgViF_Ipl5QJCWu1AfAJOpQdG5KIoikXv1K1xqQgGp3sAgZjFJHiG6KIgjk1z1KHKLNgGp3yAgwjFrJo8MPiS5KIZskXXn7NAgZ2YY9CDYZgsskmY2GL4aRJCHaIe0APDG5dAgAjAuAxA7DADNDQDQktBmnHbIATDYofZek1en7d9fwXeY9fDYsfkukHfn7z9gDgwuc16YZvZeBH6uDtgvc1jn77AxDgsvBHe1AtVwcHmn78A9EggwBHeHem7d9CEtswcmnn79ANEgZxFKFJ_6R_dmvY9yEYkxoxBH6TEtwxc1un786dEgcy3Hz1Xn5gEYgxoyoXv2CIKMQooJSgG2GdOMJc5u6EHOHUHQgzBmIwEhozBHrn9swzc1Xo7T58HYoWXJDAHek7C1yIY3ADHYZzo7l1ao7SESEYoWaJDQHek8CXyIb3ATHYcRZyk1eZ9zDeoACYeoeoeo7Sk9_IfZ9iHYwRw9l1iJ7u69IQcACXLvHhkAC1EfwXjZ9zHYc6m3A8IekUBmmJem7SkB_InZ9DIYwBhmANIeZCCXqZYm7SgC_2rZ9SIYcSsClmro7Q6TIgZD48x");
 	// $25<BExpr>
-	private static Type type10 = Runtime.Type("iHJ8JGs0bRJOKGs0bR38oQjl5C0t5OZwZRosoQoGLGlKMNgCMNxdTohwhZiojgGHZ58tLOlKMNg_5StGNJJRp45SdxaQWZ9x9hGIWcZIQw3WlJp8qR_GMGl41LzHQc4O5xaR0l5QZK3TdC6Sn4Hroro5T4mLUh0PYcIPhc5CL4aRZNZQ3loQWGLB75N5CAQw5W0I_tqOoWqIa41TEAQcr7vgMAwdH5YkaUgw6G4W6Rmd1fl3yCXXlXGDB5eoNBHQD5gwNF_KWlLS_G4Kp06Q_4oPN5N6w6QgOFKF4W6Rm41blXm5T5JCKGs0bRWwOZfgGel785e5hgPFYIpp5OIGbRdtqOeVSBmf0AtVQcHil7P5u5ggQ33jWuGvlvl5x5oBKOoCmfl9jVRcHml7z596ggR3Xj0nl5C6YZOsRomn0GJ8MS_CGq0AP6JOJNgCMOIkSkHrG7Q6T6QwSB1Ec6hZTcX5YoPgTk1vl7i5ylXvl795gZ2yW9t6YcOcUkmy0CIKMQooJSgG2GdOMJxpTodwdoeg0Xm7S589hcccmXm7B9fVIYX9D9YgTwcBH6N9tZdcXam7x6Q9gkdBXzla1AT9YkckcBH6c9tZecXem7z6f9gke3HUy9QseB1elfHAs9YcNgmAu9egfBmj0j1Ax9egl795z9Yo0mHD8AecgBXQAAgkgBHT95gsgcmPYVhgmAOAechBHEQAgkhBXEQAgshBmENAgViF3Kt0MOeVt7XXWXl7SkiVIvX9iAYgiwiBH6sAtZjcXym77hjk1z1G0GrQhGZIjG6KowZRJGJFiG5K3CKOoG4OJK6RgK5KJ55KbQYGMPjt5KlWuVyoywyszg7_8hGYn7eADDhwsF5Jmx5Sjta9TEYwjctkmaI7RDTEQotBXzXbIAUD34ZQtGp3dDgcuF_Kj_5OJC0f2AhDJ8oQjl5KIwuk1i2G8t5SJCWi2AvDJ8KOWl5KIovkXj2SIGbRdtqOJC0m2A8EYctkHDAEekwBmXIn2ADE3OKNmGp7NEylHqIVleYfIi2jnjYmnnYqn5QEYZtkxoHrn7zAfAgwxBmum9jZycXun77DfEgkyBHXnu2AiEekl7sEfAYoGyIDuEegzBXX2z2AxEYgikHDzEeV7CmXIX3A9HYgigiBmu1YJDCHes7C1YnY3ANHJ43Kt0MOeo9Cma3Ym7Sk8_IbZ9THYgob3AcHWkvwvgWeo7PHfHhk9C1IUHgs9dXzY9t9nVA_A_ACH6uHtgAd1jo7OpAlXjZ975YVBhiBH68ItcBdmmo7BIfwHnZ9DIYwBWhBH6NItZCdXqo7RhCl1ro7ShClXrJgq2");
+	private static Type type10 = Runtime.Type("tHJ8JGs0bRJOKGs0bR38oQjl5C0t5OZwZRosoQoGLGlKMNgCMNxdTohwhZiojgGHZ58tLOlKMNg_5StGNJJRp45SdxaQWk9dAhGIWcZIQw3WlJp8qR_GMGl41L9IQc4O5xaR0l5QZK3TdC6Sn41uZuo5T4mLUh0PYcIPhc5CL4aRZNZQ3loQWGLB75N5CAQw5W0I_tqOoWqIa41TEAQcr7vgMAwdH5YkaUgw6G4W6Rmd1fl3yCXXlXGDB5eoNBHQD5gwNF_KWlLS_G4Kp06Q_4oPN5N6w6QgOFKF4W6Rm41blXm5T5JCKGs0bRWwOZfgGel785e5hgPFYIpp5OIGbRdtqOeVSBmf0AtVQcHil7P5u5ggQ33jWuGvlvl5x5oBKOoCmfl9jVRcHml7z596ggR3Xj0nl5C6YZOsRomn0GJ8MS_CGq0AP6JOJNgCMOIkSkHrG7Q6T6QwSB1Ec6hZTcX5YoPgTk1vl7i5ylXvl795gZ2yW9t6YcOcUkmy0CIKMQooJSgG2GdOMJxpTodwdoeg0Xm7S589hcccmXm7B9fVIYX9D9YgTwcBH6N9tZdcXam7x6Q9gkdBXzla1AT9YkckcBH6c9tZecXem7z6f9gke3HUy9QseB1elfHAs9YcNgmAu9egfBmj0j1Ax9egl795z9Yo0mHD8AecgBXQAAgkgBHT95gsgcmPYVhgmAOAechBHEQAgkhBXEQAgshBmENAgViF3Kt0MOeVt7XXWXl7SkiVIvX9iAYgiwiBH6sAtZjcXym77hjk1z1G0GrQhGZIjG6KowZRJGJFiG5K3CKOoG4OJK6RgK5KJ55KbQYGMPjt5KlWugyVzczZ7t7l8hGYn7eADDhwsF5Jmx5Sjta9dEYwjctkmaI7RDdEQotBXzXbIAUD34ZQtGp3dDgcuF_Ipl5QJC0f2AhDJOpQdG5KIwuk1i2K1xqQgGp3uDggvFJHiG6KIovkXj2KHKLNgGp37EgZwFrJo8MPiS5KIgwk1nn7PDgZYnY9EEYgsVxkHq2GL4aRJCmqYUgkx3OgusuZvkvwvcwowcxoxgWrn7ODUEhVyBmzmu1AeEYgigmAgEeoyB1XYv2AjEYZssykHyY9RBmynum7SkzZIzY9yEYcswzk1Xo7fAgZYXZ9AHYgsk7lHYo7fAfAYgiw7_2aZ9OHYksc8lma3K0GKTkKa9sHYs8lcBH6UHtV9dHeo7Ad9lmeJ7zD9EQo9CHbZfJAjHYkZe3AtHeZ7dHimBvHwHwHYoGjJDyHewACHL7IgZBd1Xl7AIfAYo0nJDCIesBCmno9jVCdHqo7PINAYolqJDRIeoCC1MTIgwCCHMTIgZD4f0");
 	// Bool
 	private static Type type11 = Runtime.Type("QFZFjx5Q3G_RpKq3vk1EJOJNgCMOIs2Az3HE7hGHYcYHhgJko2");
 	// any
@@ -7494,35 +6976,37 @@ public final class Solver {
 	// real
 	private static Type type17 = Runtime.Type("Fc0");
 	// $9<AExpr>
-	private static Type type18 = Runtime.Type("iHJ4JGs0bRosJShGnJpp5CCK6QoFJPqG_K4W6Rm4_Icd5T95QVo7uZJA9dX5Yg2IgoZ9ACmIfV2LeZp7Bdp7SgKDRdHMYkYMgwp7xs4AdCmIECH6f_2Qeoq7ys5AjGYKW8685t5GBxLNZ4IYGbGro5wGNkJOiS5ScxZOWorro5zCmE75hZNcH5YZrX0AB53K3Tk8b9t5IgNBmY0aGDO5ecOBXTQ5gkOF_KWlLS_G4Kp06Q_G_F4W6Rm4JbGrWzGfm5d5WgZel5f5JCKGs0bRWkPZ9hWfl7D5j5hVQFZFjx5QZC4Sm_aQbdHrl7w5gZIjW9y5YwOwQk1mGFD_RwTZUgWm0CIK5SYkQgmAC6esRB1nln0AN6WgRZSgWql7T5Q6hkSF3KmKMOIsSkmr0K545QnKq3d6gcT31ulul5g6YcQoToXvl7v5A5gVUBmY0AtcUcmyl7U5w6goUFIFiG58E86CDx5SZKJRp45Qn4aXlvliHjmjmqm5A9Z58tLOlKMNg_5StGNJJRp45SdxaQWwzo7hlYH7B9N9QZdFNBKSXCMOoKJRWcdo8h0b1O5xaR0l5QZK3TdC6Sn41nZno5c9WodZegWem7c5f9hkecHfm7i9fwmfX9s9YwUZfkXim779t9gkfBHXXf1Ay93GKTkKa9iAXwNwNBH69Asggc1nm78ACAYoWnHDEAeVhBXXHq1APA343Sjp5GDx5SJGnImG4G0t5OJGoJ_G6KZGKSklLOJGONJSiC5SdxaQJ4bzXjnmIn2rIunvn5fAYVgkioHv1OF8rQoxaQekvBHr1y1AtAWcjkvglym7RAwAhojFJFi_6KIwjk1X2KLxLPZGp39DggsF_Fjx5QJCGY2ADD3_ZQoGp3NDgZtF_J_45QJCla2ARDoC4Sm_aQbGp3TDgwtB1y1AtZucXen7dAfDgkuFZKW86KYsugNkmfIVGX2YnYYaIb2eIf2in5tDYwicvomin7SA8AgovBHmm9jwvc1mn7TA8EgcwBmrHm2ABEekl7DE8AYolnIDNEeZxB1uXq2AQEYZgkHDSEesxBHumr2AcEYZgZgBHmXuIDfEekyBXuHv2AiEJ43Kt0MOeg7CHynIYoWyIDvEekzBHYHz2AyEWctotg0Xo7sE8Hhc7CXYHz2ABHekxcHeoBDHEHEHYo0aJDOHec8Cmama3ARHWcNs9hWbo7h5UHhV9CmYl9jc9dmeo7B6gHgo9dHYl7jH8AYo0iJDtHecACmio9jkAdHjo7yHi9YoljJD7IeZBCXbXm3AAIYwdcBlHnZ9QBmYlno7SVC_IqZ9PIYgrq3ARIYsrY0ATIlH");
+	private static Type type18 = Runtime.Type("tHJ4JGs0bRosJShGnJpp5CCK6QoFJPqG_K4W6Rm4_Icd5T95QVo7uZJA9dX5Yg2IgoZ9ACmIfV2LeZp7Bdp7SgKDRdHMYkYMgwp7xs4AdCmIECH6f_2Qeoq7ys5AjGYKW8685t5GBxLNZ4IYGb0uo5wGNkJOiS5ScxZOWobuo5zCmE75hZNcH5YZrX0AB53K3Tk8b9t5IgNBmY0aGDO5ecOBXTQ5gkOF_KWlLS_G4Kp06Q_G_F4W6Rm4JbGrWzGfm5d5WgZel5f5JCKGs0bRWkPk9hWfl7D5j5hVQFZFjx5QZC4Sm_aQbdHrl7w5gZIjW9y5YwOwQk1mGFD_RwTZUgWm0CIK5SYkQgmAC6esRB1nln0AN6WgRZSgWql7T5Q6hkSF3KmKMOIsSkmr0K545QnKq3d6gcT31ulul5g6YcQoToXvl7v5A5gVUBmY0AtcUcmyl7U5w6goUFIFiG58E86CDx5SZKJRp45Qn4aXlvliHjmjmqm5A9Z58tLOlKMNg_5StGNJJRp45SdxaQWc7W8hlYH7B9N9QZdFNBKSXCMOoKJRWcdV9h0b1O5xaR0l5QZK3TdC6Sn4mnJqo5c9WodZegWem7c5f9hkecHfm7i9fwmfX9s9YwUZfkXim779t9gkfBHXXf1Ay93GKTkKa9iAXwNwNBH69Asggc1nm78ACAYoWnHDEAeVhBXXHq1APA343Sjp5GDx5SJGnImG4G0t5OJGoJ_G6KZGKSklLOJGONJSiC5SdxaQJ4bzHmYn2qnr2vYyn5fAYVgkioHv1OF8rQoxaQewvBHr1y1AtAWcjwvglym7RAwAhojFJFi_6KIwjk1X2KDK6QgGp39DggsF_Kj_5OJCGY2ADDJ8oQjl5KIVtkHa2G8t5SJCla2ARDJ8KOWl5KIstkmb2SIGbRdtqOJCGe2AeDYVjkHDgDeouBHuXf2AjD3OKNmGp7tDA5gcv3OZskswsctotVuguVvgvg0jn7jAxDhsvBHrHm1A7EYZggmA9EegwBXr1n2ACEYwhkwkmnY9RBHqImm7ScxZnqY9REYVioxkXrn78AgZ2uY9dEYZicykmun78A8AYZgoyZYvY9jEYciVzkHy2K0GKTkKa9DHYkzwo7SozZYzY9zEYocV7lHXJ7SDcDQg7Cmy2YJACHYscV7lmYZ9UEek9CIaZaZao7Sg8_2bZ9SHYgds8lmbJ795tHQZ9CHfWeJAfHYwNgmAhHes9C1nlf3AsHeoNBXiJmm7SgA_2jZ9xHYsAhmAzHeVBCHmZfm7ScB_nmZ9BIYsdoBlXno7U9CIgVCdm5YwNcCCH6QItkCdHro7vtClmro7yxNkHuJgo2");
 	// ^Num(^real)
 	private static Type type19 = Runtime.Type("4CDKMQesY9PBXDwkHElD");
 	// ^$13<Sum($11<^[^real,^{|$4<^$21<AExpr>>...|}[$4<^$21<AExpr>>...]]>)>
-	private static Type type20 = Runtime.Type("jHoBKShdmIec0K0K3Tk8b9UCXEfVnEeVo7wZo7ScJDAd1IYcIIgs3CDKMQooJSgG2GdO6KLK3Tk8MJE_qPthNg0MYoIMhsp7Nl2AcCHLClXPYsYEYo0Qtoa9iCXLjl1ToNKNmGXGiG3Ij45OlsNsOsChGU35BKaQbG6PEOL7yWDh0Xl7Q_NoXXW9OBXTB5goNFJGs0bRecQB0Yl7N5O5tcOcmal7vlOkHb0KL45QpK5KJK6RgK5K1K3Tk8MFT5T6z6i9QcP3mMf5QkPFpJ4W6Rm4HfWeo5j5YwNVQoHi0G1xqQgGqJo8MPiSa9T6YoQkHDy5ewQB1e0m0A860_am0yWyl5A6oBKOoCHjl9jsRcmnl7C6N6gZS31nWql5Q6YwOkSoHr0GJ8MS_Clr0Ac6JOJNgCMOIcTkmuG7d6g6QoTBmiWvGAj6YkQkNkHyl7N5gZnyW9w6YVPoUkXz0C0t5OZwZRosoQoGLGlKMNgCMNA5s6w9y97ARAQkcFPZZQ_4MSWlLPo_6WGGlKMNo_qQi41XZYo5N9WocZdgWa1WlJp8qR_GMGl4maXbo5S9ZOoQm43QgGLGs_qRoCM7CIEIQZe3XbXem5f9YZPkeoHfX9i9YwegmAs9eZfB1XXi1Av9YZccfkHjm799j9gwfF3Kt0MOewi71a0al7SggV2nX9CAYcgsgBH6EAtVhcHqm7A9PAgghFJFoxLQ3toQoG4CE86K34ZQZG4GIK5SJG5Kp06Q_G4_WGptqNo_qQiGKRzAzDBEDESEeEsEQkiBHmHvHAiAZ0_RjGrQidHjn7TAtAgcj3myHjn5wAYohojoXz1G0tLTJC0X2A8DJOpQdG5KIgsk1Y2K1xqQgGp3DDgwsFJHiG6KIZtkXa2KHKLNgGp3RDgotFrJo8MPiS5KIwtk1en7tAgZYeY9fDYcikukHf2GL4aRJCmf2Y0AsD059DCDNDQDTDdDiDtDQcvB1ymiIAwDYshcgkXjn79Afw1mY98EYwhcwkmmn7cA9Egowc16YwwcgBH6NEtZxcXqn7dAQEgkxBXm1Atsxcmrn7eAcEgZyBXmXmm79AfEtkycHvn7fAiEgwyFKFJ_6R_d1Yo7uEyBH6vEtkzcHzn7D9yEgwz3maYbn58HYZzc7pmXo7E9yEgo7dHrY9eHnw7W8W8CH6OHtc8dmao7R9RHgo84mXlfo5UHYsPV9pHeo7N5fwmeZ9gHYoRo9lXfZ9D5YVAdgBH6tHtcAdmio7wHfwHjZ9yHYwAxeBH67ItZBdXmo7U9AIgkBC1emm3ADIegl7N5NIYoGqJDPIegCC1URIgoCCmUN5gwC4vw");
+	private static Type type20 = Runtime.Type("uHoBKShdmIec0K0K3Tk8b9UCXEfVnEeVo7wZo7ScJDAd1IYcIIgs3CDKMQooJSgG2GdO6KLK3Tk8MJE_qPthNg0MYoIMhsp7Nl2AcCHLClXPYsYEYo0Qtoa9iCXLjl1ToNKNmGXGiG3Ij45OlsNsOZDhGU35BKaQbG6PEOL7yhDh0Xl7Q_NoXXW9OBXTB5goNFJGs0bRecQB0Yl7N5O5tcOcmal7vlOkHb0KL45QpK5KJK6RgK5K1K3Tk8MFT5T6z6i9QcP3mMf5QkPFpJ4W6Rm4HfGfo5j5YwNVQoHi0G1xqQgGqJo8MPiSa9T6YoQkHDy5ewQB1e0m0A860_am0yWyl5A6oBKOoCHjl9jsRcmnl7C6N6gZS31nWql5Q6YwOkSoHr0GJ8MS_Clr0Ac6JOJNgCMOIcTkmuG7d6g6QoTBmiWvGAj6YkQkNkHyl7N5gZnyW9w6YVPoUkXz0C0t5OZwZRosoQoGLGlKMNgCMNA5s6w9y97ARAQkcFPZZQ_4MSWlLPo_6WGGlKMNo_qQi4mXJao5N9WocZdgWa1WlJp8qR_GMGl4maHeo5S9ZOoQm43QgGLGs_qRoCM7NIPIQZe3XbXem5f9YZPkeoHfX9i9YwegmAs9eZfB1XXi1Av9YZccfkHjm799j9gwfF3Kt0MOewi71a0al7SggV2nX9CAYcgsgBH6EAtVhcHqm7A9PAgghFJFoxLQ3toQoG4CE86K34ZQZG4GIK5SJG5Kp06Q_G4_WGptqNo_qQiGKRzA9EEEOEcEhEvEQkiBHmHvHAiAZ0_RjGrQid1mn7TAtAgcj3my1mn5wAYohojoXz1G0tLTJC0X2A8DJtJSgl5KIgsk1Y2KLxLPZGp3DDgwsF_Fjx5QJCGa2APD3_ZQoGp3RDgotF_J_45QJClb2AcDoC4Sm_aQbGp3eDgguBHy1AtoucXfn7eAjDgVvFZKW86KYcvkNkmiIZWXIY2anaYbIe2fIi2jn5xDYVjsvomjn7TA9AgZwBXmm9jgwc1nn7UACEgswB1uHn2ANEekl7PE9AYolqIDREeoxBHuXr2AUEYcgkHDdEecyBXumu2AgEYcgcgBXmXvIDjEeVzBmuHy2AuEJ43Kt0MOew7CHzYEYoWzIDzEeV7CXYHX3A9HWstZug0Yo7wECHhs7CmYHX3ANHeVycHfoBPHQHQHYo0bJDSHes8C1bmb3AcHWgNcAhWeo7i5fHhk9C1al9js9dmfo7C6sHgZAdXYl7vH9AYo0jJDxHesACmjo9jVBdHmo79Ij9YolmJDBIeoBCmbXn3AEIYVesBlHqZ9QB1alqo7SkC_IrZ9TIYkrr3AcIYw6a0AeIlD");
 	// ^$13<Mul($11<^[^real,^{|$4<^$21<AExpr>>...|}[$4<^$21<AExpr>>...]]>)>
-	private static Type type21 = Runtime.Type("jHooJSgdmIec0K0K3Tk8b9UCXEfVnEeVo7wZo7ScJDAd1IYcIIgs3CDKMQoBKShG2GdO6KLK3Tk8MJE_qPthNg0MYoIMhsp7Nl2AcCHLClXPYsYEYo0Qtoa9iCXLjl1ToNKNmGXGiG3Ij45OlsNsOsChGU35BKaQbG6PEOL7yWDh0Xl7Q_NoXXW9OBXTB5goNFJGs0bRecQB0Yl7N5O5tcOcmal7vlOkHb0KL45QpK5KJK6RgK5K1K3Tk8MFT5T6z6i9QcP3mMf5QkPFpJ4W6Rm4HfWeo5j5YwNVQoHi0G1xqQgGqJo8MPiSa9T6YoQkHDy5ewQB1e0m0A860_am0yWyl5A6oBKOoCHjl9jsRcmnl7C6N6gZS31nWql5Q6YwOkSoHr0GJ8MS_Clr0Ac6JOJNgCMOIcTkmuG7d6g6QoTBmiWvGAj6YkQkNkHyl7N5gZnyW9w6YVPoUkXz0C0t5OZwZRosoQoGLGlKMNgCMNA5s6w9y97ARAQkcFPZZQ_4MSWlLPo_6WGGlKMNo_qQi41XZYo5N9WocZdgWa1WlJp8qR_GMGl4maXbo5S9ZOoQm43QgGLGs_qRoCM7CIEIQZe3XbXem5f9YZPkeoHfX9i9YwegmAs9eZfB1XXi1Av9YZccfkHjm799j9gwfF3Kt0MOewi71a0al7SggV2nX9CAYcgsgBH6EAtVhcHqm7A9PAgghFJFoxLQ3toQoG4CE86K34ZQZG4GIK5SJG5Kp06Q_G4_WGptqNo_qQiGKRzAzDBEDESEeEsEQkiBHmHvHAiAZ0_RjGrQidHjn7TAtAgcj3myHjn5wAYohojoXz1G0tLTJC0X2A8DJOpQdG5KIgsk1Y2K1xqQgGp3DDgwsFJHiG6KIZtkXa2KHKLNgGp3RDgotFrJo8MPiS5KIwtk1en7tAgZYeY9fDYcikukHf2GL4aRJCmf2Y0AsD059DCDNDQDTDdDiDtDQcvB1ymiIAwDYshcgkXjn79Afw1mY98EYwhcwkmmn7cA9Egowc16YwwcgBH6NEtZxcXqn7dAQEgkxBXm1Atsxcmrn7eAcEgZyBXmXmm79AfEtkycHvn7fAiEgwyFKFJ_6R_d1Yo7uEyBH6vEtkzcHzn7D9yEgwz3maYbn58HYZzc7pmXo7E9yEgo7dHrY9eHnw7W8W8CH6OHtc8dmao7R9RHgo84mXlfo5UHYsPV9pHeo7N5fwmeZ9gHYoRo9lXfZ9D5YVAdgBH6tHtcAdmio7wHfwHjZ9yHYwAxeBH67ItZBdXmo7U9AIgkBC1emm3ADIegl7N5NIYoGqJDPIegCC1URIgoCCmUN5gwC4vw");
+	private static Type type21 = Runtime.Type("uHooJSgdmIec0K0K3Tk8b9UCXEfVnEeVo7wZo7ScJDAd1IYcIIgs3CDKMQoBKShG2GdO6KLK3Tk8MJE_qPthNg0MYoIMhsp7Nl2AcCHLClXPYsYEYo0Qtoa9iCXLjl1ToNKNmGXGiG3Ij45OlsNsOZDhGU35BKaQbG6PEOL7yhDh0Xl7Q_NoXXW9OBXTB5goNFJGs0bRecQB0Yl7N5O5tcOcmal7vlOkHb0KL45QpK5KJK6RgK5K1K3Tk8MFT5T6z6i9QcP3mMf5QkPFpJ4W6Rm4HfGfo5j5YwNVQoHi0G1xqQgGqJo8MPiSa9T6YoQkHDy5ewQB1e0m0A860_am0yWyl5A6oBKOoCHjl9jsRcmnl7C6N6gZS31nWql5Q6YwOkSoHr0GJ8MS_Clr0Ac6JOJNgCMOIcTkmuG7d6g6QoTBmiWvGAj6YkQkNkHyl7N5gZnyW9w6YVPoUkXz0C0t5OZwZRosoQoGLGlKMNgCMNA5s6w9y97ARAQkcFPZZQ_4MSWlLPo_6WGGlKMNo_qQi4mXJao5N9WocZdgWa1WlJp8qR_GMGl4maHeo5S9ZOoQm43QgGLGs_qRoCM7NIPIQZe3XbXem5f9YZPkeoHfX9i9YwegmAs9eZfB1XXi1Av9YZccfkHjm799j9gwfF3Kt0MOewi71a0al7SggV2nX9CAYcgsgBH6EAtVhcHqm7A9PAgghFJFoxLQ3toQoG4CE86K34ZQZG4GIK5SJG5Kp06Q_G4_WGptqNo_qQiGKRzA9EEEOEcEhEvEQkiBHmHvHAiAZ0_RjGrQid1mn7TAtAgcj3my1mn5wAYohojoXz1G0tLTJC0X2A8DJtJSgl5KIgsk1Y2KLxLPZGp3DDgwsF_Fjx5QJCGa2APD3_ZQoGp3RDgotF_J_45QJClb2AcDoC4Sm_aQbGp3eDgguBHy1AtoucXfn7eAjDgVvFZKW86KYcvkNkmiIZWXIY2anaYbIe2fIi2jn5xDYVjsvomjn7TA9AgZwBXmm9jgwc1nn7UACEgswB1uHn2ANEekl7PE9AYolqIDREeoxBHuXr2AUEYcgkHDdEecyBXumu2AgEYcgcgBXmXvIDjEeVzBmuHy2AuEJ43Kt0MOew7CHzYEYoWzIDzEeV7CXYHX3A9HWstZug0Yo7wECHhs7CmYHX3ANHeVycHfoBPHQHQHYo0bJDSHes8C1bmb3AcHWgNcAhWeo7i5fHhk9C1al9js9dmfo7C6sHgZAdXYl7vH9AYo0jJDxHesACmjo9jVBdHmo79Ij9YolmJDBIeoBCmbXn3AEIYVesBlHqZ9QB1alqo7SkC_IrZ9TIYkrr3AcIYw6a0AeIlD");
 	// AType
 	private static Type type22 = Runtime.Type("QFKFJ_6R_GJHiG6KIg2AwF_J_45QJCWEgwI7xVo58CXD9pmH0IE");
 	// $12<Mul($10<^[^real,^{|$3<^$20<AExpr>>...|}[$3<^$20<AExpr>>...]]>)>
-	private static Type type23 = Runtime.Type("iHooJSgdX5J4JGs0bResp7xg1DycmEYg2HYoGHtcZ9ACXDBlHIosJShGnJpp5C3_aSJOKGs0bRGt3PeWbXl5QC1ERpHMYwoDgwp7Nl3AdCHExBH6f_2Qeoq7Ot5AjGYKW8685t5GBxLNZ4IYGbGro5wGNkJOiS5ScxZOWorro5zCXL75hZNcH5YZrX0AB53K3Tk8b9t5IgNBmY0aGDO5ecOBXTQ5gkOF_KWlLS_G4Kp06Q_G_F4W6Rm4JbGrWzGfm5d5Ws_el5f5JCKGs0bRWkPZ9hWfl7D5j5hVQFZFjx5QZC4Sm_aQbdHrl7w5gZIjW9y5YwOwQk1mGFc_RwTZUgWm0CIK5SYkQgmAC6esRB1nln0AN6WgRZSgWql7T5Q6hkSF3KmKMOIsSkmr0K545QnKq3d6gcT31ulul5g6YcQoToXvl7v5A5gVUBmY0AtcUcmyl7U5w6goUFIFiG58E86CDx5SZKJRp45Qn4aXlvliHjmjmqm5A9Z58tLOlKMNg_5StGNJJRp45SdxaQWwzo7hlYH7B9N9QZdFNBKSXCMOoKJRWcdo8h0b1O5xaR0l5QZK3TdC6Sn41nZno5c9WodZegWem7c5f9hkecHfm7i9fwmfX9s9YwUZfkXim779t9gkfBHXXf1Ay93GKTkKa9iAXwNwNBH69Asggc1nm78ACAYoWnHDEAeVhBXXHq1APA343Sjp5GDx5SJGnImG4G0t5OJGoJ_G6KZGKSklLOJGONJSiC5SdxaQJ4bzXjnmIn2rIunvn5fAYVgkioHv1OF8rQoxaQekvBHr1y1AtAWcjkvglym7RAwAhojFJFi_6KIwjk1X2KLxLPZGp39DggsF_Fjx5QJCGY2ADD3_ZQoGp3NDgZtF_J_45QJCla2ARDoC4Sm_aQbGp3TDgwtB1y1AtZucXen7dAfDgkuFZKW86KYsugNkmfIVGX2YnYYaIb2eIf2in5tDYwicvomin7SA8AgovBHmm9jwvc1mn7TA8EgcwBmrHm2ABEekl7DE8AYolnIDNEeZxB1uXq2AQEYZgkHDSEesxBHumr2AcEYZgZgBHmXuIDfEekyBXuHv2AiEJ43Kt0MOeg7CHyIEYoWyIDvEekzBHYHz2AyEWctotg0Xo7sE8Hhc7CXYHz2ABHekxcHeoBDHEHEHYo0aJDOHec8Cmama3ARHWcNs9hWbo7h5UHhV9CmYl9jc9dmeo7B6gHgo9dHYl7jH8AYo0iJDtHecACmio9jkAdHjo7yHi9YoljJD7IeZBCXbXm3AAIYwdcBlHnZ9QBmYlno7SVC_IqZ9PIYgrq3ARIYsrY0ATIWI");
+	private static Type type23 = Runtime.Type("tHooJSgdX5J4JGs0bResp7xg1DycmEYg2HYoGHtcZ9ACXDBlHIosJShGnJpp5C3_aSJOKGs0bRGt3PeWbXl5QC1ERpHMYwoDgwp7Nl3AdCHExBH6f_2Qeoq7Ot5AjGYKW8685t5GBxLNZ4IYGb0uo5wGNkJOiS5ScxZOWobuo5zCXL75hZNcH5YZrX0AB53K3Tk8b9t5IgNBmY0aGDO5ecOBXTQ5gkOF_KWlLS_G4Kp06Q_G_F4W6Rm4JbGrWzGfm5d5Ws_el5f5JCKGs0bRWkPk9hWfl7D5j5hVQFZFjx5QZC4Sm_aQbdHrl7w5gZIjW9y5YwOwQk1mGFc_RwTZUgWm0CIK5SYkQgmAC6esRB1nln0AN6WgRZSgWql7T5Q6hkSF3KmKMOIsSkmr0K545QnKq3d6gcT31ulul5g6YcQoToXvl7v5A5gVUBmY0AtcUcmyl7U5w6goUFIFiG58E86CDx5SZKJRp45Qn4aXlvliHjmjmqm5A9Z58tLOlKMNg_5StGNJJRp45SdxaQWc7W8hlYH7B9N9QZdFNBKSXCMOoKJRWcdV9h0b1O5xaR0l5QZK3TdC6Sn4mnJqo5c9WodZegWem7c5f9hkecHfm7i9fwmfX9s9YwUZfkXim779t9gkfBHXXf1Ay93GKTkKa9iAXwNwNBH69Asggc1nm78ACAYoWnHDEAeVhBXXHq1APA343Sjp5GDx5SJGnImG4G0t5OJGoJ_G6KZGKSklLOJGONJSiC5SdxaQJ4bzHmYn2qnr2vYyn5fAYVgkioHv1OF8rQoxaQewvBHr1y1AtAWcjwvglym7RAwAhojFJFi_6KIwjk1X2KDK6QgGp39DggsF_Kj_5OJCGY2ADDJ8oQjl5KIVtkHa2G8t5SJCla2ARDJ8KOWl5KIstkmb2SIGbRdtqOJCGe2AeDYVjkHDgDeouBHuXf2AjD3OKNmGp7tDA5gcv3OZskswsctotVuguVvgvg0jn7jAxDhsvBHrHm1A7EYZggmA9EegwBXr1n2ACEYwhkwkmnY9RBHqImm7ScxZnqY9REYVioxkXrn78AgZ2uY9dEYZicykmun78A8AYZgoyZYvY9jEYciVzkHy2K0GKTkKa9DHYkzon7SozZYzY9zEYocV7lHXJ7SDcDQg7Cmy2YJACHYscV7lmYZ9UEek9CIaZaZao7Sg8_2bZ9SHYgds8lmbJ795tHQZ9CHfWeJAfHYwNgmAhHes9C1nlf3AsHeoNBXiJmm7SgA_2jZ9xHYsAhmAzHeVBCHmZfm7ScB_nmZ9BIYsdoBlXno7U9CIgVCdm5YwNcCCH6QItkCdHro7vtClmro7yxNkHuJso2");
 	// IntT
 	private static Type type24 = Runtime.Type("2G8t5SJCWDggIk2");
 	// RealT
 	private static Type type25 = Runtime.Type("2KHKLNgGp3ukmD0E");
 	// $7<Set(^{$2<^Expr>...})>
-	private static Type type26 = Runtime.Type("iHoBKOoGJGs0bRewp7wgmAxcXEYcnEgV3KL45QpK5KJK6RgK585t5K1K3Tk8MFA5s5y5i6Qs3K0K3Tk8M7EW7hGLJCKGs0bRWcpjo5RCmDSpXM38oQjl5CDKMQZC4Sm_aQbdmXl7flHDgdHQYgZQgwLFspOVPgPgGTYgq9jgb9wCXDxlXUWcrUQVNBXH85hcNF3KmKMOIkNkHY0K545QnKq3E5gVO3XYGal5P5YVqaGAR5ecl7dtOkmbW9OBXPd5gcPB1EgZ2fW9h5YgZf0Aj5IZPB1Et5tcQcmil7BlQkHj0KLK3Tk86C0t5OZwZRosoQoGLGlKMNgCMNS5z6c9e9g97AQkRFPZZQ_4MSWlLPo_6WGGlKMNo_qQi4Hvneo5N6WoRZSgWq0WlJp8qR_GMGl4mqlio5S6ZOoQm43QgGLGs_qRoCM7SIUIQZT3XrWul5f6Yo3vGAh6oNKNmG3Ij45OlsQZcVdgGy0W0I_tqOoWqIa4XyWam5w6YwQoUoXzl7j6d5gVccm5YkYXm7SgcZ2YX9C9YVUsckmYm7v6wkHaX9i6YgdgmAR9eodB1mWb1AU9YZRsdkHem796Q9ggeF3Kt0MOegh71EwBH6j9sVfcHim7i9u9YoliHDw9eofBmmWj1Az9343Sjp5GDx5SJGnImG4G0t5OJGoJ_G6KZGKSklLOJGONJSiC5SdxaQJ4rume2iYiImYn2rn5NAYoeZhoXq1OF8rQoxaQeZuBXmHr1ATAWwhZug0um78AdAhciFJFi_6KIkikHv1KLxLPZGp3jAgVjF_Fjx5QJCWy1AvA3_ZQoGp3xAgsjF_J_45QJC0X2A8DoC4Sm_aQbGp3ADgksBHr1AtsscmYn7DANDgZtFZKW86KYgtZPk1bIVWvHy1zmzXXIYYaIbn5TDYkhwto1en79Ai9gcuBXfm9jkucHfn7AAiDgwuB1nXf2AtDekl7vDi9Yo0jIDxDesvBHnmj2A7EYsekHD9EegwBXn1n2ACEYseseBXfmnIDNEeZxBmnXq2AQEJ43Kt0MOeZzc1Xo7TEUEYo0uIDdEecyBXnlu2AgEWwjcsgWvn7SEjEhVzFnJpp5CCK6QoFJPq44elzGaoaJeo5xEYV_zIAzEYwxg1D8Hec7CXblXo7Sk7_IYZ9DHYczw7l1ao7vEEHgc8Cmrnrn7Sk8_IbZ9THYkzw8l1eo7E6fEgc9dHmY9zHnk9p9p9CH6iHtw9d1io7R6tHgcA4HHz6QkACmLxHhsAdHXm77Ii9YoGmJD9IegBC1no9joBdXno7EIQ9Yo0qJDOIecCCmrlq3ARIYVTgClXrJZ3");
+	private static Type type26 = Runtime.Type("tHoBKOoGJGs0bRewp7wgmAxcXEYcnEgV3KL45QpK5KJK6RgK585t5K1K3Tk8MFA5s5y5i6Qs3K0K3Tk8M7Eh7hGLJCKGs0bRWc_mo5RCmDSpXM38oQjl5CDKMQZC4Sm_aQbdmXl7flHDgdHQYgZQgwLFspOVPgPgGTYgq9jgb9wCXDxlXUWcrUQVNBXH85hcNF3KmKMOIkNkHY0K545QnKq3E5gVO3XYGal5P5YVqaGAR5ecl7dtOkmbW9OBXPd5gcPB1EgZ2fW9h5YgZf0Aj5IZPB1Et5tcQcmil7BlQkHj0KLK3Tk86C0t5OZwZRosoQoGLGlKMNgCMNS5z6c9e9g97AQkRFPZZQ_4MSWlLPo_6WGGlKMNo_qQi41yYfo5N6WoRZSgWq0WlJp8qR_GMGl4mqWjo5S6ZOoQm43QgGLGs_qRoCM7cIeIQZT3XrWul5f6Yo3vGAh6oNKNmG3Ij45OlsQZcVdgGy0W0I_tqOoWqIa4XyWam5w6YwQoUoXzl7j6d5gVccm5YkYXm7SgcZ2YX9C9YVUsckmYm7v6wkHaX9i6YgdgmAR9eodB1mWb1AU9YZRsdkHem796Q9ggeF3Kt0MOegh71EwBH6j9sVfcHim7i9u9YoliHDw9eofBmmWj1Az9343Sjp5GDx5SJGnImG4G0t5OJGoJ_G6KZGKSklLOJGONJSiC5SdxaQJ4ruXfniIj2nIqnrn5NAYoeZhoXq1OF8rQoxaQekuBXmHr1ATAWwhkug0um78AdAhciFJFi_6KIkikHv1KDK6QgGp3jAgVjF_Kj_5OJCWy1AvAJ8oQjl5KIojkXz1G8t5SJC0X2A8DJ8KOWl5KIgsk1Y2SIGbRdtqOJCWY2AEDYohkHDODectBXnma2ARD3OKNmGp7TDd5gwt3OsiZjkjwjcsosVtotVugGen7RAeDhguBXmXf1AhDYsegmAjDeVvBmmHi2AuDYkgZvk1jY9RBXjYfm7SwvZ2mY98EYogcwkmmn7i9gZInY9DEYsgwwk1qn7i9i9YsecxZnqY9REYwgoxkXr2K0GKTkKa9wEeg7CHuYun7SgyZ2vY9hEYsRsykmvI79DCDQZzB1uYyIAvEoBKShGIIpl5C3_aSGWPwUk8t8l9h0Xo7N_7pXXo7eEfV2YZ9CHYsOs7CH6EHtV8dHao7xEPHgg8CXzYa3ASHYcycyBH6UHtV9dHeo7zEeHgg9CmnWv2AhHekwcXmoBjHsHsHYoGiJDuHegAC1r0j3AxHWZozl5zHYg4mJA8IeZcBmmZfm7SkB_InZ9DIYwBhmANIeZCCXqoam7SgC_2rZ9SIYwSsClmro7c6TIgZD48x");
 	// $6<SExpr>
-	private static Type type27 = Runtime.Type("iHJCKGs0bRJOKGs0bRoBKOo4XLUIQon7usIAzFYKW8685t5GBxLNZ4IMhWCh0I35BKaQbG6PEOL7CdChlIYg2LhZ_9OBHHQl1M3K3Tk8b985Igp7UWLDddXPYcoPgk5KL45QpK5KJK6RgK5K1K3Tk8MFhpPZSVcgGTJ4JGs0bRWcbvn5w41HxhWUYspUhVNFZFjx5QosJShGqJo8MPiSa9h5YoNkHDD5ewNBmQN5gZO3ZaljWm0nl5Q5YoNgmAS5esOB1EU5gVP31bGel5e5YsqeGAg53G_RpKq3i5gwPF_GWlqR_CGi0Au5WVQgQg0jl795x5hsQcX5YgNVRkHml7B5Qlmml7UlHDC6esRBmQE6gVSFIFiG58E86CDx5SZKJRp45Qn4aLz5D9N9P9i9QsSFPZZQ_4MSWlLPo_6WGGlKMNo_qQi4mqIao5e6WwSgTg0v0WlJp8qR_GMGl4HvGeo5j6ZOoQm43QgGLGs_qRoCM7zH8IQgU31y0zl5x6YVbzGAz6eVcBHXm9jcccmXm7P6B9gocBmq0Y1AE9YkSZckHa1GJ_6R_dHmX7Uxp7SodVYbX9U9YkdVeBH6d9tcecmem7S6g9goeFJFoxLQ3toQoG4CE86K34ZQZG4GIK5SJG5Kp06Q_G4_WGptqNo_qQiGKROAODTDcDjDwD9EQsfBmamjHA7AZ0_RjGrQidmYn7s9AAgkg3HnmYn5DAYwewgo1q1G0tLTJCWq1AQAJOpQdG5KIohkXr1K1xqQgGp3cAgZiFJHiG6KIgik1v1KHKLNgGp3iAgwiFrJo8MPiS5KIZjkXym7AAgZ2zX9xAYkfsjkmz1GL4aRJCHXnLgcs3NkhwhcioiVjgjVsgsg0Yn79ACDhssB1i1b1ANDYkdgmAPDegtBHi1b2ASDYcfktkmbY9RBHe2bm7ScuZneY9gDYgfoukXfn7R9gZ2iY9tDYkfcvkmin7R9R9YkdovZYjY9zDYofVwkHm2K0GKTkKa9UEesyB1nInn7SswZnnY9NEYVTZxkXqI7hAsAQkxBmmIrIATEoBKShGIIpl5C3_aSGd_mlzIXoYo5fEYg6vIAhEYowg1DjEeVzB1mGyn7SczZnyY9wEYVyozkXzn7dExEgV7CHnInn7Sc7_nXZ9BHYcyo7lXYo7d6OEgV8dmfY97CYaoaoao7Sk8_IbZ9THYsTw8l1eZ9SCXe3bm7Sg9_2fZ9hHYs9hmAjHeVACHiJXm7ScA_niZ9wHYZUoAlXjo7u6xHgVBdm5Yw_mo7SgB_2nZ9CIYgZn3AEIYsoMgZCCmMfwmqZ9RIYkIr3ATI0HE");
+	private static Type type27 = Runtime.Type("tHJCKGs0bRJOKGs0bRoBKOo4XLeIQon7usIAzFYKW8685t5GBxLNZ4IMhhCh0I35BKaQbG6PEOL7CpChlIYg2LhZ_9OBHHQl1M3K3Tk8b985Igp7UWLDddXPYcoPgk5KL45QpK5KJK6RgK5K1K3Tk8MFhpPZSVcgGTJ4JGs0bRWcMyn5w41HxhWUYspUhVNFZFjx5QosJShGqJo8MPiSa9h5YoNkHDD5ewNBmQN5gZO3ZaljWm0nl5Q5YoNgmAS5esOB1EU5gVP31bGel5e5YsqeGAg53G_RpKq3i5gwPF_GWlqR_CGi0Au5WVQgQg0jl795x5hsQcX5YgNVRkHml7B5Qlmml7UlHDC6esRBmQE6gVSFIFiG58E86CDx5SZKJRp45Qn4aLz5D9N9P9i9QsSFPZZQ_4MSWlLPo_6WGGlKMNo_qQi4Xr2bo5e6WwSgTg0v0WlJp8qR_GMGl4Hv0fo5j6ZOoQm43QgGLGs_qRoCM79IBIQgU31y0zl5x6YVbzGAz6eVcBHXm9jcccmXm7P6B9gocBmq0Y1AE9YkSZckHa1GJ_6R_dHmX7Uxp7SodVYbX9U9YkdVeBH6d9tcecmem7S6g9goeFJFoxLQ3toQoG4CE86K34ZQZG4GIK5SJG5Kp06Q_G4_WGptqNo_qQiGKROARDdDfDuDzDCEQsfBmamjHA7AZ0_RjGrQidXan7s9AAgkg3HnXan5DAYwewgo1q1G0tLTJCWq1AQAJtJSgl5KIohkXr1KLxLPZGp3cAgZiF_Fjx5QJClu1AgA3_ZQoGp3iAgwiF_J_45QJCGy1AuAoC4Sm_aQbGp3wAgojBmm1Atwjc1Xn7w98DgcsFZKW86KYksg4ACDG5RAUAeAhAsAvAyAADDDQwsBXm1aIAODYVfkdkman7R9fwHbY9TDYZfwtk1en7u9UDgcuc16YkukdBH6hDtsucmfn7v9sDgZvB1b1Atgvc1jn7w9xDgsvB1b1bm7R97EtZwcXmn7x9AEgkwFKFJ_6R_dXuY9tEYwwVxBH6OEtcxcmqn7c6REgox31ymym5UEYswVyoHu2CIKMQooJSgG2GdOMJPdRc7l7d8hWvn7vxyo1yn7NEfVYyY9vEYVRkzBH6xEtszcmzn7fE7HgZ7C1v2X3AAHYVxVxBH6CHts7dmYo7hENHgZ8CHu0r2AQHecvc1Hno8t8t8CH6UHtV9dHeo7i6eHgg9dHMYo9ldBH6iHtw9d1io7tHfwXiZ9vHYkA_cBH6xHtsAdmjo7t67IgZBCXy0m3AAIegl7UpBCH6DItwBd1qo7A_ClXqo7Dx4ARIYwp9jsCdmro7wVDlHuJV3");
 	// $9<SetT(^[^bool,$3<^Type>])>
-	private static Type type28 = Runtime.Type("U53CKOoG_9RF3Kt0MOeop7von7SsIDzc1HYcIHgc3G0GrQhGZIjG6KowZRJGJFiG5KZGKSklLOJGONJSiC5SdxaQJ4rHhtPgQoQcRVSgWLYknLhk4OF8rQoxaQekPBHIUl1PWZ5fl5eC1Ifp1Q34ZQtGp3ilmQJOpQdG5KIZ6AuG_Fjx5QJC0Ugo6G8t5SJClUgVNF_J_45QJCWX0AA5oC4Sm_aQbGp3C5gsNBmMgZ2aW9O5YV_a0AQ53OKNmG_9OBHbWb0AU505shbU85B5E5R5c5QZPBXMe5hgPBHIxkHfl7xgmAj5eVQBXIt5gcQBmIt5gkQBHEgZYjW9z5YV4m0A86YoIEYonmGDB6eoRBHLD6gwR3Ax");
+	private static Type type28 = Runtime.Type("e53CKOoG_9RF3Kt0MOeop7von7SsIDzc1HYcIHgc3G0GrQhGZIjG6KowZRJGJFiG5KZGKSklLOJGONJSiC5SdxaQJ4rHh_QsQVRoRgSgWLYknLhk4OF8rQoxaQewPBHIUl1PWZqfl5eC1Ifp1Q34ZQtGp3ilmQJtJSgl5KIZ6AuG_Kj_5OJC0Ugo6K1xqQgGp3zl1X0G8t5SJCWX0AA5J8KOWl5KIoNkXY0SIGbRdtqOJC0a0AO5Yw4AtgOc1bl7NpOkXb0GL4aRJdH5YVPZPkXeGZ0TvtMX0YlYWalblel5g5YsKfGAi5YoJEgVQBHEfwXiW9v5Ys3j0Ax5Yw3j0Az5Yo2AtZRcXml7NhRk1nl7xon7xsRZnnW9N6YZKq0AP6lH");
 	// ^$7<Set(^{$2<^Value>...})>
 	private static Type type29 = Runtime.Type("NGnJ_G6KL45QpKa9dC1EfwHEesn7uw2A7dHH38oQjl5CDKMQZC4Sm_aQbG4Kp06Q_C1EgZnIeVp7D_4AP4oLvtMXl5R4HHShWMYgnMhV5GJ8MS_CWPgg5K545QnKq3hlXQWkqQQVr7A_MAudX5Yk3Ugob9OBHIzl1XGco2");
 	// ^$8<Set(^{$3<^Expr>...})>
-	private static Type type30 = Runtime.Type("jHoBKOodXH3K3Tk8b9cCHEfwXEewn7uV3A8G_KWlLS_G4Kp06Q_GXGiG_F4W6Rm43YGiljlvl5EGKF4W6Rm41L8HQc4KIK3Tk8M7QWBhGMYkYMhw4G1xqQgGYIpp5OIGbRdtqOekNB1QgZIQesq7Bx5As4JTT5d5g5Qcr7ghmAwdHUYcYUgwM7vWNgGXl7AdNomX0GJ8MS_CGY0AD5JOJNgCMOIVOkHaG7E5P5QgOBHPR5hoOcX5Ycqb0Ac5eZl7fdPkmel7xkHDh5esPB1Ij5gVQBWel7xcQZniW9w5YoJj0Ay5JOKGs0bRo3ZQZGmImGYIjG6O44MSWlqRWtOVcZegeoeZggGn0dGHiKLRp45QdGMT3544MSWGMPjtL7iEgHQZS3XnWql5Q635IKbNnK5S44M7R6wHQsSFaGj8MFgl5O4WMPnGrRWsCWDhWuG7U6f6QkTBXIh6hsTFYKW86GBxLNZ4njWXHam5u635BKaQbG6PEOL7v6Q9QoUB1mWzGAz6YVUcPkHXX9QBHEA9Yo0YHDC9escBHylY1AN9YkUo2AP9ewTB1bm9jodcXbm786U9gVeBXmlb1Ae9YgRkdk1f1GJ_6R_d1rX7xon7SVfVIiX9u9YwegfBH6w9tofcXjm7B6z9gVgFJFoxLQ3toQoG4CE86K34ZQZG4GIK5SJG5Kp06Q_G4_WGptqNo_qQiGKRgAgDtDvD9EEESEQZhBXfXqHAQAZ0_RjGrQidXen7AATAgwh31uXen5dAYcgciomu1G0tLTJCGv1AiAJOpQdG5KIVjkHy1K1xqQgGp3vAgkjFJHiG6KIsjkmz1KHKLNgGp38DgcsFrJo8MPiS5KIkskHYn7TAgZnYY9NDYwgZtkXa2GL4aRJC1bYe0ASD05jAuAxA7DADDDQDTDQwtBHr1eIAdDYggwekmen7j9fwHfY9iDYkgwuk1in7CAjDgcvc16YkvweBH6xDtsvcmjn7DA7EgZwBmf1Atgwc1nn7EACEgswBmfmfm7j9NEtZxcXqn7NAQEgkxFKFJ_6R_dXyY98HYwxVyBH6dEtcycmun7E6gEgoy31XnXn5jEYsxVzoHy2CIKMQooJSgG2GdOMJd579PHRHeHQszBHLzEhV7C1un9sc7dmXo7U5BHYoGYJDDHew7Cmy2a3AOHYkzV8lmao7cEcEYoGbJDTHew8CHz2e3AdHYVSkykmeZ99EeVBCIfZfZfo7Sw9_2iZ9tHYoScAlmiJ79WcgGjo7RtApmjZ999YZBxeBH69ItgBd1no7CIfwXnZ9EIYVCldBH6OItcCdmqo7c6RIgoCCHu0r3AUIlDE");
+	private static Type type30 = Runtime.Type("uHoBKOodXH3K3Tk8b9cCHEfwXEewn7uV3A8G_KWlLS_G4Kp06Q_GXGiG_F4W6Rm43YGiljlvl5EGKF4W6Rm41LBHQc4KIK3Tk8M7QhBhGMYkYMhw4G1xqQgGYIpp5OIGbRdtqOekNB1QgZIQesq7Bx5As4JTT5d5g5Qcr7ghmAwdHUYcYUgwM7vWNgGXl7AdNomX0GJ8MS_CGY0AD5JOJNgCMOIVOkHaG7E5P5QgOBHPR5hoOcX5Ycqb0Ac5eZl7fdPkmel7xkHDh5esPB1Ij5gVQBWel7xcQZniW9w5YoJj0Ay5JOKGs0bRo3ZQZGmImGYIjG6O44MSWlqRWtOVcZegeoeZggGn0dGHiKLRp45QdGMT3544MSWGMPjtL7tEjHQZS3XnWql5Q635IKbNnK5S44M7R6zHQsSFaGj8MFgl5O4WMPnGrRWZDhDhWuG7U6f6QkTBXIh6hsTFYKW86GBxLNZ4njWXHam5u635BKaQbG6PEOL7v6Q9QoUB1mWzGAz6YVUcPkHXX9QBHEA9Yo0YHDC9escBHylY1AN9YkUo2AP9ewTB1bm9jodcXbm786U9gVeBXmlb1Ae9YgRkdk1f1GJ_6R_d1rX7xon7SVfVIiX9u9YwegfBH6w9tofcXjm7B6z9gVgFJFoxLQ3toQoG4CE86K34ZQZG4GIK5SJG5Kp06Q_G4_WGptqNo_qQiGKRgAjDwDyDCEPEcEQZhBXfXqHAQAZ0_RjGrQidHfn7AATAgwh31uHfn5dAYcgciomu1G0tLTJCGv1AiAJtJSgl5KIVjkHy1KLxLPZGp3vAgkjF_Fjx5QJCWz1AzA3_ZQoGp38DgcsF_J_45QJC0Y2ACDoC4Sm_aQbGp3EDgVtBXr1Atctcman7EARDgotFZKW86KYwtcPk1eIZlvXyHz1XnXYYIaYbIen5eDYohguo1fn7AAj9gsuBmfm9jVvcHin7BAuDggvBHnXi2AxDekl7zDj9Yo0mID8EecwBXnmm2ABEYwekHDDEewwBmn1q2AOEYweweBmfmqIDREeoxB1qXr2AUEJ43Kt0MOeozc1Yo7eEfEYo0vIDhEesyBmnlv2AsEWgsssgWyn7dEvEhkzFnJpp5CCK6QoFJPq4Ke0XHbobJfo58HYZ_XJAAHYgyg1DCHes7CmblYo7SV8_IaZ9PHYszg8l1bo7zEQHgs8Cmunun7SV9_IeZ9eHYV7h9l1fo7N6jEgs9dHnY9AInVA_A_ACH6uHtgAd1jo7S6xHgsA4XH79QVBC1M8IhcBdXXm7BIj9YoGnJDDIewBC1qo9jZCdXqo7QIR9Yo0rJDSIesCC1ulr3AcIYZTwClXuJg2");
 	// Var(^string)
 	private static Type type31 = Runtime.Type("3CL4aReZl7ug2Aw3x$");
 	// ^Bool
 	private static Type type32 = Runtime.Type("RFZFjx5Qeo3GJ8MS_C0Ego2K545QnKq3zk1HWsIHQco7ugJAB4vw");
+	// $10<SubsetEq(^[^$19<SetT(^[^bool,$13<^Type>])>,^$97<SExpr>,^$97])>
+	private static Type type33 = Runtime.Type("tH35IKbNnK5S446GIK5SJdHMJCKGs0bRegUB2Eysn7SwID7dHHYcYHggZ9RF3Kt0MOewq7Cxo7SVKDOdXLYgnLgk4G0GrQhGZIjG6KowZRJGJFiG5KZGKSklLOJGONJSiC5SdxaQJ4MMzhRVScSwSoTg0QYsJQhs5OF8rQoxaQeZRBmMtlXTWgMml5wCXMxpXU34ZQtGp375gZNF_Ipl5QJClX0AB5JOpQdG5KIsNkmY0K1xqQgGp3O5gcOFJHiG6KIkOkHb0KHKLNgGp3U5gVPFrJo8MPiS5KIcPkmel7tlHDh5esPBXPj5gVQFZKW86KeZl7u5v5gkQ3OcNoNVOgOsOZPkPZQoQgWjl7sxQo1ml7Ux3A96Ywo9jkRcHnl7ctRkmnl7dtRkHql7ElHDQ6ekSBXPS6gsSBmIECmIc6tZTcXul7fhTk1v0KLK3Tk86CIK5SWoccDh0yl7xZUoXy0CL4aRZNZQ3loQWGLBE9U9QIQwUFNkJOiS5ScxZOWVcoChWXm7i6A9hkcB1zli0AD93K3Tk8b9v9IgQBHaXaHDQ9ekdBHzGb1AT9JOKNgKMOJGKSklLOJ8JGs0bR0xdwhgsZvgle1K0K3Tk8M7g98HQse3mylfm5s9YVdZfoXi1G1xqQgGYIpp5OIGbRdtqOewhBmj1AtVgcHmm7d99Aggg33nHy1zXzm5CAYwfgmAEAeVhBmvGq1APAWsgghg0rm7c9SAhshF3KmKMOIVikHu1K545QnKq3fAgki3XuHvm5iAYkfwio1yX9PBHjXy1AvAYsfgQkHzm7O9gZnzX97DYZeZskXX2C0t5OZwZRosoQoGLGlKMNgCMNC9tAzD8EAESEQVtFPZZQ_4MSWlLPo_6WGGlKMNo_qQi4Xv2fo5RDWZtotgWbI7Bxtg0e2O5xaR0l5QZK3TdC6Sn4Xm3no5gDWZuougWfn7e9jDhVvcHin7uDfwmiY9wDYksovkXjn7CDxDgVwBXYYi2A9EXZdZdBH6BEsowcXnn7ExwBH6NEtZxcXqn7EDQEgkxFKFJ_6R_dXyY98HYwxVyBH6dEtcycmun7PDgEgoy3XbGel5jEYsxVzoHy2CIKMQooJSgG2GdOMJC9wAPHRHeHQszBHfmzIA7HYVyg1D9Heg7CXy1Yo7So7_YYZ9EHYgzV8lHao7wENHgg8C1u2un7So8_YbZ9UHYozV9lHeo7QDgEgg9dmYm7hHECH6iHtw9d1io7tHfwXiZ9vHYkAdvBH6xHtsAdmjo7eD7IgZBCme2m3AAIegl7O9CIYoWnJDEIeVCCXzGq3APIYZcZdk1ro7O9fwXrZ9UIYwTVDlHuJko2");
 
 	// =========================================================================
 	// Patterns
@@ -8278,7 +7762,17 @@ public final class Solver {
 					new Pair(new Pattern.Leaf(type2),null)}), "qs")}),null), 
 			new Pair(new Pattern.Leaf(type10), "be")}),
 		null);
-	private final static Pattern.Term pattern82 = new Pattern.Term("ForAll",
+	private final static Pattern.Term pattern82 = new Pattern.Term("Not",
+		new Pattern.Term("ForAll",
+			new Pattern.List(false, new Pair[]{
+				new Pair(new Pattern.Set(true, new Pair[]{
+					new Pair(new Pattern.List(false, new Pair[]{
+						new Pair(new Pattern.Leaf(type31),null), 
+						new Pair(new Pattern.Leaf(type2),null)}),null)}), "vars"), 
+				new Pair(new Pattern.Leaf(type10), "be")}),
+			null),
+		null);
+	private final static Pattern.Term pattern83 = new Pattern.Term("ForAll",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Set(true, new Pair[]{
 				new Pair(new Pattern.List(false, new Pair[]{
@@ -8293,8 +7787,50 @@ public final class Solver {
 					new Pair(new Pattern.Leaf(type10), "e")}),
 				null),null)}),
 		null);
-	private final static Pattern.Term pattern83 = new Pattern.Term("Not",
-		new Pattern.Term("ForAll",
+	private final static Pattern.Term pattern84 = new Pattern.Term("And",
+		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Leaf(type33), "e1"), 
+			new Pair(new Pattern.Term("ForAll",
+				new Pattern.List(false, new Pair[]{
+					new Pair(new Pattern.Set(true, new Pair[]{
+						new Pair(new Pattern.List(false, new Pair[]{
+							new Pair(new Pattern.Leaf(type31),null), 
+							new Pair(new Pattern.Leaf(type2),null)}),null), 
+						new Pair(new Pattern.List(false, new Pair[]{
+							new Pair(new Pattern.Leaf(type31),null), 
+							new Pair(new Pattern.Leaf(type2),null)}),null)}), "vs"), 
+					new Pair(new Pattern.Leaf(type10), "e2")}),
+				null), "qf"), 
+			new Pair(new Pattern.Leaf(type10), "es")}),
+		null);
+	private final static Pattern.Term pattern85 = new Pattern.Term("And",
+		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Term("Not",
+				new Pattern.Leaf(type33),
+				"e1"), "ne1"), 
+			new Pair(new Pattern.Term("ForAll",
+				new Pattern.List(false, new Pair[]{
+					new Pair(new Pattern.Set(true, new Pair[]{
+						new Pair(new Pattern.List(false, new Pair[]{
+							new Pair(new Pattern.Leaf(type31),null), 
+							new Pair(new Pattern.Leaf(type2),null)}),null), 
+						new Pair(new Pattern.List(false, new Pair[]{
+							new Pair(new Pattern.Leaf(type31),null), 
+							new Pair(new Pattern.Leaf(type2),null)}),null)}), "vs"), 
+					new Pair(new Pattern.Leaf(type10), "e2")}),
+				null), "qf"), 
+			new Pair(new Pattern.Leaf(type10), "es")}),
+		null);
+	private final static Pattern.Term pattern86 = new Pattern.Term("Exists",
+		new Pattern.List(false, new Pair[]{
+			new Pair(new Pattern.Set(true, new Pair[]{
+				new Pair(new Pattern.List(false, new Pair[]{
+					new Pair(new Pattern.Leaf(type31),null), 
+					new Pair(new Pattern.Leaf(type2),null)}), "qs")}),null), 
+			new Pair(new Pattern.Leaf(type10), "be")}),
+		null);
+	private final static Pattern.Term pattern87 = new Pattern.Term("Not",
+		new Pattern.Term("Exists",
 			new Pattern.List(false, new Pair[]{
 				new Pair(new Pattern.Set(true, new Pair[]{
 					new Pair(new Pattern.List(false, new Pair[]{
@@ -8303,183 +7839,7 @@ public final class Solver {
 				new Pair(new Pattern.Leaf(type10), "be")}),
 			null),
 		null);
-	private final static Pattern.Term pattern84 = new Pattern.Term("And",
-		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Term("Not",
-				new Pattern.Term("SubsetEq",
-					new Pattern.List(false, new Pair[]{
-						new Pair(new Pattern.Leaf(type28), "t1"), 
-						new Pair(new Pattern.Term("Set",
-							new Pattern.Set(true, new Pair[]{
-								new Pair(new Pattern.Leaf(type6), "w"), 
-								new Pair(new Pattern.Leaf(type6),null)}),
-							null),null), 
-						new Pair(new Pattern.Leaf(type6), "r1")}),
-					null),
-				null), "s"), 
-			new Pair(new Pattern.Term("ForAll",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Set(true, new Pair[]{
-						new Pair(new Pattern.List(false, new Pair[]{
-							new Pair(new Pattern.Leaf(type31), "v"), 
-							new Pair(new Pattern.Leaf(type2),null)}),null), 
-						new Pair(new Pattern.List(false, new Pair[]{
-							new Pair(new Pattern.Leaf(type31),null), 
-							new Pair(new Pattern.Leaf(type2),null)}),null)}), "vars"), 
-					new Pair(new Pattern.Term("Or",
-						new Pattern.Set(true, new Pair[]{
-							new Pair(new Pattern.Term("And",
-								new Pattern.Set(true, new Pair[]{
-									new Pair(new Pattern.Term("SubsetEq",
-										new Pattern.List(false, new Pair[]{
-											new Pair(new Pattern.Leaf(type28), "t2"), 
-											new Pair(new Pattern.Term("Set",
-												new Pattern.Set(true, new Pair[]{
-													new Pair(new Pattern.Leaf(type31), "u"), 
-													new Pair(new Pattern.Leaf(type6),null)}),
-												null),null), 
-											new Pair(new Pattern.Leaf(type6), "r2")}),
-										null),null), 
-									new Pair(new Pattern.Leaf(type10),null)}),
-								null),null), 
-							new Pair(new Pattern.Leaf(type10),null)}),
-						null), "f")}),
-				null),null), 
-			new Pair(new Pattern.Leaf(type10), "rs")}),
-		null);
-	private final static Pattern.Term pattern85 = new Pattern.Term("And",
-		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Term("Not",
-				new Pattern.Term("SubsetEq",
-					new Pattern.List(false, new Pair[]{
-						new Pair(new Pattern.Leaf(type28), "t1"), 
-						new Pair(new Pattern.Term("Set",
-							new Pattern.Set(true, new Pair[]{
-								new Pair(new Pattern.Leaf(type6), "w"), 
-								new Pair(new Pattern.Leaf(type6),null)}),
-							null),null), 
-						new Pair(new Pattern.Leaf(type6), "r1")}),
-					null),
-				null), "s"), 
-			new Pair(new Pattern.Term("ForAll",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Set(true, new Pair[]{
-						new Pair(new Pattern.List(false, new Pair[]{
-							new Pair(new Pattern.Leaf(type31), "v"), 
-							new Pair(new Pattern.Leaf(type2),null)}),null), 
-						new Pair(new Pattern.List(false, new Pair[]{
-							new Pair(new Pattern.Leaf(type31),null), 
-							new Pair(new Pattern.Leaf(type2),null)}),null)}), "vars"), 
-					new Pair(new Pattern.Term("Or",
-						new Pattern.Set(true, new Pair[]{
-							new Pair(new Pattern.Term("SubsetEq",
-								new Pattern.List(false, new Pair[]{
-									new Pair(new Pattern.Leaf(type28), "t2"), 
-									new Pair(new Pattern.Term("Set",
-										new Pattern.Set(true, new Pair[]{
-											new Pair(new Pattern.Leaf(type31), "u"), 
-											new Pair(new Pattern.Leaf(type6),null)}),
-										null),null), 
-									new Pair(new Pattern.Leaf(type6), "r2")}),
-								null),null), 
-							new Pair(new Pattern.Leaf(type10),null)}),
-						null), "f")}),
-				null),null), 
-			new Pair(new Pattern.Leaf(type10), "rs")}),
-		null);
-	private final static Pattern.Term pattern86 = new Pattern.Term("And",
-		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Term("SubsetEq",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type28), "t1"), 
-					new Pair(new Pattern.Term("Set",
-						new Pattern.Set(true, new Pair[]{
-							new Pair(new Pattern.Leaf(type6), "w"), 
-							new Pair(new Pattern.Leaf(type6),null)}),
-						null),null), 
-					new Pair(new Pattern.Leaf(type6), "r1")}),
-				null), "s"), 
-			new Pair(new Pattern.Term("ForAll",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Set(true, new Pair[]{
-						new Pair(new Pattern.List(false, new Pair[]{
-							new Pair(new Pattern.Leaf(type31), "v"), 
-							new Pair(new Pattern.Leaf(type2),null)}),null), 
-						new Pair(new Pattern.List(false, new Pair[]{
-							new Pair(new Pattern.Leaf(type31),null), 
-							new Pair(new Pattern.Leaf(type2),null)}),null)}), "vars"), 
-					new Pair(new Pattern.Term("Or",
-						new Pattern.Set(true, new Pair[]{
-							new Pair(new Pattern.Term("And",
-								new Pattern.Set(true, new Pair[]{
-									new Pair(new Pattern.Term("Not",
-										new Pattern.Term("SubsetEq",
-											new Pattern.List(false, new Pair[]{
-												new Pair(new Pattern.Leaf(type28), "t2"), 
-												new Pair(new Pattern.Term("Set",
-													new Pattern.Set(true, new Pair[]{
-														new Pair(new Pattern.Leaf(type31), "u"), 
-														new Pair(new Pattern.Leaf(type6),null)}),
-													null),null), 
-												new Pair(new Pattern.Leaf(type6), "r2")}),
-											null),
-										null),null), 
-									new Pair(new Pattern.Leaf(type10),null)}),
-								null),null), 
-							new Pair(new Pattern.Leaf(type10),null)}),
-						null), "f")}),
-				null),null), 
-			new Pair(new Pattern.Leaf(type10), "rs")}),
-		null);
-	private final static Pattern.Term pattern87 = new Pattern.Term("And",
-		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Term("SubsetEq",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type28), "t1"), 
-					new Pair(new Pattern.Term("Set",
-						new Pattern.Set(true, new Pair[]{
-							new Pair(new Pattern.Leaf(type6), "w"), 
-							new Pair(new Pattern.Leaf(type6),null)}),
-						null),null), 
-					new Pair(new Pattern.Leaf(type6), "r1")}),
-				null), "s"), 
-			new Pair(new Pattern.Term("ForAll",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Set(true, new Pair[]{
-						new Pair(new Pattern.List(false, new Pair[]{
-							new Pair(new Pattern.Leaf(type31), "v"), 
-							new Pair(new Pattern.Leaf(type2),null)}),null), 
-						new Pair(new Pattern.List(false, new Pair[]{
-							new Pair(new Pattern.Leaf(type31),null), 
-							new Pair(new Pattern.Leaf(type2),null)}),null)}), "vars"), 
-					new Pair(new Pattern.Term("Or",
-						new Pattern.Set(true, new Pair[]{
-							new Pair(new Pattern.Term("Not",
-								new Pattern.Term("SubsetEq",
-									new Pattern.List(false, new Pair[]{
-										new Pair(new Pattern.Leaf(type28), "t2"), 
-										new Pair(new Pattern.Term("Set",
-											new Pattern.Set(true, new Pair[]{
-												new Pair(new Pattern.Leaf(type31), "u"), 
-												new Pair(new Pattern.Leaf(type6),null)}),
-											null),null), 
-										new Pair(new Pattern.Leaf(type6), "r2")}),
-									null),
-								null),null), 
-							new Pair(new Pattern.Leaf(type10),null)}),
-						null), "f")}),
-				null),null), 
-			new Pair(new Pattern.Leaf(type10), "rs")}),
-		null);
 	private final static Pattern.Term pattern88 = new Pattern.Term("Exists",
-		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Set(true, new Pair[]{
-				new Pair(new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type31),null), 
-					new Pair(new Pattern.Leaf(type2),null)}), "qs")}),null), 
-			new Pair(new Pattern.Leaf(type10), "be")}),
-		null);
-	private final static Pattern.Term pattern89 = new Pattern.Term("Exists",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Set(true, new Pair[]{
 				new Pair(new Pattern.List(false, new Pair[]{
@@ -8494,17 +7854,7 @@ public final class Solver {
 					new Pair(new Pattern.Leaf(type10), "e")}),
 				null),null)}),
 		null);
-	private final static Pattern.Term pattern90 = new Pattern.Term("Not",
-		new Pattern.Term("Exists",
-			new Pattern.List(false, new Pair[]{
-				new Pair(new Pattern.Set(true, new Pair[]{
-					new Pair(new Pattern.List(false, new Pair[]{
-						new Pair(new Pattern.Leaf(type31),null), 
-						new Pair(new Pattern.Leaf(type2),null)}),null)}), "vars"), 
-				new Pair(new Pattern.Leaf(type10), "be")}),
-			null),
-		null);
-	private final static Pattern.Term pattern91 = new Pattern.Term("And",
+	private final static Pattern.Term pattern89 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Term("Exists",
 				new Pattern.List(false, new Pair[]{
@@ -8528,9 +7878,7 @@ public final class Solver {
 		new Inference_4(pattern77),
 		new Inference_5(pattern80),
 		new Inference_6(pattern84),
-		new Inference_7(pattern85),
-		new Inference_8(pattern86),
-		new Inference_9(pattern87)
+		new Inference_7(pattern85)
 	};
 	public static final ReductionRule[] reductions = new ReductionRule[]{
 		new Reduction_0(pattern0),
@@ -8611,10 +7959,10 @@ public final class Solver {
 		new Reduction_75(pattern81),
 		new Reduction_76(pattern82),
 		new Reduction_77(pattern83),
-		new Reduction_78(pattern88),
-		new Reduction_79(pattern89),
-		new Reduction_80(pattern90),
-		new Reduction_81(pattern91)
+		new Reduction_78(pattern86),
+		new Reduction_79(pattern87),
+		new Reduction_80(pattern88),
+		new Reduction_81(pattern89)
 	};
 
 

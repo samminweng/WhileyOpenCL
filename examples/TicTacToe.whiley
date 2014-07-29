@@ -42,9 +42,9 @@ ensures r.move == 0:
 // ===============================================================
 function play(Board b, nat pos) => (Board r)
 // Board position to place onto must be valid
-requires pos < 9 && b.move < 9 && b.pieces[pos] == BLANK:
+requires pos < 9 && b.move < 9 && b.pieces[pos] == BLANK
 // Ensures move count is incremented
-//ensures r.move == r.move + 1:
+ensures r.move == r.move + 1:
     // decide who's moving
     if b.move % 2 == 0:
         // circle on even moves
@@ -80,4 +80,12 @@ method main(System.Console console):
             console.out.println("INVALID MOVE!")
             break
         else:
-            b = play(b,p)   
+            b = play(b,p)
+
+
+
+
+
+    
+    
+    

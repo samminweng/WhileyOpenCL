@@ -22,15 +22,17 @@ public class InterpreterListOperator extends Interpreter{
 	public void interpret(Codes.ListOperator code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();		
 		//Read the list from two operands.
-		Constant.List left = (Constant.List) stackframe.getRegister(code.leftOperand);
-		Constant.List right = (Constant.List) stackframe.getRegister(code.rightOperand);		
+		//Constant.List left = (Constant.List) stackframe.getRegister(code.leftOperand);
+		//Constant.List right = (Constant.List) stackframe.getRegister(code.rightOperand);
+		Constant.List left = (Constant.List) stackframe.getRegister(code.operand(0));
+		Constant.List right = (Constant.List) stackframe.getRegister(code.operand(1));
 		//Perform the list operation (e.g. append two lists)
 		if (code.kind == Codes.ListOperatorKind.APPEND){
 			left.values.addAll(right.values);			
 			Constant.List result = Constant.V_LIST(left.values);
 			//Set the result to the target register.
-			stackframe.setRegister(code.target, result);
-			printMessage(stackframe, code.toString(), "%"+ code.target + "("+result+")\n");
+			stackframe.setRegister(code.target(), result);
+			printMessage(stackframe, code.toString(), "%"+ code.target() + "("+result+")\n");
 			
 		}else{
 			internalFailure("Not implemented!", "InterpreterBinListOp.java", null);

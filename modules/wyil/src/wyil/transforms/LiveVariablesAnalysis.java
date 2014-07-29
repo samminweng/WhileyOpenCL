@@ -186,35 +186,35 @@ public class LiveVariablesAnalysis extends BackwardFlowAnalysis<LiveVariablesAna
 		if (code instanceof Code.AbstractAssignable) {
 			Code.AbstractAssignable aa = (Code.AbstractAssignable) code;
 			if(code instanceof Codes.Update) {
-				isLive = environment.contains(aa.target);
+				Codes.Update cu = (Codes.Update) code;
+				// In the normal case, this bytecode is considered live if the
+				// assigned register is live. However, in the case of an
+				// indirect assignment, then it is always considered live.
+				if(!(cu.type() instanceof Type.Reference)) {
+					// No, this is not an indirect assignment through a
+					// reference
+					isLive = environment.contains(aa.target());
+				}
 			} else {
-				isLive = environment.remove(aa.target);
+				isLive = environment.remove(aa.target());
 			}
 		} 
 		
-		if ((isLive && code instanceof Code.AbstractUnaryAssignable)
-				|| (code instanceof Codes.Dereference)) {
-			Code.AbstractUnaryAssignable c = (Code.AbstractUnaryAssignable) code;
-			environment.add(c.operand);
-		} else if(isLive && code instanceof Code.AbstractUnaryOp) {
+		if(isLive && code instanceof Code.AbstractUnaryOp) {
 			Code.AbstractUnaryOp c = (Code.AbstractUnaryOp) code;
 			if(c.operand != Codes.NULL_REG) {
 				// return bytecode has an optional operand.
 				environment.add(c.operand);
 			}
-		} else if(isLive && code instanceof Code.AbstractBinaryAssignable) {
-			Code.AbstractBinaryAssignable c = (Code.AbstractBinaryAssignable) code;
-			environment.add(c.leftOperand);
-			environment.add(c.rightOperand);
 		} else if(isLive && code instanceof Code.AbstractBinaryOp) {
 			Code.AbstractBinaryOp c = (Code.AbstractBinaryOp) code;
 			environment.add(c.leftOperand);
 			environment.add(c.rightOperand);
 		} else if ((isLive && code instanceof Code.AbstractNaryAssignable)
-				|| (code instanceof Codes.Invoke && ((Codes.Invoke) code).type instanceof Type.Method)
-				|| (code instanceof Codes.IndirectInvoke && ((Codes.IndirectInvoke) code).type instanceof Type.Method)) {
+				|| (code instanceof Codes.Invoke && ((Codes.Invoke) code).type() instanceof Type.Method)
+				|| (code instanceof Codes.IndirectInvoke && ((Codes.IndirectInvoke) code).type() instanceof Type.Method)) {
 			Code.AbstractNaryAssignable c = (Code.AbstractNaryAssignable) code;
-			for(int operand : c.operands) {
+			for(int operand : c.operands()) {
 				environment.add(operand);
 			}
 		} else if(!isLive) {			

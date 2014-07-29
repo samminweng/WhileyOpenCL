@@ -1093,7 +1093,7 @@ public final class Types {
 		public final int minimum() { return 10; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// AndT({SetT([bool, $11<Type>]) s, $33<Proton> p, $11<Type> ts...})
+	// AndT({SetT([bool, $11<Type>]) s, $36<Proton> p, $11<Type> ts...})
 	private final static class Reduction_17 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_17(Pattern.Term pattern) { super(pattern); }
@@ -1265,24 +1265,28 @@ public final class Types {
 	public final static int K_VoidT = 6;
 	public final static Automaton.Term VoidT = new Automaton.Term(K_VoidT);
 
+	// term NullT
+	public final static int K_NullT = 7;
+	public final static Automaton.Term NullT = new Automaton.Term(K_NullT);
+
 	// term BoolT
-	public final static int K_BoolT = 7;
+	public final static int K_BoolT = 8;
 	public final static Automaton.Term BoolT = new Automaton.Term(K_BoolT);
 
 	// term IntT
-	public final static int K_IntT = 8;
+	public final static int K_IntT = 9;
 	public final static Automaton.Term IntT = new Automaton.Term(K_IntT);
 
 	// term RealT
-	public final static int K_RealT = 9;
+	public final static int K_RealT = 10;
 	public final static Automaton.Term RealT = new Automaton.Term(K_RealT);
 
 	// term StringT
-	public final static int K_StringT = 10;
+	public final static int K_StringT = 11;
 	public final static Automaton.Term StringT = new Automaton.Term(K_StringT);
 
 	// term VarT(^string)
-	public final static int K_VarT = 11;
+	public final static int K_VarT = 12;
 	public final static int VarT(Automaton automaton, String r0) {
 		int r1 = automaton.add(new Automaton.Strung(r0));
 		return automaton.add(new Automaton.Term(K_VarT, r1));
@@ -1389,7 +1393,7 @@ public final class Types {
 		public final int minimum() { return 2; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// AndT({$33<Proton> a1, $33<Proton> a2, $11<Type> ts...})
+	// AndT({$36<Proton> a1, $36<Proton> a2, $11<Type> ts...})
 	private final static class Reduction_21 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_21(Pattern.Term pattern) { super(pattern); }
@@ -1457,7 +1461,7 @@ public final class Types {
 		public final int minimum() { return 0; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// AndT({$33<Proton> a1, NotT($33<Proton> a2), $11<Type> ts...})
+	// AndT({$36<Proton> a1, NotT($36<Proton> a2), $11<Type> ts...})
 	private final static class Reduction_22 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_22(Pattern.Term pattern) { super(pattern); }
@@ -1639,7 +1643,7 @@ public final class Types {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term $8<FunctionT(^[$2<^Type>,$2,$2...])>
-	public final static int K_FunctionT = 12;
+	public final static int K_FunctionT = 13;
 	public final static int FunctionT(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
 		return automaton.add(new Automaton.Term(K_FunctionT, r1));
@@ -1655,7 +1659,7 @@ public final class Types {
 
 	public static final Schema SCHEMA = new Schema(new Schema.Term[]{
 		// $4<NotT($2<^Type>)>
-		Schema.Term("NotT",Schema.Or(Schema.Any, Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("AnyT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("TupleT",Schema.List(true)), Schema.Term("VarT",Schema.String))), Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any)))),
+		Schema.Term("NotT",Schema.Or(Schema.Any, Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("TupleT",Schema.List(true)), Schema.Term("VarT",Schema.String))), Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any)))),
 		// $7<AndT($5<^{$2<^Type>...}>)>
 		Schema.Term("AndT",Schema.Set(true)),
 		// $7<OrT($5<^{$2<^Type>...}>)>
@@ -1663,11 +1667,13 @@ public final class Types {
 		// $7<TupleT(^[$2<^Type>...])>
 		Schema.Term("TupleT",Schema.List(true)),
 		// $9<SetT(^[^bool,$3<^Type>])>
-		Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Or(Schema.Any, Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("AnyT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("TupleT",Schema.List(true)), Schema.Term("VarT",Schema.String))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))))),
+		Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Or(Schema.Any, Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("TupleT",Schema.List(true)), Schema.Term("VarT",Schema.String))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))))),
 		// AnyT
 		Schema.Term("AnyT"),
 		// VoidT
 		Schema.Term("VoidT"),
+		// NullT
+		Schema.Term("NullT"),
 		// BoolT
 		Schema.Term("BoolT"),
 		// IntT
@@ -1679,7 +1685,7 @@ public final class Types {
 		// VarT(^string)
 		Schema.Term("VarT",Schema.String),
 		// $8<FunctionT(^[$2<^Type>,$2,$2...])>
-		Schema.Term("FunctionT",Schema.List(true,Schema.Or(Schema.Any, Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("AnyT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("TupleT",Schema.List(true)), Schema.Term("VarT",Schema.String))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Term("TupleT",Schema.List(true))),Schema.Any))
+		Schema.Term("FunctionT",Schema.List(true,Schema.Or(Schema.Any, Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("TupleT",Schema.List(true)), Schema.Term("VarT",Schema.String))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Term("TupleT",Schema.List(true))),Schema.Any))
 	});
 
 	// =========================================================================
@@ -1691,11 +1697,11 @@ public final class Types {
 	// VoidT
 	private static Type type1 = Runtime.Type("2KLxLPZGp3ukmD0E");
 	// $11<Type>
-	private static Type type2 = Runtime.Type("U53GKTkK5G0GrQhGZIjG6KowZRJGJFiG5K3CKOoG4OJK6RgK5KJ55KbQYGMPjt5Klppb0fWfGjWm0ql59CXDAp1IZ0_RjGrQid1bl7ww3AN4HLR5Qcp7vgKARGJFi_6KIs4AUG_Kj_5OJCGPgc5K1xqQgGp3glHQ3_ZQoGp3jl1TJ8KOWl5KIc6AvGrJo8MPiS5KIo6AyCmIgZ2XW985YVZX0AA53OKNmG_9OBHYWY0AE505chaQtlrUB5N5QZOBXIP5hgOcHIYkIb0AT5YoOgmAc5eZPBHEe5ggPBXEe5goPc16YwPoOBH6s5tZQcXil7zgQk1jl7S5gZYjW9z5YV3m0A86YoOoOBHblmGDB6eoRBHHD6gwR3Cx");
+	private static Type type2 = Runtime.Type("e53GKTkK5G0GrQhGZIjG6KowZRJGJFiG5K3CKOoG4OJK6RgK5KJ55KbQYGMPjt5Klp_elfGi0mGnlql59CXDAp1IZ0_RjGrQidmbl7ww3AN4HLU5Qcp7vgKARGJFi_6KIs4AUG_Ipl5QJCGPgc5KLxLPZGp3glHQJ8oQjl5KIw5AsGJHiG6KIc6AvG_J_45QJCGUgs6SIGbRdtqOJC0X0A85Yw3AtgNc1Yl77pNkXY0GL4aRJdH5YVOZOkXaGZ0PftLTwxbXlYlal5R5YsJbGAT5eoo7wVPkHel7c5fwmeW9g5YoIf0Ai5YsIf0As5ekl7u5c5YoliGDw5eoQBmEy5gwQB1e0AtZRcXml77hRk1nl7c5c5YVPsRZnnW9N6YZJq0AP6GI");
 	// bool
 	private static Type type3 = Runtime.Type("Fk0");
-	// $33<Proton>
-	private static Type type4 = Runtime.Type("9G5Jmx5Sjt5G0tLTJClDgk2KLxLPZGp3ykmEJ8oQjl5KIZ3A9GJHiG6KIk3ACG_J_45QJClIgV4SIGbRdtqOJCWLgg4OJK6RgK5Kegr7TlHDUd1PYoKPgc5GL4aRJdH5YkLQgsLVGE7hZIOlpPjh0TYcIThcMg6");
+	// $36<Proton>
+	private static Type type4 = Runtime.Type("CG5Jmx5Sjt5G0tLTJClDgk2KDK6QgGp3ykmEJOpQdG5KIZ3A9G_Fjx5QJC0Igo3G8t5SJClIgV4KHKLNgGp3PlmLoC4Sm_aQbGp3SlXMZGKSklLOJdXUYZ5Atca9fC1PglHQ3OKNmG_9OBmQslHTG5xVoHD_4MUtaTQgr7ukMAx4y0");
 	// ^AnyT
 	private static Type type5 = Runtime.Type("3G0tLTJCWDggY9w3x$");
 

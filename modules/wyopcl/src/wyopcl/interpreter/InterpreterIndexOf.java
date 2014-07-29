@@ -21,9 +21,11 @@ public class InterpreterIndexOf extends Interpreter {
 		int linenumber = stackframe.getLine();
 		String msg = ">";
 		//Read the key value from the rightOperand register.
-		Constant.Integer key = (Constant.Integer)stackframe.getRegister(code.rightOperand);
+		//Constant.Integer key = (Constant.Integer)stackframe.getRegister(code.rightOperand);
+		Constant.Integer key = (Constant.Integer)stackframe.getRegister(code.operand(1));
 		//Read the list from the leftOperand register.
-		Constant left = stackframe.getRegister(code.leftOperand);
+		//Constant left = stackframe.getRegister(code.leftOperand);
+		Constant left = stackframe.getRegister(code.operand(0));
 		Constant value = null;
 		int keyvalue = key.value.intValue();
 		if(left instanceof Constant.List){
@@ -39,8 +41,8 @@ public class InterpreterIndexOf extends Interpreter {
 		}else{
 			internalFailure("Not implemented!", "InterpreterIndexOf.java", null);
 		}
-		stackframe.setRegister(code.target, value);			
-		printMessage(stackframe, code.toString(), "%"+ code.target + "("+value+")");
+		stackframe.setRegister(code.target(), value);			
+		printMessage(stackframe, code.toString(), "%"+ code.target() + "("+value+")");
 		stackframe.setLine(++linenumber);
 	}
 

@@ -31,7 +31,7 @@ public class InterpreterUpdate extends Interpreter{
 		Constant result = null;
 		if(afterType instanceof Type.List){
 			//Pops the list.
-			Constant.List list = (Constant.List)stackframe.getRegister(code.target);
+			Constant.List list = (Constant.List)stackframe.getRegister(code.target());
 			//Read the rhs from the register.
 			Constant rhs = stackframe.getRegister(code.result());
 			//Copy the arrayList
@@ -50,12 +50,11 @@ public class InterpreterUpdate extends Interpreter{
 
 			//Update the result to the list.
 			result = list;
-			stackframe.setRegister(code.target, result);
-			printMessage(stackframe, code.toString(),
-					"%"+code.target + "("+result+")");
+			stackframe.setRegister(code.target(), result);
+			printMessage(stackframe, code.toString(), "%"+code.target() + "("+result+")");
 			
 		}else if(afterType instanceof Type.Record){
-			Constant.Record record = (Constant.Record)stackframe.getRegister(code.target);
+			Constant.Record record = (Constant.Record)stackframe.getRegister(code.target());
 			Constant assignedValue = stackframe.getRegister(code.result());
 			HashMap<String, Constant> values = record.values;
 			String field = code.fields.get(0);
@@ -76,14 +75,13 @@ public class InterpreterUpdate extends Interpreter{
 			
 			result= Constant.V_RECORD(values);
 			//Update the result to the list.
-			stackframe.setRegister(code.target, result);			
+			stackframe.setRegister(code.target(), result);			
 			
 		}else{
 			internalFailure("Not implemented!", "IntepreterUpdate.java", null);
 		}
 		
-		printMessage(stackframe, code.toString(),
-				"%"+code.target + "("+result+")");
+		printMessage(stackframe, code.toString(), "%"+code.target() + "("+result+")");
 		
 		stackframe.setLine(++linenumber);
 	}

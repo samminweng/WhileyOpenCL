@@ -22,10 +22,10 @@ public class InterpreterConst extends Interpreter {
 	public void interpret(Codes.Const code, StackFrame stackframe) {		
 		// Add the register
 		int linenumber = stackframe.getLine();
-		Constant result = code.constant;	
-		stackframe.setRegister(code.target, result);
+		Constant result = code.constant;
+		stackframe.setRegister(code.target(), result);
 
-		printMessage(stackframe, code.toString(), "%"+ code.target + "("+result+")");
+		printMessage(stackframe, code.toString(), "%"+ code.target() + "("+result+")");
 		//Set the next line number
 		stackframe.setLine(++linenumber);
 	}

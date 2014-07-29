@@ -20,13 +20,14 @@ public class InterpreterConvert extends Interpreter {
 	public void interpret(Codes.Convert code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
 		//Read a value from the operand register.
-		Constant value = stackframe.getRegister(code.operand);
+		//Constant value = stackframe.getRegister(code.operand);
+		Constant value = stackframe.getRegister(code.operand(0));
 		//Convert it to the given type.
 		Type assignedType = code.assignedType();
 		Type resultType = code.result;
 		Constant result = Converter.convertToConstant(value, assignedType, resultType);
-		stackframe.setRegister(code.target, result);
-		printMessage(stackframe, code.toString(), "%"+ code.target + "("+result+")");
+		stackframe.setRegister(code.target(), result);
+		printMessage(stackframe, code.toString(), "%"+ code.target() + "("+result+")");
 		stackframe.setLine(++linenumber);
 	}
 

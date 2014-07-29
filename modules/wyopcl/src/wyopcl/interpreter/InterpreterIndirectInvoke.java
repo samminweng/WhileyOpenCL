@@ -38,9 +38,8 @@ public class InterpreterIndirectInvoke extends Interpreter {
 	public void interpret(Codes.IndirectInvoke code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
 		Constant.Lambda reference = (Constant.Lambda)stackframe.getRegister(code.reference());
-		FunctionOrMethod func = code.type;
+		//FunctionOrMethod func = code.type;
 		List<Constant> values = new ArrayList<Constant>();
-
 
 		//Get the parameter values.			
 		for(int i=0;i<code.parameters().length;i++){
@@ -50,8 +49,6 @@ public class InterpreterIndirectInvoke extends Interpreter {
 		}
 
 		
-
-
 		//Invoke the function		
 		String name = reference.name.name();
 		java.lang.reflect.Method method = null;
@@ -60,10 +57,10 @@ public class InterpreterIndirectInvoke extends Interpreter {
 				Class<?> systemClass = java.lang.Class.forName("java.lang.System");
 				java.lang.reflect.Field outField = systemClass.getDeclaredField("out");
 				Class<?> printClass = outField.getType();
-				Class<?>[] parameterTypes = new Class[code.type.params().size()];
+				Class<?>[] parameterTypes = new Class[code.type().params().size()];
 				//Iterate the parameter types
-				for(int i=0;i<code.type.params().size();i++){
-					parameterTypes[i]= Converter.ConvertToClass(code.type.params().get(i));
+				for(int i=0;i<code.type().params().size();i++){
+					parameterTypes[i]= Converter.ConvertToClass(code.type().params().get(i));
 				}
 				method = printClass.getMethod(name, parameterTypes);
 				ArrayList<Object> arguments = new ArrayList<Object> ();

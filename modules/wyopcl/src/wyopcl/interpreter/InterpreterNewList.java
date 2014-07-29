@@ -22,13 +22,13 @@ public class InterpreterNewList extends Interpreter {
 	public void interpret(Codes.NewList code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
 		ArrayList<Constant> values = new ArrayList<Constant>();
-		for (int operand : code.operands) {
+		for (int operand : code.operands()) {
 			Constant elem = stackframe.getRegister(operand);			
 			values.add(elem);
 		}
 		Constant.List result = Constant.V_LIST(values);
-		stackframe.setRegister(code.target, result);
-		printMessage(stackframe, code.toString(), "%"+ code.target + "("+result+")");	
+		stackframe.setRegister(code.target(), result);
+		printMessage(stackframe, code.toString(), "%"+ code.target() + "("+result+")");	
 		stackframe.setLine(++linenumber);
 	}
 

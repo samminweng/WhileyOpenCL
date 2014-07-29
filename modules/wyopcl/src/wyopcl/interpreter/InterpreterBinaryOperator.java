@@ -22,11 +22,12 @@ public class InterpreterBinaryOperator extends Interpreter {
 
 
 	public void interpret(Codes.BinaryOperator code, StackFrame stackframe) {
-		//System.out.println("code.target"+code.target);
 		int linenumber = stackframe.getLine();
 		Constant result = null;
-		Constant leftOperand = stackframe.getRegister(code.leftOperand);
-		Constant rightOperand = stackframe.getRegister(code.rightOperand);
+		//Constant leftOperand = stackframe.getRegister(code.leftOperand);
+		Constant leftOperand = stackframe.getRegister(code.operand(0));
+		//Constant rightOperand = stackframe.getRegister(code.rightOperand);
+		Constant rightOperand = stackframe.getRegister(code.operand(1));
 		Constant.Integer left, right;
 		left = (Constant.Integer) leftOperand;
 		right = (Constant.Integer) rightOperand;
@@ -62,7 +63,7 @@ public class InterpreterBinaryOperator extends Interpreter {
 			}
 			//Put the list into the result.
 			result = Constant.V_LIST(values);
-			stackframe.setRegister(code.target, result);			
+			stackframe.setRegister(code.target(), result);			
 			break;
 		case BITWISEAND:
 			throw new RuntimeException("Not implemented!");
@@ -83,12 +84,8 @@ public class InterpreterBinaryOperator extends Interpreter {
 			throw new RuntimeException("unknown binary expression encountered");
 			//break;
 		}
-		stackframe.setRegister(code.target, result);
-		//msg += "%"+code.leftOperand+"(" + left + ") %" +code.rightOperand+"("+ right 
-		//		+") %" + code.target + "(" + result + ")";
-		
-		//System.out.println("#"+linenumber+" ["+code+"]\n>"+msg+ "\n");
-		printMessage(stackframe, code.toString(), "%"+ code.target + "("+result+")");
+		stackframe.setRegister(code.target(), result);
+		printMessage(stackframe, code.toString(), "%"+ code.target() + "("+result+")");
 		stackframe.setLine(++linenumber);
 	}
 

@@ -15,6 +15,14 @@ import wyopcl.util.WyopclBuildTask;
 
 public class WyopclMain extends WycMain{
 
+	@Override
+	protected void version() {
+		// TODO Auto-generated method stub
+		super.version();
+	}
+
+
+
 	public static final OptArg[] EXTRA_OPTIONS = { 
 //		new OptArg("classdir", "cd", OptArg.FILEDIR, "Specify where to place generated class files",
 //			new File("."))
@@ -31,6 +39,8 @@ public class WyopclMain extends WycMain{
 		System.arraycopy(EXTRA_OPTIONS, 0, options,
 				WycMain.DEFAULT_OPTIONS.length, EXTRA_OPTIONS.length);
 		WyopclMain.DEFAULT_OPTIONS = options;
+		
+		
 	}
 	
 	public WyopclMain(WycBuildTask builder, OptArg[] options) {
@@ -128,8 +138,10 @@ public class WyopclMain extends WycMain{
 	
 	public static void main(String[] args) {
 		
-		// now, run wyjc build task
-		System.exit(new WyopclMain(new WyopclBuildTask(), DEFAULT_OPTIONS).run(args));
+		// run WyopclBuildTask
+		WyopclBuildTask builder = new WyopclBuildTask();
+		WyopclMain wyopclMain = new WyopclMain(builder, DEFAULT_OPTIONS);
+		System.exit(wyopclMain.run(args));
 	}
 
 }

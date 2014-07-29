@@ -25,13 +25,13 @@ public class InterpreterNewTuple extends Interpreter{
 		int linenumber = stackframe.getLine();
 		//Construct a new tuple from one or more operand registers.
 		Collection<Constant> values = new ArrayList<Constant>();
-		for(int oprand : code.operands){
+		for(int oprand : code.operands()){
 			values.add(stackframe.getRegister(oprand));
 		}
 		//Write the tuple to the target register.
 		Tuple result = Constant.V_TUPLE(values);
-		stackframe.setRegister(code.target, result);
-		printMessage(stackframe, code.toString(),"%"+code.target+"="+result);
+		stackframe.setRegister(code.target(), result);
+		printMessage(stackframe, code.toString(),"%"+code.target()+"="+result);
 		stackframe.setLine(++linenumber);
 	}
 	

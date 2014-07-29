@@ -20,11 +20,11 @@ public class InterpreterTupleLoad extends Interpreter{
 	public void interpret(Codes.TupleLoad code, StackFrame stackframe) {		
 		int linenumber = stackframe.getLine();
 		//Read the tuple from the operand register.
-		Constant.Tuple tuple = (Constant.Tuple)stackframe.getRegister(code.operand);
+		Constant.Tuple tuple = (Constant.Tuple)stackframe.getRegister(code.operand(0));
 		//Write the tuple
 		Constant result = tuple.values.get(code.index);
-		stackframe.setRegister(code.target, result);
-		printMessage(stackframe, code.toString(), "%"+code.target+"="+result);
+		stackframe.setRegister(code.target(), result);
+		printMessage(stackframe, code.toString(), "%"+code.target()+"="+result);
 		stackframe.setLine(++linenumber);
 	}
 	

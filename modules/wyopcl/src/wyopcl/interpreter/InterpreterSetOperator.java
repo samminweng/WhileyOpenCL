@@ -27,15 +27,14 @@ public class InterpreterSetOperator extends Interpreter{
 		int linenumber = stackframe.getLine();
 		
 		//Read two set values
-		Constant left = stackframe.getRegister(code.leftOperand);
-		Constant right = stackframe.getRegister(code.rightOperand);
+		Constant left = stackframe.getRegister(code.operand(0));
+		Constant right = stackframe.getRegister(code.operand(1));
 		
 		//Perform the operation
 		Constant result = null;
 		switch(code.kind){
 		case UNION:
 			internalFailure("Not implemented!", "InterpreterSetOperator.java", null);
-			
 			break;
 		case LEFT_UNION:
 			Constant.Set lhs = (Constant.Set)left;
@@ -55,11 +54,9 @@ public class InterpreterSetOperator extends Interpreter{
 		
 		}
 		//Write the result to target register.
-		stackframe.setRegister(code.target, result);
-		printMessage(stackframe, code.toString(),"%"+code.target+"("+result+")");
+		stackframe.setRegister(code.target(), result);
+		printMessage(stackframe, code.toString(),"%"+code.target()+"("+result+")");
 		stackframe.setLine(++linenumber);
 	}
 	
-	
-
 }

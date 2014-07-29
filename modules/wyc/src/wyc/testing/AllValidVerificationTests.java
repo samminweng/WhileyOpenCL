@@ -283,6 +283,11 @@ public class AllValidVerificationTests {
 	public void Cast_Valid_5() {
 		runTest("Cast_Valid_5");
 	}
+	
+	@Ignore("#366") @Test
+	public void Cast_Valid_6() {
+		runTest("Cast_Valid_6");
+	}
 
 	@Test
 	public void Char_Valid_1() {
@@ -3162,6 +3167,46 @@ public class AllValidVerificationTests {
 	@Test
 	public void While_Valid_30() {
 		runTest("While_Valid_30");
+	}
+	
+	@Test
+	public void While_Valid_31() {
+		runTest("While_Valid_31");
+	}
+	
+	@Ignore("378") @Test
+	public void While_Valid_32() {
+		runTest("While_Valid_32");
+	}
+	
+	@Ignore("380") @Test
+	public void While_Valid_33() {
+		runTest("While_Valid_33");
+	}
+	
+	@Test
+	public void While_Valid_34() {
+		runTest("While_Valid_34");
+	}
+	
+	@Test
+	public void While_Valid_35() {
+		runTest("While_Valid_35");
+	}
+	
+	@Test
+	public void While_Valid_36() {
+		runTest("While_Valid_36");
+	}
+	
+	@Test
+	public void While_Valid_37() {
+		runTest("While_Valid_37");
+	}
+	
+	@Test
+	public void While_Valid_38() {
+		runTest("While_Valid_38");
 	}
 	
 	@Test

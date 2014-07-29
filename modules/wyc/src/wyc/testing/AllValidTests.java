@@ -286,6 +286,11 @@ public class AllValidTests {
 	}
 
 	@Test
+	public void Cast_Valid_6() {
+		runTest("Cast_Valid_6");
+	}
+
+	@Test
 	public void Char_Valid_1() {
 		runTest("Char_Valid_1");
 	}
@@ -2049,6 +2054,11 @@ public class AllValidTests {
 		runTest("RecursiveType_Valid_27");
 	}
 
+	@Ignore("#364") @Test
+	public void RecursiveType_Valid_28() {
+		runTest("RecursiveType_Valid_28");
+	}
+	
 	@Test
 	public void RecursiveType_Valid_3() {
 		runTest("RecursiveType_Valid_3");
@@ -3129,6 +3139,46 @@ public class AllValidTests {
 		runTest("While_Valid_30");
 	}
 	
+	@Test
+	public void While_Valid_31() {
+		runTest("While_Valid_31");
+	}
+	
+	@Test
+	public void While_Valid_32() {
+		runTest("While_Valid_32");
+	}
+	
+	@Test
+	public void While_Valid_33() {
+		runTest("While_Valid_33");
+	}
+		
+	@Test
+	public void While_Valid_34() {
+		runTest("While_Valid_34");
+	}
+	
+	@Test
+	public void While_Valid_35() {
+		runTest("While_Valid_35");
+	}	
+	
+	@Test
+	public void While_Valid_36() {
+		runTest("While_Valid_36");
+	}
+		
+	@Test
+	public void While_Valid_37() {
+		runTest("While_Valid_37");
+	}
+		
+	@Test
+	public void While_Valid_38() {
+		runTest("While_Valid_38");
+	}
+		
 	@Test
 	public void While_Valid_3() {
 		runTest("While_Valid_3");

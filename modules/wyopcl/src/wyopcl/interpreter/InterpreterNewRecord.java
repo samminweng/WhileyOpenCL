@@ -30,11 +30,11 @@ public class InterpreterNewRecord extends Interpreter{
 		int linenumber = stackframe.getLine();
 		HashMap<String, Constant> values = new HashMap<String, Constant>();
 		//HashSet does not preserve the ordering
-		HashSet<String> keys = code.type.keys();
+		HashSet<String> keys = code.type().keys();
 		String[] fields = keys.toArray(new String[0]);
 		//Get the values from the operand registers.
-		for(int i=0;i<code.operands.length;i++){
-			Constant value = stackframe.getRegister(code.operands[i]);
+		for(int i=0;i<code.operands().length;i++){
+			Constant value = stackframe.getRegister(code.operand(i));
 			//Get the field type
 			int fieldindex = fields.length -i;
 			values.put(fields[fieldindex-1], value);
@@ -42,8 +42,8 @@ public class InterpreterNewRecord extends Interpreter{
 		
 		//Construct the Record value
 		Constant.Record result = Constant.V_RECORD(values);
-		stackframe.setRegister(code.target, result);
-		printMessage(stackframe, code.toString(),"%"+code.target+"("+result+")");
+		stackframe.setRegister(code.target(), result);
+		printMessage(stackframe, code.toString(),"%"+code.target()+"("+result+")");
 		stackframe.setLine(++linenumber);
 	}
 	
