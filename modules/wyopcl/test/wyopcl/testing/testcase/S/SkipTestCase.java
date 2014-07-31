@@ -7,7 +7,7 @@ import wyopcl.testing.BaseTestCase;
 public class SkipTestCase extends BaseTestCase {
 
 	@Test
-	public void Skip_Valid_1() {
+	public void test_Skip_Valid_1() {
 		exec("Skip_Valid_1");
 	}
 
