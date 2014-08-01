@@ -1,18 +1,28 @@
 package wyopcl.testing.testcase.A;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
-import wyopcl.testing.BaseTestCase;
+import wyopcl.testing.BaseUtil;
 
-public class AssumeTestCase extends BaseTestCase {
-
+public class AssumeTestCase {
+	private BaseUtil util;	
+	@Before
+	public void setUp() throws Exception {
+		util = new BaseUtil();
+	}
+	@After
+	public void tearDown() throws Exception {
+		util = null;
+	}
 	@Test
 	public void test_Assume_Valid_1() {
-		exec("Assume_Valid_1");
+		util.exec("Assume_Valid_1");
 	}
 	
 	@Test
 	public void test_Assume_Valid_2() {
-		exec("Assume_Valid_2");
+		util.exec("Assume_Valid_2");
 	}
 }

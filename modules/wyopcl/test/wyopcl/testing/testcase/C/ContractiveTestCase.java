@@ -1,19 +1,29 @@
 package wyopcl.testing.testcase.C;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import wyopcl.testing.BaseTestCase;
+import wyopcl.testing.BaseUtil;
 
-public class ContractiveTestCase extends BaseTestCase {
-
+public class ContractiveTestCase{
+	private BaseUtil util;	
+	@Before
+	public void setUp() throws Exception {
+		util = new BaseUtil();
+	}
+	@After
+	public void tearDown() throws Exception {
+		util = null;
+	}
 	@Ignore("Issue ???") @Test
 	public void test_Contractive_Valid_1() {
-		exec("Contractive_Valid_1");
+		util.exec("Contractive_Valid_1");
 	}
 
 	@Test
 	public void test_Contractive_Valid_2() {
-		exec("Contractive_Valid_2");
+		util.exec("Contractive_Valid_2");
 	}
 }

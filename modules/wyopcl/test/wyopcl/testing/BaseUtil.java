@@ -8,10 +8,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.List;
+import static org.junit.Assert.*;
 
-import junit.framework.TestCase;
 
-public class BaseTestCase extends TestCase{
+public class BaseUtil{
 	final String version = "v0.3.26";
 	//user.dir is the current directory.
 	final String classpath = 			
@@ -27,11 +27,17 @@ public class BaseTestCase extends TestCase{
 	final String cmd = "java -cp "+classpath+" wyopcl.WyopclMain -bp "+runtime+" ";
 	
 	
+	public BaseUtil(){
+		
+	}
+	
+	
 	public void exec(String file_name){
 		try {
 			//Load the output file (*.sysout).
 			String path_sysout = valid_test_folder+file_name+".sysout";
-			List<String> expected = Files.readAllLines(Paths.get(path_sysout), Charset.defaultCharset());
+			List<String> expected = Files.readAllLines(Paths.get(path_sysout),
+					Charset.defaultCharset());
 			Iterator<String> iterator = expected.iterator();
 			//Run the whiley program with interpreter.
 			String path_whiley = valid_test_folder+file_name+".whiley";
