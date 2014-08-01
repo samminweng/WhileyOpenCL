@@ -3,14 +3,14 @@ Introduction
 ======================================================================
 
 The Whiley programming language employs the extended static checking
-to eliminate the errors at the compile time, and compiles the
+to�eliminate�the errors at the compile time, and compiles the
 high-level Whiley program into different kinds of implementations.
-However, the C implementations that the Whiley compiler generates are
+However, the C�implementations that the Whiley compiler generates are
 currently quite inefficient, due to always using unbounded integers,
-unbounded data structures with frequent copying, etc. This project
+unbounded data structures with frequent copying, etc.�This project
 aims to use the program analysis techniques to generate efficient
 parallel implementations in C and OpenCL and to gain the speed-up
-across heterogeneous platforms.
+across heterogeneous�platforms.
 
 
 ======================================================================
@@ -33,10 +33,10 @@ Note that if you encounter the permission problem while running the
 wyopcl shell script, use the below command:
 $ chmod a+x ../bin/*
 
-Currently, the interpreter could run some example programs:
-'sieve.whiley', 'sort.whiley', 'microwave-oven.whiley', 'TicTacToe.whiley'
-and 'TrafficLights.whiley'.
-
+Or the interpreter can be verified with 616 test cases with the command:
+$ ant report
+The unit results are summarized at 'report/html/index.html'. Currently,
+the successful rate is 13.15%.
 
 2. Whiley-to-OpenCL translator
 The Whiley-to-OpenCL translator is written in Java and aims to generate
