@@ -196,7 +196,8 @@
 	<formatter type="plain" usefile="false" />
 	<classpath>
 		<pathelement location="build" />
-		<pathelement location="lib/junit*.jar" />
+		<pathelement location="lib/hamcrest-core-1.3.jar" />
+		<pathelement location="lib/junit-4.11.jar" />
 	</classpath>
 	<formatter type="xml" />
 	<batchtest todir="report">
