@@ -28,6 +28,8 @@ public class Converter {
 			to = (Constant.List)from;
 		}else if (from instanceof Constant.Record){
 			to = (Constant.Record)from;
+		}else if (from instanceof Constant.Char){
+			to = ((Constant.Char)from).value;
 		}else{
 			internalFailure("Not implemented!", "Converter.java", null);
 		}
@@ -82,7 +84,10 @@ public class Converter {
 		}else if (resultType instanceof Type.Real){
 			//to =  from.;
 			internalFailure("Not implemented!", "Converter.java", null);
-		} else{
+		}else if (resultType instanceof Type.Union){
+			//No conversion is done. 
+			to = from;
+		}else{
 			internalFailure("Not implemented!", "Converter.java", null);
 		}
 
@@ -125,7 +130,9 @@ public class Converter {
 			result = Constant.V_TYPE(((Constant.Type)value).type);
 		}else if (value instanceof Constant.Bool){
 			result = Constant.V_BOOL(((Constant.Bool)value).value);
-		}else {
+		}else if (value instanceof Constant.Map){
+			result = Constant.V_MAP(((Constant.Map)value).values);
+		} else {
 			internalFailure("Not implemented!", "Converter.java", null);
 		}		
 		

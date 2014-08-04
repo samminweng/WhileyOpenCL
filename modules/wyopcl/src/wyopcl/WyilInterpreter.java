@@ -36,36 +36,37 @@ import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.Case;
 import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
 import wyopcl.interpreter.Interpreter;
-import wyopcl.interpreter.InterpreterAssertOrAssume;
-import wyopcl.interpreter.InterpreterAssign;
-import wyopcl.interpreter.InterpreterBinaryOperator;
-import wyopcl.interpreter.InterpreterDebug;
-import wyopcl.interpreter.InterpreterIfIs;
-import wyopcl.interpreter.InterpreterListOperator;
-import wyopcl.interpreter.InterpreterConst;
-import wyopcl.interpreter.InterpreterConvert;
-import wyopcl.interpreter.InterpreterFieldLoad;
-import wyopcl.interpreter.InterpreterForAll;
-import wyopcl.interpreter.InterpreterGoto;
-import wyopcl.interpreter.InterpreterIf;
-import wyopcl.interpreter.InterpreterIndexOf;
-import wyopcl.interpreter.InterpreterIndirectInvoke;
-import wyopcl.interpreter.InterpreterInvoke;
-import wyopcl.interpreter.InterpreterLabel;
-import wyopcl.interpreter.InterpreterLengthOf;
-import wyopcl.interpreter.InterpreterLoop;
-import wyopcl.interpreter.InterpreterLoopEnd;
-import wyopcl.interpreter.InterpreterNewList;
-import wyopcl.interpreter.InterpreterNewRecord;
-import wyopcl.interpreter.InterpreterNewTuple;
-import wyopcl.interpreter.InterpreterNop;
 import wyopcl.interpreter.InterpreterReturn;
-import wyopcl.interpreter.InterpreterSetOperator;
-import wyopcl.interpreter.InterpreterStringOperator;
-import wyopcl.interpreter.InterpreterSubList;
-import wyopcl.interpreter.InterpreterTryCatch;
-import wyopcl.interpreter.InterpreterTupleLoad;
 import wyopcl.interpreter.InterpreterUpdate;
+import wyopcl.interpreter.A.AssertOrAssumeInterpreter;
+import wyopcl.interpreter.A.AssignInterpreter;
+import wyopcl.interpreter.B.BinaryOperatorInterpreter;
+import wyopcl.interpreter.C.ConstantInterpreter;
+import wyopcl.interpreter.C.ConvertInterpreter;
+import wyopcl.interpreter.D.DebugInterpreter;
+import wyopcl.interpreter.F.FieldLoadInterpreter;
+import wyopcl.interpreter.F.ForAllInterpreter;
+import wyopcl.interpreter.G.GotoInterpreter;
+import wyopcl.interpreter.I.IfInterpreter;
+import wyopcl.interpreter.I.IfIsInterpreter;
+import wyopcl.interpreter.I.IndexOfInterpreter;
+import wyopcl.interpreter.I.IndirectInvokeInterpreter;
+import wyopcl.interpreter.I.InvokeInterpreter;
+import wyopcl.interpreter.L.LabelInterpreter;
+import wyopcl.interpreter.L.LengthOfInterpreter;
+import wyopcl.interpreter.L.ListOperatorInterpreter;
+import wyopcl.interpreter.L.LoopInterpreter;
+import wyopcl.interpreter.L.LoopEndInterpreter;
+import wyopcl.interpreter.N.NewListInterpreter;
+import wyopcl.interpreter.N.NewMapInterpreter;
+import wyopcl.interpreter.N.NewRecordInterpreter;
+import wyopcl.interpreter.N.NewTupleInterpreter;
+import wyopcl.interpreter.N.NopInterpreter;
+import wyopcl.interpreter.S.SetOperatorInterpreter;
+import wyopcl.interpreter.S.StringOperatorInterpreter;
+import wyopcl.interpreter.S.SubListInterpreter;
+import wyopcl.interpreter.T.TryCatchInterpreter;
+import wyopcl.interpreter.T.TupleLoadInterpreter;
 
 public class WyilInterpreter extends Interpreter implements Builder{
 	protected final Build.Project project;
@@ -240,73 +241,73 @@ public class WyilInterpreter extends Interpreter implements Builder{
 
 		try{
 			if (code instanceof Codes.AssertOrAssume) {			
-				InterpreterAssertOrAssume.getInstance().interpret((Codes.AssertOrAssume)code, stackframe);
+				AssertOrAssumeInterpreter.getInstance().interpret((Codes.AssertOrAssume)code, stackframe);
 			} else if (code instanceof Codes.Assign) {			
-				InterpreterAssign.getInstance().interpret((Codes.Assign)code, stackframe);
+				AssignInterpreter.getInstance().interpret((Codes.Assign)code, stackframe);
 			} else if (code instanceof Codes.BinaryOperator) {			
-				InterpreterBinaryOperator.getInstance().interpret((Codes.BinaryOperator)code, stackframe);
+				BinaryOperatorInterpreter.getInstance().interpret((Codes.BinaryOperator)code, stackframe);
 			} else if (code instanceof Codes.ListOperator) {
-				InterpreterListOperator.getInstance().interpret((Codes.ListOperator)code, stackframe);
+				ListOperatorInterpreter.getInstance().interpret((Codes.ListOperator)code, stackframe);
 			} else if (code instanceof Codes.StringOperator) {
-				InterpreterStringOperator.getInstance().interpret((Codes.StringOperator)code, stackframe);
+				StringOperatorInterpreter.getInstance().interpret((Codes.StringOperator)code, stackframe);
 			} else if (code instanceof Codes.Convert) {			
-				InterpreterConvert.getInstance().interpret((Codes.Convert)code, stackframe);
+				ConvertInterpreter.getInstance().interpret((Codes.Convert)code, stackframe);
 			} else if (code instanceof Codes.Const) {			
-				InterpreterConst.getInstance().interpret((Codes.Const)code, stackframe);
+				ConstantInterpreter.getInstance().interpret((Codes.Const)code, stackframe);
 			} else if (code instanceof Codes.Debug) {
-				InterpreterDebug.getInstance().interpret((Codes.Debug)code, stackframe);
+				DebugInterpreter.getInstance().interpret((Codes.Debug)code, stackframe);
 			} else if (code instanceof Codes.Dereference) {
 				internalFailure("Not implemented!", filename, entry);
 			} else if (code instanceof Codes.FieldLoad) {		
-				InterpreterFieldLoad.getInstance().interpret((Codes.FieldLoad)code, stackframe);			
+				FieldLoadInterpreter.getInstance().interpret((Codes.FieldLoad)code, stackframe);			
 			} else if (code instanceof Codes.ForAll) {				
-				InterpreterForAll.getInstance().interpret((Codes.ForAll)code, stackframe);
+				ForAllInterpreter.getInstance().interpret((Codes.ForAll)code, stackframe);
 			} else if (code instanceof Codes.Goto) {	
-				InterpreterGoto.getInstance().interpret((Codes.Goto)code, stackframe);
+				GotoInterpreter.getInstance().interpret((Codes.Goto)code, stackframe);
 			} else if (code instanceof Codes.If) {
-				InterpreterIf.getInstance().interpret((Codes.If)code, stackframe);			
+				IfInterpreter.getInstance().interpret((Codes.If)code, stackframe);			
 			} else if (code instanceof Codes.IfIs) {
-				InterpreterIfIs.getInstance().interpret((Codes.IfIs)code, stackframe);
+				IfIsInterpreter.getInstance().interpret((Codes.IfIs)code, stackframe);
 			} else if (code instanceof Codes.IndirectInvoke) {			
-				InterpreterIndirectInvoke.getInstance().interpret((Codes.IndirectInvoke)code, stackframe);
+				IndirectInvokeInterpreter.getInstance().interpret((Codes.IndirectInvoke)code, stackframe);
 			} else if (code instanceof Codes.Invoke) {			
-				InterpreterInvoke.getInstance().interpret((Codes.Invoke)code, stackframe);
+				InvokeInterpreter.getInstance().interpret((Codes.Invoke)code, stackframe);
 			} else if (code instanceof Codes.Invert) {
 				internalFailure("Not implemented!", filename, entry);
 			} else if (code instanceof Codes.LoopEnd) {
-				InterpreterLoopEnd.getInstance().interpret((Codes.LoopEnd)code, stackframe);									
+				LoopEndInterpreter.getInstance().interpret((Codes.LoopEnd)code, stackframe);									
 			} else if (code instanceof Codes.Label) {
-				InterpreterLabel.getInstance().interpret((Codes.Label)code, stackframe);
+				LabelInterpreter.getInstance().interpret((Codes.Label)code, stackframe);
 			} else if (code instanceof Codes.Lambda) {
 				internalFailure("Not implemented!", filename, entry);
 			} else if (code instanceof Codes.LengthOf) {			
-				InterpreterLengthOf.getInstance().interpret((Codes.LengthOf)code, stackframe);
+				LengthOfInterpreter.getInstance().interpret((Codes.LengthOf)code, stackframe);
 			} else if (code instanceof Codes.IndexOf) {			
-				InterpreterIndexOf.getInstance().interpret((Codes.IndexOf)code, stackframe);
+				IndexOfInterpreter.getInstance().interpret((Codes.IndexOf)code, stackframe);
 			} else if (code instanceof Codes.Loop) {			
-				InterpreterLoop.getInstance().interpret((Codes.Loop)code, stackframe);			
+				LoopInterpreter.getInstance().interpret((Codes.Loop)code, stackframe);			
 			} else if (code instanceof Codes.Move) {
 				internalFailure("Not implemented!", filename, entry);
 			} else if (code instanceof Codes.NewMap) {
-				internalFailure("Not implemented!", filename, entry);
+				NewMapInterpreter.getInstance().interpret((Codes.NewMap)code, stackframe);
 			} else if (code instanceof Codes.NewList) {			
-				InterpreterNewList.getInstance().interpret((Codes.NewList)code, stackframe);
+				NewListInterpreter.getInstance().interpret((Codes.NewList)code, stackframe);
 			} else if (code instanceof Codes.NewRecord) {
-				InterpreterNewRecord.getInstance().interpret((Codes.NewRecord)code, stackframe);
+				NewRecordInterpreter.getInstance().interpret((Codes.NewRecord)code, stackframe);
 			} else if (code instanceof Codes.NewSet) {
 				internalFailure("Not implemented!", filename, entry);
 			} else if (code instanceof Codes.NewTuple) {
-				InterpreterNewTuple.getInstance().interpret((Codes.NewTuple)code, stackframe);
+				NewTupleInterpreter.getInstance().interpret((Codes.NewTuple)code, stackframe);
 			} else if (code instanceof Codes.Return) {			
 				InterpreterReturn.getInstance().interpret((Codes.Return)code, stackframe);
 			} else if (code instanceof Codes.NewObject) {
 				internalFailure("Not implemented!", filename, entry);
 			} else if (code instanceof Codes.Nop) {
-				InterpreterNop.getInstance().interpret((Codes.Nop)code, stackframe);
+				NopInterpreter.getInstance().interpret((Codes.Nop)code, stackframe);
 			} else if (code instanceof Codes.SetOperator){
-				InterpreterSetOperator.getInstance().interpret((Codes.SetOperator)code, stackframe);
+				SetOperatorInterpreter.getInstance().interpret((Codes.SetOperator)code, stackframe);
 			} else if (code instanceof Codes.SubList) {
-				InterpreterSubList.getInstance().interpret((Codes.SubList)code, stackframe);
+				SubListInterpreter.getInstance().interpret((Codes.SubList)code, stackframe);
 			} else if (code instanceof Codes.SubString) {
 				internalFailure("Not implemented!", filename, entry);
 			} else if (code instanceof Codes.Switch) {
@@ -314,9 +315,9 @@ public class WyilInterpreter extends Interpreter implements Builder{
 			} else if (code instanceof Codes.Throw) {
 				internalFailure("Not implemented!", filename, entry);
 			} else if (code instanceof Codes.TryCatch) {
-				InterpreterTryCatch.getInstance().interpret((Codes.TryCatch)code, stackframe);
+				TryCatchInterpreter.getInstance().interpret((Codes.TryCatch)code, stackframe);
 			} else if (code instanceof Codes.TupleLoad) {
-				InterpreterTupleLoad.getInstance().interpret((Codes.TupleLoad)code, stackframe);
+				TupleLoadInterpreter.getInstance().interpret((Codes.TupleLoad)code, stackframe);
 			} else if (code instanceof Codes.Update) {
 				InterpreterUpdate.getInstance().interpret((Codes.Update)code, stackframe);
 			} else {

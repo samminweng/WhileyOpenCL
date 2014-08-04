@@ -26,7 +26,7 @@ public class BaseUtil{
 			System.getProperty("user.dir")+File.separator+"lib"+File.separator+"wyc-"+version+".jar"+File.pathSeparator;
 	final String runtime = System.getProperty("user.dir")+File.separator+"lib"+File.separator+"wyrt-"+version+".jar";
 	final String valid_test_folder =  System.getProperty("user.dir")+File.separator+"tests"+File.separator+"valid"+File.separator;
-	final String cmd = "java -cp "+classpath+" wyopcl.WyopclMain -bp "+runtime+" ";
+	//final String cmd = "java -cp "+classpath+" wyopcl.WyopclMain -bp "+runtime+" ";
 	
 	
 	public BaseUtil(){
@@ -38,8 +38,13 @@ public class BaseUtil{
 		try {
 			
 			//Run the whiley program with interpreter.
-			String path_whiley = valid_test_folder+file_name+".whiley";
-			Process p = Runtime.getRuntime().exec(cmd+path_whiley);
+			String path_whiley = file_name+".whiley";
+			//Set the working directory.
+			ProcessBuilder pb = new ProcessBuilder("java", "-cp", classpath,
+					"wyopcl.WyopclMain", "-bp", runtime, path_whiley);
+			pb.directory(new File(valid_test_folder));			
+			//System.out.println("" + pb.directory());
+			Process p = pb.start();
 			Iterator<String> iterator;
 			try (BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream(), Charset.forName("UTF-8")))) {
 	            String line;
