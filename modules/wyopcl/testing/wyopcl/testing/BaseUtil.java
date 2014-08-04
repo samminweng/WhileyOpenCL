@@ -1,6 +1,7 @@
 package wyopcl.testing;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
@@ -8,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.List;
+
 import static org.junit.Assert.*;
 
 
@@ -15,15 +17,15 @@ public class BaseUtil{
 	final String version = "v0.3.26";
 	//user.dir is the current directory.
 	final String classpath = 			
-			System.getProperty("user.dir")+"\\lib\\wyjc-"+version+".jar;"+
-			System.getProperty("user.dir")+"\\lib\\wyopcl-"+version+".jar;"+
-			System.getProperty("user.dir")+	"\\lib\\wyrl-"+version+".jar;"+
-			System.getProperty("user.dir")+"\\lib\\wycs-"+version+".jar;"+
-			System.getProperty("user.dir")+"\\lib\\wybs-"+version+".jar;"+
-			System.getProperty("user.dir")+"\\lib\\wyil-"+version+".jar;"+
-			System.getProperty("user.dir")+"\\lib\\wyc-"+version+".jar;";
-	final String runtime = System.getProperty("user.dir")+"\\lib\\wyrt-"+version+".jar";
-	final String valid_test_folder =  System.getProperty("user.dir")+"\\tests\\valid\\";
+			System.getProperty("user.dir")+File.separator+"lib"+File.separator+"wyjc-"+version+".jar;"+
+			System.getProperty("user.dir")+File.separator+"lib"+File.separator+"wyopcl-"+version+".jar;"+
+			System.getProperty("user.dir")+File.separator+"lib"+File.separator+"wyrl-"+version+".jar;"+
+			System.getProperty("user.dir")+File.separator+"lib"+File.separator+"wycs-"+version+".jar;"+
+			System.getProperty("user.dir")+File.separator+"lib"+File.separator+"wybs-"+version+".jar;"+
+			System.getProperty("user.dir")+File.separator+"lib"+File.separator+"wyil-"+version+".jar;"+
+			System.getProperty("user.dir")+File.separator+"lib"+File.separator+"wyc-"+version+".jar;";
+	final String runtime = System.getProperty("user.dir")+File.separator+"lib"+File.separator+"wyrt-"+version+".jar";
+	final String valid_test_folder =  System.getProperty("user.dir")+File.separator+"tests"+File.separator+"valid"+File.separator;
 	final String cmd = "java -cp "+classpath+" wyopcl.WyopclMain -bp "+runtime+" ";
 	
 	
