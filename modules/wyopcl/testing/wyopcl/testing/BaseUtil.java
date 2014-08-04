@@ -57,8 +57,7 @@ public class BaseUtil{
 			
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException("Test file: " + file_name, e);
 		}
 	}
 }
