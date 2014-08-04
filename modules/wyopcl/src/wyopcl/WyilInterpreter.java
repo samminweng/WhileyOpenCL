@@ -36,8 +36,6 @@ import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.Case;
 import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
 import wyopcl.interpreter.Interpreter;
-import wyopcl.interpreter.InterpreterReturn;
-import wyopcl.interpreter.InterpreterUpdate;
 import wyopcl.interpreter.A.AssertOrAssumeInterpreter;
 import wyopcl.interpreter.A.AssignInterpreter;
 import wyopcl.interpreter.B.BinaryOperatorInterpreter;
@@ -62,11 +60,13 @@ import wyopcl.interpreter.N.NewMapInterpreter;
 import wyopcl.interpreter.N.NewRecordInterpreter;
 import wyopcl.interpreter.N.NewTupleInterpreter;
 import wyopcl.interpreter.N.NopInterpreter;
+import wyopcl.interpreter.R.ReturnInterpreter;
 import wyopcl.interpreter.S.SetOperatorInterpreter;
 import wyopcl.interpreter.S.StringOperatorInterpreter;
 import wyopcl.interpreter.S.SubListInterpreter;
 import wyopcl.interpreter.T.TryCatchInterpreter;
 import wyopcl.interpreter.T.TupleLoadInterpreter;
+import wyopcl.interpreter.U.UpdateInterpreter;
 
 public class WyilInterpreter extends Interpreter implements Builder{
 	protected final Build.Project project;
@@ -299,7 +299,7 @@ public class WyilInterpreter extends Interpreter implements Builder{
 			} else if (code instanceof Codes.NewTuple) {
 				NewTupleInterpreter.getInstance().interpret((Codes.NewTuple)code, stackframe);
 			} else if (code instanceof Codes.Return) {			
-				InterpreterReturn.getInstance().interpret((Codes.Return)code, stackframe);
+				ReturnInterpreter.getInstance().interpret((Codes.Return)code, stackframe);
 			} else if (code instanceof Codes.NewObject) {
 				internalFailure("Not implemented!", filename, entry);
 			} else if (code instanceof Codes.Nop) {
@@ -319,7 +319,7 @@ public class WyilInterpreter extends Interpreter implements Builder{
 			} else if (code instanceof Codes.TupleLoad) {
 				TupleLoadInterpreter.getInstance().interpret((Codes.TupleLoad)code, stackframe);
 			} else if (code instanceof Codes.Update) {
-				InterpreterUpdate.getInstance().interpret((Codes.Update)code, stackframe);
+				UpdateInterpreter.getInstance().interpret((Codes.Update)code, stackframe);
 			} else {
 				internalFailure("unknown wyil code encountered (" + code + ")", filename, entry);
 			}
