@@ -153,8 +153,7 @@ public class WyilInterpreter extends Interpreter implements Builder{
 			
 			if(label != null && verbose){
 					System.out.println(label+"--->"+pos);
-			}
-			
+			}	
 			
 		}
 

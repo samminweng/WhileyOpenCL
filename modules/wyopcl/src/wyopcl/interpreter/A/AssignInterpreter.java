@@ -22,9 +22,8 @@ public class AssignInterpreter extends Interpreter {
 
 	public void interpret(Codes.Assign code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
-		//Constant value = stackframe.getRegister(code.operand);
 		Constant value = stackframe.getRegister(code.operand(0));
-		
+	
 		//Copy the value 
 		Constant result = Converter.copyConstant(value);
 		stackframe.setRegister(code.target(), result);		

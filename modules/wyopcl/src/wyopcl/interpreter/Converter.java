@@ -21,7 +21,7 @@ public class Converter {
 	public static Object convertToObject(Constant from, Class<?> paramType){
 		Object to = null;
 		if(from instanceof Constant.Strung){
-			to = ((Constant.Strung)from).value;
+			to = ((Constant.Strung)from).value.replaceAll("\"", "");
 		}else if(from instanceof Constant.Integer){
 			to = ((Constant.Integer)from).value;
 		}else if (from instanceof Constant.List){
@@ -36,6 +36,7 @@ public class Converter {
 			internalFailure("Not implemented!", "Converter.java", null);
 		}
 
+		//return to;
 		return paramType.cast(to);
 	}	
 	
@@ -68,9 +69,16 @@ public class Converter {
 	public static Constant convertToConstant(Constant from, wyil.lang.Type assignedType, wyil.lang.Type resultType){
 		Constant to = null;
 
-		if (resultType instanceof Type.Any) {
-			//No needs to convert the type of the operand.
-			to = from;
+		if (resultType instanceof Type.Any) {		
+			if(assignedType instanceof Type.Strung){
+				String value = from.toString();
+				value = value.replaceAll("=","");				
+				to = Constant.V_STRING(value);
+			}else{
+				//No needs to convert the type of the operand.
+				to = (Constant) from;
+			}
+			
 		}else if (resultType instanceof Type.Int){
 			if(assignedType instanceof Type.List){
 				Constant.List value = (Constant.List)from;

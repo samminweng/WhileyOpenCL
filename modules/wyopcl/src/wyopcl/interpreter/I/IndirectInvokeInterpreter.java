@@ -50,7 +50,6 @@ public class IndirectInvokeInterpreter extends Interpreter {
 			Constant constant = stackframe.getRegister(code.parameter(i));
 			values.add(constant);
 		}
-
 		
 		//Invoke the function		
 		String name = reference.name.name();
