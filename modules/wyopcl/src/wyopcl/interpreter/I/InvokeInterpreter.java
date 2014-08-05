@@ -25,22 +25,24 @@ public class InvokeInterpreter extends Interpreter {
 		return instance;
 	}
 
-	private void pushBlockToStackFrame(Block blk, Codes.Invoke code, StackFrame stackframe){
+	private void pushBlockToStackFrame(Block blk, Codes.Invoke code, StackFrame oldstackframe){
+		//blockstack.push(stackframe);
+		
 		//Get the depth
-		int depth = stackframe.getDepth();
+		int depth = oldstackframe.getDepth();
 		//Create a new StackFrame
-		StackFrame stackFrame = new StackFrame(depth+1, blk, 0,	code.name.name(), code.target());
+		StackFrame newStackFrame = new StackFrame(depth+1, blk, 0,	code.name.name(), code.target());
 		
 		//Pass the input parameters.
 		int index = 0;			
 		for(int operand: code.operands()){
-			Constant constant = stackframe.getRegister(operand);
-			stackFrame.setRegister(index, constant);
+			Constant constant = oldstackframe.getRegister(operand);
+			newStackFrame.setRegister(index, constant);
 			index++;
 		}
 
 		//Start invoking a new block.		
-		blockstack.push(stackFrame);
+		blockstack.push(newStackFrame);
 	}
 	
 
@@ -52,11 +54,7 @@ public class InvokeInterpreter extends Interpreter {
 		Block blk = blocktable.get(code.name.name());
 		if(blk != null){			
 			//Push the body block to the stack. 
-			pushBlockToStackFrame(blk, code, stackframe);			
-			Block pre = blocktable.get(code.name.name()+"pre");
-			if(pre != null){
-				pushBlockToStackFrame(pre, code, stackframe);
-			}
+			pushBlockToStackFrame(blk, code, stackframe);
 			
 			printMessage(stackframe, code.toString(),"\n");
 

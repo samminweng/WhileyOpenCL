@@ -211,10 +211,4 @@ public abstract class Interpreter {
 					+" ["+input+"] "+output+"\n");
 		System.exit(-1);
 	}
-	
-	public void printPreprocessorMessage(String label, int pos){
-		if(verbose & label != null){
-			System.out.println(label+"--->"+pos);
-		}
-	}
 }
