@@ -69,16 +69,9 @@ public class Converter {
 	public static Constant convertToConstant(Constant from, wyil.lang.Type assignedType, wyil.lang.Type resultType){
 		Constant to = null;
 
-		if (resultType instanceof Type.Any) {		
-			if(assignedType instanceof Type.Strung){
-				String value = from.toString();
-				value = value.replaceAll("=","");				
-				to = Constant.V_STRING(value);
-			}else{
-				//No needs to convert the type of the operand.
-				to = (Constant) from;
-			}
-			
+		if (resultType instanceof Type.Any) {
+			//No needs to convert the type of the operand.
+			to = (Constant) from;
 		}else if (resultType instanceof Type.Int){
 			if(assignedType instanceof Type.List){
 				Constant.List value = (Constant.List)from;
