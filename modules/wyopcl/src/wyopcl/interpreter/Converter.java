@@ -30,6 +30,8 @@ public class Converter {
 			to = (Constant.Record)from;
 		}else if (from instanceof Constant.Char){
 			to = ((Constant.Char)from).value;
+		}else if(from instanceof Constant.Byte){
+			to = ((Constant.Byte)from).value;
 		}else{
 			internalFailure("Not implemented!", "Converter.java", null);
 		}
@@ -132,7 +134,9 @@ public class Converter {
 			result = Constant.V_BOOL(((Constant.Bool)value).value);
 		}else if (value instanceof Constant.Map){
 			result = Constant.V_MAP(((Constant.Map)value).values);
-		} else {
+		}else if (value instanceof Constant.Byte){
+			result = Constant.V_BYTE(((Constant.Byte)value).value);
+		}else {
 			internalFailure("Not implemented!", "Converter.java", null);
 		}		
 		

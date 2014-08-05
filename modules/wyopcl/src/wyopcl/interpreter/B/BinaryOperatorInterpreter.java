@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyopcl.interpreter.Interpreter;
-import wyopcl.interpreter.Interpreter.StackFrame;
 
 public class BinaryOperatorInterpreter extends Interpreter {
 
@@ -22,70 +21,88 @@ public class BinaryOperatorInterpreter extends Interpreter {
 		return instance;
 	}
 
+	
+	private Constant performOperation(Constant left, Constant right, Codes.BinaryOperator code){
 
-	public void interpret(Codes.BinaryOperator code, StackFrame stackframe) {
-		int linenumber = stackframe.getLine();
 		Constant result = null;
-		//Constant leftOperand = stackframe.getRegister(code.leftOperand);
-		Constant leftOperand = stackframe.getRegister(code.operand(0));
-		//Constant rightOperand = stackframe.getRegister(code.rightOperand);
-		Constant rightOperand = stackframe.getRegister(code.operand(1));
-		Constant.Integer left, right;
-		left = (Constant.Integer) leftOperand;
-		right = (Constant.Integer) rightOperand;
-		String msg = "";
+		byte leftValue, rightValue;
+		int pos;
 		// Check the operator
 		switch (code.kind) {
-		case ADD:
-			result = left.add(right);			
+		case ADD:			
+			result = ((Constant.Integer)left).add((Constant.Integer)right);
 			break;
 		case SUB:			
-			result = left.subtract(right);		
+			result = ((Constant.Integer)left).subtract((Constant.Integer)right);		
 			break;
 		case MUL:			
-			result = left.multiply(right);			
+			result = ((Constant.Integer)left).multiply((Constant.Integer)right);			
 			break;
 		case DIV:
-			result = left.divide(right);			
+			result = ((Constant.Integer)left).divide((Constant.Integer)right);			
 			break;
 		case REM:		
-			result = left.remainder(right);			
+			result = ((Constant.Integer)left).remainder((Constant.Integer)right);			
 			break;
 		case RANGE:
-			left = (Constant.Integer) leftOperand;
-			right = (Constant.Integer) rightOperand;
 			//Create a List.
 			ArrayList<Constant> values = new ArrayList<Constant>();
 			//Iterates the numbers in the range.
-			BigInteger start = left.value;
-			BigInteger end = right.value;
+			BigInteger start = ((Constant.Integer)left).value;
+			BigInteger end = ((Constant.Integer)right).value;
 			while(!start.equals(end)){
 				values.add(Constant.V_INTEGER(start));
 				start = start.add(BigInteger.ONE);		
 			}
 			//Put the list into the result.
-			result = Constant.V_LIST(values);
-			stackframe.setRegister(code.target(), result);			
+			result = Constant.V_LIST(values);		
 			break;
 		case BITWISEAND:
-			throw new RuntimeException("Not implemented!");
-			//break;
+			leftValue = ((Constant.Byte)left).value;
+			rightValue = ((Constant.Byte)right).value;
+			result = Constant.V_BYTE((byte)(leftValue & rightValue));
+			break;
 		case BITWISEOR:
-			throw new RuntimeException("Not implemented!");
-			//break;
+			leftValue = ((Constant.Byte)left).value;
+			rightValue = ((Constant.Byte)right).value;
+			result = Constant.V_BYTE((byte)(leftValue | rightValue));
+			break;
 		case BITWISEXOR:
-			throw new RuntimeException("Not implemented!");
-			//break;
+			leftValue = ((Constant.Byte)left).value;
+			rightValue = ((Constant.Byte)right).value;
+			result = Constant.V_BYTE((byte)(leftValue ^ rightValue));
+			break;
 		case LEFTSHIFT:
-			throw new RuntimeException("Not implemented!");
-			//break;
+			leftValue = ((Constant.Byte)left).value;
+			pos = ((Constant.Integer)right).value.intValue();
+			result = Constant.V_BYTE((byte)(leftValue << pos));
+			break;
 		case RIGHTSHIFT:
-			throw new RuntimeException("Not implemented!");
-			//break;
+			leftValue = ((Constant.Byte)left).value;
+			pos = ((Constant.Integer)right).value.intValue();
+			//0x000000FF is added to avoid leftValue being casted to integer
+			//before shifting and to fill the zeros to the left.
+			leftValue = (byte)((0x000000FF & leftValue)>>pos);
+			result = Constant.V_BYTE(leftValue);
+			break;
 		default:
 			throw new RuntimeException("unknown binary expression encountered");
 			//break;
 		}
+		
+		return result;
+	}
+	
+
+	public void interpret(Codes.BinaryOperator code, StackFrame stackframe) {
+		int linenumber = stackframe.getLine();
+		
+		//Constant leftOperand = stackframe.getRegister(code.leftOperand);
+		Constant left = stackframe.getRegister(code.operand(0));
+		//Constant rightOperand = stackframe.getRegister(code.rightOperand);
+		Constant right = stackframe.getRegister(code.operand(1));
+		
+		Constant result = performOperation(left, right, code);
 		stackframe.setRegister(code.target(), result);
 		printMessage(stackframe, code.toString(), "%"+ code.target() + "("+result+")");
 		stackframe.setLine(++linenumber);
