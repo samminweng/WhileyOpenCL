@@ -68,7 +68,7 @@ public class IndirectInvokeInterpreter extends Interpreter {
 				ArrayList<Object> arguments = new ArrayList<Object> ();
 				int index = 0;
 				for(Class<?> paramType: method.getParameterTypes()){
-					arguments.add(Converter.convertToObject(values.get(index), paramType));
+					arguments.add(Converter.convertConstantToJavaObject(values.get(index), paramType));
 				}
 				method.invoke(outField.get(null), arguments.toArray());
 				

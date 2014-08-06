@@ -3,9 +3,7 @@ package wyopcl.interpreter.A;
 import static wycc.lang.SyntaxError.internalFailure;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
-import wyil.lang.Constant.Set;
 import wyopcl.interpreter.Interpreter;
-import wyopcl.interpreter.Interpreter.StackFrame;
 
 public class AssertOrAssumeInterpreter extends Interpreter {
 	private static AssertOrAssumeInterpreter instance;	

@@ -436,7 +436,9 @@ public abstract class Constant implements Comparable<Constant> {
 			boolean firstTime=true;
 			for(Constant v : values) {
 				if(!firstTime) {
-					r += ",";
+					//r += ",";
+					//Add the space afterwards.
+					r += ", ";
 				}
 				firstTime=false;
 				r += v;
@@ -614,7 +616,9 @@ public abstract class Constant implements Comparable<Constant> {
 					r += ",";
 				}
 				firstTime=false;
-				r += key + ":=" + values.get(key);
+				//r += key + ":=" + values.get(key);
+				//Remove the '='
+				r += key + ":" + values.get(key);
 			}
 			return r + "}";
 		}

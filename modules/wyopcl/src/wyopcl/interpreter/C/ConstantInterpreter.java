@@ -1,11 +1,8 @@
 package wyopcl.interpreter.C;
 
-import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
-import wyil.lang.Type;
 import wyopcl.interpreter.Interpreter;
-import wyopcl.interpreter.Interpreter.StackFrame;
 
 public class ConstantInterpreter extends Interpreter {
 	private static ConstantInterpreter instance;	
@@ -24,7 +21,7 @@ public class ConstantInterpreter extends Interpreter {
 	public void interpret(Codes.Const code, StackFrame stackframe) {		
 		// Add the register
 		int linenumber = stackframe.getLine();
-		Constant result = code.constant;
+		Constant result = (Constant)code.constant;
 		stackframe.setRegister(code.target(), result);
 
 		printMessage(stackframe, code.toString(), "%"+ code.target() + "("+result+")");

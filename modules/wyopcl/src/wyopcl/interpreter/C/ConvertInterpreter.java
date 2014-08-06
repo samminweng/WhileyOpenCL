@@ -5,7 +5,6 @@ import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyopcl.interpreter.Converter;
 import wyopcl.interpreter.Interpreter;
-import wyopcl.interpreter.Interpreter.StackFrame;
 
 public class ConvertInterpreter extends Interpreter {
 	private static ConvertInterpreter instance;	
@@ -22,13 +21,12 @@ public class ConvertInterpreter extends Interpreter {
 	
 	public void interpret(Codes.Convert code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
-		//Read a value from the operand register.
-		//Constant value = stackframe.getRegister(code.operand);
+		//Read a value from the operand register.		
 		Constant value = stackframe.getRegister(code.operand(0));
 		//Convert it to the given type.
 		Type assignedType = code.assignedType();
 		Type resultType = code.result;
-		Constant result = Converter.convertToConstant(value, assignedType, resultType);
+		Constant result = Converter.castConstanttoConstant(value, assignedType, resultType);
 		stackframe.setRegister(code.target(), result);
 		printMessage(stackframe, code.toString(), "%"+ code.target() + "("+result+")");
 		stackframe.setLine(++linenumber);

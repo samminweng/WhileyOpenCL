@@ -36,7 +36,11 @@ public class Any$native {
 		} else if(o instanceof java.lang.Byte) {
 			java.lang.Byte b = (java.lang.Byte) o;
 			return toString((byte)b);
-		} else {
+		} else if (o instanceof java.math.BigDecimal){
+			//Added the cast case for bigDecimals.
+			java.math.BigDecimal b = (java.math.BigDecimal)o;
+			return Double.toString(b.doubleValue());
+		}else {
 			return o.toString();
 		}
 	}

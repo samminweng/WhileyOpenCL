@@ -5,9 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Stack;
 
-import wycc.util.Logger;
 import wyil.lang.Code.Block;
-import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyil.lang.WyilFile;
 

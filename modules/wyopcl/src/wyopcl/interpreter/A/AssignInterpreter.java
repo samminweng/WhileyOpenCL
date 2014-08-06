@@ -4,7 +4,6 @@ import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyopcl.interpreter.Converter;
 import wyopcl.interpreter.Interpreter;
-import wyopcl.interpreter.Interpreter.StackFrame;
 
 public class AssignInterpreter extends Interpreter {
 	private static AssignInterpreter instance;	
