@@ -138,7 +138,7 @@ public class Converter {
 		} else if (toType instanceof Type.Char){
 			Constant.Integer i = (Constant.Integer)from;
 			//Cast Int to Char
-			char c = (char)('0'+ i.value.intValue());
+			char c = (char)('0'+ (i.value.intValue()-32));
 			to = Constant.V_CHAR(c);
 		} else if (toType instanceof Type.Int) {
 			if (fromType instanceof Type.List) {
