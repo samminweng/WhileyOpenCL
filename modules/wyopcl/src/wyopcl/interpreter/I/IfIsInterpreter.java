@@ -28,6 +28,13 @@ public class IfIsInterpreter extends Interpreter{
 		return instance;
 	}
 	
+	
+	private int gotoTargetBranch(StackFrame stackframe, String label){		
+		Block block = stackframe.getBlock();
+		int linenumber = symboltable.get(block).getBlockPosByLabel(label);
+		return linenumber;
+	}
+	
 
 	public void interpret(Codes.IfIs code, StackFrame stackframe) {		
 		int linenumber = stackframe.getLine();
@@ -35,29 +42,24 @@ public class IfIsInterpreter extends Interpreter{
 		//Read the value from the operand register.
 		Constant value = stackframe.getRegister(code.operand);
 		
-		Constant result = null;
 		if (code.rightOperand instanceof Type.Negation){
-			Type.Negation test = (Type.Negation)code.rightOperand;
+			//Type.Negation test = (Type.Negation)code.rightOperand;
 			//Check the value is subtype of the test type.
 			if(value instanceof Constant.Record){
 				//On the true branch, its type is intersected with type test.
-				
 			}else{
-				//On the false branch, go to the label.
-				Block block = stackframe.getBlock();
-				linenumber = symboltable.get(block).getBlockPosByLabel(code.target);
-				stackframe.setLine(linenumber);
-				
+				linenumber = gotoTargetBranch(stackframe, code.target);
 			}
 		}else if(code.rightOperand instanceof Type.Null){
 			if(value instanceof Constant.Null){
-				//On the true branch, go to the label.
-				Block block = stackframe.getBlock();
-				linenumber = symboltable.get(block).getBlockPosByLabel(code.target);
-				stackframe.setLine(linenumber);
-			}else{
-				
-			}
+				//On the true branch, go to the label.				
+				linenumber = gotoTargetBranch(stackframe, code.target);	
+			}			
+		}else if (code.rightOperand instanceof Type.Char){
+			//If value is a Constant.Char, then go to the true branch.
+			if(value instanceof Constant.Char){	
+				linenumber = gotoTargetBranch(stackframe, code.target);
+			}			
 			
 		}else{
 			internalFailure("Not implemented!", "InterpreterIfIs.java", null);

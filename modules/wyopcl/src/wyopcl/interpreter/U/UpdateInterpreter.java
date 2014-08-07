@@ -78,6 +78,19 @@ public class UpdateInterpreter extends Interpreter{
 			//Update the result to the list.
 			stackframe.setRegister(code.target(), result);			
 			
+		}else if (afterType instanceof Type.Strung){
+			Constant.Strung strung = (Constant.Strung)stackframe.getRegister(code.target());
+			Constant.Char assignedValue = (Constant.Char)stackframe.getRegister(code.result());
+			//Get the index
+			Constant.Integer index = (Constant.Integer)stackframe.getRegister(code.operand(0));
+			;
+			//Replace a char in the strung at the index. 
+			StringBuilder newStrung= new StringBuilder(strung.value);
+			newStrung.setCharAt(index.value.intValue(), assignedValue.value);
+			result= Constant.V_STRING(newStrung.toString());
+			//Update the result to the strung.
+			stackframe.setRegister(code.target(), result);	
+			
 		}else{
 			internalFailure("Not implemented!", "IntepreterUpdate.java", null);
 		}

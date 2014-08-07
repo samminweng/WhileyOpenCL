@@ -10,7 +10,7 @@ import org.junit.rules.Timeout;
 import wyopcl.testing.BaseUtil;
 
 public class ByteTestCase {
-	@Rule public TestRule timeout = new Timeout(5000);
+	@Rule public TestRule timeout = new Timeout(30000);
 	private BaseUtil util;	
 	@Before
 	public void setUp() throws Exception {
