@@ -19,6 +19,7 @@ public class DoWhileTestCase {
 	}
 	@After
 	public void tearDown() throws Exception {
+		util.terminate();
 		util = null;
 	}
 	

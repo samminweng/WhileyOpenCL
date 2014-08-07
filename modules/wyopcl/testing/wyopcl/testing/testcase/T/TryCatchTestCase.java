@@ -19,6 +19,7 @@ public class TryCatchTestCase {
 	}
 	@After
 	public void tearDown() throws Exception {
+		util.terminate();
 		util = null;
 	}
 	

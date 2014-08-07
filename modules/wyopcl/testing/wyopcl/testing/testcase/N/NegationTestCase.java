@@ -19,6 +19,7 @@ public class NegationTestCase {
 	}
 	@After
 	public void tearDown() throws Exception {
+		util.terminate();
 		util = null;
 	}
 	

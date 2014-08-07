@@ -18,6 +18,7 @@ public class BoolTestCase {
 	}
 	@After
 	public void tearDown() throws Exception {
+		util.terminate();
 		util = null;
 	}
 	

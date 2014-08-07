@@ -18,6 +18,7 @@ public class DecimalAssignmentTestCase {
 	}
 	@After
 	public void tearDown() throws Exception {
+		util.terminate();
 		util = null;
 	}
 	@Test

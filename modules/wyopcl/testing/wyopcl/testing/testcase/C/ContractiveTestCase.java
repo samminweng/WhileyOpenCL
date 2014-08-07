@@ -19,6 +19,7 @@ public class ContractiveTestCase{
 	}
 	@After
 	public void tearDown() throws Exception {
+		util.terminate();
 		util = null;
 	}
 	@Ignore("Issue ???") @Test

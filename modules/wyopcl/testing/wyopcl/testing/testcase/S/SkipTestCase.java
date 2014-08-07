@@ -18,6 +18,7 @@ public class SkipTestCase {
 	}
 	@After
 	public void tearDown() throws Exception {
+		util.terminate();
 		util = null;
 	}
 

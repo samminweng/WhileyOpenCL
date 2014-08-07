@@ -19,6 +19,7 @@ public class TypeEqualsTestCase {
 	}
 	@After
 	public void tearDown() throws Exception {
+		util.terminate();
 		util = null;
 	}
 

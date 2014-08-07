@@ -19,6 +19,7 @@ public class RecursiveTestCase {
 	}
 	@After
 	public void tearDown() throws Exception {
+		util.terminate();
 		util = null;
 	}
 	

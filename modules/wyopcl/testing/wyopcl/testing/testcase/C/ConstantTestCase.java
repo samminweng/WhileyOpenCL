@@ -19,6 +19,7 @@ public class ConstantTestCase {
 	}
 	@After
 	public void tearDown() throws Exception {
+		util.terminate();
 		util = null;
 	}
 	@Ignore("#311") @Test

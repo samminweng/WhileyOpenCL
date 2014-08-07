@@ -51,6 +51,7 @@ import wyopcl.interpreter.L.LoopInterpreter;
 import wyopcl.interpreter.N.NewListInterpreter;
 import wyopcl.interpreter.N.NewMapInterpreter;
 import wyopcl.interpreter.N.NewRecordInterpreter;
+import wyopcl.interpreter.N.NewSetInterpreter;
 import wyopcl.interpreter.N.NewTupleInterpreter;
 import wyopcl.interpreter.N.NopInterpreter;
 import wyopcl.interpreter.R.ReturnInterpreter;
@@ -292,7 +293,7 @@ public class WyilInterpreter extends Interpreter implements Builder{
 			} else if (code instanceof Codes.NewRecord) {
 				NewRecordInterpreter.getInstance().interpret((Codes.NewRecord)code, stackframe);
 			} else if (code instanceof Codes.NewSet) {
-				internalFailure("Not implemented!", filename, entry);
+				NewSetInterpreter.getInstance().interpret((Codes.NewSet)code, stackframe);
 			} else if (code instanceof Codes.NewTuple) {
 				NewTupleInterpreter.getInstance().interpret((Codes.NewTuple)code, stackframe);
 			} else if (code instanceof Codes.Return) {			
