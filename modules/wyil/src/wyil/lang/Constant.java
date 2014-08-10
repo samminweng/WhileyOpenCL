@@ -613,7 +613,7 @@ public abstract class Constant implements Comparable<Constant> {
 			Collections.sort(keys);
 			for(String key : keys) {
 				if(!firstTime) {
-					r += ",";
+					r += ", ";
 				}
 				firstTime=false;
 				//r += key + ":=" + values.get(key);
