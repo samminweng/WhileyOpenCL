@@ -160,8 +160,6 @@ public class ConvertInterpreter extends Interpreter {
 	 */
 	public Constant castConstanttoConstant(Constant from, wyil.lang.Type fromType, wyil.lang.Type toType) {
 		Constant to = null;
-		// Type fromElemType;
-		// Type toElemType;
 		if (toType instanceof Type.Any) {
 			// No needs to convert the type of the operand.
 			to = (Constant) from;

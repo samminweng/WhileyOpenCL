@@ -224,6 +224,8 @@ public class Converter {
 			result = Constant.V_BYTE(((Constant.Byte) value).value);
 		} else if (value instanceof Constant.Char) {
 			result = Constant.V_CHAR(((Constant.Char) value).value);
+		} else if (value instanceof Constant.Decimal){
+			result = Constant.V_DECIMAL(((Constant.Decimal)value).value);
 		} else {
 			internalFailure("Not implemented!", "Converter.java", null);
 		}
