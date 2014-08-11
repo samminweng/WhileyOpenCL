@@ -24,24 +24,27 @@ public class ReturnInterpreter extends Interpreter {
 
 		int linenumber = stackframe.getLine();
 		int return_reg = stackframe.getReturn_reg();
-		blockstack.pop();	
-		//Check if the results are returned.
-		if (code.type != Type.T_VOID) {
-			//Read the values from the operand register.
-			Constant return_value = stackframe.getRegister(code.operand);			
-			//Get the previous block							
-			stackframe = blockstack.peek();				
-			linenumber = stackframe.getLine();
-			//Return the result by updating the register.
-			stackframe.setRegister(return_reg, return_value);		
-			printMessage(stackframe, code.toString(),
-					"%"+return_reg + "("+return_value+")");
-			
-			stackframe.setLine(++linenumber);
+		blockstack.pop();
+		//Get the previous block
+		if(!blockstack.isEmpty()){
+			StackFrame caller = blockstack.peek();				
+			linenumber = caller.getLine();
+			//Check if the results are returned.
+			if (code.type != Type.T_VOID) {
+				//Read the values from the operand register.
+				Constant return_value = stackframe.getRegister(code.operand);
+				//Return the result by updating the register.
+				caller.setRegister(return_reg, return_value);		
+				printMessage(caller, code.toString(),
+						"%"+return_reg + "("+return_value+")");
+			}else{			
+				printMessage(caller, code.toString(), "");
+			}
+			caller.setLine(++linenumber);
 		}else{
-			//Do nothing.
+			//Do nothing since the code is completed.
 		}
-
+		
 	}
 
 }
