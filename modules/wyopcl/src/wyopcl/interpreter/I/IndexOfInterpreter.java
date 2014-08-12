@@ -19,31 +19,67 @@ public class IndexOfInterpreter extends Interpreter {
 		return instance;
 	}
 	
+	private Constant getValuefromList(Constant.List list, Constant key){
+		Constant value = null;
+		//Get the value associated with the key.
+		if(key instanceof Constant.Integer){
+			value = list.values.get(((Constant.Integer)key).value.intValue());
+		}else if (key instanceof Constant.Char){
+			value = list.values.get(((Constant.Char)key).value);
+		}else{
+			internalFailure("Not implemented!", "InterpreterIndexOf.java", null);
+		}
+		
+		return value;
+	}
+	
+	private Constant getValuefromRecord(Constant.Record record, Constant key){
+		Constant value = null;
+		//Get the value associated with the key.
+		if(key instanceof Constant.Integer){
+			value = record.values.get(((Constant.Integer)key).value.intValue());
+		}else if (key instanceof Constant.Char){
+			value = record.values.get(((Constant.Char)key).value);
+		}else{
+			internalFailure("Not implemented!", "InterpreterIndexOf.java", null);
+		}
+		
+		return value;
+	}
+	
+	private Constant getValuefromStrung(Constant.Strung strung, Constant key){
+		Constant value = null;
+		//Get the value associated with the key.
+		if(key instanceof Constant.Integer){
+			//Get the char at 'keyvalue' index and returns the Constant.Char object.
+			char c = strung.value.charAt(((Constant.Integer)key).value.intValue());
+			value = Constant.V_CHAR(c);
+		}else if (key instanceof Constant.Char){
+			//value = strung.value.get(((Constant.Char)searchValue).value);
+		}else{
+			internalFailure("Not implemented!", "InterpreterIndexOf.java", null);
+		}
+		
+		return value;
+	}
+	
+	
+	
 	public void interpret(Codes.IndexOf code, StackFrame stackframe) {		
 		int linenumber = stackframe.getLine();
-		String msg = ">";
-		//Read the key value from the rightOperand register.
-		
 		//Read the list from the leftOperand register.
 		Constant constant = stackframe.getRegister(code.operand(0));
-		Constant.Integer searchValue = (Constant.Integer)stackframe.getRegister(code.operand(1));
+		Constant key = stackframe.getRegister(code.operand(1));
 		Constant value = null;
 		if(constant instanceof Constant.List){
-			//Cast the left to Constant.List type.
-			//Get the value associated with the key.
-			Constant.List list = (Constant.List) constant;
-			value = list.values.get(searchValue.value.intValue());
+			value = getValuefromList((Constant.List)constant, key);
 		}else if(constant instanceof Constant.Record){
-			//Cast the left object to Constant.Record type.
-			Constant.Record record = (Constant.Record) constant;
-			value = record.values.get(searchValue.value.intValue());
+			value = getValuefromRecord((Constant.Record)constant, key);
 		}else if(constant instanceof Constant.Strung){
-			//Get the char at 'keyvalue' index and returns the Constant.Char object.
-			Constant.Strung string = (Constant.Strung)constant;
-			value = Constant.V_CHAR(string.value.charAt(searchValue.value.intValue()));
+			value = getValuefromStrung((Constant.Strung)constant, key);
 		}else if (constant instanceof Constant.Map){
 			Constant.Map map = (Constant.Map) constant;
-			value = map.values.get(searchValue);
+			value = map.values.get(key);
 		}else{
 			internalFailure("Not implemented!", "InterpreterIndexOf.java", null);
 		}
