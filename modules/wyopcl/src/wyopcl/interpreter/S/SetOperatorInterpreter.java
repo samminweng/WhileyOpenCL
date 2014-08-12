@@ -4,6 +4,9 @@ import static wycc.lang.SyntaxError.internalFailure;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.List;
 
 import wyil.lang.Codes;
 import wyil.lang.Constant;
@@ -38,11 +41,11 @@ public class SetOperatorInterpreter extends Interpreter{
 			internalFailure("Not implemented!", "InterpreterSetOperator.java", null);
 			break;
 		case LEFT_UNION:
+			//Collection<Constant> values = new ArrayList<Constant>();
 			Constant.Set lhs = (Constant.Set)left;
-			Collection<Constant> values = new ArrayList<Constant>();
-			values.add(right);
-			Constant.Set rhs = Constant.V_SET(values);			
-			result = lhs.union(rhs);			
+			Collection<Constant> list = new LinkedHashSet<Constant>();
+			list.add(right);
+			result = lhs.union(Constant.V_SET(list));
 			break;
 		case RIGHT_UNION:
 			internalFailure("Not implemented!", "InterpreterSetOperator.java", null);

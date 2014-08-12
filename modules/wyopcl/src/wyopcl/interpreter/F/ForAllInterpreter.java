@@ -33,8 +33,6 @@ public class ForAllInterpreter extends Interpreter {
 		int linenumber = stackframe.getLine();
 		Constant result = null;
 		Constant indexOperand = stackframe.getRegister(code.indexOperand);
-		//Constant[] array = new Constant[set.values.size()];
-		//array = set.values.toArray(array);
 		
 		if(array.length != 0){
 			int index = 0;
@@ -94,8 +92,6 @@ public class ForAllInterpreter extends Interpreter {
 		}
 		
 		
-		
-
 	}
 
 }
