@@ -74,11 +74,12 @@ public class InvokeInterpreter extends Interpreter {
 					if(method.getName().startsWith(method_name)){
 						//Get the parameter types.
 						ArrayList<Object> params = new ArrayList<Object>();
-						for( Class<?> paramType : method.getParameterTypes()){
+						//for( Class<?> paramType : method.getParameterTypes()){
 							//The 'paramType' is Java data type.				    		
 							//Thus, we need a conversion from Constant to Java 
-							params.add(Converter.convertConstantToJavaObject(operand, paramType));
-						}
+							//params.add(Converter.convertConstantToJavaObject(operand, paramType));
+						//}
+						params.add(operand);
 						Object returned_obj = method.invoke(null, params.toArray());
 						Class<?> returnType = method.getReturnType();
 						//The returned_obj is a Java data type, so we need to convert
