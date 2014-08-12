@@ -1,17 +1,10 @@
 package wyopcl.interpreter.N;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.PriorityQueue;
 
-import javafx.collections.transformation.SortedList;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyopcl.interpreter.Interpreter;
-import wyopcl.interpreter.Interpreter.StackFrame;
 
 public class NewSetInterpreter extends Interpreter {
 	private static NewSetInterpreter instance;	
