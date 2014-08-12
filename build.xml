@@ -162,8 +162,7 @@
 </delete>
 </target>
 <!---JUnit testing for Wyopecl -->
-
-<target name="compile-java" depends="build-all">
+<target name="compile-java" depends="clean, build-all">
 <mkdir dir="build" />
 <javac destdir="build" includeantruntime="false">
 	<classpath>
