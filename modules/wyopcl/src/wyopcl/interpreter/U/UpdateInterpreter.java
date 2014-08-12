@@ -121,9 +121,9 @@ public class UpdateInterpreter extends Interpreter{
 	
 	public void interpret(Codes.Update code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
-		//Popup the compound type (lists, dictionaries, strings, records and references
-		Type afterType = code.afterType;
 		Constant result = null;
+		//Popup the compound type (lists, dictionaries, strings, records and references
+		Type afterType = code.afterType;		
 		if(afterType instanceof Type.List){
 			//Update the result to the list.
 			result = updateList(code, stackframe);			

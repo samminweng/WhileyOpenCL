@@ -27,51 +27,58 @@ public class ForAllInterpreter extends Interpreter {
 		}
 		return instance;
 	}
+	
+	private void iterateOverList(Constant.List list, Codes.ForAll code, StackFrame stackframe){
+		int linenumber = stackframe.getLine();
+		Constant result = null;
+		Constant indexOperand = stackframe.getRegister(code.indexOperand);
+		
+		//Check if the values is empty. If so, then directly go to loop end.		
+		if(!list.values.isEmpty()){
+			int index = 0;
+			if(indexOperand == null){
+				result = list.values.get(0);
+			}else{
+				index = list.values.indexOf(indexOperand);
+				//Check if the index is out-of-boundary. If so, then return.
+				if(index+1 == list.values.size()){
+					//No elements in the list.
+					stackframe.setRegister(code.indexOperand, null);
+					linenumber = symboltable.get(stackframe.getBlock()).getBlockPosByLabel(code.target+"LoopEnd");
+					stackframe.setLine(linenumber);
+					return;
+				}else{
+					//Put the element into the register of the index operand.
+					result = list.values.get(index+1);
+				}
+			}
+			
+			stackframe.setRegister(code.indexOperand, result);
+			printMessage(stackframe, code.toString(), "%"+ code.indexOperand + "("+result+")");
+			stackframe.setLine(++linenumber);
+		}else{
+			linenumber = symboltable.get(stackframe.getBlock()).getBlockPosByLabel(code.target+"LoopEnd");
+			stackframe.setLine(linenumber);
+		}
+	
+	}
+	
+	
+	
 
 	public void interpret(Codes.ForAll code, StackFrame stackframe) {		
-		int linenumber = stackframe.getLine();
-		Constant result;
-		//Get the index
-		Constant list = stackframe.getRegister(code.sourceOperand);
 		
-		ArrayList<Constant> values = new ArrayList<Constant>();
-		if(list instanceof Constant.List){
-			values.addAll(((Constant.List)list).values);
+		//Get the index
+		Constant source = stackframe.getRegister(code.sourceOperand);		
+		if(source instanceof Constant.List){
+			iterateOverList((Constant.List)source, code, stackframe);
+		}else if (source instanceof Constant.Map){
+			internalFailure("Not implemented!", "InterpreterForAll.java", null);
 		}else{
 			internalFailure("Not implemented!", "InterpreterForAll.java", null);
 		}
 		
-		//Check if the values is empty. If so, then directly go to loop end.		
-		if(values.isEmpty()){
-			linenumber = symboltable.get(stackframe.getBlock()).getBlockPosByLabel(code.target+"LoopEnd");
-			stackframe.setLine(linenumber);
-		}else{
-			Constant indexOperand = stackframe.getRegister(code.indexOperand);
-			int index = 0;
-			
-			if(indexOperand != null){
-				index = values.indexOf(indexOperand);
-				//Check if the index is out-of-boundary. If so, then return.
-				if(index+1 == values.size()){
-					//No elements in the list.
-					stackframe.setRegister(code.indexOperand, null);
-					String label = code.target+"LoopEnd";
-					Block block = stackframe.getBlock();
-					linenumber = symboltable.get(block).getBlockPosByLabel(label);
-					stackframe.setLine(linenumber);
-					return;
-				}
-				//Put the element into the register of the index operand.
-				result = values.get(index+1);
-			}else{
-				result = values.get(0);
-			}
-			
-			stackframe.setRegister(code.indexOperand, result);
-			printMessage(stackframe, code.toString(),
-					"%"+ code.indexOperand + "("+result+")");
-			stackframe.setLine(++linenumber);
-		}
+		
 		
 
 	}

@@ -60,11 +60,7 @@ public class IfInterpreter extends Interpreter {
 		}
 		
 		return satisfiable;
-	}
-	
-	
-	
-	
+	}	
 
 	public void interpret(Codes.If code, StackFrame stackframe) {				
 		int linenumber = stackframe.getLine();

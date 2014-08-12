@@ -60,6 +60,7 @@ import wyopcl.interpreter.S.StringOperatorInterpreter;
 import wyopcl.interpreter.S.SubListInterpreter;
 import wyopcl.interpreter.T.TryCatchInterpreter;
 import wyopcl.interpreter.T.TupleLoadInterpreter;
+import wyopcl.interpreter.U.UnaryOperatorInterpreter;
 import wyopcl.interpreter.U.UpdateInterpreter;
 
 public class WyilInterpreter extends Interpreter implements Builder{
@@ -316,6 +317,8 @@ public class WyilInterpreter extends Interpreter implements Builder{
 				TryCatchInterpreter.getInstance().interpret((Codes.TryCatch)code, stackframe);
 			} else if (code instanceof Codes.TupleLoad) {
 				TupleLoadInterpreter.getInstance().interpret((Codes.TupleLoad)code, stackframe);
+			} else if (code instanceof Codes.UnaryOperator){
+				UnaryOperatorInterpreter.getInstance().interpret((Codes.UnaryOperator)code, stackframe);
 			} else if (code instanceof Codes.Update) {
 				UpdateInterpreter.getInstance().interpret((Codes.Update)code, stackframe);
 			} else {
