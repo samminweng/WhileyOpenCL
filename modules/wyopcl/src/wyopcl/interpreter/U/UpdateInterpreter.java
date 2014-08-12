@@ -108,7 +108,7 @@ public class UpdateInterpreter extends Interpreter{
 				//Update the map
 				values.put(updateIndex0, list);
 			}else if(existingValue instanceof Constant.Integer){
-				values.put(updateIndex0, (Constant.Integer)updatedValue);
+				values.put(updateIndex0, updatedValue);			
 			}else{
 				internalFailure("Not implemented!", "IntepreterUpdate.java", null);
 			}
