@@ -21,13 +21,9 @@ public class IfInterpreter extends Interpreter {
 	}
 	
 	
-
-	public void interpret(Codes.If code, StackFrame stackframe) {				
-		int linenumber = stackframe.getLine();
-		Constant left = stackframe.getRegister(code.leftOperand);
-		Constant right = stackframe.getRegister(code.rightOperand);
+	private boolean compare(Codes.Comparator op, Constant left, Constant right){
 		boolean satisfiable = false;
-		switch (code.op) {
+		switch (op) {
 		case EQ:			
 			if (left.compareTo(right) == 0){
 				satisfiable = true;		
@@ -60,12 +56,25 @@ public class IfInterpreter extends Interpreter {
 			break;
 		default:			
 			satisfiable = true;
-			throw new RuntimeException("unknown if condition encountered:" + code);
-			
+			throw new RuntimeException("unknown comparator encountered:"+op);
 		}
 		
+		return satisfiable;
+	}
+	
+	
+	
+	
+
+	public void interpret(Codes.If code, StackFrame stackframe) {				
+		int linenumber = stackframe.getLine();
+		Constant left = stackframe.getRegister(code.leftOperand);
+		Constant right = stackframe.getRegister(code.rightOperand);
+		boolean satisfiable = false;
+		satisfiable = compare(code.op, left, right);
+		
 		if(satisfiable){
-			//Go to the branch
+			//Go to the if branch
 			Block block = stackframe.getBlock();
 			linenumber = symboltable.get(block).getBlockPosByLabel(code.target);
 		}else{
