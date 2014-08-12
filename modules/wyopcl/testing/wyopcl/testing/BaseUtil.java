@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
+import junit.framework.AssertionFailedError;
 import static org.junit.Assert.*;
 
 public class BaseUtil {
@@ -52,21 +53,23 @@ public class BaseUtil {
 			Iterator<String> iterator;
 			BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream(),
 					Charset.forName("UTF-8")));
-			String line;
+			String line = null;
 
 			// Load the output file (*.sysout).
 			String path_sysout = valid_test_folder + file_name + ".sysout";
 			List<String> expected = Files.readAllLines(Paths.get(path_sysout), Charset.defaultCharset());
 			iterator = expected.iterator();
-
-			while ((line = reader.readLine()) != null) {
-				String out = iterator.next();
-				System.out.println(line);
-				assertEquals(line, out);
-			}
-
+			
+				while ((line = reader.readLine()) != null) {
+					String out = iterator.next();
+					System.out.println(line);
+					assertEquals(line, out);
+				}
+		
 			// Ensure no records is left in the list.
-			assertFalse(iterator.hasNext());
+			if(iterator.hasNext()){
+				throw new Exception("Test file: " + file_name);
+			}			
 
 		} catch (Exception e) {
 			terminate();
