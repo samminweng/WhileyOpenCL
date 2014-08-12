@@ -3,6 +3,7 @@ package wyopcl.interpreter;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Stack;
 
 import wyil.lang.Code.Block;
@@ -11,7 +12,8 @@ import wyil.lang.WyilFile;
 
 /*Declare the abstract Interpreter class, methods and variables. */
 public abstract class Interpreter {
-	protected static HashMap<String, Block> blocktable = new HashMap<String, Block>();
+	//protected static HashMap<String, Block> blocktable = new HashMap<String, Block>();
+	protected static HashMap<String, List<Block>> blocktable = new HashMap<String, List<Block>>();
 	protected static Stack<StackFrame> blockstack = new Stack<StackFrame>();
 	protected static HashMap<Block, SymbolTable> symboltable = new HashMap<Block, SymbolTable>();
 	protected static boolean verbose = false;

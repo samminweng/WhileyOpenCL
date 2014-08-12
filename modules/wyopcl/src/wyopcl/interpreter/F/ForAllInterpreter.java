@@ -5,6 +5,7 @@ import static wycc.lang.SyntaxError.internalFailure;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Set;
 
 import wyil.lang.Code.Block;
 import wyil.lang.Codes;
@@ -28,20 +29,27 @@ public class ForAllInterpreter extends Interpreter {
 		return instance;
 	}
 	
-	private void iterateOverList(Constant.List list, Codes.ForAll code, StackFrame stackframe){
+	private void iterateOverListSet(Constant[] array, Codes.ForAll code, StackFrame stackframe){
 		int linenumber = stackframe.getLine();
 		Constant result = null;
 		Constant indexOperand = stackframe.getRegister(code.indexOperand);
+		//Constant[] array = new Constant[set.values.size()];
+		//array = set.values.toArray(array);
 		
-		//Check if the values is empty. If so, then directly go to loop end.		
-		if(!list.values.isEmpty()){
+		if(array.length != 0){
 			int index = 0;
 			if(indexOperand == null){
-				result = list.values.get(0);
+				result = array[index];
 			}else{
-				index = list.values.indexOf(indexOperand);
+				
+				for(Constant constant: array){
+					if(indexOperand.equals(constant)){
+						break;
+					}
+					index++;
+				}				
 				//Check if the index is out-of-boundary. If so, then return.
-				if(index+1 == list.values.size()){
+				if((index+1) >= array.length){
 					//No elements in the list.
 					stackframe.setRegister(code.indexOperand, null);
 					linenumber = symboltable.get(stackframe.getBlock()).getBlockPosByLabel(code.target+"LoopEnd");
@@ -49,7 +57,7 @@ public class ForAllInterpreter extends Interpreter {
 					return;
 				}else{
 					//Put the element into the register of the index operand.
-					result = list.values.get(index+1);
+					result = array[index+1];
 				}
 			}
 			
@@ -60,10 +68,8 @@ public class ForAllInterpreter extends Interpreter {
 			linenumber = symboltable.get(stackframe.getBlock()).getBlockPosByLabel(code.target+"LoopEnd");
 			stackframe.setLine(linenumber);
 		}
-	
+		
 	}
-	
-	
 	
 
 	public void interpret(Codes.ForAll code, StackFrame stackframe) {		
@@ -71,9 +77,18 @@ public class ForAllInterpreter extends Interpreter {
 		//Get the index
 		Constant source = stackframe.getRegister(code.sourceOperand);		
 		if(source instanceof Constant.List){
-			iterateOverList((Constant.List)source, code, stackframe);
+			//iterateOverList((Constant.List)source, code, stackframe);
+			Constant.List list = (Constant.List)source;
+			Constant[] array = new Constant[list.values.size()];
+			array = list.values.toArray(array);
+			iterateOverListSet(array, code, stackframe);
 		}else if (source instanceof Constant.Map){
 			internalFailure("Not implemented!", "InterpreterForAll.java", null);
+		}else if (source instanceof Constant.Set){
+			Constant.Set set = (Constant.Set)source;
+			Constant[] array = new Constant[set.values.size()];
+			array = set.values.toArray(array);
+			iterateOverListSet(array, code, stackframe);
 		}else{
 			internalFailure("Not implemented!", "InterpreterForAll.java", null);
 		}

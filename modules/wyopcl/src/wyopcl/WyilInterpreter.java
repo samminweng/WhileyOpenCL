@@ -159,6 +159,13 @@ public class WyilInterpreter extends Interpreter implements Builder{
 
 		for(WyilFile.FunctionOrMethodDeclaration method : module.functionOrMethods()) {
 			String name = method.name();
+			List<Block> blocks;
+			if(!blocktable.containsKey(name)){
+				blocks = new ArrayList<Block>();
+			}else{
+				blocks = blocktable.get(name);
+			}
+			
 			for(Case mcase : method.cases()){
 				List<Block.Entry> entries = new ArrayList<Block.Entry>();
 				//Add the entries in the precondition.
@@ -177,7 +184,9 @@ public class WyilInterpreter extends Interpreter implements Builder{
 				}
 								
 				Block block = new Block(blk.numInputs(), entries);
-				blocktable.put(name, block);
+				blocks.add(block);
+				
+				blocktable.put(name, blocks);
 				scanLabelsinBlock(block);
 				
 			

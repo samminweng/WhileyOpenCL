@@ -3,6 +3,7 @@ package wyopcl.interpreter.I;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.List;
 
 import wyil.lang.Code.Block;
 import wyil.lang.Codes;
@@ -25,8 +26,19 @@ public class InvokeInterpreter extends Interpreter {
 		return instance;
 	}
 
-	private void pushBlockToStackFrame(Block blk, Codes.Invoke code, StackFrame oldstackframe){
-		//blockstack.push(stackframe);
+	private void pushBlockToStackFrame(List<Block> blks, Codes.Invoke code, StackFrame oldstackframe){	
+		//Find the right block
+		Block blk = null;
+		if(blks.size()==1){
+			blk = blks.get(0);
+		}else{
+			for(int index=0;index<blks.size();index++){
+				blk = blks.get(index);
+				//Get the parameter type of invoked method
+				code.type().params();
+			}
+		}
+		
 		
 		//Get the depth
 		int depth = oldstackframe.getDepth();
@@ -49,13 +61,12 @@ public class InvokeInterpreter extends Interpreter {
 
 	public void interpret(Codes.Invoke code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
-		wyil.lang.Type throwsClause = code.type().throwsClause();
+	
 		//Get the Block for the corresponding function/method. 
-		Block blk = blocktable.get(code.name.name());
-		if(blk != null){			
-			//Push the body block to the stack. 
-			pushBlockToStackFrame(blk, code, stackframe);
-			
+		List<Block> blks = blocktable.get(code.name.name());
+		if(blks != null){			
+			//Push the body block to the stack.
+			pushBlockToStackFrame(blks, code, stackframe);
 			printMessage(stackframe, code.toString(),"\n");
 
 		}else{
@@ -74,9 +85,11 @@ public class InvokeInterpreter extends Interpreter {
 					if(method.getName().startsWith(method_name)){
 						//Get the parameter types.
 						ArrayList<Object> params = new ArrayList<Object>();
-						//for( Class<?> paramType : method.getParameterTypes()){
+						//Compare the parameter type
+						//for(Class<?> paramType : method.getParameterTypes()){
 							//The 'paramType' is Java data type.				    		
-							//Thus, we need a conversion from Constant to Java 
+							//Thus, we need a conversion from Constant to Java
+							
 							//params.add(Converter.convertConstantToJavaObject(operand, paramType));
 						//}
 						params.add(operand);
@@ -94,6 +107,7 @@ public class InvokeInterpreter extends Interpreter {
 
 			} catch (ClassNotFoundException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | SecurityException e) {
 				//Go to throw clause
+				wyil.lang.Type throwsClause = code.type().throwsClause();
 				printMessage(stackframe, code.toString(),"%"+code.target()+"("+throwsClause+")");
 				linenumber = symboltable.get(stackframe.getBlock()).getThrowPos(linenumber);
 				stackframe.setLine(linenumber);
