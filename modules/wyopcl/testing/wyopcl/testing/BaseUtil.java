@@ -63,7 +63,7 @@ public class BaseUtil {
 				while ((line = reader.readLine()) != null) {
 					String out = iterator.next();
 					System.out.println(line);
-					assertEquals(line, out);
+					assertEquals(out, line);
 				}
 		
 			// Ensure no records is left in the list.

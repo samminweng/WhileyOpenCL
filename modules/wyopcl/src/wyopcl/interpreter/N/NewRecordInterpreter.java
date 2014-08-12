@@ -6,8 +6,12 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
+import java.util.TreeMap;
 
 import wyil.lang.Codes;
 import wyil.lang.Constant;
@@ -32,14 +36,15 @@ public class NewRecordInterpreter extends Interpreter{
 	
 	public void interpret(Codes.NewRecord code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
-		HashMap<String, Constant> values = new HashMap<String, Constant>();
-		//Get the field names and types.
-		HashMap<String, Type> fields = code.type().fields();
+		//Use the LinkedHashMap to create the records.
+		Map<String, Constant> values = new TreeMap<String, Constant>();
+		//Get the field names and types.		
+		Map<String, Type> fields = new TreeMap<String, Type>(code.type().fields());
 		Iterator<String> iterator = fields.keySet().iterator();
 		int index = 0;
 		//Assign the field value in accordance with the sequence of field names.
 		while(iterator.hasNext()){
-			String key = iterator.next();
+			String key = iterator.next();			
 			Constant value = stackframe.getRegister(code.operand(index));
 			values.put(key, value);
 			index++;
