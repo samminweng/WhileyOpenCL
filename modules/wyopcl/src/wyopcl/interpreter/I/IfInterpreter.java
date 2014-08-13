@@ -22,6 +22,8 @@ public class IfInterpreter extends Interpreter {
 	
 	
 	private boolean compare(Codes.Comparator op, Constant left, Constant right){
+		Constant.Set leftSet, rightSet;
+		
 		boolean satisfiable = false;
 		switch (op) {
 		case EQ:			
@@ -52,6 +54,27 @@ public class IfInterpreter extends Interpreter {
 		case GTEQ:			
 			if (left.compareTo(right) >= 0) {				
 				satisfiable = true;				
+			}
+			break;
+		case IN:
+			//leftSet = (Constant.Set)left;
+			rightSet = (Constant.Set)right;
+			if(rightSet.values.contains(((Constant.Integer)left).value.intValue())){
+				satisfiable = true;
+			}
+			break;
+		case SUBSET:
+			leftSet = (Constant.Set)left;
+			rightSet = (Constant.Set)right;
+			if(leftSet.values.contains(rightSet.values)){
+				satisfiable = true;
+			}
+			break;
+		case SUBSETEQ:
+			leftSet = (Constant.Set)left;
+			rightSet = (Constant.Set)right;
+			if(leftSet.values.contains(rightSet.values)){
+				satisfiable = true;
 			}
 			break;
 		default:			

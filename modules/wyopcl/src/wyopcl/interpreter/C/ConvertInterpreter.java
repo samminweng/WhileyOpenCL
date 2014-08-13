@@ -7,6 +7,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -45,16 +46,17 @@ public class ConvertInterpreter extends Interpreter {
 				Constant.Integer value = (Constant.Integer) fromElem;
 				toElem = Constant.V_DECIMAL(new BigDecimal(value.toString()));
 			} else if (fromElemType instanceof Type.Union && toElemType instanceof Type.Real) {
-				if(fromElem instanceof Constant.Decimal){
+				if (fromElem instanceof Constant.Decimal) {
 					toElem = fromElem;
-				}else if(fromElem instanceof Constant.Integer){
-					toElem = Constant.V_DECIMAL(new BigDecimal(((Constant.Integer)fromElem).toString()));
-				}else{
+				} else if (fromElem instanceof Constant.Integer) {
+					toElem = Constant.V_DECIMAL(new BigDecimal(((Constant.Integer) fromElem).toString()));
+				} else {
 					internalFailure("Not implemented!", "ConvertInterpreter.java", null);
 				}
-				
-				//toElem = Constant.V_DECIMAL(new BigDecimal(tuple.toString()));
-			}else{
+
+				// toElem = Constant.V_DECIMAL(new
+				// BigDecimal(tuple.toString()));
+			} else {
 				internalFailure("Not implemented!", "ConvertInterpreter.java", null);
 			}
 		}
@@ -165,6 +167,48 @@ public class ConvertInterpreter extends Interpreter {
 		return to;
 	}
 
+	private Constant.Set toConstantSet(Constant from, Type fromType, Type toType) {
+		Constant.Set to = null;
+		if (fromType instanceof Type.Set) {
+			Constant.Set set = (Constant.Set) from;
+			HashSet<Constant> values = set.values;
+			to = Constant.V_SET(values);
+		}else {
+			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
+		}
+
+		return to;
+	}
+
+	private Constant.Integer toConstantInt(Constant from, Type fromType, Type toType) {
+		Constant.Integer to = null;
+		if (fromType instanceof Type.List) {
+			Constant.List list = (Constant.List) from;
+			to = (Constant.Integer) list.values.get(0);
+		} else if (fromType instanceof Type.Char) {
+			// Cast Char to int
+			to = Constant.V_INTEGER(BigInteger.valueOf((int) (((Constant.Char) from).value)));
+		} else {
+			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
+		}
+
+		return to;
+
+	}
+
+	private Constant.Decimal toConstantDecimal(Constant from, Type fromType, Type toType){
+		Constant.Decimal to = null;
+		if (fromType instanceof Type.Int) {
+			to = Constant.V_DECIMAL(new BigDecimal(((Constant.Integer) from).value.toString()));
+		} else if (fromType instanceof Type.Real){
+			to = (Constant.Decimal) from;
+		}else {
+			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
+		}
+
+		return to;
+	}
+
 	/***
 	 * Cast Constant object to Constant object.
 	 * 
@@ -181,28 +225,19 @@ public class ConvertInterpreter extends Interpreter {
 			// Cast ascii to Char
 			to = Constant.V_CHAR((char) (((Constant.Integer) from).value.intValue()));
 		} else if (toType instanceof Type.Int) {
-			if (fromType instanceof Type.List) {
-				to = ((Constant.List) from).values.get(0);
-			} else if (fromType instanceof Type.Char) {
-				// Cast Char to int
-				to = Constant.V_INTEGER(BigInteger.valueOf((int) (((Constant.Char) from).value)));
-			} else {
-				internalFailure("Not implemented!", "ConvertInterpreter.java", null);
-			}
+			to = toConstantInt(from, fromType, toType);
 		} else if (toType instanceof Type.List) {
 			to = toConstantList(from, fromType, toType);
 		} else if (toType instanceof Type.Record) {
 			to = toConstantRecord(from, fromType, toType);
 		} else if (toType instanceof Type.Real) {
-			if (fromType instanceof Type.Int) {
-				to = Constant.V_DECIMAL(new BigDecimal(((Constant.Integer) from).value.toString()));
-			} else {
-				to = (Constant.Decimal) from;
-			}
+			to = toConstantDecimal(from, fromType, toType);
 		} else if (toType instanceof Type.Union) {
 			to = from;
 		} else if (toType instanceof Type.Map) {
 			to = toConstantMap(from, fromType, toType);
+		} else if (toType instanceof Type.Set) {
+			to = toConstantSet(from, fromType, toType);
 		} else {
 			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
 		}

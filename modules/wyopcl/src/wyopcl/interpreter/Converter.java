@@ -52,6 +52,8 @@ public class Converter {
 			to = new BigDecimal(((Constant.Decimal) from).value.toString());
 		} else if (from instanceof Constant.Map){
 			to = ((Constant.Map)from).values;
+		} else if (from instanceof Constant.Set){
+			to = ((Constant.Set)from).values;
 		} else {
 			internalFailure("Not implemented!", "Converter.java", null);
 		}
