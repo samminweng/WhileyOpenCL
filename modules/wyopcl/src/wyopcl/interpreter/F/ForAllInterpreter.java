@@ -146,6 +146,9 @@ public class ForAllInterpreter extends Interpreter {
 			Constant[] array = new Constant[set.values.size()];
 			array = set.values.toArray(array);
 			iterateOverListSet(array, code, stackframe);
+		}else if(source instanceof Constant.Strung){
+			Constant.Strung strung = (Constant.Strung)source;
+			internalFailure("Not implemented!", "InterpreterForAll.java", null);
 		}else{
 			internalFailure("Not implemented!", "InterpreterForAll.java", null);
 		}

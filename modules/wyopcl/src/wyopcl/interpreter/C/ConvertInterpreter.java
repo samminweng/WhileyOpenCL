@@ -188,6 +188,8 @@ public class ConvertInterpreter extends Interpreter {
 		} else if (fromType instanceof Type.Char) {
 			// Cast Char to int
 			to = Constant.V_INTEGER(BigInteger.valueOf((int) (((Constant.Char) from).value)));
+		} else if(fromType instanceof Type.Union){
+			to = (Constant.Integer)from;
 		} else {
 			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
 		}
