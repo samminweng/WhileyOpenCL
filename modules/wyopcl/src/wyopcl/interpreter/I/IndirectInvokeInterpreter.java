@@ -75,7 +75,7 @@ public class IndirectInvokeInterpreter extends Interpreter {
 			} catch (ClassNotFoundException | NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
 				e.printStackTrace();
 			}
-		}else{
+		}else{			
 			internalFailure("Not implemented!", "InterpreterIndirectInvoke.java", null);
 		}
 

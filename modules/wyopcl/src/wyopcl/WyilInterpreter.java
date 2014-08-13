@@ -44,6 +44,7 @@ import wyopcl.interpreter.I.IndexOfInterpreter;
 import wyopcl.interpreter.I.IndirectInvokeInterpreter;
 import wyopcl.interpreter.I.InvokeInterpreter;
 import wyopcl.interpreter.L.LabelInterpreter;
+import wyopcl.interpreter.L.LambdaInterpreter;
 import wyopcl.interpreter.L.LengthOfInterpreter;
 import wyopcl.interpreter.L.ListOperatorInterpreter;
 import wyopcl.interpreter.L.LoopEndInterpreter;
@@ -156,9 +157,9 @@ public class WyilInterpreter extends Interpreter implements Builder{
 
 	/*Scans the methods*/
 	protected void preprocessor(WyilFile module){
-
+		String id = module.id().toString();
 		for(WyilFile.FunctionOrMethodDeclaration method : module.functionOrMethods()) {
-			String name = method.name();
+			String name = id+":"+method.name();
 			List<Block> blocks;
 			if(!blocktable.containsKey(name)){
 				blocks = new ArrayList<Block>();
@@ -287,7 +288,7 @@ public class WyilInterpreter extends Interpreter implements Builder{
 			} else if (code instanceof Codes.Label) {
 				LabelInterpreter.getInstance().interpret((Codes.Label)code, stackframe);
 			} else if (code instanceof Codes.Lambda) {
-				internalFailure("Not implemented!", filename, entry);
+				LambdaInterpreter.getInstance().interpret((Codes.Lambda)code, stackframe);
 			} else if (code instanceof Codes.LengthOf) {			
 				LengthOfInterpreter.getInstance().interpret((Codes.LengthOf)code, stackframe);
 			} else if (code instanceof Codes.IndexOf) {			

@@ -11,7 +11,7 @@ import org.junit.rules.Timeout;
 import wyopcl.testing.BaseUtil;
 
 public class FunctionTestCase {
-	@Rule public TestRule timeout = new Timeout(5000);
+	@Rule public TestRule timeout = new Timeout(10000);
 	private BaseUtil util;	
 	@Before
 	public void setUp() throws Exception {

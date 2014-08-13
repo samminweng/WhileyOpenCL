@@ -63,7 +63,7 @@ public class InvokeInterpreter extends Interpreter {
 		int linenumber = stackframe.getLine();
 	
 		//Get the Block for the corresponding function/method. 
-		List<Block> blks = blocktable.get(code.name.name());
+		List<Block> blks = blocktable.get(code.name.toString());
 		if(blks != null){			
 			//Push the body block to the stack.
 			pushBlockToStackFrame(blks, code, stackframe);
@@ -86,13 +86,12 @@ public class InvokeInterpreter extends Interpreter {
 						//Get the parameter types.
 						ArrayList<Object> params = new ArrayList<Object>();
 						//Compare the parameter type
-						//for(Class<?> paramType : method.getParameterTypes()){
+						for(Class<?> paramType : method.getParameterTypes()){
 							//The 'paramType' is Java data type.				    		
-							//Thus, we need a conversion from Constant to Java
-							
-							//params.add(Converter.convertConstantToJavaObject(operand, paramType));
-						//}
-						params.add(operand);
+							//Thus, we need a conversion from Constant to Java							
+							params.add(Converter.convertConstantToJavaObject(operand, paramType));
+						}
+						//params.add(operand);
 						Object returned_obj = method.invoke(null, params.toArray());
 						Class<?> returnType = method.getReturnType();
 						//The returned_obj is a Java data type, so we need to convert
