@@ -54,6 +54,8 @@ public class Converter {
 			to = ((Constant.Map)from).values;
 		} else if (from instanceof Constant.Set){
 			to = ((Constant.Set)from).values;
+		} else if (from instanceof Constant.Null){
+			to = null;
 		} else {
 			internalFailure("Not implemented!", "Converter.java", null);
 		}
