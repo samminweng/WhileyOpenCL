@@ -60,6 +60,7 @@ import wyopcl.interpreter.S.SetOperatorInterpreter;
 import wyopcl.interpreter.S.StringOperatorInterpreter;
 import wyopcl.interpreter.S.SubListInterpreter;
 import wyopcl.interpreter.S.SwitchInterpreter;
+import wyopcl.interpreter.T.ThrowInterpreter;
 import wyopcl.interpreter.T.TryCatchInterpreter;
 import wyopcl.interpreter.T.TupleLoadInterpreter;
 import wyopcl.interpreter.U.UnaryOperatorInterpreter;
@@ -128,8 +129,7 @@ public class WyilInterpreter extends Interpreter implements Builder{
 				//Go to the next statement after the loop end.
 				symbol.addLabelLoc(label, pos+1);														
 			}else if(code instanceof Codes.TryEnd){
-				label = ((Codes.TryEnd)code).label;
-				symbol.addTryCatchLoc(label, pos);
+				symbol.addLabelLoc(((Codes.TryEnd) code).label, pos);
 			}else if(code instanceof Codes.Label){
 				//Put the label map into the queue.
 				label = ((Codes.Label)code).label;
@@ -139,10 +139,8 @@ public class WyilInterpreter extends Interpreter implements Builder{
 				label = ((Codes.Loop)code).target;
 				symbol.addLabelLoc(label, pos);							
 			}else if(code instanceof Codes.TryCatch){
-				Codes.TryCatch trycatch = ((Codes.TryCatch)code);
-				label = trycatch.target;
-				symbol.addTryCatchLoc(label, pos);
-			} else{
+				symbol.addTryCatchLoc(code, pos);
+			}else{
 				//Do nothing
 			}
 			
@@ -322,9 +320,8 @@ public class WyilInterpreter extends Interpreter implements Builder{
 				internalFailure("Not implemented!", filename, entry);
 			} else if (code instanceof Codes.Switch) {
 				SwitchInterpreter.getInstance().interpret((Codes.Switch)code, stackframe);
-				//internalFailure("Not implemented!", filename, entry);
 			} else if (code instanceof Codes.Throw) {
-				internalFailure("Not implemented!", filename, entry);
+				ThrowInterpreter.getInstance().interpret((Codes.Throw)code, stackframe);
 			} else if (code instanceof Codes.TryCatch) {
 				TryCatchInterpreter.getInstance().interpret((Codes.TryCatch)code, stackframe);
 			} else if (code instanceof Codes.TupleLoad) {

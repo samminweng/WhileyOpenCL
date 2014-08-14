@@ -108,7 +108,7 @@ public class InvokeInterpreter extends Interpreter {
 				//Go to throw clause
 				wyil.lang.Type throwsClause = code.type().throwsClause();
 				printMessage(stackframe, code.toString(),"%"+code.target()+"("+throwsClause+")");
-				linenumber = symboltable.get(stackframe.getBlock()).getThrowPos(linenumber);
+				linenumber = symboltable.get(stackframe.getBlock()).getCatchPos();
 				stackframe.setLine(linenumber);
 				return;
 			}

@@ -6,7 +6,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
 
+import wyil.lang.Code;
 import wyil.lang.Code.Block;
+import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyil.lang.WyilFile;
 
@@ -139,12 +141,8 @@ public abstract class Interpreter {
 	public class SymbolTable implements Comparable<SymbolTable>{
 		private final Block block;
 		private HashMap<String, Integer> labelLocMap = new HashMap<String, Integer>();		
+		private String catchlabel = "";
 		
-		public class TryCatchBlock{
-			int start;
-			int end;
-		}
-		private HashMap<String, TryCatchBlock> trycatchMap = new HashMap<String, TryCatchBlock>(); 
 		
 		public SymbolTable(Block blk){
 			this.block = blk;
@@ -163,29 +161,15 @@ public abstract class Interpreter {
 			return line;
 		}
 		
-		public void addTryCatchLoc(String label, int line){
-			TryCatchBlock trycatchblk = null;
-			if(trycatchMap.get(label)==null){
-				trycatchblk = new TryCatchBlock();
-				trycatchblk.start = line;
-			}else{
-				trycatchblk = trycatchMap.get(label);
-				trycatchblk.end = line;
+		public void addTryCatchLoc(Code code, int line){
+			 if(code instanceof Codes.TryCatch){				
+				Codes.TryCatch trycatch = (Codes.TryCatch)code;	
+				catchlabel = trycatch.catches.get(0).second();
 			}
-			
-			trycatchMap.put(label, trycatchblk);
 		}
 		
-		public int getThrowPos(int linenumber){
-			Iterator<TryCatchBlock> iterator = trycatchMap.values().iterator();
-			while(iterator.hasNext()){
-				TryCatchBlock next = iterator.next();
-				if(linenumber >= next.start && linenumber <=next.end){
-					return next.end;
-				}
-			}
-			
-			return -1;
+		public int getCatchPos(){
+			return getBlockPosByLabel(catchlabel);
 		}
 
 		@Override
