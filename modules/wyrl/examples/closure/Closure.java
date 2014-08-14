@@ -8,6 +8,7 @@ import wyautl.rw.*;
 import wyrl.core.*;
 import wyrl.util.Runtime;
 import wyrl.util.Pair;
+import wyrl.util.AbstractRewriteRule;
 
 public final class Closure {
 	// term True
@@ -36,7 +37,7 @@ public final class Closure {
 		return automaton.add(new Automaton.Term(K_Var, r1));
 	}
 
-	// term And(^{^BExpr...})
+	// term And(^{^BExpr<Bool<True|False>|LessThan(^[^Expr<Var(^string)|Num(^int)>,^Expr<Var(^string)|Num(^int)>])>...})
 	public final static int K_And = 4;
 	public final static int And(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.Set(r0));
@@ -47,8 +48,10 @@ public final class Closure {
 		return automaton.add(new Automaton.Term(K_And, r1));
 	}
 
-	// And({BExpr x})
-	private final static class Reduction_0 implements ReductionRule {
+	// And({BExpr<Bool<True|False>|LessThan(^[^Expr<Var(^string)|Num(^int)>,^Expr<Var(^string)|Num(^int)>])> x})
+	private final static class Reduction_0 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_0(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -69,6 +72,7 @@ public final class Closure {
 		}
 
 		public final boolean apply(Automaton automaton, Object _state) {
+			int nStates = automaton.nStates();
 			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r2 = state[2]; // x
@@ -77,11 +81,17 @@ public final class Closure {
 				automaton.rewrite(r0, r2);
 				return true;
 			}
+			automaton.resize(nStates);
 			return false;
 		}
+
+		public final int minimum() { return 2; }
+		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// And({Bool b, BExpr xs...})
-	private final static class Reduction_1 implements ReductionRule {
+	// And({Bool<True|False> b, BExpr<Bool<True|False>|LessThan(^[^Expr<Var(^string)|Num(^int)>,^Expr<Var(^string)|Num(^int)>])> xs...})
+	private final static class Reduction_1 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_1(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -104,6 +114,7 @@ public final class Closure {
 		}
 
 		public final boolean apply(Automaton automaton, Object _state) {
+			int nStates = automaton.nStates();
 			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r2 = state[2]; // b
@@ -144,11 +155,17 @@ public final class Closure {
 				automaton.rewrite(r0, r17);
 				return true;
 			}
+			automaton.resize(nStates);
 			return false;
 		}
+
+		public final int minimum() { return 2; }
+		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// And({And({BExpr xs...}), BExpr ys...})
-	private final static class Reduction_2 implements ReductionRule {
+	// And({And({BExpr<Bool<True|False>|LessThan(^[^Expr<Var(^string)|Num(^int)>,^Expr<Var(^string)|Num(^int)>])> xs...}), BExpr<Bool<True|False>|LessThan(^[^Expr<Var(^string)|Num(^int)>,^Expr<Var(^string)|Num(^int)>])> ys...})
+	private final static class Reduction_2 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_2(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -176,6 +193,7 @@ public final class Closure {
 		}
 
 		public final boolean apply(Automaton automaton, Object _state) {
+			int nStates = automaton.nStates();
 			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r3 = state[3];
@@ -200,10 +218,14 @@ public final class Closure {
 				automaton.rewrite(r0, r10);
 				return true;
 			}
+			automaton.resize(nStates);
 			return false;
 		}
+
+		public final int minimum() { return 3; }
+		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term LessThan(^[^Expr,^Expr])
+	// term LessThan(^[^Expr<Var(^string)|Num(^int)>,^Expr<Var(^string)|Num(^int)>])
 	public final static int K_LessThan = 5;
 	public final static int LessThan(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
@@ -215,7 +237,9 @@ public final class Closure {
 	}
 
 	// LessThan([Num(int x), Num(int y)])
-	private final static class Reduction_3 implements ReductionRule {
+	private final static class Reduction_3 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_3(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -243,6 +267,7 @@ public final class Closure {
 		}
 
 		public final boolean apply(Automaton automaton, Object _state) {
+			int nStates = automaton.nStates();
 			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r3 = state[3]; // x
@@ -264,11 +289,17 @@ public final class Closure {
 				automaton.rewrite(r0, r12);
 				return true;
 			}
+			automaton.resize(nStates);
 			return false;
 		}
+
+		public final int minimum() { return 5; }
+		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// LessThan([Expr e1, Expr e2])
-	private final static class Reduction_4 implements ReductionRule {
+	// LessThan([Expr<Var(^string)|Num(^int)> e1, Expr<Var(^string)|Num(^int)> e2])
+	private final static class Reduction_4 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_4(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -286,6 +317,7 @@ public final class Closure {
 		}
 
 		public final boolean apply(Automaton automaton, Object _state) {
+			int nStates = automaton.nStates();
 			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r2 = state[2]; // e1
@@ -299,11 +331,17 @@ public final class Closure {
 					return true;
 				}
 			}
+			automaton.resize(nStates);
 			return false;
 		}
+
+		public final int minimum() { return 0; }
+		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// And({LessThan([Expr e1, Expr e2]) l1, LessThan([Expr e3, Expr e4]) l2, BExpr bs...})
-	private final static class Inference_0 implements InferenceRule {
+	// And({LessThan([Expr<Var(^string)|Num(^int)> e1, Expr<Var(^string)|Num(^int)> e2]) l1, LessThan([Expr<Var(^string)|Num(^int)> e3, Expr<Var(^string)|Num(^int)> e4]) l2, BExpr<Bool<True|False>|LessThan(^[^Expr<Var(^string)|Num(^int)>,^Expr<Var(^string)|Num(^int)>])> bs...})
+	private final static class Inference_0 extends AbstractRewriteRule implements InferenceRule {
+
+		public Inference_0(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -346,6 +384,7 @@ public final class Closure {
 		}
 
 		public final boolean apply(Automaton automaton, Object _state) {
+			int nStates = automaton.nStates();
 			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r2 = state[2]; // l1
@@ -380,8 +419,12 @@ public final class Closure {
 					return true;
 				}
 			}
+			automaton.resize(nStates);
 			return false;
 		}
+
+		public final int minimum() { return 0; }
+		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// =========================================================================
 	// Schema
@@ -396,9 +439,9 @@ public final class Closure {
 		Schema.Term("Num",Schema.Int),
 		// Var(^string)
 		Schema.Term("Var",Schema.String),
-		// And(^{^BExpr...})
+		// And(^{^BExpr<Bool<True|False>|LessThan(^[^Expr<Var(^string)|Num(^int)>,^Expr<Var(^string)|Num(^int)>])>...})
 		Schema.Term("And",Schema.Set(true)),
-		// LessThan(^[^Expr,^Expr])
+		// LessThan(^[^Expr<Var(^string)|Num(^int)>,^Expr<Var(^string)|Num(^int)>])
 		Schema.Term("LessThan",Schema.List(true,Schema.Or(Schema.Term("Var",Schema.String), Schema.Term("Num",Schema.Int)),Schema.Any))
 	});
 
@@ -406,28 +449,77 @@ public final class Closure {
 	// Types
 	// =========================================================================
 
-	// BExpr
+	// BExpr<Bool<True|False>|LessThan(^[^Expr<Var(^string)|Num(^int)>,^Expr<Var(^string)|Num(^int)>])>
 	private static Type type0 = Runtime.Type("CG_F4W6RmGZFjx5Q35BKqRnG4PWtL7Pdq5xBXDyomE3G_RpKq38lXHJOJNgCMOIk3AC4mHDhlIYg2LhZ4G4W6Rmd1TYk4MYoGMts_9UC1EclHPoNKNmGYIppL7vtr5hCmLipmQeZl7f_6Audm5Yk5UgoMV3");
-	// Bool
+	// Bool<True|False>
 	private static Type type1 = Runtime.Type("QFZFjx5Q3G_RpKq3vk1EJOJNgCMOIs2Az3HE7hGHYcYHhgJko2");
 	// int
 	private static Type type2 = Runtime.Type("Fg0");
-	// Expr
+	// Expr<Var(^string)|Num(^int)>
 	private static Type type3 = Runtime.Type("SFJGs0bRoNKNmGYIppL7Ato5xBXDyomEeZl7vZ3A9dm5Yk2IgoJVo2");
 
+	// =========================================================================
+	// Patterns
+	// =========================================================================
+
+	private final static Pattern.Term pattern0 = new Pattern.Term("And",
+		new Pattern.Set(false, new Pair[]{
+			new Pair(new Pattern.Leaf(type0), "x")}),
+		null);
+	private final static Pattern.Term pattern1 = new Pattern.Term("And",
+		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Leaf(type1), "b"), 
+			new Pair(new Pattern.Leaf(type0), "xs")}),
+		null);
+	private final static Pattern.Term pattern2 = new Pattern.Term("And",
+		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Term("And",
+				new Pattern.Set(true, new Pair[]{
+					new Pair(new Pattern.Leaf(type0), "xs")}),
+				null),null), 
+			new Pair(new Pattern.Leaf(type0), "ys")}),
+		null);
+	private final static Pattern.Term pattern3 = new Pattern.Term("LessThan",
+		new Pattern.List(false, new Pair[]{
+			new Pair(new Pattern.Term("Num",
+				new Pattern.Leaf(type2),
+				"x"),null), 
+			new Pair(new Pattern.Term("Num",
+				new Pattern.Leaf(type2),
+				"y"),null)}),
+		null);
+	private final static Pattern.Term pattern4 = new Pattern.Term("LessThan",
+		new Pattern.List(false, new Pair[]{
+			new Pair(new Pattern.Leaf(type3), "e1"), 
+			new Pair(new Pattern.Leaf(type3), "e2")}),
+		null);
+	private final static Pattern.Term pattern5 = new Pattern.Term("And",
+		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Term("LessThan",
+				new Pattern.List(false, new Pair[]{
+					new Pair(new Pattern.Leaf(type3), "e1"), 
+					new Pair(new Pattern.Leaf(type3), "e2")}),
+				null), "l1"), 
+			new Pair(new Pattern.Term("LessThan",
+				new Pattern.List(false, new Pair[]{
+					new Pair(new Pattern.Leaf(type3), "e3"), 
+					new Pair(new Pattern.Leaf(type3), "e4")}),
+				null), "l2"), 
+			new Pair(new Pattern.Leaf(type0), "bs")}),
+		null);
 	// =========================================================================
 	// rules
 	// =========================================================================
 
 	public static final InferenceRule[] inferences = new InferenceRule[]{
-		new Inference_0()
+		new Inference_0(pattern5)
 	};
 	public static final ReductionRule[] reductions = new ReductionRule[]{
-		new Reduction_0()		,
-new Reduction_1()		,
-new Reduction_2()		,
-new Reduction_3()		,
-new Reduction_4()
+		new Reduction_0(pattern0),
+		new Reduction_1(pattern1),
+		new Reduction_2(pattern2),
+		new Reduction_3(pattern3),
+		new Reduction_4(pattern4)
 	};
 
 
@@ -442,9 +534,13 @@ new Reduction_4()
 			Automaton automaton = reader.read();
 			System.out.print("PARSED: ");
 			print(automaton);
-			new SimpleRewriter(inferences,reductions,SCHEMA).apply(automaton);
+			StrategyRewriter.Strategy<InferenceRule> inferenceStrategy = new SimpleRewriteStrategy<InferenceRule>(automaton, inferences);
+			StrategyRewriter.Strategy<ReductionRule> reductionStrategy = new SimpleRewriteStrategy<ReductionRule>(automaton, reductions);
+			StrategyRewriter rw = new StrategyRewriter(automaton,inferenceStrategy, reductionStrategy, SCHEMA);
+			rw.apply(10000);
 			System.out.print("REWROTE: ");
 			print(automaton);
+			System.out.println("\n\n=> (" + rw.getStats() + ")\n");
 		} catch(PrettyAutomataReader.SyntaxError ex) {
 			System.err.println(ex.getMessage());
 		}

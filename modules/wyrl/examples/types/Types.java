@@ -8,16 +8,19 @@ import wyautl.rw.*;
 import wyrl.core.*;
 import wyrl.util.Runtime;
 import wyrl.util.Pair;
+import wyrl.util.AbstractRewriteRule;
 
 public final class Types {
-	// term $4<Not($2<^Type>)>
+	// term $4<Not($2<^Type<$4|Any|Int|Intersect(^{$2...})|Tuple(^[$2...])|Union(^{$2...})>>)>
 	public final static int K_Not = 0;
 	public final static int Not(Automaton automaton, int r0) {
 		return automaton.add(new Automaton.Term(K_Not, r0));
 	}
 
-	// Not(Not(any x))
-	private final static class Reduction_0 implements ReductionRule {
+	// 
+	private final static class Reduction_0 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_0(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -35,19 +38,26 @@ public final class Types {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
-			int[] state = (int[]) _state;
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r2 = state[2]; // x
 			if(r0 != r2) {
-				automaton.rewrite(r0, r2);
-				return true;
+				return automaton.rewrite(r0, r2);
 			}
-			return false;
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
+
+		public final int minimum() { return 1; }
+		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Not(Intersect({$14<Type> xs...}))
-	private final static class Reduction_1 implements ReductionRule {
+	// 
+	private final static class Reduction_1 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_1(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -67,8 +77,8 @@ public final class Types {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
-			int[] state = (int[]) _state;
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
 			int r0 = state[0];
 			Automaton.Collection s2 = (Automaton.Collection) automaton.get(state[2]);
 			int[] s2children = new int[s2.size() - 0];
@@ -88,14 +98,21 @@ public final class Types {
 			Automaton.Term r9 = new Automaton.Term(K_Union, r8);
 			int r10 = automaton.add(r9);
 			if(r0 != r10) {
-				automaton.rewrite(r0, r10);
-				return true;
+				return automaton.rewrite(r0, r10);
 			}
-			return false;
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
+
+		public final int minimum() { return 2; }
+		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Not(Union({$14<Type> xs...}))
-	private final static class Reduction_2 implements ReductionRule {
+	// 
+	private final static class Reduction_2 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_2(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -115,8 +132,8 @@ public final class Types {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
-			int[] state = (int[]) _state;
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
 			int r0 = state[0];
 			Automaton.Collection s2 = (Automaton.Collection) automaton.get(state[2]);
 			int[] s2children = new int[s2.size() - 0];
@@ -136,13 +153,18 @@ public final class Types {
 			Automaton.Term r9 = new Automaton.Term(K_Intersect, r8);
 			int r10 = automaton.add(r9);
 			if(r0 != r10) {
-				automaton.rewrite(r0, r10);
-				return true;
+				return automaton.rewrite(r0, r10);
 			}
-			return false;
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
+
+		public final int minimum() { return 2; }
+		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $7<Intersect($5<^{$2<^Type>...}>)>
+	// term $7<Intersect($5<^{$2<^Type<$7|Any|Int|Not($2)|Tuple(^[$2...])|Union($5)>>...}>)>
 	public final static int K_Intersect = 1;
 	public final static int Intersect(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.Set(r0));
@@ -153,8 +175,10 @@ public final class Types {
 		return automaton.add(new Automaton.Term(K_Intersect, r1));
 	}
 
-	// Intersect({$14<Type> x})
-	private final static class Reduction_3 implements ReductionRule {
+	// 
+	private final static class Reduction_3 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_3(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -174,20 +198,27 @@ public final class Types {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
-			int[] state = (int[]) _state;
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r2 = state[2]; // x
 			int r3 = state[3];
 			if(r0 != r2) {
-				automaton.rewrite(r0, r2);
-				return true;
+				return automaton.rewrite(r0, r2);
 			}
-			return false;
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
+
+		public final int minimum() { return 2; }
+		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Intersect({Not(Any), $14<Type> xs...})
-	private final static class Reduction_4 implements ReductionRule {
+	// 
+	private final static class Reduction_4 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_4(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -214,8 +245,8 @@ public final class Types {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
-			int[] state = (int[]) _state;
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r3 = state[3];
 			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
@@ -230,14 +261,21 @@ public final class Types {
 			Automaton.Term r8 = new Automaton.Term(K_Not, r7);
 			int r9 = automaton.add(r8);
 			if(r0 != r9) {
-				automaton.rewrite(r0, r9);
-				return true;
+				return automaton.rewrite(r0, r9);
 			}
-			return false;
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
+
+		public final int minimum() { return 3; }
+		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Intersect({Any, $14<Type> xs...})
-	private final static class Reduction_5 implements ReductionRule {
+	// 
+	private final static class Reduction_5 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_5(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -259,8 +297,8 @@ public final class Types {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
-			int[] state = (int[]) _state;
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r3 = state[3];
 			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
@@ -278,15 +316,22 @@ public final class Types {
 				Automaton.Term r9 = new Automaton.Term(K_Intersect, r8);
 				int r10 = automaton.add(r9);
 				if(r0 != r10) {
-					automaton.rewrite(r0, r10);
-					return true;
+					return automaton.rewrite(r0, r10);
 				}
 			}
-			return false;
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
+
+		public final int minimum() { return 0; }
+		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Intersect({Int, $7<Tuple(^[$2<^Type>...])> y, $14<Type> ys...})
-	private final static class Reduction_6 implements ReductionRule {
+	// 
+	private final static class Reduction_6 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_6(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -314,8 +359,8 @@ public final class Types {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
-			int[] state = (int[]) _state;
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r3 = state[3];
 			int r4 = state[4]; // y
@@ -332,14 +377,21 @@ public final class Types {
 			Automaton.Term r9 = new Automaton.Term(K_Not, r8);
 			int r10 = automaton.add(r9);
 			if(r0 != r10) {
-				automaton.rewrite(r0, r10);
-				return true;
+				return automaton.rewrite(r0, r10);
 			}
-			return false;
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
+
+		public final int minimum() { return 3; }
+		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Intersect({Tuple([$14<Type> xs...]), Tuple([$14<Type> ys...]), $14<Type> zs...})
-	private final static class Reduction_7 implements ReductionRule {
+	// 
+	private final static class Reduction_7 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_7(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -377,8 +429,8 @@ public final class Types {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
-			int[] state = (int[]) _state;
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r3 = state[3];
 			Automaton.List r5 = ((Automaton.List) automaton.get(state[4])).sublist(0);
@@ -400,15 +452,22 @@ public final class Types {
 				Automaton.Term r16 = new Automaton.Term(K_Not, r15);
 				int r17 = automaton.add(r16);
 				if(r0 != r17) {
-					automaton.rewrite(r0, r17);
-					return true;
+					return automaton.rewrite(r0, r17);
 				}
 			}
-			return false;
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
+
+		public final int minimum() { return 0; }
+		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Intersect({Intersect({$14<Type> xs...}), $14<Type> ys...})
-	private final static class Reduction_8 implements ReductionRule {
+	// 
+	private final static class Reduction_8 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_8(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -435,8 +494,8 @@ public final class Types {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
-			int[] state = (int[]) _state;
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r3 = state[3];
 			Automaton.Collection s4 = (Automaton.Collection) automaton.get(state[4]);
@@ -457,14 +516,21 @@ public final class Types {
 			Automaton.Term r9 = new Automaton.Term(K_Intersect, r8);
 			int r10 = automaton.add(r9);
 			if(r0 != r10) {
-				automaton.rewrite(r0, r10);
-				return true;
+				return automaton.rewrite(r0, r10);
 			}
-			return false;
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
+
+		public final int minimum() { return 3; }
+		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Intersect({Not($14<Type> x), $14<Type> y, $14<Type> ys...})
-	private final static class Reduction_9 implements ReductionRule {
+	// 
+	private final static class Reduction_9 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_9(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -493,8 +559,8 @@ public final class Types {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
-			int[] state = (int[]) _state;
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r3 = state[3];
 			int r4 = state[4]; // x
@@ -514,15 +580,22 @@ public final class Types {
 				Automaton.Term r11 = new Automaton.Term(K_Not, r10);
 				int r12 = automaton.add(r11);
 				if(r0 != r12) {
-					automaton.rewrite(r0, r12);
-					return true;
+					return automaton.rewrite(r0, r12);
 				}
 			}
-			return false;
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
+
+		public final int minimum() { return 0; }
+		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Intersect({Union({$14<Type> xs...}), $14<Type> ys...})
-	private final static class Reduction_10 implements ReductionRule {
+	// 
+	private final static class Reduction_10 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_10(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -549,8 +622,8 @@ public final class Types {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
-			int[] state = (int[]) _state;
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r3 = state[3];
 			Automaton.Collection s4 = (Automaton.Collection) automaton.get(state[4]);
@@ -580,14 +653,21 @@ public final class Types {
 			Automaton.Term r14 = new Automaton.Term(K_Union, r13);
 			int r15 = automaton.add(r14);
 			if(r0 != r15) {
-				automaton.rewrite(r0, r15);
-				return true;
+				return automaton.rewrite(r0, r15);
 			}
-			return false;
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
+
+		public final int minimum() { return 3; }
+		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Intersect({Int x, Not(Tuple([$14<Type>...])), $14<Type> rest...})
-	private final static class Reduction_11 implements ReductionRule {
+	// 
+	private final static class Reduction_11 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_11(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -625,8 +705,8 @@ public final class Types {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
-			int[] state = (int[]) _state;
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r2 = state[2]; // x
 			int r3 = state[3];
@@ -643,14 +723,21 @@ public final class Types {
 			Automaton.Term r12 = new Automaton.Term(K_Intersect, r11);
 			int r13 = automaton.add(r12);
 			if(r0 != r13) {
-				automaton.rewrite(r0, r13);
-				return true;
+				return automaton.rewrite(r0, r13);
 			}
-			return false;
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
+
+		public final int minimum() { return 5; }
+		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Intersect({$7<Tuple(^[$2<^Type>...])> x, Not(Int), $14<Type> rest...})
-	private final static class Reduction_12 implements ReductionRule {
+	// 
+	private final static class Reduction_12 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_12(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -683,8 +770,8 @@ public final class Types {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
-			int[] state = (int[]) _state;
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r2 = state[2]; // x
 			int r3 = state[3];
@@ -701,14 +788,21 @@ public final class Types {
 			Automaton.Term r10 = new Automaton.Term(K_Intersect, r9);
 			int r11 = automaton.add(r10);
 			if(r0 != r11) {
-				automaton.rewrite(r0, r11);
-				return true;
+				return automaton.rewrite(r0, r11);
 			}
-			return false;
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
+
+		public final int minimum() { return 4; }
+		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Intersect({Tuple([$14<Type> xs...]) t, Not(Tuple([$14<Type> ys...])), $14<Type> rest...})
-	private final static class Reduction_13 implements ReductionRule {
+	// 
+	private final static class Reduction_13 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_13(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -751,8 +845,8 @@ public final class Types {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
-			int[] state = (int[]) _state;
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r2 = state[2]; // t
 			int r3 = state[3];
@@ -775,14 +869,19 @@ public final class Types {
 				Automaton.Term r17 = new Automaton.Term(K_Intersect, r16);
 				int r18 = automaton.add(r17);
 				if(r0 != r18) {
-					automaton.rewrite(r0, r18);
-					return true;
+					return automaton.rewrite(r0, r18);
 				}
 			}
-			return false;
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
+
+		public final int minimum() { return 0; }
+		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $7<Union($5<^{$2<^Type>...}>)>
+	// term $7<Union($5<^{$2<^Type<$7|Any|Int|Not($2)|Intersect($5)|Tuple(^[$2...])>>...}>)>
 	public final static int K_Union = 2;
 	public final static int Union(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.Set(r0));
@@ -793,8 +892,10 @@ public final class Types {
 		return automaton.add(new Automaton.Term(K_Union, r1));
 	}
 
-	// Union({$14<Type> x})
-	private final static class Reduction_14 implements ReductionRule {
+	// 
+	private final static class Reduction_14 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_14(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -814,20 +915,27 @@ public final class Types {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
-			int[] state = (int[]) _state;
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r2 = state[2]; // x
 			int r3 = state[3];
 			if(r0 != r2) {
-				automaton.rewrite(r0, r2);
-				return true;
+				return automaton.rewrite(r0, r2);
 			}
-			return false;
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
+
+		public final int minimum() { return 2; }
+		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Union({Any, $14<Type> xs...})
-	private final static class Reduction_15 implements ReductionRule {
+	// 
+	private final static class Reduction_15 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_15(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -849,8 +957,8 @@ public final class Types {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
-			int[] state = (int[]) _state;
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r3 = state[3];
 			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
@@ -863,14 +971,21 @@ public final class Types {
 			Automaton.Term r5 = Any;
 			int r6 = automaton.add(r5);
 			if(r0 != r6) {
-				automaton.rewrite(r0, r6);
-				return true;
+				return automaton.rewrite(r0, r6);
 			}
-			return false;
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
+
+		public final int minimum() { return 2; }
+		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Union({Not(Any), $14<Type> xs...})
-	private final static class Reduction_16 implements ReductionRule {
+	// 
+	private final static class Reduction_16 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_16(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -897,8 +1012,8 @@ public final class Types {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
-			int[] state = (int[]) _state;
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r3 = state[3];
 			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
@@ -916,8 +1031,7 @@ public final class Types {
 				Automaton.Term r10 = new Automaton.Term(K_Union, r9);
 				int r11 = automaton.add(r10);
 				if(r0 != r11) {
-					automaton.rewrite(r0, r11);
-					return true;
+					return automaton.rewrite(r0, r11);
 				}
 			}
 			Automaton.Term r12 = Any;
@@ -925,14 +1039,21 @@ public final class Types {
 			Automaton.Term r14 = new Automaton.Term(K_Not, r13);
 			int r15 = automaton.add(r14);
 			if(r0 != r15) {
-				automaton.rewrite(r0, r15);
-				return true;
+				return automaton.rewrite(r0, r15);
 			}
-			return false;
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
+
+		public final int minimum() { return 3; }
+		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Union({Not($14<Type> x), $14<Type> y, $14<Type> ys...})
-	private final static class Reduction_17 implements ReductionRule {
+	// 
+	private final static class Reduction_17 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_17(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -961,8 +1082,8 @@ public final class Types {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
-			int[] state = (int[]) _state;
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r3 = state[3];
 			int r4 = state[4]; // x
@@ -980,15 +1101,22 @@ public final class Types {
 				Automaton.Term r9 = Any;
 				int r10 = automaton.add(r9);
 				if(r0 != r10) {
-					automaton.rewrite(r0, r10);
-					return true;
+					return automaton.rewrite(r0, r10);
 				}
 			}
-			return false;
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
+
+		public final int minimum() { return 0; }
+		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Union({Union({$14<Type> xs...}), $14<Type> ys...})
-	private final static class Reduction_18 implements ReductionRule {
+	// 
+	private final static class Reduction_18 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_18(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -1015,8 +1143,8 @@ public final class Types {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
-			int[] state = (int[]) _state;
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r3 = state[3];
 			Automaton.Collection s4 = (Automaton.Collection) automaton.get(state[4]);
@@ -1037,13 +1165,18 @@ public final class Types {
 			Automaton.Term r9 = new Automaton.Term(K_Union, r8);
 			int r10 = automaton.add(r9);
 			if(r0 != r10) {
-				automaton.rewrite(r0, r10);
-				return true;
+				return automaton.rewrite(r0, r10);
 			}
-			return false;
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
+
+		public final int minimum() { return 3; }
+		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $7<Tuple(^[$2<^Type>...])>
+	// term $7<Tuple(^[$2<^Type<$7|Any|Int|Not($2)|Intersect(^{$2...})|Union(^{$2...})>>...])>
 	public final static int K_Tuple = 3;
 	public final static int Tuple(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
@@ -1054,8 +1187,10 @@ public final class Types {
 		return automaton.add(new Automaton.Term(K_Tuple, r1));
 	}
 
-	// Tuple({Intersect({$14<Type> xs...}), $14<Type> rest...})
-	private final static class Reduction_19 implements ReductionRule {
+	// 
+	private final static class Reduction_19 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_19(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -1082,8 +1217,8 @@ public final class Types {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
-			int[] state = (int[]) _state;
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r3 = state[3];
 			Automaton.Collection s4 = (Automaton.Collection) automaton.get(state[4]);
@@ -1113,14 +1248,21 @@ public final class Types {
 			Automaton.Term r14 = new Automaton.Term(K_Intersect, r13);
 			int r15 = automaton.add(r14);
 			if(r0 != r15) {
-				automaton.rewrite(r0, r15);
-				return true;
+				return automaton.rewrite(r0, r15);
 			}
-			return false;
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
+
+		public final int minimum() { return 3; }
+		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Tuple({Union({$14<Type> xs...}), $14<Type> rest...})
-	private final static class Reduction_20 implements ReductionRule {
+	// 
+	private final static class Reduction_20 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_20(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -1147,8 +1289,8 @@ public final class Types {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
-			int[] state = (int[]) _state;
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r3 = state[3];
 			Automaton.Collection s4 = (Automaton.Collection) automaton.get(state[4]);
@@ -1178,14 +1320,21 @@ public final class Types {
 			Automaton.Term r14 = new Automaton.Term(K_Union, r13);
 			int r15 = automaton.add(r14);
 			if(r0 != r15) {
-				automaton.rewrite(r0, r15);
-				return true;
+				return automaton.rewrite(r0, r15);
 			}
-			return false;
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
+
+		public final int minimum() { return 3; }
+		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Tuple({Not($14<Type> t), $14<Type> rest...})
-	private final static class Reduction_21 implements ReductionRule {
+	// 
+	private final static class Reduction_21 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_21(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -1210,8 +1359,8 @@ public final class Types {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
-			int[] state = (int[]) _state;
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r3 = state[3];
 			int r4 = state[4]; // t
@@ -1239,11 +1388,16 @@ public final class Types {
 			Automaton.Term r20 = new Automaton.Term(K_Intersect, r19);
 			int r21 = automaton.add(r20);
 			if(r0 != r21) {
-				automaton.rewrite(r0, r21);
-				return true;
+				return automaton.rewrite(r0, r21);
 			}
-			return false;
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
+
+		public final int minimum() { return 3; }
+		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term Any
 	public final static int K_Any = 4;
@@ -1258,13 +1412,13 @@ public final class Types {
 	// =========================================================================
 
 	public static final Schema SCHEMA = new Schema(new Schema.Term[]{
-		// $4<Not($2<^Type>)>
+		// $4<Not($2<^Type<$4|Any|Int|Intersect(^{$2...})|Tuple(^[$2...])|Union(^{$2...})>>)>
 		Schema.Term("Not",Schema.Or(Schema.Any, Schema.Term("Any"), Schema.Term("Int"), Schema.Term("Intersect",Schema.Set(true)), Schema.Term("Tuple",Schema.List(true)), Schema.Term("Union",Schema.Any))),
-		// $7<Intersect($5<^{$2<^Type>...}>)>
+		// $7<Intersect($5<^{$2<^Type<$7|Any|Int|Not($2)|Tuple(^[$2...])|Union($5)>>...}>)>
 		Schema.Term("Intersect",Schema.Set(true)),
-		// $7<Union($5<^{$2<^Type>...}>)>
+		// $7<Union($5<^{$2<^Type<$7|Any|Int|Not($2)|Intersect($5)|Tuple(^[$2...])>>...}>)>
 		Schema.Term("Union",Schema.Set(true)),
-		// $7<Tuple(^[$2<^Type>...])>
+		// $7<Tuple(^[$2<^Type<$7|Any|Int|Not($2)|Intersect(^{$2...})|Union(^{$2...})>>...])>
 		Schema.Term("Tuple",Schema.List(true)),
 		// Any
 		Schema.Term("Any"),
@@ -1278,15 +1432,182 @@ public final class Types {
 
 	// any
 	private static Type type0 = Runtime.Type("Fs0");
-	// $14<Type>
+	// $14<Type<Any|Int|Not(^$14)|Intersect(^{^$14...})|Tuple(^[^$14...])|Union(^{^$14...})>>
 	private static Type type1 = Runtime.Type("yF3Kt0MOo3ZQtClDgk2C8t5SIs2AzFYIjG6_GHiGMOmCMOYG6KJK6RgK5KKtLPjtLNxVoLcpqQQoo7usJAEd1LYZJLgcp7OhmARdHMYcZMgwp7OlHDddXPYgoPgkq7Bt4Ai4N0");
 	// Any
 	private static Type type2 = Runtime.Type("2C0tLTIc2Av3w$");
 	// Int
 	private static Type type3 = Runtime.Type("2C8t5SIc2Av3w$");
-	// $7<Tuple(^[$2<^Type>...])>
+	// $7<Tuple(^[$2<^Type<$7|Any|Int|Not($2)|Intersect(^{$2...})|Union(^{$2...})>>...])>
 	private static Type type4 = Runtime.Type("yF4Kp06Q_G3Kt0MOesp7wkHDxcXEYcnEgV3C0tLTIc3AAGIHiGr3ClXIosoQoGOZZQoKaRnKqNoGKKi_qQi4LHBx3Phxq5QCmDRpHMYV4Egwp7wgmAddXPYZpPgkq7Ph5Ai480");
 
+	// =========================================================================
+	// Patterns
+	// =========================================================================
+
+	private final static Pattern.Term pattern0 = new Pattern.Term("Not",
+		new Pattern.Term("Not",
+			new Pattern.Leaf(type0),
+			"x"),
+		null);
+	private final static Pattern.Term pattern1 = new Pattern.Term("Not",
+		new Pattern.Term("Intersect",
+			new Pattern.Set(true, new Pair[]{
+				new Pair(new Pattern.Leaf(type1), "xs")}),
+			null),
+		null);
+	private final static Pattern.Term pattern2 = new Pattern.Term("Not",
+		new Pattern.Term("Union",
+			new Pattern.Set(true, new Pair[]{
+				new Pair(new Pattern.Leaf(type1), "xs")}),
+			null),
+		null);
+	private final static Pattern.Term pattern3 = new Pattern.Term("Intersect",
+		new Pattern.Set(false, new Pair[]{
+			new Pair(new Pattern.Leaf(type1), "x")}),
+		null);
+	private final static Pattern.Term pattern4 = new Pattern.Term("Intersect",
+		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Term("Not",
+				new Pattern.Leaf(type2),
+				null),null), 
+			new Pair(new Pattern.Leaf(type1), "xs")}),
+		null);
+	private final static Pattern.Term pattern5 = new Pattern.Term("Intersect",
+		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Leaf(type2),null), 
+			new Pair(new Pattern.Leaf(type1), "xs")}),
+		null);
+	private final static Pattern.Term pattern6 = new Pattern.Term("Intersect",
+		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Leaf(type3),null), 
+			new Pair(new Pattern.Leaf(type4), "y"), 
+			new Pair(new Pattern.Leaf(type1), "ys")}),
+		null);
+	private final static Pattern.Term pattern7 = new Pattern.Term("Intersect",
+		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Term("Tuple",
+				new Pattern.List(true, new Pair[]{
+					new Pair(new Pattern.Leaf(type1), "xs")}),
+				null),null), 
+			new Pair(new Pattern.Term("Tuple",
+				new Pattern.List(true, new Pair[]{
+					new Pair(new Pattern.Leaf(type1), "ys")}),
+				null),null), 
+			new Pair(new Pattern.Leaf(type1), "zs")}),
+		null);
+	private final static Pattern.Term pattern8 = new Pattern.Term("Intersect",
+		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Term("Intersect",
+				new Pattern.Set(true, new Pair[]{
+					new Pair(new Pattern.Leaf(type1), "xs")}),
+				null),null), 
+			new Pair(new Pattern.Leaf(type1), "ys")}),
+		null);
+	private final static Pattern.Term pattern9 = new Pattern.Term("Intersect",
+		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Term("Not",
+				new Pattern.Leaf(type1),
+				"x"),null), 
+			new Pair(new Pattern.Leaf(type1), "y"), 
+			new Pair(new Pattern.Leaf(type1), "ys")}),
+		null);
+	private final static Pattern.Term pattern10 = new Pattern.Term("Intersect",
+		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Term("Union",
+				new Pattern.Set(true, new Pair[]{
+					new Pair(new Pattern.Leaf(type1), "xs")}),
+				null),null), 
+			new Pair(new Pattern.Leaf(type1), "ys")}),
+		null);
+	private final static Pattern.Term pattern11 = new Pattern.Term("Intersect",
+		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Leaf(type3), "x"), 
+			new Pair(new Pattern.Term("Not",
+				new Pattern.Term("Tuple",
+					new Pattern.List(true, new Pair[]{
+						new Pair(new Pattern.Leaf(type1),null)}),
+					null),
+				null),null), 
+			new Pair(new Pattern.Leaf(type1), "rest")}),
+		null);
+	private final static Pattern.Term pattern12 = new Pattern.Term("Intersect",
+		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Leaf(type4), "x"), 
+			new Pair(new Pattern.Term("Not",
+				new Pattern.Leaf(type3),
+				null),null), 
+			new Pair(new Pattern.Leaf(type1), "rest")}),
+		null);
+	private final static Pattern.Term pattern13 = new Pattern.Term("Intersect",
+		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Term("Tuple",
+				new Pattern.List(true, new Pair[]{
+					new Pair(new Pattern.Leaf(type1), "xs")}),
+				null), "t"), 
+			new Pair(new Pattern.Term("Not",
+				new Pattern.Term("Tuple",
+					new Pattern.List(true, new Pair[]{
+						new Pair(new Pattern.Leaf(type1), "ys")}),
+					null),
+				null),null), 
+			new Pair(new Pattern.Leaf(type1), "rest")}),
+		null);
+	private final static Pattern.Term pattern14 = new Pattern.Term("Union",
+		new Pattern.Set(false, new Pair[]{
+			new Pair(new Pattern.Leaf(type1), "x")}),
+		null);
+	private final static Pattern.Term pattern15 = new Pattern.Term("Union",
+		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Leaf(type2),null), 
+			new Pair(new Pattern.Leaf(type1), "xs")}),
+		null);
+	private final static Pattern.Term pattern16 = new Pattern.Term("Union",
+		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Term("Not",
+				new Pattern.Leaf(type2),
+				null),null), 
+			new Pair(new Pattern.Leaf(type1), "xs")}),
+		null);
+	private final static Pattern.Term pattern17 = new Pattern.Term("Union",
+		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Term("Not",
+				new Pattern.Leaf(type1),
+				"x"),null), 
+			new Pair(new Pattern.Leaf(type1), "y"), 
+			new Pair(new Pattern.Leaf(type1), "ys")}),
+		null);
+	private final static Pattern.Term pattern18 = new Pattern.Term("Union",
+		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Term("Union",
+				new Pattern.Set(true, new Pair[]{
+					new Pair(new Pattern.Leaf(type1), "xs")}),
+				null),null), 
+			new Pair(new Pattern.Leaf(type1), "ys")}),
+		null);
+	private final static Pattern.Term pattern19 = new Pattern.Term("Tuple",
+		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Term("Intersect",
+				new Pattern.Set(true, new Pair[]{
+					new Pair(new Pattern.Leaf(type1), "xs")}),
+				null),null), 
+			new Pair(new Pattern.Leaf(type1), "rest")}),
+		null);
+	private final static Pattern.Term pattern20 = new Pattern.Term("Tuple",
+		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Term("Union",
+				new Pattern.Set(true, new Pair[]{
+					new Pair(new Pattern.Leaf(type1), "xs")}),
+				null),null), 
+			new Pair(new Pattern.Leaf(type1), "rest")}),
+		null);
+	private final static Pattern.Term pattern21 = new Pattern.Term("Tuple",
+		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Term("Not",
+				new Pattern.Leaf(type1),
+				"t"),null), 
+			new Pair(new Pattern.Leaf(type1), "rest")}),
+		null);
 	// =========================================================================
 	// rules
 	// =========================================================================
@@ -1295,28 +1616,28 @@ public final class Types {
 
 	};
 	public static final ReductionRule[] reductions = new ReductionRule[]{
-		new Reduction_0()		,
-new Reduction_1()		,
-new Reduction_2()		,
-new Reduction_3()		,
-new Reduction_4()		,
-new Reduction_5()		,
-new Reduction_6()		,
-new Reduction_7()		,
-new Reduction_8()		,
-new Reduction_9()		,
-new Reduction_10()		,
-new Reduction_11()		,
-new Reduction_12()		,
-new Reduction_13()		,
-new Reduction_14()		,
-new Reduction_15()		,
-new Reduction_16()		,
-new Reduction_17()		,
-new Reduction_18()		,
-new Reduction_19()		,
-new Reduction_20()		,
-new Reduction_21()
+		new Reduction_0(pattern0),
+		new Reduction_1(pattern1),
+		new Reduction_2(pattern2),
+		new Reduction_3(pattern3),
+		new Reduction_4(pattern4),
+		new Reduction_5(pattern5),
+		new Reduction_6(pattern6),
+		new Reduction_7(pattern7),
+		new Reduction_8(pattern8),
+		new Reduction_9(pattern9),
+		new Reduction_10(pattern10),
+		new Reduction_11(pattern11),
+		new Reduction_12(pattern12),
+		new Reduction_13(pattern13),
+		new Reduction_14(pattern14),
+		new Reduction_15(pattern15),
+		new Reduction_16(pattern16),
+		new Reduction_17(pattern17),
+		new Reduction_18(pattern18),
+		new Reduction_19(pattern19),
+		new Reduction_20(pattern20),
+		new Reduction_21(pattern21)
 	};
 
 
@@ -1331,9 +1652,13 @@ new Reduction_21()
 			Automaton automaton = reader.read();
 			System.out.print("PARSED: ");
 			print(automaton);
-			new SimpleRewriter(inferences,reductions,SCHEMA).apply(automaton);
+			StrategyRewriter.Strategy<InferenceRule> inferenceStrategy = new SimpleRewriteStrategy<InferenceRule>(automaton, inferences);
+			StrategyRewriter.Strategy<ReductionRule> reductionStrategy = new SimpleRewriteStrategy<ReductionRule>(automaton, reductions);
+			StrategyRewriter rw = new StrategyRewriter(automaton,inferenceStrategy, reductionStrategy, SCHEMA);
+			rw.apply(50,10000);
 			System.out.print("REWROTE: ");
 			print(automaton);
+			System.out.println("\n\n=> (" + rw.getStats() + ")\n");
 		} catch(PrettyAutomataReader.SyntaxError ex) {
 			System.err.println(ex.getMessage());
 		}

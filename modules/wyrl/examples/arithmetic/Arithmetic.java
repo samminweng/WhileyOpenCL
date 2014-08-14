@@ -18,7 +18,7 @@ public final class Arithmetic {
 		return automaton.add(new Automaton.Term(K_Var, r1));
 	}
 
-	// term $12<Mul($10<^[^real,^{|$3<^AExpr>...|}[$3<^AExpr>...]]>)>
+	// term $12<Mul($10<^[^real,^{|$3<^AExpr<$12|Num(^real)|Sum($10)|Div(^[$3,$3])|Var(^string)>>...|}[$3<^AExpr<$12|Num(^real)|Sum($10)|Div(^[$3,$3])|Var(^string)>>...]]>)>
 	public final static int K_Mul = 1;
 	public final static int Mul(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
@@ -29,7 +29,7 @@ public final class Arithmetic {
 		return automaton.add(new Automaton.Term(K_Mul, r1));
 	}
 
-	// Mul([real n, {|$9<AExpr> rest...|}])
+	// Mul([real n, {|$9<AExpr<Num(^real)|Sum(^[^real,^{|^$9...|}[^$9...]])|Mul(^[^real,^{|^$9...|}[^$9...]])|Div(^[^$9,^$9])|Var(^string)>> rest...|}])
 	private final static class Reduction_0 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_0(Pattern.Term pattern) { super(pattern); }
@@ -84,7 +84,7 @@ public final class Arithmetic {
 		public final int minimum() { return 0; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Mul([real x, {|Num(real y), $9<AExpr> rest...|}])
+	// Mul([real x, {|Num(real y), $9<AExpr<Num(^real)|Sum(^[^real,^{|^$9...|}[^$9...]])|Mul(^[^real,^{|^$9...|}[^$9...]])|Div(^[^$9,^$9])|Var(^string)>> rest...|}])
 	private final static class Reduction_1 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_1(Pattern.Term pattern) { super(pattern); }
@@ -147,10 +147,10 @@ public final class Arithmetic {
 			return false;
 		}
 
-		public final int minimum() { return 0; }
+		public final int minimum() { return 5; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Mul([real n1, {|Mul([real n2, {|$9<AExpr> xs...|}]), $9<AExpr> ys...|}])
+	// Mul([real n1, {|Mul([real n2, {|$9<AExpr<Num(^real)|Sum(^[^real,^{|^$9...|}[^$9...]])|Mul(^[^real,^{|^$9...|}[^$9...]])|Div(^[^$9,^$9])|Var(^string)>> xs...|}]), $9<AExpr<Num(^real)|Sum(^[^real,^{|^$9...|}[^$9...]])|Mul(^[^real,^{|^$9...|}[^$9...]])|Div(^[^$9,^$9])|Var(^string)>> ys...|}])
 	private final static class Reduction_2 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_2(Pattern.Term pattern) { super(pattern); }
@@ -226,10 +226,10 @@ public final class Arithmetic {
 			return false;
 		}
 
-		public final int minimum() { return 0; }
+		public final int minimum() { return 7; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Mul([real n1, {|Sum([real n2, {|$9<AExpr> xs...|}]), $9<AExpr> ys...|}])
+	// Mul([real n1, {|Sum([real n2, {|$9<AExpr<Num(^real)|Sum(^[^real,^{|^$9...|}[^$9...]])|Mul(^[^real,^{|^$9...|}[^$9...]])|Div(^[^$9,^$9])|Var(^string)>> xs...|}]), $9<AExpr<Num(^real)|Sum(^[^real,^{|^$9...|}[^$9...]])|Mul(^[^real,^{|^$9...|}[^$9...]])|Div(^[^$9,^$9])|Var(^string)>> ys...|}])
 	private final static class Reduction_3 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_3(Pattern.Term pattern) { super(pattern); }
@@ -316,10 +316,10 @@ public final class Arithmetic {
 			return false;
 		}
 
-		public final int minimum() { return 0; }
+		public final int minimum() { return 7; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $8<Div(^[$2<^AExpr>,$2])>
+	// term $8<Div(^[$2<^AExpr<$8|Num(^real)|Sum(^[^real,^{|$2...|}[$2...]])|Mul(^[^real,^{|$2...|}[$2...]])|Var(^string)>>,$2])>
 	public final static int K_Div = 2;
 	public final static int Div(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
@@ -330,7 +330,7 @@ public final class Arithmetic {
 		return automaton.add(new Automaton.Term(K_Div, r1));
 	}
 
-	// term $12<Sum($10<^[^real,^{|$3<^AExpr>...|}[$3<^AExpr>...]]>)>
+	// term $12<Sum($10<^[^real,^{|$3<^AExpr<$12|Num(^real)|Mul($10)|Div(^[$3,$3])|Var(^string)>>...|}[$3<^AExpr<$12|Num(^real)|Mul($10)|Div(^[$3,$3])|Var(^string)>>...]]>)>
 	public final static int K_Sum = 3;
 	public final static int Sum(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
@@ -380,10 +380,10 @@ public final class Arithmetic {
 			return false;
 		}
 
-		public final int minimum() { return 0; }
+		public final int minimum() { return 3; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Sum([real n, {|$9<AExpr> x, $9<AExpr> rest...|}])
+	// Sum([real n, {|$9<AExpr<Num(^real)|Sum(^[^real,^{|^$9...|}[^$9...]])|Mul(^[^real,^{|^$9...|}[^$9...]])|Div(^[^$9,^$9])|Var(^string)>> x, $9<AExpr<Num(^real)|Sum(^[^real,^{|^$9...|}[^$9...]])|Mul(^[^real,^{|^$9...|}[^$9...]])|Div(^[^$9,^$9])|Var(^string)>> rest...|}])
 	private final static class Reduction_5 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_5(Pattern.Term pattern) { super(pattern); }
@@ -424,8 +424,8 @@ public final class Arithmetic {
 				s3children[s3j++] = s3.get(s3i);
 			}
 			Automaton.Bag r6 = new Automaton.Bag(s3children);
-			boolean r7 = Runtime.accepts(type2, automaton, r4, SCHEMA); // x is ^NumSumMul
-			boolean r8 = !r7;              // !x is ^NumSumMul
+			boolean r7 = Runtime.accepts(type2, automaton, r4, SCHEMA); // x is ^NumSumMul<Num(^real)|$22<Sum($20<^[^real,^{|$13<^AExpr<Num(^real)|$22|Mul($20)|Div(^[$13,$13])|Var(^string)>>...|}[$13<^AExpr<Num(^real)|$22|Mul($20)|Div(^[$13,$13])|Var(^string)>>...]]>)>|Mul($20)>
+			boolean r8 = !r7;              // !x is ^NumSumMul<Num(^real)|$22<Sum($20<^[^real,^{|$13<^AExpr<Num(^real)|$22|Mul($20)|Div(^[$13,$13])|Var(^string)>>...|}[$13<^AExpr<Num(^real)|$22|Mul($20)|Div(^[$13,$13])|Var(^string)>>...]]>)>|Mul($20)>
 			if(r8) {
 				Automaton.Real r9 = new Automaton.Real(1); // 1.0
 				int r10 = automaton.add(r9);
@@ -453,7 +453,7 @@ public final class Arithmetic {
 		public final int minimum() { return 0; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Sum([real x, {|Num(real y), $9<AExpr> rest...|}])
+	// Sum([real x, {|Num(real y), $9<AExpr<Num(^real)|Sum(^[^real,^{|^$9...|}[^$9...]])|Mul(^[^real,^{|^$9...|}[^$9...]])|Div(^[^$9,^$9])|Var(^string)>> rest...|}])
 	private final static class Reduction_6 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_6(Pattern.Term pattern) { super(pattern); }
@@ -516,10 +516,10 @@ public final class Arithmetic {
 			return false;
 		}
 
-		public final int minimum() { return 0; }
+		public final int minimum() { return 5; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Sum([real n, {|Mul([real x, {|$9<AExpr>...|} xs]), Mul([real y, {|$9<AExpr>...|} ys]), $9<AExpr> zs...|}])
+	// Sum([real n, {|Mul([real x, {|$9<AExpr<Num(^real)|Sum(^[^real,^{|^$9...|}[^$9...]])|Mul(^[^real,^{|^$9...|}[^$9...]])|Div(^[^$9,^$9])|Var(^string)>>...|} xs]), Mul([real y, {|$9<AExpr<Num(^real)|Sum(^[^real,^{|^$9...|}[^$9...]])|Mul(^[^real,^{|^$9...|}[^$9...]])|Div(^[^$9,^$9])|Var(^string)>>...|} ys]), $9<AExpr<Num(^real)|Sum(^[^real,^{|^$9...|}[^$9...]])|Mul(^[^real,^{|^$9...|}[^$9...]])|Div(^[^$9,^$9])|Var(^string)>> zs...|}])
 	private final static class Reduction_7 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_7(Pattern.Term pattern) { super(pattern); }
@@ -618,7 +618,7 @@ public final class Arithmetic {
 		public final int minimum() { return 0; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Sum([real x, {|Sum([real y, {|$9<AExpr> ys...|}]), $9<AExpr> xs...|}])
+	// Sum([real x, {|Sum([real y, {|$9<AExpr<Num(^real)|Sum(^[^real,^{|^$9...|}[^$9...]])|Mul(^[^real,^{|^$9...|}[^$9...]])|Div(^[^$9,^$9])|Var(^string)>> ys...|}]), $9<AExpr<Num(^real)|Sum(^[^real,^{|^$9...|}[^$9...]])|Mul(^[^real,^{|^$9...|}[^$9...]])|Div(^[^$9,^$9])|Var(^string)>> xs...|}])
 	private final static class Reduction_8 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_8(Pattern.Term pattern) { super(pattern); }
@@ -694,7 +694,7 @@ public final class Arithmetic {
 			return false;
 		}
 
-		public final int minimum() { return 0; }
+		public final int minimum() { return 7; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term True
@@ -705,7 +705,7 @@ public final class Arithmetic {
 	public final static int K_False = 5;
 	public final static Automaton.Term False = new Automaton.Term(K_False);
 
-	// term $7<And($5<^{^BExpr...}>)>
+	// term $7<And($5<^{^BExpr<$7|Bool<True|False>|Var(^string)|Or($5)|Inequality($32<^AExpr<Var(^string)|Num(^real)|Sum(^[^real,^{|$32...|}[$32...]])|Mul(^[^real,^{|$32...|}[$32...]])|Div(^[$32,$32])>>)>...}>)>
 	public final static int K_And = 6;
 	public final static int And(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.Set(r0));
@@ -716,7 +716,7 @@ public final class Arithmetic {
 		return automaton.add(new Automaton.Term(K_And, r1));
 	}
 
-	// And({$9<BExpr> x})
+	// And({$9<BExpr<Bool<True|False>|Var(^string)|And(^{^$9...})|Or(^{^$9...})|Inequality($32<^AExpr<Var(^string)|Num(^real)|Sum(^[^real,^{|$32...|}[$32...]])|Mul(^[^real,^{|$32...|}[$32...]])|Div(^[$32,$32])>>)>> x})
 	private final static class Reduction_9 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_9(Pattern.Term pattern) { super(pattern); }
@@ -753,10 +753,10 @@ public final class Arithmetic {
 			return false;
 		}
 
-		public final int minimum() { return 0; }
+		public final int minimum() { return 2; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// And({Bool b, $9<BExpr> xs...})
+	// And({Bool<True|False> b, $9<BExpr<Bool<True|False>|Var(^string)|And(^{^$9...})|Or(^{^$9...})|Inequality($32<^AExpr<Var(^string)|Num(^real)|Sum(^[^real,^{|$32...|}[$32...]])|Mul(^[^real,^{|$32...|}[$32...]])|Div(^[$32,$32])>>)>> xs...})
 	private final static class Reduction_10 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_10(Pattern.Term pattern) { super(pattern); }
@@ -827,10 +827,10 @@ public final class Arithmetic {
 			return false;
 		}
 
-		public final int minimum() { return 0; }
+		public final int minimum() { return 2; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// And({And({$9<BExpr> xs...}), $9<BExpr> ys...})
+	// And({And({$9<BExpr<Bool<True|False>|Var(^string)|And(^{^$9...})|Or(^{^$9...})|Inequality($32<^AExpr<Var(^string)|Num(^real)|Sum(^[^real,^{|$32...|}[$32...]])|Mul(^[^real,^{|$32...|}[$32...]])|Div(^[$32,$32])>>)>> xs...}), $9<BExpr<Bool<True|False>|Var(^string)|And(^{^$9...})|Or(^{^$9...})|Inequality($32<^AExpr<Var(^string)|Num(^real)|Sum(^[^real,^{|$32...|}[$32...]])|Mul(^[^real,^{|$32...|}[$32...]])|Div(^[$32,$32])>>)>> ys...})
 	private final static class Reduction_11 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_11(Pattern.Term pattern) { super(pattern); }
@@ -890,10 +890,10 @@ public final class Arithmetic {
 			return false;
 		}
 
-		public final int minimum() { return 0; }
+		public final int minimum() { return 3; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// And({Or({$9<BExpr> xs...}), $9<BExpr> ys...})
+	// And({Or({$9<BExpr<Bool<True|False>|Var(^string)|And(^{^$9...})|Or(^{^$9...})|Inequality($32<^AExpr<Var(^string)|Num(^real)|Sum(^[^real,^{|$32...|}[$32...]])|Mul(^[^real,^{|$32...|}[$32...]])|Div(^[$32,$32])>>)>> xs...}), $9<BExpr<Bool<True|False>|Var(^string)|And(^{^$9...})|Or(^{^$9...})|Inequality($32<^AExpr<Var(^string)|Num(^real)|Sum(^[^real,^{|$32...|}[$32...]])|Mul(^[^real,^{|$32...|}[$32...]])|Div(^[$32,$32])>>)>> ys...})
 	private final static class Reduction_12 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_12(Pattern.Term pattern) { super(pattern); }
@@ -962,10 +962,10 @@ public final class Arithmetic {
 			return false;
 		}
 
-		public final int minimum() { return 0; }
+		public final int minimum() { return 3; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $7<Or($5<^{^BExpr...}>)>
+	// term $7<Or($5<^{^BExpr<$7|Bool<True|False>|Var(^string)|And($5)|Inequality($32<^AExpr<Var(^string)|Num(^real)|Sum(^[^real,^{|$32...|}[$32...]])|Mul(^[^real,^{|$32...|}[$32...]])|Div(^[$32,$32])>>)>...}>)>
 	public final static int K_Or = 7;
 	public final static int Or(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.Set(r0));
@@ -976,7 +976,7 @@ public final class Arithmetic {
 		return automaton.add(new Automaton.Term(K_Or, r1));
 	}
 
-	// Or({$9<BExpr> x})
+	// Or({$9<BExpr<Bool<True|False>|Var(^string)|And(^{^$9...})|Or(^{^$9...})|Inequality($32<^AExpr<Var(^string)|Num(^real)|Sum(^[^real,^{|$32...|}[$32...]])|Mul(^[^real,^{|$32...|}[$32...]])|Div(^[$32,$32])>>)>> x})
 	private final static class Reduction_13 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_13(Pattern.Term pattern) { super(pattern); }
@@ -1013,10 +1013,10 @@ public final class Arithmetic {
 			return false;
 		}
 
-		public final int minimum() { return 0; }
+		public final int minimum() { return 2; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Or({Bool b, $9<BExpr> xs...})
+	// Or({Bool<True|False> b, $9<BExpr<Bool<True|False>|Var(^string)|And(^{^$9...})|Or(^{^$9...})|Inequality($32<^AExpr<Var(^string)|Num(^real)|Sum(^[^real,^{|$32...|}[$32...]])|Mul(^[^real,^{|$32...|}[$32...]])|Div(^[$32,$32])>>)>> xs...})
 	private final static class Reduction_14 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_14(Pattern.Term pattern) { super(pattern); }
@@ -1087,10 +1087,10 @@ public final class Arithmetic {
 			return false;
 		}
 
-		public final int minimum() { return 0; }
+		public final int minimum() { return 2; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Or({Or({$9<BExpr> xs...}), $9<BExpr> ys...})
+	// Or({Or({$9<BExpr<Bool<True|False>|Var(^string)|And(^{^$9...})|Or(^{^$9...})|Inequality($32<^AExpr<Var(^string)|Num(^real)|Sum(^[^real,^{|$32...|}[$32...]])|Mul(^[^real,^{|$32...|}[$32...]])|Div(^[$32,$32])>>)>> xs...}), $9<BExpr<Bool<True|False>|Var(^string)|And(^{^$9...})|Or(^{^$9...})|Inequality($32<^AExpr<Var(^string)|Num(^real)|Sum(^[^real,^{|$32...|}[$32...]])|Mul(^[^real,^{|$32...|}[$32...]])|Div(^[$32,$32])>>)>> ys...})
 	private final static class Reduction_15 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_15(Pattern.Term pattern) { super(pattern); }
@@ -1150,10 +1150,10 @@ public final class Arithmetic {
 			return false;
 		}
 
-		public final int minimum() { return 0; }
+		public final int minimum() { return 3; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term Inequality($2<^AExpr>)
+	// term Inequality($2<^AExpr<Num(^real)|Sum(^[^real,^{|$2...|}[$2...]])|Mul(^[^real,^{|$2...|}[$2...]])|Div(^[$2,$2])|Var(^string)>>)
 	public final static int K_Inequality = 8;
 	public final static int Inequality(Automaton automaton, int r0) {
 		return automaton.add(new Automaton.Term(K_Inequality, r0));
@@ -1206,10 +1206,10 @@ public final class Arithmetic {
 			return false;
 		}
 
-		public final int minimum() { return 0; }
+		public final int minimum() { return 2; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// And({Inequality(Sum([real x1, {|Mul([real x2, {|$9<AExpr> v1|}]), $12<Mul($10<^[^real,^{|$3<^AExpr>...|}[$3<^AExpr>...]]>)> xs...|}]) s1) eq1, Inequality(Sum([real y1, {|Mul([real y2, {|$9<AExpr> v2|}]), $12<Mul($10<^[^real,^{|$3<^AExpr>...|}[$3<^AExpr>...]]>)> ys...|}]) s2) eq2, $9<BExpr> rest...})
+	// And({Inequality(Sum([real x1, {|Mul([real x2, {|$9<AExpr<Num(^real)|Sum(^[^real,^{|^$9...|}[^$9...]])|Mul(^[^real,^{|^$9...|}[^$9...]])|Div(^[^$9,^$9])|Var(^string)>> v1|}]), $12<Mul($10<^[^real,^{|$3<^AExpr<$12|Num(^real)|Sum($10)|Div(^[$3,$3])|Var(^string)>>...|}[$3<^AExpr<$12|Num(^real)|Sum($10)|Div(^[$3,$3])|Var(^string)>>...]]>)> xs...|}]) s1) eq1, Inequality(Sum([real y1, {|Mul([real y2, {|$9<AExpr<Num(^real)|Sum(^[^real,^{|^$9...|}[^$9...]])|Mul(^[^real,^{|^$9...|}[^$9...]])|Div(^[^$9,^$9])|Var(^string)>> v2|}]), $12<Mul($10<^[^real,^{|$3<^AExpr<$12|Num(^real)|Sum($10)|Div(^[$3,$3])|Var(^string)>>...|}[$3<^AExpr<$12|Num(^real)|Sum($10)|Div(^[$3,$3])|Var(^string)>>...]]>)> ys...|}]) s2) eq2, $9<BExpr<Bool<True|False>|Var(^string)|And(^{^$9...})|Or(^{^$9...})|Inequality($32<^AExpr<Var(^string)|Num(^real)|Sum(^[^real,^{|$32...|}[$32...]])|Mul(^[^real,^{|$32...|}[$32...]])|Div(^[$32,$32])>>)>> rest...})
 	private final static class Inference_0 extends AbstractRewriteRule implements InferenceRule {
 
 		public Inference_0(Pattern.Term pattern) { super(pattern); }
@@ -1457,21 +1457,21 @@ public final class Arithmetic {
 	public static final Schema SCHEMA = new Schema(new Schema.Term[]{
 		// Var(^string)
 		Schema.Term("Var",Schema.String),
-		// $12<Mul($10<^[^real,^{|$3<^AExpr>...|}[$3<^AExpr>...]]>)>
+		// $12<Mul($10<^[^real,^{|$3<^AExpr<$12|Num(^real)|Sum($10)|Div(^[$3,$3])|Var(^string)>>...|}[$3<^AExpr<$12|Num(^real)|Sum($10)|Div(^[$3,$3])|Var(^string)>>...]]>)>
 		Schema.Term("Mul",Schema.List(true,Schema.Real,Schema.Bag(true))),
-		// $8<Div(^[$2<^AExpr>,$2])>
+		// $8<Div(^[$2<^AExpr<$8|Num(^real)|Sum(^[^real,^{|$2...|}[$2...]])|Mul(^[^real,^{|$2...|}[$2...]])|Var(^string)>>,$2])>
 		Schema.Term("Div",Schema.List(true,Schema.Or(Schema.Any, Schema.Term("Num",Schema.Real), Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Var",Schema.String)),Schema.Any)),
-		// $12<Sum($10<^[^real,^{|$3<^AExpr>...|}[$3<^AExpr>...]]>)>
+		// $12<Sum($10<^[^real,^{|$3<^AExpr<$12|Num(^real)|Mul($10)|Div(^[$3,$3])|Var(^string)>>...|}[$3<^AExpr<$12|Num(^real)|Mul($10)|Div(^[$3,$3])|Var(^string)>>...]]>)>
 		Schema.Term("Sum",Schema.List(true,Schema.Real,Schema.Bag(true))),
 		// True
 		Schema.Term("True"),
 		// False
 		Schema.Term("False"),
-		// $7<And($5<^{^BExpr...}>)>
+		// $7<And($5<^{^BExpr<$7|Bool<True|False>|Var(^string)|Or($5)|Inequality($32<^AExpr<Var(^string)|Num(^real)|Sum(^[^real,^{|$32...|}[$32...]])|Mul(^[^real,^{|$32...|}[$32...]])|Div(^[$32,$32])>>)>...}>)>
 		Schema.Term("And",Schema.Set(true)),
-		// $7<Or($5<^{^BExpr...}>)>
+		// $7<Or($5<^{^BExpr<$7|Bool<True|False>|Var(^string)|And($5)|Inequality($32<^AExpr<Var(^string)|Num(^real)|Sum(^[^real,^{|$32...|}[$32...]])|Mul(^[^real,^{|$32...|}[$32...]])|Div(^[$32,$32])>>)>...}>)>
 		Schema.Term("Or",Schema.Set(true)),
-		// Inequality($2<^AExpr>)
+		// Inequality($2<^AExpr<Num(^real)|Sum(^[^real,^{|$2...|}[$2...]])|Mul(^[^real,^{|$2...|}[$2...]])|Div(^[$2,$2])|Var(^string)>>)
 		Schema.Term("Inequality",Schema.Or(Schema.Term("Num",Schema.Real), Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any)), Schema.Term("Var",Schema.String))),
 		// Num(^real)
 		Schema.Term("Num",Schema.Real)
@@ -1483,15 +1483,15 @@ public final class Arithmetic {
 
 	// real
 	private static Type type0 = Runtime.Type("Fc0");
-	// $9<AExpr>
+	// $9<AExpr<Num(^real)|Sum(^[^real,^{|^$9...|}[^$9...]])|Mul(^[^real,^{|^$9...|}[^$9...]])|Div(^[^$9,^$9])|Var(^string)>>
 	private static Type type1 = Runtime.Type("9GKF4W6RmGYIpp5CIKMQooJSgG2GdO6CL4aRGt3PeWrTQVo7uZJA9dX5Yg2IgoZ9ACmIfV2LeZp7Bdp7SgKDRdHMYkYMgwp7xs4AdCmIECH6f_2Qeoq7ys5AjdH5YwITgcMgo2");
-	// ^NumSumMul
+	// ^NumSumMul<Num(^real)|$22<Sum($20<^[^real,^{|$13<^AExpr<Num(^real)|$22|Mul($20)|Div(^[$13,$13])|Var(^string)>>...|}[$13<^AExpr<Num(^real)|$22|Mul($20)|Div(^[$13,$13])|Var(^string)>>...]]>)>|Mul($20)>
 	private static Type type2 = Runtime.Type("NGOsJShCKShpJSgdXHosJShGnJpp5CCK6Qlo3PshlEYc2HhZZ9PB1EAl1IJ4JGs0bResq7Eh1DNdHLYgZLYolLtk_9SCHETlmMoFJPqGYKW8MJCW5Ty_NglPYs3Qhoq7ys4AjCmIECH6t_YTegr7dl6AxdH5YcqUgVN3v$");
-	// $9<BExpr>
+	// $9<BExpr<Bool<True|False>|Var(^string)|And(^{^$9...})|Or(^{^$9...})|Inequality($32<^AExpr<Var(^string)|Num(^real)|Sum(^[^real,^{|$32...|}[$32...]])|Mul(^[^real,^{|$32...|}[$32...]])|Div(^[$32,$32])>>)>>
 	private static Type type3 = Runtime.Type("zG_F4W6RmGZFjx5QoNKNmGIFiG58E86dGHiKLRp45QdGMTGp4PiW6UQVo7uZJA9G3KmKMOIk3ACG_GWlqR_ClIgVK7D_p5PCmDQp1MeZl7ws4AUdmHYZq9jca9fCHEglHQYs2Qgw5K0K3Tk8b9B5YwYTgg6CDKMQoBKShGIIpl5C3_aSGWqY0eWe0il585YZbXGAA5ecl7xpNkXYl7uh1DN5eZOBHYWal7SgOZ2bW9S5Ysbb0AU5Ywbb0Ad5YcbTYoleGDg5eoPB1XWf0Aj5lHE");
-	// Bool
+	// Bool<True|False>
 	private static Type type4 = Runtime.Type("QFZFjx5Q3G_RpKq3vk1EJOJNgCMOIs2Az3HE7hGHYcYHhgJko2");
-	// $12<Mul($10<^[^real,^{|$3<^AExpr>...|}[$3<^AExpr>...]]>)>
+	// $12<Mul($10<^[^real,^{|$3<^AExpr<$12|Num(^real)|Sum($10)|Div(^[$3,$3])|Var(^string)>>...|}[$3<^AExpr<$12|Num(^real)|Sum($10)|Div(^[$3,$3])|Var(^string)>>...]]>)>
 	private static Type type5 = Runtime.Type("9GIIpla9PFKF4W6RmdXMYon9ssY9zBmD7CH68_YHego7uk3ACGYIpp5CIKMQoFJPqGYKW8MJDWaPshr5QC1ERpHMYwoDgwp7Nl3AdCHExBH6f_2Qeoq7Ot5AjdH5YcKTgcMso2");
 
 	// =========================================================================
@@ -1706,8 +1706,10 @@ public final class Arithmetic {
 			Automaton automaton = reader.read();
 			System.out.print("PARSED: ");
 			print(automaton);
-			Rewriter rw = new SimpleRewriter(inferences,reductions,SCHEMA);
-			rw.apply(automaton);
+			StrategyRewriter.Strategy<InferenceRule> inferenceStrategy = new SimpleRewriteStrategy<InferenceRule>(automaton, inferences);
+			StrategyRewriter.Strategy<ReductionRule> reductionStrategy = new SimpleRewriteStrategy<ReductionRule>(automaton, reductions);
+			StrategyRewriter rw = new StrategyRewriter(automaton,inferenceStrategy, reductionStrategy, SCHEMA);
+			rw.apply(10000);
 			System.out.print("REWROTE: ");
 			print(automaton);
 			System.out.println("\n\n=> (" + rw.getStats() + ")\n");

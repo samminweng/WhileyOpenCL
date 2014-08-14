@@ -210,7 +210,22 @@ public class ConvertInterpreter extends Interpreter {
 
 		return to;
 	}
+	
+	private Constant toConstantNegation(Constant from, Type fromType, Type toType){
+		Constant to = null;
+		if (fromType instanceof Type.Int) {
+			Constant.Integer integer = (Constant.Integer) from;
+			to = Constant.V_INTEGER(new BigInteger(integer.value.toString()));
+		} else if (fromType instanceof Type.Real){
+			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
+		}else {
+			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
+		}
 
+		return to;
+	}
+	
+	
 	/***
 	 * Cast Constant object to Constant object.
 	 * 
@@ -240,6 +255,8 @@ public class ConvertInterpreter extends Interpreter {
 			to = toConstantMap(from, fromType, toType);
 		} else if (toType instanceof Type.Set) {
 			to = toConstantSet(from, fromType, toType);
+		} else if (toType instanceof Type.Negation){
+			to = toConstantNegation(from, fromType, toType);
 		} else {
 			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
 		}

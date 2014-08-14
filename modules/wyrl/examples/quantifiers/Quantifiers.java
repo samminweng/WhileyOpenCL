@@ -26,7 +26,7 @@ public final class Quantifiers {
 	public final static int K_False = 2;
 	public final static Automaton.Term False = new Automaton.Term(K_False);
 
-	// term Fn(^[^string,^Expr...])
+	// term $9<Fn(^[^string,$3<^BExpr<$9|Bool<True|False>|Not($3)|And(^{$3...})|Or(^{$3...})|Var(^string)|ForAll(^[^{^Var(^string)...},$3])|Exists(^[^{^Var(^string)...},$3])>>...])>
 	public final static int K_Fn = 3;
 	public final static int Fn(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
@@ -37,13 +37,13 @@ public final class Quantifiers {
 		return automaton.add(new Automaton.Term(K_Fn, r1));
 	}
 
-	// term $4<Not($2<^BExpr>)>
+	// term $4<Not($2<^BExpr<$4|Bool<True|False>|And(^{$2...})|Or(^{$2...})|Var(^string)|Fn(^[^string,$2...])|ForAll(^[^{^Var(^string)...},$2])|Exists(^[^{^Var(^string)...},$2])>>)>
 	public final static int K_Not = 4;
 	public final static int Not(Automaton automaton, int r0) {
 		return automaton.add(new Automaton.Term(K_Not, r0));
 	}
 
-	// Not(Bool b)
+	// 
 	private final static class Reduction_0 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_0(Pattern.Term pattern) { super(pattern); }
@@ -61,9 +61,8 @@ public final class Quantifiers {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r1 = state[1]; // b
 			Automaton.Term r2 = True;
@@ -73,24 +72,24 @@ public final class Quantifiers {
 				Automaton.Term r5 = False;
 				int r6 = automaton.add(r5);
 				if(r0 != r6) {
-					automaton.rewrite(r0, r6);
-					return true;
+					return automaton.rewrite(r0, r6);
 				}
 			}
 			Automaton.Term r7 = True;
 			int r8 = automaton.add(r7);
 			if(r0 != r8) {
-				automaton.rewrite(r0, r8);
-				return true;
+				return automaton.rewrite(r0, r8);
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
 		public final int minimum() { return 1; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Not(Not(any x))
+	// 
 	private final static class Reduction_1 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_1(Pattern.Term pattern) { super(pattern); }
@@ -111,23 +110,23 @@ public final class Quantifiers {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r2 = state[2]; // x
 			if(r0 != r2) {
-				automaton.rewrite(r0, r2);
-				return true;
+				return automaton.rewrite(r0, r2);
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
 		public final int minimum() { return 1; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Not(And({$12<BExpr> xs...}))
+	// 
 	private final static class Reduction_2 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_2(Pattern.Term pattern) { super(pattern); }
@@ -150,9 +149,8 @@ public final class Quantifiers {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			Automaton.Collection s2 = (Automaton.Collection) automaton.get(state[2]);
 			int[] s2children = new int[s2.size() - 0];
@@ -172,17 +170,18 @@ public final class Quantifiers {
 			Automaton.Term r9 = new Automaton.Term(K_Or, r8);
 			int r10 = automaton.add(r9);
 			if(r0 != r10) {
-				automaton.rewrite(r0, r10);
-				return true;
+				return automaton.rewrite(r0, r10);
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
 		public final int minimum() { return 2; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Not(Or({$12<BExpr> xs...}))
+	// 
 	private final static class Reduction_3 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_3(Pattern.Term pattern) { super(pattern); }
@@ -205,9 +204,8 @@ public final class Quantifiers {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			Automaton.Collection s2 = (Automaton.Collection) automaton.get(state[2]);
 			int[] s2children = new int[s2.size() - 0];
@@ -227,17 +225,18 @@ public final class Quantifiers {
 			Automaton.Term r9 = new Automaton.Term(K_And, r8);
 			int r10 = automaton.add(r9);
 			if(r0 != r10) {
-				automaton.rewrite(r0, r10);
-				return true;
+				return automaton.rewrite(r0, r10);
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
 		public final int minimum() { return 2; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $7<And($5<^{$2<^BExpr>...}>)>
+	// term $7<And($5<^{$2<^BExpr<$7|Bool<True|False>|Not($2)|Or($5)|Var(^string)|Fn(^[^string,$2...])|ForAll(^[^{^Var(^string)...},$2])|Exists(^[^{^Var(^string)...},$2])>>...}>)>
 	public final static int K_And = 5;
 	public final static int And(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.Set(r0));
@@ -248,7 +247,7 @@ public final class Quantifiers {
 		return automaton.add(new Automaton.Term(K_And, r1));
 	}
 
-	// And({$12<BExpr> x})
+	// 
 	private final static class Reduction_4 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_4(Pattern.Term pattern) { super(pattern); }
@@ -271,24 +270,24 @@ public final class Quantifiers {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r2 = state[2]; // x
 			int r3 = state[3];
 			if(r0 != r2) {
-				automaton.rewrite(r0, r2);
-				return true;
+				return automaton.rewrite(r0, r2);
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
 		public final int minimum() { return 2; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// And({Bool b, $12<BExpr> xs...})
+	// 
 	private final static class Reduction_5 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_5(Pattern.Term pattern) { super(pattern); }
@@ -313,9 +312,8 @@ public final class Quantifiers {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r2 = state[2]; // b
 			int r3 = state[3];
@@ -333,8 +331,7 @@ public final class Quantifiers {
 				Automaton.Term r8 = False;
 				int r9 = automaton.add(r8);
 				if(r0 != r9) {
-					automaton.rewrite(r0, r9);
-					return true;
+					return automaton.rewrite(r0, r9);
 				}
 			}
 			Automaton.Int r10 = r4.lengthOf(); // |xs|
@@ -344,25 +341,25 @@ public final class Quantifiers {
 				Automaton.Term r13 = True;
 				int r14 = automaton.add(r13);
 				if(r0 != r14) {
-					automaton.rewrite(r0, r14);
-					return true;
+					return automaton.rewrite(r0, r14);
 				}
 			}
 			int r15 = automaton.add(r4);
 			Automaton.Term r16 = new Automaton.Term(K_And, r15);
 			int r17 = automaton.add(r16);
 			if(r0 != r17) {
-				automaton.rewrite(r0, r17);
-				return true;
+				return automaton.rewrite(r0, r17);
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
 		public final int minimum() { return 2; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// And({And({$12<BExpr> xs...}), $12<BExpr> ys...})
+	// 
 	private final static class Reduction_6 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_6(Pattern.Term pattern) { super(pattern); }
@@ -392,9 +389,8 @@ public final class Quantifiers {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r3 = state[3];
 			Automaton.Collection s4 = (Automaton.Collection) automaton.get(state[4]);
@@ -415,17 +411,18 @@ public final class Quantifiers {
 			Automaton.Term r9 = new Automaton.Term(K_And, r8);
 			int r10 = automaton.add(r9);
 			if(r0 != r10) {
-				automaton.rewrite(r0, r10);
-				return true;
+				return automaton.rewrite(r0, r10);
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
 		public final int minimum() { return 3; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// And({Not($12<BExpr> x), $12<BExpr> y, $12<BExpr> ys...})
+	// 
 	private final static class Reduction_7 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_7(Pattern.Term pattern) { super(pattern); }
@@ -457,9 +454,8 @@ public final class Quantifiers {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r3 = state[3];
 			int r4 = state[4]; // x
@@ -477,18 +473,19 @@ public final class Quantifiers {
 				Automaton.Term r9 = False;
 				int r10 = automaton.add(r9);
 				if(r0 != r10) {
-					automaton.rewrite(r0, r10);
-					return true;
+					return automaton.rewrite(r0, r10);
 				}
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
 		public final int minimum() { return 0; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// And({Or({$12<BExpr> xs...}), $12<BExpr> ys...})
+	// 
 	private final static class Reduction_8 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_8(Pattern.Term pattern) { super(pattern); }
@@ -518,9 +515,8 @@ public final class Quantifiers {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r3 = state[3];
 			Automaton.Collection s4 = (Automaton.Collection) automaton.get(state[4]);
@@ -550,17 +546,18 @@ public final class Quantifiers {
 			Automaton.Term r14 = new Automaton.Term(K_Or, r13);
 			int r15 = automaton.add(r14);
 			if(r0 != r15) {
-				automaton.rewrite(r0, r15);
-				return true;
+				return automaton.rewrite(r0, r15);
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
 		public final int minimum() { return 3; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $7<Or($5<^{$2<^BExpr>...}>)>
+	// term $7<Or($5<^{$2<^BExpr<$7|Bool<True|False>|Not($2)|And($5)|Var(^string)|Fn(^[^string,$2...])|ForAll(^[^{^Var(^string)...},$2])|Exists(^[^{^Var(^string)...},$2])>>...}>)>
 	public final static int K_Or = 6;
 	public final static int Or(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.Set(r0));
@@ -571,7 +568,7 @@ public final class Quantifiers {
 		return automaton.add(new Automaton.Term(K_Or, r1));
 	}
 
-	// Or({$12<BExpr> x})
+	// 
 	private final static class Reduction_9 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_9(Pattern.Term pattern) { super(pattern); }
@@ -594,24 +591,24 @@ public final class Quantifiers {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r2 = state[2]; // x
 			int r3 = state[3];
 			if(r0 != r2) {
-				automaton.rewrite(r0, r2);
-				return true;
+				return automaton.rewrite(r0, r2);
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
 		public final int minimum() { return 2; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Or({Bool b, $12<BExpr> xs...})
+	// 
 	private final static class Reduction_10 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_10(Pattern.Term pattern) { super(pattern); }
@@ -636,9 +633,8 @@ public final class Quantifiers {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r2 = state[2]; // b
 			int r3 = state[3];
@@ -656,8 +652,7 @@ public final class Quantifiers {
 				Automaton.Term r8 = True;
 				int r9 = automaton.add(r8);
 				if(r0 != r9) {
-					automaton.rewrite(r0, r9);
-					return true;
+					return automaton.rewrite(r0, r9);
 				}
 			}
 			Automaton.Int r10 = r4.lengthOf(); // |xs|
@@ -667,25 +662,25 @@ public final class Quantifiers {
 				Automaton.Term r13 = False;
 				int r14 = automaton.add(r13);
 				if(r0 != r14) {
-					automaton.rewrite(r0, r14);
-					return true;
+					return automaton.rewrite(r0, r14);
 				}
 			}
 			int r15 = automaton.add(r4);
 			Automaton.Term r16 = new Automaton.Term(K_Or, r15);
 			int r17 = automaton.add(r16);
 			if(r0 != r17) {
-				automaton.rewrite(r0, r17);
-				return true;
+				return automaton.rewrite(r0, r17);
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
 		public final int minimum() { return 2; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Or({Not($12<BExpr> x), $12<BExpr> y, $12<BExpr> ys...})
+	// 
 	private final static class Reduction_11 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_11(Pattern.Term pattern) { super(pattern); }
@@ -717,9 +712,8 @@ public final class Quantifiers {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r3 = state[3];
 			int r4 = state[4]; // x
@@ -737,18 +731,19 @@ public final class Quantifiers {
 				Automaton.Term r9 = True;
 				int r10 = automaton.add(r9);
 				if(r0 != r10) {
-					automaton.rewrite(r0, r10);
-					return true;
+					return automaton.rewrite(r0, r10);
 				}
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
 		public final int minimum() { return 0; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Or({Or({$12<BExpr> xs...}), $12<BExpr> ys...})
+	// 
 	private final static class Reduction_12 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_12(Pattern.Term pattern) { super(pattern); }
@@ -778,9 +773,8 @@ public final class Quantifiers {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r3 = state[3];
 			Automaton.Collection s4 = (Automaton.Collection) automaton.get(state[4]);
@@ -801,17 +795,18 @@ public final class Quantifiers {
 			Automaton.Term r9 = new Automaton.Term(K_Or, r8);
 			int r10 = automaton.add(r9);
 			if(r0 != r10) {
-				automaton.rewrite(r0, r10);
-				return true;
+				return automaton.rewrite(r0, r10);
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
 		public final int minimum() { return 3; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $13<ForAll($11<^[^{^Var(^string)...},$7<^BExpr>]>)>
+	// term $13<ForAll($11<^[^{^Var(^string)...},$7<^BExpr<$13|Var(^string)|Bool<True|False>|Not($7)|And(^{$7...})|Or(^{$7...})|Fn(^[^string,$7...])|Exists($11)>>]>)>
 	public final static int K_ForAll = 7;
 	public final static int ForAll(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
@@ -822,7 +817,7 @@ public final class Quantifiers {
 		return automaton.add(new Automaton.Term(K_ForAll, r1));
 	}
 
-	// ForAll([{Var(^string) qs...}, $12<BExpr> be])
+	// 
 	private final static class Reduction_13 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_13(Pattern.Term pattern) { super(pattern); }
@@ -844,9 +839,8 @@ public final class Quantifiers {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			Automaton.Collection s2 = (Automaton.Collection) automaton.get(state[2]);
 			int[] s2children = new int[s2.size() - 0];
@@ -855,25 +849,26 @@ public final class Quantifiers {
 			}
 			Automaton.Set r3 = new Automaton.Set(s2children);
 			int r4 = state[4]; // be
-			boolean r5 = Runtime.accepts(type4, automaton, r4, SCHEMA); // be is ^Bool
+			boolean r5 = Runtime.accepts(type4, automaton, r4, SCHEMA); // be is ^Bool<True|False>
 			Automaton.Int r6 = r3.lengthOf(); // |qs|
 			Automaton.Int r7 = new Automaton.Int(0); // 0
 			boolean r8 = r6.equals(r7);    // |qs| eq 0
-			boolean r9 = r5 || r8;         // be is ^Bool || |qs| eq 0
+			boolean r9 = r5 || r8;         // be is ^Bool<True|False> || |qs| eq 0
 			if(r9) {
 				if(r0 != r4) {
-					automaton.rewrite(r0, r4);
-					return true;
+					return automaton.rewrite(r0, r4);
 				}
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
 		public final int minimum() { return 0; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Not(ForAll([{Var(^string)...} vars, $12<BExpr> be]))
+	// 
 	private final static class Reduction_14 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_14(Pattern.Term pattern) { super(pattern); }
@@ -900,9 +895,8 @@ public final class Quantifiers {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r3 = state[3]; // vars
 			int r5 = state[5]; // be
@@ -913,17 +907,18 @@ public final class Quantifiers {
 			Automaton.Term r10 = new Automaton.Term(K_Exists, r9);
 			int r11 = automaton.add(r10);
 			if(r0 != r11) {
-				automaton.rewrite(r0, r11);
-				return true;
+				return automaton.rewrite(r0, r11);
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
 		public final int minimum() { return 4; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// ForAll([{Var(^string)...} xs, ForAll([{Var(^string)...} ys, $12<BExpr> e])])
+	// 
 	private final static class Reduction_15 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_15(Pattern.Term pattern) { super(pattern); }
@@ -956,9 +951,8 @@ public final class Quantifiers {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r2 = state[2]; // xs
 			int r6 = state[6]; // ys
@@ -972,17 +966,18 @@ public final class Quantifiers {
 			Automaton.Term r15 = new Automaton.Term(K_ForAll, r14);
 			int r16 = automaton.add(r15);
 			if(r0 != r16) {
-				automaton.rewrite(r0, r16);
-				return true;
+				return automaton.rewrite(r0, r16);
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
 		public final int minimum() { return 6; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// And({$12<BExpr> e1, ForAll([{Var(^string), Var(^string)...} vs, $12<BExpr> e2]) qf, $12<BExpr> es...})
+	// 
 	private final static class Inference_0 extends AbstractRewriteRule implements InferenceRule {
 
 		public Inference_0(Pattern.Term pattern) { super(pattern); }
@@ -998,24 +993,26 @@ public final class Quantifiers {
 				if(c1.size() >= 2) {
 					for(int r3=0;r3!=c1.size();++r3) {
 						int r2 = c1.get(r3);
-						for(int r5=0;r5!=c1.size();++r5) {
-							if(r5 == r3) { continue; }
-							int r4 = c1.get(r5);
-							Automaton.State s4 = automaton.get(r4);
-							if(s4.kind == K_ForAll) {
-								Automaton.Term t4 = (Automaton.Term) s4;
-								int r6 = t4.contents;
-								Automaton.State s6 = automaton.get(r6);
-								Automaton.List l6 = (Automaton.List) s6;
-								int r7 = l6.get(0);
-								Automaton.State s7 = automaton.get(r7);
-								Automaton.Collection c7 = (Automaton.Collection) s7;
-								if(c7.size() >= 1) {
-									for(int r9=0;r9!=c7.size();++r9) {
-										int r8 = c7.get(r9);
-										int r11 = l6.get(1);
-										int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, 0, r11, 0};
-										activations.add(new Activation(this,null,state));
+						if(Runtime.accepts(type5,automaton,automaton.get(r2), SCHEMA)) {
+							for(int r5=0;r5!=c1.size();++r5) {
+								if(r5 == r3) { continue; }
+								int r4 = c1.get(r5);
+								Automaton.State s4 = automaton.get(r4);
+								if(s4.kind == K_ForAll) {
+									Automaton.Term t4 = (Automaton.Term) s4;
+									int r6 = t4.contents;
+									Automaton.State s6 = automaton.get(r6);
+									Automaton.List l6 = (Automaton.List) s6;
+									int r7 = l6.get(0);
+									Automaton.State s7 = automaton.get(r7);
+									Automaton.Collection c7 = (Automaton.Collection) s7;
+									if(c7.size() >= 1) {
+										for(int r9=0;r9!=c7.size();++r9) {
+											int r8 = c7.get(r9);
+											int r11 = l6.get(1);
+											int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, 0, r11, 0};
+											activations.add(new Activation(this,null,state));
+										}
 									}
 								}
 							}
@@ -1025,9 +1022,8 @@ public final class Quantifiers {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r2 = state[2]; // e1
 			int r3 = state[3];
@@ -1056,18 +1052,19 @@ public final class Quantifiers {
 				Automaton.Term r22 = new Automaton.Term(K_And, r21);
 				int r23 = automaton.add(r22);
 				if(r0 != r23) {
-					automaton.rewrite(r0, r23);
-					return true;
+					return automaton.rewrite(r0, r23);
 				}
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
 		public final int minimum() { return 0; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $13<Exists($11<^[^{^Var(^string)...},$7<^BExpr>]>)>
+	// term $13<Exists($11<^[^{^Var(^string)...},$7<^BExpr<$13|Var(^string)|Bool<True|False>|Not($7)|And(^{$7...})|Or(^{$7...})|Fn(^[^string,$7...])|ForAll($11)>>]>)>
 	public final static int K_Exists = 8;
 	public final static int Exists(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
@@ -1078,7 +1075,7 @@ public final class Quantifiers {
 		return automaton.add(new Automaton.Term(K_Exists, r1));
 	}
 
-	// Exists([{Var(^string) qs...}, $12<BExpr> be])
+	// 
 	private final static class Reduction_16 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_16(Pattern.Term pattern) { super(pattern); }
@@ -1100,9 +1097,8 @@ public final class Quantifiers {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			Automaton.Collection s2 = (Automaton.Collection) automaton.get(state[2]);
 			int[] s2children = new int[s2.size() - 0];
@@ -1111,25 +1107,26 @@ public final class Quantifiers {
 			}
 			Automaton.Set r3 = new Automaton.Set(s2children);
 			int r4 = state[4]; // be
-			boolean r5 = Runtime.accepts(type4, automaton, r4, SCHEMA); // be is ^Bool
+			boolean r5 = Runtime.accepts(type4, automaton, r4, SCHEMA); // be is ^Bool<True|False>
 			Automaton.Int r6 = r3.lengthOf(); // |qs|
 			Automaton.Int r7 = new Automaton.Int(0); // 0
 			boolean r8 = r6.equals(r7);    // |qs| eq 0
-			boolean r9 = r5 || r8;         // be is ^Bool || |qs| eq 0
+			boolean r9 = r5 || r8;         // be is ^Bool<True|False> || |qs| eq 0
 			if(r9) {
 				if(r0 != r4) {
-					automaton.rewrite(r0, r4);
-					return true;
+					return automaton.rewrite(r0, r4);
 				}
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
 		public final int minimum() { return 0; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Not(Exists([{Var(^string)...} vars, $12<BExpr> be]))
+	// 
 	private final static class Reduction_17 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_17(Pattern.Term pattern) { super(pattern); }
@@ -1156,9 +1153,8 @@ public final class Quantifiers {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r3 = state[3]; // vars
 			int r5 = state[5]; // be
@@ -1169,17 +1165,18 @@ public final class Quantifiers {
 			Automaton.Term r10 = new Automaton.Term(K_ForAll, r9);
 			int r11 = automaton.add(r10);
 			if(r0 != r11) {
-				automaton.rewrite(r0, r11);
-				return true;
+				return automaton.rewrite(r0, r11);
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
 		public final int minimum() { return 4; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Exists([{Var(^string)...} xs, Exists([{Var(^string)...} ys, $12<BExpr> e])])
+	// 
 	private final static class Reduction_18 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_18(Pattern.Term pattern) { super(pattern); }
@@ -1212,9 +1209,8 @@ public final class Quantifiers {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r2 = state[2]; // xs
 			int r6 = state[6]; // ys
@@ -1228,17 +1224,18 @@ public final class Quantifiers {
 			Automaton.Term r15 = new Automaton.Term(K_Exists, r14);
 			int r16 = automaton.add(r15);
 			if(r0 != r16) {
-				automaton.rewrite(r0, r16);
-				return true;
+				return automaton.rewrite(r0, r16);
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
 		public final int minimum() { return 6; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// And({Exists([{Var(^string)...} vs, $12<BExpr> e]), $12<BExpr> es...})
+	// 
 	private final static class Reduction_19 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_19(Pattern.Term pattern) { super(pattern); }
@@ -1272,9 +1269,8 @@ public final class Quantifiers {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r3 = state[3];
 			int r5 = state[5]; // vs
@@ -1295,12 +1291,13 @@ public final class Quantifiers {
 			Automaton.Term r15 = new Automaton.Term(K_Exists, r14);
 			int r16 = automaton.add(r15);
 			if(r0 != r16) {
-				automaton.rewrite(r0, r16);
-				return true;
+				return automaton.rewrite(r0, r16);
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
 		public final int minimum() { return 5; }
 		public final int maximum() { return Integer.MAX_VALUE; }
@@ -1316,17 +1313,17 @@ public final class Quantifiers {
 		Schema.Term("True"),
 		// False
 		Schema.Term("False"),
-		// Fn(^[^string,^Expr...])
+		// $9<Fn(^[^string,$3<^BExpr<$9|Bool<True|False>|Not($3)|And(^{$3...})|Or(^{$3...})|Var(^string)|ForAll(^[^{^Var(^string)...},$3])|Exists(^[^{^Var(^string)...},$3])>>...])>
 		Schema.Term("Fn",Schema.List(true,Schema.String)),
-		// $4<Not($2<^BExpr>)>
+		// $4<Not($2<^BExpr<$4|Bool<True|False>|And(^{$2...})|Or(^{$2...})|Var(^string)|Fn(^[^string,$2...])|ForAll(^[^{^Var(^string)...},$2])|Exists(^[^{^Var(^string)...},$2])>>)>
 		Schema.Term("Not",Schema.Or(Schema.Any, Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Var",Schema.String), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any))),
-		// $7<And($5<^{$2<^BExpr>...}>)>
+		// $7<And($5<^{$2<^BExpr<$7|Bool<True|False>|Not($2)|Or($5)|Var(^string)|Fn(^[^string,$2...])|ForAll(^[^{^Var(^string)...},$2])|Exists(^[^{^Var(^string)...},$2])>>...}>)>
 		Schema.Term("And",Schema.Set(true)),
-		// $7<Or($5<^{$2<^BExpr>...}>)>
+		// $7<Or($5<^{$2<^BExpr<$7|Bool<True|False>|Not($2)|And($5)|Var(^string)|Fn(^[^string,$2...])|ForAll(^[^{^Var(^string)...},$2])|Exists(^[^{^Var(^string)...},$2])>>...}>)>
 		Schema.Term("Or",Schema.Set(true)),
-		// $13<ForAll($11<^[^{^Var(^string)...},$7<^BExpr>]>)>
+		// $13<ForAll($11<^[^{^Var(^string)...},$7<^BExpr<$13|Var(^string)|Bool<True|False>|Not($7)|And(^{$7...})|Or(^{$7...})|Fn(^[^string,$7...])|Exists($11)>>]>)>
 		Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Or(Schema.Any, Schema.Term("Var",Schema.String), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("Not",Schema.Any), Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("Exists",Schema.Any)))),
-		// $13<Exists($11<^[^{^Var(^string)...},$7<^BExpr>]>)>
+		// $13<Exists($11<^[^{^Var(^string)...},$7<^BExpr<$13|Var(^string)|Bool<True|False>|Not($7)|And(^{$7...})|Or(^{$7...})|Fn(^[^string,$7...])|ForAll($11)>>]>)>
 		Schema.Term("Exists",Schema.List(true,Schema.Set(true),Schema.Or(Schema.Any, Schema.Term("Var",Schema.String), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("Not",Schema.Any), Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("ForAll",Schema.Any))))
 	});
 
@@ -1334,16 +1331,18 @@ public final class Quantifiers {
 	// Types
 	// =========================================================================
 
-	// Bool
+	// Bool<True|False>
 	private static Type type0 = Runtime.Type("QFZFjx5Q3G_RpKq3vk1EJOJNgCMOIs2Az3HE7hGHYcYHhgJko2");
 	// any
 	private static Type type1 = Runtime.Type("Fs0");
-	// $12<BExpr>
-	private static Type type2 = Runtime.Type("uG_F4W6RmGZFjx5QosoQoGIFiG58E86CL4aRZNZQZOoQm43QgGLGs_qRoCMV0PfWbTxxNZPgPglHYc2Iho3GJ8MS_ClIgV4K545QnKq3PlmLWZ4MQop7vsKAUdXIYkIPgcq7dhmAgdHQYoYQgwq7ys5AtdH5YwnTgk6G4W6RmCWUgwb975Igr78595tgNc1Yl77pNkXYW9xC1al9jZOcXal7Q5dCH6R5toOcXbl78xOk1el79xOkXeGso2");
+	// $12<BExpr<Bool<True|False>|Not(^$12)|And(^{^$12...})|Or(^{^$12...})|Var(^string)|Fn(^[^string,^$12...])|ForAll(^[^{^Var(^string)...},^$12])|Exists(^[^{^Var(^string)...},^$12])>>
+	private static Type type2 = Runtime.Type("iG_F4W6RmGZFjx5QosoQoGIFiG58E86CL4aRZNZQZOoQm43QgGLGs_qRoCMV0PfWbTxhNoOwOglHYc2Iho3GJ8MS_ClIgV4K545QnKq3PlmLWZ4MQop7vsKAUdXIYkIPgcq7dhmAgdHQYoYQgwq7ys5AtdH5YwnTgkr3vCHPy_nUeVNB1H85gcNcHUYkNgmAC5esNBmYGPYo0aGDO5ecOBHHQ5gkOBXHQ5gsO3Dx");
 	// Var(^string)
 	private static Type type3 = Runtime.Type("3CL4aReZl7ug2Aw3x$");
-	// ^Bool
+	// ^Bool<True|False>
 	private static Type type4 = Runtime.Type("RFZFjx5Qeo3GJ8MS_C0Ego2K545QnKq3zk1HWsIHQco7ugJAB4vw");
+	// GExpr<Bool<True|False>|$26<Fn(^[^string,$20<^BExpr<Bool<True|False>|$26|Not($20)|And(^{$20...})|Or(^{$20...})|Var(^string)|ForAll(^[^{^Var(^string)...},$20])|Exists(^[^{^Var(^string)...},$20])>>...])>|Var(^string)>
+	private static Type type5 = Runtime.Type("vGpG4W6RmGZFjx5QZNZQoNKNm4nLgWOgWEYcnEhV3GJ8MS_CWHgg3K545QnKq3ClXIWkoIQVp7vZKAPdH5J8JGs0bReor3RCXMU_2PeZq7wc5AfGYIjG6C0t5OZwZRZOoQm43QgGLGs_qRoCMVlLgx6YWY0aWe0fl5uCHMvp1UYoaMgsr7ThmA75eZNBXQ95ggNBmQ95goNBHERlmYW9N5YZOgmAP5egOB1bWMYoGbGDT5ewOB1Tc5gZPBHTc5ggP38x");
 
 	// =========================================================================
 	// Patterns
@@ -1454,7 +1453,7 @@ public final class Quantifiers {
 		null);
 	private final static Pattern.Term pattern16 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Leaf(type2), "e1"), 
+			new Pair(new Pattern.Leaf(type5), "e1"), 
 			new Pair(new Pattern.Term("ForAll",
 				new Pattern.List(false, new Pair[]{
 					new Pair(new Pattern.Set(true, new Pair[]{
@@ -1541,8 +1540,10 @@ public final class Quantifiers {
 			Automaton automaton = reader.read();
 			System.out.print("PARSED: ");
 			print(automaton);
-			Rewriter rw = new SimpleRewriter(inferences,reductions,SCHEMA);
-			rw.apply(automaton);
+			StrategyRewriter.Strategy<InferenceRule> inferenceStrategy = new SimpleRewriteStrategy<InferenceRule>(automaton, inferences);
+			StrategyRewriter.Strategy<ReductionRule> reductionStrategy = new SimpleRewriteStrategy<ReductionRule>(automaton, reductions);
+			StrategyRewriter rw = new StrategyRewriter(automaton,inferenceStrategy, reductionStrategy, SCHEMA);
+			rw.apply(50,10000);
 			System.out.print("REWROTE: ");
 			print(automaton);
 			System.out.println("\n\n=> (" + rw.getStats() + ")\n");

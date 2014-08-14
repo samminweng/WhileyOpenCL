@@ -26,13 +26,13 @@ public final class Logic {
 	public final static int K_False = 2;
 	public final static Automaton.Term False = new Automaton.Term(K_False);
 
-	// term $4<Not($2<^BExpr>)>
+	// term $4<Not($2<^BExpr<$4|Bool<True|False>|And(^{$2...})|Or(^{$2...})|Var(^string)>>)>
 	public final static int K_Not = 3;
 	public final static int Not(Automaton automaton, int r0) {
 		return automaton.add(new Automaton.Term(K_Not, r0));
 	}
 
-	// Not(Bool b)
+	// 
 	private final static class Reduction_0 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_0(Pattern.Term pattern) { super(pattern); }
@@ -50,9 +50,8 @@ public final class Logic {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r1 = state[1]; // b
 			Automaton.Term r2 = True;
@@ -62,24 +61,24 @@ public final class Logic {
 				Automaton.Term r5 = False;
 				int r6 = automaton.add(r5);
 				if(r0 != r6) {
-					automaton.rewrite(r0, r6);
-					return true;
+					return automaton.rewrite(r0, r6);
 				}
 			}
 			Automaton.Term r7 = True;
 			int r8 = automaton.add(r7);
 			if(r0 != r8) {
-				automaton.rewrite(r0, r8);
-				return true;
+				return automaton.rewrite(r0, r8);
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
 		public final int minimum() { return 1; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Not(Not(any x))
+	// 
 	private final static class Reduction_1 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_1(Pattern.Term pattern) { super(pattern); }
@@ -100,23 +99,23 @@ public final class Logic {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r2 = state[2]; // x
 			if(r0 != r2) {
-				automaton.rewrite(r0, r2);
-				return true;
+				return automaton.rewrite(r0, r2);
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
-		public final int minimum() { return 2; }
+		public final int minimum() { return 1; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Not(And({$9<BExpr> xs...}))
+	// 
 	private final static class Reduction_2 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_2(Pattern.Term pattern) { super(pattern); }
@@ -139,9 +138,8 @@ public final class Logic {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			Automaton.Collection s2 = (Automaton.Collection) automaton.get(state[2]);
 			int[] s2children = new int[s2.size() - 0];
@@ -161,17 +159,18 @@ public final class Logic {
 			Automaton.Term r9 = new Automaton.Term(K_Or, r8);
 			int r10 = automaton.add(r9);
 			if(r0 != r10) {
-				automaton.rewrite(r0, r10);
-				return true;
+				return automaton.rewrite(r0, r10);
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
 		public final int minimum() { return 2; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Not(Or({$9<BExpr> xs...}))
+	// 
 	private final static class Reduction_3 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_3(Pattern.Term pattern) { super(pattern); }
@@ -194,9 +193,8 @@ public final class Logic {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			Automaton.Collection s2 = (Automaton.Collection) automaton.get(state[2]);
 			int[] s2children = new int[s2.size() - 0];
@@ -216,17 +214,18 @@ public final class Logic {
 			Automaton.Term r9 = new Automaton.Term(K_And, r8);
 			int r10 = automaton.add(r9);
 			if(r0 != r10) {
-				automaton.rewrite(r0, r10);
-				return true;
+				return automaton.rewrite(r0, r10);
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
 		public final int minimum() { return 2; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $7<And($5<^{$2<^BExpr>...}>)>
+	// term $7<And($5<^{$2<^BExpr<$7|Bool<True|False>|Not($2)|Or($5)|Var(^string)>>...}>)>
 	public final static int K_And = 4;
 	public final static int And(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.Set(r0));
@@ -237,7 +236,7 @@ public final class Logic {
 		return automaton.add(new Automaton.Term(K_And, r1));
 	}
 
-	// And({$9<BExpr> x})
+	// 
 	private final static class Reduction_4 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_4(Pattern.Term pattern) { super(pattern); }
@@ -260,24 +259,24 @@ public final class Logic {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r2 = state[2]; // x
 			int r3 = state[3];
 			if(r0 != r2) {
-				automaton.rewrite(r0, r2);
-				return true;
+				return automaton.rewrite(r0, r2);
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
 		public final int minimum() { return 2; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// And({Bool b, $9<BExpr> xs...})
+	// 
 	private final static class Reduction_5 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_5(Pattern.Term pattern) { super(pattern); }
@@ -302,9 +301,8 @@ public final class Logic {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r2 = state[2]; // b
 			int r3 = state[3];
@@ -322,8 +320,7 @@ public final class Logic {
 				Automaton.Term r8 = False;
 				int r9 = automaton.add(r8);
 				if(r0 != r9) {
-					automaton.rewrite(r0, r9);
-					return true;
+					return automaton.rewrite(r0, r9);
 				}
 			}
 			Automaton.Int r10 = r4.lengthOf(); // |xs|
@@ -333,25 +330,25 @@ public final class Logic {
 				Automaton.Term r13 = True;
 				int r14 = automaton.add(r13);
 				if(r0 != r14) {
-					automaton.rewrite(r0, r14);
-					return true;
+					return automaton.rewrite(r0, r14);
 				}
 			}
 			int r15 = automaton.add(r4);
 			Automaton.Term r16 = new Automaton.Term(K_And, r15);
 			int r17 = automaton.add(r16);
 			if(r0 != r17) {
-				automaton.rewrite(r0, r17);
-				return true;
+				return automaton.rewrite(r0, r17);
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
 		public final int minimum() { return 2; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// And({And({$9<BExpr> xs...}), $9<BExpr> ys...})
+	// 
 	private final static class Reduction_6 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_6(Pattern.Term pattern) { super(pattern); }
@@ -381,9 +378,8 @@ public final class Logic {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r3 = state[3];
 			Automaton.Collection s4 = (Automaton.Collection) automaton.get(state[4]);
@@ -404,17 +400,18 @@ public final class Logic {
 			Automaton.Term r9 = new Automaton.Term(K_And, r8);
 			int r10 = automaton.add(r9);
 			if(r0 != r10) {
-				automaton.rewrite(r0, r10);
-				return true;
+				return automaton.rewrite(r0, r10);
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
 		public final int minimum() { return 3; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// And({Not($9<BExpr> x), $9<BExpr> y, $9<BExpr> ys...})
+	// 
 	private final static class Reduction_7 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_7(Pattern.Term pattern) { super(pattern); }
@@ -446,9 +443,8 @@ public final class Logic {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r3 = state[3];
 			int r4 = state[4]; // x
@@ -466,18 +462,19 @@ public final class Logic {
 				Automaton.Term r9 = False;
 				int r10 = automaton.add(r9);
 				if(r0 != r10) {
-					automaton.rewrite(r0, r10);
-					return true;
+					return automaton.rewrite(r0, r10);
 				}
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
 		public final int minimum() { return 0; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// And({Or({$9<BExpr> xs...}), $9<BExpr> ys...})
+	// 
 	private final static class Reduction_8 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_8(Pattern.Term pattern) { super(pattern); }
@@ -507,9 +504,8 @@ public final class Logic {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r3 = state[3];
 			Automaton.Collection s4 = (Automaton.Collection) automaton.get(state[4]);
@@ -539,17 +535,18 @@ public final class Logic {
 			Automaton.Term r14 = new Automaton.Term(K_Or, r13);
 			int r15 = automaton.add(r14);
 			if(r0 != r15) {
-				automaton.rewrite(r0, r15);
-				return true;
+				return automaton.rewrite(r0, r15);
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
 		public final int minimum() { return 3; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $7<Or($5<^{$2<^BExpr>...}>)>
+	// term $7<Or($5<^{$2<^BExpr<$7|Bool<True|False>|Not($2)|And($5)|Var(^string)>>...}>)>
 	public final static int K_Or = 5;
 	public final static int Or(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.Set(r0));
@@ -560,7 +557,7 @@ public final class Logic {
 		return automaton.add(new Automaton.Term(K_Or, r1));
 	}
 
-	// Or({$9<BExpr> x})
+	// 
 	private final static class Reduction_9 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_9(Pattern.Term pattern) { super(pattern); }
@@ -583,24 +580,24 @@ public final class Logic {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r2 = state[2]; // x
 			int r3 = state[3];
 			if(r0 != r2) {
-				automaton.rewrite(r0, r2);
-				return true;
+				return automaton.rewrite(r0, r2);
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
 		public final int minimum() { return 2; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Or({Bool b, $9<BExpr> xs...})
+	// 
 	private final static class Reduction_10 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_10(Pattern.Term pattern) { super(pattern); }
@@ -625,9 +622,8 @@ public final class Logic {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r2 = state[2]; // b
 			int r3 = state[3];
@@ -645,8 +641,7 @@ public final class Logic {
 				Automaton.Term r8 = True;
 				int r9 = automaton.add(r8);
 				if(r0 != r9) {
-					automaton.rewrite(r0, r9);
-					return true;
+					return automaton.rewrite(r0, r9);
 				}
 			}
 			Automaton.Int r10 = r4.lengthOf(); // |xs|
@@ -656,25 +651,25 @@ public final class Logic {
 				Automaton.Term r13 = False;
 				int r14 = automaton.add(r13);
 				if(r0 != r14) {
-					automaton.rewrite(r0, r14);
-					return true;
+					return automaton.rewrite(r0, r14);
 				}
 			}
 			int r15 = automaton.add(r4);
 			Automaton.Term r16 = new Automaton.Term(K_Or, r15);
 			int r17 = automaton.add(r16);
 			if(r0 != r17) {
-				automaton.rewrite(r0, r17);
-				return true;
+				return automaton.rewrite(r0, r17);
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
 		public final int minimum() { return 2; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Or({Not($9<BExpr> x), $9<BExpr> y, $9<BExpr> ys...})
+	// 
 	private final static class Reduction_11 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_11(Pattern.Term pattern) { super(pattern); }
@@ -706,9 +701,8 @@ public final class Logic {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r3 = state[3];
 			int r4 = state[4]; // x
@@ -726,18 +720,19 @@ public final class Logic {
 				Automaton.Term r9 = True;
 				int r10 = automaton.add(r9);
 				if(r0 != r10) {
-					automaton.rewrite(r0, r10);
-					return true;
+					return automaton.rewrite(r0, r10);
 				}
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
 		public final int minimum() { return 0; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Or({Or({$9<BExpr> xs...}), $9<BExpr> ys...})
+	// 
 	private final static class Reduction_12 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_12(Pattern.Term pattern) { super(pattern); }
@@ -767,9 +762,8 @@ public final class Logic {
 			}
 		}
 
-		public final boolean apply(Automaton automaton, Object _state) {
+		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
-			int[] state = (int[]) _state;
 			int r0 = state[0];
 			int r3 = state[3];
 			Automaton.Collection s4 = (Automaton.Collection) automaton.get(state[4]);
@@ -790,12 +784,13 @@ public final class Logic {
 			Automaton.Term r9 = new Automaton.Term(K_Or, r8);
 			int r10 = automaton.add(r9);
 			if(r0 != r10) {
-				automaton.rewrite(r0, r10);
-				return true;
+				return automaton.rewrite(r0, r10);
 			}
 			automaton.resize(nStates);
-			return false;
+			return Automaton.K_VOID;
 		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
 
 		public final int minimum() { return 3; }
 		public final int maximum() { return Integer.MAX_VALUE; }
@@ -811,11 +806,11 @@ public final class Logic {
 		Schema.Term("True"),
 		// False
 		Schema.Term("False"),
-		// $4<Not($2<^BExpr>)>
+		// $4<Not($2<^BExpr<$4|Bool<True|False>|And(^{$2...})|Or(^{$2...})|Var(^string)>>)>
 		Schema.Term("Not",Schema.Or(Schema.Any, Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Var",Schema.String))),
-		// $7<And($5<^{$2<^BExpr>...}>)>
+		// $7<And($5<^{$2<^BExpr<$7|Bool<True|False>|Not($2)|Or($5)|Var(^string)>>...}>)>
 		Schema.Term("And",Schema.Set(true)),
-		// $7<Or($5<^{$2<^BExpr>...}>)>
+		// $7<Or($5<^{$2<^BExpr<$7|Bool<True|False>|Not($2)|And($5)|Var(^string)>>...}>)>
 		Schema.Term("Or",Schema.Set(true))
 	});
 
@@ -823,11 +818,11 @@ public final class Logic {
 	// Types
 	// =========================================================================
 
-	// Bool
+	// Bool<True|False>
 	private static Type type0 = Runtime.Type("QFZFjx5Q3G_RpKq3vk1EJOJNgCMOIs2Az3HE7hGHYcYHhgJko2");
 	// any
 	private static Type type1 = Runtime.Type("Fs0");
-	// $9<BExpr>
+	// $9<BExpr<Bool<True|False>|Not(^$9)|And(^{^$9...})|Or(^{^$9...})|Var(^string)>>
 	private static Type type2 = Runtime.Type("8G_F4W6RmGZFjx5QosoQoGIFiG58E86CL4aRGp4PhxaTQVo7uZJA9G3KmKMOIk3ACG_GWlqR_ClIgVK7D_p5PCmDQp1Mego7ws4AUCXMfwHPecq7xg5AgCXEflXQeZl7zV6At4Ax");
 
 	// =========================================================================
@@ -947,8 +942,10 @@ public final class Logic {
 			Automaton automaton = reader.read();
 			System.out.print("PARSED: ");
 			print(automaton);
-			Rewriter rw = new SimpleRewriter(inferences,reductions,SCHEMA);
-			rw.apply(automaton);
+			StrategyRewriter.Strategy<InferenceRule> inferenceStrategy = new SimpleRewriteStrategy<InferenceRule>(automaton, inferences);
+			StrategyRewriter.Strategy<ReductionRule> reductionStrategy = new SimpleRewriteStrategy<ReductionRule>(automaton, reductions);
+			StrategyRewriter rw = new StrategyRewriter(automaton,inferenceStrategy, reductionStrategy, SCHEMA);
+			rw.apply(50,10000);
 			System.out.print("REWROTE: ");
 			print(automaton);
 			System.out.println("\n\n=> (" + rw.getStats() + ")\n");

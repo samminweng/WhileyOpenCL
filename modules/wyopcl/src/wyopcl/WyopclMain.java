@@ -106,22 +106,22 @@ public class WyopclMain extends WycMain{
 			builder.build(delta);
 
 		} catch (InternalFailure e) {
-			e.outputSourceError(errout,brief);
-			if (verbose) {
-				e.printStackTrace(errout);
-			}
+			//e.outputSourceError(errout,brief);
+			//if (verbose) {
+			//	e.printStackTrace(errout);
+			//}
 			return INTERNAL_FAILURE;
 		} catch (SyntaxError e) {
-			e.outputSourceError(errout,brief);
-			if (verbose) {
-				e.printStackTrace(errout);
-			}
+			//e.outputSourceError(errout,brief);
+			//if (verbose) {
+			//	e.printStackTrace(errout);
+			//}
 			return SYNTAX_ERROR;
 		} catch (Throwable e) {
-			errout.println("internal failure (" + e.getMessage() + ")");
-			if (verbose) {
-				e.printStackTrace(errout);
-			}
+			//errout.println("internal failure (" + e.getMessage() + ")");
+			//if (verbose) {
+			//	e.printStackTrace(errout);
+			//}
 			return INTERNAL_FAILURE;
 		}
 
