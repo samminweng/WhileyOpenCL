@@ -21,8 +21,11 @@ public class ThrowInterpreter extends Interpreter {
 	public void interpret(Codes.Throw code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
 		Constant result = stackframe.getRegister(code.operand);
-		//Pop up the block	
-		blockstack.pop();
+		//Pop up the current block
+		if(blockstack.size() > 1){
+			blockstack.pop();
+		}
+		//Return to the caller
 		StackFrame caller = blockstack.peek();
 		//Put the result to the caller's register table at index of 1.
 		caller.setRegister(1, result);

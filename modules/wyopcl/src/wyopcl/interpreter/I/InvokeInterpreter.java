@@ -8,6 +8,7 @@ import java.util.List;
 import wyil.lang.Code.Block;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
+import wyil.lang.Type;
 import wyopcl.interpreter.Converter;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.Interpreter.StackFrame;
@@ -102,14 +103,16 @@ public class InvokeInterpreter extends Interpreter {
 						break;
 					}
 
+				}			
+			} catch (Exception e) {				
+				//Pop up the current block
+				if(blockstack.size() > 1){
+					blockstack.pop();
 				}
-
-			} catch (ClassNotFoundException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | SecurityException e) {
-				//Go to throw clause
-				wyil.lang.Type throwsClause = code.type().throwsClause();
-				printMessage(stackframe, code.toString(),"%"+code.target()+"("+throwsClause+")");
-				linenumber = symboltable.get(stackframe.getBlock()).getCatchPos();
-				stackframe.setLine(linenumber);
+				//Return to the caller
+				StackFrame caller = blockstack.peek();
+				linenumber = symboltable.get(caller.getBlock()).getCatchPos();
+				caller.setLine(linenumber);
 				return;
 			}
 

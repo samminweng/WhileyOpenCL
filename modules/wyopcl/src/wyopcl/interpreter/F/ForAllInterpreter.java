@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import whiley.lang.Char;
 import wyil.lang.Code.Block;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
@@ -48,14 +49,10 @@ public class ForAllInterpreter extends Interpreter {
 			int index = 0;
 			if(indexOperand == null){
 				result = array[index];
+				stackframe.setLoop_index(index);
 			}else{
-				
-				for(Constant constant: array){
-					if(indexOperand.equals(constant)){
-						break;
-					}
-					index++;
-				}				
+				//Get the current index
+				index = stackframe.getLoop_index();				
 				//Check if the index is out-of-boundary. If so, then return.
 				if((index+1) >= array.length){
 					//No elements in the list.
@@ -65,6 +62,7 @@ public class ForAllInterpreter extends Interpreter {
 				}else{
 					//Put the element into the register of the index operand.
 					result = array[index+1];
+					stackframe.setLoop_index(index+1);
 				}
 			}
 			
@@ -148,7 +146,12 @@ public class ForAllInterpreter extends Interpreter {
 			iterateOverListSet(array, code, stackframe);
 		}else if(source instanceof Constant.Strung){
 			Constant.Strung strung = (Constant.Strung)source;
-			internalFailure("Not implemented!", "InterpreterForAll.java", null);
+			Constant.Char[] chars = new Constant.Char[strung.value.length()];
+			for(int index=0;index<strung.value.length();index++){
+				chars[index] = Constant.V_CHAR(strung.value.charAt(index));
+			}
+			iterateOverListSet(chars, code, stackframe);
+			//internalFailure("Not implemented!", "InterpreterForAll.java", null);
 		}else{
 			internalFailure("Not implemented!", "InterpreterForAll.java", null);
 		}
