@@ -1,5 +1,8 @@
 package wyopcl.interpreter.B;
 
+import static wycc.lang.SyntaxError.internalFailure;
+
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 
@@ -29,20 +32,54 @@ public class BinaryOperatorInterpreter extends Interpreter {
 		int pos;
 		// Check the operator
 		switch (code.kind) {
-		case ADD:			
-			result = ((Constant.Integer)left).add((Constant.Integer)right);
+		case ADD:
+			if(left instanceof Constant.Integer){
+				result = ((Constant.Integer)left).add((Constant.Integer)right);
+			}else if (left instanceof Constant.Decimal){
+				 result = ((Constant.Decimal)left).add(((Constant.Decimal)right));
+			}else {
+				internalFailure("Not implemented!", "BinaryOperatorInterpreter.java", null);
+			}			
 			break;
 		case SUB:			
-			result = ((Constant.Integer)left).subtract((Constant.Integer)right);		
+			if(left instanceof Constant.Integer){
+				result = ((Constant.Integer)left).subtract((Constant.Integer)right);
+			}else if (left instanceof Constant.Decimal){
+				 result = ((Constant.Decimal)left).subtract(((Constant.Decimal)right));
+			}else {
+				internalFailure("Not implemented!", "BinaryOperatorInterpreter.java", null);
+			}
 			break;
-		case MUL:			
-			result = ((Constant.Integer)left).multiply((Constant.Integer)right);			
+		case MUL:		
+			if(left instanceof Constant.Integer){
+				result = ((Constant.Integer)left).multiply((Constant.Integer)right);
+			}else if (left instanceof Constant.Decimal){
+				 result = ((Constant.Decimal)left).multiply(((Constant.Decimal)right));
+			}else {
+				internalFailure("Not implemented!", "BinaryOperatorInterpreter.java", null);
+			}
 			break;
-		case DIV:
-			result = ((Constant.Integer)left).divide((Constant.Integer)right);			
+		case DIV:			
+			if(left instanceof Constant.Integer){
+				result = ((Constant.Integer)left).divide((Constant.Integer)right);
+			}else if (left instanceof Constant.Decimal){
+				Constant.Decimal dividend = (Constant.Decimal)left;
+				Constant.Decimal divisor = (Constant.Decimal)right;
+				BigDecimal division = dividend.value.divide(divisor.value);
+				result = Constant.V_DECIMAL(new BigDecimal(division.toString()));
+			}else {
+				internalFailure("Not implemented!", "BinaryOperatorInterpreter.java", null);
+			}
 			break;
 		case REM:		
-			result = ((Constant.Integer)left).remainder((Constant.Integer)right);			
+			
+			if(left instanceof Constant.Integer){
+				result = ((Constant.Integer)left).remainder((Constant.Integer)right);
+			}else if (left instanceof Constant.Decimal){
+				internalFailure("Not implemented!", "BinaryOperatorInterpreter.java", null);
+			}else {
+				internalFailure("Not implemented!", "BinaryOperatorInterpreter.java", null);
+			}
 			break;
 		case RANGE:
 			//Create a List.
@@ -86,8 +123,8 @@ public class BinaryOperatorInterpreter extends Interpreter {
 			result = Constant.V_BYTE(leftValue);
 			break;
 		default:
-			throw new RuntimeException("unknown binary expression encountered");
-			//break;
+			internalFailure("unknown binary expression encountered", "BinaryOperatorInterpreter.java", null);
+			break;
 		}
 		
 		return result;
@@ -95,11 +132,8 @@ public class BinaryOperatorInterpreter extends Interpreter {
 	
 
 	public void interpret(Codes.BinaryOperator code, StackFrame stackframe) {
-		int linenumber = stackframe.getLine();
-		
-		//Constant leftOperand = stackframe.getRegister(code.leftOperand);
-		Constant left = stackframe.getRegister(code.operand(0));
-		//Constant rightOperand = stackframe.getRegister(code.rightOperand);
+		int linenumber = stackframe.getLine();		
+		Constant left = stackframe.getRegister(code.operand(0));		
 		Constant right = stackframe.getRegister(code.operand(1));
 		
 		Constant result = performOperation(left, right, code);
