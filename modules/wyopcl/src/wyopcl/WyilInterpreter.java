@@ -59,6 +59,7 @@ import wyopcl.interpreter.R.ReturnInterpreter;
 import wyopcl.interpreter.S.SetOperatorInterpreter;
 import wyopcl.interpreter.S.StringOperatorInterpreter;
 import wyopcl.interpreter.S.SubListInterpreter;
+import wyopcl.interpreter.S.SubStringInterpreter;
 import wyopcl.interpreter.S.SwitchInterpreter;
 import wyopcl.interpreter.T.ThrowInterpreter;
 import wyopcl.interpreter.T.TryCatchInterpreter;
@@ -317,7 +318,7 @@ public class WyilInterpreter extends Interpreter implements Builder{
 			} else if (code instanceof Codes.SubList) {
 				SubListInterpreter.getInstance().interpret((Codes.SubList)code, stackframe);
 			} else if (code instanceof Codes.SubString) {
-				internalFailure("Not implemented!", filename, entry);
+				SubStringInterpreter.getInstance().interpret((Codes.SubString)code, stackframe);
 			} else if (code instanceof Codes.Switch) {
 				SwitchInterpreter.getInstance().interpret((Codes.Switch)code, stackframe);
 			} else if (code instanceof Codes.Throw) {
