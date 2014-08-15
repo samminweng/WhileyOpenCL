@@ -52,10 +52,12 @@ public class ConvertInterpreter extends Interpreter {
 					toElem = Constant.V_DECIMAL(new BigDecimal(((Constant.Integer) fromElem).toString()));
 				} else {
 					internalFailure("Not implemented!", "ConvertInterpreter.java", null);
-				}
-
-				// toElem = Constant.V_DECIMAL(new
-				// BigDecimal(tuple.toString()));
+				}			
+			} else if (fromElemType instanceof Type.Union && toElemType instanceof Type.Union){
+				toElem = fromElem;
+				//((Type.Union)fromElemType).bounds();
+				
+				//Constant.Tuple tuple = Constant.V_TUPLE(values);
 			} else {
 				internalFailure("Not implemented!", "ConvertInterpreter.java", null);
 			}
@@ -130,19 +132,19 @@ public class ConvertInterpreter extends Interpreter {
 	private Constant.Map toConstantMap(Constant from, Type fromType, Type toType) {
 		Constant.Map to = null;
 		if (fromType != toType) {
-			if (fromType instanceof Type.Map) {
+			if (from instanceof Constant.Map) {
 				HashMap<Constant, Constant> map = new HashMap<Constant, Constant>();
 				Iterator<Entry<Constant, Constant>> iterator = ((Constant.Map) from).values.entrySet().iterator();
 				while (iterator.hasNext()) {
 					Entry<Constant, Constant> next = iterator.next();
-					Constant key = castElementToElement(next.getKey(), ((Type.Map) fromType).key(),
+					Constant key = castElementToElement(next.getKey(), ((Type.UnionOfMaps) fromType).key(),
 							((Type.Map) toType).key());
-					Constant value = castElementToElement(next.getValue(), ((Type.Map) fromType).value(),
+					Constant value = castElementToElement(next.getValue(), ((Type.UnionOfMaps) fromType).value(),
 							((Type.Map) toType).value());
 					map.put(key, value);
 				}
 				to = Constant.V_MAP(map);
-			} else if (fromType instanceof Type.List) {
+			} else if (from instanceof Constant.List) {
 				Constant.List list = (Constant.List) from;
 				if (list.values.get(0).type() instanceof Type.Real
 						&& ((Type.Map) toType).element() instanceof Type.Tuple) {
