@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -17,7 +18,7 @@ import whiley.lang.Real;
 import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyjc.runtime.WyList;
-
+ 
 public class Converter {
 
 	/**
@@ -29,38 +30,76 @@ public class Converter {
 	 */
 	public static Object convertConstantToJavaObject(Constant from, Class<?> paramType) {
 		Object to = null;
-		if (from instanceof Constant.Strung) {
-			to = ((Constant.Strung) from).value.replaceAll("\"", "");
-		} else if (from instanceof Constant.Integer) {
-			to = ((Constant.Integer) from).value;
-		} else if (from instanceof Constant.List) {
-			to = (Constant.List) from;
-		} else if (from instanceof Constant.Record) {
-			to = (Constant.Record) from;
-		} else if (from instanceof Constant.Char) {
-			to = ((Constant.Char) from).value;
-		} else if (from instanceof Constant.Byte) {
-			if (paramType == WyList.class) {
-				// Cast byte to char...too complicated....
-				to = new WyList().add((byte) ((Constant.Byte) from).value);
+		if(from == null){
+			return null;
+		}else {
+			if (from instanceof Constant.Strung) {
+				to = ((Constant.Strung) from).value.replaceAll("\"", "");
+			} else if (from instanceof Constant.Integer) {
+				to = ((Constant.Integer) from).value;
+			} else if (from instanceof Constant.List) {
+				Constant.List list = (Constant.List) from;
+				String r = "[";
+				boolean firstTime=true;
+				for(Constant v : list.values) {
+					if(!firstTime) {
+						r += ", ";
+					}
+					firstTime=false;
+					r += v;
+				}
+				r+= "]";
+				to = r;				
+			} else if (from instanceof Constant.Record) {
+				Constant.Record record = (Constant.Record) from;
+				String r = "{";
+				boolean firstTime=true;
+				ArrayList<String> keys = new ArrayList<String>(record.values.keySet());
+				Collections.sort(keys);
+				for(String key : keys) {
+					if(!firstTime) {
+						r += ",";
+					}
+					firstTime=false;
+					r += key + ":" + record.values.get(key);
+				}
+				r += "}";
+				to = r;
+			} else if (from instanceof Constant.Char) {
+				to = ((Constant.Char) from).value;
+			} else if (from instanceof Constant.Byte) {
+				if (paramType == WyList.class) {
+					// Cast byte to char...too complicated....
+					to = new WyList().add((byte) ((Constant.Byte) from).value);
+				} else {
+					to = ((Constant.Byte) from).value;
+				}
+			} else if (from instanceof Constant.Bool) {
+				to = ((Constant.Bool) from).value;
+			} else if (from instanceof Constant.Decimal) {				
+				to = from;
+			} else if (from instanceof Constant.Map){
+				to = ((Constant.Map)from).values;
+			} else if (from instanceof Constant.Set){
+				//to = ((Constant.Set)from).values;
+				Constant.Set set = (Constant.Set)from;
+				String r = "{";
+				boolean firstTime=true;
+				for(Constant v : set.values) {
+					if(!firstTime) {
+						r += ",";
+					}
+					firstTime=false;
+					r += v;
+				}
+				return r + "}";
+				
+			} else if (from instanceof Constant.Null){
+				to = null;
 			} else {
-				to = ((Constant.Byte) from).value;
+				internalFailure("Not implemented!", "Converter.java", null);
 			}
-		} else if (from instanceof Constant.Bool) {
-			to = ((Constant.Bool) from).value;
-		} else if (from instanceof Constant.Decimal) {
-			to = new BigDecimal(((Constant.Decimal) from).value.toString());
-		} else if (from instanceof Constant.Map){
-			to = ((Constant.Map)from).values;
-		} else if (from instanceof Constant.Set){
-			to = ((Constant.Set)from).values;
-		} else if (from instanceof Constant.Null){
-			to = null;
-		} else {
-			internalFailure("Not implemented!", "Converter.java", null);
 		}
-
-		// return to;
 		return to;
 	}
 
