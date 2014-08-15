@@ -66,7 +66,7 @@ public abstract class Interpreter {
 		private String name;// Remove it
 		private int line;				
 		private int return_reg;
-		private int loop_index;
+		private HashMap<String, Integer> loop_index = new HashMap<String, Integer>();
 		private int depth;
 		private Constant[] registers  = new Constant[0];
 		
@@ -138,12 +138,12 @@ public abstract class Interpreter {
 			this.depth = depth;
 		}
 
-		public int getLoop_index() {
-			return loop_index;
+		public int getLoop_index(String label) {
+			return this.loop_index.get(label);
 		}
 
-		public void setLoop_index(int loop_index) {
-			this.loop_index = loop_index;
+		public void setLoop_index(String label, int loop_index) {
+			this.loop_index.put(label, loop_index);
 		}		
 	}
 	

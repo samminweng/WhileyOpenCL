@@ -135,6 +135,9 @@ public class WyilInterpreter extends Interpreter implements Builder{
 				//Put the label map into the queue.
 				label = ((Codes.Label)code).label;
 				symbol.addLabelLoc(label, pos);							
+			}else if (code instanceof Codes.ForAll){
+				label = ((Codes.Loop)code).target;
+				symbol.addLabelLoc(label, pos);
 			}else if(code instanceof Codes.Loop){								
 				//This case includes Code.Loop and Code.ForAll
 				label = ((Codes.Loop)code).target;

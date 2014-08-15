@@ -97,7 +97,8 @@ public class BinaryOperatorInterpreter extends Interpreter {
 		case BITWISEAND:
 			leftValue = ((Constant.Byte)left).value;
 			rightValue = ((Constant.Byte)right).value;
-			result = Constant.V_BYTE((byte)(leftValue & rightValue));
+			byte value = (byte) (leftValue & rightValue);
+			result = Constant.V_BYTE(value);
 			break;
 		case BITWISEOR:
 			leftValue = ((Constant.Byte)left).value;

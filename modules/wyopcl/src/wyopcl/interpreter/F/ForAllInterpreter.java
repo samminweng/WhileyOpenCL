@@ -49,20 +49,20 @@ public class ForAllInterpreter extends Interpreter {
 			int index = 0;
 			if(indexOperand == null){
 				result = array[index];
-				stackframe.setLoop_index(index);
+				stackframe.setLoop_index(code.target, index);
 			}else{
 				//Get the current index
-				index = stackframe.getLoop_index();				
+				index = stackframe.getLoop_index(code.target);				
 				//Check if the index is out-of-boundary. If so, then return.
 				if((index+1) >= array.length){
 					//No elements in the list.
-					stackframe.setRegister(code.indexOperand, null);
+					stackframe.setRegister(code.indexOperand, null);					
 					gotoLoopEnd(code, stackframe);					
 					return;
 				}else{
 					//Put the element into the register of the index operand.
 					result = array[index+1];
-					stackframe.setLoop_index(index+1);
+					stackframe.setLoop_index(code.target, index+1);
 				}
 			}
 			

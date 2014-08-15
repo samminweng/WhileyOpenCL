@@ -19,11 +19,11 @@ public class LoopEndInterpreter extends Interpreter {
 	}
 	
 	public void interpret(Codes.LoopEnd code, StackFrame stackframe) {
-		int linenumber = stackframe.getLine();
-		printMessage(stackframe, code.toString(), "("+code.label+")");	
+		int linenumber = stackframe.getLine();	
+		printMessage(stackframe, code.toString(), "("+code.label+")");
 		Code.Block block = stackframe.getBlock();
 		linenumber = symboltable.get(block).getBlockPosByLabel(code.label);
-		stackframe.setLine(linenumber);
+		stackframe.setLine(linenumber);			
 	}
 	
 	
