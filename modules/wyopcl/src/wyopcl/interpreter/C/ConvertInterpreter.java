@@ -137,10 +137,20 @@ public class ConvertInterpreter extends Interpreter {
 				Iterator<Entry<Constant, Constant>> iterator = ((Constant.Map) from).values.entrySet().iterator();
 				while (iterator.hasNext()) {
 					Entry<Constant, Constant> next = iterator.next();
-					Constant key = castElementToElement(next.getKey(), ((Type.UnionOfMaps) fromType).key(),
-							((Type.Map) toType).key());
-					Constant value = castElementToElement(next.getValue(), ((Type.UnionOfMaps) fromType).value(),
-							((Type.Map) toType).value());
+					Constant key = null, value = null;
+					//Check if the type of entry is Map or UnionMap 
+					if(fromType instanceof Type.Map){
+						key = castElementToElement(next.getKey(), ((Type.Map) fromType).key(),
+								((Type.Map) toType).key());
+						value = castElementToElement(next.getValue(), ((Type.Map) fromType).value(),
+								((Type.Map) toType).value());
+					}else if (fromType instanceof Type.UnionOfMaps){
+						key = castElementToElement(next.getKey(), ((Type.UnionOfMaps) fromType).key(),
+								((Type.Map) toType).key());
+						value = castElementToElement(next.getValue(), ((Type.UnionOfMaps) fromType).value(),
+								((Type.Map) toType).value());
+					}
+					
 					map.put(key, value);
 				}
 				to = Constant.V_MAP(map);
