@@ -79,7 +79,8 @@ public class Converter {
 			} else if (from instanceof Constant.Decimal) {				
 				to = from;
 			} else if (from instanceof Constant.Map){
-				to = ((Constant.Map)from).values;
+				to = from;
+				//to = ((Constant.Map)from).values;
 			} else if (from instanceof Constant.Set){
 				//to = ((Constant.Set)from).values;
 				Constant.Set set = (Constant.Set)from;

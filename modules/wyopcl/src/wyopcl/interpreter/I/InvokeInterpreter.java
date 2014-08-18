@@ -56,6 +56,8 @@ public class InvokeInterpreter extends Interpreter {
 
 		//Start invoking a new block.		
 		blockstack.push(newStackFrame);
+		printMessage(oldstackframe, code.toString(),"%"+code.target()+"("+oldstackframe.getRegister(code.target())+")\n");
+		
 	}
 	
 
@@ -68,7 +70,7 @@ public class InvokeInterpreter extends Interpreter {
 		if(blks != null){			
 			//Push the body block to the stack.
 			pushBlockToStackFrame(blks, code, stackframe);
-			printMessage(stackframe, code.toString(),"\n");
+			
 
 		}else{
 			//Directly invoke the function/method.

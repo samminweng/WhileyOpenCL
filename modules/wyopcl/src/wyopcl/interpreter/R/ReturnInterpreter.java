@@ -33,10 +33,11 @@ public class ReturnInterpreter extends Interpreter {
 			if (code.type != Type.T_VOID) {
 				//Read the values from the operand register.
 				Constant return_value = stackframe.getRegister(code.operand);
+				printMessage(stackframe, code.toString(),
+						"%"+return_reg + "("+return_value+")");
 				//Return the result by updating the register.
 				caller.setRegister(return_reg, return_value);		
-				printMessage(caller, code.toString(),
-						"%"+return_reg + "("+return_value+")");
+				
 			}else{			
 				printMessage(caller, code.toString(), "");
 			}
