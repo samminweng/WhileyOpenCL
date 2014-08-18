@@ -79,8 +79,30 @@ public class Converter {
 			} else if (from instanceof Constant.Decimal) {				
 				to = from;
 			} else if (from instanceof Constant.Map){
-				to = from;
-				//to = ((Constant.Map)from).values;
+				Constant.Map map = (Constant.Map)from;
+				String r = "{";
+				if(map.values.isEmpty()) {
+					r = r + "=>";
+				} else {
+					boolean firstTime=true;
+					ArrayList<String> keystr = new ArrayList<String>();
+					HashMap<String,Constant> keymap = new HashMap<String,Constant>();
+					for(Constant key : map.values.keySet()) {
+						keystr.add(key.toString());
+						keymap.put(key.toString(), key);
+					}
+					Collections.sort(keystr);
+					for(String key : keystr) {
+						if(!firstTime) {
+							r += ", ";
+						}
+						firstTime=false;
+						Constant k = keymap.get(key); 
+						r += k + "=>" + convertConstantToJavaObject(map.values.get(k), paramType);
+					}
+				}
+				r += "}";
+				to = r;
 			} else if (from instanceof Constant.Set){
 				//to = ((Constant.Set)from).values;
 				Constant.Set set = (Constant.Set)from;
