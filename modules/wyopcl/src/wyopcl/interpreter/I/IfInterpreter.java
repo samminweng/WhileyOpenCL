@@ -56,12 +56,19 @@ public class IfInterpreter extends Interpreter {
 				satisfiable = true;				
 			}
 			break;
-		case IN:
-			//leftSet = (Constant.Set)left;
-			rightSet = (Constant.Set)right;
-			if(rightSet.values.contains(((Constant.Integer)left).value.intValue())){
-				satisfiable = true;
-			}
+		case IN:			
+			if(right instanceof Constant.Set){
+				rightSet = (Constant.Set)right;
+				int leftValue = ((Constant.Integer)left).value.intValue();
+				if(rightSet.values.contains(leftValue)){
+					satisfiable = true;
+				}
+			}else if (right instanceof Constant.List){
+				Constant.List list = (Constant.List)right;
+				if(list.values.contains(left)){
+					satisfiable = true;
+				}
+			}			
 			break;
 		case SUBSET:
 			leftSet = (Constant.Set)left;
