@@ -1,5 +1,7 @@
 package wyopcl.interpreter;
 
+import static wycc.lang.SyntaxError.internalFailure;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -139,7 +141,13 @@ public abstract class Interpreter {
 		}
 
 		public int getLoop_index(String label) {
-			return this.loop_index.get(label);
+			if(this.loop_index.containsKey(label)){
+				return this.loop_index.get(label);
+			}else{
+				//If the loop index is not found, add a new one.
+				this.loop_index.put(label, 0);
+				return 0;
+			}
 		}
 
 		public void setLoop_index(String label, int loop_index) {
