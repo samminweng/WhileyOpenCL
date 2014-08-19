@@ -39,12 +39,22 @@ public class ConvertInterpreter extends Interpreter {
 		if (fromElemType == toElemType || toElemType instanceof Type.Any) {
 			toElem = fromElem;
 		} else {
-			if (fromElemType instanceof Type.Real && toElemType instanceof Type.Int) {
-				Constant.Decimal value = (Constant.Decimal) fromElem;
-				toElem = Constant.V_INTEGER(new BigInteger(value.toString()));
-			} else if (fromElemType instanceof Type.Int && toElemType instanceof Type.Real) {
-				Constant.Integer value = (Constant.Integer) fromElem;
-				toElem = Constant.V_DECIMAL(new BigDecimal(value.toString()));
+			if (fromElemType instanceof Type.Real) {
+				
+				if(toElemType instanceof Type.Int){
+					Constant.Decimal value = (Constant.Decimal) fromElem;
+					toElem = Constant.V_INTEGER(new BigInteger(value.toString()));
+				}else if (toElemType instanceof Type.Union){
+					toElem = fromElem;
+				}
+				
+			} else if (fromElemType instanceof Type.Int) {
+				if(toElemType instanceof Type.Real){
+					Constant.Integer value = (Constant.Integer) fromElem;
+					toElem = Constant.V_DECIMAL(new BigDecimal(value.toString()));
+				}else if (toElemType instanceof Type.Union){
+					toElem = fromElem;
+				}
 			} else if (fromElemType instanceof Type.Union && toElemType instanceof Type.Real) {
 				if (fromElem instanceof Constant.Decimal) {
 					toElem = fromElem;
@@ -138,18 +148,33 @@ public class ConvertInterpreter extends Interpreter {
 				while (iterator.hasNext()) {
 					Entry<Constant, Constant> next = iterator.next();
 					Constant key = null, value = null;
-					//Check if the type of entry is Map or UnionMap 
-					if(fromType instanceof Type.Map){
-						key = castElementToElement(next.getKey(), ((Type.Map) fromType).key(),
-								((Type.Map) toType).key());
-						value = castElementToElement(next.getValue(), ((Type.Map) fromType).value(),
-								((Type.Map) toType).value());
-					}else if (fromType instanceof Type.UnionOfMaps){
-						key = castElementToElement(next.getKey(), ((Type.UnionOfMaps) fromType).key(),
-								((Type.Map) toType).key());
-						value = castElementToElement(next.getValue(), ((Type.UnionOfMaps) fromType).value(),
-								((Type.Map) toType).value());
+					//Check if the type of entry is Map or UnionMap
+					if(toType instanceof Type.Map){
+						if(fromType instanceof Type.Map){
+							key = castElementToElement(next.getKey(), ((Type.Map) fromType).key(),
+									((Type.Map) toType).key());
+							value = castElementToElement(next.getValue(), ((Type.Map) fromType).value(),
+									((Type.Map) toType).value());
+						}else if (fromType instanceof Type.UnionOfMaps){
+							key = castElementToElement(next.getKey(), ((Type.UnionOfMaps) fromType).key(),
+									((Type.Map) toType).key());
+							value = castElementToElement(next.getValue(), ((Type.UnionOfMaps) fromType).value(),
+									((Type.Map) toType).value());
+						}
+					}else if(toType instanceof Type.UnionOfMaps){
+						if(fromType instanceof Type.Map){
+							key = castElementToElement(next.getKey(), ((Type.Map) fromType).key(),
+									((Type.UnionOfMaps) toType).key());
+							value = castElementToElement(next.getValue(), ((Type.Map) fromType).value(),
+									((Type.UnionOfMaps) toType).value());
+						}else if (fromType instanceof Type.UnionOfMaps){
+							key = castElementToElement(next.getKey(), ((Type.UnionOfMaps) fromType).key(),
+									((Type.UnionOfMaps) toType).key());
+							value = castElementToElement(next.getValue(), ((Type.UnionOfMaps) fromType).value(),
+									((Type.UnionOfMaps) toType).value());
+						}
 					}
+					
 					
 					map.put(key, value);
 				}
@@ -243,6 +268,8 @@ public class ConvertInterpreter extends Interpreter {
 	}
 	
 	
+	
+	
 	/***
 	 * Cast Constant object to Constant object.
 	 * 
@@ -266,9 +293,9 @@ public class ConvertInterpreter extends Interpreter {
 			to = toConstantRecord(from, fromType, toType);
 		} else if (toType instanceof Type.Real) {
 			to = toConstantDecimal(from, fromType, toType);
-		} else if (toType instanceof Type.Union) {
-			to = from;
 		} else if (toType instanceof Type.Map) {
+			to = toConstantMap(from, fromType, toType);
+		} else if (toType instanceof Type.Union) {
 			to = toConstantMap(from, fromType, toType);
 		} else if (toType instanceof Type.Set) {
 			to = toConstantSet(from, fromType, toType);
