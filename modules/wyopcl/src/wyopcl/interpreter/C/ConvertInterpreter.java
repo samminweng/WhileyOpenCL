@@ -83,7 +83,10 @@ public class ConvertInterpreter extends Interpreter {
 				fromElemType = ((Type.List)fromType).element();				
 				if(toElemType.equals(fromElemType)){
 					return (Constant.List) from;
-				}else if (toElemType instanceof Type.Real && fromElemType instanceof Type.Int) {
+				}else if (fromElemType instanceof Type.Void){
+					//Return an empty list.
+					return Constant.V_LIST(values);
+				} else if (toElemType instanceof Type.Real && fromElemType instanceof Type.Int) {
 					// Cast Constant.Integer to Constant.Decimal
 					Iterator<Constant> iterator = ((Constant.List) from).values.iterator();
 					while (iterator.hasNext()) {
