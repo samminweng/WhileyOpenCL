@@ -1,7 +1,11 @@
 package wyopcl.interpreter.I;
 
+import static wycc.lang.SyntaxError.internalFailure;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +13,7 @@ import wyil.lang.Code.Block;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyil.lang.Type;
+import wyjc.runtime.WyList;
 import wyopcl.interpreter.Converter;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.Interpreter.StackFrame;
@@ -60,6 +65,39 @@ public class InvokeInterpreter extends Interpreter {
 		
 	}
 	
+	
+	/***
+	 * Convert the Java object to Constant object.
+	 * 
+	 * @param from
+	 * @param toType
+	 * @return
+	 */
+	private Constant convertJavaObjectToConstant(Object from, Class<?> fromType, wyil.lang.Type toType) {
+		Constant to = null;
+		if (toType instanceof Type.Strung) {
+			if (from instanceof BigDecimal) {
+				to = Constant.V_STRING(((BigDecimal) from).toPlainString());
+			} else {
+				to = Constant.V_STRING(from.toString());
+			}
+		} else if (toType instanceof Type.Int) {
+			to = Constant.V_INTEGER((BigInteger) from);
+		} else if (toType instanceof Type.Byte) {
+			if (fromType == WyList.class) {
+				WyList wylist = (WyList) from;
+				to = Constant.V_BYTE(new Byte((byte) wylist.get(0)));
+			} else {
+				to = Constant.V_BYTE(new Byte((byte) from));
+			}
+		} else {
+			internalFailure("Not implemented!", "Converter.java", null);
+		}
+
+		return to;
+	}
+
+	
 
 
 	public void interpret(Codes.Invoke code, StackFrame stackframe) {
@@ -70,8 +108,6 @@ public class InvokeInterpreter extends Interpreter {
 		if(blks != null){			
 			//Push the body block to the stack.
 			pushBlockToStackFrame(blks, code, stackframe);
-			
-
 		}else{
 			//Directly invoke the function/method.
 			//Constant operand = stackframe.getRegister(code.operands[0]);
@@ -100,7 +136,7 @@ public class InvokeInterpreter extends Interpreter {
 						//The returned_obj is a Java data type, so we need to convert
 						// returned_obj into Constant.
 						
-						result = Converter.convertJavaObjectToConstant(returned_obj, returnType, code.assignedType());
+						result = convertJavaObjectToConstant(returned_obj, returnType, code.assignedType());
 						stackframe.setRegister(code.target(), result);
 						break;
 					}

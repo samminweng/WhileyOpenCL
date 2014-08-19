@@ -42,14 +42,12 @@ public class ConvertInterpreter extends Interpreter {
 			toElem = fromElem;
 		} else {
 			if (fromElemType instanceof Type.Real) {
-
 				if (toElemType instanceof Type.Int) {
 					Constant.Decimal value = (Constant.Decimal) fromElem;
 					toElem = Constant.V_INTEGER(new BigInteger(value.toString()));
 				} else if (toElemType instanceof Type.Union) {
 					toElem = fromElem;
 				}
-
 			} else if (fromElemType instanceof Type.Int) {
 				if (toElemType instanceof Type.Real) {
 					Constant.Integer value = (Constant.Integer) fromElem;
@@ -67,9 +65,6 @@ public class ConvertInterpreter extends Interpreter {
 				}
 			} else if (fromElemType instanceof Type.Union && toElemType instanceof Type.Union) {
 				toElem = fromElem;
-				// ((Type.Union)fromElemType).bounds();
-
-				// Constant.Tuple tuple = Constant.V_TUPLE(values);
 			} else {
 				internalFailure("Not implemented!", "ConvertInterpreter.java", null);
 			}
@@ -99,14 +94,6 @@ public class ConvertInterpreter extends Interpreter {
 				} else {
 					internalFailure("Not implemented!", "ConvertInterpreter.java", null);
 				}
-			} else if (toType instanceof Type.UnionOfCollections) {
-				Iterator<Constant> iterator = ((Constant.List) from).values.iterator();
-				while (iterator.hasNext()) {
-					Constant value = iterator.next();
-					values.add(castElementToElement(value, ((Type.List) fromType).element(),
-							((Type.UnionOfCollections) toType).element()));
-				}
-				return Constant.V_LIST(values);
 			} else{
 				internalFailure("Not implemented!", "ConvertInterpreter.java", null);
 			}
@@ -121,21 +108,6 @@ public class ConvertInterpreter extends Interpreter {
 			} else {
 				internalFailure("Not implemented!", "ConvertInterpreter.java", null);
 			}
-		}else if (fromType instanceof Type.Set){			
-			if(toType instanceof Type.UnionOfCollections){
-				toElemType = ((Type.UnionOfCollections)toType).element();
-				fromElemType = ((Type.Set)fromType).element();	
-				HashSet<Constant> mapValues = ((Constant.Set)from).values;
-				Iterator<Constant> iterator = mapValues.iterator();
-				while(iterator.hasNext()){
-					Constant element = iterator.next();
-					values.add(castElementToElement(element,fromElemType, toElemType));
-				}
-				return Constant.V_LIST(values);
-			}else{
-				internalFailure("Not implemented!", "ConvertInterpreter.java", null);
-			}
-			
 		}else {
 			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
 		}
@@ -181,57 +153,7 @@ public class ConvertInterpreter extends Interpreter {
 		Constant.Map to = null;
 		if (fromType != toType) {
 			if (from instanceof Constant.Map) {
-				HashMap<Constant, Constant> map = new HashMap<Constant, Constant>();
-				Iterator<Entry<Constant, Constant>> iterator = ((Constant.Map) from).values.entrySet().iterator();
-				while (iterator.hasNext()) {
-					Entry<Constant, Constant> next = iterator.next();
-					Constant key = null, value = null;
-					// Check if the type of entry is Map or UnionMap
-					if (toType instanceof Type.Map) {
-						if (fromType instanceof Type.Map) {
-							key = castElementToElement(next.getKey(), ((Type.Map) fromType).key(),
-									((Type.Map) toType).key());
-							value = castElementToElement(next.getValue(), ((Type.Map) fromType).value(),
-									((Type.Map) toType).value());
-						} else if (fromType instanceof Type.UnionOfMaps) {
-							key = castElementToElement(next.getKey(), ((Type.UnionOfMaps) fromType).key(),
-									((Type.Map) toType).key());
-							value = castElementToElement(next.getValue(), ((Type.UnionOfMaps) fromType).value(),
-									((Type.Map) toType).value());
-						}
-					} else if (toType instanceof Type.UnionOfMaps) {
-						if (fromType instanceof Type.Map) {
-							key = castElementToElement(next.getKey(), ((Type.Map) fromType).key(),
-									((Type.UnionOfMaps) toType).key());
-							value = castElementToElement(next.getValue(), ((Type.Map) fromType).value(),
-									((Type.UnionOfMaps) toType).value());
-						} else if (fromType instanceof Type.UnionOfMaps) {
-							key = castElementToElement(next.getKey(), ((Type.UnionOfMaps) fromType).key(),
-									((Type.UnionOfMaps) toType).key());
-							value = castElementToElement(next.getValue(), ((Type.UnionOfMaps) fromType).value(),
-									((Type.UnionOfMaps) toType).value());
-						}
-					}
-					map.put(key, value);
-				}
-				to = Constant.V_MAP(map);
-			} else if (from instanceof Constant.List) {
-				Constant.List list = (Constant.List) from;
-				Map<Constant, Constant> map = new HashMap<Constant, Constant>();
-				Iterator<Constant> iterator = list.values.iterator();
-				int index = 0;
-				if (fromType instanceof Type.Map && toType instanceof Type.UnionOfMaps) {
-					Constant next = iterator.next();
-					while (iterator.hasNext()) {
-						Constant element = castElementToElement(next, ((Type.Map) fromType).key(),
-								((Type.UnionOfMaps) toType).key());
-						map.put(Constant.V_INTEGER(BigInteger.valueOf(index)), (Constant.Decimal) element);
-						index++;
-					}
-				} else {
-					internalFailure("Not implemented!", "ConvertInterpreter.java", null);
-				}
-				to = Constant.V_MAP(map);
+				to = (Constant.Map)from;
 			} else {
 				internalFailure("Not implemented!", "ConvertInterpreter.java", null);
 			}
@@ -332,10 +254,12 @@ public class ConvertInterpreter extends Interpreter {
 		} else if (toType instanceof Type.Map) {
 			to = toConstantMap(from, fromType, toType);
 		} else if (toType instanceof Type.Union) {
-			if (toType instanceof Type.UnionOfCollections) {
-				to = toConstantList(from, fromType, toType);
+			if (toType instanceof Type.UnionOfCollections) {				
+				to = from;				
 			} else if (toType instanceof Type.UnionOfMaps) {
-				to = toConstantMap(from, fromType, toType);
+				to = from;
+			} else if (toType instanceof Type.UnionOfIndexibles){
+				to = from;
 			} else {
 				internalFailure("Not implemented!", "ConvertInterpreter.java", null);
 			}
