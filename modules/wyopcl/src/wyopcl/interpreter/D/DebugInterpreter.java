@@ -22,8 +22,8 @@ public class DebugInterpreter extends Interpreter{
 		int linenumber = stackframe.getLine();
 		//Read a string from operand register.
 		Constant.Strung str = (Constant.Strung)stackframe.getRegister(code.operand);
-		//print it to the console.
-		System.out.println(str);
+		//Trim the string before printing it out.
+		System.out.println(str.value.trim());
 		printMessage(stackframe, code.toString(),"");
 		stackframe.setLine(++linenumber);
 	}
