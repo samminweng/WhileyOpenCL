@@ -81,7 +81,7 @@ public class ConvertInterpreter extends Interpreter {
 			if (toType instanceof Type.List) {
 				toElemType = ((Type.List)toType).element();
 				fromElemType = ((Type.List)fromType).element();				
-				if(toElemType.equals(fromElemType)){
+				if(toElemType.equals(fromElemType) || toElemType instanceof Type.Union){
 					return (Constant.List) from;
 				}else if (fromElemType instanceof Type.Void){
 					//Return an empty list.

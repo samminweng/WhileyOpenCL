@@ -29,45 +29,58 @@ public class IfIsInterpreter extends Interpreter{
 	}
 	
 	
-	private int gotoTargetBranch(StackFrame stackframe, String label){		
+	private void gotoTargetBranch(Codes.IfIs code, StackFrame stackframe){
+		String label = code.target;
 		Block block = stackframe.getBlock();
 		int linenumber = symboltable.get(block).getBlockPosByLabel(label);
-		return linenumber;
+		stackframe.setLine(++linenumber);
+	}
+	
+	
+	private void gotoNext(Codes.IfIs code, StackFrame stackframe){
+		int linenumber = stackframe.getLine();
+		printMessage(stackframe, code.toString(),"");
+		stackframe.setLine(++linenumber);
 	}
 	
 
 	public void interpret(Codes.IfIs code, StackFrame stackframe) {		
-		int linenumber = stackframe.getLine();
-		
 		//Read the value from the operand register.
 		Constant value = stackframe.getRegister(code.operand);
-		
 		if (code.rightOperand instanceof Type.Negation){
-			//Type.Negation test = (Type.Negation)code.rightOperand;
 			//Check the value is subtype of the test type.
 			if(value instanceof Constant.Record){
 				//On the true branch, its type is intersected with type test.
+				internalFailure("Not implemented!", "InterpreterIfIs.java", null);
 			}else{
-				linenumber = gotoTargetBranch(stackframe, code.target);
+				gotoTargetBranch(code, stackframe);
 			}
 		}else if(code.rightOperand instanceof Type.Null){
 			if(value instanceof Constant.Null){
 				//On the true branch, go to the label.				
-				linenumber = gotoTargetBranch(stackframe, code.target);	
-			}			
+				gotoTargetBranch(code, stackframe);	
+			}else{
+				gotoNext(code, stackframe);
+			}
 		}else if (code.rightOperand instanceof Type.Char){
 			//If value is a Constant.Char, then go to the true branch.
 			if(value instanceof Constant.Char){	
-				linenumber = gotoTargetBranch(stackframe, code.target);
-			}			
-			
+				gotoTargetBranch(code, stackframe);
+			}else{
+				gotoNext(code, stackframe);
+			}
+		}else if(code.rightOperand instanceof Type.Int){
+			if(value instanceof Constant.Integer){
+				gotoTargetBranch(code, stackframe);
+			}else {
+				gotoNext(code, stackframe);
+			}
 		}else{
 			internalFailure("Not implemented!", "InterpreterIfIs.java", null);
 		}
 	
 		
-		printMessage(stackframe, code.toString(),"");
-		stackframe.setLine(++linenumber);
+		
 	}
 
 }
