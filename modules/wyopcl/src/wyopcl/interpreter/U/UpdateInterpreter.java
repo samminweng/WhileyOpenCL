@@ -33,13 +33,11 @@ public class UpdateInterpreter extends Interpreter{
 		Constant.List list = (Constant.List)stackframe.getRegister(code.target());
 		//Read the rhs from the register.
 		Constant rhs = stackframe.getRegister(code.result());
-		//Copy the arrayList
-		ArrayList<Constant> values = list.values;
-		//Get the indices
-		int index;
+		//Get and clone the arrayList
+		ArrayList<Constant> values = new ArrayList<Constant>(list.values);
+		int index;//Get the index
 		for (int key : code.keys()) {
 			index = ((Constant.Integer)stackframe.getRegister(key)).value.intValue();
-			//int i = index.value.intValue();
 			if(values.size()<index){
 				values.add(rhs);
 			}else{
@@ -47,13 +45,13 @@ public class UpdateInterpreter extends Interpreter{
 			}
 		}
 
-		return list;
+		return Constant.V_LIST(values);
 	}
 	
 	private Constant.Record updateRecord(Codes.Update code, StackFrame stackframe){
 		Constant.Record record = (Constant.Record)stackframe.getRegister(code.target());
 		Constant assignedValue = stackframe.getRegister(code.result());
-		HashMap<String, Constant> values = record.values;
+		HashMap<String, Constant> values = new HashMap<String, Constant>(record.values);
 		String field = code.fields.get(0);
 		
 		//Get the field value
@@ -91,7 +89,7 @@ public class UpdateInterpreter extends Interpreter{
 		//Get the index
 		Constant updateIndex0 = stackframe.getRegister(code.operand(0));
 		
-		HashMap<Constant, Constant> values = map.values;
+		HashMap<Constant, Constant> values = new HashMap<Constant, Constant>(map.values);
 	
 		//Get the existing value
 		Constant existingValue = values.get(updateIndex0);
@@ -124,9 +122,8 @@ public class UpdateInterpreter extends Interpreter{
 		Constant result = null;
 		//Popup the compound type (lists, dictionaries, strings, records and references
 		Type afterType = code.afterType;		
-		if(afterType instanceof Type.List){
-			//Update the result to the list.
-			result = updateList(code, stackframe);			
+		if(afterType instanceof Type.List){			
+			result = updateList(code, stackframe);//Update the result to the list.			
 		}else if(afterType instanceof Type.Record){
 			result = updateRecord(code, stackframe);			
 		}else if (afterType instanceof Type.Strung){
