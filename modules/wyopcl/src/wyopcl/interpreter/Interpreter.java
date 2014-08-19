@@ -16,7 +16,6 @@ import wyil.lang.WyilFile;
 
 /*Declare the abstract Interpreter class, methods and variables. */
 public abstract class Interpreter {
-	//protected static HashMap<String, Block> blocktable = new HashMap<String, Block>();
 	protected static HashMap<String, List<Block>> blocktable = new HashMap<String, List<Block>>();
 	protected static Stack<StackFrame> blockstack = new Stack<StackFrame>();
 	protected static HashMap<Block, SymbolTable> symboltable = new HashMap<Block, SymbolTable>();
@@ -106,7 +105,7 @@ public abstract class Interpreter {
 		}
 		
 		public Constant getRegister(int reg){
-			if(reg>=registers.length){
+			if(reg>=registers.length || reg < 0){
 				return null;
 			}
 			
