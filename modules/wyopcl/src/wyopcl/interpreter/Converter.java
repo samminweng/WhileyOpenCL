@@ -41,12 +41,17 @@ public class Converter {
 				Constant.List list = (Constant.List) from;
 				String r = "[";
 				boolean firstTime=true;
-				for(Constant v : list.values) {
+				for(Constant elem : list.values) {
 					if(!firstTime) {
 						r += ", ";
 					}
 					firstTime=false;
-					r += v;
+					//Check if the elem is a list
+					if(elem instanceof Constant.List){
+						r += convertConstantToJavaObject(elem, paramType);
+					}else {
+						r += elem;
+					}
 				}
 				r+= "]";
 				to = r;				
