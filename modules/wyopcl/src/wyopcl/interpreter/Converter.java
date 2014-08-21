@@ -47,7 +47,7 @@ public class Converter {
 					}
 					firstTime=false;
 					//Check if the elem is a list
-					if(elem instanceof Constant.List){
+					if(elem instanceof Constant.List || elem instanceof Constant.Record){
 						r += convertConstantToJavaObject(elem, paramType);
 					}else {
 						r += elem;
@@ -66,7 +66,14 @@ public class Converter {
 						r += ",";
 					}
 					firstTime=false;
-					r += key + ":" + record.values.get(key);
+					Constant constant = record.values.get(key);
+					if(constant instanceof Constant.Record || constant instanceof Constant.List){
+						//Convert the key record into a string
+						r+= convertConstantToJavaObject(constant, paramType);
+					}else{
+						r += key + ":" + constant;
+					}
+					
 				}
 				r += "}";
 				to = r;
