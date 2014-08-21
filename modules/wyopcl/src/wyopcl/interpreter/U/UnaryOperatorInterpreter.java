@@ -1,9 +1,13 @@
 package wyopcl.interpreter.U;
 
 import static wycc.lang.SyntaxError.internalFailure;
+
+import java.math.BigInteger;
+
 import wyil.lang.Codes;
 import wyil.lang.Codes.UnaryOperatorKind;
 import wyil.lang.Constant;
+import wyopcl.interpreter.DecimalFraction;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.Interpreter.StackFrame;
 
@@ -30,23 +34,31 @@ public class UnaryOperatorInterpreter extends Interpreter {
 				break;
 			case NUMERATOR:
 				internalFailure("Not implemented!", "UnaryOperatorInterpreter.java", null);
+				break;
 			case DENOMINATOR:
 				internalFailure("Not implemented!", "UnaryOperatorInterpreter.java", null);
+				break;
 			default:
 				internalFailure("Not implemented!", "UnaryOperatorInterpreter.java", null);
 			}
 		}else if(number instanceof Constant.Decimal){
+			DecimalFraction fraction;
 			Constant.Decimal decimal = (Constant.Decimal)number;
 			switch(kind){
 			case NEG:
 				result = Constant.V_DECIMAL(decimal.value.negate());
 				break;
 			case NUMERATOR:
-				internalFailure("Not implemented!", "UnaryOperatorInterpreter.java", null);
+				fraction = new DecimalFraction(decimal.value);
+				result = Constant.V_INTEGER(BigInteger.valueOf(fraction.getNumerator()));
+				break;			
 			case DENOMINATOR:
-				internalFailure("Not implemented!", "UnaryOperatorInterpreter.java", null);
+				fraction = new DecimalFraction(decimal.value);
+				result = Constant.V_INTEGER(BigInteger.valueOf(fraction.getNumerator()));
+				break;			
 			default:
 				internalFailure("Not implemented!", "UnaryOperatorInterpreter.java", null);
+				
 			}
 			
 		}else{

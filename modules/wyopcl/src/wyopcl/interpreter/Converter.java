@@ -69,7 +69,7 @@ public class Converter {
 					Constant constant = record.values.get(key);
 					if(constant instanceof Constant.Record || constant instanceof Constant.List){
 						//Convert the key record into a string
-						r+= convertConstantToJavaObject(constant, paramType);
+						r+=  key + ":" + convertConstantToJavaObject(constant, paramType);
 					}else{
 						r += key + ":" + constant;
 					}
