@@ -73,16 +73,14 @@ public class IfInterpreter extends Interpreter {
 		case SUBSET:
 			leftSet = (Constant.Set)left;
 			rightSet = (Constant.Set)right;
-			if(leftSet.values.contains(rightSet.values)){
+			if(rightSet.values.contains(leftSet.values)){
 				satisfiable = true;
 			}
 			break;
 		case SUBSETEQ:
 			leftSet = (Constant.Set)left;
 			rightSet = (Constant.Set)right;
-			if(leftSet.values.contains(rightSet.values)){
-				satisfiable = true;
-			}
+			satisfiable = rightSet.values.containsAll(leftSet.values);
 			break;
 		default:			
 			satisfiable = true;
