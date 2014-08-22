@@ -37,7 +37,7 @@ public class DecimalFraction {
 		this.decimal = decimal;		
 		if(this.decimal.signum() == -1){
 			this.denominator = (int) Math.pow(10.0, (double)this.decimal.scale());
-			this.numerator = (-1)*(int)this.decimal.doubleValue()*denominator;	
+			this.numerator = (int)((-1)*this.decimal.doubleValue()*denominator);	
 		}else{
 			//Convert the repeating decimals to fractions. how???
 			internalFailure("Not implemented!", "DecimalFraction.java", null);
