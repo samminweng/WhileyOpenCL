@@ -171,7 +171,13 @@ public class ConvertInterpreter extends Interpreter {
 		Constant.Set to = null;
 		if (fromType instanceof Type.Set) {
 			Constant.Set set = (Constant.Set) from;
-			HashSet<Constant> values = set.values;
+			HashSet<Constant> values = new HashSet<Constant>();
+			Iterator<Constant> iterator = set.values.iterator();
+			while(iterator.hasNext()){
+				Constant next = iterator.next();
+				//Cast the elements in the from set.
+				values.add(castElementToElement(next, ((Type.Set)fromType).element(), ((Type.Set)toType).element()));
+			}			
 			to = Constant.V_SET(values);
 		} else {
 			internalFailure("Not implemented!", "ConvertInterpreter.java", null);

@@ -13,6 +13,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeSet;
 
 import whiley.lang.Char;
 import whiley.lang.Real;
@@ -129,16 +130,19 @@ public class Converter {
 				r += "}";
 				to = r;
 			} else if (from instanceof Constant.Set){
-				//to = ((Constant.Set)from).values;
 				Constant.Set set = (Constant.Set)from;
+				//Sort the elements in a set, using the tree set.
+				TreeSet<Constant> sorted = new TreeSet<Constant>(set.values);
 				String r = "{";
 				boolean firstTime=true;
-				for(Constant v : set.values) {
+				Iterator<Constant> iterator = sorted.iterator();
+				while(iterator.hasNext()) {
+					Constant constant = iterator.next();
 					if(!firstTime) {
-						r += ",";
+						r += ", ";
 					}
 					firstTime=false;
-					r += v;
+					r += convertConstantToJavaObject(constant, paramType);
 				}
 				return r + "}";
 				
