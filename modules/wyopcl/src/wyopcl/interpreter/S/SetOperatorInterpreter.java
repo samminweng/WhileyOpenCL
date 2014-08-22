@@ -42,10 +42,8 @@ public class SetOperatorInterpreter extends Interpreter{
 			lhs = (Constant.Set)left;
 			rhs = (Constant.Set)right;
 			result = lhs.union(rhs);
-			//internalFailure("Not implemented!", "InterpreterSetOperator.java", null);
 			break;
 		case LEFT_UNION:
-			//Collection<Constant> values = new ArrayList<Constant>();
 			lhs = (Constant.Set)left;
 			Collection<Constant> list = new LinkedHashSet<Constant>();
 			list.add(right);
@@ -55,11 +53,13 @@ public class SetOperatorInterpreter extends Interpreter{
 			internalFailure("Not implemented!", "InterpreterSetOperator.java", null);
 			break;
 		case INTERSECTION:
-			internalFailure("Not implemented!", "InterpreterSetOperator.java", null);
+			lhs = (Constant.Set)left;
+			rhs = (Constant.Set)right;
+			result = lhs.intersect(rhs);
 			break;
 		default:
 			internalFailure("Not implemented!", "InterpreterSetOperator.java", null);
-		
+			break;
 		}
 		//Write the result to target register.
 		stackframe.setRegister(code.target(), result);

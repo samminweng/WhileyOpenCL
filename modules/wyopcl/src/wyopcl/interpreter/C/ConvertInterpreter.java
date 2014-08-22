@@ -168,22 +168,28 @@ public class ConvertInterpreter extends Interpreter {
 	}
 
 	private Constant.Set toConstantSet(Constant from, Type fromType, Type toType) {
-		Constant.Set to = null;
+		Type fromElemType =null;
+		HashSet<Constant> values = new HashSet<Constant>();
+		Iterator<Constant> iterator = null;
+		
 		if (fromType instanceof Type.Set) {
-			Constant.Set set = (Constant.Set) from;
-			HashSet<Constant> values = new HashSet<Constant>();
-			Iterator<Constant> iterator = set.values.iterator();
-			while (iterator.hasNext()) {
-				Constant next = iterator.next();
-				// Cast the elements in the from set.
-				values.add(castElementToElement(next, ((Type.Set) fromType).element(), ((Type.Set) toType).element()));
-			}
-			to = Constant.V_SET(values);
-		} else {
+			iterator = ((Constant.Set) from).values.iterator();
+			fromElemType = ((Type.Set) fromType).element();			
+		} else if (fromType instanceof Type.List){
+			iterator = ((Constant.List)from).values.iterator();
+			fromElemType =((Type.List)fromType).element();
+		}else {
 			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
 		}
-
-		return to;
+		
+		Type toElemType = ((Type.Set) toType).element();
+		while (iterator.hasNext()) {
+			Constant next = iterator.next();
+			// Cast the elements in the from set.
+			values.add(castElementToElement(next, fromElemType, toElemType));
+		}
+		
+		return Constant.V_SET(values);
 	}
 
 	private Constant.Integer toConstantInt(Constant from, Type fromType, Type toType) {
