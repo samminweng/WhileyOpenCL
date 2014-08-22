@@ -41,35 +41,29 @@ public class ConvertInterpreter extends Interpreter {
 		if (fromElemType == toElemType || toElemType instanceof Type.Any) {
 			toElem = fromElem;
 		} else {
-			if (fromElemType instanceof Type.Real) {
-				if (toElemType instanceof Type.Int) {
+			if (toElemType instanceof Type.Union) {
+				toElem = fromElem;
+			} else {
+				if (fromElemType instanceof Type.Real && toElemType instanceof Type.Int) {
 					Constant.Decimal value = (Constant.Decimal) fromElem;
 					toElem = Constant.V_INTEGER(new BigInteger(value.toString()));
-				} else if (toElemType instanceof Type.Union) {
-					toElem = fromElem;
-				}
-			} else if (fromElemType instanceof Type.Int) {
-				if (toElemType instanceof Type.Real) {
+				} else if (fromElemType instanceof Type.Int && toElemType instanceof Type.Real) {
 					Constant.Integer value = (Constant.Integer) fromElem;
 					toElem = Constant.V_DECIMAL(new BigDecimal(value.toString()));
-				} else if (toElemType instanceof Type.Union) {
-					toElem = fromElem;
-				}
-			} else if (fromElemType instanceof Type.Union && toElemType instanceof Type.Real) {
-				if (fromElem instanceof Constant.Decimal) {
-					toElem = fromElem;
-				} else if (fromElem instanceof Constant.Integer) {
-					toElem = Constant.V_DECIMAL(new BigDecimal(((Constant.Integer) fromElem).toString()));
+				} else if (fromElemType instanceof Type.Union && toElemType instanceof Type.Real) {
+					if (fromElem instanceof Constant.Decimal) {
+						toElem = fromElem;
+					} else if (fromElem instanceof Constant.Integer) {
+						toElem = Constant.V_DECIMAL(new BigDecimal(((Constant.Integer) fromElem).toString()));
+					} else {
+						internalFailure("Not implemented!", "ConvertInterpreter.java", null);
+					}
+				} else if (fromElemType instanceof Type.Char && toElemType instanceof Type.Int) {
+					Constant.Char fromChar = (Constant.Char) fromElem;
+					toElem = Constant.V_INTEGER(BigInteger.valueOf((int) fromChar.value));
 				} else {
 					internalFailure("Not implemented!", "ConvertInterpreter.java", null);
 				}
-			} else if (fromElemType instanceof Type.Union && toElemType instanceof Type.Union) {
-				toElem = fromElem;
-			} else if (fromElemType instanceof Type.Char && toElemType instanceof Type.Int){
-				Constant.Char fromChar = (Constant.Char)fromElem;
-				toElem = Constant.V_INTEGER(BigInteger.valueOf((int)fromChar.value));				
-			} else {
-				internalFailure("Not implemented!", "ConvertInterpreter.java", null);
 			}
 		}
 
@@ -84,12 +78,15 @@ public class ConvertInterpreter extends Interpreter {
 
 		if (fromType instanceof Type.List) {
 			fromElemType = ((Type.List) fromType).element();
-			if (fromElemType instanceof Type.Void) {				
+			if (fromElemType instanceof Type.Void) {
 				return Constant.V_LIST(values);// Return an empty list.
 			} else if (toElemType.equals(fromElemType) || toElemType instanceof Type.Union) {
-				return (Constant.List) from;//No casting
+				return (Constant.List) from;// No casting
 			} else {
-				if (toElemType instanceof Type.Real && fromElemType instanceof Type.Int) {// Cast Constant.Integer to Constant.Decimal					
+				if (toElemType instanceof Type.Real && fromElemType instanceof Type.Int) {// Cast
+																							// Constant.Integer
+																							// to
+																							// Constant.Decimal
 					Iterator<Constant> iterator = ((Constant.List) from).values.iterator();
 					while (iterator.hasNext()) {
 						Constant value = iterator.next();
@@ -176,11 +173,11 @@ public class ConvertInterpreter extends Interpreter {
 			Constant.Set set = (Constant.Set) from;
 			HashSet<Constant> values = new HashSet<Constant>();
 			Iterator<Constant> iterator = set.values.iterator();
-			while(iterator.hasNext()){
+			while (iterator.hasNext()) {
 				Constant next = iterator.next();
-				//Cast the elements in the from set.
-				values.add(castElementToElement(next, ((Type.Set)fromType).element(), ((Type.Set)toType).element()));
-			}			
+				// Cast the elements in the from set.
+				values.add(castElementToElement(next, ((Type.Set) fromType).element(), ((Type.Set) toType).element()));
+			}
 			to = Constant.V_SET(values);
 		} else {
 			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
