@@ -416,7 +416,7 @@ import wyjc.util.WyjcBuildTask;
 		runTest("Coercion_Valid_7");
 	}
 
-	@Test
+	@Ignore("#406") @Test
 	public void Coercion_Valid_8() {
 		runTest("Coercion_Valid_8");
 	}
@@ -456,6 +456,11 @@ import wyjc.util.WyjcBuildTask;
 		runTest("Complex_Valid_7");
 	}
 
+	@Test
+	public void Complex_Valid_8() {
+		runTest("Complex_Valid_8");
+	}
+	
 	@Ignore("#311") @Test
 	public void Constant_Valid_1() {
 		runTest("Constant_Valid_1");
@@ -956,7 +961,7 @@ import wyjc.util.WyjcBuildTask;
 		runTest("Ensures_Valid_5");
 	}
 
-	@Ignore("???") @Test
+	@Test
 	public void Ensures_Valid_6() {
 		runTest("Ensures_Valid_6");
 	}
@@ -1734,7 +1739,7 @@ import wyjc.util.WyjcBuildTask;
 		runTest("OpenRecord_Valid_2");
 	}
 
-	@Ignore("Issue ???") @Test
+	@Test
 	public void OpenRecord_Valid_3() {
 		runTest("OpenRecord_Valid_3");
 	}
@@ -2129,7 +2134,7 @@ import wyjc.util.WyjcBuildTask;
 		runTest("RecursiveType_Valid_27");
 	}
 
-	@Test
+	@Ignore("#364") @Test
 	public void RecursiveType_Valid_28() {
 		runTest("RecursiveType_Valid_28");
 	}
@@ -2139,7 +2144,7 @@ import wyjc.util.WyjcBuildTask;
 		runTest("RecursiveType_Valid_29");
 	}
 	
-	@Test
+	@Ignore("#406") @Test
 	public void RecursiveType_Valid_3() {
 		runTest("RecursiveType_Valid_3");
 	}
@@ -2154,7 +2159,7 @@ import wyjc.util.WyjcBuildTask;
 		runTest("RecursiveType_Valid_31");
 	}
 	
-	@Test
+	@Ignore("#406") @Test
 	public void RecursiveType_Valid_4() {
 		runTest("RecursiveType_Valid_4");
 	}
@@ -3014,7 +3019,7 @@ import wyjc.util.WyjcBuildTask;
 		runTest("UnionType_Valid_16");
 	}
 
-	@Ignore("Issue ???") @Test
+	@Test
 	public void UnionType_Valid_17() {
 		runTest("UnionType_Valid_17");
 	}
@@ -3194,7 +3199,7 @@ import wyjc.util.WyjcBuildTask;
 		runTest("While_Valid_23");
 	}
 
-	@Ignore("???") @Test
+	@Test
 	public void While_Valid_24() {
 		runTest("While_Valid_24");
 	}
@@ -3204,7 +3209,7 @@ import wyjc.util.WyjcBuildTask;
 		runTest("While_Valid_25");
 	}
 
-	@Ignore("???") @Test
+	@Test
 	public void While_Valid_26() {
 		runTest("While_Valid_26");
 	}

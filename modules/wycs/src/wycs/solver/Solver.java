@@ -6334,6 +6334,69 @@ public final class Solver {
 		public final int minimum() { return 0; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
+	// 
+	private final static class Reduction_77 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_77(Pattern.Term pattern) { super(pattern); }
+
+		public final void probe(Automaton automaton, int root, List<Activation> activations) {
+			int r0 = root;
+			Automaton.State s0 = automaton.get(r0);
+			if(s0.kind == K_Equation) {
+				Automaton.Term t0 = (Automaton.Term) s0;
+				int r1 = t0.contents;
+				Automaton.State s1 = automaton.get(r1);
+				Automaton.List l1 = (Automaton.List) s1;
+				int r2 = l1.get(0);
+				if(Runtime.accepts(type25,automaton,automaton.get(r2), SCHEMA)) {
+					int r3 = l1.get(1);
+					Automaton.State s3 = automaton.get(r3);
+					if(s3.kind == K_LengthOf) {
+						Automaton.Term t3 = (Automaton.Term) s3;
+						int r4 = t3.contents;
+						if(Runtime.accepts(type28,automaton,automaton.get(r4), SCHEMA)) {
+							int[] state = {r0, r1, r2, r3, r4};
+							activations.add(new Activation(this,null,state));
+						}
+					}
+				}
+			}
+		}
+
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
+			int r0 = state[0];
+			int r4 = state[4]; // x
+			boolean r5 = true;             // true
+			int r6 = automaton.add(r5 ? Automaton.TRUE : Automaton.FALSE);
+			Automaton.Term r7 = VoidT;
+			int r8 = automaton.add(r7);
+			Automaton.List r9 = new Automaton.List(r6, r8); // [trueVoidT]
+			int r10 = automaton.add(r9);
+			Automaton.Term r11 = new Automaton.Term(K_SetT, r10);
+			int r12 = automaton.add(r11);
+			Automaton.Set r13 = new Automaton.Set(); // {}
+			int r14 = automaton.add(r13);
+			Automaton.Term r15 = new Automaton.Term(K_Set, r14);
+			int r16 = automaton.add(r15);
+			Automaton.Bag r17 = new Automaton.Bag(r4, r16); // {|xSet({})|}
+			int r18 = automaton.add(r17);
+			Automaton.List r19 = new Automaton.List(r12, r18); // [SetT([trueVoidT]){|xSet({})|}]
+			int r20 = automaton.add(r19);
+			Automaton.Term r21 = new Automaton.Term(K_Equals, r20);
+			int r22 = automaton.add(r21);
+			if(r0 != r22) {
+				return automaton.rewrite(r0, r22);
+			}
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
+		}
+		public final String name() { return ""; }
+		public final int rank() { return 0; }
+
+		public final int minimum() { return 4; }
+		public final int maximum() { return Integer.MAX_VALUE; }
+	}
 	// term $10<SubsetEq(^[^$19<SetT(^[^bool,$13<^Type<$19|Atom<NotT($31<^Proton<TupleT(^[$31...])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)>>>)|Proton<TupleT(^[$31...])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)>>>|NotT($13)|OrT(^{$13...})|AndT(^{$13...})|TupleT(^[$13...])|FunctionT(^[$13,$13,$13...])>>])>,^$102<SExpr<$112<VExpr<Var(^string)|$122<Fn(^[^string,$116<^Expr<$102|$122|$154<Value<Tuple(^[^$154...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$154...})>>|Tuple(^[$116...])|$196<BExpr<$10|$112|Bool<True|False>|And(^{^$196...})|Or(^{^$196...})|Not(^$196)|Equals(^[$13,^{|$116,$116|}[$116,$116]])|Inequality(^[^AType<IntT|RealT>,$219<^AExpr<$112|Num(^real)|Sum(^[^real,^{|$219...|}[$219...]])|Mul(^[^real,^{|$219...|}[$219...]])|Div(^[$219,$219])>>])|Equation(^[^AType<IntT|RealT>,$219])|ForAll(^[^{^[^Var(^string),$13]...},^$196])|Exists(^[^{^[^Var(^string),$13]...},^$196])>>|AExpr<$112|Num(^real)|Sum(^[^real,^{|$219...|}[$219...]])|Mul(^[^real,^{|$219...|}[$219...]])|Div(^[$219,$219])>>>...])>|Load(^[$116,^int])|LengthOf($116)>>|Set(^{$116...})>>,^$102])>
 	public final static int K_SubsetEq = 33;
 	public final static int SubsetEq(Automaton automaton, int... r0) {
@@ -6346,9 +6409,9 @@ public final class Solver {
 	}
 
 	// 
-	private final static class Reduction_77 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_78 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_77(Pattern.Term pattern) { super(pattern); }
+		public Reduction_78(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -6421,7 +6484,7 @@ public final class Solver {
 			Automaton.Int r19 = r5.lengthOf(); // |xs|
 			Automaton.Int r20 = r8.lengthOf(); // |ys|
 			boolean r21 = r19.compareTo(r20)<=0; // |xs| le |ys|
-			boolean r22 = false;           // |xs| le |ys| && wyrl.core.Expr$Comprehension@115d9ee6
+			boolean r22 = false;           // |xs| le |ys| && wyrl.core.Expr$Comprehension@44d5575
 			if(r21) {
 				Automaton.List t23 = new Automaton.List();
 				boolean r23 = true;
@@ -6467,9 +6530,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// 
-	private final static class Reduction_78 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_79 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_78(Pattern.Term pattern) { super(pattern); }
+		public Reduction_79(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -6551,9 +6614,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// 
-	private final static class Reduction_79 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_80 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_79(Pattern.Term pattern) { super(pattern); }
+		public Reduction_80(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -6670,9 +6733,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// 
-	private final static class Reduction_80 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_81 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_80(Pattern.Term pattern) { super(pattern); }
+		public Reduction_81(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -6814,9 +6877,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// 
-	private final static class Reduction_81 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_82 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_81(Pattern.Term pattern) { super(pattern); }
+		public Reduction_82(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -7073,9 +7136,9 @@ public final class Solver {
 	}
 
 	// ForAll_1
-	private final static class Reduction_82 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_83 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_82(Pattern.Term pattern) { super(pattern); }
+		public Reduction_83(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -7088,19 +7151,9 @@ public final class Solver {
 				int r2 = l1.get(0);
 				Automaton.State s2 = automaton.get(r2);
 				Automaton.Collection c2 = (Automaton.Collection) s2;
-				boolean m2_0 = true;
-				for(int i3=0;i3!=c2.size();++i3) {
-					int r3 = c2.get(i3);
-					Automaton.State s3 = automaton.get(r3);
-					Automaton.List l3 = (Automaton.List) s3;
-					int r4 = l3.get(0);
-					int r5 = l3.get(1);
-				}
-				if(m2_0) {
-					int r4 = l1.get(1);
-					int[] state = {r0, r1, r2, 0, r4};
-					activations.add(new Activation(this,null,state));
-				}
+				int r4 = l1.get(1);
+				int[] state = {r0, r1, r2, 0, r4};
+				activations.add(new Activation(this,null,state));
 			}
 		}
 
@@ -7134,9 +7187,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// ForAll_2
-	private final static class Reduction_83 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_84 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_83(Pattern.Term pattern) { super(pattern); }
+		public Reduction_84(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -7153,19 +7206,9 @@ public final class Solver {
 					int r3 = l2.get(0);
 					Automaton.State s3 = automaton.get(r3);
 					Automaton.Collection c3 = (Automaton.Collection) s3;
-					boolean m3_0 = true;
-					for(int i4=0;i4!=c3.size();++i4) {
-						int r4 = c3.get(i4);
-						Automaton.State s4 = automaton.get(r4);
-						Automaton.List l4 = (Automaton.List) s4;
-						int r5 = l4.get(0);
-						int r6 = l4.get(1);
-					}
-					if(m3_0) {
-						int r5 = l2.get(1);
-						int[] state = {r0, r1, r2, r3, 0, r5};
-						activations.add(new Activation(this,null,state));
-					}
+					int r5 = l2.get(1);
+					int[] state = {r0, r1, r2, r3, 0, r5};
+					activations.add(new Activation(this,null,state));
 				}
 			}
 		}
@@ -7194,9 +7237,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// ForAll_3
-	private final static class Reduction_84 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_85 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_84(Pattern.Term pattern) { super(pattern); }
+		public Reduction_85(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -7209,39 +7252,19 @@ public final class Solver {
 				int r2 = l1.get(0);
 				Automaton.State s2 = automaton.get(r2);
 				Automaton.Collection c2 = (Automaton.Collection) s2;
-				boolean m2_0 = true;
-				for(int i3=0;i3!=c2.size();++i3) {
-					int r3 = c2.get(i3);
-					Automaton.State s3 = automaton.get(r3);
-					Automaton.List l3 = (Automaton.List) s3;
-					int r4 = l3.get(0);
-					int r5 = l3.get(1);
-				}
-				if(m2_0) {
-					int r4 = l1.get(1);
-					Automaton.State s4 = automaton.get(r4);
-					if(s4.kind == K_ForAll) {
-						Automaton.Term t4 = (Automaton.Term) s4;
-						int r5 = t4.contents;
-						Automaton.State s5 = automaton.get(r5);
-						Automaton.List l5 = (Automaton.List) s5;
-						int r6 = l5.get(0);
-						Automaton.State s6 = automaton.get(r6);
-						Automaton.Collection c6 = (Automaton.Collection) s6;
-						boolean m6_0 = true;
-						for(int i7=0;i7!=c6.size();++i7) {
-							int r7 = c6.get(i7);
-							Automaton.State s7 = automaton.get(r7);
-							Automaton.List l7 = (Automaton.List) s7;
-							int r8 = l7.get(0);
-							int r9 = l7.get(1);
-						}
-						if(m6_0) {
-							int r8 = l5.get(1);
-							int[] state = {r0, r1, r2, 0, r4, r5, r6, 0, r8};
-							activations.add(new Activation(this,null,state));
-						}
-					}
+				int r4 = l1.get(1);
+				Automaton.State s4 = automaton.get(r4);
+				if(s4.kind == K_ForAll) {
+					Automaton.Term t4 = (Automaton.Term) s4;
+					int r5 = t4.contents;
+					Automaton.State s5 = automaton.get(r5);
+					Automaton.List l5 = (Automaton.List) s5;
+					int r6 = l5.get(0);
+					Automaton.State s6 = automaton.get(r6);
+					Automaton.Collection c6 = (Automaton.Collection) s6;
+					int r8 = l5.get(1);
+					int[] state = {r0, r1, r2, 0, r4, r5, r6, 0, r8};
+					activations.add(new Activation(this,null,state));
 				}
 			}
 		}
@@ -7273,6 +7296,72 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// ForAll_4
+	private final static class Reduction_86 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_86(Pattern.Term pattern) { super(pattern); }
+
+		public final void probe(Automaton automaton, int root, List<Activation> activations) {
+			int r0 = root;
+			Automaton.State s0 = automaton.get(r0);
+			if(s0.kind == K_ForAll) {
+				Automaton.Term t0 = (Automaton.Term) s0;
+				int r1 = t0.contents;
+				Automaton.State s1 = automaton.get(r1);
+				Automaton.List l1 = (Automaton.List) s1;
+				int r2 = l1.get(0);
+				Automaton.State s2 = automaton.get(r2);
+				Automaton.Collection c2 = (Automaton.Collection) s2;
+				if(c2.size() >= 1) {
+					for(int r4=0;r4!=c2.size();++r4) {
+						int r3 = c2.get(r4);
+						Automaton.State s3 = automaton.get(r3);
+						Automaton.List l3 = (Automaton.List) s3;
+						int r5 = l3.get(0);
+						int r6 = l3.get(1);
+						int r8 = l1.get(1);
+						int[] state = {r0, r1, r2, r3, r4, r5, r6, 0, r8};
+						activations.add(new Activation(this,null,state));
+					}
+				}
+			}
+		}
+
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
+			int r0 = state[0];
+			int r4 = state[4];
+			int r5 = state[5]; // v
+			Automaton.Collection s2 = (Automaton.Collection) automaton.get(state[2]);
+			int[] s2children = new int[s2.size() - 1];
+			for(int s2i=0, s2j=0; s2i != s2.size();++s2i) {
+				if(s2i == r4) { continue; }
+				s2children[s2j++] = s2.get(s2i);
+			}
+			Automaton.Set r7 = new Automaton.Set(s2children);
+			int r8 = state[8]; // e
+			Automaton.List r9 = new Automaton.List(r8, r5); // [ev]
+			boolean r10 = Solver$native.contains(automaton, r9);
+			boolean r11 = !r10;            // !contains([ev])
+			if(r11) {
+				int r12 = automaton.add(r7);
+				Automaton.List r13 = new Automaton.List(r12, r8); // [xse]
+				int r14 = automaton.add(r13);
+				Automaton.Term r15 = new Automaton.Term(K_ForAll, r14);
+				int r16 = automaton.add(r15);
+				if(r0 != r16) {
+					return automaton.rewrite(r0, r16);
+				}
+			}
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
+		}
+		public final String name() { return "ForAll_4"; }
+		public final int rank() { return 1; }
+
+		public final int minimum() { return 0; }
+		public final int maximum() { return Integer.MAX_VALUE; }
+	}
+	// ForAll_5
 	private final static class Inference_6 extends AbstractRewriteRule implements InferenceRule {
 
 		public Inference_6(Pattern.Term pattern) { super(pattern); }
@@ -7308,20 +7397,9 @@ public final class Solver {
 											Automaton.List l8 = (Automaton.List) s8;
 											int r10 = l8.get(0);
 											int r11 = l8.get(1);
-											boolean m7_1 = true;
-											for(int i12=0;i12!=c7.size();++i12) {
-												if(i12 == r9) { continue; }
-												int r12 = c7.get(i12);
-												Automaton.State s12 = automaton.get(r12);
-												Automaton.List l12 = (Automaton.List) s12;
-												int r13 = l12.get(0);
-												int r14 = l12.get(1);
-											}
-											if(m7_1) {
-												int r13 = l6.get(1);
-												int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, 0, r13, 0};
-												activations.add(new Activation(this,null,state));
-											}
+											int r13 = l6.get(1);
+											int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, 0, r13, 0};
+											activations.add(new Activation(this,null,state));
 										}
 									}
 								}
@@ -7368,13 +7446,13 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "ForAll_4"; }
+		public final String name() { return "ForAll_5"; }
 		public final int rank() { return 3; }
 
 		public final int minimum() { return 0; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// ForAll_5
+	// ForAll_6
 	private final static class Inference_7 extends AbstractRewriteRule implements InferenceRule {
 
 		public Inference_7(Pattern.Term pattern) { super(pattern); }
@@ -7414,20 +7492,9 @@ public final class Solver {
 												Automaton.List l9 = (Automaton.List) s9;
 												int r11 = l9.get(0);
 												int r12 = l9.get(1);
-												boolean m8_1 = true;
-												for(int i13=0;i13!=c8.size();++i13) {
-													if(i13 == r10) { continue; }
-													int r13 = c8.get(i13);
-													Automaton.State s13 = automaton.get(r13);
-													Automaton.List l13 = (Automaton.List) s13;
-													int r14 = l13.get(0);
-													int r15 = l13.get(1);
-												}
-												if(m8_1) {
-													int r14 = l7.get(1);
-													int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, 0, r14, 0};
-													activations.add(new Activation(this,null,state));
-												}
+												int r14 = l7.get(1);
+												int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, 0, r14, 0};
+												activations.add(new Activation(this,null,state));
 											}
 										}
 									}
@@ -7476,7 +7543,7 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "ForAll_5"; }
+		public final String name() { return "ForAll_6"; }
 		public final int rank() { return 3; }
 
 		public final int minimum() { return 0; }
@@ -7493,10 +7560,10 @@ public final class Solver {
 		return automaton.add(new Automaton.Term(K_Exists, r1));
 	}
 
-	// 
-	private final static class Reduction_85 extends AbstractRewriteRule implements ReductionRule {
+	// Exists_1
+	private final static class Reduction_87 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_85(Pattern.Term pattern) { super(pattern); }
+		public Reduction_87(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -7509,19 +7576,9 @@ public final class Solver {
 				int r2 = l1.get(0);
 				Automaton.State s2 = automaton.get(r2);
 				Automaton.Collection c2 = (Automaton.Collection) s2;
-				boolean m2_0 = true;
-				for(int i3=0;i3!=c2.size();++i3) {
-					int r3 = c2.get(i3);
-					Automaton.State s3 = automaton.get(r3);
-					Automaton.List l3 = (Automaton.List) s3;
-					int r4 = l3.get(0);
-					int r5 = l3.get(1);
-				}
-				if(m2_0) {
-					int r4 = l1.get(1);
-					int[] state = {r0, r1, r2, 0, r4};
-					activations.add(new Activation(this,null,state));
-				}
+				int r4 = l1.get(1);
+				int[] state = {r0, r1, r2, 0, r4};
+				activations.add(new Activation(this,null,state));
 			}
 		}
 
@@ -7548,16 +7605,16 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return ""; }
+		public final String name() { return "Exists_1"; }
 		public final int rank() { return 1; }
 
 		public final int minimum() { return 0; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// 
-	private final static class Reduction_86 extends AbstractRewriteRule implements ReductionRule {
+	// Exists_2
+	private final static class Reduction_88 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_86(Pattern.Term pattern) { super(pattern); }
+		public Reduction_88(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -7574,19 +7631,9 @@ public final class Solver {
 					int r3 = l2.get(0);
 					Automaton.State s3 = automaton.get(r3);
 					Automaton.Collection c3 = (Automaton.Collection) s3;
-					boolean m3_0 = true;
-					for(int i4=0;i4!=c3.size();++i4) {
-						int r4 = c3.get(i4);
-						Automaton.State s4 = automaton.get(r4);
-						Automaton.List l4 = (Automaton.List) s4;
-						int r5 = l4.get(0);
-						int r6 = l4.get(1);
-					}
-					if(m3_0) {
-						int r5 = l2.get(1);
-						int[] state = {r0, r1, r2, r3, 0, r5};
-						activations.add(new Activation(this,null,state));
-					}
+					int r5 = l2.get(1);
+					int[] state = {r0, r1, r2, r3, 0, r5};
+					activations.add(new Activation(this,null,state));
 				}
 			}
 		}
@@ -7608,16 +7655,16 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return ""; }
+		public final String name() { return "Exists_2"; }
 		public final int rank() { return 2; }
 
 		public final int minimum() { return 4; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// 
-	private final static class Reduction_87 extends AbstractRewriteRule implements ReductionRule {
+	// Exists_3
+	private final static class Reduction_89 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_87(Pattern.Term pattern) { super(pattern); }
+		public Reduction_89(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -7630,39 +7677,19 @@ public final class Solver {
 				int r2 = l1.get(0);
 				Automaton.State s2 = automaton.get(r2);
 				Automaton.Collection c2 = (Automaton.Collection) s2;
-				boolean m2_0 = true;
-				for(int i3=0;i3!=c2.size();++i3) {
-					int r3 = c2.get(i3);
-					Automaton.State s3 = automaton.get(r3);
-					Automaton.List l3 = (Automaton.List) s3;
-					int r4 = l3.get(0);
-					int r5 = l3.get(1);
-				}
-				if(m2_0) {
-					int r4 = l1.get(1);
-					Automaton.State s4 = automaton.get(r4);
-					if(s4.kind == K_Exists) {
-						Automaton.Term t4 = (Automaton.Term) s4;
-						int r5 = t4.contents;
-						Automaton.State s5 = automaton.get(r5);
-						Automaton.List l5 = (Automaton.List) s5;
-						int r6 = l5.get(0);
-						Automaton.State s6 = automaton.get(r6);
-						Automaton.Collection c6 = (Automaton.Collection) s6;
-						boolean m6_0 = true;
-						for(int i7=0;i7!=c6.size();++i7) {
-							int r7 = c6.get(i7);
-							Automaton.State s7 = automaton.get(r7);
-							Automaton.List l7 = (Automaton.List) s7;
-							int r8 = l7.get(0);
-							int r9 = l7.get(1);
-						}
-						if(m6_0) {
-							int r8 = l5.get(1);
-							int[] state = {r0, r1, r2, 0, r4, r5, r6, 0, r8};
-							activations.add(new Activation(this,null,state));
-						}
-					}
+				int r4 = l1.get(1);
+				Automaton.State s4 = automaton.get(r4);
+				if(s4.kind == K_Exists) {
+					Automaton.Term t4 = (Automaton.Term) s4;
+					int r5 = t4.contents;
+					Automaton.State s5 = automaton.get(r5);
+					Automaton.List l5 = (Automaton.List) s5;
+					int r6 = l5.get(0);
+					Automaton.State s6 = automaton.get(r6);
+					Automaton.Collection c6 = (Automaton.Collection) s6;
+					int r8 = l5.get(1);
+					int[] state = {r0, r1, r2, 0, r4, r5, r6, 0, r8};
+					activations.add(new Activation(this,null,state));
 				}
 			}
 		}
@@ -7687,16 +7714,16 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return ""; }
+		public final String name() { return "Exists_3"; }
 		public final int rank() { return 1; }
 
 		public final int minimum() { return 6; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// 
-	private final static class Reduction_88 extends AbstractRewriteRule implements ReductionRule {
+	// Exists_4
+	private final static class Reduction_90 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_88(Pattern.Term pattern) { super(pattern); }
+		public Reduction_90(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -7718,19 +7745,9 @@ public final class Solver {
 							int r5 = l4.get(0);
 							Automaton.State s5 = automaton.get(r5);
 							Automaton.Collection c5 = (Automaton.Collection) s5;
-							boolean m5_0 = true;
-							for(int i6=0;i6!=c5.size();++i6) {
-								int r6 = c5.get(i6);
-								Automaton.State s6 = automaton.get(r6);
-								Automaton.List l6 = (Automaton.List) s6;
-								int r7 = l6.get(0);
-								int r8 = l6.get(1);
-							}
-							if(m5_0) {
-								int r7 = l4.get(1);
-								int[] state = {r0, r1, r2, r3, r4, r5, 0, r7, 0};
-								activations.add(new Activation(this,null,state));
-							}
+							int r7 = l4.get(1);
+							int[] state = {r0, r1, r2, r3, r4, r5, 0, r7, 0};
+							activations.add(new Activation(this,null,state));
 						}
 					}
 				}
@@ -7764,7 +7781,7 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return ""; }
+		public final String name() { return "Exists_4"; }
 		public final int rank() { return 1; }
 
 		public final int minimum() { return 5; }
@@ -8682,7 +8699,14 @@ public final class Solver {
 					new Pattern.Leaf(type18),
 					"y"),null)}),null)}),
 		null);
-	private final static Pattern.Term pattern82 = new Pattern.Term("SubsetEq",
+	private final static Pattern.Term pattern82 = new Pattern.Term("Equation",
+		new Pattern.List(false, new Pair[]{
+			new Pair(new Pattern.Leaf(type25),null), 
+			new Pair(new Pattern.Term("LengthOf",
+				new Pattern.Leaf(type28),
+				"x"),null)}),
+		null);
+	private final static Pattern.Term pattern83 = new Pattern.Term("SubsetEq",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Leaf(type29), "t"), 
 			new Pair(new Pattern.Term("Set",
@@ -8694,13 +8718,13 @@ public final class Solver {
 					new Pair(new Pattern.Leaf(type7), "ys")}),
 				null), "s2")}),
 		null);
-	private final static Pattern.Term pattern83 = new Pattern.Term("SubsetEq",
+	private final static Pattern.Term pattern84 = new Pattern.Term("SubsetEq",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Leaf(type29), "t"), 
 			new Pair(new Pattern.Leaf(type28), "x"), 
 			new Pair(new Pattern.Leaf(type28), "y")}),
 		null);
-	private final static Pattern.Term pattern84 = new Pattern.Term("SubsetEq",
+	private final static Pattern.Term pattern85 = new Pattern.Term("SubsetEq",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Term("SetT",
 				new Pattern.List(false, new Pair[]{
@@ -8717,7 +8741,7 @@ public final class Solver {
 					new Pair(new Pattern.Leaf(type7), "ys")}),
 				null), "s2")}),
 		null);
-	private final static Pattern.Term pattern85 = new Pattern.Term("And",
+	private final static Pattern.Term pattern86 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Term("SubsetEq",
 				new Pattern.List(false, new Pair[]{
@@ -8747,7 +8771,7 @@ public final class Solver {
 				null),null), 
 			new Pair(new Pattern.Leaf(type11), "rest")}),
 		null);
-	private final static Pattern.Term pattern86 = new Pattern.Term("And",
+	private final static Pattern.Term pattern87 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Term("SubsetEq",
 				new Pattern.List(false, new Pair[]{
@@ -8777,7 +8801,7 @@ public final class Solver {
 				null),null), 
 			new Pair(new Pattern.Leaf(type11), "rest")}),
 		null);
-	private final static Pattern.Term pattern87 = new Pattern.Term("And",
+	private final static Pattern.Term pattern88 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Term("SubsetEq",
 				new Pattern.List(false, new Pair[]{
@@ -8793,7 +8817,7 @@ public final class Solver {
 				null), "s2"), 
 			new Pair(new Pattern.Leaf(type11), "rest")}),
 		null);
-	private final static Pattern.Term pattern88 = new Pattern.Term("ForAll",
+	private final static Pattern.Term pattern89 = new Pattern.Term("ForAll",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Set(true, new Pair[]{
 				new Pair(new Pattern.List(false, new Pair[]{
@@ -8801,7 +8825,7 @@ public final class Solver {
 					new Pair(new Pattern.Leaf(type2),null)}), "qs")}),null), 
 			new Pair(new Pattern.Leaf(type11), "be")}),
 		null);
-	private final static Pattern.Term pattern89 = new Pattern.Term("Not",
+	private final static Pattern.Term pattern90 = new Pattern.Term("Not",
 		new Pattern.Term("ForAll",
 			new Pattern.List(false, new Pair[]{
 				new Pair(new Pattern.Set(true, new Pair[]{
@@ -8811,7 +8835,7 @@ public final class Solver {
 				new Pair(new Pattern.Leaf(type11), "be")}),
 			null),
 		null);
-	private final static Pattern.Term pattern90 = new Pattern.Term("ForAll",
+	private final static Pattern.Term pattern91 = new Pattern.Term("ForAll",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Set(true, new Pair[]{
 				new Pair(new Pattern.List(false, new Pair[]{
@@ -8826,7 +8850,18 @@ public final class Solver {
 					new Pair(new Pattern.Leaf(type11), "e")}),
 				null),null)}),
 		null);
-	private final static Pattern.Term pattern91 = new Pattern.Term("And",
+	private final static Pattern.Term pattern92 = new Pattern.Term("ForAll",
+		new Pattern.List(false, new Pair[]{
+			new Pair(new Pattern.Set(true, new Pair[]{
+				new Pair(new Pattern.List(false, new Pair[]{
+					new Pair(new Pattern.Leaf(type32), "v"), 
+					new Pair(new Pattern.Leaf(type2),null)}),null), 
+				new Pair(new Pattern.List(false, new Pair[]{
+					new Pair(new Pattern.Leaf(type32),null), 
+					new Pair(new Pattern.Leaf(type2),null)}), "xs")}),null), 
+			new Pair(new Pattern.Leaf(type11), "e")}),
+		null);
+	private final static Pattern.Term pattern93 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Leaf(type34), "e1"), 
 			new Pair(new Pattern.Term("ForAll",
@@ -8842,7 +8877,7 @@ public final class Solver {
 				null), "qf"), 
 			new Pair(new Pattern.Leaf(type11), "es")}),
 		null);
-	private final static Pattern.Term pattern92 = new Pattern.Term("And",
+	private final static Pattern.Term pattern94 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Term("Not",
 				new Pattern.Leaf(type34),
@@ -8860,7 +8895,7 @@ public final class Solver {
 				null), "qf"), 
 			new Pair(new Pattern.Leaf(type11), "es")}),
 		null);
-	private final static Pattern.Term pattern93 = new Pattern.Term("Exists",
+	private final static Pattern.Term pattern95 = new Pattern.Term("Exists",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Set(true, new Pair[]{
 				new Pair(new Pattern.List(false, new Pair[]{
@@ -8868,7 +8903,7 @@ public final class Solver {
 					new Pair(new Pattern.Leaf(type2),null)}), "qs")}),null), 
 			new Pair(new Pattern.Leaf(type11), "be")}),
 		null);
-	private final static Pattern.Term pattern94 = new Pattern.Term("Not",
+	private final static Pattern.Term pattern96 = new Pattern.Term("Not",
 		new Pattern.Term("Exists",
 			new Pattern.List(false, new Pair[]{
 				new Pair(new Pattern.Set(true, new Pair[]{
@@ -8878,7 +8913,7 @@ public final class Solver {
 				new Pair(new Pattern.Leaf(type11), "be")}),
 			null),
 		null);
-	private final static Pattern.Term pattern95 = new Pattern.Term("Exists",
+	private final static Pattern.Term pattern97 = new Pattern.Term("Exists",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Set(true, new Pair[]{
 				new Pair(new Pattern.List(false, new Pair[]{
@@ -8893,7 +8928,7 @@ public final class Solver {
 					new Pair(new Pattern.Leaf(type11), "e")}),
 				null),null)}),
 		null);
-	private final static Pattern.Term pattern96 = new Pattern.Term("And",
+	private final static Pattern.Term pattern98 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Term("Exists",
 				new Pattern.List(false, new Pair[]{
@@ -8915,9 +8950,9 @@ public final class Solver {
 		new Inference_2(pattern67),
 		new Inference_3(pattern76),
 		new Inference_4(pattern77),
-		new Inference_5(pattern87),
-		new Inference_6(pattern91),
-		new Inference_7(pattern92)
+		new Inference_5(pattern88),
+		new Inference_6(pattern93),
+		new Inference_7(pattern94)
 	};
 	public static final ReductionRule[] reductions = new ReductionRule[]{
 		new Reduction_0(pattern0),
@@ -9002,13 +9037,15 @@ public final class Solver {
 		new Reduction_79(pattern84),
 		new Reduction_80(pattern85),
 		new Reduction_81(pattern86),
-		new Reduction_82(pattern88),
+		new Reduction_82(pattern87),
 		new Reduction_83(pattern89),
 		new Reduction_84(pattern90),
-		new Reduction_85(pattern93),
-		new Reduction_86(pattern94),
+		new Reduction_85(pattern91),
+		new Reduction_86(pattern92),
 		new Reduction_87(pattern95),
-		new Reduction_88(pattern96)
+		new Reduction_88(pattern96),
+		new Reduction_89(pattern97),
+		new Reduction_90(pattern98)
 	};
 
 
