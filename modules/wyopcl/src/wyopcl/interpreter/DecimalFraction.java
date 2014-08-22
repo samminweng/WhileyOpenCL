@@ -1,5 +1,7 @@
 package wyopcl.interpreter;
 
+import static wycc.lang.SyntaxError.internalFailure;
+
 import java.math.BigDecimal;
 /**
  * This class converts a BigDecimal to a fraction (numerator/denominator).
@@ -7,6 +9,8 @@ import java.math.BigDecimal;
  *
  */
 public class DecimalFraction {
+
+
 	private int numerator, denominator;	
 	private final BigDecimal decimal;
 	
@@ -20,7 +24,7 @@ public class DecimalFraction {
 		int gcf = 1;
 		int max = Math.max(num, denum);
 		int f;
-		for(f=max; f>=1;f++){
+		for(f=max; f>=1;f--){
 			if (num%f == 0 && denum%f==0){
 				gcf = f;
 				break;
@@ -30,12 +34,19 @@ public class DecimalFraction {
 	}
 	
 	public DecimalFraction(BigDecimal decimal){
-		this.decimal = decimal;
-		this.denominator = (int) Math.pow(10.0, (double)this.decimal.precision());
-		this.numerator = (int) (this.decimal.doubleValue()*denominator);		
+		this.decimal = decimal;		
+		if(this.decimal.signum() == -1){
+			this.denominator = (int) Math.pow(10.0, (double)this.decimal.scale());
+			this.numerator = (-1)*(int)this.decimal.doubleValue()*denominator;	
+		}else{
+			//Convert the repeating decimals to fractions. how???
+			internalFailure("Not implemented!", "DecimalFraction.java", null);
+			//this.numerator =  (int)this.decimal.doubleValue()*denominator;	
+		}
+			
 		int factor = reduceFraction(numerator, denominator);
-		numerator = numerator/factor;
-		denominator = denominator/factor;
+		this.numerator = numerator/factor;
+		this.denominator = denominator/factor;
 	}
 	
 	public int getDenominator() {
@@ -46,7 +57,15 @@ public class DecimalFraction {
 		return numerator;
 	}
 
-	
+	@Override
+	public String toString() {
+		if(this.denominator == 1){
+			return ""+this.decimal.doubleValue();
+		}else{
+			return "(-"+this.numerator+"/"+this.denominator+")";
+		}
+		
+	}
 	
 	
 }

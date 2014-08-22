@@ -4,6 +4,7 @@ import static wycc.lang.SyntaxError.internalFailure;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.MathContext;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -92,8 +93,16 @@ public class Converter {
 				}
 			} else if (from instanceof Constant.Bool) {
 				to = ((Constant.Bool) from).value;
-			} else if (from instanceof Constant.Decimal) {				
-				to = from;
+			} else if (from instanceof Constant.Decimal) {
+				Constant.Decimal decimal = (Constant.Decimal)from;
+				if(decimal.value.signum()== -1){
+					//Converts the negative decimal to a decimal fraction;
+					DecimalFraction fraction = new DecimalFraction(decimal.value);
+					to = fraction.toString();
+				}else {
+					to = decimal;
+				}
+				//to = from;
 			} else if (from instanceof Constant.Map){
 				Constant.Map map = (Constant.Map)from;
 				String r = "{";

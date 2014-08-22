@@ -4,6 +4,8 @@ import static wycc.lang.SyntaxError.internalFailure;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.MathContext;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 
 import wyil.lang.Codes;
@@ -65,7 +67,8 @@ public class BinaryOperatorInterpreter extends Interpreter {
 			}else if (left instanceof Constant.Decimal){
 				Constant.Decimal dividend = (Constant.Decimal)left;
 				Constant.Decimal divisor = (Constant.Decimal)right;
-				BigDecimal division = dividend.value.divide(divisor.value);
+				//In the case of (1/3), the division result is infinite.
+				BigDecimal division = dividend.value.divide(divisor.value, MathContext.DECIMAL128);
 				result = Constant.V_DECIMAL(new BigDecimal(division.toString()));
 			}else {
 				internalFailure("Not implemented!", "BinaryOperatorInterpreter.java", null);
