@@ -20,7 +20,7 @@ import whiley.lang.Real;
 import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyjc.runtime.WyList;
- 
+
 public class Converter {
 
 	/**
@@ -31,130 +31,127 @@ public class Converter {
 	 * @return
 	 */
 	public static Object convertConstantToJavaObject(Constant from, Class<?> paramType) {
-		Object to = null;
-		if(from == null){
+		if (from == null) {
 			return null;
-		}else {
-			if (from instanceof Constant.Strung) {
-				to = ((Constant.Strung) from).value.replaceAll("\"", "");
-			} else if (from instanceof Constant.Integer) {
-				to = ((Constant.Integer) from).value;
-			} else if (from instanceof Constant.List) {
-				Constant.List list = (Constant.List) from;
-				String r = "[";
-				boolean firstTime=true;
-				for(Constant elem : list.values) {
-					if(!firstTime) {
-						r += ", ";
-					}
-					firstTime=false;
-					//Check if the elem is a list
-					if(elem instanceof Constant.List || elem instanceof Constant.Record){
-						r += convertConstantToJavaObject(elem, paramType);
-					}else {
-						r += elem;
-					}
-				}
-				r+= "]";
-				to = r;				
-			} else if (from instanceof Constant.Record) {
-				Constant.Record record = (Constant.Record) from;
-				String r = "{";
-				boolean firstTime=true;
-				ArrayList<String> keys = new ArrayList<String>(record.values.keySet());
-				Collections.sort(keys);
-				for(String key : keys) {
-					if(!firstTime) {
-						r += ",";
-					}
-					firstTime=false;
-					Constant constant = record.values.get(key);
-					if(constant instanceof Constant.Record || constant instanceof Constant.List){
-						//Convert the key record into a string
-						r+=  key + ":" + convertConstantToJavaObject(constant, paramType);
-					}else{
-						r += key + ":" + constant;
-					}
-					
-				}
-				r += "}";
-				to = r;
-			} else if (from instanceof Constant.Char) {
-				to = ((Constant.Char) from).value;
-			} else if (from instanceof Constant.Byte) {
-				if (paramType.equals(BigInteger.class)) {					
-					to = ((Constant.Byte)from).value;
-				} else if (paramType.equals(WyList.class)){
-					// Cast byte to char...too complicated....
-					WyList wyList = new WyList();
-					wyList.add(((Constant.Byte) from).value);
-					to = wyList;
-				}else {
-					to = ((Constant.Byte) from).value;
-				}
-			} else if (from instanceof Constant.Bool) {
-				to = ((Constant.Bool) from).value;
-			} else if (from instanceof Constant.Decimal) {
-				Constant.Decimal decimal = (Constant.Decimal)from;
-				if(decimal.value.signum()== -1){
-					//Converts the negative decimal to a decimal fraction;
-					DecimalFraction fraction = new DecimalFraction(decimal.value);
-					to = fraction.toString();
-				}else {
-					to = decimal;
-				}
-				//to = from;
-			} else if (from instanceof Constant.Map){
-				Constant.Map map = (Constant.Map)from;
-				String r = "{";
-				if(map.values.isEmpty()) {
-					r = r + "=>";
-				} else {
-					boolean firstTime=true;
-					ArrayList<String> keystr = new ArrayList<String>();
-					HashMap<String,Constant> keymap = new HashMap<String,Constant>();
-					for(Constant key : map.values.keySet()) {
-						keystr.add(key.toString());
-						keymap.put(key.toString(), key);
-					}
-					Collections.sort(keystr);
-					for(String key : keystr) {
-						if(!firstTime) {
-							r += ", ";
-						}
-						firstTime=false;
-						Constant k = keymap.get(key); 
-						r += k + "=>" + convertConstantToJavaObject(map.values.get(k), paramType);
-					}
-				}
-				r += "}";
-				to = r;
-			} else if (from instanceof Constant.Set){
-				Constant.Set set = (Constant.Set)from;
-				//Sort the elements in a set, using the tree set.
-				TreeSet<Constant> sorted = new TreeSet<Constant>(set.values);
-				String r = "{";
-				boolean firstTime=true;
-				Iterator<Constant> iterator = sorted.iterator();
-				while(iterator.hasNext()) {
-					Constant constant = iterator.next();
-					if(!firstTime) {
-						r += ", ";
-					}
-					firstTime=false;
-					r += convertConstantToJavaObject(constant, paramType);
-				}
-				return r + "}";
-				
-			} else if (from instanceof Constant.Null){
-				to = null;
-			} else {
-				internalFailure("Not implemented!", "Converter.java", null);
-			}
 		}
-		return to;
-	}
 
+		if (from instanceof Constant.Strung) {
+			return ((Constant.Strung) from).value.replaceAll("\"", "");
+		} else if (from instanceof Constant.Integer) {
+			return ((Constant.Integer) from).value;
+		} else if (from instanceof Constant.List) {
+			Constant.List list = (Constant.List) from;
+			String r = "[";
+			boolean firstTime = true;
+			for (Constant elem : list.values) {
+				if (!firstTime) {
+					r += ", ";
+				}
+				firstTime = false;
+				// Check if the elem is a list
+				if (elem instanceof Constant.List || elem instanceof Constant.Record) {
+					r += convertConstantToJavaObject(elem, paramType);
+				} else {
+					r += elem;
+				}
+			}
+			r += "]";
+			return r;
+		} else if (from instanceof Constant.Record) {
+			Constant.Record record = (Constant.Record) from;
+			String r = "{";
+			boolean firstTime = true;
+			ArrayList<String> keys = new ArrayList<String>(record.values.keySet());
+			Collections.sort(keys);
+			for (String key : keys) {
+				if (!firstTime) {
+					r += ",";
+				}
+				firstTime = false;
+				Constant constant = record.values.get(key);
+				if (constant instanceof Constant.Record || constant instanceof Constant.List) {
+					// Convert the key record into a string
+					r += key + ":" + convertConstantToJavaObject(constant, paramType);
+				} else {
+					r += key + ":" + constant;
+				}
+
+			}
+			r += "}";
+			return r;
+		} else if (from instanceof Constant.Char) {
+			return ((Constant.Char) from).toString();
+		} else if (from instanceof Constant.Byte) {
+			if (paramType.equals(BigInteger.class)) {
+				return ((Constant.Byte) from).value;
+			} else if (paramType.equals(WyList.class)) {
+				// Cast byte to char...too complicated....
+				WyList wyList = new WyList();
+				wyList.add(((Constant.Byte) from).value);
+				return wyList;
+			} else {
+				return ((Constant.Byte) from).value;
+			}
+		} else if (from instanceof Constant.Bool) {
+			return ((Constant.Bool) from).value;
+		} else if (from instanceof Constant.Decimal) {
+			Constant.Decimal decimal = (Constant.Decimal) from;
+			if (decimal.value.signum() == -1) {
+				// Converts the negative decimal to a decimal fraction;
+				DecimalFraction fraction = new DecimalFraction(decimal.value);
+				return fraction.toString();
+			} else {
+				return decimal;
+			}
+		} else if (from instanceof Constant.Map) {
+			Constant.Map map = (Constant.Map) from;
+			String r = "{";
+			if (map.values.isEmpty()) {
+				r = r + "=>";
+			} else {
+				boolean firstTime = true;
+				ArrayList<String> keystr = new ArrayList<String>();
+				HashMap<String, Constant> keymap = new HashMap<String, Constant>();
+				for (Constant key : map.values.keySet()) {
+					keystr.add(key.toString());
+					keymap.put(key.toString(), key);
+				}
+				Collections.sort(keystr);
+				for (String key : keystr) {
+					if (!firstTime) {
+						r += ", ";
+					}
+					firstTime = false;
+					Constant k = keymap.get(key);
+					r += k + "=>" + convertConstantToJavaObject(map.values.get(k), paramType);
+				}
+			}
+			r += "}";
+			return r;
+		} else if (from instanceof Constant.Set) {
+			Constant.Set set = (Constant.Set) from;
+			// Sort the elements in a set, using the tree set.
+			TreeSet<Constant> sorted = new TreeSet<Constant>(set.values);
+			String r = "{";
+			boolean firstTime = true;
+			Iterator<Constant> iterator = sorted.iterator();
+			while (iterator.hasNext()) {
+				Constant constant = iterator.next();
+				if (!firstTime) {
+					r += ", ";
+				}
+				firstTime = false;
+				r += convertConstantToJavaObject(constant, paramType);
+			}
+			return r + "}";
+		} else if (from instanceof Constant.Null) {
+			return null;
+		} else {
+			internalFailure("Not implemented!", "Converter.java", null);
+			return null;
+		}
+
+	}
 
 	public static Class<?> ConvertToClass(Type paramType) {
 		if (paramType instanceof Type.Any) {
@@ -199,8 +196,8 @@ public class Converter {
 			result = Constant.V_BYTE(((Constant.Byte) value).value);
 		} else if (value instanceof Constant.Char) {
 			result = Constant.V_CHAR(((Constant.Char) value).value);
-		} else if (value instanceof Constant.Decimal){
-			result = Constant.V_DECIMAL(((Constant.Decimal)value).value);
+		} else if (value instanceof Constant.Decimal) {
+			result = Constant.V_DECIMAL(((Constant.Decimal) value).value);
 		} else {
 			internalFailure("Not implemented!", "Converter.java", null);
 		}

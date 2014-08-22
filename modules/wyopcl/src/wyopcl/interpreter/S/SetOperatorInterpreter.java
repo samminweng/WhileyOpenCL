@@ -57,6 +57,11 @@ public class SetOperatorInterpreter extends Interpreter{
 			rhs = (Constant.Set)right;
 			result = lhs.intersect(rhs);
 			break;
+		case DIFFERENCE:
+			lhs = (Constant.Set)left;
+			rhs = (Constant.Set)right;
+			result = lhs.difference(rhs);
+			break;
 		default:
 			internalFailure("Not implemented!", "InterpreterSetOperator.java", null);
 			break;
