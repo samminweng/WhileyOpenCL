@@ -65,7 +65,15 @@ public class AssertOrAssumeInterpreter extends Interpreter {
 			if(set.values.contains(left)){
 				result = true;
 			}
-			//System.out.println(code);
+			break;
+		case SUBSET:
+			internalFailure("unknown if condition encountered","InterpreterAssertOrAssume.java",null);
+			break;
+		case SUBSETEQ:
+			Constant.Set lhs = (Constant.Set)left;
+			Constant.Set rhs = (Constant.Set)right;
+			result = rhs.values.containsAll(lhs.values);
+			//internalFailure("unknown if condition encountered","InterpreterAssertOrAssume.java",null);			
 			break;
 		default:
 			internalFailure("unknown if condition encountered","InterpreterAssertOrAssume.java",null);
