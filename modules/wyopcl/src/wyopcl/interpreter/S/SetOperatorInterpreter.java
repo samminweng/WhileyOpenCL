@@ -36,13 +36,17 @@ public class SetOperatorInterpreter extends Interpreter{
 		
 		//Perform the operation
 		Constant result = null;
+		Constant.Set lhs = null, rhs=null;
 		switch(code.kind){
 		case UNION:
-			internalFailure("Not implemented!", "InterpreterSetOperator.java", null);
+			lhs = (Constant.Set)left;
+			rhs = (Constant.Set)right;
+			result = lhs.union(rhs);
+			//internalFailure("Not implemented!", "InterpreterSetOperator.java", null);
 			break;
 		case LEFT_UNION:
 			//Collection<Constant> values = new ArrayList<Constant>();
-			Constant.Set lhs = (Constant.Set)left;
+			lhs = (Constant.Set)left;
 			Collection<Constant> list = new LinkedHashSet<Constant>();
 			list.add(right);
 			result = lhs.union(Constant.V_SET(list));

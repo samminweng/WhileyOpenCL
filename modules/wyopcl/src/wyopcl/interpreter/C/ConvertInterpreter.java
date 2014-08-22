@@ -65,6 +65,9 @@ public class ConvertInterpreter extends Interpreter {
 				}
 			} else if (fromElemType instanceof Type.Union && toElemType instanceof Type.Union) {
 				toElem = fromElem;
+			} else if (fromElemType instanceof Type.Char && toElemType instanceof Type.Int){
+				Constant.Char fromChar = (Constant.Char)fromElem;
+				toElem = Constant.V_INTEGER(BigInteger.valueOf((int)fromChar.value));				
 			} else {
 				internalFailure("Not implemented!", "ConvertInterpreter.java", null);
 			}
