@@ -12,7 +12,7 @@ import wyil.lang.Type;
 import wyil.lang.Type.FunctionOrMethod;
 import wyil.lang.Type.Method;
 import wyil.lang.WyilFile;
-import wyopcl.interpreter.Converter;
+import wyopcl.interpreter.Utility;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.Interpreter.StackFrame;
 
@@ -45,7 +45,7 @@ public class FieldLoadInterpreter extends Interpreter {
 			Constant.Record record = (Constant.Record)operand;
 			//Reads a record value from an operand register	
 			Constant field = record.values.get(givenfield);			
-			result = Converter.copyConstant(field);
+			result = Utility.copyConstant(field);
 		}
 
 		stackframe.setRegister(code.target(), result);	

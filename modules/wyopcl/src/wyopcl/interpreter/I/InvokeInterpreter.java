@@ -14,7 +14,7 @@ import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyjc.runtime.WyList;
-import wyopcl.interpreter.Converter;
+import wyopcl.interpreter.Utility;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.Interpreter.StackFrame;
 
@@ -128,7 +128,7 @@ public class InvokeInterpreter extends Interpreter {
 						for(Class<?> paramType : method.getParameterTypes()){
 							//The 'paramType' is Java data type.				    		
 							//Thus, we need a conversion from Constant to Java							
-							params.add(Converter.convertConstantToJavaObject(operand, paramType));
+							params.add(Utility.convertConstantToJavaObject(operand, paramType));
 						}
 						//params.add(operand);
 						Object returned_obj = method.invoke(null, params.toArray());

@@ -14,12 +14,13 @@ import java.util.Map.Entry;
 
 import wyil.lang.Codes;
 import wyil.lang.Constant;
+import wyil.lang.Code.Block;
 import wyil.lang.Constant.Record;
 import wyil.lang.Type;
 import wyil.lang.Type.Function;
 import wyil.lang.Type.FunctionOrMethod;
 import wyil.lang.Type.Method;
-import wyopcl.interpreter.Converter;
+import wyopcl.interpreter.Utility;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.Interpreter.StackFrame;
 
@@ -37,10 +38,49 @@ public class IndirectInvokeInterpreter extends Interpreter {
 		return instance;
 	}
 
+	private void pushBlockToStackFrame(Codes.IndirectInvoke code, StackFrame oldstackframe){
+		Constant.Lambda lambda = (Constant.Lambda)oldstackframe.getRegister(code.reference()); 
+		//Find the right block
+		Block blk = null;
+		List<Block> blks = blocktable.get(lambda.name.toString());
+		if (blks == null)
+			internalFailure("Not implemented!", "InterpreterIndirectInvoke.java", null);
+		
+		if(blks.size()==1){
+			blk = blks.get(0);
+		}else{
+			for(int index=0;index<blks.size();index++){
+				blk = blks.get(index);
+				//Get the parameter type of invoked method
+				code.type().params();
+			}
+		}
+		
+		
+		//Get the depth
+		int depth = oldstackframe.getDepth();
+		//Create a new StackFrame
+		StackFrame newStackFrame = new StackFrame(depth+1, blk, 0,	lambda.name.name(), code.target());
+		
+		//Pass the input parameters.
+		int index = 0;			
+		for(int operand: code.operands()){
+			Constant constant = oldstackframe.getRegister(operand);
+			newStackFrame.setRegister(index, constant);
+			index++;
+		}
+
+		//Start invoking a new block.		
+		blockstack.push(newStackFrame);
+		printMessage(oldstackframe, code.toString(),"%"+code.target()+"("+oldstackframe.getRegister(code.target())+")\n");
+		
+	}
+	
+	
 
 	public void interpret(Codes.IndirectInvoke code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
-		Constant.Lambda reference = (Constant.Lambda)stackframe.getRegister(code.reference());
+		Constant.Lambda lambda = (Constant.Lambda)stackframe.getRegister(code.reference());
 		//FunctionOrMethod func = code.type;
 		List<Constant> values = new ArrayList<Constant>();
 
@@ -52,7 +92,7 @@ public class IndirectInvokeInterpreter extends Interpreter {
 		}
 		
 		//Invoke the function		
-		String name = reference.name.name();
+		String name = lambda.name.name();
 		java.lang.reflect.Method method = null;
 		if(name.equalsIgnoreCase("println") || name.equalsIgnoreCase("print")){
 			try {
@@ -62,24 +102,25 @@ public class IndirectInvokeInterpreter extends Interpreter {
 				Class<?>[] parameterTypes = new Class[code.type().params().size()];
 				//Iterate the parameter types
 				for(int i=0;i<code.type().params().size();i++){
-					parameterTypes[i]= Converter.ConvertToClass(code.type().params().get(i));
+					parameterTypes[i]= Utility.ConvertToClass(code.type().params().get(i));
 				}
 				method = printClass.getMethod(name, parameterTypes);
 				ArrayList<Object> arguments = new ArrayList<Object> ();
 				int index = 0;
 				for(Class<?> paramType: method.getParameterTypes()){
-					arguments.add(Converter.convertConstantToJavaObject(values.get(index), paramType));
+					arguments.add(Utility.convertConstantToJavaObject(values.get(index), paramType));
 				}
 				method.invoke(outField.get(null), arguments.toArray());
+				printMessage(stackframe, code.toString(), "("+method+")");
 				
 			} catch (ClassNotFoundException | NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
 				e.printStackTrace();
 			}
-		}else{			
-			internalFailure("Not implemented!", "InterpreterIndirectInvoke.java", null);
+		}else{
+			//Invoke the anonymous function (lambda)
+			pushBlockToStackFrame(code, stackframe);
 		}
-
-		printMessage(stackframe, code.toString(), "("+method+")");
+		
 		stackframe.setLine(++linenumber);
 	}
 

@@ -21,7 +21,7 @@ import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyjc.runtime.WyList;
 
-public class Converter {
+public class Utility {
 
 	/**
 	 * Convert the Constant object to Java Object.

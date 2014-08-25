@@ -19,7 +19,7 @@ import java.util.Set;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyil.lang.Type;
-import wyopcl.interpreter.Converter;
+import wyopcl.interpreter.Utility;
 import wyopcl.interpreter.Interpreter;
 
 public class ConvertInterpreter extends Interpreter {
