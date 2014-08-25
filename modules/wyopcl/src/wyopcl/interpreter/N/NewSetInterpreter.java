@@ -5,6 +5,7 @@ import java.util.LinkedHashSet;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyopcl.interpreter.Interpreter;
+import wyopcl.interpreter.StackFrame;
 
 public class NewSetInterpreter extends Interpreter {
 	private static NewSetInterpreter instance;	

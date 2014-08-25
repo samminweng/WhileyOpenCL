@@ -2,7 +2,7 @@ package wyopcl.interpreter.L;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyopcl.interpreter.Interpreter;
-import wyopcl.interpreter.Interpreter.StackFrame;
+import wyopcl.interpreter.StackFrame;
 
 
 public class LoopEndInterpreter extends Interpreter {

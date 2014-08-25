@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyopcl.interpreter.Interpreter;
+import wyopcl.interpreter.StackFrame;
 
 public class BinaryOperatorInterpreter extends Interpreter {
 

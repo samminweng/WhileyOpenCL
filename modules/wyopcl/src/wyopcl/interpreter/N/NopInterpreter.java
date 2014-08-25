@@ -2,7 +2,7 @@ package wyopcl.interpreter.N;
 
 import wyil.lang.Codes;
 import wyopcl.interpreter.Interpreter;
-import wyopcl.interpreter.Interpreter.StackFrame;
+import wyopcl.interpreter.StackFrame;
 
 public class NopInterpreter extends Interpreter {
 	private static NopInterpreter instance;	

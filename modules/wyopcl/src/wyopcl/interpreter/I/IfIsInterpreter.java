@@ -13,7 +13,7 @@ import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyil.lang.Code.Block;
 import wyopcl.interpreter.Interpreter;
-import wyopcl.interpreter.Interpreter.StackFrame;
+import wyopcl.interpreter.StackFrame;
 
 public class IfIsInterpreter extends Interpreter{
 	private static IfIsInterpreter instance;	

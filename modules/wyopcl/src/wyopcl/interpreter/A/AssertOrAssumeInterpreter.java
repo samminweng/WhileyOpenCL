@@ -4,6 +4,7 @@ import static wycc.lang.SyntaxError.internalFailure;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyopcl.interpreter.Interpreter;
+import wyopcl.interpreter.StackFrame;
 
 public class AssertOrAssumeInterpreter extends Interpreter {
 	private static AssertOrAssumeInterpreter instance;	

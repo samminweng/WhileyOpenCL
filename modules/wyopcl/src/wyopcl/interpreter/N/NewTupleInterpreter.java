@@ -7,7 +7,7 @@ import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyil.lang.Constant.Tuple;
 import wyopcl.interpreter.Interpreter;
-import wyopcl.interpreter.Interpreter.StackFrame;
+import wyopcl.interpreter.StackFrame;
 
 public class NewTupleInterpreter extends Interpreter{
 	private static NewTupleInterpreter instance;	

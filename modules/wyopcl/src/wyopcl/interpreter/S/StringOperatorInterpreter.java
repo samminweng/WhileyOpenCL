@@ -4,7 +4,7 @@ import static wycc.lang.SyntaxError.internalFailure;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyopcl.interpreter.Interpreter;
-import wyopcl.interpreter.Interpreter.StackFrame;
+import wyopcl.interpreter.StackFrame;
 
 public class StringOperatorInterpreter extends Interpreter {
 	private static StringOperatorInterpreter instance;	

@@ -6,7 +6,7 @@ import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyopcl.interpreter.Interpreter;
-import wyopcl.interpreter.Interpreter.StackFrame;
+import wyopcl.interpreter.StackFrame;
 
 public class SubListInterpreter extends Interpreter{
 	private static SubListInterpreter instance;	

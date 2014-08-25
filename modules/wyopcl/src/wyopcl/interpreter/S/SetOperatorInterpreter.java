@@ -11,7 +11,7 @@ import java.util.List;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyopcl.interpreter.Interpreter;
-import wyopcl.interpreter.Interpreter.StackFrame;
+import wyopcl.interpreter.StackFrame;
 
 public class SetOperatorInterpreter extends Interpreter{
 	private static SetOperatorInterpreter instance;	

@@ -19,6 +19,7 @@ import java.util.Set;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyil.lang.Type;
+import wyopcl.interpreter.StackFrame;
 import wyopcl.interpreter.Utility;
 import wyopcl.interpreter.Interpreter;
 

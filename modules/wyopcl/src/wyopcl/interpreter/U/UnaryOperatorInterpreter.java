@@ -9,7 +9,7 @@ import wyil.lang.Codes.UnaryOperatorKind;
 import wyil.lang.Constant;
 import wyopcl.interpreter.DecimalFraction;
 import wyopcl.interpreter.Interpreter;
-import wyopcl.interpreter.Interpreter.StackFrame;
+import wyopcl.interpreter.StackFrame;
 
 public class UnaryOperatorInterpreter extends Interpreter {
 	private static UnaryOperatorInterpreter instance;	

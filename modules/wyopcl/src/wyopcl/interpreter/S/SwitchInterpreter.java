@@ -8,7 +8,7 @@ import wyil.lang.Code.Block;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyopcl.interpreter.Interpreter;
-import wyopcl.interpreter.Interpreter.StackFrame;
+import wyopcl.interpreter.StackFrame;
 
 public class SwitchInterpreter extends Interpreter {
 	private static SwitchInterpreter instance;

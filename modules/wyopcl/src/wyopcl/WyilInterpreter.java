@@ -29,6 +29,8 @@ import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.Case;
 import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
 import wyopcl.interpreter.Interpreter;
+import wyopcl.interpreter.StackFrame;
+import wyopcl.interpreter.SymbolTable;
 import wyopcl.interpreter.A.AssertOrAssumeInterpreter;
 import wyopcl.interpreter.A.AssignInterpreter;
 import wyopcl.interpreter.B.BinaryOperatorInterpreter;

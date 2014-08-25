@@ -16,7 +16,7 @@ import wyil.lang.Type;
 import wyjc.runtime.WyList;
 import wyopcl.interpreter.Utility;
 import wyopcl.interpreter.Interpreter;
-import wyopcl.interpreter.Interpreter.StackFrame;
+import wyopcl.interpreter.StackFrame;
 
 public class InvokeInterpreter extends Interpreter {
 

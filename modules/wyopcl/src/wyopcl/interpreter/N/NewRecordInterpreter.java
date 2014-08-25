@@ -18,7 +18,7 @@ import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyil.lang.Type.Record;
 import wyopcl.interpreter.Interpreter;
-import wyopcl.interpreter.Interpreter.StackFrame;
+import wyopcl.interpreter.StackFrame;
 
 public class NewRecordInterpreter extends Interpreter{
 

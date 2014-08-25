@@ -22,7 +22,7 @@ import wyil.lang.Type.FunctionOrMethod;
 import wyil.lang.Type.Method;
 import wyopcl.interpreter.Utility;
 import wyopcl.interpreter.Interpreter;
-import wyopcl.interpreter.Interpreter.StackFrame;
+import wyopcl.interpreter.StackFrame;
 
 public class IndirectInvokeInterpreter extends Interpreter {
 

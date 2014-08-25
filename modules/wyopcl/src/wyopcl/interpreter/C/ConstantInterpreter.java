@@ -3,6 +3,7 @@ package wyopcl.interpreter.C;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyopcl.interpreter.Interpreter;
+import wyopcl.interpreter.StackFrame;
 
 public class ConstantInterpreter extends Interpreter {
 	private static ConstantInterpreter instance;	

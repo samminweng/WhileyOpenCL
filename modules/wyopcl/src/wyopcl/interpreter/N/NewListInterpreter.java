@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyopcl.interpreter.Interpreter;
-import wyopcl.interpreter.Interpreter.StackFrame;
+import wyopcl.interpreter.StackFrame;
 
 public class NewListInterpreter extends Interpreter {
 	private static NewListInterpreter instance;	

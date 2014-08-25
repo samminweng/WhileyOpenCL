@@ -2,7 +2,7 @@ package wyopcl.interpreter.T;
 
 import wyil.lang.Codes;
 import wyopcl.interpreter.Interpreter;
-import wyopcl.interpreter.Interpreter.StackFrame;
+import wyopcl.interpreter.StackFrame;
 
 public class TryCatchInterpreter extends Interpreter{
 	private static TryCatchInterpreter instance;	

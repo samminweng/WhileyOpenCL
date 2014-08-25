@@ -3,7 +3,7 @@ package wyopcl.interpreter.L;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyopcl.interpreter.Interpreter;
-import wyopcl.interpreter.Interpreter.StackFrame;
+import wyopcl.interpreter.StackFrame;
 
 public class LoopInterpreter extends Interpreter {
 	private static LoopInterpreter instance;	

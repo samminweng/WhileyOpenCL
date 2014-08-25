@@ -3,7 +3,7 @@ package wyopcl.interpreter.G;
 import wyil.lang.Codes;
 import wyil.lang.Code.Block;
 import wyopcl.interpreter.Interpreter;
-import wyopcl.interpreter.Interpreter.StackFrame;
+import wyopcl.interpreter.StackFrame;
 
 public class GotoInterpreter extends Interpreter {
 	private static GotoInterpreter instance;	

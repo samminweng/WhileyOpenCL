@@ -12,7 +12,7 @@ import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyopcl.interpreter.Interpreter;
-import wyopcl.interpreter.Interpreter.StackFrame;
+import wyopcl.interpreter.StackFrame;
 
 public class UpdateInterpreter extends Interpreter{
 	private static UpdateInterpreter instance;	
