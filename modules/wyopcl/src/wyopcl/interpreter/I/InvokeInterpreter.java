@@ -37,13 +37,20 @@ public class InvokeInterpreter extends Interpreter {
 		Block blk = null;
 		if(blks.size()==1){
 			blk = blks.get(0);
+			//Check if the method is anonymous function. If so, then create a Lambda bytecode and put
+			// it to the target register.
+			if (blk.get(0).code instanceof Codes.Lambda){
+				int linenumber = oldstackframe.getLine();
+				Constant.Lambda result = Constant.V_LAMBDA(code.name, code.type());
+				oldstackframe.setRegister(code.target(), result);
+				printMessage(oldstackframe, code.toString(),"%"+code.target()+"("+result+")");
+				oldstackframe.setLine(++linenumber);
+				return;
+			}			
 		}else{
-			for(int index=0;index<blks.size();index++){
-				blk = blks.get(index);
-				//Get the parameter type of invoked method
-				code.type().params();
-			}
+			internalFailure("Not implemented!", "InvokeInterpreter.java", null);
 		}
+		
 		
 		
 		//Get the depth
@@ -91,7 +98,7 @@ public class InvokeInterpreter extends Interpreter {
 				to = Constant.V_BYTE(new Byte((byte) from));
 			}
 		} else {
-			internalFailure("Not implemented!", "Converter.java", null);
+			internalFailure("Not implemented!", "InvokeInterpreter.java", null);
 		}
 
 		return to;

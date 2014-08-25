@@ -138,8 +138,7 @@ public class BinaryOperatorInterpreter extends Interpreter {
 	public void interpret(Codes.BinaryOperator code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();		
 		Constant left = stackframe.getRegister(code.operand(0));		
-		Constant right = stackframe.getRegister(code.operand(1));
-		
+		Constant right = stackframe.getRegister(code.operand(1));		
 		Constant result = performOperation(left, right, code);
 		stackframe.setRegister(code.target(), result);
 		printMessage(stackframe, code.toString(), "%"+ code.target() + "("+result+")");

@@ -38,7 +38,7 @@ public class IndirectInvokeInterpreter extends Interpreter {
 		return instance;
 	}
 
-	private void pushBlockToStackFrame(Codes.IndirectInvoke code, StackFrame oldstackframe){
+	private void callAnonymousFunction(Codes.IndirectInvoke code, StackFrame oldstackframe){
 		Constant.Lambda lambda = (Constant.Lambda)oldstackframe.getRegister(code.reference()); 
 		//Find the right block
 		Block blk = null;
@@ -61,11 +61,10 @@ public class IndirectInvokeInterpreter extends Interpreter {
 		int depth = oldstackframe.getDepth();
 		//Create a new StackFrame
 		StackFrame newStackFrame = new StackFrame(depth+1, blk, 0,	lambda.name.name(), code.target());
-		
 		//Pass the input parameters.
 		int index = 0;			
-		for(int operand: code.operands()){
-			Constant constant = oldstackframe.getRegister(operand);
+		for(int parameter: code.parameters()){
+			Constant constant = oldstackframe.getRegister(parameter);
 			newStackFrame.setRegister(index, constant);
 			index++;
 		}
@@ -117,8 +116,9 @@ public class IndirectInvokeInterpreter extends Interpreter {
 				e.printStackTrace();
 			}
 		}else{
+			//internalFailure("Not implemented!", "IndirectInvokeInterpreter.java", null);
 			//Invoke the anonymous function (lambda)
-			pushBlockToStackFrame(code, stackframe);
+			callAnonymousFunction(code, stackframe);
 		}
 		
 		stackframe.setLine(++linenumber);
