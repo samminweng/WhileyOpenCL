@@ -32,12 +32,12 @@ public class InvokeInterpreter extends Interpreter {
 		return instance;
 	}
 
-	private void pushBlockToStackFrame(List<Block> blks, Codes.Invoke code, StackFrame oldstackframe){	
+	private void pushBlockToStackFrame(List<Block> blks, Codes.Invoke code, StackFrame currentStackframe){	
 		//Find the right block
 		Block blk = null;
 		if(blks.size()==1){
 			blk = blks.get(0);
-			//Check if the method is anonymous function. If so, then create a Lambda bytecode and put
+			/*//Check if the method is anonymous function. If so, then create a Lambda bytecode and put
 			// it to the target register.
 			if (blk.get(0).code instanceof Codes.Lambda){
 				int linenumber = oldstackframe.getLine();
@@ -46,7 +46,7 @@ public class InvokeInterpreter extends Interpreter {
 				printMessage(oldstackframe, code.toString(),"%"+code.target()+"("+result+")");
 				oldstackframe.setLine(++linenumber);
 				return;
-			}			
+			}*/			
 		}else{
 			internalFailure("Not implemented!", "InvokeInterpreter.java", null);
 		}
@@ -54,21 +54,21 @@ public class InvokeInterpreter extends Interpreter {
 		
 		
 		//Get the depth
-		int depth = oldstackframe.getDepth();
+		int depth = currentStackframe.getDepth();
 		//Create a new StackFrame
 		StackFrame newStackFrame = new StackFrame(depth+1, blk, 0,	code.name.name(), code.target());
 		
 		//Pass the input parameters.
 		int index = 0;			
 		for(int operand: code.operands()){
-			Constant constant = oldstackframe.getRegister(operand);
+			Constant constant = currentStackframe.getRegister(operand);
 			newStackFrame.setRegister(index, constant);
 			index++;
 		}
 
 		//Start invoking a new block.		
 		blockstack.push(newStackFrame);
-		printMessage(oldstackframe, code.toString(),"%"+code.target()+"("+oldstackframe.getRegister(code.target())+")\n");
+		printMessage(currentStackframe, code.toString(),"%"+code.target()+"("+currentStackframe.getRegister(code.target())+")\n");
 		
 	}
 	
