@@ -22,8 +22,8 @@ import wyil.lang.Type;
 import wyjc.runtime.WyList;
 
 public class Utility {
-	
-	private static String constantToString(Constant.Map map, Class<?> paramType){
+
+	private static String constantToString(Constant.Map map, Class<?> paramType) {
 		String r = "{";
 		if (map.values.isEmpty()) {
 			r = r + "=>";
@@ -47,7 +47,8 @@ public class Utility {
 		}
 		return r += "}";
 	}
-	private static String constantToString(Constant.Set set, Class<?> paramType){
+
+	private static String constantToString(Constant.Set set, Class<?> paramType) {
 		// Sort the elements in a set, using the tree set.
 		TreeSet<Constant> sorted = new TreeSet<Constant>(set.values);
 		String r = "{";
@@ -63,7 +64,8 @@ public class Utility {
 		}
 		return r + "}";
 	}
-	private static String constantToString(Constant.List list, Class<?> paramType){
+
+	private static String constantToString(Constant.List list, Class<?> paramType) {
 		String r = "[";
 		boolean firstTime = true;
 		for (Constant elem : list.values) {
@@ -81,7 +83,8 @@ public class Utility {
 		r += "]";
 		return r;
 	}
-	private static String constantToString(Constant.Record record, Class<?> paramType){
+
+	private static String constantToString(Constant.Record record, Class<?> paramType) {
 		String r = "{";
 		boolean firstTime = true;
 		ArrayList<String> keys = new ArrayList<String>(record.values.keySet());
@@ -102,20 +105,21 @@ public class Utility {
 		}
 		return r += "}";
 	}
-	private static String constantToString(Constant.Tuple tuple, Class<?> paramType){
+
+	private static String constantToString(Constant.Tuple tuple, Class<?> paramType) {
 		String r = "(";
-		boolean firstTime=true;			
-		for(Constant constant : tuple.values) {
-			if(!firstTime) {
+		boolean firstTime = true;
+		for (Constant constant : tuple.values) {
+			if (!firstTime) {
 				r += ",";
 			}
-			firstTime=false;
+			firstTime = false;
 			r += convertConstantToJavaObject(constant, paramType);
 		}
 		return r + ")";
-		
+
 	}
-	
+
 	/**
 	 * Convert the Constant object to Java Object.
 	 * 
@@ -124,21 +128,11 @@ public class Utility {
 	 * @return
 	 */
 	public static Object convertConstantToJavaObject(Constant constant, Class<?> paramType) {
-	
+
 		if (constant == null) {
 			return null;
-		}
-
-		if (constant instanceof Constant.Strung) {
-			return ((Constant.Strung) constant).value.replaceAll("\"", "");
-		} else if (constant instanceof Constant.Integer) {
-			return ((Constant.Integer) constant).value;
-		} else if (constant instanceof Constant.List) {
-			return constantToString((Constant.List)constant, paramType);
-		} else if (constant instanceof Constant.Record) {
-			return constantToString((Constant.Record) constant, paramType);
-		} else if (constant instanceof Constant.Char) {
-			return ((Constant.Char) constant).toString();
+		} else if (constant instanceof Constant.Bool) {
+			return ((Constant.Bool) constant).value;
 		} else if (constant instanceof Constant.Byte) {
 			if (paramType.equals(BigInteger.class)) {
 				return ((Constant.Byte) constant).value;
@@ -150,8 +144,8 @@ public class Utility {
 			} else {
 				return ((Constant.Byte) constant).value;
 			}
-		} else if (constant instanceof Constant.Bool) {
-			return ((Constant.Bool) constant).value;
+		} else if (constant instanceof Constant.Char) {
+			return ((Constant.Char) constant).toString();
 		} else if (constant instanceof Constant.Decimal) {
 			Constant.Decimal decimal = (Constant.Decimal) constant;
 			if (decimal.value.signum() == -1) {
@@ -161,14 +155,22 @@ public class Utility {
 			} else {
 				return decimal;
 			}
+		} else if (constant instanceof Constant.Integer) {
+			return ((Constant.Integer) constant).value;
+		} else if (constant instanceof Constant.List) {
+			return constantToString((Constant.List) constant, paramType);
 		} else if (constant instanceof Constant.Map) {
 			return constantToString((Constant.Map) constant, paramType);
-		} else if (constant instanceof Constant.Set) {
-			return constantToString((Constant.Set) constant, paramType);
 		} else if (constant instanceof Constant.Null) {
 			return null;
-		} else if (constant instanceof Constant.Tuple){
-			return constantToString((Constant.Tuple)constant, paramType);
+		} else if (constant instanceof Constant.Record) {
+			return constantToString((Constant.Record) constant, paramType);
+		} else if (constant instanceof Constant.Set) {
+			return constantToString((Constant.Set) constant, paramType);
+		} else if (constant instanceof Constant.Strung) {
+			return ((Constant.Strung) constant).value.replaceAll("\"", "");
+		} else if (constant instanceof Constant.Tuple) {
+			return constantToString((Constant.Tuple) constant, paramType);
 		} else {
 			internalFailure("Not implemented!", "Converter.java", null);
 			return null;
@@ -220,14 +222,12 @@ public class Utility {
 			return Constant.V_CHAR(((Constant.Char) constant).value);
 		} else if (constant instanceof Constant.Decimal) {
 			return Constant.V_DECIMAL(((Constant.Decimal) constant).value);
-		} else if (constant instanceof Constant.Tuple){
-			return Constant.V_TUPLE(((Constant.Tuple)constant).values);
+		} else if (constant instanceof Constant.Tuple) {
+			return Constant.V_TUPLE(((Constant.Tuple) constant).values);
 		} else {
 			internalFailure("Not implemented!", "Utility.java", null);
 			return null;
 		}
-
-		
 
 	}
 
