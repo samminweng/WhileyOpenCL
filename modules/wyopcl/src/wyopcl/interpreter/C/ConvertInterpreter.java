@@ -37,7 +37,7 @@ public class ConvertInterpreter extends Interpreter {
 		return instance;
 	}
 
-	private Constant castElement(Constant element, Type fromElemType, Type toElemType) {		
+	private Constant castElement(Constant element, Type fromElemType, Type toElemType) {
 		if (fromElemType == toElemType || toElemType instanceof Type.Any) {
 			return element;
 		} else {
@@ -69,7 +69,6 @@ public class ConvertInterpreter extends Interpreter {
 			}
 		}
 
-		
 	}
 
 	private Constant.List toConstantList(Constant from, Type fromType, Type toType) {
@@ -114,7 +113,7 @@ public class ConvertInterpreter extends Interpreter {
 			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
 			return null;
 		}
-		
+
 	}
 
 	private Constant.Record toConstantRecord(Constant from, Type fromType, Type toType) {
@@ -161,7 +160,7 @@ public class ConvertInterpreter extends Interpreter {
 		} else {
 			// Directly cast it into a Map.
 			return (Constant.Map) from;
-		}		
+		}
 	}
 
 	private Constant.Set toConstantSet(Constant from, Type fromType, Type toType) {
@@ -233,23 +232,27 @@ public class ConvertInterpreter extends Interpreter {
 		}
 	}
 
-	private Constant.Tuple toConstantTuple(Constant constant, Type fromType, Type toType){
-		if(fromType instanceof Type.Tuple && toType instanceof Type.Tuple){
-			Constant.Tuple tuple = (Constant.Tuple)constant;
-			ArrayList<Constant> values = new ArrayList<Constant>();
-			int index = 0;
-			for(Constant value : tuple.values){
-				values.add(castElement(value, ((Type.Tuple)fromType).element(index), ((Type.Tuple)toType).element(index)));
+	private Constant.Tuple toConstantTuple(Constant constant, Type fromType, Type toType) {
+		Constant.Tuple tuple = (Constant.Tuple) constant;
+		ArrayList<Constant> values = new ArrayList<Constant>();
+		int index = 0;
+		for (Constant value : tuple.values) {
+			if (fromType instanceof Type.Tuple) {
+				values.add(castElement(value, ((Type.Tuple) fromType).element(index),
+						((Type.Tuple) toType).element(index)));
+			} else if (fromType instanceof Type.UnionOfTuples) {
+				values.add(castElement(value, ((Type.UnionOfTuples) fromType).element(index),
+						((Type.Tuple) toType).element(index)));
+			} else {
+				internalFailure("Not implemented!", "ConvertInterpreter.java", null);
+				return null;
 			}
-			return Constant.V_TUPLE(values);			
-		}else{
-			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
-			return null;
-		}		
+
+		}
+		return Constant.V_TUPLE(values);
+
 	}
-	
-	
-	
+
 	/***
 	 * Cast a Constant object to the Constant object of a specific type.
 	 * 
@@ -275,9 +278,9 @@ public class ConvertInterpreter extends Interpreter {
 			return toConstantDecimal(constant, fromType, toType);
 		} else if (toType instanceof Type.Map) {
 			return toConstantMap(constant, fromType, toType);
-		}  else if (toType instanceof Type.Set) {
+		} else if (toType instanceof Type.Set) {
 			return toConstantSet(constant, fromType, toType);
-		} else if (toType instanceof Type.Tuple){
+		} else if (toType instanceof Type.Tuple) {
 			return toConstantTuple(constant, fromType, toType);
 		} else if (toType instanceof Type.Negation) {
 			return toConstantNegation(constant, fromType, toType);
