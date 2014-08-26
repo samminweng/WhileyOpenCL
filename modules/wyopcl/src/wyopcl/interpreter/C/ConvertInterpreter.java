@@ -169,27 +169,27 @@ public class ConvertInterpreter extends Interpreter {
 	}
 
 	private Constant.Set toConstantSet(Constant from, Type fromType, Type toType) {
-		Type fromElemType =null;
+		Type fromElemType = null;
 		HashSet<Constant> values = new HashSet<Constant>();
 		Iterator<Constant> iterator = null;
-		
+
 		if (fromType instanceof Type.Set) {
 			iterator = ((Constant.Set) from).values.iterator();
-			fromElemType = ((Type.Set) fromType).element();			
-		} else if (fromType instanceof Type.List){
-			iterator = ((Constant.List)from).values.iterator();
-			fromElemType =((Type.List)fromType).element();
-		}else {
+			fromElemType = ((Type.Set) fromType).element();
+		} else if (fromType instanceof Type.List) {
+			iterator = ((Constant.List) from).values.iterator();
+			fromElemType = ((Type.List) fromType).element();
+		} else {
 			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
 		}
-		
+
 		Type toElemType = ((Type.Set) toType).element();
 		while (iterator.hasNext()) {
 			Constant next = iterator.next();
 			// Cast the elements in the from set.
 			values.add(castElementToElement(next, fromElemType, toElemType));
 		}
-		
+
 		return Constant.V_SET(values);
 	}
 
@@ -244,47 +244,47 @@ public class ConvertInterpreter extends Interpreter {
 	}
 
 	/***
-	 * Cast Constant object to Constant object.
+	 * Cast a Constant object to the Constant object of a specific type.
 	 * 
-	 * @param from
+	 * @param constant
+	 * @param fromType
 	 * @param toType
 	 * @return
 	 */
-	public Constant castConstanttoConstant(Constant from, wyil.lang.Type fromType, wyil.lang.Type toType) {
-		Constant to = null;
+	public Constant castConstanttoConstant(Constant constant, wyil.lang.Type fromType, wyil.lang.Type toType) {
 		if (toType instanceof Type.Any) {
 			// No needs to convert the type of the operand.
-			to = (Constant) from;
+			return constant;
 		} else if (toType instanceof Type.Char) {
 			// Cast ascii to Char
-			to = Constant.V_CHAR((char) (((Constant.Integer) from).value.intValue()));
+			return Constant.V_CHAR((char) (((Constant.Integer) constant).value.intValue()));
 		} else if (toType instanceof Type.Int) {
-			to = toConstantInt(from, fromType, toType);
+			return toConstantInt(constant, fromType, toType);
 		} else if (toType instanceof Type.List) {
-			to = toConstantList(from, fromType, toType);
+			return toConstantList(constant, fromType, toType);
 		} else if (toType instanceof Type.Record) {
-			to = toConstantRecord(from, fromType, toType);
+			return toConstantRecord(constant, fromType, toType);
 		} else if (toType instanceof Type.Real) {
-			to = toConstantDecimal(from, fromType, toType);
+			return toConstantDecimal(constant, fromType, toType);
 		} else if (toType instanceof Type.Map) {
-			to = toConstantMap(from, fromType, toType);
+			return toConstantMap(constant, fromType, toType);
+		}  else if (toType instanceof Type.Set) {
+			return toConstantSet(constant, fromType, toType);
+		} else if (toType instanceof Type.Negation) {
+			return toConstantNegation(constant, fromType, toType);
 		} else if (toType instanceof Type.Union) {
 			if (toType instanceof Type.UnionOfCollections || toType instanceof Type.UnionOfMaps
 					|| toType instanceof Type.UnionOfIndexibles || toType instanceof Type.UnionOfLists
 					|| toType instanceof Type.Union) {
-				to = from;
+				return constant;
 			} else {
 				internalFailure("Not implemented!", "ConvertInterpreter.java", null);
+				return null;
 			}
-		} else if (toType instanceof Type.Set) {
-			to = toConstantSet(from, fromType, toType);
-		} else if (toType instanceof Type.Negation) {
-			to = toConstantNegation(from, fromType, toType);
 		} else {
 			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
+			return null;
 		}
-
-		return to;
 	}
 
 	public void interpret(Codes.Convert code, StackFrame stackframe) {
@@ -292,9 +292,7 @@ public class ConvertInterpreter extends Interpreter {
 		// Read a value from the operand register.
 		Constant value = stackframe.getRegister(code.operand(0));
 		// Convert it to the given type.
-		Type assignedType = code.assignedType();
-		Type resultType = code.result;
-		Constant result = castConstanttoConstant(value, assignedType, resultType);
+		Constant result = castConstanttoConstant(value, code.assignedType(), code.result);
 		stackframe.setRegister(code.target(), result);
 		printMessage(stackframe, code.toString(), "%" + code.target() + "(" + result + ")");
 		stackframe.setLine(++linenumber);
