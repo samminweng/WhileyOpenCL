@@ -23,7 +23,7 @@ public class DebugInterpreter extends Interpreter{
 		//Read a string from operand register.
 		Constant.Strung str = (Constant.Strung)stackframe.getRegister(code.operand);
 		//Trim the string before printing it out.
-		System.out.println(str.value.trim());
+		System.out.println(str.value.replaceAll("\"", ""));
 		printMessage(stackframe, code.toString(),"");
 		stackframe.setLine(++linenumber);
 	}

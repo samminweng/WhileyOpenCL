@@ -36,22 +36,10 @@ public class InvokeInterpreter extends Interpreter {
 		//Find the right block
 		Block blk = null;
 		if(blks.size()==1){
-			blk = blks.get(0);
-			/*//Check if the method is anonymous function. If so, then create a Lambda bytecode and put
-			// it to the target register.
-			if (blk.get(0).code instanceof Codes.Lambda){
-				int linenumber = oldstackframe.getLine();
-				Constant.Lambda result = Constant.V_LAMBDA(code.name, code.type());
-				oldstackframe.setRegister(code.target(), result);
-				printMessage(oldstackframe, code.toString(),"%"+code.target()+"("+result+")");
-				oldstackframe.setLine(++linenumber);
-				return;
-			}*/			
+			blk = blks.get(0);			
 		}else{
 			internalFailure("Not implemented!", "InvokeInterpreter.java", null);
-		}
-		
-		
+		}		
 		
 		//Get the depth
 		int depth = currentStackframe.getDepth();

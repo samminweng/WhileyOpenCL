@@ -55,7 +55,7 @@ public class MethodTestCase {
 	}
 
 	@Test
-	@Ignore("Timeout")
+	//@Ignore("Timeout")
 	public void test_Method_Valid_1() {
 		util.exec("Method_Valid_1");
 	}
