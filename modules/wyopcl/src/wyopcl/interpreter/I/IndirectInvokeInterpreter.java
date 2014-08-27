@@ -41,6 +41,7 @@ public class IndirectInvokeInterpreter extends Interpreter {
 	}
 
 	private void execFunction(Codes.IndirectInvoke code, StackFrame stackframe){
+		int linenumber = stackframe.getLine();
 		Constant.Lambda lambda = (Constant.Lambda) stackframe.getRegister(code.reference());
 		List<Constant> values = new ArrayList<Constant>();
 		// Get the parameter values.
@@ -78,6 +79,8 @@ public class IndirectInvokeInterpreter extends Interpreter {
 		} else {
 			 internalFailure("Not implemented!", "IndirectInvokeInterpreter.java", null);			
 		}
+		
+		stackframe.setLine(++linenumber);
 	}
 	
 	
@@ -85,12 +88,10 @@ public class IndirectInvokeInterpreter extends Interpreter {
 	private void execAnonymousFunction(Codes.IndirectInvoke code, StackFrame currentStackframe) {
 		// Get the depth
 		int depth = currentStackframe.getDepth();		
-		Closure func = (Closure) currentStackframe.getRegister(code.reference());
-		Block blk = blocktable.get(func.lambda.name.toString()).get(0);
+		Closure closure = (Closure) currentStackframe.getRegister(code.reference());
+		Block blk = blocktable.get(closure.lambda.name.toString()).get(0);
 		// Create a new StackFrame
-		StackFrame newStackFrame = new StackFrame(depth + 1, blk, 0, func.lambda.name.toString(), code.target());
-		// Check if the function is Anonymous(Lambda) Function.
-		Closure closure = (Closure) func;
+		StackFrame newStackFrame = new StackFrame(depth + 1, blk, 0, closure.lambda.name.toString(), code.target());
 		// Pass the input parameters.
 		int index = 0;
 		int currOperand = 0;
@@ -115,14 +116,14 @@ public class IndirectInvokeInterpreter extends Interpreter {
 	}
 
 	public void interpret(Codes.IndirectInvoke code, StackFrame stackframe) {
-		int linenumber = stackframe.getLine();
+		
 		Constant func = stackframe.getRegister(code.reference());		
 		if(func instanceof Closure){
 			execAnonymousFunction(code, stackframe);
 		}else {
 			execFunction(code, stackframe);
+			
 		}
-		stackframe.setLine(++linenumber);
 	}
 
 }
