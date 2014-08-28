@@ -99,7 +99,6 @@ public class ConstrainedTestCase {
 	}
 
 	@Test
-	@Ignore("Timout")
 	public void test_ConstrainedInt_Valid_22() {
 		util.exec("ConstrainedInt_Valid_22");
 	}
@@ -190,13 +189,11 @@ public class ConstrainedTestCase {
 	}
 
 	@Test
-	@Ignore("Timout")
 	public void test_ConstrainedList_Valid_21() {
 		util.exec("ConstrainedList_Valid_21");
 	}
 
 	@Test
-	@Ignore("Timeout")
 	public void test_ConstrainedList_Valid_22() {
 		util.exec("ConstrainedList_Valid_22");
 	}
@@ -237,7 +234,6 @@ public class ConstrainedTestCase {
 	}
 
 	@Test
-	@Ignore("Timout")
 	public void test_ConstrainedList_Valid_6() {
 		util.exec("ConstrainedList_Valid_6");
 	}
@@ -248,13 +244,11 @@ public class ConstrainedTestCase {
 	}
 
 	@Test
-	@Ignore("Timout")
 	public void test_ConstrainedList_Valid_8() {
 		util.exec("ConstrainedList_Valid_8");
 	}
 
 	@Test
-	@Ignore("Timout")
 	public void test_ConstrainedList_Valid_9() {
 		util.exec("ConstrainedList_Valid_9");
 	}

@@ -23,7 +23,6 @@ public class ComplexTestCase {
 		util = null;
 	}
 	@Test
-	@Ignore("Timeout")
 	public void test_Complex_Valid_1() {
 		util.exec("Complex_Valid_1");
 	}
@@ -45,7 +44,6 @@ public class ComplexTestCase {
 	}
 
 	@Test
-	@Ignore("Timeout")
 	public void test_Complex_Valid_5() {
 		util.exec("Complex_Valid_5");
 	}

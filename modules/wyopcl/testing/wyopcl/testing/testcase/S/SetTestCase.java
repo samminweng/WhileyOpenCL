@@ -79,14 +79,12 @@ public class SetTestCase {
 		util.exec("SetComprehension_Valid_5");
 	}
 
-	@Test
-	@Ignore("Timeout")
+	@Test	
 	public void test_SetComprehension_Valid_6() {
 		util.exec("SetComprehension_Valid_6");
 	}
 
-	@Test
-	@Ignore("Timeout")
+	@Test	
 	public void test_SetComprehension_Valid_7() {
 		util.exec("SetComprehension_Valid_7");
 	}
