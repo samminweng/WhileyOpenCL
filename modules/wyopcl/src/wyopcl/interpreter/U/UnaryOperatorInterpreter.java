@@ -41,17 +41,17 @@ public class UnaryOperatorInterpreter extends Interpreter {
 				return null;
 			}
 		}else if(number instanceof Constant.Decimal){
-			DecimalFraction fraction;
+			DecimalFraction frac;
 			Constant.Decimal decimal = (Constant.Decimal)number;
 			switch(kind){
 			case NEG:
 				return Constant.V_DECIMAL(decimal.value.negate());
 			case NUMERATOR:
-				fraction = new DecimalFraction(decimal.value);
-				return Constant.V_INTEGER(new BigInteger(fraction.getNumerator()));			
+				frac = new DecimalFraction(decimal.value);
+				return frac.getNumerator();			
 			case DENOMINATOR:				
-				fraction = new DecimalFraction(decimal.value);
-				return Constant.V_INTEGER(new BigInteger(fraction.getDenominator()));			
+				frac = new DecimalFraction(decimal.value);
+				return frac.getDenominator();			
 			default:
 				internalFailure("Not implemented!", "UnaryOperatorInterpreter.java", null);
 				return null;

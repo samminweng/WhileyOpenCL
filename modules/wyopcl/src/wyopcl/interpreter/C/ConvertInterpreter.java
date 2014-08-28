@@ -19,6 +19,7 @@ import java.util.Set;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyil.lang.Type;
+import wyopcl.interpreter.DecimalFraction;
 import wyopcl.interpreter.StackFrame;
 import wyopcl.interpreter.Utility;
 import wyopcl.interpreter.Interpreter;
@@ -280,6 +281,11 @@ public class ConvertInterpreter extends Interpreter {
 	 */
 	public Constant castConstanttoConstant(Constant constant, wyil.lang.Type fromType, wyil.lang.Type toType) {
 		if (toType instanceof Type.Any) {
+			if(constant instanceof DecimalFraction){
+				//Cast to a string
+				return Constant.V_STRING(constant.toString());
+			}
+			
 			// No needs to convert the type of the operand.
 			return constant;
 		} else if (toType instanceof Type.Char) {
