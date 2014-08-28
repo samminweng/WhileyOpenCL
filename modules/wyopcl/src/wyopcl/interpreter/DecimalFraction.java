@@ -9,11 +9,8 @@ import java.math.BigDecimal;
  *
  */
 public class DecimalFraction {
-
-
 	private int numerator, denominator;	
 	private final BigDecimal decimal;
-	
 	/**
 	 * Reduce num and denum by the greatest common factor.  
 	 * @param num
@@ -36,31 +33,39 @@ public class DecimalFraction {
 	}
 	
 	public DecimalFraction(BigDecimal decimal){
-		this.decimal = decimal;		
+		this.decimal = decimal;
+		this.denominator = (int) Math.pow(10.0, (double)this.decimal.scale());
+		this.numerator = (int)(this.decimal.doubleValue()*denominator);	
 		if(this.decimal.signum() == -1){
-			this.denominator = (int) Math.pow(10.0, (double)this.decimal.scale());
-			this.numerator = (int)((-1)*this.decimal.doubleValue()*denominator);	
-		}else{
-			//Convert the repeating decimals to fractions. how???
-			internalFailure("Not implemented!", "DecimalFraction.java", null);	
-		}			
+			this.numerator = this.numerator*(-1);	
+		}
+		
 		reduceFraction(numerator, denominator);
 	}
 	
-	public int getDenominator() {
-		return denominator;
+	public String getDenominator() {
+		return Integer.toString(denominator);
 	}
 
-	public int getNumerator() {
-		return numerator;
+	public String getNumerator() {
+		if(this.decimal.signum() == -1){
+			return Integer.toString(-1*numerator);
+		}else{
+			return Integer.toString(numerator);
+		}
+		
 	}
 
 	@Override
 	public String toString() {
 		if(this.denominator == 1){
 			return ""+this.decimal.doubleValue();
-		}else{
-			return "(-"+this.numerator+"/"+this.denominator+")";
+		}else{			
+			if(this.decimal.signum() == -1){
+				return "(-"+this.numerator+"/"+this.denominator+")";
+			}else{
+				return "("+this.numerator+"/"+this.denominator+")";
+			}
 		}
 		
 	}

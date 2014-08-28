@@ -220,7 +220,7 @@ public class ConvertInterpreter extends Interpreter {
 		if (fromType instanceof Type.Int) {
 			return Constant.V_DECIMAL(new BigDecimal(((Constant.Integer) constant).value.toString()));
 		} else if (fromType instanceof Type.Real) {
-			return (Constant.Decimal) constant;
+			return Constant.V_DECIMAL(((Constant.Decimal)constant).value);
 		} else if (fromType instanceof Type.Union){
 			if(constant instanceof Constant.Integer){
 				return Constant.V_DECIMAL(BigDecimal.valueOf(((Constant.Integer)constant).value.longValue()));

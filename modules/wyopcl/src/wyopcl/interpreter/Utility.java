@@ -153,7 +153,7 @@ public class Utility {
 				DecimalFraction fraction = new DecimalFraction(decimal.value);
 				return fraction.toString();
 			} else {
-				return decimal;
+				return decimal.value.toPlainString();
 			}
 		} else if (constant instanceof Constant.Integer) {
 			return ((Constant.Integer) constant).value;

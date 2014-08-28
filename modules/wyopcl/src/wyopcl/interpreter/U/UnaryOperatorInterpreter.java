@@ -25,47 +25,44 @@ public class UnaryOperatorInterpreter extends Interpreter {
 	}
 	
 	private Constant performArithmetic(UnaryOperatorKind kind, Constant number){
-		Constant result = null;
 		if(number instanceof Constant.Integer){
 			Constant.Integer integer = (Constant.Integer)number;
 			switch(kind){
 			case NEG:
-				result = Constant.V_INTEGER(integer.value.negate());
-				break;
+				return Constant.V_INTEGER(integer.value.negate());
 			case NUMERATOR:
 				internalFailure("Not implemented!", "UnaryOperatorInterpreter.java", null);
-				break;
+				return null;
 			case DENOMINATOR:
 				internalFailure("Not implemented!", "UnaryOperatorInterpreter.java", null);
-				break;
+				return null;
 			default:
 				internalFailure("Not implemented!", "UnaryOperatorInterpreter.java", null);
+				return null;
 			}
 		}else if(number instanceof Constant.Decimal){
 			DecimalFraction fraction;
 			Constant.Decimal decimal = (Constant.Decimal)number;
 			switch(kind){
 			case NEG:
-				result = Constant.V_DECIMAL(decimal.value.negate());
-				break;
+				return Constant.V_DECIMAL(decimal.value.negate());
 			case NUMERATOR:
 				fraction = new DecimalFraction(decimal.value);
-				result = Constant.V_INTEGER(BigInteger.valueOf(fraction.getNumerator()));
-				break;			
-			case DENOMINATOR:
+				return Constant.V_INTEGER(new BigInteger(fraction.getNumerator()));			
+			case DENOMINATOR:				
 				fraction = new DecimalFraction(decimal.value);
-				result = Constant.V_INTEGER(BigInteger.valueOf(fraction.getNumerator()));
-				break;			
+				return Constant.V_INTEGER(new BigInteger(fraction.getDenominator()));			
 			default:
 				internalFailure("Not implemented!", "UnaryOperatorInterpreter.java", null);
-				
+				return null;
 			}
 			
 		}else{
 			internalFailure("Not implemented!", "UnaryOperatorInterpreter.java", null);
+			return null;
 		}
 		
-		return result;
+		
 	}
 	
 	

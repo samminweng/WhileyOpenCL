@@ -29,62 +29,57 @@ public class BinaryOperatorInterpreter extends Interpreter {
 
 	
 	private Constant performOperation(Constant left, Constant right, Codes.BinaryOperator code){
-
-		Constant result = null;
 		byte leftValue, rightValue;
 		int pos;
 		// Check the operator
 		switch (code.kind) {
 		case ADD:
 			if(left instanceof Constant.Integer){
-				result = ((Constant.Integer)left).add((Constant.Integer)right);
+				return ((Constant.Integer)left).add((Constant.Integer)right);
 			}else if (left instanceof Constant.Decimal){
-				 result = ((Constant.Decimal)left).add(((Constant.Decimal)right));
+				return ((Constant.Decimal)left).add(((Constant.Decimal)right));
 			}else {
 				internalFailure("Not implemented!", "BinaryOperatorInterpreter.java", null);
-			}			
-			break;
+				return null;
+			}
 		case SUB:			
 			if(left instanceof Constant.Integer){
-				result = ((Constant.Integer)left).subtract((Constant.Integer)right);
+				return ((Constant.Integer)left).subtract((Constant.Integer)right);
 			}else if (left instanceof Constant.Decimal){
-				 result = ((Constant.Decimal)left).subtract(((Constant.Decimal)right));
+				return ((Constant.Decimal)left).subtract(((Constant.Decimal)right));
 			}else {
 				internalFailure("Not implemented!", "BinaryOperatorInterpreter.java", null);
-			}
-			break;
+				return null;
+			}		
 		case MUL:		
 			if(left instanceof Constant.Integer){
-				result = ((Constant.Integer)left).multiply((Constant.Integer)right);
+				return ((Constant.Integer)left).multiply((Constant.Integer)right);
 			}else if (left instanceof Constant.Decimal){
-				 result = ((Constant.Decimal)left).multiply(((Constant.Decimal)right));
+				return ((Constant.Decimal)left).multiply(((Constant.Decimal)right));
 			}else {
 				internalFailure("Not implemented!", "BinaryOperatorInterpreter.java", null);
+				return null;
 			}
-			break;
 		case DIV:			
 			if(left instanceof Constant.Integer){
-				result = ((Constant.Integer)left).divide((Constant.Integer)right);
+				return ((Constant.Integer)left).divide((Constant.Integer)right);
 			}else if (left instanceof Constant.Decimal){
 				Constant.Decimal dividend = (Constant.Decimal)left;
 				Constant.Decimal divisor = (Constant.Decimal)right;
 				//In the case of (1/3), the division result is infinite.
 				BigDecimal division = dividend.value.divide(divisor.value, MathContext.DECIMAL128);
-				result = Constant.V_DECIMAL(new BigDecimal(division.toString()));
+				return Constant.V_DECIMAL(new BigDecimal(division.toString()));
 			}else {
 				internalFailure("Not implemented!", "BinaryOperatorInterpreter.java", null);
-			}
-			break;
-		case REM:		
-			
+				return null;
+			}			
+		case REM:
 			if(left instanceof Constant.Integer){
-				result = ((Constant.Integer)left).remainder((Constant.Integer)right);
-			}else if (left instanceof Constant.Decimal){
-				internalFailure("Not implemented!", "BinaryOperatorInterpreter.java", null);
+				return ((Constant.Integer)left).remainder((Constant.Integer)right);
 			}else {
 				internalFailure("Not implemented!", "BinaryOperatorInterpreter.java", null);
-			}
-			break;
+				return null;
+			}			
 		case RANGE:
 			//Create a List.
 			ArrayList<Constant> values = new ArrayList<Constant>();
@@ -96,43 +91,35 @@ public class BinaryOperatorInterpreter extends Interpreter {
 				start = start.add(BigInteger.ONE);		
 			}
 			//Put the list into the result.
-			result = Constant.V_LIST(values);		
-			break;
+			return Constant.V_LIST(values);
 		case BITWISEAND:
 			leftValue = ((Constant.Byte)left).value;
 			rightValue = ((Constant.Byte)right).value;
 			byte value = (byte) (leftValue & rightValue);
-			result = Constant.V_BYTE(value);
-			break;
+			return Constant.V_BYTE(value);			
 		case BITWISEOR:
 			leftValue = ((Constant.Byte)left).value;
 			rightValue = ((Constant.Byte)right).value;
-			result = Constant.V_BYTE((byte)(leftValue | rightValue));
-			break;
+			return Constant.V_BYTE((byte)(leftValue | rightValue));		
 		case BITWISEXOR:
 			leftValue = ((Constant.Byte)left).value;
 			rightValue = ((Constant.Byte)right).value;
-			result = Constant.V_BYTE((byte)(leftValue ^ rightValue));
-			break;
+			return Constant.V_BYTE((byte)(leftValue ^ rightValue));			
 		case LEFTSHIFT:
 			leftValue = ((Constant.Byte)left).value;
 			pos = ((Constant.Integer)right).value.intValue();
-			result = Constant.V_BYTE((byte)(leftValue << pos));
-			break;
+			return Constant.V_BYTE((byte)(leftValue << pos));			
 		case RIGHTSHIFT:
 			leftValue = ((Constant.Byte)left).value;
 			pos = ((Constant.Integer)right).value.intValue();
 			//0x000000FF is added to avoid leftValue being casted to integer
 			//before shifting and to fill the zeros to the left.
 			leftValue = (byte)((0x000000FF & leftValue)>>pos);
-			result = Constant.V_BYTE(leftValue);
-			break;
+			return Constant.V_BYTE(leftValue);			
 		default:
 			internalFailure("unknown binary expression encountered", "BinaryOperatorInterpreter.java", null);
-			break;
+			return null;			
 		}
-		
-		return result;
 	}
 	
 
