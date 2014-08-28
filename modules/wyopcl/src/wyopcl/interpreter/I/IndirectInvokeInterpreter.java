@@ -40,7 +40,7 @@ public class IndirectInvokeInterpreter extends Interpreter {
 		return instance;
 	}
 
-	private void execFunction(Codes.IndirectInvoke code, StackFrame stackframe){
+	private void execFunction(Codes.IndirectInvoke code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
 		Constant.Lambda lambda = (Constant.Lambda) stackframe.getRegister(code.reference());
 		List<Constant> values = new ArrayList<Constant>();
@@ -77,17 +77,32 @@ public class IndirectInvokeInterpreter extends Interpreter {
 				e.printStackTrace();
 			}
 		} else {
-			 internalFailure("Not implemented!", "IndirectInvokeInterpreter.java", null);			
+			Block blk = blocktable.get(lambda.name.toString()).get(0);
+			// Create a new StackFrame
+			StackFrame newStackFrame = new StackFrame(stackframe.getDepth() + 1, blk, 0, lambda.name.toString(),
+					code.target());
+			// Pass the input parameters.
+			int index = 0;
+			for (int parameter : code.parameters()) {
+				// Get the parameter from the current stack frame
+				Constant constant = stackframe.getRegister(parameter);
+				newStackFrame.setRegister(index, constant);
+
+				index++;
+			}
+
+			// Start invoking a new block.
+			blockstack.push(newStackFrame);
+			printMessage(stackframe, code.toString(), "%" + code.target() + "(" + stackframe.getRegister(code.target())
+					+ ")\n");
 		}
-		
+
 		stackframe.setLine(++linenumber);
 	}
-	
-	
-	
-	private void execAnonymousFunction(Codes.IndirectInvoke code, StackFrame currentStackframe) {
+
+	private void pushAnonymousFunctionBlockToStack(Codes.IndirectInvoke code, StackFrame currentStackframe) {
 		// Get the depth
-		int depth = currentStackframe.getDepth();		
+		int depth = currentStackframe.getDepth();
 		Closure closure = (Closure) currentStackframe.getRegister(code.reference());
 		Block blk = blocktable.get(closure.lambda.name.toString()).get(0);
 		// Create a new StackFrame
@@ -95,7 +110,7 @@ public class IndirectInvokeInterpreter extends Interpreter {
 		// Pass the input parameters.
 		int index = 0;
 		int currOperand = 0;
-		for (Constant value : closure.parameters.values) {
+		for (Constant value : closure.params.values) {
 			if (value == null) {
 				// unknown parameter, so get it from the current stack frame
 				Constant constant = currentStackframe.getRegister(code.parameter(currOperand));
@@ -116,13 +131,13 @@ public class IndirectInvokeInterpreter extends Interpreter {
 	}
 
 	public void interpret(Codes.IndirectInvoke code, StackFrame stackframe) {
-		
-		Constant func = stackframe.getRegister(code.reference());		
-		if(func instanceof Closure){
-			execAnonymousFunction(code, stackframe);
-		}else {
+
+		Constant func = stackframe.getRegister(code.reference());
+		if (func instanceof Closure) {
+			pushAnonymousFunctionBlockToStack(code, stackframe);
+		} else {
 			execFunction(code, stackframe);
-			
+
 		}
 	}
 

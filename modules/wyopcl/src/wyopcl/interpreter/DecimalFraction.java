@@ -15,12 +15,12 @@ public class DecimalFraction {
 	private final BigDecimal decimal;
 	
 	/**
-	 * Find the greatest common factor of num and denum 
+	 * Reduce num and denum by the greatest common factor.  
 	 * @param num
 	 * @param denum
 	 * @return
 	 */
-	private int reduceFraction(int num, int denum){
+	private void reduceFraction(int num, int denum){
 		int gcf = 1;
 		int max = Math.max(num, denum);
 		int f;
@@ -29,8 +29,10 @@ public class DecimalFraction {
 				gcf = f;
 				break;
 			}
-		}		
-		return gcf;
+		}
+		
+		this.numerator = numerator/gcf;
+		this.denominator = denominator/gcf;
 	}
 	
 	public DecimalFraction(BigDecimal decimal){
@@ -40,13 +42,9 @@ public class DecimalFraction {
 			this.numerator = (int)((-1)*this.decimal.doubleValue()*denominator);	
 		}else{
 			//Convert the repeating decimals to fractions. how???
-			internalFailure("Not implemented!", "DecimalFraction.java", null);
-			//this.numerator =  (int)this.decimal.doubleValue()*denominator;	
-		}
-			
-		int factor = reduceFraction(numerator, denominator);
-		this.numerator = numerator/factor;
-		this.denominator = denominator/factor;
+			internalFailure("Not implemented!", "DecimalFraction.java", null);	
+		}			
+		reduceFraction(numerator, denominator);
 	}
 	
 	public int getDenominator() {

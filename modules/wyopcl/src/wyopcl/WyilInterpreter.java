@@ -37,6 +37,7 @@ import wyopcl.interpreter.B.BinaryOperatorInterpreter;
 import wyopcl.interpreter.C.ConstantInterpreter;
 import wyopcl.interpreter.C.ConvertInterpreter;
 import wyopcl.interpreter.D.DebugInterpreter;
+import wyopcl.interpreter.D.DereferenceInterpreter;
 import wyopcl.interpreter.F.FieldLoadInterpreter;
 import wyopcl.interpreter.F.ForAllInterpreter;
 import wyopcl.interpreter.G.GotoInterpreter;
@@ -53,6 +54,7 @@ import wyopcl.interpreter.L.LoopEndInterpreter;
 import wyopcl.interpreter.L.LoopInterpreter;
 import wyopcl.interpreter.N.NewListInterpreter;
 import wyopcl.interpreter.N.NewMapInterpreter;
+import wyopcl.interpreter.N.NewObjectInterpreter;
 import wyopcl.interpreter.N.NewRecordInterpreter;
 import wyopcl.interpreter.N.NewSetInterpreter;
 import wyopcl.interpreter.N.NewTupleInterpreter;
@@ -271,7 +273,7 @@ public class WyilInterpreter extends Interpreter implements Builder{
 			} else if (code instanceof Codes.Debug) {
 				DebugInterpreter.getInstance().interpret((Codes.Debug)code, stackframe);
 			} else if (code instanceof Codes.Dereference) {
-				internalFailure("Not implemented!", filename, entry);
+				DereferenceInterpreter.getInstance().interpret((Codes.Dereference)code, stackframe);
 			} else if (code instanceof Codes.FieldLoad) {		
 				FieldLoadInterpreter.getInstance().interpret((Codes.FieldLoad)code, stackframe);			
 			} else if (code instanceof Codes.ForAll) {				
@@ -315,7 +317,7 @@ public class WyilInterpreter extends Interpreter implements Builder{
 			} else if (code instanceof Codes.Return) {			
 				ReturnInterpreter.getInstance().interpret((Codes.Return)code, stackframe);
 			} else if (code instanceof Codes.NewObject) {
-				internalFailure("Not implemented!", filename, entry);
+				NewObjectInterpreter.getInstance().interpret((Codes.NewObject)code, stackframe);
 			} else if (code instanceof Codes.Nop) {
 				NopInterpreter.getInstance().interpret((Codes.Nop)code, stackframe);
 			} else if (code instanceof Codes.SetOperator){

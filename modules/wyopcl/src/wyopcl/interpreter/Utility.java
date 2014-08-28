@@ -224,6 +224,9 @@ public class Utility {
 			return Constant.V_DECIMAL(((Constant.Decimal) constant).value);
 		} else if (constant instanceof Constant.Tuple) {
 			return Constant.V_TUPLE(((Constant.Tuple) constant).values);
+		} else if (constant instanceof Closure){
+			Closure closure = (Closure)constant;
+			return Closure.V_Closure(closure.lambda, closure.params, closure.type);
 		} else {
 			internalFailure("Not implemented!", "Utility.java", null);
 			return null;

@@ -2,21 +2,23 @@ package wyopcl.interpreter;
 
 import wyil.lang.Constant;
 
-public class Closure extends Constant {
-	
-
+public final class Closure extends Constant {
 	public final Constant.Lambda lambda;
-	public Constant.Tuple parameters;
-	public final Constant.Type returntype;
+	public final Constant.Tuple params;
+	public final Constant.Type type;
 	
-	public Closure(Constant.Lambda lambda, Constant.Tuple parameters, Constant.Type returntype){
+	public static Closure V_Closure(Constant.Lambda lambda, Constant.Tuple params, Constant.Type type) {
+		return new Closure(lambda, params, type);
+	}
+	
+	private Closure(Constant.Lambda lambda, Constant.Tuple parameters, Constant.Type returntype){
 		this.lambda = lambda;
-		this.parameters = parameters;
-		this.returntype = returntype;
+		this.params = parameters;
+		this.type = returntype;
 	}
 	
 	public Constant.Tuple parameters(){
-		return parameters;
+		return params;
 	}
 	
 	public Constant.Lambda lambda(){
@@ -25,7 +27,7 @@ public class Closure extends Constant {
 	
 	@Override
 	public String toString() {
-		return "Closure [lambda=" + lambda + ", parameters=" + parameters + ", returntype=" + returntype + "]";
+		return "Closure [lambda=" + lambda + ", parameters=" + params + ", returntype=" + type + "]";
 	}
 
 

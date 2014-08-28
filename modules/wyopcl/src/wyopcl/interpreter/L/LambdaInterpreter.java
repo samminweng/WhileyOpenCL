@@ -29,6 +29,7 @@ public class LambdaInterpreter extends Interpreter {
 
 	public void interpret(Codes.Lambda code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
+		//Create a list of parameters.
 		Collection<Constant> parameters = new ArrayList<Constant>();
 		for(int operand: code.operands()){
 			if(operand <0){
@@ -38,11 +39,11 @@ public class LambdaInterpreter extends Interpreter {
 			}
 		}
 		
-		Constant.Tuple tuple = Constant.V_TUPLE(parameters);
+		Constant.Tuple params = Constant.V_TUPLE(parameters);
 		//Create a Constant.Closure 
 		Constant.Lambda lambda = Constant.V_LAMBDA(code.name, code.type());
-		Constant.Type returntype = Constant.V_TYPE(code.assignedType());
-		Closure result = new Closure(lambda, tuple, returntype);		
+		Constant.Type type = Constant.V_TYPE(code.assignedType());
+		Constant result = Closure.V_Closure(lambda, params, type);		
 		stackframe.setRegister(code.target(), result);
 		printMessage(stackframe, code.toString(),
 				"%" + code.target() + "(" + result + ")\n");
