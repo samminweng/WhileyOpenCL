@@ -147,14 +147,8 @@ public class Utility {
 		} else if (constant instanceof Constant.Char) {
 			return ((Constant.Char) constant).toString();
 		} else if (constant instanceof Constant.Decimal) {
-			Constant.Decimal decimal = (Constant.Decimal) constant;
-			if (decimal.value.signum() == -1) {
-				// Converts the negative decimal to a decimal fraction;
-				DecimalFraction fraction = new DecimalFraction(decimal.value);
-				return fraction.toString();
-			} else {
-				return decimal.value.toPlainString();
-			}
+			Constant.Decimal decimal = (Constant.Decimal) constant;			
+			return decimal.value.toPlainString();			
 		} else if (constant instanceof Constant.Integer) {
 			return ((Constant.Integer) constant).value;
 		} else if (constant instanceof Constant.List) {

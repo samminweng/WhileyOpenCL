@@ -7,76 +7,49 @@ import java.math.BigInteger;
 
 import wyil.lang.Constant;
 /**
- * This class converts a BigDecimal to a fraction (numerator/denominator).
+ * This class converts a Constant.Decimal to a fraction (numerator/denominator).
  * @author mw169
  *
  */
-public class DecimalFraction extends Constant {
-	private long numerator, denominator;	
-	private final BigDecimal decimal;
-	/**
-	 * Reduce num and denum by the greatest common factor.  
-	 * @param num
-	 * @param denum
-	 * @return
-	 */
-	private void reduceFraction(long num, long denum){
-		long gcf = 1;
-		long max = Math.max(num, denum);
-		long f;
-		for(f=max; f>=1;f--){
-			if (num%f == 0 && denum%f==0){
-				gcf = f;
-				break;
-			}
-		}
+public final class DecimalFraction extends Constant {
+	
+	private final BigDecimal division;
+	private final Constant.Decimal numerator, denominator;	
+	
+	public static DecimalFraction V_DecimalFraction(Constant.Decimal num, Constant.Decimal denum){
+		return new DecimalFraction(num, denum);
+	}
+	
+	/*public static DecimalFraction V_DecimalFraction(Constant.Decimal division){
+		return new DecimalFraction(division);
+	}
+	
+	
+	private DecimalFraction(Constant.Decimal division){
+		this.division = division.value;
+		int precision = this.division.precision();
 		
-		this.numerator = numerator/gcf;
-		this.denominator = denominator/gcf;
-	}
-	
-	public DecimalFraction(BigDecimal decimal){
-		this.decimal = decimal;		
-		this.denominator = (int) Math.pow(10.0, (double)this.decimal.scale());
-		this.numerator = (int)(this.decimal.doubleValue()*denominator);	
-		if(this.decimal.signum() == -1){
-			this.numerator = this.numerator*(-1);	
-		}
 		
-		reduceFraction(numerator, denominator);
+	}*/
+	
+	private DecimalFraction(Constant.Decimal num, Constant.Decimal denum){		
+		this.division = num.value.divide(denum.value);
+		BigDecimal gcd = BigDecimal.valueOf(denum.value.toBigInteger().gcd(num.value.toBigInteger()).longValue());
+		this.numerator = Constant.V_DECIMAL(num.value.divide(gcd));
+		this.denominator = Constant.V_DECIMAL(denum.value.divide(gcd));
 	}
 	
-	public DecimalFraction(Constant.Decimal num, Constant.Decimal denum){
-		this.numerator = num.value.longValue();
-		this.denominator = denum.value.longValue();
-		this.decimal = num.value.divide(denum.value,2, BigDecimal.ROUND_HALF_UP);
-	}
-	
-	public Constant.Integer getDenominator() {
-		return Constant.V_INTEGER(BigInteger.valueOf(denominator));
+	public Constant.Decimal getDenominator() {
+		return denominator;
 	}
 
-	public Constant.Integer getNumerator() {
-		if(this.decimal.signum() == -1){
-			return Constant.V_INTEGER(BigInteger.valueOf(-1*numerator));
-		}else{
-			return Constant.V_INTEGER(BigInteger.valueOf(numerator));
-		}
-		
+	public Constant.Decimal getNumerator() {
+		return numerator;
 	}
 
 	@Override
 	public String toString() {
-		if(this.denominator == 1){
-			return ""+this.decimal.toString();
-		}else{			
-			if(this.decimal.signum() == -1){
-				return "(-"+this.numerator+"/"+this.denominator+")";
-			}else{
-				return "("+this.numerator+"/"+this.denominator+")";
-			}
-		}
-		
+		return "("+this.numerator+"/"+this.denominator+")";		
 	}
 
 	@Override

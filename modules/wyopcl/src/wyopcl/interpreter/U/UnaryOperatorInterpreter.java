@@ -41,17 +41,16 @@ public class UnaryOperatorInterpreter extends Interpreter {
 				return null;
 			}
 		}else if(number instanceof Constant.Decimal){
-			DecimalFraction frac;
 			Constant.Decimal decimal = (Constant.Decimal)number;
 			switch(kind){
 			case NEG:
 				return Constant.V_DECIMAL(decimal.value.negate());
 			case NUMERATOR:
-				frac = new DecimalFraction(decimal.value);
-				return frac.getNumerator();			
+				internalFailure("Not implemented!", "UnaryOperatorInterpreter.java", null);
+				return null;			
 			case DENOMINATOR:				
-				frac = new DecimalFraction(decimal.value);
-				return frac.getDenominator();			
+				internalFailure("Not implemented!", "UnaryOperatorInterpreter.java", null);
+				return null;		
 			default:
 				internalFailure("Not implemented!", "UnaryOperatorInterpreter.java", null);
 				return null;
@@ -70,9 +69,7 @@ public class UnaryOperatorInterpreter extends Interpreter {
 		int linenumber = stackframe.getLine();
 		Constant result = null;
 		Constant number = stackframe.getRegister(code.operand(0));
-		
-		result = performArithmetic(code.kind, number);
-		
+		result = performArithmetic(code.kind, number);		
 		stackframe.setRegister(code.target(), result);
 		printMessage(stackframe, code.toString(), "%"+code.target() + "("+result+")");
 		stackframe.setLine(++linenumber);
