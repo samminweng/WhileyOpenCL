@@ -152,7 +152,16 @@ public class Utility {
 		} else if (constant instanceof Constant.Integer) {
 			return ((Constant.Integer) constant).value;
 		} else if (constant instanceof Constant.List) {
-			return constantToString((Constant.List) constant, paramType);
+			if (paramType.equals(WyList.class)) {
+				Constant.List list = (Constant.List) constant;
+				WyList wylist = new WyList();
+				for(Constant value: list.values){
+					wylist.add(((Constant.Byte)value).value);
+				}
+				return wylist;
+			}else{
+				return constantToString((Constant.List) constant, paramType);
+			}
 		} else if (constant instanceof Constant.Map) {
 			return constantToString((Constant.Map) constant, paramType);
 		} else if (constant instanceof Constant.Null) {

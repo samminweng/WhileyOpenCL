@@ -115,7 +115,20 @@ public class UpdateInterpreter extends Interpreter{
 		return Constant.V_MAP(values);
 	}
 	
-	
+	private Constant updateReference(Codes.Update code, StackFrame stackframe){
+		Constant reference = stackframe.getRegister(code.target());
+		Constant updatedValue = null;
+		if (reference instanceof Constant.Record){
+			updatedValue = updateRecord(code, stackframe);
+		}else{
+			internalFailure("Not implemented!", "IntepreterUpdate.java", null);
+		}
+		
+		
+		
+		
+		return updatedValue;
+	}
 	
 	public void interpret(Codes.Update code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
@@ -130,7 +143,9 @@ public class UpdateInterpreter extends Interpreter{
 			result = updateStrung(code, stackframe);
 		}else if (afterType instanceof Type.Map){
 			result = updateMap(code, stackframe);
-		}else{
+		}else if (afterType instanceof Type.Reference){
+			result = updateReference(code, stackframe);
+		} else{
 			internalFailure("Not implemented!", "IntepreterUpdate.java", null);
 		}
 		

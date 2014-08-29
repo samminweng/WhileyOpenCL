@@ -111,8 +111,7 @@ public class InvokeInterpreter extends Interpreter {
 	
 	private void execFunction(Codes.Invoke code, StackFrame stackframe){
 		int linenumber = stackframe.getLine();
-		//Directly invoke the function/method.
-		Constant operand = stackframe.getRegister(code.operand(0));
+		//Directly invoke the function/method.		
 		Constant result = null;
 		String module_name = code.name.module().toString().replace('/', '.');
 		String method_name = code.name.name();
@@ -126,10 +125,13 @@ public class InvokeInterpreter extends Interpreter {
 					//Get the parameter types.
 					ArrayList<Object> params = new ArrayList<Object>();
 					//Compare the parameter type
+					int index = 0;
 					for(Class<?> paramType : method.getParameterTypes()){
 						//The 'paramType' is Java data type.				    		
-						//Thus, we need a conversion from Constant to Java							
+						//Thus, we need a conversion from Constant to Java
+						Constant operand = stackframe.getRegister(code.operand(index));
 						params.add(Utility.convertConstantToJavaObject(operand, paramType));
+						index++;
 					}
 					//params.add(operand);
 					Object returned_obj = method.invoke(null, params.toArray());
