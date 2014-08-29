@@ -1,5 +1,7 @@
 package wyopcl.interpreter.I;
 
+import java.util.Iterator;
+
 import wyil.lang.Codes;
 import wyil.lang.Code.Block;
 import wyil.lang.Constant;
@@ -73,10 +75,19 @@ public class IfInterpreter extends Interpreter {
 		case SUBSET:
 			leftSet = (Constant.Set)left;
 			rightSet = (Constant.Set)right;
-			if(rightSet.values.contains(leftSet.values)){
-				satisfiable = true;
+			//Check if two sets are identical.
+			if(leftSet.equals(rightSet)){
+				return false;
 			}
-			break;
+			//Check if every element in leftSet is also an element in rightSet
+			Iterator<Constant> iterator = leftSet.values.iterator();
+			while(iterator.hasNext()){
+				Constant constant = iterator.next();
+				if(!rightSet.values.contains(constant)){
+					return false;
+				}
+			}			
+			return true;
 		case SUBSETEQ:
 			leftSet = (Constant.Set)left;
 			rightSet = (Constant.Set)right;
