@@ -284,10 +284,17 @@ public class ConvertInterpreter extends Interpreter {
 			if(constant instanceof DecimalFraction){
 				//Cast to a string
 				return Constant.V_STRING(constant.toString());
-			}
-			
-			// No needs to convert the type of the operand.
-			return constant;
+			}else if(constant instanceof Constant.Decimal){
+				Constant.Decimal decimal = (Constant.Decimal) constant;
+				if(decimal.value.signum() == -1){
+					return DecimalFraction.V_DecimalFraction(decimal);
+				}else{
+					return Constant.V_STRING(decimal.value.doubleValue()+"");
+				}				
+			}else{
+				// No needs to convert the type of the operand.
+				return constant;
+			}			
 		} else if (toType instanceof Type.Char) {
 			// Cast ascii to Char
 			return Constant.V_CHAR((char) (((Constant.Integer) constant).value.intValue()));

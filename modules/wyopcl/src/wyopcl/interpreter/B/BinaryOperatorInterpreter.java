@@ -67,8 +67,12 @@ public class BinaryOperatorInterpreter extends Interpreter {
 			}else if (left instanceof Constant.Decimal){
 				Constant.Decimal num = (Constant.Decimal)left;
 				Constant.Decimal denum = (Constant.Decimal)right;
-				//In the case of (1/3), the division result is infinite.
-				return DecimalFraction.V_DecimalFraction(num, denum);
+				try{
+					return num.divide(denum);
+				}catch(ArithmeticException ex){
+					//In the case of (1/3), the division result is infinite.
+					return DecimalFraction.V_DecimalFraction(num, denum);
+				}
 			}else {
 				internalFailure("Not implemented!", "BinaryOperatorInterpreter.java", null);
 				return null;

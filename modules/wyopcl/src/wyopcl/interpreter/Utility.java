@@ -148,7 +148,9 @@ public class Utility {
 			return ((Constant.Char) constant).toString();
 		} else if (constant instanceof Constant.Decimal) {
 			return (Constant.Decimal) constant;			
-		} else if (constant instanceof Constant.Integer) {
+		}else if (constant instanceof DecimalFraction){
+			return Constant.V_STRING(((DecimalFraction)constant).toString());
+		}else if (constant instanceof Constant.Integer) {
 			return ((Constant.Integer) constant).value;
 		} else if (constant instanceof Constant.List) {
 			if (paramType.equals(WyList.class)) {
