@@ -121,8 +121,8 @@ public class IndirectInvokeInterpreter extends Interpreter {
 				newStackFrame.setRegister(index, value);
 			}
 			index++;
-		}
-
+		}	
+		
 		// Start invoking a new block.
 		blockstack.push(newStackFrame);
 		printMessage(currentStackframe, code.toString(),

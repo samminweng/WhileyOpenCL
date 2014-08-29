@@ -202,7 +202,6 @@
 		<batchtest todir="report">
 			<fileset dir="modules/wyopcl/testing">
 				<include name="**/*Test*" />
-				<exclude name="**/*AllTests*" />
 			</fileset>
 		</batchtest>
 	</junit>

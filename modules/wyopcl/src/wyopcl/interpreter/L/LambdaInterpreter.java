@@ -38,6 +38,10 @@ public class LambdaInterpreter extends Interpreter {
 				parameters.add(stackframe.getRegister(operand));
 			}
 		}
+		//Check if the extra local parameters need adding.
+		while(parameters.size()<code.type().params().size()){
+			parameters.add(null);
+		}
 		
 		Constant.Tuple params = Constant.V_TUPLE(parameters);
 		//Create a Constant.Closure 
