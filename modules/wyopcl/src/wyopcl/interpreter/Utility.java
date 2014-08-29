@@ -45,7 +45,8 @@ public class Utility {
 				r += k + "=>" + convertConstantToJavaObject(map.values.get(k), paramType);
 			}
 		}
-		return r += "}";
+		r += "}";
+		return r.replaceAll("\"", "");
 	}
 
 	private static String constantToString(Constant.Set set, Class<?> paramType) {
@@ -62,7 +63,8 @@ public class Utility {
 			firstTime = false;
 			r += convertConstantToJavaObject(next, paramType);
 		}
-		return r + "}";
+		r += "}";
+		return r.replaceAll("\"", "");
 	}
 
 	private static String constantToString(Constant.List list, Class<?> paramType) {
@@ -81,7 +83,7 @@ public class Utility {
 			}
 		}
 		r += "]";
-		return r;
+		return r.replaceAll("\"", "");
 	}
 
 	private static String constantToString(Constant.Record record, Class<?> paramType) {
@@ -103,7 +105,8 @@ public class Utility {
 			}
 
 		}
-		return r += "}";
+		r += "}";		
+		return r.replaceAll("\"", "");
 	}
 
 	private static String constantToString(Constant.Tuple tuple, Class<?> paramType) {
@@ -116,8 +119,9 @@ public class Utility {
 			firstTime = false;
 			r += convertConstantToJavaObject(constant, paramType);
 		}
-		return r + ")";
+		r += ")";
 
+		return r.replaceAll("\"", "");
 	}
 
 	/**
@@ -172,7 +176,8 @@ public class Utility {
 		} else if (constant instanceof Constant.Set) {
 			return constantToString((Constant.Set) constant, paramType);
 		} else if (constant instanceof Constant.Strung) {
-			return ((Constant.Strung) constant).value.replaceAll("\"", "");
+			//return ((Constant.Strung) constant).value.replaceAll("\"", "");
+			return ((Constant.Strung) constant).value;
 		} else if (constant instanceof Constant.Tuple) {
 			return constantToString((Constant.Tuple) constant, paramType);
 		} else {

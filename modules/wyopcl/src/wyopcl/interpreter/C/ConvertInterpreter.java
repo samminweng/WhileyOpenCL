@@ -287,7 +287,7 @@ public class ConvertInterpreter extends Interpreter {
 			}else if(constant instanceof Constant.Decimal){
 				Constant.Decimal decimal = (Constant.Decimal) constant;
 				if(decimal.value.signum() == -1){
-					return DecimalFraction.V_DecimalFraction(decimal);
+					return Constant.V_STRING(DecimalFraction.V_DecimalFraction(decimal).toString());
 				}else{
 					return Constant.V_STRING(decimal.value.doubleValue()+"");
 				}				
