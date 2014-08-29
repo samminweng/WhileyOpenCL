@@ -147,8 +147,7 @@ public class Utility {
 		} else if (constant instanceof Constant.Char) {
 			return ((Constant.Char) constant).toString();
 		} else if (constant instanceof Constant.Decimal) {
-			Constant.Decimal decimal = (Constant.Decimal) constant;			
-			return decimal.value.toPlainString();			
+			return (Constant.Decimal) constant;			
 		} else if (constant instanceof Constant.Integer) {
 			return ((Constant.Integer) constant).value;
 		} else if (constant instanceof Constant.List) {

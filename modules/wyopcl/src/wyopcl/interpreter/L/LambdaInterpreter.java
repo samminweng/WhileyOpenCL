@@ -39,9 +39,15 @@ public class LambdaInterpreter extends Interpreter {
 			}
 		}
 		//Check if the extra local parameters need adding.
-		while(parameters.size()<code.type().params().size()){
-			parameters.add(null);
+		int size = parameters.size();
+		if(code.type().params() != null){
+			int params_size = code.type().params().size();
+			while (size<params_size){
+				parameters.add(null);
+				size++;
+			}
 		}
+		
 		
 		Constant.Tuple params = Constant.V_TUPLE(parameters);
 		//Create a Constant.Closure 
