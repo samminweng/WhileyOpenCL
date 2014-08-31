@@ -43,20 +43,24 @@ public class IfIsInterpreter extends Interpreter{
 		stackframe.setLine(++linenumber);
 	}
 	
-
+	/**
+	 * Check whether the constant value from operand register is a specific subtype.
+	 * @param code
+	 * @param stackframe
+	 */
 	public void interpret(Codes.IfIs code, StackFrame stackframe) {		
 		//Read the value from the operand register.
-		Constant value = stackframe.getRegister(code.operand);
+		Constant constant = stackframe.getRegister(code.operand);
 		if (code.rightOperand instanceof Type.Negation){
 			//Check the value is subtype of the test type.
-			if(value instanceof Constant.Record){
+			if(constant instanceof Constant.Record){
 				//On the true branch, its type is intersected with type test.
 				internalFailure("Not implemented!", "InterpreterIfIs.java", null);
 			}else{
 				gotoTargetBranch(code, stackframe);
 			}
 		}else if(code.rightOperand instanceof Type.Null){
-			if(value instanceof Constant.Null){
+			if(constant instanceof Constant.Null){
 				//On the true branch, go to the label.				
 				gotoTargetBranch(code, stackframe);	
 			}else{
@@ -64,18 +68,25 @@ public class IfIsInterpreter extends Interpreter{
 			}
 		}else if (code.rightOperand instanceof Type.Char){
 			//If value is a Constant.Char, then go to the true branch.
-			if(value instanceof Constant.Char){	
+			if(constant instanceof Constant.Char){	
 				gotoTargetBranch(code, stackframe);
 			}else{
 				gotoNext(code, stackframe);
 			}
 		}else if(code.rightOperand instanceof Type.Int){
-			if(value instanceof Constant.Integer){
+			if(constant instanceof Constant.Integer){
 				gotoTargetBranch(code, stackframe);
 			}else {
 				gotoNext(code, stackframe);
 			}
-		}else{
+		}else if (code.rightOperand instanceof Type.Record){
+			//Check if the constant is of Constant.Record type.
+			if(constant instanceof Constant.Record){
+				gotoTargetBranch(code, stackframe);
+			}else {
+				gotoNext(code, stackframe);
+			}
+		} else{
 			internalFailure("Not implemented!", "InterpreterIfIs.java", null);
 		}
 	

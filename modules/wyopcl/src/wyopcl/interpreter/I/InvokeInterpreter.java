@@ -75,6 +75,8 @@ public class InvokeInterpreter extends Interpreter {
 				return null;
 			}
 			
+		} else if (toType instanceof Type.Bool){
+			return Constant.V_BOOL((boolean)javaobj);
 		} else {
 			internalFailure("Not implemented!", "InvokeInterpreter.java", null);
 			return null;

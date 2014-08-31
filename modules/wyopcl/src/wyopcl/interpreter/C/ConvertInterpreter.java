@@ -237,14 +237,18 @@ public class ConvertInterpreter extends Interpreter {
 		}
 	}
 
-	private Constant toConstantNegation(Constant from, Type fromType, Type toType) {
+	private Constant toConstantNegation(Constant constant, Type fromType, Type toType) {
+		Type elemType = ((Type.Negation)toType).element();
 		if (fromType instanceof Type.Int) {
-			Constant.Integer integer = (Constant.Integer) from;
+			Constant.Integer integer = (Constant.Integer) constant;
 			return Constant.V_INTEGER(new BigInteger(integer.value.toString()));
 		} else if (fromType instanceof Type.Real) {
 			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
 			return null;
-		} else {
+		} else if (fromType instanceof Type.Strung){
+			Constant.Strung strung = (Constant.Strung)constant;
+			return strung;
+		}else {	
 			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
 			return null;
 		}

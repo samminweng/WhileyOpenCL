@@ -149,7 +149,7 @@ public class Utility {
 				return ((Constant.Byte) constant).value;
 			}
 		} else if (constant instanceof Constant.Char) {
-			return ((Constant.Char) constant).toString();
+			return ((Constant.Char) constant).value;
 		} else if (constant instanceof Constant.Decimal) {
 			return (Constant.Decimal) constant;			
 		}else if (constant instanceof DecimalFraction){
