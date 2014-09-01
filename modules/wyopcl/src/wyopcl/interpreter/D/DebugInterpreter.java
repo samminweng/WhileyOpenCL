@@ -22,8 +22,8 @@ public class DebugInterpreter extends Interpreter{
 		int linenumber = stackframe.getLine();
 		//Read a string from operand register.
 		Constant.Strung str = (Constant.Strung)stackframe.getRegister(code.operand);
-		//Trim the string before printing it out.
-		System.out.println(str.value.replaceAll("\"", ""));
+		//Replace the double quotes.
+		System.out.print(str.value.replaceAll("\"", ""));
 		printMessage(stackframe, code.toString(),"");
 		stackframe.setLine(++linenumber);
 	}

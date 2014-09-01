@@ -29,26 +29,33 @@ public class LengthOfInterpreter extends Interpreter{
 		int linenumber = stackframe.getLine();
 		
 		//Read a effective collection (list, set or map) from the operand register.
-		//Constant collection = stackframe.getRegister(code.operand);
 		Constant collection = stackframe.getRegister(code.operand(0));
 		int length = 0;
+		Constant result = null;
 		if(collection instanceof Constant.List){
 			//Cast the collection to a List.
 			length = ((Constant.List)collection).values.size();
+			result =  Constant.V_INTEGER(BigInteger.valueOf(length));
 		}else if (collection instanceof Constant.Record){
 			length = ((Constant.Record)collection).values.size();
+			result =  Constant.V_INTEGER(BigInteger.valueOf(length));
 		}else if (collection instanceof Constant.Strung){
 			length = ((Constant.Strung)collection).value.length();
+			result =  Constant.V_INTEGER(BigInteger.valueOf(length));
 		}else if(collection instanceof Constant.Set){
 			length = ((Constant.Set)collection).values.size();
+			result =  Constant.V_INTEGER(BigInteger.valueOf(length));
 		}else if(collection instanceof Constant.Map){
 			length = ((Constant.Map)collection).values.size();
-		}else{
+			result =  Constant.V_INTEGER(BigInteger.valueOf(length));
+		}else if (collection instanceof Constant.Null){
+			result = collection;
+		} else{
 			internalFailure("Not implemented!", "InterpreterLengthOf.java", null);
 		}
 		
 		//Write the length to register.
-		Constant result =  Constant.V_INTEGER(BigInteger.valueOf(length));
+		//Constant result =  Constant.V_INTEGER(BigInteger.valueOf(length));
 		stackframe.setRegister(code.target(), result);
 		printMessage(stackframe, code.toString(), "%"+ code.target() + "("+result+")");
 		stackframe.setLine(++linenumber);

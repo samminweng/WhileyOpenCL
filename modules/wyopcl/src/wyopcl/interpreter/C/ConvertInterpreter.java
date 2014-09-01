@@ -9,19 +9,14 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
-
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyopcl.interpreter.DecimalFraction;
 import wyopcl.interpreter.StackFrame;
-import wyopcl.interpreter.Utility;
 import wyopcl.interpreter.Interpreter;
 
 public class ConvertInterpreter extends Interpreter {
@@ -38,86 +33,41 @@ public class ConvertInterpreter extends Interpreter {
 		return instance;
 	}
 
-	private Constant castElement(Constant element, Type fromElemType, Type toElemType) {
-		if (fromElemType == toElemType || toElemType instanceof Type.Any) {
-			return element;
-		} else {
-			if (toElemType instanceof Type.Union) {
-				return element;
-			} else {
-				if (fromElemType instanceof Type.Real && toElemType instanceof Type.Int) {
-					Constant.Decimal value = (Constant.Decimal) element;
-					return Constant.V_INTEGER(new BigInteger(value.toString()));
-				} else if (fromElemType instanceof Type.Int && toElemType instanceof Type.Real) {
-					Constant.Integer value = (Constant.Integer) element;
-					return Constant.V_DECIMAL(new BigDecimal(value.toString()));
-				} else if (fromElemType instanceof Type.Union && toElemType instanceof Type.Real) {
-					if (element instanceof Constant.Decimal) {
-						return element;
-					} else if (element instanceof Constant.Integer) {
-						return Constant.V_DECIMAL(new BigDecimal(((Constant.Integer) element).toString()));
-					} else {
-						internalFailure("Not implemented!", "ConvertInterpreter.java", null);
-						return null;
-					}
-				} else if (fromElemType instanceof Type.Char && toElemType instanceof Type.Int) {
-					Constant.Char fromChar = (Constant.Char) element;
-					return Constant.V_INTEGER(BigInteger.valueOf((int) fromChar.value));
-				} else if(fromElemType instanceof Type.Union && toElemType instanceof Type.Int){
-					if(element instanceof Constant.Char){
-						char val = ((Constant.Char)element).value;
-						return Constant.V_INTEGER(BigInteger.valueOf((int)val));
-					}else{
-						return (Constant.Integer)element;
-					}
-					
-				} else {
-					internalFailure("Not implemented!", "ConvertInterpreter.java", null);
-					return null;
-				}
-			}
+
+	private Constant.List toConstantList(Constant constant, Type fromType, Type.List toType) {
+		// No needs of casting for UnionOfList type.
+		if (fromType instanceof Type.UnionOfLists) {
+			return (Constant.List) constant;
 		}
 
-	}
-
-	private Constant.List toConstantList(Constant from, Type fromType, Type toType) {
-		Type fromElemType, toElemType;
-		List<Constant> values = new ArrayList<Constant>();
-		toElemType = ((Type.List) toType).element();
+		Type toElemType = ((Type.List) toType).element();
+		Type fromElemType;
 		if (fromType instanceof Type.List) {
 			fromElemType = ((Type.List) fromType).element();
 			if (fromElemType instanceof Type.Void) {
-				return Constant.V_LIST(values);// Return an empty list.
-			} else if (toElemType.equals(fromElemType) || toElemType instanceof Type.Union) {
-				return (Constant.List) from;// No casting
-			} else {
-				if (toElemType instanceof Type.Real && fromElemType instanceof Type.Int) {
-					// Cast Constant.Integer to Constant.Decimal
-					Iterator<Constant> iterator = ((Constant.List) from).values.iterator();
-					while (iterator.hasNext()) {
-						Constant value = iterator.next();
-						values.add(castElement(value, fromElemType, toElemType));
-					}
-					return Constant.V_LIST(values);
-				} else {
-					internalFailure("Not implemented!", "ConvertInterpreter.java", null);
-					return null;
-				}
+				return Constant.V_LIST(new ArrayList<Constant>());// Return an empty list.
 			}
-		} else if (fromType instanceof Type.Strung) {
+			if (toElemType.equals(fromElemType) || toElemType instanceof Type.Union
+					|| (fromElemType instanceof Type.List && toElemType instanceof Type.List)) {
+				return (Constant.List) constant;// No casting
+			}
+
+			List<Constant> values = new ArrayList<Constant>();
+			Iterator<Constant> iterator = ((Constant.List) constant).values.iterator();
+			while (iterator.hasNext()) {
+				Constant value = iterator.next();
+				values.add(castConstanttoConstant(value, fromElemType, toElemType));
+			}
+			return Constant.V_LIST(values);
+
+		} else if (fromType instanceof Type.Strung && toElemType instanceof Type.Int) {
 			// Cast Constant.Strung to Constant.List
-			if (toElemType instanceof Type.Int) {
-				// Cast char to int
-				for (char c : ((Constant.Strung) from).value.toCharArray()) {
-					values.add(Constant.V_INTEGER(BigInteger.valueOf((int) c)));
-				}
-				return Constant.V_LIST(values);
-			} else {
-				internalFailure("Not implemented!", "ConvertInterpreter.java", null);
-				return null;
+			List<Constant> values = new ArrayList<Constant>();
+			char[] charArray = ((Constant.Strung) constant).value.toCharArray();
+			for (char c : charArray) {
+				values.add(Constant.V_INTEGER(BigInteger.valueOf((int) c)));// Cast char to int
 			}
-		} else if (fromType instanceof Type.UnionOfLists) {
-			return (Constant.List) from;
+			return Constant.V_LIST(values);
 		} else {
 			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
 			return null;
@@ -125,14 +75,13 @@ public class ConvertInterpreter extends Interpreter {
 
 	}
 
-	private Constant.Record toConstantRecord(Constant from, Type fromType, Type toType) {
+	private Constant.Record toConstantRecord(Constant constant, Type fromType, Type.Record toType) {
+		Constant.Record record = (Constant.Record)constant;
 		Type fromElemType, toElemType;
-
-		Collection<Type> fromTypeValues = ((Type.Record) fromType).fields().values();
+		Collection<Type> fromTypeValues = ((Type.Record)fromType).fields().values();
 		Type[] fromElemTypes = fromTypeValues.toArray(new Type[fromTypeValues.size()]);
-		Collection<Type> toElemTypeValues = ((Type.Record) toType).fields().values();
+		Collection<Type> toElemTypeValues = toType.fields().values();
 		Type[] toElemTypes = toElemTypeValues.toArray(new Type[toElemTypeValues.size()]);
-		Constant.Record record = (Constant.Record) from;
 
 		Map<String, Constant> map = new HashMap<String, Constant>();
 		Iterator<Entry<String, Constant>> iterator = record.values.entrySet().iterator();
@@ -140,9 +89,11 @@ public class ConvertInterpreter extends Interpreter {
 		while (iterator.hasNext()) {
 			Entry<String, Constant> entry = iterator.next();
 			fromElemType = fromElemTypes[index];
-			toElemType = toElemTypes[index];
-			Constant value = entry.getValue();
-			map.put(entry.getKey(), castElement(value, fromElemType, toElemType));
+			if (index < toElemTypes.length) {
+				toElemType = toElemTypes[index];
+				Constant value = entry.getValue();
+				map.put(entry.getKey(), castConstanttoConstant(value, fromElemType, toElemType));
+			}
 			index++;
 		}
 
@@ -150,6 +101,16 @@ public class ConvertInterpreter extends Interpreter {
 
 	}
 
+	private Constant.Char toConstantChar(Constant constant, Type fromType, Type.Char toType){
+		if(fromType instanceof Type.Int){
+			return Constant.V_CHAR((char) (((Constant.Integer) constant).value.intValue()));
+		}else{
+			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
+			return null;
+		}
+		
+	}
+	
 	/**
 	 * Convert a Constant object to a Constant.Map
 	 * 
@@ -158,7 +119,7 @@ public class ConvertInterpreter extends Interpreter {
 	 * @param toType
 	 * @return
 	 */
-	private Constant.Map toConstantMap(Constant from, Type fromType, Type toType) {
+	private Constant.Map toConstantMap(Constant from, Type fromType, Type.Map toType) {
 		if (fromType != toType) {
 			if (from instanceof Constant.Map) {
 				return (Constant.Map) from;
@@ -172,7 +133,7 @@ public class ConvertInterpreter extends Interpreter {
 		}
 	}
 
-	private Constant.Set toConstantSet(Constant constant, Type fromType, Type toType) {
+	private Constant.Set toConstantSet(Constant constant, Type fromType, Type.Set toType) {
 		Type fromElemType = null;
 		HashSet<Constant> values = new HashSet<Constant>();
 		Iterator<Constant> iterator = null;
@@ -191,13 +152,17 @@ public class ConvertInterpreter extends Interpreter {
 		while (iterator.hasNext()) {
 			Constant next = iterator.next();
 			// Cast the elements in the from set.
-			values.add(castElement(next, fromElemType, toElemType));
+			values.add(castConstanttoConstant(next, fromElemType, toElemType));
 		}
 
 		return Constant.V_SET(values);
 	}
 
-	private Constant.Integer toConstantInt(Constant constant, Type fromType, Type toType) {
+	private Constant.Integer toConstantInt(Constant constant, Type fromType, Type.Int toType) {
+		if(fromType.equals(toType)){
+			return (Constant.Integer)constant;
+		}
+		
 		if (fromType instanceof Type.List) {
 			Constant.List list = (Constant.List) constant;
 			return (Constant.Integer) list.values.get(0);
@@ -217,18 +182,18 @@ public class ConvertInterpreter extends Interpreter {
 		}
 	}
 
-	private Constant.Decimal toConstantDecimal(Constant constant, Type fromType, Type toType) {
+	private Constant.Decimal toConstantDecimal(Constant constant, Type fromType, Type.Real toType) {
 		if (fromType instanceof Type.Int) {
 			return Constant.V_DECIMAL(new BigDecimal(((Constant.Integer) constant).value.toString()));
 		} else if (fromType instanceof Type.Real) {
-			return Constant.V_DECIMAL(((Constant.Decimal)constant).value);
-		} else if (fromType instanceof Type.Union){
-			if(constant instanceof Constant.Integer){
-				return Constant.V_DECIMAL(BigDecimal.valueOf(((Constant.Integer)constant).value.longValue()));
-			}else if(constant instanceof Constant.Char){
-				char value = ((Constant.Char)constant).value;
-				return Constant.V_DECIMAL(BigDecimal.valueOf((int)value));
-			}else{
+			return Constant.V_DECIMAL(((Constant.Decimal) constant).value);
+		} else if (fromType instanceof Type.Union) {
+			if (constant instanceof Constant.Integer) {
+				return Constant.V_DECIMAL(BigDecimal.valueOf(((Constant.Integer) constant).value.longValue()));
+			} else if (constant instanceof Constant.Char) {
+				char value = ((Constant.Char) constant).value;
+				return Constant.V_DECIMAL(BigDecimal.valueOf((int) value));
+			} else {
 				return (Constant.Decimal) constant;
 			}
 		} else {
@@ -237,33 +202,32 @@ public class ConvertInterpreter extends Interpreter {
 		}
 	}
 
-	private Constant toConstantNegation(Constant constant, Type fromType, Type toType) {
-		Type elemType = ((Type.Negation)toType).element();
+	private Constant toConstantNegation(Constant constant, Type fromType, Type.Negation toType) {
 		if (fromType instanceof Type.Int) {
 			Constant.Integer integer = (Constant.Integer) constant;
 			return Constant.V_INTEGER(new BigInteger(integer.value.toString()));
 		} else if (fromType instanceof Type.Real) {
 			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
 			return null;
-		} else if (fromType instanceof Type.Strung){
-			Constant.Strung strung = (Constant.Strung)constant;
+		} else if (fromType instanceof Type.Strung) {
+			Constant.Strung strung = (Constant.Strung) constant;
 			return strung;
-		}else {	
+		} else {
 			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
 			return null;
 		}
 	}
 
-	private Constant.Tuple toConstantTuple(Constant constant, Type fromType, Type toType) {
+	private Constant.Tuple toConstantTuple(Constant constant, Type fromType, Type.Tuple toType) {
 		Constant.Tuple tuple = (Constant.Tuple) constant;
 		ArrayList<Constant> values = new ArrayList<Constant>();
 		int index = 0;
 		for (Constant value : tuple.values) {
 			if (fromType instanceof Type.Tuple) {
-				values.add(castElement(value, ((Type.Tuple) fromType).element(index),
+				values.add(castConstanttoConstant(value, ((Type.Tuple) fromType).element(index),
 						((Type.Tuple) toType).element(index)));
 			} else if (fromType instanceof Type.UnionOfTuples) {
-				values.add(castElement(value, ((Type.UnionOfTuples) fromType).element(index),
+				values.add(castConstanttoConstant(value, ((Type.UnionOfTuples) fromType).element(index),
 						((Type.Tuple) toType).element(index)));
 			} else {
 				internalFailure("Not implemented!", "ConvertInterpreter.java", null);
@@ -275,6 +239,25 @@ public class ConvertInterpreter extends Interpreter {
 
 	}
 
+	private Constant toConstantAny(Constant constant, Type fromType, Type.Any toType){
+		if (constant instanceof DecimalFraction) {
+			// Cast to a string
+			return Constant.V_STRING(constant.toString());
+		} else if (constant instanceof Constant.Decimal) {
+			Constant.Decimal decimal = (Constant.Decimal) constant;
+			if (decimal.value.signum() == -1) {
+				return Constant.V_STRING(DecimalFraction.V_DecimalFraction(decimal).toString());
+			} else {
+				return Constant.V_STRING(decimal.value.doubleValue() + "");
+			}
+		} else {
+			// No needs to convert the type of the operand.
+			return constant;
+		}
+	}
+	
+	
+	
 	/***
 	 * Cast a Constant object to the Constant object of a specific type.
 	 * 
@@ -285,39 +268,26 @@ public class ConvertInterpreter extends Interpreter {
 	 */
 	public Constant castConstanttoConstant(Constant constant, wyil.lang.Type fromType, wyil.lang.Type toType) {
 		if (toType instanceof Type.Any) {
-			if(constant instanceof DecimalFraction){
-				//Cast to a string
-				return Constant.V_STRING(constant.toString());
-			}else if(constant instanceof Constant.Decimal){
-				Constant.Decimal decimal = (Constant.Decimal) constant;
-				if(decimal.value.signum() == -1){
-					return Constant.V_STRING(DecimalFraction.V_DecimalFraction(decimal).toString());
-				}else{
-					return Constant.V_STRING(decimal.value.doubleValue()+"");
-				}				
-			}else{
-				// No needs to convert the type of the operand.
-				return constant;
-			}			
+			return toConstantAny(constant, fromType, (Type.Any)toType);
 		} else if (toType instanceof Type.Char) {
 			// Cast ascii to Char
-			return Constant.V_CHAR((char) (((Constant.Integer) constant).value.intValue()));
+			return toConstantChar(constant, fromType, (Type.Char)toType);
 		} else if (toType instanceof Type.Int) {
-			return toConstantInt(constant, fromType, toType);
+			return toConstantInt(constant, fromType, (Type.Int)toType);
 		} else if (toType instanceof Type.List) {
-			return toConstantList(constant, fromType, toType);
+			return toConstantList(constant, fromType, (Type.List) toType);
 		} else if (toType instanceof Type.Record) {
-			return toConstantRecord(constant, fromType, toType);
+			return toConstantRecord(constant, fromType, (Type.Record) toType);
 		} else if (toType instanceof Type.Real) {
-			return toConstantDecimal(constant, fromType, toType);
+			return toConstantDecimal(constant, fromType, (Type.Real) toType);
 		} else if (toType instanceof Type.Map) {
-			return toConstantMap(constant, fromType, toType);
+			return toConstantMap(constant, fromType, (Type.Map) toType);
 		} else if (toType instanceof Type.Set) {
-			return toConstantSet(constant, fromType, toType);
+			return toConstantSet(constant, fromType, (Type.Set)toType);
 		} else if (toType instanceof Type.Tuple) {
-			return toConstantTuple(constant, fromType, toType);
+			return toConstantTuple(constant, fromType, (Type.Tuple)toType);
 		} else if (toType instanceof Type.Negation) {
-			return toConstantNegation(constant, fromType, toType);
+			return toConstantNegation(constant, fromType, (Type.Negation)toType);
 		} else if (toType instanceof Type.Union) {
 			if (toType instanceof Type.UnionOfCollections || toType instanceof Type.UnionOfMaps
 					|| toType instanceof Type.UnionOfIndexibles || toType instanceof Type.UnionOfLists
