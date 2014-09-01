@@ -4,7 +4,9 @@ import static wycc.lang.SyntaxError.internalFailure;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import wyautl_old.lang.Automaton;
 import wyautl_old.lang.Automaton.State;
@@ -34,14 +36,44 @@ public class IfIsInterpreter extends Interpreter{
 		Block block = stackframe.getBlock();
 		int linenumber = symboltable.get(block).getBlockPosByLabel(label);
 		stackframe.setLine(++linenumber);
-	}
-	
+	}	
 	
 	private void gotoNext(Codes.IfIs code, StackFrame stackframe){
 		int linenumber = stackframe.getLine();
 		printMessage(stackframe, code.toString(),"");
 		stackframe.setLine(++linenumber);
 	}
+	
+	
+	private boolean checkType(Constant.Record record, Type.Record type){
+		//Check if the record contains the field names of recordType.
+		Iterator<Entry<String, Type>> fields = type.fields().entrySet().iterator();
+		while(fields.hasNext()){
+			Entry<String, Type> field = fields.next();
+			String fieldName = field.getKey();
+			Type fieldType = field.getValue();
+			if(!record.values.containsKey(fieldName)){
+				return false;
+			}else{
+				//Check the type of field value.
+				Constant constant = record.values.get(fieldName);
+				if(fieldType instanceof Type.Int){
+					if(!(constant instanceof Constant.Integer)){
+						return false;
+					}					
+				}else{
+					internalFailure("Not implemented!", "InterpreterIfIs.java", null);
+				}
+			}
+			
+		}
+		
+		return true;
+	}
+	
+	
+	
+	
 	
 	/**
 	 * Check whether the constant value from operand register is a specific subtype.
@@ -53,9 +85,14 @@ public class IfIsInterpreter extends Interpreter{
 		Constant constant = stackframe.getRegister(code.operand);
 		if (code.rightOperand instanceof Type.Negation){
 			//Check the value is subtype of the test type.
-			if(constant instanceof Constant.Record){
-				//On the true branch, its type is intersected with type test.
-				internalFailure("Not implemented!", "InterpreterIfIs.java", null);
+			Type element = ((Type.Negation)code.rightOperand).element();
+			if(constant instanceof Constant.Record && element instanceof Type.Record){
+				//On the true branch, its type is matched with type test.
+				if(checkType((Constant.Record)constant, (Type.Record)element)){
+					gotoNext(code, stackframe);
+				}else{
+					gotoTargetBranch(code, stackframe);
+				}
 			}else{
 				gotoTargetBranch(code, stackframe);
 			}
