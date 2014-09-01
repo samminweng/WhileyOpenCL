@@ -2,27 +2,23 @@ package wyopcl.interpreter;
 
 import static wycc.lang.SyntaxError.internalFailure;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.math.MathContext;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.TreeSet;
 
-import whiley.lang.Char;
-import whiley.lang.Real;
 import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyjc.runtime.WyList;
 
-public class Utility {
+public final class Utility {
 
+	private Utility(){
+		//Utility class has the private constructor.
+	}
+	
 	private static String constantToString(Constant.Map map, Class<?> paramType) {
 		String r = "{";
 		if (map.values.isEmpty()) {
