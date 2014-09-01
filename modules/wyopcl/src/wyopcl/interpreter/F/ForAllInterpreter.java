@@ -129,7 +129,6 @@ public class ForAllInterpreter extends Interpreter {
 	
 
 	public void interpret(Codes.ForAll code, StackFrame stackframe) {		
-		
 		//Get the index
 		Constant source = stackframe.getRegister(code.sourceOperand);		
 		if(source instanceof Constant.List){			
@@ -151,7 +150,10 @@ public class ForAllInterpreter extends Interpreter {
 				chars[index] = Constant.V_CHAR(strung.value.charAt(index));
 			}
 			iterateOverListSet(chars, code, stackframe);
-			//internalFailure("Not implemented!", "InterpreterForAll.java", null);
+		}else if (source instanceof Constant.Null){
+			//Go to loop end
+			gotoLoopEnd(code, stackframe);
+			return;
 		}else{
 			internalFailure("Not implemented!", "InterpreterForAll.java", null);
 		}

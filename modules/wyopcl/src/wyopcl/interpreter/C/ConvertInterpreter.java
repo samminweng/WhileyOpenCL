@@ -77,7 +77,7 @@ public class ConvertInterpreter extends Interpreter {
 
 	private Constant.Record toConstantRecord(Constant constant, Type fromType, Type.Record toType) {
 		Constant.Record record = (Constant.Record)constant;
-		Type fromElemType, toElemType;
+		Type fromElemType, toElemType = null;
 		Collection<Type> fromTypeValues = ((Type.Record)fromType).fields().values();
 		Type[] fromElemTypes = fromTypeValues.toArray(new Type[fromTypeValues.size()]);
 		Collection<Type> toElemTypeValues = toType.fields().values();
@@ -90,10 +90,10 @@ public class ConvertInterpreter extends Interpreter {
 			Entry<String, Constant> entry = iterator.next();
 			fromElemType = fromElemTypes[index];
 			if (index < toElemTypes.length) {
-				toElemType = toElemTypes[index];
-				Constant value = entry.getValue();
-				map.put(entry.getKey(), castConstanttoConstant(value, fromElemType, toElemType));
+				toElemType = toElemTypes[index];	
 			}
+			Constant value = entry.getValue();
+			map.put(entry.getKey(), castConstanttoConstant(value, fromElemType, toElemType));
 			index++;
 		}
 
@@ -242,15 +242,20 @@ public class ConvertInterpreter extends Interpreter {
 	private Constant toConstantAny(Constant constant, Type fromType, Type.Any toType){
 		if (constant instanceof DecimalFraction) {
 			// Cast to a string
+			return Constant.V_STRING(((Constant.Strung)constant).toString());
+		}else if (constant instanceof Constant){
+			return constant;
+		}else {
+			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
+			return null;
+		}
+	}
+	
+	private Constant toConstantStrung(Constant constant, Type fromType, Type.Strung toType){
+		if (constant instanceof Constant.Strung) {
+			// Cast to a string
 			return Constant.V_STRING(constant.toString());
-		} else if (constant instanceof Constant.Decimal) {
-			Constant.Decimal decimal = (Constant.Decimal) constant;
-			if (decimal.value.signum() == -1) {
-				return Constant.V_STRING(DecimalFraction.V_DecimalFraction(decimal).toString());
-			} else {
-				return Constant.V_STRING(decimal.value.doubleValue() + "");
-			}
-		} else {
+		}  else {
 			// No needs to convert the type of the operand.
 			return constant;
 		}
@@ -267,6 +272,10 @@ public class ConvertInterpreter extends Interpreter {
 	 * @return
 	 */
 	public Constant castConstanttoConstant(Constant constant, wyil.lang.Type fromType, wyil.lang.Type toType) {
+		if(fromType.equals(toType)){
+			return constant;//Not casting.
+		}
+		
 		if (toType instanceof Type.Any) {
 			return toConstantAny(constant, fromType, (Type.Any)toType);
 		} else if (toType instanceof Type.Char) {
@@ -297,6 +306,8 @@ public class ConvertInterpreter extends Interpreter {
 				internalFailure("Not implemented!", "ConvertInterpreter.java", null);
 				return null;
 			}
+		} else if (toType instanceof Type.Strung){
+			return toConstantStrung(constant, fromType, (Type.Strung)toType);
 		} else {
 			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
 			return null;

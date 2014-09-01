@@ -208,11 +208,15 @@ public class Utility {
 	 * @return
 	 */
 	public static Constant copyConstant(Constant constant) {
-
+		if(constant == null){
+			return Constant.V_NULL;
+		}
+		
 		if (constant instanceof Constant.Integer) {
 			return Constant.V_INTEGER(((Constant.Integer) constant).value);
-		} else if (constant instanceof Constant.List) {
-			return Constant.V_LIST(((Constant.List) constant).values);
+		} else if (constant instanceof Constant.List) {			
+			ArrayList<Constant> values = ((Constant.List) constant).values;			
+			return Constant.V_LIST(new ArrayList<Constant>(values));
 		} else if (constant instanceof Constant.Record) {
 			return Constant.V_RECORD(((Constant.Record) constant).values);
 		} else if (constant instanceof Constant.Strung) {

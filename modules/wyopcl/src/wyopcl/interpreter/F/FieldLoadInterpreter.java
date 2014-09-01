@@ -5,6 +5,8 @@ import static wycc.lang.SyntaxError.internalFailure;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 import wycc.lang.NameID;
 import wyfs.lang.Path;
@@ -46,8 +48,13 @@ public class FieldLoadInterpreter extends Interpreter {
 		}else if (constant instanceof Constant.Record){
 			Constant.Record record = (Constant.Record)constant;
 			//Reads a record value from an operand register	
-			Constant field = record.values.get(givenfield);			
-			result = Utility.copyConstant(field);
+			HashMap<String, Constant> values = record.values;
+			Constant fieldValue = values.get(givenfield);
+			if(fieldValue != null){
+				result = Utility.copyConstant(fieldValue);
+			}else{
+				result = Constant.V_NULL;
+			}
 		}else{
 			internalFailure("Not implemented!", "FieldLoadInterpreter.java", null);
 		}
