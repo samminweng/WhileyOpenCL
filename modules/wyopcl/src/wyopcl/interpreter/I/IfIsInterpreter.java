@@ -45,11 +45,21 @@ public class IfIsInterpreter extends Interpreter{
 	}
 	
 	
-	private boolean checkType(Constant.Record record, Type.Record type){
+	private boolean checkType(Constant.Record record, Type type){
+		HashMap<String, Type> fields = null;
+		if(type instanceof Type.Record){
+			fields = ((Type.Record)type).fields();
+		}else if (type instanceof Type.UnionOfRecords){
+			fields = ((Type.UnionOfRecords)type).fields();
+		}else{
+			internalFailure("Not implemented!", "InterpreterIfIs.java", null);
+			return false;
+		}
+		
 		//Check if the record contains the field names of recordType.
-		Iterator<Entry<String, Type>> fields = type.fields().entrySet().iterator();
-		while(fields.hasNext()){
-			Entry<String, Type> field = fields.next();
+		Iterator<Entry<String, Type>> iterator = fields.entrySet().iterator();
+		while(iterator.hasNext()){
+			Entry<String, Type> field = iterator.next();
 			String fieldName = field.getKey();
 			Type fieldType = field.getValue();
 			if(!record.values.containsKey(fieldName)){
@@ -71,9 +81,34 @@ public class IfIsInterpreter extends Interpreter{
 			}			
 		}		
 		return true;
+		
+		
 	}
 	
 	private boolean checkType(Constant.List list, Type.List type){
+		Type elementType = type.element();
+		if(elementType instanceof Type.Any){
+			return true;//No checking.
+		}
+		
+		//Check if the element in the list is the specific subtype of element type.
+		Iterator<Constant> iterator = list.values.iterator();
+		while(iterator.hasNext()){
+			Constant constant = iterator.next();
+			if(elementType instanceof Type.Int){
+				if(!(constant instanceof Constant.Integer)){
+					return false;
+				}				
+			}else{				
+				internalFailure("Not implemented!", "InterpreterIfIs.java", null);
+				return false;
+			}			
+		}		
+		return true;
+	}
+	
+	
+	private boolean checkType(Constant.Set list, Type.Set type){
 		Type elementType = type.element();
 		//Check if the element in the list is the specific subtype of element type.
 		Iterator<Constant> iterator = list.values.iterator();
@@ -135,10 +170,15 @@ public class IfIsInterpreter extends Interpreter{
 			}else {
 				gotoNext(code, stackframe);
 			}
-		}else if (type instanceof Type.Record){
+		}else if (type instanceof Type.Real){
+			if(constant instanceof Constant.Decimal){
+				gotoTargetBranch(code, stackframe);
+			}else {
+				gotoNext(code, stackframe);
+			}
+		} else if (type instanceof Type.Record || type instanceof Type.UnionOfRecords){
 			//Check if the constant is of Constant.Record type.
-			Type element = (Type.Record)type;
-			if(constant instanceof Constant.Record  && checkType((Constant.Record)constant, (Type.Record)element)){
+			if(constant instanceof Constant.Record  && checkType((Constant.Record)constant, type)){
 				gotoTargetBranch(code, stackframe);
 			}else {
 				gotoNext(code, stackframe);
@@ -149,6 +189,12 @@ public class IfIsInterpreter extends Interpreter{
 			}else {
 				gotoNext(code, stackframe);
 			}					
+		} else if (type instanceof Type.Set){
+			if(constant instanceof Constant.Set && checkType((Constant.Set)constant, (Type.Set)type)){
+				gotoTargetBranch(code, stackframe);
+			}else {
+				gotoNext(code, stackframe);
+			}
 		} else{
 			internalFailure("Not implemented!", "InterpreterIfIs.java", null);
 		}
