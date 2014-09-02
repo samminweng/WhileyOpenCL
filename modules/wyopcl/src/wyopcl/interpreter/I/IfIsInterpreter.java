@@ -143,6 +143,18 @@ public class IfIsInterpreter extends Interpreter {
 		return true;
 	}
 
+	private boolean checkType(Constant.Map map, Type.Map type) {
+		Iterator<Entry<Constant, Constant>> iterator = map.values.entrySet().iterator();		
+		while (iterator.hasNext()) {
+			Entry<Constant, Constant> entry = iterator.next();
+			if (!checkType(entry.getKey(), type.key()) ||!checkType(entry.getValue(), type.value()) ) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	
 	private boolean checkType(Constant constant, Type type) {
 		if (type instanceof Type.Negation) {
 			// The result for negation type should be inverted (i.e. negated the
@@ -175,6 +187,12 @@ public class IfIsInterpreter extends Interpreter {
 			}
 		} else if (type instanceof Type.Int) {
 			if (constant instanceof Constant.Integer) {
+				return true;
+			} else {
+				return false;
+			}
+		} else if (type instanceof Type.Map) {
+			if (constant instanceof Constant.Map && checkType((Constant.Map)constant, (Type.Map)type)) {
 				return true;
 			} else {
 				return false;
