@@ -46,11 +46,9 @@ public class UnaryOperatorInterpreter extends Interpreter {
 			case NEG:
 				return Constant.V_DECIMAL(decimal.value.negate());
 			case NUMERATOR:
-				internalFailure("Not implemented!", "UnaryOperatorInterpreter.java", null);
-				return null;			
-			case DENOMINATOR:				
-				internalFailure("Not implemented!", "UnaryOperatorInterpreter.java", null);
-				return null;		
+				return DecimalFraction.V_DecimalFraction(decimal).getNumerator();						
+			case DENOMINATOR:
+				return DecimalFraction.V_DecimalFraction(decimal).getDenominator();						
 			default:
 				internalFailure("Not implemented!", "UnaryOperatorInterpreter.java", null);
 				return null;
