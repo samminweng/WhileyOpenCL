@@ -61,8 +61,7 @@ public class IfInterpreter extends Interpreter {
 		case IN:			
 			if(right instanceof Constant.Set){
 				rightSet = (Constant.Set)right;
-				int leftValue = ((Constant.Integer)left).value.intValue();
-				if(rightSet.values.contains(leftValue)){
+				if(rightSet.values.contains(left)){
 					satisfiable = true;
 				}
 			}else if (right instanceof Constant.List){

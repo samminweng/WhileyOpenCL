@@ -66,16 +66,8 @@ public class IfIsInterpreter extends Interpreter {
 			} else {
 				// Check the type of field value.
 				Constant constant = record.values.get(fieldName);
-				if (fieldType instanceof Type.Int) {
-					if (!(constant instanceof Constant.Integer)) {
-						return false;
-					}
-				} else if (fieldType instanceof Type.Strung) {
-					if (!(constant instanceof Constant.Strung)) {
-						return false;
-					}
-				} else {
-					internalFailure("Not implemented!", "InterpreterIfIs.java", null);
+				if(!checkType(constant, fieldType)){
+					return false;
 				}
 			}
 		}
@@ -99,6 +91,8 @@ public class IfIsInterpreter extends Interpreter {
 				}
 			} else if (elementType instanceof Type.List) {
 				return checkType((Constant.List) constant, (Type.List) elementType);
+			} else if (elementType instanceof Type.Union) {
+				return checkType(constant, (Type.Union) elementType);
 			} else {
 				internalFailure("Not implemented!", "InterpreterIfIs.java", null);
 				return false;
@@ -152,6 +146,19 @@ public class IfIsInterpreter extends Interpreter {
 			}
 		}
 		return true;
+	}
+	
+	
+	private boolean checkType(Constant constant, Type.Union type) {
+		Iterator<Type> iterator = type.bounds().iterator();
+		while(iterator.hasNext()){
+			Type subtype = iterator.next();
+			if(checkType(constant, subtype)){
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	
@@ -224,6 +231,12 @@ public class IfIsInterpreter extends Interpreter {
 			}
 		} else if (type instanceof Type.Strung) {
 			if (constant instanceof Constant.Strung) {
+				return true;
+			} else {
+				return false;
+			}
+		} else if (type instanceof Type.Union) {
+			if (checkType(constant, (Type.Union)type)) {
 				return true;
 			} else {
 				return false;
