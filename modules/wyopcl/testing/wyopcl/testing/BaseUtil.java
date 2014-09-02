@@ -16,7 +16,7 @@ import junit.framework.AssertionFailedError;
 import static org.junit.Assert.*;
 
 public class BaseUtil {
-	final String version = "v0.3.28";
+	final String version = "v0.3.29";
 	// user.dir is the current directory.
 	final String classpath = System.getProperty("user.dir") + File.separator + "lib" + File.separator + "wyjc-"
 			+ version + ".jar" + File.pathSeparator + System.getProperty("user.dir") + File.separator + "lib"

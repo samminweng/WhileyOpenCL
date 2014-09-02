@@ -21,7 +21,7 @@
 :: CONFIGURATION
 ::::::::::::::::::::::::::::::::::::
 @echo off
-set WHILEY_VERSION=v0.3.28
+set WHILEY_VERSION=v0.3.29
 :: Get the parent folder of this batch file.
 for %%i in ("%~dp0..") do set "parentfolder=%%~fi"
 :: echo %parentfolder%

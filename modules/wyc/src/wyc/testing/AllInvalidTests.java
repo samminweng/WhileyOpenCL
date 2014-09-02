@@ -119,18 +119,8 @@ public class AllInvalidTests {
 					+ ".sysout";
 			
 	 		// Third, compare the output! 		
-	 		//TestUtils.compare(output,sampleOutputFile);
-			
-
-			try {
-				FileWriter fout = new FileWriter(sampleOutputFile);
-				fout.write(output);
-				fout.close();
-			} catch(IOException e) {
-				System.err.println("I/O Exception");
-			}
-		}
-		
+	 		TestUtils.compare(output,sampleOutputFile);
+		}		
 	}
 			
 	// ======================================================================
@@ -302,7 +292,7 @@ public class AllInvalidTests {
 		runTest("ConstrainedInt_Invalid_8");
 	}
 
-	@Test
+	@Ignore("Timeout") @Test
 	public void ConstrainedInt_Invalid_9() {
 		runTest("ConstrainedInt_Invalid_9");
 	}
@@ -372,6 +362,11 @@ public class AllInvalidTests {
 		runTest("DefiniteAssign_Invalid_4");
 	}
 
+	@Test
+	public void EndOfFile_Invalid_1() {
+		runTest("EndOfFile_Invalid_1");
+	}
+	
 	@Test
 	public void Ensures_Invalid_1() {
 		runTest("Ensures_Invalid_1");
@@ -1168,6 +1163,11 @@ public class AllInvalidTests {
 	public void SetSubset_Invalid_10() {
 		runTest("SetSubset_Invalid_10");
 	}
+	
+	@Test
+	public void SetSubset_Invalid_11() {
+		runTest("SetSubset_Invalid_11");
+	}
 
 	@Ignore("Internal Failure") @Test
 	public void SetSubset_Invalid_2() {
@@ -1469,7 +1469,7 @@ public class AllInvalidTests {
 		runTest("UnionType_Invalid_8");
 	}
 
-	@Test
+	@Ignore("#348") @Test
 	public void UnionType_Invalid_9() {
 		runTest("UnionType_Invalid_9");
 	}

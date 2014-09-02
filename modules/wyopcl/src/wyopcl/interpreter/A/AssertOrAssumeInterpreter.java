@@ -12,12 +12,10 @@ public class AssertOrAssumeInterpreter extends Interpreter {
 	}
 	
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
-	public static AssertOrAssumeInterpreter getInstance(){
-		
+	public static AssertOrAssumeInterpreter getInstance(){	
 		if (instance == null){
 			instance = new AssertOrAssumeInterpreter();
-		}
-	
+		}	
 		return instance;
 	}
 	
@@ -25,11 +23,13 @@ public class AssertOrAssumeInterpreter extends Interpreter {
 	public void interpret(Codes.AssertOrAssume code, StackFrame stackframe) {				
 		
 		int linenumber = stackframe.getLine();
-		Constant left = stackframe.getRegister(code.leftOperand);
-		Constant right = stackframe.getRegister(code.rightOperand);
+		//Constant left = stackframe.getRegister(code.);
+				//Constant right = stackframe.getRegister(code.rightOperand);
+		/*Constant left = null;
+		Constant right = null;
 		
 		boolean result = false;
-		switch (code.op) {
+		switch (code.) {
 		case EQ:
 			if(left.compareTo(right)==0){
 				result = true;				
@@ -82,8 +82,8 @@ public class AssertOrAssumeInterpreter extends Interpreter {
 		if(!result){
 			//If so, then the assertion is violated. Then display the messages.
 			printVerificationMessage(stackframe, code.toString(), code.msg);			
-		}
-		
+		}*/
+		printMessage(stackframe, code.toString(), "");
 		stackframe.setLine(++linenumber);
 	}
 	

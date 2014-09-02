@@ -50,7 +50,7 @@ import wyil.util.dfa.BackwardFlowAnalysis;
  * </p>
  * 
  * <pre>
- * real f(int x):
+ * function f(int x) => real:
  *    return x
  * </pre>
  * <p>
@@ -60,7 +60,7 @@ import wyil.util.dfa.BackwardFlowAnalysis;
  * </p>
  * 
  * <pre>
- * real f(int x):
+ * function f(int x) => real:
  *     load x : int                            
  *     return : real
  * </pre>
@@ -73,7 +73,7 @@ import wyil.util.dfa.BackwardFlowAnalysis;
  * </p>
  * 
  * <pre>
- * real f(int x):
+ * function f(int x) => real:
  *     load x : int 
  *     convert int to real             
  *     return : real
@@ -92,8 +92,41 @@ public final class BackPropagation extends BackwardFlowAnalysis<BackPropagation.
 	private static final HashMap<Integer,Code.Block> afterInserts = new HashMap<Integer,Code.Block>();
 	private static final HashMap<Integer,Code.Block.Entry> rewrites = new HashMap<Integer,Code.Block.Entry>();
 	
+	/**
+	 * Determines whether constant propagation is enabled or not.
+	 */
+	private boolean enabled = getEnable();
+	
+	
 	public BackPropagation(Builder builder) {
 		super();
+	}
+
+	// ===================================================
+	// Configuration Options
+	// ===================================================
+
+	public static String describeEnable() {
+		return "Enable/disable constant propagation";
+	}
+	
+	public static boolean getEnable() {
+		return true; // default value
+	}
+	
+	public void setEnable(boolean flag) {
+		this.enabled = flag;
+	}
+	
+	// ===================================================
+	// Code
+	// ===================================================
+	
+	@Override
+	public void apply(WyilFile module) {
+		if(enabled) {
+			super.apply(module);
+		}
 	}
 	
 	@Override
@@ -184,6 +217,8 @@ public final class BackPropagation extends BackwardFlowAnalysis<BackPropagation.
 			infer(index,(Codes.Debug)code,entry,environment);
 		} else if(code instanceof Codes.AssertOrAssume) {
 			infer(index,(Codes.AssertOrAssume)code,entry,environment);
+		} else if(code instanceof Codes.Fail) {
+			infer(index,(Codes.Fail)code,entry,environment);			
 		} else if(code instanceof Codes.FieldLoad) {
 			infer(index,(Codes.FieldLoad)code,entry,environment);			
 		} else if(code instanceof Codes.IndirectInvoke) {
@@ -257,15 +292,7 @@ public final class BackPropagation extends BackwardFlowAnalysis<BackPropagation.
 
 	protected Env infer(int index,
 			Codes.AssertOrAssume code, Code.Block.Entry stmt, Env environment) {
-		if(code.op == Codes.Comparator.IN) {
-			Type.EffectiveCollection src = (Type.EffectiveCollection) code.type;		
-			environment.set(code.leftOperand,src.element());
-			environment.set(code.rightOperand,code.type);
-		} else {		
-			environment.set(code.leftOperand,code.type);
-			environment.set(code.rightOperand,code.type);
-		}
-		
+		// effectively a no-op for now.
 		return environment;
 	}
 	
@@ -338,6 +365,10 @@ public final class BackPropagation extends BackwardFlowAnalysis<BackPropagation.
 	private void infer(int index, Codes.Debug code, Code.Block.Entry entry,
 			Env environment) {
 		environment.set(code.operand,Type.T_STRING);
+	}
+	
+	private void infer(int index, Codes.Fail code, Code.Block.Entry entry,
+			Env environment) {		
 	}
 	
 	private void infer(int index, Codes.FieldLoad code, Code.Block.Entry entry,
