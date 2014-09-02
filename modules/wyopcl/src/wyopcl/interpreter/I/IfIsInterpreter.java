@@ -73,7 +73,23 @@ public class IfIsInterpreter extends Interpreter{
 		return true;
 	}
 	
-	
+	private boolean checkType(Constant.List list, Type.List type){
+		Type elementType = type.element();
+		//Check if the element in the list is the specific subtype of element type.
+		Iterator<Constant> iterator = list.values.iterator();
+		while(iterator.hasNext()){
+			Constant constant = iterator.next();
+			if(elementType instanceof Type.Int){
+				if(!(constant instanceof Constant.Integer)){
+					return false;
+				}				
+			}else{				
+				internalFailure("Not implemented!", "InterpreterIfIs.java", null);
+				return false;
+			}			
+		}		
+		return true;
+	}
 	
 	
 	
@@ -85,9 +101,10 @@ public class IfIsInterpreter extends Interpreter{
 	public void interpret(Codes.IfIs code, StackFrame stackframe) {		
 		//Read the value from the operand register.
 		Constant constant = stackframe.getRegister(code.operand);
-		if (code.rightOperand instanceof Type.Negation){
+		Type type = code.rightOperand;
+		if (type instanceof Type.Negation){
 			//Check the value is subtype of the test type.
-			Type element = ((Type.Negation)code.rightOperand).element();
+			Type element = ((Type.Negation)type).element();
 			if(constant instanceof Constant.Record && element instanceof Type.Record){
 				//On the true branch, its type is matched with type test.
 				if(checkType((Constant.Record)constant, (Type.Record)element)){
@@ -98,34 +115,40 @@ public class IfIsInterpreter extends Interpreter{
 			}else{
 				gotoTargetBranch(code, stackframe);
 			}
-		}else if(code.rightOperand instanceof Type.Null){
+		}else if(type instanceof Type.Null){
 			if(constant instanceof Constant.Null){
 				//On the true branch, go to the label.				
 				gotoTargetBranch(code, stackframe);	
 			}else{
 				gotoNext(code, stackframe);
 			}
-		}else if (code.rightOperand instanceof Type.Char){
+		}else if (type instanceof Type.Char){
 			//If value is a Constant.Char, then go to the true branch.
 			if(constant instanceof Constant.Char){	
 				gotoTargetBranch(code, stackframe);
 			}else{
 				gotoNext(code, stackframe);
 			}
-		}else if(code.rightOperand instanceof Type.Int){
+		}else if(type instanceof Type.Int){
 			if(constant instanceof Constant.Integer){
 				gotoTargetBranch(code, stackframe);
 			}else {
 				gotoNext(code, stackframe);
 			}
-		}else if (code.rightOperand instanceof Type.Record){
+		}else if (type instanceof Type.Record){
 			//Check if the constant is of Constant.Record type.
-			Type element = (Type.Record)code.rightOperand;
+			Type element = (Type.Record)type;
 			if(constant instanceof Constant.Record  && checkType((Constant.Record)constant, (Type.Record)element)){
 				gotoTargetBranch(code, stackframe);
 			}else {
 				gotoNext(code, stackframe);
 			}
+		} else if (type instanceof Type.List){
+			if(constant instanceof Constant.List && checkType((Constant.List)constant, (Type.List)type)){
+				gotoTargetBranch(code, stackframe);
+			}else {
+				gotoNext(code, stackframe);
+			}					
 		} else{
 			internalFailure("Not implemented!", "InterpreterIfIs.java", null);
 		}
