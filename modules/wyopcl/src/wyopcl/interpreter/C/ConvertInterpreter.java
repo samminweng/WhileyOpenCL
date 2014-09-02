@@ -248,6 +248,13 @@ public class ConvertInterpreter extends Interpreter {
 		if (constant instanceof DecimalFraction) {
 			// Cast to a string
 			return Constant.V_STRING(((Constant.Strung)constant).toString());
+		}else if (constant instanceof Constant.Decimal){
+			//If the value is negative, then Constant.Decimal is converted to DecimalFraction. 
+			Constant.Decimal decimal = (Constant.Decimal)constant;
+			if(decimal.value.signum()==-1){
+				return DecimalFraction.V_DecimalFraction(decimal);
+			}
+			return constant;
 		}else if (constant instanceof Constant){
 			return constant;
 		}else {
