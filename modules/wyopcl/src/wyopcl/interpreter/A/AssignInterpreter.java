@@ -3,8 +3,8 @@ package wyopcl.interpreter.A;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyopcl.interpreter.StackFrame;
-import wyopcl.interpreter.Utility;
 import wyopcl.interpreter.Interpreter;
+import wyopcl.util.Utility;
 
 public class AssignInterpreter extends Interpreter {
 	private static AssignInterpreter instance;	

@@ -5,12 +5,13 @@ import static wycc.lang.SyntaxError.internalFailure;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
-import wyopcl.interpreter.Utility;
+import wyopcl.util.Utility;
 
 public class UpdateInterpreter extends Interpreter {
 	private static UpdateInterpreter instance;

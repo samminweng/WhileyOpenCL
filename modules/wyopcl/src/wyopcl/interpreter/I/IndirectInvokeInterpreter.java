@@ -21,9 +21,9 @@ import wyil.lang.Type.Function;
 import wyil.lang.Type.FunctionOrMethod;
 import wyil.lang.Type.Method;
 import wyopcl.interpreter.Closure;
-import wyopcl.interpreter.Utility;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
+import wyopcl.util.Utility;
 
 public class IndirectInvokeInterpreter extends Interpreter {
 

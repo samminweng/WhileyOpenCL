@@ -18,9 +18,9 @@ import wyil.lang.Type.FunctionOrMethod;
 import wyil.lang.Type.Method;
 import wyil.lang.WyilFile;
 import wyopcl.interpreter.Closure;
-import wyopcl.interpreter.Utility;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
+import wyopcl.util.Utility;
 
 public class FieldLoadInterpreter extends Interpreter {
 	private static FieldLoadInterpreter instance;	
