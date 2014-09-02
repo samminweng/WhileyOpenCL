@@ -9,9 +9,11 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyil.lang.Type;
@@ -162,8 +164,11 @@ public class ConvertInterpreter extends Interpreter {
 		if(fromType.equals(toType)){
 			return (Constant.Integer)constant;
 		}
-		
-		if (fromType instanceof Type.List) {
+		if (fromType instanceof Type.Real){
+			Constant.Decimal decimal = (Constant.Decimal)constant;
+			//Cast a decimal to an integer
+			return Constant.V_INTEGER(decimal.value.toBigInteger());
+		}else if (fromType instanceof Type.List) {
 			Constant.List list = (Constant.List) constant;
 			return (Constant.Integer) list.values.get(0);
 		} else if (fromType instanceof Type.Char) {
@@ -262,6 +267,18 @@ public class ConvertInterpreter extends Interpreter {
 	}
 	
 	
+	private Constant toConstantUnion(Constant constant, Type fromType, Type.Union toType){
+		//The bounds of the union type has been sorted by key, so the order of type has been changed. 
+		/*HashSet<Type> bounds = toType.bounds();
+		Iterator<Type> iterator = bounds.iterator();
+		while(iterator.hasNext()){
+			Type type = iterator.next();			
+			return castConstanttoConstant(constant, fromType, type);
+		}*/		
+		return constant;
+	}
+	
+	
 	
 	/***
 	 * Cast a Constant object to the Constant object of a specific type.
@@ -298,15 +315,12 @@ public class ConvertInterpreter extends Interpreter {
 		} else if (toType instanceof Type.Negation) {
 			return toConstantNegation(constant, fromType, (Type.Negation)toType);
 		} else if (toType instanceof Type.Union) {
-			if (toType instanceof Type.UnionOfCollections || toType instanceof Type.UnionOfMaps
-					|| toType instanceof Type.UnionOfIndexibles || toType instanceof Type.UnionOfLists
-					|| toType instanceof Type.Union) {
-				return constant;
-			} else {
-				internalFailure("Not implemented!", "ConvertInterpreter.java", null);
-				return null;
-			}
-		} else if (toType instanceof Type.Strung){
+			return toConstantUnion(constant, fromType, (Type.Union)toType);
+		} else if (toType instanceof Type.UnionOfCollections || toType instanceof Type.UnionOfMaps
+				|| toType instanceof Type.UnionOfIndexibles || toType instanceof Type.UnionOfLists
+				) {
+			return constant;
+		}else if (toType instanceof Type.Strung){
 			return toConstantStrung(constant, fromType, (Type.Strung)toType);
 		} else {
 			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
