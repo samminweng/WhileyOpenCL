@@ -45,9 +45,11 @@ public class IndirectInvokeInterpreter extends Interpreter {
 		Constant.Lambda lambda = (Constant.Lambda) stackframe.getRegister(code.reference());
 		List<Constant> values = new ArrayList<Constant>();
 		// Get the parameter values.
+		String str ="";
 		for (int i = 0; i < code.parameters().length; i++) {
 			// Check the parameter type
 			Constant constant = stackframe.getRegister(code.parameter(i));
+			str += "%" + code.parameter(i) + "(" +constant +") ";
 			values.add(constant);
 		}
 		// Invoke the function
@@ -66,11 +68,12 @@ public class IndirectInvokeInterpreter extends Interpreter {
 				method = printClass.getMethod(name, parameterTypes);
 				ArrayList<Object> arguments = new ArrayList<Object>();
 				int index = 0;
+				
 				for (Class<?> paramType : method.getParameterTypes()) {
 					arguments.add(Utility.convertConstantToJavaObject(values.get(index), paramType));
 				}
 				method.invoke(outField.get(null), arguments.toArray());
-				printMessage(stackframe, code.toString(), "(" + method + ")");
+				printMessage(stackframe, code.toString(), str);
 
 			} catch (ClassNotFoundException | NoSuchFieldException | SecurityException | IllegalArgumentException
 					| IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
@@ -82,19 +85,17 @@ public class IndirectInvokeInterpreter extends Interpreter {
 			StackFrame newStackFrame = new StackFrame(stackframe.getDepth() + 1, blk, 0, lambda.name.toString(),
 					code.target());
 			// Pass the input parameters.
-			int index = 0;
+			int index = 0;			
 			for (int parameter : code.parameters()) {
 				// Get the parameter from the current stack frame
 				Constant constant = stackframe.getRegister(parameter);
-				newStackFrame.setRegister(index, constant);
-
+				newStackFrame.setRegister(index, constant);				
 				index++;
 			}
 
 			// Start invoking a new block.
 			blockstack.push(newStackFrame);
-			printMessage(stackframe, code.toString(), "%" + code.target() + "(" + stackframe.getRegister(code.target())
-					+ ")\n");
+			printMessage(stackframe, code.toString(), str);
 		}
 
 		stackframe.setLine(++linenumber);

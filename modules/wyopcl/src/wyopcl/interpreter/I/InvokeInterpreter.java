@@ -99,16 +99,18 @@ public class InvokeInterpreter extends Interpreter {
 		StackFrame newStackFrame = new StackFrame(depth+1, blk, 0,	code.name.name(), code.target());
 		
 		//Pass the input parameters.
-		int index = 0;			
+		int index = 0;
+		String str="";
 		for(int operand: code.operands()){
 			Constant constant = currentStackframe.getRegister(operand);
 			newStackFrame.setRegister(index, constant);
+			str += "%"+operand+"("+constant+")";
 			index++;
 		}
 
 		//Push the function block to the stack		
 		blockstack.push(newStackFrame);
-		printMessage(currentStackframe, code.toString(),"%"+code.target()+"("+currentStackframe.getRegister(code.target())+")\n");
+		printMessage(currentStackframe, code.toString(),str);
 		
 	}
 	

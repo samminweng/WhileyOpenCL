@@ -34,6 +34,21 @@ public class FieldLoadInterpreter extends Interpreter {
 		}
 		return instance;
 	}
+	
+	
+	private Constant getFieldValue(Constant.Record record, String givenfield){		
+		//Reads a record value from an operand register	
+		Iterator<Entry<String, Constant>> values = record.values.entrySet().iterator();
+		while(values.hasNext()){
+			Entry<String, Constant> value = values.next();
+			Constant fieldValue = value.getValue();
+			if(value.getKey().equals(givenfield)){				
+				return Utility.copyConstant(fieldValue);
+			}
+		}		
+		return Constant.V_NULL;
+	}
+	
 
 
 	public void interpret(Codes.FieldLoad code, StackFrame stackframe) {
@@ -47,14 +62,7 @@ public class FieldLoadInterpreter extends Interpreter {
 			result = Constant.V_LAMBDA(name, (Type.Method)code.fieldType());			
 		}else if (constant instanceof Constant.Record){
 			Constant.Record record = (Constant.Record)constant;
-			//Reads a record value from an operand register	
-			HashMap<String, Constant> values = record.values;
-			Constant fieldValue = values.get(givenfield);
-			if(fieldValue != null){
-				result = Utility.copyConstant(fieldValue);
-			}else{
-				result = Constant.V_NULL;
-			}
+			result = getFieldValue(record, givenfield);
 		}else{
 			internalFailure("Not implemented!", "FieldLoadInterpreter.java", null);
 		}

@@ -204,7 +204,7 @@ public final class Utility {
 	 * @return
 	 */
 	public static Constant copyConstant(Constant constant) {
-		if(constant == null){
+		if(constant == null || constant instanceof Constant.Null){
 			return Constant.V_NULL;
 		}
 		

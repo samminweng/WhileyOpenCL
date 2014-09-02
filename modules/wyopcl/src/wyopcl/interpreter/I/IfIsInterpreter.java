@@ -61,13 +61,15 @@ public class IfIsInterpreter extends Interpreter{
 					if(!(constant instanceof Constant.Integer)){
 						return false;
 					}					
+				}else if(fieldType instanceof Type.Strung){
+					if(!(constant instanceof Constant.Strung)){
+						return false;
+					}
 				}else{
 					internalFailure("Not implemented!", "InterpreterIfIs.java", null);
 				}
-			}
-			
-		}
-		
+			}			
+		}		
 		return true;
 	}
 	
@@ -118,7 +120,8 @@ public class IfIsInterpreter extends Interpreter{
 			}
 		}else if (code.rightOperand instanceof Type.Record){
 			//Check if the constant is of Constant.Record type.
-			if(constant instanceof Constant.Record){
+			Type element = (Type.Record)code.rightOperand;
+			if(constant instanceof Constant.Record  && checkType((Constant.Record)constant, (Type.Record)element)){
 				gotoTargetBranch(code, stackframe);
 			}else {
 				gotoNext(code, stackframe);
