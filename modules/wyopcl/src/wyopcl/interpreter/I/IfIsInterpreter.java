@@ -99,7 +99,9 @@ public class IfIsInterpreter extends Interpreter{
 				if(!(constant instanceof Constant.Integer)){
 					return false;
 				}				
-			}else{				
+			}else if (elementType instanceof Type.List){
+				return checkType((Constant.List)constant, (Type.List)elementType);
+			} else{				
 				internalFailure("Not implemented!", "InterpreterIfIs.java", null);
 				return false;
 			}			
