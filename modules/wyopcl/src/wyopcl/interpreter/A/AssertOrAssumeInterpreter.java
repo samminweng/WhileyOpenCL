@@ -20,9 +20,9 @@ public class AssertOrAssumeInterpreter extends Interpreter {
 	}
 	
 	
-	public void interpret(Codes.AssertOrAssume code, StackFrame stackframe) {				
-		
+	public void interpret(Codes.AssertOrAssume code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
+		
 		//Constant left = stackframe.getRegister(code.);
 				//Constant right = stackframe.getRegister(code.rightOperand);
 		/*Constant left = null;

@@ -8,7 +8,6 @@ import java.util.Iterator;
 
 import wyil.lang.Codes;
 import wyil.lang.Constant;
-import wyil.lang.Constant.List;
 import wyil.lang.Type;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
@@ -99,7 +98,15 @@ public class UpdateInterpreter extends Interpreter {
 		} else if (fieldValue instanceof Constant.Integer || fieldValue instanceof Constant.Bool) {
 			return update(record, givenValue, field);
 		} else if (fieldValue instanceof Constant.Record){
-			return update(record, givenValue, field);
+			Constant.Record fieldValue2 = (Constant.Record)fieldValue;
+			if(code.fields.size() == 2){
+				String field2 = code.fields.get(1);
+				Constant.Record updateField = update(fieldValue2, givenValue, field2);
+				return update(record, updateField, field);
+			}else{
+				internalFailure("Not implemented!", "UpdateInterpreter.java", null);
+				return null;
+			}
 		} else {
 			internalFailure("Not implemented!", "UpdateInterpreter.java", null);
 			return null;
