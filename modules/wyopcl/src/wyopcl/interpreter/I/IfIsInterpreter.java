@@ -34,10 +34,10 @@ public class IfIsInterpreter extends Interpreter {
 	private void gotoTargetBranch(Codes.IfIs code, StackFrame stackframe) {
 		String label = code.target;
 		Block block = stackframe.getBlock();
-		printMessage(stackframe, code.toString(), code.target+"");
-		int linenumber = symboltable.get(block).getBlockPosByLabel(label);		
+		printMessage(stackframe, code.toString(), code.target + "");
+		int linenumber = symboltable.get(block).getBlockPosByLabel(label);
 		stackframe.setLine(++linenumber);
-		
+
 	}
 
 	private void gotoNext(Codes.IfIs code, StackFrame stackframe) {
@@ -56,26 +56,32 @@ public class IfIsInterpreter extends Interpreter {
 			internalFailure("Not implemented!", "InterpreterIfIs.java", null);
 			return false;
 		}
+		
+		//Check the number of field values with the number of field types.
+		if(record.values.size() != fields.size()){
+			return false;
+		}		
 
-		//Iterate over the record
+		// Iterate over the record
 		Iterator<Entry<String, Constant>> iterator = record.values.entrySet().iterator();
-		while(iterator.hasNext()){
+		while (iterator.hasNext()) {
 			Entry<String, Constant> entry = iterator.next();
 			String field = entry.getKey();
 			Constant fieldvalue = entry.getValue();
-			//Check if the type contains the field. If so, get and compare the field type with the record field.
-			if(fields.containsKey(field)){
+			// Check if the type contains the field. If so, get and compare the
+			// field type with the record field.
+			if (fields.containsKey(field)) {
 				Type fieldType = fields.get(field);
-				if(!checkType(fieldvalue, fieldType)){
+				if (!checkType(fieldvalue, fieldType)) {
 					return false;
 				}
-			}else{
-				//Return false for lacking of the field type;
+			} else {
+				// Return false for lacking of the field type;
 				return false;
 			}
 		}
-		
-		return true;	
+
+		return true;
 
 	}
 
@@ -84,8 +90,7 @@ public class IfIsInterpreter extends Interpreter {
 		if (elementType instanceof Type.Any) {
 			return true;// No checking.
 		}
-		// Check if the element in the list is the specific subtype of element
-		// type.
+		
 		Iterator<Constant> iterator = list.values.iterator();
 		while (iterator.hasNext()) {
 			Constant element = iterator.next();
@@ -97,8 +102,8 @@ public class IfIsInterpreter extends Interpreter {
 				return checkType((Constant.List) element, (Type.List) elementType);
 			} else if (elementType instanceof Type.Union) {
 				return checkType(element, (Type.Union) elementType);
-			} else if (elementType instanceof Type.Record){
-				return checkType((Constant.Record)element, (Type.Record)elementType);
+			} else if (elementType instanceof Type.Record) {
+				return checkType((Constant.Record) element, (Type.Record) elementType);
 			} else {
 				internalFailure("Not implemented!", "InterpreterIfIs.java", null);
 				return false;
@@ -144,30 +149,28 @@ public class IfIsInterpreter extends Interpreter {
 	}
 
 	private boolean checkType(Constant.Map map, Type.Map type) {
-		Iterator<Entry<Constant, Constant>> iterator = map.values.entrySet().iterator();		
+		Iterator<Entry<Constant, Constant>> iterator = map.values.entrySet().iterator();
 		while (iterator.hasNext()) {
 			Entry<Constant, Constant> entry = iterator.next();
-			if (!checkType(entry.getKey(), type.key()) ||!checkType(entry.getValue(), type.value()) ) {
+			if (!checkType(entry.getKey(), type.key()) || !checkType(entry.getValue(), type.value())) {
 				return false;
 			}
 		}
 		return true;
 	}
-	
-	
+
 	private boolean checkType(Constant constant, Type.Union type) {
 		Iterator<Type> iterator = type.bounds().iterator();
-		while(iterator.hasNext()){
+		while (iterator.hasNext()) {
 			Type subtype = iterator.next();
-			if(checkType(constant, subtype)){
+			if (checkType(constant, subtype)) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
-	
+
 	private boolean checkType(Constant constant, Type type) {
 		if (type instanceof Type.Negation) {
 			// The result for negation type should be inverted (i.e. negated the
@@ -205,7 +208,7 @@ public class IfIsInterpreter extends Interpreter {
 				return false;
 			}
 		} else if (type instanceof Type.Map) {
-			if (constant instanceof Constant.Map && checkType((Constant.Map)constant, (Type.Map)type)) {
+			if (constant instanceof Constant.Map && checkType((Constant.Map) constant, (Type.Map) type)) {
 				return true;
 			} else {
 				return false;
@@ -242,7 +245,7 @@ public class IfIsInterpreter extends Interpreter {
 				return false;
 			}
 		} else if (type instanceof Type.Union) {
-			if (checkType(constant, (Type.Union)type)) {
+			if (checkType(constant, (Type.Union) type)) {
 				return true;
 			} else {
 				return false;
