@@ -88,15 +88,17 @@ public class IfIsInterpreter extends Interpreter {
 		// type.
 		Iterator<Constant> iterator = list.values.iterator();
 		while (iterator.hasNext()) {
-			Constant constant = iterator.next();
+			Constant element = iterator.next();
 			if (elementType instanceof Type.Int) {
-				if (!(constant instanceof Constant.Integer)) {
+				if (!(element instanceof Constant.Integer)) {
 					return false;
 				}
 			} else if (elementType instanceof Type.List) {
-				return checkType((Constant.List) constant, (Type.List) elementType);
+				return checkType((Constant.List) element, (Type.List) elementType);
 			} else if (elementType instanceof Type.Union) {
-				return checkType(constant, (Type.Union) elementType);
+				return checkType(element, (Type.Union) elementType);
+			} else if (elementType instanceof Type.Record){
+				return checkType((Constant.Record)element, (Type.Record)elementType);
 			} else {
 				internalFailure("Not implemented!", "InterpreterIfIs.java", null);
 				return false;
