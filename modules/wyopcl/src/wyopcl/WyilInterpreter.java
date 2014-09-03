@@ -147,15 +147,14 @@ public class WyilInterpreter extends Interpreter implements Builder{
 				label = ((Codes.Loop)code).target;
 				symbol.addLabelLoc(label, pos);							
 			}else if(code instanceof Codes.TryCatch){
-				symbol.addTryCatchLoc(code, pos);
+				symbol.addTryCatchLoc((Codes.TryCatch)code, pos);
 			}else{
 				//Do nothing
 			}
 			
 			if(label != null && verbose){
 					System.out.println(label+"--->"+pos);
-			}	
-			
+			}
 		}
 
 		symboltable.put(blk, symbol);

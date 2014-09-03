@@ -10,8 +10,7 @@ import wyil.lang.Code.Block;
 public class SymbolTable implements Comparable<SymbolTable>{
 	private final Block block;
 	private HashMap<String, Integer> labelLocMap = new HashMap<String, Integer>();		
-	private String catchlabel = "";
-	
+	private String catchlabel = "";	
 	
 	public SymbolTable(Block blk){
 		this.block = blk;
@@ -22,19 +21,14 @@ public class SymbolTable implements Comparable<SymbolTable>{
 	}
 	
 	public int getBlockPosByLabel(String label){
-		int line = -1;
-		
 		if(labelLocMap.containsKey(label)){
-			line = labelLocMap.get(label);
+			return labelLocMap.get(label);
 		}
-		return line;
+		return -1;
 	}
 	
-	public void addTryCatchLoc(Code code, int line){
-		 if(code instanceof Codes.TryCatch){				
-			Codes.TryCatch trycatch = (Codes.TryCatch)code;	
-			catchlabel = trycatch.catches.get(0).second();
-		}
+	public void addTryCatchLoc(Codes.TryCatch trycatch, int line){				
+		catchlabel = trycatch.catches.get(0).second();
 	}
 	
 	public int getCatchPos(){

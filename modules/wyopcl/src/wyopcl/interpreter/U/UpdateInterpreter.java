@@ -8,6 +8,7 @@ import java.util.Iterator;
 
 import wyil.lang.Codes;
 import wyil.lang.Constant;
+import wyil.lang.Constant.List;
 import wyil.lang.Type;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
@@ -26,57 +27,77 @@ public class UpdateInterpreter extends Interpreter {
 		}
 		return instance;
 	}
-
-	private Constant.List updateList(Codes.Update code, StackFrame stackframe) {
-		// Pops the list.
-		Constant.List list = (Constant.List) stackframe.getRegister(code.target());
-		// Read the rhs from the register.
-		Constant rhs = stackframe.getRegister(code.result());
+	
+	private Constant.List update(Constant.List list, Constant givenValue, int index) {
 		// Deeply copy and clone the values in the original Constant.List.		
 		ArrayList<Constant> values = new ArrayList<Constant>(list.values.size());
 		Iterator<Constant> iterator = list.values.iterator();
 		while(iterator.hasNext()){
 			Constant constant = iterator.next();
 			values.add(Utility.copyConstant(constant));
-		}		
+		}
+		
+		if (values.size() < index) {
+			values.add(givenValue);
+		} else {			
+			values.set(index, givenValue);
+		}
+		
+		return Constant.V_LIST(values);
+		
+	}
+	
+	private Constant.List updateList(Codes.Update code, StackFrame stackframe) {
+		// Pops the list.
+		Constant.List list = (Constant.List) stackframe.getRegister(code.target());
+		// Read the rhs from the register.
+		Constant givenValue = stackframe.getRegister(code.result());			
 		// Get the index
 		int index = ((Constant.Integer) stackframe.getRegister(code.key(0))).value.intValue();
-		if (values.size() < index) {
-			values.add(rhs);
+		Constant element = list.values.get(index);
+		//Check if the element is a compound subtype.
+		if (element instanceof Constant.List) {
+			int index2 = ((Constant.Integer) stackframe.getRegister(code.key(1))).value.intValue();
+			Constant.List updatedValue = update((Constant.List)element, givenValue, index2);
+			return update(list, updatedValue, index);
+		} else if(element instanceof Constant.Record){
+			String field = code.fields.get(0);
+			Constant.Record updatedRecord = update((Constant.Record)element, givenValue, field);
+			return update(list, updatedRecord, index);
 		} else {
-			Constant value = values.get(index);
-			if (value instanceof Constant.List) {
-				int index2 = ((Constant.Integer) stackframe.getRegister(code.key(1))).value.intValue();
-				((Constant.List) value).values.set(index2, rhs);
-			} else {
-				values.set(index, rhs);
-			}
-
+			return update(list, givenValue, index);
 		}
-		return Constant.V_LIST(values);
+		
+	}
+	
+	private Constant.Record update(Constant.Record record, Constant givenValue, String field){
+		HashMap<String, Constant> values = new HashMap<String, Constant>(record.values);
+		values.put(field, givenValue);
+		
+		return Constant.V_RECORD(values);
 	}
 
 	private Constant.Record updateRecord(Codes.Update code, StackFrame stackframe) {
 		Constant.Record record = (Constant.Record) stackframe.getRegister(code.target());
-		Constant assignedValue = stackframe.getRegister(code.result());
+		Constant givenValue = stackframe.getRegister(code.result());
 		HashMap<String, Constant> values = new HashMap<String, Constant>(record.values);
 		String field = code.fields.get(0);
 
 		// Get the field value
-		Constant constant = values.get(field);
-		if (constant instanceof Constant.List) {
-			Constant.List list = (Constant.List) constant;
+		Constant fieldValue = values.get(field);
+		if (fieldValue instanceof Constant.List) {
+			Constant.List list = (Constant.List) fieldValue;
 			int index = ((Constant.Integer) stackframe.getRegister(code.key(0))).value.intValue();
-			list.values.set(index, assignedValue);
-		} else if (constant instanceof Constant.Integer) {
-			values.put(field, assignedValue);
-		} else if (constant instanceof Constant.Bool) {
-			values.put(field, assignedValue);
+			return update(record, update(list, givenValue, index), field);
+			//list.values.set(index, assignedValue);
+		} else if (fieldValue instanceof Constant.Integer || fieldValue instanceof Constant.Bool) {
+			return update(record, givenValue, field);
 		} else {
-			internalFailure("Not implemented!", "IntepreterUpdate.java", null);
+			internalFailure("Not implemented!", "UpdateInterpreter.java", null);
+			return null;
 		}
 
-		return Constant.V_RECORD(values);
+	
 	}
 
 	private Constant.Strung updateStrung(Codes.Update code, StackFrame stackframe) {
@@ -90,37 +111,36 @@ public class UpdateInterpreter extends Interpreter {
 		newStrung.setCharAt(updateIndex.value.intValue(), updatedValue.value);
 		return Constant.V_STRING(newStrung.toString());
 	}
+	
+	private Constant.Map update(Constant.Map map, Constant key, Constant Value){
+		HashMap<Constant, Constant> values = new HashMap<Constant, Constant>(map.values);
+		values.put(key, Value);
+		return Constant.V_MAP(values);
+	}	
 
 	private Constant.Map updateMap(Codes.Update code, StackFrame stackframe) {
 		Constant.Map map = (Constant.Map) stackframe.getRegister(code.target());
-		Constant updatedValue = stackframe.getRegister(code.result());
-		// Get the index
-		Constant updateIndex0 = stackframe.getRegister(code.operand(0));
-
-		HashMap<Constant, Constant> values = new HashMap<Constant, Constant>(map.values);
-
+		Constant givenValue = stackframe.getRegister(code.result());
+		// Get the key
+		Constant key = stackframe.getRegister(code.operand(0));
 		// Get the existing value
-		Constant existingValue = values.get(updateIndex0);
+		Constant existingValue = map.values.get(key);
 		if (existingValue == null) {
-			values.put(updateIndex0, updatedValue);
+			return update(map, key, givenValue);
 		} else {
 			if (existingValue instanceof Constant.List) {
-				// Get the list
-				Constant.List list = (Constant.List) existingValue;
-				// Get the updated sub-index
-				Constant.Integer updateIndex1 = (Constant.Integer) stackframe.getRegister(code.operand(1));
-				// Update the list
-				list.values.set(updateIndex1.value.intValue(), updatedValue);
+				//Update the element
+				int index1 = ((Constant.Integer) stackframe.getRegister(code.operand(1))).value.intValue();
+				Constant.List updatedList = update((Constant.List)existingValue, givenValue, index1);
 				// Update the map
-				values.put(updateIndex0, list);
+				return update(map, key, updatedList);
 			} else if (existingValue instanceof Constant.Integer) {
-				values.put(updateIndex0, updatedValue);
+				return update(map, key, givenValue);
 			} else {
-				internalFailure("Not implemented!", "IntepreterUpdate.java", null);
+				internalFailure("Not implemented!", "UpdateInterpreter.java", null);
+				return null;
 			}
-		}
-
-		return Constant.V_MAP(values);
+		}		
 	}
 
 	private Constant updateReference(Codes.Update code, StackFrame stackframe) {
@@ -129,7 +149,7 @@ public class UpdateInterpreter extends Interpreter {
 		if (reference instanceof Constant.Record) {
 			updatedValue = updateRecord(code, stackframe);
 		} else {
-			internalFailure("Not implemented!", "IntepreterUpdate.java", null);
+			internalFailure("Not implemented!", "UpdateInterpreter.java", null);
 		}
 
 		return updatedValue;
@@ -152,7 +172,7 @@ public class UpdateInterpreter extends Interpreter {
 		} else if (afterType instanceof Type.Reference) {
 			result = updateReference(code, stackframe);
 		} else {
-			internalFailure("Not implemented!", "IntepreterUpdate.java", null);
+			internalFailure("Not implemented!", "UpdateInterpreter.java", null);
 		}
 
 		stackframe.setRegister(code.target(), result);
