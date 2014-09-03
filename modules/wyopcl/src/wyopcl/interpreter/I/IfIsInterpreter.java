@@ -34,8 +34,10 @@ public class IfIsInterpreter extends Interpreter {
 	private void gotoTargetBranch(Codes.IfIs code, StackFrame stackframe) {
 		String label = code.target;
 		Block block = stackframe.getBlock();
-		int linenumber = symboltable.get(block).getBlockPosByLabel(label);
+		printMessage(stackframe, code.toString(), code.target+"");
+		int linenumber = symboltable.get(block).getBlockPosByLabel(label);		
 		stackframe.setLine(++linenumber);
+		
 	}
 
 	private void gotoNext(Codes.IfIs code, StackFrame stackframe) {
@@ -55,23 +57,25 @@ public class IfIsInterpreter extends Interpreter {
 			return false;
 		}
 
-		// Check if the record contains the field names of recordType.
-		Iterator<Entry<String, Type>> iterator = fields.entrySet().iterator();
-		while (iterator.hasNext()) {
-			Entry<String, Type> field = iterator.next();
-			String fieldName = field.getKey();
-			Type fieldType = field.getValue();
-			if (!record.values.containsKey(fieldName)) {
-				return false;
-			} else {
-				// Check the type of field value.
-				Constant constant = record.values.get(fieldName);
-				if(!checkType(constant, fieldType)){
+		//Iterate over the record
+		Iterator<Entry<String, Constant>> iterator = record.values.entrySet().iterator();
+		while(iterator.hasNext()){
+			Entry<String, Constant> entry = iterator.next();
+			String field = entry.getKey();
+			Constant fieldvalue = entry.getValue();
+			//Check if the type contains the field. If so, get and compare the field type with the record field.
+			if(fields.containsKey(field)){
+				Type fieldType = fields.get(field);
+				if(!checkType(fieldvalue, fieldType)){
 					return false;
 				}
+			}else{
+				//Return false for lacking of the field type;
+				return false;
 			}
 		}
-		return true;
+		
+		return true;	
 
 	}
 
