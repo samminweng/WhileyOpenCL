@@ -57,9 +57,15 @@ public class UpdateInterpreter extends Interpreter {
 		Constant element = list.values.get(index);
 		//Check if the element is a compound subtype.
 		if (element instanceof Constant.List) {
-			int index2 = ((Constant.Integer) stackframe.getRegister(code.key(1))).value.intValue();
-			Constant.List updatedValue = update((Constant.List)element, givenValue, index2);
-			return update(list, updatedValue, index);
+			//Check if the subindex is provided.
+			if(code.keys().length >=2 ){
+				int subindex = ((Constant.Integer) stackframe.getRegister(code.key(1))).value.intValue();
+				Constant.List updatedValue = update((Constant.List)element, givenValue, subindex);
+				return update(list, updatedValue, index);
+			}else{
+				//Update the element in the list with the given value.
+				return update(list, givenValue, index);
+			}			
 		} else if(element instanceof Constant.Record){
 			String field = code.fields.get(0);
 			Constant.Record updatedRecord = update((Constant.Record)element, givenValue, field);
