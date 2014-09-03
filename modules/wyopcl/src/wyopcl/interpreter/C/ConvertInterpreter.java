@@ -79,24 +79,19 @@ public class ConvertInterpreter extends Interpreter {
 
 	private Constant.Record toConstantRecord(Constant constant, Type fromType, Type.Record toType) {
 		Constant.Record record = (Constant.Record)constant;
-		Type fromElemType, toElemType = null;
-		Collection<Type> fromTypeValues = ((Type.Record)fromType).fields().values();
-		Type[] fromElemTypes = fromTypeValues.toArray(new Type[fromTypeValues.size()]);
-		Collection<Type> toElemTypeValues = toType.fields().values();
-		Type[] toElemTypes = toElemTypeValues.toArray(new Type[toElemTypeValues.size()]);
+		Type fromKeyType, toKeyType = null;
+		HashMap<String, Type> fromTypeValues = ((Type.Record)fromType).fields();		
+		HashMap<String, Type> toElemTypeValues = toType.fields();		
 
 		Map<String, Constant> map = new HashMap<String, Constant>();
-		Iterator<Entry<String, Constant>> iterator = record.values.entrySet().iterator();
-		int index = 0;
+		Iterator<Entry<String, Constant>> iterator = record.values.entrySet().iterator();		
 		while (iterator.hasNext()) {
-			Entry<String, Constant> entry = iterator.next();
-			fromElemType = fromElemTypes[index];
-			if (index < toElemTypes.length) {
-				toElemType = toElemTypes[index];	
-			}
+			Entry<String, Constant> entry = iterator.next();			
 			Constant value = entry.getValue();
-			map.put(entry.getKey(), castConstanttoConstant(value, fromElemType, toElemType));
-			index++;
+			String key = entry.getKey();
+			fromKeyType = fromTypeValues.get(key);
+			toKeyType = toElemTypeValues.get(key);
+			map.put(entry.getKey(), castConstanttoConstant(value, fromKeyType, toKeyType));			
 		}
 
 		return Constant.V_RECORD(map);
@@ -296,7 +291,7 @@ public class ConvertInterpreter extends Interpreter {
 	 * @return
 	 */
 	public Constant castConstanttoConstant(Constant constant, wyil.lang.Type fromType, wyil.lang.Type toType) {
-		if(fromType.equals(toType)){
+		if(toType == null || fromType.equals(toType)){
 			return constant;//Not casting.
 		}
 		
