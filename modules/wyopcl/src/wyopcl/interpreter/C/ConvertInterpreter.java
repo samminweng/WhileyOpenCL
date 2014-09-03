@@ -242,7 +242,7 @@ public class ConvertInterpreter extends Interpreter {
 	private Constant toConstantAny(Constant constant, Type fromType, Type.Any toType){
 		if (constant instanceof DecimalFraction) {
 			// Cast to a string
-			return Constant.V_STRING(((Constant.Strung)constant).toString());
+			return Constant.V_STRING(((DecimalFraction)constant).toString());
 		}else if (constant instanceof Constant.Decimal){
 			//If the value is negative, then Constant.Decimal is converted to DecimalFraction. 
 			Constant.Decimal decimal = (Constant.Decimal)constant;

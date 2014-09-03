@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import wyil.lang.Codes;
 import wyil.lang.Constant;
+import wyil.lang.Constant.Decimal;
 import wyopcl.interpreter.DecimalFraction;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
@@ -73,7 +74,10 @@ public class BinaryOperatorInterpreter extends Interpreter {
 					//In the case of (1/3), the division result is infinite.
 					return DecimalFraction.V_DecimalFraction(num, denum);
 				}
-			}else {
+			}else if (left instanceof DecimalFraction){
+				internalFailure("Not implemented!", "BinaryOperatorInterpreter.java", null);
+				return null;
+			} else {
 				internalFailure("Not implemented!", "BinaryOperatorInterpreter.java", null);
 				return null;
 			}			

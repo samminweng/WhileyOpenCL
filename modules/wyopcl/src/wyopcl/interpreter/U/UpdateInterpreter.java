@@ -98,6 +98,8 @@ public class UpdateInterpreter extends Interpreter {
 			//list.values.set(index, assignedValue);
 		} else if (fieldValue instanceof Constant.Integer || fieldValue instanceof Constant.Bool) {
 			return update(record, givenValue, field);
+		} else if (fieldValue instanceof Constant.Record){
+			return update(record, givenValue, field);
 		} else {
 			internalFailure("Not implemented!", "UpdateInterpreter.java", null);
 			return null;
