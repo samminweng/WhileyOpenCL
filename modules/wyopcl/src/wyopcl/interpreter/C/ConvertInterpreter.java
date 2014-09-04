@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -111,22 +112,47 @@ public class ConvertInterpreter extends Interpreter {
 	/**
 	 * Convert a Constant object to a Constant.Map
 	 * 
-	 * @param from
+	 * @param constant
 	 * @param fromType
 	 * @param toType
 	 * @return
 	 */
-	private Constant.Map toConstantMap(Constant from, Type fromType, Type.Map toType) {
+	private Constant.Map toConstantMap(Constant constant, Type fromType, Type.Map toType) {
 		if (fromType != toType) {
-			if (from instanceof Constant.Map) {
-				return (Constant.Map) from;
+			if (constant instanceof Constant.Map) {
+				Constant.Map map = (Constant.Map)constant;
+				Type fromElemType = ((Type.Map)fromType).element();
+				Type toElemType = ((Type.Map)toType).element();
+				if(fromElemType.equals(toElemType)){
+					return map;
+				}else{
+					if(toElemType instanceof Type.Tuple && fromElemType instanceof Type.Tuple){
+						Type.Tuple toTupleType = (Type.Tuple)toElemType;
+						Type.Tuple fromTupleType = (Type.Tuple)fromElemType;
+						//Do the type casting
+						LinkedHashMap<Constant, Constant> convertedMap = new LinkedHashMap<Constant, Constant>();
+						Iterator<Entry<Constant, Constant>> iterator = map.values.entrySet().iterator();
+						while(iterator.hasNext()){
+							Entry<Constant, Constant> entry = iterator.next();
+							//Convert the tuple type							
+							Constant key = castConstanttoConstant(entry.getKey(), fromTupleType.element(0), toTupleType.element(0));
+							Constant value = castConstanttoConstant(entry.getValue(), fromTupleType.element(1), toTupleType.element(1));
+							convertedMap.put(key, value);
+						}
+						
+						
+						return Constant.V_MAP(convertedMap);
+					}
+			
+					return map;
+				}
 			} else {
 				internalFailure("Not implemented!", "ConvertInterpreter.java", null);
 				return null;
 			}
 		} else {
 			// Directly cast it into a Map.
-			return (Constant.Map) from;
+			return (Constant.Map) constant;
 		}
 	}
 
