@@ -47,6 +47,7 @@ import wyopcl.interpreter.I.IfInterpreter;
 import wyopcl.interpreter.I.IfIsInterpreter;
 import wyopcl.interpreter.I.IndexOfInterpreter;
 import wyopcl.interpreter.I.IndirectInvokeInterpreter;
+import wyopcl.interpreter.I.InvertInterpreter;
 import wyopcl.interpreter.I.InvokeInterpreter;
 import wyopcl.interpreter.L.LabelInterpreter;
 import wyopcl.interpreter.L.LambdaInterpreter;
@@ -291,7 +292,7 @@ public class WyilInterpreter extends Interpreter implements Builder{
 			} else if (code instanceof Codes.Invoke) {			
 				InvokeInterpreter.getInstance().interpret((Codes.Invoke)code, stackframe);
 			} else if (code instanceof Codes.Invert) {
-				internalFailure("Not implemented!", filename, entry);
+				InvertInterpreter.getInstance().interpret((Codes.Invert)code, stackframe);
 			} else if (code instanceof Codes.LoopEnd) {
 				LoopEndInterpreter.getInstance().interpret((Codes.LoopEnd)code, stackframe);									
 			} else if (code instanceof Codes.Label) {

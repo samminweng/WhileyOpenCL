@@ -1,0 +1,43 @@
+package wyopcl.interpreter.I;
+
+import static wycc.lang.SyntaxError.internalFailure;
+import wyil.lang.Codes;
+import wyil.lang.Constant;
+import wyopcl.interpreter.Interpreter;
+import wyopcl.interpreter.StackFrame;
+
+public class InvertInterpreter extends Interpreter {
+	private static InvertInterpreter instance;
+
+	public InvertInterpreter() {
+	}
+
+	/* Implement the Singleton pattern to ensure this class has one instance. */
+	public static InvertInterpreter getInstance() {
+		if (instance == null) {
+			instance = new InvertInterpreter();
+		}
+		return instance;
+	}
+	
+	public void interpret(Codes.Invert code, StackFrame stackframe) {
+		int linenumber = stackframe.getLine();		
+		Constant constant = stackframe.getRegister(code.operand(0));
+		Constant result = null;
+		if(constant instanceof Constant.Byte){
+			//perform bitwise not operation.
+			byte inv =(byte) ~((Constant.Byte)constant).value;
+			result = Constant.V_BYTE(inv);
+			
+		}else{
+			internalFailure("Not implemented!", "InvertInterpreter.java", null);
+			return;
+		}
+		stackframe.setRegister(code.target(), result);;
+		
+		printMessage(stackframe, code.toString(), "%"+code.target()+"("+result+")");
+		stackframe.setLine(++linenumber);
+	}
+	
+	
+}
