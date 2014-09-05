@@ -15,6 +15,7 @@ import java.util.Set;
 import wybs.lang.Build;
 import wybs.lang.Build.Project;
 import wybs.lang.Builder;
+import wycc.lang.Attribute;
 import wycc.lang.SyntaxError;
 import wycc.util.Logger;
 import wycc.util.Pair;
@@ -25,6 +26,7 @@ import wyil.lang.Code.Block;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyil.lang.Type;
+import wyil.lang.Type.FunctionOrMethod;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.Case;
 import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
@@ -166,12 +168,13 @@ public class WyilInterpreter extends Interpreter implements Builder{
 		String id = module.id().toString();
 		for(WyilFile.FunctionOrMethodDeclaration method : module.functionOrMethods()) {
 			String name = id+":"+method.name();
-			List<Block> blocks;
+			HashMap<FunctionOrMethod, Block> blocks;
 			if(!blocktable.containsKey(name)){
-				blocks = new ArrayList<Block>();
+				blocks = new HashMap<FunctionOrMethod, Block>();
 			}else{
 				blocks = blocktable.get(name);
 			}
+			FunctionOrMethod type = method.type();
 			
 			for(Case mcase : method.cases()){
 				List<Block.Entry> entries = new ArrayList<Block.Entry>();
@@ -191,7 +194,7 @@ public class WyilInterpreter extends Interpreter implements Builder{
 				}
 								
 				Block block = new Block(blk.numInputs(), entries);
-				blocks.add(block);
+				blocks.put(type, block);
 				
 				blocktable.put(name, blocks);
 				scanLabelsinBlock(block);

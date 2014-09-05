@@ -7,6 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -80,7 +81,7 @@ public class IndirectInvokeInterpreter extends Interpreter {
 				e.printStackTrace();
 			}
 		} else {
-			Block blk = blocktable.get(lambda.name.toString()).get(0);
+			Block blk = blocktable.get(lambda.name.toString()).get(code.type());
 			// Create a new StackFrame
 			StackFrame newStackFrame = new StackFrame(stackframe.getDepth() + 1, blk, 0, lambda.name.toString(),
 					code.target());
@@ -105,7 +106,7 @@ public class IndirectInvokeInterpreter extends Interpreter {
 		// Get the depth
 		int depth = currentStackframe.getDepth();
 		Closure closure = (Closure) currentStackframe.getRegister(code.reference());
-		Block blk = blocktable.get(closure.lambda.name.toString()).get(0);
+		Block blk = (Block) blocktable.get(closure.lambda.name.toString()).values().toArray()[0];
 		// Create a new StackFrame
 		StackFrame newStackFrame = new StackFrame(depth + 1, blk, 0, closure.lambda.name.toString(), code.target());
 		// Pass the input parameters.
@@ -132,7 +133,6 @@ public class IndirectInvokeInterpreter extends Interpreter {
 	}
 
 	public void interpret(Codes.IndirectInvoke code, StackFrame stackframe) {
-
 		Constant func = stackframe.getRegister(code.reference());
 		if (func instanceof Closure) {
 			pushAnonymousFunctionBlockToStack(code, stackframe);

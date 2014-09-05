@@ -12,11 +12,15 @@ import wyil.lang.Code;
 import wyil.lang.Code.Block;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
+import wyil.lang.Constant.Type;
+import wyil.lang.Type.FunctionOrMethod;
 import wyil.lang.WyilFile;
+import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
 
 /*Declare the abstract Interpreter class, methods and variables. */
 public abstract class Interpreter {
-	protected static HashMap<String, List<Block>> blocktable = new HashMap<String, List<Block>>();
+	//Store a hashmap inside a hashmap.
+	protected static HashMap<String, HashMap<FunctionOrMethod, Block>> blocktable = new HashMap<String, HashMap<FunctionOrMethod, Block>>();
 	protected static Stack<StackFrame> blockstack = new Stack<StackFrame>();
 	protected static HashMap<Block, SymbolTable> symboltable = new HashMap<Block, SymbolTable>();
 	protected static boolean verbose = false;

@@ -8,13 +8,18 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Set;
 
+import wyfs.lang.Path.ID;
 import wyil.lang.Code.Block;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyil.lang.Type;
+import wyil.lang.Type.FunctionOrMethod;
 import wyjc.runtime.WyList;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
@@ -82,16 +87,17 @@ public class InvokeInterpreter extends Interpreter {
 			return null;
 		}
 	}
+	
+	
+	
 
 
-	private void pushFunctionBlockToStack(List<Block> blks, Codes.Invoke code, StackFrame currentStackframe){	
+	private void pushFunctionBlockToStack(HashMap<FunctionOrMethod, Block> blks, Codes.Invoke code, StackFrame currentStackframe){	
 		//Find the right block
-		Block blk = null;
-		if(blks.size()==1){
-			blk = blks.get(0);			
-		}else{
+		Block blk = blks.get(code.type());
+		
+		if (blk == null)
 			internalFailure("Not implemented!", "InvokeInterpreter.java", null);
-		}		
 		
 		//Get the depth
 		int depth = currentStackframe.getDepth();
@@ -168,8 +174,8 @@ public class InvokeInterpreter extends Interpreter {
 
 
 	public void interpret(Codes.Invoke code, StackFrame stackframe) {	
-		//Get the Block for the corresponding function/method. 
-		List<Block> blks = blocktable.get(code.name.toString());
+		//Get the Block for the corresponding function/method.
+		HashMap<FunctionOrMethod, Block> blks = blocktable.get(code.name.toString());
 		if(blks != null){			
 			//Push the function block to the stack.
 			pushFunctionBlockToStack(blks, code, stackframe);

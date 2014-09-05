@@ -308,13 +308,24 @@ public class ConvertInterpreter extends Interpreter {
 	}
 	
 	private Constant toConstantUnion(Constant constant, Type fromType, Type.Union toType) {
+		
+		Constant.Decimal decimal = null;
 		Iterator<Type> iterator = toType.bounds().iterator();
 		while(iterator.hasNext()){
 			Type type = iterator.next();
 			if(fromType.equals(type)){
 				return constant;
 			}
+			
+			//Check if there is any need for converting an integer to a real
+			if(constant instanceof Constant.Integer && fromType instanceof Type.Int && type instanceof Type.Real){
+				decimal=toConstantDecimal(constant, fromType, (Type.Real)type);
+			}
 		}		
+		
+		if(decimal!= null){
+			return decimal;
+		}
 		
 		return constant;
 	}
