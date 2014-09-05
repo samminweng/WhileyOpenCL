@@ -1,6 +1,11 @@
 package wyopcl.interpreter.I;
 
 import static wycc.lang.SyntaxError.internalFailure;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
+
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyopcl.interpreter.Interpreter;
@@ -10,7 +15,7 @@ public class IndexOfInterpreter extends Interpreter {
 	private static IndexOfInterpreter instance;	
 	public IndexOfInterpreter(){		
 	}
-	
+
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
 	public static IndexOfInterpreter getInstance(){
 		if (instance == null){
@@ -18,7 +23,7 @@ public class IndexOfInterpreter extends Interpreter {
 		}
 		return instance;
 	}
-	
+
 	private Constant getValuefromList(Constant.List list, Constant key){
 		Constant value = null;
 		//Get the value associated with the key.
@@ -29,10 +34,10 @@ public class IndexOfInterpreter extends Interpreter {
 		}else{
 			internalFailure("Not implemented!", "InterpreterIndexOf.java", null);
 		}
-		
+
 		return value;
 	}
-	
+
 	private Constant getValuefromRecord(Constant.Record record, Constant key){
 		Constant value = null;
 		//Get the value associated with the key.
@@ -43,10 +48,10 @@ public class IndexOfInterpreter extends Interpreter {
 		}else{
 			internalFailure("Not implemented!", "InterpreterIndexOf.java", null);
 		}
-		
+
 		return value;
 	}
-	
+
 	private Constant getValuefromStrung(Constant.Strung strung, Constant key){
 		Constant value = null;
 		//Get the value associated with the key.
@@ -59,12 +64,35 @@ public class IndexOfInterpreter extends Interpreter {
 		}else{
 			internalFailure("Not implemented!", "InterpreterIndexOf.java", null);
 		}
-		
+
 		return value;
 	}
-	
-	
-	
+
+
+	private Constant getValuefromMap(Constant.Map map, Constant key){		
+		//Get the value associated with the key.
+		if(map.values.containsKey(key)){
+			return map.values.get(key);
+		}
+
+		//Comparing two Constatn.Decimal requires using compareTo method.
+		Iterator<Entry<Constant, Constant>> iterator = map.values.entrySet().iterator();
+		while(iterator.hasNext()){
+			Entry<Constant, Constant> entry = iterator.next();
+			Constant entryKey = entry.getKey();
+			if(entryKey.compareTo(key)==0){
+				return entry.getValue();
+			}			
+		}
+
+
+		internalFailure("Not implemented!", "InterpreterIndexOf.java", null);
+		return null;
+	}
+
+
+
+
 	public void interpret(Codes.IndexOf code, StackFrame stackframe) {		
 		int linenumber = stackframe.getLine();
 		//Read the list from the leftOperand register.
@@ -78,8 +106,7 @@ public class IndexOfInterpreter extends Interpreter {
 		}else if(constant instanceof Constant.Strung){
 			value = getValuefromStrung((Constant.Strung)constant, key);
 		}else if (constant instanceof Constant.Map){
-			Constant.Map map = (Constant.Map) constant;
-			value = map.values.get(key);
+			value = getValuefromMap((Constant.Map) constant, key);
 		}else{
 			internalFailure("Not implemented!", "InterpreterIndexOf.java", null);
 		}
