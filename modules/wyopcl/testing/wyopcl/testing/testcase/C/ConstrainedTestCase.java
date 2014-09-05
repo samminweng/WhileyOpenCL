@@ -289,7 +289,6 @@ public class ConstrainedTestCase {
 	}
 
 	@Test
-	@Ignore("Timout")
 	public void test_ConstrainedRecord_Valid_8() {
 		util.exec("ConstrainedRecord_Valid_8");
 	}
