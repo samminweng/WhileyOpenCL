@@ -104,7 +104,7 @@ public class AllValidTests {
 		
 		int r = p.first();
 
-		System.out.println(p.second());
+		System.out.print(p.second());
 		
 		if (r != WycMain.SUCCESS) {
 			fail("Test failed to compile!");
@@ -365,6 +365,11 @@ public class AllValidTests {
 		runTest("Coercion_Valid_8");
 	}
 
+	@Test
+	public void Coercion_Valid_9() {
+		runTest("Coercion_Valid_9");
+	}
+	
 	@Test
 	public void Complex_Valid_1() {
 		runTest("Complex_Valid_1");
@@ -1374,7 +1379,7 @@ public class AllValidTests {
 		runTest("ListAccess_Valid_8");
 	}
 
-	@Ignore("#427") @Test
+	@Test
 	public void ListAccess_Valid_9() {
 		runTest("ListAccess_Valid_9");
 	}
@@ -2144,12 +2149,12 @@ public class AllValidTests {
 		runTest("Reference_Valid_1");
 	}
 	
-	@Ignore("#427") @Test
+	@Test
 	public void Reference_Valid_2() {
 		runTest("Reference_Valid_2");
 	}
 	
-	@Ignore("#427") @Test
+	@Test
 	public void Reference_Valid_3() {
 		runTest("Reference_Valid_3");
 	}

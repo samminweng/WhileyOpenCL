@@ -363,6 +363,11 @@ public class AllValidVerificationTests {
 		runTest("Coercion_Valid_8");
 	}
 
+	@Test
+	public void Coercion_Valid_9() {
+		runTest("Coercion_Valid_9");
+	}
+	
 	@Ignore("Issue ???") @Test
 	public void Complex_Valid_1() {
 		runTest("Complex_Valid_1");
@@ -1379,7 +1384,7 @@ public class AllValidVerificationTests {
 		runTest("ListAccess_Valid_8");
 	}
 
-	@Ignore("#427") @Test
+	@Test
 	public void ListAccess_Valid_9() {
 		runTest("ListAccess_Valid_9");
 	}
@@ -2161,12 +2166,12 @@ public class AllValidVerificationTests {
 		runTest("Reference_Valid_1");
 	}
 	
-	@Ignore("#427") @Test
+	@Ignore("Unclassified") @Test
 	public void Reference_Valid_2() {
 		runTest("Reference_Valid_2");
 	}
 	
-	@Ignore("#427") @Test
+	@Ignore("Unclassified") @Test
 	public void Reference_Valid_3() {
 		runTest("Reference_Valid_3");
 	}
