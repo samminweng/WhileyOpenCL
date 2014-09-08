@@ -1,219 +1,253 @@
-<project name="whiley" default="build-all">  
-  <import file="config.xml"/>
+<project name="whiley" default="build-all">
+	<import file="config.xml"/>
 
-  <!-- ============================================== -->
-  <!-- Build Commands -->
-  <!-- ============================================== -->
+	<!-- ============================================== -->
+	<!-- Build Commands -->
+	<!-- ============================================== -->
 
-  <target name="build-all">
-    <subant failonerror="true" target="build">
-      <fileset dir="modules" includes="wybs/build.xml"/>
-      <fileset dir="modules" includes="wyrl/build.xml"/>
-      <fileset dir="modules" includes="wycs/build.xml"/>
-      <fileset dir="modules" includes="wyil/build.xml"/>
-      <fileset dir="modules" includes="wyc/build.xml"/>
-      <fileset dir="modules" includes="wyrt/build.xml"/>
-      <fileset dir="modules" includes="wyjc/build.xml"/>
-      <fileset dir="modules" includes="wycc/build.xml"/>
-      <!--wyopcl-->
-      <fileset dir="modules" includes="wyopcl/build.xml" />
-    </subant>
-  </target>
- 
-  <!-- ============================================== -->
-  <!-- Documenation --> 
-  <!-- ============================================== -->
+	<target name="build-all">
+		<subant failonerror="true" target="build">
+			<fileset dir="modules" includes="wybs/build.xml"/>
+			<fileset dir="modules" includes="wyrl/build.xml"/>
+			<fileset dir="modules" includes="wycs/build.xml"/>
+			<fileset dir="modules" includes="wyil/build.xml"/>
+			<fileset dir="modules" includes="wyc/build.xml"/>
+			<fileset dir="modules" includes="wyrt/build.xml"/>
+			<fileset dir="modules" includes="wyjc/build.xml"/>
+			<fileset dir="modules" includes="wycc/build.xml"/>
+			<!--wyopcl-->
+			<fileset dir="modules" includes="wyopcl/build.xml" />
+		</subant>
+	</target>
 
-  <target name="doc">
-    <javadoc
+	<!-- ============================================== -->
+	<!-- Documenation -->
+	<!-- ============================================== -->
+
+	<target name="doc">
+		<javadoc
        destdir="docs/api"
        author="true"
        version="true"
        use="true"
        windowtitle="Whiley Compiler API">
-      <doctitle><![CDATA[<h1>The Whiley Compiler (v${version})</h1>]]></doctitle>
-      <bottom><![CDATA[<i>Copyright &#169; 2011 David J. Pearce. All Rights Reserved.</i>]]></bottom>
-      <packageset dir="modules/wyrl/src">
-	<include name="wyautl/**"/>
-	<include name="wyrl/**"/>
-	<exclude name="wyrl/testing/**"/>
-      </packageset>
-      <packageset dir="modules/wybs/src">
-	<include name="wyfs/**"/>
-	<include name="wybs/**"/>
-	<include name="wycc/**"/>
-      </packageset>
-      <packageset dir="modules/wycs/src">
-	<include name="wycs/**"/>
-	<exclude name="wycs/testing/**"/>
-      </packageset>
-      <packageset dir="modules/wyil/src">
-	<include name="wyil/**"/>
-	<include name="wyautl_old/**"/>
-	<exclude name="wyil/testing/**"/>
-      </packageset>
-      <packageset dir="modules/wyc/src">
-	<include name="wyc/**"/>
-	<exclude name="wyc/testing/**"/>
-      </packageset>
-      <packageset dir="modules/wyjc/src">
-	<include name="wyjc/**"/>
-	<include name="wyjvm/**"/>
-	<exclude name="wyjc/testing/**"/>
-      </packageset>
-      <!--
+			<doctitle>
+				<![CDATA[<h1>The Whiley Compiler (v${version})</h1>]]></doctitle>
+		<bottom>
+			<![CDATA[<i>Copyright &#169; 2011 David J. Pearce. All Rights Reserved.</i>]]></bottom>
+	<packageset dir="modules/wyrl/src">
+		<include name="wyautl/**"/>
+		<include name="wyrl/**"/>
+		<exclude name="wyrl/testing/**"/>
+	</packageset>
+	<packageset dir="modules/wybs/src">
+		<include name="wyfs/**"/>
+		<include name="wybs/**"/>
+		<include name="wycc/**"/>
+	</packageset>
+	<packageset dir="modules/wycs/src">
+		<include name="wycs/**"/>
+		<exclude name="wycs/testing/**"/>
+	</packageset>
+	<packageset dir="modules/wyil/src">
+		<include name="wyil/**"/>
+		<include name="wyautl_old/**"/>
+		<exclude name="wyil/testing/**"/>
+	</packageset>
+	<packageset dir="modules/wyc/src">
+		<include name="wyc/**"/>
+		<exclude name="wyc/testing/**"/>
+	</packageset>
+	<packageset dir="modules/wyjc/src">
+		<include name="wyjc/**"/>
+		<include name="wyjvm/**"/>
+		<exclude name="wyjc/testing/**"/>
+	</packageset>
+	<!--
       <packageset dir="modules/wycc/src">
 	<include name="wycc/**"/>
 	<exclude name="wycc/testing/**"/>
       </packageset>
       -->
-      <group title="Whiley Build System (WYBS)" packages="wybs:wyfs.*:wybs.*:wycc.*"/>
-      <group title="Whiley Compiler (WYC)" packages="wyc:wyc.*"/>
-      <group title="Whiley Intermediate Language (WYIL)" packages="wyil:wyil.*"/>
-      <group title="Whiley-2-Java Compiler (WYJC)" packages="wyjc:wyjc.*:wyjvm.*"/>
-      <!--<group title="Whiley-2-C Compiler (WYCC)" packages="wycc:wycc.*"/>-->
-      <group title="Whiley Constraint Solver (WYCS)" packages="wycs:wycs.*"/>
-      <group title="Whiley Rewrite Language (WYRL)" packages="wyrl:wyrl.*:wyautl.*"/>
-      <!-- wyopcl -->
-      <group title="Whiley-2-OpenCL (WyOpCL)" packages="wyopcl:wyopcl.*" />
-      </javadoc>
-  </target>
+	<group title="Whiley Build System (WYBS)" packages="wybs:wyfs.*:wybs.*:wycc.*"/>
+	<group title="Whiley Compiler (WYC)" packages="wyc:wyc.*"/>
+	<group title="Whiley Intermediate Language (WYIL)" packages="wyil:wyil.*"/>
+	<group title="Whiley-2-Java Compiler (WYJC)" packages="wyjc:wyjc.*:wyjvm.*"/>
+	<!--<group title="Whiley-2-C Compiler (WYCC)" packages="wycc:wycc.*"/>-->
+	<group title="Whiley Constraint Solver (WYCS)" packages="wycs:wycs.*"/>
+	<group title="Whiley Rewrite Language (WYRL)" packages="wyrl:wyrl.*:wyautl.*"/>
+	<!-- wyopcl -->
+	<group title="Whiley-2-OpenCL (WyOpCL)" packages="wyopcl:wyopcl.*" />
+</javadoc>
+</target>
 
-  <!-- ============================================== -->
-  <!-- Distribution -->
-  <!-- ============================================== -->
+<!-- ============================================== -->
+<!-- Distribution -->
+<!-- ============================================== -->
 
-  <target name="distjars" depends="build-all">
-    <subant failonerror="false" target="dist">
-      <fileset dir="modules" includes="*/build.xml"/>
-    </subant>
-  </target>
+<target name="distjars" depends="build-all">
+<subant failonerror="false" target="dist">
+	<fileset dir="modules" includes="*/build.xml"/>
+</subant>
+</target>
 
-  <target name="distsrc" depends="build-all">
-  <mkdir dir="wdk-v${version}"/>
-  <copy todir="wdk-v${version}">
-    <fileset dir=".">
-      <include name="LICENSE"/>
-      <include name="README"/>
-      <include name="CONTRIBUTORS"/>
-      <include name="build.xml"/>
-      <include name="config.xml"/>
-      <include name="modules/**/*.java"/>
-      <include name="modules/**/*.whiley"/>
-      <include name="modules/**/*.wyrl"/>
-      <include name="modules/**/*.wycs"/>
-      <include name="modules/**/*.xml"/>
-      <include name="examples/**/*.whiley"/>
-      <include name="tests/**/*.whiley"/>
-      <include name="tests/**/*.sysout"/>
-      <include name="bin/wyilc"/>
-      <include name="bin/wyc"/>
-      <include name="bin/wyjc"/>
-      <include name="bin/wyj"/>
-      <include name="bin/wycc"/>
-      <include name="bin/wycs"/>
-      <include name="bin/wyrl"/>
-      <include name="bin/wy_common.bash"/>
-      <include name="lib/*-v${version}.jar"/>
-      <include name="lib/jasm-v*.jar"/>
-      <!-- wyopcl -->
-      <include name="bin/wyopcl" />
-    </fileset>
-  </copy>
-  <tar destfile="dist/wdk-src-v${version}.tar" longfile="gnu">  
-    <tarfileset dir="." includes="wdk-v${version}/**/*"/>
-    <tarfileset dir="." filemode="755">
-      <include name="wdk-v${version}/bin/*"/>
-    </tarfileset>
-  </tar>
-  <gzip destfile="dist/wdk-src-v${version}.tgz" src="dist/wdk-src-v${version}.tar"/>
-  <delete file="dist/wdk-src-v${version}.tar"/>
-  <delete dir="wdk-v${version}"/>
-    <echo message="============================================="/>
-    <echo message="BUILT: dist/wdk-src-v${version}.tgz"/>
-    <echo message="============================================="/>
-  </target>
+<target name="distsrc" depends="build-all">
+<mkdir dir="wdk-v${version}"/>
+<copy todir="wdk-v${version}">
+	<fileset dir=".">
+		<include name="LICENSE"/>
+		<include name="README"/>
+		<include name="CONTRIBUTORS"/>
+		<include name="build.xml"/>
+		<include name="config.xml"/>
+		<include name="modules/**/*.java"/>
+		<include name="modules/**/*.whiley"/>
+		<include name="modules/**/*.wyrl"/>
+		<include name="modules/**/*.wycs"/>
+		<include name="modules/**/*.xml"/>
+		<include name="examples/**/*.whiley"/>
+		<include name="tests/**/*.whiley"/>
+		<include name="tests/**/*.sysout"/>
+		<include name="bin/wyilc"/>
+		<include name="bin/wyc"/>
+		<include name="bin/wyjc"/>
+		<include name="bin/wyj"/>
+		<include name="bin/wycc"/>
+		<include name="bin/wycs"/>
+		<include name="bin/wyrl"/>
+		<include name="bin/wy_common.bash"/>
+		<include name="lib/*-v${version}.jar"/>
+		<include name="lib/jasm-v*.jar"/>
+		<!-- wyopcl -->
+		<include name="bin/wyopcl" />
+	</fileset>
+</copy>
+<tar destfile="dist/wdk-src-v${version}.tar" longfile="gnu">
+	<tarfileset dir="." includes="wdk-v${version}/**/*"/>
+	<tarfileset dir="." filemode="755">
+		<include name="wdk-v${version}/bin/*"/>
+	</tarfileset>
+</tar>
+<gzip destfile="dist/wdk-src-v${version}.tgz" src="dist/wdk-src-v${version}.tar"/>
+<delete file="dist/wdk-src-v${version}.tar"/>
+<delete dir="wdk-v${version}"/>
+<echo message="============================================="/>
+<echo message="BUILT: dist/wdk-src-v${version}.tgz"/>
+<echo message="============================================="/>
+</target>
 
-  <target name="dist" depends="distsrc,distjars">
-  </target>
+<target name="dist" depends="distsrc,distjars">
+</target>
 
-	<!-- ============================================== -->
-	<!-- Misc Commands -->
-	<!-- ============================================== -->
+<!-- ============================================== -->
+<!-- Misc Commands -->
+<!-- ============================================== -->
 
-	<target name="clean">
-	<subant failonerror="false" target="clean">
-		<fileset dir="modules" includes="*/build.xml" />
-	</subant>
-	<delete includeEmptyDirs="true" failonerror="false">
-		<fileset file="*~" />
-		<fileset dir="dist" />
-		<fileset dir="docs" />
-		<fileset dir="tests">
-			<include name="**/*.class" />
-			<include name="**/*.wyil" />
-			<include name="**/*.o" />
+<target name="clean">
+<subant failonerror="false" target="clean">
+	<fileset dir="modules" includes="*/build.xml" />
+</subant>
+<delete includeEmptyDirs="true" failonerror="false">
+	<fileset file="*~" />
+	<fileset dir="dist" />
+	<fileset dir="docs" />
+	<fileset dir="tests">
+		<include name="**/*.class" />
+		<include name="**/*.wyil" />
+		<include name="**/*.o" />
+	</fileset>
+	<fileset dir="build" />
+	<!--wyopcl-->
+	<fileset dir="report" />
+</delete>
+</target>
+<!---JUnit testing for Wyopecl -->
+<target name="compile-java" depends="clean, build-all">
+<mkdir dir="build" />
+<javac destdir="build" includeantruntime="false">
+	<classpath>
+		<pathelement location="lib/ant.jar" />
+		<pathelement location="lib/org.hamcrest.core_1.3.0.v201303031735.jar" />
+		<pathelement location="lib/junit.jar" />
+		<pathelement location="lib/wybs-v${version}.jar"/>
+		<pathelement location="lib/wyc-v${version}.jar"/>
+		<pathelement location="lib/wycc-v${version}.jar"/>
+		<pathelement location="lib/wycs-v${version}.jar"/>
+		<pathelement location="lib/wyil-v${version}.jar"/>
+		<pathelement location="lib/wyjc-v${version}.jar"/>
+		<pathelement location="lib/wyrl-v${version}.jar"/>
+		<pathelement location="lib/wyrt-v${version}.jar"/>
+		<pathelement location="lib/jasm-v0.1.6.jar"/>
+	</classpath>
+	<src path="modules/wybs/src" />
+	<src path="modules/wyc/src" />
+	<src path="modules/wycc/src" />
+	<src path="modules/wycs/src" />
+	<src path="modules/wyil/src" />
+	<src path="modules/wyjc/src" />
+	<src path="modules/wyrl/src" />
+	<src path="modules/wyopcl/src" />
+	<src path="modules/wyopcl/testing" />
+</javac>
+</target>
+
+<target name="test-valid" depends="compile-java">
+<mkdir dir="report/valid" />
+<junit>
+	<formatter type="plain" usefile="false" />
+	<classpath>
+		<pathelement location="build" />
+		<pathelement location="lib/org.hamcrest.core_1.3.0.v201303031735.jar" />
+		<pathelement location="lib/junit.jar" />
+	</classpath>
+	<formatter type="xml" />
+	<batchtest todir="report/valid">
+		<fileset dir="modules/wyopcl/testing/">
+			<include name="**/valid/*Test*" />
 		</fileset>
-		<fileset dir="build" />
-		<!--wyopcl-->
-		<fileset dir="report" />
-	</delete>
-	</target>
-	<!---JUnit testing for Wyopecl -->
-	<target name="compile-java" depends="clean, build-all">
-	<mkdir dir="build" />
-	<javac destdir="build" includeantruntime="false">
-		<classpath>
-			<pathelement location="lib/ant.jar" />
-			<pathelement location="lib/org.hamcrest.core_1.3.0.v201303031735.jar" />
-			<pathelement location="lib/junit.jar" />
-			<pathelement location="lib/wybs-v${version}.jar"/>
-			<pathelement location="lib/wyc-v${version}.jar"/>
-			<pathelement location="lib/wycc-v${version}.jar"/>
-			<pathelement location="lib/wycs-v${version}.jar"/>
-			<pathelement location="lib/wyil-v${version}.jar"/>
-			<pathelement location="lib/wyjc-v${version}.jar"/>
-			<pathelement location="lib/wyrl-v${version}.jar"/>
-			<pathelement location="lib/wyrt-v${version}.jar"/>
-			<pathelement location="lib/jasm-v0.1.6.jar"/>
-		</classpath>
-		<src path="modules/wybs/src" />
-		<src path="modules/wyc/src" />
-		<src path="modules/wycc/src" />
-		<src path="modules/wycs/src" />
-		<src path="modules/wyil/src" />
-		<src path="modules/wyjc/src" />
-		<src path="modules/wyrl/src" />
-		<src path="modules/wyopcl/src" />
-		<src path="modules/wyopcl/testing" />
-	</javac>
-	</target>
-
-	<target name="test" depends="compile-java">
-	<mkdir dir="report" />
-	<junit>
-		<formatter type="plain" usefile="false" />
-		<classpath>
-			<pathelement location="build" />
-			<pathelement location="lib/org.hamcrest.core_1.3.0.v201303031735.jar" />
-			<pathelement location="lib/junit.jar" />
-		</classpath>
-		<formatter type="xml" />
-		<batchtest todir="report">
-			<fileset dir="modules/wyopcl/testing">
-				<include name="**/*Test*" />
-			</fileset>
-		</batchtest>
-	</junit>
-	</target>
-	<target name="report" depends="test">
-	<mkdir dir="report/html" />
-	<junitreport todir="report">
-		<fileset dir="report">
-			<include name="TEST-*.xml" />
+	</batchtest>
+</junit>
+</target>
+<target name="test-invalid" depends="compile-java">
+<mkdir dir="report/invalid" />
+<junit>
+	<formatter type="plain" usefile="false" />
+	<classpath>
+		<pathelement location="build" />
+		<pathelement location="lib/org.hamcrest.core_1.3.0.v201303031735.jar" />
+		<pathelement location="lib/junit.jar" />
+	</classpath>
+	<formatter type="xml" />
+	<batchtest todir="report/invalid">
+		<fileset dir="modules/wyopcl/testing/">
+			<include name="**/invalid/*Test*" />
 		</fileset>
-		<report todir="report/html" />
-	</junitreport>
-	</target>
+	</batchtest>
+</junit>
+</target>
 
+<target name="report" depends="test-valid, test-invalid">
+<mkdir dir="report/valid/html" />
+<junitreport todir="report">
+	<fileset dir="report/valid">
+		<include name="TEST-*.xml" />
+	</fileset>
+	<report todir="report/valid/html" />
+</junitreport>
+<junitreport todir="report">
+	<fileset dir="report/invalid">
+		<include name="TEST-*.xml" />
+	</fileset>
+	<report todir="report/invalid/html" />
+</junitreport>
+<junitreport todir="report">
+	<fileset dir="report/valid">
+		<include name="TEST-*.xml" />
+	</fileset>
+	<fileset dir="report/invalid">
+		<include name="TEST-*.xml" />
+	</fileset>
+	<report todir="report/alltests" />
+</junitreport>
+</target>
 </project>
