@@ -187,13 +187,13 @@
 	<src path="modules/wyjc/src" />
 	<src path="modules/wyrl/src" />
 	<src path="modules/wyopcl/src" />
-	<src path="modules/wyopcl/testing" />
+	<src path="modules/wyopcl/test" />
 </javac>
 </target>
 
-<target name="test-valid" depends="compile-java">
+<target name="test" depends="compile-java">
 <mkdir dir="report/valid" />
-<junit>
+<junit fork="yes">
 	<formatter type="plain" usefile="false" />
 	<classpath>
 		<pathelement location="build" />
@@ -202,32 +202,30 @@
 	</classpath>
 	<formatter type="xml" />
 	<batchtest todir="report/valid">
-		<fileset dir="modules/wyopcl/testing/">
-			<include name="**/valid/*Test*" />
+		<fileset dir="modules/wyopcl/test/">
+			<include name="**/*ValidTestCase*" />
 		</fileset>
 	</batchtest>
 </junit>
-</target>
-<target name="test-invalid" depends="compile-java">
-<mkdir dir="report/invalid" />
-<junit>
-	<formatter type="plain" usefile="false" />
-	<classpath>
-		<pathelement location="build" />
-		<pathelement location="lib/org.hamcrest.core_1.3.0.v201303031735.jar" />
-		<pathelement location="lib/junit.jar" />
-	</classpath>
-	<formatter type="xml" />
-	<batchtest todir="report/invalid">
-		<fileset dir="modules/wyopcl/testing/">
-			<include name="**/invalid/*Test*" />
-		</fileset>
-	</batchtest>
-</junit>
+<mkdir dir="report/invalid"/>
+	<junit fork="yes">
+		<formatter type="plain" usefile="false" />
+		<classpath>
+			<pathelement location="build" />
+			<pathelement location="lib/org.hamcrest.core_1.3.0.v201303031735.jar" />
+			<pathelement location="lib/junit.jar" />
+		</classpath>
+		<formatter type="xml" />
+		<batchtest todir="report/invalid">
+			<fileset dir="modules/wyopcl/test/">
+				<include name="**/*InvalidTestCase*" />
+			</fileset>
+		</batchtest>
+	</junit>
 </target>
 
-<target name="report" depends="test-valid, test-invalid">
-<mkdir dir="report/valid/html" />
+<target name="report" depends="test">
+<!--<target name="report" depends="test-invalid">-->
 <junitreport todir="report">
 	<fileset dir="report/valid">
 		<include name="TEST-*.xml" />
@@ -240,6 +238,7 @@
 	</fileset>
 	<report todir="report/invalid/html" />
 </junitreport>
+<mkdir dir="report/alltests" />
 <junitreport todir="report">
 	<fileset dir="report/valid">
 		<include name="TEST-*.xml" />
