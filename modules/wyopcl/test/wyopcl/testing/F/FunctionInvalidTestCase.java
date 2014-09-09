@@ -24,73 +24,73 @@ public class FunctionInvalidTestCase {
 	}
 	
 	@Test
-	public void test_FunctionRef_Valid_1() {
-		util.exec("FunctionRef_Valid_1");
+	public void test_FunctionRef_Invalid_1() {
+		util.exec("FunctionRef_Invalid_1");
 	}
 
 	@Test
-	public void test_FunctionRef_Valid_2() {
-		util.exec("FunctionRef_Valid_2");
+	public void test_FunctionRef_Invalid_2() {
+		util.exec("FunctionRef_Invalid_2");
 	}
 
 	@Test
-	public void test_FunctionRef_Valid_3() {
-		util.exec("FunctionRef_Valid_3");
+	public void test_FunctionRef_Invalid_3() {
+		util.exec("FunctionRef_Invalid_3");
 	}
 
 	@Test
-	public void test_FunctionRef_Valid_4() {
-		util.exec("FunctionRef_Valid_4");
+	public void test_FunctionRef_Invalid_4() {
+		util.exec("FunctionRef_Invalid_4");
 	}
 
 	@Test
-	public void test_FunctionRef_Valid_5() {
-		util.exec("FunctionRef_Valid_5");
+	public void test_FunctionRef_Invalid_5() {
+		util.exec("FunctionRef_Invalid_5");
 	}
 
 	@Test
-	public void test_FunctionRef_Valid_6() {
-		util.exec("FunctionRef_Valid_6");
+	public void test_FunctionRef_Invalid_6() {
+		util.exec("FunctionRef_Invalid_6");
 	}
 
 	@Test
-	public void test_FunctionRef_Valid_7() {
-		util.exec("FunctionRef_Valid_7");
+	public void test_FunctionRef_Invalid_7() {
+		util.exec("FunctionRef_Invalid_7");
 	}
 
 	@Test
-	public void test_FunctionRef_Valid_9() {
-		util.exec("FunctionRef_Valid_9");
+	public void test_FunctionRef_Invalid_9() {
+		util.exec("FunctionRef_Invalid_9");
 	}
 
 	@Test
-	public void test_Function_Valid_1() {
-		util.exec("Function_Valid_1");
+	public void test_Function_Invalid_1() {
+		util.exec("Function_Invalid_1");
 	}
 
 	@Test
-	public void test_Function_Valid_10() {
-		util.exec("Function_Valid_10");
+	public void test_Function_Invalid_10() {
+		util.exec("Function_Invalid_10");
 	}	
 
 	@Test
-	public void test_Function_Valid_2() {
-		util.exec("Function_Valid_2");
+	public void test_Function_Invalid_2() {
+		util.exec("Function_Invalid_2");
 	}
 
 	@Test
-	public void test_Function_Valid_3() {
-		util.exec("Function_Valid_3");
+	public void test_Function_Invalid_3() {
+		util.exec("Function_Invalid_3");
 	}
 
 	@Test
-	public void test_Function_Valid_4() {
-		util.exec("Function_Valid_4");
+	public void test_Function_Invalid_4() {
+		util.exec("Function_Invalid_4");
 	}
 	
 	@Test
-	public void test_Function_Valid_9() {
-		util.exec("Function_Valid_9");
+	public void test_Function_Invalid_9() {
+		util.exec("Function_Invalid_9");
 	}
 
 	

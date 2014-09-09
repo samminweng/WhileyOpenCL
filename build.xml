@@ -192,7 +192,7 @@
 </target>
 
 <target name="test" depends="compile-java">
-<mkdir dir="report/valid" />
+<!--<mkdir dir="report/valid" />
 <junit fork="yes">
 	<formatter type="plain" usefile="false" />
 	<classpath>
@@ -206,7 +206,7 @@
 			<include name="**/*ValidTestCase*" />
 		</fileset>
 	</batchtest>
-</junit>
+</junit>-->
 <mkdir dir="report/invalid"/>
 	<junit fork="yes">
 		<formatter type="plain" usefile="false" />
@@ -225,20 +225,19 @@
 </target>
 
 <target name="report" depends="test">
-<!--<target name="report" depends="test-invalid">-->
-<junitreport todir="report">
+<!--<junitreport todir="report">
 	<fileset dir="report/valid">
 		<include name="TEST-*.xml" />
 	</fileset>
 	<report todir="report/valid/html" />
-</junitreport>
+</junitreport>-->
 <junitreport todir="report">
 	<fileset dir="report/invalid">
 		<include name="TEST-*.xml" />
 	</fileset>
 	<report todir="report/invalid/html" />
 </junitreport>
-<mkdir dir="report/alltests" />
+<!--<mkdir dir="report/alltests" />
 <junitreport todir="report">
 	<fileset dir="report/valid">
 		<include name="TEST-*.xml" />
@@ -247,6 +246,6 @@
 		<include name="TEST-*.xml" />
 	</fileset>
 	<report todir="report/alltests" />
-</junitreport>
+</junitreport>-->
 </target>
 </project>
