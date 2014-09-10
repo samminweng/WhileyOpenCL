@@ -4,6 +4,7 @@ import junit.framework.TestCase;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
@@ -28,7 +29,7 @@ public class AssertInvalidTestCase {
 	public void test_Assert_Invalid_1() {		
 		util.exec("Assert_Invalid_1");
 	}
-
+		
 	@Test	
 	public void test_Assert_Invalid_2() {		
 		util.exec("Assert_Invalid_2");

@@ -27,7 +27,7 @@ public class RecursiveInvalidTestCase {
 	public void test_RecursiveType_Invalid_1() {
 		util.exec("RecursiveType_Invalid_1");
 	}
-
+	@Ignore("Missing RecursiveType_Invalid_10.sysout")
 	@Test
 	public void test_RecursiveType_Invalid_10() {
 		util.exec("RecursiveType_Invalid_10");
@@ -53,21 +53,23 @@ public class RecursiveInvalidTestCase {
 		util.exec("RecursiveType_Invalid_5");
 	}
 
+	@Ignore("Missing RecursiveType_Invalid_6.sysout")
 	@Test
 	public void test_RecursiveType_Invalid_6() {
 		util.exec("RecursiveType_Invalid_6");
 	}
-
+	
+	@Ignore("Missing RecursiveType_Invalid_7.sysout")
 	@Test
 	public void test_RecursiveType_Invalid_7() {
 		util.exec("RecursiveType_Invalid_7");
 	}
-
+	@Ignore("Missing RecursiveType_Invalid_8.sysout")
 	@Test
 	public void test_RecursiveType_Invalid_8() {
 		util.exec("RecursiveType_Invalid_8");
 	}
-
+	@Ignore("Missing RecursiveType_Invalid_9.sysout")
 	@Test
 	public void test_RecursiveType_Invalid_9() {
 		util.exec("RecursiveType_Invalid_9");

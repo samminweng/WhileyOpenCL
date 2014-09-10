@@ -49,6 +49,8 @@ public class WyopclMain extends WycMain{
 		if (classDir != null) {
 			((WyopclBuildTask) builder).setClassDir(classDir);
 		}
+		//Enable the verification
+		builder.setVerification(true);
 	}
 	
 	

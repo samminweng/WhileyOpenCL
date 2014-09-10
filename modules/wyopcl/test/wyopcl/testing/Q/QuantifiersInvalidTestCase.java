@@ -43,12 +43,12 @@ public class QuantifiersInvalidTestCase {
 	public void test_Quantifiers_Invalid_4() {
 		util.exec("Quantifiers_Invalid_4");
 	}
-	
+	@Ignore("The main function in the wyil contains only one 'return' bytecode.")
 	@Test
 	public void test_Quantifiers_Invalid_5() {
 		util.exec("Quantifiers_Invalid_5");
 	}
-	
+	@Ignore("The main function in the wyil contains only one 'return' bytecode.")
 	@Test
 	public void test_Quantifiers_Invalid_6() {
 		util.exec("Quantifiers_Invalid_6");

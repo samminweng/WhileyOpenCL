@@ -57,7 +57,7 @@ public class FunctionInvalidTestCase {
 	public void test_FunctionRef_Invalid_7() {
 		util.exec("FunctionRef_Invalid_7");
 	}
-
+	@Ignore("Missing FunctionRef_Invalid_9.sysout")
 	@Test
 	public void test_FunctionRef_Invalid_9() {
 		util.exec("FunctionRef_Invalid_9");
@@ -68,11 +68,12 @@ public class FunctionInvalidTestCase {
 		util.exec("Function_Invalid_1");
 	}
 
+	@Ignore("Missing Function_Invalid_10.sysout")
 	@Test
 	public void test_Function_Invalid_10() {
 		util.exec("Function_Invalid_10");
 	}	
-
+	@Ignore("Missing Function_Invalid_2.sysout")
 	@Test
 	public void test_Function_Invalid_2() {
 		util.exec("Function_Invalid_2");
@@ -87,7 +88,7 @@ public class FunctionInvalidTestCase {
 	public void test_Function_Invalid_4() {
 		util.exec("Function_Invalid_4");
 	}
-	
+	@Ignore("Missing Function_Invalid_9.sysout")
 	@Test
 	public void test_Function_Invalid_9() {
 		util.exec("Function_Invalid_9");

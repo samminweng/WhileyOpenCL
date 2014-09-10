@@ -32,7 +32,7 @@ public class EnsuresInvalidTestCase {
 	public void test_Ensures_Invalid_2() {
 		util.exec("Ensures_Invalid_2");
 	}
-
+	
 	@Test
 	public void test_Ensures_Invalid_3() {
 		util.exec("Ensures_Invalid_3");
