@@ -69,7 +69,6 @@ public class ConstrainedInvalidTestCase {
 		util.exec("ConstrainedInt_Invalid_5");
 	}
 	
-	@Ignore("The main function in the wyil contains only one 'return' bytecode.")
 	@Test
 	public void test_ConstrainedInt_Invalid_6() {
 		util.exec("ConstrainedInt_Invalid_6");
