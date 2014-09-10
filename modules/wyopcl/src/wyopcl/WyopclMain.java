@@ -119,9 +119,6 @@ public class WyopclMain extends WycMain{
 				e.printStackTrace(stderr);
 			}
 			return SYNTAX_ERROR;
-		} catch(Error e){//Assertion error.
-			//Print out the error message.
-			
 		} catch (Throwable e) {
 			stderr.println("" + e.getMessage() + "");
 			if (verbose) {

@@ -48,7 +48,8 @@ public final class DecimalFraction extends Constant {
 
 	@Override
 	public String toString() {
-		if(this.denominator.value.compareTo(BigInteger.ONE)==0){
+		//Check if the quotient is not null and positive.
+		if(this.quotient != null && this.denominator.value.compareTo(BigInteger.ONE)==0){
 			return this.quotient.toString();
 		}else{
 			return "("+this.numerator+"/"+this.denominator+")";	

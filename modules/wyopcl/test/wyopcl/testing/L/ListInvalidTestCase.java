@@ -11,7 +11,7 @@ import org.junit.rules.Timeout;
 import wyopcl.testing.BaseTestUtil;
 
 public class ListInvalidTestCase {
-	@Rule public TestRule timeout = new Timeout(5000);
+	//@Rule public TestRule timeout = new Timeout(5000);
 	private BaseTestUtil util;	
 	@Before
 	public void setUp() throws Exception {
