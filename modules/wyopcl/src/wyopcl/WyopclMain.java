@@ -106,7 +106,7 @@ public class WyopclMain extends WycMain{
 			builder.build(delta);
 
 		} catch (InternalFailure e) {
-			e.outputSourceError(stderr,brief);
+			e.outputSourceError(stderr,false);
 			if (verbose) {
 				e.printStackTrace(stderr);
 			}
@@ -117,8 +117,11 @@ public class WyopclMain extends WycMain{
 				e.printStackTrace(stderr);
 			}
 			return SYNTAX_ERROR;
+		} catch(Error e){//Assertion error.
+			//Print out the error message.
+			
 		} catch (Throwable e) {
-			stderr.println("internal failure (" + e.getMessage() + ")");
+			stderr.println("" + e.getMessage() + "");
 			if (verbose) {
 				e.printStackTrace(stderr);
 			}

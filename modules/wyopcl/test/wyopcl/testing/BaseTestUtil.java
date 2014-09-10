@@ -115,7 +115,7 @@ public final class BaseTestUtil {
 				String expected = iterator.next();
 				System.out.println(output);				
 				//Check if the output matches the regular expression for file path.
-				if(output.matches(".*"+path_whiley+":\\d:.*.")){
+				if(output.matches(".*"+path_whiley+":\\d+:.*.")){
 					String[] out_array = output.split(":");
 					String[] expected_array = expected.split(":");
 					assertEquals(expected_array[1], out_array[1]);

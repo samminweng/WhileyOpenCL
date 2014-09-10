@@ -30,6 +30,7 @@ import wyil.lang.Type.FunctionOrMethod;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.Case;
 import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
+import wyil.transforms.RuntimeAssertions;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
 import wyopcl.interpreter.SymbolTable;
@@ -40,6 +41,7 @@ import wyopcl.interpreter.C.ConstantInterpreter;
 import wyopcl.interpreter.C.ConvertInterpreter;
 import wyopcl.interpreter.D.DebugInterpreter;
 import wyopcl.interpreter.D.DereferenceInterpreter;
+import wyopcl.interpreter.F.FailInterpreter;
 import wyopcl.interpreter.F.FieldLoadInterpreter;
 import wyopcl.interpreter.F.ForAllInterpreter;
 import wyopcl.interpreter.G.GotoInterpreter;
@@ -257,7 +259,6 @@ public class WyilInterpreter extends Interpreter implements Builder{
 
 	private void dispatch(Block.Entry entry, StackFrame stackframe) {	
 		Code code = entry.code;
-
 		try{
 			if (code instanceof Codes.AssertOrAssume) {			
 				AssertOrAssumeInterpreter.getInstance().interpret((Codes.AssertOrAssume)code, stackframe);
@@ -277,6 +278,8 @@ public class WyilInterpreter extends Interpreter implements Builder{
 				DebugInterpreter.getInstance().interpret((Codes.Debug)code, stackframe);
 			} else if (code instanceof Codes.Dereference) {
 				DereferenceInterpreter.getInstance().interpret((Codes.Dereference)code, stackframe);
+			} else if (code instanceof Codes.Fail) {
+				FailInterpreter.getInstance().interpret((Codes.Fail)code, stackframe);
 			} else if (code instanceof Codes.FieldLoad) {		
 				FieldLoadInterpreter.getInstance().interpret((Codes.FieldLoad)code, stackframe);			
 			} else if (code instanceof Codes.ForAll) {				
@@ -344,8 +347,8 @@ public class WyilInterpreter extends Interpreter implements Builder{
 			} else {
 				internalFailure("unknown wyil code encountered (" + code + ")", filename, entry);
 			}
-		}catch (SyntaxError ex) {
-			throw ex;
+		} catch (SyntaxError ex) {
+			throw ex;	
 		} catch (Exception ex) {		
 			internalFailure(ex.getMessage(), filename, entry, ex);
 		}
