@@ -40,7 +40,13 @@ public class BinaryOperatorInterpreter extends Interpreter {
 				return ((Constant.Integer)left).add((Constant.Integer)right);
 			}else if (left instanceof Constant.Decimal){
 				return ((Constant.Decimal)left).add(((Constant.Decimal)right));
-			}else {
+			}else if (left instanceof Constant.Char){
+				//Char + char
+				char ch_left = ((Constant.Char)left).value;
+				char ch_right= ((Constant.Char)right).value;
+				char result = (char)((int)ch_left + (int)ch_right);
+				return Constant.V_CHAR(result);
+			} else {
 				internalFailure("Not implemented!", "BinaryOperatorInterpreter.java", null);
 				return null;
 			}
