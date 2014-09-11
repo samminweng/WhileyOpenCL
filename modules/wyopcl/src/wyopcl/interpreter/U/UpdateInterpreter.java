@@ -86,27 +86,26 @@ public class UpdateInterpreter extends Interpreter {
 		Constant.Record record = (Constant.Record) stackframe.getRegister(code.target());
 		Constant givenValue = stackframe.getRegister(code.result());
 		HashMap<String, Constant> values = new HashMap<String, Constant>(record.values);
+		ArrayList fields = code.fields;
 		String field = code.fields.get(0);
 
 		// Get the field value
 		Constant fieldValue = values.get(field);
 		if (fieldValue instanceof Constant.List) {
-			Constant.List list = (Constant.List) fieldValue;
 			int index = ((Constant.Integer) stackframe.getRegister(code.key(0))).value.intValue();
-			return update(record, update(list, givenValue, index), field);
+			return update(record, update((Constant.List) fieldValue, givenValue, index), field);
 			//list.values.set(index, assignedValue);
 		} else if (fieldValue instanceof Constant.Integer || fieldValue instanceof Constant.Bool) {
 			return update(record, givenValue, field);
 		} else if (fieldValue instanceof Constant.Record){
-			Constant.Record fieldValue2 = (Constant.Record)fieldValue;
+			//Check if there is another field that requires to update the given value.
 			if(code.fields.size() == 2){
-				String field2 = code.fields.get(1);
-				Constant.Record updateField = update(fieldValue2, givenValue, field2);
-				return update(record, updateField, field);
-			}else{
-				internalFailure("Not implemented!", "UpdateInterpreter.java", null);
-				return null;
-			}
+				//Do the update for the nested record. 
+				return update(record, update((Constant.Record)fieldValue, givenValue, code.fields.get(1)), field);
+			}			
+			return update(record, givenValue, field);
+		} else if (fieldValue instanceof Constant.Null){
+			return update(record, givenValue, field);			
 		} else {
 			internalFailure("Not implemented!", "UpdateInterpreter.java", null);
 			return null;
