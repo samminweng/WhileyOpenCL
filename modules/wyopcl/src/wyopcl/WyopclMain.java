@@ -49,8 +49,11 @@ public class WyopclMain extends WycMain{
 		if (classDir != null) {
 			((WyopclBuildTask) builder).setClassDir(classDir);
 		}
-		//Enable the verification
-		builder.setVerification(true);
+		
+		
+		boolean verbose = values.containsKey("verbose");
+		builder.setVerbose(verbose);
+		
 	}
 	
 	
@@ -94,7 +97,15 @@ public class WyopclMain extends WycMain{
 			for (String arg : args) {
 				File f = new File(arg);
 				if(f.exists()){
-					delta.add(f);
+					delta.add(f);					
+					//Check if the test case is valid. If so, then disable the verification.
+					if(f.getName().matches(".*_Valid_*.*")){
+						//Current the verification does not support the bitwise operation.
+						builder.setVerification(false);
+					}else{
+						//Enable the verification
+						builder.setVerification(true);
+					}					
 				}else{
 					arguments.add(arg);
 				}
