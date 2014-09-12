@@ -12,6 +12,7 @@ import java.util.TreeSet;
 import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyjc.runtime.WyList;
+import wyjc.runtime.WyRat;
 import wyopcl.interpreter.Closure;
 import wyopcl.interpreter.DecimalFraction;
 
@@ -149,6 +150,12 @@ public final class Utility {
 		} else if (constant instanceof Constant.Char) {
 			return ((Constant.Char) constant).value;
 		} else if (constant instanceof Constant.Decimal) {
+			//Check if the returned type is WyRat
+			if(paramType.equals(WyRat.class)){	
+				Constant.Decimal decimal = (Constant.Decimal)constant;
+				WyRat rat = new WyRat(decimal.value);
+				return rat;
+			}			
 			return (Constant.Decimal) constant;			
 		}else if (constant instanceof DecimalFraction){
 			return Constant.V_STRING(((DecimalFraction)constant).toString());

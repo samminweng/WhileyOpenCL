@@ -38,7 +38,7 @@ public class UpdateInterpreter extends Interpreter {
 			values.add(Utility.copyConstant(constant));
 		}
 
-		if (values.size() < updateIndex) {
+		if (values.size() <=updateIndex) {
 			values.add(givenValue);
 		} else {			
 			values.set(updateIndex, givenValue);
@@ -98,8 +98,14 @@ public class UpdateInterpreter extends Interpreter {
 		// Get the field value
 		Constant fieldValue = values.get(field);
 		if (fieldValue instanceof Constant.List) {
-			int index = ((Constant.Integer) stackframe.getRegister(code.key(0))).value.intValue();
-			givenValue = update((Constant.List) fieldValue, givenValue, index);	
+			Constant.List list = (Constant.List) fieldValue;
+			int index = 0;
+			//Check if the list is empty. If so, then get the updated index.
+			if(!list.values.isEmpty()){
+				index = ((Constant.Integer) stackframe.getRegister(code.key(0))).value.intValue();
+			}
+			//Update the list with the given value.
+			givenValue = update(list, givenValue, index);	
 		}
 
 		if (fieldValue instanceof Constant.Record && fields.length == 2){

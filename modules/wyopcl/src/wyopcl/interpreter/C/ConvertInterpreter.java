@@ -474,14 +474,39 @@ public class ConvertInterpreter extends Interpreter {
 
 			}
 
-			// internalFailure("Not implemented!", "ConvertInterpreter.java",
-			// null);
+			
 			return record;
 
 		}
 
 		return constant;
 	}
+	
+	private Constant toConstantReference(Constant constant, Type fromType, Type.Reference toType) {
+		if (constant instanceof Constant.Record) {
+			Constant.Record record = (Constant.Record) constant;
+			Type.Record toElemType = (Type.Record)toType.element();
+			Type.Record fromElemType = (Type.Record)((Type.Reference)fromType).element();
+			HashMap<String, Constant> convertedValues = new HashMap<String, Constant>();
+			Iterator<Entry<String, Constant>> iterator = record.values.entrySet().iterator();
+			while(iterator.hasNext()){
+				Entry<String, Constant> entry = iterator.next();
+				String field = entry.getKey();
+				Type fromFieldType = fromElemType.field(field);
+				Type toFieldType = toElemType.field(field);
+				Constant value = castConstanttoConstant(entry.getValue(),fromFieldType,toFieldType);
+				convertedValues.put(field, value);
+			}
+			
+
+			return Constant.V_RECORD(convertedValues);
+
+		}
+		internalFailure("Not implemented!", "ConvertInterpreter.java", null);
+		return null;
+	}
+	
+	
 
 	/***
 	 * Cast a Constant object to the Constant object of a specific type.
@@ -529,6 +554,8 @@ public class ConvertInterpreter extends Interpreter {
 			return toConstantUnion(constant, fromType, (Type.Union) toType);
 		} else if (toType instanceof Type.Strung) {
 			return toConstantStrung(constant, fromType, (Type.Strung) toType);
+		} else if (toType instanceof Type.Reference){
+			return toConstantReference(constant, fromType, (Type.Reference)toType);
 		} else {
 			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
 			return null;
