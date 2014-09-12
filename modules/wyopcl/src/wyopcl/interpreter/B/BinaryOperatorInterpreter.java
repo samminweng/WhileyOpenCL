@@ -42,10 +42,8 @@ public class BinaryOperatorInterpreter extends Interpreter {
 				return ((Constant.Decimal)left).add(((Constant.Decimal)right));
 			}else if (left instanceof Constant.Char){
 				//Char + char
-				char ch_left = ((Constant.Char)left).value;
-				char ch_right= ((Constant.Char)right).value;
-				char result = (char)((int)ch_left + (int)ch_right);
-				return Constant.V_CHAR(result);
+				int add = ((int)((Constant.Char)left).value + (int)((Constant.Char)right).value);
+				return Constant.V_CHAR((char)add);
 			} else {
 				internalFailure("Not implemented!", "BinaryOperatorInterpreter.java", null);
 				return null;
@@ -55,7 +53,14 @@ public class BinaryOperatorInterpreter extends Interpreter {
 				return ((Constant.Integer)left).subtract((Constant.Integer)right);
 			}else if (left instanceof Constant.Decimal){
 				return ((Constant.Decimal)left).subtract(((Constant.Decimal)right));
-			}else {
+			}else if (left instanceof Constant.Char){
+				// Char - Char
+				int left_int = (int)((Constant.Char)left).value;
+				int right_int = (int)((Constant.Char)right).value;
+				int diff = left_int - right_int;
+				//Cast the integeral diff into a char
+				return Constant.V_CHAR((char)diff);
+			} else {
 				internalFailure("Not implemented!", "BinaryOperatorInterpreter.java", null);
 				return null;
 			}		
@@ -64,6 +69,10 @@ public class BinaryOperatorInterpreter extends Interpreter {
 				return ((Constant.Integer)left).multiply((Constant.Integer)right);
 			}else if (left instanceof Constant.Decimal){
 				return ((Constant.Decimal)left).multiply(((Constant.Decimal)right));
+			}else if (left instanceof Constant.Char){
+				//Char * char
+				int mul = (int)((Constant.Char)left).value * (int)((Constant.Char)right).value;
+				return Constant.V_INTEGER(BigInteger.valueOf(mul));
 			}else {
 				internalFailure("Not implemented!", "BinaryOperatorInterpreter.java", null);
 				return null;

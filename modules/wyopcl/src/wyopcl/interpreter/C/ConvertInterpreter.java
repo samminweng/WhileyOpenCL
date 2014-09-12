@@ -85,7 +85,13 @@ public class ConvertInterpreter extends Interpreter {
 	private Constant.Record toConstantRecord(Constant constant, Type fromType, Type.Record toType) {
 		Constant.Record record = (Constant.Record) constant;
 		Type fromKeyType, toKeyType = null;
-		HashMap<String, Type> fromTypeValues = ((Type.Record) fromType).fields();
+		HashMap<String, Type> fromFieldTypes = null;
+		if(fromType instanceof Type.Record){
+			fromFieldTypes = ((Type.Record) fromType).fields();
+		}else if (fromType instanceof Type.UnionOfRecords){
+			fromFieldTypes = ((Type.UnionOfRecords)fromType).fields();
+		}
+		
 		HashMap<String, Type> toElemTypeValues = toType.fields();
 
 		Map<String, Constant> map = new HashMap<String, Constant>();
@@ -94,7 +100,7 @@ public class ConvertInterpreter extends Interpreter {
 			Entry<String, Constant> entry = iterator.next();
 			Constant value = entry.getValue();
 			String key = entry.getKey();
-			fromKeyType = fromTypeValues.get(key);
+			fromKeyType = fromFieldTypes.get(key);
 			toKeyType = toElemTypeValues.get(key);
 			map.put(entry.getKey(), castConstanttoConstant(value, fromKeyType, toKeyType));
 		}
@@ -438,7 +444,7 @@ public class ConvertInterpreter extends Interpreter {
 		return constant;
 	}
 	
-	private Constant toConstantUnionTuples(Constant constant, Type fromType, Type.UnionOfRecords toType) {
+	private Constant toConstantUnionRecords(Constant constant, Type fromType, Type.UnionOfRecords toType) {
 		if (constant instanceof Constant.Record) {
 			Constant.Record record = (Constant.Record) constant;
 			Iterator<Type> iterator = toType.bounds().iterator();
@@ -501,7 +507,7 @@ public class ConvertInterpreter extends Interpreter {
 		} else if (toType instanceof Type.UnionOfTuples){
 			return toConstantUnionTuples(constant, fromType, (Type.UnionOfTuples)toType);
 		} else if (toType instanceof Type.UnionOfRecords){
-			return toConstantUnionTuples(constant, fromType, (Type.UnionOfRecords)toType);
+			return toConstantUnionRecords(constant, fromType, (Type.UnionOfRecords)toType);
 		} else if (toType instanceof Type.Union) {
 			return toConstantUnion(constant, fromType, (Type.Union)toType);
 		} else if (toType instanceof Type.Strung) {
