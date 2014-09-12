@@ -5,12 +5,10 @@ import static wycc.lang.SyntaxError.internalFailure;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -19,8 +17,8 @@ import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyopcl.interpreter.DecimalFraction;
-import wyopcl.interpreter.StackFrame;
 import wyopcl.interpreter.Interpreter;
+import wyopcl.interpreter.StackFrame;
 
 public class ConvertInterpreter extends Interpreter {
 	private static ConvertInterpreter instance;
@@ -179,17 +177,32 @@ public class ConvertInterpreter extends Interpreter {
 		HashSet<Constant> values = new HashSet<Constant>();
 		Iterator<Constant> iterator = null;
 
-		if (fromType instanceof Type.Set) {
-			iterator = ((Constant.Set) constant).values.iterator();
+		if (fromType instanceof Type.Set) {			
 			fromElemType = ((Type.Set) fromType).element();
-		} else if (fromType instanceof Type.List) {
-			iterator = ((Constant.List) constant).values.iterator();
+		} else if (fromType instanceof Type.List) {			
 			fromElemType = ((Type.List) fromType).element();
+		} else if (fromType instanceof Type.UnionOfCollections){
+			fromElemType = ((Type.UnionOfCollections)fromType).element();
 		} else {
 			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
 		}
-
+		
 		Type toElemType = ((Type.Set) toType).element();
+		if(constant instanceof Constant.Set){
+			iterator = ((Constant.Set) constant).values.iterator();
+		} else if (constant instanceof Constant.List){
+			iterator = ((Constant.List) constant).values.iterator();
+		} else if (constant instanceof Constant.Strung){
+			Constant.Strung strung = (Constant.Strung)constant;
+			char[] charArray = strung.value.toCharArray();
+			for(char ch: charArray){
+				values.add(castConstanttoConstant(Constant.V_CHAR(ch), fromElemType, toElemType));
+			}
+			return Constant.V_SET(values);
+		} else {
+			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
+		}
+		
 		while (iterator.hasNext()) {
 			Constant next = iterator.next();
 			// Cast the elements in the from set.
