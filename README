@@ -33,10 +33,10 @@ Note that if you encounter the permission problem while running the
 wyopcl shell script, use the below command:
 $ chmod a+x ../bin/*
 
-Or the interpreter can be verified with 616 test cases with the command:
+Or the interpreter can be verified with 905 test cases with the command:
 $ ant report
-The unit test results are summarized at 'report/html/index.html'. 
-The current success rate is 93.67% (Failures: 16, Errors: 23, Skipped: 51).
+The unit test results are summarized at 'report/index.html'. 
+The current success rate is 96.02% (Failures: 27, Errors: 9, Skipped: 117).
 
 2. Whiley-to-OpenCL translator
 The Whiley-to-OpenCL translator is written in Java and aims to generate
