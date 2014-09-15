@@ -55,11 +55,12 @@ public class BinaryOperatorInterpreter extends Interpreter {
 				return ((Constant.Decimal)left).subtract(((Constant.Decimal)right));
 			}else if (left instanceof Constant.Char){
 				// Char - Char
-				int left_int = (int)((Constant.Char)left).value;
-				int right_int = (int)((Constant.Char)right).value;
-				int diff = left_int - right_int;
-				//Cast the integeral diff into a char
-				return Constant.V_CHAR((char)diff);
+				char left_char = ((Constant.Char)left).value;
+				char right_char = ((Constant.Char)right).value;
+				//Subtract one char with another.
+				int diff =  (left_char -  right_char);
+				//Return the integeral diff.
+				return Constant.V_INTEGER(BigInteger.valueOf(diff));
 			} else {
 				internalFailure("Not implemented!", "BinaryOperatorInterpreter.java", null);
 				return null;
