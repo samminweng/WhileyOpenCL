@@ -27,13 +27,13 @@ public class TypeEqualsInvalidTestCase {
 	public void test_TypeEquals_Invalid_1() {
 		util.exec("TypeEquals_Invalid_1");
 	}	
-
+	
 	@Test
 	public void test_TypeEquals_Invalid_2() {
 		util.exec("TypeEquals_Invalid_2");
 	}
 	
-	
+	@Ignore("Missing TypeEquals_Invalid_5.sysout")
 	@Test
 	public void test_TypeEquals_Invalid_5() {
 		util.exec("TypeEquals_Invalid_5");

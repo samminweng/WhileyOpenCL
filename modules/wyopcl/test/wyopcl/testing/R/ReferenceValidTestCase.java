@@ -26,6 +26,7 @@ public class ReferenceValidTestCase {
 		util = null;
 	}
 	
+	@Ignore("Missing Reference_Valid_1.sysout")
 	@Test
 	public void test_Reference_Valid_1() {
 		util.exec("Reference_Valid_1");
