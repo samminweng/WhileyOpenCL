@@ -219,7 +219,7 @@ public class ConvertInterpreter extends Interpreter {
 	}
 
 	private Constant.Integer toConstantInt(Constant constant, Type fromType, Type.Int toType) {
-		if (fromType.equals(toType)) {
+		if (fromType.equals(toType) || constant instanceof Constant.Integer) {
 			return (Constant.Integer) constant;
 		}
 		if (fromType instanceof Type.Real) {
