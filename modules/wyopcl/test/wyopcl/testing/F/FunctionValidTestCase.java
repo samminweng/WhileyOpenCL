@@ -44,7 +44,6 @@ public class FunctionValidTestCase {
 	}
 
 	@Test
-	@Ignore("Timeout")
 	public void test_FunctionRef_Valid_4() {
 		util.exec("FunctionRef_Valid_4");
 	}

@@ -27,7 +27,6 @@ public class CharValidTestCase {
 	}
 
 	@Test
-	@Ignore("Timeout")
 	public void test_Char_Valid_1() {
 		util.exec("Char_Valid_1");
 	}
