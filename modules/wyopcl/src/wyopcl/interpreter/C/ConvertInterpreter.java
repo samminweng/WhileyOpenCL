@@ -491,6 +491,11 @@ public class ConvertInterpreter extends Interpreter {
 		return constant;
 	}
 	
+	private Constant toConstantFunction(Constant constant, Type fromType, Type.Function toType) {
+		//Converting a reference to another reference does not require type-casting.
+		return constant;
+	}
+	
 	
 
 	/***
@@ -541,6 +546,8 @@ public class ConvertInterpreter extends Interpreter {
 			return toConstantStrung(constant, fromType, (Type.Strung) toType);
 		} else if (toType instanceof Type.Reference){
 			return toConstantReference(constant, fromType, (Type.Reference)toType);
+		} else if (toType instanceof Type.Function){
+			return toConstantFunction(constant, fromType, (Type.Function)toType);
 		} else {
 			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
 			return null;

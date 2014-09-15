@@ -1,7 +1,11 @@
 package wyopcl.interpreter;
 
 import wyil.lang.Constant;
-
+/**
+ * This class stores all the information about Lambda function
+ * @author mw169
+ *
+ */
 public final class Closure extends Constant {
 	public final Constant.Lambda lambda;
 	public final Constant.Tuple params;

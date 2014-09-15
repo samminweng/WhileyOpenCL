@@ -133,12 +133,77 @@ public class RecursiveValidTestCase {
 		util.exec("RecursiveType_Valid_28");
 	}
 
+	/**
+	 .\RecursiveType_Valid_3.whiley:19: record required, got: X<[Y<X|{Y index,Z<{Z index,Z src}|int|real|[Z]> src}|{Z<{Z index,Z src}|int|real|[Z]> index,Y src}>+]>|{Z<{Z index,Z src}|int|real|[Z]> index,Z<{Z index,Z src}|int|real|[Z]> src}
+            Value src = evaluate(e.src)
+                                 ^^^^^
+wycc.lang.SyntaxError: record required, got: X<[Y<X|{Y index,Z<{Z index,Z src}|int|real|[Z]> src}|{Z<{Z index,Z src}|int|real|[Z]> index,Y src}>+]>|{Z<{Z index,Z src}|int|real|[Z]> index,Z<{Z index,Z src}|int|real|[Z]> src}
+	at wycc.lang.SyntaxError.syntaxError(SyntaxError.java:238)
+	at wyc.lang.WhileyFile.syntaxError(WhileyFile.java:620)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:2327)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:1674)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:2108)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:1681)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:428)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:323)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:298)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:767)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:329)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:298)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:767)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:329)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:298)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:264)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:145)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:135)
+	at wyc.builder.WhileyBuilder.build(WhileyBuilder.java:181)
+	at wybs.util.StdBuildRule.apply(StdBuildRule.java:109)
+	at wybs.util.StdProject.build(StdProject.java:256)
+	at wyc.util.WycBuildTask.buildEntries(WycBuildTask.java:503)
+	at wyc.util.WycBuildTask.build(WycBuildTask.java:471)
+	at wyopcl.WyopclMain.run(WyopclMain.java:119)
+	at wyopcl.WyopclMain.main(WyopclMain.java:148)
+	 
+	  */
 	@Test
+	@Ignore("SyntaxError")
 	public void test_RecursiveType_Valid_3() {
 		util.exec("RecursiveType_Valid_3");
 	}
 
+	/**
+	 .\RecursiveType_Valid_4.whiley:23: record required, got: X<[Y<X|{Y index,Z<{Z index,Z src}|int|real|[Z]> src}|{Z<{Z index,Z src}|int|real|[Z]> index,Y src}>+]>|{Z<{Z index,Z src}|int|real|[Z]> index,Z<{Z index,Z src}|int|real|[Z]> src}
+            null|Value src = evaluate(e.src)
+                                      ^^^^^
+wycc.lang.SyntaxError: record required, got: X<[Y<X|{Y index,Z<{Z index,Z src}|int|real|[Z]> src}|{Z<{Z index,Z src}|int|real|[Z]> index,Y src}>+]>|{Z<{Z index,Z src}|int|real|[Z]> index,Z<{Z index,Z src}|int|real|[Z]> src}
+	at wycc.lang.SyntaxError.syntaxError(SyntaxError.java:238)
+	at wyc.lang.WhileyFile.syntaxError(WhileyFile.java:620)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:2327)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:1674)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:2108)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:1681)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:428)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:323)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:298)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:767)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:329)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:298)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:767)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:329)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:298)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:264)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:145)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:135)
+	at wyc.builder.WhileyBuilder.build(WhileyBuilder.java:181)
+	at wybs.util.StdBuildRule.apply(StdBuildRule.java:109)
+	at wybs.util.StdProject.build(StdProject.java:256)
+	at wyc.util.WycBuildTask.buildEntries(WycBuildTask.java:503)
+	at wyc.util.WycBuildTask.build(WycBuildTask.java:471)
+	at wyopcl.WyopclMain.run(WyopclMain.java:119)
+	at wyopcl.WyopclMain.main(WyopclMain.java:148)
+	 */
 	@Test
+	@Ignore("SyntaxError")
 	public void test_RecursiveType_Valid_4() {
 		util.exec("RecursiveType_Valid_4");
 	}
