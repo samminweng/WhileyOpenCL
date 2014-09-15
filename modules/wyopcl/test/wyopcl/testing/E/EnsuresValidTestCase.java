@@ -51,7 +51,6 @@ public class EnsuresValidTestCase {
 		util.exec("Ensures_Valid_5");
 	}
 
-	@Ignore("???")
 	@Test
 	public void test_Ensures_Valid_6() {
 		util.exec("Ensures_Valid_6");

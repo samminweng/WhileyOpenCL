@@ -66,7 +66,6 @@ public class UnionValidTestCase {
 		util.exec("UnionType_Valid_16");
 	}
 
-	@Ignore("Issue ???")
 	@Test
 	public void test_UnionType_Valid_17() {
 		util.exec("UnionType_Valid_17");

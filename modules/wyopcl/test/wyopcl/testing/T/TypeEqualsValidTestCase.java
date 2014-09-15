@@ -101,7 +101,35 @@ public class TypeEqualsValidTestCase {
 		util.exec("TypeEquals_Valid_22");
 	}
 
-	@Ignore("Issue ???")
+	/**
+	 * .\TypeEquals_Valid_23.whiley:11: expecting int or real or char, found TypeEquals_Valid_23:expr
+        return e + 1
+               ^
+wycc.lang.SyntaxError: expecting int or real or char, found TypeEquals_Valid_23:expr
+	at wycc.lang.SyntaxError.syntaxError(SyntaxError.java:238)
+	at wyc.lang.WhileyFile.syntaxError(WhileyFile.java:620)
+	at wyc.builder.FlowTypeChecker.checkSuptypes(FlowTypeChecker.java:4133)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:1883)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:1660)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:797)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:327)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:298)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:767)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:329)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:298)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:264)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:145)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:135)
+	at wyc.builder.WhileyBuilder.build(WhileyBuilder.java:181)
+	at wybs.util.StdBuildRule.apply(StdBuildRule.java:109)
+	at wybs.util.StdProject.build(StdProject.java:256)
+	at wyc.util.WycBuildTask.buildEntries(WycBuildTask.java:503)
+	at wyc.util.WycBuildTask.build(WycBuildTask.java:471)
+	at wyopcl.WyopclMain.run(WyopclMain.java:119)
+	at wyopcl.WyopclMain.main(WyopclMain.java:148)
+
+	 */
+	@Ignore("SyntaxError")
 	@Test
 	public void test_TypeEquals_Valid_23() {
 		util.exec("TypeEquals_Valid_23");
@@ -136,8 +164,29 @@ public class TypeEqualsValidTestCase {
 	public void test_TypeEquals_Valid_29() {
 		util.exec("TypeEquals_Valid_29");
 	}
+/**
+ * .\TypeEquals_Valid_3.whiley:6: unknown variable
+    r = []
+    ^
+wycc.lang.SyntaxError: unknown variable
+	at wycc.lang.SyntaxError.syntaxError(SyntaxError.java:238)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:1021)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:462)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:325)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:298)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:264)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:145)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:135)
+	at wyc.builder.WhileyBuilder.build(WhileyBuilder.java:181)
+	at wybs.util.StdBuildRule.apply(StdBuildRule.java:109)
+	at wybs.util.StdProject.build(StdProject.java:256)
+	at wyc.util.WycBuildTask.buildEntries(WycBuildTask.java:503)
+	at wyc.util.WycBuildTask.build(WycBuildTask.java:471)
+	at wyopcl.WyopclMain.run(WyopclMain.java:119)
+	at wyopcl.WyopclMain.main(WyopclMain.java:148)
 
-	@Ignore("issue ???")
+ */
+	@Ignore("SyntaxError")
 	@Test
 	public void test_TypeEquals_Valid_3() {
 		util.exec("TypeEquals_Valid_3");
@@ -172,20 +221,115 @@ public class TypeEqualsValidTestCase {
 	public void test_TypeEquals_Valid_35() {
 		util.exec("TypeEquals_Valid_35");
 	}
-
-	@Ignore("Issue ???")
+/**
+ * .\TypeEquals_Valid_36.whiley:10: found int|[int], expected string, set, list or dictionary.
+    if (t.lhs is plist) && ((|t.lhs| > 0) && (t.lhs[0] == 0)):
+                              ^^^^^
+wycc.lang.SyntaxError: found int|[int], expected string, set, list or dictionary.
+	at wycc.lang.SyntaxError.syntaxError(SyntaxError.java:238)
+	at wyc.lang.WhileyFile.syntaxError(WhileyFile.java:620)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:2173)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:1691)
+	at wyc.builder.FlowTypeChecker.resolveLeafCondition(FlowTypeChecker.java:1458)
+	at wyc.builder.FlowTypeChecker.propagateCondition(FlowTypeChecker.java:1356)
+	at wyc.builder.FlowTypeChecker.propagateCondition(FlowTypeChecker.java:1263)
+	at wyc.builder.FlowTypeChecker.resolveNonLeafCondition(FlowTypeChecker.java:1396)
+	at wyc.builder.FlowTypeChecker.propagateCondition(FlowTypeChecker.java:1345)
+	at wyc.builder.FlowTypeChecker.propagateCondition(FlowTypeChecker.java:1263)
+	at wyc.builder.FlowTypeChecker.resolveNonLeafCondition(FlowTypeChecker.java:1398)
+	at wyc.builder.FlowTypeChecker.propagateCondition(FlowTypeChecker.java:1345)
+	at wyc.builder.FlowTypeChecker.propagateCondition(FlowTypeChecker.java:1263)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:755)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:329)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:298)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:264)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:145)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:135)
+	at wyc.builder.WhileyBuilder.build(WhileyBuilder.java:181)
+	at wybs.util.StdBuildRule.apply(StdBuildRule.java:109)
+	at wybs.util.StdProject.build(StdProject.java:256)
+	at wyc.util.WycBuildTask.buildEntries(WycBuildTask.java:503)
+	at wyc.util.WycBuildTask.build(WycBuildTask.java:471)
+	at wyopcl.WyopclMain.run(WyopclMain.java:119)
+	at wyopcl.WyopclMain.main(WyopclMain.java:148)
+ */
+	@Ignore("SyntaxError")
 	@Test
 	public void test_TypeEquals_Valid_36() {
 		util.exec("TypeEquals_Valid_36");
 	}
+/**
+ * .\TypeEquals_Valid_37.whiley:10: found int|[int], expected string, set, list or dictionary.
+    if (t.lhs is plist) && ((|t.lhs| > 0) && (t.lhs[0] == 0)):
+                              ^^^^^
+wycc.lang.SyntaxError: found int|[int], expected string, set, list or dictionary.
+	at wycc.lang.SyntaxError.syntaxError(SyntaxError.java:238)
+	at wyc.lang.WhileyFile.syntaxError(WhileyFile.java:620)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:2173)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:1691)
+	at wyc.builder.FlowTypeChecker.resolveLeafCondition(FlowTypeChecker.java:1458)
+	at wyc.builder.FlowTypeChecker.propagateCondition(FlowTypeChecker.java:1356)
+	at wyc.builder.FlowTypeChecker.propagateCondition(FlowTypeChecker.java:1263)
+	at wyc.builder.FlowTypeChecker.resolveNonLeafCondition(FlowTypeChecker.java:1396)
+	at wyc.builder.FlowTypeChecker.propagateCondition(FlowTypeChecker.java:1345)
+	at wyc.builder.FlowTypeChecker.propagateCondition(FlowTypeChecker.java:1263)
+	at wyc.builder.FlowTypeChecker.resolveNonLeafCondition(FlowTypeChecker.java:1398)
+	at wyc.builder.FlowTypeChecker.propagateCondition(FlowTypeChecker.java:1345)
+	at wyc.builder.FlowTypeChecker.propagateCondition(FlowTypeChecker.java:1263)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:755)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:329)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:298)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:264)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:145)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:135)
+	at wyc.builder.WhileyBuilder.build(WhileyBuilder.java:181)
+	at wybs.util.StdBuildRule.apply(StdBuildRule.java:109)
+	at wybs.util.StdProject.build(StdProject.java:256)
+	at wyc.util.WycBuildTask.buildEntries(WycBuildTask.java:503)
+	at wyc.util.WycBuildTask.build(WycBuildTask.java:471)
+	at wyopcl.WyopclMain.run(WyopclMain.java:119)
+	at wyopcl.WyopclMain.main(WyopclMain.java:148)
 
-	@Ignore("Issue ???")
+ */
+	@Ignore("SyntaxError")
 	@Test
 	public void test_TypeEquals_Valid_37() {
 		util.exec("TypeEquals_Valid_37");
 	}
 
-	@Ignore("Issue ???")
+	/***
+	 * .\TypeEquals_Valid_38.whiley:8: found int|[int], expected string, set, list or dictionary.
+    if (t.lhs is [int]) && ((|t.lhs| > 0) && (t.lhs[0] == 0)):
+                              ^^^^^
+wycc.lang.SyntaxError: found int|[int], expected string, set, list or dictionary.
+	at wycc.lang.SyntaxError.syntaxError(SyntaxError.java:238)
+	at wyc.lang.WhileyFile.syntaxError(WhileyFile.java:620)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:2173)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:1691)
+	at wyc.builder.FlowTypeChecker.resolveLeafCondition(FlowTypeChecker.java:1458)
+	at wyc.builder.FlowTypeChecker.propagateCondition(FlowTypeChecker.java:1356)
+	at wyc.builder.FlowTypeChecker.propagateCondition(FlowTypeChecker.java:1263)
+	at wyc.builder.FlowTypeChecker.resolveNonLeafCondition(FlowTypeChecker.java:1396)
+	at wyc.builder.FlowTypeChecker.propagateCondition(FlowTypeChecker.java:1345)
+	at wyc.builder.FlowTypeChecker.propagateCondition(FlowTypeChecker.java:1263)
+	at wyc.builder.FlowTypeChecker.resolveNonLeafCondition(FlowTypeChecker.java:1398)
+	at wyc.builder.FlowTypeChecker.propagateCondition(FlowTypeChecker.java:1345)
+	at wyc.builder.FlowTypeChecker.propagateCondition(FlowTypeChecker.java:1263)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:755)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:329)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:298)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:264)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:145)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:135)
+	at wyc.builder.WhileyBuilder.build(WhileyBuilder.java:181)
+	at wybs.util.StdBuildRule.apply(StdBuildRule.java:109)
+	at wybs.util.StdProject.build(StdProject.java:256)
+	at wyc.util.WycBuildTask.buildEntries(WycBuildTask.java:503)
+	at wyc.util.WycBuildTask.build(WycBuildTask.java:471)
+	at wyopcl.WyopclMain.run(WyopclMain.java:119)
+	at wyopcl.WyopclMain.main(WyopclMain.java:148)
+	 */
+	@Ignore("SyntaxError")
 	@Test
 	public void test_TypeEquals_Valid_38() {
 		util.exec("TypeEquals_Valid_38");
@@ -200,8 +344,32 @@ public class TypeEqualsValidTestCase {
 	public void test_TypeEquals_Valid_40() {
 		util.exec("TypeEquals_Valid_40");
 	}
+/**
+ * .\TypeEquals_Valid_41.whiley:11: expected type int, found TypeEquals_Valid_41:expr
+        return e
+               ^
+wycc.lang.SyntaxError: expected type int, found TypeEquals_Valid_41:expr
+	at wycc.lang.SyntaxError.syntaxError(SyntaxError.java:238)
+	at wyc.builder.FlowTypeChecker.checkIsSubtype(FlowTypeChecker.java:4060)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:799)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:327)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:298)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:767)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:329)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:298)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:264)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:145)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:135)
+	at wyc.builder.WhileyBuilder.build(WhileyBuilder.java:181)
+	at wybs.util.StdBuildRule.apply(StdBuildRule.java:109)
+	at wybs.util.StdProject.build(StdProject.java:256)
+	at wyc.util.WycBuildTask.buildEntries(WycBuildTask.java:503)
+	at wyc.util.WycBuildTask.build(WycBuildTask.java:471)
+	at wyopcl.WyopclMain.run(WyopclMain.java:119)
+	at wyopcl.WyopclMain.main(WyopclMain.java:148)
 
-	@Ignore("Issue ???")
+ */
+	@Ignore("SyntaxError")
 	@Test
 	public void test_TypeEquals_Valid_41() {
 		util.exec("TypeEquals_Valid_41");
@@ -222,7 +390,6 @@ public class TypeEqualsValidTestCase {
 		util.exec("TypeEquals_Valid_44");
 	}
 
-	@Ignore("???")
 	@Test
 	public void test_TypeEquals_Valid_45() {
 		util.exec("TypeEquals_Valid_45");

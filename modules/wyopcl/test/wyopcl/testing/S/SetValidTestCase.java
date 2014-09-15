@@ -186,7 +186,6 @@ public class SetValidTestCase {
 		util.exec("SetIntersection_Valid_6");
 	}
 
-	@Ignore("???")
 	@Test
 	public void test_SetIntersection_Valid_7() {
 		util.exec("SetIntersection_Valid_7");

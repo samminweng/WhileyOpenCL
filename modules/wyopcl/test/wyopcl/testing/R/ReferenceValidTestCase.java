@@ -25,8 +25,7 @@ public class ReferenceValidTestCase {
 		util.terminate();
 		util = null;
 	}
-
-	@Ignore("???")
+	
 	@Test
 	public void test_Reference_Valid_1() {
 		util.exec("Reference_Valid_1");

@@ -31,19 +31,16 @@ public class TryCatchValidTestCase {
 		util.exec("TryCatch_Valid_1");
 	}
 
-	@Ignore("???")
 	@Test
 	public void test_TryCatch_Valid_2() {
 		util.exec("TryCatch_Valid_2");
 	}
 
-	@Ignore("???")
 	@Test
 	public void test_TryCatch_Valid_3() {
 		util.exec("TryCatch_Valid_3");
 	}
 
-	@Ignore("???")
 	@Test
 	public void test_TryCatch_Valid_4() {
 		util.exec("TryCatch_Valid_4");

@@ -41,7 +41,6 @@ public class RecursiveValidTestCase {
 		util.exec("RecursiveType_Valid_11");
 	}
 
-	@Ignore("???")
 	@Test
 	public void test_RecursiveType_Valid_12() {
 		util.exec("RecursiveType_Valid_12");
@@ -97,7 +96,7 @@ public class RecursiveValidTestCase {
 		util.exec("RecursiveType_Valid_21");
 	}
 
-	@Ignore("???")
+	
 	@Test
 	public void test_RecursiveType_Valid_22() {
 		util.exec("RecursiveType_Valid_22");
@@ -143,8 +142,29 @@ public class RecursiveValidTestCase {
 	public void test_RecursiveType_Valid_4() {
 		util.exec("RecursiveType_Valid_4");
 	}
+	/**
+	 * .\RecursiveType_Valid_5.whiley:6: expected type X<{[int] items,X|null next}>, found null
+    Link start = null
+                 ^^^^
+wycc.lang.SyntaxError: expected type X<{[int] items,X|null next}>, found null
+	at wycc.lang.SyntaxError.syntaxError(SyntaxError.java:238)
+	at wyc.builder.FlowTypeChecker.checkIsSubtype(FlowTypeChecker.java:4070)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:429)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:323)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:298)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:264)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:145)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:135)
+	at wyc.builder.WhileyBuilder.build(WhileyBuilder.java:181)
+	at wybs.util.StdBuildRule.apply(StdBuildRule.java:109)
+	at wybs.util.StdProject.build(StdProject.java:256)
+	at wyc.util.WycBuildTask.buildEntries(WycBuildTask.java:503)
+	at wyc.util.WycBuildTask.build(WycBuildTask.java:471)
+	at wyopcl.WyopclMain.run(WyopclMain.java:119)
+	at wyopcl.WyopclMain.main(WyopclMain.java:148)
 
-	@Ignore("#18")
+	 */
+	@Ignore("SyntaxError")
 	@Test
 	public void test_RecursiveType_Valid_5() {
 		util.exec("RecursiveType_Valid_5");

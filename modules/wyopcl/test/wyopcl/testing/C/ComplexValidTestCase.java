@@ -35,9 +35,41 @@ public class ComplexValidTestCase {
 	public void test_Complex_Valid_2() {
 		util.exec("Complex_Valid_2");
 	}
-
-	@Ignore("Issue ???")
+	/**
+	 * .\Complex_Valid_3.whiley:9: record required, got: X<null|{int item,X left,X right}>
+    (tree != null && tree.left != null ==> tree.left.item < tree.item) &&
+                                           ^^^^^^^^^^^^^^
+wycc.lang.SyntaxError: record required, got: X<null|{int item,X left,X right}>
+	at wycc.lang.SyntaxError.syntaxError(SyntaxError.java:238)
+	at wyc.lang.WhileyFile.syntaxError(WhileyFile.java:620)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:2327)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:1674)
+	at wyc.builder.FlowTypeChecker.resolveLeafCondition(FlowTypeChecker.java:1458)
+	at wyc.builder.FlowTypeChecker.propagateCondition(FlowTypeChecker.java:1356)
+	at wyc.builder.FlowTypeChecker.propagateCondition(FlowTypeChecker.java:1263)
+	at wyc.builder.FlowTypeChecker.resolveNonLeafCondition(FlowTypeChecker.java:1422)
+	at wyc.builder.FlowTypeChecker.propagateCondition(FlowTypeChecker.java:1345)
+	at wyc.builder.FlowTypeChecker.propagateCondition(FlowTypeChecker.java:1263)
+	at wyc.builder.FlowTypeChecker.resolveNonLeafCondition(FlowTypeChecker.java:1398)
+	at wyc.builder.FlowTypeChecker.propagateCondition(FlowTypeChecker.java:1345)
+	at wyc.builder.FlowTypeChecker.propagateCondition(FlowTypeChecker.java:1263)
+	at wyc.builder.FlowTypeChecker.resolveNonLeafCondition(FlowTypeChecker.java:1396)
+	at wyc.builder.FlowTypeChecker.propagateCondition(FlowTypeChecker.java:1345)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:1750)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:1660)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:196)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:147)
+	at wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:135)
+	at wyc.builder.WhileyBuilder.build(WhileyBuilder.java:181)
+	at wybs.util.StdBuildRule.apply(StdBuildRule.java:109)
+	at wybs.util.StdProject.build(StdProject.java:256)
+	at wyc.util.WycBuildTask.buildEntries(WycBuildTask.java:503)
+	at wyc.util.WycBuildTask.build(WycBuildTask.java:471)
+	at wyopcl.WyopclMain.run(WyopclMain.java:119)
+	at wyopcl.WyopclMain.main(WyopclMain.java:148)
+	 */
 	@Test
+	@Ignore("SyntaxError")
 	public void test_Complex_Valid_3() {
 		util.exec("Complex_Valid_3");
 	}

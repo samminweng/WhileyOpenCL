@@ -41,7 +41,6 @@ public class DoWhileValidTestCase {
 		util.exec("DoWhile_Valid_3");
 	}
 
-	@Ignore("???")
 	@Test
 	public void test_DoWhile_Valid_4() {
 		util.exec("DoWhile_Valid_4");

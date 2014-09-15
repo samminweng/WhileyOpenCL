@@ -91,13 +91,31 @@ public class ForValidTestCase {
 		util.exec("For_Valid_4");
 	}
 
-	@Ignore("Issue ???")
+	/**
+	 * .\For_Valid_5.whiley:4: variable may be uninitialised for i, r in xs:
+	 * ^^^^^^^^^^^^^^^ wycc.lang.SyntaxError: variable may be uninitialised at
+	 * wycc.lang.SyntaxError.syntaxError(SyntaxError.java:238) at
+	 * wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:675) at
+	 * wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:333) at
+	 * wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:298) at
+	 * wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:264) at
+	 * wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:145) at
+	 * wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:135) at
+	 * wyc.builder.WhileyBuilder.build(WhileyBuilder.java:181) at
+	 * wybs.util.StdBuildRule.apply(StdBuildRule.java:109) at
+	 * wybs.util.StdProject.build(StdProject.java:256) at
+	 * wyc.util.WycBuildTask.buildEntries(WycBuildTask.java:503) at
+	 * wyc.util.WycBuildTask.build(WycBuildTask.java:471) at
+	 * wyopcl.WyopclMain.run(WyopclMain.java:119) at
+	 * wyopcl.WyopclMain.main(WyopclMain.java:148)
+	 */
+	@Ignore("SyntaxError")
 	@Test
 	public void test_For_Valid_5() {
 		util.exec("For_Valid_5");
 	}
 
-	@Ignore("Issue ???")
+	@Ignore("SyntaxError")
 	@Test
 	public void test_For_Valid_6() {
 		util.exec("For_Valid_6");

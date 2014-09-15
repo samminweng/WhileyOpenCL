@@ -31,7 +31,6 @@ public class MessageValidTestCase {
 		util.exec("MessageRef_Valid_1");
 	}
 
-	@Ignore("???")
 	@Test
 	public void test_MessageRef_Valid_2() {
 		util.exec("MessageRef_Valid_2");

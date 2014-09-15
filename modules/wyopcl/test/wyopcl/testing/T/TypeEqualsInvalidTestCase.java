@@ -24,23 +24,23 @@ public class TypeEqualsInvalidTestCase {
 	}
 
 	@Test
-	public void test_TypeEquals_Valid_1() {
-		util.exec("TypeEquals_Valid_1");
+	public void test_TypeEquals_Invalid_1() {
+		util.exec("TypeEquals_Invalid_1");
 	}	
 
 	@Test
-	public void test_TypeEquals_Valid_2() {
-		util.exec("TypeEquals_Valid_2");
+	public void test_TypeEquals_Invalid_2() {
+		util.exec("TypeEquals_Invalid_2");
 	}
 	
 	
 	@Test
-	public void test_TypeEquals_Valid_5() {
-		util.exec("TypeEquals_Valid_5");
+	public void test_TypeEquals_Invalid_5() {
+		util.exec("TypeEquals_Invalid_5");
 	}
 
 	@Test
-	public void test_TypeEquals_Valid_6() {
-		util.exec("TypeEquals_Valid_6");
+	public void test_TypeEquals_Invalid_6() {
+		util.exec("TypeEquals_Invalid_6");
 	}	
 }

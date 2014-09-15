@@ -41,7 +41,6 @@ public class MethodValidTestCase {
 		util.exec("MethodCall_Valid_3");
 	}
 
-	@Ignore("???")
 	@Test
 	public void test_MethodCall_Valid_4() {
 		util.exec("MethodCall_Valid_4");

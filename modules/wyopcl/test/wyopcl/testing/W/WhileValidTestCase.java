@@ -101,7 +101,6 @@ public class WhileValidTestCase {
 		util.exec("While_Valid_23");
 	}
 
-	@Ignore("???")
 	@Test
 	public void test_While_Valid_24() {
 		util.exec("While_Valid_24");
@@ -111,8 +110,7 @@ public class WhileValidTestCase {
 	public void test_While_Valid_25() {
 		util.exec("While_Valid_25");
 	}
-
-	@Ignore("???")
+	
 	@Test
 	public void test_While_Valid_26() {
 		util.exec("While_Valid_26");
@@ -123,7 +121,6 @@ public class WhileValidTestCase {
 		util.exec("While_Valid_27");
 	}
 
-	@Ignore("???")
 	@Test
 	public void test_While_Valid_28() {
 		util.exec("While_Valid_28");

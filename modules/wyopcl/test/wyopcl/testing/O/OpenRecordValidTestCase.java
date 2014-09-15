@@ -41,7 +41,6 @@ public class OpenRecordValidTestCase {
 		util.exec("OpenRecord_Valid_2");
 	}
 
-	@Ignore("Issue ???")
 	@Test
 	public void test_OpenRecord_Valid_3() {
 		util.exec("OpenRecord_Valid_3");

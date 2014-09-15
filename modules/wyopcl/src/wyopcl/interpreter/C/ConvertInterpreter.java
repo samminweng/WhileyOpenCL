@@ -236,9 +236,13 @@ public class ConvertInterpreter extends Interpreter {
 			if (constant instanceof Constant.Char) {
 				Constant.Char fromchar = (Constant.Char) constant;
 				return Constant.V_INTEGER(BigInteger.valueOf((int) fromchar.value));
-			} else {
-				return (Constant.Integer) constant;
-			}
+			} 
+			return (Constant.Integer) constant;
+		} else if (fromType instanceof Type.Record){
+			Type.Record type = (Type.Record)fromType;
+			Constant.Record record = (Constant.Record)constant;			
+			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
+			return null;
 		} else {
 			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
 			return null;

@@ -31,13 +31,34 @@ public class FunctionValidTestCase {
 		util.exec("FunctionRef_Valid_1");
 	}
 
-	@Ignore("Issue ???")
+	/**
+	 * Parsed 1 source file(s).
+	 * ....................................................... [62ms+1mb]
+	 * .\FunctionRef_Valid_2.whiley:4: incomparable operands: real and int
+	 * return x + 1 ^^^^^ wycc.lang.SyntaxError: incomparable operands: real and
+	 * int at wycc.lang.SyntaxError.syntaxError(SyntaxError.java:238) at
+	 * wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:1889) at
+	 * wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:1660) at
+	 * wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:797) at
+	 * wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:327) at
+	 * wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:298) at
+	 * wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:264) at
+	 * wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:145) at
+	 * wyc.builder.FlowTypeChecker.propagate(FlowTypeChecker.java:135) at
+	 * wyc.builder.WhileyBuilder.build(WhileyBuilder.java:181) at
+	 * wybs.util.StdBuildRule.apply(StdBuildRule.java:109) at
+	 * wybs.util.StdProject.build(StdProject.java:256) at
+	 * wyc.util.WycBuildTask.buildEntries(WycBuildTask.java:503) at
+	 * wyc.util.WycBuildTask.build(WycBuildTask.java:471) at
+	 * wyopcl.WyopclMain.run(WyopclMain.java:119) at
+	 * wyopcl.WyopclMain.main(WyopclMain.java:148)
+	 **/
+	@Ignore("SyntaxError")
 	@Test
 	public void test_FunctionRef_Valid_2() {
 		util.exec("FunctionRef_Valid_2");
 	}
 
-	@Ignore("???")
 	@Test
 	public void test_FunctionRef_Valid_3() {
 		util.exec("FunctionRef_Valid_3");
