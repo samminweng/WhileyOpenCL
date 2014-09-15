@@ -160,6 +160,12 @@ public final class Utility {
 		}else if (constant instanceof DecimalFraction){
 			return Constant.V_STRING(((DecimalFraction)constant).toString());
 		}else if (constant instanceof Constant.Integer) {
+			//Check if the returned type is WyRat
+			if(paramType.equals(WyRat.class)){	
+				Constant.Integer integer = (Constant.Integer)constant;
+				WyRat rat = new WyRat(integer.value);
+				return rat;
+			}			
 			return ((Constant.Integer) constant).value;
 		} else if (constant instanceof Constant.List) {
 			if (paramType.equals(WyList.class)) {

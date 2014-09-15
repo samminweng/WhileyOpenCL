@@ -1,5 +1,6 @@
 package wyopcl.interpreter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -8,9 +9,9 @@ import wyil.lang.Code.Block;
 
 public class StackFrame {
 	private final Block block;
-	private String name;// Remove it
+	private String name;
 	private int line;				
-	private int return_reg;
+	private int return_reg;	
 	private HashMap<String, Integer> loop_index = new HashMap<String, Integer>();
 	private int depth;
 	private Constant[] registers  = new Constant[0];
@@ -95,5 +96,6 @@ public class StackFrame {
 
 	public void setLoop_index(String label, int loop_index) {
 		this.loop_index.put(label, loop_index);
-	}		
+	}
+			
 }

@@ -21,6 +21,7 @@ import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyil.lang.Type.FunctionOrMethod;
 import wyjc.runtime.WyList;
+import wyjc.runtime.WyRat;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
 import wyopcl.util.Utility;
@@ -56,6 +57,12 @@ public class InvokeInterpreter extends Interpreter {
 				return Constant.V_STRING(str);
 			}
 		} else if (toType instanceof Type.Int) {
+			if(fromType.equals(WyRat.class)){
+				WyRat wyRat = (WyRat)javaobj;
+				return Constant.V_INTEGER(wyRat.numerator());
+			}
+			
+			
 			return Constant.V_INTEGER((BigInteger) javaobj);
 		} else if (toType instanceof Type.Byte) {
 			if (fromType == WyList.class) {
@@ -105,7 +112,7 @@ public class InvokeInterpreter extends Interpreter {
 		StackFrame newStackFrame = new StackFrame(depth+1, blk, 0,	code.name.name(), code.target());
 		
 		//Pass the input parameters.
-		int index = 0;
+		int index = 0;		
 		String str="";
 		for(int operand: code.operands()){
 			Constant constant = currentStackframe.getRegister(operand);

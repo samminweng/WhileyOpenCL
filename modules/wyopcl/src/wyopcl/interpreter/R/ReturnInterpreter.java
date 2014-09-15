@@ -29,7 +29,8 @@ public class ReturnInterpreter extends Interpreter {
 		
 		if(!blockstack.isEmpty()){
 			StackFrame caller = blockstack.peek();				
-			linenumber = caller.getLine();
+			linenumber = caller.getLine();					
+			
 			//Check if the results are returned.
 			if (code.type != Type.T_VOID) {
 				//Read the values from the operand register.

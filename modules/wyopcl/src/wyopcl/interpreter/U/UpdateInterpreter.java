@@ -151,8 +151,22 @@ public class UpdateInterpreter extends Interpreter {
 	private Constant updateReference(Codes.Update code, StackFrame stackframe) {
 		Constant reference = stackframe.getRegister(code.target());
 		Constant updatedValue = null;
+		Constant givenValue = stackframe.getRegister(code.result());
 		if (reference instanceof Constant.Record) {
-			return updateRecord(code, stackframe);
+			Constant.Record record = (Constant.Record)reference;
+			HashMap<String, Constant> values = record.values;
+			String[] fields = code.fields.toArray(new String[code.fields.size()]);
+			// Get the field value
+			Constant fieldValue = values.get(fields[0]);
+			//Update the value
+			if(fieldValue != null){
+				values.put(fields[0], givenValue);
+			}else{
+				internalFailure("Not implemented!", "UpdateInterpreter.java", null);
+				return null;
+			}			
+			
+			return reference;
 		}		
 
 		internalFailure("Not implemented!", "UpdateInterpreter.java", null);

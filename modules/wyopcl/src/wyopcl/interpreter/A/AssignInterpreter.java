@@ -2,6 +2,7 @@ package wyopcl.interpreter.A;
 
 import wyil.lang.Codes;
 import wyil.lang.Constant;
+import wyil.lang.Type;
 import wyopcl.interpreter.StackFrame;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.util.Utility;
@@ -22,10 +23,15 @@ public class AssignInterpreter extends Interpreter {
 
 	public void interpret(Codes.Assign code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
-		Constant value = stackframe.getRegister(code.operand(0));
-	
-		//Copy the value 
-		Constant result = Utility.copyConstant(value);
+		Constant constant = stackframe.getRegister(code.operand(0));
+		Constant result;
+		if (code.type() instanceof Type.Reference){
+			result = constant;
+		}else {
+			//Copy the value 
+			result = Utility.copyConstant(constant);
+		}
+		
 		stackframe.setRegister(code.target(), result);		
 		printMessage(stackframe, code.toString(), "%"+ code.target() + "("+result+")");
 		stackframe.setLine(++linenumber);

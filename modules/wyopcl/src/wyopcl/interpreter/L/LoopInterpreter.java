@@ -1,5 +1,6 @@
 package wyopcl.interpreter.L;
 
+import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyopcl.interpreter.Interpreter;
@@ -21,11 +22,9 @@ public class LoopInterpreter extends Interpreter {
 	
 	public void interpret(Codes.Loop code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
-//		for (int modifiedOperand:code.modifiedOperands){
-//			Constant operand = stackframe.getRegister(modifiedOperand);			
-//		}		
+		//Code.Block block = stackframe.getBlock();
+		//linenumber = symboltable.get(block).getBlockPosByLabel(code.target);
 		printMessage(stackframe, code.toString(), "("+code.target+")");
-		
 		stackframe.setLine(++linenumber);
 	}
 
