@@ -487,27 +487,8 @@ public class ConvertInterpreter extends Interpreter {
 	}
 	
 	private Constant toConstantReference(Constant constant, Type fromType, Type.Reference toType) {
-		if (constant instanceof Constant.Record) {
-			Constant.Record record = (Constant.Record) constant;
-			Type.Record toElemType = (Type.Record)toType.element();
-			Type.Record fromElemType = (Type.Record)((Type.Reference)fromType).element();
-			HashMap<String, Constant> convertedValues = new HashMap<String, Constant>();
-			Iterator<Entry<String, Constant>> iterator = record.values.entrySet().iterator();
-			while(iterator.hasNext()){
-				Entry<String, Constant> entry = iterator.next();
-				String field = entry.getKey();
-				Type fromFieldType = fromElemType.field(field);
-				Type toFieldType = toElemType.field(field);
-				Constant value = castConstanttoConstant(entry.getValue(),fromFieldType,toFieldType);
-				convertedValues.put(field, value);
-			}
-			
-
-			return Constant.V_RECORD(convertedValues);
-
-		}
-		internalFailure("Not implemented!", "ConvertInterpreter.java", null);
-		return null;
+		//Converting a reference to another reference does not require type-casting.
+		return constant;
 	}
 	
 	
