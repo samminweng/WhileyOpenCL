@@ -15,6 +15,7 @@ import java.util.Map.Entry;
 
 import wyil.lang.Codes;
 import wyil.lang.Constant;
+import wyil.lang.Constant.Integer;
 import wyil.lang.Type;
 import wyopcl.interpreter.DecimalFraction;
 import wyopcl.interpreter.Interpreter;
@@ -218,35 +219,45 @@ public class ConvertInterpreter extends Interpreter {
 		return Constant.V_SET(values);
 	}
 
-	private Constant.Integer toConstantInt(Constant constant, Type fromType, Type.Int toType) {
-		if (fromType.equals(toType) || constant instanceof Constant.Integer) {
-			return (Constant.Integer) constant;
-		}
-		if (fromType instanceof Type.Real) {
-			Constant.Decimal decimal = (Constant.Decimal) constant;
-			// Cast a decimal to an integer
-			return Constant.V_INTEGER(decimal.value.toBigInteger());
-		} else if (fromType instanceof Type.List) {
-			Constant.List list = (Constant.List) constant;
-			return (Constant.Integer) list.values.get(0);
-		} else if (fromType instanceof Type.Char) {
-			// Cast Char to int
-			return Constant.V_INTEGER(BigInteger.valueOf((int) (((Constant.Char) constant).value)));
-		} else if (fromType instanceof Type.Union) {
-			if (constant instanceof Constant.Char) {
-				Constant.Char fromchar = (Constant.Char) constant;
-				return Constant.V_INTEGER(BigInteger.valueOf((int) fromchar.value));
-			} 
-			return (Constant.Integer) constant;
-		} else if (fromType instanceof Type.Record){
-			Type.Record type = (Type.Record)fromType;
-			Constant.Record record = (Constant.Record)constant;			
-			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
+	private Constant.Integer toConstantInt(Constant constant, Type.Int toType) {
+		
+		try{
+			if (constant instanceof Constant.Integer) {
+				return (Constant.Integer) constant;
+			}
+			if (constant instanceof Constant.Decimal) {
+				Constant.Decimal decimal = (Constant.Decimal) constant;
+				// Cast a decimal to an integer
+				return Constant.V_INTEGER(decimal.value.toBigInteger());
+			} else if (constant instanceof Constant.List) {
+				Constant.List list = (Constant.List) constant;
+				return (Constant.Integer) list.values.get(0);
+			} else if (constant instanceof Constant.Char) {
+				// Cast Char to int
+				return Constant.V_INTEGER(BigInteger.valueOf((int) (((Constant.Char) constant).value)));
+			} else if (constant instanceof Constant.Record){				
+				//Get the field types.
+				Constant.Record record = (Constant.Record)constant;
+				Iterator<Entry<String, Constant>> iterator = record.values.entrySet().iterator();
+				while(iterator.hasNext()){
+					Entry<String, Constant> field = iterator.next();
+					Constant fieldConstant = field.getValue();
+					Constant result = toConstantInt(fieldConstant, toType);
+					if(result != null){
+						return (Constant.Integer) result;
+					}
+				}	
+			
+			} else {
+				internalFailure("Not implemented!", "ConvertInterpreter.java", null);
+			}
+		}catch(ClassCastException ex){
 			return null;
-		} else {
+		}catch(Exception ex){
 			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
-			return null;
 		}
+		
+		return null;
 	}
 
 	private Constant.Decimal toConstantDecimal(Constant constant, Type fromType, Type.Real toType) {
@@ -263,10 +274,10 @@ public class ConvertInterpreter extends Interpreter {
 			} else {
 				return (Constant.Decimal) constant;
 			}
-		} else {
+		} 
 			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
 			return null;
-		}
+		
 	}
 
 	private Constant toConstantNegation(Constant constant, Type fromType, Type.Negation toType) {
@@ -279,10 +290,10 @@ public class ConvertInterpreter extends Interpreter {
 		} else if (fromType instanceof Type.Strung) {
 			Constant.Strung strung = (Constant.Strung) constant;
 			return strung;
-		} else {
-			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
-			return null;
-		}
+		} 
+		internalFailure("Not implemented!", "ConvertInterpreter.java", null);
+		return null;
+		
 	}
 
 	private Constant.Tuple toConstantTuple(Constant constant, Type fromType, Type.Tuple toType) {
@@ -517,7 +528,7 @@ public class ConvertInterpreter extends Interpreter {
 			// Cast ascii to Char
 			return toConstantChar(constant, fromType, (Type.Char) toType);
 		} else if (toType instanceof Type.Int) {
-			return toConstantInt(constant, fromType, (Type.Int) toType);
+			return toConstantInt(constant, (Type.Int) toType);
 		} else if (toType instanceof Type.List) {
 			return toConstantList(constant, fromType, (Type.List) toType);
 		} else if (toType instanceof Type.Record) {
@@ -557,9 +568,9 @@ public class ConvertInterpreter extends Interpreter {
 	public void interpret(Codes.Convert code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
 		// Read a value from the operand register.
-		Constant value = stackframe.getRegister(code.operand(0));
+		Constant constant = stackframe.getRegister(code.operand(0));
 		// Convert it to the given type.
-		Constant result = castConstanttoConstant(value, code.assignedType(), code.result);
+		Constant result = castConstanttoConstant(constant, code.type(), code.result);
 		stackframe.setRegister(code.target(), result);
 		printMessage(stackframe, code.toString(), "%" + code.target() + "(" + result + ")");
 		stackframe.setLine(++linenumber);

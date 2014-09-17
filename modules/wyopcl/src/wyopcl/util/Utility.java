@@ -187,8 +187,8 @@ public final class Utility {
 		} else if (constant instanceof Constant.Set) {
 			return constantToString((Constant.Set) constant, paramType);
 		} else if (constant instanceof Constant.Strung) {
-			//return ((Constant.Strung) constant).value.replaceAll("\"", "");
 			return ((Constant.Strung) constant).value;
+			//return constant;
 		} else if (constant instanceof Constant.Tuple) {
 			return constantToString((Constant.Tuple) constant, paramType);
 		} else {

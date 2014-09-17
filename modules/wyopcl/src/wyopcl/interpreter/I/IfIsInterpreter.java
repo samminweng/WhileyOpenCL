@@ -70,13 +70,14 @@ public class IfIsInterpreter extends Interpreter {
 
 	private boolean checkType(Constant constant, Type.List type) {
 		try{
-			Constant.List list = (Constant.List)constant;
+			Constant.List list = (Constant.List)constant;			
 			Type elementType = type.element();
 			Iterator<Constant> iterator = list.values.iterator();
 			while (iterator.hasNext()) {
 				Constant element = iterator.next();
 				return checkType(element, elementType);
-			}			
+			}
+			return true;
 		}catch(ClassCastException ex){
 			//Catch the type casting exception, meaning that the constant is not a instance of Constant.List subtype.
 			return false;
@@ -95,16 +96,7 @@ public class IfIsInterpreter extends Interpreter {
 			Iterator<Constant> iterator = set.values.iterator();
 			while (iterator.hasNext()) {
 				Constant next = iterator.next();
-				if (elementType instanceof Type.Int) {
-					if (!(next instanceof Constant.Integer)) {
-						return false;
-					}
-				} else if (elementType instanceof Type.Tuple) {
-					if (!checkType((Constant.Tuple) next, (Type.Tuple) elementType)) {
-						return false;
-					}
-				} else {
-					internalFailure("Not implemented!", "InterpreterIfIs.java", null);
+				if(!checkType(next, elementType)){
 					return false;
 				}
 			}
@@ -182,85 +174,85 @@ public class IfIsInterpreter extends Interpreter {
 		// The result for negation type should be inverted (i.e. negated the
 		// result of type checking)
 		// Check the value is subtype of the test type.
-		Type element = ((Type.Negation) type).element();		
+		Type elementType = ((Type.Negation) type).element();		
 		// On the true branch, its type is matched with type test.
-		return !checkType(constant, element);
+		return !checkType(constant, elementType);
 	}
 
 	private boolean checkType(Constant constant, Type type) {
-
-		if(type instanceof Type.Any){
-			return true;// No checking.
-		}
-		
-		if (type instanceof Type.Null) {
-			if (constant instanceof Constant.Null) {
-				// On the true branch, go to the label.
-				return true;
+		try{
+			
+			if(type instanceof Type.Any){
+				return true;// No checking.
 			}
-			return false;
-		} 
-		
-		if(type instanceof Type.Bool){
-			if(constant instanceof Constant.Bool){
-				return true;
-			}
-			return false;
-		}
-		
-		
-		if (type instanceof Type.Char) {
-			// If value is a Constant.Char, then go to the true branch.
-			if (constant instanceof Constant.Char) {
+			
+			if (type instanceof Type.Null) {
+				Constant.Null n = (Constant.Null)constant;
 				return true;
 			} 
-			return false;			
-		} 
-		
-		if (type instanceof Type.Int) {
-			if (constant instanceof Constant.Integer) {
+			
+			if(type instanceof Type.Bool){
+				Constant.Bool b = (Constant.Bool)constant;
 				return true;
 			}
-			return false;			
-		} 
-		
-		if (type instanceof Type.Strung) {
-			if (constant instanceof Constant.Strung) {
+			
+			
+			if (type instanceof Type.Char) {
+				Constant.Char c = (Constant.Char)constant;
+				return true;			
+			} 
+			
+			if (type instanceof Type.Int) {
+				Constant.Integer i = (Constant.Integer)constant; 
+				return true;			
+			} 
+			
+			if (type instanceof Type.Strung) {
+				Constant.Strung s = (Constant.Strung)constant;
+				return true;		
+			}
+			
+			if (type instanceof Type.Real) {
+				Constant.Decimal d = (Constant.Decimal)constant;
 				return true;
 			}
-			return false;			
-		}
-		
-		if (type instanceof Type.Real) {
-			if (constant instanceof Constant.Decimal) {
-				return true;
+			
+			if (type instanceof Type.Negation) {
+				return checkType(constant, (Type.Negation)type);
 			}
+			
+			if (type instanceof Type.Map) {
+				return checkType(constant, (Type.Map) type);			
+			}
+			if (type instanceof Type.Record) {
+				// Check if the constant is of Constant.Record type.
+				return checkType(constant, (Type.Record)type);
+			}
+			
+			if (type instanceof Type.List) {
+				return checkType(constant, (Type.List) type);
+			} 
+			
+			if (type instanceof Type.Set) {
+				return checkType(constant, (Type.Set) type);
+			} 		 
+			
+			if (type instanceof Type.Union) {
+				return checkType(constant, (Type.Union) type);
+			}
+			
+			if(type instanceof Type.Tuple){
+				return checkType(constant, (Type.Tuple)type);
+			}
+			
+			
+		}catch(ClassCastException ex){
+			//Catch the type casting exception, meaning that the constant is not a instance of Constant.Map subtype.
+			return false;
+		}catch(Exception ex){
+			internalFailure("Error!!", "InterpreterIfIs.java", null);
 			return false;
 		}
-		
-		if (type instanceof Type.Negation) {
-			return checkType(constant, (Type.Negation)type);
-		}
-		
-		if (type instanceof Type.Map) {
-			return checkType(constant, (Type.Map) type);			
-		}
-		if (type instanceof Type.Record) {
-			// Check if the constant is of Constant.Record type.
-			return checkType(constant, (Type.Record)type);
-		}
-		
-		if (type instanceof Type.List) {
-			return checkType(constant, (Type.List) type);
-		} 
-		
-		if (type instanceof Type.Set) {
-			return checkType(constant, (Type.Set) type);
-		} 		 
-		
-		if (type instanceof Type.Union) {
-			return checkType(constant, (Type.Union) type);
-		} 
 		
 		//If type is not any of the above types, then it is a new type.
 		internalFailure("Not implemented!", "InterpreterIfIs.java", null);

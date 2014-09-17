@@ -23,21 +23,27 @@ public class StringOperatorInterpreter extends Interpreter {
 		int linenumber = stackframe.getLine();
 		//Read two string from the operands
 		Constant.Strung left = (Constant.Strung)stackframe.getRegister(code.operand(0));
-		Constant rightOperand = stackframe.getRegister(code.operand(1));
+		Constant right = stackframe.getRegister(code.operand(1));
 		//Check the operator
 		Constant.Strung result = null;
 		switch (code.kind){
 		case APPEND:
 			//Check the type of right operand before appending those two operands.
-			if (rightOperand instanceof Constant.Strung){
-				result = Constant.V_STRING(left.value + ((Constant.Strung)rightOperand).value);			
+			if (right instanceof Constant.Strung){
+				result = Constant.V_STRING(left.value + ((Constant.Strung)right).value);			
 			}else{
 				internalFailure("Not implemented!", "InterpreterStringOperator.java", null);
 			}
 			break;
 		case LEFT_APPEND:
-			char c = ((Constant.Char)rightOperand).value;
-			result = Constant.V_STRING(left.value + c);
+			if(right instanceof Constant.Char){
+				char c = ((Constant.Char)right).value;
+				result = Constant.V_STRING(left.value + c);
+			}else{
+				internalFailure("Not implemented!", "InterpreterStringOperator.java", null);
+				
+			}
+			
 		break;
 		default:
 			internalFailure("Not implemented!", "InterpreterStringOperator.java", null);

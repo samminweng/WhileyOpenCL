@@ -64,7 +64,8 @@ public class FieldLoadInterpreter extends Interpreter {
 			Constant.Record record = (Constant.Record)constant;
 			result = getFieldValue(record, givenfield);
 		}else{
-			internalFailure("Not implemented!", "FieldLoadInterpreter.java", null);
+			result = constant;
+			//internalFailure("Not implemented!", "FieldLoadInterpreter.java", null);
 		}
 
 		stackframe.setRegister(code.target(), result);	

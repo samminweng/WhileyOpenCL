@@ -43,7 +43,8 @@ public class BinaryOperatorInterpreter extends Interpreter {
 			}else if (left instanceof Constant.Char){
 				//Char + char
 				int add = ((Constant.Char)left).value + ((Constant.Char)right).value;
-				return Constant.V_INTEGER(BigInteger.valueOf(add));
+				//Return a Char
+				return Constant.V_CHAR((char)add);
 			} else {
 				internalFailure("Not implemented!", "BinaryOperatorInterpreter.java", null);
 				return null;
@@ -91,6 +92,9 @@ public class BinaryOperatorInterpreter extends Interpreter {
 					return DecimalFraction.V_DecimalFraction(num, denum);
 				}
 			}else if (left instanceof DecimalFraction){
+				DecimalFraction left_dec = (DecimalFraction)left;
+				Constant.Decimal right_dec = (Constant.Decimal)right;
+				
 				internalFailure("Not implemented!", "BinaryOperatorInterpreter.java", null);
 				return null;
 			} else {

@@ -53,7 +53,7 @@ public class InvokeInterpreter extends Interpreter {
 				return Constant.V_STRING(((BigDecimal) javaobj).toPlainString());
 			} else {
 				//trim the beginning and ending quotes.
-				String str = javaobj.toString().replaceAll("^\"|\"$", "");
+			    String str = javaobj.toString().replaceAll("^\"|\"$", "");
 				return Constant.V_STRING(str);
 			}
 		} else if (toType instanceof Type.Int) {
