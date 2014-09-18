@@ -3,9 +3,12 @@ package wyopcl.interpreter.L;
 import static wycc.lang.SyntaxError.internalFailure;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import wyil.lang.Codes;
 import wyil.lang.Constant;
+import wyil.lang.Constant.List;
+import wyil.lang.Type;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
 
@@ -21,7 +24,32 @@ public class ListOperatorInterpreter extends Interpreter{
 		}
 		return instance;
 	}
-
+	/**
+	 * Check if a Constant.List is empty
+	 * @param list
+	 * @param type
+	 * @return
+	 */
+	private boolean checkEmpty(Constant.List list, Type type){
+		
+		if(type instanceof Type.List){
+			Iterator<Constant> iterator = list.values.iterator();
+			while(iterator.hasNext()){
+				Constant.List elem = (List) iterator.next();
+				if(!elem.values.isEmpty()){
+					return false;
+				}
+			}
+		}else{
+			if(!list.values.isEmpty()){
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	
 
 	public void interpret(Codes.ListOperator code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();		
@@ -34,7 +62,11 @@ public class ListOperatorInterpreter extends Interpreter{
 		case APPEND:
 			//Create a new array list to append the left and right list.
 			ArrayList<Constant> values = new ArrayList<Constant>();
-			values.addAll(left.values);
+			Type elementType = code.type().element();
+			//Check the left is empty. If so, then do not add to the new list.
+			if(!checkEmpty(left, elementType)){
+				values.addAll(left.values);
+			}			
 			values.addAll(right.values);			
 			result = Constant.V_LIST(values);
 			break;

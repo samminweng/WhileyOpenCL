@@ -88,9 +88,9 @@ public class StackFrame {
 		if(this.loop_index.containsKey(label)){
 			return this.loop_index.get(label);
 		}else{
-			//If the loop index is not found, add a new one.
-			this.loop_index.put(label, 0);
-			return 0;
+			//If the loop index is not found, then return -1.
+			this.loop_index.put(label, -1);
+			return -1;
 		}
 	}
 

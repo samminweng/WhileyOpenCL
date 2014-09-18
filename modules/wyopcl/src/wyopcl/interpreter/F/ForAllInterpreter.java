@@ -34,52 +34,44 @@ public class ForAllInterpreter extends Interpreter {
 	}
 	
 	private void gotoLoopEnd(Codes.ForAll code, StackFrame stackframe){
+		stackframe.setRegister(code.indexOperand, null);
 		int linenumber = symboltable.get(stackframe.getBlock()).getBlockPosByLabel(code.target+"LoopEnd");
 		stackframe.setLine(linenumber);
 	}
 	
 	
-	
-	private void iterateOverListSet(Constant[] array, Codes.ForAll code, StackFrame stackframe){
+	private void goIntoLoop(Codes.ForAll code, StackFrame stackframe, int index, Constant result){
 		int linenumber = stackframe.getLine();
-		Constant result = null;
-		Constant indexOperand = stackframe.getRegister(code.indexOperand);
-		
-		if(array.length != 0){
-			int index = 0;
-			if(indexOperand == null){
-				result = array[index];
-				stackframe.setLoop_index(code.target, index);
-			}else{
-				//Get the current index
-				index = stackframe.getLoop_index(code.target);				
-				//Check if the index is out-of-boundary. If so, then return.
-				if((index+1) >= array.length){
-					//No elements in the list.
-					stackframe.setRegister(code.indexOperand, null);					
-					gotoLoopEnd(code, stackframe);					
-					return;
-				}else{
-					//Put the element into the register of the index operand.
-					result = array[index+1];
-					stackframe.setLoop_index(code.target, index+1);
-				}
-			}
-			
-			stackframe.setRegister(code.indexOperand, result);
-			printMessage(stackframe, code.toString(), "%"+ code.indexOperand + "("+result+")");
-			stackframe.setLine(++linenumber);
-		}else{
-			gotoLoopEnd(code, stackframe);			
-		}
-		
+		stackframe.setLoop_index(code.target, index);
+		stackframe.setRegister(code.indexOperand, result);
+		printMessage(stackframe, code.toString(), "%"+ code.indexOperand + "("+result+")");
+		stackframe.setLine(++linenumber);
 	}
 	
+	
+	private void iterateOverListSet(Codes.ForAll code, StackFrame stackframe, Constant[] array){
+		Constant indexOperand = stackframe.getRegister(code.indexOperand);
+		if(array.length > 0){
+			//Get the current index
+			int index = stackframe.getLoop_index(code.target);
+			if(indexOperand == null || index == -1){
+				goIntoLoop(code, stackframe, 0, array[0]);
+				return;
+			}
+			index++;
+			//Check if the index is out-of-boundary. If not, then go into the loop.
+			if(index < array.length){
+				goIntoLoop(code, stackframe, index, array[index]);
+				return;
+			}			
+		}
+		gotoLoopEnd(code, stackframe);
+	}
 	
 	private Constant.Tuple createTuple(Entry<Constant, Constant> entry){
 		Constant.Tuple tuple = null;
 				
-		Collection<Constant> list = new ArrayList();
+		Collection<Constant> list = new ArrayList<Constant>();
 		list.add(entry.getKey());
 		list.add(entry.getValue());
 		//Create a tuple
@@ -135,21 +127,21 @@ public class ForAllInterpreter extends Interpreter {
 			Constant.List list = (Constant.List)source;
 			Constant[] array = new Constant[list.values.size()];
 			array = list.values.toArray(array);
-			iterateOverListSet(array, code, stackframe);
+			iterateOverListSet(code, stackframe, array);
 		}else if (source instanceof Constant.Map){			
 			iterateOverMap((Constant.Map)source, code, stackframe);
 		}else if (source instanceof Constant.Set){
 			Constant.Set set = (Constant.Set)source;
 			Constant[] array = new Constant[set.values.size()];
 			array = set.values.toArray(array);
-			iterateOverListSet(array, code, stackframe);
+			iterateOverListSet(code, stackframe, array);
 		}else if(source instanceof Constant.Strung){
 			Constant.Strung strung = (Constant.Strung)source;
 			Constant.Char[] chars = new Constant.Char[strung.value.length()];
 			for(int index=0;index<strung.value.length();index++){
 				chars[index] = Constant.V_CHAR(strung.value.charAt(index));
 			}
-			iterateOverListSet(chars, code, stackframe);
+			iterateOverListSet(code, stackframe, chars);
 		}else if (source instanceof Constant.Null){
 			//Go to loop end
 			gotoLoopEnd(code, stackframe);
