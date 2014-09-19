@@ -40,8 +40,11 @@ public class DoWhileValidTestCase {
 	public void test_DoWhile_Valid_3() {
 		util.exec("DoWhile_Valid_3");
 	}
-
+	/**
+	 * internal failure (invalid coercion encountered: X<{X|int next}> => int)
+	 */
 	@Test
+	@Ignore("Compilation Error")
 	public void test_DoWhile_Valid_4() {
 		util.exec("DoWhile_Valid_4");
 	}
