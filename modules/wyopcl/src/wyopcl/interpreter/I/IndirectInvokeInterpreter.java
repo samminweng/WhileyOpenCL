@@ -79,7 +79,8 @@ public class IndirectInvokeInterpreter extends Interpreter {
 			} catch (ClassNotFoundException | NoSuchFieldException | SecurityException | IllegalArgumentException
 					| IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
 				e.printStackTrace();
-			}
+			}			
+			stackframe.setLine(++linenumber);
 		} else {
 			Block blk = blocktable.get(lambda.name.toString()).get(code.type());
 			// Create a new StackFrame
@@ -99,7 +100,7 @@ public class IndirectInvokeInterpreter extends Interpreter {
 			printMessage(stackframe, code.toString(), str);
 		}
 
-		stackframe.setLine(++linenumber);
+		
 	}
 
 	private void pushAnonymousFunctionBlockToStack(Codes.IndirectInvoke code, StackFrame currentStackframe) {
