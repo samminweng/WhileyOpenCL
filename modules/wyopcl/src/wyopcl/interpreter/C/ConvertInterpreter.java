@@ -264,7 +264,19 @@ public class ConvertInterpreter extends Interpreter {
 					}
 				}	
 			
-			} 
+			}
+			if(constant instanceof Constant.Bool){				
+				Constant.Bool b = (Constant.Bool)constant;
+				//If b == true, then return 1.
+				if(b.value){
+					return Constant.V_INTEGER(BigInteger.ONE);
+				}else{
+					return Constant.V_INTEGER(BigInteger.ZERO);
+				}
+				
+			}
+			
+			
 			internalFailure("Not implemented!", "ConvertInterpreter.java", null);
 			
 		}catch(ClassCastException ex){

@@ -198,7 +198,12 @@ public class ConstrainedValidTestCase {
 	public void test_ConstrainedList_Valid_22() {
 		util.exec("ConstrainedList_Valid_22");
 	}
-
+	
+	/**
+	 * The expected result is different from executed one.
+	 * Expected: :[[19, 43], [22, 50]]
+	 * Actual: :[[19, [22], [43], 50]] 
+	 */
 	@Test
 	public void test_ConstrainedList_Valid_23() {
 		util.exec("ConstrainedList_Valid_23");

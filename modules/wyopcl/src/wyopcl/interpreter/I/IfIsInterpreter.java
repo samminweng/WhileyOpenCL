@@ -75,7 +75,9 @@ public class IfIsInterpreter extends Interpreter {
 			Iterator<Constant> iterator = list.values.iterator();
 			while (iterator.hasNext()) {
 				Constant element = iterator.next();
-				return checkType(element, elementType);
+				if(!checkType(element, elementType)){
+					return false;
+				}
 			}
 			return true;
 		}catch(ClassCastException ex){

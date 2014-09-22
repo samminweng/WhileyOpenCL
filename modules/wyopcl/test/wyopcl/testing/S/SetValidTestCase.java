@@ -186,7 +186,11 @@ public class SetValidTestCase {
 		util.exec("SetIntersection_Valid_6");
 	}
 
+	/**
+	 * internal failure (invalid coercion encountered: real => int)
+	 */
 	@Test
+	@Ignore("Compilation_Error")
 	public void test_SetIntersection_Valid_7() {
 		util.exec("SetIntersection_Valid_7");
 	}

@@ -41,6 +41,15 @@ public class MethodValidTestCase {
 		util.exec("MethodCall_Valid_3");
 	}
 
+	/**
+	 * The expected result is different from the actual one.
+	 * Expected:
+	   123
+	 * Actual:
+	   SUM: 228
+	   SUM: 228
+	 * 
+	 */
 	@Test
 	public void test_MethodCall_Valid_4() {
 		util.exec("MethodCall_Valid_4");
@@ -57,7 +66,6 @@ public class MethodValidTestCase {
 	}
 
 	@Test
-	// @Ignore("Timeout")
 	public void test_Method_Valid_1() {
 		util.exec("Method_Valid_1");
 	}
