@@ -98,14 +98,6 @@ public class WyopclMain extends WycMain{
 				File f = new File(arg);
 				if(f.exists()){
 					delta.add(f);					
-					//Check if the test case is valid. If so, then disable the verification.
-					if(f.getName().matches(".*_Valid_*.*")){
-						//Current the verification does not support the bitwise operation.
-						builder.setVerification(false);
-					}else{
-						//Enable the verification
-						builder.setVerification(true);
-					}					
 				}else{
 					arguments.add(arg);
 				}

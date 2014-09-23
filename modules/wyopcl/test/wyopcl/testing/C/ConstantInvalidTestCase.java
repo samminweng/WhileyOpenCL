@@ -24,7 +24,7 @@ public class ConstantInvalidTestCase {
 	}
 	
 	@Test
-	@Ignore("Missing the Constant_Invalid_1.sysout")
+	@Ignore("unclassified")
 	public void test_Constant_Invalid_1() {
 		util.exec("Constant_Invalid_1");
 	}

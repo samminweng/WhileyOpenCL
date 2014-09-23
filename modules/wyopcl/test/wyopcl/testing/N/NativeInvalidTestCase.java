@@ -22,7 +22,7 @@ public class NativeInvalidTestCase {
 		util.terminate();
 		util = null;
 	}
-	@Ignore("Missing Native_Invalid_1.sysout")
+	@Ignore("unclassified")
 	@Test
 	public void test_Native_Invalid_1() {
 		util.exec("Native_Invalid_1");

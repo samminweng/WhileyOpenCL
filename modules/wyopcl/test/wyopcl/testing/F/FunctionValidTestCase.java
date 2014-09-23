@@ -53,7 +53,10 @@ public class FunctionValidTestCase {
 	 * wyopcl.WyopclMain.run(WyopclMain.java:119) at
 	 * wyopcl.WyopclMain.main(WyopclMain.java:148)
 	 **/
-	@Ignore("SyntaxError")
+	@Ignore("Issue ???\n"
+			+ ".\\FunctionRef_Valid_2.whiley:4: incomparable operands: real and int\r\n" + 
+			"	  return x + 1 ^^^^^ wycc.lang.SyntaxError: incomparable operands: real and\r\n" + 
+			"	  int at wycc.lang.SyntaxError.syntaxError(SyntaxError.java:238) at")
 	@Test
 	public void test_FunctionRef_Valid_2() {
 		util.exec("FunctionRef_Valid_2");

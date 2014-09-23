@@ -63,17 +63,17 @@ public class MethodInvalidTestCase {
 	public void test_MethodCall_Invalid_8() {
 		util.exec("MethodCall_Invalid_8");
 	}
-	@Ignore("Missing MethodRef_Invalid_1.sysout")
+	@Ignore("unclassified")
 	@Test
 	public void test_MethodRef_Invalid_1() {
 		util.exec("MethodRef_Invalid_1");
 	}
-	@Ignore("Missing MethodRef_Invalid_2.sysout")
+	@Ignore("Internal Failure") 
 	@Test
 	public void test_MethodRef_Invalid_2() {
 		util.exec("MethodRef_Invalid_2");
 	}
-	@Ignore("Missing MethodRef_Invalid_3.sysout")
+	@Ignore("unclassified")
 	@Test
 	public void test_MethodRef_Invalid_3() {
 		util.exec("MethodRef_Invalid_3");

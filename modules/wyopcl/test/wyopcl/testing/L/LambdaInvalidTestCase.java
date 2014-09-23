@@ -23,7 +23,7 @@ public class LambdaInvalidTestCase {
 		util = null;
 	}	
 
-	@Ignore("Missing Lambda_Invalid_3.sysout")
+	@Ignore("unclassified")
 	@Test
 	public void test_Lambda_Invalid_3() {
 		util.exec("Lambda_Invalid_3");

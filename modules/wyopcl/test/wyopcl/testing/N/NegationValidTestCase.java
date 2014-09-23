@@ -59,7 +59,13 @@ wycc.lang.SyntaxError$InternalFailure: internal failure, intersection types not 
 	at wyopcl.WyopclMain.main(WyopclMain.java:148)
 
 	 */
-	@Ignore("SyntaxError")
+	@Ignore("Issue ???\n"
+			+ " .\\NegationType_Valid_3.whiley:3: internal failure, intersection types not supported yet\r\n" + 
+			"function f(string x) => !null & !int:\r\n" + 
+			"                         ^^^^^^^^^^^\r\n" + 
+			"wycc.lang.SyntaxError$InternalFailure: internal failure, intersection types not supported yet\r\n" + 
+			"	at wycc.lang.SyntaxError.internalFailure(SyntaxError.java:297)\r\n" + 
+			"	at wyc.lang.WhileyFile.internalFailure(WhileyFile.java:630)")
 	@Test
 	public void test_NegationType_Valid_3() {
 		util.exec("NegationType_Valid_3");

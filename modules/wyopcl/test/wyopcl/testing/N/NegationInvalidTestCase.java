@@ -27,7 +27,7 @@ public class NegationInvalidTestCase {
 	public void test_NegationType_Invalid_1() {
 		util.exec("NegationType_Invalid_1");
 	}
-	@Ignore("Missing NegationType_Invalid_2.sysout")
+	@Ignore("unclassified")
 	@Test
 	public void test_NegationType_Invalid_2() {
 		util.exec("NegationType_Invalid_2");

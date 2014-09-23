@@ -68,12 +68,12 @@ public class FunctionInvalidTestCase {
 		util.exec("Function_Invalid_1");
 	}
 
-	@Ignore("Missing Function_Invalid_10.sysout")
 	@Test
 	public void test_Function_Invalid_10() {
 		util.exec("Function_Invalid_10");
-	}	
-	@Ignore("Missing Function_Invalid_2.sysout")
+	}
+	
+	@Ignore("Internal Failure")
 	@Test
 	public void test_Function_Invalid_2() {
 		util.exec("Function_Invalid_2");
@@ -88,7 +88,7 @@ public class FunctionInvalidTestCase {
 	public void test_Function_Invalid_4() {
 		util.exec("Function_Invalid_4");
 	}
-	@Ignore("Missing Function_Invalid_9.sysout")
+	@Ignore("unclassified")
 	@Test
 	public void test_Function_Invalid_9() {
 		util.exec("Function_Invalid_9");

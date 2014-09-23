@@ -127,7 +127,13 @@ wycc.lang.SyntaxError: expected type {null x}|{int x}, found {null|int x}
 	at wyopcl.WyopclMain.main(WyopclMain.java:148)
 
 	 */
-	@Ignore("SyntaxError")
+	@Ignore("Issue ???\n"
+			+ "\\RecordSubtype_Valid_1.whiley:12: expected type {null x}|{int x}, found {null|int x}\r\n" + 
+			"    return x\r\n" + 
+			"           ^\r\n" + 
+			"wycc.lang.SyntaxError: expected type {null x}|{int x}, found {null|int x}\r\n" + 
+			"	at wycc.lang.SyntaxError.syntaxError(SyntaxError.java:238)\r\n" + 
+			"	at wyc.builder.FlowTypeChecker.checkIsSubtype(FlowTypeChecker.java:4060)")
 	@Test
 	public void test_RecordSubtype_Valid_1() {
 		util.exec("RecordSubtype_Valid_1");
@@ -153,7 +159,12 @@ wycc.lang.SyntaxError: expected type {null data,X<null|{null|int data,X next}> n
 	at wyopcl.WyopclMain.run(WyopclMain.java:119)
 	at wyopcl.WyopclMain.main(WyopclMain.java:148)
 	 */
-	@Ignore("SyntaxError")
+	@Ignore("Issue ???\n"
+			+ " .\\RecordSubtype_Valid_2.whiley:12: expected type {null data,X<null|{null|int data,X next}> next}|{int data,X<null|{null|int data,X next}> next}, found X<{null|int data,X|null next}>\r\n" + 
+			"    return r\r\n" + 
+			"           ^\r\n" + 
+			"wycc.lang.SyntaxError: expected type {null data,X<null|{null|int data,X next}> next}|{int data,X<null|{null|int data,X next}> next}, found X<{null|int data,X|null next}>\r\n" + 
+			"	at wycc.lang.SyntaxError.syntaxError(SyntaxError.java:238)")
 	@Test
 	public void test_RecordSubtype_Valid_2() {
 		util.exec("RecordSubtype_Valid_2");

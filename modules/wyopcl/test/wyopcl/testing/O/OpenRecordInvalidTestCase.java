@@ -28,12 +28,8 @@ public class OpenRecordInvalidTestCase {
 	public void test_OpenRecord_Invalid_1() {
 		util.exec("OpenRecord_Invalid_1");
 	}
-	@Ignore("Missing OpenRecord_Invalid_10.sysout")
-	@Test
-	public void test_OpenRecord_Invalid_10() {
-		util.exec("OpenRecord_Invalid_10");
-	}
-	@Ignore("Missing OpenRecord_Invalid_2.sysout")
+	
+	@Ignore("unclassified")
 	@Test
 	public void test_OpenRecord_Invalid_2() {
 		util.exec("OpenRecord_Invalid_2");

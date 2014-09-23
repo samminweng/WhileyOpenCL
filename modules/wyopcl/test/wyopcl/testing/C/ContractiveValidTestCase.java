@@ -44,7 +44,12 @@ wycc.lang.SyntaxError: contractive type encountered
 	at wyopcl.WyopclMain.run(WyopclMain.java:119)
 	at wyopcl.WyopclMain.main(WyopclMain.java:148)
 	 */
-	@Ignore("SyntaxError")
+	@Ignore("Issue ???\n"
+			+ ".\\Contractive_Valid_1.whiley:5: contractive type encountered\r\n" + 
+			"function f(Contractive x) => Contractive:\r\n" + 
+			"           ^^^^^^^^^^^\r\n" + 
+			"wycc.lang.SyntaxError: contractive type encountered\r\n" + 
+			"	at wycc.lang.SyntaxError.syntaxError(SyntaxError.java:238)")
 	@Test
 	public void test_Contractive_Valid_1() {
 		util.exec("Contractive_Valid_1");

@@ -26,12 +26,12 @@ public class UpdateValidTestCase {
 		util = null;
 	}
 	
-	@Ignore("Missing Update_Valid_1.sysout")
+	@Ignore("Issue ???")
 	@Test
 	public void test_Update_Valid_1() {
 		util.exec("Update_Valid_1");
 	}
-	@Ignore("Missing Update_Valid_2.sysout")
+	@Ignore("Issue ???")
 	@Test
 	public void test_Update_Valid_2() {
 		util.exec("Update_Valid_2");

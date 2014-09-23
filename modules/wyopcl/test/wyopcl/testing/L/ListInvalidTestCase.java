@@ -49,19 +49,19 @@ public class ListInvalidTestCase {
 		util.exec("ListAppend_Invalid_2");
 	}
 
-	@Ignore("Missing ListAppend_Invalid_3.sysout")
+	@Ignore("Unknown Issue")
 	@Test
 	public void test_ListAppend_Invalid_3() {
 		util.exec("ListAppend_Invalid_3");
 	}
 
-	@Ignore("Missing ListAppend_Invalid_4.sysout")
+	@Ignore("Internal Failure")
 	@Test
 	public void test_ListAppend_Invalid_4() {
 		util.exec("ListAppend_Invalid_4");
 	}
 
-	@Ignore("Missing ListAppend_Invalid_5.sysout")
+	@Ignore("Internal Failure")
 	@Test
 	public void test_ListAppend_Invalid_5() {
 		util.exec("ListAppend_Invalid_5");
@@ -73,19 +73,13 @@ public class ListInvalidTestCase {
 		util.exec("ListAssign_Invalid_1");
 	}
 
-	@Ignore("Missing ListAssign_Invalid_11.sysout")
-	@Test
-	public void test_ListAssign_Invalid_11() {
-		util.exec("ListAssign_Invalid_11");
-	}
-
-	@Ignore("Missing ListAssign_Invalid_2.sysout")
+	@Ignore("Infinite Loop?")
 	@Test
 	public void test_ListAssign_Invalid_2() {
 		util.exec("ListAssign_Invalid_2");
 	}
 
-	@Ignore("Missing ListAssign_Invalid_3.sysout")
+	@Ignore("Infinite Loop?")
 	@Test
 	public void test_ListAssign_Invalid_3() {
 		util.exec("ListAssign_Invalid_3");
@@ -142,7 +136,7 @@ public class ListInvalidTestCase {
 		util.exec("ListSublist_Invalid_1");
 	}
 
-	@Ignore("Missing ListSublist_Invalid_2.sysout")
+	@Ignore("unclassified")
 	@Test
 	public void test_ListSublist_Invalid_2() {
 		util.exec("ListSublist_Invalid_2");
@@ -153,7 +147,7 @@ public class ListInvalidTestCase {
 		util.exec("ListSublist_Invalid_3");
 	}
 
-	@Ignore("Missing ListUpdate_Invalid_1.sysout")
+	@Ignore("unclassified")
 	@Test
 	public void test_ListUpdate_Invalid_1() {
 		util.exec("ListUpdate_Invalid_1");

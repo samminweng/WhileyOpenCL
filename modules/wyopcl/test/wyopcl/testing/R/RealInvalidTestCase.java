@@ -46,7 +46,7 @@ public class RealInvalidTestCase {
 	public void test_RealDiv_Invalid_2() {
 		util.exec("RealDiv_Invalid_2");
 	}	
-	@Ignore("Missing RealMul_Invalid_1.sysout")
+	@Ignore("Internal Failure")
 	@Test
 	public void test_RealMul_Invalid_1() {
 		util.exec("RealMul_Invalid_1");

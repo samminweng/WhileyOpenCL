@@ -69,7 +69,13 @@ wycc.lang.SyntaxError: record required, got: X<null|{int item,X left,X right}>
 	at wyopcl.WyopclMain.main(WyopclMain.java:148)
 	 */
 	@Test
-	@Ignore("SyntaxError")
+	@Ignore("Issue ???\n"
+			+ ".\\Complex_Valid_3.whiley:9: record required, got: X<null|{int item,X left,X right}>\r\n" + 
+			"    (tree != null && tree.left != null ==> tree.left.item < tree.item) &&\r\n" + 
+			"                                           ^^^^^^^^^^^^^^\r\n" + 
+			"wycc.lang.SyntaxError: record required, got: X<null|{int item,X left,X right}>\r\n" + 
+			"	at wycc.lang.SyntaxError.syntaxError(SyntaxError.java:238)\r\n" + 
+			"	at wyc.lang.WhileyFile.syntaxError(WhileyFile.java:620)")
 	public void test_Complex_Valid_3() {
 		util.exec("Complex_Valid_3");
 	}

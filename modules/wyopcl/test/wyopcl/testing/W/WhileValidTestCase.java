@@ -152,19 +152,16 @@ public class WhileValidTestCase {
 	}
 
 	@Test
-	@Ignore("No While_Valid_34.sysout")
 	public void test_While_Valid_34() {
 		util.exec("While_Valid_34");
 	}
 
-	@Test
-	@Ignore("No While_Valid_35.sysout")
+	@Test	
 	public void test_While_Valid_35() {
 		util.exec("While_Valid_35");
 	}
 
-	@Test
-	@Ignore("No While_Valid_36.sysout")
+	@Test	
 	public void test_While_Valid_36() {
 		util.exec("While_Valid_36");
 	}

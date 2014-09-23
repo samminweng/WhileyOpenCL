@@ -284,7 +284,14 @@ wycc.lang.SyntaxError: incomparable operands: !int and int
 	at wyopcl.WyopclMain.main(WyopclMain.java:148)
 	 */
 	@Test
-	@Ignore("SyntaxError")
+	@Ignore("Issue ???\n"
+			+ ".\\ConstrainedNegation_Valid_1.whiley:9: incomparable operands: !int and int\r\n" + 
+			"    if x is int:\r\n" + 
+			"       ^^^^^^^^\r\n" + 
+			"wycc.lang.SyntaxError: incomparable operands: !int and int\r\n" + 
+			"	at wycc.lang.SyntaxError.syntaxError(SyntaxError.java:238)\r\n" + 
+			"	at wyc.lang.WhileyFile.syntaxError(WhileyFile.java:620)"
+			)
 	public void test_ConstrainedNegation_Valid_1() {
 		util.exec("ConstrainedNegation_Valid_1");
 	}

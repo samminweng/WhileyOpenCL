@@ -25,7 +25,7 @@ public class ConstrainedInvalidTestCase {
 		util.terminate();
 		util = null;
 	}
-	@Ignore("Missing ConstrainedDictionary_Invalid_1.sysout")
+	@Ignore("unclassified")
 	@Test
 	public void test_ConstrainedDictionary_Invalid_1() {
 		util.exec("ConstrainedDictionary_Invalid_1");
@@ -36,7 +36,7 @@ public class ConstrainedInvalidTestCase {
 		util.exec("ConstrainedInt_Invalid_1");
 	}
 
-	@Ignore("Missing ConstrainedInt_Invalid_10.sysout")
+	@Ignore("unclassified")
 	@Test
 	public void test_ConstrainedInt_Invalid_10() {
 		util.exec("ConstrainedInt_Invalid_10");
@@ -80,6 +80,7 @@ public class ConstrainedInvalidTestCase {
 	}
 	
 	@Test
+	@Ignore("Timeout")
 	public void test_ConstrainedInt_Invalid_9() {
 		util.exec("ConstrainedInt_Invalid_9");
 	}
@@ -94,7 +95,7 @@ public class ConstrainedInvalidTestCase {
 		util.exec("ConstrainedList_Invalid_2");
 	}
 
-	@Ignore("Missing 'ConstrainedList_Invalid_3.sysout'")
+	@Ignore("unclassified")
 	@Test
 	public void test_ConstrainedList_Invalid_3() {
 		util.exec("ConstrainedList_Invalid_3");

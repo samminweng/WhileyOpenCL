@@ -72,7 +72,7 @@ public class WycMain {
 			new OptArg("verbose",
 					"Print detailed information on what the compiler is doing"),
 			new OptArg("brief", "Enable brief reporting of error messages"),
-			new OptArg("",
+			new OptArg("verify",
 					"Enable detailed verification checking"),
 			new OptArg("smt-",
 					"Enable detailed verification checking using an external SMT solver"),
@@ -257,7 +257,7 @@ public class WycMain {
 		boolean verbose = values.containsKey("verbose");
 				
 		builder.setVerbose(verbose);
-		builder.setVerification(values.containsKey(""));
+		builder.setVerification(values.containsKey("verify"));
 		builder.setSmtVerification(values.containsKey("smt-"));
 
 		ArrayList<Pipeline.Modifier> pipelineModifiers = (ArrayList) values

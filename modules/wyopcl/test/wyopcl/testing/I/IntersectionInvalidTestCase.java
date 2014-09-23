@@ -23,13 +23,13 @@ public class IntersectionInvalidTestCase {
 		util = null;
 	}
 	
-	@Ignore("Missing Intersection_Invalid_1.sysout")
+	@Ignore("unclassified")
 	@Test
 	public void test_Intersection_Invalid_1() {
 		util.exec("Intersection_Invalid_1");
 	}
 	
-	@Ignore("Missing Intersection_Invalid_2.sysout")
+	@Ignore("unclassified")
 	@Test
 	public void test_Intersection_Invalid_2() {
 		util.exec("Intersection_Invalid_2");

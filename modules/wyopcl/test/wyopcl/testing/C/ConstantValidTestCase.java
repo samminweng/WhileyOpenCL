@@ -70,7 +70,13 @@ wycc.lang.SyntaxError$InternalFailure: internal failure
 	at wyc.builder.FlowTypeChecker.resolveAsType(FlowTypeChecker.java:3325)
 	at wyc.builder.FlowTypeC
 	*/
-	@Ignore("SyntaxError")
+	@Ignore("Issue #311\n"
+			+ ".\\Constant_Valid_1.whiley:5: internal failure\r\n" + 
+			"constant CONSTANT is {V1 is TYPE, V2 is TYPE}\r\n" + 
+			"                            ^^^^\r\n" + 
+			"wycc.lang.SyntaxError$InternalFailure: internal failure\r\n" + 
+			"	at wycc.lang.SyntaxError.internalFailure(SyntaxError.java:312)\r\n" + 
+			"	at wyc.lang.WhileyFile.internalFailure(WhileyFile.java:635)")
 	@Test
 	public void test_Constant_Valid_1() {
 		util.exec("Constant_Valid_1");
@@ -103,7 +109,13 @@ Caused by: wycc.util.ResolveError: type not found: Constant_Valid_2:ZLIB
 	... 13 more
 
 	 */
-	@Ignore("SyntaxError")
+	@Ignore("Issue #311\n"
+			+ ".\\Constant_Valid_2.whiley:4: type not found: Constant_Valid_2:ZLIB\r\n" + 
+			"type CompressionMethod is {ZLIB}\r\n" + 
+			"                           ^^^^\r\n" + 
+			"wycc.lang.SyntaxError: type not found: Constant_Valid_2:ZLIB\r\n" + 
+			"	at wycc.lang.SyntaxError.syntaxError(SyntaxError.java:253)\r\n" + 
+			"	at wyc.lang.WhileyFile.syntaxError(WhileyFile.java:625)")
 	@Test
 	public void test_Constant_Valid_2() {
 		util.exec("Constant_Valid_2");

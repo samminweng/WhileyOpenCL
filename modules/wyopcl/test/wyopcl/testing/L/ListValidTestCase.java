@@ -74,7 +74,13 @@ wycc.lang.SyntaxError: invalid set or list expression
 	at wyopcl.WyopclMain.run(WyopclMain.java:119)
 	at wyopcl.WyopclMain.main(WyopclMain.java:148)
 	 */
-	@Ignore("SyntaxError")
+	@Ignore("Issue ???\n"
+			+ ".\\ListAccess_Valid_6.whiley:9: invalid set or list expression\r\n" + 
+			"            r = r ++ [r[0]]\r\n" + 
+			"                      ^\r\n" + 
+			"wycc.lang.SyntaxError: invalid set or list expression\r\n" + 
+			"	at wycc.lang.SyntaxError.syntaxError(SyntaxError.java:238)\r\n" + 
+			"	at wyc.lang.WhileyFile.syntaxError(WhileyFile.java:620)")
 	@Test
 	public void test_ListAccess_Valid_6() {
 		util.exec("ListAccess_Valid_6");
@@ -108,7 +114,13 @@ wycc.lang.SyntaxError: incomparable operands: [void] and null
 	at wyopcl.WyopclMain.main(WyopclMain.java:148)
 
 	 */
-	@Ignore("SyntaxError")
+	@Ignore("Issue ???\n"
+			+ ".\\ListAccess_Valid_7.whiley:6: incomparable operands: [void] and null\r\n" + 
+			"        if r == null:\r\n" + 
+			"           ^^^^^^^^^\r\n" + 
+			"wycc.lang.SyntaxError: incomparable operands: [void] and null\r\n" + 
+			"	at wycc.lang.SyntaxError.syntaxError(SyntaxError.java:238)\r\n" + 
+			"	at wyc.lang.WhileyFile.syntaxError(WhileyFile.java:620)")
 	@Test
 	public void test_ListAccess_Valid_7() {
 		util.exec("ListAccess_Valid_7");

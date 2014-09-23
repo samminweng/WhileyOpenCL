@@ -47,12 +47,6 @@ public class CoercionValidTestCase {
 	}
 
 	@Test
-	@Ignore("No such a file.")
-	public void test_Coercion_Valid_5() {
-		util.exec("Coercion_Valid_5");
-	}
-
-	@Test
 	public void test_Coercion_Valid_6() {
 		util.exec("Coercion_Valid_6");
 	}
@@ -87,7 +81,12 @@ wycc.lang.SyntaxError: expected type real, found int
 	at wyopcl.WyopclMain.main(WyopclMain.java:148)
 	 */
 	@Test
-	@Ignore("SyntaxError")
+	@Ignore("Issue #406\n"
+			+ ".\\Coercion_Valid_8.whiley:7: expected type real, found int\r\n" + 
+			"        return |x|\r\n" + 
+			"               ^^^\r\n" + 
+			"wycc.lang.SyntaxError: expected type real, found int\r\n" + 
+			"	at wycc.lang.SyntaxError.syntaxError(SyntaxError.java:238)")
 	public void test_Coercion_Valid_8() {
 		util.exec("Coercion_Valid_8");
 	}

@@ -129,7 +129,14 @@ wycc.lang.SyntaxError: expecting int or real or char, found TypeEquals_Valid_23:
 	at wyopcl.WyopclMain.main(WyopclMain.java:148)
 
 	 */
-	@Ignore("SyntaxError")
+	@Ignore("Issue ???\n"
+			+ ".\\TypeEquals_Valid_23.whiley:11: expecting int or real or char, found TypeEquals_Valid_23:expr\r\n" + 
+			"        return e + 1\r\n" + 
+			"               ^\r\n" + 
+			"wycc.lang.SyntaxError: expecting int or real or char, found TypeEquals_Valid_23:expr\r\n" + 
+			"	at wycc.lang.SyntaxError.syntaxError(SyntaxError.java:238)\r\n" + 
+			"	at wyc.lang.WhileyFile.syntaxError(WhileyFile.java:620)\r\n" + 
+			"	at wyc.builder.FlowTypeChecker.checkSuptypes(FlowTypeChecker.java:4133)")
 	@Test
 	public void test_TypeEquals_Valid_23() {
 		util.exec("TypeEquals_Valid_23");
@@ -186,7 +193,12 @@ wycc.lang.SyntaxError: unknown variable
 	at wyopcl.WyopclMain.main(WyopclMain.java:148)
 
  */
-	@Ignore("SyntaxError")
+	@Ignore("Issue ???\n"
+			+ ".\\TypeEquals_Valid_3.whiley:6: unknown variable\r\n" + 
+			"    r = []\r\n" + 
+			"    ^\r\n" + 
+			"wycc.lang.SyntaxError: unknown variable\r\n" + 
+			"	at wycc.lang.SyntaxError.syntaxError(SyntaxError.java:238)")
 	@Test
 	public void test_TypeEquals_Valid_3() {
 		util.exec("TypeEquals_Valid_3");
@@ -253,7 +265,13 @@ wycc.lang.SyntaxError: found int|[int], expected string, set, list or dictionary
 	at wyopcl.WyopclMain.run(WyopclMain.java:119)
 	at wyopcl.WyopclMain.main(WyopclMain.java:148)
  */
-	@Ignore("SyntaxError")
+	@Ignore("Issue ???\n"
+			+ ".\\TypeEquals_Valid_36.whiley:10: found int|[int], expected string, set, list or dictionary.\r\n" + 
+			"    if (t.lhs is plist) && ((|t.lhs| > 0) && (t.lhs[0] == 0)):\r\n" + 
+			"                              ^^^^^\r\n" + 
+			"wycc.lang.SyntaxError: found int|[int], expected string, set, list or dictionary.\r\n" + 
+			"	at wycc.lang.SyntaxError.syntaxError(SyntaxError.java:238)\r\n" + 
+			"	at wyc.lang.WhileyFile.syntaxError(WhileyFile.java:620)")
 	@Test
 	public void test_TypeEquals_Valid_36() {
 		util.exec("TypeEquals_Valid_36");
@@ -291,7 +309,13 @@ wycc.lang.SyntaxError: found int|[int], expected string, set, list or dictionary
 	at wyopcl.WyopclMain.main(WyopclMain.java:148)
 
  */
-	@Ignore("SyntaxError")
+	@Ignore("Issue ???\n"
+			+ ".\\TypeEquals_Valid_37.whiley:10: found int|[int], expected string, set, list or dictionary.\r\n" + 
+			"    if (t.lhs is plist) && ((|t.lhs| > 0) && (t.lhs[0] == 0)):\r\n" + 
+			"                              ^^^^^\r\n" + 
+			"wycc.lang.SyntaxError: found int|[int], expected string, set, list or dictionary.\r\n" + 
+			"	at wycc.lang.SyntaxError.syntaxError(SyntaxError.java:238)\r\n" + 
+			"	at wyc.lang.WhileyFile.syntaxError(WhileyFile.java:620)")
 	@Test
 	public void test_TypeEquals_Valid_37() {
 		util.exec("TypeEquals_Valid_37");
@@ -329,7 +353,13 @@ wycc.lang.SyntaxError: found int|[int], expected string, set, list or dictionary
 	at wyopcl.WyopclMain.run(WyopclMain.java:119)
 	at wyopcl.WyopclMain.main(WyopclMain.java:148)
 	 */
-	@Ignore("SyntaxError")
+	@Ignore("Issue ???\n"
+			+ ".\\TypeEquals_Valid_38.whiley:8: found int|[int], expected string, set, list or dictionary.\r\n" + 
+			"    if (t.lhs is [int]) && ((|t.lhs| > 0) && (t.lhs[0] == 0)):\r\n" + 
+			"                              ^^^^^\r\n" + 
+			"wycc.lang.SyntaxError: found int|[int], expected string, set, list or dictionary.\r\n" + 
+			"	at wycc.lang.SyntaxError.syntaxError(SyntaxError.java:238)\r\n" + 
+			"	at wyc.lang.WhileyFile.syntaxError(WhileyFile.java:620)")
 	@Test
 	public void test_TypeEquals_Valid_38() {
 		util.exec("TypeEquals_Valid_38");
@@ -369,7 +399,13 @@ wycc.lang.SyntaxError: expected type int, found TypeEquals_Valid_41:expr
 	at wyopcl.WyopclMain.main(WyopclMain.java:148)
 
  */
-	@Ignore("SyntaxError")
+	@Ignore("Issue ???\n"
+			+ ".\\TypeEquals_Valid_41.whiley:11: expected type int, found TypeEquals_Valid_41:expr\r\n" + 
+			"        return e\r\n" + 
+			"               ^\r\n" + 
+			"wycc.lang.SyntaxError: expected type int, found TypeEquals_Valid_41:expr\r\n" + 
+			"	at wycc.lang.SyntaxError.syntaxError(SyntaxError.java:238)\r\n" + 
+			"	at wyc.builder.FlowTypeChecker.checkIsSubtype(FlowTypeChecker.java:4060)")
 	@Test
 	public void test_TypeEquals_Valid_41() {
 		util.exec("TypeEquals_Valid_41");

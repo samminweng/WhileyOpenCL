@@ -16,24 +16,22 @@ import junit.framework.AssertionFailedError;
 import static org.junit.Assert.*;
 
 public final class BaseTestUtil {
-	final String version = "v0.3.30";
+	private final String version = "v0.3.30";
 	// user.dir is the current directory.
-	final String classpath = System.getProperty("user.dir") + File.separator + "lib" + File.separator + "wyjc-"
-			+ version + ".jar" + File.pathSeparator + System.getProperty("user.dir") + File.separator + "lib"
-			+ File.separator + "wyopcl-" + version + ".jar" + File.pathSeparator + System.getProperty("user.dir")
-			+ File.separator + "lib" + File.separator + "wyrl-" + version + ".jar" + File.pathSeparator
-			+ System.getProperty("user.dir") + File.separator + "lib" + File.separator + "wycs-" + version + ".jar"
-			+ File.pathSeparator + System.getProperty("user.dir") + File.separator + "lib" + File.separator + "wybs-"
-			+ version + ".jar" + File.pathSeparator + System.getProperty("user.dir") + File.separator + "lib"
-			+ File.separator + "wyil-" + version + ".jar" + File.pathSeparator + System.getProperty("user.dir")
-			+ File.separator + "lib" + File.separator + "wyc-" + version + ".jar" + File.pathSeparator;
-	final String runtime = System.getProperty("user.dir") + File.separator + "lib" + File.separator + "wyrt-" + version
-			+ ".jar";
-	final String workspace_folder = System.getProperty("user.dir");
-	final String valid_test_folder = System.getProperty("user.dir") + File.separator + "tests" + File.separator
-			+ "valid" + File.separator;
-	final String invalid_test_folder = System.getProperty("user.dir") + File.separator + "tests" + File.separator
-			+ "invalid" + File.separator;
+	private final String workspace_path = System.getProperty("user.dir")+ File.separator;
+	private final String lib_path = workspace_path + "lib"+ File.separator;
+	
+	private final String classpath = lib_path + "wyjc-"	+ version + ".jar" + File.pathSeparator 
+			+ lib_path + "wyopcl-" + version + ".jar" + File.pathSeparator 
+			+ lib_path + "wyrl-" + version + ".jar" + File.pathSeparator
+			+ lib_path + "wycs-" + version + ".jar"	+ File.pathSeparator
+			+ lib_path + "wybs-"+ version + ".jar" + File.pathSeparator 
+			+ lib_path + "wyil-" + version + ".jar" + File.pathSeparator
+			+ lib_path + "wyc-" + version + ".jar" + File.pathSeparator;
+	final String runtime = lib_path + "wyrt-" + version + ".jar";
+	
+	final String valid_path = workspace_path + "tests" + File.separator + "valid" + File.separator;
+	final String invalid_path = workspace_path + "tests" + File.separator + "invalid" + File.separator;
 
 	private ProcessBuilder pb;
 	private Process p;
@@ -58,7 +56,7 @@ public final class BaseTestUtil {
 			String path_whiley = file_name + ".whiley";
 			// Set the working directory.
 			pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, path_whiley);
-			pb.directory(new File(valid_test_folder));
+			pb.directory(new File(valid_path));
 
 			// System.out.println("" + pb.directory());
 			p = pb.start();
@@ -66,7 +64,7 @@ public final class BaseTestUtil {
 					Charset.forName("UTF-8")));
 
 			// Load the output file (*.sysout).
-			String path_sysout = valid_test_folder + file_name + ".sysout";
+			String path_sysout = valid_path + file_name + ".sysout";
 
 			Iterator<String> iterator = Files.readAllLines(Paths.get(path_sysout), Charset.defaultCharset()).iterator();
 			String output = null;
@@ -93,8 +91,8 @@ public final class BaseTestUtil {
 			// Run the whiley program with interpreter.
 			String path_whiley = file_name + ".whiley";
 			// Set the working directory.
-			pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, path_whiley);
-			pb.directory(new File(invalid_test_folder));
+			pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, path_whiley, "-verify");
+			pb.directory(new File(invalid_path));
 
 			// System.out.println("" + pb.directory());
 			p = pb.start();
@@ -104,7 +102,7 @@ public final class BaseTestUtil {
 					Charset.forName("UTF-8")));
 
 			// Load the output file (*.sysout).
-			String path_sysout = invalid_test_folder + file_name + ".sysout";
+			String path_sysout = invalid_path + file_name + ".sysout";
 
 			Iterator<String> iterator = Files.readAllLines(Paths.get(path_sysout), Charset.defaultCharset()).iterator();
 			String output = null;

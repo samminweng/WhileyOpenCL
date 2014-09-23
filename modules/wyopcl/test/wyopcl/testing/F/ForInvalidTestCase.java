@@ -49,7 +49,7 @@ public class ForInvalidTestCase{
 		util.exec("For_Invalid_8");
 	}
 
-	@Ignore("Missing For_Invalid_9.sysout")
+	@Ignore("Issue #409")
 	@Test
 	public void test_For_Invalid_9() {
 		util.exec("For_Invalid_9");

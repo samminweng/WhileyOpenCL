@@ -47,7 +47,13 @@ wycc.lang.SyntaxError$InternalFailure: internal failure, intersection types not 
 	at wyopcl.WyopclMain.run(WyopclMain.java:119)
 	at wyopcl.WyopclMain.main(WyopclMain.java:148)
 	 */
-	@Ignore("SyntaxError")
+	@Ignore("Issue ???\n"
+			+ ".\\Intersection_Valid_1.whiley:3: internal failure, intersection types not supported yet\r\n" + 
+			"type EmptyList is [int] & [real]\r\n" + 
+			"                 ^^^^^^^^^^^^^^^\r\n" + 
+			"wycc.lang.SyntaxError$InternalFailure: internal failure, intersection types not supported yet\r\n" + 
+			"	at wycc.lang.SyntaxError.internalFailure(SyntaxError.java:297)\r\n" + 
+			"	at wyc.lang.WhileyFile.internalFailure(WhileyFile.java:630)")
 	@Test
 	public void test_Intersection_Valid_1() {
 		util.exec("Intersection_Valid_1");
@@ -73,7 +79,13 @@ wycc.lang.SyntaxError$InternalFailure: internal failure, intersection types not 
 	at wyopcl.WyopclMain.run(WyopclMain.java:119)
 	at wyopcl.WyopclMain.main(WyopclMain.java:148)
 	 */
-	@Ignore("SyntaxError")
+	@Ignore("Issue ???\n"
+			+ " .\\Intersection_Valid_2.whiley:7: internal failure, intersection types not supported yet\r\n" + 
+			"type InterList is UnitList & LinkedList\r\n" + 
+			"                 ^^^^^^^^^^^^^^^^^^^^^^\r\n" + 
+			"wycc.lang.SyntaxError$InternalFailure: internal failure, intersection types not supported yet\r\n" + 
+			"	at wycc.lang.SyntaxError.internalFailure(SyntaxError.java:297)\r\n" + 
+			"	at wyc.lang.WhileyFile.internalFailure(WhileyFile.java:630)")
 	@Test
 	public void test_Intersection_Valid_2() {
 		util.exec("Intersection_Valid_2");

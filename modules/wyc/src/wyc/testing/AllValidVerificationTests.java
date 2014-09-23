@@ -50,13 +50,15 @@ public class AllValidVerificationTests {
 	 * The directory containing the source files for each test case. Every test
 	 * corresponds to a file in this directory.
 	 */
-	public final static String WHILEY_SRC_DIR = "../../tests/valid".replace('/', File.separatorChar);
+	//public final static String WHILEY_SRC_DIR = "../../tests/valid".replace('/', File.separatorChar);
+	public final static String WHILEY_SRC_DIR = System.getProperty("user.dir")+ File.separator + "tests"+File.separator + "valid";
 	
 	/**
 	 * The directory where compiler libraries are stored. This is necessary
 	 * since it will contain the Whiley Runtime.
 	 */
-	public final static String WYC_LIB_DIR = "../../lib/".replace('/', File.separatorChar);
+	//public final static String WYC_LIB_DIR = "../../lib/".replace('/', File.separatorChar);
+	public final static String WYC_LIB_DIR = System.getProperty("user.dir")+ File.separator + "lib"+ File.separator;
 	
 	/**
 	 * The path to the Whiley RunTime (WyRT) library. This contains the Whiley

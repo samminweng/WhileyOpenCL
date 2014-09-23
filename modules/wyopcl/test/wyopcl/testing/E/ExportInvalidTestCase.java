@@ -24,7 +24,7 @@ public class ExportInvalidTestCase {
 	}
 	
 	@Test
-	@Ignore("Missing Export_Invalid_1.sysout")
+	@Ignore("unclassified")
 	public void test_Export_Invalid_1() {
 		util.exec("Export_Invalid_1");
 	}

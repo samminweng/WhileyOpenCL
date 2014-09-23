@@ -109,13 +109,48 @@ public class ForValidTestCase {
 	 * wyopcl.WyopclMain.run(WyopclMain.java:119) at
 	 * wyopcl.WyopclMain.main(WyopclMain.java:148)
 	 */
-	@Ignore("SyntaxError")
+	@Ignore("Issue ???\n"
+			+ ".\\For_Valid_5.whiley:4: variable may be uninitialised for i, r in xs:\r\n" + 
+			"	  ^^^^^^^^^^^^^^^ wycc.lang.SyntaxError: variable may be uninitialised at\r\n" + 
+			"	  wycc.lang.SyntaxError.syntaxError(SyntaxError.java:238) at")
 	@Test
 	public void test_For_Valid_5() {
 		util.exec("For_Valid_5");
 	}
-
-	@Ignore("SyntaxError")
+/**
+ * 
+ [.\For_Valid_6.whiley] failed on definite assignment check (internal failure, internal failure)  [0ms]
+.\For_Valid_6.whiley:9: internal failure, internal failure
+    for x in xs:
+    ^^^^^^^^^^^^
+wycc.lang.SyntaxError$InternalFailure: internal failure, internal failure
+	at wycc.lang.SyntaxError.internalFailure(SyntaxError.java:312)
+	at wyil.util.dfa.ForwardFlowAnalysis.propagate(ForwardFlowAnalysis.java:208)
+	at wyil.util.dfa.ForwardFlowAnalysis.propagate(ForwardFlowAnalysis.java:94)
+	at wyil.util.dfa.ForwardFlowAnalysis.propagate(ForwardFlowAnalysis.java:83)
+	at wyil.util.dfa.ForwardFlowAnalysis.apply(ForwardFlowAnalysis.java:64)
+	at wyil.checks.DefiniteAssignmentCheck.apply(DefiniteAssignmentCheck.java:1)
+	at wyc.builder.WhileyBuilder.process(WhileyBuilder.java:360)
+	at wyc.builder.WhileyBuilder.build(WhileyBuilder.java:224)
+	at wybs.util.StdBuildRule.apply(StdBuildRule.java:109)
+	at wybs.util.StdProject.build(StdProject.java:256)
+	at wyc.util.WycBuildTask.buildEntries(WycBuildTask.java:503)
+	at wyc.util.WycBuildTask.build(WycBuildTask.java:471)
+	at wyopcl.WyopclMain.run(WyopclMain.java:119)
+	at wyopcl.WyopclMain.main(WyopclMain.java:148)
+Caused by: java.lang.NullPointerException
+	at wyil.checks.DefiniteAssignmentCheck.join(DefiniteAssignmentCheck.java:164)
+	at wyil.checks.DefiniteAssignmentCheck.propagate(DefiniteAssignmentCheck.java:157)
+	at wyil.checks.DefiniteAssignmentCheck.propagate(DefiniteAssignmentCheck.java:1)
+	at wyil.util.dfa.ForwardFlowAnalysis.propagate(ForwardFlowAnalysis.java:138)
+	... 12 more
+ */
+	@Ignore("Issue ???"
+			+ ".\\For_Valid_6.whiley:9: internal failure, internal failure\r\n" + 
+			"    for x in xs:\r\n" + 
+			"    ^^^^^^^^^^^^\r\n" + 
+			"wycc.lang.SyntaxError$InternalFailure: internal failure, internal failure\r\n" + 
+			"	at wycc.lang.SyntaxError.internalFailure(SyntaxError.java:312)")
 	@Test
 	public void test_For_Valid_6() {
 		util.exec("For_Valid_6");
