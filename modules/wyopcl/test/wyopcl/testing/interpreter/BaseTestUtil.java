@@ -1,4 +1,4 @@
-package wyopcl.testing;
+package wyopcl.testing.interpreter;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -70,7 +70,7 @@ public final class BaseTestUtil {
 			String output = null;
 			while ((output = reader.readLine()) != null) {
 				String expected = iterator.next();
-				System.out.println(output);
+				//System.out.println(output);
 				assertEquals(expected, output);
 			}
 
@@ -108,7 +108,7 @@ public final class BaseTestUtil {
 			String output = null;
 			while ((output = reader.readLine()) != null) {
 				String expected = iterator.next();
-				System.out.println(output);
+				//System.out.println(output);
 				// Check if the output matches the regular expression for file path, e.g.
 				// .\List_Invalid_1.whiley:5: unknown variable
 				if (output.matches(".*" + path_whiley + ":\\d+:.*.")) {
