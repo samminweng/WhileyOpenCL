@@ -36,19 +36,19 @@ public class BoundTestCase {
 		//Add a lower bound
 		bounds.addLowerBound("x", new BigInteger("-10"));
 		assertNotNull(bounds.getDomain("x"));
-		assertEquals(BigInteger.valueOf(-10), bounds.getLower("x"));
+		assertEquals(new BigInteger("-10"), bounds.getLower("x"));
 		
 		//Add a weak lower bound
 		bounds.addLowerBound("x", new BigInteger("-11"));
-		assertEquals(BigInteger.valueOf(-10), bounds.getLower("x"));
+		assertEquals(new BigInteger("-10"), bounds.getLower("x"));
 		
 		//Add a strong lower bound
 		bounds.addLowerBound("x", new BigInteger("-9"));
-		assertEquals(BigInteger.valueOf(-9), bounds.getLower("x"));
+		assertEquals(new BigInteger("-9"), bounds.getLower("x"));
 		
 		//Add a positive and stronger lower bound
 		bounds.addLowerBound("x", new BigInteger("9"));
-		assertEquals(BigInteger.valueOf(9), bounds.getLower("x"));
+		assertEquals(new BigInteger("9"), bounds.getLower("x"));
 		bounds = null;
 	}
 	
@@ -59,19 +59,19 @@ public class BoundTestCase {
 		//Add a upper bound
 		bounds.addUpperBound("x", new BigInteger("10"));
 		assertNotNull(bounds.getDomain("x"));
-		assertEquals(BigInteger.valueOf(10), bounds.getUpper("x"));
+		assertEquals(new BigInteger("10"), bounds.getUpper("x"));
 		
 		//Add a weak upper bound
 		bounds.addUpperBound("x", new BigInteger("11"));
-		assertEquals(BigInteger.valueOf(10), bounds.getUpper("x"));
+		assertEquals(new BigInteger("10"), bounds.getUpper("x"));
 		
 		//Add a strong upper bound
 		bounds.addUpperBound("x", new BigInteger("9"));
-		assertEquals(BigInteger.valueOf(9), bounds.getUpper("x"));
+		assertEquals(new BigInteger("9"), bounds.getUpper("x"));
 		
 		//Add a negative and stronger lower bound
 		bounds.addUpperBound("x", new BigInteger("-9"));
-		assertEquals(BigInteger.valueOf(-9), bounds.getUpper("x"));		
+		assertEquals(new BigInteger("-9"), bounds.getUpper("x"));		
 		bounds = null;
 	}
 	
@@ -81,14 +81,14 @@ public class BoundTestCase {
 	public void testRightPlus() {
 		Bounds bnd = new Bounds();		
 		//D(x) = [4..8]
-		bnd.addLowerBound("x", BigInteger.valueOf(4));
-		bnd.addUpperBound("x", BigInteger.valueOf(8));
+		bnd.addLowerBound("x", new BigInteger("4"));
+		bnd.addUpperBound("x", new BigInteger("8"));
 		//D(y) = [0..3]
-		bnd.addLowerBound("y", BigInteger.valueOf(0));
-		bnd.addUpperBound("y", BigInteger.valueOf(3));
+		bnd.addLowerBound("y", new BigInteger("0"));
+		bnd.addUpperBound("y", new BigInteger("3"));
 		//D(z) = [2..2]
-		bnd.addLowerBound("z", BigInteger.valueOf(2));
-		bnd.addUpperBound("z", BigInteger.valueOf(2));
+		bnd.addLowerBound("z", new BigInteger("2"));
+		bnd.addUpperBound("z", new BigInteger("2"));
 		//x = y+z
 		RightPlus plus = new RightPlus("x", "y", "z");
 		assertTrue(plus.inferBound(bnd));
@@ -111,8 +111,8 @@ public class BoundTestCase {
 	public void testEqual() {
 		Bounds bnd = new Bounds();	
 		//D(x) = [-10..10]
-		bnd.addLowerBound("x", BigInteger.valueOf(-10));
-		bnd.addUpperBound("x", BigInteger.valueOf(10));
+		bnd.addLowerBound("x", new BigInteger("-10"));
+		bnd.addUpperBound("x", new BigInteger("10"));
 		ConstraintList list = new ConstraintList();
 		list.addConstraint(new Equals("x", "y"));
 		list.addConstraint(new Equals("y","z"));
