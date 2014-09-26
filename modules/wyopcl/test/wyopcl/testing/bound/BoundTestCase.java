@@ -121,6 +121,19 @@ public class BoundTestCase {
 		assertEquals(new BigInteger("10"), bnd.getUpper("y"));
 		assertEquals(new BigInteger("-10"), bnd.getLower("z"));
 		assertEquals(new BigInteger("10"), bnd.getUpper("z"));
+		
+		//Add the stronger bounds on z [0..5]
+		bnd.addLowerBound("z", new BigInteger("0"));
+		bnd.addUpperBound("z", new BigInteger("5"));
+		
+		assertTrue(list.inferFixPoint(bnd));
+		assertEquals(new BigInteger("0"), bnd.getLower("x"));
+		assertEquals(new BigInteger("5"), bnd.getUpper("x"));
+		assertEquals(new BigInteger("0"), bnd.getLower("y"));
+		assertEquals(new BigInteger("5"), bnd.getUpper("y"));
+		assertEquals(new BigInteger("0"), bnd.getLower("z"));
+		assertEquals(new BigInteger("5"), bnd.getUpper("z"));
+		
 		list = null;		
 	}
 	/***
