@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 public class Bounds {
 	//Every subclass shares the 'bounds' variable;
+	
 	protected static HashMap<String, Domain> bounds; 
 	public Bounds(){
 		bounds = new HashMap<String, Domain>();
@@ -38,7 +39,7 @@ public class Bounds {
 				domain = new Domain(name, null, null);
 			}
 			//Check if the lower bound has the value. If not, then update the lower bound. 
-			if(domain.getLower_bound()== null){
+			if(domain.getLower_bound() == null){
 				domain.setLower_bound(new_Lower_bound);
 			}else{
 				//Otherwise, compare the new lower bound with existing one.
@@ -78,7 +79,6 @@ public class Bounds {
 		}
 		
 	}
-	
 	
 	
 	
