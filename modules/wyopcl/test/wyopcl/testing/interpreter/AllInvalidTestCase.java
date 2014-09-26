@@ -10,7 +10,7 @@ import org.junit.Test;
 import org.junit.rules.TestRule;
 import org.junit.rules.Timeout;
 
-public class AllInvalidTestCases {
+public class AllInvalidTestCase {
 	@Rule
 	public TestRule timeout = new Timeout(5000);
 	private BaseTestUtil util;

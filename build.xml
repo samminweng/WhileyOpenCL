@@ -192,7 +192,7 @@
 </target>
 
 <target name="test" depends="compile-java">
-<mkdir dir="report/valid" />
+<mkdir dir="report/interpreter/valid" />
 <junit fork="yes">
 	<formatter type="plain" usefile="false" />
 	<classpath>
@@ -201,50 +201,74 @@
 		<pathelement location="lib/junit.jar" />
 	</classpath>
 	<formatter type="xml" />
-	<batchtest todir="report/valid">
+	<batchtest todir="report/interpreter/valid">
 		<fileset dir="modules/wyopcl/test/">
-			<include name="**/*ValidTestCase*" />
+			<include name="**/*AllValidTestCase*" />
 		</fileset>
 	</batchtest>
 </junit>
-<mkdir dir="report/invalid"/>
-	<junit fork="yes">
-		<formatter type="plain" usefile="false" />
-		<classpath>
-			<pathelement location="build" />
-			<pathelement location="lib/org.hamcrest.core_1.3.0.v201303031735.jar" />
-			<pathelement location="lib/junit.jar" />
-		</classpath>
-		<formatter type="xml" />
-		<batchtest todir="report/invalid">
-			<fileset dir="modules/wyopcl/test/">
-				<include name="**/*InvalidTestCase*" />
-			</fileset>
-		</batchtest>
-	</junit>
+<mkdir dir="report/interpreter/invalid"/>
+<junit fork="yes">
+	<formatter type="plain" usefile="false" />
+	<classpath>
+		<pathelement location="build" />
+		<pathelement location="lib/org.hamcrest.core_1.3.0.v201303031735.jar" />
+		<pathelement location="lib/junit.jar" />
+	</classpath>
+	<formatter type="xml" />
+	<batchtest todir="report/interpreter/invalid">
+		<fileset dir="modules/wyopcl/test/">
+			<include name="**/*AllInvalidTestCase*" />
+		</fileset>
+	</batchtest>
+</junit>
+<mkdir dir="report/bounds"/>
+<junit fork="yes">
+	<formatter type="plain" usefile="false" />
+	<classpath>
+		<pathelement location="build" />
+		<pathelement location="lib/org.hamcrest.core_1.3.0.v201303031735.jar" />
+		<pathelement location="lib/junit.jar" />
+	</classpath>
+	<formatter type="xml" />
+	<batchtest todir="report/bounds">
+		<fileset dir="modules/wyopcl/test/">
+			<include name="**/*BoundTestCase*" />
+		</fileset>
+	</batchtest>
+</junit>
 </target>
 
 <target name="report" depends="test">
 <junitreport todir="report">
-	<fileset dir="report/valid">
+	<fileset dir="report/interpreter/valid">
 		<include name="TEST-*.xml" />
 	</fileset>
-	<report todir="report/valid/html" />
+	<report todir="report/interpreter/valid/html" />
 </junitreport>
 <junitreport todir="report">
-	<fileset dir="report/invalid">
+	<fileset dir="report/interpreter/invalid">
 		<include name="TEST-*.xml" />
 	</fileset>
-	<report todir="report/invalid/html" />
+	<report todir="report/interpreter/invalid/html" />
 </junitreport>
 <junitreport todir="report">
-	<fileset dir="report/valid">
+	<fileset dir="report/interpreter/valid">
 		<include name="TEST-*.xml" />
 	</fileset>
-	<fileset dir="report/invalid">
+	<fileset dir="report/interpreter/invalid">
 		<include name="TEST-*.xml" />
 	</fileset>
-	<report todir="report" />
+	<report todir="report/interpreter" />
+</junitreport>
+<junitreport todir="report">
+	<fileset dir="report/bounds">
+		<include name="TEST-*.xml" />
+	</fileset>
+	<fileset dir="report/bounds">
+		<include name="TEST-*.xml" />
+	</fileset>
+	<report todir="report/bounds" />
 </junitreport>
 </target>
 </project>
