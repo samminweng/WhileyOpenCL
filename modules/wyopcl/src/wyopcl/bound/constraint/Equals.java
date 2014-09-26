@@ -16,7 +16,7 @@ public class Equals implements Constraint{
 		this.x = x;
 		this.y = y;
 	}
-	
+	@Override
 	public boolean inferBound(Bounds bnd) {
 		try{
 			min_x = bnd.getLower(x);
@@ -40,14 +40,13 @@ public class Equals implements Constraint{
 			
 			if(max_x != null){
 				bnd.addUpperBound(y, max_x);
-			}
+			}		
 			
-			
-			return true;
 		}catch(Exception ex){
 			return false;
 		}
 		
-		
+
+		return true;
 	}
 }

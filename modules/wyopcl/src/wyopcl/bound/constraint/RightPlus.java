@@ -19,7 +19,7 @@ public class RightPlus implements Constraint{
 		this.y = y;
 		this.z = z;
 	}
-
+	@Override
 	public boolean inferBound(Bounds bnd) {
 		try{			
 			
@@ -68,12 +68,12 @@ public class RightPlus implements Constraint{
 				bnd.addUpperBound(z, max_x.subtract(min_y));
 			}
 
-			return true;
+			
 		}catch(Exception ex){
 			return false;
 		}
 		
-
+		return true;
 	}
 
 }
