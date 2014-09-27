@@ -5,77 +5,63 @@ import java.util.HashMap;
 
 public class Bounds {
 	//Every subclass shares the 'bounds' variable;
-	
 	protected static HashMap<String, Domain> bounds; 
 	public Bounds(){
 		bounds = new HashMap<String, Domain>();
 	}
 	
+	public void updateDomain(String name, Domain domain){
+		bounds.put(name, domain);
+	}
+	/**
+	 * Get the domain by name
+	 * @param name
+	 * @return
+	 */
 	public Domain getDomain(String name){
-		if(bounds.containsKey(name)){
-			return bounds.get(name);
+		if(!bounds.containsKey(name)){
+			Domain d = new Domain(name, null, null);
+			bounds.put(name, d);
 		}
-		return null;
+		return bounds.get(name);
 	}
 	
 	public BigInteger getLower(String name){
-		if(bounds.containsKey(name)){
-			return bounds.get(name).getLower_bound();
-		}
-		return null;
+		return getDomain(name).getMin();
 	}
 	
 	public BigInteger getUpper(String name){
-		if(bounds.containsKey(name)){
-			return bounds.get(name).getUpper_bound();
-		}
-		return null;
+		return getDomain(name).getMax();
 	}
 	
-	public boolean addLowerBound(String name, BigInteger new_Lower_bound){
+	public void addLowerBound(String name, BigInteger new_min){
 		try{
-			Domain domain = bounds.get(name);
-			if(domain == null){
-				domain = new Domain(name, null, null);
+			Domain domain = getDomain(name);			
+			//Check the lower bound and update the lower bound
+			//When the existing bound in '-infinity' Or the new lower bound is 'larger'.
+			if(domain.getMin() == null || new_min.compareTo(domain.getMin())>0){
+				domain.setMin(new_min);
 			}
-			//Check if the lower bound has the value. If not, then update the lower bound. 
-			if(domain.getLower_bound() == null){
-				domain.setLower_bound(new_Lower_bound);
-			}else{
-				//Otherwise, compare the new lower bound with existing one.
-				//If the new bound is smaller, then update the lower bound.
-				if(new_Lower_bound.compareTo(domain.getLower_bound())>0){
-					domain.setLower_bound(new_Lower_bound);
-				}
-			}
-			bounds.put(name, domain);
-			return true;
+			updateDomain(name, domain);
+						
 		}catch(Exception ex){
-			return false;
+			throw ex;
 		}
 		
 	}
 	
-	public boolean addUpperBound(String name, BigInteger new_Upper_Bound){
+	public void addUpperBound(String name, BigInteger new_bound){
 		try{
-			Domain domain = bounds.get(name);
-			if(domain == null){
-				domain = new Domain(name, null, null);			
-			}
-			
-			if(domain.getUpper_bound()== null){
-				domain.setUpper_bound(new_Upper_Bound);
-			}else{
-				//If the upper_bound is larger
-				if(new_Upper_Bound.compareTo(domain.getUpper_bound())<0){
-					domain.setUpper_bound(new_Upper_Bound);
-				}
+			Domain domain = getDomain(name);	
+			//Check the upper bound and update the upper bound
+			//when the existing upper bound is infinity (null) or the new upper bound is 'smaller'.
+			if(domain.getMax()== null || new_bound.compareTo(domain.getMax())<0){
+				domain.setMax(new_bound);
 			}
 			//Update the domain.
-			bounds.put(name, domain);
-			return true;
+			updateDomain(name, domain);
 		}catch(Exception ex){
-			return false;
+			throw ex;
 		}
 		
 	}

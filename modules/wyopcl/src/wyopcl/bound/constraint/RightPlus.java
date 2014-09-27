@@ -3,6 +3,7 @@ package wyopcl.bound.constraint;
 import java.math.BigInteger;
 
 import wyopcl.bound.Bounds;
+import wyopcl.bound.Domain;
 
 /**
  * Implements the propagation rule for the primitive constraint (e.g. x = y +
@@ -21,14 +22,18 @@ public class RightPlus implements Constraint{
 	}
 	@Override
 	public boolean inferBound(Bounds bnd) {
+		Domain original_x = bnd.getDomain(x);
+		Domain original_y = bnd.getDomain(y);
+		Domain original_z = bnd.getDomain(z);
+
 		try{			
-			
+
 			min_x = bnd.getLower(x);
 			max_x = bnd.getUpper(x);
-			
+
 			min_y = bnd.getLower(y);
 			max_y = bnd.getUpper(y);
-			
+
 			min_z = bnd.getLower(z);
 			max_z = bnd.getUpper(z);
 
@@ -68,12 +73,20 @@ public class RightPlus implements Constraint{
 				bnd.addUpperBound(z, max_x.subtract(min_y));
 			}
 
-			
+
 		}catch(Exception ex){
-			return false;
+			throw ex;
 		}
-		
-		return true;
+
+		Domain updated_x = bnd.getDomain(x);
+		Domain updated_y = bnd.getDomain(y);
+		Domain updated_z = bnd.getDomain(z);
+		// Check whether the bounds has changed.
+		if (original_x.compareTo(updated_x) == 0 && original_y.compareTo(updated_y) == 0 && original_z.compareTo(updated_z)==0) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

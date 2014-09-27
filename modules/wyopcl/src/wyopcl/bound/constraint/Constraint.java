@@ -2,6 +2,12 @@ package wyopcl.bound.constraint;
 
 import wyopcl.bound.Bounds;
 
-public interface Constraint {
+/**
+ * An interface of primitive constraints.
+ * 
+ * @author mw169
+ *
+ */
+public interface Constraint {	
 	boolean inferBound(Bounds bnd);
 }

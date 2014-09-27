@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import wyopcl.bound.Bounds;
 import wyopcl.bound.Domain;
+import wyopcl.bound.constraint.Const;
 import wyopcl.bound.constraint.ConstraintList;
 import wyopcl.bound.constraint.Equals;
 import wyopcl.bound.constraint.LessThan;
@@ -28,79 +29,110 @@ public class BoundTestCase {
 	public void tearDown() throws Exception {
 
 	}
-
+	/**
+	 * Given D(x)=[-10..null]
+	 * Test the lower bound of Domain D(X).
+	 */
 	@Test
 	public void testLower() {
-		Bounds bnd = new Bounds();
-		assertNull(bnd.getDomain("x"));
+		Bounds bnds = new Bounds();		
 		// Add a lower bound
-		bnd.addLowerBound("x", new BigInteger("-10"));
-		assertNotNull(bnd.getDomain("x"));
-		assertEquals(new BigInteger("-10"), bnd.getLower("x"));
+		bnds.addLowerBound("x", new BigInteger("-10"));
+		assertNotNull(bnds.getDomain("x"));
+		assertEquals(new BigInteger("-10"), bnds.getLower("x"));
 
 		// Add a weak lower bound
-		bnd.addLowerBound("x", new BigInteger("-11"));
-		assertEquals(new BigInteger("-10"), bnd.getLower("x"));
+		bnds.addLowerBound("x", new BigInteger("-11"));
+		assertEquals(new BigInteger("-10"), bnds.getLower("x"));
 
 		// Add a strong lower bound
-		bnd.addLowerBound("x", new BigInteger("-9"));
-		assertEquals(new BigInteger("-9"), bnd.getLower("x"));
+		bnds.addLowerBound("x", new BigInteger("-9"));
+		assertEquals(new BigInteger("-9"), bnds.getLower("x"));
 
 		// Add a positive and stronger lower bound
-		bnd.addLowerBound("x", new BigInteger("9"));
-		assertEquals(new BigInteger("9"), bnd.getLower("x"));
-		bnd = null;
+		bnds.addLowerBound("x", new BigInteger("9"));
+		assertEquals(new BigInteger("9"), bnds.getLower("x"));
+		bnds = null;
 	}
 
+	/**
+	 * Given D(x)=[null..10]
+	 * Test the upper bounds of Domain D(X).
+	 */
 	@Test
 	public void testUpper() {
-		Bounds bnd = new Bounds();
-		assertNull(bnd.getDomain("x"));
+		Bounds bnds = new Bounds();
 		// Add a upper bound
-		bnd.addUpperBound("x", new BigInteger("10"));
-		assertNotNull(bnd.getDomain("x"));
-		assertEquals(new BigInteger("10"), bnd.getUpper("x"));
+		bnds.addUpperBound("x", new BigInteger("10"));
+		assertNotNull(bnds.getDomain("x"));
+		assertEquals(new BigInteger("10"), bnds.getUpper("x"));
 
 		// Add a weak upper bound
-		bnd.addUpperBound("x", new BigInteger("11"));
-		assertEquals(new BigInteger("10"), bnd.getUpper("x"));
+		bnds.addUpperBound("x", new BigInteger("11"));
+		assertEquals(new BigInteger("10"), bnds.getUpper("x"));
 
 		// Add a strong upper bound
-		bnd.addUpperBound("x", new BigInteger("9"));
-		assertEquals(new BigInteger("9"), bnd.getUpper("x"));
+		bnds.addUpperBound("x", new BigInteger("9"));
+		assertEquals(new BigInteger("9"), bnds.getUpper("x"));
 
 		// Add a negative and stronger lower bound
-		bnd.addUpperBound("x", new BigInteger("-9"));
-		assertEquals(new BigInteger("-9"), bnd.getUpper("x"));
-		bnd = null;
+		bnds.addUpperBound("x", new BigInteger("-9"));
+		assertEquals(new BigInteger("-9"), bnds.getUpper("x"));
+		bnds = null;
 	}
 
+	/**
+	 * Given D(x)=[20..20]
+	 * Test the constraint X == 20
+	 */
+	@Test
+	public void testConst(){
+		ConstraintList list = new ConstraintList();
+		Bounds bnds = new Bounds();
+		list.addConstraint(new Const("x", new BigInteger("20")));
+		assertTrue(list.checkBoundConsistency(bnds));
+		assertEquals(new BigInteger("20"), bnds.getLower("x"));
+		assertEquals(new BigInteger("20"), bnds.getUpper("x"));
+	}
+	
+	
+	
+	/**
+	 * Given D(x)=[4..8] D(y)=[0..3] D(z)=[2..2]
+	 * Test the equality X=Y+Z
+	 */
 	@Test
 	public void testRightPlus() {
-		Bounds bnd = new Bounds();
+		ConstraintList list = new ConstraintList();
+		Bounds bnds = new Bounds();
 		// D(x) = [4..8]
-		bnd.addLowerBound("x", new BigInteger("4"));
-		bnd.addUpperBound("x", new BigInteger("8"));
+		bnds.addLowerBound("x", new BigInteger("4"));
+		bnds.addUpperBound("x", new BigInteger("8"));
 		// D(y) = [0..3]
-		bnd.addLowerBound("y", new BigInteger("0"));
-		bnd.addUpperBound("y", new BigInteger("3"));
+		bnds.addLowerBound("y", new BigInteger("0"));
+		bnds.addUpperBound("y", new BigInteger("3"));
 		// D(z) = [2..2]
-		bnd.addLowerBound("z", new BigInteger("2"));
-		bnd.addUpperBound("z", new BigInteger("2"));
+		bnds.addLowerBound("z", new BigInteger("2"));
+		bnds.addUpperBound("z", new BigInteger("2"));
 		// x = y+z
-		assertTrue(new RightPlus("x", "y", "z").inferBound(bnd));
-		assertEquals(new BigInteger("4"), bnd.getLower("x"));
-		assertEquals(new BigInteger("5"), bnd.getUpper("x"));
+		list.addConstraint(new RightPlus("x", "y", "z"));
+		assertTrue(list.checkBoundConsistency(bnds));
+		assertEquals(new BigInteger("4"), bnds.getLower("x"));
+		assertEquals(new BigInteger("5"), bnds.getUpper("x"));
 
-		assertEquals(new BigInteger("2"), bnd.getLower("y"));
-		assertEquals(new BigInteger("3"), bnd.getUpper("y"));
+		assertEquals(new BigInteger("2"), bnds.getLower("y"));
+		assertEquals(new BigInteger("3"), bnds.getUpper("y"));
 
-		assertEquals(new BigInteger("2"), bnd.getLower("z"));
-		assertEquals(new BigInteger("2"), bnd.getUpper("z"));
+		assertEquals(new BigInteger("2"), bnds.getLower("z"));
+		assertEquals(new BigInteger("2"), bnds.getUpper("z"));
 
-		bnd = null;
+		bnds = null;
 	}
 
+	/**
+	 * Given D(x) =[-10..10]
+	 * Test the constraints ( x == y ^ y == z)
+	 */
 	@Test
 	public void testEqual() {
 		ConstraintList list = new ConstraintList();
@@ -111,7 +143,7 @@ public class BoundTestCase {
 
 		list.addConstraint(new Equals("x", "y"));
 		list.addConstraint(new Equals("y", "z"));
-		assertTrue(list.inferFixPoint(bnd));
+		assertTrue(list.checkBoundConsistency(bnd));
 		assertEquals(new BigInteger("-10"), bnd.getLower("y"));
 		assertEquals(new BigInteger("10"), bnd.getUpper("y"));
 		assertEquals(new BigInteger("-10"), bnd.getLower("z"));
@@ -121,7 +153,7 @@ public class BoundTestCase {
 		bnd.addLowerBound("z", new BigInteger("0"));
 		bnd.addUpperBound("z", new BigInteger("5"));
 
-		assertTrue(list.inferFixPoint(bnd));
+		assertTrue(list.checkBoundConsistency(bnd));
 		assertEquals(new BigInteger("0"), bnd.getLower("x"));
 		assertEquals(new BigInteger("5"), bnd.getUpper("x"));
 		assertEquals(new BigInteger("0"), bnd.getLower("y"));
@@ -133,7 +165,8 @@ public class BoundTestCase {
 	}
 
 	/***
-	 * Constraints: x < y ^ y < z Propagate the bounds of x to y and z.
+	 * Given D(x) = [-10..10]
+	 * Test the constraints: x < y ^ y < z
 	 */
 	@Test
 	public void testLessThanLeft() {
@@ -146,7 +179,7 @@ public class BoundTestCase {
 		list.addConstraint(new LessThan("x", "y"));
 		// y<=z
 		list.addConstraint(new LessThan("y", "z"));
-		assertTrue(list.inferFixPoint(bnd));
+		assertTrue(list.checkBoundConsistency(bnd));
 		// Propagate the lower bound from x to y
 		assertEquals(new BigInteger("-9"), bnd.getLower("y"));
 		// The upper bound remain the same.
@@ -179,7 +212,7 @@ public class BoundTestCase {
 		list.addConstraint(new LessThanEquals("x", "y"));
 		// y<=z
 		list.addConstraint(new LessThanEquals("y", "z"));
-		assertTrue(list.inferFixPoint(bnd));
+		assertTrue(list.checkBoundConsistency(bnd));
 		// Propagate the lower bound from x to y
 		assertEquals(new BigInteger("-10"), bnd.getLower("y"));
 		// The upper bound remain the same.
@@ -210,7 +243,7 @@ public class BoundTestCase {
 		list.addConstraint(new LessThanEquals("x", "y"));
 		// y<=z
 		list.addConstraint(new LessThanEquals("y", "z"));
-		assertTrue(list.inferFixPoint(bnd));
+		assertTrue(list.checkBoundConsistency(bnd));
 		// Propagate the lower bound from x to y
 		assertEquals(new BigInteger("10"), bnd.getUpper("y"));
 		// The upper bound remain the same.
