@@ -1,5 +1,7 @@
 package wyopcl.bound.constraint;
 
+import static wycc.lang.SyntaxError.internalFailure;
+
 import java.math.BigInteger;
 
 import wyopcl.bound.Bounds;
@@ -26,11 +28,9 @@ public class Equals implements Constraint {
 	@Override
 	public boolean inferBound(Bounds bnd) {
 		
-		Domain original_x = bnd.getDomain(x);
-		Domain original_y = bnd.getDomain(y);
-		
-		
 		try {
+			Domain original_x = (Domain) bnd.getDomain(x).clone();
+			Domain original_y = (Domain) bnd.getDomain(y).clone();
 			x_min = bnd.getLower(x);
 			x_max = bnd.getUpper(x);
 			y_min = bnd.getLower(y);
@@ -55,17 +55,17 @@ public class Equals implements Constraint {
 				bnd.addUpperBound(x, y_max);
 			}
 			
+			Domain updated_x = bnd.getDomain(x);
+			Domain updated_y = bnd.getDomain(y);
+			// Check whether the bounds has changed.
+			if (original_x.equals(updated_x) && original_y.equals(updated_y)) {
+				return true;
+			}
+			
 		} catch (Exception ex) {
-			throw ex;
+			internalFailure(ex.getMessage(),"Equals.java",null);	
 		}
 		
-		
-		Domain updated_x = bnd.getDomain(x);
-		Domain updated_y = bnd.getDomain(y);
-		// Check whether the bounds has changed.
-		if (original_x.compareTo(updated_x) == 0 && original_y.compareTo(updated_y) == 0) {
-			return true;
-		}
 
 		return false;
 		

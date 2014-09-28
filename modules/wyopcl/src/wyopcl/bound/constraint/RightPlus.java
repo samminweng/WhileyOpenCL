@@ -1,5 +1,6 @@
 package wyopcl.bound.constraint;
 
+import static wycc.lang.SyntaxError.internalFailure;
 import java.math.BigInteger;
 
 import wyopcl.bound.Bounds;
@@ -22,12 +23,11 @@ public class RightPlus implements Constraint{
 	}
 	@Override
 	public boolean inferBound(Bounds bnd) {
-		Domain original_x = bnd.getDomain(x);
-		Domain original_y = bnd.getDomain(y);
-		Domain original_z = bnd.getDomain(z);
-
 		try{			
-
+			Domain original_x = (Domain) bnd.getDomain(x).clone();
+			Domain original_y = (Domain) bnd.getDomain(y).clone();
+			Domain original_z = (Domain) bnd.getDomain(z).clone();
+			
 			min_x = bnd.getLower(x);
 			max_x = bnd.getUpper(x);
 
@@ -72,18 +72,17 @@ public class RightPlus implements Constraint{
 				// min (max_z, max_x - min_y)
 				bnd.addUpperBound(z, max_x.subtract(min_y));
 			}
-
+			
+			Domain updated_x = bnd.getDomain(x);
+			Domain updated_y = bnd.getDomain(y);
+			Domain updated_z = bnd.getDomain(z);
+			// Check whether the bounds has changed.
+			if (original_x.compareTo(updated_x) == 0 && original_y.compareTo(updated_y) == 0 && original_z.compareTo(updated_z)==0) {
+				return true;
+			}
 
 		}catch(Exception ex){
-			throw ex;
-		}
-
-		Domain updated_x = bnd.getDomain(x);
-		Domain updated_y = bnd.getDomain(y);
-		Domain updated_z = bnd.getDomain(z);
-		// Check whether the bounds has changed.
-		if (original_x.compareTo(updated_x) == 0 && original_y.compareTo(updated_y) == 0 && original_z.compareTo(updated_z)==0) {
-			return true;
+			internalFailure(ex.getMessage(),"RightPlus.java",null);
 		}
 
 		return false;

@@ -37,24 +37,24 @@ public class ConstraintList {
 	 */
 	public boolean checkBoundConsistency(Bounds bnd, int... iterations){
 		int MaxIteration = iterations.length >0 ? iterations[0] : 5;
-		boolean isBoundConsistent = false;
-		for(int i=0;i<MaxIteration;i++){			
-			//Iterate through the constraints to infer the bounds.
-			int consistency_constraints = 0;
-			for(Constraint c: list){
-				if(c.inferBound(bnd)){
-					//If the bounds are consistent, then add the counter.
-					consistency_constraints++;
+		for(int i=0;i<MaxIteration;i++){
+				//Iterate through the constraints to infer the bounds.
+				int consistent = 0;
+				for(Constraint c: list){
+					if(c.inferBound(bnd)){
+						//If the bounds are consistent, then add the counter.
+						consistent++;
+					}
+				}				
+				//Check if the bounds are consistent with all the constraints.
+				if(consistent == list.size()){
+					System.out.println("isBoundConsistent = "+true);
+					return true;
 				}
-			}				
-			//Check if the bounds are consistent with all the constraints.
-			if(consistency_constraints == list.size()){
-				isBoundConsistent = true;
-			}
 		}
 
 
-		return isBoundConsistent;
+		return false;
 
 	}
 

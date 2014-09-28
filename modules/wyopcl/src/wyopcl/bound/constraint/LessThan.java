@@ -1,5 +1,7 @@
 package wyopcl.bound.constraint;
 
+import static wycc.lang.SyntaxError.internalFailure;
+
 import java.math.BigInteger;
 
 import wyopcl.bound.Bounds;
@@ -19,11 +21,9 @@ public class LessThan implements Constraint {
 	 */
 	public boolean inferBound(Bounds bnd) {
 
-		Domain original_x = bnd.getDomain(x);
-		Domain original_y = bnd.getDomain(y);
-
 		try{
-
+			Domain original_x = (Domain)bnd.getDomain(x).clone();
+			Domain original_y = (Domain)bnd.getDomain(y).clone();
 			//Propagate 'lower bound of x + 1' to lower bound of y 
 			min_x = bnd.getLower(x);			
 			if(min_x != null){
@@ -35,16 +35,15 @@ public class LessThan implements Constraint {
 			if (max_y != null){
 				bnd.addUpperBound(x, max_y.subtract(BigInteger.ONE));
 			}
+			Domain updated_x = bnd.getDomain(x);
+			Domain updated_y = bnd.getDomain(y);
+			// Check whether the bounds has changed.
+			if (original_x.equals(updated_x) && original_y.equals(updated_y)) {
+				return true;
+			}
 
 		}catch(Exception ex){
-			throw ex;
-		}
-
-		Domain updated_x = bnd.getDomain(x);
-		Domain updated_y = bnd.getDomain(y);
-		// Check whether the bounds has changed.
-		if (original_x.compareTo(updated_x) == 0 && original_y.compareTo(updated_y) == 0) {
-			return true;
+			internalFailure(ex.getMessage(),"LessThan.java",null);
 		}
 
 		return false;

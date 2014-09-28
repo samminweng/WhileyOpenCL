@@ -2,20 +2,21 @@ package wyopcl.bound;
 
 import java.math.BigInteger;
 
-public class Domain implements Comparable<Domain>{
+public class Domain implements Comparable<Domain>, Cloneable{
 	private final String name;
 	private BigInteger lower_bound = null;
 	private BigInteger upper_bound = null;
 
 	public Domain(String name){
 		this.name = name;
-	}	
-
+	}
+	
 	public Domain(String name, BigInteger lower_bound, BigInteger upper_bound){
 		this.name = name;
 		this.lower_bound = lower_bound;
 		this.upper_bound = upper_bound;
 	}
+	
 
 	public String getName() {
 		return name;
@@ -74,7 +75,53 @@ public class Domain implements Comparable<Domain>{
 		
 		
 		return "Domain [name=" + name +
-				", lower_bound=" + lb +
-				", upper_bound=" + ub + "]";
+				", lower_bound=" + this.lower_bound +
+				", upper_bound=" + this.upper_bound + "]";
 	}
+	
+	
+	
+	
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		Domain d = new Domain(this.name);
+		d.lower_bound = this.lower_bound;
+		d.upper_bound = this.upper_bound;
+		return d;
+	}
+
+	
+	public boolean equals(Object obj) {
+		if(!(obj instanceof Domain)){
+			return false;
+		}
+		
+		//return super.equals(obj);
+		Domain d = (Domain)obj;
+		if(d.name != this.name){
+			return false;
+		}
+		
+		if(d.lower_bound == null){
+			if(this.lower_bound != null)
+				return false;
+		}else{
+			if(this.lower_bound==null || !(d.lower_bound.equals(this.lower_bound)))
+				return false;
+		}		
+		
+		if(d.upper_bound == null){
+			if(this.upper_bound != null)
+				return false;
+		}else{
+			if(this.upper_bound== null || !(d.upper_bound.equals(this.upper_bound)))
+				return false;
+		}
+		
+		return true;
+	}
+	
+	
+	
+	
 }

@@ -1,5 +1,7 @@
 package wyopcl.bound.constraint;
 
+import static wycc.lang.SyntaxError.internalFailure;
+
 import java.math.BigInteger;
 
 import wyopcl.bound.Bounds;
@@ -21,19 +23,19 @@ public class Const implements Constraint{
 
 	@Override
 	public boolean inferBound(Bounds bnd) {
-		Domain original_x = bnd.getDomain(x);
+		
 		try {
+			Domain original_x = (Domain)bnd.getDomain(x).clone();
 			//Assign the lower and upper bounds.
 			bnd.addLowerBound(x, constant_value);
 			bnd.addUpperBound(x, constant_value);
+			Domain updated_x = bnd.getDomain(x);	
+			// Check whether the bounds has changed.
+			if (original_x.equals(updated_x)) {
+				return true;
+			}
 		} catch (Exception ex) {
-			throw ex;
-		}
-		
-		Domain updated_x = bnd.getDomain(x);	
-		// Check whether the bounds has changed.
-		if (original_x.compareTo(updated_x) == 0) {
-			return true;
+			internalFailure(ex.getMessage(),"Const.java",null);;
 		}
 
 		return false;
