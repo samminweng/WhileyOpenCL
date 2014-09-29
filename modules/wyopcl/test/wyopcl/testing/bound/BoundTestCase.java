@@ -13,6 +13,7 @@ import wyopcl.bound.Domain;
 import wyopcl.bound.constraint.Const;
 import wyopcl.bound.constraint.ConstraintList;
 import wyopcl.bound.constraint.Equals;
+import wyopcl.bound.constraint.LeftPlus;
 import wyopcl.bound.constraint.LessThan;
 import wyopcl.bound.constraint.LessThanEquals;
 import wyopcl.bound.constraint.RightPlus;
@@ -29,13 +30,18 @@ public class BoundTestCase {
 	public void tearDown() throws Exception {
 
 	}
+
 	/**
-	 * Given D(x)=[-10..null]
-	 * Test the lower bound of Domain D(X).
+	 * Given D(x)=[-10..null], propagate the lower bound of Domain D(X).
+	 * 
+	 * @see <a
+	 *      href="http://sourceforge.net/p/czt/code/ci/master/tree/zlive/src/test
+	 *      /java/net/sourceforge/czt/animation/eval/flatpred/BoundsTest.java#l35">
+	 *      net.sourceforge.czt.animation.eval.flatpred.BoundsTest#testLower()</a>
 	 */
 	@Test
 	public void testLower() {
-		Bounds bnds = new Bounds();		
+		Bounds bnds = new Bounds();
 		// Add a lower bound
 		bnds.addLowerBound("x", new BigInteger("-10"));
 		assertNotNull(bnds.getDomain("x"));
@@ -56,8 +62,12 @@ public class BoundTestCase {
 	}
 
 	/**
-	 * Given D(x)=[null..10]
-	 * Test the upper bounds of Domain D(X).
+	 * Given D(x)=[null..10], propagate the upper bounds of Domain D(X).
+	 * 
+	 * @see <a
+	 *      href="http://sourceforge.net/p/czt/code/ci/master/tree/zlive/src/test
+	 *      /java/net/sourceforge/czt/animation/eval/flatpred/BoundsTest.java#l74">
+	 *      net.sourceforge.czt.animation.eval.flatpred.BoundsTest#testUpper()</a>
 	 */
 	@Test
 	public void testUpper() {
@@ -82,11 +92,15 @@ public class BoundTestCase {
 	}
 
 	/**
-	 * Given D(x)=[20..20]
-	 * Test the constraint X == 20
+	 * Given D(x)=[20..20], propagate the bounds for the constraint X = 20
+	 * 
+	 * @see <a
+	 *      href="http://sourceforge.net/p/czt/code/ci/master/tree/zlive/src/test
+	 *      /java/net/sourceforge/czt/animation/eval/flatpred/BoundsTest.java#l113">
+	 *      net.sourceforge.czt.animation.eval.flatpred.BoundsTest#testConst()</a>
 	 */
 	@Test
-	public void testConst(){
+	public void testConst() {
 		ConstraintList list = new ConstraintList();
 		Bounds bnds = new Bounds();
 		list.addConstraint(new Const("x", new BigInteger("20")));
@@ -94,44 +108,151 @@ public class BoundTestCase {
 		assertEquals(new BigInteger("20"), bnds.getLower("x"));
 		assertEquals(new BigInteger("20"), bnds.getUpper("x"));
 	}
-	
-	
-	
-	/**
-	 * Given D(x)=[4..8] D(y)=[0..3] D(z)=[2..2]
-	 * Test the equality X=Y+Z
+
+	/***
+	 * Given D(x) = [-10..10] Test the constraints: x < y ^ y < z
+	 * @see <a
+	 *      href="http://sourceforge.net/p/czt/code/ci/master/tree/zlive/src/test
+	 *      /java/net/sourceforge/czt/animation/eval/flatpred/BoundsTest.java#l142">
+	 *      net.sourceforge.czt.animation.eval.flatpred.BoundsTest#testLessThanLeft()</a>
 	 */
 	@Test
-	public void testRightPlus() {
+	public void testLessThanLeft() {
+		Bounds bnd = new Bounds();
+		// D(x) = [-10..10]
+		bnd.addLowerBound("x", new BigInteger("-10"));
+		bnd.addUpperBound("x", new BigInteger("10"));
 		ConstraintList list = new ConstraintList();
-		Bounds bnds = new Bounds();
-		// D(x) = [4..8]
-		bnds.addLowerBound("x", new BigInteger("4"));
-		bnds.addUpperBound("x", new BigInteger("8"));
-		// D(y) = [0..3]
-		bnds.addLowerBound("y", new BigInteger("0"));
-		bnds.addUpperBound("y", new BigInteger("3"));
-		// D(z) = [2..2]
-		bnds.addLowerBound("z", new BigInteger("2"));
-		bnds.addUpperBound("z", new BigInteger("2"));
-		// x = y+z
-		list.addConstraint(new RightPlus("x", "y", "z"));
-		assertTrue(list.checkBoundConsistency(bnds));
-		assertEquals(new BigInteger("4"), bnds.getLower("x"));
-		assertEquals(new BigInteger("5"), bnds.getUpper("x"));
+		// x<=y
+		list.addConstraint(new LessThan("x", "y"));
+		// y<=z
+		list.addConstraint(new LessThan("y", "z"));
+		assertTrue(list.checkBoundConsistency(bnd));
+		// Propagate the lower bound from x to y
+		assertEquals(new BigInteger("-9"), bnd.getLower("y"));
+		// The upper bound remain the same.
+		assertNull(bnd.getUpper("y"));
+		// Then propagate the lower bound to z.
+		assertEquals(new BigInteger("-8"), bnd.getLower("z"));
+		// The upper bound remain the same.
+		assertNull(bnd.getUpper("y"));
 
-		assertEquals(new BigInteger("2"), bnds.getLower("y"));
-		assertEquals(new BigInteger("3"), bnds.getUpper("y"));
+		// Check if the bounds of x have not changed.
+		assertEquals(new BigInteger("-10"), bnd.getLower("x"));
+		assertEquals(new BigInteger("10"), bnd.getUpper("x"));
 
-		assertEquals(new BigInteger("2"), bnds.getLower("z"));
-		assertEquals(new BigInteger("2"), bnds.getUpper("z"));
+		bnd = null;
+	}
+	
+	/***
+	 * Given D(z) = [-10..10] Test the constraints: x < y ^ y < z
+	 * @see <a
+	 *      href="http://sourceforge.net/p/czt/code/ci/master/tree/zlive/src/test
+	 *      /java/net/sourceforge/czt/animation/eval/flatpred/BoundsTest.java#l163">
+	 *      net.sourceforge.czt.animation.eval.flatpred.BoundsTest#testLessThanRight()</a>
+	 */
+	@Test
+	public void testLessThanRight() {
+		Bounds bnd = new Bounds();
+		// D(z) = [-10..10]
+		bnd.addLowerBound("z", new BigInteger("-10"));
+		bnd.addUpperBound("z", new BigInteger("10"));
+		ConstraintList list = new ConstraintList();
+		// x<=y
+		list.addConstraint(new LessThan("x", "y"));
+		// y<=z
+		list.addConstraint(new LessThan("y", "z"));
+		assertTrue(list.checkBoundConsistency(bnd));
+		// Propagate the upper bound from z to y
+		assertNull(bnd.getLower("y"));
+		assertEquals(new BigInteger("9"), bnd.getUpper("y"));
+	
+		// Then propagate the lower bound to z to x
+		assertNull(bnd.getLower("x"));
+		assertEquals(new BigInteger("8"), bnd.getUpper("x"));
 
-		bnds = null;
+		// Check if the bounds of x have not changed.
+		assertEquals(new BigInteger("-10"), bnd.getLower("z"));
+		assertEquals(new BigInteger("10"), bnd.getUpper("z"));
+
+		bnd = null;
+	}
+
+	/***
+	 * Given D(x) = [-10..10] and constraints x <= y ^ y <= z, propagate the lower bounds from x to y and z.
+	 * @see <a
+	 *      href="http://sourceforge.net/p/czt/code/ci/master/tree/zlive/src/test
+	 *      /java/net/sourceforge/czt/animation/eval/flatpred/BoundsTest.java#l184">
+	 *      net.sourceforge.czt.animation.eval.flatpred.BoundsTest#testLessThanEqualsLeft()</a>  
+	 */
+	@Test
+	public void testLessThanEqualsLeft() {
+		ConstraintList list = new ConstraintList();
+		Bounds bnd = new Bounds();
+		// D(x) = [-10..10]
+		bnd.addLowerBound("x", new BigInteger("-10"));
+		bnd.addUpperBound("x", new BigInteger("10"));
+
+		// x<=y
+		list.addConstraint(new LessThanEquals("x", "y"));
+		// y<=z
+		list.addConstraint(new LessThanEquals("y", "z"));
+		assertTrue(list.checkBoundConsistency(bnd));
+		// Propagate the lower bound from x to y
+		assertEquals(new BigInteger("-10"), bnd.getLower("y"));
+		// The upper bound remain the same.
+		assertNull(bnd.getUpper("y"));
+		// Then propagate the lower bound to z.
+		assertEquals(new BigInteger("-10"), bnd.getLower("z"));
+		// The upper bound remain the same.
+		assertNull(bnd.getUpper("y"));
+
+		// Check if the bounds of x have not changed.
+		assertEquals(new BigInteger("-10"), bnd.getLower("x"));
+		assertEquals(new BigInteger("10"), bnd.getUpper("x"));
+	}
+
+	/***
+	 * Given D(z) = [-10..10] and constraints x <= y ^ y <= z, propagate the upper bounds from z to y and x.
+	 * @see <a
+	 *      href="http://sourceforge.net/p/czt/code/ci/master/tree/zlive/src/test
+	 *      /java/net/sourceforge/czt/animation/eval/flatpred/BoundsTest.java#l205">
+	 *      net.sourceforge.czt.animation.eval.flatpred.BoundsTest#testLessThanEqualsRight()</a> 
+	 */
+	@Test
+	public void testLessThanEqualsRight() {
+		ConstraintList list = new ConstraintList();
+		Bounds bnd = new Bounds();
+		// D(z) = [-10..10]
+		bnd.addLowerBound("z", new BigInteger("-10"));
+		bnd.addUpperBound("z", new BigInteger("10"));
+
+		// x<=y
+		list.addConstraint(new LessThanEquals("x", "y"));
+		// y<=z
+		list.addConstraint(new LessThanEquals("y", "z"));
+		assertTrue(list.checkBoundConsistency(bnd));
+		// Propagate the lower bound from x to y
+		assertEquals(new BigInteger("10"), bnd.getUpper("y"));
+		// The upper bound remain the same.
+		assertNull(bnd.getLower("y"));
+		// Then propagate the lower bound to z.
+		assertEquals(new BigInteger("10"), bnd.getUpper("x"));
+		// The upper bound remain the same.
+		assertNull(bnd.getLower("x"));
+
+		// Check if the bounds of z have not changed.
+		assertEquals(new BigInteger("-10"), bnd.getLower("z"));
+		assertEquals(new BigInteger("10"), bnd.getUpper("z"));
 	}
 
 	/**
-	 * Given D(x) =[-10..10]
-	 * Test the constraints ( x == y ^ y == z)
+	 * Given D(x) =[-10..10] Test the constraints ( x == y ^ y == z)
+	 * 
+	 * @see <a
+	 *      href="http://sourceforge.net/p/czt/code/ci/master/tree/zlive/src/test
+	 *      /java/net/sourceforge/czt/animation/eval/flatpred/BoundsTest.java#l226">
+	 *      net.sourceforge.czt.animation.eval.flatpred.BoundsTest#testEquals()</a>
 	 */
 	@Test
 	public void testEqual() {
@@ -165,97 +286,107 @@ public class BoundTestCase {
 	}
 
 	/***
-	 * Given D(x) = [-10..10]
-	 * Test the constraints: x < y ^ y < z
+	 * Given D(x)=[0..5] D(y)=[3..4] D(z)=[-10..10] and the constraint X+Y=Z,
+	 * propagate bounds among x, y and z.
+	 * 
+	 * @see <a
+	 *      href="http://sourceforge.net/p/czt/code/ci/master/tree/zlive/src/test
+	 *      /java/net/sourceforge/czt/animation/eval/flatpred/BoundsTest.java#l372">
+	 *      net.sourceforge.czt.animation.eval.flatpred.BoundsTest#testPlusRight</a>
 	 */
 	@Test
-	public void testLessThanLeft() {
-		Bounds bnd = new Bounds();
-		// D(x) = [-10..10]
-		bnd.addLowerBound("x", new BigInteger("-10"));
-		bnd.addUpperBound("x", new BigInteger("10"));
+	public void testLeftPlus() {
 		ConstraintList list = new ConstraintList();
-		// x<=y
-		list.addConstraint(new LessThan("x", "y"));
-		// y<=z
-		list.addConstraint(new LessThan("y", "z"));
-		assertTrue(list.checkBoundConsistency(bnd));
-		// Propagate the lower bound from x to y
-		assertEquals(new BigInteger("-9"), bnd.getLower("y"));
-		// The upper bound remain the same.
-		assertNull(bnd.getUpper("y"));
-		// Then propagate the lower bound to z.
-		assertEquals(new BigInteger("-8"), bnd.getLower("z"));
-		// The upper bound remain the same.
-		assertNull(bnd.getUpper("y"));
+		Bounds bnds = new Bounds();
+		// D(x)=[0..5]
+		bnds.addLowerBound("x", new BigInteger("0"));
+		bnds.addUpperBound("x", new BigInteger("5"));
+		// D(y)=[3..4]
+		bnds.addLowerBound("y", new BigInteger("3"));
+		bnds.addUpperBound("y", new BigInteger("4"));
+		// D(z)=[-10..10]
+		bnds.addLowerBound("z", new BigInteger("-10"));
+		bnds.addUpperBound("z", new BigInteger("10"));
+		// x+y = z
+		list.addConstraint(new LeftPlus("x", "y", "z"));
+		assertTrue(list.checkBoundConsistency(bnds));
+		assertEquals(new BigInteger("0"), bnds.getLower("x"));
+		assertEquals(new BigInteger("5"), bnds.getUpper("x"));
 
-		// Check if the bounds of x have not changed.
-		assertEquals(new BigInteger("-10"), bnd.getLower("x"));
-		assertEquals(new BigInteger("10"), bnd.getUpper("x"));
+		assertEquals(new BigInteger("3"), bnds.getLower("y"));
+		assertEquals(new BigInteger("4"), bnds.getUpper("y"));
 
-		bnd = null;
+		assertEquals(new BigInteger("3"), bnds.getLower("z"));
+		assertEquals(new BigInteger("9"), bnds.getUpper("z"));
+
+		bnds = null;
 	}
 
-	/***
-	 * Constraints: x <= y ^ y <= z Propagate the lower bounds from x to y and
-	 * z.
+	/**
+	 * Given D(x)=[0..10] D(y)=[2..3] D(z)=[7..8] Test the equality X+Y=Z
+	 * 
+	 * @see <a href="http://sourceforge.net/p/czt/code/ci/master/tree/zlive/src/test/java/net/sourceforge/
+	 * czt/animation/eval/flatpred/BoundsTest.java#l394 ">net.sourceforge.czt.animation.eval.flatpred.BoundsTest#testPlusLeft()</a>
 	 */
 	@Test
-	public void testLessThanEqualsLeft() {
+	public void testLeftPlus2() {
 		ConstraintList list = new ConstraintList();
-		Bounds bnd = new Bounds();
-		// D(x) = [-10..10]
-		bnd.addLowerBound("x", new BigInteger("-10"));
-		bnd.addUpperBound("x", new BigInteger("10"));
+		Bounds bnds = new Bounds();
+		// D(x) = [0..10]
+		bnds.addLowerBound("x", new BigInteger("0"));
+		bnds.addUpperBound("x", new BigInteger("10"));
+		// D(y) = [2..3]
+		bnds.addLowerBound("y", new BigInteger("2"));
+		bnds.addUpperBound("y", new BigInteger("3"));
+		// D(z) = [7..8]
+		bnds.addLowerBound("z", new BigInteger("7"));
+		bnds.addUpperBound("z", new BigInteger("8"));
+		// x+y=z
+		list.addConstraint(new LeftPlus("x", "y", "z"));
+		assertTrue(list.checkBoundConsistency(bnds));
+		assertEquals(new BigInteger("4"), bnds.getLower("x"));
+		assertEquals(new BigInteger("6"), bnds.getUpper("x"));
 
-		// x<=y
-		list.addConstraint(new LessThanEquals("x", "y"));
-		// y<=z
-		list.addConstraint(new LessThanEquals("y", "z"));
-		assertTrue(list.checkBoundConsistency(bnd));
-		// Propagate the lower bound from x to y
-		assertEquals(new BigInteger("-10"), bnd.getLower("y"));
-		// The upper bound remain the same.
-		assertNull(bnd.getUpper("y"));
-		// Then propagate the lower bound to z.
-		assertEquals(new BigInteger("-10"), bnd.getLower("z"));
-		// The upper bound remain the same.
-		assertNull(bnd.getUpper("y"));
+		assertEquals(new BigInteger("2"), bnds.getLower("y"));
+		assertEquals(new BigInteger("3"), bnds.getUpper("y"));
 
-		// Check if the bounds of x have not changed.
-		assertEquals(new BigInteger("-10"), bnd.getLower("x"));
-		assertEquals(new BigInteger("10"), bnd.getUpper("x"));
+		assertEquals(new BigInteger("7"), bnds.getLower("z"));
+		assertEquals(new BigInteger("8"), bnds.getUpper("z"));
+
+		bnds = null;
 	}
 
-	/***
-	 * Constraints: x <= y ^ y <= z Propagate the upper bounds from z to y and
-	 * x.
+	/**
+	 * Given D(x)=[4..8] D(y)=[0..3] D(z)=[2..2] Test the equality X=Y+Z
+	 * 
+	 * @see Figure3.11
 	 */
 	@Test
-	public void testLessThanEqualsRight() {
+	public void testRightPlus() {
 		ConstraintList list = new ConstraintList();
-		Bounds bnd = new Bounds();
-		// D(x) = [-10..10]
-		bnd.addLowerBound("z", new BigInteger("-10"));
-		bnd.addUpperBound("z", new BigInteger("10"));
+		Bounds bnds = new Bounds();
+		// D(x) = [4..8]
+		bnds.addLowerBound("x", new BigInteger("4"));
+		bnds.addUpperBound("x", new BigInteger("8"));
+		// D(y) = [0..3]
+		bnds.addLowerBound("y", new BigInteger("0"));
+		bnds.addUpperBound("y", new BigInteger("3"));
+		// D(z) = [2..2]
+		bnds.addLowerBound("z", new BigInteger("2"));
+		bnds.addUpperBound("z", new BigInteger("2"));
+		// x = y+z
+		list.addConstraint(new RightPlus("x", "y", "z"));
+		assertTrue(list.checkBoundConsistency(bnds));
+		assertEquals(new BigInteger("4"), bnds.getLower("x"));
+		assertEquals(new BigInteger("5"), bnds.getUpper("x"));
 
-		// x<=y
-		list.addConstraint(new LessThanEquals("x", "y"));
-		// y<=z
-		list.addConstraint(new LessThanEquals("y", "z"));
-		assertTrue(list.checkBoundConsistency(bnd));
-		// Propagate the lower bound from x to y
-		assertEquals(new BigInteger("10"), bnd.getUpper("y"));
-		// The upper bound remain the same.
-		assertNull(bnd.getLower("y"));
-		// Then propagate the lower bound to z.
-		assertEquals(new BigInteger("10"), bnd.getUpper("x"));
-		// The upper bound remain the same.
-		assertNull(bnd.getLower("x"));
+		assertEquals(new BigInteger("2"), bnds.getLower("y"));
+		assertEquals(new BigInteger("3"), bnds.getUpper("y"));
 
-		// Check if the bounds of z have not changed.
-		assertEquals(new BigInteger("-10"), bnd.getLower("z"));
-		assertEquals(new BigInteger("10"), bnd.getUpper("z"));
+		assertEquals(new BigInteger("2"), bnds.getLower("z"));
+		assertEquals(new BigInteger("2"), bnds.getUpper("z"));
+
+		bnds = null;
 	}
 
 }

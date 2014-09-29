@@ -10,7 +10,7 @@ import wyopcl.bound.Domain;
  * Implements the propagation rule for the primitive constraint (e.g. x = y +
  * z).
  * 
- * @author mw169
+ * @author Min-Hsien Weng
  *
  */
 public class RightPlus implements Constraint{
@@ -77,7 +77,7 @@ public class RightPlus implements Constraint{
 			Domain updated_y = bnd.getDomain(y);
 			Domain updated_z = bnd.getDomain(z);
 			// Check whether the bounds has changed.
-			if (original_x.compareTo(updated_x) == 0 && original_y.compareTo(updated_y) == 0 && original_z.compareTo(updated_z)==0) {
+			if (original_x.equals(updated_x) && original_y.equals(updated_y) && original_z.equals(updated_z)) {
 				return true;
 			}
 
