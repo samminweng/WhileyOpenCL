@@ -95,30 +95,15 @@ public class Domain implements Comparable<Domain>, Cloneable{
 		if(!(obj instanceof Domain)){
 			return false;
 		}
-		
-		//return super.equals(obj);
 		Domain d = (Domain)obj;
-		if(d.name != this.name){
+		//Compare this domain with obj. If the result == 0, return true.
+		//Otherwise, return false.
+		if(this.compareTo(d)==0){
+			return true;
+		}else{
 			return false;
 		}
 		
-		if(d.lower_bound == null){
-			if(this.lower_bound != null)
-				return false;
-		}else{
-			if(this.lower_bound==null || !(d.lower_bound.equals(this.lower_bound)))
-				return false;
-		}		
-		
-		if(d.upper_bound == null){
-			if(this.upper_bound != null)
-				return false;
-		}else{
-			if(this.upper_bound== null || !(d.upper_bound.equals(this.upper_bound)))
-				return false;
-		}
-		
-		return true;
 	}
 	
 	
