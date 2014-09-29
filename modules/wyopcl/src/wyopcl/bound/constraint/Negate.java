@@ -6,7 +6,7 @@ import java.math.BigInteger;
 import wyopcl.bound.Bounds;
 import wyopcl.bound.Domain;
 /**
- * Implements the propagation rule for constraint '!X = Y'
+ * Implements the propagation rule for constraint 'X = -Y'
  * 
  * @author Min-Hsien Weng
  *

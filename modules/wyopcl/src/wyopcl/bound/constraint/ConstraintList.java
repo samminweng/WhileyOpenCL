@@ -35,7 +35,7 @@ public class ConstraintList {
 	 * the default value is 5. 
 	 * @return true if bounds are consistent with all constraints. Otherwise, return false.
 	 */
-	public boolean checkBoundConsistency(Bounds bnd, int... iterations){
+	public boolean inferFixedPoint(Bounds bnd, int... iterations){
 		int MaxIteration = iterations.length >0 ? iterations[0] : 5;
 		for(int i=0;i<MaxIteration;i++){
 				//Iterate through the constraints to infer the bounds.

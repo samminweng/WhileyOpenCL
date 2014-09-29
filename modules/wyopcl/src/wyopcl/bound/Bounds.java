@@ -2,10 +2,13 @@ package wyopcl.bound;
 
 import java.math.BigInteger;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 public class Bounds {
 	//Every subclass shares the 'bounds' variable;
-	protected static HashMap<String, Domain> bounds; 
+	protected static HashMap<String, Domain> bounds;
+	private boolean isChanged = false;
 	public Bounds(){
 		bounds = new HashMap<String, Domain>();
 	}
@@ -65,9 +68,29 @@ public class Bounds {
 		}
 		
 	}
+
+	public boolean isChanged() {
+		return isChanged;
+	}
+
+	public void setChanged(boolean isChanged) {
+		this.isChanged = isChanged;
+	}
 	
 	
-	
+	public boolean checkBoundConsistency(){
+		Iterator<Entry<String, Domain>> iterator = bounds.entrySet().iterator();
+		while(iterator.hasNext()){
+			Entry<String, Domain> bnd = iterator.next();
+			Domain d = bnd.getValue();
+			//Check upper bound < lower bound. If so, return false;
+			if(d.getMax().compareTo(d.getMin())<0){
+				return false;
+			}
+		}
+		
+		return true;
+	}
 	
 	
 }
