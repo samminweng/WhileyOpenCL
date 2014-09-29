@@ -16,6 +16,7 @@ import wyopcl.bound.constraint.Equals;
 import wyopcl.bound.constraint.LeftPlus;
 import wyopcl.bound.constraint.LessThan;
 import wyopcl.bound.constraint.LessThanEquals;
+import wyopcl.bound.constraint.Negate;
 import wyopcl.bound.constraint.RightPlus;
 import wyopcl.testing.interpreter.BaseTestUtil;
 
@@ -255,7 +256,7 @@ public class BoundTestCase {
 	 *      net.sourceforge.czt.animation.eval.flatpred.BoundsTest#testEquals()</a>
 	 */
 	@Test
-	public void testEqual() {
+	public void testEquals() {
 		ConstraintList list = new ConstraintList();
 		Bounds bnd = new Bounds();
 		// D(x) = [-10..10]
@@ -281,6 +282,33 @@ public class BoundTestCase {
 		assertEquals(new BigInteger("5"), bnd.getUpper("y"));
 		assertEquals(new BigInteger("0"), bnd.getLower("z"));
 		assertEquals(new BigInteger("5"), bnd.getUpper("z"));
+
+		bnd = null;
+	}
+	
+	/**
+	 * Given D(x) =[-10..10] Test the constraints ( !x = y)
+	 * 
+	 * @see <a
+	 *      href="http://sourceforge.net/p/czt/code/ci/master/tree/zlive/src/test
+	 *      /java/net/sourceforge/czt/animation/eval/flatpred/BoundsTest.java#l258">
+	 *      net.sourceforge.czt.animation.eval.flatpred.BoundsTest#testNegateRightNone()</a>
+	 */
+	@Test
+	public void testNegateRightNone() {
+		
+		Bounds bnd = new Bounds();
+		// D(x) = [-10..10]
+		bnd.addLowerBound("x", new BigInteger("1"));
+		bnd.addUpperBound("x", new BigInteger("5"));
+		
+		ConstraintList list = new ConstraintList();
+		list.addConstraint(new Negate("x", "y"));
+		assertTrue(list.checkBoundConsistency(bnd));
+		assertEquals(new BigInteger("1"), bnd.getLower("x"));
+		assertEquals(new BigInteger("5"), bnd.getUpper("x"));
+		assertEquals(new BigInteger("-5"), bnd.getLower("y"));
+		assertEquals(new BigInteger("-1"), bnd.getUpper("y"));
 
 		bnd = null;
 	}
