@@ -38,6 +38,12 @@ public class Domain implements Comparable<Domain>, Cloneable{
 		this.upper_bound = upper_bound;
 	}
 
+	/***
+	 * Compare this domain with another domain (d).
+	 * If both of them are equal, return 0.
+	 * If this domain < d domain, return -1;
+	 * If this domain > d domain, return 1;
+	 */
 	@Override
 	public int compareTo(Domain d) {
 		//Compare the name field.
@@ -46,24 +52,39 @@ public class Domain implements Comparable<Domain>, Cloneable{
 		}
 		//Compare the lower_bound field
 		if(this.lower_bound == null){
-			return (d.lower_bound == null)? 0 : 1;
-			//That means this domain > 'd' domain.
-		}
-
-		if (this.lower_bound.compareTo(d.lower_bound)!=0){
-			return this.lower_bound.compareTo(d.lower_bound);
-		}
+			//That means this domain < d domain.
+			if (d.lower_bound != null){
+				return -1;
+			}
+		}else{
+			//This means this domain > d domain (l:-infinity)
+			if (d.lower_bound ==null){
+				return 1;
+			}else{
+				//Compare the lower bounds of this domain with d domain.
+				if(this.lower_bound.equals(d.lower_bound) == false){
+					return this.lower_bound.compareTo(d.lower_bound);
+				}				
+			}
+		}		
 
 		//Compare the upper_bound field
 		if(this.upper_bound == null){
-			return (d.upper_bound == null)? 0: 1;
-			//That means that this domain > d domain.			
+			//That means that this > d .
+			if (d.upper_bound != null){
+				return 1;
+			}						
+		}else{
+			//This means that this < d (u:infinity)
+			if (d.upper_bound == null){
+				return -1;
+			}else{
+				if(this.upper_bound.equals(d.upper_bound) == false)	{
+					return this.upper_bound.compareTo(d.upper_bound);
+				}				
+			}
 		}
 
-
-		if (this.upper_bound.compareTo(d.upper_bound) != 0){
-			return this.upper_bound.compareTo(d.upper_bound);
-		}
 		return 0;
 	}
 

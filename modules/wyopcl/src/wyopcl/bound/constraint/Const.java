@@ -23,21 +23,10 @@ public class Const implements Constraint{
 
 	@Override
 	public boolean inferBound(Bounds bnd) {
-		
-		try {
-			Domain original_x = (Domain)bnd.getDomain(x).clone();
-			//Assign the lower and upper bounds.
-			bnd.addLowerBound(x, constant_value);
-			bnd.addUpperBound(x, constant_value);
-			Domain updated_x = bnd.getDomain(x);	
-			// Check whether the bounds has changed.
-			if (original_x.equals(updated_x)) {
-				return true;
-			}
-		} catch (Exception ex) {
-			internalFailure(ex.getMessage(),"Const.java",null);;
-		}
-
+			
+		//Assign the lower and upper bounds.
+		bnd.addLowerBound(x, constant_value);
+		bnd.addUpperBound(x, constant_value);
 		return false;
 	}
 	

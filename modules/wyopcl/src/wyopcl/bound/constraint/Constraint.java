@@ -8,6 +8,11 @@ import wyopcl.bound.Bounds;
  * @author mw169
  *
  */
-public interface Constraint {	
+public interface Constraint {
+	/**
+	 * Infer bounds from the constraints and domains
+	 * @param bnd
+	 * @return true if the bounds are changed. Return false if the bounds remain the same.
+	 */
 	boolean inferBound(Bounds bnd);
 }
