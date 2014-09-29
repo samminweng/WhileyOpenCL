@@ -18,14 +18,14 @@ public class Negate implements Constraint{
 		this.x = x;
 		this.y = y;
 	}
-	
-	
+
+
 	@Override
 	public boolean inferBound(Bounds bnd) {
 		try{			
 			Domain original_x = (Domain) bnd.getDomain(x).clone();
 			Domain original_y = (Domain) bnd.getDomain(y).clone();
-			
+
 			min_x = bnd.getLower(x);
 			max_x = bnd.getUpper(x);
 			min_y = bnd.getLower(y);
@@ -38,12 +38,24 @@ public class Negate implements Constraint{
 				//max (min_y, !min_x)
 				bnd.addLowerBound(y, max_x.negate());
 			}
-			// Add the upper bound of x variable.
+			// Add the upper bound of y variable.
 			if (min_x != null) {
 				//min (max_y, !min_x)
 				bnd.addUpperBound(y, min_x.negate());
 			}
-			
+
+
+			// Add the lower bound of x variable.
+			if (max_y != null) {
+				//max (min_y, !min_x)
+				bnd.addLowerBound(x, max_y.negate());
+			}
+			// Add the upper bound of x variable.
+			if (min_y != null) {
+				//min (max_y, !min_x)
+				bnd.addUpperBound(x, min_y.negate());
+			}
+
 			Domain updated_x = bnd.getDomain(x);
 			Domain updated_y = bnd.getDomain(y);
 			// Check whether the bounds has changed.
@@ -57,7 +69,7 @@ public class Negate implements Constraint{
 
 		return false;
 	}
-	
-	
+
+
 
 }
