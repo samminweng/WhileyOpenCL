@@ -45,10 +45,10 @@ public class WyopclMain extends WycMain{
 	public void configure(Map<String, Object> values) throws IOException {
 		super.configure(values);
 		
-		File classDir = (File) values.get("classdir");
+		/*File classDir = (File) values.get("classdir");
 		if (classDir != null) {
 			((WyopclBuildTask) builder).setClassDir(classDir);
-		}
+		}*/
 		
 		
 		boolean verbose = values.containsKey("verbose");
