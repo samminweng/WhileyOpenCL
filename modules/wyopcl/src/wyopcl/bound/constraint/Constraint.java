@@ -5,7 +5,7 @@ import wyopcl.bound.Bounds;
 /**
  * An interface of primitive constraints.
  * 
- * @author mw169
+ * @author Min-Hsien Weng 
  *
  */
 public interface Constraint {

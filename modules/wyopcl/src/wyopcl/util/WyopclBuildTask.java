@@ -10,7 +10,7 @@ import wycc.util.Logger;
 import wyfs.lang.Content;
 import wyfs.lang.Path;
 import wyfs.util.DirectoryRoot;
-import wyopcl.WyilInterpreter;
+import wyopcl.interpreter.WyilInterpreter;
 import jasm.io.ClassFileReader;
 import jasm.io.ClassFileWriter;
 import jasm.lang.ClassFile;

@@ -9,9 +9,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import wyopcl.bound.Bounds;
+import wyopcl.bound.ConstraintList;
 import wyopcl.bound.Domain;
 import wyopcl.bound.constraint.Const;
-import wyopcl.bound.constraint.ConstraintList;
 import wyopcl.bound.constraint.Equals;
 import wyopcl.bound.constraint.LeftPlus;
 import wyopcl.bound.constraint.LessThan;
