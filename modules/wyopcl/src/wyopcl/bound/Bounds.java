@@ -10,18 +10,12 @@ import java.util.Map.Entry;
 public class Bounds {
 	// Every subclass shares the 'bounds' variable;
 	protected static HashMap<String, Domain> bounds;
-	private boolean isChanged = false;
-
+	public boolean isChanged = false;
 	public Bounds() {
 		bounds = new HashMap<String, Domain>();
 	}
 
-	/*
-	 * public boolean isChanged() { return isChanged; }
-	 * 
-	 * public void setChanged(boolean isChanged) { this.isChanged = isChanged; }
-	 */
-
+	
 	/**
 	 * Get the domain by name
 	 * 
@@ -45,7 +39,6 @@ public class Bounds {
 	}
 
 	public boolean addLowerBound(String name, BigInteger new_min) {
-		isChanged = false;
 		try {
 			Domain existing_domain = getDomain(name);
 			Domain new_domain = (Domain) existing_domain.clone();
@@ -57,16 +50,15 @@ public class Bounds {
 			if (new_domain.compareTo(existing_domain) > 0) {
 				//new_domain.setMin(new_min);
 				bounds.put(name, new_domain);
-				isChanged = true;
+				return true;
 			}
 		} catch (Exception ex) {
 			internalFailure(ex.getMessage(), "Bounds.java", null);
 		}
-		return isChanged;
+		return false;
 	}
 
 	public boolean addUpperBound(String name, BigInteger new_max) {
-		isChanged = false;
 		try {
 			Domain existing_domain = getDomain(name);
 			Domain new_domain = (Domain) existing_domain.clone();
@@ -75,14 +67,13 @@ public class Bounds {
 			// bound is 'smaller'.	
 			//Check new domain is smaller (stronger) than existing one.
 			if (new_domain.compareTo(existing_domain) < 0) {
-				//new_domain.setMax(new_max);
 				bounds.put(name, new_domain);
-				isChanged = true;
+				return true;
 			}			
 		} catch (Exception ex) {
 			internalFailure(ex.getMessage(), "Bounds.java", null);
 		}
-		return isChanged;
+		return false;
 	}
 
 	/**
@@ -100,7 +91,6 @@ public class Bounds {
 				return false;
 			}
 		}
-
 		return true;
 	}
 

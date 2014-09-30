@@ -21,11 +21,9 @@ public class Negate implements Constraint{
 
 
 	@Override
-	public boolean inferBound(Bounds bnd) {
-		try{			
-			Domain original_x = (Domain) bnd.getDomain(x).clone();
-			Domain original_y = (Domain) bnd.getDomain(y).clone();
-
+	public boolean inferBound(Bounds bnd) {			
+			bnd.isChanged = false;
+			//Before propagation
 			min_x = bnd.getLower(x);
 			max_x = bnd.getUpper(x);
 			min_y = bnd.getLower(y);
@@ -36,38 +34,27 @@ public class Negate implements Constraint{
 			// Add the lower bound of y variable.
 			if (max_x != null) {
 				//max (min_y, !min_x)
-				bnd.addLowerBound(y, max_x.negate());
+				bnd.isChanged |= bnd.addLowerBound(y, max_x.negate());
 			}
 			// Add the upper bound of y variable.
 			if (min_x != null) {
 				//min (max_y, !min_x)
-				bnd.addUpperBound(y, min_x.negate());
+				bnd.isChanged |= bnd.addUpperBound(y, min_x.negate());
 			}
 
 
 			// Add the lower bound of x variable.
 			if (max_y != null) {
 				//max (min_y, !min_x)
-				bnd.addLowerBound(x, max_y.negate());
+				bnd.isChanged |= bnd.addLowerBound(x, max_y.negate());
 			}
 			// Add the upper bound of x variable.
 			if (min_y != null) {
 				//min (max_y, !min_x)
-				bnd.addUpperBound(x, min_y.negate());
+				bnd.isChanged |= bnd.addUpperBound(x, min_y.negate());
 			}
 
-			Domain updated_x = bnd.getDomain(x);
-			Domain updated_y = bnd.getDomain(y);
-			// Check whether the bounds has changed.
-			if (original_x.equals(updated_x) && original_y.equals(updated_y)) {
-				return true;
-			}
-
-		}catch(Exception ex){
-			internalFailure(ex.getMessage(),"RightPlus.java",null);
-		}
-
-		return false;
+		return bnd.isChanged;
 	}
 
 
