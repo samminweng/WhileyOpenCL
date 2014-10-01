@@ -12,7 +12,7 @@ import org.junit.rules.Timeout;
 
 public class AllValidTestCase {
 	@Rule
-	public TestRule timeout = new Timeout(5000);
+	public TestRule timeout = new Timeout(25000);
 	private BaseTestUtil util;
 
 	@Before
