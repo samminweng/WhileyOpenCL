@@ -14,8 +14,6 @@ import java.util.Set;
 
 import wybs.lang.Build;
 import wybs.lang.Build.Project;
-import wybs.lang.Builder;
-import wycc.lang.Attribute;
 import wycc.lang.SyntaxError;
 import wycc.util.Logger;
 import wycc.util.Pair;
@@ -30,7 +28,7 @@ import wyil.lang.Type.FunctionOrMethod;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.Case;
 import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
-import wyil.transforms.RuntimeAssertions;
+import wyopcl.WyopclBuilder;
 import wyopcl.interpreter.bytecode.AssertOrAssumeInterpreter;
 import wyopcl.interpreter.bytecode.AssignInterpreter;
 import wyopcl.interpreter.bytecode.BinaryOperatorInterpreter;
@@ -73,7 +71,7 @@ import wyopcl.interpreter.bytecode.TupleLoadInterpreter;
 import wyopcl.interpreter.bytecode.UnaryOperatorInterpreter;
 import wyopcl.interpreter.bytecode.UpdateInterpreter;
 
-public class WyilInterpreter extends Interpreter implements Builder{
+public class WyilInterpreter extends Interpreter implements WyopclBuilder{
 	protected final Build.Project project;
 	protected String filename;
 
@@ -90,7 +88,8 @@ public class WyilInterpreter extends Interpreter implements Builder{
 	public Project project() {
 		return project;
 	}
-
+	
+	@Override
 	public void setLogger(Logger logger) {
 		this.logger = logger;
 	}
