@@ -1,5 +1,7 @@
 package wyopcl.bound;
 
+import static wycc.lang.SyntaxError.internalFailure;
+
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Set;
@@ -32,7 +34,7 @@ public class BoundAnalyzer implements Builder{
 
 	@Override
 	public Set<Entry<?>> build(Collection<Pair<Entry<?>, Root>> delta) throws IOException {
-		// TODO Auto-generated method stub
+		internalFailure("Not implemented!", "BoundAnalyzer.java", null);
 		return null;
 	}
 
