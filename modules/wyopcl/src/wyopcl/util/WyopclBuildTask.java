@@ -17,7 +17,6 @@ public class WyopclBuildTask extends wyc.util.WycBuildTask {
 	
 	public WyopclBuildTask() {
 		super();
-		//super(new Registry());
 	}
 		
 	@Override
@@ -27,7 +26,7 @@ public class WyopclBuildTask extends wyc.util.WycBuildTask {
 		
 		// Now, add build rule for interpreting the wyil files by using
 		// the WyilInterpreter.		
-	
+		 
 		WyilInterpreter wyilInterpreter = new WyilInterpreter(project);
 		
 		if (verbose) {

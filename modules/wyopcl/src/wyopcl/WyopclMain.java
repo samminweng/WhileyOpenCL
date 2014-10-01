@@ -14,10 +14,8 @@ import wycc.util.OptArg;
 import wyopcl.util.WyopclBuildTask;
 
 public class WyopclMain extends WycMain{
-
-	public static final OptArg[] EXTRA_OPTIONS = { 
-//		new OptArg("classdir", "cd", OptArg.FILEDIR, "Specify where to place generated class files",
-//			new File("."))
+	private boolean verbose = false;
+	public static final OptArg[] EXTRA_OPTIONS = {
 	};
 	
 	public static OptArg[] DEFAULT_OPTIONS;
@@ -31,8 +29,6 @@ public class WyopclMain extends WycMain{
 		System.arraycopy(EXTRA_OPTIONS, 0, options,
 				WycMain.DEFAULT_OPTIONS.length, EXTRA_OPTIONS.length);
 		WyopclMain.DEFAULT_OPTIONS = options;
-		
-		
 	}
 	
 	public WyopclMain(WycBuildTask builder, OptArg[] options) {
@@ -44,24 +40,13 @@ public class WyopclMain extends WycMain{
 	@Override
 	public void configure(Map<String, Object> values) throws IOException {
 		super.configure(values);
-		
-		/*File classDir = (File) values.get("classdir");
-		if (classDir != null) {
-			((WyopclBuildTask) builder).setClassDir(classDir);
-		}*/
-		
-		
-		boolean verbose = values.containsKey("verbose");
+		verbose = values.containsKey("verbose");
 		builder.setVerbose(verbose);
-		
 	}
 	
 	
 	@Override
 	public int run(String[] _args) {
-		boolean verbose = false;
-		boolean brief = false;
-		
 		try {
 			// =====================================================================
 			// Process Options
@@ -80,14 +65,7 @@ public class WyopclMain extends WycMain{
 			if (args.isEmpty() || values.containsKey("help")) {
 				usage();
 				return SUCCESS;
-			}
-
-			brief = values.containsKey("brief");
-			
-			// =====================================================================
-			// Configure Build Task & Sanity Check
-			// =====================================================================
-			verbose = values.containsKey("verbose");
+			}		
 			
 			configure(values);
 						
@@ -117,7 +95,7 @@ public class WyopclMain extends WycMain{
 			}
 			return INTERNAL_FAILURE;
 		} catch (SyntaxError e) {
-			e.outputSourceError(stderr,brief);
+			e.outputSourceError(stderr,false);
 			if (verbose) {
 				e.printStackTrace(stderr);
 			}
