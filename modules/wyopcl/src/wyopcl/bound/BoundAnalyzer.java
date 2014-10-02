@@ -7,66 +7,23 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
-
 import wybs.lang.Build.Project;
-import wybs.lang.Build;
-import wybs.lang.Builder;
 import wycc.lang.SyntaxError;
-import wycc.util.Logger;
 import wycc.util.Pair;
 import wyfs.lang.Path;
 import wyfs.lang.Path.Entry;
 import wyfs.lang.Path.Root;
 import wyil.lang.Code;
+import wyil.lang.Code.Block;
 import wyil.lang.Codes;
 import wyil.lang.WyilFile;
-import wyil.lang.Code.Block;
 import wyil.lang.WyilFile.Case;
 import wyopcl.WyopclBuilder;
 import wyopcl.bound.analyzer.ConstAnalyzer;
 import wyopcl.bound.analyzer.IfAnalyzer;
+import wyopcl.bound.analyzer.InvokeAnalyzer;
 import wyopcl.bound.analyzer.UnaryOperatorAnalyzer;
-import wyopcl.interpreter.bytecode.AssertOrAssumeInterpreter;
-import wyopcl.interpreter.bytecode.AssignInterpreter;
-import wyopcl.interpreter.bytecode.BinaryOperatorInterpreter;
-import wyopcl.interpreter.bytecode.ConstantInterpreter;
-import wyopcl.interpreter.bytecode.ConvertInterpreter;
-import wyopcl.interpreter.bytecode.DebugInterpreter;
-import wyopcl.interpreter.bytecode.DereferenceInterpreter;
-import wyopcl.interpreter.bytecode.FailInterpreter;
-import wyopcl.interpreter.bytecode.FieldLoadInterpreter;
-import wyopcl.interpreter.bytecode.ForAllInterpreter;
-import wyopcl.interpreter.bytecode.GotoInterpreter;
-import wyopcl.interpreter.bytecode.IfInterpreter;
-import wyopcl.interpreter.bytecode.IfIsInterpreter;
-import wyopcl.interpreter.bytecode.IndexOfInterpreter;
-import wyopcl.interpreter.bytecode.IndirectInvokeInterpreter;
-import wyopcl.interpreter.bytecode.InvertInterpreter;
-import wyopcl.interpreter.bytecode.InvokeInterpreter;
-import wyopcl.interpreter.bytecode.LabelInterpreter;
-import wyopcl.interpreter.bytecode.LambdaInterpreter;
-import wyopcl.interpreter.bytecode.LengthOfInterpreter;
-import wyopcl.interpreter.bytecode.ListOperatorInterpreter;
-import wyopcl.interpreter.bytecode.LoopEndInterpreter;
-import wyopcl.interpreter.bytecode.LoopInterpreter;
-import wyopcl.interpreter.bytecode.NewListInterpreter;
-import wyopcl.interpreter.bytecode.NewMapInterpreter;
-import wyopcl.interpreter.bytecode.NewObjectInterpreter;
-import wyopcl.interpreter.bytecode.NewRecordInterpreter;
-import wyopcl.interpreter.bytecode.NewSetInterpreter;
-import wyopcl.interpreter.bytecode.NewTupleInterpreter;
-import wyopcl.interpreter.bytecode.NopInterpreter;
-import wyopcl.interpreter.bytecode.ReturnInterpreter;
-import wyopcl.interpreter.bytecode.SetOperatorInterpreter;
-import wyopcl.interpreter.bytecode.StringOperatorInterpreter;
-import wyopcl.interpreter.bytecode.SubListInterpreter;
-import wyopcl.interpreter.bytecode.SubStringInterpreter;
-import wyopcl.interpreter.bytecode.SwitchInterpreter;
-import wyopcl.interpreter.bytecode.ThrowInterpreter;
-import wyopcl.interpreter.bytecode.TryCatchInterpreter;
-import wyopcl.interpreter.bytecode.TupleLoadInterpreter;
-import wyopcl.interpreter.bytecode.UnaryOperatorInterpreter;
-import wyopcl.interpreter.bytecode.UpdateInterpreter;
+
 /**
  * analyzes the wyil bytecode by adding the constraints, which are parsed from each bytecode,
  * and inferring the bounds consistent with all constraints.
@@ -167,7 +124,7 @@ public class BoundAnalyzer extends Analyzer implements WyopclBuilder{
 			} else if (code instanceof Codes.IndirectInvoke) {			
 				//IndirectInvokeInterpreter.getInstance().interpret((Codes.IndirectInvoke)code, stackframe);
 			} else if (code instanceof Codes.Invoke) {			
-				//InvokeInterpreter.getInstance().interpret((Codes.Invoke)code, stackframe);
+				InvokeAnalyzer.getInstance().analyze((Codes.Invoke)code, bnd, list);
 			} else if (code instanceof Codes.Invert) {
 				//InvertInterpreter.getInstance().interpret((Codes.Invert)code, stackframe);
 			} else if (code instanceof Codes.LoopEnd) {
