@@ -40,6 +40,7 @@ public class InvokeAnalyzer extends Analyzer {
 			//Get the input parameters of integer type
 			if(paramType instanceof Type.Int){
 				String param = "%"+code.operand(index);
+				//Missing the variable name of function input parameters, so we used the function name temporarily.
 				//Add the equal constraint for input parameter.
 				list.addConstraint(new Equals(param, func_name));
 			}

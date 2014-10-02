@@ -3,9 +3,14 @@ package wyopcl.bound;
 import static wycc.lang.SyntaxError.internalFailure;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map.Entry;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /***
  * adds the upper or lower bounds and keeps track of the bounds for all variables.
@@ -101,15 +106,13 @@ public class Bounds {
 	 */
 	public String toString() {
 		String str = "Bounds [";
-		Iterator<Domain> iterator = bounds.values().iterator();
-		while(iterator.hasNext()){
-			Domain d = iterator.next();
-			str += d.toString();
-			//Check if iterator has the next one.
-			//If so, then add the ', '
-			str += (iterator.hasNext())? ",\n ": "";
+		//Sort all the domains
+		List<Domain> domains = new ArrayList<Domain>(bounds.values());
+		Collections.sort(domains);
+		for(Domain d : domains){
+			str += "\n\t"+d.toString();
 		}
-		str += "]"; 
+		str += "\n]"; 
 		
 		return str ;
 	}
