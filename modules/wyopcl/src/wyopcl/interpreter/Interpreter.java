@@ -39,15 +39,6 @@ public abstract class Interpreter {
 		this.args = args;
 	}
 	
-	
-	/*public static boolean isVerify() {
-		return verify;
-	}
-
-	public void setVerify(boolean verify) {
-		Interpreter.verify = verify;
-	}*/
-	
 	public static WyilFile getModule() {
 		return module;
 	}

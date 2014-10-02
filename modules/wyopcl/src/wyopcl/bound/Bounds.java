@@ -7,6 +7,11 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+/***
+ * adds the upper or lower bounds and keeps track of the bounds for all variables.
+ * @author Min-Hsien Weng
+ *
+ */
 public class Bounds {
 	// Every subclass shares the 'bounds' variable;
 	protected static HashMap<String, Domain> bounds;
@@ -14,7 +19,6 @@ public class Bounds {
 	public Bounds() {
 		bounds = new HashMap<String, Domain>();
 	}
-
 	
 	/**
 	 * Get the domain by name
@@ -44,9 +48,7 @@ public class Bounds {
 			Domain new_domain = (Domain) existing_domain.clone();
 			new_domain.setMin(new_min);
 			// Check the lower bound and update the lower bound
-			// When the existing bound in '-infinity' Or the new lower bound is
-			// 'larger'.
-			//if (new_domain.getMin() == null || new_min.compareTo(new_domain.getMin()) > 0) {
+			// When the existing bound in '-infinity' Or the new lower bound is 'larger'.
 			if (new_domain.compareTo(existing_domain) > 0) {
 				//new_domain.setMin(new_min);
 				bounds.put(name, new_domain);
@@ -62,9 +64,7 @@ public class Bounds {
 		try {
 			Domain existing_domain = getDomain(name);
 			Domain new_domain = (Domain) existing_domain.clone();
-			new_domain.setMax(new_max);		
-			// when the existing upper bound is infinity (null) or the new upper
-			// bound is 'smaller'.	
+			new_domain.setMax(new_max);	
 			//Check new domain is smaller (stronger) than existing one.
 			if (new_domain.compareTo(existing_domain) < 0) {
 				bounds.put(name, new_domain);
@@ -92,6 +92,26 @@ public class Bounds {
 			}
 		}
 		return true;
+	}
+	
+	
+	@Override
+	/**
+	 * Prints out all the bounds. 
+	 */
+	public String toString() {
+		String str = "Bounds [";
+		Iterator<Domain> iterator = bounds.values().iterator();
+		while(iterator.hasNext()){
+			Domain d = iterator.next();
+			str += d.toString();
+			//Check if iterator has the next one.
+			//If so, then add the ', '
+			str += (iterator.hasNext())? ",\n ": "";
+		}
+		str += "]"; 
+		
+		return str ;
 	}
 
 }

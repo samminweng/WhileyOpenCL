@@ -49,11 +49,7 @@ import wyc.util.WycAntTask;
  * 
  */
 public class WyopclAntTask extends WycAntTask {
-	private final WyopclBuildTask myBuilder;
-	
-	/*public void setClassdir(File dir) throws IOException {
-		myBuilder.setClassDir(dir);		
-	}*/
+	private final WyopclBuildTask myBuilder;	
 	
 	public WyopclAntTask() {
 		super(new WyopclBuildTask());

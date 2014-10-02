@@ -11,6 +11,5 @@ import wycc.util.Logger;
 public interface WyopclBuilder extends Builder{
 	void setLogger(Logger logger);
 	void setVerbose(boolean verbose);
-	//void setVerify(boolean verification);
 	void setArgs(String[] arguments);	
 }

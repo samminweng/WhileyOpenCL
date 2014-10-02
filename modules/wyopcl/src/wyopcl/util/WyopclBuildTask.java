@@ -43,14 +43,11 @@ public class WyopclBuildTask extends wyc.util.WycBuildTask {
 			default:
 				internalFailure("Not implemented!", "WyopclBuildTask.java", null);
 				return;
-			}
-			
+			}			
 		}else{
 			// Now, add build rule for interpreting the wyil files by using
 			// the WyilInterpreter.			
-			builder = new WyilInterpreter(project);
-
-			
+			builder = new WyilInterpreter(project);			
 		}
 
 		if (verbose) {
@@ -58,10 +55,6 @@ public class WyopclBuildTask extends wyc.util.WycBuildTask {
 			builder.setVerbose(verbose);
 		}
 
-/*		if(verification){
-			builder.setVerify(verification);
-		}
-*/
 		builder.setArgs(this.arguments);
 
 		project.add(new StdBuildRule(builder, wyilDir, wyilIncludes,
