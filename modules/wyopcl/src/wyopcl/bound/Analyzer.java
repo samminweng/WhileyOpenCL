@@ -5,10 +5,9 @@ import java.util.HashMap;
 import wybs.lang.Build;
 import wybs.lang.Build.Project;
 import wycc.util.Logger;
+import wyil.lang.Code;
+import wyil.lang.Codes;
 import wyil.lang.WyilFile;
-import wyil.lang.Code.Block;
-import wyil.lang.Type.FunctionOrMethod;
-import wyopcl.WyopclBuilder;
 /***
  * A abstract class to store the values of verbose, WyilFile module, file name and arguments.
  * All the analyzers are extended from this abstract class, so that they can access the above
@@ -48,5 +47,17 @@ public abstract class Analyzer {
 
 	public void setArgs(String[] arguments) {
 		this.args = arguments;		
+	}
+	/**
+	 * Print out the bytecode.
+	 * @param code
+	 */
+	public void printBytecode(Code code){
+		if(code instanceof Codes.Label){
+			System.out.println(code);
+		}else{
+			System.out.println("\t"+code);
+		}
+		
 	}
 }

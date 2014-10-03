@@ -19,6 +19,6 @@ public class ReturnAnalyzer extends Analyzer {
 	}
 	
 	public void analyze(Codes.Return code){
-		System.out.println(code);
+		
 	}
 }

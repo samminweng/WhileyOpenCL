@@ -32,8 +32,5 @@ public class ConstAnalyzer extends Analyzer {
 			//Add the 'Const' constraint.
 			this.constraintlist.addConstraint(new Const(name, ((Constant.Integer)constant).value));
 		}
-		
-		System.out.println(code);
-		
 	}
 }

@@ -47,7 +47,5 @@ public class UnaryOperatorAnalyzer extends Analyzer {
 				
 		}
 		
-		System.out.println(code);
-		
 	}
 }

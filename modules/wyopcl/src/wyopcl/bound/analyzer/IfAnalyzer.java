@@ -70,11 +70,6 @@ public class IfAnalyzer extends Analyzer {
 			
 		}
 		
-		
-		
-		
-		
-		System.out.println(code);
 	}
 	
 }

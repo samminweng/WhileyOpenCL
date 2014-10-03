@@ -20,7 +20,7 @@ public class LabelAnalyzer extends Analyzer {
 	
 	public void analyze(Codes.Label code){
 		//Switch the current constraint list
-		this.constraintlist = this.constraintListMap.get(code.label);		
-		System.out.println(code);
+		this.constraintlist = this.constraintListMap.get(code.label);	
+		
 	}
 }

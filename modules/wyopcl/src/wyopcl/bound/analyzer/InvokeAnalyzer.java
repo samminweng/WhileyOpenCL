@@ -51,12 +51,8 @@ public class InvokeAnalyzer extends Analyzer {
 		//Shall the bytecode in sub-method be executed?
 		for(Case mcase: functionOrMethod.cases()){
 			
-		}
+		}		
 		
-		//String target = "%"+code.target();
-		
-		
-		System.out.println(code);
 	}
 	
 }

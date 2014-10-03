@@ -123,6 +123,9 @@ public class BoundAnalyzer extends Analyzer implements WyopclBuilder{
 						"\n"+bnd.toString()
 						+"\nisBoundConsistency="+bnd.checkBoundConsistency());
 			}
+			
+			//Clear the map
+			constraintListMap.clear();
 
 		}
 		
@@ -226,7 +229,7 @@ public class BoundAnalyzer extends Analyzer implements WyopclBuilder{
 			internalFailure(ex.getMessage(), filename, entry, ex);
 		}
 
-
+		printBytecode(code);
 	}
 
 
