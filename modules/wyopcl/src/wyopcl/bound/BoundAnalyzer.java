@@ -69,6 +69,11 @@ public class BoundAnalyzer extends Analyzer implements WyopclBuilder{
 		return generatedFiles;
 	}
 
+	/**
+	 * Extracts the method or function declaration and converts it into a string.
+	 * @param method
+	 * @return
+	 */
 	private String getFunctionOrMethodDel(WyilFile.FunctionOrMethodDeclaration method){
 		String str = "===============================================\n"; 
 		//Get the modifier (i.e. public, protected, private...)
