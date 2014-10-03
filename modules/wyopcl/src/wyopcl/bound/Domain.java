@@ -22,19 +22,19 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 		return name;
 	}
 
-	public BigInteger getMin() {
+	public BigInteger getLowerBound() {
 		return lower_bound;
 	}
 
-	public void setMin(BigInteger lower_bound) {
+	public void setLowerBound(BigInteger lower_bound) {
 		this.lower_bound = lower_bound;
 	}
 
-	public BigInteger getMax() {
+	public BigInteger getUpperBound() {
 		return upper_bound;
 	}
 
-	public void setMax(BigInteger upper_bound) {
+	public void setUpperBound(BigInteger upper_bound) {
 		this.upper_bound = upper_bound;
 	}
 

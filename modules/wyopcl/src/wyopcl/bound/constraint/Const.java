@@ -1,6 +1,7 @@
 package wyopcl.bound.constraint;
 
 import java.math.BigInteger;
+
 import wyopcl.bound.Bounds;
 
 /***
@@ -8,7 +9,7 @@ import wyopcl.bound.Bounds;
  * @author mw169
  *
  */
-public class Const implements Constraint{
+public class Const extends Constraint{
 	private final String x;
 	private final BigInteger constant_value;
 	public Const(String x, BigInteger constant_value){
@@ -28,5 +29,4 @@ public class Const implements Constraint{
 		return bnd.isChanged;
 	}
 	
-
 }

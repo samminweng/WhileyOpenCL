@@ -14,7 +14,7 @@ import wyopcl.bound.Domain;
  *
  */
 
-public class LessThanEquals implements Constraint {
+public class LessThanEquals extends Constraint {
 	private BigInteger min_x, max_y;
 	private String x, y;	
 	public LessThanEquals(String x, String y){

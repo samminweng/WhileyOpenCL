@@ -13,7 +13,9 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 /***
- * adds the upper or lower bounds and keeps track of the bounds for all variables.
+ * adds the upper or lower bounds and keeps track of the bounds for all
+ * variables.
+ * 
  * @author Min-Hsien Weng
  *
  */
@@ -21,10 +23,11 @@ public class Bounds {
 	// Every subclass shares the 'bounds' variable;
 	protected static HashMap<String, Domain> bounds;
 	public boolean isChanged = false;
+
 	public Bounds() {
 		bounds = new HashMap<String, Domain>();
 	}
-	
+
 	/**
 	 * Get the domain by name
 	 * 
@@ -40,22 +43,23 @@ public class Bounds {
 	}
 
 	public BigInteger getLower(String name) {
-		return getDomain(name).getMin();
+		return getDomain(name).getLowerBound();
 	}
 
 	public BigInteger getUpper(String name) {
-		return getDomain(name).getMax();
+		return getDomain(name).getUpperBound();
 	}
 
 	public boolean addLowerBound(String name, BigInteger new_min) {
 		try {
 			Domain existing_domain = getDomain(name);
 			Domain new_domain = (Domain) existing_domain.clone();
-			new_domain.setMin(new_min);
+			new_domain.setLowerBound(new_min);
 			// Check the lower bound and update the lower bound
-			// When the existing bound in '-infinity' Or the new lower bound is 'larger'.
+			// When the existing bound in '-infinity' Or the new lower bound is
+			// 'larger'.
 			if (new_domain.compareTo(existing_domain) > 0) {
-				//new_domain.setMin(new_min);
+				// new_domain.setMin(new_min);
 				bounds.put(name, new_domain);
 				return true;
 			}
@@ -69,17 +73,18 @@ public class Bounds {
 		try {
 			Domain existing_domain = getDomain(name);
 			Domain new_domain = (Domain) existing_domain.clone();
-			new_domain.setMax(new_max);	
-			//Check new domain is smaller (stronger) than existing one.
+			new_domain.setUpperBound(new_max);
+			// Check new domain is smaller (stronger) than existing one.
 			if (new_domain.compareTo(existing_domain) < 0) {
 				bounds.put(name, new_domain);
 				return true;
-			}			
+			}
 		} catch (Exception ex) {
 			internalFailure(ex.getMessage(), "Bounds.java", null);
 		}
 		return false;
 	}
+
 
 	/**
 	 * Check if all the bounds are consistent (lower bound <= upper bound)
@@ -92,29 +97,41 @@ public class Bounds {
 			Entry<String, Domain> bnd = iterator.next();
 			Domain d = bnd.getValue();
 			// Check upper bound < lower bound. If so, return false;
-			if (d.getMax().compareTo(d.getMin()) < 0) {
-				return false;
+			// Check upper bound < lower bound. If so, return false;
+			BigInteger max = d.getUpperBound();
+			BigInteger min = d.getLowerBound();
+			if(max == null && min == null){
+				return true;
+			}else{
+				if(max == null || min == null){
+					return true;
+				}else{
+					if (max.compareTo(min) < 0) {
+						return false;
+					}
+					
+					return true;
+				}
 			}
 		}
 		return true;
 	}
-	
-	
+
 	@Override
 	/**
 	 * Prints out all the bounds. 
 	 */
 	public String toString() {
 		String str = "Bounds [";
-		//Sort all the domains
+		// Sort all the domains
 		List<Domain> domains = new ArrayList<Domain>(bounds.values());
 		Collections.sort(domains);
-		for(Domain d : domains){
-			str += "\n\t"+d.toString();
+		for (Domain d : domains) {
+			str += "\n\t" + d.toString();
 		}
-		str += "\n]"; 
-		
-		return str ;
+		str += "\n]";
+
+		return str;
 	}
 
 }

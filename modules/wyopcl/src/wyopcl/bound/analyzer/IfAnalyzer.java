@@ -1,6 +1,9 @@
 package wyopcl.bound.analyzer;
 
+import java.util.Iterator;
+
 import wyil.lang.Codes;
+import wyil.lang.Constant;
 import wyopcl.bound.Bounds;
 import wyopcl.bound.ConstraintList;
 /**
@@ -22,7 +25,39 @@ public class IfAnalyzer {
 	}
 	
 	public void analyze(Codes.If code, Bounds bnd, ConstraintList list){
+		switch(code.op){
+		case EQ:			
+			
+			break;
+		case NEQ:				
+			
+			break;
+		case LT:			
+			
+			break;
+		case LTEQ:			
+			
+			break;
+		case GT:					
+			
+			break;
+		case GTEQ:			
+			
+			break;
+		case IN:			
+					
+			break;
+		case SUBSET:
+			
+			break;
+		case SUBSETEQ:
+			
+			break;
+		default:			
+			
 		
+		
+		}
 		
 	}
 	

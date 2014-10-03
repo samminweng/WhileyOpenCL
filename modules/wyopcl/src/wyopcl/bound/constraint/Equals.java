@@ -9,7 +9,7 @@ import wyopcl.bound.Bounds;
  * @author mw169
  *
  */
-public class Equals implements Constraint {
+public class Equals extends Constraint {
 	private BigInteger x_min, x_max, y_min, y_max;
 	private final String x, y;
 

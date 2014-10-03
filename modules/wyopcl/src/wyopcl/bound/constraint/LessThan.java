@@ -4,7 +4,7 @@ import java.math.BigInteger;
 import wyopcl.bound.Bounds;
 
 
-public class LessThan implements Constraint {
+public class LessThan extends Constraint {
 	private BigInteger min_x, max_y;
 	private final String x, y;	
 	public LessThan(String x, String y){

@@ -8,11 +8,18 @@ import wyopcl.bound.Bounds;
  * @author Min-Hsien Weng 
  *
  */
-public interface Constraint {
+public abstract class Constraint implements Cloneable{	
+	@Override
+	public Object clone() throws CloneNotSupportedException {
+		return super.clone();
+	}
+
 	/**
 	 * Infer bounds from the constraints and domains
 	 * @param bnd
 	 * @return true if the bounds are changed. Return false if the bounds remain the same.
 	 */
-	boolean inferBound(Bounds bnd);
+	public abstract boolean inferBound(Bounds bnd);
+	
+	
 }

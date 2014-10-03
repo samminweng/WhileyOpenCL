@@ -13,7 +13,7 @@ import wyopcl.bound.Domain;
  * @author Min-Hsien Weng
  *
  */
-public class RightPlus implements Constraint{
+public class RightPlus extends Constraint{
 	private BigInteger min_x, max_x, min_y, max_y, min_z, max_z;
 	private String x, y, z;
 	public RightPlus(String x, String y, String z) {

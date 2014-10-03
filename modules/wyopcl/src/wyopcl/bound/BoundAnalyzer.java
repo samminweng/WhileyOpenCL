@@ -3,10 +3,14 @@ package wyopcl.bound;
 import static wycc.lang.SyntaxError.internalFailure;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
+
 import wybs.lang.Build.Project;
 import wycc.lang.SyntaxError;
 import wycc.util.Pair;
@@ -16,6 +20,8 @@ import wyfs.lang.Path.Root;
 import wyil.lang.Code;
 import wyil.lang.Code.Block;
 import wyil.lang.Codes;
+import wyil.lang.Modifier;
+import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.Case;
 import wyopcl.WyopclBuilder;
@@ -32,10 +38,13 @@ import wyopcl.bound.analyzer.UnaryOperatorAnalyzer;
  *
  */
 public class BoundAnalyzer extends Analyzer implements WyopclBuilder{
+	//The hashmap stores the constraints and bounds for each method or function.
+	protected static HashMap<Bounds, ConstraintList> list = new HashMap<Bounds, ConstraintList>();
+	
 	public BoundAnalyzer(Project project){
 		this.project = project;
 	}
-	
+
 	@Override
 	public Set<Entry<?>> build(Collection<Pair<Entry<?>, Root>> delta) throws IOException {
 		Runtime runtime = Runtime.getRuntime();
@@ -58,36 +67,74 @@ public class BoundAnalyzer extends Analyzer implements WyopclBuilder{
 				(endTime - start), memory - runtime.freeMemory());
 		return generatedFiles;
 	}
-	
-	
+
+	private String getFunctionOrMethodDel(WyilFile.FunctionOrMethodDeclaration method){
+		String str = "===============================================\n"; 
+		//Get the modifier (i.e. public, protected, private...)
+		str += ((method.hasModifier(Modifier.PUBLIC)))? Modifier.PUBLIC.toString() : "";
+		str += ((method.hasModifier(Modifier.PRIVATE)))? Modifier.PRIVATE.toString() : "";
+		str += ((method.hasModifier(Modifier.PROTECTED)))? Modifier.PROTECTED.toString() : "";
+		str += ((method.hasModifier(Modifier.NATIVE)))? Modifier.NATIVE.toString() : "";
+		str += ((method.hasModifier(Modifier.EXPORT)))? Modifier.EXPORT.toString() : "";
+		
+		//Get the return type
+		str += method.type().ret() + " ";
+		//Get the method name
+		str += method.name() + "(";
+		//Get the parameter type
+		for(Type param :method.type().params()) {
+			str += param;						
+		}
+		str+="):";
+		return str;
+	}
+
 	/**
 	 * Takes the in-memory wyil file and analyzes the range values for all variables.
 	 * @param module
 	 */
 	private void startAnalysis(){
-		ConstraintList list = new ConstraintList();
-		Bounds bnd = new Bounds();
+		
 		for(WyilFile.FunctionOrMethodDeclaration method : module.functionOrMethods()) {
-			if(method.name().equals("main")){
-				for(Case mcase : method.cases()){
-					Block blk = mcase.body();
-					Iterator<wyil.lang.Code.Block.Entry> iterator = blk.iterator();
-					while(iterator.hasNext()){
-						//Get the Block.Entry
-						Block.Entry entry = iterator.next();
-						//check the code type and add the constraints 
-						dispatch(entry, bnd, list);
-					}
+			System.out.println(getFunctionOrMethodDel(method));
+			list = new HashMap<Bounds, ConstraintList>();
+			ConstraintList constraintlist = new ConstraintList();
+			Bounds bnd = new Bounds();
+			for(Case mcase : method.cases()){
+				Block blk = mcase.body();
+				Iterator<wyil.lang.Code.Block.Entry> iterator = blk.iterator();
+				while(iterator.hasNext()){
+					//Get the Block.Entry
+					Block.Entry entry = iterator.next();
+					//check the code type and add the constraints 
+					dispatch(entry, bnd, constraintlist);
 				}
-			}			
+			}
+			
+			list.put(bnd, constraintlist);
+			
+			Iterator<java.util.Map.Entry<Bounds, ConstraintList>> iterator = list.entrySet().iterator();
+			while(iterator.hasNext()){
+				java.util.Map.Entry<Bounds, ConstraintList> entry = iterator.next();
+				//Infer the bounds consistent with all constraints.
+				constraintlist = entry.getValue();
+				bnd = entry.getKey();
+				
+				constraintlist.inferFixedPoint(bnd);
+				System.out.println("\n"+bnd.toString()
+						+"\nisBoundConsistency="+bnd.checkBoundConsistency());
+			}
+
 		}
-		//Infer the bounds consistent with all constraints.
-		list.inferFixedPoint(bnd);
-		System.out.println("\n"+bnd.toString());
+		
+		
+		
+		
+		
 
 	}
-	
-	
+
+
 	private void dispatch(Block.Entry entry, Bounds bnd, ConstraintList list){
 		Code code = entry.code; 
 		try{
@@ -183,19 +230,19 @@ public class BoundAnalyzer extends Analyzer implements WyopclBuilder{
 		} catch (Exception ex) {		
 			internalFailure(ex.getMessage(), filename, entry, ex);
 		}
-		
-		
+
+
 	}
-	
-	
 
-		
-	
-	
-	
 
-	
 
-	
+
+
+
+
+
+
+
+
 
 }

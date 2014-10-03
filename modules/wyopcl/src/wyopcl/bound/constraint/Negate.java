@@ -11,7 +11,7 @@ import wyopcl.bound.Domain;
  * @author Min-Hsien Weng
  *
  */
-public class Negate implements Constraint{
+public class Negate extends Constraint{
 	private BigInteger min_x, max_x, min_y, max_y;
 	private String x, y;
 	public Negate(String x, String y){

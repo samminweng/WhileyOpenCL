@@ -13,7 +13,7 @@ import wyopcl.bound.Domain;
  * @author Min-Hsien Weng
  *
  */
-public class LeftPlus implements Constraint {
+public class LeftPlus extends Constraint {
 	private BigInteger min_x, max_x, min_y, max_y, min_z, max_z;
 	private final String x, y, z;
 

@@ -4,17 +4,18 @@ import java.util.ArrayList;
 
 import wyopcl.bound.constraint.Constraint;
 
-public class ConstraintList {
-
-	protected static ArrayList<Constraint> list;
+public class ConstraintList implements Cloneable{
+	public ArrayList<Constraint> list;	
 	public ConstraintList(){
-		list = new ArrayList<Constraint>();
+		list = new ArrayList<Constraint>();		
 	}
 
 	public void addConstraint(Constraint c){
 		list.add(c);
 	}
-
+	
+	
+	
 	/**
 	 * Iterate through the constraints to infer the bounds.
 	 * @param bnd
@@ -30,11 +31,7 @@ public class ConstraintList {
 			isFixedPointed ^= !(c.inferBound(bnd));
 		}				
 		//Check if all the bounds are consistent or unchanged with all the constraints.
-		//Is so, then the fixed pointed is reaches.
-		if(isFixedPointed){
-			System.out.println("isFixedPointed = "+isFixedPointed);
-		}
-
+		//Is so, then the fixed pointed is reached.
 		return isFixedPointed;
 	}
 
@@ -59,5 +56,16 @@ public class ConstraintList {
 
 	}
 
-
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		ConstraintList newConslist = new ConstraintList();
+		//Deep copy the list
+		ArrayList<Constraint> newlist = new ArrayList<Constraint>();
+		for(Constraint cons: this.list){
+			Constraint cloned = (Constraint) cons.clone();
+			newlist.add(cloned);			
+		}
+		newConslist.list = newlist;
+		return newlist;
+	}
 }
