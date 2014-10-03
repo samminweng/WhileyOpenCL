@@ -17,7 +17,12 @@ import wyopcl.WyopclBuilder;
  * @author Min-Hsien Weng
  *
  */
-public abstract class Analyzer {	
+public abstract class Analyzer {
+	//The hashmap stores the constraints with in the label value in each method or function.
+	protected static HashMap<String, ConstraintList> constraintListMap = new HashMap<String, ConstraintList>();
+	//Current constraint list
+	protected static ConstraintList constraintlist;
+	
 	protected static Build.Project project;
 	protected static String filename;
 	protected static boolean verbose = false;

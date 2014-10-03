@@ -2,6 +2,7 @@ package wyopcl.bound.analyzer;
 
 import wyil.lang.Codes;
 import wyil.lang.Codes.UnaryOperatorKind;
+import wyopcl.bound.Analyzer;
 import wyopcl.bound.Bounds;
 import wyopcl.bound.ConstraintList;
 import wyopcl.bound.constraint.Negate;
@@ -12,7 +13,7 @@ import wyopcl.bound.constraint.Negate;
  * @author Min-Hsien Weng
  *
  */
-public class UnaryOperatorAnalyzer {
+public class UnaryOperatorAnalyzer extends Analyzer {
 	private static UnaryOperatorAnalyzer instance;	
 	public UnaryOperatorAnalyzer(){
 	}
@@ -25,14 +26,14 @@ public class UnaryOperatorAnalyzer {
 		return instance;
 	}
 	
-	public void analyze(Codes.UnaryOperator code, ConstraintList list){
+	public void analyze(Codes.UnaryOperator code){
 		UnaryOperatorKind kind = code.kind;
 		String x = "%"+code.operand(0);
 		String y = "%"+code.target();
 		//
 		switch(kind){
 			case NEG:
-				list.addConstraint(new Negate(x, y));
+				this.constraintlist.addConstraint(new Negate(x, y));
 				break;
 			case NUMERATOR:
 				System.err.println("Not implemented!");

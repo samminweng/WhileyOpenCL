@@ -71,5 +71,9 @@ public class RightPlus extends Constraint{
 
 		return bnd.isChanged;
 	}
+	@Override
+	public String toString() {
+		return "RightPlus [x=" + x + ", y=" + y + ", z=" + z + "]";
+	}
 
 }

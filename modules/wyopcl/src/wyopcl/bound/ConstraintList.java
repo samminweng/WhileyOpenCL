@@ -57,15 +57,15 @@ public class ConstraintList implements Cloneable{
 	}
 
 	@Override
-	protected Object clone() throws CloneNotSupportedException {
+	public Object clone() throws CloneNotSupportedException {
 		ConstraintList newConslist = new ConstraintList();
 		//Deep copy the list
-		ArrayList<Constraint> newlist = new ArrayList<Constraint>();
+		ArrayList<Constraint> list = new ArrayList<Constraint>();
 		for(Constraint cons: this.list){
 			Constraint cloned = (Constraint) cons.clone();
-			newlist.add(cloned);			
+			list.add(cloned);			
 		}
-		newConslist.list = newlist;
-		return newlist;
+		newConslist.list = list;
+		return newConslist;
 	}
 }

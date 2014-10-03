@@ -28,5 +28,8 @@ public class Const extends Constraint{
 		bnd.isChanged |= bnd.addUpperBound(x, constant_value);
 		return bnd.isChanged;
 	}
-	
+	@Override
+	public String toString() {
+		return "Const [x=" + x + ", constant_value=" + constant_value + "]";
+	}
 }

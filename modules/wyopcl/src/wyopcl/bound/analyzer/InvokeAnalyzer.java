@@ -30,7 +30,7 @@ public class InvokeAnalyzer extends Analyzer {
 		return instance;
 	}
 	
-	public void analyze(Codes.Invoke code, ConstraintList list){
+	public void analyze(Codes.Invoke code){
 		String func_name = code.name.name();
 		
 		//Get the fun block from module.
@@ -42,7 +42,7 @@ public class InvokeAnalyzer extends Analyzer {
 				String param = "%"+code.operand(index);
 				//Missing the variable name of function input parameters, so we used the function name temporarily.
 				//Add the equal constraint for input parameter.
-				list.addConstraint(new Equals(param, func_name));
+				this.constraintlist.addConstraint(new Equals(param, func_name));
 			}
 			index++;			
 		}

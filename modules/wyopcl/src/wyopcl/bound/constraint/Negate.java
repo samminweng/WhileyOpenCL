@@ -58,5 +58,11 @@ public class Negate extends Constraint{
 	}
 
 
+	@Override
+	public String toString() {
+		return "Negate [x=" + x + ", y=" + y + "]";
+	}
+
+
 
 }

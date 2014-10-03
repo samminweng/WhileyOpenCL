@@ -5,6 +5,7 @@ import java.util.Iterator;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyil.lang.Type;
+import wyopcl.bound.Analyzer;
 import wyopcl.bound.Bounds;
 import wyopcl.bound.ConstraintList;
 /**
@@ -12,7 +13,7 @@ import wyopcl.bound.ConstraintList;
  * @author Min-Hsien Weng
  *
  */
-public class IfAnalyzer {
+public class IfAnalyzer extends Analyzer {
 	private static IfAnalyzer instance;	
 	public IfAnalyzer(){
 	}
@@ -25,56 +26,47 @@ public class IfAnalyzer {
 		return instance;
 	}
 	
-	
-	private void branchConstraintList(Codes.If code){
-		String left = "%"+code.leftOperand;
-		String right = "%"+code.rightOperand;
-		
-		//The 'if'
-		
-		
-		switch(code.op){
-		case EQ:			
-			
-			break;
-		case NEQ:				
-			
-			break;
-		case LT:			
-			
-			break;
-		case LTEQ:			
-			
-			break;
-		case GT:					
-			
-			break;
-		case GTEQ:			
-			
-			break;
-		case IN:			
-			System.err.println("Not implemented!");		
-			break;
-		case SUBSET:
-			System.err.println("Not implemented!");
-			break;
-		case SUBSETEQ:
-			System.err.println("Not implemented!");
-			break;
-		default:			
-			System.err.println("Not implemented!");
-	
-		}
-		
-		
-	}
-	
-	
-	
-	
-	public void analyze(Codes.If code, ConstraintList list){
+	public void analyze(Codes.If code) throws CloneNotSupportedException{
 		
 		if(code.type instanceof Type.Int){
+			String left = "%"+code.leftOperand;
+			String right = "%"+code.rightOperand;
+			
+			//The 'if'
+			ConstraintList if_list = (ConstraintList)this.constraintlist.clone();
+			
+			switch(code.op){
+			case EQ:			
+				
+				break;
+			case NEQ:				
+				
+				break;
+			case LT:			
+				
+				break;
+			case LTEQ:			
+				this.constraintListMap.put(code.target, if_list);
+				break;
+			case GT:					
+				
+				break;
+			case GTEQ:			
+				this.constraintListMap.put(code.target, if_list);
+				break;
+			case IN:			
+				System.err.println("Not implemented!");		
+				break;
+			case SUBSET:
+				System.err.println("Not implemented!");
+				break;
+			case SUBSETEQ:
+				System.err.println("Not implemented!");
+				break;
+			default:			
+				System.err.println("Not implemented!");
+		
+			}
 			
 		}
 		

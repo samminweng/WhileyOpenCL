@@ -73,4 +73,9 @@ public class LeftPlus extends Constraint {
 		return bnd.isChanged;
 	}
 
+	@Override
+	public String toString() {
+		return "LeftPlus [x=" + x + ", y=" + y + ", z=" + z + "]";
+	}
+
 }

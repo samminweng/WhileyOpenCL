@@ -2,6 +2,7 @@ package wyopcl.bound.analyzer;
 
 import wyil.lang.Codes;
 import wyil.lang.Constant;
+import wyopcl.bound.Analyzer;
 import wyopcl.bound.Bounds;
 import wyopcl.bound.ConstraintList;
 import wyopcl.bound.constraint.Const;
@@ -10,7 +11,7 @@ import wyopcl.bound.constraint.Const;
  * @author Min-Hsien Weng
  *
  */
-public class ConstAnalyzer {
+public class ConstAnalyzer extends Analyzer {
 	private static ConstAnalyzer instance;	
 	public ConstAnalyzer(){
 	}
@@ -23,13 +24,13 @@ public class ConstAnalyzer {
 		return instance;
 	}
 	
-	public void analyze(Codes.Const code, ConstraintList list){
+	public void analyze(Codes.Const code){
 		Constant constant = code.constant;
 		String name = "%"+code.target();
 		//Check the value is an Constant.Integer
 		if(constant instanceof Constant.Integer){
 			//Add the 'Const' constraint.
-			list.addConstraint(new Const(name, ((Constant.Integer)constant).value));
+			this.constraintlist.addConstraint(new Const(name, ((Constant.Integer)constant).value));
 		}
 		
 		System.out.println(code);

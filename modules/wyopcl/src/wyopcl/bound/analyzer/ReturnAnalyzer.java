@@ -18,7 +18,7 @@ public class ReturnAnalyzer extends Analyzer {
 		return instance;
 	}
 	
-	public void analyze(Codes.Return code, ConstraintList list){
+	public void analyze(Codes.Return code){
 		System.out.println(code);
 	}
 }

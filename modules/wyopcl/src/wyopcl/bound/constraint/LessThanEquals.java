@@ -39,5 +39,9 @@ public class LessThanEquals extends Constraint {
 
 		return bnd.isChanged;
 	}
+	@Override
+	public String toString() {
+		return "LessThanEquals [x=" + x + ", y=" + y + "]";
+	}
 
 }
