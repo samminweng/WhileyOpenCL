@@ -8,7 +8,9 @@ import wyil.lang.Type;
 import wyopcl.bound.Analyzer;
 import wyopcl.bound.Bounds;
 import wyopcl.bound.ConstraintList;
+import wyopcl.bound.constraint.GreaterThan;
 import wyopcl.bound.constraint.GreaterThanEquals;
+import wyopcl.bound.constraint.LessThan;
 import wyopcl.bound.constraint.LessThanEquals;
 /**
  * Parses the 'If' bytecode to add the constraints to the list.
@@ -48,6 +50,8 @@ public class IfAnalyzer extends Analyzer {
 				
 				break;
 			case LTEQ:
+				//Add the constraint 'left>right' to current list
+				this.constraintlist.addConstraint(new GreaterThan(left, right));
 				if_list.addConstraint(new LessThanEquals(left, right));
 				this.constraintListMap.put(code.target, if_list);
 				break;
@@ -55,8 +59,11 @@ public class IfAnalyzer extends Analyzer {
 				
 				break;
 			case GTEQ:
+				//Add the constraint 'left< right' to current constraint list.
+				this.constraintlist.addConstraint(new LessThan(left, right));				
 				//'left >= right'
 				if_list.addConstraint(new GreaterThanEquals(left, right));
+				
 				this.constraintListMap.put(code.target, if_list);
 				break;
 			case IN:			

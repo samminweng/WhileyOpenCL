@@ -25,7 +25,7 @@ public class GreaterThanEquals extends Constraint {
 		//Propagate the lower bound from y to x.
 		min_x = bnd.getLower(x);
 		max_x = bnd.getUpper(x);
-		max_y = bnd.getLower(y);
+		min_y = bnd.getLower(y);
 		max_y = bnd.getUpper(y);
 		if(min_y != null){
 			bnd.isChanged |= bnd.addLowerBound(x, min_y);
