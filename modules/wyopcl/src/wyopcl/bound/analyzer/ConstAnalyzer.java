@@ -23,7 +23,7 @@ public class ConstAnalyzer {
 		return instance;
 	}
 	
-	public void analyze(Codes.Const code, Bounds bnd, ConstraintList list){
+	public void analyze(Codes.Const code, ConstraintList list){
 		Constant constant = code.constant;
 		String name = "%"+code.target();
 		//Check the value is an Constant.Integer

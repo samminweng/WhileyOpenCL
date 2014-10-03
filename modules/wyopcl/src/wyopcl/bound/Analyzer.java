@@ -17,7 +17,7 @@ import wyopcl.WyopclBuilder;
  * @author Min-Hsien Weng
  *
  */
-public abstract class Analyzer {
+public abstract class Analyzer {	
 	protected static Build.Project project;
 	protected static String filename;
 	protected static boolean verbose = false;

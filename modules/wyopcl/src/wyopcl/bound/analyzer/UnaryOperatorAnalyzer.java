@@ -25,7 +25,7 @@ public class UnaryOperatorAnalyzer {
 		return instance;
 	}
 	
-	public void analyze(Codes.UnaryOperator code, Bounds bnd, ConstraintList list){
+	public void analyze(Codes.UnaryOperator code, ConstraintList list){
 		UnaryOperatorKind kind = code.kind;
 		String x = "%"+code.operand(0);
 		String y = "%"+code.target();

@@ -28,6 +28,8 @@ import wyopcl.WyopclBuilder;
 import wyopcl.bound.analyzer.ConstAnalyzer;
 import wyopcl.bound.analyzer.IfAnalyzer;
 import wyopcl.bound.analyzer.InvokeAnalyzer;
+import wyopcl.bound.analyzer.LabelAnalyzer;
+import wyopcl.bound.analyzer.ReturnAnalyzer;
 import wyopcl.bound.analyzer.UnaryOperatorAnalyzer;
 
 /**
@@ -38,8 +40,8 @@ import wyopcl.bound.analyzer.UnaryOperatorAnalyzer;
  *
  */
 public class BoundAnalyzer extends Analyzer implements WyopclBuilder{
-	//The hashmap stores the constraints and bounds for each method or function.
-	protected static HashMap<Bounds, ConstraintList> list = new HashMap<Bounds, ConstraintList>();
+	//The hashmap stores the constraints with in the label value in each method or function.
+	protected static HashMap<String, ConstraintList> list = new HashMap<String, ConstraintList>();
 	
 	public BoundAnalyzer(Project project){
 		this.project = project;
@@ -97,9 +99,8 @@ public class BoundAnalyzer extends Analyzer implements WyopclBuilder{
 		
 		for(WyilFile.FunctionOrMethodDeclaration method : module.functionOrMethods()) {
 			System.out.println(getFunctionOrMethodDel(method));
-			list = new HashMap<Bounds, ConstraintList>();
 			ConstraintList constraintlist = new ConstraintList();
-			Bounds bnd = new Bounds();
+			list.put("code", constraintlist);
 			for(Case mcase : method.cases()){
 				Block blk = mcase.body();
 				Iterator<wyil.lang.Code.Block.Entry> iterator = blk.iterator();
@@ -107,35 +108,30 @@ public class BoundAnalyzer extends Analyzer implements WyopclBuilder{
 					//Get the Block.Entry
 					Block.Entry entry = iterator.next();
 					//check the code type and add the constraints 
-					dispatch(entry, bnd, constraintlist);
+					dispatch(entry, constraintlist);
 				}
-			}
+			}	
 			
-			list.put(bnd, constraintlist);
-			
-			Iterator<java.util.Map.Entry<Bounds, ConstraintList>> iterator = list.entrySet().iterator();
+			Iterator<java.util.Map.Entry<String, ConstraintList>> iterator = list.entrySet().iterator();
 			while(iterator.hasNext()){
-				java.util.Map.Entry<Bounds, ConstraintList> entry = iterator.next();
+				java.util.Map.Entry<String, ConstraintList> entry = iterator.next();
 				//Infer the bounds consistent with all constraints.
 				constraintlist = entry.getValue();
-				bnd = entry.getKey();
-				
+				String label = entry.getKey();
+				Bounds bnd = new Bounds();
 				constraintlist.inferFixedPoint(bnd);
-				System.out.println("\n"+bnd.toString()
+				System.out.println("\n"+label+
+						"\n"+bnd.toString()
 						+"\nisBoundConsistency="+bnd.checkBoundConsistency());
 			}
 
 		}
 		
-		
-		
-		
-		
 
 	}
 
 
-	private void dispatch(Block.Entry entry, Bounds bnd, ConstraintList list){
+	private void dispatch(Block.Entry entry, ConstraintList list){
 		Code code = entry.code; 
 		try{
 			if (code instanceof Codes.AssertOrAssume) {			
@@ -151,7 +147,7 @@ public class BoundAnalyzer extends Analyzer implements WyopclBuilder{
 			} else if (code instanceof Codes.Convert) {			
 				//ConvertInterpreter.getInstance().interpret((Codes.Convert)code, stackframe);
 			} else if (code instanceof Codes.Const) {			
-				ConstAnalyzer.getInstance().analyze((Codes.Const)code, bnd, list);
+				ConstAnalyzer.getInstance().analyze((Codes.Const)code, list);
 			} else if (code instanceof Codes.Debug) {
 				//DebugInterpreter.getInstance().interpret((Codes.Debug)code, stackframe);
 			} else if (code instanceof Codes.Dereference) {
@@ -165,19 +161,19 @@ public class BoundAnalyzer extends Analyzer implements WyopclBuilder{
 			} else if (code instanceof Codes.Goto) {	
 				//GotoInterpreter.getInstance().interpret((Codes.Goto)code, stackframe);
 			} else if (code instanceof Codes.If) {
-				IfAnalyzer.getInstance().analyze((Codes.If)code, bnd, list);			
+				IfAnalyzer.getInstance().analyze((Codes.If)code, list);			
 			} else if (code instanceof Codes.IfIs) {
 				//IfIsInterpreter.getInstance().interpret((Codes.IfIs)code, stackframe);
 			} else if (code instanceof Codes.IndirectInvoke) {			
 				//IndirectInvokeInterpreter.getInstance().interpret((Codes.IndirectInvoke)code, stackframe);
 			} else if (code instanceof Codes.Invoke) {			
-				InvokeAnalyzer.getInstance().analyze((Codes.Invoke)code, bnd, list);
+				InvokeAnalyzer.getInstance().analyze((Codes.Invoke)code, list);
 			} else if (code instanceof Codes.Invert) {
 				//InvertInterpreter.getInstance().interpret((Codes.Invert)code, stackframe);
 			} else if (code instanceof Codes.LoopEnd) {
 				//LoopEndInterpreter.getInstance().interpret((Codes.LoopEnd)code, stackframe);									
 			} else if (code instanceof Codes.Label) {
-				//LabelInterpreter.getInstance().interpret((Codes.Label)code, stackframe);
+				LabelAnalyzer.getInstance().analyze((Codes.Label)code, list);
 			} else if (code instanceof Codes.Lambda) {
 				//LambdaInterpreter.getInstance().interpret((Codes.Lambda)code, stackframe);
 			} else if (code instanceof Codes.LengthOf) {			
@@ -199,7 +195,7 @@ public class BoundAnalyzer extends Analyzer implements WyopclBuilder{
 			} else if (code instanceof Codes.NewTuple) {
 				//NewTupleInterpreter.getInstance().interpret((Codes.NewTuple)code, stackframe);
 			} else if (code instanceof Codes.Return) {			
-				//ReturnInterpreter.getInstance().interpret((Codes.Return)code, stackframe);
+				ReturnAnalyzer.getInstance().analyze((Codes.Return)code, list);
 			} else if (code instanceof Codes.NewObject) {
 				//NewObjectInterpreter.getInstance().interpret((Codes.NewObject)code, stackframe);
 			} else if (code instanceof Codes.Nop) {
@@ -219,7 +215,7 @@ public class BoundAnalyzer extends Analyzer implements WyopclBuilder{
 			} else if (code instanceof Codes.TupleLoad) {
 				//TupleLoadInterpreter.getInstance().interpret((Codes.TupleLoad)code, stackframe);
 			} else if (code instanceof Codes.UnaryOperator){
-				UnaryOperatorAnalyzer.getInstance().analyze((Codes.UnaryOperator)code, bnd, list);
+				UnaryOperatorAnalyzer.getInstance().analyze((Codes.UnaryOperator)code, list);
 			} else if (code instanceof Codes.Update) {
 				//UpdateInterpreter.getInstance().interpret((Codes.Update)code, stackframe);
 			} else {

@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 import wyil.lang.Codes;
 import wyil.lang.Constant;
+import wyil.lang.Type;
 import wyopcl.bound.Bounds;
 import wyopcl.bound.ConstraintList;
 /**
@@ -24,7 +25,14 @@ public class IfAnalyzer {
 		return instance;
 	}
 	
-	public void analyze(Codes.If code, Bounds bnd, ConstraintList list){
+	
+	private void branchConstraintList(Codes.If code){
+		String left = "%"+code.leftOperand;
+		String right = "%"+code.rightOperand;
+		
+		//The 'if'
+		
+		
 		switch(code.op){
 		case EQ:			
 			
@@ -45,20 +53,36 @@ public class IfAnalyzer {
 			
 			break;
 		case IN:			
-					
+			System.err.println("Not implemented!");		
 			break;
 		case SUBSET:
-			
+			System.err.println("Not implemented!");
 			break;
 		case SUBSETEQ:
-			
+			System.err.println("Not implemented!");
 			break;
 		default:			
-			
-		
-		
+			System.err.println("Not implemented!");
+	
 		}
 		
+		
+	}
+	
+	
+	
+	
+	public void analyze(Codes.If code, ConstraintList list){
+		
+		if(code.type instanceof Type.Int){
+			
+		}
+		
+		
+		
+		
+		
+		System.out.println(code);
 	}
 	
 }

@@ -30,7 +30,7 @@ public class InvokeAnalyzer extends Analyzer {
 		return instance;
 	}
 	
-	public void analyze(Codes.Invoke code, Bounds bnd, ConstraintList list){
+	public void analyze(Codes.Invoke code, ConstraintList list){
 		String func_name = code.name.name();
 		
 		//Get the fun block from module.
