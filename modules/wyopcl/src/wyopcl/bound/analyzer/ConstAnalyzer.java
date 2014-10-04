@@ -30,7 +30,7 @@ public class ConstAnalyzer extends Analyzer {
 		//Check the value is an Constant.Integer
 		if(constant instanceof Constant.Integer){
 			//Add the 'Const' constraint.
-			this.constraintlist.addConstraint(new Const(name, ((Constant.Integer)constant).value));
+			Analyzer.constraintlist.addConstraint(new Const(name, ((Constant.Integer)constant).value));
 		}
 	}
 }

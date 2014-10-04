@@ -34,7 +34,7 @@ public class InvokeAnalyzer extends Analyzer {
 		String func_name = code.name.name();
 		
 		//Get the fun block from module.
-		FunctionOrMethodDeclaration functionOrMethod = this.module.functionOrMethod(func_name, code.type());
+		FunctionOrMethodDeclaration functionOrMethod = Analyzer.module.functionOrMethod(func_name, code.type());
 		int index = 0;
 		for(Type paramType: code.type().params()){
 			//Get the input parameters of integer type
@@ -42,7 +42,7 @@ public class InvokeAnalyzer extends Analyzer {
 				String param = "%"+code.operand(index);
 				//Missing the variable name of function input parameters, so we used the function name temporarily.
 				//Add the equal constraint for input parameter.
-				this.constraintlist.addConstraint(new Equals(param, func_name));
+				Analyzer.constraintlist.addConstraint(new Equals(param, func_name));
 			}
 			index++;			
 		}
