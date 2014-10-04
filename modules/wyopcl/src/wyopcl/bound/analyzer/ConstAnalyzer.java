@@ -3,8 +3,6 @@ package wyopcl.bound.analyzer;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyopcl.bound.Analyzer;
-import wyopcl.bound.Bounds;
-import wyopcl.bound.ConstraintList;
 import wyopcl.bound.constraint.Const;
 /**
  * Parses 'Const' bytecode to add the 'Const' constraint to the list. 

@@ -3,8 +3,6 @@ package wyopcl.bound.analyzer;
 import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyopcl.bound.Analyzer;
-import wyopcl.bound.Bounds;
-import wyopcl.bound.ConstraintList;
 import wyopcl.bound.constraint.Equals;
 /**
  * Parse the 'return' bytecode and add the constraint 

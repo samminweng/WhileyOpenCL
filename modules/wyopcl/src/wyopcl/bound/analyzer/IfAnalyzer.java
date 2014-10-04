@@ -1,12 +1,8 @@
 package wyopcl.bound.analyzer;
 
-import java.util.Iterator;
-
 import wyil.lang.Codes;
-import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyopcl.bound.Analyzer;
-import wyopcl.bound.Bounds;
 import wyopcl.bound.ConstraintList;
 import wyopcl.bound.constraint.GreaterThan;
 import wyopcl.bound.constraint.GreaterThanEquals;

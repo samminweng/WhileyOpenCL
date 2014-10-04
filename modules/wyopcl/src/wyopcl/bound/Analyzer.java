@@ -34,7 +34,7 @@ public abstract class Analyzer {
 	protected Logger logger = Logger.NULL;
 	
 	public Project project() {
-		return this.project;
+		return Analyzer.project;
 	}
 	
 	public void setLogger(Logger logger) {
@@ -42,11 +42,11 @@ public abstract class Analyzer {
 	}
 	
 	public void setVerbose(boolean verbose) {
-		this.verbose = verbose;		
+		Analyzer.verbose = verbose;		
 	}
 
 	public void setArgs(String[] arguments) {
-		this.args = arguments;		
+		Analyzer.args = arguments;		
 	}
 	/**
 	 * Print out the bytecode.

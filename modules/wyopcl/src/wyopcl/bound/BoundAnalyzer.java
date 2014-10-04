@@ -3,12 +3,9 @@ package wyopcl.bound;
 import static wycc.lang.SyntaxError.internalFailure;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import wybs.lang.Build.Project;
@@ -43,9 +40,10 @@ public class BoundAnalyzer extends Analyzer implements WyopclBuilder{
 	
 	
 	public BoundAnalyzer(Project project){
-		this.project = project;
+		Analyzer.project = project;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Set<Entry<?>> build(Collection<Pair<Entry<?>, Root>> delta) throws IOException {
 		Runtime runtime = Runtime.getRuntime();
@@ -57,8 +55,8 @@ public class BoundAnalyzer extends Analyzer implements WyopclBuilder{
 			//Path.Root dst = p.second();
 			Path.Entry<WyilFile> sf = (Path.Entry<WyilFile>) p.first();
 			WyilFile module = sf.read();
-			this.filename = module.filename();
-			this.module = module;
+			Analyzer.filename = module.filename();
+			Analyzer.module = module;
 			//Start analyzing the range.
 			this.startAnalysis();
 		}

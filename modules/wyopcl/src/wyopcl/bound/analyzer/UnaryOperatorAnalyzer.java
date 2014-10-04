@@ -3,8 +3,6 @@ package wyopcl.bound.analyzer;
 import wyil.lang.Codes;
 import wyil.lang.Codes.UnaryOperatorKind;
 import wyopcl.bound.Analyzer;
-import wyopcl.bound.Bounds;
-import wyopcl.bound.ConstraintList;
 import wyopcl.bound.constraint.Negate;
 /**
  * Parse 'Unary Operator' bytecode and add the constraints in accordance with operator kind.

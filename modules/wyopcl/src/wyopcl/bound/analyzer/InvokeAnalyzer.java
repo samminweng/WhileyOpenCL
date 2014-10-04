@@ -1,14 +1,10 @@
 package wyopcl.bound.analyzer;
 
-import java.util.ArrayList;
-
 import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyil.lang.WyilFile.Case;
 import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
 import wyopcl.bound.Analyzer;
-import wyopcl.bound.Bounds;
-import wyopcl.bound.ConstraintList;
 import wyopcl.bound.constraint.Equals;
 /**
  * Parses the invoke bytecode and adds the constraints to the list.
@@ -34,7 +30,7 @@ public class InvokeAnalyzer extends Analyzer {
 		String func_name = code.name.name();
 		
 		//Get the fun block from module.
-		FunctionOrMethodDeclaration functionOrMethod = Analyzer.module.functionOrMethod(func_name, code.type());
+		//FunctionOrMethodDeclaration functionOrMethod = Analyzer.module.functionOrMethod(func_name, code.type());
 		int index = 0;
 		for(Type paramType: code.type().params()){
 			//Get the input parameters of integer type
@@ -49,9 +45,9 @@ public class InvokeAnalyzer extends Analyzer {
 		
 		
 		//Shall the bytecode in sub-method be executed?
-		for(Case mcase: functionOrMethod.cases()){
+		//for(Case mcase: functionOrMethod.cases()){
 			
-		}		
+		//}		
 		
 	}
 	
