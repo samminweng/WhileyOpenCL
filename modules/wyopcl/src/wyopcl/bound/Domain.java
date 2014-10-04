@@ -91,10 +91,11 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 
 	@Override
 	public String toString() {
-		//String lb = (this.lower_bound == null) ? "-infinity" : this.lower_bound.toString();
-		//String ub = (this.upper_bound == null) ? "infinity" : this.upper_bound.toString();
-
-		return "Domain [name=" + name + ", lower_bound=" + this.lower_bound + ", upper_bound=" + this.upper_bound + "]";
+		String lb = (this.lower_bound == null) ? "-infinity" : this.lower_bound.toString();
+		String ub = (this.upper_bound == null) ? "infinity" : this.upper_bound.toString();
+		//Change the string format
+		//return "Domain [name=" + name + ", lower_bound=" + this.lower_bound + ", upper_bound=" + this.upper_bound + "]";
+		return "D("+this.name+") = [" + lb + ".."  + ub + "]";
 	}
 
 	@Override
