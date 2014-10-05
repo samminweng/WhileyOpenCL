@@ -41,41 +41,50 @@ public class InvokeInterpreter extends Interpreter {
 	}
 	
 	/***
-	 * Convert the Java object to Constant object.
-	 * 
-	 * @param javaobj
-	 * @param toType
-	 * @return
+	 * Convert the Java object to the object of given Constant type.
+	 * @param obj an Java object
+	 * @param toType the given Constant type
+	 * @return the Constant object of the specified type. 
 	 */
-	private Constant convertJavaObjectToConstant(Object javaobj, Class<?> fromType, wyil.lang.Type toType) {
+	private Constant convertJavaObjectToConstant(Object obj, wyil.lang.Type toType) {
 		if (toType instanceof Type.Strung) {
-			if (javaobj instanceof BigDecimal) {
-				return Constant.V_STRING(((BigDecimal) javaobj).toPlainString());
+			if (obj instanceof BigDecimal) {
+				return Constant.V_STRING(((BigDecimal) obj).toPlainString());
 			} else {
 				//trim the beginning and ending quotes.
-			    String str = javaobj.toString().replaceAll("^\"|\"$", "");
+			    String str = obj.toString().replaceAll("^\"|\"$", "");
 				return Constant.V_STRING(str);
 			}
-		} else if (toType instanceof Type.Int) {
-			if(fromType.equals(WyRat.class)){
-				WyRat wyRat = (WyRat)javaobj;
+		} 
+		
+		if (toType instanceof Type.Int) {
+			//if(fromType.equals(WyRat.class)){
+			if(obj instanceof WyRat){
+				WyRat wyRat = (WyRat)obj;
 				return Constant.V_INTEGER(wyRat.numerator());
-			}
-			
-			
-			return Constant.V_INTEGER((BigInteger) javaobj);
-		} else if (toType instanceof Type.Byte) {
-			if (fromType == WyList.class) {
-				WyList wylist = (WyList) javaobj;
+			}			
+			return Constant.V_INTEGER((BigInteger) obj);
+		} 
+		
+		if (toType instanceof Type.Bool){
+			return Constant.V_BOOL((boolean)obj);
+		}
+		
+		if (toType instanceof Type.Byte) {
+			//if (fromType == WyList.class) {
+			if(obj instanceof WyList){
+				WyList wylist = (WyList) obj;
 				return Constant.V_BYTE(new Byte((byte) wylist.get(0)));
-			} else {
-				return Constant.V_BYTE(new Byte((byte) javaobj));
-			}
-		} else if (toType instanceof Type.List){
-			Type elemType = ((Type.List)toType).element();
-			if(javaobj instanceof WyList && elemType instanceof Type.Byte){
+			}			
+			return Constant.V_BYTE(new Byte((byte) obj));
+		}
+		
+		
+		
+		if (toType instanceof Type.List){
+			if(obj instanceof WyList && ((Type.List)toType).element() instanceof Type.Byte){
 				Collection<Constant> values = new ArrayList<Constant>();
-				WyList wylist = (WyList)javaobj;
+				WyList wylist = (WyList)obj;
 				Iterator<?> iterator = wylist.iterator();
 				while(iterator.hasNext()){
 					Object next = iterator.next();
@@ -87,12 +96,13 @@ public class InvokeInterpreter extends Interpreter {
 				return null;
 			}
 			
-		} else if (toType instanceof Type.Bool){
-			return Constant.V_BOOL((boolean)javaobj);
-		} else {
-			internalFailure("Not implemented!", "InvokeInterpreter.java", null);
-			return null;
-		}
+		} 
+		
+		
+		
+		internalFailure("Not implemented!", "InvokeInterpreter.java", null);
+		return null;
+		
 	}
 	
 	
@@ -153,11 +163,11 @@ public class InvokeInterpreter extends Interpreter {
 						index++;
 					}
 					//params.add(operand);
-					Object returned_obj = method.invoke(null, params.toArray());
-					Class<?> returnType = method.getReturnType();
+					Object obj = method.invoke(null, params.toArray());
+					//Class<?> returnType = method.getReturnType();
 					//The returned_obj is a Java data type, so we need to convert
 					// returned_obj into Constant.					
-					result = convertJavaObjectToConstant(returned_obj, returnType, code.assignedType());
+					result = convertJavaObjectToConstant(obj, code.assignedType());
 					stackframe.setRegister(code.target(), result);
 					printMessage(stackframe, code.toString(),"%"+code.target()+"("+result+")");
 					stackframe.setLine(++linenumber);

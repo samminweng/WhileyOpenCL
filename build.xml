@@ -191,37 +191,42 @@
 </javac>
 </target>
 
-<target name="test" depends="compile-java">
-<mkdir dir="report/interpreter/valid" />
-<junit fork="yes">
-	<formatter type="plain" usefile="false" />
-	<classpath>
-		<pathelement location="build" />
-		<pathelement location="lib/org.hamcrest.core_1.3.0.v201303031735.jar" />
-		<pathelement location="lib/junit.jar" />
-	</classpath>
-	<formatter type="xml" />
-	<batchtest todir="report/interpreter/valid">
-		<fileset dir="modules/wyopcl/test/">
-			<include name="**/*AllValidTestCase*" />
-		</fileset>
-	</batchtest>
-</junit>
-<mkdir dir="report/interpreter/invalid"/>
-<junit fork="yes">
-	<formatter type="plain" usefile="false" />
-	<classpath>
-		<pathelement location="build" />
-		<pathelement location="lib/org.hamcrest.core_1.3.0.v201303031735.jar" />
-		<pathelement location="lib/junit.jar" />
-	</classpath>
-	<formatter type="xml" />
-	<batchtest todir="report/interpreter/invalid">
-		<fileset dir="modules/wyopcl/test/">
-			<include name="**/*AllInvalidTestCase*" />
-		</fileset>
-	</batchtest>
-</junit>
+<target name="test-interpreter-valid" depends="compile-java">
+	<mkdir dir="report/interpreter/valid" />
+	<junit fork="yes">
+		<formatter type="plain" usefile="false" />
+		<classpath>
+			<pathelement location="build" />
+			<pathelement location="lib/org.hamcrest.core_1.3.0.v201303031735.jar" />
+			<pathelement location="lib/junit.jar" />
+		</classpath>
+		<formatter type="xml" />
+		<batchtest todir="report/interpreter/valid">
+			<fileset dir="modules/wyopcl/test/">
+				<include name="**/*AllValidTestCase*" />
+			</fileset>
+		</batchtest>
+	</junit>	
+</target>	
+<target name="test-interpreter-invalid" depends="compile-java">
+	<mkdir dir="report/interpreter/invalid"/>
+	<junit fork="yes">
+		<formatter type="plain" usefile="false" />
+		<classpath>
+			<pathelement location="build" />
+			<pathelement location="lib/org.hamcrest.core_1.3.0.v201303031735.jar" />
+			<pathelement location="lib/junit.jar" />
+		</classpath>
+		<formatter type="xml" />
+		<batchtest todir="report/interpreter/invalid">
+			<fileset dir="modules/wyopcl/test/">
+				<include name="**/*AllInvalidTestCase*" />
+			</fileset>
+		</batchtest>
+	</junit>
+</target>	
+	
+<target name="test-bounds" depends="compile-java">
 <mkdir dir="report/bounds"/>
 <junit fork="yes">
 	<formatter type="plain" usefile="false" />
@@ -239,7 +244,7 @@
 </junit>
 </target>
 
-<target name="report" depends="test">
+<target name="report" depends="test-interpreter-valid, test-interpreter-invalid, test-bounds">
 <junitreport todir="report">
 	<fileset dir="report/interpreter/valid">
 		<include name="TEST-*.xml" />
