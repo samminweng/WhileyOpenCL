@@ -167,14 +167,7 @@ public class WyilInterpreter extends Interpreter implements WyopclBuilder{
 		String id = module.id().toString();
 		for(WyilFile.FunctionOrMethodDeclaration method : module.functionOrMethods()) {
 			String name = id+":"+method.name();
-			HashMap<FunctionOrMethod, Block> blocks;
-			if(!blocktable.containsKey(name)){
-				blocks = new HashMap<FunctionOrMethod, Block>();
-			}else{
-				blocks = blocktable.get(name);
-			}
-			FunctionOrMethod type = method.type();
-			
+			HashMap<FunctionOrMethod, Block> blocks = addFuncBlocksByName(name);
 			for(Case mcase : method.cases()){
 				List<Block.Entry> entries = new ArrayList<Block.Entry>();
 				//Add the entries in the precondition.
@@ -193,13 +186,11 @@ public class WyilInterpreter extends Interpreter implements WyopclBuilder{
 				}
 								
 				Block block = new Block(blk.numInputs(), entries);
-				blocks.put(type, block);
-				
-				blocktable.put(name, blocks);
+				blocks.put(method.type(), block);				
 				scanLabelsinBlock(block);
-				
-			
 			}
+			
+			updateFuncBlocks(name, blocks);
 		}
 
 	}

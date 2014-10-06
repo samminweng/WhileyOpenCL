@@ -39,7 +39,7 @@ public class InvokeInterpreter extends Interpreter {
 		}
 		return instance;
 	}
-	
+
 	/***
 	 * Convert the Java object to the object of given Constant type.
 	 * @param obj an Java object
@@ -50,13 +50,12 @@ public class InvokeInterpreter extends Interpreter {
 		if (toType instanceof Type.Strung) {
 			if (obj instanceof BigDecimal) {
 				return Constant.V_STRING(((BigDecimal) obj).toPlainString());
-			} else {
-				//trim the beginning and ending quotes.
-			    String str = obj.toString().replaceAll("^\"|\"$", "");
-				return Constant.V_STRING(str);
 			}
+			//trim the beginning and ending quotes.
+			String str = obj.toString().replaceAll("^\"|\"$", "");
+			return Constant.V_STRING(str);
 		} 
-		
+
 		if (toType instanceof Type.Int) {
 			//if(fromType.equals(WyRat.class)){
 			if(obj instanceof WyRat){
@@ -65,11 +64,11 @@ public class InvokeInterpreter extends Interpreter {
 			}			
 			return Constant.V_INTEGER((BigInteger) obj);
 		} 
-		
+
 		if (toType instanceof Type.Bool){
 			return Constant.V_BOOL((boolean)obj);
 		}
-		
+
 		if (toType instanceof Type.Byte) {
 			//if (fromType == WyList.class) {
 			if(obj instanceof WyList){
@@ -78,66 +77,31 @@ public class InvokeInterpreter extends Interpreter {
 			}			
 			return Constant.V_BYTE(new Byte((byte) obj));
 		}
-		
-		
-		
+
 		if (toType instanceof Type.List){
-			if(obj instanceof WyList && ((Type.List)toType).element() instanceof Type.Byte){
-				Collection<Constant> values = new ArrayList<Constant>();
-				WyList wylist = (WyList)obj;
-				Iterator<?> iterator = wylist.iterator();
-				while(iterator.hasNext()){
-					Object next = iterator.next();
-					values.add(Constant.V_BYTE((byte)next));
-				}
-				return Constant.V_LIST(values);
-			}else{
-				internalFailure("Not implemented!", "InvokeInterpreter.java", null);
-				return null;
+			Collection<Constant> values = new ArrayList<Constant>();
+			WyList wylist = (WyList)obj;
+			Iterator<?> iterator = wylist.iterator();
+			while(iterator.hasNext()){
+				Object nextObj = iterator.next();
+				Type elemType = ((Type.List)toType).element();
+				values.add(convertJavaObjectToConstant(nextObj, elemType));
 			}
-			
+			return Constant.V_LIST(values);
 		} 
-		
-		
-		
+
+
 		internalFailure("Not implemented!", "InvokeInterpreter.java", null);
 		return null;
-		
+
 	}
-	
-	
-	
 
 
-	private void pushFunctionBlockToStack(HashMap<FunctionOrMethod, Block> blks, Codes.Invoke code, StackFrame currentStackframe){	
-		//Find the right block
-		Block blk = blks.get(code.type());
-		
-		if (blk == null)
-			internalFailure("Not implemented!", "InvokeInterpreter.java", null);
-		
-		//Get the depth
-		int depth = currentStackframe.getDepth();
-		//Create a new StackFrame
-		StackFrame newStackFrame = new StackFrame(depth+1, blk, 0,	code.name.name(), code.target());
-		
-		//Pass the input parameters.
-		int index = 0;		
-		String str="";
-		for(int operand: code.operands()){
-			Constant constant = currentStackframe.getRegister(operand);
-			newStackFrame.setRegister(index, constant);
-			str += "%"+operand+"("+constant+")";
-			index++;
-		}
-
-		//Push the function block to the stack		
-		blockstack.push(newStackFrame);
-		printMessage(currentStackframe, code.toString(),str);
-		
-	}
-	
-	
+	/**
+	 * Directly invoke the function/method from library
+	 * @param code
+	 * @param stackframe
+	 */
 	private void execFunction(Codes.Invoke code, StackFrame stackframe){
 		int linenumber = stackframe.getLine();
 		//Directly invoke the function/method.		
@@ -186,20 +150,37 @@ public class InvokeInterpreter extends Interpreter {
 			return;
 		}
 	}
-	
-	
 
 
-	public void interpret(Codes.Invoke code, StackFrame stackframe) {	
-		//Get the Block for the corresponding function/method.
-		HashMap<FunctionOrMethod, Block> blks = blocktable.get(code.name.toString());
-		if(blks != null){			
-			//Push the function block to the stack.
-			pushFunctionBlockToStack(blks, code, stackframe);
+
+
+	public void interpret(Codes.Invoke code, StackFrame stackframe) {
+		
+		//Find the right block
+		Block blk = Interpreter.getFuncBlockByName(code.name.toString(), code.type());
+		
+		if (blk != null){
+			//Get the depth
+			int depth = stackframe.getDepth();
+			//Create a new StackFrame
+			StackFrame newStackFrame = new StackFrame(depth+1, blk, 0,	code.name.name(), code.target());
+		
+			//Pass the input parameters.
+			int index = 0;		
+			String str="";
+			for(int operand: code.operands()){
+				Constant constant = stackframe.getRegister(operand);
+				newStackFrame.setRegister(index, constant);
+				str += "%"+operand+"("+constant+")";
+				index++;
+			}
+		
+			//Push the function block to the stack		
+			blockstack.push(newStackFrame);
+			printMessage(stackframe, code.toString(),str);
 		}else{
-			//Directly invoke the function/method.
 			execFunction(code, stackframe);
-		}
+		}		
 	}
 
 }

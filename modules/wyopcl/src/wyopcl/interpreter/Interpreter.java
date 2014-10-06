@@ -20,7 +20,7 @@ import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
 /*Declare the abstract Interpreter class, methods and variables. */
 public abstract class Interpreter {
 	//Store a hashmap inside a hashmap.
-	protected static HashMap<String, HashMap<FunctionOrMethod, Block>> blocktable = new HashMap<String, HashMap<FunctionOrMethod, Block>>();
+	private static HashMap<String, HashMap<FunctionOrMethod, Block>> blocktable = new HashMap<String, HashMap<FunctionOrMethod, Block>>();
 	protected static Stack<StackFrame> blockstack = new Stack<StackFrame>();
 	protected static HashMap<Block, SymbolTable> symboltable = new HashMap<Block, SymbolTable>();
 	protected static boolean verbose = false;
@@ -54,6 +54,50 @@ public abstract class Interpreter {
 	
 	public void setVerbose(boolean verbose) {
 		Interpreter.verbose = verbose;
+	}
+	
+	/**
+	 * Adds or returns the Function blocks (HashMap) by method names.
+	 * @param name the name of function or method
+	 * @return the function blocks (a hashmap)
+	 */
+	public static HashMap<FunctionOrMethod, Block> addFuncBlocksByName(String name){
+		if(!blocktable.containsKey(name)){
+			return new HashMap<FunctionOrMethod, Block>();
+		}else{
+			return blocktable.get(name);
+		}
+	}
+	/**
+	 * Updates the function or method blocks in the HashMap.
+	 * @param name the name of function or method
+	 * @param blocks the function blocks (Hashmap<FunctionOrMethod, Block>)
+	 */
+	public static void updateFuncBlocks(String name, HashMap<FunctionOrMethod, Block> blocks){
+		blocktable.put(name, blocks);
+	}
+	
+	
+	/**
+	 * Get the function block by name plus type (if provided)
+	 * @param name the name of method or function
+	 * @param functionOrMethod the method or function types
+	 * @return the function block that contains a list of bytecode. 
+	 */
+	public static Block getFuncBlockByName(String name, FunctionOrMethod... functionOrMethod){
+		//Get the Hashmap of function block by name
+		//Get the Block for the corresponding function/method.
+		if(blocktable.containsKey(name)){
+			HashMap<FunctionOrMethod, Block> hashMap = blocktable.get(name);
+			if (functionOrMethod == null){	
+				return (Block) hashMap.values().toArray()[0];
+			}else{
+				return hashMap.get(functionOrMethod[0]);
+			}
+		}else{
+			return null;
+		}
+		
 	}
 	
 	

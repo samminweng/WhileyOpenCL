@@ -39,4 +39,4 @@ set WHILEY_BOOTPATH=%parentfolder%\lib\wyrt-%WHILEY_VERSION%.jar
 ::::::::::::::::::::::::::::::::::::::::::::
 :: RUN APPLICATION
 ::::::::::::::::::::::::::::::::::::::::::::
-java -server -Xmx512M -cp %WHILEY_CLASSPATH% wyopcl.WyopclMain -bp %WHILEY_BOOTPATH% %1
+java -server -Xmx512M -cp %WHILEY_CLASSPATH% wyopcl.WyopclMain -bp %WHILEY_BOOTPATH% %1 %2 %3

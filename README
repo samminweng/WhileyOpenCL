@@ -12,7 +12,6 @@ aims to use the program analysis techniques to generate efficient
 parallel implementations in C and OpenCL and to gain the speed-up
 across heterogeneous platforms.
 
-
 ======================================================================
 Installation
 ======================================================================
@@ -33,11 +32,6 @@ Note that if you encounter the permission problem while running the
 wyopcl shell script, use the below command:
 $ chmod a+x ../bin/*
 
-Or the interpreter can be verified with 905 test cases with the command:
-$ ant report
-The unit test results are summarized at 'report/interpreter/index.html'. 
-The current success rate is 96.80% (Failures: 23, Errors: 6, Skipped: 101).
-
 2. Whiley-to-OpenCL translator
 The Whiley-to-OpenCL translator is written in Java and aims to generate
 C/OpenCL code and proof obligation. At this stage, we will use the prime
@@ -47,11 +41,28 @@ allows us to make use of different SMT solvers (e.g. Z3).
 ----------------------------------------------------------------------
 2.1 Bound Analyzer
 Bound analyzer aims to infer the bounds and check the bounds consistent
-with all constraints. Currently, the bound analyzer can be verified with
-8 test cases by using the below commands:
+with all constraints. To run the bound analyzer on Whiley programs,
+use the below commands:​​
+$ git clone https://github.com/samminweng/WhileyOpenCL
+$ cd WhileyOpenCL/
+$ ant
+$ cd tests/valid/
+$ ./../../bin/wyopcl -a range IfElse_Valid_1.whiley 
+
+======================================================================
+Unit Testing
+======================================================================
+
+1. WyIL Interpreter
+Or the interpreter can be verified with 905 test cases with the command:
+$ ant report
+The unit test results are summarized at 'report/interpreter/index.html'. 
+The current success rate is 95.85% (Failures: 22, Errors: 16, Skipped: 94).
+
+2. Whiley-to-OpenCL translator
+2.1 Bound Analyzer
+Currently, the bound analyzer can be verified with 8 test cases by using the below commands:
 $ git clone https://github.com/samminweng/WhileyOpenCL
 $ cd WhileyOpenCL/
 $ ant report
-The unit test results are summarized at 'report/bounds/index.html'. 
-
- 
+The unit test results are summarized at 'report/bounds/index.html'.

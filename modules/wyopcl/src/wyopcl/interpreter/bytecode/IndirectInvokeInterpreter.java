@@ -82,7 +82,8 @@ public class IndirectInvokeInterpreter extends Interpreter {
 			}			
 			stackframe.setLine(++linenumber);
 		} else {
-			Block blk = blocktable.get(lambda.name.toString()).get(code.type());
+			Block blk = Interpreter.getFuncBlockByName(lambda.name.toString(), code.type());
+			//Block blk = blocktable.get(lambda.name.toString()).get(code.type());
 			// Create a new StackFrame
 			StackFrame newStackFrame = new StackFrame(stackframe.getDepth() + 1, blk, 0, lambda.name.toString(),
 					code.target());
@@ -107,7 +108,8 @@ public class IndirectInvokeInterpreter extends Interpreter {
 		// Get the depth
 		int depth = currentStackframe.getDepth();
 		Closure closure = (Closure) currentStackframe.getRegister(code.reference());
-		Block blk = (Block) blocktable.get(closure.lambda.name.toString()).values().toArray()[0];
+		Block blk = Interpreter.getFuncBlockByName(closure.lambda.name.toString(), code.type());
+		//Block blk = (Block) blocktable.get(closure.lambda.name.toString()).values().toArray()[0];
 		// Create a new StackFrame
 		StackFrame newStackFrame = new StackFrame(depth + 1, blk, 0, closure.lambda.name.toString(), code.target());
 		// Pass the input parameters.
