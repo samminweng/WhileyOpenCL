@@ -32,8 +32,8 @@ public class IfAnalyzer extends Analyzer {
 			String left = "%"+code.leftOperand;
 			String right = "%"+code.rightOperand;
 			
-			//The 'if'
-			ConstraintList if_list = (ConstraintList)Analyzer.constraintlist.clone();
+			//The constraintlist for 'if' branch.
+			ConstraintList if_list = (ConstraintList) this.getConstraintList().clone();
 			
 			switch(code.op){
 			case EQ:			
@@ -47,20 +47,19 @@ public class IfAnalyzer extends Analyzer {
 				break;
 			case LTEQ:
 				//Add the constraint 'left>right' to current list
-				Analyzer.constraintlist.addConstraint(new GreaterThan(left, right));
-				if_list.addConstraint(new LessThanEquals(left, right));
-				Analyzer.constraintListMap.put(code.target, if_list);
+				this.getConstraintList().addConstraint(new GreaterThan(left, right));
+				if_list.addConstraint(new LessThanEquals(left+"_"+code.target, right));
+				putConstraintList(code.target, if_list);
 				break;
 			case GT:					
 				
 				break;
 			case GTEQ:
 				//Add the constraint 'left< right' to current constraint list.
-				Analyzer.constraintlist.addConstraint(new LessThan(left, right));				
+				this.getConstraintList().addConstraint(new LessThan(left, right));				
 				//'left >= right'
-				if_list.addConstraint(new GreaterThanEquals(left, right));
-				
-				Analyzer.constraintListMap.put(code.target, if_list);
+				if_list.addConstraint(new GreaterThanEquals(left+"_"+code.target, right));
+				putConstraintList(code.target, if_list);			
 				break;
 			case IN:			
 				System.err.println("Not implemented!");		

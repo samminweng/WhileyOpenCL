@@ -32,13 +32,22 @@ public class WyopclBuildTask extends wyc.util.WycBuildTask {
 	protected void addBuildRules(StdProject project) {
 		// Add default build rule for converting whiley files into wyil files. 
 		super.addBuildRules(project);
-		WyopclBuilder builder;
+		//Builder builder;
 		//Check the first argument to determine whether to run the analyzer.		
 		if(analysis!= null){
 			//Add the switch for the further analysis.
 			switch(analysis.toLowerCase()){
 			case "range":
-				builder = new BoundAnalyzer(project);
+				BoundAnalyzer builder = new BoundAnalyzer(project);
+				if (verbose) {
+					builder.setLogger(new Logger.Default(System.err));
+					builder.setVerbose(verbose);
+				}
+
+				builder.setArgs(this.arguments);
+
+				project.add(new StdBuildRule(builder, wyilDir, wyilIncludes,
+						wyilExcludes, null));
 				break;
 			default:
 				internalFailure("Not implemented!", "WyopclBuildTask.java", null);
@@ -47,18 +56,19 @@ public class WyopclBuildTask extends wyc.util.WycBuildTask {
 		}else{
 			// Now, add build rule for interpreting the wyil files by using
 			// the WyilInterpreter.			
-			builder = new WyilInterpreter(project);			
+			WyilInterpreter builder = new WyilInterpreter(project);
+			if (verbose) {
+				builder.setLogger(new Logger.Default(System.err));
+				builder.setVerbose(verbose);
+			}
+
+			builder.setArgs(this.arguments);
+
+			project.add(new StdBuildRule(builder, wyilDir, wyilIncludes,
+					wyilExcludes, null));
 		}
 
-		if (verbose) {
-			builder.setLogger(new Logger.Default(System.err));
-			builder.setVerbose(verbose);
-		}
-
-		builder.setArgs(this.arguments);
-
-		project.add(new StdBuildRule(builder, wyilDir, wyilIncludes,
-				wyilExcludes, null));
+		
 
 
 	}	

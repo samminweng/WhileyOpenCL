@@ -26,13 +26,8 @@ public class LabelAnalyzer extends Analyzer {
 	public void analyze(Codes.Label code){
 		//check if map contains the constrainlist.
 		String label = code.label;
-		if(!Analyzer.constraintListMap.containsKey(label)){
-			ConstraintList newlist = new ConstraintList();
-			Analyzer.constraintListMap.put(label, newlist);
-		}
-		
-		//Switch the current constraint list
-		Analyzer.constraintlist = Analyzer.constraintListMap.get(code.label);	
+		//Switch the current constraint list by setting the label with new value.
+		Analyzer.setLabel(label);
 		
 	}
 }

@@ -46,7 +46,6 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 					(this.lower_bound != null && new_min.compareTo(this.lower_bound)<0)){
 				setLowerBound(new_min);	
 			}
-
 		}
 
 		BigInteger new_max = d.getUpperBound();
@@ -56,12 +55,11 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 					(this.upper_bound != null && new_min.compareTo(this.upper_bound)>0)){
 				setUpperBound(new_max);
 			}
-			
 		}
-			
+
 	}
-	
-	
+
+
 	/***
 	 * Compare this domain with another domain (d). If both of them are equal,
 	 * return 0. If this domain < d domain, return -1; If this domain > d
@@ -69,7 +67,10 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 	 */
 	@Override
 	public int compareTo(Domain d) {
-
+		// Compare the name field.
+		if (this.name.compareTo(d.getName()) != 0) {
+			return this.name.compareTo(d.getName());
+		}
 		// Compare the lower_bound field
 		if (this.lower_bound == null) {
 			// That means this domain < d domain.
@@ -105,10 +106,7 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 			}
 		}
 
-		// Compare the name field.
-		if (this.name.compareTo(d.getName()) != 0) {
-			return this.name.compareTo(d.getName());
-		}
+
 
 		return 0;
 	}

@@ -38,7 +38,7 @@ public class InvokeAnalyzer extends Analyzer {
 				String param = "%"+code.operand(index);
 				//Missing the variable name of function input parameters, so we used the function name temporarily.
 				//Add the equal constraint for input parameter.
-				Analyzer.constraintlist.addConstraint(new Equals(param, func_name));
+				this.getConstraintList().addConstraint(new Equals(param, func_name));
 			}
 			index++;			
 		}

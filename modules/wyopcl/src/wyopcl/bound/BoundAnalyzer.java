@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 import wybs.lang.Build.Project;
+import wybs.lang.Builder;
 import wycc.lang.SyntaxError;
 import wycc.util.Pair;
 import wyfs.lang.Path;
@@ -38,11 +39,11 @@ import wyopcl.bound.analyzer.UnaryOperatorAnalyzer;
  * @author Min-Hsien Weng
  *
  */
-public class BoundAnalyzer extends Analyzer implements WyopclBuilder{
+public class BoundAnalyzer extends Analyzer implements Builder{
 	
 	
 	public BoundAnalyzer(Project project){
-		Analyzer.project = project;
+		Analyzer.setProject(project);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -57,14 +58,14 @@ public class BoundAnalyzer extends Analyzer implements WyopclBuilder{
 			//Path.Root dst = p.second();
 			Path.Entry<WyilFile> sf = (Path.Entry<WyilFile>) p.first();
 			WyilFile module = sf.read();
-			Analyzer.filename = module.filename();
-			Analyzer.module = module;
+			Analyzer.setFilename(module.filename());
+			Analyzer.setModule(module);
 			//Start analyzing the range.
 			this.startAnalysis();
 		}
 
 		long endTime = System.currentTimeMillis();
-		logger.logTimedMessage("Wyil interpreter completed.\nFile:" + filename,
+		logger.logTimedMessage("Wyil interpreter completed.\nFile:" + Analyzer.getFilename(),
 				(endTime - start), memory - runtime.freeMemory());
 		return generatedFiles;
 	}
@@ -102,10 +103,9 @@ public class BoundAnalyzer extends Analyzer implements WyopclBuilder{
 	 */
 	private void startAnalysis(){
 		
-		for(WyilFile.FunctionOrMethodDeclaration method : module.functionOrMethods()) {
+		for(WyilFile.FunctionOrMethodDeclaration method : getModule().functionOrMethods()) {
 			System.out.println(getFunctionOrMethodDel(method));
-			constraintlist = new ConstraintList();
-			constraintListMap.put("code", constraintlist);
+			Analyzer.setLabel("code");
 			for(Case mcase : method.cases()){
 				Block blk = mcase.body();
 				Iterator<wyil.lang.Code.Block.Entry> iterator = blk.iterator();
@@ -116,33 +116,9 @@ public class BoundAnalyzer extends Analyzer implements WyopclBuilder{
 					dispatch(entry);
 				}
 			}	
-						
-			//Iterates through all the constraint lists and infer each list's fixed point.
-			Iterator<java.util.Map.Entry<String, ConstraintList>> iterator = constraintListMap.entrySet().iterator();
-			Bounds unionBounds = new Bounds();
-			while(iterator.hasNext()){
-				java.util.Map.Entry<String, ConstraintList> entry = iterator.next();
-				//Infer the bounds consistent with all constraints.
-				ConstraintList list = entry.getValue();
-				String label = entry.getKey();
-				Bounds bnd = new Bounds();
-				list.inferFixedPoint(bnd);
-				if(Analyzer.verbose){
-					System.out.println("\n"+label+":"+
-							"\n"+bnd.toString()
-							+"\nisBoundConsistency="+bnd.checkBoundConsistency());
-				}				
-				unionBounds.union(bnd);
-			}
 			
-			
-			System.out.println("\nUnion Bounds:"+
-					"\n"+unionBounds.toString()
-					+"\nisBoundConsistency="+unionBounds.checkBoundConsistency());
-			
-			//Clear the map
-			constraintListMap.clear();
-
+			analyze();
+		
 		}
 		
 
@@ -201,7 +177,7 @@ public class BoundAnalyzer extends Analyzer implements WyopclBuilder{
 			} else if (code instanceof Codes.Loop) {			
 				//LoopInterpreter.getInstance().interpret((Codes.Loop)code, stackframe);			
 			} else if (code instanceof Codes.Move) {
-				internalFailure("Not implemented!", filename, entry);
+				internalFailure("Not implemented!", Analyzer.getFilename(), entry);
 			} else if (code instanceof Codes.NewMap) {
 				//NewMapInterpreter.getInstance().interpret((Codes.NewMap)code, stackframe);
 			} else if (code instanceof Codes.NewList) {			
@@ -237,12 +213,12 @@ public class BoundAnalyzer extends Analyzer implements WyopclBuilder{
 			} else if (code instanceof Codes.Update) {
 				//UpdateInterpreter.getInstance().interpret((Codes.Update)code, stackframe);
 			} else {
-				internalFailure("unknown wyil code encountered (" + code + ")", filename, entry);
+				internalFailure("unknown wyil code encountered (" + code + ")", Analyzer.getFilename(), entry);
 			}
 		} catch (SyntaxError ex) {
 			throw ex;	
 		} catch (Exception ex) {		
-			internalFailure(ex.getMessage(), filename, entry, ex);
+			internalFailure(ex.getMessage(), Analyzer.getFilename(), entry, ex);
 		}
 
 		printBytecode(code);
