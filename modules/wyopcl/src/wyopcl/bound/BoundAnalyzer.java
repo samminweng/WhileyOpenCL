@@ -3,9 +3,11 @@ package wyopcl.bound;
 import static wycc.lang.SyntaxError.internalFailure;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import wybs.lang.Build.Project;
@@ -92,6 +94,7 @@ public class BoundAnalyzer extends Analyzer implements WyopclBuilder{
 		str+="):";
 		return str;
 	}
+	
 
 	/**
 	 * Takes the in-memory wyil file and analyzes the range values for all variables.
@@ -113,19 +116,29 @@ public class BoundAnalyzer extends Analyzer implements WyopclBuilder{
 					dispatch(entry);
 				}
 			}	
-			
+						
+			//Iterates through all the constraint lists and infer each list's fixed point.
 			Iterator<java.util.Map.Entry<String, ConstraintList>> iterator = constraintListMap.entrySet().iterator();
+			Bounds unionBounds = new Bounds();
 			while(iterator.hasNext()){
 				java.util.Map.Entry<String, ConstraintList> entry = iterator.next();
 				//Infer the bounds consistent with all constraints.
-				constraintlist = entry.getValue();
+				ConstraintList list = entry.getValue();
 				String label = entry.getKey();
 				Bounds bnd = new Bounds();
-				constraintlist.inferFixedPoint(bnd);
-				System.out.println("\n"+label+":"+
-						"\n"+bnd.toString()
-						+"\nisBoundConsistency="+bnd.checkBoundConsistency());
+				list.inferFixedPoint(bnd);
+				if(Analyzer.verbose){
+					System.out.println("\n"+label+":"+
+							"\n"+bnd.toString()
+							+"\nisBoundConsistency="+bnd.checkBoundConsistency());
+				}				
+				unionBounds.union(bnd);
 			}
+			
+			
+			System.out.println("\nUnion Bounds:"+
+					"\n"+unionBounds.toString()
+					+"\nisBoundConsistency="+unionBounds.checkBoundConsistency());
 			
 			//Clear the map
 			constraintListMap.clear();

@@ -19,9 +19,10 @@ import java.util.Map.Entry;
  */
 public class Bounds {
 	// Every subclass shares the 'bounds' variable;
-	protected static HashMap<String, Domain> bounds;
+	//protected static HashMap<String, Domain> bounds;
+	private HashMap<String, Domain> bounds;
 	public boolean isChanged = false;
-
+	
 	public Bounds() {
 		bounds = new HashMap<String, Domain>();
 	}
@@ -83,6 +84,24 @@ public class Bounds {
 		return false;
 	}
 
+	
+	/**
+	 * Take the union of current bounds and the new bounds
+	 * to produce a new bounds which contains all the bounds in current or new or both bounds.
+	 * @param bnd the new bounds
+	 */
+	public void union(Bounds bnd){		
+		Iterator<Entry<String, Domain>> iterator = bnd.getBounds().entrySet().iterator();
+		while(iterator.hasNext()){
+			Entry<String, Domain> entry = iterator.next();
+			String var_name = entry.getKey();
+			Domain new_domain = entry.getValue();
+			Domain existing_domain = getDomain(var_name);
+			existing_domain.widenBounds(new_domain);
+			bounds.put(var_name, existing_domain);
+		}		
+	}
+	
 
 	/**
 	 * Check if all the bounds are consistent (lower bound <= upper bound)
@@ -94,8 +113,7 @@ public class Bounds {
 		while (iterator.hasNext()) {
 			Entry<String, Domain> bnd = iterator.next();
 			Domain d = bnd.getValue();
-			// Check upper bound < lower bound. If so, return false;
-			// Check upper bound < lower bound. If so, return false;
+			// Check upper bound < lower bound. If so, return false;			
 			BigInteger max = d.getUpperBound();
 			BigInteger min = d.getLowerBound();
 			if(max == null && min == null){
@@ -130,6 +148,10 @@ public class Bounds {
 		str += "\n]";
 
 		return str;
+	}
+
+	public HashMap<String, Domain> getBounds() {
+		return bounds;
 	}
 
 }
