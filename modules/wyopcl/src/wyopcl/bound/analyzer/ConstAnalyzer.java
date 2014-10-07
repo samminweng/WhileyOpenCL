@@ -28,7 +28,7 @@ public class ConstAnalyzer extends Analyzer {
 		//Check the value is an Constant.Integer
 		if(constant instanceof Constant.Integer){
 			//Add the 'Const' constraint.
-			this.getConstraintList().addConstraint(new Const(name, ((Constant.Integer)constant).value));
+			addConstraint(new Const(name, ((Constant.Integer)constant).value));
 		}
 	}
 }

@@ -26,7 +26,7 @@ public class NewListAnalyzer extends Analyzer {
 		
 		if(code.type().element() instanceof Type.Int){
 			for(int operand: code.operands()){
-				this.getConstraintList().addConstraint(new Union("%"+code.target(), "%"+operand));				
+				addConstraint(new Union("%"+code.target(), "%"+operand));				
 			}
 		}
 		

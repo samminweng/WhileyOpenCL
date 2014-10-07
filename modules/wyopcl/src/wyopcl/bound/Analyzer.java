@@ -9,6 +9,7 @@ import wycc.util.Logger;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.WyilFile;
+import wyopcl.bound.constraint.Constraint;
 /***
  * A abstract class to store the values of verbose, WyilFile module, file name and arguments.
  * All the analyzers are extended from this abstract class, so that they can access the above
@@ -59,16 +60,42 @@ public abstract class Analyzer {
 		constraintListMap.clear();
 	}
 	
-	public ConstraintList getConstraintList(){
+	/**
+	 * Return the current constraint list.
+	 * @return the constraint list.
+	 */
+	private ConstraintList getCurrentConstraintList(){
 		if(!constraintListMap.containsKey(label)){
-			ConstraintList constraintlist = new ConstraintList();
-			constraintListMap.put(label, constraintlist);
+			//Clone the current constraint list to make a new one.
+			ConstraintList list = new ConstraintList();
+			constraintListMap.put(label, list);
 		}		
 		return constraintListMap.get(label);
 	}
-
-	public void putConstraintList(String label, ConstraintList list){
-		constraintListMap.put(label, list);
+	
+	/**
+	 * Adds the constraint to the current constraint list.
+	 * @param c
+	 */
+	public void addConstraint(Constraint c){				
+		ConstraintList list = getCurrentConstraintList();
+		list.addConstraint(c);
+	}
+	
+	/**
+	 * Branches the current constraint list and adds the 
+	 * constraint to the cloned list.
+	 * @param new_label the name of new branch.
+	 * @param c constraint
+	 */
+	public void branchandAddConstraint(String new_label, Constraint c){
+		ConstraintList current_list = getCurrentConstraintList();
+		ConstraintList new_list;
+		//Cloned the current constraint list. 
+		new_list = (ConstraintList) current_list.clone();
+		new_list.addConstraint(c);
+		constraintListMap.put(new_label, new_list);
+		
 	}
 	
 

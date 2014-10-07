@@ -33,7 +33,7 @@ public class ReturnAnalyzer extends Analyzer {
 		//Check if the return type is integer.
 		if(returnType instanceof Type.Int){
 			//Add the 'Equals' constraint to the return (ret) variable.
-			this.getConstraintList().addConstraint(new Equals("return", ret));
+			addConstraint(new Equals("return", ret));
 		}
 			
 		

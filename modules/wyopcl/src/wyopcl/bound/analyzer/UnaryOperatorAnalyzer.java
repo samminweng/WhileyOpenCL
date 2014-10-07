@@ -31,7 +31,7 @@ public class UnaryOperatorAnalyzer extends Analyzer {
 		//
 		switch(kind){
 			case NEG:
-				this.getConstraintList().addConstraint(new Negate(x, y));
+				addConstraint(new Negate(x, y));
 				break;
 			case NUMERATOR:
 				System.err.println("Not implemented!");

@@ -12,9 +12,7 @@ public class ConstraintList implements Cloneable{
 
 	public void addConstraint(Constraint c){
 		list.add(c);
-	}
-	
-	
+	}	
 	
 	/**
 	 * Iterate through the constraints to infer the bounds.
@@ -57,13 +55,23 @@ public class ConstraintList implements Cloneable{
 	}
 
 	@Override
-	public Object clone() throws CloneNotSupportedException {
+	/**
+	 * Clones the current constraint list.
+	 */
+	public Object clone() {
 		ConstraintList newConslist = new ConstraintList();
 		//Deep copy the list
 		ArrayList<Constraint> list = new ArrayList<Constraint>();
 		for(Constraint cons: this.list){
-			Constraint cloned = (Constraint) cons.clone();
-			list.add(cloned);			
+			Constraint cloned ;
+			try {
+				cloned = (Constraint) cons.clone();
+				list.add(cloned);
+			} catch (CloneNotSupportedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+						
 		}
 		newConslist.list = list;
 		return newConslist;
