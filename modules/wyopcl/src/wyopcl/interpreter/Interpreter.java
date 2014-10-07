@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
 
+import wycc.util.Logger;
 import wyil.lang.Code;
 import wyil.lang.Code.Block;
 import wyil.lang.Codes;
@@ -27,6 +28,10 @@ public abstract class Interpreter {
 	//protected static boolean verify = false;
 	protected static WyilFile module;
 	protected String[] args;
+	/**
+	 * For logging information.
+	 */
+	protected Logger logger = Logger.NULL;
 	
 	/**
 	 * Passing the additional arguments from console to the interpreter.
@@ -113,5 +118,10 @@ public abstract class Interpreter {
 		System.err.println(stackframe.getDepth()+" "+stackframe.getName()+"."+stackframe.getLine()
 					+" ["+input+"] "+output+"\n");
 		System.exit(-1);
+	}
+
+	public void setLogger(Logger logger) {
+		this.logger = logger;
+		
 	}
 }

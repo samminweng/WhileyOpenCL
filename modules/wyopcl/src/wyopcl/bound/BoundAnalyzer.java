@@ -3,11 +3,9 @@ package wyopcl.bound;
 import static wycc.lang.SyntaxError.internalFailure;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 import wybs.lang.Build.Project;
@@ -24,7 +22,6 @@ import wyil.lang.Modifier;
 import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.Case;
-import wyopcl.WyopclBuilder;
 import wyopcl.bound.analyzer.ConstAnalyzer;
 import wyopcl.bound.analyzer.IfAnalyzer;
 import wyopcl.bound.analyzer.InvokeAnalyzer;

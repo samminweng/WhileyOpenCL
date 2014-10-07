@@ -1,11 +1,9 @@
 package wyopcl.util;
 
 import static wycc.lang.SyntaxError.internalFailure;
-import wybs.lang.Builder;
 import wybs.util.StdBuildRule;
 import wybs.util.StdProject;
 import wycc.util.Logger;
-import wyopcl.WyopclBuilder;
 import wyopcl.bound.BoundAnalyzer;
 import wyopcl.interpreter.WyilInterpreter;
 
