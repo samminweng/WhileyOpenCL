@@ -26,6 +26,7 @@ import wyopcl.bound.analyzer.ConstAnalyzer;
 import wyopcl.bound.analyzer.IfAnalyzer;
 import wyopcl.bound.analyzer.InvokeAnalyzer;
 import wyopcl.bound.analyzer.LabelAnalyzer;
+import wyopcl.bound.analyzer.NewListAnalyzer;
 import wyopcl.bound.analyzer.ReturnAnalyzer;
 import wyopcl.bound.analyzer.UnaryOperatorAnalyzer;
 
@@ -58,7 +59,7 @@ public class BoundAnalyzer extends Analyzer implements Builder{
 			Analyzer.setFilename(module.filename());
 			Analyzer.setModule(module);
 			//Start analyzing the range.
-			this.startAnalysis();
+			this.analyze();
 		}
 
 		long endTime = System.currentTimeMillis();
@@ -98,7 +99,7 @@ public class BoundAnalyzer extends Analyzer implements Builder{
 	 * Takes the in-memory wyil file and analyzes the range values for all variables.
 	 * @param module
 	 */
-	private void startAnalysis(){
+	public void analyze(){
 		
 		for(WyilFile.FunctionOrMethodDeclaration method : getModule().functionOrMethods()) {
 			System.out.println(getFunctionOrMethodDel(method));
@@ -114,7 +115,31 @@ public class BoundAnalyzer extends Analyzer implements Builder{
 				}
 			}	
 			
-			analyze();
+			//Iterates through all the constraint lists and infer each list's fixed point.
+			Iterator<java.util.Map.Entry<String, ConstraintList>> iterator = getConstranitListMap().entrySet().iterator();
+			Bounds unionBounds = new Bounds();
+			while(iterator.hasNext()){
+				java.util.Map.Entry<String, ConstraintList> entry = iterator.next();
+				//Infer the bounds consistent with all constraints.
+				ConstraintList list = entry.getValue();
+				String label = entry.getKey();
+				Bounds bnd = new Bounds();
+				list.inferFixedPoint(bnd);
+				if(Analyzer.isVerbose()){
+					System.out.println("\n"+label+":"+
+							"\n"+bnd.toString()
+							+"\nisBoundConsistency="+bnd.checkBoundConsistency());
+				}				
+				unionBounds.union(bnd);
+			}
+			
+			
+			System.out.println("\nUnion Bounds:"+
+					"\n"+unionBounds.toString()
+					+"\nisBoundConsistency="+unionBounds.checkBoundConsistency());
+			
+			//Clear the map
+			clearConstraintListMap();
 		
 		}
 		
@@ -178,7 +203,7 @@ public class BoundAnalyzer extends Analyzer implements Builder{
 			} else if (code instanceof Codes.NewMap) {
 				//NewMapInterpreter.getInstance().interpret((Codes.NewMap)code, stackframe);
 			} else if (code instanceof Codes.NewList) {			
-				//NewListInterpreter.getInstance().interpret((Codes.NewList)code, stackframe);
+				NewListAnalyzer.getInstance().analyze((Codes.NewList)code);
 			} else if (code instanceof Codes.NewRecord) {
 				//NewRecordInterpreter.getInstance().interpret((Codes.NewRecord)code, stackframe);
 			} else if (code instanceof Codes.NewSet) {

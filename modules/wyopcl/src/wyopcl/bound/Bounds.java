@@ -48,6 +48,55 @@ public class Bounds {
 	public BigInteger getUpper(String name) {
 		return getDomain(name).getUpperBound();
 	}
+	
+	public boolean widenLowerBound(String name, BigInteger new_min) {
+		try {
+			Domain existing_domain = getDomain(name);
+			Domain new_domain = (Domain) existing_domain.clone();
+			new_domain.setLowerBound(new_min);
+			// Check if the new domain is smaller than existing domain.
+			if (existing_domain.getLowerBound() == null || existing_domain.compareTo(new_domain) > 0) {
+				// new_domain.setMin(new_min);
+				bounds.put(name, new_domain);
+				return true;
+			}
+		} catch (Exception ex) {
+			internalFailure(ex.getMessage(), "Bounds.java", null);
+		}
+		return false;
+	}
+	
+	public boolean widenUpperBound(String name, BigInteger new_max) {
+		try {
+			Domain existing_domain = getDomain(name);
+			Domain new_domain = (Domain) existing_domain.clone();
+			new_domain.setUpperBound(new_max);
+			// Check if new domain is stronger than existing one.
+			if (existing_domain.getUpperBound() == null || existing_domain.compareTo(new_domain) < 0) {
+				bounds.put(name, new_domain);
+				return true;
+			}
+		} catch (Exception ex) {
+			internalFailure(ex.getMessage(), "Bounds.java", null);
+		}
+		return false;
+	}
+	
+	
+	
+	/**
+	 * Widen the current domain with the bounds from the new domain.
+	 * @param d the new domain
+	 */
+	public void widenBounds(Domain d) {		
+		BigInteger new_min = d.getLowerBound();
+		//Widen the lower bounds if the new lower bound < this lower bound.
+		widenLowerBound(d.getName(), new_min);
+		BigInteger new_max = d.getUpperBound();
+		//Widen the upper bound if the new upper bound > current upper bound.
+		widenUpperBound(d.getName(), new_max);
+
+	}
 
 	public boolean addLowerBound(String name, BigInteger new_min) {
 		try {
@@ -94,11 +143,8 @@ public class Bounds {
 		Iterator<Entry<String, Domain>> iterator = bnd.getBounds().entrySet().iterator();
 		while(iterator.hasNext()){
 			Entry<String, Domain> entry = iterator.next();
-			String var_name = entry.getKey();
 			Domain new_domain = entry.getValue();
-			Domain existing_domain = getDomain(var_name);
-			existing_domain.widenBounds(new_domain);
-			bounds.put(var_name, existing_domain);
+			widenBounds(new_domain);
 		}		
 	}
 	

@@ -50,6 +50,15 @@ public abstract class Analyzer {
 		
 	}
 	
+	
+	public HashMap<String, ConstraintList> getConstranitListMap(){
+		return constraintListMap;
+	}
+	
+	public void clearConstraintListMap(){
+		constraintListMap.clear();
+	}
+	
 	public ConstraintList getConstraintList(){
 		if(!constraintListMap.containsKey(label)){
 			ConstraintList constraintlist = new ConstraintList();
@@ -62,38 +71,11 @@ public abstract class Analyzer {
 		constraintListMap.put(label, list);
 	}
 	
+
 	public static void setLabel(String label) {
 		Analyzer.label = label;
 	}
 	
-	public void analyze(){
-		//Iterates through all the constraint lists and infer each list's fixed point.
-		Iterator<java.util.Map.Entry<String, ConstraintList>> iterator = constraintListMap.entrySet().iterator();
-		Bounds unionBounds = new Bounds();
-		while(iterator.hasNext()){
-			java.util.Map.Entry<String, ConstraintList> entry = iterator.next();
-			//Infer the bounds consistent with all constraints.
-			ConstraintList list = entry.getValue();
-			String label = entry.getKey();
-			Bounds bnd = new Bounds();
-			list.inferFixedPoint(bnd);
-			if(Analyzer.verbose){
-				System.out.println("\n"+label+":"+
-						"\n"+bnd.toString()
-						+"\nisBoundConsistency="+bnd.checkBoundConsistency());
-			}				
-			unionBounds.union(bnd);
-		}
-		
-		
-		System.out.println("\nUnion Bounds:"+
-				"\n"+unionBounds.toString()
-				+"\nisBoundConsistency="+unionBounds.checkBoundConsistency());
-		
-		//Clear the map
-		constraintListMap.clear();
-	}
-
 	public static String getFilename() {
 		return filename;
 	}
@@ -122,10 +104,13 @@ public abstract class Analyzer {
 		this.logger = logger;		
 	}
 	
-	public void setVerbose(boolean verbose) {
+	public static void setVerbose(boolean verbose) {
 		Analyzer.verbose = verbose;		
 	}
 
+	public static boolean isVerbose(){
+		return Analyzer.verbose;
+	}
 	public static void setProject(Build.Project project) {
 		Analyzer.project = project;
 	}

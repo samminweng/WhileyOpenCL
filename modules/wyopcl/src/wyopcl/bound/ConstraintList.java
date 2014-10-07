@@ -48,7 +48,7 @@ public class ConstraintList implements Cloneable{
 		int MaxIteration = iterations.length >0 ? iterations[0] : 5;
 		for(int i=0;i<MaxIteration;i++){
 			boolean isFixedPointed = this.inferBound(bnd);
-			if(isFixedPointed){
+			if(isFixedPointed){			
 				return true;
 			}
 		}		

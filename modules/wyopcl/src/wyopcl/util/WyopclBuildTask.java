@@ -1,9 +1,11 @@
 package wyopcl.util;
 
 import static wycc.lang.SyntaxError.internalFailure;
+import wybs.lang.Builder;
 import wybs.util.StdBuildRule;
 import wybs.util.StdProject;
 import wycc.util.Logger;
+import wyopcl.bound.Analyzer;
 import wyopcl.bound.BoundAnalyzer;
 import wyopcl.interpreter.WyilInterpreter;
 
@@ -30,22 +32,20 @@ public class WyopclBuildTask extends wyc.util.WycBuildTask {
 	protected void addBuildRules(StdProject project) {
 		// Add default build rule for converting whiley files into wyil files. 
 		super.addBuildRules(project);
-		//Builder builder;
+		Builder builder;
 		//Check the first argument to determine whether to run the analyzer.		
 		if(analysis!= null){
 			//Add the switch for the further analysis.
 			switch(analysis.toLowerCase()){
 			case "range":
-				BoundAnalyzer builder = new BoundAnalyzer(project);
+				builder = new BoundAnalyzer(project);
 				if (verbose) {
-					builder.setLogger(new Logger.Default(System.err));
-					builder.setVerbose(verbose);
+					((BoundAnalyzer) builder).setLogger(new Logger.Default(System.err));
+					((BoundAnalyzer) builder).setVerbose(verbose);
 				}
 
-				builder.setArgs(this.arguments);
+				//builder.setArgs(this.arguments);
 
-				project.add(new StdBuildRule(builder, wyilDir, wyilIncludes,
-						wyilExcludes, null));
 				break;
 			default:
 				internalFailure("Not implemented!", "WyopclBuildTask.java", null);
@@ -54,19 +54,19 @@ public class WyopclBuildTask extends wyc.util.WycBuildTask {
 		}else{
 			// Now, add build rule for interpreting the wyil files by using
 			// the WyilInterpreter.			
-			WyilInterpreter builder = new WyilInterpreter(project);
+			builder = new WyilInterpreter(project);
 			if (verbose) {
-				builder.setLogger(new Logger.Default(System.err));
-				builder.setVerbose(verbose);
+				((WyilInterpreter) builder).setLogger(new Logger.Default(System.err));
+				((WyilInterpreter) builder).setVerbose(verbose);
 			}
 
-			builder.setArgs(this.arguments);
+			((WyilInterpreter) builder).setArgs(this.arguments);
 
-			project.add(new StdBuildRule(builder, wyilDir, wyilIncludes,
-					wyilExcludes, null));
+			
 		}
 
-		
+		project.add(new StdBuildRule(builder, wyilDir, wyilIncludes,
+				wyilExcludes, null));
 
 
 	}	

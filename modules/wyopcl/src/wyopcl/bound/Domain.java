@@ -38,27 +38,6 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 		this.upper_bound = upper_bound;
 	}
 
-	public void widenBounds(Domain d) {		
-		BigInteger new_min = d.getLowerBound();
-		//Widen the lower bounds if the new lower bound < this lower bound.
-		if(new_min != null){
-			if(this.lower_bound == null || 
-					(this.lower_bound != null && new_min.compareTo(this.lower_bound)<0)){
-				setLowerBound(new_min);	
-			}
-		}
-
-		BigInteger new_max = d.getUpperBound();
-		//Widen the upper bound if the new upper bound > current upper bound.
-		if(new_max != null){
-			if(this.upper_bound == null || 
-					(this.upper_bound != null && new_min.compareTo(this.upper_bound)>0)){
-				setUpperBound(new_max);
-			}
-		}
-
-	}
-
 
 	/***
 	 * Compare this domain with another domain (d). If both of them are equal,

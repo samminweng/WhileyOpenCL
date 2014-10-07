@@ -38,17 +38,18 @@ public class InvokeAnalyzer extends Analyzer {
 				String param = "%"+code.operand(index);
 				//Missing the variable name of function input parameters, so we used the function name temporarily.
 				//Add the equal constraint for input parameter.
-				this.getConstraintList().addConstraint(new Equals(param, func_name));
+				//this.getConstraintList().addConstraint(new Equals(param, func_name));
 			}
 			index++;			
 		}
 		
-		
-		//Shall the bytecode in sub-method be executed?
-		//for(Case mcase: functionOrMethod.cases()){
+		Type returnType = code.type().ret();
+		if(returnType instanceof Type.Int){
+			String return_reg = "%"+code.target();
+			//this.getConstraintList().addConstraint(new Equals(return_reg, func_name));
+		}
 			
-		//}		
-		
+			
 	}
 	
 }
