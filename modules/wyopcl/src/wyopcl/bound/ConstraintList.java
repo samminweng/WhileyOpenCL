@@ -1,7 +1,6 @@
 package wyopcl.bound;
-
+import static wycc.lang.SyntaxError.internalFailure;
 import java.util.ArrayList;
-
 import wyopcl.bound.constraint.Constraint;
 
 public class ConstraintList implements Cloneable{
@@ -68,8 +67,7 @@ public class ConstraintList implements Cloneable{
 				cloned = (Constraint) cons.clone();
 				list.add(cloned);
 			} catch (CloneNotSupportedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				internalFailure(e.getMessage(), "ConstraintList.java", null);
 			}
 						
 		}

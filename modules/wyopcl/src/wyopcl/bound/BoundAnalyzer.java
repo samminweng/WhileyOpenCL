@@ -9,8 +9,11 @@ import java.util.Iterator;
 import java.util.Set;
 
 import wybs.lang.Build.Project;
+import wybs.lang.Build;
 import wybs.lang.Builder;
 import wycc.lang.SyntaxError;
+import wycc.util.Logger;
+import wycc.util.Logger.Default;
 import wycc.util.Pair;
 import wyfs.lang.Path;
 import wyfs.lang.Path.Entry;
@@ -18,17 +21,16 @@ import wyfs.lang.Path.Root;
 import wyil.lang.Code;
 import wyil.lang.Code.Block;
 import wyil.lang.Codes;
+import wyil.lang.Constant;
 import wyil.lang.Modifier;
 import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.Case;
-import wyopcl.bound.analyzer.ConstAnalyzer;
-import wyopcl.bound.analyzer.IfAnalyzer;
-import wyopcl.bound.analyzer.InvokeAnalyzer;
-import wyopcl.bound.analyzer.LabelAnalyzer;
-import wyopcl.bound.analyzer.NewListAnalyzer;
-import wyopcl.bound.analyzer.ReturnAnalyzer;
-import wyopcl.bound.analyzer.UnaryOperatorAnalyzer;
+import wyopcl.bound.constraint.Const;
+import wyopcl.bound.constraint.GreaterThan;
+import wyopcl.bound.constraint.GreaterThanEquals;
+import wyopcl.bound.constraint.LessThan;
+import wyopcl.bound.constraint.LessThanEquals;
 
 /**
  * analyzes the wyil bytecode by adding the constraints, which are parsed from each bytecode,
@@ -37,13 +39,37 @@ import wyopcl.bound.analyzer.UnaryOperatorAnalyzer;
  * @author Min-Hsien Weng
  *
  */
-public class BoundAnalyzer extends Analyzer implements Builder{
-	
+public class BoundAnalyzer implements Builder{
+	private Build.Project project;
+	private String filename;
+	private boolean verbose = false;
+	//private static WyilFile module;
+	private String[] args;
+	/**
+	 * For logging information.
+	 */
+	protected Logger logger = Logger.NULL;
 	
 	public BoundAnalyzer(Project project){
-		Analyzer.setProject(project);
+		this.project = project;
+	}	
+	
+	@Override
+	public Project project() {
+		// TODO Auto-generated method stub
+		return project;
 	}
 
+	public void setLogger(Logger logger) {
+		this.logger = logger;		
+	}
+
+	public void setVerbose(boolean verbose) {
+		this.verbose = verbose;
+		
+	}
+	
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public Set<Entry<?>> build(Collection<Pair<Entry<?>, Root>> delta) throws IOException {
@@ -56,14 +82,13 @@ public class BoundAnalyzer extends Analyzer implements Builder{
 			//Path.Root dst = p.second();
 			Path.Entry<WyilFile> sf = (Path.Entry<WyilFile>) p.first();
 			WyilFile module = sf.read();
-			Analyzer.setFilename(module.filename());
-			Analyzer.setModule(module);
+			filename = module.filename();
 			//Start analyzing the range.
-			this.analyze();
+			analyze(module);
 		}
 
 		long endTime = System.currentTimeMillis();
-		logger.logTimedMessage("Wyil interpreter completed.\nFile:" + Analyzer.getFilename(),
+		logger.logTimedMessage("Wyil interpreter completed.\nFile:" + filename,
 				(endTime - start), memory - runtime.freeMemory());
 		return generatedFiles;
 	}
@@ -99,9 +124,9 @@ public class BoundAnalyzer extends Analyzer implements Builder{
 	 * Takes the in-memory wyil file and analyzes the range values for all variables.
 	 * @param module
 	 */
-	public void analyze(){
+	public void analyze(WyilFile module){
 		
-		for(WyilFile.FunctionOrMethodDeclaration method : getModule().functionOrMethods()) {
+		for(WyilFile.FunctionOrMethodDeclaration method : module.functionOrMethods()) {
 			System.out.println(getFunctionOrMethodDel(method));
 			Analyzer.setLabel("code");
 			for(Case mcase : method.cases()){
@@ -115,31 +140,7 @@ public class BoundAnalyzer extends Analyzer implements Builder{
 				}
 			}	
 			
-			//Iterates through all the constraint lists and infer each list's fixed point.
-			Iterator<java.util.Map.Entry<String, ConstraintList>> iterator = getConstranitListMap().entrySet().iterator();
-			Bounds unionBounds = new Bounds();
-			while(iterator.hasNext()){
-				java.util.Map.Entry<String, ConstraintList> entry = iterator.next();
-				//Infer the bounds consistent with all constraints.
-				ConstraintList list = entry.getValue();
-				String label = entry.getKey();
-				Bounds bnd = new Bounds();
-				list.inferFixedPoint(bnd);
-				if(Analyzer.isVerbose()){
-					System.out.println("\n"+label+":"+
-							"\n"+bnd.toString()
-							+"\nisBoundConsistency="+bnd.checkBoundConsistency());
-				}				
-				unionBounds.union(bnd);
-			}
-			
-			
-			System.out.println("\nUnion Bounds:"+
-					"\n"+unionBounds.toString()
-					+"\nisBoundConsistency="+unionBounds.checkBoundConsistency());
-			
-			//Clear the map
-			clearConstraintListMap();
+			Analyzer.getInstance().inferBoundsOverAllConstraintlists(this.verbose);
 		
 		}
 		
@@ -163,7 +164,7 @@ public class BoundAnalyzer extends Analyzer implements Builder{
 			} else if (code instanceof Codes.Convert) {			
 				//ConvertInterpreter.getInstance().interpret((Codes.Convert)code, stackframe);
 			} else if (code instanceof Codes.Const) {			
-				ConstAnalyzer.getInstance().analyze((Codes.Const)code);
+				Analyzer.getInstance().analyze((Codes.Const)code);
 			} else if (code instanceof Codes.Debug) {
 				//DebugInterpreter.getInstance().interpret((Codes.Debug)code, stackframe);
 			} else if (code instanceof Codes.Dereference) {
@@ -177,19 +178,19 @@ public class BoundAnalyzer extends Analyzer implements Builder{
 			} else if (code instanceof Codes.Goto) {	
 				//GotoInterpreter.getInstance().interpret((Codes.Goto)code, stackframe);
 			} else if (code instanceof Codes.If) {
-				IfAnalyzer.getInstance().analyze((Codes.If)code);			
+				Analyzer.getInstance().analyze((Codes.If)code);			
 			} else if (code instanceof Codes.IfIs) {
 				//IfIsInterpreter.getInstance().interpret((Codes.IfIs)code, stackframe);
 			} else if (code instanceof Codes.IndirectInvoke) {			
 				//IndirectInvokeInterpreter.getInstance().interpret((Codes.IndirectInvoke)code, stackframe);
 			} else if (code instanceof Codes.Invoke) {			
-				InvokeAnalyzer.getInstance().analyze((Codes.Invoke)code);
+				Analyzer.getInstance().analyze((Codes.Invoke)code);
 			} else if (code instanceof Codes.Invert) {
 				//InvertInterpreter.getInstance().interpret((Codes.Invert)code, stackframe);
 			} else if (code instanceof Codes.LoopEnd) {
 				//LoopEndInterpreter.getInstance().interpret((Codes.LoopEnd)code, stackframe);									
 			} else if (code instanceof Codes.Label) {
-				LabelAnalyzer.getInstance().analyze((Codes.Label)code);
+				Analyzer.getInstance().analyze((Codes.Label)code);
 			} else if (code instanceof Codes.Lambda) {
 				//LambdaInterpreter.getInstance().interpret((Codes.Lambda)code, stackframe);
 			} else if (code instanceof Codes.LengthOf) {			
@@ -199,11 +200,11 @@ public class BoundAnalyzer extends Analyzer implements Builder{
 			} else if (code instanceof Codes.Loop) {			
 				//LoopInterpreter.getInstance().interpret((Codes.Loop)code, stackframe);			
 			} else if (code instanceof Codes.Move) {
-				internalFailure("Not implemented!", Analyzer.getFilename(), entry);
+				internalFailure("Not implemented!", filename, entry);
 			} else if (code instanceof Codes.NewMap) {
 				//NewMapInterpreter.getInstance().interpret((Codes.NewMap)code, stackframe);
 			} else if (code instanceof Codes.NewList) {			
-				NewListAnalyzer.getInstance().analyze((Codes.NewList)code);
+				Analyzer.getInstance().analyze((Codes.NewList)code);
 			} else if (code instanceof Codes.NewRecord) {
 				//NewRecordInterpreter.getInstance().interpret((Codes.NewRecord)code, stackframe);
 			} else if (code instanceof Codes.NewSet) {
@@ -211,7 +212,7 @@ public class BoundAnalyzer extends Analyzer implements Builder{
 			} else if (code instanceof Codes.NewTuple) {
 				//NewTupleInterpreter.getInstance().interpret((Codes.NewTuple)code, stackframe);
 			} else if (code instanceof Codes.Return) {			
-				ReturnAnalyzer.getInstance().analyze((Codes.Return)code);
+				Analyzer.getInstance().analyze((Codes.Return)code);
 			} else if (code instanceof Codes.NewObject) {
 				//NewObjectInterpreter.getInstance().interpret((Codes.NewObject)code, stackframe);
 			} else if (code instanceof Codes.Nop) {
@@ -231,30 +232,25 @@ public class BoundAnalyzer extends Analyzer implements Builder{
 			} else if (code instanceof Codes.TupleLoad) {
 				//TupleLoadInterpreter.getInstance().interpret((Codes.TupleLoad)code, stackframe);
 			} else if (code instanceof Codes.UnaryOperator){
-				UnaryOperatorAnalyzer.getInstance().analyze((Codes.UnaryOperator)code);
+				Analyzer.getInstance().analyze((Codes.UnaryOperator)code);
 			} else if (code instanceof Codes.Update) {
 				//UpdateInterpreter.getInstance().interpret((Codes.Update)code, stackframe);
 			} else {
-				internalFailure("unknown wyil code encountered (" + code + ")", Analyzer.getFilename(), entry);
+				internalFailure("unknown wyil code encountered (" + code + ")", filename, entry);
 			}
 		} catch (SyntaxError ex) {
 			throw ex;	
 		} catch (Exception ex) {		
-			internalFailure(ex.getMessage(), Analyzer.getFilename(), entry, ex);
+			internalFailure(ex.getMessage(), filename, entry, ex);
 		}
-
-		printBytecode(code);
+		//Print out the bytecode.
+		if(code instanceof Codes.Label){
+			System.out.println(code);
+		}else{
+			System.out.println("\t"+code);
+		}
 	}
 
-
-
-
-
-
-
-
-
-
-
+	
 
 }

@@ -5,8 +5,8 @@ import java.math.BigInteger;
 import wyopcl.bound.Bounds;
 
 /***
- *  Implementing the propagation rule for the constant value assignment (e.g. x = 20 )
- * @author mw169
+ * Implements the propagation rule for the constant value assignment (e.g. x = 20 )
+ * @author Min-Hsien Weng
  *
  */
 public class Const extends Constraint{
