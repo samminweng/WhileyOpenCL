@@ -154,7 +154,7 @@ public class BoundAnalyzer implements Builder{
 			if (code instanceof Codes.AssertOrAssume) {			
 				//AssertOrAssumeInterpreter.getInstance().interpret((Codes.AssertOrAssume)code, stackframe);
 			} else if (code instanceof Codes.Assign) {			
-				//AssignInterpreter.getInstance().interpret((Codes.Assign)code, stackframe);
+				Analyzer.getInstance().analyze((Codes.Assign)code);
 			} else if (code instanceof Codes.BinaryOperator) {			
 				//BinaryOperatorInterpreter.getInstance().interpret((Codes.BinaryOperator)code, stackframe);
 			} else if (code instanceof Codes.ListOperator) {
@@ -174,7 +174,7 @@ public class BoundAnalyzer implements Builder{
 			} else if (code instanceof Codes.FieldLoad) {		
 				//FieldLoadInterpreter.getInstance().interpret((Codes.FieldLoad)code, stackframe);			
 			} else if (code instanceof Codes.ForAll) {				
-				//ForAllInterpreter.getInstance().interpret((Codes.ForAll)code, stackframe);
+				Analyzer.getInstance().analyze((Codes.ForAll)code);
 			} else if (code instanceof Codes.Goto) {	
 				//GotoInterpreter.getInstance().interpret((Codes.Goto)code, stackframe);
 			} else if (code instanceof Codes.If) {

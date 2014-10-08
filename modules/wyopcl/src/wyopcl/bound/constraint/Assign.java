@@ -9,12 +9,12 @@ import wyopcl.bound.Bounds;
  * @author Min-Hsien Weng
  *
  */
-public class Assignment extends Constraint {
+public class Assign extends Constraint {
 	
 	private BigInteger x_min, x_max, y_min, y_max;
 	private final String x, y;
 
-	public Assignment(String x, String y) {
+	public Assign(String x, String y) {
 		this.x = x;
 		this.y = y;
 	}

@@ -7,6 +7,7 @@ import wyil.lang.Codes;
 import wyil.lang.Codes.UnaryOperatorKind;
 import wyil.lang.Constant;
 import wyil.lang.Type;
+import wyopcl.bound.constraint.Assign;
 import wyopcl.bound.constraint.Const;
 import wyopcl.bound.constraint.Constraint;
 import wyopcl.bound.constraint.Equals;
@@ -119,7 +120,11 @@ public class Analyzer {
 
 
 	public void analyze(Codes.Assign code){
-
+		//Check if the assigned value is an integer
+		if(code.assignedType() instanceof Type.Int){
+			//Add the constraint 'target = operand'
+			addConstraint(new Assign("%"+code.target(), "%"+code.operand(0)));
+		}
 
 	}
 
@@ -191,12 +196,12 @@ public class Analyzer {
 	}
 	
 	/**
-	 *  * Parses the invoke bytecode and adds the constraints to the list.
-	 * The possible constraints include:
+	 *Parses the invoke bytecode and adds the constraints to the list.
+	 * The possible constraints include: none....
 	 * @param code
 	 */
 	public void analyze(Codes.Invoke code){
-		String func_name = code.name.name();
+		/*//String func_name = code.name.name();
 		
 		//Get the fun block from module.
 		//FunctionOrMethodDeclaration functionOrMethod = Analyzer.module.functionOrMethod(func_name, code.type());
@@ -204,7 +209,7 @@ public class Analyzer {
 		for(Type paramType: code.type().params()){
 			//Get the input parameters of integer type
 			if(paramType instanceof Type.Int){
-				String param = "%"+code.operand(index);
+				//String param = "%"+code.operand(index);
 				//Missing the variable name of function input parameters, so we used the function name temporarily.
 				//Add the equal constraint for input parameter.
 				//this.getConstraintList().addConstraint(new Equals(param, func_name));
@@ -214,9 +219,9 @@ public class Analyzer {
 		
 		Type returnType = code.type().ret();
 		if(returnType instanceof Type.Int){
-			String return_reg = "%"+code.target();
+			//String return_reg = "%"+code.target();
 			//this.getConstraintList().addConstraint(new Equals(return_reg, func_name));
-		}
+		}*/
 			
 			
 	}
@@ -298,5 +303,14 @@ public class Analyzer {
 		
 	}
 	
+	public void analyze(Codes.ForAll code){
+		//Check if each element is an integer
+		if(code.type.element() instanceof Type.Int){
+			//Propagate the range of source register to the index reg 
+			addConstraint(new Assign("%"+code.indexOperand, "%"+code.sourceOperand));
+		}
+		
+		
+	}
 	
 }
