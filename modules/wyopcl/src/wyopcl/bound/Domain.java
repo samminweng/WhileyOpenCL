@@ -2,6 +2,7 @@ package wyopcl.bound;
 
 import java.math.BigInteger;
 import java.util.Comparator;
+import java.util.regex.Pattern;
 
 public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain> {
 	private final String name;
@@ -21,6 +22,26 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 	public String getName() {
 		return name;
 	}
+	
+	private int getReg(){
+		
+		if(name.contains("_")){
+			String[] name_str = name.split("_");
+			int reg = Integer.parseInt(name_str[0].substring(1));
+			return reg;
+		}
+		return Integer.parseInt(name.substring(1));		
+	}
+	
+	private int getLabel(){
+		if(name.contains("_")){
+			String[] name_str = name.split("_");
+			int lbl = Integer.parseInt(name_str[1].split("blklab")[1]);
+			return lbl;
+		}
+		return -1;
+	}
+	
 
 	public BigInteger getLowerBound() {
 		return lower_bound;
@@ -127,12 +148,15 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 	 * Implemented for sort the domains
 	 */
 	public int compare(Domain d0, Domain d1) {
-		//Compare the length
-		if(d0.getName().length() > d1.getName().length()){
-			return 1;//if name is longer, then the value is also bigger.
+		if(d0.getName()=="return" || d1.getName() == "return"){
+			return 0;
 		}
-		
-		return d0.compareTo(d1);
+		int reg = d0.getReg() - d1.getReg();
+		if(reg == 0){
+			return d0.getLabel() - d1.getLabel();
+		}else{
+			return reg;
+		}
 	}
 
 }

@@ -121,7 +121,7 @@ public class Analyzer {
 
 	public void analyze(Codes.Assign code){
 		//Check if the assigned value is an integer
-		if(code.assignedType() instanceof Type.Int){
+		if(code.type() instanceof Type.Int){
 			//Add the constraint 'target = operand'
 			addConstraint(new Assign("%"+code.target(), "%"+code.operand(0)));
 		}
@@ -154,13 +154,15 @@ public class Analyzer {
 			String right = "%"+code.rightOperand;
 			switch(code.op){
 			case EQ:			
-
+				branchandAddConstraint(code.target, new Equals(left+"_"+code.target, right));
+				addConstraint(new GreaterThanEquals(left, right));
 				break;
 			case NEQ:				
 
 				break;
 			case LT:			
-
+				branchandAddConstraint(code.target, new LessThan(left+"_"+code.target, right));
+				addConstraint(new GreaterThanEquals(left, right));
 				break;
 			case LTEQ:
 				//Add the 'left <= right' constraint to the branched list.
@@ -169,7 +171,8 @@ public class Analyzer {
 				addConstraint(new GreaterThan(left, right));
 				break;
 			case GT:					
-
+				branchandAddConstraint(code.target, new GreaterThan(left+"_"+code.target, right));
+				addConstraint(new LessThanEquals(left, right));
 				break;
 			case GTEQ:
 				//Branch and add the left >= right constraint to 
@@ -303,14 +306,30 @@ public class Analyzer {
 		
 	}
 	
+	/**
+	 * Parses the 'ForAll' bytecode and adds the assign constraint, e.g. <br>
+	 * <code>forall %5 in %0 () : [int]</code>
+	 * adds the constraint '%5 = %0', which propagtes the bounds from %0 to %5.
+	 * @param code the 'forall' bytecode
+	 */
 	public void analyze(Codes.ForAll code){
 		//Check if each element is an integer
 		if(code.type.element() instanceof Type.Int){
 			//Propagate the range of source register to the index reg 
 			addConstraint(new Assign("%"+code.indexOperand, "%"+code.sourceOperand));
-		}
+		}		
+		
+	}
+	
+	/**
+	 * How to get the length of a list without computing the list.
+	 * @param code
+	 */
+	public void analyze(Codes.LengthOf code){
+		
 		
 		
 	}
+	
 	
 }

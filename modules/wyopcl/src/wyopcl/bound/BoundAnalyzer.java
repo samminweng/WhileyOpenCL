@@ -98,7 +98,7 @@ public class BoundAnalyzer implements Builder{
 	 * @param method
 	 * @return
 	 */
-	private String getFunctionOrMethodDel(WyilFile.FunctionOrMethodDeclaration method){
+	private void printFunctionOrMethodDel(WyilFile.FunctionOrMethodDeclaration method){
 		String str = "===============================================\n"; 
 		//Get the modifier (i.e. public, protected, private...)
 		str += ((method.hasModifier(Modifier.PUBLIC)))? Modifier.PUBLIC.toString() : "";
@@ -116,7 +116,7 @@ public class BoundAnalyzer implements Builder{
 			str += param;						
 		}
 		str+="):";
-		return str;
+		System.out.println(str);
 	}
 	
 
@@ -126,9 +126,10 @@ public class BoundAnalyzer implements Builder{
 	 */
 	public void analyze(WyilFile module){
 		
-		for(WyilFile.FunctionOrMethodDeclaration method : module.functionOrMethods()) {
-			System.out.println(getFunctionOrMethodDel(method));
+		for(WyilFile.FunctionOrMethodDeclaration method : module.functionOrMethods()) {			
+			printFunctionOrMethodDel(method);
 			Analyzer.getInstance().setLabel("code");
+			int line = 0;
 			for(Case mcase : method.cases()){
 				Block blk = mcase.body();
 				Iterator<wyil.lang.Code.Block.Entry> iterator = blk.iterator();
@@ -136,7 +137,7 @@ public class BoundAnalyzer implements Builder{
 					//Get the Block.Entry
 					Block.Entry entry = iterator.next();
 					//check the code type and add the constraints 
-					dispatch(entry);
+					line = dispatch(entry, method.name(), line);
 				}
 			}	
 			
@@ -148,7 +149,7 @@ public class BoundAnalyzer implements Builder{
 	}
 
 
-	private void dispatch(Block.Entry entry){
+	private int dispatch(Block.Entry entry, String name, int line){
 		Code code = entry.code; 
 		try{
 			if (code instanceof Codes.AssertOrAssume) {			
@@ -243,12 +244,16 @@ public class BoundAnalyzer implements Builder{
 		} catch (Exception ex) {		
 			internalFailure(ex.getMessage(), filename, entry, ex);
 		}
-		//Print out the bytecode.
+		//Print out the bytecode with the format (e.g. 'main.9 [const %12 = 2345 : int]')
 		if(code instanceof Codes.Label){
-			System.out.println(code);
+			System.out.println(name+"."+line+" ["+code+"]");
 		}else{
-			System.out.println("\t"+code);
+			System.out.println(name+"."+line+" [\t"+code+"]");
 		}
+		
+		
+		
+		return ++line;
 	}
 
 	
