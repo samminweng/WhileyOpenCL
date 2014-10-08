@@ -24,6 +24,10 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 	}
 	
 	private int getReg(){
+		//Put the 'return' variables at the last item.
+		if(getName()=="return"){
+			return Integer.MAX_VALUE;
+		}		
 		
 		if(name.contains("_")){
 			String[] name_str = name.split("_");
@@ -148,9 +152,7 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 	 * Implemented for sort the domains
 	 */
 	public int compare(Domain d0, Domain d1) {
-		if(d0.getName()=="return" || d1.getName() == "return"){
-			return 0;
-		}
+		
 		int reg = d0.getReg() - d1.getReg();
 		if(reg == 0){
 			return d0.getLabel() - d1.getLabel();
