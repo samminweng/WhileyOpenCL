@@ -128,7 +128,7 @@ public class BoundAnalyzer implements Builder{
 		
 		for(WyilFile.FunctionOrMethodDeclaration method : module.functionOrMethods()) {
 			System.out.println(getFunctionOrMethodDel(method));
-			Analyzer.setLabel("code");
+			Analyzer.getInstance().setLabel("code");
 			for(Case mcase : method.cases()){
 				Block blk = mcase.body();
 				Iterator<wyil.lang.Code.Block.Entry> iterator = blk.iterator();
@@ -140,7 +140,7 @@ public class BoundAnalyzer implements Builder{
 				}
 			}	
 			
-			Analyzer.getInstance().inferBoundsOverAllConstraintlists(this.verbose);
+			Analyzer.getInstance().inferBoundsOverAllConstraintlists(verbose);
 		
 		}
 		

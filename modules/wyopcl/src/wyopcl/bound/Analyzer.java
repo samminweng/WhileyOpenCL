@@ -17,20 +17,21 @@ import wyopcl.bound.constraint.LessThanEquals;
 import wyopcl.bound.constraint.Negate;
 import wyopcl.bound.constraint.Union;
 /***
- * A abstract class to store the values of verbose, WyilFile module, file name and arguments.
- * All the analyzers are extended from this abstract class, so that they can access the above
- * information.
+ * A class to store all the constraints produced in the wyil file and infer the bounds consistent
+ * with all the constraints. Due to the singleton design pattern, the class variables 'constraintListMap'
+ * and 'label' has one instance.
  *    
  * @author Min-Hsien Weng
  *
  */
 public class Analyzer {
 	//The hashmap stores the constraints with in the label value in each method or function.
-	private static HashMap<String, ConstraintList> constraintListMap = new HashMap<String, ConstraintList>();
-	private static String label = "";
+	private HashMap<String, ConstraintList> constraintListMap;
+	private String label = "";
 
 	private static Analyzer instance;	
 	public Analyzer(){
+		 constraintListMap = new HashMap<String, ConstraintList>();
 	}
 
 	/*Implement the 'Singleton' pattern to ensure this class has one instance.*/
@@ -41,19 +42,13 @@ public class Analyzer {
 		return instance;
 	}
 
-	public HashMap<String, ConstraintList> getConstranitListMap(){
-		return constraintListMap;
-	}
-
-	public void clearConstraintListMap(){
-		constraintListMap.clear();
-	}
+	
 	/**
 	 * 
 	 */
 	public void inferBoundsOverAllConstraintlists(boolean verbose){
 		//Iterates through all the constraint lists and infer each list's fixed point.
-		Iterator<java.util.Map.Entry<String, ConstraintList>> iterator = getConstranitListMap().entrySet().iterator();
+		Iterator<java.util.Map.Entry<String, ConstraintList>> iterator = constraintListMap.entrySet().iterator();
 		Bounds unionBounds = new Bounds();
 		while(iterator.hasNext()){
 			java.util.Map.Entry<String, ConstraintList> entry = iterator.next();
@@ -76,7 +71,7 @@ public class Analyzer {
 				+"\nisBoundConsistency="+unionBounds.checkBoundConsistency());
 		
 		//Clear the map
-		clearConstraintListMap();
+		constraintListMap.clear();
 	}
 	
 	
@@ -118,8 +113,8 @@ public class Analyzer {
 
 	}	
 
-	public static void setLabel(String label) {
-		Analyzer.label = label;
+	public void setLabel(String label) {
+		this.label = label;
 	}
 
 
@@ -236,7 +231,7 @@ public class Analyzer {
 		//check if map contains the constrainlist.
 		String label = code.label;
 		//Switch the current constraint list by setting the label with new value.
-		Analyzer.setLabel(label);
+		setLabel(label);
 		
 	}
 	
