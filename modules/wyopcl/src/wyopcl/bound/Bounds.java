@@ -187,7 +187,8 @@ public class Bounds {
 		String str = "Bounds [";
 		// Sort all the domains
 		List<Domain> domains = new ArrayList<Domain>(bounds.values());
-		Collections.sort(domains);
+		//All the domains are sorted by names.
+		Collections.sort(domains, new Domain(""));
 		for (Domain d : domains) {
 			str += "\n\t" + d.toString();
 		}

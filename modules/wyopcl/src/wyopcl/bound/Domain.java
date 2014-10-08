@@ -127,6 +127,11 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 	 * Implemented for sort the domains
 	 */
 	public int compare(Domain d0, Domain d1) {
+		//Compare the length
+		if(d0.getName().length() > d1.getName().length()){
+			return 1;//if name is longer, then the value is also bigger.
+		}
+		
 		return d0.compareTo(d1);
 	}
 
