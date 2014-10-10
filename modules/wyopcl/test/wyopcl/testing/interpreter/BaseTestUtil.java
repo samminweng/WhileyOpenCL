@@ -16,7 +16,7 @@ import junit.framework.AssertionFailedError;
 import static org.junit.Assert.*;
 
 public final class BaseTestUtil {
-	private final String version = "v0.3.30";
+	private final String version = "v0.3.31";
 	// user.dir is the current directory.
 	private final String workspace_path = System.getProperty("user.dir")+ File.separator;
 	private final String lib_path = workspace_path + "lib"+ File.separator;

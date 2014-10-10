@@ -165,18 +165,27 @@ public class WyilInterpreter extends Interpreter implements Builder{
 			for(Case mcase : method.cases()){
 				List<Block.Entry> entries = new ArrayList<Block.Entry>();
 				//Add the entries in the precondition.
-				Block pre = mcase.precondition();
-				if(pre != null){
-					entries.addAll(pre);
+				List<Block> pre_list = mcase.precondition();
+				if(pre_list != null){
+					Iterator<Block> iterator = pre_list.iterator();
+					while(iterator.hasNext()){
+						Block pre = iterator.next();
+						entries.addAll(pre);
+					}
+					
 				}	
 				//Add the entries in the body block.
 				Block blk = mcase.body();
 				entries.addAll(blk);
 				
 				//Add the entries in the postcondition.
-				Block post = mcase.postcondition();
-				if(post != null){
-					entries.addAll(post);
+				List<Block> post_list = mcase.postcondition();
+				if(post_list != null){
+					Iterator<Block> iterator = post_list.iterator();
+					while(iterator.hasNext()){
+						Block post = iterator.next();
+						entries.addAll(post);
+					}					
 				}
 								
 				Block block = new Block(blk.numInputs(), entries);
