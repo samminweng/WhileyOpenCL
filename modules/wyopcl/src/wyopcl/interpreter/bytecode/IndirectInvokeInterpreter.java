@@ -108,7 +108,8 @@ public class IndirectInvokeInterpreter extends Interpreter {
 		// Get the depth
 		int depth = currentStackframe.getDepth();
 		Closure closure = (Closure) currentStackframe.getRegister(code.reference());
-		Block blk = Interpreter.getFuncBlockByName(closure.lambda.name.toString(), code.type());
+		String annonymous_name = closure.lambda.name.module() +":" + closure.lambda.name.name();
+		Block blk = Interpreter.getFuncBlockByName(annonymous_name);
 		//Block blk = (Block) blocktable.get(closure.lambda.name.toString()).values().toArray()[0];
 		// Create a new StackFrame
 		StackFrame newStackFrame = new StackFrame(depth + 1, blk, 0, closure.lambda.name.toString(), code.target());

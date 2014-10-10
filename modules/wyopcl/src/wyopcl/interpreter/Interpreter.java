@@ -91,10 +91,12 @@ public abstract class Interpreter {
 	 */
 	public static Block getFuncBlockByName(String name, FunctionOrMethod... functionOrMethod){
 		//Get the Hashmap of function block by name
+		
+		
 		//Get the Block for the corresponding function/method.
 		if(blocktable.containsKey(name)){
 			HashMap<FunctionOrMethod, Block> hashMap = blocktable.get(name);
-			if (functionOrMethod == null){	
+			if (functionOrMethod == null || functionOrMethod.length == 0){	
 				return (Block) hashMap.values().toArray()[0];
 			}else{
 				return hashMap.get(functionOrMethod[0]);
