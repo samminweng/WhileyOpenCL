@@ -48,7 +48,14 @@ public class Bounds {
 	public BigInteger getUpper(String name) {
 		return getDomain(name).getUpperBound();
 	}
-	
+	/**
+	 * 
+	 * Widens the lower bound if existing lower bound > the new lower bound or 
+	 * existing lower bound is -infinity.
+	 * @param name the variable name
+	 * @param new_min the new lower bound
+	 * @return true if the lower bound is changed.
+	 */
 	public boolean widenLowerBound(String name, BigInteger new_min) {
 		try {
 			Domain existing_domain = getDomain(name);
@@ -65,7 +72,13 @@ public class Bounds {
 		}
 		return false;
 	}
-	
+	/**
+	 * Widens the upper bound if existing upper bound is < the new bound or
+	 * existing upper bound is infinity 
+	 * @param name
+	 * @param new_max
+	 * @return
+	 */
 	public boolean widenUpperBound(String name, BigInteger new_max) {
 		try {
 			Domain existing_domain = getDomain(name);

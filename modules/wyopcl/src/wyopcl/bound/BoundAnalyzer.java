@@ -121,6 +121,24 @@ public class BoundAnalyzer implements Builder{
 	
 
 	/**
+	 * Prints out each bytecode with line number and indentation.
+	 * @param name
+	 * @param line
+	 */
+	private int printWyILCode(Code code, String name, int line){
+		//Print out the bytecode with the format (e.g. 'main.9 [const %12 = 2345 : int]')
+		if(code instanceof Codes.Label){
+			System.out.println(name+"."+line+" ["+code+"]");
+		}else{
+			System.out.println(name+"."+line+" [\t"+code+"]");
+		}	
+		
+		return ++line;
+	}
+	
+	
+	
+	/**
 	 * Takes the in-memory wyil file and analyzes the range values for all variables.
 	 * @param module
 	 */
@@ -136,8 +154,9 @@ public class BoundAnalyzer implements Builder{
 				while(iterator.hasNext()){
 					//Get the Block.Entry
 					Block.Entry entry = iterator.next();
-					//check the code type and add the constraints 
-					line = dispatch(entry, method.name(), line);
+					//check the code type and add the constraints
+					dispatch(entry);
+					line = printWyILCode(entry.code, method.name(), line);
 				}
 			}	
 			
@@ -148,8 +167,12 @@ public class BoundAnalyzer implements Builder{
 
 	}
 
-
-	private int dispatch(Block.Entry entry, String name, int line){
+	/**
+	 * Checks the type of the wyil code and dispatches the code to the analyzer for
+	 * being executed by the <code>analyze(code)</code> 
+	 * @param entry
+	 */
+	private void dispatch(Block.Entry entry){
 		Code code = entry.code; 
 		try{
 			if (code instanceof Codes.AssertOrAssume) {			
@@ -244,16 +267,7 @@ public class BoundAnalyzer implements Builder{
 		} catch (Exception ex) {		
 			internalFailure(ex.getMessage(), filename, entry, ex);
 		}
-		//Print out the bytecode with the format (e.g. 'main.9 [const %12 = 2345 : int]')
-		if(code instanceof Codes.Label){
-			System.out.println(name+"."+line+" ["+code+"]");
-		}else{
-			System.out.println(name+"."+line+" [\t"+code+"]");
-		}
-		
-		
-		
-		return ++line;
+
 	}
 
 	
