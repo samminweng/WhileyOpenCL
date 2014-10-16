@@ -43,7 +43,8 @@ public class BoundAnalyzer implements Builder{
 	private Build.Project project;
 	private String filename;
 	private boolean verbose = false;
-	//private static WyilFile module;
+	
+	
 	private String[] args;
 	/**
 	 * For logging information.
@@ -97,7 +98,7 @@ public class BoundAnalyzer implements Builder{
 	 * Extracts the method or function declaration and converts it into a string.
 	 * @param method
 	 * @return
-	 */
+	 *//*
 	private void printFunctionOrMethodDel(WyilFile.FunctionOrMethodDeclaration method){
 		String str = "===============================================\n"; 
 		//Get the modifier (i.e. public, protected, private...)
@@ -117,53 +118,34 @@ public class BoundAnalyzer implements Builder{
 		}
 		str+="):";
 		System.out.println(str);
-	}
-	
-
-	/**
-	 * Prints out each bytecode with line number and indentation.
-	 * @param name
-	 * @param line
-	 */
-	private int printWyILCode(Code code, String name, int line){
-		//Print out the bytecode with the format (e.g. 'main.9 [const %12 = 2345 : int]')
-		if(code instanceof Codes.Label){
-			System.out.println(name+"."+line+" ["+code+"]");
-		}else{
-			System.out.println(name+"."+line+" [\t"+code+"]");
-		}	
-		
-		return ++line;
-	}
-	
+	}*/
 	
 	
 	/**
-	 * Takes the in-memory wyil file and analyzes the range values for all variables.
+	 * Takes the in-memory wyil file and analyzes the range values for all variables in each function.
 	 * @param module
 	 */
 	public void analyze(WyilFile module){
-		
+		Analyzer.getInstance().setModule(module);
 		for(WyilFile.FunctionOrMethodDeclaration method : module.functionOrMethods()) {			
-			printFunctionOrMethodDel(method);
+			//printFunctionOrMethodDel(method);
 			Analyzer.getInstance().setLabel("code");
 			int line = 0;
+			//Parse each byte-code and add the constraints accordingly.
 			for(Case mcase : method.cases()){
 				Block blk = mcase.body();
 				Iterator<wyil.lang.Code.Block.Entry> iterator = blk.iterator();
 				while(iterator.hasNext()){
 					//Get the Block.Entry
 					Block.Entry entry = iterator.next();
-					//check the code type and add the constraints
+					//check the code type and add the constraints according to code type.
 					dispatch(entry);
-					line = printWyILCode(entry.code, method.name(), line);
+					line = Analyzer.getInstance().printWyILCode(entry.code, method.name(), line);
 				}
 			}	
-			
-			Analyzer.getInstance().inferBoundsOverAllConstraintlists(verbose);
-		
-		}
-		
+			//Infer the bounds 
+			Analyzer.getInstance().inferBoundsOverAllConstraintlists(method, verbose);
+		}	
 
 	}
 

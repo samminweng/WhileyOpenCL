@@ -5,8 +5,12 @@ import java.util.Iterator;
 
 import wyil.lang.Codes;
 import wyil.lang.Codes.UnaryOperatorKind;
+import wyil.lang.Code;
 import wyil.lang.Constant;
 import wyil.lang.Type;
+import wyil.lang.Type.FunctionOrMethod;
+import wyil.lang.WyilFile;
+import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
 import wyopcl.bound.constraint.Assign;
 import wyopcl.bound.constraint.Const;
 import wyopcl.bound.constraint.Constraint;
@@ -16,6 +20,7 @@ import wyopcl.bound.constraint.GreaterThanEquals;
 import wyopcl.bound.constraint.LessThan;
 import wyopcl.bound.constraint.LessThanEquals;
 import wyopcl.bound.constraint.Negate;
+import wyopcl.bound.constraint.Range;
 import wyopcl.bound.constraint.Union;
 /***
  * A class to store all the constraints produced in the wyil file and infer the bounds consistent
@@ -28,11 +33,18 @@ import wyopcl.bound.constraint.Union;
 public class Analyzer {
 	//The hashmap stores the constraints with in the label value in each method or function.
 	private HashMap<String, ConstraintList> constraintListMap;
+	//The hashmap stores the unions of bounds for each functions.
+	private HashMap<WyilFile.FunctionOrMethodDeclaration, Bounds> unionOfBoundsMap;
 	private String label = "";
+	private WyilFile module;
+	//
+	private int depth = 0;
+	
 
 	private static Analyzer instance;	
 	public Analyzer(){
 		 constraintListMap = new HashMap<String, ConstraintList>();
+		 unionOfBoundsMap = new HashMap<WyilFile.FunctionOrMethodDeclaration, Bounds>();
 	}
 
 	/*Implement the 'Singleton' pattern to ensure this class has one instance.*/
@@ -43,14 +55,39 @@ public class Analyzer {
 		return instance;
 	}
 
+	public void setLabel(String label) {
+		this.label = label;
+	}
+	
+	public void setModule(WyilFile module) {
+		this.module = module;
+	}
 	
 	/**
+	 * Prints out each bytecode with line number and indentation.
+	 * @param name
+	 * @param line
+	 */
+	public int printWyILCode(Code code, String name, int line){
+		//Print out the bytecode with the format (e.g. 'main.9 [const %12 = 2345 : int]')
+		if(code instanceof Codes.Label){
+			System.out.println(name+"."+line+"."+depth+" ["+code+"]");
+		}else{
+			System.out.println(name+"."+line+"."+depth+" [\t"+code+"]");
+		}	
+		
+		return ++line;
+	}
+	
+	
+	/**
+	 *infer bounds consistent with all constraints.
 	 * 
 	 */
-	public void inferBoundsOverAllConstraintlists(boolean verbose){
+	public void inferBoundsOverAllConstraintlists(WyilFile.FunctionOrMethodDeclaration method, boolean verbose){
 		//Iterates through all the constraint lists and infer each list's fixed point.
 		Iterator<java.util.Map.Entry<String, ConstraintList>> iterator = constraintListMap.entrySet().iterator();
-		Bounds unionBounds = new Bounds();
+		Bounds unionOfBounds = new Bounds();
 		while(iterator.hasNext()){
 			java.util.Map.Entry<String, ConstraintList> entry = iterator.next();
 			//Infer the bounds consistent with all constraints.
@@ -63,14 +100,16 @@ public class Analyzer {
 						"\n"+bnd.toString()
 						+"\nisBoundConsistency="+bnd.checkBoundConsistency());
 			}				
-			unionBounds.union(bnd);
+			unionOfBounds.union(bnd);
 		}
 		
 		
-		System.out.println("\nUnion Bounds:"+
-				"\n"+unionBounds.toString()
-				+"\nisBoundConsistency="+unionBounds.checkBoundConsistency());
+		System.out.println("\nUnion of Bounds:"+
+				"\n"+unionOfBounds.toString()
+				+"\nisBoundConsistency="+unionOfBounds.checkBoundConsistency());
 		
+		//put the union of bounds in 
+		unionOfBoundsMap.put(method, unionOfBounds);
 		//Clear the map
 		constraintListMap.clear();
 	}
@@ -114,9 +153,7 @@ public class Analyzer {
 
 	}	
 
-	public void setLabel(String label) {
-		this.label = label;
-	}
+	
 
 
 	public void analyze(Codes.Assign code){
@@ -206,8 +243,6 @@ public class Analyzer {
 	public void analyze(Codes.Invoke code){
 		/*//String func_name = code.name.name();
 		
-		//Get the fun block from module.
-		//FunctionOrMethodDeclaration functionOrMethod = Analyzer.module.functionOrMethod(func_name, code.type());
 		int index = 0;
 		for(Type paramType: code.type().params()){
 			//Get the input parameters of integer type
@@ -225,7 +260,22 @@ public class Analyzer {
 			//String return_reg = "%"+code.target();
 			//this.getConstraintList().addConstraint(new Equals(return_reg, func_name));
 		}*/
-			
+		
+		//Get the fun declaration from module.
+		FunctionOrMethodDeclaration functionOrMethod = module.functionOrMethod(code.name.name(), code.type());		
+		
+		//Check if the function has been analyzed. If so, the union of bounds shall be used to
+		//add the equality 
+		if(unionOfBoundsMap.containsKey(functionOrMethod)){
+			Bounds bounds = unionOfBoundsMap.get(functionOrMethod);
+			//Check if the return type is integer
+			if(code.type().ret() instanceof Type.Int){
+				//Add the range constraint for the return register.
+				addConstraint(new Range("%"+code.target(), bounds.getLower("return"), bounds.getUpper("return")));
+			}	
+						
+		}
+		
 			
 	}
 	
