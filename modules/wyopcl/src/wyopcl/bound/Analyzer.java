@@ -1,9 +1,13 @@
 package wyopcl.bound;
 
+import static wycc.lang.SyntaxError.internalFailure;
+
 import java.util.HashMap;
 import java.util.Iterator;
 
+import wycc.lang.SyntaxError;
 import wyil.lang.Codes;
+import wyil.lang.Code.Block;
 import wyil.lang.Codes.UnaryOperatorKind;
 import wyil.lang.Code;
 import wyil.lang.Constant;
@@ -151,7 +155,111 @@ public class Analyzer {
 		new_list.addConstraint(c);
 		constraintListMap.put(new_label, new_list);
 
-	}	
+	}
+	
+	/**
+	 * Checks the type of the wyil code and dispatches the code to the analyzer for
+	 * being executed by the <code>analyze(code)</code> 
+	 * @param entry
+	 */
+	public void dispatch(Block.Entry entry, HashMap<WyilFile.FunctionOrMethodDeclaration, Bounds> unionOfBoundsMap){
+		Code code = entry.code; 
+		try{
+			if (code instanceof Codes.AssertOrAssume) {			
+				//AssertOrAssumeInterpreter.getInstance().interpret((Codes.AssertOrAssume)code, stackframe);
+			} else if (code instanceof Codes.Assign) {			
+				analyze((Codes.Assign)code);
+			} else if (code instanceof Codes.BinaryOperator) {			
+				//BinaryOperatorInterpreter.getInstance().interpret((Codes.BinaryOperator)code, stackframe);
+			} else if (code instanceof Codes.ListOperator) {
+				//ListOperatorInterpreter.getInstance().interpret((Codes.ListOperator)code, stackframe);
+			} else if (code instanceof Codes.StringOperator) {
+				//StringOperatorInterpreter.getInstance().interpret((Codes.StringOperator)code, stackframe);
+			} else if (code instanceof Codes.Convert) {			
+				//ConvertInterpreter.getInstance().interpret((Codes.Convert)code, stackframe);
+			} else if (code instanceof Codes.Const) {			
+				analyze((Codes.Const)code);
+			} else if (code instanceof Codes.Debug) {
+				//DebugInterpreter.getInstance().interpret((Codes.Debug)code, stackframe);
+			} else if (code instanceof Codes.Dereference) {
+				//DereferenceInterpreter.getInstance().interpret((Codes.Dereference)code, stackframe);
+			} else if (code instanceof Codes.Fail) {
+				//FailInterpreter.getInstance().interpret((Codes.Fail)code, stackframe);
+			} else if (code instanceof Codes.FieldLoad) {		
+				//FieldLoadInterpreter.getInstance().interpret((Codes.FieldLoad)code, stackframe);			
+			} else if (code instanceof Codes.ForAll) {				
+				Analyzer.getInstance().analyze((Codes.ForAll)code);
+			} else if (code instanceof Codes.Goto) {	
+				//GotoInterpreter.getInstance().interpret((Codes.Goto)code, stackframe);
+			} else if (code instanceof Codes.If) {
+				Analyzer.getInstance().analyze((Codes.If)code);			
+			} else if (code instanceof Codes.IfIs) {
+				//IfIsInterpreter.getInstance().interpret((Codes.IfIs)code, stackframe);
+			} else if (code instanceof Codes.IndirectInvoke) {			
+				//IndirectInvokeInterpreter.getInstance().interpret((Codes.IndirectInvoke)code, stackframe);
+			} else if (code instanceof Codes.Invoke) {			
+				analyze((Codes.Invoke)code, unionOfBoundsMap);
+			} else if (code instanceof Codes.Invert) {
+				//InvertInterpreter.getInstance().interpret((Codes.Invert)code, stackframe);
+			} else if (code instanceof Codes.LoopEnd) {
+				//LoopEndInterpreter.getInstance().interpret((Codes.LoopEnd)code, stackframe);									
+			} else if (code instanceof Codes.Label) {
+				Analyzer.getInstance().analyze((Codes.Label)code);
+			} else if (code instanceof Codes.Lambda) {
+				//LambdaInterpreter.getInstance().interpret((Codes.Lambda)code, stackframe);
+			} else if (code instanceof Codes.LengthOf) {			
+				//LengthOfInterpreter.getInstance().interpret((Codes.LengthOf)code, stackframe);
+			} else if (code instanceof Codes.IndexOf) {			
+				//IndexOfInterpreter.getInstance().interpret((Codes.IndexOf)code, stackframe);
+			} else if (code instanceof Codes.Loop) {			
+				//LoopInterpreter.getInstance().interpret((Codes.Loop)code, stackframe);			
+			} else if (code instanceof Codes.Move) {
+				internalFailure("Not implemented!", "", entry);
+			} else if (code instanceof Codes.NewMap) {
+				//NewMapInterpreter.getInstance().interpret((Codes.NewMap)code, stackframe);
+			} else if (code instanceof Codes.NewList) {			
+				Analyzer.getInstance().analyze((Codes.NewList)code);
+			} else if (code instanceof Codes.NewRecord) {
+				//NewRecordInterpreter.getInstance().interpret((Codes.NewRecord)code, stackframe);
+			} else if (code instanceof Codes.NewSet) {
+				//NewSetInterpreter.getInstance().interpret((Codes.NewSet)code, stackframe);
+			} else if (code instanceof Codes.NewTuple) {
+				//NewTupleInterpreter.getInstance().interpret((Codes.NewTuple)code, stackframe);
+			} else if (code instanceof Codes.Return) {			
+				Analyzer.getInstance().analyze((Codes.Return)code);
+			} else if (code instanceof Codes.NewObject) {
+				//NewObjectInterpreter.getInstance().interpret((Codes.NewObject)code, stackframe);
+			} else if (code instanceof Codes.Nop) {
+				//NopInterpreter.getInstance().interpret((Codes.Nop)code, stackframe);
+			} else if (code instanceof Codes.SetOperator){
+				//SetOperatorInterpreter.getInstance().interpret((Codes.SetOperator)code, stackframe);
+			} else if (code instanceof Codes.SubList) {
+				//SubListInterpreter.getInstance().interpret((Codes.SubList)code, stackframe);
+			} else if (code instanceof Codes.SubString) {
+				//SubStringInterpreter.getInstance().interpret((Codes.SubString)code, stackframe);
+			} else if (code instanceof Codes.Switch) {
+				//SwitchInterpreter.getInstance().interpret((Codes.Switch)code, stackframe);
+			} else if (code instanceof Codes.Throw) {
+				//ThrowInterpreter.getInstance().interpret((Codes.Throw)code, stackframe);
+			} else if (code instanceof Codes.TryCatch) {
+				//TryCatchInterpreter.getInstance().interpret((Codes.TryCatch)code, stackframe);
+			} else if (code instanceof Codes.TupleLoad) {
+				//TupleLoadInterpreter.getInstance().interpret((Codes.TupleLoad)code, stackframe);
+			} else if (code instanceof Codes.UnaryOperator){
+				Analyzer.getInstance().analyze((Codes.UnaryOperator)code);
+			} else if (code instanceof Codes.Update) {
+				//UpdateInterpreter.getInstance().interpret((Codes.Update)code, stackframe);
+			} else {
+				internalFailure("unknown wyil code encountered (" + code + ")", "", entry);
+			}
+		} catch (SyntaxError ex) {
+			throw ex;	
+		} catch (Exception ex) {		
+			internalFailure(ex.getMessage(), "", entry, ex);
+		}
+
+	}
+	
 
 	
 	public void analyze(Codes.Assign code){
