@@ -241,17 +241,7 @@ public class Analyzer {
 	public void analyze(Codes.Invoke code, HashMap<WyilFile.FunctionOrMethodDeclaration, Bounds> unionOfBoundsMap){
 		/*//String func_name = code.name.name();
 		
-		int index = 0;
-		for(Type paramType: code.type().params()){
-			//Get the input parameters of integer type
-			if(paramType instanceof Type.Int){
-				//String param = "%"+code.operand(index);
-				//Missing the variable name of function input parameters, so we used the function name temporarily.
-				//Add the equal constraint for input parameter.
-				//this.getConstraintList().addConstraint(new Equals(param, func_name));
-			}
-			index++;			
-		}
+		
 		
 		Type returnType = code.type().ret();
 		if(returnType instanceof Type.Int){
@@ -261,6 +251,21 @@ public class Analyzer {
 		
 		//Get the fun declaration from module.
 		FunctionOrMethodDeclaration functionOrMethod = module.functionOrMethod(code.name.name(), code.type());		
+		
+		
+		int index = 0;
+		for(Type paramType: code.type().params()){
+			//Get the input parameters of integer type
+			if(paramType instanceof Type.Int){
+				String param = "%"+code.operand(index);
+				//Missing the variable name of function input parameters, so we used the function name temporarily.
+				//Add the equal constraint for input parameter.
+				addConstraint(new Union(functionOrMethod.name(), param));
+			}
+			index++;			
+		}
+		
+		
 		
 		//Check if the function has been analyzed. If so, the union of bounds shall be used to
 		//add the equality 

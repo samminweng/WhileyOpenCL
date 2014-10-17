@@ -87,7 +87,8 @@ public class BoundAnalyzer implements Builder{
 			WyilFile module = sf.read();
 			filename = module.filename();
 			//Start analyzing the range.
-			analyze(module);
+			//analyze(module);
+			analyzeMethodCall(module);
 		}
 
 		long endTime = System.currentTimeMillis();
@@ -152,6 +153,41 @@ public class BoundAnalyzer implements Builder{
 
 	}
 
+	
+	/**
+	 * Takes the in-memory wyil file and analyzes the range values for all variables in each function.
+	 * @param module
+	 */
+	public void analyzeMethodCall(WyilFile module){
+		Analyzer.getInstance().setModule(module);
+		
+		for(WyilFile.FunctionOrMethodDeclaration method : module.functionOrMethod("main")) {			
+			//printFunctionOrMethodDel(method);
+			Analyzer.getInstance().setLabel("code");
+			int line = 0;
+			//Parse each byte-code and add the constraints accordingly.
+			for(Case mcase : method.cases()){
+				Block blk = mcase.body();
+				Iterator<wyil.lang.Code.Block.Entry> iterator = blk.iterator();
+				while(iterator.hasNext()){
+					//Get the Block.Entry
+					Block.Entry entry = iterator.next();
+					//check the code type and add the constraints according to code type.
+					dispatch(entry);
+					line = Analyzer.getInstance().printWyILCode(entry.code, method.name(), line);
+				}
+			}	
+			//Infer the bounds 
+			Bounds bnd = Analyzer.getInstance().inferBoundsOverAllConstraintlists(verbose);
+			unionOfBoundsMap.put(method, bnd);
+		}	
+
+	}
+	
+	
+	
+	
+	
 	/**
 	 * Checks the type of the wyil code and dispatches the code to the analyzer for
 	 * being executed by the <code>analyze(code)</code> 

@@ -24,17 +24,14 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 	}
 	
 	private int getReg(){
-		//Put the 'return' variables at the last item.
-		if(getName()=="return"){
-			return Integer.MAX_VALUE;
-		}		
-		
+		//return the register no.
 		if(name.contains("_")){
 			String[] name_str = name.split("_");
 			int reg = Integer.parseInt(name_str[0].substring(1));
 			return reg;
 		}
-		return Integer.parseInt(name.substring(1));		
+		//Return the maximal values for other cases.
+		return Integer.MAX_VALUE;
 	}
 	
 	private int getLabel(){
