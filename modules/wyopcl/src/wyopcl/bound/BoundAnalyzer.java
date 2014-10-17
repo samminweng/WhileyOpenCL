@@ -4,6 +4,7 @@ import static wycc.lang.SyntaxError.internalFailure;
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -43,7 +44,8 @@ public class BoundAnalyzer implements Builder{
 	private Build.Project project;
 	private String filename;
 	private boolean verbose = false;
-	
+	//The hashmap stores the unions of bounds for each function.
+	private HashMap<WyilFile.FunctionOrMethodDeclaration, Bounds> unionOfBoundsMap = new HashMap<WyilFile.FunctionOrMethodDeclaration, Bounds>();
 	
 	private String[] args;
 	/**
@@ -144,7 +146,8 @@ public class BoundAnalyzer implements Builder{
 				}
 			}	
 			//Infer the bounds 
-			Analyzer.getInstance().inferBoundsOverAllConstraintlists(method, verbose);
+			Bounds bnd = Analyzer.getInstance().inferBoundsOverAllConstraintlists(verbose);
+			unionOfBoundsMap.put(method, bnd);
 		}	
 
 	}
@@ -190,7 +193,7 @@ public class BoundAnalyzer implements Builder{
 			} else if (code instanceof Codes.IndirectInvoke) {			
 				//IndirectInvokeInterpreter.getInstance().interpret((Codes.IndirectInvoke)code, stackframe);
 			} else if (code instanceof Codes.Invoke) {			
-				Analyzer.getInstance().analyze((Codes.Invoke)code);
+				Analyzer.getInstance().analyze((Codes.Invoke)code, unionOfBoundsMap);
 			} else if (code instanceof Codes.Invert) {
 				//InvertInterpreter.getInstance().interpret((Codes.Invert)code, stackframe);
 			} else if (code instanceof Codes.LoopEnd) {

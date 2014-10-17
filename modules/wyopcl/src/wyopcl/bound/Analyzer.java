@@ -33,18 +33,17 @@ import wyopcl.bound.constraint.Union;
 public class Analyzer {
 	//The hashmap stores the constraints with in the label value in each method or function.
 	private HashMap<String, ConstraintList> constraintListMap;
-	//The hashmap stores the unions of bounds for each functions.
-	private HashMap<WyilFile.FunctionOrMethodDeclaration, Bounds> unionOfBoundsMap;
+	
 	private String label = "";
 	private WyilFile module;
-	//
+	
+
 	private int depth = 0;
 	
 
 	private static Analyzer instance;	
 	public Analyzer(){
-		 constraintListMap = new HashMap<String, ConstraintList>();
-		 unionOfBoundsMap = new HashMap<WyilFile.FunctionOrMethodDeclaration, Bounds>();
+		 constraintListMap = new HashMap<String, ConstraintList>();		
 	}
 
 	/*Implement the 'Singleton' pattern to ensure this class has one instance.*/
@@ -84,7 +83,7 @@ public class Analyzer {
 	 *infer bounds consistent with all constraints.
 	 * 
 	 */
-	public void inferBoundsOverAllConstraintlists(WyilFile.FunctionOrMethodDeclaration method, boolean verbose){
+	public Bounds inferBoundsOverAllConstraintlists(boolean verbose){
 		//Iterates through all the constraint lists and infer each list's fixed point.
 		Iterator<java.util.Map.Entry<String, ConstraintList>> iterator = constraintListMap.entrySet().iterator();
 		Bounds unionOfBounds = new Bounds();
@@ -109,9 +108,10 @@ public class Analyzer {
 				+"\nisBoundConsistency="+unionOfBounds.checkBoundConsistency());
 		
 		//put the union of bounds in 
-		unionOfBoundsMap.put(method, unionOfBounds);
+		//unionOfBoundsMap.put(method, unionOfBounds);
 		//Clear the map
 		constraintListMap.clear();
+		return unionOfBounds;
 	}
 	
 	
@@ -143,7 +143,7 @@ public class Analyzer {
 	 * @param new_label the name of new branch.
 	 * @param c constraint
 	 */
-	public void branchandAddConstraint(String new_label, Constraint c){
+	public void branchConstraintList(String new_label, Constraint c){
 		ConstraintList current_list = getCurrentConstraintList();
 		ConstraintList new_list;
 		//Cloned the current constraint list. 
@@ -154,8 +154,6 @@ public class Analyzer {
 	}	
 
 	
-
-
 	public void analyze(Codes.Assign code){
 		//Check if the assigned value is an integer
 		if(code.type() instanceof Type.Int){
@@ -191,29 +189,29 @@ public class Analyzer {
 			String right = "%"+code.rightOperand;
 			switch(code.op){
 			case EQ:			
-				branchandAddConstraint(code.target, new Equals(left+"_"+code.target, right));
+				branchConstraintList(code.target, new Equals(left+"_"+code.target, right));
 				addConstraint(new GreaterThanEquals(left, right));
 				break;
 			case NEQ:				
 
 				break;
 			case LT:			
-				branchandAddConstraint(code.target, new LessThan(left+"_"+code.target, right));
+				branchConstraintList(code.target, new LessThan(left+"_"+code.target, right));
 				addConstraint(new GreaterThanEquals(left, right));
 				break;
 			case LTEQ:
 				//Add the 'left <= right' constraint to the branched list.
-				branchandAddConstraint(code.target, new LessThanEquals(left+"_"+code.target, right));
+				branchConstraintList(code.target, new LessThanEquals(left+"_"+code.target, right));
 				//Add the constraint 'left>right' to current list
 				addConstraint(new GreaterThan(left, right));
 				break;
 			case GT:					
-				branchandAddConstraint(code.target, new GreaterThan(left+"_"+code.target, right));
+				branchConstraintList(code.target, new GreaterThan(left+"_"+code.target, right));
 				addConstraint(new LessThanEquals(left, right));
 				break;
 			case GTEQ:
 				//Branch and add the left >= right constraint to 
-				branchandAddConstraint(code.target, new GreaterThanEquals(left+"_"+code.target, right));
+				branchConstraintList(code.target, new GreaterThanEquals(left+"_"+code.target, right));
 				//Add the constraint 'left< right' to current constraint list.
 				addConstraint(new LessThan(left, right));		
 				break;
@@ -240,7 +238,7 @@ public class Analyzer {
 	 * The possible constraints include: none....
 	 * @param code
 	 */
-	public void analyze(Codes.Invoke code){
+	public void analyze(Codes.Invoke code, HashMap<WyilFile.FunctionOrMethodDeclaration, Bounds> unionOfBoundsMap){
 		/*//String func_name = code.name.name();
 		
 		int index = 0;
