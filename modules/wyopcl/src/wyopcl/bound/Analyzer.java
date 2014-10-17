@@ -36,27 +36,25 @@ import wyopcl.bound.constraint.Union;
  */
 public class Analyzer {
 	//The hashmap stores the constraints with in the label value in each method or function.
-	private HashMap<String, ConstraintList> constraintListMap;
+	private static HashMap<String, ConstraintList> constraintListMap;
 	
 	private String label = "";
 	private WyilFile module;
-	
-
 	private int depth = 0;
 	
 
-	private static Analyzer instance;	
+	//private static Analyzer instance;	
 	public Analyzer(){
 		 constraintListMap = new HashMap<String, ConstraintList>();		
 	}
 
-	/*Implement the 'Singleton' pattern to ensure this class has one instance.*/
+	/*Implement the 'Singleton' pattern to ensure this class has one instance.
 	public static Analyzer getInstance(){	
 		if (instance == null){
 			instance = new Analyzer();
 		}	
 		return instance;
-	}
+	}*/
 
 	public void setLabel(String label) {
 		this.label = label;
@@ -64,6 +62,10 @@ public class Analyzer {
 	
 	public void setModule(WyilFile module) {
 		this.module = module;
+	}
+	
+	public void setDepth(int depth){
+		this.depth = depth;
 	}
 	
 	/**
@@ -80,6 +82,42 @@ public class Analyzer {
 		}	
 		
 		return ++line;
+	}
+	
+	
+	/**
+	 *infer bounds consistent with all constraints.
+	 * 
+	 */
+	public Bounds inferBoundsOverAllConstraintlists(boolean verbose, WyilFile.FunctionOrMethodDeclaration main){
+		//Iterates through all the constraint lists and infer each list's fixed point.
+		Iterator<java.util.Map.Entry<String, ConstraintList>> iterator = constraintListMap.entrySet().iterator();
+		Bounds unionOfBounds = new Bounds();
+		while(iterator.hasNext()){
+			java.util.Map.Entry<String, ConstraintList> entry = iterator.next();
+			//Infer the bounds consistent with all constraints.
+			ConstraintList list = entry.getValue();
+			String label = entry.getKey();
+			Bounds bnd = new Bounds();
+			list.inferFixedPoint(bnd);
+			if(verbose){
+				System.out.println("\n"+label+":"+
+						"\n"+bnd.toString()
+						+"\nisBoundConsistency="+bnd.checkBoundConsistency());
+			}				
+			unionOfBounds.union(bnd);
+		}
+		
+		
+		System.out.println("\nUnion of Bounds in "+ main.name()+":"+
+				"\n"+unionOfBounds.toString()
+				+"\nisBoundConsistency="+unionOfBounds.checkBoundConsistency());
+		
+		//put the union of bounds in 
+		//unionOfBoundsMap.put(method, unionOfBounds);
+		//Clear the map
+		constraintListMap.clear();
+		return unionOfBounds;
 	}
 	
 	
@@ -107,7 +145,7 @@ public class Analyzer {
 		}
 		
 		
-		System.out.println("\nUnion of Bounds:"+
+		System.out.println("\nUnion of Bounds :"+
 				"\n"+unionOfBounds.toString()
 				+"\nisBoundConsistency="+unionOfBounds.checkBoundConsistency());
 		
@@ -115,6 +153,42 @@ public class Analyzer {
 		//unionOfBoundsMap.put(method, unionOfBounds);
 		//Clear the map
 		constraintListMap.clear();
+		return unionOfBounds;
+	}
+	
+	
+	/**
+	 *infer bounds consistent with all constraints.
+	 * 
+	 */
+	public Bounds inferBoundsOverAllConstraintlists(boolean verbose, Bounds unionOfBounds){
+		//Iterates through all the constraint lists and infer each list's fixed point.
+		Iterator<java.util.Map.Entry<String, ConstraintList>> iterator = constraintListMap.entrySet().iterator();
+		//Bounds unionOfBounds = new Bounds();
+		while(iterator.hasNext()){
+			java.util.Map.Entry<String, ConstraintList> entry = iterator.next();
+			//Infer the bounds consistent with all constraints.
+			ConstraintList list = entry.getValue();
+			String label = entry.getKey();
+			Bounds bnd = new Bounds();
+			list.inferFixedPoint(bnd);
+			if(verbose){
+				System.out.println("\n"+label+":"+
+						"\n"+bnd.toString()
+						+"\nisBoundConsistency="+bnd.checkBoundConsistency());
+			}				
+			unionOfBounds.union(bnd);
+		}
+		
+		
+		System.out.println("\nUnion of Bounds:"+
+				"\n"+unionOfBounds.toString()
+				+"\nisBoundConsistency="+unionOfBounds.checkBoundConsistency());
+		
+		//put the union of bounds in 
+		//unionOfBoundsMap.put(method, unionOfBounds);
+		//Clear the map
+		//constraintListMap.clear();
 		return unionOfBounds;
 	}
 	
@@ -188,11 +262,11 @@ public class Analyzer {
 			} else if (code instanceof Codes.FieldLoad) {		
 				//FieldLoadInterpreter.getInstance().interpret((Codes.FieldLoad)code, stackframe);			
 			} else if (code instanceof Codes.ForAll) {				
-				Analyzer.getInstance().analyze((Codes.ForAll)code);
+				analyze((Codes.ForAll)code);
 			} else if (code instanceof Codes.Goto) {	
 				//GotoInterpreter.getInstance().interpret((Codes.Goto)code, stackframe);
 			} else if (code instanceof Codes.If) {
-				Analyzer.getInstance().analyze((Codes.If)code);			
+				analyze((Codes.If)code);			
 			} else if (code instanceof Codes.IfIs) {
 				//IfIsInterpreter.getInstance().interpret((Codes.IfIs)code, stackframe);
 			} else if (code instanceof Codes.IndirectInvoke) {			
@@ -204,7 +278,7 @@ public class Analyzer {
 			} else if (code instanceof Codes.LoopEnd) {
 				//LoopEndInterpreter.getInstance().interpret((Codes.LoopEnd)code, stackframe);									
 			} else if (code instanceof Codes.Label) {
-				Analyzer.getInstance().analyze((Codes.Label)code);
+				analyze((Codes.Label)code);
 			} else if (code instanceof Codes.Lambda) {
 				//LambdaInterpreter.getInstance().interpret((Codes.Lambda)code, stackframe);
 			} else if (code instanceof Codes.LengthOf) {			
@@ -218,7 +292,7 @@ public class Analyzer {
 			} else if (code instanceof Codes.NewMap) {
 				//NewMapInterpreter.getInstance().interpret((Codes.NewMap)code, stackframe);
 			} else if (code instanceof Codes.NewList) {			
-				Analyzer.getInstance().analyze((Codes.NewList)code);
+				analyze((Codes.NewList)code);
 			} else if (code instanceof Codes.NewRecord) {
 				//NewRecordInterpreter.getInstance().interpret((Codes.NewRecord)code, stackframe);
 			} else if (code instanceof Codes.NewSet) {
@@ -226,7 +300,7 @@ public class Analyzer {
 			} else if (code instanceof Codes.NewTuple) {
 				//NewTupleInterpreter.getInstance().interpret((Codes.NewTuple)code, stackframe);
 			} else if (code instanceof Codes.Return) {			
-				Analyzer.getInstance().analyze((Codes.Return)code);
+				analyze((Codes.Return)code);
 			} else if (code instanceof Codes.NewObject) {
 				//NewObjectInterpreter.getInstance().interpret((Codes.NewObject)code, stackframe);
 			} else if (code instanceof Codes.Nop) {
@@ -246,7 +320,7 @@ public class Analyzer {
 			} else if (code instanceof Codes.TupleLoad) {
 				//TupleLoadInterpreter.getInstance().interpret((Codes.TupleLoad)code, stackframe);
 			} else if (code instanceof Codes.UnaryOperator){
-				Analyzer.getInstance().analyze((Codes.UnaryOperator)code);
+				analyze((Codes.UnaryOperator)code);
 			} else if (code instanceof Codes.Update) {
 				//UpdateInterpreter.getInstance().interpret((Codes.Update)code, stackframe);
 			} else {
@@ -361,7 +435,7 @@ public class Analyzer {
 		FunctionOrMethodDeclaration functionOrMethod = module.functionOrMethod(code.name.name(), code.type());		
 		
 		
-		int index = 0;
+		/*int index = 0;
 		for(Type paramType: code.type().params()){
 			//Get the input parameters of integer type
 			if(paramType instanceof Type.Int){
@@ -371,7 +445,7 @@ public class Analyzer {
 				addConstraint(new Union(functionOrMethod.name(), param));
 			}
 			index++;			
-		}
+		}*/
 		
 		
 		
