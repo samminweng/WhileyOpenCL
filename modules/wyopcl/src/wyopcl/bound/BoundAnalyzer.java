@@ -72,7 +72,6 @@ public class BoundAnalyzer implements Builder{
 
 	public void setVerbose(boolean verbose) {
 		this.verbose = verbose;
-
 	}
 
 
@@ -100,72 +99,21 @@ public class BoundAnalyzer implements Builder{
 		return generatedFiles;
 	}
 
-	/**
-	 * Extracts the method or function declaration and converts it into a string.
-	 * @param method
-	 * @return
-	 *//*
-	private void printFunctionOrMethodDel(WyilFile.FunctionOrMethodDeclaration method){
-		String str = "===============================================\n"; 
-		//Get the modifier (i.e. public, protected, private...)
-		str += ((method.hasModifier(Modifier.PUBLIC)))? Modifier.PUBLIC.toString() : "";
-		str += ((method.hasModifier(Modifier.PRIVATE)))? Modifier.PRIVATE.toString() : "";
-		str += ((method.hasModifier(Modifier.PROTECTED)))? Modifier.PROTECTED.toString() : "";
-		str += ((method.hasModifier(Modifier.NATIVE)))? Modifier.NATIVE.toString() : "";
-		str += ((method.hasModifier(Modifier.EXPORT)))? Modifier.EXPORT.toString() : "";
-
-		//Get the return type
-		str += method.type().ret() + " ";
-		//Get the method name
-		str += method.name() + "(";
-		//Get the parameter type
-		for(Type param :method.type().params()) {
-			str += param;						
-		}
-		str+="):";
-		System.out.println(str);
-	}*/
-
-	private void addConstrantsAndInferBounds(WyilFile.FunctionOrMethodDeclaration method){
-		Analyzer analyzer = new Analyzer();
-		analyzer.setLabel("code");
-		int line = 0;
-		//Parse each byte-code and add the constraints accordingly.
-		for(Case mcase : method.cases()){
-			Block blk = mcase.body();
-			Iterator<wyil.lang.Code.Block.Entry> iterator = blk.iterator();
-			while(iterator.hasNext()){
-				//Get the Block.Entry
-				Block.Entry entry = iterator.next();	
-				analyzer.dispatch(entry, unionOfBoundsMap);
-				line = analyzer.printWyILCode(entry.code, method.name(), line);
-			}
-		}	
-		//Infer the bounds 
-		Bounds bnd = analyzer.inferBoundsOverAllConstraintlists(verbose);
-		unionOfBoundsMap.put(method, bnd);
+	private void printBounds(Bounds bnd){
+		System.out.println("\n"+bnd.toString()
+						+"\nisBoundConsistency="+bnd.checkBoundConsistency());
 	}
 	
-	
-	/**
-	 * Takes the in-memory wyil file and analyzes the range values for all variables in each function.
-	 * @param module
-	 */
-	public void analyze(WyilFile module){
-		for(WyilFile.FunctionOrMethodDeclaration method : module.functionOrMethods()) {			
-			addConstrantsAndInferBounds(method);
-		}
-	}
-
-	
-	private void addConstrants(WyilFile.FunctionOrMethodDeclaration functionOrMethod, Analyzer analyzer){
-		
+	private Bounds getBoundsByFunc(FunctionOrMethodDeclaration functionOrMethod){
 		if(!unionOfBoundsMap.containsKey(functionOrMethod)){
 			unionOfBoundsMap.put(functionOrMethod, new Bounds());
-		}
-		Bounds bnd = unionOfBoundsMap.get(functionOrMethod);
+		}		
+		return unionOfBoundsMap.get(functionOrMethod);
 		
-		analyzer.setLabel("code");
+	}
+	
+	
+	private void IterateWyILCodeAndAddConstraints(WyilFile.FunctionOrMethodDeclaration functionOrMethod, Analyzer analyzer){
 		int line = 0;
 		//Parse each byte-code and add the constraints accordingly.
 		for(Case mcase : functionOrMethod.cases()){
@@ -174,28 +122,35 @@ public class BoundAnalyzer implements Builder{
 			while(iterator.hasNext()){
 				//Get the Block.Entry
 				Block.Entry entry = iterator.next();	
-				analyzer.dispatch(entry, unionOfBoundsMap);
-				if(verbose){
-					line = analyzer.printWyILCode(entry.code, functionOrMethod.name(), line);
-				}				
+				analyzer.dispatch(entry);
+				line = analyzer.printWyILCode(entry.code, functionOrMethod.name(), line);				
 			}
-		}	
-		
+		}
 	}
 	
 	
+	/**
+	 * Takes the in-memory wyil file and analyzes the variable ranges for each function.
+	 * @param module
+	 */
+	public void analyze(WyilFile module){
+		for(WyilFile.FunctionOrMethodDeclaration method : module.functionOrMethods()) {			
+			Analyzer analyzer = new Analyzer(0);
+			IterateWyILCodeAndAddConstraints(method, analyzer);	
+			//Infer the bounds 
+			printBounds(analyzer.inferBoundsOverAllConstraintlists(verbose));
+			analyzer = null;
+		}
+	}
+
 	
 	/**
 	 * Takes the in-memory wyil file and analyzes the range values for all variables in each function.
 	 * @param module
 	 */
 	public void analyzeMethodCall(WyilFile module){
-		Analyzer analyzer = new Analyzer();
-		analyzer.setDepth(0);
-		analyzer.setModule(module);
-		
+		Analyzer analyzer = new Analyzer(0);
 		WyilFile.FunctionOrMethodDeclaration main = module.functionOrMethod("main").get(0);
-		//Analyzer.getInstance().setLabel("code");
 		int line = 0;
 		//Parse each byte-code and add the constraints accordingly.
 		for(Case mcase : main.cases()){
@@ -210,13 +165,10 @@ public class BoundAnalyzer implements Builder{
 					//Get the function
 					Codes.Invoke code = (Codes.Invoke)entry.code;
 					FunctionOrMethodDeclaration functionOrMethod = module.functionOrMethod(code.name.name(), code.type());					
-					if(functionOrMethod != null){			
-						//Bounds bnd = unionOfBoundsMap.get(functionOrMethod);
+					if(functionOrMethod != null){
 						//Infer the bounds 
-						Bounds bnd = analyzer.inferBoundsOverAllConstraintlists(verbose, main);
-						unionOfBoundsMap.put(main, bnd);
-						Analyzer invokeanalyzer = new Analyzer();
-						invokeanalyzer.setDepth(1);
+						unionOfBoundsMap.put(functionOrMethod, analyzer.inferBoundsOverAllConstraintlists(verbose));
+						Analyzer invokeanalyzer = new Analyzer(1);
 						int index = 0;
 						for(Type paramType: code.type().params()){
 							//Get the input parameters of integer type
@@ -225,31 +177,35 @@ public class BoundAnalyzer implements Builder{
 								//Missing the variable name of function input parameters, so we used the function name temporarily.
 								//Add lower bounds and upper bounds for input parameters.														
 								invokeanalyzer.addConstraint(new Range("%"+index,
-										unionOfBoundsMap.get(main).getLower(param),
-										unionOfBoundsMap.get(main).getUpper(param)));
+										getBoundsByFunc(main).getLower(param),
+										getBoundsByFunc(main).getUpper(param)));
 							}
 							index++;			
 						}
-						addConstrants(functionOrMethod, invokeanalyzer);
+						IterateWyILCodeAndAddConstraints(functionOrMethod, invokeanalyzer);
 						//Infer the bounds 
-						unionOfBoundsMap.put(functionOrMethod,  invokeanalyzer.inferBoundsOverAllConstraintlists(verbose, bnd));
+						Bounds bnd = invokeanalyzer.inferBoundsOverAllConstraintlists(verbose);
+						unionOfBoundsMap.put(functionOrMethod,  bnd);
+						printBounds(bnd);
 						//propagate the bounds of return values.
 						String ret = "%"+code.target();						
 						analyzer.addConstraint(new Range(ret,
-								unionOfBoundsMap.get(functionOrMethod).getLower("return"),
-								unionOfBoundsMap.get(functionOrMethod).getUpper("return")));
+								getBoundsByFunc(functionOrMethod).getLower("return"),
+								getBoundsByFunc(functionOrMethod).getUpper("return")));
 						
 						invokeanalyzer = null;
 					}
 				}else{
-					analyzer.dispatch(entry, unionOfBoundsMap);					
+					analyzer.dispatch(entry);					
 				}
 				
 			}
 		}	
 		//Infer the bounds 
-		Bounds bnd = analyzer.inferBoundsOverAllConstraintlists(verbose, main);
-		unionOfBoundsMap.put(main, bnd);
+		unionOfBoundsMap.put(main, analyzer.inferBoundsOverAllConstraintlists(verbose));
+		
+		printBounds(analyzer.inferBoundsOverAllConstraintlists(verbose));
+		
 	}
 
 

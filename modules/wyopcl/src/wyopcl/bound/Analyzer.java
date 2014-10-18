@@ -37,27 +37,18 @@ import wyopcl.bound.constraint.Union;
 public class Analyzer {
 	//The hashmap stores the constraints with in the label value in each method or function.
 	private HashMap<String, ConstraintList> constraintListMap;
-	
-	private String label = "";
-	private WyilFile module;
-	private int depth = 0;
-	
+	private Bounds unionOfBounds;
+	private String label = "code";
+	private final int depth;	
 
-	//private static Analyzer instance;	
-	public Analyzer(){
-		 constraintListMap = new HashMap<String, ConstraintList>();		
+	public Analyzer(int depth){
+		 constraintListMap = new HashMap<String, ConstraintList>();
+		 unionOfBounds = new Bounds();
+		 this.depth = depth;
 	}
 
 	public void setLabel(String label) {
 		this.label = label;
-	}
-	
-	public void setModule(WyilFile module) {
-		this.module = module;
-	}
-	
-	public void setDepth(int depth){
-		this.depth = depth;
 	}
 	
 	/**
@@ -74,43 +65,9 @@ public class Analyzer {
 		}	
 		
 		return ++line;
-	}
+	}	
 	
 	
-	/**
-	 *infer bounds consistent with all constraints.
-	 * 
-	 */
-	public Bounds inferBoundsOverAllConstraintlists(boolean verbose, WyilFile.FunctionOrMethodDeclaration main){
-		//Iterates through all the constraint lists and infer each list's fixed point.
-		Iterator<java.util.Map.Entry<String, ConstraintList>> iterator = constraintListMap.entrySet().iterator();
-		Bounds unionOfBounds = new Bounds();
-		while(iterator.hasNext()){
-			java.util.Map.Entry<String, ConstraintList> entry = iterator.next();
-			//Infer the bounds consistent with all constraints.
-			ConstraintList list = entry.getValue();
-			String label = entry.getKey();
-			Bounds bnd = new Bounds();
-			list.inferFixedPoint(bnd);
-			if(verbose){
-				System.out.println("\n"+label+":"+
-						"\n"+bnd.toString()
-						+"\nisBoundConsistency="+bnd.checkBoundConsistency());
-			}				
-			unionOfBounds.union(bnd);
-		}
-		
-		
-		System.out.println("\nUnion of Bounds in "+ main.name()+":"+
-				"\n"+unionOfBounds.toString()
-				+"\nisBoundConsistency="+unionOfBounds.checkBoundConsistency());
-		
-		//put the union of bounds in 
-		//unionOfBoundsMap.put(method, unionOfBounds);
-		//Clear the map
-		constraintListMap.clear();
-		return unionOfBounds;
-	}
 	
 	
 	/**
@@ -120,70 +77,28 @@ public class Analyzer {
 	public Bounds inferBoundsOverAllConstraintlists(boolean verbose){
 		//Iterates through all the constraint lists and infer each list's fixed point.
 		Iterator<java.util.Map.Entry<String, ConstraintList>> iterator = constraintListMap.entrySet().iterator();
-		Bounds unionOfBounds = new Bounds();
+		
 		while(iterator.hasNext()){
 			java.util.Map.Entry<String, ConstraintList> entry = iterator.next();
 			//Infer the bounds consistent with all constraints.
 			ConstraintList list = entry.getValue();
-			String label = entry.getKey();
 			Bounds bnd = new Bounds();
 			list.inferFixedPoint(bnd);
-			if(verbose){
+			/*if(verbose){
 				System.out.println("\n"+label+":"+
 						"\n"+bnd.toString()
 						+"\nisBoundConsistency="+bnd.checkBoundConsistency());
-			}				
+			}*/				
 			unionOfBounds.union(bnd);
-		}
-		
-		
-		System.out.println("\nUnion of Bounds :"+
-				"\n"+unionOfBounds.toString()
-				+"\nisBoundConsistency="+unionOfBounds.checkBoundConsistency());
-		
-		//put the union of bounds in 
-		//unionOfBoundsMap.put(method, unionOfBounds);
+		}				
+
 		//Clear the map
 		constraintListMap.clear();
 		return unionOfBounds;
 	}
 	
 	
-	/**
-	 *infer bounds consistent with all constraints.
-	 * 
-	 */
-	public Bounds inferBoundsOverAllConstraintlists(boolean verbose, Bounds unionOfBounds){
-		//Iterates through all the constraint lists and infer each list's fixed point.
-		Iterator<java.util.Map.Entry<String, ConstraintList>> iterator = constraintListMap.entrySet().iterator();
-		//Bounds unionOfBounds = new Bounds();
-		while(iterator.hasNext()){
-			java.util.Map.Entry<String, ConstraintList> entry = iterator.next();
-			//Infer the bounds consistent with all constraints.
-			ConstraintList list = entry.getValue();
-			String label = entry.getKey();
-			Bounds bnd = new Bounds();
-			list.inferFixedPoint(bnd);
-			if(verbose){
-				System.out.println("\n"+label+":"+
-						"\n"+bnd.toString()
-						+"\nisBoundConsistency="+bnd.checkBoundConsistency());
-			}				
-			unionOfBounds.union(bnd);
-		}
-		
-		
-		System.out.println("\nUnion of Bounds:"+
-				"\n"+unionOfBounds.toString()
-				+"\nisBoundConsistency="+unionOfBounds.checkBoundConsistency());
-		
-		//put the union of bounds in 
-		//unionOfBoundsMap.put(method, unionOfBounds);
-		//Clear the map
-		//constraintListMap.clear();
-		return unionOfBounds;
-	}
-	
+
 	
 	/**
 	 * Return the current constraint list.
@@ -228,7 +143,7 @@ public class Analyzer {
 	 * being executed by the <code>analyze(code)</code> 
 	 * @param entry
 	 */
-	public void dispatch(Block.Entry entry, HashMap<WyilFile.FunctionOrMethodDeclaration, Bounds> unionOfBoundsMap){
+	public void dispatch(Block.Entry entry){
 		Code code = entry.code; 
 		try{
 			if (code instanceof Codes.AssertOrAssume) {			
@@ -264,7 +179,7 @@ public class Analyzer {
 			} else if (code instanceof Codes.IndirectInvoke) {			
 				//IndirectInvokeInterpreter.getInstance().interpret((Codes.IndirectInvoke)code, stackframe);
 			} else if (code instanceof Codes.Invoke) {			
-				analyze((Codes.Invoke)code, unionOfBoundsMap);
+				analyze((Codes.Invoke)code);
 			} else if (code instanceof Codes.Invert) {
 				//InvertInterpreter.getInstance().interpret((Codes.Invert)code, stackframe);
 			} else if (code instanceof Codes.LoopEnd) {
@@ -412,10 +327,8 @@ public class Analyzer {
 	 * The possible constraints include: none....
 	 * @param code
 	 */
-	public void analyze(Codes.Invoke code, HashMap<WyilFile.FunctionOrMethodDeclaration, Bounds> unionOfBoundsMap){
+	public void analyze(Codes.Invoke code){
 		/*//String func_name = code.name.name();
-		
-		
 		
 		Type returnType = code.type().ret();
 		if(returnType instanceof Type.Int){
@@ -424,7 +337,7 @@ public class Analyzer {
 		}*/
 		
 		//Get the fun declaration from module.
-		FunctionOrMethodDeclaration functionOrMethod = module.functionOrMethod(code.name.name(), code.type());		
+		//FunctionOrMethodDeclaration functionOrMethod = module.functionOrMethod(code.name.name(), code.type());		
 		
 		
 		/*int index = 0;
@@ -443,7 +356,7 @@ public class Analyzer {
 		
 		//Check if the function has been analyzed. If so, the union of bounds shall be used to
 		//add the equality 
-		if(unionOfBoundsMap.containsKey(functionOrMethod)){
+		/*if(unionOfBoundsMap.containsKey(functionOrMethod)){
 			Bounds bounds = unionOfBoundsMap.get(functionOrMethod);
 			//Check if the return type is integer
 			if(code.type().ret() instanceof Type.Int){
@@ -451,7 +364,7 @@ public class Analyzer {
 				addConstraint(new Range("%"+code.target(), bounds.getLower("return"), bounds.getUpper("return")));
 			}	
 						
-		}
+		}*/
 		
 			
 	}

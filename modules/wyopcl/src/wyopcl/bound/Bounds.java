@@ -19,7 +19,6 @@ import java.util.Map.Entry;
  */
 public class Bounds {
 	// Every subclass shares the 'bounds' variable;
-	//protected static HashMap<String, Domain> bounds;
 	private HashMap<String, Domain> bounds;
 	public boolean isChanged = false;
 	
