@@ -25,11 +25,14 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 	
 	private int getReg(){
 		//return the register no.
-		if(name.contains("_")){
-			String[] name_str = name.split("_");
-			int reg = Integer.parseInt(name_str[0].substring(1));
-			return reg;
+		if(name.matches("^%\\d.*")){
+			if(name.contains("_")){
+				String[] name_str = name.split("_");
+				return Integer.parseInt(name_str[0].substring(1));
+			}
+			return Integer.parseInt(name.split("^%")[1]);
 		}
+	
 		//Return the maximal values for other cases.
 		return Integer.MAX_VALUE;
 	}

@@ -166,8 +166,11 @@ public class BoundAnalyzer implements Builder{
 					Codes.Invoke code = (Codes.Invoke)entry.code;
 					FunctionOrMethodDeclaration functionOrMethod = module.functionOrMethod(code.name.name(), code.type());					
 					if(functionOrMethod != null){
-						//Infer the bounds 
-						unionOfBoundsMap.put(functionOrMethod, analyzer.inferBoundsOverAllConstraintlists(verbose));
+						
+						
+						//Infer the bounds
+						Bounds bnd = analyzer.inferBoundsOverAllConstraintlists(verbose);
+						//unionOfBoundsMap.put(functionOrMethod, analyzer.inferBoundsOverAllConstraintlists(verbose));
 						Analyzer invokeanalyzer = new Analyzer(1);
 						int index = 0;
 						for(Type paramType: code.type().params()){
@@ -177,23 +180,22 @@ public class BoundAnalyzer implements Builder{
 								//Missing the variable name of function input parameters, so we used the function name temporarily.
 								//Add lower bounds and upper bounds for input parameters.														
 								invokeanalyzer.addConstraint(new Range("%"+index,
-										getBoundsByFunc(main).getLower(param),
-										getBoundsByFunc(main).getUpper(param)));
+										bnd.getLower(param),
+										bnd.getUpper(param)));
 							}
 							index++;			
 						}
 						IterateWyILCodeAndAddConstraints(functionOrMethod, invokeanalyzer);
 						//Infer the bounds 
-						Bounds bnd = invokeanalyzer.inferBoundsOverAllConstraintlists(verbose);
-						unionOfBoundsMap.put(functionOrMethod,  bnd);
+						bnd = invokeanalyzer.inferBoundsOverAllConstraintlists(verbose);
 						printBounds(bnd);
+						unionOfBoundsMap.put(functionOrMethod,  bnd);
+						invokeanalyzer = null;						
 						//propagate the bounds of return values.
 						String ret = "%"+code.target();						
 						analyzer.addConstraint(new Range(ret,
 								getBoundsByFunc(functionOrMethod).getLower("return"),
 								getBoundsByFunc(functionOrMethod).getUpper("return")));
-						
-						invokeanalyzer = null;
 					}
 				}else{
 					analyzer.dispatch(entry);					
