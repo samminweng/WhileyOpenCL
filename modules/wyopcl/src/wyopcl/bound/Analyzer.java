@@ -38,13 +38,16 @@ public class Analyzer {
 	//The hashmap stores the constraints with in the label value in each method or function.
 	private HashMap<String, ConstraintList> constraintListMap;
 	private Bounds unionOfBounds;
-	private String label = "code";
+	private String assert_label;
+	private String label;
 	private final int depth;	
 
 	public Analyzer(int depth){
-		 constraintListMap = new HashMap<String, ConstraintList>();
-		 unionOfBounds = new Bounds();
+		 this.constraintListMap = new HashMap<String, ConstraintList>();
+		 this.unionOfBounds = new Bounds();
 		 this.depth = depth;
+		 this.assert_label = "";
+		 this.label = "code";
 	}
 
 	public void setLabel(String label) {
@@ -117,9 +120,11 @@ public class Analyzer {
 	 * Adds the constraint to the current constraint list.
 	 * @param c
 	 */
-	public void addConstraint(Constraint c){				
-		ConstraintList list = getCurrentConstraintList();
-		list.addConstraint(c);
+	public void addConstraint(Constraint c){
+		if(assert_label.equals("")){
+			ConstraintList list = getCurrentConstraintList();
+			list.addConstraint(c);
+		}		
 	}
 
 	/**
@@ -147,7 +152,7 @@ public class Analyzer {
 		Code code = entry.code; 
 		try{
 			if (code instanceof Codes.AssertOrAssume) {			
-				//AssertOrAssumeInterpreter.getInstance().interpret((Codes.AssertOrAssume)code, stackframe);
+				analyze((Codes.AssertOrAssume)code);
 			} else if (code instanceof Codes.Assign) {			
 				analyze((Codes.Assign)code);
 			} else if (code instanceof Codes.BinaryOperator) {			
@@ -242,6 +247,12 @@ public class Analyzer {
 	}
 	
 
+	public void analyze(Codes.AssertOrAssume code){
+		//Set the assert_label so that no constraints are added to list.
+		this.assert_label = code.target;
+		
+	}
+	
 	
 	public void analyze(Codes.Assign code){
 		//Check if the assigned value is an integer
@@ -378,8 +389,13 @@ public class Analyzer {
 	public void analyze(Codes.Label code){
 		//check if map contains the constrainlist.
 		String label = code.label;
-		//Switch the current constraint list by setting the label with new value.
-		setLabel(label);
+		if(label.equals(this.assert_label)){
+			this.assert_label = "";
+		}else{
+			//Switch the current constraint list by setting the label with new value.
+			setLabel(label);
+		}
+		
 		
 	}
 	

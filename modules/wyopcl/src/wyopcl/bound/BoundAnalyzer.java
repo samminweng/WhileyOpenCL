@@ -162,26 +162,25 @@ public class BoundAnalyzer implements Builder{
 				line = analyzer.printWyILCode(entry.code, main.name(), line);
 				//check the code type and add the constraints according to code type.
 				if(entry.code instanceof Codes.Invoke){
+					//Infer the bounds
+					Bounds bnd = analyzer.inferBoundsOverAllConstraintlists(verbose);
+					printBounds(bnd);
+					unionOfBoundsMap.put(main, bnd);
 					//Get the function
 					Codes.Invoke code = (Codes.Invoke)entry.code;
 					FunctionOrMethodDeclaration functionOrMethod = module.functionOrMethod(code.name.name(), code.type());					
-					if(functionOrMethod != null){
-						
-						
-						//Infer the bounds
-						Bounds bnd = analyzer.inferBoundsOverAllConstraintlists(verbose);
-						//unionOfBoundsMap.put(functionOrMethod, analyzer.inferBoundsOverAllConstraintlists(verbose));
+					if(functionOrMethod != null){						
 						Analyzer invokeanalyzer = new Analyzer(1);
 						int index = 0;
 						for(Type paramType: code.type().params()){
 							//Get the input parameters of integer type
-							if(paramType instanceof Type.Int){
+							if(paramType instanceof Type.Int ||
+									(paramType instanceof Type.List && ((Type.List)paramType).element() instanceof Type.Int)){
 								String param = "%"+code.operand(index);
-								//Missing the variable name of function input parameters, so we used the function name temporarily.
 								//Add lower bounds and upper bounds for input parameters.														
 								invokeanalyzer.addConstraint(new Range("%"+index,
-										bnd.getLower(param),
-										bnd.getUpper(param)));
+										getBoundsByFunc(main).getLower(param),
+										getBoundsByFunc(main).getUpper(param)));
 							}
 							index++;			
 						}
@@ -189,7 +188,7 @@ public class BoundAnalyzer implements Builder{
 						//Infer the bounds 
 						bnd = invokeanalyzer.inferBoundsOverAllConstraintlists(verbose);
 						printBounds(bnd);
-						unionOfBoundsMap.put(functionOrMethod,  bnd);
+						unionOfBoundsMap.put(functionOrMethod, bnd);
 						invokeanalyzer = null;						
 						//propagate the bounds of return values.
 						String ret = "%"+code.target();						
