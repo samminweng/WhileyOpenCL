@@ -36,7 +36,7 @@ import wyopcl.bound.constraint.Union;
  */
 public class Analyzer {
 	//The hashmap stores the constraints with in the label value in each method or function.
-	private static HashMap<String, ConstraintList> constraintListMap;
+	private HashMap<String, ConstraintList> constraintListMap;
 	
 	private String label = "";
 	private WyilFile module;
@@ -47,14 +47,6 @@ public class Analyzer {
 	public Analyzer(){
 		 constraintListMap = new HashMap<String, ConstraintList>();		
 	}
-
-	/*Implement the 'Singleton' pattern to ensure this class has one instance.
-	public static Analyzer getInstance(){	
-		if (instance == null){
-			instance = new Analyzer();
-		}	
-		return instance;
-	}*/
 
 	public void setLabel(String label) {
 		this.label = label;

@@ -158,7 +158,7 @@ public class BoundAnalyzer implements Builder{
 	}
 
 	
-	private void addConstrantsAndInferBounds(WyilFile.FunctionOrMethodDeclaration functionOrMethod, Analyzer analyzer){
+	private void addConstrants(WyilFile.FunctionOrMethodDeclaration functionOrMethod, Analyzer analyzer){
 		
 		if(!unionOfBoundsMap.containsKey(functionOrMethod)){
 			unionOfBoundsMap.put(functionOrMethod, new Bounds());
@@ -180,8 +180,7 @@ public class BoundAnalyzer implements Builder{
 				}				
 			}
 		}	
-		//Infer the bounds 
-		unionOfBoundsMap.put(functionOrMethod,  analyzer.inferBoundsOverAllConstraintlists(verbose, bnd));
+		
 	}
 	
 	
@@ -231,8 +230,9 @@ public class BoundAnalyzer implements Builder{
 							}
 							index++;			
 						}
-						addConstrantsAndInferBounds(functionOrMethod, invokeanalyzer);
-						
+						addConstrants(functionOrMethod, invokeanalyzer);
+						//Infer the bounds 
+						unionOfBoundsMap.put(functionOrMethod,  invokeanalyzer.inferBoundsOverAllConstraintlists(verbose, bnd));
 						//propagate the bounds of return values.
 						String ret = "%"+code.target();						
 						analyzer.addConstraint(new Range(ret,
