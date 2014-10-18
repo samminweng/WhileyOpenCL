@@ -34,4 +34,9 @@ public class Range extends Constraint {
 		return bnd.isChanged;
 	}
 
+	@Override
+	public String toString() {
+		return "Range [min_x=" + min_x + ", max_x=" + max_x + ", x=" + x + "]";
+	}
+
 }
