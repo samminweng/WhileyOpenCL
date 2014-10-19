@@ -46,18 +46,29 @@ public class Analyzer {
 	private final int depth;	
 
 	public Analyzer(int depth){
-		 this.constraintListMap = new HashMap<String, ConstraintList>();
-		 this.unionOfBounds = new Bounds();
-		 this.depth = depth;
-		 this.assert_label = "";
-		 this.label = "code";
+		this.constraintListMap = new HashMap<String, ConstraintList>();
+		this.unionOfBounds = new Bounds();
+		this.depth = depth;
+		this.assert_label = "";
+		this.label = "code";
 	}
 
 	public void setLabel(String label) {
 		this.label = label;
 	}
-	
-	
+
+	/**
+	 * Check if the asserted or assumed flag is enabled.
+	 * @return true if assertion/assume is on. Otherwise, return false
+	 */
+	public boolean isAssertOrAssume(){
+		if(!assert_label.equals("")){
+			return true;
+		}		
+		return false;
+	}
+
+
 	/**
 	 * Prints out each bytecode with line number and indentation.
 	 * @param name
@@ -72,19 +83,27 @@ public class Analyzer {
 			font_color_start = (char)27 +"[30;1m";
 			font_color_end = (char)27 + "[0m";
 		}
-		
+
 		if(code instanceof Codes.Label){
 			System.out.println(font_color_start+name+"."+line+"."+depth+" ["+code+"]"+font_color_end);
 		}else{
 			System.out.println(font_color_start+name+"."+line+"."+depth+" [\t"+code+"]"+font_color_end);
 		}	
-		
+
 		return ++line;
 	}	
-	
-	
-	
-	
+
+	/**
+	 * Print out the bounds.
+	 * @param bnd
+	 */
+	private void printBounds(Bounds bnd){
+		String font_color_start = (char)27 +"[31m";
+		String font_color_end = (char)27 + "[0m";
+		System.out.println(bnd.toString()
+						+"\nisBoundConsistency="+bnd.checkBoundConsistency());
+	}
+
 	/**
 	 *infer bounds consistent with all constraints.
 	 * 
@@ -92,30 +111,29 @@ public class Analyzer {
 	public Bounds inferBoundsOverAllConstraintlists(boolean verbose){
 		//Iterates through all the constraint lists and infer each list's fixed point.
 		Iterator<java.util.Map.Entry<String, ConstraintList>> iterator = constraintListMap.entrySet().iterator();
-		
+
 		while(iterator.hasNext()){
 			java.util.Map.Entry<String, ConstraintList> entry = iterator.next();
 			//Infer the bounds consistent with all constraints.
 			ConstraintList list = entry.getValue();
 			Bounds bnd = new Bounds();
-			list.inferFixedPoint(bnd);
-			/*if(verbose){
-				System.out.println("\n"+label+":"+
-						"\n"+bnd.toString()
-						+"\nisBoundConsistency="+bnd.checkBoundConsistency());
-			}*/				
+			list.inferFixedPoint(bnd);			
 			unionOfBounds.union(bnd);
 			bnd = null;
-		}				
-
+		}
+		
+		//Print out the bounds.
+		if(verbose){
+			printBounds(unionOfBounds);
+		}
 		//Clear the map
 		constraintListMap.clear();
 		return unionOfBounds;
 	}
-	
-	
 
-	
+
+
+
 	/**
 	 * Return the current constraint list.
 	 * @return the constraint list.
@@ -134,24 +152,32 @@ public class Analyzer {
 	 * @param c
 	 */
 	public void addConstraintToCurrentList(Constraint c){
-		if(assert_label.equals("")){
-			ConstraintList list = getCurrentConstraintList();
-			list.addConstraint(c);
-		}		
+		if(isAssertOrAssume()){
+			return;
+		}	
+		
+		ConstraintList list = getCurrentConstraintList();
+		list.addConstraint(c);
 	}
 
+	/**
+	 * Add the constraints to all lists in the Hashmap.
+	 * @param c the constraint.
+	 */
 	public void addConstraintToAllList(Constraint c){
-		if(assert_label.equals("")){
-			Iterator<ConstraintList> iterator = constraintListMap.values().iterator();
-			while(iterator.hasNext()){
-				ConstraintList constraintlist = iterator.next();
-				//Add the 'Equals' constraint to the return (ret) variable.
-				constraintlist.addConstraint(c);
-			}			
-		}		
+		if(isAssertOrAssume()){
+			return;
+		}
+		Iterator<ConstraintList> iterator = constraintListMap.values().iterator();
+		while(iterator.hasNext()){
+			ConstraintList constraintlist = iterator.next();
+			//Add the 'Equals' constraint to the return (ret) variable.
+			constraintlist.addConstraint(c);
+		}			
+
 	}
-	
-	
+
+
 	/**
 	 * Branches the current constraint list and adds the 
 	 * constraint to the cloned list.
@@ -159,10 +185,10 @@ public class Analyzer {
 	 * @param c constraint
 	 */
 	public void branchConstraintList(String new_label, Constraint c){
-		if(!assert_label.equals("")){
+		if(isAssertOrAssume()){
 			return;
 		}
-		
+
 		ConstraintList current_list = getCurrentConstraintList();
 		ConstraintList new_list;
 		//Cloned the current constraint list. 
@@ -171,7 +197,7 @@ public class Analyzer {
 		constraintListMap.put(new_label, new_list);
 
 	}
-	
+
 	/**
 	 * Checks the type of the wyil code and dispatches the code to the analyzer for
 	 * being executed by the <code>analyze(code)</code> 
@@ -274,15 +300,15 @@ public class Analyzer {
 		}
 
 	}
-	
+
 
 	public void analyze(Codes.AssertOrAssume code){
 		//Set the assert_label so that no constraints are added to list.
 		this.assert_label = code.target;
-		
+
 	}
-	
-	
+
+
 	public void analyze(Codes.Assign code){
 		//Check if the assigned value is an integer
 		if(code.type() instanceof Type.Int ||
@@ -319,7 +345,7 @@ public class Analyzer {
 			}	
 		}
 	}
-	
+
 
 	/**
 	 * Parses the 'If' bytecode to add the constraints to the list.
@@ -376,7 +402,7 @@ public class Analyzer {
 		}
 
 	}
-	
+
 	/**
 	 *Parses the invoke bytecode and adds the constraints to the list.
 	 * The possible constraints include: none....
@@ -384,17 +410,17 @@ public class Analyzer {
 	 */
 	public void analyze(Codes.Invoke code){
 		/*//String func_name = code.name.name();
-		
+
 		Type returnType = code.type().ret();
 		if(returnType instanceof Type.Int){
 			//String return_reg = "%"+code.target();
 			//this.getConstraintList().addConstraint(new Equals(return_reg, func_name));
 		}*/
-		
+
 		//Get the fun declaration from module.
 		//FunctionOrMethodDeclaration functionOrMethod = module.functionOrMethod(code.name.name(), code.type());		
-		
-		
+
+
 		/*int index = 0;
 		for(Type paramType: code.type().params()){
 			//Get the input parameters of integer type
@@ -406,9 +432,9 @@ public class Analyzer {
 			}
 			index++;			
 		}*/
-		
-		
-		
+
+
+
 		//Check if the function has been analyzed. If so, the union of bounds shall be used to
 		//add the equality 
 		/*if(unionOfBoundsMap.containsKey(functionOrMethod)){
@@ -418,12 +444,12 @@ public class Analyzer {
 				//Add the range constraint for the return register.
 				addConstraint(new Range("%"+code.target(), bounds.getLower("return"), bounds.getUpper("return")));
 			}	
-						
+
 		}*/
-		
-			
+
+
 	}
-	
+
 	/**
 	 * Parse the 'label' bytecode, get the constraint list by the label and set it to the current
 	 * constraint list. If the constraint list does not exist, then create a constraint list and
@@ -441,26 +467,26 @@ public class Analyzer {
 				setLabel(label);
 			}		
 		}
-		
+
 	}
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * Add the 'equal' constraints of the target and operand register.
 	 * @param code
 	 */
 	public void analyze(Codes.NewList code){
-		
+
 		if(code.type().element() instanceof Type.Int){
 			for(int operand: code.operands()){
 				addConstraintToCurrentList(new Union("%"+code.target(), "%"+operand));				
 			}
 		}
-		
+
 	}
-	
+
 	/**
 	 * Parse the 'return' bytecode and add the constraint 
 	 * @param code
@@ -480,7 +506,7 @@ public class Analyzer {
 			addConstraintToAllList((new Equals("return", ret)));		
 		}		
 	}
-	
+
 	public void analyze(Codes.ListOperator code){
 		switch(code.kind){
 		case APPEND:
@@ -489,20 +515,20 @@ public class Analyzer {
 			}
 			break;
 		case LEFT_APPEND:
-			
+
 			break;
 		case RIGHT_APPEND:
-			
+
 			break;
 		default:
 			internalFailure("Not implemented!", "Analyzer.java", null);
 			break;
 		}
-		
-		
+
+
 	}
-	
-	
+
+
 	/**
 	 * Parse 'Unary Operator' bytecode and add the constraints in accordance with operator kind.
 	 * For example, add the 'Negate' constraint for the negated operator.
@@ -515,23 +541,23 @@ public class Analyzer {
 		String y = "%"+code.target();
 		//
 		switch(kind){
-			case NEG:
-				addConstraintToCurrentList(new Negate(x, y));
-				break;
-			case NUMERATOR:
-				System.err.println("Not implemented!");
-				break;
-			case DENOMINATOR:
-				System.err.println("Not implemented!");
-				break;
-			default:
-				System.err.println("Not implemented!");
-				break;
-				
+		case NEG:
+			addConstraintToCurrentList(new Negate(x, y));
+			break;
+		case NUMERATOR:
+			System.err.println("Not implemented!");
+			break;
+		case DENOMINATOR:
+			System.err.println("Not implemented!");
+			break;
+		default:
+			System.err.println("Not implemented!");
+			break;
+
 		}
-		
+
 	}
-	
+
 	/**
 	 * Parses the 'ForAll' bytecode and adds the assign constraint, e.g. <br>
 	 * <code>forall %5 in %0 () : [int]</code>
@@ -544,9 +570,9 @@ public class Analyzer {
 			//Propagate the range of source register to the index reg 
 			addConstraintToCurrentList(new Assign("%"+code.indexOperand, "%"+code.sourceOperand));
 		}		
-		
+
 	}
-	
+
 	/**
 	 * The bounds of a list/map shall be propagated from the operand to the target.  
 	 * @param code
@@ -554,15 +580,15 @@ public class Analyzer {
 	public void analyze(Codes.LengthOf code){		
 		addConstraintToCurrentList(new Equals("%"+code.target(), "%"+code.operand(0)));		
 	}
-	
-	
+
+
 	public void analyze(Codes.Loop code){		
 		for(int operand : code.modifiedOperands){
-		//	addConstraint(new Equals("%"+code.target, "%"+operand));
+			//	addConstraint(new Equals("%"+code.target, "%"+operand));
 		}
 	}
-	
-	
+
+
 	public void analyze(Codes.SubList code){
 		if(code.type().element() instanceof Type.Int){
 			for(int operand: code.operands()){
@@ -607,7 +633,7 @@ public class Analyzer {
 				internalFailure("unknown binary expression encountered", "Analyzer.java", null);		
 			}
 		}
-		
+
 	}
-	
+
 }

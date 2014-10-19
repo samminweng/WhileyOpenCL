@@ -99,12 +99,12 @@ public class BoundAnalyzer implements Builder{
 		return generatedFiles;
 	}
 
-	private void printBounds(Bounds bnd){
+	/*private void printBounds(Bounds bnd){
 		String font_color_start = (char)27 +"[31m";
 		String font_color_end = (char)27 + "[0m";
-		System.out.println(font_color_start+bnd.toString()
-						+"\nisBoundConsistency="+bnd.checkBoundConsistency()+font_color_end);
-	}
+		System.out.println(bnd.toString()
+						+"\nisBoundConsistency="+bnd.checkBoundConsistency());
+	}*/
 	
 	private Bounds getBoundsByFunc(FunctionOrMethodDeclaration functionOrMethod){
 		if(!unionOfBoundsMap.containsKey(functionOrMethod)){
@@ -140,7 +140,7 @@ public class BoundAnalyzer implements Builder{
 			Analyzer analyzer = new Analyzer(0);
 			IterateWyILCodeAndAddConstraints(method, analyzer);	
 			//Infer the bounds 
-			printBounds(analyzer.inferBoundsOverAllConstraintlists(verbose));
+			analyzer.inferBoundsOverAllConstraintlists(true);
 			analyzer = null;
 		}
 	}
@@ -169,9 +169,7 @@ public class BoundAnalyzer implements Builder{
 					FunctionOrMethodDeclaration functionOrMethod = module.functionOrMethod(code.name.name(), code.type());					
 					if(functionOrMethod != null){
 						//Infer the bounds
-						Bounds bnd = analyzer.inferBoundsOverAllConstraintlists(verbose);
-						printBounds(bnd);
-						unionOfBoundsMap.put(main, bnd);
+						unionOfBoundsMap.put(main, analyzer.inferBoundsOverAllConstraintlists(verbose));
 						Analyzer invokeanalyzer = new Analyzer(1);
 						int index = 0;
 						for(Type paramType: code.type().params()){
@@ -187,10 +185,8 @@ public class BoundAnalyzer implements Builder{
 							index++;			
 						}
 						IterateWyILCodeAndAddConstraints(functionOrMethod, invokeanalyzer);
-						//Infer the bounds 
-						bnd = invokeanalyzer.inferBoundsOverAllConstraintlists(verbose);
-						printBounds(bnd);
-						unionOfBoundsMap.put(functionOrMethod, bnd);
+						//Infer the bounds
+						unionOfBoundsMap.put(functionOrMethod, invokeanalyzer.inferBoundsOverAllConstraintlists(true));
 						invokeanalyzer = null;						
 						//propagate the bounds of return values.
 						String ret = "%"+code.target();						
@@ -206,8 +202,7 @@ public class BoundAnalyzer implements Builder{
 		}	
 		//Infer the bounds 
 		unionOfBoundsMap.put(main, analyzer.inferBoundsOverAllConstraintlists(verbose));
-		
-		printBounds(analyzer.inferBoundsOverAllConstraintlists(verbose));
+		analyzer.inferBoundsOverAllConstraintlists(true);
 		
 	}
 
