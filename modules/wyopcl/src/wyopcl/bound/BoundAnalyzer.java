@@ -100,8 +100,10 @@ public class BoundAnalyzer implements Builder{
 	}
 
 	private void printBounds(Bounds bnd){
-		System.out.println("\n"+bnd.toString()
-						+"\nisBoundConsistency="+bnd.checkBoundConsistency());
+		String font_color_start = (char)27 +"[31m";
+		String font_color_end = (char)27 + "[0m";
+		System.out.println(font_color_start+bnd.toString()
+						+"\nisBoundConsistency="+bnd.checkBoundConsistency()+font_color_end);
 	}
 	
 	private Bounds getBoundsByFunc(FunctionOrMethodDeclaration functionOrMethod){
@@ -162,14 +164,14 @@ public class BoundAnalyzer implements Builder{
 				line = analyzer.printWyILCode(entry.code, main.name(), line);
 				//check the code type and add the constraints according to code type.
 				if(entry.code instanceof Codes.Invoke){
-					//Infer the bounds
-					Bounds bnd = analyzer.inferBoundsOverAllConstraintlists(verbose);
-					//printBounds(bnd);
-					unionOfBoundsMap.put(main, bnd);
 					//Get the function
 					Codes.Invoke code = (Codes.Invoke)entry.code;
 					FunctionOrMethodDeclaration functionOrMethod = module.functionOrMethod(code.name.name(), code.type());					
-					if(functionOrMethod != null){						
+					if(functionOrMethod != null){
+						//Infer the bounds
+						Bounds bnd = analyzer.inferBoundsOverAllConstraintlists(verbose);
+						printBounds(bnd);
+						unionOfBoundsMap.put(main, bnd);
 						Analyzer invokeanalyzer = new Analyzer(1);
 						int index = 0;
 						for(Type paramType: code.type().params()){

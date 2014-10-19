@@ -65,10 +65,18 @@ public class Analyzer {
 	 */
 	public int printWyILCode(Code code, String name, int line){
 		//Print out the bytecode with the format (e.g. 'main.9 [const %12 = 2345 : int]')
+		String font_color_start = "";
+		String font_color_end = "";
+		//Use the ANSI escape color to distinguish the set of bytecode of the assertion.
+		if(!this.assert_label.equals("")){
+			font_color_start = (char)27 +"[30;1m";
+			font_color_end = (char)27 + "[0m";
+		}
+		
 		if(code instanceof Codes.Label){
-			System.out.println(name+"."+line+"."+depth+" ["+code+"]");
+			System.out.println(font_color_start+name+"."+line+"."+depth+" ["+code+"]"+font_color_end);
 		}else{
-			System.out.println(name+"."+line+"."+depth+" [\t"+code+"]");
+			System.out.println(font_color_start+name+"."+line+"."+depth+" [\t"+code+"]"+font_color_end);
 		}	
 		
 		return ++line;
