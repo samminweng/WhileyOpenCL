@@ -121,9 +121,9 @@ public class BoundAnalyzer implements Builder{
 			Iterator<wyil.lang.Code.Block.Entry> iterator = blk.iterator();
 			while(iterator.hasNext()){
 				//Get the Block.Entry
-				Block.Entry entry = iterator.next();	
-				analyzer.dispatch(entry);
+				Block.Entry entry = iterator.next();
 				line = analyzer.printWyILCode(entry.code, functionOrMethod.name(), line);				
+				analyzer.dispatch(entry);				
 			}
 		}
 	}

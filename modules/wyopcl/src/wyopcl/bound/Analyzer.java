@@ -38,7 +38,7 @@ public class Analyzer {
 	//The hashmap stores the constraints with in the label value in each method or function.
 	private HashMap<String, ConstraintList> constraintListMap;
 	private Bounds unionOfBounds;
-	private String assert_label;
+	private String assert_label;//stores the label name of the assertion
 	private String label;
 	private final int depth;	
 
@@ -53,6 +53,7 @@ public class Analyzer {
 	public void setLabel(String label) {
 		this.label = label;
 	}
+	
 	
 	/**
 	 * Prints out each bytecode with line number and indentation.
@@ -93,6 +94,7 @@ public class Analyzer {
 						+"\nisBoundConsistency="+bnd.checkBoundConsistency());
 			}*/				
 			unionOfBounds.union(bnd);
+			bnd = null;
 		}				
 
 		//Clear the map
@@ -134,6 +136,10 @@ public class Analyzer {
 	 * @param c constraint
 	 */
 	public void branchConstraintList(String new_label, Constraint c){
+		if(!assert_label.equals("")){
+			return;
+		}
+		
 		ConstraintList current_list = getCurrentConstraintList();
 		ConstraintList new_list;
 		//Cloned the current constraint list. 
@@ -149,6 +155,8 @@ public class Analyzer {
 	 * @param entry
 	 */
 	public void dispatch(Block.Entry entry){
+		
+		
 		Code code = entry.code; 
 		try{
 			if (code instanceof Codes.AssertOrAssume) {			
@@ -181,6 +189,8 @@ public class Analyzer {
 				analyze((Codes.If)code);			
 			} else if (code instanceof Codes.IfIs) {
 				//IfIsInterpreter.getInstance().interpret((Codes.IfIs)code, stackframe);
+			} else if (code instanceof Codes.IndexOf) {			
+				analyze((Codes.IndexOf)code);
 			} else if (code instanceof Codes.IndirectInvoke) {			
 				//IndirectInvokeInterpreter.getInstance().interpret((Codes.IndirectInvoke)code, stackframe);
 			} else if (code instanceof Codes.Invoke) {			
@@ -195,8 +205,6 @@ public class Analyzer {
 				//LambdaInterpreter.getInstance().interpret((Codes.Lambda)code, stackframe);
 			} else if (code instanceof Codes.LengthOf) {			
 				//LengthOfInterpreter.getInstance().interpret((Codes.LengthOf)code, stackframe);
-			} else if (code instanceof Codes.IndexOf) {			
-				//IndexOfInterpreter.getInstance().interpret((Codes.IndexOf)code, stackframe);
 			} else if (code instanceof Codes.Loop) {			
 				//LoopInterpreter.getInstance().interpret((Codes.Loop)code, stackframe);			
 			} else if (code instanceof Codes.Move) {
@@ -276,6 +284,20 @@ public class Analyzer {
 			addConstraint(new Const(name, ((Constant.Integer)constant).value));
 		}
 	}
+	/**
+	 * Implements the propagation rule for <code>Codes.IndexOf</code> bytecode
+	 * to assign the bounds from the source operator register to the target operator.
+	 * @param code
+	 */
+	public void analyze(Codes.IndexOf code){		
+		if(code.type() instanceof Type.List){
+			Type elemType = ((Type.List)code.type()).element();
+			if(elemType instanceof Type.Int){
+				addConstraint(new Assign("%"+code.target(), "%"+code.operand(0)));
+			}	
+		}
+	}
+	
 
 	/**
 	 * Parses the 'If' bytecode to add the constraints to the list.
@@ -392,10 +414,11 @@ public class Analyzer {
 		if(label.equals(this.assert_label)){
 			this.assert_label = "";
 		}else{
-			//Switch the current constraint list by setting the label with new value.
-			setLabel(label);
+			if(constraintListMap.containsKey(label)){
+				//Switch the current constraint list by setting the label with new value.
+				setLabel(label);
+			}		
 		}
-		
 		
 	}
 	

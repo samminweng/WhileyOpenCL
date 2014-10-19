@@ -11,6 +11,7 @@ import wyopcl.bound.Bounds;
 public abstract class Constraint implements Cloneable{	
 	@Override
 	public Object clone() throws CloneNotSupportedException {
+		//return this.clone();
 		return super.clone();
 	}
 
