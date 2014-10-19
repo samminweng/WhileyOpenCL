@@ -196,7 +196,7 @@ public class Bounds {
 	 * Prints out all the bounds. 
 	 */
 	public String toString() {
-		String str = "Bounds [";
+		String str = "[";
 		// Sort all the domains
 		List<Domain> domains = new ArrayList<Domain>(bounds.values());
 		//All the domains are sorted by names.

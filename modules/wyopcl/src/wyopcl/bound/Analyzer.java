@@ -43,8 +43,12 @@ public class Analyzer {
 	private Bounds unionOfBounds;
 	private String assert_label;//stores the label name of the assertion
 	private String label;
-	private final int depth;	
-
+	private final int depth;
+	private final String GRAY = (char)27 +"[30;1m";
+	private final String BLUE = (char)27 +"[34;1m";
+	private final String RED = (char)27 + "[31;1m";
+	private final String RESET = (char)27 + "[0m";
+	
 	public Analyzer(int depth){
 		this.constraintListMap = new HashMap<String, ConstraintList>();
 		this.unionOfBounds = new Bounds();
@@ -73,15 +77,16 @@ public class Analyzer {
 	 * Prints out each bytecode with line number and indentation.
 	 * @param name
 	 * @param line
+	 * @see <a href="http://en.wikipedia.org/wiki/ANSI_escape_code">ANSI escape code</a>
 	 */
 	public int printWyILCode(Code code, String name, int line){
 		//Print out the bytecode with the format (e.g. 'main.9 [const %12 = 2345 : int]')
 		String font_color_start = "";
 		String font_color_end = "";
 		//Use the ANSI escape color to distinguish the set of bytecode of the assertion.
-		if(!this.assert_label.equals("")){
-			font_color_start = (char)27 +"[30;1m";
-			font_color_end = (char)27 + "[0m";
+		if(isAssertOrAssume()){
+			font_color_start = GRAY;
+			font_color_end = RESET;
 		}
 
 		if(code instanceof Codes.Label){
@@ -98,10 +103,14 @@ public class Analyzer {
 	 * @param bnd
 	 */
 	private void printBounds(Bounds bnd){
-		String font_color_start = (char)27 +"[31m";
-		String font_color_end = (char)27 + "[0m";
-		System.out.println(bnd.toString()
-						+"\nisBoundConsistency="+bnd.checkBoundConsistency());
+		System.out.print(BLUE+"Bounds"+RESET);
+		System.out.println(bnd.toString());
+		if(bnd.checkBoundConsistency()){
+			System.out.println(BLUE+"Consistency=true"+RESET);
+		}else{
+			System.out.println(RED+"Consistency=false"+RESET);
+		}
+		
 	}
 
 	/**
