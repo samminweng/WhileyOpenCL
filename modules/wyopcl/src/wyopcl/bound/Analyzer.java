@@ -2,6 +2,8 @@ package wyopcl.bound;
 
 import static wycc.lang.SyntaxError.internalFailure;
 
+import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -122,13 +124,25 @@ public class Analyzer {
 	 * Adds the constraint to the current constraint list.
 	 * @param c
 	 */
-	public void addConstraint(Constraint c){
+	public void addConstraintToCurrentList(Constraint c){
 		if(assert_label.equals("")){
 			ConstraintList list = getCurrentConstraintList();
 			list.addConstraint(c);
 		}		
 	}
 
+	public void addConstraintToAllList(Constraint c){
+		if(assert_label.equals("")){
+			Iterator<ConstraintList> iterator = constraintListMap.values().iterator();
+			while(iterator.hasNext()){
+				ConstraintList constraintlist = iterator.next();
+				//Add the 'Equals' constraint to the return (ret) variable.
+				constraintlist.addConstraint(c);
+			}			
+		}		
+	}
+	
+	
 	/**
 	 * Branches the current constraint list and adds the 
 	 * constraint to the cloned list.
@@ -154,9 +168,7 @@ public class Analyzer {
 	 * being executed by the <code>analyze(code)</code> 
 	 * @param entry
 	 */
-	public void dispatch(Block.Entry entry){
-		
-		
+	public void dispatch(Block.Entry entry){		
 		Code code = entry.code; 
 		try{
 			if (code instanceof Codes.AssertOrAssume) {			
@@ -165,8 +177,6 @@ public class Analyzer {
 				analyze((Codes.Assign)code);
 			} else if (code instanceof Codes.BinaryOperator) {			
 				//BinaryOperatorInterpreter.getInstance().interpret((Codes.BinaryOperator)code, stackframe);
-			} else if (code instanceof Codes.ListOperator) {
-				//ListOperatorInterpreter.getInstance().interpret((Codes.ListOperator)code, stackframe);
 			} else if (code instanceof Codes.StringOperator) {
 				//StringOperatorInterpreter.getInstance().interpret((Codes.StringOperator)code, stackframe);
 			} else if (code instanceof Codes.Convert) {			
@@ -197,6 +207,10 @@ public class Analyzer {
 				analyze((Codes.Invoke)code);
 			} else if (code instanceof Codes.Invert) {
 				//InvertInterpreter.getInstance().interpret((Codes.Invert)code, stackframe);
+			} else if (code instanceof Codes.ListOperator) {
+				analyze((Codes.ListOperator)code);
+			} else if (code instanceof Codes.Loop) {			
+				analyze((Codes.Loop)code);			
 			} else if (code instanceof Codes.LoopEnd) {
 				//LoopEndInterpreter.getInstance().interpret((Codes.LoopEnd)code, stackframe);									
 			} else if (code instanceof Codes.Label) {
@@ -204,10 +218,8 @@ public class Analyzer {
 			} else if (code instanceof Codes.Lambda) {
 				//LambdaInterpreter.getInstance().interpret((Codes.Lambda)code, stackframe);
 			} else if (code instanceof Codes.LengthOf) {			
-				//LengthOfInterpreter.getInstance().interpret((Codes.LengthOf)code, stackframe);
-			} else if (code instanceof Codes.Loop) {			
-				//LoopInterpreter.getInstance().interpret((Codes.Loop)code, stackframe);			
-			} else if (code instanceof Codes.Move) {
+				analyze((Codes.LengthOf)code);
+			}  else if (code instanceof Codes.Move) {
 				internalFailure("Not implemented!", "", entry);
 			} else if (code instanceof Codes.NewMap) {
 				//NewMapInterpreter.getInstance().interpret((Codes.NewMap)code, stackframe);
@@ -264,9 +276,10 @@ public class Analyzer {
 	
 	public void analyze(Codes.Assign code){
 		//Check if the assigned value is an integer
-		if(code.type() instanceof Type.Int){
+		if(code.type() instanceof Type.Int ||
+				(code.type()instanceof Type.List && ((Type.List)code.type()).element() instanceof Type.Int)){
 			//Add the constraint 'target = operand'
-			addConstraint(new Assign("%"+code.target(), "%"+code.operand(0)));
+			addConstraintToCurrentList(new Assign("%"+code.target(), "%"+code.operand(0)));
 		}
 
 	}
@@ -281,7 +294,7 @@ public class Analyzer {
 		//Check the value is an Constant.Integer
 		if(constant instanceof Constant.Integer){
 			//Add the 'Const' constraint.
-			addConstraint(new Const(name, ((Constant.Integer)constant).value));
+			addConstraintToCurrentList(new Const(name, ((Constant.Integer)constant).value));
 		}
 	}
 	/**
@@ -293,7 +306,7 @@ public class Analyzer {
 		if(code.type() instanceof Type.List){
 			Type elemType = ((Type.List)code.type()).element();
 			if(elemType instanceof Type.Int){
-				addConstraint(new Assign("%"+code.target(), "%"+code.operand(0)));
+				addConstraintToCurrentList(new Assign("%"+code.target(), "%"+code.operand(0)));
 			}	
 		}
 	}
@@ -312,30 +325,30 @@ public class Analyzer {
 			switch(code.op){
 			case EQ:			
 				branchConstraintList(code.target, new Equals(left+"_"+code.target, right));
-				addConstraint(new GreaterThanEquals(left, right));
+				addConstraintToCurrentList(new GreaterThanEquals(left, right));
 				break;
 			case NEQ:				
 
 				break;
 			case LT:			
 				branchConstraintList(code.target, new LessThan(left+"_"+code.target, right));
-				addConstraint(new GreaterThanEquals(left, right));
+				addConstraintToCurrentList(new GreaterThanEquals(left, right));
 				break;
 			case LTEQ:
 				//Add the 'left <= right' constraint to the branched list.
 				branchConstraintList(code.target, new LessThanEquals(left+"_"+code.target, right));
 				//Add the constraint 'left>right' to current list
-				addConstraint(new GreaterThan(left, right));
+				addConstraintToCurrentList(new GreaterThan(left, right));
 				break;
 			case GT:					
 				branchConstraintList(code.target, new GreaterThan(left+"_"+code.target, right));
-				addConstraint(new LessThanEquals(left, right));
+				addConstraintToCurrentList(new LessThanEquals(left, right));
 				break;
 			case GTEQ:
 				//Branch and add the left >= right constraint to 
 				branchConstraintList(code.target, new GreaterThanEquals(left+"_"+code.target, right));
 				//Add the constraint 'left< right' to current constraint list.
-				addConstraint(new LessThan(left, right));		
+				addConstraintToCurrentList(new LessThan(left, right));		
 				break;
 			case IN:			
 				System.err.println("Not implemented!");		
@@ -423,6 +436,8 @@ public class Analyzer {
 	}
 	
 	
+	
+	
 	/**
 	 * Add the 'equal' constraints of the target and operand register.
 	 * @param code
@@ -431,7 +446,7 @@ public class Analyzer {
 		
 		if(code.type().element() instanceof Type.Int){
 			for(int operand: code.operands()){
-				addConstraint(new Union("%"+code.target(), "%"+operand));				
+				addConstraintToCurrentList(new Union("%"+code.target(), "%"+operand));				
 			}
 		}
 		
@@ -450,11 +465,35 @@ public class Analyzer {
 		//Get the return operand
 		String ret = "%"+code.operand;
 		//Check if the return type is integer.
-		if(returnType instanceof Type.Int){
+		if(returnType instanceof Type.Int ||
+				(returnType instanceof Type.List && ((Type.List)returnType).element() instanceof Type.Int)){
 			//Add the 'Equals' constraint to the return (ret) variable.
-			addConstraint(new Equals("return", ret));
+			addConstraintToAllList((new Equals("return", ret)));		
 		}		
 	}
+	
+	public void analyze(Codes.ListOperator code){
+		switch(code.kind){
+		case APPEND:
+			for(int operand : code.operands()){
+				addConstraintToCurrentList(new Equals("%"+code.target(), "%"+operand));
+			}			
+			//addConstraint(new Union())
+			break;
+		case LEFT_APPEND:
+			
+			break;
+		case RIGHT_APPEND:
+			
+			break;
+		default:
+			internalFailure("Not implemented!", "Analyzer.java", null);
+			break;
+		}
+		
+		
+	}
+	
 	
 	/**
 	 * Parse 'Unary Operator' bytecode and add the constraints in accordance with operator kind.
@@ -469,7 +508,7 @@ public class Analyzer {
 		//
 		switch(kind){
 			case NEG:
-				addConstraint(new Negate(x, y));
+				addConstraintToCurrentList(new Negate(x, y));
 				break;
 			case NUMERATOR:
 				System.err.println("Not implemented!");
@@ -495,20 +534,25 @@ public class Analyzer {
 		//Check if each element is an integer
 		if(code.type.element() instanceof Type.Int){
 			//Propagate the range of source register to the index reg 
-			addConstraint(new Assign("%"+code.indexOperand, "%"+code.sourceOperand));
+			addConstraintToCurrentList(new Assign("%"+code.indexOperand, "%"+code.sourceOperand));
 		}		
 		
 	}
 	
 	/**
-	 * How to get the length of a list without computing the list.
+	 * The bounds of a list/map shall be propagated from the operand to the target.  
 	 * @param code
 	 */
-	public void analyze(Codes.LengthOf code){
-		
-		
-		
+	public void analyze(Codes.LengthOf code){		
+		addConstraintToCurrentList(new Equals("%"+code.target(), "%"+code.operand(0)));		
 	}
 	
+	
+	public void analyze(Codes.Loop code){		
+		for(int operand : code.modifiedOperands){
+		//	addConstraint(new Equals("%"+code.target, "%"+operand));
+		}
+		
+	}
 	
 }

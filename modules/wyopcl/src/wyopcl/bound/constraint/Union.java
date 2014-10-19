@@ -61,4 +61,12 @@ public class Union extends Constraint {
 		return bnd.isChanged;
 	}
 
+
+	@Override
+	public String toString() {
+		return "Union [x=" + x + ", y=" + y + "]";
+	}
+
+	
+	
 }

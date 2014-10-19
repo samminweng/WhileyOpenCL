@@ -164,7 +164,7 @@ public class BoundAnalyzer implements Builder{
 				if(entry.code instanceof Codes.Invoke){
 					//Infer the bounds
 					Bounds bnd = analyzer.inferBoundsOverAllConstraintlists(verbose);
-					printBounds(bnd);
+					//printBounds(bnd);
 					unionOfBoundsMap.put(main, bnd);
 					//Get the function
 					Codes.Invoke code = (Codes.Invoke)entry.code;
@@ -178,7 +178,7 @@ public class BoundAnalyzer implements Builder{
 									(paramType instanceof Type.List && ((Type.List)paramType).element() instanceof Type.Int)){
 								String param = "%"+code.operand(index);
 								//Add lower bounds and upper bounds for input parameters.														
-								invokeanalyzer.addConstraint(new Range("%"+index,
+								invokeanalyzer.addConstraintToCurrentList(new Range("%"+index,
 										getBoundsByFunc(main).getLower(param),
 										getBoundsByFunc(main).getUpper(param)));
 							}
@@ -192,7 +192,7 @@ public class BoundAnalyzer implements Builder{
 						invokeanalyzer = null;						
 						//propagate the bounds of return values.
 						String ret = "%"+code.target();						
-						analyzer.addConstraint(new Range(ret,
+						analyzer.addConstraintToCurrentList(new Range(ret,
 								getBoundsByFunc(functionOrMethod).getLower("return"),
 								getBoundsByFunc(functionOrMethod).getUpper("return")));
 					}
