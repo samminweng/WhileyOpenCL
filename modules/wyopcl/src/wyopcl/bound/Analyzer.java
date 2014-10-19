@@ -28,6 +28,7 @@ import wyopcl.bound.constraint.LessThanEquals;
 import wyopcl.bound.constraint.Negate;
 import wyopcl.bound.constraint.Range;
 import wyopcl.bound.constraint.Union;
+import wyopcl.interpreter.DecimalFraction;
 /***
  * A class to store all the constraints produced in the wyil file and infer the bounds consistent
  * with all the constraints. Due to the singleton design pattern, the class variables 'constraintListMap'
@@ -176,7 +177,7 @@ public class Analyzer {
 			} else if (code instanceof Codes.Assign) {			
 				analyze((Codes.Assign)code);
 			} else if (code instanceof Codes.BinaryOperator) {			
-				//BinaryOperatorInterpreter.getInstance().interpret((Codes.BinaryOperator)code, stackframe);
+				analyze((Codes.BinaryOperator)code);
 			} else if (code instanceof Codes.StringOperator) {
 				//StringOperatorInterpreter.getInstance().interpret((Codes.StringOperator)code, stackframe);
 			} else if (code instanceof Codes.Convert) {			
@@ -240,7 +241,7 @@ public class Analyzer {
 			} else if (code instanceof Codes.SetOperator){
 				//SetOperatorInterpreter.getInstance().interpret((Codes.SetOperator)code, stackframe);
 			} else if (code instanceof Codes.SubList) {
-				//SubListInterpreter.getInstance().interpret((Codes.SubList)code, stackframe);
+				analyze((Codes.SubList)code);
 			} else if (code instanceof Codes.SubString) {
 				//SubStringInterpreter.getInstance().interpret((Codes.SubString)code, stackframe);
 			} else if (code instanceof Codes.Switch) {
@@ -477,8 +478,7 @@ public class Analyzer {
 		case APPEND:
 			for(int operand : code.operands()){
 				addConstraintToCurrentList(new Equals("%"+code.target(), "%"+operand));
-			}			
-			//addConstraint(new Union())
+			}
 			break;
 		case LEFT_APPEND:
 			
@@ -551,6 +551,53 @@ public class Analyzer {
 	public void analyze(Codes.Loop code){		
 		for(int operand : code.modifiedOperands){
 		//	addConstraint(new Equals("%"+code.target, "%"+operand));
+		}
+	}
+	
+	
+	public void analyze(Codes.SubList code){
+		if(code.type().element() instanceof Type.Int){
+			for(int operand: code.operands()){
+				addConstraintToCurrentList(new Equals("%"+code.target(), "%"+operand));
+			}			
+		}
+	}
+	/**
+	 * Implemented the propagation rule for <code>Codes.BinaryOperator</code> code
+	 * to add the 'equal' constraints of operands and target registers. 
+	 * @param code
+	 */
+	public void analyze(Codes.BinaryOperator code){
+		if(code.type() instanceof Type.Int){
+			switch (code.kind) {
+			case ADD:
+				break;
+			case SUB:			
+				for(int operand: code.operands()){
+					addConstraintToCurrentList(new Equals("%"+code.target(), "%"+operand));
+				}
+				break;
+			case MUL:		
+				break;
+			case DIV:			
+				break;			
+			case REM:
+				break;			
+			case RANGE:
+				break;
+			case BITWISEAND:
+				break;			
+			case BITWISEOR:
+				break;	
+			case BITWISEXOR:
+				break;		
+			case LEFTSHIFT:
+				break;			
+			case RIGHTSHIFT:
+				break;			
+			default:
+				internalFailure("unknown binary expression encountered", "Analyzer.java", null);		
+			}
 		}
 		
 	}
