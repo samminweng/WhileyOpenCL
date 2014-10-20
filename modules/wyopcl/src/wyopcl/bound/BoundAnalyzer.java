@@ -25,6 +25,7 @@ import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyil.lang.Modifier;
 import wyil.lang.Type;
+import wyil.lang.Type.FunctionOrMethod;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.Case;
 import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
@@ -48,7 +49,7 @@ public class BoundAnalyzer implements Builder{
 	private String filename;
 	private boolean verbose = false;
 	//The hashmap stores the unions of bounds for each function.
-	private HashMap<WyilFile.FunctionOrMethodDeclaration, Bounds> unionOfBoundsMap = new HashMap<WyilFile.FunctionOrMethodDeclaration, Bounds>();
+	//private HashMap<WyilFile.FunctionOrMethodDeclaration, Bounds> unionOfBoundsMap = new HashMap<WyilFile.FunctionOrMethodDeclaration, Bounds>();
 
 	private String[] args;
 	/**
@@ -62,7 +63,6 @@ public class BoundAnalyzer implements Builder{
 
 	@Override
 	public Project project() {
-		// TODO Auto-generated method stub
 		return project;
 	}
 
@@ -99,23 +99,7 @@ public class BoundAnalyzer implements Builder{
 		return generatedFiles;
 	}
 
-	/*private void printBounds(Bounds bnd){
-		String font_color_start = (char)27 +"[31m";
-		String font_color_end = (char)27 + "[0m";
-		System.out.println(bnd.toString()
-						+"\nisBoundConsistency="+bnd.checkBoundConsistency());
-	}*/
-
-	private Bounds getBoundsByFunc(FunctionOrMethodDeclaration functionOrMethod){
-		if(!unionOfBoundsMap.containsKey(functionOrMethod)){
-			unionOfBoundsMap.put(functionOrMethod, new Bounds());
-		}		
-		return unionOfBoundsMap.get(functionOrMethod);
-
-	}
-
-
-	private void IterateWyILCodeAndAddConstraints(WyilFile.FunctionOrMethodDeclaration functionOrMethod, Analyzer analyzer){
+	private void iterateWyILCodeAndAddConstraints(WyilFile.FunctionOrMethodDeclaration functionOrMethod, Analyzer analyzer){
 		int line = 0;
 		//Parse each byte-code and add the constraints accordingly.
 		for(Case mcase : functionOrMethod.cases()){
@@ -138,7 +122,7 @@ public class BoundAnalyzer implements Builder{
 	public void analyze(WyilFile module){
 		for(WyilFile.FunctionOrMethodDeclaration method : module.functionOrMethods()) {			
 			Analyzer analyzer = new Analyzer(0);
-			IterateWyILCodeAndAddConstraints(method, analyzer);	
+			iterateWyILCodeAndAddConstraints(method, analyzer);	
 			//Infer the bounds 
 			analyzer.inferBoundsOverAllConstraintlists(true);
 			analyzer = null;
@@ -146,8 +130,13 @@ public class BoundAnalyzer implements Builder{
 	}
 
 
+	/**
+	 * Pass the bounds from main function to the invoked function.
+	 * @param code <code>Codes.Invoke</code> bytecode
+	 * @param bnd the bounds of main function
+	 * @param analyzer the invoked analyzer.
+	 */
 	private void passParametersToFunc(Codes.Invoke code, Bounds bnd, Analyzer analyzer){
-
 		int index = 0;
 		for(Type paramType: code.type().params()){
 			if(analyzer.isIntType(paramType)){
@@ -155,12 +144,17 @@ public class BoundAnalyzer implements Builder{
 				//Add lower bounds and upper bounds for input parameters.														
 				analyzer.addConstraintToCurrentList(new Range("%"+index, bnd.getLower(param), bnd.getUpper(param)));
 			}
-
 		}
 	}
 
 
-
+	private void passReturnValuesToMain(Codes.Invoke code, Bounds bnd, Analyzer analyzer){
+		//propagate the bounds of return values.
+		String ret = "%"+code.target();						
+		analyzer.addConstraintToCurrentList(new Range(ret,
+				bnd.getLower("return"),
+				bnd.getUpper("return")));
+	}
 
 
 
@@ -186,34 +180,16 @@ public class BoundAnalyzer implements Builder{
 					Codes.Invoke code = (Codes.Invoke)entry.code;
 					FunctionOrMethodDeclaration functionOrMethod = module.functionOrMethod(code.name.name(), code.type());					
 					if(functionOrMethod != null){
-						//Infer the bounds
-						//unionOfBoundsMap.put(main, analyzer.inferBoundsOverAllConstraintlists(verbose));
+						//Infer the bounds						
 						Bounds bnd = analyzer.inferBoundsOverAllConstraintlists(verbose);
 						Analyzer invokeanalyzer = new Analyzer(1);
-						/*int index = 0;
-						for(Type paramType: code.type().params()){
-							//Get the input parameters of integer type
-							if(paramType instanceof Type.Int ||
-									(paramType instanceof Type.List && ((Type.List)paramType).element() instanceof Type.Int)){
-								String param = "%"+code.operand(index);
-								//Add lower bounds and upper bounds for input parameters.														
-								invokeanalyzer.addConstraintToCurrentList(new Range("%"+index,
-										getBoundsByFunc(main).getLower(param),
-										getBoundsByFunc(main).getUpper(param)));
-							}
-							index++;			
-						}*/
 						passParametersToFunc(code, bnd, invokeanalyzer);
-						
-						IterateWyILCodeAndAddConstraints(functionOrMethod, invokeanalyzer);
+						iterateWyILCodeAndAddConstraints(functionOrMethod, invokeanalyzer);
 						//Infer the bounds
-						unionOfBoundsMap.put(functionOrMethod, invokeanalyzer.inferBoundsOverAllConstraintlists(true));
+						bnd = invokeanalyzer.inferBoundsOverAllConstraintlists(true);						
 						invokeanalyzer = null;						
 						//propagate the bounds of return values.
-						String ret = "%"+code.target();						
-						analyzer.addConstraintToCurrentList(new Range(ret,
-								getBoundsByFunc(functionOrMethod).getLower("return"),
-								getBoundsByFunc(functionOrMethod).getUpper("return")));
+						passReturnValuesToMain(code, bnd, analyzer);
 					}
 				}else{
 					analyzer.dispatch(entry);					
@@ -221,8 +197,7 @@ public class BoundAnalyzer implements Builder{
 
 			}
 		}	
-		//Infer the bounds 
-		unionOfBoundsMap.put(main, analyzer.inferBoundsOverAllConstraintlists(verbose));
+		//Infer the bounds 		
 		analyzer.inferBoundsOverAllConstraintlists(true);
 
 	}

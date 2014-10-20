@@ -27,6 +27,7 @@ import wyopcl.bound.constraint.LessThan;
 import wyopcl.bound.constraint.LessThanEquals;
 import wyopcl.bound.constraint.Negate;
 import wyopcl.bound.constraint.Range;
+import wyopcl.bound.constraint.RightPlus;
 import wyopcl.bound.constraint.Union;
 import wyopcl.interpreter.DecimalFraction;
 /***
@@ -621,9 +622,10 @@ public class Analyzer {
 	 * @param code
 	 */
 	public void analyze(Codes.BinaryOperator code){
-		if(code.type() instanceof Type.Int){
+		if(isIntType(code.type())){
 			switch (code.kind) {
 			case ADD:
+				addConstraintToCurrentList(new RightPlus("%"+code.target(), "%"+code.operand(0), "%"+code.operand(1)));
 				break;
 			case SUB:			
 				for(int operand: code.operands()){
@@ -681,6 +683,11 @@ public class Analyzer {
 		if(index == 1 && isIntType(code.type().element(index))){
 			addConstraintToCurrentList(new Assign("%"+code.target(), "%"+code.operand(0)));
 		}
+	}
+	
+	
+	public void analyze(Codes.NewTuple code){
+		
 	}
 
 }
