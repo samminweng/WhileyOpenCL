@@ -94,8 +94,8 @@ public class BoundAnalyzer implements Builder{
 		}
 
 		long endTime = System.currentTimeMillis();
-		logger.logTimedMessage("Wyil interpreter completed.\nFile:" + filename,
-				(endTime - start), memory - runtime.freeMemory());
+		System.err.println("Wyil interpreter completed.\nFile:" + filename+ 
+				" Time: "+(endTime - start)+" ms");
 		return generatedFiles;
 	}
 
@@ -186,10 +186,10 @@ public class BoundAnalyzer implements Builder{
 						passParametersToFunc(code, bnd, invokeanalyzer);
 						iterateWyILCodeAndAddConstraints(functionOrMethod, invokeanalyzer);
 						//Infer the bounds
-						bnd = invokeanalyzer.inferBoundsOverAllConstraintlists(true);						
-						invokeanalyzer = null;						
+						bnd = invokeanalyzer.inferBoundsOverAllConstraintlists(true);
 						//propagate the bounds of return values.
 						passReturnValuesToMain(code, bnd, analyzer);
+						invokeanalyzer = null;
 					}
 				}else{
 					analyzer.dispatch(entry);					

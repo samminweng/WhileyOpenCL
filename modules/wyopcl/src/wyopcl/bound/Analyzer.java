@@ -181,12 +181,10 @@ public class Analyzer {
 	 * @param c
 	 */
 	public void addConstraintToCurrentList(Constraint c){
-		if(isAssertOrAssume()){
-			return;
-		}	
-		
-		ConstraintList list = getCurrentConstraintList();
-		list.addConstraint(c);
+		if(!isAssertOrAssume()){
+			ConstraintList list = getCurrentConstraintList();
+			list.addConstraint(c);
+		}
 	}
 
 	/**
@@ -194,16 +192,14 @@ public class Analyzer {
 	 * @param c the constraint.
 	 */
 	public void addConstraintToAllList(Constraint c){
-		if(isAssertOrAssume()){
-			return;
+		if(!isAssertOrAssume()){
+			Iterator<ConstraintList> iterator = constraintListMap.values().iterator();
+			while(iterator.hasNext()){
+				ConstraintList constraintlist = iterator.next();
+				//Add the 'Equals' constraint to the return (ret) variable.
+				constraintlist.addConstraint(c);
+			}
 		}
-		Iterator<ConstraintList> iterator = constraintListMap.values().iterator();
-		while(iterator.hasNext()){
-			ConstraintList constraintlist = iterator.next();
-			//Add the 'Equals' constraint to the return (ret) variable.
-			constraintlist.addConstraint(c);
-		}			
-
 	}
 
 
@@ -214,17 +210,16 @@ public class Analyzer {
 	 * @param c constraint
 	 */
 	public void branchConstraintList(String new_label, Constraint c){
-		if(isAssertOrAssume()){
-			return;
+		//Branch the constraint list only when the bytecode does not
+		//belong to the assertion or assumption.
+		if(!isAssertOrAssume()){
+			ConstraintList current_list = getCurrentConstraintList();
+			ConstraintList new_list;
+			//Cloned the current constraint list. 
+			new_list = (ConstraintList) current_list.clone();
+			new_list.addConstraint(c);
+			constraintListMap.put(new_label, new_list);
 		}
-
-		ConstraintList current_list = getCurrentConstraintList();
-		ConstraintList new_list;
-		//Cloned the current constraint list. 
-		new_list = (ConstraintList) current_list.clone();
-		new_list.addConstraint(c);
-		constraintListMap.put(new_label, new_list);
-
 	}
 
 	/**
