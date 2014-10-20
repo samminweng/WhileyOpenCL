@@ -105,16 +105,16 @@ public class BoundAnalyzer implements Builder{
 		System.out.println(bnd.toString()
 						+"\nisBoundConsistency="+bnd.checkBoundConsistency());
 	}*/
-	
+
 	private Bounds getBoundsByFunc(FunctionOrMethodDeclaration functionOrMethod){
 		if(!unionOfBoundsMap.containsKey(functionOrMethod)){
 			unionOfBoundsMap.put(functionOrMethod, new Bounds());
 		}		
 		return unionOfBoundsMap.get(functionOrMethod);
-		
+
 	}
-	
-	
+
+
 	private void IterateWyILCodeAndAddConstraints(WyilFile.FunctionOrMethodDeclaration functionOrMethod, Analyzer analyzer){
 		int line = 0;
 		//Parse each byte-code and add the constraints accordingly.
@@ -129,8 +129,8 @@ public class BoundAnalyzer implements Builder{
 			}
 		}
 	}
-	
-	
+
+
 	/**
 	 * Takes the in-memory wyil file and analyzes the variable ranges for each function.
 	 * @param module
@@ -145,7 +145,25 @@ public class BoundAnalyzer implements Builder{
 		}
 	}
 
-	
+
+	private void passParametersToFunc(Codes.Invoke code, Bounds bnd, Analyzer analyzer){
+
+		int index = 0;
+		for(Type paramType: code.type().params()){
+			if(analyzer.isIntType(paramType)){
+				String param = "%"+code.operand(index);
+				//Add lower bounds and upper bounds for input parameters.														
+				analyzer.addConstraintToCurrentList(new Range("%"+index, bnd.getLower(param), bnd.getUpper(param)));
+			}
+
+		}
+	}
+
+
+
+
+
+
 	/**
 	 * Takes the in-memory wyil file and analyzes the range values for all variables in each function.
 	 * @param module
@@ -169,9 +187,10 @@ public class BoundAnalyzer implements Builder{
 					FunctionOrMethodDeclaration functionOrMethod = module.functionOrMethod(code.name.name(), code.type());					
 					if(functionOrMethod != null){
 						//Infer the bounds
-						unionOfBoundsMap.put(main, analyzer.inferBoundsOverAllConstraintlists(verbose));
+						//unionOfBoundsMap.put(main, analyzer.inferBoundsOverAllConstraintlists(verbose));
+						Bounds bnd = analyzer.inferBoundsOverAllConstraintlists(verbose);
 						Analyzer invokeanalyzer = new Analyzer(1);
-						int index = 0;
+						/*int index = 0;
 						for(Type paramType: code.type().params()){
 							//Get the input parameters of integer type
 							if(paramType instanceof Type.Int ||
@@ -183,7 +202,9 @@ public class BoundAnalyzer implements Builder{
 										getBoundsByFunc(main).getUpper(param)));
 							}
 							index++;			
-						}
+						}*/
+						passParametersToFunc(code, bnd, invokeanalyzer);
+						
 						IterateWyILCodeAndAddConstraints(functionOrMethod, invokeanalyzer);
 						//Infer the bounds
 						unionOfBoundsMap.put(functionOrMethod, invokeanalyzer.inferBoundsOverAllConstraintlists(true));
@@ -197,13 +218,13 @@ public class BoundAnalyzer implements Builder{
 				}else{
 					analyzer.dispatch(entry);					
 				}
-				
+
 			}
 		}	
 		//Infer the bounds 
 		unionOfBoundsMap.put(main, analyzer.inferBoundsOverAllConstraintlists(verbose));
 		analyzer.inferBoundsOverAllConstraintlists(true);
-		
+
 	}
 
 

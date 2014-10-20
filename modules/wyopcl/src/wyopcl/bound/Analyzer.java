@@ -72,6 +72,30 @@ public class Analyzer {
 		return false;
 	}
 
+	
+	
+	/**
+	 * Check if the type is instance of Integer by inferring the type from 
+	 * <code>wyil.Lang.Type</code> objects, including the effective collection types.
+	 * @param type 
+	 * @return true if the type is or contains an integer type. 
+	 */
+	public boolean isIntType(Type type){
+		if(type instanceof Type.Int){
+			return true;
+		} else if(type instanceof Type.Map){
+			//Check the type of values in the map.
+			if (((Type.Map)type).value() instanceof Type.Int){
+				return true;
+			}			
+		}else if(type instanceof Type.List){
+			if (((Type.List)type).element() instanceof Type.Int){
+				return true;
+			}
+		}		
+		
+		return false;
+	}
 
 	/**
 	 * Prints out each bytecode with line number and indentation.
@@ -129,18 +153,13 @@ public class Analyzer {
 			list.inferFixedPoint(bnd);			
 			unionOfBounds.union(bnd);
 			bnd = null;
-		}
-		
+		}		
 		//Print out the bounds.
 		if(verbose){
 			printBounds(unionOfBounds);
-		}
-		//Clear the map
-		constraintListMap.clear();
+		}		
 		return unionOfBounds;
 	}
-
-
 
 
 	/**
@@ -266,7 +285,7 @@ public class Analyzer {
 			}  else if (code instanceof Codes.Move) {
 				internalFailure("Not implemented!", "", entry);
 			} else if (code instanceof Codes.NewMap) {
-				//NewMapInterpreter.getInstance().interpret((Codes.NewMap)code, stackframe);
+				analyze((Codes.NewMap)code);
 			} else if (code instanceof Codes.NewList) {			
 				analyze((Codes.NewList)code);
 			} else if (code instanceof Codes.NewRecord) {
@@ -294,7 +313,7 @@ public class Analyzer {
 			} else if (code instanceof Codes.TryCatch) {
 				//TryCatchInterpreter.getInstance().interpret((Codes.TryCatch)code, stackframe);
 			} else if (code instanceof Codes.TupleLoad) {
-				//TupleLoadInterpreter.getInstance().interpret((Codes.TupleLoad)code, stackframe);
+				analyze((Codes.TupleLoad)code);
 			} else if (code instanceof Codes.UnaryOperator){
 				analyze((Codes.UnaryOperator)code);
 			} else if (code instanceof Codes.Update) {
@@ -320,12 +339,10 @@ public class Analyzer {
 
 	public void analyze(Codes.Assign code){
 		//Check if the assigned value is an integer
-		if(code.type() instanceof Type.Int ||
-				(code.type()instanceof Type.List && ((Type.List)code.type()).element() instanceof Type.Int)){
+		if(isIntType(code.type())){
 			//Add the constraint 'target = operand'
 			addConstraintToCurrentList(new Assign("%"+code.target(), "%"+code.operand(0)));
 		}
-
 	}
 
 	/**
@@ -334,9 +351,9 @@ public class Analyzer {
 	 */
 	public void analyze(Codes.Const code){
 		Constant constant = code.constant;
-		String name = "%"+code.target();
 		//Check the value is an Constant.Integer
 		if(constant instanceof Constant.Integer){
+			String name = "%"+code.target();
 			//Add the 'Const' constraint.
 			addConstraintToCurrentList(new Const(name, ((Constant.Integer)constant).value));
 		}
@@ -347,11 +364,9 @@ public class Analyzer {
 	 * @param code
 	 */
 	public void analyze(Codes.IndexOf code){		
-		if(code.type() instanceof Type.List){
-			Type elemType = ((Type.List)code.type()).element();
-			if(elemType instanceof Type.Int){
-				addConstraintToCurrentList(new Assign("%"+code.target(), "%"+code.operand(0)));
-			}	
+		if(isIntType((Type) code.type())){
+			addConstraintToCurrentList(new Equals("%"+code.target(), "%"+code.operand(0)));
+				
 		}
 	}
 
@@ -363,7 +378,7 @@ public class Analyzer {
 	 */
 	public void analyze(Codes.If code) throws CloneNotSupportedException{
 
-		if(code.type instanceof Type.Int){
+		if(isIntType(code.type)){
 			String left = "%"+code.leftOperand;
 			String right = "%"+code.rightOperand;
 			switch(code.op){
@@ -487,8 +502,7 @@ public class Analyzer {
 	 * @param code
 	 */
 	public void analyze(Codes.NewList code){
-
-		if(code.type().element() instanceof Type.Int){
+		if(isIntType(code.type())){
 			for(int operand: code.operands()){
 				addConstraintToCurrentList(new Union("%"+code.target(), "%"+operand));				
 			}
@@ -501,16 +515,10 @@ public class Analyzer {
 	 * @param code
 	 */
 	public void analyze(Codes.Return code){
-		Type returnType = code.type;
-		if (returnType == Type.T_VOID){
-			//Do nothing
-			return ;
-		}
-		//Get the return operand
-		String ret = "%"+code.operand;
 		//Check if the return type is integer.
-		if(returnType instanceof Type.Int ||
-				(returnType instanceof Type.List && ((Type.List)returnType).element() instanceof Type.Int)){
+		if(isIntType(code.type)){
+			//Get the return operand
+			String ret = "%"+code.operand;
 			//Add the 'Equals' constraint to the return (ret) variable.
 			addConstraintToAllList((new Equals("return", ret)));		
 		}		
@@ -571,33 +579,35 @@ public class Analyzer {
 	 * Parses the 'ForAll' bytecode and adds the assign constraint, e.g. <br>
 	 * <code>forall %5 in %0 () : [int]</code>
 	 * adds the constraint '%5 = %0', which propagtes the bounds from %0 to %5.
-	 * @param code the 'forall' bytecode
+	 * @param code the <code>Codes.Forall</code> bytecode
 	 */
 	public void analyze(Codes.ForAll code){
 		//Check if each element is an integer
-		if(code.type.element() instanceof Type.Int){
+		if(isIntType((Type) code.type)){
 			//Propagate the range of source register to the index reg 
 			addConstraintToCurrentList(new Assign("%"+code.indexOperand, "%"+code.sourceOperand));
-		}		
-
+		}
 	}
 
 	/**
-	 * The bounds of a list/map shall be propagated from the operand to the target.  
+	 * 
 	 * @param code
 	 */
 	public void analyze(Codes.LengthOf code){		
-		addConstraintToCurrentList(new Equals("%"+code.target(), "%"+code.operand(0)));		
+		//addConstraintToCurrentList(new Equals("%"+code.target(), "%"+code.operand(0)));		
 	}
 
 
 	public void analyze(Codes.Loop code){		
-		for(int operand : code.modifiedOperands){
+		//for(int operand : code.modifiedOperands){
 			//	addConstraint(new Equals("%"+code.target, "%"+operand));
-		}
+		//}
 	}
 
-
+	/**
+	 * The bounds of a list/map shall be propagated from the operand to the target. 
+	 * @param code
+	 */
 	public void analyze(Codes.SubList code){
 		if(code.type().element() instanceof Type.Int){
 			for(int operand: code.operands()){
@@ -643,6 +653,34 @@ public class Analyzer {
 			}
 		}
 
+	}
+	
+	/**
+	 * Propagate the bounds of a new Map by taking the union of values. 
+	 * 
+	 * @param code the <code>Codes.NewMap</code> byte-code.
+	 */
+	public void analyze(Codes.NewMap code){
+		for(int operand: code.operands()){
+			//Consider The values fields
+			if(operand%2==1){
+				if(code.type().value() instanceof Type.Int){
+					addConstraintToCurrentList(new Union("%"+code.target(), "%"+operand));
+				}
+			}
+		}		
+	}
+	
+	/**
+	 * Load the tuple values at the given index and assign the bounds of the operand to the target.
+	 * @param code
+	 */
+	public void analyze(Codes.TupleLoad code){
+		//Check if the index is that of value field (1).
+		int index = code.index;
+		if(index == 1 && isIntType(code.type().element(index))){
+			addConstraintToCurrentList(new Assign("%"+code.target(), "%"+code.operand(0)));
+		}
 	}
 
 }
