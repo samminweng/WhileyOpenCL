@@ -6,6 +6,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import wycc.lang.SyntaxError;
 import wyil.lang.Codes;
@@ -15,6 +16,7 @@ import wyil.lang.Code;
 import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyil.lang.Type.FunctionOrMethod;
+import wyil.lang.Type.Tuple;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
 import wyopcl.bound.constraint.Assign;
@@ -23,6 +25,7 @@ import wyopcl.bound.constraint.Constraint;
 import wyopcl.bound.constraint.Equals;
 import wyopcl.bound.constraint.GreaterThan;
 import wyopcl.bound.constraint.GreaterThanEquals;
+import wyopcl.bound.constraint.LeftPlus;
 import wyopcl.bound.constraint.LessThan;
 import wyopcl.bound.constraint.LessThanEquals;
 import wyopcl.bound.constraint.Negate;
@@ -49,7 +52,7 @@ public class Analyzer {
 	private final String BLUE = (char)27 +"[34;1m";
 	private final String RED = (char)27 + "[31;1m";
 	private final String RESET = (char)27 + "[0m";
-	
+
 	public Analyzer(int depth){
 		this.constraintListMap = new HashMap<String, ConstraintList>();
 		this.unionOfBounds = new Bounds();
@@ -73,8 +76,8 @@ public class Analyzer {
 		return false;
 	}
 
-	
-	
+
+
 	/**
 	 * Check if the type is instance of Integer by inferring the type from 
 	 * <code>wyil.Lang.Type</code> objects, including the effective collection types.
@@ -84,16 +87,22 @@ public class Analyzer {
 	public boolean isIntType(Type type){
 		if(type instanceof Type.Int){
 			return true;
-		} else if(type instanceof Type.Map){
+		}
+		
+		if(type instanceof Type.Map){
 			//Check the type of values in the map.
-			if (((Type.Map)type).value() instanceof Type.Int){
-				return true;
-			}			
-		}else if(type instanceof Type.List){
-			if (((Type.List)type).element() instanceof Type.Int){
-				return true;
-			}
-		}		
+			return isIntType(((Type.Map)type).value());			
+		}
+		
+		if(type instanceof Type.List){
+			return isIntType(((Type.List)type).element());
+		}
+		
+		if (type instanceof Type.Tuple){
+			//Check the type of value field. 
+			Type element = ((Type.Tuple)type).element(1);
+			return isIntType(element);	
+		}
 		
 		return false;
 	}
@@ -135,7 +144,7 @@ public class Analyzer {
 		}else{
 			System.out.println(RED+"Consistency=false"+RESET);
 		}
-		
+
 	}
 
 	/**
@@ -289,7 +298,7 @@ public class Analyzer {
 			} else if (code instanceof Codes.NewSet) {
 				//NewSetInterpreter.getInstance().interpret((Codes.NewSet)code, stackframe);
 			} else if (code instanceof Codes.NewTuple) {
-				//NewTupleInterpreter.getInstance().interpret((Codes.NewTuple)code, stackframe);
+				analyze((Codes.NewTuple)code);
 			} else if (code instanceof Codes.Return) {			
 				analyze((Codes.Return)code);
 			} else if (code instanceof Codes.NewObject) {
@@ -362,7 +371,7 @@ public class Analyzer {
 	public void analyze(Codes.IndexOf code){		
 		if(isIntType((Type) code.type())){
 			addConstraintToCurrentList(new Equals("%"+code.target(), "%"+code.operand(0)));
-				
+
 		}
 	}
 
@@ -596,7 +605,7 @@ public class Analyzer {
 
 	public void analyze(Codes.Loop code){		
 		//for(int operand : code.modifiedOperands){
-			//	addConstraint(new Equals("%"+code.target, "%"+operand));
+		//	addConstraint(new Equals("%"+code.target, "%"+operand));
 		//}
 	}
 
@@ -651,7 +660,7 @@ public class Analyzer {
 		}
 
 	}
-	
+
 	/**
 	 * Propagate the bounds of a new Map by taking the union of values. 
 	 * 
@@ -667,21 +676,29 @@ public class Analyzer {
 			}
 		}		
 	}
-	
+
 	/**
 	 * Load the tuple values at the given index and assign the bounds of the operand to the target.
 	 * @param code
 	 */
 	public void analyze(Codes.TupleLoad code){
 		//Check if the index is that of value field (1).
+		Type.Tuple tuple = (Tuple) code.type();
 		int index = code.index;
-		if(index == 1 && isIntType(code.type().element(index))){
+		if(isIntType(tuple.element(index))){
 			addConstraintToCurrentList(new Assign("%"+code.target(), "%"+code.operand(0)));
 		}
 	}
-	
-	
+
+
 	public void analyze(Codes.NewTuple code){
+		//Assing the bounds of value field to the target
+		Type.Tuple tuple = code.type();
+		for(int index=0; index<code.operands().length; index++){
+			if(isIntType(tuple.element(index))){
+				addConstraintToCurrentList(new Union("%"+code.target(), "%"+code.operand(index)));
+			}
+		}
 		
 	}
 
