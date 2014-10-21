@@ -684,19 +684,19 @@ public class Analyzer {
 	 */
 	public void analyze(Codes.NewMap code){
 		Type.Map map = code.type();
-		int index =0;
+		int index =1;
 		while(index<code.operands().length){
 			//Consider the key field
-			if(isIntType(map.key())){
-				addConstraintToCurrentList(new Union("%"+code.target(), "%"+code.operand(index)));
-			}
-			index++;
+			//if(isIntType(map.key())){
+				//addConstraintToCurrentList(new Union("%"+code.target(), "%"+code.operand(index)));
+			//}
+			//index++;
 			
 			//Consider The values field
 			if(isIntType(map.value())){
 				addConstraintToCurrentList(new Union("%"+code.target(), "%"+code.operand(index)));
 			}
-			index++;
+			index+=2;
 		}
 			
 				
@@ -708,11 +708,14 @@ public class Analyzer {
 	 */
 	public void analyze(Codes.TupleLoad code){
 		//Check if the index is that of value field (1).
-		Type.Tuple tuple = (Tuple) code.type();
 		int index = code.index;
-		if(isIntType(tuple.element(index))){
-			addConstraintToCurrentList(new Assign("%"+code.target(), "%"+code.operand(0)));
+		if(index%2==1){
+			Type.Tuple tuple = (Tuple) code.type();
+			if(isIntType(tuple.element(index))){
+				addConstraintToCurrentList(new Assign("%"+code.target(), "%"+code.operand(0)));
+			}
 		}
+		
 	}
 
 	/**
@@ -722,18 +725,21 @@ public class Analyzer {
 	public void analyze(Codes.NewTuple code){
 		//Assing the bounds of value field to the target
 		Type.Tuple tuple = code.type();
-		for(int index=0; index<code.operands().length; index++){
+		int index = 1;
+		while(index<code.operands().length){
 			if(isIntType(tuple.element(index))){
 				addConstraintToCurrentList(new Union("%"+code.target(), "%"+code.operand(index)));
 			}
+			index+=2;
 		}
 		
 	}
-
+	/**
+	 * Updates an element of a list. But how do we update the bounds??? 
+	 * @param code
+	 */
 	public void analyze(Codes.Update code){
-		if(isIntType(code.type())){
-			addConstraintToCurrentList(new Assign("%"+code.result(), "%"+code.target()));
-		}
+		
 	}
 	
 	

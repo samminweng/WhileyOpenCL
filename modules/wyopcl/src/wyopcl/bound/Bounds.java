@@ -167,6 +167,7 @@ public class Bounds {
 	 * @return true if bounds are consistent. Otherwise, return false.
 	 */
 	public boolean checkBoundConsistency() {
+		boolean isConsistent = true;
 		Iterator<Entry<String, Domain>> iterator = bounds.entrySet().iterator();
 		while (iterator.hasNext()) {
 			Entry<String, Domain> bnd = iterator.next();
@@ -174,21 +175,14 @@ public class Bounds {
 			// Check upper bound < lower bound. If so, return false;			
 			BigInteger max = d.getUpperBound();
 			BigInteger min = d.getLowerBound();
-			if(max == null && min == null){
-				return true;
+	
+			if(max != null && min != null && max.compareTo(min) < 0){
+				isConsistent &= false;
 			}else{
-				if(max == null || min == null){
-					return true;
-				}else{
-					if (max.compareTo(min) < 0) {
-						return false;
-					}
-					
-					return true;
-				}
+				isConsistent &= true;
 			}
 		}
-		return true;
+		return isConsistent;
 	}
 
 	@Override
