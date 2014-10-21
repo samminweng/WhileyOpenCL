@@ -339,7 +339,7 @@ public class Analyzer {
 			} else if (code instanceof Codes.UnaryOperator){
 				analyze((Codes.UnaryOperator)code);
 			} else if (code instanceof Codes.Update) {
-				//UpdateInterpreter.getInstance().interpret((Codes.Update)code, stackframe);
+				analyze((Codes.Update)code);
 			} else {
 				internalFailure("unknown wyil code encountered (" + code + ")", "", entry);
 			}
@@ -730,7 +730,11 @@ public class Analyzer {
 		
 	}
 
-	
+	public void analyze(Codes.Update code){
+		if(isIntType(code.type())){
+			addConstraintToCurrentList(new Assign("%"+code.result(), "%"+code.target()));
+		}
+	}
 	
 	
 }
