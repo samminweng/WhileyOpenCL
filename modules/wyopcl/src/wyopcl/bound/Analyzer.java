@@ -90,8 +90,9 @@ public class Analyzer {
 		}
 		
 		if(type instanceof Type.Map){
+			Type.Map map = (Type.Map)type;
 			//Check the type of values in the map.
-			return isIntType(((Type.Map)type).value());			
+			return isIntType(map.key()) || isIntType(map.value());			
 		}
 		
 		if(type instanceof Type.List){
@@ -590,7 +591,7 @@ public class Analyzer {
 		//Check if each element is an integer
 		if(isIntType((Type) code.type)){
 			//Propagate the range of source register to the index reg 
-			addConstraintToCurrentList(new Assign("%"+code.indexOperand, "%"+code.sourceOperand));
+			addConstraintToCurrentList(new Equals("%"+code.indexOperand, "%"+code.sourceOperand));
 		}
 	}
 
@@ -643,6 +644,10 @@ public class Analyzer {
 			case REM:
 				break;			
 			case RANGE:
+				//Take the union of operands
+				for(int operand: code.operands()){
+					addConstraintToCurrentList(new Union("%"+code.target(), "%"+operand));
+				}				
 				break;
 			case BITWISEAND:
 				break;			
@@ -667,14 +672,23 @@ public class Analyzer {
 	 * @param code the <code>Codes.NewMap</code> byte-code.
 	 */
 	public void analyze(Codes.NewMap code){
-		for(int operand: code.operands()){
-			//Consider The values fields
-			if(operand%2==1){
-				if(code.type().value() instanceof Type.Int){
-					addConstraintToCurrentList(new Union("%"+code.target(), "%"+operand));
-				}
+		Type.Map map = code.type();
+		int index =0;
+		while(index<code.operands().length){
+			//Consider the key field
+			if(isIntType(map.key())){
+				addConstraintToCurrentList(new Union("%"+code.target(), "%"+code.operand(index)));
 			}
-		}		
+			index++;
+			
+			//Consider The values field
+			if(isIntType(map.value())){
+				addConstraintToCurrentList(new Union("%"+code.target(), "%"+code.operand(index)));
+			}
+			index++;
+		}
+			
+				
 	}
 
 	/**
@@ -690,7 +704,10 @@ public class Analyzer {
 		}
 	}
 
-
+	/**
+	 * Take the union of bounds from operands and target
+	 * @param code
+	 */
 	public void analyze(Codes.NewTuple code){
 		//Assing the bounds of value field to the target
 		Type.Tuple tuple = code.type();
@@ -702,4 +719,7 @@ public class Analyzer {
 		
 	}
 
+	
+	
+	
 }

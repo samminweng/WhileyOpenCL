@@ -31,11 +31,13 @@ public class Assign extends Constraint {
 
 		// Propagating the bounds from y to x.
 		if (y_min != null) {
-			bnd.isChanged |= bnd.addLowerBound(x, y_min);
+			bnd.isChanged |= bnd.widenLowerBound(x, y_min);
+			//bnd.isChanged |= bnd.addLowerBound(x, y_min);
 		}
 
 		if (y_max != null) {
-			bnd.isChanged |= bnd.addUpperBound(x, y_max);
+			bnd.isChanged |= bnd.widenUpperBound(x, y_max);
+			//bnd.isChanged |= bnd.addUpperBound(x, y_max);
 		}
 
 		return bnd.isChanged;
