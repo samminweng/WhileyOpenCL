@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Stack;
 
 import wycc.lang.SyntaxError;
 import wyil.lang.Codes;
@@ -45,7 +46,8 @@ public class Analyzer {
 	//The hashmap stores the constraints with in the label value in each method or function.
 	private HashMap<String, ConstraintList> constraintListMap;
 	private Bounds unionOfBounds;
-	private String assert_label;//stores the label name of the assertion
+	//The stack is used to store the assertion's labels.
+	private Stack<String> assert_label;
 	private String label;
 	private final int depth;
 	private final String GRAY = (char)27 +"[30;1m";
@@ -57,7 +59,7 @@ public class Analyzer {
 		this.constraintListMap = new HashMap<String, ConstraintList>();
 		this.unionOfBounds = new Bounds();
 		this.depth = depth;
-		this.assert_label = "";
+		this.assert_label = new Stack<String>();
 		this.label = "code";
 	}
 
@@ -70,13 +72,27 @@ public class Analyzer {
 	 * @return true if assertion/assume is on. Otherwise, return false
 	 */
 	public boolean isAssertOrAssume(){
-		if(!assert_label.equals("")){
+		if(!assert_label.empty()){
 			return true;
 		}		
 		return false;
 	}
 
-
+	/**
+	 * Enable the flag of assert or assume to avoid adding or branching the constraints to the list. 
+	 * @param label
+	 */
+	public void enableAssertOrAssume(String label){
+		if(!assert_label.contains(label)){
+			assert_label.push(label);
+		}		
+	}
+	
+	public void disableAssertOrAssume(String label){
+		if(assert_label.contains(label)){
+			assert_label.pop();
+		}
+	}
 
 	/**
 	 * Check if the type is instance of Integer by inferring the type from 
@@ -337,9 +353,8 @@ public class Analyzer {
 
 
 	public void analyze(Codes.AssertOrAssume code){
-		//Set the assert_label so that no constraints are added to list.
-		this.assert_label = code.target;
-
+		//Push the assert_label so that no constraints are added to list.
+		enableAssertOrAssume(code.target);
 	}
 
 
@@ -489,15 +504,11 @@ public class Analyzer {
 	public void analyze(Codes.Label code){
 		//check if map contains the constrainlist.
 		String label = code.label;
-		if(label.equals(this.assert_label)){
-			this.assert_label = "";
-		}else{
-			if(constraintListMap.containsKey(label)){
-				//Switch the current constraint list by setting the label with new value.
-				setLabel(label);
-			}		
+		disableAssertOrAssume(label);
+		if(constraintListMap.containsKey(label)){
+			//Switch the current constraint list by setting the label with new value.
+			setLabel(label);
 		}
-
 	}
 
 
