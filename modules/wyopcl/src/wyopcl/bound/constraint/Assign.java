@@ -26,16 +26,29 @@ public class Assign extends Constraint {
 	public boolean inferBound(Bounds bnd) {
 
 		bnd.isChanged = false;
+		x_min = bnd.getLower(x);
+		x_max = bnd.getLower(x);
 		y_min = bnd.getLower(y);
 		y_max = bnd.getUpper(y);
 
 		// Propagating the bounds from y to x.
-		if (y_min != null) {			
-			bnd.isChanged |= bnd.addLowerBound(x, y_min);
+		if (y_min != null) {
+			if(x_min != null){
+				//If the bounds of x and y are not null, then the
+				//widen operator is used to widen the bound. 
+				bnd.isChanged |= bnd.widenLowerBound(x, y_min); 
+			}else{
+				bnd.isChanged |= bnd.addLowerBound(x, y_min);
+			}
+			
 		}
 
-		if (y_max != null) {			
-			bnd.isChanged |= bnd.addUpperBound(x, y_max);
+		if (y_max != null) {
+			if(x_max != null){
+				bnd.isChanged |= bnd.widenUpperBound(x, y_max);
+			}else{
+				bnd.isChanged |= bnd.addUpperBound(x, y_max);
+			}			
 		}
 
 		return bnd.isChanged;

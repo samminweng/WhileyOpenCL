@@ -15,49 +15,35 @@ public class Union extends Constraint {
 		this.x = x;
 		this.y = y;
 	}
-	
-	
+
+
 	@Override
 	public boolean inferBound(Bounds bnd) {
 		bnd.isChanged = false;
 		min_x = bnd.getLower(x);
-		min_y = bnd.getLower(y);
 		max_x = bnd.getUpper(x);
+		min_y = bnd.getLower(y);
 		max_y = bnd.getUpper(y);
-		
-		//Propagate the lower bounds to z
-		if(min_x != null){
-			//Get the smaller lower bounds of x and y and add that lower bound to z.
-			if(min_y != null){				
-				bnd.isChanged |= bnd.widenLowerBound(x, min_x.min(max_y));
-				 
-			}else{
-				bnd.isChanged |= bnd.widenLowerBound(x, min_x);
-			}			
-		}else{
+
+		//Propagate the lower bounds to x
+		if(min_x == null){
+			bnd.isChanged |= bnd.addLowerBound(x, min_y);
+		}else{			
+			//Get the smaller lower bounds of x and y and add that lower bound to x.
 			if(min_y != null){
 				bnd.isChanged |= bnd.widenLowerBound(x, min_y);
-			}else{
-				//Do nothing because both of lower bounds are -inf. 
 			}
 		}
-		
-		
-		//Propagate the upper bounds to z.
-		if(max_x != null){
-			if(max_y != null){
-				bnd.isChanged |= bnd.widenUpperBound(x, max_x.max(max_y));
-			}else{
-				bnd.isChanged |= bnd.widenUpperBound(x, max_x);
-			}
-			
-		}else{
-			if(max_y != null){
+
+		//Propagate the upper bounds to x.
+		if(max_x == null){
+			bnd.isChanged |= bnd.addUpperBound(x, max_y);
+		}else{			
+			if(max_y != null){				
 				bnd.isChanged |= bnd.widenUpperBound(x, max_y);
-			}
+			}		
 		}
-		
-		
+
 		return bnd.isChanged;
 	}
 
@@ -67,6 +53,6 @@ public class Union extends Constraint {
 		return "Union [x=" + x + ", y=" + y + "]";
 	}
 
-	
-	
+
+
 }
