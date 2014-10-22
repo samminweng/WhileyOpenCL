@@ -42,7 +42,7 @@ allows us to make use of different SMT solvers (e.g. Z3).
 2.1 Bound Analyzer
 Bound analyzer aims to infer the bounds and check the bounds consistent
 with all constraints. To run the bound analyzer on Whiley programs,
-use the below commands:​​
+use the below commands:
 $ git clone https://github.com/samminweng/WhileyOpenCL
 $ cd WhileyOpenCL/
 $ ant
@@ -61,6 +61,6 @@ The current success rate is 95.85% (Failures: 22, Errors: 16, Skipped: 94).
 
 2. Whiley-to-OpenCL translator
 2.1 Bound Analyzer
-The bound analyzer can be verified with 16 test cases by using the commands:
-$ ant bounds
-The unit test results are summarized at 'report/bounds/index.html'.
+The bound analyzer currently is being used to analyze the valid test
+Whiley programs, including {IfElse_Valid_1..3}, {For_Valid_1..3} and 
+{While_Valid_1}.
