@@ -48,7 +48,8 @@ public class Analyzer {
 	private Bounds unionOfBounds;
 	//The stack is used to store the assertion's labels.
 	private Stack<String> stackOfAssertOrAssume;
-	private String label;
+	//Keep track of the current branch name.
+	private String branch;
 	private final int depth;
 	private final String GRAY = (char)27 +"[30;1m";
 	private final String BLUE = (char)27 +"[34;1m";
@@ -60,11 +61,18 @@ public class Analyzer {
 		this.unionOfBounds = new Bounds();
 		this.depth = depth;
 		this.stackOfAssertOrAssume = new Stack<String>();
-		this.label = "code";
+		this.branch = "code";
 	}
-
-	public void setLabel(String label) {
-		this.label = label;
+	/**
+	 * Switch the constraint list according to the label name. 
+	 * @param label the name of label.
+	 */
+	public void switchBranch(String label) {
+		if(constraintListMap.containsKey(label)){
+			//Switch the current constraint list by setting the label with new value.
+			this.branch = label;
+		}
+		
 	}
 
 	/**
@@ -194,12 +202,12 @@ public class Analyzer {
 	 * @return the constraint list.
 	 */
 	private ConstraintList getCurrentConstraintList(){
-		if(!constraintListMap.containsKey(label)){
+		if(!constraintListMap.containsKey(branch)){
 			//Clone the current constraint list to make a new one.
 			ConstraintList list = new ConstraintList();
-			constraintListMap.put(label, list);
+			constraintListMap.put(branch, list);
 		}		
-		return constraintListMap.get(label);
+		return constraintListMap.get(branch);
 	}
 
 	/**
@@ -240,9 +248,8 @@ public class Analyzer {
 		//belong to the assertion or assumption.
 		if(!isAssertOrAssume()){
 			ConstraintList current_list = getCurrentConstraintList();
-			ConstraintList new_list;
 			//Cloned the current constraint list. 
-			new_list = (ConstraintList) current_list.clone();
+			ConstraintList new_list = (ConstraintList) current_list.clone();
 			new_list.addConstraint(c);
 			constraintListMap.put(new_label, new_list);
 		}
@@ -505,10 +512,8 @@ public class Analyzer {
 		//check if map contains the constrainlist.
 		String label = code.label;
 		disableAssertOrAssume(label);
-		if(constraintListMap.containsKey(label)){
-			//Switch the current constraint list by setting the label with new value.
-			setLabel(label);
-		}
+		//Switch the current constraint list by setting the label with new value.
+		switchBranch(label);		
 	}
 
 
