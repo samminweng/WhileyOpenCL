@@ -87,21 +87,22 @@ public class Analyzer {
 	}
 
 	/**
-	 * Enable the flag of assert or assume to avoid adding or branching the constraints to the list. 
-	 * @param label
+	 * Enable/Disable the flag of assert or assume 
+	 * to avoid adding or branching the constraints to the list. 
+	 * @param label the label name of assertion or assumption 
+	 * @param enable boolean value to enable or disable the flag.
 	 */
-	public void enableAssertOrAssume(String label){
-		if(!stackOfAssertOrAssume.contains(label)){
+	public void enableAssertOrAssume(String label, boolean enabled){
+		if(enabled){
 			stackOfAssertOrAssume.push(label);
-		}		
-	}
-	
-	public void disableAssertOrAssume(String label){
-		if(stackOfAssertOrAssume.contains(label)){
-			stackOfAssertOrAssume.pop();
+		}else{
+			if(!stackOfAssertOrAssume.empty() &&
+					stackOfAssertOrAssume.peek().equals(label)){
+				stackOfAssertOrAssume.pop();
+			}			
 		}
 	}
-
+	
 	/**
 	 * Check if the type is instance of Integer by inferring the type from 
 	 * <code>wyil.Lang.Type</code> objects, including the effective collection types.
@@ -361,7 +362,7 @@ public class Analyzer {
 
 	public void analyze(Codes.AssertOrAssume code){
 		//Push the assert_label so that no constraints are added to list.
-		enableAssertOrAssume(code.target);
+		enableAssertOrAssume(code.target, true);
 	}
 
 
@@ -511,7 +512,7 @@ public class Analyzer {
 	public void analyze(Codes.Label code){
 		//check if map contains the constrainlist.
 		String label = code.label;
-		disableAssertOrAssume(label);
+		enableAssertOrAssume(label, false);
 		//Switch the current constraint list by setting the label with new value.
 		switchBranch(label);		
 	}
