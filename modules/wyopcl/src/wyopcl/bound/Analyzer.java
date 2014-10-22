@@ -613,14 +613,17 @@ public class Analyzer {
 	}
 
 	/**
-	 * 
+	 * Not implemented.
 	 * @param code
 	 */
 	public void analyze(Codes.LengthOf code){		
 		//addConstraintToCurrentList(new Equals("%"+code.target(), "%"+code.operand(0)));		
 	}
 
-
+	/**
+	 * Not implemented
+	 * @param code
+	 */
 	public void analyze(Codes.Loop code){		
 		//for(int operand : code.modifiedOperands){
 		//	addConstraint(new Equals("%"+code.target, "%"+operand));
