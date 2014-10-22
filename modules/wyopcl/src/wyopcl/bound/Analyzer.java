@@ -47,7 +47,7 @@ public class Analyzer {
 	private HashMap<String, ConstraintList> constraintListMap;
 	private Bounds unionOfBounds;
 	//The stack is used to store the assertion's labels.
-	private Stack<String> assert_label;
+	private Stack<String> stackOfAssertOrAssume;
 	private String label;
 	private final int depth;
 	private final String GRAY = (char)27 +"[30;1m";
@@ -59,7 +59,7 @@ public class Analyzer {
 		this.constraintListMap = new HashMap<String, ConstraintList>();
 		this.unionOfBounds = new Bounds();
 		this.depth = depth;
-		this.assert_label = new Stack<String>();
+		this.stackOfAssertOrAssume = new Stack<String>();
 		this.label = "code";
 	}
 
@@ -72,7 +72,7 @@ public class Analyzer {
 	 * @return true if assertion/assume is on. Otherwise, return false
 	 */
 	public boolean isAssertOrAssume(){
-		if(!assert_label.empty()){
+		if(!stackOfAssertOrAssume.empty()){
 			return true;
 		}		
 		return false;
@@ -83,14 +83,14 @@ public class Analyzer {
 	 * @param label
 	 */
 	public void enableAssertOrAssume(String label){
-		if(!assert_label.contains(label)){
-			assert_label.push(label);
+		if(!stackOfAssertOrAssume.contains(label)){
+			stackOfAssertOrAssume.push(label);
 		}		
 	}
 	
 	public void disableAssertOrAssume(String label){
-		if(assert_label.contains(label)){
-			assert_label.pop();
+		if(stackOfAssertOrAssume.contains(label)){
+			stackOfAssertOrAssume.pop();
 		}
 	}
 
