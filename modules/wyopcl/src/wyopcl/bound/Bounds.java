@@ -17,7 +17,7 @@ import java.util.Map.Entry;
  * @author Min-Hsien Weng
  *
  */
-public class Bounds {
+public class Bounds implements Cloneable{
 	// Every subclass shares the 'bounds' variable;
 	private HashMap<String, Domain> bounds;
 	public boolean isChanged = false;
@@ -96,19 +96,7 @@ public class Bounds {
 	
 	
 	
-	/**
-	 * Widen the current domain with the bounds from the new domain.
-	 * @param d the new domain
-	 */
-	public void widenBounds(Domain d) {		
-		BigInteger new_min = d.getLowerBound();
-		//Widen the lower bounds if the new lower bound < this lower bound.
-		widenLowerBound(d.getName(), new_min);
-		BigInteger new_max = d.getUpperBound();
-		//Widen the upper bound if the new upper bound > current upper bound.
-		widenUpperBound(d.getName(), new_max);
-
-	}
+	
 
 	public boolean addLowerBound(String name, BigInteger new_min) {
 		try {
@@ -156,7 +144,12 @@ public class Bounds {
 		while(iterator.hasNext()){
 			Entry<String, Domain> entry = iterator.next();
 			Domain new_domain = entry.getValue();
-			widenBounds(new_domain);
+			BigInteger new_min = new_domain.getLowerBound();
+			//Widen the lower bounds if the new lower bound < this lower bound.
+			widenLowerBound(new_domain.getName(), new_min);
+			BigInteger new_max = new_domain.getUpperBound();
+			//Widen the upper bound if the new upper bound > current upper bound.
+			widenUpperBound(new_domain.getName(), new_max);
 		}		
 	}
 	
@@ -190,7 +183,7 @@ public class Bounds {
 	 * Prints out all the bounds. 
 	 */
 	public String toString() {
-		String str = "[";
+		String str = "{";
 		// Sort all the domains
 		List<Domain> domains = new ArrayList<Domain>(bounds.values());
 		//All the domains are sorted by names.
@@ -198,7 +191,7 @@ public class Bounds {
 		for (Domain d : domains) {
 			str += "\n\t" + d.toString();
 		}
-		str += "\n]";
+		str += "\n}";
 
 		return str;
 	}
@@ -207,4 +200,25 @@ public class Bounds {
 		return bounds;
 	}
 
+	@Override
+	public Object clone() {
+		Bounds bnd = new Bounds();
+		
+		Iterator<Entry<String, Domain>> iterator = this.getBounds().entrySet().iterator();
+		while(iterator.hasNext()){
+			Entry<String, Domain> entry = iterator.next();
+			try {
+				bnd.getBounds().put(entry.getKey(), (Domain) entry.getValue().clone());
+			} catch (CloneNotSupportedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return bnd;
+	}
+
+	
+	
+	
 }
