@@ -12,7 +12,6 @@ import wyopcl.bound.constraint.Constraint;
  */
 public class BasicBlock {
 	private List<Constraint> constraintList;
-	private List<BasicBlock> parentNodes;
 	private List<BasicBlock> childNodes = null;
 	private final String branch;
 	private Bounds unionOfBounds;
@@ -20,38 +19,27 @@ public class BasicBlock {
 	public BasicBlock(String branch){
 		this.branch = branch;		
 		this.unionOfBounds = new Bounds();
-	}
-	
-	public BasicBlock(BasicBlock parent){
-		this(parent.branch);
-		addParent(parent);		
-	}
-	
-	public BasicBlock(String branch, BasicBlock parent){
-		this(branch);
-		addParent(parent);		
-	}
+		this.constraintList = new ArrayList<Constraint>();
+	}	
 	
 	/**
-	 * Adds a child node.	
-	 * @param blk
+	 * Adds a child node to the current node, and
+	 * infer the bounds of current node and combines
+	 * the bounds of current and child nodes into 
+	 * the union of bounds.  
+	 * @param blk the child node.
 	 */
-	public void addChild(BasicBlock blk){
+	public void addChild(BasicBlock child){
 		if(childNodes == null){
 			childNodes = new ArrayList<BasicBlock>();
-		}
-		
-		childNodes.add(blk);
+		}		
+		childNodes.add(child);
+		//Infer the bounds
+		this.inferFixedPoint();
+		//Take the union of bounds of child node and current node. 
+		child.getBounds().union((Bounds) this.getBounds().clone());
 	}
 	
-	public void addParent(BasicBlock blk){
-		if(parentNodes == null){
-			parentNodes = new ArrayList<BasicBlock>();
-		}		
-		parentNodes.add(blk);		
-		unionOfBounds.union((Bounds)blk.getBounds().clone());
-		
-	}
 	
 	public boolean isLeaf(){
 		if(childNodes == null){
@@ -68,10 +56,7 @@ public class BasicBlock {
 		return childNodes;
 	}
 	
-	public void addConstraint(Constraint c){
-		if(this.constraintList == null){
-			this.constraintList = new ArrayList<Constraint>();
-		}		
+	public void addConstraint(Constraint c){		
 		constraintList.add(c);
 	}	
 	

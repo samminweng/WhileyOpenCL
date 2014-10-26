@@ -48,7 +48,7 @@ public class AnalyzerV2 {
 	//private Bounds unionOfBounds;
 	//The stack is used to store the assertion's labels.
 	private Stack<String> stackOfAssertOrAssume;
-	
+
 	//private String branch;
 	private final int depth;
 	private final String GRAY = (char)27 +"[30;1m";
@@ -64,20 +64,15 @@ public class AnalyzerV2 {
 	//The exit node of CFG
 	private BasicBlock exit;
 	//The list of basic block;
-	private List<BasicBlock> list = new ArrayList<BasicBlock>();
+	//private List<BasicBlock> list = new ArrayList<BasicBlock>();
 
 	public AnalyzerV2(int depth){
-		//this.constraintListMap = new HashMap<String, ConstraintList>();
-		//this.unionOfBounds = new Bounds();
 		this.depth = depth;
 		this.stackOfAssertOrAssume = new Stack<String>();
 		this.entry = new BasicBlock("code");
-		this.exit = new BasicBlock("exit");
-		this.list = new ArrayList<BasicBlock>();
-		this.list.add(entry);
-		this.list.add(exit);
+		this.exit = new BasicBlock("exit");		
 	}
-	
+
 	public void initializeEntryNode(List<Type> paramTypes){
 		int index = 0;
 		for(Type param: paramTypes){
@@ -87,8 +82,8 @@ public class AnalyzerV2 {
 			index++;
 		}	
 	}
-	
-	
+
+
 	/**
 	 * Check if the asserted or assumed flag is enabled.
 	 * @return true if assertion/assume is on. Otherwise, return false
@@ -188,18 +183,35 @@ public class AnalyzerV2 {
 	}
 
 	/**
+	 * Traverse each node in CFG and infer the bounds for each node. 
+	 * @param blk
+	 */
+	private void inferBounds(BasicBlock blk){
+		blk.inferFixedPoint();
+		if(!blk.isLeaf()){
+			for(BasicBlock child: blk.getChildNodes()){
+				 inferBounds(child);
+			}			
+		}
+		
+		return;
+	}
+
+
+	/**
 	 *infer bounds consistent with all constraints.
 	 * 
 	 */
 	public Bounds inferBounds(boolean verbose){
+		inferBounds(entry);
 		//Print out the bounds.
 		if(verbose){
 			printBounds(exit.getBounds());
 		}		
 		return exit.getBounds();
 	}
-	
-	
+
+
 
 	private BasicBlock getCurrentBlock(){
 		if(current_blk==null){
@@ -252,27 +264,26 @@ public class AnalyzerV2 {
 	public void branch(String new_label, Constraint c){
 		//Branch the constraint list only when the bytecode does not
 		//belong to the assertion or assumption.
-		if(!isAssertOrAssume()){
-			current_blk.inferFixedPoint();
-			BasicBlock branch_blk = getBasicBlock(entry, new_label);
-			if(branch_blk == null){				
-				BasicBlock leftBlock = new BasicBlock(current_blk);
-				BasicBlock rightBlock = new BasicBlock(new_label, current_blk);
+		if(!isAssertOrAssume()){			
+			//BasicBlock branch_blk = getBasicBlock(entry, new_label);
+			BasicBlock blk = getCurrentBlock();
+			BasicBlock leftBlock = new BasicBlock(blk.getBranch());
+			BasicBlock rightBlock = new BasicBlock(new_label);
 
-				//Add the constraint to the left block
-				rightBlock.addConstraint(c);
+			//Connect the blk and left and right blocks.
+			blk.addChild(leftBlock);			
+			//Add the constraint to the left block
+			blk.addChild(rightBlock);
+			
+			rightBlock.addConstraint(c);						
+			//Set the current block to the left
+			setCurrentBlock(leftBlock);			
+		}
+	}
 
-				//Connect the blk and left and right blocks.
-				current_blk.addChild(leftBlock);
-				current_blk.addChild(rightBlock);
-				//Set the current block to the left
-				current_blk = leftBlock;
-				this.list.add(leftBlock);
-				this.list.add(rightBlock);
-				
-			}else{
-				throw new RuntimeException("Not implemented yet.");
-			}
+	private void setCurrentBlock(BasicBlock block) {
+		if(block != null){
+			this.current_blk = block;
 		}
 	}
 
@@ -570,9 +581,8 @@ public class AnalyzerV2 {
 			//Add the 'Equals' constraint to the return (ret) variable.
 			blk.addConstraint((new Equals("return", ret)));			
 		}
-		
 		blk.inferFixedPoint();
-		exit.addParent(blk);
+		blk.addChild(exit);
 	}
 
 	public void analyze(Codes.ListOperator code){
