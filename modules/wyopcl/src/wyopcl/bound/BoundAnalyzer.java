@@ -49,7 +49,7 @@ public class BoundAnalyzer implements Builder{
 	private String filename;
 	private boolean verbose = false;
 	//The hashmap stores the unions of bounds for each function.
-	//private HashMap<WyilFile.FunctionOrMethodDeclaration, Bounds> unionOfBoundsMap = new HashMap<WyilFile.FunctionOrMethodDeclaration, Bounds>();
+	private HashMap<WyilFile.FunctionOrMethodDeclaration, Bounds> unionOfBoundsMap = new HashMap<WyilFile.FunctionOrMethodDeclaration, Bounds>();
 
 	private String[] args;
 	/**
@@ -131,30 +131,7 @@ public class BoundAnalyzer implements Builder{
 		}
 	}
 	
-	/**
-	 * Takes the in-memory wyil file and analyzes the variable ranges for each function.
-	 * @param module
-	 */
-	public void analyzeV2(WyilFile module){
-		for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {			
-			AnalyzerV2 analyzer = new AnalyzerV2(0);
-			analyzer.initializeEntryNode(functionOrMethod.type().params());
-			int line = 0;
-			//Parse each byte-code and add the constraints accordingly.
-			for(Case mcase : functionOrMethod.cases()){
-				Iterator<wyil.lang.Code.Block.Entry> iterator = mcase.body().iterator();
-				while(iterator.hasNext()){
-					//Get the Block.Entry
-					Block.Entry entry = iterator.next();
-					line = analyzer.printWyILCode(entry.code, functionOrMethod.name(), line);				
-					analyzer.dispatch(entry);				
-				}
-			}			
-			//Infer the bounds 
-			analyzer.printBounds(analyzer.exit.getBounds());
-			analyzer = null;
-		}
-	}
+	
 	
 
 
@@ -232,10 +209,37 @@ public class BoundAnalyzer implements Builder{
 
 	
 	/**
+	 * Takes the in-memory wyil file and analyzes the variable ranges for each function.
+	 * @param module
+	 */
+	public void analyzeV2(WyilFile module){
+		for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {			
+			AnalyzerV2 analyzer = new AnalyzerV2(0);
+			analyzer.initializeEntryNode(functionOrMethod.type().params());
+			int line = 0;
+			//Parse each byte-code and add the constraints accordingly.
+			for(Case mcase : functionOrMethod.cases()){
+				Iterator<wyil.lang.Code.Block.Entry> iterator = mcase.body().iterator();
+				while(iterator.hasNext()){
+					//Get the Block.Entry
+					Block.Entry entry = iterator.next();
+					line = analyzer.printWyILCode(entry.code, functionOrMethod.name(), line);				
+					analyzer.dispatch(entry);				
+				}
+			}			
+			//Infer the bounds 
+			Bounds bnd = analyzer.inferBounds(true);
+			this.unionOfBoundsMap.put(functionOrMethod, bnd);
+			analyzer = null;
+		}
+	}
+	
+	
+	/**
 	 * Takes the in-memory wyil file and analyzes the range values for all variables in each function.
 	 * @param module
 	 */
-	public void analyzeMethodCallV2(WyilFile module){
+	public void analyzeMain(WyilFile module){
 		AnalyzerV2 analyzer = new AnalyzerV2(0);
 		WyilFile.FunctionOrMethodDeclaration main = module.functionOrMethod("main").get(0);
 		int line = 0;

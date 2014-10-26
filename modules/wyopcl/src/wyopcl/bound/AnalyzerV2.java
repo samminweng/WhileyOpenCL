@@ -62,7 +62,9 @@ public class AnalyzerV2 {
 	//Keep track of the current basic block.
 	private BasicBlock current_blk;
 	//The exit node of CFG
-	public BasicBlock exit;
+	private BasicBlock exit;
+	//The list of basic block;
+	private List<BasicBlock> list = new ArrayList<BasicBlock>();
 
 	public AnalyzerV2(int depth){
 		//this.constraintListMap = new HashMap<String, ConstraintList>();
@@ -71,7 +73,9 @@ public class AnalyzerV2 {
 		this.stackOfAssertOrAssume = new Stack<String>();
 		this.entry = new BasicBlock("code");
 		this.exit = new BasicBlock("exit");
-
+		this.list = new ArrayList<BasicBlock>();
+		this.list.add(entry);
+		this.list.add(exit);
 	}
 	
 	public void initializeEntryNode(List<Type> paramTypes){
@@ -188,22 +192,11 @@ public class AnalyzerV2 {
 	 * 
 	 */
 	public Bounds inferBounds(boolean verbose){
-		
-		BasicBlock blk = getCurrentBlock();
-		blk.inferFixedPoint();		
-
 		//Print out the bounds.
 		if(verbose){
-			printBounds(blk.getBounds());
+			printBounds(exit.getBounds());
 		}		
-		return blk.getBounds();
-	}
-
-
-	public void addExit(){
-		
-		
-		
+		return exit.getBounds();
 	}
 	
 	
@@ -274,6 +267,8 @@ public class AnalyzerV2 {
 				current_blk.addChild(rightBlock);
 				//Set the current block to the left
 				current_blk = leftBlock;
+				this.list.add(leftBlock);
+				this.list.add(rightBlock);
 				
 			}else{
 				throw new RuntimeException("Not implemented yet.");
@@ -567,17 +562,17 @@ public class AnalyzerV2 {
 	 * @param code
 	 */
 	public void analyze(Codes.Return code){
+		//Get the return operand
+		String ret = "%"+code.operand;
+		BasicBlock blk = getCurrentBlock();
 		//Check if the return type is integer.
 		if(!isAssertOrAssume() && isIntType(code.type)){
-			//Get the return operand
-			String ret = "%"+code.operand;
-			BasicBlock blk = getCurrentBlock();
 			//Add the 'Equals' constraint to the return (ret) variable.
-			blk.addConstraint((new Equals("return", ret)));
-
-			blk.inferFixedPoint();
-			exit.unionBounds((Bounds) blk.getBounds().clone());
-		}		
+			blk.addConstraint((new Equals("return", ret)));			
+		}
+		
+		blk.inferFixedPoint();
+		exit.addParent(blk);
 	}
 
 	public void analyze(Codes.ListOperator code){

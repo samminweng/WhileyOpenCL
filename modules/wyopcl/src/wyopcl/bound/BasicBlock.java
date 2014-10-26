@@ -12,27 +12,24 @@ import wyopcl.bound.constraint.Constraint;
  */
 public class BasicBlock {
 	private List<Constraint> constraintList;
-	private BasicBlock parent = null;
+	private List<BasicBlock> parentNodes;
 	private List<BasicBlock> childNodes = null;
 	private final String branch;
 	private Bounds unionOfBounds;
 	
 	public BasicBlock(String branch){
-		this.branch = branch;
-		this.parent = null;		
+		this.branch = branch;		
 		this.unionOfBounds = new Bounds();
 	}
 	
 	public BasicBlock(BasicBlock parent){
-		this.branch = parent.branch;
-		this.parent = parent;
-		this.unionOfBounds = (Bounds) parent.getBounds().clone();
+		this(parent.branch);
+		addParent(parent);		
 	}
 	
 	public BasicBlock(String branch, BasicBlock parent){
-		this.branch = branch;
-		this.parent = parent;
-		this.unionOfBounds = (Bounds) parent.getBounds().clone();
+		this(branch);
+		addParent(parent);		
 	}
 	
 	/**
@@ -47,15 +44,19 @@ public class BasicBlock {
 		childNodes.add(blk);
 	}
 	
-	public BasicBlock getParent(){
-		return parent;
+	public void addParent(BasicBlock blk){
+		if(parentNodes == null){
+			parentNodes = new ArrayList<BasicBlock>();
+		}		
+		parentNodes.add(blk);		
+		unionOfBounds.union((Bounds)blk.getBounds().clone());
+		
 	}
 	
 	public boolean isLeaf(){
 		if(childNodes == null){
 			return true;
-		}
-		
+		}		
 		return false;
 	}
 	
@@ -76,12 +77,7 @@ public class BasicBlock {
 	
 	public Bounds getBounds(){
 		return unionOfBounds;
-	}
-	
-	public void unionBounds(Bounds bnd){
-		unionOfBounds.union(bnd);
-	}
-	
+	}	
 	
 	public void addBounds(String name, BigInteger new_min, BigInteger new_max){
 		unionOfBounds.addLowerBound(name, new_min);
