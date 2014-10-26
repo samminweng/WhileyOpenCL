@@ -73,16 +73,19 @@ public class AnalyzerV2 {
 		this.exit = new BasicBlock("exit");		
 	}
 
+	public void initializeEntryNode(Type paramType, String param, BigInteger min, BigInteger max){
+		if(isIntType(paramType)){
+			this.entry.addBounds(param, min, max);
+		}
+	}
+
 	public void initializeEntryNode(List<Type> paramTypes){
 		int index = 0;
-		for(Type param: paramTypes){
-			if(isIntType(param)){
-				this.entry.addBounds("%"+index, null, null);				
-			}
+		for(Type paramType: paramTypes){
+			initializeEntryNode(paramType, "%"+index, null, null);
 			index++;
 		}	
 	}
-
 
 	/**
 	 * Check if the asserted or assumed flag is enabled.

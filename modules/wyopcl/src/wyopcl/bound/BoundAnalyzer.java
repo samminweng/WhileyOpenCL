@@ -206,7 +206,22 @@ public class BoundAnalyzer implements Builder{
 		analyzer.inferBoundsOverAllConstraintlists(true);
 
 	}
-
+	
+	
+	private void iterateByteCode(AnalyzerV2 analyzer, WyilFile.FunctionOrMethodDeclaration functionOrMethod){
+		int line = 0;
+		//Parse each byte-code and add the constraints accordingly.
+		for(Case mcase : functionOrMethod.cases()){
+			Iterator<wyil.lang.Code.Block.Entry> iterator = mcase.body().iterator();
+			while(iterator.hasNext()){
+				//Get the Block.Entry
+				Block.Entry entry = iterator.next();
+				line = analyzer.printWyILCode(entry.code, functionOrMethod.name(), line);				
+				analyzer.dispatch(entry);				
+			}
+		}
+	}
+	
 	
 	/**
 	 * Takes the in-memory wyil file and analyzes the variable ranges for each function.
@@ -216,20 +231,9 @@ public class BoundAnalyzer implements Builder{
 		for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {			
 			AnalyzerV2 analyzer = new AnalyzerV2(0);
 			analyzer.initializeEntryNode(functionOrMethod.type().params());
-			int line = 0;
-			//Parse each byte-code and add the constraints accordingly.
-			for(Case mcase : functionOrMethod.cases()){
-				Iterator<wyil.lang.Code.Block.Entry> iterator = mcase.body().iterator();
-				while(iterator.hasNext()){
-					//Get the Block.Entry
-					Block.Entry entry = iterator.next();
-					line = analyzer.printWyILCode(entry.code, functionOrMethod.name(), line);				
-					analyzer.dispatch(entry);				
-				}
-			}			
+			iterateByteCode(analyzer, functionOrMethod);			
 			//Infer the bounds 
 			Bounds bnd = analyzer.inferBounds(true);
-			//this.unionOfBoundsMap.put(functionOrMethod, bnd);
 			analyzer = null;
 		}
 	}
@@ -258,15 +262,24 @@ public class BoundAnalyzer implements Builder{
 					FunctionOrMethodDeclaration functionOrMethod = module.functionOrMethod(code.name.name(), code.type());					
 					if(functionOrMethod != null){
 						//Infer the bounds						
-						analyzer.inferBounds(true);
+						Bounds bnd = analyzer.inferBounds(true);
 						AnalyzerV2 invokeanalyzer = new AnalyzerV2(1);
-						//passParametersToFunc(code, bnd, invokeanalyzer);
-						//iterateWyILCodeAndAddConstraints(functionOrMethod, invokeanalyzer);
+						int index = 0;
+						for(Type paramType: functionOrMethod.type().params()){
+							invokeanalyzer.initializeEntryNode(paramType,
+									"%"+index,
+									bnd.getLower("%"+code.operand(index)),
+									bnd.getUpper("%"+code.operand(index)));
+							index++;
+						}
+						iterateByteCode(invokeanalyzer, functionOrMethod);						
 						//Infer the bounds
-						//bnd = invokeanalyzer.inferBoundsOverAllConstraintlists(true);
-						//propagate the bounds of return values.
-						//passReturnValuesToMain(code, bnd, analyzer);
-						//invokeanalyzer = null;
+						bnd = invokeanalyzer.inferBounds(true);
+						//propagate the bounds of return value.
+						String ret = "%"+code.target();						
+						analyzer.addConstraint(new Range(ret, bnd.getLower("return"), bnd.getUpper("return")));	
+					
+						invokeanalyzer = null;
 					}
 				}else{
 					analyzer.dispatch(entry);					
