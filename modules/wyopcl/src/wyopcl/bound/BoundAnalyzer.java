@@ -49,7 +49,7 @@ public class BoundAnalyzer implements Builder{
 	private String filename;
 	private boolean verbose = false;
 	//The hashmap stores the unions of bounds for each function.
-	private HashMap<WyilFile.FunctionOrMethodDeclaration, Bounds> unionOfBoundsMap = new HashMap<WyilFile.FunctionOrMethodDeclaration, Bounds>();
+	//private HashMap<WyilFile.FunctionOrMethodDeclaration, Bounds> unionOfBoundsMap = new HashMap<WyilFile.FunctionOrMethodDeclaration, Bounds>();
 
 	private String[] args;
 	/**
@@ -89,10 +89,10 @@ public class BoundAnalyzer implements Builder{
 			WyilFile module = sf.read();
 			filename = module.filename();
 			//Start analyzing the range.
-			//analyze(module);
-			analyzeV2(module);
+			//analyze(module);			
 			//analyzeMethodCall(module);
-			//analyzeMethodCallV2(module);
+			//analyzeV2(module);
+			analyzeMethodCallV2(module);
 		}
 
 		long endTime = System.currentTimeMillis();
@@ -229,7 +229,7 @@ public class BoundAnalyzer implements Builder{
 			}			
 			//Infer the bounds 
 			Bounds bnd = analyzer.inferBounds(true);
-			this.unionOfBoundsMap.put(functionOrMethod, bnd);
+			//this.unionOfBoundsMap.put(functionOrMethod, bnd);
 			analyzer = null;
 		}
 	}
@@ -239,7 +239,7 @@ public class BoundAnalyzer implements Builder{
 	 * Takes the in-memory wyil file and analyzes the range values for all variables in each function.
 	 * @param module
 	 */
-	public void analyzeMain(WyilFile module){
+	public void analyzeMethodCallV2(WyilFile module){
 		AnalyzerV2 analyzer = new AnalyzerV2(0);
 		WyilFile.FunctionOrMethodDeclaration main = module.functionOrMethod("main").get(0);
 		int line = 0;
@@ -258,7 +258,7 @@ public class BoundAnalyzer implements Builder{
 					FunctionOrMethodDeclaration functionOrMethod = module.functionOrMethod(code.name.name(), code.type());					
 					if(functionOrMethod != null){
 						//Infer the bounds						
-						//Bounds bnd = analyzer.inferBoundsOverAllConstraintlists(verbose);
+						analyzer.inferBounds(true);
 						AnalyzerV2 invokeanalyzer = new AnalyzerV2(1);
 						//passParametersToFunc(code, bnd, invokeanalyzer);
 						//iterateWyILCodeAndAddConstraints(functionOrMethod, invokeanalyzer);

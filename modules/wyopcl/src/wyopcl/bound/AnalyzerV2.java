@@ -190,25 +190,28 @@ public class AnalyzerV2 {
 		blk.inferFixedPoint();
 		if(!blk.isLeaf()){
 			for(BasicBlock child: blk.getChildNodes()){
-				 inferBounds(child);
+				inferBounds(child);
 			}			
 		}
 		
-		return;
+		return ;
 	}
 
-
+	
 	/**
-	 *infer bounds consistent with all constraints.
-	 * 
+	 * Get the current node and infer its bounds, which are
+	 * consistent with all constraints.
+	 * @param verbose 
+	 * @return the bounds of current node.
 	 */
 	public Bounds inferBounds(boolean verbose){
-		inferBounds(entry);
+		BasicBlock blk = getCurrentBlock();
+		inferBounds(blk);
 		//Print out the bounds.
 		if(verbose){
-			printBounds(exit.getBounds());
+			printBounds(blk.getBounds());
 		}		
-		return exit.getBounds();
+		return blk.getBounds();
 	}
 
 
@@ -583,6 +586,7 @@ public class AnalyzerV2 {
 		}
 		blk.inferFixedPoint();
 		blk.addChild(exit);
+		setCurrentBlock(exit);
 	}
 
 	public void analyze(Codes.ListOperator code){
