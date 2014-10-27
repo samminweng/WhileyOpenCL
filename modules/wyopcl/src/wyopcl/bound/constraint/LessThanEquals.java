@@ -41,7 +41,7 @@ public class LessThanEquals extends Constraint {
 	}
 	@Override
 	public String toString() {
-		return "LessThanEquals [x=" + x + ", y=" + y + "]";
+		return "LessThanEquals [" +x +"<=" + y + "]";
 	}
 
 }

@@ -64,9 +64,17 @@ public class BasicBlock {
 		return unionOfBounds;
 	}	
 	
+	public BigInteger getLower(String name){
+		return unionOfBounds.getLower(name);
+	}
+	
+	public BigInteger getUpper(String name){
+		return unionOfBounds.getUpper(name);
+	}
+	
 	public void addBounds(String name, BigInteger new_min, BigInteger new_max){
 		unionOfBounds.addLowerBound(name, new_min);
-		unionOfBounds.addLowerBound(name, new_max);
+		unionOfBounds.addUpperBound(name, new_max);
 	}
 	
 	

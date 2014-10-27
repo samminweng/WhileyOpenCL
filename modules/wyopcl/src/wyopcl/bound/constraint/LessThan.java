@@ -38,7 +38,7 @@ public class LessThan extends Constraint {
 
 	@Override
 	public String toString() {
-		return "LessThan [x=" + x + ", y=" + y + "]";
+		return "LessThan ["+ x +"<"+ y + "]";
 	}
 
 

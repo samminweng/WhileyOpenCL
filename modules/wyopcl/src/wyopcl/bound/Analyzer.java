@@ -44,35 +44,47 @@ import wyopcl.interpreter.DecimalFraction;
  */
 public class Analyzer {
 	//The hashmap stores the constraints with in the label value in each method or function.
-	private HashMap<String, ConstraintList> constraintListMap;
-	private Bounds unionOfBounds;
+	//private HashMap<String, ConstraintList> constraintListMap;
+	//private Bounds unionOfBounds;
 	//The stack is used to store the assertion's labels.
 	private Stack<String> stackOfAssertOrAssume;
-	//Keep track of the current branch name.
-	private String branch;
+
+	//private String branch;
 	private final int depth;
 	private final String GRAY = (char)27 +"[30;1m";
 	private final String BLUE = (char)27 +"[34;1m";
 	private final String RED = (char)27 + "[31;1m";
 	private final String RESET = (char)27 + "[0m";
 
+	//The variables are used in the control flow graph (CFG).
+	//Root node of CFG
+	private BasicBlock entry;
+	//Keep track of the current basic block.
+	private BasicBlock current_blk;
+	//The exit node of CFG
+	private BasicBlock exit;
+	//The list of basic block;
+	//private List<BasicBlock> list = new ArrayList<BasicBlock>();
+
 	public Analyzer(int depth){
-		this.constraintListMap = new HashMap<String, ConstraintList>();
-		this.unionOfBounds = new Bounds();
 		this.depth = depth;
 		this.stackOfAssertOrAssume = new Stack<String>();
-		this.branch = "code";
+		this.entry = new BasicBlock("code");
+		this.exit = new BasicBlock("exit");		
 	}
-	/**
-	 * Switch the constraint list according to the label name. 
-	 * @param label the name of label.
-	 */
-	public void switchBranch(String label) {
-		if(constraintListMap.containsKey(label)){
-			//Switch the current constraint list by setting the label with new value.
-			this.branch = label;
+
+	public void initializeEntryNode(Type paramType, String param, BigInteger min, BigInteger max){
+		if(isIntType(paramType)){
+			this.entry.addBounds(param, min, max);
 		}
-		
+	}
+
+	public void initializeEntryNode(List<Type> paramTypes){
+		int index = 0;
+		for(Type paramType: paramTypes){
+			initializeEntryNode(paramType, "%"+index, null, null);
+			index++;
+		}	
 	}
 
 	/**
@@ -102,7 +114,7 @@ public class Analyzer {
 			}			
 		}
 	}
-	
+
 	/**
 	 * Check if the type is instance of Integer by inferring the type from 
 	 * <code>wyil.Lang.Type</code> objects, including the effective collection types.
@@ -113,23 +125,23 @@ public class Analyzer {
 		if(type instanceof Type.Int){
 			return true;
 		}
-		
+
 		if(type instanceof Type.Map){
 			Type.Map map = (Type.Map)type;
 			//Check the type of values in the map.
 			return isIntType(map.key()) || isIntType(map.value());			
 		}
-		
+
 		if(type instanceof Type.List){
 			return isIntType(((Type.List)type).element());
 		}
-		
+
 		if (type instanceof Type.Tuple){
 			//Check the type of value field. 
 			Type element = ((Type.Tuple)type).element(1);
 			return isIntType(element);	
 		}
-		
+
 		return false;
 	}
 
@@ -162,7 +174,7 @@ public class Analyzer {
 	 * Print out the bounds.
 	 * @param bnd
 	 */
-	private void printBounds(Bounds bnd){
+	public void printBounds(Bounds bnd){
 		System.out.print(BLUE+"Bounds"+RESET);
 		System.out.println(bnd.toString());
 		if(bnd.checkBoundConsistency()){
@@ -174,69 +186,80 @@ public class Analyzer {
 	}
 
 	/**
-	 *infer bounds consistent with all constraints.
-	 * 
+	 * Traverse each node in CFG and infer the bounds for each node. 
+	 * @param blk
 	 */
-	public Bounds inferBoundsOverAllConstraintlists(boolean verbose){
-		//Iterates through all the constraint lists and infer each list's fixed point.
-		Iterator<java.util.Map.Entry<String, ConstraintList>> iterator = constraintListMap.entrySet().iterator();
+	private void inferBounds(BasicBlock blk){
+		blk.inferFixedPoint();
+		if(!blk.isLeaf()){
+			for(BasicBlock child: blk.getChildNodes()){
+				inferBounds(child);
+			}			
+		}
+		
+		return ;
+	}
 
-		while(iterator.hasNext()){
-			java.util.Map.Entry<String, ConstraintList> entry = iterator.next();
-			//Infer the bounds consistent with all constraints.
-			ConstraintList list = entry.getValue();
-			Bounds bnd = new Bounds();
-			list.inferFixedPoint(bnd);			
-			unionOfBounds.union(bnd);
-			bnd = null;
-		}		
+	
+	/**
+	 * Get the current node and infer its bounds, which are
+	 * consistent with all constraints.
+	 * @param verbose 
+	 * @return the bounds of current node.
+	 */
+	public Bounds inferBounds(boolean verbose){
+		BasicBlock blk = getCurrentBlock();
+		inferBounds(blk);
 		//Print out the bounds.
 		if(verbose){
-			printBounds(unionOfBounds);
+			printBounds(blk.getBounds());
 		}		
-		return unionOfBounds;
+		return blk.getBounds();
 	}
 
 
+
+	private BasicBlock getCurrentBlock(){
+		if(current_blk==null){
+			current_blk = entry;
+		}
+		return current_blk;
+	}
+
 	/**
-	 * Return the current constraint list.
-	 * @return the constraint list.
+	 * Traverse a tree to get the block whose branch name is matched with
+	 * label.
+	 * @param blk
+	 * @param label
+	 * @return blk
 	 */
-	private ConstraintList getCurrentConstraintList(){
-		if(!constraintListMap.containsKey(branch)){
-			//Clone the current constraint list to make a new one.
-			ConstraintList list = new ConstraintList();
-			constraintListMap.put(branch, list);
+	private BasicBlock getBasicBlock(BasicBlock blk, String label){
+		if(blk.isLeaf()){
+			if(blk.getBranch().equals(label)){
+				return blk;
+			}
+		}else{
+			for(BasicBlock childNode :blk.getChildNodes()){
+				BasicBlock child_blk = getBasicBlock(childNode, label);
+				if(child_blk != null){
+					return child_blk;
+				}
+			}
 		}		
-		return constraintListMap.get(branch);
+
+		return null;
+
 	}
 
 	/**
 	 * Adds the constraint to the current constraint list.
 	 * @param c
 	 */
-	public void addConstraintToCurrentList(Constraint c){
+	public void addConstraint(Constraint c){
 		if(!isAssertOrAssume()){
-			ConstraintList list = getCurrentConstraintList();
-			list.addConstraint(c);
+			getCurrentBlock().addConstraint(c);
 		}
 	}
-
-	/**
-	 * Add the constraints to all lists in the Hashmap.
-	 * @param c the constraint.
-	 */
-	public void addConstraintToAllList(Constraint c){
-		if(!isAssertOrAssume()){
-			Iterator<ConstraintList> iterator = constraintListMap.values().iterator();
-			while(iterator.hasNext()){
-				ConstraintList constraintlist = iterator.next();
-				//Add the 'Equals' constraint to the return (ret) variable.
-				constraintlist.addConstraint(c);
-			}
-		}
-	}
-
 
 	/**
 	 * Branches the current constraint list and adds the 
@@ -244,15 +267,29 @@ public class Analyzer {
 	 * @param new_label the name of new branch.
 	 * @param c constraint
 	 */
-	public void branchConstraintList(String new_label, Constraint c){
+	public void branch(String new_label, Constraint c){
 		//Branch the constraint list only when the bytecode does not
 		//belong to the assertion or assumption.
-		if(!isAssertOrAssume()){
-			ConstraintList current_list = getCurrentConstraintList();
-			//Cloned the current constraint list. 
-			ConstraintList new_list = (ConstraintList) current_list.clone();
-			new_list.addConstraint(c);
-			constraintListMap.put(new_label, new_list);
+		if(!isAssertOrAssume()){			
+			//BasicBlock branch_blk = getBasicBlock(entry, new_label);
+			BasicBlock blk = getCurrentBlock();
+			BasicBlock leftBlock = new BasicBlock(blk.getBranch());
+			BasicBlock rightBlock = new BasicBlock(new_label);
+
+			//Connect the blk and left and right blocks.
+			blk.addChild(leftBlock);			
+			//Add the constraint to the left block
+			blk.addChild(rightBlock);
+			
+			rightBlock.addConstraint(c);						
+			//Set the current block to the left
+			setCurrentBlock(leftBlock);			
+		}
+	}
+
+	private void setCurrentBlock(BasicBlock block) {
+		if(block != null){
+			this.current_blk = block;
 		}
 	}
 
@@ -370,7 +407,7 @@ public class Analyzer {
 		//Check if the assigned value is an integer
 		if(isIntType(code.type())){
 			//Add the constraint 'target = operand'
-			addConstraintToCurrentList(new Assign("%"+code.target(), "%"+code.operand(0)));
+			addConstraint(new Assign("%"+code.target(), "%"+code.operand(0)));
 		}
 	}
 
@@ -384,7 +421,7 @@ public class Analyzer {
 		if(constant instanceof Constant.Integer){
 			String name = "%"+code.target();
 			//Add the 'Const' constraint.
-			addConstraintToCurrentList(new Const(name, ((Constant.Integer)constant).value));
+			addConstraint(new Const(name, ((Constant.Integer)constant).value));
 		}
 	}
 	/**
@@ -394,7 +431,7 @@ public class Analyzer {
 	 */
 	public void analyze(Codes.IndexOf code){		
 		if(isIntType((Type) code.type())){
-			addConstraintToCurrentList(new Equals("%"+code.target(), "%"+code.operand(0)));
+			addConstraint(new Equals("%"+code.target(), "%"+code.operand(0)));
 
 		}
 	}
@@ -412,31 +449,31 @@ public class Analyzer {
 			String right = "%"+code.rightOperand;
 			switch(code.op){
 			case EQ:			
-				branchConstraintList(code.target, new Equals(left+"_"+code.target, right));
-				addConstraintToCurrentList(new GreaterThanEquals(left, right));
+				branch(code.target, new Equals(left, right));
+				addConstraint(new GreaterThanEquals(left, right));
 				break;
 			case NEQ:				
 
 				break;
-			case LT:			
-				branchConstraintList(code.target, new LessThan(left+"_"+code.target, right));
-				addConstraintToCurrentList(new GreaterThanEquals(left, right));
+			case LT:
+				branch(code.target, new LessThan(left, right));
+				addConstraint(new GreaterThanEquals(left, right));				
 				break;
 			case LTEQ:
 				//Add the 'left <= right' constraint to the branched list.
-				branchConstraintList(code.target, new LessThanEquals(left+"_"+code.target, right));
+				branch(code.target, new LessThanEquals(left, right));
 				//Add the constraint 'left>right' to current list
-				addConstraintToCurrentList(new GreaterThan(left, right));
+				addConstraint(new GreaterThan(left, right));
 				break;
 			case GT:					
-				branchConstraintList(code.target, new GreaterThan(left+"_"+code.target, right));
-				addConstraintToCurrentList(new LessThanEquals(left, right));
+				branch(code.target, new GreaterThan(left, right));
+				addConstraint(new LessThanEquals(left, right));
 				break;
 			case GTEQ:
 				//Branch and add the left >= right constraint to 
-				branchConstraintList(code.target, new GreaterThanEquals(left+"_"+code.target, right));
+				branch(code.target, new GreaterThanEquals(left, right));
 				//Add the constraint 'left< right' to current constraint list.
-				addConstraintToCurrentList(new LessThan(left, right));		
+				addConstraint(new LessThan(left, right));		
 				break;
 			case IN:			
 				System.err.println("Not implemented!");		
@@ -514,7 +551,11 @@ public class Analyzer {
 		String label = code.label;
 		enableAssertOrAssume(label, false);
 		//Switch the current constraint list by setting the label with new value.
-		switchBranch(label);		
+		BasicBlock blk = getBasicBlock(entry, label);
+		if(blk != null){
+			//Switch the current block
+			this.current_blk = blk;
+		}		
 	}
 
 
@@ -527,7 +568,7 @@ public class Analyzer {
 	public void analyze(Codes.NewList code){
 		if(isIntType(code.type())){
 			for(int operand: code.operands()){
-				addConstraintToCurrentList(new Union("%"+code.target(), "%"+operand));				
+				addConstraint(new Union("%"+code.target(), "%"+operand));				
 			}
 		}
 
@@ -538,20 +579,24 @@ public class Analyzer {
 	 * @param code
 	 */
 	public void analyze(Codes.Return code){
+		//Get the return operand
+		String ret = "%"+code.operand;
+		BasicBlock blk = getCurrentBlock();
 		//Check if the return type is integer.
-		if(isIntType(code.type)){
-			//Get the return operand
-			String ret = "%"+code.operand;
+		if(!isAssertOrAssume() && isIntType(code.type)){
 			//Add the 'Equals' constraint to the return (ret) variable.
-			addConstraintToAllList((new Equals("return", ret)));		
-		}		
+			blk.addConstraint((new Equals("return", ret)));			
+		}
+		blk.inferFixedPoint();
+		blk.addChild(exit);
+		setCurrentBlock(exit);
 	}
 
 	public void analyze(Codes.ListOperator code){
 		switch(code.kind){
 		case APPEND:
 			for(int operand : code.operands()){
-				addConstraintToCurrentList(new Equals("%"+code.target(), "%"+operand));
+				addConstraint(new Equals("%"+code.target(), "%"+operand));
 			}
 			break;
 		case LEFT_APPEND:
@@ -582,7 +627,7 @@ public class Analyzer {
 		//
 		switch(kind){
 		case NEG:
-			addConstraintToCurrentList(new Negate(x, y));
+			addConstraint(new Negate(x, y));
 			break;
 		case NUMERATOR:
 			System.err.println("Not implemented!");
@@ -608,7 +653,7 @@ public class Analyzer {
 		//Check if each element is an integer
 		if(isIntType((Type) code.type)){
 			//Propagate the range of source register to the index reg 
-			addConstraintToCurrentList(new Equals("%"+code.indexOperand, "%"+code.sourceOperand));
+			addConstraint(new Equals("%"+code.indexOperand, "%"+code.sourceOperand));
 		}
 	}
 
@@ -637,7 +682,7 @@ public class Analyzer {
 	public void analyze(Codes.SubList code){
 		if(code.type().element() instanceof Type.Int){
 			for(int operand: code.operands()){
-				addConstraintToCurrentList(new Equals("%"+code.target(), "%"+operand));
+				addConstraint(new Equals("%"+code.target(), "%"+operand));
 			}			
 		}
 	}
@@ -650,11 +695,11 @@ public class Analyzer {
 		if(isIntType(code.type())){
 			switch (code.kind) {
 			case ADD:
-				addConstraintToCurrentList(new RightPlus("%"+code.target(), "%"+code.operand(0), "%"+code.operand(1)));
+				addConstraint(new RightPlus("%"+code.target(), "%"+code.operand(0), "%"+code.operand(1)));
 				break;
 			case SUB:			
 				for(int operand: code.operands()){
-					addConstraintToCurrentList(new Equals("%"+code.target(), "%"+operand));
+					addConstraint(new Equals("%"+code.target(), "%"+operand));
 				}
 				break;
 			case MUL:		
@@ -666,7 +711,7 @@ public class Analyzer {
 			case RANGE:
 				//Take the union of operands
 				for(int operand: code.operands()){
-					addConstraintToCurrentList(new Union("%"+code.target(), "%"+operand));
+					addConstraint(new Union("%"+code.target(), "%"+operand));
 				}				
 				break;
 			case BITWISEAND:
@@ -697,18 +742,18 @@ public class Analyzer {
 		while(index<code.operands().length){
 			//Consider the key field
 			//if(isIntType(map.key())){
-				//addConstraintToCurrentList(new Union("%"+code.target(), "%"+code.operand(index)));
+			//addConstraintToCurrentList(new Union("%"+code.target(), "%"+code.operand(index)));
 			//}
 			//index++;
-			
+
 			//Consider The values field
 			if(isIntType(map.value())){
-				addConstraintToCurrentList(new Union("%"+code.target(), "%"+code.operand(index)));
+				addConstraint(new Union("%"+code.target(), "%"+code.operand(index)));
 			}
 			index+=2;
 		}
-			
-				
+
+
 	}
 
 	/**
@@ -721,10 +766,10 @@ public class Analyzer {
 		if(index%2==1){
 			Type.Tuple tuple = (Tuple) code.type();
 			if(isIntType(tuple.element(index))){
-				addConstraintToCurrentList(new Assign("%"+code.target(), "%"+code.operand(0)));
+				addConstraint(new Assign("%"+code.target(), "%"+code.operand(0)));
 			}
 		}
-		
+
 	}
 
 	/**
@@ -737,19 +782,19 @@ public class Analyzer {
 		int index = 1;
 		while(index<code.operands().length){
 			if(isIntType(tuple.element(index))){
-				addConstraintToCurrentList(new Union("%"+code.target(), "%"+code.operand(index)));
+				addConstraint(new Union("%"+code.target(), "%"+code.operand(index)));
 			}
 			index+=2;
 		}
-		
+
 	}
 	/**
 	 * Updates an element of a list. But how do we update the bounds??? 
 	 * @param code
 	 */
 	public void analyze(Codes.Update code){
-		
+
 	}
-	
-	
+
+
 }

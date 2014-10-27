@@ -78,9 +78,9 @@ public class BoundAnalyzer implements Builder{
 	@SuppressWarnings("unchecked")
 	@Override
 	public Set<Entry<?>> build(Collection<Pair<Entry<?>, Root>> delta) throws IOException {
-		Runtime runtime = Runtime.getRuntime();
+		//Runtime runtime = Runtime.getRuntime();
 		long start = System.currentTimeMillis();
-		long memory = runtime.freeMemory();
+		//long memory = runtime.freeMemory();
 
 		HashSet<Path.Entry<?>> generatedFiles = new HashSet<Path.Entry<?>>();
 		for(Pair<Path.Entry<?>,Path.Root> p : delta) {
@@ -92,7 +92,7 @@ public class BoundAnalyzer implements Builder{
 			//analyze(module);			
 			//analyzeMethodCall(module);
 			//analyzeV2(module);
-			analyzeMethodCallV2(module);
+			analyzeMethodCall(module);
 		}
 
 		long endTime = System.currentTimeMillis();
@@ -100,13 +100,13 @@ public class BoundAnalyzer implements Builder{
 				" Time: "+(endTime - start)+" ms");
 		return generatedFiles;
 	}
-
-	private void iterateWyILCodeAndAddConstraints(WyilFile.FunctionOrMethodDeclaration functionOrMethod, Analyzer analyzer){
+	
+	
+	private void iterateByteCode(Analyzer analyzer, WyilFile.FunctionOrMethodDeclaration functionOrMethod){
 		int line = 0;
 		//Parse each byte-code and add the constraints accordingly.
 		for(Case mcase : functionOrMethod.cases()){
-			Block blk = mcase.body();
-			Iterator<wyil.lang.Code.Block.Entry> iterator = blk.iterator();
+			Iterator<wyil.lang.Code.Block.Entry> iterator = mcase.body().iterator();
 			while(iterator.hasNext()){
 				//Get the Block.Entry
 				Block.Entry entry = iterator.next();
@@ -115,54 +115,24 @@ public class BoundAnalyzer implements Builder{
 			}
 		}
 	}
-
-
+	
+	
 	/**
 	 * Takes the in-memory wyil file and analyzes the variable ranges for each function.
 	 * @param module
 	 */
 	public void analyze(WyilFile module){
-		for(WyilFile.FunctionOrMethodDeclaration method : module.functionOrMethods()) {			
+		for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {			
 			Analyzer analyzer = new Analyzer(0);
-			iterateWyILCodeAndAddConstraints(method, analyzer);	
+			analyzer.initializeEntryNode(functionOrMethod.type().params());
+			iterateByteCode(analyzer, functionOrMethod);			
 			//Infer the bounds 
-			analyzer.inferBoundsOverAllConstraintlists(true);
+			analyzer.inferBounds(true);
 			analyzer = null;
 		}
 	}
 	
 	
-	
-
-
-	/**
-	 * Pass the bounds from main function to the invoked function.
-	 * @param code <code>Codes.Invoke</code> bytecode
-	 * @param bnd the bounds of main function
-	 * @param analyzer the invoked analyzer.
-	 */
-	private void passParametersToFunc(Codes.Invoke code, Bounds bnd, Analyzer analyzer){
-		int index = 0;
-		for(Type paramType: code.type().params()){
-			if(analyzer.isIntType(paramType)){
-				String param = "%"+code.operand(index);
-				//Add lower bounds and upper bounds for input parameters.														
-				analyzer.addConstraintToCurrentList(new Range("%"+index, bnd.getLower(param), bnd.getUpper(param)));
-			}
-		}
-	}
-
-
-	private void passReturnValuesToMain(Codes.Invoke code, Bounds bnd, Analyzer analyzer){
-		//propagate the bounds of return values.
-		String ret = "%"+code.target();						
-		analyzer.addConstraintToCurrentList(new Range(ret,
-				bnd.getLower("return"),
-				bnd.getUpper("return")));
-	}
-
-
-
 	/**
 	 * Takes the in-memory wyil file and analyzes the range values for all variables in each function.
 	 * @param module
@@ -186,84 +156,8 @@ public class BoundAnalyzer implements Builder{
 					FunctionOrMethodDeclaration functionOrMethod = module.functionOrMethod(code.name.name(), code.type());					
 					if(functionOrMethod != null){
 						//Infer the bounds						
-						Bounds bnd = analyzer.inferBoundsOverAllConstraintlists(verbose);
-						Analyzer invokeanalyzer = new Analyzer(1);
-						passParametersToFunc(code, bnd, invokeanalyzer);
-						iterateWyILCodeAndAddConstraints(functionOrMethod, invokeanalyzer);
-						//Infer the bounds
-						bnd = invokeanalyzer.inferBoundsOverAllConstraintlists(true);
-						//propagate the bounds of return values.
-						passReturnValuesToMain(code, bnd, analyzer);
-						invokeanalyzer = null;
-					}
-				}else{
-					analyzer.dispatch(entry);					
-				}
-
-			}
-		}	
-		//Infer the bounds 		
-		analyzer.inferBoundsOverAllConstraintlists(true);
-
-	}
-	
-	
-	private void iterateByteCode(AnalyzerV2 analyzer, WyilFile.FunctionOrMethodDeclaration functionOrMethod){
-		int line = 0;
-		//Parse each byte-code and add the constraints accordingly.
-		for(Case mcase : functionOrMethod.cases()){
-			Iterator<wyil.lang.Code.Block.Entry> iterator = mcase.body().iterator();
-			while(iterator.hasNext()){
-				//Get the Block.Entry
-				Block.Entry entry = iterator.next();
-				line = analyzer.printWyILCode(entry.code, functionOrMethod.name(), line);				
-				analyzer.dispatch(entry);				
-			}
-		}
-	}
-	
-	
-	/**
-	 * Takes the in-memory wyil file and analyzes the variable ranges for each function.
-	 * @param module
-	 */
-	public void analyzeV2(WyilFile module){
-		for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {			
-			AnalyzerV2 analyzer = new AnalyzerV2(0);
-			analyzer.initializeEntryNode(functionOrMethod.type().params());
-			iterateByteCode(analyzer, functionOrMethod);			
-			//Infer the bounds 
-			Bounds bnd = analyzer.inferBounds(true);
-			analyzer = null;
-		}
-	}
-	
-	
-	/**
-	 * Takes the in-memory wyil file and analyzes the range values for all variables in each function.
-	 * @param module
-	 */
-	public void analyzeMethodCallV2(WyilFile module){
-		AnalyzerV2 analyzer = new AnalyzerV2(0);
-		WyilFile.FunctionOrMethodDeclaration main = module.functionOrMethod("main").get(0);
-		int line = 0;
-		//Parse each byte-code and add the constraints accordingly.
-		for(Case mcase : main.cases()){
-			Block blk = mcase.body();
-			Iterator<wyil.lang.Code.Block.Entry> iterator = blk.iterator();
-			while(iterator.hasNext()){
-				//Get the Block.Entry
-				Block.Entry entry = iterator.next();
-				line = analyzer.printWyILCode(entry.code, main.name(), line);
-				//check the code type and add the constraints according to code type.
-				if(entry.code instanceof Codes.Invoke){
-					//Get the function
-					Codes.Invoke code = (Codes.Invoke)entry.code;
-					FunctionOrMethodDeclaration functionOrMethod = module.functionOrMethod(code.name.name(), code.type());					
-					if(functionOrMethod != null){
-						//Infer the bounds						
 						Bounds bnd = analyzer.inferBounds(true);
-						AnalyzerV2 invokeanalyzer = new AnalyzerV2(1);
+						Analyzer invokeanalyzer = new Analyzer(1);
 						int index = 0;
 						for(Type paramType: functionOrMethod.type().params()){
 							invokeanalyzer.initializeEntryNode(paramType,
@@ -276,8 +170,7 @@ public class BoundAnalyzer implements Builder{
 						//Infer the bounds
 						bnd = invokeanalyzer.inferBounds(true);
 						//propagate the bounds of return value.
-						String ret = "%"+code.target();						
-						analyzer.addConstraint(new Range(ret, bnd.getLower("return"), bnd.getUpper("return")));	
+						analyzer.addConstraint(new Range("%"+code.target(), bnd.getLower("return"), bnd.getUpper("return")));	
 					
 						invokeanalyzer = null;
 					}

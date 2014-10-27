@@ -5,7 +5,6 @@ import wybs.lang.Builder;
 import wybs.util.StdBuildRule;
 import wybs.util.StdProject;
 import wycc.util.Logger;
-import wyopcl.bound.Analyzer;
 import wyopcl.bound.BoundAnalyzer;
 import wyopcl.interpreter.WyilInterpreter;
 

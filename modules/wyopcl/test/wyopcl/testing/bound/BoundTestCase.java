@@ -8,8 +8,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import wyopcl.bound.BasicBlock;
 import wyopcl.bound.Bounds;
-import wyopcl.bound.ConstraintList;
+//import wyopcl.bound.ConstraintList;
 import wyopcl.bound.Domain;
 import wyopcl.bound.constraint.Const;
 import wyopcl.bound.constraint.Equals;
@@ -101,13 +102,12 @@ public class BoundTestCase {
 	 *      net.sourceforge.czt.animation.eval.flatpred.BoundsTest#testConst()</a>
 	 */
 	@Test
-	public void testConst() {
-		ConstraintList list = new ConstraintList();
-		Bounds bnds = new Bounds();
-		list.addConstraint(new Const("x", new BigInteger("20")));
-		assertTrue(list.inferFixedPoint(bnds));
-		assertEquals(new BigInteger("20"), bnds.getLower("x"));
-		assertEquals(new BigInteger("20"), bnds.getUpper("x"));
+	public void testConst() {		
+		BasicBlock blk = new BasicBlock("code");
+		blk.addConstraint(new Const("x", new BigInteger("20")));		
+		assertTrue(blk.inferFixedPoint());
+		assertEquals(new BigInteger("20"), blk.getBounds().getLower("x"));
+		assertEquals(new BigInteger("20"), blk.getBounds().getUpper("x"));
 	}
 
 	/***
@@ -119,30 +119,28 @@ public class BoundTestCase {
 	 */
 	@Test
 	public void testLessThanLeft() {
-		Bounds bnd = new Bounds();
+		BasicBlock blk = new BasicBlock("code");
 		// D(x) = [-10..10]
-		bnd.addLowerBound("x", new BigInteger("-10"));
-		bnd.addUpperBound("x", new BigInteger("10"));
-		ConstraintList list = new ConstraintList();
+		blk.addBounds("x", new BigInteger("-10"), new BigInteger("10"));
 		// x<=y
-		list.addConstraint(new LessThan("x", "y"));
+		blk.addConstraint(new LessThan("x", "y"));
 		// y<=z
-		list.addConstraint(new LessThan("y", "z"));
-		assertTrue(list.inferFixedPoint(bnd));
+		blk.addConstraint(new LessThan("y", "z"));
+		assertTrue(blk.inferFixedPoint());
 		// Propagate the lower bound from x to y
-		assertEquals(new BigInteger("-9"), bnd.getLower("y"));
+		assertEquals(new BigInteger("-9"), blk.getLower("y"));
 		// The upper bound remain the same.
-		assertNull(bnd.getUpper("y"));
+		assertNull(blk.getUpper("y"));
 		// Then propagate the lower bound to z.
-		assertEquals(new BigInteger("-8"), bnd.getLower("z"));
+		assertEquals(new BigInteger("-8"), blk.getLower("z"));
 		// The upper bound remain the same.
-		assertNull(bnd.getUpper("y"));
+		assertNull(blk.getUpper("y"));
 
 		// Check if the bounds of x have not changed.
-		assertEquals(new BigInteger("-10"), bnd.getLower("x"));
-		assertEquals(new BigInteger("10"), bnd.getUpper("x"));
+		assertEquals(new BigInteger("-10"), blk.getLower("x"));
+		assertEquals(new BigInteger("10"), blk.getUpper("x"));
 
-		bnd = null;
+		
 	}
 	
 	/***
@@ -154,29 +152,28 @@ public class BoundTestCase {
 	 */
 	@Test
 	public void testLessThanRight() {
-		Bounds bnd = new Bounds();
+		BasicBlock blk = new BasicBlock("code");
 		// D(z) = [-10..10]
-		bnd.addLowerBound("z", new BigInteger("-10"));
-		bnd.addUpperBound("z", new BigInteger("10"));
-		ConstraintList list = new ConstraintList();
+		blk.addBounds("z",  new BigInteger("-10"), new BigInteger("10"));
+		
 		// x<=y
-		list.addConstraint(new LessThan("x", "y"));
+		blk.addConstraint(new LessThan("x", "y"));
 		// y<=z
-		list.addConstraint(new LessThan("y", "z"));
-		assertTrue(list.inferFixedPoint(bnd));
+		blk.addConstraint(new LessThan("y", "z"));
+		
+		assertTrue(blk.inferFixedPoint());
 		// Propagate the upper bound from z to y
-		assertNull(bnd.getLower("y"));
-		assertEquals(new BigInteger("9"), bnd.getUpper("y"));
+		assertNull(blk.getLower("y"));
+		assertEquals(new BigInteger("9"), blk.getUpper("y"));
 	
 		// Then propagate the lower bound to z to x
-		assertNull(bnd.getLower("x"));
-		assertEquals(new BigInteger("8"), bnd.getUpper("x"));
+		assertNull(blk.getLower("x"));
+		assertEquals(new BigInteger("8"), blk.getUpper("x"));
 
 		// Check if the bounds of x have not changed.
-		assertEquals(new BigInteger("-10"), bnd.getLower("z"));
-		assertEquals(new BigInteger("10"), bnd.getUpper("z"));
-
-		bnd = null;
+		assertEquals(new BigInteger("-10"), blk.getLower("z"));
+		assertEquals(new BigInteger("10"), blk.getUpper("z"));
+		
 	}
 
 	/***
@@ -188,29 +185,26 @@ public class BoundTestCase {
 	 */
 	@Test
 	public void testLessThanEqualsLeft() {
-		ConstraintList list = new ConstraintList();
-		Bounds bnd = new Bounds();
+		BasicBlock blk = new BasicBlock("code");
 		// D(x) = [-10..10]
-		bnd.addLowerBound("x", new BigInteger("-10"));
-		bnd.addUpperBound("x", new BigInteger("10"));
-
+		blk.addBounds("x", new BigInteger("-10"),  new BigInteger("10"));
 		// x<=y
-		list.addConstraint(new LessThanEquals("x", "y"));
+		blk.addConstraint(new LessThanEquals("x", "y"));
 		// y<=z
-		list.addConstraint(new LessThanEquals("y", "z"));
-		assertTrue(list.inferFixedPoint(bnd));
+		blk.addConstraint(new LessThanEquals("y", "z"));
+		assertTrue(blk.inferFixedPoint());
 		// Propagate the lower bound from x to y
-		assertEquals(new BigInteger("-10"), bnd.getLower("y"));
+		assertEquals(new BigInteger("-10"), blk.getLower("y"));
 		// The upper bound remain the same.
-		assertNull(bnd.getUpper("y"));
+		assertNull(blk.getUpper("y"));
 		// Then propagate the lower bound to z.
-		assertEquals(new BigInteger("-10"), bnd.getLower("z"));
+		assertEquals(new BigInteger("-10"), blk.getLower("z"));
 		// The upper bound remain the same.
-		assertNull(bnd.getUpper("y"));
+		assertNull(blk.getUpper("y"));
 
 		// Check if the bounds of x have not changed.
-		assertEquals(new BigInteger("-10"), bnd.getLower("x"));
-		assertEquals(new BigInteger("10"), bnd.getUpper("x"));
+		assertEquals(new BigInteger("-10"), blk.getLower("x"));
+		assertEquals(new BigInteger("10"), blk.getUpper("x"));
 	}
 
 	/***
@@ -222,29 +216,27 @@ public class BoundTestCase {
 	 */
 	@Test
 	public void testLessThanEqualsRight() {
-		ConstraintList list = new ConstraintList();
-		Bounds bnd = new Bounds();
+		BasicBlock blk = new BasicBlock("code");
 		// D(z) = [-10..10]
-		bnd.addLowerBound("z", new BigInteger("-10"));
-		bnd.addUpperBound("z", new BigInteger("10"));
+		blk.addBounds("z", new BigInteger("-10"), new BigInteger("10"));
 
 		// x<=y
-		list.addConstraint(new LessThanEquals("x", "y"));
+		blk.addConstraint(new LessThanEquals("x", "y"));
 		// y<=z
-		list.addConstraint(new LessThanEquals("y", "z"));
-		assertTrue(list.inferFixedPoint(bnd));
+		blk.addConstraint(new LessThanEquals("y", "z"));
+		assertTrue(blk.inferFixedPoint());
 		// Propagate the lower bound from x to y
-		assertEquals(new BigInteger("10"), bnd.getUpper("y"));
+		assertEquals(new BigInteger("10"), blk.getUpper("y"));
 		// The upper bound remain the same.
-		assertNull(bnd.getLower("y"));
+		assertNull(blk.getLower("y"));
 		// Then propagate the lower bound to z.
-		assertEquals(new BigInteger("10"), bnd.getUpper("x"));
+		assertEquals(new BigInteger("10"), blk.getUpper("x"));
 		// The upper bound remain the same.
-		assertNull(bnd.getLower("x"));
+		assertNull(blk.getLower("x"));
 
 		// Check if the bounds of z have not changed.
-		assertEquals(new BigInteger("-10"), bnd.getLower("z"));
-		assertEquals(new BigInteger("10"), bnd.getUpper("z"));
+		assertEquals(new BigInteger("-10"), blk.getLower("z"));
+		assertEquals(new BigInteger("10"), blk.getUpper("z"));
 	}
 
 	/**
@@ -257,33 +249,28 @@ public class BoundTestCase {
 	 */
 	@Test
 	public void testEquals() {
-		ConstraintList list = new ConstraintList();
-		Bounds bnd = new Bounds();
+		BasicBlock blk = new BasicBlock("code");
 		// D(x) = [-10..10]
-		bnd.addLowerBound("x", new BigInteger("-10"));
-		bnd.addUpperBound("x", new BigInteger("10"));
+		blk.addBounds("x", new BigInteger("-10"), new BigInteger("10"));
 
-		list.addConstraint(new Equals("x", "y"));
-		list.addConstraint(new Equals("y", "z"));
-		assertTrue(list.inferFixedPoint(bnd));
-		assertEquals(new BigInteger("-10"), bnd.getLower("y"));
-		assertEquals(new BigInteger("10"), bnd.getUpper("y"));
-		assertEquals(new BigInteger("-10"), bnd.getLower("z"));
-		assertEquals(new BigInteger("10"), bnd.getUpper("z"));
+		blk.addConstraint(new Equals("x", "y"));
+		blk.addConstraint(new Equals("y", "z"));
+		assertTrue(blk.inferFixedPoint());
+		assertEquals(new BigInteger("-10"), blk.getLower("y"));
+		assertEquals(new BigInteger("10"), blk.getUpper("y"));
+		assertEquals(new BigInteger("-10"), blk.getLower("z"));
+		assertEquals(new BigInteger("10"), blk.getUpper("z"));
 
 		// Add the stronger bounds on z [0..5]
-		bnd.addLowerBound("z", new BigInteger("0"));
-		bnd.addUpperBound("z", new BigInteger("5"));
+		blk.addBounds("z", new BigInteger("0"), new BigInteger("5"));
 
-		assertTrue(list.inferFixedPoint(bnd));
-		assertEquals(new BigInteger("0"), bnd.getLower("x"));
-		assertEquals(new BigInteger("5"), bnd.getUpper("x"));
-		assertEquals(new BigInteger("0"), bnd.getLower("y"));
-		assertEquals(new BigInteger("5"), bnd.getUpper("y"));
-		assertEquals(new BigInteger("0"), bnd.getLower("z"));
-		assertEquals(new BigInteger("5"), bnd.getUpper("z"));
-
-		bnd = null;
+		assertTrue(blk.inferFixedPoint());
+		assertEquals(new BigInteger("0"), blk.getLower("x"));
+		assertEquals(new BigInteger("5"), blk.getUpper("x"));
+		assertEquals(new BigInteger("0"), blk.getLower("y"));
+		assertEquals(new BigInteger("5"), blk.getUpper("y"));
+		assertEquals(new BigInteger("0"), blk.getLower("z"));
+		assertEquals(new BigInteger("5"), blk.getUpper("z"));
 	}
 	
 	/**
@@ -297,20 +284,17 @@ public class BoundTestCase {
 	@Test
 	public void testNegateRightNone() {
 		
-		Bounds bnd = new Bounds();
+		BasicBlock blk = new BasicBlock("code");
 		// D(x) = [1..5]
-		bnd.addLowerBound("x", new BigInteger("1"));
-		bnd.addUpperBound("x", new BigInteger("5"));
-		
-		ConstraintList list = new ConstraintList();
-		list.addConstraint(new Negate("x", "y"));
-		assertTrue(list.inferFixedPoint(bnd));
-		assertEquals(new BigInteger("1"), bnd.getLower("x"));
-		assertEquals(new BigInteger("5"), bnd.getUpper("x"));
-		assertEquals(new BigInteger("-5"), bnd.getLower("y"));
-		assertEquals(new BigInteger("-1"), bnd.getUpper("y"));
+		blk.addBounds("x", new BigInteger("1"), new BigInteger("5"));
 
-		bnd = null;
+		blk.addConstraint(new Negate("x", "y"));
+		assertTrue(blk.inferFixedPoint());
+		assertEquals(new BigInteger("1"), blk.getLower("x"));
+		assertEquals(new BigInteger("5"), blk.getUpper("x"));
+		assertEquals(new BigInteger("-5"), blk.getLower("y"));
+		assertEquals(new BigInteger("-1"), blk.getUpper("y"));
+
 	}
 
 	/**
@@ -323,24 +307,19 @@ public class BoundTestCase {
 	 */
 	@Test
 	public void testNegateRightLoose() {
-		
-		Bounds bnd = new Bounds();
+		BasicBlock blk = new BasicBlock("code");		
 		// D(x) = [1..5]
-		bnd.addLowerBound("x", new BigInteger("1"));
-		bnd.addUpperBound("x", new BigInteger("5"));
+		blk.addBounds("x", new BigInteger("1"), new BigInteger("5"));
 		// D(y) = [-10..10]
-		bnd.addLowerBound("y", new BigInteger("-10"));
-		bnd.addUpperBound("y", new BigInteger("10"));
+		blk.addBounds("y", new BigInteger("-10"), new BigInteger("10"));
 		
-		ConstraintList list = new ConstraintList();
-		list.addConstraint(new Negate("x", "y"));
-		assertTrue(list.inferFixedPoint(bnd));
-		assertEquals(new BigInteger("1"), bnd.getLower("x"));
-		assertEquals(new BigInteger("5"), bnd.getUpper("x"));
-		assertEquals(new BigInteger("-5"), bnd.getLower("y"));
-		assertEquals(new BigInteger("-1"), bnd.getUpper("y"));
+		blk.addConstraint(new Negate("x", "y"));
+		assertTrue(blk.inferFixedPoint());
+		assertEquals(new BigInteger("1"), blk.getLower("x"));
+		assertEquals(new BigInteger("5"), blk.getUpper("x"));
+		assertEquals(new BigInteger("-5"), blk.getLower("y"));
+		assertEquals(new BigInteger("-1"), blk.getUpper("y"));
 
-		bnd = null;
 	}
 	
 	/**
@@ -354,23 +333,18 @@ public class BoundTestCase {
 	@Test
 	public void testNegateRightTight() {
 		
-		Bounds bnd = new Bounds();
+		BasicBlock blk = new BasicBlock("code");
 		// D(x) = [1..5]
-		bnd.addLowerBound("x", new BigInteger("1"));
-		bnd.addUpperBound("x", new BigInteger("5"));
-		// D(y) = [-10..10]
-		bnd.addLowerBound("y", new BigInteger("-4"));
-		bnd.addUpperBound("y", new BigInteger("-2"));
+		blk.addBounds("x", new BigInteger("1"), new BigInteger("5"));
+		// D(y) = [-4..-2]
+		blk.addBounds("y", new BigInteger("-4"),  new BigInteger("-2"));
 		
-		ConstraintList list = new ConstraintList();
-		list.addConstraint(new Negate("x", "y"));
-		assertTrue(list.inferFixedPoint(bnd));
-		assertEquals(new BigInteger("2"), bnd.getLower("x"));
-		assertEquals(new BigInteger("4"), bnd.getUpper("x"));
-		assertEquals(new BigInteger("-4"), bnd.getLower("y"));
-		assertEquals(new BigInteger("-2"), bnd.getUpper("y"));
-
-		bnd = null;
+		blk.addConstraint(new Negate("x", "y"));
+		assertTrue(blk.inferFixedPoint());
+		assertEquals(new BigInteger("2"), blk.getLower("x"));
+		assertEquals(new BigInteger("4"), blk.getUpper("x"));
+		assertEquals(new BigInteger("-4"), blk.getLower("y"));
+		assertEquals(new BigInteger("-2"), blk.getUpper("y"));
 	}
 	
 	/**
@@ -384,23 +358,19 @@ public class BoundTestCase {
 	@Test
 	public void testNegateLeftLoose() {
 		
-		Bounds bnd = new Bounds();
+		BasicBlock blk = new BasicBlock("code");
 		// D(x) = [1..5]
-		bnd.addLowerBound("x", new BigInteger("-5"));
-		bnd.addUpperBound("x", new BigInteger("-1"));
+		blk.addBounds("x", new BigInteger("-5"), new BigInteger("-1"));
 		// D(y) = [-10..10]
-		bnd.addLowerBound("y", new BigInteger("-10"));
-		bnd.addUpperBound("y", new BigInteger("10"));
+		blk.addBounds("y", new BigInteger("-10"), new BigInteger("10"));
 		
-		ConstraintList list = new ConstraintList();
-		list.addConstraint(new Negate("x", "y"));
-		assertTrue(list.inferFixedPoint(bnd));
-		assertEquals(new BigInteger("-5"), bnd.getLower("x"));
-		assertEquals(new BigInteger("-1"), bnd.getUpper("x"));
-		assertEquals(new BigInteger("1"), bnd.getLower("y"));
-		assertEquals(new BigInteger("5"), bnd.getUpper("y"));
+		blk.addConstraint(new Negate("x", "y"));
+		assertTrue(blk.inferFixedPoint());
+		assertEquals(new BigInteger("-5"), blk.getLower("x"));
+		assertEquals(new BigInteger("-1"), blk.getUpper("x"));
+		assertEquals(new BigInteger("1"), blk.getLower("y"));
+		assertEquals(new BigInteger("5"), blk.getUpper("y"));
 
-		bnd = null;
 	}
 	
 	/**
@@ -414,23 +384,19 @@ public class BoundTestCase {
 	@Test
 	public void testNegateLeftTight() {
 		
-		Bounds bnd = new Bounds();
+		BasicBlock blk = new BasicBlock("code");
 		// D(x) = [1..5]
-		bnd.addLowerBound("x", new BigInteger("-4"));
-		bnd.addUpperBound("x", new BigInteger("-2"));
+		blk.addBounds("x", new BigInteger("-4"), new BigInteger("-2"));
 		// D(y) = [-10..10]
-		bnd.addLowerBound("y", new BigInteger("1"));
-		bnd.addUpperBound("y", new BigInteger("5"));
+		blk.addBounds("y", new BigInteger("1"), new BigInteger("5"));
 		
-		ConstraintList list = new ConstraintList();
-		list.addConstraint(new Negate("x", "y"));
-		assertTrue(list.inferFixedPoint(bnd));
-		assertEquals(new BigInteger("-4"), bnd.getLower("x"));
-		assertEquals(new BigInteger("-2"), bnd.getUpper("x"));
-		assertEquals(new BigInteger("2"), bnd.getLower("y"));
-		assertEquals(new BigInteger("4"), bnd.getUpper("y"));
+		blk.addConstraint(new Negate("x", "y"));
+		assertTrue(blk.inferFixedPoint());
+		assertEquals(new BigInteger("-4"), blk.getLower("x"));
+		assertEquals(new BigInteger("-2"), blk.getUpper("x"));
+		assertEquals(new BigInteger("2"), blk.getLower("y"));
+		assertEquals(new BigInteger("4"), blk.getUpper("y"));
 
-		bnd = null;
 	}
 	
 	/***
@@ -444,30 +410,25 @@ public class BoundTestCase {
 	 */
 	@Test
 	public void testLeftPlus() {
-		ConstraintList list = new ConstraintList();
-		Bounds bnds = new Bounds();
+		BasicBlock blk = new BasicBlock("code");		
 		// D(x)=[0..5]
-		bnds.addLowerBound("x", new BigInteger("0"));
-		bnds.addUpperBound("x", new BigInteger("5"));
+		blk.addBounds("x", new BigInteger("0"), new BigInteger("5"));		
 		// D(y)=[3..4]
-		bnds.addLowerBound("y", new BigInteger("3"));
-		bnds.addUpperBound("y", new BigInteger("4"));
+		blk.addBounds("y", new BigInteger("3"), new BigInteger("4"));
 		// D(z)=[-10..10]
-		bnds.addLowerBound("z", new BigInteger("-10"));
-		bnds.addUpperBound("z", new BigInteger("10"));
+		blk.addBounds("z", new BigInteger("-10"), new BigInteger("10"));
 		// x+y = z
-		list.addConstraint(new LeftPlus("x", "y", "z"));
-		assertTrue(list.inferFixedPoint(bnds));
-		assertEquals(new BigInteger("0"), bnds.getLower("x"));
-		assertEquals(new BigInteger("5"), bnds.getUpper("x"));
+		blk.addConstraint(new LeftPlus("x", "y", "z"));
+		assertTrue(blk.inferFixedPoint());
+		assertEquals(new BigInteger("0"), blk.getLower("x"));
+		assertEquals(new BigInteger("5"), blk.getUpper("x"));
 
-		assertEquals(new BigInteger("3"), bnds.getLower("y"));
-		assertEquals(new BigInteger("4"), bnds.getUpper("y"));
+		assertEquals(new BigInteger("3"), blk.getLower("y"));
+		assertEquals(new BigInteger("4"), blk.getUpper("y"));
 
-		assertEquals(new BigInteger("3"), bnds.getLower("z"));
-		assertEquals(new BigInteger("9"), bnds.getUpper("z"));
+		assertEquals(new BigInteger("3"), blk.getLower("z"));
+		assertEquals(new BigInteger("9"), blk.getUpper("z"));
 
-		bnds = null;
 	}
 
 	/**
@@ -478,30 +439,27 @@ public class BoundTestCase {
 	 */
 	@Test
 	public void testLeftPlus2() {
-		ConstraintList list = new ConstraintList();
-		Bounds bnds = new Bounds();
+		BasicBlock blk = new BasicBlock("code");
 		// D(x) = [0..10]
-		bnds.addLowerBound("x", new BigInteger("0"));
-		bnds.addUpperBound("x", new BigInteger("10"));
+		blk.addBounds("x", new BigInteger("0"), new BigInteger("10"));
+		
 		// D(y) = [2..3]
-		bnds.addLowerBound("y", new BigInteger("2"));
-		bnds.addUpperBound("y", new BigInteger("3"));
+		blk.addBounds("y", new BigInteger("2"), new BigInteger("3"));
+
 		// D(z) = [7..8]
-		bnds.addLowerBound("z", new BigInteger("7"));
-		bnds.addUpperBound("z", new BigInteger("8"));
+		blk.addBounds("z", new BigInteger("7"), new BigInteger("8"));
 		// x+y=z
-		list.addConstraint(new LeftPlus("x", "y", "z"));
-		assertTrue(list.inferFixedPoint(bnds));
-		assertEquals(new BigInteger("4"), bnds.getLower("x"));
-		assertEquals(new BigInteger("6"), bnds.getUpper("x"));
+		blk.addConstraint(new LeftPlus("x", "y", "z"));
+		assertTrue(blk.inferFixedPoint());
+		assertEquals(new BigInteger("4"), blk.getLower("x"));
+		assertEquals(new BigInteger("6"), blk.getUpper("x"));
 
-		assertEquals(new BigInteger("2"), bnds.getLower("y"));
-		assertEquals(new BigInteger("3"), bnds.getUpper("y"));
+		assertEquals(new BigInteger("2"), blk.getLower("y"));
+		assertEquals(new BigInteger("3"), blk.getUpper("y"));
 
-		assertEquals(new BigInteger("7"), bnds.getLower("z"));
-		assertEquals(new BigInteger("8"), bnds.getUpper("z"));
+		assertEquals(new BigInteger("7"), blk.getLower("z"));
+		assertEquals(new BigInteger("8"), blk.getUpper("z"));
 
-		bnds = null;
 	}
 
 	/**
@@ -511,30 +469,25 @@ public class BoundTestCase {
 	 */
 	@Test
 	public void testRightPlus() {
-		ConstraintList list = new ConstraintList();
-		Bounds bnds = new Bounds();
+		BasicBlock blk = new BasicBlock("code");
 		// D(x) = [4..8]
-		bnds.addLowerBound("x", new BigInteger("4"));
-		bnds.addUpperBound("x", new BigInteger("8"));
+		blk.addBounds("x", new BigInteger("4"), new BigInteger("8"));
 		// D(y) = [0..3]
-		bnds.addLowerBound("y", new BigInteger("0"));
-		bnds.addUpperBound("y", new BigInteger("3"));
+		blk.addBounds("y", new BigInteger("0"), new BigInteger("3"));
 		// D(z) = [2..2]
-		bnds.addLowerBound("z", new BigInteger("2"));
-		bnds.addUpperBound("z", new BigInteger("2"));
+		blk.addBounds("z", new BigInteger("2"), new BigInteger("2"));
 		// x = y+z
-		list.addConstraint(new RightPlus("x", "y", "z"));
-		assertTrue(list.inferFixedPoint(bnds));
-		assertEquals(new BigInteger("4"), bnds.getLower("x"));
-		assertEquals(new BigInteger("5"), bnds.getUpper("x"));
+		blk.addConstraint(new RightPlus("x", "y", "z"));
+		assertTrue(blk.inferFixedPoint());
+		assertEquals(new BigInteger("4"), blk.getLower("x"));
+		assertEquals(new BigInteger("5"), blk.getUpper("x"));
 
-		assertEquals(new BigInteger("2"), bnds.getLower("y"));
-		assertEquals(new BigInteger("3"), bnds.getUpper("y"));
+		assertEquals(new BigInteger("2"), blk.getLower("y"));
+		assertEquals(new BigInteger("3"), blk.getUpper("y"));
 
-		assertEquals(new BigInteger("2"), bnds.getLower("z"));
-		assertEquals(new BigInteger("2"), bnds.getUpper("z"));
+		assertEquals(new BigInteger("2"), blk.getLower("z"));
+		assertEquals(new BigInteger("2"), blk.getUpper("z"));
 
-		bnds = null;
 	}
 
 }
