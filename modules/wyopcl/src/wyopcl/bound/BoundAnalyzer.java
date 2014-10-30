@@ -89,10 +89,8 @@ public class BoundAnalyzer implements Builder{
 			WyilFile module = sf.read();
 			filename = module.filename();
 			//Start analyzing the range.
-			//analyze(module);			
+			analyze(module);			
 			//analyzeMethodCall(module);
-			//analyzeV2(module);
-			analyzeMethodCall(module);
 		}
 
 		long endTime = System.currentTimeMillis();
@@ -104,15 +102,18 @@ public class BoundAnalyzer implements Builder{
 	
 	private void iterateByteCode(Analyzer analyzer, WyilFile.FunctionOrMethodDeclaration functionOrMethod){
 		int line = 0;
-		//Parse each byte-code and add the constraints accordingly.
 		for(Case mcase : functionOrMethod.cases()){
+			analyzer.createEntryNode(functionOrMethod.type().params());
 			Iterator<wyil.lang.Code.Block.Entry> iterator = mcase.body().iterator();
+			//Parse each byte-code and add the constraints accordingly.
 			while(iterator.hasNext()){
 				//Get the Block.Entry
 				Block.Entry entry = iterator.next();
 				line = analyzer.printWyILCode(entry.code, functionOrMethod.name(), line);				
 				analyzer.dispatch(entry);				
 			}
+			analyzer.createExitBlock();
+			analyzer.outputCFG(functionOrMethod.name());
 		}
 	}
 	
@@ -124,10 +125,10 @@ public class BoundAnalyzer implements Builder{
 	public void analyze(WyilFile module){
 		for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {			
 			Analyzer analyzer = new Analyzer(0);
-			analyzer.initializeEntryNode(functionOrMethod.type().params());
+			
 			iterateByteCode(analyzer, functionOrMethod);			
 			//Infer the bounds 
-			analyzer.inferBounds(true);
+			//analyzer.inferBounds(true);
 			analyzer = null;
 		}
 	}
@@ -160,7 +161,7 @@ public class BoundAnalyzer implements Builder{
 						Analyzer invokeanalyzer = new Analyzer(1);
 						int index = 0;
 						for(Type paramType: functionOrMethod.type().params()){
-							invokeanalyzer.initializeEntryNode(paramType,
+							invokeanalyzer.createEntryNode(paramType,
 									"%"+index,
 									bnd.getLower("%"+code.operand(index)),
 									bnd.getUpper("%"+code.operand(index)));

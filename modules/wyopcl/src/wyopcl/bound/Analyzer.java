@@ -2,6 +2,9 @@ package wyopcl.bound;
 
 import static wycc.lang.SyntaxError.internalFailure;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,9 +46,6 @@ import wyopcl.interpreter.DecimalFraction;
  *
  */
 public class Analyzer {
-	//The hashmap stores the constraints with in the label value in each method or function.
-	//private HashMap<String, ConstraintList> constraintListMap;
-	//private Bounds unionOfBounds;
 	//The stack is used to store the assertion's labels.
 	private Stack<String> stackOfAssertOrAssume;
 
@@ -59,39 +59,50 @@ public class Analyzer {
 	//The variables are used in the control flow graph (CFG).
 	//Root node of CFG
 	private BasicBlock entry;
-	//Keep track of the current basic block.
 	private BasicBlock current_blk;
 	//The exit node of CFG
 	private BasicBlock exit;
 	//The list of basic block;
-	//private List<BasicBlock> list = new ArrayList<BasicBlock>();
+	private List<BasicBlock> list = new ArrayList<BasicBlock>();
 
 	public Analyzer(int depth){
 		this.depth = depth;
 		this.stackOfAssertOrAssume = new Stack<String>();
-		this.entry = new BasicBlock("code");
-		this.exit = new BasicBlock("exit");		
+		this.entry = new BasicBlock("entry");		
+		list.add(entry);
+		
 	}
 
-	public void initializeEntryNode(Type paramType, String param, BigInteger min, BigInteger max){
+	public void createEntryNode(Type paramType, String param, BigInteger min, BigInteger max){
 		if(isIntType(paramType)){
 			this.entry.addBounds(param, min, max);
 		}
 	}
 
-	public void initializeEntryNode(List<Type> paramTypes){
+	/**
+	 * 
+	 * @param paramTypes
+	 */
+	public void createEntryNode(List<Type> paramTypes){
 		int index = 0;
 		for(Type paramType: paramTypes){
-			initializeEntryNode(paramType, "%"+index, null, null);
+			createEntryNode(paramType, "%"+index, null, null);
 			index++;
 		}	
+	}
+	
+	/**
+	 * Create the exit block
+	 */
+	public void createExitBlock(){
+		exit = createMergeBlock("exit");
 	}
 
 	/**
 	 * Check if the asserted or assumed flag is enabled.
 	 * @return true if assertion/assume is on. Otherwise, return false
 	 */
-	public boolean isAssertOrAssume(){
+	private boolean isAssertOrAssume(){
 		if(!stackOfAssertOrAssume.empty()){
 			return true;
 		}		
@@ -104,7 +115,7 @@ public class Analyzer {
 	 * @param label the label name of assertion or assumption 
 	 * @param enable boolean value to enable or disable the flag.
 	 */
-	public void enableAssertOrAssume(String label, boolean enabled){
+	private void enableAssertOrAssume(String label, boolean enabled){
 		if(enabled){
 			stackOfAssertOrAssume.push(label);
 		}else{
@@ -121,7 +132,7 @@ public class Analyzer {
 	 * @param type 
 	 * @return true if the type is or contains an integer type. 
 	 */
-	public boolean isIntType(Type type){
+	private boolean isIntType(Type type){
 		if(type instanceof Type.Int){
 			return true;
 		}
@@ -162,9 +173,11 @@ public class Analyzer {
 		}
 
 		if(code instanceof Codes.Label){
-			System.out.println(font_color_start+name+"."+line+"."+depth+" ["+code+"]"+font_color_end);
+			//System.out.println(font_color_start+name+"."+line+"."+depth+" ["+code+"]"+font_color_end);
+			System.out.println(font_color_start+name+"."+line+" ["+code+"]"+font_color_end);
 		}else{
-			System.out.println(font_color_start+name+"."+line+"."+depth+" [\t"+code+"]"+font_color_end);
+			//System.out.println(font_color_start+name+"."+line+"."+depth+" [\t"+code+"]"+font_color_end);
+			System.out.println(font_color_start+name+"."+line+" [\t"+code+"]"+font_color_end);
 		}	
 
 		return ++line;
@@ -196,11 +209,11 @@ public class Analyzer {
 				inferBounds(child);
 			}			
 		}
-		
+
 		return ;
 	}
 
-	
+
 	/**
 	 * Get the current node and infer its bounds, which are
 	 * consistent with all constraints.
@@ -217,39 +230,67 @@ public class Analyzer {
 		return blk.getBounds();
 	}
 
-
-
+	/**
+	 * Keep track of the current basic block
+	 * @return
+	 */
 	private BasicBlock getCurrentBlock(){
-		if(current_blk==null){
+		if(current_blk == null){
 			current_blk = entry;
 		}
+
 		return current_blk;
 	}
 
+	private void setCurrentBlock(BasicBlock blk){
+		current_blk = blk;
+	}
+
 	/**
-	 * Traverse a tree to get the block whose branch name is matched with
-	 * label.
-	 * @param blk
+	 * Iterates over all nodes in a list to get the block,
+	 * whose branch name is matched with label.
 	 * @param label
 	 * @return blk
 	 */
-	private BasicBlock getBasicBlock(BasicBlock blk, String label){
-		if(blk.isLeaf()){
+	private BasicBlock getBasicBlock(String label){
+		Iterator<BasicBlock> iterator = list.iterator();
+		while(iterator.hasNext()){
+			BasicBlock blk = iterator.next();
 			if(blk.getBranch().equals(label)){
 				return blk;
 			}
-		}else{
-			for(BasicBlock childNode :blk.getChildNodes()){
-				BasicBlock child_blk = getBasicBlock(childNode, label);
-				if(child_blk != null){
-					return child_blk;
+		}		
+		return null;
+	}
+
+	public void outputCFG(String name){
+
+		String dot_string= "digraph "+name+"{\n";		
+		Iterator<BasicBlock> iterator = list.iterator();
+		while(iterator.hasNext()){
+			BasicBlock blk = iterator.next();
+			if(!blk.isLeaf()){
+				for(BasicBlock child: blk.getChildNodes()){
+					dot_string += blk.getBranch() +"->"+ child.getBranch() + ";\n";
 				}
 			}
-		}		
+		}
+		
+		dot_string += "\n}";
 
-		return null;
+		//Write out the CFG-function_name.dot
+		try {
+			PrintWriter writer = new PrintWriter("CFG-"+name+".dot", "UTF-8");
+			writer.println(dot_string);
+			writer.close();
+		} catch (FileNotFoundException | UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
+
+
 
 	/**
 	 * Adds the constraint to the current constraint list.
@@ -262,36 +303,62 @@ public class Analyzer {
 	}
 
 	/**
-	 * Branches the current constraint list and adds the 
-	 * constraint to the cloned list.
+	 * Branches the current block and adds the 
+	 * if_then_else blocks. And set the current
+	 * block to the left one.
 	 * @param new_label the name of new branch.
 	 * @param c constraint
 	 */
-	public void branch(String new_label, Constraint c){
+	private void createIfElseBranch(String new_label, Constraint c){
 		//Branch the constraint list only when the bytecode does not
 		//belong to the assertion or assumption.
-		if(!isAssertOrAssume()){			
-			//BasicBlock branch_blk = getBasicBlock(entry, new_label);
-			BasicBlock blk = getCurrentBlock();
-			BasicBlock leftBlock = new BasicBlock(blk.getBranch());
-			BasicBlock rightBlock = new BasicBlock(new_label);
 
-			//Connect the blk and left and right blocks.
-			blk.addChild(leftBlock);			
-			//Add the constraint to the left block
-			blk.addChild(rightBlock);
-			
-			rightBlock.addConstraint(c);						
-			//Set the current block to the left
-			setCurrentBlock(leftBlock);			
-		}
+		BasicBlock blk = getCurrentBlock();
+		BasicBlock leftBlock = new BasicBlock(new_label+"_Else");
+		BasicBlock rightBlock = new BasicBlock(new_label);
+
+		//Connect the blk and left and right blocks.
+		blk.addChild(leftBlock);		
+		blk.addChild(rightBlock);
+
+		//Add the constraint to the left block
+		rightBlock.addConstraint(c);						
+		//Set the current block to the left
+		list.add(leftBlock);
+		list.add(rightBlock);			
+		
+		setCurrentBlock(leftBlock);
+
 	}
 
-	private void setCurrentBlock(BasicBlock block) {
+	private BasicBlock createMergeBlock(String label){
+		//The merge node
+		BasicBlock merge_blk = new BasicBlock(label);
+
+		//Add the merge to all the leaf blocks.
+		Iterator<BasicBlock> iterator = list.iterator();
+		while(iterator.hasNext()){
+			BasicBlock blk = iterator.next();
+			if(blk.isLeaf()){
+				blk.addChild(merge_blk);
+			}			
+		}
+		
+		list.add(merge_blk);
+		
+		return merge_blk;
+	}
+
+
+
+
+
+
+	/*private void setCurrentBlock(BasicBlock block) {
 		if(block != null){
 			this.current_blk = block;
 		}
-	}
+	}*/
 
 	/**
 	 * Checks the type of the wyil code and dispatches the code to the analyzer for
@@ -397,13 +464,13 @@ public class Analyzer {
 	}
 
 
-	public void analyze(Codes.AssertOrAssume code){
+	private void analyze(Codes.AssertOrAssume code){
 		//Push the assert_label so that no constraints are added to list.
 		enableAssertOrAssume(code.target, true);
 	}
 
 
-	public void analyze(Codes.Assign code){
+	private void analyze(Codes.Assign code){
 		//Check if the assigned value is an integer
 		if(isIntType(code.type())){
 			//Add the constraint 'target = operand'
@@ -415,7 +482,7 @@ public class Analyzer {
 	 * Parses 'Const' bytecode to add the 'Const' constraint to the list. 
 	 * @param code
 	 */
-	public void analyze(Codes.Const code){
+	private void analyze(Codes.Const code){
 		Constant constant = code.constant;
 		//Check the value is an Constant.Integer
 		if(constant instanceof Constant.Integer){
@@ -429,7 +496,7 @@ public class Analyzer {
 	 * to assign the bounds from the source operator register to the target operator.
 	 * @param code
 	 */
-	public void analyze(Codes.IndexOf code){		
+	private void analyze(Codes.IndexOf code){		
 		if(isIntType((Type) code.type())){
 			addConstraint(new Equals("%"+code.target(), "%"+code.operand(0)));
 
@@ -442,36 +509,36 @@ public class Analyzer {
 	 * @param code
 	 * @throws CloneNotSupportedException
 	 */
-	public void analyze(Codes.If code) throws CloneNotSupportedException{
+	private void analyze(Codes.If code) throws CloneNotSupportedException{
 
-		if(isIntType(code.type)){
+		if(isIntType(code.type) && !isAssertOrAssume()){
 			String left = "%"+code.leftOperand;
 			String right = "%"+code.rightOperand;
 			switch(code.op){
 			case EQ:			
-				branch(code.target, new Equals(left, right));
+				createIfElseBranch(code.target, new Equals(left, right));
 				addConstraint(new GreaterThanEquals(left, right));
 				break;
 			case NEQ:				
 
 				break;
 			case LT:
-				branch(code.target, new LessThan(left, right));
+				createIfElseBranch(code.target, new LessThan(left, right));
 				addConstraint(new GreaterThanEquals(left, right));				
 				break;
 			case LTEQ:
 				//Add the 'left <= right' constraint to the branched list.
-				branch(code.target, new LessThanEquals(left, right));
+				createIfElseBranch(code.target, new LessThanEquals(left, right));
 				//Add the constraint 'left>right' to current list
 				addConstraint(new GreaterThan(left, right));
 				break;
 			case GT:					
-				branch(code.target, new GreaterThan(left, right));
+				createIfElseBranch(code.target, new GreaterThan(left, right));
 				addConstraint(new LessThanEquals(left, right));
 				break;
 			case GTEQ:
 				//Branch and add the left >= right constraint to 
-				branch(code.target, new GreaterThanEquals(left, right));
+				createIfElseBranch(code.target, new GreaterThanEquals(left, right));
 				//Add the constraint 'left< right' to current constraint list.
 				addConstraint(new LessThan(left, right));		
 				break;
@@ -498,7 +565,7 @@ public class Analyzer {
 	 * The possible constraints include: none....
 	 * @param code
 	 */
-	public void analyze(Codes.Invoke code){
+	private void analyze(Codes.Invoke code){
 		/*//String func_name = code.name.name();
 
 		Type returnType = code.type().ret();
@@ -546,16 +613,20 @@ public class Analyzer {
 	 * put it to the map with the key of label and value of the newly created list. 
 	 * @param code
 	 */
-	public void analyze(Codes.Label code){
+	private void analyze(Codes.Label code){
 		//check if map contains the constrainlist.
 		String label = code.label;
 		enableAssertOrAssume(label, false);
 		//Switch the current constraint list by setting the label with new value.
-		BasicBlock blk = getBasicBlock(entry, label);
-		if(blk != null){
-			//Switch the current block
-			this.current_blk = blk;
-		}		
+		BasicBlock blk = getBasicBlock(label);
+		if(blk == null){
+			//The merge node
+			blk = createMergeBlock(label);
+		}
+
+		//Switch the current block
+		setCurrentBlock(blk);
+
 	}
 
 
@@ -565,7 +636,7 @@ public class Analyzer {
 	 * Add the 'equal' constraints of the target and operand register.
 	 * @param code
 	 */
-	public void analyze(Codes.NewList code){
+	private void analyze(Codes.NewList code){
 		if(isIntType(code.type())){
 			for(int operand: code.operands()){
 				addConstraint(new Union("%"+code.target(), "%"+operand));				
@@ -578,7 +649,7 @@ public class Analyzer {
 	 * Parse the 'return' bytecode and add the constraint 
 	 * @param code
 	 */
-	public void analyze(Codes.Return code){
+	private void analyze(Codes.Return code){
 		//Get the return operand
 		String ret = "%"+code.operand;
 		BasicBlock blk = getCurrentBlock();
@@ -587,12 +658,10 @@ public class Analyzer {
 			//Add the 'Equals' constraint to the return (ret) variable.
 			blk.addConstraint((new Equals("return", ret)));			
 		}
-		blk.inferFixedPoint();
-		blk.addChild(exit);
-		setCurrentBlock(exit);
+
 	}
 
-	public void analyze(Codes.ListOperator code){
+	private void analyze(Codes.ListOperator code){
 		switch(code.kind){
 		case APPEND:
 			for(int operand : code.operands()){
@@ -620,7 +689,7 @@ public class Analyzer {
 	 * 
 	 * @param code
 	 */
-	public void analyze(Codes.UnaryOperator code){
+	private void analyze(Codes.UnaryOperator code){
 		UnaryOperatorKind kind = code.kind;
 		String x = "%"+code.operand(0);
 		String y = "%"+code.target();
@@ -649,7 +718,7 @@ public class Analyzer {
 	 * adds the constraint '%5 = %0', which propagtes the bounds from %0 to %5.
 	 * @param code the <code>Codes.Forall</code> bytecode
 	 */
-	public void analyze(Codes.ForAll code){
+	private void analyze(Codes.ForAll code){
 		//Check if each element is an integer
 		if(isIntType((Type) code.type)){
 			//Propagate the range of source register to the index reg 
@@ -661,7 +730,7 @@ public class Analyzer {
 	 * Not implemented.
 	 * @param code
 	 */
-	public void analyze(Codes.LengthOf code){		
+	private void analyze(Codes.LengthOf code){		
 		//addConstraintToCurrentList(new Equals("%"+code.target(), "%"+code.operand(0)));		
 	}
 
@@ -669,7 +738,7 @@ public class Analyzer {
 	 * Not implemented
 	 * @param code
 	 */
-	public void analyze(Codes.Loop code){		
+	private void analyze(Codes.Loop code){		
 		//for(int operand : code.modifiedOperands){
 		//	addConstraint(new Equals("%"+code.target, "%"+operand));
 		//}
@@ -679,7 +748,7 @@ public class Analyzer {
 	 * The bounds of a list/map shall be propagated from the operand to the target. 
 	 * @param code
 	 */
-	public void analyze(Codes.SubList code){
+	private void analyze(Codes.SubList code){
 		if(code.type().element() instanceof Type.Int){
 			for(int operand: code.operands()){
 				addConstraint(new Equals("%"+code.target(), "%"+operand));
@@ -691,7 +760,7 @@ public class Analyzer {
 	 * to add the 'equal' constraints of operands and target registers. 
 	 * @param code
 	 */
-	public void analyze(Codes.BinaryOperator code){
+	private void analyze(Codes.BinaryOperator code){
 		if(isIntType(code.type())){
 			switch (code.kind) {
 			case ADD:
@@ -736,7 +805,7 @@ public class Analyzer {
 	 * 
 	 * @param code the <code>Codes.NewMap</code> byte-code.
 	 */
-	public void analyze(Codes.NewMap code){
+	private void analyze(Codes.NewMap code){
 		Type.Map map = code.type();
 		int index =1;
 		while(index<code.operands().length){
@@ -760,7 +829,7 @@ public class Analyzer {
 	 * Load the tuple values at the given index and assign the bounds of the operand to the target.
 	 * @param code
 	 */
-	public void analyze(Codes.TupleLoad code){
+	private void analyze(Codes.TupleLoad code){
 		//Check if the index is that of value field (1).
 		int index = code.index;
 		if(index%2==1){
@@ -776,7 +845,7 @@ public class Analyzer {
 	 * Take the union of bounds from operands and target
 	 * @param code
 	 */
-	public void analyze(Codes.NewTuple code){
+	private void analyze(Codes.NewTuple code){
 		//Assing the bounds of value field to the target
 		Type.Tuple tuple = code.type();
 		int index = 1;
@@ -792,7 +861,7 @@ public class Analyzer {
 	 * Updates an element of a list. But how do we update the bounds??? 
 	 * @param code
 	 */
-	public void analyze(Codes.Update code){
+	private void analyze(Codes.Update code){
 
 	}
 
