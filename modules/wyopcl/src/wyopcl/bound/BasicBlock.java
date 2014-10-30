@@ -17,6 +17,8 @@ public class BasicBlock {
 	//The branch name
 	private String branch = "";
 	private Bounds unionOfBounds;
+	//Indicate if the bounds remain unchanged. False: unchanged. True: changed.
+	private boolean isChanged = false;
 	
 	public BasicBlock(){
 		this.unionOfBounds = new Bounds();
@@ -106,7 +108,11 @@ public class BasicBlock {
 		constraintList.add(c);
 	}	
 	
-	public Bounds getBounds(){
+	public boolean isChanged(){
+		return isChanged;
+	}
+	
+	public Bounds getBounds(){		
 		return unionOfBounds;
 	}	
 	
@@ -128,43 +134,46 @@ public class BasicBlock {
 		unionOfBounds.addUpperBound(name, new_max);
 	}
 	
+	/**
+	 * Infer the bounds 
+	 * @return true if the bounds are changed. Return false if bounds remain unchanged.
+	 */
+	public boolean inferBounds(){
+		isChanged = false;
+		//Iterate through the constraints to infer the bounds.
+		for(Constraint c: this.constraintList){
+			//The inferBound method returns False if the bounds remain unchanged.
+			boolean inferBound = c.inferBound(this.unionOfBounds);
+			//So we use the bitwise Or to combine all the results
+			isChanged |= inferBound;
+		}
+		return isChanged;
+	}
+	
+	
+	
 	
 	/**
-	 * Iterate through the constraints to infer the bounds.
-	 * @return true if all the bounds are consistent or unchanged with all the constraints.
-	 * 		   false otherwise.
-	 */
-	private boolean inferBound(){
-		//Iterate through the constraints to infer the bounds.
-		boolean isFixedPointed = true;		
-		for(Constraint c: constraintList){
-			//The inferBound method returns false when all the bounds.
-			//So we negated the result and use the AND bitwise to combine all the results.
-			isFixedPointed ^= !(c.inferBound(unionOfBounds));
-		}				
-		//Check if all the bounds are consistent or unchanged with all the constraints.
-		//Is so, then the fixed pointed is reached.
-		return isFixedPointed;
-	}
-
-
-
-	/**
-	 * Repeatedly run the inferBound method.
-	 * @param bnd
+	 * Repeatedly infer the Bound consistent with all the constraints.
 	 * @param iterations optional parameter. iterations[0] specifies the number of iterations. If not specifies, 
 	 * the default value is 5. 
-	 * @return true if bounds are consistent with all constraints. Otherwise, return false.
+	 * @return true if bounds remain 'unchanged'. Otherwise, return false.
 	 */
 	public boolean inferFixedPoint(int... iterations){
 		int MaxIteration = iterations.length >0 ? iterations[0] : 5;
+		boolean isFixedPointed = true;
 		for(int i=0;i<MaxIteration;i++){
-			boolean isFixedPointed = this.inferBound();
-			if(isFixedPointed){			
-				return true;
+			//Initialize the isFixedPointed
+			isFixedPointed = true;
+			//Iterate through the constraints to infer the bounds.
+			for(Constraint c: this.constraintList){
+				//The inferBound method returns false when all the bounds.
+				//So we negated the result and use the AND bitwise to combine all the results.
+				boolean isChanged = c.inferBound(this.unionOfBounds);
+				isFixedPointed &= !isChanged;
 			}
 		}		
-		return false;
+		return isFixedPointed;
 	}
 
 	@Override
@@ -173,8 +182,7 @@ public class BasicBlock {
 				+ ", parent=" + parent 
 				+ ", childNodes=" + childNodes
 				+ ", branch=" + branch + ", unionOfBounds=" + unionOfBounds + "]";*/
-		return branch + "\n"
-				+ "\tBounds=" + unionOfBounds + "]";
+		return branch + ":" + unionOfBounds;
 	}
 	
 	

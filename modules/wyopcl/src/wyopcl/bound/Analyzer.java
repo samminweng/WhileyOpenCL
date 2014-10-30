@@ -94,8 +94,12 @@ public class Analyzer {
 	/**
 	 * Create the exit block
 	 */
-	public void createExitBlock(){
-		exit = createMergeBlock("exit");
+	public BasicBlock getExitBlock(){
+		if(exit == null){
+			exit = new BasicBlock("exit");
+			list.add(exit);
+		}
+		return exit;
 	}
 
 	/**
@@ -198,36 +202,48 @@ public class Analyzer {
 
 	}
 
-	/**
-	 * Traverse each node in CFG and infer the bounds for each node. 
-	 * @param blk
-	 */
-	private void inferBounds(BasicBlock blk){
-		blk.inferFixedPoint();
-		if(!blk.isLeaf()){
-			for(BasicBlock child: blk.getChildNodes()){
-				inferBounds(child);
-			}			
-		}
-
-		return ;
-	}
-
 
 	/**
-	 * Get the current node and infer its bounds, which are
-	 * consistent with all constraints.
+	 * Repeatedly iterates over all blocks, starting from the entry block to the exit block,
+	 * and infer the bounds consistent with all the constraints in each block.
 	 * @param verbose 
-	 * @return the bounds of current node.
+	 * @param iterations optional parameter. iterations[0] specifies the number of iterations. If not specifies, 
+	 * the default value is 5.
+	 * @return the bounds
 	 */
-	public Bounds inferBounds(boolean verbose){
-		BasicBlock blk = getCurrentBlock();
-		inferBounds(blk);
-		//Print out the bounds.
-		if(verbose){
-			printBounds(blk.getBounds());
-		}		
-		return blk.getBounds();
+	public Bounds inferBounds(boolean verbose, int... iterations){
+		int MaxIteration = iterations.length >0 ? iterations[0] : 5;
+		boolean isChanged = true;
+		//Stop until there is no change in bounds.
+		for(int i=0;i<MaxIteration;i++){
+			if(verbose){
+				System.out.println("==================Iteration=======================");
+			}
+			
+			isChanged = false;
+			//Iterate all the block
+			for(BasicBlock blk : list){
+				//Take the union of parents' bounds as the initial bounds
+				if(blk.hasParent()){
+					for(BasicBlock parent: blk.getParentNodes()){
+						blk.unionBounds(parent);
+					}
+				}
+				//If bounds has no change, then return False.
+				boolean inferBounds = blk.inferBounds();
+				//The bitwise AND to combine all the results
+				isChanged |= inferBounds;
+				//Print out the bounds.
+				if(verbose){
+					System.out.println(blk);
+					System.out.println("inferBounds="+inferBounds);
+				}
+			}
+			
+			//Check if the bounds in the block remains the same. If it is true, then exit.
+			System.out.println("isChanged="+isChanged);
+		}
+		return exit.getBounds();
 	}
 
 	/**
@@ -658,6 +674,9 @@ public class Analyzer {
 			//Add the 'Equals' constraint to the return (ret) variable.
 			blk.addConstraint((new Equals("return", ret)));			
 		}
+		
+		//Connect the current block with exit block.
+		blk.addChild(getExitBlock());
 
 	}
 

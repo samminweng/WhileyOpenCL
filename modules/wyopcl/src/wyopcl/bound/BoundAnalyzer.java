@@ -112,7 +112,6 @@ public class BoundAnalyzer implements Builder{
 				line = analyzer.printWyILCode(entry.code, functionOrMethod.name(), line);				
 				analyzer.dispatch(entry);				
 			}
-			analyzer.createExitBlock();
 			analyzer.outputCFG(functionOrMethod.name());
 		}
 	}
@@ -124,11 +123,10 @@ public class BoundAnalyzer implements Builder{
 	 */
 	public void analyze(WyilFile module){
 		for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {			
-			Analyzer analyzer = new Analyzer(0);
-			
+			Analyzer analyzer = new Analyzer(0);			
 			iterateByteCode(analyzer, functionOrMethod);			
-			//Infer the bounds 
-			//analyzer.inferBounds(true);
+			//Infer and print the final bounds.
+			analyzer.printBounds(analyzer.inferBounds(verbose));
 			analyzer = null;
 		}
 	}

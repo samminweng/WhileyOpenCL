@@ -189,9 +189,9 @@ public class Bounds implements Cloneable{
 		//All the domains are sorted by names.
 		Collections.sort(domains, new Domain(""));
 		for (Domain d : domains) {
-			str += "\n\t" + d.toString();
+			str += "\n\t"+ d.toString();
 		}
-		str += "\n}";
+		str += "}";
 
 		return str;
 	}
