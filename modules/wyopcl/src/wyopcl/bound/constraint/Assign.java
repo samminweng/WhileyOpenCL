@@ -57,7 +57,7 @@ public class Assign extends Constraint {
 
 	@Override
 	public String toString() {
-		return "Assignment [ x=" + x + ", y=" + y + "]";
+		return "Assignment [ " + x + ":=" + y + "]";
 	}
 	
 

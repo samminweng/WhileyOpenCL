@@ -36,7 +36,7 @@ public class Range extends Constraint {
 
 	@Override
 	public String toString() {
-		return "Range [min_x=" + min_x + ", max_x=" + max_x + ", x=" + x + "]";
+		return "Range [ " + x + "= ["+ min_x + ".." + max_x + "]]";
 	}
 
 }

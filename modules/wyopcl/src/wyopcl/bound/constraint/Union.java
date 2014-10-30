@@ -50,7 +50,7 @@ public class Union extends Constraint {
 
 	@Override
 	public String toString() {
-		return "Union [x=" + x + ", y=" + y + "]";
+		return "Union [ " + x + "cup" + y + " = "+x +" ]";
 	}
 
 

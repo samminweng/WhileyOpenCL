@@ -55,7 +55,7 @@ public class Equals extends Constraint {
 
 	@Override
 	public String toString() {
-		return "Equals [x=" + x + ", y=" + y + "]";
+		return "Equals [ " + x + "==" + y + " ]";
 	}
 
 

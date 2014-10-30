@@ -6,7 +6,7 @@ import java.math.BigInteger;
 import wyopcl.bound.Bounds;
 import wyopcl.bound.Domain;
 /**
- * Implements the propagation rule for constraint 'X = -Y'
+ * Implements the propagation rule for constraint '!X = Y'
  * 
  * @author Min-Hsien Weng
  *
@@ -60,7 +60,7 @@ public class Negate extends Constraint{
 
 	@Override
 	public String toString() {
-		return "Negate [x=" + x + ", y=" + y + "]";
+		return "Negate [ !" + x + "=" + y + "]";
 	}
 
 

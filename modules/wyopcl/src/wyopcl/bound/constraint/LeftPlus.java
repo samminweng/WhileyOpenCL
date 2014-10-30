@@ -75,7 +75,7 @@ public class LeftPlus extends Constraint {
 
 	@Override
 	public String toString() {
-		return "LeftPlus [x=" + x + ", y=" + y + ", z=" + z + "]";
+		return "LeftPlus [ " + x + "+" + y + "=" + z + "]";
 	}
 
 }
