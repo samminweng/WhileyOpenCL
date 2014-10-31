@@ -64,13 +64,15 @@ public class Analyzer {
 	private BasicBlock exit;
 	//The list of basic block;
 	private List<BasicBlock> list = new ArrayList<BasicBlock>();
+	//The label name of the loop condition
+	private String loop_condition = "";
 
 	public Analyzer(int depth){
 		this.depth = depth;
 		this.stackOfAssertOrAssume = new Stack<String>();
 		this.entry = new BasicBlock("entry");		
 		list.add(entry);
-		
+
 	}
 
 	public void createEntryNode(Type paramType, String param, BigInteger min, BigInteger max){
@@ -80,7 +82,7 @@ public class Analyzer {
 	}
 
 	/**
-	 * 
+	 * Creates the entry node
 	 * @param paramTypes
 	 */
 	public void createEntryNode(List<Type> paramTypes){
@@ -90,7 +92,7 @@ public class Analyzer {
 			index++;
 		}	
 	}
-	
+
 	/**
 	 * Create the exit block
 	 */
@@ -219,7 +221,7 @@ public class Analyzer {
 			if(verbose){
 				System.out.println("==================Iteration=======================");
 			}
-			
+
 			isChanged = false;
 			//Iterate all the block
 			for(BasicBlock blk : list){
@@ -239,7 +241,7 @@ public class Analyzer {
 					System.out.println("inferBounds="+inferBounds);
 				}
 			}
-			
+
 			//Check if the bounds in the block remains the same. If it is true, then exit.
 			System.out.println("isChanged="+isChanged);
 		}
@@ -291,7 +293,7 @@ public class Analyzer {
 				}
 			}
 		}
-		
+
 		dot_string += "\n}";
 
 		//Write out the CFG-function_name.dot
@@ -318,6 +320,17 @@ public class Analyzer {
 		}
 	}
 
+	private void createLoopHeader(String label){
+		BasicBlock blk = getCurrentBlock();
+		BasicBlock loopheader = new BasicBlock(label);
+		blk.addChild(loopheader);
+		list.add(loopheader);		
+		setCurrentBlock(loopheader);
+		loop_condition = label;
+	}
+
+
+
 	/**
 	 * Branches the current block and adds the 
 	 * if_then_else blocks. And set the current
@@ -325,56 +338,51 @@ public class Analyzer {
 	 * @param new_label the name of new branch.
 	 * @param c constraint
 	 */
-	private void createIfElseBranch(String new_label, Constraint c){
-		//Branch the constraint list only when the bytecode does not
-		//belong to the assertion or assumption.
+	private void createIfElseBranch(String new_label, Constraint c, Constraint neg_c){
 
 		BasicBlock blk = getCurrentBlock();
-		BasicBlock leftBlock = new BasicBlock(new_label+"_Else");
-		BasicBlock rightBlock = new BasicBlock(new_label);
+		if(!loop_condition.equals("")){
+			//Create the if/else branch for the loop condition
+			//Get the loop body
+			BasicBlock loopbody = new BasicBlock(loop_condition+"_loopbody");
+			loopbody.addConstraint(c);
+			list.add(loopbody);
 
-		//Connect the blk and left and right blocks.
-		blk.addChild(leftBlock);		
-		blk.addChild(rightBlock);
+			BasicBlock loopEnd = new BasicBlock(new_label);
+			loopEnd.addConstraint(neg_c);
+			list.add(loopEnd);
 
-		//Add the constraint to the left block
-		rightBlock.addConstraint(c);						
-		//Set the current block to the left
-		list.add(leftBlock);
-		list.add(rightBlock);			
-		
-		setCurrentBlock(leftBlock);
+			blk.addChild(loopEnd);
+			blk.addChild(loopbody);
+
+			setCurrentBlock(loopbody);
+		}else{
+			//Branch the constraint list only when the bytecode does not
+			//belong to the assertion or assumption.
+			BasicBlock leftBlock = new BasicBlock(new_label+"_Else");
+			BasicBlock rightBlock = new BasicBlock(new_label);
+
+			//Connect the blk and left and right blocks.
+			blk.addChild(leftBlock);		
+			blk.addChild(rightBlock);
+
+			//Add the constraint to the left block
+			leftBlock.addConstraint(c);
+			rightBlock.addConstraint(neg_c);						
+			//Set the current block to the left
+			list.add(leftBlock);
+			list.add(rightBlock);			
+
+			setCurrentBlock(leftBlock);
+		}
+
+
 
 	}
 
-	private BasicBlock createMergeBlock(String label){
-		//The merge node
-		BasicBlock merge_blk = new BasicBlock(label);
-
-		//Add the merge to all the leaf blocks.
-		Iterator<BasicBlock> iterator = list.iterator();
-		while(iterator.hasNext()){
-			BasicBlock blk = iterator.next();
-			if(blk.isLeaf()){
-				blk.addChild(merge_blk);
-			}			
-		}
-		
-		list.add(merge_blk);
-		
-		return merge_blk;
-	}
 
 
 
-
-
-
-	/*private void setCurrentBlock(BasicBlock block) {
-		if(block != null){
-			this.current_blk = block;
-		}
-	}*/
 
 	/**
 	 * Checks the type of the wyil code and dispatches the code to the analyzer for
@@ -425,7 +433,7 @@ public class Analyzer {
 			} else if (code instanceof Codes.Loop) {			
 				analyze((Codes.Loop)code);			
 			} else if (code instanceof Codes.LoopEnd) {
-				//LoopEndInterpreter.getInstance().interpret((Codes.LoopEnd)code, stackframe);									
+				analyze((Codes.LoopEnd)code);									
 			} else if (code instanceof Codes.Label) {
 				analyze((Codes.Label)code);
 			} else if (code instanceof Codes.Lambda) {
@@ -532,31 +540,25 @@ public class Analyzer {
 			String right = "%"+code.rightOperand;
 			switch(code.op){
 			case EQ:			
-				createIfElseBranch(code.target, new Equals(left, right));
-				addConstraint(new GreaterThanEquals(left, right));
+				createIfElseBranch(code.target, new Equals(left, right), new GreaterThanEquals(left, right));
 				break;
 			case NEQ:				
 
 				break;
 			case LT:
-				createIfElseBranch(code.target, new LessThan(left, right));
-				addConstraint(new GreaterThanEquals(left, right));				
+				createIfElseBranch(code.target, new LessThan(left, right), new GreaterThanEquals(left, right));			
 				break;
 			case LTEQ:
 				//Add the 'left <= right' constraint to the branched list.
-				createIfElseBranch(code.target, new LessThanEquals(left, right));
-				//Add the constraint 'left>right' to current list
-				addConstraint(new GreaterThan(left, right));
+				createIfElseBranch(code.target, new LessThanEquals(left, right), new GreaterThan(left, right));
 				break;
 			case GT:					
-				createIfElseBranch(code.target, new GreaterThan(left, right));
-				addConstraint(new LessThanEquals(left, right));
+				createIfElseBranch(code.target, new GreaterThan(left, right), new LessThanEquals(left, right));
 				break;
 			case GTEQ:
 				//Branch and add the left >= right constraint to 
-				createIfElseBranch(code.target, new GreaterThanEquals(left, right));
+				createIfElseBranch(code.target, new GreaterThanEquals(left, right), new LessThan(left, right));
 				//Add the constraint 'left< right' to current constraint list.
-				addConstraint(new LessThan(left, right));		
 				break;
 			case IN:			
 				System.err.println("Not implemented!");		
@@ -634,14 +636,25 @@ public class Analyzer {
 		String label = code.label;
 		enableAssertOrAssume(label, false);
 		//Switch the current constraint list by setting the label with new value.
-		BasicBlock blk = getBasicBlock(label);
-		if(blk == null){
+		//
+		//Get the current block
+		BasicBlock c_blk = getCurrentBlock();
+
+		if(c_blk.getBranch().equals("")){
+			//update the branch
+			c_blk.setBranch(label);
+		}else{
 			//The merge node
-			blk = createMergeBlock(label);
+			BasicBlock blk = getBasicBlock(label);
+			if(blk == null){
+				blk = new BasicBlock(label);
+				list.add(blk);
+				c_blk.addChild(blk);
+			}
+			//Switch the current block
+			setCurrentBlock(blk);
 		}
 
-		//Switch the current block
-		setCurrentBlock(blk);
 
 	}
 
@@ -674,7 +687,7 @@ public class Analyzer {
 			//Add the 'Equals' constraint to the return (ret) variable.
 			blk.addConstraint((new Equals("return", ret)));			
 		}
-		
+
 		//Connect the current block with exit block.
 		blk.addChild(getExitBlock());
 
@@ -754,13 +767,29 @@ public class Analyzer {
 	}
 
 	/**
-	 * Not implemented
+	 * Creates a loop structure, including the loop header and loop body
 	 * @param code
 	 */
-	private void analyze(Codes.Loop code){		
-		//for(int operand : code.modifiedOperands){
-		//	addConstraint(new Equals("%"+code.target, "%"+operand));
-		//}
+	private void analyze(Codes.Loop code){	
+		String label = code.target;
+		createLoopHeader(label);
+	}
+
+	/**
+	 * 
+	 * @param code
+	 */
+	private void analyze(Codes.LoopEnd code){
+		BasicBlock loopheader = getBasicBlock(code.label);
+		//Connect the current node with loop header
+		BasicBlock blk = getCurrentBlock();		
+		blk.addChild(loopheader);
+
+		//Create a new block without name
+		BasicBlock new_block = new BasicBlock();
+		list.add(new_block);
+		blk.addChild(new_block);
+		setCurrentBlock(new_block);
 	}
 
 	/**

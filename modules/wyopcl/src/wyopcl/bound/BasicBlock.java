@@ -46,10 +46,15 @@ public class BasicBlock {
 	public void addChild(BasicBlock child){
 		if(childNodes == null){
 			childNodes = new ArrayList<BasicBlock>();
-		}		
-		childNodes.add(child);
-		//set the parent-child rel to the child node.
-		child.addParent(this);		
+		}
+		
+		//Check if the child node has been added before.
+		if(!childNodes.contains(child)){
+			childNodes.add(child);
+			//set the parent-child rel to the child node.
+			child.addParent(this);	
+		}
+		
 	}
 	
 	
@@ -182,7 +187,9 @@ public class BasicBlock {
 				+ ", parent=" + parent 
 				+ ", childNodes=" + childNodes
 				+ ", branch=" + branch + ", unionOfBounds=" + unionOfBounds + "]";*/
-		return branch + ":" + unionOfBounds;
+		return branch + ":\n"
+				+"<<"+constraintList+">>\n"
+				+ unionOfBounds;
 	}
 	
 	
