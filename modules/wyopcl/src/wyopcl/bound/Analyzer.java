@@ -281,6 +281,18 @@ public class Analyzer {
 		return null;
 	}
 
+	/**
+	 * Create a basic block with the specific label name
+	 * @param label the branch name
+	 * @return the blk
+	 */
+	private BasicBlock createBasicBlock(String label, BasicBlock parent){
+		BasicBlock blk = new BasicBlock(label);
+		list.add(blk);
+		parent.addChild(blk);
+		return blk;
+	}	
+	
 	public void outputCFG(String name){
 
 		String dot_string= "digraph "+name+"{\n";		
@@ -320,15 +332,6 @@ public class Analyzer {
 		}
 	}
 
-	private void createLoopHeader(String label){
-		BasicBlock blk = getCurrentBlock();
-		BasicBlock loopheader = new BasicBlock(label);
-		blk.addChild(loopheader);
-		list.add(loopheader);		
-		setCurrentBlock(loopheader);
-		loop_condition = label;
-	}
-
 
 
 	/**
@@ -344,35 +347,24 @@ public class Analyzer {
 		if(!loop_condition.equals("")){
 			//Create the if/else branch for the loop condition
 			//Get the loop body
-			BasicBlock loopbody = new BasicBlock(loop_condition+"_loopbody");
-			loopbody.addConstraint(neg_c);
-			list.add(loopbody);
+			BasicBlock loopbody = createBasicBlock(loop_condition+"_loopbody", blk);
+			loopbody.addConstraint(neg_c);			
 
-			BasicBlock loopEnd = new BasicBlock(new_label);
-			loopEnd.addConstraint(c);
-			list.add(loopEnd);
-
-			blk.addChild(loopEnd);
-			blk.addChild(loopbody);
+			BasicBlock loopEnd = createBasicBlock(new_label, blk);
+			loopEnd.addConstraint(c);		
 
 			setCurrentBlock(loopbody);
 		}else{
 			//Branch the constraint list only when the bytecode does not
 			//belong to the assertion or assumption.
-			BasicBlock leftBlock = new BasicBlock(new_label+"_Else");
-			BasicBlock rightBlock = new BasicBlock(new_label);
-
-			//Connect the blk and left and right blocks.
-			blk.addChild(leftBlock);		
-			blk.addChild(rightBlock);
+			BasicBlock leftBlock = createBasicBlock(new_label+"_Else", blk);
+			BasicBlock rightBlock = createBasicBlock(new_label, blk);
 
 			//Add the constraint to the left block
 			leftBlock.addConstraint(c);
 			rightBlock.addConstraint(neg_c);						
 			//Set the current block to the left
-			list.add(leftBlock);
-			list.add(rightBlock);			
-
+		
 			setCurrentBlock(leftBlock);
 		}
 
@@ -647,9 +639,7 @@ public class Analyzer {
 			//The merge node
 			BasicBlock blk = getBasicBlock(label);
 			if(blk == null){
-				blk = new BasicBlock(label);
-				list.add(blk);
-				c_blk.addChild(blk);
+				blk = createBasicBlock(label, c_blk);
 			}
 			//Switch the current block
 			setCurrentBlock(blk);
@@ -772,7 +762,9 @@ public class Analyzer {
 	 */
 	private void analyze(Codes.Loop code){	
 		String label = code.target;
-		createLoopHeader(label);
+		BasicBlock loopheader = createBasicBlock(label, getCurrentBlock());		
+		setCurrentBlock(loopheader);
+		loop_condition = label;
 	}
 
 	/**
@@ -786,9 +778,7 @@ public class Analyzer {
 		blk.addChild(loopheader);
 
 		//Create a new block without name
-		BasicBlock new_block = new BasicBlock();
-		list.add(new_block);
-		blk.addChild(new_block);
+		BasicBlock new_block = createBasicBlock("", blk);
 		setCurrentBlock(new_block);
 	}
 
