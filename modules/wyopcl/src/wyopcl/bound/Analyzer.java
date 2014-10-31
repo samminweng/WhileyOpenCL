@@ -345,11 +345,11 @@ public class Analyzer {
 			//Create the if/else branch for the loop condition
 			//Get the loop body
 			BasicBlock loopbody = new BasicBlock(loop_condition+"_loopbody");
-			loopbody.addConstraint(c);
+			loopbody.addConstraint(neg_c);
 			list.add(loopbody);
 
 			BasicBlock loopEnd = new BasicBlock(new_label);
-			loopEnd.addConstraint(neg_c);
+			loopEnd.addConstraint(c);
 			list.add(loopEnd);
 
 			blk.addChild(loopEnd);
