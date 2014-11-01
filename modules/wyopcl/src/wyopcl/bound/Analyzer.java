@@ -352,7 +352,7 @@ public class Analyzer {
 		BasicBlock blk = getCurrentBlock();
 		//Branch out the block 
 		//The left block does not have the name
-		BasicBlock leftBlock = createBasicBlock(new_label+"_ELSE", blk);
+		BasicBlock leftBlock = createBasicBlock(new_label+"ELSE", blk);
 		BasicBlock rightBlock = createBasicBlock(new_label, blk);
 
 		//Add the constraint to the left block
@@ -633,7 +633,7 @@ public class Analyzer {
 			//Switch the current constraint list by setting the label with new value.
 			//Get the current block
 			BasicBlock c_blk = getCurrentBlock();
-			if(c_blk.getBranch().equals("")){
+			if(c_blk.getBranch().contains("LOOPEND")){
 				//update the branch
 				c_blk.setBranch(label);
 			}else{
@@ -796,7 +796,7 @@ public class Analyzer {
 		blk.addChild(loopheader);
 
 		//Create a new block without name
-		BasicBlock loopexit = createBasicBlock("", blk);
+		BasicBlock loopexit = createBasicBlock("LOOPEND", blk);
 		loopheader.addChild(loopexit);
 		setCurrentBlock(loopexit);
 	}
