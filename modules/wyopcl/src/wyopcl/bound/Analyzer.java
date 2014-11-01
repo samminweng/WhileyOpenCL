@@ -281,14 +281,20 @@ public class Analyzer {
 		return null;
 	}
 
+	private BasicBlock createBasicBlock(String label){
+		BasicBlock blk = new BasicBlock(label);
+		list.add(blk);
+		return blk;
+	}
+	
+	
 	/**
 	 * Create a basic block with the specific label name
 	 * @param label the branch name
 	 * @return the blk
 	 */
 	private BasicBlock createBasicBlock(String label, BasicBlock parent){
-		BasicBlock blk = new BasicBlock(label);
-		list.add(blk);
+		BasicBlock blk = createBasicBlock(label);
 		parent.addChild(blk);
 		return blk;
 	}	
@@ -348,16 +354,15 @@ public class Analyzer {
 			//Create the if/else branch for the loop condition
 			//Get the loop body
 			BasicBlock loopbody = createBasicBlock(loop_condition+"_loopbody", blk);
-			loopbody.addConstraint(neg_c);			
-
 			BasicBlock loopEnd = createBasicBlock(new_label, blk);
+			loopbody.addConstraint(neg_c);
 			loopEnd.addConstraint(c);		
 
 			setCurrentBlock(loopbody);
 		}else{
-			//Branch the constraint list only when the bytecode does not
-			//belong to the assertion or assumption.
-			BasicBlock leftBlock = createBasicBlock(new_label+"_Else", blk);
+			//Branch out the block 
+			//The left block does not have the name
+			BasicBlock leftBlock = createBasicBlock("", blk);
 			BasicBlock rightBlock = createBasicBlock(new_label, blk);
 
 			//Add the constraint to the left block
@@ -366,15 +371,16 @@ public class Analyzer {
 			//Set the current block to the left
 		
 			setCurrentBlock(leftBlock);
+			
+			//Create a merge block
+			BasicBlock mergeBlock = createBasicBlock("merge");
+			leftBlock.addChild(mergeBlock);
+			rightBlock.addChild(mergeBlock);
 		}
 
 
 
 	}
-
-
-
-
 
 	/**
 	 * Checks the type of the wyil code and dispatches the code to the analyzer for
@@ -407,7 +413,7 @@ public class Analyzer {
 			} else if (code instanceof Codes.ForAll) {				
 				analyze((Codes.ForAll)code);
 			} else if (code instanceof Codes.Goto) {	
-				//GotoInterpreter.getInstance().interpret((Codes.Goto)code, stackframe);
+				analyze((Codes.Goto)code);
 			} else if (code instanceof Codes.If) {
 				analyze((Codes.If)code);			
 			} else if (code instanceof Codes.IfIs) {
@@ -527,45 +533,55 @@ public class Analyzer {
 	 */
 	private void analyze(Codes.If code) throws CloneNotSupportedException{
 
-		if(isIntType(code.type) && !isAssertOrAssume()){
+		if(!isAssertOrAssume()){
 			String left = "%"+code.leftOperand;
 			String right = "%"+code.rightOperand;
-			switch(code.op){
-			case EQ:			
-				createIfElseBranch(code.target, new Equals(left, right), new GreaterThanEquals(left, right));
-				break;
-			case NEQ:				
+			Constraint left_c = null;
+			Constraint right_c = null;
+			if(isIntType(code.type)){
+				switch(code.op){
+				case EQ:
+					left_c = new Equals(left, right);
+					right_c = new Equals(left, right);				
+					break;
+				case NEQ:				
 
-				break;
-			case LT:
-				createIfElseBranch(code.target, new LessThan(left, right), new GreaterThanEquals(left, right));			
-				break;
-			case LTEQ:
-				//Add the 'left <= right' constraint to the branched list.
-				createIfElseBranch(code.target, new LessThanEquals(left, right), new GreaterThan(left, right));
-				break;
-			case GT:					
-				createIfElseBranch(code.target, new GreaterThan(left, right), new LessThanEquals(left, right));
-				break;
-			case GTEQ:
-				//Branch and add the left >= right constraint to 
-				createIfElseBranch(code.target, new GreaterThanEquals(left, right), new LessThan(left, right));
-				//Add the constraint 'left< right' to current constraint list.
-				break;
-			case IN:			
-				System.err.println("Not implemented!");		
-				break;
-			case SUBSET:
-				System.err.println("Not implemented!");
-				break;
-			case SUBSETEQ:
-				System.err.println("Not implemented!");
-				break;
-			default:			
-				System.err.println("Not implemented!");
+					break;
+				case LT:
+					left_c = new LessThan(left, right);
+					right_c = new GreaterThanEquals(left, right);			
+					break;
+				case LTEQ:
+					//Add the 'left <= right' constraint to the branched list.
+					left_c = new LessThanEquals(left, right);
+					right_c = new GreaterThan(left, right);
+					break;
+				case GT:					
+					left_c = new GreaterThan(left, right);
+					right_c = new LessThanEquals(left, right);
+					break;
+				case GTEQ:
+					//Branch and add the left >= right constraint to 
+					left_c = new GreaterThanEquals(left, right);
+					right_c = new LessThan(left, right);
+					//Add the constraint 'left< right' to current constraint list.
+					break;
+				case IN:			
+					System.err.println("Not implemented!");		
+					break;
+				case SUBSET:
+					System.err.println("Not implemented!");
+					break;
+				case SUBSETEQ:
+					System.err.println("Not implemented!");
+					break;
+				default:			
+					System.err.println("Not implemented!");
 
+				}
 			}
-
+			
+			createIfElseBranch(code.target, left_c, right_c);
 		}
 
 	}
@@ -624,26 +640,24 @@ public class Analyzer {
 	 * @param code
 	 */
 	private void analyze(Codes.Label code){
-		//check if map contains the constrainlist.
 		String label = code.label;
-		enableAssertOrAssume(label, false);
-		//Switch the current constraint list by setting the label with new value.
-		//
-		//Get the current block
-		BasicBlock c_blk = getCurrentBlock();
-
-		if(c_blk.getBranch().equals("")){
-			//update the branch
-			c_blk.setBranch(label);
-		}else{
-			//The merge node
-			BasicBlock blk = getBasicBlock(label);
-			if(blk == null){
-				blk = createBasicBlock(label, c_blk);
+		if(!isAssertOrAssume()){
+			//Switch the current constraint list by setting the label with new value.
+			//Get the current block
+			BasicBlock c_blk = getCurrentBlock();
+			if(c_blk.getBranch().equals("")){
+				//update the branch
+				c_blk.setBranch(label);
+			}else{
+				//Create a block.
+				BasicBlock blk = getBasicBlock(label);
+				//Switch the current block
+				setCurrentBlock(blk);
 			}
-			//Switch the current block
-			setCurrentBlock(blk);
 		}
+		
+		enableAssertOrAssume(label, false);
+		
 
 
 	}
@@ -742,9 +756,13 @@ public class Analyzer {
 	 */
 	private void analyze(Codes.ForAll code){
 		//Check if each element is an integer
-		if(isIntType((Type) code.type)){
+		if(isIntType((Type) code.type)){			
+			String label = code.target;
+			BasicBlock loopheader = createBasicBlock(label, getCurrentBlock());
+			BasicBlock loopbody = createBasicBlock(label+"_loopbody", loopheader);
+			setCurrentBlock(loopbody);
 			//Propagate the range of source register to the index reg 
-			addConstraint(new Equals("%"+code.indexOperand, "%"+code.sourceOperand));
+			addConstraint(new LessThanEquals("%"+code.indexOperand, "%"+code.sourceOperand));
 		}
 	}
 
@@ -762,9 +780,9 @@ public class Analyzer {
 	 */
 	private void analyze(Codes.Loop code){	
 		String label = code.target;
-		BasicBlock loopheader = createBasicBlock(label, getCurrentBlock());		
+		BasicBlock loopheader = createBasicBlock(label, getCurrentBlock());
+		loop_condition = label;		
 		setCurrentBlock(loopheader);
-		loop_condition = label;
 	}
 
 	/**
@@ -778,8 +796,9 @@ public class Analyzer {
 		blk.addChild(loopheader);
 
 		//Create a new block without name
-		BasicBlock new_block = createBasicBlock("", blk);
-		setCurrentBlock(new_block);
+		BasicBlock loopexit = createBasicBlock("", blk);
+		loopheader.addChild(loopexit);
+		setCurrentBlock(loopexit);
 	}
 
 	/**
@@ -903,5 +922,34 @@ public class Analyzer {
 
 	}
 
-
+	/**
+	 * Update the current block's branch with the given target.
+	 * @param code
+	 */
+	private void analyze(Codes.Goto code){
+		//Get the label name
+		String label = code.target;
+		BasicBlock c_blk = getCurrentBlock();
+		if(c_blk.getBranch().equals("")){
+			//Update the branch
+			c_blk.setBranch(label);
+		}else{
+			if(c_blk.isLeaf()){
+				//Create a new block
+				createBasicBlock(label, c_blk);
+			}else{
+				//Get the existing child block
+				for(BasicBlock blk : c_blk.getChildNodes()){
+					if(blk.getBranch().equals("merge")){
+						blk.setBranch(label);
+					}
+				}
+			}
+		}
+		//Add the 
+		
+		
+	}
+	
+	
 }
