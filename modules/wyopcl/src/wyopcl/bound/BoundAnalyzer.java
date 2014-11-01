@@ -126,7 +126,7 @@ public class BoundAnalyzer implements Builder{
 			Analyzer analyzer = new Analyzer(0);			
 			iterateByteCode(analyzer, functionOrMethod);			
 			//Infer and print the final bounds.
-			//analyzer.printBounds(analyzer.inferBounds(verbose));
+			analyzer.printBounds(analyzer.inferBounds(verbose));
 			analyzer = null;
 		}
 	}

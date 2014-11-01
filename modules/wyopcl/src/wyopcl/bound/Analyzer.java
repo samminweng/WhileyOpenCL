@@ -231,14 +231,17 @@ public class Analyzer {
 						blk.unionBounds(parent);
 					}
 				}
-				//If bounds has no change, then return False.
-				boolean inferBounds = blk.inferBounds();
-				//The bitwise AND to combine all the results
-				isChanged |= inferBounds;
-				//Print out the bounds.
-				if(verbose){
-					System.out.println(blk);
-					System.out.println("inferBounds="+inferBounds);
+				if(blk.hasChild()){
+					//If bounds has no change, then return False.
+					boolean inferBounds = blk.inferBounds();
+					//The bitwise AND to combine all the results
+					isChanged |= inferBounds;
+					
+					//Print out the bounds.
+					if(verbose){
+						System.out.println(blk);
+						System.out.println("inferBounds="+inferBounds);
+					}
 				}
 			}
 
@@ -352,7 +355,7 @@ public class Analyzer {
 		BasicBlock blk = getCurrentBlock();
 		//Branch out the block 
 		//The left block does not have the name
-		BasicBlock leftBlock = createBasicBlock(new_label+"ELSE", blk);
+		BasicBlock leftBlock = createBasicBlock(new_label+"_ELSE", blk);
 		BasicBlock rightBlock = createBasicBlock(new_label, blk);
 
 		//Add the constraint to the left block
@@ -363,7 +366,7 @@ public class Analyzer {
 		setCurrentBlock(leftBlock);
 
 		//Create a merge block
-		BasicBlock mergeBlock = createBasicBlock(new_label+"merge");
+		BasicBlock mergeBlock = createBasicBlock(new_label+"_MERGE");
 		leftBlock.addChild(mergeBlock);
 		rightBlock.addChild(mergeBlock);
 
@@ -647,8 +650,8 @@ public class Analyzer {
 				}
 				//Switch the current block
 				setCurrentBlock(blk);
-				
-				
+
+
 			}
 		}
 
@@ -682,18 +685,19 @@ public class Analyzer {
 		//Get the return operand
 		String ret = "%"+code.operand;
 		BasicBlock blk = getCurrentBlock();
-		//Connect the current block with exit block.
-		//go the leaf blk
-		blk.addChild(getExitBlock());
-				
-		setCurrentBlock(getExitBlock());
 		//Check if the return type is integer.
 		if(!isAssertOrAssume() && isIntType(code.type)){
 			//Add the 'Equals' constraint to the return (ret) variable.
-			getExitBlock().addConstraint((new Equals("return", ret)));			
+			blk.addConstraint((new Assign("return", ret)));			
 		}
+		//Connect the current block with exit block.
+		//go the leaf blk
+		blk.addChild(getExitBlock());
 
-		
+		setCurrentBlock(getExitBlock());
+
+
+
 
 	}
 

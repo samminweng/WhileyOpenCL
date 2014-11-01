@@ -105,6 +105,15 @@ public class BasicBlock {
 		return siblings;
 	}
 	
+	
+	public boolean hasChild(){
+		if(childNodes==null){
+			return false;
+		}
+	
+		return true;
+	}
+	
 	public boolean hasParent(){
 		if(parentNodes == null){
 			return false;
