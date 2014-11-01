@@ -286,8 +286,8 @@ public class Analyzer {
 		list.add(blk);
 		return blk;
 	}
-	
-	
+
+
 	/**
 	 * Create a basic block with the specific label name
 	 * @param label the branch name
@@ -298,7 +298,7 @@ public class Analyzer {
 		parent.addChild(blk);
 		return blk;
 	}	
-	
+
 	public void outputCFG(String name){
 
 		String dot_string= "digraph "+name+"{\n";		
@@ -350,34 +350,22 @@ public class Analyzer {
 	private void createIfElseBranch(String new_label, Constraint c, Constraint neg_c){
 
 		BasicBlock blk = getCurrentBlock();
-		if(!loop_condition.equals("")){
-			//Create the if/else branch for the loop condition
-			//Get the loop body
-			BasicBlock loopbody = createBasicBlock(loop_condition+"_loopbody", blk);
-			BasicBlock loopEnd = createBasicBlock(new_label, blk);
-			loopbody.addConstraint(neg_c);
-			loopEnd.addConstraint(c);		
+		//Branch out the block 
+		//The left block does not have the name
+		BasicBlock leftBlock = createBasicBlock(new_label+"_ELSE", blk);
+		BasicBlock rightBlock = createBasicBlock(new_label, blk);
 
-			setCurrentBlock(loopbody);
-		}else{
-			//Branch out the block 
-			//The left block does not have the name
-			BasicBlock leftBlock = createBasicBlock("", blk);
-			BasicBlock rightBlock = createBasicBlock(new_label, blk);
+		//Add the constraint to the left block
+		leftBlock.addConstraint(c);
+		rightBlock.addConstraint(neg_c);						
+		//Set the current block to the left
 
-			//Add the constraint to the left block
-			leftBlock.addConstraint(c);
-			rightBlock.addConstraint(neg_c);						
-			//Set the current block to the left
-		
-			setCurrentBlock(leftBlock);
-			
-			//Create a merge block
-			BasicBlock mergeBlock = createBasicBlock("merge");
-			leftBlock.addChild(mergeBlock);
-			rightBlock.addChild(mergeBlock);
-		}
+		setCurrentBlock(leftBlock);
 
+		//Create a merge block
+		BasicBlock mergeBlock = createBasicBlock(new_label+"merge");
+		leftBlock.addChild(mergeBlock);
+		rightBlock.addChild(mergeBlock);
 
 
 	}
@@ -580,7 +568,7 @@ public class Analyzer {
 
 				}
 			}
-			
+
 			createIfElseBranch(code.target, left_c, right_c);
 		}
 
@@ -651,13 +639,21 @@ public class Analyzer {
 			}else{
 				//Create a block.
 				BasicBlock blk = getBasicBlock(label);
+				if(blk == null){
+					List<BasicBlock> list = c_blk.getChildNodes();
+					//Get the merge block					
+					blk = list.get(0);
+					blk.setBranch(label);
+				}
 				//Switch the current block
 				setCurrentBlock(blk);
+				
+				
 			}
 		}
-		
+
 		enableAssertOrAssume(label, false);
-		
+
 
 
 	}
@@ -686,14 +682,18 @@ public class Analyzer {
 		//Get the return operand
 		String ret = "%"+code.operand;
 		BasicBlock blk = getCurrentBlock();
+		//Connect the current block with exit block.
+		//go the leaf blk
+		blk.addChild(getExitBlock());
+				
+		setCurrentBlock(getExitBlock());
 		//Check if the return type is integer.
 		if(!isAssertOrAssume() && isIntType(code.type)){
 			//Add the 'Equals' constraint to the return (ret) variable.
-			blk.addConstraint((new Equals("return", ret)));			
+			getExitBlock().addConstraint((new Equals("return", ret)));			
 		}
 
-		//Connect the current block with exit block.
-		blk.addChild(getExitBlock());
+		
 
 	}
 
@@ -930,7 +930,7 @@ public class Analyzer {
 		//Get the label name
 		String label = code.target;
 		BasicBlock c_blk = getCurrentBlock();
-		if(c_blk.getBranch().equals("")){
+		if(c_blk.getBranch().contains("ELSE")){
 			//Update the branch
 			c_blk.setBranch(label);
 		}else{
@@ -940,16 +940,16 @@ public class Analyzer {
 			}else{
 				//Get the existing child block
 				for(BasicBlock blk : c_blk.getChildNodes()){
-					if(blk.getBranch().equals("merge")){
+					if(blk.getBranch().contains("merge")){
 						blk.setBranch(label);
 					}
 				}
 			}
 		}
 		//Add the 
-		
-		
+
+
 	}
-	
-	
+
+
 }
