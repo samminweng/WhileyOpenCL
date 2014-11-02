@@ -2,6 +2,7 @@ package wyopcl.bound;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import wyopcl.bound.constraint.Constraint;
@@ -11,6 +12,7 @@ import wyopcl.bound.constraint.Constraint;
  *
  */
 public class BasicBlock {
+	
 	private List<Constraint> constraintList;
 	private List<BasicBlock> childNodes = null;
 	private List<BasicBlock> parentNodes = null;
@@ -219,7 +221,20 @@ public class BasicBlock {
 				+"<<"+constraintList+">>\n"
 				+ unionOfBounds;
 	}
+
 	
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof BasicBlock)) {
+			return false;
+		}
+		BasicBlock blk = (BasicBlock)obj;
+		if(this.getBranch().equals(blk.getBranch())){
+			return true;
+		}
+		return false;
+	}
+
 	
 	
 

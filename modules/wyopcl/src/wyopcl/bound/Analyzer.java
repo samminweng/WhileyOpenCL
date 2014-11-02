@@ -236,7 +236,7 @@ public class Analyzer {
 					boolean inferBounds = blk.inferBounds();
 					//The bitwise AND to combine all the results
 					isChanged |= inferBounds;
-					
+
 					//Print out the bounds.
 					if(verbose){
 						System.out.println(blk);
@@ -351,24 +351,42 @@ public class Analyzer {
 	 * @param c constraint
 	 */
 	private void createIfElseBranch(String new_label, Constraint c, Constraint neg_c){
+		BasicBlock c_blk = getCurrentBlock();
+		//Check whether to add if-else blocks or loop-condition blocks.
+		if(!loop_condition.equals("")){			
+			BasicBlock loop_body = createBasicBlock(loop_condition+"_loopbody", c_blk);
+			BasicBlock loop_exit = createBasicBlock(loop_condition+"_loopexit", c_blk);
 
-		BasicBlock blk = getCurrentBlock();
-		//Branch out the block 
-		//The left block does not have the name
-		BasicBlock leftBlock = createBasicBlock(new_label+"_ELSE", blk);
-		BasicBlock rightBlock = createBasicBlock(new_label, blk);
+			//put the original constraint to current blk(loopbody)
+			loop_body.addConstraint(c);
+			loop_body.addChild(c_blk);
+			//put the negated constraint to the loop_exit
+			loop_exit.addConstraint(neg_c);	
+			setCurrentBlock(loop_body);
+			loop_condition = "";
+		}else{
 
-		//Add the constraint to the left block
-		leftBlock.addConstraint(c);
-		rightBlock.addConstraint(neg_c);						
-		//Set the current block to the left
+			//Branch out the block 
+			//The left block does not have the name
+			BasicBlock leftBlock = createBasicBlock(new_label+"_ELSE", c_blk);
+			BasicBlock rightBlock = createBasicBlock(new_label, c_blk);
 
-		setCurrentBlock(leftBlock);
+			//Add the constraint to the left block
+			leftBlock.addConstraint(c);
+			rightBlock.addConstraint(neg_c);						
+			//Set the current block to the left
 
-		//Create a merge block
-		BasicBlock mergeBlock = createBasicBlock(new_label+"_MERGE");
-		leftBlock.addChild(mergeBlock);
-		rightBlock.addChild(mergeBlock);
+			setCurrentBlock(leftBlock);
+
+			//Create a merge block
+			BasicBlock mergeBlock = createBasicBlock(new_label+"_MERGE");
+			leftBlock.addChild(mergeBlock);
+			rightBlock.addChild(mergeBlock);
+		}
+
+
+
+
 
 
 	}
@@ -636,7 +654,7 @@ public class Analyzer {
 			//Switch the current constraint list by setting the label with new value.
 			//Get the current block
 			BasicBlock c_blk = getCurrentBlock();
-			if(c_blk.getBranch().contains("LOOPEND")){
+			if(c_blk.getBranch().equals("")){
 				//update the branch
 				c_blk.setBranch(label);
 			}else{
@@ -690,6 +708,8 @@ public class Analyzer {
 			//Add the 'Equals' constraint to the return (ret) variable.
 			blk.addConstraint((new Assign("return", ret)));			
 		}
+		//Check the current blk has the child. If so, go to the child blk		
+		
 		//Connect the current block with exit block.
 		//go the leaf blk
 		blk.addChild(getExitBlock());
@@ -764,9 +784,13 @@ public class Analyzer {
 			String label = code.target;
 			BasicBlock loopheader = createBasicBlock(label, getCurrentBlock());
 			BasicBlock loopbody = createBasicBlock(label+"_loopbody", loopheader);
-			setCurrentBlock(loopbody);
+			BasicBlock loopexit = createBasicBlock(label+"_loopexit", loopheader);
+
 			//Propagate the range of source register to the index reg 
-			addConstraint(new LessThanEquals("%"+code.indexOperand, "%"+code.sourceOperand));
+			loopbody.addConstraint(new LessThanEquals("%"+code.indexOperand, "%"+code.sourceOperand));
+			loopexit.addConstraint(new GreaterThan("%"+code.indexOperand, "%"+code.sourceOperand));
+
+			setCurrentBlock(loopbody);
 		}
 	}
 
@@ -779,13 +803,13 @@ public class Analyzer {
 	}
 
 	/**
-	 * Creates a loop structure, including the loop header and loop body
+	 * Creates a loop structure, including the loop header, loop body and loop exit
 	 * @param code
 	 */
 	private void analyze(Codes.Loop code){	
 		String label = code.target;
 		BasicBlock loopheader = createBasicBlock(label, getCurrentBlock());
-		loop_condition = label;		
+		loop_condition = label;
 		setCurrentBlock(loopheader);
 	}
 
@@ -794,14 +818,12 @@ public class Analyzer {
 	 * @param code
 	 */
 	private void analyze(Codes.LoopEnd code){
-		BasicBlock loopheader = getBasicBlock(code.label);
-		//Connect the current node with loop header
-		BasicBlock blk = getCurrentBlock();		
-		blk.addChild(loopheader);
-
-		//Create a new block without name
-		BasicBlock loopexit = createBasicBlock("LOOPEND", blk);
-		loopheader.addChild(loopexit);
+		BasicBlock loopexit = getBasicBlock(code.label+"_loopexit");
+		//Get the current blk
+		BasicBlock c_blk = getCurrentBlock();
+		//Connect it with the loop exit
+		c_blk.addChild(loopexit);
+		loopexit.setBranch("");
 		setCurrentBlock(loopexit);
 	}
 
