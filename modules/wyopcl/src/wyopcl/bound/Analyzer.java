@@ -775,23 +775,22 @@ public class Analyzer {
 	/**
 	 * Parses the 'ForAll' bytecode and adds the assign constraint, e.g. <br>
 	 * <code>forall %5 in %0 () : [int]</code>
-	 * adds the constraint '%5 = %0', which propagtes the bounds from %0 to %5.
+	 * adds the constraint '%5 = %0', which propagates the bounds from %0 to %5.
 	 * @param code the <code>Codes.Forall</code> bytecode
 	 */
 	private void analyze(Codes.ForAll code){
+		String label = code.target;
+		//Creates a loop structure, including the loop header, loop body and loop exit
+		BasicBlock loopheader = createBasicBlock(label, getCurrentBlock());
+		BasicBlock loopbody = createBasicBlock(label+"_loopbody", loopheader);
+		BasicBlock loopexit = createBasicBlock(label+"_loopexit", loopheader);
 		//Check if each element is an integer
 		if(isIntType((Type) code.type)){			
-			String label = code.target;
-			BasicBlock loopheader = createBasicBlock(label, getCurrentBlock());
-			BasicBlock loopbody = createBasicBlock(label+"_loopbody", loopheader);
-			BasicBlock loopexit = createBasicBlock(label+"_loopexit", loopheader);
-
 			//Propagate the range of source register to the index reg 
 			loopbody.addConstraint(new LessThanEquals("%"+code.indexOperand, "%"+code.sourceOperand));
 			loopexit.addConstraint(new GreaterThan("%"+code.indexOperand, "%"+code.sourceOperand));
-
-			setCurrentBlock(loopbody);
 		}
+		setCurrentBlock(loopbody);
 	}
 
 	/**
@@ -803,7 +802,7 @@ public class Analyzer {
 	}
 
 	/**
-	 * Creates a loop structure, including the loop header, loop body and loop exit
+	 * Creates a loop loop header
 	 * @param code
 	 */
 	private void analyze(Codes.Loop code){	
@@ -818,11 +817,13 @@ public class Analyzer {
 	 * @param code
 	 */
 	private void analyze(Codes.LoopEnd code){
+		BasicBlock loopheader = getBasicBlock(code.label);
 		BasicBlock loopexit = getBasicBlock(code.label+"_loopexit");
 		//Get the current blk
 		BasicBlock c_blk = getCurrentBlock();
 		//Connect it with the loop exit
 		c_blk.addChild(loopexit);
+		c_blk.addChild(loopheader);
 		loopexit.setBranch("");
 		setCurrentBlock(loopexit);
 	}
@@ -850,9 +851,7 @@ public class Analyzer {
 				addConstraint(new RightPlus("%"+code.target(), "%"+code.operand(0), "%"+code.operand(1)));
 				break;
 			case SUB:			
-				for(int operand: code.operands()){
-					addConstraint(new Equals("%"+code.target(), "%"+operand));
-				}
+				addConstraint(new RightPlus("%"+code.operand(0), "%"+code.target(), "%"+code.operand(1)));				
 				break;
 			case MUL:		
 				break;
