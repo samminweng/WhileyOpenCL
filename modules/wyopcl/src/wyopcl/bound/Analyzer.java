@@ -7,36 +7,29 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
 
 import wycc.lang.SyntaxError;
-import wyil.lang.Codes;
-import wyil.lang.Code.Block;
-import wyil.lang.Codes.UnaryOperatorKind;
 import wyil.lang.Code;
+import wyil.lang.Code.Block;
+import wyil.lang.Codes;
+import wyil.lang.Codes.UnaryOperatorKind;
 import wyil.lang.Constant;
 import wyil.lang.Type;
-import wyil.lang.Type.FunctionOrMethod;
 import wyil.lang.Type.Tuple;
-import wyil.lang.WyilFile;
-import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
 import wyopcl.bound.constraint.Assign;
 import wyopcl.bound.constraint.Const;
 import wyopcl.bound.constraint.Constraint;
 import wyopcl.bound.constraint.Equals;
 import wyopcl.bound.constraint.GreaterThan;
 import wyopcl.bound.constraint.GreaterThanEquals;
-import wyopcl.bound.constraint.LeftPlus;
 import wyopcl.bound.constraint.LessThan;
 import wyopcl.bound.constraint.LessThanEquals;
 import wyopcl.bound.constraint.Negate;
-import wyopcl.bound.constraint.Range;
 import wyopcl.bound.constraint.RightPlus;
 import wyopcl.bound.constraint.Union;
-import wyopcl.interpreter.DecimalFraction;
 /***
  * A class to store all the constraints produced in the wyil file and infer the bounds consistent
  * with all the constraints. Due to the singleton design pattern, the class variables 'constraintListMap'
@@ -335,10 +328,8 @@ public class Analyzer {
 	 * Adds the constraint to the current constraint list.
 	 * @param c
 	 */
-	public void addConstraint(Constraint c){
-		if(!isAssertOrAssume()){
-			getCurrentBlock().addConstraint(c);
-		}
+	public void addConstraint(Constraint c){		
+		getCurrentBlock().addConstraint(c);		
 	}
 
 
@@ -399,93 +390,105 @@ public class Analyzer {
 	public void dispatch(Block.Entry entry){		
 		Code code = entry.code; 
 		try{
-			if (code instanceof Codes.AssertOrAssume) {			
-				analyze((Codes.AssertOrAssume)code);
-			} else if (code instanceof Codes.Assign) {			
-				analyze((Codes.Assign)code);
-			} else if (code instanceof Codes.BinaryOperator) {			
-				analyze((Codes.BinaryOperator)code);
-			} else if (code instanceof Codes.StringOperator) {
-				//StringOperatorInterpreter.getInstance().interpret((Codes.StringOperator)code, stackframe);
-			} else if (code instanceof Codes.Convert) {			
-				//ConvertInterpreter.getInstance().interpret((Codes.Convert)code, stackframe);
-			} else if (code instanceof Codes.Const) {			
-				analyze((Codes.Const)code);
-			} else if (code instanceof Codes.Debug) {
-				//DebugInterpreter.getInstance().interpret((Codes.Debug)code, stackframe);
-			} else if (code instanceof Codes.Dereference) {
-				//DereferenceInterpreter.getInstance().interpret((Codes.Dereference)code, stackframe);
-			} else if (code instanceof Codes.Fail) {
-				//FailInterpreter.getInstance().interpret((Codes.Fail)code, stackframe);
-			} else if (code instanceof Codes.FieldLoad) {		
-				//FieldLoadInterpreter.getInstance().interpret((Codes.FieldLoad)code, stackframe);			
-			} else if (code instanceof Codes.ForAll) {				
-				analyze((Codes.ForAll)code);
-			} else if (code instanceof Codes.Goto) {	
-				analyze((Codes.Goto)code);
-			} else if (code instanceof Codes.If) {
-				analyze((Codes.If)code);			
-			} else if (code instanceof Codes.IfIs) {
-				//IfIsInterpreter.getInstance().interpret((Codes.IfIs)code, stackframe);
-			} else if (code instanceof Codes.IndexOf) {			
-				analyze((Codes.IndexOf)code);
-			} else if (code instanceof Codes.IndirectInvoke) {			
-				//IndirectInvokeInterpreter.getInstance().interpret((Codes.IndirectInvoke)code, stackframe);
-			} else if (code instanceof Codes.Invoke) {			
-				analyze((Codes.Invoke)code);
-			} else if (code instanceof Codes.Invert) {
-				//InvertInterpreter.getInstance().interpret((Codes.Invert)code, stackframe);
-			} else if (code instanceof Codes.ListOperator) {
-				analyze((Codes.ListOperator)code);
-			} else if (code instanceof Codes.Loop) {			
-				analyze((Codes.Loop)code);			
-			} else if (code instanceof Codes.LoopEnd) {
-				analyze((Codes.LoopEnd)code);									
-			} else if (code instanceof Codes.Label) {
-				analyze((Codes.Label)code);
-			} else if (code instanceof Codes.Lambda) {
-				//LambdaInterpreter.getInstance().interpret((Codes.Lambda)code, stackframe);
-			} else if (code instanceof Codes.LengthOf) {			
-				analyze((Codes.LengthOf)code);
-			}  else if (code instanceof Codes.Move) {
-				internalFailure("Not implemented!", "", entry);
-			} else if (code instanceof Codes.NewMap) {
-				analyze((Codes.NewMap)code);
-			} else if (code instanceof Codes.NewList) {			
-				analyze((Codes.NewList)code);
-			} else if (code instanceof Codes.NewRecord) {
-				//NewRecordInterpreter.getInstance().interpret((Codes.NewRecord)code, stackframe);
-			} else if (code instanceof Codes.NewSet) {
-				//NewSetInterpreter.getInstance().interpret((Codes.NewSet)code, stackframe);
-			} else if (code instanceof Codes.NewTuple) {
-				analyze((Codes.NewTuple)code);
-			} else if (code instanceof Codes.Return) {			
-				analyze((Codes.Return)code);
-			} else if (code instanceof Codes.NewObject) {
-				//NewObjectInterpreter.getInstance().interpret((Codes.NewObject)code, stackframe);
-			} else if (code instanceof Codes.Nop) {
-				//NopInterpreter.getInstance().interpret((Codes.Nop)code, stackframe);
-			} else if (code instanceof Codes.SetOperator){
-				//SetOperatorInterpreter.getInstance().interpret((Codes.SetOperator)code, stackframe);
-			} else if (code instanceof Codes.SubList) {
-				analyze((Codes.SubList)code);
-			} else if (code instanceof Codes.SubString) {
-				//SubStringInterpreter.getInstance().interpret((Codes.SubString)code, stackframe);
-			} else if (code instanceof Codes.Switch) {
-				//SwitchInterpreter.getInstance().interpret((Codes.Switch)code, stackframe);
-			} else if (code instanceof Codes.Throw) {
-				//ThrowInterpreter.getInstance().interpret((Codes.Throw)code, stackframe);
-			} else if (code instanceof Codes.TryCatch) {
-				//TryCatchInterpreter.getInstance().interpret((Codes.TryCatch)code, stackframe);
-			} else if (code instanceof Codes.TupleLoad) {
-				analyze((Codes.TupleLoad)code);
-			} else if (code instanceof Codes.UnaryOperator){
-				analyze((Codes.UnaryOperator)code);
-			} else if (code instanceof Codes.Update) {
-				analyze((Codes.Update)code);
-			} else {
-				internalFailure("unknown wyil code encountered (" + code + ")", "", entry);
+			//enable the assertion 
+			if (code instanceof Codes.AssertOrAssume) {
+				//Push the assert_label so that no constraints are added to list.
+				enableAssertOrAssume(((Codes.AssertOrAssume)code).target, true);
 			}
+
+			//Check if the bytecode is under the assertion or assumption.				
+			if(!isAssertOrAssume()){
+				if (code instanceof Codes.Assign) {			
+					analyze((Codes.Assign)code);
+				} else if (code instanceof Codes.BinaryOperator) {			
+					analyze((Codes.BinaryOperator)code);
+				} else if (code instanceof Codes.StringOperator) {
+					//StringOperatorInterpreter.getInstance().interpret((Codes.StringOperator)code, stackframe);
+				} else if (code instanceof Codes.Convert) {			
+					//ConvertInterpreter.getInstance().interpret((Codes.Convert)code, stackframe);
+				} else if (code instanceof Codes.Const) {			
+					analyze((Codes.Const)code);
+				} else if (code instanceof Codes.Debug) {
+					//DebugInterpreter.getInstance().interpret((Codes.Debug)code, stackframe);
+				} else if (code instanceof Codes.Dereference) {
+					//DereferenceInterpreter.getInstance().interpret((Codes.Dereference)code, stackframe);
+				} else if (code instanceof Codes.Fail) {
+					//FailInterpreter.getInstance().interpret((Codes.Fail)code, stackframe);
+				} else if (code instanceof Codes.FieldLoad) {		
+					//FieldLoadInterpreter.getInstance().interpret((Codes.FieldLoad)code, stackframe);			
+				} else if (code instanceof Codes.ForAll) {				
+					analyze((Codes.ForAll)code);
+				} else if (code instanceof Codes.Goto) {	
+					analyze((Codes.Goto)code);
+				} else if (code instanceof Codes.If) {
+					analyze((Codes.If)code);			
+				} else if (code instanceof Codes.IfIs) {
+					//IfIsInterpreter.getInstance().interpret((Codes.IfIs)code, stackframe);
+				} else if (code instanceof Codes.IndexOf) {			
+					analyze((Codes.IndexOf)code);
+				} else if (code instanceof Codes.IndirectInvoke) {			
+					//IndirectInvokeInterpreter.getInstance().interpret((Codes.IndirectInvoke)code, stackframe);
+				} else if (code instanceof Codes.Invoke) {			
+					analyze((Codes.Invoke)code);
+				} else if (code instanceof Codes.Invert) {
+					//InvertInterpreter.getInstance().interpret((Codes.Invert)code, stackframe);
+				} else if (code instanceof Codes.ListOperator) {
+					analyze((Codes.ListOperator)code);
+				} else if (code instanceof Codes.Loop) {			
+					analyze((Codes.Loop)code);			
+				} else if (code instanceof Codes.LoopEnd) {
+					analyze((Codes.LoopEnd)code);									
+				} else if (code instanceof Codes.Label) {
+					analyze((Codes.Label)code);
+				} else if (code instanceof Codes.Lambda) {
+					//LambdaInterpreter.getInstance().interpret((Codes.Lambda)code, stackframe);
+				} else if (code instanceof Codes.LengthOf) {			
+					analyze((Codes.LengthOf)code);
+				}  else if (code instanceof Codes.Move) {
+					internalFailure("Not implemented!", "", entry);
+				} else if (code instanceof Codes.NewMap) {
+					analyze((Codes.NewMap)code);
+				} else if (code instanceof Codes.NewList) {			
+					analyze((Codes.NewList)code);
+				} else if (code instanceof Codes.NewRecord) {
+					//NewRecordInterpreter.getInstance().interpret((Codes.NewRecord)code, stackframe);
+				} else if (code instanceof Codes.NewSet) {
+					//NewSetInterpreter.getInstance().interpret((Codes.NewSet)code, stackframe);
+				} else if (code instanceof Codes.NewTuple) {
+					analyze((Codes.NewTuple)code);
+				} else if (code instanceof Codes.Return) {			
+					analyze((Codes.Return)code);
+				} else if (code instanceof Codes.NewObject) {
+					//NewObjectInterpreter.getInstance().interpret((Codes.NewObject)code, stackframe);
+				} else if (code instanceof Codes.Nop) {
+					//NopInterpreter.getInstance().interpret((Codes.Nop)code, stackframe);
+				} else if (code instanceof Codes.SetOperator){
+					//SetOperatorInterpreter.getInstance().interpret((Codes.SetOperator)code, stackframe);
+				} else if (code instanceof Codes.SubList) {
+					analyze((Codes.SubList)code);
+				} else if (code instanceof Codes.SubString) {
+					//SubStringInterpreter.getInstance().interpret((Codes.SubString)code, stackframe);
+				} else if (code instanceof Codes.Switch) {
+					//SwitchInterpreter.getInstance().interpret((Codes.Switch)code, stackframe);
+				} else if (code instanceof Codes.Throw) {
+					//ThrowInterpreter.getInstance().interpret((Codes.Throw)code, stackframe);
+				} else if (code instanceof Codes.TryCatch) {
+					//TryCatchInterpreter.getInstance().interpret((Codes.TryCatch)code, stackframe);
+				} else if (code instanceof Codes.TupleLoad) {
+					analyze((Codes.TupleLoad)code);
+				} else if (code instanceof Codes.UnaryOperator){
+					analyze((Codes.UnaryOperator)code);
+				} else if (code instanceof Codes.Update) {
+					analyze((Codes.Update)code);
+				} else {
+					internalFailure("unknown wyil code encountered (" + code + ")", "", entry);
+				}
+			}
+			//disable the assertion
+			if(code instanceof Codes.Label){
+				enableAssertOrAssume(((Codes.Label)code).label, false);
+			}
+
 		} catch (SyntaxError ex) {
 			throw ex;	
 		} catch (Exception ex) {		
@@ -495,25 +498,20 @@ public class Analyzer {
 	}
 
 
-	private void analyze(Codes.AssertOrAssume code){
-		//Push the assert_label so that no constraints are added to list.
-		enableAssertOrAssume(code.target, true);
-	}
-
-
-	private void analyze(Codes.Assign code){
+	private void analyze(Codes.Assign code){		
 		//Check if the assigned value is an integer
 		if(isIntType(code.type())){
 			//Add the constraint 'target = operand'
 			addConstraint(new Assign("%"+code.target(), "%"+code.operand(0)));
 		}
+
 	}
 
 	/**
 	 * Parses 'Const' bytecode to add the 'Const' constraint to the list. 
 	 * @param code
 	 */
-	private void analyze(Codes.Const code){
+	private void analyze(Codes.Const code){	
 		Constant constant = code.constant;
 		//Check the value is an Constant.Integer
 		if(constant instanceof Constant.Integer){
@@ -521,16 +519,16 @@ public class Analyzer {
 			//Add the 'Const' constraint.
 			addConstraint(new Const(name, ((Constant.Integer)constant).value));
 		}
+
 	}
 	/**
 	 * Implements the propagation rule for <code>Codes.IndexOf</code> bytecode
 	 * to assign the bounds from the source operator register to the target operator.
 	 * @param code
 	 */
-	private void analyze(Codes.IndexOf code){		
+	private void analyze(Codes.IndexOf code){
 		if(isIntType((Type) code.type())){
 			addConstraint(new Equals("%"+code.target(), "%"+code.operand(0)));
-
 		}
 	}
 
@@ -542,56 +540,56 @@ public class Analyzer {
 	 */
 	private void analyze(Codes.If code) throws CloneNotSupportedException{
 
-		if(!isAssertOrAssume()){
-			String left = "%"+code.leftOperand;
-			String right = "%"+code.rightOperand;
-			Constraint left_c = null;
-			Constraint right_c = null;
-			if(isIntType(code.type)){
-				switch(code.op){
-				case EQ:
-					left_c = new Equals(left, right);
-					right_c = new Equals(left, right);				
-					break;
-				case NEQ:				
 
-					break;
-				case LT:
-					left_c = new LessThan(left, right);
-					right_c = new GreaterThanEquals(left, right);			
-					break;
-				case LTEQ:
-					//Add the 'left <= right' constraint to the branched list.
-					left_c = new LessThanEquals(left, right);
-					right_c = new GreaterThan(left, right);
-					break;
-				case GT:					
-					left_c = new GreaterThan(left, right);
-					right_c = new LessThanEquals(left, right);
-					break;
-				case GTEQ:
-					//Branch and add the left >= right constraint to 
-					left_c = new GreaterThanEquals(left, right);
-					right_c = new LessThan(left, right);
-					//Add the constraint 'left< right' to current constraint list.
-					break;
-				case IN:			
-					System.err.println("Not implemented!");		
-					break;
-				case SUBSET:
-					System.err.println("Not implemented!");
-					break;
-				case SUBSETEQ:
-					System.err.println("Not implemented!");
-					break;
-				default:			
-					System.err.println("Not implemented!");
+		String left = "%"+code.leftOperand;
+		String right = "%"+code.rightOperand;
+		Constraint left_c = null;
+		Constraint right_c = null;
+		if(isIntType(code.type)){
+			switch(code.op){
+			case EQ:
+				left_c = new Equals(left, right);
+				right_c = new Equals(left, right);				
+				break;
+			case NEQ:				
 
-				}
+				break;
+			case LT:
+				left_c = new LessThan(left, right);
+				right_c = new GreaterThanEquals(left, right);			
+				break;
+			case LTEQ:
+				//Add the 'left <= right' constraint to the branched list.
+				left_c = new LessThanEquals(left, right);
+				right_c = new GreaterThan(left, right);
+				break;
+			case GT:					
+				left_c = new GreaterThan(left, right);
+				right_c = new LessThanEquals(left, right);
+				break;
+			case GTEQ:
+				//Branch and add the left >= right constraint to 
+				left_c = new GreaterThanEquals(left, right);
+				right_c = new LessThan(left, right);
+				//Add the constraint 'left< right' to current constraint list.
+				break;
+			case IN:			
+				System.err.println("Not implemented!");		
+				break;
+			case SUBSET:
+				System.err.println("Not implemented!");
+				break;
+			case SUBSETEQ:
+				System.err.println("Not implemented!");
+				break;
+			default:			
+				System.err.println("Not implemented!");
+
 			}
-
-			createIfElseBranch(code.target, left_c, right_c);
 		}
+
+		createIfElseBranch(code.target, left_c, right_c);
+
 
 	}
 
@@ -650,30 +648,28 @@ public class Analyzer {
 	 */
 	private void analyze(Codes.Label code){
 		String label = code.label;
-		if(!isAssertOrAssume()){
-			//Switch the current constraint list by setting the label with new value.
-			//Get the current block
-			BasicBlock c_blk = getCurrentBlock();
-			if(c_blk.getBranch().equals("")){
-				//update the branch
-				c_blk.setBranch(label);
-			}else{
-				//Create a block.
-				BasicBlock blk = getBasicBlock(label);
-				if(blk == null){
-					List<BasicBlock> list = c_blk.getChildNodes();
-					//Get the merge block					
-					blk = list.get(0);
-					blk.setBranch(label);
-				}
-				//Switch the current block
-				setCurrentBlock(blk);
 
-
+		//Switch the current constraint list by setting the label with new value.
+		//Get the current block
+		BasicBlock c_blk = getCurrentBlock();
+		if(c_blk.getBranch().equals("")){
+			//update the branch
+			c_blk.setBranch(label);
+		}else{
+			//Create a block.
+			BasicBlock blk = getBasicBlock(label);
+			if(blk == null){
+				List<BasicBlock> list = c_blk.getChildNodes();
+				//Get the merge block					
+				blk = list.get(0);
+				blk.setBranch(label);
 			}
+			//Switch the current block
+			setCurrentBlock(blk);
 		}
 
-		enableAssertOrAssume(label, false);
+
+
 
 
 
@@ -686,12 +682,13 @@ public class Analyzer {
 	 * Add the 'equal' constraints of the target and operand register.
 	 * @param code
 	 */
-	private void analyze(Codes.NewList code){
-		if(isIntType(code.type())){
-			for(int operand: code.operands()){
-				addConstraint(new Union("%"+code.target(), "%"+operand));				
+	private void analyze(Codes.NewList code){		
+			if(isIntType(code.type())){
+				for(int operand: code.operands()){
+					addConstraint(new Union("%"+code.target(), "%"+operand));				
+				}
 			}
-		}
+		
 
 	}
 
@@ -699,45 +696,43 @@ public class Analyzer {
 	 * Parse the 'return' bytecode and add the constraint 
 	 * @param code
 	 */
-	private void analyze(Codes.Return code){
-		//Get the return operand
-		String ret = "%"+code.operand;
-		BasicBlock blk = getCurrentBlock();
-		//Check if the return type is integer.
-		if(!isAssertOrAssume() && isIntType(code.type)){
-			//Add the 'Equals' constraint to the return (ret) variable.
-			blk.addConstraint((new Assign("return", ret)));			
-		}
-		//Check the current blk has the child. If so, go to the child blk		
+	private void analyze(Codes.Return code){		
+			//Get the return operand
+			String ret = "%"+code.operand;
+			BasicBlock blk = getCurrentBlock();
+			//Check if the return type is integer.
+			if(isIntType(code.type)){
+				//Add the 'Equals' constraint to the return (ret) variable.
+				blk.addConstraint((new Assign("return", ret)));			
+			}
+			//Check the current blk has the child. If so, go to the child blk		
+
+			//Connect the current block with exit block.
+			//go the leaf blk
+			blk.addChild(getExitBlock());
+			setCurrentBlock(getExitBlock());
 		
-		//Connect the current block with exit block.
-		//go the leaf blk
-		blk.addChild(getExitBlock());
-
-		setCurrentBlock(getExitBlock());
-
-
-
 
 	}
 
-	private void analyze(Codes.ListOperator code){
-		switch(code.kind){
-		case APPEND:
-			for(int operand : code.operands()){
-				addConstraint(new Equals("%"+code.target(), "%"+operand));
+	private void analyze(Codes.ListOperator code){		
+			switch(code.kind){
+			case APPEND:
+				for(int operand : code.operands()){
+					addConstraint(new Equals("%"+code.target(), "%"+operand));
+				}
+				break;
+			case LEFT_APPEND:
+
+				break;
+			case RIGHT_APPEND:
+
+				break;
+			default:
+				internalFailure("Not implemented!", "Analyzer.java", null);
+				break;
 			}
-			break;
-		case LEFT_APPEND:
-
-			break;
-		case RIGHT_APPEND:
-
-			break;
-		default:
-			internalFailure("Not implemented!", "Analyzer.java", null);
-			break;
-		}
+		
 
 
 	}
@@ -778,7 +773,7 @@ public class Analyzer {
 	 * adds the constraint '%5 = %0', which propagates the bounds from %0 to %5.
 	 * @param code the <code>Codes.Forall</code> bytecode
 	 */
-	private void analyze(Codes.ForAll code){
+	private void analyze(Codes.ForAll code){		
 		String label = code.target;
 		//Creates a loop structure, including the loop header, loop body and loop exit
 		BasicBlock loopheader = createBasicBlock(label, getCurrentBlock());
@@ -790,7 +785,10 @@ public class Analyzer {
 			loopbody.addConstraint(new LessThanEquals("%"+code.indexOperand, "%"+code.sourceOperand));
 			loopexit.addConstraint(new GreaterThan("%"+code.indexOperand, "%"+code.sourceOperand));
 		}
-		setCurrentBlock(loopbody);
+		setCurrentBlock(loopbody);			
+
+
+
 	}
 
 	/**
@@ -805,7 +803,7 @@ public class Analyzer {
 	 * Creates a loop loop header
 	 * @param code
 	 */
-	private void analyze(Codes.Loop code){	
+	private void analyze(Codes.Loop code){		
 		String label = code.target;
 		BasicBlock loopheader = createBasicBlock(label, getCurrentBlock());
 		loop_condition = label;
@@ -816,7 +814,7 @@ public class Analyzer {
 	 * 
 	 * @param code
 	 */
-	private void analyze(Codes.LoopEnd code){
+	private void analyze(Codes.LoopEnd code){		
 		BasicBlock loopheader = getBasicBlock(code.label);
 		BasicBlock loopexit = getBasicBlock(code.label+"_loopexit");
 		//Get the current blk
@@ -826,18 +824,20 @@ public class Analyzer {
 		c_blk.addChild(loopheader);
 		loopexit.setBranch("");
 		setCurrentBlock(loopexit);
+
 	}
 
 	/**
 	 * The bounds of a list/map shall be propagated from the operand to the target. 
 	 * @param code
 	 */
-	private void analyze(Codes.SubList code){
-		if(code.type().element() instanceof Type.Int){
-			for(int operand: code.operands()){
-				addConstraint(new Equals("%"+code.target(), "%"+operand));
-			}			
-		}
+	private void analyze(Codes.SubList code){		
+			if(code.type().element() instanceof Type.Int){
+				for(int operand: code.operands()){
+					addConstraint(new Equals("%"+code.target(), "%"+operand));
+				}			
+			}
+		
 	}
 	/**
 	 * Implemented the propagation rule for <code>Codes.BinaryOperator</code> code
@@ -887,23 +887,23 @@ public class Analyzer {
 	 * 
 	 * @param code the <code>Codes.NewMap</code> byte-code.
 	 */
-	private void analyze(Codes.NewMap code){
-		Type.Map map = code.type();
-		int index =1;
-		while(index<code.operands().length){
-			//Consider the key field
-			//if(isIntType(map.key())){
-			//addConstraintToCurrentList(new Union("%"+code.target(), "%"+code.operand(index)));
-			//}
-			//index++;
+	private void analyze(Codes.NewMap code){		
+			Type.Map map = code.type();
+			int index =1;
+			while(index<code.operands().length){
+				//Consider the key field
+				//if(isIntType(map.key())){
+				//addConstraintToCurrentList(new Union("%"+code.target(), "%"+code.operand(index)));
+				//}
+				//index++;
 
-			//Consider The values field
-			if(isIntType(map.value())){
-				addConstraint(new Union("%"+code.target(), "%"+code.operand(index)));
+				//Consider The values field
+				if(isIntType(map.value())){
+					addConstraint(new Union("%"+code.target(), "%"+code.operand(index)));
+				}
+				index+=2;
 			}
-			index+=2;
-		}
-
+		
 
 	}
 
@@ -928,15 +928,17 @@ public class Analyzer {
 	 * @param code
 	 */
 	private void analyze(Codes.NewTuple code){
-		//Assing the bounds of value field to the target
-		Type.Tuple tuple = code.type();
-		int index = 1;
-		while(index<code.operands().length){
-			if(isIntType(tuple.element(index))){
-				addConstraint(new Union("%"+code.target(), "%"+code.operand(index)));
+		
+			//Assing the bounds of value field to the target
+			Type.Tuple tuple = code.type();
+			int index = 1;
+			while(index<code.operands().length){
+				if(isIntType(tuple.element(index))){
+					addConstraint(new Union("%"+code.target(), "%"+code.operand(index)));
+				}
+				index+=2;
 			}
-			index+=2;
-		}
+		
 
 	}
 	/**
@@ -952,6 +954,7 @@ public class Analyzer {
 	 * @param code
 	 */
 	private void analyze(Codes.Goto code){
+
 		//Get the label name
 		String label = code.target;
 		BasicBlock c_blk = getCurrentBlock();
@@ -971,10 +974,10 @@ public class Analyzer {
 				}
 			}
 		}
-		//Add the 
-
-
 	}
+
+
+
 
 
 }
