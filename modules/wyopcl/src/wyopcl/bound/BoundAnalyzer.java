@@ -2,7 +2,14 @@ package wyopcl.bound;
 
 import static wycc.lang.SyntaxError.internalFailure;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -48,8 +55,7 @@ public class BoundAnalyzer implements Builder{
 	private Build.Project project;
 	private String filename;
 	private boolean verbose = false;
-	//The hashmap stores the unions of bounds for each function.
-	//private HashMap<WyilFile.FunctionOrMethodDeclaration, Bounds> unionOfBoundsMap = new HashMap<WyilFile.FunctionOrMethodDeclaration, Bounds>();
+	private File output_file;
 
 	private String[] args;
 	/**
@@ -87,15 +93,20 @@ public class BoundAnalyzer implements Builder{
 			//Path.Root dst = p.second();
 			Path.Entry<WyilFile> sf = (Path.Entry<WyilFile>) p.first();
 			WyilFile module = sf.read();
-			filename = module.filename();
+			filename = module.filename().split(".whiley")[0];
+			//Create a file
+			output_file = new File(filename+".sysout");
+			//If file exists, then delete it
+			if(output_file.exists()){
+				output_file.delete();
+			}			
 			//Start analyzing the range.
-			analyze(module);			
+			analyze(module);
 			//analyzeMethodCall(module);
 		}
 
 		long endTime = System.currentTimeMillis();
-		System.err.println("Wyil interpreter completed.\nFile:" + filename+ 
-				" Time: "+(endTime - start)+" ms");
+		System.err.println("Wyil interpreter completed.\nFile:" + filename +".whiley Time: "+(endTime - start)+" ms");
 		return generatedFiles;
 	}
 	
@@ -116,6 +127,25 @@ public class BoundAnalyzer implements Builder{
 		}
 	}
 	
+	/**
+	 * Writes out the bounds to a file (*.sysout) for the
+	 * aggressive tests.
+	 * @param func_name the name of a function.
+	 * @param bnd the bounds of a function.
+	 */
+	private void writeOutBounds(String func_name, Bounds bnd){
+		try {
+			FileWriter writer = new FileWriter(output_file, true);
+			writer.write("Bounds of "+func_name+"\n");
+			writer.write(bnd.toString()+"\n");
+			writer.write("Consistency="+bnd.checkBoundConsistency()+"\n");
+			writer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	
 	/**
 	 * Takes the in-memory wyil file and analyzes the variable ranges for each function.
@@ -126,7 +156,9 @@ public class BoundAnalyzer implements Builder{
 			Analyzer analyzer = new Analyzer(0);			
 			iterateByteCode(analyzer, functionOrMethod);			
 			//Infer and print the final bounds.
-			analyzer.printBounds(analyzer.inferBounds(verbose));
+			Bounds bnd = analyzer.inferBounds(verbose);
+			analyzer.printBounds(bnd);
+			writeOutBounds(functionOrMethod.name(), bnd);
 			analyzer = null;
 		}
 	}

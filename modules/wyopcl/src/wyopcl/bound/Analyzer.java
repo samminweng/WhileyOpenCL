@@ -194,7 +194,6 @@ public class Analyzer {
 		}else{
 			System.out.println(RED+"Consistency=false"+RESET);
 		}
-
 	}
 
 

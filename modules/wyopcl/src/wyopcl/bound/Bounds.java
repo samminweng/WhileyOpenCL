@@ -191,7 +191,7 @@ public class Bounds implements Cloneable{
 		for (Domain d : domains) {
 			str += "\n\t"+ d.toString();
 		}
-		str += "}";
+		str += "\n}";
 
 		return str;
 	}
