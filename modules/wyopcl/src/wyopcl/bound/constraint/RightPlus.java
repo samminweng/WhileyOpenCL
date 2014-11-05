@@ -46,24 +46,24 @@ public class RightPlus extends Constraint{
 
 		// Apply the propagate rule on y variable.
 		// Set the lower bound of y variable.
-		if (min_x != null && min_z != null) {
+		if (min_x != null && max_z != null) {
 			//max(y_min, min_x - max_z)
 			bnd.isChanged |= bnd.addLowerBound(y, min_x.subtract(max_z));
 		}
 		//Add the upper bound of y variable.
-		if (min_x != null && max_z != null) {
+		if (max_x != null && min_z != null) {
 			//min(y_max, max_x - min_z)
 			bnd.isChanged |= bnd.addUpperBound(y, max_x.subtract(min_z));
 		}
 
 		// Apply the propagate rule on z variable.
 		// Add the lower bound of z variable.
-		if (min_x != null && min_y != null) {
+		if (min_x != null && max_y != null) {
 			// max (min_z, min_x - max_y)
 			bnd.isChanged |= bnd.addLowerBound(z, min_x.subtract(max_y));
 		}
 
-		if (min_x != null && max_y != null) {
+		if (max_x != null && min_y != null) {
 			// min (max_z, max_x - min_y)
 			bnd.isChanged |= bnd.addUpperBound(z, max_x.subtract(min_y));
 		}
