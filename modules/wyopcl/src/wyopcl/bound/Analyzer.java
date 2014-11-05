@@ -63,9 +63,9 @@ public class Analyzer {
 	public Analyzer(int depth){
 		this.depth = depth;
 		this.stackOfAssertOrAssume = new Stack<String>();
-		this.entry = new BasicBlock("entry");		
-		list.add(entry);
-
+		this.entry = createBasicBlock("entry");
+		this.exit = createBasicBlock("exit");
+		this.current_blk = this.entry;
 	}
 
 	public void createEntryNode(Type paramType, String param, BigInteger min, BigInteger max){
@@ -86,16 +86,7 @@ public class Analyzer {
 		}	
 	}
 
-	/**
-	 * Create the exit block
-	 */
-	public BasicBlock getExitBlock(){
-		if(exit == null){
-			exit = new BasicBlock("exit");
-			list.add(exit);
-		}
-		return exit;
-	}
+	
 
 	/**
 	 * Check if the asserted or assumed flag is enabled.
@@ -248,8 +239,10 @@ public class Analyzer {
 	 * @return
 	 */
 	private BasicBlock getCurrentBlock(){
+		//If the current block is null, throw out an Runtime exception
 		if(current_blk == null){
-			current_blk = entry;
+			throw new RuntimeException("Current block is null.");
+			//current_blk = entry;
 		}
 
 		return current_blk;
@@ -294,8 +287,11 @@ public class Analyzer {
 		return blk;
 	}	
 
+	/**
+	 * Outputs the control flow graphs.
+	 * @param name
+	 */
 	public void outputCFG(String name){
-
 		String dot_string= "digraph "+name+"{\n";		
 		Iterator<BasicBlock> iterator = list.iterator();
 		while(iterator.hasNext()){
@@ -306,7 +302,6 @@ public class Analyzer {
 				}
 			}
 		}
-
 		dot_string += "\n}";
 
 		//Write out the CFG-function_name.dot
@@ -355,7 +350,6 @@ public class Analyzer {
 			setCurrentBlock(loop_body);
 			loop_condition = "";
 		}else{
-
 			//Branch out the block 
 			//The left block does not have the name
 			BasicBlock leftBlock = createBasicBlock(new_label+"_ELSE", c_blk);
@@ -367,19 +361,12 @@ public class Analyzer {
 			//Set the current block to the left
 
 			setCurrentBlock(leftBlock);
-
-			//Create a merge block
-			BasicBlock mergeBlock = createBasicBlock(new_label+"_MERGE");
-			leftBlock.addChild(mergeBlock);
-			rightBlock.addChild(mergeBlock);
 		}
-
-
-
-
-
-
 	}
+	
+	
+	
+	
 
 	/**
 	 * Checks the type of the wyil code and dispatches the code to the analyzer for
@@ -646,31 +633,15 @@ public class Analyzer {
 	 * @param code
 	 */
 	private void analyze(Codes.Label code){
-		String label = code.label;
-
-		//Switch the current constraint list by setting the label with new value.
-		//Get the current block
-		BasicBlock c_blk = getCurrentBlock();
-		if(c_blk.getBranch().equals("")){
-			//update the branch
-			c_blk.setBranch(label);
-		}else{
-			//Create a block.
-			BasicBlock blk = getBasicBlock(label);
-			if(blk == null){
-				List<BasicBlock> list = c_blk.getChildNodes();
-				//Get the merge block					
-				blk = list.get(0);
-				blk.setBranch(label);
-			}
-			//Switch the current block
-			setCurrentBlock(blk);
-		}
-
-
-
-
-
+		String label = code.label;		
+		//Switch the current block by setting the label with new value.
+		//Create a block.
+		BasicBlock blk = getBasicBlock(label);
+		if(blk == null){
+			blk = createBasicBlock(label);
+		}		
+		//Switch the current block
+		setCurrentBlock(blk);
 
 	}
 
@@ -708,10 +679,8 @@ public class Analyzer {
 
 			//Connect the current block with exit block.
 			//go the leaf blk
-			blk.addChild(getExitBlock());
-			setCurrentBlock(getExitBlock());
-		
-
+			blk.addChild(getBasicBlock("exit"));
+			setCurrentBlock(null);
 	}
 
 	private void analyze(Codes.ListOperator code){		
@@ -956,23 +925,22 @@ public class Analyzer {
 
 		//Get the label name
 		String label = code.target;
-		BasicBlock c_blk = getCurrentBlock();
-		if(c_blk.getBranch().contains("ELSE")){
-			//Update the branch
-			c_blk.setBranch(label);
-		}else{
-			if(c_blk.isLeaf()){
-				//Create a new block
-				createBasicBlock(label, c_blk);
-			}else{
-				//Get the existing child block
-				for(BasicBlock blk : c_blk.getChildNodes()){
-					if(blk.getBranch().contains("merge")){
-						blk.setBranch(label);
-					}
-				}
-			}
+		BasicBlock new_blk = getBasicBlock(label);
+		if(new_blk == null){
+			new_blk = createBasicBlock(label);
 		}
+		
+		//Link the new block with current blk and its siblings (if existing).  
+		BasicBlock c_blk = getCurrentBlock();
+		c_blk.addChild(new_blk);
+		//Get the sibling blk
+		if(c_blk.getBranch().matches(".*_ELSE")){
+			//Get the blk of target 
+			BasicBlock sibling_blk = getBasicBlock(c_blk.getBranch().split("_ELSE")[0]);
+			sibling_blk.addChild(new_blk);
+		}
+		
+		setCurrentBlock(null);
 	}
 
 

@@ -16,6 +16,7 @@ public class BasicBlock {
 	private List<Constraint> constraintList;
 	private List<BasicBlock> childNodes = null;
 	private List<BasicBlock> parentNodes = null;
+
 	//The branch name
 	private String branch = "";
 	private Bounds unionOfBounds;
@@ -89,24 +90,6 @@ public class BasicBlock {
 		}		
 		return false;
 	}
-	/**
-	 * Check if the block has the common parent.
-	 * @param blk
-	 * @return
-	 */
-	public ArrayList<BasicBlock> hasSibling(){
-		ArrayList<BasicBlock> siblings = new ArrayList<BasicBlock>();
-		//check if they have the common parents
-		for(BasicBlock parent: this.parentNodes){
-			for(BasicBlock child :parent.getChildNodes()){				
-				if(!child.getBranch().equals(this.branch)){
-					siblings.add(child);
-				}
-			}
-		}
-		return siblings;
-	}
-	
 	
 	public boolean hasChild(){
 		if(childNodes==null){
