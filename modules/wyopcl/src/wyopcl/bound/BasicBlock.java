@@ -16,22 +16,63 @@ public class BasicBlock implements Comparable<BasicBlock>{
 	private List<Constraint> constraintList;
 	private List<BasicBlock> childNodes = null;
 	private List<BasicBlock> parentNodes = null;
+	
+	
+	public enum BlockType{
+		BLOCK{
+			public String toString(){
+				return "BLOCK";
+			}
+		}, LOOP_HEADER{
+			public String toString(){
+				return "LOOP_HEADER";
+			}
+		}, LOOP_BODY{
+			public String toString(){
+				return "LOOP_BODY";
+			}
+		}, LOOP_EXIT{
+			public String toString(){
+				return "LOOP_EXIT";
+			}
+		}, IF_BRANCH{
+			public String toString(){
+				return "IF";
+			}
+		}, ELSE_BRANCH{
+			public String toString(){
+				return "ELSE";
+			}
+		}, ENTRY{
+			public String toString(){
+				return "ENTRY";
+			}
+		}, EXIT{
+			public String toString(){
+				return "EXIT";
+			}
+		}
+	}
+	
 
 	//The branch name
-	private String branch = "";
+	private String branch;
+	private BlockType type;
 	private Bounds unionOfBounds;
 	//Indicate if the bounds remain unchanged. False: unchanged. True: changed.
 	private boolean isChanged = false;
 	
-	public BasicBlock(){
+	private BasicBlock(){
 		this.unionOfBounds = new Bounds();
 		this.constraintList = new ArrayList<Constraint>();
 	}	
 	
-	public BasicBlock(String branch){
+	public BasicBlock(String branch, BlockType type){
 		//Use the nested constructor to create the BasicBlock object.
 		this();
-		this.branch = branch;	
+		this.branch = branch;
+		this.type = type;
+		
 	}
 	/**
 	 * Sets the branch name.
@@ -108,8 +149,13 @@ public class BasicBlock implements Comparable<BasicBlock>{
 	
 	
 	public String getBranch(){
-		return branch;
+		return this.branch;
 	}
+	
+	public BlockType getType(){
+		return this.type;
+	}
+	
 	
 	public List<BasicBlock> getChildNodes(){
 		return childNodes;
@@ -213,7 +259,9 @@ public class BasicBlock implements Comparable<BasicBlock>{
 		}
 		BasicBlock blk = (BasicBlock)obj;
 		if(this.getBranch().equals(blk.getBranch())){
-			return true;
+			if(this.getType().equals(blk.getType())){
+				return true;
+			}			
 		}
 		return false;
 	}

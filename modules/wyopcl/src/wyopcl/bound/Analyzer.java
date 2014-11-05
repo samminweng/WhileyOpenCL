@@ -20,6 +20,7 @@ import wyil.lang.Codes.UnaryOperatorKind;
 import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyil.lang.Type.Tuple;
+import wyopcl.bound.BasicBlock.BlockType;
 import wyopcl.bound.constraint.Assign;
 import wyopcl.bound.constraint.Const;
 import wyopcl.bound.constraint.Constraint;
@@ -62,13 +63,12 @@ public class Analyzer {
 	private String loop_condition = "";
 
 	private boolean isGoto = false;
-	private boolean isLoop = false;
 
 	public Analyzer(int depth){
 		this.depth = depth;
 		this.stackOfAssertOrAssume = new Stack<String>();
-		this.entry = createBasicBlock("entry");
-		this.exit = createBasicBlock("exit");
+		this.entry = createBasicBlock("entry", BlockType.ENTRY);
+		this.exit = createBasicBlock("exit", BlockType.EXIT);
 		this.current_blk = this.entry;
 	}
 
@@ -263,18 +263,54 @@ public class Analyzer {
 	 * @return blk
 	 */
 	private BasicBlock getBasicBlock(String label){
+		
 		Iterator<BasicBlock> iterator = list.iterator();
 		while(iterator.hasNext()){
 			BasicBlock blk = iterator.next();
 			if(blk.getBranch().equals(label)){
-				return blk;
+				if(blk.getType().equals(BlockType.BLOCK)){
+					return blk;
+				}
+				//Get the block of If branch
+				if(blk.getType().equals(BlockType.IF_BRANCH)){
+					return blk;
+				}
+				//Get the block of Loop Exit
+				if(blk.getType().equals(BlockType.LOOP_EXIT)){
+					return blk;
+				}
+			}
+		}		
+			
+		//Not found
+		return null;
+		
+		
+	}
+	
+	/***
+	 * Finds the block by the branch name and block types
+	 * @param label
+	 * @param type
+	 * @return
+	 */
+	private BasicBlock getBasicBlock(String label, BlockType type){
+		Iterator<BasicBlock> iterator = list.iterator();
+		while(iterator.hasNext()){
+			BasicBlock blk = iterator.next();
+			if(blk.getBranch().equals(label)){
+				if(blk.getType().equals(type)){
+					return blk;
+				}
 			}
 		}		
 		return null;
+		
 	}
+	
 
-	private BasicBlock createBasicBlock(String label){
-		BasicBlock blk = new BasicBlock(label);
+	private BasicBlock createBasicBlock(String label, BlockType type){
+		BasicBlock blk = new BasicBlock(label, type);
 		list.add(blk);
 		return blk;
 	}
@@ -285,8 +321,8 @@ public class Analyzer {
 	 * @param label the branch name
 	 * @return the blk
 	 */
-	private BasicBlock createBasicBlock(String label, BasicBlock parent){
-		BasicBlock blk = createBasicBlock(label);
+	private BasicBlock createBasicBlock(String label, BlockType type, BasicBlock parent){
+		BasicBlock blk = createBasicBlock(label, type);
 		parent.addChild(blk);
 		return blk;
 	}	
@@ -295,7 +331,6 @@ public class Analyzer {
 	 * Outputs the control flow graphs.
 	 * @param name
 	 */
-	@SuppressWarnings("unchecked")
 	public void outputCFG(String name){
 		String dot_string= "digraph "+name+"{\n";
 		Collections.sort(list);
@@ -304,7 +339,7 @@ public class Analyzer {
 			BasicBlock blk = iterator.next();
 			if(!blk.isLeaf()){
 				for(BasicBlock child: blk.getChildNodes()){
-					dot_string += blk.getBranch() +"->"+ child.getBranch() + ";\n";
+					dot_string += "\""+blk.getBranch()+" [" +blk.getType()+"]\"->\""+ child.getBranch()+" ["+child.getType() + "]\";\n";
 				}
 			}
 		}
@@ -346,8 +381,8 @@ public class Analyzer {
 		//Check whether to add if-else blocks or loop-condition blocks.
 		if(!loop_condition.equals("")){
 
-			BasicBlock loop_body = createBasicBlock(new_label+"_loopbody", c_blk);
-			BasicBlock loop_exit = createBasicBlock(new_label, c_blk);
+			BasicBlock loop_body = createBasicBlock(new_label, BlockType.LOOP_BODY, c_blk);
+			BasicBlock loop_exit = createBasicBlock(new_label, BlockType.LOOP_EXIT, c_blk);
 
 			//put the original constraint to current blk(loopbody)
 			loop_body.addConstraint(c);			
@@ -358,8 +393,8 @@ public class Analyzer {
 		}else{
 			//Branch out the block 
 			//The left block does not have the name
-			BasicBlock leftBlock = createBasicBlock(new_label+"_ELSE", c_blk);
-			BasicBlock rightBlock = createBasicBlock(new_label, c_blk);
+			BasicBlock leftBlock = createBasicBlock(new_label, BlockType.ELSE_BRANCH, c_blk);
+			BasicBlock rightBlock = createBasicBlock(new_label, BlockType.IF_BRANCH, c_blk);
 
 			//Add the constraint to the left block
 			leftBlock.addConstraint(c);
@@ -644,7 +679,7 @@ public class Analyzer {
 		//Create a block.
 		BasicBlock blk = getBasicBlock(label);
 		if(blk == null){
-			blk = createBasicBlock(label);
+			blk = createBasicBlock(label, BlockType.BLOCK);
 		}		
 
 		if(!isGoto){
@@ -690,7 +725,7 @@ public class Analyzer {
 
 		//Connect the current block with exit block.
 		//go the leaf blk
-		blk.addChild(getBasicBlock("exit"));
+		blk.addChild(getBasicBlock("exit", BlockType.EXIT));
 		setCurrentBlock(null);
 		isGoto = true;
 	}
@@ -756,11 +791,11 @@ public class Analyzer {
 	private void analyze(Codes.ForAll code){		
 		String label = code.target;
 		//Creates a loop structure, including the loop header, loop body and loop exit
-		BasicBlock loopheader = createBasicBlock(label, getCurrentBlock());
+		BasicBlock loopheader = createBasicBlock(label, BlockType.LOOP_HEADER, getCurrentBlock());
 		int blk_num = Integer.parseInt(label.split("blklab")[1])+1;
 		String branch = "blklab"+blk_num;
-		BasicBlock loopbody = createBasicBlock(branch+"_loopbody", loopheader);
-		BasicBlock loopexit = createBasicBlock(branch, loopheader);
+		BasicBlock loopbody = createBasicBlock(branch, BlockType.LOOP_BODY, loopheader);
+		BasicBlock loopexit = createBasicBlock(branch, BlockType.LOOP_EXIT, loopheader);
 		//Check if each element is an integer
 		if(isIntType((Type) code.type)){			
 			//Propagate the range of source register to the index reg 
@@ -769,8 +804,6 @@ public class Analyzer {
 		}
 
 		setCurrentBlock(loopbody);
-		isLoop = true;
-
 	}
 
 	/**
@@ -787,7 +820,7 @@ public class Analyzer {
 	 */
 	private void analyze(Codes.Loop code){		
 		String label = code.target;
-		BasicBlock loopheader = createBasicBlock(label, getCurrentBlock());
+		BasicBlock loopheader = createBasicBlock(label, BlockType.LOOP_HEADER, getCurrentBlock());
 		loop_condition = label;
 		setCurrentBlock(loopheader);
 	}
@@ -797,13 +830,12 @@ public class Analyzer {
 	 * @param code
 	 */
 	private void analyze(Codes.LoopEnd code){
-		BasicBlock loopheader = getBasicBlock(code.label);
+		BasicBlock loopheader = getBasicBlock(code.label, BlockType.LOOP_HEADER);
 		//connect the loopheader and current blk
 		BasicBlock c_blk = getCurrentBlock();
 		c_blk.addChild(loopheader);
 
 		setCurrentBlock(null);
-		isLoop = false;
 		isGoto = true;
 
 	}
@@ -942,19 +974,10 @@ public class Analyzer {
 		BasicBlock c_blk = getCurrentBlock();
 		BasicBlock new_blk = getBasicBlock(label);
 		if(new_blk == null){
-			new_blk = createBasicBlock(label);
+			new_blk = createBasicBlock(label, BlockType.BLOCK);
 		}
 		c_blk.addChild(new_blk);
-
-
-		//Link the new block with current blk and its siblings (if existing).  	
-		//Get the sibling blk
-		/*if(c_blk.getBranch().matches(".*_ELSE")){
-			//Get the blk of target 
-			BasicBlock sibling_blk = getBasicBlock(c_blk.getBranch().split("_ELSE")[0]);
-			sibling_blk.addChild(new_blk);
-		}*/
-
+		//Set isGoto flag to avoid linking the next block with current block.
 		isGoto = true;
 
 		setCurrentBlock(null);

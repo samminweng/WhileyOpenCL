@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import wyopcl.bound.BasicBlock;
+import wyopcl.bound.BasicBlock.BlockType;
 import wyopcl.bound.Bounds;
 //import wyopcl.bound.ConstraintList;
 import wyopcl.bound.Domain;
@@ -103,7 +104,7 @@ public class BoundTestCase {
 	 */
 	@Test
 	public void testConst() {		
-		BasicBlock blk = new BasicBlock("code");
+		BasicBlock blk = new BasicBlock("code", BlockType.BLOCK);
 		blk.addConstraint(new Const("x", new BigInteger("20")));		
 		assertTrue(blk.inferFixedPoint());
 		assertEquals(new BigInteger("20"), blk.getBounds().getLower("x"));
@@ -119,7 +120,7 @@ public class BoundTestCase {
 	 */
 	@Test
 	public void testLessThanLeft() {
-		BasicBlock blk = new BasicBlock("code");
+		BasicBlock blk = new BasicBlock("code", BlockType.BLOCK);
 		// D(x) = [-10..10]
 		blk.addBounds("x", new BigInteger("-10"), new BigInteger("10"));
 		// x<=y
@@ -152,7 +153,7 @@ public class BoundTestCase {
 	 */
 	@Test
 	public void testLessThanRight() {
-		BasicBlock blk = new BasicBlock("code");
+		BasicBlock blk = new BasicBlock("code", BlockType.BLOCK);
 		// D(z) = [-10..10]
 		blk.addBounds("z",  new BigInteger("-10"), new BigInteger("10"));
 		
@@ -185,7 +186,7 @@ public class BoundTestCase {
 	 */
 	@Test
 	public void testLessThanEqualsLeft() {
-		BasicBlock blk = new BasicBlock("code");
+		BasicBlock blk = new BasicBlock("code", BlockType.BLOCK);
 		// D(x) = [-10..10]
 		blk.addBounds("x", new BigInteger("-10"),  new BigInteger("10"));
 		// x<=y
@@ -216,7 +217,7 @@ public class BoundTestCase {
 	 */
 	@Test
 	public void testLessThanEqualsRight() {
-		BasicBlock blk = new BasicBlock("code");
+		BasicBlock blk = new BasicBlock("code", BlockType.BLOCK);
 		// D(z) = [-10..10]
 		blk.addBounds("z", new BigInteger("-10"), new BigInteger("10"));
 
@@ -249,7 +250,7 @@ public class BoundTestCase {
 	 */
 	@Test
 	public void testEquals() {
-		BasicBlock blk = new BasicBlock("code");
+		BasicBlock blk = new BasicBlock("code", BlockType.BLOCK);
 		// D(x) = [-10..10]
 		blk.addBounds("x", new BigInteger("-10"), new BigInteger("10"));
 
@@ -284,7 +285,7 @@ public class BoundTestCase {
 	@Test
 	public void testNegateRightNone() {
 		
-		BasicBlock blk = new BasicBlock("code");
+		BasicBlock blk = new BasicBlock("code", BlockType.BLOCK);
 		// D(x) = [1..5]
 		blk.addBounds("x", new BigInteger("1"), new BigInteger("5"));
 
@@ -307,7 +308,7 @@ public class BoundTestCase {
 	 */
 	@Test
 	public void testNegateRightLoose() {
-		BasicBlock blk = new BasicBlock("code");		
+		BasicBlock blk = new BasicBlock("code", BlockType.BLOCK);		
 		// D(x) = [1..5]
 		blk.addBounds("x", new BigInteger("1"), new BigInteger("5"));
 		// D(y) = [-10..10]
@@ -333,7 +334,7 @@ public class BoundTestCase {
 	@Test
 	public void testNegateRightTight() {
 		
-		BasicBlock blk = new BasicBlock("code");
+		BasicBlock blk = new BasicBlock("code", BlockType.BLOCK);
 		// D(x) = [1..5]
 		blk.addBounds("x", new BigInteger("1"), new BigInteger("5"));
 		// D(y) = [-4..-2]
@@ -358,7 +359,7 @@ public class BoundTestCase {
 	@Test
 	public void testNegateLeftLoose() {
 		
-		BasicBlock blk = new BasicBlock("code");
+		BasicBlock blk = new BasicBlock("code", BlockType.BLOCK);
 		// D(x) = [1..5]
 		blk.addBounds("x", new BigInteger("-5"), new BigInteger("-1"));
 		// D(y) = [-10..10]
@@ -384,7 +385,7 @@ public class BoundTestCase {
 	@Test
 	public void testNegateLeftTight() {
 		
-		BasicBlock blk = new BasicBlock("code");
+		BasicBlock blk = new BasicBlock("code", BlockType.BLOCK);
 		// D(x) = [1..5]
 		blk.addBounds("x", new BigInteger("-4"), new BigInteger("-2"));
 		// D(y) = [-10..10]
@@ -410,7 +411,7 @@ public class BoundTestCase {
 	 */
 	@Test
 	public void testLeftPlus() {
-		BasicBlock blk = new BasicBlock("code");		
+		BasicBlock blk = new BasicBlock("code", BlockType.BLOCK);		
 		// D(x)=[0..5]
 		blk.addBounds("x", new BigInteger("0"), new BigInteger("5"));		
 		// D(y)=[3..4]
@@ -439,7 +440,7 @@ public class BoundTestCase {
 	 */
 	@Test
 	public void testLeftPlus2() {
-		BasicBlock blk = new BasicBlock("code");
+		BasicBlock blk = new BasicBlock("code", BlockType.BLOCK);
 		// D(x) = [0..10]
 		blk.addBounds("x", new BigInteger("0"), new BigInteger("10"));
 		
@@ -469,7 +470,7 @@ public class BoundTestCase {
 	 */
 	@Test
 	public void testRightPlus() {
-		BasicBlock blk = new BasicBlock("code");
+		BasicBlock blk = new BasicBlock("code", BlockType.BLOCK);
 		// D(x) = [4..8]
 		blk.addBounds("x", new BigInteger("4"), new BigInteger("8"));
 		// D(y) = [0..3]
