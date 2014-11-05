@@ -11,7 +11,7 @@ import wyopcl.bound.constraint.Constraint;
  * @author Min-Hsien Weng
  *
  */
-public class BasicBlock {
+public class BasicBlock implements Comparable<BasicBlock>{
 	
 	private List<Constraint> constraintList;
 	private List<BasicBlock> childNodes = null;
@@ -216,6 +216,43 @@ public class BasicBlock {
 			return true;
 		}
 		return false;
+	}
+	
+	/**
+	 * Get the blk label no
+	 * @return the number of blk label 
+	 */
+	private int getblklab(){
+		if(this.branch.equals("entry")){
+			return Integer.MIN_VALUE;
+		}
+		
+		if(this.branch.equals("exit")){
+			return Integer.MAX_VALUE;
+		}
+		
+		String blk_lab="";
+		if(this.branch.contains("_")){
+			blk_lab = this.branch.split("_")[0];
+		}else{
+			blk_lab = this.branch;
+		}	
+		
+		if(blk_lab.matches("^blklab.*")){
+			return Integer.parseInt(blk_lab.split("blklab")[1]);
+		}
+		
+		return Integer.MIN_VALUE;
+	}
+	
+
+
+	@Override
+	/**
+	 * Implements for sorting the elements in the list. 
+	 */
+	public int compareTo(BasicBlock blk) {
+		return this.getblklab() - blk.getblklab();		
 	}
 
 	

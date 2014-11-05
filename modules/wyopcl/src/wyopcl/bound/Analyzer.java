@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
@@ -294,8 +295,10 @@ public class Analyzer {
 	 * Outputs the control flow graphs.
 	 * @param name
 	 */
+	@SuppressWarnings("unchecked")
 	public void outputCFG(String name){
-		String dot_string= "digraph "+name+"{\n";		
+		String dot_string= "digraph "+name+"{\n";
+		Collections.sort(list);
 		Iterator<BasicBlock> iterator = list.iterator();
 		while(iterator.hasNext()){
 			BasicBlock blk = iterator.next();
