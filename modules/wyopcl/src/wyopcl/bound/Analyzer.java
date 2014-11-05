@@ -338,13 +338,13 @@ public class Analyzer {
 	private void createIfElseBranch(String new_label, Constraint c, Constraint neg_c){
 		BasicBlock c_blk = getCurrentBlock();
 		//Check whether to add if-else blocks or loop-condition blocks.
-		if(!loop_condition.equals("")){			
-			BasicBlock loop_body = createBasicBlock(loop_condition+"_loopbody", c_blk);
-			BasicBlock loop_exit = createBasicBlock(loop_condition+"_loopexit", c_blk);
+		if(!loop_condition.equals("")){
+			
+			BasicBlock loop_body = createBasicBlock(new_label+"_loopbody", c_blk);
+			BasicBlock loop_exit = createBasicBlock(new_label, c_blk);
 
 			//put the original constraint to current blk(loopbody)
-			loop_body.addConstraint(c);
-			loop_body.addChild(c_blk);
+			loop_body.addConstraint(c);			
 			//put the negated constraint to the loop_exit
 			loop_exit.addConstraint(neg_c);	
 			setCurrentBlock(loop_body);
@@ -782,16 +782,13 @@ public class Analyzer {
 	 * 
 	 * @param code
 	 */
-	private void analyze(Codes.LoopEnd code){		
+	private void analyze(Codes.LoopEnd code){
 		BasicBlock loopheader = getBasicBlock(code.label);
-		BasicBlock loopexit = getBasicBlock(code.label+"_loopexit");
-		//Get the current blk
+		//connect the loopheader and current blk
 		BasicBlock c_blk = getCurrentBlock();
-		//Connect it with the loop exit
-		c_blk.addChild(loopexit);
 		c_blk.addChild(loopheader);
-		loopexit.setBranch("");
-		setCurrentBlock(loopexit);
+		
+		setCurrentBlock(null);
 
 	}
 
