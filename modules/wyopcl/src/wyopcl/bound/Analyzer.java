@@ -60,6 +60,9 @@ public class Analyzer {
 	//The label name of the loop condition
 	private String loop_condition = "";
 
+	private boolean isGoto = false;
+	private boolean isLoop = false;
+
 	public Analyzer(int depth){
 		this.depth = depth;
 		this.stackOfAssertOrAssume = new Stack<String>();
@@ -86,7 +89,7 @@ public class Analyzer {
 		}	
 	}
 
-	
+
 
 	/**
 	 * Check if the asserted or assumed flag is enabled.
@@ -339,7 +342,7 @@ public class Analyzer {
 		BasicBlock c_blk = getCurrentBlock();
 		//Check whether to add if-else blocks or loop-condition blocks.
 		if(!loop_condition.equals("")){
-			
+
 			BasicBlock loop_body = createBasicBlock(new_label+"_loopbody", c_blk);
 			BasicBlock loop_exit = createBasicBlock(new_label, c_blk);
 
@@ -363,10 +366,10 @@ public class Analyzer {
 			setCurrentBlock(leftBlock);
 		}
 	}
-	
-	
-	
-	
+
+
+
+
 
 	/**
 	 * Checks the type of the wyil code and dispatches the code to the analyzer for
@@ -640,9 +643,14 @@ public class Analyzer {
 		if(blk == null){
 			blk = createBasicBlock(label);
 		}		
+
+		if(!isGoto){
+			getCurrentBlock().addChild(blk);
+		}
+
 		//Switch the current block
 		setCurrentBlock(blk);
-
+		isGoto = false;
 	}
 
 
@@ -653,12 +661,12 @@ public class Analyzer {
 	 * @param code
 	 */
 	private void analyze(Codes.NewList code){		
-			if(isIntType(code.type())){
-				for(int operand: code.operands()){
-					addConstraint(new Union("%"+code.target(), "%"+operand));				
-				}
+		if(isIntType(code.type())){
+			for(int operand: code.operands()){
+				addConstraint(new Union("%"+code.target(), "%"+operand));				
 			}
-		
+		}
+
 
 	}
 
@@ -667,40 +675,41 @@ public class Analyzer {
 	 * @param code
 	 */
 	private void analyze(Codes.Return code){		
-			//Get the return operand
-			String ret = "%"+code.operand;
-			BasicBlock blk = getCurrentBlock();
-			//Check if the return type is integer.
-			if(isIntType(code.type)){
-				//Add the 'Equals' constraint to the return (ret) variable.
-				blk.addConstraint((new Assign("return", ret)));			
-			}
-			//Check the current blk has the child. If so, go to the child blk		
+		//Get the return operand
+		String ret = "%"+code.operand;
+		BasicBlock blk = getCurrentBlock();
+		//Check if the return type is integer.
+		if(isIntType(code.type)){
+			//Add the 'Equals' constraint to the return (ret) variable.
+			blk.addConstraint((new Assign("return", ret)));			
+		}
+		//Check the current blk has the child. If so, go to the child blk		
 
-			//Connect the current block with exit block.
-			//go the leaf blk
-			blk.addChild(getBasicBlock("exit"));
-			setCurrentBlock(null);
+		//Connect the current block with exit block.
+		//go the leaf blk
+		blk.addChild(getBasicBlock("exit"));
+		setCurrentBlock(null);
+		isGoto = true;
 	}
 
 	private void analyze(Codes.ListOperator code){		
-			switch(code.kind){
-			case APPEND:
-				for(int operand : code.operands()){
-					addConstraint(new Equals("%"+code.target(), "%"+operand));
-				}
-				break;
-			case LEFT_APPEND:
-
-				break;
-			case RIGHT_APPEND:
-
-				break;
-			default:
-				internalFailure("Not implemented!", "Analyzer.java", null);
-				break;
+		switch(code.kind){
+		case APPEND:
+			for(int operand : code.operands()){
+				addConstraint(new Equals("%"+code.target(), "%"+operand));
 			}
-		
+			break;
+		case LEFT_APPEND:
+
+			break;
+		case RIGHT_APPEND:
+
+			break;
+		default:
+			internalFailure("Not implemented!", "Analyzer.java", null);
+			break;
+		}
+
 
 
 	}
@@ -745,17 +754,19 @@ public class Analyzer {
 		String label = code.target;
 		//Creates a loop structure, including the loop header, loop body and loop exit
 		BasicBlock loopheader = createBasicBlock(label, getCurrentBlock());
-		BasicBlock loopbody = createBasicBlock(label+"_loopbody", loopheader);
-		BasicBlock loopexit = createBasicBlock(label+"_loopexit", loopheader);
+		int blk_num = Integer.parseInt(label.split("blklab")[1])+1;
+		String branch = "blklab"+blk_num;
+		BasicBlock loopbody = createBasicBlock(branch+"_loopbody", loopheader);
+		BasicBlock loopexit = createBasicBlock(branch, loopheader);
 		//Check if each element is an integer
 		if(isIntType((Type) code.type)){			
 			//Propagate the range of source register to the index reg 
 			loopbody.addConstraint(new LessThanEquals("%"+code.indexOperand, "%"+code.sourceOperand));
 			loopexit.addConstraint(new GreaterThan("%"+code.indexOperand, "%"+code.sourceOperand));
 		}
-		setCurrentBlock(loopbody);			
 
-
+		setCurrentBlock(loopbody);
+		isLoop = true;
 
 	}
 
@@ -787,8 +798,10 @@ public class Analyzer {
 		//connect the loopheader and current blk
 		BasicBlock c_blk = getCurrentBlock();
 		c_blk.addChild(loopheader);
-		
+
 		setCurrentBlock(null);
+		isLoop = false;
+		isGoto = true;
 
 	}
 
@@ -797,12 +810,12 @@ public class Analyzer {
 	 * @param code
 	 */
 	private void analyze(Codes.SubList code){		
-			if(code.type().element() instanceof Type.Int){
-				for(int operand: code.operands()){
-					addConstraint(new Equals("%"+code.target(), "%"+operand));
-				}			
-			}
-		
+		if(code.type().element() instanceof Type.Int){
+			for(int operand: code.operands()){
+				addConstraint(new Equals("%"+code.target(), "%"+operand));
+			}			
+		}
+
 	}
 	/**
 	 * Implemented the propagation rule for <code>Codes.BinaryOperator</code> code
@@ -853,22 +866,22 @@ public class Analyzer {
 	 * @param code the <code>Codes.NewMap</code> byte-code.
 	 */
 	private void analyze(Codes.NewMap code){		
-			Type.Map map = code.type();
-			int index =1;
-			while(index<code.operands().length){
-				//Consider the key field
-				//if(isIntType(map.key())){
-				//addConstraintToCurrentList(new Union("%"+code.target(), "%"+code.operand(index)));
-				//}
-				//index++;
+		Type.Map map = code.type();
+		int index =1;
+		while(index<code.operands().length){
+			//Consider the key field
+			//if(isIntType(map.key())){
+			//addConstraintToCurrentList(new Union("%"+code.target(), "%"+code.operand(index)));
+			//}
+			//index++;
 
-				//Consider The values field
-				if(isIntType(map.value())){
-					addConstraint(new Union("%"+code.target(), "%"+code.operand(index)));
-				}
-				index+=2;
+			//Consider The values field
+			if(isIntType(map.value())){
+				addConstraint(new Union("%"+code.target(), "%"+code.operand(index)));
 			}
-		
+			index+=2;
+		}
+
 
 	}
 
@@ -893,17 +906,17 @@ public class Analyzer {
 	 * @param code
 	 */
 	private void analyze(Codes.NewTuple code){
-		
-			//Assing the bounds of value field to the target
-			Type.Tuple tuple = code.type();
-			int index = 1;
-			while(index<code.operands().length){
-				if(isIntType(tuple.element(index))){
-					addConstraint(new Union("%"+code.target(), "%"+code.operand(index)));
-				}
-				index+=2;
+
+		//Assing the bounds of value field to the target
+		Type.Tuple tuple = code.type();
+		int index = 1;
+		while(index<code.operands().length){
+			if(isIntType(tuple.element(index))){
+				addConstraint(new Union("%"+code.target(), "%"+code.operand(index)));
 			}
-		
+			index+=2;
+		}
+
 
 	}
 	/**
@@ -922,21 +935,25 @@ public class Analyzer {
 
 		//Get the label name
 		String label = code.target;
+
+		BasicBlock c_blk = getCurrentBlock();
 		BasicBlock new_blk = getBasicBlock(label);
 		if(new_blk == null){
 			new_blk = createBasicBlock(label);
 		}
-		
-		//Link the new block with current blk and its siblings (if existing).  
-		BasicBlock c_blk = getCurrentBlock();
 		c_blk.addChild(new_blk);
+
+
+		//Link the new block with current blk and its siblings (if existing).  	
 		//Get the sibling blk
-		if(c_blk.getBranch().matches(".*_ELSE")){
+		/*if(c_blk.getBranch().matches(".*_ELSE")){
 			//Get the blk of target 
 			BasicBlock sibling_blk = getBasicBlock(c_blk.getBranch().split("_ELSE")[0]);
 			sibling_blk.addChild(new_blk);
-		}
-		
+		}*/
+
+		isGoto = true;
+
 		setCurrentBlock(null);
 	}
 
