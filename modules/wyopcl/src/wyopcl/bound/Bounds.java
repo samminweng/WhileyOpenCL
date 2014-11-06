@@ -61,7 +61,7 @@ public class Bounds implements Cloneable{
 			Domain new_domain = (Domain) existing_domain.clone();
 			new_domain.setLowerBound(new_min);
 			// Check if the new domain is smaller than existing domain.
-			if (existing_domain.getLowerBound() == null || existing_domain.compareTo(new_domain) > 0) {
+			if (existing_domain.getLowerBound() == null || existing_domain.compareTo(new_domain) > 0) {		
 				// new_domain.setMin(new_min);
 				bounds.put(name, new_domain);
 				return true;
@@ -85,6 +85,7 @@ public class Bounds implements Cloneable{
 			new_domain.setUpperBound(new_max);
 			// Check if new domain is stronger than existing one.
 			if (existing_domain.getUpperBound() == null || existing_domain.compareTo(new_domain) < 0) {
+			//if (existing_domain.compareTo(new_domain) < 0) {
 				bounds.put(name, new_domain);
 				return true;
 			}

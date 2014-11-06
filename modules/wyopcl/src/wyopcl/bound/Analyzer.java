@@ -201,6 +201,9 @@ public class Analyzer {
 	 * @return the bounds
 	 */
 	public Bounds inferBounds(boolean verbose, int... iterations){
+		//Sort the blks
+		Collections.sort(list);
+		
 		int MaxIteration = iterations.length >0 ? iterations[0] : 5;
 		boolean isChanged = true;
 		//Stop until there is no change in bounds.
@@ -218,18 +221,18 @@ public class Analyzer {
 						blk.unionBounds(parent);
 					}
 				}
-				if(blk.hasChild()){
-					//If bounds has no change, then return False.
-					boolean inferBounds = blk.inferBounds();
-					//The bitwise AND to combine all the results
-					isChanged |= inferBounds;
 
-					//Print out the bounds.
-					if(verbose){
-						System.out.println(blk);
-						System.out.println("inferBounds="+inferBounds);
-					}
+				//If bounds has no change, then return False.
+				boolean inferBounds = blk.inferBounds();
+				//The bitwise AND to combine all the results
+				isChanged |= inferBounds;
+
+				//Print out the bounds.
+				if(verbose){
+					System.out.println(blk);
+					System.out.println("inferBounds="+inferBounds);
 				}
+
 			}
 
 			//Check if the bounds in the block remains the same. If it is true, then exit.
@@ -263,7 +266,7 @@ public class Analyzer {
 	 * @return blk
 	 */
 	private BasicBlock getBasicBlock(String label){
-		
+
 		Iterator<BasicBlock> iterator = list.iterator();
 		while(iterator.hasNext()){
 			BasicBlock blk = iterator.next();
@@ -281,13 +284,13 @@ public class Analyzer {
 				}
 			}
 		}		
-			
+
 		//Not found
 		return null;
-		
-		
+
+
 	}
-	
+
 	/***
 	 * Finds the block by the branch name and block types
 	 * @param label
@@ -305,9 +308,9 @@ public class Analyzer {
 			}
 		}		
 		return null;
-		
+
 	}
-	
+
 
 	private BasicBlock createBasicBlock(String label, BlockType type){
 		BasicBlock blk = new BasicBlock(label, type);
@@ -331,9 +334,11 @@ public class Analyzer {
 	 * Outputs the control flow graphs.
 	 * @param name
 	 */
-	public void outputCFG(String name){
-		String dot_string= "digraph "+name+"{\n";
+	public void printCFG(String name){
+		//Sort the blks.
 		Collections.sort(list);
+		
+		String dot_string= "digraph "+name+"{\n";		
 		Iterator<BasicBlock> iterator = list.iterator();
 		while(iterator.hasNext()){
 			BasicBlock blk = iterator.next();

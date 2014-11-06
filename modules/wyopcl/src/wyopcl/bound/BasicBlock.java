@@ -19,39 +19,45 @@ public class BasicBlock implements Comparable<BasicBlock>{
 	
 	
 	public enum BlockType{
-		BLOCK{
-			public String toString(){
-				return "BLOCK";
-			}
-		}, LOOP_HEADER{
-			public String toString(){
-				return "LOOP_HEADER";
-			}
-		}, LOOP_BODY{
-			public String toString(){
-				return "LOOP_BODY";
-			}
-		}, LOOP_EXIT{
-			public String toString(){
-				return "LOOP_EXIT";
-			}
-		}, IF_BRANCH{
-			public String toString(){
-				return "IF";
-			}
-		}, ELSE_BRANCH{
-			public String toString(){
-				return "ELSE";
-			}
-		}, ENTRY{
+		ENTRY(0){
 			public String toString(){
 				return "ENTRY";
 			}
-		}, EXIT{
+		},
+		BLOCK(1){
+			public String toString(){
+				return "BLOCK";
+			}
+		}, LOOP_HEADER(2){
+			public String toString(){
+				return "LOOP_HEADER";
+			}
+		}, LOOP_BODY(3){
+			public String toString(){
+				return "LOOP_BODY";
+			}
+		}, LOOP_EXIT(4){
+			public String toString(){
+				return "LOOP_EXIT";
+			}
+		}, IF_BRANCH(5){
+			public String toString(){
+				return "IF";
+			}
+		}, ELSE_BRANCH(6){
+			public String toString(){
+				return "ELSE";
+			}
+		},  EXIT(7){
 			public String toString(){
 				return "EXIT";
 			}
+		};
+		public int order;
+		private BlockType(int order){
+			this.order = order;
 		}
+		
 	}
 	
 
@@ -266,32 +272,7 @@ public class BasicBlock implements Comparable<BasicBlock>{
 		return false;
 	}
 	
-	/**
-	 * Get the blk label no
-	 * @return the number of blk label 
-	 */
-	private int getblklab(){
-		if(this.branch.equals("entry")){
-			return Integer.MIN_VALUE;
-		}
-		
-		if(this.branch.equals("exit")){
-			return Integer.MAX_VALUE;
-		}
-		
-		String blk_lab="";
-		if(this.branch.contains("_")){
-			blk_lab = this.branch.split("_")[0];
-		}else{
-			blk_lab = this.branch;
-		}	
-		
-		if(blk_lab.matches("^blklab.*")){
-			return Integer.parseInt(blk_lab.split("blklab")[1]);
-		}
-		
-		return Integer.MIN_VALUE;
-	}
+
 	
 
 
@@ -300,7 +281,7 @@ public class BasicBlock implements Comparable<BasicBlock>{
 	 * Implements for sorting the elements in the list. 
 	 */
 	public int compareTo(BasicBlock blk) {
-		return this.getblklab() - blk.getblklab();		
+		return this.type.order - blk.type.order;		
 	}
 
 	

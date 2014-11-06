@@ -123,7 +123,7 @@ public class BoundAnalyzer implements Builder{
 				line = analyzer.printWyILCode(entry.code, functionOrMethod.name(), line);				
 				analyzer.dispatch(entry);				
 			}
-			analyzer.outputCFG(functionOrMethod.name());
+			analyzer.printCFG(functionOrMethod.name());
 		}
 	}
 	
