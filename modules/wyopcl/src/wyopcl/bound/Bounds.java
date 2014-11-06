@@ -39,7 +39,15 @@ public class Bounds implements Cloneable{
 		}
 		return bounds.get(name);
 	}
-
+	/**
+	 * Check if the var is added before.
+	 * @param name
+	 * @return
+	 */
+	public boolean isExisting(String name){
+		return bounds.containsKey(name);
+	}
+	
 	public BigInteger getLower(String name) {
 		return getDomain(name).getLowerBound();
 	}

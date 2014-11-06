@@ -3,7 +3,9 @@ package wyopcl.bound;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 
 import wyopcl.bound.constraint.Constraint;
 /**
@@ -12,12 +14,17 @@ import wyopcl.bound.constraint.Constraint;
  *
  */
 public class BasicBlock implements Comparable<BasicBlock>{
-	
+
 	private List<Constraint> constraintList;
 	private List<BasicBlock> childNodes = null;
 	private List<BasicBlock> parentNodes = null;
-	
-	
+	//The branch name
+	private String branch;
+	private BlockType type;
+	private Bounds unionOfBounds;
+	//Indicate if the bounds remain unchanged. False: unchanged. True: changed.
+	private boolean isChanged = false;
+
 	public enum BlockType{
 		ENTRY(0){
 			public String toString(){
@@ -57,28 +64,23 @@ public class BasicBlock implements Comparable<BasicBlock>{
 		private BlockType(int order){
 			this.order = order;
 		}
-		
-	}
-	
 
-	//The branch name
-	private String branch;
-	private BlockType type;
-	private Bounds unionOfBounds;
-	//Indicate if the bounds remain unchanged. False: unchanged. True: changed.
-	private boolean isChanged = false;
-	
+	}
+
+
+
+
 	private BasicBlock(){
 		this.unionOfBounds = new Bounds();
 		this.constraintList = new ArrayList<Constraint>();
 	}	
-	
+
 	public BasicBlock(String branch, BlockType type){
 		//Use the nested constructor to create the BasicBlock object.
 		this();
 		this.branch = branch;
 		this.type = type;
-		
+
 	}
 	/**
 	 * Sets the branch name.
@@ -87,7 +89,7 @@ public class BasicBlock implements Comparable<BasicBlock>{
 	public void setBranch(String branch){
 		this.branch = branch;
 	}	
-	
+
 	/**
 	 * Adds a child node to the current node
 	 * and also add the current node to the parent list of its child nodes.
@@ -97,36 +99,78 @@ public class BasicBlock implements Comparable<BasicBlock>{
 		if(childNodes == null){
 			childNodes = new ArrayList<BasicBlock>();
 		}
-		
+
 		//Check if the child node has been added before.
 		if(!childNodes.contains(child)){
 			childNodes.add(child);
 			//set the parent-child rel to the child node.
 			child.addParent(this);	
 		}
-		
+
 	}
-	
-	
+
+
 	private void addParent(BasicBlock parent){
 		if(parentNodes == null){
 			parentNodes = new ArrayList<BasicBlock>();
 		}		
 		parentNodes.add(parent);
 	}
-	
-	
+
+
 	/**
 	 * Combines the bounds of current and parent nodes into 
-	 * the union of bounds.  
+	 * the union of bounds. 
+	 * Check if the var has been existed in the current bounds.
+	 * If so, then the union operator takes 
+	 * 
+	 * min of current and parent' lower bounds and 
+	 * max of these two blk's upper bounds.
+	 * 
+	 * And sets the bounds directly to current bounds. 
+	 *  
 	 * @param parent
 	 */
 	public void unionBounds(BasicBlock parent){
 		//Take the union of bounds of parent node and current node. 
-		this.getBounds().union((Bounds) parent.getBounds().clone());
+		//this.getBounds().union((Bounds) parent.getBounds().clone());
+
+		Bounds parent_bnds = (Bounds) parent.getBounds().clone();
+		Iterator<String> iterator = parent_bnds.getBounds().keySet().iterator();
+		while(iterator.hasNext()){
+			String name = iterator.next();
+			//Lower bounds
+			BigInteger new_min = null;
+			BigInteger min_parent = parent_bnds.getLower(name);
+			//Upper bounds
+			BigInteger new_max = null;
+			BigInteger max_parent = parent_bnds.getUpper(name);
+			if(this.unionOfBounds.isExisting(name)){
+				BigInteger min_current = this.unionOfBounds.getLower(name);
+				//Find the min (this, parent)
+				if(min_parent!= null&& min_current!=null){
+					new_min=min_parent.min(min_current);
+				}
+				
+				BigInteger max_current = this.unionOfBounds.getUpper(name);
+				//Find the max (this, parent)
+				if(max_parent!= null && max_current!=null){
+					new_max = max_parent.max(max_current);
+				}
+				
+			}else{
+				new_min = min_parent;
+				new_max = max_parent;
+			}			
+			this.unionOfBounds.getDomain(name).setLowerBound(new_min);	
+			this.unionOfBounds.getDomain(name).setUpperBound(new_max);
+		}
+		
+
+
 	}
-	
-	
+
+
 	/**
 	 * Check if the block is the leaf node.
 	 * @return
@@ -137,59 +181,59 @@ public class BasicBlock implements Comparable<BasicBlock>{
 		}		
 		return false;
 	}
-	
+
 	public boolean hasChild(){
 		if(childNodes==null){
 			return false;
 		}
-	
+
 		return true;
 	}
-	
+
 	public boolean hasParent(){
 		if(parentNodes == null){
 			return false;
 		}
 		return true;
 	}
-	
-	
+
+
 	public String getBranch(){
 		return this.branch;
 	}
-	
+
 	public BlockType getType(){
 		return this.type;
 	}
-	
-	
+
+
 	public List<BasicBlock> getChildNodes(){
 		return childNodes;
 	}
-	
+
 	public List<BasicBlock> getParentNodes(){
 		return parentNodes;
 	}
-	
-	
+
+
 	public void addConstraint(Constraint c){
 		if(c != null){
 			constraintList.add(c);
 		}
 	}	
-	
+
 	public boolean isChanged(){
 		return isChanged;
 	}
-	
+
 	public Bounds getBounds(){		
 		return unionOfBounds;
 	}	
-	
+
 	public BigInteger getLower(String name){
 		return unionOfBounds.getLower(name);
 	}
-	
+
 	public BigInteger getUpper(String name){
 		return unionOfBounds.getUpper(name);
 	}
@@ -203,7 +247,7 @@ public class BasicBlock implements Comparable<BasicBlock>{
 		unionOfBounds.addLowerBound(name, new_min);
 		unionOfBounds.addUpperBound(name, new_max);
 	}
-	
+
 	/**
 	 * Infer the bounds 
 	 * @return true if the bounds are changed. Return false if bounds remain unchanged.
@@ -219,10 +263,10 @@ public class BasicBlock implements Comparable<BasicBlock>{
 		}
 		return isChanged;
 	}
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * Repeatedly infer the Bound consistent with all the constraints.
 	 * @param iterations optional parameter. iterations[0] specifies the number of iterations. If not specifies, 
@@ -252,12 +296,12 @@ public class BasicBlock implements Comparable<BasicBlock>{
 				+ ", parent=" + parent 
 				+ ", childNodes=" + childNodes
 				+ ", branch=" + branch + ", unionOfBounds=" + unionOfBounds + "]";*/
-		return branch + ":\n"
-				+"<<"+constraintList+">>\n"
-				+ unionOfBounds;
+		return this.branch + "["+this.type+"]:\n"
+		+"<<"+this.constraintList+">>\n"
+		+ this.unionOfBounds;
 	}
 
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (!(obj instanceof BasicBlock)) {
@@ -271,9 +315,9 @@ public class BasicBlock implements Comparable<BasicBlock>{
 		}
 		return false;
 	}
-	
 
-	
+
+
 
 
 	@Override
@@ -284,7 +328,7 @@ public class BasicBlock implements Comparable<BasicBlock>{
 		return this.type.order - blk.type.order;		
 	}
 
-	
-	
+
+
 
 }
