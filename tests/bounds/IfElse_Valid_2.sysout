@@ -1,6 +1,6 @@
 Bounds of f
 {
-	D(%0) = [11..9]
+	D(%0) = [-infinity..infinity]
 	D(%2) = [10..10]
 	D(%3) = [1..1]
 	D(%5) = [10..10]
@@ -8,7 +8,7 @@ Bounds of f
 	D(%7) = [0..0]
 	D(return) = [0..2]
 }
-Consistency=false
+Consistency=true
 Bounds of main
 {
 	D(%6) = [1..1]
