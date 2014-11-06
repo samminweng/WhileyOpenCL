@@ -2,13 +2,13 @@ Bounds of play
 {
 	D(%3) = [0..0]
 	D(%5) = [-infinity..infinity]
-	D(%6) = [-infinity..infinity]
-	D(%7) = [-infinity..infinity]
+	D(%6) = [0..0]
+	D(%7) = [1..infinity]
 }
 Consistency=true
 Bounds of isAlive
 {
-	D(%0) = [1..0]
+	D(%0) = [-infinity..infinity]
 	D(%3) = [0..0]
 	D(%5) = [1..1]
 	D(%6) = [-infinity..1]
@@ -16,14 +16,14 @@ Bounds of isAlive
 	D(%11) = [1..1]
 	D(%12) = [-infinity..-1]
 	D(%17) = [1..1]
-	D(%18) = [-infinity..1]
+	D(%18) = [-infinity..infinity]
 }
-Consistency=false
+Consistency=true
 Bounds of main
 {
 	D(%10) = [0..0]
 	D(%11) = [5..5]
-	D(%12) = [-infinity..infinity]
-	D(%13) = [-infinity..infinity]
+	D(%12) = [0..5]
+	D(%13) = [1..infinity]
 }
 Consistency=true

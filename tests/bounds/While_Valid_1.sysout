@@ -1,7 +1,7 @@
 Bounds of reverse
 {
 	D(%0) = [-infinity..infinity]
-	D(%1) = [1..-1]
+	D(%1) = [1..infinity]
 	D(%3) = [-infinity..infinity]
 	D(%4) = [-infinity..infinity]
 	D(%13) = [0..0]
@@ -12,7 +12,7 @@ Bounds of reverse
 	D(%22) = [-infinity..infinity]
 	D(return) = [-infinity..infinity]
 }
-Consistency=false
+Consistency=true
 Bounds of main
 {
 	D(%1) = [-infinity..infinity]
