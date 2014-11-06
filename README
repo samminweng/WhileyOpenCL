@@ -28,10 +28,6 @@ $ ./../bin/wyopcl sieve.whiley 100
 or add the verbose option to print out the interpretation.
 $ ./../bin/wyopcl -verbose sieve.whiley 100
 
-Note that if you encounter the permission problem while running the
-wyopcl shell script, use the below command:
-$ chmod a+x ../bin/*
-
 2. Whiley-to-OpenCL translator
 The Whiley-to-OpenCL translator is written in Java and aims to generate
 C/OpenCL code and proof obligation. At this stage, we will use the prime
