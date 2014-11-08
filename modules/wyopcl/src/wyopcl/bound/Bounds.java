@@ -149,16 +149,34 @@ public class Bounds implements Cloneable{
 	 * @param bnd the new bounds
 	 */
 	public void union(Bounds bnd){		
-		Iterator<Entry<String, Domain>> iterator = bnd.getBounds().entrySet().iterator();
+		Iterator<String> iterator = bnd.getBounds().keySet().iterator();
 		while(iterator.hasNext()){
-			Entry<String, Domain> entry = iterator.next();
-			Domain new_domain = entry.getValue();
-			BigInteger new_min = new_domain.getLowerBound();
-			//Widen the lower bounds if the new lower bound < this lower bound.
-			widenLowerBound(new_domain.getName(), new_min);
-			BigInteger new_max = new_domain.getUpperBound();
-			//Widen the upper bound if the new upper bound > current upper bound.
-			widenUpperBound(new_domain.getName(), new_max);
+			String name = iterator.next();
+			//Lower bounds
+			BigInteger new_min = null;
+			BigInteger min_parent = bnd.getLower(name);
+			//Upper bounds
+			BigInteger new_max = null;
+			BigInteger max_parent = bnd.getUpper(name);
+			if(this.isExisting(name)){
+				BigInteger min_current = this.getLower(name);
+				//Find the min (this, parent)
+				if(min_parent!= null&& min_current!=null){
+					new_min=min_parent.min(min_current);
+				}
+				
+				BigInteger max_current = this.getUpper(name);
+				//Find the max (this, parent)
+				if(max_parent!= null && max_current!=null){
+					new_max = max_parent.max(max_current);
+				}
+				
+			}else{
+				new_min = min_parent;
+				new_max = max_parent;
+			}			
+			this.getDomain(name).setLowerBound(new_min);	
+			this.getDomain(name).setUpperBound(new_max);
 		}		
 	}
 	

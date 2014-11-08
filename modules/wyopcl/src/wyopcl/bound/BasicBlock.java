@@ -132,42 +132,8 @@ public class BasicBlock implements Comparable<BasicBlock>{
 	 * @param parent
 	 */
 	public void unionBounds(BasicBlock parent){
-		//Take the union of bounds of parent node and current node. 
-		//this.getBounds().union((Bounds) parent.getBounds().clone());
-
-		Bounds parent_bnds = (Bounds) parent.getBounds().clone();
-		Iterator<String> iterator = parent_bnds.getBounds().keySet().iterator();
-		while(iterator.hasNext()){
-			String name = iterator.next();
-			//Lower bounds
-			BigInteger new_min = null;
-			BigInteger min_parent = parent_bnds.getLower(name);
-			//Upper bounds
-			BigInteger new_max = null;
-			BigInteger max_parent = parent_bnds.getUpper(name);
-			if(this.unionOfBounds.isExisting(name)){
-				BigInteger min_current = this.unionOfBounds.getLower(name);
-				//Find the min (this, parent)
-				if(min_parent!= null&& min_current!=null){
-					new_min=min_parent.min(min_current);
-				}
-				
-				BigInteger max_current = this.unionOfBounds.getUpper(name);
-				//Find the max (this, parent)
-				if(max_parent!= null && max_current!=null){
-					new_max = max_parent.max(max_current);
-				}
-				
-			}else{
-				new_min = min_parent;
-				new_max = max_parent;
-			}			
-			this.unionOfBounds.getDomain(name).setLowerBound(new_min);	
-			this.unionOfBounds.getDomain(name).setUpperBound(new_max);
-		}
-		
-
-
+		//Take the union of bounds of parent node and current node.
+		this.getBounds().union( (Bounds) parent.getBounds().clone());
 	}
 
 
