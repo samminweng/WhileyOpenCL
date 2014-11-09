@@ -82,13 +82,7 @@ public class BasicBlock implements Comparable<BasicBlock>{
 		this.type = type;
 
 	}
-	/**
-	 * Sets the branch name.
-	 * @param branch the branch name
-	 */
-	public void setBranch(String branch){
-		this.branch = branch;
-	}	
+	
 
 	/**
 	 * Adds a child node to the current node
@@ -147,14 +141,7 @@ public class BasicBlock implements Comparable<BasicBlock>{
 		}		
 		return false;
 	}
-
-	public boolean hasChild(){
-		if(childNodes==null){
-			return false;
-		}
-
-		return true;
-	}
+	
 
 	public boolean hasParent(){
 		if(parentNodes == null){
