@@ -237,7 +237,7 @@ public class BasicBlock implements Comparable<BasicBlock>{
 				//The inferBound method returns false when all the bounds.
 				//So we negated the result and use the AND bitwise to combine all the results.
 				boolean isChanged = c.inferBound(this.unionOfBounds);
-				isFixedPointed &= !isChanged;
+				isFixedPointed |= isChanged;
 			}
 		}		
 		return isFixedPointed;
@@ -249,9 +249,11 @@ public class BasicBlock implements Comparable<BasicBlock>{
 				+ ", parent=" + parent 
 				+ ", childNodes=" + childNodes
 				+ ", branch=" + branch + ", unionOfBounds=" + unionOfBounds + "]";*/
-		return this.branch + "["+this.type+"]:\n"
-		+"<<"+this.constraintList+">>\n"
-		+ this.unionOfBounds;
+		return  "---------------------------------------\n"
+				+ String.format("%s %-20s %s%n", "Name", "Type", "Constraints")
+				+ String.format("%s %-15s %s%n", this.branch, this.type, this.constraintList)
+				+ this.unionOfBounds+"\n"
+				+"---------------------------------------";
 	}
 
 

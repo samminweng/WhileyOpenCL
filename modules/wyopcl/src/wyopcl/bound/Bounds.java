@@ -21,6 +21,7 @@ public class Bounds implements Cloneable{
 	// Every subclass shares the 'bounds' variable;
 	private HashMap<String, Domain> bounds;
 	public boolean isChanged = false;
+	private Domain existing_domain;
 	
 	public Bounds() {
 		bounds = new HashMap<String, Domain>();
@@ -65,7 +66,7 @@ public class Bounds implements Cloneable{
 	 */
 	public boolean widenLowerBound(String name, BigInteger new_min) {
 		try {
-			Domain existing_domain = getDomain(name);
+			existing_domain = getDomain(name);
 			Domain new_domain = (Domain) existing_domain.clone();
 			new_domain.setLowerBound(new_min);
 			// Check if the new domain is smaller than existing domain.
@@ -88,7 +89,7 @@ public class Bounds implements Cloneable{
 	 */
 	public boolean widenUpperBound(String name, BigInteger new_max) {
 		try {
-			Domain existing_domain = getDomain(name);
+			existing_domain = getDomain(name);
 			Domain new_domain = (Domain) existing_domain.clone();
 			new_domain.setUpperBound(new_max);
 			// Check if new domain is stronger than existing one.
@@ -103,14 +104,17 @@ public class Bounds implements Cloneable{
 		return false;
 	}
 	
-	
-	
-	
-
+	/**
+	 * Adds the lower bounds of a variable.
+	 * @param name
+	 * @param new_min
+	 * @return true if bounds change. Otherwise, return false.
+	 */
 	public boolean addLowerBound(String name, BigInteger new_min) {
+		existing_domain = getDomain(name);
+		Domain new_domain = null;
 		try {
-			Domain existing_domain = getDomain(name);
-			Domain new_domain = (Domain) existing_domain.clone();
+			new_domain = (Domain) existing_domain.clone();
 			new_domain.setLowerBound(new_min);
 			// Check the lower bound and update the lower bound
 			// When the existing bound in '-infinity' Or the new lower bound is
@@ -125,11 +129,18 @@ public class Bounds implements Cloneable{
 		}
 		return false;
 	}
-
+	
+	/**
+	 * Adds the upper bounds
+	 * @param name
+	 * @param new_max
+	 * @return true if bounds change. Otherwise, return false.
+	 */
 	public boolean addUpperBound(String name, BigInteger new_max) {
+		existing_domain = getDomain(name);
+		Domain new_domain = null;
 		try {
-			Domain existing_domain = getDomain(name);
-			Domain new_domain = (Domain) existing_domain.clone();
+			new_domain = (Domain) existing_domain.clone();
 			new_domain.setUpperBound(new_max);
 			// Check new domain is smaller (stronger) than existing one.
 			if (new_domain.compareTo(existing_domain) < 0) {
@@ -210,15 +221,15 @@ public class Bounds implements Cloneable{
 	 * Prints out all the bounds. 
 	 */
 	public String toString() {
-		String str = "{";
+		String str = "{\n";
 		// Sort all the domains
 		List<Domain> domains = new ArrayList<Domain>(bounds.values());
 		//All the domains are sorted by names.
 		Collections.sort(domains, new Domain(""));
 		for (Domain d : domains) {
-			str += "\n\t"+ d.toString();
+			str += "\t"+ d.toString()+"\n";
 		}
-		str += "\n}";
+		str += "}";
 
 		return str;
 	}

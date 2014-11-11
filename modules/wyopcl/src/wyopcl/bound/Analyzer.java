@@ -202,17 +202,16 @@ public class Analyzer {
 	 */
 	public Bounds inferBounds(boolean verbose, int... iterations){
 		//Sort the blks
-		Collections.sort(list);
-		
-		int MaxIteration = iterations.length >0 ? iterations[0] : 5;
-		boolean isChanged = true;
+		Collections.sort(list);		
+		int MaxIteration = iterations.length >0 ? iterations[0] : 10;
+		boolean isFixedPointed = true;
 		//Stop until there is no change in bounds.
 		for(int i=0;i<MaxIteration;i++){
 			if(verbose){
-				System.out.println("==================Iteration=======================");
+				System.out.println(BLUE+"Iteration "+i+" => "+RESET);
 			}
-
-			isChanged = false;
+			//Initialize the isFixedPointed
+			isFixedPointed = true;
 			//Iterate all the block
 			for(BasicBlock blk : list){
 				//Take the union of parents' bounds as the initial bounds
@@ -221,22 +220,18 @@ public class Analyzer {
 						blk.unionBounds(parent);
 					}
 				}
-
 				//If bounds has no change, then return False.
-				boolean inferBounds = blk.inferBounds();
+				boolean isChanged = blk.inferBounds();
 				//The bitwise AND to combine all the results
-				isChanged |= inferBounds;
-
+				isFixedPointed |= isChanged;
 				//Print out the bounds.
 				if(verbose){
 					System.out.println(blk);
-					System.out.println("inferBounds="+inferBounds);
+					System.out.println("isChanged="+isChanged);
 				}
-
 			}
-
 			//Check if the bounds in the block remains the same. If it is true, then exit.
-			System.out.println("isChanged="+isChanged);
+			System.out.println("isFixedPointed="+isFixedPointed);
 		}
 		return exit.getBounds();
 	}
@@ -337,7 +332,7 @@ public class Analyzer {
 	public void printCFG(String name){
 		//Sort the blks.
 		Collections.sort(list);
-		
+
 		String dot_string= "digraph "+name+"{\n";		
 		Iterator<BasicBlock> iterator = list.iterator();
 		while(iterator.hasNext()){

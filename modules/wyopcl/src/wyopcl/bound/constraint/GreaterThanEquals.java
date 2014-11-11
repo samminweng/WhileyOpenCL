@@ -22,19 +22,22 @@ public class GreaterThanEquals extends Constraint {
 	@Override
 	public boolean inferBound(Bounds bnd) {
 		bnd.isChanged = false;
-		//Propagate the lower bound from y to x.
+		
 		min_x = bnd.getLower(x);
 		max_x = bnd.getUpper(x);
 		min_y = bnd.getLower(y);
 		max_y = bnd.getUpper(y);
+		
+		//The bounds of x
+		//Propagate the lower bound from y to x.
 		if(min_y != null){
 			bnd.isChanged |= bnd.addLowerBound(x, min_y);
-		}		
-
-		//Propagate the upper bound from x to y.
-		if (max_x != null){
-			bnd.isChanged |= bnd.addUpperBound(y, max_x);
 		}
+		//Propagate the upper bound from y to x using the widening operator
+		if(max_y != null){
+			bnd.isChanged |= bnd.widenUpperBound(x, max_y);
+		}
+		
 
 		return bnd.isChanged;
 	}
