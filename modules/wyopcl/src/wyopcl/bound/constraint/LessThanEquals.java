@@ -15,7 +15,7 @@ import wyopcl.bound.Domain;
  */
 
 public class LessThanEquals extends Constraint {
-	private BigInteger min_x, max_y;
+	private BigInteger min_x, max_x, min_y, max_y;
 	private String x, y;	
 	public LessThanEquals(String x, String y){
 		this.x = x;
@@ -27,15 +27,27 @@ public class LessThanEquals extends Constraint {
 		bnd.isChanged = false;
 		//Propagate the lower bound from x to y.
 		min_x = bnd.getLower(x);
+		max_x = bnd.getUpper(x);
+		min_y = bnd.getLower(y);
 		max_y = bnd.getUpper(y);
-		if(min_x != null){
-			bnd.isChanged |= bnd.addLowerBound(y, min_x);
-		}		
-
 		//Propagate the upper bound from y to x.
 		if (max_y != null){
 			bnd.isChanged |= bnd.addUpperBound(x, max_y);
 		}
+		
+		if(min_y != null){
+			bnd.isChanged |= bnd.widenLowerBound(x, min_y);
+		}
+		
+		
+		if(min_x != null){
+			bnd.isChanged |= bnd.addLowerBound(y, min_x);
+		}
+		
+		if(max_x != null){
+			bnd.isChanged |= bnd.widenUpperBound(y, max_x);
+		}
+		
 
 		return bnd.isChanged;
 	}

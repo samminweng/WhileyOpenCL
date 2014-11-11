@@ -22,7 +22,7 @@ public class Bounds implements Cloneable{
 	private HashMap<String, Domain> bounds;
 	public boolean isChanged = false;
 	private Domain existing_domain;
-	
+
 	public Bounds() {
 		bounds = new HashMap<String, Domain>();
 	}
@@ -48,7 +48,7 @@ public class Bounds implements Cloneable{
 	public boolean isExisting(String name){
 		return bounds.containsKey(name);
 	}
-	
+
 	public BigInteger getLower(String name) {
 		return getDomain(name).getLowerBound();
 	}
@@ -69,12 +69,14 @@ public class Bounds implements Cloneable{
 			existing_domain = getDomain(name);
 			Domain new_domain = (Domain) existing_domain.clone();
 			new_domain.setLowerBound(new_min);
-			// Check if the new domain is smaller than existing domain.
-			if (existing_domain.getLowerBound() == null || existing_domain.compareTo(new_domain) > 0) {		
-				// new_domain.setMin(new_min);
-				bounds.put(name, new_domain);
-				return true;
+			if(new_domain.isConsistent()){
+				// Check if the new domain is smaller than existing domain.
+				if (existing_domain.getLowerBound() != null || existing_domain.compareTo(new_domain) > 0) {
+					bounds.put(name, new_domain);
+					return true;
+				}
 			}
+
 		} catch (Exception ex) {
 			internalFailure(ex.getMessage(), "Bounds.java", null);
 		}
@@ -92,18 +94,20 @@ public class Bounds implements Cloneable{
 			existing_domain = getDomain(name);
 			Domain new_domain = (Domain) existing_domain.clone();
 			new_domain.setUpperBound(new_max);
-			// Check if new domain is stronger than existing one.
-			if (existing_domain.getUpperBound() == null || existing_domain.compareTo(new_domain) < 0) {
-			//if (existing_domain.compareTo(new_domain) < 0) {
-				bounds.put(name, new_domain);
-				return true;
+			if(new_domain.isConsistent()){
+				// Check if new domain is stronger than existing one.
+				if (existing_domain.getUpperBound() != null || existing_domain.compareTo(new_domain) < 0) {
+					bounds.put(name, new_domain);
+					return true;
+				}
 			}
+
 		} catch (Exception ex) {
 			internalFailure(ex.getMessage(), "Bounds.java", null);
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Adds the lower bounds of a variable.
 	 * @param name
@@ -116,20 +120,25 @@ public class Bounds implements Cloneable{
 		try {
 			new_domain = (Domain) existing_domain.clone();
 			new_domain.setLowerBound(new_min);
-			// Check the lower bound and update the lower bound
-			// When the existing bound in '-infinity' Or the new lower bound is
-			// 'larger'.
-			if (new_domain.compareTo(existing_domain) > 0) {
-				// new_domain.setMin(new_min);
-				bounds.put(name, new_domain);
-				return true;
+			if(new_domain.isConsistent()){
+				if(!existing_domain.equals(new_domain)){
+					// Check the lower bound and update the lower bound
+					// When the existing bound in '-infinity' Or the new lower bound is
+					// 'larger'.
+					if (new_domain.compareTo(existing_domain) > 0) {
+						// new_domain.setMin(new_min);
+						bounds.put(name, new_domain);				
+						return true;
+					}
+				}
 			}
+
 		} catch (Exception ex) {
 			internalFailure(ex.getMessage(), "Bounds.java", null);
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Adds the upper bounds
 	 * @param name
@@ -142,10 +151,14 @@ public class Bounds implements Cloneable{
 		try {
 			new_domain = (Domain) existing_domain.clone();
 			new_domain.setUpperBound(new_max);
-			// Check new domain is smaller (stronger) than existing one.
-			if (new_domain.compareTo(existing_domain) < 0) {
-				bounds.put(name, new_domain);
-				return true;
+			if(new_domain.isConsistent()){
+				if(!existing_domain.equals(new_domain)){
+					// Check new domain is smaller (stronger) than existing one.
+					if (new_domain.compareTo(existing_domain) < 0) {
+						bounds.put(name, new_domain);
+						return true;
+					}
+				}	
 			}
 		} catch (Exception ex) {
 			internalFailure(ex.getMessage(), "Bounds.java", null);
@@ -153,7 +166,7 @@ public class Bounds implements Cloneable{
 		return false;
 	}
 
-	
+
 	/**
 	 * Take the union of current bounds and the new bounds
 	 * to produce a new bounds which contains all the bounds in current or new or both bounds.
@@ -175,13 +188,13 @@ public class Bounds implements Cloneable{
 				if(min_parent!= null&& min_current!=null){
 					new_min=min_parent.min(min_current);
 				}
-				
+
 				BigInteger max_current = this.getUpper(name);
 				//Find the max (this, parent)
 				if(max_parent!= null && max_current!=null){
 					new_max = max_parent.max(max_current);
 				}
-				
+
 			}else{
 				new_min = min_parent;
 				new_max = max_parent;
@@ -190,7 +203,7 @@ public class Bounds implements Cloneable{
 			this.getDomain(name).setUpperBound(new_max);
 		}		
 	}
-	
+
 
 	/**
 	 * Check if all the bounds are consistent (lower bound <= upper bound)
@@ -204,14 +217,7 @@ public class Bounds implements Cloneable{
 			Entry<String, Domain> bnd = iterator.next();
 			Domain d = bnd.getValue();
 			// Check upper bound < lower bound. If so, return false;			
-			BigInteger max = d.getUpperBound();
-			BigInteger min = d.getLowerBound();
-	
-			if(max != null && min != null && max.compareTo(min) < 0){
-				isConsistent &= false;
-			}else{
-				isConsistent &= true;
-			}
+			isConsistent &= d.isConsistent();
 		}
 		return isConsistent;
 	}
@@ -241,7 +247,7 @@ public class Bounds implements Cloneable{
 	@Override
 	public Object clone() {
 		Bounds bnd = new Bounds();
-		
+
 		Iterator<Entry<String, Domain>> iterator = this.getBounds().entrySet().iterator();
 		while(iterator.hasNext()){
 			Entry<String, Domain> entry = iterator.next();
@@ -252,11 +258,11 @@ public class Bounds implements Cloneable{
 				e.printStackTrace();
 			}
 		}
-		
+
 		return bnd;
 	}
 
-	
-	
-	
+
+
+
 }

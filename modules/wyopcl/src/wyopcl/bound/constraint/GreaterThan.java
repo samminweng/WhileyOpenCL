@@ -10,7 +10,7 @@ import wyopcl.bound.Bounds;
  */
 public class GreaterThan extends Constraint {
 
-	private BigInteger max_x, min_y;
+	private BigInteger max_x, min_x, max_y, min_y;
 	private final String x, y;	
 	public GreaterThan(String x, String y){
 		this.x = x;
@@ -25,11 +25,17 @@ public class GreaterThan extends Constraint {
 		bnd.isChanged = false;
 
 		max_x = bnd.getUpper(x);
+		min_x = bnd.getLower(x);
+		max_y = bnd.getUpper(y);
 		min_y = bnd.getLower(y);
 
-		//Propagate 'max_x - 1' to Upper bound of y.
-		if (max_x != null){
+		
+		/*if (max_x != null){
 			bnd.isChanged |= bnd.addUpperBound(y, max_x.subtract(BigInteger.ONE));
+		}*/
+		//Propagate 'max_y + 1' to Upper bound of x using the widen operator.
+		if(max_y != null){
+			bnd.isChanged |= bnd.widenUpperBound(x, max_y.add(BigInteger.ONE));
 		}
 
 		//Propagate 'min_y + 1' to lower bound of x 

@@ -8,6 +8,7 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 	private final String name;
 	private BigInteger lower_bound = null;
 	private BigInteger upper_bound = null;
+	private boolean isConsistent = true;
 
 	public Domain(String name) {
 		this.name = name;
@@ -63,6 +64,15 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 		this.upper_bound = upper_bound;
 	}
 
+	public boolean isConsistent(){
+		if(this.lower_bound!= null && this.upper_bound != null){
+			if(this.lower_bound.compareTo(this.upper_bound)>0){
+				return false;
+			}
+		}		
+		return true;
+	}
+	
 
 	/***
 	 * Compare this domain with another domain (d). If both of them are equal,
