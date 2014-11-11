@@ -42,7 +42,7 @@ public class GreaterThanEquals extends Constraint {
 
 	@Override
 	public String toString() {
-		return "GreatThanEquals[ " + x + ">=" + y + " ]";
+		return x + ">=" + y;
 	}
 	
 	

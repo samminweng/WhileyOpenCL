@@ -60,7 +60,7 @@ public class Negate extends Constraint{
 
 	@Override
 	public String toString() {
-		return "Negate [ !" + x + "=" + y + "]";
+		return "!" + x + "=" + y;
 	}
 
 

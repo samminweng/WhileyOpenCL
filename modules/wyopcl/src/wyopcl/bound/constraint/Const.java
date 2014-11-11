@@ -30,6 +30,6 @@ public class Const extends Constraint{
 	}
 	@Override
 	public String toString() {
-		return "Const [ " + x + "=" + constant_value + " ]";
+		return x + "=" + constant_value;
 	}
 }

@@ -73,7 +73,7 @@ public class RightPlus extends Constraint{
 	}
 	@Override
 	public String toString() {
-		return "RightPlus [ " + x + "=" + y + "+" + z + " ]";
+		return x + "=" + y + "+" + z;
 	}
 
 }

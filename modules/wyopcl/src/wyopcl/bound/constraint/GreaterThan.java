@@ -43,6 +43,6 @@ public class GreaterThan extends Constraint {
 
 	@Override
 	public String toString() {
-		return "GreaterThan [ " + x + ">" + y + " ]";
+		return  x + ">" + y ;
 	}
 }
