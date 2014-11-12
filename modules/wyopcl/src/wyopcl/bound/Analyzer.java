@@ -535,7 +535,7 @@ public class Analyzer {
 		if(isIntType(code.type())){
 			//Add the constraint 'target = operand'
 			//addConstraint(new Assign("%"+code.target(), "%"+code.operand(0)));
-			addConstraint(new Equals("%"+code.target(), "%"+code.operand(0)));
+			addConstraint(new Union("%"+code.target(), "%"+code.operand(0)));
 		}
 
 	}

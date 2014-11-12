@@ -4,7 +4,7 @@ import java.math.BigInteger;
 
 import wyopcl.bound.Bounds;
 /**
- * Implements the propagation rule for the constraint 'x \cup y = x'
+ * Implements the propagation rule for the constraint 'x = x \cup y'
  * @author Min-Hsien Weng
  *
  */
@@ -26,22 +26,14 @@ public class Union extends Constraint {
 		max_y = bnd.getUpper(y);
 
 		//Propagate the lower bounds to x
-		if(min_x == null){
-			bnd.isChanged |= bnd.addLowerBound(x, min_y);
-		}else{			
+		if(min_y != null){
 			//Get the smaller lower bounds of x and y and add that lower bound to x.
-//			if(min_y != null){
-//				bnd.isChanged |= bnd.widenLowerBound(x, min_y);
-//			}
+			bnd.isChanged |= bnd.widenLowerBound(x, min_y);			
 		}
 
 		//Propagate the upper bounds to x.
-		if(max_x == null){
-			bnd.isChanged |= bnd.addUpperBound(x, max_y);
-		}else{			
-//			if(max_y != null){				
-//				bnd.isChanged |= bnd.widenUpperBound(x, max_y);
-//			}		
+		if(max_y != null){
+			bnd.isChanged |= bnd.widenUpperBound(x, max_y);
 		}
 
 		return bnd.isChanged;
@@ -50,7 +42,7 @@ public class Union extends Constraint {
 
 	@Override
 	public String toString() {
-		return x + "cup" + y + " = "+x;
+		return x + "=" + x + "cup" + y;
 	}
 
 
