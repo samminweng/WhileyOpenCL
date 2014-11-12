@@ -69,14 +69,14 @@ public class Bounds implements Cloneable{
 			existing_domain = getDomain(name);
 			Domain new_domain = (Domain) existing_domain.clone();
 			new_domain.setLowerBound(new_min);
-			if(new_domain.isConsistent()){
-				// Check if the new domain is smaller than existing domain.
+			// Check if the new domain is smaller than existing domain.
+			if(!existing_domain.equals(new_domain)){
 				if (existing_domain.getLowerBound() != null || existing_domain.compareTo(new_domain) > 0) {
 					bounds.put(name, new_domain);
 					return true;
 				}
-			}
 
+			}
 		} catch (Exception ex) {
 			internalFailure(ex.getMessage(), "Bounds.java", null);
 		}
@@ -93,15 +93,14 @@ public class Bounds implements Cloneable{
 		try {
 			existing_domain = getDomain(name);
 			Domain new_domain = (Domain) existing_domain.clone();
-			new_domain.setUpperBound(new_max);
-			if(new_domain.isConsistent()){
-				// Check if new domain is stronger than existing one.
+			new_domain.setUpperBound(new_max);			
+			// Check if new domain is stronger than existing one.
+			if(!existing_domain.equals(new_domain)){
 				if (existing_domain.getUpperBound() != null || existing_domain.compareTo(new_domain) < 0) {
 					bounds.put(name, new_domain);
 					return true;
 				}
 			}
-
 		} catch (Exception ex) {
 			internalFailure(ex.getMessage(), "Bounds.java", null);
 		}
@@ -120,16 +119,14 @@ public class Bounds implements Cloneable{
 		try {
 			new_domain = (Domain) existing_domain.clone();
 			new_domain.setLowerBound(new_min);
-			if(new_domain.isConsistent()){
-				if(!existing_domain.equals(new_domain)){
-					// Check the lower bound and update the lower bound
-					// When the existing bound in '-infinity' Or the new lower bound is
-					// 'larger'.
-					if (new_domain.compareTo(existing_domain) > 0) {
-						// new_domain.setMin(new_min);
-						bounds.put(name, new_domain);				
-						return true;
-					}
+			if(!existing_domain.equals(new_domain)){
+				// Check the lower bound and update the lower bound
+				// When the existing bound in '-infinity' Or the new lower bound is
+				// 'larger'.
+				if (new_domain.compareTo(existing_domain) > 0) {
+					// new_domain.setMin(new_min);
+					bounds.put(name, new_domain);				
+					return true;
 				}
 			}
 
@@ -151,15 +148,13 @@ public class Bounds implements Cloneable{
 		try {
 			new_domain = (Domain) existing_domain.clone();
 			new_domain.setUpperBound(new_max);
-			if(new_domain.isConsistent()){
-				if(!existing_domain.equals(new_domain)){
-					// Check new domain is smaller (stronger) than existing one.
-					if (new_domain.compareTo(existing_domain) < 0) {
-						bounds.put(name, new_domain);
-						return true;
-					}
-				}	
-			}
+			if(!existing_domain.equals(new_domain)){
+				// Check new domain is smaller (stronger) than existing one.
+				if (new_domain.compareTo(existing_domain) < 0) {
+					bounds.put(name, new_domain);
+					return true;
+				}
+			}			
 		} catch (Exception ex) {
 			internalFailure(ex.getMessage(), "Bounds.java", null);
 		}

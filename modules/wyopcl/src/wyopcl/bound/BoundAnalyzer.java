@@ -205,7 +205,7 @@ public class BoundAnalyzer implements Builder{
 						//Infer the bounds
 						bnd = invokeanalyzer.inferBounds(true);
 						//propagate the bounds of return value.
-						analyzer.addConstraint(new Range("%"+code.target(), bnd.getLower("return"), bnd.getUpper("return")));	
+						//analyzer.addConstraint(new Range("%"+code.target(), bnd.getLower("return"), bnd.getUpper("return")));	
 					
 						invokeanalyzer = null;
 					}

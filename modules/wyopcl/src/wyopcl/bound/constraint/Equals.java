@@ -5,8 +5,12 @@ import wyopcl.bound.Bounds;
 
 /**
  * Implementing the propagation rule for the equality ( x == y )
+ * The rule gets the lower bounds of 'x and y'
+ * and higher upper bounds of 'x and y'
  * 
- * @author mw169
+ * For example, D(x)=[-10..10] D(y)=[0..5]. The resulting domains are
+ * D(x)=[0..5] D(y)=[0..5] 
+ * @author Min-Hsien Weng
  *
  */
 public class Equals extends Constraint {

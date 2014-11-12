@@ -1,18 +1,18 @@
 Bounds of reverse
 {
 	D(%0) = [-infinity..infinity]
-	D(%1) = [1..infinity]
+	D(%1) = [-infinity..0]
 	D(%3) = [-infinity..infinity]
 	D(%4) = [-infinity..infinity]
 	D(%13) = [0..0]
 	D(%15) = [1..1]
-	D(%16) = [-infinity..-1]
+	D(%16) = [1..0]
 	D(%20) = [-infinity..infinity]
 	D(%21) = [-infinity..infinity]
 	D(%22) = [-infinity..infinity]
 	D(return) = [-infinity..infinity]
 }
-Consistency=true
+Consistency=false
 Bounds of main
 {
 	D(%1) = [-infinity..infinity]
@@ -22,7 +22,7 @@ Bounds of main
 	D(%5) = [3..3]
 	D(%6) = [4..4]
 	D(%7) = [5..5]
-	D(%8) = [1..5]
+	D(%8) = [5..5]
 	D(%13) = [-infinity..infinity]
 }
 Consistency=true
