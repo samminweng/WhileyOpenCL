@@ -19,7 +19,7 @@ import wyopcl.bound.constraint.LeftPlus;
 import wyopcl.bound.constraint.LessThan;
 import wyopcl.bound.constraint.LessThanEquals;
 import wyopcl.bound.constraint.Negate;
-import wyopcl.bound.constraint.RightPlus;
+import wyopcl.bound.constraint.Plus;
 import wyopcl.testing.interpreter.BaseTestUtil;
 
 public class BoundTestCase {
@@ -478,7 +478,7 @@ public class BoundTestCase {
 		// D(z) = [2..2]
 		blk.addBounds("z", new BigInteger("2"), new BigInteger("2"));
 		// x = y+z
-		blk.addConstraint(new RightPlus("x", "y", "z"));
+		blk.addConstraint(new Plus("x", "y", "z"));
 		assertTrue(blk.inferFixedPoint());
 		assertEquals(new BigInteger("4"), blk.getLower("x"));
 		assertEquals(new BigInteger("5"), blk.getUpper("x"));

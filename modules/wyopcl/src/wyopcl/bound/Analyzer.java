@@ -29,7 +29,7 @@ import wyopcl.bound.constraint.GreaterThanEquals;
 import wyopcl.bound.constraint.LessThan;
 import wyopcl.bound.constraint.LessThanEquals;
 import wyopcl.bound.constraint.Negate;
-import wyopcl.bound.constraint.RightPlus;
+import wyopcl.bound.constraint.Plus;
 import wyopcl.bound.constraint.Union;
 /***
  * A class to store all the constraints produced in the wyil file and infer the bounds consistent
@@ -535,7 +535,7 @@ public class Analyzer {
 		if(isIntType(code.type())){
 			//Add the constraint 'target = operand'
 			//addConstraint(new Assign("%"+code.target(), "%"+code.operand(0)));
-			addConstraint(new Union("%"+code.target(), "%"+code.operand(0)));
+			addConstraint(new Equals("%"+code.target(), "%"+code.operand(0)));
 		}
 
 	}
@@ -865,10 +865,10 @@ public class Analyzer {
 		if(isIntType(code.type())){
 			switch (code.kind) {
 			case ADD:
-				addConstraint(new RightPlus("%"+code.target(), "%"+code.operand(0), "%"+code.operand(1)));
+				addConstraint(new Plus("%"+code.target(), "%"+code.operand(0), "%"+code.operand(1)));
 				break;
 			case SUB:			
-				addConstraint(new RightPlus("%"+code.operand(0), "%"+code.target(), "%"+code.operand(1)));				
+				addConstraint(new Plus("%"+code.operand(0), "%"+code.target(), "%"+code.operand(1)));				
 				break;
 			case MUL:		
 				break;
