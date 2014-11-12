@@ -803,8 +803,8 @@ public class Analyzer {
 		//Check if each element is an integer
 		if(isIntType((Type) code.type)){			
 			//Propagate the range of source register to the index reg 
-			loopbody.addConstraint(new LessThanEquals("%"+code.indexOperand, "%"+code.sourceOperand));
-			loopexit.addConstraint(new GreaterThan("%"+code.indexOperand, "%"+code.sourceOperand));
+			loopbody.addConstraint(new Equals("%"+code.indexOperand, "%"+code.sourceOperand));
+			//Do not add any constraint to loop exit.
 		}
 
 		setCurrentBlock(loopbody);
