@@ -110,7 +110,11 @@ public class BoundAnalyzer implements Builder{
 		return generatedFiles;
 	}
 	
-	
+	/**
+	 * Iterate each bytecode
+	 * @param analyzer
+	 * @param functionOrMethod
+	 */
 	private void iterateByteCode(Analyzer analyzer, WyilFile.FunctionOrMethodDeclaration functionOrMethod){
 		int line = 0;
 		for(Case mcase : functionOrMethod.cases()){

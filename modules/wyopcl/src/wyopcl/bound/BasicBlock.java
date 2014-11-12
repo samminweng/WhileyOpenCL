@@ -205,13 +205,16 @@ public class BasicBlock implements Comparable<BasicBlock>{
 	 * Infer the bounds 
 	 * @return true if the bounds are changed. Return false if bounds remain unchanged.
 	 */
-	public boolean inferBounds(){
+	public boolean inferBounds(boolean verbose){
 		isChanged = false;
 		//Iterate through the constraints to infer the bounds.
 		for(Constraint c: this.constraintList){
 			//The inferBound method returns False if the bounds remain unchanged.
 			boolean inferBound = c.inferBound(this.unionOfBounds);
 			//So we use the bitwise Or to combine all the results
+			if(verbose){
+				System.out.println(c+" BoundChanged:"+inferBound);
+			}			
 			isChanged |= inferBound;
 		}
 		return isChanged;

@@ -5,7 +5,7 @@ import wyopcl.bound.Bounds;
 
 
 public class LessThan extends Constraint {
-	private BigInteger min_x, max_y;
+	private BigInteger min_x, max_x, min_y, max_y;
 	private final String x, y;	
 	public LessThan(String x, String y){
 		this.x = x;
@@ -21,6 +21,8 @@ public class LessThan extends Constraint {
 		bnd.isChanged = false;
 		//Propagate 'lower bound of x + 1' to lower bound of y 
 		min_x = bnd.getLower(x);
+		max_x = bnd.getUpper(x);
+		min_y = bnd.getLower(y);
 		max_y = bnd.getUpper(y);
 
 		if(min_x != null){

@@ -64,13 +64,18 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 		this.upper_bound = upper_bound;
 	}
 
+	/**
+	 * Compare the lower bound with the upper bound. 
+	 * @return true if lower <= upper. Otherwise, return false.
+	 */
 	public boolean isConsistent(){
+		isConsistent = true;
 		if(this.lower_bound!= null && this.upper_bound != null){
 			if(this.lower_bound.compareTo(this.upper_bound)>0){
-				return false;
+				isConsistent = false;
 			}
 		}		
-		return true;
+		return isConsistent;
 	}
 	
 

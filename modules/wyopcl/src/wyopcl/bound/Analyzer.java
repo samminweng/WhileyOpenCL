@@ -21,7 +21,6 @@ import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyil.lang.Type.Tuple;
 import wyopcl.bound.BasicBlock.BlockType;
-import wyopcl.bound.constraint.Assign;
 import wyopcl.bound.constraint.Const;
 import wyopcl.bound.constraint.Constraint;
 import wyopcl.bound.constraint.Equals;
@@ -221,7 +220,7 @@ public class Analyzer {
 					}
 				}
 				//If bounds has no change, then isChanged = true.
-				boolean isChanged = blk.inferBounds();
+				boolean isChanged = blk.inferBounds(verbose);
 				//Use bitwise 'AND' to combine all the results
 				isFixedPointed &= (!isChanged);
 				//Print out the bounds.
@@ -389,9 +388,11 @@ public class Analyzer {
 			BasicBlock loop_exit = createBasicBlock(new_label, BlockType.LOOP_EXIT, c_blk);
 
 			//put the original constraint to current blk(loopbody)
-			loop_body.addConstraint(c);			
+			//loop_body.addConstraint(c);
+			loop_body.addConstraint(neg_c);	
 			//put the negated constraint to the loop_exit
-			loop_exit.addConstraint(neg_c);	
+			//loop_exit.addConstraint(neg_c);
+			loop_exit.addConstraint(c);	
 			setCurrentBlock(loop_body);
 			loop_condition = "";
 		}else{
@@ -533,7 +534,8 @@ public class Analyzer {
 		//Check if the assigned value is an integer
 		if(isIntType(code.type())){
 			//Add the constraint 'target = operand'
-			addConstraint(new Assign("%"+code.target(), "%"+code.operand(0)));
+			//addConstraint(new Assign("%"+code.target(), "%"+code.operand(0)));
+			addConstraint(new Equals("%"+code.target(), "%"+code.operand(0)));
 		}
 
 	}
@@ -723,12 +725,10 @@ public class Analyzer {
 		//Check if the return type is integer.
 		if(isIntType(code.type)){
 			//Add the 'Equals' constraint to the return (ret) variable.
-			blk.addConstraint((new Assign("return", ret)));			
-		}
-		//Check the current blk has the child. If so, go to the child blk		
-
-		//Connect the current block with exit block.
-		//go the leaf blk
+			//blk.addConstraint((new Assign("return", ret)));
+			blk.addConstraint((new Equals("return", ret)));
+		}		
+		//Connect the current block with exit block.		
 		blk.addChild(getBasicBlock("exit", BlockType.EXIT));
 		setCurrentBlock(null);
 		isGoto = true;
@@ -934,7 +934,7 @@ public class Analyzer {
 		if(index%2==1){
 			Type.Tuple tuple = (Tuple) code.type();
 			if(isIntType(tuple.element(index))){
-				addConstraint(new Assign("%"+code.target(), "%"+code.operand(0)));
+				addConstraint(new Equals("%"+code.target(), "%"+code.operand(0)));
 			}
 		}
 
