@@ -242,8 +242,8 @@
 	<classpath refid="junit-classpath"/>	
 	<formatter type="xml" />
 	<batchtest todir="report/bounds">
-		<fileset dir="modules/wyopcl/test/">
-			<include name="**/*BoundTestCase*" />
+		<fileset dir="modules/wyopcl/test">
+			<include name="**/Bound*" />
 		</fileset>
 	</batchtest>
 </junit>
