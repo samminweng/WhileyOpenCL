@@ -1,9 +1,9 @@
 Bounds of play
 {
 	D(%3) = [0..0]
-	D(%5) = [-infinity..infinity]
-	D(%6) = [0..0]
-	D(%7) = [0..0]
+	D(%5) = [0..32767]
+	D(%6) = [0..32767]
+	D(%7) = [0..32767]
 }
 Consistency=true
 Bounds of isAlive
@@ -11,8 +11,8 @@ Bounds of isAlive
 	D(%0) = [-infinity..infinity]
 	D(%3) = [0..0]
 	D(%5) = [1..1]
-	D(%6) = [-infinity..1]
-	D(%8) = [-infinity..infinity]
+	D(%6) = [0..32767]
+	D(%8) = [0..32767]
 	D(%11) = [1..1]
 	D(%12) = [-infinity..-1]
 	D(%17) = [1..1]

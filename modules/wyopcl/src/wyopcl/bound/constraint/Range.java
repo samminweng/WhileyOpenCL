@@ -16,14 +16,22 @@ public class Range extends Constraint {
 		this.x = x;
 		this.y = y;
 	}
+	
+	public Range(String x, BigInteger min, BigInteger max){
+		this.x = x;
+		this.min_y = min;
+		this.max_y = max;
+	}
+	
 
 	@Override
 	public boolean inferBound(Bounds bnd) {
 		
 		bnd.isChanged = false;
-		
-		min_y = bnd.getLower(y);
-		max_y = bnd.getUpper(y);
+		if(y != null){
+			min_y = bnd.getLower(y);
+			max_y = bnd.getUpper(y);
+		}		
 		
 		bnd.getDomain(x).setLowerBound(min_y);
 		bnd.getDomain(x).setUpperBound(max_y);
@@ -33,7 +41,12 @@ public class Range extends Constraint {
 
 	@Override
 	public String toString() {
-		return x + ":="+ y;
+		if(y!=null){
+			return x + ":="+ y;
+		}else{
+			return x+":=["+min_y+".."+max_y+"]";
+		}
+		
 	}
 
 }

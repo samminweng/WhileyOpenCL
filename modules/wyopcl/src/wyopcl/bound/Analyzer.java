@@ -805,11 +805,12 @@ public class Analyzer {
 	}
 
 	/**
-	 * Not implemented.
+	 * Add the [0..32767] range to the target register. We use the max value of
+	 * short integer as the length of a list.  
 	 * @param code
 	 */
 	private void analyze(Codes.LengthOf code){		
-		//addConstraintToCurrentList(new Equals("%"+code.target(), "%"+code.operand(0)));		
+		addConstraint(new Range("%"+code.target(), BigInteger.ZERO, BigInteger.valueOf(32767)));		
 	}
 
 	/**
