@@ -26,6 +26,7 @@ import wyopcl.bound.constraint.Constraint;
 import wyopcl.bound.constraint.Equals;
 import wyopcl.bound.constraint.GreaterThan;
 import wyopcl.bound.constraint.GreaterThanEquals;
+import wyopcl.bound.constraint.LeftPlus;
 import wyopcl.bound.constraint.LessThan;
 import wyopcl.bound.constraint.LessThanEquals;
 import wyopcl.bound.constraint.Negate;
@@ -862,8 +863,9 @@ public class Analyzer {
 			case ADD:
 				addConstraint(new Plus("%"+code.target(), "%"+code.operand(0), "%"+code.operand(1)));
 				break;
-			case SUB:			
-				addConstraint(new Plus("%"+code.operand(0), "%"+code.target(), "%"+code.operand(1)));				
+			case SUB:
+				//target = op(0) - op(1) => target+op(1) = op(0)		
+				addConstraint(new LeftPlus("%"+code.target(), "%"+code.operand(1), "%"+code.operand(0)));				
 				break;
 			case MUL:		
 				break;
