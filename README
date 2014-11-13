@@ -59,4 +59,7 @@ The current success rate is 95.85% (Failures: 22, Errors: 16, Skipped: 94).
 2.1 Bound Analyzer
 The bound analyzer currently is being used to analyze the valid test
 Whiley programs, including {IfElse_Valid_1..2}, {BoolList_Valid_2}, 
-{While_Valid_1}, {For_Valid_1}
+{While_Valid_1}, {For_Valid_1}... To run the tests, use the below commands:
+$ ant report
+he unit test results are summarized at 'report/bounds/index.html'. 
+
