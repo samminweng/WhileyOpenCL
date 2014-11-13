@@ -469,7 +469,7 @@ public class BoundTestCase {
 	 * @see Figure3.11
 	 */
 	@Test
-	public void testRightPlus() {
+	public void testPlus() {
 		BasicBlock blk = new BasicBlock("code", BlockType.BLOCK);
 		// D(x) = [4..8]
 		blk.addBounds("x", new BigInteger("4"), new BigInteger("8"));
