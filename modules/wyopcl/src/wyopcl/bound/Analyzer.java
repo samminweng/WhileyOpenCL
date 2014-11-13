@@ -234,8 +234,7 @@ public class Analyzer {
 			//Check if the bounds in the block remains the same. If it is true, then go to loop exit.
 			if(isFixedPointed){
 				break;
-			}
-			
+			}			
 		}
 		return exit.getBounds();
 	}
@@ -388,11 +387,9 @@ public class Analyzer {
 			BasicBlock loop_body = createBasicBlock(new_label, BlockType.LOOP_BODY, c_blk);
 			BasicBlock loop_exit = createBasicBlock(new_label, BlockType.LOOP_EXIT, c_blk);
 
-			//put the original constraint to current blk(loopbody)
-			//loop_body.addConstraint(c);
+			//put the opposite constraint to current blk(loopbody)			
 			loop_body.addConstraint(neg_c);	
-			//put the negated constraint to the loop_exit
-			//loop_exit.addConstraint(neg_c);
+			//put the original constraint to the loop_exit			
 			loop_exit.addConstraint(c);	
 			setCurrentBlock(loop_body);
 			loop_condition = "";
@@ -406,7 +403,6 @@ public class Analyzer {
 			leftBlock.addConstraint(c);
 			rightBlock.addConstraint(neg_c);						
 			//Set the current block to the left
-
 			setCurrentBlock(leftBlock);
 		}
 	}
@@ -534,8 +530,7 @@ public class Analyzer {
 	private void analyze(Codes.Assign code){		
 		//Check if the assigned value is an integer
 		if(isIntType(code.type())){
-			//Add the constraint 'target = operand'
-			//addConstraint(new Assign("%"+code.target(), "%"+code.operand(0)));
+			//Add the constraint 'target = operand'			
 			addConstraint(new Range("%"+code.target(), "%"+code.operand(0)));
 		}
 
@@ -725,8 +720,7 @@ public class Analyzer {
 		BasicBlock blk = getCurrentBlock();
 		//Check if the return type is integer.
 		if(isIntType(code.type)){
-			//Add the 'Equals' constraint to the return (ret) variable.
-			//blk.addConstraint((new Assign("return", ret)));
+			//Add the 'Equals' constraint to the return (ret) variable.			
 			blk.addConstraint((new Equals("return", ret)));
 		}		
 		//Connect the current block with exit block.		

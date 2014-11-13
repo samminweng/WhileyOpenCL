@@ -7,8 +7,7 @@ import java.util.regex.Pattern;
 public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain> {
 	private final String name;
 	private BigInteger lower_bound = null;
-	private BigInteger upper_bound = null;
-	private boolean isConsistent = true;
+	private BigInteger upper_bound = null;	
 
 	public Domain(String name) {
 		this.name = name;
@@ -69,13 +68,12 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 	 * @return true if lower <= upper. Otherwise, return false.
 	 */
 	public boolean isConsistent(){
-		isConsistent = true;
 		if(this.lower_bound!= null && this.upper_bound != null){
 			if(this.lower_bound.compareTo(this.upper_bound)>0){
-				isConsistent = false;
+				return false;
 			}
 		}		
-		return isConsistent;
+		return true;
 	}
 	
 
@@ -166,8 +164,7 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 	/**
 	 * Implemented for sort the domains
 	 */
-	public int compare(Domain d0, Domain d1) {
-		
+	public int compare(Domain d0, Domain d1) {		
 		int reg = d0.getReg() - d1.getReg();
 		if(reg == 0){
 			return d0.getLabel() - d1.getLabel();

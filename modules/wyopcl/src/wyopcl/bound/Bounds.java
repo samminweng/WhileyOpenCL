@@ -21,7 +21,7 @@ public class Bounds implements Cloneable{
 	// Every subclass shares the 'bounds' variable;
 	private HashMap<String, Domain> bounds;
 	public boolean isChanged = false;
-	private Domain existing_domain;
+	//private Domain existing_domain;
 
 	public Bounds() {
 		bounds = new HashMap<String, Domain>();
@@ -66,7 +66,7 @@ public class Bounds implements Cloneable{
 	 */
 	public boolean widenLowerBound(String name, BigInteger new_min) {
 		try {
-			existing_domain = getDomain(name);
+			Domain existing_domain = getDomain(name);
 			Domain new_domain = (Domain) existing_domain.clone();
 			new_domain.setLowerBound(new_min);
 			// Check if the new domain is smaller than existing domain.
@@ -75,7 +75,6 @@ public class Bounds implements Cloneable{
 					bounds.put(name, new_domain);
 					return true;
 				}
-
 			}
 		} catch (Exception ex) {
 			internalFailure(ex.getMessage(), "Bounds.java", null);
@@ -91,7 +90,7 @@ public class Bounds implements Cloneable{
 	 */
 	public boolean widenUpperBound(String name, BigInteger new_max) {
 		try {
-			existing_domain = getDomain(name);
+			Domain existing_domain = getDomain(name);
 			Domain new_domain = (Domain) existing_domain.clone();
 			new_domain.setUpperBound(new_max);			
 			// Check if new domain is stronger than existing one.
@@ -114,7 +113,7 @@ public class Bounds implements Cloneable{
 	 * @return true if bounds change. Otherwise, return false.
 	 */
 	public boolean addLowerBound(String name, BigInteger new_min) {
-		existing_domain = getDomain(name);
+		Domain existing_domain = getDomain(name);
 		Domain new_domain = null;
 		try {
 			new_domain = (Domain) existing_domain.clone();
@@ -143,7 +142,7 @@ public class Bounds implements Cloneable{
 	 * @return true if bounds change. Otherwise, return false.
 	 */
 	public boolean addUpperBound(String name, BigInteger new_max) {
-		existing_domain = getDomain(name);
+		Domain existing_domain = getDomain(name);
 		Domain new_domain = null;
 		try {
 			new_domain = (Domain) existing_domain.clone();
@@ -183,13 +182,11 @@ public class Bounds implements Cloneable{
 				if(min_parent!= null&& min_current!=null){
 					new_min=min_parent.min(min_current);
 				}
-
 				BigInteger max_current = this.getUpper(name);
 				//Find the max (this, parent)
 				if(max_parent!= null && max_current!=null){
 					new_max = max_parent.max(max_current);
 				}
-
 			}else{
 				new_min = min_parent;
 				new_max = max_parent;
@@ -242,7 +239,6 @@ public class Bounds implements Cloneable{
 	@Override
 	public Object clone() {
 		Bounds bnd = new Bounds();
-
 		Iterator<Entry<String, Domain>> iterator = this.getBounds().entrySet().iterator();
 		while(iterator.hasNext()){
 			Entry<String, Domain> entry = iterator.next();
@@ -253,11 +249,21 @@ public class Bounds implements Cloneable{
 				e.printStackTrace();
 			}
 		}
-
 		return bnd;
 	}
 
-
-
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof Bounds){
+			Bounds bnd = (Bounds)obj;
+			//Test the key set
+			if(this.bounds.keySet().equals(bnd.bounds.keySet())){
+				if(this.bounds.values().containsAll(bnd.bounds.values())){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
 }

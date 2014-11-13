@@ -22,6 +22,7 @@ public class BasicBlock implements Comparable<BasicBlock>{
 	private String branch;
 	private BlockType type;
 	private Bounds unionOfBounds;
+	private Bounds existingBounds;
 	//Indicate if the bounds remain unchanged. False: unchanged. True: changed.
 	private boolean isChanged = false;
 
@@ -206,17 +207,18 @@ public class BasicBlock implements Comparable<BasicBlock>{
 	 * @return true if the bounds are changed. Return false if bounds remain unchanged.
 	 */
 	public boolean inferBounds(boolean verbose){
-		isChanged = false;
+		isChanged = true;
 		//Iterate through the constraints to infer the bounds.
 		for(Constraint c: this.constraintList){
 			//The inferBound method returns False if the bounds remain unchanged.
-			boolean inferBound = c.inferBound(this.unionOfBounds);
-			//So we use the bitwise Or to combine all the results
-			if(verbose){
-				System.out.println(c+" BoundChanged:"+inferBound);
-			}			
-			isChanged |= inferBound;
+			c.inferBound(this.unionOfBounds);
 		}
+		//Test the equality of HashMap of bounds.
+		if(existingBounds!= null && existingBounds.equals(this.unionOfBounds)){
+			isChanged = false;
+		}
+		//Clone the inferred bounds and assign it to the existing bounds.
+		existingBounds = (Bounds) this.unionOfBounds.clone();
 		return isChanged;
 	}
 
