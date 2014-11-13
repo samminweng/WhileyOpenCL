@@ -229,8 +229,10 @@ public class Analyzer {
 					System.out.println(blk);
 					System.out.println("isChanged="+isChanged);
 				}
-			}			
-			System.out.println("isFixedPointed="+isFixedPointed);
+			}
+			if(verbose){
+				System.out.println("isFixedPointed="+isFixedPointed);
+			}
 			//Check if the bounds in the block remains the same. If it is true, then go to loop exit.
 			if(isFixedPointed){
 				break;

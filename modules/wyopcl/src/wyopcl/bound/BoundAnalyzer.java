@@ -55,8 +55,6 @@ public class BoundAnalyzer implements Builder{
 	private Build.Project project;
 	private String filename;
 	private boolean verbose = false;
-	private File output_file;
-
 	private String[] args;
 	/**
 	 * For logging information.
@@ -93,18 +91,12 @@ public class BoundAnalyzer implements Builder{
 			//Path.Root dst = p.second();
 			Path.Entry<WyilFile> sf = (Path.Entry<WyilFile>) p.first();
 			WyilFile module = sf.read();
-			filename = module.filename().split(".whiley")[0];
-			//Create a file
-			output_file = new File(filename+".sysout");
-			//If file exists, then delete it
-			if(output_file.exists()){
-				output_file.delete();
-			}			
+			filename = module.filename().split(".whiley")[0];				
 			//Start analyzing the range.
 			analyze(module);
 			//analyzeMethodCall(module);
 		}
-
+		
 		long endTime = System.currentTimeMillis();
 		System.err.println("Wyil interpreter completed.\nFile:" + filename +".whiley Time: "+(endTime - start)+" ms");
 		return generatedFiles;
@@ -124,10 +116,15 @@ public class BoundAnalyzer implements Builder{
 			while(iterator.hasNext()){
 				//Get the Block.Entry
 				Block.Entry entry = iterator.next();
-				line = analyzer.printWyILCode(entry.code, functionOrMethod.name(), line);				
+				if(verbose){
+					line = analyzer.printWyILCode(entry.code, functionOrMethod.name(), line);
+				}
 				analyzer.dispatch(entry);				
 			}
-			analyzer.printCFG(functionOrMethod.name());
+			if(verbose){
+				analyzer.printCFG(functionOrMethod.name());
+			}
+			
 		}
 	}
 	
@@ -137,17 +134,10 @@ public class BoundAnalyzer implements Builder{
 	 * @param func_name the name of a function.
 	 * @param bnd the bounds of a function.
 	 */
-	private void writeOutBounds(String func_name, Bounds bnd){
-		try {
-			FileWriter writer = new FileWriter(output_file, true);
-			writer.write("Bounds of "+func_name+"\n");
-			writer.write(bnd.toString()+"\n");
-			writer.write("Consistency="+bnd.checkBoundConsistency()+"\n");
-			writer.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void printOutBounds(String func_name, Bounds bnd){
+		System.out.println("Bounds of "+func_name);
+		System.out.println(bnd.toString());
+		System.out.println("Consistency="+bnd.checkBoundConsistency());
 	}
 	
 	
@@ -161,8 +151,10 @@ public class BoundAnalyzer implements Builder{
 			iterateByteCode(analyzer, functionOrMethod);			
 			//Infer and print the final bounds.
 			Bounds bnd = analyzer.inferBounds(verbose);
-			analyzer.printBounds(bnd);
-			writeOutBounds(functionOrMethod.name(), bnd);
+			if(verbose){
+				analyzer.printBounds(bnd);
+			}			
+			printOutBounds(functionOrMethod.name(), bnd);
 			analyzer = null;
 		}
 	}
