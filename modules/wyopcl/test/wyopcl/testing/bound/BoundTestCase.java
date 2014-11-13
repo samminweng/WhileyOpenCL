@@ -107,8 +107,8 @@ public class BoundTestCase {
 		BasicBlock blk = new BasicBlock("code", BlockType.BLOCK);
 		blk.addConstraint(new Const("x", new BigInteger("20")));		
 		assertTrue(blk.inferFixedPoint());
-		assertEquals(new BigInteger("20"), blk.getBounds().getLower("x"));
-		assertEquals(new BigInteger("20"), blk.getBounds().getUpper("x"));
+		assertEquals(new BigInteger("20"), blk.getLower("x"));
+		assertEquals(new BigInteger("20"), blk.getUpper("x"));
 	}
 
 	/***

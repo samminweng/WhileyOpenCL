@@ -264,27 +264,18 @@ public class Analyzer {
 	 * @return blk
 	 */
 	private BasicBlock getBasicBlock(String label){
+		BasicBlock blk = getBasicBlock(label, BlockType.BLOCK);
+		if(blk == null){
+			//Get the block of If branch
+			blk = getBasicBlock(label, BlockType.IF_BRANCH);
+		}
+		
+		if(blk == null){
+			//Get the block of Loop Exit
+			blk = getBasicBlock(label, BlockType.LOOP_EXIT);
+		}
 
-		Iterator<BasicBlock> iterator = list.iterator();
-		while(iterator.hasNext()){
-			BasicBlock blk = iterator.next();
-			if(blk.getBranch().equals(label)){
-				if(blk.getType().equals(BlockType.BLOCK)){
-					return blk;
-				}
-				//Get the block of If branch
-				if(blk.getType().equals(BlockType.IF_BRANCH)){
-					return blk;
-				}
-				//Get the block of Loop Exit
-				if(blk.getType().equals(BlockType.LOOP_EXIT)){
-					return blk;
-				}
-			}
-		}		
-
-		//Not found
-		return null;
+		return blk;
 
 
 	}
@@ -310,21 +301,27 @@ public class Analyzer {
 	}
 
 
-	private BasicBlock createBasicBlock(String label, BlockType type){
+	/*private BasicBlock createBasicBlock(String label, BlockType type){
 		BasicBlock blk = new BasicBlock(label, type);
 		list.add(blk);
 		return blk;
-	}
+	}*/
 
 
 	/**
 	 * Create a basic block with the specific label name
 	 * @param label the branch name
+	 * @param type the blk type
+	 * @param parents the parent blk
 	 * @return the blk
 	 */
-	private BasicBlock createBasicBlock(String label, BlockType type, BasicBlock parent){
-		BasicBlock blk = createBasicBlock(label, type);
-		parent.addChild(blk);
+	private BasicBlock createBasicBlock(String label, BlockType type, BasicBlock... parents){
+		BasicBlock blk = new BasicBlock(label, type);
+		list.add(blk);
+		BasicBlock parent = parents.length > 0 ? parents[0] : null;
+		if(parent != null){
+			parent.addChild(blk);
+		}		
 		return blk;
 	}	
 

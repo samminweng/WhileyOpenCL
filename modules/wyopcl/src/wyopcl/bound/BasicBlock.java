@@ -65,17 +65,19 @@ public class BasicBlock implements Comparable<BasicBlock>{
 		private BlockType(int order){
 			this.order = order;
 		}
-
 	}
-
-
-
-
+	/**
+	 * Private constructor
+	 */
 	private BasicBlock(){
 		this.unionOfBounds = new Bounds();
 		this.constraintList = new ArrayList<Constraint>();
 	}	
-
+	/**
+	 * Constructing a basic block with a specific name and block type.
+	 * @param branch the name of blk
+	 * @param type the type of blk
+	 */
 	public BasicBlock(String branch, BlockType type){
 		//Use the nested constructor to create the BasicBlock object.
 		this();
@@ -128,7 +130,7 @@ public class BasicBlock implements Comparable<BasicBlock>{
 	 */
 	public void unionBounds(BasicBlock parent){
 		//Take the union of bounds of parent node and current node.
-		this.getBounds().union( (Bounds) parent.getBounds().clone());
+		this.unionOfBounds.union((Bounds) parent.getBounds().clone());
 	}
 
 
@@ -143,7 +145,10 @@ public class BasicBlock implements Comparable<BasicBlock>{
 		return false;
 	}
 	
-
+	/**
+	 * Check if the blk has the parent nodes.
+	 * @return true if blk has parent. Otherwise, return false.
+	 */
 	public boolean hasParent(){
 		if(parentNodes == null){
 			return false;
@@ -151,35 +156,46 @@ public class BasicBlock implements Comparable<BasicBlock>{
 		return true;
 	}
 
-
+	/**
+	 * Return the blk name.
+	 * @return the name of blk.
+	 */
 	public String getBranch(){
 		return this.branch;
 	}
-
+	/**
+	 * Return the block type.
+	 * @return
+	 */
 	public BlockType getType(){
 		return this.type;
 	}
 
-
+	/**
+	 * Return a list of child blks.
+	 * @return
+	 */
 	public List<BasicBlock> getChildNodes(){
 		return childNodes;
 	}
-
+	/**
+	 * Return a list of parent blks.
+	 * @return
+	 */
 	public List<BasicBlock> getParentNodes(){
 		return parentNodes;
 	}
 
-
+	/**
+	 * Add a constraint to the list of constraints.
+	 * @param c the constraint
+	 */
 	public void addConstraint(Constraint c){
-		if(c != null){
+		if(c != null && !constraintList.contains(c)){
 			constraintList.add(c);
 		}
 	}	
-
-	public boolean isChanged(){
-		return isChanged;
-	}
-
+	
 	public Bounds getBounds(){		
 		return unionOfBounds;
 	}	
