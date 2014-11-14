@@ -400,8 +400,8 @@ public class Analyzer {
 			BasicBlock rightBlock = createBasicBlock(new_label, BlockType.IF_BRANCH, c_blk);
 
 			//Add the constraint to the left block
-			leftBlock.addConstraint(c);
-			rightBlock.addConstraint(neg_c);						
+			leftBlock.addConstraint(neg_c);
+			rightBlock.addConstraint(c);						
 			//Set the current block to the left
 			setCurrentBlock(leftBlock);
 		}
