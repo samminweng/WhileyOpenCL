@@ -88,7 +88,12 @@ public class Analyzer {
 		for(Type paramType: paramTypes){
 			createEntryNode(paramType, "%"+index, null, null);
 			index++;
-		}	
+		}
+		
+		//Create the default basic block and adds it to the child of entry node.
+		BasicBlock blk = createBasicBlock("code", BlockType.BLOCK, this.entry);
+		setCurrentBlock(blk);
+		
 	}
 
 
@@ -342,7 +347,7 @@ public class Analyzer {
 			BasicBlock blk = iterator.next();
 			if(!blk.isLeaf()){
 				for(BasicBlock child: blk.getChildNodes()){
-					dot_string += "\""+blk.getBranch()+" [" +blk.getType()+"]\"->\""+ child.getBranch()+" ["+child.getType() + "]\";\n";
+					dot_string += "\""+blk.getType()+" [" +blk.getBranch()+"]\"->\""+ child.getType() +" ["+child.getBranch() + "]\";\n";
 				}
 			}
 		}

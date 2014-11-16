@@ -186,6 +186,7 @@ public class BoundAnalyzer implements Builder{
 						Bounds bnd = analyzer.inferBounds(true);
 						Analyzer invokeanalyzer = new Analyzer(1);
 						int index = 0;
+						//Pass the bounds of input parameters.
 						for(Type paramType: functionOrMethod.type().params()){
 							invokeanalyzer.createEntryNode(paramType,
 									"%"+index,
