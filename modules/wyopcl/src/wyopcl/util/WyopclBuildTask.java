@@ -35,21 +35,25 @@ public class WyopclBuildTask extends wyc.util.WycBuildTask {
 		//Check the first argument to determine whether to run the analyzer.		
 		if(analysis!= null){
 			//Add the switch for the further analysis.
-			switch(analysis.toLowerCase()){
-			case "range":
-				builder = new BoundAnalyzer(project);
-				if (verbose) {
-					((BoundAnalyzer) builder).setLogger(new Logger.Default(System.err));
-					((BoundAnalyzer) builder).setVerbose(verbose);
-				}
-
-				//builder.setArgs(this.arguments);
-
-				break;
-			default:
-				internalFailure("Not implemented!", "WyopclBuildTask.java", null);
-				return;
-			}			
+			builder = new BoundAnalyzer(project);
+			//switch(analysis.toLowerCase()){
+			//case "function":				
+			//	((BoundAnalyzer) builder).setAnalyzeType(false);
+			//	break;
+			//case "functioncall":
+			if(analysis.equals("functioncall")){
+				((BoundAnalyzer) builder).setAnalyzeType(true);
+			}				
+			//	break;
+			//default:
+			//	internalFailure("Not implemented!", "WyopclBuildTask.java", null);
+			//	return;
+		//	}
+			
+			if (verbose) {
+				((BoundAnalyzer) builder).setLogger(new Logger.Default(System.err));
+				((BoundAnalyzer) builder).setVerbose(verbose);
+			}
 		}else{
 			// Now, add build rule for interpreting the wyil files by using
 			// the WyilInterpreter.			

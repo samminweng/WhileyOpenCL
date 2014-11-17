@@ -41,7 +41,7 @@ public class Bounds implements Cloneable{
 		return bounds.get(name);
 	}
 	/**
-	 * Check if the var is added before.
+	 * Check if the bound is inf
 	 * @param name
 	 * @return
 	 */
@@ -171,26 +171,22 @@ public class Bounds implements Cloneable{
 		while(iterator.hasNext()){
 			String name = iterator.next();
 			//Lower bounds
-			BigInteger new_min = null;
-			BigInteger min_parent = bnd.getLower(name);
+			BigInteger new_min = bnd.getLower(name);
 			//Upper bounds
-			BigInteger new_max = null;
-			BigInteger max_parent = bnd.getUpper(name);
+			BigInteger new_max = bnd.getUpper(name);
 			if(this.isExisting(name)){
 				BigInteger min_current = this.getLower(name);
 				//Find the min (this, parent)
-				if(min_parent!= null&& min_current!=null){
-					new_min=min_parent.min(min_current);
+				if(new_min != null&& min_current!=null){
+					new_min=new_min.min(min_current);
 				}
+				
 				BigInteger max_current = this.getUpper(name);
 				//Find the max (this, parent)
-				if(max_parent!= null && max_current!=null){
-					new_max = max_parent.max(max_current);
-				}
-			}else{
-				new_min = min_parent;
-				new_max = max_parent;
-			}			
+				if(new_max!=null && max_current!= null){
+					new_max = new_max.max(max_current);
+				}	
+			}
 			this.getDomain(name).setLowerBound(new_min);	
 			this.getDomain(name).setUpperBound(new_max);
 		}		

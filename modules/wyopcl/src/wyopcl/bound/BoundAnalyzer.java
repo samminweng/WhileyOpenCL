@@ -55,7 +55,7 @@ public class BoundAnalyzer implements Builder{
 	private Build.Project project;
 	private String filename;
 	private boolean verbose = false;
-	private String[] args;
+	private boolean isFunctionCall = false;
 	/**
 	 * For logging information.
 	 */
@@ -77,6 +77,14 @@ public class BoundAnalyzer implements Builder{
 	public void setVerbose(boolean verbose) {
 		this.verbose = verbose;
 	}
+	
+	/**
+	 * Set the type of analyzing the functions.
+	 * @param type
+	 */
+	public void setAnalyzeType(boolean isFuncType){
+		this.isFunctionCall = isFuncType;		
+	}
 
 
 	@SuppressWarnings("unchecked")
@@ -93,8 +101,11 @@ public class BoundAnalyzer implements Builder{
 			WyilFile module = sf.read();
 			filename = module.filename().split(".whiley")[0];				
 			//Start analyzing the range.
-			analyze(module);
-			//analyzeMethodCall(module);
+			if(isFunctionCall){
+				analyzeFunctionCall(module);
+			}else{
+				analyze(module);
+			}
 		}
 		
 		long endTime = System.currentTimeMillis();
@@ -164,7 +175,7 @@ public class BoundAnalyzer implements Builder{
 	 * Takes the in-memory wyil file and analyzes the range values for all variables in each function.
 	 * @param module
 	 */
-	public void analyzeMethodCall(WyilFile module){
+	public void analyzeFunctionCall(WyilFile module){
 		Analyzer analyzer = new Analyzer(0);
 		WyilFile.FunctionOrMethodDeclaration main = module.functionOrMethod("main").get(0);
 		int line = 0;

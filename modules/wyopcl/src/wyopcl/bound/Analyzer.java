@@ -219,17 +219,17 @@ public class Analyzer {
 			//Initialize the isFixedPointed
 			isFixedPointed = true;
 			//Iterate all the blocks
-			for(BasicBlock blk : list){
-				//Take the union of parents' bounds as the initial bounds
+			for(BasicBlock blk : list){			
+				//If bounds has no change, then isChanged = true.
+				boolean isChanged = blk.inferBounds(verbose);
+				//Use bitwise 'AND' to combine all the results
+				isFixedPointed &= (!isChanged);			
+				//Take the union of parents' bounds.
 				if(blk.hasParent()){
 					for(BasicBlock parent: blk.getParentNodes()){
 						blk.unionBounds(parent);
 					}
-				}
-				//If bounds has no change, then isChanged = true.
-				boolean isChanged = blk.inferBounds(verbose);
-				//Use bitwise 'AND' to combine all the results
-				isFixedPointed &= (!isChanged);
+				}			
 				//Print out the bounds.
 				if(verbose){
 					System.out.println(blk);
