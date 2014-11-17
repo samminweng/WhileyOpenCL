@@ -133,7 +133,7 @@ public class BoundAnalyzer implements Builder{
 				analyzer.dispatch(entry);				
 			}
 			if(verbose){
-				analyzer.printCFG(functionOrMethod.name());
+				analyzer.printCFG(filename, functionOrMethod.name());
 			}
 			
 		}

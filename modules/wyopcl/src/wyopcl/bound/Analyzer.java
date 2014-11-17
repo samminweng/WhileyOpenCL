@@ -337,11 +337,11 @@ public class Analyzer {
 	 * Outputs the control flow graphs.
 	 * @param name
 	 */
-	public void printCFG(String name){
+	public void printCFG(String filename, String func_name){
 		//Sort the blks.
 		Collections.sort(list);
 
-		String dot_string= "digraph "+name+"{\n";		
+		String dot_string= "digraph "+func_name+"{\n";		
 		Iterator<BasicBlock> iterator = list.iterator();
 		while(iterator.hasNext()){
 			BasicBlock blk = iterator.next();
@@ -355,7 +355,7 @@ public class Analyzer {
 
 		//Write out the CFG-function_name.dot
 		try {
-			PrintWriter writer = new PrintWriter("CFG-"+name+".dot", "UTF-8");
+			PrintWriter writer = new PrintWriter(filename+"-"+func_name+".dot", "UTF-8");
 			writer.println(dot_string);
 			writer.close();
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
