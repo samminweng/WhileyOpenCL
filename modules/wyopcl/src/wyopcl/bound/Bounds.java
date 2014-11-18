@@ -207,25 +207,28 @@ public class Bounds implements Cloneable{
 		Iterator<String> iterator = bnd.bounds.keySet().iterator();
 		while(iterator.hasNext()){
 			String name = iterator.next();
-			//Lower bounds
-			BigInteger new_min = bnd.getLower(name);
-			//Upper bounds
-			BigInteger new_max = bnd.getUpper(name);
-			if(this.isExisting(name)){
-				BigInteger min_current = this.getLower(name);
-				//Find the min (this, parent)
-				if(new_min != null&& min_current!=null){
-					new_min=new_min.min(min_current);
-				}
-				
-				BigInteger max_current = this.getUpper(name);
-				//Find the max (this, parent)
-				if(new_max!=null && max_current!= null){
-					new_max = new_max.max(max_current);
-				}	
+			if(bnd.isExisting(name)){
+				//Lower bounds
+				BigInteger new_min = bnd.getLower(name);
+				//Upper bounds
+				BigInteger new_max = bnd.getUpper(name);
+				if(this.isExisting(name)){
+					BigInteger min_current = this.getLower(name);
+					//Find the min (this, parent)
+					if(new_min != null&& min_current!=null){
+						new_min=new_min.min(min_current);					
+					}
+					
+					BigInteger max_current = this.getUpper(name);
+					//Find the max (this, parent)
+					if(new_max!=null && max_current!= null){
+						new_max = new_max.max(max_current);
+					}
+				}				
+				this.getDomain(name).setLowerBound(new_min);				
+				this.getDomain(name).setUpperBound(new_max);				
 			}
-			this.getDomain(name).setLowerBound(new_min);	
-			this.getDomain(name).setUpperBound(new_max);
+						
 		}		
 	}
 	

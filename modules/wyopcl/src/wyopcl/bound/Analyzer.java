@@ -232,7 +232,9 @@ public class Analyzer {
 							blk.getBounds().widen(var);
 						}						
 					}					
-				}			
+				}
+				
+				
 				
 				//If bounds has no change, then isChanged = true.
 				boolean isChanged = blk.inferBounds(verbose);
