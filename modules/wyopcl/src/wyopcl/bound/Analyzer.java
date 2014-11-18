@@ -214,27 +214,27 @@ public class Analyzer {
 		Collections.sort(list);		
 		int MaxIteration = iterations.length >0 ? iterations[0] : 10;		
 		boolean isFixedPointed = true;
-		Bounds bnd_before, bnd_after;
+		Bounds bnd_before = null, bnd_after = null;
 		//Stop until there is no change in bounds.
-		for(int i=0;i<MaxIteration;i++){
+		for(int iteration=1;iteration<=MaxIteration;iteration++){
 			if(verbose){
-				System.out.println(BLUE+"Iteration "+i+" => "+RESET);
+				System.out.println(BLUE+"Iteration "+iteration+" => "+RESET);
 			}			
 			//Initialize the isFixedPointed
-			isFixedPointed = true;
-			bnd_before = (Bounds) exit.getBounds().clone();
+			isFixedPointed = true;			
 			//Iterate all the blocks
 			for(BasicBlock blk : list){
+				//Before the bound inference
 				if(blk.getType().equals(BlockType.LOOP_BODY)){
+					bnd_before = (Bounds) blk.getBounds().clone();
 					for(String var: loop_variables.keySet()){
 						boolean isIncreasing = loop_variables.get(var);
-						if(isIncreasing){
-							blk.getBounds().widen(var);
+						//After three iterations, the bounds is still increasing.
+						if(isIncreasing && iteration%3==0){						
+							blk.getBounds().widenUpperBoundsAgainstThresholds(var);
 						}						
 					}					
-				}
-				
-				
+				}				
 				
 				//If bounds has no change, then isChanged = true.
 				boolean isChanged = blk.inferBounds(verbose);
@@ -245,26 +245,36 @@ public class Analyzer {
 					for(BasicBlock parent: blk.getParentNodes()){
 						blk.unionBounds(parent);
 					}
-				}		
-
+				}
 				//Print out the bounds.
 				if(verbose){
 					System.out.println(blk);
 					System.out.println("isChanged="+isChanged);
 				}
+				
+				if(blk.getType().equals(BlockType.LOOP_BODY)){
+					bnd_after = (Bounds) blk.getBounds().clone();
+				}
+				
 			}//End of bound inference for all constraints in all blks.
-			bnd_after = (Bounds) exit.getBounds().clone();
+			
 			//check loop variable is increasing
-			for(String var: loop_variables.keySet()){
-				loop_variables.put(var, false);
+			for(String var: loop_variables.keySet()){	
+				boolean isIncreasing = loop_variables.get(var);
+				//Reset the increasing flag
+				if(iteration%3==0){
+					isIncreasing = false;
+				}
 				BigInteger max_before = bnd_before.getUpper(var);
 				BigInteger max_after = bnd_after.getUpper(var);
 				if(max_before!= null && max_after!=null){
+					//The bounds is increasing
 					if(max_before.compareTo(max_after)<0){
-						loop_variables.put(var, true);
+						isIncreasing |= true;
+						loop_variables.put(var, isIncreasing);
 					}					
-				}
-			}			
+				}				
+			}					
 			
 			if(verbose){
 				System.out.println("isFixedPointed="+isFixedPointed);

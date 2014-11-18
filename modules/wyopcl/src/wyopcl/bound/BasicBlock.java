@@ -216,12 +216,7 @@ public class BasicBlock implements Comparable<BasicBlock>{
 	public void addBounds(String name, BigInteger new_min, BigInteger new_max){
 		unionOfBounds.addLowerBound(name, new_min);
 		unionOfBounds.addUpperBound(name, new_max);
-	}
-
-	public boolean widenBounds(String name){
-		return unionOfBounds.widen(name);
-	}
-	
+	}	
 	
 	/**
 	 * Infer the bounds 

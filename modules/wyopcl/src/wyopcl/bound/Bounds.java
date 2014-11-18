@@ -232,8 +232,13 @@ public class Bounds implements Cloneable{
 		}		
 	}
 	
-	
-	public boolean widen(String name){
+	/**
+	 * Widens the upper bounds against a list of max values of integer types.
+	 * (i.e. short, int and long long).
+	 * @param name
+	 * @return
+	 */
+	public boolean widenUpperBoundsAgainstThresholds(String name){
 		BigInteger max = getUpper(name);
 		if(max!= null){
 			//Check the max values and widen the upper bound
