@@ -218,6 +218,11 @@ public class BasicBlock implements Comparable<BasicBlock>{
 		unionOfBounds.addUpperBound(name, new_max);
 	}
 
+	public boolean widenBounds(String name){
+		return unionOfBounds.widen(name);
+	}
+	
+	
 	/**
 	 * Infer the bounds 
 	 * @return true if the bounds are changed. Return false if bounds remain unchanged.

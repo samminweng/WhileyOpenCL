@@ -1,6 +1,6 @@
 package wyopcl.bound;
 
-import static wycc.lang.SyntaxError.internalFailure;
+
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -21,7 +21,40 @@ public class Bounds implements Cloneable{
 	// Every subclass shares the 'bounds' variable;
 	private HashMap<String, Domain> bounds;
 	public boolean isChanged = false;
-	//private Domain existing_domain;
+	
+	
+	public enum Threshold{
+		_I64_MIN(){
+			public BigInteger getValue(){
+				return  new BigInteger("-9223372036854775808");	
+			}
+		}, INT_MIN(){
+			public BigInteger getValue(){
+				return new BigInteger("-2147483648");
+			}
+		}, SHRT_MIN(){
+			public BigInteger getValue(){
+				return new BigInteger("-32768");
+			}
+		}, SHRT_MAX(){
+			public BigInteger getValue(){
+				return new BigInteger("32767");
+			}
+		}, INT_MAX(){
+			public BigInteger getValue(){
+				return new BigInteger("2147483647");
+			}
+		}, _I64_MAX(){
+			public BigInteger getValue(){
+				return new BigInteger("9223372036854775807");
+			}
+		};
+		
+		public abstract BigInteger getValue();
+		private Threshold(){
+			
+		}
+	}
 
 	public Bounds() {
 		bounds = new HashMap<String, Domain>();
@@ -55,7 +88,8 @@ public class Bounds implements Cloneable{
 
 	public BigInteger getUpper(String name) {
 		return getDomain(name).getUpperBound();
-	}
+	}	
+	
 	/**
 	 * 
 	 * Widens the lower bound if existing lower bound > the new lower bound or 
@@ -77,7 +111,7 @@ public class Bounds implements Cloneable{
 				}
 			}
 		} catch (Exception ex) {
-			internalFailure(ex.getMessage(), "Bounds.java", null);
+			throw new RuntimeException(ex.getMessage());
 		}
 		return false;
 	}
@@ -101,11 +135,13 @@ public class Bounds implements Cloneable{
 				}
 			}
 		} catch (Exception ex) {
-			internalFailure(ex.getMessage(), "Bounds.java", null);
+			throw new RuntimeException(ex.getMessage());
 		}
 		return false;
 	}
-
+	
+	
+	
 	/**
 	 * Adds the lower bounds of a variable.
 	 * @param name
@@ -130,11 +166,12 @@ public class Bounds implements Cloneable{
 			}
 
 		} catch (Exception ex) {
-			internalFailure(ex.getMessage(), "Bounds.java", null);
+			throw new RuntimeException(ex.getMessage());
 		}
 		return false;
 	}
-
+	
+	
 	/**
 	 * Adds the upper bounds
 	 * @param name
@@ -155,7 +192,7 @@ public class Bounds implements Cloneable{
 				}
 			}			
 		} catch (Exception ex) {
-			internalFailure(ex.getMessage(), "Bounds.java", null);
+			throw new RuntimeException(ex.getMessage());
 		}
 		return false;
 	}
@@ -167,7 +204,7 @@ public class Bounds implements Cloneable{
 	 * @param bnd the new bounds
 	 */
 	public void union(Bounds bnd){		
-		Iterator<String> iterator = bnd.getBounds().keySet().iterator();
+		Iterator<String> iterator = bnd.bounds.keySet().iterator();
 		while(iterator.hasNext()){
 			String name = iterator.next();
 			//Lower bounds
@@ -191,6 +228,30 @@ public class Bounds implements Cloneable{
 			this.getDomain(name).setUpperBound(new_max);
 		}		
 	}
+	
+	
+	public boolean widen(String name){
+		BigInteger max = getUpper(name);
+		if(max!= null){
+			//Check the max values and widen the upper bound
+			BigInteger threshold = Threshold.SHRT_MAX.getValue();
+			if(max.compareTo(threshold)<0){
+				return widenUpperBound(name, threshold);
+			}else{
+				threshold = Threshold.INT_MAX.getValue();
+				if(max.compareTo(threshold)<0){
+					return widenUpperBound(name, threshold);
+				}else{
+					threshold = Threshold._I64_MAX.getValue();
+					if(max.compareTo(threshold)<0){
+						return widenUpperBound(name, threshold);
+					}
+				}
+			}
+		}
+		
+		return false;
+	}	
 
 
 	/**
@@ -227,19 +288,15 @@ public class Bounds implements Cloneable{
 
 		return str;
 	}
-
-	public HashMap<String, Domain> getBounds() {
-		return bounds;
-	}
-
+	
 	@Override
 	public Object clone() {
 		Bounds bnd = new Bounds();
-		Iterator<Entry<String, Domain>> iterator = this.getBounds().entrySet().iterator();
+		Iterator<Entry<String, Domain>> iterator = this.bounds.entrySet().iterator();
 		while(iterator.hasNext()){
 			Entry<String, Domain> entry = iterator.next();
 			try {
-				bnd.getBounds().put(entry.getKey(), (Domain) entry.getValue().clone());
+				bnd.bounds.put(entry.getKey(), (Domain) entry.getValue().clone());
 			} catch (CloneNotSupportedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

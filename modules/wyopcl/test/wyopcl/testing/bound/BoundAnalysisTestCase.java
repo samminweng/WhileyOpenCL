@@ -31,6 +31,11 @@ public class BoundAnalysisTestCase {
 	}
 	
 	@Test
+	public void test_While_1() {
+		util.exec("While_1");
+	}
+	
+	@Test
 	public void test_IfElse_Valid_1() {
 		util.exec("IfElse_Valid_1");
 	}

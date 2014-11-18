@@ -8,6 +8,7 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Stack;
@@ -21,6 +22,7 @@ import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyil.lang.Type.Tuple;
 import wyopcl.bound.BasicBlock.BlockType;
+import wyopcl.bound.constraint.Assign;
 import wyopcl.bound.constraint.Const;
 import wyopcl.bound.constraint.Constraint;
 import wyopcl.bound.constraint.Equals;
@@ -62,6 +64,8 @@ public class Analyzer {
 	private List<BasicBlock> list = new ArrayList<BasicBlock>();
 	//The label name of the loop condition
 	private String loop_condition = "";
+	//A list of loop variables.
+	private HashMap<String, Boolean> loop_variables = new HashMap<String, Boolean>();
 
 	private boolean isGoto = false;
 
@@ -89,11 +93,11 @@ public class Analyzer {
 			createEntryNode(paramType, "%"+index, null, null);
 			index++;
 		}
-		
+
 		//Create the default basic block and adds it to the child of entry node.
 		BasicBlock blk = createBasicBlock("code", BlockType.BLOCK, this.entry);
 		setCurrentBlock(blk);
-		
+
 	}
 
 
@@ -171,7 +175,6 @@ public class Analyzer {
 			font_color_start = GRAY;
 			font_color_end = RESET;
 		}
-
 		if(code instanceof Codes.Label){
 			//System.out.println(font_color_start+name+"."+line+"."+depth+" ["+code+"]"+font_color_end);
 			System.out.println(font_color_start+name+"."+line+" ["+code+"]"+font_color_end);
@@ -209,17 +212,28 @@ public class Analyzer {
 	public Bounds inferBounds(boolean verbose, int... iterations){
 		//Sort the blks
 		Collections.sort(list);		
-		int MaxIteration = iterations.length >0 ? iterations[0] : 5;
+		int MaxIteration = iterations.length >0 ? iterations[0] : 10;		
 		boolean isFixedPointed = true;
+		Bounds bnd_before, bnd_after;
 		//Stop until there is no change in bounds.
 		for(int i=0;i<MaxIteration;i++){
 			if(verbose){
 				System.out.println(BLUE+"Iteration "+i+" => "+RESET);
-			}
+			}			
 			//Initialize the isFixedPointed
 			isFixedPointed = true;
+			bnd_before = (Bounds) exit.getBounds().clone();
 			//Iterate all the blocks
-			for(BasicBlock blk : list){			
+			for(BasicBlock blk : list){
+				if(blk.getType().equals(BlockType.LOOP_BODY)){
+					for(String var: loop_variables.keySet()){
+						boolean isIncreasing = loop_variables.get(var);
+						if(isIncreasing){
+							blk.getBounds().widen(var);
+						}						
+					}					
+				}			
+				
 				//If bounds has no change, then isChanged = true.
 				boolean isChanged = blk.inferBounds(verbose);
 				//Use bitwise 'AND' to combine all the results
@@ -229,21 +243,32 @@ public class Analyzer {
 					for(BasicBlock parent: blk.getParentNodes()){
 						blk.unionBounds(parent);
 					}
-				}			
+				}		
+
 				//Print out the bounds.
 				if(verbose){
 					System.out.println(blk);
 					System.out.println("isChanged="+isChanged);
 				}
-			}
+			}//End of bound inference for all constraints in all blks.
+			bnd_after = (Bounds) exit.getBounds().clone();
+			//check loop variable is increasing
+			for(String var: loop_variables.keySet()){
+				loop_variables.put(var, false);
+				BigInteger max_before = bnd_before.getUpper(var);
+				BigInteger max_after = bnd_after.getUpper(var);
+				if(max_before!= null && max_after!=null){
+					if(max_before.compareTo(max_after)<0){
+						loop_variables.put(var, true);
+					}					
+				}
+			}			
+			
 			if(verbose){
 				System.out.println("isFixedPointed="+isFixedPointed);
-			}
-			//Check if the bounds in the block remains the same. If it is true, then go to loop exit.
-			if(isFixedPointed){
-				break;
-			}			
-		}
+			}	
+		}		
+
 		return exit.getBounds();
 	}
 
@@ -277,7 +302,7 @@ public class Analyzer {
 			//Get the block of If branch
 			blk = getBasicBlock(label, BlockType.IF_BRANCH);
 		}
-		
+
 		if(blk == null){
 			//Get the block of Loop Exit
 			blk = getBasicBlock(label, BlockType.LOOP_EXIT);
@@ -536,7 +561,7 @@ public class Analyzer {
 		//Check if the assigned value is an integer
 		if(isIntType(code.type())){
 			//Add the constraint 'target = operand'			
-			addConstraint(new Range("%"+code.target(), "%"+code.operand(0)));
+			addConstraint(new Assign("%"+code.target(), "%"+code.operand(0)));
 		}
 
 	}
@@ -825,6 +850,11 @@ public class Analyzer {
 	 */
 	private void analyze(Codes.Loop code){		
 		String label = code.target;
+		for(int op: code.modifiedOperands){
+			if(!loop_variables.containsKey("%"+op)){
+				loop_variables.put("%"+op, false);
+			}			
+		}
 		BasicBlock loopheader = createBasicBlock(label, BlockType.LOOP_HEADER, getCurrentBlock());
 		loop_condition = label;
 		setCurrentBlock(loopheader);
