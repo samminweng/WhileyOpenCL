@@ -172,7 +172,7 @@
 <path id="junit-classpath">
 	<fileset dir="lib">
 		<include name="*hamcrest*.jar" />
-		<include name="junit.jar" />
+		<include name="*junit*.jar" />
 	</fileset>
 	<pathelement path="${build.dir}" />
 </path>	
