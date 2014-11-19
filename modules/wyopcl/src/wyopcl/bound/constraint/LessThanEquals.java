@@ -33,20 +33,11 @@ public class LessThanEquals extends Constraint {
 		//Propagate the upper bound from y to x.
 		if (max_y != null){
 			bnd.isChanged |= bnd.addUpperBound(x, max_y);
-		}
-		
-		if(min_y != null){
-			bnd.isChanged |= bnd.widenLowerBound(x, min_y);
-		}
-		
+		}	
 		
 		if(min_x != null){
 			bnd.isChanged |= bnd.addLowerBound(y, min_x);
-		}
-		
-		if(max_x != null){
-			bnd.isChanged |= bnd.widenUpperBound(y, max_x);
-		}
+		}		
 		
 
 		return bnd.isChanged;
