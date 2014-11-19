@@ -109,7 +109,7 @@ public class BoundAnalyzer implements Builder{
 		}
 		
 		long endTime = System.currentTimeMillis();
-		System.err.println("Wyil interpreter completed.\nFile:" + filename +".whiley Time: "+(endTime - start)+" ms");
+		System.err.println("Bound Analysis completed.\nFile:" + filename +".whiley Time: "+(endTime - start)+" ms");
 		return generatedFiles;
 	}
 	

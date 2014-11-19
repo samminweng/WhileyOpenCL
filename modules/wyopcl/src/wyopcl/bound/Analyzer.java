@@ -221,7 +221,9 @@ public class Analyzer {
 				System.out.println(BLUE+"Iteration "+iteration+" => "+RESET);
 			}			
 			//Initialize the isFixedPointed
-			isFixedPointed = true;			
+			isFixedPointed = true;
+			//If bounds has changed, then isChanged = false.
+			boolean isChanged = false;
 			//Iterate all the blocks
 			for(BasicBlock blk : list){
 				//Before the bound inference
@@ -231,13 +233,13 @@ public class Analyzer {
 						boolean isIncreasing = loop_variables.get(var);
 						//After three iterations, the bounds is still increasing.
 						if(isIncreasing && iteration%3==0){						
-							blk.getBounds().widenUpperBoundsAgainstThresholds(var);
+							isChanged |= blk.getBounds().widenUpperBoundsAgainstThresholds(var);
 						}						
 					}					
 				}				
 				
-				//If bounds has no change, then isChanged = true.
-				boolean isChanged = blk.inferBounds(verbose);
+				//If bounds remain unchanged, then isChanged = true.
+				isChanged |= blk.inferBounds(verbose);
 				//Use bitwise 'AND' to combine all the results
 				isFixedPointed &= (!isChanged);			
 				//Take the union of parents' bounds.
