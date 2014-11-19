@@ -223,7 +223,7 @@
 	</batchtest>
 </junit>
 </target>
-	<target name="report" depends="test-interpreter-valid, test-interpreter-invalid">	
+	<target name="interpreter" depends="test-interpreter-valid, test-interpreter-invalid">	
 	<junitreport todir="report">
 		<fileset dir="${valid.dir}">
 			<include name="TEST-*.xml" />
