@@ -22,7 +22,6 @@ public class Bounds implements Cloneable{
 	private HashMap<String, Domain> bounds;
 	public boolean isChanged = false;
 	
-	
 	public enum Threshold{
 		_I64_MIN(){
 			public BigInteger getValue(){
@@ -74,7 +73,7 @@ public class Bounds implements Cloneable{
 		return bounds.get(name);
 	}
 	/**
-	 * Check if the bound is inf
+	 * Check if variable has been existed in bounds HashMap.
 	 * @param name
 	 * @return
 	 */

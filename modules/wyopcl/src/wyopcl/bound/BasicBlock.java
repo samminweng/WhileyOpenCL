@@ -32,31 +32,47 @@ public class BasicBlock implements Comparable<BasicBlock>{
 				return "ENTRY";
 			}
 		},
-		BLOCK(1){
+		ASSERT(1){
+			public String toString(){
+				return "ASSERT";
+			}
+		},
+		ASSUME(2){
+			public String toString(){
+				return "ASSUME";
+			}
+		},
+		BLOCK(3){
 			public String toString(){
 				return "BLOCK";
 			}
-		}, LOOP_HEADER(2){
+		},
+		LOOP_HEADER(4){
 			public String toString(){
 				return "LOOP_HEADER";
 			}
-		}, LOOP_BODY(3){
+		},
+		LOOP_BODY(5){
 			public String toString(){
 				return "LOOP_BODY";
 			}
-		}, LOOP_EXIT(4){
+		},
+		LOOP_EXIT(6){
 			public String toString(){
 				return "LOOP_EXIT";
 			}
-		}, IF_BRANCH(5){
+		},
+		IF_BRANCH(7){
 			public String toString(){
 				return "IF";
 			}
-		}, ELSE_BRANCH(6){
+		},
+		ELSE_BRANCH(8){
 			public String toString(){
 				return "ELSE";
 			}
-		},  EXIT(7){
+		},
+		EXIT(9){
 			public String toString(){
 				return "EXIT";
 			}
