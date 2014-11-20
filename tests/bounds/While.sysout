@@ -16,14 +16,14 @@ f.14 [	return %5 : int]
 Bounds of f
 {
 	D(%0) = [-infinity..infinity]
-	D(%3) = [0..9223372036854775808]
+	D(%3) = [0..9223372036854775810]
 	D(%4) = [0..0]
-	D(%5) = [0..18446744073709551614]
+	D(%5) = [0..36893488147419103231]
 	D(%6) = [0..0]
 	D(%11) = [-infinity..infinity]
 	D(%13) = [1..1]
 	D(%14) = [-infinity..infinity]
-	D(return) = [0..8589934591]
+	D(return) = [0..27670116110564327422]
 }
 Consistency=true
 main.0 [	fieldload %2 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}]

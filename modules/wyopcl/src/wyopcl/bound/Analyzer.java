@@ -213,7 +213,7 @@ public class Analyzer {
 	public Bounds inferBounds(boolean verbose, int... iterations){
 		//Sort the blks
 		Collections.sort(list);		
-		int MaxIteration = iterations.length >0 ? iterations[0] : 10;		
+		int MaxIteration = iterations.length >0 ? iterations[0] : 12;		
 		boolean isFixedPointed = true;
 		Bounds bnd_before = null, bnd_after = null;
 		//Stop until there is no change in bounds.
