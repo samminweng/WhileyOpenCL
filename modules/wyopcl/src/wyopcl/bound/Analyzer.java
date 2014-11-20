@@ -45,8 +45,8 @@ import wyopcl.bound.constraint.Union;
  *
  */
 public class Analyzer {
-	//The stack is used to store the assertion's labels.
-	private Stack<String> stackOfAssertOrAssume;
+	//The boolean flag is used to show whether the code is inside an assertion or assumption.	
+	private boolean isAssertOrAssume = false;
 
 	//private String branch;
 	private final int depth;
@@ -72,7 +72,6 @@ public class Analyzer {
 
 	public Analyzer(int depth){
 		this.depth = depth;
-		this.stackOfAssertOrAssume = new Stack<String>();
 		this.entry = createBasicBlock("entry", BlockType.ENTRY);
 		this.exit = createBasicBlock("exit", BlockType.EXIT);
 		this.current_blk = this.entry;
@@ -94,11 +93,9 @@ public class Analyzer {
 			createEntryNode(paramType, "%"+index, null, null);
 			index++;
 		}
-
 		//Create the default basic block and adds it to the child of entry node.
 		BasicBlock blk = createBasicBlock("code", BlockType.BLOCK, this.entry);
 		setCurrentBlock(blk);
-
 	}
 
 
@@ -108,28 +105,9 @@ public class Analyzer {
 	 * @return true if assertion/assume is on. Otherwise, return false
 	 */
 	private boolean isAssertOrAssume(){
-		if(!stackOfAssertOrAssume.empty()){
-			return true;
-		}		
-		return false;
+		return isAssertOrAssume;		
 	}
 
-	/**
-	 * Enable/Disable the flag of assert or assume 
-	 * to avoid adding or branching the constraints to the list. 
-	 * @param label the label name of assertion or assumption 
-	 * @param enable boolean value to enable or disable the flag.
-	 */
-	private void enableAssertOrAssume(String label, boolean enabled){
-		if(enabled){
-			stackOfAssertOrAssume.push(label);
-		}else{
-			if(!stackOfAssertOrAssume.empty() &&
-					stackOfAssertOrAssume.peek().equals(label)){
-				stackOfAssertOrAssume.pop();
-			}			
-		}
-	}
 
 	/**
 	 * Check if the type is instance of Integer by inferring the type from 
@@ -288,7 +266,7 @@ public class Analyzer {
 		if(current_blk!=null){
 			return current_blk.getBounds();
 		}
-		
+
 		return exit.getBounds();
 	}
 
@@ -327,6 +305,7 @@ public class Analyzer {
 			//Get the block of Loop Exit
 			blk = getBasicBlock(label, BlockType.LOOP_EXIT);
 		}
+		
 
 		return blk;
 
@@ -472,8 +451,7 @@ public class Analyzer {
 		try{
 			//enable the assertion 
 			if (code instanceof Codes.AssertOrAssume) {
-				//Push the assert_label so that no constraints are added to list.
-				enableAssertOrAssume(((Codes.AssertOrAssume)code).target, true);
+				//Create an assertion or assumption blk.
 				analyze((Codes.AssertOrAssume)code);
 			}else if (code instanceof Codes.Assign) {			
 				analyze((Codes.Assign)code);
@@ -517,7 +495,6 @@ public class Analyzer {
 				analyze((Codes.LoopEnd)code);									
 			} else if (code instanceof Codes.Label) {
 				analyze((Codes.Label)code);
-				enableAssertOrAssume(((Codes.Label)code).label, false);
 			} else if (code instanceof Codes.Lambda) {
 				//LambdaInterpreter.getInstance().interpret((Codes.Lambda)code, stackframe);
 			} else if (code instanceof Codes.LengthOf) {			
@@ -583,6 +560,7 @@ public class Analyzer {
 
 		BasicBlock blk = createBasicBlock(code.target, type, current_blk);
 		setCurrentBlock(blk);
+		isAssertOrAssume = true;
 	}
 
 	private void analyze(Codes.Assign code){		
@@ -742,9 +720,15 @@ public class Analyzer {
 	 * @param code
 	 */
 	private void analyze(Codes.Label code){
-		String label = code.label;		
-		//Switch the current block by setting the label with new value.
-		//Create a block.
+		String label = code.label;
+		//Check and determine whether to disable the assertion.
+		if(isAssertOrAssume()){
+			if(getBasicBlock(label, BlockType.ASSERT)!= null 
+					|| getBasicBlock(label, BlockType.ASSUME) != null){
+				isAssertOrAssume = false;
+			}		
+		}
+		//Get the target blk. If it is null, then create a new block.
 		BasicBlock blk = getBasicBlock(label);
 		if(blk == null){
 			blk = createBasicBlock(label, BlockType.BLOCK);
@@ -758,9 +742,6 @@ public class Analyzer {
 		setCurrentBlock(blk);
 		isGoto = false;
 	}
-
-
-
 
 	/**
 	 * Add the 'equal' constraints of the target and operand register.
