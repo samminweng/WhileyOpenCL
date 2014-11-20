@@ -248,7 +248,7 @@
 	</batchtest>
 </junit>
 </target>
-<target name="bounds" depends="test-bounds">
+<target name="bound-analyzer" depends="test-bounds">
 <junitreport todir="report">
 	<fileset dir="report/bounds">
 		<include name="TEST-*.xml" />
