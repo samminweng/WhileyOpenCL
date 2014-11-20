@@ -1,3 +1,18 @@
+f.0 [	const %4 = 0 : int]
+f.1 [	assign %3 = %4  : int]
+f.2 [	const %6 = 0 : int]
+f.3 [	assign %5 = %6  : int]
+f.4 [	loop (%3, %5)]
+f.5 [	ifge %3, %0 goto blklab2 : int]
+f.6 [	add %11 = %5, %3 : int]
+f.7 [	assign %5 = %11  : int]
+f.8 [	const %13 = 1 : int]
+f.9 [	add %14 = %3, %13 : int]
+f.10 [	assign %3 = %14  : int]
+f.11 [	nop]
+f.12 [end blklab1]
+f.13 [.blklab2]
+f.14 [	return %5 : int]
 Bounds of f
 {
 	D(%0) = [-infinity..infinity]
@@ -11,6 +26,23 @@ Bounds of f
 	D(return) = [0..8589934591]
 }
 Consistency=true
+main.0 [	fieldload %2 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}]
+main.1 [	fieldload %3 = %2 println : {method(any) => void print,method(any) => void println}]
+main.2 [	const %4 = "Sum=" : string]
+main.3 [	const %6 = 5 : int]
+main.4 [	assert blklab4]
+[30;1mmain.5 [	const %9 = 1000000 : int][0m
+[30;1mmain.6 [	iflt %6, %9 goto blklab3 : int][0m
+[30;1mmain.7 [	fail ""precondition not satisfied""][0m
+[30;1mmain.8 [.blklab3][0m
+[30;1mmain.9 [.blklab4][0m
+main.10 [	invoke %5 = (%6) While:f : function(int) => int]
+main.11 [	convert %5 = %5 any : int]
+main.12 [	invoke %5 = (%5) whiley/lang/Any:toString : function(any) => string]
+main.13 [	sappend %7 = %4, %5 : string]
+main.14 [	convert %7 = %7 any : string]
+main.15 [	indirectinvoke %3 (%7) : method(any) => void]
+main.16 [	return]
 Bounds of main
 {
 	D(%6) = [5..999999]

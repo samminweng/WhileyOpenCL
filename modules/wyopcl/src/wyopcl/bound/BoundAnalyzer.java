@@ -127,9 +127,9 @@ public class BoundAnalyzer implements Builder{
 			while(iterator.hasNext()){
 				//Get the Block.Entry
 				Block.Entry entry = iterator.next();
-				if(verbose){
+				//if(verbose){
 					line = analyzer.printWyILCode(entry.code, functionOrMethod.name(), line);
-				}
+				//}
 				analyzer.dispatch(entry);				
 			}
 			if(verbose){
@@ -186,9 +186,9 @@ public class BoundAnalyzer implements Builder{
 			while(iterator.hasNext()){
 				//Get the Block.Entry
 				Block.Entry entry = iterator.next();
-				if(verbose){
+				//if(verbose){
 					line = analyzer.printWyILCode(entry.code, main.name(), line);
-				}				
+				//}				
 				//check the code type and add the constraints according to code type.
 				if(entry.code instanceof Codes.Invoke){
 					//Get the function
@@ -209,14 +209,14 @@ public class BoundAnalyzer implements Builder{
 						}
 						iterateByteCode(invokeanalyzer, functionOrMethod);						
 						//Infer the bounds
-						bnd = invokeanalyzer.inferBounds(false);
+						bnd = invokeanalyzer.inferBounds(verbose);
 						if(verbose){
 							invokeanalyzer.printCFG(filename, functionOrMethod.name());
 							invokeanalyzer.printBounds(bnd);
 						}
+						printOutBounds(functionOrMethod.name(), bnd);						
 						//propagate the bounds of return value.
-						analyzer.addConstraint(new Range("%"+code.target(), bnd.getLower("return"), bnd.getUpper("return")));	
-					
+						analyzer.addConstraint(new Range("%"+code.target(), bnd.getLower("return"), bnd.getUpper("return")));
 						invokeanalyzer = null;
 					}
 				}else{

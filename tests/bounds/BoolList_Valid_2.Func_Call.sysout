@@ -1,3 +1,76 @@
+main.0 [	const %2 = true : bool]
+main.1 [	const %3 = true : bool]
+main.2 [	const %4 = true : bool]
+main.3 [	const %5 = true : bool]
+main.4 [	const %6 = true : bool]
+main.5 [	const %7 = true : bool]
+main.6 [	const %8 = true : bool]
+main.7 [	newlist %9 = (%2, %3, %4, %5, %6, %7, %8) : [bool]]
+main.8 [	assign %1 = %9  : [bool]]
+main.9 [	const %10 = 0 : int]
+main.10 [	const %11 = 5 : int]
+main.11 [	range %12 = %10, %11 : [int]]
+main.12 [	forall %13 in %12 (%1) : [int]]
+main.13 [	fieldload %15 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}]
+main.14 [	fieldload %16 = %15 println : {method(any) => void print,method(any) => void println}]
+main.15 [	assign %17 = %1  : [bool]]
+main.16 [	convert %17 = %17 any : [bool]]
+main.17 [	indirectinvoke %16 (%17) : method(any) => void]
+main.18 [	invoke %18 = (%1) BoolList_Valid_2:play : function([bool]) => [bool]]
+play.0 [	assign %2 = %0  : [bool]]
+play.1 [	assign %1 = %2  : [bool]]
+play.2 [	const %3 = 0 : int]
+play.3 [	lengthof %5 = %0 : [bool]]
+play.4 [	range %6 = %3, %5 : [int]]
+play.5 [	forall %7 in %6 (%1) : [int]]
+play.6 [	invoke %8 = (%7, %0) BoolList_Valid_2:isAlive : function(int,[bool]) => bool]
+play.7 [	const %11 = true : bool]
+play.8 [	ifeq %8, %11 goto blklab4 : bool]
+play.9 [	goto blklab2]
+play.10 [.blklab4]
+play.11 [	const %14 = true : bool]
+play.12 [	assert blklab12]
+[30;1mplay.13 [	const %20 = 0 : int][0m
+[30;1mplay.14 [	ifge %7, %20 goto blklab11 : int][0m
+[30;1mplay.15 [	fail ""index out of bounds (negative)""][0m
+[30;1mplay.16 [.blklab11][0m
+[30;1mplay.17 [	lengthof %20 = %1 : [bool]][0m
+[30;1mplay.18 [	iflt %7, %20 goto blklab12 : int][0m
+[30;1mplay.19 [	fail ""index out of bounds (not less than length)""][0m
+[30;1mplay.20 [.blklab12][0m
+play.21 [	update %1[%7] = %14 : [bool] -> [bool]]
+play.22 [	goto blklab3]
+play.23 [.blklab2]
+play.24 [	const %17 = false : bool]
+play.25 [	assert blklab14]
+[30;1mplay.26 [	const %20 = 0 : int][0m
+[30;1mplay.27 [	ifge %7, %20 goto blklab13 : int][0m
+[30;1mplay.28 [	fail ""index out of bounds (negative)""][0m
+[30;1mplay.29 [.blklab13][0m
+[30;1mplay.30 [	lengthof %20 = %1 : [bool]][0m
+[30;1mplay.31 [	iflt %7, %20 goto blklab14 : int][0m
+[30;1mplay.32 [	fail ""index out of bounds (not less than length)""][0m
+[30;1mplay.33 [.blklab14][0m
+play.34 [	update %1[%7] = %17 : [bool] -> [bool]]
+play.35 [.blklab3]
+play.36 [	nop]
+play.37 [end blklab0]
+play.38 [.blklab1]
+play.39 [	return %1 : [bool]]
+Bounds of play
+{
+	D(%3) = [0..0]
+	D(%5) = [0..32767]
+	D(%6) = [0..32767]
+	D(%7) = [0..infinity]
+	D(%20) = [0..32767]
+}
+Consistency=true
+main.19 [	assign %1 = %18  : [bool]]
+main.20 [	nop]
+main.21 [end blklab9]
+main.22 [.blklab10]
+main.23 [	return]
 Bounds of main
 {
 	D(%1) = [-infinity..infinity]
