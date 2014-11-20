@@ -38,7 +38,7 @@ public final class BaseTestUtil {
 			//Analyze the bounds of a Whiley program.
 			String path_whiley = file_name + ".whiley";
 			// Set the working directory.
-			pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-analysis", "range", path_whiley);
+			pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-analysis", "function", path_whiley);
 			pb.directory(new File(path));
 
 			// System.out.println("" + pb.directory());
@@ -66,6 +66,43 @@ public final class BaseTestUtil {
 			throw new RuntimeException("Test file: " + file_name, e);
 		}
 	}
+	
+	public void exec_Func_Call(String file_name) {
+		try {			
+			//Analyze the bounds of a Whiley program.
+			String path_whiley = file_name + ".whiley";
+			// Set the working directory.
+			pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-analysis", "functioncall", path_whiley);
+			pb.directory(new File(path));
+
+			// System.out.println("" + pb.directory());
+			p = pb.start();
+			
+			BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream(),
+					Charset.forName("UTF-8")));
+			//Read the sysout file
+			String sysout = path+File.separator+file_name+".Func_Call.sysout";
+
+			Iterator<String> iterator = Files.readAllLines(Paths.get(sysout), Charset.defaultCharset()).iterator();
+			String output = null;
+			while ((output = reader.readLine()) != null) {
+				String expected = iterator.next();
+				//System.out.println(output);
+				assertEquals(expected, output);
+			}
+
+			// Ensure no records is left in the list.
+			if (iterator.hasNext()) {
+				throw new Exception("Test file: " + file_name);
+			}
+		} catch (Exception e) {
+			terminate();
+			throw new RuntimeException("Test file: " + file_name, e);
+		}
+	}
+	
+	
+	
 	
 	public void terminate() {
 		while (p != null) {
