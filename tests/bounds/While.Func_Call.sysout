@@ -4,7 +4,7 @@ main.2 [	const %4 = "Sum=" : string]
 main.3 [	const %6 = 5 : int]
 main.4 [	assert blklab4]
 [30;1mmain.5 [	const %9 = 1000000 : int][0m
-[30;1mmain.6 [	iflt %6, %9 goto blklab3 : int][0m
+[30;1mmain.6 [	ifle %6, %9 goto blklab3 : int][0m
 [30;1mmain.7 [	fail ""precondition not satisfied""][0m
 [30;1mmain.8 [.blklab3][0m
 [30;1mmain.9 [.blklab4][0m
@@ -26,15 +26,15 @@ f.13 [.blklab2]
 f.14 [	return %5 : int]
 Bounds of f
 {
-	D(%0) = [5..999999]
-	D(%3) = [0..999999]
+	D(%0) = [5..1000000]
+	D(%3) = [0..1000000]
 	D(%4) = [0..0]
-	D(%5) = [0..9223372036857775801]
+	D(%5) = [0..9223372036857775804]
 	D(%6) = [0..0]
 	D(%11) = [-infinity..infinity]
 	D(%13) = [1..1]
 	D(%14) = [-infinity..infinity]
-	D(return) = [0..9223372036856775803]
+	D(return) = [0..9223372036856775805]
 }
 Consistency=true
 main.11 [	convert %5 = %5 any : int]
@@ -45,8 +45,8 @@ main.15 [	indirectinvoke %3 (%7) : method(any) => void]
 main.16 [	return]
 Bounds of main
 {
-	D(%5) = [0..9223372036856775803]
-	D(%6) = [5..999999]
+	D(%5) = [0..9223372036856775805]
+	D(%6) = [5..1000000]
 	D(%9) = [1000000..1000000]
 }
 Consistency=true

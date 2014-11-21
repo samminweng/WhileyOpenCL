@@ -1,7 +1,7 @@
 import whiley.lang.System
 
 function f(int limit) => int
-requires limit < 1000000:
+requires limit <= 1000000:
     int i=0
     int sum=0
     while i<limit:

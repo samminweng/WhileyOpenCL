@@ -32,7 +32,7 @@ main.2 [	const %4 = "Sum=" : string]
 main.3 [	const %6 = 5 : int]
 main.4 [	assert blklab4]
 [30;1mmain.5 [	const %9 = 1000000 : int][0m
-[30;1mmain.6 [	iflt %6, %9 goto blklab3 : int][0m
+[30;1mmain.6 [	ifle %6, %9 goto blklab3 : int][0m
 [30;1mmain.7 [	fail ""precondition not satisfied""][0m
 [30;1mmain.8 [.blklab3][0m
 [30;1mmain.9 [.blklab4][0m
@@ -45,7 +45,7 @@ main.15 [	indirectinvoke %3 (%7) : method(any) => void]
 main.16 [	return]
 Bounds of main
 {
-	D(%6) = [5..999999]
+	D(%6) = [5..1000000]
 	D(%9) = [1000000..1000000]
 }
 Consistency=true
