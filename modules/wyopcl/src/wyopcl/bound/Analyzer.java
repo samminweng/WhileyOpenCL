@@ -1,5 +1,6 @@
 package wyopcl.bound;
 
+
 import static wycc.lang.SyntaxError.internalFailure;
 
 import java.io.FileNotFoundException;
