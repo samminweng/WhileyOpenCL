@@ -36,19 +36,17 @@ public class WyopclBuildTask extends wyc.util.WycBuildTask {
 		if(analysis!= null){
 			//Add the switch for the further analysis.
 			builder = new BoundAnalyzer(project);
-			//switch(analysis.toLowerCase()){
-			//case "function":				
-			//	((BoundAnalyzer) builder).setAnalyzeType(false);
-			//	break;
-			//case "functioncall":
-			if(analysis.equals("functioncall")){
-				((BoundAnalyzer) builder).setAnalyzeType(true);
-			}				
-			//	break;
-			//default:
-			//	internalFailure("Not implemented!", "WyopclBuildTask.java", null);
-			//	return;
-		//	}
+			switch(analysis.toLowerCase()){
+			case "function":				
+				((BoundAnalyzer) builder).setAnalyzeType(false);
+				break;
+			case "functioncall":
+				((BoundAnalyzer) builder).setAnalyzeType(true);				
+				break;
+			default:
+				internalFailure("Not implemented!", "WyopclBuildTask.java", null);
+				return;
+			}
 			
 			if (verbose) {
 				((BoundAnalyzer) builder).setLogger(new Logger.Default(System.err));
