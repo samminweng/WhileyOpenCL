@@ -238,7 +238,7 @@ public class BasicBlock implements Comparable<BasicBlock>{
 	 * Infer the bounds 
 	 * @return true if the bounds are changed. Return false if bounds remain unchanged.
 	 */
-	public boolean inferBounds(boolean verbose){
+	public boolean inferBounds(){
 		isChanged = true;
 		//Iterate through the constraints to infer the bounds.
 		for(Constraint c: this.constraintList){

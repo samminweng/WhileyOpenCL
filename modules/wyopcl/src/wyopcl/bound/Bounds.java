@@ -203,9 +203,7 @@ public class Bounds implements Cloneable{
 	 * @param bnd the new bounds
 	 */
 	public void union(Bounds bnd){		
-		Iterator<String> iterator = bnd.bounds.keySet().iterator();
-		while(iterator.hasNext()){
-			String name = iterator.next();
+		for(String name: bnd.bounds.keySet()){
 			if(bnd.isExisting(name)){
 				//Lower bounds
 				BigInteger new_min = bnd.getLower(name);
@@ -223,11 +221,15 @@ public class Bounds implements Cloneable{
 					if(new_max!=null && max_current!= null){
 						new_max = new_max.max(max_current);
 					}
-				}				
-				this.getDomain(name).setLowerBound(new_min);				
-				this.getDomain(name).setUpperBound(new_max);				
-			}
-						
+				}
+				
+				//if(new_min != null){
+					this.getDomain(name).setLowerBound(new_min);
+				//}
+				//if(new_max != null){
+					this.getDomain(name).setUpperBound(new_max);
+				//}								
+			}						
 		}		
 	}
 	
@@ -260,6 +262,22 @@ public class Bounds implements Cloneable{
 		return false;
 	}	
 
+	/**
+	 * Widen the upper bounds to + infinity (null)
+	 * @param name
+	 * @return
+	 */
+	public boolean widenUpperBoundsToInf(String name){
+		BigInteger max = getUpper(name);
+		if(max != null){			
+			this.getDomain(name).setUpperBound(null);
+			return true;
+		}		
+		return false;
+	}
+	
+	
+	
 
 	/**
 	 * Check if all the bounds are consistent (lower bound <= upper bound)

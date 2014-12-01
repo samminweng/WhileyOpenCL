@@ -9,6 +9,11 @@ main.4 [	assert blklab4]
 [30;1mmain.8 [.blklab3][0m
 [30;1mmain.9 [.blklab4][0m
 main.10 [	invoke %5 = (%6) While:f : function(int) => int]
+Bounds of f{
+	D(%6) = [5..1000000]
+	D(%9) = [1000000..1000000]
+}
+Consistency=true
 f.0 [	const %4 = 0 : int]
 f.1 [	assign %3 = %4  : int]
 f.2 [	const %6 = 0 : int]
@@ -24,8 +29,7 @@ f.11 [	nop]
 f.12 [end blklab1]
 f.13 [.blklab2]
 f.14 [	return %5 : int]
-Bounds of f
-{
+Bounds of f{
 	D(%0) = [5..1000000]
 	D(%3) = [0..1000000]
 	D(%4) = [0..0]
@@ -43,10 +47,10 @@ main.13 [	sappend %7 = %4, %5 : string]
 main.14 [	convert %7 = %7 any : string]
 main.15 [	indirectinvoke %3 (%7) : method(any) => void]
 main.16 [	return]
-Bounds of main
-{
-	D(%5) = [0..9223372036856775805]
+Bounds of main{
+	D(%5) = [-infinity..infinity]
 	D(%6) = [5..1000000]
 	D(%9) = [1000000..1000000]
+	D(return) = [-infinity..infinity]
 }
 Consistency=true

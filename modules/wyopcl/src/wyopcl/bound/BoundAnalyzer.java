@@ -52,40 +52,16 @@ import wyopcl.bound.constraint.Union;
  *
  */
 public class BoundAnalyzer implements Builder{
-	private Build.Project project;
-	private String filename;
-	private boolean verbose = false;
-	private boolean isFunctionCall = false;
-	/**
-	 * For logging information.
-	 */
-	protected Logger logger = Logger.NULL;
-
-	public BoundAnalyzer(Project project){
-		this.project = project;
+	private final AnalyzerConfiguration config;
+	
+	public BoundAnalyzer(AnalyzerConfiguration config){
+		this.config = config;
 	}	
 
 	@Override
 	public Project project() {
-		return project;
-	}
-
-	public void setLogger(Logger logger) {
-		this.logger = logger;		
-	}
-
-	public void setVerbose(boolean verbose) {
-		this.verbose = verbose;
-	}
-	
-	/**
-	 * Set the type of analyzing the functions.
-	 * @param type
-	 */
-	public void setAnalyzeType(boolean isFuncType){
-		this.isFunctionCall = isFuncType;		
-	}
-
+		return config.getProject();
+	}	
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -93,15 +69,14 @@ public class BoundAnalyzer implements Builder{
 		//Runtime runtime = Runtime.getRuntime();
 		long start = System.currentTimeMillis();
 		//long memory = runtime.freeMemory();
-
 		HashSet<Path.Entry<?>> generatedFiles = new HashSet<Path.Entry<?>>();
 		for(Pair<Path.Entry<?>,Path.Root> p : delta) {
 			//Path.Root dst = p.second();
 			Path.Entry<WyilFile> sf = (Path.Entry<WyilFile>) p.first();
 			WyilFile module = sf.read();
-			filename = module.filename().split(".whiley")[0];				
+			config.setFilename(module.filename().split(".whiley")[0]);				
 			//Start analyzing the range.
-			if(isFunctionCall){
+			if(config.isFunctionCall()){
 				analyzeFunctionCall(module);
 			}else{
 				analyze(module);
@@ -109,7 +84,7 @@ public class BoundAnalyzer implements Builder{
 		}
 		
 		long endTime = System.currentTimeMillis();
-		System.err.println("Bound Analysis completed.\nFile:" + filename +".whiley Time: "+(endTime - start)+" ms");
+		System.err.println("Bound Analysis completed.\nFile:" + config.getFilename() +".whiley Time: "+(endTime - start)+" ms");
 		return generatedFiles;
 	}
 	
@@ -122,33 +97,13 @@ public class BoundAnalyzer implements Builder{
 		int line = 0;
 		for(Case mcase : functionOrMethod.cases()){
 			analyzer.createEntryNode(functionOrMethod.type().params());
-			Iterator<wyil.lang.Code.Block.Entry> iterator = mcase.body().iterator();
 			//Parse each byte-code and add the constraints accordingly.
-			while(iterator.hasNext()){
+			for(Block.Entry entry :mcase.body()){
 				//Get the Block.Entry
-				Block.Entry entry = iterator.next();
-				//if(verbose){
-					line = analyzer.printWyILCode(entry.code, functionOrMethod.name(), line);
-				//}
+				line = analyzer.printWyILCode(entry.code, functionOrMethod.name(), line);
 				analyzer.dispatch(entry);				
 			}
-			if(verbose){
-				analyzer.printCFG(filename, functionOrMethod.name());
-			}
-			
 		}
-	}
-	
-	/**
-	 * Writes out the bounds to a file (*.sysout) for the
-	 * aggressive tests.
-	 * @param func_name the name of a function.
-	 * @param bnd the bounds of a function.
-	 */
-	public void printOutBounds(String func_name, Bounds bnd){
-		System.out.println("Bounds of "+func_name);
-		System.out.println(bnd.toString());
-		System.out.println("Consistency="+bnd.checkBoundConsistency());
 	}
 	
 	
@@ -158,14 +113,10 @@ public class BoundAnalyzer implements Builder{
 	 */
 	public void analyze(WyilFile module){
 		for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {			
-			Analyzer analyzer = new Analyzer(0);			
+			Analyzer analyzer = new Analyzer(0, config);			
 			iterateByteCode(analyzer, functionOrMethod);			
 			//Infer and print the final bounds.
-			Bounds bnd = analyzer.inferBounds(verbose);
-			if(verbose){
-				analyzer.printBounds(bnd);
-			}			
-			printOutBounds(functionOrMethod.name(), bnd);
+			analyzer.inferBounds(functionOrMethod.name());	
 			analyzer = null;
 		}
 	}
@@ -175,20 +126,14 @@ public class BoundAnalyzer implements Builder{
 	 * Takes the in-memory wyil file and analyzes the range values for all variables in each function.
 	 * @param module
 	 */
-	public void analyzeFunctionCall(WyilFile module){
-		Analyzer analyzer = new Analyzer(0);
+	private void analyzeFunctionCall(WyilFile module){
+		Analyzer analyzer = new Analyzer(0, config);
 		WyilFile.FunctionOrMethodDeclaration main = module.functionOrMethod("main").get(0);
 		int line = 0;
 		//Parse each byte-code and add the constraints accordingly.
 		for(Case mcase : main.cases()){
-			Block blk = mcase.body();
-			Iterator<wyil.lang.Code.Block.Entry> iterator = blk.iterator();
-			while(iterator.hasNext()){
-				//Get the Block.Entry
-				Block.Entry entry = iterator.next();
-				//if(verbose){
-					line = analyzer.printWyILCode(entry.code, main.name(), line);
-				//}				
+			for(Block.Entry entry: mcase.body()){				
+				line = analyzer.printWyILCode(entry.code, main.name(), line);							
 				//check the code type and add the constraints according to code type.
 				if(entry.code instanceof Codes.Invoke){
 					//Get the function
@@ -196,8 +141,8 @@ public class BoundAnalyzer implements Builder{
 					FunctionOrMethodDeclaration functionOrMethod = module.functionOrMethod(code.name.name(), code.type());					
 					if(functionOrMethod != null){
 						//Infer the bounds						
-						Bounds bnd = analyzer.inferBounds(false);
-						Analyzer invokeanalyzer = new Analyzer(1);
+						Bounds bnd = analyzer.inferBounds(functionOrMethod.name());
+						Analyzer invokeanalyzer = new Analyzer(1, config);
 						int index = 0;
 						//Pass the bounds of input parameters.
 						for(Type paramType: functionOrMethod.type().params()){
@@ -209,12 +154,7 @@ public class BoundAnalyzer implements Builder{
 						}
 						iterateByteCode(invokeanalyzer, functionOrMethod);						
 						//Infer the bounds
-						bnd = invokeanalyzer.inferBounds(verbose);
-						if(verbose){
-							invokeanalyzer.printCFG(filename, functionOrMethod.name());
-							invokeanalyzer.printBounds(bnd);
-						}
-						printOutBounds(functionOrMethod.name(), bnd);						
+						invokeanalyzer.inferBounds(functionOrMethod.name());												
 						//propagate the bounds of return value.
 						analyzer.addConstraint(new Range("%"+code.target(), bnd.getLower("return"), bnd.getUpper("return")));
 						invokeanalyzer = null;
@@ -225,12 +165,8 @@ public class BoundAnalyzer implements Builder{
 			}			
 		}	
 		//Infer the bounds 		
-		Bounds bnd = analyzer.inferBounds(verbose);
-		if(verbose){
-			analyzer.printCFG(filename, main.name());
-			analyzer.printBounds(bnd);
-		}			
-		printOutBounds(main.name(), bnd);
+		analyzer.inferBounds(main.name());
+			
 		analyzer = null;
 
 	}

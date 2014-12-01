@@ -46,6 +46,8 @@ import wyopcl.bound.constraint.Union;
  *
  */
 public class Analyzer {
+	private final AnalyzerConfiguration config;
+	
 	//The boolean flag is used to show whether the code is inside an assertion or assumption.	
 	private boolean isAssertOrAssume = false;
 
@@ -71,8 +73,9 @@ public class Analyzer {
 
 	private boolean isGoto = false;
 
-	public Analyzer(int depth){
+	public Analyzer(int depth, AnalyzerConfiguration config){
 		this.depth = depth;
+		this.config = config;
 		this.entry = createBasicBlock("entry", BlockType.ENTRY);
 		this.exit = createBasicBlock("exit", BlockType.EXIT);
 		this.current_blk = this.entry;
@@ -168,28 +171,26 @@ public class Analyzer {
 
 	/**
 	 * Print out the bounds.
-	 * @param bnd
+	 * @param func_name the name of function or method
+	 * @param bnd the bounds
+	 * @param isVerbose the mode of message
 	 */
-	public void printBounds(Bounds bnd){
-		System.out.print(BLUE+"Bounds"+RESET);
+	private void printBounds(String func_name, Bounds bnd){
+		System.out.print("Bounds of "+func_name);
 		System.out.println(bnd.toString());
-		if(bnd.checkBoundConsistency()){
-			System.out.println(BLUE+"Consistency=true"+RESET);
-		}else{
-			System.out.println(RED+"Consistency=false"+RESET);
-		}
+		System.out.println("Consistency="+bnd.checkBoundConsistency());		
 	}
 
 
 	/**
 	 * Repeatedly iterates over all blocks, starting from the entry block to the exit block,
 	 * and infer the bounds consistent with all the constraints in each block.
-	 * @param verbose 
+	 * @param func_name the name of function or method
 	 * @param iterations optional parameter. iterations[0] specifies the number of iterations. If not specifies, 
 	 * the default value is 5.
 	 * @return the bounds
 	 */
-	public Bounds inferBounds(boolean verbose, int... iterations){
+	public Bounds inferBounds(String func_name, int... iterations){
 		//Sort the blks
 		Collections.sort(list);		
 		int MaxIteration = iterations.length >0 ? iterations[0] : 12;		
@@ -197,7 +198,7 @@ public class Analyzer {
 		Bounds bnd_before = null, bnd_after = null;
 		//Stop until there is no change in bounds.
 		for(int iteration=1;iteration<=MaxIteration;iteration++){
-			if(verbose){
+			if(config.isVerbose()){
 				System.out.println(BLUE+"Iteration "+iteration+" => "+RESET);
 			}			
 			//Initialize the isFixedPointed
@@ -212,14 +213,19 @@ public class Analyzer {
 					for(String var: loop_variables.keySet()){
 						boolean isIncreasing = loop_variables.get(var);
 						//After three iterations, the bounds is still increasing.
-						if(isIncreasing && iteration%3==0){						
-							isChanged |= blk.getBounds().widenUpperBoundsAgainstThresholds(var);
+						if(isIncreasing && iteration%3==0){
+							if(config.isMultiWiden()){
+								isChanged |= blk.getBounds().widenUpperBoundsAgainstThresholds(var);
+							}else{
+								isChanged |= blk.getBounds().widenUpperBoundsToInf(var);
+							}
+							
 						}						
 					}					
 				}				
 
 				//If bounds remain unchanged, then isChanged = true.
-				isChanged |= blk.inferBounds(verbose);
+				isChanged |= blk.inferBounds();
 				//Use bitwise 'AND' to combine all the results
 				isFixedPointed &= (!isChanged);			
 				//Take the union of parents' bounds.
@@ -229,46 +235,60 @@ public class Analyzer {
 					}
 				}
 				//Print out the bounds.
-				if(verbose){
+				if(config.isVerbose()){
 					System.out.println(blk);
 					System.out.println("isChanged="+isChanged);
 				}
 
 				if(blk.getType().equals(BlockType.LOOP_BODY)){
 					bnd_after = (Bounds) blk.getBounds().clone();
+					//check loop variable is increasing
+					for(String var: loop_variables.keySet()){	
+						boolean isIncreasing = loop_variables.get(var);
+						//Reset the increasing flag
+						if(iteration%3==0){
+							isIncreasing = false;
+						}
+						BigInteger max_before = bnd_before.getUpper(var);
+						BigInteger max_after = bnd_after.getUpper(var);
+						if(max_before!= null && max_after!=null){
+							//The bounds is increasing
+							if(max_before.compareTo(max_after)<0){
+								isIncreasing |= true;
+								loop_variables.put(var, isIncreasing);
+							}					
+						}				
+					}
 				}
+			}//End of bound inference for all constraints in all blks.					
 
-			}//End of bound inference for all constraints in all blks.
-
-			//check loop variable is increasing
-			for(String var: loop_variables.keySet()){	
-				boolean isIncreasing = loop_variables.get(var);
-				//Reset the increasing flag
-				if(iteration%3==0){
-					isIncreasing = false;
-				}
-				BigInteger max_before = bnd_before.getUpper(var);
-				BigInteger max_after = bnd_after.getUpper(var);
-				if(max_before!= null && max_after!=null){
-					//The bounds is increasing
-					if(max_before.compareTo(max_after)<0){
-						isIncreasing |= true;
-						loop_variables.put(var, isIncreasing);
-					}					
-				}				
-			}					
-
-			if(verbose){
+			if(config.isVerbose()){
 				System.out.println("isFixedPointed="+isFixedPointed);
-			}	
+			}
+			
+			//Stop the loop when the fixed point is reached.
+			if(isFixedPointed){
+				break;
+			}
+			
 		}		
 
 		BasicBlock current_blk = getCurrentBlock();
+		Bounds bnd;
 		if(current_blk!=null){
-			return current_blk.getBounds();
+			bnd = current_blk.getBounds();
+		}else{
+			bnd = exit.getBounds();
 		}
-
-		return exit.getBounds();
+		
+		//check if print out the CFG
+		if(config.isVerbose()){
+			printCFG(func_name);
+		}		
+		printBounds(func_name, bnd);
+		
+		
+		return bnd;
 	}
 
 	/**
@@ -320,9 +340,7 @@ public class Analyzer {
 	 * @return
 	 */
 	private BasicBlock getBasicBlock(String label, BlockType type){
-		Iterator<BasicBlock> iterator = list.iterator();
-		while(iterator.hasNext()){
-			BasicBlock blk = iterator.next();
+		for(BasicBlock blk : list){
 			if(blk.getBranch().equals(label)){
 				if(blk.getType().equals(type)){
 					return blk;
@@ -332,14 +350,6 @@ public class Analyzer {
 		return null;
 
 	}
-
-
-	/*private BasicBlock createBasicBlock(String label, BlockType type){
-		BasicBlock blk = new BasicBlock(label, type);
-		list.add(blk);
-		return blk;
-	}*/
-
 
 	/**
 	 * Create a basic block with the specific label name
@@ -362,14 +372,12 @@ public class Analyzer {
 	 * Outputs the control flow graphs.
 	 * @param name
 	 */
-	public void printCFG(String filename, String func_name){
+	private void printCFG(String func_name){
 		//Sort the blks.
 		Collections.sort(list);
-
 		String dot_string= "digraph "+func_name+"{\n";		
-		Iterator<BasicBlock> iterator = list.iterator();
-		while(iterator.hasNext()){
-			BasicBlock blk = iterator.next();
+		
+		for(BasicBlock blk: list){
 			if(!blk.isLeaf() && (!blk.getType().equals(BlockType.ASSERT)||
 					!blk.getType().equals(BlockType.ASSUME) )){
 				for(BasicBlock child: blk.getChildNodes()){
@@ -381,17 +389,14 @@ public class Analyzer {
 
 		//Write out the CFG-function_name.dot
 		try {
-			PrintWriter writer = new PrintWriter(filename+"-"+func_name+".dot", "UTF-8");
+			PrintWriter writer = new PrintWriter(config.getFilename()+"-"+func_name+".dot", "UTF-8");
 			writer.println(dot_string);
 			writer.close();
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
-
-
 
 	/**
 	 * Adds the constraint to the current constraint list.
@@ -400,8 +405,6 @@ public class Analyzer {
 	public void addConstraint(Constraint c){		
 		getCurrentBlock().addConstraint(c);		
 	}
-
-
 
 	/**
 	 * Branches the current block and adds the 
@@ -958,12 +961,6 @@ public class Analyzer {
 		Type.Map map = code.type();
 		int index =1;
 		while(index<code.operands().length){
-			//Consider the key field
-			//if(isIntType(map.key())){
-			//addConstraintToCurrentList(new Union("%"+code.target(), "%"+code.operand(index)));
-			//}
-			//index++;
-
 			//Consider The values field
 			if(isIntType(map.value())){
 				addConstraint(new Union("%"+code.target(), "%"+code.operand(index)));
