@@ -9,13 +9,13 @@ import wyopcl.bound.Bounds;
  *
  */
 public class Range extends Constraint {
-	private BigInteger min_y, max_y;
+	private BigInteger min_x, max_x, min_y, max_y;
 	private String x, y;
 	
-	public Range(String x, String y){
+	/*public Range(String x, String y){
 		this.x = x;
 		this.y = y;
-	}
+	}*/
 	
 	public Range(String x, BigInteger min, BigInteger max){
 		this.x = x;
@@ -28,13 +28,16 @@ public class Range extends Constraint {
 	public boolean inferBound(Bounds bnd) {
 		
 		bnd.isChanged = false;
-		if(y != null){
-			min_y = bnd.getLower(y);
-			max_y = bnd.getUpper(y);
-		}		
-		
-		bnd.getDomain(x).setLowerBound(min_y);
-		bnd.getDomain(x).setUpperBound(max_y);
+		min_x = bnd.getLower(x);
+		max_x = bnd.getUpper(x);			
+		if(min_x != min_y){
+			bnd.getDomain(x).setLowerBound(min_y);
+			bnd.isChanged |= true;
+		}
+		if(max_x != max_y){
+			bnd.getDomain(x).setUpperBound(max_y);
+			bnd.isChanged |= true;
+		}
 		
 		return bnd.isChanged;
 	}

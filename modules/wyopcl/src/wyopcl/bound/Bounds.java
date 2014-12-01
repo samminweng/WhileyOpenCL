@@ -212,8 +212,8 @@ public class Bounds implements Cloneable{
 				if(this.isExisting(name)){
 					BigInteger min_current = this.getLower(name);
 					//Find the min (this, parent)
-					if(new_min != null&& min_current!=null){
-						new_min=new_min.min(min_current);					
+					if(min_current != null && new_min!=null){
+						new_min = new_min.min(min_current);
 					}
 					
 					BigInteger max_current = this.getUpper(name);
@@ -221,7 +221,7 @@ public class Bounds implements Cloneable{
 					if(max_current == null && new_max != null){
 						new_max = max_current;
 					}
-					if(new_max!=null && max_current != null){
+					if(max_current != null && new_max!=null){
 						new_max = new_max.max(max_current);
 					}					
 				}

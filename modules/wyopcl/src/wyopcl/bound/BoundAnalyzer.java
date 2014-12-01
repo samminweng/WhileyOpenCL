@@ -154,7 +154,7 @@ public class BoundAnalyzer implements Builder{
 						}
 						iterateByteCode(invokeanalyzer, functionOrMethod);						
 						//Infer the bounds
-						invokeanalyzer.inferBounds(functionOrMethod.name());												
+						bnd = invokeanalyzer.inferBounds(functionOrMethod.name());												
 						//propagate the bounds of return value.
 						analyzer.addConstraint(new Range("%"+code.target(), bnd.getLower("return"), bnd.getUpper("return")));
 						invokeanalyzer = null;
