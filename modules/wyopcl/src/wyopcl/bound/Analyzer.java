@@ -24,6 +24,7 @@ import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.Type.Tuple;
+import wyil.lang.WyilFile.Case;
 import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
 import wyopcl.bound.BasicBlock.BlockType;
 import wyopcl.bound.constraint.Assign;
@@ -49,7 +50,8 @@ import wyopcl.bound.constraint.Union;
  */
 public class Analyzer {
 	private final AnalyzerConfiguration config;
-	//private final FunctionOrMethodDeclaration functionOrMethod;
+	private final FunctionOrMethodDeclaration functionOrMethod;
+	private final WyilFile module;
 	//The boolean flag is used to show whether the code is inside an assertion or assumption.	
 	private boolean isAssertOrAssume = false;
 
@@ -75,14 +77,36 @@ public class Analyzer {
 
 	private boolean isGoto = false;
 
-	public Analyzer(int depth, AnalyzerConfiguration config){
+	public Analyzer(int depth, AnalyzerConfiguration config,
+			FunctionOrMethodDeclaration functionOrMethod, WyilFile module){
 		this.depth = depth;
 		this.config = config;
-		//this.functionOrMethod = functionOrMethod;
+		this.functionOrMethod = functionOrMethod;
+		this.module = module;
 		this.entry = createBasicBlock("entry", BlockType.ENTRY);
 		this.exit = createBasicBlock("exit", BlockType.EXIT);
 		this.current_blk = this.entry;
 	}
+	
+	
+	/**
+	 * Iterate each bytecode
+	 * @param analyzer
+	 * @param functionOrMethod
+	 */
+	public void iterateByteCode(){
+		int line = 0;
+		for(Case mcase : functionOrMethod.cases()){
+			createEntryNode(functionOrMethod.type().params());
+			//Parse each byte-code and add the constraints accordingly.
+			for(Block.Entry entry :mcase.body()){
+				//Get the Block.Entry
+				line = printWyILCode(entry.code, functionOrMethod.name(), line);
+				dispatch(entry);				
+			}
+		}
+	}
+	
 
 	public void createEntryNode(Type paramType, String param, BigInteger min, BigInteger max){
 		if(isIntType(paramType)){
@@ -178,8 +202,8 @@ public class Analyzer {
 	 * @param bnd the bounds
 	 * @param isVerbose the mode of message
 	 */
-	private void printBounds(String func_name, Bounds bnd){
-		System.out.print("Bounds of "+func_name);
+	private void printBounds(Bounds bnd){
+		System.out.print("Bounds of "+functionOrMethod.name());
 		System.out.println(bnd.toString());
 		System.out.println("Consistency="+bnd.checkBoundConsistency());		
 	}
@@ -193,7 +217,7 @@ public class Analyzer {
 	 * the default value is 5.
 	 * @return the bounds
 	 */
-	public Bounds inferBounds(String func_name, int... iterations){
+	public Bounds inferBounds(int... iterations){
 		//Sort the blks
 		Collections.sort(list);		
 		int MaxIteration = iterations.length >0 ? iterations[0] : 12;		
@@ -213,19 +237,7 @@ public class Analyzer {
 			for(BasicBlock blk : list){
 				//Before the bound inference
 				if(blk.getType().equals(BlockType.LOOP_BODY)){
-					bnd_before = (Bounds) blk.getBounds().clone();
-					/*for(String var: loop_variables.keySet()){
-						boolean isIncreasing = loop_variables.get(var);
-						//After three iterations, the bounds is still increasing.
-						if(isIncreasing && iteration%3==0){
-							if(config.isMultiWiden()){
-								isChanged |= blk.getBounds().widenUpperBoundsAgainstThresholds(var);
-							}else{
-								isChanged |= blk.getBounds().widenUpperBoundsToInf(var);
-							}
-							
-						}						
-					}*/					
+					bnd_before = (Bounds) blk.getBounds().clone();				
 				}				
 
 				//If bounds remain unchanged, then isChanged = true.
@@ -294,11 +306,9 @@ public class Analyzer {
 		
 		//check if print out the CFG
 		if(config.isVerbose()){
-			printCFG(func_name);
+			printCFG(functionOrMethod.name());
 		}		
-		printBounds(func_name, bnd);
-		
-		
+		printBounds(bnd);		
 		return bnd;
 	}
 
@@ -687,45 +697,26 @@ public class Analyzer {
 	 * @param code
 	 */
 	private void analyze(Codes.Invoke code){
-		/*//String func_name = code.name.name();
-
-		Type returnType = code.type().ret();
-		if(returnType instanceof Type.Int){
-			//String return_reg = "%"+code.target();
-			//this.getConstraintList().addConstraint(new Equals(return_reg, func_name));
-		}*/
-
-		//Get the fun declaration from module.
-		//FunctionOrMethodDeclaration functionOrMethod = module.functionOrMethod(code.name.name(), code.type());		
-
-
-		/*int index = 0;
-		for(Type paramType: code.type().params()){
-			//Get the input parameters of integer type
-			if(paramType instanceof Type.Int){
-				String param = "%"+code.operand(index);
-				//Missing the variable name of function input parameters, so we used the function name temporarily.
-				//Add the equal constraint for input parameter.
-				addConstraint(new Union(functionOrMethod.name(), param));
+		FunctionOrMethodDeclaration functionOrMethod = module.functionOrMethod(code.name.name(), code.type());					
+		if(functionOrMethod != null){
+			//Infer the bounds						
+			Bounds bnd = this.inferBounds();
+			Analyzer invokeanalyzer = new Analyzer(1, config, functionOrMethod, module);
+			int index = 0;
+			//Pass the bounds of input parameters.
+			for(Type paramType: functionOrMethod.type().params()){
+				invokeanalyzer.createEntryNode(paramType, "%"+index,
+						bnd.getLower("%"+code.operand(index)),
+						bnd.getUpper("%"+code.operand(index)));
+				index++;
 			}
-			index++;			
-		}*/
-
-
-
-		//Check if the function has been analyzed. If so, the union of bounds shall be used to
-		//add the equality 
-		/*if(unionOfBoundsMap.containsKey(functionOrMethod)){
-			Bounds bounds = unionOfBoundsMap.get(functionOrMethod);
-			//Check if the return type is integer
-			if(code.type().ret() instanceof Type.Int){
-				//Add the range constraint for the return register.
-				addConstraint(new Range("%"+code.target(), bounds.getLower("return"), bounds.getUpper("return")));
-			}	
-
-		}*/
-
-
+			invokeanalyzer.iterateByteCode();						
+			//Infer the bounds
+			bnd = invokeanalyzer.inferBounds();												
+			//propagate the bounds of return value.
+			this.addConstraint(new Range("%"+code.target(), bnd.getLower("return"), bnd.getUpper("return")));
+			invokeanalyzer = null;
+		}
 	}
 
 	/**
@@ -1046,7 +1037,7 @@ public class Analyzer {
 	}
 
 
-
+	
 
 
 }

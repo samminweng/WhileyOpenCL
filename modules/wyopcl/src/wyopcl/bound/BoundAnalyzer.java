@@ -88,24 +88,6 @@ public class BoundAnalyzer implements Builder{
 		return generatedFiles;
 	}
 	
-	/**
-	 * Iterate each bytecode
-	 * @param analyzer
-	 * @param functionOrMethod
-	 */
-	private void iterateByteCode(Analyzer analyzer, WyilFile.FunctionOrMethodDeclaration functionOrMethod){
-		int line = 0;
-		for(Case mcase : functionOrMethod.cases()){
-			analyzer.createEntryNode(functionOrMethod.type().params());
-			//Parse each byte-code and add the constraints accordingly.
-			for(Block.Entry entry :mcase.body()){
-				//Get the Block.Entry
-				line = analyzer.printWyILCode(entry.code, functionOrMethod.name(), line);
-				analyzer.dispatch(entry);				
-			}
-		}
-	}
-	
 	
 	/**
 	 * Takes the in-memory wyil file and analyzes the variable ranges for each function.
@@ -113,10 +95,10 @@ public class BoundAnalyzer implements Builder{
 	 */
 	public void analyze(WyilFile module){
 		for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {			
-			Analyzer analyzer = new Analyzer(0, config);			
-			iterateByteCode(analyzer, functionOrMethod);			
+			Analyzer analyzer = new Analyzer(0, config, functionOrMethod, module);			
+			analyzer.iterateByteCode();			
 			//Infer and print the final bounds.
-			analyzer.inferBounds(functionOrMethod.name());	
+			analyzer.inferBounds();	
 			analyzer = null;
 		}
 	}
@@ -127,47 +109,12 @@ public class BoundAnalyzer implements Builder{
 	 * @param module
 	 */
 	private void analyzeFunctionCall(WyilFile module){
-		Analyzer analyzer = new Analyzer(0, config);
 		WyilFile.FunctionOrMethodDeclaration main = module.functionOrMethod("main").get(0);
-		int line = 0;
-		//Parse each byte-code and add the constraints accordingly.
-		for(Case mcase : main.cases()){
-			for(Block.Entry entry: mcase.body()){				
-				line = analyzer.printWyILCode(entry.code, main.name(), line);							
-				//check the code type and add the constraints according to code type.
-				if(entry.code instanceof Codes.Invoke){
-					//Get the function
-					Codes.Invoke code = (Codes.Invoke)entry.code;
-					FunctionOrMethodDeclaration functionOrMethod = module.functionOrMethod(code.name.name(), code.type());					
-					if(functionOrMethod != null){
-						//Infer the bounds						
-						Bounds bnd = analyzer.inferBounds(functionOrMethod.name());
-						Analyzer invokeanalyzer = new Analyzer(1, config);
-						int index = 0;
-						//Pass the bounds of input parameters.
-						for(Type paramType: functionOrMethod.type().params()){
-							invokeanalyzer.createEntryNode(paramType, "%"+index,
-									bnd.getLower("%"+code.operand(index)),
-									bnd.getUpper("%"+code.operand(index)));
-							index++;
-						}
-						iterateByteCode(invokeanalyzer, functionOrMethod);						
-						//Infer the bounds
-						bnd = invokeanalyzer.inferBounds(functionOrMethod.name());												
-						//propagate the bounds of return value.
-						analyzer.addConstraint(new Range("%"+code.target(), bnd.getLower("return"), bnd.getUpper("return")));
-						invokeanalyzer = null;
-					}
-				}else{
-					analyzer.dispatch(entry);					
-				}
-			}			
-		}	
-		//Infer the bounds 		
-		analyzer.inferBounds(main.name());
-			
+		Analyzer analyzer = new Analyzer(0, config, main, module);
+		//Infer the bounds
+		analyzer.iterateByteCode();	
+		analyzer.inferBounds();			
 		analyzer = null;
-
 	}
 
 
