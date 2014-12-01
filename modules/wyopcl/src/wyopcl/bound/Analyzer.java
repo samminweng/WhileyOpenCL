@@ -195,7 +195,7 @@ public class Analyzer {
 		Collections.sort(list);		
 		int MaxIteration = iterations.length >0 ? iterations[0] : 12;		
 		boolean isFixedPointed = true;
-		Bounds bnd_before = null, bnd_after = null;
+		
 		//Stop until there is no change in bounds.
 		for(int iteration=1;iteration<=MaxIteration;iteration++){
 			if(config.isVerbose()){
@@ -205,6 +205,7 @@ public class Analyzer {
 			isFixedPointed = true;
 			//If bounds has changed, then isChanged = false.
 			boolean isChanged = false;
+			Bounds bnd_before = null, bnd_after = null;
 			//Iterate all the blocks
 			for(BasicBlock blk : list){
 				//Before the bound inference
@@ -267,9 +268,9 @@ public class Analyzer {
 			}
 			
 			//Stop the loop when the fixed point is reached.
-			if(isFixedPointed){
-				break;
-			}
+			//if(isFixedPointed){
+			//	break;
+			//}
 			
 		}		
 
