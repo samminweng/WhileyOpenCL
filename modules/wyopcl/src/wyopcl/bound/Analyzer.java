@@ -22,7 +22,9 @@ import wyil.lang.Codes.Assert;
 import wyil.lang.Codes.UnaryOperatorKind;
 import wyil.lang.Constant;
 import wyil.lang.Type;
+import wyil.lang.WyilFile;
 import wyil.lang.Type.Tuple;
+import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
 import wyopcl.bound.BasicBlock.BlockType;
 import wyopcl.bound.constraint.Assign;
 import wyopcl.bound.constraint.Const;
@@ -47,7 +49,7 @@ import wyopcl.bound.constraint.Union;
  */
 public class Analyzer {
 	private final AnalyzerConfiguration config;
-	
+	//private final FunctionOrMethodDeclaration functionOrMethod;
 	//The boolean flag is used to show whether the code is inside an assertion or assumption.	
 	private boolean isAssertOrAssume = false;
 
@@ -76,6 +78,7 @@ public class Analyzer {
 	public Analyzer(int depth, AnalyzerConfiguration config){
 		this.depth = depth;
 		this.config = config;
+		//this.functionOrMethod = functionOrMethod;
 		this.entry = createBasicBlock("entry", BlockType.ENTRY);
 		this.exit = createBasicBlock("exit", BlockType.EXIT);
 		this.current_blk = this.entry;
@@ -211,7 +214,7 @@ public class Analyzer {
 				//Before the bound inference
 				if(blk.getType().equals(BlockType.LOOP_BODY)){
 					bnd_before = (Bounds) blk.getBounds().clone();
-					for(String var: loop_variables.keySet()){
+					/*for(String var: loop_variables.keySet()){
 						boolean isIncreasing = loop_variables.get(var);
 						//After three iterations, the bounds is still increasing.
 						if(isIncreasing && iteration%3==0){
@@ -222,7 +225,7 @@ public class Analyzer {
 							}
 							
 						}						
-					}					
+					}*/					
 				}				
 
 				//If bounds remain unchanged, then isChanged = true.
@@ -246,10 +249,6 @@ public class Analyzer {
 					//check loop variable is increasing
 					for(String var: loop_variables.keySet()){	
 						boolean isIncreasing = loop_variables.get(var);
-						//Reset the increasing flag
-						if(iteration%3==0){
-							isIncreasing = false;
-						}
 						BigInteger max_before = bnd_before.getUpper(var);
 						BigInteger max_after = bnd_after.getUpper(var);
 						if(max_before!= null && max_after!=null){
@@ -258,7 +257,18 @@ public class Analyzer {
 								isIncreasing |= true;
 								loop_variables.put(var, isIncreasing);
 							}					
-						}				
+						}
+						//After three iterations, the bounds is still increasing.
+						if(iteration%3==0){
+							isIncreasing = loop_variables.get(var);
+							if(config.isMultiWiden()){
+								isChanged |= blk.getBounds().widenUpperBoundsAgainstThresholds(var);
+							}else{
+								isChanged |= blk.getBounds().widenUpperBoundsToInf(var);
+							}
+							//Reset the increasing flag
+							isIncreasing = false;
+						}
 					}
 				}
 			}//End of bound inference for all constraints in all blks.					
@@ -268,9 +278,9 @@ public class Analyzer {
 			}
 			
 			//Stop the loop when the fixed point is reached.
-			//if(isFixedPointed){
-			//	break;
-			//}
+			if(isFixedPointed){
+				break;
+			}
 			
 		}		
 
@@ -442,7 +452,7 @@ public class Analyzer {
 		}
 	}
 
-
+	
 
 
 

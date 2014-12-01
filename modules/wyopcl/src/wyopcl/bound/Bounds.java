@@ -218,9 +218,6 @@ public class Bounds implements Cloneable{
 					
 					BigInteger max_current = this.getUpper(name);
 					//Find the max (this, parent)
-					if(max_current == null && new_max != null){
-						new_max = max_current;
-					}
 					if(max_current != null && new_max!=null){
 						new_max = new_max.max(max_current);
 					}					
