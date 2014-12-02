@@ -105,7 +105,7 @@ public class BoundAnalyzer implements Builder{
 	
 	
 	/**
-	 * Takes the in-memory wyil file and analyzes the range values for all variables in each function.
+	 * Takes the in-memory wyil file and analyzes the ranges using function call.
 	 * @param module
 	 */
 	private void analyzeFunctionCall(WyilFile module){

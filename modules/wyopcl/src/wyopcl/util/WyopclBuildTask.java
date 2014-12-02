@@ -6,6 +6,7 @@ import wybs.util.StdBuildRule;
 import wybs.util.StdProject;
 import wycc.util.Logger;
 import wyopcl.bound.AnalyzerConfiguration;
+import wyopcl.bound.AnalyzerConfiguration.WidenStrategy;
 import wyopcl.bound.BoundAnalyzer;
 import wyopcl.interpreter.WyilInterpreter;
 
@@ -13,11 +14,11 @@ public class WyopclBuildTask extends wyc.util.WycBuildTask {
 	
 	//runtime 	
 	protected String[] arguments;
-	//'analysis' option
-	private String analysis = null;
+	//'range' option
+	private String range= null;
 	
-	public void setAnalysis(String analysis) {
-		this.analysis = analysis;
+	public void setRange(String range) {
+		this.range = range;
 	}
 
 	public void setArguments(String[] arguments) {
@@ -34,13 +35,19 @@ public class WyopclBuildTask extends wyc.util.WycBuildTask {
 		super.addBuildRules(project);
 		Builder builder;
 		//Check the first argument to determine whether to run the analyzer.		
-		if(analysis!= null){
+		if(range != null){
 			//Create a config object to store the properties
 			AnalyzerConfiguration config = new AnalyzerConfiguration(project);
-			if(analysis.toLowerCase().equals("functioncall")){
-				config.setInvoked(true);
-			}else{
-				config.setInvoked(false);
+			config.setInvoked(true);
+			if(range!=null){
+				switch(range){
+				case "naive":
+					config.setWidenStrategy(WidenStrategy.NAIVE);
+					break;
+				case "gradual":
+					config.setWidenStrategy(WidenStrategy.MULTILEVEL);
+				}
+				
 			}
 			
 			if (verbose) {

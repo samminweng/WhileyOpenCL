@@ -16,8 +16,10 @@ import wyopcl.util.WyopclBuildTask;
 public class WyopclMain extends WycMain{
 	private boolean verbose = false;
 	public static final OptArg[] EXTRA_OPTIONS = {
-		//Add the 'analysis' option 
-		new OptArg("analysis", "a", OptArg.STRING, "Run the range analysis on the whiley program")
+		//Add the 'range' option 
+		new OptArg("range", null, OptArg.STRING, "Run bound analysis on whiley program with a specific widening strategy:\n"
+												 + "\t\t\t   [naive]\tWidening the bounds to infinity.\n"
+												 + "\t\t\t   [gradual]\tWidening the bounds to Int16, Int32, Int64 and infinity.")
 	};
 	
 	public static OptArg[] DEFAULT_OPTIONS;
@@ -44,9 +46,9 @@ public class WyopclMain extends WycMain{
 		super.configure(values);
 		verbose = values.containsKey("verbose");
 		builder.setVerbose(verbose);
-		if(values.containsKey("analysis")){
-			String analysis = (String)values.get("analysis");
-			((WyopclBuildTask) builder).setAnalysis(analysis);			
+		if(values.containsKey("range")){
+			String range = (String)values.get("range");
+			((WyopclBuildTask) builder).setRange(range);			
 		}
 	}
 	

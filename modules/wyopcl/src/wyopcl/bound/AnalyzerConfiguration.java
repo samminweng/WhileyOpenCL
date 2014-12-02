@@ -45,7 +45,7 @@ public final class AnalyzerConfiguration {
 		return false;
 	}
 	
-	public void setWiden_strategy(WidenStrategy widen_strategy) {
+	public void setWidenStrategy(WidenStrategy widen_strategy) {
 		this.widen_strategy = widen_strategy;
 	}	
 	
