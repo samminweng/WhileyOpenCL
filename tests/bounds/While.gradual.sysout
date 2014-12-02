@@ -9,7 +9,7 @@ main.4 [	assert blklab4]
 [30;1mmain.8 [.blklab3][0m
 [30;1mmain.9 [.blklab4][0m
 main.10 [	invoke %5 = (%6) While:f : function(int) => int]
-Bounds of f{
+Bounds of main{
 	D(%6) = [5..1000000]
 	D(%9) = [1000000..1000000]
 }
@@ -31,14 +31,14 @@ f.13 [.blklab2]
 f.14 [	return %5 : int]
 Bounds of f{
 	D(%0) = [5..1000000]
-	D(%3) = [0..1000000]
+	D(%3) = [0..9223372036854775807]
 	D(%4) = [0..0]
-	D(%5) = [0..9223372036857775804]
+	D(%5) = [0..9223372036856775805]
 	D(%6) = [0..0]
 	D(%11) = [-infinity..infinity]
 	D(%13) = [1..1]
 	D(%14) = [-infinity..infinity]
-	D(return) = [0..9223372036856775805]
+	D(return) = [0..9223372036855775806]
 }
 Consistency=true
 main.11 [	convert %5 = %5 any : int]
@@ -48,9 +48,8 @@ main.14 [	convert %7 = %7 any : string]
 main.15 [	indirectinvoke %3 (%7) : method(any) => void]
 main.16 [	return]
 Bounds of main{
-	D(%5) = [-infinity..infinity]
+	D(%5) = [0..9223372036855775806]
 	D(%6) = [5..1000000]
 	D(%9) = [1000000..1000000]
-	D(return) = [-infinity..infinity]
 }
 Consistency=true

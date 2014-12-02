@@ -1,0 +1,154 @@
+main.0 [	const %2 = true : bool]
+main.1 [	const %3 = true : bool]
+main.2 [	const %4 = true : bool]
+main.3 [	const %5 = true : bool]
+main.4 [	const %6 = true : bool]
+main.5 [	const %7 = true : bool]
+main.6 [	const %8 = true : bool]
+main.7 [	newlist %9 = (%2, %3, %4, %5, %6, %7, %8) : [bool]]
+main.8 [	assign %1 = %9  : [bool]]
+main.9 [	const %10 = 0 : int]
+main.10 [	const %11 = 5 : int]
+main.11 [	range %12 = %10, %11 : [int]]
+main.12 [	forall %13 in %12 (%1) : [int]]
+main.13 [	fieldload %15 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}]
+main.14 [	fieldload %16 = %15 println : {method(any) => void print,method(any) => void println}]
+main.15 [	assign %17 = %1  : [bool]]
+main.16 [	convert %17 = %17 any : [bool]]
+main.17 [	indirectinvoke %16 (%17) : method(any) => void]
+main.18 [	invoke %18 = (%1) BoolList_Valid_2:play : function([bool]) => [bool]]
+Bounds of main{
+	D(%10) = [0..0]
+	D(%11) = [5..5]
+	D(%12) = [5..5]
+	D(%13) = [5..5]
+}
+Consistency=true
+play.0 [	assign %2 = %0  : [bool]]
+play.1 [	assign %1 = %2  : [bool]]
+play.2 [	const %3 = 0 : int]
+play.3 [	lengthof %5 = %0 : [bool]]
+play.4 [	range %6 = %3, %5 : [int]]
+play.5 [	forall %7 in %6 (%1) : [int]]
+play.6 [	invoke %8 = (%7, %0) BoolList_Valid_2:isAlive : function(int,[bool]) => bool]
+Bounds of play{
+	D(%3) = [0..0]
+	D(%5) = [0..32767]
+	D(%6) = [0..32767]
+	D(%7) = [0..32767]
+}
+Consistency=true
+isAlive.0 [	const %3 = 0 : int]
+isAlive.1 [	ifle %0, %3 goto blklab5 : int]
+isAlive.2 [	const %5 = 1 : int]
+isAlive.3 [	add %6 = %0, %5 : int]
+isAlive.4 [	lengthof %8 = %1 : [bool]]
+isAlive.5 [	ifge %6, %8 goto blklab5 : int]
+isAlive.6 [	const %11 = 1 : int]
+isAlive.7 [	sub %12 = %0, %11 : int]
+isAlive.8 [	assert blklab16]
+[30;1misAlive.9 [	const %23 = 0 : int][0m
+[30;1misAlive.10 [	ifge %12, %23 goto blklab15 : int][0m
+[30;1misAlive.11 [	fail ""index out of bounds (negative)""][0m
+[30;1misAlive.12 [.blklab15][0m
+[30;1misAlive.13 [	lengthof %24 = %1 : [bool]][0m
+[30;1misAlive.14 [	iflt %12, %24 goto blklab16 : int][0m
+[30;1misAlive.15 [	fail ""index out of bounds (not less than length)""][0m
+[30;1misAlive.16 [.blklab16][0m
+isAlive.17 [	indexof %13 = %1, %12 : [bool]]
+isAlive.18 [	const %14 = true : bool]
+isAlive.19 [	ifeq %13, %14 goto blklab7 : bool]
+isAlive.20 [	goto blklab5]
+isAlive.21 [.blklab7]
+isAlive.22 [	const %17 = 1 : int]
+isAlive.23 [	add %18 = %0, %17 : int]
+isAlive.24 [	assert blklab18]
+[30;1misAlive.25 [	const %23 = 0 : int][0m
+[30;1misAlive.26 [	ifge %18, %23 goto blklab17 : int][0m
+[30;1misAlive.27 [	fail ""index out of bounds (negative)""][0m
+[30;1misAlive.28 [.blklab17][0m
+[30;1misAlive.29 [	lengthof %24 = %1 : [bool]][0m
+[30;1misAlive.30 [	iflt %18, %24 goto blklab18 : int][0m
+[30;1misAlive.31 [	fail ""index out of bounds (not less than length)""][0m
+[30;1misAlive.32 [.blklab18][0m
+isAlive.33 [	indexof %19 = %1, %18 : [bool]]
+isAlive.34 [	const %20 = true : bool]
+isAlive.35 [	ifeq %19, %20 goto blklab8 : bool]
+isAlive.36 [	goto blklab5]
+isAlive.37 [.blklab8]
+isAlive.38 [	const %21 = true : bool]
+isAlive.39 [	return %21 : bool]
+isAlive.40 [.blklab5]
+isAlive.41 [	const %22 = false : bool]
+isAlive.42 [	return %22 : bool]
+Bounds of isAlive{
+	D(%0) = [-infinity..infinity]
+	D(%3) = [0..0]
+	D(%5) = [1..1]
+	D(%6) = [2..32766]
+	D(%8) = [0..32767]
+	D(%11) = [1..1]
+	D(%12) = [-1..32766]
+	D(%17) = [1..1]
+	D(%18) = [-infinity..infinity]
+	D(%23) = [0..0]
+	D(%24) = [0..32767]
+}
+Consistency=true
+play.7 [	const %11 = true : bool]
+play.8 [	ifeq %8, %11 goto blklab4 : bool]
+play.9 [	goto blklab2]
+play.10 [.blklab4]
+play.11 [	const %14 = true : bool]
+play.12 [	assert blklab12]
+[30;1mplay.13 [	const %20 = 0 : int][0m
+[30;1mplay.14 [	ifge %7, %20 goto blklab11 : int][0m
+[30;1mplay.15 [	fail ""index out of bounds (negative)""][0m
+[30;1mplay.16 [.blklab11][0m
+[30;1mplay.17 [	lengthof %20 = %1 : [bool]][0m
+[30;1mplay.18 [	iflt %7, %20 goto blklab12 : int][0m
+[30;1mplay.19 [	fail ""index out of bounds (not less than length)""][0m
+[30;1mplay.20 [.blklab12][0m
+play.21 [	update %1[%7] = %14 : [bool] -> [bool]]
+play.22 [	goto blklab3]
+play.23 [.blklab2]
+play.24 [	const %17 = false : bool]
+play.25 [	assert blklab14]
+[30;1mplay.26 [	const %20 = 0 : int][0m
+[30;1mplay.27 [	ifge %7, %20 goto blklab13 : int][0m
+[30;1mplay.28 [	fail ""index out of bounds (negative)""][0m
+[30;1mplay.29 [.blklab13][0m
+[30;1mplay.30 [	lengthof %20 = %1 : [bool]][0m
+[30;1mplay.31 [	iflt %7, %20 goto blklab14 : int][0m
+[30;1mplay.32 [	fail ""index out of bounds (not less than length)""][0m
+[30;1mplay.33 [.blklab14][0m
+play.34 [	update %1[%7] = %17 : [bool] -> [bool]]
+play.35 [.blklab3]
+play.36 [	nop]
+play.37 [end blklab0]
+play.38 [.blklab1]
+play.39 [	return %1 : [bool]]
+Bounds of play{
+	D(%0) = [-infinity..infinity]
+	D(%3) = [0..0]
+	D(%5) = [0..32767]
+	D(%6) = [0..32767]
+	D(%7) = [0..32767]
+	D(%8) = [-infinity..infinity]
+	D(%20) = [0..32767]
+}
+Consistency=true
+main.19 [	assign %1 = %18  : [bool]]
+main.20 [	nop]
+main.21 [end blklab9]
+main.22 [.blklab10]
+main.23 [	return]
+Bounds of main{
+	D(%1) = [-infinity..infinity]
+	D(%10) = [0..0]
+	D(%11) = [5..5]
+	D(%12) = [5..5]
+	D(%13) = [5..5]
+	D(%18) = [-infinity..infinity]
+}
+Consistency=true

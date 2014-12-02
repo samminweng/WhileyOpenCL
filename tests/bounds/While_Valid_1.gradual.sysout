@@ -1,3 +1,19 @@
+main.0 [	const %3 = 1 : int]
+main.1 [	const %4 = 2 : int]
+main.2 [	const %5 = 3 : int]
+main.3 [	const %6 = 4 : int]
+main.4 [	const %7 = 5 : int]
+main.5 [	newlist %8 = (%3, %4, %5, %6, %7) : [int]]
+main.6 [	invoke %2 = (%8) While_Valid_1:reverse : function([int]) => [int]]
+Bounds of main{
+	D(%3) = [1..1]
+	D(%4) = [2..2]
+	D(%5) = [3..3]
+	D(%6) = [4..4]
+	D(%7) = [5..5]
+	D(%8) = [5..5]
+}
+Consistency=true
 reverse.0 [	lengthof %3 = %0 : [int]]
 reverse.1 [	assign %1 = %3  : int]
 reverse.2 [	const %4 = [] : [void]]
@@ -40,10 +56,9 @@ reverse.38 [	nop]
 reverse.39 [end blklab0]
 reverse.40 [.blklab1]
 reverse.41 [	return %4 : [int]]
-Bounds of reverse
-{
+Bounds of reverse{
 	D(%0) = [-infinity..infinity]
-	D(%1) = [0..32767]
+	D(%1) = [0..9223372036854775807]
 	D(%3) = [0..32767]
 	D(%4) = [-infinity..infinity]
 	D(%8) = [0..32767]
@@ -60,13 +75,6 @@ Bounds of reverse
 	D(return) = [-infinity..infinity]
 }
 Consistency=true
-main.0 [	const %3 = 1 : int]
-main.1 [	const %4 = 2 : int]
-main.2 [	const %5 = 3 : int]
-main.3 [	const %6 = 4 : int]
-main.4 [	const %7 = 5 : int]
-main.5 [	newlist %8 = (%3, %4, %5, %6, %7) : [int]]
-main.6 [	invoke %2 = (%8) While_Valid_1:reverse : function([int]) => [int]]
 main.7 [	assign %1 = %2  : [int]]
 main.8 [	fieldload %10 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}]
 main.9 [	fieldload %11 = %10 println : {method(any) => void print,method(any) => void println}]
@@ -76,8 +84,7 @@ main.12 [	invoke %12 = (%13) whiley/lang/Any:toString : function(any) => string]
 main.13 [	convert %12 = %12 any : string]
 main.14 [	indirectinvoke %11 (%12) : method(any) => void]
 main.15 [	return]
-Bounds of main
-{
+Bounds of main{
 	D(%1) = [-infinity..infinity]
 	D(%2) = [-infinity..infinity]
 	D(%3) = [1..1]

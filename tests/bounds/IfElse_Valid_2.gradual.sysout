@@ -2,6 +2,10 @@ main.0 [	fieldload %2 = %0 out : {[string] args,{method(any) => void print,metho
 main.1 [	fieldload %3 = %2 println : {method(any) => void print,method(any) => void println}]
 main.2 [	const %6 = 1 : int]
 main.3 [	invoke %5 = (%6) IfElse_Valid_2:f : function(int) => int]
+Bounds of main{
+	D(%6) = [1..1]
+}
+Consistency=true
 f.0 [	const %2 = 10 : int]
 f.1 [	ifge %0, %2 goto blklab0 : int]
 f.2 [	const %3 = 1 : int]
@@ -15,8 +19,7 @@ f.9 [.blklab2]
 f.10 [.blklab1]
 f.11 [	const %7 = 0 : int]
 f.12 [	return %7 : int]
-Bounds of f
-{
+Bounds of f{
 	D(%0) = [1..11]
 	D(%2) = [10..10]
 	D(%3) = [1..1]
@@ -34,6 +37,12 @@ main.8 [	fieldload %8 = %0 out : {[string] args,{method(any) => void print,metho
 main.9 [	fieldload %9 = %8 println : {method(any) => void print,method(any) => void println}]
 main.10 [	const %12 = 10 : int]
 main.11 [	invoke %11 = (%12) IfElse_Valid_2:f : function(int) => int]
+Bounds of main{
+	D(%5) = [0..2]
+	D(%6) = [1..1]
+	D(%12) = [10..10]
+}
+Consistency=true
 f.0 [	const %2 = 10 : int]
 f.1 [	ifge %0, %2 goto blklab0 : int]
 f.2 [	const %3 = 1 : int]
@@ -47,8 +56,7 @@ f.9 [.blklab2]
 f.10 [.blklab1]
 f.11 [	const %7 = 0 : int]
 f.12 [	return %7 : int]
-Bounds of f
-{
+Bounds of f{
 	D(%0) = [10..11]
 	D(%2) = [10..10]
 	D(%3) = [1..1]
@@ -66,6 +74,14 @@ main.16 [	fieldload %14 = %0 out : {[string] args,{method(any) => void print,met
 main.17 [	fieldload %15 = %14 println : {method(any) => void print,method(any) => void println}]
 main.18 [	const %18 = 11 : int]
 main.19 [	invoke %17 = (%18) IfElse_Valid_2:f : function(int) => int]
+Bounds of main{
+	D(%5) = [0..2]
+	D(%6) = [1..1]
+	D(%11) = [0..2]
+	D(%12) = [10..10]
+	D(%18) = [11..11]
+}
+Consistency=true
 f.0 [	const %2 = 10 : int]
 f.1 [	ifge %0, %2 goto blklab0 : int]
 f.2 [	const %3 = 1 : int]
@@ -79,8 +95,7 @@ f.9 [.blklab2]
 f.10 [.blklab1]
 f.11 [	const %7 = 0 : int]
 f.12 [	return %7 : int]
-Bounds of f
-{
+Bounds of f{
 	D(%0) = [11..11]
 	D(%2) = [10..10]
 	D(%3) = [1..1]
@@ -98,6 +113,16 @@ main.24 [	fieldload %20 = %0 out : {[string] args,{method(any) => void print,met
 main.25 [	fieldload %21 = %20 println : {method(any) => void print,method(any) => void println}]
 main.26 [	const %24 = 1212 : int]
 main.27 [	invoke %23 = (%24) IfElse_Valid_2:f : function(int) => int]
+Bounds of main{
+	D(%5) = [0..2]
+	D(%6) = [1..1]
+	D(%11) = [0..2]
+	D(%12) = [10..10]
+	D(%17) = [0..2]
+	D(%18) = [11..11]
+	D(%24) = [1212..1212]
+}
+Consistency=true
 f.0 [	const %2 = 10 : int]
 f.1 [	ifge %0, %2 goto blklab0 : int]
 f.2 [	const %3 = 1 : int]
@@ -111,8 +136,7 @@ f.9 [.blklab2]
 f.10 [.blklab1]
 f.11 [	const %7 = 0 : int]
 f.12 [	return %7 : int]
-Bounds of f
-{
+Bounds of f{
 	D(%0) = [1212..1212]
 	D(%2) = [10..10]
 	D(%3) = [1..1]
@@ -131,6 +155,19 @@ main.33 [	fieldload %27 = %26 println : {method(any) => void print,method(any) =
 main.34 [	const %30 = 1212 : int]
 main.35 [	neg %31 = %30 : int]
 main.36 [	invoke %29 = (%31) IfElse_Valid_2:f : function(int) => int]
+Bounds of main{
+	D(%5) = [0..2]
+	D(%6) = [1..1]
+	D(%11) = [0..2]
+	D(%12) = [10..10]
+	D(%17) = [0..2]
+	D(%18) = [11..11]
+	D(%23) = [0..2]
+	D(%24) = [1212..1212]
+	D(%30) = [1212..1212]
+	D(%31) = [-1212..-1212]
+}
+Consistency=true
 f.0 [	const %2 = 10 : int]
 f.1 [	ifge %0, %2 goto blklab0 : int]
 f.2 [	const %3 = 1 : int]
@@ -144,8 +181,7 @@ f.9 [.blklab2]
 f.10 [.blklab1]
 f.11 [	const %7 = 0 : int]
 f.12 [	return %7 : int]
-Bounds of f
-{
+Bounds of f{
 	D(%0) = [-1212..11]
 	D(%2) = [10..10]
 	D(%3) = [1..1]
@@ -160,8 +196,7 @@ main.38 [	invoke %28 = (%29) whiley/lang/Any:toString : function(any) => string]
 main.39 [	convert %28 = %28 any : string]
 main.40 [	indirectinvoke %27 (%28) : method(any) => void]
 main.41 [	return]
-Bounds of main
-{
+Bounds of main{
 	D(%5) = [0..2]
 	D(%6) = [1..1]
 	D(%11) = [0..2]
