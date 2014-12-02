@@ -33,12 +33,12 @@ public final class BaseTestUtil {
 
 	}
 	
-	public void exec(String file_name) {
+	public void exec_naive_widening(String file_name) {
 		try {			
 			//Analyze the bounds of a Whiley program.
 			String path_whiley = file_name + ".whiley";
 			// Set the working directory.
-			pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-analysis", "function", path_whiley);
+			pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-range", "naive", path_whiley);
 			pb.directory(new File(path));
 
 			// System.out.println("" + pb.directory());
@@ -47,7 +47,7 @@ public final class BaseTestUtil {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream(),
 					Charset.forName("UTF-8")));
 			//Read the sysout file
-			String sysout = path+File.separator+file_name+".sysout";
+			String sysout = path+File.separator+file_name+".naive.sysout";
 
 			Iterator<String> iterator = Files.readAllLines(Paths.get(sysout), Charset.defaultCharset()).iterator();
 			String output = null;
@@ -67,21 +67,19 @@ public final class BaseTestUtil {
 		}
 	}
 	
-	public void exec_Func_Call(String file_name) {
+	public void exec_gradual_widening(String file_name) {
 		try {			
 			//Analyze the bounds of a Whiley program.
 			String path_whiley = file_name + ".whiley";
 			// Set the working directory.
-			pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-analysis", "functioncall", path_whiley);
+			pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-range", "gradual", path_whiley);
 			pb.directory(new File(path));
-
-			// System.out.println("" + pb.directory());
 			p = pb.start();
 			
 			BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream(),
 					Charset.forName("UTF-8")));
 			//Read the sysout file
-			String sysout = path+File.separator+file_name+".Func_Call.sysout";
+			String sysout = path+File.separator+file_name+".gradual.sysout";
 
 			Iterator<String> iterator = Files.readAllLines(Paths.get(sysout), Charset.defaultCharset()).iterator();
 			String output = null;
