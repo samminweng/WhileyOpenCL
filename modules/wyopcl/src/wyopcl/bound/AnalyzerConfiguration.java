@@ -1,5 +1,8 @@
 package wyopcl.bound;
 
+import java.util.Collections;
+import java.util.Properties;
+
 import wybs.lang.Build;
 import wycc.util.Logger;
 
@@ -9,72 +12,66 @@ import wycc.util.Logger;
  *
  */
 public final class AnalyzerConfiguration {
-	private final Build.Project project;
-	
-	public Build.Project getProject() {
-		return project;
-	}
-
-	public AnalyzerConfiguration(Build.Project project){
-		this.project = project;
-	}	
+	//private final Build.Project project;
+	private Properties properties;
 	
 	/* Determine the widen strategy. */
 	public enum WidenStrategy{
 		//Widen the bounds upto +/- infinity
 		NAIVE,
 		//Widen the bounds against a list of threshold values
-		MULTILEVEL
+		GRADUAL
+	}
+
+	public AnalyzerConfiguration(Build.Project project){
+		this.properties = new Properties();
+		this.properties.put("project", project);
+		this.properties.put("logger",  Logger.NULL);
+		this.properties.put("argument", Collections.emptyList());
+		//Initial properties based on default properties
+		this.properties.put("filename", "");
+		this.properties.put("widen", WidenStrategy.NAIVE);
+		this.properties.put("invoked", "functioncall");
+		this.properties.put("verbose", false);		
+		
 	}
 	
-	private WidenStrategy widen_strategy = WidenStrategy.NAIVE;
+	public void setProperty(String key, Object value){
+		if(!this.properties.containsKey(key)){
+			throw new RuntimeException("Unknown Properties");
+		}
+		this.properties.put(key, value);
+	}
 	
-	/**Directly invoke the functions by default.*/
-	private boolean isInvoked;
-	private String filename;
-	private boolean verbose = false;
+	public Object getProperty(String key){
+		if(!this.properties.containsKey(key)){
+			throw new RuntimeException("Unknown Properties");
+		}
+		return this.properties.get(key);
+	}	
+	
+	
 	/**
-	 * For logging information.
+	 * Check if setting the gradual widen strategy. 
+	 * @return
 	 */
-	protected Logger logger = Logger.NULL;
-	
 	public boolean isMultiWiden() {
-		if(widen_strategy.equals(WidenStrategy.MULTILEVEL)){
+		if(this.properties.get("widen").equals(WidenStrategy.GRADUAL)){
 			return true;
 		}		
 		return false;
 	}
-	
-	public void setWidenStrategy(WidenStrategy widen_strategy) {
-		this.widen_strategy = widen_strategy;
-	}	
-	
-	public boolean isFunctionCall() {		
-		return isInvoked;
-	}
-
-	public void setInvoked(boolean isInvoked) {
-		this.isInvoked = isInvoked;
-	}	
-	
-	public void setLogger(Logger logger) {
-		this.logger = logger;		
-	}
 
 	public boolean isVerbose() {
-		return verbose;
-	}
-	
-	public void setVerbose(boolean verbose) {
-		this.verbose = verbose;
-	}
+		return (boolean) this.properties.get("verbose");
+	}	
 
 	public String getFilename() {
-		return filename;
+		return (String) this.properties.get("filename");
 	}
 
-	public void setFilename(String filename) {
-		this.filename = filename;
+	public Logger getLogger(){
+		return (Logger) this.properties.get("logger");
 	}
 	
 }

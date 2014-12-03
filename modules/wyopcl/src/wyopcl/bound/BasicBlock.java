@@ -2,6 +2,7 @@ package wyopcl.bound;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -196,9 +197,15 @@ public class BasicBlock implements Comparable<BasicBlock>{
 	}
 	/**
 	 * Return a list of parent blks.
-	 * @return
+	 * @return the list of blocks. If no parents is found, return an immutable 
+	 * empty list.
 	 */
 	public List<BasicBlock> getParentNodes(){
+		if(parentNodes == null){
+			//Return an immutable list
+			return Collections.emptyList();
+		}
+		
 		return parentNodes;
 	}
 

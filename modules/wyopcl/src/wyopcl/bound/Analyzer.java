@@ -72,6 +72,19 @@ public class Analyzer {
 	private List<BasicBlock> list = new ArrayList<BasicBlock>();
 	//The label name of the loop condition
 	private String loop_condition = "";
+	
+	/*private class BoundChange{
+		private String name;
+		boolean isIncreasing = false;
+		boolean isDescreasing = false;
+		
+		public BoundChange(String name){
+			this.name = name;
+		}
+		
+		
+	}*/
+	
 	//A list of loop variables.
 	private HashMap<String, Boolean> loop_variables = new HashMap<String, Boolean>();
 
@@ -87,8 +100,8 @@ public class Analyzer {
 		this.exit = createBasicBlock("exit", BlockType.EXIT);
 		this.current_blk = this.entry;
 	}
-	
-	
+
+
 	/**
 	 * Iterate each bytecode
 	 * @param analyzer
@@ -106,7 +119,7 @@ public class Analyzer {
 			}
 		}
 	}
-	
+
 
 	public void createEntryNode(Type paramType, String param, BigInteger min, BigInteger max){
 		if(isIntType(paramType)){
@@ -208,6 +221,67 @@ public class Analyzer {
 		System.out.println("Consistency="+bnd.checkBoundConsistency());		
 	}
 
+	/**
+	 * Infer the bounds for a block. 
+	 * @param blk the target block.
+	 * @param isChanged the bound
+	 * @param iteration the iteration number.
+	 * @return true if bounds are unchanged. Otherwise, return false.
+	 */
+	private boolean inferBoundsforBlock(BasicBlock blk, boolean isChanged, int iteration){
+		Bounds bnd_before = null, bnd_after = null;
+		//Before the bound inference
+		//The bound before bound inference. 
+		if(blk.getType().equals(BlockType.LOOP_BODY)){
+			bnd_before = (Bounds) blk.getBounds().clone();		
+		}
+		//If bounds remain unchanged, then isChanged = true.
+		isChanged |= blk.inferBounds();
+
+		//Take the union of parents' bounds.
+		for(BasicBlock parent: blk.getParentNodes()){
+			blk.unionBounds(parent);
+		}
+		
+		if(blk.getType().equals(BlockType.LOOP_BODY)){
+			bnd_after = (Bounds) blk.getBounds().clone();
+			//check loop variable is increasing
+			for(String var: loop_variables.keySet()){			
+				//Upper bounds
+				BigInteger max_before = bnd_before.getUpper(var);
+				BigInteger max_after = bnd_after.getUpper(var);
+				if(max_before!= null && max_after!=null){
+					//The bounds is increasing
+					if(max_before.compareTo(max_after)<0){
+						boolean isIncreasing = loop_variables.get(var);
+						isIncreasing |= true;
+						loop_variables.put(var, isIncreasing);
+					}					
+				}
+				//After four iterations, the bounds is still increasing.
+				if(iteration%3==0){
+					if(loop_variables.get(var)){
+						if(config.isMultiWiden()){
+							isChanged |= blk.getBounds().widenUpperBoundsAgainstThresholds(var);
+						}else{
+							isChanged |= blk.getBounds().widenUpperBoundsToInf(var);
+						}
+					}							
+					//Reset the increasing flag
+					loop_variables.put(var, false);
+				}
+			}
+		}
+
+		//Print out the bounds.
+		if(config.isVerbose()){
+			System.out.println(blk);
+			System.out.println("isChanged="+isChanged);
+		}
+		return isChanged;
+	}
+
+
 
 	/**
 	 * Repeatedly iterates over all blocks, starting from the entry block to the exit block,
@@ -221,10 +295,11 @@ public class Analyzer {
 		//Sort the blks
 		Collections.sort(list);		
 		int MaxIteration = iterations.length >0 ? iterations[0] : 12;		
-		boolean isFixedPointed = true;
-		
-		//Stop until there is no change in bounds.
-		for(int iteration=1;iteration<=MaxIteration;iteration++){
+		boolean isFixedPointed = false;
+		int iteration=1;
+		//Stop the loop when the fixed point is reached or no change in bounds,
+		//using XOR operator terminates the loop earlier.
+		while(isFixedPointed ^ iteration<=MaxIteration){
 			if(config.isVerbose()){
 				System.out.println(BLUE+"Iteration "+iteration+" => "+RESET);
 			}			
@@ -232,68 +307,17 @@ public class Analyzer {
 			isFixedPointed = true;
 			//If bounds has changed, then isChanged = false.
 			boolean isChanged = false;
-			Bounds bnd_before = null, bnd_after = null;
 			//Iterate all the blocks
-			for(BasicBlock blk : list){
-				//Before the bound inference
-				if(blk.getType().equals(BlockType.LOOP_BODY)){
-					bnd_before = (Bounds) blk.getBounds().clone();				
-				}				
-
-				//If bounds remain unchanged, then isChanged = true.
-				isChanged |= blk.inferBounds();
+			for(BasicBlock blk : list){				
+				isChanged = inferBoundsforBlock(blk, isChanged, iteration);				
 				//Use bitwise 'AND' to combine all the results
-				isFixedPointed &= (!isChanged);			
-				//Take the union of parents' bounds.
-				if(blk.hasParent()){
-					for(BasicBlock parent: blk.getParentNodes()){
-						blk.unionBounds(parent);
-					}
-				}
-				//Print out the bounds.
-				if(config.isVerbose()){
-					System.out.println(blk);
-					System.out.println("isChanged="+isChanged);
-				}
+				isFixedPointed &= (!isChanged);	
 
-				if(blk.getType().equals(BlockType.LOOP_BODY)){
-					bnd_after = (Bounds) blk.getBounds().clone();
-					//check loop variable is increasing
-					for(String var: loop_variables.keySet()){	
-						boolean isIncreasing = loop_variables.get(var);
-						BigInteger max_before = bnd_before.getUpper(var);
-						BigInteger max_after = bnd_after.getUpper(var);
-						if(max_before!= null && max_after!=null){
-							//The bounds is increasing
-							if(max_before.compareTo(max_after)<0){
-								isIncreasing |= true;
-								loop_variables.put(var, isIncreasing);
-							}					
-						}
-						//After three iterations, the bounds is still increasing.
-						if(iteration%3==0){
-							isIncreasing = loop_variables.get(var);
-							if(config.isMultiWiden()){
-								isChanged |= blk.getBounds().widenUpperBoundsAgainstThresholds(var);
-							}else{
-								isChanged |= blk.getBounds().widenUpperBoundsToInf(var);
-							}
-							//Reset the increasing flag
-							isIncreasing = false;
-						}
-					}
-				}
-			}//End of bound inference for all constraints in all blks.					
-
+			}//End of bound inference for all constraints in all blks.
 			if(config.isVerbose()){
 				System.out.println("isFixedPointed="+isFixedPointed);
-			}
-			
-			//Stop the loop when the fixed point is reached.
-			if(isFixedPointed){
-				break;
-			}
-			
+			}			
+			iteration++;
 		}		
 
 		BasicBlock current_blk = getCurrentBlock();
@@ -303,7 +327,7 @@ public class Analyzer {
 		}else{
 			bnd = exit.getBounds();
 		}
-		
+
 		//check if print out the CFG
 		if(config.isVerbose()){
 			printCFG(functionOrMethod.name());
@@ -347,7 +371,7 @@ public class Analyzer {
 			//Get the block of Loop Exit
 			blk = getBasicBlock(label, BlockType.LOOP_EXIT);
 		}
-		
+
 
 		return blk;
 
@@ -397,7 +421,7 @@ public class Analyzer {
 		//Sort the blks.
 		Collections.sort(list);
 		String dot_string= "digraph "+func_name+"{\n";		
-		
+
 		for(BasicBlock blk: list){
 			if(!blk.isLeaf() && (!blk.getType().equals(BlockType.ASSERT)||
 					!blk.getType().equals(BlockType.ASSUME) )){
@@ -462,7 +486,7 @@ public class Analyzer {
 		}
 	}
 
-	
+
 
 
 
@@ -701,7 +725,7 @@ public class Analyzer {
 		if(functionOrMethod != null){
 			//Infer the bounds						
 			Bounds bnd = this.inferBounds();
-			Analyzer invokeanalyzer = new Analyzer(1, config, functionOrMethod, module);
+			Analyzer invokeanalyzer = new Analyzer(depth+1, config, functionOrMethod, module);
 			int index = 0;
 			//Pass the bounds of input parameters.
 			for(Type paramType: functionOrMethod.type().params()){
@@ -1037,7 +1061,7 @@ public class Analyzer {
 	}
 
 
-	
+
 
 
 }

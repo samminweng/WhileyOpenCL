@@ -10,8 +10,7 @@ import wyopcl.bound.AnalyzerConfiguration.WidenStrategy;
 import wyopcl.bound.BoundAnalyzer;
 import wyopcl.interpreter.WyilInterpreter;
 
-public class WyopclBuildTask extends wyc.util.WycBuildTask {
-	
+public class WyopclBuildTask extends wyc.util.WycBuildTask {	
 	//runtime 	
 	protected String[] arguments;
 	//'range' option
@@ -38,25 +37,23 @@ public class WyopclBuildTask extends wyc.util.WycBuildTask {
 		if(range != null){
 			//Create a config object to store the properties
 			AnalyzerConfiguration config = new AnalyzerConfiguration(project);
-			config.setInvoked(true);
+			config.setProperty("invoked", true);
 			if(range!=null){
 				switch(range){
 				case "naive":
-					config.setWidenStrategy(WidenStrategy.NAIVE);
+					config.setProperty("widen", WidenStrategy.NAIVE);
 					break;
 				case "gradual":
-					config.setWidenStrategy(WidenStrategy.MULTILEVEL);
-				}
-				
+					config.setProperty("widen", WidenStrategy.GRADUAL);
+				}				
 			}
 			
 			if (verbose) {
-				config.setLogger(new Logger.Default(System.err));
-				config.setVerbose(verbose);
-			}
-			
-			builder = new BoundAnalyzer(config);
-			
+				config.setProperty("logger", new Logger.Default(System.err));
+				config.setProperty("verbose", true);
+			}			
+			config.setProperty("argument", arguments);			
+			builder = new BoundAnalyzer(config);			
 		}else{
 			// Now, add build rule for interpreting the wyil files by using
 			// the WyilInterpreter.			
@@ -65,10 +62,7 @@ public class WyopclBuildTask extends wyc.util.WycBuildTask {
 				((WyilInterpreter) builder).setLogger(new Logger.Default(System.err));
 				((WyilInterpreter) builder).setVerbose(verbose);
 			}
-
-			((WyilInterpreter) builder).setArgs(this.arguments);
-
-			
+			((WyilInterpreter) builder).setArgs(this.arguments);			
 		}
 
 		project.add(new StdBuildRule(builder, wyilDir, wyilIncludes,

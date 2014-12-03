@@ -60,31 +60,28 @@ public class BoundAnalyzer implements Builder{
 
 	@Override
 	public Project project() {
-		return config.getProject();
+		return (Project) config.getProperty("project");
 	}	
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public Set<Entry<?>> build(Collection<Pair<Entry<?>, Root>> delta) throws IOException {
-		//Runtime runtime = Runtime.getRuntime();
+		Runtime runtime = Runtime.getRuntime();
 		long start = System.currentTimeMillis();
-		//long memory = runtime.freeMemory();
+		long memory = runtime.freeMemory();
 		HashSet<Path.Entry<?>> generatedFiles = new HashSet<Path.Entry<?>>();
 		for(Pair<Path.Entry<?>,Path.Root> p : delta) {
 			//Path.Root dst = p.second();
 			Path.Entry<WyilFile> sf = (Path.Entry<WyilFile>) p.first();
 			WyilFile module = sf.read();
-			config.setFilename(module.filename().split(".whiley")[0]);				
-			//Start analyzing the range.
-			if(config.isFunctionCall()){
-				analyzeFunctionCall(module);
-			}else{
-				analyze(module);
-			}
+			config.setProperty("filename", module.filename().split(".whiley")[0]);				
+			//Start analyzing the bounds.
+			analyzeFunctionCall(module);
 		}
 		
 		long endTime = System.currentTimeMillis();
-		System.err.println("Bound Analysis completed.\nFile:" + config.getFilename() +".whiley Time: "+(endTime - start)+" ms");
+		config.getLogger().logTimedMessage("Bound Analysis completed\nFile:" + config.getFilename()+".whiley Time: "+(endTime - start)+" ms",
+				(endTime - start), memory);
 		return generatedFiles;
 	}
 	
@@ -116,12 +113,5 @@ public class BoundAnalyzer implements Builder{
 		analyzer.inferBounds();			
 		analyzer = null;
 	}
-
-
-
-
-
-
-
 
 }
