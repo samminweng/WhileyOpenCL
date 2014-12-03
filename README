@@ -47,9 +47,9 @@ $ git clone https://github.com/samminweng/WhileyOpenCL
 $ cd WhileyOpenCL/
 $ ant
 $ cd tests/bounds
-$ ./../../bin/wyopcl -range naive IfElse_Valid_2.whiley 
+$ ./../../bin/wyopcl -range gradual While.whiley 
 Or add the verbose option to print out the analyzing process.
-$ ./../../bin/wyopcl -range naive -verbose IfElse_Valid_2.whiley
+$ ./../../bin/wyopcl -range gradual -verbose IfElse_Valid_2.whiley
 
 ======================================================================
 Unit Testing

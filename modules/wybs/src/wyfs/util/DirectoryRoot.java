@@ -93,7 +93,7 @@ public final class DirectoryRoot extends AbstractRoot<DirectoryRoot.Folder> {
 	 * and an appropriate file filter. In converting the path to a File object,
 	 * an IOException may arise if it is an invalid path.
 	 * 
-	 * @param path
+	 * @param valid_path
 	 *            --- location of directory on filesystem, expressed as a native
 	 *            path (i.e. separated using File.separatorChar, etc)
 	 * @throws IOException
@@ -109,7 +109,7 @@ public final class DirectoryRoot extends AbstractRoot<DirectoryRoot.Folder> {
 	 * and an appropriate file filter. In converting the path to a File object,
 	 * an IOException may arise if it is an invalid path.
 	 * 
-	 * @param path
+	 * @param valid_path
 	 *            --- location of directory on filesystem, expressed as a native
 	 *            path (i.e. separated using File.separatorChar, etc)
 	 * @param filter

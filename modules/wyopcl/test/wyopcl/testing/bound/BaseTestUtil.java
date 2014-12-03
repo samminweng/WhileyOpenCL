@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Iterator;
 
@@ -23,8 +24,7 @@ public final class BaseTestUtil {
 			+ lib_path + "wybs-"+ version + ".jar" + File.pathSeparator 
 			+ lib_path + "wyil-" + version + ".jar" + File.pathSeparator
 			+ lib_path + "wyc-" + version + ".jar" + File.pathSeparator;
-	final String runtime = lib_path + "wyrt-" + version + ".jar";
-	final String path = workspace_path + "tests" + File.separator + "bounds" + File.separator;
+	final String runtime = lib_path + "wyrt-" + version + ".jar";	
 	
 	private ProcessBuilder pb;
 	private Process p;
@@ -32,22 +32,34 @@ public final class BaseTestUtil {
 	public BaseTestUtil() {
 
 	}
-	
-	public void exec_naive_widening(String file_name) {
-		try {			
-			//Analyze the bounds of a Whiley program.
-			String path_whiley = file_name + ".whiley";
+	/**
+	 * Analyze the bounds of a Whiley program using naive or gradual widening strategy.
+	 * @param path_whiley
+	 * @param widen
+	 */
+	public void exec(String path_whiley, String widen) {
+		File file = new File(path_whiley+ ".whiley");
+		try {	
 			// Set the working directory.
-			pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-range", "naive", path_whiley);
-			pb.directory(new File(path));
-
-			// System.out.println("" + pb.directory());
+			if(widen.equals("gradual")){
+				pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-range", "gradual", file.getName());
+			}else{
+				pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-range", "naive", file.getName());
+			}
+			
+			pb.directory(file.getParentFile());
+			System.out.println("" + pb.directory());
 			p = pb.start();
 			
 			BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream(),
 					Charset.forName("UTF-8")));
 			//Read the sysout file
-			String sysout = path+File.separator+file_name+".naive.sysout";
+			String sysout;
+			if(widen.equals("gradual")){
+				sysout = path_whiley+".gradual.sysout";
+			}else{
+				sysout = path_whiley+".naive.sysout";
+			}
 
 			Iterator<String> iterator = Files.readAllLines(Paths.get(sysout), Charset.defaultCharset()).iterator();
 			String output = null;
@@ -59,49 +71,16 @@ public final class BaseTestUtil {
 
 			// Ensure no records is left in the list.
 			if (iterator.hasNext()) {
-				throw new Exception("Test file: " + file_name);
+				throw new Exception("Test file: " + file.getName());
 			}
 		} catch (Exception e) {
 			terminate();
-			throw new RuntimeException("Test file: " + file_name, e);
+			throw new RuntimeException("Test file: " + file.getName(), e);
 		}
+		
+		file = null;		
 	}
-	
-	public void exec_gradual_widening(String file_name) {
-		try {			
-			//Analyze the bounds of a Whiley program.
-			String path_whiley = file_name + ".whiley";
-			// Set the working directory.
-			pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-range", "gradual", path_whiley);
-			pb.directory(new File(path));
-			p = pb.start();
-			
-			BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream(),
-					Charset.forName("UTF-8")));
-			//Read the sysout file
-			String sysout = path+File.separator+file_name+".gradual.sysout";
 
-			Iterator<String> iterator = Files.readAllLines(Paths.get(sysout), Charset.defaultCharset()).iterator();
-			String output = null;
-			while ((output = reader.readLine()) != null) {
-				String expected = iterator.next();
-				//System.out.println(output);
-				assertEquals(expected, output);
-			}
-
-			// Ensure no records is left in the list.
-			if (iterator.hasNext()) {
-				throw new Exception("Test file: " + file_name);
-			}
-		} catch (Exception e) {
-			terminate();
-			throw new RuntimeException("Test file: " + file_name, e);
-		}
-	}
-	
-	
-	
-	
 	public void terminate() {
 		while (p != null) {
 			p.destroy();
