@@ -34,7 +34,7 @@ public class ForAllInterpreter extends Interpreter {
 	
 	private void gotoLoopEnd(Codes.ForAll code, StackFrame stackframe){
 		stackframe.setRegister(code.indexOperand, null);
-		int linenumber = symboltable.get(stackframe.getBlock()).getBlockPosByLabel(code.target+"LoopEnd");
+		int linenumber = symboltable.getBlockPosByLabel(stackframe.getBlock(), code.target+"LoopEnd");
 		stackframe.setLine(linenumber);
 	}
 	

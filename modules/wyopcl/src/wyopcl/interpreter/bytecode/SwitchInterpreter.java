@@ -41,7 +41,7 @@ public class SwitchInterpreter extends Interpreter {
 			if(next.first().equals(value)){
 				//Go to the label
 				String label = next.second();				
-				linenumber = symboltable.get(block).getBlockPosByLabel(label);
+				linenumber = symboltable.getBlockPosByLabel(block, label);
 				isMatched = true;
 				break;
 			}
@@ -49,7 +49,7 @@ public class SwitchInterpreter extends Interpreter {
 		
 		//If not matched, go to default
 		if(!isMatched){
-			linenumber = symboltable.get(block).getBlockPosByLabel(code.defaultTarget);
+			linenumber = symboltable.getBlockPosByLabel(block, code.defaultTarget);
 		}
 		
 		printMessage(stackframe, code.toString(), "%" + code.operand + "(" + value + ")");

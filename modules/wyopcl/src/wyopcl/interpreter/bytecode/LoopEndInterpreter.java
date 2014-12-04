@@ -26,7 +26,7 @@ public class LoopEndInterpreter extends Interpreter {
 		int linenumber = stackframe.getLine();	
 		printMessage(stackframe, code.toString(), "("+code.label+")");
 		Code.Block block = stackframe.getBlock();
-		linenumber = symboltable.get(block).getBlockPosByLabel(code.label);
+		linenumber = symboltable.getBlockPosByLabel(block, code.label);
 		stackframe.setLine(linenumber);			
 	}
 	

@@ -76,7 +76,7 @@ public class Interpreter implements Builder {
 	//Store a hashmap inside a hashmap.
 	protected static HashMap<String, HashMap<FunctionOrMethod, Block>> blocktable = new HashMap<String, HashMap<FunctionOrMethod, Block>>();
 	protected static Stack<StackFrame> blockstack = new Stack<StackFrame>();
-	protected static HashMap<Block, SymbolTable> symboltable = new HashMap<Block, SymbolTable>();
+	protected static SymbolTable symboltable = new SymbolTable();
 	protected static InterpreterConfiguration config;
 	
 	public Interpreter(){	
@@ -159,9 +159,7 @@ public class Interpreter implements Builder {
 	}
 	
 	
-	private void scanLabelsinBlock(Block blk){
-		//Create the Symbol table from the symboltable.
-		SymbolTable symbol = new SymbolTable(blk);					
+	private void scanLabelsinBlock(Block blk){					
 		//Pre-scan the code block and keep the symbol label map.
 		for(int pos = 0; pos <blk.size(); pos++){
 			Block.Entry entry = blk.get(pos);
@@ -170,22 +168,22 @@ public class Interpreter implements Builder {
 			if(code instanceof Codes.LoopEnd){
 				label = ((Codes.LoopEnd)code).label+"LoopEnd";							
 				//Go to the next statement after the loop end.
-				symbol.addLabelLoc(label, pos+1);														
+				symboltable.addLabelLoc(blk, label, pos+1);														
 			}else if(code instanceof Codes.TryEnd){
-				symbol.addLabelLoc(((Codes.TryEnd) code).label, pos);
+				symboltable.addLabelLoc(blk, ((Codes.TryEnd) code).label, pos);
 			}else if(code instanceof Codes.Label){
 				//Put the label map into the queue.
 				label = ((Codes.Label)code).label;
-				symbol.addLabelLoc(label, pos);							
+				symboltable.addLabelLoc(blk, label, pos);							
 			}else if (code instanceof Codes.ForAll){
 				label = ((Codes.Loop)code).target;
-				symbol.addLabelLoc(label, pos);
+				symboltable.addLabelLoc(blk, label, pos);
 			}else if(code instanceof Codes.Loop){								
 				//This case includes Code.Loop and Code.ForAll
 				label = ((Codes.Loop)code).target;
-				symbol.addLabelLoc(label, pos);							
+				symboltable.addLabelLoc(blk, label, pos);							
 			}else if(code instanceof Codes.TryCatch){
-				symbol.addTryCatchLoc((Codes.TryCatch)code, pos);
+				symboltable.addTryCatchLoc((Codes.TryCatch)code, pos);
 			}else{
 				//Do nothing
 			}
@@ -194,8 +192,6 @@ public class Interpreter implements Builder {
 					System.out.println(label+"--->"+pos);
 			}
 		}
-
-		symboltable.put(blk, symbol);
 	}
 	
 	/*Scans the methods*/

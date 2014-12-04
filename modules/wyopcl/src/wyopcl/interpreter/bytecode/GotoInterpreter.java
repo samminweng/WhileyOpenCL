@@ -26,7 +26,7 @@ public class GotoInterpreter extends Interpreter {
 		int linenumber = stackframe.getLine();	
 		
 		Block block = stackframe.getBlock();
-		linenumber = symboltable.get(block).getBlockPosByLabel(code.target);
+		linenumber = symboltable.getBlockPosByLabel(block, code.target);
 		stackframe.setLine(linenumber);
 		
 		printMessage(stackframe, code.toString(),

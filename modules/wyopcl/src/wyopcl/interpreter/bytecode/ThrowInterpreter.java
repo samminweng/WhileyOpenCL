@@ -33,7 +33,7 @@ public class ThrowInterpreter extends Interpreter {
 		StackFrame caller = blockstack.peek();
 		//Put the result to the caller's register table at index of 1.
 		caller.setRegister(1, result);
-		linenumber = symboltable.get(caller.getBlock()).getCatchPos();
+		linenumber = symboltable.getCatchPos(caller.getBlock());
 		caller.setLine(linenumber);
 		printMessage(stackframe, code.toString(),"%"+code.operand+"="+result);	
 	}

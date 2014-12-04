@@ -1,28 +1,55 @@
 package wyopcl.interpreter;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.List;
+import java.util.Map;
 
 import wyil.lang.Codes;
 import wyil.lang.Code.Block;
 
-
-public class SymbolTable implements Comparable<SymbolTable>{
-	private final Block block;
-	private HashMap<String, Integer> labelLocMap = new HashMap<String, Integer>();		
-	private String catchlabel = "";	
+/**
+ * Stores the symbol information where each label relates to its line number in a block.
+ * It also can map a block and a label name to the corresponding line number. The table is
+ * implemented with a nested HashMap. 
+ * @author Min-Hsien Weng
+ * 
+ */
+public class SymbolTable{
 	
-	public SymbolTable(Block blk){
-		this.block = blk;
+	private HashMap<Block, HashMap<String, Integer>> labelLocMap;		
+	private String catchlabel = "";
+
+	public SymbolTable(){
+		labelLocMap = new HashMap<Block, HashMap<String, Integer>>();
 	}	
+	/**
+	 * Adds the label name in a block associated with its line number.	
+	 * @param blk the block
+	 * @param label the name of label
+	 * @param line the line number
+	 */
+	public void addLabelLoc(Block blk, String label, int line){
+		HashMap<String, Integer> map;
+		if(labelLocMap.containsKey(blk)){
+			map = labelLocMap.get(blk);
+		}else{
+			map = new HashMap<String, Integer>();
+		}
 		
-	public void addLabelLoc(String label, int line){
-		labelLocMap.put(label, line);
+		map.put(label, line);
+		labelLocMap.put(blk, map);
 	}
 	
-	public int getBlockPosByLabel(String label){
-		if(labelLocMap.containsKey(label)){
-			return labelLocMap.get(label);
+	public int getBlockPosByLabel(Block blk, String label){
+		if(labelLocMap.containsKey(blk)){
+			HashMap<String, Integer> map = labelLocMap.get(blk);
+			if(map.containsKey(label)){
+				return map.get(label);
+			}	
 		}
+		
 		return -1;
 	}
 	
@@ -30,15 +57,8 @@ public class SymbolTable implements Comparable<SymbolTable>{
 		catchlabel = trycatch.catches.get(0).second();
 	}
 	
-	public int getCatchPos(){
-		return getBlockPosByLabel(catchlabel);
+	public int getCatchPos(Block blk){
+		return getBlockPosByLabel(blk, catchlabel);
 	}
-
-	@Override
-	public int compareTo(SymbolTable symbol) {
-		if(this.block.hashCode() == symbol.hashCode()){
-			return 0;
-		}
-		return -1;
-	}
+	
 }

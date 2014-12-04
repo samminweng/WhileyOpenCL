@@ -113,7 +113,7 @@ public class IfInterpreter extends Interpreter {
 		if(satisfiable){
 			//Go to the if branch
 			Block block = stackframe.getBlock();
-			linenumber = symboltable.get(block).getBlockPosByLabel(code.target);
+			linenumber = symboltable.getBlockPosByLabel(block, code.target);
 		}else{
 			linenumber++;
 		}

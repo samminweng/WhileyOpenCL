@@ -298,7 +298,7 @@ public class IfIsInterpreter extends Interpreter {
 			String label = code.target;
 			Block block = stackframe.getBlock();
 			printMessage(stackframe, code.toString(), code.target + "");
-			int linenumber = symboltable.get(block).getBlockPosByLabel(label);
+			int linenumber = symboltable.getBlockPosByLabel(block, label);
 			stackframe.setLine(++linenumber);
 		} else {
 			//Go to the next line.

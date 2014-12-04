@@ -142,7 +142,7 @@ public class InvokeInterpreter extends Interpreter {
 			}
 			//Return to the caller
 			StackFrame caller = blockstack.peek();
-			linenumber = symboltable.get(caller.getBlock()).getCatchPos();
+			linenumber = symboltable.getCatchPos(caller.getBlock());
 			caller.setLine(linenumber);
 			return;
 		}
