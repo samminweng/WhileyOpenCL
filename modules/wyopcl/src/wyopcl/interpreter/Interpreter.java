@@ -24,42 +24,23 @@ public abstract class Interpreter {
 	private static HashMap<String, HashMap<FunctionOrMethod, Block>> blocktable = new HashMap<String, HashMap<FunctionOrMethod, Block>>();
 	protected static Stack<StackFrame> blockstack = new Stack<StackFrame>();
 	protected static HashMap<Block, SymbolTable> symboltable = new HashMap<Block, SymbolTable>();
-	protected static boolean verbose = false;
-	//protected static boolean verify = false;
-	protected static WyilFile module;
-	protected String[] args;
-	/**
-	 * For logging information.
-	 */
-	protected Logger logger = Logger.NULL;
+	protected static InterpreterConfiguration config;
 	
 	/**
 	 * Passing the additional arguments from console to the interpreter.
 	 */
 	public String[] getArgs() {
-		return args;
-	}
-
-	public void setArgs(String[] args) {
-		this.args = args;
+		return (String[]) config.getProperty("arguments");
 	}
 	
-	public static WyilFile getModule() {
-		return module;
-	}
-	
-	public void setModule(WyilFile module) {
-		Interpreter.module = module;
+	public WyilFile getModule() {
+		return (WyilFile) config.getProperty("module");
 	}
 
-
-	public static boolean isVerbose() {
-		return verbose;
-	}
+	public boolean isVerbose() {
+		return (boolean) config.getProperty("verbose");
+	}	
 	
-	public void setVerbose(boolean verbose) {
-		Interpreter.verbose = verbose;
-	}
 	
 	/**
 	 * Adds or returns the Function blocks (HashMap) by method names.
@@ -90,9 +71,7 @@ public abstract class Interpreter {
 	 * @return the function block that contains a list of bytecode. 
 	 */
 	public static Block getFuncBlockByName(String name, FunctionOrMethod... functionOrMethod){
-		//Get the Hashmap of function block by name
-		
-		
+		//Get the Hashmap of function block by name	
 		//Get the Block for the corresponding function/method.
 		if(blocktable.containsKey(name)){
 			HashMap<FunctionOrMethod, Block> hashMap = blocktable.get(name);
@@ -109,7 +88,7 @@ public abstract class Interpreter {
 	
 	
 	public void printMessage(StackFrame stackframe, String input, String output){
-		if(verbose){
+		if(isVerbose()){
 			System.out.println(stackframe.getDepth()+" "+stackframe.getName()+"."+stackframe.getLine()
 					+" ["+input+"] "+output+"\n");
 		}
@@ -121,9 +100,5 @@ public abstract class Interpreter {
 					+" ["+input+"] "+output+"\n");
 		System.exit(-1);
 	}
-
-	public void setLogger(Logger logger) {
-		this.logger = logger;
-		
-	}
+	
 }

@@ -8,6 +8,7 @@ import wycc.util.Logger;
 import wyopcl.bound.AnalyzerConfiguration;
 import wyopcl.bound.AnalyzerConfiguration.WidenStrategy;
 import wyopcl.bound.BoundAnalyzer;
+import wyopcl.interpreter.InterpreterConfiguration;
 import wyopcl.interpreter.WyilInterpreter;
 
 public class WyopclBuildTask extends wyc.util.WycBuildTask {	
@@ -56,13 +57,14 @@ public class WyopclBuildTask extends wyc.util.WycBuildTask {
 			builder = new BoundAnalyzer(config);			
 		}else{
 			// Now, add build rule for interpreting the wyil files by using
-			// the WyilInterpreter.			
-			builder = new WyilInterpreter(project);
+			// the WyilInterpreter.
+			InterpreterConfiguration config = new InterpreterConfiguration(project);
 			if (verbose) {
-				((WyilInterpreter) builder).setLogger(new Logger.Default(System.err));
-				((WyilInterpreter) builder).setVerbose(verbose);
+				config.setProperty("logger", new Logger.Default(System.err));
+				config.setProperty("verbose", true);
 			}
-			((WyilInterpreter) builder).setArgs(this.arguments);			
+			config.setProperty("arguments", this.arguments);
+			builder = new WyilInterpreter(config);
 		}
 
 		project.add(new StdBuildRule(builder, wyilDir, wyilIncludes,

@@ -72,22 +72,14 @@ import wyopcl.interpreter.bytecode.UnaryOperatorInterpreter;
 import wyopcl.interpreter.bytecode.UpdateInterpreter;
 
 public class WyilInterpreter extends Interpreter implements Builder{
-	protected final Build.Project project;
-	protected String filename;
-
-	
-
-	public WyilInterpreter(Build.Project project) {
-		this.project = project;
+	public WyilInterpreter(InterpreterConfiguration config) {
+		Interpreter.config = config;
 	}
 
 	@Override
 	public Project project() {
-		return project;
+		return (Project) config.getProperty("project");
 	}
-	
-	
-
 
 	@SuppressWarnings("unchecked")
 	@Override
@@ -103,15 +95,16 @@ public class WyilInterpreter extends Interpreter implements Builder{
 			//Path.Root dst = p.second();
 			Path.Entry<WyilFile> sf = (Path.Entry<WyilFile>) p.first();
 			WyilFile module = sf.read();
-			setModule(module);
-			this.filename = module.filename();
+			config.setProperty("module", module);
+			config.setProperty("filename", module.filename());
 			this.preprocessor(module);
 			//Get started with the main method.
 			this.interpret(module);
 		}
 
 		long endTime = System.currentTimeMillis();
-		logger.logTimedMessage("Wyil interpreter completed.\nFile:" + filename,
+		Logger logger = (Logger) config.getProperty("logger");
+		logger.logTimedMessage("Wyil interpreter completed.\nFile:" + config.getProperty("filename"),
 				(endTime - start), memory - runtime.freeMemory());
 		return generatedFiles;
 	}
@@ -147,7 +140,7 @@ public class WyilInterpreter extends Interpreter implements Builder{
 				//Do nothing
 			}
 			
-			if(label != null && verbose){
+			if(label != null && isVerbose()){
 					System.out.println(label+"--->"+pos);
 			}
 		}
@@ -218,7 +211,7 @@ public class WyilInterpreter extends Interpreter implements Builder{
 					}
 					//Create a List of Constant objects.
 					ArrayList<Constant> arguments = new ArrayList<Constant>();
-					for(String arg: args){
+					for(String arg: getArgs()){
 						arguments.add(Constant.V_STRING(arg));
 					}
 					//Replace the value of args with the argument list.
@@ -299,7 +292,7 @@ public class WyilInterpreter extends Interpreter implements Builder{
 			} else if (code instanceof Codes.Loop) {			
 				LoopInterpreter.getInstance().interpret((Codes.Loop)code, stackframe);			
 			} else if (code instanceof Codes.Move) {
-				internalFailure("Not implemented!", filename, entry);
+				internalFailure("Not implemented!", (String)config.getProperty("filename"), entry);
 			} else if (code instanceof Codes.NewMap) {
 				NewMapInterpreter.getInstance().interpret((Codes.NewMap)code, stackframe);
 			} else if (code instanceof Codes.NewList) {			
@@ -335,12 +328,12 @@ public class WyilInterpreter extends Interpreter implements Builder{
 			} else if (code instanceof Codes.Update) {
 				UpdateInterpreter.getInstance().interpret((Codes.Update)code, stackframe);
 			} else {
-				internalFailure("unknown wyil code encountered (" + code + ")", filename, entry);
+				internalFailure("unknown wyil code encountered (" + code + ")", (String)config.getProperty("filename"), entry);
 			}
 		} catch (SyntaxError ex) {
 			throw ex;	
 		} catch (Exception ex) {		
-			internalFailure(ex.getMessage(), filename, entry, ex);
+			internalFailure(ex.getMessage(), (String)config.getProperty("filename"), entry, ex);
 		}
 
 	}
