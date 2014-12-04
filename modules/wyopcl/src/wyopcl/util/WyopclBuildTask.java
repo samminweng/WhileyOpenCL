@@ -8,8 +8,8 @@ import wycc.util.Logger;
 import wyopcl.bound.AnalyzerConfiguration;
 import wyopcl.bound.AnalyzerConfiguration.WidenStrategy;
 import wyopcl.bound.BoundAnalyzer;
+import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.InterpreterConfiguration;
-import wyopcl.interpreter.WyilInterpreter;
 
 public class WyopclBuildTask extends wyc.util.WycBuildTask {	
 	//runtime 	
@@ -64,7 +64,7 @@ public class WyopclBuildTask extends wyc.util.WycBuildTask {
 				config.setProperty("verbose", true);
 			}
 			config.setProperty("arguments", this.arguments);
-			builder = new WyilInterpreter(config);
+			builder = new Interpreter(config);
 		}
 
 		project.add(new StdBuildRule(builder, wyilDir, wyilIncludes,
