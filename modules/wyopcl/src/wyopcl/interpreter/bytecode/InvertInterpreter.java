@@ -5,12 +5,15 @@ import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
-
+/**
+ * Interprets <code>Codes.Invert</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.Invert
+ */
 public class InvertInterpreter extends Interpreter {
 	private static InvertInterpreter instance;
 
-	public InvertInterpreter() {
-	}
+	private InvertInterpreter() {}
 
 	/* Implement the Singleton pattern to ensure this class has one instance. */
 	public static InvertInterpreter getInstance() {

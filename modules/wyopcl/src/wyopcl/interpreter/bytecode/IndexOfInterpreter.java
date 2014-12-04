@@ -2,7 +2,6 @@ package wyopcl.interpreter.bytecode;
 
 import static wycc.lang.SyntaxError.internalFailure;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
@@ -10,11 +9,15 @@ import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
-
+/**
+ * Interprets <code>Codes.IndexOf</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.IndexOf
+ *
+ */
 public class IndexOfInterpreter extends Interpreter {
 	private static IndexOfInterpreter instance;	
-	public IndexOfInterpreter(){		
-	}
+	private IndexOfInterpreter(){}
 
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
 	public static IndexOfInterpreter getInstance(){
@@ -68,7 +71,6 @@ public class IndexOfInterpreter extends Interpreter {
 		return value;
 	}
 
-
 	private Constant getValuefromMap(Constant.Map map, Constant key){		
 		//Get the value associated with the key.
 		if(map.values.containsKey(key)){
@@ -89,9 +91,6 @@ public class IndexOfInterpreter extends Interpreter {
 		internalFailure("Not implemented!", "InterpreterIndexOf.java", null);
 		return null;
 	}
-
-
-
 
 	public void interpret(Codes.IndexOf code, StackFrame stackframe) {		
 		int linenumber = stackframe.getLine();

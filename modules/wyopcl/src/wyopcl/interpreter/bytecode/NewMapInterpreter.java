@@ -2,18 +2,20 @@ package wyopcl.interpreter.bytecode;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
-import wycc.util.Pair;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
-
+/**
+ * Interprets <code>Codes.NewMap</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.NewMap
+ *
+ */
 public class NewMapInterpreter extends Interpreter {
 	private static NewMapInterpreter instance;	
-	public NewMapInterpreter(){		
-	}
+	private NewMapInterpreter(){}
 	
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
 	public static NewMapInterpreter getInstance(){
@@ -39,7 +41,6 @@ public class NewMapInterpreter extends Interpreter {
 		stackframe.setRegister(code.target(), result);
 		printMessage(stackframe, code.toString(), "%"+ code.target() + "("+result+")");	
 		stackframe.setLine(++linenumber);
-		
 		
 	}
 	

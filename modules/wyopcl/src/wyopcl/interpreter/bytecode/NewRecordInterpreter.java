@@ -1,30 +1,24 @@
 package wyopcl.interpreter.bytecode;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 import java.util.TreeMap;
 
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyil.lang.Type;
-import wyil.lang.Type.Record;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
-
+/**
+ * Interprets <code>Codes.NewRecord</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.NewRecord
+ *
+ */
 public class NewRecordInterpreter extends Interpreter{
 
 	private static NewRecordInterpreter instance;	
-	public NewRecordInterpreter(){		
-	}
+	private NewRecordInterpreter(){	}
 	
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
 	public static NewRecordInterpreter getInstance(){
@@ -49,7 +43,6 @@ public class NewRecordInterpreter extends Interpreter{
 			values.put(key, value);
 			index++;
 		}		
-		
 		//Construct the Record value
 		Constant.Record result = Constant.V_RECORD(values);
 		stackframe.setRegister(code.target(), result);

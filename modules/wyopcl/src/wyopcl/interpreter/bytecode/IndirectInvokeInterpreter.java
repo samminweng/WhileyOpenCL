@@ -1,37 +1,27 @@
 package wyopcl.interpreter.bytecode;
 
-import static wycc.lang.SyntaxError.internalFailure;
-import jasm.lang.ClassFile.Field;
-
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map.Entry;
 
+import wyil.lang.Code.Block;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
-import wyil.lang.Code.Block;
-import wyil.lang.Constant.Record;
-import wyil.lang.Type;
-import wyil.lang.Type.Function;
-import wyil.lang.Type.FunctionOrMethod;
-import wyil.lang.Type.Method;
 import wyopcl.interpreter.Closure;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
 import wyopcl.util.Utility;
-
+/**
+ * Interprets <code>Codes.IndirectInvoke</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.IndirectInvoke
+ *
+ */
 public class IndirectInvokeInterpreter extends Interpreter {
 
 	private static IndirectInvokeInterpreter instance;
 
-	public IndirectInvokeInterpreter() {
-	}
+	private IndirectInvokeInterpreter() {}
 
 	/* Implement the Singleton pattern to ensure this class has one instance. */
 	public static IndirectInvokeInterpreter getInstance() {

@@ -1,27 +1,21 @@
 package wyopcl.interpreter.bytecode;
 
-import static wycc.lang.SyntaxError.internalFailure;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
 import wycc.lang.NameID;
-import wyfs.lang.Path;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyil.lang.Type;
-import wyil.lang.Type.EffectiveRecord;
-import wyil.lang.Type.FunctionOrMethod;
-import wyil.lang.Type.Method;
-import wyil.lang.WyilFile;
-import wyopcl.interpreter.Closure;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
 import wyopcl.util.Utility;
-
+/**
+ * Interprets <code>Codes.Record</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.Record
+ *
+ */
 public class FieldLoadInterpreter extends Interpreter {
 	private static FieldLoadInterpreter instance;	
 	public FieldLoadInterpreter(){

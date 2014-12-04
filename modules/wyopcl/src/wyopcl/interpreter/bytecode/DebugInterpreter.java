@@ -4,11 +4,15 @@ import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
-
+/**
+ * Interprets <code>Codes.Debug</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.Debug
+ *
+ */
 public class DebugInterpreter extends Interpreter{
 	private static DebugInterpreter instance;	
-	public DebugInterpreter(){		
-	}
+	private DebugInterpreter(){	}
 	
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
 	public static DebugInterpreter getInstance(){

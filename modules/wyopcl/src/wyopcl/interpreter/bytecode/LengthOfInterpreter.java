@@ -4,17 +4,19 @@ import static wycc.lang.SyntaxError.internalFailure;
 
 import java.math.BigInteger;
 
-import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
-import wyil.lang.Type;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
-
+/**
+ * Interprets <code>Codes.LengthOf</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.LengthOf
+ *
+ */
 public class LengthOfInterpreter extends Interpreter{
 	private static LengthOfInterpreter instance;	
-	public LengthOfInterpreter(){		
-	}
+	private LengthOfInterpreter(){}
 	
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
 	public static LengthOfInterpreter getInstance(){

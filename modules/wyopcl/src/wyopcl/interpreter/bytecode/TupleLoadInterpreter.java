@@ -4,11 +4,15 @@ import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
-
+/**
+ * Interprets <code>Codes.TupleLoad</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.TupleLoad
+ *
+ */
 public class TupleLoadInterpreter extends Interpreter{
 	private static TupleLoadInterpreter instance;	
-	public TupleLoadInterpreter(){		
-	}
+	private TupleLoadInterpreter(){	}
 	
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
 	public static TupleLoadInterpreter getInstance(){

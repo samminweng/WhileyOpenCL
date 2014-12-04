@@ -1,11 +1,10 @@
 package wyopcl.interpreter;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import wyil.lang.Constant;
 import wyil.lang.Code.Block;
+import wyil.lang.Constant;
 
 public class StackFrame {
 	private final Block block;

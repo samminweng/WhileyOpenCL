@@ -4,11 +4,15 @@ import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
-
+/**
+ * Interprets <code>Codes.SubString</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.SubString
+ *
+ */
 public class SubStringInterpreter extends Interpreter {
 	private static SubStringInterpreter instance;	
-	public SubStringInterpreter(){		
-	}
+	private SubStringInterpreter(){}
 
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
 	public static SubStringInterpreter getInstance(){

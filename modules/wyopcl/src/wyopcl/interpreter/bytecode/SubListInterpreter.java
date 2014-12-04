@@ -1,17 +1,19 @@
 package wyopcl.interpreter.bytecode;
 
 import java.util.List;
-
-import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
-
+/**
+ * Interprets <code>Codes.SubList</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.SubList
+ *
+ */
 public class SubListInterpreter extends Interpreter{
 	private static SubListInterpreter instance;	
-	public SubListInterpreter(){		
-	}
+	private SubListInterpreter(){}
 
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
 	public static SubListInterpreter getInstance(){

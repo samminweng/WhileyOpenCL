@@ -2,21 +2,22 @@ package wyopcl.interpreter.bytecode;
 
 import static wycc.lang.SyntaxError.internalFailure;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.LinkedHashSet;
-import java.util.List;
 
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
-
+/**
+ * Interprets <code>Codes.SetOperator</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.SetOperator
+ *
+ */
 public class SetOperatorInterpreter extends Interpreter{
 	private static SetOperatorInterpreter instance;	
-	public SetOperatorInterpreter(){		
-	}
+	private SetOperatorInterpreter(){}
 	
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
 	public static SetOperatorInterpreter getInstance(){

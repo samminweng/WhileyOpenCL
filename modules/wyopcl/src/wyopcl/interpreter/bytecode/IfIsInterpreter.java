@@ -12,12 +12,16 @@ import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
-
+/**
+ * Interprets <code>Codes.IfIsInterpreter</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.IfIsInterpreter
+ *
+ */
 public class IfIsInterpreter extends Interpreter {
 	private static IfIsInterpreter instance;
 
-	public IfIsInterpreter() {
-	}
+	private IfIsInterpreter() {	}
 
 	/* Implement the Singleton pattern to ensure this class has one instance. */
 	public static IfIsInterpreter getInstance() {
@@ -180,7 +184,12 @@ public class IfIsInterpreter extends Interpreter {
 		// On the true branch, its type is matched with type test.
 		return !checkType(constant, elementType);
 	}
-
+	/**
+	 * Check <code>constant</code> is an instance of the specific type
+	 * @param constant constant object
+	 * @param type Constant.Type
+	 * @return true if the constant is of type. Otherwise, return false.
+	 */
 	private boolean checkType(Constant constant, Type type) {
 		try{
 			
@@ -189,34 +198,45 @@ public class IfIsInterpreter extends Interpreter {
 			}
 			
 			if (type instanceof Type.Null) {
-				Constant.Null n = (Constant.Null)constant;
-				return true;
+				if(constant instanceof Constant.Null){
+					return true;
+				}				
+				return false;
 			} 
 			
 			if(type instanceof Type.Bool){
-				Constant.Bool b = (Constant.Bool)constant;
-				return true;
-			}
-			
+				if(constant instanceof Constant.Bool){
+					return true;
+				}
+				return false;
+			}			
 			
 			if (type instanceof Type.Char) {
-				Constant.Char c = (Constant.Char)constant;
-				return true;			
+				if(constant instanceof Constant.Char){
+					return true;
+				}
+				return false;			
 			} 
 			
 			if (type instanceof Type.Int) {
-				Constant.Integer i = (Constant.Integer)constant; 
-				return true;			
+				if(constant instanceof Constant.Integer){
+					return true;
+				}
+				return false;			
 			} 
 			
 			if (type instanceof Type.Strung) {
-				Constant.Strung s = (Constant.Strung)constant;
-				return true;		
+				if(constant instanceof Constant.Strung){
+					return true;
+				}
+				return false;		
 			}
 			
 			if (type instanceof Type.Real) {
-				Constant.Decimal d = (Constant.Decimal)constant;
-				return true;
+				if(constant instanceof Constant.Decimal){
+					return true;
+				}
+				return false;
 			}
 			
 			if (type instanceof Type.Negation) {

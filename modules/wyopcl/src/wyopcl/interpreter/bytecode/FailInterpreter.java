@@ -1,14 +1,16 @@
 package wyopcl.interpreter.bytecode;
 
-import static wycc.lang.SyntaxError.internalFailure;
 import wyil.lang.Codes;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
-
+/**
+ * Interprets <code>Codes.Fail</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.Fail
+ */
 public class FailInterpreter extends Interpreter {
 	private static FailInterpreter instance;	
-	public FailInterpreter(){
-	}
+	private FailInterpreter(){	}
 
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
 	public static FailInterpreter getInstance(){

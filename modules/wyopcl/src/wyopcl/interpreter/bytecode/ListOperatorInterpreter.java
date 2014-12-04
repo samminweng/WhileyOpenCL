@@ -11,11 +11,15 @@ import wyil.lang.Constant.List;
 import wyil.lang.Type;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
-
+/**
+ * Interprets <code>Codes.ListOperator</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.ListOperator
+ *
+ */
 public class ListOperatorInterpreter extends Interpreter{
 	private static ListOperatorInterpreter instance;	
-	public ListOperatorInterpreter(){
-	}
+	private ListOperatorInterpreter(){}
 
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
 	public static ListOperatorInterpreter getInstance(){

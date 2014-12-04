@@ -6,11 +6,15 @@ import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
-
+/**
+ * Interprets <code>Codes.NewSet</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.NewSet
+ *
+ */
 public class NewSetInterpreter extends Interpreter {
 	private static NewSetInterpreter instance;	
-	public NewSetInterpreter(){		
-	}
+	private NewSetInterpreter(){ }
 	
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
 	public static NewSetInterpreter getInstance(){

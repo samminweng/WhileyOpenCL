@@ -3,7 +3,12 @@ package wyopcl.interpreter.bytecode;
 import wyil.lang.Codes;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
-
+/**
+ * Interprets <code>Codes.TryCatch</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.TryCatch
+ *
+ */
 public class TryCatchInterpreter extends Interpreter{
 	private static TryCatchInterpreter instance;	
 	public TryCatchInterpreter(){		

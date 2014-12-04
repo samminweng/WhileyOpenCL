@@ -2,35 +2,32 @@ package wyopcl.interpreter.bytecode;
 
 import static wycc.lang.SyntaxError.internalFailure;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.Set;
 
-import wyfs.lang.Path.ID;
 import wyil.lang.Code.Block;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyil.lang.Type;
-import wyil.lang.Type.FunctionOrMethod;
 import wyjc.runtime.WyList;
 import wyjc.runtime.WyRat;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
 import wyopcl.util.Utility;
-
+/**
+ * Interprets <code>Codes.Invoke</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.Invoke
+ *
+ */
 public class InvokeInterpreter extends Interpreter {
 
 	private static InvokeInterpreter instance;	
-	public InvokeInterpreter(){		
-	}
+	private InvokeInterpreter(){}
 
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
 	public static InvokeInterpreter getInstance(){

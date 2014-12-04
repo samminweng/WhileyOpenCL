@@ -5,11 +5,15 @@ import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
-
+/**
+ * Interprets <code>Codes.StringOperator</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.StringOperator
+ *
+ */
 public class StringOperatorInterpreter extends Interpreter {
 	private static StringOperatorInterpreter instance;	
-	public StringOperatorInterpreter(){		
-	}
+	private StringOperatorInterpreter(){}
 
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
 	public static StringOperatorInterpreter getInstance(){

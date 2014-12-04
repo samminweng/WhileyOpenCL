@@ -3,11 +3,15 @@ package wyopcl.interpreter.bytecode;
 import wyil.lang.Codes;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
-
+/**
+ * Interprets <code>Codes.Nop</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.Nop
+ *
+ */
 public class NopInterpreter extends Interpreter {
 	private static NopInterpreter instance;	
-	public NopInterpreter(){		
-	}
+	private NopInterpreter(){}
 	
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
 	public static NopInterpreter getInstance(){

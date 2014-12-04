@@ -4,11 +4,15 @@ import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
-
+/**
+ * Interprets <code>Codes.Throw</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.Throw
+ *
+ */
 public class ThrowInterpreter extends Interpreter {
 	private static ThrowInterpreter instance;	
-	public ThrowInterpreter(){		
-	}
+	private ThrowInterpreter(){}
 
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
 	public static ThrowInterpreter getInstance(){

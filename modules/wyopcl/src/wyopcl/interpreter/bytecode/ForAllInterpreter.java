@@ -2,27 +2,27 @@ package wyopcl.interpreter.bytecode;
 
 import static wycc.lang.SyntaxError.internalFailure;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
-import java.util.Set;
 
-import wyil.lang.Code.Block;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
-import wyil.lang.Type;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
 
-
+/**
+ * Interprets <code>Codes.ForAll</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.ForAll
+ *
+ */
 public class ForAllInterpreter extends Interpreter {
 
 	private static ForAllInterpreter instance;	
-	public ForAllInterpreter(){
-	}
+	private ForAllInterpreter(){}
 
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
 	public static ForAllInterpreter getInstance(){

@@ -4,11 +4,16 @@ import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
-
+/**
+ * Interprets <code>Codes.Const</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.Const
+ *
+ */
 public class ConstantInterpreter extends Interpreter {
-	private static ConstantInterpreter instance;	
-	public ConstantInterpreter(){
-	}
+	private static ConstantInterpreter instance;
+	
+	private ConstantInterpreter(){	}
 	
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
 	public static ConstantInterpreter getInstance(){

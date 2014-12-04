@@ -5,11 +5,15 @@ import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
-
+/**
+ * Interprets <code>Codes.Return</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.Return
+ *
+ */
 public class ReturnInterpreter extends Interpreter {
 	private static ReturnInterpreter instance;	
-	public ReturnInterpreter(){		
-	}
+	private ReturnInterpreter(){}
 
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
 	public static ReturnInterpreter getInstance(){
@@ -21,7 +25,6 @@ public class ReturnInterpreter extends Interpreter {
 
 
 	public void interpret(Codes.Return code, StackFrame stackframe) {
-
 		int linenumber = stackframe.getLine();
 		int return_reg = stackframe.getReturn_reg();
 		blockstack.pop();

@@ -7,12 +7,15 @@ import wyil.lang.Code.Block;
 import wyil.lang.Constant;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
-
+/**
+ * Interprets <code>Codes.If</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.If
+ *
+ */
 public class IfInterpreter extends Interpreter {
 	private static IfInterpreter instance;	
-	public IfInterpreter(){
-		
-	}
+	private IfInterpreter(){}
 	
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
 	public static IfInterpreter getInstance(){

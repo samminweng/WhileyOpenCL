@@ -4,12 +4,16 @@ import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
-
+/**
+ * Interprets <code>Codes.Dereference</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.Dereference
+ *
+ */
 public class DereferenceInterpreter extends Interpreter {
 	private static DereferenceInterpreter instance;
 
-	public DereferenceInterpreter() {
-	}
+	private DereferenceInterpreter() {	}
 
 	/* Implement the Singleton pattern to ensure this class has one instance. */
 	public static DereferenceInterpreter getInstance() {

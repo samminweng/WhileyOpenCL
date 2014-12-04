@@ -4,11 +4,15 @@ import wyil.lang.Codes;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
 
-
+/**
+ * Interprets <code>Codes.LoopEnd</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.LoopEnd
+ *
+ */
 public class LoopEndInterpreter extends Interpreter {
 	private static LoopEndInterpreter instance;	
-	public LoopEndInterpreter(){		
-	}
+	private LoopEndInterpreter(){}
 	
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
 	public static LoopEndInterpreter getInstance(){

@@ -4,18 +4,17 @@ import static wycc.lang.SyntaxError.internalFailure;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Stack;
-import java.util.Map.Entry;
 
-import wybs.lang.Builder;
 import wybs.lang.Build.Project;
+import wybs.lang.Builder;
 import wycc.lang.SyntaxError;
 import wycc.util.Logger;
 import wycc.util.Pair;

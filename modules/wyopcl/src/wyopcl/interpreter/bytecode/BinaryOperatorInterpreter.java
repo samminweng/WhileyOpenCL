@@ -2,23 +2,23 @@ package wyopcl.interpreter.bytecode;
 
 import static wycc.lang.SyntaxError.internalFailure;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.math.MathContext;
-import java.math.RoundingMode;
 import java.util.ArrayList;
 
 import wyil.lang.Codes;
 import wyil.lang.Constant;
-import wyil.lang.Constant.Decimal;
 import wyopcl.interpreter.DecimalFraction;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
-
+/**
+ * Interprets <code>Codes.BinaryOperator</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.BinaryOperator
+ */
 public class BinaryOperatorInterpreter extends Interpreter {
 
 	private static BinaryOperatorInterpreter instance;	
-	public BinaryOperatorInterpreter(){
+	private BinaryOperatorInterpreter(){
 	}
 
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
@@ -92,9 +92,8 @@ public class BinaryOperatorInterpreter extends Interpreter {
 					return DecimalFraction.V_DecimalFraction(num, denum);
 				}
 			}else if (left instanceof DecimalFraction){
-				DecimalFraction left_dec = (DecimalFraction)left;
-				Constant.Decimal right_dec = (Constant.Decimal)right;
-				
+				//DecimalFraction left_dec = (DecimalFraction)left;
+				//Constant.Decimal right_dec = (Constant.Decimal)right;				
 				internalFailure("Not implemented!", "BinaryOperatorInterpreter.java", null);
 				return null;
 			} else {

@@ -8,18 +8,20 @@ import java.util.Iterator;
 
 import wyil.lang.Codes;
 import wyil.lang.Constant;
-import wyil.lang.Constant.List;
-import wyil.lang.Constant.Record;
 import wyil.lang.Type;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
 import wyopcl.util.Utility;
-
+/**
+ * Interprets <code>Codes.Update</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.Update
+ *
+ */
 public class UpdateInterpreter extends Interpreter {
 	private static UpdateInterpreter instance;
 
-	public UpdateInterpreter() {
-	}
+	private UpdateInterpreter() {}
 
 	/* Implement the Singleton pattern to ensure this class has one instance. */
 	public static UpdateInterpreter getInstance() {

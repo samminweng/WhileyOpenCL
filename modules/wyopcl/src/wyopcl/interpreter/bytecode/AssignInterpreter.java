@@ -6,12 +6,14 @@ import wyil.lang.Type;
 import wyopcl.interpreter.StackFrame;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.util.Utility;
-
+/**
+ * Interprets <code>Codes.Assign</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.Assign
+ */
 public class AssignInterpreter extends Interpreter {
 	private static AssignInterpreter instance;	
-	public AssignInterpreter(){
-		super();
-	}
+	private AssignInterpreter(){}
 
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
 	public static AssignInterpreter getInstance(){
@@ -30,8 +32,7 @@ public class AssignInterpreter extends Interpreter {
 		}else {
 			//Copy the value 
 			result = Utility.copyConstant(constant);
-		}
-		
+		}		
 		stackframe.setRegister(code.target(), result);		
 		printMessage(stackframe, code.toString(), "%"+ code.target() + "("+result+")");
 		stackframe.setLine(++linenumber);

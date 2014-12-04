@@ -15,17 +15,19 @@ import java.util.Map.Entry;
 
 import wyil.lang.Codes;
 import wyil.lang.Constant;
-import wyil.lang.Constant.Integer;
 import wyil.lang.Type;
 import wyopcl.interpreter.DecimalFraction;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
-
+/**
+ * Interprets <code>Codes.Convert</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.Convert
+ *
+ */
 public class ConvertInterpreter extends Interpreter {
 	private static ConvertInterpreter instance;
-
-	public ConvertInterpreter() {
-	}
+	private ConvertInterpreter() {	}
 
 	/* Implement the Singleton pattern to ensure this class has one instance. */
 	public static ConvertInterpreter getInstance() {

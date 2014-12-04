@@ -8,11 +8,15 @@ import wyil.lang.Constant;
 import wyil.lang.Constant.Tuple;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
-
+/**
+ * Interprets <code>Codes.NewTuple</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.NewTuple
+ *
+ */
 public class NewTupleInterpreter extends Interpreter{
 	private static NewTupleInterpreter instance;	
-	public NewTupleInterpreter(){		
-	}
+	private NewTupleInterpreter(){}
 	
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
 	public static NewTupleInterpreter getInstance(){

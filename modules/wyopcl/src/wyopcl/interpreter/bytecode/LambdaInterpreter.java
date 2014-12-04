@@ -1,23 +1,23 @@
 package wyopcl.interpreter.bytecode;
 
-import static wycc.lang.SyntaxError.internalFailure;
-
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import wyil.lang.Codes;
 import wyil.lang.Constant;
-import wyil.lang.Code.Block;
 import wyopcl.interpreter.Closure;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
-
+/**
+ * Interprets <code>Codes.Lambda</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.Lambda
+ *
+ */
 public class LambdaInterpreter extends Interpreter {
 	private static LambdaInterpreter instance;
 
-	public LambdaInterpreter() {
-	}
+	private LambdaInterpreter() {}
 
 	/* Implement the Singleton pattern to ensure this class has one instance. */
 	public static LambdaInterpreter getInstance() {

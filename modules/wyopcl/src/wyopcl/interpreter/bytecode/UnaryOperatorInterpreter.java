@@ -1,9 +1,6 @@
 package wyopcl.interpreter.bytecode;
 
 import static wycc.lang.SyntaxError.internalFailure;
-
-import java.math.BigInteger;
-
 import wyil.lang.Codes;
 import wyil.lang.Codes.UnaryOperatorKind;
 import wyil.lang.Constant;
@@ -11,10 +8,15 @@ import wyopcl.interpreter.DecimalFraction;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
 
+/**
+ * Interprets <code>Codes.UnaryOperator</code> bytecode.
+ * @author Min-Hsien Weng
+ * @see wyil.lang.Codes.UnaryOperator
+ *
+ */
 public class UnaryOperatorInterpreter extends Interpreter {
 	private static UnaryOperatorInterpreter instance;	
-	public UnaryOperatorInterpreter(){		
-	}
+	private UnaryOperatorInterpreter(){}
 
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
 	public static UnaryOperatorInterpreter getInstance(){
@@ -57,11 +59,8 @@ public class UnaryOperatorInterpreter extends Interpreter {
 		}else{
 			internalFailure("Not implemented!", "UnaryOperatorInterpreter.java", null);
 			return null;
-		}
-		
-		
-	}
-	
+		}		
+	}	
 	
 	public void interpret(Codes.UnaryOperator code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
