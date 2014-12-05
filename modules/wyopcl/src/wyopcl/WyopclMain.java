@@ -81,9 +81,13 @@ public class WyopclMain extends WycMain{
 			//Additional arguments
 			ArrayList<String> arguments = new ArrayList<String>();
 			for (String arg : args) {
-				File f = new File(arg);
-				if(f.exists()){
-					delta.add(f);					
+				if(arg.contains(".whiley")){
+					File f = new File(arg);
+					if(f.exists()){
+						delta.add(f);					
+					}else{
+						throw new RuntimeException("Could not find "+arg);
+					}
 				}else{
 					arguments.add(arg);
 				}

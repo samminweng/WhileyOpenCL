@@ -137,33 +137,11 @@ public class Interpreter implements Builder {
 	}
 	
 	
-	/**
-	 * Adds or returns the Function blocks (HashMap) by method names.
-	 * @param name the name of function or method
-	 * @return the function blocks (a hashmap)
-	 */
-	public static HashMap<FunctionOrMethod, Block> addFuncBlocksByName(String name){
-		if(!blocktable.containsKey(name)){
-			return new HashMap<FunctionOrMethod, Block>();
-		}else{
-			return blocktable.get(name);
-		}
-	}
-	/**
-	 * Updates the function or method blocks in the HashMap.
-	 * @param name the name of function or method
-	 * @param blocks the function blocks (Hashmap<FunctionOrMethod, Block>)
-	 */
-	public static void updateFuncBlocks(String name, HashMap<FunctionOrMethod, Block> blocks){
-		blocktable.put(name, blocks);
-	}
-	
 	
 	private void scanLabelsinBlock(Block blk){					
 		//Pre-scan the code block and keep the symbol label map.
 		for(int pos = 0; pos <blk.size(); pos++){
-			Block.Entry entry = blk.get(pos);
-			Code code = entry.code;
+			Code code = blk.get(pos).code;
 			String label = null;
 			if(code instanceof Codes.LoopEnd){
 				label = ((Codes.LoopEnd)code).label+"LoopEnd";							
@@ -189,11 +167,24 @@ public class Interpreter implements Builder {
 			}
 			
 			if(label != null && isVerbose()){
-					System.out.println(label+"--->"+pos);
+				System.out.println(label+"--->"+pos);
 			}
 		}
 	}
 	
+	
+	/**
+	 * Adds or returns the Function blocks (HashMap) by method names.
+	 * @param name the name of function or method
+	 * @return the function blocks (a hashmap)
+	 */
+	private HashMap<FunctionOrMethod, Block> addFuncBlocksByName(String name){
+		if(!blocktable.containsKey(name)){
+			return new HashMap<FunctionOrMethod, Block>();
+		}else{
+			return blocktable.get(name);
+		}
+	}
 	/*Scans the methods*/
 	protected void preprocessor(WyilFile module){
 		String id = module.id().toString();
@@ -205,33 +196,27 @@ public class Interpreter implements Builder {
 				//Add the entries in the precondition.
 				List<Block> pre_list = mcase.precondition();
 				if(pre_list != null){
-					Iterator<Block> iterator = pre_list.iterator();
-					while(iterator.hasNext()){
-						Block pre = iterator.next();
+					for(Block pre : pre_list){
 						entries.addAll(pre);
-					}
-					
+					}					
 				}	
 				//Add the entries in the body block.
-				Block blk = mcase.body();
-				entries.addAll(blk);
+				entries.addAll(mcase.body());
 				
 				//Add the entries in the postcondition.
 				List<Block> post_list = mcase.postcondition();
 				if(post_list != null){
-					Iterator<Block> iterator = post_list.iterator();
-					while(iterator.hasNext()){
-						Block post = iterator.next();
+					for(Block post: post_list){
 						entries.addAll(post);
 					}					
 				}
 								
-				Block block = new Block(blk.numInputs(), entries);
+				Block block = new Block(mcase.body().numInputs(), entries);
 				blocks.put(method.type(), block);				
 				scanLabelsinBlock(block);
 			}
 			
-			updateFuncBlocks(name, blocks);
+			blocktable.put(name, blocks);
 		}
 
 	}
@@ -253,27 +238,23 @@ public class Interpreter implements Builder {
 			}else{
 				return hashMap.get(functionOrMethod[0]);
 			}
-		}else{
-			return null;
-		}		
+		}
+		return null;		
 	}
 	
 	protected void interpret(WyilFile module){
 		//Get the main method
 		for(FunctionOrMethodDeclaration method: module.functionOrMethod("main")){
 			for(Case mcase:method.cases()){
-				Block block = mcase.body();				
-				StackFrame mainframe = new StackFrame(1, block,0, method.name(), -1);
+				StackFrame mainframe = new StackFrame(1, mcase.body(), 0, method.name(), -1);
 				//Put a Constant.Record to the register 0.				
 				int index = 0;
 				for(wyil.lang.Type param : method.type().params()){
 					//The values are used to create the Constant.Record.
 					HashMap<String, Constant> values = new HashMap<String, Constant>();
 					//put 'args' and 'out' fields into values.
-					Iterator<Entry<String, Type>> iterator = ((Type.Record)param).fields().entrySet().iterator();
-					while(iterator.hasNext()){
-						Entry<String, Type> next = iterator.next();
-						values.put(next.getKey(), Constant.V_TYPE(next.getValue()));
+					for(Entry<String, Type> entry : ((Type.Record)param).fields().entrySet()){
+						values.put(entry.getKey(), Constant.V_TYPE(entry.getValue()));
 					}
 					//Create a List of Constant objects.
 					ArrayList<Constant> arguments = new ArrayList<Constant>();
@@ -282,7 +263,6 @@ public class Interpreter implements Builder {
 					}
 					//Replace the value of args with the argument list.
 					values.put("args", Constant.V_LIST(arguments));
-
 					mainframe.setRegister(index, Constant.V_RECORD(values));
 					index++;
 				}

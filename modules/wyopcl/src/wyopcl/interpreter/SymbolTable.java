@@ -1,13 +1,9 @@
 package wyopcl.interpreter;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.Map;
 
-import wyil.lang.Codes;
 import wyil.lang.Code.Block;
+import wyil.lang.Codes;
 
 /**
  * Stores the symbol information where each label relates to its line number in a block.
