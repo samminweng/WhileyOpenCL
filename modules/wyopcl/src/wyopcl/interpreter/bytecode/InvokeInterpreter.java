@@ -6,18 +6,27 @@ import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
+import wycc.lang.NameID;
 import wyil.lang.Code.Block;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyil.lang.Type;
+import wyil.lang.Type.FunctionOrMethod;
 import wyjc.runtime.WyList;
+import wyjc.runtime.WyObject;
 import wyjc.runtime.WyRat;
+import wyjc.runtime.WyRecord;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
 import wyopcl.util.Utility;
+import whiley.io.File$native;;
 /**
  * Interprets <code>Codes.Invoke</code> bytecode.
  * @author Min-Hsien Weng
@@ -43,7 +52,7 @@ public class InvokeInterpreter extends Interpreter {
 	 * @param toType the given Constant type
 	 * @return the Constant object of the specified type. 
 	 */
-	private Constant convertJavaObjectToConstant(Object obj, wyil.lang.Type toType) {
+	private Constant convertJavaObjectToConstant(NameID nameID, Object obj, wyil.lang.Type toType) {
 		if (toType instanceof Type.Strung) {
 			if (obj instanceof BigDecimal) {
 				return Constant.V_STRING(((BigDecimal) obj).toPlainString());
@@ -78,16 +87,33 @@ public class InvokeInterpreter extends Interpreter {
 		if (toType instanceof Type.List){
 			Collection<Constant> values = new ArrayList<Constant>();
 			WyList wylist = (WyList)obj;
-			Iterator<?> iterator = wylist.iterator();
-			while(iterator.hasNext()){
-				Object nextObj = iterator.next();
+			for(Object wyObj : wylist){
 				Type elemType = ((Type.List)toType).element();
-				values.add(convertJavaObjectToConstant(nextObj, elemType));
+				values.add(convertJavaObjectToConstant(nameID, wyObj, elemType));
 			}
 			return Constant.V_LIST(values);
-		} 
-
-
+		}
+		
+		if(toType instanceof Type.Record){
+			Type.Record recordType = (Type.Record)toType;
+			WyRecord wyrecord = (WyRecord)obj;			
+			Map<String, Constant> values = new HashMap<String, Constant>();
+			for(String field: wyrecord.keySet()){
+				Type fieldType = recordType.field(field);
+				Object value = wyrecord.get(field);
+				values.put(field, convertJavaObjectToConstant(nameID, value, fieldType));
+			}			
+			return Constant.V_RECORD(values);
+		}
+		
+		//Convert a Java obj to a constant method.
+		//But Constant class does not have the constructor for method.
+		//This method is not yet complete and essential for executing 001_avg benchmark program.
+		if(toType instanceof Type.Method){
+			Type.Method methodType = (Type.Method)toType;			
+			return Constant.V_LAMBDA(nameID, methodType);			
+		}		
+		
 		internalFailure("Not implemented!", "InvokeInterpreter.java", null);
 		return null;
 
@@ -105,30 +131,33 @@ public class InvokeInterpreter extends Interpreter {
 		Constant result = null;
 		String module_name = code.name.module().toString().replace('/', '.');
 		String method_name = code.name.name();
-		try {
+		
+		
+				
+		try {			
 			//Load the Class
 			ClassLoader classLoader = this.getClass().getClassLoader();
-			Class<?> whileyclass = Class.forName(module_name, true, classLoader);
+			Class<?> whileyclass = Class.forName(module_name, true, classLoader);			
+			
 			for(Method method: whileyclass.getMethods()){
 				//Find the method by checking the method name.
 				if(method.getName().startsWith(method_name)){
 					//Get the parameter types.
-					ArrayList<Object> params = new ArrayList<Object>();
+					Object[] params = new Object[code.type().params().size()];
 					//Compare the parameter type
 					int index = 0;
 					for(Class<?> paramType : method.getParameterTypes()){
 						//The 'paramType' is Java data type.				    		
 						//Thus, we need a conversion from Constant to Java
 						Constant operand = stackframe.getRegister(code.operand(index));
-						params.add(Utility.convertConstantToJavaObject(operand, paramType));
+						params[index] = Utility.convertConstantToJavaObject(operand, paramType);
 						index++;
 					}
 					//params.add(operand);
-					Object obj = method.invoke(null, params.toArray());
-					//Class<?> returnType = method.getReturnType();
+					Object obj = method.invoke(null, params);
 					//The returned_obj is a Java data type, so we need to convert
 					// returned_obj into Constant.					
-					result = convertJavaObjectToConstant(obj, code.assignedType());
+					result = convertJavaObjectToConstant(code.name, obj, code.assignedType());
 					stackframe.setRegister(code.target(), result);
 					printMessage(stackframe, code.toString(),"%"+code.target()+"("+result+")");
 					stackframe.setLine(++linenumber);
