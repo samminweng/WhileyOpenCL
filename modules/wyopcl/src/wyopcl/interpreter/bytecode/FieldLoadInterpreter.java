@@ -7,6 +7,7 @@ import wycc.lang.NameID;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyil.lang.Type;
+import wyil.lang.WyilFile;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
 import wyopcl.util.Utility;
@@ -52,7 +53,7 @@ public class FieldLoadInterpreter extends Interpreter {
 		Constant result = null;
 		if (constant instanceof Constant.Type){
 			//Temporarily solve the method problem for println....
-			NameID name = new NameID(getModule().id(), givenfield);
+			NameID name = new NameID(((WyilFile) config.getProperty("module")).id(), givenfield);
 			result = Constant.V_LAMBDA(name, (Type.Method)code.fieldType());			
 		}else if (constant instanceof Constant.Record){
 			Constant.Record record = (Constant.Record)constant;

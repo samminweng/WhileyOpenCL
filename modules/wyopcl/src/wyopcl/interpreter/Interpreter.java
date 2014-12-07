@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -87,17 +86,6 @@ public class Interpreter implements Builder {
 		Interpreter.config = config;
 	}
 	
-	/**
-	 * Passing the additional arguments from console to the interpreter.
-	 */
-	public String[] getArgs() {
-		return (String[]) config.getProperty("arguments");
-	}
-	
-	public WyilFile getModule() {
-		return (WyilFile) config.getProperty("module");
-	}
-
 	public boolean isVerbose() {
 		return (boolean) config.getProperty("verbose");
 	}	
@@ -172,25 +160,15 @@ public class Interpreter implements Builder {
 		}
 	}
 	
-	
-	/**
-	 * Adds or returns the Function blocks (HashMap) by method names.
-	 * @param name the name of function or method
-	 * @return the function blocks (a hashmap)
-	 */
-	private HashMap<FunctionOrMethod, Block> addFuncBlocksByName(String name){
-		if(!blocktable.containsKey(name)){
-			return new HashMap<FunctionOrMethod, Block>();
-		}else{
-			return blocktable.get(name);
-		}
-	}
 	/*Scans the methods*/
 	protected void preprocessor(WyilFile module){
 		String id = module.id().toString();
 		for(WyilFile.FunctionOrMethodDeclaration method : module.functionOrMethods()) {
 			String name = id+":"+method.name();
-			HashMap<FunctionOrMethod, Block> blocks = addFuncBlocksByName(name);
+			HashMap<FunctionOrMethod, Block> blocks = blocktable.get(name);
+			if(blocks == null){
+				blocks = new HashMap<FunctionOrMethod, Block>();
+			}
 			for(Case mcase : method.cases()){
 				List<Block.Entry> entries = new ArrayList<Block.Entry>();
 				//Add the entries in the precondition.
@@ -258,7 +236,7 @@ public class Interpreter implements Builder {
 					}
 					//Create a List of Constant objects.
 					ArrayList<Constant> arguments = new ArrayList<Constant>();
-					for(String arg: getArgs()){
+					for(String arg: (String[]) config.getProperty("arguments")){
 						arguments.add(Constant.V_STRING(arg));
 					}
 					//Replace the value of args with the argument list.
