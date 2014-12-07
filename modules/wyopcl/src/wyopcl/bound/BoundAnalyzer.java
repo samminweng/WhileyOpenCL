@@ -90,7 +90,7 @@ public class BoundAnalyzer implements Builder{
 	 * Takes the in-memory wyil file and analyzes the variable ranges for each function.
 	 * @param module
 	 */
-	public void analyze(WyilFile module){
+	private void analyze(WyilFile module){
 		for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {			
 			Analyzer analyzer = new Analyzer(0, config, functionOrMethod, module);			
 			analyzer.iterateByteCode();			

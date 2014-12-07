@@ -121,7 +121,7 @@ public class Analyzer {
 	}
 
 
-	public void createEntryNode(Type paramType, String param, BigInteger min, BigInteger max){
+	private void createEntryNode(Type paramType, String param, BigInteger min, BigInteger max){
 		if(isIntType(paramType)){
 			this.entry.addBounds(param, min, max);
 		}
@@ -131,7 +131,7 @@ public class Analyzer {
 	 * Creates the entry node
 	 * @param paramTypes
 	 */
-	public void createEntryNode(List<Type> paramTypes){
+	private void createEntryNode(List<Type> paramTypes){
 		int index = 0;
 		for(Type paramType: paramTypes){
 			createEntryNode(paramType, "%"+index, null, null);
@@ -189,7 +189,7 @@ public class Analyzer {
 	 * @param line
 	 * @see <a href="http://en.wikipedia.org/wiki/ANSI_escape_code">ANSI escape code</a>
 	 */
-	public int printWyILCode(Code code, String name, int line){
+	private int printWyILCode(Code code, String name, int line){
 		//Print out the bytecode with the format (e.g. 'main.9 [const %12 = 2345 : int]')
 		String font_color_start = "";
 		String font_color_end = "";
@@ -447,7 +447,7 @@ public class Analyzer {
 	 * Adds the constraint to the current constraint list.
 	 * @param c
 	 */
-	public void addConstraint(Constraint c){		
+	private void addConstraint(Constraint c){		
 		getCurrentBlock().addConstraint(c);		
 	}
 
@@ -458,7 +458,7 @@ public class Analyzer {
 	 * @param new_label the name of new branch.
 	 * @param c constraint
 	 */
-	private void createIfElseBranch(String new_label, Constraint c, Constraint neg_c){
+	private void createIfElseBranchOrLoopStructure(String new_label, Constraint c, Constraint neg_c){
 		BasicBlock c_blk = getCurrentBlock();
 		//Check whether to add if-else blocks or loop-condition blocks.
 		if(!loop_condition.equals("")){
@@ -495,7 +495,7 @@ public class Analyzer {
 	 * being executed by the <code>analyze(code)</code> 
 	 * @param entry
 	 */
-	public void dispatch(Block.Entry entry){		
+	private void dispatch(Block.Entry entry){		
 		Code code = entry.code; 
 		try{
 			//enable the assertion 
@@ -702,7 +702,7 @@ public class Analyzer {
 			}
 
 			if(!isAssertOrAssume()){
-				createIfElseBranch(code.target, left_c, right_c);
+				createIfElseBranchOrLoopStructure(code.target, left_c, right_c);
 			}else{
 				//Instead of creating if-else branches, we put the condition to the current blk
 				BasicBlock current_blk = getCurrentBlock();
