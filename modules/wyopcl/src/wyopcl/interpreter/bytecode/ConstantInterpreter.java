@@ -29,7 +29,6 @@ public class ConstantInterpreter extends Interpreter {
 		int linenumber = stackframe.getLine();
 		Constant result = (Constant)code.constant;
 		stackframe.setRegister(code.target(), result);
-
 		printMessage(stackframe, code.toString(), "%"+ code.target() + "("+result+")");
 		//Set the next line number
 		stackframe.setLine(++linenumber);

@@ -62,13 +62,7 @@ public class ConvertInterpreter extends Interpreter {
 			if (fromElemType instanceof Type.Void) {
 				// Return an empty list.
 				return Constant.V_LIST(new ArrayList<Constant>());
-			}
-			
-			/*if (toElemType.equals(fromElemType) || toElemType instanceof Type.Union
-					|| (fromElemType instanceof Type.List && toElemType instanceof Type.List)) {
-				return (Constant.List) constant;// No casting
-			}*/
-			
+			}			
 			
 			//Convert each element into the given type. 
 			List<Constant> values = new ArrayList<Constant>();
@@ -347,19 +341,31 @@ public class ConvertInterpreter extends Interpreter {
 
 	}
 
+	/**
+	 * Casts a Constant from one Constant type to another Constant type  
+	 * @param constant the Constant
+	 * @param fromType the original type
+	 * @param toType the casted type
+	 * @return Constant
+	 */
 	private Constant toConstantAny(Constant constant, Type fromType, Type.Any toType) {
 		if (constant instanceof DecimalFraction) {
 			// Cast to a string
 			return Constant.V_STRING(((DecimalFraction) constant).toString());
 		} 
-		if (constant instanceof Constant.Decimal) {
-			// If the value is negative, then Constant.Decimal is converted to
-			// DecimalFraction.
+		if (constant instanceof Constant.Decimal) {			
 			Constant.Decimal decimal = (Constant.Decimal) constant;
-			if (decimal.value.signum() == -1) {
+			// If the negative constant contains any decimal, then convert Constant.Decimal to DecimalFraction.
+			if (decimal.value.signum()<0 && decimal.value.scale()>0) {
 				return DecimalFraction.V_DecimalFraction(decimal);
 			}
-			return constant;
+			//Get the precision of the decimal part. 
+			//If precision >1, try to remove the zeros after decimal points
+			if(decimal.value.remainder(BigDecimal.ONE).precision()>1){
+				BigDecimal frac = decimal.value.stripTrailingZeros();
+				return Constant.V_DECIMAL(frac);
+			}
+			return decimal;
 		}
 		if (constant instanceof Constant) {
 			return constant;

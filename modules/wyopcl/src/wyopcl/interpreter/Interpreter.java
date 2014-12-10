@@ -71,26 +71,32 @@ import wyopcl.interpreter.bytecode.UnaryOperatorInterpreter;
 import wyopcl.interpreter.bytecode.UpdateInterpreter;
 
 /*Declare the abstract Interpreter class, methods and variables. */
+/**
+ * Entry point of WyIL intepreter to iterate over bytecode, build control flow graph, 
+ * and infer bounds.  
+ * @author Min-Hsien Weng
+ *
+ */
 public class Interpreter implements Builder {
 	//Store a hashmap inside a hashmap.
 	protected static HashMap<String, HashMap<FunctionOrMethod, Block>> blocktable = new HashMap<String, HashMap<FunctionOrMethod, Block>>();
 	protected static Stack<StackFrame> blockstack = new Stack<StackFrame>();
 	protected static SymbolTable symboltable = new SymbolTable();
 	protected static InterpreterConfiguration config;
-	
+
 	public Interpreter(){	
-		
+
 	}	
-	
+
 	public Interpreter(InterpreterConfiguration config){
 		Interpreter.config = config;
 	}
-	
+
 	public boolean isVerbose() {
 		return (boolean) config.getProperty("verbose");
 	}	
-	
-	
+
+
 	@Override
 	public Project project() {
 		return (Project) config.getProperty("project");
@@ -123,9 +129,9 @@ public class Interpreter implements Builder {
 				(endTime - start), memory - runtime.freeMemory());
 		return generatedFiles;
 	}
-	
-	
-	
+
+
+
 	private void scanLabelsinBlock(Block blk){					
 		//Pre-scan the code block and keep the symbol label map.
 		for(int pos = 0; pos <blk.size(); pos++){
@@ -153,13 +159,13 @@ public class Interpreter implements Builder {
 			}else{
 				//Do nothing
 			}
-			
+
 			if(label != null && isVerbose()){
 				System.out.println(label+"--->"+pos);
 			}
 		}
 	}
-	
+
 	/*Scans the methods*/
 	protected void preprocessor(WyilFile module){
 		String id = module.id().toString();
@@ -180,7 +186,7 @@ public class Interpreter implements Builder {
 				}	
 				//Add the entries in the body block.
 				entries.addAll(mcase.body());
-				
+
 				//Add the entries in the postcondition.
 				List<Block> post_list = mcase.postcondition();
 				if(post_list != null){
@@ -188,18 +194,18 @@ public class Interpreter implements Builder {
 						entries.addAll(post);
 					}					
 				}
-								
+
 				Block block = new Block(mcase.body().numInputs(), entries);
 				blocks.put(method.type(), block);				
 				scanLabelsinBlock(block);
 			}
-			
+
 			blocktable.put(name, blocks);
 		}
 
 	}
-	
-	
+
+
 	/**
 	 * Get the function block by name plus type (if provided)
 	 * @param name the name of method or function
@@ -219,35 +225,37 @@ public class Interpreter implements Builder {
 		}
 		return null;		
 	}
-	
+	/**
+	 * Passes the command-line arguments and interprets each bytecode of the main function.  
+	 * @param module in-memory WyIL bytecode
+	 */
 	protected void interpret(WyilFile module){
 		//Get the main method
-		for(FunctionOrMethodDeclaration method: module.functionOrMethod("main")){
-			for(Case mcase:method.cases()){
-				StackFrame mainframe = new StackFrame(1, mcase.body(), 0, method.name(), -1);
-				//Put a Constant.Record to the register 0.				
-				int index = 0;
-				for(wyil.lang.Type param : method.type().params()){
-					//The values are used to create the Constant.Record.
-					HashMap<String, Constant> values = new HashMap<String, Constant>();
-					//put 'args' and 'out' fields into values.
-					for(Entry<String, Type> entry : ((Type.Record)param).fields().entrySet()){
-						values.put(entry.getKey(), Constant.V_TYPE(entry.getValue()));
-					}
-					//Create a List of Constant objects.
-					ArrayList<Constant> arguments = new ArrayList<Constant>();
-					for(String arg: (String[]) config.getProperty("arguments")){
-						arguments.add(Constant.V_STRING(arg));
-					}
-					//Replace the value of args with the argument list.
-					values.put("args", Constant.V_LIST(arguments));
-					mainframe.setRegister(index, Constant.V_RECORD(values));
-					index++;
+		FunctionOrMethodDeclaration main_method= module.functionOrMethod("main").get(0);
+		for(Case mcase:main_method.cases()){
+			StackFrame mainframe = new StackFrame(1, mcase.body(), 0, main_method.name(), -1);
+			//Put a Constant.Record to the register 0.				
+			int index = 0;
+			for(wyil.lang.Type param : main_method.type().params()){
+				//The values are used to create the Constant.Record.
+				HashMap<String, Constant> values = new HashMap<String, Constant>();
+				//put 'args' and 'out' fields into values.
+				for(Entry<String, Type> entry : ((Type.Record)param).fields().entrySet()){
+					values.put(entry.getKey(), Constant.V_TYPE(entry.getValue()));
 				}
-
-				blockstack.push(mainframe);				
+				//Create a List of Constant objects.
+				ArrayList<Constant> arguments = new ArrayList<Constant>();
+				for(String arg: (String[]) config.getProperty("arguments")){
+					arguments.add(Constant.V_STRING(arg));
+				}
+				//Replace the value of args with the argument list.
+				values.put("args", Constant.V_LIST(arguments));
+				mainframe.setRegister(index, Constant.V_RECORD(values));
+				index++;
 			}
+			blockstack.push(mainframe);				
 		}
+
 
 		while(!blockstack.isEmpty()){
 			StackFrame stackframe = blockstack.peek();
@@ -263,7 +271,12 @@ public class Interpreter implements Builder {
 		}
 	}
 
-
+	/**
+	 * Dispatch each bytecode along with the active stack frame to an individual interpreter of bytecode type.
+	 * 
+	 * @param entry the bytecode.
+	 * @param stackframe the active stack frame.
+	 */
 	private void dispatch(Block.Entry entry, StackFrame stackframe) {	
 		Code code = entry.code;
 		try{
@@ -361,20 +374,25 @@ public class Interpreter implements Builder {
 		}
 
 	}	
-	
-	
+
+	/**
+	 * prints out the interpretation for each line of bytecode.
+	 * @param stackframe the active stack frame
+	 * @param input the 
+	 * @param output
+	 */
 	public void printMessage(StackFrame stackframe, String input, String output){
 		if(isVerbose()){
 			System.out.println(stackframe.getDepth()+" "+stackframe.getName()+"."+stackframe.getLine()
 					+" ["+input+"] "+output+"\n");
 		}
-		
-	}
 
-	public void printVerificationMessage(StackFrame stackframe, String input, String output){
-		System.err.println(stackframe.getDepth()+" "+stackframe.getName()+"."+stackframe.getLine()
-					+" ["+input+"] "+output+"\n");
-		System.exit(-1);
 	}
 	
+	public void printVerificationMessage(StackFrame stackframe, String input, String output){
+		System.err.println(stackframe.getDepth()+" "+stackframe.getName()+"."+stackframe.getLine()
+				+" ["+input+"] "+output+"\n");
+		System.exit(-1);
+	}
+
 }

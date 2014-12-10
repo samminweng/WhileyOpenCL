@@ -30,7 +30,11 @@ public class IndirectInvokeInterpreter extends Interpreter {
 		}
 		return instance;
 	}
-
+	/**
+	 * Invokes the function
+	 * @param code
+	 * @param stackframe
+	 */
 	private void execFunction(Codes.IndirectInvoke code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
 		Constant.Lambda lambda = (Constant.Lambda) stackframe.getRegister(code.reference());

@@ -124,19 +124,32 @@ public final class Utility {
 	}
 
 	/**
-	 * Convert the Constant object to Java Object.
+	 * Convert the Constant object to the Java Object of given type.
 	 * 
-	 * @param constant
-	 * @param paramType
-	 * @return
+	 * @param constant the Constant 
+	 * @param paramType the given Java type
+	 * @return the Java object
 	 */
+	@SuppressWarnings("unchecked")
 	public static Object convertConstantToJavaObject(Constant constant, Class<?> paramType) {
 
-		if (constant == null) {
+		if (constant == null || constant instanceof Constant.Null) {
 			return null;
-		} else if (constant instanceof Constant.Bool) {
+		}
+		
+		if (constant instanceof Constant.Bool) {
 			return ((Constant.Bool) constant).value;
-		} else if (constant instanceof Constant.Byte) {
+		} 
+		
+		if (constant instanceof Constant.Char) {
+			return ((Constant.Char) constant).value;
+		}
+		
+		if (constant instanceof Constant.Strung) {
+			return ((Constant.Strung) constant).value;
+		}
+		
+		if (constant instanceof Constant.Byte) {
 			if (paramType.equals(BigInteger.class)) {
 				return ((Constant.Byte) constant).value;
 			} else if (paramType.equals(WyList.class)) {
@@ -147,27 +160,33 @@ public final class Utility {
 			} else {
 				return ((Constant.Byte) constant).value;
 			}
-		} else if (constant instanceof Constant.Char) {
-			return ((Constant.Char) constant).value;
-		} else if (constant instanceof Constant.Decimal) {
+		}
+		
+		
+		if (constant instanceof Constant.Decimal) {
 			//Check if the returned type is WyRat
 			if(paramType.equals(WyRat.class)){	
 				Constant.Decimal decimal = (Constant.Decimal)constant;
-				WyRat rat = new WyRat(decimal.value);
-				return rat;
+				return new WyRat(decimal.value);
 			}			
 			return (Constant.Decimal) constant;			
-		}else if (constant instanceof DecimalFraction){
-			return Constant.V_STRING(((DecimalFraction)constant).toString());
-		}else if (constant instanceof Constant.Integer) {
+		}
+		
+		if (constant instanceof DecimalFraction){
+			//return the string of a DecimalFraction.
+			return ((DecimalFraction)constant).toString();
+		}
+		
+		if (constant instanceof Constant.Integer) {
 			//Check if the returned type is WyRat
 			if(paramType.equals(WyRat.class)){	
 				Constant.Integer integer = (Constant.Integer)constant;
-				WyRat rat = new WyRat(integer.value);
-				return rat;
+				return new WyRat(integer.value);
 			}			
 			return ((Constant.Integer) constant).value;
-		} else if (constant instanceof Constant.List) {
+		}
+		
+		if (constant instanceof Constant.List) {
 			if (paramType.equals(WyList.class)) {
 				Constant.List list = (Constant.List) constant;
 				WyList wylist = new WyList();
@@ -178,23 +197,28 @@ public final class Utility {
 			}else{
 				return constantToString((Constant.List) constant, paramType);
 			}
-		} else if (constant instanceof Constant.Map) {
-			return constantToString((Constant.Map) constant, paramType);
-		} else if (constant instanceof Constant.Null) {
-			return null;
-		} else if (constant instanceof Constant.Record) {
-			return constantToString((Constant.Record) constant, paramType);
-		} else if (constant instanceof Constant.Set) {
-			return constantToString((Constant.Set) constant, paramType);
-		} else if (constant instanceof Constant.Strung) {
-			return ((Constant.Strung) constant).value;
-			//return constant;
-		} else if (constant instanceof Constant.Tuple) {
-			return constantToString((Constant.Tuple) constant, paramType);
-		} else {
-			internalFailure("Not implemented!", "Converter.java", null);
-			return null;
 		}
+		
+		if (constant instanceof Constant.Map) {
+			return constantToString((Constant.Map) constant, paramType);
+		}
+		
+		if (constant instanceof Constant.Record) {
+			return constantToString((Constant.Record) constant, paramType);
+		}
+		
+		if (constant instanceof Constant.Set) {
+			return constantToString((Constant.Set) constant, paramType);
+		}		
+		
+		if (constant instanceof Constant.Tuple) {
+			return constantToString((Constant.Tuple) constant, paramType);
+		} 
+		
+		
+		internalFailure("Not implemented!", "Converter.java", null);
+		return null;
+		
 
 	}
 

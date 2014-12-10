@@ -2,11 +2,13 @@ package wyopcl.interpreter.bytecode;
 
 import static wycc.lang.SyntaxError.internalFailure;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 
 import wyil.lang.Codes;
 import wyil.lang.Constant;
+import wyil.lang.Constant.Integer;
 import wyopcl.interpreter.DecimalFraction;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
@@ -29,10 +31,15 @@ public class BinaryOperatorInterpreter extends Interpreter {
 		return instance;
 	}
 
-	
+	/**
+	 * Perform arithmetic operations on the operands.
+	 * @param left the left operand
+	 * @param right the right operand
+	 * @param code the <code>Codes.BinaryOperator</code> operator
+	 * @return the resulting constant
+	 */
 	private Constant performOperation(Constant left, Constant right, Codes.BinaryOperator code){
-		byte leftValue, rightValue;
-		int pos;
+		byte leftValue, rightValue;		
 		// Check the operator
 		switch (code.kind) {
 		case ADD:
@@ -41,31 +48,20 @@ public class BinaryOperatorInterpreter extends Interpreter {
 			}else if (left instanceof Constant.Decimal){
 				return ((Constant.Decimal)left).add(((Constant.Decimal)right));
 			}else if (left instanceof Constant.Char){
-				//Char + char
-				int add = ((Constant.Char)left).value + ((Constant.Char)right).value;
-				//Return a Char
-				return Constant.V_CHAR((char)add);
-			} else {
-				internalFailure("Not implemented!", "BinaryOperatorInterpreter.java", null);
-				return null;
-			}
+				//Result = (char)(char + char)
+				return Constant.V_CHAR((char)(((Constant.Char)left).value + ((Constant.Char)right).value));
+			} 
+			break;
 		case SUB:			
 			if(left instanceof Constant.Integer){
 				return ((Constant.Integer)left).subtract((Constant.Integer)right);
 			}else if (left instanceof Constant.Decimal){
 				return ((Constant.Decimal)left).subtract(((Constant.Decimal)right));
 			}else if (left instanceof Constant.Char){
-				// Char - Char
-				char left_char = ((Constant.Char)left).value;
-				char right_char = ((Constant.Char)right).value;
-				//Subtract one char with another.
-				int diff = left_char -  right_char;
-				//Return the integeral diff.
-				return Constant.V_INTEGER(BigInteger.valueOf(diff));
-			} else {
-				internalFailure("Not implemented!", "BinaryOperatorInterpreter.java", null);
-				return null;
-			}		
+				//Result = (int)(char - char)
+				return Constant.V_INTEGER(BigInteger.valueOf(((Constant.Char)left).value -  ((Constant.Char)right).value));
+			} 
+			break;
 		case MUL:		
 			if(left instanceof Constant.Integer){
 				return ((Constant.Integer)left).multiply((Constant.Integer)right);
@@ -73,40 +69,41 @@ public class BinaryOperatorInterpreter extends Interpreter {
 				return ((Constant.Decimal)left).multiply(((Constant.Decimal)right));
 			}else if (left instanceof Constant.Char){
 				//Char * char
-				int mul = (int)((Constant.Char)left).value * (int)((Constant.Char)right).value;
-				return Constant.V_INTEGER(BigInteger.valueOf(mul));
-			}else {
-				internalFailure("Not implemented!", "BinaryOperatorInterpreter.java", null);
-				return null;
+				return Constant.V_INTEGER(BigInteger.valueOf((int)((Constant.Char)left).value * (int)((Constant.Char)right).value));
 			}
+			break;
 		case DIV:			
 			if(left instanceof Constant.Integer){
 				return ((Constant.Integer)left).divide((Constant.Integer)right);
-			}else if (left instanceof Constant.Decimal){
+			}
+			if (left instanceof Constant.Decimal){
 				Constant.Decimal num = (Constant.Decimal)left;
-				Constant.Decimal denum = (Constant.Decimal)right;
-				try{
+				Constant.Decimal denum = (Constant.Decimal)right;	
+				try{										
+					//The divide method occurs Arithmetic Exceptions when the results of dividing two BigDecimal has no 
+					//rounded resulting values.
 					return num.divide(denum);
 				}catch(ArithmeticException ex){
 					//In the case of (1/3), the division result is infinite.
-					return DecimalFraction.V_DecimalFraction(num, denum);
+					return DecimalFraction.V_DecimalFraction(num, denum);					
 				}
-			}else if (left instanceof DecimalFraction){
-				//DecimalFraction left_dec = (DecimalFraction)left;
-				//Constant.Decimal right_dec = (Constant.Decimal)right;				
-				internalFailure("Not implemented!", "BinaryOperatorInterpreter.java", null);
-				return null;
-			} else {
-				internalFailure("Not implemented!", "BinaryOperatorInterpreter.java", null);
-				return null;
-			}			
+			}
+			
+			if(left instanceof DecimalFraction){				
+				DecimalFraction left_frac = (DecimalFraction)left;
+				DecimalFraction right_frac = DecimalFraction.V_DecimalFraction(((Constant.Decimal)right));
+				
+				Integer num = left_frac.getNumerator().multiply(right_frac.getDenominator());
+				Integer denum = left_frac.getDenominator().multiply(right_frac.getNumerator());
+				return  DecimalFraction.V_DecimalFraction(num, denum);				
+			}
+			
+			break;
 		case REM:
 			if(left instanceof Constant.Integer){
 				return ((Constant.Integer)left).remainder((Constant.Integer)right);
-			}else {
-				internalFailure("Not implemented!", "BinaryOperatorInterpreter.java", null);
-				return null;
-			}			
+			}
+			break;			
 		case RANGE:
 			//Create a List.
 			ArrayList<Constant> values = new ArrayList<Constant>();
@@ -122,8 +119,7 @@ public class BinaryOperatorInterpreter extends Interpreter {
 		case BITWISEAND:
 			leftValue = ((Constant.Byte)left).value;
 			rightValue = ((Constant.Byte)right).value;
-			byte value = (byte) (leftValue & rightValue);
-			return Constant.V_BYTE(value);			
+			return Constant.V_BYTE((byte) (leftValue & rightValue));			
 		case BITWISEOR:
 			leftValue = ((Constant.Byte)left).value;
 			rightValue = ((Constant.Byte)right).value;
@@ -134,27 +130,31 @@ public class BinaryOperatorInterpreter extends Interpreter {
 			return Constant.V_BYTE((byte)(leftValue ^ rightValue));			
 		case LEFTSHIFT:
 			leftValue = ((Constant.Byte)left).value;
-			pos = ((Constant.Integer)right).value.intValue();
+			int pos = ((Constant.Integer)right).value.intValue();
 			return Constant.V_BYTE((byte)(leftValue << pos));			
 		case RIGHTSHIFT:
 			leftValue = ((Constant.Byte)left).value;
 			pos = ((Constant.Integer)right).value.intValue();
 			//0x000000FF is added to avoid leftValue being casted to integer
 			//before shifting and to fill the zeros to the left.
-			leftValue = (byte)((0x000000FF & leftValue)>>pos);
-			return Constant.V_BYTE(leftValue);			
+			return Constant.V_BYTE((byte)((0x000000FF & leftValue)>>pos));			
 		default:
-			internalFailure("unknown binary expression encountered", "BinaryOperatorInterpreter.java", null);
-			return null;			
-		}
+			break;			
+		}		
+		internalFailure("Not implemented!", "BinaryOperatorInterpreter.java", null);
+		return null;
 	}
 	
-
+	/**
+	 * Executes code 
+	 * @param code <code>Codes.BinaryOperator</code> code
+	 * @param stackframe the activated stack frame
+	 */
 	public void interpret(Codes.BinaryOperator code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();		
-		Constant left = stackframe.getRegister(code.operand(0));		
-		Constant right = stackframe.getRegister(code.operand(1));		
-		Constant result = performOperation(left, right, code);
+		Constant result = performOperation(stackframe.getRegister(code.operand(0)),
+										   stackframe.getRegister(code.operand(1)),
+										   code);
 		stackframe.setRegister(code.target(), result);
 		printMessage(stackframe, code.toString(), "%"+ code.target() + "("+result+")");
 		stackframe.setLine(++linenumber);
