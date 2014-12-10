@@ -2,9 +2,7 @@ package wyopcl.interpreter;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-
 import wyil.lang.Constant;
-import wyil.lang.Type.Null;
 /**
  * This class converts the division of two Constant.Decimals or a Constant.Decimal
  * to a fraction (numerator/denominator)

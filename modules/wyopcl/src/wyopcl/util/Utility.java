@@ -104,8 +104,9 @@ public final class Utility {
 			}
 
 		}
-		r += "}";		
-		return r.replaceAll("\"", "");
+		r += "}";
+		return r;
+		//return r.replaceAll("\"", "");
 	}
 
 	private static String constantToString(Constant.Tuple tuple, Class<?> paramType) {
@@ -142,10 +143,11 @@ public final class Utility {
 		} 
 		
 		if (constant instanceof Constant.Char) {
-			return ((Constant.Char) constant).value;
+			return ((Constant.Char) constant);
 		}
 		
 		if (constant instanceof Constant.Strung) {
+			//Add the double quotas to the return string.
 			return ((Constant.Strung) constant).value;
 		}
 		

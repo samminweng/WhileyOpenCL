@@ -6,11 +6,8 @@ import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import wycc.lang.NameID;
@@ -18,15 +15,12 @@ import wyil.lang.Code.Block;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyil.lang.Type;
-import wyil.lang.Type.FunctionOrMethod;
 import wyjc.runtime.WyList;
-import wyjc.runtime.WyObject;
 import wyjc.runtime.WyRat;
 import wyjc.runtime.WyRecord;
 import wyopcl.interpreter.Interpreter;
 import wyopcl.interpreter.StackFrame;
 import wyopcl.util.Utility;
-import whiley.io.File$native;;
 /**
  * Interprets <code>Codes.Invoke</code> bytecode.
  * @author Min-Hsien Weng
@@ -58,15 +52,12 @@ public class InvokeInterpreter extends Interpreter {
 				return Constant.V_STRING(((BigDecimal) obj).toPlainString());
 			}
 			//trim the beginning and ending quotes.
-			String str = obj.toString().replaceAll("^\"|\"$", "");
-			return Constant.V_STRING(str);
+			return Constant.V_STRING(obj.toString().replaceAll("^\"|\"$", ""));
 		} 
 
-		if (toType instanceof Type.Int) {
-			//if(fromType.equals(WyRat.class)){
+		if (toType instanceof Type.Int) {			
 			if(obj instanceof WyRat){
-				WyRat wyRat = (WyRat)obj;
-				return Constant.V_INTEGER(wyRat.numerator());
+				return Constant.V_INTEGER(((WyRat)obj).numerator());
 			}			
 			return Constant.V_INTEGER((BigInteger) obj);
 		} 
@@ -75,11 +66,9 @@ public class InvokeInterpreter extends Interpreter {
 			return Constant.V_BOOL((boolean)obj);
 		}
 
-		if (toType instanceof Type.Byte) {
-			//if (fromType == WyList.class) {
+		if (toType instanceof Type.Byte) {			
 			if(obj instanceof WyList){
-				WyList wylist = (WyList) obj;
-				return Constant.V_BYTE(new Byte((byte) wylist.get(0)));
+				return Constant.V_BYTE(new Byte((byte) ((WyList) obj).get(0)));
 			}			
 			return Constant.V_BYTE(new Byte((byte) obj));
 		}
@@ -121,19 +110,16 @@ public class InvokeInterpreter extends Interpreter {
 
 
 	/**
-	 * Directly invoke the function/method from library
+	 * Directly invoke the function/method from runtime library
 	 * @param code
 	 * @param stackframe
 	 */
-	private void execFunction(Codes.Invoke code, StackFrame stackframe){
+	private void invokeRuntimeFunction(Codes.Invoke code, StackFrame stackframe){
 		int linenumber = stackframe.getLine();
 		//Directly invoke the function/method.		
 		Constant result = null;
 		String module_name = code.name.module().toString().replace('/', '.');
-		String method_name = code.name.name();
-		
-		
-				
+		String method_name = code.name.name();				
 		try {			
 			//Load the Class
 			ClassLoader classLoader = this.getClass().getClassLoader();
@@ -151,6 +137,7 @@ public class InvokeInterpreter extends Interpreter {
 						//Thus, we need a conversion from Constant to Java
 						Constant operand = stackframe.getRegister(code.operand(index));
 						params[index] = Utility.convertConstantToJavaObject(operand, paramType);
+						//params[index] = operand;
 						index++;
 					}
 					//params.add(operand);
@@ -205,7 +192,7 @@ public class InvokeInterpreter extends Interpreter {
 			blockstack.push(newStackFrame);
 			printMessage(stackframe, code.toString(),str);
 		}else{
-			execFunction(code, stackframe);
+			invokeRuntimeFunction(code, stackframe);
 		}		
 	}
 

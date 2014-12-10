@@ -25,18 +25,20 @@ public class NewMapInterpreter extends Interpreter {
 		return instance;
 	}
 	
-	
+	/**
+	 * Creates a new Constant Map using the operands from <code>Codes.NewMap</code> code.
+	 * @param code the <code>Codes.NewMap</code>
+	 * @param stackframe the activated stack frame.
+	 */
 	public void interpret(Codes.NewMap code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
-		
+		//Create a Hashmap with the key and values from operand registers.
 		Map<Constant, Constant> values = new HashMap<Constant, Constant>();
-		int length = code.operands().length/2;
-		for(int i = 0; i< length; i++){
-			Constant key = stackframe.getRegister(code.operand(i*2));
-			Constant value = stackframe.getRegister(code.operand(i*2+1));
+		for(int i = 0; i< code.operands().length; i+=2){
+			Constant key = stackframe.getRegister(code.operand(i));
+			Constant value = stackframe.getRegister(code.operand(i+1));
 			values.put(key, value);
-		}
-		
+		}		
 		Constant.Map result = Constant.V_MAP(values);
 		stackframe.setRegister(code.target(), result);
 		printMessage(stackframe, code.toString(), "%"+ code.target() + "("+result+")");	

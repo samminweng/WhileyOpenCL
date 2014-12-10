@@ -367,6 +367,15 @@ public class ConvertInterpreter extends Interpreter {
 			}
 			return decimal;
 		}
+		
+		if(fromType instanceof Type.Union){
+			//For union type only.
+			if(constant instanceof Constant.Char){
+				//Cast the char to Constant.Strung, so that it can output the string without single quote (').
+				return Constant.V_STRING(((Constant.Char)constant).value+"");
+			}
+		}		
+		
 		if (constant instanceof Constant) {
 			return constant;
 		}

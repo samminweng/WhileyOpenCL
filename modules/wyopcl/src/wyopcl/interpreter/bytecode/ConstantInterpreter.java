@@ -23,11 +23,16 @@ public class ConstantInterpreter extends Interpreter {
 		return instance;
 	}
 
-
+	/**
+	 * Gets the constant from bytecode and puts it into the register table at
+	 * the specific position.
+	 * @param code
+	 * @param stackframe
+	 */
 	public void interpret(Codes.Const code, StackFrame stackframe) {		
 		// Add the register
 		int linenumber = stackframe.getLine();
-		Constant result = (Constant)code.constant;
+		Constant result = code.constant;		
 		stackframe.setRegister(code.target(), result);
 		printMessage(stackframe, code.toString(), "%"+ code.target() + "("+result+")");
 		//Set the next line number
