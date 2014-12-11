@@ -8,8 +8,7 @@
       <!--<exclude name="wyjc/testing/**"/> 
       <exclude name="*/**/package-info.java"/>--> 
     </javac>
-    <taskdef name="wyopcl" classname="wyopcl.util.WyopclAntTask" classpath="src/:../wyil/src/:../wyc/src:../wyrl/src:../wycs/src:../wybs/src/:../wyjc/src/:../../${JASM_JAR}"/>
-    <!--<wyopcl verbose="false" wyildir="../wyrt/src" includes="whiley/**/*.wyil"/>-->
+    <taskdef name="wyopcl" classname="wyopcl.WyopclAntTask" classpath="src/:../wyil/src/:../wyc/src:../wyrl/src:../wycs/src:../wybs/src/:../wyjc/src/:../../${JASM_JAR}"/>
   </target>
 
   <target name="build" depends="compile-wyopcl">

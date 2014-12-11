@@ -11,7 +11,6 @@ import wyc.util.WycBuildTask;
 import wycc.lang.SyntaxError;
 import wycc.lang.SyntaxError.InternalFailure;
 import wycc.util.OptArg;
-import wyopcl.util.WyopclBuildTask;
 
 public class WyopclMain extends WycMain{
 	private boolean verbose = false;

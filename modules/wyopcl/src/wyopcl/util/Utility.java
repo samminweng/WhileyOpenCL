@@ -13,8 +13,6 @@ import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyjc.runtime.WyList;
 import wyjc.runtime.WyRat;
-import wyopcl.interpreter.Closure;
-import wyopcl.interpreter.DecimalFraction;
 
 public final class Utility {
 
