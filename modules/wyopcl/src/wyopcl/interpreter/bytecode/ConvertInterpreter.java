@@ -103,14 +103,12 @@ public class ConvertInterpreter extends Interpreter {
 		HashMap<String, Type> toElemTypeValues = toType.fields();
 
 		Map<String, Constant> map = new HashMap<String, Constant>();
-		Iterator<Entry<String, Constant>> iterator = record.values.entrySet().iterator();
-		while (iterator.hasNext()) {
-			Entry<String, Constant> entry = iterator.next();
+		for (Entry<String, Constant> entry:record.values.entrySet() ) {
 			Constant value = entry.getValue();
 			String key = entry.getKey();
 			fromKeyType = fromFieldTypes.get(key);
 			toKeyType = toElemTypeValues.get(key);
-			map.put(entry.getKey(), castConstanttoConstant(value, fromKeyType, toKeyType));
+			map.put(key, castConstanttoConstant(value, fromKeyType, toKeyType));
 		}
 
 		return Constant.V_RECORD(map);
@@ -227,7 +225,12 @@ public class ConvertInterpreter extends Interpreter {
 
 		return Constant.V_SET(values);
 	}
-
+	/**
+	 * Casts a Constant to Constant.Integer
+	 * @param constant
+	 * @param toType Type.Int
+	 * @return
+	 */
 	private Constant.Integer toConstantInt(Constant constant, Type.Int toType) {
 		
 		try{
@@ -250,13 +253,11 @@ public class ConvertInterpreter extends Interpreter {
 			if (constant instanceof Constant.Record){				
 				//Get the field types.
 				Constant.Record record = (Constant.Record)constant;
-				Iterator<Entry<String, Constant>> iterator = record.values.entrySet().iterator();
-				while(iterator.hasNext()){
-					Entry<String, Constant> field = iterator.next();
-					Constant fieldConstant = field.getValue();
+				for(Entry<String, Constant> entry:record.values.entrySet()){
+					Constant fieldConstant = entry.getValue();
 					Constant result = toConstantInt(fieldConstant, toType);
 					if(result != null){
-						return (Constant.Integer) result;
+						return (Constant.Integer) fieldConstant;
 					}
 				}	
 			
@@ -610,7 +611,12 @@ public class ConvertInterpreter extends Interpreter {
 			return null;
 		}
 	}
-
+	
+	/**
+	 * Converts the input constant to another constant of the given type. 
+	 * @param code
+	 * @param stackframe
+	 */
 	public void interpret(Codes.Convert code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
 		// Read a value from the operand register.

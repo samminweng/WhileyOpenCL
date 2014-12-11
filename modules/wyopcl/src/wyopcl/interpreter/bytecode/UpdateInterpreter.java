@@ -61,53 +61,60 @@ public class UpdateInterpreter extends Interpreter {
 		values.put(key, Value);
 		return Constant.V_MAP(values);
 	}
-
-	private Constant.List updateList(Codes.Update code, StackFrame stackframe) {
-		// Pops the list.
-		Constant.List list = (Constant.List) stackframe.getRegister(code.target());
-		// Read the rhs from the register.
-		Constant givenValue = stackframe.getRegister(code.result());
+	/**
+	 * Gets the given value and updates the list with given value at the given position.
+	 * If the element is a list or record, then update its sublist w  
+	 * 
+	 * @param code
+	 * @param stackframe
+	 * @param list the list
+	 * @param givenValue the given value
+	 * @return the updated list
+	 */
+	private Constant.List updateList(StackFrame stackframe, Constant.List list, Constant givenValue, int[] keys, String... field) {
 		// Get the index
-		int[] keys = code.keys();
-
 		int index = ((Constant.Integer) stackframe.getRegister(keys[0])).value.intValue();
 		Constant element = list.values.get(index);
-		//Check if the element is a compound subtype.
+		//Check if the element is a compound data set.
 		if (element instanceof Constant.List) {
-			//Check if the subindex is provided.
-			if(keys.length >=2){
+			if(keys.length==2){
+				//Get the subIndex
 				int subindex = ((Constant.Integer) stackframe.getRegister(keys[1])).value.intValue();
 				givenValue = update((Constant.List)element, givenValue, subindex);
-			}						
+			}									
 		}
 
 		if(element instanceof Constant.Record){			
-			String field = code.fields.get(0);
-			givenValue = update((Constant.Record)element, givenValue, field);			
+			//Update the record with given value at the given field.
+			givenValue = update((Constant.Record)element, givenValue, field[0]);			
 		} 
 
-		//Update the element in the list with the given value.
+		//Update the list with the given value at the index position.
 		return update(list, givenValue, index);
 	}		
-
-	private Constant.Record updateRecord(Codes.Update code, StackFrame stackframe) {
-		Constant.Record record = (Constant.Record) stackframe.getRegister(code.target());
-		Constant givenValue = stackframe.getRegister(code.result());
+	/**
+	 * Gets 
+	 * @param code
+	 * @param stackframe
+	 * @return
+	 */
+	private Constant.Record updateRecord(Codes.Update code, StackFrame stackframe, Constant.Record record, Constant givenValue) {
 		HashMap<String, Constant> values = new HashMap<String, Constant>(record.values);
 		String[] fields = code.fields.toArray(new String[code.fields.size()]);
-		String field = fields[0];
+		//String field = fields[0];
 
 		// Get the field value
-		Constant fieldValue = values.get(field);
+		Constant fieldValue = values.get(fields[0]);
 		if (fieldValue instanceof Constant.List) {
 			Constant.List list = (Constant.List) fieldValue;
-			int index = 0;
+			//int index = 0;
 			//Check if the list is empty. If so, then get the updated index.
-			if(!list.values.isEmpty()){
-				index = ((Constant.Integer) stackframe.getRegister(code.key(0))).value.intValue();
-			}
-			//Update the list with the given value.
-			givenValue = update(list, givenValue, index);	
+			/*Constant key = stackframe.getRegister(code.key(0));
+			if(key instanceof Constant.Integer){
+				int	index = ((Constant.Integer) key).value.intValue();
+				//Update the list with the given value.
+				givenValue = update(list, givenValue, index);
+			}*/				
 		}
 
 		if (fieldValue instanceof Constant.Record && fields.length == 2){
@@ -115,7 +122,7 @@ public class UpdateInterpreter extends Interpreter {
 				//Do the update for the nested record. 
 			givenValue = update((Constant.Record)fieldValue, givenValue, fields[1]);			
 		} 
-		return update(record, givenValue, field);
+		return update(record, givenValue, fields[0]);
 	}
 
 	private Constant.Strung updateStrung(Codes.Update code, StackFrame stackframe) {
@@ -167,24 +174,40 @@ public class UpdateInterpreter extends Interpreter {
 				internalFailure("Not implemented!", "UpdateInterpreter.java", null);
 				return null;
 			}			
-			
 			return reference;
-		}		
+		}
+		
+		if(reference instanceof Constant.Integer){
+			updatedValue = (Constant.Integer)reference;
+			return updatedValue;
+		}
 
 		internalFailure("Not implemented!", "UpdateInterpreter.java", null);
-		return updatedValue;
+		return null;
 	}
-
+	/**
+	 * Update the constant with the given constant.
+	 * @param code
+	 * @param stackframe
+	 */
 	public void interpret(Codes.Update code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
 		Constant result = null;
 		// Popup the compound type (lists, dictionaries, strings, records and
 		// references
 		Type afterType = code.afterType;
-		if (afterType instanceof Type.List) {			
-			result = updateList(code, stackframe);// Update the result to the list.
+		Constant givenValue = stackframe.getRegister(code.result());
+		if (afterType instanceof Type.List) {
+			Constant.List list = (Constant.List) stackframe.getRegister(code.target());
+			//Check if there is any given field. 
+			if(code.fields!=null&& code.fields.size()==1){
+				result = updateList(stackframe, list, givenValue, code.keys(), code.fields.get(0));	
+			}else{
+				result = updateList(stackframe, list, givenValue,  code.keys());	
+			}				
 		} else if (afterType instanceof Type.Record) {
-			result = updateRecord(code, stackframe);
+			Constant.Record record = (Constant.Record) stackframe.getRegister(code.target());
+			result = updateRecord(code, stackframe, record, givenValue);
 		} else if (afterType instanceof Type.Strung) {
 			result = updateStrung(code, stackframe);
 		} else if (afterType instanceof Type.Map) {

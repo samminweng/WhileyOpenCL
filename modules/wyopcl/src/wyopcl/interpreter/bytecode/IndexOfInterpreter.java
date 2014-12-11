@@ -91,7 +91,12 @@ public class IndexOfInterpreter extends Interpreter {
 		internalFailure("Not implemented!", "InterpreterIndexOf.java", null);
 		return null;
 	}
-
+	/**
+	 * Gets the ith element from the composite set (i.e. List, Record,
+	 * Strung, Map)
+	 * @param code
+	 * @param stackframe
+	 */
 	public void interpret(Codes.IndexOf code, StackFrame stackframe) {		
 		int linenumber = stackframe.getLine();
 		//Read the list from the leftOperand register.

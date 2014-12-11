@@ -27,9 +27,7 @@ public class DereferenceInterpreter extends Interpreter {
 		int linenumber = stackframe.getLine();
 		//Get the reference constant
 		Constant reference = stackframe.getRegister(code.operand(0));
-		//Deference it
-		
-		//Set it the target register.
+		//Deference it and set it to the target register.
 		stackframe.setRegister(code.target(), reference);
 		printMessage(stackframe, code.toString(),"%"+code.target()+"("+reference+")");
 		stackframe.setLine(++linenumber);

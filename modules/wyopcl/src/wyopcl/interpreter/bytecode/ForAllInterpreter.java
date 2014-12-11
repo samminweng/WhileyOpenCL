@@ -2,11 +2,13 @@ package wyopcl.interpreter.bytecode;
 
 import static wycc.lang.SyntaxError.internalFailure;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import wyil.lang.Codes;
 import wyil.lang.Constant;
@@ -38,13 +40,18 @@ public class ForAllInterpreter extends Interpreter {
 		stackframe.setLine(linenumber);
 	}
 	
-	
-	private void goIntoLoop(Codes.ForAll code, StackFrame stackframe, int index, Constant result){
+	private void gotoLoopBody(Codes.ForAll code, StackFrame stackframe, Constant indexOperand){
 		int linenumber = stackframe.getLine();
-		stackframe.setLoop_index(code.target, index);
-		stackframe.setRegister(code.indexOperand, result);
-		printMessage(stackframe, code.toString(), "%"+ code.indexOperand + "("+result+")");
+		//stackframe.setLoop_index(code.target, index);
+		stackframe.setRegister(code.indexOperand, indexOperand);
+		printMessage(stackframe, code.toString(), "%"+ code.indexOperand + "("+indexOperand+")");
 		stackframe.setLine(++linenumber);
+	}
+	
+	
+	private void gotoLoopBody(Codes.ForAll code, StackFrame stackframe, int index, Constant indexOperand){		
+		stackframe.setLoop_index(code.target, index);
+		gotoLoopBody(code, stackframe, indexOperand);	
 	}
 	
 	
@@ -54,39 +61,65 @@ public class ForAllInterpreter extends Interpreter {
 			//Get the current index
 			int index = stackframe.getLoop_index(code.target);
 			if(indexOperand == null || index == -1){
-				goIntoLoop(code, stackframe, 0, array[0]);
-				return;
-			}
-			index++;
+				index = 0;
+			}else{
+				index++;				
+			}			
 			//Check if the index is out-of-boundary. If not, then go into the loop.
 			if(index < array.length){
-				goIntoLoop(code, stackframe, index, array[index]);
+				gotoLoopBody(code, stackframe, index, array[index]);
 				return;
-			}			
-		}
+			}
+		}		
 		gotoLoopEnd(code, stackframe);
+	
 	}
 	
 	private Constant.Tuple createTuple(Entry<Constant, Constant> entry){
-		Constant.Tuple tuple = null;
-				
+		Constant.Tuple tuple = null;				
 		Collection<Constant> list = new ArrayList<Constant>();
 		list.add(entry.getKey());
 		list.add(entry.getValue());
 		//Create a tuple
-		tuple = Constant.V_TUPLE(list);
-		
+		tuple = Constant.V_TUPLE(list);		
 		return tuple;
 	}
 	
-	
+	/**
+	 * Iterates over all elements in a map
+	 * @param map
+	 * @param code
+	 * @param stackframe
+	 */
 	private void iterateOverMap(Constant.Map map, Codes.ForAll code, StackFrame stackframe){
-		int linenumber = stackframe.getLine();
-		Constant result = null;
+		/*int linenumber = stackframe.getLine();
+		Constant result = null;*/
 		Constant indexOperand = stackframe.getRegister(code.indexOperand);
 		
 		HashMap<Constant, Constant> values = map.values;
-		if(values.size() == 0){
+		if(values != null && values.size()>0){
+			Iterator<Entry<Constant, Constant>> iterator = values.entrySet().iterator();
+			Entry<Constant, Constant> entry = null;
+			if(indexOperand != null){
+				//Find the entry that matches the indexOperand
+				Constant.Tuple tuple = (Constant.Tuple)indexOperand;
+				while(iterator.hasNext()){
+					//Check if the tuple matches one of the entries
+					entry = iterator.next();
+					if(entry.getKey()==tuple.values.get(0) && entry.getValue() == tuple.values.get(1)){
+						break;
+					}
+				}				
+			}
+			if(iterator.hasNext()){
+				entry = iterator.next();
+				indexOperand = createTuple(entry);
+				gotoLoopBody(code, stackframe, indexOperand);
+				return;
+			}			
+		}		
+		gotoLoopEnd(code, stackframe);
+		/*if(values.size() == 0){
 			gotoLoopEnd(code, stackframe);
 		}else{
 			Iterator<Entry<Constant, Constant>> iterator = values.entrySet().iterator();
@@ -115,10 +148,29 @@ public class ForAllInterpreter extends Interpreter {
 			printMessage(stackframe, code.toString(), "%"+ code.indexOperand + "("+result+")");
 			stackframe.setLine(++linenumber);
 			
-		}
+		}*/
+	}	
+	/**
+	 * Iterate over the single record
+	 * @param record
+	 * @param code
+	 * @param stackframe
+	 */
+	private void iterateOverRecord(Constant.Record record, Codes.ForAll code, StackFrame stackframe){
+		Constant indexOperand = stackframe.getRegister(code.indexOperand);
+		if(indexOperand == null){
+			gotoLoopBody(code, stackframe, record);
+		}else{
+			gotoLoopEnd(code, stackframe);
+		}		
 	}
 	
-
+	/**
+	 * Iterates each element in the composite data set and stores the activated
+	 * element at the indexOperand.
+	 * @param code
+	 * @param stackframe
+	 */
 	public void interpret(Codes.ForAll code, StackFrame stackframe) {		
 		//Get the index
 		Constant source = stackframe.getRegister(code.sourceOperand);		
@@ -145,6 +197,9 @@ public class ForAllInterpreter extends Interpreter {
 			//Go to loop end
 			gotoLoopEnd(code, stackframe);
 			return;
+		}else if (source instanceof Constant.Record){
+			Constant.Record record = (Constant.Record)source;
+			iterateOverRecord(record, code, stackframe);
 		}else{
 			internalFailure("Not implemented!", "InterpreterForAll.java", null);
 		}

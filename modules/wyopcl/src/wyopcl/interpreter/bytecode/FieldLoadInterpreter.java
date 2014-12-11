@@ -19,7 +19,7 @@ import wyopcl.util.Utility;
  */
 public class FieldLoadInterpreter extends Interpreter {
 	private static FieldLoadInterpreter instance;	
-	public FieldLoadInterpreter(){
+	private FieldLoadInterpreter(){
 	}
 
 	/*Implement the Singleton pattern to ensure this class has one instance.*/
@@ -44,8 +44,11 @@ public class FieldLoadInterpreter extends Interpreter {
 		return Constant.V_NULL;
 	}
 	
-
-
+	/**
+	 * Loads the values of the given field from a composite data.
+	 * @param code
+	 * @param stackframe
+	 */
 	public void interpret(Codes.FieldLoad code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
 		String givenfield = code.field;
