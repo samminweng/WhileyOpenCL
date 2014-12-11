@@ -21,11 +21,13 @@ public class LoopInterpreter extends Interpreter {
 		return instance;
 	}
 	
-	
+	/**
+	 * Prints out the bytecode without any further action.
+	 * @param code
+	 * @param stackframe
+	 */
 	public void interpret(Codes.Loop code, StackFrame stackframe) {
 		int linenumber = stackframe.getLine();
-		//Code.Block block = stackframe.getBlock();
-		//linenumber = symboltable.get(block).getBlockPosByLabel(code.target);
 		printMessage(stackframe, code.toString(), "("+code.target+")");
 		stackframe.setLine(++linenumber);
 	}

@@ -30,21 +30,23 @@ public class IfIsInterpreter extends Interpreter {
 		}
 		return instance;
 	}
-
+	/**
+	 * Check the constant if its fields are matched with the given Record type.
+	 * @param constant the constant
+	 * @param type the given type
+	 * @return
+	 */
 	private boolean checkType(Constant constant, Type.Record type) {
 		try{
 			Constant.Record record = (Constant.Record)constant;
-			HashMap<String, Type> fields = ((Type.Record) type).fields();		
-
+			HashMap<String, Type> fields = ((Type.Record) type).fields();
 			// Check the number of field values with the number of field types.
 			if (record.values.size() != fields.size()) {
 				return false;
 			}
 
 			// Iterate over the record
-			Iterator<Entry<String, Constant>> iterator = record.values.entrySet().iterator();
-			while (iterator.hasNext()) {
-				Entry<String, Constant> entry = iterator.next();
+			for (Entry<String, Constant> entry : record.values.entrySet()) {
 				String field = entry.getKey();
 				Constant fieldvalue = entry.getValue();
 				// Check if the type contains the field. If so, get and compare the

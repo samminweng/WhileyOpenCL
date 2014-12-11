@@ -47,20 +47,28 @@ public final class Utility {
 		r += "}";
 		return r.replaceAll("\"", "");
 	}
-
+	/**
+	 * Returns a string of a sorted Constant.Set, using tree set.
+	 * @param set the Constant Set 
+	 * @param paramType the given type
+	 * @return
+	 */
 	private static String constantToString(Constant.Set set, Class<?> paramType) {
 		// Sort the elements in a set, using the tree set.
 		TreeSet<Constant> sorted = new TreeSet<Constant>(set.values);
 		String r = "{";
 		boolean firstTime = true;
-		Iterator<Constant> iterator = sorted.iterator();
-		while (iterator.hasNext()) {
-			Constant next = iterator.next();
+		for (Constant constant: sorted) {
 			if (!firstTime) {
 				r += ", ";
 			}
 			firstTime = false;
-			r += convertConstantToJavaObject(next, paramType);
+			if(constant instanceof Constant.Char){
+				r += "'"+convertConstantToJavaObject(constant, paramType)+"'";
+			}else{
+				r += convertConstantToJavaObject(constant, paramType);
+			}
+			
 		}
 		r += "}";
 		return r.replaceAll("\"", "");
@@ -143,7 +151,7 @@ public final class Utility {
 		} 
 		
 		if (constant instanceof Constant.Char) {
-			return ((Constant.Char) constant);
+			return ((Constant.Char) constant).value;
 		}
 		
 		if (constant instanceof Constant.Strung) {

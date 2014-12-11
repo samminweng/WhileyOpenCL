@@ -54,21 +54,21 @@ public class IndexOfInterpreter extends Interpreter {
 
 		return value;
 	}
-
-	private Constant getValuefromStrung(Constant.Strung strung, Constant key){
-		Constant value = null;
+	/**
+	 * Gets the char of a string at the given index
+	 * @param strung the string
+	 * @param index the index
+	 * @return the char
+	 */
+	private Constant getValuefromStrung(Constant.Strung strung, Constant index){
 		//Get the value associated with the key.
-		if(key instanceof Constant.Integer){
+		if(index instanceof Constant.Integer){
 			//Get the char at 'keyvalue' index and returns the Constant.Char object.
-			char c = strung.value.charAt(((Constant.Integer)key).value.intValue());
-			value = Constant.V_CHAR(c);
-		}else if (key instanceof Constant.Char){
-			//value = strung.value.get(((Constant.Char)searchValue).value);
-		}else{
-			internalFailure("Not implemented!", "InterpreterIndexOf.java", null);
+			char c = strung.value.charAt(((Constant.Integer)index).value.intValue());
+			return Constant.V_CHAR(c);
 		}
-
-		return value;
+		internalFailure("Not implemented!", "InterpreterIndexOf.java", null);
+		return null;
 	}
 
 	private Constant getValuefromMap(Constant.Map map, Constant key){		
