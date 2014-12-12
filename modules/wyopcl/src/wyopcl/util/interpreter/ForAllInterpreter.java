@@ -33,13 +33,22 @@ public class ForAllInterpreter extends Interpreter {
 		}
 		return instance;
 	}
-	
+	/**
+	 * Goes to the loop end.
+	 * @param code
+	 * @param stackframe
+	 */
 	private void gotoLoopEnd(Codes.ForAll code, StackFrame stackframe){
 		stackframe.setRegister(code.indexOperand, null);
 		int linenumber = symboltable.getBlockPosByLabel(stackframe.getBlock(), code.target+"LoopEnd");
 		stackframe.setLine(linenumber);
 	}
-	
+	/**
+	 * Goes to the loop body.
+	 * @param code
+	 * @param stackframe
+	 * @param indexOperand
+	 */
 	private void gotoLoopBody(Codes.ForAll code, StackFrame stackframe, Constant indexOperand){
 		int linenumber = stackframe.getLine();
 		//stackframe.setLoop_index(code.target, index);
@@ -75,16 +84,6 @@ public class ForAllInterpreter extends Interpreter {
 	
 	}
 	
-	private Constant.Tuple createTuple(Entry<Constant, Constant> entry){
-		Constant.Tuple tuple = null;				
-		Collection<Constant> list = new ArrayList<Constant>();
-		list.add(entry.getKey());
-		list.add(entry.getValue());
-		//Create a tuple
-		tuple = Constant.V_TUPLE(list);		
-		return tuple;
-	}
-	
 	/**
 	 * Iterates over all elements in a map
 	 * @param map
@@ -92,8 +91,6 @@ public class ForAllInterpreter extends Interpreter {
 	 * @param stackframe
 	 */
 	private void iterateOverMap(Constant.Map map, Codes.ForAll code, StackFrame stackframe){
-		/*int linenumber = stackframe.getLine();
-		Constant result = null;*/
 		Constant indexOperand = stackframe.getRegister(code.indexOperand);
 		
 		HashMap<Constant, Constant> values = map.values;
@@ -113,42 +110,17 @@ public class ForAllInterpreter extends Interpreter {
 			}
 			if(iterator.hasNext()){
 				entry = iterator.next();
-				indexOperand = createTuple(entry);
+				//Constant.Tuple tuple = null;				
+				Collection<Constant> list = new ArrayList<Constant>();
+				list.add(entry.getKey());
+				list.add(entry.getValue());
+				//Create a tuple
+				indexOperand = Constant.V_TUPLE(list);
 				gotoLoopBody(code, stackframe, indexOperand);
 				return;
 			}			
 		}		
 		gotoLoopEnd(code, stackframe);
-		/*if(values.size() == 0){
-			gotoLoopEnd(code, stackframe);
-		}else{
-			Iterator<Entry<Constant, Constant>> iterator = values.entrySet().iterator();
-			if(indexOperand == null){				
-				//Create a tuple
-				result = createTuple(iterator.next());
-			}else{
-				Constant.Tuple tuple = (Constant.Tuple)indexOperand;
-				while(iterator.hasNext()){
-					//Check if the tuple matches one of the entries
-					Entry<Constant, Constant> entry = iterator.next();
-					if(entry.getKey()==tuple.values.get(0) && entry.getValue() == tuple.values.get(1)){
-						break;
-					}
-				}
-				
-				if(iterator.hasNext()){					
-					result = createTuple(iterator.next());
-				}else{
-					gotoLoopEnd(code, stackframe);
-					return;
-				}
-			}
-			
-			stackframe.setRegister(code.indexOperand, result);
-			printMessage(stackframe, code.toString(), "%"+ code.indexOperand + "("+result+")");
-			stackframe.setLine(++linenumber);
-			
-		}*/
 	}	
 	/**
 	 * Iterate over the single record
@@ -196,7 +168,6 @@ public class ForAllInterpreter extends Interpreter {
 		}else if (source instanceof Constant.Null){
 			//Go to loop end
 			gotoLoopEnd(code, stackframe);
-			return;
 		}else if (source instanceof Constant.Record){
 			Constant.Record record = (Constant.Record)source;
 			iterateOverRecord(record, code, stackframe);

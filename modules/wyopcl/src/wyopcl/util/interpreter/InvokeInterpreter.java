@@ -8,6 +8,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import wycc.lang.NameID;
@@ -110,47 +111,27 @@ public class InvokeInterpreter extends Interpreter {
 
 
 	/**
-	 * Directly invoke the function/method from runtime library
+	 * Directly invoke the function/method from Whiley runtime library
 	 * @param code
 	 * @param stackframe
 	 */
-	private void invokeRuntimeFunction(Codes.Invoke code, StackFrame stackframe){
-		int linenumber = stackframe.getLine();
-		//Directly invoke the function/method.		
-		Constant result = null;
-		String module_name = code.name.module().toString().replace('/', '.');
-		String method_name = code.name.name();				
+	private void invokeRuntimeFunction(Codes.Invoke code, StackFrame stackframe, List<Constant> params){
+		int linenumber = stackframe.getLine();		
+				
+		
+		//Directly invoke the function/method.
 		try {			
 			//Load the Class
-			ClassLoader classLoader = this.getClass().getClassLoader();
-			Class<?> whileyclass = Class.forName(module_name, true, classLoader);			
-			
-			for(Method method: whileyclass.getMethods()){
-				//Find the method by checking the method name.
-				if(method.getName().startsWith(method_name)){
-					//Get the parameter types.
-					Object[] params = new Object[code.type().params().size()];
-					//Compare the parameter type
-					int index = 0;
-					for(Class<?> paramType : method.getParameterTypes()){
-						//The 'paramType' is Java data type.				    		
-						//Thus, we need a conversion from Constant to Java
-						Constant operand = stackframe.getRegister(code.operand(index));
-						params[index] = Utility.convertConstantToJavaObject(operand, paramType);
-						//params[index] = operand;
-						index++;
-					}
-					//params.add(operand);
-					Object obj = method.invoke(null, params);
-					//The returned_obj is a Java data type, so we need to convert
-					// returned_obj into Constant.					
-					result = convertJavaObjectToConstant(code.name, obj, code.assignedType());
-					stackframe.setRegister(code.target(), result);
-					printMessage(stackframe, code.toString(),"%"+code.target()+"("+result+")");
-					stackframe.setLine(++linenumber);
-					return;
-				}
-			}			
+			Object obj = Utility.invokeWhileyRuntimeFucntion(this.getClass().getClassLoader(), 
+															 code.name.module().toString().replace('/', '.'),
+															 code.name.name(),
+															 code.type().params(),
+															 params);
+			// returned_obj into Constant.					
+			Constant result = convertJavaObjectToConstant(code.name, obj, code.assignedType());
+			stackframe.setRegister(code.target(), result);
+			printMessage(stackframe, code.toString(),"%"+code.target()+"("+result+")");
+			stackframe.setLine(++linenumber);
 		} catch (Exception e) {				
 			//Pop up the current block
 			if(blockstack.size() > 1){
@@ -160,40 +141,42 @@ public class InvokeInterpreter extends Interpreter {
 			StackFrame caller = blockstack.peek();
 			linenumber = symboltable.getCatchPos(caller.getBlock());
 			caller.setLine(linenumber);
-			return;
 		}
+		
+		
 	}
 
 
 
-
+	/**
+	 * Invokes either the function or the Whiley runtime function.
+	 * @param code
+	 * @param stackframe
+	 */
 	public void interpret(Codes.Invoke code, StackFrame stackframe) {
 		
 		//Find the right block
 		Block blk = Interpreter.getFuncBlockByName(code.name.toString(), code.type());
+		// Create a list of parameters.
+		List<Constant> params = new ArrayList<Constant>();				
+		for (int operand: code.operands()) {
+			params.add(stackframe.getRegister(operand));
+		}
 		
-		if (blk != null){
-			//Get the depth
-			int depth = stackframe.getDepth();
-			//Create a new StackFrame
-			StackFrame newStackFrame = new StackFrame(depth+1, blk, 0,	code.name.name(), code.target());
-		
-			//Pass the input parameters.
-			int index = 0;		
-			String str="";
-			for(int operand: code.operands()){
-				Constant constant = stackframe.getRegister(operand);
-				newStackFrame.setRegister(index, constant);
-				str += "%"+operand+"("+constant+")";
-				index++;
-			}
-		
+		if (blk != null){			
+			StackFrame newStackFrame = Utility.invokeFunction(blk,
+															  stackframe.getDepth(),
+															  code.name.name(),
+															  params,
+															  code.target());
 			//Push the function block to the stack		
 			blockstack.push(newStackFrame);
-			printMessage(stackframe, code.toString(),str);
+			printMessage(stackframe, code.toString(),"");
 		}else{
-			invokeRuntimeFunction(code, stackframe);
-		}		
+			invokeRuntimeFunction(code, stackframe, params);
+		}
+		
+		params = null;
 	}
 
 }

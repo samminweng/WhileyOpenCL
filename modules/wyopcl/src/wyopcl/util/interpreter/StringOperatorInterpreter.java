@@ -2,7 +2,6 @@ package wyopcl.util.interpreter;
 
 import static wycc.lang.SyntaxError.internalFailure;
 import wyil.lang.Codes;
-import wyil.lang.Codes.StringOperator;
 import wyil.lang.Constant;
 import wyopcl.util.Interpreter;
 import wyopcl.util.StackFrame;
@@ -42,31 +41,32 @@ public class StringOperatorInterpreter extends Interpreter {
 			break;
 		case LEFT_APPEND:
 			if(right instanceof Constant.Char){
-				char c = ((Constant.Char)right).value;
-				return Constant.V_STRING(left.value + c);
+				return Constant.V_STRING(left.value + ((Constant.Char)right).value);
 			}
 			break;
 		case RIGHT_APPEND:
 			if(right instanceof Constant.Char){
-				char c = ((Constant.Char)right).value;
-				return Constant.V_STRING(c + left.value);
+				return Constant.V_STRING(((Constant.Char)right).value + left.value);
 			}
 		default:
 			break;
-
 		}
 		internalFailure("Not implemented!", "InterpreterStringOperator.java", null);
 		return null;
 	}
 
-
-
+	/**
+	 * Appends a string or char to the existing string.
+	 * @param code
+	 * @param stackframe
+	 */
 	public void interpret(Codes.StringOperator code, StackFrame stackframe) {		
 		int linenumber = stackframe.getLine();
 		//Read two string from the operands
-		Constant.Strung left = (Constant.Strung)stackframe.getRegister(code.operand(0));
-		Constant right = stackframe.getRegister(code.operand(1));
-		Constant.Strung result = performStringOperation(code.kind, left, right);
+		Constant.Strung result =
+				performStringOperation(code.kind,
+				 					   (Constant.Strung)stackframe.getRegister(code.operand(0)),
+									   stackframe.getRegister(code.operand(1)));
 		//Write the result to the target register.
 		stackframe.setRegister(code.target(), result);
 		printMessage(stackframe, code.toString(),"%"+code.target()+"("+result+")");
