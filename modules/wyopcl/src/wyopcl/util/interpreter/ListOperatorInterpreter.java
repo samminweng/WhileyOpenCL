@@ -29,25 +29,20 @@ public class ListOperatorInterpreter extends Interpreter{
 		return instance;
 	}
 	/**
-	 * Check if a Constant.List is empty
+	 * Recursively check if a Constant.List contains any element.
 	 * @param list
 	 * @param type
-	 * @return
+	 * @return false if the list contains elements. Return true if the list has no elements.
 	 */
-	private boolean checkEmpty(Constant.List list, Type type){
-		
-		if(type instanceof Type.List){
-			Iterator<Constant> iterator = list.values.iterator();
-			while(iterator.hasNext()){
-				Constant.List elem = (List) iterator.next();
-				if(!elem.values.isEmpty()){
-					return false;
-				}
+	private boolean checkEmpty(Constant.List list){
+		for(Constant elem: list.values){				
+			if(elem instanceof Constant.List){
+				return checkEmpty((Constant.List)elem);
 			}
-		}else{
-			if(!list.values.isEmpty()){
-				return false;
-			}
+		}
+			
+		if(!list.values.isEmpty()){
+			return false;
 		}
 		
 		return true;
@@ -66,9 +61,9 @@ public class ListOperatorInterpreter extends Interpreter{
 		case APPEND:
 			//Create a new array list to append the left and right list.
 			ArrayList<Constant> values = new ArrayList<Constant>();
-			Type elementType = code.type().element();
+			//Type elementType = code.type().element();
 			//Check the left is empty. If so, then do not add to the new list.
-			if(!checkEmpty(left, elementType)){
+			if(!checkEmpty(left)){
 				values.addAll(left.values);
 			}			
 			values.addAll(right.values);			
