@@ -1,8 +1,8 @@
-package wyopcl.bound.constraint;
+package wyopcl.translator.bound.constraint;
 
 import java.math.BigInteger;
 
-import wyopcl.bound.Bounds;
+import wyopcl.translator.bound.Bounds;
 /**
  * Implements the propagation rule for the constraint 'x := y' which set both lower and upper bounds. 
  * @author Min-Hsien Weng

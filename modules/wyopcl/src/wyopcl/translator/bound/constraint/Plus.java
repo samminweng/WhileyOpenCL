@@ -1,10 +1,11 @@
-package wyopcl.bound.constraint;
+package wyopcl.translator.bound.constraint;
 
 import static wycc.lang.SyntaxError.internalFailure;
+
 import java.math.BigInteger;
 
-import wyopcl.bound.Bounds;
-import wyopcl.bound.Domain;
+import wyopcl.translator.bound.Bounds;
+import wyopcl.translator.bound.Domain;
 
 /**
  * Implements the propagation rule for the primitive constraint (e.g. x = y +

@@ -1,4 +1,4 @@
-package wyopcl.testing.bound;
+package wyopcl.testing.translator;
 
 import static org.junit.Assert.*;
 
@@ -8,19 +8,20 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import wyopcl.bound.BasicBlock;
-import wyopcl.bound.BasicBlock.BlockType;
-import wyopcl.bound.Bounds;
 //import wyopcl.bound.ConstraintList;
-import wyopcl.bound.Domain;
-import wyopcl.bound.constraint.Const;
-import wyopcl.bound.constraint.Equals;
-import wyopcl.bound.constraint.LeftPlus;
-import wyopcl.bound.constraint.LessThan;
-import wyopcl.bound.constraint.LessThanEquals;
-import wyopcl.bound.constraint.Negate;
-import wyopcl.bound.constraint.Plus;
+
 import wyopcl.testing.interpreter.BaseTestUtil;
+import wyopcl.translator.bound.BasicBlock;
+import wyopcl.translator.bound.Bounds;
+import wyopcl.translator.bound.Domain;
+import wyopcl.translator.bound.BasicBlock.BlockType;
+import wyopcl.translator.bound.constraint.Const;
+import wyopcl.translator.bound.constraint.Equals;
+import wyopcl.translator.bound.constraint.LeftPlus;
+import wyopcl.translator.bound.constraint.LessThan;
+import wyopcl.translator.bound.constraint.LessThanEquals;
+import wyopcl.translator.bound.constraint.Negate;
+import wyopcl.translator.bound.constraint.Plus;
 
 public class BoundTestCase {
 

@@ -1,4 +1,4 @@
-package wyopcl.bound;
+package wyopcl.translator.bound;
 
 
 import static wycc.lang.SyntaxError.internalFailure;
@@ -26,20 +26,21 @@ import wyil.lang.WyilFile;
 import wyil.lang.Type.Tuple;
 import wyil.lang.WyilFile.Case;
 import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
-import wyopcl.bound.BasicBlock.BlockType;
-import wyopcl.bound.constraint.Assign;
-import wyopcl.bound.constraint.Const;
-import wyopcl.bound.constraint.Constraint;
-import wyopcl.bound.constraint.Equals;
-import wyopcl.bound.constraint.GreaterThan;
-import wyopcl.bound.constraint.GreaterThanEquals;
-import wyopcl.bound.constraint.LeftPlus;
-import wyopcl.bound.constraint.LessThan;
-import wyopcl.bound.constraint.LessThanEquals;
-import wyopcl.bound.constraint.Negate;
-import wyopcl.bound.constraint.Plus;
-import wyopcl.bound.constraint.Range;
-import wyopcl.bound.constraint.Union;
+import wyopcl.translator.Configuration;
+import wyopcl.translator.bound.BasicBlock.BlockType;
+import wyopcl.translator.bound.constraint.Assign;
+import wyopcl.translator.bound.constraint.Const;
+import wyopcl.translator.bound.constraint.Constraint;
+import wyopcl.translator.bound.constraint.Equals;
+import wyopcl.translator.bound.constraint.GreaterThan;
+import wyopcl.translator.bound.constraint.GreaterThanEquals;
+import wyopcl.translator.bound.constraint.LeftPlus;
+import wyopcl.translator.bound.constraint.LessThan;
+import wyopcl.translator.bound.constraint.LessThanEquals;
+import wyopcl.translator.bound.constraint.Negate;
+import wyopcl.translator.bound.constraint.Plus;
+import wyopcl.translator.bound.constraint.Range;
+import wyopcl.translator.bound.constraint.Union;
 /***
  * A class to store all the constraints produced in the wyil file and infer the bounds consistent
  * with all the constraints. Due to the singleton design pattern, the class variables 'constraintListMap'
@@ -49,7 +50,7 @@ import wyopcl.bound.constraint.Union;
  *
  */
 public class Analyzer {
-	private final AnalyzerConfiguration config;
+	private final Configuration config;
 	private final FunctionOrMethodDeclaration functionOrMethod;
 	private final WyilFile module;
 	//The boolean flag is used to show whether the code is inside an assertion or assumption.	
@@ -90,7 +91,7 @@ public class Analyzer {
 
 	private boolean isGoto = false;
 
-	public Analyzer(int depth, AnalyzerConfiguration config,
+	public Analyzer(int depth, Configuration config,
 			FunctionOrMethodDeclaration functionOrMethod, WyilFile module){
 		this.depth = depth;
 		this.config = config;

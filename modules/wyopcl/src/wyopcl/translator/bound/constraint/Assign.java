@@ -1,8 +1,8 @@
-package wyopcl.bound.constraint;
+package wyopcl.translator.bound.constraint;
 
 import java.math.BigInteger;
 
-import wyopcl.bound.Bounds;
+import wyopcl.translator.bound.Bounds;
 
 /**
  * Propagates the bounds for the constraint 'x:=y'.

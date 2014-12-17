@@ -1,6 +1,6 @@
-package wyopcl.bound.constraint;
+package wyopcl.translator.bound.constraint;
 
-import wyopcl.bound.Bounds;
+import wyopcl.translator.bound.Bounds;
 
 /**
  * An interface of primitive constraints.

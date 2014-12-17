@@ -1,4 +1,4 @@
-package wyopcl.bound;
+package wyopcl.translator.bound;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
-import wyopcl.bound.constraint.Constraint;
+import wyopcl.translator.bound.constraint.Constraint;
 /**
  * The basic block for building the control flow graph (CFG).
  * @author Min-Hsien Weng

@@ -1,4 +1,4 @@
-package wyopcl.bound;
+package wyopcl.translator.bound;
 
 import java.math.BigInteger;
 import java.util.Comparator;
