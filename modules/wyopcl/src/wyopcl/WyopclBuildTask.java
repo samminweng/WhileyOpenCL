@@ -1,6 +1,5 @@
 package wyopcl;
 
-import static wycc.lang.SyntaxError.internalFailure;
 import wybs.lang.Builder;
 import wybs.util.StdBuildRule;
 import wybs.util.StdProject;
@@ -42,19 +41,26 @@ public class WyopclBuildTask extends wyc.util.WycBuildTask {
 			switch(mode){
 				case "naive":
 					config.setProperty("widen", WidenStrategy.NAIVE);
+					config.setProperty("mode", Mode.BoundAnalysis);
 					break;
 				case "gradual":
 					config.setProperty("widen", WidenStrategy.GRADUAL);
+					config.setProperty("mode", Mode.BoundAnalysis);
 					break;
+				case "code":
+					config.setProperty("mode", Mode.CodeGeneration);
+					break;
+				default:
+					throw new RuntimeException("Unknown Mode");
 			}				
-			config.setProperty("mode", Mode.BoundAnalysis);
 			
 			if (verbose) {
 				config.setProperty("logger", new Logger.Default(System.err));
 				config.setProperty("verbose", true);
 			}			
 			config.setProperty("argument", arguments);			
-			builder = new Translator(config);			
+			builder = new Translator(config);
+						
 		}else{
 			// Now, add build rule for interpreting the wyil files by using
 			// the WyilInterpreter.
@@ -66,6 +72,9 @@ public class WyopclBuildTask extends wyc.util.WycBuildTask {
 			config.setProperty("arguments", this.arguments);
 			builder = new Interpreter(config);
 		}
+		
+	
+		
 
 		project.add(new StdBuildRule(builder, wyilDir, wyilIncludes,
 				wyilExcludes, null));

@@ -11,14 +11,12 @@ import wycc.util.Pair;
 import wyfs.lang.Path;
 import wyfs.lang.Path.Entry;
 import wyfs.lang.Path.Root;
-import wyil.lang.Code;
-import wyil.lang.Codes;
 import wyil.lang.WyilFile;
-import wyopcl.translator.Configuration.Mode;
 import wyopcl.translator.bound.Analyzer;
 import wyopcl.translator.generator.CodeGenerator;
 /**
- * Main entry point
+ * Main entry point of translator
+ * 
  * @author Min-Hsien Weng
  *
  */
@@ -42,6 +40,7 @@ public class Translator implements Builder{
 		HashSet<Path.Entry<?>> generatedFiles = new HashSet<Path.Entry<?>>();
 		for(Pair<Path.Entry<?>,Path.Root> p : delta) {
 			//Path.Root dst = p.second();
+			@SuppressWarnings("unchecked")
 			Path.Entry<WyilFile> sf = (Path.Entry<WyilFile>) p.first();
 			WyilFile module = sf.read();
 			config.setProperty("filename", module.filename().split(".whiley")[0]);				
@@ -51,6 +50,7 @@ public class Translator implements Builder{
 					analyzeFunctionCall(module);
 					break;
 				case CodeGeneration:
+					generateCodeInC(module);
 					break;
 			default:
 				break;
@@ -71,6 +71,7 @@ public class Translator implements Builder{
 	 * Takes the in-memory wyil file and analyzes the variable ranges for each function.
 	 * @param module
 	 */
+	@SuppressWarnings("unused")
 	private void analyze(WyilFile module){
 		for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {			
 			Analyzer analyzer = new Analyzer(0, config, functionOrMethod, module);			
@@ -95,18 +96,17 @@ public class Translator implements Builder{
 		analyzer = null;
 	}
 	
-	
-	private void generate(WyilFile module){
+	/**
+	 * Reads the in-memory WyIL file and generates the code in C
+	 * @param module
+	 */
+	private void generateCodeInC(WyilFile module){
 		for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {			
 			CodeGenerator generator = new CodeGenerator(config);			
-						
+			generator.iterateByteCode(functionOrMethod);			
 			//Infer and print the final bounds.
 			generator = null;
 		}
-	}
-	
-	
-	
-	
+	}	
 
 }

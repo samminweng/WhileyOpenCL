@@ -19,7 +19,7 @@ public class WyopclMain extends WycMain{
 		new OptArg("range", null, OptArg.STRING, "Run bound analysis on whiley program with a specific widening strategy:\n"
 												 + "\t\t\t   [naive]\tWidening the bounds to infinity.\n"
 												 + "\t\t\t   [gradual]\tWidening the bounds to Int16, Int32, Int64 and infinity."),
-		new OptArg("code", null, OptArg.STRING, "Generate the code in C for the whiley program\n")
+		new OptArg("code", "Generate the code in C for the whiley program\n")
 	};
 	
 	public static OptArg[] DEFAULT_OPTIONS;
@@ -46,10 +46,13 @@ public class WyopclMain extends WycMain{
 		super.configure(values);
 		verbose = values.containsKey("verbose");
 		builder.setVerbose(verbose);
+		//Get the code option
+		if(values.containsKey("code")){
+			((WyopclBuildTask) builder).setMode("code");
+		}		
 		//Get the range or code option
-		if(values.containsKey("range") || values.containsKey("code")){
-			String mode = (String)values.get("range")!=null? (String)values.get("range") :  (String)values.get("code");
-			((WyopclBuildTask) builder).setMode(mode);			
+		if(values.containsKey("range")){
+			((WyopclBuildTask) builder).setMode((String)values.get("range"));			
 		}		
 	}
 	
