@@ -101,12 +101,12 @@ public class Translator implements Builder{
 	 * @param module
 	 */
 	private void generateCodeInC(WyilFile module){
-		for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {			
-			CodeGenerator generator = new CodeGenerator(config);			
-			generator.iterateByteCode(functionOrMethod);			
-			//Infer and print the final bounds.
-			generator = null;
+		CodeGenerator generator = new CodeGenerator(config);	
+		for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {
+			generator.iterateByteCode(functionOrMethod);	
+			//Infer and print the final bounds.	
 		}
+		generator = null;
 	}	
 
 }

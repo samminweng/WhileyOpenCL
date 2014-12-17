@@ -8,8 +8,11 @@ import wycc.lang.SyntaxError;
 import wyil.lang.Code;
 import wyil.lang.Code.Block;
 import wyil.lang.Codes;
+import wyil.lang.Type;
+import wyil.lang.Type.FunctionOrMethod;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.Case;
+import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
 import wyopcl.translator.Configuration;
 /**
  * Converts the WyIL code into C code.
@@ -34,19 +37,78 @@ public class CodeGenerator{
 		if(code instanceof Codes.Label){
 			System.out.println(name+"."+line+" ["+code+"]");
 		}else{
-			//System.out.println(font_color_start+name+"."+line+"."+depth+" [\t"+code+"]"+font_color_end);
 			System.out.println(name+"."+line+" [\t"+code+"]");
-		}	
-
+		}
 		return ++line;
 	}
+	
+	/**
+	 * Translate the WyIL type into the type in C.
+	 * @param type the WyIL type
+	 * @return the result string
+	 */
+	private String translate(Type type){
+		if(type instanceof Type.Int || type instanceof Type.Bool){
+			return "int";
+		}
+		
+		if(type instanceof Type.List){
+			Type.List listType = (Type.List)type;
+			return translate(listType.element())+"*";
+		}		
+		
+		return null;
+		
+	}
+	
+	
+
+	/**
+	 * Translates the function or method declaration (e.g. <code>int* play(int* _0, int size){</code>)
+	 * @param functionOrMethod
+	 */
+	private void translate(FunctionOrMethodDeclaration functionOrMethod){
+		String str = "";
+		//Get the return type
+		FunctionOrMethod type = functionOrMethod.type();
+		Type ret = type.ret();
+		str += translate(ret)+" ";
+		//Get the name
+		str += functionOrMethod.name();
+		//Get the input parameters
+		str += "(";
+		int var = 0;
+		boolean isfirst = true;
+		for(Type param :type.params()){
+			if(isfirst){
+				str += translate(param);
+			}else{
+				str += ", " + translate(param);
+			}
+			//Add the variable names
+			str += " _"+var;			
+			//Add the extra 'size' param for the 'list' type
+			if(param instanceof Type.List){
+				str +=", int size";
+			}			
+			isfirst = false;
+			var++;
+		}
+		str += "){";
+		list.add(str);
+	}
+	
 	
 	/**
 	 * Iterate each bytecode of a function block.
 	 * @param functionOrMethod the function block
 	 */
-	public void iterateByteCode(WyilFile.FunctionOrMethodDeclaration functionOrMethod){
+	public void iterateByteCode(FunctionOrMethodDeclaration functionOrMethod){
+		//generate the function declaration.
+		translate(functionOrMethod);		
 		for(Case mcase : functionOrMethod.cases()){
+			
+			
 			int line = 0;
 			//Parse each byte-code and add the constraints accordingly.
 			for(Block.Entry entry :mcase.body()){
@@ -64,7 +126,7 @@ public class CodeGenerator{
 	 * Generates the code for <code>Codes.Const</code> code.
 	 * @param code
 	 */
-	private void generate(Codes.Const code){
+	private void translate(Codes.Const code){
 		String str = code.target()+ "="+ code.constant;
 		list.add(str);
 	}
@@ -91,7 +153,7 @@ public class CodeGenerator{
 			} else if (code instanceof Codes.Convert) {			
 				//ConvertInterpreter.getInstance().interpret((Codes.Convert)code, stackframe);
 			} else if (code instanceof Codes.Const) {			
-				generate((Codes.Const)code);
+				translate((Codes.Const)code);
 			} else if (code instanceof Codes.Debug) {
 				//DebugInterpreter.getInstance().interpret((Codes.Debug)code, stackframe);
 			} else if (code instanceof Codes.Dereference) {
