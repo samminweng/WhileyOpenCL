@@ -3,6 +3,7 @@ package wyopcl.translator.generator;
 import static wycc.lang.SyntaxError.internalFailure;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import wycc.lang.SyntaxError;
 import wyil.lang.Code;
@@ -21,10 +22,18 @@ import wyopcl.translator.Configuration;
  */
 public class CodeGenerator{
 	private final Configuration config;
-	private ArrayList<String> list;
+	private final String prefix = "_";
+	private String function_del;
+	private HashMap<String, String> vars;
+	private ArrayList<Integer> params;
+	private ArrayList<String> statements;
+	private String loop_condition;
+	private String indent="";
 	public CodeGenerator(Configuration config){
 		this.config = config;
-		this.list = new ArrayList<String>();
+		this.vars = new HashMap<String, String>();
+		this.params = new ArrayList<Integer>();
+		this.statements = new ArrayList<String>();
 	}
 	
 	/**
@@ -67,7 +76,7 @@ public class CodeGenerator{
 	 * Translates the function or method declaration (e.g. <code>int* play(int* _0, int size){</code>)
 	 * @param functionOrMethod
 	 */
-	private void translate(FunctionOrMethodDeclaration functionOrMethod){
+	private String translate(FunctionOrMethodDeclaration functionOrMethod){
 		String str = "";
 		//Get the return type
 		FunctionOrMethod type = functionOrMethod.type();
@@ -85,8 +94,10 @@ public class CodeGenerator{
 			}else{
 				str += ", " + translate(param);
 			}
+			//Put the input params into the lookup list.
+			params.add(var);
 			//Add the variable names
-			str += " _"+var;			
+			str += " "+prefix+var;			
 			//Add the extra 'size' param for the 'list' type
 			if(param instanceof Type.List){
 				str +=", int size";
@@ -95,7 +106,8 @@ public class CodeGenerator{
 			var++;
 		}
 		str += "){";
-		list.add(str);
+		System.out.println(str);
+		return str;
 	}
 	
 	
@@ -105,10 +117,8 @@ public class CodeGenerator{
 	 */
 	public void iterateByteCode(FunctionOrMethodDeclaration functionOrMethod){
 		//generate the function declaration.
-		translate(functionOrMethod);		
-		for(Case mcase : functionOrMethod.cases()){
-			
-			
+		function_del = translate(functionOrMethod);		
+		for(Case mcase : functionOrMethod.cases()){			
 			int line = 0;
 			//Parse each byte-code and add the constraints accordingly.
 			for(Block.Entry entry :mcase.body()){
@@ -127,8 +137,208 @@ public class CodeGenerator{
 	 * @param code
 	 */
 	private void translate(Codes.Const code){
-		String str = code.target()+ "="+ code.constant;
-		list.add(str);
+		//Declare the variables
+		vars.put(prefix+code.target(), translate(code.assignedType()));		
+		String str = indent + prefix+code.target()+ " = "+ code.constant + ";";
+		statements.add(str);
+		System.out.println(str);
+	}
+	
+	/**
+	 * Generates the code for <code>Codes.Assign</code> code.
+	 * @param code
+	 */
+	private void translate(Codes.Assign code){
+		vars.put(prefix+code.target(), translate(code.type()));//Var
+		String str = indent + prefix+code.target()+ " = "+ prefix+code.operand(0) + ";";
+		statements.add(str);
+		System.out.println(str);
+	}
+	
+	/**
+	 * Generates the C code <code>Codes.Length</code> code.
+	 * 
+	 * @param code
+	 */
+	private void translate(Codes.LengthOf code){
+		vars.put(prefix+code.target(), "int");
+		String str = indent + prefix+code.target() + " = size;";
+		statements.add(str);
+		System.out.println(str);
+	}
+	
+	/**
+	 * Generates the code for <code>Codes.BinaryOperator</code>
+	 * @param code
+	 */
+	private void translate(Codes.BinaryOperator code){
+		Type type = code.type();
+		String str="";
+		switch(code.kind){
+		case ADD:
+			break;
+		case SUB:
+			break;
+		case MUL:
+			break;
+		case DIV:
+			break;
+		case REM:
+			break;
+		case RANGE:
+			vars.put(prefix+code.target(), translate(type));			
+			//expression = "range "+ prefix+code.target() + "="+prefix+code.operand(0)+","+prefix+code.operand(1);
+			
+			loop_condition = prefix+code.target()+"="+prefix+code.operand(0)+";"
+					   +prefix+code.target()+"<"+prefix+code.operand(1)+";"
+					   +prefix+code.target()+"++";			
+			break;
+		case BITWISEOR:
+			break;
+		case BITWISEXOR:
+			break;
+		case BITWISEAND:
+			break;
+		case LEFTSHIFT:
+			break;
+		case RIGHTSHIFT:
+			break;
+		}
+	}
+	
+	/**
+	 * Generates the code for <code>Codes.ForAll</code> code
+	 * @param code
+	 */
+	private void translate(Codes.ForAll code){
+		String str = "";
+		if(loop_condition != null){
+			str += indent + "for("+loop_condition+"){";
+			statements.add(str);
+			System.out.println(str);
+			//Add the indentation
+			indent += "\t";			
+			//The expression for element
+			vars.put(prefix+code.indexOperand, translate(code.type.element()));
+			str = indent + prefix + code.indexOperand + "=" + prefix + code.modifiedOperands[0]+"["+ prefix +code.sourceOperand+"];";
+			statements.add(str);
+			System.out.println(str);
+			loop_condition = null;
+		}
+	}
+	
+	
+	/**
+	 * Generates the code for <code>Codes.Invoke</code> code
+	 * @param code
+	 */
+	private void translate(Codes.Invoke code){
+		String str = indent;
+		String ret = prefix+code.target();
+		vars.put(ret, translate(code.type().ret()));
+		str += ret+ "="+code.name.name()+"(";
+		//Input parameters
+		boolean isFirst = true;
+		int index =0;
+		for(int operand: code.operands()){
+			if(isFirst){
+				str+= prefix+operand;
+			}else{
+				str+= " ,"+prefix+operand;
+			}
+			//Add the 'size' parameter 
+			if(code.type().params().get(index) instanceof Type.List){
+				str += " , size";
+			}
+			isFirst = false;
+			index++;
+		}
+		str += ");";
+		statements.add(str);
+		System.out.println(str);
+	}
+	
+	/**
+	 * Generates the code for <code>Codes.If</code> code
+	 * @param code
+	 */
+	private void translate(Codes.If code){
+		String str = indent;
+		String left = prefix+code.leftOperand;
+		String right = prefix+code.rightOperand;
+		str += "if("+left;
+		//The condition
+		switch(code.op){
+		case EQ:
+			str+="==";
+			break;
+		case NEQ:
+			str+="!=";
+			break;
+		case LT:
+			str+="<";
+			break;
+		case LTEQ:
+			str+="<=";
+			break;
+		case GT:
+			str+=">";
+			break;
+		case GTEQ:
+			str+=">=";
+			break;
+		case IN:
+			break;
+		case SUBSET:
+			break;
+		case SUBSETEQ:
+			break;
+		}
+		str += right;
+		str +="){";
+		str += "goto "+code.target+";";
+		str +="}";
+		statements.add(str);
+		System.out.println(str);
+	}
+	
+	private void translate(Codes.AssertOrAssume code){
+		String str = indent;		
+	}
+	
+	
+	private void translate(Codes.Goto code){
+		String str = indent;
+		str += "goto "+code.target+";";
+		statements.add(str);
+		System.out.println(str);
+	}
+	
+	
+	private void translate(Codes.Label code){
+		String str = code.label+":";
+		statements.add(str);
+		System.out.println(str);	
+	}
+	
+	private void translate(Codes.Fail code){
+		String str = indent+"perror(\""+code+"\");";
+		statements.add(str);
+		System.out.println(str);
+	}
+	
+	private void translate(Codes.Update code){
+		String str = indent;
+		//For List type only
+		if(code.type() instanceof Type.List){
+			str += code.result();
+			
+			
+			statements.add(str);
+			System.out.println(str);
+		}
+		
+		
 	}
 	
 	
@@ -142,12 +352,11 @@ public class CodeGenerator{
 		try{
 			//enable the assertion 
 			if (code instanceof Codes.AssertOrAssume) {
-				//Create an assertion or assumption blk.
-				//analyze((Codes.AssertOrAssume)code);
+				translate((Codes.AssertOrAssume)code);
 			}else if (code instanceof Codes.Assign) {			
-				//analyze((Codes.Assign)code);
+				translate((Codes.Assign)code);
 			} else if (code instanceof Codes.BinaryOperator) {			
-				//analyze((Codes.BinaryOperator)code);
+				translate((Codes.BinaryOperator)code);
 			} else if (code instanceof Codes.StringOperator) {
 				//StringOperatorInterpreter.getInstance().interpret((Codes.StringOperator)code, stackframe);
 			} else if (code instanceof Codes.Convert) {			
@@ -159,15 +368,15 @@ public class CodeGenerator{
 			} else if (code instanceof Codes.Dereference) {
 				//DereferenceInterpreter.getInstance().interpret((Codes.Dereference)code, stackframe);
 			} else if (code instanceof Codes.Fail) {
-				//FailInterpreter.getInstance().interpret((Codes.Fail)code, stackframe);
+				translate((Codes.Fail)code);
 			} else if (code instanceof Codes.FieldLoad) {		
 				//FieldLoadInterpreter.getInstance().interpret((Codes.FieldLoad)code, stackframe);			
 			} else if (code instanceof Codes.ForAll) {				
-				//analyze((Codes.ForAll)code);
+				translate((Codes.ForAll)code);
 			} else if (code instanceof Codes.Goto) {	
-				//analyze((Codes.Goto)code);
+				translate((Codes.Goto)code);
 			} else if (code instanceof Codes.If) {
-				//analyze((Codes.If)code);			
+				translate((Codes.If)code);			
 			} else if (code instanceof Codes.IfIs) {
 				//IfIsInterpreter.getInstance().interpret((Codes.IfIs)code, stackframe);
 			} else if (code instanceof Codes.IndexOf) {			
@@ -175,7 +384,7 @@ public class CodeGenerator{
 			} else if (code instanceof Codes.IndirectInvoke) {			
 				//IndirectInvokeInterpreter.getInstance().interpret((Codes.IndirectInvoke)code, stackframe);
 			} else if (code instanceof Codes.Invoke) {			
-				//analyze((Codes.Invoke)code);
+				translate((Codes.Invoke)code);
 			} else if (code instanceof Codes.Invert) {
 				//InvertInterpreter.getInstance().interpret((Codes.Invert)code, stackframe);
 			} else if (code instanceof Codes.ListOperator) {
@@ -185,11 +394,11 @@ public class CodeGenerator{
 			} else if (code instanceof Codes.LoopEnd) {
 				//analyze((Codes.LoopEnd)code);									
 			} else if (code instanceof Codes.Label) {
-				//analyze((Codes.Label)code);
+				translate((Codes.Label)code);
 			} else if (code instanceof Codes.Lambda) {
 				//LambdaInterpreter.getInstance().interpret((Codes.Lambda)code, stackframe);
 			} else if (code instanceof Codes.LengthOf) {			
-				//analyze((Codes.LengthOf)code);
+				translate((Codes.LengthOf)code);
 			}  else if (code instanceof Codes.Move) {
 				internalFailure("Not implemented!", "", entry);
 			} else if (code instanceof Codes.NewMap) {
@@ -225,7 +434,7 @@ public class CodeGenerator{
 			} else if (code instanceof Codes.UnaryOperator){
 				//analyze((Codes.UnaryOperator)code);
 			} else if (code instanceof Codes.Update) {
-				//analyze((Codes.Update)code);
+				translate((Codes.Update)code);
 			} else {
 				internalFailure("unknown wyil code encountered (" + code + ")", "", entry);
 			}		
