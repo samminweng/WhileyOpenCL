@@ -28,7 +28,7 @@ public class CodeGenerator{
 	private ArrayList<Integer> params;
 	private ArrayList<String> statements;
 	private String loop_condition;
-	private String indent="";
+	private String indent="\t";
 	public CodeGenerator(Configuration config){
 		this.config = config;
 		this.vars = new HashMap<String, String>();
@@ -140,8 +140,8 @@ public class CodeGenerator{
 		//Declare the variables
 		vars.put(prefix+code.target(), translate(code.assignedType()));		
 		String str = indent + prefix+code.target()+ " = "+ code.constant + ";";
-		statements.add(str);
 		System.out.println(str);
+		statements.add(str);		
 	}
 	
 	/**
@@ -151,8 +151,8 @@ public class CodeGenerator{
 	private void translate(Codes.Assign code){
 		vars.put(prefix+code.target(), translate(code.type()));//Var
 		String str = indent + prefix+code.target()+ " = "+ prefix+code.operand(0) + ";";
-		statements.add(str);
 		System.out.println(str);
+		statements.add(str);		
 	}
 	
 	/**
@@ -187,11 +187,9 @@ public class CodeGenerator{
 			break;
 		case RANGE:
 			vars.put(prefix+code.target(), translate(type));			
-			//expression = "range "+ prefix+code.target() + "="+prefix+code.operand(0)+","+prefix+code.operand(1);
-			
 			loop_condition = prefix+code.target()+"="+prefix+code.operand(0)+";"
-					   +prefix+code.target()+"<"+prefix+code.operand(1)+";"
-					   +prefix+code.target()+"++";			
+					   		+prefix+code.target()+"<"+prefix+code.operand(1)+";"
+					   		+prefix+code.target()+"++";			
 			break;
 		case BITWISEOR:
 			break;
@@ -220,9 +218,9 @@ public class CodeGenerator{
 			indent += "\t";			
 			//The expression for element
 			vars.put(prefix+code.indexOperand, translate(code.type.element()));
-			str = indent + prefix + code.indexOperand + "=" + prefix + code.modifiedOperands[0]+"["+ prefix +code.sourceOperand+"];";
-			statements.add(str);
+			str = indent + prefix + code.indexOperand + "=" +prefix +code.sourceOperand+";";
 			System.out.println(str);
+			statements.add(str);			
 			loop_condition = null;
 		}
 	}
@@ -254,8 +252,8 @@ public class CodeGenerator{
 			index++;
 		}
 		str += ");";
-		statements.add(str);
 		System.out.println(str);
+		statements.add(str);		
 	}
 	
 	/**
@@ -298,49 +296,74 @@ public class CodeGenerator{
 		str +="){";
 		str += "goto "+code.target+";";
 		str +="}";
-		statements.add(str);
 		System.out.println(str);
+		statements.add(str);
+		
 	}
 	
 	private void translate(Codes.AssertOrAssume code){
-		String str = indent;		
+		String str = indent+"//"+code;
+		System.out.println(str);
+		statements.add(str);		
 	}
 	
 	
 	private void translate(Codes.Goto code){
 		String str = indent;
 		str += "goto "+code.target+";";
-		statements.add(str);
 		System.out.println(str);
+		statements.add(str);		
 	}
 	
 	
 	private void translate(Codes.Label code){
 		String str = code.label+":";
+		System.out.println(str);
 		statements.add(str);
-		System.out.println(str);	
 	}
 	
 	private void translate(Codes.Fail code){
 		String str = indent+"perror(\""+code+"\");";
-		statements.add(str);
 		System.out.println(str);
+		statements.add(str);
+		
 	}
 	
 	private void translate(Codes.Update code){
 		String str = indent;
 		//For List type only
 		if(code.type() instanceof Type.List){
-			str += code.result();
-			
-			
-			statements.add(str);
+			str += prefix+code.target()+"["+code.operand(0)+"] = "+prefix+code.result()+";";
 			System.out.println(str);
-		}
-		
-		
+			statements.add(str);			
+		}		
 	}
 	
+	private void translate(Codes.Nop code){
+		//Do nothing
+		String str = indent+";//"+code;
+		System.out.println(str);
+		statements.add(str);
+	}
+	
+	private void translate(Codes.LoopEnd code){
+		String str = indent+"}";
+		System.out.println(str);
+		statements.add(str);
+		//decrease the indent
+		indent.replaceFirst("\t", "");
+	}
+	
+	private void translate(Codes.Return code){
+		String str = indent+"return "+prefix+code.operand+";";
+		System.out.println(str);
+		statements.add(str);		
+		//Reset the indent
+		indent = "\t";
+		str = indent+"}";
+		System.out.println(str);
+		statements.add(str);	
+	}
 	
 	/**
 	 * Checks the type of the wyil code and dispatches the code to the analyzer for
@@ -392,7 +415,7 @@ public class CodeGenerator{
 			} else if (code instanceof Codes.Loop) {			
 				//analyze((Codes.Loop)code);			
 			} else if (code instanceof Codes.LoopEnd) {
-				//analyze((Codes.LoopEnd)code);									
+				translate((Codes.LoopEnd)code);									
 			} else if (code instanceof Codes.Label) {
 				translate((Codes.Label)code);
 			} else if (code instanceof Codes.Lambda) {
@@ -412,11 +435,11 @@ public class CodeGenerator{
 			} else if (code instanceof Codes.NewTuple) {
 				//analyze((Codes.NewTuple)code);
 			} else if (code instanceof Codes.Return) {			
-				//analyze((Codes.Return)code);
+				translate((Codes.Return)code);
 			} else if (code instanceof Codes.NewObject) {
 				//NewObjectInterpreter.getInstance().interpret((Codes.NewObject)code, stackframe);
 			} else if (code instanceof Codes.Nop) {
-				//NopInterpreter.getInstance().interpret((Codes.Nop)code, stackframe);
+				translate((Codes.Nop)code);
 			} else if (code instanceof Codes.SetOperator){
 				//SetOperatorInterpreter.getInstance().interpret((Codes.SetOperator)code, stackframe);
 			} else if (code instanceof Codes.SubList) {
