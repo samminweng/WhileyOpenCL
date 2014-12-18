@@ -36,7 +36,7 @@ public class CodeGenerator{
 		this.params = new ArrayList<Integer>();
 		this.statements = new ArrayList<String>();
 	}
-	
+
 	/**
 	 * Prints out each bytecode with the line number and the correct indentation.
 	 * @param name
@@ -51,7 +51,7 @@ public class CodeGenerator{
 		}
 		return ++line;
 	}
-	
+
 	/**
 	 * Translate the WyIL type into the type in C.
 	 * @param type the WyIL type
@@ -61,17 +61,17 @@ public class CodeGenerator{
 		if(type instanceof Type.Int || type instanceof Type.Bool){
 			return "int";
 		}
-		
+
 		if(type instanceof Type.List){
 			Type.List listType = (Type.List)type;
 			return translate(listType.element())+"*";
 		}		
-		
+
 		return null;
-		
+
 	}
-	
-	
+
+
 
 	/**
 	 * Translates the function or method declaration (e.g. <code>int* play(int* _0, int size){</code>)
@@ -112,7 +112,7 @@ public class CodeGenerator{
 		}
 		return str;
 	}
-	
+
 	private void printoutCode(){
 		//function declaration
 		System.out.println(function_del);
@@ -128,9 +128,9 @@ public class CodeGenerator{
 		//Clear statements
 		statements.clear();
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Iterate each bytecode of a function block.
 	 * @param functionOrMethod the function block
@@ -148,11 +148,19 @@ public class CodeGenerator{
 				}				
 				dispatch(entry);				
 			}
-		}		
+		}
+		//Reset the indent
+		indent = "\t";
+		String str = "}";
+		if(config.isVerbose()){
+			System.out.println(str);
+		}
+		statements.add(str);
+
 		printoutCode();
 	}
-	
-	
+
+
 	/**
 	 * Generates the code for <code>Codes.Const</code> code.
 	 * @param code
@@ -166,7 +174,7 @@ public class CodeGenerator{
 		}
 		statements.add(str);		
 	}
-	
+
 	/**
 	 * Generates the code for <code>Codes.Assign</code> code.
 	 * @param code
@@ -179,7 +187,7 @@ public class CodeGenerator{
 		}
 		statements.add(str);		
 	}
-	
+
 	/**
 	 * Generates the C code <code>Codes.Length</code> code.
 	 * 
@@ -193,32 +201,40 @@ public class CodeGenerator{
 		}
 		statements.add(str);
 	}
-	
+
 	/**
 	 * Generates the code for <code>Codes.BinaryOperator</code>
 	 * @param code
 	 */
 	private void translate(Codes.BinaryOperator code){
 		Type type = code.type();
-		String str="";
+		String target = prefix+code.target();
+		String left = prefix+code.operand(0);
+		String right = prefix+code.operand(1);
+		vars.put(target, "int");
+		String str=indent;
+		str+= target+"="+left;
 		switch(code.kind){
-		case ADD:
+		case ADD:			
+			str+= "+";
 			break;
 		case SUB:
+			str+= "-";
 			break;
 		case MUL:
+			str+= "*";
 			break;
 		case DIV:
+			str+= "/";
 			break;
 		case REM:
+			str+= "%";
 			break;
 		case RANGE:
 			//Generate the for-loop condition.
-			vars.put(prefix+code.target(), "int");			
-			loop_condition = prefix+code.target()+"="+prefix+code.operand(0)+";"+
-					   		 prefix+code.target()+"<"+prefix+code.operand(1)+";"+
-					   		 prefix+code.target()+"++";			
-			break;
+			vars.put(target, "int");			
+			loop_condition = target+"="+left+";"+ target+"<"+right+";"+target+"++";			
+			return;
 		case BITWISEOR:
 			break;
 		case BITWISEXOR:
@@ -230,8 +246,14 @@ public class CodeGenerator{
 		case RIGHTSHIFT:
 			break;
 		}
+		
+		str+= right+";";
+		if(config.isVerbose()){
+			System.out.println(str);
+		}
+		statements.add(str);
 	}
-	
+
 	/**
 	 * Generates the code for <code>Codes.ForAll</code> code
 	 * @param code
@@ -256,8 +278,8 @@ public class CodeGenerator{
 			loop_condition = null;
 		}
 	}
-	
-	
+
+
 	/**
 	 * Generates the code for <code>Codes.Invoke</code> code
 	 * @param code
@@ -289,7 +311,7 @@ public class CodeGenerator{
 		}
 		statements.add(str);		
 	}
-	
+
 	/**
 	 * Generates the code for <code>Codes.If</code> code
 	 * @param code
@@ -330,14 +352,14 @@ public class CodeGenerator{
 		str +="){";
 		str += "goto "+code.target+";";
 		str +="}";
-		
+
 		if(config.isVerbose()){
 			System.out.println(str);
 		}
 		statements.add(str);
-		
+
 	}
-	
+
 	private void translate(Codes.AssertOrAssume code){
 		String str = indent+"//"+code;
 		if(config.isVerbose()){
@@ -345,8 +367,8 @@ public class CodeGenerator{
 		}		
 		statements.add(str);		
 	}
-	
-	
+
+
 	private void translate(Codes.Goto code){
 		String str = indent;
 		str += "goto "+code.target+";";
@@ -355,8 +377,8 @@ public class CodeGenerator{
 		}
 		statements.add(str);		
 	}
-	
-	
+
+
 	private void translate(Codes.Label code){
 		String str = code.label+":";
 		if(config.isVerbose()){
@@ -364,7 +386,7 @@ public class CodeGenerator{
 		}
 		statements.add(str);
 	}
-	
+
 	private void translate(Codes.Fail code){
 		String str = indent+"perror(\""+code+"\");";
 		if(config.isVerbose()){
@@ -372,7 +394,7 @@ public class CodeGenerator{
 		}
 		statements.add(str);		
 	}
-	
+
 	private void translate(Codes.Update code){
 		String str = indent;
 		//For List type only
@@ -384,7 +406,7 @@ public class CodeGenerator{
 			statements.add(str);			
 		}		
 	}
-	
+
 	private void translate(Codes.Nop code){
 		//Do nothing
 		String str = indent+";//"+code;
@@ -393,7 +415,7 @@ public class CodeGenerator{
 		}
 		statements.add(str);
 	}
-	
+
 	private void translate(Codes.LoopEnd code){
 		//decrease the indent
 		indent = indent.replaceFirst("\t", "");
@@ -403,22 +425,16 @@ public class CodeGenerator{
 		}
 		statements.add(str);		
 	}
-	
+
 	private void translate(Codes.Return code){
 		String str = indent+"return "+prefix+code.operand+";";
 		if(config.isVerbose()){
 			System.out.println(str);
 		}
 		statements.add(str);		
-		//Reset the indent
-		indent = "\t";
-		str = "}";
-		if(config.isVerbose()){
-			System.out.println(str);
-		}
-		statements.add(str);	
+
 	}
-	
+
 	/**
 	 * Checks the type of the wyil code and dispatches the code to the analyzer for
 	 * being executed by the <code>analyze(code)</code> 
