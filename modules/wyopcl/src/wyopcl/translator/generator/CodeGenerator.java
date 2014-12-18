@@ -4,6 +4,7 @@ import static wycc.lang.SyntaxError.internalFailure;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import wycc.lang.SyntaxError;
 import wyil.lang.Code;
@@ -106,9 +107,28 @@ public class CodeGenerator{
 			var++;
 		}
 		str += "){";
-		System.out.println(str);
+		if(config.isVerbose()){
+			System.out.println(str);
+		}
 		return str;
 	}
+	
+	private void printoutCode(){
+		//function declaration
+		System.out.println(function_del);
+		//Var declaration
+		for(Entry<String, String> var: vars.entrySet()){
+			System.out.println(indent+var.getValue()+" "+var.getKey()+";");
+		}
+		//clear vars
+		vars.clear();
+		for(String stat: statements){
+			System.out.println(stat.toString());
+		}
+		//Clear statements
+		statements.clear();
+	}
+	
 	
 	
 	/**
@@ -128,7 +148,8 @@ public class CodeGenerator{
 				}				
 				dispatch(entry);				
 			}
-		}
+		}		
+		printoutCode();
 	}
 	
 	
@@ -140,7 +161,9 @@ public class CodeGenerator{
 		//Declare the variables
 		vars.put(prefix+code.target(), translate(code.assignedType()));		
 		String str = indent + prefix+code.target()+ " = "+ code.constant + ";";
-		System.out.println(str);
+		if(config.isVerbose()){
+			System.out.println(str);
+		}
 		statements.add(str);		
 	}
 	
@@ -151,7 +174,9 @@ public class CodeGenerator{
 	private void translate(Codes.Assign code){
 		vars.put(prefix+code.target(), translate(code.type()));//Var
 		String str = indent + prefix+code.target()+ " = "+ prefix+code.operand(0) + ";";
-		System.out.println(str);
+		if(config.isVerbose()){
+			System.out.println(str);
+		}
 		statements.add(str);		
 	}
 	
@@ -163,8 +188,10 @@ public class CodeGenerator{
 	private void translate(Codes.LengthOf code){
 		vars.put(prefix+code.target(), "int");
 		String str = indent + prefix+code.target() + " = size;";
+		if(config.isVerbose()){
+			System.out.println(str);
+		}
 		statements.add(str);
-		System.out.println(str);
 	}
 	
 	/**
@@ -186,10 +213,11 @@ public class CodeGenerator{
 		case REM:
 			break;
 		case RANGE:
-			vars.put(prefix+code.target(), translate(type));			
-			loop_condition = prefix+code.target()+"="+prefix+code.operand(0)+";"
-					   		+prefix+code.target()+"<"+prefix+code.operand(1)+";"
-					   		+prefix+code.target()+"++";			
+			//Generate the for-loop condition.
+			vars.put(prefix+code.target(), "int");			
+			loop_condition = prefix+code.target()+"="+prefix+code.operand(0)+";"+
+					   		 prefix+code.target()+"<"+prefix+code.operand(1)+";"+
+					   		 prefix+code.target()+"++";			
 			break;
 		case BITWISEOR:
 			break;
@@ -213,13 +241,17 @@ public class CodeGenerator{
 		if(loop_condition != null){
 			str += indent + "for("+loop_condition+"){";
 			statements.add(str);
-			System.out.println(str);
+			if(config.isVerbose()){
+				System.out.println(str);
+			}
 			//Add the indentation
 			indent += "\t";			
 			//The expression for element
 			vars.put(prefix+code.indexOperand, translate(code.type.element()));
 			str = indent + prefix + code.indexOperand + "=" +prefix +code.sourceOperand+";";
-			System.out.println(str);
+			if(config.isVerbose()){
+				System.out.println(str);
+			}
 			statements.add(str);			
 			loop_condition = null;
 		}
@@ -252,7 +284,9 @@ public class CodeGenerator{
 			index++;
 		}
 		str += ");";
-		System.out.println(str);
+		if(config.isVerbose()){
+			System.out.println(str);
+		}
 		statements.add(str);		
 	}
 	
@@ -296,14 +330,19 @@ public class CodeGenerator{
 		str +="){";
 		str += "goto "+code.target+";";
 		str +="}";
-		System.out.println(str);
+		
+		if(config.isVerbose()){
+			System.out.println(str);
+		}
 		statements.add(str);
 		
 	}
 	
 	private void translate(Codes.AssertOrAssume code){
 		String str = indent+"//"+code;
-		System.out.println(str);
+		if(config.isVerbose()){
+			System.out.println(str);
+		}		
 		statements.add(str);		
 	}
 	
@@ -311,30 +350,37 @@ public class CodeGenerator{
 	private void translate(Codes.Goto code){
 		String str = indent;
 		str += "goto "+code.target+";";
-		System.out.println(str);
+		if(config.isVerbose()){
+			System.out.println(str);
+		}
 		statements.add(str);		
 	}
 	
 	
 	private void translate(Codes.Label code){
 		String str = code.label+":";
-		System.out.println(str);
+		if(config.isVerbose()){
+			System.out.println(str);
+		}
 		statements.add(str);
 	}
 	
 	private void translate(Codes.Fail code){
 		String str = indent+"perror(\""+code+"\");";
-		System.out.println(str);
-		statements.add(str);
-		
+		if(config.isVerbose()){
+			System.out.println(str);
+		}
+		statements.add(str);		
 	}
 	
 	private void translate(Codes.Update code){
 		String str = indent;
 		//For List type only
 		if(code.type() instanceof Type.List){
-			str += prefix+code.target()+"["+code.operand(0)+"] = "+prefix+code.result()+";";
-			System.out.println(str);
+			str += prefix+code.target()+"["+prefix+code.operand(0)+"] = "+prefix+code.result()+";";
+			if(config.isVerbose()){
+				System.out.println(str);
+			}
 			statements.add(str);			
 		}		
 	}
@@ -342,26 +388,34 @@ public class CodeGenerator{
 	private void translate(Codes.Nop code){
 		//Do nothing
 		String str = indent+";//"+code;
-		System.out.println(str);
+		if(config.isVerbose()){
+			System.out.println(str);
+		}
 		statements.add(str);
 	}
 	
 	private void translate(Codes.LoopEnd code){
-		String str = indent+"}";
-		System.out.println(str);
-		statements.add(str);
 		//decrease the indent
-		indent.replaceFirst("\t", "");
+		indent = indent.replaceFirst("\t", "");
+		String str = indent+"}";
+		if(config.isVerbose()){
+			System.out.println(str);
+		}
+		statements.add(str);		
 	}
 	
 	private void translate(Codes.Return code){
 		String str = indent+"return "+prefix+code.operand+";";
-		System.out.println(str);
+		if(config.isVerbose()){
+			System.out.println(str);
+		}
 		statements.add(str);		
 		//Reset the indent
 		indent = "\t";
-		str = indent+"}";
-		System.out.println(str);
+		str = "}";
+		if(config.isVerbose()){
+			System.out.println(str);
+		}
 		statements.add(str);	
 	}
 	
