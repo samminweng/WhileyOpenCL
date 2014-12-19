@@ -1,6 +1,8 @@
 package wyopcl.translator;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -101,12 +103,22 @@ public class Translator implements Builder{
 	 * @param module
 	 */
 	private void generateCodeInC(WyilFile module){
-		CodeGenerator generator = new CodeGenerator(config);	
-		for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {
-			generator.iterateByteCode(functionOrMethod);	
-			//Infer and print the final bounds.	
-		}
-		generator = null;
+		//Create a writer to write the C code to a *.c file.
+		PrintWriter writer;
+		try {
+			writer = new PrintWriter(config.getFilename()+".c");
+			CodeGenerator generator = new CodeGenerator(config);	
+			for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {
+				generator.iterateByteCode(functionOrMethod);	
+				//Write out the code to *.c
+				generator.printoutCode(writer);
+			}
+			generator = null;
+			writer.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 	}	
 
 }

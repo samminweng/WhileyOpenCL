@@ -2,6 +2,7 @@ package wyopcl.translator.generator;
 
 import static wycc.lang.SyntaxError.internalFailure;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -11,6 +12,7 @@ import wyil.lang.Code;
 import wyil.lang.Code.Block;
 import wyil.lang.Codes;
 import wyil.lang.Type;
+import wyil.lang.Type.EffectiveIndexible;
 import wyil.lang.Type.FunctionOrMethod;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.Case;
@@ -67,10 +69,32 @@ public class CodeGenerator{
 			return translate(listType.element())+"*";
 		}		
 
+		if(type instanceof Type.Void){
+			return "void";
+		}
+
+		if(type instanceof Type.Record){			
+			Type.Record record = (Type.Record)type;
+			HashMap<String, Type> fields = record.fields();
+			if(fields.containsKey("args")){
+				return "int argc, char** argv";
+			}
+			return record.toString();
+
+		}
+
+
 		return null;
 
 	}
 
+	private void addStatement(String stat){
+		if(config.isVerbose()){
+			System.out.println(stat);
+		}
+		statements.add(stat);
+	}
+	
 
 
 	/**
@@ -84,28 +108,33 @@ public class CodeGenerator{
 		Type ret = type.ret();
 		str += translate(ret)+" ";
 		//Get the name
-		str += functionOrMethod.name();
-		//Get the input parameters
-		str += "(";
-		int var = 0;
-		boolean isfirst = true;
-		for(Type param :type.params()){
-			if(isfirst){
-				str += translate(param);
-			}else{
-				str += ", " + translate(param);
+		String name = functionOrMethod.name();
+		str += name + "(";
+		//Translate the  input parameters
+		if(name.equals("main")){
+			str += translate(type.params().get(0));
+		}else{
+			int var = 0;
+			boolean isfirst = true;
+			for(Type param :type.params()){
+				if(isfirst){
+					str += translate(param);
+				}else{
+					str += ", " + translate(param);
+				}
+				//Put the input params into the lookup list.
+				params.add(var);
+				//Add the variable names
+				str += " "+prefix+var;			
+				//Add the extra 'size' param for the 'list' type
+				if(param instanceof Type.List){
+					str +=", int size";
+				}			
+				isfirst = false;
+				var++;
 			}
-			//Put the input params into the lookup list.
-			params.add(var);
-			//Add the variable names
-			str += " "+prefix+var;			
-			//Add the extra 'size' param for the 'list' type
-			if(param instanceof Type.List){
-				str +=", int size";
-			}			
-			isfirst = false;
-			var++;
-		}
+		}	
+
 		str += "){";
 		if(config.isVerbose()){
 			System.out.println(str);
@@ -113,22 +142,25 @@ public class CodeGenerator{
 		return str;
 	}
 
-	private void printoutCode(){
+	public void printoutCode(PrintWriter writer){
 		//function declaration
 		System.out.println(function_del);
+		writer.println(function_del);
 		//Var declaration
 		for(Entry<String, String> var: vars.entrySet()){
 			System.out.println(indent+var.getValue()+" "+var.getKey()+";");
+			writer.println(indent+var.getValue()+" "+var.getKey()+";");
+		}
+		//Statments
+		for(String stat: statements){
+			System.out.println(stat.toString());
+			writer.println(stat.toString());
 		}
 		//clear vars
 		vars.clear();
-		for(String stat: statements){
-			System.out.println(stat.toString());
-		}
 		//Clear statements
 		statements.clear();
 	}
-
 
 
 	/**
@@ -156,8 +188,6 @@ public class CodeGenerator{
 			System.out.println(str);
 		}
 		statements.add(str);
-
-		printoutCode();
 	}
 
 
@@ -231,8 +261,7 @@ public class CodeGenerator{
 			str+= "%";
 			break;
 		case RANGE:
-			//Generate the for-loop condition.
-			vars.put(target, "int");			
+			//Generate the for-loop condition.		
 			loop_condition = target+"="+left+";"+ target+"<"+right+";"+target+"++";			
 			return;
 		case BITWISEOR:
@@ -246,7 +275,7 @@ public class CodeGenerator{
 		case RIGHTSHIFT:
 			break;
 		}
-		
+
 		str+= right+";";
 		if(config.isVerbose()){
 			System.out.println(str);
@@ -427,13 +456,53 @@ public class CodeGenerator{
 	}
 
 	private void translate(Codes.Return code){
-		String str = indent+"return "+prefix+code.operand+";";
+		String str = indent;
+		//If operand == -1, then no return value.
+		if(code.operand != -1){
+			str += "return "+prefix+code.operand+";";
+		}else{
+			str += "return;";
+		}		
+
 		if(config.isVerbose()){
 			System.out.println(str);
 		}
 		statements.add(str);		
-
 	}
+
+	private void translate(Codes.IndexOf code){
+		String str = indent;
+		//EffectiveIndexible type = code.type();
+		vars.put(prefix+code.target(), "int");
+		str += prefix+code.target() + "="+prefix+code.operand(0)
+				+"["+prefix+code.operand(1)+"];";
+		if(config.isVerbose()){
+			System.out.println(str);
+		}
+		statements.add(str);		
+	}
+
+
+	private void translate(Codes.NewList code){
+		String stat = indent;
+		String target = prefix+code.target();		
+		//Add 'size' variable
+		vars.put("size", "int");
+		stat = indent+"size="+code.operands().length+";";
+		addStatement(stat);
+		//Allocate the memory for the list
+		vars.put(target, translate(code.type()));
+		stat = indent + target + "=(int*)malloc(size*sizeof(int));";
+		addStatement(stat);		
+		//Initialize the all the elements.
+		int index = 0;
+		for(int operand: code.operands()){
+			stat = indent+target+"["+index+"]="+prefix+operand+";";
+			addStatement(stat);
+			index++;
+		}
+	}
+
 
 	/**
 	 * Checks the type of the wyil code and dispatches the code to the analyzer for
@@ -473,7 +542,7 @@ public class CodeGenerator{
 			} else if (code instanceof Codes.IfIs) {
 				//IfIsInterpreter.getInstance().interpret((Codes.IfIs)code, stackframe);
 			} else if (code instanceof Codes.IndexOf) {			
-				//analyze((Codes.IndexOf)code);
+				translate((Codes.IndexOf)code);
 			} else if (code instanceof Codes.IndirectInvoke) {			
 				//IndirectInvokeInterpreter.getInstance().interpret((Codes.IndirectInvoke)code, stackframe);
 			} else if (code instanceof Codes.Invoke) {			
@@ -497,7 +566,7 @@ public class CodeGenerator{
 			} else if (code instanceof Codes.NewMap) {
 				//analyze((Codes.NewMap)code);
 			} else if (code instanceof Codes.NewList) {			
-				//analyze((Codes.NewList)code);
+				translate((Codes.NewList)code);
 			} else if (code instanceof Codes.NewRecord) {
 				//NewRecordInterpreter.getInstance().interpret((Codes.NewRecord)code, stackframe);
 			} else if (code instanceof Codes.NewSet) {
