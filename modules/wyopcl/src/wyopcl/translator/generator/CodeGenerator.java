@@ -28,14 +28,14 @@ public class CodeGenerator{
 	private final String prefix = "_";
 	private String function_del;
 	private HashMap<String, String> vars;
-	private ArrayList<Integer> params;
+	private HashMap<Integer, Type> params;
 	private ArrayList<String> statements;
 	private String loop_condition;
 	private String indent="\t";
 	public CodeGenerator(Configuration config){
 		this.config = config;
 		this.vars = new HashMap<String, String>();
-		this.params = new ArrayList<Integer>();
+		this.params = new HashMap<Integer, Type>();
 		this.statements = new ArrayList<String>();
 	}
 
@@ -112,11 +112,14 @@ public class CodeGenerator{
 		//Get the name
 		String name = functionOrMethod.name();
 		str += name + "(";
+		int var = 0;
 		//Translate the  input parameters
 		if(name.equals("main")){
-			str += translate(type.params().get(0));
-		}else{
-			int var = 0;
+			Type param = type.params().get(var);
+			str += translate(param);
+			//Put the input params into the lookup list.
+			params.put(var, param);
+		}else{			
 			boolean isfirst = true;
 			for(Type param :type.params()){
 				if(isfirst){
@@ -125,7 +128,7 @@ public class CodeGenerator{
 					str += ", " + translate(param);
 				}
 				//Put the input params into the lookup list.
-				params.add(var);
+				params.put(var, param);
 				//Add the variable names
 				str += " "+prefix+var;			
 				//Add the extra 'size' param for the 'list' type
@@ -451,10 +454,45 @@ public class CodeGenerator{
 	}
 	
 	private void translate(Codes.FieldLoad code){
-		
+		/*Type param = params.get(code.operand(0));
+		if(param != null){
+			if(param instanceof Type.Record){
+				Type.Record record = (Type.Record) param;
+				Type fieldType = record.field(code.field);
+			}
+		}*/
+		String field = code.field;
+		Type fieldType = code.fieldType();
+		params.put(code.target(), fieldType);
 		
 		
 	}
+	
+	private void translate(Codes.Convert code){
+		//Converts Constant to Any type
+		if(code.result instanceof Type.Any){
+			//Do nothing.			
+		}
+	}
+	
+	
+	private void translate(Codes.IndirectInvoke code){
+		String stat = indent;
+		if(code.type() instanceof Type.FunctionOrMethod){
+			Type funType = this.params.get(code.operand(0));
+			
+			//Print out the 		
+			for(int param: code.parameters()){
+				
+			}
+			
+		}
+		
+		
+		addStatement(stat);
+		
+	}
+	
 
 
 	/**
@@ -475,7 +513,7 @@ public class CodeGenerator{
 			} else if (code instanceof Codes.StringOperator) {
 				//StringOperatorInterpreter.getInstance().interpret((Codes.StringOperator)code, stackframe);
 			} else if (code instanceof Codes.Convert) {			
-				//ConvertInterpreter.getInstance().interpret((Codes.Convert)code, stackframe);
+				translate((Codes.Convert)code);
 			} else if (code instanceof Codes.Const) {			
 				translate((Codes.Const)code);
 			} else if (code instanceof Codes.Debug) {
@@ -497,7 +535,7 @@ public class CodeGenerator{
 			} else if (code instanceof Codes.IndexOf) {			
 				translate((Codes.IndexOf)code);
 			} else if (code instanceof Codes.IndirectInvoke) {			
-				//IndirectInvokeInterpreter.getInstance().interpret((Codes.IndirectInvoke)code, stackframe);
+				translate((Codes.IndirectInvoke)code);
 			} else if (code instanceof Codes.Invoke) {			
 				translate((Codes.Invoke)code);
 			} else if (code instanceof Codes.Invert) {
