@@ -87,7 +87,11 @@ public class CodeGenerator{
 		return null;
 
 	}
-
+	/**
+	 * Adds the statement to the list and 
+	 * print out the statement if the verbose option is on. 
+	 * @param stat
+	 */
 	private void addStatement(String stat){
 		if(config.isVerbose()){
 			System.out.println(stat);
@@ -95,8 +99,6 @@ public class CodeGenerator{
 		statements.add(stat);
 	}
 	
-
-
 	/**
 	 * Translates the function or method declaration (e.g. <code>int* play(int* _0, int size){</code>)
 	 * @param functionOrMethod
@@ -183,11 +185,8 @@ public class CodeGenerator{
 		}
 		//Reset the indent
 		indent = "\t";
-		String str = "}";
-		if(config.isVerbose()){
-			System.out.println(str);
-		}
-		statements.add(str);
+		String stat = "}";
+		addStatement(stat);
 	}
 
 
@@ -198,11 +197,8 @@ public class CodeGenerator{
 	private void translate(Codes.Const code){
 		//Declare the variables
 		vars.put(prefix+code.target(), translate(code.assignedType()));		
-		String str = indent + prefix+code.target()+ " = "+ code.constant + ";";
-		if(config.isVerbose()){
-			System.out.println(str);
-		}
-		statements.add(str);		
+		String stat = indent + prefix+code.target()+ " = "+ code.constant + ";";
+		addStatement(stat);		
 	}
 
 	/**
@@ -211,11 +207,8 @@ public class CodeGenerator{
 	 */
 	private void translate(Codes.Assign code){
 		vars.put(prefix+code.target(), translate(code.type()));//Var
-		String str = indent + prefix+code.target()+ " = "+ prefix+code.operand(0) + ";";
-		if(config.isVerbose()){
-			System.out.println(str);
-		}
-		statements.add(str);		
+		String stat = indent + prefix+code.target()+ " = "+ prefix+code.operand(0) + ";";
+		addStatement(stat);		
 	}
 
 	/**
@@ -225,11 +218,8 @@ public class CodeGenerator{
 	 */
 	private void translate(Codes.LengthOf code){
 		vars.put(prefix+code.target(), "int");
-		String str = indent + prefix+code.target() + " = size;";
-		if(config.isVerbose()){
-			System.out.println(str);
-		}
-		statements.add(str);
+		String stat = indent + prefix+code.target() + " = size;";
+		addStatement(stat);
 	}
 
 	/**
@@ -242,23 +232,23 @@ public class CodeGenerator{
 		String left = prefix+code.operand(0);
 		String right = prefix+code.operand(1);
 		vars.put(target, "int");
-		String str=indent;
-		str+= target+"="+left;
+		String stat=indent;
+		stat+= target+"="+left;
 		switch(code.kind){
 		case ADD:			
-			str+= "+";
+			stat+= "+";
 			break;
 		case SUB:
-			str+= "-";
+			stat+= "-";
 			break;
 		case MUL:
-			str+= "*";
+			stat+= "*";
 			break;
 		case DIV:
-			str+= "/";
+			stat+= "/";
 			break;
 		case REM:
-			str+= "%";
+			stat+= "%";
 			break;
 		case RANGE:
 			//Generate the for-loop condition.		
@@ -276,11 +266,8 @@ public class CodeGenerator{
 			break;
 		}
 
-		str+= right+";";
-		if(config.isVerbose()){
-			System.out.println(str);
-		}
-		statements.add(str);
+		stat+= right+";";
+		addStatement(stat);
 	}
 
 	/**
@@ -288,22 +275,16 @@ public class CodeGenerator{
 	 * @param code
 	 */
 	private void translate(Codes.ForAll code){
-		String str = "";
+		String stat = "";
 		if(loop_condition != null){
-			str += indent + "for("+loop_condition+"){";
-			statements.add(str);
-			if(config.isVerbose()){
-				System.out.println(str);
-			}
+			stat += indent + "for("+loop_condition+"){";
+			addStatement(stat);
 			//Add the indentation
 			indent += "\t";			
 			//The expression for element
 			vars.put(prefix+code.indexOperand, translate(code.type.element()));
-			str = indent + prefix + code.indexOperand + "=" +prefix +code.sourceOperand+";";
-			if(config.isVerbose()){
-				System.out.println(str);
-			}
-			statements.add(str);			
+			stat = indent + prefix + code.indexOperand + "=" +prefix +code.sourceOperand+";";
+			addStatement(stat);			
 			loop_condition = null;
 		}
 	}
@@ -314,31 +295,28 @@ public class CodeGenerator{
 	 * @param code
 	 */
 	private void translate(Codes.Invoke code){
-		String str = indent;
+		String stat = indent;
 		String ret = prefix+code.target();
 		vars.put(ret, translate(code.type().ret()));
-		str += ret+ "="+code.name.name()+"(";
+		stat += ret+ "="+code.name.name()+"(";
 		//Input parameters
 		boolean isFirst = true;
 		int index =0;
 		for(int operand: code.operands()){
 			if(isFirst){
-				str+= prefix+operand;
+				stat+= prefix+operand;
 			}else{
-				str+= " ,"+prefix+operand;
+				stat+= " ,"+prefix+operand;
 			}
 			//Add the 'size' parameter 
 			if(code.type().params().get(index) instanceof Type.List){
-				str += " , size";
+				stat += " , size";
 			}
 			isFirst = false;
 			index++;
 		}
-		str += ");";
-		if(config.isVerbose()){
-			System.out.println(str);
-		}
-		statements.add(str);		
+		stat += ");";
+		addStatement(stat);			
 	}
 
 	/**
@@ -346,29 +324,29 @@ public class CodeGenerator{
 	 * @param code
 	 */
 	private void translate(Codes.If code){
-		String str = indent;
+		String stat = indent;
 		String left = prefix+code.leftOperand;
 		String right = prefix+code.rightOperand;
-		str += "if("+left;
+		stat += "if("+left;
 		//The condition
 		switch(code.op){
 		case EQ:
-			str+="==";
+			stat+="==";
 			break;
 		case NEQ:
-			str+="!=";
+			stat+="!=";
 			break;
 		case LT:
-			str+="<";
+			stat+="<";
 			break;
 		case LTEQ:
-			str+="<=";
+			stat+="<=";
 			break;
 		case GT:
-			str+=">";
+			stat+=">";
 			break;
 		case GTEQ:
-			str+=">=";
+			stat+=">=";
 			break;
 		case IN:
 			break;
@@ -377,109 +355,78 @@ public class CodeGenerator{
 		case SUBSETEQ:
 			break;
 		}
-		str += right;
-		str +="){";
-		str += "goto "+code.target+";";
-		str +="}";
+		stat += right;
+		stat +="){";
+		stat += "goto "+code.target+";";
+		stat +="}";
 
-		if(config.isVerbose()){
-			System.out.println(str);
-		}
-		statements.add(str);
+		addStatement(stat);	
 
 	}
 
 	private void translate(Codes.AssertOrAssume code){
-		String str = indent+"//"+code;
-		if(config.isVerbose()){
-			System.out.println(str);
-		}		
-		statements.add(str);		
+		String stat = indent+"//"+code;
+		addStatement(stat);			
 	}
 
 
 	private void translate(Codes.Goto code){
-		String str = indent;
-		str += "goto "+code.target+";";
-		if(config.isVerbose()){
-			System.out.println(str);
-		}
-		statements.add(str);		
+		String stat = indent;
+		stat += "goto "+code.target+";";
+		addStatement(stat);		
 	}
 
 
 	private void translate(Codes.Label code){
-		String str = code.label+":";
-		if(config.isVerbose()){
-			System.out.println(str);
-		}
-		statements.add(str);
+		String stat = code.label+":";
+		addStatement(stat);
 	}
 
 	private void translate(Codes.Fail code){
-		String str = indent+"perror(\""+code+"\");";
-		if(config.isVerbose()){
-			System.out.println(str);
-		}
-		statements.add(str);		
+		String stat = indent+"perror(\""+code+"\");";
+		addStatement(stat);		
 	}
 
 	private void translate(Codes.Update code){
-		String str = indent;
+		String stat = indent;
 		//For List type only
 		if(code.type() instanceof Type.List){
-			str += prefix+code.target()+"["+prefix+code.operand(0)+"] = "+prefix+code.result()+";";
-			if(config.isVerbose()){
-				System.out.println(str);
-			}
-			statements.add(str);			
+			stat += prefix+code.target()+"["+prefix+code.operand(0)+"] = "+prefix+code.result()+";";
+			addStatement(stat);				
 		}		
 	}
 
 	private void translate(Codes.Nop code){
 		//Do nothing
-		String str = indent+";//"+code;
-		if(config.isVerbose()){
-			System.out.println(str);
-		}
-		statements.add(str);
+		String stat = indent+";//"+code;
+		addStatement(stat);	
 	}
 
 	private void translate(Codes.LoopEnd code){
 		//decrease the indent
 		indent = indent.replaceFirst("\t", "");
-		String str = indent+"}";
-		if(config.isVerbose()){
-			System.out.println(str);
-		}
-		statements.add(str);		
+		String stat = indent+"}";
+		addStatement(stat);			
 	}
 
 	private void translate(Codes.Return code){
-		String str = indent;
+		String stat = indent;
 		//If operand == -1, then no return value.
 		if(code.operand != -1){
-			str += "return "+prefix+code.operand+";";
+			stat += "return "+prefix+code.operand+";";
 		}else{
-			str += "return;";
-		}		
-
-		if(config.isVerbose()){
-			System.out.println(str);
+			stat += "return;";
 		}
-		statements.add(str);		
+		addStatement(stat);			
 	}
 
 	private void translate(Codes.IndexOf code){
-		String str = indent;
+		String stat = indent;
 		//EffectiveIndexible type = code.type();
 		vars.put(prefix+code.target(), "int");
-		str += prefix+code.target() + "="+prefix+code.operand(0)
+		stat += prefix+code.target() + "="+prefix+code.operand(0)
 				+"["+prefix+code.operand(1)+"];";
-		if(config.isVerbose()){
-			System.out.println(str);
-		}
-		statements.add(str);		
+		addStatement(stat);		
 	}
 
 
@@ -501,6 +448,12 @@ public class CodeGenerator{
 			addStatement(stat);
 			index++;
 		}
+	}
+	
+	private void translate(Codes.FieldLoad code){
+		
+		
+		
 	}
 
 
@@ -532,7 +485,7 @@ public class CodeGenerator{
 			} else if (code instanceof Codes.Fail) {
 				translate((Codes.Fail)code);
 			} else if (code instanceof Codes.FieldLoad) {		
-				//FieldLoadInterpreter.getInstance().interpret((Codes.FieldLoad)code, stackframe);			
+				translate((Codes.FieldLoad)code);			
 			} else if (code instanceof Codes.ForAll) {				
 				translate((Codes.ForAll)code);
 			} else if (code instanceof Codes.Goto) {	
