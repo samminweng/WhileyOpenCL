@@ -16,6 +16,7 @@ import wyfs.lang.Path.Root;
 import wyil.lang.WyilFile;
 import wyopcl.translator.bound.Analyzer;
 import wyopcl.translator.generator.CodeGenerator;
+import wyopcl.translator.generator.Utility;
 /**
  * Main entry point of translator
  * 
@@ -107,6 +108,10 @@ public class Translator implements Builder{
 		PrintWriter writer;
 		try {
 			writer = new PrintWriter(config.getFilename()+".c");
+			//Write out the 'include'
+			Utility.generateHeader(writer);
+			Utility.generateClone(writer);
+			Utility.generateToString(writer);
 			CodeGenerator generator = new CodeGenerator(config);	
 			for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {
 				generator.iterateByteCode(functionOrMethod);	

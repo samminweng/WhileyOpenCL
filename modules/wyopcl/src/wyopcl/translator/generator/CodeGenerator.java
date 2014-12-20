@@ -210,7 +210,7 @@ public class CodeGenerator{
 	 */
 	private void translate(Codes.Assign code){
 		vars.put(prefix+code.target(), translate(code.type()));//Var
-		String stat = indent + prefix+code.target()+ " = "+ prefix+code.operand(0) + ";";
+		String stat = indent + prefix+code.target()+ " = clone("+ prefix+code.operand(0) + ", size);";
 		addStatement(stat);		
 	}
 
@@ -452,7 +452,10 @@ public class CodeGenerator{
 			index++;
 		}
 	}
-	
+	/**
+	 * TODO: Not implemented.
+	 * @param code
+	 */
 	private void translate(Codes.FieldLoad code){
 		/*Type param = params.get(code.operand(0));
 		if(param != null){
@@ -467,7 +470,10 @@ public class CodeGenerator{
 		
 		
 	}
-	
+	/**
+	 * TODO: Not implemented.
+	 * @param code
+	 */
 	private void translate(Codes.Convert code){
 		//Converts Constant to Any type
 		if(code.result instanceof Type.Any){
@@ -475,22 +481,21 @@ public class CodeGenerator{
 		}
 	}
 	
-	
+	/**
+	 * Generates the C code for <code>Codes.IndirectInvoke</code>.
+	 * TODO : generalize the code generation.
+	 * @param code
+	 */
 	private void translate(Codes.IndirectInvoke code){
 		String stat = indent;
 		if(code.type() instanceof Type.FunctionOrMethod){
-			Type funType = this.params.get(code.operand(0));
-			
-			//Print out the 		
-			for(int param: code.parameters()){
-				
-			}
-			
-		}
-		
-		
-		addStatement(stat);
-		
+			//Hard-coded the 'str' var
+			vars.put("str[1024]","char");			
+			//Hard-coded the invoked (temporarily).
+			stat += "printf(\"%s\\n\",toString("+prefix+code.parameter(0)+", "
+					+ "size, str));";
+		}		
+		addStatement(stat);		
 	}
 	
 
