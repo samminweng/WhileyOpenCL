@@ -51,6 +51,18 @@ $ ./../../../bin/wyopcl -range gradual While.whiley
 Or add the verbose option to print out the analyzing process.
 $ ./../../../bin/wyopcl -range gradual -verbose While.whiley
 
+2.2 Code Generator
+Code Generator aims to translate the Whiley program into C code. To
+run the code generator, use the below commands:
+$ git clone https://github.com/samminweng/WhileyOpenCL
+$ cd WhileyOpenCL/
+$ ant
+$ cd tests/code/valid
+$ ./../../../bin/wyopcl -code BoolList_Valid_2.whiley
+$ gcc BoolList_Valid_2.c -o BoolList_Valid_2.out
+$ ./BoolList_Valid_2.out
+
+
 ======================================================================
 Unit Testing
 ======================================================================
