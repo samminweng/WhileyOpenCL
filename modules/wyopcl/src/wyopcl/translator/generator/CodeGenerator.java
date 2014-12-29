@@ -142,7 +142,7 @@ public class CodeGenerator{
 				str += " "+prefix+var;			
 				//Add the extra 'size' param for the 'list' type
 				if(param instanceof Type.List){
-					str +=", int size";
+					str +=", int "+prefix+var+"_size";
 				}			
 				isfirst = false;
 				var++;
@@ -164,8 +164,8 @@ public class CodeGenerator{
 		writer.println(function_del+"{");
 		//Var declaration
 		for(Entry<String, String> var: vars.entrySet()){
-			System.out.println(indent+var.getValue()+" "+var.getKey()+";");
-			writer.println(indent+var.getValue()+" "+var.getKey()+";");
+			System.out.println("\t"+var.getValue()+" "+var.getKey()+";");
+			writer.println("\t"+var.getValue()+" "+var.getKey()+";");
 		}
 		//Statments
 		for(String stat: statements){
@@ -201,7 +201,7 @@ public class CodeGenerator{
 	 */
 	private void translate(Codes.Assign code){
 		vars.put(prefix+code.target(), translate(code.type()));//Var
-		String stat = indent + prefix+code.target()+ " = clone("+ prefix+code.operand(0) + ", size);";
+		String stat = indent + prefix+code.target()+ " = clone("+ prefix+code.operand(0) + ", getSize("+ prefix+code.operand(0)+"));";
 		addStatement(code, stat);		
 	}
 
@@ -212,7 +212,7 @@ public class CodeGenerator{
 	 */
 	private void translate(Codes.LengthOf code){
 		vars.put(prefix+code.target(), "int");
-		String stat = indent + prefix+code.target() + " = size;";
+		String stat = indent + prefix+code.target() + " = getSize("+prefix+code.operand(0)+");";
 		addStatement(code, stat);
 	}
 
@@ -303,7 +303,7 @@ public class CodeGenerator{
 			}
 			//Add the 'size' parameter 
 			if(code.type().params().get(index) instanceof Type.List){
-				stat += " , size";
+				stat += " , getSize("+prefix+operand+")";
 			}
 			isFirst = false;
 			index++;
@@ -433,15 +433,12 @@ public class CodeGenerator{
 
 
 	private void translate(Codes.NewList code){
-		//Add 'size' variable
-		vars.put("size", "int");
+		
 		String stat = indent;
-		String target = prefix+code.target();		
-		stat = indent+"size="+code.operands().length+";";
-		addStatement(code, stat);
+		String target = prefix+code.target();
 		//Allocate the memory for the list
 		vars.put(target, translate(code.type()));
-		stat = indent + target + "=(int*)malloc(size*sizeof(int));";
+		stat = indent + target + "=(int*)malloc("+(code.operands().length+1)+"*sizeof(int));";
 		addStatement(code, stat);		
 		//Initialize the all the elements.
 		int index = 0;
@@ -450,6 +447,9 @@ public class CodeGenerator{
 			addStatement(code, stat);
 			index++;
 		}
+		//Add the ending entry
+		stat = indent+target+"["+index+"]=NULL;";
+		addStatement(code, stat);		
 	}
 	/**
 	 * TODO: Not implemented.
@@ -493,7 +493,7 @@ public class CodeGenerator{
 			vars.put("str[1024]","char");			
 			//Hard-coded the invoked (temporarily).
 			stat += "printf(\"%s\\n\",toString("+prefix+code.parameter(0)+", "
-					+ "size, str));";
+					+ "getSize("+prefix+code.parameter(0)+"), str));";
 		}		
 		addStatement(code, stat);		
 	}
