@@ -5,6 +5,7 @@ import static wycc.lang.SyntaxError.internalFailure;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map.Entry;
 
 import wycc.lang.SyntaxError;
@@ -24,19 +25,21 @@ import wyopcl.translator.Configuration;
  *
  */
 public class CodeGenerator{
+	public ArrayList<String> list_func;//A list of function declaration. 
 	private final Configuration config;
 	private final String prefix = "_";
-	private String function_del;
 	private HashMap<String, String> vars;
 	private HashMap<Integer, Type> params;
-	private ArrayList<String> statements;
+	private ArrayList<String> statements;	
 	private String loop_condition;
+	private String assert_label;
 	private String indent="\t";
 	public CodeGenerator(Configuration config){
 		this.config = config;
 		this.vars = new HashMap<String, String>();
 		this.params = new HashMap<Integer, Type>();
 		this.statements = new ArrayList<String>();
+		this.list_func = new ArrayList<String>();
 	}
 
 	/**
@@ -44,7 +47,7 @@ public class CodeGenerator{
 	 * @param name
 	 * @param line
 	 */
-	private int printWyILCode(Code code, String name, int line){
+	public int printWyILCode(Code code, String name, int line){
 		//Print out the bytecode using the format (e.g. 'main.9 [const %12 = 2345 : int]')
 		if(code instanceof Codes.Label){
 			System.out.println(name+"."+line+" ["+code+"]");
@@ -89,21 +92,27 @@ public class CodeGenerator{
 	}
 	/**
 	 * Adds the statement to the list and 
-	 * print out the statement if the verbose option is on. 
-	 * @param stat
+	 * print out the statement if the verbose option is on.
+	 * @param code the WyIL code 
+	 * @param stat the C code 
 	 */
-	private void addStatement(String stat){
-		if(config.isVerbose()){
-			System.out.println(stat);
-		}
-		statements.add(stat);
+	private void addStatement(Code code, String stat){
+		//Add the WyIL code as a comment
+		statements.add(indent+"//"+code.toString());
+		//Add the translated statement.
+		if(stat != null){
+			if(config.isVerbose()){
+				System.out.println(stat);
+			}
+			statements.add(stat);
+		}		
 	}
 	
 	/**
 	 * Translates the function or method declaration (e.g. <code>int* play(int* _0, int size){</code>)
 	 * @param functionOrMethod
 	 */
-	private String translate(FunctionOrMethodDeclaration functionOrMethod){
+	public String translate(FunctionOrMethodDeclaration functionOrMethod){
 		String str = "";
 		//Get the return type
 		FunctionOrMethod type = functionOrMethod.type();
@@ -140,17 +149,19 @@ public class CodeGenerator{
 			}
 		}	
 
-		str += "){";
+		str += ")";
 		if(config.isVerbose()){
 			System.out.println(str);
 		}
+		//Add the function declaration to the list
+		list_func.add(str);		
 		return str;
 	}
 
-	public void printoutCode(PrintWriter writer){
+	public void printoutCode(PrintWriter writer, String function_del){		
 		//function declaration
-		System.out.println(function_del);
-		writer.println(function_del);
+		System.out.println(function_del+"{");
+		writer.println(function_del+"{");
 		//Var declaration
 		for(Entry<String, String> var: vars.entrySet()){
 			System.out.println(indent+var.getValue()+" "+var.getKey()+";");
@@ -161,35 +172,15 @@ public class CodeGenerator{
 			System.out.println(stat.toString());
 			writer.println(stat.toString());
 		}
+		//Ending clause
+		System.out.println("}");
+		writer.println("}");
 		//clear vars
 		vars.clear();
 		//Clear statements
 		statements.clear();
-	}
-
-
-	/**
-	 * Iterate each bytecode of a function block.
-	 * @param functionOrMethod the function block
-	 */
-	public void iterateByteCode(FunctionOrMethodDeclaration functionOrMethod){
-		//generate the function declaration.
-		function_del = translate(functionOrMethod);		
-		for(Case mcase : functionOrMethod.cases()){			
-			int line = 0;
-			//Parse each byte-code and add the constraints accordingly.
-			for(Block.Entry entry :mcase.body()){
-				//Get the Block.Entry
-				if(config.isVerbose()){
-					line = printWyILCode(entry.code, functionOrMethod.name(), line);
-				}				
-				dispatch(entry);				
-			}
-		}
 		//Reset the indent
 		indent = "\t";
-		String stat = "}";
-		addStatement(stat);
 	}
 
 
@@ -201,7 +192,7 @@ public class CodeGenerator{
 		//Declare the variables
 		vars.put(prefix+code.target(), translate(code.assignedType()));		
 		String stat = indent + prefix+code.target()+ " = "+ code.constant + ";";
-		addStatement(stat);		
+		addStatement(code, stat);		
 	}
 
 	/**
@@ -211,7 +202,7 @@ public class CodeGenerator{
 	private void translate(Codes.Assign code){
 		vars.put(prefix+code.target(), translate(code.type()));//Var
 		String stat = indent + prefix+code.target()+ " = clone("+ prefix+code.operand(0) + ", size);";
-		addStatement(stat);		
+		addStatement(code, stat);		
 	}
 
 	/**
@@ -222,7 +213,7 @@ public class CodeGenerator{
 	private void translate(Codes.LengthOf code){
 		vars.put(prefix+code.target(), "int");
 		String stat = indent + prefix+code.target() + " = size;";
-		addStatement(stat);
+		addStatement(code, stat);
 	}
 
 	/**
@@ -268,9 +259,8 @@ public class CodeGenerator{
 		case RIGHTSHIFT:
 			break;
 		}
-
 		stat+= right+";";
-		addStatement(stat);
+		addStatement(code, stat);
 	}
 
 	/**
@@ -281,13 +271,13 @@ public class CodeGenerator{
 		String stat = "";
 		if(loop_condition != null){
 			stat += indent + "for("+loop_condition+"){";
-			addStatement(stat);
+			addStatement(code, stat);
 			//Add the indentation
 			indent += "\t";			
 			//The expression for element
 			vars.put(prefix+code.indexOperand, translate(code.type.element()));
 			stat = indent + prefix + code.indexOperand + "=" +prefix +code.sourceOperand+";";
-			addStatement(stat);			
+			addStatement(code, stat);			
 			loop_condition = null;
 		}
 	}
@@ -319,7 +309,7 @@ public class CodeGenerator{
 			index++;
 		}
 		stat += ");";
-		addStatement(stat);			
+		addStatement(code, stat);			
 	}
 
 	/**
@@ -363,31 +353,41 @@ public class CodeGenerator{
 		stat += "goto "+code.target+";";
 		stat +="}";
 
-		addStatement(stat);	
+		addStatement(code, stat);	
 
 	}
 
 	private void translate(Codes.AssertOrAssume code){
-		String stat = indent+"//"+code;
-		addStatement(stat);			
+		//Increase the indent
+		indent += "\t";
+		//Add the starting clause for the assertion
+		addStatement(code, indent+"{");	
+		assert_label = code.target;
 	}
 
 
 	private void translate(Codes.Goto code){
 		String stat = indent;
 		stat += "goto "+code.target+";";
-		addStatement(stat);		
+		addStatement(code, stat);		
 	}
 
 
-	private void translate(Codes.Label code){
-		String stat = code.label+":";
-		addStatement(stat);
+	private void translate(Codes.Label code){		
+		//Check if the label is equal to assert_label
+		if(assert_label != null && assert_label.equals(code.label)){
+			//Ending clause.
+			addStatement(code, indent+"}");			
+			//decrease the indentation
+			indent.replace("\t", "");
+			assert_label = null;
+		}
+		addStatement(code, code.label+":");
 	}
 
 	private void translate(Codes.Fail code){
 		String stat = indent+"perror(\""+code+"\");";
-		addStatement(stat);		
+		addStatement(code, stat);		
 	}
 
 	private void translate(Codes.Update code){
@@ -395,21 +395,20 @@ public class CodeGenerator{
 		//For List type only
 		if(code.type() instanceof Type.List){
 			stat += prefix+code.target()+"["+prefix+code.operand(0)+"] = "+prefix+code.result()+";";
-			addStatement(stat);				
+			addStatement(code, stat);				
 		}		
 	}
 
 	private void translate(Codes.Nop code){
 		//Do nothing
-		String stat = indent+";//"+code;
-		addStatement(stat);	
+		String stat = indent+";";
+		addStatement(code, stat);	
 	}
 
 	private void translate(Codes.LoopEnd code){
 		//decrease the indent
 		indent = indent.replaceFirst("\t", "");
-		String stat = indent+"}";
-		addStatement(stat);			
+		addStatement(code, indent+"}");			
 	}
 
 	private void translate(Codes.Return code){
@@ -420,35 +419,35 @@ public class CodeGenerator{
 		}else{
 			stat += "return;";
 		}
-		addStatement(stat);			
+		addStatement(code, stat);			
 	}
 
 	private void translate(Codes.IndexOf code){
-		String stat = indent;
 		//EffectiveIndexible type = code.type();
 		vars.put(prefix+code.target(), "int");
+		String stat = indent;
 		stat += prefix+code.target() + "="+prefix+code.operand(0)
 				+"["+prefix+code.operand(1)+"];";
-		addStatement(stat);		
+		addStatement(code, stat);		
 	}
 
 
 	private void translate(Codes.NewList code){
-		String stat = indent;
-		String target = prefix+code.target();		
 		//Add 'size' variable
 		vars.put("size", "int");
+		String stat = indent;
+		String target = prefix+code.target();		
 		stat = indent+"size="+code.operands().length+";";
-		addStatement(stat);
+		addStatement(code, stat);
 		//Allocate the memory for the list
 		vars.put(target, translate(code.type()));
 		stat = indent + target + "=(int*)malloc(size*sizeof(int));";
-		addStatement(stat);		
+		addStatement(code, stat);		
 		//Initialize the all the elements.
 		int index = 0;
 		for(int operand: code.operands()){
 			stat = indent+target+"["+index+"]="+prefix+operand+";";
-			addStatement(stat);
+			addStatement(code, stat);
 			index++;
 		}
 	}
@@ -467,6 +466,7 @@ public class CodeGenerator{
 		String field = code.field;
 		Type fieldType = code.fieldType();
 		params.put(code.target(), fieldType);
+		addStatement(code, null);
 		
 		
 	}
@@ -495,7 +495,7 @@ public class CodeGenerator{
 			stat += "printf(\"%s\\n\",toString("+prefix+code.parameter(0)+", "
 					+ "size, str));";
 		}		
-		addStatement(stat);		
+		addStatement(code, stat);		
 	}
 	
 
@@ -505,7 +505,7 @@ public class CodeGenerator{
 	 * being executed by the <code>analyze(code)</code> 
 	 * @param entry
 	 */
-	private void dispatch(Block.Entry entry){		
+	public void dispatch(Block.Entry entry){		
 		Code code = entry.code; 
 		try{
 			//enable the assertion 

@@ -11,78 +11,116 @@ import java.util.List;
  */
 public final class Utility {
 	private Utility(){
-		
+
 	}
 	/**
 	 * Writes out the 'include' and 'define' code.
 	 * TODO : generalize the code generation.
 	 * @param writer
 	 */
-	public static void generateHeader(PrintWriter writer){
+	public static void generateHeader(PrintWriter writer, List<String> list_func){
 		//Include files
-		String stats = "#include <stdio.h>\n"+
-					   "#include <stdlib.h>\n"+
-					   "#include <string.h>\n"+
-					   "#include <errno.h>\n";
-		//Boolean type
-		stats += "#define false 0\n"+
-				  "#define true 1";
+		String stats = "";
+		stats +="#include <stdio.h>\n" + 
+				"#include <stdlib.h>\n" + 
+				"#include <string.h>\n" + 
+				"#include <errno.h>\n" + 
+				"#define false 0\n" + 
+				"#define true 1\n" + 
+				"#define NULL -1\n";
+		
+		for(String func : list_func){
+			stats += func + ";\n";
+		}		
 		writer.println(stats);
 		System.out.println(stats);
-		
 	}
 	
 	/**
-	 * Write out the native 'toString' function in C.
+	 * Write out the 'include' part
+	 * @param writer
+	 */
+	public static void generateIncludes(PrintWriter writer, String filename){		
+		writer.println("#include \""+filename+".h\"");
+		System.out.println("#include \""+filename+".h\"");
+	}
+	
+
+	/**
+	 * Generate the native C 'toString' function to convert the content of an array to a string.
 	 * TODO : generalize the code generation.
 	 * @param writer
 	 */
 	public static void generateToString(PrintWriter writer){
 		//Hard-coded the function temporarily.
-		String stats = "char* toString(int arr[], int size, char *str){\r\n" + 				
-				"	int i;\r\n" +				
-				"	int len;\r\n" + 				
-				"	i=0;\r\n" +
-				"	strcpy(str, \"[\");\r\n" + 
-				"	for(i=0;i<size;i++){\r\n" + 				
-				"		if(arr[i]==true){\r\n" + 				
-				"			strcat(str, \"true\");\r\n" +				
-				"		}else{\r\n" + 				
-				"			strcat(str, \"false\");\r\n" + 				
-				"		}\r\n" + 				
-				"		if(i<size-1){\r\n" + 				
-				"			strcat(str, \", \");\r\n" + 				
-				"		}\r\n" + 				
-				"	}\r\n" + 				
-				"	strcat(str, \"]\");\r\n" + 				
-				"	//Add the ending \r\n" + 				
-				"	len = strlen(str);\r\n" + 				
-				"	str[len+1]='\\0';\r\n" + 				
-				"	return str;\r\n" + 				
+		String stats = "";		
+		stats +="char* toString(int arr[], int size, char *str){\n" + 
+				"int i;\n" + 
+				"int len;\n" + 
+				"i=0;\n" + 
+				"strcpy(str, \"[\");\n" + 
+				"for(i=0;i<size;i++){\n" + 
+				"if(arr[i]==true){\n" + 
+				"strcat(str, \"true\");\n" + 
+				"}else{\n" + 
+				"strcat(str, \"false\");\n" + 
+				"}\n" + 
+				"if(i<size-1){\n" + 
+				"strcat(str, \", \");\n" + 
+				"}\n" + 
+				"}\n" + 
+				"strcat(str, \"]\");\n" + 
+				"//Add the ending\n" + 
+				"len = strlen(str);\n" + 
+				"str[len+1]=NULL;\n" + 
+				"return str;\n" + 
 				"}";
 		writer.println(stats);
 		System.out.println(stats);
 	}
-	
+
 	/**
-	 * Generates the native clone function in C.
+	 * Generates the native C 'Clone' function to clone an array.
+	 * TODO : generalization.
 	 * @param writer
 	 */
 	public static void generateClone(PrintWriter writer){
-		String stats ="int* clone(int *arr, int size){\r\n" + 				
-				"	int *ptr;\r\n" + 				
-				"	int i;\r\n" + 				
-				"	//Clone all the values from board array due to immutable Whiley value\r\n" +				
-				"	ptr = (int*)malloc(size*sizeof(int));\r\n" + 				
-				"	//Copy data from 'board' array to 'nboard' array\r\n" + 				
-				"	for(i=0;i<size;i++){\r\n" + 				
-				"		ptr[i]=arr[i];\r\n" + 				
-				"	}\r\n" + 				
-				"	return ptr;\r\n" + 				
+		String stats = "";		
+		stats +="int* clone(int *arr, int size){\n" + 
+				"int *ptr;\n" + 
+				"int i;\n" + 
+				"//Clone all the values from board array due to immutable Whiley value\n" + 
+				"ptr = (int*)malloc((size+1)*sizeof(int));\n" + 
+				"//Copy data from 'board' array to 'nboard' array\n" + 
+				"for(i=0;i<size;i++){\n" + 
+				"ptr[i]=arr[i];\n" + 
+				"}\n" + 
+				"//Ending\n" + 
+				"ptr[i]=NULL;\n" + 
+				"return ptr;\n" + 
+				"}";				
+	
+		writer.println(stats);
+		System.out.println(stats);
+	}
+
+	/**
+	 * Generates the native C 'getSize' function to get the size of an array.
+	 * TODO : generalization.
+	 * @param writer
+	 */
+	public static void generateGetSize(PrintWriter writer){
+		String stats = "";
+		stats += "int getSize(int *arr){\n" + 
+				"int size=0;\n" + 
+				"while(arr[size] != NULL){\n" + 
+				"size++;\n" + 
+				"}\n" + 
+				"return size;\n" + 
 				"}";
 		writer.println(stats);
 		System.out.println(stats);
 	}
-	
+
 
 }

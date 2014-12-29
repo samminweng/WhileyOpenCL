@@ -3,8 +3,10 @@ package wyopcl.translator;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import wybs.lang.Build.Project;
@@ -14,6 +16,8 @@ import wyfs.lang.Path;
 import wyfs.lang.Path.Entry;
 import wyfs.lang.Path.Root;
 import wyil.lang.WyilFile;
+import wyil.lang.Code.Block;
+import wyil.lang.WyilFile.Case;
 import wyopcl.translator.bound.Analyzer;
 import wyopcl.translator.generator.CodeGenerator;
 import wyopcl.translator.generator.Utility;
@@ -46,7 +50,7 @@ public class Translator implements Builder{
 			@SuppressWarnings("unchecked")
 			Path.Entry<WyilFile> sf = (Path.Entry<WyilFile>) p.first();
 			WyilFile module = sf.read();
-			config.setProperty("filename", module.filename().split(".whiley")[0]);				
+			config.setProperty("filename", module.filename().split(".whiley")[0].replace(".\\", ""));				
 			//Check the mode
 			switch(config.getMode()){
 				case BoundAnalysis:
@@ -103,27 +107,48 @@ public class Translator implements Builder{
 	 * Reads the in-memory WyIL file and generates the code in C
 	 * @param module
 	 */
-	private void generateCodeInC(WyilFile module){
+	private void generateCodeInC(WyilFile module){		
+		CodeGenerator generator = new CodeGenerator(config);
 		//Create a writer to write the C code to a *.c file.
-		PrintWriter writer;
+		PrintWriter writer;		
 		try {
 			writer = new PrintWriter(config.getFilename()+".c");
-			//Write out the 'include'
-			Utility.generateHeader(writer);
+			Utility.generateIncludes(writer, config.getFilename());
+			Utility.generateGetSize(writer);
 			Utility.generateClone(writer);
 			Utility.generateToString(writer);
-			CodeGenerator generator = new CodeGenerator(config);	
+			//Iterate each function
 			for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {
-				generator.iterateByteCode(functionOrMethod);	
+				String function_del = generator.translate(functionOrMethod);
+				//Iterate each byte-code of a function block.			
+				for(Case mcase : functionOrMethod.cases()){			
+					int line = 0;
+					//Parse each byte-code and add the constraints accordingly.
+					for(Block.Entry entry :mcase.body()){
+						//Get the Block.Entry
+						if(config.isVerbose()){
+							line = generator.printWyILCode(entry.code, functionOrMethod.name(), line);
+						}				
+						generator.dispatch(entry);				
+					}
+				}				
 				//Write out the code to *.c
-				generator.printoutCode(writer);
-			}
-			generator = null;
+				generator.printoutCode(writer, function_del);
+			}			
 			writer.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
-	}	
+		} catch (FileNotFoundException e) {			
+			throw new RuntimeException("Error occurs in writing "+config.getFilename()+".c");
+		}
+		
+		//Write out the function signatures to *.h file.		
+		try{
+			writer = new PrintWriter(config.getFilename()+".h");
+			Utility.generateHeader(writer, generator.list_func);
+			writer.close();
+		}catch (FileNotFoundException e) {
+			throw new RuntimeException("Error occurs in writing "+config.getFilename()+".h");
+		}
+		generator = null;
+	}
 
 }
