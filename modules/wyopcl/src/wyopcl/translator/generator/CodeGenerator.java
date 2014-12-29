@@ -99,7 +99,15 @@ public class CodeGenerator{
 	 */
 	private void addStatement(Code code, String stat){
 		//Add the WyIL code as a comment
-		statements.add(indent+"//"+code.toString());
+		if(code != null){
+			if(code instanceof Codes.Label && !(code instanceof Codes.LoopEnd)){
+				//No indentation for label bytecode
+				statements.add("//"+code.toString());
+			}else{
+				statements.add(indent+"//"+code.toString());
+			}
+			
+		}		
 		//Add the translated statement.
 		if(stat != null){
 			if(config.isVerbose()){
@@ -362,10 +370,10 @@ public class CodeGenerator{
 	}
 
 	private void translate(Codes.AssertOrAssume code){
+		//Add the starting clause for the assertion
+		addStatement(code, indent+"{");
 		//Increase the indent
 		indent += "\t";
-		//Add the starting clause for the assertion
-		addStatement(code, indent+"{");	
 		assert_label = code.target;
 	}
 
@@ -380,10 +388,10 @@ public class CodeGenerator{
 	private void translate(Codes.Label code){		
 		//Check if the label is equal to assert_label
 		if(assert_label != null && assert_label.equals(code.label)){
-			//Ending clause.
-			addStatement(code, indent+"}");			
 			//decrease the indentation
-			indent.replace("\t", "");
+			indent = indent.replaceFirst("\t", "");
+			//Ending clause.
+			addStatement(null, indent+"}");
 			assert_label = null;
 		}
 		addStatement(code, code.label+":");

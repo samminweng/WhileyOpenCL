@@ -70,19 +70,19 @@ long long* play(long long* _0, long long _0_size){
 		if(_8==_11){goto blklab4;}
 		//goto blklab2
 		goto blklab2;
-		//.blklab4
+//.blklab4
 blklab4:
 		//const %14 = true : bool
 		_14 = true;
-			//assert blklab12
-			{
+		//assert blklab12
+		{
 			//const %20 = 0 : int
 			_20 = 0;
 			//ifge %7, %20 goto blklab11 : int
 			if(_7>=_20){goto blklab11;}
 			//fail ""index out of bounds (negative)""
 			perror("fail ""index out of bounds (negative)""");
-			//.blklab11
+//.blklab11
 blklab11:
 			//lengthof %20 = %1 : [bool]
 			_20 = getSize(_1);
@@ -90,50 +90,48 @@ blklab11:
 			if(_7<_20){goto blklab12;}
 			//fail ""index out of bounds (not less than length)""
 			perror("fail ""index out of bounds (not less than length)""");
-			//.blklab12
-			}
-			//.blklab12
+		}
+//.blklab12
 blklab12:
-			//update %1[%7] = %14 : [bool] -> [bool]
-			_1[_7] = _14;
-			//goto blklab3
-			goto blklab3;
-			//.blklab2
+		//update %1[%7] = %14 : [bool] -> [bool]
+		_1[_7] = _14;
+		//goto blklab3
+		goto blklab3;
+//.blklab2
 blklab2:
-			//const %17 = false : bool
-			_17 = false;
-				//assert blklab14
-				{
-				//const %20 = 0 : int
-				_20 = 0;
-				//ifge %7, %20 goto blklab13 : int
-				if(_7>=_20){goto blklab13;}
-				//fail ""index out of bounds (negative)""
-				perror("fail ""index out of bounds (negative)""");
-				//.blklab13
+		//const %17 = false : bool
+		_17 = false;
+		//assert blklab14
+		{
+			//const %20 = 0 : int
+			_20 = 0;
+			//ifge %7, %20 goto blklab13 : int
+			if(_7>=_20){goto blklab13;}
+			//fail ""index out of bounds (negative)""
+			perror("fail ""index out of bounds (negative)""");
+//.blklab13
 blklab13:
-				//lengthof %20 = %1 : [bool]
-				_20 = getSize(_1);
-				//iflt %7, %20 goto blklab14 : int
-				if(_7<_20){goto blklab14;}
-				//fail ""index out of bounds (not less than length)""
-				perror("fail ""index out of bounds (not less than length)""");
-				//.blklab14
-				}
-				//.blklab14
+			//lengthof %20 = %1 : [bool]
+			_20 = getSize(_1);
+			//iflt %7, %20 goto blklab14 : int
+			if(_7<_20){goto blklab14;}
+			//fail ""index out of bounds (not less than length)""
+			perror("fail ""index out of bounds (not less than length)""");
+		}
+//.blklab14
 blklab14:
-				//update %1[%7] = %17 : [bool] -> [bool]
-				_1[_7] = _17;
-				//.blklab3
+		//update %1[%7] = %17 : [bool] -> [bool]
+		_1[_7] = _17;
+//.blklab3
 blklab3:
-				//nop
-				;
-			//end blklab0
-			}
-			//.blklab1
+		//nop
+		;
+	//end blklab0
+	}
+//.blklab1
 blklab1:
-			//return %1 : [bool]
-			return _1;
+	//return %1 : [bool]
+	return _1;
 }
 long long isAlive(long long _0, long long* _1, long long _1_size){
 	long long _22;
@@ -168,15 +166,15 @@ long long isAlive(long long _0, long long* _1, long long _1_size){
 	_11 = 1;
 	//sub %12 = %0, %11 : int
 	_12=_0-_11;
-		//assert blklab16
-		{
+	//assert blklab16
+	{
 		//const %23 = 0 : int
 		_23 = 0;
 		//ifge %12, %23 goto blklab15 : int
 		if(_12>=_23){goto blklab15;}
 		//fail ""index out of bounds (negative)""
 		perror("fail ""index out of bounds (negative)""");
-		//.blklab15
+//.blklab15
 blklab15:
 		//lengthof %24 = %1 : [bool]
 		_24 = getSize(_1);
@@ -184,64 +182,62 @@ blklab15:
 		if(_12<_24){goto blklab16;}
 		//fail ""index out of bounds (not less than length)""
 		perror("fail ""index out of bounds (not less than length)""");
-		//.blklab16
-		}
-		//.blklab16
+	}
+//.blklab16
 blklab16:
-		//indexof %13 = %1, %12 : [bool]
-		_13=_1[_12];
-		//const %14 = true : bool
-		_14 = true;
-		//ifeq %13, %14 goto blklab7 : bool
-		if(_13==_14){goto blklab7;}
-		//goto blklab5
-		goto blklab5;
-		//.blklab7
+	//indexof %13 = %1, %12 : [bool]
+	_13=_1[_12];
+	//const %14 = true : bool
+	_14 = true;
+	//ifeq %13, %14 goto blklab7 : bool
+	if(_13==_14){goto blklab7;}
+	//goto blklab5
+	goto blklab5;
+//.blklab7
 blklab7:
-		//const %17 = 1 : int
-		_17 = 1;
-		//add %18 = %0, %17 : int
-		_18=_0+_17;
-			//assert blklab18
-			{
-			//const %23 = 0 : int
-			_23 = 0;
-			//ifge %18, %23 goto blklab17 : int
-			if(_18>=_23){goto blklab17;}
-			//fail ""index out of bounds (negative)""
-			perror("fail ""index out of bounds (negative)""");
-			//.blklab17
+	//const %17 = 1 : int
+	_17 = 1;
+	//add %18 = %0, %17 : int
+	_18=_0+_17;
+	//assert blklab18
+	{
+		//const %23 = 0 : int
+		_23 = 0;
+		//ifge %18, %23 goto blklab17 : int
+		if(_18>=_23){goto blklab17;}
+		//fail ""index out of bounds (negative)""
+		perror("fail ""index out of bounds (negative)""");
+//.blklab17
 blklab17:
-			//lengthof %24 = %1 : [bool]
-			_24 = getSize(_1);
-			//iflt %18, %24 goto blklab18 : int
-			if(_18<_24){goto blklab18;}
-			//fail ""index out of bounds (not less than length)""
-			perror("fail ""index out of bounds (not less than length)""");
-			//.blklab18
-			}
-			//.blklab18
+		//lengthof %24 = %1 : [bool]
+		_24 = getSize(_1);
+		//iflt %18, %24 goto blklab18 : int
+		if(_18<_24){goto blklab18;}
+		//fail ""index out of bounds (not less than length)""
+		perror("fail ""index out of bounds (not less than length)""");
+	}
+//.blklab18
 blklab18:
-			//indexof %19 = %1, %18 : [bool]
-			_19=_1[_18];
-			//const %20 = true : bool
-			_20 = true;
-			//ifeq %19, %20 goto blklab8 : bool
-			if(_19==_20){goto blklab8;}
-			//goto blklab5
-			goto blklab5;
-			//.blklab8
+	//indexof %19 = %1, %18 : [bool]
+	_19=_1[_18];
+	//const %20 = true : bool
+	_20 = true;
+	//ifeq %19, %20 goto blklab8 : bool
+	if(_19==_20){goto blklab8;}
+	//goto blklab5
+	goto blklab5;
+//.blklab8
 blklab8:
-			//const %21 = true : bool
-			_21 = true;
-			//return %21 : bool
-			return _21;
-			//.blklab5
+	//const %21 = true : bool
+	_21 = true;
+	//return %21 : bool
+	return _21;
+//.blklab5
 blklab5:
-			//const %22 = false : bool
-			_22 = false;
-			//return %22 : bool
-			return _22;
+	//const %22 = false : bool
+	_22 = false;
+	//return %22 : bool
+	return _22;
 }
 void main(int argc, char** argv){
 	long long* _18;
@@ -314,7 +310,7 @@ void main(int argc, char** argv){
 		;
 	//end blklab9
 	}
-	//.blklab10
+//.blklab10
 blklab10:
 	//return
 	return;
