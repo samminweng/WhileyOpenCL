@@ -1,16 +1,16 @@
 #include "BoolList_Valid_2.h"
-int getSize(int *arr){
-int size=0;
+long long getSize(long long *arr){
+long long size=0;
 while(arr[size] != NULL){
 size++;
 }
 return size;
 }
-int* clone(int *arr, int size){
-int *ptr;
-int i;
+long long* clone(long long *arr, long long size){
+long long *ptr;
+long long i;
 //Clone all the values from board array due to immutable Whiley value
-ptr = (int*)malloc((size+1)*sizeof(int));
+ptr = (long long*)malloc((size+1)*sizeof(long long));
 //Copy data from 'board' array to 'nboard' array
 for(i=0;i<size;i++){
 ptr[i]=arr[i];
@@ -19,9 +19,9 @@ ptr[i]=arr[i];
 ptr[i]=NULL;
 return ptr;
 }
-char* toString(int arr[], int size, char *str){
-int i;
-int len;
+char* toString(long long arr[], long long size, char *str){
+long long i;
+long long len;
 i=0;
 strcpy(str, "[");
 for(i=0;i<size;i++){
@@ -40,18 +40,17 @@ len = strlen(str);
 str[len+1]=NULL;
 return str;
 }
-int* play(int* _0, int _0_size){
-	int _20;
-	int _7;
-	int _8;
-	int _11;
-	int _3;
-	int _5;
-	int _17;
-	int _6;
-	int _14;
-	int* _1;
-	int* _2;
+long long* play(long long* _0, long long _0_size){
+	long long _20;
+	long long _7;
+	long long _8;
+	long long _11;
+	long long _3;
+	long long _5;
+	long long _17;
+	long long _14;
+	long long* _1;
+	long long* _2;
 	//assign %2 = %0  : [bool]
 	_2 = clone(_0, getSize(_0));
 	//assign %1 = %2  : [bool]
@@ -60,10 +59,9 @@ int* play(int* _0, int _0_size){
 	_3 = 0;
 	//lengthof %5 = %0 : [bool]
 	_5 = getSize(_0);
+	//range %6 = %3, %5 : [int]
 	//forall %7 in %6 (%1) : [int]
-	for(_6=_3;_6<_5;_6++){
-		//forall %7 in %6 (%1) : [int]
-		_7=_6;
+	for(_7=_3;_7<_5;_7++){
 		//invoke %8 = (%7, %0) BoolList_Valid_2:isAlive : function(int,[bool]) => bool
 		_8=isAlive(_7 ,_0 , getSize(_0));
 		//const %11 = true : bool
@@ -137,23 +135,23 @@ blklab1:
 			//return %1 : [bool]
 			return _1;
 }
-int isAlive(int _0, int* _1, int _1_size){
-	int _22;
-	int _21;
-	int _20;
-	int _8;
-	int _11;
-	int _18;
-	int _3;
-	int _19;
-	int _5;
-	int _17;
-	int _6;
-	int _14;
-	int _23;
-	int _24;
-	int _12;
-	int _13;
+long long isAlive(long long _0, long long* _1, long long _1_size){
+	long long _22;
+	long long _21;
+	long long _20;
+	long long _8;
+	long long _11;
+	long long _18;
+	long long _3;
+	long long _19;
+	long long _5;
+	long long _17;
+	long long _6;
+	long long _14;
+	long long _23;
+	long long _24;
+	long long _12;
+	long long _13;
 	//const %3 = 0 : int
 	_3 = 0;
 	//ifle %0, %3 goto blklab5 : int
@@ -246,22 +244,21 @@ blklab5:
 			return _22;
 }
 void main(int argc, char** argv){
-	int* _18;
-	int* _17;
-	int _12;
-	int _13;
+	long long* _18;
+	long long* _17;
+	long long _13;
 	char str[1024];
-	int _7;
-	int _8;
-	int* _9;
-	int _11;
-	int _10;
-	int _3;
-	int _4;
-	int _5;
-	int _6;
-	int* _1;
-	int _2;
+	long long _7;
+	long long _8;
+	long long* _9;
+	long long _11;
+	long long _10;
+	long long _3;
+	long long _4;
+	long long _5;
+	long long _6;
+	long long* _1;
+	long long _2;
 	//const %2 = true : bool
 	_2 = true;
 	//const %3 = true : bool
@@ -277,7 +274,7 @@ void main(int argc, char** argv){
 	//const %8 = true : bool
 	_8 = true;
 	//newlist %9 = (%2, %3, %4, %5, %6, %7, %8) : [bool]
-	_9=(int*)malloc(8*sizeof(int));
+	_9=(long long*)malloc(8*sizeof(long long));
 	//newlist %9 = (%2, %3, %4, %5, %6, %7, %8) : [bool]
 	_9[0]=_2;
 	//newlist %9 = (%2, %3, %4, %5, %6, %7, %8) : [bool]
@@ -300,10 +297,9 @@ void main(int argc, char** argv){
 	_10 = 0;
 	//const %11 = 5 : int
 	_11 = 5;
+	//range %12 = %10, %11 : [int]
 	//forall %13 in %12 (%1) : [int]
-	for(_12=_10;_12<_11;_12++){
-		//forall %13 in %12 (%1) : [int]
-		_13=_12;
+	for(_13=_10;_13<_11;_13++){
 		//fieldload %15 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}
 		//fieldload %16 = %15 println : {method(any) => void print,method(any) => void println}
 		//assign %17 = %1  : [bool]

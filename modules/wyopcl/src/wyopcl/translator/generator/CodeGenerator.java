@@ -12,6 +12,7 @@ import wycc.lang.SyntaxError;
 import wyil.lang.Code;
 import wyil.lang.Code.Block;
 import wyil.lang.Codes;
+import wyil.lang.Codes.BinaryOperator;
 import wyil.lang.Type;
 import wyil.lang.Type.EffectiveIndexible;
 import wyil.lang.Type.FunctionOrMethod;
@@ -31,7 +32,7 @@ public class CodeGenerator{
 	private HashMap<String, String> vars;
 	private HashMap<Integer, Type> params;
 	private ArrayList<String> statements;	
-	private String loop_condition;
+	private BinaryOperator loop_condition;
 	private String assert_label;
 	private String indent="\t";
 	public CodeGenerator(Configuration config){
@@ -64,7 +65,7 @@ public class CodeGenerator{
 	 */
 	private String translate(Type type){
 		if(type instanceof Type.Int || type instanceof Type.Bool){
-			return "int";
+			return "long long";
 		}
 
 		if(type instanceof Type.List){
@@ -142,7 +143,7 @@ public class CodeGenerator{
 				str += " "+prefix+var;			
 				//Add the extra 'size' param for the 'list' type
 				if(param instanceof Type.List){
-					str +=", int "+prefix+var+"_size";
+					str +=", long long "+prefix+var+"_size";
 				}			
 				isfirst = false;
 				var++;
@@ -211,7 +212,7 @@ public class CodeGenerator{
 	 * @param code
 	 */
 	private void translate(Codes.LengthOf code){
-		vars.put(prefix+code.target(), "int");
+		vars.put(prefix+code.target(), translate(code.assignedType()));
 		String stat = indent + prefix+code.target() + " = getSize("+prefix+code.operand(0)+");";
 		addStatement(code, stat);
 	}
@@ -225,29 +226,30 @@ public class CodeGenerator{
 		String target = prefix+code.target();
 		String left = prefix+code.operand(0);
 		String right = prefix+code.operand(1);
-		vars.put(target, "int");
+		vars.put(target, translate(type));
 		String stat=indent;
 		stat+= target+"="+left;
 		switch(code.kind){
 		case ADD:			
-			stat+= "+";
+			stat+= "+"+right+";";
 			break;
 		case SUB:
-			stat+= "-";
+			stat+= "-"+right+";";
 			break;
 		case MUL:
-			stat+= "*";
+			stat+= "*"+right+";";
 			break;
 		case DIV:
-			stat+= "/";
+			stat+= "/"+right+";";
 			break;
 		case REM:
-			stat+= "%";
+			stat+= "%"+right+";";
 			break;
 		case RANGE:
+			stat = null;
 			//Generate the for-loop condition.		
-			loop_condition = target+"="+left+";"+ target+"<"+right+";"+target+"++";			
-			return;
+			loop_condition = code;			
+			break;
 		case BITWISEOR:
 			break;
 		case BITWISEXOR:
@@ -259,7 +261,6 @@ public class CodeGenerator{
 		case RIGHTSHIFT:
 			break;
 		}
-		stat+= right+";";
 		addStatement(code, stat);
 	}
 
@@ -270,14 +271,17 @@ public class CodeGenerator{
 	private void translate(Codes.ForAll code){
 		String stat = "";
 		if(loop_condition != null){
-			stat += indent + "for("+loop_condition+"){";
+			//get starting value
+			String start = prefix+loop_condition.operand(0);
+			String end = prefix+loop_condition.operand(1);
+			String index = prefix+code.indexOperand;
+			vars.put(index, translate(code.type.element()));
+			vars.remove(prefix+code.sourceOperand);
+			//The expression for loop condition.
+			stat += indent + "for("+index+"="+start+";"+index+"<"+end+";"+index+"++){";
 			addStatement(code, stat);
 			//Add the indentation
-			indent += "\t";			
-			//The expression for element
-			vars.put(prefix+code.indexOperand, translate(code.type.element()));
-			stat = indent + prefix + code.indexOperand + "=" +prefix +code.sourceOperand+";";
-			addStatement(code, stat);			
+			indent += "\t";				
 			loop_condition = null;
 		}
 	}
@@ -423,8 +427,8 @@ public class CodeGenerator{
 	}
 
 	private void translate(Codes.IndexOf code){
-		//EffectiveIndexible type = code.type();
-		vars.put(prefix+code.target(), "int");
+		EffectiveIndexible type = code.type();
+		vars.put(prefix+code.target(), translate(type.element()));
 		String stat = indent;
 		stat += prefix+code.target() + "="+prefix+code.operand(0)
 				+"["+prefix+code.operand(1)+"];";
@@ -436,9 +440,10 @@ public class CodeGenerator{
 		
 		String stat = indent;
 		String target = prefix+code.target();
+		String type = translate(code.type());		
 		//Allocate the memory for the list
-		vars.put(target, translate(code.type()));
-		stat = indent + target + "=(int*)malloc("+(code.operands().length+1)+"*sizeof(int));";
+		vars.put(target, type);
+		stat = indent + target + "=("+type+")malloc("+(code.operands().length+1)+"*sizeof("+translate(code.type().element())+"));";
 		addStatement(code, stat);		
 		//Initialize the all the elements.
 		int index = 0;
@@ -466,9 +471,7 @@ public class CodeGenerator{
 		String field = code.field;
 		Type fieldType = code.fieldType();
 		params.put(code.target(), fieldType);
-		addStatement(code, null);
-		
-		
+		addStatement(code, null);		
 	}
 	/**
 	 * TODO: Not implemented.

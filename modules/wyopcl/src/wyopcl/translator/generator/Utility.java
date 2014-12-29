@@ -54,9 +54,9 @@ public final class Utility {
 	public static void generateToString(PrintWriter writer){
 		//Hard-coded the function temporarily.
 		String stats = "";		
-		stats +="char* toString(int arr[], int size, char *str){\n" + 
-				"int i;\n" + 
-				"int len;\n" + 
+		stats +="char* toString(long long arr[], long long size, char *str){\n" + 
+				"long long i;\n" + 
+				"long long len;\n" + 
 				"i=0;\n" + 
 				"strcpy(str, \"[\");\n" + 
 				"for(i=0;i<size;i++){\n" + 
@@ -86,11 +86,11 @@ public final class Utility {
 	 */
 	public static void generateClone(PrintWriter writer){
 		String stats = "";		
-		stats +="int* clone(int *arr, int size){\n" + 
-				"int *ptr;\n" + 
-				"int i;\n" + 
+		stats +="long long* clone(long long *arr, long long size){\n" + 
+				"long long *ptr;\n" + 
+				"long long i;\n" + 
 				"//Clone all the values from board array due to immutable Whiley value\n" + 
-				"ptr = (int*)malloc((size+1)*sizeof(int));\n" + 
+				"ptr = (long long*)malloc((size+1)*sizeof(long long));\n" + 
 				"//Copy data from 'board' array to 'nboard' array\n" + 
 				"for(i=0;i<size;i++){\n" + 
 				"ptr[i]=arr[i];\n" + 
@@ -111,8 +111,8 @@ public final class Utility {
 	 */
 	public static void generateGetSize(PrintWriter writer){
 		String stats = "";
-		stats += "int getSize(int *arr){\n" + 
-				"int size=0;\n" + 
+		stats +="long long getSize(long long *arr){\n" + 
+				"long long size=0;\n" + 
 				"while(arr[size] != NULL){\n" + 
 				"size++;\n" + 
 				"}\n" + 
