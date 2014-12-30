@@ -455,6 +455,11 @@ public class Analyzer {
 	private void addAttribute(String name, String att_name, Object value){
 		symboltable.putAttribute(name, att_name, value);
 	}
+	
+	public void addSymbol(String name, Symbol symbol){
+		symboltable.putSymbol(name, symbol);
+	}
+	
 	/**
 	 * Get the attribute value.
 	 * @param name
@@ -758,9 +763,12 @@ public class Analyzer {
 			int index = 0;
 			//Pass the bounds of input parameters.
 			for(Type paramType: functionOrMethod.type().params()){
-				invokeanalyzer.createEntryNode(paramType, prefix+index,
-						bnd.getLower(prefix+code.operand(index)),
-						bnd.getUpper(prefix+code.operand(index)));
+				String param = prefix+index;
+				String operand = prefix+code.operand(index);
+				invokeanalyzer.createEntryNode(paramType, param, bnd.getLower(operand), bnd.getUpper(operand));
+				//pass the symbol 
+				Symbol symbol = symboltable.getSymbol(operand).clone();
+				invokeanalyzer.addSymbol(param, symbol);
 				index++;
 			}
 			invokeanalyzer.iterateByteCode();						

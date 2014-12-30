@@ -18,13 +18,19 @@ public class SymbolTable {
 	 * @param name
 	 * @return
 	 */
-	private Symbol getSymbol(String name){
+	public Symbol getSymbol(String name){
 		if(!symbols.containsKey(name)){
 			Symbol var = new Symbol(name);
 			symbols.put(name, var);
 		}
 		return symbols.get(name);
 	}
+	
+	public void putSymbol(String name, Symbol symbol){
+		symbols.put(name, symbol);
+	}
+	
+	
 	
 	/**
 	 * Add the variable attribute to the hashmap.

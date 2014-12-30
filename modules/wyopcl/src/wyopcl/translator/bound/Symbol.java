@@ -6,7 +6,7 @@ import java.util.Properties;
  * @author Min-Hsien Weng
  *
  */
-public class Symbol {
+public class Symbol implements Cloneable{
 	private String name;
 	private Properties attributes;
 	
@@ -37,6 +37,13 @@ public class Symbol {
 	@Override
 	public String toString() {
 		return "Symbol [name=" + name + ", attributes=" + attributes + "]";
+	}
+	@Override
+	protected Symbol clone() {
+		Symbol symbol;
+		symbol = new Symbol(name);		
+		symbol.attributes = (Properties) this.attributes.clone();
+		return symbol;
 	}	
-
+	
 }
