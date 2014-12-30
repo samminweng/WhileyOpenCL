@@ -43,8 +43,7 @@ import wyopcl.translator.bound.constraint.Range;
 import wyopcl.translator.bound.constraint.Union;
 /***
  * A class to store all the constraints produced in the wyil file and infer the bounds consistent
- * with all the constraints. Due to the singleton design pattern, the class variables 'constraintListMap'
- * and 'label' has one instance.
+ * with all the constraints. The class variables 'constraintListMap' and 'label' have only one instance.
  *    
  * @author Min-Hsien Weng
  *
@@ -53,27 +52,24 @@ public class Analyzer {
 	private final Configuration config;
 	private final FunctionOrMethodDeclaration functionOrMethod;
 	private final WyilFile module;
-	//The boolean flag is used to show whether the code is inside an assertion or assumption.	
-	private boolean isAssertOrAssume = false;
-
-	//private String branch;
-	private final int depth;
 	private final String GRAY = (char)27 +"[30;1m";
 	private final String BLUE = (char)27 +"[34;1m";
 	private final String RED = (char)27 + "[31;1m";
-	private final String RESET = (char)27 + "[0m";
-
-	//The variables are used in the control flow graph (CFG).
-	//Root node of CFG
-	private BasicBlock entry;
-	private BasicBlock current_blk;
-	//The exit node of CFG
-	private BasicBlock exit;
-	//The list of basic block;
-	private List<BasicBlock> list = new ArrayList<BasicBlock>();
-	//The label name of the loop condition
-	private String loop_condition = "";
+	private final String RESET = (char)27 + "[0m";	
 	
+	
+	//The boolean flag is used to show whether the code is inside an assertion or assumption.	
+	private boolean isAssertOrAssume;
+	//private String branch;
+	private final int depth;
+	//The variables are used in the control flow graph (CFG).
+	private BasicBlock entry;//Root node of CFG
+	private BasicBlock current_blk;	
+	private BasicBlock exit;//The exit node of CFG
+	//The list of basic block;
+	private List<BasicBlock> list;
+	//The label name of the loop condition
+	private String loop_condition;
 	/*private class BoundChange{
 		private String name;
 		boolean isIncreasing = false;
@@ -81,28 +77,38 @@ public class Analyzer {
 		
 		public BoundChange(String name){
 			this.name = name;
-		}
-		
-		
-	}*/
-	
+		}		
+	}*/	
 	//A list of loop variables.
-	private HashMap<String, Boolean> loop_variables = new HashMap<String, Boolean>();
-
-	private boolean isGoto = false;
-
+	private HashMap<String, Boolean> loop_variables;
+	private boolean isGoto;
+	
+	//The symbol table of variables
+	private SymbolTable symboltable;
+	
+	private void initialize(){
+		//Initialize the variables
+		this.list = new ArrayList<BasicBlock>();
+		this.isAssertOrAssume = false;
+		this.symboltable = new SymbolTable();
+		//Initialize
+		this.entry = createBasicBlock("entry", BlockType.ENTRY);
+		this.exit = createBasicBlock("exit", BlockType.EXIT);
+		this.current_blk = this.entry;
+		this.loop_variables = new HashMap<String, Boolean>();
+		this.isGoto = false;
+	}
+	
+	
 	public Analyzer(int depth, Configuration config,
 			FunctionOrMethodDeclaration functionOrMethod, WyilFile module){
 		this.depth = depth;
 		this.config = config;
 		this.functionOrMethod = functionOrMethod;
 		this.module = module;
-		this.entry = createBasicBlock("entry", BlockType.ENTRY);
-		this.exit = createBasicBlock("exit", BlockType.EXIT);
-		this.current_blk = this.entry;
-	}
-
-
+		initialize();		
+	}	
+	
 	/**
 	 * Iterate each bytecode
 	 * @param analyzer
@@ -142,17 +148,6 @@ public class Analyzer {
 		BasicBlock blk = createBasicBlock("code", BlockType.BLOCK, this.entry);
 		setCurrentBlock(blk);
 	}
-
-
-
-	/**
-	 * Check if the asserted or assumed flag is enabled.
-	 * @return true if assertion/assume is on. Otherwise, return false
-	 */
-	private boolean isAssertOrAssume(){
-		return isAssertOrAssume;		
-	}
-
 
 	/**
 	 * Check if the type is instance of Integer by inferring the type from 
@@ -195,7 +190,7 @@ public class Analyzer {
 		String font_color_start = "";
 		String font_color_end = "";
 		//Use the ANSI escape color to distinguish the set of bytecode of the assertion.
-		if(isAssertOrAssume()){
+		if(isAssertOrAssume){
 			font_color_start = GRAY;
 			font_color_end = RESET;
 		}
@@ -462,17 +457,16 @@ public class Analyzer {
 	private void createIfElseBranchOrLoopStructure(String new_label, Constraint c, Constraint neg_c){
 		BasicBlock c_blk = getCurrentBlock();
 		//Check whether to add if-else blocks or loop-condition blocks.
-		if(!loop_condition.equals("")){
-
+		if(loop_condition != null){
 			BasicBlock loop_body = createBasicBlock(new_label, BlockType.LOOP_BODY, c_blk);
 			BasicBlock loop_exit = createBasicBlock(new_label, BlockType.LOOP_EXIT, c_blk);
-
 			//put the opposite constraint to current blk(loopbody)			
 			loop_body.addConstraint(neg_c);	
 			//put the original constraint to the loop_exit			
 			loop_exit.addConstraint(c);	
 			setCurrentBlock(loop_body);
-			loop_condition = "";
+			//Reset the loop condition flag.
+			loop_condition = null;
 		}else{
 			//Branch out the block 
 			//The left block does not have the name
@@ -702,7 +696,7 @@ public class Analyzer {
 
 			}
 
-			if(!isAssertOrAssume()){
+			if(!isAssertOrAssume){
 				createIfElseBranchOrLoopStructure(code.target, left_c, right_c);
 			}else{
 				//Instead of creating if-else branches, we put the condition to the current blk
@@ -753,7 +747,7 @@ public class Analyzer {
 	private void analyze(Codes.Label code){
 		String label = code.label;
 		//Check and determine whether to disable the assertion.
-		if(isAssertOrAssume()){
+		if(isAssertOrAssume){
 			if(getBasicBlock(label, BlockType.ASSERT)!= null 
 					|| getBasicBlock(label, BlockType.ASSUME) != null){
 				isAssertOrAssume = false;
