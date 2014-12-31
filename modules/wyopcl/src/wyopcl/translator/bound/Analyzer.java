@@ -452,7 +452,7 @@ public class Analyzer {
 	 * @param name
 	 * @param type
 	 */
-	private void addAttribute(String name, String att_name, Object value){
+	private void putAttribute(String name, String att_name, Object value){
 		symboltable.putAttribute(name, att_name, value);
 	}
 	
@@ -634,7 +634,7 @@ public class Analyzer {
 		String target = prefix+code.target();
 		String operand = prefix+code.operand(0);
 		
-		addAttribute(target, "type", code.type());
+		putAttribute(target, "type", code.type());
 		//Check if the assigned value is an integer
 		if(isIntType(code.type())){
 			//Add the constraint 'target = operand'			
@@ -644,7 +644,7 @@ public class Analyzer {
 		if(code.type() instanceof Type.List){
 			//Get the 'size' attribute from 
 			BigInteger size = (BigInteger) getAttribute(operand, "size");
-			addAttribute(target, "size", size);
+			putAttribute(target, "size", size);
 		}
 		
 
@@ -659,14 +659,14 @@ public class Analyzer {
 		Constant constant = code.constant;
 		String target = prefix+code.target();
 		//Add type attribute
-		addAttribute(target, "type", code.assignedType());
+		putAttribute(target, "type", code.assignedType());
 		
 		//Check the value is an Constant.Integer
 		if(constant instanceof Constant.Integer){
 			//Add the 'Const' constraint.
 			BigInteger value = ((Constant.Integer)constant).value;
 			addConstraint(new Const(target, value));
-			addAttribute(target, "value", value);
+			putAttribute(target, "value", value);
 		}
 		
 	}
@@ -677,7 +677,13 @@ public class Analyzer {
 	 */
 	private void analyze(Codes.IndexOf code){
 		if(isIntType((Type) code.type())){
-			addConstraint(new Equals(prefix+code.target(), prefix+code.operand(0)));
+			String target = prefix+code.target();
+			String op = prefix+code.operand(0);
+			String index = prefix+code.operand(1);
+			
+			
+			
+			addConstraint(new Equals(target, op));
 		}
 	}
 
@@ -687,7 +693,7 @@ public class Analyzer {
 	 * @param code
 	 * @throws CloneNotSupportedException
 	 */
-	private void analyze(Codes.If code) throws CloneNotSupportedException{
+	private void analyze(Codes.If code) {
 		String left = prefix+code.leftOperand;
 		String right = prefix+code.rightOperand;
 
@@ -773,9 +779,20 @@ public class Analyzer {
 			}
 			invokeanalyzer.iterateByteCode();						
 			//Infer the bounds
-			bnd = invokeanalyzer.inferBounds();												
-			//propagate the bounds of return value.
-			this.addConstraint(new Range(prefix+code.target(), bnd.getLower("return"), bnd.getUpper("return")));
+			bnd = invokeanalyzer.inferBounds();
+			String return_reg = prefix+code.target();
+			Type return_type = code.type().ret();
+			//propagate the bounds of return value.						
+			addConstraint(new Range(return_reg, bnd.getLower("return"), bnd.getUpper("return")));
+			//Add 'type' attribute
+			putAttribute(return_reg, "type", return_type);
+			//Add 'size' attribute
+			if(return_type instanceof Type.List){
+				BigInteger size = (BigInteger) invokeanalyzer.getAttribute("return", "size");
+				putAttribute(return_reg, "size", size);
+			}
+			
+			
 			invokeanalyzer = null;
 		}
 	}
@@ -816,14 +833,14 @@ public class Analyzer {
 	 */
 	private void analyze(Codes.NewList code){
 		String target = prefix+code.target();
-		addAttribute(target, "type", code.type());		
+		putAttribute(target, "type", code.type());		
 		if(isIntType(code.type())){
 			for(int operand: code.operands()){
 				addConstraint(new Union(prefix+code.target(), prefix+operand));				
 			}
 		}		
 		//Add the 'size' attribute
-		addAttribute(target, "size", BigInteger.valueOf(code.operands().length));
+		putAttribute(target, "size", BigInteger.valueOf(code.operands().length));
 	}
 
 	/**
@@ -832,13 +849,20 @@ public class Analyzer {
 	 */
 	private void analyze(Codes.Return code){		
 		//Get the return operand
-		String ret = prefix+code.operand;
-		BasicBlock blk = getCurrentBlock();
+		String retOp = prefix+code.operand;
+		BasicBlock blk = getCurrentBlock();		
 		//Check if the return type is integer.
 		if(isIntType(code.type)){
-			//Add the 'Equals' constraint to the return (ret) variable.			
-			blk.addConstraint((new Assign("return", ret)));
+			//Add the 'Equals' constraint to the return (ret) variable.	
+			blk.addConstraint((new Assign("return", retOp)));
 		}		
+		Type type = code.type;
+		putAttribute("return", "type", type);
+		if(type instanceof Type.List){
+			//Get 'size' att from ret op
+			BigInteger size = (BigInteger) getAttribute(retOp, "size");
+			putAttribute("return", "size", size);
+		}
 		//Connect the current block with exit block.		
 		blk.addChild(getBasicBlock("exit", BlockType.EXIT));
 		setCurrentBlock(null);
@@ -911,12 +935,13 @@ public class Analyzer {
 		BasicBlock loopbody = createBasicBlock(branch, BlockType.LOOP_BODY, loopheader);
 		BasicBlock loopexit = createBasicBlock(branch, BlockType.LOOP_EXIT, loopheader);
 		
-		String indexOp = prefix+code.indexOperand;
-		addAttribute(indexOp, "type", code.type.element());
 		//Check if each element is an integer
-		if(isIntType((Type) code.type)){			
+		if(isIntType((Type) code.type)){
+			String indexOp = prefix+code.indexOperand;
+			putAttribute(indexOp, "type", code.type.element());			
+			String sourceOp = prefix+code.sourceOperand;			
 			//Propagate the range of source register to the index reg 
-			loopbody.addConstraint(new Equals(indexOp, prefix+code.sourceOperand));
+			loopbody.addConstraint(new Equals(indexOp, sourceOp));
 			//Do not add any constraint to loop exit.
 		}
 
@@ -928,8 +953,18 @@ public class Analyzer {
 	 * short integer as the length of a list.  
 	 * @param code
 	 */
-	private void analyze(Codes.LengthOf code){		
-		addConstraint(new Range(prefix+code.target(), BigInteger.ZERO, BigInteger.valueOf(32767)));		
+	private void analyze(Codes.LengthOf code){
+		//Get the size att
+		String op = prefix+code.operand(0);
+		BigInteger size = (BigInteger) getAttribute(op, "size");
+		
+		String target = prefix+code.target();
+		Type type = code.assignedType();
+		//Add 'type' att
+		putAttribute(target, "type", type);
+		//Add 'value' att
+		putAttribute(target, "value", size);
+		addConstraint(new Const(target, size));		
 	}
 
 	/**
@@ -982,11 +1017,16 @@ public class Analyzer {
 	 */
 	private void analyze(Codes.BinaryOperator code){
 		String target = prefix+code.target(); 
-		addAttribute(target, "type", code.type());		
+		//Add the type att
+		Type type = code.assignedType();
+		putAttribute(target, "type", type);		
 		if(isIntType(code.type())){
+			//Get the values
+			BigInteger left = (BigInteger)getAttribute(prefix+code.operand(0), "value");
+			BigInteger right = (BigInteger)getAttribute(prefix+code.operand(1), "value");			
 			switch (code.kind) {
 			case ADD:
-				addConstraint(new Plus(target, prefix+code.operand(0), prefix+code.operand(1)));
+				addConstraint(new Plus(target, prefix+code.operand(0), prefix+code.operand(1)));				
 				break;
 			case SUB:
 				//target = op(0) - op(1) => target+op(1) = op(0)		
@@ -1000,14 +1040,9 @@ public class Analyzer {
 				break;			
 			case RANGE:
 				//Take the union of operands
-				for(int operand: code.operands()){
-					addConstraint(new Union(target, prefix+operand));
-				}
-				//Get the starting value
-				BigInteger start = (BigInteger)getAttribute(prefix+code.operand(0), "value");
-				BigInteger end = (BigInteger)getAttribute(prefix+code.operand(1), "value");				
-				//Add the size for
-				addAttribute(target, "size", end.subtract(start).subtract(BigInteger.ONE));
+				addConstraint(new Range(target, left, right));
+				//Add the size att
+				putAttribute(target, "size", right.subtract(left).subtract(BigInteger.ONE));				
 				break;
 			case BITWISEAND:
 				break;			
@@ -1111,15 +1146,15 @@ public class Analyzer {
 		String target = prefix+code.target();
 		String record = prefix+code.operand(0);
 		//add the type to the record
-		addAttribute(record, "type", code.type());		
+		putAttribute(record, "type", code.type());		
 		//Target 
-		addAttribute(target, "type", code.fieldType());
-		addAttribute(target, "field", code.field);
+		putAttribute(target, "type", code.fieldType());
+		putAttribute(target, "field", code.field);
 	}
 
 	private void analyze(Codes.Convert code){
 		String target = prefix+code.target();
-		addAttribute(target, "type", code.result);
+		putAttribute(target, "type", code.result);
 		
 	}
 	

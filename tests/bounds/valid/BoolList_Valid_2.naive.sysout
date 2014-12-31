@@ -20,8 +20,8 @@ main.18 [	invoke %18 = (%1) BoolList_Valid_2:play : function([bool]) => [bool]]
 Bounds of main{
 	D(%10) = [0..0]
 	D(%11) = [5..5]
-	D(%12) = [5..5]
-	D(%13) = [5..5]
+	D(%12) = [0..5]
+	D(%13) = [0..5]
 }
 Consistency=true
 play.0 [	assign %2 = %0  : [bool]]
@@ -33,9 +33,9 @@ play.5 [	forall %7 in %6 (%1) : [int]]
 play.6 [	invoke %8 = (%7, %0) BoolList_Valid_2:isAlive : function(int,[bool]) => bool]
 Bounds of play{
 	D(%3) = [0..0]
-	D(%5) = [0..32767]
-	D(%6) = [0..32767]
-	D(%7) = [0..32767]
+	D(%5) = [7..7]
+	D(%6) = [0..7]
+	D(%7) = [0..7]
 }
 Consistency=true
 isAlive.0 [	const %3 = 0 : int]
@@ -85,14 +85,14 @@ Bounds of isAlive{
 	D(%0) = [-infinity..infinity]
 	D(%3) = [0..0]
 	D(%5) = [1..1]
-	D(%6) = [2..32766]
-	D(%8) = [0..32767]
+	D(%6) = [2..6]
+	D(%8) = [7..7]
 	D(%11) = [1..1]
-	D(%12) = [-1..32766]
+	D(%12) = [-1..6]
 	D(%17) = [1..1]
 	D(%18) = [-infinity..infinity]
 	D(%23) = [0..0]
-	D(%24) = [0..32767]
+	D(%24) = [7..7]
 }
 Consistency=true
 play.7 [	const %11 = true : bool]
@@ -131,11 +131,11 @@ play.39 [	return %1 : [bool]]
 Bounds of play{
 	D(%0) = [-infinity..infinity]
 	D(%3) = [0..0]
-	D(%5) = [0..32767]
-	D(%6) = [0..32767]
-	D(%7) = [0..32767]
+	D(%5) = [7..7]
+	D(%6) = [0..7]
+	D(%7) = [0..7]
 	D(%8) = [-infinity..infinity]
-	D(%20) = [0..32767]
+	D(%20) = [0..7]
 }
 Consistency=true
 main.19 [	assign %1 = %18  : [bool]]
@@ -147,8 +147,8 @@ Bounds of main{
 	D(%1) = [-infinity..infinity]
 	D(%10) = [0..0]
 	D(%11) = [5..5]
-	D(%12) = [5..5]
-	D(%13) = [5..5]
+	D(%12) = [0..5]
+	D(%13) = [0..5]
 	D(%18) = [-infinity..infinity]
 }
 Consistency=true
