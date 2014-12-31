@@ -59,7 +59,7 @@ public class Analyzer {
 	private final String prefix = "%";
 	
 	//The boolean flag is used to show whether the code is inside an assertion or assumption.	
-	private boolean isAssertOrAssume;
+	private String assertOrAssume_label;
 	//private String branch;
 	private final int depth;
 	//The variables are used in the control flow graph (CFG).
@@ -89,7 +89,7 @@ public class Analyzer {
 	private void initialize(){
 		//Initialize the variables
 		this.list = new ArrayList<BasicBlock>();
-		this.isAssertOrAssume = false;
+		this.assertOrAssume_label = null;
 		this.symboltable = new SymbolTable();
 		//Initialize
 		this.entry = createBasicBlock("entry", BlockType.ENTRY);
@@ -191,7 +191,7 @@ public class Analyzer {
 		String font_color_start = "";
 		String font_color_end = "";
 		//Use the ANSI escape color to distinguish the set of bytecode of the assertion.
-		if(isAssertOrAssume){
+		if(assertOrAssume_label != null){
 			font_color_start = GRAY;
 			font_color_end = RESET;
 		}
@@ -402,12 +402,22 @@ public class Analyzer {
 	 */
 	private BasicBlock createBasicBlock(String label, BlockType type, BasicBlock... parents){
 		BasicBlock blk = new BasicBlock(label, type);
-		list.add(blk);
-		BasicBlock parent = parents.length > 0 ? parents[0] : null;
-		if(parent != null){
-			parent.addChild(blk);
-		}		
-		return blk;
+		//Check if the block exists
+		if(!list.contains(blk)){
+			list.add(blk);
+			BasicBlock parent = parents.length > 0 ? parents[0] : null;
+			if(parent != null){
+				parent.addChild(blk);
+			}
+			return blk;
+		}else{
+			for(BasicBlock block: list){
+				if(blk.equals(block)){
+					return block;
+				}				
+			}
+		}
+		return null;
 	}	
 
 	/**
@@ -616,8 +626,8 @@ public class Analyzer {
 
 
 	private void analyze(Codes.AssertOrAssume code){		
-		BasicBlock current_blk = getCurrentBlock();
-
+		/**BasicBlock current_blk = getCurrentBlock();
+		
 		BlockType type = null;
 		if(code instanceof Assert){			
 			type = BlockType.ASSERT;
@@ -626,14 +636,13 @@ public class Analyzer {
 		}					
 
 		BasicBlock blk = createBasicBlock(code.target, type, current_blk);
-		setCurrentBlock(blk);
-		isAssertOrAssume = true;
+		setCurrentBlock(blk);*/
+		assertOrAssume_label = code.target;
 	}
 
 	private void analyze(Codes.Assign code){
 		String target = prefix+code.target();
-		String operand = prefix+code.operand(0);
-		
+		String operand = prefix+code.operand(0);		
 		putAttribute(target, "type", code.type());
 		//Check if the assigned value is an integer
 		if(isIntType(code.type())){
@@ -741,7 +750,7 @@ public class Analyzer {
 
 			}
 
-			if(!isAssertOrAssume){
+			if(assertOrAssume_label==null){
 				createIfElseBranchOrLoopStructure(code.target, left_c, right_c);
 			}else{
 				//Instead of creating if-else branches, we put the condition to the current blk
@@ -771,9 +780,14 @@ public class Analyzer {
 			for(Type paramType: functionOrMethod.type().params()){
 				String param = prefix+index;
 				String operand = prefix+code.operand(index);
-				invokeanalyzer.createEntryNode(paramType, param, bnd.getLower(operand), bnd.getUpper(operand));
+				//Check parameter type
+				if(isIntType(paramType)){
+					invokeanalyzer.createEntryNode(paramType, param, bnd.getLower(operand), bnd.getUpper(operand));					
+				}
 				//pass the symbol 
 				Symbol symbol = symboltable.getSymbol(operand).clone();
+				//Update the name
+				symbol.setName(param);
 				invokeanalyzer.addSymbol(param, symbol);
 				index++;
 			}
@@ -806,18 +820,15 @@ public class Analyzer {
 	private void analyze(Codes.Label code){
 		String label = code.label;
 		//Check and determine whether to disable the assertion.
-		if(isAssertOrAssume){
-			if(getBasicBlock(label, BlockType.ASSERT)!= null 
-					|| getBasicBlock(label, BlockType.ASSUME) != null){
-				isAssertOrAssume = false;
-			}		
+		if(assertOrAssume_label != null && assertOrAssume_label.equals(label) ){
+			assertOrAssume_label = null;		
 		}
 		//Get the target blk. If it is null, then create a new block.
 		BasicBlock blk = getBasicBlock(label);
 		if(blk == null){
 			blk = createBasicBlock(label, BlockType.BLOCK);
-		}		
-
+		}
+		
 		if(!isGoto){
 			getCurrentBlock().addChild(blk);
 		}

@@ -15,6 +15,15 @@ public class Symbol implements Cloneable{
 		this.attributes = new Properties();
 	}
 	/**
+	 * Update the name of the symbol
+	 * @param name
+	 */
+	public void setName(String name){
+		this.name = name;
+	}
+	
+	
+	/**
 	 * Add the attribute
 	 * @param att_name
 	 * @param att_value

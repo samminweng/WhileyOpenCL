@@ -65,12 +65,12 @@ public class BasicBlock implements Comparable<BasicBlock>{
 		},
 		IF_BRANCH(7){
 			public String toString(){
-				return "IF";
+				return "IF_BRANCH";
 			}
 		},
 		ELSE_BRANCH(8){
 			public String toString(){
-				return "ELSE";
+				return "ELSE_BRANCH";
 			}
 		},
 		EXIT(9){
