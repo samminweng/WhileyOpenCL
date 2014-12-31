@@ -430,10 +430,9 @@ public class Analyzer {
 		String dot_string= "digraph "+func_name+"{\n";		
 
 		for(BasicBlock blk: list){
-			if(!blk.isLeaf() && (!blk.getType().equals(BlockType.ASSERT)||
-					!blk.getType().equals(BlockType.ASSUME) )){
+			if(!blk.isLeaf()){
 				for(BasicBlock child: blk.getChildNodes()){
-					dot_string += "\""+blk.getType()+" [" +blk.getBranch()+"]\"->\""+ child.getType() +" ["+child.getBranch() + "]\";\n";
+					dot_string += "\""+blk.getBranch()+" [" +blk.getType()+"]\"->\""+ child.getBranch() +" ["+child.getType() + "]\";\n";
 				}
 			}
 		}
@@ -625,18 +624,7 @@ public class Analyzer {
 	}
 
 
-	private void analyze(Codes.AssertOrAssume code){		
-		/**BasicBlock current_blk = getCurrentBlock();
-		
-		BlockType type = null;
-		if(code instanceof Assert){			
-			type = BlockType.ASSERT;
-		}else{
-			type = BlockType.ASSUME;
-		}					
-
-		BasicBlock blk = createBasicBlock(code.target, type, current_blk);
-		setCurrentBlock(blk);*/
+	private void analyze(Codes.AssertOrAssume code){
 		assertOrAssume_label = code.target;
 	}
 
@@ -688,10 +676,7 @@ public class Analyzer {
 		if(isIntType((Type) code.type())){
 			String target = prefix+code.target();
 			String op = prefix+code.operand(0);
-			String index = prefix+code.operand(1);
-			
-			
-			
+			String index = prefix+code.operand(1);			
 			addConstraint(new Equals(target, op));
 		}
 	}
@@ -748,18 +733,16 @@ public class Analyzer {
 			default:			
 				System.err.println("Not implemented!");
 
-			}
-
-			if(assertOrAssume_label==null){
-				createIfElseBranchOrLoopStructure(code.target, left_c, right_c);
-			}else{
-				//Instead of creating if-else branches, we put the condition to the current blk
-				BasicBlock current_blk = getCurrentBlock();
-				current_blk.addConstraint(left_c);				
-			}
+			}			
 		}
 
-
+		if(assertOrAssume_label==null){
+			createIfElseBranchOrLoopStructure(code.target, left_c, right_c);
+		}else{
+			//Instead of creating if-else branches, we put the condition to the current blk
+			BasicBlock current_blk = getCurrentBlock();
+			current_blk.addConstraint(left_c);				
+		}
 
 
 	}
@@ -820,22 +803,27 @@ public class Analyzer {
 	private void analyze(Codes.Label code){
 		String label = code.label;
 		//Check and determine whether to disable the assertion.
-		if(assertOrAssume_label != null && assertOrAssume_label.equals(label) ){
-			assertOrAssume_label = null;		
-		}
-		//Get the target blk. If it is null, then create a new block.
-		BasicBlock blk = getBasicBlock(label);
-		if(blk == null){
-			blk = createBasicBlock(label, BlockType.BLOCK);
+		if(assertOrAssume_label != null){
+			if(assertOrAssume_label.equals(label)){
+				//Reset the value of label
+				assertOrAssume_label = null;
+			}						
+		}else{
+			//Get the target blk. If it is null, then create a new block.
+			BasicBlock blk = getBasicBlock(label);
+			if(blk == null){
+				blk = createBasicBlock(label, BlockType.BLOCK);
+			}
+			
+			if(!isGoto){
+				getCurrentBlock().addChild(blk);
+			}
+
+			//Switch the current block
+			setCurrentBlock(blk);
+			isGoto = false;
 		}
 		
-		if(!isGoto){
-			getCurrentBlock().addChild(blk);
-		}
-
-		//Switch the current block
-		setCurrentBlock(blk);
-		isGoto = false;
 	}
 
 	/**
@@ -1149,7 +1137,6 @@ public class Analyzer {
 		c_blk.addChild(new_blk);
 		//Set isGoto flag to avoid linking the next block with current block.
 		isGoto = true;
-
 		setCurrentBlock(null);
 	}
 
