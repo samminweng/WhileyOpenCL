@@ -286,7 +286,7 @@ void main(int argc, char** argv){
 	//newlist %9 = (%2, %3, %4, %5, %6, %7, %8) : [bool]
 	_9[6]=_8;
 	//newlist %9 = (%2, %3, %4, %5, %6, %7, %8) : [bool]
-	_9[7]=NULL;
+	_9[7]=END;
 	//assign %1 = %9  : [bool]
 	_1 = clone(_9, getSize(_9));
 	//const %10 = 0 : int
