@@ -27,7 +27,11 @@ public final class Utility {
 				"#include <errno.h>\n" + 
 				"#define false 0\n" + 
 				"#define true 1\n" + 
-				"#define NULL -1\n";
+				"#define END -1\n";
+		//Native function declaration
+		stats +="long long* clone(long long *arr, long long size);\n"+
+				"char* toString(long long arr[], long long size, char *str);\n"+
+				"long long getSize(long long *arr);\n";
 		
 		for(String func : list_func){
 			stats += func + ";\n";
@@ -53,27 +57,28 @@ public final class Utility {
 	 */
 	public static void generateToString(PrintWriter writer){
 		//Hard-coded the function temporarily.
+		String indent = "\t";
 		String stats = "";		
 		stats +="char* toString(long long arr[], long long size, char *str){\n" + 
-				"long long i;\n" + 
-				"long long len;\n" + 
-				"i=0;\n" + 
-				"strcpy(str, \"[\");\n" + 
-				"for(i=0;i<size;i++){\n" + 
-				"if(arr[i]==true){\n" + 
-				"strcat(str, \"true\");\n" + 
-				"}else{\n" + 
-				"strcat(str, \"false\");\n" + 
-				"}\n" + 
-				"if(i<size-1){\n" + 
-				"strcat(str, \", \");\n" + 
-				"}\n" + 
-				"}\n" + 
-				"strcat(str, \"]\");\n" + 
-				"//Add the ending\n" + 
-				"len = strlen(str);\n" + 
-				"str[len+1]=NULL;\n" + 
-				"return str;\n" + 
+				indent+"long long i;\n" + 
+				indent+"long long len;\n" + 
+				indent+"i=0;\n" + 
+				indent+"strcpy(str, \"[\");\n" + 
+				indent+"for(i=0;i<size;i++){\n" + 
+				indent+indent+"if(arr[i]==true){\n" + 
+				indent+indent+indent+"strcat(str, \"true\");\n" + 
+				indent+indent+"}else{\n" + 
+				indent+indent+indent+"strcat(str, \"false\");\n" + 
+				indent+indent+"}\n" + 
+				indent+indent+"if(i<size-1){\n" + 
+				indent+indent+indent+"strcat(str, \", \");\n" + 
+				indent+indent+"}\n" + 
+				indent+"}\n" + 
+				indent+"strcat(str, \"]\");\n" + 
+				indent+"//Add the ending\n" + 
+				indent+"len = strlen(str);\n" + 
+				indent+"str[len+1]=END;\n" + 
+				indent+"return str;\n" + 
 				"}";
 		writer.println(stats);
 		System.out.println(stats);
@@ -85,19 +90,20 @@ public final class Utility {
 	 * @param writer
 	 */
 	public static void generateClone(PrintWriter writer){
+		String indent = "\t";
 		String stats = "";		
 		stats +="long long* clone(long long *arr, long long size){\n" + 
-				"long long *ptr;\n" + 
-				"long long i;\n" + 
-				"//Clone all the values from board array due to immutable Whiley value\n" + 
-				"ptr = (long long*)malloc((size+1)*sizeof(long long));\n" + 
-				"//Copy data from 'board' array to 'nboard' array\n" + 
-				"for(i=0;i<size;i++){\n" + 
-				"ptr[i]=arr[i];\n" + 
-				"}\n" + 
-				"//Ending\n" + 
-				"ptr[i]=NULL;\n" + 
-				"return ptr;\n" + 
+				indent+"long long *ptr;\n" + 
+				indent+"long long i;\n" + 
+				indent+"//Clone all the values from board array due to immutable Whiley value\n" + 
+				indent+"ptr = (long long*)malloc((size+1)*sizeof(long long));\n" + 
+				indent+"//Copy data from 'board' array to 'nboard' array\n" + 
+				indent+"for(i=0;i<size;i++){\n" + 
+				indent+indent+"ptr[i]=arr[i];\n" + 
+				indent+"}\n" + 
+				indent+"//Ending\n" + 
+				indent+"ptr[i]=END;\n" + 
+				indent+"return ptr;\n" + 
 				"}";				
 	
 		writer.println(stats);
@@ -110,13 +116,14 @@ public final class Utility {
 	 * @param writer
 	 */
 	public static void generateGetSize(PrintWriter writer){
+		String indent = "\t";
 		String stats = "";
 		stats +="long long getSize(long long *arr){\n" + 
-				"long long size=0;\n" + 
-				"while(arr[size] != NULL){\n" + 
-				"size++;\n" + 
-				"}\n" + 
-				"return size;\n" + 
+				indent+"long long size=0;\n" + 
+				indent+"while(arr[size] != END){\n" + 
+				indent+indent+"size++;\n" + 
+				indent+"}\n" + 
+				indent+"return size;\n" + 
 				"}";
 		writer.println(stats);
 		System.out.println(stats);

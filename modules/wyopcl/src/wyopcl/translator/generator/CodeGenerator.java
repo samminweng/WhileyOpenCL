@@ -5,9 +5,7 @@ import static wycc.lang.SyntaxError.internalFailure;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map.Entry;
-
 import wycc.lang.SyntaxError;
 import wyil.lang.Code;
 import wyil.lang.Code.Block;
@@ -16,8 +14,6 @@ import wyil.lang.Codes.BinaryOperator;
 import wyil.lang.Type;
 import wyil.lang.Type.EffectiveIndexible;
 import wyil.lang.Type.FunctionOrMethod;
-import wyil.lang.WyilFile;
-import wyil.lang.WyilFile.Case;
 import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
 import wyopcl.translator.Configuration;
 /**

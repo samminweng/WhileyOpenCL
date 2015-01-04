@@ -1,44 +1,44 @@
 #include "BoolList_Valid_2.h"
 long long getSize(long long *arr){
-long long size=0;
-while(arr[size] != NULL){
-size++;
-}
-return size;
+	long long size=0;
+	while(arr[size] != END){
+		size++;
+	}
+	return size;
 }
 long long* clone(long long *arr, long long size){
-long long *ptr;
-long long i;
-//Clone all the values from board array due to immutable Whiley value
-ptr = (long long*)malloc((size+1)*sizeof(long long));
-//Copy data from 'board' array to 'nboard' array
-for(i=0;i<size;i++){
-ptr[i]=arr[i];
-}
-//Ending
-ptr[i]=NULL;
-return ptr;
+	long long *ptr;
+	long long i;
+	//Clone all the values from board array due to immutable Whiley value
+	ptr = (long long*)malloc((size+1)*sizeof(long long));
+	//Copy data from 'board' array to 'nboard' array
+	for(i=0;i<size;i++){
+		ptr[i]=arr[i];
+	}
+	//Ending
+	ptr[i]=END;
+	return ptr;
 }
 char* toString(long long arr[], long long size, char *str){
-long long i;
-long long len;
-i=0;
-strcpy(str, "[");
-for(i=0;i<size;i++){
-if(arr[i]==true){
-strcat(str, "true");
-}else{
-strcat(str, "false");
-}
-if(i<size-1){
-strcat(str, ", ");
-}
-}
-strcat(str, "]");
-//Add the ending
-len = strlen(str);
-str[len+1]=NULL;
-return str;
+	long long i;
+	long long len;
+	i=0;
+	strcpy(str, "[");
+	for(i=0;i<size;i++){
+		if(arr[i]==true){
+			strcat(str, "true");
+		}else{
+			strcat(str, "false");
+		}
+		if(i<size-1){
+			strcat(str, ", ");
+		}
+	}
+	strcat(str, "]");
+	//Add the ending
+	len = strlen(str);
+	str[len+1]=END;
+	return str;
 }
 long long* play(long long* _0, long long _0_size){
 	long long _20;
