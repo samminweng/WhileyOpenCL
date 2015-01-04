@@ -25,6 +25,7 @@ public class CodeGenerator{
 	public ArrayList<String> list_func;//A list of function declaration. 
 	private final Configuration config;
 	private final String prefix = "_";
+	private final String end = "END";
 	private HashMap<String, String> vars;
 	private HashMap<Integer, Type> params;
 	private ArrayList<String> statements;	
@@ -457,7 +458,7 @@ public class CodeGenerator{
 			index++;
 		}
 		//Add the ending entry
-		stat = indent+target+"["+index+"]=NULL;";
+		stat = indent+target+"["+index+"]="+end+";";
 		addStatement(code, stat);		
 	}
 	/**
