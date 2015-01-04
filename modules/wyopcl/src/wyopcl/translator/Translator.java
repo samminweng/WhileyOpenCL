@@ -44,6 +44,7 @@ public class Translator implements Builder{
 		Runtime runtime = Runtime.getRuntime();
 		long start = System.currentTimeMillis();
 		long memory = runtime.freeMemory();
+		String message = "";
 		HashSet<Path.Entry<?>> generatedFiles = new HashSet<Path.Entry<?>>();
 		for(Pair<Path.Entry<?>,Path.Root> p : delta) {
 			//Path.Root dst = p.second();
@@ -55,9 +56,11 @@ public class Translator implements Builder{
 			switch(config.getMode()){
 				case BoundAnalysis:
 					analyzeFunctionCall(module);
+					message = "Bound analysis completed";
 					break;
 				case CodeGeneration:
 					generateCodeInC(module);
+					message = "Code generation completed";
 					break;
 			default:
 				break;
@@ -68,7 +71,7 @@ public class Translator implements Builder{
 		}
 		
 		long endTime = System.currentTimeMillis();
-		config.getLogger().logTimedMessage("Bound Analysis completed\nFile:" + config.getFilename()+".whiley Time: "+(endTime - start)+" ms",
+		config.getLogger().logTimedMessage(message+"\nFile:" + config.getFilename()+".whiley Time: "+(endTime - start)+" ms",
 				(endTime - start), memory);
 		return generatedFiles;
 	}
