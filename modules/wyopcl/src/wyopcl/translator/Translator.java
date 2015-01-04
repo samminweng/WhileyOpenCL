@@ -56,11 +56,11 @@ public class Translator implements Builder{
 			switch(config.getMode()){
 				case BoundAnalysis:
 					analyzeFunctionCall(module);
-					message = "Bound analysis completed";
+					message = "Bound analysis completed\nFile:" + config.getFilename()+".whiley";
 					break;
 				case CodeGeneration:
 					generateCodeInC(module);
-					message = "Code generation completed";
+					message = "Code generation completed\nFile:"+config.getFilename()+".c";
 					break;
 			default:
 				break;
@@ -71,8 +71,7 @@ public class Translator implements Builder{
 		}
 		
 		long endTime = System.currentTimeMillis();
-		config.getLogger().logTimedMessage(message+"\nFile:" + config.getFilename()+".whiley Time: "+(endTime - start)+" ms",
-				(endTime - start), memory);
+		config.getLogger().logTimedMessage(message+" Time: "+(endTime - start)+" ms", (endTime - start), memory);
 		return generatedFiles;
 	}
 	
