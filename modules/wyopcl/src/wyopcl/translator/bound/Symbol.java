@@ -9,7 +9,7 @@ import java.util.Properties;
 public class Symbol implements Cloneable{
 	private String name;
 	private Properties attributes;
-	
+
 	public Symbol(String name){
 		this.name = name;
 		this.attributes = new Properties();
@@ -54,5 +54,6 @@ public class Symbol implements Cloneable{
 		symbol.attributes = (Properties) this.attributes.clone();
 		return symbol;
 	}	
+	
 	
 }
