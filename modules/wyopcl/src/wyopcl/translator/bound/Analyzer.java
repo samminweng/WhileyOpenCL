@@ -84,13 +84,13 @@ public class Analyzer {
 	private boolean isGoto;
 	
 	//The symbol table of variables
-	private SymbolTable symboltable;
+	private HashMap<String, Symbol> symbols;
 	
 	private void initialize(){
 		//Initialize the variables
 		this.list = new ArrayList<BasicBlock>();
 		this.assertOrAssume_label = null;
-		this.symboltable = new SymbolTable();
+		this.symbols = new HashMap<String, Symbol>();
 		//Initialize
 		this.entry = createBasicBlock("entry", BlockType.ENTRY);
 		this.exit = createBasicBlock("exit", BlockType.EXIT);
@@ -456,27 +456,45 @@ public class Analyzer {
 	private void addConstraint(Constraint c){		
 		getCurrentBlock().addConstraint(c);		
 	}
-	/**
-	 * Adds the variable type to the symbol table.
-	 * @param name
-	 * @param type
-	 */
-	private void putAttribute(String name, String att_name, Object value){
-		symboltable.putAttribute(name, att_name, value);
-	}
-	
-	public void addSymbol(String name, Symbol symbol){
-		symboltable.putSymbol(name, symbol);
-	}
 	
 	/**
-	 * Get the attribute value.
+	 * Get the symbol info for a variable.
 	 * @param name
-	 * @param att_name
 	 * @return
 	 */
+	public Symbol getSymbol(String name){
+		if(!symbols.containsKey(name)){
+			Symbol var = new Symbol(name);
+			symbols.put(name, var);
+		}
+		return symbols.get(name);
+	}
+	
+	/**
+	 * Add the variable attribute to the hashmap.
+	 * @param name the variable name
+	 * @param att_name the attribute name
+	 * @param att_value the attribute value
+	 * @return
+	 */
+	private void putAttribute(String name, String att_name, Object att_value){
+		Symbol symbol = getSymbol(name);
+		symbol.setAttribute(att_name, att_value);
+	}
+	
+	public void putSymbol(String name, Symbol symbol){
+		symbols.put(name, symbol);
+	}
+	
+	/**
+	 * Get the attribute of a variable
+	 * @param name
+	 * @param att_name
+	 * @return the attribute value. Return null if the variable does not contain the attribute.
+	 */
 	private Object getAttribute(String name, String att_name){
-		return symboltable.getAttribute(name, att_name);
+		Symbol symbol = getSymbol(name);
+		return symbol.getAttribute(att_name);
 	}
 
 	/**
@@ -768,10 +786,10 @@ public class Analyzer {
 					invokeanalyzer.createEntryNode(paramType, param, bnd.getLower(operand), bnd.getUpper(operand));					
 				}
 				//pass the symbol 
-				Symbol symbol = symboltable.getSymbol(operand).clone();
+				Symbol symbol = getSymbol(operand).clone();
 				//Update the name
 				symbol.setName(param);
-				invokeanalyzer.addSymbol(param, symbol);
+				invokeanalyzer.putSymbol(param, symbol);
 				index++;
 			}
 			invokeanalyzer.iterateByteCode();						
