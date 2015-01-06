@@ -63,7 +63,7 @@ public class Analyzer {
 	private final String RED = (char)27 + "[31;1m";
 	private final String RESET = (char)27 + "[0m";	
 	private final String prefix = "%";
-	
+
 	//The boolean flag is used to show whether the code is inside an assertion or assumption.	
 	private String assertOrAssume_label;
 	//private String branch;
@@ -80,7 +80,7 @@ public class Analyzer {
 		private String name;
 		boolean isIncreasing = false;
 		boolean isDescreasing = false;
-		
+
 		public BoundChange(String name){
 			this.name = name;
 		}		
@@ -88,10 +88,10 @@ public class Analyzer {
 	//A list of loop variables.
 	private HashMap<String, Boolean> loop_variables;
 	private boolean isGoto;
-	
+
 	//The symbol table of variables
 	private HashMap<String, Symbol> symbols;
-	
+
 	private void initialize(){
 		//Initialize the variables
 		this.list = new ArrayList<BasicBlock>();
@@ -104,8 +104,8 @@ public class Analyzer {
 		this.loop_variables = new HashMap<String, Boolean>();
 		this.isGoto = false;
 	}
-	
-	
+
+
 	public Analyzer(int depth, Configuration config,
 			FunctionOrMethodDeclaration functionOrMethod, WyilFile module){
 		this.depth = depth;
@@ -114,7 +114,7 @@ public class Analyzer {
 		this.module = module;
 		initialize();		
 	}
-	
+
 	private String castDeclarationtoString(FunctionOrMethodDeclaration functionOrMethod){
 		String declaration ="";
 		declaration += functionOrMethod.type().ret() + " "+functionOrMethod.name()+" (";
@@ -146,8 +146,8 @@ public class Analyzer {
 		declaration +=")";
 		return declaration;
 	}
-	
-	
+
+
 	/**
 	 * Iterate each bytecode
 	 * @param analyzer
@@ -189,7 +189,7 @@ public class Analyzer {
 		BasicBlock blk = createBasicBlock("code", BlockType.BLOCK, this.entry);
 		setCurrentBlock(blk);
 	}
-	
+
 
 	/**
 	 * Check if the type is instance of Integer by inferring the type from 
@@ -254,27 +254,48 @@ public class Analyzer {
 	 * @param isVerbose the mode of message
 	 */
 	private void printBounds(Bounds bnd){
-		System.out.print("Bounds of "+functionOrMethod.name()+"{");
-		//Print out the bounds
-		System.out.println(bnd.toString());
-		
+		System.out.print("Bounds of "+functionOrMethod.name()+"{\n");		
 		//Sort the symbol tables		
 		List<Symbol> sortedSymbols = new ArrayList<Symbol>(symbols.values());
 		Collections.sort(sortedSymbols);
+		//Print out the bounds
+		for(Symbol symbol : sortedSymbols){
+			String str_symbols = "";
+			String name = symbol.getName();
+			if(bnd.isExisting(name)){
+				Domain d = bnd.getDomain(name);
+				str_symbols+="\t"+d+"\n";
+			}			
+			if(!str_symbols.equals("")){
+				System.out.print(str_symbols);
+			}
+		}
+
 		//Print out the values of available variables
 		for(Symbol symbol : sortedSymbols){
 			String str_symbols = "";
-			//get the 'type' attribute
-			Type type = (Type) symbol.getAttribute("type");			
+			String name = symbol.getName();					
 			//print the 'value' attribute
 			Object val = symbol.getAttribute("value");
 			if(val != null){
-				str_symbols += "\tval("+symbol.getName()+")="+val+"\n";
-			}			
+				str_symbols += "\tvalue("+name+")\t= "+val+"\n";
+			}
+			
+			if(!str_symbols.equals("")){
+				System.out.print(str_symbols);
+			}
+		}
+
+		//Print out the size of available variables
+		for(Symbol symbol : sortedSymbols){
+			String str_symbols = "";
+			String name = symbol.getName();
+			//get the 'type' attribute
+			Type type = (Type) symbol.getAttribute("type");						
 			//print the 'size' att
 			if(type instanceof Type.List){
 				Object size = symbol.getAttribute("size");
-				str_symbols += "\tsize("+symbol.getName()+")="+size+"\n";
+				str_symbols += "\tsize("+name+")\t= "+size+"\n";
 			}
 			if(!str_symbols.equals("")){
 				System.out.print(str_symbols);
@@ -306,7 +327,7 @@ public class Analyzer {
 		for(BasicBlock parent: blk.getParentNodes()){
 			blk.unionBounds(parent);
 		}
-		
+
 		if(blk.getType().equals(BlockType.LOOP_BODY)){
 			bnd_after = (Bounds) blk.getBounds().clone();
 			//check loop variable is increasing
@@ -523,7 +544,7 @@ public class Analyzer {
 	private void addConstraint(Constraint c){		
 		getCurrentBlock().addConstraint(c);		
 	}
-	
+
 	/**
 	 * Get the symbol info for a variable.
 	 * @param name
@@ -536,7 +557,7 @@ public class Analyzer {
 		}
 		return symbols.get(name);
 	}
-	
+
 	/**
 	 * Add the variable attribute to the hashmap.
 	 * @param name the variable name
@@ -548,11 +569,11 @@ public class Analyzer {
 		Symbol symbol = getSymbol(name);
 		symbol.setAttribute(att_name, att_value);
 	}
-	
+
 	public void putSymbol(String name, Symbol symbol){
 		symbols.put(name, symbol);
 	}
-	
+
 	/**
 	 * Get the attribute of a variable
 	 * @param name
@@ -722,13 +743,13 @@ public class Analyzer {
 			//Add the constraint 'target = operand'			
 			addConstraint(new Assign(target, operand));
 		}
-		
+
 		if(code.type() instanceof Type.List){
 			//Get the 'size' attribute from 
 			BigInteger size = (BigInteger) getAttribute(operand, "size");
 			putAttribute(target, "size", size);
 		}
-		
+
 
 	}
 
@@ -742,7 +763,7 @@ public class Analyzer {
 		String target = prefix+code.target();
 		//Add type attribute
 		putAttribute(target, "type", code.assignedType());
-		
+
 		//Check the value is an Constant.Integer
 		if(constant instanceof Constant.Integer){
 			//Add the 'Const' constraint.
@@ -750,7 +771,7 @@ public class Analyzer {
 			addConstraint(new Const(target, value));
 			putAttribute(target, "value", value);
 		}
-		
+
 	}
 	/**
 	 * Implements the propagation rule for <code>Codes.IndexOf</code> bytecode
@@ -873,8 +894,8 @@ public class Analyzer {
 				BigInteger size = (BigInteger) invokeanalyzer.getAttribute("return", "size");
 				putAttribute(return_reg, "size", size);
 			}
-			
-			
+
+
 			invokeanalyzer = null;
 		}
 	}
@@ -899,7 +920,7 @@ public class Analyzer {
 			if(blk == null){
 				blk = createBasicBlock(label, BlockType.BLOCK);
 			}
-			
+
 			if(!isGoto){
 				getCurrentBlock().addChild(blk);
 			}
@@ -908,7 +929,7 @@ public class Analyzer {
 			setCurrentBlock(blk);
 			isGoto = false;
 		}
-		
+
 	}
 
 	/**
@@ -1018,7 +1039,7 @@ public class Analyzer {
 		String branch = "blklab"+blk_num;
 		BasicBlock loopbody = createBasicBlock(branch, BlockType.LOOP_BODY, loopheader);
 		BasicBlock loopexit = createBasicBlock(branch, BlockType.LOOP_EXIT, loopheader);
-		
+
 		//Check if each element is an integer
 		if(isIntType((Type) code.type)){
 			String indexOp = prefix+code.indexOperand;
@@ -1041,7 +1062,7 @@ public class Analyzer {
 		//Get the size att
 		String op = prefix+code.operand(0);
 		BigInteger size = (BigInteger) getAttribute(op, "size");
-		
+
 		String target = prefix+code.target();
 		Type type = code.assignedType();
 		//Add 'type' att
@@ -1238,9 +1259,9 @@ public class Analyzer {
 	private void analyze(Codes.Convert code){
 		String target = prefix+code.target();
 		putAttribute(target, "type", code.result);
-		
+
 	}
-	
+
 
 
 }
