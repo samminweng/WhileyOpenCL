@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Stack;
 
 import wycc.lang.SyntaxError;
@@ -22,6 +23,7 @@ import wyil.lang.Codes.Assert;
 import wyil.lang.Codes.UnaryOperatorKind;
 import wyil.lang.Constant;
 import wyil.lang.Type;
+import wyil.lang.Type.Record;
 import wyil.lang.WyilFile;
 import wyil.lang.Type.Tuple;
 import wyil.lang.WyilFile.Case;
@@ -107,7 +109,40 @@ public class Analyzer {
 		this.functionOrMethod = functionOrMethod;
 		this.module = module;
 		initialize();		
-	}	
+	}
+	
+	private String castDeclarationtoString(FunctionOrMethodDeclaration functionOrMethod){
+		String declaration ="";
+		declaration += functionOrMethod.type().ret() + " "+functionOrMethod.name()+" (";
+		if(!functionOrMethod.name().equals("main")){			
+			boolean isFirst = true;
+			int index=0;
+			for(Type paramType : functionOrMethod.type().params()){
+				//input parameter
+				if(isFirst){
+					declaration += paramType+" "+prefix+index;
+				}else{
+					declaration += ", "+paramType;
+				}
+				isFirst = false;
+				index++;
+			}		
+		}else{
+			boolean isFirst = true;
+			Type.Record paramType = (Type.Record) functionOrMethod.type().params().get(0);
+			for(Entry<String, Type> entry :paramType.fields().entrySet()){
+				if(isFirst){
+					declaration += entry.getValue() + " "+entry.getKey();
+				}else{
+					declaration += ", " +entry.getValue() + " "+entry.getKey();
+				}
+				isFirst = false;
+			}			
+		}
+		declaration +=")";
+		return declaration;
+	}
+	
 	
 	/**
 	 * Iterate each bytecode
@@ -116,6 +151,8 @@ public class Analyzer {
 	 */
 	public void iterateByteCode(){
 		int line = 0;
+		//Print the function declaration
+		System.out.println(castDeclarationtoString(functionOrMethod));
 		for(Case mcase : functionOrMethod.cases()){
 			createEntryNode(functionOrMethod.type().params());
 			//Parse each byte-code and add the constraints accordingly.
