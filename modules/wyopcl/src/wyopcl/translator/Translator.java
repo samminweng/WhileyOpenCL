@@ -116,7 +116,6 @@ public class Translator implements Builder{
 		try {
 			writer = new PrintWriter(config.getFilename()+".c");
 			Utility.generateIncludes(writer, config.getFilename());
-			Utility.generateGetSize(writer);
 			Utility.generateClone(writer);
 			Utility.generateToString(writer);
 			//Iterate each function
@@ -145,7 +144,7 @@ public class Translator implements Builder{
 		//Write out the function signatures to *.h file.		
 		try{
 			writer = new PrintWriter(config.getFilename()+".h");
-			Utility.generateHeader(writer, generator.list_func);
+			Utility.generateHeader(writer, generator.list_func, config.isVerbose());
 			writer.close();
 		}catch (FileNotFoundException e) {
 			throw new RuntimeException("Error occurs in writing "+config.getFilename()+".h");

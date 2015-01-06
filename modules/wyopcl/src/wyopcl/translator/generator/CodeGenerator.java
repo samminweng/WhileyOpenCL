@@ -25,9 +25,8 @@ public class CodeGenerator{
 	public ArrayList<String> list_func;//A list of function declaration. 
 	private final Configuration config;
 	private final String prefix = "_";
-	private final String end = "END";
 	private HashMap<String, String> vars;
-	private HashMap<Integer, Type> params;
+	private HashMap<String, Type> params;//A list of input parameters 
 	private ArrayList<String> statements;	
 	private BinaryOperator loop_condition;
 	private String assert_label;
@@ -35,7 +34,7 @@ public class CodeGenerator{
 	public CodeGenerator(Configuration config){
 		this.config = config;
 		this.vars = new HashMap<String, String>();
-		this.params = new HashMap<Integer, Type>();
+		this.params = new HashMap<String, Type>();
 		this.statements = new ArrayList<String>();
 		this.list_func = new ArrayList<String>();
 	}
@@ -115,43 +114,43 @@ public class CodeGenerator{
 	}
 	
 	/**
-	 * Translates the function or method declaration (e.g. <code>int* play(int* _0, int size){</code>)
+	 * Translates the function or method declaration (e.g. <code>int* play(int* _0, int _0_size){</code>)
 	 * @param functionOrMethod
 	 */
 	public String translate(FunctionOrMethodDeclaration functionOrMethod){
 		String str = "";
-		//Get the return type
-		FunctionOrMethod type = functionOrMethod.type();
-		Type ret = type.ret();
-		str += translate(ret)+" ";
 		//Get the name
-		String name = functionOrMethod.name();
-		str += name + "(";
-		int var = 0;
-		//Translate the  input parameters
+		String name = functionOrMethod.name();		
 		if(name.equals("main")){
-			Type param = type.params().get(var);
-			str += translate(param);
-			//Put the input params into the lookup list.
-			params.put(var, param);
-		}else{			
+		 str = "int main(int argc, char** argv";
+		}else{
+			//Get the return type
+			FunctionOrMethod type = functionOrMethod.type();
+			Type ret = type.ret();
+			str += translate(ret)+" ";
+			str += name + "(";
 			boolean isfirst = true;
+			int index = 0;	
 			for(Type param :type.params()){
 				if(isfirst){
 					str += translate(param);
 				}else{
 					str += ", " + translate(param);
 				}
+				String op = prefix+index;
 				//Put the input params into the lookup list.
-				params.put(var, param);
+				params.put(op, param);
 				//Add the variable names
-				str += " "+prefix+var;			
+				str += " "+op;			
 				//Add the extra 'size' param for the 'list' type
 				if(param instanceof Type.List){
-					str +=", long long "+prefix+var+"_size";
-				}			
+					String op_size = op+"_size";
+					str +=", long long "+op_size;
+					params.put(op_size, Type.Int.T_INT);
+				}		
+				
 				isfirst = false;
-				var++;
+				index++;
 			}
 		}	
 
@@ -206,9 +205,19 @@ public class CodeGenerator{
 	 * @param code
 	 */
 	private void translate(Codes.Assign code){
-		vars.put(prefix+code.target(), translate(code.type()));//Var
-		String stat = indent + prefix+code.target()+ " = clone("+ prefix+code.operand(0) + ", getSize("+ prefix+code.operand(0)+"));";
-		addStatement(code, stat);		
+		String target = prefix+code.target();
+		String op = prefix+code.operand(0);
+		if(code.type()instanceof Type.List){
+			vars.put(target, translate(code.type()));//Var
+			String target_size = target+"_size";			
+			String stat = indent + target+ " = clone("+ op + ", "+ op+"_size);";
+			addStatement(code, stat);
+			//Add the '_return_size' variable.
+			vars.put(target_size, "long long");
+			stat = indent + target_size+" = "+op+"_size;";
+			addStatement(null, stat);
+		}
+		
 	}
 
 	/**
@@ -218,7 +227,7 @@ public class CodeGenerator{
 	 */
 	private void translate(Codes.LengthOf code){
 		vars.put(prefix+code.target(), translate(code.assignedType()));
-		String stat = indent + prefix+code.target() + " = getSize("+prefix+code.operand(0)+");";
+		String stat = indent + prefix+code.target() + " = "+prefix+code.operand(0)+"_size;";
 		addStatement(code, stat);
 	}
 
@@ -294,31 +303,42 @@ public class CodeGenerator{
 
 	/**
 	 * Generates the code for <code>Codes.Invoke</code> code
-	 * @param code
+	 * TODO The size of the returned list requires the symbolic analysis.
+	 * @param code 
 	 */
 	private void translate(Codes.Invoke code){
 		String stat = indent;
 		String ret = prefix+code.target();
-		vars.put(ret, translate(code.type().ret()));
+		Type return_type = code.type().ret();
+		vars.put(ret, translate(return_type));
 		stat += ret+ "="+code.name.name()+"(";
 		//Input parameters
 		boolean isFirst = true;
 		int index =0;
+		String op_size = "";
 		for(int operand: code.operands()){
 			if(isFirst){
 				stat+= prefix+operand;
 			}else{
 				stat+= " ,"+prefix+operand;
 			}
-			//Add the 'size' parameter 
+			//Add the '_reg_size' parameter 
 			if(code.type().params().get(index) instanceof Type.List){
-				stat += " , getSize("+prefix+operand+")";
+				op_size = prefix+operand+"_size";
+				stat += " , "+op_size;
 			}
 			isFirst = false;
 			index++;
 		}
 		stat += ");";
-		addStatement(code, stat);			
+		addStatement(code, stat);
+		//Add the 'ret_size' variable.
+		if(return_type instanceof Type.List){
+			String ret_size = ret+"_size";
+			vars.put(ret_size, "long long");
+			stat = indent+ret_size+"="+op_size+";";
+			addStatement(null, stat);
+		}		
 	}
 
 	/**
@@ -426,7 +446,8 @@ public class CodeGenerator{
 		if(code.operand != -1){
 			stat += "return "+prefix+code.operand+";";
 		}else{
-			stat += "return;";
+			//The return value of main function.
+			stat += "return -1;";
 		}
 		addStatement(code, stat);			
 	}
@@ -448,8 +469,13 @@ public class CodeGenerator{
 		String type = translate(code.type());		
 		//Allocate the memory for the list
 		vars.put(target, type);
-		stat = indent + target + "=("+type+")malloc("+(code.operands().length+1)+"*sizeof("+translate(code.type().element())+"));";
-		addStatement(code, stat);		
+		stat = indent + target + "=("+type+")malloc("+(code.operands().length)+"*sizeof("+translate(code.type().element())+"));";
+		addStatement(code, stat);
+		//Add the 'target_size' variable to indicate the length of the list
+		String target_size = target+"_size";
+		vars.put(target_size, "long long");
+		stat = indent + target_size+"="+ code.operands().length+";";
+		addStatement(code, stat);
 		//Initialize the all the elements.
 		int index = 0;
 		for(int operand: code.operands()){
@@ -457,9 +483,6 @@ public class CodeGenerator{
 			addStatement(code, stat);
 			index++;
 		}
-		//Add the ending entry
-		stat = indent+target+"["+index+"]="+end+";";
-		addStatement(code, stat);		
 	}
 	/**
 	 * TODO: Not implemented.
@@ -475,7 +498,7 @@ public class CodeGenerator{
 		}*/
 		String field = code.field;
 		Type fieldType = code.fieldType();
-		params.put(code.target(), fieldType);
+		params.put(prefix+code.target(), fieldType);
 		addStatement(code, null);		
 	}
 	/**
@@ -500,8 +523,8 @@ public class CodeGenerator{
 			//Hard-coded the 'str' var
 			vars.put("str[1024]","char");			
 			//Hard-coded the invoked (temporarily).
-			stat += "printf(\"%s\\n\",toString("+prefix+code.parameter(0)+", "
-					+ "getSize("+prefix+code.parameter(0)+"), str));";
+			String op = prefix+code.parameter(0);
+			stat += "printf(\"%s\\n\",toString("+op+", "+op+"_size, str));";
 		}		
 		addStatement(code, stat);		
 	}
