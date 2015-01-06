@@ -38,61 +38,22 @@ public class Plus extends Constraint{
 		if (min_y != null && min_z != null) {
 			//max (min_x, min_y + min_z)
 			BigInteger min = min_y.add(min_z);
-			/*if(min_x != null){
-				min = min_x.max(min);
-			}*/			
-			bnd.isChanged |= bnd.addLowerBound(x, min);
+			if(min_x!= null && min.compareTo(min_x)<0){
+				bnd.isChanged |= bnd.widenLowerBound(x, min);
+			}else{
+				bnd.isChanged |= bnd.addLowerBound(x, min);
+			}
 		}
 		// Add the upper bound of x variable.
 		if (max_y != null && max_z != null) {
 			//min (max_x, max_y + max_z)
 			BigInteger max = max_y.add(max_z);
-			/*if(max_x != null){
-				max = max_x.min(max);
-			}*/
-			bnd.isChanged |= bnd.addUpperBound(x, max);
+			if(max_x!= null && max.compareTo(max_x)>0){
+				bnd.isChanged |= bnd.widenUpperBound(x, max);				
+			}else{
+				bnd.isChanged |= bnd.addUpperBound(x, max);
+			}			
 		}
-
-		// Apply the propagate rule on y variable.
-		// Set the lower bound of y variable.
-		if (min_x != null && max_z != null) {
-			//max(y_min, min_x - max_z)
-			BigInteger max = min_x.subtract(max_z);
-			/*if(min_y != null){
-				 max =  min_y.max(max);
-			}*/			
-			bnd.isChanged |= bnd.addLowerBound(y, max);
-		}
-		//Add the upper bound of y variable.
-		if (max_x != null && min_z != null) {
-			//min(y_max, max_x - min_z)
-			BigInteger min = max_x.subtract(min_z);
-			/*if(max_y != null){
-				 min = max_y.min(min); 
-			}*/			
-			bnd.isChanged |= bnd.addUpperBound(y, min);
-		}
-
-		// Apply the propagate rule on z variable.
-		// Add the lower bound of z variable.
-		if (min_x != null && max_y != null) {
-			// max (min_z, min_x - max_y)
-			BigInteger max = min_x.subtract(max_y);
-			/*if(min_z != null){
-				max = min_z.max(max);
-			}*/			 
-			bnd.isChanged |= bnd.addLowerBound(z, max);
-		}
-
-		if (max_x != null && min_y != null) {
-			// min (max_z, max_x - min_y)
-			BigInteger min = max_x.subtract(min_y);
-			/*if(max_z != null){
-				min = max_z.min(min);
-			}*/			
-			bnd.isChanged |= bnd.addUpperBound(z, min);
-		}
-
 
 		return bnd.isChanged;
 	}

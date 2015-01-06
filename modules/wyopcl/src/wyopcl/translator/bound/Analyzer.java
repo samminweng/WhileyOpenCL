@@ -268,7 +268,7 @@ public class Analyzer {
 			str_symbols += "\ttype("+name+")\t= "+type+"\n";			
 			System.out.print(str_symbols);
 		}*/
-		
+
 		//Print out the bounds
 		for(Symbol symbol : sortedSymbols){
 			String str_symbols = "";
@@ -291,7 +291,7 @@ public class Analyzer {
 			if(val != null){
 				str_symbols += "\tvalue("+name+")\t= "+val+"\n";
 			}
-			
+
 			if(!str_symbols.equals("")){
 				System.out.print(str_symbols);
 			}
@@ -331,40 +331,41 @@ public class Analyzer {
 		if(blk.getType().equals(BlockType.LOOP_BODY)){
 			bnd_before = (Bounds) blk.getBounds().clone();		
 		}
-		//If bounds remain unchanged, then isChanged = true.
-		isChanged |= blk.inferBounds();
-
+		
 		//Take the union of parents' bounds.
 		for(BasicBlock parent: blk.getParentNodes()){
 			blk.unionBounds(parent);
 		}
+		
+		//If bounds remain unchanged, then isChanged = true.
+		isChanged |= blk.inferBounds();	
 
 		if(blk.getType().equals(BlockType.LOOP_BODY)){
 			bnd_after = (Bounds) blk.getBounds().clone();
 			//check loop variable is increasing
-			for(String var: loop_variables.keySet()){			
+			for(String loop_var: loop_variables.keySet()){			
 				//Upper bounds
-				BigInteger max_before = bnd_before.getUpper(var);
-				BigInteger max_after = bnd_after.getUpper(var);
+				BigInteger max_before = bnd_before.getUpper(loop_var);
+				BigInteger max_after = bnd_after.getUpper(loop_var);
 				if(max_before!= null && max_after!=null){
 					//The bounds is increasing
 					if(max_before.compareTo(max_after)<0){
-						boolean isIncreasing = loop_variables.get(var);
+						boolean isIncreasing = loop_variables.get(loop_var);
 						isIncreasing |= true;
-						loop_variables.put(var, isIncreasing);
+						loop_variables.put(loop_var, isIncreasing);
 					}					
 				}
 				//After four iterations, the bounds is still increasing.
 				if(iteration%3==0){
-					if(loop_variables.get(var)){
+					if(loop_variables.get(loop_var)){
 						if(config.isMultiWiden()){
-							isChanged |= blk.getBounds().widenUpperBoundsAgainstThresholds(var);
+							isChanged |= blk.getBounds().widenUpperBoundsAgainstThresholds(loop_var);
 						}else{
-							isChanged |= blk.getBounds().widenUpperBoundsToInf(var);
+							isChanged |= blk.getBounds().widenUpperBoundsToInf(loop_var);
 						}
 					}							
 					//Reset the increasing flag
-					loop_variables.put(var, false);
+					loop_variables.put(loop_var, false);
 				}
 			}
 		}
@@ -390,7 +391,13 @@ public class Analyzer {
 	public Bounds inferBounds(int... iterations){
 		//Sort the blks
 		Collections.sort(list);		
-		int MaxIteration = iterations.length >0 ? iterations[0] : 12;		
+		int MaxIteration;
+		if(config.isMultiWiden()){
+			 MaxIteration = iterations.length >0 ? iterations[0] : 13;
+		}else{
+			MaxIteration = iterations.length >0 ? iterations[0] : 4;
+		}	
+		
 		boolean isFixedPointed = false;
 		int iteration=1;
 		//Stop the loop when the fixed point is reached or no change in bounds,
@@ -774,7 +781,7 @@ public class Analyzer {
 		String target = prefix+code.target();
 		//Add type attribute
 		putAttribute(target, "type", code.assignedType());
-
+		
 		//Check the value is an Constant.Integer
 		if(constant instanceof Constant.Integer){
 			//Add the 'Const' constraint.
@@ -807,59 +814,59 @@ public class Analyzer {
 	private void analyze(Codes.If code) {
 		String left = prefix+code.leftOperand;
 		String right = prefix+code.rightOperand;
-
-		Constraint left_c = null;
-		Constraint right_c = null;
-		if(isIntType(code.type)){
-			switch(code.op){
-			case EQ:
-				left_c = new Equals(left, right);
-				right_c = new Equals(left, right);				
-				break;
-			case NEQ:				
-
-				break;
-			case LT:
-				left_c = new LessThan(left, right);
-				right_c = new GreaterThanEquals(left, right);			
-				break;
-			case LTEQ:
-				//Add the 'left <= right' constraint to the branched list.
-				left_c = new LessThanEquals(left, right);
-				right_c = new GreaterThan(left, right);
-				break;
-			case GT:					
-				left_c = new GreaterThan(left, right);
-				right_c = new LessThanEquals(left, right);
-				break;
-			case GTEQ:
-				//Branch and add the left >= right constraint to 
-				left_c = new GreaterThanEquals(left, right);
-				right_c = new LessThan(left, right);
-				//Add the constraint 'left< right' to current constraint list.
-				break;
-			case IN:			
-				System.err.println("Not implemented!");		
-				break;
-			case SUBSET:
-				System.err.println("Not implemented!");
-				break;
-			case SUBSETEQ:
-				System.err.println("Not implemented!");
-				break;
-			default:			
-				System.err.println("Not implemented!");
-
-			}			
-		}
-
 		if(assertOrAssume_label==null){
+			Constraint left_c = null;
+			Constraint right_c = null;
+			if(isIntType(code.type)){
+				switch(code.op){
+				case EQ:
+					left_c = new Equals(left, right);
+					right_c = new Equals(left, right);				
+					break;
+				case NEQ:				
+
+					break;
+				case LT:
+					left_c = new LessThan(left, right);
+					right_c = new GreaterThanEquals(left, right);			
+					break;
+				case LTEQ:
+					//Add the 'left <= right' constraint to the branched list.
+					left_c = new LessThanEquals(left, right);
+					right_c = new GreaterThan(left, right);
+					break;
+				case GT:					
+					left_c = new GreaterThan(left, right);
+					right_c = new LessThanEquals(left, right);
+					break;
+				case GTEQ:
+					//Branch and add the left >= right constraint to 
+					left_c = new GreaterThanEquals(left, right);
+					right_c = new LessThan(left, right);
+					//Add the constraint 'left< right' to current constraint list.
+					break;
+				case IN:			
+					System.err.println("Not implemented!");		
+					break;
+				case SUBSET:
+					System.err.println("Not implemented!");
+					break;
+				case SUBSETEQ:
+					System.err.println("Not implemented!");
+					break;
+				default:			
+					System.err.println("Not implemented!");
+
+				}			
+			}	
 			createIfElseBranchOrLoopStructure(code.target, left_c, right_c);
-		}else{
-			//Instead of creating if-else branches, we put the condition to the current blk
-			BasicBlock current_blk = getCurrentBlock();
-			current_blk.addConstraint(left_c);				
 		}
+		//Ignore the constraints in the assertion or assumption.
+		//else{
+		//Instead of creating if-else branches, we put the condition to the current blk
+		//	BasicBlock current_blk = getCurrentBlock();
+		//	current_blk.addConstraint(left_c);				
+		//}
 
 
 	}
@@ -896,10 +903,13 @@ public class Analyzer {
 			bnd = invokeanalyzer.inferBounds();
 			String return_reg = prefix+code.target();
 			Type return_type = code.type().ret();
-			//propagate the bounds of return value.						
-			addConstraint(new Range(return_reg, bnd.getLower("return"), bnd.getUpper("return")));
-			//Add 'type' attribute
-			putAttribute(return_reg, "type", return_type);
+			if(isIntType(return_type)){
+				//propagate the bounds of return value.						
+				addConstraint(new Range(return_reg, bnd.getLower("return"), bnd.getUpper("return")));
+				//Add 'type' attribute
+				putAttribute(return_reg, "type", return_type);
+			}
+			
 			//Add 'size' attribute
 			if(return_type instanceof Type.List){
 				BigInteger size = (BigInteger) invokeanalyzer.getAttribute("return", "size");

@@ -1,11 +1,14 @@
+void main([string] args, {method(any) => void print,method(any) => void println} out)
 main.0 [	fieldload %2 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}]
 main.1 [	fieldload %3 = %2 println : {method(any) => void print,method(any) => void println}]
 main.2 [	const %5 = 1 : int]
 main.3 [	invoke %4 = (%5) IfElse_Valid_1:f : function(int) => string]
 Bounds of main{
-	D(%5) = [1..1]
+	domain(%5)	= [1..1]
+	value(%5)	= 1
 }
 Consistency=true
+string f(int %0)
 f.0 [	const %2 = 10 : int]
 f.1 [	ifge %0, %2 goto blklab0 : int]
 f.2 [	const %3 = "LESS THAN" : string]
@@ -19,9 +22,12 @@ f.9 [.blklab2]
 f.10 [	const %7 = "EQUALS" : string]
 f.11 [	return %7 : string]
 Bounds of f{
-	D(%0) = [1..11]
-	D(%2) = [10..10]
-	D(%5) = [10..10]
+	domain(%0)	= [1..11]
+	domain(%2)	= [10..10]
+	domain(%5)	= [10..10]
+	value(%0)	= 1
+	value(%2)	= 10
+	value(%5)	= 10
 }
 Consistency=true
 main.4 [	convert %4 = %4 any : string]
@@ -31,11 +37,13 @@ main.7 [	fieldload %8 = %7 println : {method(any) => void print,method(any) => v
 main.8 [	const %10 = 10 : int]
 main.9 [	invoke %9 = (%10) IfElse_Valid_1:f : function(int) => string]
 Bounds of main{
-	D(%4) = [-infinity..infinity]
-	D(%5) = [1..1]
-	D(%10) = [10..10]
+	domain(%5)	= [1..1]
+	domain(%10)	= [10..10]
+	value(%5)	= 1
+	value(%10)	= 10
 }
 Consistency=true
+string f(int %0)
 f.0 [	const %2 = 10 : int]
 f.1 [	ifge %0, %2 goto blklab0 : int]
 f.2 [	const %3 = "LESS THAN" : string]
@@ -49,9 +57,12 @@ f.9 [.blklab2]
 f.10 [	const %7 = "EQUALS" : string]
 f.11 [	return %7 : string]
 Bounds of f{
-	D(%0) = [10..11]
-	D(%2) = [10..10]
-	D(%5) = [10..10]
+	domain(%0)	= [10..11]
+	domain(%2)	= [10..10]
+	domain(%5)	= [10..10]
+	value(%0)	= 10
+	value(%2)	= 10
+	value(%5)	= 10
 }
 Consistency=true
 main.10 [	convert %9 = %9 any : string]
@@ -61,13 +72,15 @@ main.13 [	fieldload %13 = %12 println : {method(any) => void print,method(any) =
 main.14 [	const %15 = 11 : int]
 main.15 [	invoke %14 = (%15) IfElse_Valid_1:f : function(int) => string]
 Bounds of main{
-	D(%4) = [-infinity..infinity]
-	D(%5) = [1..1]
-	D(%9) = [-infinity..infinity]
-	D(%10) = [10..10]
-	D(%15) = [11..11]
+	domain(%5)	= [1..1]
+	domain(%10)	= [10..10]
+	domain(%15)	= [11..11]
+	value(%5)	= 1
+	value(%10)	= 10
+	value(%15)	= 11
 }
 Consistency=true
+string f(int %0)
 f.0 [	const %2 = 10 : int]
 f.1 [	ifge %0, %2 goto blklab0 : int]
 f.2 [	const %3 = "LESS THAN" : string]
@@ -81,9 +94,12 @@ f.9 [.blklab2]
 f.10 [	const %7 = "EQUALS" : string]
 f.11 [	return %7 : string]
 Bounds of f{
-	D(%0) = [11..11]
-	D(%2) = [10..10]
-	D(%5) = [10..10]
+	domain(%0)	= [11..11]
+	domain(%2)	= [10..10]
+	domain(%5)	= [10..10]
+	value(%0)	= 11
+	value(%2)	= 10
+	value(%5)	= 10
 }
 Consistency=true
 main.16 [	convert %14 = %14 any : string]
@@ -93,15 +109,17 @@ main.19 [	fieldload %18 = %17 println : {method(any) => void print,method(any) =
 main.20 [	const %20 = 1212 : int]
 main.21 [	invoke %19 = (%20) IfElse_Valid_1:f : function(int) => string]
 Bounds of main{
-	D(%4) = [-infinity..infinity]
-	D(%5) = [1..1]
-	D(%9) = [-infinity..infinity]
-	D(%10) = [10..10]
-	D(%14) = [-infinity..infinity]
-	D(%15) = [11..11]
-	D(%20) = [1212..1212]
+	domain(%5)	= [1..1]
+	domain(%10)	= [10..10]
+	domain(%15)	= [11..11]
+	domain(%20)	= [1212..1212]
+	value(%5)	= 1
+	value(%10)	= 10
+	value(%15)	= 11
+	value(%20)	= 1212
 }
 Consistency=true
+string f(int %0)
 f.0 [	const %2 = 10 : int]
 f.1 [	ifge %0, %2 goto blklab0 : int]
 f.2 [	const %3 = "LESS THAN" : string]
@@ -115,11 +133,14 @@ f.9 [.blklab2]
 f.10 [	const %7 = "EQUALS" : string]
 f.11 [	return %7 : string]
 Bounds of f{
-	D(%0) = [1212..1212]
-	D(%2) = [10..10]
-	D(%5) = [10..10]
+	domain(%0)	= [1212..11]
+	domain(%2)	= [10..10]
+	domain(%5)	= [10..10]
+	value(%0)	= 1212
+	value(%2)	= 10
+	value(%5)	= 10
 }
-Consistency=true
+Consistency=false
 main.22 [	convert %19 = %19 any : string]
 main.23 [	indirectinvoke %18 (%19) : method(any) => void]
 main.24 [	fieldload %22 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}]
@@ -128,18 +149,19 @@ main.26 [	const %25 = 1212 : int]
 main.27 [	neg %26 = %25 : int]
 main.28 [	invoke %24 = (%26) IfElse_Valid_1:f : function(int) => string]
 Bounds of main{
-	D(%4) = [-infinity..infinity]
-	D(%5) = [1..1]
-	D(%9) = [-infinity..infinity]
-	D(%10) = [10..10]
-	D(%14) = [-infinity..infinity]
-	D(%15) = [11..11]
-	D(%19) = [-infinity..infinity]
-	D(%20) = [1212..1212]
-	D(%25) = [1212..1212]
-	D(%26) = [-1212..-1212]
+	domain(%5)	= [1..1]
+	domain(%10)	= [10..10]
+	domain(%15)	= [11..11]
+	domain(%20)	= [1212..1212]
+	domain(%25)	= [1212..1212]
+	value(%5)	= 1
+	value(%10)	= 10
+	value(%15)	= 11
+	value(%20)	= 1212
+	value(%25)	= 1212
 }
 Consistency=true
+string f(int %0)
 f.0 [	const %2 = 10 : int]
 f.1 [	ifge %0, %2 goto blklab0 : int]
 f.2 [	const %3 = "LESS THAN" : string]
@@ -153,25 +175,27 @@ f.9 [.blklab2]
 f.10 [	const %7 = "EQUALS" : string]
 f.11 [	return %7 : string]
 Bounds of f{
-	D(%0) = [-1212..11]
-	D(%2) = [10..10]
-	D(%5) = [10..10]
+	domain(%0)	= [-1212..11]
+	domain(%2)	= [10..10]
+	domain(%5)	= [10..10]
+	value(%2)	= 10
+	value(%5)	= 10
 }
 Consistency=true
 main.29 [	convert %24 = %24 any : string]
 main.30 [	indirectinvoke %23 (%24) : method(any) => void]
 main.31 [	return]
 Bounds of main{
-	D(%4) = [-infinity..infinity]
-	D(%5) = [1..1]
-	D(%9) = [-infinity..infinity]
-	D(%10) = [10..10]
-	D(%14) = [-infinity..infinity]
-	D(%15) = [11..11]
-	D(%19) = [-infinity..infinity]
-	D(%20) = [1212..1212]
-	D(%24) = [-infinity..infinity]
-	D(%25) = [1212..1212]
-	D(%26) = [-1212..-1212]
+	domain(%5)	= [1..1]
+	domain(%10)	= [10..10]
+	domain(%15)	= [11..11]
+	domain(%20)	= [1212..1212]
+	domain(%25)	= [1212..1212]
+	domain(%26)	= [-1212..-1212]
+	value(%5)	= 1
+	value(%10)	= 10
+	value(%15)	= 11
+	value(%20)	= 1212
+	value(%25)	= 1212
 }
 Consistency=true

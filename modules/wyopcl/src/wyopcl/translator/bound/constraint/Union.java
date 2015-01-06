@@ -30,10 +30,11 @@ public class Union extends Constraint {
 			if(min_x == null){
 				bnd.isChanged |= bnd.addLowerBound(x, min_y);
 			}else{
-				//Get the smaller lower bounds of x and y and add that lower bound to x.
-				bnd.isChanged |= bnd.widenLowerBound(x, min_y);	
-			}
-				
+				//If the min_x > min_y, then widen the lower bound of x 
+				if(min_x.compareTo(min_y)>0){
+					bnd.isChanged |= bnd.widenLowerBound(x, min_y);	
+				}				
+			}				
 		}
 
 		//Propagate the upper bounds to x.
@@ -41,10 +42,11 @@ public class Union extends Constraint {
 			if(max_x == null){
 				bnd.isChanged |= bnd.addUpperBound(x, max_y);
 			}else{
-				bnd.isChanged |= bnd.widenUpperBound(x, max_y);
-			}
-			
-			
+				//If the max_x < max_y, then widen the upper bound of x.
+				if(max_x.compareTo(max_y)<0){
+					bnd.isChanged |= bnd.widenUpperBound(x, max_y);
+				}				
+			}			
 		}
 
 		return bnd.isChanged;
