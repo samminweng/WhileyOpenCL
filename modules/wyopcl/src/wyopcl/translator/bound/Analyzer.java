@@ -117,7 +117,7 @@ public class Analyzer {
 
 	private String castDeclarationtoString(FunctionOrMethodDeclaration functionOrMethod){
 		String declaration ="";
-		declaration += functionOrMethod.type().ret() + " "+functionOrMethod.name()+" (";
+		declaration += functionOrMethod.type().ret() + " "+functionOrMethod.name()+"(";
 		if(!functionOrMethod.name().equals("main")){			
 			boolean isFirst = true;
 			int index=0;
@@ -126,7 +126,7 @@ public class Analyzer {
 				if(isFirst){
 					declaration += paramType+" "+prefix+index;
 				}else{
-					declaration += ", "+paramType;
+					declaration += ", "+paramType+ " "+prefix+index;
 				}
 				isFirst = false;
 				index++;
@@ -258,6 +258,17 @@ public class Analyzer {
 		//Sort the symbol tables		
 		List<Symbol> sortedSymbols = new ArrayList<Symbol>(symbols.values());
 		Collections.sort(sortedSymbols);
+		//Print out the type
+		/*for(Symbol symbol : sortedSymbols){
+			String str_symbols = "";
+			String name = symbol.getName();
+			//get the 'type' attribute
+			Type type = (Type) symbol.getAttribute("type");						
+			//print the 'size' att
+			str_symbols += "\ttype("+name+")\t= "+type+"\n";			
+			System.out.print(str_symbols);
+		}*/
+		
 		//Print out the bounds
 		for(Symbol symbol : sortedSymbols){
 			String str_symbols = "";
