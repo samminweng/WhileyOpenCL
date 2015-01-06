@@ -6,7 +6,7 @@ import java.util.Properties;
  * @author Min-Hsien Weng
  *
  */
-public class Symbol implements Cloneable{
+public class Symbol implements Cloneable, Comparable<Symbol>{
 	private String name;
 	private Properties attributes;
 
@@ -20,6 +20,10 @@ public class Symbol implements Cloneable{
 	 */
 	public void setName(String name){
 		this.name = name;
+	}
+	
+	public String getName(){
+		return this.name;
 	}
 	
 	
@@ -53,6 +57,19 @@ public class Symbol implements Cloneable{
 		symbol = new Symbol(name);		
 		symbol.attributes = (Properties) this.attributes.clone();
 		return symbol;
+	}
+	@Override
+	public int compareTo(Symbol s1) {
+		if(this.name.equals(s1.getName())){
+			return 0;
+		}
+		if(this.name.contains("%")&& s1.name.contains("%")){
+			int reg_0 = Integer.parseInt(this.name.split("%")[1]);
+			int reg_1 = Integer.parseInt(s1.name.split("%")[1]);
+			return reg_0 - reg_1;
+		}			
+		
+		return Integer.MIN_VALUE;
 	}	
 	
 	

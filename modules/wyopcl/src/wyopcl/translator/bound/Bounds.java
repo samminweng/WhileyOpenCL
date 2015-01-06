@@ -296,16 +296,15 @@ public class Bounds implements Cloneable{
 	 * Prints out all the bounds. 
 	 */
 	public String toString() {
-		String str = "{\n";
+		String str = "";
 		// Sort all the domains
 		List<Domain> domains = new ArrayList<Domain>(bounds.values());
 		//All the domains are sorted by names.
-		Collections.sort(domains, new Domain(""));
+		Collections.sort(domains);
 		for (Domain d : domains) {
-			str += "\t"+ d.toString()+"\n";
+			str += "\n\t"+ d.toString();
 		}
-		str += "}";
-
+		domains = null;
 		return str;
 	}
 	

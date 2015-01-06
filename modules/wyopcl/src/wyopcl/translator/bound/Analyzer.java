@@ -8,12 +8,16 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Stack;
+import java.util.TreeMap;
 
 import wycc.lang.SyntaxError;
 import wyil.lang.Code;
@@ -250,8 +254,34 @@ public class Analyzer {
 	 * @param isVerbose the mode of message
 	 */
 	private void printBounds(Bounds bnd){
-		System.out.print("Bounds of "+functionOrMethod.name());
+		System.out.print("Bounds of "+functionOrMethod.name()+"{");
+		//Print out the bounds
 		System.out.println(bnd.toString());
+		
+		//Sort the symbol tables		
+		List<Symbol> sortedSymbols = new ArrayList<Symbol>(symbols.values());
+		Collections.sort(sortedSymbols);
+		//Print out the values of available variables
+		for(Symbol symbol : sortedSymbols){
+			String str_symbols = "";
+			//get the 'type' attribute
+			Type type = (Type) symbol.getAttribute("type");			
+			//print the 'value' attribute
+			Object val = symbol.getAttribute("value");
+			if(val != null){
+				str_symbols += "\tval("+symbol.getName()+")="+val+"\n";
+			}			
+			//print the 'size' att
+			if(type instanceof Type.List){
+				Object size = symbol.getAttribute("size");
+				str_symbols += "\tsize("+symbol.getName()+")="+size+"\n";
+			}
+			if(!str_symbols.equals("")){
+				System.out.print(str_symbols);
+			}
+		}
+		sortedSymbols = null;
+		System.out.println("}");
 		System.out.println("Consistency="+bnd.checkBoundConsistency());		
 	}
 
