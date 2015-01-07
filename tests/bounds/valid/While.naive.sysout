@@ -1,3 +1,4 @@
+void main([string] args, {method(any) => void print,method(any) => void println} out)
 main.0 [	fieldload %2 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}]
 main.1 [	fieldload %3 = %2 println : {method(any) => void print,method(any) => void println}]
 main.2 [	const %4 = "Sum=" : string]
@@ -9,11 +10,11 @@ main.4 [	assert blklab4]
 [30;1mmain.8 [.blklab3][0m
 [30;1mmain.9 [.blklab4][0m
 main.10 [	invoke %5 = (%6) While:f : function(int) => int]
-Bounds of main{
-	D(%6) = [5..1000000]
-	D(%9) = [1000000..1000000]
-}
+Bounds at the 10th line number of function main:
+	domain(%6)	= [5..5]
+	value(%6)	= 5
 Consistency=true
+int f(int %0)
 f.0 [	const %4 = 0 : int]
 f.1 [	assign %3 = %4  : int]
 f.2 [	const %6 = 0 : int]
@@ -29,17 +30,20 @@ f.11 [	nop]
 f.12 [end blklab1]
 f.13 [.blklab2]
 f.14 [	return %5 : int]
-Bounds of f{
-	D(%0) = [5..1000000]
-	D(%3) = [0..infinity]
-	D(%4) = [0..0]
-	D(%5) = [0..infinity]
-	D(%6) = [0..0]
-	D(%11) = [-infinity..infinity]
-	D(%13) = [1..1]
-	D(%14) = [-infinity..infinity]
-	D(return) = [0..infinity]
-}
+Bounds at the end of function f:
+	domain(%0)	= [5..5]
+	domain(%3)	= [5..5]
+	domain(%4)	= [0..0]
+	domain(return)	= [0..infinity]
+	domain(%5)	= [0..infinity]
+	domain(%6)	= [0..0]
+	domain(%11)	= [0..2]
+	domain(%13)	= [0..2]
+	domain(%14)	= [0..2]
+	value(%0)	= 5
+	value(%4)	= 0
+	value(%6)	= 0
+	value(%13)	= 1
 Consistency=true
 main.11 [	convert %5 = %5 any : int]
 main.12 [	invoke %5 = (%5) whiley/lang/Any:toString : function(any) => string]
@@ -47,9 +51,8 @@ main.13 [	sappend %7 = %4, %5 : string]
 main.14 [	convert %7 = %7 any : string]
 main.15 [	indirectinvoke %3 (%7) : method(any) => void]
 main.16 [	return]
-Bounds of main{
-	D(%5) = [0..infinity]
-	D(%6) = [5..1000000]
-	D(%9) = [1000000..1000000]
-}
+Bounds at the end of function main:
+	domain(%5)	= [0..infinity]
+	domain(%6)	= [5..5]
+	value(%6)	= 5
 Consistency=true

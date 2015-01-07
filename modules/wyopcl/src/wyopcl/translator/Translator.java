@@ -85,8 +85,8 @@ public class Translator implements Builder{
 		for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {			
 			Analyzer analyzer = new Analyzer(0, config, functionOrMethod, module);			
 			analyzer.iterateByteCode();			
-			//Infer and print the final bounds.
-			analyzer.inferBounds();	
+			//Infer and print the final bounds of main function.
+			analyzer.inferBounds(true);	
 			analyzer = null;
 		}
 	}
@@ -99,9 +99,9 @@ public class Translator implements Builder{
 	private void analyzeFunctionCall(WyilFile module){
 		WyilFile.FunctionOrMethodDeclaration main = module.functionOrMethod("main").get(0);
 		Analyzer analyzer = new Analyzer(0, config, main, module);
-		//Infer the bounds
-		analyzer.iterateByteCode();	
-		analyzer.inferBounds();			
+		analyzer.iterateByteCode();
+		//Infer the bounds at the end of main function.
+		analyzer.inferBounds(true);			
 		analyzer = null;
 	}
 	

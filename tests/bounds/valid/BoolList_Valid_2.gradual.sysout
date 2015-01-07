@@ -18,7 +18,7 @@ main.15 [	assign %17 = %1  : [bool]]
 main.16 [	convert %17 = %17 any : [bool]]
 main.17 [	indirectinvoke %16 (%17) : method(any) => void]
 main.18 [	invoke %18 = (%1) BoolList_Valid_2:play : function([bool]) => [bool]]
-Bounds of main{
+Bounds at the 18th line number of function main:
 	domain(%10)	= [0..0]
 	domain(%11)	= [5..5]
 	domain(%12)	= [0..5]
@@ -28,7 +28,6 @@ Bounds of main{
 	size(%1)	= 7
 	size(%9)	= 7
 	size(%12)	= 4
-}
 Consistency=true
 [bool] play([bool] %0)
 play.0 [	assign %2 = %0  : [bool]]
@@ -38,7 +37,7 @@ play.3 [	lengthof %5 = %0 : [bool]]
 play.4 [	range %6 = %3, %5 : [int]]
 play.5 [	forall %7 in %6 (%1) : [int]]
 play.6 [	invoke %8 = (%7, %0) BoolList_Valid_2:isAlive : function(int,[bool]) => bool]
-Bounds of play{
+Bounds at the 6th line number of function play:
 	domain(%3)	= [0..0]
 	domain(%5)	= [7..7]
 	domain(%6)	= [0..7]
@@ -49,7 +48,6 @@ Bounds of play{
 	size(%1)	= 7
 	size(%2)	= 7
 	size(%6)	= 6
-}
 Consistency=true
 bool isAlive(int %0, [bool] %1)
 isAlive.0 [	const %3 = 0 : int]
@@ -95,8 +93,8 @@ isAlive.39 [	return %21 : bool]
 isAlive.40 [.blklab5]
 isAlive.41 [	const %22 = false : bool]
 isAlive.42 [	return %22 : bool]
-Bounds of isAlive{
-	domain(%0)	= [0..7]
+Bounds at the end of function isAlive:
+	domain(%0)	= [0..1]
 	domain(%3)	= [0..0]
 	domain(%5)	= [1..1]
 	domain(%6)	= [2..7]
@@ -104,18 +102,13 @@ Bounds of isAlive{
 	domain(%11)	= [1..1]
 	domain(%12)	= [0..0]
 	domain(%17)	= [1..1]
-	domain(%18)	= [1..8]
-	domain(%23)	= [0..0]
-	domain(%24)	= [7..7]
+	domain(%18)	= [2..2]
 	value(%3)	= 0
 	value(%5)	= 1
 	value(%8)	= 7
 	value(%11)	= 1
 	value(%17)	= 1
-	value(%23)	= 0
-	value(%24)	= 7
 	size(%1)	= 7
-}
 Consistency=true
 play.7 [	const %11 = true : bool]
 play.8 [	ifeq %8, %11 goto blklab4 : bool]
@@ -150,28 +143,25 @@ play.36 [	nop]
 play.37 [end blklab0]
 play.38 [.blklab1]
 play.39 [	return %1 : [bool]]
-Bounds of play{
+Bounds at the end of function play:
 	domain(%3)	= [0..0]
 	domain(%5)	= [7..7]
 	domain(%6)	= [0..7]
 	domain(%7)	= [0..7]
-	domain(%20)	= [7..0]
 	value(%3)	= 0
 	value(%5)	= 7
-	value(%20)	= 7
 	size(%0)	= 7
 	size(%1)	= 7
 	size(%2)	= 7
 	size(return)	= 7
 	size(%6)	= 6
-}
-Consistency=false
+Consistency=true
 main.19 [	assign %1 = %18  : [bool]]
 main.20 [	nop]
 main.21 [end blklab9]
 main.22 [.blklab10]
 main.23 [	return]
-Bounds of main{
+Bounds at the end of function main:
 	domain(%10)	= [0..0]
 	domain(%11)	= [5..5]
 	domain(%12)	= [0..5]
@@ -181,5 +171,5 @@ Bounds of main{
 	size(%1)	= 7
 	size(%9)	= 7
 	size(%12)	= 4
-}
+	size(%18)	= 7
 Consistency=true

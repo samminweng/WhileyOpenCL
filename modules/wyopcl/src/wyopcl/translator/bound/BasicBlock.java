@@ -282,7 +282,7 @@ public class BasicBlock implements Comparable<BasicBlock>{
 				//So we negated the result and use the AND bitwise to combine all the results.
 				boolean isChanged = c.inferBound(this.unionOfBounds);
 				isFixedPointed |= isChanged;
-			}
+			}			
 		}		
 		return isFixedPointed;
 	}

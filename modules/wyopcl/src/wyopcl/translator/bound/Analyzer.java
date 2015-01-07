@@ -91,6 +91,8 @@ public class Analyzer {
 
 	//The symbol table of variables
 	private HashMap<String, Symbol> symbols;
+	//The line number
+	private int line;
 
 	private void initialize(){
 		//Initialize the variables
@@ -103,6 +105,7 @@ public class Analyzer {
 		this.current_blk = this.entry;
 		this.loop_variables = new HashMap<String, Boolean>();
 		this.isGoto = false;
+		this.line = 0;
 	}
 
 
@@ -153,8 +156,7 @@ public class Analyzer {
 	 * @param analyzer
 	 * @param functionOrMethod
 	 */
-	public void iterateByteCode(){
-		int line = 0;
+	public void iterateByteCode(){		
 		//Print the function declaration
 		System.out.println(castDeclarationtoString(functionOrMethod));
 		for(Case mcase : functionOrMethod.cases()){
@@ -251,10 +253,15 @@ public class Analyzer {
 	 * Print out the bounds.
 	 * @param func_name the name of function or method
 	 * @param bnd the bounds
-	 * @param isVerbose the mode of message
+	 * @param isEnd indicates whether it is called at the end of function.
 	 */
-	private void printBounds(Bounds bnd){
-		System.out.print("Bounds of "+functionOrMethod.name()+"{\n");		
+	private void printBounds(Bounds bnd, boolean isEnd){
+		if(isEnd){
+			System.out.print("Bounds at the end of function "+functionOrMethod.name()+":\n");
+		}else{
+			System.out.print("Bounds at the "+(line-1)+"th line number of function "+functionOrMethod.name()+":\n");
+		}
+				
 		//Sort the symbol tables		
 		List<Symbol> sortedSymbols = new ArrayList<Symbol>(symbols.values());
 		Collections.sort(sortedSymbols);
@@ -313,7 +320,6 @@ public class Analyzer {
 			}
 		}
 		sortedSymbols = null;
-		System.out.println("}");
 		System.out.println("Consistency="+bnd.checkBoundConsistency());		
 	}
 
@@ -331,12 +337,12 @@ public class Analyzer {
 		if(blk.getType().equals(BlockType.LOOP_BODY)){
 			bnd_before = (Bounds) blk.getBounds().clone();		
 		}
-		
+
 		//Take the union of parents' bounds.
 		for(BasicBlock parent: blk.getParentNodes()){
 			blk.unionBounds(parent);
 		}
-		
+
 		//If bounds remain unchanged, then isChanged = true.
 		isChanged |= blk.inferBounds();	
 
@@ -383,21 +389,19 @@ public class Analyzer {
 	/**
 	 * Repeatedly iterates over all blocks, starting from the entry block to the exit block,
 	 * and infer the bounds consistent with all the constraints in each block.
-	 * @param func_name the name of function or method
-	 * @param iterations optional parameter. iterations[0] specifies the number of iterations. If not specifies, 
-	 * the default value is 5.
+	 * @param isEnd indicates if it is called at the end of a function.
 	 * @return the bounds
 	 */
-	public Bounds inferBounds(int... iterations){
+	public Bounds inferBounds(boolean isEnd){
 		//Sort the blks
 		Collections.sort(list);		
 		int MaxIteration;
 		if(config.isMultiWiden()){
-			 MaxIteration = iterations.length >0 ? iterations[0] : 13;
+			MaxIteration = 13;
 		}else{
-			MaxIteration = iterations.length >0 ? iterations[0] : 4;
+			MaxIteration = 4;
 		}	
-		
+
 		boolean isFixedPointed = false;
 		int iteration=1;
 		//Stop the loop when the fixed point is reached or no change in bounds,
@@ -419,7 +423,12 @@ public class Analyzer {
 			}//End of bound inference for all constraints in all blks.
 			if(config.isVerbose()){
 				System.out.println("isFixedPointed="+isFixedPointed);
-			}			
+			}
+
+			if(isFixedPointed){
+				break;
+			}
+
 			iteration++;
 		}		
 
@@ -435,7 +444,7 @@ public class Analyzer {
 		if(config.isVerbose()){
 			printCFG(functionOrMethod.name());
 		}		
-		printBounds(bnd);		
+		printBounds(bnd, isEnd);		
 		return bnd;
 	}
 
@@ -649,9 +658,13 @@ public class Analyzer {
 	private void dispatch(Block.Entry entry){		
 		Code code = entry.code; 
 		try{
-			//enable the assertion 
+			//Ignore the bytecode inside an assertion or assumption.
+			if(assertOrAssume_label!=null&& !(code instanceof Codes.Label)){
+				return;
+			}			
+			//Start analyzing the bytecode.
 			if (code instanceof Codes.AssertOrAssume) {
-				//Create an assertion or assumption blk.
+				//enable the assertion
 				analyze((Codes.AssertOrAssume)code);
 			}else if (code instanceof Codes.Assign) {			
 				analyze((Codes.Assign)code);
@@ -752,7 +765,7 @@ public class Analyzer {
 		assertOrAssume_label = code.target;
 	}
 
-	private void analyze(Codes.Assign code){
+	private void analyze(Codes.Assign code){	
 		String target = prefix+code.target();
 		String operand = prefix+code.operand(0);		
 		putAttribute(target, "type", code.type());
@@ -776,12 +789,13 @@ public class Analyzer {
 	 * Parses 'Const' bytecode to add the 'Const' constraint to the list. 
 	 * @param code
 	 */
-	private void analyze(Codes.Const code){	
+	private void analyze(Codes.Const code){
+
 		Constant constant = code.constant;
 		String target = prefix+code.target();
 		//Add type attribute
 		putAttribute(target, "type", code.assignedType());
-		
+
 		//Check the value is an Constant.Integer
 		if(constant instanceof Constant.Integer){
 			//Add the 'Const' constraint.
@@ -814,55 +828,52 @@ public class Analyzer {
 	private void analyze(Codes.If code) {
 		String left = prefix+code.leftOperand;
 		String right = prefix+code.rightOperand;
-		if(assertOrAssume_label==null){
-			Constraint left_c = null;
-			Constraint right_c = null;
-			if(isIntType(code.type)){
-				switch(code.op){
-				case EQ:
-					left_c = new Equals(left, right);
-					right_c = new Equals(left, right);				
-					break;
-				case NEQ:				
 
-					break;
-				case LT:
-					left_c = new LessThan(left, right);
-					right_c = new GreaterThanEquals(left, right);			
-					break;
-				case LTEQ:
-					//Add the 'left <= right' constraint to the branched list.
-					left_c = new LessThanEquals(left, right);
-					right_c = new GreaterThan(left, right);
-					break;
-				case GT:					
-					left_c = new GreaterThan(left, right);
-					right_c = new LessThanEquals(left, right);
-					break;
-				case GTEQ:
-					//Branch and add the left >= right constraint to 
-					left_c = new GreaterThanEquals(left, right);
-					right_c = new LessThan(left, right);
-					//Add the constraint 'left< right' to current constraint list.
-					break;
-				case IN:			
-					System.err.println("Not implemented!");		
-					break;
-				case SUBSET:
-					System.err.println("Not implemented!");
-					break;
-				case SUBSETEQ:
-					System.err.println("Not implemented!");
-					break;
-				default:			
-					System.err.println("Not implemented!");
+		Constraint left_c = null;
+		Constraint right_c = null;
+		if(isIntType(code.type)){
+			switch(code.op){
+			case EQ:
+				left_c = new Equals(left, right);
+				right_c = new Equals(left, right);				
+				break;
+			case NEQ:				
 
-				}			
-			}	
-			createIfElseBranchOrLoopStructure(code.target, left_c, right_c);
-		}
-		//Ignore the constraints in the assertion or assumption.
-		//else{
+				break;
+			case LT:
+				left_c = new LessThan(left, right);
+				right_c = new GreaterThanEquals(left, right);			
+				break;
+			case LTEQ:
+				//Add the 'left <= right' constraint to the branched list.
+				left_c = new LessThanEquals(left, right);
+				right_c = new GreaterThan(left, right);
+				break;
+			case GT:					
+				left_c = new GreaterThan(left, right);
+				right_c = new LessThanEquals(left, right);
+				break;
+			case GTEQ:
+				//Branch and add the left >= right constraint to 
+				left_c = new GreaterThanEquals(left, right);
+				right_c = new LessThan(left, right);
+				//Add the constraint 'left< right' to current constraint list.
+				break;
+			case IN:			
+				System.err.println("Not implemented!");		
+				break;
+			case SUBSET:
+				System.err.println("Not implemented!");
+				break;
+			case SUBSETEQ:
+				System.err.println("Not implemented!");
+				break;
+			default:			
+				System.err.println("Not implemented!");
+
+			}			
+		}	
+		createIfElseBranchOrLoopStructure(code.target, left_c, right_c);
 		//Instead of creating if-else branches, we put the condition to the current blk
 		//	BasicBlock current_blk = getCurrentBlock();
 		//	current_blk.addConstraint(left_c);				
@@ -880,7 +891,7 @@ public class Analyzer {
 		FunctionOrMethodDeclaration functionOrMethod = module.functionOrMethod(code.name.name(), code.type());					
 		if(functionOrMethod != null){
 			//Infer the bounds						
-			Bounds bnd = this.inferBounds();
+			Bounds bnd = this.inferBounds(false);
 			Analyzer invokeanalyzer = new Analyzer(depth+1, config, functionOrMethod, module);
 			int index = 0;
 			//Pass the bounds of input parameters.
@@ -899,17 +910,20 @@ public class Analyzer {
 				index++;
 			}
 			invokeanalyzer.iterateByteCode();						
-			//Infer the bounds
-			bnd = invokeanalyzer.inferBounds();
+			//Infer the bounds at the end of invoked function.
+			bnd = invokeanalyzer.inferBounds(true);
 			String return_reg = prefix+code.target();
 			Type return_type = code.type().ret();
+			//put the 'type' attribute of 'return_reg'
+			putAttribute(return_reg, "type", return_type);
+			
 			if(isIntType(return_type)){
 				//propagate the bounds of return value.						
 				addConstraint(new Range(return_reg, bnd.getLower("return"), bnd.getUpper("return")));
 				//Add 'type' attribute
 				putAttribute(return_reg, "type", return_type);
 			}
-			
+
 			//Add 'size' attribute
 			if(return_type instanceof Type.List){
 				BigInteger size = (BigInteger) invokeanalyzer.getAttribute("return", "size");
@@ -1083,7 +1097,6 @@ public class Analyzer {
 		//Get the size att
 		String op = prefix+code.operand(0);
 		BigInteger size = (BigInteger) getAttribute(op, "size");
-
 		String target = prefix+code.target();
 		Type type = code.assignedType();
 		//Add 'type' att

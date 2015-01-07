@@ -128,10 +128,10 @@ public class Bounds implements Cloneable{
 			new_domain.setUpperBound(new_max);			
 			// Check if new domain is stronger than existing one.
 			if(!existing_domain.equals(new_domain)){
-				if (existing_domain.getUpperBound() != null || existing_domain.compareTo(new_domain) < 0) {
+				//if (existing_domain.getUpperBound() != null || existing_domain.compareTo(new_domain) < 0) {
 					bounds.put(name, new_domain);
 					return true;
-				}
+				//}
 			}
 		} catch (Exception ex) {
 			throw new RuntimeException(ex.getMessage());
@@ -249,6 +249,9 @@ public class Bounds implements Cloneable{
 					threshold = Threshold._I64_MAX.getValue();
 					if(max.compareTo(threshold)<0){
 						return widenUpperBound(name, threshold);
+					}else{
+						//Widen the upper bound to inf
+						return widenUpperBound(name, null);
 					}
 				}
 			}

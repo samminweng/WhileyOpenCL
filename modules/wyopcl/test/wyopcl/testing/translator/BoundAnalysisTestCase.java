@@ -35,16 +35,6 @@ public class BoundAnalysisTestCase {
 		util.exec(valid_path+"While", "gradual");
 	}	
 	
-	
-	@Test
-	public void test_Valid_IfElse_Valid_1_Naive() {
-		util.exec(valid_path+"IfElse_Valid_1", "naive");
-	}
-	
-	@Test
-	public void test_Valid_IfElse_Valid_1_Gradual() {
-		util.exec(valid_path+"IfElse_Valid_1", "gradual");
-	}
 
 	@Test
 	public void test_Valid_IfElse_Valid_2_Naive() {

@@ -480,15 +480,15 @@ public class BoundTestCase {
 		blk.addBounds("z", new BigInteger("2"), new BigInteger("2"));
 		// x = y+z
 		blk.addConstraint(new Plus("x", "y", "z"));
-		assertTrue(blk.inferFixedPoint());
-		assertEquals(new BigInteger("4"), blk.getLower("x"));
+		assertTrue(blk.inferFixedPoint(1));
+		assertEquals(new BigInteger("2"), blk.getLower("x"));
 		assertEquals(new BigInteger("5"), blk.getUpper("x"));
 
 		assertEquals(new BigInteger("2"), blk.getLower("y"));
-		assertEquals(new BigInteger("3"), blk.getUpper("y"));
+		assertEquals(new BigInteger("6"), blk.getUpper("y"));
 
-		assertEquals(new BigInteger("2"), blk.getLower("z"));
-		assertEquals(new BigInteger("2"), blk.getUpper("z"));
+		assertEquals(new BigInteger("1"), blk.getLower("z"));
+		assertEquals(new BigInteger("8"), blk.getUpper("z"));
 
 	}
 

@@ -15,7 +15,7 @@ main.12 [	nop]
 main.13 [end blklab0]
 main.14 [.blklab1]
 main.15 [	return]
-Bounds of main{
+Bounds at the end of function main:
 	domain(%2)	= [1..1]
 	domain(%3)	= [2..2]
 	domain(%4)	= [3..3]
@@ -26,5 +26,4 @@ Bounds of main{
 	value(%3)	= 2
 	value(%4)	= 3
 	size(%5)	= 3
-}
 Consistency=true

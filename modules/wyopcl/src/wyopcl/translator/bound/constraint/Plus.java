@@ -55,6 +55,46 @@ public class Plus extends Constraint{
 			}			
 		}
 
+		// Apply the propagation rule on y variable.
+		// Add the lower bound of y variable.
+		if (min_x != null && max_z != null) {			
+			BigInteger min = min_x.subtract(max_z);
+			if(min_y!= null && min.compareTo(min_y)<0){
+				bnd.isChanged |= bnd.widenLowerBound(y, min);
+			}else{
+				bnd.isChanged |= bnd.addLowerBound(y, min);
+			}
+		}
+		// Add the upper bound of y variable.
+		if (max_x != null && min_z != null) {			
+			BigInteger max = max_x.subtract(min_z);
+			if(max_y!= null && max.compareTo(max_y)>0){
+				bnd.isChanged |= bnd.widenUpperBound(y, max);				
+			}else{
+				bnd.isChanged |= bnd.addUpperBound(y, max);
+			}			
+		}
+
+		// Apply the propagation rule on z variable.
+		// Add the lower bound of z variable.
+		if (min_x != null && max_y != null) {
+			BigInteger min = min_x.subtract(max_y);
+			if(min_z!= null && min.compareTo(min_z)<0){
+				bnd.isChanged |= bnd.widenLowerBound(z, min);
+			}else{
+				bnd.isChanged |= bnd.addLowerBound(z, min);
+			}
+		}
+		// Add the upper bound of z variable.
+		if (max_x != null && min_y != null) {			
+			BigInteger max = max_x.subtract(min_y);
+			if(max_z!= null && max.compareTo(max_z)>0){
+				bnd.isChanged |= bnd.widenUpperBound(z, max);				
+			}else{
+				bnd.isChanged |= bnd.addUpperBound(z, max);
+			}			
+		}
+
 		return bnd.isChanged;
 	}
 	@Override

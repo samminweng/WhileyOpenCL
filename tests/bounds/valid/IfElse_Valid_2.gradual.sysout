@@ -3,10 +3,9 @@ main.0 [	fieldload %2 = %0 out : {[string] args,{method(any) => void print,metho
 main.1 [	fieldload %3 = %2 println : {method(any) => void print,method(any) => void println}]
 main.2 [	const %6 = 1 : int]
 main.3 [	invoke %5 = (%6) IfElse_Valid_2:f : function(int) => int]
-Bounds of main{
+Bounds at the 3th line number of function main:
 	domain(%6)	= [1..1]
 	value(%6)	= 1
-}
 Consistency=true
 int f(int %0)
 f.0 [	const %2 = 10 : int]
@@ -22,7 +21,7 @@ f.9 [.blklab2]
 f.10 [.blklab1]
 f.11 [	const %7 = 0 : int]
 f.12 [	return %7 : int]
-Bounds of f{
+Bounds at the end of function f:
 	domain(%0)	= [1..11]
 	domain(%2)	= [10..10]
 	domain(%3)	= [1..1]
@@ -36,7 +35,6 @@ Bounds of f{
 	value(%5)	= 10
 	value(%6)	= 2
 	value(%7)	= 0
-}
 Consistency=true
 main.4 [	convert %5 = %5 any : int]
 main.5 [	invoke %4 = (%5) whiley/lang/Any:toString : function(any) => string]
@@ -46,13 +44,12 @@ main.8 [	fieldload %8 = %0 out : {[string] args,{method(any) => void print,metho
 main.9 [	fieldload %9 = %8 println : {method(any) => void print,method(any) => void println}]
 main.10 [	const %12 = 10 : int]
 main.11 [	invoke %11 = (%12) IfElse_Valid_2:f : function(int) => int]
-Bounds of main{
+Bounds at the 11th line number of function main:
 	domain(%5)	= [0..2]
 	domain(%6)	= [1..1]
 	domain(%12)	= [10..10]
 	value(%6)	= 1
 	value(%12)	= 10
-}
 Consistency=true
 int f(int %0)
 f.0 [	const %2 = 10 : int]
@@ -68,7 +65,7 @@ f.9 [.blklab2]
 f.10 [.blklab1]
 f.11 [	const %7 = 0 : int]
 f.12 [	return %7 : int]
-Bounds of f{
+Bounds at the end of function f:
 	domain(%0)	= [10..11]
 	domain(%2)	= [10..10]
 	domain(%3)	= [1..1]
@@ -82,7 +79,6 @@ Bounds of f{
 	value(%5)	= 10
 	value(%6)	= 2
 	value(%7)	= 0
-}
 Consistency=true
 main.12 [	convert %11 = %11 any : int]
 main.13 [	invoke %10 = (%11) whiley/lang/Any:toString : function(any) => string]
@@ -92,7 +88,7 @@ main.16 [	fieldload %14 = %0 out : {[string] args,{method(any) => void print,met
 main.17 [	fieldload %15 = %14 println : {method(any) => void print,method(any) => void println}]
 main.18 [	const %18 = 11 : int]
 main.19 [	invoke %17 = (%18) IfElse_Valid_2:f : function(int) => int]
-Bounds of main{
+Bounds at the 19th line number of function main:
 	domain(%5)	= [0..2]
 	domain(%6)	= [1..1]
 	domain(%11)	= [0..2]
@@ -101,7 +97,6 @@ Bounds of main{
 	value(%6)	= 1
 	value(%12)	= 10
 	value(%18)	= 11
-}
 Consistency=true
 int f(int %0)
 f.0 [	const %2 = 10 : int]
@@ -117,7 +112,7 @@ f.9 [.blklab2]
 f.10 [.blklab1]
 f.11 [	const %7 = 0 : int]
 f.12 [	return %7 : int]
-Bounds of f{
+Bounds at the end of function f:
 	domain(%0)	= [11..11]
 	domain(%2)	= [10..10]
 	domain(%3)	= [1..1]
@@ -131,7 +126,6 @@ Bounds of f{
 	value(%5)	= 10
 	value(%6)	= 2
 	value(%7)	= 0
-}
 Consistency=true
 main.20 [	convert %17 = %17 any : int]
 main.21 [	invoke %16 = (%17) whiley/lang/Any:toString : function(any) => string]
@@ -141,7 +135,7 @@ main.24 [	fieldload %20 = %0 out : {[string] args,{method(any) => void print,met
 main.25 [	fieldload %21 = %20 println : {method(any) => void print,method(any) => void println}]
 main.26 [	const %24 = 1212 : int]
 main.27 [	invoke %23 = (%24) IfElse_Valid_2:f : function(int) => int]
-Bounds of main{
+Bounds at the 27th line number of function main:
 	domain(%5)	= [0..2]
 	domain(%6)	= [1..1]
 	domain(%11)	= [0..2]
@@ -153,7 +147,6 @@ Bounds of main{
 	value(%12)	= 10
 	value(%18)	= 11
 	value(%24)	= 1212
-}
 Consistency=true
 int f(int %0)
 f.0 [	const %2 = 10 : int]
@@ -169,7 +162,7 @@ f.9 [.blklab2]
 f.10 [.blklab1]
 f.11 [	const %7 = 0 : int]
 f.12 [	return %7 : int]
-Bounds of f{
+Bounds at the end of function f:
 	domain(%0)	= [1212..11]
 	domain(%2)	= [10..10]
 	domain(%3)	= [1..1]
@@ -183,7 +176,6 @@ Bounds of f{
 	value(%5)	= 10
 	value(%6)	= 2
 	value(%7)	= 0
-}
 Consistency=false
 main.28 [	convert %23 = %23 any : int]
 main.29 [	invoke %22 = (%23) whiley/lang/Any:toString : function(any) => string]
@@ -194,7 +186,7 @@ main.33 [	fieldload %27 = %26 println : {method(any) => void print,method(any) =
 main.34 [	const %30 = 1212 : int]
 main.35 [	neg %31 = %30 : int]
 main.36 [	invoke %29 = (%31) IfElse_Valid_2:f : function(int) => int]
-Bounds of main{
+Bounds at the 36th line number of function main:
 	domain(%5)	= [0..2]
 	domain(%6)	= [1..1]
 	domain(%11)	= [0..2]
@@ -209,7 +201,6 @@ Bounds of main{
 	value(%18)	= 11
 	value(%24)	= 1212
 	value(%30)	= 1212
-}
 Consistency=true
 int f(int %0)
 f.0 [	const %2 = 10 : int]
@@ -225,7 +216,7 @@ f.9 [.blklab2]
 f.10 [.blklab1]
 f.11 [	const %7 = 0 : int]
 f.12 [	return %7 : int]
-Bounds of f{
+Bounds at the end of function f:
 	domain(%0)	= [-1212..11]
 	domain(%2)	= [10..10]
 	domain(%3)	= [1..1]
@@ -238,14 +229,13 @@ Bounds of f{
 	value(%5)	= 10
 	value(%6)	= 2
 	value(%7)	= 0
-}
 Consistency=true
 main.37 [	convert %29 = %29 any : int]
 main.38 [	invoke %28 = (%29) whiley/lang/Any:toString : function(any) => string]
 main.39 [	convert %28 = %28 any : string]
 main.40 [	indirectinvoke %27 (%28) : method(any) => void]
 main.41 [	return]
-Bounds of main{
+Bounds at the end of function main:
 	domain(%5)	= [0..2]
 	domain(%6)	= [1..1]
 	domain(%11)	= [0..2]
@@ -262,5 +252,4 @@ Bounds of main{
 	value(%18)	= 11
 	value(%24)	= 1212
 	value(%30)	= 1212
-}
 Consistency=true
