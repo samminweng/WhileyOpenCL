@@ -6,11 +6,15 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
+
+import wycc.lang.NameID;
 import wycc.lang.SyntaxError;
+import wyfs.lang.Path.ID;
 import wyil.lang.Code;
 import wyil.lang.Code.Block;
 import wyil.lang.Codes;
 import wyil.lang.Codes.BinaryOperator;
+import wyil.lang.Codes.UnaryOperator;
 import wyil.lang.Type;
 import wyil.lang.Type.EffectiveIndexible;
 import wyil.lang.Type.FunctionOrMethod;
@@ -310,6 +314,14 @@ public class CodeGenerator{
 		String stat = indent;
 		String ret = prefix+code.target();
 		Type return_type = code.type().ret();
+		
+		//The code for calling the whiley.lang.any.toString() function.
+		if(code.name.toString().equals("whiley/lang/Any:toString")){			
+			vars.put(ret+"[1024]", "char");			
+			stat += "sprintf("+ret+", \"%ld\", "+ prefix+code.operand(0)+");";
+			addStatement(code, stat);
+			return;
+		}		
 		vars.put(ret, translate(return_type));
 		stat += ret+ "="+code.name.name()+"(";
 		//Input parameters
@@ -524,11 +536,24 @@ public class CodeGenerator{
 			vars.put("str[1024]","char");			
 			//Hard-coded the invoked (temporarily).
 			String op = prefix+code.parameter(0);
-			stat += "printf(\"%s\\n\",toString("+op+", "+op+"_size, str));";
+			Type paramType = code.type().params().get(0);
+			if(vars.containsKey(op)){
+				stat += "printf(\"%s\\n\",toString("+op+", "+op+"_size, str));";
+			}else{
+				stat += "printf(\"%s\\n\","+op+");";
+			}
+			
 		}		
 		addStatement(code, stat);		
 	}
 	
+	
+	private void translate(UnaryOperator code) {		
+		String target = prefix+code.target();
+		vars.put(target, translate(code.type()));
+		String stat = indent + target+"= -"+prefix+code.operand(0)+";";
+		addStatement(code, stat);		
+	}
 
 
 	/**
@@ -621,7 +646,7 @@ public class CodeGenerator{
 			} else if (code instanceof Codes.TupleLoad) {
 				//analyze((Codes.TupleLoad)code);
 			} else if (code instanceof Codes.UnaryOperator){
-				//analyze((Codes.UnaryOperator)code);
+				translate((Codes.UnaryOperator)code);
 			} else if (code instanceof Codes.Update) {
 				translate((Codes.Update)code);
 			} else {
@@ -635,4 +660,6 @@ public class CodeGenerator{
 		}
 
 	}
+
+	
 }
