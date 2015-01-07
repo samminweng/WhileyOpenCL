@@ -11,10 +11,14 @@ import wycc.lang.NameID;
 import wycc.lang.SyntaxError;
 import wyfs.lang.Path.ID;
 import wyil.lang.Code;
+import wyil.lang.Constant;
 import wyil.lang.Code.Block;
 import wyil.lang.Codes;
 import wyil.lang.Codes.BinaryOperator;
+import wyil.lang.Codes.Loop;
+import wyil.lang.Codes.StringOperator;
 import wyil.lang.Codes.UnaryOperator;
+import wyil.lang.Constant.Strung;
 import wyil.lang.Type;
 import wyil.lang.Type.EffectiveIndexible;
 import wyil.lang.Type.FunctionOrMethod;
@@ -33,6 +37,7 @@ public class CodeGenerator{
 	private HashMap<String, Type> params;//A list of input parameters 
 	private ArrayList<String> statements;	
 	private BinaryOperator loop_condition;
+	private String loop_label;
 	private String assert_label;
 	private String indent="\t";
 	public CodeGenerator(Configuration config){
@@ -166,6 +171,18 @@ public class CodeGenerator{
 		list_func.add(str);		
 		return str;
 	}
+	/**
+	 * Increase the indentation.
+	 */
+	private void increaseIndent(){
+		this.indent += "\t";
+	}
+	/**
+	 * Decrease the indentation.
+	 */
+	private void decreaseIndent(){
+		this.indent = this.indent.replaceFirst("\t", "");
+	}
 
 	public void printoutCode(PrintWriter writer, String function_del){		
 		//function declaration
@@ -198,9 +215,17 @@ public class CodeGenerator{
 	 * @param code
 	 */
 	private void translate(Codes.Const code){
-		//Declare the variables
-		vars.put(prefix+code.target(), translate(code.assignedType()));		
-		String stat = indent + prefix+code.target()+ " = "+ code.constant + ";";
+		String stat;
+		String target = prefix+code.target();
+		if(code.assignedType() instanceof Type.Strung){
+			Strung strung = (Strung) code.constant;
+			stat = indent + "char "+target+"["+(strung.value.length()+1)+"] = \""+strung.value+"\";";
+		}else{
+			//Declare the variables
+			vars.put(prefix+code.target(), translate(code.assignedType()));		
+			stat = indent +target + " = "+ code.constant + ";";
+		}
+		
 		addStatement(code, stat);		
 	}
 
@@ -211,8 +236,8 @@ public class CodeGenerator{
 	private void translate(Codes.Assign code){
 		String target = prefix+code.target();
 		String op = prefix+code.operand(0);
+		vars.put(target, translate(code.type()));//Var
 		if(code.type()instanceof Type.List){
-			vars.put(target, translate(code.type()));//Var
 			String target_size = target+"_size";			
 			String stat = indent + target+ " = clone("+ op + ", "+ op+"_size);";
 			addStatement(code, stat);
@@ -220,6 +245,9 @@ public class CodeGenerator{
 			vars.put(target_size, "long long");
 			stat = indent + target_size+" = "+op+"_size;";
 			addStatement(null, stat);
+		}else{
+			String stat = indent + target+ " = "+ op + ";";
+			addStatement(code, stat);
 		}
 		
 	}
@@ -316,10 +344,16 @@ public class CodeGenerator{
 		Type return_type = code.type().ret();
 		
 		//The code for calling the whiley.lang.any.toString() function.
-		if(code.name.toString().equals("whiley/lang/Any:toString")){			
+		if(code.name.toString().equals("whiley/lang/Any:toString")){
+			//Check if the input parameter is also the return 
+			String param = prefix+code.operand(0);			
+			if(ret.equals(param)){
+				//Create a temporary string variable ''	
+				ret = ret+"_str";
+			}
 			vars.put(ret+"[1024]", "char");			
 			stat += "sprintf("+ret+", \"%ld\", "+ prefix+code.operand(0)+");";
-			addStatement(code, stat);
+			addStatement(code, stat);		
 			return;
 		}		
 		vars.put(ret, translate(return_type));
@@ -361,39 +395,74 @@ public class CodeGenerator{
 		String stat = indent;
 		String left = prefix+code.leftOperand;
 		String right = prefix+code.rightOperand;
-		stat += "if("+left;
-		//The condition
-		switch(code.op){
-		case EQ:
-			stat+="==";
-			break;
-		case NEQ:
-			stat+="!=";
-			break;
-		case LT:
-			stat+="<";
-			break;
-		case LTEQ:
-			stat+="<=";
-			break;
-		case GT:
-			stat+=">";
-			break;
-		case GTEQ:
-			stat+=">=";
-			break;
-		case IN:
-			break;
-		case SUBSET:
-			break;
-		case SUBSETEQ:
-			break;
+		//Check if the condition is a loop condition.
+		if(loop_label != null){
+			stat += "while("+left;
+			//The negated operator
+			switch(code.op){
+			case EQ:
+				stat+="!=";
+				break;
+			case NEQ:
+				stat+="==";
+				break;
+			case LT:
+				stat+=">=";
+				break;
+			case LTEQ:
+				stat+=">";
+				break;
+			case GT:
+				stat+="<=";
+				break;
+			case GTEQ:
+				stat+="<";
+				break;
+			case IN:
+				break;
+			case SUBSET:
+				break;
+			case SUBSETEQ:
+				break;
+			}
+			stat += right;
+			stat +="){";
+			//Increase the indent
+			increaseIndent();
+		}else{
+			stat += "if("+left;
+			//The condition
+			switch(code.op){
+			case EQ:
+				stat+="==";
+				break;
+			case NEQ:
+				stat+="!=";
+				break;
+			case LT:
+				stat+="<";
+				break;
+			case LTEQ:
+				stat+="<=";
+				break;
+			case GT:
+				stat+=">";
+				break;
+			case GTEQ:
+				stat+=">=";
+				break;
+			case IN:
+				break;
+			case SUBSET:
+				break;
+			case SUBSETEQ:
+				break;
+			}
+			stat += right;
+			stat +="){";
+			stat += "goto "+code.target+";";
+			stat +="}";
 		}
-		stat += right;
-		stat +="){";
-		stat += "goto "+code.target+";";
-		stat +="}";
-
 		addStatement(code, stat);	
 
 	}
@@ -416,14 +485,13 @@ public class CodeGenerator{
 
 	private void translate(Codes.Label code){		
 		//Check if the label is equal to assert_label
-		if(assert_label != null && assert_label.equals(code.label)){
-			//decrease the indentation
-			indent = indent.replaceFirst("\t", "");
+		if(assert_label != null && assert_label.equals(code.label)){			
+			decreaseIndent();
 			//Ending clause.
 			addStatement(null, indent+"}");
 			assert_label = null;
 		}
-		addStatement(code, code.label+":");
+		addStatement(code, code.label+":;");
 	}
 
 	private void translate(Codes.Fail code){
@@ -449,7 +517,8 @@ public class CodeGenerator{
 	private void translate(Codes.LoopEnd code){
 		//decrease the indent
 		indent = indent.replaceFirst("\t", "");
-		addStatement(code, indent+"}");			
+		addStatement(code, indent+"}");
+		loop_label= null;
 	}
 
 	private void translate(Codes.Return code){
@@ -474,8 +543,7 @@ public class CodeGenerator{
 	}
 
 
-	private void translate(Codes.NewList code){
-		
+	private void translate(Codes.NewList code){		
 		String stat = indent;
 		String target = prefix+code.target();
 		String type = translate(code.type());		
@@ -555,7 +623,36 @@ public class CodeGenerator{
 		addStatement(code, stat);		
 	}
 
+	private void translate(Loop code) {		
+		loop_label = code.target;
+		addStatement(code, null);
+	}
+	
+	private void translate(StringOperator code) {
+		String stat = "";
+		String target = prefix+code.target();
+		vars.put(target+"[1024]", "char");		
+		String left = prefix+code.operand(0);
+		String right = prefix+code.operand(1);
+		
+		//Check the operator
+		switch (code.kind){
+		case APPEND:
+			stat += indent + "strcpy("+target+", "+left+");\n";
+			stat += indent + "strcat("+target+", "+right+"_str);";
+			break;
+		case LEFT_APPEND:
 
+			break;
+		case RIGHT_APPEND:
+
+		default:
+			break;
+		}
+		addStatement(code, stat);
+	}
+	
+	
 	/**
 	 * Checks the type of the wyil code and dispatches the code to the analyzer for
 	 * being executed by the <code>analyze(code)</code> 
@@ -571,9 +668,7 @@ public class CodeGenerator{
 				translate((Codes.Assign)code);
 			} else if (code instanceof Codes.BinaryOperator) {			
 				translate((Codes.BinaryOperator)code);
-			} else if (code instanceof Codes.StringOperator) {
-				//StringOperatorInterpreter.getInstance().interpret((Codes.StringOperator)code, stackframe);
-			} else if (code instanceof Codes.Convert) {			
+			}  else if (code instanceof Codes.Convert) {			
 				translate((Codes.Convert)code);
 			} else if (code instanceof Codes.Const) {			
 				translate((Codes.Const)code);
@@ -604,7 +699,7 @@ public class CodeGenerator{
 			} else if (code instanceof Codes.ListOperator) {
 				//analyze((Codes.ListOperator)code);
 			} else if (code instanceof Codes.Loop) {			
-				//analyze((Codes.Loop)code);			
+				translate((Codes.Loop)code);			
 			} else if (code instanceof Codes.LoopEnd) {
 				translate((Codes.LoopEnd)code);									
 			} else if (code instanceof Codes.Label) {
@@ -633,6 +728,8 @@ public class CodeGenerator{
 				translate((Codes.Nop)code);
 			} else if (code instanceof Codes.SetOperator){
 				//SetOperatorInterpreter.getInstance().interpret((Codes.SetOperator)code, stackframe);
+			} else if (code instanceof Codes.StringOperator) {
+				translate((Codes.StringOperator)code);
 			} else if (code instanceof Codes.SubList) {
 				//analyze((Codes.SubList)code);
 			} else if (code instanceof Codes.SubString) {
@@ -660,6 +757,10 @@ public class CodeGenerator{
 		}
 
 	}
+
+	
+
+	
 
 	
 }

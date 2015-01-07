@@ -42,7 +42,7 @@ long long f(long long _0){
 	//return %3 : int
 	return _3;
 //.blklab0
-blklab0:
+blklab0:;
 	//const %5 = 10 : int
 	_5 = 10;
 	//ifle %0, %5 goto blklab2 : int
@@ -52,9 +52,9 @@ blklab0:
 	//return %6 : int
 	return _6;
 //.blklab2
-blklab2:
+blklab2:;
 //.blklab1
-blklab1:
+blklab1:;
 	//const %7 = 0 : int
 	_7 = 0;
 	//return %7 : int

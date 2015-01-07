@@ -62,7 +62,7 @@ long long* play(long long* _0, long long _0_size){
 		//goto blklab2
 		goto blklab2;
 //.blklab4
-blklab4:
+blklab4:;
 		//const %14 = true : bool
 		_14 = true;
 		//assert blklab12
@@ -74,7 +74,7 @@ blklab4:
 			//fail ""index out of bounds (negative)""
 			perror("fail ""index out of bounds (negative)""");
 //.blklab11
-blklab11:
+blklab11:;
 			//lengthof %20 = %1 : [bool]
 			_20 = _1_size;
 			//iflt %7, %20 goto blklab12 : int
@@ -83,13 +83,13 @@ blklab11:
 			perror("fail ""index out of bounds (not less than length)""");
 		}
 //.blklab12
-blklab12:
+blklab12:;
 		//update %1[%7] = %14 : [bool] -> [bool]
 		_1[_7] = _14;
 		//goto blklab3
 		goto blklab3;
 //.blklab2
-blklab2:
+blklab2:;
 		//const %17 = false : bool
 		_17 = false;
 		//assert blklab14
@@ -101,7 +101,7 @@ blklab2:
 			//fail ""index out of bounds (negative)""
 			perror("fail ""index out of bounds (negative)""");
 //.blklab13
-blklab13:
+blklab13:;
 			//lengthof %20 = %1 : [bool]
 			_20 = _1_size;
 			//iflt %7, %20 goto blklab14 : int
@@ -110,17 +110,17 @@ blklab13:
 			perror("fail ""index out of bounds (not less than length)""");
 		}
 //.blklab14
-blklab14:
+blklab14:;
 		//update %1[%7] = %17 : [bool] -> [bool]
 		_1[_7] = _17;
 //.blklab3
-blklab3:
+blklab3:;
 		//nop
 		;
 	//end blklab0
 	}
 //.blklab1
-blklab1:
+blklab1:;
 	//return %1 : [bool]
 	return _1;
 }
@@ -166,7 +166,7 @@ long long isAlive(long long _0, long long* _1, long long _1_size){
 		//fail ""index out of bounds (negative)""
 		perror("fail ""index out of bounds (negative)""");
 //.blklab15
-blklab15:
+blklab15:;
 		//lengthof %24 = %1 : [bool]
 		_24 = _1_size;
 		//iflt %12, %24 goto blklab16 : int
@@ -175,7 +175,7 @@ blklab15:
 		perror("fail ""index out of bounds (not less than length)""");
 	}
 //.blklab16
-blklab16:
+blklab16:;
 	//indexof %13 = %1, %12 : [bool]
 	_13=_1[_12];
 	//const %14 = true : bool
@@ -185,7 +185,7 @@ blklab16:
 	//goto blklab5
 	goto blklab5;
 //.blklab7
-blklab7:
+blklab7:;
 	//const %17 = 1 : int
 	_17 = 1;
 	//add %18 = %0, %17 : int
@@ -199,7 +199,7 @@ blklab7:
 		//fail ""index out of bounds (negative)""
 		perror("fail ""index out of bounds (negative)""");
 //.blklab17
-blklab17:
+blklab17:;
 		//lengthof %24 = %1 : [bool]
 		_24 = _1_size;
 		//iflt %18, %24 goto blklab18 : int
@@ -208,7 +208,7 @@ blklab17:
 		perror("fail ""index out of bounds (not less than length)""");
 	}
 //.blklab18
-blklab18:
+blklab18:;
 	//indexof %19 = %1, %18 : [bool]
 	_19=_1[_18];
 	//const %20 = true : bool
@@ -218,13 +218,13 @@ blklab18:
 	//goto blklab5
 	goto blklab5;
 //.blklab8
-blklab8:
+blklab8:;
 	//const %21 = true : bool
 	_21 = true;
 	//return %21 : bool
 	return _21;
 //.blklab5
-blklab5:
+blklab5:;
 	//const %22 = false : bool
 	_22 = false;
 	//return %22 : bool
@@ -310,7 +310,7 @@ int main(int argc, char** argv){
 	//end blklab9
 	}
 //.blklab10
-blklab10:
+blklab10:;
 	//return
 	return -1;
 }
