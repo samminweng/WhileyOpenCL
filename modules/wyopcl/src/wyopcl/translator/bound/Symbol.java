@@ -58,18 +58,27 @@ public class Symbol implements Cloneable, Comparable<Symbol>{
 		symbol.attributes = (Properties) this.attributes.clone();
 		return symbol;
 	}
+	
+	private int getReg(String name){
+		//return the register no.
+		if(name.matches("^%\\d.*")){
+			if(name.contains("_")){
+				String[] name_str = name.split("_");
+				return Integer.parseInt(name_str[0].substring(1));
+			}
+			return Integer.parseInt(name.split("^%")[1]);
+		}
+	
+		//Return the maximal values for other cases.
+		return Integer.MAX_VALUE;
+	}
+	
 	@Override
-	public int compareTo(Symbol s1) {
-		if(this.name.equals(s1.getName())){
+	public int compareTo(Symbol s) {
+		if(this.name.equals(s.getName())){
 			return 0;
 		}
-		if(this.name.contains("%")&& s1.name.contains("%")){
-			int reg_0 = Integer.parseInt(this.name.split("%")[1]);
-			int reg_1 = Integer.parseInt(s1.name.split("%")[1]);
-			return reg_0 - reg_1;
-		}			
-		
-		return Integer.MIN_VALUE;
+		return getReg(this.name) - getReg(s.name);
 	}	
 	
 	

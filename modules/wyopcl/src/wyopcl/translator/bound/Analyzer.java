@@ -88,6 +88,7 @@ public class Analyzer {
 	//A list of loop variables.
 	private HashMap<String, Boolean> loop_variables;
 	private boolean isGoto;
+	private final PrintWriter writer;
 
 	//The symbol table of variables
 	private HashMap<String, Symbol> symbols;
@@ -109,12 +110,16 @@ public class Analyzer {
 	}
 
 
-	public Analyzer(int depth, Configuration config,
-			FunctionOrMethodDeclaration functionOrMethod, WyilFile module){
+	public Analyzer(int depth,
+			Configuration config,
+			FunctionOrMethodDeclaration functionOrMethod,
+			WyilFile module,
+			PrintWriter writer){
 		this.depth = depth;
 		this.config = config;
 		this.functionOrMethod = functionOrMethod;
 		this.module = module;
+		this.writer = writer;
 		initialize();		
 	}
 
@@ -158,7 +163,7 @@ public class Analyzer {
 	 */
 	public void iterateByteCode(){		
 		//Print the function declaration
-		System.out.println(castDeclarationtoString(functionOrMethod));
+		writer.println(castDeclarationtoString(functionOrMethod));
 		for(Case mcase : functionOrMethod.cases()){
 			createEntryNode(functionOrMethod.type().params());
 			//Parse each byte-code and add the constraints accordingly.
@@ -240,12 +245,11 @@ public class Analyzer {
 		}
 		if(code instanceof Codes.Label){
 			//System.out.println(font_color_start+name+"."+line+"."+depth+" ["+code+"]"+font_color_end);
-			System.out.println(font_color_start+name+"."+line+" ["+code+"]"+font_color_end);
+			writer.println(font_color_start+name+"."+line+" ["+code+"]"+font_color_end);
 		}else{
 			//System.out.println(font_color_start+name+"."+line+"."+depth+" [\t"+code+"]"+font_color_end);
-			System.out.println(font_color_start+name+"."+line+" [\t"+code+"]"+font_color_end);
-		}	
-
+			writer.println(font_color_start+name+"."+line+" [\t"+code+"]"+font_color_end);
+		}
 		return ++line;
 	}	
 
@@ -257,9 +261,9 @@ public class Analyzer {
 	 */
 	private void printBounds(Bounds bnd, boolean isEnd){
 		if(isEnd){
-			System.out.print("Bounds at the end of function "+functionOrMethod.name()+":\n");
+			writer.print("Bounds at the end of function "+functionOrMethod.name()+":\n");
 		}else{
-			System.out.print("Bounds at the "+(line-1)+"th line number of function "+functionOrMethod.name()+":\n");
+			writer.print("Bounds at the "+(line-1)+"th line number of function "+functionOrMethod.name()+":\n");
 		}
 				
 		//Sort the symbol tables		
@@ -285,7 +289,7 @@ public class Analyzer {
 				str_symbols+="\t"+d+"\n";
 			}			
 			if(!str_symbols.equals("")){
-				System.out.print(str_symbols);
+				writer.print(str_symbols);
 			}
 		}
 
@@ -300,7 +304,7 @@ public class Analyzer {
 			}
 
 			if(!str_symbols.equals("")){
-				System.out.print(str_symbols);
+				writer.print(str_symbols);
 			}
 		}
 
@@ -316,11 +320,11 @@ public class Analyzer {
 				str_symbols += "\tsize("+name+")\t= "+size+"\n";
 			}
 			if(!str_symbols.equals("")){
-				System.out.print(str_symbols);
+				writer.print(str_symbols);
 			}
 		}
 		sortedSymbols = null;
-		System.out.println("Consistency="+bnd.checkBoundConsistency());		
+		writer.println("Consistency="+bnd.checkBoundConsistency());		
 	}
 
 	/**
@@ -552,12 +556,11 @@ public class Analyzer {
 			}
 		}
 		dot_string += "\n}";
-
 		//Write out the CFG-function_name.dot
 		try {
-			PrintWriter writer = new PrintWriter(config.getFilename()+"-"+func_name+".dot", "UTF-8");
-			writer.println(dot_string);
-			writer.close();
+			PrintWriter cfg_writer = new PrintWriter(config.getFilename()+"-"+func_name+".dot", "UTF-8");
+			cfg_writer.println(dot_string);
+			cfg_writer.close();
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -892,7 +895,7 @@ public class Analyzer {
 		if(functionOrMethod != null){
 			//Infer the bounds						
 			Bounds bnd = this.inferBounds(false);
-			Analyzer invokeanalyzer = new Analyzer(depth+1, config, functionOrMethod, module);
+			Analyzer invokeanalyzer = new Analyzer(depth+1, config, functionOrMethod, module, writer);
 			int index = 0;
 			//Pass the bounds of input parameters.
 			for(Type paramType: functionOrMethod.type().params()){

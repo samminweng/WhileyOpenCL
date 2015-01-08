@@ -3,6 +3,8 @@ package wyopcl.translator;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -29,7 +31,7 @@ import wyopcl.translator.generator.Utility;
  */
 public class Translator implements Builder{
 	private Configuration config;
-	
+
 	public Translator(Configuration config){
 		this.config = config;
 	}	
@@ -38,6 +40,19 @@ public class Translator implements Builder{
 	public Project project() {
 		return (Project) config.getProperty("project");
 	}
+
+	private String getFilename(){
+		String filename = config.getFilename();
+		//Get widening strategy
+		if(config.isMultiWiden()){
+			filename += ".gradual";
+		}else{
+			filename += ".naive";
+		}
+		filename += ".sysout";
+		return filename;
+	}
+
 
 	@Override
 	public Set<Entry<?>> build(Collection<Pair<Entry<?>, Root>> delta) throws IOException {
@@ -54,57 +69,50 @@ public class Translator implements Builder{
 			config.setProperty("filename", module.filename().split(".whiley")[0].replace(".\\", ""));				
 			//Check the mode
 			switch(config.getMode()){
-				case BoundAnalysis:
-					analyzeFunctionCall(module);
-					message = "Bound analysis completed\nFile:" + config.getFilename()+".whiley";
-					break;
-				case CodeGeneration:
-					generateCodeInC(module);
-					message = "Code generation completed\nFile:"+config.getFilename()+".c";
-					break;
+			case BoundAnalysis:
+				analyzeFunctionCall(module);
+				message = "Bound analysis completed.\nFile: " + getFilename();
+				break;
+			case CodeGeneration:
+				generateCodeInC(module);
+				message = "Code generation completed.\nFile: "+config.getFilename()+".c";
+				break;
 			default:
 				break;
-			}
-			
+			}			
 			//Start generating the code.
-			
 		}
-		
+
 		long endTime = System.currentTimeMillis();
-		config.getLogger().logTimedMessage(message+" Time: "+(endTime - start)+" ms", (endTime - start), memory);
+		System.out.println(message+" Time: "+(endTime - start)+" ms Memory Usage: "+ memory);
 		return generatedFiles;
 	}
-	
-	
-	/**
-	 * Takes the in-memory wyil file and analyzes the variable ranges for each function.
-	 * @param module
-	 */
-	@SuppressWarnings("unused")
-	private void analyze(WyilFile module){
-		for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {			
-			Analyzer analyzer = new Analyzer(0, config, functionOrMethod, module);			
-			analyzer.iterateByteCode();			
-			//Infer and print the final bounds of main function.
-			analyzer.inferBounds(true);	
-			analyzer = null;
-		}
-	}
-	
-	
+
+
 	/**
 	 * Takes the in-memory wyil file and analyzes the ranges using function call.
 	 * @param module
 	 */
-	private void analyzeFunctionCall(WyilFile module){
-		WyilFile.FunctionOrMethodDeclaration main = module.functionOrMethod("main").get(0);
-		Analyzer analyzer = new Analyzer(0, config, main, module);
-		analyzer.iterateByteCode();
-		//Infer the bounds at the end of main function.
-		analyzer.inferBounds(true);			
-		analyzer = null;
+	private void analyzeFunctionCall(WyilFile module){		
+		try {
+			PrintWriter writer  = new PrintWriter(getFilename());
+			WyilFile.FunctionOrMethodDeclaration main = module.functionOrMethod("main").get(0);
+			Analyzer analyzer = new Analyzer(0, config, main, module, writer);
+			analyzer.iterateByteCode();
+			//Infer the bounds at the end of main function.
+			analyzer.inferBounds(true);			
+			analyzer = null;
+			writer.close();
+			//Print out the bound analysis results to console.
+			for(String line: Files.readAllLines(Paths.get(getFilename()))){
+				System.out.println(line);
+			}			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
 	}
-	
+
 	/**
 	 * Reads the in-memory WyIL file and generates the code in C
 	 * @param module
@@ -140,7 +148,7 @@ public class Translator implements Builder{
 		} catch (FileNotFoundException e) {			
 			throw new RuntimeException("Error occurs in writing "+config.getFilename()+".c");
 		}
-		
+
 		//Write out the function signatures to *.h file.		
 		try{
 			writer = new PrintWriter(config.getFilename()+".h");
