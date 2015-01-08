@@ -489,7 +489,10 @@ public class BoundTestCase {
 
 		assertEquals(new BigInteger("1"), blk.getLower("z"));
 		assertEquals(new BigInteger("8"), blk.getUpper("z"));
-
 	}
+	
+	
+	
+	
 
 }

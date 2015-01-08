@@ -51,7 +51,7 @@ public final class BaseTestUtil {
 			System.out.println("" + pb.directory());
 			p = pb.start();
 			
-			BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream(),
+			/*BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream(),
 					Charset.forName("UTF-8")));
 			//Read the sysout file
 			String sysout;
@@ -72,7 +72,7 @@ public final class BaseTestUtil {
 			// Ensure no records is left in the list.
 			if (iterator.hasNext()) {
 				throw new Exception("Test file: " + file.getName());
-			}
+			}*/
 		} catch (Exception e) {
 			terminate();
 			throw new RuntimeException("Test file: " + file.getName(), e);
