@@ -28,14 +28,16 @@ char* toString(long long arr[], long long size, char *str){
 	return str;
 }
 int main(int argc, char** argv){
-	long long _12;
+	long long _5_size;
+	long long index;
+	char str[1024];
+	long long _7;
 	char _11[1024];
-	long long _2;
 	long long _3;
 	long long _4;
 	long long* _5;
-	long long _5_size;
-	char str[1024];
+	long long _12;
+	long long _2;
 	//const %2 = 1 : int
 	_2 = 1;
 	//const %3 = 2 : int
@@ -52,20 +54,24 @@ int main(int argc, char** argv){
 	_5[1]=_3;
 	//newlist %5 = (%2, %3, %4) : [int]
 	_5[2]=_4;
-	//fieldload %9 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}
-	//fieldload %10 = %9 println : {method(any) => void print,method(any) => void println}
-	//assign %12 = %7  : int
-	_12 = _7;
-	//invoke %11 = (%12) whiley/lang/Any:toString : function(any) => string
-	sprintf(_11, "%ld", _12);
-	//indirectinvoke %10 (%11) : method(any) => void
-	printf("%s\n",_11);
-	//nop
-	;
-//end blklab0
-}
+	//forall %7 in %5 () : [int]
+	for(index=0;index<_5_size;index++){
+		_7=_5[index];
+
+		//fieldload %9 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}
+		//fieldload %10 = %9 println : {method(any) => void print,method(any) => void println}
+		//assign %12 = %7  : int
+		_12 = _7;
+		//invoke %11 = (%12) whiley/lang/Any:toString : function(any) => string
+		sprintf(_11, "%ld", _12);
+		//indirectinvoke %10 (%11) : method(any) => void
+		printf("%s\n",_11);
+		//nop
+		;
+	//end blklab0
+	}
 //.blklab1
 blklab1:;
-//return
-return -1;
+	//return
+	return -1;
 }

@@ -3,6 +3,7 @@ package wyopcl.translator;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -104,7 +105,7 @@ public class Translator implements Builder{
 			analyzer = null;
 			writer.close();
 			//Print out the bound analysis results to console.
-			for(String line: Files.readAllLines(Paths.get(getFilename()))){
+			for(String line: Files.readAllLines(Paths.get(getFilename()), StandardCharsets.UTF_8)){
 				System.out.println(line);
 			}			
 		} catch (IOException e) {

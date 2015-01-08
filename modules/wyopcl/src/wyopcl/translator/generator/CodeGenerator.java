@@ -3,6 +3,7 @@ package wyopcl.translator.generator;
 import static wycc.lang.SyntaxError.internalFailure;
 
 import java.io.PrintWriter;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -24,6 +25,7 @@ import wyil.lang.Type.EffectiveIndexible;
 import wyil.lang.Type.FunctionOrMethod;
 import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
 import wyopcl.translator.Configuration;
+import wyopcl.translator.bound.Symbol;
 /**
  * Converts the WyIL code into C code.
  * @author Min-Hsien Weng
@@ -40,14 +42,52 @@ public class CodeGenerator{
 	private String loop_label;
 	private String assert_label;
 	private String indent="\t";
+	//The symbol table of variables
+	private HashMap<String, Symbol> symbols;
 	public CodeGenerator(Configuration config){
 		this.config = config;
 		this.vars = new HashMap<String, String>();
 		this.params = new HashMap<String, Type>();
 		this.statements = new ArrayList<String>();
 		this.list_func = new ArrayList<String>();
+		this.symbols = new HashMap<String, Symbol>();
+	}
+	/**
+	 * Get the symbol info for a variable.
+	 * @param name
+	 * @return
+	 */
+	private Symbol getSymbol(String name){
+		if(!symbols.containsKey(name)){
+			Symbol var = new Symbol(name);
+			symbols.put(name, var);
+		}
+		return symbols.get(name);
 	}
 
+	/**
+	 * Get the attribute of a variable
+	 * @param name
+	 * @param att_name
+	 * @return the attribute value. Return null if the variable does not contain the attribute.
+	 */
+	private Object getAttribute(String name, String att_name){
+		Symbol symbol = getSymbol(name);
+		return symbol.getAttribute(att_name);
+	}
+	
+	/**
+	 * Add the variable attribute to the hashmap.
+	 * @param name the variable name
+	 * @param att_name the attribute name
+	 * @param att_value the attribute value
+	 * @return
+	 */
+	private void putAttribute(String name, String att_name, Object att_value){
+		Symbol symbol = getSymbol(name);
+		symbol.setAttribute(att_name, att_value);
+	}
+	
 	/**
 	 * Prints out each bytecode with the line number and the correct indentation.
 	 * @param name
@@ -316,20 +356,26 @@ public class CodeGenerator{
 	 */
 	private void translate(Codes.ForAll code){
 		String stat = "";
+		String index = prefix+code.indexOperand;
+		vars.put(index, translate(code.type.element()));
 		if(loop_condition != null){
 			//get starting value
 			String start = prefix+loop_condition.operand(0);
 			String end = prefix+loop_condition.operand(1);
-			String index = prefix+code.indexOperand;
-			vars.put(index, translate(code.type.element()));
 			vars.remove(prefix+code.sourceOperand);
 			//The expression for loop condition.
-			stat += indent + "for("+index+"="+start+";"+index+"<"+end+";"+index+"++){";
-			addStatement(code, stat);
-			//Add the indentation
-			indent += "\t";				
+			stat += indent + "for("+index+"="+start+";"+index+"<"+end+";"+index+"++){";						
 			loop_condition = null;
+		}else{
+			//index variable
+			vars.put("index", "long long");
+			String sourceOp = prefix+code.sourceOperand;
+			stat += indent + "for(index=0;index<"+sourceOp+"_size;index++){\n";
+			stat += indent + "\t"+index+"="+sourceOp+"[index];\n";
 		}
+		addStatement(code, stat);
+		//Add the indentation
+		increaseIndent();
 	}
 
 
@@ -563,6 +609,7 @@ public class CodeGenerator{
 			addStatement(code, stat);
 			index++;
 		}
+		
 	}
 	/**
 	 * TODO: Not implemented.

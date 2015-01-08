@@ -580,7 +580,7 @@ public class Analyzer {
 	 * @param name
 	 * @return
 	 */
-	public Symbol getSymbol(String name){
+	private Symbol getSymbol(String name){
 		if(!symbols.containsKey(name)){
 			Symbol var = new Symbol(name);
 			symbols.put(name, var);
