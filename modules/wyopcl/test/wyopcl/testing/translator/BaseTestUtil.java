@@ -37,7 +37,7 @@ public final class BaseTestUtil {
 	 * @param path_whiley
 	 * @param widen
 	 */
-	public void exec(String path_whiley, String widen) {
+	public void execBoundAnalysis(String path_whiley, String widen) {
 		File file = new File(path_whiley+ ".whiley");
 		try {	
 			// Set the working directory.
@@ -81,6 +81,30 @@ public final class BaseTestUtil {
 		file = null;		
 	}
 
+	/**
+	 * Translate a Whiley program into the C code. 
+	 * @param path_whiley
+	 * @param widen
+	 */
+	public void execCodeGeneration(String path_whiley) {
+		File file = new File(path_whiley+ ".whiley");
+		try {	
+			
+			pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-code", file.getName());
+			
+			pb.directory(file.getParentFile());
+			System.out.println("" + pb.directory());
+			p = pb.start();
+			
+		} catch (Exception e) {
+			terminate();
+			throw new RuntimeException("Test file: " + file.getName(), e);
+		}
+		
+		file = null;		
+	}
+	
+	
 	public void terminate() {
 		while (p != null) {
 			p.destroy();

@@ -27,53 +27,53 @@ public class BoundAnalysisTestCase {
 	
 	@Test
 	public void test_Valid_While_Naive() {
-		util.exec(valid_path+"While", "naive");
+		util.execBoundAnalysis(valid_path+"While", "naive");
 	}
 	
 	@Test
 	public void test_Valid_While_Gradual() {
-		util.exec(valid_path+"While", "gradual");
+		util.execBoundAnalysis(valid_path+"While", "gradual");
 	}	
 	
 
 	@Test
 	public void test_Valid_IfElse_Valid_2_Naive() {
-		util.exec(valid_path+"IfElse_Valid_2", "naive");
+		util.execBoundAnalysis(valid_path+"IfElse_Valid_2", "naive");
 	}
 	
 	@Test
 	public void test_Valid_IfElse_Valid_2_Gradual() {
-		util.exec(valid_path+"IfElse_Valid_2", "gradual");
+		util.execBoundAnalysis(valid_path+"IfElse_Valid_2", "gradual");
 	}
 	
 	@Test
 	public void test_Valid_For_Valid_1_Naive() {
-		util.exec(valid_path+"For_Valid_1", "naive");
+		util.execBoundAnalysis(valid_path+"For_Valid_1", "naive");
 	}
 	
 	@Test
 	public void test_Valid_For_Valid_1_Gradual() {
-		util.exec(valid_path+"For_Valid_1", "gradual");
+		util.execBoundAnalysis(valid_path+"For_Valid_1", "gradual");
 	}
 	
 	@Test
 	public void test_Valid_While_Valid_1_Naive() {
-		util.exec(valid_path+"While_Valid_1", "naive");
+		util.execBoundAnalysis(valid_path+"While_Valid_1", "naive");
 	}
 	
 	@Test
 	public void test_Valid_While_Valid_1_Gradual() {
-		util.exec(valid_path+"While_Valid_1", "gradual");
+		util.execBoundAnalysis(valid_path+"While_Valid_1", "gradual");
 	}
 	
 	@Test
 	public void test_Valid_BoolList_Valid_2_Naive() {
-		util.exec(valid_path+"BoolList_Valid_2", "naive");
+		util.execBoundAnalysis(valid_path+"BoolList_Valid_2", "naive");
 	}
 	
 	@Test
 	public void test_BoolList_Valid_2_Gradual() {
-		util.exec(valid_path+"BoolList_Valid_2", "gradual");
+		util.execBoundAnalysis(valid_path+"BoolList_Valid_2", "gradual");
 	}
 	
 }

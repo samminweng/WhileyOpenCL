@@ -28,13 +28,13 @@ char* toString(long long arr[], long long size, char *str){
 	return str;
 }
 long long f(long long _0){
-	long long _11;
+	long long _13;
+	long long _14;
 	long long _3;
 	long long _4;
 	long long _5;
 	long long _6;
-	long long _14;
-	long long _13;
+	long long _11;
 	//const %4 = 0 : int
 	_4 = 0;
 	//assign %3 = %4  : int
@@ -67,11 +67,11 @@ blklab2:;
 }
 int main(int argc, char** argv){
 	char _7[1024];
-	char str[1024];
-	char _5_str[1024];
-	long long _9;
 	long long _5;
 	long long _6;
+	long long _9;
+	char _5_str[1024];
+	char str[1024];
 	//fieldload %2 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}
 	//fieldload %3 = %2 println : {method(any) => void print,method(any) => void println}
 	//const %4 = "Sum=" : string

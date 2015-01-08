@@ -28,11 +28,11 @@ char* toString(long long arr[], long long size, char *str){
 	return str;
 }
 long long f(long long _0){
-	long long _7;
+	long long _2;
 	long long _3;
 	long long _5;
 	long long _6;
-	long long _2;
+	long long _7;
 	//const %2 = 10 : int
 	_2 = 10;
 	//ifge %0, %2 goto blklab0 : int
@@ -61,23 +61,23 @@ blklab1:;
 	return _7;
 }
 int main(int argc, char** argv){
-	char _10[1024];
-	long long _18;
-	char _22[1024];
-	long long _29;
-	long long _17;
-	char _4[1024];
-	long long _23;
 	long long _24;
 	long long _12;
-	long long _31;
-	long long _30;
-	char str[1024];
-	char _28[1024];
-	long long _11;
+	long long _23;
+	char _10[1024];
+	long long _17;
 	char _16[1024];
+	long long _18;
+	long long _29;
+	char _28[1024];
+	char _22[1024];
+	char str[1024];
+	char _4[1024];
 	long long _5;
 	long long _6;
+	long long _31;
+	long long _30;
+	long long _11;
 	//fieldload %2 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}
 	//fieldload %3 = %2 println : {method(any) => void print,method(any) => void println}
 	//const %6 = 1 : int

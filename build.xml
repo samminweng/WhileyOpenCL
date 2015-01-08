@@ -244,6 +244,7 @@
 	<batchtest todir="report/translator/bound">
 		<fileset dir="modules/wyopcl/test">
 			<include name="**/Bound*" />
+			<include name="**/Code*" />
 		</fileset>
 	</batchtest>
 </junit>
