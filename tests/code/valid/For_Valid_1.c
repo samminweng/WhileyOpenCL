@@ -57,7 +57,6 @@ int main(int argc, char** argv){
 	//forall %7 in %5 () : [int]
 	for(index=0;index<_5_size;index++){
 		_7=_5[index];
-
 		//fieldload %9 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}
 		//fieldload %10 = %9 println : {method(any) => void print,method(any) => void println}
 		//assign %12 = %7  : int

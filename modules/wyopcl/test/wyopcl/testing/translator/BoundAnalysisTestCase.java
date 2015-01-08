@@ -56,12 +56,12 @@ public class BoundAnalysisTestCase {
 		util.execBoundAnalysis(valid_path+"For_Valid_1", "gradual");
 	}
 	
-	@Test
+	//@Test
 	public void test_Valid_While_Valid_1_Naive() {
 		util.execBoundAnalysis(valid_path+"While_Valid_1", "naive");
 	}
 	
-	@Test
+	//@Test
 	public void test_Valid_While_Valid_1_Gradual() {
 		util.execBoundAnalysis(valid_path+"While_Valid_1", "gradual");
 	}
