@@ -96,7 +96,12 @@ public class Translator implements Builder{
 	 */
 	private void analyzeFunctionCall(WyilFile module){		
 		try {
-			PrintWriter writer  = new PrintWriter(getFilename());
+			PrintWriter writer = null;
+			if(!config.isVerbose()){
+				 writer  = new PrintWriter(getFilename());
+			}else{
+				writer = new PrintWriter(System.out, true);
+			}
 			WyilFile.FunctionOrMethodDeclaration main = module.functionOrMethod("main").get(0);
 			Analyzer analyzer = new Analyzer(0, config, main, module, writer);
 			analyzer.iterateByteCode();
@@ -104,10 +109,13 @@ public class Translator implements Builder{
 			analyzer.inferBounds(true);			
 			analyzer = null;
 			writer.close();
-			//Print out the bound analysis results to console.
-			for(String line: Files.readAllLines(Paths.get(getFilename()), StandardCharsets.UTF_8)){
-				System.out.println(line);
-			}			
+			if(!config.isVerbose()){
+				//Print out the bound analysis results to console.
+				for(String line: Files.readAllLines(Paths.get(getFilename()), StandardCharsets.UTF_8)){
+					System.out.println(line);
+				}
+			}
+				
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
