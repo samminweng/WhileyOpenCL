@@ -35,7 +35,7 @@ public class GreaterThanEquals extends Constraint {
 		}
 		//Propagate the upper bound from y to x using the widening operator
 		if(max_y != null){
-			bnd.isChanged |= bnd.widenUpperBound(x, max_y);
+			bnd.isChanged |= bnd.addUpperBound(x, max_y);
 		}
 		
 

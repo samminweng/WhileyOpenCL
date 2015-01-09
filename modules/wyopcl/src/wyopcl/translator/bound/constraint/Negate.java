@@ -6,7 +6,7 @@ import java.math.BigInteger;
 import wyopcl.translator.bound.Bounds;
 import wyopcl.translator.bound.Domain;
 /**
- * Implements the propagation rule for constraint '!X = Y'
+ * Implements the propagation rule for constraint 'Y = !X'
  * 
  * @author Min-Hsien Weng
  *
@@ -30,20 +30,20 @@ public class Negate extends Constraint{
 			max_y = bnd.getUpper(y);
 
 
-			// !X = Y
+			// Y = !X
 			// Add the lower bound of y variable.
 			if (max_x != null) {
 				//max (min_y, !min_x)
-				bnd.isChanged |= bnd.addLowerBound(y, max_x.negate());
+				bnd.isChanged |= bnd.setLowerBound(y, max_x.negate());
 			}
 			// Add the upper bound of y variable.
 			if (min_x != null) {
 				//min (max_y, !min_x)
-				bnd.isChanged |= bnd.addUpperBound(y, min_x.negate());
+				bnd.isChanged |= bnd.setUpperBound(y, min_x.negate());
 			}
 
 
-			// Add the lower bound of x variable.
+			/*// Add the lower bound of x variable.
 			if (max_y != null) {
 				//max (min_y, !min_x)
 				bnd.isChanged |= bnd.addLowerBound(x, max_y.negate());
@@ -52,7 +52,7 @@ public class Negate extends Constraint{
 			if (min_y != null) {
 				//min (max_y, !min_x)
 				bnd.isChanged |= bnd.addUpperBound(x, min_y.negate());
-			}
+			}*/
 
 		return bnd.isChanged;
 	}

@@ -342,10 +342,7 @@ public class Analyzer {
 			bnd_before = (Bounds) blk.getBounds().clone();		
 		}
 
-		//Take the union of parents' bounds.
-		for(BasicBlock parent: blk.getParentNodes()){
-			blk.unionBounds(parent);
-		}
+		
 
 		//If bounds remain unchanged, then isChanged = true.
 		isChanged |= blk.inferBounds();	
@@ -419,7 +416,11 @@ public class Analyzer {
 			//If bounds has changed, then isChanged = false.
 			boolean isChanged = false;
 			//Iterate all the blocks
-			for(BasicBlock blk : list){				
+			for(BasicBlock blk : list){
+				//Take the union of parents' bounds.
+				for(BasicBlock parent: blk.getParentNodes()){
+					blk.unionBounds(parent);
+				}
 				isChanged = inferBoundsforBlock(blk, isChanged, iteration);				
 				//Use bitwise 'AND' to combine all the results
 				isFixedPointed &= (!isChanged);	
@@ -1168,11 +1169,12 @@ public class Analyzer {
 			BigInteger right = (BigInteger)getAttribute(prefix+code.operand(1), "value");			
 			switch (code.kind) {
 			case ADD:
-				addConstraint(new Plus(target, prefix+code.operand(0), prefix+code.operand(1)));				
+				addConstraint(new LeftPlus(prefix+code.operand(0), prefix+code.operand(1), target));				
 				break;
 			case SUB:
-				//target = op(0) - op(1) => target+op(1) = op(0)		
-				addConstraint(new LeftPlus(target, prefix+code.operand(1), prefix+code.operand(0)));				
+				//target = op(0) + (- op(1)) 
+				addConstraint(new Negate(prefix+code.operand(1), prefix+code.operand(1)));
+				addConstraint(new LeftPlus(prefix+code.operand(0), prefix+code.operand(1), target));				
 				break;
 			case MUL:		
 				break;

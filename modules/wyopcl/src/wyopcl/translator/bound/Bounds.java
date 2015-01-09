@@ -84,10 +84,21 @@ public class Bounds implements Cloneable{
 	public BigInteger getLower(String name) {
 		return getDomain(name).getLowerBound();
 	}
-
+	
+	public boolean setLowerBound(String name, BigInteger lower_bound){
+		getDomain(name).setLowerBound(lower_bound);
+		return true;
+	}
+	
 	public BigInteger getUpper(String name) {
 		return getDomain(name).getUpperBound();
-	}	
+	}
+	
+	public boolean setUpperBound(String name, BigInteger upper_bound){
+		getDomain(name).setUpperBound(upper_bound);
+		return true;
+	}
+	
 	
 	/**
 	 * 

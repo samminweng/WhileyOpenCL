@@ -30,13 +30,13 @@ public class GreaterThan extends Constraint {
 		min_y = bnd.getLower(y);
 
 		
-		/*if (max_x != null){
+		if (max_x != null){
 			bnd.isChanged |= bnd.addUpperBound(y, max_x.subtract(BigInteger.ONE));
-		}*/
-		//Propagate 'max_y + 1' to Upper bound of x using the widen operator.
-		if(max_y != null){
-			bnd.isChanged |= bnd.widenUpperBound(x, max_y.add(BigInteger.ONE));
 		}
+		//Propagate 'max_y + 1' to Upper bound of x using the widen operator.
+		/*if(max_y != null){
+			bnd.isChanged |= bnd.widenUpperBound(x, max_y.add(BigInteger.ONE));
+		}*/
 
 		//Propagate 'min_y + 1' to lower bound of x 
 		if(min_y != null){
