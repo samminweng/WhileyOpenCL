@@ -1184,7 +1184,7 @@ public class Analyzer {
 				break;			
 			case RANGE:
 				//Take the union of operands
-				addConstraint(new Range(target, left, right));
+				addConstraint(new Range(target, left, right.subtract(BigInteger.ONE)));
 				//Add the size att
 				putAttribute(target, "size", right.subtract(left).subtract(BigInteger.ONE));				
 				break;
