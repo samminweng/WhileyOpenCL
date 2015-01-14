@@ -21,8 +21,8 @@ main.18 [	invoke %18 = (%1) BoolList_Valid_2:play : function([bool]) => [bool]]
 Bounds at the 18th line number of function main:
 	domain(%10)	= [0..0]
 	domain(%11)	= [5..5]
-	domain(%12)	= [0..5]
-	domain(%13)	= [0..5]
+	domain(%12)	= [0..4]
+	domain(%13)	= [0..4]
 	value(%10)	= 0
 	value(%11)	= 5
 	size(%1)	= 7
@@ -40,8 +40,8 @@ play.6 [	invoke %8 = (%7, %0) BoolList_Valid_2:isAlive : function(int,[bool]) =>
 Bounds at the 6th line number of function play:
 	domain(%3)	= [0..0]
 	domain(%5)	= [7..7]
-	domain(%6)	= [0..7]
-	domain(%7)	= [0..7]
+	domain(%6)	= [0..6]
+	domain(%7)	= [0..6]
 	value(%3)	= 0
 	value(%5)	= 7
 	size(%0)	= 7
@@ -94,15 +94,15 @@ isAlive.40 [.blklab5]
 isAlive.41 [	const %22 = false : bool]
 isAlive.42 [	return %22 : bool]
 Bounds at the end of function isAlive:
-	domain(%0)	= [0..7]
+	domain(%0)	= [0..6]
 	domain(%3)	= [0..0]
 	domain(%5)	= [1..1]
 	domain(%6)	= [2..6]
 	domain(%8)	= [7..7]
 	domain(%11)	= [-1..-1]
-	domain(%12)	= [0..6]
+	domain(%12)	= [0..5]
 	domain(%17)	= [1..1]
-	domain(%18)	= [2..8]
+	domain(%18)	= [2..7]
 	value(%3)	= 0
 	value(%5)	= 1
 	value(%8)	= 7
@@ -146,8 +146,8 @@ play.39 [	return %1 : [bool]]
 Bounds at the end of function play:
 	domain(%3)	= [0..0]
 	domain(%5)	= [7..7]
-	domain(%6)	= [0..7]
-	domain(%7)	= [0..7]
+	domain(%6)	= [0..6]
+	domain(%7)	= [0..6]
 	value(%3)	= 0
 	value(%5)	= 7
 	size(%0)	= 7
@@ -164,8 +164,8 @@ main.23 [	return]
 Bounds at the end of function main:
 	domain(%10)	= [0..0]
 	domain(%11)	= [5..5]
-	domain(%12)	= [0..5]
-	domain(%13)	= [0..5]
+	domain(%12)	= [0..4]
+	domain(%13)	= [0..4]
 	value(%10)	= 0
 	value(%11)	= 5
 	size(%1)	= 7

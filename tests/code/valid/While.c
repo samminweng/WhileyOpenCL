@@ -66,24 +66,22 @@ blklab2:;
 	return _5;
 }
 int main(int argc, char** argv){
-	char _7[1024];
-	long long _5;
+	long long _1;
+	long long _2;
+	long long _3;
 	long long _6;
-	long long _9;
-	char _5_str[1024];
+	long long _8;
 	char str[1024];
-	//fieldload %2 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}
-	//fieldload %3 = %2 println : {method(any) => void print,method(any) => void println}
-	//const %4 = "Sum=" : string
-	char _4[5] = "Sum=";
-	//const %6 = 5 : int
-	_6 = 5;
+	char _8_str[1024];
+	char _9[1024];
+	//const %3 = 50000 : int
+	_3 = 50000;
 	//assert blklab4
 	{
-		//const %9 = 1000000 : int
-		_9 = 1000000;
-		//ifle %6, %9 goto blklab3 : int
-		if(_6<=_9){goto blklab3;}
+		//const %6 = 1000000 : int
+		_6 = 1000000;
+		//ifle %3, %6 goto blklab3 : int
+		if(_3<=_6){goto blklab3;}
 		//fail ""precondition not satisfied""
 		perror("fail ""precondition not satisfied""");
 //.blklab3
@@ -91,15 +89,23 @@ blklab3:;
 	}
 //.blklab4
 blklab4:;
-	//invoke %5 = (%6) While:f : function(int) => int
-	_5=f(_6);
-	//invoke %5 = (%5) whiley/lang/Any:toString : function(any) => string
-	sprintf(_5_str, "%ld", _5);
-	//sappend %7 = %4, %5 : string
-	strcpy(_7, _4);
-	strcat(_7, _5_str);
-	//indirectinvoke %3 (%7) : method(any) => void
-	printf("%s\n",_7);
+	//invoke %2 = (%3) While:f : function(int) => int
+	_2=f(_3);
+	//assign %1 = %2  : int
+	_1 = _2;
+	//fieldload %5 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}
+	//fieldload %6 = %5 println : {method(any) => void print,method(any) => void println}
+	//const %7 = "Sum=" : string
+	char _7[5] = "Sum=";
+	//assign %8 = %1  : int
+	_8 = _1;
+	//invoke %8 = (%8) whiley/lang/Any:toString : function(any) => string
+	sprintf(_8_str, "%lld", _8);
+	//sappend %9 = %7, %8 : string
+	strcpy(_9, _7);
+	strcat(_9, _8_str);
+	//indirectinvoke %6 (%9) : method(any) => void
+	printf("%s\n",_9);
 	//return
 	return -1;
 }

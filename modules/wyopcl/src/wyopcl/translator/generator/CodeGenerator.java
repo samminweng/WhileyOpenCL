@@ -129,9 +129,7 @@ public class CodeGenerator{
 				return "int argc, char** argv";
 			}
 			return record.toString();
-
 		}
-
 
 		return null;
 
@@ -398,7 +396,7 @@ public class CodeGenerator{
 				ret = ret+"_str";
 			}
 			vars.put(ret+"[1024]", "char");			
-			stat += "sprintf("+ret+", \"%ld\", "+ prefix+code.operand(0)+");";
+			stat += "sprintf("+ret+", \"%lld\", "+ prefix+code.operand(0)+");";
 			addStatement(code, stat);		
 			return;
 		}		
