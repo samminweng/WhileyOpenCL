@@ -265,7 +265,7 @@ public class Analyzer {
 		}else{
 			writer.print("Bounds at the "+(line-1)+"th line number of function "+functionOrMethod.name()+":\n");
 		}
-				
+
 		//Sort the symbol tables		
 		List<Symbol> sortedSymbols = new ArrayList<Symbol>(symbols.values());
 		Collections.sort(sortedSymbols);
@@ -334,16 +334,13 @@ public class Analyzer {
 	 * @param iteration the iteration number.
 	 * @return true if bounds are unchanged. Otherwise, return false.
 	 */
-	private boolean inferBoundsforBlock(BasicBlock blk, boolean isChanged, int iteration){
+	private boolean inferBlockBounds(BasicBlock blk, boolean isChanged, int iteration){
 		Bounds bnd_before = null, bnd_after = null;
 		//Before the bound inference
 		//The bound before bound inference. 
 		if(blk.getType().equals(BlockType.LOOP_BODY)){
 			bnd_before = (Bounds) blk.getBounds().clone();		
 		}
-
-		
-
 		//If bounds remain unchanged, then isChanged = true.
 		isChanged |= blk.inferBounds();	
 
@@ -421,7 +418,7 @@ public class Analyzer {
 				for(BasicBlock parent: blk.getParentNodes()){
 					blk.unionBounds(parent);
 				}
-				isChanged = inferBoundsforBlock(blk, isChanged, iteration);				
+				isChanged = inferBlockBounds(blk, isChanged, iteration);				
 				//Use bitwise 'AND' to combine all the results
 				isFixedPointed &= (!isChanged);	
 
@@ -623,35 +620,40 @@ public class Analyzer {
 	 * @param new_label the name of new branch.
 	 * @param c constraint
 	 */
-	private void createIfElseBranchOrLoopStructure(String new_label, Constraint c, Constraint neg_c){
-		BasicBlock c_blk = getCurrentBlock();
-		//Check whether to add if-else blocks or loop-condition blocks.
-		if(loop_condition != null){
-			BasicBlock loop_body = createBasicBlock(new_label, BlockType.LOOP_BODY, c_blk);
-			BasicBlock loop_exit = createBasicBlock(new_label, BlockType.LOOP_EXIT, c_blk);
-			//put the opposite constraint to current blk(loopbody)			
-			loop_body.addConstraint(neg_c);	
-			//put the original constraint to the loop_exit			
-			loop_exit.addConstraint(c);	
-			setCurrentBlock(loop_body);
-			//Reset the loop condition flag.
-			loop_condition = null;
-		}else{
-			//Branch out the block 
-			//The left block does not have the name
-			BasicBlock leftBlock = createBasicBlock(new_label, BlockType.ELSE_BRANCH, c_blk);
-			BasicBlock rightBlock = createBasicBlock(new_label, BlockType.IF_BRANCH, c_blk);
+	private void createIfElseBranch(String new_label, Constraint c, Constraint neg_c){
+		BasicBlock c_blk = getCurrentBlock();		
+		//Branch out the block 
+		//The left block does not have the name
+		BasicBlock leftBlock = createBasicBlock(new_label, BlockType.ELSE_BRANCH, c_blk);
+		BasicBlock rightBlock = createBasicBlock(new_label, BlockType.IF_BRANCH, c_blk);
 
-			//Add the constraint to the left block
-			leftBlock.addConstraint(neg_c);
-			rightBlock.addConstraint(c);						
-			//Set the current block to the left
-			setCurrentBlock(leftBlock);
-		}
+		//Add the constraint to the left block
+		leftBlock.addConstraint(neg_c);
+		rightBlock.addConstraint(c);						
+		//Set the current block to the left
+		setCurrentBlock(leftBlock);
 	}
 
 
-
+	/**
+	 * Branches the current block and adds the loop header, loop body and loop exit. And set the current
+	 * block to the .
+	 * @param new_label the name of new branch.
+	 * @param c constraint
+	 */
+	private void createLoopStructure(String new_label, Constraint c, Constraint neg_c){
+		BasicBlock c_blk = getCurrentBlock();
+		//Check whether to add if-else blocks or loop-condition blocks.
+		BasicBlock loop_body = createBasicBlock(new_label, BlockType.LOOP_BODY, c_blk);
+		BasicBlock loop_exit = createBasicBlock(new_label, BlockType.LOOP_EXIT, c_blk);
+		//put the opposite constraint to current blk(loopbody)			
+		loop_body.addConstraint(neg_c);	
+		//put the original constraint to the loop_exit			
+		//loop_exit.addConstraint(c);	
+		setCurrentBlock(loop_body);
+		//Reset the loop condition flag.
+		loop_condition = null;
+	}
 
 
 	/**
@@ -876,8 +878,14 @@ public class Analyzer {
 				System.err.println("Not implemented!");
 
 			}			
-		}	
-		createIfElseBranchOrLoopStructure(code.target, left_c, right_c);
+		}
+		
+		if(loop_condition != null){
+			createLoopStructure(code.target, left_c, right_c);
+		}else{
+			createIfElseBranch(code.target, left_c, right_c);
+		}
+		
 		//Instead of creating if-else branches, we put the condition to the current blk
 		//	BasicBlock current_blk = getCurrentBlock();
 		//	current_blk.addConstraint(left_c);				
@@ -920,7 +928,7 @@ public class Analyzer {
 			Type return_type = code.type().ret();
 			//put the 'type' attribute of 'return_reg'
 			putAttribute(return_reg, "type", return_type);
-			
+
 			if(isIntType(return_type)){
 				//propagate the bounds of return value.						
 				addConstraint(new Range(return_reg, bnd.getLower("return"), bnd.getUpper("return")));
@@ -1169,12 +1177,13 @@ public class Analyzer {
 			BigInteger right = (BigInteger)getAttribute(prefix+code.operand(1), "value");			
 			switch (code.kind) {
 			case ADD:
-				addConstraint(new LeftPlus(prefix+code.operand(0), prefix+code.operand(1), target));				
+				//addConstraint(new Plus(target, prefix+code.operand(0), prefix+code.operand(1)));
+				addConstraint(new LeftPlus(prefix+code.operand(0), prefix+code.operand(1), target));	
 				break;
 			case SUB:
 				//target = op(0) + (- op(1)) 
 				addConstraint(new Negate(prefix+code.operand(1), prefix+code.operand(1)));
-				addConstraint(new LeftPlus(prefix+code.operand(0), prefix+code.operand(1), target));				
+				addConstraint(new Plus(target, prefix+code.operand(0), prefix+code.operand(1)));				
 				break;
 			case MUL:		
 				break;

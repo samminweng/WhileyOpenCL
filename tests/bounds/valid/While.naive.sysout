@@ -1,15 +1,18 @@
 void main([string] args, {method(any) => void print,method(any) => void println} out)
-main.0 [	const %3 = 50000 : int]
-main.1 [	assert blklab4]
-[30;1mmain.2 [	const %6 = 1000000 : int][0m
-[30;1mmain.3 [	ifle %3, %6 goto blklab3 : int][0m
-[30;1mmain.4 [	fail ""precondition not satisfied""][0m
-[30;1mmain.5 [.blklab3][0m
-[30;1mmain.6 [.blklab4][0m
-main.7 [	invoke %2 = (%3) While:f : function(int) => int]
-Bounds at the 7th line number of function main:
-	domain(%3)	= [50000..50000]
-	value(%3)	= 50000
+main.0 [	fieldload %2 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}]
+main.1 [	fieldload %3 = %2 println : {method(any) => void print,method(any) => void println}]
+main.2 [	const %4 = "Sum=" : string]
+main.3 [	const %6 = 5 : int]
+main.4 [	assert blklab4]
+[30;1mmain.5 [	const %9 = 1000000 : int][0m
+[30;1mmain.6 [	ifle %6, %9 goto blklab3 : int][0m
+[30;1mmain.7 [	fail ""precondition not satisfied""][0m
+[30;1mmain.8 [.blklab3][0m
+[30;1mmain.9 [.blklab4][0m
+main.10 [	invoke %5 = (%6) While:f : function(int) => int]
+Bounds at the 10th line number of function main:
+	domain(%6)	= [5..5]
+	value(%6)	= 5
 Consistency=true
 int f(int %0)
 f.0 [	const %4 = 0 : int]
@@ -28,35 +31,28 @@ f.12 [end blklab1]
 f.13 [.blklab2]
 f.14 [	return %5 : int]
 Bounds at the end of function f:
-	domain(%0)	= [50000..50000]
-	domain(%3)	= [50000..50000]
+	domain(%0)	= [5..5]
+	domain(%3)	= [0..infinity]
 	domain(%4)	= [0..0]
-	domain(%5)	= [0..0]
+	domain(%5)	= [0..infinity]
 	domain(%6)	= [0..0]
-	domain(%11)	= [0..0]
+	domain(%11)	= [0..3]
 	domain(%13)	= [1..1]
-	domain(%14)	= [1..1]
-	domain(return)	= [0..0]
-	value(%0)	= 50000
+	domain(%14)	= [1..3]
+	domain(return)	= [0..infinity]
+	value(%0)	= 5
 	value(%4)	= 0
 	value(%6)	= 0
 	value(%13)	= 1
 Consistency=true
-main.8 [	assign %1 = %2  : int]
-main.9 [	fieldload %5 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}]
-main.10 [	fieldload %6 = %5 println : {method(any) => void print,method(any) => void println}]
-main.11 [	const %7 = "Sum=" : string]
-main.12 [	assign %8 = %1  : int]
-main.13 [	convert %8 = %8 any : int]
-main.14 [	invoke %8 = (%8) whiley/lang/Any:toString : function(any) => string]
-main.15 [	sappend %9 = %7, %8 : string]
-main.16 [	convert %9 = %9 any : string]
-main.17 [	indirectinvoke %6 (%9) : method(any) => void]
-main.18 [	return]
+main.11 [	convert %5 = %5 any : int]
+main.12 [	invoke %5 = (%5) whiley/lang/Any:toString : function(any) => string]
+main.13 [	sappend %7 = %4, %5 : string]
+main.14 [	convert %7 = %7 any : string]
+main.15 [	indirectinvoke %3 (%7) : method(any) => void]
+main.16 [	return]
 Bounds at the end of function main:
-	domain(%1)	= [0..0]
-	domain(%2)	= [0..0]
-	domain(%3)	= [50000..50000]
-	domain(%8)	= [0..0]
-	value(%3)	= 50000
+	domain(%5)	= [0..infinity]
+	domain(%6)	= [5..5]
+	value(%6)	= 5
 Consistency=true

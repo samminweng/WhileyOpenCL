@@ -23,7 +23,7 @@ public class BasicBlock implements Comparable<BasicBlock>{
 	private String branch;
 	private BlockType type;
 	private Bounds unionOfBounds;
-	private Bounds existingBounds;
+	//private Bounds existingBounds;
 	//Indicate if the bounds remain unchanged. False: unchanged. True: changed.
 	private boolean isChanged = false;
 
@@ -247,17 +247,17 @@ public class BasicBlock implements Comparable<BasicBlock>{
 	 */
 	public boolean inferBounds(){
 		isChanged = true;
+		//Clone the inferred bounds and assign it to the existing bounds.
+		Bounds existingBounds = (Bounds) this.unionOfBounds.clone();
 		//Iterate through the constraints to infer the bounds.
 		for(Constraint c: this.constraintList){
 			//The inferBound method returns False if the bounds remain unchanged.
 			c.inferBound(this.unionOfBounds);
 		}
-		//Test the equality of HashMap of bounds.
+		//Test the equality of existing and newly inferred bounds.
 		if(existingBounds!= null && existingBounds.equals(this.unionOfBounds)){
 			isChanged = false;
-		}
-		//Clone the inferred bounds and assign it to the existing bounds.
-		existingBounds = (Bounds) this.unionOfBounds.clone();
+		}		
 		return isChanged;
 	}
 

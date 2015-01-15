@@ -28,11 +28,11 @@ public class Assign extends Constraint{
 		
 		//Assign the lower and upper bounds.
 		if(min_x != min_y){
-			bnd.getDomain(x).setLowerBound(min_y);
+			bnd.isChanged |= bnd.setLowerBound(x, min_y);
 		}
 		
 		if(max_x != max_y){
-			bnd.getDomain(x).setUpperBound(max_y);
+			bnd.isChanged |= bnd.setUpperBound(x, max_y);
 		}
 		
 		return bnd.isChanged;

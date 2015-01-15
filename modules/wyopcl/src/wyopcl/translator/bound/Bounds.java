@@ -86,6 +86,14 @@ public class Bounds implements Cloneable{
 	}
 	
 	public boolean setLowerBound(String name, BigInteger lower_bound){
+		BigInteger existing_bound = getLower(name);
+		//Check if existing bound == lower_bound
+		if(existing_bound == null && lower_bound == null){
+			return false;			
+		}
+		if(existing_bound != null && lower_bound != null && existing_bound.compareTo(lower_bound)==0){
+			return false;			
+		}		
 		getDomain(name).setLowerBound(lower_bound);
 		return true;
 	}
@@ -95,6 +103,14 @@ public class Bounds implements Cloneable{
 	}
 	
 	public boolean setUpperBound(String name, BigInteger upper_bound){
+		BigInteger existing_bound = getUpper(name);
+		//Check if existing bound == upper_bound
+		if(existing_bound == null && upper_bound == null){
+			return false;			
+		}
+		if(existing_bound != null && upper_bound != null && existing_bound.compareTo(upper_bound)==0){
+			return false;			
+		}		
 		getDomain(name).setUpperBound(upper_bound);
 		return true;
 	}

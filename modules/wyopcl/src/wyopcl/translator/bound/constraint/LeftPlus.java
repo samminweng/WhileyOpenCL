@@ -34,7 +34,7 @@ public class LeftPlus extends Constraint {
 		min_z = bnd.getLower(z);
 		max_z = bnd.getUpper(z);
 
-		// X = Z - Y 
+		/*// X = Z - Y 
 		// Add the lower bound of y variable.
 		if (min_z != null && max_y != null) {
 			// max(min_x, min_z - max_y)
@@ -57,17 +57,19 @@ public class LeftPlus extends Constraint {
 			// min (max_y, max_z - min_x)
 			bnd.isChanged |= bnd.addUpperBound(y, max_z.subtract(min_x));
 		}
-
+*/
 		// Z = X + Y
 		// Propagate the lower bound of z variable. 
 		if (min_x != null && min_y != null) {
 			// max (min_z, min_x + min_y)
-			bnd.isChanged |= bnd.addLowerBound(z, min_x.add(min_y));
+			//bnd.isChanged |= bnd.addLowerBound(z, min_x.add(min_y));
+			bnd.isChanged |= bnd.setLowerBound(z, min_x.add(min_y));
 		}
 		// Add the upper bound of z variable.
 		if (max_x != null && max_y != null) {
 			// min (max_z, max_x + max_y)
-			bnd.isChanged |= bnd.addUpperBound(z, max_x.add(max_y));
+			//bnd.isChanged |= bnd.addUpperBound(z, max_x.add(max_y));
+			bnd.isChanged |= bnd.setUpperBound(z, max_x.add(max_y));
 		}
 
 		return bnd.isChanged;
