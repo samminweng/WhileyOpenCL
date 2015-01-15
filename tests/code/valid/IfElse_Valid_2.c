@@ -28,11 +28,11 @@ char* toString(long long arr[], long long size, char *str){
 	return str;
 }
 long long f(long long _0){
-	long long _2;
+	long long _7;
 	long long _3;
 	long long _5;
 	long long _6;
-	long long _7;
+	long long _2;
 	//const %2 = 10 : int
 	_2 = 10;
 	//ifge %0, %2 goto blklab0 : int
@@ -62,11 +62,11 @@ blklab1:;
 }
 int main(int argc, char** argv){
 	char _7[1024];
+	char str[1024];
+	long long _8;
+	long long _3;
 	long long _1;
 	long long _2;
-	long long _3;
-	long long _8;
-	char str[1024];
 	//const %3 = 1 : int
 	_3 = 1;
 	//invoke %2 = (%3) IfElse_Valid_2:f : function(int) => int
@@ -78,7 +78,7 @@ int main(int argc, char** argv){
 	//assign %8 = %1  : int
 	_8 = _1;
 	//invoke %7 = (%8) whiley/lang/Any:toString : function(any) => string
-	sprintf(_7, "%ld", _8);
+	sprintf(_7, "%lld", _8);
 	//indirectinvoke %6 (%7) : method(any) => void
 	printf("%s\n",_7);
 	//return

@@ -809,6 +809,13 @@ public class Analyzer {
 			addConstraint(new Const(target, value));
 			putAttribute(target, "value", value);
 		}
+		
+		if(constant instanceof Constant.List){
+			List<Constant> list = ((Constant.List)constant).values;
+			putAttribute(target, "value", list);
+			putAttribute(target, "size", BigInteger.valueOf(list.size()));
+		}
+		
 
 	}
 	/**
@@ -1022,11 +1029,18 @@ public class Analyzer {
 	}
 
 	private void analyze(Codes.ListOperator code){		
+		String target = prefix+code.target();
+		putAttribute(target, "type", code.type());	
 		switch(code.kind){
 		case APPEND:
+			BigInteger size = BigInteger.ZERO;
 			for(int operand : code.operands()){
-				addConstraint(new Equals(prefix+code.target(), prefix+operand));
+				String op = prefix+operand;
+				size = size.add((BigInteger) getAttribute(op, "size"));
+				addConstraint(new Equals(target, prefix+operand));
 			}
+			//put 'size' attribute 
+			putAttribute(target, "size", size);			
 			break;
 		case LEFT_APPEND:
 
@@ -1307,6 +1321,12 @@ public class Analyzer {
 	private void analyze(Codes.Convert code){
 		String target = prefix+code.target();
 		putAttribute(target, "type", code.result);
+		
+		if(code.result instanceof Type.List){
+			//Get the value
+			
+			
+		}
 
 	}
 
