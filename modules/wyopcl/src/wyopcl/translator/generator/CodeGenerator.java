@@ -466,7 +466,7 @@ public class CodeGenerator{
 			//Get the type of input parameter
 			if(!code.type().params().isEmpty()){
 				String param = prefix+code.operand(0);
-				Type paramType = code.type().params().get(0);
+				Type paramType = (Type) getAttribute(param, "type");
 				//Cast the input as a string
 				vars.put(ret+"[1024]", "char");	
 				if(paramType instanceof Type.Int){

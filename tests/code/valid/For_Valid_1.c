@@ -10,23 +10,20 @@ long long* clone(long long *arr, long long size){
 	}
 	return ptr;
 }
-char* toString(long long arr[], long long size, char *str){
+void append(long long* op_1, long long op_1_size, long long* op_2, long long op_2_size, long long* res){
 	long long i;
-	i=0;
-	strcpy(str, "[");
-	for(i=0;i<size;i++){
-		if(arr[i]==true){
-			strcat(str, "true");
-		}else{
-			strcat(str, "false");
-		}
-		if(i<size-1){
-			strcat(str, ", ");
-		}
+	long long res_i;
+	res_i=0;
+	for(i=0;i<op_1_size;i++){
+		res[res_i]=op_1[i];
+		res_i++;
 	}
-	strcat(str, "]");
-	return str;
+	for(i=0;i<op_2_size;i++){
+		res[res_i]=op_2[i];
+		res_i++;
+	}
 }
+
 int main(int argc, char** argv){
 	long long _5_size;
 	long long index;
@@ -57,12 +54,15 @@ int main(int argc, char** argv){
 	//forall %7 in %5 () : [int]
 	for(index=0;index<_5_size;index++){
 		_7=_5[index];
+
 		//fieldload %9 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}
 		//fieldload %10 = %9 println : {method(any) => void print,method(any) => void println}
 		//assign %12 = %7  : int
 		_12 = _7;
+		//convert %12 = %12 any : int
 		//invoke %11 = (%12) whiley/lang/Any:toString : function(any) => string
-		sprintf(_11, "%ld", _12);
+		sprintf(_11, "%lld", _12);
+		//convert %11 = %11 any : string
 		//indirectinvoke %10 (%11) : method(any) => void
 		printf("%s\n",_11);
 		//nop
@@ -73,4 +73,18 @@ int main(int argc, char** argv){
 blklab1:;
 	//return
 	return -1;
+}
+char* toString(long long arr[], long long size, char *str){
+	long long i;
+	i=0;
+	strcpy(str, "[");
+	for(i=0;i<size;i++){		
+		char c[1024];
+		sprintf(c, "%d", arr[i]);
+		strcat(str, c);		if(i<size-1){
+			strcat(str, ", ");
+		}
+	}
+	strcat(str, "]");
+	return str;
 }
