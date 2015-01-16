@@ -274,6 +274,7 @@ public class CodeGenerator{
 	private void translate(Codes.Const code){
 		String stat = null;
 		String target = prefix+code.target();
+		putAttribute(target, "type", code.assignedType());		
 		if(code.assignedType() instanceof Type.Strung){
 			Strung strung = (Strung) code.constant;
 			stat = indent + "char "+target+"["+(strung.value.length()+1)+"] = \""+strung.value+"\";";
@@ -408,7 +409,7 @@ public class CodeGenerator{
 	 * @param paramTypes
 	 * @return
 	 */
-	private String translate(int[] operands, List<Type> paramTypes, String ret, Type return_type){
+	private String translate(int[] operands, List<Type> paramTypes){
 		String stat = "";
 		boolean isFirst = true;
 		int index =0;
@@ -426,16 +427,20 @@ public class CodeGenerator{
 			}
 			isFirst = false;
 			index++;
-		}
+		}	
+		return stat;
+	}
 
+	private String translate(int[] operands, List<Type> paramTypes, String ret, Type return_type){
+		vars.put(ret, translate(return_type));
+		String stat ="";
 		//Add the 'ret_size' variable.
 		if(return_type instanceof Type.List){
-			stat += ");\n";
 			String ret_size = ret+"_size";
 			vars.put(ret_size, "long long");
 			//Check if the input parameter is of integer type.
 			stat += indent+ret_size + "=";
-			index = 0;
+			int index = 0;
 			for(Type paramType : paramTypes){
 				if(paramType instanceof Type.List){
 					stat += prefix+operands[index]+"_size;";
@@ -443,10 +448,6 @@ public class CodeGenerator{
 				index++;
 			}
 		}
-
-		if(return_type instanceof Type.Strung){
-			stat += ", "+ret+");\n";
-		}		
 		return stat;
 	}
 
@@ -483,15 +484,18 @@ public class CodeGenerator{
 					for(int op: code.operands()){
 						paramType = (Type) getAttribute(prefix+op, "type");
 						params.add(paramType);
-					}			
-
-					stat += translate(code.operands(), params, ret, return_type);
+					}					
+					stat += translate(code.operands(), params);
+					stat += ", "+ret+");\n";
 					addStatement(code, stat);
 				}
 			}		
-		}else{
-			vars.put(ret, translate(return_type));
+		}else{			
 			stat += ret+ "="+code.name.name()+"(";
+			//input parameter
+			stat += translate(code.operands(), code.type().params());
+			stat += ");\n";
+			//return value
 			stat += translate(code.operands(), code.type().params(), ret, return_type);
 			addStatement(code, stat);
 

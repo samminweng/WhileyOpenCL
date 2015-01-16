@@ -10,36 +10,33 @@ long long* clone(long long *arr, long long size){
 	}
 	return ptr;
 }
-char* toString(long long arr[], long long size, char *str){
+void append(long long* op_1, long long op_1_size, long long* op_2, long long op_2_size, long long* res){
 	long long i;
-	i=0;
-	strcpy(str, "[");
-	for(i=0;i<size;i++){
-		if(arr[i]==true){
-			strcat(str, "true");
-		}else{
-			strcat(str, "false");
-		}
-		if(i<size-1){
-			strcat(str, ", ");
-		}
+	long long res_i;
+	res_i=0;
+	for(i=0;i<op_1_size;i++){
+		res[res_i]=op_1[i];
+		res_i++;
 	}
-	strcat(str, "]");
-	return str;
+	for(i=0;i<op_2_size;i++){
+		res[res_i]=op_2[i];
+		res_i++;
+	}
 }
+
 long long* play(long long* _0, long long _0_size){
+	long long _20;
 	long long _1_size;
-	long long* _1;
-	long long* _2;
-	long long _14;
-	long long _3;
-	long long _17;
-	long long _5;
 	long long _7;
 	long long _8;
-	long long _20;
 	long long _11;
+	long long _3;
+	long long _5;
+	long long _17;
+	long long _14;
 	long long _2_size;
+	long long* _1;
+	long long* _2;
 	//assign %2 = %0  : [bool]
 	_2 = clone(_0, _0_size);
 	_2_size = _0_size;
@@ -55,6 +52,7 @@ long long* play(long long* _0, long long _0_size){
 	for(_7=_3;_7<_5;_7++){
 		//invoke %8 = (%7, %0) BoolList_Valid_2:isAlive : function(int,[bool]) => bool
 		_8=isAlive(_7 ,_0 , _0_size);
+
 		//const %11 = true : bool
 		_11 = true;
 		//ifeq %8, %11 goto blklab4 : bool
@@ -125,22 +123,22 @@ blklab1:;
 	return _1;
 }
 long long isAlive(long long _0, long long* _1, long long _1_size){
-	long long _24;
-	long long _13;
-	long long _12;
-	long long _23;
-	long long _14;
-	long long _17;
-	long long _19;
-	long long _18;
-	long long _3;
-	long long _5;
-	long long _6;
-	long long _8;
-	long long _20;
-	long long _11;
 	long long _22;
 	long long _21;
+	long long _20;
+	long long _8;
+	long long _11;
+	long long _18;
+	long long _3;
+	long long _19;
+	long long _5;
+	long long _17;
+	long long _6;
+	long long _14;
+	long long _23;
+	long long _24;
+	long long _12;
+	long long _13;
 	//const %3 = 0 : int
 	_3 = 0;
 	//ifle %0, %3 goto blklab5 : int
@@ -231,25 +229,25 @@ blklab5:;
 	return _22;
 }
 int main(int argc, char** argv){
-	long long _13;
-	long long _9_size;
-	long long* _17;
-	long long* _18;
-	char str[1024];
 	long long _1_size;
-	long long* _1;
-	long long _2;
+	long long _18_size;
+	long long* _18;
+	long long _17_size;
+	long long* _17;
+	long long _13;
+	char str[1024];
+	long long _7;
+	long long _9_size;
+	long long _8;
+	long long _11;
+	long long* _9;
+	long long _10;
 	long long _3;
 	long long _4;
 	long long _5;
 	long long _6;
-	long long _17_size;
-	long long _7;
-	long long _8;
-	long long* _9;
-	long long _18_size;
-	long long _11;
-	long long _10;
+	long long* _1;
+	long long _2;
 	//const %2 = true : bool
 	_2 = true;
 	//const %3 = true : bool
@@ -297,6 +295,7 @@ int main(int argc, char** argv){
 		//assign %17 = %1  : [bool]
 		_17 = clone(_1, _1_size);
 		_17_size = _1_size;
+		//convert %17 = %17 any : [bool]
 		//indirectinvoke %16 (%17) : method(any) => void
 		printf("%s\n",toString(_17, _17_size, str));
 		//invoke %18 = (%1) BoolList_Valid_2:play : function([bool]) => [bool]
@@ -313,4 +312,21 @@ int main(int argc, char** argv){
 blklab10:;
 	//return
 	return -1;
+}
+char* toString(long long arr[], long long size, char *str){
+	long long i;
+	i=0;
+	strcpy(str, "[");
+	for(i=0;i<size;i++){		
+		if(arr[i]==true){
+			strcat(str, "true");
+		}else{
+			strcat(str, "false");
+		}
+		if(i<size-1){
+			strcat(str, ", ");
+		}
+	}
+	strcat(str, "]");
+	return str;
 }
