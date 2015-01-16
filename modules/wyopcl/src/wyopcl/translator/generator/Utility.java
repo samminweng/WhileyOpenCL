@@ -48,33 +48,39 @@ public final class Utility {
 		writer.println("#include \""+filename+".h\"");
 		System.out.println("#include \""+filename+".h\"");
 	}
-	
 
 	/**
 	 * Generate the native C 'toString' function to convert the content of an array to a string.
 	 * TODO : generalize the code generation.
 	 * @param writer
 	 */
-	public static void generateToString(PrintWriter writer){
+	public static void generateToString(PrintWriter writer, boolean isBoolType){
 		//Hard-coded the function temporarily.
 		String indent = "\t";
 		String stats = "";		
 		stats +="char* toString(long long arr[], long long size, char *str){\n" + 
-				indent+"long long i;\n" +
-				indent+"i=0;\n" + 
-				indent+"strcpy(str, \"[\");\n" + 
-				indent+"for(i=0;i<size;i++){\n" + 
-				indent+indent+"if(arr[i]==true){\n" + 
-				indent+indent+indent+"strcat(str, \"true\");\n" + 
-				indent+indent+"}else{\n" + 
-				indent+indent+indent+"strcat(str, \"false\");\n" + 
-				indent+indent+"}\n" + 
-				indent+indent+"if(i<size-1){\n" + 
-				indent+indent+indent+"strcat(str, \", \");\n" + 
-				indent+indent+"}\n" + 
-				indent+"}\n" + 
-				indent+"strcat(str, \"]\");\n" + 
-				indent+"return str;\n" + 
+				"	long long i;\n" + 
+				"	i=0;\n" + 
+				"	strcpy(str, \"[\");\n" + 
+				"	for(i=0;i<size;i++){		\n";
+		if(isBoolType){
+			stats +="		if(arr[i]==true){\n" + 
+				    "			strcat(str, \"true\");\n" + 
+					"		}else{\n" + 
+					"			strcat(str, \"false\");\n" + 
+					"		}\n";
+		}else{
+			stats +="		char c[1024];\n" + 
+					"		sprintf(c, \"%d\", arr[i]);\n" + 
+					"		strcat(str, c);";	
+		}
+				 
+	    stats +="		if(i<size-1){\n" + 
+				"			strcat(str, \", \");\n" + 
+				"		}\n" + 
+				"	}\n" + 
+				"	strcat(str, \"]\");\n" + 
+				"	return str;\n" + 
 				"}";
 		writer.println(stats);
 		System.out.println(stats);
@@ -85,23 +91,47 @@ public final class Utility {
 	 * TODO : generalization.
 	 * @param writer
 	 */
-	public static void generateClone(PrintWriter writer){
-		String indent = "\t";
+	public static void generateClone(PrintWriter writer){		
 		String stats = "";		
 		stats +="long long* clone(long long *arr, long long size){\n" + 
-				indent+"long long *ptr;\n" + 
-				indent+"long long i;\n" + 
-				indent+"//Clone all the values from board array due to immutable Whiley value\n" + 
-				indent+"ptr = (long long*)malloc(size*sizeof(long long));\n" + 
-				indent+"//Copy data from 'board' array to 'nboard' array\n" + 
-				indent+"for(i=0;i<size;i++){\n" + 
-				indent+indent+"ptr[i]=arr[i];\n" + 
-				indent+"}\n" +				
-				indent+"return ptr;\n" + 
+				"	long long *ptr;\n" + 
+				"	long long i;\n" + 
+				"	//Clone all the values from board array due to immutable Whiley value\n" + 
+				"	ptr = (long long*)malloc(size*sizeof(long long));\n" + 
+				"	//Copy data from 'board' array to 'nboard' array\n" + 
+				"	for(i=0;i<size;i++){\n" + 
+				"		ptr[i]=arr[i];\n" + 
+				"	}\n" + 
+				"	return ptr;\n" + 
 				"}";				
 	
 		writer.println(stats);
 		System.out.println(stats);
 	}
+	
+	public static void generateAppend(PrintWriter writer){
+		String indent = "\t";
+		String stats = "";		
+		stats +="void append(long long* op_1, long long op_1_size, long long* op_2, long long op_2_size, long long* res){\n" + 
+				"	long long i;\n" + 
+				"	long long res_i;\n" + 
+				"	res_i=0;\n" + 
+				"	for(i=0;i<op_1_size;i++){\n" + 
+				"		res[res_i]=op_1[i];\n" + 
+				"		res_i++;\n" + 
+				"	}\n" + 
+				"	for(i=0;i<op_2_size;i++){\n" + 
+				"		res[res_i]=op_2[i];\n" + 
+				"		res_i++;\n" + 
+				"	}\n" + 
+				"}\n" + 
+				"";				
+	
+		writer.println(stats);
+		System.out.println(stats);
+	}
+	
+	
+	
 
 }

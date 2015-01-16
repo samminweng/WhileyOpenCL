@@ -5,13 +5,17 @@ import static wycc.lang.SyntaxError.internalFailure;
 import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map.Entry;
+import java.util.Stack;
 
 import wycc.lang.NameID;
 import wycc.lang.SyntaxError;
 import wyfs.lang.Path.ID;
 import wyil.lang.Code;
+import wyil.lang.Codes.ListOperator;
 import wyil.lang.Constant;
 import wyil.lang.Code.Block;
 import wyil.lang.Codes;
@@ -40,10 +44,11 @@ public class CodeGenerator{
 	private ArrayList<String> statements;	
 	private BinaryOperator loop_condition;
 	private String loop_label;
-	private String assert_label;
+	private Stack<String> assert_labels;
 	private String indent="\t";
 	//The symbol table of variables
 	private HashMap<String, Symbol> symbols;
+
 	public CodeGenerator(Configuration config){
 		this.config = config;
 		this.vars = new HashMap<String, String>();
@@ -51,6 +56,7 @@ public class CodeGenerator{
 		this.statements = new ArrayList<String>();
 		this.list_func = new ArrayList<String>();
 		this.symbols = new HashMap<String, Symbol>();
+		this.assert_labels = new Stack<String>();
 	}
 	/**
 	 * Get the symbol info for a variable.
@@ -75,7 +81,7 @@ public class CodeGenerator{
 		Symbol symbol = getSymbol(name);
 		return symbol.getAttribute(att_name);
 	}
-	
+
 	/**
 	 * Add the variable attribute to the hashmap.
 	 * @param name the variable name
@@ -87,7 +93,7 @@ public class CodeGenerator{
 		Symbol symbol = getSymbol(name);
 		symbol.setAttribute(att_name, att_value);
 	}
-	
+
 	/**
 	 * Prints out each bytecode with the line number and the correct indentation.
 	 * @param name
@@ -149,7 +155,7 @@ public class CodeGenerator{
 			}else{
 				statements.add(indent+"//"+code.toString());
 			}
-			
+
 		}		
 		//Add the translated statement.
 		if(stat != null){
@@ -159,7 +165,7 @@ public class CodeGenerator{
 			statements.add(stat);
 		}		
 	}
-	
+
 	/**
 	 * Translates the function or method declaration (e.g. <code>int* play(int* _0, int _0_size){</code>)
 	 * @param functionOrMethod
@@ -169,7 +175,7 @@ public class CodeGenerator{
 		//Get the name
 		String name = functionOrMethod.name();		
 		if(name.equals("main")){
-		 str = "int main(int argc, char** argv";
+			str = "int main(int argc, char** argv";
 		}else{
 			//Get the return type
 			FunctionOrMethod type = functionOrMethod.type();
@@ -195,7 +201,7 @@ public class CodeGenerator{
 					str +=", long long "+op_size;
 					params.put(op_size, Type.Int.T_INT);
 				}		
-				
+
 				isfirst = false;
 				index++;
 			}
@@ -222,7 +228,20 @@ public class CodeGenerator{
 		this.indent = this.indent.replaceFirst("\t", "");
 	}
 
-	public void printoutCode(PrintWriter writer, String function_del){		
+	public boolean isBoolTypeIntroduced(){
+		//Check if any symbol is bool type
+		Boolean isBoolType = false;
+		for(String var_name:symbols.keySet()){
+			Type type = (Type) getAttribute(var_name, "type");
+			if(type instanceof Type.Bool){
+				isBoolType = true;				
+			}			
+		}		
+		return isBoolType;
+	}
+
+
+	public void printoutCode(PrintWriter writer, String function_del){
 		//function declaration
 		System.out.println(function_del+"{");
 		writer.println(function_del+"{");
@@ -253,17 +272,24 @@ public class CodeGenerator{
 	 * @param code
 	 */
 	private void translate(Codes.Const code){
-		String stat;
+		String stat = null;
 		String target = prefix+code.target();
 		if(code.assignedType() instanceof Type.Strung){
 			Strung strung = (Strung) code.constant;
 			stat = indent + "char "+target+"["+(strung.value.length()+1)+"] = \""+strung.value+"\";";
+		}else if(code.assignedType() instanceof Type.List){
+			Constant.List list = (Constant.List) code.constant;
+			//Initialize an array
+			if(list.values.isEmpty()){
+				stat = indent + target + "=(long long*)malloc(1*sizeof(long long));\n";
+				stat += indent + target +"_size = 0;";
+			}			
 		}else{
 			//Declare the variables
 			vars.put(prefix+code.target(), translate(code.assignedType()));		
 			stat = indent +target + " = "+ code.constant + ";";
 		}
-		
+
 		addStatement(code, stat);		
 	}
 
@@ -287,7 +313,7 @@ public class CodeGenerator{
 			String stat = indent + target+ " = "+ op + ";";
 			addStatement(code, stat);
 		}
-		
+
 	}
 
 	/**
@@ -376,6 +402,54 @@ public class CodeGenerator{
 		increaseIndent();
 	}
 
+	/**
+	 * Output the input parameters of a function call.
+	 * @param operands
+	 * @param paramTypes
+	 * @return
+	 */
+	private String translate(int[] operands, List<Type> paramTypes, String ret, Type return_type){
+		String stat = "";
+		boolean isFirst = true;
+		int index =0;
+		String op_size = "";
+		for(int operand: operands){			
+			if(isFirst){
+				stat+= prefix+operand;
+			}else{
+				stat+= " ,"+prefix+operand;
+			}
+			//Add the '*_size' parameter 
+			if(paramTypes.get(index) instanceof Type.List){
+				op_size = prefix+operand+"_size";
+				stat += " , "+op_size;
+			}
+			isFirst = false;
+			index++;
+		}
+
+		//Add the 'ret_size' variable.
+		if(return_type instanceof Type.List){
+			stat += ");\n";
+			String ret_size = ret+"_size";
+			vars.put(ret_size, "long long");
+			//Check if the input parameter is of integer type.
+			stat += indent+ret_size + "=";
+			index = 0;
+			for(Type paramType : paramTypes){
+				if(paramType instanceof Type.List){
+					stat += prefix+operands[index]+"_size;";
+				}				
+				index++;
+			}
+		}
+
+		if(return_type instanceof Type.Strung){
+			stat += ", "+ret+");\n";
+		}		
+		return stat;
+	}
+
 
 	/**
 	 * Generates the code for <code>Codes.Invoke</code> code
@@ -385,50 +459,44 @@ public class CodeGenerator{
 	private void translate(Codes.Invoke code){
 		String stat = indent;
 		String ret = prefix+code.target();
-		Type return_type = code.type().ret();
-		
+		Type return_type = code.type().ret();		
 		//The code for calling the whiley.lang.any.toString() function.
 		if(code.name.toString().equals("whiley/lang/Any:toString")){
-			//Check if the input parameter is also the return 
-			String param = prefix+code.operand(0);			
-			if(ret.equals(param)){
-				//Create a temporary string variable ''	
-				ret = ret+"_str";
-			}
-			vars.put(ret+"[1024]", "char");			
-			stat += "sprintf("+ret+", \"%lld\", "+ prefix+code.operand(0)+");";
-			addStatement(code, stat);		
-			return;
-		}		
-		vars.put(ret, translate(return_type));
-		stat += ret+ "="+code.name.name()+"(";
-		//Input parameters
-		boolean isFirst = true;
-		int index =0;
-		String op_size = "";
-		for(int operand: code.operands()){
-			if(isFirst){
-				stat+= prefix+operand;
-			}else{
-				stat+= " ,"+prefix+operand;
-			}
-			//Add the '_reg_size' parameter 
-			if(code.type().params().get(index) instanceof Type.List){
-				op_size = prefix+operand+"_size";
-				stat += " , "+op_size;
-			}
-			isFirst = false;
-			index++;
+			//Get the type of input parameter
+			if(!code.type().params().isEmpty()){
+				String param = prefix+code.operand(0);
+				Type paramType = code.type().params().get(0);
+				//Cast the input as a string
+				vars.put(ret+"[1024]", "char");	
+				if(paramType instanceof Type.Int){
+					//Check if the input parameter is also the return
+					if(ret.equals(param)){
+						//Create a temporary string variable ''	
+						ret = ret+"_str";
+					}							
+					stat += "sprintf("+ret+", \"%lld\", "+ prefix+code.operand(0)+");";
+					addStatement(code, stat);		
+				}else{				
+					stat += "toString(";
+					//Get type attribute
+					ArrayList<Type> params = new ArrayList<Type>();
+					for(int op: code.operands()){
+						paramType = (Type) getAttribute(prefix+op, "type");
+						params.add(paramType);
+					}			
+
+					stat += translate(code.operands(), params, ret, return_type);
+					addStatement(code, stat);
+				}
+			}		
+		}else{
+			vars.put(ret, translate(return_type));
+			stat += ret+ "="+code.name.name()+"(";
+			stat += translate(code.operands(), code.type().params(), ret, return_type);
+			addStatement(code, stat);
+
 		}
-		stat += ");";
-		addStatement(code, stat);
-		//Add the 'ret_size' variable.
-		if(return_type instanceof Type.List){
-			String ret_size = ret+"_size";
-			vars.put(ret_size, "long long");
-			stat = indent+ret_size+"="+op_size+";";
-			addStatement(null, stat);
-		}		
+
 	}
 
 	/**
@@ -440,7 +508,7 @@ public class CodeGenerator{
 		String left = prefix+code.leftOperand;
 		String right = prefix+code.rightOperand;
 		//Check if the condition is a loop condition.
-		if(loop_label != null){
+		if(loop_label != null && assert_labels.isEmpty()){
 			stat += "while("+left;
 			//The negated operator
 			switch(code.op){
@@ -473,6 +541,7 @@ public class CodeGenerator{
 			stat +="){";
 			//Increase the indent
 			increaseIndent();
+			loop_label = null;
 		}else{
 			stat += "if("+left;
 			//The condition
@@ -516,7 +585,7 @@ public class CodeGenerator{
 		addStatement(code, indent+"{");
 		//Increase the indent
 		indent += "\t";
-		assert_label = code.target;
+		assert_labels.push(code.target);
 	}
 
 
@@ -529,11 +598,12 @@ public class CodeGenerator{
 
 	private void translate(Codes.Label code){		
 		//Check if the label is equal to assert_label
-		if(assert_label != null && assert_label.equals(code.label)){			
+		if(assert_labels.contains(code.label)){
+			//pop up the label from the stack.
+			assert_labels.pop();
 			decreaseIndent();
 			//Ending clause.
 			addStatement(null, indent+"}");
-			assert_label = null;
 		}
 		addStatement(code, code.label+":;");
 	}
@@ -607,7 +677,7 @@ public class CodeGenerator{
 			addStatement(code, stat);
 			index++;
 		}
-		
+
 	}
 	/**
 	 * TODO: Not implemented.
@@ -630,13 +700,15 @@ public class CodeGenerator{
 	 * TODO: Not implemented.
 	 * @param code
 	 */
-	private void translate(Codes.Convert code){
+	private void translate(Codes.Convert code){		
 		//Converts Constant to Any type
 		if(code.result instanceof Type.Any){
+			putAttribute(prefix+code.operand(0), "type", code.type());			
 			//Do nothing.			
 		}
+		addStatement(code, null);
 	}
-	
+
 	/**
 	 * Generates the C code for <code>Codes.IndirectInvoke</code>.
 	 * TODO : generalize the code generation.
@@ -655,12 +727,12 @@ public class CodeGenerator{
 			}else{
 				stat += "printf(\"%s\\n\","+op+");";
 			}
-			
+
 		}		
 		addStatement(code, stat);		
 	}
-	
-	
+
+
 	private void translate(UnaryOperator code) {		
 		String target = prefix+code.target();
 		vars.put(target, translate(code.type()));
@@ -672,14 +744,14 @@ public class CodeGenerator{
 		loop_label = code.target;
 		addStatement(code, null);
 	}
-	
+
 	private void translate(StringOperator code) {
 		String stat = "";
 		String target = prefix+code.target();
 		vars.put(target+"[1024]", "char");		
 		String left = prefix+code.operand(0);
 		String right = prefix+code.operand(1);
-		
+
 		//Check the operator
 		switch (code.kind){
 		case APPEND:
@@ -696,8 +768,42 @@ public class CodeGenerator{
 		}
 		addStatement(code, stat);
 	}
-	
-	
+
+
+	private void translate(ListOperator code) {
+		String target = prefix+code.target();
+		vars.put(target, translate(code.type().element())+"*");
+		vars.put(target+"_size", "long long");
+		String stat = "";
+		stat += indent+target+"_size = ";
+		boolean isFirst = true;
+		for(int operand: code.operands()){
+			String op = prefix + operand;
+			if(isFirst){
+				stat += op+"_size";
+			}else{
+				stat += "+"+op+"_size";
+			}
+			isFirst = false;
+		}
+		stat +=";\n";
+		//Allocate the array
+		stat += indent+target+"=("+translate(code.type().element())+"*)malloc("+target+"_size*sizeof("+translate(code.type().element())+"));\n";
+		stat += indent+"append(";
+		isFirst = true;
+		for(int operand: code.operands()){
+			String op = prefix + operand;
+			if(isFirst){
+				stat += op+", "+op+"_size";
+			}else{
+				stat += ","+op+", "+op+"_size";
+			}
+			isFirst = false;
+		}
+		stat += ", "+target+");\n";
+		addStatement(code, stat);
+	}
+
 	/**
 	 * Checks the type of the wyil code and dispatches the code to the analyzer for
 	 * being executed by the <code>analyze(code)</code> 
@@ -742,7 +848,7 @@ public class CodeGenerator{
 			} else if (code instanceof Codes.Invert) {
 				//InvertInterpreter.getInstance().interpret((Codes.Invert)code, stackframe);
 			} else if (code instanceof Codes.ListOperator) {
-				//analyze((Codes.ListOperator)code);
+				translate((Codes.ListOperator)code);
 			} else if (code instanceof Codes.Loop) {			
 				translate((Codes.Loop)code);			
 			} else if (code instanceof Codes.LoopEnd) {
@@ -803,9 +909,10 @@ public class CodeGenerator{
 
 	}
 
-	
 
-	
 
-	
+
+
+
+
 }

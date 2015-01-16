@@ -133,8 +133,9 @@ public class Translator implements Builder{
 		try {
 			writer = new PrintWriter(config.getFilename()+".c");
 			Utility.generateIncludes(writer, config.getFilename());
-			Utility.generateClone(writer);
-			Utility.generateToString(writer);
+			Utility.generateClone(writer);		
+			Utility.generateAppend(writer);
+			boolean isBoolType = false;
 			//Iterate each function
 			for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {
 				String function_del = generator.translate(functionOrMethod);
@@ -149,10 +150,14 @@ public class Translator implements Builder{
 						}				
 						generator.dispatch(entry);				
 					}
-				}				
+				}
+				isBoolType |= generator.isBoolTypeIntroduced();
 				//Write out the code to *.c
 				generator.printoutCode(writer, function_del);
-			}			
+			
+			}
+			Utility.generateToString(writer, isBoolType);
+			
 			writer.close();
 		} catch (FileNotFoundException e) {			
 			throw new RuntimeException("Error occurs in writing "+config.getFilename()+".c");
