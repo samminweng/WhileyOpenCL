@@ -44,4 +44,9 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(valid_path+"BoolList_Valid_2");
 	}
 	
+	@Test
+	public void test_Valid_While_Valid_1() {
+		util.execCodeGeneration(valid_path+"While_Valid_1");
+	}
+	
 }
