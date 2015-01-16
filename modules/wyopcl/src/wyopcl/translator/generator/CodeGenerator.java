@@ -277,7 +277,8 @@ public class CodeGenerator{
 		putAttribute(target, "type", code.assignedType());		
 		if(code.assignedType() instanceof Type.Strung){
 			Strung strung = (Strung) code.constant;
-			stat = indent + "char "+target+"["+(strung.value.length()+1)+"] = \""+strung.value+"\";";
+			vars.put(target+"["+(strung.value.length()+1)+"]" , "char");			
+			stat = indent + "strcpy("+target+", \""+strung.value+"\");";
 		}else if(code.assignedType() instanceof Type.List){
 			Constant.List list = (Constant.List) code.constant;
 			//Initialize an array
@@ -468,16 +469,18 @@ public class CodeGenerator{
 				String param = prefix+code.operand(0);
 				Type paramType = (Type) getAttribute(param, "type");
 				//Cast the input as a string
-				vars.put(ret+"[1024]", "char");	
+				
 				if(paramType instanceof Type.Int){
 					//Check if the input parameter is also the return
 					if(ret.equals(param)){
 						//Create a temporary string variable ''	
 						ret = ret+"_str";
-					}							
+					}
+					vars.put(ret+"[1024]", "char");
 					stat += "sprintf("+ret+", \"%lld\", "+ prefix+code.operand(0)+");";
 					addStatement(code, stat);		
-				}else{				
+				}else{
+					vars.put(ret+"[1024]", "char");	
 					stat += "toString(";
 					//Get type attribute
 					ArrayList<Type> params = new ArrayList<Type>();

@@ -10,31 +10,28 @@ long long* clone(long long *arr, long long size){
 	}
 	return ptr;
 }
-char* toString(long long arr[], long long size, char *str){
+void append(long long* op_1, long long op_1_size, long long* op_2, long long op_2_size, long long* res){
 	long long i;
-	i=0;
-	strcpy(str, "[");
-	for(i=0;i<size;i++){
-		if(arr[i]==true){
-			strcat(str, "true");
-		}else{
-			strcat(str, "false");
-		}
-		if(i<size-1){
-			strcat(str, ", ");
-		}
+	long long res_i;
+	res_i=0;
+	for(i=0;i<op_1_size;i++){
+		res[res_i]=op_1[i];
+		res_i++;
 	}
-	strcat(str, "]");
-	return str;
+	for(i=0;i<op_2_size;i++){
+		res[res_i]=op_2[i];
+		res_i++;
+	}
 }
+
 long long f(long long _0){
-	long long _13;
-	long long _14;
+	long long _11;
 	long long _3;
 	long long _4;
 	long long _5;
 	long long _6;
-	long long _11;
+	long long _14;
+	long long _13;
 	//const %4 = 0 : int
 	_4 = 0;
 	//assign %3 = %4  : int
@@ -66,14 +63,15 @@ blklab2:;
 	return _5;
 }
 int main(int argc, char** argv){
-	long long _1;
-	long long _2;
+	char _8_str[1024];
+	char str[1024];
+	char _7[5];
+	long long _8;
 	long long _3;
 	long long _6;
-	long long _8;
-	char str[1024];
-	char _8_str[1024];
 	char _9[1024];
+	long long _1;
+	long long _2;
 	//const %3 = 50000 : int
 	_3 = 50000;
 	//assert blklab4
@@ -91,21 +89,38 @@ blklab3:;
 blklab4:;
 	//invoke %2 = (%3) While:f : function(int) => int
 	_2=f(_3);
+
 	//assign %1 = %2  : int
 	_1 = _2;
 	//fieldload %5 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}
 	//fieldload %6 = %5 println : {method(any) => void print,method(any) => void println}
 	//const %7 = "Sum=" : string
-	char _7[5] = "Sum=";
+	strcpy(_7, "Sum=");
 	//assign %8 = %1  : int
 	_8 = _1;
+	//convert %8 = %8 any : int
 	//invoke %8 = (%8) whiley/lang/Any:toString : function(any) => string
 	sprintf(_8_str, "%lld", _8);
 	//sappend %9 = %7, %8 : string
 	strcpy(_9, _7);
 	strcat(_9, _8_str);
+	//convert %9 = %9 any : string
 	//indirectinvoke %6 (%9) : method(any) => void
 	printf("%s\n",_9);
 	//return
 	return -1;
+}
+char* toString(long long arr[], long long size, char *str){
+	long long i;
+	i=0;
+	strcpy(str, "[");
+	for(i=0;i<size;i++){		
+		char c[1024];
+		sprintf(c, "%d", arr[i]);
+		strcat(str, c);		if(i<size-1){
+			strcat(str, ", ");
+		}
+	}
+	strcat(str, "]");
+	return str;
 }
