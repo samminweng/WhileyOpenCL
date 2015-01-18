@@ -288,6 +288,39 @@ public class Bounds implements Cloneable{
 	}	
 
 	/**
+	 * Widens the lower bounds against a list of min values of integer types.
+	 * (i.e. short, int and long long).
+	 * @param name
+	 * @return
+	 */
+	public boolean widenLowerBoundsAgainstThresholds(String name){
+		BigInteger min = getLower(name);
+		if(min!= null){
+			//Check the max values and widen the upper bound
+			BigInteger threshold = Threshold.SHRT_MIN.getValue();
+			if(min.compareTo(threshold)<0){
+				return widenLowerBound(name, threshold);
+			}else{
+				threshold = Threshold.INT_MIN.getValue();
+				if(min.compareTo(threshold)<0){
+					return widenLowerBound(name, threshold);
+				}else{
+					threshold = Threshold._I64_MIN.getValue();
+					if(min.compareTo(threshold)<0){
+						return widenLowerBound(name, threshold);
+					}else{
+						//Widen the upper bound to inf
+						return widenLowerBound(name, null);
+					}
+				}
+			}
+		}
+		
+		return false;
+	}
+	
+	
+	/**
 	 * Widen the upper bounds to + infinity (null)
 	 * @param name
 	 * @return
@@ -301,7 +334,19 @@ public class Bounds implements Cloneable{
 		return false;
 	}
 	
-	
+	/**
+	 * Widen the lower bounds to - infinity (null)
+	 * @param name
+	 * @return
+	 */
+	public boolean widenLowerBoundsToInf(String name){
+		BigInteger min = getLower(name);
+		if(min != null){			
+			this.getDomain(name).setLowerBound(null);
+			return true;
+		}		
+		return false;
+	}
 	
 
 	/**

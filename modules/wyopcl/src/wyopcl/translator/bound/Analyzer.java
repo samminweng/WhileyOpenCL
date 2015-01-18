@@ -76,17 +76,34 @@ public class Analyzer {
 	private List<BasicBlock> list;
 	//The label name of the loop condition
 	private String loop_condition;
-	/*private class BoundChange{
+	private class BoundChange{
 		private String name;
-		boolean isIncreasing = false;
-		boolean isDescreasing = false;
-
+		private boolean isUBIncreasing = false;
+		private boolean isLBDecreasing = false;
 		public BoundChange(String name){
 			this.name = name;
+			this.isUBIncreasing = false;
+			this.isLBDecreasing = false;
+		}
+		
+		public boolean isUBIncreasing() {
+			return isUBIncreasing;
+		}
+
+		public void setUBIncreasing(boolean isIncreasing) {
+			this.isUBIncreasing = isIncreasing;
+		}
+
+		public boolean isLBDecreasing() {
+			return isLBDecreasing;
+		}
+
+		public void setLBDecreasing(boolean isDecreasing) {
+			this.isLBDecreasing = isDecreasing;
 		}		
-	}*/	
+	}	
 	//A list of loop variables.
-	private HashMap<String, Boolean> loop_variables;
+	private HashMap<String, BoundChange> loop_variables;
 	private boolean isGoto;
 	private final PrintWriter writer;
 
@@ -104,7 +121,7 @@ public class Analyzer {
 		this.entry = createBasicBlock("entry", BlockType.ENTRY);
 		this.exit = createBasicBlock("exit", BlockType.EXIT);
 		this.current_blk = this.entry;
-		this.loop_variables = new HashMap<String, Boolean>();
+		this.loop_variables = new HashMap<String, BoundChange>();
 		this.isGoto = false;
 		this.line = 0;
 	}
@@ -349,27 +366,58 @@ public class Analyzer {
 			//check loop variable is increasing
 			for(String loop_var: loop_variables.keySet()){			
 				//Upper bounds
-				BigInteger max_before = bnd_before.getUpper(loop_var);
-				BigInteger max_after = bnd_after.getUpper(loop_var);
-				if(max_before!= null && max_after!=null){
-					//The bounds is increasing
-					if(max_before.compareTo(max_after)<0){
-						boolean isIncreasing = loop_variables.get(loop_var);
+				BigInteger upper_before = bnd_before.getUpper(loop_var);
+				BigInteger upper_after = bnd_after.getUpper(loop_var);
+								
+				BoundChange boundChange = loop_variables.get(loop_var);
+				if(upper_before!= null && upper_after!=null){
+					//Check if the upper bounds is increasing
+					if(upper_before.compareTo(upper_after)<0){
+						boolean isIncreasing = boundChange.isUBIncreasing();
 						isIncreasing |= true;
-						loop_variables.put(loop_var, isIncreasing);
+						boundChange.setUBIncreasing(isIncreasing);
+						loop_variables.put(loop_var, boundChange);
 					}					
 				}
-				//After four iterations, the bounds is still increasing.
+				
+				//Lower bounds
+				BigInteger lower_before = bnd_before.getLower(loop_var);
+				BigInteger lower_after = bnd_after.getLower(loop_var);
+				if(lower_before!= null && lower_after != null){
+					//Check if the lower bound is decreasing
+					if(lower_before.compareTo(lower_after)>0){
+						boolean isDecreasing = boundChange.isLBDecreasing();
+						isDecreasing |= true;
+						boundChange.setLBDecreasing(isDecreasing);
+						loop_variables.put(loop_var, boundChange);
+					}
+					
+				}
+				
+				
+				//After three iterations, the bounds is still increasing.
 				if(iteration%3==0){
-					if(loop_variables.get(loop_var)){
+					//Widen the upper bound
+					if(boundChange.isUBIncreasing()){
 						if(config.isMultiWiden()){
 							isChanged |= blk.getBounds().widenUpperBoundsAgainstThresholds(loop_var);
 						}else{
 							isChanged |= blk.getBounds().widenUpperBoundsToInf(loop_var);
 						}
-					}							
+					}
 					//Reset the increasing flag
-					loop_variables.put(loop_var, false);
+					boundChange.setUBIncreasing(false);
+					//Widen the lower bound
+					if(boundChange.isLBDecreasing()){
+						if(config.isMultiWiden()){
+							isChanged |= blk.getBounds().widenLowerBoundsAgainstThresholds(loop_var);
+						}else{
+							isChanged |= blk.getBounds().widenLowerBoundsToInf(loop_var);
+						}
+					}
+					//Reset the decreasing flag
+					boundChange.setLBDecreasing(false);					
+					loop_variables.put(loop_var, boundChange);
 				}
 			}
 		}
@@ -1140,7 +1188,7 @@ public class Analyzer {
 		String label = code.target;
 		for(int op: code.modifiedOperands){
 			if(!loop_variables.containsKey(prefix+op)){
-				loop_variables.put(prefix+op, false);
+				loop_variables.put(prefix+op, new BoundChange(prefix+op));
 			}			
 		}
 		BasicBlock loopheader = createBasicBlock(label, BlockType.LOOP_HEADER, getCurrentBlock());
