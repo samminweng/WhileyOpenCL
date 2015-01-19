@@ -7,5 +7,6 @@
 long long* clone(long long *arr, long long size);
 char* toString(long long arr[], long long size, char *str);
 long long f(long long _0);
+long long reverse_f(long long _0);
 int main(int argc, char** argv);
 

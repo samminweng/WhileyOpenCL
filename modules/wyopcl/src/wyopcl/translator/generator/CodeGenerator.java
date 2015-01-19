@@ -81,6 +81,21 @@ public class CodeGenerator{
 		Symbol symbol = getSymbol(name);
 		return symbol.getAttribute(att_name);
 	}
+	
+	/**
+	 * Get a list of attributes from symbol table
+	 * @param ops a list of operands
+	 * @param att_name the attribute name
+	 * @return
+	 */
+	private List<Object> getAttributes(int[] ops, String att_name){
+		ArrayList<Object> list = new ArrayList<Object>();
+		for(int op: ops){
+			list.add(getAttribute(prefix+op, att_name));
+		}		
+		return list;
+	}
+	
 
 	/**
 	 * Add the variable attribute to the hashmap.
@@ -136,10 +151,27 @@ public class CodeGenerator{
 			}
 			return record.toString();
 		}
-
+		
+		if(type instanceof Type.Strung){
+			return "char";
+		}
+		
 		return null;
-
 	}
+	
+	/**
+	 * Adds the type declaration for a variable.
+	 * @param type the Whiley type
+	 * @param var the name of variable
+	 */
+	private void addDeclaration(Type type, String var){
+		if(type instanceof Type.Strung){
+			vars.put(var+"[1024]", translate(type));
+		}else{
+			vars.put(var, translate(type));
+		}		
+	}
+	
 	/**
 	 * Adds the statement to the list and 
 	 * print out the statement if the verbose option is on.
@@ -432,23 +464,37 @@ public class CodeGenerator{
 		return stat;
 	}
 
-	private String translate(int[] operands, List<Type> paramTypes, String ret, Type return_type){
-		vars.put(ret, translate(return_type));
-		String stat ="";
-		//Add the 'ret_size' variable.
-		if(return_type instanceof Type.List){
-			String ret_size = ret+"_size";
-			vars.put(ret_size, "long long");
-			//Check if the input parameter is of integer type.
-			stat += indent+ret_size + "=";
-			int index = 0;
-			for(Type paramType : paramTypes){
-				if(paramType instanceof Type.List){
-					stat += prefix+operands[index]+"_size;";
-				}				
-				index++;
-			}
+	private String transalteAnyToString(Codes.Invoke code){
+		String stat = indent;
+		String ret = prefix+code.target();
+		Type return_type = code.type().ret();
+		//Get the type of input parameter		
+		String param = prefix+code.operand(0);
+		Type paramType = (Type) getAttribute(param, "type");
+		//Cast the input as a string				
+		if(paramType instanceof Type.Int){
+			//Check if the input parameter is also the return
+			if(ret.equals(param)){
+				//Create a temporary string variable ''	
+				ret = ret+"_str";
+			}			
+			addDeclaration(return_type, ret);
+			stat += "sprintf("+ret+", \"%lld\", "+ prefix+code.operand(0)+");";					
+		}else{			
+			addDeclaration(return_type, ret);
+			stat += "toString(";
+			code.operands();
+			//Get type attribute
+			/*ArrayList<Type> params = new ArrayList<Type>();
+			for(int op: code.operands()){
+				paramType = (Type) getAttribute(prefix+op, "type");
+				params.add(paramType);
+			}*/
+			List params = getAttributes(code.operands(), "type");
+			stat += translate(code.operands(), params);
+			stat += ", "+ret+");\n";
 		}
+		addStatement(code, stat);
 		return stat;
 	}
 
@@ -459,49 +505,34 @@ public class CodeGenerator{
 	 * @param code 
 	 */
 	private void translate(Codes.Invoke code){
-		String stat = indent;
-		String ret = prefix+code.target();
-		Type return_type = code.type().ret();		
+		String stat;
 		//The code for calling the whiley.lang.any.toString() function.
 		if(code.name.toString().equals("whiley/lang/Any:toString")){
-			//Get the type of input parameter
-			if(!code.type().params().isEmpty()){
-				String param = prefix+code.operand(0);
-				Type paramType = (Type) getAttribute(param, "type");
-				//Cast the input as a string
-				
-				if(paramType instanceof Type.Int){
-					//Check if the input parameter is also the return
-					if(ret.equals(param)){
-						//Create a temporary string variable ''	
-						ret = ret+"_str";
-					}
-					vars.put(ret+"[1024]", "char");
-					stat += "sprintf("+ret+", \"%lld\", "+ prefix+code.operand(0)+");";
-					addStatement(code, stat);		
-				}else{
-					vars.put(ret+"[1024]", "char");	
-					stat += "toString(";
-					//Get type attribute
-					ArrayList<Type> params = new ArrayList<Type>();
-					for(int op: code.operands()){
-						paramType = (Type) getAttribute(prefix+op, "type");
-						params.add(paramType);
-					}					
-					stat += translate(code.operands(), params);
-					stat += ", "+ret+");\n";
-					addStatement(code, stat);
-				}
-			}		
-		}else{			
-			stat += ret+ "="+code.name.name()+"(";
+			stat = transalteAnyToString(code);		
+		}else{
+			String ret = prefix+code.target();
+			Type return_type = code.type().ret();
+			stat = indent + ret+ "="+code.name.name()+"(";
 			//input parameter
 			stat += translate(code.operands(), code.type().params());
 			stat += ");\n";
+			addDeclaration(return_type, ret);
+			//Add the 'ret_size' variable.
+			if(return_type instanceof Type.List){
+				String ret_size = ret+"_size";
+				//vars.put(ret_size, "long long");
+				//Check if the input parameter is of integer type.
+				stat += indent+ret_size + "=";
+				int index = 0;
+				for(Type paramType : code.type().params()){
+					if(paramType instanceof Type.List){
+						stat += prefix+code.operands()[index]+"_size;";
+					}				
+					index++;
+				}
+			}
 			//return value
-			stat += translate(code.operands(), code.type().params(), ret, return_type);
 			addStatement(code, stat);
-
 		}
 
 	}
@@ -615,8 +646,13 @@ public class CodeGenerator{
 		addStatement(code, code.label+":;");
 	}
 
-	private void translate(Codes.Fail code){
-		String stat = indent+"perror(\""+code+"\");";
+	/**
+	 * Prints out the message and Generates the stderr, followed by exit  
+	 * @param code
+	 */
+	private void translate(Codes.Fail code){		
+		String stat = indent+"fprintf(stderr,\""+code+"\");\n";
+		stat += indent+"exit(0);";
 		addStatement(code, stat);		
 	}
 
