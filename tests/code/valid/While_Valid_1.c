@@ -57,7 +57,8 @@ long long* reverse(long long* _0, long long _0_size){
 		//ifle %3, %8 goto blklab2 : int
 		if(_3<=_8){goto blklab2;}
 		//fail ""loop invariant not satisfied on entry""
-		perror("fail ""loop invariant not satisfied on entry""");
+		fprintf(stderr,"fail ""loop invariant not satisfied on entry""");
+		exit(0);
 	}
 //.blklab2
 blklab2:;
@@ -69,7 +70,8 @@ blklab2:;
 		//ifle %1, %11 goto blklab3 : int
 		if(_1<=_11){goto blklab3;}
 		//fail """"
-		perror("fail """"");
+		fprintf(stderr,"fail """"");
+		exit(0);
 	}
 //.blklab3
 blklab3:;
@@ -90,7 +92,8 @@ blklab3:;
 			//ifge %16, %27 goto blklab5 : int
 			if(_16>=_27){goto blklab5;}
 			//fail ""index out of bounds (negative)""
-			perror("fail ""index out of bounds (negative)""");
+			fprintf(stderr,"fail ""index out of bounds (negative)""");
+			exit(0);
 //.blklab5
 blklab5:;
 			//lengthof %28 = %0 : [int]
@@ -98,7 +101,8 @@ blklab5:;
 			//iflt %16, %28 goto blklab6 : int
 			if(_16<_28){goto blklab6;}
 			//fail ""index out of bounds (not less than length)""
-			perror("fail ""index out of bounds (not less than length)""");
+			fprintf(stderr,"fail ""index out of bounds (not less than length)""");
+			exit(0);
 		}
 //.blklab6
 blklab6:;
@@ -125,7 +129,8 @@ blklab6:;
 			//ifle %16, %25 goto blklab4 : int
 			if(_16<=_25){goto blklab4;}
 			//fail ""loop invariant not restored""
-			perror("fail ""loop invariant not restored""");
+			fprintf(stderr,"fail ""loop invariant not restored""");
+			exit(0);
 		}
 //.blklab4
 blklab4:;
@@ -142,7 +147,7 @@ int main(int argc, char** argv){
 	long long _13_size;
 	long long _1_size;
 	long long _8_size;
-	long long _2_size;
+	size_t _2_size;
 	long long* _13;
 	char str[1024];
 	long long _7;
@@ -179,8 +184,8 @@ int main(int argc, char** argv){
 	//newlist %8 = (%3, %4, %5, %6, %7) : [int]
 	_8[4]=_7;
 	//invoke %2 = (%8) While_Valid_1:reverse : function([int]) => [int]
-	_2=reverse(_8 , _8_size);
 	_2_size=_8_size;
+	_2=reverse(_8 , _8_size);
 	//assign %1 = %2  : [int]
 	_1 = clone(_2, _2_size);
 	_1_size = _2_size;
@@ -192,7 +197,6 @@ int main(int argc, char** argv){
 	//convert %13 = %13 any : [int]
 	//invoke %12 = (%13) whiley/lang/Any:toString : function(any) => string
 	toString(_13 , _13_size, _12);
-
 	//convert %12 = %12 any : string
 	//indirectinvoke %11 (%12) : method(any) => void
 	printf("%s\n",_12);

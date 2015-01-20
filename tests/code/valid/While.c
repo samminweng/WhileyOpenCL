@@ -107,31 +107,35 @@ blklab5:;
 	return _7;
 }
 int main(int argc, char** argv){
-	char _21[1024];
-	char _5_str[1024];
-	char _4[5];
-	long long _27;
-	char _25[5];
 	char _19_str[1024];
+	char _25[5];
+	long long _27;
+	char _26_str;
+	long long _23;
+	char _12_str[1024];
+	long long _26;
+	char _7[1024];
+	long long _30;
+	char str[1024];
+	char _28[1024];
+	long long _9;
+	char _18[5];
+	long long _5;
+	long long _6;
+	char _5_str;
+	char _5_str[1024];
+	char _21[1024];
+	char _4[5];
+	char _19_str;
 	long long _19;
 	long long _16;
 	char _14[1024];
-	long long _23;
 	long long _12;
-	char _12_str[1024];
-	long long _26;
 	long long _13;
-	char _7[1024];
-	long long _30;
 	long long _20;
-	char str[1024];
-	char _28[1024];
 	char _26_str[1024];
-	char _18[5];
-	long long _9;
 	char _11[5];
-	long long _5;
-	long long _6;
+	char _12_str;
 	//fieldload %2 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}
 	//fieldload %3 = %2 println : {method(any) => void print,method(any) => void println}
 	//const %4 = "Sum=" : string
@@ -154,7 +158,6 @@ blklab6:;
 blklab7:;
 	//invoke %5 = (%6) While:f : function(int) => int
 	_5=f(_6);
-
 	//convert %5 = %5 any : int
 	//invoke %5 = (%5) whiley/lang/Any:toString : function(any) => string
 	sprintf(_5_str, "%lld", _5);
@@ -186,7 +189,6 @@ blklab8:;
 blklab9:;
 	//invoke %12 = (%13) While:reverse_f : function(int) => int
 	_12=reverse_f(_13);
-
 	//convert %12 = %12 any : int
 	//invoke %12 = (%12) whiley/lang/Any:toString : function(any) => string
 	sprintf(_12_str, "%lld", _12);
@@ -218,7 +220,6 @@ blklab10:;
 blklab11:;
 	//invoke %19 = (%20) While:f : function(int) => int
 	_19=f(_20);
-
 	//convert %19 = %19 any : int
 	//invoke %19 = (%19) whiley/lang/Any:toString : function(any) => string
 	sprintf(_19_str, "%lld", _19);
@@ -250,7 +251,6 @@ blklab12:;
 blklab13:;
 	//invoke %26 = (%27) While:reverse_f : function(int) => int
 	_26=reverse_f(_27);
-
 	//convert %26 = %26 any : int
 	//invoke %26 = (%26) whiley/lang/Any:toString : function(any) => string
 	sprintf(_26_str, "%lld", _26);

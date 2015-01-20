@@ -52,7 +52,6 @@ long long* play(long long* _0, long long _0_size){
 	for(_7=_3;_7<_5;_7++){
 		//invoke %8 = (%7, %0) BoolList_Valid_2:isAlive : function(int,[bool]) => bool
 		_8=isAlive(_7 ,_0 , _0_size);
-
 		//const %11 = true : bool
 		_11 = true;
 		//ifeq %8, %11 goto blklab4 : bool
@@ -70,7 +69,8 @@ blklab4:;
 			//ifge %7, %20 goto blklab11 : int
 			if(_7>=_20){goto blklab11;}
 			//fail ""index out of bounds (negative)""
-			perror("fail ""index out of bounds (negative)""");
+			fprintf(stderr,"fail ""index out of bounds (negative)""");
+			exit(0);
 //.blklab11
 blklab11:;
 			//lengthof %20 = %1 : [bool]
@@ -78,7 +78,8 @@ blklab11:;
 			//iflt %7, %20 goto blklab12 : int
 			if(_7<_20){goto blklab12;}
 			//fail ""index out of bounds (not less than length)""
-			perror("fail ""index out of bounds (not less than length)""");
+			fprintf(stderr,"fail ""index out of bounds (not less than length)""");
+			exit(0);
 		}
 //.blklab12
 blklab12:;
@@ -97,7 +98,8 @@ blklab2:;
 			//ifge %7, %20 goto blklab13 : int
 			if(_7>=_20){goto blklab13;}
 			//fail ""index out of bounds (negative)""
-			perror("fail ""index out of bounds (negative)""");
+			fprintf(stderr,"fail ""index out of bounds (negative)""");
+			exit(0);
 //.blklab13
 blklab13:;
 			//lengthof %20 = %1 : [bool]
@@ -105,7 +107,8 @@ blklab13:;
 			//iflt %7, %20 goto blklab14 : int
 			if(_7<_20){goto blklab14;}
 			//fail ""index out of bounds (not less than length)""
-			perror("fail ""index out of bounds (not less than length)""");
+			fprintf(stderr,"fail ""index out of bounds (not less than length)""");
+			exit(0);
 		}
 //.blklab14
 blklab14:;
@@ -162,7 +165,8 @@ long long isAlive(long long _0, long long* _1, long long _1_size){
 		//ifge %12, %23 goto blklab15 : int
 		if(_12>=_23){goto blklab15;}
 		//fail ""index out of bounds (negative)""
-		perror("fail ""index out of bounds (negative)""");
+		fprintf(stderr,"fail ""index out of bounds (negative)""");
+		exit(0);
 //.blklab15
 blklab15:;
 		//lengthof %24 = %1 : [bool]
@@ -170,7 +174,8 @@ blklab15:;
 		//iflt %12, %24 goto blklab16 : int
 		if(_12<_24){goto blklab16;}
 		//fail ""index out of bounds (not less than length)""
-		perror("fail ""index out of bounds (not less than length)""");
+		fprintf(stderr,"fail ""index out of bounds (not less than length)""");
+		exit(0);
 	}
 //.blklab16
 blklab16:;
@@ -195,7 +200,8 @@ blklab7:;
 		//ifge %18, %23 goto blklab17 : int
 		if(_18>=_23){goto blklab17;}
 		//fail ""index out of bounds (negative)""
-		perror("fail ""index out of bounds (negative)""");
+		fprintf(stderr,"fail ""index out of bounds (negative)""");
+		exit(0);
 //.blklab17
 blklab17:;
 		//lengthof %24 = %1 : [bool]
@@ -203,7 +209,8 @@ blklab17:;
 		//iflt %18, %24 goto blklab18 : int
 		if(_18<_24){goto blklab18;}
 		//fail ""index out of bounds (not less than length)""
-		perror("fail ""index out of bounds (not less than length)""");
+		fprintf(stderr,"fail ""index out of bounds (not less than length)""");
+		exit(0);
 	}
 //.blklab18
 blklab18:;
@@ -230,7 +237,7 @@ blklab5:;
 }
 int main(int argc, char** argv){
 	long long _1_size;
-	long long _18_size;
+	size_t _18_size;
 	long long* _18;
 	long long _17_size;
 	long long* _17;
@@ -299,8 +306,8 @@ int main(int argc, char** argv){
 		//indirectinvoke %16 (%17) : method(any) => void
 		printf("%s\n",toString(_17, _17_size, str));
 		//invoke %18 = (%1) BoolList_Valid_2:play : function([bool]) => [bool]
-		_18=play(_1 , _1_size);
 		_18_size=_1_size;
+		_18=play(_1 , _1_size);
 		//assign %1 = %18  : [bool]
 		_1 = clone(_18, _18_size);
 		_1_size = _18_size;

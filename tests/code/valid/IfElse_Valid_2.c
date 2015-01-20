@@ -60,6 +60,7 @@ blklab1:;
 int main(int argc, char** argv){
 	char _7[1024];
 	char str[1024];
+	char _7;
 	long long _8;
 	long long _3;
 	long long _1;
@@ -68,7 +69,6 @@ int main(int argc, char** argv){
 	_3 = 1;
 	//invoke %2 = (%3) IfElse_Valid_2:f : function(int) => int
 	_2=f(_3);
-
 	//assign %1 = %2  : int
 	_1 = _2;
 	//fieldload %5 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}
@@ -80,7 +80,7 @@ int main(int argc, char** argv){
 	sprintf(_7, "%lld", _8);
 	//convert %7 = %7 any : string
 	//indirectinvoke %6 (%7) : method(any) => void
-	printf("%s\n",_7);
+	printf("%s\n",toString(_7, _7_size, str));
 	//return
 	return -1;
 }

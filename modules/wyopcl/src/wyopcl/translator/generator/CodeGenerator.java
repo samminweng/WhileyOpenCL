@@ -89,7 +89,7 @@ public class CodeGenerator{
 	 * @return
 	 */
 	private List<Object> getAttributes(int[] ops, String att_name){
-		ArrayList<Object> list = new ArrayList<Object>();
+		List<Object> list = new ArrayList<Object>();
 		for(int op: ops){
 			list.add(getAttribute(prefix+op, att_name));
 		}		
@@ -167,6 +167,10 @@ public class CodeGenerator{
 	private void addDeclaration(Type type, String var){
 		if(type instanceof Type.Strung){
 			vars.put(var+"[1024]", translate(type));
+		}else if (type instanceof Type.List){
+			vars.put(var, translate(type));
+			//add the additional parameter 'reg_size' to indicate the array size.
+			vars.put(var+"_size", "size_t");
 		}else{
 			vars.put(var, translate(type));
 		}		
@@ -437,104 +441,114 @@ public class CodeGenerator{
 	}
 
 	/**
-	 * Output the input parameters of a function call.
-	 * @param operands
-	 * @param paramTypes
-	 * @return
+	 * Generates the code for input parameters of a function call. This functions adds parameters to the parameter list
+	 * and check if parameter type is a list add '_size' variable to the parameter list.   
+	 * 
+	 * @param params the registers
+	 * @param paramTypes the parameter types using wildcard type
+	 * @return parameter list 
 	 */
-	private String translate(int[] operands, List<Type> paramTypes){
+	private String translateParameters(int[] operands, List<?> paramTypes){
 		String stat = "";
 		boolean isFirst = true;
 		int index =0;
-		String op_size = "";
-		for(int operand: operands){			
+		for(int op: operands){
+			String param = prefix+op;			
 			if(isFirst){
-				stat+= prefix+operand;
+				stat+= param;
+				isFirst = false;
 			}else{
-				stat+= " ,"+prefix+operand;
+				stat+= " ,"+param;
 			}
 			//Add the '*_size' parameter 
-			if(paramTypes.get(index) instanceof Type.List){
-				op_size = prefix+operand+"_size";
-				stat += " , "+op_size;
-			}
-			isFirst = false;
+			Type paramType = (Type) paramTypes.get(index);
+			if(paramType instanceof Type.List){
+				stat += " , "+param+"_size";
+			}						
 			index++;
 		}	
 		return stat;
 	}
-
-	private String transalteAnyToString(Codes.Invoke code){
+	
+	/**
+	 * Generates C code for 'Any.toString' function, which casts one parameter of any type to a string. 
+	 * Currently there are two kinds of conversion.  
+	 * <ul>
+	 * <li>using 'sprinf' function to cast an integer into a list of chars;</li>
+	 * <li>using naive 'toString' function to cast a list of integers or booleans into a list of chars.</li>
+	 * </ul>
+	 * For example, the following WyIL code:
+	 * <p><code>invoke %26 = (%26) whiley/lang/Any:toString : function(any) => string</code></p>
+	 * can be translated into the C code:
+	 * <p><code>sprintf(_26_str, "%lld", _26);</code></p>
+	 * @param code
+	 * @return the generated C code for 'Any.ToString' function call.
+	 */
+	private String transalteWhileyAnyToString(Codes.Invoke code){
 		String stat = indent;
 		String ret = prefix+code.target();
 		Type return_type = code.type().ret();
-		//Get the type of input parameter		
-		String param = prefix+code.operand(0);
+		//Check if the input parameter is also the return_reg
+		String param = prefix+code.operand(0); 
+		if(ret.equals(param)){
+			//Create a temporary string variable ''	
+			ret = ret+"_str";	
+		}						
+		addDeclaration(return_type, ret);
+		//Input parameters
 		Type paramType = (Type) getAttribute(param, "type");
 		//Cast the input as a string				
 		if(paramType instanceof Type.Int){
-			//Check if the input parameter is also the return
-			if(ret.equals(param)){
-				//Create a temporary string variable ''	
-				ret = ret+"_str";
-			}			
-			addDeclaration(return_type, ret);
 			stat += "sprintf("+ret+", \"%lld\", "+ prefix+code.operand(0)+");";					
-		}else{			
-			addDeclaration(return_type, ret);
+		}else{
 			stat += "toString(";
-			code.operands();
 			//Get type attribute
-			/*ArrayList<Type> params = new ArrayList<Type>();
-			for(int op: code.operands()){
-				paramType = (Type) getAttribute(prefix+op, "type");
-				params.add(paramType);
-			}*/
-			List params = getAttributes(code.operands(), "type");
-			stat += translate(code.operands(), params);
-			stat += ", "+ret+");\n";
+			stat += translateParameters(code.operands(), getAttributes(code.operands(), "type"));
+			stat += ", "+ret+");";
 		}
-		addStatement(code, stat);
 		return stat;
 	}
 
 
 	/**
-	 * Generates the code for <code>Codes.Invoke</code> code
-	 * TODO The size of the returned list requires the symbolic analysis.
+	 * Produces the code for <code>Codes.Invoke</code> code. For example, the following WyIL code:
+	 * <p><code>invoke %18 = (%1) BoolList_Valid_2:play : function([bool]) => [bool]</code></p>
+	 * can be translated into the following C code:
+	 * <p><code>_18_size=_1_size;
+	 * _18=play(_1 , _1_size);</code></p>	  
+	 * If the WyIL code calls <code>Any.toString</code>, then use the {@link #transalteWhileyAnyToString(Codes.Invoke)} function. 
+	 * <p>TODO The size of the returned list requires the symbolic analysis.
 	 * @param code 
 	 */
 	private void translate(Codes.Invoke code){
-		String stat;
+		String stat = "";
 		//The code for calling the whiley.lang.any.toString() function.
 		if(code.name.toString().equals("whiley/lang/Any:toString")){
-			stat = transalteAnyToString(code);		
+			stat = transalteWhileyAnyToString(code);		
 		}else{
 			String ret = prefix+code.target();
 			Type return_type = code.type().ret();
-			stat = indent + ret+ "="+code.name.name()+"(";
-			//input parameter
-			stat += translate(code.operands(), code.type().params());
-			stat += ");\n";
 			addDeclaration(return_type, ret);
-			//Add the 'ret_size' variable.
+			//Assign the value of 'return_size' variable.
 			if(return_type instanceof Type.List){
 				String ret_size = ret+"_size";
-				//vars.put(ret_size, "long long");
-				//Check if the input parameter is of integer type.
-				stat += indent+ret_size + "=";
-				int index = 0;
-				for(Type paramType : code.type().params()){
-					if(paramType instanceof Type.List){
-						stat += prefix+code.operands()[index]+"_size;";
-					}				
-					index++;
-				}
-			}
-			//return value
-			addStatement(code, stat);
+				//Check if any parameter is also a list. 
+				stat += indent+ret_size + "=";				
+				for(int index=0;index<code.operands().length;index++){
+					Type type = code.type().params().get(index);
+					if(type instanceof Type.List){
+						//Assign both of lists to have the same array size, e.g. '_17_size = _1_size;'
+						stat += prefix+code.operand(index)+"_size;\n";
+					}
+				}				
+			}			
+			stat += indent + ret+ "="+code.name.name()+"(";
+			//input parameters
+			stat += translateParameters(code.operands(), code.type().params());
+			stat += ");";						
 		}
-
+		//add the statement
+		addStatement(code, stat);
 	}
 
 	/**
