@@ -9,8 +9,12 @@ import wyopcl.translator.bound.Domain;
 
 
 /**
- * Implemented for the propagation rule of constraint 'x<=y' 
- * @author mw169
+ * Implements the propagation rule for constraint <code>x <= y</code> from 'y' to 'x'. It adds the upper bound  from 'y' to 'x' without making any change to 'y'.
+ * For example, the following bounds and constraints:
+ * <p><code> D(x) = [1..11], D(y)=[10..10], x < y</code></p> 
+ * can be inferred as below:
+ * <p><code>D(x) = [1..10], D(y)=[10..10]</code></p>
+ * @author Min-Hsien Weng
  *
  */
 
@@ -34,10 +38,10 @@ public class LessThanEquals extends Constraint {
 		if (max_y != null){
 			bnd.isChanged |= bnd.addUpperBound(x, max_y);
 		}	
-		
+		/*
 		if(min_x != null){
 			bnd.isChanged |= bnd.addLowerBound(y, min_x);
-		}		
+		}*/		
 		
 
 		return bnd.isChanged;

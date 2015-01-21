@@ -4,7 +4,16 @@ import java.math.BigInteger;
 
 import wyopcl.translator.bound.Bounds;
 
-
+/**
+ * Implements the propagation rule for constraint <code>x < y</code> from 'y' to 'x'. It gets the upper bound from 'y'
+ * and decrements the bound by '1'. And then it adds the new upper bound to 'x' without making any change to 'y'.
+ * </p>For example, the following bounds and constraints:
+ * <p><code> D(x) = [1..11], D(y)=[10..10], x < y</code></p> 
+ * can be inferred as below:
+ * <p><code>D(x) = [1..9], D(y)=[10..10]</code></p>
+ * @author Min-Hsien Weng
+ *
+ */
 public class LessThan extends Constraint {
 	private BigInteger min_x, max_x, min_y, max_y;
 	private final String x, y;	
@@ -18,17 +27,11 @@ public class LessThan extends Constraint {
 	 * Propagate rule of inequality 'x < y'.
 	 */
 	public boolean inferBound(Bounds bnd) {
-
 		bnd.isChanged = false;
-		//Propagate 'lower bound of x + 1' to lower bound of y 
 		min_x = bnd.getLower(x);
 		max_x = bnd.getUpper(x);
 		min_y = bnd.getLower(y);
 		max_y = bnd.getUpper(y);
-
-		if(min_x != null){
-			bnd.isChanged |= bnd.addLowerBound(y, min_x.add(BigInteger.ONE));
-		}		
 
 		//Propagate 'upper bound of y - 1' to lower bound of x.
 		if (max_y != null){
