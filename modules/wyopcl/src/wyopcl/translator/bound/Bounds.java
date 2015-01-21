@@ -378,7 +378,7 @@ public class Bounds implements Cloneable{
 		Collections.sort(domains);
 		for (Domain d : domains) {
 			str += "\n\t"+ d.toString();
-		}
+		}		
 		domains = null;
 		return str;
 	}

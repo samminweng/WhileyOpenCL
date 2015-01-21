@@ -71,7 +71,7 @@ public class Analyzer {
 	//The variables are used in the control flow graph (CFG).
 	private BasicBlock entry;//Root node of CFG
 	private BasicBlock current_blk;	
-	private BasicBlock exit;//The exit node of CFG
+	//private BasicBlock exit;//The exit node of CFG
 	//The list of basic block;
 	private List<BasicBlock> list;
 	//The label name of the loop condition
@@ -119,7 +119,8 @@ public class Analyzer {
 		this.symbols = new HashMap<String, Symbol>();
 		//Initialize
 		this.entry = createBasicBlock("entry", BlockType.ENTRY);
-		this.exit = createBasicBlock("exit", BlockType.EXIT);
+		createBasicBlock("exit", BlockType.EXIT);
+		//this.exit = createBasicBlock("exit", BlockType.EXIT);
 		this.current_blk = this.entry;
 		this.loop_variables = new HashMap<String, BoundChange>();
 		this.isGoto = false;
@@ -367,8 +368,7 @@ public class Analyzer {
 			for(String loop_var: loop_variables.keySet()){			
 				//Upper bounds
 				BigInteger upper_before = bnd_before.getUpper(loop_var);
-				BigInteger upper_after = bnd_after.getUpper(loop_var);
-								
+				BigInteger upper_after = bnd_after.getUpper(loop_var);								
 				BoundChange boundChange = loop_variables.get(loop_var);
 				if(upper_before!= null && upper_after!=null){
 					//Check if the upper bounds is increasing
@@ -390,10 +390,8 @@ public class Analyzer {
 						isDecreasing |= true;
 						boundChange.setLBDecreasing(isDecreasing);
 						loop_variables.put(loop_var, boundChange);
-					}
-					
+					}					
 				}
-				
 				
 				//After three iterations, the bounds is still increasing.
 				if(iteration%3==0){
@@ -450,9 +448,10 @@ public class Analyzer {
 
 		boolean isFixedPointed = false;
 		int iteration=1;
-		//Stop the loop when the fixed point is reached or no change in bounds,
-		//using XOR operator terminates the loop earlier.
-		while(isFixedPointed ^ iteration<=MaxIteration){
+		//Stop the loop when the program reaches the fixed point or max-iterations 
+		//by using AND operator to combine these two condition.
+		//If both of two cond are evaluated to be true, then enter the loop.
+		while(!isFixedPointed && iteration <= MaxIteration){
 			if(config.isVerbose()){
 				System.out.println(BLUE+"Iteration "+iteration+" => "+RESET);
 			}			
@@ -460,37 +459,36 @@ public class Analyzer {
 			isFixedPointed = true;
 			//If bounds has changed, then isChanged = false.
 			boolean isChanged = false;
-			//Iterate all the blocks
+			//Iterate all the blocks, except Exit block.
 			for(BasicBlock blk : list){
-				//Take the union of parents' bounds.
-				for(BasicBlock parent: blk.getParentNodes()){
-					blk.unionBounds(parent);
+				//Take the union of all blocks for exit block
+				if(!blk.getType().equals(BlockType.EXIT)){
+					//Take the union of parents' bounds.
+					for(BasicBlock parent: blk.getParentNodes()){						
+						blk.unionBounds(parent);																		
+					}					
+					isChanged = inferBlockBounds(blk, isChanged, iteration);				
+					//Use bitwise 'AND' to combine all the results
+					isFixedPointed &= (!isChanged);	
 				}
-				isChanged = inferBlockBounds(blk, isChanged, iteration);				
-				//Use bitwise 'AND' to combine all the results
-				isFixedPointed &= (!isChanged);	
-
-			}//End of bound inference for all constraints in all blks.
+			}//End of bound inference for all constraints in all blks.	
 			if(config.isVerbose()){
 				System.out.println("isFixedPointed="+isFixedPointed);
 			}
-
-			if(isFixedPointed){
-				break;
-			}
-
 			iteration++;
-		}		
-
-		BasicBlock current_blk = getCurrentBlock();
-		Bounds bnd;
-		if(current_blk!=null){
-			bnd = current_blk.getBounds();
-		}else{
-			bnd = exit.getBounds();
 		}
-
-		//check if print out the CFG
+		
+		//Take the union of all blocks to produce the functional result 
+		BasicBlock exit_blk = getBasicBlock("exit", BlockType.EXIT);
+		for(BasicBlock blk: list){
+			//Consider the consistent bounds without taking into the inconsistent bounds.
+			if(blk.isConsistent()&&blk.getType()!= BlockType.EXIT){
+				exit_blk.unionBounds(blk);					
+			}			
+		}
+		
+		Bounds bnd = exit_blk.getBounds();
+		//check the verbose to determine whether to print out the CFG
 		if(config.isVerbose()){
 			printCFG(functionOrMethod.name());
 		}		
@@ -528,13 +526,10 @@ public class Analyzer {
 			//Get the block of If branch
 			blk = getBasicBlock(label, BlockType.IF_BRANCH);
 		}
-
 		if(blk == null){
 			//Get the block of Loop Exit
 			blk = getBasicBlock(label, BlockType.LOOP_EXIT);
 		}
-
-
 		return blk;
 
 
@@ -697,7 +692,7 @@ public class Analyzer {
 		//put the opposite constraint to current blk(loopbody)			
 		loop_body.addConstraint(neg_c);	
 		//put the original constraint to the loop_exit			
-		//loop_exit.addConstraint(c);	
+		loop_exit.addConstraint(c);	
 		setCurrentBlock(loop_body);
 		//Reset the loop condition flag.
 		loop_condition = null;

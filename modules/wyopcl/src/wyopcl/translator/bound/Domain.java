@@ -160,10 +160,11 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 
 	}
 
-	@Override
+	
 	/**
 	 * Implemented for sort the domains
 	 */
+	@Override
 	public int compare(Domain d0, Domain d1) {		
 		int reg = d0.getReg() - d1.getReg();
 		if(reg == 0){

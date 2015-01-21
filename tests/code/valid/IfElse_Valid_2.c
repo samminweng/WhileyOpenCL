@@ -58,29 +58,70 @@ blklab1:;
 	return _7;
 }
 int main(int argc, char** argv){
-	char _7[1024];
+	char _10[1024];
+	long long _18;
+	char _22[1024];
+	long long _17;
+	long long _23;
+	char _4[1024];
+	long long _24;
+	long long _12;
+	long long _25;
 	char str[1024];
-	char _7;
-	long long _8;
-	long long _3;
-	long long _1;
-	long long _2;
-	//const %3 = 1 : int
-	_3 = 1;
-	//invoke %2 = (%3) IfElse_Valid_2:f : function(int) => int
-	_2=f(_3);
-	//assign %1 = %2  : int
-	_1 = _2;
-	//fieldload %5 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}
-	//fieldload %6 = %5 println : {method(any) => void print,method(any) => void println}
-	//assign %8 = %1  : int
-	_8 = _1;
-	//convert %8 = %8 any : int
-	//invoke %7 = (%8) whiley/lang/Any:toString : function(any) => string
-	sprintf(_7, "%lld", _8);
-	//convert %7 = %7 any : string
-	//indirectinvoke %6 (%7) : method(any) => void
-	printf("%s\n",toString(_7, _7_size, str));
+	long long _11;
+	char _16[1024];
+	long long _5;
+	long long _6;
+	//fieldload %2 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}
+	//fieldload %3 = %2 println : {method(any) => void print,method(any) => void println}
+	//const %6 = 10 : int
+	_6 = 10;
+	//invoke %5 = (%6) IfElse_Valid_2:f : function(int) => int
+	_5=f(_6);
+	//convert %5 = %5 any : int
+	//invoke %4 = (%5) whiley/lang/Any:toString : function(any) => string
+	sprintf(_4, "%lld", _5);
+	//convert %4 = %4 any : string
+	//indirectinvoke %3 (%4) : method(any) => void
+	printf("%s\n",_4);
+	//fieldload %8 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}
+	//fieldload %9 = %8 println : {method(any) => void print,method(any) => void println}
+	//const %12 = 11 : int
+	_12 = 11;
+	//invoke %11 = (%12) IfElse_Valid_2:f : function(int) => int
+	_11=f(_12);
+	//convert %11 = %11 any : int
+	//invoke %10 = (%11) whiley/lang/Any:toString : function(any) => string
+	sprintf(_10, "%lld", _11);
+	//convert %10 = %10 any : string
+	//indirectinvoke %9 (%10) : method(any) => void
+	printf("%s\n",_10);
+	//fieldload %14 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}
+	//fieldload %15 = %14 println : {method(any) => void print,method(any) => void println}
+	//const %18 = 1212 : int
+	_18 = 1212;
+	//invoke %17 = (%18) IfElse_Valid_2:f : function(int) => int
+	_17=f(_18);
+	//convert %17 = %17 any : int
+	//invoke %16 = (%17) whiley/lang/Any:toString : function(any) => string
+	sprintf(_16, "%lld", _17);
+	//convert %16 = %16 any : string
+	//indirectinvoke %15 (%16) : method(any) => void
+	printf("%s\n",_16);
+	//fieldload %20 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}
+	//fieldload %21 = %20 println : {method(any) => void print,method(any) => void println}
+	//const %24 = 1212 : int
+	_24 = 1212;
+	//neg %25 = %24 : int
+	_25= -_24;
+	//invoke %23 = (%25) IfElse_Valid_2:f : function(int) => int
+	_23=f(_25);
+	//convert %23 = %23 any : int
+	//invoke %22 = (%23) whiley/lang/Any:toString : function(any) => string
+	sprintf(_22, "%lld", _23);
+	//convert %22 = %22 any : string
+	//indirectinvoke %21 (%22) : method(any) => void
+	printf("%s\n",_22);
 	//return
 	return -1;
 }

@@ -15,7 +15,6 @@ import wyopcl.translator.bound.constraint.Constraint;
  *
  */
 public class BasicBlock implements Comparable<BasicBlock>{
-
 	private List<Constraint> constraintList;
 	private List<BasicBlock> childNodes = null;
 	private List<BasicBlock> parentNodes = null;
@@ -23,10 +22,9 @@ public class BasicBlock implements Comparable<BasicBlock>{
 	private String branch;
 	private BlockType type;
 	private Bounds unionOfBounds;
-	//private Bounds existingBounds;
 	//Indicate if the bounds remain unchanged. False: unchanged. True: changed.
-	private boolean isChanged = false;
-
+	private boolean isChanged;
+	
 	public enum BlockType{
 		ENTRY(0){
 			public String toString(){
@@ -65,12 +63,12 @@ public class BasicBlock implements Comparable<BasicBlock>{
 		},
 		IF_BRANCH(7){
 			public String toString(){
-				return "IF_BRANCH";
+				return "IF";
 			}
 		},
 		ELSE_BRANCH(8){
 			public String toString(){
-				return "ELSE_BRANCH";
+				return "ELSE";
 			}
 		},
 		EXIT(9){
@@ -100,7 +98,7 @@ public class BasicBlock implements Comparable<BasicBlock>{
 		this();
 		this.branch = branch;
 		this.type = type;
-
+		this.isChanged = false;
 	}
 	
 
@@ -253,11 +251,11 @@ public class BasicBlock implements Comparable<BasicBlock>{
 		for(Constraint c: this.constraintList){
 			//The inferBound method returns False if the bounds remain unchanged.
 			c.inferBound(this.unionOfBounds);
-		}
+		}		
 		//Test the equality of existing and newly inferred bounds.
 		if(existingBounds!= null && existingBounds.equals(this.unionOfBounds)){
 			isChanged = false;
-		}		
+		}
 		return isChanged;
 	}
 
@@ -297,7 +295,8 @@ public class BasicBlock implements Comparable<BasicBlock>{
 				+ String.format("%s %-20s %s%n", "Name", "Type", "Constraints")
 				+ String.format("%s %-15s %s%n", this.branch, this.type, this.constraintList)
 				+ this.unionOfBounds+"\n"
-				+"---------------------------------------";
+				+"---------------------------------------\n"
+				+"IsConsistent="+isConsistent();
 	}
 
 
@@ -315,10 +314,6 @@ public class BasicBlock implements Comparable<BasicBlock>{
 		return false;
 	}
 
-
-
-
-
 	@Override
 	/**
 	 * Implements for sorting the elements in the list. 
@@ -326,8 +321,12 @@ public class BasicBlock implements Comparable<BasicBlock>{
 	public int compareTo(BasicBlock blk) {
 		return this.type.order - blk.type.order;		
 	}
-
-
-
-
+	
+	/**
+	 * Indicate if the inferred bounds are consistent. .
+	 * @return true if all the bounds are consistent.
+	 */
+	public boolean isConsistent() {
+		return this.unionOfBounds.checkBoundConsistency();
+	}
 }
