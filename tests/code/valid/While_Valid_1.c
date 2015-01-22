@@ -25,35 +25,35 @@ void append(long long* op_1, long long op_1_size, long long* op_2, long long op_
 }
 
 long long* reverse(long long* _0, long long _0_size){
-	long long _50;
+	long long _1;
+	long long _10;
+	long long _12;
+	long long _14;
+	long long _16;
+	long long _19;
+	long long _2;
+	long long _22;
 	long long _24;
 	long long _25;
 	long long _26;
-	long long _48;
-	long long _3_size;
-	long long _46;
-	long long _33;
-	long long _45;
-	long long _8;
-	long long _10;
 	long long* _3;
-	long long* _4;
-	long long _6;
-	long long _1;
-	long long _2;
-	long long _19;
-	long long _16;
-	long long _40;
-	long long _14;
-	long long _42;
-	long long _12;
-	long long* _44;
-	long long _22;
+	long long _33;
 	long long _35;
-	long long _44_size;
 	long long _36;
 	long long _38;
+	long long _3_size;
+	long long* _4;
+	long long _40;
+	long long _42;
+	long long* _44;
+	long long _44_size;
+	long long _45;
+	long long _46;
+	long long _48;
 	long long _4_size;
+	long long _50;
+	long long _6;
+	long long _8;
 	//assign %44 = %0  : [int]
 	_44 = clone(_0, _0_size);
 	_44_size = _0_size;
@@ -239,21 +239,21 @@ blklab16:;
 	return _0;
 }
 int main(int argc, char** argv){
+	long long* _1;
+	char _12[1024];
+	long long* _13;
 	long long _13_size;
-	long long _8_size;
-	char str[1024];
-	long long _7;
-	long long* _8;
+	long long _1_size;
+	long long* _2;
+	size_t _2_size;
 	long long _3;
 	long long _4;
 	long long _5;
 	long long _6;
-	long long* _1;
-	long long* _2;
-	long long _1_size;
-	size_t _2_size;
-	long long* _13;
-	char _12[1024];
+	long long _7;
+	long long* _8;
+	long long _8_size;
+	char str[1024];
 	//const %3 = 1 : int
 	_3 = 1;
 	//const %4 = 2 : int

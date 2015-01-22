@@ -25,16 +25,16 @@ void append(long long* op_1, long long op_1_size, long long* op_2, long long op_
 }
 
 int main(int argc, char** argv){
-	long long _5_size;
-	long long index;
-	char str[1024];
-	long long _7;
 	char _11[1024];
+	long long _12;
+	long long _2;
 	long long _3;
 	long long _4;
 	long long* _5;
-	long long _12;
-	long long _2;
+	long long _5_size;
+	long long _7;
+	long long index;
+	char str[1024];
 	//const %2 = 1 : int
 	_2 = 1;
 	//const %3 = 2 : int

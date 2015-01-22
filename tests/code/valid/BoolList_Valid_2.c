@@ -25,18 +25,18 @@ void append(long long* op_1, long long op_1_size, long long* op_2, long long op_
 }
 
 long long* play(long long* _0, long long _0_size){
-	long long _20;
-	long long _1_size;
-	long long _7;
-	long long _8;
+	long long* _1;
 	long long _11;
+	long long _14;
+	long long _17;
+	long long _1_size;
+	long long* _2;
+	long long _20;
+	long long _2_size;
 	long long _3;
 	long long _5;
-	long long _17;
-	long long _14;
-	long long _2_size;
-	long long* _1;
-	long long* _2;
+	long long _7;
+	long long _8;
 	//assign %2 = %0  : [bool]
 	_2 = clone(_0, _0_size);
 	_2_size = _0_size;
@@ -126,22 +126,22 @@ blklab1:;
 	return _1;
 }
 long long isAlive(long long _0, long long* _1, long long _1_size){
-	long long _22;
-	long long _21;
-	long long _20;
-	long long _8;
 	long long _11;
-	long long _18;
-	long long _3;
-	long long _19;
-	long long _5;
-	long long _17;
-	long long _6;
-	long long _14;
-	long long _23;
-	long long _24;
 	long long _12;
 	long long _13;
+	long long _14;
+	long long _17;
+	long long _18;
+	long long _19;
+	long long _20;
+	long long _21;
+	long long _22;
+	long long _23;
+	long long _24;
+	long long _3;
+	long long _5;
+	long long _6;
+	long long _8;
 	//const %3 = 0 : int
 	_3 = 0;
 	//ifle %0, %3 goto blklab5 : int
@@ -236,25 +236,25 @@ blklab5:;
 	return _22;
 }
 int main(int argc, char** argv){
-	long long _1_size;
-	size_t _18_size;
-	long long* _18;
-	long long _17_size;
-	long long* _17;
-	long long _13;
-	char str[1024];
-	long long _7;
-	long long _9_size;
-	long long _8;
-	long long _11;
-	long long* _9;
+	long long* _1;
 	long long _10;
+	long long _11;
+	long long _13;
+	long long* _17;
+	long long _17_size;
+	long long* _18;
+	size_t _18_size;
+	long long _1_size;
+	long long _2;
 	long long _3;
 	long long _4;
 	long long _5;
 	long long _6;
-	long long* _1;
-	long long _2;
+	long long _7;
+	long long _8;
+	long long* _9;
+	long long _9_size;
+	char str[1024];
 	//const %2 = true : bool
 	_2 = true;
 	//const %3 = true : bool

@@ -8,8 +8,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Stack;
+import java.util.TreeMap;
 
 import wycc.lang.NameID;
 import wycc.lang.SyntaxError;
@@ -282,10 +284,13 @@ public class CodeGenerator{
 		System.out.println(function_del+"{");
 		writer.println(function_del+"{");
 		//Var declaration
-		for(Entry<String, String> var: vars.entrySet()){
+		//Sorts the variable declaration by variable names
+		Map<String, String> sortedVars = new TreeMap<String, String>(vars);		
+		for(Entry<String, String> var: sortedVars.entrySet()){
 			System.out.println("\t"+var.getValue()+" "+var.getKey()+";");
 			writer.println("\t"+var.getValue()+" "+var.getKey()+";");
 		}
+		sortedVars = null;
 		//Statments
 		for(String stat: statements){
 			System.out.println(stat.toString());

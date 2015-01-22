@@ -25,11 +25,11 @@ void append(long long* op_1, long long op_1_size, long long* op_2, long long op_
 }
 
 long long f(long long _0){
-	long long _7;
+	long long _2;
 	long long _3;
 	long long _5;
 	long long _6;
-	long long _2;
+	long long _7;
 	//const %2 = 10 : int
 	_2 = 10;
 	//ifge %0, %2 goto blklab0 : int
@@ -59,19 +59,19 @@ blklab1:;
 }
 int main(int argc, char** argv){
 	char _10[1024];
+	long long _11;
+	long long _12;
+	char _16[1024];
+	long long _17;
 	long long _18;
 	char _22[1024];
-	long long _17;
 	long long _23;
-	char _4[1024];
 	long long _24;
-	long long _12;
 	long long _25;
-	char str[1024];
-	long long _11;
-	char _16[1024];
+	char _4[1024];
 	long long _5;
 	long long _6;
+	char str[1024];
 	//fieldload %2 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}
 	//fieldload %3 = %2 println : {method(any) => void print,method(any) => void println}
 	//const %6 = 10 : int
