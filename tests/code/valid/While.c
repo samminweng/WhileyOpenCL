@@ -107,35 +107,31 @@ blklab5:;
 	return _7;
 }
 int main(int argc, char** argv){
-	char _19_str[1024];
-	char _25[5];
-	long long _27;
-	char _26_str;
-	long long _23;
-	char _12_str[1024];
-	long long _26;
-	char _7[1024];
-	long long _30;
-	char str[1024];
-	char _28[1024];
-	long long _9;
-	char _18[5];
-	long long _5;
-	long long _6;
-	char _5_str;
-	char _5_str[1024];
 	char _21[1024];
+	char _5_str[1024];
 	char _4[5];
-	char _19_str;
+	long long _27;
+	char _25[5];
+	char _19_str[1024];
 	long long _19;
 	long long _16;
 	char _14[1024];
+	long long _23;
 	long long _12;
+	char _12_str[1024];
+	long long _26;
 	long long _13;
+	char _7[1024];
+	long long _30;
 	long long _20;
+	char str[1024];
+	char _28[1024];
 	char _26_str[1024];
+	char _18[5];
+	long long _9;
 	char _11[5];
-	char _12_str;
+	long long _5;
+	long long _6;
 	//fieldload %2 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}
 	//fieldload %3 = %2 println : {method(any) => void print,method(any) => void println}
 	//const %4 = "Sum=" : string

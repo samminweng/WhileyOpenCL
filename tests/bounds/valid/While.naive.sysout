@@ -36,7 +36,7 @@ Bounds at the end of function f:
 	domain(%4)	= [0..0]
 	domain(%5)	= [0..infinity]
 	domain(%6)	= [0..0]
-	domain(%11)	= [0..3]
+	domain(%11)	= [0..27]
 	domain(%13)	= [1..1]
 	domain(%14)	= [1..5]
 	domain(return)	= [0..infinity]
@@ -53,82 +53,20 @@ main.15 [	indirectinvoke %3 (%7) : method(any) => void]
 main.16 [	fieldload %9 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}]
 main.17 [	fieldload %10 = %9 println : {method(any) => void print,method(any) => void println}]
 main.18 [	const %11 = "Sum=" : string]
-main.19 [	const %13 = 5 : int]
+main.19 [	const %13 = 50000 : int]
 main.20 [	assert blklab9]
 [30;1mmain.21 [	const %16 = 1000000 : int][0m
 [30;1mmain.22 [	ifle %13, %16 goto blklab8 : int][0m
 [30;1mmain.23 [	fail ""precondition not satisfied""][0m
 [30;1mmain.24 [.blklab8][0m
 [30;1mmain.25 [.blklab9][0m
-main.26 [	invoke %12 = (%13) While:reverse_f : function(int) => int]
+main.26 [	invoke %12 = (%13) While:f : function(int) => int]
 Bounds at the 26th line number of function main:
 	domain(%5)	= [0..infinity]
 	domain(%6)	= [5..5]
-	domain(%13)	= [5..5]
+	domain(%13)	= [50000..50000]
 	value(%6)	= 5
-	value(%13)	= 5
-Consistency=true
-int reverse_f(int %0)
-reverse_f.0 [	const %5 = 1 : int]
-reverse_f.1 [	sub %6 = %0, %5 : int]
-reverse_f.2 [	assign %3 = %6  : int]
-reverse_f.3 [	const %8 = 0 : int]
-reverse_f.4 [	assign %7 = %8  : int]
-reverse_f.5 [	loop (%3, %7)]
-reverse_f.6 [	const %10 = 0 : int]
-reverse_f.7 [	ifle %3, %10 goto blklab5 : int]
-reverse_f.8 [	add %13 = %7, %3 : int]
-reverse_f.9 [	assign %7 = %13  : int]
-reverse_f.10 [	const %15 = 1 : int]
-reverse_f.11 [	sub %16 = %3, %15 : int]
-reverse_f.12 [	assign %3 = %16  : int]
-reverse_f.13 [	nop]
-reverse_f.14 [end blklab4]
-reverse_f.15 [.blklab5]
-reverse_f.16 [	return %7 : int]
-Bounds at the end of function reverse_f:
-	domain(%0)	= [5..5]
-	domain(%3)	= [-infinity..4]
-	domain(%5)	= [-1..-1]
-	domain(%6)	= [4..4]
-	domain(%7)	= [0..infinity]
-	domain(%8)	= [0..0]
-	domain(%10)	= [0..0]
-	domain(%13)	= [1..12]
-	domain(%15)	= [-1..2]
-	domain(%16)	= [1..3]
-	domain(return)	= [0..infinity]
-	value(%0)	= 5
-	value(%5)	= 1
-	value(%8)	= 0
-	value(%10)	= 0
-	value(%15)	= 1
-Consistency=true
-main.27 [	convert %12 = %12 any : int]
-main.28 [	invoke %12 = (%12) whiley/lang/Any:toString : function(any) => string]
-main.29 [	sappend %14 = %11, %12 : string]
-main.30 [	convert %14 = %14 any : string]
-main.31 [	indirectinvoke %10 (%14) : method(any) => void]
-main.32 [	fieldload %16 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}]
-main.33 [	fieldload %17 = %16 println : {method(any) => void print,method(any) => void println}]
-main.34 [	const %18 = "Sum=" : string]
-main.35 [	const %20 = 50000 : int]
-main.36 [	assert blklab11]
-[30;1mmain.37 [	const %23 = 1000000 : int][0m
-[30;1mmain.38 [	ifle %20, %23 goto blklab10 : int][0m
-[30;1mmain.39 [	fail ""precondition not satisfied""][0m
-[30;1mmain.40 [.blklab10][0m
-[30;1mmain.41 [.blklab11][0m
-main.42 [	invoke %19 = (%20) While:f : function(int) => int]
-Bounds at the 42th line number of function main:
-	domain(%5)	= [0..infinity]
-	domain(%6)	= [5..5]
-	domain(%12)	= [0..infinity]
-	domain(%13)	= [5..5]
-	domain(%20)	= [50000..50000]
-	value(%6)	= 5
-	value(%13)	= 5
-	value(%20)	= 50000
+	value(%13)	= 50000
 Consistency=true
 int f(int %0)
 f.0 [	const %4 = 0 : int]
@@ -152,7 +90,7 @@ Bounds at the end of function f:
 	domain(%4)	= [0..0]
 	domain(%5)	= [0..infinity]
 	domain(%6)	= [0..0]
-	domain(%11)	= [0..3]
+	domain(%11)	= [0..299997]
 	domain(%13)	= [1..1]
 	domain(%14)	= [1..50000]
 	domain(return)	= [0..infinity]
@@ -161,88 +99,17 @@ Bounds at the end of function f:
 	value(%6)	= 0
 	value(%13)	= 1
 Consistency=true
-main.43 [	convert %19 = %19 any : int]
-main.44 [	invoke %19 = (%19) whiley/lang/Any:toString : function(any) => string]
-main.45 [	sappend %21 = %18, %19 : string]
-main.46 [	convert %21 = %21 any : string]
-main.47 [	indirectinvoke %17 (%21) : method(any) => void]
-main.48 [	fieldload %23 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}]
-main.49 [	fieldload %24 = %23 println : {method(any) => void print,method(any) => void println}]
-main.50 [	const %25 = "Sum=" : string]
-main.51 [	const %27 = 50000 : int]
-main.52 [	assert blklab13]
-[30;1mmain.53 [	const %30 = 1000000 : int][0m
-[30;1mmain.54 [	ifle %27, %30 goto blklab12 : int][0m
-[30;1mmain.55 [	fail ""precondition not satisfied""][0m
-[30;1mmain.56 [.blklab12][0m
-[30;1mmain.57 [.blklab13][0m
-main.58 [	invoke %26 = (%27) While:reverse_f : function(int) => int]
-Bounds at the 58th line number of function main:
-	domain(%5)	= [0..infinity]
-	domain(%6)	= [5..5]
-	domain(%12)	= [0..infinity]
-	domain(%13)	= [5..5]
-	domain(%19)	= [0..infinity]
-	domain(%20)	= [50000..50000]
-	domain(%27)	= [50000..50000]
-	value(%6)	= 5
-	value(%13)	= 5
-	value(%20)	= 50000
-	value(%27)	= 50000
-Consistency=true
-int reverse_f(int %0)
-reverse_f.0 [	const %5 = 1 : int]
-reverse_f.1 [	sub %6 = %0, %5 : int]
-reverse_f.2 [	assign %3 = %6  : int]
-reverse_f.3 [	const %8 = 0 : int]
-reverse_f.4 [	assign %7 = %8  : int]
-reverse_f.5 [	loop (%3, %7)]
-reverse_f.6 [	const %10 = 0 : int]
-reverse_f.7 [	ifle %3, %10 goto blklab5 : int]
-reverse_f.8 [	add %13 = %7, %3 : int]
-reverse_f.9 [	assign %7 = %13  : int]
-reverse_f.10 [	const %15 = 1 : int]
-reverse_f.11 [	sub %16 = %3, %15 : int]
-reverse_f.12 [	assign %3 = %16  : int]
-reverse_f.13 [	nop]
-reverse_f.14 [end blklab4]
-reverse_f.15 [.blklab5]
-reverse_f.16 [	return %7 : int]
-Bounds at the end of function reverse_f:
-	domain(%0)	= [50000..50000]
-	domain(%3)	= [-infinity..49999]
-	domain(%5)	= [-1..-1]
-	domain(%6)	= [49999..49999]
-	domain(%7)	= [0..infinity]
-	domain(%8)	= [0..0]
-	domain(%10)	= [0..0]
-	domain(%13)	= [1..149997]
-	domain(%15)	= [-1..49997]
-	domain(%16)	= [1..49998]
-	domain(return)	= [0..infinity]
-	value(%0)	= 50000
-	value(%5)	= 1
-	value(%8)	= 0
-	value(%10)	= 0
-	value(%15)	= 1
-Consistency=true
-main.59 [	convert %26 = %26 any : int]
-main.60 [	invoke %26 = (%26) whiley/lang/Any:toString : function(any) => string]
-main.61 [	sappend %28 = %25, %26 : string]
-main.62 [	convert %28 = %28 any : string]
-main.63 [	indirectinvoke %24 (%28) : method(any) => void]
-main.64 [	return]
+main.27 [	convert %12 = %12 any : int]
+main.28 [	invoke %12 = (%12) whiley/lang/Any:toString : function(any) => string]
+main.29 [	sappend %14 = %11, %12 : string]
+main.30 [	convert %14 = %14 any : string]
+main.31 [	indirectinvoke %10 (%14) : method(any) => void]
+main.32 [	return]
 Bounds at the end of function main:
 	domain(%5)	= [0..infinity]
 	domain(%6)	= [5..5]
 	domain(%12)	= [0..infinity]
-	domain(%13)	= [5..5]
-	domain(%19)	= [0..infinity]
-	domain(%20)	= [50000..50000]
-	domain(%26)	= [0..infinity]
-	domain(%27)	= [50000..50000]
+	domain(%13)	= [50000..50000]
 	value(%6)	= 5
-	value(%13)	= 5
-	value(%20)	= 50000
-	value(%27)	= 50000
+	value(%13)	= 50000
 Consistency=true
