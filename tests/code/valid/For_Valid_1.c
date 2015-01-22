@@ -29,7 +29,6 @@ int main(int argc, char** argv){
 	long long index;
 	char str[1024];
 	long long _7;
-	char _11;
 	char _11[1024];
 	long long _3;
 	long long _4;
@@ -65,7 +64,7 @@ int main(int argc, char** argv){
 		sprintf(_11, "%lld", _12);
 		//convert %11 = %11 any : string
 		//indirectinvoke %10 (%11) : method(any) => void
-		printf("%s\n",toString(_11, _11_size, str));
+		printf("%s\n",_11);
 		//nop
 		;
 	//end blklab0
