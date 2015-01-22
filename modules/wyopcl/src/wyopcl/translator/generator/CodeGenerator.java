@@ -862,7 +862,7 @@ public class CodeGenerator{
 			}
 			isFirst = false;
 		}
-		stat += ", "+target+");\n";
+		stat += ", "+target+");";
 		addStatement(code, stat);
 	}
 
