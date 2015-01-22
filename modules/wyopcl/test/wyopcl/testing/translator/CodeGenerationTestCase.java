@@ -25,28 +25,33 @@ public class CodeGenerationTestCase {
 	}	
 	
 	@Test
-	public void test_Valid_While() {
+	public void test_While() {
 		util.execCodeGeneration(valid_path+"While");
 	}	
 	
 	@Test
-	public void test_Valid_IfElse_Valid_2() {
+	public void test_IfElse_Valid_2() {
 		util.execCodeGeneration(valid_path+"IfElse_Valid_2");
 	}	
 	
 	@Test
-	public void test_Valid_For_Valid_1() {
+	public void test_For_Valid_1() {
 		util.execCodeGeneration(valid_path+"For_Valid_1");
 	}
 	
 	@Test
-	public void test_Valid_BoolList_Valid_2() {
+	public void test_BoolList_Valid_2() {
 		util.execCodeGeneration(valid_path+"BoolList_Valid_2");
 	}
 	
 	@Test
-	public void test_Valid_While_Valid_1() {
+	public void test_While_Valid_1() {
 		util.execCodeGeneration(valid_path+"While_Valid_1");
 	}
 	
+	
+	@Test
+	public void test_Reverse_List() {
+		util.execCodeGeneration(valid_path+"Reverse_List");
+	}
 }

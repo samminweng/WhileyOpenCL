@@ -21,113 +21,68 @@ Bounds at the 6th line number of function main:
 	size(%8)	= 5
 Consistency=true
 [int] reverse([int] %0)
-reverse.0 [	assign %44 = %0  : [int]]
-reverse.1 [	const %2 = 0 : int]
-reverse.2 [	assign %1 = %2  : int]
-reverse.3 [	assign %4 = %0  : [int]]
-reverse.4 [	assign %3 = %4  : [int]]
-reverse.5 [	assert blklab3]
-[30;1mreverse.6 [	const %6 = 0 : int][0m
-[30;1mreverse.7 [	iflt %2, %6 goto blklab4 : int][0m
-[30;1mreverse.8 [	lengthof %8 = %0 : [int]][0m
-[30;1mreverse.9 [	lengthof %10 = %0 : [int]][0m
-[30;1mreverse.10 [	ifeq %8, %10 goto blklab3 : int][0m
-[30;1mreverse.11 [.blklab4][0m
-[30;1mreverse.12 [	fail ""loop invariant not satisfied on entry""][0m
-[30;1mreverse.13 [.blklab3][0m
-reverse.14 [	loop (%0, %1)]
-reverse.15 [	assume blklab5]
-[30;1mreverse.16 [	const %12 = 0 : int][0m
-[30;1mreverse.17 [	iflt %1, %12 goto blklab6 : int][0m
-[30;1mreverse.18 [	lengthof %14 = %0 : [int]][0m
-[30;1mreverse.19 [	lengthof %16 = %3 : [int]][0m
-[30;1mreverse.20 [	ifeq %14, %16 goto blklab5 : int][0m
-[30;1mreverse.21 [.blklab6][0m
-[30;1mreverse.22 [	fail """"][0m
-[30;1mreverse.23 [.blklab5][0m
-reverse.24 [	lengthof %19 = %0 : [int]]
-reverse.25 [	ifge %1, %19 goto blklab2 : int]
-reverse.26 [	lengthof %22 = %0 : [int]]
-reverse.27 [	const %24 = 1 : int]
-reverse.28 [	add %25 = %1, %24 : int]
-reverse.29 [	sub %26 = %22, %25 : int]
-reverse.30 [	assert blklab10]
-[30;1mreverse.31 [	const %45 = 0 : int][0m
-[30;1mreverse.32 [	ifge %26, %45 goto blklab9 : int][0m
-[30;1mreverse.33 [	fail ""index out of bounds (negative)""][0m
-[30;1mreverse.34 [.blklab9][0m
-[30;1mreverse.35 [	lengthof %46 = %3 : [int]][0m
-[30;1mreverse.36 [	iflt %26, %46 goto blklab10 : int][0m
-[30;1mreverse.37 [	fail ""index out of bounds (not less than length)""][0m
-[30;1mreverse.38 [.blklab10][0m
-reverse.39 [	assert blklab12]
-[30;1mreverse.40 [	const %45 = 0 : int][0m
-[30;1mreverse.41 [	ifge %26, %45 goto blklab11 : int][0m
-[30;1mreverse.42 [	fail ""index out of bounds (negative)""][0m
-[30;1mreverse.43 [.blklab11][0m
-[30;1mreverse.44 [	lengthof %46 = %3 : [int]][0m
-[30;1mreverse.45 [	iflt %26, %46 goto blklab12 : int][0m
-[30;1mreverse.46 [	fail ""index out of bounds (not less than length)""][0m
-[30;1mreverse.47 [.blklab12][0m
-reverse.48 [	indexof %33 = %3, %26 : [int]]
-reverse.49 [	assert blklab14]
-[30;1mreverse.50 [	const %46 = 0 : int][0m
-[30;1mreverse.51 [	ifge %1, %46 goto blklab13 : int][0m
-[30;1mreverse.52 [	fail ""index out of bounds (negative)""][0m
-[30;1mreverse.53 [.blklab13][0m
-[30;1mreverse.54 [	lengthof %46 = %0 : [int]][0m
-[30;1mreverse.55 [	iflt %1, %46 goto blklab14 : int][0m
-[30;1mreverse.56 [	fail ""index out of bounds (not less than length)""][0m
-[30;1mreverse.57 [.blklab14][0m
-reverse.58 [	update %0[%1] = %33 : [int] -> [int]]
-reverse.59 [	const %35 = 1 : int]
-reverse.60 [	add %36 = %1, %35 : int]
-reverse.61 [	assign %1 = %36  : int]
-reverse.62 [	assert blklab7]
-[30;1mreverse.63 [	const %38 = 0 : int][0m
-[30;1mreverse.64 [	iflt %36, %38 goto blklab8 : int][0m
-[30;1mreverse.65 [	lengthof %40 = %0 : [int]][0m
-[30;1mreverse.66 [	lengthof %42 = %3 : [int]][0m
-[30;1mreverse.67 [	ifeq %40, %42 goto blklab7 : int][0m
-[30;1mreverse.68 [.blklab8][0m
-[30;1mreverse.69 [	fail ""loop invariant not restored""][0m
-[30;1mreverse.70 [.blklab7][0m
-reverse.71 [	nop]
-reverse.72 [end blklab1]
-reverse.73 [.blklab2]
-reverse.74 [	assert blklab16]
-[30;1mreverse.75 [	lengthof %48 = %44 : [int]][0m
-[30;1mreverse.76 [	lengthof %50 = %0 : [int]][0m
-[30;1mreverse.77 [	ifeq %48, %50 goto blklab15 : int][0m
-[30;1mreverse.78 [	fail ""postcondition not satisfied""][0m
-[30;1mreverse.79 [.blklab15][0m
-[30;1mreverse.80 [.blklab16][0m
-reverse.81 [	return %0 : [int]]
+reverse.0 [	lengthof %3 = %0 : [int]]
+reverse.1 [	assign %1 = %3  : int]
+reverse.2 [	const %4 = [] : [void]]
+reverse.3 [	convert %4 = %4 [int] : [void]]
+reverse.4 [	assert blklab2]
+[30;1mreverse.5 [	lengthof %8 = %0 : [int]][0m
+[30;1mreverse.6 [	ifle %3, %8 goto blklab2 : int][0m
+[30;1mreverse.7 [	fail ""loop invariant not satisfied on entry""][0m
+[30;1mreverse.8 [.blklab2][0m
+reverse.9 [	loop (%1, %4)]
+reverse.10 [	assume blklab3]
+[30;1mreverse.11 [	lengthof %11 = %0 : [int]][0m
+[30;1mreverse.12 [	ifle %1, %11 goto blklab3 : int][0m
+[30;1mreverse.13 [	fail """"][0m
+[30;1mreverse.14 [.blklab3][0m
+reverse.15 [	const %13 = 0 : int]
+reverse.16 [	ifle %1, %13 goto blklab1 : int]
+reverse.17 [	const %15 = 1 : int]
+reverse.18 [	sub %16 = %1, %15 : int]
+reverse.19 [	assign %1 = %16  : int]
+reverse.20 [	assert blklab6]
+[30;1mreverse.21 [	const %27 = 0 : int][0m
+[30;1mreverse.22 [	ifge %16, %27 goto blklab5 : int][0m
+[30;1mreverse.23 [	fail ""index out of bounds (negative)""][0m
+[30;1mreverse.24 [.blklab5][0m
+[30;1mreverse.25 [	lengthof %28 = %0 : [int]][0m
+[30;1mreverse.26 [	iflt %16, %28 goto blklab6 : int][0m
+[30;1mreverse.27 [	fail ""index out of bounds (not less than length)""][0m
+[30;1mreverse.28 [.blklab6][0m
+reverse.29 [	indexof %20 = %0, %16 : [int]]
+reverse.30 [	newlist %21 = (%20) : [int]]
+reverse.31 [	append %22 = %4, %21 : [int]]
+reverse.32 [	assign %4 = %22  : [int]]
+reverse.33 [	assert blklab4]
+[30;1mreverse.34 [	lengthof %25 = %0 : [int]][0m
+[30;1mreverse.35 [	ifle %16, %25 goto blklab4 : int][0m
+[30;1mreverse.36 [	fail ""loop invariant not restored""][0m
+[30;1mreverse.37 [.blklab4][0m
+reverse.38 [	nop]
+reverse.39 [end blklab0]
+reverse.40 [.blklab1]
+reverse.41 [	return %4 : [int]]
 Bounds at the end of function reverse:
 	domain(%0)	= [1..5]
 	domain(%1)	= [0..5]
-	domain(%2)	= [0..0]
-	domain(%3)	= [1..5]
+	domain(%3)	= [5..5]
 	domain(%4)	= [1..5]
-	domain(%19)	= [5..5]
-	domain(%22)	= [1..9]
-	domain(%24)	= [1..1]
-	domain(%25)	= [-5..-1]
-	domain(%26)	= [0..4]
-	domain(%35)	= [1..1]
-	domain(%36)	= [1..5]
-	domain(%44)	= [1..5]
+	domain(%13)	= [0..0]
+	domain(%15)	= [-5..3]
+	domain(%16)	= [0..4]
+	domain(%21)	= [1..5]
+	domain(%22)	= [1..5]
 	domain(return)	= [1..5]
-	value(%2)	= 0
-	value(%19)	= 5
-	value(%22)	= 5
-	value(%24)	= 1
-	value(%35)	= 1
+	value(%3)	= 5
+	value(%4)	= []
+	value(%13)	= 0
+	value(%15)	= 1
 	size(%0)	= 5
-	size(%3)	= 5
-	size(%4)	= 5
-	size(%44)	= 5
-	size(return)	= 5
+	size(%4)	= 1
+	size(%21)	= 1
+	size(%22)	= 1
+	size(return)	= 1
 Consistency=true
 main.7 [	assign %1 = %2  : [int]]
 main.8 [	fieldload %10 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}]
@@ -153,7 +108,7 @@ Bounds at the end of function main:
 	value(%5)	= 3
 	value(%6)	= 4
 	value(%7)	= 5
-	size(%1)	= 5
-	size(%2)	= 5
+	size(%1)	= 1
+	size(%2)	= 1
 	size(%8)	= 5
 Consistency=true

@@ -66,6 +66,16 @@ public class BoundAnalysisTestCase {
 		util.execBoundAnalysis(valid_path+"While_Valid_1", "gradual");
 	}
 	
+	@Test 
+	public void test_Reverse_List_Naive(){
+		util.execBoundAnalysis(valid_path+"Reverse_List", "naive");
+	}
+	
+	@Test 
+	public void test_Reverse_List_Gradual(){
+		util.execBoundAnalysis(valid_path+"Reverse_List", "gradual");
+	}
+	
 	@Test
 	public void test_BoolList_Valid_2_Naive() {
 		util.execBoundAnalysis(valid_path+"BoolList_Valid_2", "naive");

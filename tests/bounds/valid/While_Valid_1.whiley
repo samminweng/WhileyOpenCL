@@ -1,16 +1,12 @@
 import whiley.lang.System
 
-function reverse([int] xs) => ([int] ys)
-// size of lists are the same
-ensures |xs| == |ys|:
-    int i = 0
-    [int] zs = xs
-    //
-    while i<|xs| where i>=0 && |xs|==|zs|:
-        int j = |xs| - (i+1)
-        xs[i] = zs[j]
-        i = i + 1
-    return xs
+function reverse([int] ls) => [int]:
+    int i = |ls|
+    [int] r = []
+    while i > 0 where i <= |ls|:
+        i = i - 1
+        r = r ++ [ls[i]]
+    return r
 
 method main(System.Console sys) => void:
     [int] rs = reverse([1, 2, 3, 4, 5])
