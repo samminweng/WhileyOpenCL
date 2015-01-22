@@ -225,33 +225,37 @@ public class Bounds implements Cloneable{
 
 
 	/**
-	 * Take the union of current bounds and the new bounds
-	 * to produce a new bounds which contains all the bounds in current or new or both bounds.
-	 * @param bnd the new bounds
+	 * Take the union of existing and new bounds to produce the final bounds.
+	 * @param new_bnd new bounds
 	 */
-	public void union(Bounds bnd){		
-		for(String name: bnd.bounds.keySet()){
-			if(bnd.isExisting(name)){
-				//Lower bounds
-				BigInteger new_min = bnd.getLower(name);
-				//Upper bounds
-				BigInteger new_max = bnd.getUpper(name);
-				if(this.isExisting(name)){
-					BigInteger min_current = this.getLower(name);
-					//Find the min (this, parent)
-					if(min_current != null && new_min!=null){
-						new_min = new_min.min(min_current);
+	public void union(Bounds new_bnd){		
+		for(String var: new_bnd.bounds.keySet()){			
+			//Lower bounds
+			BigInteger new_min = new_bnd.getLower(var);
+			//Upper bounds
+			BigInteger new_max = new_bnd.getUpper(var);			
+			//Check if the existing bounds contains the variable.
+			if(this.isExisting(var)){
+				BigInteger existing_min = this.getLower(var);
+				//Find the min (this, parent)
+				if(new_min!=null){
+					if(existing_min != null){
+						new_min = new_min.min(existing_min);
 					}
-					
-					BigInteger max_current = this.getUpper(name);
-					//Find the max (this, parent)
-					if(max_current != null && new_max!=null){
-						new_max = new_max.max(max_current);
+				}
+				this.setLowerBound(var, new_min);
+				BigInteger existing_max = this.getUpper(var);
+				//Find the max (this, parent)
+				if(new_max!=null){
+					if(existing_max != null){
+						new_max = new_max.max(existing_max);
 					}					
 				}
-				this.getDomain(name).setLowerBound(new_min);					
-				this.getDomain(name).setUpperBound(new_max);
-			}						
+				this.setUpperBound(var, new_max);
+			}else{
+				this.addLowerBound(var, new_min);					
+				this.addUpperBound(var, new_max);
+			}			
 		}		
 	}
 	

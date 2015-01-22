@@ -345,6 +345,7 @@ public class Analyzer {
 		writer.println("Consistency="+bnd.checkBoundConsistency());		
 	}
 
+	
 	/**
 	 * Infer the bounds for a block. 
 	 * @param blk the target block.
@@ -438,14 +439,9 @@ public class Analyzer {
 	 */
 	public Bounds inferBounds(boolean isEnd){
 		//Sort the blks
-		Collections.sort(list);		
-		int MaxIteration;
-		if(config.isMultiWiden()){
-			MaxIteration = 13;
-		}else{
-			MaxIteration = 4;
-		}	
-
+		Collections.sort(list);
+		//The least common multiple of naive (3) and graduate (12) widening strategies plus one. 
+		int MaxIteration = 13;
 		boolean isFixedPointed = false;
 		int iteration=1;
 		//Stop the loop when the program reaches the fixed point or max-iterations 
