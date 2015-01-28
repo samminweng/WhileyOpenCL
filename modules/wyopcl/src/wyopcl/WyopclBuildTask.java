@@ -1,5 +1,9 @@
 package wyopcl;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import wybs.lang.Builder;
 import wybs.util.StdBuildRule;
 import wybs.util.StdProject;
@@ -11,79 +15,56 @@ import wyopcl.translator.Configuration.WidenStrategy;
 import wyopcl.util.Interpreter;
 import wyopcl.util.InterpreterConfiguration;
 
-public class WyopclBuildTask extends wyc.util.WycBuildTask {	
-	//runtime 	
-	protected String[] arguments;
-	//'mode' option for the translator
-	private String mode= null;
-	
-	public void setMode(String mode) {
-		this.mode = mode;
-	}
-
-	public void setArguments(String[] arguments) {
-		this.arguments = arguments;
-	}
-
+public class WyopclBuildTask extends wyc.util.WycBuildTask {
+	private Configuration config;
+	private String[] args;
 	public WyopclBuildTask() {
 		super();
 	}
-
+	
+	public void setConfig(Map<String, Object> values){
+		this.config = new Configuration();
+		if(values.containsKey("verbose")){			
+			config.setProperty("logger", new Logger.Default(System.err));
+			config.setProperty("verbose", true);
+		}			
+		//If the options are matched with existing modes, then enable the translator by writing the mode option. 
+		for(Entry<String, Object> entry: values.entrySet()){
+			String option = entry.getKey();
+			Object value = entry.getValue();
+			config.setMode(option, value);
+		}		
+	}
+	
+	
+	public void setArguments(List<String> args){
+		this.args = args.toArray(new String[args.size()]);
+	}
+	
+	
 	@Override
 	protected void addBuildRules(StdProject project) {
 		// Add default build rule for converting whiley files into wyil files. 
 		super.addBuildRules(project);
 		Builder builder;
 		//Check the first argument to determine whether to run the analyzer.		
-		if(mode != null){
-			//Create a config object to store the properties
-			Configuration config = new Configuration(project);
-			switch(mode){
-				case "naive":
-					config.setProperty("widen", WidenStrategy.NAIVE);
-					config.setProperty("mode", Mode.BoundAnalysis);
-					break;
-				case "gradual":
-					config.setProperty("widen", WidenStrategy.GRADUAL);
-					config.setProperty("mode", Mode.BoundAnalysis);
-					break;
-				case "code":
-					config.setProperty("mode", Mode.CodeGeneration);
-					break;
-				default:
-					throw new RuntimeException("Unknown Mode");
-			}				
-			
-			if (verbose) {
-				config.setProperty("logger", new Logger.Default(System.err));
-				config.setProperty("verbose", true);
-			}			
-			config.setProperty("argument", arguments);			
+		if(config != null && config.getMode() != null){						
 			builder = new Translator(config);
-						
 		}else{
 			// Now, add build rule for interpreting the wyil files by using
 			// the WyilInterpreter.
-			InterpreterConfiguration config = new InterpreterConfiguration(project);
+			InterpreterConfiguration interpreterconfig = new InterpreterConfiguration(project);
 			if (verbose) {
-				config.setProperty("logger", new Logger.Default(System.err));
-				config.setProperty("verbose", true);
+				interpreterconfig.setProperty("logger", new Logger.Default(System.err));
+				interpreterconfig.setProperty("verbose", true);
 			}
-			config.setProperty("arguments", this.arguments);
-			builder = new Interpreter(config);
+			interpreterconfig.setProperty("arguments", args);			
+			builder = new Interpreter(interpreterconfig);
 		}
-		
-	
-		
 
 		project.add(new StdBuildRule(builder, wyilDir, wyilIncludes,
 				wyilExcludes, null));
-
-
 	}	
-
-
-
 
 }		
 

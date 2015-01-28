@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,12 +19,15 @@ import wycc.util.Pair;
 import wyfs.lang.Path;
 import wyfs.lang.Path.Entry;
 import wyfs.lang.Path.Root;
+import wyil.lang.Code;
+import wyil.lang.Codes.Loop;
 import wyil.lang.WyilFile;
 import wyil.lang.Code.Block;
 import wyil.lang.WyilFile.Case;
 import wyopcl.translator.bound.Analyzer;
 import wyopcl.translator.generator.CodeGenerator;
 import wyopcl.translator.generator.Utility;
+import wyopcl.translator.symbolic.PatternMatcher;
 /**
  * Main entry point of translator
  * 
@@ -173,5 +177,21 @@ public class Translator implements Builder{
 		}
 		generator = null;
 	}
+	
+	/**
+	 * Analyze the loop patterns.
+	 * @param module
+	 */
+	private void analyzeLoopPattern(WyilFile module){
+		PatternMatcher matcher;		
+		//Iterate each function
+		for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {
+			matcher = new PatternMatcher(config);
+			matcher.buildLoopBlock(functionOrMethod);
+			matcher = null;
+		}
+		
+	}
+	
 
 }

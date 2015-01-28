@@ -11,13 +11,14 @@ import wycc.util.Logger;
  */
 public class Configuration {
 	protected Properties properties;
-	/* The executing mode of translator*/
-	public enum Mode{
+	/* The modes of translator*/
+	public enum Mode{		
 		BoundAnalysis,
 		CodeGeneration,
+		PatternMatching,
 		TheoremProving
 	}
-	
+
 	/* Determine the widen strategy. */
 	public enum WidenStrategy{
 		//Widen the bounds upto +/- infinity
@@ -25,28 +26,27 @@ public class Configuration {
 		//Widen the bounds against a list of threshold values
 		GRADUAL
 	}
-	
-	public Configuration(Build.Project project){
+
+	public Configuration(){
 		this.properties = new Properties();
-		this.properties.put("project", project);
 		this.properties.put("logger",  Logger.NULL);
 		this.properties.put("argument", Collections.emptyList());
 		//Initial properties based on default properties
 		this.properties.put("filename", "");
 		this.properties.put("verbose", false);		
 	}	
-	
+
 	public void setProperty(String key, Object value){	
 		this.properties.put(key, value);
 	}
-	
+
 	public Object getProperty(String key){
 		if(!this.properties.containsKey(key)){
 			throw new RuntimeException("Unknown Properties");
 		}
 		return this.properties.get(key);
 	}	
-	
+
 	public boolean isVerbose() {
 		return (boolean) this.properties.get("verbose");
 	}	
@@ -58,11 +58,41 @@ public class Configuration {
 	public Logger getLogger(){
 		return (Logger) this.properties.get("logger");
 	}
-	
-	public Mode getMode(){
-		return (Mode) this.getProperty("mode");
+
+	public void setMode(String mode, Object value) {
+		switch(mode){
+		case "range":
+			setProperty("mode", Mode.BoundAnalysis);
+			if(value.toString().equals("gradual")){
+				setProperty("widen", WidenStrategy.GRADUAL);
+			}else{
+				setProperty("widen", WidenStrategy.NAIVE);
+			}			
+			break;
+		case "code":
+			setProperty("mode", Mode.CodeGeneration);
+			break;
+		case "pattern":
+			setProperty("mode", Mode.PatternMatching);
+			break;
+		default:
+			//Do nothing
+			break;
+		}
 	}
 	
+	/**
+	 * Get the mode.
+	 * @return the mode. If no mode is set, return null.
+	 */
+	public Mode getMode(){
+		if(!this.properties.containsKey("mode")){
+			return null;
+		}
+		
+		return (Mode) this.getProperty("mode");
+	}
+
 	/**
 	 * Check if setting the gradual widen strategy. 
 	 * @return
@@ -73,5 +103,5 @@ public class Configuration {
 		}		
 		return false;
 	}
-	
+
 }
