@@ -20,14 +20,17 @@ import wyfs.lang.Path;
 import wyfs.lang.Path.Entry;
 import wyfs.lang.Path.Root;
 import wyil.lang.Code;
+import wyil.lang.Codes;
 import wyil.lang.Codes.Loop;
 import wyil.lang.WyilFile;
 import wyil.lang.Code.Block;
 import wyil.lang.WyilFile.Case;
+import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
 import wyopcl.translator.bound.Analyzer;
 import wyopcl.translator.generator.CodeGenerator;
 import wyopcl.translator.generator.Utility;
 import wyopcl.translator.symbolic.PatternMatcher;
+import wyopcl.translator.symbolic.pattern.Pattern;
 /**
  * Main entry point of translator
  * 
@@ -82,12 +85,15 @@ public class Translator implements Builder{
 				generateCodeInC(module);
 				message = "Code generation completed.\nFile: "+config.getFilename()+".c";
 				break;
+			case PatternMatching:
+				analyzePatterns(module);
+				message = "Pattern matching completed.\nFile: " + getFilename();
+				break;
 			default:
 				break;
 			}			
 			//Start generating the code.
 		}
-
 		long endTime = System.currentTimeMillis();
 		System.out.println(message+" Time: "+(endTime - start)+" ms Memory Usage: "+ memory);
 		return generatedFiles;
@@ -102,7 +108,7 @@ public class Translator implements Builder{
 		try {
 			PrintWriter writer = null;
 			if(!config.isVerbose()){
-				 writer  = new PrintWriter(getFilename());
+				writer  = new PrintWriter(getFilename());
 			}else{
 				writer = new PrintWriter(System.out, true);
 			}
@@ -119,7 +125,7 @@ public class Translator implements Builder{
 					System.out.println(line);
 				}
 			}
-				
+
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -158,10 +164,10 @@ public class Translator implements Builder{
 				isBoolType |= generator.isBoolTypeIntroduced();
 				//Write out the code to *.c
 				generator.printoutCode(writer, function_del);
-			
+
 			}
 			Utility.generateToString(writer, isBoolType);
-			
+
 			writer.close();
 		} catch (FileNotFoundException e) {			
 			throw new RuntimeException("Error occurs in writing "+config.getFilename()+".c");
@@ -177,21 +183,26 @@ public class Translator implements Builder{
 		}
 		generator = null;
 	}
+
 	
 	/**
 	 * Analyze the loop patterns.
 	 * @param module
 	 */
-	private void analyzeLoopPattern(WyilFile module){
-		PatternMatcher matcher;		
+	private void analyzePatterns(WyilFile module){
+		PatternMatcher matcher = new PatternMatcher(config);		
 		//Iterate each function
 		for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {
-			matcher = new PatternMatcher(config);
-			matcher.buildLoopBlock(functionOrMethod);
-			matcher = null;
+			HashMap<String, List<Code>> loop_blks = matcher.buildLoopBlock(functionOrMethod);
+			//Iterate over all loop block and infer the pattern for each of them. 
+			for(List<Code> loop_blk: loop_blks.values()){
+				Pattern pattern = matcher.analyze(loop_blk);
+			}
+			
+			
 		}
-		
+
 	}
-	
+
 
 }
