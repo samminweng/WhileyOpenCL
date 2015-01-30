@@ -19,8 +19,9 @@ public class P4 extends Pattern{
 	@Override
 	public String toString() {
 		return "while_loop && loop_var("+V+") && incr("+V+", "+incr+")"
-				+ " && init("+V+", "+initExpr+") &&  while_cond("+V+", <= , "+upperExpr+") =>"
-				+ "loop_iters("+V+", "+upperExpr+" - "+initExpr+"+1)";
+				+ " && init("+V+", "+initExpr+") &&  while_cond("+V+", <= , "+upperExpr+")"
+				+ "\n=> loop_iters("+V+","+getNumberOfIterations()+")";
+				//+ "loop_iters("+V+", "+upperExpr+" - "+initExpr+"+1)";
 	}
 	
 	@Override
@@ -31,13 +32,10 @@ public class P4 extends Pattern{
 		return true;
 	}
 
-
 	@Override
 	public Expr getNumberOfIterations() {
-		// TODO Auto-generated method stub
-		return null;
+		Expr result = (Expr) upperExpr.clone();
+		return result.subtract(initExpr).add(new Expr(BigInteger.ONE));
 	}
-
-	
 	
 }

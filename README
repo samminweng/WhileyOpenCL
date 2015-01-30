@@ -62,6 +62,15 @@ $ ./../../../bin/wyopcl -code BoolList_Valid_2.whiley
 $ gcc BoolList_Valid_2.c -o BoolList_Valid_2.out
 $ ./BoolList_Valid_2.out
 
+2.3 Pattern Matcher
+Pattern matcher finds the loop block of a Whiley program and identifies
+the pattern for the given loop by matching with any available pattern.
+To run the pattern match, use the below commands:
+$ git clone https://github.com/samminweng/WhileyOpenCL
+$ cd WhileyOpenCL/
+$ ant
+$ cd tests/pattern/valid
+$ ./../../../bin/wyopcl -pattern While.whiley
 
 ======================================================================
 Unit Testing

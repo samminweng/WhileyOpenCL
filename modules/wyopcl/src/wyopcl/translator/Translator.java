@@ -49,7 +49,7 @@ public class Translator implements Builder{
 		return (Project) config.getProperty("project");
 	}
 
-	private String getFilename(){
+	private String getOutputFilename(){
 		String filename = config.getFilename();
 		//Get widening strategy
 		if(config.isMultiWiden()){
@@ -79,7 +79,7 @@ public class Translator implements Builder{
 			switch(config.getMode()){
 			case BoundAnalysis:
 				analyzeFunctionCall(module);
-				message = "Bound analysis completed.\nFile: " + getFilename();
+				message = "Bound analysis completed.\nFile: " + config.getFilename();
 				break;
 			case CodeGeneration:
 				generateCodeInC(module);
@@ -87,7 +87,7 @@ public class Translator implements Builder{
 				break;
 			case PatternMatching:
 				analyzePatterns(module);
-				message = "Pattern matching completed.\nFile: " + getFilename();
+				message = "Pattern matching completed.\nFile: " + config.getFilename();
 				break;
 			default:
 				break;
@@ -108,7 +108,7 @@ public class Translator implements Builder{
 		try {
 			PrintWriter writer = null;
 			if(!config.isVerbose()){
-				writer  = new PrintWriter(getFilename());
+				writer  = new PrintWriter(getOutputFilename());
 			}else{
 				writer = new PrintWriter(System.out, true);
 			}
@@ -121,7 +121,7 @@ public class Translator implements Builder{
 			writer.close();
 			if(!config.isVerbose()){
 				//Print out the bound analysis results to console.
-				for(String line: Files.readAllLines(Paths.get(getFilename()), StandardCharsets.UTF_8)){
+				for(String line: Files.readAllLines(Paths.get(getOutputFilename()), StandardCharsets.UTF_8)){
 					System.out.println(line);
 				}
 			}

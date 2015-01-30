@@ -67,14 +67,16 @@ public class PatternMatcher {
 	 * @param functionOrMethod
 	 */
 	public void buildLoopBlockAndMatchPattern(FunctionOrMethodDeclaration functionOrMethod){
-		//Clear the symbol table.
-		expressiontable.clear();
 		List<Code> loop_blk = null;
 		String loop_label = null;
 		int line = 0;
 		String func_name = functionOrMethod.name();
 		//Iterate each byte-code of a function block.			
 		for(Case mcase : functionOrMethod.cases()){
+			//End of the function
+			System.out.println("\n----------------Start of "+func_name+" function----------------");
+			//Clear the symbol table.
+			expressiontable.clear();
 			//Parse each byte-code and add the constraints accordingly.
 			for(Block.Entry entry :mcase.body()){
 				Code code = entry.code;
@@ -85,8 +87,7 @@ public class PatternMatcher {
 					}else{
 						System.out.println(func_name+"."+(++line)+" [\t"+code+"]");
 					}
-				}	
-				
+				}				
 				//Start a loop block
 				if(code instanceof Codes.Loop){
 					Codes.Loop loop = (Codes.Loop)code;
@@ -95,15 +96,13 @@ public class PatternMatcher {
 					if(loop_blk == null){
 						loop_blk = new ArrayList<Code>();
 					}
-				}
-				
+				}				
 				//Decide whether to put the code into loop blk or expression table.
 				if(loop_blk==null){
 					putExpression(code);
 				}else{
 					loop_blk.add(code);	
-				}
-				
+				}				
 				//End the loop block
 				if(code instanceof Codes.Label){
 					Codes.Label label = (Codes.Label)code;
@@ -114,19 +113,18 @@ public class PatternMatcher {
 							result += "\n\t"+loop_code;
 						}
 						result += "\n}";
-						result += "\nThe matched patten is as follows:"+
-								  "\n======================================"+
-								  "\n"+pattern;
-					    System.out.println(result);
+						result +="\n"+pattern;
+						System.out.println(result);
 						loop_blk = null;
 						//reset the loop blk
 						loop_label = null;
-					}
-										
+					}										
 				}
-			}
+			}			
+			//End of the function
+			System.out.println("\n----------------End of "+func_name+" function----------------\n");
 		}		
-		
+
 	}
 
 	/**
@@ -166,7 +164,7 @@ public class PatternMatcher {
 						String op = prefix+binOp.operand(index);
 						if(V.equals(op)&&(index+1)<size){
 							//Get the next oprand
-							return getExpr(prefix+binOp.operand(++index));							
+							return new Expr(code);							
 						}				
 					}
 				}				
@@ -217,10 +215,14 @@ public class PatternMatcher {
 				if(V.equals(prefix+if_code.leftOperand)){
 					switch(compareOp){
 					case ">":
-						
+						if(if_code.op.equals(Comparator.LTEQ)){
+							return new Expr(code);	
+						}
 						break;
 					case ">=":
-						
+						if(if_code.op.equals(Comparator.LT)){
+							return new Expr(code);	
+						}
 						break;
 					case "<":
 						if(if_code.op.equals(Comparator.GTEQ)){
@@ -228,7 +230,9 @@ public class PatternMatcher {
 						}							
 						break;
 					case "<=":
-						
+						if(if_code.op.equals(Comparator.GT)){
+							return new Expr(code);	
+						}
 						break;
 					default:
 						throw new RuntimeException("Unknown comparator operator "+compareOp);
@@ -266,7 +270,7 @@ public class PatternMatcher {
 				}
 			}
 		}	
-		
+
 		return pattern;
 	}
 

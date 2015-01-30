@@ -20,8 +20,9 @@ public class P1 extends Pattern{
 	@Override
 	public String toString() {
 		return "while_loop && loop_var("+V+") && decr("+V+", "+decr+")"
-				+ " && init("+V+", "+initExpr+") &&  while_cond("+V+", > , "+lowerExpr+") =>"
-				+ "loop_iters("+V+", "+initExpr+" - "+lowerExpr+")";
+				+ " && init("+V+", "+initExpr+") &&  while_cond("+V+", > , "+lowerExpr+")"
+				+ "\n=>loop_iters("+V+", " + getNumberOfIterations()+")";
+				//+ "loop_iters("+V+", "+initExpr+" - "+lowerExpr+")";
 	}
 
 	@Override
@@ -36,8 +37,8 @@ public class P1 extends Pattern{
 
 	@Override
 	public Expr getNumberOfIterations() {
-		// TODO Auto-generated method stub
-		return null;
+		Expr result = (Expr)initExpr.clone();
+		return result.subtract(lowerExpr);
 	}
 
 	

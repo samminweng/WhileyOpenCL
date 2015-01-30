@@ -45,8 +45,6 @@ public class Expr implements Cloneable{
 				break;
 			case SUB:	
 				coefficients.add(BigInteger.ZERO);
-				coefficients.add(BigInteger.ONE);
-				ref_vars.add(prefix+binOp.operand(0));
 				coefficients.add(BigInteger.valueOf(-1));
 				ref_vars.add(prefix+binOp.operand(1));
 				break;
@@ -62,13 +60,21 @@ public class Expr implements Cloneable{
 		}
 	}	
 	/**
-	 * Multiple constructor
-	 * @param code
+	 * Multiple constructor to create an expression with an WyIL code.  
+	 * @param code the WyIL code
 	 */
 	public Expr(Code code){
 		this();
 		initialize(code);
 	}
+	/**
+	 * Multiple constructor to create an expression with a constant.
+	 * @param constant the constant
+	 */
+	public Expr(BigInteger constant){
+		this();
+		coefficients.add(constant);		
+	}	
 	
 	/**
 	 * Basic constructor
@@ -94,6 +100,53 @@ public class Expr implements Cloneable{
 		return -1;
 	}
 
+	/**
+	 * Add another expression into this one. 
+	 * @param expr
+	 * @return
+	 */
+	public Expr add(Expr expr){
+		//Perform the subtract operation on the constant and the ref_vars which exist in both this and expr.
+		for(int index=0; index<this.coefficients.size();index++){
+			BigInteger co = this.coefficients.get(index); 
+			if(index== 0){
+				//Subtract the constant parts of this and expr.  
+				BigInteger expr_co = expr.coefficients.get(index); 
+				BigInteger result = co.add(expr_co);
+				//update the coefficient
+				this.coefficients.set(index, result);
+			}else{
+				//Get variable
+				String var = this.ref_vars.get(index-1);
+				int expr_index = expr.getVarIndex(var);
+				//Check if the var exists in the expr.
+				if(expr_index!=-1){
+					//Get the coefficient from expr
+					BigInteger expr_co = expr.coefficients.get(expr_index);
+					//Subtract the coefficient part
+					BigInteger result = co.add(expr_co);
+					//update the coefficient
+					this.coefficients.set(index, result);					
+				}			
+			}			
+		}		
+		//The remaining ref_vars from expr
+		for(int index=0; index<expr.ref_vars.size();index++){
+			BigInteger expr_co = expr.coefficients.get(index+1);
+			String expr_var = expr.ref_vars.get(index);
+			if(this.getVarIndex(expr_var)==-1){
+				this.coefficients.add(expr_co);
+				this.ref_vars.add(expr_var);
+			}			
+		}
+		return this;
+	}
+
+	/**
+	 * Subtract the expression from this one.
+	 * @param expr
+	 * @return
+	 */
 	public Expr subtract(Expr expr){		
 		//Perform the subtract operation on the constant and the ref_vars which exist in both this and expr.
 		for(int index=0; index<this.coefficients.size();index++){
@@ -139,7 +192,9 @@ public class Expr implements Cloneable{
 		for(int index=0;index<coefficients.size();index++){
 			BigInteger co = coefficients.get(index);
 			if(isFirst){
+				//if(co.compareTo(BigInteger.ZERO)!=0){
 				expr += co;
+				//}				
 				isFirst = false;
 			}else{
 				if(co.signum()==-1){
@@ -147,7 +202,7 @@ public class Expr implements Cloneable{
 				}else{
 					expr += " + ";
 				}
-				
+
 				BigInteger abs = co.abs();
 				if(abs.compareTo(BigInteger.ONE)!=0){
 					expr += abs+ " * ";
