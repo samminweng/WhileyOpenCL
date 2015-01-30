@@ -66,11 +66,11 @@ public class PatternMatcher {
 	 * Iterate each code of the input function and build up the loop blk.
 	 * @param functionOrMethod
 	 */
-	public HashMap<String, List<Code>> buildLoopBlock(FunctionOrMethodDeclaration functionOrMethod){
+	public void buildLoopBlockAndMatchPattern(FunctionOrMethodDeclaration functionOrMethod){
 		//Clear the symbol table.
 		expressiontable.clear();
-		HashMap<String, List<Code>> loop_blks = new HashMap<String, List<Code>>();
 		List<Code> loop_blk = null;
+		String loop_label = null;
 		int line = 0;
 		String func_name = functionOrMethod.name();
 		//Iterate each byte-code of a function block.			
@@ -85,19 +85,16 @@ public class PatternMatcher {
 					}else{
 						System.out.println(func_name+"."+(++line)+" [\t"+code+"]");
 					}
-				}
-				
-				
+				}	
 				
 				//Start a loop block
 				if(code instanceof Codes.Loop){
 					Codes.Loop loop = (Codes.Loop)code;
-					String loop_label = loop.target;
+					loop_label = loop.target;
 					//Lazy initialization
-					if(!loop_blks.containsKey(loop_label)){
-						loop_blks.put(loop_label, new ArrayList<Code>());
+					if(loop_blk == null){
+						loop_blk = new ArrayList<Code>();
 					}
-					loop_blk = loop_blks.get(loop_label);
 				}
 				
 				//Decide whether to put the code into loop blk or expression table.
@@ -110,14 +107,26 @@ public class PatternMatcher {
 				//End the loop block
 				if(code instanceof Codes.Label){
 					Codes.Label label = (Codes.Label)code;
-					String loop_label = label.label;
-					if(loop_blks.containsKey(loop_label)){
+					if(loop_blk!=null && loop_label.equals(label.label)){						
+						Pattern pattern = analyze(loop_blk);
+						String result = "{";
+						for(Code loop_code: loop_blk){
+							result += "\n\t"+loop_code;
+						}
+						result += "\n}";
+						result += "\nThe matched patten is as follows:"+
+								  "\n======================================"+
+								  "\n"+pattern;
+					    System.out.println(result);
 						loop_blk = null;
-					}					
+						//reset the loop blk
+						loop_label = null;
+					}
+										
 				}
 			}
 		}		
-		return loop_blks;
+		
 	}
 
 	/**
@@ -204,11 +213,26 @@ public class PatternMatcher {
 		for(Code code: blk){
 			if(code instanceof Codes.If){
 				Codes.If if_code = (Codes.If)code;
+				//Check if the loop var occurs in the condition
 				if(V.equals(prefix+if_code.leftOperand)){
-					if(compareOp.equals(if_code.op.toString())){
-						String bound_op = prefix+if_code.rightOperand;
-						return getExpr(bound_op);
-					}					
+					switch(compareOp){
+					case ">":
+						
+						break;
+					case ">=":
+						
+						break;
+					case "<":
+						if(if_code.op.equals(Comparator.GTEQ)){
+							return new Expr(code);	
+						}							
+						break;
+					case "<=":
+						
+						break;
+					default:
+						throw new RuntimeException("Unknown comparator operator "+compareOp);
+					}
 				}				
 			}		
 		}		
@@ -221,7 +245,7 @@ public class PatternMatcher {
 	 * @param loop_block the block of a given loop
 	 * @return pattern. If not found, return null.
 	 */
-	public Pattern analyze(List<Code> loop_block){
+	private Pattern analyze(List<Code> loop_block){
 		Pattern pattern;
 		String V = loop_Var(loop_block);
 		//Get initial value from symbol table.
@@ -229,20 +253,20 @@ public class PatternMatcher {
 		//Check if loop var is incremented or decremented by a constant.
 		Expr decr = decr(V, loop_block);
 		Expr incr = incr(V, loop_block);
-		pattern = new P1(V, init, decr, incr, "gt", while_cond(V, "gt", loop_block));
+		pattern = new P1(V, init, decr, incr, while_cond(V, ">", loop_block));
 		if(pattern.isNil()){
-			pattern = new P2(V, init, decr, incr, "ge", while_cond(V, "ge", loop_block)); 
+			pattern = new P2(V, init, decr, incr, while_cond(V, ">=", loop_block)); 
 			if(pattern.isNil()){
-				pattern = new P3(V, init, decr, incr, "lt", while_cond(V, "lt", loop_block)); 
+				pattern = new P3(V, init, decr, incr, while_cond(V, "<", loop_block)); 
 				if(pattern.isNil()){
-					pattern = new P4(V, init, decr, incr, "le", while_cond(V, "le", loop_block));
+					pattern = new P4(V, init, decr, incr, while_cond(V, "<=", loop_block));
 					if(pattern.isNil()){
 						pattern = new NullPattern();
 					}
 				}
 			}
-		}
-
+		}	
+		
 		return pattern;
 	}
 

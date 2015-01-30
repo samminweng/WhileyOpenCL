@@ -16,15 +16,13 @@ import wyil.lang.Codes.BinaryOperatorKind;
  * @author Min-Hsien Weng
  *
  */
-public class Expr {
-	private final Code code;
+public class Expr implements Cloneable{
 	private String target;
 	private List<String> ref_vars;
 	private List<BigInteger> coefficients;
 	private final String prefix ="%"; 
-	
-	
-	private void toExpr(){
+
+	private void initialize(Code code){
 		if(code instanceof Codes.Assign){
 			Codes.Assign assign = (Codes.Assign)code;
 			ref_vars.add(prefix+assign.operand(0));
@@ -39,44 +37,134 @@ public class Expr {
 			target = prefix+((Codes.Const)code).target();
 		}else if(code instanceof Codes.BinaryOperator){
 			Codes.BinaryOperator binOp = (Codes.BinaryOperator)code;
-			if(binOp.kind.equals(BinaryOperatorKind.ADD)){
-				
-				
-				
-			}else{
-				
-			}
+			switch(binOp.kind){
+			case ADD:
+				coefficients.add(BigInteger.ZERO);
+				coefficients.add(BigInteger.ONE);
+				ref_vars.add(prefix+binOp.operand(1));
+				break;
+			case SUB:	
+				coefficients.add(BigInteger.ZERO);
+				coefficients.add(BigInteger.ONE);
+				ref_vars.add(prefix+binOp.operand(0));
+				coefficients.add(BigInteger.valueOf(-1));
+				ref_vars.add(prefix+binOp.operand(1));
+				break;
+			default:
+				throw new RuntimeException(binOp.kind+"Not implemented");				
+			}			
 			target = prefix+binOp.target();
+		}else if(code instanceof Codes.If){
+			Codes.If if_code = (Codes.If)code;
+			coefficients.add(BigInteger.ZERO);
+			coefficients.add(BigInteger.ONE);
+			ref_vars.add(prefix+if_code.rightOperand);		
 		}
 	}	
-	
+	/**
+	 * Multiple constructor
+	 * @param code
+	 */
 	public Expr(Code code){
-		this.code = code;
-		this.ref_vars = new ArrayList<String>();
-		this.coefficients = new ArrayList<BigInteger>();
-		toExpr();
+		this();
+		initialize(code);
 	}
 	
+	/**
+	 * Basic constructor
+	 */
+	public Expr(){
+		this.ref_vars = new ArrayList<String>();
+		this.coefficients = new ArrayList<BigInteger>();
+	}
+
 	public String getTarget(){
 		return target;
 	}	
-	
-	public String getExpr(){
-		String expr ="";
-		for(int index=0;index<coefficients.size();index++){
-			BigInteger co = coefficients.get(index);
-			if(index==0){
-				expr += "="+co;
+
+	public int getVarIndex(String var){
+		if(this.ref_vars.contains(var)){
+			for(int index=0; index<ref_vars.size();index++){
+				String ref_var = ref_vars.get(index);
+				if(ref_var.equals(var)){
+					return index;
+				}
+			}		
+		}		
+		return -1;
+	}
+
+	public Expr subtract(Expr expr){		
+		//Perform the subtract operation on the constant and the ref_vars which exist in both this and expr.
+		for(int index=0; index<this.coefficients.size();index++){
+			BigInteger co = this.coefficients.get(index); 
+			if(index== 0){
+				//Subtract the constant parts of this and expr.  
+				BigInteger expr_co = expr.coefficients.get(index); 
+				BigInteger result = co.subtract(expr_co);
+				//update the coefficient
+				this.coefficients.set(index, result);
 			}else{
-				expr += "+"+co+ref_vars.get(index-1);
+				//Get variable
+				String var = this.ref_vars.get(index-1);
+				int expr_index = expr.getVarIndex(var);
+				//Check if the var exists in the expr.
+				if(expr_index!=-1){
+					//Get the coefficient from expr
+					BigInteger expr_co = expr.coefficients.get(expr_index);
+					//Subtract the coefficient part
+					BigInteger result = co.subtract(expr_co);
+					//update the coefficient
+					this.coefficients.set(index, result);					
+				}			
 			}			
 		}		
-		return expr; 
+		//The remaining ref_vars from expr
+		for(int index=0; index<expr.ref_vars.size();index++){
+			BigInteger expr_co = expr.coefficients.get(index+1);
+			String expr_var = expr.ref_vars.get(index);
+			if(this.getVarIndex(expr_var)==-1){
+				this.coefficients.add(expr_co.negate());
+				this.ref_vars.add(expr_var);
+			}			
+		}
+		return this;
 	}
+
 
 	@Override
 	public String toString() {
-		return code.toString();
+		String expr = "";
+		boolean isFirst = true;
+		for(int index=0;index<coefficients.size();index++){
+			BigInteger co = coefficients.get(index);
+			if(isFirst){
+				expr += co;
+				isFirst = false;
+			}else{
+				if(co.signum()==-1){
+					expr += " - ";
+				}else{
+					expr += " + ";
+				}
+				
+				BigInteger abs = co.abs();
+				if(abs.compareTo(BigInteger.ONE)!=0){
+					expr += abs+ " * ";
+				}
+				expr += ref_vars.get(index-1);
+			}			
+		}		
+		return expr;
 	}
-	
+	@Override
+	public Object clone() {
+		try {
+			return super.clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

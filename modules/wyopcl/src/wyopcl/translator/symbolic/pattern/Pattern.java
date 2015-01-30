@@ -14,17 +14,15 @@ public abstract class Pattern {
 	protected final Expr initExpr;
 	protected final Expr incr;
 	protected final Expr decr;
-	protected final String comparator;
 	
-	public Pattern(String V, Expr initExpr, Expr decr, Expr incr, String comparator){
+	public Pattern(String V, Expr initExpr, Expr decr, Expr incr){
 			this.V = V;
 			this.initExpr = initExpr;
 			this.decr = decr;
 			this.incr = incr;
-			this.comparator = comparator;
 	}
 	
 	public abstract boolean isNil();
-	public abstract BigInteger getNumberOfIterations();
+	public abstract Expr getNumberOfIterations();
 	
 }

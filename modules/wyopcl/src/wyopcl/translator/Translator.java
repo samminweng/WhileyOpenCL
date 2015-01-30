@@ -193,16 +193,7 @@ public class Translator implements Builder{
 		PatternMatcher matcher = new PatternMatcher(config);		
 		//Iterate each function
 		for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {
-			HashMap<String, List<Code>> loop_blks = matcher.buildLoopBlock(functionOrMethod);
-			//Iterate over all loop block and infer the pattern for each of them. 
-			for(List<Code> loop_blk: loop_blks.values()){
-				Pattern pattern = matcher.analyze(loop_blk);
-			}
-			
-			
+			matcher.buildLoopBlockAndMatchPattern(functionOrMethod);			
 		}
-
 	}
-
-
 }

@@ -10,8 +10,8 @@ import wyopcl.translator.symbolic.Expr;
  */
 public class P2 extends Pattern{
 	private final Expr lowerExpr;
-	public P2(String V, Expr initExpr, Expr decr, Expr incr, String comparator, Expr lowerExpr) {
-		super(V, initExpr, decr, incr, comparator);
+	public P2(String V, Expr initExpr, Expr decr, Expr incr, Expr lowerExpr) {
+		super(V, initExpr, decr, incr);
 		this.lowerExpr = lowerExpr;
 	}
 
@@ -20,13 +20,13 @@ public class P2 extends Pattern{
 	@Override
 	public String toString() {
 		return "while_loop && loop_var("+V+") && decr("+V+", "+decr+")"
-				+ " && init("+V+", "+initExpr+") &&  while_cond("+V+", > , "+lowerExpr+") =>"
+				+ " && init("+V+", "+initExpr+") &&  while_cond("+V+", >= , "+lowerExpr+") =>"
 				+ "loop_iters("+V+", "+initExpr+" - "+lowerExpr+"+1)";
 	}
 	
 	@Override
 	public boolean isNil() {
-		if(V!=null&&initExpr!=null&&decr!=null&&comparator.equals("ge")&&lowerExpr!=null){
+		if(V!=null&&initExpr!=null&&decr!=null&&lowerExpr!=null){
 			return false;
 		}
 		return true;
@@ -35,7 +35,7 @@ public class P2 extends Pattern{
 
 
 	@Override
-	public BigInteger getNumberOfIterations() {
+	public Expr getNumberOfIterations() {
 		// TODO Auto-generated method stub
 		return null;
 	}

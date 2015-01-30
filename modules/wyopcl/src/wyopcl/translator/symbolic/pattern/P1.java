@@ -10,8 +10,8 @@ import wyopcl.translator.symbolic.Expr;
  */
 public class P1 extends Pattern{
 	private final Expr lowerExpr;
-	public P1(String V, Expr initExpr, Expr decr, Expr incr, String comparator, Expr lowerExpr) {
-		super(V, initExpr, decr, incr, comparator);
+	public P1(String V, Expr initExpr, Expr decr, Expr incr, Expr lowerExpr) {
+		super(V, initExpr, decr, incr);
 		this.lowerExpr = lowerExpr;
 	}
 
@@ -26,7 +26,7 @@ public class P1 extends Pattern{
 
 	@Override
 	public boolean isNil() {
-		if(V!=null&&initExpr!=null&&decr!=null&&comparator.equals("gt")&&lowerExpr!=null){
+		if(V!=null&&initExpr!=null&&decr!=null&&lowerExpr!=null){
 			return false;
 		}
 		return true;
@@ -35,7 +35,7 @@ public class P1 extends Pattern{
 
 
 	@Override
-	public BigInteger getNumberOfIterations() {
+	public Expr getNumberOfIterations() {
 		// TODO Auto-generated method stub
 		return null;
 	}

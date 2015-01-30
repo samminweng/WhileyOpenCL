@@ -10,8 +10,8 @@ import wyopcl.translator.symbolic.Expr;
  */
 public class P3 extends Pattern{
 	private final Expr upperExpr;
-	public P3(String V, Expr initExpr, Expr decr, Expr incr, String comparator, Expr upperExpr) {
-		super(V, initExpr, decr, incr, comparator);
+	public P3(String V, Expr initExpr, Expr decr, Expr incr, Expr upperExpr) {
+		super(V, initExpr, decr, incr);
 		this.upperExpr = upperExpr;
 	}
 
@@ -19,14 +19,15 @@ public class P3 extends Pattern{
 
 	@Override
 	public String toString() {
-		return "while_loop && loop_var("+V+") && incr("+V+", "+decr+")"
-				+ " && init("+V+", "+initExpr+") &&  while_cond("+V+", < , "+upperExpr+") =>"
-				+ "loop_iters("+V+", "+upperExpr+" - "+initExpr+")";
+		return "while_loop && loop_var("+V+") && incr("+V+", "+incr+")"
+				+ " && init("+V+", "+initExpr+") &&  while_cond("+V+", < , "+upperExpr+")"
+				+ "\n=> loop_iters("+V+","+getNumberOfIterations()+")";
+				//+ "loop_iters("+V+", "+upperExpr+" - "+initExpr+")";
 	}
 	
 	@Override
 	public boolean isNil() {
-		if(V!=null&&initExpr!=null&&incr!=null&&comparator.equals("lt")&&upperExpr!=null){
+		if(V!=null&&initExpr!=null&&incr!=null&&upperExpr!=null){
 			return false;
 		}
 		return true;
@@ -35,9 +36,9 @@ public class P3 extends Pattern{
 
 
 	@Override
-	public BigInteger getNumberOfIterations() {
-		// TODO Auto-generated method stub
-		return null;
+	public Expr getNumberOfIterations() {
+		Expr result = (Expr) upperExpr.clone();
+		return result.subtract(initExpr);
 	}
 
 	
