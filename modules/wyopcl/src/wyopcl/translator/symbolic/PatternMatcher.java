@@ -4,6 +4,8 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import wyil.lang.Code;
 import wyil.lang.Codes;
@@ -45,7 +47,8 @@ public class PatternMatcher {
 	 * @param code
 	 */
 	private void putExpression(Code code){
-		if(code instanceof Codes.Assign || code instanceof Codes.Const){
+		if(code instanceof Codes.Assign || code instanceof Codes.Const
+		  || code instanceof Codes.BinaryOperator){
 			Expr expr = new Expr(code);
 			expressiontable.put(expr.getTarget(), expr);			
 		}
@@ -101,6 +104,9 @@ public class PatternMatcher {
 				if(loop_blk==null){
 					putExpression(code);
 				}else{
+					if(code instanceof Codes.Const){
+						putExpression(code);
+					}
 					loop_blk.add(code);	
 				}				
 				//End the loop block
@@ -108,11 +114,20 @@ public class PatternMatcher {
 					Codes.Label label = (Codes.Label)code;
 					if(loop_blk!=null && loop_label.equals(label.label)){						
 						Pattern pattern = analyze(loop_blk);
-						String result = "{";
+						String result = "";
+						result += "{";
+						//Loop block						
 						for(Code loop_code: loop_blk){
 							result += "\n\t"+loop_code;
 						}
 						result += "\n}";
+						//Expression table
+						//Sort the expression table by key
+						TreeMap<String, Expr> sortedMap = new TreeMap<String, Expr>(expressiontable);
+						for(Entry<String, Expr> expr:sortedMap.entrySet()){
+							result += "\n"+expr.getKey() + " = " +expr.getValue();
+						}
+						sortedMap = null;
 						result +="\n"+pattern;
 						System.out.println(result);
 						loop_blk = null;
@@ -163,8 +178,10 @@ public class PatternMatcher {
 					for(int index=0; index<size;index++){
 						String op = prefix+binOp.operand(index);
 						if(V.equals(op)&&(index+1)<size){
-							//Get the next oprand
-							return new Expr(code);							
+							//Create an expression to store the decremental value.
+							Expr expr = new Expr(BigInteger.ZERO);
+							expr.addVar(prefix+binOp.operand(index+1), BigInteger.ONE.negate());
+							return expr;							
 						}				
 					}
 				}				
@@ -192,8 +209,10 @@ public class PatternMatcher {
 					for(int index=0; index<size;index++){
 						String op = prefix+binOp.operand(index);
 						if(V.equals(op)&&(index+1)<size){
-							//Get the next oprand
-							return new Expr(code);							
+							//Create an expression to store the decremental value.
+							Expr expr = new Expr(BigInteger.ZERO);
+							expr.addVar(prefix+binOp.operand(index+1), BigInteger.ONE);
+							return expr;							
 						}				
 					}
 				}				

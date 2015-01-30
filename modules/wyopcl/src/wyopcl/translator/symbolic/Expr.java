@@ -41,10 +41,14 @@ public class Expr implements Cloneable{
 			case ADD:
 				coefficients.add(BigInteger.ZERO);
 				coefficients.add(BigInteger.ONE);
+				ref_vars.add(prefix+binOp.operand(0));
+				coefficients.add(BigInteger.ONE);
 				ref_vars.add(prefix+binOp.operand(1));
 				break;
 			case SUB:	
 				coefficients.add(BigInteger.ZERO);
+				coefficients.add(BigInteger.ONE);
+				ref_vars.add(prefix+binOp.operand(0));
 				coefficients.add(BigInteger.valueOf(-1));
 				ref_vars.add(prefix+binOp.operand(1));
 				break;
@@ -74,7 +78,7 @@ public class Expr implements Cloneable{
 	public Expr(BigInteger constant){
 		this();
 		coefficients.add(constant);		
-	}	
+	}
 	
 	/**
 	 * Basic constructor
@@ -86,7 +90,13 @@ public class Expr implements Cloneable{
 
 	public String getTarget(){
 		return target;
-	}	
+	}
+	
+	public void addVar(String var, BigInteger co){
+		this.ref_vars.add(var);
+		this.coefficients.add(co);
+	}
+	
 
 	public int getVarIndex(String var){
 		if(this.ref_vars.contains(var)){

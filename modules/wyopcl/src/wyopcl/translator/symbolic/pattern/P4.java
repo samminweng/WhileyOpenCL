@@ -20,7 +20,7 @@ public class P4 extends Pattern{
 	public String toString() {
 		return "while_loop && loop_var("+V+") && incr("+V+", "+incr+")"
 				+ " && init("+V+", "+initExpr+") &&  while_cond("+V+", <= , "+upperExpr+")"
-				+ "\n=> loop_iters("+V+","+getNumberOfIterations()+")";
+				+ "\n=> loop_iters("+V+", "+getNumberOfIterations()+")";
 				//+ "loop_iters("+V+", "+upperExpr+" - "+initExpr+"+1)";
 	}
 	

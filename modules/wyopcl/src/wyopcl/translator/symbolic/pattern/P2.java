@@ -21,7 +21,7 @@ public class P2 extends Pattern{
 	public String toString() {
 		return "while_loop && loop_var("+V+") && decr("+V+", "+decr+")"
 				+ " && init("+V+", "+initExpr+") &&  while_cond("+V+", >= , "+lowerExpr+")"
-				+ "\n=>loop_iters("+V+","+getNumberOfIterations()+")";
+				+ "\n=>loop_iters("+V+", "+getNumberOfIterations()+")";
 				//+ "loop_iters("+V+", "+initExpr+" - "+lowerExpr+"+1)";
 	}
 	
