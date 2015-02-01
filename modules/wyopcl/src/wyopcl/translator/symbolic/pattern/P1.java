@@ -1,7 +1,5 @@
 package wyopcl.translator.symbolic.pattern;
 
-import java.math.BigInteger;
-
 import wyopcl.translator.symbolic.Expr;
 /**
  * while_loop && loop_var(V) && decr(V, 1) && init(V, Init) &&  while_cond(V, "> ", LowerExpr) => loop_iters(V, Init - LowerExpr)

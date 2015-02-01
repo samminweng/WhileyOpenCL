@@ -1,7 +1,5 @@
 package wyopcl.translator.symbolic.pattern;
 
-import java.math.BigInteger;
-
 import wyopcl.translator.symbolic.Expr;
 
 public class NullPattern extends Pattern {

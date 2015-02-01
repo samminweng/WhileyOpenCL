@@ -50,11 +50,14 @@ import wyopcl.translator.bound.constraint.Union;
 /***
  * A class to store all the constraints produced in the wyil file and infer the bounds consistent
  * with all the constraints. The class variables 'constraintListMap' and 'label' have only one instance.
+ * 
+ * 
+ * This class is implemented with <a href="http://www.tutorialspoint.com/design_pattern/abstract_factory_pattern.htm">Factory design pattern</a>
  *    
  * @author Min-Hsien Weng
  *
  */
-public class Analyzer {
+public class BoundAnalyzer {
 	private final Configuration config;
 	private final FunctionOrMethodDeclaration functionOrMethod;
 	private final WyilFile module;
@@ -128,7 +131,7 @@ public class Analyzer {
 	}
 
 
-	public Analyzer(int depth,
+	public BoundAnalyzer(int depth,
 			Configuration config,
 			FunctionOrMethodDeclaration functionOrMethod,
 			WyilFile module,
@@ -950,7 +953,7 @@ public class Analyzer {
 		if(functionOrMethod != null){
 			//Infer the bounds						
 			Bounds bnd = this.inferBounds(false);
-			Analyzer invokeanalyzer = new Analyzer(depth+1, config, functionOrMethod, module, writer);
+			BoundAnalyzer invokeboundAnalyzer = new BoundAnalyzer(depth+1, config, functionOrMethod, module, writer);
 			int index = 0;
 			//Pass the bounds of input parameters.
 			for(Type paramType: functionOrMethod.type().params()){
@@ -958,18 +961,18 @@ public class Analyzer {
 				String operand = prefix+code.operand(index);
 				//Check parameter type
 				if(isIntType(paramType)){
-					invokeanalyzer.createEntryNode(paramType, param, bnd.getLower(operand), bnd.getUpper(operand));					
+					invokeboundAnalyzer.createEntryNode(paramType, param, bnd.getLower(operand), bnd.getUpper(operand));					
 				}
 				//pass the symbol 
 				Symbol symbol = getSymbol(operand).clone();
 				//Update the name
 				symbol.setName(param);
-				invokeanalyzer.putSymbol(param, symbol);
+				invokeboundAnalyzer.putSymbol(param, symbol);
 				index++;
 			}
-			invokeanalyzer.iterateByteCode();						
+			invokeboundAnalyzer.iterateByteCode();						
 			//Infer the bounds at the end of invoked function.
-			bnd = invokeanalyzer.inferBounds(true);
+			bnd = invokeboundAnalyzer.inferBounds(true);
 			String return_reg = prefix+code.target();
 			Type return_type = code.type().ret();
 			//put the 'type' attribute of 'return_reg'
@@ -984,12 +987,12 @@ public class Analyzer {
 
 			//Add 'size' attribute
 			if(return_type instanceof Type.List){
-				BigInteger size = (BigInteger) invokeanalyzer.getAttribute("return", "size");
+				BigInteger size = (BigInteger) invokeboundAnalyzer.getAttribute("return", "size");
 				putAttribute(return_reg, "size", size);
 			}
 
 
-			invokeanalyzer = null;
+			invokeboundAnalyzer = null;
 		}
 	}
 

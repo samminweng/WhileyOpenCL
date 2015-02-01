@@ -26,7 +26,7 @@ import wyil.lang.WyilFile;
 import wyil.lang.Code.Block;
 import wyil.lang.WyilFile.Case;
 import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
-import wyopcl.translator.bound.Analyzer;
+import wyopcl.translator.bound.BoundAnalyzer;
 import wyopcl.translator.generator.CodeGenerator;
 import wyopcl.translator.generator.Utility;
 import wyopcl.translator.symbolic.PatternMatcher;
@@ -113,11 +113,11 @@ public class Translator implements Builder{
 				writer = new PrintWriter(System.out, true);
 			}
 			WyilFile.FunctionOrMethodDeclaration main = module.functionOrMethod("main").get(0);
-			Analyzer analyzer = new Analyzer(0, config, main, module, writer);
-			analyzer.iterateByteCode();
+			BoundAnalyzer boundAnalyzer = new BoundAnalyzer(0, config, main, module, writer);
+			boundAnalyzer.iterateByteCode();
 			//Infer the bounds at the end of main function.
-			analyzer.inferBounds(true);			
-			analyzer = null;
+			boundAnalyzer.inferBounds(true);			
+			boundAnalyzer = null;
 			writer.close();
 			if(!config.isVerbose()){
 				//Print out the bound analysis results to console.
