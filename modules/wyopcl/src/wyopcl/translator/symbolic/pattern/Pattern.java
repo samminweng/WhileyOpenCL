@@ -14,6 +14,7 @@ public abstract class Pattern {
 	protected final Expr initExpr;
 	protected final Expr incr;
 	protected final Expr decr;
+	protected Expr numberOfIterations;// the number of loop iterations in affine form. 
 	
 	public Pattern(String V, Expr initExpr, Expr decr, Expr incr){
 			this.V = V;

@@ -12,7 +12,7 @@ public class NullPattern extends Pattern {
 
 	@Override
 	public Expr getNumberOfIterations() {
-		return null;
+		return numberOfIterations;
 	}
 
 	@Override

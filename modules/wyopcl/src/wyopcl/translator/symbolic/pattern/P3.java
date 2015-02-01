@@ -37,8 +37,11 @@ public class P3 extends Pattern{
 
 	@Override
 	public Expr getNumberOfIterations() {
-		Expr result = (Expr) upperExpr.clone();
-		return result.subtract(initExpr);
+		if(numberOfIterations == null){
+			numberOfIterations = (Expr) upperExpr.clone();
+			numberOfIterations.subtract(initExpr);
+		}
+		return numberOfIterations;
 	}
 
 	
