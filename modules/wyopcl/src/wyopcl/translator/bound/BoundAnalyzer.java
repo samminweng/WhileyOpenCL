@@ -69,12 +69,9 @@ public class BoundAnalyzer {
 
 	//The boolean flag is used to show whether the code is inside an assertion or assumption.	
 	private String assertOrAssume_label;
-	//private String branch;
 	private final int depth;
-	//The variables are used in the control flow graph (CFG).
-	private BasicBlock entry;//Root node of CFG
-	private BasicBlock current_blk;	
-	//private BasicBlock exit;//The exit node of CFG
+	//The variables are used in the control flow graph (CFG).	
+	private BasicBlock current_blk;		
 	//The list of basic block;
 	private List<BasicBlock> list;
 	//The label name of the loop condition
@@ -121,10 +118,10 @@ public class BoundAnalyzer {
 		this.assertOrAssume_label = null;
 		this.symbols = new HashMap<String, Symbol>();
 		//Initialize
-		this.entry = createBasicBlock("entry", BlockType.ENTRY);
+		//this.entry = createBasicBlock("entry", BlockType.ENTRY);
 		createBasicBlock("exit", BlockType.EXIT);
 		//this.exit = createBasicBlock("exit", BlockType.EXIT);
-		this.current_blk = this.entry;
+		this.current_blk = createBasicBlock("entry", BlockType.ENTRY);
 		this.loop_variables = new HashMap<String, BoundChange>();
 		this.isGoto = false;
 		this.line = 0;
@@ -199,7 +196,7 @@ public class BoundAnalyzer {
 
 	private void createEntryNode(Type paramType, String param, BigInteger min, BigInteger max){
 		if(isIntType(paramType)){
-			this.entry.addBounds(param, min, max);
+			getCurrentBlock().addBounds(param, min, max);
 		}
 	}
 
@@ -214,7 +211,7 @@ public class BoundAnalyzer {
 			index++;
 		}
 		//Create the default basic block and adds it to the child of entry node.
-		BasicBlock blk = createBasicBlock("code", BlockType.BLOCK, this.entry);
+		BasicBlock blk = createBasicBlock("code", BlockType.BLOCK, getCurrentBlock());
 		setCurrentBlock(blk);
 	}
 
