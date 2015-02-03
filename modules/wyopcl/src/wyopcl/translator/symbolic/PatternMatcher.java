@@ -49,7 +49,8 @@ public class PatternMatcher {
 	private void putExpression(Code code){
 		if(code instanceof Codes.Assign || code instanceof Codes.Const
 		  || code instanceof Codes.BinaryOperator){
-			Expr expr = new Expr(code);
+			Expr expr = new Expr(code);	
+			System.out.println(expr.getTarget() + " = "+ expr);
 			expressiontable.put(expr.getTarget(), expr);			
 		}
 	}
@@ -180,7 +181,7 @@ public class PatternMatcher {
 						if(V.equals(op)&&(index+1)<size){
 							//Create an expression to store the decremental value.
 							Expr expr = new Expr(BigInteger.ZERO);
-							expr.addVar(prefix+binOp.operand(index+1), BigInteger.ONE.negate());
+							expr.addVarOrConstant(BigInteger.ONE.negate(), prefix+binOp.operand(index+1));
 							return expr;							
 						}				
 					}
@@ -211,7 +212,7 @@ public class PatternMatcher {
 						if(V.equals(op)&&(index+1)<size){
 							//Create an expression to store the decremental value.
 							Expr expr = new Expr(BigInteger.ZERO);
-							expr.addVar(prefix+binOp.operand(index+1), BigInteger.ONE);
+							expr.addVarOrConstant(BigInteger.ONE, prefix+binOp.operand(index+1));
 							return expr;							
 						}				
 					}
