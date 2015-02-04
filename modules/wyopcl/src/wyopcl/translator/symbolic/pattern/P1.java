@@ -110,6 +110,12 @@ public class P1 extends Pattern{
 		return null;
 	}
 
+	/**
+	 * Given a input expression, recursively replace the element with the expression retrieved from the expression table.
+	 * @param var the name of variable
+	 * @param expr the input expression 
+	 * @return the updated expression.
+	 */
 	private Expr replaceExpr(String var, Expr expr){
 		Expr var_expr = getExpr(var);
 		if(var_expr == null) return expr;
@@ -125,9 +131,9 @@ public class P1 extends Pattern{
 	
 
 	/**
-	 * Get the symbol value from symbol table.
-	 * @param op
-	 * @return value(Expr). If not found, return null.
+	 * Get the initial value of loop variable from expression table.
+	 * @param V the loop variable
+	 * @return initial value (Expr). If not found, return null.
 	 */
 	private Expr init(String V){
 		Expr init = getExpr(V);

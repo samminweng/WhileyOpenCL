@@ -161,7 +161,10 @@ public class Expr implements Cloneable{
 		}		
 		return -1;
 	}
-
+	/**
+	 * Get the array of referenced variables in the expression
+	 * @return the variable array  
+	 */
 	public String[] getVars(){
 		//return this.ref_vars;
 		return this.ref_vars.toArray(new String[this.ref_vars.size()]);
@@ -202,8 +205,14 @@ public class Expr implements Cloneable{
 		if(index!= -1){			
 			//Get the coefficient
 			BigInteger coefficient = getCoefficient(var);
-			expr = expr.multiply(coefficient);
-			this.add(expr);
+			expr = expr.multiply(coefficient.abs());
+			if(coefficient.signum()>0){
+				//Addition				
+				this.add(expr);
+			}else{
+				//Subtraction
+				this.subtract(expr);
+			}			
 			
 			//Remove the var and its coefficient
 			this.ref_vars.remove(index);
@@ -279,16 +288,15 @@ public class Expr implements Cloneable{
 					expr += " + ";
 				}				
 			}
-
+			BigInteger abs = co.abs();
 			if(index<ref_vars.size()){
-				BigInteger abs = co.abs();
 				if(abs.compareTo(BigInteger.ONE)!=0){
 					expr += abs + " * ";
 				}				
 				expr += ref_vars.get(index);
 			}else{
 				//constant value
-				expr += co;
+				expr += abs;
 			}								
 		}		
 		return expr;
