@@ -1,5 +1,8 @@
 package wyopcl.translator.symbolic.pattern;
 
+import java.util.List;
+
+import wyil.lang.Code;
 import wyopcl.translator.symbolic.Expr;
 
 /**
@@ -9,17 +12,12 @@ import wyopcl.translator.symbolic.Expr;
  *
  */
 public abstract class Pattern {
-	protected final String V;
-	protected final Expr initExpr;
-	protected final Expr incr;
-	protected final Expr decr;
+	protected final String prefix = "%";
+	protected String type;//The pattern type
+	protected boolean isNil;
 	protected Expr numberOfIterations;// the number of loop iterations in affine form. 
 	
-	public Pattern(String V, Expr initExpr, Expr decr, Expr incr){
-			this.V = V;
-			this.initExpr = initExpr;
-			this.decr = decr;
-			this.incr = incr;
+	public Pattern(){			
 	}
 	
 	public abstract boolean isNil();

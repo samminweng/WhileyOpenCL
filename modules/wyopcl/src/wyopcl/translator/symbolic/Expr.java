@@ -26,8 +26,8 @@ public class Expr implements Cloneable{
 	 * Basic constructor
 	 */
 	public Expr(){
-		this.ref_vars = new ArrayList<String>();
-		this.coefficients = new ArrayList<BigInteger>();
+		//this.ref_vars = new ArrayList<String>();
+		//this.coefficients = new ArrayList<BigInteger>();
 	}
 
 	private void initialize(Code code){
@@ -76,7 +76,7 @@ public class Expr implements Cloneable{
 	 */
 	public Expr(Code code){
 		this();
-		initialize(code);
+		initialize(code);		
 	}
 	/**
 	 * Multiple constructor to create an expression with a constant.
@@ -99,6 +99,14 @@ public class Expr implements Cloneable{
 	 * @param co the coefficient.
 	 */
 	public void addVarOrConstant(BigInteger co, String var){
+		//Lazy initialization
+		if(this.ref_vars == null){
+			this.ref_vars = new ArrayList<String>();		
+		}		
+		if(this.coefficients == null){
+			this.coefficients = new ArrayList<BigInteger>();
+		}		
+		
 		//Add the variable together with coefficient.
 		if(var != null){
 			int index = getVarIndex(var);
@@ -129,7 +137,7 @@ public class Expr implements Cloneable{
 	 * Get the array index of the constant.
 	 * @return the array index. If no constant exists, return 0.
 	 */
-	private int getConstIndex(){
+	public int getConstIndex(){
 		if(this.coefficients.isEmpty()){
 			return 0;
 		}				
@@ -142,7 +150,7 @@ public class Expr implements Cloneable{
 	 * @param var the given variable.
 	 * @return the index. If not found, return -1.
 	 */
-	private int getVarIndex(String var){
+	public int getVarIndex(String var){
 		if(this.ref_vars.contains(var)){
 			for(int index=0; index<ref_vars.size();index++){
 				String ref_var = ref_vars.get(index);
@@ -154,6 +162,21 @@ public class Expr implements Cloneable{
 		return -1;
 	}
 
+	public String[] getVars(){
+		//return this.ref_vars;
+		return this.ref_vars.toArray(new String[this.ref_vars.size()]);
+	}
+	
+	
+	public BigInteger getCoefficient(String var){
+		BigInteger co = null;
+		int index = getVarIndex(var);
+		if(index!=-1){
+			co = this.coefficients.get(index);
+		}		
+		return co;
+	}
+	
 	/**
 	 * Multiply the coefficients by a constant value
 	 * @return
@@ -168,6 +191,29 @@ public class Expr implements Cloneable{
 		return this;
 	}
 
+	/**
+	 * Replace the variable with a given expression
+	 * @param var
+	 * @param expr
+	 * @return
+	 */
+	public Expr merge(String var, Expr expr){
+		int index = getVarIndex(var);
+		if(index!= -1){			
+			//Get the coefficient
+			BigInteger coefficient = getCoefficient(var);
+			expr = expr.multiply(coefficient);
+			this.add(expr);
+			
+			//Remove the var and its coefficient
+			this.ref_vars.remove(index);
+			this.coefficients.remove(index);
+		}
+		
+		return this;		
+	}
+	
+	
 
 	/**
 	 * Add another expression into this one. 
@@ -211,11 +257,8 @@ public class Expr implements Cloneable{
 	 */
 	public Expr subtract(Expr expr){		
 		//Subtraction can be considered as addition of the minuend and the opposite of the subtrahend 
-		//For example, this - expr = this + (-1*expr)
-		Expr temp = expr.multiply(BigInteger.ONE.negate());
-		System.out.println(temp);
-		Expr result = this.add(temp);
-		System.out.println(result);
+		//For example, this - expr = this + (-1*expr)		
+		this.add(expr.multiply(BigInteger.ONE.negate()));		
 		return this;
 	}
 

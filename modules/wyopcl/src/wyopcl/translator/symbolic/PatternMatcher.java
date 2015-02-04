@@ -46,25 +46,18 @@ public class PatternMatcher {
 	 *
 	 * @param code
 	 */
-	private void putExpression(Code code){
-		if(code instanceof Codes.Assign || code instanceof Codes.Const
-		  || code instanceof Codes.BinaryOperator){
-			Expr expr = new Expr(code);	
+	private void putExpr(Code code){
+		Expr expr = new Expr(code);
+		if(expr.getTarget()!=null){
 			System.out.println(expr.getTarget() + " = "+ expr);
-			expressiontable.put(expr.getTarget(), expr);			
+			//Add to the expression table.
+			expressiontable.put(expr.getTarget(), expr);
+		}else{
+			//Nullify the expr object.
+			expr = null;
 		}
-	}
-	/**
-	 * Get the symbol value from symbol table.
-	 * @param op
-	 * @return value(Expr). If not found, return null.
-	 */
-	private Expr getExpr(String op){
-		if(expressiontable.containsKey(op)){
-			return expressiontable.get(op);						
-		}		
-		return null;
-	}
+		
+	}	
 
 	/**
 	 * Iterate each code of the input function and build up the loop blk.
@@ -103,11 +96,8 @@ public class PatternMatcher {
 				}				
 				//Decide whether to put the code into loop blk or expression table.
 				if(loop_blk==null){
-					putExpression(code);
+					putExpr(code);
 				}else{
-					if(code instanceof Codes.Const){
-						putExpression(code);
-					}
 					loop_blk.add(code);	
 				}				
 				//End the loop block
@@ -124,11 +114,11 @@ public class PatternMatcher {
 						result += "\n}";
 						//Expression table
 						//Sort the expression table by key
-						TreeMap<String, Expr> sortedMap = new TreeMap<String, Expr>(expressiontable);
+						/*TreeMap<String, Expr> sortedMap = new TreeMap<String, Expr>(expressiontable);
 						for(Entry<String, Expr> expr:sortedMap.entrySet()){
 							result += "\n"+expr.getKey() + " = " +expr.getValue();
 						}
-						sortedMap = null;
+						sortedMap = null;*/
 						result +="\n"+pattern;
 						System.out.println(result);
 						loop_blk = null;
@@ -143,53 +133,7 @@ public class PatternMatcher {
 
 	}
 
-	/**
-	 * Get the loop variable
-	 * @param blk
-	 * @return
-	 */
-	private String loop_Var(List<Code> blk){
-		for(Code code: blk){
-			if(code instanceof Codes.Loop){
-				Codes.Loop loop = (Codes.Loop)code;
-				int[] ops = loop.modifiedOperands;
-				if(ops.length >=1){
-					return	prefix+ops[0];
-				}				
-			}
-		}		
-		return null;
-	}
-
-	/**
-	 * Get the decremental value for the given loop variable.
-	 * @param V
-	 * @param blk
-	 * @return decrement value (Expr). If not matched, return null;
-	 */
-	private Expr decr(String V, List<Code> blk){
-		for(Code code: blk){							
-			if(code instanceof Codes.BinaryOperator){
-				Codes.BinaryOperator binOp = (Codes.BinaryOperator)code;
-				BinaryOperatorKind kind = binOp.kind;
-				//Check if the op kind is subtract
-				if(kind.equals(BinaryOperatorKind.SUB)){
-					int size = binOp.operands().length; 
-					//Check if the loop variable is used in the code
-					for(int index=0; index<size;index++){
-						String op = prefix+binOp.operand(index);
-						if(V.equals(op)&&(index+1)<size){
-							//Create an expression to store the decremental value.
-							Expr expr = new Expr(BigInteger.ZERO);
-							expr.addVarOrConstant(BigInteger.ONE.negate(), prefix+binOp.operand(index+1));
-							return expr;							
-						}				
-					}
-				}				
-			}						
-		}		
-		return null;
-	}
+	
 
 	/**
 	 * Get the incremental value for the given loop variable.
@@ -222,47 +166,7 @@ public class PatternMatcher {
 		return null;
 	}
 
-	private Expr init(String V){
-		return getExpr(V);		
-	}
-
-
-	private Expr while_cond(String V, String compareOp, List<Code> blk){
-		for(Code code: blk){
-			if(code instanceof Codes.If){
-				Codes.If if_code = (Codes.If)code;
-				//Check if the loop var occurs in the condition
-				if(V.equals(prefix+if_code.leftOperand)){
-					switch(compareOp){
-					case ">":
-						if(if_code.op.equals(Comparator.LTEQ)){
-							return new Expr(code);	
-						}
-						break;
-					case ">=":
-						if(if_code.op.equals(Comparator.LT)){
-							return new Expr(code);	
-						}
-						break;
-					case "<":
-						if(if_code.op.equals(Comparator.GTEQ)){
-							return new Expr(code);	
-						}							
-						break;
-					case "<=":
-						if(if_code.op.equals(Comparator.GT)){
-							return new Expr(code);	
-						}
-						break;
-					default:
-						throw new RuntimeException("Unknown comparator operator "+compareOp);
-					}
-				}				
-			}		
-		}		
-		return null;
-	}
-
+	
 	/**
 	 * Takes the list of loop bytecode as input, take the block of loop bytecode, iterate over all available patterns
 	 * and check if the given loop is matched with any one of them by using the pattern checker.
@@ -271,14 +175,14 @@ public class PatternMatcher {
 	 */
 	private Pattern analyze(List<Code> loop_block){
 		Pattern pattern;
-		String V = loop_Var(loop_block);
+		/*String V = loop_Var(loop_block);
 		//Get initial value from symbol table.
 		Expr init = init(V);
 		//Check if loop var is incremented or decremented by a constant.
 		Expr decr = decr(V, loop_block);
-		Expr incr = incr(V, loop_block);
-		pattern = new P1(V, init, decr, incr, while_cond(V, ">", loop_block));
-		if(pattern.isNil()){
+		Expr incr = incr(V, loop_block);*/
+		pattern = new P1(loop_block, expressiontable);
+		/*if(pattern.isNil()){
 			pattern = new P2(V, init, decr, incr, while_cond(V, ">=", loop_block)); 
 			if(pattern.isNil()){
 				pattern = new P3(V, init, decr, incr, while_cond(V, "<", loop_block)); 
@@ -289,7 +193,7 @@ public class PatternMatcher {
 					}
 				}
 			}
-		}	
+		}*/	
 
 		return pattern;
 	}

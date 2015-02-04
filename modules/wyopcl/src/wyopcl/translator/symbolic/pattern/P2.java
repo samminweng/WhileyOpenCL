@@ -9,9 +9,20 @@ import wyopcl.translator.symbolic.Expr;
  *
  */
 public class P2 extends Pattern{
-	private final Expr lowerExpr;
-	public P2(String V, Expr initExpr, Expr decr, Expr incr, Expr lowerExpr) {
-		super(V, initExpr, decr, incr);
+
+	@Override
+	public boolean isNil() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Expr getNumberOfIterations() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	/*private final Expr lowerExpr;
+	public P2(String V, Expr initExpr, Expr decr, Expr incr, Expr lowerExpr) {		
 		this.lowerExpr = lowerExpr;
 	}
 
@@ -43,7 +54,7 @@ public class P2 extends Pattern{
 			numberOfIterations.add(new Expr(BigInteger.ONE));
 		}				
 		return numberOfIterations;
-	}
+	}*/
 
 	
 	

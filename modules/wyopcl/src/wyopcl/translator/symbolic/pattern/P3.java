@@ -7,7 +7,19 @@ import wyopcl.translator.symbolic.Expr;
  *
  */
 public class P3 extends Pattern{
-	private final Expr upperExpr;
+
+	@Override
+	public boolean isNil() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Expr getNumberOfIterations() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	/*private final Expr upperExpr;
 	public P3(String V, Expr initExpr, Expr decr, Expr incr, Expr upperExpr) {
 		super(V, initExpr, decr, incr);
 		this.upperExpr = upperExpr;
@@ -41,7 +53,7 @@ public class P3 extends Pattern{
 		}
 		return numberOfIterations;
 	}
-
+*/
 	
 	
 }
