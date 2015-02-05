@@ -19,55 +19,53 @@ import wyil.lang.Codes.BinaryOperatorKind;
 public class Expr implements Cloneable{
 	private String target;
 	private List<String> ref_vars;
-	private List<BigInteger> coefficients; // The list of coefficients (the constant value is added as the last).
+	private List<BigInteger> coefficients; // The list of coefficients .
 	private final String prefix ="%"; 
-
+	private BigInteger constant;//(the constant value is added as the last)
 	/**
 	 * Basic constructor
 	 */
 	public Expr(){
-		//this.ref_vars = new ArrayList<String>();
-		//this.coefficients = new ArrayList<BigInteger>();
+		//c0 = 0
+		this.constant = BigInteger.ZERO;
+		this.ref_vars = new ArrayList<String>();
+		this.coefficients = new ArrayList<BigInteger>();
 	}
 
 	private void initialize(Code code){
 		if(code instanceof Codes.Assign){
+			target = prefix+((Codes.Assign)code).target();
 			Codes.Assign assign = (Codes.Assign)code;
 			//1*v1
-			addVarOrConstant(BigInteger.ONE, prefix+assign.operand(0));
-			//c0
-			addVarOrConstant(BigInteger.ZERO, null);
-			target = prefix+assign.target();
+			addVar(BigInteger.ONE, prefix+assign.operand(0));
 		}else if(code instanceof Codes.Const){
+			target = prefix+((Codes.Const)code).target();
 			Constant constant = ((Codes.Const)code).constant;
 			if(constant instanceof Constant.Integer){
 				//c0
-				addVarOrConstant(((Constant.Integer) constant).value, null);	
+				addConstant(((Constant.Integer) constant).value);	
 			}
-			target = prefix+((Codes.Const)code).target();
+
 		}else if(code instanceof Codes.BinaryOperator){
+			target = prefix+((Codes.BinaryOperator)code).target();
 			Codes.BinaryOperator binOp = (Codes.BinaryOperator)code;
 			switch(binOp.kind){
 			case ADD:
-				//v1+v2+c0
-				addVarOrConstant(BigInteger.ONE, prefix+binOp.operand(0));
-				addVarOrConstant(BigInteger.ONE, prefix+binOp.operand(1));
-				addVarOrConstant(BigInteger.ZERO, null);
+				//v1+v2
+				addVar(BigInteger.ONE, prefix+binOp.operand(0));
+				addVar(BigInteger.ONE, prefix+binOp.operand(1));
 				break;
 			case SUB:	
-				//v1-v2+c0
-				addVarOrConstant(BigInteger.ONE, prefix+binOp.operand(0));
-				addVarOrConstant(BigInteger.ONE.negate(), prefix+binOp.operand(1));//-1*v2
-				addVarOrConstant(BigInteger.ZERO, null);
+				//v1-v2
+				addVar(BigInteger.ONE, prefix+binOp.operand(0));
+				addVar(BigInteger.ONE.negate(), prefix+binOp.operand(1));//-1*v2
 				break;
 			default:
 				throw new RuntimeException(binOp.kind+"Not implemented");				
 			}			
-			target = prefix+binOp.target();
 		}else if(code instanceof Codes.If){
 			Codes.If if_code = (Codes.If)code;
-			addVarOrConstant(BigInteger.ONE, prefix+if_code.rightOperand);
-			addVarOrConstant(BigInteger.ZERO, null);
+			addVar(BigInteger.ONE, prefix+if_code.rightOperand);
 		}
 	}	
 	/**
@@ -84,66 +82,56 @@ public class Expr implements Cloneable{
 	 */
 	public Expr(BigInteger constant){
 		this();
-		addVarOrConstant(constant, null);		
+		addConstant(constant);		
 	}
 
 
-
+	/**
+	 * Get the target operand.
+	 * @return
+	 */
 	public String getTarget(){
 		return target;
 	}	
+	/**
+	 * Add the constant only
+	 * @param co the constant
+	 */
+	public void addConstant(BigInteger co){
+		this.constant = constant.add(co);		
+	}
+
 
 	/**
 	 * Add the variable and coefficient to the lists.
 	 * @param var the name of variable. If null, it means the constant.
 	 * @param co the coefficient.
 	 */
-	public void addVarOrConstant(BigInteger co, String var){
-		//Lazy initialization
-		if(this.ref_vars == null){
-			this.ref_vars = new ArrayList<String>();		
-		}		
-		if(this.coefficients == null){
-			this.coefficients = new ArrayList<BigInteger>();
-		}		
-		
+	public void addVar(BigInteger co, String var){
 		//Add the variable together with coefficient.
-		if(var != null){
-			int index = getVarIndex(var);
-			//New variable
-			if(index==-1){
-				index = this.ref_vars.size();
-				//Append the var and co to the end of the list.
-				this.ref_vars.add(index, var);
-				this.coefficients.add(index, co);
-			}else{
-				BigInteger existing_co = this.coefficients.get(index);
-				//Update the coefficient at the index of var.
-				this.coefficients.set(index, existing_co.add(co));
-			}
+		int index = getVarIndex(var);
+		//New variable
+		if(index==-1){
+			index = this.ref_vars.size();
+			//Append the var and co to the end of the list.
+			this.ref_vars.add(var);
+			this.coefficients.add(co);
 		}else{
-			//Add the constant only.
-			int index = getConstIndex();
-			if(index == 0 || this.coefficients.size() == this.ref_vars.size()){
-				this.coefficients.add(co);
-			}else{
-				BigInteger existing_co = this.coefficients.get(index);
-				this.coefficients.set(index, existing_co.add(co));
-			}			
-		}		
+			//Existing variable
+			BigInteger existing_co = this.coefficients.get(index);
+			//Update the coefficient at the index of var.
+			this.coefficients.set(index, existing_co.add(co));
+		}
+
 	}
 
 	/**
 	 * Get the array index of the constant.
 	 * @return the array index. If no constant exists, return 0.
 	 */
-	public int getConstIndex(){
-		if(this.coefficients.isEmpty()){
-			return 0;
-		}				
-		return this.coefficients.size()-1;
+	public BigInteger getConstant(){
+		return this.constant;
 	}
-
 
 	/**
 	 * Get the index of the referenced list for a given variable.
@@ -169,8 +157,8 @@ public class Expr implements Cloneable{
 		//return this.ref_vars;
 		return this.ref_vars.toArray(new String[this.ref_vars.size()]);
 	}
-	
-	
+
+
 	public BigInteger getCoefficient(String var){
 		BigInteger co = null;
 		int index = getVarIndex(var);
@@ -179,23 +167,28 @@ public class Expr implements Cloneable{
 		}		
 		return co;
 	}
-	
+
 	/**
 	 * Multiply the coefficients by a constant value
+	 * @param scale the scale
 	 * @return
 	 */
-	public Expr multiply(BigInteger number){
+	public Expr multiply(BigInteger scale){
 		//Perform the multiplication operation on the coefficient which exist in this expression.
 		for(int index=0; index<this.coefficients.size();index++){
 			BigInteger co = this.coefficients.get(index);
-			BigInteger result = co.multiply(number);
+			BigInteger result = co.multiply(scale);
 			this.coefficients.set(index, result);
 		}
+		//Multiply the constant
+		this.constant = this.constant.multiply(scale);
+
 		return this;
 	}
 
 	/**
-	 * Replace the variable with a given expression
+	 * Replace the variable with a given expression. For example, %3 = %6 and  %6 = %0 - %5 
+	 * so %3 = %0 - %5
 	 * @param var
 	 * @param expr
 	 * @return
@@ -205,24 +198,19 @@ public class Expr implements Cloneable{
 		if(index!= -1){			
 			//Get the coefficient
 			BigInteger coefficient = getCoefficient(var);
-			expr = expr.multiply(coefficient.abs());
 			if(coefficient.signum()>0){
 				//Addition				
-				this.add(expr);
+				this.add(expr.multiply(coefficient.abs()));
 			}else{
 				//Subtraction
-				this.subtract(expr);
-			}			
-			
+				this.subtract(expr.multiply(coefficient.abs()));
+			}
 			//Remove the var and its coefficient
 			this.ref_vars.remove(index);
 			this.coefficients.remove(index);
 		}
-		
 		return this;		
 	}
-	
-	
 
 	/**
 	 * Add another expression into this one. 
@@ -238,7 +226,7 @@ public class Expr implements Cloneable{
 			//Check if the var exists in the expr.
 			if(expr_index!=-1){
 				BigInteger expr_co = expr.coefficients.get(expr_index);
-				addVarOrConstant(expr_co, var);
+				addVar(expr_co, var);
 			}
 		}		
 		//The remaining ref_vars from expr
@@ -246,16 +234,14 @@ public class Expr implements Cloneable{
 			String var = expr.ref_vars.get(index);
 			if(this.getVarIndex(var)==-1){
 				BigInteger expr_co = expr.coefficients.get(index);
-				addVarOrConstant(expr_co, var);
+				addVar(expr_co, var);
 			}			
 		}		
 		//Subtract the constant parts of this and expr
-		//Get the const from expr 
-		int expr_index = expr.getConstIndex();
-		BigInteger expr_co = expr.coefficients.get(expr_index); 
+		//Get the const from expr
+		BigInteger expr_co = expr.getConstant(); 
 		//update the coefficient
-		addVarOrConstant(expr_co, null);	
-
+		addConstant(expr_co);
 		return this;
 	}
 
@@ -274,31 +260,21 @@ public class Expr implements Cloneable{
 
 	@Override
 	public String toString() {
-		String expr = "";
-		boolean isFirst = true;
+		String expr = ""+constant;
 		//Iterate over all variables.
 		for(int index=0;index<coefficients.size();index++){
 			BigInteger co = coefficients.get(index);
-			if(isFirst){			
-				isFirst = false;
+			if(co.signum()==-1){
+				expr += " - ";
 			}else{
-				if(co.signum()==-1){
-					expr += " - ";
-				}else{
-					expr += " + ";
-				}				
+				expr += " + ";
 			}
 			BigInteger abs = co.abs();
-			if(index<ref_vars.size()){
-				if(abs.compareTo(BigInteger.ONE)!=0){
-					expr += abs + " * ";
-				}				
-				expr += ref_vars.get(index);
-			}else{
-				//constant value
-				expr += abs;
-			}								
-		}		
+			if(abs.compareTo(BigInteger.ONE)!=0){
+				expr += abs + " * ";
+			}				
+			expr += ref_vars.get(index);								
+		}
 		return expr;
 	}
 	@Override

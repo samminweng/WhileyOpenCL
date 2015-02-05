@@ -17,7 +17,7 @@ import wyopcl.translator.symbolic.Expr;
 public class P1 extends Pattern{
 	private final String V;
 	private final Expr initExpr;
-	private final Expr decr;
+	private final BigInteger decr;
 	private final Expr lowerExpr;
 	private final HashMap<String, Expr> expressiontable;
 	private final List<Code> blk;
@@ -30,7 +30,9 @@ public class P1 extends Pattern{
 		this.initExpr = init(this.V);
 		this.decr = decr(this.V);
 		this.lowerExpr = while_cond(this.V, ">");
-		if(this.V!=null&&this.initExpr!=null&& this.decr!=null && this.lowerExpr!=null){
+		if(this.V!=null&&this.initExpr!=null&&
+		  this.decr!=null&&this.decr.compareTo(BigInteger.ONE)==0&&
+		  this.lowerExpr!=null){
 			this.isNil = true;
 		}else{
 			this.isNil = false;
@@ -71,9 +73,7 @@ public class P1 extends Pattern{
 	public boolean isNil() {
 		return this.isNil;
 	}
-
-
-
+	
 	@Override
 	public Expr getNumberOfIterations() {
 		if(numberOfIterations==null){
@@ -148,45 +148,34 @@ public class P1 extends Pattern{
 	 * Get the decremental value for the given loop variable.
 	 * @return decrement value (Expr). If not matched, return null;
 	 */
-	private Expr decr(String V){
+	private BigInteger decr(String V){
 		if(V!= null){
 			for(Code code: blk){							
-				if(code instanceof Codes.Const){
-					putExpr(new Expr(code));
-				}else if(code instanceof Codes.BinaryOperator){
-					Codes.BinaryOperator binOp = (Codes.BinaryOperator)code;
-					String op = prefix+binOp.operand(0);
-					//Check if the operation is to perform a subtraction on the loop variable.
-					if(binOp.kind.equals(BinaryOperatorKind.SUB)&& V.equals(op)){						
-						//Create an expression
-						putExpr(new Expr(binOp));
-					}									
+				if(code instanceof Codes.BinaryOperator || code instanceof Codes.Const){	
+					//Create an expression
+					putExpr(new Expr(code));					
 				}else if(code instanceof Codes.Assign){
 					//Check if the assignment bytecode is to over-write the value of loop variable.
 					Codes.Assign assign = (Codes.Assign)code;
 					String target = prefix+assign.target();
 					//Get the temporary variable
 					Expr expr = getExpr(prefix+assign.operand(0));
-					if(target.equals(V) && expr!=null){
-						String[] vars = expr.getVars();
-						//Get the coefficient of the decremental variable in the expr
-						if(vars.length>=2){
-							String decr_op = vars[1];
-							BigInteger coefficient = expr.getCoefficient(decr_op);
+					if(expr!=null && target.equals(V)){
+						//Find the coefficient of the decremental variable in the expr 
+						for(String var: expr.getVars()){
+							BigInteger coefficient = expr.getCoefficient(var);
 							//Check if the op kind is subtract
-							if(coefficient!=null&&coefficient.signum()<0){								
-								//Get the decrmental value from the expression table
-								return getExpr(decr_op);
-							}								
-						}							
-
+							if(!var.equals(V)&&coefficient.signum()<0){
+								Expr decrement = getExpr(V);
+								return decrement.getConstant();
+							}
+						}
 					}
 				}
 			}
 		}
 		return null;
 	}
-
 
 	private Expr while_cond(String V, String compareOp){
 		if(V != null){

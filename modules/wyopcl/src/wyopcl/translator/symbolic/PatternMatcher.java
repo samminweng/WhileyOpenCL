@@ -93,13 +93,15 @@ public class PatternMatcher {
 					if(loop_blk == null){
 						loop_blk = new ArrayList<Code>();
 					}
-				}				
+				}
+			
 				//Decide whether to put the code into loop blk or expression table.
-				if(loop_blk==null){
-					putExpr(code);
-				}else{
+				if(loop_blk!=null){
 					loop_blk.add(code);	
-				}				
+				}else{
+					//Create the expression and put it into the table.
+					putExpr(code);
+				}
 				//End the loop block
 				if(code instanceof Codes.Label){
 					Codes.Label label = (Codes.Label)code;
@@ -112,13 +114,6 @@ public class PatternMatcher {
 							result += "\n\t"+loop_code;
 						}
 						result += "\n}";
-						//Expression table
-						//Sort the expression table by key
-						/*TreeMap<String, Expr> sortedMap = new TreeMap<String, Expr>(expressiontable);
-						for(Entry<String, Expr> expr:sortedMap.entrySet()){
-							result += "\n"+expr.getKey() + " = " +expr.getValue();
-						}
-						sortedMap = null;*/
 						result +="\n"+pattern;
 						System.out.println(result);
 						loop_blk = null;
@@ -140,7 +135,7 @@ public class PatternMatcher {
 	 * @param V the loop variable
 	 * @param blk the loop block
 	 * @return decrement value (BigInteger). If not matched, return null;
-	 */
+	 *//*
 	private Expr incr(String V, List<Code> blk){
 		//Used to map the symbol with values (BigInteger).		
 		for(Code code: blk){							
@@ -164,7 +159,7 @@ public class PatternMatcher {
 			}						
 		}		
 		return null;
-	}
+	}*/
 
 	
 	/**
