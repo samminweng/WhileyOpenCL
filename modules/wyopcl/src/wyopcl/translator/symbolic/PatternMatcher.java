@@ -33,7 +33,6 @@ import wyopcl.translator.symbolic.pattern.Pattern;
  */
 public class PatternMatcher {
 	private final Configuration config;
-	private final String prefix = "%";
 	private HashMap<String, Expr> expressiontable;//Store constant integers along with symbols.
 
 	public PatternMatcher(Configuration config){
@@ -49,9 +48,12 @@ public class PatternMatcher {
 	private void putExpr(Code code){
 		Expr expr = new Expr(code);
 		if(expr.getTarget()!=null){
-			System.out.println(expr.getTarget() + " = "+ expr);
-			//Add to the expression table.
-			expressiontable.put(expr.getTarget(), expr);
+			//Check if the target exists in the expression table.
+			if(!expressiontable.containsKey(expr.getTarget())){
+				System.out.println(expr.getTarget() + " = "+ expr);
+				//Add to the expression table.
+				expressiontable.put(expr.getTarget(), expr);
+			}			
 		}else{
 			//Nullify the expr object.
 			expr = null;
@@ -98,10 +100,10 @@ public class PatternMatcher {
 				//Decide whether to put the code into loop blk or expression table.
 				if(loop_blk!=null){
 					loop_blk.add(code);	
-				}else{
-					//Create the expression and put it into the table.
-					putExpr(code);
 				}
+				//Create the expression and put it into the table.
+				putExpr(code);
+				
 				//End the loop block
 				if(code instanceof Codes.Label){
 					Codes.Label label = (Codes.Label)code;
@@ -177,18 +179,18 @@ public class PatternMatcher {
 		Expr decr = decr(V, loop_block);
 		Expr incr = incr(V, loop_block);*/
 		pattern = new P1(loop_block, expressiontable);
-		/*if(pattern.isNil()){
-			pattern = new P2(V, init, decr, incr, while_cond(V, ">=", loop_block)); 
+		if(pattern.isNil()){
+			/*pattern = new P2(V, init, decr, incr, while_cond(V, ">=", loop_block)); 
 			if(pattern.isNil()){
 				pattern = new P3(V, init, decr, incr, while_cond(V, "<", loop_block)); 
 				if(pattern.isNil()){
 					pattern = new P4(V, init, decr, incr, while_cond(V, "<=", loop_block));
-					if(pattern.isNil()){
+					if(pattern.isNil()){*/
 						pattern = new NullPattern();
-					}
+					/*}
 				}
-			}
-		}*/	
+			}*/
+		}	
 
 		return pattern;
 	}
