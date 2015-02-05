@@ -31,11 +31,11 @@ public class P1 extends Pattern{
 		this.decr = decr(this.V);
 		this.lowerExpr = while_cond(this.V, ">");
 		if(this.V!=null&&this.initExpr!=null&&
-		  this.decr!=null&&this.decr.compareTo(BigInteger.ONE)==0&&
-		  this.lowerExpr!=null){
-			this.isNil = true;
-		}else{
+				this.decr!=null&&this.decr.compareTo(BigInteger.ONE)==0&&
+				this.lowerExpr!=null){
 			this.isNil = false;
+		}else{
+			this.isNil = true;
 		}	
 	}
 
@@ -43,11 +43,11 @@ public class P1 extends Pattern{
 	 * Check if the code is a constant assignment and put the symbol and value into the symbol table. 
 	 *
 	 * @param code
-	 */
+	 *//*
 	private void putExpr(Expr expr){
 		System.out.println(expr.getTarget() + " = "+ expr);
 		expressiontable.put(expr.getTarget(), expr);	
-	}
+	}*/
 
 	/**
 	 * Get the symbol value from symbol table.
@@ -73,7 +73,7 @@ public class P1 extends Pattern{
 	public boolean isNil() {
 		return this.isNil;
 	}
-	
+
 	@Override
 	public Expr getNumberOfIterations() {
 		if(numberOfIterations==null){
@@ -119,7 +119,7 @@ public class P1 extends Pattern{
 	private Expr replaceExpr(String var, Expr expr){
 		Expr var_expr = getExpr(var);
 		if(var_expr == null) return expr;
-		
+
 		expr = expr.merge(var, var_expr);
 		String[] vars = expr.getVars();
 		for(String new_var: vars){
@@ -127,8 +127,8 @@ public class P1 extends Pattern{
 		}		
 		return expr;
 	}
-	
-	
+
+
 
 	/**
 	 * Get the initial value of loop variable from expression table.
@@ -145,28 +145,36 @@ public class P1 extends Pattern{
 	}
 
 	/**
-	 * Get the decremental value for the given loop variable.
+	 * Get the decremental value for the given loop variable. The conditions are
+	 * <ul>
+	 * 	<li>reassigned the value of loop variable
+	 *  <li>decrement the value by the constant ONE
+	 * </ul>
+	 * For example, the loop variable is assigned to a temporary variable (%3 = %16)  
+	 * which performs the subtraction on the loop variable (%16 = %3 - %15 and %15 = 1) 
+	 * 
 	 * @return decrement value (Expr). If not matched, return null;
 	 */
 	private BigInteger decr(String V){
 		if(V!= null){
 			for(Code code: blk){							
-				if(code instanceof Codes.BinaryOperator || code instanceof Codes.Const){	
-					//Create an expression
-					putExpr(new Expr(code));					
-				}else if(code instanceof Codes.Assign){
+				if(code instanceof Codes.Assign){
 					//Check if the assignment bytecode is to over-write the value of loop variable.
 					Codes.Assign assign = (Codes.Assign)code;
 					String target = prefix+assign.target();
-					//Get the temporary variable
-					Expr expr = getExpr(prefix+assign.operand(0));
-					if(expr!=null && target.equals(V)){
-						//Find the coefficient of the decremental variable in the expr 
-						for(String var: expr.getVars()){
-							BigInteger coefficient = expr.getCoefficient(var);
-							//Check if the op kind is subtract
-							if(!var.equals(V)&&coefficient.signum()<0){
-								Expr decrement = getExpr(V);
+					//V  = %3
+					if(target.equals(V)){
+						//Get the temporary variable, e.g. %16
+						Expr expr = getExpr(prefix+assign.operand(0));
+						//Check if the loop variable is used in the expression for the tmp variable.
+						String[] vars = expr.getVars();
+						if(expr.getVarIndex(V) == 0 && vars.length == 2){
+							String decr_op = vars[1];
+							//Find the coefficient of the decremental variable in the expr 
+							BigInteger coefficient = expr.getCoefficient(decr_op);
+							//Check if the op kind is a subtraction
+							if(coefficient.signum()<0){
+								Expr decrement = getExpr(decr_op);
 								return decrement.getConstant();
 							}
 						}

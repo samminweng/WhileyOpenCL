@@ -45,7 +45,6 @@ public class Expr implements Cloneable{
 				//c0
 				addConstant(((Constant.Integer) constant).value);	
 			}
-
 		}else if(code instanceof Codes.BinaryOperator){
 			target = prefix+((Codes.BinaryOperator)code).target();
 			Codes.BinaryOperator binOp = (Codes.BinaryOperator)code;
@@ -63,9 +62,6 @@ public class Expr implements Cloneable{
 			default:
 				throw new RuntimeException(binOp.kind+"Not implemented");				
 			}			
-		}else if(code instanceof Codes.If){
-			Codes.If if_code = (Codes.If)code;
-			addVar(BigInteger.ONE, prefix+if_code.rightOperand);
 		}
 	}	
 	/**
