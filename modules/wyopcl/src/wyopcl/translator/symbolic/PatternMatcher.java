@@ -13,6 +13,7 @@ import wyil.lang.Codes.Comparator;
 import wyil.lang.Constant;
 import wyil.lang.Code.Block;
 import wyil.lang.Codes.BinaryOperatorKind;
+import wyil.lang.Type;
 import wyil.lang.WyilFile.Case;
 import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
 import wyopcl.translator.Configuration;
@@ -33,6 +34,7 @@ import wyopcl.translator.symbolic.pattern.Pattern;
  */
 public class PatternMatcher {
 	private final Configuration config;
+	private final String prefix="%";
 	private HashMap<String, Expr> expressiontable;//Store constant integers along with symbols.
 
 	public PatternMatcher(Configuration config){
@@ -45,8 +47,7 @@ public class PatternMatcher {
 	 *
 	 * @param code
 	 */
-	private void putExpr(Code code){
-		Expr expr = new Expr(code);
+	private void putExpr(Expr expr){
 		if(expr.getTarget()!=null){
 			//Check if the target exists in the expression table.
 			if(!expressiontable.containsKey(expr.getTarget())){
@@ -58,7 +59,7 @@ public class PatternMatcher {
 			//Nullify the expr object.
 			expr = null;
 		}
-		
+
 	}	
 
 	/**
@@ -70,12 +71,17 @@ public class PatternMatcher {
 		String loop_label = null;
 		int line = 0;
 		String func_name = functionOrMethod.name();
+		//Clear the symbol table.
+		expressiontable.clear();
+		/*//Add the input parameters to the expression table.
+		int param_size = functionOrMethod.type().params().size();
+		for(int index=0;index<param_size;index++){
+			putExpr(new Expr(prefix+index));
+		}	*/	
 		//Iterate each byte-code of a function block.			
 		for(Case mcase : functionOrMethod.cases()){
 			//End of the function
-			System.out.println("\n----------------Start of "+func_name+" function----------------");
-			//Clear the symbol table.
-			expressiontable.clear();
+			System.out.println("\n----------------Start of "+func_name+" function----------------");	
 			//Parse each byte-code and add the constraints accordingly.
 			for(Block.Entry entry :mcase.body()){
 				Code code = entry.code;
@@ -96,14 +102,14 @@ public class PatternMatcher {
 						loop_blk = new ArrayList<Code>();
 					}
 				}
-			
+
 				//Decide whether to put the code into loop blk or expression table.
 				if(loop_blk!=null){
 					loop_blk.add(code);	
 				}
 				//Create the expression and put it into the table.
-				putExpr(code);
-				
+				putExpr(new Expr(code));
+
 				//End the loop block
 				if(code instanceof Codes.Label){
 					Codes.Label label = (Codes.Label)code;
@@ -130,13 +136,10 @@ public class PatternMatcher {
 
 	}
 
-	
+
 
 	/**
-	 * Get the incremental value for the given loop variable.
-	 * @param V the loop variable
-	 * @param blk the loop block
-	 * @return decrement value (BigInteger). If not matched, return null;
+	 * 
 	 *//*
 	private Expr incr(String V, List<Code> blk){
 		//Used to map the symbol with values (BigInteger).		
@@ -163,7 +166,7 @@ public class PatternMatcher {
 		return null;
 	}*/
 
-	
+
 	/**
 	 * Takes the list of loop bytecode as input, take the block of loop bytecode, iterate over all available patterns
 	 * and check if the given loop is matched with any one of them by using the pattern checker.
@@ -172,24 +175,12 @@ public class PatternMatcher {
 	 */
 	private Pattern analyze(List<Code> loop_block){
 		Pattern pattern;
-		/*String V = loop_Var(loop_block);
-		//Get initial value from symbol table.
-		Expr init = init(V);
-		//Check if loop var is incremented or decremented by a constant.
-		Expr decr = decr(V, loop_block);
-		Expr incr = incr(V, loop_block);*/
 		pattern = new P1(loop_block, expressiontable);
 		if(pattern.isNil()){
-			/*pattern = new P2(V, init, decr, incr, while_cond(V, ">=", loop_block)); 
+			pattern = new P2(loop_block, expressiontable); 
 			if(pattern.isNil()){
-				pattern = new P3(V, init, decr, incr, while_cond(V, "<", loop_block)); 
-				if(pattern.isNil()){
-					pattern = new P4(V, init, decr, incr, while_cond(V, "<=", loop_block));
-					if(pattern.isNil()){*/
-						pattern = new NullPattern();
-					/*}
-				}
-			}*/
+				pattern = new NullPattern();
+			}
 		}	
 
 		return pattern;

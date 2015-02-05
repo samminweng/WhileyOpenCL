@@ -1,6 +1,6 @@
 import whiley.lang.System
 
-function P1(int limit) => int
+function f1(int limit) => int
 requires limit <= 1000000:
     int i=limit-1
     int sum=0
@@ -9,7 +9,7 @@ requires limit <= 1000000:
         i=i-1
     return sum
     
-function P2(int limit) => int
+function f2(int limit) => int
 requires limit <= 1000000:
     int i=limit-1
     int sum=0
@@ -18,7 +18,7 @@ requires limit <= 1000000:
         i=i-1
     return sum
 
-function P3(int limit) => int
+function f3(int limit) => int
 requires limit <= 1000000:
     int i=0
     int sum=0
@@ -27,7 +27,7 @@ requires limit <= 1000000:
         i=i+1
     return sum
 
-function P4(int limit) => int
+function f4(int limit) => int
 requires limit <= 1000000:
     int i=0
     int sum=0
@@ -37,7 +37,7 @@ requires limit <= 1000000:
     return sum
 
 method main(System.Console sys):
-    sys.out.println("P1 Loop Sum="++P1(5))
-    sys.out.println("P2 Loop Sum="++P2(5))
-    sys.out.println("P3 Loop Sum="++P3(5))
-    sys.out.println("P4 Loop Sum="++P4(5))
+    sys.out.println("f1 Loop Sum="++f1(5))
+    sys.out.println("f2 Loop Sum="++f2(5))
+    sys.out.println("f3 Loop Sum="++f3(5))
+    sys.out.println("f4 Loop Sum="++f4(5))

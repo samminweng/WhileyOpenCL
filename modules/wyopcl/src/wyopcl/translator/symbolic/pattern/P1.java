@@ -6,11 +6,17 @@ import java.util.List;
 
 import wyil.lang.Code;
 import wyil.lang.Codes;
-import wyil.lang.Codes.BinaryOperatorKind;
 import wyil.lang.Codes.Comparator;
 import wyopcl.translator.symbolic.Expr;
 /**
- * while_loop && loop_var(V) && decr(V, 1) && init(V, Init) &&  while_cond(V, "> ", LowerExpr) => loop_iters(V, Init - LowerExpr)
+ * Implemented the while-loop pattens, as follows:
+ * <ul>
+ * <li>while_loop && loop_var(V) && decr(V, 1) && init(V, Init) &&  while_cond(V, ">", LowerExpr) => loop_iters(V, Init - LowerExpr)
+ * <li>while_loop && loop_var(V) && decr(V, 1) && init(V, Init) &&  while_cond(V, ">=", LowerExpr) => loop_iters(V, Init - LowerExpr + 1)
+ * </ul>
+ * <p>
+ * This class takes the loop block and expression table as input and, if the block is matched the conditions, then produce the pattern as output.
+ * 
  * @author Min-Hsien Weng
  *
  */
@@ -18,39 +24,29 @@ public class P1 extends Pattern{
 	private final String V;
 	private final Expr initExpr;
 	private final BigInteger decr;
+	private String comparatorOp;
 	private final Expr lowerExpr;
 	private final HashMap<String, Expr> expressiontable;
 	private final List<Code> blk;
-
+	
 	public P1(List<Code> blk, HashMap<String, Expr> expressiontable) {
-		this.expressiontable = expressiontable;
 		this.blk = blk;
+		this.expressiontable = expressiontable;
 		this.type = "P1";		
 		this.V = loop_var();
 		this.initExpr = init(this.V);
 		this.decr = decr(this.V);
-		this.lowerExpr = while_cond(this.V, ">");
-		if(this.V!=null&&this.initExpr!=null&&
-				this.decr!=null&&this.decr.compareTo(BigInteger.ONE)==0&&
-				this.lowerExpr!=null){
+		this.lowerExpr = while_cond(this.V);
+		if(this.V!=null&&this.initExpr!=null&&this.decr!=null&&this.lowerExpr!=null){
 			this.isNil = false;
 		}else{
 			this.isNil = true;
 		}	
 	}
 
-	/**
-	 * Check if the code is a constant assignment and put the symbol and value into the symbol table. 
-	 *
-	 * @param code
-	 *//*
-	private void putExpr(Expr expr){
-		System.out.println(expr.getTarget() + " = "+ expr);
-		expressiontable.put(expr.getTarget(), expr);	
-	}*/
 
 	/**
-	 * Get the symbol value from symbol table.
+	 * Get the value from expression table.
 	 * @param op
 	 * @return value(Expr). If not found, return null.
 	 */
@@ -61,11 +57,49 @@ public class P1 extends Pattern{
 		return null;
 	}
 
+	/**
+	 * Get the lower or upper bound of loop condition.
+	 * @param V the loop variable
+	 * @param compareOp the type of comparator 
+	 * @return the expression of bound.
+	 */
+	private Expr while_cond(String V){
+		Expr expr = null;
+		if(V != null){
+			for(Code code: blk){
+				if(code instanceof Codes.If){
+					Codes.If if_code = (Codes.If)code;
+					//Check if the loop var occurs in the condition
+					if(V.equals(prefix+if_code.leftOperand)){
+						if(if_code.op.equals(Comparator.LTEQ) ){
+							comparatorOp = ">";
+							//Get the expression 
+							expr = getExpr(prefix+if_code.rightOperand);
+							if(expr == null){
+								expr = new Expr(prefix+if_code.rightOperand);
+							}
+						}else if(if_code.op.equals(Comparator.LT)){
+							comparatorOp = ">=";
+							//Get the expression 
+							expr = getExpr(prefix+if_code.rightOperand);
+							if(expr == null){
+								expr = new Expr(prefix+if_code.rightOperand);
+							}
+						}else{
+							comparatorOp = null;
+						}
+					}
+				}		
+			}		
+		}
+		return expr;
+	}
+
 
 	@Override
 	public String toString() {
 		return type + ":while_loop && loop_var("+V+") && decr("+V+", "+decr+")"
-				+ " && init("+V+", "+initExpr+") &&  while_cond("+V+", > , "+lowerExpr+")"
+				+ " && init("+V+", "+initExpr+") &&  while_cond("+V+", "+comparatorOp+", "+lowerExpr+")"
 				+ "\n=>loop_iters("+V+", " + getNumberOfIterations()+")";
 	}
 
@@ -78,7 +112,11 @@ public class P1 extends Pattern{
 	public Expr getNumberOfIterations() {
 		if(numberOfIterations==null){
 			Expr result = (Expr)initExpr.clone();
-			numberOfIterations = result.subtract(lowerExpr);
+			if(comparatorOp.equals(">")){
+				numberOfIterations = result.subtract(lowerExpr);
+			}else{
+				numberOfIterations = result.subtract(lowerExpr).add(new Expr(BigInteger.ONE));
+			}			
 		}		
 		return numberOfIterations;
 	}
@@ -185,44 +223,6 @@ public class P1 extends Pattern{
 		return null;
 	}
 
-	private Expr while_cond(String V, String compareOp){
-		if(V != null){
-			for(Code code: blk){
-				if(code instanceof Codes.If){
-					Codes.If if_code = (Codes.If)code;
-					//Check if the loop var occurs in the condition
-					if(V.equals(prefix+if_code.leftOperand)){
-						//switch(compareOp){
-						//case ">":
-						if(if_code.op.equals(Comparator.LTEQ)){
-							//Get the expression 
-							return getExpr(prefix+if_code.rightOperand);
-						}
-						//	break;
-						/*//case ">=":
-							if(if_code.op.equals(Comparator.LT)){
-								return new Expr(code);	
-							}
-							break;
-						case "<":
-							if(if_code.op.equals(Comparator.GTEQ)){
-								return new Expr(code);	
-							}							
-							break;
-						case "<=":
-							if(if_code.op.equals(Comparator.GT)){
-								return new Expr(code);	
-							}
-							break;
-						default:
-							throw new RuntimeException("Unknown comparator operator "+compareOp);
-						}*/
-					}				
-				}		
-			}
-		}
 
-		return null;
-	}
 
 }

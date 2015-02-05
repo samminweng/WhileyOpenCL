@@ -72,6 +72,18 @@ public class Expr implements Cloneable{
 		this();
 		initialize(code);		
 	}
+	
+	/**
+	 * Constructor to create an expression by specifying the target var.
+	 * @param op
+	 */
+	public Expr(String var){
+		this();
+		this.target = var;
+		this.addVar(BigInteger.ONE, var);
+	}
+	
+	
 	/**
 	 * Multiple constructor to create an expression with a constant.
 	 * @param constant the constant

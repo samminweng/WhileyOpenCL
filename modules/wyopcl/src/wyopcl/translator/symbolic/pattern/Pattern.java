@@ -1,8 +1,11 @@
 package wyopcl.translator.symbolic.pattern;
 
+import java.util.HashMap;
 import java.util.List;
 
 import wyil.lang.Code;
+import wyil.lang.Codes;
+import wyil.lang.Codes.Comparator;
 import wyopcl.translator.symbolic.Expr;
 
 /**
@@ -17,10 +20,12 @@ public abstract class Pattern {
 	protected boolean isNil;
 	protected Expr numberOfIterations;// the number of loop iterations in affine form. 
 	
-	public Pattern(){			
+	public Pattern(){		
 	}
-	
+
 	public abstract boolean isNil();
 	public abstract Expr getNumberOfIterations();
+
 	
+
 }
