@@ -36,10 +36,11 @@ public class PatternMatcher {
 	private final Configuration config;
 	private final String prefix="%";
 	private HashMap<String, Expr> expressiontable;//Store constant integers along with symbols.
-
+	private List<Class<? extends Pattern>> avail_patterns;
 	public PatternMatcher(Configuration config){
 		this.config = config;
-		this.expressiontable = new HashMap<String, Expr>(); 
+		this.expressiontable = new HashMap<String, Expr>();
+		this.avail_patterns = new ArrayList<Class<? extends Pattern>>();
 	}	
 
 	/**
@@ -73,11 +74,11 @@ public class PatternMatcher {
 		String func_name = functionOrMethod.name();
 		//Clear the symbol table.
 		expressiontable.clear();
-		/*//Add the input parameters to the expression table.
+		//Add the input parameters to the expression table.
 		int param_size = functionOrMethod.type().params().size();
 		for(int index=0;index<param_size;index++){
 			putExpr(new Expr(prefix+index));
-		}	*/	
+		}		
 		//Iterate each byte-code of a function block.			
 		for(Case mcase : functionOrMethod.cases()){
 			//End of the function
@@ -134,37 +135,7 @@ public class PatternMatcher {
 			System.out.println("\n----------------End of "+func_name+" function----------------\n");
 		}		
 
-	}
-
-
-
-	/**
-	 * 
-	 *//*
-	private Expr incr(String V, List<Code> blk){
-		//Used to map the symbol with values (BigInteger).		
-		for(Code code: blk){							
-			if(code instanceof Codes.BinaryOperator){
-				Codes.BinaryOperator binOp = (Codes.BinaryOperator)code;
-				BinaryOperatorKind kind = binOp.kind;
-				//Check if the op kind is subtract
-				if(kind.equals(BinaryOperatorKind.ADD)){
-					int size = binOp.operands().length; 
-					//Check if the loop variable is used in the code
-					for(int index=0; index<size;index++){
-						String op = prefix+binOp.operand(index);
-						if(V.equals(op)&&(index+1)<size){
-							//Create an expression to store the decremental value.
-							Expr expr = new Expr(BigInteger.ZERO);
-							expr.addVarOrConstant(BigInteger.ONE, prefix+binOp.operand(index+1));
-							return expr;							
-						}				
-					}
-				}				
-			}						
-		}		
-		return null;
-	}*/
+	}	
 
 
 	/**

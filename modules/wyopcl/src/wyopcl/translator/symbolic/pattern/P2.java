@@ -71,17 +71,11 @@ public class P2 extends Pattern{
 						if(if_code.op.equals(Comparator.GTEQ) ){
 							comparatorOp = "<";
 							//Get the expression 
-							expr = getExpr(prefix+if_code.rightOperand);
-							if(expr == null){
-								expr = new Expr(prefix+if_code.rightOperand);
-							}
+							return getExpr(prefix+if_code.rightOperand);
 						}else if(if_code.op.equals(Comparator.GT)){
 							comparatorOp = "<=";
 							//Get the expression
-							expr = getExpr(prefix+if_code.rightOperand);
-							if(expr == null){
-								expr = new Expr(prefix+if_code.rightOperand);
-							}
+							return getExpr(prefix+if_code.rightOperand);
 						}else{
 							comparatorOp = null;
 						}
@@ -154,16 +148,16 @@ public class P2 extends Pattern{
 	private Expr replaceExpr(String var, Expr expr){
 		Expr var_expr = getExpr(var);
 		if(var_expr == null) return expr;
-
 		expr = expr.merge(var, var_expr);
 		String[] vars = expr.getVars();
 		for(String new_var: vars){
-			expr = replaceExpr(new_var, expr);
+			if(new_var != null && !new_var.equals(var)){
+				//check if the new var is not the existing var
+				expr = replaceExpr(new_var, expr);				
+			}			
 		}		
 		return expr;
 	}
-
-
 
 	/**
 	 * Get the initial value of loop variable from expression table.

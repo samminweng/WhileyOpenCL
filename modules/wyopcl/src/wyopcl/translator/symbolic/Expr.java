@@ -206,6 +206,9 @@ public class Expr implements Cloneable{
 		if(index!= -1){			
 			//Get the coefficient
 			BigInteger coefficient = getCoefficient(var);
+			//Remove the var and its coefficient
+			this.ref_vars.remove(var);
+			this.coefficients.remove(coefficient);
 			if(coefficient.signum()>0){
 				//Addition				
 				this.add(expr.multiply(coefficient.abs()));
@@ -213,9 +216,7 @@ public class Expr implements Cloneable{
 				//Subtraction
 				this.subtract(expr.multiply(coefficient.abs()));
 			}
-			//Remove the var and its coefficient
-			this.ref_vars.remove(index);
-			this.coefficients.remove(index);
+			
 		}
 		return this;		
 	}

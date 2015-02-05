@@ -74,17 +74,11 @@ public class P1 extends Pattern{
 						if(if_code.op.equals(Comparator.LTEQ) ){
 							comparatorOp = ">";
 							//Get the expression 
-							expr = getExpr(prefix+if_code.rightOperand);
-							if(expr == null){
-								expr = new Expr(prefix+if_code.rightOperand);
-							}
+							return getExpr(prefix+if_code.rightOperand);							
 						}else if(if_code.op.equals(Comparator.LT)){
 							comparatorOp = ">=";
 							//Get the expression 
-							expr = getExpr(prefix+if_code.rightOperand);
-							if(expr == null){
-								expr = new Expr(prefix+if_code.rightOperand);
-							}
+							return getExpr(prefix+if_code.rightOperand);
 						}else{
 							comparatorOp = null;
 						}
@@ -161,7 +155,10 @@ public class P1 extends Pattern{
 		expr = expr.merge(var, var_expr);
 		String[] vars = expr.getVars();
 		for(String new_var: vars){
-			expr = replaceExpr(new_var, expr);
+			if(new_var != null && !new_var.equals(var)){
+				//check if the new var is not the existing var
+				expr = replaceExpr(new_var, expr);				
+			}			
 		}		
 		return expr;
 	}
