@@ -19,8 +19,11 @@ public abstract class Pattern {
 	protected String type;//The pattern type
 	protected boolean isNil;
 	protected Expr numberOfIterations;// the number of loop iterations in affine form. 
-	
-	public Pattern(){		
+	protected final HashMap<String, Expr> expressiontable;
+	protected final List<Code> blk;
+	public Pattern(List<Code> blk, HashMap<String, Expr> expressiontable){
+		this.blk = blk;
+		this.expressiontable = expressiontable;
 	}
 
 	public abstract boolean isNil();

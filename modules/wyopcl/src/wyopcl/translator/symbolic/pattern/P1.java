@@ -26,12 +26,10 @@ public class P1 extends Pattern{
 	private final BigInteger decr;
 	private String comparatorOp;
 	private final Expr lowerExpr;
-	private final HashMap<String, Expr> expressiontable;
-	private final List<Code> blk;
+	
 	
 	public P1(List<Code> blk, HashMap<String, Expr> expressiontable) {
-		this.blk = blk;
-		this.expressiontable = expressiontable;
+		super(blk, expressiontable);
 		this.type = "P1";		
 		this.V = loop_var();
 		this.initExpr = init(this.V);

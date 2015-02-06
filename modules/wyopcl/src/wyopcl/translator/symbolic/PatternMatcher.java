@@ -1,5 +1,7 @@
 package wyopcl.translator.symbolic;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,11 +38,13 @@ public class PatternMatcher {
 	private final Configuration config;
 	private final String prefix="%";
 	private HashMap<String, Expr> expressiontable;//Store constant integers along with symbols.
-	private List<Class<? extends Pattern>> avail_patterns;
+	private List<Class<? extends Pattern>> avail_patterns;//Store the available patterns.
 	public PatternMatcher(Configuration config){
 		this.config = config;
 		this.expressiontable = new HashMap<String, Expr>();
 		this.avail_patterns = new ArrayList<Class<? extends Pattern>>();
+		this.avail_patterns.add(P1.class);
+		this.avail_patterns.add(P2.class);
 	}	
 
 	/**
@@ -145,14 +149,30 @@ public class PatternMatcher {
 	 * @return pattern. If not found, return null.
 	 */
 	private Pattern analyze(List<Code> loop_block){
-		Pattern pattern;
-		pattern = new P1(loop_block, expressiontable);
-		if(pattern.isNil()){
-			pattern = new P2(loop_block, expressiontable); 
-			if(pattern.isNil()){
-				pattern = new NullPattern();
+		Pattern pattern = null;		
+		//Iterate over all the available patterns.
+		for(Class<? extends Pattern> avail_pattern: avail_patterns){
+			try {
+				//Get the constructor				
+				Constructor<? extends Pattern> constructor = avail_pattern.getConstructor(List.class, HashMap.class);
+				if(constructor!=null){
+					pattern = constructor.newInstance(loop_block, expressiontable);
+					//Check if the loop block is matched with the pattern. If so, then return the pattern. 
+					if(!pattern.isNil()){
+						return pattern;
+					}					
+				}								
+			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+					| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		}	
+			pattern = null;
+		}
+		//If no patterns are matched, then return NullPattern.
+		if(pattern == null){
+			pattern = new NullPattern(loop_block, expressiontable);
+		}		
 
 		return pattern;
 	}
