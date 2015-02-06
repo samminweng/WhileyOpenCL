@@ -64,9 +64,7 @@ public class P1 extends Pattern{
 	private Expr while_cond(String V){
 		Expr expr = null;
 		if(V != null){
-			
-			for(int index=0;index<=blk.size();index++){
-				Code code = blk.get(index); 
+			for(Code code: blk){ 
 				if(code instanceof Codes.If){
 					Codes.If if_code = (Codes.If)code;
 					//Check if the loop var occurs in the condition
