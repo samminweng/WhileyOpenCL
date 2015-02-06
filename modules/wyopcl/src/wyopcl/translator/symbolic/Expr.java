@@ -62,6 +62,10 @@ public class Expr implements Cloneable{
 			default:
 				throw new RuntimeException(binOp.kind+"Not implemented");				
 			}			
+		}else if(code instanceof Codes.LengthOf){
+			Codes.LengthOf lengthOf = (Codes.LengthOf)code;
+			target = prefix+lengthOf.target();
+			addVar(BigInteger.ONE, "|"+prefix+lengthOf.operand(0)+"|");
 		}
 	}	
 	/**

@@ -82,7 +82,9 @@ public class PatternMatcher {
 		int param_size = functionOrMethod.type().params().size();
 		for(int index=0;index<param_size;index++){
 			putExpr(new Expr(prefix+index));
-		}		
+		}
+		
+		String label_AssertOrAssume = null;
 		//Iterate each byte-code of a function block.			
 		for(Case mcase : functionOrMethod.cases()){
 			//End of the function
@@ -97,43 +99,67 @@ public class PatternMatcher {
 					}else{
 						System.out.println(func_name+"."+(++line)+" [\t"+code+"]");
 					}
+				}
+				
+				if(code instanceof Codes.AssertOrAssume){
+					Codes.AssertOrAssume assertOrAssume = (Codes.AssertOrAssume)code;
+					label_AssertOrAssume = assertOrAssume.target;
 				}				
-				//Start a loop block
-				if(code instanceof Codes.Loop){
-					Codes.Loop loop = (Codes.Loop)code;
-					loop_label = loop.target;
-					//Lazy initialization
-					if(loop_blk == null){
-						loop_blk = new ArrayList<Code>();
-					}
-				}
-
-				//Decide whether to put the code into loop blk or expression table.
-				if(loop_blk!=null){
-					loop_blk.add(code);	
-				}
-				//Create the expression and put it into the table.
-				putExpr(new Expr(code));
-
-				//End the loop block
-				if(code instanceof Codes.Label){
-					Codes.Label label = (Codes.Label)code;
-					if(loop_blk!=null && loop_label.equals(label.label)){						
-						Pattern pattern = analyze(loop_blk);
-						String result = "";
-						result += "{";
-						//Loop block						
-						for(Code loop_code: loop_blk){
-							result += "\n\t"+loop_code;
+				
+				//Check if the bytecode is inside an assertion or assumption
+				//Omit the bytecode in a assertion or assumption.
+				if(label_AssertOrAssume == null){					
+					//Start a loop block
+					if(code instanceof Codes.Loop){
+						Codes.Loop loop = (Codes.Loop)code;
+						loop_label = loop.target;
+						//Lazy initialization
+						if(loop_blk == null){
+							loop_blk = new ArrayList<Code>();
 						}
-						result += "\n}";
-						result +="\n"+pattern;
-						System.out.println(result);
-						loop_blk = null;
-						//reset the loop blk
-						loop_label = null;
-					}										
+					}
+
+					//Decide whether to put the code into loop blk or expression table.
+					if(loop_blk!=null){
+						loop_blk.add(code);	
+					}
+					//Create the expression and put it into the table.
+					putExpr(new Expr(code));
+
+					//End the loop block
+					if(code instanceof Codes.Label){
+						Codes.Label label = (Codes.Label)code;
+						if(loop_blk!=null && loop_label.equals(label.label)){						
+							Pattern pattern = analyze(loop_blk);
+							String result = "";
+							result += "{";
+							//Print out all the bytecode in the loop block
+							for(Code loop_code: loop_blk){
+								if(code instanceof Codes.Loop || code instanceof Codes.LoopEnd){
+									result += "\n\t"+loop_code;
+								}else{
+									result += "\n\t\t"+loop_code;
+								}							
+							}
+							result += "\n}";
+							result +="\n"+pattern;
+							System.out.println(result);
+							loop_blk = null;
+							//reset the loop blk
+							loop_label = null;
+						}										
+					}					
 				}
+				
+				//Nullify the label of an assertion or assumption. 
+				if(label_AssertOrAssume!= null){
+					if(code instanceof Codes.Label){
+						Codes.Label label = (Codes.Label)code;
+						if(label_AssertOrAssume.equals(label.label)){
+							label_AssertOrAssume = null;
+						}					
+					}				
+				}			
 			}			
 			//End of the function
 			System.out.println("\n----------------End of "+func_name+" function----------------\n");
