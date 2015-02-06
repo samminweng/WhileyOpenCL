@@ -22,8 +22,6 @@ import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.pattern.NullPattern;
 import wyopcl.translator.symbolic.pattern.P1;
 import wyopcl.translator.symbolic.pattern.P2;
-import wyopcl.translator.symbolic.pattern.P3;
-import wyopcl.translator.symbolic.pattern.P4;
 import wyopcl.translator.symbolic.pattern.Pattern;
 
 /**
