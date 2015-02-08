@@ -61,7 +61,7 @@ public class Configuration {
 
 	public void setMode(String mode, Object value) {
 		switch(mode){
-		case "range":
+		case "bound":
 			setProperty("mode", Mode.BoundAnalysis);
 			if(value.toString().equals("gradual")){
 				setProperty("widen", WidenStrategy.GRADUAL);

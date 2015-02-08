@@ -17,12 +17,12 @@ import wyopcl.translator.Configuration;
 
 public class WyopclMain extends WycMain{		
 	public static final OptArg[] EXTRA_OPTIONS = {
-		//Add the 'range' option 
-		new OptArg("range", null, OptArg.STRING, "Run bound analysis on whiley program with a specific widening strategy:\n"
+		//Add the 'bound' option 
+		new OptArg("bound", null, OptArg.STRING, "Run bound analysis on whiley program using the below widening strategy:\n"
 				+ "\t\t\t   [naive]\tWidening the bounds to infinity.\n"
 				+ "\t\t\t   [gradual]\tWidening the bounds to Int16, Int32, Int64 and infinity."),
-				new OptArg("code", "Generate the code in C for the whiley program\n"),
-				new OptArg("pattern", "Find the patterns for loops in the whiley program.\n")
+				new OptArg("code", "Generate the code in C for the whiley program"),
+				new OptArg("pattern", "Find the patterns for loops in the whiley program.")
 	};
 
 	public static OptArg[] DEFAULT_OPTIONS;
