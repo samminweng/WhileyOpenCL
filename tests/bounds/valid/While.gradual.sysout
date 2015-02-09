@@ -3,12 +3,12 @@ main.0 [	fieldload %2 = %0 out : {[string] args,{method(any) => void print,metho
 main.1 [	fieldload %3 = %2 println : {method(any) => void print,method(any) => void println}]
 main.2 [	const %4 = "Sum=" : string]
 main.3 [	const %6 = 5 : int]
-main.4 [	assert blklab7]
+main.4 [	assert blklab4]
 [30;1mmain.5 [	const %9 = 1000000 : int][0m
-[30;1mmain.6 [	ifle %6, %9 goto blklab6 : int][0m
+[30;1mmain.6 [	ifle %6, %9 goto blklab3 : int][0m
 [30;1mmain.7 [	fail ""precondition not satisfied""][0m
-[30;1mmain.8 [.blklab6][0m
-[30;1mmain.9 [.blklab7][0m
+[30;1mmain.8 [.blklab3][0m
+[30;1mmain.9 [.blklab4][0m
 main.10 [	invoke %5 = (%6) While:f : function(int) => int]
 Bounds at the 10th line number of function main:
 	domain(%6)	= [5..5]
@@ -54,12 +54,12 @@ main.16 [	fieldload %9 = %0 out : {[string] args,{method(any) => void print,meth
 main.17 [	fieldload %10 = %9 println : {method(any) => void print,method(any) => void println}]
 main.18 [	const %11 = "Sum=" : string]
 main.19 [	const %13 = 50000 : int]
-main.20 [	assert blklab9]
+main.20 [	assert blklab6]
 [30;1mmain.21 [	const %16 = 1000000 : int][0m
-[30;1mmain.22 [	ifle %13, %16 goto blklab8 : int][0m
+[30;1mmain.22 [	ifle %13, %16 goto blklab5 : int][0m
 [30;1mmain.23 [	fail ""precondition not satisfied""][0m
-[30;1mmain.24 [.blklab8][0m
-[30;1mmain.25 [.blklab9][0m
+[30;1mmain.24 [.blklab5][0m
+[30;1mmain.25 [.blklab6][0m
 main.26 [	invoke %12 = (%13) While:f : function(int) => int]
 Bounds at the 26th line number of function main:
 	domain(%5)	= [0..infinity]
