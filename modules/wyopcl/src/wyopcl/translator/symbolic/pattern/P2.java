@@ -26,7 +26,7 @@ public class P2 extends Pattern{
 	
 	public P2(List<Code> blk, HashMap<String, Expr> expressiontable) {
 		super(blk, expressiontable);
-		this.type = "P3";		
+		this.type = "P2";		
 		this.V = loop_var();
 		this.initExpr = init(this.V);
 		this.incr = incr(this.V);
