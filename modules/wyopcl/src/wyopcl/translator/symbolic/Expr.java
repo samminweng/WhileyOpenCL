@@ -21,7 +21,7 @@ public class Expr implements Cloneable{
 	private List<String> ref_vars;
 	private List<BigInteger> coefficients; // The list of coefficients .
 	private final String prefix ="%"; 
-	private BigInteger constant;//(the constant value is added as the last)
+	private BigInteger constant;//(the constant value)
 	/**
 	 * Basic constructor
 	 */
@@ -31,7 +31,10 @@ public class Expr implements Cloneable{
 		this.ref_vars = new ArrayList<String>();
 		this.coefficients = new ArrayList<BigInteger>();
 	}
-
+	/**
+	 * Initial the expression with the bytecode.
+	 * @param code the Whiley code
+	 */
 	private void initialize(Code code){
 		if(code instanceof Codes.Assign){
 			target = prefix+((Codes.Assign)code).target();
@@ -138,8 +141,8 @@ public class Expr implements Cloneable{
 	}
 
 	/**
-	 * Get the array index of the constant.
-	 * @return the array index. If no constant exists, return 0.
+	 * Get the constant.
+	 * @return the constant
 	 */
 	public BigInteger getConstant(){
 		return this.constant;
@@ -170,7 +173,11 @@ public class Expr implements Cloneable{
 		return this.ref_vars.toArray(new String[this.ref_vars.size()]);
 	}
 
-
+	/**
+	 * Get the coefficient of the given variable.
+	 * @param var the name of variable
+	 * @return the coefficient (BigInteger). If not found, return null.
+	 */
 	public BigInteger getCoefficient(String var){
 		BigInteger co = null;
 		int index = getVarIndex(var);
