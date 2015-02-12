@@ -86,7 +86,7 @@ public class P2 extends Pattern{
 
 	@Override
 	public String toString() {
-		return type + ":while_loop && loop_var("+V+") && decr("+V+", "+incr+")"
+		return type + ":while_loop && loop_var("+V+") && incr("+V+", "+incr+")"
 				+ " && init("+V+", "+initExpr+") &&  while_cond("+V+", "+comparatorOp+", "+upperExpr+")"
 				+ "\n=>loop_iters("+V+", " + getNumberOfIterations()+")";
 	}

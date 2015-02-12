@@ -34,15 +34,16 @@ import wyopcl.translator.symbolic.pattern.Pattern;
  */
 public class PatternMatcher {
 	private final Configuration config;
-	private final String prefix="%";
-	private HashMap<String, Expr> expressiontable;//Store constant integers along with symbols.
+	private final String prefix="%";	
 	private List<Class<? extends Pattern>> avail_patterns;//Store the available patterns.
+	private String label_AssertOrAssume;//The flag to store the label for an assertion or assumption.	
+
 	public PatternMatcher(Configuration config){
 		this.config = config;
-		this.expressiontable = new HashMap<String, Expr>();
 		this.avail_patterns = new ArrayList<Class<? extends Pattern>>();
 		this.avail_patterns.add(P1.class);
 		this.avail_patterns.add(P2.class);
+		this.label_AssertOrAssume = null;
 	}	
 
 	/**
@@ -50,7 +51,7 @@ public class PatternMatcher {
 	 *
 	 * @param code
 	 */
-	private void putExpr(Expr expr){
+	private void putExpr(Expr expr, HashMap<String, Expr> expressiontable){
 		if(expr.getTarget()!=null){
 			//Check if the target exists in the expression table.
 			if(!expressiontable.containsKey(expr.getTarget())){
@@ -62,27 +63,52 @@ public class PatternMatcher {
 			//Nullify the expr object.
 			expr = null;
 		}
+	}
 
-	}	
+
+	/**
+	 * Check if the code is inside an assertion or assumption.
+	 * @param code the code.
+	 * @return true if the code belongs to the assertion or assumption. Otherwise, return false.
+	 */
+	private boolean checkAssertOrAssume(Code code){
+		if(label_AssertOrAssume == null){
+			if(code instanceof Codes.AssertOrAssume){
+				Codes.AssertOrAssume assertOrAssume = (Codes.AssertOrAssume)code;
+				label_AssertOrAssume = assertOrAssume.target;
+				return true;
+			}		
+		}else{			
+			if(code instanceof Codes.Label){
+				Codes.Label label = (Codes.Label)code;
+				if(label_AssertOrAssume.equals(label.label)){
+					//Nullify the label of an assertion or assumption. 
+					label_AssertOrAssume = null;
+					return true;
+				}					
+			}
+		}
+		//In other cases, if the label is not null, then the code is inside the assertion or assumption.
+		return (label_AssertOrAssume == null)? true: false;
+	}
+
 
 	/**
 	 * Iterate each code of the input function and build up the loop blk.
 	 * @param functionOrMethod
 	 */
-	public void buildLoopBlockAndMatchPattern(FunctionOrMethodDeclaration functionOrMethod){
-		List<Code> loop_blk = null;
-		String loop_label = null;
+	public void buildCodeBlockAndMatchPattern(FunctionOrMethodDeclaration functionOrMethod){
 		int line = 0;
 		String func_name = functionOrMethod.name();
-		//Clear the symbol table.
-		expressiontable.clear();
+		//Store 
+		List<Code> code_blk = new ArrayList<Code>();
+		//Store the register along with the corresponding expression.
+		HashMap<String, Expr> expressiontable = new HashMap<String, Expr>();
 		//Add the input parameters to the expression table.
 		int param_size = functionOrMethod.type().params().size();
 		for(int index=0;index<param_size;index++){
-			putExpr(new Expr(prefix+index));
+			putExpr(new Expr(prefix+index), expressiontable);
 		}
-		
-		String label_AssertOrAssume = null;
 		//Iterate each byte-code of a function block.			
 		for(Case mcase : functionOrMethod.cases()){
 			//End of the function
@@ -97,68 +123,32 @@ public class PatternMatcher {
 					}else{
 						System.out.println(func_name+"."+(++line)+" [\t"+code+"]");
 					}
-				}
-				
-				if(code instanceof Codes.AssertOrAssume){
-					Codes.AssertOrAssume assertOrAssume = (Codes.AssertOrAssume)code;
-					label_AssertOrAssume = assertOrAssume.target;
-				}				
-				
+				}	
 				//Check if the bytecode is inside an assertion or assumption
 				//Omit the bytecode in a assertion or assumption.
-				if(label_AssertOrAssume == null){					
-					//Start a loop block
-					if(code instanceof Codes.Loop){
-						Codes.Loop loop = (Codes.Loop)code;
-						loop_label = loop.target;
-						//Lazy initialization
-						if(loop_blk == null){
-							loop_blk = new ArrayList<Code>();
-						}
-					}
-
-					//Decide whether to put the code into loop blk or expression table.
-					if(loop_blk!=null){
-						loop_blk.add(code);	
-					}
+				if(checkAssertOrAssume(code)){					
 					//Create the expression and put it into the table.
-					putExpr(new Expr(code));
-
-					//End the loop block
-					if(code instanceof Codes.Label){
-						Codes.Label label = (Codes.Label)code;
-						if(loop_blk!=null && loop_label.equals(label.label)){						
-							Pattern pattern = analyze(loop_blk);
-							String result = "";
-							result += "{";
-							//Print out all the bytecode in the loop block
-							for(Code loop_code: loop_blk){
-								if(code instanceof Codes.Loop || code instanceof Codes.LoopEnd){
-									result += "\n\t"+loop_code;
-								}else{
-									result += "\n\t\t"+loop_code;
-								}							
-							}
-							result += "\n}";
-							result +="\n"+pattern;
-							System.out.println(result);
-							loop_blk = null;
-							//reset the loop blk
-							loop_label = null;
-						}										
-					}					
-				}
-				
-				//Nullify the label of an assertion or assumption. 
-				if(label_AssertOrAssume!= null){
-					if(code instanceof Codes.Label){
-						Codes.Label label = (Codes.Label)code;
-						if(label_AssertOrAssume.equals(label.label)){
-							label_AssertOrAssume = null;
-						}					
-					}				
-				}			
+					putExpr(new Expr(code), expressiontable);
+					//Add the code into the code block.
+					code_blk.add(code);
+				}		
 			}			
+			Pattern pattern = analyzePattern(code_blk, expressiontable);
+			String result = "";
+			result += "{";
+			//Print out all the bytecode in the loop block
+			for(Code code: code_blk){
+				if(code instanceof Codes.Loop || code instanceof Codes.LoopEnd){
+					result += "\n\t"+code;
+				}else{
+					result += "\n\t\t"+code;
+				}							
+			}
+			result += "\n}";
+			result +="\n"+pattern;
+			System.out.println(result);
+			code_blk = null;
+			expressiontable = null;
 			//End of the function
 			System.out.println("\n----------------End of "+func_name+" function----------------\n");
 		}		
@@ -169,10 +159,11 @@ public class PatternMatcher {
 	/**
 	 * Takes the list of loop bytecode as input, take the block of loop bytecode, iterate over all available patterns
 	 * and check if the given loop is matched with any one of them by using the pattern checker.
-	 * @param loop_block the block of a given loop
+	 * @param block the code block
+	 * @param expressiontable the table of expressions
 	 * @return pattern. If not found, return null.
 	 */
-	private Pattern analyze(List<Code> loop_block){
+	private Pattern analyzePattern(List<Code> loop_block, HashMap<String, Expr> expressiontable){
 		Pattern pattern = null;		
 		//Iterate over all the available patterns.
 		for(Class<? extends Pattern> avail_pattern: avail_patterns){
@@ -187,8 +178,7 @@ public class PatternMatcher {
 					}					
 				}								
 			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
-					| InvocationTargetException | NoSuchMethodException | SecurityException e) {
-				// TODO Auto-generated catch block
+					| InvocationTargetException | NoSuchMethodException | SecurityException e) {				
 				e.printStackTrace();
 			}
 			pattern = null;

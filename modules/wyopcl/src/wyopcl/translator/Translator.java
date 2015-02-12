@@ -193,7 +193,7 @@ public class Translator implements Builder{
 		PatternMatcher matcher = new PatternMatcher(config);		
 		//Iterate each function
 		for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {
-			matcher.buildLoopBlockAndMatchPattern(functionOrMethod);			
+			matcher.buildCodeBlockAndMatchPattern(functionOrMethod);			
 		}
 	}
 }
