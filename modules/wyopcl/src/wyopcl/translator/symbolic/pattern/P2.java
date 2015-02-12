@@ -111,32 +111,6 @@ public class P2 extends Pattern{
 
 
 	/**
-	 * Find the loop variable
-	 * @return the variable (string). If not found, return null.
-	 */
-	private String loop_var() {
-		//Get the loop bytecode		
-		if(blk.get(0) instanceof Codes.Loop){
-			//Get all the modified operands
-			Codes.Loop loop = (Codes.Loop)blk.get(0);
-			for(int op:  loop.modifiedOperands){
-				String var = prefix+op;
-				for(Code code: blk){
-					//Check if the operand is a loop variable in the loop condition
-					if(code instanceof Codes.If){
-						Codes.If if_code = (Codes.If)code;
-						//Check if the var is used in the if-else bytecode 
-						if(var.equals(prefix+if_code.leftOperand)){
-							return var;
-						}
-					}
-				}
-			}
-		}
-		return null;
-	}
-
-	/**
 	 * Given a input expression, recursively replace the element with the expression retrieved from the expression table.
 	 * @param var the name of variable
 	 * @param expr the input expression 
