@@ -163,7 +163,7 @@ public class PatternMatcher {
 	 * @param expressiontable the table of expressions
 	 * @return pattern. If not found, return null.
 	 */
-	private Pattern analyzePattern(List<Code> loop_block, HashMap<String, Expr> expressiontable){
+	private Pattern analyzePattern(List<Code> block, HashMap<String, Expr> expressiontable){
 		Pattern pattern = null;		
 		//Iterate over all the available patterns.
 		for(Class<? extends Pattern> avail_pattern: avail_patterns){
@@ -171,7 +171,7 @@ public class PatternMatcher {
 				//Get the constructor				
 				Constructor<? extends Pattern> constructor = avail_pattern.getConstructor(List.class, HashMap.class);
 				if(constructor!=null){
-					pattern = constructor.newInstance(loop_block, expressiontable);
+					pattern = constructor.newInstance(block, expressiontable);
 					//Check if the loop block is matched with the pattern. If so, then return the pattern. 
 					if(!pattern.isNil()){
 						return pattern;
@@ -185,7 +185,7 @@ public class PatternMatcher {
 		}
 		//If no patterns are matched, then return NullPattern.
 		if(pattern == null){
-			pattern = new NullPattern(loop_block, expressiontable);
+			pattern = new NullPattern(block, expressiontable);
 		}		
 
 		return pattern;

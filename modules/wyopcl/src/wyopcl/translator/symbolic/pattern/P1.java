@@ -20,19 +20,13 @@ import wyopcl.translator.symbolic.Expr;
  * @author Min-Hsien Weng
  *
  */
-public class P1 extends Pattern{
-	private final String V;
-	private final Expr initExpr;
+public class P1 extends Pattern{	
 	private final BigInteger decr;
 	private String comparatorOp;
 	private final Expr lowerExpr;
-	
-	
 	public P1(List<Code> blk, HashMap<String, Expr> expressiontable) {
 		super(blk, expressiontable);
 		this.type = "P1";		
-		this.V = loop_var();
-		this.initExpr = init(this.V);
 		this.decr = decr(this.V);
 		this.lowerExpr = while_cond(this.V);
 		if(this.V!=null&&this.initExpr!=null&&this.decr!=null&&this.lowerExpr!=null){
@@ -101,43 +95,6 @@ public class P1 extends Pattern{
 		return numberOfIterations;
 	}
 
-
-	/**
-	 * Given a input expression, recursively replace the element with the expression retrieved from the expression table.
-	 * @param var the name of variable
-	 * @param expr the input expression 
-	 * @return the updated expression.
-	 */
-	private Expr replaceExpr(String var, Expr expr){
-		Expr var_expr = getExpr(var);
-		if(var_expr == null) return expr;
-
-		expr = expr.merge(var, var_expr);
-		String[] vars = expr.getVars();
-		for(String new_var: vars){
-			if(new_var != null && !new_var.equals(var)){
-				//check if the new var is not the existing var
-				expr = replaceExpr(new_var, expr);				
-			}			
-		}		
-		return expr;
-	}
-
-
-
-	/**
-	 * Get the initial value of loop variable from expression table.
-	 * @param V the loop variable
-	 * @return initial value (Expr). If not found, return null.
-	 */
-	private Expr init(String V){
-		Expr init = getExpr(V);
-		String[] vars = init.getVars();
-		for(String var: vars){
-			init= replaceExpr(var, init);  
-		}		
-		return init;
-	}
 
 	/**
 	 * Get the decremental value for the given loop variable. The conditions are

@@ -4,7 +4,7 @@ function f1(int limit) => int
 requires limit <= 1000000:
     int i=limit-1
     int sum=0
-    while i>0:
+    while 0<i:
         sum = sum + i
         i=i-1
     return sum
