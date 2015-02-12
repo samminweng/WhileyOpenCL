@@ -14,17 +14,12 @@ public class NullPattern extends Pattern {
 
 	public NullPattern(List<Code> blk, HashMap<String, Expr> expressiontable) {
 		super(blk, expressiontable);
-		
+		this.isNil = true;
 	}
 
 	@Override
 	public Expr getNumberOfIterations() {
 		return null;
-	}
-
-	@Override
-	public boolean isNil() {
-		return true;
 	}
 
 	@Override

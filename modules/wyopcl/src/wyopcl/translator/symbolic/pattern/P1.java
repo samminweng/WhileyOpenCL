@@ -44,18 +44,6 @@ public class P1 extends Pattern{
 
 
 	/**
-	 * Get the value from expression table.
-	 * @param op
-	 * @return value(Expr). If not found, return null.
-	 */
-	private Expr getExpr(String op){
-		if(expressiontable.containsKey(op)){
-			return expressiontable.get(op);						
-		}		
-		return null;
-	}
-
-	/**
 	 * Get the lower or upper bound of loop condition.
 	 * @param V the loop variable
 	 * @param compareOp the type of comparator 

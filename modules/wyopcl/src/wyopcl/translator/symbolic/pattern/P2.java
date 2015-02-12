@@ -40,18 +40,6 @@ public class P2 extends Pattern{
 
 
 	/**
-	 * Get the value from expression table.
-	 * @param op
-	 * @return value(Expr). If not found, return null.
-	 */
-	private Expr getExpr(String op){
-		if(expressiontable.containsKey(op)){
-			return expressiontable.get(op);						
-		}		
-		return null;
-	}
-
-	/**
 	 * Get the lower or upper bound of loop condition.
 	 * @param V the loop variable
 	 * @param compareOp the type of comparator 
@@ -89,11 +77,6 @@ public class P2 extends Pattern{
 		return type + ":while_loop && loop_var("+V+") && incr("+V+", "+incr+")"
 				+ " && init("+V+", "+initExpr+") &&  while_cond("+V+", "+comparatorOp+", "+upperExpr+")"
 				+ "\n=>loop_iters("+V+", " + getNumberOfIterations()+")";
-	}
-
-	@Override
-	public boolean isNil() {
-		return this.isNil;
 	}
 
 	@Override

@@ -26,7 +26,9 @@ public abstract class Pattern {
 		this.expressiontable = expressiontable;
 	}
 
-	public abstract boolean isNil();
+	public boolean isNil() {
+		return this.isNil;
+	}
 	public abstract Expr getNumberOfIterations();
 
 	/**
@@ -52,6 +54,18 @@ public abstract class Pattern {
 				}
 			}
 		}
+		return null;
+	}
+
+	/**
+	 * Get the value from expression table.
+	 * @param op
+	 * @return value(Expr). If not found, return null.
+	 */
+	protected Expr getExpr(String op) {
+		if(expressiontable.containsKey(op)){
+			return expressiontable.get(op);						
+		}		
 		return null;
 	}
 
