@@ -29,7 +29,6 @@ public class P2 extends Pattern{
 		this.loopbody_post = new ArrayList<Code>();
 		this.loopexit = new ArrayList<Code>();
 
-
 		this.line = incr(blk, this.V, loopbody_pre, loopbody_incr, loopbody_post, loopexit, this.line);
 		if(V != null && this.initExpr != null && this.loop_boundExpr != null && this.incr != null){
 			this.isNil = false;
@@ -109,27 +108,28 @@ public class P2 extends Pattern{
 		List<Code> blk = loopbody_pre;
 		int index;
 		for(index=line; index<code_blk.size();index++){
-			Code code = code_blk.get(index);			
-			if(code instanceof Codes.Assign){
-				//Check if the assignment bytecode is to over-write the value of loop variable.
-				Codes.Assign assign = (Codes.Assign)code;				
-				this.incr = getIncrement((Codes.Assign)code, loop_var);
-				if(this.incr != null){
-					loopbody_incr.add(assign);
-					blk = loopbody_post;
-				}				
-			}else if(code instanceof Codes.LoopEnd){
-				//Search for the loop end
-				Codes.LoopEnd loopend = (Codes.LoopEnd)code;
-				if(loopend.label.equals(loop_label)){
-					//change the blk to loop exit.
-					loopbody_post.add(code);
-					blk = loopexit;
-				}				
-			}else{
-				blk.add(code);
+			Code code = code_blk.get(index);
+			if(!checkAssertOrAssume(code)){
+				if(code instanceof Codes.Assign){
+					//Check if the assignment bytecode is to over-write the value of loop variable.
+					Codes.Assign assign = (Codes.Assign)code;				
+					this.incr = getIncrement((Codes.Assign)code, loop_var);
+					if(this.incr != null){
+						loopbody_incr.add(assign);
+						blk = loopbody_post;
+					}				
+				}else if(code instanceof Codes.LoopEnd){
+					//Search for the loop end
+					Codes.LoopEnd loopend = (Codes.LoopEnd)code;
+					if(loopend.label.equals(loop_label)){
+						//change the blk to loop exit.
+						loopbody_post.add(code);
+						blk = loopexit;
+					}				
+				}else{
+					blk.add(code);
+				}
 			}
-
 		}
 		return line;
 

@@ -116,26 +116,29 @@ public class P1 extends Pattern{
 		List<Code> blk = loopbody_pre;
 		int index;
 		for(index=line; index<code_blk.size();index++){
-			Code code = code_blk.get(index);			
-			if(code instanceof Codes.Assign){
-				//Check if the assignment bytecode is to over-write the value of loop variable.
-				Codes.Assign assign = (Codes.Assign)code;				
-				this.decr = getDecrement(assign, loop_var);
-				if(this.decr != null){
-					loopbody_decr.add(assign);
-					blk = loopbody_post;
-				}				
-			}else if(code instanceof Codes.LoopEnd){
-				//Search for the loop end
-				Codes.LoopEnd loopend = (Codes.LoopEnd)code;
-				if(loopend.label.equals(loop_label)){
-					//change the blk to loop exit.
-					loopbody_post.add(code);
-					blk = loopexit;
-				}				
-			}else{
-				blk.add(code);
+			Code code = code_blk.get(index);
+			if(!checkAssertOrAssume(code)){
+				if(code instanceof Codes.Assign){
+					//Check if the assignment bytecode is to over-write the value of loop variable.
+					Codes.Assign assign = (Codes.Assign)code;				
+					this.decr = getDecrement(assign, loop_var);
+					if(this.decr != null){
+						loopbody_decr.add(assign);
+						blk = loopbody_post;
+					}				
+				}else if(code instanceof Codes.LoopEnd){
+					//Search for the loop end
+					Codes.LoopEnd loopend = (Codes.LoopEnd)code;
+					if(loopend.label.equals(loop_label)){
+						//change the blk to loop exit.
+						loopbody_post.add(code);
+						blk = loopexit;
+					}				
+				}else{
+					blk.add(code);
+				}
 			}
+			
 			
 		}
 		return line;
