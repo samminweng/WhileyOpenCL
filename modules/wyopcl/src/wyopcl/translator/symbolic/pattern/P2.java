@@ -6,7 +6,6 @@ import java.util.List;
 
 import wyil.lang.Code;
 import wyil.lang.Codes;
-import wyil.lang.Codes.Comparator;
 import wyopcl.translator.symbolic.Expr;
 /**
  * Implemented the while-loop patterns, as follows:
@@ -19,66 +18,29 @@ import wyopcl.translator.symbolic.Expr;
  */
 public class P2 extends Pattern{
 	private final BigInteger incr;
-	private String comparatorOp;
-	private final Expr upperExpr;
+	
 	
 	public P2(List<Code> blk, HashMap<String, Expr> expressiontable) {
 		super(blk, expressiontable);
 		this.type = "P2";
-		this.incr = incr(this.V);
-		this.upperExpr = while_cond(this.V);
-		if(this.V!=null&&this.initExpr!=null&&this.incr!=null&&this.upperExpr!=null){
-			this.isNil = false;
-		}else{
-			this.isNil = true;
+		this.incr = incr(blk, this.V);		
+		if(this.incr!=null){
+			this.isNil &= false;
 		}	
-	}
-
-
-	/**
-	 * Get the lower or upper bound of loop condition.
-	 * @param V the loop variable
-	 * @param compareOp the type of comparator 
-	 * @return the expression of bound.
-	 */
-	private Expr while_cond(String V){
-		Expr expr = null;
-		if(V != null){
-			for(Code code: blk){
-				if(code instanceof Codes.If){
-					Codes.If if_code = (Codes.If)code;
-					//Check if the loop var occurs in the condition
-					if(V.equals(prefix+if_code.leftOperand)){
-						if(if_code.op.equals(Comparator.GTEQ) ){
-							comparatorOp = "<";
-							//Get the expression 
-							return getExpr(prefix+if_code.rightOperand);
-						}else if(if_code.op.equals(Comparator.GT)){
-							comparatorOp = "<=";
-							//Get the expression
-							return getExpr(prefix+if_code.rightOperand);
-						}else{
-							comparatorOp = null;
-						}
-					}
-				}		
-			}		
-		}
-		return expr;
 	}
 
 
 	@Override
 	public String toString() {
 		return type + ":while_loop && loop_var("+V+") && incr("+V+", "+incr+")"
-				+ " && init("+V+", "+initExpr+") &&  while_cond("+V+", "+comparatorOp+", "+upperExpr+")"
+				+ " && init("+V+", "+initExpr+") &&  while_cond("+V+", "+comparatorOp+", "+loop_boundExpr+")"
 				+ "\n=>loop_iters("+V+", " + getNumberOfIterations()+")";
 	}
 
 	@Override
 	public Expr getNumberOfIterations() {
 		if(numberOfIterations==null){
-			Expr result = (Expr)upperExpr.clone();
+			Expr result = (Expr)loop_boundExpr.clone();
 			if(comparatorOp.equals("<")){
 				numberOfIterations = result.subtract(initExpr);
 			}else{
@@ -100,9 +62,9 @@ public class P2 extends Pattern{
 	 * 
 	 * @return increment value (Expr). If not matched, return null;
 	 */
-	private BigInteger incr(String V){
+	private BigInteger incr(List<Code> code_blk, String V){
 		if(V!= null){
-			for(Code code: blk){							
+			for(Code code: code_blk){							
 				if(code instanceof Codes.Assign){
 					//Check if the assignment bytecode is to over-write the value of loop variable.
 					Codes.Assign assign = (Codes.Assign)code;

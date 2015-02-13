@@ -1,12 +1,13 @@
 package wyopcl.translator.symbolic.pattern;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import wyil.lang.Code;
 import wyil.lang.Codes;
-import wyil.lang.Codes.Comparator;
+import wyil.lang.Codes.LoopEnd;
 import wyopcl.translator.symbolic.Expr;
 /**
  * Implemented the while-loop pattens, as follows:
@@ -21,65 +22,28 @@ import wyopcl.translator.symbolic.Expr;
  *
  */
 public class P1 extends Pattern{	
-	private final BigInteger decr;
-	private String comparatorOp;
-	private final Expr lowerExpr;
+	private BigInteger decr;
 	public P1(List<Code> blk, HashMap<String, Expr> expressiontable) {
 		super(blk, expressiontable);
-		this.type = "P1";		
-		this.decr = decr(this.V);
-		this.lowerExpr = while_cond(this.V);
-		if(this.V!=null&&this.initExpr!=null&&this.decr!=null&&this.lowerExpr!=null){
+		this.type = "P1";
+		this.loopbody_pre = new ArrayList<Code>();
+		this.loopbody_decr = new ArrayList<Code>();
+		this.loopbody_post = new ArrayList<Code>();
+		this.loopexit = new ArrayList<Code>();
+
+		this.line = decr(blk, this.V, loopbody_pre, loopbody_decr, loopbody_post, loopexit, this.line);
+		if(V != null && this.initExpr != null && this.loop_boundExpr != null && this.decr != null){
 			this.isNil = false;
 		}else{
 			this.isNil = true;
-		}	
+		}		
 	}
-
-
-	/**
-	 * Get the lower or upper bound of loop condition.
-	 * @param V the loop variable
-	 * @param compareOp the type of comparator 
-	 * @return the expression of bound.
-	 */
-	private Expr while_cond(String V){
-		Expr expr = null;
-		if(V != null){
-			for(Code code: blk){ 
-				if(code instanceof Codes.If){
-					Codes.If if_code = (Codes.If)code;
-					//Check if the loop var occurs in the condition
-					if(V.equals(prefix+if_code.leftOperand)){
-						if(if_code.op.equals(Comparator.LTEQ) ){
-							comparatorOp = ">";
-							//Get the expression 
-							return getExpr(prefix+if_code.rightOperand);							
-						}else if(if_code.op.equals(Comparator.LT)){
-							comparatorOp = ">=";
-							//Get the expression 
-							return getExpr(prefix+if_code.rightOperand);
-						}else{
-							comparatorOp = null;
-						}
-					}
-				}		
-			}		
-		}
-		return expr;
-	}
-
 
 	@Override
 	public String toString() {
 		return type + ":while_loop && loop_var("+V+") && decr("+V+", "+decr+")"
-				+ " && init("+V+", "+initExpr+") &&  while_cond("+V+", "+comparatorOp+", "+lowerExpr+")"
+				+ " && init("+V+", "+initExpr+") &&  while_cond("+V+", "+comparatorOp+", "+loop_boundExpr+")"
 				+ "\n=>loop_iters("+V+", " + getNumberOfIterations()+")";
-	}
-
-	@Override
-	public boolean isNil() {
-		return this.isNil;
 	}
 
 	@Override
@@ -87,13 +51,41 @@ public class P1 extends Pattern{
 		if(numberOfIterations==null){
 			Expr result = (Expr)initExpr.clone();
 			if(comparatorOp.equals(">")){
-				numberOfIterations = result.subtract(lowerExpr);
+				numberOfIterations = result.subtract(loop_boundExpr);
 			}else{
-				numberOfIterations = result.subtract(lowerExpr).add(new Expr(BigInteger.ONE));
+				numberOfIterations = result.subtract(loop_boundExpr).add(new Expr(BigInteger.ONE));
 			}			
 		}		
 		return numberOfIterations;
 	}
+
+	/**
+	 * Extract the decrement value from the 'assignment' bytecode of loop variable. 
+	 * @param assign the 'assignment' bytecode
+	 * @param loop_var the loop variable
+	 * @return the decrement (BigInteger). If not found, return null.
+	 */
+	private BigInteger getDecrement(Codes.Assign assign, String loop_var){
+		//Check if the target is the loop variable.
+		if((prefix+assign.target()).equals(loop_var)){
+			//Get the temporary variable, e.g. %16
+			Expr expr = getExpr(prefix+assign.operand(0));
+			//Check if the loop variable is used in the expression for the tmp variable.
+			String[] vars = expr.getVars();
+			if(expr.getVarIndex(loop_var) == 0 && vars.length == 2){
+				String decr_op = vars[1];
+				//Find the coefficient of the decremental variable in the expr 
+				BigInteger coefficient = expr.getCoefficient(decr_op);
+				//Check if the op kind is a subtraction
+				if(coefficient.signum()<0){
+					Expr decrement = getExpr(decr_op);
+					return decrement.getConstant();
+				}
+			}
+		}
+		return null;
+	}
+
 
 
 	/**
@@ -107,35 +99,52 @@ public class P1 extends Pattern{
 	 * 
 	 * @return decrement value (Expr). If not matched, return null;
 	 */
-	private BigInteger decr(String V){
-		if(V!= null){
-			for(Code code: blk){							
-				if(code instanceof Codes.Assign){
-					//Check if the assignment bytecode is to over-write the value of loop variable.
-					Codes.Assign assign = (Codes.Assign)code;
-					String target = prefix+assign.target();
-					//V  = %3
-					if(target.equals(V)){
-						//Get the temporary variable, e.g. %16
-						Expr expr = getExpr(prefix+assign.operand(0));
-						//Check if the loop variable is used in the expression for the tmp variable.
-						String[] vars = expr.getVars();
-						if(expr.getVarIndex(V) == 0 && vars.length == 2){
-							String decr_op = vars[1];
-							//Find the coefficient of the decremental variable in the expr 
-							BigInteger coefficient = expr.getCoefficient(decr_op);
-							//Check if the op kind is a subtraction
-							if(coefficient.signum()<0){
-								Expr decrement = getExpr(decr_op);
-								return decrement.getConstant();
-							}
-						}
-					}
-				}
+	private int decr(List<Code> code_blk, String loop_var,
+			List<Code> loopbody_pre,
+			List<Code> loopbody_decr,
+			List<Code> loopbody_post,
+			List<Code> loopexit, int line){
+		//Check if the loop variable is inferred.
+		if(loop_var == null) return line;
+
+		//Get loop label
+		Codes.Loop loop = (Codes.Loop)loop_header.get(0);
+		String loop_label = loop.target;
+
+		//Search for the decrement.
+		//The flag that specifies the pattern part.
+		List<Code> blk = loopbody_pre;
+		int index;
+		for(index=line; index<code_blk.size();index++){
+			Code code = code_blk.get(index);			
+			if(code instanceof Codes.Assign){
+				//Check if the assignment bytecode is to over-write the value of loop variable.
+				Codes.Assign assign = (Codes.Assign)code;				
+				this.decr = getDecrement(assign, loop_var);
+				if(this.decr != null){
+					loopbody_decr.add(assign);
+					blk = loopbody_post;
+				}				
+			}else if(code instanceof Codes.LoopEnd){
+				//Search for the loop end
+				Codes.LoopEnd loopend = (Codes.LoopEnd)code;
+				if(loopend.label.equals(loop_label)){
+					//change the blk to loop exit.
+					loopbody_post.add(code);
+					blk = loopexit;
+				}				
+			}else{
+				blk.add(code);
 			}
+			
 		}
-		return null;
+		return line;
 	}
+
+
+
+	
+
 
 
 
