@@ -142,14 +142,18 @@ public abstract class Pattern {
 	 * @param loop_var the loop variable.
 	 * @return the expression. If not found, return null.
 	 */
-	private Expr getInitExpr(String loop_var){
-		//Get the expression for loop variable.	
-		Expr expr = getExpr(loop_var);
-		String[] vars = expr.getVars();
-		for(String var: vars){
-			expr= replaceExpr(var, expr);  
+	private Expr getInitExpr(Codes.Assign assign, String loop_var){
+		//check if the loop variable is used in the assignment.
+		if(loop_var.equals(prefix+(assign.target()))){
+			//Get the expression for loop variable.	
+			Expr expr = getExpr(loop_var);
+			String[] vars = expr.getVars();
+			for(String var: vars){
+				expr= replaceExpr(var, expr);  
+			}
+			return expr;
 		}
-		return expr;
+		return null;
 	}
 
 
@@ -167,26 +171,23 @@ public abstract class Pattern {
 		if(loop_var == null) return line;
 
 		//Put the code to init_pre, init and init_post parts.
-		for(int index = line; index<code_blk.size(); index++){
+		int index;
+		for(index = line; index<code_blk.size(); index++){
 			Code code = code_blk.get(index);
-			if(!checkAssertOrAssume(code)){
-				//Check if this code assigns the value to the loop variable. 
-				if(code instanceof Codes.Assign){
-					//check if the loop variable is used in the assignment.
-					if(loop_var.equals(prefix+((Codes.Assign)code).target())){
-						//Add the code to 'init' part.
-						init.add(code);
-						//Get the expression for loop variable.	
-						initExpr = getInitExpr(loop_var);
-						return index;
-					}
+			//Check if this code assigns the value to the loop variable. 
+			if(!checkAssertOrAssume(code)&& code instanceof Codes.Assign){
+				//Get the expression for loop variable.	
+				initExpr = getInitExpr((Codes.Assign)code, loop_var);
+				if(initExpr != null){
+					//Add the code to 'init' part.
+					init.add(code);
+					break;
 				}
 			}
 			//Otherwise, add the code to the 'init_pre' part
 			init_pre.add(code);
-
 		}			
-		return line;
+		return index;
 	}
 
 	/**
