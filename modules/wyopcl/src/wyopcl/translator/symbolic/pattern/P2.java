@@ -20,9 +20,13 @@ import wyopcl.translator.symbolic.Expr;
 public class P2 extends Pattern{
 	private BigInteger incr;
 
-
-	public P2(List<Code> blk, HashMap<String, Expr> expressiontable) {
-		super(blk, expressiontable);
+	/**
+	 * Constructor for P2 pattern
+	 * @param param_size
+	 * @param blk
+	 */
+	public P2(int param_size, List<Code> blk) {
+		super(param_size, blk);
 		this.type = "P2";		
 		this.loopbody_incr = new ArrayList<Code>();		
 
@@ -101,17 +105,19 @@ public class P2 extends Pattern{
 		int index;
 		//Search for the decrement
 		for(index=line; index<code_blk.size();index++){
-			Code code = code_blk.get(index);			
+			Code code = code_blk.get(index);
+			//Create the expression and put it into the table.
+			putExpr(new Expr(code));
 			if(!checkAssertOrAssume(code) && code instanceof Codes.Assign){
 				//Check if the assignment bytecode is to over-write the value of loop variable.
 				Codes.Assign assign = (Codes.Assign)code;				
 				this.incr = getIncrement(assign, loop_var);
 				if(this.incr != null){
-					loopbody_incr.add(assign);
+					AddCodeToPatternPart(assign, loopbody_incr);
 					break;
 				}
 			}
-			loopbody_pre.add(code);
+			AddCodeToPatternPart(code, loopbody_pre);
 		}
 
 		//Get loop label
@@ -120,7 +126,8 @@ public class P2 extends Pattern{
 		//Search for loop end and put the code to 'loop_post' part.
 		for(; index<code_blk.size();index++){
 			Code code = code_blk.get(index);
-			loopbody_post.add(code);
+			//Create the expression and put it into the table.
+			AddCodeToPatternPart(code, loopbody_post);
 			if(!checkAssertOrAssume(code)){
 				if(code instanceof Codes.LoopEnd){
 					//Get the loop end to see if the 
@@ -134,9 +141,9 @@ public class P2 extends Pattern{
 
 		//Put the remaining code into the 'loopexit' part
 		for(; index<code_blk.size();index++){
-			loopexit.add(code_blk.get(index));
+			//Create the expression and put it into the table.
+			AddCodeToPatternPart(code_blk.get(index), loopexit);
 		}
-
 		return index;
 
 	}

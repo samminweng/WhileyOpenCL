@@ -1,8 +1,6 @@
 package wyopcl.translator.symbolic.pattern;
 
-import java.util.HashMap;
 import java.util.List;
-
 import wyil.lang.Code;
 import wyopcl.translator.symbolic.Expr;
 /**
@@ -12,8 +10,8 @@ import wyopcl.translator.symbolic.Expr;
  */
 public class NullPattern extends Pattern {
 
-	public NullPattern(List<Code> blk, HashMap<String, Expr> expressiontable) {
-		super(blk, expressiontable);
+	public NullPattern(int params_size, List<Code> blk) {
+		super(params_size, blk);
 		this.isNil = true;
 	}
 

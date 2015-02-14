@@ -17,9 +17,9 @@ import wyopcl.translator.symbolic.Expr;
  */
 public abstract class Pattern {
 	protected final String prefix = "%";	
-	protected HashMap<String, Expr> expressiontable;
+	protected HashMap<String, Expr> expressiontable;//Store the register along with the corresponding expression.
 	protected String type;//The pattern type
-	protected boolean isNil;
+	protected boolean isNil;//The flag indicates whether this pattern is matched with the given loop (True: not matched False: Matched).
 	protected Expr numberOfIterations;// the number of loop iterations in affine form.
 	protected String label_AssertOrAssume;//The flag to store the label for an assertion or assumption.	
 
@@ -42,8 +42,13 @@ public abstract class Pattern {
 	protected List<Code> loopexit;
 
 
-	public Pattern(List<Code> blk, HashMap<String, Expr> expressiontable){
-		this.expressiontable = expressiontable;
+	public Pattern(int param_size, List<Code> blk){
+		this.expressiontable = new HashMap<String, Expr>();
+		//Add the input parameters to the expression table.
+		for(int index=0;index<param_size;index++){
+			putExpr(new Expr(prefix+index));
+		}
+		//The flag to store the label for an assertion or assumption.	
 		this.label_AssertOrAssume = null;
 
 		//The list of code in each part of the pattern.
@@ -130,6 +135,29 @@ public abstract class Pattern {
 		return null;
 	}
 
+	
+	
+	
+	
+	/**
+	 * Check if the code is a constant assignment and put the symbol and value into the symbol table. 
+	 *
+	 * @param code
+	 */
+	protected void putExpr(Expr expr){
+		if(expr.getTarget()!=null){
+			//Check if the target exists in the expression table.
+			if(!expressiontable.containsKey(expr.getTarget())){
+				System.out.println(expr.getTarget() + " = "+ expr);
+				//Add to the expression table.
+				expressiontable.put(expr.getTarget(), expr);
+			}			
+		}else{
+			//Nullify the expr object.
+			expr = null;
+		}
+	}
+	
 	/**
 	 * Get the value from expression table.
 	 * @param op
@@ -141,6 +169,15 @@ public abstract class Pattern {
 		}		
 		return null;
 	}
+	
+	protected void AddCodeToPatternPart(Code code, List<Code> blk){
+		//Create the expression and put it into the table.
+		putExpr(new Expr(code));
+		blk.add(code);	
+	}
+	
+	
+	
 	/**
 	 * Get the expression of assigning the initial value to the loop variable. 
 	 * @param loop_var the loop variable.
@@ -151,6 +188,9 @@ public abstract class Pattern {
 		if(loop_var.equals(prefix+(assign.target()))){
 			//Get the expression for loop variable.	
 			Expr expr = getExpr(loop_var);
+			if(expr == null){
+				expr = new Expr(assign);
+			}			
 			String[] vars = expr.getVars();
 			for(String var: vars){
 				expr= replaceExpr(var, expr);  
@@ -178,18 +218,19 @@ public abstract class Pattern {
 		int index;
 		for(index = line; index<code_blk.size(); index++){
 			Code code = code_blk.get(index);
+			
 			//Check if this code assigns the value to the loop variable. 
 			if(!checkAssertOrAssume(code)&& code instanceof Codes.Assign){
 				//Get the expression for loop variable.	
 				initExpr = getInitExpr((Codes.Assign)code, loop_var);
 				if(initExpr != null){
 					//Add the code to 'init' part.
-					init.add(code);
+					AddCodeToPatternPart(code, init);
 					break;
 				}
 			}
 			//Otherwise, add the code to the 'init_pre' part
-			init_pre.add(code);
+			AddCodeToPatternPart(code, init_pre);
 		}			
 		return index;
 	}
@@ -279,6 +320,8 @@ public abstract class Pattern {
 		int index;
 		for(index=line; index< code_blk.size(); index++){
 			Code code = code_blk.get(index);
+			//Create the expression and put it into the table.
+			putExpr(new Expr(code));
 			//Search for loop bytecode
 			if(!checkAssertOrAssume(code)&&code instanceof Codes.Loop){
 				//Check if the loop variable is used in the loop
@@ -288,14 +331,14 @@ public abstract class Pattern {
 					break;
 				}
 			}
-			init_post.add(code);
+			AddCodeToPatternPart(code, init_post);
 		}
-
 
 		//Search for the loop condition
 		for(; index< code_blk.size(); index++){
 			Code code = code_blk.get(index);
-			loop_header.add(code);
+			//Create the expression and put it into the table.
+			AddCodeToPatternPart(code, loop_header);
 			if(!checkAssertOrAssume(code)&&code instanceof Codes.If){
 				this.loop_boundExpr = getLoopBoundExpr(code, loop_var);
 				if(this.loop_boundExpr!=null){
@@ -303,7 +346,6 @@ public abstract class Pattern {
 					break;					
 				}
 			}
-
 		}
 		return index;
 	}
