@@ -8,6 +8,7 @@ import java.util.List;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyopcl.translator.symbolic.Expr;
+import wyopcl.translator.symbolic.pattern.Pattern.PART;
 /**
  * Implemented the while-loop patterns, as follows:
  * <ul>
@@ -28,11 +29,17 @@ public class P2 extends Pattern{
 	public P2(int param_size, List<Code> blk) {
 		super(param_size, blk);
 		this.type = "P2";		
-		this.loopbody_incr = new ArrayList<Code>();		
-
-		this.line = incr(blk, this.V, loopbody_pre, loopbody_incr, loopbody_post, loopexit, this.line);
+		//Get the increment
+		this.line = incr(blk, this.V,
+				this.parts.get(PART.LOOPBODY_PRE.index()),
+				this.parts.get(PART.LOOPBODY_INCR.index()),
+				this.parts.get(PART.LOOPBODY_POST.index()),
+				this.parts.get(PART.LOOP_EXIT.index()),
+				this.line);
+		
 		if(V != null && this.initExpr != null && this.loop_boundExpr != null && this.incr != null){
 			this.isNil = false;
+			
 		}else{
 			this.isNil = true;
 		}			
@@ -121,7 +128,7 @@ public class P2 extends Pattern{
 		}
 
 		//Get loop label
-		Codes.Loop loop = (Codes.Loop)loop_header.get(0);
+		Codes.Loop loop = (Codes.Loop)this.parts.get(PART.LOOP_HEADER.index()).get(0);
 		String loop_label = loop.target;
 		//Search for loop end and put the code to 'loop_post' part.
 		for(; index<code_blk.size();index++){

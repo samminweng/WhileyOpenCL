@@ -44,6 +44,27 @@ public class PatternMatcher {
 	}
 
 	/**
+	 * Print out all the code sequentially in accordance with the PARTS.
+	 * @param pattern
+	 */
+	private void printPattern(Pattern pattern){		
+		String result = "";
+		result += "{";
+		//Print out all the bytecode in the pattern
+		for(List<Code> part: pattern.parts){
+			for(Code code: part){
+				result += "\n\t"+code;
+			}									
+		}
+		result += "\n}";
+		result +="\n"+pattern;
+		System.out.println(result);
+		
+		
+	}
+	
+	
+	/**
 	 * Iterate each code of the input function and build up the loop blk.
 	 * @param functionOrMethod
 	 */
@@ -71,23 +92,14 @@ public class PatternMatcher {
 				code_blk.add(code);					
 			}			
 			Pattern pattern = analyzePattern(param_size, code_blk);
-			String result = "";
-			result += "{";
-			//Print out all the bytecode in the loop block
-			for(Code code: code_blk){
-				result += "\n\t"+code;						
-			}
-			result += "\n}";
-			result +="\n"+pattern;
-			System.out.println(result);
+			printPattern(pattern);
 			code_blk = null;
 			//End of the function
 			System.out.println("\n----------------End of "+func_name+" function----------------\n");
 		}		
 
-	}	
-
-
+	}
+	
 	/**
 	 * Takes the list of loop bytecode as input, take the block of loop bytecode, iterate over all available patterns
 	 * and check if the given loop is matched with any one of them by using the pattern checker.

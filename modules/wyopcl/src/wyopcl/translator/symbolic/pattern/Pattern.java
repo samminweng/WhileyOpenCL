@@ -31,16 +31,24 @@ public abstract class Pattern {
 
 	//Store the list of code for each part of the pattern.
 	protected int line;//keep track of the current line number.
-	protected List<Code> init_pre;
-	protected List<Code> init;
-	protected List<Code> init_post;
-	protected List<Code> loop_header;
-	protected List<Code> loopbody_pre;
-	protected List<Code> loopbody_decr;
-	protected List<Code> loopbody_incr;
-	protected List<Code> loopbody_post;
-	protected List<Code> loopexit;
-
+	public List<List<Code>> parts;//The collection of all parts in the pattern.
+	//Define the sequence of pattern parts and use 'index()' method to get the index.
+	public enum PART{
+		INIT_PRE 		(0),
+		INIT	 		(1),
+		INIT_POST		(2),
+		LOOP_HEADER		(3),
+		LOOPBODY_PRE	(4),
+		LOOPBODY_DECR	(5),//the same order
+		LOOPBODY_INCR	(5),//the same order
+		LOOPBODY_POST	(6),
+		LOOP_EXIT		(7);		
+		private int index;
+		PART(int index){
+			this.index = index;
+		}
+		public int index() { return index;}
+	}
 
 	public Pattern(int param_size, List<Code> blk){
 		this.expressiontable = new HashMap<String, Expr>();
@@ -52,19 +60,25 @@ public abstract class Pattern {
 		this.label_AssertOrAssume = null;
 
 		//The list of code in each part of the pattern.
-		this.init_pre = new ArrayList<Code>();
-		this.init = new ArrayList<Code>();
-		this.init_post = new ArrayList<Code>();
-		this.loop_header = new ArrayList<Code>();
-		this.loopbody_pre = new ArrayList<Code>();		
-		this.loopbody_post = new ArrayList<Code>();
-		this.loopexit = new ArrayList<Code>();
+		this.parts = new ArrayList<List<Code>>();
+		//Add each list of code into the list of pattern parts
+		//Use 'values().length' to get the number of parts.
+		for(int index=0;index<PART.values().length;index++){
+			//Initialize the each part.
+			this.parts.add(new ArrayList<Code>());			
+		}
 		
 		//Construct each part in the pattern.
 		this.line = 0;
 		this.V = loop_var(blk);
-		this.line = init(blk, this.V, init_pre, init, this.line);
-		this.line = while_cond(blk, this.V, init_post, loop_header, line);		
+		this.line = init(blk, this.V,
+						 this.parts.get(PART.INIT_PRE.index()),
+						 this.parts.get(PART.INIT.index()),
+						 this.line);
+		this.line = while_cond(blk, this.V,
+							   this.parts.get(PART.INIT_POST.index()),
+							   this.parts.get(PART.LOOP_HEADER.index()),
+							   line);		
 	}
 
 	public abstract Expr getNumberOfIterations();

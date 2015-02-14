@@ -26,11 +26,15 @@ public class P1 extends Pattern{
 	public P1(int param_size, List<Code> blk) {
 		super(param_size, blk);
 		this.type = "P1";
-		this.loopbody_decr = new ArrayList<Code>();
-
-		this.line = decr(blk, this.V, loopbody_pre, loopbody_decr, loopbody_post, loopexit, this.line);
+		//Get the decrement
+		this.line = decr(blk, this.V,
+						this.parts.get(PART.LOOPBODY_PRE.index()),
+						this.parts.get(PART.LOOPBODY_DECR.index()),
+						this.parts.get(PART.LOOPBODY_POST.index()),
+						this.parts.get(PART.LOOP_EXIT.index()),
+						this.line);
 		if(V != null && this.initExpr != null && this.loop_boundExpr != null && this.decr != null){
-			this.isNil = false;
+			this.isNil = false;			
 		}else{
 			this.isNil = true;
 		}		
@@ -125,7 +129,7 @@ public class P1 extends Pattern{
 		}
 
 		//Get loop label
-		Codes.Loop loop = (Codes.Loop)loop_header.get(0);
+		Codes.Loop loop = (Codes.Loop)this.parts.get(PART.LOOP_HEADER.index()).get(0);
 		String loop_label = loop.target;
 		//Search for loop end and put the code to 'loop_post' part.
 		for(; index<code_blk.size();index++){
