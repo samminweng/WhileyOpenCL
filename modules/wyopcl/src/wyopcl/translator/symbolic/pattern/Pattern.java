@@ -51,6 +51,10 @@ public abstract class Pattern {
 		this.init = new ArrayList<Code>();
 		this.init_post = new ArrayList<Code>();
 		this.loop_header = new ArrayList<Code>();
+		this.loopbody_pre = new ArrayList<Code>();		
+		this.loopbody_post = new ArrayList<Code>();
+		this.loopexit = new ArrayList<Code>();
+		
 		//Construct each part in the pattern.
 		this.line = 0;
 		this.V = loop_var(blk);
