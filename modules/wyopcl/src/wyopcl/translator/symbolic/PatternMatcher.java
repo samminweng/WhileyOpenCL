@@ -54,19 +54,16 @@ public class PatternMatcher {
 			if(!(code instanceof Codes.Loop)){
 				if(code instanceof Codes.If){
 					Codes.If if_code = (Codes.If)code;
-					int op = -1;
 					//Get the comparing operand
-					if(loop_var==if_code.leftOperand){ 							
-						op = if_code.rightOperand;
-					}else if(loop_var == if_code.rightOperand){
-						op = if_code.leftOperand;
-					}					
-					if(op>0){
+					if(loop_var==if_code.leftOperand){
 						//Construct an assignment for loop variable 
-						return Codes.Assign(Type.T_INT, loop_var, op);	
+						return Codes.Assign(if_code.type, loop_var, if_code.rightOperand);	
+					}else if(loop_var == if_code.rightOperand){
+						//Construct an assignment for loop variable 
+						return Codes.Assign(if_code.type, loop_var, if_code.leftOperand);
 					}
 				}
-				blk.add(code);				
+				blk.add(code);
 			}
 		}		
 		return null;
@@ -203,7 +200,7 @@ public class PatternMatcher {
 				code_blk.add(code);					
 			}			
 			Pattern pattern = analyzePattern(param_size, code_blk);
-			System.out.println("The inferred pattern:\n"+pattern);
+			System.out.println("The original pattern:\n"+pattern);
 			Pattern pattern_1 = transform(pattern);
 			System.out.println("From "+pattern.getType()+" to "+pattern_1.getType()+", the transformed pattern:\n"+pattern_1);
 			Pattern pattern_2 = transform(pattern_1);
