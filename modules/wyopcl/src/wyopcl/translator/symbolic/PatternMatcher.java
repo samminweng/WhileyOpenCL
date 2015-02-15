@@ -49,7 +49,7 @@ public class PatternMatcher {
 	 */
 	private Codes.Assign getInitAssign(Pattern p, int loop_var, List<Code> blk){
 		//Put all the other code in the p's loop header into the code block.
-		List<Code> loop_header = p.getPart(PART.LOOP_HEADER.index());
+		List<Code> loop_header = p.getPart(PART.LOOP_HEADER.index);
 		for(Code code: loop_header){
 			if(!(code instanceof Codes.Loop)){
 				if(code instanceof Codes.If){
@@ -78,15 +78,15 @@ public class PatternMatcher {
 	 * @return the bytecode of loop condition.
 	 */
 	private Codes.If getLoopCondition(Pattern p, int loop_var, List<Code> blk){
-		List<Code> loop_header = p.getPart(PART.LOOP_HEADER.index());
+		List<Code> loop_header = p.getPart(PART.LOOP_HEADER.index);
 		Codes.Loop loop = (Codes.Loop)loop_header.get(0);
 		//Add the loop bytecode
 		blk.add(loop);			
 
 		//Add all the code in the 'init_pre'
-		blk.addAll(p.getPart(PART.INIT_PRE.index()));
+		blk.addAll(p.getPart(PART.INIT_PRE.index));
 		//Get the initial assignment code 
-		int init_assignOp = ((Codes.Assign) p.getPart(PART.INIT.index()).get(0)).operand(0);
+		int init_assignOp = ((Codes.Assign) p.getPart(PART.INIT.index).get(0)).operand(0);
 		Codes.If condition = (Codes.If) loop_header.get(loop_header.size()-1);
 		
 		switch (condition.op){
@@ -111,7 +111,7 @@ public class PatternMatcher {
 	 * @return
 	 */
 	private Codes.BinaryOperator getIncrOrDecr(Pattern p, int loop_var, List<Code> blk){
-		List<Code> loopbody_pre = p.getPart(PART.LOOPBODY_PRE.index());
+		List<Code> loopbody_pre = p.getPart(PART.LOOPBODY_PRE.index);
 		Codes.BinaryOperator binOp = (Codes.BinaryOperator)loopbody_pre.get(loopbody_pre.size()-1);
 		switch(binOp.kind){
 		case ADD:
@@ -141,13 +141,13 @@ public class PatternMatcher {
 
 		blk.add(getInitAssign(p, loop_var, blk));
 		//Get the 'init_post'
-		blk.addAll(p.getPart(PART.INIT_POST.index()));			
+		blk.addAll(p.getPart(PART.INIT_POST.index));			
 
 		//Get the loop header
 		blk.add(getLoopCondition(p, loop_var, blk));
 
 		//Add the code in the 'loopbody_pre'
-		List<Code> loopbody_pre = p.getPart(PART.LOOPBODY_PRE.index());
+		List<Code> loopbody_pre = p.getPart(PART.LOOPBODY_PRE.index);
 		int index;
 		for(index=0;index<loopbody_pre.size()-1;index++){
 			blk.add(loopbody_pre.get(index));
@@ -156,9 +156,9 @@ public class PatternMatcher {
 		//Get the increment or decrement
 		blk.add(getIncrOrDecr(p, loop_var, blk));
 		//Add the loop_decr
-		blk.addAll(p.getPart(PART.LOOPBODY_DECR.index()));
-		blk.addAll(p.getPart(PART.LOOPBODY_POST.index()));
-		blk.addAll(p.getPart(PART.LOOP_EXIT.index()));
+		blk.addAll(p.getPart(PART.LOOPBODY_DECR.index));
+		blk.addAll(p.getPart(PART.LOOPBODY_POST.index));
+		blk.addAll(p.getPart(PART.LOOP_EXIT.index));
 		//For debugging
 		if(config.isVerbose()){
 			for(Code code: blk){

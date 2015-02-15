@@ -31,15 +31,15 @@ public class P2 extends Pattern{
 		this.type = "P2";		
 		//Get the increment
 		this.line = incr(blk, this.V,
-				this.parts.get(PART.LOOPBODY_PRE.index()),
-				this.parts.get(PART.LOOPBODY_INCR.index()),
-				this.parts.get(PART.LOOPBODY_POST.index()),
-				this.parts.get(PART.LOOP_EXIT.index()),
+				this.parts.get(PART.LOOPBODY_PRE.index),
+				this.parts.get(PART.LOOPBODY_INCR.index),
+				this.parts.get(PART.LOOPBODY_POST.index),
+				this.parts.get(PART.LOOP_EXIT.index),
 				this.line);
-		
+
 		if(V != null && this.initExpr != null && this.loop_boundExpr != null && this.incr != null){
 			this.isNil = false;
-			
+
 		}else{
 			this.isNil = true;
 		}			
@@ -50,17 +50,18 @@ public class P2 extends Pattern{
 	public String toString() {
 		String result = "";
 		result += "{";
-		//Print out all the bytecode in the pattern
-		for(List<Code> part: this.parts){
-			for(Code code: part){
+		//Print out all the bytecode in accordance with the sequence of PART
+		for(PART part: this.set){
+			result += "\n"+part+":";
+			List<Code> part_code = this.parts.get(part.index);
+			for(Code code: part_code){
 				result += "\n\t"+code;
-			}									
+			}
 		}
-		result += "\n}";
-		
+		result += "\n}";	
 		result += type + ":while_loop && loop_var("+V+") && incr("+V+", "+incr+")"
-				  + " && init("+V+", "+initExpr+") &&  while_cond("+V+", "+comparatorOp+", "+loop_boundExpr+")"
-				  + "\n=>loop_iters("+V+", " + getNumberOfIterations()+")";
+				+ " && init("+V+", "+initExpr+") &&  while_cond("+V+", "+comparatorOp+", "+loop_boundExpr+")"
+				+ "\n=>loop_iters("+V+", " + getNumberOfIterations()+")";
 		return result;
 	}
 
@@ -138,7 +139,7 @@ public class P2 extends Pattern{
 		}
 
 		//Get loop label
-		Codes.Loop loop = (Codes.Loop)this.parts.get(PART.LOOP_HEADER.index()).get(0);
+		Codes.Loop loop = (Codes.Loop)this.parts.get(PART.LOOP_HEADER.index).get(0);
 		String loop_label = loop.target;
 		//Search for loop end and put the code to 'loop_post' part.
 		for(; index<code_blk.size();index++){

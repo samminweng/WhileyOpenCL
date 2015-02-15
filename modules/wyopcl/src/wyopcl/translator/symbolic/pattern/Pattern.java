@@ -1,6 +1,7 @@
 package wyopcl.translator.symbolic.pattern;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Codes.Comparator;
 import wyopcl.translator.symbolic.Expr;
+import wyopcl.translator.symbolic.pattern.Pattern.PART;
 
 /**
  * The abstract class for all pattern classes. This class is implemented with
@@ -35,23 +37,64 @@ public abstract class Pattern {
 	public List<List<Code>> parts;//The collection of all parts in the pattern.
 	//Define the sequence of pattern parts and use 'index()' method to get the index.
 	public enum PART{
-		INIT_PRE 		(0),
-		INIT	 		(1),
-		INIT_POST		(2),
-		LOOP_HEADER		(3),
-		LOOPBODY_PRE	(4),
-		LOOPBODY_DECR	(5),//the same order
-		LOOPBODY_INCR	(5),//the same order
-		LOOPBODY_POST	(6),
-		LOOP_EXIT		(7);		
-		private int index;
+		INIT_PRE 		(0){
+			public String toString(){
+				return "init_pre";
+			}
+		},
+		INIT	 		(1){
+			public String toString(){
+				return "init";
+			}
+		},
+		INIT_POST		(2){
+			public String toString(){
+				return "init_post";
+			}
+		},
+		LOOP_HEADER		(3){
+			public String toString(){
+				return "loop_header";
+			}
+		},
+		LOOPBODY_PRE	(4){
+			public String toString(){
+				return "loopbody_pre";
+			}
+		},
+		LOOPBODY_DECR	(5){
+			public String toString(){
+				return "loopbody_decr";
+			}
+		},//the same order
+		LOOPBODY_INCR	(5){
+			public String toString(){
+				return "loopbody_incr";
+			}
+		},//the same order
+		LOOPBODY_POST	(6){
+			public String toString(){
+				return "loopbody_post";
+			}
+		},
+		LOOP_EXIT		(7){
+			public String toString(){
+				return "loop_exit";
+			}
+		};		
+		public int index;
 		PART(int index){
 			this.index = index;
 		}
-		public int index() { return index;}
+		//public int index() { return index;}
 	}
-
+	
+	public EnumSet<PART> set;
+	
+	
 	public Pattern(int param_size, List<Code> blk){
+		//Create an enum set containing all the pattern parts
+		this.set = EnumSet.allOf(PART.class);
 		this.expressiontable = new HashMap<String, Expr>();
 		this.param_size = param_size;
 		//Add the input parameters to the expression table.
@@ -74,12 +117,12 @@ public abstract class Pattern {
 		this.line = 0;
 		this.V = loop_var(blk);
 		this.line = init(blk, this.V,
-						 this.parts.get(PART.INIT_PRE.index()),
-						 this.parts.get(PART.INIT.index()),
+						 this.parts.get(PART.INIT_PRE.index),
+						 this.parts.get(PART.INIT.index),
 						 this.line);
 		this.line = while_cond(blk, this.V,
-							   this.parts.get(PART.INIT_POST.index()),
-							   this.parts.get(PART.LOOP_HEADER.index()),
+							   this.parts.get(PART.INIT_POST.index),
+							   this.parts.get(PART.LOOP_HEADER.index),
 							   line);		
 	}
 
