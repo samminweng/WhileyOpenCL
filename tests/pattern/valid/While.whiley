@@ -35,6 +35,20 @@ requires limit <= 1000000:
         sum = sum + i
         i=i+1
     return sum
+    
+function f5(int limit) => int
+requires limit <= 1000000:
+    int i=0
+    int sum=0
+    while i<=limit:
+    	if i < 10:
+    		sum = sum + 1
+    	else:
+    		if i > 10:
+    			sum = sum + 2
+    	sum = sum + i
+    	i = i + 1
+    return sum
 
 method main(System.Console sys):
     //sys.out.println("f1 Loop Sum="++f1(5))
