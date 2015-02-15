@@ -24,10 +24,11 @@ public abstract class Pattern {
 	protected String label_AssertOrAssume;//The flag to store the label for an assertion or assumption.	
 
 	//Expressions related to the loop variable.
-	protected String V;
-	protected Expr initExpr;
-	protected String comparatorOp;
-	protected Expr loop_boundExpr;
+	public int param_size;
+	public String V;
+	public Expr initExpr;
+	public String comparatorOp;
+	public Expr loop_boundExpr;
 
 	//Store the list of code for each part of the pattern.
 	protected int line;//keep track of the current line number.
@@ -52,6 +53,7 @@ public abstract class Pattern {
 
 	public Pattern(int param_size, List<Code> blk){
 		this.expressiontable = new HashMap<String, Expr>();
+		this.param_size = param_size;
 		//Add the input parameters to the expression table.
 		for(int index=0;index<param_size;index++){
 			putExpr(new Expr(prefix+index));
@@ -90,6 +92,12 @@ public abstract class Pattern {
 	public boolean isNil() {
 		return this.isNil;
 	}
+	
+	public List<Code> getPart(int index){
+		return this.parts.get(index);
+	}
+	
+	
 
 	/**
 	 * Check if the code is inside an assertion or assumption.

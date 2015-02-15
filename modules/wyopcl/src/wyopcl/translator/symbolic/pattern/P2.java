@@ -130,6 +130,7 @@ public class P2 extends Pattern{
 				this.incr = getIncrement(assign, loop_var);
 				if(this.incr != null){
 					AddCodeToPatternPart(assign, loopbody_incr);
+					index++;
 					break;
 				}
 			}
@@ -140,7 +141,7 @@ public class P2 extends Pattern{
 		Codes.Loop loop = (Codes.Loop)this.parts.get(PART.LOOP_HEADER.index()).get(0);
 		String loop_label = loop.target;
 		//Search for loop end and put the code to 'loop_post' part.
-		for(++index; index<code_blk.size();index++){
+		for(; index<code_blk.size();index++){
 			Code code = code_blk.get(index);
 			//Create the expression and put it into the table.
 			AddCodeToPatternPart(code, loopbody_post);
@@ -148,7 +149,8 @@ public class P2 extends Pattern{
 				if(code instanceof Codes.LoopEnd){
 					//Get the loop end to see if the 
 					Codes.LoopEnd loopend = (Codes.LoopEnd)code;
-					if(loopend.label.equals(loop_label)){						
+					if(loopend.label.equals(loop_label)){
+						index++;
 						break;				
 					}				
 				}
@@ -156,7 +158,7 @@ public class P2 extends Pattern{
 		}
 
 		//Put the remaining code into the 'loopexit' part
-		for(++index; index<code_blk.size();index++){
+		for(; index<code_blk.size();index++){
 			//Create the expression and put it into the table.
 			AddCodeToPatternPart(code_blk.get(index), loopexit);
 		}
