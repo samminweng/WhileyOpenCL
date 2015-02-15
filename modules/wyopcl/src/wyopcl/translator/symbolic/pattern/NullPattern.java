@@ -12,6 +12,7 @@ public class NullPattern extends Pattern {
 
 	public NullPattern(int params_size, List<Code> blk) {
 		super(params_size, blk);
+		this.type = "NullPattern";
 		this.isNil = true;
 	}
 

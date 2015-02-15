@@ -97,7 +97,9 @@ public abstract class Pattern {
 		return this.parts.get(index);
 	}
 	
-	
+	public String getType(){
+		return this.type;
+	}
 
 	/**
 	 * Check if the code is inside an assertion or assumption.

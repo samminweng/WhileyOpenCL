@@ -2,21 +2,14 @@ package wyopcl.translator.symbolic;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map.Entry;
-import java.util.TreeMap;
 
 import wyil.lang.Code;
-import wyil.lang.Codes;
-import wyil.lang.Codes.Assign;
-import wyil.lang.Codes.Comparator;
-import wyil.lang.Codes.If;
-import wyil.lang.Constant;
 import wyil.lang.Code.Block;
+import wyil.lang.Codes;
 import wyil.lang.Codes.BinaryOperatorKind;
+import wyil.lang.Codes.Comparator;
 import wyil.lang.Type;
 import wyil.lang.WyilFile.Case;
 import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
@@ -36,7 +29,7 @@ import wyopcl.translator.symbolic.pattern.Pattern.PART;
  *
  */
 public class PatternMatcher {
-	private final String prefix = "%";
+	//private final String prefix = "%";
 	private final Configuration config;	
 	private List<Class<? extends Pattern>> avail_patterns;//Store the available patterns.
 
@@ -46,134 +39,137 @@ public class PatternMatcher {
 		this.avail_patterns.add(P1.class);
 		this.avail_patterns.add(P2.class);
 	}
-	
+
 	/**
-	 * Construct the intial value assignment
+	 * Construct  the 'init_pre' and 'init' parts  from one pattern type to another.
 	 * @param p1
 	 * @param loop_var
 	 * @param blk
 	 * @return
 	 */
-	private Codes.Assign getInitAssign(P1 p1, int loop_var, List<Code> blk){
-		Codes.Assign init_assign = null;
-		//Construct the 'init_pre' of P2
-		//Replace the 'init' of P1 with the constant in 'loop_header' part.  
-		//Put all the constants of the P1's loop header into the init_pre part.
-		List<Code> loop_header = p1.getPart(PART.LOOP_HEADER.index());
+	private Codes.Assign getInitAssign(Pattern p, int loop_var, List<Code> blk){
+		//Put all the other code in the p's loop header into the code block.
+		List<Code> loop_header = p.getPart(PART.LOOP_HEADER.index());
 		for(Code code: loop_header){
-			if(code instanceof Codes.Const){
-				blk.add(code);
-			}else if(code instanceof Codes.If){
-				Codes.If if_code = (Codes.If)code;
-				int op = -1;
-				//Get the comparing operand
-				if(loop_var==if_code.leftOperand){ 							
-					op = if_code.rightOperand;
-				}else if(loop_var == if_code.rightOperand){
-					op = if_code.leftOperand;
-				}					
-				if(op>0){
-					//Construct an assignment for loop variable 
-					init_assign = Codes.Assign(Type.T_INT, loop_var, op);
+			if(!(code instanceof Codes.Loop)){
+				if(code instanceof Codes.If){
+					Codes.If if_code = (Codes.If)code;
+					int op = -1;
+					//Get the comparing operand
+					if(loop_var==if_code.leftOperand){ 							
+						op = if_code.rightOperand;
+					}else if(loop_var == if_code.rightOperand){
+						op = if_code.leftOperand;
+					}					
+					if(op>0){
+						//Construct an assignment for loop variable 
+						return Codes.Assign(Type.T_INT, loop_var, op);	
+					}
 				}
+				blk.add(code);				
 			}
 		}		
-		return init_assign;
+		return null;
 	}
+
+
 	/**
-	 * Construct the loop condition for P2 pattern
-	 * @param p1
-	 * @param loop_var
-	 * @param blk
-	 * @return
+	 * Construct the loop condition from one pattern type to another
+	 * @param p pattern
+	 * @param loop_var the loop variable
+	 * @param blk the code block
+	 * @return the bytecode of loop condition.
 	 */
-	private Codes.If getLoopCondition(P1 p1, int loop_var, List<Code> blk){
-		List<Code> loop_header = p1.getPart(PART.LOOP_HEADER.index());
+	private Codes.If getLoopCondition(Pattern p, int loop_var, List<Code> blk){
+		List<Code> loop_header = p.getPart(PART.LOOP_HEADER.index());
 		Codes.Loop loop = (Codes.Loop)loop_header.get(0);
 		//Add the loop bytecode
 		blk.add(loop);			
 
 		//Add all the code in the 'init_pre'
-		blk.addAll(p1.getPart(PART.INIT_PRE.index()));
+		blk.addAll(p.getPart(PART.INIT_PRE.index()));
 		//Get the initial assignment code 
-		int init_assignOp = ((Codes.Assign) p1.getPart(PART.INIT.index()).get(0)).operand(0);
+		int init_assignOp = ((Codes.Assign) p.getPart(PART.INIT.index()).get(0)).operand(0);
 		Codes.If condition = (Codes.If) loop_header.get(loop_header.size()-1);
 		
-		Codes.If loop_condition = null;		
-		if(condition.op.equals(Comparator.LTEQ)){
-			//Construct a ifge 
-			loop_condition = Codes.If(Type.Int.T_INT, loop_var, init_assignOp, Comparator.GTEQ, condition.target);
-		}else{
-			loop_condition = Codes.If(Type.Int.T_INT, loop_var, init_assignOp, Comparator.GT, condition.target);
-		}		
-		return loop_condition;
+		switch (condition.op){
+		case LTEQ:
+			return Codes.If(Type.Int.T_INT, loop_var, init_assignOp, Comparator.GTEQ, condition.target);
+		case LT:
+			return Codes.If(Type.Int.T_INT, loop_var, init_assignOp, Comparator.GT, condition.target);
+		case GTEQ:
+			return Codes.If(Type.Int.T_INT, loop_var, init_assignOp, Comparator.LTEQ, condition.target);
+		case GT:
+			return Codes.If(Type.Int.T_INT, loop_var, init_assignOp, Comparator.LT, condition.target);
+		default:
+			return null;
+		}
 	}
-	
+
 	/**
-	 * Get the increment for P2 pattern
+	 * Get the increment for P2 pattern or the decrement for P1
 	 * @param p1
 	 * @param loop_var
 	 * @param blk
 	 * @return
 	 */
-	private Codes.BinaryOperator getIncrement(P1 p1, int loop_var, List<Code> blk){
-		List<Code> loopbody_pre = p1.getPart(PART.LOOPBODY_PRE.index());
+	private Codes.BinaryOperator getIncrOrDecr(Pattern p, int loop_var, List<Code> blk){
+		List<Code> loopbody_pre = p.getPart(PART.LOOPBODY_PRE.index());
 		Codes.BinaryOperator binOp = (Codes.BinaryOperator)loopbody_pre.get(loopbody_pre.size()-1);
-		//Construct a 'add' binOp
-		return Codes.BinaryOperator(binOp.type(), binOp.target(), binOp.operand(0), binOp.operand(1), BinaryOperatorKind.ADD);
+		switch(binOp.kind){
+		case ADD:
+			//Construct a 'sub' bin
+			return Codes.BinaryOperator(binOp.type(), binOp.target(), binOp.operand(0), binOp.operand(1), BinaryOperatorKind.SUB);
+		case SUB:
+			//Construct a 'add' binOp
+			return Codes.BinaryOperator(binOp.type(), binOp.target(), binOp.operand(0), binOp.operand(1), BinaryOperatorKind.ADD);
+		default:
+			return null;	
+		}		
 	}
-	
+
 
 	/**
 	 * Transform the pattern of P1 or P2 type to the other type.
 	 * @param pattern
 	 * @return
 	 */
-	private Pattern transform(Pattern pattern){
+	private Pattern transform(Pattern p){
 		//No transformation 
-		if(pattern instanceof NullPattern) return pattern;
+		if(p instanceof NullPattern) return p;
+		//Store all the bytecode for the new pattern.
+		List<Code> blk = new ArrayList<Code>();		
+		//Get the loop var
+		int loop_var = Integer.parseInt(p.V.replace("%", ""));
 
-		if(pattern instanceof P1){
-			List<Code> blk = new ArrayList<Code>();
-			P1 p1 = (P1) pattern;
-			//Get the loop var
-			int loop_var = Integer.parseInt(p1.V.replace("%", ""));
-			
-			Code init = getInitAssign(p1, loop_var, blk);
-			blk.add(init);
-			//Get the 'init_post'
-			blk.addAll(p1.getPart(PART.INIT_POST.index()));			
+		blk.add(getInitAssign(p, loop_var, blk));
+		//Get the 'init_post'
+		blk.addAll(p.getPart(PART.INIT_POST.index()));			
 
-			Codes.If loop_condition = getLoopCondition(p1, loop_var, blk);
-			blk.add(loop_condition);
-			
-			//Add the code in the 'loopbody_pre'
-			List<Code> loopbody_pre = p1.getPart(PART.LOOPBODY_PRE.index());
-			int index;
-			for(index=0;index<loopbody_pre.size()-1;index++){
-				blk.add(loopbody_pre.get(index));
-			}
-			Codes.BinaryOperator incr = getIncrement(p1, loop_var, blk);
-			blk.add(incr);
-			//Add the loop_decr
-			blk.addAll(p1.getPart(PART.LOOPBODY_DECR.index()));
-			blk.addAll(p1.getPart(PART.LOOPBODY_POST.index()));
-			blk.addAll(p1.getPart(PART.LOOP_EXIT.index()));
-			//For debugging
-			if(config.isVerbose()){
-				for(Code code: blk){
-					System.out.println(code);
-				}
-			}
-			//Analyze the transformed list of code.
-			return analyzePattern(p1.param_size, blk);
-		}else if(pattern instanceof P2){
+		//Get the loop header
+		blk.add(getLoopCondition(p, loop_var, blk));
 
+		//Add the code in the 'loopbody_pre'
+		List<Code> loopbody_pre = p.getPart(PART.LOOPBODY_PRE.index());
+		int index;
+		for(index=0;index<loopbody_pre.size()-1;index++){
+			blk.add(loopbody_pre.get(index));
 		}
-
-		//In other cases, no transformation
-		return pattern;
-
+		
+		//Get the increment or decrement
+		blk.add(getIncrOrDecr(p, loop_var, blk));
+		//Add the loop_decr
+		blk.addAll(p.getPart(PART.LOOPBODY_DECR.index()));
+		blk.addAll(p.getPart(PART.LOOPBODY_POST.index()));
+		blk.addAll(p.getPart(PART.LOOP_EXIT.index()));
+		//For debugging
+		if(config.isVerbose()){
+			for(Code code: blk){
+				System.out.println(code);
+			}
+		}
+		//Analyze the transformed list of code.
+		return analyzePattern(p.param_size, blk);
 	}
 
 
@@ -207,8 +203,11 @@ public class PatternMatcher {
 				code_blk.add(code);					
 			}			
 			Pattern pattern = analyzePattern(param_size, code_blk);
-			System.out.println(pattern);
-			System.out.println("The transformed pattern:\n"+transform(pattern));
+			System.out.println("The inferred pattern:\n"+pattern);
+			Pattern pattern_1 = transform(pattern);
+			System.out.println("From "+pattern.getType()+" to "+pattern_1.getType()+", the transformed pattern:\n"+pattern_1);
+			Pattern pattern_2 = transform(pattern_1);
+			System.out.println("From "+pattern_1.getType()+" to "+pattern_2.getType()+", the transformed pattern:\n"+pattern_2);
 			code_blk = null;
 			//End of the function
 			System.out.println("\n----------------End of "+func_name+" function----------------\n");
