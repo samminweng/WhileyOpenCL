@@ -39,12 +39,25 @@ public class P1 extends Pattern{
 			this.isNil = true;
 		}		
 	}
-
+	/**
+	 * Print out all the code sequentially in accordance with the PARTS.
+	 */
 	@Override
 	public String toString() {
-		return type + ":while_loop && loop_var("+V+") && decr("+V+", "+decr+")"
-				+ " && init("+V+", "+initExpr+") &&  while_cond("+V+", "+comparatorOp+", "+loop_boundExpr+")"
-				+ "\n=>loop_iters("+V+", " + getNumberOfIterations()+")";
+		String result = "";
+		result += "{";
+		//Print out all the bytecode in the pattern
+		for(List<Code> part: this.parts){
+			for(Code code: part){
+				result += "\n\t"+code;
+			}									
+		}
+		result += "\n}";		
+		result += type + ":while_loop && loop_var("+V+") && decr("+V+", "+decr+")"
+				  + " && init("+V+", "+initExpr+") &&  while_cond("+V+", "+comparatorOp+", "+loop_boundExpr+")"
+				  + "\n=>loop_iters("+V+", " + getNumberOfIterations()+")";
+		
+		return result;
 	}
 
 	@Override
@@ -115,13 +128,13 @@ public class P1 extends Pattern{
 		for(index=line; index<code_blk.size();index++){
 			Code code = code_blk.get(index);
 			//Create the expression and put it into the table.
-			putExpr(new Expr(code));
 			if(!checkAssertOrAssume(code) && code instanceof Codes.Assign){
 				//Check if the assignment bytecode is to over-write the value of loop variable.
 				Codes.Assign assign = (Codes.Assign)code;				
 				this.decr = getDecrement(assign, loop_var);
 				if(this.decr != null){
 					AddCodeToPatternPart(assign, loopbody_decr);
+					index++;
 					break;
 				}
 			}
@@ -141,6 +154,7 @@ public class P1 extends Pattern{
 					//Get the loop end to see if the 
 					Codes.LoopEnd loopend = (Codes.LoopEnd)code;
 					if(loopend.label.equals(loop_label)){
+						index++;
 						break;				
 					}				
 				}

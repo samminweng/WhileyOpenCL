@@ -42,27 +42,6 @@ public class PatternMatcher {
 		this.avail_patterns.add(P1.class);
 		this.avail_patterns.add(P2.class);
 	}
-
-	/**
-	 * Print out all the code sequentially in accordance with the PARTS.
-	 * @param pattern
-	 */
-	private void printPattern(Pattern pattern){		
-		String result = "";
-		result += "{";
-		//Print out all the bytecode in the pattern
-		for(List<Code> part: pattern.parts){
-			for(Code code: part){
-				result += "\n\t"+code;
-			}									
-		}
-		result += "\n}";
-		result +="\n"+pattern;
-		System.out.println(result);
-		
-		
-	}
-	
 	
 	/**
 	 * Iterate each code of the input function and build up the loop blk.
@@ -92,7 +71,7 @@ public class PatternMatcher {
 				code_blk.add(code);					
 			}			
 			Pattern pattern = analyzePattern(param_size, code_blk);
-			printPattern(pattern);
+			System.out.println(pattern);
 			code_blk = null;
 			//End of the function
 			System.out.println("\n----------------End of "+func_name+" function----------------\n");

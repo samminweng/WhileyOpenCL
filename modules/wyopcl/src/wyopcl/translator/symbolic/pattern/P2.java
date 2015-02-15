@@ -48,9 +48,20 @@ public class P2 extends Pattern{
 
 	@Override
 	public String toString() {
-		return type + ":while_loop && loop_var("+V+") && incr("+V+", "+incr+")"
-				+ " && init("+V+", "+initExpr+") &&  while_cond("+V+", "+comparatorOp+", "+loop_boundExpr+")"
-				+ "\n=>loop_iters("+V+", " + getNumberOfIterations()+")";
+		String result = "";
+		result += "{";
+		//Print out all the bytecode in the pattern
+		for(List<Code> part: this.parts){
+			for(Code code: part){
+				result += "\n\t"+code;
+			}									
+		}
+		result += "\n}";
+		
+		result += type + ":while_loop && loop_var("+V+") && incr("+V+", "+incr+")"
+				  + " && init("+V+", "+initExpr+") &&  while_cond("+V+", "+comparatorOp+", "+loop_boundExpr+")"
+				  + "\n=>loop_iters("+V+", " + getNumberOfIterations()+")";
+		return result;
 	}
 
 	@Override
@@ -113,8 +124,6 @@ public class P2 extends Pattern{
 		//Search for the decrement
 		for(index=line; index<code_blk.size();index++){
 			Code code = code_blk.get(index);
-			//Create the expression and put it into the table.
-			putExpr(new Expr(code));
 			if(!checkAssertOrAssume(code) && code instanceof Codes.Assign){
 				//Check if the assignment bytecode is to over-write the value of loop variable.
 				Codes.Assign assign = (Codes.Assign)code;				
@@ -131,7 +140,7 @@ public class P2 extends Pattern{
 		Codes.Loop loop = (Codes.Loop)this.parts.get(PART.LOOP_HEADER.index()).get(0);
 		String loop_label = loop.target;
 		//Search for loop end and put the code to 'loop_post' part.
-		for(; index<code_blk.size();index++){
+		for(++index; index<code_blk.size();index++){
 			Code code = code_blk.get(index);
 			//Create the expression and put it into the table.
 			AddCodeToPatternPart(code, loopbody_post);
@@ -139,7 +148,7 @@ public class P2 extends Pattern{
 				if(code instanceof Codes.LoopEnd){
 					//Get the loop end to see if the 
 					Codes.LoopEnd loopend = (Codes.LoopEnd)code;
-					if(loopend.label.equals(loop_label)){
+					if(loopend.label.equals(loop_label)){						
 						break;				
 					}				
 				}
@@ -147,7 +156,7 @@ public class P2 extends Pattern{
 		}
 
 		//Put the remaining code into the 'loopexit' part
-		for(; index<code_blk.size();index++){
+		for(++index; index<code_blk.size();index++){
 			//Create the expression and put it into the table.
 			AddCodeToPatternPart(code_blk.get(index), loopexit);
 		}
