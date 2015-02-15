@@ -13,6 +13,7 @@ import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Codes.Assign;
 import wyil.lang.Codes.Comparator;
+import wyil.lang.Codes.If;
 import wyil.lang.Constant;
 import wyil.lang.Code.Block;
 import wyil.lang.Codes.BinaryOperatorKind;
@@ -47,6 +48,83 @@ public class PatternMatcher {
 	}
 	
 	/**
+	 * Construct the intial value assignment
+	 * @param p1
+	 * @param loop_var
+	 * @param blk
+	 * @return
+	 */
+	private Codes.Assign getInitAssign(P1 p1, int loop_var, List<Code> blk){
+		Codes.Assign init_assign = null;
+		//Construct the 'init_pre' of P2
+		//Replace the 'init' of P1 with the constant in 'loop_header' part.  
+		//Put all the constants of the P1's loop header into the init_pre part.
+		List<Code> loop_header = p1.getPart(PART.LOOP_HEADER.index());
+		for(Code code: loop_header){
+			if(code instanceof Codes.Const){
+				blk.add(code);
+			}else if(code instanceof Codes.If){
+				Codes.If if_code = (Codes.If)code;
+				int op = -1;
+				//Get the comparing operand
+				if(loop_var==if_code.leftOperand){ 							
+					op = if_code.rightOperand;
+				}else if(loop_var == if_code.rightOperand){
+					op = if_code.leftOperand;
+				}					
+				if(op>0){
+					//Construct an assignment for loop variable 
+					init_assign = Codes.Assign(Type.T_INT, loop_var, op);
+				}
+			}
+		}		
+		return init_assign;
+	}
+	/**
+	 * Construct the loop condition for P2 pattern
+	 * @param p1
+	 * @param loop_var
+	 * @param blk
+	 * @return
+	 */
+	private Codes.If getLoopCondition(P1 p1, int loop_var, List<Code> blk){
+		List<Code> loop_header = p1.getPart(PART.LOOP_HEADER.index());
+		Codes.Loop loop = (Codes.Loop)loop_header.get(0);
+		//Add the loop bytecode
+		blk.add(loop);			
+
+		//Add all the code in the 'init_pre'
+		blk.addAll(p1.getPart(PART.INIT_PRE.index()));
+		//Get the initial assignment code 
+		int init_assignOp = ((Codes.Assign) p1.getPart(PART.INIT.index()).get(0)).operand(0);
+		Codes.If condition = (Codes.If) loop_header.get(loop_header.size()-1);
+		
+		Codes.If loop_condition = null;		
+		if(condition.op.equals(Comparator.LTEQ)){
+			//Construct a ifge 
+			loop_condition = Codes.If(Type.Int.T_INT, loop_var, init_assignOp, Comparator.GTEQ, condition.target);
+		}else{
+			loop_condition = Codes.If(Type.Int.T_INT, loop_var, init_assignOp, Comparator.GT, condition.target);
+		}		
+		return loop_condition;
+	}
+	
+	/**
+	 * Get the increment for P2 pattern
+	 * @param p1
+	 * @param loop_var
+	 * @param blk
+	 * @return
+	 */
+	private Codes.BinaryOperator getIncrement(P1 p1, int loop_var, List<Code> blk){
+		List<Code> loopbody_pre = p1.getPart(PART.LOOPBODY_PRE.index());
+		Codes.BinaryOperator binOp = (Codes.BinaryOperator)loopbody_pre.get(loopbody_pre.size()-1);
+		//Construct a 'add' binOp
+		return Codes.BinaryOperator(binOp.type(), binOp.target(), binOp.operand(0), binOp.operand(1), BinaryOperatorKind.ADD);
+	}
+	
+
+	/**
 	 * Transform the pattern of P1 or P2 type to the other type.
 	 * @param pattern
 	 * @return
@@ -54,77 +132,29 @@ public class PatternMatcher {
 	private Pattern transform(Pattern pattern){
 		//No transformation 
 		if(pattern instanceof NullPattern) return pattern;
-		
+
 		if(pattern instanceof P1){
 			List<Code> blk = new ArrayList<Code>();
 			P1 p1 = (P1) pattern;
 			//Get the loop var
 			int loop_var = Integer.parseInt(p1.V.replace("%", ""));
-			//Construct the 'init_pre' of P2
-			//Replace the 'init' of P1 with the constant in 'loop_header' part.  
-			//Put all the constants of the P1's loop header into the init_pre part.
-			List<Code> loop_header = p1.getPart(PART.LOOP_HEADER.index());
-			Comparator comparingOp = null;
-			String blklabel = null;
-			for(Code code: loop_header){
-				if(code instanceof Codes.Const){
-					blk.add(code);
-				}else if(code instanceof Codes.If){
-					Codes.If if_code = (Codes.If)code;
-					int op = -1;
-					//Get the comparing operand
-					if(loop_var==if_code.leftOperand){ 							
-						op = if_code.rightOperand;
-					}else if(loop_var == if_code.rightOperand){
-						op = if_code.leftOperand;
-					}					
-					if(op >0){						
-						comparingOp = if_code.op;
-						blklabel = if_code.target;
-						//Construct an assignment for loop variable 
-						Codes.Assign init_assign = Codes.Assign(Type.T_INT, loop_var, op);
-						blk.add(init_assign);
-					}
-				}
-			}
+			
+			Code init = getInitAssign(p1, loop_var, blk);
+			blk.add(init);
 			//Get the 'init_post'
 			blk.addAll(p1.getPart(PART.INIT_POST.index()));			
+
+			Codes.If loop_condition = getLoopCondition(p1, loop_var, blk);
+			blk.add(loop_condition);
 			
-			//Construct the loop header for P2 pattern
-			//Add the loop bytecode
-			for(Code code: loop_header){
-				if(code instanceof Codes.Loop){
-					Codes.Loop loop = (Codes.Loop)code;
-					//Check if loop_var is used in the loop
-					for(int op: loop.modifiedOperands){
-						if(op == loop_var){
-							blk.add(loop);
-						}
-					}
-				}
-			}
-			//Add all the code in the 'init_pre'
-			blk.addAll(p1.getPart(PART.INIT_PRE.index()));
-			//Get the initial assignment code 
-			int init_assignOp = ((Codes.Assign) p1.getPart(PART.INIT.index()).get(0)).operand(0);
-			
-			if(comparingOp.equals(Comparator.LTEQ)){
-				//Construct a ifge 
-				blk.add(Codes.If(Type.Int.T_INT, loop_var, init_assignOp, Comparator.GTEQ, blklabel));
-			}else{
-				blk.add(Codes.If(Type.Int.T_INT, loop_var, init_assignOp, Comparator.GT, blklabel));
-			}
 			//Add the code in the 'loopbody_pre'
 			List<Code> loopbody_pre = p1.getPart(PART.LOOPBODY_PRE.index());
 			int index;
 			for(index=0;index<loopbody_pre.size()-1;index++){
 				blk.add(loopbody_pre.get(index));
 			}
-			Codes.BinaryOperator binOp = (Codes.BinaryOperator)loopbody_pre.get(index);
-			
-			//Construct a 'add' binOp
-			blk.add(Codes.BinaryOperator(binOp.type(), binOp.target(), binOp.operand(0), binOp.operand(1), BinaryOperatorKind.ADD));
-			
+			Codes.BinaryOperator incr = getIncrement(p1, loop_var, blk);
+			blk.add(incr);
 			//Add the loop_decr
 			blk.addAll(p1.getPart(PART.LOOPBODY_DECR.index()));
 			blk.addAll(p1.getPart(PART.LOOPBODY_POST.index()));
@@ -138,17 +168,17 @@ public class PatternMatcher {
 			//Analyze the transformed list of code.
 			return analyzePattern(p1.param_size, blk);
 		}else if(pattern instanceof P2){
-			
+
 		}
-		
+
 		//In other cases, no transformation
 		return pattern;
-		
+
 	}
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * Iterate each code of the input function and build up the loop blk.
 	 * @param functionOrMethod
@@ -185,7 +215,7 @@ public class PatternMatcher {
 		}		
 
 	}
-	
+
 	/**
 	 * Takes the list of loop bytecode as input, take the block of loop bytecode, iterate over all available patterns
 	 * and check if the given loop is matched with any one of them by using the pattern checker.

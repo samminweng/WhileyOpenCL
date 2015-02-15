@@ -9,14 +9,14 @@ requires limit <= 1000000:
         i=i-1
     return sum
     
-//function f2(int limit) => int
-//requires limit <= 1000000:
-//    int i=limit-1
-//    int sum=0
-//    while i>=0:
-//        sum = sum + i
-//        i=i-1
-//    return sum
+function f2(int limit) => int
+requires limit <= 1000000:
+    int i=limit
+    int sum=0
+    while i>=0:
+        sum = sum + i
+        i=i-1
+    return sum
 
 //function f3(int limit) => int
 //requires limit <= 1000000:
