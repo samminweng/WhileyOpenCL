@@ -82,7 +82,7 @@ public class P1 extends Pattern{
 	 * @param loop_var the loop variable
 	 * @return the decrement (BigInteger). If not found, return null.
 	 */
-	private BigInteger getDecrement(Codes.Assign assign, String loop_var){
+	private BigInteger extractDecrement(Codes.Assign assign, String loop_var){
 		//Check if the target is the loop variable.
 		if((prefix+assign.target()).equals(loop_var)){
 			//Get the temporary variable, e.g. %16
@@ -134,7 +134,7 @@ public class P1 extends Pattern{
 			if(!checkAssertOrAssume(code) && code instanceof Codes.Assign){
 				//Check if the assignment bytecode is to over-write the value of loop variable.
 				Codes.Assign assign = (Codes.Assign)code;				
-				this.decr = getDecrement(assign, loop_var);
+				this.decr = extractDecrement(assign, loop_var);
 				if(this.decr != null){
 					AddCodeToPatternPart(assign, loopbody_decr);
 					index++;

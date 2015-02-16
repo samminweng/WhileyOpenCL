@@ -78,8 +78,13 @@ public class P2 extends Pattern{
 		return numberOfIterations;
 	}
 
-
-	private BigInteger getIncrement(Codes.Assign assign, String loop_var){
+	/**
+	 * Extract the increment value from the re-assignment bytecode of the loop variable. 
+	 * @param assign
+	 * @param loop_var
+	 * @return
+	 */
+	private BigInteger extractIncrement(Codes.Assign assign, String loop_var){
 		//Check if the assignment bytecode is to over-write the value of loop variable.
 		if(loop_var.equals(prefix+assign.target())){
 			//Get the temporary variable, e.g. %16
@@ -128,7 +133,7 @@ public class P2 extends Pattern{
 			if(!checkAssertOrAssume(code) && code instanceof Codes.Assign){
 				//Check if the assignment bytecode is to over-write the value of loop variable.
 				Codes.Assign assign = (Codes.Assign)code;				
-				this.incr = getIncrement(assign, loop_var);
+				this.incr = extractIncrement(assign, loop_var);
 				if(this.incr != null){
 					AddCodeToPatternPart(assign, loopbody_incr);
 					index++;
