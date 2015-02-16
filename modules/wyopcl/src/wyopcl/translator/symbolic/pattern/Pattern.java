@@ -88,10 +88,10 @@ public abstract class Pattern {
 		}
 		//public int index() { return index;}
 	}
-	
+
 	public EnumSet<PART> set;
-	
-	
+
+
 	public Pattern(int param_size, List<Code> blk){
 		//Create an enum set containing all the pattern parts
 		this.set = EnumSet.allOf(PART.class);
@@ -112,18 +112,18 @@ public abstract class Pattern {
 			//Initialize the each part.
 			this.parts.add(new ArrayList<Code>());			
 		}
-		
+
 		//Construct each part in the pattern.
 		this.line = 0;
 		this.V = loop_var(blk);
 		this.line = init(blk, this.V,
-						 this.parts.get(PART.INIT_PRE.index),
-						 this.parts.get(PART.INIT.index),
-						 this.line);
+				this.parts.get(PART.INIT_PRE.index),
+				this.parts.get(PART.INIT.index),
+				this.line);
 		this.line = while_cond(blk, this.V,
-							   this.parts.get(PART.INIT_POST.index),
-							   this.parts.get(PART.LOOP_HEADER.index),
-							   line);		
+				this.parts.get(PART.INIT_POST.index),
+				this.parts.get(PART.LOOP_HEADER.index),
+				line);		
 	}
 
 	public abstract Expr getNumberOfIterations();
@@ -135,11 +135,11 @@ public abstract class Pattern {
 	public boolean isNil() {
 		return this.isNil;
 	}
-	
+
 	public List<Code> getPart(int index){
 		return this.parts.get(index);
 	}
-	
+
 	public String getType(){
 		return this.type;
 	}
@@ -202,10 +202,10 @@ public abstract class Pattern {
 		return null;
 	}
 
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * Check if the code is a constant assignment and put the symbol and value into the symbol table. 
 	 *
@@ -224,7 +224,7 @@ public abstract class Pattern {
 			expr = null;
 		}
 	}
-	
+
 	/**
 	 * Get the value from expression table.
 	 * @param op
@@ -236,21 +236,21 @@ public abstract class Pattern {
 		}		
 		return null;
 	}
-	
+
 	protected void AddCodeToPatternPart(Code code, List<Code> blk){
 		//Create the expression and put it into the table.
 		putExpr(new Expr(code));
 		blk.add(code);	
 	}
-	
-	
-	
+
+
+
 	/**
-	 * Get the expression of assigning the initial value to the loop variable. 
+	 * Extract the expression from the bytecode of assigning the initial value to the loop variable. 
 	 * @param loop_var the loop variable.
 	 * @return the expression. If not found, return null.
 	 */
-	private Expr getInitExpr(Codes.Assign assign, String loop_var){
+	private Expr extractInitExpr(Codes.Assign assign, String loop_var){
 		//check if the loop variable is used in the assignment.
 		if(loop_var.equals(prefix+(assign.target()))){
 			//Get the expression for loop variable.	
@@ -288,7 +288,7 @@ public abstract class Pattern {
 			//Check if this code assigns the value to the loop variable. 
 			if(!checkAssertOrAssume(code)&& code instanceof Codes.Assign){
 				//Get the expression for loop variable.	
-				initExpr = getInitExpr((Codes.Assign)code, loop_var);
+				initExpr = extractInitExpr((Codes.Assign)code, loop_var);
 				if(initExpr != null){
 					//Add the code to 'init' part.
 					AddCodeToPatternPart(code, init);
@@ -323,51 +323,50 @@ public abstract class Pattern {
 	}
 
 	/**
-	 * Get the expression of loop bound from the loop condition bytecode.
+	 * Extract the expression of loop bound from the loop condition bytecode.
 	 * @param if_code
 	 * @param loop_var
 	 * @return
 	 */
-	private Expr getLoopBoundExpr(Code code, String loop_var){
+	private Expr extractLoopBoundExpr(Codes.If if_code, String loop_var){
 		String op = null;
-		if(code instanceof Codes.If){
-			Codes.If if_code = (Codes.If)code;
-			//Check if the loop var exists in the condition
-			if(loop_var.equals(prefix+if_code.leftOperand)){
-				if(if_code.op.equals(Comparator.LTEQ) ){
-					comparatorOp = ">";													
-				}else if(if_code.op.equals(Comparator.LT)){
-					comparatorOp = ">=";
-				}else if(if_code.op.equals(Comparator.GTEQ)){
-					comparatorOp = "<";
-				}else if(if_code.op.equals(Comparator.GT)){
-					comparatorOp = "<=";
-				}else{
-					return null;
-				}
-				op = prefix+if_code.rightOperand;								
-			}
 
-			if(loop_var.equals(prefix+if_code.rightOperand)){						
-				if(if_code.op.equals(Comparator.LTEQ) ){
-					comparatorOp = "<";													
-				}else if(if_code.op.equals(Comparator.LT)){
-					comparatorOp = "<=";
-				}else if(if_code.op.equals(Comparator.GTEQ)){
-					comparatorOp = ">";
-				}else if(if_code.op.equals(Comparator.GT)){
-					comparatorOp = ">=";
-				}else{
-					return null;
-				}			
-				op = prefix+if_code.leftOperand;						
+		//Check if the loop var exists in the condition
+		if(loop_var.equals(prefix+if_code.leftOperand)){
+			if(if_code.op.equals(Comparator.LTEQ) ){
+				comparatorOp = ">";													
+			}else if(if_code.op.equals(Comparator.LT)){
+				comparatorOp = ">=";
+			}else if(if_code.op.equals(Comparator.GTEQ)){
+				comparatorOp = "<";
+			}else if(if_code.op.equals(Comparator.GT)){
+				comparatorOp = "<=";
+			}else{
+				return null;
 			}
-
-			if(op != null){
-				//Get the expression 
-				return getExpr(op);
-			}
+			op = prefix+if_code.rightOperand;								
 		}
+
+		if(loop_var.equals(prefix+if_code.rightOperand)){						
+			if(if_code.op.equals(Comparator.LTEQ) ){
+				comparatorOp = "<";													
+			}else if(if_code.op.equals(Comparator.LT)){
+				comparatorOp = "<=";
+			}else if(if_code.op.equals(Comparator.GTEQ)){
+				comparatorOp = ">";
+			}else if(if_code.op.equals(Comparator.GT)){
+				comparatorOp = ">=";
+			}else{
+				return null;
+			}			
+			op = prefix+if_code.leftOperand;						
+		}
+
+		if(op != null){
+			//Get the expression 
+			return getExpr(op);
+		}
+
 		return null;
 	}
 
@@ -404,7 +403,7 @@ public abstract class Pattern {
 			//Add the code to loop header	
 			AddCodeToPatternPart(code, loop_header);
 			if(!checkAssertOrAssume(code)&&code instanceof Codes.If){
-				this.loop_boundExpr = getLoopBoundExpr(code, loop_var);
+				this.loop_boundExpr = extractLoopBoundExpr((Codes.If)code, loop_var);
 				if(this.loop_boundExpr!=null){
 					return ++index;					
 				}
