@@ -1,6 +1,7 @@
 package wyopcl.translator.symbolic.pattern;
 
 import java.util.List;
+
 import wyil.lang.Code;
 import wyopcl.translator.symbolic.Expr;
 /**
@@ -24,5 +25,10 @@ public class NullPattern extends Pattern {
 	@Override
 	public String toString() {
 		return "Undecidable Pattern";
+	}
+
+	@Override
+	public List<Code> getPartByName(String name) {
+		return null;
 	}
 }

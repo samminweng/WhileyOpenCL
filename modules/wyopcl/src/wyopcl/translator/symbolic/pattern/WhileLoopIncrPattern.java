@@ -8,7 +8,6 @@ import java.util.List;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyopcl.translator.symbolic.Expr;
-import wyopcl.translator.symbolic.pattern.Pattern.PART;
 /**
  * Implemented the while-loop patterns, as follows:
  * <ul>
@@ -18,28 +17,21 @@ import wyopcl.translator.symbolic.pattern.Pattern.PART;
  * @author Min-Hsien Weng
  *
  */
-public class P2 extends Pattern{
+public class WhileLoopIncrPattern extends WhileLoopPattern{
 	private BigInteger incr;
-
 	/**
 	 * Constructor for P2 pattern
 	 * @param param_size
 	 * @param blk
 	 */
-	public P2(int param_size, List<Code> blk) {
+	public WhileLoopIncrPattern(int param_size, List<Code> blk) {
 		super(param_size, blk);
 		this.type = "P2";		
 		//Get the increment
-		this.line = incr(blk, this.V,
-				this.parts.get(PART.LOOPBODY_PRE.index),
-				this.parts.get(PART.LOOPBODY_INCR.index),
-				this.parts.get(PART.LOOPBODY_POST.index),
-				this.parts.get(PART.LOOP_EXIT.index),
-				this.line);
+		this.line = incr(blk, this.V, this.line);
 
 		if(V != null && this.initExpr != null && this.loop_boundExpr != null && this.incr != null){
 			this.isNil = false;
-
 		}else{
 			this.isNil = true;
 		}			
@@ -50,13 +42,14 @@ public class P2 extends Pattern{
 	public String toString() {
 		String result = "";
 		result += "{";
-		//Print out all the bytecode in accordance with the sequence of PART
-		for(PART part: this.set){
-			result += "\n"+part+":";
-			List<Code> part_code = this.parts.get(part.index);
+		//Print out all the bytecode
+		int index = 0;
+		for(List<Code> part_code: this.parts){
+			result += "\n"+this.part_names.get(index)+":";
 			for(Code code: part_code){
 				result += "\n\t"+code;
 			}
+			index++;
 		}
 		result += "\n}";	
 		result += type + ":while_loop && loop_var("+V+") && incr("+V+", "+incr+")"
@@ -116,11 +109,7 @@ public class P2 extends Pattern{
 	 * 
 	 * @return increment value (Expr). If not matched, return null;
 	 */
-	private int incr(List<Code> code_blk, String loop_var,
-			List<Code> loopbody_pre,
-			List<Code> loopbody_incr,
-			List<Code> loopbody_post,
-			List<Code> loopexit, int line){
+	private int incr(List<Code> code_blk, String loop_var, int line){
 		//Check if the loop variable is inferred.
 		if(loop_var == null) return line;
 
@@ -135,22 +124,21 @@ public class P2 extends Pattern{
 				Codes.Assign assign = (Codes.Assign)code;				
 				this.incr = extractIncrement(assign, loop_var);
 				if(this.incr != null){
-					AddCodeToPatternPart(assign, loopbody_incr);
+					AddCodeToPatternPart(assign, "loopbody_update");
 					index++;
 					break;
 				}
 			}
-			AddCodeToPatternPart(code, loopbody_pre);
+			AddCodeToPatternPart(code, "loopbody_before");
 		}
 
 		//Get loop label
-		Codes.Loop loop = (Codes.Loop)this.parts.get(PART.LOOP_HEADER.index).get(0);
-		String loop_label = loop.target;
+		String loop_label = ((Codes.Loop)getPartByName("loop_header").get(0)).target;
 		//Search for loop end and put the code to 'loop_post' part.
 		for(; index<code_blk.size();index++){
 			Code code = code_blk.get(index);
 			//Create the expression and put it into the table.
-			AddCodeToPatternPart(code, loopbody_post);
+			AddCodeToPatternPart(code, "loopbody_after");
 			if(!checkAssertOrAssume(code)){
 				if(code instanceof Codes.LoopEnd){
 					//Get the loop end to see if the 
@@ -166,11 +154,8 @@ public class P2 extends Pattern{
 		//Put the remaining code into the 'loopexit' part
 		for(; index<code_blk.size();index++){
 			//Create the expression and put it into the table.
-			AddCodeToPatternPart(code_blk.get(index), loopexit);
+			AddCodeToPatternPart(code_blk.get(index), "loop_exit");
 		}
 		return index;
-
 	}
-
-
 }

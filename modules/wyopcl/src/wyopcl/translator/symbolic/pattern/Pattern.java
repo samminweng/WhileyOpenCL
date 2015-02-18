@@ -1,15 +1,15 @@
 package wyopcl.translator.symbolic.pattern;
 
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Optional;
+import java.util.stream.IntStream;
 
 import wyil.lang.Code;
 import wyil.lang.Codes;
-import wyil.lang.Codes.Comparator;
 import wyopcl.translator.symbolic.Expr;
-import wyopcl.translator.symbolic.pattern.Pattern.PART;
 
 /**
  * The abstract class for all pattern classes. This class is implemented with
@@ -25,78 +25,15 @@ public abstract class Pattern {
 	protected Expr numberOfIterations;// the number of loop iterations in affine form.
 	protected String label_AssertOrAssume;//The flag to store the label for an assertion or assumption.	
 
-	//Expressions related to the loop variable.
-	public int param_size;
-	public String V;
-	public Expr initExpr;
-	public String comparatorOp;
-	public Expr loop_boundExpr;
-
 	//Store the list of code for each part of the pattern.
 	protected int line;//keep track of the current line number.
 	public List<List<Code>> parts;//The collection of all parts in the pattern.
-	//Define the sequence of pattern parts and use 'index()' method to get the index.
-	public enum PART{
-		INIT_PRE 		(0){
-			public String toString(){
-				return "init_pre";
-			}
-		},
-		INIT	 		(1){
-			public String toString(){
-				return "init";
-			}
-		},
-		INIT_POST		(2){
-			public String toString(){
-				return "init_post";
-			}
-		},
-		LOOP_HEADER		(3){
-			public String toString(){
-				return "loop_header";
-			}
-		},
-		LOOPBODY_PRE	(4){
-			public String toString(){
-				return "loopbody_pre";
-			}
-		},
-		LOOPBODY_DECR	(5){
-			public String toString(){
-				return "loopbody_decr";
-			}
-		},//the same order
-		LOOPBODY_INCR	(5){
-			public String toString(){
-				return "loopbody_incr";
-			}
-		},//the same order
-		LOOPBODY_POST	(6){
-			public String toString(){
-				return "loopbody_post";
-			}
-		},
-		LOOP_EXIT		(7){
-			public String toString(){
-				return "loop_exit";
-			}
-		};		
-		public int index;
-		PART(int index){
-			this.index = index;
-		}
-		//public int index() { return index;}
-	}
-
-	public EnumSet<PART> set;
-
-
+	protected HashMap<Integer, String> part_names;//Store the relation between part index and part name.
+	public int param_size;//the number of input parameters.
 	public Pattern(int param_size, List<Code> blk){
-		//Create an enum set containing all the pattern parts
-		this.set = EnumSet.allOf(PART.class);
+		this.param_size = param_size;		
+		
 		this.expressiontable = new HashMap<String, Expr>();
-		this.param_size = param_size;
 		//Add the input parameters to the expression table.
 		for(int index=0;index<param_size;index++){
 			putExpr(new Expr(prefix+index));
@@ -104,26 +41,9 @@ public abstract class Pattern {
 		//The flag to store the label for an assertion or assumption.	
 		this.label_AssertOrAssume = null;
 
-		//The list of code in each part of the pattern.
+		//The list of code in each pattern part.
 		this.parts = new ArrayList<List<Code>>();
-		//Add each list of code into the list of pattern parts
-		//Use 'values().length' to get the number of parts.
-		for(int index=0;index<PART.values().length;index++){
-			//Initialize the each part.
-			this.parts.add(new ArrayList<Code>());			
-		}
-
-		//Construct each part in the pattern.
-		this.line = 0;
-		this.V = loop_var(blk);
-		this.line = init(blk, this.V,
-				this.parts.get(PART.INIT_PRE.index),
-				this.parts.get(PART.INIT.index),
-				this.line);
-		this.line = while_cond(blk, this.V,
-				this.parts.get(PART.INIT_POST.index),
-				this.parts.get(PART.LOOP_HEADER.index),
-				line);		
+		this.part_names = new HashMap<Integer, String>();
 	}
 
 	public abstract Expr getNumberOfIterations();
@@ -136,10 +56,48 @@ public abstract class Pattern {
 		return this.isNil;
 	}
 
-	public List<Code> getPart(int index){
-		return this.parts.get(index);
+	/**
+	 * Get the list of code by using the part name. If the part name is new, then add the new pattern part and the list of code.
+	 * This method is a data-driven design rather than using a fixed-sized enum list.  
+	 *   
+	 * @param part_name the name of pattern part.
+	 * @return the list of code. 
+	 */
+	public List<Code> getPartByName(String part_name){
+		//Check if the part_name contains 
+		if(part_names.containsValue(part_name)){
+			for(Entry<Integer, String> entry : part_names.entrySet()){
+				if(entry.getValue().equals(part_name)){
+					return parts.get(entry.getKey());
+				}
+			}	
+		}else{
+			int index = part_names.size();
+			//Add the new part name into the 'part_names' hashmap
+			part_names.put(index, part_name);
+			//Add the new list to the list of parts
+			parts.add(new ArrayList<Code>());
+			return parts.get(index);
+		}
+		return null;
 	}
-
+	
+	/**
+	 * Add the code to the specific pattern part.
+	 * @param code
+	 * @param part_name
+	 */
+	protected void AddCodeToPatternPart(Code code, String part_name){
+		//Create the expression and put it into the table.
+		putExpr(new Expr(code));
+		List<Code> blk = getPartByName(part_name);
+		blk.add(code);	
+	}
+	
+	/**
+	 * Get the pattern type.
+	 * @return the pattern type. 
+	 */
 	public String getType(){
 		return this.type;
 	}
@@ -169,43 +127,7 @@ public abstract class Pattern {
 		//In other cases, if the label is not null, then the code is inside the assertion or assumption.
 		return (label_AssertOrAssume != null)? true: false;
 	}
-
-
-
-	/**
-	 * Find the loop variable
-	 * @return the variable (string). If not found, return null.
-	 */
-	protected String loop_var(List<Code> code_blk) {
-		String var = null;		
-		for(int i=0; i<code_blk.size(); i++){
-			//Get the loop bytecode	
-			Code code = code_blk.get(i);
-			//Loop header
-			if(code instanceof Codes.Loop){
-				Codes.Loop loop = (Codes.Loop)code;
-				//The loop variable is the first modified operands.
-				var = prefix+loop.modifiedOperands[0];
-				for(int j=i;j<code_blk.size();j++){
-					Code next_code = code_blk.get(j);
-					//Get the following code to see if the loop variable is used in the loop condition
-					if(next_code!= null && next_code instanceof Codes.If){
-						Codes.If if_code = (Codes.If)next_code;
-						//Check if the var is left-handed operand. If so, then this is the loop variable.
-						if(var.equals(prefix+if_code.leftOperand) || var.equals(prefix+if_code.rightOperand)){
-							return var;
-						}
-					}
-				}
-			}			
-		}
-		return null;
-	}
-
-
-
-
-
+	
 	/**
 	 * Check if the code is a constant assignment and put the symbol and value into the symbol table. 
 	 *
@@ -237,69 +159,11 @@ public abstract class Pattern {
 		return null;
 	}
 
-	protected void AddCodeToPatternPart(Code code, List<Code> blk){
+	/*protected void AddCodeToPatternPart(Code code, List<Code> blk){
 		//Create the expression and put it into the table.
 		putExpr(new Expr(code));
 		blk.add(code);	
-	}
-
-
-
-	/**
-	 * Extract the expression from the bytecode of assigning the initial value to the loop variable. 
-	 * @param loop_var the loop variable.
-	 * @return the expression. If not found, return null.
-	 */
-	private Expr extractInitExpr(Codes.Assign assign, String loop_var){
-		//check if the loop variable is used in the assignment.
-		if(loop_var.equals(prefix+(assign.target()))){
-			//Get the expression for loop variable.	
-			Expr expr = getExpr(loop_var);
-			if(expr == null){
-				expr = new Expr(assign);
-			}			
-			String[] vars = expr.getVars();
-			for(String var: vars){
-				expr= replaceExpr(var, expr);  
-			}
-			return expr;
-		}
-		return null;
-	}
-
-
-	/**
-	 * Get the expression that assigns the initial value the loop variable and record the list of code in 'init_pre' and 'init' part.
-	 * @param loop_var the loop variable
-	 * @param init_pre the list of code in the 'init_pre' part. Passing an array list parameter allows the called function to modify 
-	 * 		  the context of the array list. 
-	 * @param init the list of code in the 'init' part that assigns the initial values to the loop variable.
-	 * @param line the starting line of code
-	 * @return the ending line of code of 'init' part.
-	 */
-	protected int init(List<Code> code_blk, String loop_var, List<Code> init_pre, List<Code> init, int line) {
-		//No loop variables
-		if(loop_var == null) return line;
-
-		//Put the code to init_pre, init and init_post parts.
-		int index;
-		for(index = line; index<code_blk.size(); index++){
-			Code code = code_blk.get(index);			
-			//Check if this code assigns the value to the loop variable. 
-			if(!checkAssertOrAssume(code)&& code instanceof Codes.Assign){
-				//Get the expression for loop variable.	
-				initExpr = extractInitExpr((Codes.Assign)code, loop_var);
-				if(initExpr != null){
-					//Add the code to 'init' part.
-					AddCodeToPatternPart(code, init);
-					return ++index;
-				}
-			}
-			//Otherwise, add the code to the 'init_pre' part
-			AddCodeToPatternPart(code, init_pre);
-		}			
-		return index;
-	}
+	}*/	
 
 	/**
 	 * Given a input expression, recursively replace the element with the expression retrieved from the expression table.
@@ -320,96 +184,6 @@ public abstract class Pattern {
 			}			
 		}		
 		return expr;
-	}
-
-	/**
-	 * Extract the expression of loop bound from the loop condition bytecode.
-	 * @param if_code
-	 * @param loop_var
-	 * @return
-	 */
-	private Expr extractLoopBoundExpr(Codes.If if_code, String loop_var){
-		String op = null;
-
-		//Check if the loop var exists in the condition
-		if(loop_var.equals(prefix+if_code.leftOperand)){
-			if(if_code.op.equals(Comparator.LTEQ) ){
-				comparatorOp = ">";													
-			}else if(if_code.op.equals(Comparator.LT)){
-				comparatorOp = ">=";
-			}else if(if_code.op.equals(Comparator.GTEQ)){
-				comparatorOp = "<";
-			}else if(if_code.op.equals(Comparator.GT)){
-				comparatorOp = "<=";
-			}else{
-				return null;
-			}
-			op = prefix+if_code.rightOperand;								
-		}
-
-		if(loop_var.equals(prefix+if_code.rightOperand)){						
-			if(if_code.op.equals(Comparator.LTEQ) ){
-				comparatorOp = "<";													
-			}else if(if_code.op.equals(Comparator.LT)){
-				comparatorOp = "<=";
-			}else if(if_code.op.equals(Comparator.GTEQ)){
-				comparatorOp = ">";
-			}else if(if_code.op.equals(Comparator.GT)){
-				comparatorOp = ">=";
-			}else{
-				return null;
-			}			
-			op = prefix+if_code.leftOperand;						
-		}
-
-		if(op != null){
-			//Get the expression 
-			return getExpr(op);
-		}
-
-		return null;
-	}
-
-
-
-	/**
-	 * Get the lower or upper bound of loop condition.
-	 * @param V the loop variable
-	 * @param compareOp the type of comparator 
-	 * @return the expression of bound.
-	 */
-	protected int while_cond(List<Code> code_blk, String loop_var, List<Code> init_post, List<Code> loop_header, int line) {
-		if(loop_var == null) return line;
-
-		//Search for the loop condition
-		int index;
-		for(index=line; index< code_blk.size(); index++){
-			Code code = code_blk.get(index);
-			//Search for loop bytecode
-			if(!checkAssertOrAssume(code)&&code instanceof Codes.Loop){
-				//Check if the loop variable is used in the loop
-				Codes.Loop loop = (Codes.Loop)code;
-				if(loop_var.equals(prefix+loop.modifiedOperands[0])){
-					//Stop the iteration.
-					break;
-				}
-			}
-			AddCodeToPatternPart(code, init_post);
-		}
-
-		//Search for the loop condition
-		for(; index< code_blk.size(); index++){
-			Code code = code_blk.get(index);
-			//Add the code to loop header	
-			AddCodeToPatternPart(code, loop_header);
-			if(!checkAssertOrAssume(code)&&code instanceof Codes.If){
-				this.loop_boundExpr = extractLoopBoundExpr((Codes.If)code, loop_var);
-				if(this.loop_boundExpr!=null){
-					return ++index;					
-				}
-			}
-		}
-		return index;
 	}
 
 }

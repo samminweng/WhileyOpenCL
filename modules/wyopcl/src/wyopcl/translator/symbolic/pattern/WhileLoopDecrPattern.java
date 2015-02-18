@@ -22,18 +22,13 @@ import wyopcl.translator.symbolic.Expr;
  * @author Min-Hsien Weng
  *
  */
-public class P1 extends Pattern{	
+public class WhileLoopDecrPattern extends WhileLoopPattern{	
 	private BigInteger decr;
-	public P1(int param_size, List<Code> blk) {
+	public WhileLoopDecrPattern(int param_size, List<Code> blk) {
 		super(param_size, blk);
 		this.type = "P1";
 		//Get the decrement
-		this.line = decr(blk, this.V,
-						this.parts.get(PART.LOOPBODY_PRE.index),
-						this.parts.get(PART.LOOPBODY_DECR.index),
-						this.parts.get(PART.LOOPBODY_POST.index),
-						this.parts.get(PART.LOOP_EXIT.index),
-						this.line);
+		this.line = decr(blk, this.V, this.line);
 		if(V != null && this.initExpr != null && this.loop_boundExpr != null && this.decr != null){
 			this.isNil = false;			
 		}else{
@@ -47,13 +42,14 @@ public class P1 extends Pattern{
 	public String toString() {
 		String result = "";
 		result += "{";
-		//Print out all the bytecode in accordance with the sequence of PART
-		for(PART part: this.set){
-			result += "\n"+part+":";
-			List<Code> part_code = this.parts.get(part.index);
+		//Print out all the bytecode
+		int index = 0;
+		for(List<Code> part_code: this.parts){
+			result += "\n"+this.part_names.get(index)+":";
 			for(Code code: part_code){
 				result += "\n\t"+code;
 			}
+			index++;
 		}
 		result += "\n}";		
 		result += type + ":while_loop && loop_var("+V+") && decr("+V+", "+decr+")"
@@ -116,16 +112,10 @@ public class P1 extends Pattern{
 	 * 
 	 * @return decrement value (Expr). If not matched, return null;
 	 */
-	private int decr(List<Code> code_blk, String loop_var,
-			List<Code> loopbody_pre,
-			List<Code> loopbody_decr,
-			List<Code> loopbody_post,
-			List<Code> loopexit, int line){
+	private int decr(List<Code> code_blk, String loop_var, int line){
 		//Check if the loop variable is inferred.
 		if(loop_var == null) return line;
-
-		//Search for the decrement.
-		//The flag that specifies the pattern part.
+		
 		int index;
 		//Search for the decrement
 		for(index=line; index<code_blk.size();index++){
@@ -136,22 +126,22 @@ public class P1 extends Pattern{
 				Codes.Assign assign = (Codes.Assign)code;				
 				this.decr = extractDecrement(assign, loop_var);
 				if(this.decr != null){
-					AddCodeToPatternPart(assign, loopbody_decr);
+					AddCodeToPatternPart(assign, "loopbody_update");
 					index++;
 					break;
 				}
 			}
-			AddCodeToPatternPart(code, loopbody_pre);
+			AddCodeToPatternPart(code, "loopbody_before");
 		}
 
 		//Get loop label
-		Codes.Loop loop = (Codes.Loop)this.parts.get(PART.LOOP_HEADER.index).get(0);
-		String loop_label = loop.target;
+		List<Code> loop_header = getPartByName("loop_header");
+		String loop_label = ((Codes.Loop)loop_header.get(0)).target;
 		//Search for loop end and put the code to 'loop_post' part.
 		for(; index<code_blk.size();index++){
 			Code code = code_blk.get(index);
 			//Create the expression and put it into the table.
-			AddCodeToPatternPart(code, loopbody_post);
+			AddCodeToPatternPart(code, "loopbody_after");
 			if(!checkAssertOrAssume(code)){
 				if(code instanceof Codes.LoopEnd){
 					//Get the loop end to see if the 
@@ -164,20 +154,11 @@ public class P1 extends Pattern{
 			}
 		}
 		
-		//Put the remaining code into the 'loopexit' part
+		//Put the remaining code into the 'loop_exit' part
 		for(; index<code_blk.size();index++){
 			//Create the expression and put it into the table.
-			AddCodeToPatternPart(code_blk.get(index), loopexit);
+			AddCodeToPatternPart(code_blk.get(index), "loop_exit");
 		}
-
 		return index;
 	}
-
-
-
-
-
-
-
-
 }
