@@ -270,7 +270,7 @@ public class RewriteComplexity {
 	 * is negative, then the automaton is guaranteed to reduce in size after a
 	 * successful application.
 	 * 
-	 * @param Expr
+	 * @param LinearExpr
 	 *            The expr being examined.
 	 * @param Environment
 	 *            A mapping from variables to their guaranteed mininmal sizes.

@@ -7,7 +7,7 @@ import java.util.List;
 
 import wyil.lang.Code;
 import wyil.lang.Codes;
-import wyopcl.translator.symbolic.Expr;
+import wyopcl.translator.symbolic.expression.LinearExpr;
 /**
  * Implemented the while-loop patterns, as follows:
  * <ul>
@@ -20,17 +20,17 @@ import wyopcl.translator.symbolic.Expr;
 public class WhileLoopIncrPattern extends WhileLoopPattern{
 	private BigInteger incr;
 	/**
-	 * Constructor for P2 pattern
+	 * Constructor 
 	 * @param param_size
 	 * @param blk
 	 */
 	public WhileLoopIncrPattern(int param_size, List<Code> blk) {
 		super(param_size, blk);
-		this.type = "P2";		
+		this.type = "WhileLoopIncr";		
 		//Get the increment
 		this.line = incr(blk, this.V, this.line);
 
-		if(V != null && this.initExpr != null && this.loop_boundExpr != null && this.incr != null){
+		if(V != null && this.initLinearExpr != null && this.loop_boundLinearExpr != null && this.incr != null){
 			this.isNil = false;
 		}else{
 			this.isNil = true;
@@ -52,20 +52,20 @@ public class WhileLoopIncrPattern extends WhileLoopPattern{
 			index++;
 		}
 		result += "\n}";	
-		result += type + ":while_loop && loop_var("+V+") && incr("+V+", "+incr+")"
-				+ " && init("+V+", "+initExpr+") &&  while_cond("+V+", "+comparatorOp+", "+loop_boundExpr+")"
+		result += "\n" + type + ":while_loop && loop_var("+V+") && incr("+V+", "+incr+")"
+				+ " && init("+V+", "+initLinearExpr+") &&  while_cond("+V+", "+comparatorOp+", "+loop_boundLinearExpr+")"
 				+ "\n=>loop_iters("+V+", " + getNumberOfIterations()+")";
 		return result;
 	}
 
 	@Override
-	public Expr getNumberOfIterations() {
+	public LinearExpr getNumberOfIterations() {
 		if(numberOfIterations==null){
-			Expr result = (Expr)loop_boundExpr.clone();
+			LinearExpr result = (LinearExpr)loop_boundLinearExpr.clone();
 			if(comparatorOp.equals("<")){
-				numberOfIterations = result.subtract(initExpr);
+				numberOfIterations = result.subtract(initLinearExpr);
 			}else{
-				numberOfIterations = result.subtract(initExpr).add(new Expr(BigInteger.ONE));
+				numberOfIterations = result.subtract(initLinearExpr).add(factory.putExpr(BigInteger.ONE));
 			}			
 		}		
 		return numberOfIterations;
@@ -81,16 +81,16 @@ public class WhileLoopIncrPattern extends WhileLoopPattern{
 		//Check if the assignment bytecode is to over-write the value of loop variable.
 		if(loop_var.equals(prefix+assign.target())){
 			//Get the temporary variable, e.g. %16
-			Expr expr = getExpr(prefix+assign.operand(0));
+			LinearExpr linearExpr = (LinearExpr) factory.getExpr(prefix+assign.operand(0));
 			//Check if the loop variable is used in the expression for the tmp variable.
-			String[] vars = expr.getVars();
-			if(expr.getVarIndex(V) == 0 && vars.length == 2){
+			String[] vars = linearExpr.getVars();
+			if(linearExpr.getVarIndex(V) == 0 && vars.length == 2){
 				String incr_op = vars[1];
 				//Find the coefficient of the incremental variable in the expr 
-				BigInteger coefficient = expr.getCoefficient(incr_op);
+				BigInteger coefficient = linearExpr.getCoefficient(incr_op);
 				//Check if the op kind is a addition
 				if(coefficient.signum()>0){
-					Expr increment = getExpr(incr_op);
+					LinearExpr increment = (LinearExpr) factory.getExpr(incr_op);
 					return increment.getConstant();
 				}
 			}

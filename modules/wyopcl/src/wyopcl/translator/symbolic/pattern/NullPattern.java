@@ -3,7 +3,7 @@ package wyopcl.translator.symbolic.pattern;
 import java.util.List;
 
 import wyil.lang.Code;
-import wyopcl.translator.symbolic.Expr;
+import wyopcl.translator.symbolic.expression.LinearExpr;
 /**
  * The 'null' object for pattern class.
  * @author Min-Hsien Weng
@@ -18,7 +18,7 @@ public class NullPattern extends Pattern {
 	}
 
 	@Override
-	public Expr getNumberOfIterations() {
+	public LinearExpr getNumberOfIterations() {
 		return null;
 	}
 

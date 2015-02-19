@@ -1,66 +1,24 @@
 package wyopcl.translator.symbolic.pattern;
 
-import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.List;
 
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Codes.Comparator;
-import wyopcl.translator.symbolic.Expr;
-
+import wyopcl.translator.symbolic.expression.LinearExpr;
+/**
+ * A while-loop pattern includes 'init_before', 'init', 'init_after', 'loop_header', 'loopbody_before',
+ * 'loopbody_update', 'loopbody_after' and 'loop_exit' parts. 
+ * 
+ * @author Min-Hsien Weng
+ *
+ */
 public class WhileLoopPattern extends Pattern{
 	//Expressions related to the loop variable.
-	public int param_size;
 	public String V;
-	public Expr initExpr;
+	public LinearExpr initLinearExpr;
 	public String comparatorOp;
-	public Expr loop_boundExpr;
-	/*//Define the sequence of pattern parts and use 'ordinal()' method to indicate the position in the enum list.
-	public enum PART{
-		INIT_BEFORE{
-			public String toString(){
-				return "init_before";
-			}
-		},
-		INIT{
-			public String toString(){
-				return "init";
-			}
-		},
-		INIT_AFTER{
-			public String toString(){
-				return "init_after";
-			}
-		},
-		LOOP_HEADER{
-			public String toString(){
-				return "loop_header";
-			}
-		},
-		LOOPBODY_BEFORE{
-			public String toString(){
-				return "loopbody_before";
-			}
-		},
-		LOOPBODY_UPDATE{
-			public String toString(){
-				return "loopbody_update";
-			}
-		},
-		LOOPBODY_AFTER{
-			public String toString(){
-				return "loopbody_after";
-			}
-		},
-		LOOP_EXIT{
-			public String toString(){
-				return "loop_exit";
-			}
-		};		
-	}*/
-
-
+	public LinearExpr loop_boundLinearExpr;
 
 	public WhileLoopPattern(int param_size, List<Code> blk) {
 		super(param_size, blk);
@@ -85,7 +43,8 @@ public class WhileLoopPattern extends Pattern{
 			//Get the loop bytecode	
 			Code code = code_blk.get(index);
 			//Loop header
-			if(!checkAssertOrAssume(code) && code instanceof Codes.Loop){
+			if(!checkAssertOrAssume(code) && code instanceof Codes.Loop && 
+					!(code instanceof Codes.ForAll)){
 				Codes.Loop loop = (Codes.Loop)code;
 				//The loop variable is the first modified operands.
 				var = prefix+loop.modifiedOperands[0];
@@ -127,22 +86,23 @@ public class WhileLoopPattern extends Pattern{
 	 * @param loop_var the loop variable.
 	 * @return the expression. If not found, return null.
 	 */
-	private Expr extractInitExpr(Codes.Assign assign, String loop_var){
+	public LinearExpr extractInitLinearExpr(Codes.Assign assign, String loop_var){
 		//check if the loop variable is used in the assignment.
 		if(loop_var.equals(prefix+assign.target())){
 			//Get the expression for loop variable.	
-			Expr expr = getExpr(loop_var);
-			if(expr == null){
-				expr = new Expr(assign);
+			LinearExpr linearExpr = (LinearExpr) factory.getExpr(loop_var);
+			if(linearExpr == null){
+				linearExpr = factory.putExpr(assign);
 			}			
-			String[] vars = expr.getVars();
+			String[] vars = linearExpr.getVars();
 			for(String var: vars){
-				expr= replaceExpr(var, expr);  
+				linearExpr= factory.replaceLinearExpr(var, linearExpr);  
 			}
-			return expr;
+			return linearExpr;
 		}
 		return null;
 	}
+	
 
 	/**
 	 * Get the expression that assigns the initial value the loop variable and record the list of code in 'init_pre' and 'init' part.
@@ -161,8 +121,8 @@ public class WhileLoopPattern extends Pattern{
 			//Check if this code assigns the value to the loop variable. 
 			if(!checkAssertOrAssume(code)&& code instanceof Codes.Assign){
 				//Get the expression for loop variable.	
-				initExpr = extractInitExpr((Codes.Assign)code, loop_var);
-				if(initExpr != null){
+				initLinearExpr = extractInitLinearExpr((Codes.Assign)code, loop_var);
+				if(initLinearExpr != null){
 					//Add the code to 'init' part that assigns the initial values to the loop variable.
 					AddCodeToPatternPart(code, "init");
 					return index++;
@@ -174,53 +134,7 @@ public class WhileLoopPattern extends Pattern{
 		return index;
 	}
 
-	/**
-	 * Extract the expression of loop bound from the loop condition bytecode.
-	 * @param if_code
-	 * @param loop_var
-	 * @return
-	 */
-	private Expr extractLoopBoundExpr(Codes.If if_code, String loop_var){
-		String op = null;
-		//Check if the loop var exists in the condition
-		if(loop_var.equals(prefix+if_code.leftOperand)){
-			if(if_code.op.equals(Comparator.LTEQ) ){
-				comparatorOp = ">";													
-			}else if(if_code.op.equals(Comparator.LT)){
-				comparatorOp = ">=";
-			}else if(if_code.op.equals(Comparator.GTEQ)){
-				comparatorOp = "<";
-			}else if(if_code.op.equals(Comparator.GT)){
-				comparatorOp = "<=";
-			}else{
-				return null;
-			}
-			op = prefix+if_code.rightOperand;								
-		}
-
-		if(loop_var.equals(prefix+if_code.rightOperand)){						
-			if(if_code.op.equals(Comparator.LTEQ) ){
-				comparatorOp = "<";													
-			}else if(if_code.op.equals(Comparator.LT)){
-				comparatorOp = "<=";
-			}else if(if_code.op.equals(Comparator.GTEQ)){
-				comparatorOp = ">";
-			}else if(if_code.op.equals(Comparator.GT)){
-				comparatorOp = ">=";
-			}else{
-				return null;
-			}			
-			op = prefix+if_code.leftOperand;						
-		}
-
-		if(op != null){
-			//Get the expression 
-			return getExpr(op);
-		}
-
-		return null;
-	}
-
+	
 	/**
 	 * Get the lower or upper bound of loop condition.
 	 * @param V the loop variable
@@ -251,17 +165,52 @@ public class WhileLoopPattern extends Pattern{
 			//Add the code to loop header	
 			AddCodeToPatternPart(code, "loop_header");
 			if(!checkAssertOrAssume(code)&&code instanceof Codes.If){
-				this.loop_boundExpr = extractLoopBoundExpr((Codes.If)code, loop_var);
-				if(this.loop_boundExpr!=null){
-					return ++index;					
+				Codes.If if_code = (Codes.If)code;
+				String op = null;
+				//Check if the loop var exists in the condition
+				if(loop_var.equals(prefix+if_code.leftOperand)){
+					if(if_code.op.equals(Comparator.LTEQ) ){
+						comparatorOp = ">";													
+					}else if(if_code.op.equals(Comparator.LT)){
+						comparatorOp = ">=";
+					}else if(if_code.op.equals(Comparator.GTEQ)){
+						comparatorOp = "<";
+					}else if(if_code.op.equals(Comparator.GT)){
+						comparatorOp = "<=";
+					}else{
+						//Do nothing
+					}
+					op = prefix+if_code.rightOperand;								
 				}
+
+				if(loop_var.equals(prefix+if_code.rightOperand)){						
+					if(if_code.op.equals(Comparator.LTEQ) ){
+						comparatorOp = "<";													
+					}else if(if_code.op.equals(Comparator.LT)){
+						comparatorOp = "<=";
+					}else if(if_code.op.equals(Comparator.GTEQ)){
+						comparatorOp = ">";
+					}else if(if_code.op.equals(Comparator.GT)){
+						comparatorOp = ">=";
+					}else{
+						//Do nothing
+					}			
+					op = prefix+if_code.leftOperand;						
+				}
+				
+				if(op != null){
+					//Get the expression 
+					 this.loop_boundLinearExpr = (LinearExpr) factory.getExpr(op);
+					 return ++index;	
+				}
+				
 			}
 		}
 		return index;
 	}
 
 	@Override
-	public Expr getNumberOfIterations() {
+	public LinearExpr getNumberOfIterations() {
 		return null;
 	}
 }

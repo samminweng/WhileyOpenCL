@@ -1,4 +1,4 @@
-package wyopcl.translator.symbolic;
+package wyopcl.translator.symbolic.expression;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -16,98 +16,23 @@ import wyil.lang.Codes.BinaryOperatorKind;
  * @author Min-Hsien Weng
  *
  */
-public class Expr implements Cloneable{
-	private String target;
+public class LinearExpr extends Expr{	
 	private List<String> ref_vars;
-	private List<BigInteger> coefficients; // The list of coefficients .
-	private final String prefix ="%"; 
+	private List<BigInteger> coefficients; // The list of coefficients
 	private BigInteger constant;//(the constant value)
 	/**
 	 * Basic constructor
 	 */
-	public Expr(){
+	public LinearExpr(String target){
+		super(target);
 		//c0 = 0
 		this.constant = BigInteger.ZERO;
 		this.ref_vars = new ArrayList<String>();
 		this.coefficients = new ArrayList<BigInteger>();
 	}
-	/**
-	 * Initial the expression with the bytecode.
-	 * @param code the Whiley code
-	 */
-	private void initialize(Code code){
-		if(code instanceof Codes.Assign){
-			target = prefix+((Codes.Assign)code).target();
-			Codes.Assign assign = (Codes.Assign)code;
-			//1*v1
-			addVar(BigInteger.ONE, prefix+assign.operand(0));
-		}else if(code instanceof Codes.Const){
-			target = prefix+((Codes.Const)code).target();
-			Constant constant = ((Codes.Const)code).constant;
-			if(constant instanceof Constant.Integer){
-				//c0
-				addConstant(((Constant.Integer) constant).value);	
-			}
-		}else if(code instanceof Codes.BinaryOperator){
-			target = prefix+((Codes.BinaryOperator)code).target();
-			Codes.BinaryOperator binOp = (Codes.BinaryOperator)code;
-			switch(binOp.kind){
-			case ADD:
-				//v1+v2
-				addVar(BigInteger.ONE, prefix+binOp.operand(0));
-				addVar(BigInteger.ONE, prefix+binOp.operand(1));
-				break;
-			case SUB:	
-				//v1-v2
-				addVar(BigInteger.ONE, prefix+binOp.operand(0));
-				addVar(BigInteger.ONE.negate(), prefix+binOp.operand(1));//-1*v2
-				break;
-			default:
-				throw new RuntimeException(binOp.kind+"Not implemented");				
-			}			
-		}else if(code instanceof Codes.LengthOf){
-			Codes.LengthOf lengthOf = (Codes.LengthOf)code;
-			target = prefix+lengthOf.target();
-			addVar(BigInteger.ONE, "|"+prefix+lengthOf.operand(0)+"|");
-		}
-	}	
-	/**
-	 * Multiple constructor to create an expression with an WyIL code.  
-	 * @param code the WyIL code
-	 */
-	public Expr(Code code){
-		this();
-		initialize(code);		
-	}
-	
-	/**
-	 * Constructor to create an expression by specifying the target var.
-	 * @param op
-	 */
-	public Expr(String var){
-		this();
-		this.target = var;
-		this.addVar(BigInteger.ONE, var);
-	}
 	
 	
-	/**
-	 * Multiple constructor to create an expression with a constant.
-	 * @param constant the constant
-	 */
-	public Expr(BigInteger constant){
-		this();
-		addConstant(constant);		
-	}
-
-
-	/**
-	 * Get the target operand.
-	 * @return
-	 */
-	public String getTarget(){
-		return target;
-	}	
+	
 	/**
 	 * Add the constant only
 	 * @param co the constant
@@ -192,7 +117,7 @@ public class Expr implements Cloneable{
 	 * @param scale the scale
 	 * @return
 	 */
-	public Expr multiply(BigInteger scale){
+	public LinearExpr multiply(BigInteger scale){
 		//Perform the multiplication operation on the coefficient which exist in this expression.
 		for(int index=0; index<this.coefficients.size();index++){
 			BigInteger co = this.coefficients.get(index);
@@ -209,10 +134,10 @@ public class Expr implements Cloneable{
 	 * Replace the variable with a given expression. For example, %3 = %6 and  %6 = %0 - %5 
 	 * so %3 = %0 - %5
 	 * @param var
-	 * @param expr
+	 * @param linearExpr
 	 * @return
 	 */
-	public Expr merge(String var, Expr expr){
+	public LinearExpr merge(String var, LinearExpr linearExpr){
 		int index = getVarIndex(var);
 		if(index!= -1){			
 			//Get the coefficient
@@ -222,10 +147,10 @@ public class Expr implements Cloneable{
 			this.coefficients.remove(coefficient);
 			if(coefficient.signum()>0){
 				//Addition				
-				this.add(expr.multiply(coefficient.abs()));
+				this.add(linearExpr.multiply(coefficient.abs()));
 			}else{
 				//Subtraction
-				this.subtract(expr.multiply(coefficient.abs()));
+				this.subtract(linearExpr.multiply(coefficient.abs()));
 			}
 			
 		}
@@ -234,32 +159,32 @@ public class Expr implements Cloneable{
 
 	/**
 	 * Add another expression into this one. 
-	 * @param expr
+	 * @param linearExpr
 	 * @return
 	 */
-	public Expr add(Expr expr){
+	public LinearExpr add(LinearExpr linearExpr){
 		//Perform the addition operation on the constant and the ref_vars which exist in both this and expr.
 		for(int index=0; index<this.ref_vars.size();index++){
 			//Get variable
 			String var = this.ref_vars.get(index);
-			int expr_index = expr.getVarIndex(var);
+			int expr_index = linearExpr.getVarIndex(var);
 			//Check if the var exists in the expr.
 			if(expr_index!=-1){
-				BigInteger expr_co = expr.coefficients.get(expr_index);
+				BigInteger expr_co = linearExpr.coefficients.get(expr_index);
 				addVar(expr_co, var);
 			}
 		}		
 		//The remaining ref_vars from expr
-		for(int index=0; index<expr.ref_vars.size();index++){
-			String var = expr.ref_vars.get(index);
+		for(int index=0; index<linearExpr.ref_vars.size();index++){
+			String var = linearExpr.ref_vars.get(index);
 			if(this.getVarIndex(var)==-1){
-				BigInteger expr_co = expr.coefficients.get(index);
+				BigInteger expr_co = linearExpr.coefficients.get(index);
 				addVar(expr_co, var);
 			}			
 		}		
 		//Subtract the constant parts of this and expr
 		//Get the const from expr
-		BigInteger expr_co = expr.getConstant(); 
+		BigInteger expr_co = linearExpr.getConstant(); 
 		//update the coefficient
 		addConstant(expr_co);
 		return this;
@@ -267,13 +192,13 @@ public class Expr implements Cloneable{
 
 	/**
 	 * Subtract the expression from this one.
-	 * @param expr
+	 * @param linearExpr
 	 * @return
 	 */
-	public Expr subtract(Expr expr){		
+	public LinearExpr subtract(LinearExpr linearExpr){		
 		//Subtraction can be considered as addition of the minuend and the opposite of the subtrahend 
 		//For example, this - expr = this + (-1*expr)		
-		this.add(expr.multiply(BigInteger.ONE.negate()));		
+		this.add(linearExpr.multiply(BigInteger.ONE.negate()));		
 		return this;
 	}
 

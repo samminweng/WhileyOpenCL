@@ -9,7 +9,7 @@ import java.util.List;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Codes.LoopEnd;
-import wyopcl.translator.symbolic.Expr;
+import wyopcl.translator.symbolic.expression.LinearExpr;
 /**
  * Implemented the while-loop pattens, as follows:
  * <ul>
@@ -26,10 +26,10 @@ public class WhileLoopDecrPattern extends WhileLoopPattern{
 	private BigInteger decr;
 	public WhileLoopDecrPattern(int param_size, List<Code> blk) {
 		super(param_size, blk);
-		this.type = "P1";
+		this.type = "WhileLoopDecr";
 		//Get the decrement
 		this.line = decr(blk, this.V, this.line);
-		if(V != null && this.initExpr != null && this.loop_boundExpr != null && this.decr != null){
+		if(V != null && this.initLinearExpr != null && this.loop_boundLinearExpr != null && this.decr != null){
 			this.isNil = false;			
 		}else{
 			this.isNil = true;
@@ -52,21 +52,21 @@ public class WhileLoopDecrPattern extends WhileLoopPattern{
 			index++;
 		}
 		result += "\n}";		
-		result += type + ":while_loop && loop_var("+V+") && decr("+V+", "+decr+")"
-				  + " && init("+V+", "+initExpr+") &&  while_cond("+V+", "+comparatorOp+", "+loop_boundExpr+")"
+		result += "\n" + type + ":while_loop && loop_var("+V+") && decr("+V+", "+decr+")"
+				  + " && init("+V+", "+initLinearExpr+") &&  while_cond("+V+", "+comparatorOp+", "+loop_boundLinearExpr+")"
 				  + "\n=>loop_iters("+V+", " + getNumberOfIterations()+")";
 		
 		return result;
 	}
 
 	@Override
-	public Expr getNumberOfIterations() {
+	public LinearExpr getNumberOfIterations() {
 		if(numberOfIterations==null){
-			Expr result = (Expr)initExpr.clone();
+			LinearExpr result = (LinearExpr)initLinearExpr.clone();
 			if(comparatorOp.equals(">")){
-				numberOfIterations = result.subtract(loop_boundExpr);
+				numberOfIterations = result.subtract(loop_boundLinearExpr);
 			}else{
-				numberOfIterations = result.subtract(loop_boundExpr).add(new Expr(BigInteger.ONE));
+				numberOfIterations = result.subtract(loop_boundLinearExpr).add(factory.putExpr(BigInteger.ONE));
 			}			
 		}		
 		return numberOfIterations;
@@ -82,16 +82,16 @@ public class WhileLoopDecrPattern extends WhileLoopPattern{
 		//Check if the target is the loop variable.
 		if((prefix+assign.target()).equals(loop_var)){
 			//Get the temporary variable, e.g. %16
-			Expr expr = getExpr(prefix+assign.operand(0));
+			LinearExpr linearExpr = (LinearExpr) factory.getExpr(prefix+assign.operand(0));
 			//Check if the loop variable is used in the expression for the tmp variable.
-			String[] vars = expr.getVars();
-			if(expr.getVarIndex(loop_var) == 0 && vars.length == 2){
+			String[] vars = linearExpr.getVars();
+			if(linearExpr.getVarIndex(loop_var) == 0 && vars.length == 2){
 				String decr_op = vars[1];
 				//Find the coefficient of the decremental variable in the expr 
-				BigInteger coefficient = expr.getCoefficient(decr_op);
+				BigInteger coefficient = linearExpr.getCoefficient(decr_op);
 				//Check if the op kind is a subtraction
 				if(coefficient.signum()<0){
-					Expr decrement = getExpr(decr_op);
+					LinearExpr decrement = (LinearExpr) factory.getExpr(decr_op);
 					return decrement.getConstant();
 				}
 			}
