@@ -31,8 +31,6 @@ public class LinearExpr extends Expr{
 		this.coefficients = new ArrayList<BigInteger>();
 	}
 	
-	
-	
 	/**
 	 * Add the constant only
 	 * @param co the constant

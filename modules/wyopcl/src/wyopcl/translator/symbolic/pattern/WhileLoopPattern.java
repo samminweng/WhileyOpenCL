@@ -82,29 +82,6 @@ public class WhileLoopPattern extends Pattern{
 
 
 	/**
-	 * Extract the expression from the bytecode of assigning the initial value to the loop variable. 
-	 * @param loop_var the loop variable.
-	 * @return the expression. If not found, return null.
-	 */
-	public LinearExpr extractInitLinearExpr(Codes.Assign assign, String loop_var){
-		//check if the loop variable is used in the assignment.
-		if(loop_var.equals(prefix+assign.target())){
-			//Get the expression for loop variable.	
-			LinearExpr linearExpr = (LinearExpr) factory.getExpr(loop_var);
-			if(linearExpr == null){
-				linearExpr = factory.putExpr(assign);
-			}			
-			String[] vars = linearExpr.getVars();
-			for(String var: vars){
-				linearExpr= factory.replaceLinearExpr(var, linearExpr);  
-			}
-			return linearExpr;
-		}
-		return null;
-	}
-	
-
-	/**
 	 * Get the expression that assigns the initial value the loop variable and record the list of code in 'init_pre' and 'init' part.
 	 * @param loop_var the loop variable
 	 * @param line the starting line of code
@@ -113,16 +90,22 @@ public class WhileLoopPattern extends Pattern{
 	protected int init(List<Code> code_blk, String loop_var, int line) {
 		//No loop variables
 		if(loop_var == null) return line;
-		
+
 		//Put the code to init_before and init.
 		int index;
 		for(index = line; index<code_blk.size(); index++){
 			Code code = code_blk.get(index);			
 			//Check if this code assigns the value to the loop variable. 
 			if(!checkAssertOrAssume(code)&& code instanceof Codes.Assign){
-				//Get the expression for loop variable.	
-				initLinearExpr = extractInitLinearExpr((Codes.Assign)code, loop_var);
-				if(initLinearExpr != null){
+				Codes.Assign assign = (Codes.Assign)code;
+				//check if the loop variable is used in the assignment.
+				if(loop_var.equals(prefix+assign.target())){
+					//Get the expression for loop variable.	
+					LinearExpr linearExpr = (LinearExpr) factory.getExpr(loop_var);
+					if(linearExpr == null){
+						linearExpr = factory.putExpr(assign);
+					}			
+					this.initLinearExpr= factory.replaceLinearExpr(linearExpr);
 					//Add the code to 'init' part that assigns the initial values to the loop variable.
 					AddCodeToPatternPart(code, "init");
 					return index++;
@@ -134,7 +117,7 @@ public class WhileLoopPattern extends Pattern{
 		return index;
 	}
 
-	
+
 	/**
 	 * Get the lower or upper bound of loop condition.
 	 * @param V the loop variable
@@ -158,7 +141,7 @@ public class WhileLoopPattern extends Pattern{
 			}
 			AddCodeToPatternPart(code, "init_after");
 		}		
-		
+
 		//Search for the loop condition
 		for(; index< code_blk.size(); index++){
 			Code code = code_blk.get(index);
@@ -197,13 +180,13 @@ public class WhileLoopPattern extends Pattern{
 					}			
 					op = prefix+if_code.leftOperand;						
 				}
-				
+
 				if(op != null){
 					//Get the expression 
-					 this.loop_boundLinearExpr = (LinearExpr) factory.getExpr(op);
-					 return ++index;	
+					this.loop_boundLinearExpr = (LinearExpr) factory.getExpr(op);
+					return ++index;	
 				}
-				
+
 			}
 		}
 		return index;

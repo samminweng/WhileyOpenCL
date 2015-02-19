@@ -40,18 +40,7 @@ public class WhileLoopIncrPattern extends WhileLoopPattern{
 
 	@Override
 	public String toString() {
-		String result = "";
-		result += "{";
-		//Print out all the bytecode
-		int index = 0;
-		for(List<Code> part_code: this.parts){
-			result += "\n"+this.part_names.get(index)+":";
-			for(Code code: part_code){
-				result += "\n\t"+code;
-			}
-			index++;
-		}
-		result += "\n}";	
+		String result = super.toString();	
 		result += "\n" + type + ":while_loop && loop_var("+V+") && incr("+V+", "+incr+")"
 				+ " && init("+V+", "+initLinearExpr+") &&  while_cond("+V+", "+comparatorOp+", "+loop_boundLinearExpr+")"
 				+ "\n=>loop_iters("+V+", " + getNumberOfIterations()+")";

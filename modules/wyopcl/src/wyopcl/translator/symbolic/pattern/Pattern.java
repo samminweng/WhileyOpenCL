@@ -134,6 +134,23 @@ public abstract class Pattern {
 		//In other cases, if the label is not null, then the code is inside the assertion or assumption.
 		return (label_AssertOrAssume != null)? true: false;
 	}
+
+	@Override
+	public String toString() {
+		String result = "";
+		result += "{";
+		//Print out all the bytecode
+		int index = 0;
+		for(List<Code> part_code: this.parts){
+			result += "\n"+this.part_names.get(index)+":";
+			for(Code code: part_code){
+				result += "\n\t"+code;
+			}
+			index++;
+		}
+		result += "\n}";
+		return result;
+	}
 	
 
 

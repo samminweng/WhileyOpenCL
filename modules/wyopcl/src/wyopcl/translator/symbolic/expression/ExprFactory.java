@@ -25,7 +25,7 @@ public class ExprFactory {
 	 * @param code
 	 * @return
 	 */
-	private LinearExpr getLinearExpr(Code code){
+	private LinearExpr initializeLinearExprWithByteCode(Code code){
 		LinearExpr expr = null;
 		if(code instanceof Codes.Assign){
 			expr = new LinearExpr(prefix+((Codes.Assign)code).target());	
@@ -100,7 +100,7 @@ public class ExprFactory {
 	 * @param linearExpr the input expression 
 	 * @return the updated expression.
 	 */
-	public LinearExpr replaceLinearExpr(String var, LinearExpr linearExpr) {
+	private LinearExpr replaceLinearExpr(String var, LinearExpr linearExpr) {
 		LinearExpr var_linearExpr = (LinearExpr) getExpr(var);
 		if(var_linearExpr == null) return linearExpr;
 
@@ -114,8 +114,18 @@ public class ExprFactory {
 		}		
 		return linearExpr;
 	}
-	
-	
+	/**
+	 * Replace each variable in a linear expression with the expressions from the table.
+	 * @param linearExpr the original expression.
+	 * @return the simplified expression.
+	 */
+	public LinearExpr replaceLinearExpr(LinearExpr linearExpr){
+		String[] vars = linearExpr.getVars();
+		for(String var: vars){
+			linearExpr= this.replaceLinearExpr(var, linearExpr);  
+		}
+		return linearExpr;
+	}
 	
 	
 	/**
@@ -141,10 +151,9 @@ public class ExprFactory {
 		}
 		
 		if(object instanceof Code){
-			expr = getLinearExpr((Code)object);
+			expr = initializeLinearExprWithByteCode((Code)object);
 			addExprToTable(expr);
 		}	
-		
 		
 		return expr;
 	}

@@ -1,5 +1,6 @@
 package wyopcl.translator.symbolic.expression;
 
+
 public abstract class Expr implements Cloneable{
 	protected String target;
 	protected final String prefix ="%";
@@ -7,7 +8,6 @@ public abstract class Expr implements Cloneable{
 	public Expr(String target){
 		this.target = target;
 	}
-	
 	
 	/**
 	 * Get the target operand.

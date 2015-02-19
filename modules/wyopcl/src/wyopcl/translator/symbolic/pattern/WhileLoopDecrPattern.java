@@ -40,22 +40,10 @@ public class WhileLoopDecrPattern extends WhileLoopPattern{
 	 */
 	@Override
 	public String toString() {
-		String result = "";
-		result += "{";
-		//Print out all the bytecode
-		int index = 0;
-		for(List<Code> part_code: this.parts){
-			result += "\n"+this.part_names.get(index)+":";
-			for(Code code: part_code){
-				result += "\n\t"+code;
-			}
-			index++;
-		}
-		result += "\n}";		
+		String result = super.toString();		
 		result += "\n" + type + ":while_loop && loop_var("+V+") && decr("+V+", "+decr+")"
-				  + " && init("+V+", "+initLinearExpr+") &&  while_cond("+V+", "+comparatorOp+", "+loop_boundLinearExpr+")"
-				  + "\n=>loop_iters("+V+", " + getNumberOfIterations()+")";
-		
+				+ " && init("+V+", "+initLinearExpr+") &&  while_cond("+V+", "+comparatorOp+", "+loop_boundLinearExpr+")"
+				+ "\n=>loop_iters("+V+", " + getNumberOfIterations()+")";
 		return result;
 	}
 
@@ -79,23 +67,22 @@ public class WhileLoopDecrPattern extends WhileLoopPattern{
 	 * @return the decrement (BigInteger). If not found, return null.
 	 */
 	private BigInteger extractDecrement(Codes.Assign assign, String loop_var){
-		//Check if the target is the loop variable.
-		if((prefix+assign.target()).equals(loop_var)){
-			//Get the temporary variable, e.g. %16
-			LinearExpr linearExpr = (LinearExpr) factory.getExpr(prefix+assign.operand(0));
-			//Check if the loop variable is used in the expression for the tmp variable.
-			String[] vars = linearExpr.getVars();
-			if(linearExpr.getVarIndex(loop_var) == 0 && vars.length == 2){
-				String decr_op = vars[1];
-				//Find the coefficient of the decremental variable in the expr 
-				BigInteger coefficient = linearExpr.getCoefficient(decr_op);
-				//Check if the op kind is a subtraction
-				if(coefficient.signum()<0){
-					LinearExpr decrement = (LinearExpr) factory.getExpr(decr_op);
-					return decrement.getConstant();
-				}
+
+		//Get the temporary variable, e.g. %16
+		LinearExpr linearExpr = (LinearExpr) factory.getExpr(prefix+assign.operand(0));
+		//Check if the loop variable is used in the expression for the tmp variable.
+		String[] vars = linearExpr.getVars();
+		if(linearExpr.getVarIndex(loop_var) == 0 && vars.length == 2){
+			String decr_op = vars[1];
+			//Find the coefficient of the decremental variable in the expr 
+			BigInteger coefficient = linearExpr.getCoefficient(decr_op);
+			//Check if the op kind is a subtraction
+			if(coefficient.signum()<0){
+				LinearExpr decrement = (LinearExpr) factory.getExpr(decr_op);
+				return decrement.getConstant();
 			}
 		}
+
 		return null;
 	}
 
@@ -115,7 +102,7 @@ public class WhileLoopDecrPattern extends WhileLoopPattern{
 	private int decr(List<Code> code_blk, String loop_var, int line){
 		//Check if the loop variable is inferred.
 		if(loop_var == null) return line;
-		
+
 		int index;
 		//Search for the decrement
 		for(index=line; index<code_blk.size();index++){
@@ -123,12 +110,13 @@ public class WhileLoopDecrPattern extends WhileLoopPattern{
 			//Create the expression and put it into the table.
 			if(!checkAssertOrAssume(code) && code instanceof Codes.Assign){
 				//Check if the assignment bytecode is to over-write the value of loop variable.
-				Codes.Assign assign = (Codes.Assign)code;				
-				this.decr = extractDecrement(assign, loop_var);
-				if(this.decr != null){
+				Codes.Assign assign = (Codes.Assign)code;
+				//Check if the target is the loop variable.
+				if((prefix+assign.target()).equals(loop_var)){
+					this.decr = extractDecrement(assign, loop_var);
 					AddCodeToPatternPart(assign, "loopbody_update");
 					index++;
-					break;
+					break;				
 				}
 			}
 			AddCodeToPatternPart(code, "loopbody_before");
@@ -153,7 +141,7 @@ public class WhileLoopDecrPattern extends WhileLoopPattern{
 				}
 			}
 		}
-		
+
 		//Put the remaining code into the 'loop_exit' part
 		for(; index<code_blk.size();index++){
 			//Create the expression and put it into the table.

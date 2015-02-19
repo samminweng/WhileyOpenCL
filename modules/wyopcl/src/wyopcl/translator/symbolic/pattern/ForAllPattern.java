@@ -40,11 +40,7 @@ public class ForAllPattern extends Pattern {
 			}			
 		}
 		return null;
-	}
-	
-	
-	
-	
+	}	
 	
 	public int loop_range(List<Code> code_blk, String loop_var, int line){
 		if(loop_var == null) return line;
@@ -87,21 +83,8 @@ public class ForAllPattern extends Pattern {
 
 	@Override
 	public String toString() {
-		String result = "";
-		result += "{";
-		//Print out all the bytecode
-		int index = 0;
-		for(List<Code> part_code: this.parts){
-			result += "\n"+this.part_names.get(index)+":";
-			for(Code code: part_code){
-				result += "\n\t"+code;
-			}
-			index++;
-		}
-		result += "\n}";
-		
-		
-		return "ForPattern [V=" + V + ", rangeExpr=" + rangeExpr + "]";
+		String result = super.toString();
+		return result + "ForPattern [V=" + V + ", rangeExpr=" + rangeExpr + "]";
 	}
 	
 
