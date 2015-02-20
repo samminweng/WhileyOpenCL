@@ -101,6 +101,21 @@ public class ExprFactory {
 		return null;
 	}
 	
+	/**
+	 * Get the unassigned registers by searching the maximal value of register.
+	 * @return the register.
+	 */
+	public int getAvailableReg(){
+		//Start from 0
+		int max_reg = 0; 
+		for(String key: expressiontable.keySet()){
+			int reg = Integer.parseInt(key.replace("%", ""));
+			if(reg>max_reg){
+				max_reg = reg;  
+			}
+		}
+		return ++max_reg;
+	}
 	
 	/**
 	 * Given a input expression, recursively replace the element with the expression retrieved from the expression table.

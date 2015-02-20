@@ -66,21 +66,18 @@ public class WhileLoopIncrPattern extends WhileLoopPattern{
 	 * @return
 	 */
 	private BigInteger extractIncrement(Codes.Assign assign, String loop_var){
-		//Check if the assignment bytecode is to over-write the value of loop variable.
-		if(loop_var.equals(prefix+assign.target())){
-			//Get the temporary variable, e.g. %16
-			LinearExpr linearExpr = (LinearExpr) factory.getExpr(prefix+assign.operand(0));
-			//Check if the loop variable is used in the expression for the tmp variable.
-			String[] vars = linearExpr.getVars();
-			if(linearExpr.getVarIndex(V) == 0 && vars.length == 2){
-				String incr_op = vars[1];
-				//Find the coefficient of the incremental variable in the expr 
-				BigInteger coefficient = linearExpr.getCoefficient(incr_op);
-				//Check if the op kind is a addition
-				if(coefficient.signum()>0){
-					LinearExpr increment = (LinearExpr) factory.getExpr(incr_op);
-					return increment.getConstant();
-				}
+		//Get the temporary variable, e.g. %16
+		LinearExpr linearExpr = (LinearExpr) factory.getExpr(prefix+assign.operand(0));
+		//Check if the loop variable is used in the expression for the tmp variable.
+		String[] vars = linearExpr.getVars();
+		if(linearExpr.getVarIndex(V) == 0 && vars.length == 2){
+			String incr_op = vars[1];
+			//Find the coefficient of the incremental variable in the expr 
+			BigInteger coefficient = linearExpr.getCoefficient(incr_op);
+			//Check if the op kind is a addition
+			if(coefficient.signum()>0){
+				LinearExpr increment = (LinearExpr) factory.getExpr(incr_op);
+				return increment.getConstant();
 			}
 		}
 		return null;
@@ -100,24 +97,35 @@ public class WhileLoopIncrPattern extends WhileLoopPattern{
 	private int incr(List<Code> code_blk, String loop_var, int line){
 		//Check if the loop variable is inferred.
 		if(loop_var == null) return line;
-
 		//Search for the decrement.
 		//The flag that specifies the pattern part.
 		int index;
-		//Search for the decrement
+		//Search for the increment
 		for(index=line; index<code_blk.size();index++){
 			Code code = code_blk.get(index);
-			if(!checkAssertOrAssume(code) && code instanceof Codes.Assign){
-				//Check if the assignment bytecode is to over-write the value of loop variable.
-				Codes.Assign assign = (Codes.Assign)code;				
-				this.incr = extractIncrement(assign, loop_var);
-				if(this.incr != null){
-					AddCodeToPatternPart(assign, "loopbody_update");
-					index++;
-					break;
+			String pattern_part = "loopbody_before";//The default pattern part
+			if(!checkAssertOrAssume(code)){
+				if(code instanceof Codes.Assign){
+					//Check if the assignment bytecode is to over-write the value of loop variable.
+					Codes.Assign assign = (Codes.Assign)code;
+					//Check if the assignment bytecode is to over-write the value of loop variable.
+					if(loop_var.equals(prefix+assign.target())){
+						this.incr = extractIncrement(assign, loop_var);
+						AddCodeToPatternPart(assign, "loopbody_update");
+						index++;
+						break;	
+					}
 				}
-			}
-			AddCodeToPatternPart(code, "loopbody_before");
+
+				if(code instanceof Codes.BinaryOperator){
+					Codes.BinaryOperator binOp = (Codes.BinaryOperator)code;
+					if(loop_var.equals(prefix+binOp.operand(0))){
+						//Add this code to the loopbody_update
+						pattern_part = "loopbody_update";						
+					}				
+				}			
+			}			
+			AddCodeToPatternPart(code, pattern_part);
 		}
 
 		//Get loop label

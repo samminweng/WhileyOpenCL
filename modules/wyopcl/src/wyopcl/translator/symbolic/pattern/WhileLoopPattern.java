@@ -109,7 +109,7 @@ public class WhileLoopPattern extends Pattern{
 					this.initLinearExpr= factory.replaceLinearExpr(linearExpr);
 					//Add the code to 'init' part that assigns the initial values to the loop variable.
 					AddCodeToPatternPart(code, "init");
-					return index++;
+					return ++index;
 				}
 			}
 			//Otherwise, add the code to the 'init_before' part

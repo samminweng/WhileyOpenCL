@@ -36,47 +36,7 @@ public class PatternMatcher {
 		this.avail_patterns.add(WhileLoopDecrPattern.class);
 		this.avail_patterns.add(WhileLoopIncrPattern.class);
 		this.avail_patterns.add(ForAllPattern.class);
-	}
-
-	/**
-	 * Iterate each code of the input function and build up the loop blk.
-	 * @param functionOrMethod
-	 */
-	public void buildCodeBlockAndMatchPattern(FunctionOrMethodDeclaration functionOrMethod){
-		int line = 0;
-		String func_name = functionOrMethod.name();			
-		int param_size = functionOrMethod.type().params().size();
-		//Iterate each byte-code of a function block.			
-		for(Case mcase : functionOrMethod.cases()){
-			//Store the list of code for a function.
-			List<Code> code_blk = new ArrayList<Code>();	
-			//Begin the function
-			System.out.println("\n----------------Start of "+func_name+" function----------------");	
-			//Parse each byte-code and add the constraints accordingly.
-			for(Block.Entry entry :mcase.body()){
-				Code code = entry.code;
-				//Print out the bytecode if verbose is enabled.
-				if(config.isVerbose()){
-					if(code instanceof Codes.Label){
-						System.out.println(func_name+"."+(++line)+" ["+code+"]");
-					}else{
-						System.out.println(func_name+"."+(++line)+" [\t"+code+"]");
-					}
-				}	
-				code_blk.add(code);					
-			}			
-			Pattern pattern = analyzePattern(param_size, code_blk);
-			System.out.println("The original pattern:\n"+pattern);
-			//Pattern pattern_1 = transform(pattern);
-			//System.out.println("From "+pattern.getType()+" to "+pattern_1.getType()+", the transformed pattern:\n"+pattern_1);
-			//Pattern pattern_2 = transform(pattern_1);
-			//System.out.println("From "+pattern_1.getType()+" to "+pattern_2.getType()+", the transformed pattern:\n"+pattern_2);
-			code_blk = null;
-			//End of the function
-			System.out.println("\n----------------End of "+func_name+" function----------------\n");
-		}		
-
-	}
+	}	
 
 	/**
 	 * Takes the list of loop bytecode as input, take the block of loop bytecode, iterate over all available patterns

@@ -33,7 +33,7 @@ public abstract class Pattern {
 	protected HashMap<Integer, String> part_names;//Store the relation between part index and part name.
 	public int param_size;//the number of input parameters.
 	
-	protected final ExprFactory factory;
+	public final ExprFactory factory;
 	
 	
 	public Pattern(int param_size, List<Code> blk){

@@ -30,7 +30,9 @@ import wyopcl.translator.bound.BoundAnalyzer;
 import wyopcl.translator.generator.CodeGenerator;
 import wyopcl.translator.generator.Utility;
 import wyopcl.translator.symbolic.PatternMatcher;
+import wyopcl.translator.symbolic.PatternTransformer;
 import wyopcl.translator.symbolic.pattern.Pattern;
+import wyopcl.translator.symbolic.pattern.WhileLoopIncrPattern;
 /**
  * Main entry point of translator
  * 
@@ -186,14 +188,53 @@ public class Translator implements Builder{
 
 	
 	/**
-	 * Analyze the loop patterns.
-	 * @param module
+	 *  Iterate each code of the input function, build up the code blk and then analyze the loop pattern.
+	 * @param module 
 	 */
 	private void analyzePatterns(WyilFile module){
-		PatternMatcher matcher = new PatternMatcher(config);		
+		PatternMatcher matcher = new PatternMatcher(config);
+		PatternTransformer transformer = new PatternTransformer(config);
 		//Iterate each function
 		for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {
-			matcher.buildCodeBlockAndMatchPattern(functionOrMethod);			
+			//Store the list of code for a function.
+			List<Code> code_blk = new ArrayList<Code>();			
+			
+			int line = 0;
+			String func_name = functionOrMethod.name();			
+			int param_size = functionOrMethod.type().params().size();
+			//Begin the function
+			System.out.println("\n----------------Start of "+func_name+" function----------------");	
+			//Iterate each byte-code of a function block.			
+			for(Case mcase : functionOrMethod.cases()){				
+				//Parse each byte-code and add the constraints accordingly.
+				for(Block.Entry entry :mcase.body()){
+					Code code = entry.code;
+					//Print out the bytecode if verbose is enabled.
+					if(config.isVerbose()){
+						if(code instanceof Codes.Label){
+							System.out.println(func_name+"."+(++line)+" ["+code+"]");
+						}else{
+							System.out.println(func_name+"."+(++line)+" [\t"+code+"]");
+						}
+					}	
+					code_blk.add(code);					
+				}				
+				//End of the function
+			}
+			
+			Pattern pattern = matcher.analyzePattern(param_size, code_blk);
+			System.out.println("The original pattern:\n"+pattern);
+			if(pattern instanceof WhileLoopIncrPattern){
+				List<Code> transformed_code_blk = transformer.transform((WhileLoopIncrPattern)pattern);
+				Pattern pattern_1 = matcher.analyzePattern(param_size, transformed_code_blk);
+				System.out.println("From "+pattern.getType()+" to "+pattern_1.getType()+", the transformed pattern:\n"+pattern_1);
+			}			
+			//Pattern pattern_1 = transform(pattern);
+			//System.out.println("From "+pattern.getType()+" to "+pattern_1.getType()+", the transformed pattern:\n"+pattern_1);
+			//Pattern pattern_2 = transform(pattern_1);
+			//System.out.println("From "+pattern_1.getType()+" to "+pattern_2.getType()+", the transformed pattern:\n"+pattern_2);
+			code_blk = null;
+			System.out.println("\n----------------End of "+func_name+" function----------------\n");
 		}
 	}
 }
