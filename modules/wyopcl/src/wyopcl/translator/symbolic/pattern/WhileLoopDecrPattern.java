@@ -25,8 +25,7 @@ import wyopcl.translator.symbolic.expression.LinearExpr;
 public class WhileLoopDecrPattern extends WhileLoopPattern{	
 	private BigInteger decr;
 	public WhileLoopDecrPattern(int param_size, List<Code> blk) {
-		super(param_size, blk);
-		this.type = "WhileLoopDecr";
+		super(param_size, blk);		
 		//Get the decrement
 		this.line = decr(blk, this.V, this.line);
 		if(V != null && this.initLinearExpr != null && this.loop_boundLinearExpr != null && this.decr != null){
@@ -41,7 +40,7 @@ public class WhileLoopDecrPattern extends WhileLoopPattern{
 	@Override
 	public String toString() {
 		String result = super.toString();		
-		result += "\n" + type + ":while_loop && loop_var("+V+") && decr("+V+", "+decr+")"
+		result += "\nwhile_loop && loop_var("+V+") && decr("+V+", "+decr+")"
 				+ " && init("+V+", "+initLinearExpr+") &&  while_cond("+V+", "+comparatorOp+", "+loop_boundLinearExpr+")"
 				+ "\n=>loop_iters("+V+", " + getNumberOfIterations()+")";
 		return result;
@@ -54,7 +53,7 @@ public class WhileLoopDecrPattern extends WhileLoopPattern{
 			if(comparatorOp.equals(">")){
 				numberOfIterations = result.subtract(loop_boundLinearExpr);
 			}else{
-				numberOfIterations = result.subtract(loop_boundLinearExpr).add(factory.putExpr(BigInteger.ONE));
+				numberOfIterations = result.subtract(loop_boundLinearExpr).add((LinearExpr) factory.putExpr(BigInteger.ONE));
 			}			
 		}		
 		return numberOfIterations;

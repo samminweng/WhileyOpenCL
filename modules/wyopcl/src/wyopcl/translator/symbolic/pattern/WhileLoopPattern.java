@@ -24,6 +24,7 @@ public class WhileLoopPattern extends Pattern{
 		super(param_size, blk);
 		//Add each list of code into the list of pattern parts
 		//Construct each part in the pattern.
+		this.type = "WhileLoop";
 		this.line = 0;
 		this.V = loop_var(blk);
 		this.line = init(blk, this.V, this.line);
@@ -103,7 +104,7 @@ public class WhileLoopPattern extends Pattern{
 					//Get the expression for loop variable.	
 					LinearExpr linearExpr = (LinearExpr) factory.getExpr(loop_var);
 					if(linearExpr == null){
-						linearExpr = factory.putExpr(assign);
+						linearExpr = (LinearExpr) factory.putExpr(assign);
 					}			
 					this.initLinearExpr= factory.replaceLinearExpr(linearExpr);
 					//Add the code to 'init' part that assigns the initial values to the loop variable.

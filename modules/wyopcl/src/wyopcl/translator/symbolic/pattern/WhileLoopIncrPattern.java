@@ -25,8 +25,7 @@ public class WhileLoopIncrPattern extends WhileLoopPattern{
 	 * @param blk
 	 */
 	public WhileLoopIncrPattern(int param_size, List<Code> blk) {
-		super(param_size, blk);
-		this.type = "WhileLoopIncr";		
+		super(param_size, blk);	
 		//Get the increment
 		this.line = incr(blk, this.V, this.line);
 
@@ -41,7 +40,7 @@ public class WhileLoopIncrPattern extends WhileLoopPattern{
 	@Override
 	public String toString() {
 		String result = super.toString();	
-		result += "\n" + type + ":while_loop && loop_var("+V+") && incr("+V+", "+incr+")"
+		result += "\n" + type + " && loop_var("+V+") && incr("+V+", "+incr+")"
 				+ " && init("+V+", "+initLinearExpr+") &&  while_cond("+V+", "+comparatorOp+", "+loop_boundLinearExpr+")"
 				+ "\n=>loop_iters("+V+", " + getNumberOfIterations()+")";
 		return result;
@@ -54,7 +53,7 @@ public class WhileLoopIncrPattern extends WhileLoopPattern{
 			if(comparatorOp.equals("<")){
 				numberOfIterations = result.subtract(initLinearExpr);
 			}else{
-				numberOfIterations = result.subtract(initLinearExpr).add(factory.putExpr(BigInteger.ONE));
+				numberOfIterations = result.subtract(initLinearExpr).add((LinearExpr) factory.putExpr(BigInteger.ONE));
 			}			
 		}		
 		return numberOfIterations;

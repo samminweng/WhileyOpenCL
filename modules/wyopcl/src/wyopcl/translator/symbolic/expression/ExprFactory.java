@@ -25,33 +25,41 @@ public class ExprFactory {
 	 * @param code
 	 * @return
 	 */
-	private LinearExpr initializeLinearExprWithByteCode(Code code){
-		LinearExpr expr = null;
+	private Expr initializeExprWithByteCode(Code code){
+		Expr expr = null;
 		if(code instanceof Codes.Assign){
 			expr = new LinearExpr(prefix+((Codes.Assign)code).target());	
 			Codes.Assign assign = (Codes.Assign)code;
 			//1*v1
-			expr.addVar(BigInteger.ONE, prefix+assign.operand(0));
+			((LinearExpr) expr).addVar(BigInteger.ONE, prefix+assign.operand(0));
 		}else if(code instanceof Codes.Const){
 			expr = new LinearExpr(prefix+((Codes.Const)code).target());
 			Constant constant = ((Codes.Const)code).constant;
 			if(constant instanceof Constant.Integer){
 				//c0
-				expr.addConstant(((Constant.Integer) constant).value);	
+				((LinearExpr) expr).addConstant(((Constant.Integer) constant).value);	
 			}
 		}else if(code instanceof Codes.BinaryOperator){
-			expr = new LinearExpr(prefix+((Codes.BinaryOperator)code).target());
+			
 			Codes.BinaryOperator binOp = (Codes.BinaryOperator)code;
 			switch(binOp.kind){
 			case ADD:
+				expr = new LinearExpr(prefix+((Codes.BinaryOperator)code).target());
 				//v1+v2
-				expr.addVar(BigInteger.ONE, prefix+binOp.operand(0));
-				expr.addVar(BigInteger.ONE, prefix+binOp.operand(1));
+				((LinearExpr) expr).addVar(BigInteger.ONE, prefix+binOp.operand(0));
+				((LinearExpr) expr).addVar(BigInteger.ONE, prefix+binOp.operand(1));
 				break;
-			case SUB:	
+			case SUB:
+				expr = new LinearExpr(prefix+((Codes.BinaryOperator)code).target());
 				//v1-v2
-				expr.addVar(BigInteger.ONE, prefix+binOp.operand(0));
-				expr.addVar(BigInteger.ONE.negate(), prefix+binOp.operand(1));//-1*v2
+				((LinearExpr) expr).addVar(BigInteger.ONE, prefix+binOp.operand(0));
+				((LinearExpr) expr).addVar(BigInteger.ONE.negate(), prefix+binOp.operand(1));//-1*v2
+				break;
+			case RANGE:
+				//target = [op_0 ... op_1]
+				expr = new RangeExpr(prefix+binOp.target(), 
+									 (LinearExpr)getExpr(prefix+binOp.operand(0)),
+									 (LinearExpr)getExpr(prefix+binOp.operand(1)));
 				break;
 			default:
 				throw new RuntimeException(binOp.kind+"Not implemented");				
@@ -59,7 +67,7 @@ public class ExprFactory {
 		}else if(code instanceof Codes.LengthOf){
 			expr = new LinearExpr(prefix+((Codes.LengthOf)code).toString());
 			Codes.LengthOf lengthOf = (Codes.LengthOf)code;
-			expr.addVar(BigInteger.ONE, "|"+prefix+lengthOf.operand(0)+"|");
+			((LinearExpr) expr).addVar(BigInteger.ONE, "|"+prefix+lengthOf.operand(0)+"|");
 		}		
 		return expr;
 	}
@@ -133,25 +141,25 @@ public class ExprFactory {
 	 * @param object
 	 * @return
 	 */
-	public LinearExpr putExpr(Object object){
-		LinearExpr expr = null;
+	public Expr putExpr(Object object){
+		Expr expr = null;
 
 		//Return the assignment, e.g. %0 = %0
 		if(object instanceof String){
 			String var = object.toString();
 			expr = new LinearExpr(var);
-			expr.addVar(BigInteger.ONE, var);
+			((LinearExpr) expr).addVar(BigInteger.ONE, var);
 			addExprToTable(expr);
 		}
 		
 		//Return the constant expression, e.g. 1 = 1 
 		if(object instanceof BigInteger){
 			expr = new LinearExpr(null);
-			expr.addConstant((BigInteger)object);
+			((LinearExpr) expr).addConstant((BigInteger)object);
 		}
 		
 		if(object instanceof Code){
-			expr = initializeLinearExprWithByteCode((Code)object);
+			expr = initializeExprWithByteCode((Code)object);
 			addExprToTable(expr);
 		}	
 		

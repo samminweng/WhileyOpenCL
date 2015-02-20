@@ -35,7 +35,7 @@ public class PatternMatcher {
 		this.avail_patterns = new ArrayList<Class<? extends Pattern>>();
 		this.avail_patterns.add(WhileLoopDecrPattern.class);
 		this.avail_patterns.add(WhileLoopIncrPattern.class);
-		//this.avail_patterns.add(ForAllPattern.class);
+		this.avail_patterns.add(ForAllPattern.class);
 	}
 
 	/**

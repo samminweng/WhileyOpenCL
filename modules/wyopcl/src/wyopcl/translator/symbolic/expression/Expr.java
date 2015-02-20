@@ -1,5 +1,7 @@
 package wyopcl.translator.symbolic.expression;
 
+import java.math.BigInteger;
+
 
 public abstract class Expr implements Cloneable{
 	protected String target;
@@ -16,5 +18,7 @@ public abstract class Expr implements Cloneable{
 	public String getTarget(){
 		return target;
 	}
+
+	
 
 }

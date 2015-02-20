@@ -4,8 +4,10 @@ import java.util.List;
 
 import wyil.lang.Code;
 import wyil.lang.Codes;
+import wyil.lang.Codes.BinaryOperatorKind;
 import wyopcl.translator.symbolic.expression.Expr;
 import wyopcl.translator.symbolic.expression.LinearExpr;
+import wyopcl.translator.symbolic.expression.RangeExpr;
 
 /**
  * The 'For' pattern includes the 'loop_before', 'loop_header', 'loop_body' and 'loop_exit'. 
@@ -14,15 +16,17 @@ import wyopcl.translator.symbolic.expression.LinearExpr;
  *
  */
 public class ForAllPattern extends Pattern {
-	public String V;
-	public Expr rangeExpr;
+	private String V;
+	private String rangeOp;
+	private RangeExpr rangeExpr;
 	
 	public ForAllPattern(int param_size, List<Code> blk) {
 		super(param_size, blk);
-		this.type = "ForAllPattern";
+		this.type = "forall";
 		this.V = loop_var(blk);
-		this.line = loop_range(blk, this.V, 0);
-		if(this.V != null){
+		this.line = loop_range(blk, this.V, 0);		
+		if(this.V != null && this.rangeOp != null){
+			this.rangeExpr = (RangeExpr) factory.getExpr(rangeOp);		
 			this.isNil = false;
 		}else{
 			this.isNil = true;
@@ -36,6 +40,7 @@ public class ForAllPattern extends Pattern {
 			System.out.println(code);
 			if(code instanceof Codes.ForAll){
 				Codes.ForAll forall = (Codes.ForAll)code;
+				this.rangeOp = prefix+forall.sourceOperand;
 				return prefix+forall.indexOperand;
 			}			
 		}
@@ -53,7 +58,7 @@ public class ForAllPattern extends Pattern {
 				AddCodeToPatternPart(code, "loop_header");
 				++index;
 				break;
-			}			
+			} 
 			AddCodeToPatternPart(code, "loop_before");
 		}
 		//Search for the 'loopend' bytecode
@@ -77,14 +82,20 @@ public class ForAllPattern extends Pattern {
 
 	@Override
 	public LinearExpr getNumberOfIterations() {
-		// TODO Auto-generated method stub
-		return null;
+		if(this.numberOfIterations == null){				
+			LinearExpr upperExpr = (LinearExpr) this.rangeExpr.getUpper().clone();
+			//Get the range expr
+			this.numberOfIterations = upperExpr.subtract(this.rangeExpr.getLower());
+		}
+		return this.numberOfIterations;
 	}
 
 	@Override
 	public String toString() {
-		String result = super.toString();
-		return result + "ForPattern [V=" + V + ", rangeExpr=" + rangeExpr + "]";
+		String result = super.toString();		
+		result += "\n" + type + " " +V+" in range"+this.rangeExpr+
+			      "\n=>loop_iters("+V+", " + getNumberOfIterations()+")";
+		return result;
 	}
 	
 
