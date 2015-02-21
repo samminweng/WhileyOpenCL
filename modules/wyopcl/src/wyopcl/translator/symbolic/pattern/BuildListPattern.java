@@ -23,7 +23,7 @@ public class BuildListPattern extends Pattern {
 		this.line = init(blk, this.list_var, 0);
 		this.line = while_cond(blk, this.list_var, this.line);
 		this.line = loop_update(blk, this.list_var, this.line);
-		if(this.V == null){
+		if(this.V == null || this.line == 0){
 			this.isNil = true;
 		}else{
 			this.isNil = false;
