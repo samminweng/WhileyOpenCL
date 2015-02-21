@@ -6,6 +6,8 @@ import java.util.HashMap;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
+import wyil.lang.Type;
+import wyopcl.translator.Configuration;
 
 /**
  * Create a factory to generate the expression based on the input type.
@@ -13,10 +15,12 @@ import wyil.lang.Constant;
  *
  */
 public class ExprFactory {
+	private final Configuration config;
 	private final String prefix ="%";
 	private HashMap<String, Expr> expressiontable;//Store the register along with the corresponding expression.
 	
-	public ExprFactory(){
+	public ExprFactory(Configuration config){
+		this.config = config;
 		this.expressiontable = new HashMap<String, Expr>();
 	}
 	
@@ -82,7 +86,9 @@ public class ExprFactory {
 		if(expr != null && expr.getTarget()!=null){
 			//Check if the target exists in the expression table.
 			if(!expressiontable.containsKey(expr.getTarget())){
-				System.out.println(expr.getTarget() + " = "+ expr);
+				if(config.isVerbose()){
+					System.out.println(expr.getTarget() + " = "+ expr);
+				}			
 				//Add to the expression table.
 				expressiontable.put(expr.getTarget(), expr);
 			}			
@@ -106,8 +112,8 @@ public class ExprFactory {
 	 * @return the register.
 	 */
 	public int getAvailableReg(){
-		//Start from 0
-		int max_reg = 0; 
+		//Start from -1
+		int max_reg = -1; 
 		for(String key: expressiontable.keySet()){
 			int reg = Integer.parseInt(key.replace("%", ""));
 			if(reg>max_reg){
@@ -158,20 +164,20 @@ public class ExprFactory {
 	 */
 	public Expr putExpr(Object object){
 		Expr expr = null;
-
-		//Return the assignment, e.g. %0 = %0
-		if(object instanceof String){
-			String var = object.toString();
-			expr = new LinearExpr(var);
-			((LinearExpr) expr).addVar(BigInteger.ONE, var);
-			addExprToTable(expr);
-		}
 		
 		//Return the constant expression, e.g. 1 = 1 
 		if(object instanceof BigInteger){
 			expr = new LinearExpr(null);
 			((LinearExpr) expr).addConstant((BigInteger)object);
-		}
+		}		
+		
+		//Return the assignment, e.g. %0 = %0
+		if(object instanceof Type){
+			String var = prefix+getAvailableReg();
+			expr = new LinearExpr(var);
+			((LinearExpr) expr).addVar(BigInteger.ONE, var);
+			addExprToTable(expr);
+		}		
 		
 		if(object instanceof Code){
 			expr = initializeExprWithByteCode((Code)object);

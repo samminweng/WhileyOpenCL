@@ -22,6 +22,7 @@ import wyfs.lang.Path.Root;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Codes.Loop;
+import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.Code.Block;
 import wyil.lang.WyilFile.Case;
@@ -32,7 +33,9 @@ import wyopcl.translator.generator.Utility;
 import wyopcl.translator.symbolic.PatternMatcher;
 import wyopcl.translator.symbolic.PatternTransformer;
 import wyopcl.translator.symbolic.pattern.Pattern;
+import wyopcl.translator.symbolic.pattern.WhileLoopDecrPattern;
 import wyopcl.translator.symbolic.pattern.WhileLoopIncrPattern;
+import wyopcl.translator.symbolic.pattern.WhileLoopPattern;
 /**
  * Main entry point of translator
  * 
@@ -201,7 +204,7 @@ public class Translator implements Builder{
 			
 			int line = 0;
 			String func_name = functionOrMethod.name();			
-			int param_size = functionOrMethod.type().params().size();
+			ArrayList<Type> param_size = functionOrMethod.type().params();
 			//Begin the function
 			System.out.println("\n----------------Start of "+func_name+" function----------------");	
 			//Iterate each byte-code of a function block.			
@@ -224,15 +227,25 @@ public class Translator implements Builder{
 			
 			Pattern pattern = matcher.analyzePattern(param_size, code_blk);
 			System.out.println("The original pattern:\n"+pattern);
-			if(pattern instanceof WhileLoopIncrPattern){
+			
+			if(pattern instanceof WhileLoopPattern){
+				List<Code> transformed_code_blk = transformer.transform((WhileLoopPattern)pattern);
+				Pattern pattern_1 = matcher.analyzePattern(param_size, transformed_code_blk);
+				System.out.println("From "+pattern.getType()+" to "+pattern_1.getType()+", the transformed pattern:\n"+pattern_1);
+			}
+			
+			/*if(pattern instanceof WhileLoopIncrPattern){
 				List<Code> transformed_code_blk = transformer.transform((WhileLoopIncrPattern)pattern);
 				Pattern pattern_1 = matcher.analyzePattern(param_size, transformed_code_blk);
 				System.out.println("From "+pattern.getType()+" to "+pattern_1.getType()+", the transformed pattern:\n"+pattern_1);
-			}			
-			//Pattern pattern_1 = transform(pattern);
-			//System.out.println("From "+pattern.getType()+" to "+pattern_1.getType()+", the transformed pattern:\n"+pattern_1);
-			//Pattern pattern_2 = transform(pattern_1);
-			//System.out.println("From "+pattern_1.getType()+" to "+pattern_2.getType()+", the transformed pattern:\n"+pattern_2);
+			}	
+			
+			if(pattern instanceof WhileLoopDecrPattern){
+				List<Code> transformed_code_blk = transformer.transform((WhileLoopDecrPattern)pattern);
+				Pattern pattern_1 = matcher.analyzePattern(param_size, transformed_code_blk);
+				System.out.println("From "+pattern.getType()+" to "+pattern_1.getType()+", the transformed pattern:\n"+pattern_1);
+			}*/
+			
 			code_blk = null;
 			System.out.println("\n----------------End of "+func_name+" function----------------\n");
 		}

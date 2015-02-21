@@ -4,7 +4,9 @@ import java.util.List;
 
 import wyil.lang.Code;
 import wyil.lang.Codes;
+import wyil.lang.Type;
 import wyil.lang.Codes.BinaryOperatorKind;
+import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.expression.Expr;
 import wyopcl.translator.symbolic.expression.LinearExpr;
 import wyopcl.translator.symbolic.expression.RangeExpr;
@@ -15,13 +17,12 @@ import wyopcl.translator.symbolic.expression.RangeExpr;
  * @author Min-Hsien Weng
  *
  */
-public class ForAllPattern extends Pattern {
-	private String V;
+public class ForAllPattern extends Pattern {	
 	private String rangeOp;
 	private RangeExpr rangeExpr;
 	
-	public ForAllPattern(int param_size, List<Code> blk) {
-		super(param_size, blk);
+	public ForAllPattern(List<Type> params, List<Code> blk, Configuration config) {
+		super(params, blk, config);
 		this.type = "forall";
 		this.V = loop_var(blk);
 		this.line = loop_range(blk, this.V, 0);		
@@ -37,7 +38,6 @@ public class ForAllPattern extends Pattern {
 		int index;
 		for(index=0;index<blk.size();index++){
 			Code code = blk.get(index);
-			System.out.println(code);
 			if(code instanceof Codes.ForAll){
 				Codes.ForAll forall = (Codes.ForAll)code;
 				this.rangeOp = prefix+forall.sourceOperand;

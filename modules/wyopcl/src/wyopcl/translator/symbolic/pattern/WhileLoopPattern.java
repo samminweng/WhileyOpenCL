@@ -4,7 +4,9 @@ import java.util.List;
 
 import wyil.lang.Code;
 import wyil.lang.Codes;
+import wyil.lang.Type;
 import wyil.lang.Codes.Comparator;
+import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.expression.LinearExpr;
 /**
  * A while-loop pattern includes 'init_before', 'init', 'init_after', 'loop_header', 'loopbody_before',
@@ -15,13 +17,12 @@ import wyopcl.translator.symbolic.expression.LinearExpr;
  */
 public class WhileLoopPattern extends Pattern{
 	//Expressions related to the loop variable.
-	public String V;
 	public LinearExpr initLinearExpr;
 	public String comparatorOp;
 	public LinearExpr loop_boundLinearExpr;
 
-	public WhileLoopPattern(int param_size, List<Code> blk) {
-		super(param_size, blk);
+	public WhileLoopPattern(List<Type> params, List<Code> blk, Configuration config) {
+		super(params, blk, config);
 		//Add each list of code into the list of pattern parts
 		//Construct each part in the pattern.
 		this.type = "WhileLoop";

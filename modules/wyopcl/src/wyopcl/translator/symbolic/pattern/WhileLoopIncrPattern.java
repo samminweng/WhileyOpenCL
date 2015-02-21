@@ -7,6 +7,8 @@ import java.util.List;
 
 import wyil.lang.Code;
 import wyil.lang.Codes;
+import wyil.lang.Type;
+import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.expression.LinearExpr;
 /**
  * Implemented the while-loop patterns, as follows:
@@ -24,8 +26,8 @@ public class WhileLoopIncrPattern extends WhileLoopPattern{
 	 * @param param_size
 	 * @param blk
 	 */
-	public WhileLoopIncrPattern(int param_size, List<Code> blk) {
-		super(param_size, blk);	
+	public WhileLoopIncrPattern(List<Type> params, List<Code> blk, Configuration config) {
+		super(params, blk, config);	
 		//Get the increment
 		this.line = incr(blk, this.V, this.line);
 

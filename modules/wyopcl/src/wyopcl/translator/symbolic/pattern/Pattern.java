@@ -9,6 +9,8 @@ import java.util.stream.IntStream;
 
 import wyil.lang.Code;
 import wyil.lang.Codes;
+import wyil.lang.Type;
+import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.expression.Expr;
 import wyopcl.translator.symbolic.expression.ExprFactory;
 import wyopcl.translator.symbolic.expression.LinearExpr;
@@ -20,7 +22,8 @@ import wyopcl.translator.symbolic.expression.LinearExpr;
  *
  */
 public abstract class Pattern {
-	protected final String prefix = "%";	
+	protected final String prefix = "%";
+	protected final Configuration config;
 	
 	protected String type;//The pattern type
 	protected boolean isNil;//The flag indicates whether this pattern is matched with the given loop (True: not matched False: Matched).
@@ -31,18 +34,18 @@ public abstract class Pattern {
 	protected int line;//keep track of the current line number.
 	public List<List<Code>> parts;//The collection of all parts in the pattern.
 	protected HashMap<Integer, String> part_names;//Store the relation between part index and part name.
-	public int param_size;//the number of input parameters.
 	
 	public final ExprFactory factory;
 	
+	//The variable (loop variable or list variable).
+	public String V;
 	
-	public Pattern(int param_size, List<Code> blk){
-		this.param_size = param_size;		
-		
-		this.factory = new ExprFactory();
+	public Pattern(List<Type> params, List<Code> blk, Configuration config){
+		this.config = config;
+		this.factory = new ExprFactory(config);
 		//Add the input parameters to the expression table.
-		for(int index=0;index<param_size;index++){
-			factory.putExpr(prefix+index);
+		for(Type param: params){
+			factory.putExpr(param);
 		}
 		//The flag to store the label for an assertion or assumption.	
 		this.label_AssertOrAssume = null;

@@ -16,6 +16,7 @@ import wyopcl.translator.symbolic.expression.LinearExpr;
 import wyopcl.translator.symbolic.pattern.ForAllPattern;
 import wyopcl.translator.symbolic.pattern.NullPattern;
 import wyopcl.translator.symbolic.pattern.Pattern;
+import wyopcl.translator.symbolic.pattern.WhileLoopDecrPattern;
 import wyopcl.translator.symbolic.pattern.WhileLoopIncrPattern;
 import wyopcl.translator.symbolic.pattern.WhileLoopPattern;
 
@@ -26,14 +27,14 @@ public class PatternTransformer {
 	public PatternTransformer(Configuration config){
 		this.config = config;
 	}	
-
-	/**
+/*
+	*//**
 	 * Construct  the 'init_pre' and 'init' parts  from one pattern type to another.
 	 * @param p1
 	 * @param loop_var
 	 * @param blk
 	 * @return
-	 */
+	 *//*
 	private Codes.Assign getInitAssign(Pattern p, int loop_var, List<Code> blk){
 		//Put all the other code in the p's loop header into the code block.
 		for(Code code: p.getPartByName("loop_header")){
@@ -56,13 +57,13 @@ public class PatternTransformer {
 	}
 
 
-	/**
+	*//**
 	 * Construct the loop condition from one pattern type to another
 	 * @param p pattern
 	 * @param loop_var the loop variable
 	 * @param blk the code block
 	 * @return the bytecode of loop condition.
-	 */
+	 *//*
 	private Codes.If getLoopCondition(Pattern p, int loop_var, List<Code> blk){
 		List<Code> loop_header = p.getPartByName("loop_header");
 		Codes.Loop loop = (Codes.Loop)loop_header.get(0);
@@ -87,13 +88,13 @@ public class PatternTransformer {
 		}
 	}
 
-	/**
+	*//**
 	 * Get the increment for P2 pattern or the decrement for P1
 	 * @param p1
 	 * @param loop_var
 	 * @param blk
 	 * @return
-	 */
+	 *//*
 	private Codes.BinaryOperator getIncrOrDecr(Pattern p, int loop_var, List<Code> blk){
 		List<Code> loopbody_before = p.getPartByName("loopbody_before");
 		Codes.BinaryOperator binOp = (Codes.BinaryOperator)loopbody_before.get(loopbody_before.size()-1);
@@ -107,7 +108,8 @@ public class PatternTransformer {
 		default:
 			return null;	
 		}		
-	}
+	}*/
+
 
 	/**
 	 * Transform the WhileLoop pattern to the 'forall' pattern. The transformation can be expressed as below:
@@ -121,13 +123,16 @@ public class PatternTransformer {
 	 * @param p
 	 * @return
 	 */
-	public List<Code> transform(WhileLoopIncrPattern p){
+	public List<Code> transform(WhileLoopPattern p){
 		//Store all the bytecode for the new pattern.
 		List<Code> blk = new ArrayList<Code>();	
 		//Add the code in the 'init_before'
 		blk.addAll(p.getPartByName("init_before"));
 		//Add the code in the 'init_after'
 		blk.addAll(p.getPartByName("init_after"));
+		//Create a forall bytecode that requires the loop var and range.
+		
+		//Construct the range
 		//Get the loop var
 		int loop_var = Integer.parseInt(p.V.replace("%", ""));
 		//Get the init var bytecode
@@ -135,7 +140,13 @@ public class PatternTransformer {
 		int leftOperand = assign.operand(0);
 		//Get the loop condition
 		List<Code> loop_header = p.getPartByName("loop_header");
-		
+		//Take out the first and last bytecode, put the remaining code into the code block.
+		int index=1;
+		while(index<loop_header.size()-1){
+			Code code = loop_header.get(index);
+			blk.add(code);
+			index++;
+		}
 		
 		Codes.If loop_condition = (Codes.If)loop_header.get(loop_header.size()-1);
 		int rightOperand;
@@ -157,7 +168,7 @@ public class PatternTransformer {
 		Codes.Loop loop = (Codes.Loop)loop_header.get(0);
 		modifiedOp.add(loop.modifiedOperands[1]);
 		
-	//Create the forall bytecode
+		//Create the forall bytecode
 		Codes.ForAll forall = Codes.ForAll(Type.List(assign.type(), false),
 										   target,
 										   loop_var,
@@ -169,8 +180,6 @@ public class PatternTransformer {
 		blk.addAll(p.getPartByName("loopbody_exit"));
 		return blk;
 	}
-
-
 
 	/**
 	 * Transform the pattern of P1 or P2 type to the other type.

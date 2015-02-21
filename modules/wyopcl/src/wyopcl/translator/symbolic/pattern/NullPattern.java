@@ -3,6 +3,8 @@ package wyopcl.translator.symbolic.pattern;
 import java.util.List;
 
 import wyil.lang.Code;
+import wyil.lang.Type;
+import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.expression.LinearExpr;
 /**
  * The 'null' object for pattern class.
@@ -11,8 +13,8 @@ import wyopcl.translator.symbolic.expression.LinearExpr;
  */
 public class NullPattern extends Pattern {
 
-	public NullPattern(int params_size, List<Code> blk) {
-		super(params_size, blk);
+	public NullPattern(List<Type> params, List<Code> blk, Configuration config) {
+		super(params, blk, config);
 		this.type = "NullPattern";
 		this.isNil = true;
 	}

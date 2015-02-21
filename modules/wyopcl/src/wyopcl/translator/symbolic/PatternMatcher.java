@@ -8,6 +8,7 @@ import java.util.List;
 import wyil.lang.Code;
 import wyil.lang.Code.Block;
 import wyil.lang.Codes;
+import wyil.lang.Type;
 import wyil.lang.WyilFile.Case;
 import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
 import wyopcl.translator.Configuration;
@@ -33,6 +34,7 @@ public class PatternMatcher {
 	public PatternMatcher(Configuration config){
 		this.config = config;
 		this.avail_patterns = new ArrayList<Class<? extends Pattern>>();
+		//this.avail_patterns.add(BuildListPattern.class);
 		this.avail_patterns.add(WhileLoopDecrPattern.class);
 		this.avail_patterns.add(WhileLoopIncrPattern.class);
 		this.avail_patterns.add(ForAllPattern.class);
@@ -45,15 +47,15 @@ public class PatternMatcher {
 	 * @param block the code block
 	 * @return pattern. If not found, return null.
 	 */
-	public Pattern analyzePattern(int param_size, List<Code> block){
+	public Pattern analyzePattern(List<Type> params, List<Code> block){
 		Pattern pattern = null;		
 		//Iterate over all the available patterns.
 		for(Class<? extends Pattern> avail_pattern: avail_patterns){
 			try {
 				//Get the constructor				
-				Constructor<? extends Pattern> constructor = avail_pattern.getConstructor(int.class, List.class);
+				Constructor<? extends Pattern> constructor = avail_pattern.getConstructor(List.class, List.class, Configuration.class);
 				if(constructor!=null){
-					pattern = constructor.newInstance(param_size, block);
+					pattern = constructor.newInstance(params, block, config);
 					//Check if the loop block is matched with the pattern. If so, then return the pattern. 
 					if(!pattern.isNil()){
 						return pattern;
@@ -67,7 +69,7 @@ public class PatternMatcher {
 		}
 		//If no patterns are matched, then return NullPattern.
 		if(pattern == null){
-			pattern = new NullPattern(param_size, block);
+			pattern = new NullPattern(params, block, config);
 		}
 		return pattern;
 	}

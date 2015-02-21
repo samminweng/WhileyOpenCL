@@ -8,7 +8,10 @@ import java.util.List;
 
 import wyil.lang.Code;
 import wyil.lang.Codes;
+import wyil.lang.Type;
+import wyil.lang.Codes.BinaryOperatorKind;
 import wyil.lang.Codes.LoopEnd;
+import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.expression.LinearExpr;
 /**
  * Implemented the while-loop pattens, as follows:
@@ -24,8 +27,8 @@ import wyopcl.translator.symbolic.expression.LinearExpr;
  */
 public class WhileLoopDecrPattern extends WhileLoopPattern{	
 	private BigInteger decr;
-	public WhileLoopDecrPattern(int param_size, List<Code> blk) {
-		super(param_size, blk);		
+	public WhileLoopDecrPattern(List<Type> params, List<Code> blk, Configuration config) {
+		super(params, blk, config);		
 		//Get the decrement
 		this.line = decr(blk, this.V, this.line);
 		if(V != null && this.initLinearExpr != null && this.loop_boundLinearExpr != null && this.decr != null){
@@ -106,19 +109,29 @@ public class WhileLoopDecrPattern extends WhileLoopPattern{
 		//Search for the decrement
 		for(index=line; index<code_blk.size();index++){
 			Code code = code_blk.get(index);
+			String pattern_part = "loopbody_before";
 			//Create the expression and put it into the table.
-			if(!checkAssertOrAssume(code) && code instanceof Codes.Assign){
-				//Check if the assignment bytecode is to over-write the value of loop variable.
-				Codes.Assign assign = (Codes.Assign)code;
-				//Check if the target is the loop variable.
-				if((prefix+assign.target()).equals(loop_var)){
-					this.decr = extractDecrement(assign, loop_var);
-					AddCodeToPatternPart(assign, "loopbody_update");
-					index++;
-					break;				
+			if(!checkAssertOrAssume(code)){
+				if(code instanceof Codes.Assign){
+					//Check if the assignment bytecode is to over-write the value of loop variable.
+					Codes.Assign assign = (Codes.Assign)code;
+					//Check if the target is the loop variable.
+					if((prefix+assign.target()).equals(loop_var)){
+						this.decr = extractDecrement(assign, loop_var);
+						AddCodeToPatternPart(assign, "loopbody_update");
+						index++;
+						break;				
+					}
+				}
+				if(code instanceof Codes.BinaryOperator){
+					Codes.BinaryOperator binOp = (Codes.BinaryOperator)code;
+					if(binOp.kind.equals(BinaryOperatorKind.SUB)&&
+							loop_var.equals(prefix+binOp.operand(0))){
+						pattern_part = "loopbody_update";
+					}					
 				}
 			}
-			AddCodeToPatternPart(code, "loopbody_before");
+			AddCodeToPatternPart(code, pattern_part);
 		}
 
 		//Get loop label
