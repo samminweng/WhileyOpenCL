@@ -39,9 +39,12 @@ public abstract class Pattern {
 	
 	//The variable (loop variable or list variable).
 	public String V;
+	//The list of parameter types
+	public List<Type> params;
 	
 	public Pattern(List<Type> params, List<Code> blk, Configuration config){
 		this.config = config;
+		this.params = params;
 		this.factory = new ExprFactory(config);
 		//Add the input parameters to the expression table.
 		for(Type param: params){
