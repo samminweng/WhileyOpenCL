@@ -106,39 +106,47 @@ public class WhileLoopDecrPattern extends WhileLoopPattern{
 		if(loop_var == null) return line;
 
 		int index;
-		//Search for the decrement
-		for(index=line; index<code_blk.size();index++){
+		//Put the code in 'loopbody_before' part.
+		for(index=line+1; index<code_blk.size();index++){
 			Code code = code_blk.get(index);
-			String pattern_part = "loopbody_before";
 			//Create the expression and put it into the table.
 			if(!checkAssertOrAssume(code)){
+				//Search for the binOp that subtracts the loop variable with a constant.
+				if(code instanceof Codes.BinaryOperator){
+					Codes.BinaryOperator binOp = (Codes.BinaryOperator)code;
+					if(binOp.kind.equals(BinaryOperatorKind.SUB)&&
+							loop_var.equals(prefix+binOp.operand(0))){
+						break;
+					}					
+				}
+			}
+			AddCodeToPatternPart(code, "loopbody_before");
+		}
+
+		//Search for the decrement
+		for(; index<code_blk.size();index++){
+			Code code = code_blk.get(index);
+			AddCodeToPatternPart(code, "loopbody_update");
+			//Create the expression and put it into the table.
+			if(!checkAssertOrAssume(code)){
+				//Search for the decrement that assigns the value to the loop var.
 				if(code instanceof Codes.Assign){
 					//Check if the assignment bytecode is to over-write the value of loop variable.
 					Codes.Assign assign = (Codes.Assign)code;
 					//Check if the target is the loop variable.
 					if((prefix+assign.target()).equals(loop_var)){
 						this.decr = extractDecrement(assign, loop_var);
-						AddCodeToPatternPart(assign, "loopbody_update");
-						index++;
 						break;				
 					}
 				}
-				if(code instanceof Codes.BinaryOperator){
-					Codes.BinaryOperator binOp = (Codes.BinaryOperator)code;
-					if(binOp.kind.equals(BinaryOperatorKind.SUB)&&
-							loop_var.equals(prefix+binOp.operand(0))){
-						pattern_part = "loopbody_update";
-					}					
-				}
-			}
-			AddCodeToPatternPart(code, pattern_part);
+			}			
 		}
 
 		//Get loop label
 		List<Code> loop_header = getPartByName("loop_header");
 		String loop_label = ((Codes.Loop)loop_header.get(0)).target;
 		//Search for loop end and put the code to 'loop_post' part.
-		for(; index<code_blk.size();index++){
+		for(index=index+1; index<code_blk.size();index++){
 			Code code = code_blk.get(index);
 			//Create the expression and put it into the table.
 			AddCodeToPatternPart(code, "loopbody_after");
@@ -147,7 +155,6 @@ public class WhileLoopDecrPattern extends WhileLoopPattern{
 					//Get the loop end to see if the 
 					Codes.LoopEnd loopend = (Codes.LoopEnd)code;
 					if(loopend.label.equals(loop_label)){
-						index++;
 						break;				
 					}				
 				}
@@ -155,7 +162,7 @@ public class WhileLoopDecrPattern extends WhileLoopPattern{
 		}
 
 		//Put the remaining code into the 'loop_exit' part
-		for(; index<code_blk.size();index++){
+		for(index=index+1; index<code_blk.size();index++){
 			//Create the expression and put it into the table.
 			AddCodeToPatternPart(code_blk.get(index), "loop_exit");
 		}
