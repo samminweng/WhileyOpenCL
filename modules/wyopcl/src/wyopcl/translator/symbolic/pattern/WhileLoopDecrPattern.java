@@ -31,7 +31,7 @@ public class WhileLoopDecrPattern extends WhileLoopPattern{
 		super(params, blk, config);		
 		//Get the decrement
 		this.line = decr(blk, this.V, this.line);
-		if(V != null && this.initLinearExpr != null && this.loop_boundLinearExpr != null && this.decr != null){
+		if(V != null && this.init != null && this.loop_bound != null && this.decr != null){
 			this.isNil = false;			
 		}else{
 			this.isNil = true;
@@ -44,7 +44,7 @@ public class WhileLoopDecrPattern extends WhileLoopPattern{
 	public String toString() {
 		String result = super.toString();		
 		result += "\nwhile_loop && loop_var("+V+") && decr("+V+", "+decr+")"
-				+ " && init("+V+", "+initLinearExpr+") &&  while_cond("+V+", "+comparatorOp+", "+loop_boundLinearExpr+")"
+				+ " && init("+V+", "+init+") &&  while_cond("+V+", "+comparatorOp+", "+loop_bound+")"
 				+ "\n=>loop_iters("+V+", " + getNumberOfIterations()+")";
 		return result;
 	}
@@ -52,11 +52,11 @@ public class WhileLoopDecrPattern extends WhileLoopPattern{
 	@Override
 	public LinearExpr getNumberOfIterations() {
 		if(numberOfIterations==null){
-			LinearExpr result = (LinearExpr)initLinearExpr.clone();
+			LinearExpr result = (LinearExpr)init.clone();
 			if(comparatorOp.equals(">")){
-				numberOfIterations = result.subtract(loop_boundLinearExpr);
+				numberOfIterations = result.subtract(loop_bound);
 			}else{
-				numberOfIterations = result.subtract(loop_boundLinearExpr).add((LinearExpr) factory.putExpr(BigInteger.ONE));
+				numberOfIterations = result.subtract(loop_bound).add((LinearExpr) factory.putExpr(BigInteger.ONE));
 			}			
 		}		
 		return numberOfIterations;

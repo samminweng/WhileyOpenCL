@@ -123,7 +123,7 @@ public class PatternTransformer {
 	 * @param p
 	 * @return
 	 */
-	public List<Code> transform(WhileLoopPattern p){
+	public List<Code> transformWhileToForAll(WhileLoopPattern p){
 		//Store all the bytecode for the new pattern.
 		List<Code> blk = new ArrayList<Code>();	
 		//Add the code in the 'init_before'

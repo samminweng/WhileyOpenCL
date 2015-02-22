@@ -229,7 +229,7 @@ public class Translator implements Builder{
 			System.out.println("The original pattern:\n"+pattern);
 			
 			if(pattern instanceof WhileLoopPattern){
-				List<Code> transformed_code_blk = transformer.transform((WhileLoopPattern)pattern);
+				List<Code> transformed_code_blk = transformer.transformWhileToForAll((WhileLoopPattern)pattern);
 				Pattern pattern_1 = matcher.analyzePattern(param_size, transformed_code_blk);
 				System.out.println("From "+pattern.getType()+" to "+pattern_1.getType()+", the transformed pattern:\n"+pattern_1);
 			}

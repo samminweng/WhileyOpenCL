@@ -15,11 +15,11 @@ import wyopcl.translator.symbolic.expression.LinearExpr;
  * @author Min-Hsien Weng
  *
  */
-public class WhileLoopPattern extends Pattern{
+public abstract class WhileLoopPattern extends Pattern{
 	//Expressions related to the loop variable.
-	public LinearExpr initLinearExpr;
+	public LinearExpr init;
 	public String comparatorOp;
-	public LinearExpr loop_boundLinearExpr;
+	public LinearExpr loop_bound;
 
 	public WhileLoopPattern(List<Type> params, List<Code> blk, Configuration config) {
 		super(params, blk, config);
@@ -84,7 +84,8 @@ public class WhileLoopPattern extends Pattern{
 
 
 	/**
-	 * Get the expression that assigns the initial value the loop variable and record the list of code in 'init_pre' and 'init' part.
+	 * Get the expression that assigns the initial value the loop variable and record the list of code in 'init_pre','
+	 * 'init' and 'init_after' parts.
 	 * @param loop_var the loop variable
 	 * @param line the starting line of code
 	 * @return the ending line of code of 'init' part.
@@ -102,20 +103,38 @@ public class WhileLoopPattern extends Pattern{
 				Codes.Assign assign = (Codes.Assign)code;
 				//check if the loop variable is used in the assignment.
 				if(loop_var.equals(prefix+assign.target())){
+					//Put the assignment bytecode of loop variable into the 'init' part.
 					//Get the expression for loop variable.	
 					LinearExpr linearExpr = (LinearExpr) factory.getExpr(loop_var);
 					if(linearExpr == null){
 						linearExpr = (LinearExpr) factory.putExpr(assign);
 					}			
-					this.initLinearExpr= factory.replaceLinearExpr(linearExpr);
+					this.init= factory.replaceLinearExpr(linearExpr);
 					//Add the code to 'init' part that assigns the initial values to the loop variable.
-					AddCodeToPatternPart(code, "init");
-					return ++index;
+					AddCodeToPatternPart(code, "init");					
+					break;
 				}
 			}
 			//Otherwise, add the code to the 'init_before' part
 			AddCodeToPatternPart(code, "init_before");
-		}			
+		}
+		
+		//Search for the loop condition
+		for(index=index+1; index< code_blk.size(); index++){
+			Code code = code_blk.get(index);
+			//Search for loop bytecode
+			if(!checkAssertOrAssume(code)&&code instanceof Codes.Loop){
+				//Check if the loop variable is used in the loop
+				Codes.Loop loop = (Codes.Loop)code;
+				if(loop_var.equals(prefix+loop.modifiedOperands[0])){
+					//Stop the iteration.
+					break;
+				}
+			}
+			AddCodeToPatternPart(code, "init_after");
+		}
+		
+		
 		return index;
 	}
 
@@ -130,22 +149,8 @@ public class WhileLoopPattern extends Pattern{
 		if(loop_var == null) return line;
 		//Search for the loop condition
 		int index;
-		for(index=line; index< code_blk.size(); index++){
-			Code code = code_blk.get(index);
-			//Search for loop bytecode
-			if(!checkAssertOrAssume(code)&&code instanceof Codes.Loop){
-				//Check if the loop variable is used in the loop
-				Codes.Loop loop = (Codes.Loop)code;
-				if(loop_var.equals(prefix+loop.modifiedOperands[0])){
-					//Stop the iteration.
-					break;
-				}
-			}
-			AddCodeToPatternPart(code, "init_after");
-		}		
-
 		//Search for the loop condition
-		for(; index< code_blk.size(); index++){
+		for(index=line; index< code_blk.size(); index++){
 			Code code = code_blk.get(index);
 			//Add the code to loop header	
 			AddCodeToPatternPart(code, "loop_header");
@@ -185,17 +190,13 @@ public class WhileLoopPattern extends Pattern{
 
 				if(op != null){
 					//Get the expression 
-					this.loop_boundLinearExpr = (LinearExpr) factory.getExpr(op);
-					return ++index;	
+					this.loop_bound = (LinearExpr) factory.getExpr(op);
+					break;	
 				}
-
 			}
 		}
 		return index;
 	}
 
-	@Override
-	public LinearExpr getNumberOfIterations() {
-		return null;
-	}
+	
 }
