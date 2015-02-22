@@ -97,12 +97,12 @@ public class ExprFactory {
 	
 	/**
 	 * Get the value from expression table.
-	 * @param op
+	 * @param target
 	 * @return value(Expr). If not found, return null.
 	 */
-	public Expr getExpr(String op) {
-		if(expressiontable.containsKey(op)){
-			return expressiontable.get(op);						
+	public Expr getExpr(String target) {
+		if(expressiontable.containsKey(target)){
+			return expressiontable.get(target);						
 		}		
 		return null;
 	}
