@@ -6,29 +6,135 @@ import java.util.List;
 
 import wyil.lang.Code;
 import wyil.lang.Codes;
-import wyil.lang.Codes.Assign;
 import wyil.lang.Type;
 import wyil.lang.Codes.BinaryOperatorKind;
-import wyil.lang.Codes.Comparator;
-import wyil.lang.Type.EffectiveCollection;
-import wyopcl.translator.Configuration;
-import wyopcl.translator.symbolic.expression.LinearExpr;
 import wyopcl.translator.symbolic.pattern.ForAllPattern;
-import wyopcl.translator.symbolic.pattern.NullPattern;
 import wyopcl.translator.symbolic.pattern.Pattern;
 import wyopcl.translator.symbolic.pattern.WhileLoopDecrPattern;
 import wyopcl.translator.symbolic.pattern.WhileLoopIncrPattern;
 import wyopcl.translator.symbolic.pattern.WhileLoopPattern;
 
-public class PatternTransformer {
-	private final Configuration config;
-	private final String prefix = "%";
-
-	public PatternTransformer(Configuration config){
-		this.config = config;
+/**
+ * The abstract class for the pattern transformer. The transformer takes a pattern of one type as input, make the transformation
+ * and set the resulting pattern as the output.
+ * @author Min-Hsien Weng
+ *
+ */
+public class Transformer extends Object{
+	public Pattern before;
+	public Pattern after;
+	
+	/**
+	 * Constructor 
+	 * @param before the original pattern (While-Loop pattern type)
+	 */
+	public Transformer(WhileLoopPattern before){
+		this.before = before;
+		this.after = transform((WhileLoopPattern) this.before);
+	}
+	
+	
+	public Transformer(WhileLoopIncrPattern before){
+		this((WhileLoopPattern)before);
 	}	
-/*
-	*//**
+	
+	public Transformer(WhileLoopDecrPattern before){
+		this((WhileLoopPattern)before);
+	}
+
+	/**
+	 * Transform the WhileLoop pattern to the 'forall' pattern. The transformation can be expressed as below:
+	 *		A; v=I; B; while (v > L) { C; v = u; D} E => A; B; for v in range (I, L) {C; D} E
+	 *		where:
+	 *		A, B, C, D, E is the list of code.
+	 *		v is the loop variable.
+	 *		u is the update of loop variable.
+	 *		I is the initial value.
+	 *		L is the loop lower bound.	
+	 */
+	private Pattern transform(WhileLoopPattern p) {
+		
+		//Store all the bytecode for the new pattern.
+		List<Code> blk = new ArrayList<Code>();	
+		//Add the code in the 'init_before'
+		blk.addAll(p.getPartByName("init_before"));
+		//Add the code in the 'init_after'
+		blk.addAll(p.getPartByName("init_after"));
+		//Create a forall bytecode that requires the loop var and range.
+
+		//Construct the range
+		//Get the loop var
+		int loop_var = Integer.parseInt(p.V.replace("%", ""));
+		//Get the init var bytecode
+		Codes.Assign assign = (Codes.Assign) p.getPartByName("init").get(0);
+		int leftOperand = assign.operand(0);
+		//Get the loop condition
+		List<Code> loop_header = p.getPartByName("loop_header");
+		//Take out the first and last bytecode, put the remaining code into the code block.
+		int index=1;
+		while(index<loop_header.size()-1){
+			Code code = loop_header.get(index);
+			blk.add(code);
+			index++;
+		}
+
+		Codes.If loop_condition = (Codes.If)loop_header.get(loop_header.size()-1);
+		int rightOperand;
+		if(loop_var == loop_condition.leftOperand){
+			rightOperand = loop_condition.rightOperand;		
+		}else{
+			rightOperand = loop_condition.leftOperand;
+		}
+		int target = p.factory.getAvailableReg();
+		Codes.BinaryOperator binOp = Codes.BinaryOperator(assign.type(),
+				target,
+				leftOperand,
+				rightOperand, 
+				BinaryOperatorKind.RANGE);
+		blk.add(binOp);
+
+
+		Collection<Integer> modifiedOp = new ArrayList<Integer>();
+		Codes.Loop loop = (Codes.Loop)loop_header.get(0);
+		modifiedOp.add(loop.modifiedOperands[1]);
+
+		//Create the forall bytecode
+		Codes.ForAll forall = Codes.ForAll(Type.List(assign.type(), false),
+				target,
+				loop_var,
+				modifiedOp,
+				loop.target);
+		blk.add(forall);
+		blk.addAll(p.getPartByName("loopbody_before"));
+		blk.addAll(p.getPartByName("loopbody_after"));
+		blk.addAll(p.getPartByName("loopbody_exit"));
+
+		Pattern pattern = new ForAllPattern(p.params, blk, p.config);
+		if(pattern.isNil()){
+			return null;
+		}
+		
+		return pattern;
+	}
+	
+	/**
+	 * Get the resulting pattern after the transformation.
+	 * @return
+	 */
+	public Pattern getAfterPattern(){
+		return this.after;
+	}
+	/**
+	 * Get the original pattern.
+	 * @return
+	 */
+	public Pattern getBeforePattern(){
+		return this.before;
+	}
+	
+	
+	/*
+	 *//**
 	 * Construct  the 'init_pre' and 'init' parts  from one pattern type to another.
 	 * @param p1
 	 * @param loop_var
@@ -57,13 +163,13 @@ public class PatternTransformer {
 	}
 
 
-	*//**
-	 * Construct the loop condition from one pattern type to another
-	 * @param p pattern
-	 * @param loop_var the loop variable
-	 * @param blk the code block
-	 * @return the bytecode of loop condition.
-	 *//*
+	  *//**
+	  * Construct the loop condition from one pattern type to another
+	  * @param p pattern
+	  * @param loop_var the loop variable
+	  * @param blk the code block
+	  * @return the bytecode of loop condition.
+	  *//*
 	private Codes.If getLoopCondition(Pattern p, int loop_var, List<Code> blk){
 		List<Code> loop_header = p.getPartByName("loop_header");
 		Codes.Loop loop = (Codes.Loop)loop_header.get(0);
@@ -88,13 +194,13 @@ public class PatternTransformer {
 		}
 	}
 
-	*//**
-	 * Get the increment for P2 pattern or the decrement for P1
-	 * @param p1
-	 * @param loop_var
-	 * @param blk
-	 * @return
-	 *//*
+	   *//**
+	   * Get the increment for P2 pattern or the decrement for P1
+	   * @param p1
+	   * @param loop_var
+	   * @param blk
+	   * @return
+	   *//*
 	private Codes.BinaryOperator getIncrOrDecr(Pattern p, int loop_var, List<Code> blk){
 		List<Code> loopbody_before = p.getPartByName("loopbody_before");
 		Codes.BinaryOperator binOp = (Codes.BinaryOperator)loopbody_before.get(loopbody_before.size()-1);
@@ -122,7 +228,7 @@ public class PatternTransformer {
 	 *		u is the update of loop variable.
 	 * @param p
 	 * @return
-	 */
+	 *//*
 	public List<Code> transformWhileToForAll(WhileLoopPattern p){
 		//Store all the bytecode for the new pattern.
 		List<Code> blk = new ArrayList<Code>();	
@@ -131,7 +237,7 @@ public class PatternTransformer {
 		//Add the code in the 'init_after'
 		blk.addAll(p.getPartByName("init_after"));
 		//Create a forall bytecode that requires the loop var and range.
-		
+
 		//Construct the range
 		//Get the loop var
 		int loop_var = Integer.parseInt(p.V.replace("%", ""));
@@ -147,7 +253,7 @@ public class PatternTransformer {
 			blk.add(code);
 			index++;
 		}
-		
+
 		Codes.If loop_condition = (Codes.If)loop_header.get(loop_header.size()-1);
 		int rightOperand;
 		if(loop_var == loop_condition.leftOperand){
@@ -157,30 +263,30 @@ public class PatternTransformer {
 		}
 		int target = p.factory.getAvailableReg();
 		Codes.BinaryOperator binOp = Codes.BinaryOperator(assign.type(),
-														  target,
-														  leftOperand,
-														  rightOperand, 
-														  BinaryOperatorKind.RANGE);
+				target,
+				leftOperand,
+				rightOperand, 
+				BinaryOperatorKind.RANGE);
 		blk.add(binOp);
-		
-		
+
+
 		Collection<Integer> modifiedOp = new ArrayList<Integer>();
 		Codes.Loop loop = (Codes.Loop)loop_header.get(0);
 		modifiedOp.add(loop.modifiedOperands[1]);
-		
+
 		//Create the forall bytecode
 		Codes.ForAll forall = Codes.ForAll(Type.List(assign.type(), false),
-										   target,
-										   loop_var,
-										   modifiedOp,
-										   loop.target);
+				target,
+				loop_var,
+				modifiedOp,
+				loop.target);
 		blk.add(forall);
 		blk.addAll(p.getPartByName("loopbody_before"));
 		blk.addAll(p.getPartByName("loopbody_after"));
 		blk.addAll(p.getPartByName("loopbody_exit"));
 		return blk;
 	}
-
+	  */
 	/**
 	 * Transform the pattern of P1 or P2 type to the other type.
 	 * @param pattern
@@ -225,9 +331,5 @@ public class PatternTransformer {
 		return analyzePattern(p.param_size, blk);
 	}*/
 
-
-
-
-
-
+	
 }

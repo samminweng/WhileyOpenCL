@@ -76,4 +76,27 @@ public class PatternMatcher {
 	}
 
 
+	/**
+	 * Transform a pattern of one type to another by getting the constructor. 
+	 * @param p
+	 * @return
+	 */
+	public Pattern transformPattern(Pattern p){
+		try {
+			Class<?> clazz = Class.forName("wyopcl.translator.symbolic.Transformer");		
+			//Get the constructor
+			Constructor<?> constructor = clazz.getConstructor(p.getClass());
+			if(constructor!=null){
+				Transformer transformer = (Transformer)constructor.newInstance(p);
+				return transformer.after;					
+			}
+		} catch (SecurityException | InstantiationException | IllegalAccessException |
+				IllegalArgumentException | InvocationTargetException | ClassNotFoundException | NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//If no patterns are matched, then return NullPattern.
+		return  new NullPattern(null, null, config);
+	}
+
 }

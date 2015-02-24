@@ -14,7 +14,7 @@ import wyil.lang.Codes.LoopEnd;
 import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.expression.LinearExpr;
 /**
- * Implemented the while-loop pattens, as follows:
+ * The final class that implemented the while-loop pattens, as follows:
  * <ul>
  * <li>while_loop && loop_var(V) && decr(V, 1) && init(V, Init) &&  while_cond(V, ">", LowerExpr) => loop_iters(V, Init - LowerExpr)
  * <li>while_loop && loop_var(V) && decr(V, 1) && init(V, Init) &&  while_cond(V, ">=", LowerExpr) => loop_iters(V, Init - LowerExpr + 1)
@@ -25,7 +25,7 @@ import wyopcl.translator.symbolic.expression.LinearExpr;
  * @author Min-Hsien Weng
  *
  */
-public class WhileLoopDecrPattern extends WhileLoopPattern{	
+public final class WhileLoopDecrPattern extends WhileLoopPattern{	
 	private BigInteger decr;
 	public WhileLoopDecrPattern(List<Type> params, List<Code> blk, Configuration config) {
 		super(params, blk, config);		

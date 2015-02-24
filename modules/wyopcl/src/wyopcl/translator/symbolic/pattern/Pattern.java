@@ -21,9 +21,9 @@ import wyopcl.translator.symbolic.expression.LinearExpr;
  * @author Min-Hsien Weng
  *
  */
-public abstract class Pattern {
+public abstract class Pattern extends Object{
 	protected final String prefix = "%";
-	protected final Configuration config;
+	public final Configuration config;
 	
 	protected String type;//The pattern type
 	protected boolean isNil;//The flag indicates whether this pattern is matched with the given loop (True: not matched False: Matched).
