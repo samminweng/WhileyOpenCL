@@ -29,6 +29,7 @@ import wyopcl.translator.generator.CodeGenerator;
 import wyopcl.translator.generator.Utility;
 import wyopcl.translator.symbolic.PatternMatcher;
 import wyopcl.translator.symbolic.pattern.Pattern;
+import wyopcl.translator.symbolic.pattern.BasePattern;
 import wyopcl.translator.symbolic.pattern.WhileLoopPattern;
 /**
  * Main entry point of translator
@@ -221,7 +222,7 @@ public class Translator implements Builder{
 			Pattern pattern = matcher.analyzePattern(param_size, code_blk);
 			System.out.println("The original pattern:\n"+pattern);
 			if(pattern instanceof WhileLoopPattern){
-				Pattern pattern_1 = matcher.transformPattern((WhileLoopPattern)pattern);			
+				Pattern pattern_1 = matcher.transformBasePattern((WhileLoopPattern)pattern);			
 				System.out.println("From "+pattern.getType()+" to "+pattern_1.getType()+", the transformed pattern:\n"+pattern_1);
 			}
 			

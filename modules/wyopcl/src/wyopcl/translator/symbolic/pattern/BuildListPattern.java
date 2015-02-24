@@ -13,23 +13,25 @@ import wyopcl.translator.symbolic.expression.LinearExpr;
  * @author Min-Hsien Weng
  *
  */
-public class BuildListPattern extends Pattern {
+public class BuildListPattern extends WhileLoopPattern {
 	private String list_var;
 	private String loop_label;
 	
-	public BuildListPattern(List<Type> params, List<Code> blk, Configuration config) {
-		super(params, blk, config);
+	public BuildListPattern(Configuration config, List<Type> params, List<Code> blk) {
+		super(config, params, blk);
+		this.loop_var = loop_var(blk);
 		this.list_var = list_var(blk);
 		this.line = init(blk, this.list_var, 0);
 		this.line = while_cond(blk, this.list_var, this.line);
 		this.line = loop_update(blk, this.list_var, this.line);
-		if(this.V == null || this.line == 0){
+		if(this.loop_var == null || this.line == 0){
 			this.isNil = true;
 		}else{
 			this.isNil = false;
 		}
 	}
-
+	
+	
 	/**
 	 * Extract the variable of a modified list from the list of code.
 	 * @param blk the list of code
@@ -47,7 +49,7 @@ public class BuildListPattern extends Pattern {
 				this.loop_label = loop.target;
 				modifiedOps = loop.modifiedOperands;
 				//The loop variable.
-				this.V = prefix+modifiedOps[0];
+				this.loop_var = prefix+modifiedOps[0];
 				break;
 			}			
 		}
@@ -80,7 +82,7 @@ public class BuildListPattern extends Pattern {
 	 * @param line the starting line number
 	 * @return ending line number
 	 */
-	private int init(List<Code> blk, String var, int line){
+	protected int init(List<Code> blk, String var, int line){
 		if(var == null) return line;
 
 		int index;
@@ -116,8 +118,8 @@ public class BuildListPattern extends Pattern {
 	}
 
 
-
-	private int while_cond(List<Code> blk, String var, int line){
+	
+	protected int while_cond(List<Code> blk, String var, int line){
 		if(var == null) return line;
 
 		int index;
@@ -161,7 +163,7 @@ public class BuildListPattern extends Pattern {
 				//Check if the code initializes the list.
 				if(code instanceof Codes.Assign){
 					Codes.Assign assign = (Codes.Assign)code;
-					if(this.V.equals(prefix+assign.target())){
+					if(this.loop_var.equals(prefix+assign.target())){
 						break;
 					}									
 				}			

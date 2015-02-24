@@ -8,8 +8,9 @@ import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyil.lang.Codes.BinaryOperatorKind;
-import wyopcl.translator.symbolic.pattern.ForAllPattern;
 import wyopcl.translator.symbolic.pattern.Pattern;
+import wyopcl.translator.symbolic.pattern.ForAllPattern;
+import wyopcl.translator.symbolic.pattern.BasePattern;
 import wyopcl.translator.symbolic.pattern.WhileLoopDecrPattern;
 import wyopcl.translator.symbolic.pattern.WhileLoopIncrPattern;
 import wyopcl.translator.symbolic.pattern.WhileLoopPattern;
@@ -33,11 +34,17 @@ public class Transformer extends Object{
 		this.after = transform((WhileLoopPattern) this.before);
 	}
 	
-	
+	/**
+	 * Constructor
+	 * @param before the original pattern ('WhileLoopIncrPattern' pattern type)
+	 */
 	public Transformer(WhileLoopIncrPattern before){
 		this((WhileLoopPattern)before);
 	}	
-	
+	/**
+	 * Constructor.
+	 * @param before the original pattern ('WhileLoopDecrPattern' pattern type)
+	 */
 	public Transformer(WhileLoopDecrPattern before){
 		this((WhileLoopPattern)before);
 	}
@@ -64,7 +71,7 @@ public class Transformer extends Object{
 
 		//Construct the range
 		//Get the loop var
-		int loop_var = Integer.parseInt(p.V.replace("%", ""));
+		int loop_var = Integer.parseInt(p.loop_var.replace("%", ""));
 		//Get the init var bytecode
 		Codes.Assign assign = (Codes.Assign) p.getPartByName("init").get(0);
 		int leftOperand = assign.operand(0);
@@ -109,7 +116,7 @@ public class Transformer extends Object{
 		blk.addAll(p.getPartByName("loopbody_after"));
 		blk.addAll(p.getPartByName("loopbody_exit"));
 
-		Pattern pattern = new ForAllPattern(p.params, blk, p.config);
+		ForAllPattern pattern = new ForAllPattern(p.config, p.params, blk);
 		if(pattern.isNil()){
 			return null;
 		}

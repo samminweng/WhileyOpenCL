@@ -12,12 +12,13 @@ import wyil.lang.Type;
 import wyil.lang.WyilFile.Case;
 import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
 import wyopcl.translator.Configuration;
+import wyopcl.translator.symbolic.pattern.Pattern;
 import wyopcl.translator.symbolic.pattern.BuildListPattern;
 import wyopcl.translator.symbolic.pattern.ForAllPattern;
 import wyopcl.translator.symbolic.pattern.NullPattern;
 import wyopcl.translator.symbolic.pattern.WhileLoopDecrPattern;
 import wyopcl.translator.symbolic.pattern.WhileLoopIncrPattern;
-import wyopcl.translator.symbolic.pattern.Pattern;
+import wyopcl.translator.symbolic.pattern.BasePattern;
 
 /**
  * 
@@ -30,15 +31,15 @@ import wyopcl.translator.symbolic.pattern.Pattern;
 public class PatternMatcher {
 	//private final String prefix = "%";
 	private final Configuration config;	
-	private List<Class<? extends Pattern>> avail_patterns;//Store the available patterns.
+	private List<Class<? extends BasePattern>> avail_basePatterns;//Store the available patterns.
 
 	public PatternMatcher(Configuration config){
 		this.config = config;
-		this.avail_patterns = new ArrayList<Class<? extends Pattern>>();
-		this.avail_patterns.add(BuildListPattern.class);
-		this.avail_patterns.add(WhileLoopDecrPattern.class);
-		this.avail_patterns.add(WhileLoopIncrPattern.class);
-		this.avail_patterns.add(ForAllPattern.class);
+		this.avail_basePatterns = new ArrayList<Class<? extends BasePattern>>();
+		this.avail_basePatterns.add(BuildListPattern.class);
+		this.avail_basePatterns.add(WhileLoopDecrPattern.class);
+		this.avail_basePatterns.add(WhileLoopIncrPattern.class);
+		this.avail_basePatterns.add(ForAllPattern.class);
 	}	
 
 	/**
@@ -51,12 +52,12 @@ public class PatternMatcher {
 	public Pattern analyzePattern(List<Type> params, List<Code> block){
 		Pattern pattern = null;		
 		//Iterate over all the available patterns.
-		for(Class<? extends Pattern> avail_pattern: avail_patterns){
+		for(Class<? extends BasePattern> avail_basePattern: avail_basePatterns){
 			try {
 				//Get the constructor				
-				Constructor<? extends Pattern> constructor = avail_pattern.getConstructor(List.class, List.class, Configuration.class);
+				Constructor<? extends BasePattern> constructor = avail_basePattern.getConstructor(Configuration.class, List.class, List.class);
 				if(constructor!=null){
-					pattern = constructor.newInstance(params, block, config);
+					pattern = constructor.newInstance(config, params, block);
 					//Check if the loop block is matched with the pattern. If so, then return the pattern. 
 					if(!pattern.isNil()){
 						return pattern;
@@ -70,7 +71,7 @@ public class PatternMatcher {
 		}
 		//If no patterns are matched, then return NullPattern.
 		if(pattern == null){
-			pattern = new NullPattern(params, block, config);
+			pattern = new NullPattern(config);
 		}
 		return pattern;
 	}
@@ -81,22 +82,20 @@ public class PatternMatcher {
 	 * @param p
 	 * @return
 	 */
-	public Pattern transformPattern(Pattern p){
+	public Pattern transformBasePattern(BasePattern p){
 		try {
-			Class<?> clazz = Class.forName("wyopcl.translator.symbolic.Transformer");		
-			//Get the constructor
-			Constructor<?> constructor = clazz.getConstructor(p.getClass());
+			//Get the constructor, based on the type of input pattern. 
+			Constructor<?> constructor = Transformer.class.getConstructor(p.getClass());
 			if(constructor!=null){
 				Transformer transformer = (Transformer)constructor.newInstance(p);
-				return transformer.after;					
+				return transformer.getAfterPattern();					
 			}
 		} catch (SecurityException | InstantiationException | IllegalAccessException |
-				IllegalArgumentException | InvocationTargetException | ClassNotFoundException | NoSuchMethodException e) {
-			// TODO Auto-generated catch block
+				IllegalArgumentException | InvocationTargetException | NoSuchMethodException e) {
 			e.printStackTrace();
 		}
-		//If no patterns are matched, then return NullPattern.
-		return  new NullPattern(null, null, config);
+		//If the transformation fails, then return NullPattern.
+		return  new NullPattern(config);
 	}
 
 }

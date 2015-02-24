@@ -15,21 +15,20 @@ import wyopcl.translator.symbolic.expression.LinearExpr;
  * @author Min-Hsien Weng
  *
  */
-public abstract class WhileLoopPattern extends Pattern{
+public abstract class WhileLoopPattern extends LoopPattern{
 	//Expressions related to the loop variable.
 	public LinearExpr init;
 	public String comparatorOp;
 	public LinearExpr loop_bound;
 
-	public WhileLoopPattern(List<Type> params, List<Code> blk, Configuration config) {
-		super(params, blk, config);
+	public WhileLoopPattern(Configuration config, List<Type> params, List<Code> blk) {
+		super(config, params);
 		//Add each list of code into the list of pattern parts
 		//Construct each part in the pattern.
-		this.type = "WhileLoop";
-		this.line = 0;
-		this.V = loop_var(blk);
-		this.line = init(blk, this.V, this.line);
-		this.line = while_cond(blk, this.V, this.line);		
+		this.type = "WhileLoop";		
+		this.loop_var = loop_var(blk);
+		this.line = init(blk, this.loop_var, this.line);
+		this.line = while_cond(blk, this.loop_var, this.line);		
 	}
 
 	/**
@@ -39,6 +38,7 @@ public abstract class WhileLoopPattern extends Pattern{
 	 */
 	protected String loop_var(List<Code> code_blk) {		
 		String var = null;
+		Codes.Loop loop = null;
 		int index;
 		//Search for the 'loop' bytecode
 		for(index=0; index<code_blk.size(); index++){
@@ -47,9 +47,9 @@ public abstract class WhileLoopPattern extends Pattern{
 			//Loop header
 			if(!checkAssertOrAssume(code) && code instanceof Codes.Loop && 
 					!(code instanceof Codes.ForAll)){
-				Codes.Loop loop = (Codes.Loop)code;
+				loop = (Codes.Loop)code;
 				//The loop variable is the first modified operands.
-				var = prefix+loop.modifiedOperands[0];
+				var = prefix+loop.modifiedOperands[0];				
 				break;
 			}			
 		}
@@ -79,6 +79,11 @@ public abstract class WhileLoopPattern extends Pattern{
 			}
 		}
 
+		if(loop != null){
+			this.loop_label = loop.target;
+		}
+		
+		
 		return null;
 	}
 
@@ -141,7 +146,7 @@ public abstract class WhileLoopPattern extends Pattern{
 
 	/**
 	 * Get the lower or upper bound of loop condition.
-	 * @param V the loop variable
+	 * @param loop_var the loop variable
 	 * @param compareOp the type of comparator 
 	 * @return the expression of bound.
 	 */

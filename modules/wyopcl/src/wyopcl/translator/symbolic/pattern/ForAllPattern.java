@@ -17,16 +17,16 @@ import wyopcl.translator.symbolic.expression.RangeExpr;
  * @author Min-Hsien Weng
  *
  */
-public class ForAllPattern extends Pattern {	
+public class ForAllPattern extends LoopPattern {	
 	private String rangeOp;
 	private RangeExpr rangeExpr;
 	
-	public ForAllPattern(List<Type> params, List<Code> blk, Configuration config) {
-		super(params, blk, config);
+	public ForAllPattern(Configuration config, List<Type> params, List<Code> blk) {
+		super(config, params);
 		this.type = "forall";
-		this.V = loop_var(blk);
-		this.line = loop_range(blk, this.V, 0);		
-		if(this.V != null && this.rangeOp != null){
+		this.loop_var = loop_var(blk);
+		this.line = loop_range(blk, this.loop_var, this.line);		
+		if(this.loop_var != null && this.rangeOp != null){
 			this.rangeExpr = (RangeExpr) factory.getExpr(rangeOp);		
 			this.isNil = false;
 		}else{
@@ -93,8 +93,8 @@ public class ForAllPattern extends Pattern {
 	@Override
 	public String toString() {
 		String result = super.toString();		
-		result += "\n" + type + " " +V+" in range"+this.rangeExpr+
-			      "\n=>loop_iters("+V+", " + getNumberOfIterations()+")";
+		result += "\n" + type + " " +loop_var+" in range"+this.rangeExpr+
+			      "\n=>loop_iters("+loop_var+", " + getNumberOfIterations()+")";
 		return result;
 	}
 	

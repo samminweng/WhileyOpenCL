@@ -1,16 +1,11 @@
 package wyopcl.translator.symbolic.pattern;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.HashMap;
 import java.util.List;
-
 import wyil.lang.Code;
 import wyil.lang.Codes;
-import wyil.lang.Type;
 import wyil.lang.Codes.BinaryOperatorKind;
-import wyil.lang.Codes.LoopEnd;
+import wyil.lang.Type;
 import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.expression.LinearExpr;
 /**
@@ -27,11 +22,11 @@ import wyopcl.translator.symbolic.expression.LinearExpr;
  */
 public final class WhileLoopDecrPattern extends WhileLoopPattern{	
 	private BigInteger decr;
-	public WhileLoopDecrPattern(List<Type> params, List<Code> blk, Configuration config) {
-		super(params, blk, config);		
+	public WhileLoopDecrPattern(Configuration config, List<Type> params, List<Code> blk) {
+		super(config, params, blk);		
 		//Get the decrement
-		this.line = decr(blk, this.V, this.line);
-		if(V != null && this.init != null && this.loop_bound != null && this.decr != null){
+		this.line = decr(blk, this.loop_var, this.line);
+		if(loop_var != null && this.init != null && this.loop_bound != null && this.decr != null){
 			this.isNil = false;			
 		}else{
 			this.isNil = true;
@@ -43,9 +38,9 @@ public final class WhileLoopDecrPattern extends WhileLoopPattern{
 	@Override
 	public String toString() {
 		String result = super.toString();		
-		result += "\nwhile_loop && loop_var("+V+") && decr("+V+", "+decr+")"
-				+ " && init("+V+", "+init+") &&  while_cond("+V+", "+comparatorOp+", "+loop_bound+")"
-				+ "\n=>loop_iters("+V+", " + getNumberOfIterations()+")";
+		result += "\nwhile_loop && loop_var("+loop_var+") && decr("+loop_var+", "+decr+")"
+				+ " && init("+loop_var+", "+init+") &&  while_cond("+loop_var+", "+comparatorOp+", "+loop_bound+")"
+				+ "\n=>loop_iters("+loop_var+", " + getNumberOfIterations()+")";
 		return result;
 	}
 

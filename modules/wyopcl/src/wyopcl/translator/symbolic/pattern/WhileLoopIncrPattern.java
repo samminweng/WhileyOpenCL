@@ -1,8 +1,6 @@
 package wyopcl.translator.symbolic.pattern;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import wyil.lang.Code;
@@ -22,16 +20,17 @@ import wyopcl.translator.symbolic.expression.LinearExpr;
 public final class WhileLoopIncrPattern extends WhileLoopPattern{
 	private BigInteger incr;
 	/**
-	 * Constructor 
-	 * @param param_size
-	 * @param blk
+	 * Constructor
+	 * @param config configuration 
+	 * @param params the list of parameter types
+	 * @param blk the list of code block.
 	 */
-	public WhileLoopIncrPattern(List<Type> params, List<Code> blk, Configuration config) {
-		super(params, blk, config);	
+	public WhileLoopIncrPattern(Configuration config, List<Type> params, List<Code> blk) {
+		super(config, params, blk);	
 		//Get the increment
-		this.line = incr(blk, this.V, this.line);
+		this.line = incr(blk, this.loop_var, this.line);
 
-		if(V != null && this.init != null && this.loop_bound != null && this.incr != null){
+		if(loop_var != null && this.init != null && this.loop_bound != null && this.incr != null){
 			this.isNil = false;
 		}else{
 			this.isNil = true;
@@ -42,9 +41,9 @@ public final class WhileLoopIncrPattern extends WhileLoopPattern{
 	@Override
 	public String toString() {
 		String result = super.toString();	
-		result += "\n" + type + " && loop_var("+V+") && incr("+V+", "+incr+")"
-				+ " && init("+V+", "+init+") &&  while_cond("+V+", "+comparatorOp+", "+loop_bound+")"
-				+ "\n=>loop_iters("+V+", " + getNumberOfIterations()+")";
+		result += "\n" + type + " && loop_var("+loop_var+") && incr("+loop_var+", "+incr+")"
+				+ " && init("+loop_var+", "+init+") &&  while_cond("+loop_var+", "+comparatorOp+", "+loop_bound+")"
+				+ "\n=>loop_iters("+loop_var+", " + getNumberOfIterations()+")";
 		return result;
 	}
 
@@ -72,7 +71,7 @@ public final class WhileLoopIncrPattern extends WhileLoopPattern{
 		LinearExpr linearExpr = (LinearExpr) factory.getExpr(prefix+assign.operand(0));
 		//Check if the loop variable is used in the expression for the tmp variable.
 		String[] vars = linearExpr.getVars();
-		if(linearExpr.getVarIndex(V) == 0 && vars.length == 2){
+		if(linearExpr.getVarIndex(loop_var) == 0 && vars.length == 2){
 			String incr_op = vars[1];
 			//Find the coefficient of the incremental variable in the expr 
 			BigInteger coefficient = linearExpr.getCoefficient(incr_op);
