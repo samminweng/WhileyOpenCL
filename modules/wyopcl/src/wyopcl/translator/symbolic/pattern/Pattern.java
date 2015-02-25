@@ -10,6 +10,7 @@ public class Pattern extends Object{
 	
 	public Pattern(Configuration config){
 		this.config = config;
+		this.isNil = true;//By default.
 	}
 	
 	/**

@@ -36,7 +36,7 @@ public class PatternMatcher {
 	public PatternMatcher(Configuration config){
 		this.config = config;
 		this.avail_basePatterns = new ArrayList<Class<? extends BasePattern>>();
-		this.avail_basePatterns.add(BuildListPattern.class);
+		//this.avail_basePatterns.add(BuildListPattern.class);
 		this.avail_basePatterns.add(WhileLoopDecrPattern.class);
 		this.avail_basePatterns.add(WhileLoopIncrPattern.class);
 		this.avail_basePatterns.add(ForAllPattern.class);

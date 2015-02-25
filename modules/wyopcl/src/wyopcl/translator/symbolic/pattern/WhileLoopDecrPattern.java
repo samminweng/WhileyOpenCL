@@ -24,13 +24,13 @@ public final class WhileLoopDecrPattern extends WhileLoopPattern{
 	private BigInteger decr;
 	public WhileLoopDecrPattern(Configuration config, List<Type> params, List<Code> blk) {
 		super(config, params, blk);		
-		//Get the decrement
-		this.line = decr(blk, this.loop_var, this.line);
-		if(loop_var != null && this.init != null && this.loop_bound != null && this.decr != null){
-			this.isNil = false;			
-		}else{
-			this.isNil = true;
-		}		
+		if(this.init != null && this.loop_bound != null){
+			//Get the decrement
+			this.line = decr(blk, this.loop_var, this.line);
+			if(this.decr != null){				
+				this.isNil = false;
+			}	
+		}
 	}
 	/**
 	 * Print out all the code sequentially in accordance with the PARTS.

@@ -22,13 +22,15 @@ public abstract class WhileLoopPattern extends LoopPattern{
 	public LinearExpr loop_bound;
 
 	public WhileLoopPattern(Configuration config, List<Type> params, List<Code> blk) {
-		super(config, params);
+		super(config, params, blk);
 		//Add each list of code into the list of pattern parts
 		//Construct each part in the pattern.
-		this.type = "WhileLoop";		
-		this.loop_var = loop_var(blk);
-		this.line = init(blk, this.loop_var, this.line);
-		this.line = while_cond(blk, this.loop_var, this.line);		
+		this.type = "WhileLoop";
+		if(this.loop_var!=null){
+			this.loop_var = loop_var(blk);
+			this.init = init(blk, this.loop_var, this.line);
+			this.loop_bound = while_cond(blk, this.loop_var, this.line);
+		}		
 	}
 
 	/**
@@ -81,9 +83,7 @@ public abstract class WhileLoopPattern extends LoopPattern{
 
 		if(loop != null){
 			this.loop_label = loop.target;
-		}
-		
-		
+		}		
 		return null;
 	}
 
@@ -91,57 +91,67 @@ public abstract class WhileLoopPattern extends LoopPattern{
 	/**
 	 * Get the expression that assigns the initial value the loop variable and record the list of code in 'init_pre','
 	 * 'init' and 'init_after' parts.
+	 * @param code_blk the list of code.
 	 * @param loop_var the loop variable
 	 * @param line the starting line of code
-	 * @return the ending line of code of 'init' part.
+	 * @return the expression of 'init' part.
 	 */
-	protected int init(List<Code> code_blk, String loop_var, int line) {
-		//No loop variables
-		if(loop_var == null) return line;
-
+	protected LinearExpr init(List<Code> code_blk, String loop_var, int line) {
+		LinearExpr init = null;
 		//Put the code to init_before and init.
-		int index;
-		for(index = line; index<code_blk.size(); index++){
-			Code code = code_blk.get(index);			
+		int index = line;
+		//Search for the initial value assignment.
+		while(index<code_blk.size()){
+			Code code = code_blk.get(index);
+			index++;
 			//Check if this code assigns the value to the loop variable. 
 			if(!checkAssertOrAssume(code)&& code instanceof Codes.Assign){
-				Codes.Assign assign = (Codes.Assign)code;
 				//check if the loop variable is used in the assignment.
-				if(loop_var.equals(prefix+assign.target())){
-					//Put the assignment bytecode of loop variable into the 'init' part.
-					//Get the expression for loop variable.	
-					LinearExpr linearExpr = (LinearExpr) factory.getExpr(loop_var);
-					if(linearExpr == null){
-						linearExpr = (LinearExpr) factory.putExpr(assign);
-					}			
-					this.init= factory.replaceLinearExpr(linearExpr);
+				if(loop_var.equals(prefix+((Codes.Assign)code).target())){
 					//Add the code to 'init' part that assigns the initial values to the loop variable.
-					AddCodeToPatternPart(code, "init");					
+					AddCodeToPatternPart(code, "init");
+					//Get the expression for loop variable.	
+					init = factory.replaceLinearExpr((LinearExpr) factory.getExpr(loop_var));
 					break;
 				}
 			}
 			//Otherwise, add the code to the 'init_before' part
-			AddCodeToPatternPart(code, "init_before");
+			AddCodeToPatternPart(code, "init_before");	
 		}
-		
-		//Search for the loop condition
-		for(index=index+1; index< code_blk.size(); index++){
-			Code code = code_blk.get(index);
-			//Search for loop bytecode
-			if(!checkAssertOrAssume(code)&&code instanceof Codes.Loop){
-				//Check if the loop variable is used in the loop
-				Codes.Loop loop = (Codes.Loop)code;
-				if(loop_var.equals(prefix+loop.modifiedOperands[0])){
-					//Stop the iteration.
-					break;
-				}
-			}
-			AddCodeToPatternPart(code, "init_after");
-		}
-		
-		
-		return index;
+		//Set the current line number to 'line' flag.
+		this.line = index;
+		return init;		
 	}
+
+
+	/**
+	 * Output a canonical loop condition from a if bytecode.
+	 * That is that the loop variable is on the left and the comparing op is on the right.  
+	 * @param before_code the original if byte-code
+	 * @param loop_var the loop variable
+	 * @return the if byte-code in a canonical form. If the bytecode is not about the loop var, then return null;
+	 */
+	private Codes.If standardizeLoopCondition(Codes.If before_code, String loop_var){
+		//Check if the loop exist in left or right
+		if(!loop_var.equals(prefix+before_code.rightOperand) 
+				&& !loop_var.equals(prefix+before_code.leftOperand)){
+			return null;
+		}
+
+		//Check if the loop var is on the right-hand side of the condition. If not, then
+		//This bytecode does not need any transformation.
+		if(loop_var.equals(prefix+before_code.rightOperand)){
+			//The loop var is on the right.
+			return Codes.If(before_code.type,
+					before_code.rightOperand, 
+					before_code.leftOperand, 
+					before_code.op,
+					before_code.target);
+		}
+
+		return before_code;
+	}
+
 
 
 	/**
@@ -150,58 +160,63 @@ public abstract class WhileLoopPattern extends LoopPattern{
 	 * @param compareOp the type of comparator 
 	 * @return the expression of bound.
 	 */
-	protected int while_cond(List<Code> code_blk, String loop_var, int line) {
-		if(loop_var == null) return line;
+	protected LinearExpr while_cond(List<Code> code_blk, String loop_var, int line) {
+		LinearExpr loop_bound = null;
+		int index = line;
 		//Search for the loop condition
-		int index;
-		//Search for the loop condition
-		for(index=line; index< code_blk.size(); index++){
+		while(index< code_blk.size()){
 			Code code = code_blk.get(index);
-			//Add the code to loop header	
-			AddCodeToPatternPart(code, "loop_header");
-			if(!checkAssertOrAssume(code)&&code instanceof Codes.If){
-				Codes.If if_code = (Codes.If)code;
-				String op = null;
-				//Check if the loop var exists in the condition
-				if(loop_var.equals(prefix+if_code.leftOperand)){
-					if(if_code.op.equals(Comparator.LTEQ) ){
-						comparatorOp = ">";													
-					}else if(if_code.op.equals(Comparator.LT)){
-						comparatorOp = ">=";
-					}else if(if_code.op.equals(Comparator.GTEQ)){
-						comparatorOp = "<";
-					}else if(if_code.op.equals(Comparator.GT)){
-						comparatorOp = "<=";
-					}else{
-						//Do nothing
-					}
-					op = prefix+if_code.rightOperand;								
-				}
-
-				if(loop_var.equals(prefix+if_code.rightOperand)){						
-					if(if_code.op.equals(Comparator.LTEQ) ){
-						comparatorOp = "<";													
-					}else if(if_code.op.equals(Comparator.LT)){
-						comparatorOp = "<=";
-					}else if(if_code.op.equals(Comparator.GTEQ)){
-						comparatorOp = ">";
-					}else if(if_code.op.equals(Comparator.GT)){
-						comparatorOp = ">=";
-					}else{
-						//Do nothing
-					}			
-					op = prefix+if_code.leftOperand;						
-				}
-
-				if(op != null){
-					//Get the expression 
-					this.loop_bound = (LinearExpr) factory.getExpr(op);
-					break;	
+			index++;
+			//Search for loop bytecode
+			if(!checkAssertOrAssume(code)&&code instanceof Codes.Loop){
+				//Check if the loop variable is used in the loop
+				if(loop_var.equals(prefix+((Codes.Loop)code).modifiedOperands[0])){
+					//Stop the iteration.
+					//Add the code to loop header	
+					AddCodeToPatternPart(code, "loop_header");
+					break;
 				}
 			}
+			AddCodeToPatternPart(code, "init_after");
 		}
-		return index;
+		
+		//Search for the loop condition
+		while(index< code_blk.size()){
+			Code code = code_blk.get(index);
+			//Search for the loop condition and put it into the 'loop_header'.
+			if(!checkAssertOrAssume(code)){
+				if(code instanceof Codes.If){
+					Codes.If if_code = (Codes.If)code;
+					if_code = standardizeLoopCondition(if_code, loop_var);
+					if(if_code != null){					
+						String cop = prefix+if_code.rightOperand;
+						if(if_code.op.equals(Comparator.LTEQ) ){
+							comparatorOp = ">";													
+						}else if(if_code.op.equals(Comparator.LT)){
+							comparatorOp = ">=";
+						}else if(if_code.op.equals(Comparator.GTEQ)){
+							comparatorOp = "<";
+						}else if(if_code.op.equals(Comparator.GT)){
+							comparatorOp = "<=";
+						}else{
+							//Do nothing
+						}
+						//Get the expression
+						loop_bound = (LinearExpr) factory.getExpr(cop);
+						//Add the code to loop header	
+						AddCodeToPatternPart(code, "loop_header");
+						break;	
+					}
+				}
+			}
+			//Add the other code to the init_after
+			AddCodeToPatternPart(code, "init_after");
+			index++;
+		}
+
+		this.line = index;
+		return loop_bound;
 	}
 
-	
+
 }

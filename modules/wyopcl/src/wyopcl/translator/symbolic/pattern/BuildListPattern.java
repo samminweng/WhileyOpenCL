@@ -13,20 +13,16 @@ import wyopcl.translator.symbolic.expression.LinearExpr;
  * @author Min-Hsien Weng
  *
  */
-public class BuildListPattern extends WhileLoopPattern {
+public final class BuildListPattern extends WhileLoopPattern {
 	private String list_var;
 	private String loop_label;
 	
 	public BuildListPattern(Configuration config, List<Type> params, List<Code> blk) {
 		super(config, params, blk);
-		this.loop_var = loop_var(blk);
-		this.list_var = list_var(blk);
-		this.line = init(blk, this.list_var, 0);
-		this.line = while_cond(blk, this.list_var, this.line);
-		this.line = loop_update(blk, this.list_var, this.line);
-		if(this.loop_var == null || this.line == 0){
-			this.isNil = true;
-		}else{
+		if(this.loop_var != null){
+			//this.line = init(blk, this.list_var, 0);
+			//this.line = while_cond(blk, this.list_var, this.line);
+			this.line = loop_update(blk, this.list_var, this.line);
 			this.isNil = false;
 		}
 	}
@@ -48,8 +44,6 @@ public class BuildListPattern extends WhileLoopPattern {
 				Codes.Loop loop = (Codes.Loop)code;
 				this.loop_label = loop.target;
 				modifiedOps = loop.modifiedOperands;
-				//The loop variable.
-				this.loop_var = prefix+modifiedOps[0];
 				break;
 			}			
 		}
@@ -82,9 +76,8 @@ public class BuildListPattern extends WhileLoopPattern {
 	 * @param line the starting line number
 	 * @return ending line number
 	 */
-	protected int init(List<Code> blk, String var, int line){
-		if(var == null) return line;
-
+	private int init_list(List<Code> blk, String var, int line){
+	
 		int index;
 		for(index=line;index<blk.size();index++){
 			Code code = blk.get(index);
@@ -119,9 +112,8 @@ public class BuildListPattern extends WhileLoopPattern {
 
 
 	
-	protected int while_cond(List<Code> blk, String var, int line){
-		if(var == null) return line;
-
+	/*protected LinearExpr while_cond(List<Code> blk, String var, int line){
+		LinearExpr loop_bound = null;
 		int index;
 		for(index=line+1;index<blk.size();index++){
 			Code code = blk.get(index);
@@ -149,8 +141,9 @@ public class BuildListPattern extends WhileLoopPattern {
 			}	
 		}		
 		
-		return ++index;
-	}
+		this.line = ++index;
+		return loop_bound;
+	}*/
 
 	private int loop_update(List<Code> blk, String var, int line){		
 		if(var == null) return line;

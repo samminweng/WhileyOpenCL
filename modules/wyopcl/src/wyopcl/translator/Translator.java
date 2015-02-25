@@ -221,10 +221,10 @@ public class Translator implements Builder{
 			
 			Pattern pattern = matcher.analyzePattern(param_size, code_blk);
 			System.out.println("The original pattern:\n"+pattern);
-			if(pattern instanceof WhileLoopPattern){
+			/*if(pattern instanceof WhileLoopPattern){
 				Pattern pattern_1 = matcher.transformBasePattern((WhileLoopPattern)pattern);			
 				System.out.println("From "+pattern.getType()+" to "+pattern_1.getType()+", the transformed pattern:\n"+pattern_1);
-			}
+			}*/
 			
 			code_blk = null;
 			System.out.println("\n----------------End of "+func_name+" function----------------\n");

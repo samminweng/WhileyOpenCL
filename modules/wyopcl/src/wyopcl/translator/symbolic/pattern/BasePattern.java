@@ -114,6 +114,10 @@ public abstract class BasePattern extends Pattern {
 		return (label_AssertOrAssume != null)? true: false;
 	}
 
+	
+	
+	
+	
 	@Override
 	public String toString() {
 		String result = "";

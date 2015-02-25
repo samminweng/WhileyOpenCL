@@ -22,30 +22,34 @@ public class ForAllPattern extends LoopPattern {
 	private RangeExpr rangeExpr;
 	
 	public ForAllPattern(Configuration config, List<Type> params, List<Code> blk) {
-		super(config, params);
+		super(config, params, blk);
 		this.type = "forall";
-		this.loop_var = loop_var(blk);
-		this.line = loop_range(blk, this.loop_var, this.line);		
-		if(this.loop_var != null && this.rangeOp != null){
+		if(this.loop_var != null){
+			this.line = loop_range(blk, this.loop_var, this.line);	
 			this.rangeExpr = (RangeExpr) factory.getExpr(rangeOp);		
 			this.isNil = false;
-		}else{
-			this.isNil = true;
-		}		
+		}
 	}
 	
-	public String loop_var(List<Code> blk){
+	@Override
+	protected String loop_var(List<Code> blk) {
 		int index;
 		for(index=0;index<blk.size();index++){
 			Code code = blk.get(index);
 			if(code instanceof Codes.ForAll){
 				Codes.ForAll forall = (Codes.ForAll)code;
 				this.rangeOp = prefix+forall.sourceOperand;
+				this.loop_label = forall.target;
 				return prefix+forall.indexOperand;
 			}			
 		}
 		return null;
-	}	
+	}
+	
+	
+	/*public String loop_var(List<Code> blk){
+		
+	}	*/
 	
 	public int loop_range(List<Code> code_blk, String loop_var, int line){
 		if(loop_var == null) return line;
@@ -97,6 +101,8 @@ public class ForAllPattern extends LoopPattern {
 			      "\n=>loop_iters("+loop_var+", " + getNumberOfIterations()+")";
 		return result;
 	}
+
+	
 	
 
 }
