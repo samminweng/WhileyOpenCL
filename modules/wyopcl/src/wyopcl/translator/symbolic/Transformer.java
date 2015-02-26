@@ -24,7 +24,7 @@ import wyopcl.translator.symbolic.pattern.WhileLoopPattern;
 public class Transformer extends Object{
 	public Pattern before;
 	public Pattern after;
-	
+
 	/**
 	 * Constructor 
 	 * @param before the original pattern (While-Loop pattern type)
@@ -33,7 +33,7 @@ public class Transformer extends Object{
 		this.before = before;
 		this.after = transform((WhileLoopPattern) this.before);
 	}
-	
+
 	/**
 	 * Constructor
 	 * @param before the original pattern ('WhileLoopIncrPattern' pattern type)
@@ -60,7 +60,7 @@ public class Transformer extends Object{
 	 *		L is the loop lower bound.	
 	 */
 	private Pattern transform(WhileLoopPattern p) {
-		
+
 		//Store all the bytecode for the new pattern.
 		List<Code> blk = new ArrayList<Code>();	
 		//Add the code in the 'init_before'
@@ -73,45 +73,32 @@ public class Transformer extends Object{
 		//Get the loop var
 		int loop_var = Integer.parseInt(p.loop_var.replace("%", ""));
 		//Get the init var bytecode
-		Codes.Assign assign = (Codes.Assign) p.getPartByName("init").get(0);
-		int leftOperand = assign.operand(0);
+		List<Code> init = p.getPartByName("init"); 
+		Codes.Assign assign = (Codes.Assign) init.get(0);
 		//Get the loop condition
 		List<Code> loop_header = p.getPartByName("loop_header");
-		//Take out the first and last bytecode, put the remaining code into the code block.
-		int index=1;
-		while(index<loop_header.size()-1){
-			Code code = loop_header.get(index);
-			blk.add(code);
-			index++;
-		}
-
-		Codes.If loop_condition = (Codes.If)loop_header.get(loop_header.size()-1);
-		int rightOperand;
-		if(loop_var == loop_condition.leftOperand){
-			rightOperand = loop_condition.rightOperand;		
-		}else{
-			rightOperand = loop_condition.leftOperand;
-		}
-		int target = p.factory.getAvailableReg();
-		Codes.BinaryOperator binOp = Codes.BinaryOperator(assign.type(),
-				target,
-				leftOperand,
-				rightOperand, 
+		Codes.Loop loop = (Codes.Loop)loop_header.get(0);
+		Codes.If loop_condition = (Codes.If)loop_header.get(1);
+		Codes.BinaryOperator binOp
+		= Codes.BinaryOperator(assign.type(), 
+				p.factory.getAvailableReg(),
+				assign.operand(0),
+				loop_condition.rightOperand, 
 				BinaryOperatorKind.RANGE);
 		blk.add(binOp);
 
-
 		Collection<Integer> modifiedOp = new ArrayList<Integer>();
-		Codes.Loop loop = (Codes.Loop)loop_header.get(0);
 		modifiedOp.add(loop.modifiedOperands[1]);
 
 		//Create the forall bytecode
-		Codes.ForAll forall = Codes.ForAll(Type.List(assign.type(), false),
-				target,
+		Codes.ForAll forall
+		= Codes.ForAll(Type.List(assign.type(), false),
+				binOp.target(),
 				loop_var,
 				modifiedOp,
 				loop.target);
-		blk.add(forall);
+		blk.add(forall);		
+		
 		blk.addAll(p.getPartByName("loopbody_before"));
 		blk.addAll(p.getPartByName("loopbody_after"));
 		blk.addAll(p.getPartByName("loopbody_exit"));
@@ -120,10 +107,9 @@ public class Transformer extends Object{
 		if(pattern.isNil()){
 			return null;
 		}
-		
 		return pattern;
 	}
-	
+
 	/**
 	 * Get the resulting pattern after the transformation.
 	 * @return
@@ -138,8 +124,8 @@ public class Transformer extends Object{
 	public Pattern getBeforePattern(){
 		return this.before;
 	}
-	
-	
+
+
 	/*
 	 *//**
 	 * Construct  the 'init_pre' and 'init' parts  from one pattern type to another.
@@ -338,5 +324,5 @@ public class Transformer extends Object{
 		return analyzePattern(p.param_size, blk);
 	}*/
 
-	
+
 }

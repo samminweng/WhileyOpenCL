@@ -1,5 +1,5 @@
 import whiley.lang.System
-
+/*
 function f1(int limit) => int
 requires limit <= 1000000:
     int i=limit
@@ -17,12 +17,12 @@ requires limit <= 1000000:
         sum = sum + i
         i=i-1
     return sum
-/*
+
 function f3(int limit) => int
 requires limit <= 1000000:
     int i=0
     int sum=0
-    while i<limit:
+    while limit<i:
         sum = sum + i
         i=i+1
     return sum
@@ -35,7 +35,7 @@ requires limit <= 1000000:
         sum = sum + i
         i=i+1
     return sum
-     
+    
 function f5(int limit) => int
 requires limit <= 1000000:
     int i=0

@@ -5,6 +5,7 @@ import java.util.List;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
+import wyil.lang.Codes.BinaryOperatorKind;
 import wyil.lang.Codes.Comparator;
 import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.expression.Expr;
@@ -32,7 +33,7 @@ public abstract class WhileLoopPattern extends LoopPattern{
 		}		
 	}
 
-	
+
 	/**
 	 * Output a canonical loop condition from a if bytecode.
 	 * That is that the loop variable is on the left and the comparing op is on the right.  
@@ -67,7 +68,7 @@ public abstract class WhileLoopPattern extends LoopPattern{
 			default:
 				break;
 			}
-			
+
 			if(new_op != null){
 				//The loop var is on the right.
 				return Codes.If(before_code.type,
@@ -108,7 +109,7 @@ public abstract class WhileLoopPattern extends LoopPattern{
 			}
 			AddCodeToPatternPart(code, "init_after");
 		}
-		
+
 		//Search for the loop condition
 		while(index< code_blk.size()){
 			Code code = code_blk.get(index);
@@ -142,12 +143,67 @@ public abstract class WhileLoopPattern extends LoopPattern{
 			}
 			//Add the other code to the init_after
 			AddCodeToPatternPart(code, "init_after");
-			
+
 		}
 
 		this.line = index;
 		return loop_bound;
 	}
 
+	/**
+	 * Searches for the loop_update and put the searched code into 'loopbody_before'.
+	 * @param blk the list of code
+	 * @param line the starting line number.
+	 */
+	protected void loopbody_before(List<Code> blk, int line){
+		int index = line;
+		//Put the code in 'loopbody_before' part.
+		while(index<blk.size()){
+			Code code = blk.get(index);
+			//Create the expression and put it into the table.
+			if(!checkAssertOrAssume(code)){
+				//Search for the binOp that subtracts the loop variable with a constant.
+				if(code instanceof Codes.BinaryOperator){
+					Codes.BinaryOperator binOp = (Codes.BinaryOperator)code;
+					//Search for the decrement
+					if(loop_var.equals(prefix+binOp.operand(0))){
+						break;
+					}					
+				}
+			}
+			AddCodeToPatternPart(code, "loopbody_before");
+			index++;
+		}
+		
+		this.line = index;
+	}
+	
+	
+	
+	/**
+	 * Search the loop end of the given loop label and put the code in the 'loopbody_after' part.
+	 * @param blk
+	 * @param line
+	 */
+	protected void loopbody_after(List<Code> blk, int line){
+		int index = line;
+		//Search for loop end and put the code to 'loop_post' part.
+		while(index<blk.size()){
+			Code code = blk.get(index);
+			index++;
+			//Create the expression and put it into the table.
+			AddCodeToPatternPart(code, "loopbody_after");
+			if(!checkAssertOrAssume(code)){
+				if(code instanceof Codes.LoopEnd){
+					//Get the loop end to see if the 
+					if(((Codes.LoopEnd)code).label.equals(this.loop_label)){
+						break;				
+					}				
+				}
+			}
+		}
+
+		this.line = index;
+	}
 
 }

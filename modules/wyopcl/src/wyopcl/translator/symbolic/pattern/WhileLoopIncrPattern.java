@@ -6,10 +6,11 @@ import java.util.List;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
+import wyil.lang.Codes.BinaryOperatorKind;
 import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.expression.LinearExpr;
 /**
- * The final class that implemented the while-loop patterns, as follows:
+ * The class that implemented the while-loop patterns, as follows:
  * <ul>
  * <li>while_loop && loop_var(V)  && incr(V,+1) && init(V,Init) && while_cond(V, "<", UpperExpr) => loop_iters(V, UpperExpr - Init)
  * <li>while_loop && loop_var(V)  && incr(V,+1) && init(V,Init) && while_cond(V, "<=", UpperExpr) => loop_iters(V, UpperExpr - Init +1 )
@@ -28,9 +29,11 @@ public class WhileLoopIncrPattern extends WhileLoopPattern{
 	public WhileLoopIncrPattern(Configuration config, List<Type> params, List<Code> blk) {
 		super(config, params, blk);
 		if(this.loop_bound != null){
+			this.loopbody_before(blk, this.line);
 			//Get the increment
-			this.line = incr(blk, this.loop_var, this.line);
+			this.incr = incr(blk, this.loop_var, this.line);
 			if(this.incr != null){
+				this.loopbody_after(blk, this.line);
 				this.loop_exit(blk, this.line);
 				this.isNil = false;
 			}	
@@ -95,58 +98,29 @@ public class WhileLoopIncrPattern extends WhileLoopPattern{
 	 * 
 	 * @return increment value (Expr). If not matched, return null;
 	 */
-	private int incr(List<Code> code_blk, String loop_var, int line){
-		//Search for the decrement.
-		//The flag that specifies the pattern part.
-		int index;
-		//Search for the increment
-		for(index=line; index<code_blk.size();index++){
+	private BigInteger incr(List<Code> code_blk, String loop_var, int line){
+		BigInteger incr = null;
+		int index = line;
+		while(index<code_blk.size()){
 			Code code = code_blk.get(index);
-			String pattern_part = "loopbody_before";//The default pattern part
+			index++;
+			AddCodeToPatternPart(code, "loopbody_update");
+			//Create the expression and put it into the table.
 			if(!checkAssertOrAssume(code)){
+				//Search for the decrement that assigns the value to the loop var.
 				if(code instanceof Codes.Assign){
 					//Check if the assignment bytecode is to over-write the value of loop variable.
 					Codes.Assign assign = (Codes.Assign)code;
-					//Check if the assignment bytecode is to over-write the value of loop variable.
-					if(loop_var.equals(prefix+assign.target())){
-						this.incr = extractIncrement(assign, loop_var);
-						AddCodeToPatternPart(assign, "loopbody_update");
-						index++;
-						break;	
+					//Check if the target is the loop variable.
+					if((prefix+assign.target()).equals(loop_var)){
+						incr = extractIncrement(assign, loop_var);
+						break;				
 					}
 				}
-
-				if(code instanceof Codes.BinaryOperator){
-					Codes.BinaryOperator binOp = (Codes.BinaryOperator)code;
-					if(loop_var.equals(prefix+binOp.operand(0))){
-						//Add this code to the loopbody_update
-						pattern_part = "loopbody_update";						
-					}				
-				}			
 			}			
-			AddCodeToPatternPart(code, pattern_part);
 		}
 
-		//Get loop label
-		String loop_label = ((Codes.Loop)getPartByName("loop_header").get(0)).target;
-		//Search for loop end and put the code to 'loop_post' part.
-		for(; index<code_blk.size();index++){
-			Code code = code_blk.get(index);
-			//Create the expression and put it into the table.
-			AddCodeToPatternPart(code, "loopbody_after");
-			if(!checkAssertOrAssume(code)){
-				if(code instanceof Codes.LoopEnd){
-					//Get the loop end to see if the 
-					Codes.LoopEnd loopend = (Codes.LoopEnd)code;
-					if(loopend.label.equals(loop_label)){
-						index++;
-						break;				
-					}				
-				}
-			}
-		}
-
-		
-		return index;
+		this.line = index;
+		return incr;
 	}
 }

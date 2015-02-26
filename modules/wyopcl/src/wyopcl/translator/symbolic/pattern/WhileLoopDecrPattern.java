@@ -25,9 +25,11 @@ public final class WhileLoopDecrPattern extends WhileLoopPattern{
 	public WhileLoopDecrPattern(Configuration config, List<Type> params, List<Code> blk) {
 		super(config, params, blk);		
 		if(this.loop_bound != null){
+			this.loopbody_before(blk, this.line);
 			//Get the decrement
 			this.decr = decr(blk, this.loop_var, this.line);
 			if(this.decr != null){
+				this.loopbody_after(blk, this.line);
 				this.loop_exit(blk, this.line);
 				this.isNil = false;
 			}	
@@ -100,26 +102,6 @@ public final class WhileLoopDecrPattern extends WhileLoopPattern{
 	private BigInteger decr(List<Code> code_blk, String loop_var, int line){
 		BigInteger decr = null;
 		int index = line;
-		//Put the code in 'loopbody_before' part.
-		while(index<code_blk.size()){
-			Code code = code_blk.get(index);
-			//Create the expression and put it into the table.
-			if(!checkAssertOrAssume(code)){
-				//Search for the binOp that subtracts the loop variable with a constant.
-				if(code instanceof Codes.BinaryOperator){
-					Codes.BinaryOperator binOp = (Codes.BinaryOperator)code;
-					//Search for the decrement
-					if(binOp.kind.equals(BinaryOperatorKind.SUB)&&
-							loop_var.equals(prefix+binOp.operand(0))){
-						break;
-					}					
-				}
-			}
-			AddCodeToPatternPart(code, "loopbody_before");
-			index++;
-		}
-
-		
 		while(index<code_blk.size()){
 			Code code = code_blk.get(index);
 			index++;
@@ -137,22 +119,6 @@ public final class WhileLoopDecrPattern extends WhileLoopPattern{
 					}
 				}
 			}			
-		}
-
-		//Search for loop end and put the code to 'loop_post' part.
-		while(index<code_blk.size()){
-			Code code = code_blk.get(index);
-			index++;
-			//Create the expression and put it into the table.
-			AddCodeToPatternPart(code, "loopbody_after");
-			if(!checkAssertOrAssume(code)){
-				if(code instanceof Codes.LoopEnd){
-					//Get the loop end to see if the 
-					if(((Codes.LoopEnd)code).label.equals(this.loop_label)){
-						break;				
-					}				
-				}
-			}
 		}
 
 		this.line = index;

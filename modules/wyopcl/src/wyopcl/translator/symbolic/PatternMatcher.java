@@ -38,7 +38,7 @@ public class PatternMatcher {
 		this.avail_basePatterns = new ArrayList<Class<? extends BasePattern>>();
 		//this.avail_basePatterns.add(BuildListPattern.class);
 		this.avail_basePatterns.add(WhileLoopDecrPattern.class);
-		//this.avail_basePatterns.add(WhileLoopIncrPattern.class);
+		this.avail_basePatterns.add(WhileLoopIncrPattern.class);
 		this.avail_basePatterns.add(ForAllPattern.class);
 	}	
 
@@ -82,18 +82,22 @@ public class PatternMatcher {
 	 * @param p
 	 * @return
 	 */
-	public Pattern transformBasePattern(BasePattern p){
+	public Pattern transformPattern(Pattern p){
+		Constructor<?> constructor;
 		try {
 			//Get the constructor, based on the type of input pattern. 
-			Constructor<?> constructor = Transformer.class.getConstructor(p.getClass());
+			constructor = Transformer.class.getConstructor(p.getClass());
 			if(constructor!=null){
 				Transformer transformer = (Transformer)constructor.newInstance(p);
 				return transformer.getAfterPattern();					
-			}
-		} catch (SecurityException | InstantiationException | IllegalAccessException |
-				IllegalArgumentException | InvocationTargetException | NoSuchMethodException e) {
+			}			
+		}catch (NoSuchMethodException e){
+			return  new NullPattern(config);
+		}catch (SecurityException | InstantiationException | IllegalAccessException |
+				IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
-		}
+		}	
+		
 		//If the transformation fails, then return NullPattern.
 		return  new NullPattern(config);
 	}
