@@ -7,123 +7,32 @@ import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyil.lang.Codes.Comparator;
 import wyopcl.translator.Configuration;
+import wyopcl.translator.symbolic.expression.Expr;
 import wyopcl.translator.symbolic.expression.LinearExpr;
 /**
- * A while-loop pattern includes 'init_before', 'init', 'init_after', 'loop_header', 'loopbody_before',
+ * The while-loop pattern searches for the loop condition and split the list of code into
+ * 'init_after', 'loop_header'
  * 'loopbody_update', 'loopbody_after' and 'loop_exit' parts. 
  * 
  * @author Min-Hsien Weng
  *
  */
 public abstract class WhileLoopPattern extends LoopPattern{
-	//Expressions related to the loop variable.
-	public LinearExpr init;
+	//Expressions related to the loop condition.
 	public String comparatorOp;
 	public LinearExpr loop_bound;
 
 	public WhileLoopPattern(Configuration config, List<Type> params, List<Code> blk) {
 		super(config, params, blk);
-		//Add each list of code into the list of pattern parts
-		//Construct each part in the pattern.
 		this.type = "WhileLoop";
-		if(this.loop_var!=null){
-			this.loop_var = loop_var(blk);
-			this.init = init(blk, this.loop_var, this.line);
+		//Check if the loop var is inferred
+		if(this.init != null){
+			//this.init = init(blk, this.loop_var, this.line);
 			this.loop_bound = while_cond(blk, this.loop_var, this.line);
 		}		
 	}
 
-	/**
-	 * Find the loop variable
-	 * @param code_blk the code block.
-	 * @return the variable (string). If not found, return null.
-	 */
-	protected String loop_var(List<Code> code_blk) {		
-		String var = null;
-		Codes.Loop loop = null;
-		int index;
-		//Search for the 'loop' bytecode
-		for(index=0; index<code_blk.size(); index++){
-			//Get the loop bytecode	
-			Code code = code_blk.get(index);
-			//Loop header
-			if(!checkAssertOrAssume(code) && code instanceof Codes.Loop && 
-					!(code instanceof Codes.ForAll)){
-				loop = (Codes.Loop)code;
-				//The loop variable is the first modified operands.
-				var = prefix+loop.modifiedOperands[0];				
-				break;
-			}			
-		}
-		//Search for the loop condition
-		for(;index<code_blk.size();index++){
-			Code code = code_blk.get(index);
-			//Get the following code to see if the loop variable is used in the loop condition
-			if(!checkAssertOrAssume(code) && code instanceof Codes.If){
-				Codes.If if_code = (Codes.If)code;
-				//Check if the var is left-handed operand. If so, then this is the loop variable.
-				if(var != null && (var.equals(prefix+if_code.leftOperand) || var.equals(prefix+if_code.rightOperand))){
-					break;
-				}
-			}
-		}
-
-		//Search for the update(increment/decrement)
-		for(;index<code_blk.size();index++){
-			Code code = code_blk.get(index);
-			//Get the following code to see if the loop variable is used in the update
-			if(!checkAssertOrAssume(code) && code instanceof Codes.BinaryOperator){
-				Codes.BinaryOperator binOp = (Codes.BinaryOperator)code;
-				//Check if the loop var is used in the operands
-				if(var != null && var.equals(prefix+binOp.operand(0)) || var.equals(prefix+binOp.operand(1))){
-					return var;
-				}
-			}
-		}
-
-		if(loop != null){
-			this.loop_label = loop.target;
-		}		
-		return null;
-	}
-
-
-	/**
-	 * Get the expression that assigns the initial value the loop variable and record the list of code in 'init_pre','
-	 * 'init' and 'init_after' parts.
-	 * @param code_blk the list of code.
-	 * @param loop_var the loop variable
-	 * @param line the starting line of code
-	 * @return the expression of 'init' part.
-	 */
-	protected LinearExpr init(List<Code> code_blk, String loop_var, int line) {
-		LinearExpr init = null;
-		//Put the code to init_before and init.
-		int index = line;
-		//Search for the initial value assignment.
-		while(index<code_blk.size()){
-			Code code = code_blk.get(index);
-			index++;
-			//Check if this code assigns the value to the loop variable. 
-			if(!checkAssertOrAssume(code)&& code instanceof Codes.Assign){
-				//check if the loop variable is used in the assignment.
-				if(loop_var.equals(prefix+((Codes.Assign)code).target())){
-					//Add the code to 'init' part that assigns the initial values to the loop variable.
-					AddCodeToPatternPart(code, "init");
-					//Get the expression for loop variable.	
-					init = factory.replaceLinearExpr((LinearExpr) factory.getExpr(loop_var));
-					break;
-				}
-			}
-			//Otherwise, add the code to the 'init_before' part
-			AddCodeToPatternPart(code, "init_before");	
-		}
-		//Set the current line number to 'line' flag.
-		this.line = index;
-		return init;		
-	}
-
-
+	
 	/**
 	 * Output a canonical loop condition from a if bytecode.
 	 * That is that the loop variable is on the left and the comparing op is on the right.  

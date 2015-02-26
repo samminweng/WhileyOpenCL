@@ -220,14 +220,5 @@ public class LinearExpr extends Expr{
 		}
 		return expr;
 	}
-	@Override
-	public Object clone() {
-		try {
-			return super.clone();
-		} catch (CloneNotSupportedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
+	
 }

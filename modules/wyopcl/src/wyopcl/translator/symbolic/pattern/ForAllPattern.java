@@ -4,6 +4,7 @@ import java.util.List;
 
 import wyil.lang.Code;
 import wyil.lang.Codes;
+import wyil.lang.Codes.ForAll;
 import wyil.lang.Type;
 import wyil.lang.Codes.BinaryOperatorKind;
 import wyopcl.translator.Configuration;
@@ -12,77 +13,70 @@ import wyopcl.translator.symbolic.expression.LinearExpr;
 import wyopcl.translator.symbolic.expression.RangeExpr;
 
 /**
- * The 'For' pattern includes the 'loop_before', 'loop_header', 'loop_body' and 'loop_exit'. 
+ * The 'ForAll' pattern is similar to 'WhileLoop' pattern. It includes the 'init_before', 'init', 'init_after', 
+ * 'loop_header', 'loop_body' and 'loop_exit'. For example, a 'forall' loop iterates over the range (%7).
+ * The loop variable is the range ('%7') and then the 'init' is the assignment byte-code of the range value ('range %7 = %5, %0 : [int]').
  * 
  * @author Min-Hsien Weng
  *
  */
 public class ForAllPattern extends LoopPattern {	
-	private String rangeOp;
-	private RangeExpr rangeExpr;
-	
+	private RangeExpr rangeExpr;	
 	public ForAllPattern(Configuration config, List<Type> params, List<Code> blk) {
 		super(config, params, blk);
 		this.type = "forall";
-		if(this.loop_var != null){
-			this.line = loop_range(blk, this.loop_var, this.line);	
-			this.rangeExpr = (RangeExpr) factory.getExpr(rangeOp);		
-			this.isNil = false;
+		if(this.init != null){
+			this.rangeExpr = loop_range(blk, this.loop_var, this.line);
+			if(this.rangeExpr != null){
+				this.isNil = false;
+			}		
 		}
 	}
 	
-	@Override
-	protected String loop_var(List<Code> blk) {
-		int index;
-		for(index=0;index<blk.size();index++){
-			Code code = blk.get(index);
-			if(code instanceof Codes.ForAll){
-				Codes.ForAll forall = (Codes.ForAll)code;
-				this.rangeOp = prefix+forall.sourceOperand;
-				this.loop_label = forall.target;
-				return prefix+forall.indexOperand;
-			}			
-		}
-		return null;
-	}
-	
-	
-	/*public String loop_var(List<Code> blk){
-		
-	}	*/
-	
-	public int loop_range(List<Code> code_blk, String loop_var, int line){
-		if(loop_var == null) return line;
-		
-		int index;		
+	/**
+	 * Get the range that 
+	 * @param code_blk
+	 * @param loop_var
+	 * @param line
+	 * @return
+	 */
+	private RangeExpr loop_range(List<Code> code_blk, String loop_var, int line){
+		RangeExpr rangeOp = null;
+		int index = line;	
 		//Search for the 'forall' bytecode
-		for(index=line;index<code_blk.size();index++){
+		while(index<code_blk.size()){
 			Code code = code_blk.get(index);
-			if(code instanceof Codes.ForAll){
+			++index;
+			if(!checkAssertOrAssume(code) && code instanceof Codes.ForAll){
 				AddCodeToPatternPart(code, "loop_header");
-				++index;
+				ForAll forall = (ForAll)code;
+				rangeOp = (RangeExpr) factory.getExpr(prefix+forall.sourceOperand);
 				break;
-			} 
-			AddCodeToPatternPart(code, "loop_before");
-		}
+			}			
+			AddCodeToPatternPart(code, "init_after");
+		}		
+		
 		//Search for the 'loopend' bytecode
-		for(;index<code_blk.size();index++){
+		while(index<code_blk.size()){
 			Code code = code_blk.get(index);
-			if(code instanceof Codes.LoopEnd){
-				AddCodeToPatternPart(code, "loop_end");
-				++index;
-				break;
-			}
+			index++;
 			AddCodeToPatternPart(code, "loop_body");
+			if(code instanceof Codes.LoopEnd){
+				break;
+			}			
 		}		
 		//Put all the remaining code into the loop exit.
-		for(; index<code_blk.size(); index++){
+		while(index<code_blk.size()){
 			Code code = code_blk.get(index);
+			index++;
 			AddCodeToPatternPart(code, "loop_exit");
 		}
 		
-		return index;
+		return rangeOp;
 	}
+	
+
+	
 
 	@Override
 	public LinearExpr getNumberOfIterations() {
@@ -101,8 +95,5 @@ public class ForAllPattern extends LoopPattern {
 			      "\n=>loop_iters("+loop_var+", " + getNumberOfIterations()+")";
 		return result;
 	}
-
 	
-	
-
 }

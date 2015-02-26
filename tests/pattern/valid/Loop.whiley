@@ -1,6 +1,6 @@
 import whiley.lang.System
 
-function f1(int limit) => int
+/*function f1(int limit) => int
 requires limit <= 1000000:
     int i=limit
     int sum=0
@@ -49,7 +49,7 @@ requires limit <= 1000000:
     	sum = sum + i
     	i = i + 1
     return sum
-     
+*/     
 function f6(int limit) => int
 requires limit <= 1000000:
     int sum=0
@@ -57,13 +57,13 @@ requires limit <= 1000000:
         sum = sum + i
     return sum
     
-function f7(int limit) => int
+/*function f7(int limit) => int
 requires limit <= 1000000:
     int sum=0
     for i in limit .. 0:
         sum = sum + i
     return sum    
-   
+ */  
 
 method main(System.Console sys):
     //sys.out.println("f1 Loop Sum="++f1(5))

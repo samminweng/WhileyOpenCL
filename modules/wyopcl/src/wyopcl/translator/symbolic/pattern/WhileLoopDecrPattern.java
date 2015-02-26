@@ -24,7 +24,7 @@ public final class WhileLoopDecrPattern extends WhileLoopPattern{
 	private BigInteger decr;
 	public WhileLoopDecrPattern(Configuration config, List<Type> params, List<Code> blk) {
 		super(config, params, blk);		
-		if(this.init != null && this.loop_bound != null){
+		if(this.loop_bound != null){
 			//Get the decrement
 			this.line = decr(blk, this.loop_var, this.line);
 			if(this.decr != null){				

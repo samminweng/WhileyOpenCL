@@ -23,7 +23,7 @@ import wyopcl.translator.symbolic.expression.LinearExpr;
  */
 public abstract class BasePattern extends Pattern {	
 	public final ExprFactory factory;
-	public List<Type> params;//The list of parameter types
+	public final List<Type> params;//The list of parameter types
 	
 	//Store the list of code for each part of the pattern.
 	protected int line;//keep track of the current line number.
@@ -41,10 +41,10 @@ public abstract class BasePattern extends Pattern {
 		this.factory = new ExprFactory(config);//Create an expression factory to record all the extracted expressions.
 		
 		//Add the input parameters to the expression table.
+		this.params = params;
 		for(Type param: params){
 			factory.putExpr(param);
-		}
-		this.params = params;
+		}	
 		this.line = 0;
 	}	
 

@@ -27,7 +27,7 @@ public final class WhileLoopIncrPattern extends WhileLoopPattern{
 	 */
 	public WhileLoopIncrPattern(Configuration config, List<Type> params, List<Code> blk) {
 		super(config, params, blk);
-		if(this.init != null && this.loop_bound != null){
+		if(this.loop_bound != null){
 			//Get the increment
 			this.line = incr(blk, this.loop_var, this.line);
 			if(this.incr != null){				
@@ -50,10 +50,10 @@ public final class WhileLoopIncrPattern extends WhileLoopPattern{
 	public LinearExpr getNumberOfIterations() {
 		if(numberOfIterations==null){
 			LinearExpr result = (LinearExpr)loop_bound.clone();
-			if(comparatorOp.equals("<")){
-				numberOfIterations = result.subtract(init);
+			if(comparatorOp.equals("<")){				
+				numberOfIterations = result.subtract((LinearExpr) init);
 			}else{
-				numberOfIterations = result.subtract(init).add((LinearExpr) factory.putExpr(BigInteger.ONE));
+				numberOfIterations = result.subtract((LinearExpr) init).add((LinearExpr) factory.putExpr(BigInteger.ONE));
 			}			
 		}		
 		return numberOfIterations;

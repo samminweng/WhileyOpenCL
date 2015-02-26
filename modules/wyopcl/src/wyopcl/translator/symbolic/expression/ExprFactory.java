@@ -25,11 +25,36 @@ public class ExprFactory {
 	}
 	
 	/**
+	 * Create an expression with the constant
+	 * @param constant
+	 * @return the expression.
+	 */
+	private Expr createExpr(BigInteger constant){
+		LinearExpr expr = new LinearExpr(null);
+		((LinearExpr) expr).addConstant(constant);
+		return expr;
+	}
+	
+	/**
+	 * Create an expression with the input parameter types.
+	 * @param type the input parameter type.
+	 * @return the expression.
+	 */
+	private Expr createExpr(Type paramType){
+		String var = prefix+getAvailableReg();
+		LinearExpr expr = new LinearExpr(var);
+		((LinearExpr) expr).addVar(BigInteger.ONE, var);
+		
+		return expr;
+	}
+	
+	
+	/**
 	 * Initial the linear expression with the bytecode.
 	 * @param code
 	 * @return
 	 */
-	private Expr initializeExprWithByteCode(Code code){
+	private Expr createExpr(Code code){
 		Expr expr = null;
 		if(code instanceof Codes.Assign){
 			expr = new LinearExpr(prefix+((Codes.Assign)code).target());	
@@ -96,13 +121,14 @@ public class ExprFactory {
 	}
 	
 	/**
-	 * Get the value from expression table.
+	 * Get the expression from expression table. If the return expression is a linear expression, then it is rewritten to the normal form
+	 * which is no longer rewritten by other expressions quals by quals. 
 	 * @param target
 	 * @return value(Expr). If not found, return null.
 	 */
 	public Expr getExpr(String target) {
 		if(expressiontable.containsKey(target)){
-			return expressiontable.get(target);						
+			return expressiontable.get(target);
 		}		
 		return null;
 	}
@@ -145,17 +171,22 @@ public class ExprFactory {
 	}
 	/**
 	 * Replace each variable in a linear expression with the expressions from the table.
-	 * @param linearExpr the original expression.
+	 * @param Expr the original expression.
 	 * @return the simplified expression.
 	 */
-	public LinearExpr replaceLinearExpr(LinearExpr linearExpr){
-		String[] vars = linearExpr.getVars();
-		for(String var: vars){
-			linearExpr= this.replaceLinearExpr(var, linearExpr);  
-		}
-		return linearExpr;
+	public Expr rewriteExpr(Expr expr){
+		//Rewrite the linear expression 
+		if(expr != null && expr instanceof LinearExpr){
+			LinearExpr linearExpr = (LinearExpr)expr;
+			String[] vars = linearExpr.getVars();
+			for(String var: vars){
+				linearExpr= this.replaceLinearExpr(var, linearExpr);  
+			}
+			return linearExpr;
+		}		
+		return expr;
 	}
-	
+		
 	
 	/**
 	 * Create a expression and put it to the table
@@ -167,23 +198,19 @@ public class ExprFactory {
 		
 		//Return the constant expression, e.g. 1 = 1 
 		if(object instanceof BigInteger){
-			expr = new LinearExpr(null);
-			((LinearExpr) expr).addConstant((BigInteger)object);
+			expr = createExpr((BigInteger)object);
 		}		
 		
 		//Return the assignment, e.g. %0 = %0
 		if(object instanceof Type){
-			String var = prefix+getAvailableReg();
-			expr = new LinearExpr(var);
-			((LinearExpr) expr).addVar(BigInteger.ONE, var);
-			addExprToTable(expr);
+			expr = createExpr((Type)object);
 		}		
 		
 		if(object instanceof Code){
-			expr = initializeExprWithByteCode((Code)object);
-			addExprToTable(expr);
+			expr = createExpr((Code)object);			
 		}	
 		
+		addExprToTable(expr);
 		return expr;
 	}
 	
