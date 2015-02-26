@@ -26,8 +26,9 @@ public final class WhileLoopDecrPattern extends WhileLoopPattern{
 		super(config, params, blk);		
 		if(this.loop_bound != null){
 			//Get the decrement
-			this.line = decr(blk, this.loop_var, this.line);
-			if(this.decr != null){				
+			this.decr = decr(blk, this.loop_var, this.line);
+			if(this.decr != null){
+				this.loop_exit(blk, this.line);
 				this.isNil = false;
 			}	
 		}
@@ -96,19 +97,18 @@ public final class WhileLoopDecrPattern extends WhileLoopPattern{
 	 * 
 	 * @return decrement value (Expr). If not matched, return null;
 	 */
-	private int decr(List<Code> code_blk, String loop_var, int line){
-		//Check if the loop variable is inferred.
-		if(loop_var == null) return line;
-
-		int index;
+	private BigInteger decr(List<Code> code_blk, String loop_var, int line){
+		BigInteger decr = null;
+		int index = line;
 		//Put the code in 'loopbody_before' part.
-		for(index=line+1; index<code_blk.size();index++){
+		while(index<code_blk.size()){
 			Code code = code_blk.get(index);
 			//Create the expression and put it into the table.
 			if(!checkAssertOrAssume(code)){
 				//Search for the binOp that subtracts the loop variable with a constant.
 				if(code instanceof Codes.BinaryOperator){
 					Codes.BinaryOperator binOp = (Codes.BinaryOperator)code;
+					//Search for the decrement
 					if(binOp.kind.equals(BinaryOperatorKind.SUB)&&
 							loop_var.equals(prefix+binOp.operand(0))){
 						break;
@@ -116,11 +116,13 @@ public final class WhileLoopDecrPattern extends WhileLoopPattern{
 				}
 			}
 			AddCodeToPatternPart(code, "loopbody_before");
+			index++;
 		}
 
-		//Search for the decrement
-		for(; index<code_blk.size();index++){
+		
+		while(index<code_blk.size()){
 			Code code = code_blk.get(index);
+			index++;
 			AddCodeToPatternPart(code, "loopbody_update");
 			//Create the expression and put it into the table.
 			if(!checkAssertOrAssume(code)){
@@ -130,37 +132,30 @@ public final class WhileLoopDecrPattern extends WhileLoopPattern{
 					Codes.Assign assign = (Codes.Assign)code;
 					//Check if the target is the loop variable.
 					if((prefix+assign.target()).equals(loop_var)){
-						this.decr = extractDecrement(assign, loop_var);
+						decr = extractDecrement(assign, loop_var);
 						break;				
 					}
 				}
 			}			
 		}
 
-		//Get loop label
-		List<Code> loop_header = getPartByName("loop_header");
-		String loop_label = ((Codes.Loop)loop_header.get(0)).target;
 		//Search for loop end and put the code to 'loop_post' part.
-		for(index=index+1; index<code_blk.size();index++){
+		while(index<code_blk.size()){
 			Code code = code_blk.get(index);
+			index++;
 			//Create the expression and put it into the table.
 			AddCodeToPatternPart(code, "loopbody_after");
 			if(!checkAssertOrAssume(code)){
 				if(code instanceof Codes.LoopEnd){
 					//Get the loop end to see if the 
-					Codes.LoopEnd loopend = (Codes.LoopEnd)code;
-					if(loopend.label.equals(loop_label)){
+					if(((Codes.LoopEnd)code).label.equals(this.loop_label)){
 						break;				
 					}				
 				}
 			}
 		}
 
-		//Put the remaining code into the 'loop_exit' part
-		for(index=index+1; index<code_blk.size();index++){
-			//Create the expression and put it into the table.
-			AddCodeToPatternPart(code_blk.get(index), "loop_exit");
-		}
-		return index;
+		this.line = index;
+		return decr;
 	}
 }

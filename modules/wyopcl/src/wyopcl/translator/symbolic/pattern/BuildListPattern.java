@@ -20,8 +20,7 @@ public final class BuildListPattern extends WhileLoopPattern {
 	public BuildListPattern(Configuration config, List<Type> params, List<Code> blk) {
 		super(config, params, blk);
 		if(this.loop_var != null){
-			//this.line = init(blk, this.list_var, 0);
-			//this.line = while_cond(blk, this.list_var, this.line);
+		
 			this.line = loop_update(blk, this.list_var, this.line);
 			this.isNil = false;
 		}

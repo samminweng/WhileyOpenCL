@@ -46,16 +46,36 @@ public abstract class WhileLoopPattern extends LoopPattern{
 				&& !loop_var.equals(prefix+before_code.leftOperand)){
 			return null;
 		}
-
 		//Check if the loop var is on the right-hand side of the condition. If not, then
 		//This bytecode does not need any transformation.
 		if(loop_var.equals(prefix+before_code.rightOperand)){
-			//The loop var is on the right.
-			return Codes.If(before_code.type,
-					before_code.rightOperand, 
-					before_code.leftOperand, 
-					before_code.op,
-					before_code.target);
+			//Change the comparing operator
+			Comparator new_op = null;
+			switch(before_code.op){
+			case LTEQ:
+				new_op = Comparator.GTEQ;
+				break;
+			case LT:
+				new_op = Comparator.GT;
+				break;
+			case GTEQ:
+				new_op = Comparator.LTEQ;
+				break;
+			case GT:
+				new_op = Comparator.LT;
+				break;
+			default:
+				break;
+			}
+			
+			if(new_op != null){
+				//The loop var is on the right.
+				return Codes.If(before_code.type,
+						before_code.rightOperand, 
+						before_code.leftOperand, 
+						new_op,
+						before_code.target);
+			}			
 		}
 
 		return before_code;
@@ -92,11 +112,13 @@ public abstract class WhileLoopPattern extends LoopPattern{
 		//Search for the loop condition
 		while(index< code_blk.size()){
 			Code code = code_blk.get(index);
+			index++;
 			//Search for the loop condition and put it into the 'loop_header'.
 			if(!checkAssertOrAssume(code)){
 				if(code instanceof Codes.If){
 					Codes.If if_code = (Codes.If)code;
 					if_code = standardizeLoopCondition(if_code, loop_var);
+					//Check if the bytecode is the loop condition.					
 					if(if_code != null){					
 						String cop = prefix+if_code.rightOperand;
 						if(if_code.op.equals(Comparator.LTEQ) ){
@@ -113,14 +135,14 @@ public abstract class WhileLoopPattern extends LoopPattern{
 						//Get the expression
 						loop_bound = (LinearExpr) factory.getExpr(cop);
 						//Add the code to loop header	
-						AddCodeToPatternPart(code, "loop_header");
+						AddCodeToPatternPart(if_code, "loop_header");
 						break;	
 					}
 				}
 			}
 			//Add the other code to the init_after
 			AddCodeToPatternPart(code, "init_after");
-			index++;
+			
 		}
 
 		this.line = index;

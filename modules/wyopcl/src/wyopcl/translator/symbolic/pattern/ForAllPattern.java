@@ -28,6 +28,7 @@ public class ForAllPattern extends LoopPattern {
 		if(this.init != null){
 			this.rangeExpr = loop_range(blk, this.loop_var, this.line);
 			if(this.rangeExpr != null){
+				this.loop_exit(blk, this.line);
 				this.isNil = false;
 			}		
 		}
@@ -65,13 +66,8 @@ public class ForAllPattern extends LoopPattern {
 				break;
 			}			
 		}		
-		//Put all the remaining code into the loop exit.
-		while(index<code_blk.size()){
-			Code code = code_blk.get(index);
-			index++;
-			AddCodeToPatternPart(code, "loop_exit");
-		}
-		
+	
+		this.line = index;
 		return rangeOp;
 	}
 	

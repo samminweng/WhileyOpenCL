@@ -17,7 +17,7 @@ import wyopcl.translator.symbolic.expression.LinearExpr;
  * @author Min-Hsien Weng
  *
  */
-public final class WhileLoopIncrPattern extends WhileLoopPattern{
+public class WhileLoopIncrPattern extends WhileLoopPattern{
 	private BigInteger incr;
 	/**
 	 * Constructor
@@ -30,7 +30,8 @@ public final class WhileLoopIncrPattern extends WhileLoopPattern{
 		if(this.loop_bound != null){
 			//Get the increment
 			this.line = incr(blk, this.loop_var, this.line);
-			if(this.incr != null){				
+			if(this.incr != null){
+				this.loop_exit(blk, this.line);
 				this.isNil = false;
 			}	
 		}		
@@ -95,8 +96,6 @@ public final class WhileLoopIncrPattern extends WhileLoopPattern{
 	 * @return increment value (Expr). If not matched, return null;
 	 */
 	private int incr(List<Code> code_blk, String loop_var, int line){
-		//Check if the loop variable is inferred.
-		if(loop_var == null) return line;
 		//Search for the decrement.
 		//The flag that specifies the pattern part.
 		int index;
@@ -147,11 +146,7 @@ public final class WhileLoopIncrPattern extends WhileLoopPattern{
 			}
 		}
 
-		//Put the remaining code into the 'loopexit' part
-		for(; index<code_blk.size();index++){
-			//Create the expression and put it into the table.
-			AddCodeToPatternPart(code_blk.get(index), "loop_exit");
-		}
+		
 		return index;
 	}
 }

@@ -130,4 +130,20 @@ public abstract class LoopPattern extends BasePattern{
 		return false;
 	}	
 
+	/**
+	 * Adds the code to the loop exit
+	 * @param blk
+	 * @param line
+	 */
+	protected void loop_exit(List<Code>blk, int line){
+		int index = line;
+		//Put the remaining code into the 'loop_exit' part
+		while(index<blk.size()){
+			Code code = blk.get(index);
+			index++;
+			//Create the expression and put it into the table.
+			AddCodeToPatternPart(code, "loop_exit");
+		}
+	}
+	
 }
