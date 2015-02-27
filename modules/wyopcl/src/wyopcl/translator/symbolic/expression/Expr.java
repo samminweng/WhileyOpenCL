@@ -1,15 +1,21 @@
 package wyopcl.translator.symbolic.expression;
 
-import java.math.BigInteger;
+import wyil.lang.Code;
 
-
-public abstract class Expr implements Cloneable{
+public class Expr implements Cloneable{
 	protected String target;
 	protected final String prefix ="%";
+	protected Code code;
 	
 	public Expr(String target){
 		this.target = target;
 	}
+	
+	public Expr(String target, Code code){
+		this(target);
+		this.code = code;
+	}
+	
 	
 	/**
 	 * Get the target operand.

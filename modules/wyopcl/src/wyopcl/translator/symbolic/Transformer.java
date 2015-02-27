@@ -8,6 +8,7 @@ import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyil.lang.Codes.BinaryOperatorKind;
+import wyopcl.translator.symbolic.pattern.NullPattern;
 import wyopcl.translator.symbolic.pattern.Pattern;
 import wyopcl.translator.symbolic.pattern.ForAllPattern;
 import wyopcl.translator.symbolic.pattern.BasePattern;
@@ -22,8 +23,8 @@ import wyopcl.translator.symbolic.pattern.WhileLoopPattern;
  *
  */
 public class Transformer extends Object{
-	public Pattern before;
-	public Pattern after;
+	private Pattern before;
+	private Pattern after;
 
 	/**
 	 * Constructor 
@@ -32,6 +33,10 @@ public class Transformer extends Object{
 	public Transformer(WhileLoopPattern before){
 		this.before = before;
 		this.after = transform((WhileLoopPattern) this.before);
+		if(this.after.isNil()){
+			this.after = new NullPattern(this.before.config);
+		}
+
 	}
 
 	/**
@@ -67,24 +72,22 @@ public class Transformer extends Object{
 		blk.addAll(p.getPartByName("init_before"));
 		//Add the code in the 'init_after'
 		blk.addAll(p.getPartByName("init_after"));
-		//Create a forall bytecode that requires the loop var and range.
-
-		//Construct the range
 		//Get the loop var
 		int loop_var = Integer.parseInt(p.loop_var.replace("%", ""));
+
+		//Create a forall bytecode that requires the loop var and range.
+
 		//Get the init var bytecode
 		List<Code> init = p.getPartByName("init"); 
-		Codes.Assign assign = (Codes.Assign) init.get(0);
+		Codes.Assign init_assign = (Codes.Assign) init.get(0);
 		//Get the loop condition
 		List<Code> loop_header = p.getPartByName("loop_header");
 		Codes.Loop loop = (Codes.Loop)loop_header.get(0);
-		Codes.If loop_condition = (Codes.If)loop_header.get(1);
-		Codes.BinaryOperator binOp
-		= Codes.BinaryOperator(assign.type(), 
-				p.factory.getAvailableReg(),
-				assign.operand(0),
-				loop_condition.rightOperand, 
-				BinaryOperatorKind.RANGE);
+		Codes.If loop_bound = (Codes.If)loop_header.get(1);
+		Codes.BinaryOperator binOp;
+		//Construct the range = (init, loop_bound)
+		binOp = Codes.BinaryOperator(init_assign.type(),  p.factory.getAvailableReg(),
+				init_assign.operand(0), loop_bound.rightOperand, BinaryOperatorKind.RANGE);
 		blk.add(binOp);
 
 		Collection<Integer> modifiedOp = new ArrayList<Integer>();
@@ -92,21 +95,19 @@ public class Transformer extends Object{
 
 		//Create the forall bytecode
 		Codes.ForAll forall
-		= Codes.ForAll(Type.List(assign.type(), false),
+		= Codes.ForAll(Type.List(init_assign.type(), false),
 				binOp.target(),
 				loop_var,
 				modifiedOp,
 				loop.target);
 		blk.add(forall);		
-		
+
 		blk.addAll(p.getPartByName("loopbody_before"));
 		blk.addAll(p.getPartByName("loopbody_after"));
 		blk.addAll(p.getPartByName("loopbody_exit"));
 
 		ForAllPattern pattern = new ForAllPattern(p.config, p.params, blk);
-		if(pattern.isNil()){
-			return null;
-		}
+
 		return pattern;
 	}
 

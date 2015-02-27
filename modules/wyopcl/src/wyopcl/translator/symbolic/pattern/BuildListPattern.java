@@ -19,8 +19,8 @@ public final class BuildListPattern extends WhileLoopPattern {
 	
 	public BuildListPattern(Configuration config, List<Type> params, List<Code> blk) {
 		super(config, params, blk);
-		if(this.loop_var != null){
-		
+		this.loop_var = loop_var(blk);
+		if(this.loop_var != null){		
 			this.line = loop_update(blk, this.list_var, this.line);
 			this.isNil = false;
 		}
@@ -28,46 +28,31 @@ public final class BuildListPattern extends WhileLoopPattern {
 	
 	
 	/**
-	 * Extract the variable of a modified list from the list of code.
+	 * Extract the list variable from the list of code by searching for the 'Codes.Loop' bytecode
 	 * @param blk the list of code
 	 * @return the variable name of the modified list.
 	 */
-	private String list_var(List<Code> blk){
-		int[] modifiedOps = null;
+	@Override
+	protected String loop_var(List<Code> blk){
 		int index;
 		//Check if there is a loop
 		for(index=0; index<blk.size(); index++){
 			Code code = blk.get(index);
-			//Check if there is the code that converts a list
 			if(!checkAssertOrAssume(code) && code instanceof Codes.Loop){
 				Codes.Loop loop = (Codes.Loop)code;
 				this.loop_label = loop.target;
-				modifiedOps = loop.modifiedOperands;
-				break;
-			}			
-		}
-
-		for(; index<blk.size(); index++){
-			Code code = blk.get(index);			
-			//Check if there is the assignment code that assign a list to the modifiedOp
-			if(!checkAssertOrAssume(code) && code instanceof Codes.Assign){
-				Codes.Assign assign = (Codes.Assign)code;
-				//Check if the assign a list to one of modified ops.		
-				if(assign.assignedType() instanceof Type.List){
-					//check if the target is 
-					for(int modifiedOp: modifiedOps){
-						if(assign.target() == modifiedOp){
-							//The list variable.
-							return prefix+modifiedOp;
-						}
-					}					
+				//The first operand is the index op whilst the second is the modified list.
+				if(loop.modifiedOperands.length>=2){
+					return prefix+loop.modifiedOperands[1];
 				}
 			}			
 		}
-
 		return null;
 	}
 
+	
+	
+	
 	/**
 	 * Split the list of code into 'init_before' and 'init' pattern part.
 	 * @param blk the list of code

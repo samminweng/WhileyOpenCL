@@ -62,11 +62,13 @@ public class ExprFactory {
 			//1*v1
 			((LinearExpr) expr).addVar(BigInteger.ONE, prefix+assign.operand(0));
 		}else if(code instanceof Codes.Const){
-			expr = new LinearExpr(prefix+((Codes.Const)code).target());
-			Constant constant = ((Codes.Const)code).constant;
-			if(constant instanceof Constant.Integer){
+			Codes.Const constant = (Codes.Const)code;
+			if(constant.constant instanceof Constant.Integer){
+				expr = new LinearExpr(prefix+((Codes.Const)code).target());
 				//c0
-				((LinearExpr) expr).addConstant(((Constant.Integer) constant).value);	
+				((LinearExpr) expr).addConstant(((Constant.Integer) constant.constant).value);	
+			}else if(constant.constant instanceof Constant.List){
+				expr = new Expr(prefix+((Codes.Const)code).target(), code);
 			}
 		}else if(code instanceof Codes.BinaryOperator){
 			

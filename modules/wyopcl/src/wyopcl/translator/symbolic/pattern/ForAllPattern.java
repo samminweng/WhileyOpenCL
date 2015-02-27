@@ -20,18 +20,44 @@ import wyopcl.translator.symbolic.expression.RangeExpr;
  * @author Min-Hsien Weng
  *
  */
-public class ForAllPattern extends LoopPattern {	
-	private RangeExpr rangeExpr;	
+public class ForAllPattern extends LoopPattern {
+	
+	private RangeExpr range;	
 	public ForAllPattern(Configuration config, List<Type> params, List<Code> blk) {
 		super(config, params, blk);
 		this.type = "forall";
-		if(this.init != null){
-			this.rangeExpr = loop_range(blk, this.loop_var, this.line);
-			if(this.rangeExpr != null){
-				this.loop_exit(blk, this.line);
-				this.isNil = false;
-			}		
+		this.range = forall(blk, this.loop_var, this.line);
+		if(this.range != null){
+			this.loop_body(blk, this.line);
+			this.loop_exit(blk, this.line);
+			this.isNil = false;
 		}
+	}
+
+	
+	/**
+	 * Search the loop end of the given loop label and put the code in the 'loopbody_after' part.
+	 * @param blk
+	 * @param line
+	 */
+	protected void loop_body(List<Code> blk, int line){
+		int index = line;
+		//Search for loop end and put the code to 'loop_post' part.
+		while(index<blk.size()){
+			Code code = blk.get(index);
+			index++;
+			//Create the expression and put it into the table.
+			AddCodeToPatternPart(code, "loop_body");
+			if(!checkAssertOrAssume(code)){
+				if(code instanceof Codes.LoopEnd){
+					//Get the loop end to see if the 
+					if(((Codes.LoopEnd)code).label.equals(this.loop_label)){
+						break;				
+					}				
+				}
+			}
+		}
+		this.line = index;
 	}
 	
 	/**
@@ -41,7 +67,7 @@ public class ForAllPattern extends LoopPattern {
 	 * @param line
 	 * @return
 	 */
-	private RangeExpr loop_range(List<Code> code_blk, String loop_var, int line){
+	private RangeExpr forall(List<Code> code_blk, String loop_var, int line){
 		RangeExpr rangeOp = null;
 		int index = line;	
 		//Search for the 'forall' bytecode
@@ -53,33 +79,22 @@ public class ForAllPattern extends LoopPattern {
 				ForAll forall = (ForAll)code;
 				rangeOp = (RangeExpr) factory.getExpr(prefix+forall.sourceOperand);
 				break;
-			}			
-			AddCodeToPatternPart(code, "init_after");
+			}
 		}		
-		
-		//Search for the 'loopend' bytecode
-		while(index<code_blk.size()){
-			Code code = code_blk.get(index);
-			index++;
-			AddCodeToPatternPart(code, "loop_body");
-			if(code instanceof Codes.LoopEnd){
-				break;
-			}			
-		}		
-	
+
 		this.line = index;
 		return rangeOp;
 	}
-	
 
-	
+
+
 
 	@Override
 	public LinearExpr getNumberOfIterations() {
 		if(this.numberOfIterations == null){				
-			LinearExpr upperExpr = (LinearExpr) this.rangeExpr.getUpper().clone();
+			LinearExpr upperExpr = (LinearExpr) this.range.getUpper().clone();
 			//Get the range expr
-			this.numberOfIterations = upperExpr.subtract(this.rangeExpr.getLower());
+			this.numberOfIterations = upperExpr.subtract(this.range.getLower());
 		}
 		return this.numberOfIterations;
 	}
@@ -87,9 +102,13 @@ public class ForAllPattern extends LoopPattern {
 	@Override
 	public String toString() {
 		String result = super.toString();		
-		result += "\n" + type + " " +loop_var+" in range"+this.rangeExpr+
-			      "\n=>loop_iters("+loop_var+", " + getNumberOfIterations()+")";
+		result += "\n" + type + " " +loop_var+" in range"+this.range+
+				"\n=>loop_iters("+loop_var+", " + getNumberOfIterations()+")";
 		return result;
 	}
+
 	
+
+	
+
 }

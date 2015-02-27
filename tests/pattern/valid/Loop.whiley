@@ -1,19 +1,19 @@
 import whiley.lang.System
-/*
+ 
 function f1(int limit) => int
 requires limit <= 1000000:
     int i=limit
     int sum=0
-    while 0<i:
+    while 1<i where i <= limit:
         sum = sum + i
         i=i-1
     return sum
-   
+ 
 function f2(int limit) => int
 requires limit <= 1000000:
     int i=limit
     int sum=0
-    while i>=0:
+    while i>=1:
         sum = sum + i
         i=i-1
     return sum
@@ -49,7 +49,7 @@ requires limit <= 1000000:
     	sum = sum + i
     	i = i + 1
     return sum
-*/     
+     
 function f6(int limit) => int
 requires limit <= 1000000:
     int sum=0

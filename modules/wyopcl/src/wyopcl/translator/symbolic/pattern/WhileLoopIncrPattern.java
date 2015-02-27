@@ -28,16 +28,14 @@ public class WhileLoopIncrPattern extends WhileLoopPattern{
 	 */
 	public WhileLoopIncrPattern(Configuration config, List<Type> params, List<Code> blk) {
 		super(config, params, blk);
-		if(this.loop_bound != null){
-			this.loopbody_before(blk, this.line);
-			//Get the increment
-			this.incr = incr(blk, this.loop_var, this.line);
-			if(this.incr != null){
-				this.loopbody_after(blk, this.line);
-				this.loop_exit(blk, this.line);
-				this.isNil = false;
-			}	
-		}		
+		//Get the increment
+		this.incr = incr(blk, this.loop_var, this.line);
+		if(this.incr != null){
+			this.line = this.loopbody_after(blk, this.line);
+			this.line = this.loop_exit(blk, this.line);
+			this.isNil = false;			
+		}
+
 	}
 
 

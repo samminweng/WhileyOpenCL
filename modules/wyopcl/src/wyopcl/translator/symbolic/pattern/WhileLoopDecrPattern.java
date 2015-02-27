@@ -23,16 +23,13 @@ import wyopcl.translator.symbolic.expression.LinearExpr;
 public final class WhileLoopDecrPattern extends WhileLoopPattern{	
 	private BigInteger decr;
 	public WhileLoopDecrPattern(Configuration config, List<Type> params, List<Code> blk) {
-		super(config, params, blk);		
-		if(this.loop_bound != null){
-			this.loopbody_before(blk, this.line);
-			//Get the decrement
-			this.decr = decr(blk, this.loop_var, this.line);
-			if(this.decr != null){
-				this.loopbody_after(blk, this.line);
-				this.loop_exit(blk, this.line);
-				this.isNil = false;
-			}	
+		super(config, params, blk);
+		//Get the decrement
+		this.decr = decr(blk, this.loop_var, this.line);
+		if(this.decr != null){
+			this.line = this.loopbody_after(blk, this.line);
+			this.line = this.loop_exit(blk, this.line);
+			this.isNil = false;	
 		}
 	}
 	/**
@@ -52,9 +49,9 @@ public final class WhileLoopDecrPattern extends WhileLoopPattern{
 		if(numberOfIterations==null){
 			LinearExpr result = (LinearExpr)init.clone();
 			if(comparatorOp.equals(">")){
-				numberOfIterations = result.subtract(loop_bound);
+				numberOfIterations = result.subtract((LinearExpr) loop_bound);
 			}else{
-				numberOfIterations = result.subtract(loop_bound).add((LinearExpr) factory.putExpr(BigInteger.ONE));
+				numberOfIterations = result.subtract((LinearExpr) loop_bound).add((LinearExpr) factory.putExpr(BigInteger.ONE));
 			}			
 		}		
 		return numberOfIterations;

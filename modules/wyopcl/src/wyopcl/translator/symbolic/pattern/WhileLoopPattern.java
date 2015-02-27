@@ -5,35 +5,34 @@ import java.util.List;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
-import wyil.lang.Codes.BinaryOperatorKind;
 import wyil.lang.Codes.Comparator;
 import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.expression.Expr;
 import wyopcl.translator.symbolic.expression.LinearExpr;
 /**
- * The while-loop pattern searches for the loop condition and split the list of code into
- * 'init_after', 'loop_header'
- * 'loopbody_update', 'loopbody_after' and 'loop_exit' parts. 
+ * The while-loop pattern gets the code of the loop header, infer the loop lower or upper bound from loop condition
+ * and splits the list of code into 'init_after', 'loop_header' and 'loopbody_before' parts. 
  * 
  * @author Min-Hsien Weng
  *
  */
 public abstract class WhileLoopPattern extends LoopPattern{
-	//Expressions related to the loop condition.
+	//Expressions related to the while-loop condition.
 	public String comparatorOp;
-	public LinearExpr loop_bound;
+	public Expr loop_bound;
 
 	public WhileLoopPattern(Configuration config, List<Type> params, List<Code> blk) {
 		super(config, params, blk);
 		this.type = "WhileLoop";
-		//Check if the loop var is inferred
-		if(this.init != null){
-			//this.init = init(blk, this.loop_var, this.line);
-			this.loop_bound = while_cond(blk, this.loop_var, this.line);
-		}		
-	}
-
-
+		this.loop_bound = while_cond(blk, this.loop_var, this.line);
+		if(this.loop_bound != null){
+			//Simplify the expressions.
+			this.loop_bound = factory.rewriteExpr(this.loop_bound);
+			this.line = this.loopbody_before(blk, this.line);
+		}
+	}	
+	
+	
 	/**
 	 * Output a canonical loop condition from a if bytecode.
 	 * That is that the loop variable is on the left and the comparing op is on the right.  
@@ -83,79 +82,80 @@ public abstract class WhileLoopPattern extends LoopPattern{
 	}
 
 
-
 	/**
-	 * Get the lower or upper bound of loop condition.
+	 * Find the bytecode of loop blk and loop condition and put them into the 'loop_header'
 	 * @param loop_var the loop variable
 	 * @param compareOp the type of comparator 
 	 * @return the expression of bound.
 	 */
-	protected LinearExpr while_cond(List<Code> code_blk, String loop_var, int line) {
+	protected LinearExpr while_cond(List<Code> blk, String loop_var, int line) {
 		LinearExpr loop_bound = null;
 		int index = line;
 		//Search for the loop condition
-		while(index< code_blk.size()){
-			Code code = code_blk.get(index);
-			index++;
-			//Search for loop bytecode
-			if(!checkAssertOrAssume(code)&&code instanceof Codes.Loop){
-				//Check if the loop variable is used in the loop
-				if(loop_var.equals(prefix+((Codes.Loop)code).modifiedOperands[0])){
-					//Stop the iteration.
-					//Add the code to loop header	
-					AddCodeToPatternPart(code, "loop_header");
-					break;
-				}
-			}
-			AddCodeToPatternPart(code, "init_after");
-		}
-
-		//Search for the loop condition
-		while(index< code_blk.size()){
-			Code code = code_blk.get(index);
+		while(index<blk.size()){
+			Code code = blk.get(index);
 			index++;
 			//Search for the loop condition and put it into the 'loop_header'.
 			if(!checkAssertOrAssume(code)){
-				if(code instanceof Codes.If){
+				if(code instanceof Codes.Loop){
+					Codes.Loop loop = (Codes.Loop)code;
+					//Check if the loop variable is used in the loop
+					if(this.loop_label.equals(loop.target)){
+						//Stop the iteration.
+						AddCodeToPatternPart(code, "loop_header");
+					}
+				}else if(code instanceof Codes.If){
 					Codes.If if_code = (Codes.If)code;
 					if_code = standardizeLoopCondition(if_code, loop_var);
 					//Check if the bytecode is the loop condition.					
-					if(if_code != null){					
+					if(if_code != null){
+						//Add the code to loop header	
+						AddCodeToPatternPart(if_code, "loop_header");
 						String cop = prefix+if_code.rightOperand;
-						if(if_code.op.equals(Comparator.LTEQ) ){
-							comparatorOp = ">";													
-						}else if(if_code.op.equals(Comparator.LT)){
+						switch(if_code.op){
+						case LTEQ:
+							comparatorOp = ">";
+							break;
+						case LT:
 							comparatorOp = ">=";
-						}else if(if_code.op.equals(Comparator.GTEQ)){
+							break;
+						case GTEQ:
 							comparatorOp = "<";
-						}else if(if_code.op.equals(Comparator.GT)){
+							break;
+						case GT:
 							comparatorOp = "<=";
-						}else{
-							//Do nothing
+							break;
+						default:
+							break;
 						}
 						//Get the expression
 						loop_bound = (LinearExpr) factory.getExpr(cop);
-						//Add the code to loop header	
-						AddCodeToPatternPart(if_code, "loop_header");
+						//Stop the iteration
 						break;	
 					}
+				}else{
+					//Add the other code to the init_after
+					AddCodeToPatternPart(code, "init_after");
 				}
+			}else{
+				//Add the other code to the init_after
+				AddCodeToPatternPart(code, "init_after");
 			}
-			//Add the other code to the init_after
-			AddCodeToPatternPart(code, "init_after");
-
+			
 		}
-
 		this.line = index;
 		return loop_bound;
 	}
+
+	
+
 
 	/**
 	 * Searches for the loop_update and put the searched code into 'loopbody_before'.
 	 * @param blk the list of code
 	 * @param line the starting line number.
 	 */
-	protected void loopbody_before(List<Code> blk, int line){
+	protected int loopbody_before(List<Code> blk, int line){
 		int index = line;
 		//Put the code in 'loopbody_before' part.
 		while(index<blk.size()){
@@ -167,27 +167,24 @@ public abstract class WhileLoopPattern extends LoopPattern{
 					Codes.BinaryOperator binOp = (Codes.BinaryOperator)code;
 					//Search for the decrement
 					if(loop_var.equals(prefix+binOp.operand(0))){
-						break;
+						return index;
 					}					
 				}
 			}
 			AddCodeToPatternPart(code, "loopbody_before");
 			index++;
 		}
-		
-		this.line = index;
+
+		return index;
 	}
-	
-	
-	
+
 	/**
-	 * Search the loop end of the given loop label and put the code in the 'loopbody_after' part.
+	 * Search for loop end and put the code to 'loopbody_after' part.  
 	 * @param blk
 	 * @param line
 	 */
-	protected void loopbody_after(List<Code> blk, int line){
+	protected int loopbody_after(List<Code> blk, int line){
 		int index = line;
-		//Search for loop end and put the code to 'loop_post' part.
 		while(index<blk.size()){
 			Code code = blk.get(index);
 			index++;
@@ -202,8 +199,8 @@ public abstract class WhileLoopPattern extends LoopPattern{
 				}
 			}
 		}
-
-		this.line = index;
+		return index;
 	}
+	
 
 }
