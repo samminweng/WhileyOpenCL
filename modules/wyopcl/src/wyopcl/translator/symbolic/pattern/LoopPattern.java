@@ -14,7 +14,7 @@ import wyopcl.translator.symbolic.expression.LinearExpr;
  * @author Min-Hsien Weng
  *
  */
-public abstract class LoopPattern extends BasePattern{
+public abstract class LoopPattern extends Pattern{
 	protected LinearExpr numberOfIterations;// the number of loop iterations in affine form.	
 	//The variable (loop variable or list variable).
 	public String loop_var;

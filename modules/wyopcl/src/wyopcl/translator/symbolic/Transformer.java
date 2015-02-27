@@ -11,7 +11,6 @@ import wyil.lang.Codes.BinaryOperatorKind;
 import wyopcl.translator.symbolic.pattern.NullPattern;
 import wyopcl.translator.symbolic.pattern.Pattern;
 import wyopcl.translator.symbolic.pattern.ForAllPattern;
-import wyopcl.translator.symbolic.pattern.BasePattern;
 import wyopcl.translator.symbolic.pattern.WhileLoopDecrPattern;
 import wyopcl.translator.symbolic.pattern.WhileLoopIncrPattern;
 import wyopcl.translator.symbolic.pattern.WhileLoopPattern;

@@ -29,8 +29,6 @@ import wyopcl.translator.generator.CodeGenerator;
 import wyopcl.translator.generator.Utility;
 import wyopcl.translator.symbolic.PatternMatcher;
 import wyopcl.translator.symbolic.pattern.Pattern;
-import wyopcl.translator.symbolic.pattern.BasePattern;
-import wyopcl.translator.symbolic.pattern.WhileLoopPattern;
 /**
  * Main entry point of translator
  * 

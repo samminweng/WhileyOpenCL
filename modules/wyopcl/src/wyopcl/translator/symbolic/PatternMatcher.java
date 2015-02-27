@@ -18,7 +18,6 @@ import wyopcl.translator.symbolic.pattern.ForAllPattern;
 import wyopcl.translator.symbolic.pattern.NullPattern;
 import wyopcl.translator.symbolic.pattern.WhileLoopDecrPattern;
 import wyopcl.translator.symbolic.pattern.WhileLoopIncrPattern;
-import wyopcl.translator.symbolic.pattern.BasePattern;
 
 /**
  * 
@@ -31,15 +30,15 @@ import wyopcl.translator.symbolic.pattern.BasePattern;
 public class PatternMatcher {
 	//private final String prefix = "%";
 	private final Configuration config;	
-	private List<Class<? extends BasePattern>> avail_basePatterns;//Store the available patterns.
+	private List<Class<? extends Pattern>> avail_Patterns;//Store the available patterns.
 
 	public PatternMatcher(Configuration config){
 		this.config = config;
-		this.avail_basePatterns = new ArrayList<Class<? extends BasePattern>>();
-		//this.avail_basePatterns.add(BuildListPattern.class);
-		this.avail_basePatterns.add(WhileLoopDecrPattern.class);
-		this.avail_basePatterns.add(WhileLoopIncrPattern.class);
-		this.avail_basePatterns.add(ForAllPattern.class);
+		this.avail_Patterns = new ArrayList<Class<? extends Pattern>>();
+		//this.avail_Patterns.add(BuildListPattern.class);
+		this.avail_Patterns.add(WhileLoopDecrPattern.class);
+		this.avail_Patterns.add(WhileLoopIncrPattern.class);
+		this.avail_Patterns.add(ForAllPattern.class);
 	}	
 
 	/**
@@ -52,10 +51,10 @@ public class PatternMatcher {
 	public Pattern analyzePattern(List<Type> params, List<Code> block){
 		Pattern pattern = null;		
 		//Iterate over all the available patterns.
-		for(Class<? extends BasePattern> avail_basePattern: avail_basePatterns){
+		for(Class<? extends Pattern> avail_Pattern: avail_Patterns){
 			try {
 				//Get the constructor				
-				Constructor<? extends BasePattern> constructor = avail_basePattern.getConstructor(Configuration.class, List.class, List.class);
+				Constructor<? extends Pattern> constructor = avail_Pattern.getConstructor(Configuration.class, List.class, List.class);
 				if(constructor!=null){
 					pattern = constructor.newInstance(config, params, block);
 					//Check if the loop block is matched with the pattern. If so, then return the pattern. 

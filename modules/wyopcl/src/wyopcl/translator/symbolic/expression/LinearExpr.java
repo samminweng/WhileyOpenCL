@@ -17,9 +17,9 @@ import wyil.lang.Codes.BinaryOperatorKind;
  *
  */
 public class LinearExpr extends Expr{	
-	private List<String> ref_vars;
-	private List<BigInteger> coefficients; // The list of coefficients
-	private BigInteger constant;//(the constant value)
+	protected List<String> ref_vars;
+	protected List<BigInteger> coefficients; // The list of coefficients
+	protected BigInteger constant;//(the constant value)
 	/**
 	 * Basic constructor
 	 */
@@ -138,6 +138,7 @@ public class LinearExpr extends Expr{
 	public LinearExpr merge(String var, LinearExpr linearExpr){
 		int index = getVarIndex(var);
 		if(index!= -1){			
+			LinearExpr clonedExpr = (LinearExpr) linearExpr.clone();
 			//Get the coefficient
 			BigInteger coefficient = getCoefficient(var);
 			//Remove the var and its coefficient
@@ -145,10 +146,10 @@ public class LinearExpr extends Expr{
 			this.coefficients.remove(coefficient);
 			if(coefficient.signum()>0){
 				//Addition				
-				this.add(linearExpr.multiply(coefficient.abs()));
+				this.add(clonedExpr.multiply(coefficient.abs()));
 			}else{
 				//Subtraction
-				this.subtract(linearExpr.multiply(coefficient.abs()));
+				this.subtract(clonedExpr.multiply(coefficient.abs()));
 			}
 			
 		}
@@ -219,6 +220,17 @@ public class LinearExpr extends Expr{
 			expr += ref_vars.get(index);								
 		}
 		return expr;
+	}
+	
+	@Override
+	public Object clone() {
+		LinearExpr expr = new LinearExpr(this.target);
+		//Add all the variables
+		for(String var: this.ref_vars){
+			expr.addVar(this.getCoefficient(var), var);
+		}
+		expr.addConstant(this.getConstant());
+		return expr;		
 	}
 	
 }
