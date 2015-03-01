@@ -100,6 +100,7 @@ public abstract class LoopPattern extends Pattern{
 		return factory.getExpr(loop_var);
 	}
 	
+	
 	/**
 	 * Search the loop bytecode and put the code to the 'init_after' part.
 	 * If the code is related to the list , then put it to the 'init_list' part.
@@ -121,22 +122,6 @@ public abstract class LoopPattern extends Pattern{
 					if(this.loop_label.equals(loop.target)){
 						//Stop the iteration.
 						break;
-					}
-				}
-				//Search for the initial assignment for the modified operand.
-				if(code instanceof Codes.Const){
-					Codes.Const constant = (Codes.Const)code;
-					if(constant.constant.type() instanceof Type.List &&
-							this.modified_Op.equals(prefix+constant.target())){
-						part = "list_init";
-					}
-				}
-				
-				if(code instanceof Codes.Convert){
-					Codes.Convert convert = (Codes.Convert)code;
-					if(convert.result instanceof Type.List && 
-							this.modified_Op.equals(prefix+convert.target())){
-						part = "list_init";
 					}
 				}				
 			}

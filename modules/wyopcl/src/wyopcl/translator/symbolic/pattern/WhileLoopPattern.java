@@ -11,8 +11,8 @@ import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.expression.Expr;
 import wyopcl.translator.symbolic.expression.LinearExpr;
 /**
- * The while-loop pattern gets the code of the loop header, infer the loop lower or upper bound from loop condition
- * and splits the list of code into 'init_after', 'loop_header' and 'loopbody_before' parts.
+ * The while-loop pattern gets the loop header, loop condition and loop update.
+ * and splits the list of code into 'init_after', 'loop_header', 'loopbody_before' and 'loopbody_update' parts.
  * 
  * @author Min-Hsien Weng
  *
@@ -37,8 +37,14 @@ public abstract class WhileLoopPattern extends LoopPattern{
 		}
 	}	
 	
-	
-	public int loopbody_update(List<Code> blk, String loop_var, int line){
+	/**
+	 * Search for the code of re-assigning values to the loop variable and put the prior code to the 'loopbody_update' part.
+	 * @param blk the list of code.
+	 * @param loop_var the loop variable.
+	 * @param line the starting line number
+	 * @return the ending line number.
+	 */
+	protected int loopbody_update(List<Code> blk, String loop_var, int line){
 		int index = line;
 		while(index<blk.size()){
 			Code code = blk.get(index);

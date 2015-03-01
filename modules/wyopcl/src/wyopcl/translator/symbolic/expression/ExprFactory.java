@@ -99,7 +99,16 @@ public class ExprFactory {
 			expr = new LinearExpr(prefix+((Codes.LengthOf)code).toString());
 			Codes.LengthOf lengthOf = (Codes.LengthOf)code;
 			((LinearExpr) expr).addVar(BigInteger.ONE, "|"+prefix+lengthOf.operand(0)+"|");
-		}		
+		}else if(code instanceof Codes.IndexOf){
+			Codes.IndexOf indexof = (Codes.IndexOf)code;
+			expr = new Expr(prefix+indexof.target(), code);
+		}else if(code instanceof Codes.NewList){
+			Codes.NewList newlist = (Codes.NewList)code;
+			expr = new Expr(prefix+newlist.target(), code);
+		}else if(code instanceof Codes.ListOperator){
+			Codes.ListOperator listOp = (Codes.ListOperator)code;
+			expr = new Expr(prefix+listOp.target(), code);
+		}
 		return expr;
 	}
 	

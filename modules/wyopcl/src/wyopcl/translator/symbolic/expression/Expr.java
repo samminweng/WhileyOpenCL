@@ -1,6 +1,7 @@
 package wyopcl.translator.symbolic.expression;
 
 import wyil.lang.Code;
+import wyil.lang.Codes;
 
 public class Expr implements Cloneable{
 	protected String target;
@@ -39,7 +40,12 @@ public class Expr implements Cloneable{
 
 	@Override
 	public String toString() {
-		return "target=" + target + ", code=" + code + "]";
+		if(code != null){
+			if(code instanceof Codes.Const){
+				return ((Codes.Const)code).constant+"";
+			}
+		}
+		return null;
 	}
 
 	
