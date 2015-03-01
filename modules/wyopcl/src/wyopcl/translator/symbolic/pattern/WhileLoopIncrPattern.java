@@ -48,42 +48,6 @@ public class WhileLoopIncrPattern extends WhileLoopPattern{
 		return result;
 	}
 
-	@Override
-	public LinearExpr getNumberOfIterations() {
-		if(numberOfIterations==null){
-			LinearExpr result = (LinearExpr)loop_bound.clone();
-			if(comparatorOp.equals("<")){				
-				numberOfIterations = result.subtract((LinearExpr) init);
-			}else{
-				numberOfIterations = result.subtract((LinearExpr) init).add((LinearExpr) factory.putExpr(BigInteger.ONE));
-			}			
-		}		
-		return numberOfIterations;
-	}
-
-	/**
-	 * Extract the increment value from the re-assignment bytecode of the loop variable. 
-	 * @param assign
-	 * @param loop_var
-	 * @return
-	 */
-	private BigInteger extractIncrement(Codes.Assign assign, String loop_var){
-		//Get the temporary variable, e.g. %16
-		LinearExpr linearExpr = (LinearExpr) factory.getExpr(prefix+assign.operand(0));
-		//Check if the loop variable is used in the expression for the tmp variable.
-		String[] vars = linearExpr.getVars();
-		if(linearExpr.getVarIndex(loop_var) == 0 && vars.length == 2){
-			String incr_op = vars[1];
-			//Find the coefficient of the incremental variable in the expr 
-			BigInteger coefficient = linearExpr.getCoefficient(incr_op);
-			//Check if the op kind is a addition
-			if(coefficient.signum()>0){
-				LinearExpr increment = (LinearExpr) factory.getExpr(incr_op);
-				return increment.getConstant();
-			}
-		}
-		return null;
-	}
 
 	/**
 	 * Get the incremental value for the given loop variable. The conditions are
@@ -111,7 +75,7 @@ public class WhileLoopIncrPattern extends WhileLoopPattern{
 					Codes.Assign assign = (Codes.Assign)code;
 					//Check if the target is the loop variable.
 					if((prefix+assign.target()).equals(loop_var)){
-						incr = extractIncrement(assign, loop_var);
+						incr = factory.extractIncrement(assign, loop_var);
 						break;				
 					}
 				}

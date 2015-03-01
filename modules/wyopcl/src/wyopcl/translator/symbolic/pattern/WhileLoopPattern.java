@@ -1,5 +1,6 @@
 package wyopcl.translator.symbolic.pattern;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import wyil.lang.Code;
@@ -11,11 +12,12 @@ import wyopcl.translator.symbolic.expression.Expr;
 import wyopcl.translator.symbolic.expression.LinearExpr;
 /**
  * The while-loop pattern gets the code of the loop header, infer the loop lower or upper bound from loop condition
- * and splits the list of code into 'init_after', 'loop_header' and 'loopbody_before' parts. 
+ * and splits the list of code into 'init_after', 'loop_header' and 'loopbody_before' parts.
  * 
  * @author Min-Hsien Weng
  *
  */
+
 public abstract class WhileLoopPattern extends LoopPattern{
 	//Expressions related to the while-loop condition.
 	public String comparatorOp;
@@ -202,5 +204,33 @@ public abstract class WhileLoopPattern extends LoopPattern{
 		return index;
 	}
 	
-
+	
+	@Override
+	public LinearExpr getNumberOfIterations() {
+		if(numberOfIterations==null){
+			LinearExpr result = null;
+			switch(comparatorOp){
+			case "<":
+				result = (LinearExpr)loop_bound.clone();
+				result = result.subtract((LinearExpr) init);
+				break;
+			case "<=":
+				result = (LinearExpr)loop_bound.clone();
+				result = result.subtract((LinearExpr) init).add((LinearExpr) factory.putExpr(BigInteger.ONE));
+				break;
+			case ">":
+				result = (LinearExpr)init.clone();
+				result = result.subtract((LinearExpr) loop_bound);
+				break;
+			case ">=":
+				result = (LinearExpr)init.clone();
+				result = result.subtract((LinearExpr) loop_bound).add((LinearExpr) factory.putExpr(BigInteger.ONE));
+				break;
+			}
+			
+			numberOfIterations = result;
+		}		
+		return numberOfIterations;
+	}
+	
 }

@@ -217,4 +217,53 @@ public class ExprFactory {
 	}
 	
 
+	/**
+	 * Extract the decrement value from the 'assignment' bytecode of loop variable. 
+	 * @param assign the 'assignment' bytecode
+	 * @param loop_var the loop variable
+	 * @return the decrement (BigInteger). If not found, return null.
+	 */
+	public BigInteger extractDecrement(Codes.Assign assign, String loop_var){
+
+		//Get the temporary variable, e.g. %16
+		LinearExpr linearExpr = (LinearExpr) getExpr(prefix+assign.operand(0));
+		//Check if the loop variable is used in the expression for the tmp variable.
+		String[] vars = linearExpr.getVars();
+		if(linearExpr.getVarIndex(loop_var) == 0 && vars.length == 2){
+			String decr_op = vars[1];
+			//Find the coefficient of the decremental variable in the expr 
+			BigInteger coefficient = linearExpr.getCoefficient(decr_op);
+			//Check if the op kind is a subtraction
+			if(coefficient.signum()<0){
+				LinearExpr decrement = (LinearExpr) getExpr(decr_op);
+				return decrement.getConstant();
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Extract the increment value from the re-assignment bytecode of the loop variable. 
+	 * @param assign
+	 * @param loop_var
+	 * @return
+	 */
+	public BigInteger extractIncrement(Codes.Assign assign, String loop_var){
+		//Get the temporary variable, e.g. %16
+		LinearExpr linearExpr = (LinearExpr) getExpr(prefix+assign.operand(0));
+		//Check if the loop variable is used in the expression for the tmp variable.
+		String[] vars = linearExpr.getVars();
+		if(linearExpr.getVarIndex(loop_var) == 0 && vars.length == 2){
+			String incr_op = vars[1];
+			//Find the coefficient of the incremental variable in the expr 
+			BigInteger coefficient = linearExpr.getCoefficient(incr_op);
+			//Check if the op kind is a addition
+			if(coefficient.signum()>0){
+				LinearExpr increment = (LinearExpr) getExpr(incr_op);
+				return increment.getConstant();
+			}
+		}
+		return null;
+	}
+	
 }

@@ -19,6 +19,7 @@ public abstract class LoopPattern extends Pattern{
 	//The variable (loop variable or list variable).
 	public String loop_var;
 	public String loop_label;
+	public String modified_Op;
 	public Expr init;
 	
 	public LoopPattern(Configuration config, List<Type> params, List<Code> blk){
@@ -67,11 +68,11 @@ public abstract class LoopPattern extends Pattern{
 						break;
 					}
 				}else if(code instanceof Codes.BinaryOperator){
-					//Check if the loop variable is assgined with a range
+					//Check if the loop variable is assigned with a range
 					if(loop_var.equals(prefix+((Codes.BinaryOperator)code).target())){
 						break;
 					}
-				}		
+				}
 			}
 			//Otherwise, add the code to the 'init_before' part
 			AddCodeToPatternPart(code, "init_before");
@@ -95,12 +96,14 @@ public abstract class LoopPattern extends Pattern{
 		line++;
 		//Increment the 
 		this.line = line;
-		//Get the expression for loop variable and simplify the expression.	
+		//Get the expression for loop variable.	
 		return factory.getExpr(loop_var);
 	}
 	
 	/**
-	 * Search the loop bytecode and put the code to the 'init_after' part
+	 * Search the loop bytecode and put the code to the 'init_after' part.
+	 * If the code is related to the list , then put it to the 'init_list' part.
+	 * to the ''
 	 * @param blk the list of code
 	 * @param line the starting line number
 	 */
@@ -108,7 +111,8 @@ public abstract class LoopPattern extends Pattern{
 		int index = line;
 		//Search for the loop condition
 		while(index< blk.size()){
-			Code code = blk.get(index);			
+			Code code = blk.get(index);
+			String part = "init_after";
 			//Search for loop bytecode
 			if(!checkAssertOrAssume(code)){
 				if(code instanceof Codes.Loop){
@@ -119,15 +123,31 @@ public abstract class LoopPattern extends Pattern{
 						break;
 					}
 				}
+				//Search for the initial assignment for the modified operand.
+				if(code instanceof Codes.Const){
+					Codes.Const constant = (Codes.Const)code;
+					if(constant.constant.type() instanceof Type.List &&
+							this.modified_Op.equals(prefix+constant.target())){
+						part = "list_init";
+					}
+				}
+				
+				if(code instanceof Codes.Convert){
+					Codes.Convert convert = (Codes.Convert)code;
+					if(convert.result instanceof Type.List && 
+							this.modified_Op.equals(prefix+convert.target())){
+						part = "list_init";
+					}
+				}				
 			}
-			AddCodeToPatternPart(code, "init_after");
+			AddCodeToPatternPart(code, part);
 			index++;
 		}
 		return index;
 	}
 	
 	/**
-	 * Find the loop variable
+	 *  Extract the list variable from the list of code by searching for the 'Codes.Loop'  or 'Forall' bytecode
 	 * @param code_blk the code block.
 	 * @return the variable (string). If not found, return null.
 	 */
@@ -146,8 +166,13 @@ public abstract class LoopPattern extends Pattern{
 				}else if(code instanceof Codes.Loop){
 					Codes.Loop loop = (Codes.Loop)code;
 					this.loop_label = loop.target;
+					int[] ops = loop.modifiedOperands;
+					//Check if the loop modifies any ops.
+					if(ops.length == 2){
+						modified_Op = prefix+ops[1]; 
+					}
 					//By default, the loop variable is the first modified operands.
-					return prefix+loop.modifiedOperands[0];	
+					return prefix+ops[0];	
 				}
 			}							
 		}		

@@ -7,6 +7,7 @@ import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyopcl.translator.Configuration;
+import wyopcl.translator.symbolic.expression.Expr;
 import wyopcl.translator.symbolic.expression.LinearExpr;
 /**
  * The BuildList pattern contains 'init_before', 'init', 'init_after', 'loop_header', 'loopbody_before'
@@ -15,175 +16,58 @@ import wyopcl.translator.symbolic.expression.LinearExpr;
  */
 public final class BuildListPattern extends WhileLoopPattern {
 	private String list_var;
-	private String loop_label;
+	private Expr list_update;
 	
 	public BuildListPattern(Configuration config, List<Type> params, List<Code> blk) {
 		super(config, params, blk);
-		this.loop_var = loop_var(blk);
-		if(this.loop_var != null){		
-			this.line = loop_update(blk, this.list_var, this.line);
-			this.isNil = false;
+		this.list_var = this.modified_Op;
+		this.list_update = list_update(blk, this.loop_var, this.list_var, this.line);
+		if(this.list_update != null){
+			this.line = this.loopbody_after(blk, this.line);
+			this.line = this.loop_exit(blk, this.line);
+			this.isNil = false;	
 		}
 	}
 	
 	
 	/**
-	 * Extract the list variable from the list of code by searching for the 'Codes.Loop' bytecode
+	 * Search for the update for the list and put the code to the 'list_update' part.
+	 * And extract the expression of the newly appended list from the assignment bytecode. 
 	 * @param blk the list of code
-	 * @return the variable name of the modified list.
+	 * @param loop_var the loop variable
+	 * @param list_var the list variable
+	 * @param line
+	 * @return
 	 */
-	@Override
-	protected String loop_var(List<Code> blk){
-		int index;
-		//Check if there is a loop
-		for(index=0; index<blk.size(); index++){
+	protected Expr list_update(List<Code> blk, String loop_var, String list_var, int line){
+		Expr expr = null;
+		int index = line;
+		while(index<blk.size()){
 			Code code = blk.get(index);
-			if(!checkAssertOrAssume(code) && code instanceof Codes.Loop){
-				Codes.Loop loop = (Codes.Loop)code;
-				this.loop_label = loop.target;
-				//The first operand is the index op whilst the second is the modified list.
-				if(loop.modifiedOperands.length>=2){
-					return prefix+loop.modifiedOperands[1];
-				}
-			}			
-		}
-		return null;
-	}
-
-	
-	
-	
-	/**
-	 * Split the list of code into 'init_before' and 'init' pattern part.
-	 * @param blk the list of code
-	 * @param var the variable of the list.
-	 * @param line the starting line number
-	 * @return ending line number
-	 */
-	private int init_list(List<Code> blk, String var, int line){
-	
-		int index;
-		for(index=line;index<blk.size();index++){
-			Code code = blk.get(index);
-			AddCodeToPatternPart(code, "init_before");
-			if(!checkAssertOrAssume(code)){
-				//Check if the code initializes the list.
-				if(code instanceof Codes.Const){
-					Codes.Const constant = (Codes.Const)code;
-					if(var.equals(prefix+constant.target())){
-						break;
-					}				
-				}								
-			}			
-		}
-		
-		for(index++;index<blk.size();index++){
-			Code code = blk.get(index);
-			AddCodeToPatternPart(code, "init");
-			if(!checkAssertOrAssume(code)){
-				//Check if the byte converts the [void] into the [int]
-				if(code instanceof Codes.Convert){					
-					Codes.Convert convert = (Codes.Convert)code;
-					if(var.equals(prefix+convert.target())){
-						break;
-					}
-				}				
-			}			
-		}
-		
-		return index;
-	}
-
-
-	
-	/*protected LinearExpr while_cond(List<Code> blk, String var, int line){
-		LinearExpr loop_bound = null;
-		int index;
-		for(index=line+1;index<blk.size();index++){
-			Code code = blk.get(index);
-			if(!checkAssertOrAssume(code)){
-				//Check if the code initializes the list.
-				if(code instanceof Codes.Loop){
-					Codes.Loop loop = (Codes.Loop)code;
-					if(loop.target.equals(this.loop_label)){
-						break;
-					}
-				}
-								
-			}			
-			AddCodeToPatternPart(code, "init_after");
-		}
-		
-		for(;index<blk.size();index++){
-			Code code = blk.get(index);
-			AddCodeToPatternPart(code, "loop_header");
-			if(!checkAssertOrAssume(code)){
-				//Check if the byte is the condition followed by the loop
-				if(code instanceof Codes.If){					
-					break;
-				}				
-			}	
-		}		
-		
-		this.line = ++index;
-		return loop_bound;
-	}*/
-
-	private int loop_update(List<Code> blk, String var, int line){		
-		if(var == null) return line;
-
-		int index;
-		for(index=line;index<blk.size();index++){
-			Code code = blk.get(index);
-			AddCodeToPatternPart(code, "loopbody_before");
+			index++;
+			AddCodeToPatternPart(code, "list_update");
 			if(!checkAssertOrAssume(code)){
 				//Check if the code initializes the list.
 				if(code instanceof Codes.Assign){
 					Codes.Assign assign = (Codes.Assign)code;
 					if(this.loop_var.equals(prefix+assign.target())){
-						break;
-					}									
-				}			
-			}
-		}
-		
-		for(index++;index<blk.size();index++){
-			Code code = blk.get(index);
-			AddCodeToPatternPart(code, "loopbody_update");
-			if(!checkAssertOrAssume(code)){
-				//Check if the code initializes the list.
-				if(code instanceof Codes.Assign){
-					Codes.Assign assign = (Codes.Assign)code;
-					if(this.list_var.equals(prefix+assign.target())){
-						break;
-					}					
-				}			
-			}
-		}
-		
-		for(index++;index<blk.size();index++){
-			Code code = blk.get(index);
-			AddCodeToPatternPart(code, "loopbody_after");
-			if(!checkAssertOrAssume(code)){
-				//Check if the code initializes the list.
-				if(code instanceof Codes.LoopEnd){
-					Codes.LoopEnd loopend = (Codes.LoopEnd)code;
-					if(this.loop_label.equals(loopend.label)){
+						expr = factory.getExpr(prefix+assign.operand(0));
 						break;
 					}
-				}								
+				}			
 			}
-		}		
+		}
 		
-		return index;
+		
+		return expr;
 		
 		
 	}
 
+
 	@Override
-	public LinearExpr getNumberOfIterations() {
-		// TODO Auto-generated method stub
-		return null;
+	public String toString() {
+		return "BuildListPattern [list_var=" + list_var + "]";
 	}
 
 }

@@ -37,6 +37,11 @@ public class Expr implements Cloneable{
 		return null;
 	}
 
+	@Override
+	public String toString() {
+		return "target=" + target + ", code=" + code + "]";
+	}
+
 	
 
 }

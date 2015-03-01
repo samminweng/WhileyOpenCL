@@ -44,47 +44,6 @@ public final class WhileLoopDecrPattern extends WhileLoopPattern{
 		return result;
 	}
 
-	@Override
-	public LinearExpr getNumberOfIterations() {
-		if(numberOfIterations==null){
-			LinearExpr result = (LinearExpr)init.clone();
-			if(comparatorOp.equals(">")){
-				numberOfIterations = result.subtract((LinearExpr) loop_bound);
-			}else{
-				numberOfIterations = result.subtract((LinearExpr) loop_bound).add((LinearExpr) factory.putExpr(BigInteger.ONE));
-			}			
-		}		
-		return numberOfIterations;
-	}
-
-	/**
-	 * Extract the decrement value from the 'assignment' bytecode of loop variable. 
-	 * @param assign the 'assignment' bytecode
-	 * @param loop_var the loop variable
-	 * @return the decrement (BigInteger). If not found, return null.
-	 */
-	private BigInteger extractDecrement(Codes.Assign assign, String loop_var){
-
-		//Get the temporary variable, e.g. %16
-		LinearExpr linearExpr = (LinearExpr) factory.getExpr(prefix+assign.operand(0));
-		//Check if the loop variable is used in the expression for the tmp variable.
-		String[] vars = linearExpr.getVars();
-		if(linearExpr.getVarIndex(loop_var) == 0 && vars.length == 2){
-			String decr_op = vars[1];
-			//Find the coefficient of the decremental variable in the expr 
-			BigInteger coefficient = linearExpr.getCoefficient(decr_op);
-			//Check if the op kind is a subtraction
-			if(coefficient.signum()<0){
-				LinearExpr decrement = (LinearExpr) factory.getExpr(decr_op);
-				return decrement.getConstant();
-			}
-		}
-
-		return null;
-	}
-
-
-
 	/**
 	 * Get the decremental value for the given loop variable. The conditions are
 	 * <ul>
@@ -111,7 +70,7 @@ public final class WhileLoopDecrPattern extends WhileLoopPattern{
 					Codes.Assign assign = (Codes.Assign)code;
 					//Check if the target is the loop variable.
 					if((prefix+assign.target()).equals(loop_var)){
-						decr = extractDecrement(assign, loop_var);
+						decr = factory.extractDecrement(assign, loop_var);
 						break;				
 					}
 				}

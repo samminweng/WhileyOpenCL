@@ -6,12 +6,12 @@ import wyopcl.translator.Configuration;
  * @author Min-Hsien Weng
  *
  */
-public class NullPattern extends Pattern {
+public final class NullPattern extends Pattern {
 	
 	public NullPattern(Configuration config) {
 		super(config);
 		this.type = "NullPattern";
-		
+		this.isNil = true;
 	}
 	
 
