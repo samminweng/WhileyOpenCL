@@ -1,5 +1,6 @@
 package wyopcl.translator.symbolic.pattern;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import wyil.lang.Code;
@@ -56,12 +57,8 @@ public final class BuildListPattern extends WhileLoopPattern {
 					}
 				}			
 			}
-		}
-		
-		
+		}	
 		return expr;
-		
-		
 	}
 
 

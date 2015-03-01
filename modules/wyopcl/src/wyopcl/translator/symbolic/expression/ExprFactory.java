@@ -218,7 +218,15 @@ public class ExprFactory {
 	
 
 	/**
-	 * Extract the decrement value from the 'assignment' bytecode of loop variable. 
+	 * Extract the decrement value from the 'assignment' bytecode of loop variable.
+	 * Get the decremental value for the given loop variable. The conditions are
+	 * <ul>
+	 * 	<li>reassigned the value of loop variable
+	 *  <li>decrement the value by the constant ONE
+	 * </ul>
+	 * For example, the loop variable is assigned to a temporary variable (%3 = %16)  
+	 * which performs the subtraction on the loop variable (%16 = %3 - %15 and %15 = 1) 
+	 *  
 	 * @param assign the 'assignment' bytecode
 	 * @param loop_var the loop variable
 	 * @return the decrement (BigInteger). If not found, return null.
@@ -242,11 +250,23 @@ public class ExprFactory {
 		return null;
 	}
 	
+	
+	
+	
 	/**
 	 * Extract the increment value from the re-assignment bytecode of the loop variable. 
+	 *
+	 * Get the incremental value for the given loop variable. The conditions are
+	 * <ul>
+	 * 	<li>reassign the value of loop variable
+	 *  <li>increment the value by the constant ONE
+	 * </ul>
+	 * For example, the loop variable is assigned to a temporary variable (%3 = %14)  
+	 * which performs the subtraction on the loop variable (%14 = %3 + %13 and %13 = 1) 
+	 * 
 	 * @param assign
 	 * @param loop_var
-	 * @return
+	 * @return increment value (BigInteger). If not matched, return null;
 	 */
 	public BigInteger extractIncrement(Codes.Assign assign, String loop_var){
 		//Get the temporary variable, e.g. %16

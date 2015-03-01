@@ -21,11 +21,10 @@ import wyopcl.translator.symbolic.expression.LinearExpr;
  *
  */
 public final class WhileLoopDecrPattern extends WhileLoopPattern{	
-	private BigInteger decr;
+
 	public WhileLoopDecrPattern(Configuration config, List<Type> params, List<Code> blk) {
 		super(config, params, blk);
 		//Get the decrement
-		this.decr = decr(blk, this.loop_var, this.line);
 		if(this.decr != null){
 			this.line = this.loopbody_after(blk, this.line);
 			this.line = this.loop_exit(blk, this.line);
@@ -44,40 +43,5 @@ public final class WhileLoopDecrPattern extends WhileLoopPattern{
 		return result;
 	}
 
-	/**
-	 * Get the decremental value for the given loop variable. The conditions are
-	 * <ul>
-	 * 	<li>reassigned the value of loop variable
-	 *  <li>decrement the value by the constant ONE
-	 * </ul>
-	 * For example, the loop variable is assigned to a temporary variable (%3 = %16)  
-	 * which performs the subtraction on the loop variable (%16 = %3 - %15 and %15 = 1) 
-	 * 
-	 * @return decrement value (Expr). If not matched, return null;
-	 */
-	private BigInteger decr(List<Code> code_blk, String loop_var, int line){
-		BigInteger decr = null;
-		int index = line;
-		while(index<code_blk.size()){
-			Code code = code_blk.get(index);
-			index++;
-			AddCodeToPatternPart(code, "loopbody_update");
-			//Create the expression and put it into the table.
-			if(!checkAssertOrAssume(code)){
-				//Search for the decrement that assigns the value to the loop var.
-				if(code instanceof Codes.Assign){
-					//Check if the assignment bytecode is to over-write the value of loop variable.
-					Codes.Assign assign = (Codes.Assign)code;
-					//Check if the target is the loop variable.
-					if((prefix+assign.target()).equals(loop_var)){
-						decr = factory.extractDecrement(assign, loop_var);
-						break;				
-					}
-				}
-			}			
-		}
-
-		this.line = index;
-		return decr;
-	}
+	
 }

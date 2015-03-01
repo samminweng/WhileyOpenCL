@@ -22,6 +22,8 @@ public abstract class WhileLoopPattern extends LoopPattern{
 	//Expressions related to the while-loop condition.
 	public String comparatorOp;
 	public Expr loop_bound;
+	public BigInteger decr;
+	public BigInteger incr;
 
 	public WhileLoopPattern(Configuration config, List<Type> params, List<Code> blk) {
 		super(config, params, blk);
@@ -31,9 +33,37 @@ public abstract class WhileLoopPattern extends LoopPattern{
 			//Simplify the expressions.
 			this.loop_bound = factory.rewriteExpr(this.loop_bound);
 			this.line = this.loopbody_before(blk, this.line);
+			this.line = this.loopbody_update(blk, this.loop_var, this.line);
 		}
 	}	
 	
+	
+	public int loopbody_update(List<Code> blk, String loop_var, int line){
+		int index = line;
+		while(index<blk.size()){
+			Code code = blk.get(index);
+			index++;
+			AddCodeToPatternPart(code, "loopbody_update");
+			//Create the expression and put it into the table.
+			if(!checkAssertOrAssume(code)){
+				//Search for the decrement that assigns the value to the loop var.
+				if(code instanceof Codes.Assign){
+					//Check if the assignment bytecode is to over-write the value of loop variable.
+					Codes.Assign assign = (Codes.Assign)code;
+					//Check if the target is the loop variable.
+					if((prefix+assign.target()).equals(loop_var)){
+						//Get the increment and decrement.
+						incr = factory.extractIncrement(assign, loop_var);
+						decr = factory.extractDecrement(assign, loop_var);
+						break;				
+					}
+				}
+			}			
+						
+		}
+
+		return index;
+	}
 	
 	/**
 	 * Output a canonical loop condition from a if bytecode.
