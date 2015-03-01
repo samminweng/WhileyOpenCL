@@ -25,12 +25,12 @@ public final class BuildListPattern extends WhileLoopPattern {
 		this.type ="BuildList";
 		//Check if the inferred increment or decrement is null. If not, then continue iterating the list of code.
 		//Otherwise, stop constructing the BuildListPattern.
-		if(this.incr != null || this.decr != null){
-			
-			this.line = this.loopbody_after(blk, this.line);
-			this.line = this.loop_exit(blk, this.line);
-			
-			this.isNil = false;	
+		if(this.incr != null || this.decr != null){	
+			if(this.list_update != null){
+				this.line = this.loopbody_after(blk, this.line);
+				this.line = this.loop_exit(blk, this.line);
+				this.isNil = false;	
+			}			
 		}
 	}
 
@@ -43,37 +43,39 @@ public final class BuildListPattern extends WhileLoopPattern {
 	 * @param line the starting line number
 	 */
 	@Override
-	protected int init_after(List<Code> blk, int line){
-		this.list_var = this.modified_Op;
+	protected int init_after(List<Code> blk, int line){		
 		int index = line;
-		//Search for the loop condition
-		while(index< blk.size()){
-			Code code = blk.get(index);
-			//Search for loop bytecode
-			if(!checkAssertOrAssume(code)){
-				//Search for the initial assignment for the modified operand.
-				if(code instanceof Codes.Const){
-					Codes.Const constant = (Codes.Const)code;
-					if(constant.constant.type() instanceof Type.List &&
-							this.list_var.equals(prefix+constant.target())){
-						AddCodeToPatternPart(code, "list_init");
+		//Check if the loop contains the operand of modifying the list.
+		if(this.modified_Ops!= null && this.modified_Ops.length>1){
+			this.list_var = this.modified_Ops[1];
+			//Search for the loop condition
+			while(index< blk.size()){
+				Code code = blk.get(index);
+				//Search for loop bytecode
+				if(!checkAssertOrAssume(code)){
+					//Search for the initial assignment for the modified operand.
+					if(code instanceof Codes.Const){
+						Codes.Const constant = (Codes.Const)code;
+						if(constant.constant.type() instanceof Type.List &&
+								this.list_var.equals(prefix+constant.target())){
+							AddCodeToPatternPart(code, "list_init");
+						}
 					}
-				}
 
-				if(code instanceof Codes.Convert){
-					Codes.Convert convert = (Codes.Convert)code;
-					if(convert.result instanceof Type.List && 
-							this.list_var.equals(prefix+convert.target())){
-						AddCodeToPatternPart(code, "list_init");
-						break;
-					}
-				}				
-			}			
-			index++;
-		}
-		//Get the initial expression for the list var
-		this.list_init = factory.getExpr(this.list_var);
-				
+					if(code instanceof Codes.Convert){
+						Codes.Convert convert = (Codes.Convert)code;
+						if(convert.result instanceof Type.List && 
+								this.list_var.equals(prefix+convert.target())){
+							AddCodeToPatternPart(code, "list_init");
+							break;
+						}
+					}				
+				}			
+				index++;
+			}
+			//Get the initial expression for the list var
+			this.list_init = factory.getExpr(this.list_var);
+		}		
 		index = super.init_after(blk, index);
 		return index;
 	}

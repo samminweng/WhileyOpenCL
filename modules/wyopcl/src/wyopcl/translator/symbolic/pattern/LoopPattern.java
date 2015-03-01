@@ -19,7 +19,7 @@ public abstract class LoopPattern extends Pattern{
 	//The variable (loop variable or list variable).
 	public String loop_var;
 	public String loop_label;
-	public String modified_Op;
+	public String[] modified_Ops;//Store all the operands modified inside the loop.
 	public Expr init;
 	
 	public LoopPattern(Configuration config, List<Type> params, List<Code> blk){
@@ -151,13 +151,15 @@ public abstract class LoopPattern extends Pattern{
 				}else if(code instanceof Codes.Loop){
 					Codes.Loop loop = (Codes.Loop)code;
 					this.loop_label = loop.target;
-					int[] ops = loop.modifiedOperands;
-					//Check if the loop modifies any ops.
-					if(ops.length == 2){
-						modified_Op = prefix+ops[1]; 
+					//Initialize the modified operands from the loop bytecode 
+					this.modified_Ops = new String[loop.modifiedOperands.length];
+					index = 0;
+					while(index<loop.modifiedOperands.length){
+						this.modified_Ops[index] = prefix+loop.modifiedOperands[index];
+						index++;
 					}
 					//By default, the loop variable is the first modified operands.
-					return prefix+ops[0];	
+					return modified_Ops[0];	
 				}
 			}							
 		}		
