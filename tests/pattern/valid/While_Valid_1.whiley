@@ -1,13 +1,13 @@
 import whiley.lang.System
 
-/*function reverse([int] ls) => [int]:
+function reverse([int] ls) => [int]:
     int i = |ls|
     [int] r = []
     while i > 0 where i <= |ls|:
         i = i - 1
         r = r ++ [ls[i]]
     return r
-*/    
+   
 function rewrite_reverse([int] ls) => [int]:
     int i = |ls|
     int r_capacity = |ls|
