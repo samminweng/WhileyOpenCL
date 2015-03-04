@@ -96,7 +96,7 @@ public class ExprFactory {
 				throw new RuntimeException(binOp.kind+"Not implemented");				
 			}			
 		}else if(code instanceof Codes.LengthOf){
-			expr = new LinearExpr(prefix+((Codes.LengthOf)code).toString());
+			expr = new LinearExpr(prefix+((Codes.LengthOf)code).target());
 			Codes.LengthOf lengthOf = (Codes.LengthOf)code;
 			((LinearExpr) expr).addVar(BigInteger.ONE, "|"+prefix+lengthOf.operand(0)+"|");
 		}else if(code instanceof Codes.IndexOf){

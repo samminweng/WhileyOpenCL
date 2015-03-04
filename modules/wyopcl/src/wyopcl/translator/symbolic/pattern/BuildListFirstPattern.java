@@ -153,11 +153,12 @@ public class BuildListFirstPattern extends WhileLoopPattern {
 		int index = line;
 		while(index<blk.size()){
 			Code code = blk.get(index);
-			index++;
+			index++;			
 			if(checkAssertOrAssume(code)){
 				//Create the expression and put it into the table.
-				AddCodeToPatternPart(code, "list_capacity");
+				AddCodeToPatternPart(code, "list_assertion");
 				if(code instanceof Codes.If){
+					//Get the list_capacity
 					Codes.If if_code = (Codes.If)code;
 					//Check if the target is the list_size
 					if(this.list_size.equals(prefix+if_code.leftOperand)){						
@@ -167,12 +168,17 @@ public class BuildListFirstPattern extends WhileLoopPattern {
 						this.list_capacity = prefix+if_code.leftOperand;
 					}
 				}
+			}else{
+				if(code instanceof Codes.Return){
+					AddCodeToPatternPart(code, "return");
+				}else{
+					//Create the expression and put it into the table.
+					AddCodeToPatternPart(code, "loop_exit");
+				}
 			}
-			
-		}
+		}		
 		
-		
-		return super.loop_exit(blk, line);
+		return index;
 	}
 	
 

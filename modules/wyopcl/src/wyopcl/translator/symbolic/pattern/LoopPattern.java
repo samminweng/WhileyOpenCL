@@ -199,10 +199,20 @@ public abstract class LoopPattern extends Pattern{
 		while(index<blk.size()){
 			Code code = blk.get(index);
 			index++;
-			//Create the expression and put it into the table.
-			AddCodeToPatternPart(code, "loop_exit");
-		}
+			if(!checkAssertOrAssume(code)){
+				if(code instanceof Codes.Return){
+					AddCodeToPatternPart(code, "return");
+				}else{
+					//Create the expression and put it into the table.
+					AddCodeToPatternPart(code, "loop_exit");
+				}
+			}
+		}	
+		
 		return index;
 	}
+	
+	
+	
 	
 }

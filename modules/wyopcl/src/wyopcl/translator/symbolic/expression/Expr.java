@@ -44,6 +44,7 @@ public class Expr implements Cloneable{
 			if(code instanceof Codes.Const){
 				return ((Codes.Const)code).constant+"";
 			}
+			return this.code.toString();
 		}
 		return null;
 	}
