@@ -75,33 +75,7 @@ public class BoundAnalyzer {
 	//The list of basic block;
 	private List<BasicBlock> list;
 	//The label name of the loop condition
-	private String loop_condition;
-	private class BoundChange{
-		private String name;
-		private boolean isUBIncreasing = false;
-		private boolean isLBDecreasing = false;
-		public BoundChange(String name){
-			this.name = name;
-			this.isUBIncreasing = false;
-			this.isLBDecreasing = false;
-		}
-		
-		public boolean isUBIncreasing() {
-			return isUBIncreasing;
-		}
-
-		public void setUBIncreasing(boolean isIncreasing) {
-			this.isUBIncreasing = isIncreasing;
-		}
-
-		public boolean isLBDecreasing() {
-			return isLBDecreasing;
-		}
-
-		public void setLBDecreasing(boolean isDecreasing) {
-			this.isLBDecreasing = isDecreasing;
-		}		
-	}	
+	private String loop_condition;	
 	//A list of loop variables.
 	private HashMap<String, BoundChange> loop_variables;
 	private boolean isGoto;
@@ -117,10 +91,8 @@ public class BoundAnalyzer {
 		this.list = new ArrayList<BasicBlock>();
 		this.assertOrAssume_label = null;
 		this.symbols = new HashMap<String, Symbol>();
-		//Initialize
-		//this.entry = createBasicBlock("entry", BlockType.ENTRY);
-		createBasicBlock("exit", BlockType.EXIT);
-		//this.exit = createBasicBlock("exit", BlockType.EXIT);
+		//Initialize		
+		createBasicBlock("exit", BlockType.EXIT);		
 		this.current_blk = createBasicBlock("entry", BlockType.ENTRY);
 		this.loop_variables = new HashMap<String, BoundChange>();
 		this.isGoto = false;
@@ -141,39 +113,7 @@ public class BoundAnalyzer {
 		initialize();		
 	}
 
-	private String castDeclarationtoString(FunctionOrMethodDeclaration functionOrMethod){
-		String declaration ="";
-		declaration += functionOrMethod.type().ret() + " "+functionOrMethod.name()+"(";
-		if(!functionOrMethod.name().equals("main")){			
-			boolean isFirst = true;
-			int index=0;
-			for(Type paramType : functionOrMethod.type().params()){
-				//input parameter
-				if(isFirst){
-					declaration += paramType+" "+prefix+index;
-				}else{
-					declaration += ", "+paramType+ " "+prefix+index;
-				}
-				isFirst = false;
-				index++;
-			}		
-		}else{
-			boolean isFirst = true;
-			Type.Record paramType = (Type.Record) functionOrMethod.type().params().get(0);
-			for(Entry<String, Type> entry :paramType.fields().entrySet()){
-				if(isFirst){
-					declaration += entry.getValue() + " "+entry.getKey();
-				}else{
-					declaration += ", " +entry.getValue() + " "+entry.getKey();
-				}
-				isFirst = false;
-			}			
-		}
-		declaration +=")";
-		return declaration;
-	}
-
-
+	
 	/**
 	 * Iterate each bytecode
 	 * @param analyzer
@@ -181,7 +121,7 @@ public class BoundAnalyzer {
 	 */
 	public void iterateByteCode(){		
 		//Print the function declaration
-		writer.println(castDeclarationtoString(functionOrMethod));
+		writer.println(Utils.castDeclarationtoString(functionOrMethod));
 		for(Case mcase : functionOrMethod.cases()){
 			createEntryNode(functionOrMethod.type().params());
 			//Parse each byte-code and add the constraints accordingly.
@@ -195,7 +135,7 @@ public class BoundAnalyzer {
 
 
 	private void createEntryNode(Type paramType, String param, BigInteger min, BigInteger max){
-		if(isIntType(paramType)){
+		if(Utils.isIntType(paramType)){
 			getCurrentBlock().addBounds(param, min, max);
 		}
 	}
@@ -216,35 +156,7 @@ public class BoundAnalyzer {
 	}
 
 
-	/**
-	 * Check if the type is instance of Integer by inferring the type from 
-	 * <code>wyil.Lang.Type</code> objects, including the effective collection types.
-	 * @param type 
-	 * @return true if the type is or contains an integer type. 
-	 */
-	private boolean isIntType(Type type){
-		if(type instanceof Type.Int){
-			return true;
-		}
-
-		if(type instanceof Type.Map){
-			Type.Map map = (Type.Map)type;
-			//Check the type of values in the map.
-			return isIntType(map.key()) || isIntType(map.value());			
-		}
-
-		if(type instanceof Type.List){
-			return isIntType(((Type.List)type).element());
-		}
-
-		if (type instanceof Type.Tuple){
-			//Check the type of value field. 
-			Type element = ((Type.Tuple)type).element(1);
-			return isIntType(element);	
-		}
-
-		return false;
-	}
+	
 
 	/**
 	 * Prints out each bytecode with line number and indentation.
@@ -815,7 +727,7 @@ public class BoundAnalyzer {
 		String operand = prefix+code.operand(0);		
 		putAttribute(target, "type", code.type());
 		//Check if the assigned value is an integer
-		if(isIntType(code.type())){
+		if(Utils.isIntType(code.type())){
 			//Add the constraint 'target = operand'			
 			addConstraint(new Assign(target, operand));
 		}
@@ -863,7 +775,7 @@ public class BoundAnalyzer {
 	 * @param code
 	 */
 	private void analyze(Codes.IndexOf code){
-		if(isIntType((Type) code.type())){
+		if(Utils.isIntType((Type) code.type())){
 			String target = prefix+code.target();
 			String op = prefix+code.operand(0);
 			String index = prefix+code.operand(1);			
@@ -883,7 +795,7 @@ public class BoundAnalyzer {
 
 		Constraint left_c = null;
 		Constraint right_c = null;
-		if(isIntType(code.type)){
+		if(Utils.isIntType(code.type)){
 			switch(code.op){
 			case EQ:
 				left_c = new Equals(left, right);
@@ -957,7 +869,7 @@ public class BoundAnalyzer {
 				String param = prefix+index;
 				String operand = prefix+code.operand(index);
 				//Check parameter type
-				if(isIntType(paramType)){
+				if(Utils.isIntType(paramType)){
 					invokeboundAnalyzer.createEntryNode(paramType, param, bnd.getLower(operand), bnd.getUpper(operand));					
 				}
 				//pass the symbol 
@@ -975,7 +887,7 @@ public class BoundAnalyzer {
 			//put the 'type' attribute of 'return_reg'
 			putAttribute(return_reg, "type", return_type);
 
-			if(isIntType(return_type)){
+			if(Utils.isIntType(return_type)){
 				//propagate the bounds of return value.						
 				addConstraint(new Range(return_reg, bnd.getLower("return"), bnd.getUpper("return")));
 				//Add 'type' attribute
@@ -1032,7 +944,7 @@ public class BoundAnalyzer {
 	private void analyze(Codes.NewList code){
 		String target = prefix+code.target();
 		putAttribute(target, "type", code.type());		
-		if(isIntType(code.type())){
+		if(Utils.isIntType(code.type())){
 			for(int operand: code.operands()){
 				addConstraint(new Union(prefix+code.target(), prefix+operand));				
 			}
@@ -1050,7 +962,7 @@ public class BoundAnalyzer {
 		String retOp = prefix+code.operand;
 		BasicBlock blk = getCurrentBlock();		
 		//Check if the return type is integer.
-		if(isIntType(code.type)){
+		if(Utils.isIntType(code.type)){
 			//Add the 'Equals' constraint to the return (ret) variable.	
 			blk.addConstraint((new Assign("return", retOp)));
 		}		
@@ -1141,7 +1053,7 @@ public class BoundAnalyzer {
 		BasicBlock loopexit = createBasicBlock(branch, BlockType.LOOP_EXIT, loopheader);
 
 		//Check if each element is an integer
-		if(isIntType((Type) code.type)){
+		if(Utils.isIntType((Type) code.type)){
 			String indexOp = prefix+code.indexOperand;
 			putAttribute(indexOp, "type", code.type.element());			
 			String sourceOp = prefix+code.sourceOperand;			
@@ -1224,7 +1136,7 @@ public class BoundAnalyzer {
 		//Add the type att
 		Type type = code.assignedType();
 		putAttribute(target, "type", type);		
-		if(isIntType(code.type())){
+		if(Utils.isIntType(code.type())){
 			//Get the values
 			BigInteger left = (BigInteger)getAttribute(prefix+code.operand(0), "value");
 			BigInteger right = (BigInteger)getAttribute(prefix+code.operand(1), "value");			
@@ -1277,7 +1189,7 @@ public class BoundAnalyzer {
 		int index =1;
 		while(index<code.operands().length){
 			//Consider The values field
-			if(isIntType(map.value())){
+			if(Utils.isIntType(map.value())){
 				addConstraint(new Union(prefix+code.target(), prefix+code.operand(index)));
 			}
 			index+=2;
@@ -1295,7 +1207,7 @@ public class BoundAnalyzer {
 		int index = code.index;
 		if(index%2==1){
 			Type.Tuple tuple = (Tuple) code.type();
-			if(isIntType(tuple.element(index))){
+			if(Utils.isIntType(tuple.element(index))){
 				addConstraint(new Equals(prefix+code.target(), prefix+code.operand(0)));
 			}
 		}
@@ -1312,7 +1224,7 @@ public class BoundAnalyzer {
 		Type.Tuple tuple = code.type();
 		int index = 1;
 		while(index<code.operands().length){
-			if(isIntType(tuple.element(index))){
+			if(Utils.isIntType(tuple.element(index))){
 				addConstraint(new Union(prefix+code.target(), prefix+code.operand(index)));
 			}
 			index+=2;

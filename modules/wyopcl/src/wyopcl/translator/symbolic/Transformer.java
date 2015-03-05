@@ -206,10 +206,10 @@ public class Transformer extends Object{
 		int eleOp = indexof.target();
 		//Get the assignment of list
 		Codes.Assign list_assign = (Assign) list_update.get(list_update.size()-1);
-		Collection<Integer> operands = new ArrayList();
+		Collection<Integer> operands = new ArrayList<Integer>();
 		operands.add(reg_list_size);
 		//Create an update byte-code, update %7[%9] = %32 : [int] -> [int]
-		blk.add(Codes.Update(list_assign.type(), list_assign.target(), operands, eleOp, list_assign.assignedType(), new ArrayList()));
+		blk.add(Codes.Update(list_assign.type(), list_assign.target(), operands, eleOp, list_assign.assignedType(), new ArrayList<String>()));
 		//Add the 'list_size_update' part
 		//Create an constant 1, const %34 = 1 : int 
 		int reg_one = p.factory.getAvailableReg();
