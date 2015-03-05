@@ -27,6 +27,7 @@ import wyil.lang.Codes.Assert;
 import wyil.lang.Codes.UnaryOperatorKind;
 import wyil.lang.Constant;
 import wyil.lang.Type;
+import wyil.lang.Type.EffectiveList;
 import wyil.lang.Type.Record;
 import wyil.lang.WyilFile;
 import wyil.lang.Type.Tuple;
@@ -81,8 +82,9 @@ public class BoundAnalyzer {
 	private boolean isGoto;
 	private final PrintWriter writer;
 
-	//The symbol table of variables
-	private HashMap<String, Symbol> symbols;
+	//Stores all the extracted symbols.
+	private SymbolController controller;
+	
 	//The line number
 	private int line;
 
@@ -90,7 +92,7 @@ public class BoundAnalyzer {
 		//Initialize the variables
 		this.list = new ArrayList<BasicBlock>();
 		this.assertOrAssume_label = null;
-		this.symbols = new HashMap<String, Symbol>();
+		this.controller = new SymbolController();
 		//Initialize		
 		createBasicBlock("exit", BlockType.EXIT);		
 		this.current_blk = createBasicBlock("entry", BlockType.ENTRY);
@@ -196,9 +198,9 @@ public class BoundAnalyzer {
 			writer.print("Bounds at the "+(line-1)+"th line number of function "+functionOrMethod.name()+":\n");
 		}
 
-		//Sort the symbol tables		
-		List<Symbol> sortedSymbols = new ArrayList<Symbol>(symbols.values());
-		Collections.sort(sortedSymbols);
+				
+/*		List<Symbol> sortedSymbols = new ArrayList<Symbol>(symbols.values());
+		Collections.sort(sortedSymbols);*/
 		//Print out the type
 		/*for(Symbol symbol : sortedSymbols){
 			String str_symbols = "";
@@ -209,7 +211,9 @@ public class BoundAnalyzer {
 			str_symbols += "\ttype("+name+")\t= "+type+"\n";			
 			System.out.print(str_symbols);
 		}*/
-
+		//Sort the symbol tables
+		List<Symbol> sortedSymbols = controller.sortedSymbols();
+		
 		//Print out the bounds
 		for(Symbol symbol : sortedSymbols){
 			String str_symbols = "";
@@ -524,45 +528,7 @@ public class BoundAnalyzer {
 		getCurrentBlock().addConstraint(c);		
 	}
 
-	/**
-	 * Get the symbol info for a variable.
-	 * @param name
-	 * @return
-	 */
-	private Symbol getSymbol(String name){
-		if(!symbols.containsKey(name)){
-			Symbol var = new Symbol(name);
-			symbols.put(name, var);
-		}
-		return symbols.get(name);
-	}
 
-	/**
-	 * Add the variable attribute to the hashmap.
-	 * @param name the variable name
-	 * @param att_name the attribute name
-	 * @param att_value the attribute value
-	 * @return
-	 */
-	private void putAttribute(String name, String att_name, Object att_value){
-		Symbol symbol = getSymbol(name);
-		symbol.setAttribute(att_name, att_value);
-	}
-
-	public void putSymbol(String name, Symbol symbol){
-		symbols.put(name, symbol);
-	}
-
-	/**
-	 * Get the attribute of a variable
-	 * @param name
-	 * @param att_name
-	 * @return the attribute value. Return null if the variable does not contain the attribute.
-	 */
-	private Object getAttribute(String name, String att_name){
-		Symbol symbol = getSymbol(name);
-		return symbol.getAttribute(att_name);
-	}
 
 	/**
 	 * Branches the current block and adds the 
@@ -725,7 +691,7 @@ public class BoundAnalyzer {
 	private void analyze(Codes.Assign code){	
 		String target = prefix+code.target();
 		String operand = prefix+code.operand(0);		
-		putAttribute(target, "type", code.type());
+		controller.putAttribute(target, "type", code.type());
 		//Check if the assigned value is an integer
 		if(Utils.isIntType(code.type())){
 			//Add the constraint 'target = operand'			
@@ -734,11 +700,9 @@ public class BoundAnalyzer {
 
 		if(code.type() instanceof Type.List){
 			//Get the 'size' attribute from 
-			BigInteger size = (BigInteger) getAttribute(operand, "size");
-			putAttribute(target, "size", size);
+			BigInteger size = (BigInteger) controller.getAttribute(operand, "size");
+			controller.putAttribute(target, "size", size);
 		}
-
-
 	}
 
 
@@ -751,20 +715,20 @@ public class BoundAnalyzer {
 		Constant constant = code.constant;
 		String target = prefix+code.target();
 		//Add type attribute
-		putAttribute(target, "type", code.assignedType());
+		controller.putAttribute(target, "type", code.assignedType());
 
 		//Check the value is an Constant.Integer
 		if(constant instanceof Constant.Integer){
 			//Add the 'Const' constraint.
 			BigInteger value = ((Constant.Integer)constant).value;
 			addConstraint(new Const(target, value));
-			putAttribute(target, "value", value);
+			controller.putAttribute(target, "value", value);
 		}
 		
 		if(constant instanceof Constant.List){
 			List<Constant> list = ((Constant.List)constant).values;
-			putAttribute(target, "value", list);
-			putAttribute(target, "size", BigInteger.valueOf(list.size()));
+			controller.putAttribute(target, "value", list);
+			controller.putAttribute(target, "size", BigInteger.valueOf(list.size()));
 		}
 		
 
@@ -873,10 +837,10 @@ public class BoundAnalyzer {
 					invokeboundAnalyzer.createEntryNode(paramType, param, bnd.getLower(operand), bnd.getUpper(operand));					
 				}
 				//pass the symbol 
-				Symbol symbol = getSymbol(operand).clone();
+				Symbol symbol = controller.getSymbol(operand).clone();
 				//Update the name
 				symbol.setName(param);
-				invokeboundAnalyzer.putSymbol(param, symbol);
+				invokeboundAnalyzer.controller.putSymbol(param, symbol);
 				index++;
 			}
 			invokeboundAnalyzer.iterateByteCode();						
@@ -885,19 +849,19 @@ public class BoundAnalyzer {
 			String return_reg = prefix+code.target();
 			Type return_type = code.type().ret();
 			//put the 'type' attribute of 'return_reg'
-			putAttribute(return_reg, "type", return_type);
+			controller.putAttribute(return_reg, "type", return_type);
 
 			if(Utils.isIntType(return_type)){
 				//propagate the bounds of return value.						
 				addConstraint(new Range(return_reg, bnd.getLower("return"), bnd.getUpper("return")));
 				//Add 'type' attribute
-				putAttribute(return_reg, "type", return_type);
+				controller.putAttribute(return_reg, "type", return_type);
 			}
 
 			//Add 'size' attribute
 			if(return_type instanceof Type.List){
-				BigInteger size = (BigInteger) invokeboundAnalyzer.getAttribute("return", "size");
-				putAttribute(return_reg, "size", size);
+				BigInteger size = (BigInteger) invokeboundAnalyzer.controller.getAttribute("return", "size");
+				controller.putAttribute(return_reg, "size", size);
 			}
 
 
@@ -943,14 +907,14 @@ public class BoundAnalyzer {
 	 */
 	private void analyze(Codes.NewList code){
 		String target = prefix+code.target();
-		putAttribute(target, "type", code.type());		
+		controller.putAttribute(target, "type", code.type());		
 		if(Utils.isIntType(code.type())){
 			for(int operand: code.operands()){
 				addConstraint(new Union(prefix+code.target(), prefix+operand));				
 			}
 		}		
 		//Add the 'size' attribute
-		putAttribute(target, "size", BigInteger.valueOf(code.operands().length));
+		controller.putAttribute(target, "size", BigInteger.valueOf(code.operands().length));
 	}
 
 	/**
@@ -967,7 +931,7 @@ public class BoundAnalyzer {
 			blk.addConstraint((new Assign("return", retOp)));
 		}		
 		Type type = code.type;
-		putAttribute("return", "type", type);
+		controller.putAttribute("return", "type", type);
 		if(type instanceof Type.List){
 			//Get 'size' att from ret op
 			BigInteger size = (BigInteger) getAttribute(retOp, "size");
@@ -978,6 +942,9 @@ public class BoundAnalyzer {
 		setCurrentBlock(null);
 		isGoto = true;
 	}
+
+	
+
 
 	private void analyze(Codes.ListOperator code){		
 		String target = prefix+code.target();
@@ -1003,9 +970,27 @@ public class BoundAnalyzer {
 			internalFailure("Not implemented!", "Analyzer.java", null);
 			break;
 		}
+	}
 
-
-
+	/**
+	 * Put the attribute and its values into the hashmap
+	 * @param target
+	 * @param att_name
+	 * @param att_value
+	 */
+	public void putAttribute(String target, String att_name, Object att_value) {
+		controller.putAttribute(target, att_name, att_value);
+	}
+	
+	/**
+	 * Get 
+	 * @param retOp
+	 * @param string
+	 * @return
+	 */
+	public Object getAttribute(String target, String att_name) {
+		// TODO Auto-generated method stub
+		return controller.getAttribute(target, att_name);
 	}
 
 
