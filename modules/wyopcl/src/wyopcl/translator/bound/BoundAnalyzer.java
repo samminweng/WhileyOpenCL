@@ -110,7 +110,7 @@ public class BoundAnalyzer {
 	 */
 	public void iterateByteCode(){		
 		//Print the function declaration
-		writer.println(Utils.castDeclarationtoString(functionOrMethod));
+		//writer.println(Utils.castDeclarationtoString(functionOrMethod));
 		blk_ctrl.createEntryNode(functionOrMethod.type().params());
 		//Parse each byte-code and add the constraints accordingly.
 		for(Code code: code_blk){
@@ -430,6 +430,51 @@ public class BoundAnalyzer {
 	}
 
 	/**
+	 * Propagate the bounds to the input parametes of a function call.
+	 * @param invokeboundAnalyzer the analyzer of invoked function.
+	 * @param operands the operands of calling function
+	 * @param bnd the bounds of calling function
+	 */
+	private void propagateBoundsToFunctionCall(BoundAnalyzer invokeboundAnalyzer, int[] operands, Bounds bnd){
+		int index = 0;
+		//Pass the bounds of input parameters.
+		for(Type paramType: functionOrMethod.type().params()){
+			String param = prefix+index;
+			String operand = prefix+operands[index];
+			//Check parameter type
+			if(Utils.isIntType(paramType)){
+				invokeboundAnalyzer.blk_ctrl.createEntryNode(paramType, param, bnd.getLower(operand), bnd.getUpper(operand));					
+			}
+			//pass the symbol 
+			Symbol symbol = sym_ctrl.getSymbol(operand).clone();
+			//Update the name
+			symbol.setName(param);
+			invokeboundAnalyzer.sym_ctrl.putSymbol(param, symbol);
+			index++;
+		}
+	}
+	
+	private void propagateBoundsFromFunctionCall(BoundAnalyzer invokeboundAnalyzer, String ret_reg, Type ret_type, Bounds bnd){		
+		//put the 'type' attribute of 'return_reg'
+		sym_ctrl.putAttribute(ret_reg, "type", ret_type);
+
+		if(Utils.isIntType(ret_type)){
+			//propagate the bounds of return value.						
+			addConstraint(new Range(ret_reg, bnd.getLower("return"), bnd.getUpper("return")));
+			//Add 'type' attribute
+			sym_ctrl.putAttribute(ret_reg, "type", ret_type);
+		}
+
+		//Add 'size' attribute
+		if(ret_type instanceof Type.List){
+			BigInteger size = (BigInteger) invokeboundAnalyzer.sym_ctrl.getAttribute("return", "size");
+			sym_ctrl.putAttribute(ret_reg, "size", size);
+		}
+		
+	}
+	
+	
+	/**
 	 *Parses the invoke bytecode and adds the constraints to the list.
 	 * The possible constraints include: none....
 	 * @param code
@@ -440,43 +485,13 @@ public class BoundAnalyzer {
 			//Infer the bounds						
 			Bounds bnd = this.inferBounds(false);
 			List<Code> code_blk = Utils.getCodeBlock(functionOrMethod);
+			//Create the bound analyzer for the invoked function.
 			BoundAnalyzer invokeboundAnalyzer = new BoundAnalyzer(depth+1, config, functionOrMethod, module, writer, code_blk);
-			int index = 0;
-			//Pass the bounds of input parameters.
-			for(Type paramType: functionOrMethod.type().params()){
-				String param = prefix+index;
-				String operand = prefix+code.operand(index);
-				//Check parameter type
-				if(Utils.isIntType(paramType)){
-					invokeboundAnalyzer.blk_ctrl.createEntryNode(paramType, param, bnd.getLower(operand), bnd.getUpper(operand));					
-				}
-				//pass the symbol 
-				Symbol symbol = sym_ctrl.getSymbol(operand).clone();
-				//Update the name
-				symbol.setName(param);
-				invokeboundAnalyzer.sym_ctrl.putSymbol(param, symbol);
-				index++;
-			}
-			invokeboundAnalyzer.iterateByteCode();						
+			propagateBoundsToFunctionCall(invokeboundAnalyzer, code.operands(), bnd);
+			invokeboundAnalyzer.iterateByteCode();
 			//Infer the bounds at the end of invoked function.
-			bnd = invokeboundAnalyzer.inferBounds(true);
-			String return_reg = prefix+code.target();
-			Type return_type = code.type().ret();
-			//put the 'type' attribute of 'return_reg'
-			sym_ctrl.putAttribute(return_reg, "type", return_type);
-
-			if(Utils.isIntType(return_type)){
-				//propagate the bounds of return value.						
-				addConstraint(new Range(return_reg, bnd.getLower("return"), bnd.getUpper("return")));
-				//Add 'type' attribute
-				sym_ctrl.putAttribute(return_reg, "type", return_type);
-			}
-
-			//Add 'size' attribute
-			if(return_type instanceof Type.List){
-				BigInteger size = (BigInteger) invokeboundAnalyzer.sym_ctrl.getAttribute("return", "size");
-				sym_ctrl.putAttribute(return_reg, "size", size);
-			}
+			Bounds ret_bnd = invokeboundAnalyzer.inferBounds(true);			
+			propagateBoundsFromFunctionCall(invokeboundAnalyzer, prefix+code.target(), code.type().ret(), ret_bnd);
 			invokeboundAnalyzer = null;
 		}
 	}
