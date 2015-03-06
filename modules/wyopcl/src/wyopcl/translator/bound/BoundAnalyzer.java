@@ -71,10 +71,7 @@ public class BoundAnalyzer {
 	//The boolean flag is used to show whether the code is inside an assertion or assumption.	
 	private String assertOrAssume_label;
 	private final int depth;
-	//The variables are used in the control flow graph (CFG).	
-	private BasicBlock current_blk;		
-	//The list of basic block;
-	private List<BasicBlock> list;
+	
 	//The label name of the loop condition
 	private String loop_condition;	
 	//A list of loop variables.
@@ -83,19 +80,16 @@ public class BoundAnalyzer {
 	private final PrintWriter writer;
 
 	//Stores all the extracted symbols.
-	private SymbolController controller;
-	
+	private SymbolController sym_ctrl;
+	private BlockController blk_ctrl;
 	//The line number
 	private int line;
 
 	private void initialize(){
 		//Initialize the variables
-		this.list = new ArrayList<BasicBlock>();
 		this.assertOrAssume_label = null;
-		this.controller = new SymbolController();
-		//Initialize		
-		createBasicBlock("exit", BlockType.EXIT);		
-		this.current_blk = createBasicBlock("entry", BlockType.ENTRY);
+		this.sym_ctrl = new SymbolController();
+		this.blk_ctrl = new BlockController();
 		this.loop_variables = new HashMap<String, BoundChange>();
 		this.isGoto = false;
 		this.line = 0;
@@ -115,7 +109,7 @@ public class BoundAnalyzer {
 		initialize();		
 	}
 
-	
+
 	/**
 	 * Iterate each bytecode
 	 * @param analyzer
@@ -125,7 +119,7 @@ public class BoundAnalyzer {
 		//Print the function declaration
 		writer.println(Utils.castDeclarationtoString(functionOrMethod));
 		for(Case mcase : functionOrMethod.cases()){
-			createEntryNode(functionOrMethod.type().params());
+			blk_ctrl.createEntryNode(functionOrMethod.type().params());
 			//Parse each byte-code and add the constraints accordingly.
 			for(Block.Entry entry :mcase.body()){
 				//Get the Block.Entry
@@ -135,30 +129,6 @@ public class BoundAnalyzer {
 		}
 	}
 
-
-	private void createEntryNode(Type paramType, String param, BigInteger min, BigInteger max){
-		if(Utils.isIntType(paramType)){
-			getCurrentBlock().addBounds(param, min, max);
-		}
-	}
-
-	/**
-	 * Creates the entry node
-	 * @param paramTypes
-	 */
-	private void createEntryNode(List<Type> paramTypes){
-		int index = 0;
-		for(Type paramType: paramTypes){
-			createEntryNode(paramType, prefix+index, null, null);
-			index++;
-		}
-		//Create the default basic block and adds it to the child of entry node.
-		BasicBlock blk = createBasicBlock("code", BlockType.BLOCK, getCurrentBlock());
-		setCurrentBlock(blk);
-	}
-
-
-	
 
 	/**
 	 * Prints out each bytecode with line number and indentation.
@@ -198,8 +168,8 @@ public class BoundAnalyzer {
 			writer.print("Bounds at the "+(line-1)+"th line number of function "+functionOrMethod.name()+":\n");
 		}
 
-				
-/*		List<Symbol> sortedSymbols = new ArrayList<Symbol>(symbols.values());
+
+		/*		List<Symbol> sortedSymbols = new ArrayList<Symbol>(symbols.values());
 		Collections.sort(sortedSymbols);*/
 		//Print out the type
 		/*for(Symbol symbol : sortedSymbols){
@@ -212,8 +182,8 @@ public class BoundAnalyzer {
 			System.out.print(str_symbols);
 		}*/
 		//Sort the symbol tables
-		List<Symbol> sortedSymbols = controller.sortedSymbols();
-		
+		List<Symbol> sortedSymbols = sym_ctrl.sortedSymbols();
+
 		//Print out the bounds
 		for(Symbol symbol : sortedSymbols){
 			String str_symbols = "";
@@ -261,7 +231,7 @@ public class BoundAnalyzer {
 		writer.println("Consistency="+bnd.checkBoundConsistency());		
 	}
 
-	
+
 	/**
 	 * Infer the bounds for a block. 
 	 * @param blk the target block.
@@ -296,7 +266,7 @@ public class BoundAnalyzer {
 						loop_variables.put(loop_var, boundChange);
 					}					
 				}
-				
+
 				//Lower bounds
 				BigInteger lower_before = bnd_before.getLower(loop_var);
 				BigInteger lower_after = bnd_after.getLower(loop_var);
@@ -309,7 +279,7 @@ public class BoundAnalyzer {
 						loop_variables.put(loop_var, boundChange);
 					}					
 				}
-				
+
 				//After three iterations, the bounds is still increasing.
 				if(iteration%3==0){
 					//Widen the upper bound
@@ -354,8 +324,9 @@ public class BoundAnalyzer {
 	 * @return the bounds
 	 */
 	public Bounds inferBounds(boolean isEnd){
-		//Sort the blks
-		Collections.sort(list);
+		//Sort the blks		
+		//Collections.sort(list);
+		blk_ctrl.sortedList();
 		//The least common multiple of naive (3) and graduate (12) widening strategies plus one. 
 		int MaxIteration = 13;
 		boolean isFixedPointed = false;
@@ -372,7 +343,7 @@ public class BoundAnalyzer {
 			//If bounds has changed, then isChanged = false.
 			boolean isChanged = false;
 			//Iterate all the blocks, except Exit block.
-			for(BasicBlock blk : list){
+			for(BasicBlock blk : blk_ctrl.getList()){
 				//Take the union of all blocks for exit block
 				if(!blk.getType().equals(BlockType.EXIT)){
 					//Take the union of parents' bounds.
@@ -389,16 +360,16 @@ public class BoundAnalyzer {
 			}
 			iteration++;
 		}
-		
+
 		//Take the union of all blocks to produce the functional result 
-		BasicBlock exit_blk = getBasicBlock("exit", BlockType.EXIT);
-		for(BasicBlock blk: list){
+		BasicBlock exit_blk = blk_ctrl.getBasicBlock("exit", BlockType.EXIT);
+		for(BasicBlock blk: blk_ctrl.getList()){
 			//Consider the consistent bounds without taking into the inconsistent bounds.
 			if(blk.isConsistent()&&blk.getType()!= BlockType.EXIT){
 				exit_blk.unionBounds(blk);					
 			}			
 		}
-		
+
 		Bounds bnd = exit_blk.getBounds();
 		//check the verbose to determine whether to print out the CFG
 		if(config.isVerbose()){
@@ -408,89 +379,6 @@ public class BoundAnalyzer {
 		return bnd;
 	}
 
-	/**
-	 * Keep track of the current basic block
-	 * @return
-	 */
-	private BasicBlock getCurrentBlock(){
-		//If the current block is null, throw out an Runtime exception
-		if(current_blk == null){
-			//throw new RuntimeException("Current block is null.");
-			//current_blk = entry;
-		}
-
-		return current_blk;
-	}
-
-	private void setCurrentBlock(BasicBlock blk){
-		current_blk = blk;
-	}
-
-	/**
-	 * Iterates over all nodes in a list to get the block,
-	 * whose branch name is matched with label.
-	 * @param label
-	 * @return blk
-	 */
-	private BasicBlock getBasicBlock(String label){
-		BasicBlock blk = getBasicBlock(label, BlockType.BLOCK);
-		if(blk == null){
-			//Get the block of If branch
-			blk = getBasicBlock(label, BlockType.IF_BRANCH);
-		}
-		if(blk == null){
-			//Get the block of Loop Exit
-			blk = getBasicBlock(label, BlockType.LOOP_EXIT);
-		}
-		return blk;
-
-
-	}
-
-	/***
-	 * Finds the block by the branch name and block types
-	 * @param label
-	 * @param type
-	 * @return
-	 */
-	private BasicBlock getBasicBlock(String label, BlockType type){
-		for(BasicBlock blk : list){
-			if(blk.getBranch().equals(label)){
-				if(blk.getType().equals(type)){
-					return blk;
-				}
-			}
-		}		
-		return null;
-
-	}
-
-	/**
-	 * Create a basic block with the specific label name
-	 * @param label the branch name
-	 * @param type the blk type
-	 * @param parents the parent blk
-	 * @return the blk
-	 */
-	private BasicBlock createBasicBlock(String label, BlockType type, BasicBlock... parents){
-		BasicBlock blk = new BasicBlock(label, type);
-		//Check if the block exists
-		if(!list.contains(blk)){
-			list.add(blk);
-			BasicBlock parent = parents.length > 0 ? parents[0] : null;
-			if(parent != null){
-				parent.addChild(blk);
-			}
-			return blk;
-		}else{
-			for(BasicBlock block: list){
-				if(blk.equals(block)){
-					return block;
-				}				
-			}
-		}
-		return null;
-	}	
 
 	/**
 	 * Outputs the control flow graphs.
@@ -498,10 +386,10 @@ public class BoundAnalyzer {
 	 */
 	private void printCFG(String func_name){
 		//Sort the blks.
-		Collections.sort(list);
+		blk_ctrl.sortedList();
 		String dot_string= "digraph "+func_name+"{\n";		
 
-		for(BasicBlock blk: list){
+		for(BasicBlock blk: blk_ctrl.getList()){
 			if(!blk.isLeaf()){
 				for(BasicBlock child: blk.getChildNodes()){
 					dot_string += "\""+blk.getBranch()+" [" +blk.getType()+"]\"->\""+ child.getBranch() +" ["+child.getType() + "]\";\n";
@@ -525,53 +413,8 @@ public class BoundAnalyzer {
 	 * @param c
 	 */
 	private void addConstraint(Constraint c){		
-		getCurrentBlock().addConstraint(c);		
+		blk_ctrl.getCurrentBlock().addConstraint(c);		
 	}
-
-
-
-	/**
-	 * Branches the current block and adds the 
-	 * if_then_else blocks. And set the current
-	 * block to the left one.
-	 * @param new_label the name of new branch.
-	 * @param c constraint
-	 */
-	private void createIfElseBranch(String new_label, Constraint c, Constraint neg_c){
-		BasicBlock c_blk = getCurrentBlock();		
-		//Branch out the block 
-		//The left block does not have the name
-		BasicBlock leftBlock = createBasicBlock(new_label, BlockType.ELSE_BRANCH, c_blk);
-		BasicBlock rightBlock = createBasicBlock(new_label, BlockType.IF_BRANCH, c_blk);
-
-		//Add the constraint to the left block
-		leftBlock.addConstraint(neg_c);
-		rightBlock.addConstraint(c);						
-		//Set the current block to the left
-		setCurrentBlock(leftBlock);
-	}
-
-
-	/**
-	 * Branches the current block and adds the loop header, loop body and loop exit. And set the current
-	 * block to the .
-	 * @param new_label the name of new branch.
-	 * @param c constraint
-	 */
-	private void createLoopStructure(String new_label, Constraint c, Constraint neg_c){
-		BasicBlock c_blk = getCurrentBlock();
-		//Check whether to add if-else blocks or loop-condition blocks.
-		BasicBlock loop_body = createBasicBlock(new_label, BlockType.LOOP_BODY, c_blk);
-		BasicBlock loop_exit = createBasicBlock(new_label, BlockType.LOOP_EXIT, c_blk);
-		//put the opposite constraint to current blk(loopbody)			
-		loop_body.addConstraint(neg_c);	
-		//put the original constraint to the loop_exit			
-		loop_exit.addConstraint(c);	
-		setCurrentBlock(loop_body);
-		//Reset the loop condition flag.
-		loop_condition = null;
-	}
-
 
 	/**
 	 * Checks the type of the wyil code and dispatches the code to the analyzer for
@@ -691,7 +534,7 @@ public class BoundAnalyzer {
 	private void analyze(Codes.Assign code){	
 		String target = prefix+code.target();
 		String operand = prefix+code.operand(0);		
-		controller.putAttribute(target, "type", code.type());
+		sym_ctrl.putAttribute(target, "type", code.type());
 		//Check if the assigned value is an integer
 		if(Utils.isIntType(code.type())){
 			//Add the constraint 'target = operand'			
@@ -700,8 +543,8 @@ public class BoundAnalyzer {
 
 		if(code.type() instanceof Type.List){
 			//Get the 'size' attribute from 
-			BigInteger size = (BigInteger) controller.getAttribute(operand, "size");
-			controller.putAttribute(target, "size", size);
+			BigInteger size = (BigInteger) sym_ctrl.getAttribute(operand, "size");
+			sym_ctrl.putAttribute(target, "size", size);
 		}
 	}
 
@@ -715,22 +558,22 @@ public class BoundAnalyzer {
 		Constant constant = code.constant;
 		String target = prefix+code.target();
 		//Add type attribute
-		controller.putAttribute(target, "type", code.assignedType());
+		sym_ctrl.putAttribute(target, "type", code.assignedType());
 
 		//Check the value is an Constant.Integer
 		if(constant instanceof Constant.Integer){
 			//Add the 'Const' constraint.
 			BigInteger value = ((Constant.Integer)constant).value;
 			addConstraint(new Const(target, value));
-			controller.putAttribute(target, "value", value);
+			sym_ctrl.putAttribute(target, "value", value);
 		}
-		
+
 		if(constant instanceof Constant.List){
 			List<Constant> list = ((Constant.List)constant).values;
-			controller.putAttribute(target, "value", list);
-			controller.putAttribute(target, "size", BigInteger.valueOf(list.size()));
+			sym_ctrl.putAttribute(target, "value", list);
+			sym_ctrl.putAttribute(target, "size", BigInteger.valueOf(list.size()));
 		}
-		
+
 
 	}
 	/**
@@ -801,13 +644,13 @@ public class BoundAnalyzer {
 
 			}			
 		}
-		
+
 		if(loop_condition != null){
-			createLoopStructure(code.target, left_c, right_c);
+			blk_ctrl.createLoopStructure(code.target, left_c, right_c);
 		}else{
-			createIfElseBranch(code.target, left_c, right_c);
+			blk_ctrl.createIfElseBranch(code.target, left_c, right_c);
 		}
-		
+
 		//Instead of creating if-else branches, we put the condition to the current blk
 		//	BasicBlock current_blk = getCurrentBlock();
 		//	current_blk.addConstraint(left_c);				
@@ -834,13 +677,13 @@ public class BoundAnalyzer {
 				String operand = prefix+code.operand(index);
 				//Check parameter type
 				if(Utils.isIntType(paramType)){
-					invokeboundAnalyzer.createEntryNode(paramType, param, bnd.getLower(operand), bnd.getUpper(operand));					
+					invokeboundAnalyzer.blk_ctrl.createEntryNode(paramType, param, bnd.getLower(operand), bnd.getUpper(operand));					
 				}
 				//pass the symbol 
-				Symbol symbol = controller.getSymbol(operand).clone();
+				Symbol symbol = sym_ctrl.getSymbol(operand).clone();
 				//Update the name
 				symbol.setName(param);
-				invokeboundAnalyzer.controller.putSymbol(param, symbol);
+				invokeboundAnalyzer.sym_ctrl.putSymbol(param, symbol);
 				index++;
 			}
 			invokeboundAnalyzer.iterateByteCode();						
@@ -849,19 +692,19 @@ public class BoundAnalyzer {
 			String return_reg = prefix+code.target();
 			Type return_type = code.type().ret();
 			//put the 'type' attribute of 'return_reg'
-			controller.putAttribute(return_reg, "type", return_type);
+			sym_ctrl.putAttribute(return_reg, "type", return_type);
 
 			if(Utils.isIntType(return_type)){
 				//propagate the bounds of return value.						
 				addConstraint(new Range(return_reg, bnd.getLower("return"), bnd.getUpper("return")));
 				//Add 'type' attribute
-				controller.putAttribute(return_reg, "type", return_type);
+				sym_ctrl.putAttribute(return_reg, "type", return_type);
 			}
 
 			//Add 'size' attribute
 			if(return_type instanceof Type.List){
-				BigInteger size = (BigInteger) invokeboundAnalyzer.controller.getAttribute("return", "size");
-				controller.putAttribute(return_reg, "size", size);
+				BigInteger size = (BigInteger) invokeboundAnalyzer.sym_ctrl.getAttribute("return", "size");
+				sym_ctrl.putAttribute(return_reg, "size", size);
 			}
 
 
@@ -885,17 +728,17 @@ public class BoundAnalyzer {
 			}						
 		}else{
 			//Get the target blk. If it is null, then create a new block.
-			BasicBlock blk = getBasicBlock(label);
+			BasicBlock blk = blk_ctrl.getBasicBlock(label);
 			if(blk == null){
-				blk = createBasicBlock(label, BlockType.BLOCK);
+				blk = blk_ctrl.createBasicBlock(label, BlockType.BLOCK);
 			}
 
 			if(!isGoto){
-				getCurrentBlock().addChild(blk);
+				blk_ctrl.getCurrentBlock().addChild(blk);
 			}
 
 			//Switch the current block
-			setCurrentBlock(blk);
+			blk_ctrl.setCurrentBlock(blk);
 			isGoto = false;
 		}
 
@@ -907,14 +750,14 @@ public class BoundAnalyzer {
 	 */
 	private void analyze(Codes.NewList code){
 		String target = prefix+code.target();
-		controller.putAttribute(target, "type", code.type());		
+		sym_ctrl.putAttribute(target, "type", code.type());		
 		if(Utils.isIntType(code.type())){
 			for(int operand: code.operands()){
 				addConstraint(new Union(prefix+code.target(), prefix+operand));				
 			}
 		}		
 		//Add the 'size' attribute
-		controller.putAttribute(target, "size", BigInteger.valueOf(code.operands().length));
+		sym_ctrl.putAttribute(target, "size", BigInteger.valueOf(code.operands().length));
 	}
 
 	/**
@@ -924,41 +767,38 @@ public class BoundAnalyzer {
 	private void analyze(Codes.Return code){		
 		//Get the return operand
 		String retOp = prefix+code.operand;
-		BasicBlock blk = getCurrentBlock();		
+		BasicBlock blk = blk_ctrl.getCurrentBlock();		
 		//Check if the return type is integer.
 		if(Utils.isIntType(code.type)){
 			//Add the 'Equals' constraint to the return (ret) variable.	
 			blk.addConstraint((new Assign("return", retOp)));
 		}		
 		Type type = code.type;
-		controller.putAttribute("return", "type", type);
+		sym_ctrl.putAttribute("return", "type", type);
 		if(type instanceof Type.List){
 			//Get 'size' att from ret op
-			BigInteger size = (BigInteger) getAttribute(retOp, "size");
-			putAttribute("return", "size", size);
+			BigInteger size = (BigInteger)sym_ctrl.getAttribute(retOp, "size");
+			sym_ctrl.putAttribute("return", "size", size);
 		}
 		//Connect the current block with exit block.		
-		blk.addChild(getBasicBlock("exit", BlockType.EXIT));
-		setCurrentBlock(null);
+		blk.addChild(blk_ctrl.getBasicBlock("exit", BlockType.EXIT));
+		blk_ctrl.setCurrentBlock(null);
 		isGoto = true;
 	}
 
-	
-
-
 	private void analyze(Codes.ListOperator code){		
 		String target = prefix+code.target();
-		putAttribute(target, "type", code.type());	
+		sym_ctrl.putAttribute(target, "type", code.type());	
 		switch(code.kind){
 		case APPEND:
 			BigInteger size = BigInteger.ZERO;
 			for(int operand : code.operands()){
 				String op = prefix+operand;
-				size = size.add((BigInteger) getAttribute(op, "size"));
+				size = size.add((BigInteger)sym_ctrl.getAttribute(op, "size"));
 				addConstraint(new Equals(target, prefix+operand));
 			}
 			//put 'size' attribute 
-			putAttribute(target, "size", size);			
+			sym_ctrl.putAttribute(target, "size", size);			
 			break;
 		case LEFT_APPEND:
 
@@ -977,21 +817,21 @@ public class BoundAnalyzer {
 	 * @param target
 	 * @param att_name
 	 * @param att_value
-	 */
+	 *//*
 	public void putAttribute(String target, String att_name, Object att_value) {
-		controller.putAttribute(target, att_name, att_value);
-	}
-	
+		sym_ctrl.putAttribute(target, att_name, att_value);
+	}*/
+
 	/**
 	 * Get 
 	 * @param retOp
 	 * @param string
 	 * @return
-	 */
+	 *//*
 	public Object getAttribute(String target, String att_name) {
 		// TODO Auto-generated method stub
-		return controller.getAttribute(target, att_name);
-	}
+		return sym_ctrl.getAttribute(target, att_name);
+	}*/
 
 
 	/**
@@ -1031,23 +871,23 @@ public class BoundAnalyzer {
 	private void analyze(Codes.ForAll code){		
 		String label = code.target;
 		//Creates a loop structure, including the loop header, loop body and loop exit
-		BasicBlock loopheader = createBasicBlock(label, BlockType.LOOP_HEADER, getCurrentBlock());
+		BasicBlock loopheader = blk_ctrl.createBasicBlock(label, BlockType.LOOP_HEADER, blk_ctrl.getCurrentBlock());
 		int blk_num = Integer.parseInt(label.split("blklab")[1])+1;
 		String branch = "blklab"+blk_num;
-		BasicBlock loopbody = createBasicBlock(branch, BlockType.LOOP_BODY, loopheader);
-		BasicBlock loopexit = createBasicBlock(branch, BlockType.LOOP_EXIT, loopheader);
+		BasicBlock loopbody = blk_ctrl.createBasicBlock(branch, BlockType.LOOP_BODY, loopheader);
+		BasicBlock loopexit = blk_ctrl.createBasicBlock(branch, BlockType.LOOP_EXIT, loopheader);
 
 		//Check if each element is an integer
 		if(Utils.isIntType((Type) code.type)){
 			String indexOp = prefix+code.indexOperand;
-			putAttribute(indexOp, "type", code.type.element());			
+			sym_ctrl.putAttribute(indexOp, "type", code.type.element());			
 			String sourceOp = prefix+code.sourceOperand;			
 			//Propagate the range of source register to the index reg 
 			loopbody.addConstraint(new Equals(indexOp, sourceOp));
 			//Do not add any constraint to loop exit.
 		}
 
-		setCurrentBlock(loopbody);
+		blk_ctrl.setCurrentBlock(loopbody);
 	}
 
 	/**
@@ -1058,13 +898,13 @@ public class BoundAnalyzer {
 	private void analyze(Codes.LengthOf code){
 		//Get the size att
 		String op = prefix+code.operand(0);
-		BigInteger size = (BigInteger) getAttribute(op, "size");
+		BigInteger size = (BigInteger) sym_ctrl.getAttribute(op, "size");
 		String target = prefix+code.target();
 		Type type = code.assignedType();
 		//Add 'type' att
-		putAttribute(target, "type", type);
+		sym_ctrl.putAttribute(target, "type", type);
 		//Add 'value' att
-		putAttribute(target, "value", size);
+		sym_ctrl.putAttribute(target, "value", size);
 		addConstraint(new Const(target, size));		
 	}
 
@@ -1079,9 +919,9 @@ public class BoundAnalyzer {
 				loop_variables.put(prefix+op, new BoundChange(prefix+op));
 			}			
 		}
-		BasicBlock loopheader = createBasicBlock(label, BlockType.LOOP_HEADER, getCurrentBlock());
+		BasicBlock loopheader = blk_ctrl.createBasicBlock(label, BlockType.LOOP_HEADER, blk_ctrl.getCurrentBlock());
 		loop_condition = label;
-		setCurrentBlock(loopheader);
+		blk_ctrl.setCurrentBlock(loopheader);
 	}
 
 	/**
@@ -1089,12 +929,12 @@ public class BoundAnalyzer {
 	 * @param code
 	 */
 	private void analyze(Codes.LoopEnd code){
-		BasicBlock loopheader = getBasicBlock(code.label, BlockType.LOOP_HEADER);
+		BasicBlock loopheader = blk_ctrl.getBasicBlock(code.label, BlockType.LOOP_HEADER);
 		//connect the loopheader and current blk
-		BasicBlock c_blk = getCurrentBlock();
+		BasicBlock c_blk = blk_ctrl.getCurrentBlock();
 		c_blk.addChild(loopheader);
 
-		setCurrentBlock(null);
+		blk_ctrl.setCurrentBlock(null);
 		isGoto = true;
 
 	}
@@ -1120,11 +960,11 @@ public class BoundAnalyzer {
 		String target = prefix+code.target(); 
 		//Add the type att
 		Type type = code.assignedType();
-		putAttribute(target, "type", type);		
+		sym_ctrl.putAttribute(target, "type", type);		
 		if(Utils.isIntType(code.type())){
 			//Get the values
-			BigInteger left = (BigInteger)getAttribute(prefix+code.operand(0), "value");
-			BigInteger right = (BigInteger)getAttribute(prefix+code.operand(1), "value");			
+			BigInteger left = (BigInteger)sym_ctrl.getAttribute(prefix+code.operand(0), "value");
+			BigInteger right = (BigInteger)sym_ctrl.getAttribute(prefix+code.operand(1), "value");			
 			switch (code.kind) {
 			case ADD:
 				//addConstraint(new Plus(target, prefix+code.operand(0), prefix+code.operand(1)));
@@ -1145,7 +985,7 @@ public class BoundAnalyzer {
 				//Take the union of operands
 				addConstraint(new Range(target, left, right.subtract(BigInteger.ONE)));
 				//Add the size att
-				putAttribute(target, "size", right.subtract(left).subtract(BigInteger.ONE));				
+				sym_ctrl.putAttribute(target, "size", right.subtract(left).subtract(BigInteger.ONE));				
 				break;
 			case BITWISEAND:
 				break;			
@@ -1233,35 +1073,35 @@ public class BoundAnalyzer {
 		//Get the label name
 		String label = code.target;
 
-		BasicBlock c_blk = getCurrentBlock();
-		BasicBlock new_blk = getBasicBlock(label);
+		BasicBlock c_blk = blk_ctrl.getCurrentBlock();
+		BasicBlock new_blk = blk_ctrl.getBasicBlock(label);
 		if(new_blk == null){
-			new_blk = createBasicBlock(label, BlockType.BLOCK);
+			new_blk = blk_ctrl.createBasicBlock(label, BlockType.BLOCK);
 		}
 		c_blk.addChild(new_blk);
 		//Set isGoto flag to avoid linking the next block with current block.
 		isGoto = true;
-		setCurrentBlock(null);
+		blk_ctrl.setCurrentBlock(null);
 	}
 
 	private void analyze(Codes.FieldLoad code){
 		String target = prefix+code.target();
 		String record = prefix+code.operand(0);
 		//add the type to the record
-		putAttribute(record, "type", code.type());		
+		sym_ctrl.putAttribute(record, "type", code.type());		
 		//Target 
-		putAttribute(target, "type", code.fieldType());
-		putAttribute(target, "field", code.field);
+		sym_ctrl.putAttribute(target, "type", code.fieldType());
+		sym_ctrl.putAttribute(target, "field", code.field);
 	}
 
 	private void analyze(Codes.Convert code){
 		String target = prefix+code.target();
-		putAttribute(target, "type", code.result);
-		
+		sym_ctrl.putAttribute(target, "type", code.result);
+
 		if(code.result instanceof Type.List){
 			//Get the value
-			
-			
+
+
 		}
 
 	}
