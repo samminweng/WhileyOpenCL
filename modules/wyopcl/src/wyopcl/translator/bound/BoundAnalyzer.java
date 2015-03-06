@@ -61,15 +61,10 @@ import wyopcl.translator.bound.constraint.Union;
 public class BoundAnalyzer {
 	private final Configuration config;
 	private final FunctionOrMethodDeclaration functionOrMethod;
+	private final List<Code> code_blk;
 	private final WyilFile module;
-	private final String GRAY = (char)27 +"[30;1m";
-	private final String BLUE = (char)27 +"[34;1m";
-	private final String RED = (char)27 + "[31;1m";
-	private final String RESET = (char)27 + "[0m";	
-	private final String prefix = "%";
 
-	/*//The boolean flag is used to show whether the code is inside an assertion or assumption.	
-	private String assertOrAssume_label;*/
+	private final String prefix = "%";
 	private final int depth;
 
 	//The label name of the loop condition
@@ -85,9 +80,11 @@ public class BoundAnalyzer {
 	//The line number
 	private int line;
 
+	/**
+	 * Initialize the variables.
+	 */
 	private void initialize(){
 		//Initialize the variables
-		//this.assertOrAssume_label = null;
 		this.sym_ctrl = new SymbolController();
 		this.blk_ctrl = new BlockController();
 		this.loop_variables = new HashMap<String, BoundChange>();
@@ -100,12 +97,13 @@ public class BoundAnalyzer {
 			Configuration config,
 			FunctionOrMethodDeclaration functionOrMethod,
 			WyilFile module,
-			PrintWriter writer){
+			PrintWriter writer, List<Code> code_blk){
 		this.depth = depth;
 		this.config = config;
 		this.functionOrMethod = functionOrMethod;
 		this.module = module;
 		this.writer = writer;
+		this.code_blk = code_blk;
 		initialize();		
 	}
 
@@ -118,42 +116,14 @@ public class BoundAnalyzer {
 	public void iterateByteCode(){		
 		//Print the function declaration
 		writer.println(Utils.castDeclarationtoString(functionOrMethod));
-		for(Case mcase : functionOrMethod.cases()){
-			blk_ctrl.createEntryNode(functionOrMethod.type().params());
-			//Parse each byte-code and add the constraints accordingly.
-			for(Block.Entry entry :mcase.body()){
-				//Get the Block.Entry
-				line = printWyILCode(entry.code, functionOrMethod.name(), line);
-				dispatch(entry);				
-			}
+		blk_ctrl.createEntryNode(functionOrMethod.type().params());
+		//Parse each byte-code and add the constraints accordingly.
+		for(Code code: code_blk){
+			//Get the Block.Entry
+			line = Utils.printWyILCode(code, functionOrMethod.name(), line, writer);
+			dispatch(code);
 		}
 	}
-
-
-	/**
-	 * Prints out each bytecode with line number and indentation.
-	 * @param name
-	 * @param line
-	 * @see <a href="http://en.wikipedia.org/wiki/ANSI_escape_code">ANSI escape code</a>
-	 */
-	private int printWyILCode(Code code, String name, int line){
-		//Print out the bytecode with the format (e.g. 'main.9 [const %12 = 2345 : int]')
-		String font_color_start = "";
-		String font_color_end = "";
-		//Use the ANSI escape color to distinguish the set of bytecode of the assertion.
-		if(Utils.checkAssertOrAssume(code)){
-			font_color_start = GRAY;
-			font_color_end = RESET;
-		}
-		if(code instanceof Codes.Label){
-			//System.out.println(font_color_start+name+"."+line+"."+depth+" ["+code+"]"+font_color_end);
-			writer.println(font_color_start+name+"."+line+" ["+code+"]"+font_color_end);
-		}else{
-			//System.out.println(font_color_start+name+"."+line+"."+depth+" [\t"+code+"]"+font_color_end);
-			writer.println(font_color_start+name+"."+line+" [\t"+code+"]"+font_color_end);
-		}
-		return ++line;
-	}	
 
 	/**
 	 * Print out the bounds.
@@ -322,7 +292,7 @@ public class BoundAnalyzer {
 		//If both of two cond are evaluated to be true, then enter the loop.
 		while(!isFixedPointed && iteration <= MaxIteration){
 			if(config.isVerbose()){
-				System.out.println(BLUE+"Iteration "+iteration+" => "+RESET);
+				System.out.println("Iteration "+iteration+" => ");
 			}			
 			//Initialize the isFixedPointed
 			isFixedPointed = true;
@@ -359,40 +329,12 @@ public class BoundAnalyzer {
 		Bounds bnd = exit_blk.getBounds();
 		//check the verbose to determine whether to print out the CFG
 		if(config.isVerbose()){
-			printCFG(functionOrMethod.name());
+			Utils.printCFG(blk_ctrl.getList(), config.getFilename(), functionOrMethod.name());
 		}		
 		printBounds(bnd, isEnd);		
 		return bnd;
 	}
 
-
-	/**
-	 * Outputs the control flow graphs.
-	 * @param name
-	 */
-	private void printCFG(String func_name){
-		//Sort the blks.
-		blk_ctrl.sortedList();
-		String dot_string= "digraph "+func_name+"{\n";		
-
-		for(BasicBlock blk: blk_ctrl.getList()){
-			if(!blk.isLeaf()){
-				for(BasicBlock child: blk.getChildNodes()){
-					dot_string += "\""+blk.getBranch()+" [" +blk.getType()+"]\"->\""+ child.getBranch() +" ["+child.getType() + "]\";\n";
-				}
-			}
-		}
-		dot_string += "\n}";
-		//Write out the CFG-function_name.dot
-		try {
-			PrintWriter cfg_writer = new PrintWriter(config.getFilename()+"-"+func_name+".dot", "UTF-8");
-			cfg_writer.println(dot_string);
-			cfg_writer.close();
-		} catch (FileNotFoundException | UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 
 	/**
 	 * Adds the constraint to the current constraint list.
@@ -407,13 +349,12 @@ public class BoundAnalyzer {
 	/**
 	 * Checks the type of the wyil code and dispatches the code to the analyzer for
 	 * being executed by the <code>analyze(code)</code> 
-	 * @param entry
+	 * @param code the byte-code
 	 */
-	private void dispatch(Block.Entry entry){		
-		Code code = entry.code; 
+	private void dispatch(Code code){
 		try{
 			//Ignore the bytecode inside an assertion or assumption.
-			if(Utils.checkAssertOrAssume(code)&& !(code instanceof Codes.Label)){
+			if(Utils.checkAssertOrAssume(code)){
 				return;
 			}			
 			//Start analyzing the bytecode.
@@ -467,7 +408,7 @@ public class BoundAnalyzer {
 			} else if (code instanceof Codes.LengthOf) {			
 				analyze((Codes.LengthOf)code);
 			}  else if (code instanceof Codes.Move) {
-				internalFailure("Not implemented!", "", entry);
+				internalFailure("Not implemented!", "", null);
 			} else if (code instanceof Codes.NewMap) {
 				analyze((Codes.NewMap)code);
 			} else if (code instanceof Codes.NewList) {			
@@ -503,13 +444,13 @@ public class BoundAnalyzer {
 			} else if (code instanceof Codes.Update) {
 				analyze((Codes.Update)code);
 			} else {
-				internalFailure("unknown wyil code encountered (" + code + ")", "", entry);
+				internalFailure("unknown wyil code encountered (" + code + ")", "", null);
 			}		
 
 		} catch (SyntaxError ex) {
 			throw ex;	
 		} catch (Exception ex) {		
-			internalFailure(ex.getMessage(), "", entry, ex);
+			internalFailure(ex.getMessage(), "", null, ex);
 		}
 
 	}
@@ -657,7 +598,8 @@ public class BoundAnalyzer {
 		if(functionOrMethod != null){
 			//Infer the bounds						
 			Bounds bnd = this.inferBounds(false);
-			BoundAnalyzer invokeboundAnalyzer = new BoundAnalyzer(depth+1, config, functionOrMethod, module, writer);
+			List<Code> code_blk = Utils.getCodeBlock(functionOrMethod);
+			BoundAnalyzer invokeboundAnalyzer = new BoundAnalyzer(depth+1, config, functionOrMethod, module, writer, code_blk);
 			int index = 0;
 			//Pass the bounds of input parameters.
 			for(Type paramType: functionOrMethod.type().params()){
@@ -694,8 +636,6 @@ public class BoundAnalyzer {
 				BigInteger size = (BigInteger) invokeboundAnalyzer.sym_ctrl.getAttribute("return", "size");
 				sym_ctrl.putAttribute(return_reg, "size", size);
 			}
-
-
 			invokeboundAnalyzer = null;
 		}
 	}

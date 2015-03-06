@@ -1,10 +1,17 @@
 package wyopcl.translator.bound;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map.Entry;
 
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
+import wyil.lang.Code.Block;
+import wyil.lang.WyilFile.Case;
 import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
 
 /**
@@ -13,9 +20,15 @@ import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
  *
  */
 public final class Utils {
-	private final static String prefix = "%";
+	private static String prefix = "%";
 	//The boolean flag is used to show whether the code is inside an assertion or assumption.	
 	private static String assertOrAssume_label = null;
+	//Color code
+	private static String GRAY = (char)27 +"[30;1m";
+	private static String BLUE = (char)27 +"[34;1m";
+	private static String RED = (char)27 + "[31;1m";
+	private static String RESET = (char)27 + "[0m";	
+	
 	private Utils(){
 
 	}
@@ -46,6 +59,62 @@ public final class Utils {
 		return (assertOrAssume_label != null)? true: false;
 	}
 
+	
+	/**
+	 * Prints out each bytecode with line number and indentation.
+	 * @param name
+	 * @param line
+	 * @see <a href="http://en.wikipedia.org/wiki/ANSI_escape_code">ANSI escape code</a>
+	 */
+	protected static int printWyILCode(Code code, String name, int line, PrintWriter writer){
+		//Print out the bytecode with the format (e.g. 'main.9 [const %12 = 2345 : int]')
+		String font_color_start = "";
+		String font_color_end = "";
+		//Use the ANSI escape color to distinguish the set of bytecode of the assertion.
+		if(Utils.checkAssertOrAssume(code)){
+			font_color_start = GRAY;
+			font_color_end = RESET;
+		}
+		if(code instanceof Codes.Label){
+			//System.out.println(font_color_start+name+"."+line+"."+depth+" ["+code+"]"+font_color_end);
+			writer.println(font_color_start+name+"."+line+" ["+code+"]"+font_color_end);
+		}else{
+			//System.out.println(font_color_start+name+"."+line+"."+depth+" [\t"+code+"]"+font_color_end);
+			writer.println(font_color_start+name+"."+line+" [\t"+code+"]"+font_color_end);
+		}
+		return ++line;
+	}
+	
+	/**
+	 * Outputs the control flow graphs (*.dot).
+	 * @param blks the list of block
+	 * @param filename the name of input file.
+	 * @param func_name the name of function.
+	 */
+	protected static void printCFG(List<BasicBlock> blks, String filename, String func_name){
+		//Sort the blks.
+		//blk_ctrl.sortedList();
+		String dot_string= "digraph "+func_name+"{\n";		
+
+		for(BasicBlock blk: blks){
+			if(!blk.isLeaf()){
+				for(BasicBlock child: blk.getChildNodes()){
+					dot_string += "\""+blk.getBranch()+" [" +blk.getType()+"]\"->\""+ child.getBranch() +" ["+child.getType() + "]\";\n";
+				}
+			}
+		}
+		dot_string += "\n}";
+		//Write out the CFG-function_name.dot
+		try {
+			PrintWriter cfg_writer = new PrintWriter(filename+"-"+func_name+".dot", "UTF-8");
+			cfg_writer.println(dot_string);
+			cfg_writer.close();
+		} catch (FileNotFoundException | UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 
 	/**
 	 * Extract the function name.
@@ -114,8 +183,21 @@ public final class Utils {
 		return false;
 	}
 
-
-
+	/**
+	 * Get the list of code for a function.
+	 * @param functionOrMethod the function or method declaration.
+	 * @return the list of code.
+	 */
+	public static List<Code> getCodeBlock(FunctionOrMethodDeclaration functionOrMethod){
+		List<Code> code_blk = new ArrayList<Code>();
+		for(Case mcase : functionOrMethod.cases()){
+			for(Block.Entry entry :mcase.body()){
+				//Get each bytecode and add it to the code_blk.
+				code_blk.add(entry.code);		
+			}
+		}		
+		return code_blk;
+	}
 
 
 }

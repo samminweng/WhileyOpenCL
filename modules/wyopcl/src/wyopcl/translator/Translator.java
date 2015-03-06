@@ -25,6 +25,7 @@ import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.Case;
 import wyopcl.translator.bound.BoundAnalyzer;
+import wyopcl.translator.bound.Utils;
 import wyopcl.translator.generator.CodeGenerator;
 import wyopcl.translator.generator.Utility;
 import wyopcl.translator.symbolic.PatternMatcher;
@@ -76,7 +77,7 @@ public class Translator implements Builder{
 			//Check the mode
 			switch(config.getMode()){
 			case BoundAnalysis:
-				analyzeFunctionCall(module);
+				analyzeFunction(module);
 				message = "Bound analysis completed.\nFile: " + config.getFilename();
 				break;
 			case CodeGeneration:
@@ -84,7 +85,7 @@ public class Translator implements Builder{
 				message = "Code generation completed.\nFile: "+config.getFilename()+".c";
 				break;
 			case PatternMatching:
-				analyzePatterns(module);
+				analyzePattern(module);
 				message = "Pattern matching completed.\nFile: " + config.getFilename();
 				break;
 			default:
@@ -102,7 +103,7 @@ public class Translator implements Builder{
 	 * Takes the in-memory wyil file and analyzes the ranges using function call.
 	 * @param module
 	 */
-	private void analyzeFunctionCall(WyilFile module){		
+	private void analyzeFunction(WyilFile module){		
 		try {
 			PrintWriter writer = null;
 			if(!config.isVerbose()){
@@ -110,8 +111,8 @@ public class Translator implements Builder{
 			}else{
 				writer = new PrintWriter(System.out, true);
 			}
-			WyilFile.FunctionOrMethodDeclaration main = module.functionOrMethod("main").get(0);
-			BoundAnalyzer boundAnalyzer = new BoundAnalyzer(0, config, main, module, writer);
+			List<Code> code_blk = Utils.getCodeBlock(module.functionOrMethod("main").get(0));
+			BoundAnalyzer boundAnalyzer = new BoundAnalyzer(0, config, module.functionOrMethod("main").get(0), module, writer, code_blk);
 			boundAnalyzer.iterateByteCode();
 			//Infer the bounds at the end of main function.
 			boundAnalyzer.inferBounds(true);			
@@ -187,7 +188,7 @@ public class Translator implements Builder{
 	 *  Iterate each code of the input function, build up the code blk and then analyze the loop pattern.
 	 * @param module 
 	 */
-	private void analyzePatterns(WyilFile module){
+	private void analyzePattern(WyilFile module){
 		PatternMatcher matcher = new PatternMatcher(config);
 		//Iterate each function
 		for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {
