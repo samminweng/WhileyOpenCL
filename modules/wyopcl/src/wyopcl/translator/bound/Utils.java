@@ -14,10 +14,39 @@ import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
  */
 public final class Utils {
 	private final static String prefix = "%";
+	//The boolean flag is used to show whether the code is inside an assertion or assumption.	
+	private static String assertOrAssume_label = null;
 	private Utils(){
-		
+
 	}
-	
+
+	/**
+	 * Check if the code is inside an assertion or assumption.
+	 * @param code the code.
+	 * @return true if the code belongs to the assertion or assumption. Otherwise, return false.
+	 */
+	protected static boolean checkAssertOrAssume(Code code){
+		if(assertOrAssume_label == null){
+			if(code instanceof Codes.AssertOrAssume){
+				Codes.AssertOrAssume assertOrAssume = (Codes.AssertOrAssume)code;
+				assertOrAssume_label = assertOrAssume.target;
+				return true;
+			}		
+		}else{			
+			if(code instanceof Codes.Label){
+				Codes.Label label = (Codes.Label)code;
+				if(assertOrAssume_label.equals(label.label)){
+					//Nullify the label of an assertion or assumption. 
+					assertOrAssume_label = null;
+					return true;
+				}					
+			}
+		}
+		//In other cases, if the label is not null, then the code is inside the assertion or assumption.
+		return (assertOrAssume_label != null)? true: false;
+	}
+
+
 	/**
 	 * Extract the function name.
 	 * @param functionOrMethod
@@ -54,7 +83,7 @@ public final class Utils {
 		declaration +=")";
 		return declaration;
 	}
-	
+
 	/**
 	 * Check if the type is instance of Integer by inferring the type from 
 	 * <code>wyil.Lang.Type</code> objects, including the effective collection types.
@@ -84,9 +113,9 @@ public final class Utils {
 
 		return false;
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 }

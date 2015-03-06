@@ -68,10 +68,10 @@ public class BoundAnalyzer {
 	private final String RESET = (char)27 + "[0m";	
 	private final String prefix = "%";
 
-	//The boolean flag is used to show whether the code is inside an assertion or assumption.	
-	private String assertOrAssume_label;
+	/*//The boolean flag is used to show whether the code is inside an assertion or assumption.	
+	private String assertOrAssume_label;*/
 	private final int depth;
-	
+
 	//The label name of the loop condition
 	private String loop_condition;	
 	//A list of loop variables.
@@ -87,7 +87,7 @@ public class BoundAnalyzer {
 
 	private void initialize(){
 		//Initialize the variables
-		this.assertOrAssume_label = null;
+		//this.assertOrAssume_label = null;
 		this.sym_ctrl = new SymbolController();
 		this.blk_ctrl = new BlockController();
 		this.loop_variables = new HashMap<String, BoundChange>();
@@ -141,7 +141,7 @@ public class BoundAnalyzer {
 		String font_color_start = "";
 		String font_color_end = "";
 		//Use the ANSI escape color to distinguish the set of bytecode of the assertion.
-		if(assertOrAssume_label != null){
+		if(Utils.checkAssertOrAssume(code)){
 			font_color_start = GRAY;
 			font_color_end = RESET;
 		}
@@ -168,20 +168,6 @@ public class BoundAnalyzer {
 			writer.print("Bounds at the "+(line-1)+"th line number of function "+functionOrMethod.name()+":\n");
 		}
 
-
-		/*		List<Symbol> sortedSymbols = new ArrayList<Symbol>(symbols.values());
-		Collections.sort(sortedSymbols);*/
-		//Print out the type
-		/*for(Symbol symbol : sortedSymbols){
-			String str_symbols = "";
-			String name = symbol.getName();
-			//get the 'type' attribute
-			Type type = (Type) symbol.getAttribute("type");						
-			//print the 'size' att
-			str_symbols += "\ttype("+name+")\t= "+type+"\n";			
-			System.out.print(str_symbols);
-		}*/
-		//Sort the symbol tables
 		List<Symbol> sortedSymbols = sym_ctrl.sortedSymbols();
 
 		//Print out the bounds
@@ -416,6 +402,8 @@ public class BoundAnalyzer {
 		blk_ctrl.getCurrentBlock().addConstraint(c);		
 	}
 
+
+
 	/**
 	 * Checks the type of the wyil code and dispatches the code to the analyzer for
 	 * being executed by the <code>analyze(code)</code> 
@@ -425,13 +413,13 @@ public class BoundAnalyzer {
 		Code code = entry.code; 
 		try{
 			//Ignore the bytecode inside an assertion or assumption.
-			if(assertOrAssume_label!=null&& !(code instanceof Codes.Label)){
+			if(Utils.checkAssertOrAssume(code)&& !(code instanceof Codes.Label)){
 				return;
 			}			
 			//Start analyzing the bytecode.
 			if (code instanceof Codes.AssertOrAssume) {
 				//enable the assertion
-				analyze((Codes.AssertOrAssume)code);
+				//analyze((Codes.AssertOrAssume)code);
 			}else if (code instanceof Codes.Assign) {			
 				analyze((Codes.Assign)code);
 			} else if (code instanceof Codes.BinaryOperator) {			
@@ -527,9 +515,9 @@ public class BoundAnalyzer {
 	}
 
 
-	private void analyze(Codes.AssertOrAssume code){
+	/*private void analyze(Codes.AssertOrAssume code){
 		assertOrAssume_label = code.target;
-	}
+	}*/
 
 	private void analyze(Codes.Assign code){	
 		String target = prefix+code.target();
@@ -720,27 +708,21 @@ public class BoundAnalyzer {
 	 */
 	private void analyze(Codes.Label code){
 		String label = code.label;
-		//Check and determine whether to disable the assertion.
-		if(assertOrAssume_label != null){
-			if(assertOrAssume_label.equals(label)){
-				//Reset the value of label
-				assertOrAssume_label = null;
-			}						
-		}else{
-			//Get the target blk. If it is null, then create a new block.
-			BasicBlock blk = blk_ctrl.getBasicBlock(label);
-			if(blk == null){
-				blk = blk_ctrl.createBasicBlock(label, BlockType.BLOCK);
-			}
 
-			if(!isGoto){
-				blk_ctrl.getCurrentBlock().addChild(blk);
-			}
-
-			//Switch the current block
-			blk_ctrl.setCurrentBlock(blk);
-			isGoto = false;
+		//Get the target blk. If it is null, then create a new block.
+		BasicBlock blk = blk_ctrl.getBasicBlock(label);
+		if(blk == null){
+			blk = blk_ctrl.createBasicBlock(label, BlockType.BLOCK);
 		}
+
+		if(!isGoto){
+			blk_ctrl.getCurrentBlock().addChild(blk);
+		}
+
+		//Switch the current block
+		blk_ctrl.setCurrentBlock(blk);
+		isGoto = false;
+		//}
 
 	}
 

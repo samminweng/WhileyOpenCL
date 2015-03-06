@@ -58,7 +58,7 @@ isAlive.4 [	lengthof %8 = %1 : [bool]]
 isAlive.5 [	ifge %6, %8 goto blklab5 : int]
 isAlive.6 [	const %11 = 1 : int]
 isAlive.7 [	sub %12 = %0, %11 : int]
-isAlive.8 [	assert blklab16]
+[30;1misAlive.8 [	assert blklab16][0m
 [30;1misAlive.9 [	const %23 = 0 : int][0m
 [30;1misAlive.10 [	ifge %12, %23 goto blklab15 : int][0m
 [30;1misAlive.11 [	fail ""index out of bounds (negative)""][0m
@@ -74,7 +74,7 @@ isAlive.20 [	goto blklab5]
 isAlive.21 [.blklab7]
 isAlive.22 [	const %17 = 1 : int]
 isAlive.23 [	add %18 = %0, %17 : int]
-isAlive.24 [	assert blklab18]
+[30;1misAlive.24 [	assert blklab18][0m
 [30;1misAlive.25 [	const %23 = 0 : int][0m
 [30;1misAlive.26 [	ifge %18, %23 goto blklab17 : int][0m
 [30;1misAlive.27 [	fail ""index out of bounds (negative)""][0m
@@ -115,7 +115,7 @@ play.8 [	ifeq %8, %11 goto blklab4 : bool]
 play.9 [	goto blklab2]
 play.10 [.blklab4]
 play.11 [	const %14 = true : bool]
-play.12 [	assert blklab12]
+[30;1mplay.12 [	assert blklab12][0m
 [30;1mplay.13 [	const %20 = 0 : int][0m
 [30;1mplay.14 [	ifge %7, %20 goto blklab11 : int][0m
 [30;1mplay.15 [	fail ""index out of bounds (negative)""][0m
@@ -128,7 +128,7 @@ play.21 [	update %1[%7] = %14 : [bool] -> [bool]]
 play.22 [	goto blklab3]
 play.23 [.blklab2]
 play.24 [	const %17 = false : bool]
-play.25 [	assert blklab14]
+[30;1mplay.25 [	assert blklab14][0m
 [30;1mplay.26 [	const %20 = 0 : int][0m
 [30;1mplay.27 [	ifge %7, %20 goto blklab13 : int][0m
 [30;1mplay.28 [	fail ""index out of bounds (negative)""][0m
