@@ -148,7 +148,7 @@ public class BlockController {
 	 * @param min
 	 * @param max
 	 */
-	public void createEntryNode(Type paramType, String param, BigInteger min, BigInteger max){
+	public void addParamBounds(Type paramType, String param, BigInteger min, BigInteger max){
 		if(Utils.isIntType(paramType)){
 			getCurrentBlock().addBounds(param, min, max);
 		}
@@ -161,7 +161,7 @@ public class BlockController {
 	public void createEntryNode(List<Type> paramTypes){
 		int index = 0;
 		for(Type paramType: paramTypes){
-			createEntryNode(paramType, prefix+index, null, null);
+			addParamBounds(paramType, prefix+index, null, null);
 			index++;
 		}
 		//Create the default basic block and adds it to the child of entry node.

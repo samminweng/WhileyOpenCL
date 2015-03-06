@@ -24,6 +24,7 @@ import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.Case;
+import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
 import wyopcl.translator.bound.BoundAnalyzer;
 import wyopcl.translator.bound.Utils;
 import wyopcl.translator.generator.CodeGenerator;
@@ -111,8 +112,10 @@ public class Translator implements Builder{
 			}else{
 				writer = new PrintWriter(System.out, true);
 			}
-			List<Code> code_blk = Utils.getCodeBlock(module.functionOrMethod("main").get(0));
-			BoundAnalyzer boundAnalyzer = new BoundAnalyzer(0, config, module.functionOrMethod("main").get(0), module, writer, code_blk);
+			FunctionOrMethodDeclaration functionOrMethod = module.functionOrMethod("main").get(0);
+			List<Code> code_blk = Utils.getCodeBlock(functionOrMethod);
+			BoundAnalyzer boundAnalyzer = new BoundAnalyzer(0, config, functionOrMethod.name(), module, writer, code_blk);
+			boundAnalyzer.propagateBounds(functionOrMethod.type().params());
 			boundAnalyzer.iterateByteCode();
 			//Infer the bounds at the end of main function.
 			boundAnalyzer.inferBounds(true);			

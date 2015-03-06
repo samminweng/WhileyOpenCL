@@ -60,7 +60,8 @@ import wyopcl.translator.bound.constraint.Union;
  */
 public class BoundAnalyzer {
 	private final Configuration config;
-	private final FunctionOrMethodDeclaration functionOrMethod;
+	//private final FunctionOrMethodDeclaration functionOrMethod;
+	private final String func_name;
 	private final List<Code> code_blk;
 	private final WyilFile module;
 
@@ -90,12 +91,13 @@ public class BoundAnalyzer {
 
 	public BoundAnalyzer(int depth,
 			Configuration config,
-			FunctionOrMethodDeclaration functionOrMethod,
+			String func_name,
 			WyilFile module,
 			PrintWriter writer, List<Code> code_blk){
 		this.depth = depth;
 		this.config = config;
-		this.functionOrMethod = functionOrMethod;
+		this.func_name = func_name;
+		//this.functionOrMethod = functionOrMethod;
 		this.module = module;
 		this.writer = writer;
 		this.code_blk = code_blk;
@@ -103,6 +105,11 @@ public class BoundAnalyzer {
 	}
 
 
+	public void propagateBounds(List<Type> params){
+		blk_ctrl.createEntryNode(params);
+	}
+	
+	
 	/**
 	 * Iterate each bytecode
 	 * @param analyzer
@@ -111,11 +118,11 @@ public class BoundAnalyzer {
 	public void iterateByteCode(){		
 		//Print the function declaration
 		//writer.println(Utils.castDeclarationtoString(functionOrMethod));
-		blk_ctrl.createEntryNode(functionOrMethod.type().params());
+		//blk_ctrl.createEntryNode(functionOrMethod.type().params());
 		//Parse each byte-code and add the constraints accordingly.
 		for(Code code: code_blk){
 			//Get the Block.Entry
-			line = Utils.printWyILCode(code, functionOrMethod.name(), line, writer);
+			line = Utils.printWyILCode(code, func_name, line, writer);
 			dispatch(code);
 		}
 	}
@@ -176,7 +183,7 @@ public class BoundAnalyzer {
 		Bounds bnd = exit_blk.getBounds();
 		//check the verbose to determine whether to print out the CFG
 		if(config.isVerbose()){
-			Utils.printCFG(blk_ctrl.getList(), config.getFilename(), functionOrMethod.name());
+			Utils.printCFG(blk_ctrl.getList(), config.getFilename(), func_name);
 		}		
 		Utils.printBounds(sym_ctrl.sortedSymbols(), bnd, writer);		
 		return bnd;
@@ -435,15 +442,15 @@ public class BoundAnalyzer {
 	 * @param operands the operands of calling function
 	 * @param bnd the bounds of calling function
 	 */
-	private void propagateBoundsToFunctionCall(BoundAnalyzer invokeboundAnalyzer, int[] operands, Bounds bnd){
+	public void propagateBoundsToFunctionCall(BoundAnalyzer invokeboundAnalyzer, List<Type> params, int[] operands, Bounds bnd){
 		int index = 0;
 		//Pass the bounds of input parameters.
-		for(Type paramType: functionOrMethod.type().params()){
+		for(Type paramType: params){
 			String param = prefix+index;
 			String operand = prefix+operands[index];
 			//Check parameter type
 			if(Utils.isIntType(paramType)){
-				invokeboundAnalyzer.blk_ctrl.createEntryNode(paramType, param, bnd.getLower(operand), bnd.getUpper(operand));					
+				invokeboundAnalyzer.blk_ctrl.addParamBounds(paramType, param, bnd.getLower(operand), bnd.getUpper(operand));					
 			}
 			//pass the symbol 
 			Symbol symbol = sym_ctrl.getSymbol(operand).clone();
@@ -454,7 +461,7 @@ public class BoundAnalyzer {
 		}
 	}
 	
-	private void propagateBoundsFromFunctionCall(BoundAnalyzer invokeboundAnalyzer, String ret_reg, Type ret_type, Bounds bnd){		
+	public void propagateBoundsFromFunctionCall(BoundAnalyzer invokeboundAnalyzer, String ret_reg, Type ret_type, Bounds bnd){		
 		//put the 'type' attribute of 'return_reg'
 		sym_ctrl.putAttribute(ret_reg, "type", ret_type);
 
@@ -486,8 +493,8 @@ public class BoundAnalyzer {
 			Bounds bnd = this.inferBounds(false);
 			List<Code> code_blk = Utils.getCodeBlock(functionOrMethod);
 			//Create the bound analyzer for the invoked function.
-			BoundAnalyzer invokeboundAnalyzer = new BoundAnalyzer(depth+1, config, functionOrMethod, module, writer, code_blk);
-			propagateBoundsToFunctionCall(invokeboundAnalyzer, code.operands(), bnd);
+			BoundAnalyzer invokeboundAnalyzer = new BoundAnalyzer(depth+1, config, functionOrMethod.name(), module, writer, code_blk);
+			propagateBoundsToFunctionCall(invokeboundAnalyzer,functionOrMethod.type().params(), code.operands(), bnd);
 			invokeboundAnalyzer.iterateByteCode();
 			//Infer the bounds at the end of invoked function.
 			Bounds ret_bnd = invokeboundAnalyzer.inferBounds(true);			
