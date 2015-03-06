@@ -66,11 +66,6 @@ public class BoundAnalyzer {
 
 	private final String prefix = "%";
 	private final int depth;
-
-	//The label name of the loop condition
-	private String loop_condition;	
-	//A list of loop variables.
-	private HashMap<String, BoundChange> loop_variables;
 	private boolean isGoto;
 	private final PrintWriter writer;
 
@@ -86,8 +81,8 @@ public class BoundAnalyzer {
 	private void initialize(){
 		//Initialize the variables
 		this.sym_ctrl = new SymbolController();
-		this.blk_ctrl = new BlockController();
-		this.loop_variables = new HashMap<String, BoundChange>();
+		this.blk_ctrl = new BlockController(this.config);
+		//this.loop_variables = new HashMap<String, BoundChange>();
 		this.isGoto = false;
 		this.line = 0;
 	}
@@ -126,154 +121,6 @@ public class BoundAnalyzer {
 	}
 
 	/**
-	 * Print out the bounds.
-	 * @param func_name the name of function or method
-	 * @param bnd the bounds
-	 * @param isEnd indicates whether it is called at the end of function.
-	 */
-	private void printBounds(Bounds bnd, boolean isEnd){
-		if(isEnd){
-			writer.print("Bounds at the end of function "+functionOrMethod.name()+":\n");
-		}else{
-			writer.print("Bounds at the "+(line-1)+"th line number of function "+functionOrMethod.name()+":\n");
-		}
-
-		List<Symbol> sortedSymbols = sym_ctrl.sortedSymbols();
-
-		//Print out the bounds
-		for(Symbol symbol : sortedSymbols){
-			String str_symbols = "";
-			String name = symbol.getName();
-			if(bnd.isExisting(name)){
-				Domain d = bnd.getDomain(name);
-				str_symbols+="\t"+d+"\n";
-			}			
-			if(!str_symbols.equals("")){
-				writer.print(str_symbols);
-			}
-		}
-
-		//Print out the values of available variables
-		for(Symbol symbol : sortedSymbols){
-			String str_symbols = "";
-			String name = symbol.getName();					
-			//print the 'value' attribute
-			Object val = symbol.getAttribute("value");
-			if(val != null){
-				str_symbols += "\tvalue("+name+")\t= "+val+"\n";
-			}
-
-			if(!str_symbols.equals("")){
-				writer.print(str_symbols);
-			}
-		}
-
-		//Print out the size of available variables
-		for(Symbol symbol : sortedSymbols){
-			String str_symbols = "";
-			String name = symbol.getName();
-			//get the 'type' attribute
-			Type type = (Type) symbol.getAttribute("type");						
-			//print the 'size' att
-			if(type instanceof Type.List){
-				Object size = symbol.getAttribute("size");
-				str_symbols += "\tsize("+name+")\t= "+size+"\n";
-			}
-			if(!str_symbols.equals("")){
-				writer.print(str_symbols);
-			}
-		}
-		sortedSymbols = null;
-		writer.println("Consistency="+bnd.checkBoundConsistency());		
-	}
-
-
-	/**
-	 * Infer the bounds for a block. 
-	 * @param blk the target block.
-	 * @param isChanged the bound
-	 * @param iteration the iteration number.
-	 * @return true if bounds are unchanged. Otherwise, return false.
-	 */
-	private boolean inferBlockBounds(BasicBlock blk, boolean isChanged, int iteration){
-		Bounds bnd_before = null, bnd_after = null;
-		//Before the bound inference
-		//The bound before bound inference. 
-		if(blk.getType().equals(BlockType.LOOP_BODY)){
-			bnd_before = (Bounds) blk.getBounds().clone();		
-		}
-		//If bounds remain unchanged, then isChanged = true.
-		isChanged |= blk.inferBounds();	
-
-		if(blk.getType().equals(BlockType.LOOP_BODY)){
-			bnd_after = (Bounds) blk.getBounds().clone();
-			//check loop variable is increasing
-			for(String loop_var: loop_variables.keySet()){			
-				//Upper bounds
-				BigInteger upper_before = bnd_before.getUpper(loop_var);
-				BigInteger upper_after = bnd_after.getUpper(loop_var);								
-				BoundChange boundChange = loop_variables.get(loop_var);
-				if(upper_before!= null && upper_after!=null){
-					//Check if the upper bounds is increasing
-					if(upper_before.compareTo(upper_after)<0){
-						boolean isIncreasing = boundChange.isUBIncreasing();
-						isIncreasing |= true;
-						boundChange.setUBIncreasing(isIncreasing);
-						loop_variables.put(loop_var, boundChange);
-					}					
-				}
-
-				//Lower bounds
-				BigInteger lower_before = bnd_before.getLower(loop_var);
-				BigInteger lower_after = bnd_after.getLower(loop_var);
-				if(lower_before!= null && lower_after != null){
-					//Check if the lower bound is decreasing
-					if(lower_before.compareTo(lower_after)>0){
-						boolean isDecreasing = boundChange.isLBDecreasing();
-						isDecreasing |= true;
-						boundChange.setLBDecreasing(isDecreasing);
-						loop_variables.put(loop_var, boundChange);
-					}					
-				}
-
-				//After three iterations, the bounds is still increasing.
-				if(iteration%3==0){
-					//Widen the upper bound
-					if(boundChange.isUBIncreasing()){
-						if(config.isMultiWiden()){
-							isChanged |= blk.getBounds().widenUpperBoundsAgainstThresholds(loop_var);
-						}else{
-							isChanged |= blk.getBounds().widenUpperBoundsToInf(loop_var);
-						}
-					}
-					//Reset the increasing flag
-					boundChange.setUBIncreasing(false);
-					//Widen the lower bound
-					if(boundChange.isLBDecreasing()){
-						if(config.isMultiWiden()){
-							isChanged |= blk.getBounds().widenLowerBoundsAgainstThresholds(loop_var);
-						}else{
-							isChanged |= blk.getBounds().widenLowerBoundsToInf(loop_var);
-						}
-					}
-					//Reset the decreasing flag
-					boundChange.setLBDecreasing(false);					
-					loop_variables.put(loop_var, boundChange);
-				}
-			}
-		}
-
-		//Print out the bounds.
-		if(config.isVerbose()){
-			System.out.println(blk);
-			System.out.println("isChanged="+isChanged);
-		}
-		return isChanged;
-	}
-
-
-
-	/**
 	 * Repeatedly iterates over all blocks, starting from the entry block to the exit block,
 	 * and infer the bounds consistent with all the constraints in each block.
 	 * @param isEnd indicates if it is called at the end of a function.
@@ -306,7 +153,7 @@ public class BoundAnalyzer {
 					for(BasicBlock parent: blk.getParentNodes()){						
 						blk.unionBounds(parent);																		
 					}					
-					isChanged = inferBlockBounds(blk, isChanged, iteration);				
+					isChanged = blk_ctrl.inferBlockBounds(blk, isChanged, iteration);				
 					//Use bitwise 'AND' to combine all the results
 					isFixedPointed &= (!isChanged);	
 				}
@@ -331,20 +178,18 @@ public class BoundAnalyzer {
 		if(config.isVerbose()){
 			Utils.printCFG(blk_ctrl.getList(), config.getFilename(), functionOrMethod.name());
 		}		
-		printBounds(bnd, isEnd);		
+		Utils.printBounds(sym_ctrl.sortedSymbols(), bnd, writer);		
 		return bnd;
 	}
 
 
 	/**
-	 * Adds the constraint to the current constraint list.
+	 * Adds the constraint to the current block.
 	 * @param c
 	 */
 	private void addConstraint(Constraint c){		
 		blk_ctrl.getCurrentBlock().addConstraint(c);		
 	}
-
-
 
 	/**
 	 * Checks the type of the wyil code and dispatches the code to the analyzer for
@@ -574,18 +419,14 @@ public class BoundAnalyzer {
 			}			
 		}
 
-		if(loop_condition != null){
+		//Check if the if-bytecode is the loop condition.
+		if(blk_ctrl.isLoopCondition()){
+			//Create a loop body and loop exit.
 			blk_ctrl.createLoopStructure(code.target, left_c, right_c);
 		}else{
+			//Create if and else branches.
 			blk_ctrl.createIfElseBranch(code.target, left_c, right_c);
 		}
-
-		//Instead of creating if-else branches, we put the condition to the current blk
-		//	BasicBlock current_blk = getCurrentBlock();
-		//	current_blk.addConstraint(left_c);				
-		//}
-
-
 	}
 
 	/**
@@ -837,12 +678,11 @@ public class BoundAnalyzer {
 	private void analyze(Codes.Loop code){		
 		String label = code.target;
 		for(int op: code.modifiedOperands){
-			if(!loop_variables.containsKey(prefix+op)){
-				loop_variables.put(prefix+op, new BoundChange(prefix+op));
-			}			
+			blk_ctrl.addLoopVar(prefix+op);		
 		}
-		BasicBlock loopheader = blk_ctrl.createBasicBlock(label, BlockType.LOOP_HEADER, blk_ctrl.getCurrentBlock());
-		loop_condition = label;
+		//BasicBlock loopheader = blk_ctrl.createBasicBlock(label, BlockType.LOOP_HEADER, blk_ctrl.getCurrentBlock());
+		//loop_condition = label;
+		BasicBlock loopheader = blk_ctrl.createLoopHeader(label);
 		blk_ctrl.setCurrentBlock(loopheader);
 	}
 

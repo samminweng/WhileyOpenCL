@@ -199,5 +199,48 @@ public final class Utils {
 		return code_blk;
 	}
 
+	
+	/**
+	 * Print out the bounds.
+	 * @param bnd the bounds
+	 */
+	protected static void printBounds(List<Symbol> sortedSymbols, Bounds bnd, PrintWriter writer){
+		String str = "";
+		//Print out the bounds
+		for(Symbol symbol : sortedSymbols){
+			//String str_symbols = "";
+			String name = symbol.getName();
+			if(bnd.isExisting(name)){
+				Domain d = bnd.getDomain(name);
+				str+="\t"+d+"\n";
+			}			
+		}
+
+		//Print out the values of available variables
+		for(Symbol symbol : sortedSymbols){
+			//String str_symbols = "";
+			String name = symbol.getName();					
+			//print the 'value' attribute
+			Object val = symbol.getAttribute("value");
+			if(val != null){
+				str += "\tvalue("+name+")\t= "+val+"\n";
+			}			
+		}
+
+		//Print out the size of available variables
+		for(Symbol symbol : sortedSymbols){
+			//String str_symbols = "";
+			String name = symbol.getName();
+			//get the 'type' attribute
+			Type type = (Type) symbol.getAttribute("type");						
+			//print the 'size' att
+			if(type instanceof Type.List){
+				Object size = symbol.getAttribute("size");
+				str += "\tsize("+name+")\t= "+size+"\n";
+			}			
+		}
+		str += "Consistency="+bnd.checkBoundConsistency();
+		writer.println(str);		
+	}
 
 }

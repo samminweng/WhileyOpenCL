@@ -10,7 +10,6 @@ main.3 [	const %6 = 5 : int]
 [30;1mmain.8 [.blklab3][0m
 [30;1mmain.9 [.blklab4][0m
 main.10 [	invoke %5 = (%6) While:f : function(int) => int]
-Bounds at the 10th line number of function main:
 	domain(%6)	= [5..5]
 	value(%6)	= 5
 Consistency=true
@@ -30,7 +29,6 @@ f.11 [	nop]
 f.12 [end blklab1]
 f.13 [.blklab2]
 f.14 [	return %5 : int]
-Bounds at the end of function f:
 	domain(%0)	= [5..5]
 	domain(%3)	= [0..5]
 	domain(%4)	= [0..0]
@@ -61,7 +59,6 @@ main.19 [	const %13 = 50000 : int]
 [30;1mmain.24 [.blklab5][0m
 [30;1mmain.25 [.blklab6][0m
 main.26 [	invoke %12 = (%13) While:f : function(int) => int]
-Bounds at the 26th line number of function main:
 	domain(%5)	= [0..infinity]
 	domain(%6)	= [5..5]
 	domain(%13)	= [50000..50000]
@@ -84,7 +81,6 @@ f.11 [	nop]
 f.12 [end blklab1]
 f.13 [.blklab2]
 f.14 [	return %5 : int]
-Bounds at the end of function f:
 	domain(%0)	= [50000..50000]
 	domain(%3)	= [0..50000]
 	domain(%4)	= [0..0]
@@ -105,7 +101,6 @@ main.29 [	sappend %14 = %11, %12 : string]
 main.30 [	convert %14 = %14 any : string]
 main.31 [	indirectinvoke %10 (%14) : method(any) => void]
 main.32 [	return]
-Bounds at the end of function main:
 	domain(%5)	= [0..infinity]
 	domain(%6)	= [5..5]
 	domain(%12)	= [0..infinity]

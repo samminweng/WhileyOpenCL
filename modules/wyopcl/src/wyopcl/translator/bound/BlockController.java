@@ -3,32 +3,40 @@ package wyopcl.translator.bound;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import wyil.lang.Type;
+import wyopcl.translator.Configuration;
 import wyopcl.translator.bound.BasicBlock.BlockType;
 import wyopcl.translator.bound.constraint.Constraint;
 
 /**
  * Creates, retrieves and stores the blocks for a function.
+ * This class also infers the bounds.
  * @author Min-Hsien Weng
  *
  */
 public class BlockController {
 	private final String prefix = "%";
+	private final Configuration config;
 	//The list of basic block;
 	private List<BasicBlock> list;
 	//The variables are used in the control flow graph (CFG).	
 	private BasicBlock current_blk;
 	//The label name of the loop condition
 	private String loop_condition;	
+	//A list of loop variables.
+	private HashMap<String, BoundChange> loop_variables;
 
-	public BlockController(){
+	public BlockController(Configuration config){
+		this.config = config;
 		//Initialize the variables
 		this.list = new ArrayList<BasicBlock>();
 		//Initialize		
 		createBasicBlock("exit", BlockType.EXIT);		
 		this.current_blk = createBasicBlock("entry", BlockType.ENTRY);
+		this.loop_variables = new HashMap<String, BoundChange>();
 	}
 
 	/**
@@ -161,8 +169,8 @@ public class BlockController {
 		setCurrentBlock(blk);
 	}
 
-	
-	
+
+
 	/**
 	 * Branches the current block and adds the 
 	 * if_then_else blocks. And set the current
@@ -184,6 +192,31 @@ public class BlockController {
 		setCurrentBlock(leftBlock);
 	}
 
+	/**
+	 * Create a loop header and appends it to the current block.
+	 * @param label
+	 * @param c
+	 */
+	public BasicBlock createLoopHeader(String label){
+		BasicBlock loop_header = createBasicBlock(label, BlockType.LOOP_HEADER, getCurrentBlock());
+		loop_condition = label;
+		return loop_header;
+	}
+	
+	/**
+	 * Check if the if bytecode is the loop condition
+	 * @return
+	 */
+	public boolean isLoopCondition(){		
+		//Check if the if-bytecode is the loop condition.
+		if(loop_condition != null){
+			//Reset the loop condition flag.
+			loop_condition = null;
+			return true;
+		}
+		return false;
+	}
+	
 
 	/**
 	 * Branches the current block and adds the loop header, loop body and loop exit. And set the current
@@ -201,7 +234,106 @@ public class BlockController {
 		//put the original constraint to the loop_exit			
 		loop_exit.addConstraint(c);	
 		setCurrentBlock(loop_body);
-		//Reset the loop condition flag.
-		loop_condition = null;
 	}
+	
+	/**
+	 * Added loop variable to the hashmap
+	 * @param target
+	 */
+	public void addLoopVar(String target){
+		if(!loop_variables.containsKey(target)){
+			loop_variables.put(target, new BoundChange(target));
+		}
+	}
+
+	/**
+	 * Infer the bounds for a block. 
+	 * @param blk the target block.
+	 * @param isChanged the bound
+	 * @param iteration the iteration number.
+	 * @return true if bounds are unchanged. Otherwise, return false.
+	 */
+	protected boolean inferBlockBounds(BasicBlock blk, boolean isChanged, int iteration){
+		Bounds bnd_before = null, bnd_after = null;
+		//Before the bound inference
+		//The bound before bound inference. 
+		if(blk.getType().equals(BlockType.LOOP_BODY)){
+			bnd_before = (Bounds) blk.getBounds().clone();		
+		}
+		//If bounds remain unchanged, then isChanged = true.
+		isChanged |= blk.inferBounds();	
+
+		if(blk.getType().equals(BlockType.LOOP_BODY)){
+			bnd_after = (Bounds) blk.getBounds().clone();
+			//check loop variable is increasing
+			for(String loop_var: loop_variables.keySet()){			
+				//Upper bounds
+				BigInteger upper_before = bnd_before.getUpper(loop_var);
+				BigInteger upper_after = bnd_after.getUpper(loop_var);								
+				BoundChange boundChange = loop_variables.get(loop_var);
+				if(upper_before!= null && upper_after!=null){
+					//Check if the upper bounds is increasing
+					if(upper_before.compareTo(upper_after)<0){
+						boolean isIncreasing = boundChange.isUBIncreasing();
+						isIncreasing |= true;
+						boundChange.setUBIncreasing(isIncreasing);
+						loop_variables.put(loop_var, boundChange);
+					}					
+				}
+
+				//Lower bounds
+				BigInteger lower_before = bnd_before.getLower(loop_var);
+				BigInteger lower_after = bnd_after.getLower(loop_var);
+				if(lower_before!= null && lower_after != null){
+					//Check if the lower bound is decreasing
+					if(lower_before.compareTo(lower_after)>0){
+						boolean isDecreasing = boundChange.isLBDecreasing();
+						isDecreasing |= true;
+						boundChange.setLBDecreasing(isDecreasing);
+						loop_variables.put(loop_var, boundChange);
+					}					
+				}
+
+				//After three iterations, the bounds is still increasing.
+				if(iteration%3==0){
+					//Widen the upper bound
+					if(boundChange.isUBIncreasing()){
+						if(config.isMultiWiden()){
+							isChanged |= blk.getBounds().widenUpperBoundsAgainstThresholds(loop_var);
+						}else{
+							isChanged |= blk.getBounds().widenUpperBoundsToInf(loop_var);
+						}
+					}
+					//Reset the increasing flag
+					boundChange.setUBIncreasing(false);
+					//Widen the lower bound
+					if(boundChange.isLBDecreasing()){
+						if(config.isMultiWiden()){
+							isChanged |= blk.getBounds().widenLowerBoundsAgainstThresholds(loop_var);
+						}else{
+							isChanged |= blk.getBounds().widenLowerBoundsToInf(loop_var);
+						}
+					}
+					//Reset the decreasing flag
+					boundChange.setLBDecreasing(false);					
+					loop_variables.put(loop_var, boundChange);
+				}
+			}
+		}
+
+		//Print out the bounds.
+		if(config.isVerbose()){
+			System.out.println(blk);
+			System.out.println("isChanged="+isChanged);
+		}
+		return isChanged;
+	}
+
+
+
+	
+
+
+	
+
 }
