@@ -26,12 +26,16 @@ public class ForAllPattern extends LoopPattern {
 	public ForAllPattern(Configuration config, List<Type> params, List<Code> blk) {
 		super(config, params, blk);
 		this.type = "forall";
-		this.range = forall(blk, this.loop_var, this.line);
-		if(this.range != null){
-			this.loop_body(blk, this.line);
-			this.loop_exit(blk, this.line);
-			this.isNil = false;
+		//Check if the super class is constructed successfully.
+		if(this.init != null ){
+			this.range = forall(blk, this.loop_var, this.line);
+			if(this.range != null){
+				this.loop_body(blk, this.line);
+				this.loop_exit(blk, this.line);
+				this.isNil = false;
+			}
 		}
+		
 	}
 
 	

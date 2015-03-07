@@ -28,15 +28,18 @@ public abstract class WhileLoopPattern extends LoopPattern{
 	public WhileLoopPattern(Configuration config, List<Type> params, List<Code> blk) {
 		super(config, params, blk);
 		this.type = "WhileLoop";
-		this.loop_bound = while_cond(blk, this.loop_var, this.line);
-		if(this.loop_bound != null){
-			//Simplify the expressions.
-			this.loop_bound = factory.rewriteExpr(this.loop_bound);
-			this.line = this.loopbody_before(blk, this.line);
-			this.line = this.loopbody_update(blk, this.loop_var, this.line);
+		//Check if the super class is constructed successfully.
+		if(this.init != null ){
+			this.loop_bound = while_cond(blk, this.loop_var, this.line);
+			if(this.loop_bound != null){
+				//Simplify the expressions.
+				this.loop_bound = factory.rewriteExpr(this.loop_bound);
+				this.line = this.loopbody_before(blk, this.line);
+				this.line = this.loopbody_update(blk, this.loop_var, this.line);
+			}
 		}
 	}	
-	
+
 	/**
 	 * Search for the code of re-assigning values to the loop variable and put the prior code to the 'loopbody_update' part.
 	 * @param blk the list of code.
@@ -65,12 +68,12 @@ public abstract class WhileLoopPattern extends LoopPattern{
 					}
 				}
 			}			
-						
+
 		}
 
 		return index;
 	}
-	
+
 	/**
 	 * Output a canonical loop condition from a if bytecode.
 	 * That is that the loop variable is on the left and the comparing op is on the right.  
@@ -179,13 +182,13 @@ public abstract class WhileLoopPattern extends LoopPattern{
 				//Add the other code to the init_after
 				AddCodeToPatternPart(code, "init_after");
 			}
-			
+
 		}
 		this.line = index;
 		return loop_bound;
 	}
 
-	
+
 
 
 	/**
@@ -239,8 +242,8 @@ public abstract class WhileLoopPattern extends LoopPattern{
 		}
 		return index;
 	}
-	
-	
+
+
 	@Override
 	public LinearExpr getNumberOfIterations() {
 		if(numberOfIterations==null){
@@ -263,10 +266,10 @@ public abstract class WhileLoopPattern extends LoopPattern{
 				result = result.subtract((LinearExpr) loop_bound).add((LinearExpr) factory.putExpr(BigInteger.ONE));
 				break;
 			}
-			
+
 			numberOfIterations = result;
 		}		
 		return numberOfIterations;
 	}
-	
+
 }

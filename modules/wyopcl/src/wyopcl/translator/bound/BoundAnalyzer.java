@@ -49,6 +49,7 @@ import wyopcl.translator.bound.constraint.Plus;
 import wyopcl.translator.bound.constraint.Range;
 import wyopcl.translator.bound.constraint.Union;
 import wyopcl.translator.symbolic.PatternMatcher;
+import wyopcl.translator.symbolic.pattern.Pattern;
 /***
  * A class to store all the constraints produced in the wyil file and infer the bounds consistent
  * with all the constraints. The class variables 'constraintListMap' and 'label' have only one instance.
@@ -67,20 +68,28 @@ public class BoundAnalyzer {
 	private final String prefix = "%";
 	private boolean isGoto;
 	//Find the matched pattern and transform the pattern.
-	private PatternMatcher matcher;
+	private final PatternMatcher matcher;
 	//Stores all the extracted symbols.
 	private SymbolController sym_ctrl;
 	private BlockController blk_ctrl;
 	//The line number
 	private int line;
-
-	public BoundAnalyzer(Configuration config, WyilFile module, String func_name, List<Code> code_blk){
+	
+	/**
+	 * Constructor of bound analyzer
+	 * @param config
+	 * @param module
+	 * @param func_name
+	 * @param code_blk
+	 * @param matcher
+	 */
+	public BoundAnalyzer(Configuration config, WyilFile module, String func_name, List<Code> code_blk, PatternMatcher matcher){
 		this.config = config;
 		this.func_name = func_name;
 		this.module = module;
 		this.code_blk = code_blk;
-		//Initialize the variables
-		this.matcher = new PatternMatcher(config);
+		this.matcher = matcher;
+		//Initialize the variables		
 		this.sym_ctrl = new SymbolController();
 		this.blk_ctrl = new BlockController(this.config);
 		this.isGoto = false;
@@ -91,8 +100,8 @@ public class BoundAnalyzer {
 	public void propagateBounds(List<Type> params){
 		blk_ctrl.createEntryNode(params);
 	}
-	
-	
+
+
 	/**
 	 * Iterate each bytecode
 	 * @param analyzer
@@ -421,7 +430,7 @@ public class BoundAnalyzer {
 	 * @param operands the operands of calling function
 	 * @param bnd the bounds of calling function
 	 */
-	public void propagateBoundsToFunctionCall(BoundAnalyzer invokeboundAnalyzer, List<Type> params, int[] operands, Bounds bnd){
+	private void propagateBoundsToFunctionCall(BoundAnalyzer invokeboundAnalyzer, List<Type> params, int[] operands, Bounds bnd){
 		int index = 0;
 		//Pass the bounds of input parameters.
 		for(Type paramType: params){
@@ -439,8 +448,14 @@ public class BoundAnalyzer {
 			index++;
 		}
 	}
-	
-	public void propagateBoundsFromFunctionCall(BoundAnalyzer invokeboundAnalyzer, String ret_reg, Type ret_type, Bounds bnd){		
+	/**
+	 * Propagate the bounds of return value to the caller. 
+	 * @param invokeboundAnalyzer
+	 * @param ret_reg
+	 * @param ret_type
+	 * @param bnd
+	 */
+	private void propagateBoundsFromFunctionCall(BoundAnalyzer invokeboundAnalyzer, String ret_reg, Type ret_type, Bounds bnd){		
 		//put the 'type' attribute of 'return_reg'
 		sym_ctrl.putAttribute(ret_reg, "type", ret_type);
 
@@ -456,10 +471,26 @@ public class BoundAnalyzer {
 			BigInteger size = (BigInteger) invokeboundAnalyzer.sym_ctrl.getAttribute("return", "size");
 			sym_ctrl.putAttribute(ret_reg, "size", size);
 		}
-		
+	}
+	
+	/**
+	 * Given a list of code, the pattern matcher recognizes the pattern and do the transformation.
+	 * @param params
+	 * @param code_blk
+	 */
+	private void patternMatchAndTransform(List<Type> params, List<Code> code_blk){
+		//Check if the pattern is enabled.
+		if(this.matcher != null){
+			Pattern pattern = this.matcher.analyzePattern(params, code_blk);
+			System.out.println("The original pattern:\n"+pattern);
+			List<Code> result_code_blk = matcher.transformPattern(pattern);
+			Pattern transformed_pattern = matcher.analyzePattern(params, result_code_blk);
+			System.out.println("From "+pattern.getType()+" to "+transformed_pattern.getType()+", the transformed pattern:\n"+transformed_pattern);
+		}
 	}
 	
 	
+
 	/**
 	 *Parses the invoke bytecode and adds the constraints to the list.
 	 * The possible constraints include: none....
@@ -468,16 +499,16 @@ public class BoundAnalyzer {
 	private void analyze(Codes.Invoke code){
 		FunctionOrMethodDeclaration functionOrMethod = module.functionOrMethod(code.name.name(), code.type());					
 		if(functionOrMethod != null){
+			List<Type> params = functionOrMethod.type().params();
 			//The list of bytecode 
 			List<Code> code_blk = Utils.getCodeBlock(functionOrMethod);
-			
-			
+			patternMatchAndTransform(params, code_blk);			
 			//Infer the bounds						
 			Bounds bnd = this.inferBounds();
-			
 			//Create the bound analyzer for the invoked function.
-			BoundAnalyzer invokeboundAnalyzer = new BoundAnalyzer(config, module, functionOrMethod.name(), code_blk);
-			propagateBoundsToFunctionCall(invokeboundAnalyzer,functionOrMethod.type().params(), code.operands(), bnd);
+			BoundAnalyzer invokeboundAnalyzer = new BoundAnalyzer(config, module, functionOrMethod.name(), code_blk, matcher);
+			
+			propagateBoundsToFunctionCall(invokeboundAnalyzer,params, code.operands(), bnd);
 			invokeboundAnalyzer.iterateByteCode();
 			//Infer the bounds at the end of invoked function.
 			Bounds ret_bnd = invokeboundAnalyzer.inferBounds();			

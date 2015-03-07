@@ -23,10 +23,10 @@ public abstract class LoopPattern extends Pattern{
 	public Expr init;
 	
 	public LoopPattern(Configuration config, List<Type> params, List<Code> blk){
-		super(config, params);
+		super(config, params, blk);
 		this.type = "LoopPattern";
 		//If the list of code contains the loop bytecode, then proceed the inference 
-		if(this.isLoop(blk)){
+		if(this.factory != null && this.isLoop(blk)){
 			//Get the loop variable.
 			this.loop_var = loop_var(blk);
 			if(this.loop_var != null){

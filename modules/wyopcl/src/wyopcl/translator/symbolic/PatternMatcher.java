@@ -83,24 +83,24 @@ public class PatternMatcher {
 	 * @param p
 	 * @return
 	 */
-	public Pattern transformPattern(Pattern p){
+	public List<Code> transformPattern(Pattern p){
 		Constructor<?> constructor;
 		try {
 			//Get the constructor, based on the type of input pattern. 
 			constructor = Transformer.class.getConstructor(p.getClass());
 			if(constructor!=null){
 				Transformer transformer = (Transformer)constructor.newInstance(p);
-				return transformer.getAfterPattern();					
+				return transformer.getResult();					
 			}			
 		}catch (NoSuchMethodException e){
-			return  new NullPattern(config);
+			return  null;
 		}catch (SecurityException | InstantiationException | IllegalAccessException |
 				IllegalArgumentException | InvocationTargetException e) {
 			e.printStackTrace();
 		}	
 		
 		//If the transformation fails, then return NullPattern.
-		return  new NullPattern(config);
+		return null;
 	}
 
 }

@@ -94,7 +94,7 @@ public class Translator implements Builder{
 				message = "Code generation completed.\nFile: "+config.getFilename()+".c";
 				break;
 			case "pattern":
-				analyzePattern(module);
+				patternMatch(module);
 				message = "Pattern matching completed.\nFile: " + config.getFilename();
 				break;
 			default:
@@ -117,7 +117,12 @@ public class Translator implements Builder{
 			//PrintWriter writer = null;			
 			FunctionOrMethodDeclaration functionOrMethod = module.functionOrMethod("main").get(0);
 			List<Code> code_blk = Utils.getCodeBlock(functionOrMethod);
-			BoundAnalyzer boundAnalyzer = new BoundAnalyzer(config, module, functionOrMethod.name(), code_blk);
+			//Check if the pattern mode is enabled.
+			PatternMatcher matcher = null;
+			if(this.config.isPatternMatching()){
+				matcher = new PatternMatcher(config);
+			}			
+			BoundAnalyzer boundAnalyzer = new BoundAnalyzer(config, module, functionOrMethod.name(), code_blk, matcher);
 			boundAnalyzer.propagateBounds(functionOrMethod.type().params());
 			boundAnalyzer.iterateByteCode();
 			//Infer the bounds at the end of main function.
@@ -194,7 +199,7 @@ public class Translator implements Builder{
 	 *  Iterate each code of the input function, build up the code blk and then analyze the loop pattern.
 	 * @param module 
 	 */
-	private void analyzePattern(WyilFile module){
+	private void patternMatch(WyilFile module){
 		PatternMatcher matcher = new PatternMatcher(config);
 		//Iterate each function
 		for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {
@@ -226,8 +231,9 @@ public class Translator implements Builder{
 			
 			Pattern pattern = matcher.analyzePattern(params, code_blk);
 			System.out.println("The original pattern:\n"+pattern);
-			Pattern pattern_1 = matcher.transformPattern(pattern);			
-			System.out.println("From "+pattern.getType()+" to "+pattern_1.getType()+", the transformed pattern:\n"+pattern_1);
+			List<Code> result_code_blk = matcher.transformPattern(pattern);
+			Pattern transformed_pattern = matcher.analyzePattern(params, result_code_blk);
+			System.out.println("From "+pattern.getType()+" to "+transformed_pattern.getType()+", the transformed pattern:\n"+transformed_pattern);
 			
 			code_blk = null;
 			System.out.println("\n----------------End of "+func_name+" function----------------\n");

@@ -34,7 +34,7 @@ import wyopcl.translator.symbolic.pattern.WhileLoopPattern;
  */
 public class Transformer extends Object{
 	private Pattern before;
-	private Pattern after;
+	private List<Code> result;
 	
 	/**
 	 * Constructor for 'BuildListPattern'
@@ -42,12 +42,8 @@ public class Transformer extends Object{
 	 */
 	public Transformer(BuildListPattern before){
 		this.before = before;
-		this.after = transform((BuildListPattern) this.before);
-		if(this.after.isNil()){
-			this.after = new NullPattern(this.before.config);
-		}
-	}
-	
+		this.result = transform((BuildListPattern) this.before);
+	}	
 
 	/**
 	 * Constructor 
@@ -55,10 +51,7 @@ public class Transformer extends Object{
 	 */
 	private Transformer(WhileLoopPattern before){
 		this.before = before;
-		this.after = transform((WhileLoopPattern) this.before);
-		if(this.after.isNil()){
-			this.after = new NullPattern(this.before.config);
-		}
+		this.result = transform((WhileLoopPattern) this.before);
 	}	
 
 	/**
@@ -86,7 +79,7 @@ public class Transformer extends Object{
 	 *		I is the initial value.
 	 *		L is the loop lower bound.	
 	 */
-	private Pattern transform(WhileLoopPattern p) {
+	private List<Code> transform(WhileLoopPattern p) {
 
 		//Store all the bytecode for the new pattern.
 		List<Code> blk = new ArrayList<Code>();	
@@ -128,9 +121,7 @@ public class Transformer extends Object{
 		blk.addAll(p.getPartByName("loopbody_after"));
 		blk.addAll(p.getPartByName("loopbody_exit"));
 
-		ForAllPattern pattern = new ForAllPattern(p.config, p.params, blk);
-
-		return pattern;
+		return blk;
 	}
 	
 	/**
@@ -145,9 +136,9 @@ public class Transformer extends Object{
 	 * The new parts are 'list_size_init' and 'list_assertion'.
 	 * 
 	 * @param p the 'BuildListPattern'
-	 * @return 
+	 * @return the list of transformed code.
 	 */
-	public BuildListFirstPattern transform(BuildListPattern p){		
+	public List<Code> transform(BuildListPattern p){		
 		//Store all the bytecode for the new pattern.
 		List<Code> blk = new ArrayList<Code>();	
 		blk.addAll(p.getPartByName("init_before"));
@@ -233,29 +224,20 @@ public class Transformer extends Object{
 		
 		blk.addAll(p.getPartByName("return"));
 		
-		/*//Debug
-		for(Code code: blk){
-			System.out.println(code);
-		}*/
-		
-		
-		return new BuildListFirstPattern(p.config, p.params, blk);
+		return blk;
 	}
 	
 	
-	/**
-	 * Get the resulting pattern after the transformation.
-	 * @return
-	 */
-	public Pattern getAfterPattern(){
-		return this.after;
-	}
 	/**
 	 * Get the original pattern.
 	 * @return
 	 */
 	public Pattern getBeforePattern(){
 		return this.before;
+	}
+
+	public List<Code> getResult() {
+		return result;
 	}
 
 

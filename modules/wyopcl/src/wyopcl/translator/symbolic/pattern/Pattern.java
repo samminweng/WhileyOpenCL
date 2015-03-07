@@ -21,15 +21,17 @@ public class Pattern extends Object{
 	public final Configuration config;
 	public String type;//The pattern type
 	public boolean isNil;//The flag indicates whether this pattern is matched with the given loop (True: not matched False: Matched).
-	
+
 	public ExprFactory factory;
 	public List<Type> params;//The list of parameter types
-	
+
 	//Store the list of code for each part of the pattern.
 	public int line;//keep track of the current line number.
 	public List<List<Code>> parts;//The collection of all parts in the pattern.
 	public HashMap<Integer, String> part_names;//Store the relation between part index and part name.
 	public String label_AssertOrAssume;//The flag to store the label for an assertion or assumption.
+
+	
 	
 	/**
 	 * Base constructor
@@ -39,26 +41,30 @@ public class Pattern extends Object{
 		this.config = config;
 		this.isNil = true;//By default.
 	}
+	
+	
 	/**
 	 * Multiple constructor
 	 * @param config
 	 * @param params
 	 */
-	public Pattern(Configuration config, List<Type> params){
+	public Pattern(Configuration config, List<Type> params, List<Code> blk){
 		this(config);
-		//The flag to store the label for an assertion or assumption.	
-		this.label_AssertOrAssume = null;
-		//The list of code in each pattern part.
-		this.parts = new ArrayList<List<Code>>();
-		this.part_names = new HashMap<Integer, String>();	
-		this.factory = new ExprFactory(config);//Create an expression factory to record all the extracted expressions.
-		
-		//Add the input parameters to the expression table.
-		this.params = params;
-		for(Type param: params){
-			factory.putExpr(param);
-		}	
-		this.line = 0;
+		if(blk != null){
+			//The flag to store the label for an assertion or assumption.	
+			this.label_AssertOrAssume = null;
+			//The list of code in each pattern part.
+			this.parts = new ArrayList<List<Code>>();
+			this.part_names = new HashMap<Integer, String>();	
+			this.factory = new ExprFactory(config);//Create an expression factory to record all the extracted expressions.
+			//Add the input parameters to the expression table.
+			this.params = params;
+			for(Type param: params){
+				factory.putExpr(param);
+			}
+			this.line = 0;
+		}
+	
 	}	
 
 	/**
@@ -68,7 +74,7 @@ public class Pattern extends Object{
 	public boolean isNil() {
 		return this.isNil;
 	}
-	
+
 	/**
 	 * Get the pattern type.
 	 * @return the pattern type. 
@@ -76,7 +82,7 @@ public class Pattern extends Object{
 	public String getType(){
 		return this.type;
 	}
-	
+
 	/**
 	 * Get the list of code by using the part name. If the part name is new, then add the new pattern part and the list of code.
 	 * This method is a data-driven design rather than using a fixed-sized enum list.  
@@ -116,7 +122,7 @@ public class Pattern extends Object{
 		blk.add(code);	
 	}
 
-	
+
 	/**
 	 * Check if the code is inside an assertion or assumption.
 	 * @param code the code.
@@ -143,10 +149,10 @@ public class Pattern extends Object{
 		return (label_AssertOrAssume != null)? true: false;
 	}
 
-	
-	
-	
-	
+
+
+
+
 	@Override
 	public String toString() {
 		String result = "";
@@ -163,8 +169,8 @@ public class Pattern extends Object{
 		result += "\n}";
 		return result;
 	}
-	
-	
-	
+
+
+
 
 }
