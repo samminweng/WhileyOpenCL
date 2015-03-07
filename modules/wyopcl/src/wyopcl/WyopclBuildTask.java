@@ -10,8 +10,6 @@ import wybs.util.StdProject;
 import wycc.util.Logger;
 import wyopcl.translator.Configuration;
 import wyopcl.translator.Translator;
-import wyopcl.translator.Configuration.Mode;
-import wyopcl.translator.Configuration.WidenStrategy;
 import wyopcl.util.Interpreter;
 import wyopcl.util.InterpreterConfiguration;
 

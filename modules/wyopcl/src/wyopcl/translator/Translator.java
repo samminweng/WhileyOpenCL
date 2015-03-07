@@ -39,9 +39,10 @@ import wyopcl.translator.symbolic.pattern.Pattern;
  */
 public class Translator implements Builder{
 	private Configuration config;
+	//private PrintWriter writer = null;
 
 	public Translator(Configuration config){
-		this.config = config;
+		this.config = config;		
 	}	
 
 	@Override
@@ -52,7 +53,7 @@ public class Translator implements Builder{
 	private String getOutputFilename(){
 		String filename = config.getFilename();
 		//Get widening strategy
-		if(config.isMultiWiden()){
+		if(config.isGradualWiden()){
 			filename += ".gradual";
 		}else{
 			filename += ".naive";
@@ -64,6 +65,13 @@ public class Translator implements Builder{
 
 	@Override
 	public Set<Entry<?>> build(Collection<Pair<Entry<?>, Root>> delta) throws IOException {
+		//Specify the output file.
+		/*if(!config.isVerbose()){
+			writer  = new PrintWriter(getOutputFilename());
+		}else{
+			writer = new PrintWriter(System.out, true);
+		}*/
+		
 		Runtime runtime = Runtime.getRuntime();
 		long start = System.currentTimeMillis();
 		long memory = runtime.freeMemory();
@@ -77,15 +85,15 @@ public class Translator implements Builder{
 			config.setProperty("filename", module.filename().split(".whiley")[0].replace(".\\", ""));				
 			//Check the mode
 			switch(config.getMode()){
-			case BoundAnalysis:
+			case "bound":
 				analyzeFunction(module);
 				message = "Bound analysis completed.\nFile: " + config.getFilename();
 				break;
-			case CodeGeneration:
+			case "code":
 				generateCodeInC(module);
 				message = "Code generation completed.\nFile: "+config.getFilename()+".c";
 				break;
-			case PatternMatching:
+			case "pattern":
 				analyzePattern(module);
 				message = "Pattern matching completed.\nFile: " + config.getFilename();
 				break;
@@ -106,21 +114,16 @@ public class Translator implements Builder{
 	 */
 	private void analyzeFunction(WyilFile module){		
 		try {
-			PrintWriter writer = null;
-			if(!config.isVerbose()){
-				writer  = new PrintWriter(getOutputFilename());
-			}else{
-				writer = new PrintWriter(System.out, true);
-			}
+			//PrintWriter writer = null;			
 			FunctionOrMethodDeclaration functionOrMethod = module.functionOrMethod("main").get(0);
 			List<Code> code_blk = Utils.getCodeBlock(functionOrMethod);
-			BoundAnalyzer boundAnalyzer = new BoundAnalyzer(0, config, functionOrMethod.name(), module, writer, code_blk);
+			BoundAnalyzer boundAnalyzer = new BoundAnalyzer(config, module, functionOrMethod.name(), code_blk);
 			boundAnalyzer.propagateBounds(functionOrMethod.type().params());
 			boundAnalyzer.iterateByteCode();
 			//Infer the bounds at the end of main function.
-			boundAnalyzer.inferBounds(true);			
+			boundAnalyzer.inferBounds();			
 			boundAnalyzer = null;
-			writer.close();
+			//writer.close();
 			if(!config.isVerbose()){
 				//Print out the bound analysis results to console.
 				for(String line: Files.readAllLines(Paths.get(getOutputFilename()), StandardCharsets.UTF_8)){
@@ -200,7 +203,7 @@ public class Translator implements Builder{
 			
 			int line = 0;
 			String func_name = functionOrMethod.name();			
-			ArrayList<Type> param_size = functionOrMethod.type().params();
+			ArrayList<Type> params = functionOrMethod.type().params();
 			//Begin the function
 			System.out.println("\n----------------Start of "+func_name+" function----------------");	
 			//Iterate each byte-code of a function block.			
@@ -221,7 +224,7 @@ public class Translator implements Builder{
 				//End of the function
 			}
 			
-			Pattern pattern = matcher.analyzePattern(param_size, code_blk);
+			Pattern pattern = matcher.analyzePattern(params, code_blk);
 			System.out.println("The original pattern:\n"+pattern);
 			Pattern pattern_1 = matcher.transformPattern(pattern);			
 			System.out.println("From "+pattern.getType()+" to "+pattern_1.getType()+", the transformed pattern:\n"+pattern_1);

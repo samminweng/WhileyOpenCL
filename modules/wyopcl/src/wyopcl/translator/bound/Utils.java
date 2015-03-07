@@ -66,7 +66,7 @@ public final class Utils {
 	 * @param line
 	 * @see <a href="http://en.wikipedia.org/wiki/ANSI_escape_code">ANSI escape code</a>
 	 */
-	protected static int printWyILCode(Code code, String name, int line, PrintWriter writer){
+	protected static int printWyILCode(Code code, String name, int line){
 		//Print out the bytecode with the format (e.g. 'main.9 [const %12 = 2345 : int]')
 		String font_color_start = "";
 		String font_color_end = "";
@@ -77,10 +77,10 @@ public final class Utils {
 		}
 		if(code instanceof Codes.Label){
 			//System.out.println(font_color_start+name+"."+line+"."+depth+" ["+code+"]"+font_color_end);
-			writer.println(font_color_start+name+"."+line+" ["+code+"]"+font_color_end);
+			System.out.println(font_color_start+name+"."+line+" ["+code+"]"+font_color_end);
 		}else{
 			//System.out.println(font_color_start+name+"."+line+"."+depth+" [\t"+code+"]"+font_color_end);
-			writer.println(font_color_start+name+"."+line+" [\t"+code+"]"+font_color_end);
+			System.out.println(font_color_start+name+"."+line+" [\t"+code+"]"+font_color_end);
 		}
 		return ++line;
 	}
@@ -204,7 +204,7 @@ public final class Utils {
 	 * Print out the bounds.
 	 * @param bnd the bounds
 	 */
-	protected static void printBounds(List<Symbol> sortedSymbols, Bounds bnd, PrintWriter writer){
+	protected static void printBounds(List<Symbol> sortedSymbols, Bounds bnd){
 		String str = "";
 		//Print out the bounds
 		for(Symbol symbol : sortedSymbols){
@@ -240,7 +240,7 @@ public final class Utils {
 			}			
 		}
 		str += "Consistency="+bnd.checkBoundConsistency();
-		writer.println(str);		
+		System.out.println(str);		
 	}
 
 }

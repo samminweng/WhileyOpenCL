@@ -1,6 +1,8 @@
 package wyopcl.translator;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Properties;
 
 import wybs.lang.Build;
@@ -11,29 +13,15 @@ import wycc.util.Logger;
  */
 public class Configuration {
 	protected Properties properties;
-	/* The modes of translator*/
-	public enum Mode{		
-		BoundAnalysis,
-		CodeGeneration,
-		PatternMatching,
-		TheoremProving
-	}
-
-	/* Determine the widen strategy. */
-	public enum WidenStrategy{
-		//Widen the bounds upto +/- infinity
-		NAIVE,
-		//Widen the bounds against a list of threshold values
-		GRADUAL
-	}
-
 	public Configuration(){
 		this.properties = new Properties();
 		this.properties.put("logger",  Logger.NULL);
 		this.properties.put("argument", Collections.emptyList());
 		//Initial properties based on default properties
 		this.properties.put("filename", "");
-		this.properties.put("verbose", false);		
+		this.properties.put("verbose", false);
+		//Initialize the list of modes.
+		this.properties.put("modes", new ArrayList<String>());
 	}	
 
 	public void setProperty(String key, Object value){	
@@ -60,45 +48,53 @@ public class Configuration {
 	}
 
 	public void setMode(String mode, Object value) {
-		switch(mode){
-		case "bound":
-			setProperty("mode", Mode.BoundAnalysis);
+		//Get the mode 
+		@SuppressWarnings("unchecked")
+		List<String> modes = (List<String>) this.getProperty("modes");
+		if(mode.equals("bound")||mode.equals("code")||mode.equals("pattern")){			
 			if(value.toString().equals("gradual")){
-				setProperty("widen", WidenStrategy.GRADUAL);
+				setProperty("widen", "gradual");
 			}else{
-				setProperty("widen", WidenStrategy.NAIVE);
-			}			
-			break;
-		case "code":
-			setProperty("mode", Mode.CodeGeneration);
-			break;
-		case "pattern":
-			setProperty("mode", Mode.PatternMatching);
-			break;
-		default:
-			//Do nothing
-			break;
-		}
+				setProperty("widen", "naive");
+			}
+			modes.add(mode);
+		}		
+		setProperty("modes", modes);
 	}
 	
 	/**
-	 * Get the mode.
+	 * Get the mode. If there are more than one mode, then return the first one. 
 	 * @return the mode. If no mode is set, return null.
 	 */
-	public Mode getMode(){
-		if(!this.properties.containsKey("mode")){
+	public String getMode(){
+		if(!this.properties.containsKey("modes")){
 			return null;
-		}
-		
-		return (Mode) this.getProperty("mode");
+		}		
+		return ((List<String>) this.getProperty("modes")).get(0);
 	}
 
+	/**
+	 * Check if the pattern mode is on.
+	 * @return
+	 */
+	public boolean isPatternMatching(){
+		if(this.properties.containsKey("modes")){
+			for(String mode :(List<String>) this.properties.get("modes")){
+				if(mode.equals("pattern")){
+					return true;
+				}				
+			}
+		}
+		
+		return false;
+	}
+	
 	/**
 	 * Check if setting the gradual widen strategy. 
 	 * @return
 	 */
-	public boolean isMultiWiden() {
-		if(this.properties.get("widen").equals(WidenStrategy.GRADUAL)){
+	public boolean isGradualWiden() {
+		if(this.properties.get("widen").equals("gradual")){
 			return true;
 		}		
 		return false;

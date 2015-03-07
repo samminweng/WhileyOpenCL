@@ -48,6 +48,7 @@ import wyopcl.translator.bound.constraint.Negate;
 import wyopcl.translator.bound.constraint.Plus;
 import wyopcl.translator.bound.constraint.Range;
 import wyopcl.translator.bound.constraint.Union;
+import wyopcl.translator.symbolic.PatternMatcher;
 /***
  * A class to store all the constraints produced in the wyil file and infer the bounds consistent
  * with all the constraints. The class variables 'constraintListMap' and 'label' have only one instance.
@@ -60,48 +61,30 @@ import wyopcl.translator.bound.constraint.Union;
  */
 public class BoundAnalyzer {
 	private final Configuration config;
-	//private final FunctionOrMethodDeclaration functionOrMethod;
 	private final String func_name;
 	private final List<Code> code_blk;
 	private final WyilFile module;
-
 	private final String prefix = "%";
-	private final int depth;
 	private boolean isGoto;
-	private final PrintWriter writer;
-
+	//Find the matched pattern and transform the pattern.
+	private PatternMatcher matcher;
 	//Stores all the extracted symbols.
 	private SymbolController sym_ctrl;
 	private BlockController blk_ctrl;
 	//The line number
 	private int line;
 
-	/**
-	 * Initialize the variables.
-	 */
-	private void initialize(){
-		//Initialize the variables
-		this.sym_ctrl = new SymbolController();
-		this.blk_ctrl = new BlockController(this.config);
-		//this.loop_variables = new HashMap<String, BoundChange>();
-		this.isGoto = false;
-		this.line = 0;
-	}
-
-
-	public BoundAnalyzer(int depth,
-			Configuration config,
-			String func_name,
-			WyilFile module,
-			PrintWriter writer, List<Code> code_blk){
-		this.depth = depth;
+	public BoundAnalyzer(Configuration config, WyilFile module, String func_name, List<Code> code_blk){
 		this.config = config;
 		this.func_name = func_name;
-		//this.functionOrMethod = functionOrMethod;
 		this.module = module;
-		this.writer = writer;
 		this.code_blk = code_blk;
-		initialize();		
+		//Initialize the variables
+		this.matcher = new PatternMatcher(config);
+		this.sym_ctrl = new SymbolController();
+		this.blk_ctrl = new BlockController(this.config);
+		this.isGoto = false;
+		this.line = 0;		
 	}
 
 
@@ -115,14 +98,11 @@ public class BoundAnalyzer {
 	 * @param analyzer
 	 * @param functionOrMethod
 	 */
-	public void iterateByteCode(){		
-		//Print the function declaration
-		//writer.println(Utils.castDeclarationtoString(functionOrMethod));
-		//blk_ctrl.createEntryNode(functionOrMethod.type().params());
+	public void iterateByteCode(){
 		//Parse each byte-code and add the constraints accordingly.
 		for(Code code: code_blk){
 			//Get the Block.Entry
-			line = Utils.printWyILCode(code, func_name, line, writer);
+			line = Utils.printWyILCode(code, func_name, line);
 			dispatch(code);
 		}
 	}
@@ -133,9 +113,8 @@ public class BoundAnalyzer {
 	 * @param isEnd indicates if it is called at the end of a function.
 	 * @return the bounds
 	 */
-	public Bounds inferBounds(boolean isEnd){
-		//Sort the blks		
-		//Collections.sort(list);
+	public Bounds inferBounds(){
+		//Sort the blks
 		blk_ctrl.sortedList();
 		//The least common multiple of naive (3) and graduate (12) widening strategies plus one. 
 		int MaxIteration = 13;
@@ -185,7 +164,7 @@ public class BoundAnalyzer {
 		if(config.isVerbose()){
 			Utils.printCFG(blk_ctrl.getList(), config.getFilename(), func_name);
 		}		
-		Utils.printBounds(sym_ctrl.sortedSymbols(), bnd, writer);		
+		Utils.printBounds(sym_ctrl.sortedSymbols(), bnd);		
 		return bnd;
 	}
 
@@ -489,15 +468,19 @@ public class BoundAnalyzer {
 	private void analyze(Codes.Invoke code){
 		FunctionOrMethodDeclaration functionOrMethod = module.functionOrMethod(code.name.name(), code.type());					
 		if(functionOrMethod != null){
-			//Infer the bounds						
-			Bounds bnd = this.inferBounds(false);
+			//The list of bytecode 
 			List<Code> code_blk = Utils.getCodeBlock(functionOrMethod);
+			
+			
+			//Infer the bounds						
+			Bounds bnd = this.inferBounds();
+			
 			//Create the bound analyzer for the invoked function.
-			BoundAnalyzer invokeboundAnalyzer = new BoundAnalyzer(depth+1, config, functionOrMethod.name(), module, writer, code_blk);
+			BoundAnalyzer invokeboundAnalyzer = new BoundAnalyzer(config, module, functionOrMethod.name(), code_blk);
 			propagateBoundsToFunctionCall(invokeboundAnalyzer,functionOrMethod.type().params(), code.operands(), bnd);
 			invokeboundAnalyzer.iterateByteCode();
 			//Infer the bounds at the end of invoked function.
-			Bounds ret_bnd = invokeboundAnalyzer.inferBounds(true);			
+			Bounds ret_bnd = invokeboundAnalyzer.inferBounds();			
 			propagateBoundsFromFunctionCall(invokeboundAnalyzer, prefix+code.target(), code.type().ret(), ret_bnd);
 			invokeboundAnalyzer = null;
 		}

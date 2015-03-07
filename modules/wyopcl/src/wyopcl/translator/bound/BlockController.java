@@ -298,7 +298,7 @@ public class BlockController {
 				if(iteration%3==0){
 					//Widen the upper bound
 					if(boundChange.isUBIncreasing()){
-						if(config.isMultiWiden()){
+						if(config.isGradualWiden()){
 							isChanged |= blk.getBounds().widenUpperBoundsAgainstThresholds(loop_var);
 						}else{
 							isChanged |= blk.getBounds().widenUpperBoundsToInf(loop_var);
@@ -308,7 +308,7 @@ public class BlockController {
 					boundChange.setUBIncreasing(false);
 					//Widen the lower bound
 					if(boundChange.isLBDecreasing()){
-						if(config.isMultiWiden()){
+						if(config.isGradualWiden()){
 							isChanged |= blk.getBounds().widenLowerBoundsAgainstThresholds(loop_var);
 						}else{
 							isChanged |= blk.getBounds().widenLowerBoundsToInf(loop_var);
