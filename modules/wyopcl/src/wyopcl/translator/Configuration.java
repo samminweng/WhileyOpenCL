@@ -51,12 +51,15 @@ public class Configuration {
 		//Get the mode 
 		@SuppressWarnings("unchecked")
 		List<String> modes = (List<String>) this.getProperty("modes");
-		if(mode.equals("bound")||mode.equals("code")||mode.equals("pattern")){			
-			if(value.toString().equals("gradual")){
-				setProperty("widen", "gradual");
-			}else{
-				setProperty("widen", "naive");
-			}
+		if(mode.equals("bound")||mode.equals("code")||mode.equals("pattern")){
+			//Check if the value is not null.
+			if(value!= null){
+				if(value.toString().equals("gradual")){
+					setProperty("widen", "gradual");
+				}else{
+					setProperty("widen", "naive");
+				}
+			}			
 			modes.add(mode);
 		}		
 		setProperty("modes", modes);
