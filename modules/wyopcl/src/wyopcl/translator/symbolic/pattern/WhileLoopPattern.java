@@ -8,6 +8,7 @@ import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyil.lang.Codes.Comparator;
 import wyopcl.translator.Configuration;
+import wyopcl.translator.symbolic.Visitor;
 import wyopcl.translator.symbolic.expression.Expr;
 import wyopcl.translator.symbolic.expression.LinearExpr;
 /**
@@ -18,7 +19,7 @@ import wyopcl.translator.symbolic.expression.LinearExpr;
  *
  */
 
-public abstract class WhileLoopPattern extends LoopPattern{
+public abstract class WhileLoopPattern extends LoopPattern {
 	//Expressions related to the while-loop condition.
 	public String comparatorOp;
 	public Expr loop_bound;
@@ -271,5 +272,6 @@ public abstract class WhileLoopPattern extends LoopPattern{
 		}		
 		return numberOfIterations;
 	}
+
 
 }

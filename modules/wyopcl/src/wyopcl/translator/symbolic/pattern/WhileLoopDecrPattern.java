@@ -2,11 +2,13 @@ package wyopcl.translator.symbolic.pattern;
 
 import java.math.BigInteger;
 import java.util.List;
+
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Codes.BinaryOperatorKind;
 import wyil.lang.Type;
 import wyopcl.translator.Configuration;
+import wyopcl.translator.symbolic.Visitor;
 import wyopcl.translator.symbolic.expression.LinearExpr;
 /**
  * The final class that implemented the while-loop pattens, as follows:
@@ -20,7 +22,7 @@ import wyopcl.translator.symbolic.expression.LinearExpr;
  * @author Min-Hsien Weng
  *
  */
-public final class WhileLoopDecrPattern extends WhileLoopPattern{	
+public final class WhileLoopDecrPattern extends WhileLoopPattern implements Visitable{	
 
 	public WhileLoopDecrPattern(Configuration config, List<Type> params, List<Code> blk) {
 		super(config, params, blk);
@@ -43,5 +45,10 @@ public final class WhileLoopDecrPattern extends WhileLoopPattern{
 		return result;
 	}
 
+	@Override
+	public List<Code> accept(Visitor visitor) {
+		return visitor.visit(this);
+	}
+	
 	
 }

@@ -231,10 +231,12 @@ public class Translator implements Builder{
 			
 			Pattern pattern = matcher.analyzePattern(params, code_blk);
 			System.out.println("The original pattern:\n"+pattern);
-			List<Code> result_code_blk = matcher.transformPattern(pattern);
-			Pattern transformed_pattern = matcher.analyzePattern(params, result_code_blk);
-			System.out.println("From "+pattern.getType()+" to "+transformed_pattern.getType()+", the transformed pattern:\n"+transformed_pattern);
-			
+			//List<Code> result_code_blk = matcher.transformPattern(pattern);
+			List<Code> result_code_blk = matcher.transformPatternUsingVisitor(pattern);
+			if(result_code_blk!= null){
+				Pattern transformed_pattern = matcher.analyzePattern(params, result_code_blk);
+				System.out.println("From "+pattern.getType()+" to "+transformed_pattern.getType()+", the transformed pattern:\n"+transformed_pattern);
+			}			
 			code_blk = null;
 			System.out.println("\n----------------End of "+func_name+" function----------------\n");
 		}

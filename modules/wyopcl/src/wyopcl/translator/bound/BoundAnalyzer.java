@@ -484,12 +484,14 @@ public class BoundAnalyzer {
 		if(this.matcher != null){
 			Pattern pattern = this.matcher.analyzePattern(params, code_blk_before);
 			System.out.println("The original pattern:\n"+pattern);
-			List<Code> code_blk_after = matcher.transformPattern(pattern);
-			Pattern transformed_pattern = matcher.analyzePattern(params, code_blk_after);
-			if(!transformed_pattern.isNil){
-				System.out.println("From "+pattern.getType()+" to "+transformed_pattern.getType()+", the transformed pattern:\n"+transformed_pattern);
-				return code_blk_after;
-			}			
+			List<Code> code_blk_after = matcher.transformPatternUsingVisitor(pattern);
+			if(code_blk_after != null){
+				Pattern transformed_pattern = matcher.analyzePattern(params, code_blk_after);
+				if(!transformed_pattern.isNil){
+					System.out.println("From "+pattern.getType()+" to "+transformed_pattern.getType()+", the transformed pattern:\n"+transformed_pattern);
+					return code_blk_after;
+				}
+			}						
 		}
 		//If the pattern is off or the pattern can not be transformed, return the originial code blk
 		return code_blk_before;

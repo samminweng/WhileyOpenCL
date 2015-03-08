@@ -8,6 +8,7 @@ import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyopcl.translator.Configuration;
+import wyopcl.translator.symbolic.Visitor;
 import wyopcl.translator.symbolic.expression.Expr;
 import wyopcl.translator.symbolic.expression.LinearExpr;
 /**
@@ -15,7 +16,7 @@ import wyopcl.translator.symbolic.expression.LinearExpr;
  * @author Min-Hsien Weng
  *
  */
-public class BuildListPattern extends WhileLoopPattern {
+public class BuildListPattern extends WhileLoopPattern implements Visitable {
 	protected String list_var;
 	protected Expr list_init;
 	protected Expr list_update;
@@ -130,6 +131,12 @@ public class BuildListPattern extends WhileLoopPattern {
 				+ "\n=>loop_iters("+loop_var+", " + getNumberOfIterations()+")";
 		return result;
 
+	}
+
+
+	@Override
+	public List<Code> accept(Visitor visitor) {
+		return visitor.visit(this);
 	}
 
 }

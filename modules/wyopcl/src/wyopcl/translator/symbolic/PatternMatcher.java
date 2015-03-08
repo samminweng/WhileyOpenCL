@@ -17,6 +17,7 @@ import wyopcl.translator.symbolic.pattern.Pattern;
 import wyopcl.translator.symbolic.pattern.BuildListPattern;
 import wyopcl.translator.symbolic.pattern.ForAllPattern;
 import wyopcl.translator.symbolic.pattern.NullPattern;
+import wyopcl.translator.symbolic.pattern.Visitable;
 import wyopcl.translator.symbolic.pattern.WhileLoopDecrPattern;
 import wyopcl.translator.symbolic.pattern.WhileLoopIncrPattern;
 
@@ -32,7 +33,7 @@ public class PatternMatcher {
 	//private final String prefix = "%";
 	private final Configuration config;	
 	private List<Class<? extends Pattern>> avail_Patterns;//Store the available patterns.
-
+	
 	public PatternMatcher(Configuration config){
 		this.config = config;
 		this.avail_Patterns = new ArrayList<Class<? extends Pattern>>();
@@ -40,7 +41,7 @@ public class PatternMatcher {
 		this.avail_Patterns.add(BuildListPattern.class);
 		this.avail_Patterns.add(WhileLoopDecrPattern.class);
 		this.avail_Patterns.add(WhileLoopIncrPattern.class);
-		this.avail_Patterns.add(ForAllPattern.class);
+		this.avail_Patterns.add(ForAllPattern.class);	
 	}	
 
 	/**
@@ -77,30 +78,19 @@ public class PatternMatcher {
 		return pattern;
 	}
 
-
 	/**
-	 * Transform a pattern of one type to another by getting the constructor. 
+	 * Transform a pattern of one type to another by using the visitor design pattern. 
+	 * If the pattern is visitable, then we can perform the pattern transformation on it. Otherwise, do nothing.
 	 * @param p
 	 * @return
 	 */
-	public List<Code> transformPattern(Pattern p){
-		Constructor<?> constructor;
-		try {
-			//Get the constructor, based on the type of input pattern. 
-			constructor = Transformer.class.getConstructor(p.getClass());
-			if(constructor!=null){
-				Transformer transformer = (Transformer)constructor.newInstance(p);
-				return transformer.getResult();					
-			}			
-		}catch (NoSuchMethodException e){
-			return  null;
-		}catch (SecurityException | InstantiationException | IllegalAccessException |
-				IllegalArgumentException | InvocationTargetException e) {
-			e.printStackTrace();
-		}	
-		
-		//If the transformation fails, then return NullPattern.
-		return null;
+	public List<Code> transformPatternUsingVisitor(Pattern p){
+		TransformerVisitor visitor = new TransformerVisitor();
+		List<Code> code_blk = null;
+		if(p instanceof Visitable){
+			code_blk = ((Visitable) p).accept(visitor);
+		}		
+		return code_blk;
 	}
-
+	
 }

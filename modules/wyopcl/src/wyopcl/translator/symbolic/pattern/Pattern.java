@@ -16,7 +16,7 @@ import wyopcl.translator.symbolic.expression.ExprFactory;
  * @author Min-Hsien Weng
  *
  */
-public class Pattern extends Object{
+public class Pattern extends Object {
 	public final String prefix = "%";
 	public final Configuration config;
 	public String type;//The pattern type
