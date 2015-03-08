@@ -123,9 +123,10 @@ public class BuildListFirstPattern extends WhileLoopPattern {
 					//Create the expression and put it into the table.
 					AddCodeToPatternPart(code, "list_update");					
 				}
-			}
-			//Create the expression and put it into the table.
-			AddCodeToPatternPart(code, "list_update_before");
+			}else{
+				//Create the expression and put it into the table.
+				AddCodeToPatternPart(code, "list_update_before");
+			}			
 		}
 
 		//Search for the list_size_update

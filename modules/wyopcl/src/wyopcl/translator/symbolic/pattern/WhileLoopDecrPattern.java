@@ -22,7 +22,7 @@ import wyopcl.translator.symbolic.expression.LinearExpr;
  * @author Min-Hsien Weng
  *
  */
-public final class WhileLoopDecrPattern extends WhileLoopPattern implements Visitable{	
+public final class WhileLoopDecrPattern extends WhileLoopPattern{	
 
 	public WhileLoopDecrPattern(Configuration config, List<Type> params, List<Code> blk) {
 		super(config, params, blk);
@@ -43,11 +43,6 @@ public final class WhileLoopDecrPattern extends WhileLoopPattern implements Visi
 				+ " && init("+loop_var+", "+init+") &&  while_cond("+loop_var+", "+comparatorOp+", "+loop_bound+")"
 				+ "\n=>loop_iters("+loop_var+", " + getNumberOfIterations()+")";
 		return result;
-	}
-
-	@Override
-	public List<Code> accept(Visitor visitor) {
-		return visitor.visit(this);
 	}
 	
 	
