@@ -477,16 +477,22 @@ public class BoundAnalyzer {
 	 * Given a list of code, the pattern matcher recognizes the pattern and do the transformation.
 	 * @param params
 	 * @param code_blk
+	 * @return the list of code 
 	 */
-	private void patternMatchAndTransform(List<Type> params, List<Code> code_blk){
+	private List<Code> patternMatchAndTransform(List<Type> params, List<Code> code_blk_before){
 		//Check if the pattern is enabled.
 		if(this.matcher != null){
-			Pattern pattern = this.matcher.analyzePattern(params, code_blk);
+			Pattern pattern = this.matcher.analyzePattern(params, code_blk_before);
 			System.out.println("The original pattern:\n"+pattern);
-			List<Code> result_code_blk = matcher.transformPattern(pattern);
-			Pattern transformed_pattern = matcher.analyzePattern(params, result_code_blk);
-			System.out.println("From "+pattern.getType()+" to "+transformed_pattern.getType()+", the transformed pattern:\n"+transformed_pattern);
+			List<Code> code_blk_after = matcher.transformPattern(pattern);
+			Pattern transformed_pattern = matcher.analyzePattern(params, code_blk_after);
+			if(!transformed_pattern.isNil){
+				System.out.println("From "+pattern.getType()+" to "+transformed_pattern.getType()+", the transformed pattern:\n"+transformed_pattern);
+				return code_blk_after;
+			}			
 		}
+		//If the pattern is off or the pattern can not be transformed, return the originial code blk
+		return code_blk_before;
 	}
 	
 	
@@ -502,12 +508,12 @@ public class BoundAnalyzer {
 			List<Type> params = functionOrMethod.type().params();
 			//The list of bytecode 
 			List<Code> code_blk = Utils.getCodeBlock(functionOrMethod);
-			patternMatchAndTransform(params, code_blk);			
+			code_blk = patternMatchAndTransform(params, code_blk);			
 			//Infer the bounds						
 			Bounds bnd = this.inferBounds();
 			//Create the bound analyzer for the invoked function.
 			BoundAnalyzer invokeboundAnalyzer = new BoundAnalyzer(config, module, functionOrMethod.name(), code_blk, matcher);
-			
+			//Propagate the bounds of input parameters to the function.
 			propagateBoundsToFunctionCall(invokeboundAnalyzer,params, code.operands(), bnd);
 			invokeboundAnalyzer.iterateByteCode();
 			//Infer the bounds at the end of invoked function.
