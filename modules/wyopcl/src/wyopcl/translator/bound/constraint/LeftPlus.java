@@ -63,13 +63,21 @@ public class LeftPlus extends Constraint {
 		if (min_x != null && min_y != null) {
 			// max (min_z, min_x + min_y)
 			//bnd.isChanged |= bnd.addLowerBound(z, min_x.add(min_y));
-			bnd.isChanged |= bnd.setLowerBound(z, min_x.add(min_y));
+			BigInteger add = min_x.add(min_y);
+			if(min_z != null){
+				add = min_z.min(min_x.add(min_y));
+			}			
+			bnd.isChanged |= bnd.setLowerBound(z, add);
 		}
 		// Add the upper bound of z variable.
 		if (max_x != null && max_y != null) {
 			// min (max_z, max_x + max_y)
 			//bnd.isChanged |= bnd.addUpperBound(z, max_x.add(max_y));
-			bnd.isChanged |= bnd.setUpperBound(z, max_x.add(max_y));
+			BigInteger add = max_x.add(max_y);
+			if(max_z!= null){
+				add = max_z.max(max_x.add(max_y));
+			}			
+			bnd.isChanged |= bnd.setUpperBound(z, add);
 		}
 
 		return bnd.isChanged;

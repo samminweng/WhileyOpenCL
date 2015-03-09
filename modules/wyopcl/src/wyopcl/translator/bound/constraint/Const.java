@@ -24,12 +24,12 @@ public class Const extends Constraint{
 		//Assign the lower and upper bounds.
 		//Using the bitwise inclusive OR to disjunct the results of adding upper or lower bounds.
 		//If one operation has changed the bounds, then return true;
-		bnd.isChanged |= bnd.addLowerBound(x, constant_value);
-		bnd.isChanged |= bnd.addUpperBound(x, constant_value);
+		bnd.isChanged |= bnd.setLowerBound(x, constant_value);
+		bnd.isChanged |= bnd.setUpperBound(x, constant_value);
 		return bnd.isChanged;
 	}
 	@Override
 	public String toString() {
-		return x + "=" + constant_value;
+		return x + ":=" + constant_value;
 	}
 }

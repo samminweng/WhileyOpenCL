@@ -20,6 +20,7 @@ requires limit <= 1000000:
     
 
 method main(System.Console sys):
-    sys.out.println("Sum="++f(5))    
+    //sys.out.println("Sum="++f(5))    
     //sys.out.println("Sum="++f(50000))
     sys.out.println("Sum="++f2(5))
+    sys.out.println("Sum="++f2(50000))
