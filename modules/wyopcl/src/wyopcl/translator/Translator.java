@@ -128,15 +128,8 @@ public class Translator implements Builder{
 			//Infer the bounds at the end of main function.
 			boundAnalyzer.inferBounds();			
 			boundAnalyzer = null;
-			//writer.close();
-			if(!config.isVerbose()){
-				//Print out the bound analysis results to console.
-				for(String line: Files.readAllLines(Paths.get(getOutputFilename()), StandardCharsets.UTF_8)){
-					System.out.println(line);
-				}
-			}
 
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}		

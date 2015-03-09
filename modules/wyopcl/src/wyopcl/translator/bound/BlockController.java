@@ -129,7 +129,6 @@ public class BlockController {
 			//throw new RuntimeException("Current block is null.");
 			//current_blk = entry;
 		}
-
 		return current_blk;
 	}
 

@@ -34,28 +34,40 @@ public final class Utils {
 	}
 
 	/**
+	 * Enables the assertion or assumption
+	 * @param assertOrAssume
+	 */
+	protected static void enabledAssertOrAssume(Code code){
+		if(code instanceof Codes.AssertOrAssume){
+			Codes.AssertOrAssume assertOrAssume = (Codes.AssertOrAssume)code;
+			if(!checkAssertOrAssume()){
+				assertOrAssume_label = assertOrAssume.target;
+			}			
+		}		
+	}
+	
+	/**
+	 * Disables the assertion or assumption
+	 * @param label
+	 */
+	protected static void disabledAssertOrAssume(Code code){
+		 if (code instanceof Codes.Label) {
+			 Codes.Label label = (Codes.Label)code;
+			 if(checkAssertOrAssume() && assertOrAssume_label.equals(label.label)){
+					//Nullify the label of an assertion or assumption. 
+					assertOrAssume_label = null;
+				}
+		 }					
+	}
+	
+	
+	/**
 	 * Check if the code is inside an assertion or assumption.
 	 * @param code the code.
 	 * @return true if the code belongs to the assertion or assumption. Otherwise, return false.
 	 */
-	protected static boolean checkAssertOrAssume(Code code){
-		if(assertOrAssume_label == null){
-			if(code instanceof Codes.AssertOrAssume){
-				Codes.AssertOrAssume assertOrAssume = (Codes.AssertOrAssume)code;
-				assertOrAssume_label = assertOrAssume.target;
-				return true;
-			}		
-		}else{			
-			if(code instanceof Codes.Label){
-				Codes.Label label = (Codes.Label)code;
-				if(assertOrAssume_label.equals(label.label)){
-					//Nullify the label of an assertion or assumption. 
-					assertOrAssume_label = null;
-					return true;
-				}					
-			}
-		}
-		//In other cases, if the label is not null, then the code is inside the assertion or assumption.
+	protected static boolean checkAssertOrAssume(){
+		//f the label is not null, then the code is inside the assertion or assumption.
 		return (assertOrAssume_label != null)? true: false;
 	}
 
@@ -71,7 +83,7 @@ public final class Utils {
 		String font_color_start = "";
 		String font_color_end = "";
 		//Use the ANSI escape color to distinguish the set of bytecode of the assertion.
-		if(Utils.checkAssertOrAssume(code)){
+		if(Utils.checkAssertOrAssume()){
 			font_color_start = GRAY;
 			font_color_end = RESET;
 		}
