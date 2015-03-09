@@ -21,5 +21,5 @@ function reverse([int] ls) => [int]:
     return r
 
 method main(System.Console sys) => void:
-    [int] rs = reverse([1, 2, 3, 4, 5])
+    [int] rs = reverse([0, 1, 2, 3, 4, 5])
     sys.out.println(Any.toString(rs))

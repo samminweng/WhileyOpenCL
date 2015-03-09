@@ -208,7 +208,7 @@ public class BlockController {
 	 */
 	public boolean isLoopCondition(){		
 		//Check if the if-bytecode is the loop condition.
-		if(loop_condition != null){
+		if(!Utils.checkAssertOrAssume() && loop_condition != null){
 			//Reset the loop condition flag.
 			loop_condition = null;
 			return true;

@@ -131,7 +131,7 @@ public class BoundAnalyzer {
 		if(config.isGradualWiden()){
 			MaxIteration = 13;
 		}	
-		
+
 		boolean isFixedPointed = false;
 		int iteration=1;
 		//Stop the loop when the program reaches the fixed point or max-iterations 
@@ -199,97 +199,93 @@ public class BoundAnalyzer {
 	private void dispatch(Code code){
 		try{			
 			//Check if the code is inside the assertion or assumption.
-			if(!Utils.checkAssertOrAssume()){
-				if (code instanceof Codes.AssertOrAssume) {
-					//enable the assertion
-					analyze((Codes.AssertOrAssume)code);
-				}else if (code instanceof Codes.Assign) {			
-					analyze((Codes.Assign)code);
-				} else if (code instanceof Codes.BinaryOperator) {			
-					analyze((Codes.BinaryOperator)code);
-				} else if (code instanceof Codes.StringOperator) {
-					//StringOperatorInterpreter.getInstance().interpret((Codes.StringOperator)code, stackframe);
-				} else if (code instanceof Codes.Convert) {			
-					analyze((Codes.Convert)code);
-				} else if (code instanceof Codes.Const) {			
-					analyze((Codes.Const)code);
-				} else if (code instanceof Codes.Debug) {
-					//DebugInterpreter.getInstance().interpret((Codes.Debug)code, stackframe);
-				} else if (code instanceof Codes.Dereference) {
-					//DereferenceInterpreter.getInstance().interpret((Codes.Dereference)code, stackframe);
-				} else if (code instanceof Codes.Fail) {
-					//FailInterpreter.getInstance().interpret((Codes.Fail)code, stackframe);
-				} else if (code instanceof Codes.FieldLoad) {		
-					analyze((Codes.FieldLoad)code);			
-				} else if (code instanceof Codes.ForAll) {				
-					analyze((Codes.ForAll)code);
-				} else if (code instanceof Codes.Goto) {	
-					analyze((Codes.Goto)code);
-				} else if (code instanceof Codes.If) {
-					analyze((Codes.If)code);			
-				} else if (code instanceof Codes.IfIs) {
-					//IfIsInterpreter.getInstance().interpret((Codes.IfIs)code, stackframe);
-				} else if (code instanceof Codes.IndexOf) {			
-					analyze((Codes.IndexOf)code);
-				} else if (code instanceof Codes.IndirectInvoke) {			
-					//IndirectInvokeInterpreter.getInstance().interpret((Codes.IndirectInvoke)code, stackframe);
-				} else if (code instanceof Codes.Invoke) {			
-					analyze((Codes.Invoke)code);
-				} else if (code instanceof Codes.Invert) {
-					//InvertInterpreter.getInstance().interpret((Codes.Invert)code, stackframe);
-				} else if (code instanceof Codes.ListOperator) {
-					analyze((Codes.ListOperator)code);
-				} else if (code instanceof Codes.Loop) {			
-					analyze((Codes.Loop)code);			
-				} else if (code instanceof Codes.LoopEnd) {
-					analyze((Codes.LoopEnd)code);									
-				} else if (code instanceof Codes.Label) {
-					analyze((Codes.Label)code);
-				} else if (code instanceof Codes.Lambda) {
-					//LambdaInterpreter.getInstance().interpret((Codes.Lambda)code, stackframe);
-				} else if (code instanceof Codes.LengthOf) {			
-					analyze((Codes.LengthOf)code);
-				}  else if (code instanceof Codes.Move) {
-					internalFailure("Not implemented!", "", null);
-				} else if (code instanceof Codes.NewMap) {
-					analyze((Codes.NewMap)code);
-				} else if (code instanceof Codes.NewList) {			
-					analyze((Codes.NewList)code);
-				} else if (code instanceof Codes.NewRecord) {
-					//NewRecordInterpreter.getInstance().interpret((Codes.NewRecord)code, stackframe);
-				} else if (code instanceof Codes.NewSet) {
-					//NewSetInterpreter.getInstance().interpret((Codes.NewSet)code, stackframe);
-				} else if (code instanceof Codes.NewTuple) {
-					analyze((Codes.NewTuple)code);
-				} else if (code instanceof Codes.Return) {			
-					analyze((Codes.Return)code);
-				} else if (code instanceof Codes.NewObject) {
-					//NewObjectInterpreter.getInstance().interpret((Codes.NewObject)code, stackframe);
-				} else if (code instanceof Codes.Nop) {
-					//NopInterpreter.getInstance().interpret((Codes.Nop)code, stackframe);
-				} else if (code instanceof Codes.SetOperator){
-					//SetOperatorInterpreter.getInstance().interpret((Codes.SetOperator)code, stackframe);
-				} else if (code instanceof Codes.SubList) {
-					analyze((Codes.SubList)code);
-				} else if (code instanceof Codes.SubString) {
-					//SubStringInterpreter.getInstance().interpret((Codes.SubString)code, stackframe);
-				} else if (code instanceof Codes.Switch) {
-					//SwitchInterpreter.getInstance().interpret((Codes.Switch)code, stackframe);
-				} else if (code instanceof Codes.Throw) {
-					//ThrowInterpreter.getInstance().interpret((Codes.Throw)code, stackframe);
-				} else if (code instanceof Codes.TryCatch) {
-					//TryCatchInterpreter.getInstance().interpret((Codes.TryCatch)code, stackframe);
-				} else if (code instanceof Codes.TupleLoad) {
-					analyze((Codes.TupleLoad)code);
-				} else if (code instanceof Codes.UnaryOperator){
-					analyze((Codes.UnaryOperator)code);
-				} else if (code instanceof Codes.Update) {
-					analyze((Codes.Update)code);
-				} else {
-					internalFailure("unknown wyil code encountered (" + code + ")", "", null);
-				}	
-			}else{
-				Utils.disabledAssertOrAssume(code);
+			if (code instanceof Codes.AssertOrAssume) {
+				//enable the assertion
+				analyze((Codes.AssertOrAssume)code);
+			}else if (code instanceof Codes.Assign) {			
+				analyze((Codes.Assign)code);
+			} else if (code instanceof Codes.BinaryOperator) {			
+				analyze((Codes.BinaryOperator)code);
+			} else if (code instanceof Codes.StringOperator) {
+				//StringOperatorInterpreter.getInstance().interpret((Codes.StringOperator)code, stackframe);
+			} else if (code instanceof Codes.Convert) {			
+				analyze((Codes.Convert)code);
+			} else if (code instanceof Codes.Const) {			
+				analyze((Codes.Const)code);
+			} else if (code instanceof Codes.Debug) {
+				//DebugInterpreter.getInstance().interpret((Codes.Debug)code, stackframe);
+			} else if (code instanceof Codes.Dereference) {
+				//DereferenceInterpreter.getInstance().interpret((Codes.Dereference)code, stackframe);
+			} else if (code instanceof Codes.Fail) {
+				//FailInterpreter.getInstance().interpret((Codes.Fail)code, stackframe);
+			} else if (code instanceof Codes.FieldLoad) {		
+				analyze((Codes.FieldLoad)code);			
+			} else if (code instanceof Codes.ForAll) {				
+				analyze((Codes.ForAll)code);
+			} else if (code instanceof Codes.Goto) {	
+				analyze((Codes.Goto)code);
+			} else if (code instanceof Codes.If) {
+				analyze((Codes.If)code);			
+			} else if (code instanceof Codes.IfIs) {
+				//IfIsInterpreter.getInstance().interpret((Codes.IfIs)code, stackframe);
+			} else if (code instanceof Codes.IndexOf) {			
+				analyze((Codes.IndexOf)code);
+			} else if (code instanceof Codes.IndirectInvoke) {			
+				//IndirectInvokeInterpreter.getInstance().interpret((Codes.IndirectInvoke)code, stackframe);
+			} else if (code instanceof Codes.Invoke) {			
+				analyze((Codes.Invoke)code);
+			} else if (code instanceof Codes.Invert) {
+				//InvertInterpreter.getInstance().interpret((Codes.Invert)code, stackframe);
+			} else if (code instanceof Codes.ListOperator) {
+				analyze((Codes.ListOperator)code);
+			} else if (code instanceof Codes.Loop) {			
+				analyze((Codes.Loop)code);			
+			} else if (code instanceof Codes.LoopEnd) {
+				analyze((Codes.LoopEnd)code);									
+			} else if (code instanceof Codes.Label) {
+				analyze((Codes.Label)code);
+			} else if (code instanceof Codes.Lambda) {
+				//LambdaInterpreter.getInstance().interpret((Codes.Lambda)code, stackframe);
+			} else if (code instanceof Codes.LengthOf) {			
+				analyze((Codes.LengthOf)code);
+			}  else if (code instanceof Codes.Move) {
+				internalFailure("Not implemented!", "", null);
+			} else if (code instanceof Codes.NewMap) {
+				analyze((Codes.NewMap)code);
+			} else if (code instanceof Codes.NewList) {			
+				analyze((Codes.NewList)code);
+			} else if (code instanceof Codes.NewRecord) {
+				//NewRecordInterpreter.getInstance().interpret((Codes.NewRecord)code, stackframe);
+			} else if (code instanceof Codes.NewSet) {
+				//NewSetInterpreter.getInstance().interpret((Codes.NewSet)code, stackframe);
+			} else if (code instanceof Codes.NewTuple) {
+				analyze((Codes.NewTuple)code);
+			} else if (code instanceof Codes.Return) {			
+				analyze((Codes.Return)code);
+			} else if (code instanceof Codes.NewObject) {
+				//NewObjectInterpreter.getInstance().interpret((Codes.NewObject)code, stackframe);
+			} else if (code instanceof Codes.Nop) {
+				//NopInterpreter.getInstance().interpret((Codes.Nop)code, stackframe);
+			} else if (code instanceof Codes.SetOperator){
+				//SetOperatorInterpreter.getInstance().interpret((Codes.SetOperator)code, stackframe);
+			} else if (code instanceof Codes.SubList) {
+				analyze((Codes.SubList)code);
+			} else if (code instanceof Codes.SubString) {
+				//SubStringInterpreter.getInstance().interpret((Codes.SubString)code, stackframe);
+			} else if (code instanceof Codes.Switch) {
+				//SwitchInterpreter.getInstance().interpret((Codes.Switch)code, stackframe);
+			} else if (code instanceof Codes.Throw) {
+				//ThrowInterpreter.getInstance().interpret((Codes.Throw)code, stackframe);
+			} else if (code instanceof Codes.TryCatch) {
+				//TryCatchInterpreter.getInstance().interpret((Codes.TryCatch)code, stackframe);
+			} else if (code instanceof Codes.TupleLoad) {
+				analyze((Codes.TupleLoad)code);
+			} else if (code instanceof Codes.UnaryOperator){
+				analyze((Codes.UnaryOperator)code);
+			} else if (code instanceof Codes.Update) {
+				analyze((Codes.Update)code);
+			} else {
+				internalFailure("unknown wyil code encountered (" + code + ")", "", null);
 			}
 		} catch (SyntaxError ex) {
 			throw ex;	
@@ -425,7 +421,14 @@ public class BoundAnalyzer {
 			blk_ctrl.createLoopStructure(code.target, left_c, right_c);
 		}else{
 			//Create if and else branches.
-			blk_ctrl.createIfElseBranch(code.target, left_c, right_c);
+			//check if the byte-code is inside
+			if(Utils.checkAssertOrAssume()){
+				//If so, then add the constraint rather than a whole if-else branch.
+				addConstraint(left_c);
+			}else{
+				blk_ctrl.createIfElseBranch(code.target, left_c, right_c);
+			}
+			
 		}
 	}
 
@@ -537,21 +540,25 @@ public class BoundAnalyzer {
 	 * @param code
 	 */
 	private void analyze(Codes.Label code){
-		String label = code.label;
-		//Get the target blk. If it is null, then create a new block.
-		BasicBlock blk = blk_ctrl.getBasicBlock(label);
-		if(blk == null){
-			blk = blk_ctrl.createBasicBlock(label, BlockType.BLOCK);
+		//Check if the bytecode is inside an assertion or assumption.
+		if(Utils.checkAssertOrAssume()){
+			//If so, then disable the flag.
+			Utils.disabledAssertOrAssume(code);
+		}else{
+			String label = code.label;
+			//Get the target blk. If it is null, then create a new block.
+			BasicBlock blk = blk_ctrl.getBasicBlock(label);
+			if(blk == null){
+				blk = blk_ctrl.createBasicBlock(label, BlockType.BLOCK);
+			}
+
+			if(!isGoto){
+				blk_ctrl.getCurrentBlock().addChild(blk);
+			}
+			//Switch the current block
+			blk_ctrl.setCurrentBlock(blk);
+			isGoto = false;
 		}
-
-		if(!isGoto){
-			blk_ctrl.getCurrentBlock().addChild(blk);
-		}
-
-		//Switch the current block
-		blk_ctrl.setCurrentBlock(blk);
-		isGoto = false;
-
 	}
 
 	/**
