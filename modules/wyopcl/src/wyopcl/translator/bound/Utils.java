@@ -32,45 +32,6 @@ public final class Utils {
 	private Utils(){
 
 	}
-
-	/**
-	 * Enables the assertion or assumption
-	 * @param assertOrAssume
-	 */
-	protected static void enabledAssertOrAssume(Code code){
-		if(code instanceof Codes.AssertOrAssume){
-			Codes.AssertOrAssume assertOrAssume = (Codes.AssertOrAssume)code;
-			if(!checkAssertOrAssume()){
-				assertOrAssume_label = assertOrAssume.target;
-			}			
-		}		
-	}
-	
-	/**
-	 * Disables the assertion or assumption
-	 * @param label
-	 */
-	protected static void disabledAssertOrAssume(Code code){
-		 if (code instanceof Codes.Label) {
-			 Codes.Label label = (Codes.Label)code;
-			 if(checkAssertOrAssume() && assertOrAssume_label.equals(label.label)){
-					//Nullify the label of an assertion or assumption. 
-					assertOrAssume_label = null;
-				}
-		 }					
-	}
-	
-	
-	/**
-	 * Check if the code is inside an assertion or assumption.
-	 * @param code the code.
-	 * @return true if the code belongs to the assertion or assumption. Otherwise, return false.
-	 */
-	protected static boolean checkAssertOrAssume(){
-		//f the label is not null, then the code is inside the assertion or assumption.
-		return (assertOrAssume_label != null)? true: false;
-	}
-
 	
 	/**
 	 * Prints out each bytecode with line number and indentation.
@@ -78,12 +39,12 @@ public final class Utils {
 	 * @param line
 	 * @see <a href="http://en.wikipedia.org/wiki/ANSI_escape_code">ANSI escape code</a>
 	 */
-	protected static int printWyILCode(Code code, String name, int line){
+	protected static int printWyILCode(Code code, String name, int line, BlockController blk_ctrl){
 		//Print out the bytecode with the format (e.g. 'main.9 [const %12 = 2345 : int]')
 		String font_color_start = "";
 		String font_color_end = "";
 		//Use the ANSI escape color to distinguish the set of bytecode of the assertion.
-		if(Utils.checkAssertOrAssume()){
+		if(blk_ctrl.checkAssertOrAssume()){
 			font_color_start = GRAY;
 			font_color_end = RESET;
 		}

@@ -112,7 +112,7 @@ public class BoundAnalyzer {
 		//Parse each byte-code and add the constraints accordingly.
 		for(Code code: code_blk){
 			//Get the Block.Entry
-			line = Utils.printWyILCode(code, func_name, line);
+			line = Utils.printWyILCode(code, func_name, line, blk_ctrl);
 			dispatch(code);			
 		}
 	}
@@ -297,7 +297,7 @@ public class BoundAnalyzer {
 
 
 	private void analyze(AssertOrAssume code) {
-		Utils.enabledAssertOrAssume((Codes.AssertOrAssume)code);
+		blk_ctrl.enabledAssertOrAssume((Codes.AssertOrAssume)code);
 	}
 
 
@@ -414,22 +414,23 @@ public class BoundAnalyzer {
 
 			}			
 		}
-
-		//Check if the if-bytecode is the loop condition.
-		if(blk_ctrl.isLoopCondition()){
-			//Create a loop body and loop exit.
-			blk_ctrl.createLoopStructure(code.target, left_c, right_c);
-		}else{
-			//Create if and else branches.
-			//check if the byte-code is inside
-			if(Utils.checkAssertOrAssume()){
-				//If so, then add the constraint rather than a whole if-else branch.
+		//check if the byte-code is inside an assertion or assumption.
+		if(blk_ctrl.checkAssertOrAssume()){
+			//Check if the code is verified the length of a list.
+			if(!blk_ctrl.isLengthOfCondition()){
+				//If not, then add the constraint rather than a whole if-else branch.
 				addConstraint(left_c);
+			}			
+		}else{
+			//Check if the if-bytecode is the loop condition.
+			if(blk_ctrl.isLoopCondition()){
+				//Create a loop body and loop exit.
+				blk_ctrl.createLoopStructure(code.target, left_c, right_c);
 			}else{
+				//Create if and else branches.
 				blk_ctrl.createIfElseBranch(code.target, left_c, right_c);
 			}
-			
-		}
+		}		
 	}
 
 	/**
@@ -541,9 +542,9 @@ public class BoundAnalyzer {
 	 */
 	private void analyze(Codes.Label code){
 		//Check if the bytecode is inside an assertion or assumption.
-		if(Utils.checkAssertOrAssume()){
+		if(blk_ctrl.checkAssertOrAssume()){
 			//If so, then disable the flag.
-			Utils.disabledAssertOrAssume(code);
+			blk_ctrl.disabledAssertOrAssume(code);
 		}else{
 			String label = code.label;
 			//Get the target blk. If it is null, then create a new block.
@@ -712,6 +713,8 @@ public class BoundAnalyzer {
 	 * @param code
 	 */
 	private void analyze(Codes.LengthOf code){
+		//set the flag
+		blk_ctrl.disabledLengthOfCondition(code);		
 		//Get the size att
 		String op = prefix+code.operand(0);
 		BigInteger size = (BigInteger) sym_ctrl.getAttribute(op, "size");

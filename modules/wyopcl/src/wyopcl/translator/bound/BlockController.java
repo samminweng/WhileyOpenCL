@@ -6,6 +6,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import wyil.lang.Code;
+import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyopcl.translator.Configuration;
 import wyopcl.translator.bound.BasicBlock.BlockType;
@@ -28,6 +30,10 @@ public class BlockController {
 	private String loop_condition;	
 	//A list of loop variables.
 	private HashMap<String, BoundChange> loop_variables;
+	//The flag that is used to mark the 'if' bytecode, followed by 'LengthOf' bytecode  
+	private boolean isLengthOfConditions;
+	//The boolean flag is used to show whether the code is inside an assertion or assumption.	
+	private String assertOrAssume_label = null;
 
 	public BlockController(Configuration config){
 		this.config = config;
@@ -37,6 +43,65 @@ public class BlockController {
 		createBasicBlock("exit", BlockType.EXIT);		
 		this.current_blk = createBasicBlock("entry", BlockType.ENTRY);
 		this.loop_variables = new HashMap<String, BoundChange>();
+	}
+	
+	
+	/**
+	 * Enables the assertion or assumption
+	 * @param assertOrAssume
+	 */
+	public void enabledAssertOrAssume(Code code){
+		if(code instanceof Codes.AssertOrAssume){
+			Codes.AssertOrAssume assertOrAssume = (Codes.AssertOrAssume)code;
+			if(!checkAssertOrAssume()){
+				assertOrAssume_label = assertOrAssume.target;
+			}			
+		}		
+	}
+	
+	/**
+	 * Disables the assertion or assumption
+	 * @param label
+	 */
+	public void disabledAssertOrAssume(Code code){
+		 if (code instanceof Codes.Label) {
+			 Codes.Label label = (Codes.Label)code;
+			 if(checkAssertOrAssume() && assertOrAssume_label.equals(label.label)){
+					//Nullify the label of an assertion or assumption. 
+					assertOrAssume_label = null;
+					//Reset the flag of LengthOf byte-code
+					isLengthOfConditions = false;
+				}
+		 }					
+	}
+	
+	
+	/**
+	 * Check if the code is inside an assertion or assumption.
+	 * @param code the code.
+	 * @return true if the code belongs to the assertion or assumption. Otherwise, return false.
+	 */
+	public boolean checkAssertOrAssume(){
+		//f the label is not null, then the code is inside the assertion or assumption.
+		return (assertOrAssume_label != null)? true: false;
+	}
+	
+	
+	/**
+	 * Does not put the constraints, followed by LengthOf byte-code, to simplify the bound inference.
+	 * This is because the assertion of lengthof is complicated and irregular.
+	 * @param code
+	 */
+	public void disabledLengthOfCondition(Codes.LengthOf code){
+		if(checkAssertOrAssume()){
+			isLengthOfConditions = true;
+		}else{
+			isLengthOfConditions = false;
+		}
+	}
+	
+	public boolean isLengthOfCondition(){
+		return isLengthOfConditions;
 	}
 
 	/**
@@ -208,7 +273,7 @@ public class BlockController {
 	 */
 	public boolean isLoopCondition(){		
 		//Check if the if-bytecode is the loop condition.
-		if(!Utils.checkAssertOrAssume() && loop_condition != null){
+		if(!checkAssertOrAssume() && loop_condition != null){
 			//Reset the loop condition flag.
 			loop_condition = null;
 			return true;
