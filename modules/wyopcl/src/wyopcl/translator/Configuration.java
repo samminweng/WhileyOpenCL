@@ -20,6 +20,8 @@ public class Configuration {
 		//Initial properties based on default properties
 		this.properties.put("filename", "");
 		this.properties.put("verbose", false);
+		//Output the results to the physical file
+		this.properties.put("output", false);
 		//Initialize the list of modes.
 		this.properties.put("modes", new ArrayList<String>());
 	}	
@@ -47,6 +49,11 @@ public class Configuration {
 		return (Logger) this.properties.get("logger");
 	}
 
+	public boolean isOutputFile(){
+		return (boolean) this.properties.get("output");
+	}
+	
+	
 	public void setMode(String mode, Object value) {
 		//Get the mode 
 		@SuppressWarnings("unchecked")

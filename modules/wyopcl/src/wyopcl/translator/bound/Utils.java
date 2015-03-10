@@ -93,10 +93,9 @@ public final class Utils {
 	 * Extract the function name.
 	 * @param functionOrMethod
 	 * @return
-	 */
+	 *//*
 	protected static String castDeclarationtoString(FunctionOrMethodDeclaration functionOrMethod){
-		String declaration ="";
-		declaration += functionOrMethod.type().ret() + " "+functionOrMethod.name()+"(";
+		String declaration = functionOrMethod.type().ret() + " "+functionOrMethod.name()+"(";
 		if(!functionOrMethod.name().equals("main")){			
 			boolean isFirst = true;
 			int index=0;
@@ -124,7 +123,7 @@ public final class Utils {
 		}
 		declaration +=")";
 		return declaration;
-	}
+	}*/
 
 	/**
 	 * Check if the type is instance of Integer by inferring the type from 

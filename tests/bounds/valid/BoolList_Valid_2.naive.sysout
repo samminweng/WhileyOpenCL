@@ -1,4 +1,3 @@
-void main([string] args, {method(any) => void print,method(any) => void println} out)
 main.0 [	const %2 = true : bool]
 main.1 [	const %3 = true : bool]
 main.2 [	const %4 = true : bool]
@@ -28,7 +27,6 @@ main.18 [	invoke %18 = (%1) BoolList_Valid_2:play : function([bool]) => [bool]]
 	size(%9)	= 7
 	size(%12)	= 4
 Consistency=true
-[bool] play([bool] %0)
 play.0 [	assign %2 = %0  : [bool]]
 play.1 [	assign %1 = %2  : [bool]]
 play.2 [	const %3 = 0 : int]
@@ -47,7 +45,6 @@ play.6 [	invoke %8 = (%7, %0) BoolList_Valid_2:isAlive : function(int,[bool]) =>
 	size(%2)	= 7
 	size(%6)	= 6
 Consistency=true
-bool isAlive(int %0, [bool] %1)
 isAlive.0 [	const %3 = 0 : int]
 isAlive.1 [	ifle %0, %3 goto blklab5 : int]
 isAlive.2 [	const %5 = 1 : int]
@@ -56,7 +53,7 @@ isAlive.4 [	lengthof %8 = %1 : [bool]]
 isAlive.5 [	ifge %6, %8 goto blklab5 : int]
 isAlive.6 [	const %11 = 1 : int]
 isAlive.7 [	sub %12 = %0, %11 : int]
-[30;1misAlive.8 [	assert blklab16][0m
+isAlive.8 [	assert blklab16]
 [30;1misAlive.9 [	const %23 = 0 : int][0m
 [30;1misAlive.10 [	ifge %12, %23 goto blklab15 : int][0m
 [30;1misAlive.11 [	fail ""index out of bounds (negative)""][0m
@@ -72,7 +69,7 @@ isAlive.20 [	goto blklab5]
 isAlive.21 [.blklab7]
 isAlive.22 [	const %17 = 1 : int]
 isAlive.23 [	add %18 = %0, %17 : int]
-[30;1misAlive.24 [	assert blklab18][0m
+isAlive.24 [	assert blklab18]
 [30;1misAlive.25 [	const %23 = 0 : int][0m
 [30;1misAlive.26 [	ifge %18, %23 goto blklab17 : int][0m
 [30;1misAlive.27 [	fail ""index out of bounds (negative)""][0m
@@ -96,15 +93,19 @@ isAlive.42 [	return %22 : bool]
 	domain(%5)	= [1..1]
 	domain(%6)	= [2..6]
 	domain(%8)	= [7..7]
-	domain(%11)	= [-6..4]
+	domain(%11)	= [-1..-1]
 	domain(%12)	= [0..5]
 	domain(%17)	= [1..1]
-	domain(%18)	= [2..7]
+	domain(%18)	= [0..6]
+	domain(%23)	= [0..0]
+	domain(%24)	= [7..7]
 	value(%3)	= 0
 	value(%5)	= 1
 	value(%8)	= 7
 	value(%11)	= 1
 	value(%17)	= 1
+	value(%23)	= 0
+	value(%24)	= 7
 	size(%1)	= 7
 Consistency=true
 play.7 [	const %11 = true : bool]
@@ -112,7 +113,7 @@ play.8 [	ifeq %8, %11 goto blklab4 : bool]
 play.9 [	goto blklab2]
 play.10 [.blklab4]
 play.11 [	const %14 = true : bool]
-[30;1mplay.12 [	assert blklab12][0m
+play.12 [	assert blklab12]
 [30;1mplay.13 [	const %20 = 0 : int][0m
 [30;1mplay.14 [	ifge %7, %20 goto blklab11 : int][0m
 [30;1mplay.15 [	fail ""index out of bounds (negative)""][0m
@@ -125,7 +126,7 @@ play.21 [	update %1[%7] = %14 : [bool] -> [bool]]
 play.22 [	goto blklab3]
 play.23 [.blklab2]
 play.24 [	const %17 = false : bool]
-[30;1mplay.25 [	assert blklab14][0m
+play.25 [	assert blklab14]
 [30;1mplay.26 [	const %20 = 0 : int][0m
 [30;1mplay.27 [	ifge %7, %20 goto blklab13 : int][0m
 [30;1mplay.28 [	fail ""index out of bounds (negative)""][0m
@@ -144,8 +145,10 @@ play.39 [	return %1 : [bool]]
 	domain(%5)	= [7..7]
 	domain(%6)	= [0..6]
 	domain(%7)	= [0..6]
+	domain(%20)	= [7..7]
 	value(%3)	= 0
 	value(%5)	= 7
+	value(%20)	= 7
 	size(%0)	= 7
 	size(%1)	= 7
 	size(%2)	= 7
@@ -168,3 +171,4 @@ main.23 [	return]
 	size(%12)	= 4
 	size(%18)	= 7
 Consistency=true
+Bound analysis completed.

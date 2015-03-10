@@ -39,7 +39,6 @@ import wyopcl.translator.symbolic.pattern.Pattern;
  */
 public class Translator implements Builder{
 	private Configuration config;
-	//private PrintWriter writer = null;
 
 	public Translator(Configuration config){
 		this.config = config;		
@@ -65,13 +64,6 @@ public class Translator implements Builder{
 
 	@Override
 	public Set<Entry<?>> build(Collection<Pair<Entry<?>, Root>> delta) throws IOException {
-		//Specify the output file.
-		/*if(!config.isVerbose()){
-			writer  = new PrintWriter(getOutputFilename());
-		}else{
-			writer = new PrintWriter(System.out, true);
-		}*/
-		
 		Runtime runtime = Runtime.getRuntime();
 		long start = System.currentTimeMillis();
 		long memory = runtime.freeMemory();
@@ -82,7 +74,9 @@ public class Translator implements Builder{
 			@SuppressWarnings("unchecked")
 			Path.Entry<WyilFile> sf = (Path.Entry<WyilFile>) p.first();
 			WyilFile module = sf.read();
-			config.setProperty("filename", module.filename().split(".whiley")[0].replace(".\\", ""));				
+			//Put the in-memory WyIL file to config for later retrieval.
+			this.config.setProperty("module", module);
+			this.config.setProperty("filename", module.filename().split(".whiley")[0].replace(".\\", ""));				
 			//Check the mode
 			switch(config.getMode()){
 			case "bound":
@@ -103,7 +97,7 @@ public class Translator implements Builder{
 			//Start generating the code.
 		}
 		long endTime = System.currentTimeMillis();
-		System.out.println(message+" Time: "+(endTime - start)+" ms Memory Usage: "+ memory);
+		System.out.println(message+" Time: "+(endTime - start)+" ms Memory Usage: "+ memory);	
 		return generatedFiles;
 	}
 
@@ -113,22 +107,17 @@ public class Translator implements Builder{
 	 * @param module
 	 */
 	private void analyzeFunction(WyilFile module){		
-		try {
-			//PrintWriter writer = null;			
+		try {			
 			FunctionOrMethodDeclaration functionOrMethod = module.functionOrMethod("main").get(0);
-			List<Code> code_blk = Utils.getCodeBlock(functionOrMethod);
-			//Check if the pattern mode is enabled.
-			PatternMatcher matcher = null;
-			if(this.config.isPatternMatching()){
-				matcher = new PatternMatcher(config);
-			}			
-			BoundAnalyzer boundAnalyzer = new BoundAnalyzer(config, module, functionOrMethod.name(), code_blk, matcher);
+			//Put the function name to the config
+			this.config.setProperty("function_name", functionOrMethod.name());
+			List<Code> code_blk = Utils.getCodeBlock(functionOrMethod);				
+			BoundAnalyzer boundAnalyzer = new BoundAnalyzer(config, code_blk);
 			boundAnalyzer.propagateBounds(functionOrMethod.type().params());
 			boundAnalyzer.iterateByteCode();
 			//Infer the bounds at the end of main function.
 			boundAnalyzer.inferBounds();			
-			boundAnalyzer = null;
-
+			boundAnalyzer = null;			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

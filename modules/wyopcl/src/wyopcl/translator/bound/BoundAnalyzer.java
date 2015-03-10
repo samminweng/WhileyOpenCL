@@ -62,14 +62,12 @@ import wyopcl.translator.symbolic.pattern.Pattern;
  *
  */
 public class BoundAnalyzer {
-	private final Configuration config;
-	private final String func_name;
+	private Configuration config;
+	//private final String func_name;
 	private final List<Code> code_blk;
-	private final WyilFile module;
+	//private final WyilFile module;
 	private final String prefix = "%";
 	private boolean isGoto;
-	//Find the matched pattern and transform the pattern.
-	private final PatternMatcher matcher;
 	//Stores all the extracted symbols.
 	private SymbolController sym_ctrl;
 	private BlockController blk_ctrl;
@@ -79,17 +77,11 @@ public class BoundAnalyzer {
 	/**
 	 * Constructor of bound analyzer
 	 * @param config
-	 * @param module
-	 * @param func_name
 	 * @param code_blk
-	 * @param matcher
 	 */
-	public BoundAnalyzer(Configuration config, WyilFile module, String func_name, List<Code> code_blk, PatternMatcher matcher){
+	public BoundAnalyzer(Configuration config, List<Code> code_blk){
 		this.config = config;
-		this.func_name = func_name;
-		this.module = module;
 		this.code_blk = code_blk;
-		this.matcher = matcher;
 		//Initialize the variables		
 		this.sym_ctrl = new SymbolController();
 		this.blk_ctrl = new BlockController(this.config);
@@ -97,7 +89,10 @@ public class BoundAnalyzer {
 		this.line = 0;		
 	}
 
-
+	/**
+	 * Propagate the input bounds.
+	 * @param params
+	 */
 	public void propagateBounds(List<Type> params){
 		blk_ctrl.createEntryNode(params);
 	}
@@ -109,6 +104,7 @@ public class BoundAnalyzer {
 	 * @param functionOrMethod
 	 */
 	public void iterateByteCode(){
+		String func_name = (String)config.getProperty("function_name");
 		//Parse each byte-code and add the constraints accordingly.
 		for(Code code: code_blk){
 			//Get the Block.Entry
@@ -176,7 +172,7 @@ public class BoundAnalyzer {
 		Bounds bnd = exit_blk.getBounds();
 		//check the verbose to determine whether to print out the CFG
 		if(config.isVerbose()){
-			Utils.printCFG(blk_ctrl.getList(), config.getFilename(), func_name);
+			Utils.printCFG(blk_ctrl.getList(), config.getFilename(), (String)config.getProperty("function_name"));
 		}		
 		Utils.printBounds(sym_ctrl.sortedSymbols(), bnd);		
 		return bnd;
@@ -370,34 +366,34 @@ public class BoundAnalyzer {
 		String left = prefix+code.leftOperand;
 		String right = prefix+code.rightOperand;
 
-		Constraint left_c = null;
-		Constraint right_c = null;
+		Constraint c = null;
+		Constraint inverted_c = null;
 		if(Utils.isIntType(code.type)){
 			switch(code.op){
 			case EQ:
-				left_c = new Equals(left, right);
-				right_c = new Equals(left, right);				
+				c = new Equals(left, right);
+				inverted_c = new Equals(left, right);				
 				break;
 			case NEQ:				
 
 				break;
 			case LT:
-				left_c = new LessThan(left, right);
-				right_c = new GreaterThanEquals(left, right);			
+				c = new LessThan(left, right);
+				inverted_c = new GreaterThanEquals(left, right);			
 				break;
 			case LTEQ:
 				//Add the 'left <= right' constraint to the branched list.
-				left_c = new LessThanEquals(left, right);
-				right_c = new GreaterThan(left, right);
+				c = new LessThanEquals(left, right);
+				inverted_c = new GreaterThan(left, right);
 				break;
 			case GT:					
-				left_c = new GreaterThan(left, right);
-				right_c = new LessThanEquals(left, right);
+				c = new GreaterThan(left, right);
+				inverted_c = new LessThanEquals(left, right);
 				break;
 			case GTEQ:
 				//Branch and add the left >= right constraint to 
-				left_c = new GreaterThanEquals(left, right);
-				right_c = new LessThan(left, right);
+				c = new GreaterThanEquals(left, right);
+				inverted_c = new LessThan(left, right);
 				//Add the constraint 'left< right' to current constraint list.
 				break;
 			case IN:			
@@ -416,19 +412,24 @@ public class BoundAnalyzer {
 		}
 		//check if the byte-code is inside an assertion or assumption.
 		if(blk_ctrl.checkAssertOrAssume()){
-			//Check if the code is verified the length of a list.
-			if(!blk_ctrl.isLengthOfCondition()){
-				//If not, then add the constraint rather than a whole if-else branch.
-				addConstraint(left_c);
-			}			
+			//Check if the following code is instance of fail
+			Code next_code = code_blk.get(this.line);
+			//Check if the code is a fail
+			if(blk_ctrl.checkInvertCondition(code, next_code)){
+				//add the inverted constraint rather than a whole if-else branch.
+				addConstraint(inverted_c);
+			}else{
+				//If not, add the constraint extracted from the byte-code.
+				addConstraint(c);
+			}
 		}else{
 			//Check if the if-bytecode is the loop condition.
 			if(blk_ctrl.isLoopCondition()){
 				//Create a loop body and loop exit.
-				blk_ctrl.createLoopStructure(code.target, left_c, right_c);
+				blk_ctrl.createLoopStructure(code.target, c, inverted_c);
 			}else{
 				//Create if and else branches.
-				blk_ctrl.createIfElseBranch(code.target, left_c, right_c);
+				blk_ctrl.createIfElseBranch(code.target, c, inverted_c);
 			}
 		}		
 	}
@@ -489,9 +490,11 @@ public class BoundAnalyzer {
 	 * @return the list of code 
 	 */
 	private List<Code> patternMatchAndTransform(List<Type> params, List<Code> code_blk_before){
-		//Check if the pattern is enabled.
-		if(this.matcher != null){
-			Pattern pattern = this.matcher.analyzePattern(params, code_blk_before);
+		//Check if the pattern matching is on. 
+		if(this.config.isPatternMatching()){
+			//Initialize the pattern matcher.
+			PatternMatcher matcher = new PatternMatcher(config);
+			Pattern pattern = matcher.analyzePattern(params, code_blk_before);
 			System.out.println("The original pattern:\n"+pattern);
 			List<Code> code_blk_after = matcher.transformPatternUsingVisitor(pattern);
 			if(code_blk_after != null){
@@ -506,14 +509,13 @@ public class BoundAnalyzer {
 		return code_blk_before;
 	}
 
-
-
 	/**
 	 *Parses the invoke bytecode and adds the constraints to the list.
 	 * The possible constraints include: none....
 	 * @param code
 	 */
 	private void analyze(Codes.Invoke code){
+		WyilFile module = (WyilFile) config.getProperty("module");
 		FunctionOrMethodDeclaration functionOrMethod = module.functionOrMethod(code.name.name(), code.type());					
 		if(functionOrMethod != null){
 			List<Type> params = functionOrMethod.type().params();
@@ -523,7 +525,11 @@ public class BoundAnalyzer {
 			//Infer the bounds						
 			Bounds bnd = this.inferBounds();
 			//Create the bound analyzer for the invoked function.
-			BoundAnalyzer invokeboundAnalyzer = new BoundAnalyzer(config, module, functionOrMethod.name(), code_blk, matcher);
+			//Get the function
+			String function_name = (String)config.getProperty("function_name");
+			//Set the function name
+			config.setProperty("function_name", functionOrMethod.name());
+			BoundAnalyzer invokeboundAnalyzer = new BoundAnalyzer(config, code_blk);
 			//Propagate the bounds of input parameters to the function.
 			propagateBoundsToFunctionCall(invokeboundAnalyzer,params, code.operands(), bnd);
 			invokeboundAnalyzer.iterateByteCode();
@@ -531,6 +537,8 @@ public class BoundAnalyzer {
 			Bounds ret_bnd = invokeboundAnalyzer.inferBounds();			
 			propagateBoundsFromFunctionCall(invokeboundAnalyzer, prefix+code.target(), code.type().ret(), ret_bnd);
 			invokeboundAnalyzer = null;
+			//Set the function name with
+			config.setProperty("function_name", function_name);			
 		}
 	}
 
@@ -712,9 +720,7 @@ public class BoundAnalyzer {
 	 * Add the range to the target register.   
 	 * @param code
 	 */
-	private void analyze(Codes.LengthOf code){
-		//set the flag
-		blk_ctrl.disabledLengthOfCondition(code);		
+	private void analyze(Codes.LengthOf code){	
 		//Get the size att
 		String op = prefix+code.operand(0);
 		BigInteger size = (BigInteger) sym_ctrl.getAttribute(op, "size");

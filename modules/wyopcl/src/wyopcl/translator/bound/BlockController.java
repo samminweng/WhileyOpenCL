@@ -30,8 +30,6 @@ public class BlockController {
 	private String loop_condition;	
 	//A list of loop variables.
 	private HashMap<String, BoundChange> loop_variables;
-	//The flag that is used to mark the 'if' bytecode, followed by 'LengthOf' bytecode  
-	private boolean isLengthOfConditions;
 	//The boolean flag is used to show whether the code is inside an assertion or assumption.	
 	private String assertOrAssume_label = null;
 
@@ -43,6 +41,27 @@ public class BlockController {
 		createBasicBlock("exit", BlockType.EXIT);		
 		this.current_blk = createBasicBlock("entry", BlockType.ENTRY);
 		this.loop_variables = new HashMap<String, BoundChange>();
+	}
+	
+	
+	/**
+	 * Check whether the condition should be inverted or not
+	 * @param code
+	 * @return true if the condition should be inverted. Otherwise, return false.
+	 */
+	public boolean checkInvertCondition(Codes.If code, Code next_code){
+		//Check if the byte-code is inside an assertion or assumption.
+		if(checkAssertOrAssume()){
+			//Check if the code is a fail			
+			if(next_code instanceof Codes.Fail){
+				return false;
+			}
+			//Check if the if byte-code goes outside the assertion or assumption.	
+			if(!code.target.equals(assertOrAssume_label)){
+				return true;
+			}
+		}		
+		return false;
 	}
 	
 	
@@ -69,8 +88,6 @@ public class BlockController {
 			 if(checkAssertOrAssume() && assertOrAssume_label.equals(label.label)){
 					//Nullify the label of an assertion or assumption. 
 					assertOrAssume_label = null;
-					//Reset the flag of LengthOf byte-code
-					isLengthOfConditions = false;
 				}
 		 }					
 	}
@@ -84,25 +101,7 @@ public class BlockController {
 	public boolean checkAssertOrAssume(){
 		//f the label is not null, then the code is inside the assertion or assumption.
 		return (assertOrAssume_label != null)? true: false;
-	}
-	
-	
-	/**
-	 * Does not put the constraints, followed by LengthOf byte-code, to simplify the bound inference.
-	 * This is because the assertion of lengthof is complicated and irregular.
-	 * @param code
-	 */
-	public void disabledLengthOfCondition(Codes.LengthOf code){
-		if(checkAssertOrAssume()){
-			isLengthOfConditions = true;
-		}else{
-			isLengthOfConditions = false;
-		}
-	}
-	
-	public boolean isLengthOfCondition(){
-		return isLengthOfConditions;
-	}
+	}	
 
 	/**
 	 * Create a basic block with the specific label name
@@ -392,12 +391,5 @@ public class BlockController {
 		}
 		return isChanged;
 	}
-
-
-
-	
-
-
-	
 
 }
