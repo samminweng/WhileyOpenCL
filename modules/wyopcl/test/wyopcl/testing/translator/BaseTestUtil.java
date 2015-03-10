@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -37,42 +39,50 @@ public final class BaseTestUtil {
 	 * @param path_whiley
 	 * @param widen
 	 */
-	public void execBoundAnalysis(String path_whiley, String widen) {
-		File file = new File(path_whiley+ ".whiley");
+	public void execBoundAnalysis(String path, String filename, String... options) {
+		File file = new File(path+filename+ ".whiley");
 		try {	
+			
+			String sysout_file_name = path+filename+"."+options[0]+"."+options[1];
 			// Set the working directory.
-			if(widen.equals("gradual")){
-				pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-range", "gradual", file.getName());
-			}else{
-				pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-range", "naive", file.getName());
-			}
+			switch(options.length){
+			case 2:
+				pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, options[0], options[1], file.getName());
+				break;
+			case 3:
+				sysout_file_name += "."+options[2];
+				pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, options[0], options[1], options[2], file.getName());
+				break;
+			}			
+			sysout_file_name += ".sysout"; 
 			
 			pb.directory(file.getParentFile());
 			System.out.println("" + pb.directory());
 			p = pb.start();
 			
-			BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream(),
-					Charset.forName("UTF-8")));
-			//Read the sysout file
-			/*String sysout;
-			if(widen.equals("gradual")){
-				sysout = path_whiley+".gradual.sysout";
-			}else{
-				sysout = path_whiley+".naive.sysout";
-			}
-
-			Iterator<String> iterator = Files.readAllLines(Paths.get(sysout), Charset.defaultCharset()).iterator();*/
+			BufferedReader executed_reader = new BufferedReader(new InputStreamReader(p.getInputStream(), Charset.forName("UTF-8")));
+			//Write the output to the corresponding files.
+			File sysout_file = new File(sysout_file_name);
+			FileReader file_reader = new FileReader(sysout_file);
+			BufferedReader expected_reader = new BufferedReader(file_reader);
+			
 			String output = null;
-			while ((output = reader.readLine()) != null) {
-				//String expected = iterator.next();
-				System.out.println(output);
-				//assertEquals(expected, output);
+			while ((output = executed_reader.readLine()) != null) {
+				String expected = expected_reader.readLine();
+				//Ignored the memory usage...
+				if(expected != null){
+					assertEquals(expected, output);
+				}				
 			}
-
-			// Ensure no records is left in the list.
-			/*if (iterator.hasNext()) {
-				throw new Exception("Test file: " + file.getName());
-			}*/
+			
+			executed_reader.close();
+			expected_reader.close();
+			file_reader.close();
+			//Nullify the file input/output objects.			
+			executed_reader =null;
+			sysout_file = null;
+			file_reader = null;
+			expected_reader = null;
 		} catch (Exception e) {
 			terminate();
 			throw new RuntimeException("Test file: " + file.getName(), e);

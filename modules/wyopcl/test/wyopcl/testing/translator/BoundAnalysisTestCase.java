@@ -1,7 +1,5 @@
 package wyopcl.testing.translator;
 
-import static org.junit.Assert.*;
-
 import java.io.File;
 
 import org.junit.After;
@@ -26,64 +24,44 @@ public class BoundAnalysisTestCase {
 	
 	
 	@Test
-	public void test_While_Naive() {
-		util.execBoundAnalysis(valid_path+"While", "naive");
+	public void test_Loop_Naive() {
+		util.execBoundAnalysis(valid_path, "Loop", "-bound", "naive");
 	}
 	
 	@Test
-	public void test_While_Gradual() {
-		util.execBoundAnalysis(valid_path+"While", "gradual");
+	public void test_Loop_Gradual() {
+		util.execBoundAnalysis(valid_path, "Loop", "-bound", "gradual");
 	}	
 	
 
 	@Test
 	public void test_IfElse_Valid_2_Naive() {
-		util.execBoundAnalysis(valid_path+"IfElse_Valid_2", "naive");
+		util.execBoundAnalysis(valid_path, "IfElse_Valid_2", "-bound", "naive");
 	}
 	
 	@Test
 	public void test_IfElse_Valid_2_Gradual() {
-		util.execBoundAnalysis(valid_path+"IfElse_Valid_2", "gradual");
-	}
-	
-	@Test
-	public void test_For_Valid_1_Naive() {
-		util.execBoundAnalysis(valid_path+"For_Valid_1", "naive");
-	}
-	
-	@Test
-	public void test_For_Valid_1_Gradual() {
-		util.execBoundAnalysis(valid_path+"For_Valid_1", "gradual");
+		util.execBoundAnalysis(valid_path, "IfElse_Valid_2", "-bound", "gradual");
 	}
 	
 	@Test
 	public void test_While_Valid_1_Naive() {
-		util.execBoundAnalysis(valid_path+"While_Valid_1", "naive");
+		util.execBoundAnalysis(valid_path, "While_Valid_1", "-bound", "naive", "-pattern");
 	}
 	
 	@Test
 	public void test_While_Valid_1_Gradual() {
-		util.execBoundAnalysis(valid_path+"While_Valid_1", "gradual");
-	}
-	
-	@Test 
-	public void test_Reverse_List_Naive(){
-		util.execBoundAnalysis(valid_path+"Reverse_List", "naive");
-	}
-	
-	@Test 
-	public void test_Reverse_List_Gradual(){
-		util.execBoundAnalysis(valid_path+"Reverse_List", "gradual");
+		util.execBoundAnalysis(valid_path, "While_Valid_1", "-bound", "gradual", "-pattern");
 	}
 	
 	@Test
 	public void test_BoolList_Valid_2_Naive() {
-		util.execBoundAnalysis(valid_path+"BoolList_Valid_2", "naive");
+		util.execBoundAnalysis(valid_path, "BoolList_Valid_2", "-bound", "naive");
 	}
 	
 	@Test
 	public void test_BoolList_Valid_2_Gradual() {
-		util.execBoundAnalysis(valid_path+"BoolList_Valid_2", "gradual");
+		util.execBoundAnalysis(valid_path, "BoolList_Valid_2", "-bound", "gradual");
 	}
 	
 }

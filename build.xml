@@ -236,25 +236,30 @@
 </target>	
 <!-- Test the bound analyzer with test cases.-->
 <target name="test-bound" depends="compile-java">
-<mkdir dir="report/translator/bound"/>
+<mkdir dir="report/bound"/>
 <junit fork="yes">
 	<formatter type="plain" usefile="false" />
 	<classpath refid="junit-classpath"/>	
 	<formatter type="xml" />
-	<batchtest todir="report/translator/bound">
+	<batchtest todir="report/bound">
 		<fileset dir="modules/wyopcl/test">
-			<include name="**/Bound*" />
-			<include name="**/Code*" />
+			<include name="**/BoundAnalysisTestCase*" />
 		</fileset>
 	</batchtest>
 </junit>
+	<junitreport todir="report">
+		<fileset dir="report/bound">
+			<include name="TEST-*.xml" />
+		</fileset>
+		<report todir="report/bound" />
+	</junitreport>
 </target>
-<target name="translator" depends="test-bound">
+<target name="boundanalyzer" depends="test-bound">
 <junitreport todir="report">
-	<fileset dir="report/translator/bound">
+	<fileset dir="report/bound">
 		<include name="TEST-*.xml" />
 	</fileset>
-	<report todir="report/translator" />
+	<report todir="report/bound" />
 </junitreport>
 </target>
 </project>
