@@ -123,10 +123,7 @@ public class BoundAnalyzer {
 		//Sort the blks
 		blk_ctrl.sortedList();
 		//The least common multiple of naive (3) and graduate (12) widening strategies plus one. 
-		int MaxIteration = 4;
-		if(config.isGradualWiden()){
-			MaxIteration = 13;
-		}	
+		int	MaxIteration = 20;
 
 		boolean isFixedPointed = false;
 		int iteration=1;

@@ -36,7 +36,19 @@ public class Equals extends Constraint {
 		y_max = bnd.getUpper(y);
 
 		// Check if the lower and upper bounds is infinity.
-		// If not, then propagating the bounds from x to y
+		if(x_min != null && y_min != null){
+			BigInteger min = x_min.min(y_min);
+			bnd.isChanged |= bnd.setLowerBound(y, min);
+			bnd.isChanged |= bnd.setLowerBound(x, min);
+		}		
+		
+		if(x_max != null && y_max != null){
+			BigInteger max = x_max.max(y_max);
+			bnd.isChanged |= bnd.setUpperBound(y, max);
+			bnd.isChanged |= bnd.setUpperBound(x, max);
+		}			
+		
+		/*// If not, then propagating the bounds from x to y
 		if (x_min != null) {
 			bnd.isChanged |= bnd.addLowerBound(y, x_min);
 		}
@@ -52,7 +64,7 @@ public class Equals extends Constraint {
 
 		if (y_max != null) {
 			bnd.isChanged |= bnd.addUpperBound(x, y_max);
-		}
+		}*/
 
 		return bnd.isChanged;
 

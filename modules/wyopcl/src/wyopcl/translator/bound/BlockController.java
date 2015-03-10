@@ -295,7 +295,8 @@ public class BlockController {
 		//put the opposite constraint to current blk(loopbody)			
 		loop_body.addConstraint(neg_c);	
 		//put the original constraint to the loop_exit			
-		loop_exit.addConstraint(c);	
+		//Should we not put the inverted constraint to the loop_exit?
+		//loop_exit.addConstraint(c);	
 		setCurrentBlock(loop_body);
 	}
 	

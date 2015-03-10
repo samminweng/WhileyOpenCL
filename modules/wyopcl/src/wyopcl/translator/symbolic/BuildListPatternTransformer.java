@@ -131,10 +131,60 @@ public class BuildListPatternTransformer{
 	}
 
 	/**
+	 * Adds an assertion to restrict the range of list size (0<=list_size<lengthof(list))
+	 * For example,
+	 *      assert blklab14<br>
+	 *		const %45 = 0 : int<br>
+	 *		ifge %9, %45 goto blklab13 : int<br>
+	 *		fail ""index out of bounds (negative)""<br>
+	 *		.blklab13<br>
+	 *		lengthof %45 = %7 : [int]<br>
+	 *		iflt %9, %45 goto blklab14 : int<br>
+	 *		fail ""index out of bounds (not less than length)""<br>
+	 *	    .blklab14<br>
+	 * @param blk
+	 * @param p
+	 */
+	private void list_size_assertion(List<Code> blk, BuildListPattern p){
+		//Add a block of assertion or assumption to ensure the range of list size.
+		String assertLabel = CodeUtils.freshLabel();
+		//assert blklab14
+		blk.add(Codes.Assert(assertLabel));
+		int reg_zero = getAvailableReg(p);
+		//const %45 = 0 : int
+		blk.add(Codes.Const(getAvailableReg(p), Constant.V_INTEGER(BigInteger.ZERO)));
+		String gotoLabel = CodeUtils.freshLabel();
+		//ifge %9, %45 goto blklab13 : int
+		blk.add(Codes.If(Type.Int.T_INT, reg_list_size, reg_zero, Comparator.GTEQ, gotoLabel));
+		//fail ""index out of bounds (negative)""
+		blk.add(Codes.Fail("index out of bounds (negative)"));
+		//.blklab13
+		blk.add(Codes.Label(gotoLabel));
+		//lengthof %45 = %7 : [int]
+		blk.add(Codes.LengthOf(Type.List.List(Type.Int.T_INT, false), reg_zero, reg_list));
+		//iflt %9, %45 goto blklab14 : int
+		blk.add(Codes.If(Type.Int.T_INT, reg_list_size, reg_zero, Comparator.LT, assertLabel));
+		//fail ""index out of bounds (not less than length)""
+		blk.add(Codes.Fail("index out of bounds (not less than length)"));
+		//.blklab14
+		blk.add(Codes.Label(assertLabel));
+	}
+
+
+	/**
 	 * Creates the 'list_update' part. For example,
 	 * <p>
-	 * 		indexof %32 = %0, %25 : [int]
-	 *		update %7[%9] = %32 : [int] -> [int]
+	 * 		indexof %32 = %0, %25 : [int]<br>
+	 * 		assert blklab14<br>
+	 *		const %45 = 0 : int<br>
+	 *		ifge %9, %45 goto blklab13 : int<br>
+	 *		fail ""index out of bounds (negative)""<br>
+	 *		.blklab13<br>
+	 *		lengthof %45 = %7 : [int]<br>
+	 *		iflt %9, %45 goto blklab14 : int<br>
+	 *		fail ""index out of bounds (not less than length)""<br>
+	 *	    .blklab14<br>
+	 *		update %7[%9] = %32 : [int] -> [int]<br>
 	 * </p>
 	 * @param blk
 	 * @param p
@@ -146,6 +196,9 @@ public class BuildListPatternTransformer{
 		Codes.IndexOf indexof = (IndexOf) list_update.get(0);		
 		int indexOp = indexof.target();
 		blk.add(indexof);
+		//Add the assertion for list size 
+		list_size_assertion(blk, p);
+
 		//Get the assignment of list
 		Codes.Assign list_assign = (Assign) list_update.get(list_update.size()-1);
 		Collection<Integer> operands = new ArrayList<Integer>();
@@ -228,7 +281,7 @@ public class BuildListPatternTransformer{
 
 		blk.addAll(p.getPartByName("loopbody_after"));
 		blk.addAll(p.getPartByName("loop_exit"));
-		
+
 		//Add the 'list_assertion' part
 		list_assertion(blk, p);
 		blk.addAll(p.getPartByName("return"));
