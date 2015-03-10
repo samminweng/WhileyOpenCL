@@ -254,12 +254,4 @@
 		<report todir="report/bound" />
 	</junitreport>
 </target>
-<target name="boundanalyzer" depends="test-bound">
-<junitreport todir="report">
-	<fileset dir="report/bound">
-		<include name="TEST-*.xml" />
-	</fileset>
-	<report todir="report/bound" />
-</junitreport>
-</target>
 </project>
