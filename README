@@ -47,9 +47,9 @@ $ git clone https://github.com/samminweng/WhileyOpenCL
 $ cd WhileyOpenCL/
 $ ant
 $ cd tests/bounds/valid
-$ ./../../../bin/wyopcl -range gradual While.whiley 
+$ ./../../../bin/wyopcl -bound naive -pattern While_Valid_1.whiley 
 Or add the verbose option to print out the analyzing process.
-$ ./../../../bin/wyopcl -range gradual -verbose While.whiley
+$ ./../../../bin/wyopcl -bound naive -pattern -verbose While_Valid_1.whiley
 
 2.2 Code Generator
 Code Generator aims to translate the Whiley program into C code. To
