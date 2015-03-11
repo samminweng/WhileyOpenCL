@@ -1,5 +1,9 @@
 package wyopcl.translator.bound;
-
+/**
+ * Keeps track of the change in the ranges of a loop variable. 
+ * @author Min-Hsien Weng
+ *
+ */
 public class BoundChange {
 	private String name;
 	private boolean isUBIncreasing = false;

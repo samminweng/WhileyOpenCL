@@ -85,7 +85,7 @@ public class PatternMatcher {
 	 * @return
 	 */
 	public List<Code> transformPatternUsingVisitor(Pattern p){
-		TransformerVisitor visitor = new TransformerVisitor();
+		Transformer visitor = new Transformer();
 		List<Code> code_blk = null;
 		if(p instanceof Visitable){
 			code_blk = ((Visitable) p).accept(visitor);

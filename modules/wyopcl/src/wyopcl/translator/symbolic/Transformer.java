@@ -11,10 +11,10 @@ import wyopcl.translator.symbolic.pattern.WhileLoopPattern;
  * @author Min-Hsien Weng
  *
  */
-public class TransformerVisitor implements Visitor{
+public class Transformer implements Visitor{
 	private WhileLoopPatternTransformer whileloopTransformer;
 	private BuildListPatternTransformer buildlistTransformer;
-	public TransformerVisitor(){
+	public Transformer(){
 		this.whileloopTransformer = new WhileLoopPatternTransformer();
 		this.buildlistTransformer = new BuildListPatternTransformer();
 	}	
