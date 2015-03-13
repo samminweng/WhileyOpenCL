@@ -9,7 +9,7 @@ import wyil.lang.Codes.BinaryOperatorKind;
 import wyil.lang.Type;
 import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.Visitor;
-import wyopcl.translator.symbolic.expression.LinearExpr;
+import wyopcl.translator.symbolic.pattern.expression.LinearExpr;
 /**
  * The final class that implemented the while-loop pattens, as follows:
  * <ul>

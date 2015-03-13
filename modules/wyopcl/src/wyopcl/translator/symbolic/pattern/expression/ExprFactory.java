@@ -1,4 +1,4 @@
-package wyopcl.translator.symbolic.expression;
+package wyopcl.translator.symbolic.pattern.expression;
 
 import java.math.BigInteger;
 import java.util.HashMap;
@@ -185,17 +185,17 @@ public class ExprFactory {
 	 * @param Expr the original expression.
 	 * @return the simplified expression.
 	 */
-	public Expr rewriteExpr(Expr expr){
+	public Expr rewriteExpr(Expr init){
 		//Rewrite the linear expression 
-		if(expr != null && expr instanceof LinearExpr){
-			LinearExpr linearExpr = (LinearExpr)expr;
+		if(init != null && init instanceof LinearExpr){
+			LinearExpr linearExpr = (LinearExpr)init;
 			String[] vars = linearExpr.getVars();
 			for(String var: vars){
 				linearExpr= this.replaceLinearExpr(var, linearExpr);  
 			}
 			return linearExpr;
 		}		
-		return expr;
+		return init;
 	}
 		
 	

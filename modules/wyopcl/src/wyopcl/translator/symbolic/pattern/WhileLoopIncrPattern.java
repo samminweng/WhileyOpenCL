@@ -9,7 +9,9 @@ import wyil.lang.Type;
 import wyil.lang.Codes.BinaryOperatorKind;
 import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.Visitor;
-import wyopcl.translator.symbolic.expression.LinearExpr;
+import wyopcl.translator.symbolic.pattern.expression.LinearExpr;
+import wyopcl.translator.symbolic.pattern.transform.Transformable;
+import wyopcl.translator.symbolic.pattern.transform.Transformer;
 /**
  * The class that implemented the while-loop patterns, as follows:
  * <ul>
@@ -19,7 +21,7 @@ import wyopcl.translator.symbolic.expression.LinearExpr;
  * @author Min-Hsien Weng
  *
  */
-public class WhileLoopIncrPattern extends WhileLoopPattern implements Visitable{
+public class WhileLoopIncrPattern extends WhileLoopPattern implements Transformable{
 	/**
 	 * Constructor
 	 * @param config configuration 
@@ -47,8 +49,8 @@ public class WhileLoopIncrPattern extends WhileLoopPattern implements Visitable{
 
 
 	@Override
-	public List<Code> accept(Visitor visitor) {
-		return visitor.visit(this);
+	public List<Code> accept(Transformer transformer) {
+		return transformer.transform(this);
 	}
 	
 }

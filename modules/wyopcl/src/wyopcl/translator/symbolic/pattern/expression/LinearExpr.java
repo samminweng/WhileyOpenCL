@@ -1,13 +1,9 @@
-package wyopcl.translator.symbolic.expression;
+package wyopcl.translator.symbolic.pattern.expression;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-import wyil.lang.Code;
-import wyil.lang.Codes;
-import wyil.lang.Constant;
-import wyil.lang.Codes.BinaryOperatorKind;
 
 /**
  * The affine expression is used to store the initial values, conditions and number of loop iterations.

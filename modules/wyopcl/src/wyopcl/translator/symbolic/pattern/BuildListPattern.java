@@ -9,14 +9,16 @@ import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.Visitor;
-import wyopcl.translator.symbolic.expression.Expr;
-import wyopcl.translator.symbolic.expression.LinearExpr;
+import wyopcl.translator.symbolic.pattern.expression.Expr;
+import wyopcl.translator.symbolic.pattern.expression.LinearExpr;
+import wyopcl.translator.symbolic.pattern.transform.Transformable;
+import wyopcl.translator.symbolic.pattern.transform.Transformer;
 /**
  * The BuildList pattern contains 'init_before', 'init', 'init_after', 'loop_header', 'loopbody_before'
  * @author Min-Hsien Weng
  *
  */
-public class BuildListPattern extends WhileLoopPattern implements Visitable {
+public class BuildListPattern extends WhileLoopPattern implements Transformable {
 	protected String list_var;
 	protected Expr list_init;
 	protected Expr list_update;
@@ -135,8 +137,8 @@ public class BuildListPattern extends WhileLoopPattern implements Visitable {
 
 
 	@Override
-	public List<Code> accept(Visitor visitor) {
-		return visitor.visit(this);
+	public List<Code> accept(Transformer transformer) {
+		return transformer.transform((Pattern)this);
 	}
 
 }

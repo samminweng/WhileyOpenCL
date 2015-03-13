@@ -50,6 +50,7 @@ import wyopcl.translator.bound.constraint.Plus;
 import wyopcl.translator.bound.constraint.Range;
 import wyopcl.translator.bound.constraint.Union;
 import wyopcl.translator.symbolic.PatternMatcher;
+import wyopcl.translator.symbolic.PatternTransformer;
 import wyopcl.translator.symbolic.pattern.Pattern;
 /***
  * A class to store all the constraints produced in the wyil file and infer the bounds consistent
@@ -493,14 +494,18 @@ public class BoundAnalyzer {
 			PatternMatcher matcher = new PatternMatcher(config);
 			Pattern pattern = matcher.analyzePattern(params, code_blk_before);
 			System.out.println("The original pattern:\n"+pattern);
-			List<Code> code_blk_after = matcher.transformPatternUsingVisitor(pattern);
+			PatternTransformer transformer = new PatternTransformer();
+			List<Code> code_blk_after = transformer.transformPatternUsingVisitor(pattern);
 			if(code_blk_after != null){
 				Pattern transformed_pattern = matcher.analyzePattern(params, code_blk_after);
 				if(!transformed_pattern.isNil){
 					System.out.println("From "+pattern.getType()+" to "+transformed_pattern.getType()+", the transformed pattern:\n"+transformed_pattern);
 					return code_blk_after;
 				}
-			}						
+			}
+			//Nullify the matcher and transformer
+			matcher = null;
+			transformer = null;			
 		}
 		//If the pattern is off or the pattern can not be transformed, return the originial code blk
 		return code_blk_before;

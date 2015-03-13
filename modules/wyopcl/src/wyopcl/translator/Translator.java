@@ -30,6 +30,7 @@ import wyopcl.translator.bound.Utils;
 import wyopcl.translator.generator.CodeGenerator;
 import wyopcl.translator.generator.Utility;
 import wyopcl.translator.symbolic.PatternMatcher;
+import wyopcl.translator.symbolic.PatternTransformer;
 import wyopcl.translator.symbolic.pattern.Pattern;
 /**
  * Main entry point of translator
@@ -183,6 +184,8 @@ public class Translator implements Builder{
 	 */
 	private void patternMatch(WyilFile module){
 		PatternMatcher matcher = new PatternMatcher(config);
+		//Create the transformer
+		PatternTransformer transformer = new PatternTransformer();
 		//Iterate each function
 		for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {
 			//Store the list of code for a function.
@@ -213,8 +216,8 @@ public class Translator implements Builder{
 			
 			Pattern pattern = matcher.analyzePattern(params, code_blk);
 			System.out.println("The original pattern:\n"+pattern);
-			//List<Code> result_code_blk = matcher.transformPattern(pattern);
-			List<Code> result_code_blk = matcher.transformPatternUsingVisitor(pattern);
+			
+			List<Code> result_code_blk = transformer.transformPatternUsingVisitor(pattern);
 			if(result_code_blk!= null){
 				Pattern transformed_pattern = matcher.analyzePattern(params, result_code_blk);
 				System.out.println("From "+pattern.getType()+" to "+transformed_pattern.getType()+", the transformed pattern:\n"+transformed_pattern);
@@ -222,5 +225,14 @@ public class Translator implements Builder{
 			code_blk = null;
 			System.out.println("\n----------------End of "+func_name+" function----------------\n");
 		}
+		
+		transformer = null;
+		matcher = null;
+		
 	}
+	
+	
+	
+	
+	
 }

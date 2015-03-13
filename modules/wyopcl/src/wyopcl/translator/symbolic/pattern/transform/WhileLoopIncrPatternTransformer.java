@@ -1,4 +1,4 @@
-package wyopcl.translator.symbolic;
+package wyopcl.translator.symbolic.pattern.transform;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,6 +8,8 @@ import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyil.lang.Codes.BinaryOperatorKind;
+import wyopcl.translator.symbolic.pattern.BuildListPattern;
+import wyopcl.translator.symbolic.pattern.Pattern;
 import wyopcl.translator.symbolic.pattern.WhileLoopDecrPattern;
 import wyopcl.translator.symbolic.pattern.WhileLoopIncrPattern;
 import wyopcl.translator.symbolic.pattern.WhileLoopPattern;
@@ -21,16 +23,24 @@ import wyopcl.translator.symbolic.pattern.WhileLoopPattern;
  *		I is the initial value.
  *		L is the loop lower bound.	
  */
-public class WhileLoopPatternTransformer {
-	
-	public WhileLoopPatternTransformer(){
+public class WhileLoopIncrPatternTransformer extends Transformer {
+		
+	public WhileLoopIncrPatternTransformer(){
 		
 	}
 
-	public List<Code> transform(WhileLoopPattern p) {
-
-		//Store all the bytecode for the new pattern.
-		List<Code> blk = new ArrayList<Code>();	
+	/**
+	 * Transform the WhileLoopPattern pattern to the forall pattern
+	 * @param pattern
+	 * @return
+	 */
+	public List<Code> transform(Pattern pattern) {
+		if(!(pattern instanceof WhileLoopIncrPattern)) return null;
+		
+		WhileLoopIncrPattern p = (WhileLoopIncrPattern)pattern;
+		
+		List<Code> blk = new ArrayList<Code>();//Store all the bytecode for the new pattern.
+		
 		//Add the code in the 'init_before'
 		blk.addAll(p.getPartByName("init_before"));
 		//Add the code in the 'init_after'
@@ -71,6 +81,7 @@ public class WhileLoopPatternTransformer {
 
 		return blk;
 	}
+	
 	
 	
 	

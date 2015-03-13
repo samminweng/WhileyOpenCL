@@ -8,9 +8,9 @@ import wyil.lang.Codes.ForAll;
 import wyil.lang.Type;
 import wyil.lang.Codes.BinaryOperatorKind;
 import wyopcl.translator.Configuration;
-import wyopcl.translator.symbolic.expression.Expr;
-import wyopcl.translator.symbolic.expression.LinearExpr;
-import wyopcl.translator.symbolic.expression.RangeExpr;
+import wyopcl.translator.symbolic.pattern.expression.Expr;
+import wyopcl.translator.symbolic.pattern.expression.LinearExpr;
+import wyopcl.translator.symbolic.pattern.expression.RangeExpr;
 
 /**
  * The 'ForAll' pattern is similar to 'WhileLoop' pattern. It includes the 'init_before', 'init', 'init_after', 

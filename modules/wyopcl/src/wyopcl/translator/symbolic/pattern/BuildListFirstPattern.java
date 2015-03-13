@@ -6,7 +6,7 @@ import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyopcl.translator.Configuration;
-import wyopcl.translator.symbolic.expression.Expr;
+import wyopcl.translator.symbolic.pattern.expression.Expr;
 /**
  * This pattern creates a new list (r) with an existing list and initializes the array size (r_size) and capacity (r_capacity).
  * Then it iterates over the existing list to gradually fill up the new list.   

@@ -5,8 +5,8 @@ import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyopcl.translator.Configuration;
-import wyopcl.translator.symbolic.expression.Expr;
-import wyopcl.translator.symbolic.expression.LinearExpr;
+import wyopcl.translator.symbolic.pattern.expression.Expr;
+import wyopcl.translator.symbolic.pattern.expression.LinearExpr;
 /**
  * The abstract class extends the Pattern class and infer the 'loop_var', 'loop_label' and 'init' variables.
  * This abstract pattern splits the list of code into 'init_before', 'init' and 'init_after' parts.

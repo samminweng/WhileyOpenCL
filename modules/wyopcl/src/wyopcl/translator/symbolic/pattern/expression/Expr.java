@@ -1,4 +1,4 @@
-package wyopcl.translator.symbolic.expression;
+package wyopcl.translator.symbolic.pattern.expression;
 
 import wyil.lang.Code;
 import wyil.lang.Codes;

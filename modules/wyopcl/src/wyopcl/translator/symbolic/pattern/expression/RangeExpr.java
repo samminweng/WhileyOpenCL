@@ -1,6 +1,5 @@
-package wyopcl.translator.symbolic.expression;
+package wyopcl.translator.symbolic.pattern.expression;
 
-import wyil.lang.Codes;
 
 public class RangeExpr extends Expr {
 	private LinearExpr lower;

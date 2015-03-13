@@ -1,4 +1,4 @@
-package wyopcl.translator.symbolic;
+package wyopcl.translator.symbolic.pattern.transform;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -16,20 +16,37 @@ import wyil.lang.Codes.Comparator;
 import wyil.lang.Codes.IndexOf;
 import wyil.lang.Codes.LengthOf;
 import wyopcl.translator.symbolic.pattern.BuildListPattern;
+import wyopcl.translator.symbolic.pattern.Pattern;
+import wyopcl.translator.symbolic.pattern.WhileLoopPattern;
 /**
  * 
- * Transform the 'BuildListPattern' to 'BuildListFirstPattern'.
- * BuidListPattern has 'init_before', 'init', 'list_init', 'init_after', 'loop_header', 'loopbody_before', 'loopbody_update', 'list_update_before'
- * 'list_update', 'loopbody_after', 'loop_exit' and 'return'.
+ * Transforms the 'BuildListPattern' to 'BuildListFirstPattern'. The differences on parts of 'BuildListPattern' and 'BuildListFirstPattern'
+ * patterns are listed as below:
  * <p>
- * BuildListFirstPattern has 'init_before', 'init', 'list_init', 'init_after', 'loop_header', 'loopbody_before', 'loopbody_update', 'list_update_before'
- * 'list_update', 'list_size_update', 'loopbody_after', 'loop_exit' 'list_assertion' and 'return'.
- * <p>
- * The parts that require change are 'list_init', 'loop_header', 'list_update' and 'list_size_update'.
- * The new parts are 'list_size_init' and 'list_assertion'.
+ * <table>
+ * <tr><th>BuildListPattern</th><th>BuildListFirstPattern</th></tr>
+ * <tr><td>init_before</td><td>init_before</td></tr>
+ * <tr><td>init</td><td>init</td></tr>
+ * <tr><td>list_init</td><td>list_init</td></tr>
+ * <tr><td></td><td>list_size_init</td></tr>
+ * <tr><td>init_after</td><td>init_after</td></tr>
+ * <tr><td>loop_header</td><td>loop_header</td></tr>
+ * <tr><td>loopbody_before</td><td>loopbody_before</td></tr>
+ * <tr><td>loopbody_update</td><td>loopbody_update</td></tr>
+ * <tr><td>list_update_before</td><td>list_update_before</td></tr>
+ * <tr><td>list_update</td><td>list_update</td></tr>
+ * <tr><td></td><td>list_size_update</td></tr>
+ * <tr><td>loopbody_after</td><td>loopbody_after</td></tr>
+ * <tr><td>loop_exit</td><td>loop_exit</td></tr>
+ * <tr><td></td><td>list_assertion</td></tr>
+ * <tr><td>return</td><td>return</td></tr>
+ * </table>
+ * </p>
+ * The parts that require changes are 'list_init', 'loop_header' and 'list_update'. The new parts are
+ * 'list_size_init', 'list_size_update' and 'list_assertion'.
  * 
  */
-public class BuildListPatternTransformer{
+public class BuildListPatternTransformer extends Transformer{
 	private int available_reg;
 	private int reg_input_list;
 	private int reg_list;
@@ -40,7 +57,6 @@ public class BuildListPatternTransformer{
 	 * Constructor
 	 */
 	public BuildListPatternTransformer(){
-
 	}
 
 	/**
@@ -48,22 +64,17 @@ public class BuildListPatternTransformer{
 	 * @param p
 	 * @return
 	 */
-	private int getAvailableReg(BuildListPattern p){
-		if(available_reg == -1){
-			available_reg = p.factory.getAvailableReg();
-		}		
+	private int getAvailableReg(){		
 		return ++available_reg;
 	}
 
-
-
 	/**
-	 * Create the 'list_init' part of the 'BuildListFirstPattern'. For example,
+	 * Creates the 'list_init' part of the 'BuildListFirstPattern'. For example,
 	 * 		lengthof %6 = %0 : [int]
 	 * 		assign %7 = %0  : [int]
 	 * where %6 is the list_capacity, %0 is the input list and %7 is the output list.
-	 * @param blk
-	 * @param p
+	 * @param blk the list of transformed code.
+	 * @param p 
 	 */
 	private void list_init(List<Code> blk, BuildListPattern p){
 		//Make change to the 'list_init' part
@@ -74,7 +85,7 @@ public class BuildListPatternTransformer{
 		//The register of input list
 		reg_input_list = lengthof.operand(0);
 
-		reg_list_capacity = getAvailableReg(p);
+		reg_list_capacity = getAvailableReg();
 		blk.add(Codes.LengthOf(lengthof.type(), reg_list_capacity, reg_input_list));
 
 		//Get the list var from list_init part
@@ -90,14 +101,12 @@ public class BuildListPatternTransformer{
 	 * 		assign %9 = %10  : int
 	 * where %10 is initial value of list_size and %9 is the list_size.
 	 * 
-	 * @param blk
-	 * @param p
 	 */
 	private void list_size_init(List<Code> blk, BuildListPattern p){
 		//Add the new 'list_size_init'
-		int reg_zero = getAvailableReg(p);
+		int reg_zero = getAvailableReg();
 		blk.add(Codes.Const(reg_zero, Constant.V_INTEGER(BigInteger.ZERO)));
-		reg_list_size = getAvailableReg(p);
+		reg_list_size = getAvailableReg();
 		blk.add(Codes.Assign(Type.Int.T_INT, reg_list_size, reg_zero));
 	}
 
@@ -106,11 +115,8 @@ public class BuildListPatternTransformer{
 	 * 		loop (%1, %7, %9)<br>
 	 *		ifle %1, %22 goto blklab6 : int</p>
 	 * where %1 the loop variable, %7 is the list and %9 is the list_size
-	 * @param blk
-	 * @param p
 	 */
 	private void loop_header(List<Code> blk, BuildListPattern p){
-
 		//Get the loop header
 		List<Code> loop_header = p.getPartByName("loop_header");
 		Codes.Loop loop = (Codes.Loop)loop_header.get(0);		
@@ -142,17 +148,15 @@ public class BuildListPatternTransformer{
 	 *		iflt %9, %45 goto blklab14 : int<br>
 	 *		fail ""index out of bounds (not less than length)""<br>
 	 *	    .blklab14<br>
-	 * @param blk
-	 * @param p
 	 */
 	private void list_size_assertion(List<Code> blk, BuildListPattern p){
 		//Add a block of assertion or assumption to ensure the range of list size.
 		String assertLabel = CodeUtils.freshLabel();
 		//assert blklab14
 		blk.add(Codes.Assert(assertLabel));
-		int reg_zero = getAvailableReg(p);
+		int reg_zero = getAvailableReg();
 		//const %45 = 0 : int
-		blk.add(Codes.Const(getAvailableReg(p), Constant.V_INTEGER(BigInteger.ZERO)));
+		blk.add(Codes.Const(getAvailableReg(), Constant.V_INTEGER(BigInteger.ZERO)));
 		String gotoLabel = CodeUtils.freshLabel();
 		//ifge %9, %45 goto blklab13 : int
 		blk.add(Codes.If(Type.Int.T_INT, reg_list_size, reg_zero, Comparator.GTEQ, gotoLabel));
@@ -186,8 +190,6 @@ public class BuildListPatternTransformer{
 	 *	    .blklab14<br>
 	 *		update %7[%9] = %32 : [int] -> [int]<br>
 	 * </p>
-	 * @param blk
-	 * @param p
 	 */
 	private void list_update(List<Code> blk, BuildListPattern p){
 		//Change the list_update part
@@ -215,16 +217,14 @@ public class BuildListPatternTransformer{
 	 *		assign %9 = %35  : int
 	 * </p>
 	 * where %9 is the list_size.
-	 * @param blk
-	 * @param p
 	 */
 	private void list_size_update(List<Code> blk, BuildListPattern p){
 		//Add the 'list_size_update' part
 		//Create an constant 1, const %34 = 1 : int 
-		int reg_one = getAvailableReg(p);
+		int reg_one = getAvailableReg();
 		blk.add(Codes.Const(reg_one, Constant.Integer.V_INTEGER(BigInteger.ONE)));
 		//Create a binary operator to add the list_size to one, add %35 = %9, %34 : int
-		int reg_add_list_size = getAvailableReg(p);
+		int reg_add_list_size = getAvailableReg();
 		blk.add(Codes.BinaryOperator(Type.Int.T_INT, reg_add_list_size, reg_list_size, reg_one, BinaryOperatorKind.ADD));
 		//Assign the above result to the list_size
 		blk.add(Codes.Assign(Type.Int.T_INT, reg_list_size, reg_add_list_size));
@@ -254,14 +254,18 @@ public class BuildListPatternTransformer{
 
 	/**
 	 * Transform a pattern of 'BuildListPattern' type to that of 'BuildListFirstPattern' type.
-	 * @param p
-	 * @return a list of code according to 'BuildListFirstPattern'
+	 * @param pattern
+	 * @return a list of code based on the design of 'BuildListFirstPattern'. 
 	 */
-	public List<Code> transform(BuildListPattern p){
-		//Initialize the available reg
-		available_reg = -1;
-		//Store all the bytecode for the new pattern.
-		List<Code> blk = new ArrayList<Code>();	
+	@Override
+	public List<Code> transform(Pattern pattern){
+		//Check if the input pattern is a BuildListPattern. If not, return null.
+		if(!(pattern instanceof BuildListPattern)) return null;
+	
+		BuildListPattern p = (BuildListPattern)pattern;		
+		List<Code> blk = new ArrayList<Code>();//Store all the bytecode for the new pattern.
+		this.available_reg = p.factory.getAvailableReg();
+		
 		blk.addAll(p.getPartByName("init_before"));
 		blk.addAll(p.getPartByName("init"));
 		//Make change to the 'list_init' part
@@ -287,6 +291,6 @@ public class BuildListPatternTransformer{
 		blk.addAll(p.getPartByName("return"));
 
 		return blk;
-	}	
+	}
 
 }

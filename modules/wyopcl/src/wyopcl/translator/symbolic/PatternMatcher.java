@@ -6,18 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import wyil.lang.Code;
-import wyil.lang.Code.Block;
-import wyil.lang.Codes;
 import wyil.lang.Type;
-import wyil.lang.WyilFile.Case;
-import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
 import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.pattern.BuildListFirstPattern;
-import wyopcl.translator.symbolic.pattern.Pattern;
 import wyopcl.translator.symbolic.pattern.BuildListPattern;
 import wyopcl.translator.symbolic.pattern.ForAllPattern;
 import wyopcl.translator.symbolic.pattern.NullPattern;
-import wyopcl.translator.symbolic.pattern.Visitable;
+import wyopcl.translator.symbolic.pattern.Pattern;
 import wyopcl.translator.symbolic.pattern.WhileLoopDecrPattern;
 import wyopcl.translator.symbolic.pattern.WhileLoopIncrPattern;
 
@@ -83,14 +78,14 @@ public class PatternMatcher {
 	 * If the pattern is visitable, then we can perform the pattern transformation on it. Otherwise, do nothing.
 	 * @param p
 	 * @return
-	 */
+	 *//*
 	public List<Code> transformPatternUsingVisitor(Pattern p){
 		Transformer visitor = new Transformer();
 		List<Code> code_blk = null;
-		if(p instanceof Visitable){
-			code_blk = ((Visitable) p).accept(visitor);
+		if(p instanceof Transformable){
+			code_blk = ((Transformable) p).accept(visitor);
 		}		
 		return code_blk;
-	}
+	}*/
 	
 }

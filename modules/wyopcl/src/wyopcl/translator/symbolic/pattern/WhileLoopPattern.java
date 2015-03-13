@@ -8,9 +8,8 @@ import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyil.lang.Codes.Comparator;
 import wyopcl.translator.Configuration;
-import wyopcl.translator.symbolic.Visitor;
-import wyopcl.translator.symbolic.expression.Expr;
-import wyopcl.translator.symbolic.expression.LinearExpr;
+import wyopcl.translator.symbolic.pattern.expression.Expr;
+import wyopcl.translator.symbolic.pattern.expression.LinearExpr;
 /**
  * The while-loop pattern gets the loop header, loop condition and loop update.
  * and splits the list of code into 'init_after', 'loop_header', 'loopbody_before' and 'loopbody_update' parts.

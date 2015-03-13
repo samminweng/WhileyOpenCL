@@ -9,7 +9,7 @@ import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyopcl.translator.Configuration;
-import wyopcl.translator.symbolic.expression.ExprFactory;
+import wyopcl.translator.symbolic.pattern.expression.ExprFactory;
 /**
  * The abstract base class to define all the commonly used fields and methods for all its subclass, including the assert_label, data-driven storage and
  * the expression factory
