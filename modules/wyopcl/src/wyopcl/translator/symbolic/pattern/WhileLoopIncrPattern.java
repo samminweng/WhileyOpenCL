@@ -1,15 +1,10 @@
 package wyopcl.translator.symbolic.pattern;
 
-import java.math.BigInteger;
 import java.util.List;
 
 import wyil.lang.Code;
-import wyil.lang.Codes;
 import wyil.lang.Type;
-import wyil.lang.Codes.BinaryOperatorKind;
 import wyopcl.translator.Configuration;
-import wyopcl.translator.symbolic.Visitor;
-import wyopcl.translator.symbolic.pattern.expression.LinearExpr;
 import wyopcl.translator.symbolic.pattern.transform.Transformable;
 import wyopcl.translator.symbolic.pattern.transform.Transformer;
 /**

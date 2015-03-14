@@ -251,18 +251,14 @@ public class BuildListPatternTransformer extends Transformer{
 		blk.add(Codes.Label(endLab));
 	}
 
-
 	/**
-	 * Transform a pattern of 'BuildListPattern' type to that of 'BuildListFirstPattern' type.
-	 * @param pattern
-	 * @return a list of code based on the design of 'BuildListFirstPattern'. 
+	 * Takes a 'BuildListPattern' and outputs a list of transformed byte-code that matches
+	 * with 'BuildListFirstPattern'.
+	 * @param p
+	 * @return
 	 */
-	@Override
-	public List<Code> transform(Pattern pattern){
-		//Check if the input pattern is a BuildListPattern. If not, return null.
-		if(!(pattern instanceof BuildListPattern)) return null;
-	
-		BuildListPattern p = (BuildListPattern)pattern;		
+	private List<Code> transform(BuildListPattern p){
+		
 		List<Code> blk = new ArrayList<Code>();//Store all the bytecode for the new pattern.
 		this.available_reg = p.factory.getAvailableReg();
 		
@@ -291,6 +287,21 @@ public class BuildListPatternTransformer extends Transformer{
 		blk.addAll(p.getPartByName("return"));
 
 		return blk;
+	}
+	
+	
+
+	/**
+	 * Transform a pattern of 'BuildListPattern' type to that of 'BuildListFirstPattern' type.
+	 * @param pattern
+	 * @return a list of code based on the design of 'BuildListFirstPattern'. 
+	 */
+	@Override
+	public List<Code> transform(Pattern pattern){
+		//Check if the input pattern is a BuildListPattern. If not, return null.
+		if(!(pattern instanceof BuildListPattern)) return null;
+	
+		return transform((BuildListPattern)pattern);
 	}
 
 }

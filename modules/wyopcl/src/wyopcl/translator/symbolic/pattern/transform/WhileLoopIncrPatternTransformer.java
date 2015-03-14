@@ -24,23 +24,22 @@ import wyopcl.translator.symbolic.pattern.WhileLoopPattern;
  *		L is the loop lower bound.	
  */
 public class WhileLoopIncrPatternTransformer extends Transformer {
-		
+
 	public WhileLoopIncrPatternTransformer(){
-		
+
 	}
 
+	
 	/**
-	 * Transform the WhileLoopPattern pattern to the forall pattern
-	 * @param pattern
+	 * Takes a 'WhileLoopIncrPattern' as input and outputs a list of byte-code that matches
+	 * with 'ForallPattern'.
+	 * @param p
 	 * @return
 	 */
-	public List<Code> transform(Pattern pattern) {
-		if(!(pattern instanceof WhileLoopIncrPattern)) return null;
-		
-		WhileLoopIncrPattern p = (WhileLoopIncrPattern)pattern;
-		
+	private List<Code> transform(WhileLoopIncrPattern p){
+
 		List<Code> blk = new ArrayList<Code>();//Store all the bytecode for the new pattern.
-		
+
 		//Add the code in the 'init_before'
 		blk.addAll(p.getPartByName("init_before"));
 		//Add the code in the 'init_after'
@@ -80,11 +79,29 @@ public class WhileLoopIncrPatternTransformer extends Transformer {
 		blk.addAll(p.getPartByName("loopbody_exit"));
 
 		return blk;
+
 	}
-	
-	
-	
-	
+
+
+
+	/**
+	 * Check if the input pattern is an instance of 'WhileLoopIncrPattern' pattern.
+	 * If so, then perform pattern transformation. This generalizes the pattern transformation.
+	 * For example, the extra argument can be added to this function to allow the pattern
+	 * transformer to transform a while-loop pattern into another pattern.
+	 * 
+	 * @param pattern
+	 * @return
+	 */
+	@Override
+	public List<Code> transform(Pattern pattern) {
+		if(!(pattern instanceof WhileLoopIncrPattern)) return null;
+		return transform((WhileLoopIncrPattern)pattern);
+	}
+
+
+
+
 	/*
 	 *//**
 	 * Construct  the 'init_pre' and 'init' parts  from one pattern type to another.
