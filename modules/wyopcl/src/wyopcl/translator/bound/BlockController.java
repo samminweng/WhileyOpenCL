@@ -212,7 +212,7 @@ public class BlockController {
 	 * @param max
 	 */
 	public void addParamBounds(Type paramType, String param, BigInteger min, BigInteger max){
-		if(Utils.isIntType(paramType)){
+		if(BoundAnalyzerHelper.isIntType(paramType)){
 			getCurrentBlock().addBounds(param, min, max);
 		}
 	}

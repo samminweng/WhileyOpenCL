@@ -1,4 +1,4 @@
-package wyopcl.translator.bound;
+package wyopcl.translator;
 
 import java.util.Properties;
 /**
@@ -45,14 +45,16 @@ public class Symbol implements Cloneable, Comparable<Symbol>{
 			return null;
 		}
 		return this.attributes.get(att_name);
-	}
-
+	}	
+	
+	
 	@Override
 	public String toString() {
 		return "Symbol [name=" + name + ", attributes=" + attributes + "]";
 	}
+	
 	@Override
-	protected Symbol clone() {
+	public Symbol clone() {
 		Symbol symbol;
 		symbol = new Symbol(name);		
 		symbol.attributes = (Properties) this.attributes.clone();

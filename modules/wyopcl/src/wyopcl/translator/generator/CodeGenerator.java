@@ -31,92 +31,58 @@ import wyil.lang.Type.EffectiveIndexible;
 import wyil.lang.Type.FunctionOrMethod;
 import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
 import wyopcl.translator.Configuration;
-import wyopcl.translator.bound.Symbol;
+import wyopcl.translator.Symbol;
+import wyopcl.translator.SymbolController;
 /**
- * Converts the WyIL code into C code.
+ * Takes a list of functional byte-code and converts it into C code.
  * @author Min-Hsien Weng
  *
  */
 public class CodeGenerator{
-	public ArrayList<String> list_func;//A list of function declaration. 
 	private final Configuration config;
 	private final String prefix = "_";
+	private String indent="\t";
 	private HashMap<String, String> vars;
 	private HashMap<String, Type> params;//A list of input parameters 
 	private ArrayList<String> statements;	
 	private BinaryOperator loop_condition;
 	private String loop_label;
-	private Stack<String> assert_labels;
-	private String indent="\t";
-	//The symbol table of variables
-	private HashMap<String, Symbol> symbols;
-
+	private Stack<String> assert_labels;	
+	private SymbolController sym_ctrl;
+	
 	public CodeGenerator(Configuration config){
 		this.config = config;
 		this.vars = new HashMap<String, String>();
 		this.params = new HashMap<String, Type>();
-		this.statements = new ArrayList<String>();
-		this.list_func = new ArrayList<String>();
-		this.symbols = new HashMap<String, Symbol>();
+		this.statements = new ArrayList<String>();		
+		this.sym_ctrl = new SymbolController();		
 		this.assert_labels = new Stack<String>();
 	}
+
 	/**
-	 * Get the symbol info for a variable.
-	 * @param name
-	 * @return
+	 * Iterates over the list of byte-code to generate the corresponding C code.  
+	 * @param code_blk
+	 * @param func_name
 	 */
-	private Symbol getSymbol(String name){
-		if(!symbols.containsKey(name)){
-			Symbol var = new Symbol(name);
-			symbols.put(name, var);
+	public void IterateBytecode(List<Code> code_blk, String func_name){
+		int line = 0;
+		for(Code code: code_blk){
+			//Get the Block.Entry
+			if(config.isVerbose()){
+				line = printWyILCode(code, func_name, line);
+			}				
+			dispatch(code);
 		}
-		return symbols.get(name);
-	}
-
-	/**
-	 * Get the attribute of a variable
-	 * @param name
-	 * @param att_name
-	 * @return the attribute value. Return null if the variable does not contain the attribute.
-	 */
-	private Object getAttribute(String name, String att_name){
-		Symbol symbol = getSymbol(name);
-		return symbol.getAttribute(att_name);
 	}
 	
-	/**
-	 * Get a list of attributes from symbol table
-	 * @param ops a list of operands
-	 * @param att_name the attribute name
-	 * @return
-	 */
-	private List<Object> getAttributes(int[] ops, String att_name){
-		List<Object> list = new ArrayList<Object>();
-		for(int op: ops){
-			list.add(getAttribute(prefix+op, att_name));
-		}		
-		return list;
-	}
 	
-
-	/**
-	 * Add the variable attribute to the hashmap.
-	 * @param name the variable name
-	 * @param att_name the attribute name
-	 * @param att_value the attribute value
-	 * @return
-	 */
-	private void putAttribute(String name, String att_name, Object att_value){
-		Symbol symbol = getSymbol(name);
-		symbol.setAttribute(att_name, att_value);
-	}
-
+	
 	/**
 	 * Prints out each bytecode with the line number and the correct indentation.
 	 * @param name
 	 * @param line
 	 */
-	public int printWyILCode(Code code, String name, int line){
+	private int printWyILCode(Code code, String name, int line){
 		//Print out the bytecode using the format (e.g. 'main.9 [const %12 = 2345 : int]')
 		if(code instanceof Codes.Label){
 			System.out.println(name+"."+line+" ["+code+"]");
@@ -249,8 +215,8 @@ public class CodeGenerator{
 		if(config.isVerbose()){
 			System.out.println(str);
 		}
-		//Add the function declaration to the list
-		list_func.add(str);		
+		
+				
 		return str;
 	}
 	/**
@@ -266,16 +232,12 @@ public class CodeGenerator{
 		this.indent = this.indent.replaceFirst("\t", "");
 	}
 
+	/**
+	 * Check if the Bool type is used in the function.
+	 * @return
+	 */
 	public boolean isBoolTypeIntroduced(){
-		//Check if any symbol is bool type
-		Boolean isBoolType = false;
-		for(String var_name:symbols.keySet()){
-			Type type = (Type) getAttribute(var_name, "type");
-			if(type instanceof Type.Bool){
-				isBoolType = true;				
-			}			
-		}		
-		return isBoolType;
+		return sym_ctrl.isBoolTypeUsed();
 	}
 
 
@@ -315,7 +277,7 @@ public class CodeGenerator{
 	private void translate(Codes.Const code){
 		String stat = null;
 		String target = prefix+code.target();
-		putAttribute(target, "type", code.assignedType());		
+		sym_ctrl.putAttribute(target, "type", code.assignedType());		
 		if(code.assignedType() instanceof Type.Strung){
 			Strung strung = (Strung) code.constant;
 			vars.put(target+"["+(strung.value.length()+1)+"]" , "char");			
@@ -501,14 +463,14 @@ public class CodeGenerator{
 		}						
 		addDeclaration(return_type, ret);
 		//Input parameters
-		Type paramType = (Type) getAttribute(param, "type");
+		Type paramType = (Type) sym_ctrl.getAttribute(param, "type");
 		//Cast the input as a string				
 		if(paramType instanceof Type.Int){
 			stat += "sprintf("+ret+", \"%lld\", "+ prefix+code.operand(0)+");";					
 		}else{
 			stat += "toString(";
 			//Get type attribute
-			stat += translateParameters(code.operands(), getAttributes(code.operands(), "type"));
+			stat += translateParameters(code.operands(), (List<?>)sym_ctrl.getAttributes(code.operands(), prefix, "type"));
 			stat += ", "+ret+");";
 		}
 		return stat;
@@ -765,7 +727,7 @@ public class CodeGenerator{
 	private void translate(Codes.Convert code){		
 		//Converts Constant to Any type
 		if(code.result instanceof Type.Any){
-			putAttribute(prefix+code.operand(0), "type", code.type());			
+			sym_ctrl.putAttribute(prefix+code.operand(0), "type", code.type());			
 			//Do nothing.			
 		}
 		addStatement(code, null);
@@ -871,8 +833,7 @@ public class CodeGenerator{
 	 * being executed by the <code>analyze(code)</code> 
 	 * @param entry
 	 */
-	public void dispatch(Block.Entry entry){		
-		Code code = entry.code; 
+	public void dispatch(Code code){
 		try{
 			//enable the assertion 
 			if (code instanceof Codes.AssertOrAssume) {
@@ -886,9 +847,9 @@ public class CodeGenerator{
 			} else if (code instanceof Codes.Const) {			
 				translate((Codes.Const)code);
 			} else if (code instanceof Codes.Debug) {
-				//DebugInterpreter.getInstance().interpret((Codes.Debug)code, stackframe);
+				internalFailure("Not implemented!", code.toString() , null);
 			} else if (code instanceof Codes.Dereference) {
-				//DereferenceInterpreter.getInstance().interpret((Codes.Dereference)code, stackframe);
+				internalFailure("Not implemented!", code.toString() , null);
 			} else if (code instanceof Codes.Fail) {
 				translate((Codes.Fail)code);
 			} else if (code instanceof Codes.FieldLoad) {		
@@ -900,7 +861,7 @@ public class CodeGenerator{
 			} else if (code instanceof Codes.If) {
 				translate((Codes.If)code);			
 			} else if (code instanceof Codes.IfIs) {
-				//IfIsInterpreter.getInstance().interpret((Codes.IfIs)code, stackframe);
+				internalFailure("Not implemented!", code.toString() , null);
 			} else if (code instanceof Codes.IndexOf) {			
 				translate((Codes.IndexOf)code);
 			} else if (code instanceof Codes.IndirectInvoke) {			
@@ -908,7 +869,7 @@ public class CodeGenerator{
 			} else if (code instanceof Codes.Invoke) {			
 				translate((Codes.Invoke)code);
 			} else if (code instanceof Codes.Invert) {
-				//InvertInterpreter.getInstance().interpret((Codes.Invert)code, stackframe);
+				internalFailure("Not implemented!", code.toString() , null);
 			} else if (code instanceof Codes.ListOperator) {
 				translate((Codes.ListOperator)code);
 			} else if (code instanceof Codes.Loop) {			
@@ -918,55 +879,55 @@ public class CodeGenerator{
 			} else if (code instanceof Codes.Label) {
 				translate((Codes.Label)code);
 			} else if (code instanceof Codes.Lambda) {
-				//LambdaInterpreter.getInstance().interpret((Codes.Lambda)code, stackframe);
+				internalFailure("Not implemented!", code.toString() , null);
 			} else if (code instanceof Codes.LengthOf) {			
 				translate((Codes.LengthOf)code);
 			}  else if (code instanceof Codes.Move) {
-				internalFailure("Not implemented!", "", entry);
+				internalFailure("Not implemented!", code.toString() , null);
 			} else if (code instanceof Codes.NewMap) {
-				//analyze((Codes.NewMap)code);
+				internalFailure("Not implemented!", code.toString() , null);
 			} else if (code instanceof Codes.NewList) {			
 				translate((Codes.NewList)code);
 			} else if (code instanceof Codes.NewRecord) {
-				//NewRecordInterpreter.getInstance().interpret((Codes.NewRecord)code, stackframe);
+				internalFailure("Not implemented!", code.toString() , null);
 			} else if (code instanceof Codes.NewSet) {
-				//NewSetInterpreter.getInstance().interpret((Codes.NewSet)code, stackframe);
+				internalFailure("Not implemented!", code.toString() , null);
 			} else if (code instanceof Codes.NewTuple) {
-				//analyze((Codes.NewTuple)code);
+				internalFailure("Not implemented!", code.toString() , null);
 			} else if (code instanceof Codes.Return) {			
 				translate((Codes.Return)code);
 			} else if (code instanceof Codes.NewObject) {
-				//NewObjectInterpreter.getInstance().interpret((Codes.NewObject)code, stackframe);
+				internalFailure("Not implemented!", code.toString() , null);
 			} else if (code instanceof Codes.Nop) {
 				translate((Codes.Nop)code);
 			} else if (code instanceof Codes.SetOperator){
-				//SetOperatorInterpreter.getInstance().interpret((Codes.SetOperator)code, stackframe);
+				internalFailure("Not implemented!", code.toString() , null);
 			} else if (code instanceof Codes.StringOperator) {
 				translate((Codes.StringOperator)code);
 			} else if (code instanceof Codes.SubList) {
-				//analyze((Codes.SubList)code);
+				internalFailure("Not implemented!", code.toString() , null);
 			} else if (code instanceof Codes.SubString) {
-				//SubStringInterpreter.getInstance().interpret((Codes.SubString)code, stackframe);
+				internalFailure("Not implemented!", code.toString() , null);
 			} else if (code instanceof Codes.Switch) {
-				//SwitchInterpreter.getInstance().interpret((Codes.Switch)code, stackframe);
+				internalFailure("Not implemented!", code.toString() , null);
 			} else if (code instanceof Codes.Throw) {
-				//ThrowInterpreter.getInstance().interpret((Codes.Throw)code, stackframe);
+				internalFailure("Not implemented!", code.toString() , null);
 			} else if (code instanceof Codes.TryCatch) {
-				//TryCatchInterpreter.getInstance().interpret((Codes.TryCatch)code, stackframe);
+				internalFailure("Not implemented!", code.toString() , null);
 			} else if (code instanceof Codes.TupleLoad) {
-				//analyze((Codes.TupleLoad)code);
+				internalFailure("Not implemented!", code.toString() , null);
 			} else if (code instanceof Codes.UnaryOperator){
 				translate((Codes.UnaryOperator)code);
 			} else if (code instanceof Codes.Update) {
 				translate((Codes.Update)code);
 			} else {
-				internalFailure("unknown wyil code encountered (" + code + ")", "", entry);
+				internalFailure("unknown wyil code encountered (" + code + ")", "", null);
 			}		
 
 		} catch (SyntaxError ex) {
 			throw ex;	
 		} catch (Exception ex) {		
-			internalFailure(ex.getMessage(), "", entry, ex);
+			internalFailure(ex.getMessage(), "", null, ex);
 		}
 
 	}

@@ -1,9 +1,11 @@
-package wyopcl.translator.bound;
+package wyopcl.translator;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+
+import wyil.lang.Type;
 
 
 /**
@@ -49,8 +51,22 @@ public class SymbolController {
 	public Object getAttribute(String target, String att_name){
 		Symbol symbol = getSymbol(target);
 		return symbol.getAttribute(att_name);
-	}
+	}	
 	
+	/**
+	 * Get a list of attributes from symbol table
+	 * @param ops a list of operands
+	 * @param prefix the prefix string of the registers
+	 * @param att_name the attribute name
+	 * @return
+	 */
+	public List<Object> getAttributes(int[] ops, String prefix, String att_name){
+		List<Object> list = new ArrayList<Object>();
+		for(int op: ops){
+			list.add(getAttribute(prefix+op, att_name));
+		}		
+		return list;
+	}	
 	
 	/**
 	 * Add the variable attribute to the hashmap.
@@ -64,60 +80,34 @@ public class SymbolController {
 		symbol.setAttribute(att_name, att_value);
 	}
 
-	
+	/**
+	 * Sorts the symbols in the Hashmap by their values
+	 * @return
+	 */
 	public List<Symbol> sortedSymbols(){
 		//Sort the symbol tables		
 		List<Symbol> sortedSymbols = new ArrayList<Symbol>(symbols.values());
 		Collections.sort(sortedSymbols);
-		
-		/*//Print out the bounds
-		for(Symbol symbol : sortedSymbols){
-			String str_symbols = "";
-			String name = symbol.getName();
-			if(bnd.isExisting(name)){
-				Domain d = bnd.getDomain(name);
-				str_symbols+="\t"+d+"\n";
-			}			
-			if(!str_symbols.equals("")){
-				writer.print(str_symbols);
-			}
-		}*/
-
-		/*//Print out the values of available variables
-		for(Symbol symbol : sortedSymbols){
-			String str_symbols = "";
-			String name = symbol.getName();					
-			//print the 'value' attribute
-			Object val = symbol.getAttribute("value");
-			if(val != null){
-				str_symbols += "\tvalue("+name+")\t= "+val+"\n";
-			}
-
-			if(!str_symbols.equals("")){
-				writer.print(str_symbols);
-			}
-		}
-
-		//Print out the size of available variables
-		for(Symbol symbol : sortedSymbols){
-			String str_symbols = "";
-			String name = symbol.getName();
-			//get the 'type' attribute
-			Type type = (Type) symbol.getAttribute("type");						
-			//print the 'size' att
-			if(type instanceof Type.List){
-				Object size = symbol.getAttribute("size");
-				str_symbols += "\tsize("+name+")\t= "+size+"\n";
-			}
-			if(!str_symbols.equals("")){
-				writer.print(str_symbols);
-			}
-		}
-		sortedSymbols = null;*/
-		
-		return sortedSymbols;
-		
+		return sortedSymbols;		
 	}
+	
+	
+	/**
+	 * Check if the Bool type is used in the function.
+	 * @return
+	 */
+	public boolean isBoolTypeUsed(){
+		//Check if any symbol is bool type
+		Boolean isTypeUsed = false;
+		for(String var_name:symbols.keySet()){
+			Type type = (Type) getAttribute(var_name, "type");
+			if(type instanceof Type.Bool){
+				isTypeUsed = true;				
+			}			
+		}		
+		return isTypeUsed;		
+	}
+	
 	
 	
 }

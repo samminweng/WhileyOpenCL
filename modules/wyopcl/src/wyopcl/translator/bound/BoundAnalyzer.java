@@ -35,6 +35,9 @@ import wyil.lang.Type.Tuple;
 import wyil.lang.WyilFile.Case;
 import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
 import wyopcl.translator.Configuration;
+import wyopcl.translator.Symbol;
+import wyopcl.translator.SymbolController;
+import wyopcl.translator.TranslatorHelper;
 import wyopcl.translator.bound.BasicBlock.BlockType;
 import wyopcl.translator.bound.constraint.Assign;
 import wyopcl.translator.bound.constraint.Const;
@@ -109,7 +112,7 @@ public class BoundAnalyzer {
 		//Parse each byte-code and add the constraints accordingly.
 		for(Code code: code_blk){
 			//Get the Block.Entry
-			line = Utils.printWyILCode(code, func_name, line, blk_ctrl);
+			line = BoundAnalyzerHelper.printWyILCode(code, func_name, line, blk_ctrl);
 			dispatch(code);			
 		}
 	}
@@ -170,9 +173,9 @@ public class BoundAnalyzer {
 		Bounds bnd = exit_blk.getBounds();
 		//check the verbose to determine whether to print out the CFG
 		if(config.isVerbose()){
-			Utils.printCFG(blk_ctrl.getList(), config.getFilename(), (String)config.getProperty("function_name"));
+			BoundAnalyzerHelper.printCFG(blk_ctrl.getList(), config.getFilename(), (String)config.getProperty("function_name"));
 		}		
-		Utils.printBounds(sym_ctrl.sortedSymbols(), bnd);		
+		BoundAnalyzerHelper.printBounds(sym_ctrl.sortedSymbols(), bnd);		
 		return bnd;
 	}
 
@@ -300,7 +303,7 @@ public class BoundAnalyzer {
 		String operand = prefix+code.operand(0);		
 		sym_ctrl.putAttribute(target, "type", code.type());
 		//Check if the assigned value is an integer
-		if(Utils.isIntType(code.type())){
+		if(BoundAnalyzerHelper.isIntType(code.type())){
 			//Add the constraint 'target = operand'			
 			addConstraint(new Assign(target, operand));
 		}
@@ -346,7 +349,7 @@ public class BoundAnalyzer {
 	 * @param code
 	 */
 	private void analyze(Codes.IndexOf code){
-		if(Utils.isIntType((Type) code.type())){
+		if(BoundAnalyzerHelper.isIntType((Type) code.type())){
 			String target = prefix+code.target();
 			String op = prefix+code.operand(0);
 			String index = prefix+code.operand(1);			
@@ -366,7 +369,7 @@ public class BoundAnalyzer {
 
 		Constraint c = null;
 		Constraint inverted_c = null;
-		if(Utils.isIntType(code.type)){
+		if(BoundAnalyzerHelper.isIntType(code.type)){
 			switch(code.op){
 			case EQ:
 				c = new Equals(left, right);
@@ -445,7 +448,7 @@ public class BoundAnalyzer {
 			String param = prefix+index;
 			String operand = prefix+operands[index];
 			//Check parameter type
-			if(Utils.isIntType(paramType)){
+			if(BoundAnalyzerHelper.isIntType(paramType)){
 				invokeboundAnalyzer.blk_ctrl.addParamBounds(paramType, param, bnd.getLower(operand), bnd.getUpper(operand));					
 			}
 			//pass the symbol 
@@ -467,7 +470,7 @@ public class BoundAnalyzer {
 		//put the 'type' attribute of 'return_reg'
 		sym_ctrl.putAttribute(ret_reg, "type", ret_type);
 
-		if(Utils.isIntType(ret_type)){
+		if(BoundAnalyzerHelper.isIntType(ret_type)){
 			//propagate the bounds of return value.						
 			addConstraint(new Range(ret_reg, bnd.getLower("return"), bnd.getUpper("return")));
 			//Add 'type' attribute
@@ -522,7 +525,7 @@ public class BoundAnalyzer {
 		if(functionOrMethod != null){
 			List<Type> params = functionOrMethod.type().params();
 			//The list of bytecode 
-			List<Code> code_blk = Utils.getCodeBlock(functionOrMethod);
+			List<Code> code_blk = TranslatorHelper.getCodeBlock(functionOrMethod);
 			code_blk = patternMatchAndTransform(params, code_blk);			
 			//Infer the bounds						
 			Bounds bnd = this.inferBounds();
@@ -579,7 +582,7 @@ public class BoundAnalyzer {
 	private void analyze(Codes.NewList code){
 		String target = prefix+code.target();
 		sym_ctrl.putAttribute(target, "type", code.type());		
-		if(Utils.isIntType(code.type())){
+		if(BoundAnalyzerHelper.isIntType(code.type())){
 			for(int operand: code.operands()){
 				addConstraint(new Union(prefix+code.target(), prefix+operand));				
 			}
@@ -597,7 +600,7 @@ public class BoundAnalyzer {
 		String retOp = prefix+code.operand;
 		BasicBlock blk = blk_ctrl.getCurrentBlock();		
 		//Check if the return type is integer.
-		if(Utils.isIntType(code.type)){
+		if(BoundAnalyzerHelper.isIntType(code.type)){
 			//Add the 'Equals' constraint to the return (ret) variable.	
 			blk.addConstraint((new Assign("return", retOp)));
 		}		
@@ -706,7 +709,7 @@ public class BoundAnalyzer {
 		BasicBlock loopexit = blk_ctrl.createBasicBlock(branch, BlockType.LOOP_EXIT, loopheader);
 
 		//Check if each element is an integer
-		if(Utils.isIntType((Type) code.type)){
+		if(BoundAnalyzerHelper.isIntType((Type) code.type)){
 			String indexOp = prefix+code.indexOperand;
 			sym_ctrl.putAttribute(indexOp, "type", code.type.element());			
 			String sourceOp = prefix+code.sourceOperand;			
@@ -785,7 +788,7 @@ public class BoundAnalyzer {
 		//Add the type att
 		Type type = code.assignedType();
 		sym_ctrl.putAttribute(target, "type", type);		
-		if(Utils.isIntType(code.type())){
+		if(BoundAnalyzerHelper.isIntType(code.type())){
 			//Get the values
 			BigInteger left = (BigInteger)sym_ctrl.getAttribute(prefix+code.operand(0), "value");
 			BigInteger right = (BigInteger)sym_ctrl.getAttribute(prefix+code.operand(1), "value");			
@@ -839,7 +842,7 @@ public class BoundAnalyzer {
 		int index =1;
 		while(index<code.operands().length){
 			//Consider The values field
-			if(Utils.isIntType(map.value())){
+			if(BoundAnalyzerHelper.isIntType(map.value())){
 				addConstraint(new Union(prefix+code.target(), prefix+code.operand(index)));
 			}
 			index+=2;
@@ -857,7 +860,7 @@ public class BoundAnalyzer {
 		int index = code.index;
 		if(index%2==1){
 			Type.Tuple tuple = (Tuple) code.type();
-			if(Utils.isIntType(tuple.element(index))){
+			if(BoundAnalyzerHelper.isIntType(tuple.element(index))){
 				addConstraint(new Equals(prefix+code.target(), prefix+code.operand(0)));
 			}
 		}
@@ -874,7 +877,7 @@ public class BoundAnalyzer {
 		Type.Tuple tuple = code.type();
 		int index = 1;
 		while(index<code.operands().length){
-			if(Utils.isIntType(tuple.element(index))){
+			if(BoundAnalyzerHelper.isIntType(tuple.element(index))){
 				addConstraint(new Union(prefix+code.target(), prefix+code.operand(index)));
 			}
 			index+=2;

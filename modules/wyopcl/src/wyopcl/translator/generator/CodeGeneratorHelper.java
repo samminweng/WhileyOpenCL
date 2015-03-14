@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Lists the common methods for code generation. 
+ * Lists the code generation methods 
  * @author Min-Hsien Weng
  *
  */
-public final class Utility {
-	private Utility(){
+public final class CodeGeneratorHelper {
+	private CodeGeneratorHelper(){
 
 	}
 	/**
@@ -109,6 +109,10 @@ public final class Utility {
 		System.out.println(stats);
 	}
 	
+	/**
+	 * Generates the C code for append byte-code.
+	 * @param writer
+	 */
 	public static void generateAppend(PrintWriter writer){
 		String indent = "\t";
 		String stats = "";		

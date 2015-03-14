@@ -13,13 +13,14 @@ import wyil.lang.Type;
 import wyil.lang.Code.Block;
 import wyil.lang.WyilFile.Case;
 import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
+import wyopcl.translator.Symbol;
 
 /**
  * Utility class for bound analyzer.
  * @author Min-Hsien Weng
  *
  */
-public final class Utils {
+public final class BoundAnalyzerHelper {
 	private static String prefix = "%";
 	//The boolean flag is used to show whether the code is inside an assertion or assumption.	
 	private static String assertOrAssume_label = null;
@@ -29,7 +30,7 @@ public final class Utils {
 	private static String RED = (char)27 + "[31;1m";
 	private static String RESET = (char)27 + "[0m";	
 	
-	private Utils(){
+	private BoundAnalyzerHelper(){
 
 	}
 	
@@ -159,7 +160,7 @@ public final class Utils {
 	 * Get the list of code for a function.
 	 * @param functionOrMethod the function or method declaration.
 	 * @return the list of code.
-	 */
+	 *//*
 	public static List<Code> getCodeBlock(FunctionOrMethodDeclaration functionOrMethod){
 		List<Code> code_blk = new ArrayList<Code>();
 		for(Case mcase : functionOrMethod.cases()){
@@ -169,7 +170,7 @@ public final class Utils {
 			}
 		}		
 		return code_blk;
-	}
+	}*/
 
 	
 	/**
