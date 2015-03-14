@@ -107,7 +107,6 @@ public final class BaseTestUtil {
 			String output = null;
 			while ((output = reader.readLine()) != null) {
 				System.out.println(output);
-				//assertEquals(expected, output);
 			}			
 			reader.close();
 			System.out.println("Finish" + pb.directory()+path_whiley+ ".whiley");

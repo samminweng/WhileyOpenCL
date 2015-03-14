@@ -35,6 +35,7 @@ long long* play(long long* _0, long long _0_size){
 	long long _2_size;
 	long long _3;
 	long long _5;
+	size_t _6_size;
 	long long _7;
 	long long _8;
 	//assign %2 = %0  : [bool]
@@ -239,6 +240,7 @@ int main(int argc, char** argv){
 	long long* _1;
 	long long _10;
 	long long _11;
+	size_t _12_size;
 	long long _13;
 	long long* _17;
 	long long _17_size;
