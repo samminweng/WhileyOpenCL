@@ -1,16 +1,12 @@
 package wyopcl.translator.symbolic.pattern;
 
-import java.math.BigInteger;
 import java.util.List;
 
 import wyil.lang.Code;
 import wyil.lang.Codes;
-import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyopcl.translator.Configuration;
-import wyopcl.translator.symbolic.Visitor;
 import wyopcl.translator.symbolic.pattern.expression.Expr;
-import wyopcl.translator.symbolic.pattern.expression.LinearExpr;
 import wyopcl.translator.symbolic.pattern.transform.Transformable;
 import wyopcl.translator.symbolic.pattern.transform.Transformer;
 /**

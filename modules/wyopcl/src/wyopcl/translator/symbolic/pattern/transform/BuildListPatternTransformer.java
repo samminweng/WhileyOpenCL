@@ -17,7 +17,7 @@ import wyil.lang.Codes.IndexOf;
 import wyil.lang.Codes.LengthOf;
 import wyopcl.translator.symbolic.pattern.BuildListPattern;
 import wyopcl.translator.symbolic.pattern.Pattern;
-import wyopcl.translator.symbolic.pattern.WhileLoopPattern;
+
 /**
  * 
  * Transforms the 'BuildListPattern' to 'BuildListFirstPattern'. The differences on parts of 'BuildListPattern' and 'BuildListFirstPattern'

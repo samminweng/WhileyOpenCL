@@ -1,8 +1,10 @@
 package wyopcl.translator.generator;
 
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+
+import wyil.lang.Type;
 
 /**
  * Lists the code generation methods 
@@ -135,7 +137,40 @@ public final class CodeGeneratorHelper {
 		System.out.println(stats);
 	}
 	
-	
+	/**
+	 * Translate the WyIL type into the type in C.
+	 * @param type the WyIL type
+	 * @return the result string
+	 */
+	public static String translate(Type type){
+		if(type instanceof Type.Int || type instanceof Type.Bool){
+			return "long long";
+		}
+
+		if(type instanceof Type.List){
+			Type.List listType = (Type.List)type;
+			return translate(listType.element())+"*";
+		}		
+
+		if(type instanceof Type.Void){
+			return "void";
+		}
+
+		if(type instanceof Type.Record){			
+			Type.Record record = (Type.Record)type;
+			HashMap<String, Type> fields = record.fields();
+			if(fields.containsKey("args")){
+				return "int argc, char** argv";
+			}
+			return record.toString();
+		}
+		
+		if(type instanceof Type.Strung){
+			return "char";
+		}
+		
+		return null;
+	}
 	
 
 }

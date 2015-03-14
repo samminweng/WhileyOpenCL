@@ -6,9 +6,7 @@ import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Codes.ForAll;
 import wyil.lang.Type;
-import wyil.lang.Codes.BinaryOperatorKind;
 import wyopcl.translator.Configuration;
-import wyopcl.translator.symbolic.pattern.expression.Expr;
 import wyopcl.translator.symbolic.pattern.expression.LinearExpr;
 import wyopcl.translator.symbolic.pattern.expression.RangeExpr;
 

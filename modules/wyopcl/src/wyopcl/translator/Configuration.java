@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
-import wybs.lang.Build;
 import wycc.util.Logger;
 /**
  * Provides a container for the configuration of the translator.

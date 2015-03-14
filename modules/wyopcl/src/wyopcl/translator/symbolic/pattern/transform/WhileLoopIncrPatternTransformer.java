@@ -6,13 +6,10 @@ import java.util.List;
 
 import wyil.lang.Code;
 import wyil.lang.Codes;
-import wyil.lang.Type;
 import wyil.lang.Codes.BinaryOperatorKind;
-import wyopcl.translator.symbolic.pattern.BuildListPattern;
+import wyil.lang.Type;
 import wyopcl.translator.symbolic.pattern.Pattern;
-import wyopcl.translator.symbolic.pattern.WhileLoopDecrPattern;
 import wyopcl.translator.symbolic.pattern.WhileLoopIncrPattern;
-import wyopcl.translator.symbolic.pattern.WhileLoopPattern;
 /**
  * Transform the WhileLoop pattern to the 'forall' pattern. The transformation can be expressed as below:
  *		A; v=I; B; while (v > L) { C; v = u; D} E => A; B; for v in range (I, L) {C; D} E
