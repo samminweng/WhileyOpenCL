@@ -27,6 +27,8 @@ import wyil.lang.Type.FunctionOrMethod;
 import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
 import wyopcl.translator.Configuration;
 import wyopcl.translator.SymbolController;
+import wyopcl.translator.symbolic.PatternMatcher;
+import wyopcl.translator.symbolic.PatternTransformer;
 /**
  * Takes a list of functional byte-code and converts it into C code.
  * @author Min-Hsien Weng
@@ -42,7 +44,7 @@ public class CodeGenerator{
 	private BinaryOperator loop_condition;
 	private String loop_label;
 	private Stack<String> assert_labels;	
-	private SymbolController sym_ctrl;
+	private SymbolController sym_ctrl;	
 	
 	public CodeGenerator(Configuration config){
 		this.config = config;

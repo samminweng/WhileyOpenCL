@@ -1,10 +1,7 @@
 package wyopcl.translator.symbolic.pattern;
-
 import java.util.List;
-
 import wyil.lang.Code;
 import wyil.lang.Type;
-import wyopcl.translator.Configuration;
 /**
  * The final class that implemented the while-loop pattens, as follows:
  * <ul>
@@ -17,14 +14,15 @@ import wyopcl.translator.Configuration;
  * @author Min-Hsien Weng
  *
  */
-public final class WhileLoopDecrPattern extends WhileLoopPattern{	
-
-	public WhileLoopDecrPattern(Configuration config, List<Type> params, List<Code> blk) {
-		super(config, params, blk);
+public final class WhileLoopDecrPattern extends WhileLoopPattern{
+	public WhileLoopDecrPattern(boolean isVerbose, List<Type> params, List<Code> blk) {
+		super(isVerbose, params, blk);
+		this.type = "WhileLoopDecrPattern";
 		//Get the decrement
 		if(this.decr != null){
 			this.line = this.loopbody_after(blk, this.line);
 			this.line = this.loop_exit(blk, this.line);
+			
 			this.isNil = false;	
 		}
 	}

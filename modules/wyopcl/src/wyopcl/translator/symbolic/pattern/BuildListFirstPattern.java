@@ -1,11 +1,9 @@
 package wyopcl.translator.symbolic.pattern;
 
 import java.util.List;
-
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
-import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.pattern.expression.Expr;
 /**
  * This pattern creates a new list (r) with an existing list and initializes the array size (r_size) and capacity (r_capacity).
@@ -13,7 +11,7 @@ import wyopcl.translator.symbolic.pattern.expression.Expr;
  * @author Min-Hsien Weng
  *
  */
-public class BuildListFirstPattern extends WhileLoopPattern {
+public final class BuildListFirstPattern extends WhileLoopPattern {
 	protected String list_var;
 	protected String list_size;
 	protected String list_capacity;
@@ -22,8 +20,8 @@ public class BuildListFirstPattern extends WhileLoopPattern {
 	protected Expr list_size_init;
 	protected Expr list_size_update;
 
-	public BuildListFirstPattern(Configuration config, List<Type> params, List<Code> blk) {
-		super(config, params, blk);
+	public BuildListFirstPattern(boolean isVerbose, List<Type> params, List<Code> blk) {
+		super(isVerbose, params, blk);
 		this.type ="BuildListFirst";
 		//Check if the inferred increment or decrement is null. If not, then continue iterating the list of code.
 		//Otherwise, stop constructing the BuildListPattern.

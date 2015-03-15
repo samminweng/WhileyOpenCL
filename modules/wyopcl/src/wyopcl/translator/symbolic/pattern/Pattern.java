@@ -18,7 +18,6 @@ import wyopcl.translator.symbolic.pattern.expression.ExprFactory;
  */
 public class Pattern extends Object {
 	public final String prefix = "%";
-	public final Configuration config;
 	public String type;//The pattern type
 	public boolean isNil;//The flag indicates whether this pattern is matched with the given loop (True: not matched False: Matched).
 
@@ -31,40 +30,40 @@ public class Pattern extends Object {
 	public HashMap<Integer, String> part_names;//Store the relation between part index and part name.
 	public String label_AssertOrAssume;//The flag to store the label for an assertion or assumption.
 
-	
-	
-	/**
-	 * Base constructor
-	 * @param config
-	 */
-	public Pattern(Configuration config){
-		this.config = config;
+	public Pattern(){
 		this.isNil = true;//By default.
 	}
 	
+	/**
+	 * Base constructor
+	 * @param isVerbose
+	 */
+	private Pattern(boolean isVerbose, List<Type> params){
+		this();
+		this.factory = new ExprFactory(isVerbose);//Create an expression factory to record all the extracted expressions.
+		//Add the input parameters to the expression table.
+		this.params = params;
+		for(Type param: params){
+			factory.putExpr(param);
+		}
+	}	
 	
 	/**
 	 * Multiple constructor
+	 * @param isVerbose
 	 * @param config
 	 * @param params
 	 */
-	public Pattern(Configuration config, List<Type> params, List<Code> blk){
-		this(config);
+	public Pattern(boolean isVerbose, List<Type> params, List<Code> blk){
+		this(isVerbose, params);
 		if(blk != null){
 			//The flag to store the label for an assertion or assumption.	
 			this.label_AssertOrAssume = null;
 			//The list of code in each pattern part.
 			this.parts = new ArrayList<List<Code>>();
-			this.part_names = new HashMap<Integer, String>();	
-			this.factory = new ExprFactory(config);//Create an expression factory to record all the extracted expressions.
-			//Add the input parameters to the expression table.
-			this.params = params;
-			for(Type param: params){
-				factory.putExpr(param);
-			}
+			this.part_names = new HashMap<Integer, String>();
 			this.line = 0;
 		}
-	
 	}	
 
 	/**
@@ -148,10 +147,6 @@ public class Pattern extends Object {
 		//In other cases, if the label is not null, then the code is inside the assertion or assumption.
 		return (label_AssertOrAssume != null)? true: false;
 	}
-
-
-
-
 
 	@Override
 	public String toString() {

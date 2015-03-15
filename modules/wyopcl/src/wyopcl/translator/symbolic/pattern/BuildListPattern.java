@@ -5,7 +5,6 @@ import java.util.List;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
-import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.pattern.expression.Expr;
 import wyopcl.translator.symbolic.pattern.transform.Transformable;
 import wyopcl.translator.symbolic.pattern.transform.Transformer;
@@ -14,13 +13,13 @@ import wyopcl.translator.symbolic.pattern.transform.Transformer;
  * @author Min-Hsien Weng
  *
  */
-public class BuildListPattern extends WhileLoopPattern implements Transformable {
+public final class BuildListPattern extends WhileLoopPattern implements Transformable {
 	protected String list_var;
 	protected Expr list_init;
 	protected Expr list_update;
 
-	public BuildListPattern(Configuration config, List<Type> params, List<Code> blk) {
-		super(config, params, blk);
+	public BuildListPattern(boolean isVerbose, List<Type> params, List<Code> blk) {
+		super(isVerbose, params, blk);
 		this.type ="BuildList";
 		//Check if the inferred increment or decrement is null. If not, then continue iterating the list of code.
 		//Otherwise, stop constructing the BuildListPattern.

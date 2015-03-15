@@ -32,7 +32,7 @@ import wyopcl.translator.symbolic.pattern.Pattern;
  *
  */
 public class Translator implements Builder{
-	private Configuration config;
+	private Configuration config;	
 
 	public Translator(Configuration config){
 		this.config = config;		
@@ -105,6 +105,8 @@ public class Translator implements Builder{
 		}		
 	}
 
+
+
 	/**
 	 * Reads the in-memory WyIL file and generates the code in C
 	 * @param module
@@ -127,8 +129,12 @@ public class Translator implements Builder{
 				String function_del = generator.translate(functionOrMethod);
 				//Add the function declaration to the list
 				function_list.add(function_del);
-				//Iterate each byte-code of a function block.			
-				List<Code> code_blk = TranslatorHelper.getCodeBlock(functionOrMethod);
+				//Find the matching pattern and transform the code into more predictable code. 		
+				List<Code> code_blk = TranslatorHelper.patternMatchingandTransformation(
+						config,
+						functionOrMethod.type().params(), 
+						TranslatorHelper.getCodeBlock(functionOrMethod));
+				//Iterate each byte-code of a function block.	
 				generator.IterateBytecode(code_blk, functionOrMethod.name());
 				isBoolType |= generator.isBoolTypeIntroduced();
 				//Write out the code to *.c
@@ -148,42 +154,33 @@ public class Translator implements Builder{
 		}catch (FileNotFoundException e) {
 			throw new RuntimeException("Error occurs in writing "+config.getFilename()+".h");
 		}
-		
+
 	}
 
-	
+
 	/**
 	 *  Iterate each code of the input function, build up the code blk and then analyze the loop pattern.
 	 * @param module 
 	 */
 	private void patternMatch(WyilFile module){
-		PatternMatcher matcher = new PatternMatcher(config);
-		//Create the transformer
-		PatternTransformer transformer = new PatternTransformer();
+
 		//Iterate each function
 		for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {
 			String func_name = functionOrMethod.name();			
 			ArrayList<Type> params = functionOrMethod.type().params();
 			//Begin the function
 			System.out.println("\n----------------Start of "+func_name+" function----------------");
-			List<Code> code_blk = TranslatorHelper.getCodeBlock(functionOrMethod);
-			Pattern pattern = matcher.analyzePattern(params, code_blk);
-			System.out.println("The original pattern:\n"+pattern);			
-			List<Code> result_code_blk = transformer.transformPatternUsingVisitor(pattern);
-			if(result_code_blk!= null){
-				Pattern transformed_pattern = matcher.analyzePattern(params, result_code_blk);
-				System.out.println("From "+pattern.getType()+" to "+transformed_pattern.getType()+", the transformed pattern:\n"+transformed_pattern);
-			}			
-			code_blk = null;
+			//Find the matching pattern and transform the code into more predictable code. 		
+			List<Code> code_blk = TranslatorHelper.patternMatchingandTransformation(
+					config,
+					functionOrMethod.type().params(), 
+					TranslatorHelper.getCodeBlock(functionOrMethod));
 			System.out.println("\n----------------End of "+func_name+" function----------------\n");
 		}		
-		transformer = null;
-		matcher = null;
-		
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 }

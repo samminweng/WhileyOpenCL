@@ -25,12 +25,11 @@ import wyopcl.translator.symbolic.pattern.WhileLoopIncrPattern;
  *
  */
 public class PatternMatcher {
-	//private final String prefix = "%";
-	private final Configuration config;	
+	private final boolean isVerbose;
 	private List<Class<? extends Pattern>> avail_Patterns;//Store the available patterns.
 	
-	public PatternMatcher(Configuration config){
-		this.config = config;
+	public PatternMatcher(boolean isVerbose){
+		this.isVerbose = isVerbose;
 		this.avail_Patterns = new ArrayList<Class<? extends Pattern>>();
 		this.avail_Patterns.add(BuildListFirstPattern.class);
 		this.avail_Patterns.add(BuildListPattern.class);
@@ -52,9 +51,9 @@ public class PatternMatcher {
 		for(Class<? extends Pattern> avail_Pattern: avail_Patterns){
 			try {
 				//Get the constructor				
-				Constructor<? extends Pattern> constructor = avail_Pattern.getConstructor(Configuration.class, List.class, List.class);
+				Constructor<? extends Pattern> constructor = avail_Pattern.getConstructor(boolean.class, List.class, List.class);
 				if(constructor!=null){
-					pattern = constructor.newInstance(config, params, block);
+					pattern = constructor.newInstance(this.isVerbose, params, block);
 					//Check if the loop block is matched with the pattern. If so, then return the pattern. 
 					if(!pattern.isNil()){
 						return pattern;
@@ -68,24 +67,9 @@ public class PatternMatcher {
 		}
 		//If no patterns are matched, then return NullPattern.
 		if(pattern == null){
-			pattern = new NullPattern(config);
+			pattern = new NullPattern();
 		}
 		return pattern;
 	}
-
-	/**
-	 * Transform a pattern of one type to another by using the visitor design pattern. 
-	 * If the pattern is visitable, then we can perform the pattern transformation on it. Otherwise, do nothing.
-	 * @param p
-	 * @return
-	 *//*
-	public List<Code> transformPatternUsingVisitor(Pattern p){
-		Transformer visitor = new Transformer();
-		List<Code> code_blk = null;
-		if(p instanceof Transformable){
-			code_blk = ((Transformable) p).accept(visitor);
-		}		
-		return code_blk;
-	}*/
 	
 }

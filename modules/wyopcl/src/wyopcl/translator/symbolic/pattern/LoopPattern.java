@@ -4,7 +4,6 @@ import java.util.List;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
-import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.pattern.expression.Expr;
 import wyopcl.translator.symbolic.pattern.expression.LinearExpr;
 /**
@@ -22,8 +21,8 @@ public abstract class LoopPattern extends Pattern{
 	public String[] modified_Ops;//Store all the operands modified inside the loop.
 	public Expr init;
 	
-	public LoopPattern(Configuration config, List<Type> params, List<Code> blk){
-		super(config, params, blk);
+	public LoopPattern(boolean isVerbose, List<Type> params, List<Code> blk){
+		super(isVerbose, params, blk);
 		this.type = "LoopPattern";
 		//If the list of code contains the loop bytecode, then proceed the inference 
 		if(this.factory != null && this.isLoop(blk)){

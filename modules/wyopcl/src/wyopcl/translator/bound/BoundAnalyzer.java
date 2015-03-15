@@ -489,12 +489,12 @@ public class BoundAnalyzer {
 	 * @param params
 	 * @param code_blk
 	 * @return the list of code 
-	 */
+	 *//*
 	private List<Code> patternMatchAndTransform(List<Type> params, List<Code> code_blk_before){
 		//Check if the pattern matching is on. 
 		if(this.config.isPatternMatching()){
 			//Initialize the pattern matcher.
-			PatternMatcher matcher = new PatternMatcher(config);
+			PatternMatcher matcher = new PatternMatcher(config.isVerbose());
 			Pattern pattern = matcher.analyzePattern(params, code_blk_before);
 			System.out.println("The original pattern:\n"+pattern);
 			PatternTransformer transformer = new PatternTransformer();
@@ -512,7 +512,7 @@ public class BoundAnalyzer {
 		}
 		//If the pattern is off or the pattern can not be transformed, return the originial code blk
 		return code_blk_before;
-	}
+	}*/
 
 	/**
 	 *Parses the invoke bytecode and adds the constraints to the list.
@@ -526,7 +526,7 @@ public class BoundAnalyzer {
 			List<Type> params = functionOrMethod.type().params();
 			//The list of bytecode 
 			List<Code> code_blk = TranslatorHelper.getCodeBlock(functionOrMethod);
-			code_blk = patternMatchAndTransform(params, code_blk);			
+			code_blk = TranslatorHelper.patternMatchingandTransformation(config, params, code_blk);			
 			//Infer the bounds						
 			Bounds bnd = this.inferBounds();
 			//Create the bound analyzer for the invoked function.

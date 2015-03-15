@@ -25,9 +25,8 @@ public abstract class WhileLoopPattern extends LoopPattern {
 	public BigInteger decr;
 	public BigInteger incr;
 
-	public WhileLoopPattern(Configuration config, List<Type> params, List<Code> blk) {
-		super(config, params, blk);
-		this.type = "WhileLoop";
+	public WhileLoopPattern(boolean isVerbose, List<Type> params, List<Code> blk) {
+		super(isVerbose, params, blk);		
 		//Check if the super class is constructed successfully.
 		if(this.init != null ){
 			this.loop_bound = while_cond(blk, this.loop_var, this.line);

@@ -156,7 +156,7 @@ public class BuildListPatternTransformer extends Transformer{
 		blk.add(Codes.Assert(assertLabel));
 		int reg_zero = getAvailableReg();
 		//const %45 = 0 : int
-		blk.add(Codes.Const(getAvailableReg(), Constant.V_INTEGER(BigInteger.ZERO)));
+		blk.add(Codes.Const(reg_zero, Constant.V_INTEGER(BigInteger.ZERO)));
 		String gotoLabel = CodeUtils.freshLabel();
 		//ifge %9, %45 goto blklab13 : int
 		blk.add(Codes.If(Type.Int.T_INT, reg_list_size, reg_zero, Comparator.GTEQ, gotoLabel));

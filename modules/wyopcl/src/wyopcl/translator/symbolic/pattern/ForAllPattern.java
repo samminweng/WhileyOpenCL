@@ -6,7 +6,6 @@ import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Codes.ForAll;
 import wyil.lang.Type;
-import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.pattern.expression.LinearExpr;
 import wyopcl.translator.symbolic.pattern.expression.RangeExpr;
 
@@ -18,12 +17,11 @@ import wyopcl.translator.symbolic.pattern.expression.RangeExpr;
  * @author Min-Hsien Weng
  *
  */
-public class ForAllPattern extends LoopPattern {
-	
+public class ForAllPattern extends LoopPattern {	
 	private RangeExpr range;	
-	public ForAllPattern(Configuration config, List<Type> params, List<Code> blk) {
-		super(config, params, blk);
-		this.type = "forall";
+	public ForAllPattern(boolean isVerbose, List<Type> params, List<Code> blk) {
+		super(isVerbose, params, blk);
+		this.type = "ForAll";
 		//Check if the super class is constructed successfully.
 		if(this.init != null ){
 			this.range = forall(blk, this.loop_var, this.line);
