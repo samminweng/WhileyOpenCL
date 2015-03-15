@@ -31,14 +31,16 @@ long long* reverse(long long* _0, long long _0_size){
 	long long _15;
 	long long _16;
 	long long _20;
-	long long* _21;
-	long long _21_size;
-	long long* _22;
-	long long _22_size;
 	long long _25;
 	long long _27;
 	long long _28;
 	long long _3;
+	long long _30;
+	long long _31;
+	long long _32;
+	long long _33;
+	long long _34;
+	long long _35;
 	long long* _4;
 	long long _4_size;
 	long long _8;
@@ -46,10 +48,16 @@ long long* reverse(long long* _0, long long _0_size){
 	_3 = _0_size;
 	//assign %1 = %3  : int
 	_1 = _3;
-	//const %4 = [] : [void]
-	_4=(long long*)malloc(1*sizeof(long long));
-	_4_size = 0;
-	//convert %4 = %4 [int] : [void]
+	//lengthof %30 = %0 : [int]
+	_30 = _0_size;
+	//assign %4 = %0  : [int]
+	_4 = clone(_0, _0_size);
+	_4_size = _0_size;
+
+	//const %31 = 0 : int
+	_31 = 0;
+	//assign %32 = %31  : int
+	_32 = _31;
 	//assert blklab2
 	{
 		//lengthof %8 = %0 : [int]
@@ -62,7 +70,6 @@ long long* reverse(long long* _0, long long _0_size){
 	}
 //.blklab2
 blklab2:;
-	//loop (%1, %4)
 	//assume blklab3
 	{
 		//lengthof %11 = %0 : [int]
@@ -77,6 +84,7 @@ blklab2:;
 blklab3:;
 	//const %13 = 0 : int
 	_13 = 0;
+	//loop (%1, %4, %32)
 		//ifle %1, %13 goto blklab1 : int
 	while(_1>_13){
 		//const %15 = 1 : int
@@ -108,19 +116,35 @@ blklab7:;
 blklab8:;
 		//indexof %20 = %0, %16 : [int]
 		_20=_0[_16];
-		//newlist %21 = (%20) : [int]
-		_21=(long long*)malloc(1*sizeof(long long));
-		_21_size=1;
-		//newlist %21 = (%20) : [int]
-		_21[0]=_20;
-		//append %22 = %4, %21 : [int]
-		_22_size = _4_size+_21_size;
-		_22=append(_4, _4_size,_21, _21_size);
-		free(_21);
-		//assign %4 = %22  : [int]
-		_4 = clone(_22, _22_size);
-		_4_size = _22_size;
-		free(_22);
+		//assert blklab9
+		{
+			//const %33 = 0 : int
+			_33 = 0;
+			//ifge %32, %33 goto blklab10 : int
+			if(_32>=_33){goto blklab10;}
+			//fail ""index out of bounds (negative)""
+			fprintf(stderr,"fail ""index out of bounds (negative)""");
+			exit(0);
+//.blklab10
+blklab10:;
+			//lengthof %33 = %4 : [int]
+			_33 = _4_size;
+			//iflt %32, %33 goto blklab9 : int
+			if(_32<_33){goto blklab9;}
+			//fail ""index out of bounds (not less than length)""
+			fprintf(stderr,"fail ""index out of bounds (not less than length)""");
+			exit(0);
+		}
+//.blklab9
+blklab9:;
+		//update %4[%32] = %20 : [int] -> [int]
+		_4[_32] = _20;
+		//const %34 = 1 : int
+		_34 = 1;
+		//add %35 = %32, %34 : int
+		_35=_32+_34;
+		//assign %32 = %35  : int
+		_32 = _35;
 		//assert blklab4
 		{
 			//lengthof %25 = %0 : [int]
@@ -139,6 +163,16 @@ blklab4:;
 	}
 //.blklab1
 blklab1:;
+	//assert blklab11
+	{
+		//ifeq %32, %30 goto blklab11 : int
+		if(_32==_30){goto blklab11;}
+		//fail ""assertion failed""
+		fprintf(stderr,"fail ""assertion failed""");
+		exit(0);
+	}
+//.blklab11
+blklab11:;
 	//return %4 : [int]
 	return _4;
 }
@@ -174,8 +208,8 @@ int main(int argc, char** argv){
 		//convert %1 = %1 [int] : [void]
 		//const %3 = 0 : int
 		_3 = 0;
-		//const %4 = 1000 : int
-		_4 = 1000;
+		//const %4 = 10000 : int
+		_4 = 10000;
 		//range %5 = %3, %4 : [int]
 		//forall %6 in %5 (%1) : [int]
 		for(_6=_3;_6<_4;_6++){

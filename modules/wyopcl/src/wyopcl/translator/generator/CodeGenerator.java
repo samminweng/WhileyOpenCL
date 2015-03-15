@@ -177,6 +177,19 @@ public class CodeGenerator{
 			statements.add(stat);
 		}		
 	}
+	
+	/**
+	 * Check if the op is one of the input parameters.
+	 * @param op
+	 * @return true if op is the input parameter.
+	 */
+	private boolean isInputParameters(String op){
+		if(params.containsKey(op)){
+			return true;
+		}		
+		return false;
+	}
+	
 
 	/**
 	 * Translates the function or method declaration (e.g. <code>int* play(int* _0, int _0_size){</code>)
@@ -338,11 +351,9 @@ public class CodeGenerator{
 			stat += indent + target_size+" = "+op+"_size;\n";
 			//free(_12);
 			//Check if the op is the input parameters or not.
-			if(!op.equals(prefix+0)){
+			if(!isInputParameters(op)){
 				stat += indent+"free("+op+");";
-			}
-			
-			
+			}			
 			addStatement(code, stat);
 		}else{
 			String stat = indent + target+ " = "+ op + ";";
