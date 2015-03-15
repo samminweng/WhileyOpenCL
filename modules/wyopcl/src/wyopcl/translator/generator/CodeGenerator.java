@@ -45,7 +45,7 @@ public class CodeGenerator{
 	private String loop_label;
 	private Stack<String> assert_labels;	
 	private SymbolController sym_ctrl;	
-	
+
 	public CodeGenerator(Configuration config){
 		this.config = config;
 		this.vars = new HashMap<String, String>();
@@ -54,6 +54,42 @@ public class CodeGenerator{
 		this.sym_ctrl = new SymbolController();		
 		this.assert_labels = new Stack<String>();
 	}
+	/**
+	 * Add the statements of starting timer and iterations.
+	 */
+	private void addTimerAndIterations(String func_name){
+		// Adds the timer to measure the starting time at the main method
+		if(func_name.equals("main")){
+			//Add variable declaration
+			vars.put("start", "time_t");
+			vars.put("end", "time_t");
+			vars.put("diff", "double");
+			//Add the number of iteration
+			vars.put("iteration", "int");
+			statements.add(indent + "time(&start);");
+			statements.add(indent + "iteration=0;");
+			statements.add(indent + "while(iteration<10){");
+			increaseIndent();
+			statements.add(indent + "iteration++;");
+		}
+	}
+
+	/**
+	 * Adds the ending timer and calculate the execution time
+	 * @param func_name
+	 */
+	private void addEndingTimer(String func_name, Code code){
+		//Adds the ending time and calculate and print out the execution time
+		if(func_name.equals("main") && code instanceof Codes.Return){
+			decreaseIndent();
+			//The end of iteration while-loop.
+			statements.add(indent + "}");			
+			statements.add(indent + "time(&end);");
+			statements.add(indent + "diff = difftime(end, start);");
+			statements.add(indent + "printf(\"Execution time:%.3lf seconds\", diff/iteration);");
+		}
+	}
+
 
 	/**
 	 * Iterates over the list of byte-code to generate the corresponding C code.  
@@ -61,18 +97,20 @@ public class CodeGenerator{
 	 * @param func_name
 	 */
 	public void IterateBytecode(List<Code> code_blk, String func_name){
+		addTimerAndIterations(func_name);
 		int line = 0;
 		for(Code code: code_blk){
 			//Get the Block.Entry
 			if(config.isVerbose()){
 				line = printWyILCode(code, func_name, line);
-			}				
+			}		
+			addEndingTimer(func_name, code);
 			dispatch(code);
 		}
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Prints out each bytecode with the line number and the correct indentation.
 	 * @param name
@@ -88,7 +126,7 @@ public class CodeGenerator{
 		return ++line;
 	}
 
-		
+
 	/**
 	 * Adds the type declaration for a variable.
 	 * @param type the Whiley type
@@ -101,7 +139,7 @@ public class CodeGenerator{
 				vars.put(var, CodeGeneratorHelper.translate(type));
 			}else{
 				//If the size is not assigned, use the default size (1024).
-				vars.put(var+"[1024]", CodeGeneratorHelper.translate(type));
+				vars.put(var, CodeGeneratorHelper.translate(type));
 			}			
 		}else if (type instanceof Type.List){
 			vars.put(var, CodeGeneratorHelper.translate(type));
@@ -111,9 +149,9 @@ public class CodeGenerator{
 			vars.put(var, CodeGeneratorHelper.translate(type));
 		}		
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Adds the statement to the list and 
 	 * print out the statement if the verbose option is on.
@@ -185,8 +223,8 @@ public class CodeGenerator{
 		if(config.isVerbose()){
 			System.out.println(str);
 		}
-		
-				
+
+
 		return str;
 	}
 	/**
@@ -252,7 +290,7 @@ public class CodeGenerator{
 			Strung strung = (Strung) code.constant;
 			//vars.put(target+"["+(strung.value.length()+1)+"]" , "char");			
 			addDeclaration(Type.Strung.T_STRING, target+"["+(strung.value.length()+1)+"]");
-			
+
 			stat = indent + "strcpy("+target+", \""+strung.value+"\");";
 		}else if(code.assignedType() instanceof Type.List){
 			Constant.List list = (Constant.List) code.constant;
@@ -278,22 +316,25 @@ public class CodeGenerator{
 	private void translate(Codes.Assign code){
 		String target = prefix+code.target();
 		String op = prefix+code.operand(0);
-		//vars.put(target, CodeGeneratorHelper.translate(code.type()));//Var
+		//var
 		addDeclaration(code.type(), target);
 		if(code.type()instanceof Type.List){
-			String target_size = target+"_size";			
-			String stat = indent + target+ " = clone("+ op + ", "+ op+"_size);";
-			addStatement(code, stat);
+			String target_size = target+"_size";
 			//Add the '_return_size' variable.
-			//vars.put(target_size, "long long");
 			addDeclaration(Type.Int.T_INT, target_size);
-			stat = indent + target_size+" = "+op+"_size;";
-			addStatement(null, stat);
+			
+			String stat = indent + target+ " = clone("+ op + ", "+ op+"_size);\n";
+			//Check if the op is input parameter (reg 0)
+			if(!op.equals("_0")){
+				//Free the memory of the op 
+				stat += indent + "free("+op+");\n";
+			}			
+			stat += indent + target_size+" = "+op+"_size;";
+			addStatement(code, stat);
 		}else{
 			String stat = indent + target+ " = "+ op + ";";
 			addStatement(code, stat);
 		}
-
 	}
 
 	/**
@@ -415,7 +456,7 @@ public class CodeGenerator{
 		}	
 		return stat;
 	}
-	
+
 	/**
 	 * Generates C code for 'Any.toString' function, which casts one parameter of any type to a string. 
 	 * Currently there are two kinds of conversion.  
@@ -427,6 +468,11 @@ public class CodeGenerator{
 	 * <p><code>invoke %26 = (%26) whiley/lang/Any:toString : function(any) => string</code></p>
 	 * can be translated into the C code:
 	 * <p><code>sprintf(_26_str, "%lld", _26);</code></p>
+	 * Another case is 
+	 * <p><code>invoke %17 = (%18) whiley/lang/Any:toString : function(any) => string</code></p>
+	 * can be translated into the C code:
+	 * <p><code>_17 = (char*)malloc((_18_size)*sizeof(long long));</code><br>
+	 * <code>toString(_18 , _18_size, _17);</code></p>
 	 * @param code
 	 * @return the generated C code for 'Any.ToString' function call.
 	 */
@@ -445,9 +491,12 @@ public class CodeGenerator{
 		Type paramType = (Type) sym_ctrl.getAttribute(param, "type");
 		//Cast the input as a string				
 		if(paramType instanceof Type.Int){
+
 			stat += "sprintf("+ret+", \"%lld\", "+ prefix+code.operand(0)+");";					
 		}else{
-			stat += "toString(";
+			//_17 = (char*)malloc((_18_size)*sizeof(long long));
+			stat += prefix+code.target()+" = (char*)malloc(("+prefix+code.operand(0)+"_size*sizeof(long long)));\n";
+			stat += indent+"toString(";
 			//Get type attribute
 			stat += translateParameters(code.operands(), (List<?>)sym_ctrl.getAttributes(code.operands(), prefix, "type"));
 			stat += ", "+ret+");";
@@ -654,7 +703,7 @@ public class CodeGenerator{
 		EffectiveIndexible type = code.type();
 		//vars.put(prefix+code.target(), CodeGeneratorHelper.translate(type.element()));
 		addDeclaration(type.element(), prefix+code.target());
-		
+
 		String stat = indent;
 		stat += prefix+code.target() + "="+prefix+code.operand(0)
 				+"["+prefix+code.operand(1)+"];";
@@ -722,21 +771,13 @@ public class CodeGenerator{
 	 * @param code
 	 */
 	private void translate(Codes.IndirectInvoke code){
-		String stat = indent;
+		String stat = "";
 		if(code.type() instanceof Type.FunctionOrMethod){
-			//Hard-coded the 'str' var
-			//vars.put("str[1024]","char");			
-			addDeclaration(Type.Strung.T_STRING, "str");
-			
-			//Hard-coded the invoked (temporarily).
+			//Hard-coded temporarily.
 			String op = prefix+code.parameter(0);
-			Type paramType = code.type().params().get(0);
-			if(vars.containsKey(op)){
-				stat += "printf(\"%s\\n\",toString("+op+", "+op+"_size, str));";
-			}else{
-				stat += "printf(\"%s\\n\","+op+");";
-			}
-
+			stat += indent + "printf(\"%s\\n\","+op+");\n";
+			//free the malloc of op
+			stat += indent + "free("+op+");";
 		}		
 		addStatement(code, stat);		
 	}
@@ -760,7 +801,7 @@ public class CodeGenerator{
 		String target = prefix+code.target();
 		//vars.put(target+"[1024]", "char");		
 		addDeclaration(code.type(), target);
-		
+
 		String left = prefix+code.operand(0);
 		String right = prefix+code.operand(1);
 
@@ -788,7 +829,7 @@ public class CodeGenerator{
 		addDeclaration((Type) code.type(), target);
 		//vars.put(target+"_size", "long long");
 		addDeclaration(Type.Int.T_INT, target+"_size");
-		
+
 		String stat = "";
 		stat += indent+target+"_size = ";
 		boolean isFirst = true;

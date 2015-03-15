@@ -22,5 +22,11 @@ function reverse([int] ls) => [int]:
 */
 
 method main(System.Console sys) => void:
-    [int] rs = reverse([1, 2, 3, 4, 5, 6, 7])
-    sys.out.println(Any.toString(rs))
+	//Create the input list using the for loop. 
+	[int] xs = []
+	int i = 0
+	while i <= 10000:
+		xs = xs ++ [i]
+		i = i + 1
+	[int] rs = reverse(xs)
+	sys.out.println(Any.toString(rs))

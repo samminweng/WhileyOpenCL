@@ -44,22 +44,23 @@ public final class TranslatorHelper {
 	 */
 	public static List<Code> patternMatchingandTransformation(Configuration config, List<Type> params, List<Code> code_blk){
 		//Initialize the pattern matcher.
-		PatternMatcher matcher = new PatternMatcher(config.isVerbose());
-		Pattern pattern = matcher.analyzePattern(params, code_blk);
-		System.out.println("The original pattern:\n"+pattern);
-		PatternTransformer transformer = new PatternTransformer();
-		List<Code> code_blk_after = transformer.transformPatternUsingVisitor(pattern);
-		if(code_blk_after != null){
-			Pattern transformed_pattern = matcher.analyzePattern(params, code_blk_after);
-			if(!transformed_pattern.isNil){
-				System.out.println("From "+pattern.getType()+" to "+transformed_pattern.getType()+", the transformed pattern:\n"+transformed_pattern);
-				return code_blk_after;
+		if(config.isPatternMatching()){
+			PatternMatcher matcher = new PatternMatcher(config.isVerbose());
+			Pattern pattern = matcher.analyzePattern(params, code_blk);
+			System.out.println("The original pattern:\n"+pattern);
+			PatternTransformer transformer = new PatternTransformer();
+			List<Code> code_blk_after = transformer.transformPatternUsingVisitor(pattern);
+			if(code_blk_after != null){
+				Pattern transformed_pattern = matcher.analyzePattern(params, code_blk_after);
+				if(!transformed_pattern.isNil){
+					System.out.println("From "+pattern.getType()+" to "+transformed_pattern.getType()+", the transformed pattern:\n"+transformed_pattern);
+					return code_blk_after;
+				}
 			}
-		}
-		//Nullify the matcher and transformer
-		matcher = null;
-		transformer = null;
-		
+			//Nullify the matcher and transformer
+			matcher = null;
+			transformer = null;
+		}		
 		return code_blk;
 	}
 

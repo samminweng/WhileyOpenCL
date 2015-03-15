@@ -28,7 +28,6 @@ long long f(long long _0){
 	long long _10;
 	long long _15;
 	long long _17;
-	long long _18;
 	long long _20;
 	long long _3;
 	long long _4;
@@ -37,8 +36,6 @@ long long f(long long _0){
 	long long _8;
 	//const %4 = 0 : int
 	_4 = 0;
-	//assign %3 = %4  : int
-	_3 = _4;
 	//const %6 = 0 : int
 	_6 = 0;
 	//assign %5 = %6  : int
@@ -55,7 +52,6 @@ long long f(long long _0){
 	}
 //.blklab3
 blklab3:;
-	//loop (%3, %5)
 	//assume blklab4
 	{
 		//const %10 = 0 : int
@@ -68,18 +64,15 @@ blklab3:;
 	}
 //.blklab4
 blklab4:;
-		//ifge %3, %0 goto blklab2 : int
-	while(_3<_0){
+	//range %21 = %4, %0 : int
+	//forall %3 in %21 (%5) : [int]
+	for(_3=_4;_3<_0;_3++){
 		//add %15 = %5, %3 : int
 		_15=_5+_3;
 		//assign %5 = %15  : int
 		_5 = _15;
 		//const %17 = 1 : int
 		_17 = 1;
-		//add %18 = %3, %17 : int
-		_18=_3+_17;
-		//assign %3 = %18  : int
-		_3 = _18;
 		//assert blklab5
 		{
 			//const %20 = 0 : int
@@ -96,10 +89,6 @@ blklab5:;
 		;
 	//end blklab1
 	}
-//.blklab2
-blklab2:;
-	//return %5 : int
-	return _5;
 }
 long long f2(long long _0){
 	long long _12;

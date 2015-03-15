@@ -20,6 +20,11 @@ function reverse([int] ls) => [int]:
     assert r_size == r_capacity
     return r
 */
+
 method main(System.Console sys) => void:
-    [int] rs = reverse([0, 1, 2, 3, 4, 5])
-    sys.out.println(Any.toString(rs))
+	//Create the input list using the for loop. 
+	[int] xs = []
+	for i in 1..1000:
+		xs = xs ++ [i]
+	[int] rs = reverse(xs)
+	sys.out.println(Any.toString(rs))

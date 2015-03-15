@@ -15,6 +15,7 @@ public final class CodeGeneratorHelper {
 	private CodeGeneratorHelper(){
 
 	}
+	
 	/**
 	 * Writes out the 'include' and 'define' code.
 	 * TODO : generalize the code generation.
@@ -27,6 +28,7 @@ public final class CodeGeneratorHelper {
 				"#include <stdlib.h>\n" + 
 				"#include <string.h>\n" + 
 				"#include <errno.h>\n" + 
+				"#include <time.h>\n"+
 				"#define false 0\n" + 
 				"#define true 1\n";
 		//Native function declaration
@@ -74,7 +76,7 @@ public final class CodeGeneratorHelper {
 		}else{
 			stats +="		char c[1024];\n" + 
 					"		sprintf(c, \"%d\", arr[i]);\n" + 
-					"		strcat(str, c);";	
+					"		strcat(str, c);\n";	
 		}
 				 
 	    stats +="		if(i<size-1){\n" + 
@@ -82,6 +84,8 @@ public final class CodeGeneratorHelper {
 				"		}\n" + 
 				"	}\n" + 
 				"	strcat(str, \"]\");\n" + 
+				"	//free arr[]"+
+				"	free(arr);"+
 				"	return str;\n" + 
 				"}";
 		writer.println(stats);
@@ -129,7 +133,11 @@ public final class CodeGeneratorHelper {
 				"	for(i=0;i<op_2_size;i++){\n" + 
 				"		res[res_i]=op_2[i];\n" + 
 				"		res_i++;\n" + 
-				"	}\n" + 
+				"	}\n" +
+				"	//free the op_1\n" + 
+				"	free(op_1);"+
+				"	//free the op_2\n" + 
+				"	free(op_2);"+
 				"}\n" + 
 				"";				
 	
@@ -166,7 +174,7 @@ public final class CodeGeneratorHelper {
 		}
 		
 		if(type instanceof Type.Strung){
-			return "char";
+			return "char*";
 		}
 		
 		return null;
