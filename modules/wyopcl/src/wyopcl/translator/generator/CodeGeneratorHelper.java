@@ -116,30 +116,26 @@ public final class CodeGeneratorHelper {
 	}
 	
 	/**
-	 * Generates the C code for append byte-code.
+	 * Generates the C code to append a op to another and return the result pointer.
 	 * @param writer
 	 */
 	public static void generateAppend(PrintWriter writer){
 		String indent = "\t";
 		String stats = "";		
-		stats +="void append(long long* op_1, long long op_1_size, long long* op_2, long long op_2_size, long long* res){\n" + 
+		stats +="long long* append(long long* op_1, long long op_1_size, long long* op_2, long long op_2_size){\n" + 
 				"	long long i;\n" + 
-				"	long long res_i;\n" + 
-				"	res_i=0;\n" + 
-				"	for(i=0;i<op_1_size;i++){\n" + 
-				"		res[res_i]=op_1[i];\n" + 
-				"		res_i++;\n" + 
-				"	}\n" + 
+				"	long long *res;\n" + 
+				"	long long res_size;\n" + 
+				"	//Assign the res with op. That means both of them address to same memory location. In other word, copy the array.\n" + 
+				"	//Realloc the array size of 'res'\n" + 
+				"	res = op_1;\n" + 
+				"	res_size = op_1_size+op_2_size;\n" + 
+				"	res = (long long*)realloc(res, (op_1_size+op_2_size)*sizeof(long long));\n" + 
 				"	for(i=0;i<op_2_size;i++){\n" + 
-				"		res[res_i]=op_2[i];\n" + 
-				"		res_i++;\n" + 
+				"		res[op_1_size+i]=op_2[i];\n" + 
 				"	}\n" +
-				"	//free the op_1\n" + 
-				"	free(op_1);"+
-				"	//free the op_2\n" + 
-				"	free(op_2);"+
-				"}\n" + 
-				"";				
+				"	return res;\n" + 
+				"}";				
 	
 		writer.println(stats);
 		System.out.println(stats);

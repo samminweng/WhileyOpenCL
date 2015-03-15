@@ -322,13 +322,7 @@ public class CodeGenerator{
 			String target_size = target+"_size";
 			//Add the '_return_size' variable.
 			addDeclaration(Type.Int.T_INT, target_size);
-
-			String stat = indent + target+ " = clone("+ op + ", "+ op+"_size);\n";
-			//Check if the op is input parameter (reg 0)
-			if(!op.equals("_0")){
-				//Free the memory of the op 
-				stat += indent + "free("+op+");\n";
-			}			
+			String stat = indent + target+ " = clone("+ op + ", "+ op+"_size);\n";			
 			stat += indent + target_size+" = "+op+"_size;";
 			addStatement(code, stat);
 		}else{
@@ -822,16 +816,29 @@ public class CodeGenerator{
 		addStatement(code, stat);
 	}
 
-
+	/**
+	 * Translates the append byte-code. For example, 
+	 * <p>
+	 * <code>append %10 = %1, %9 : [int]</code>
+	 * </p>
+	 * can be translated into:
+	 * <p>
+	 * <code>_10_size = _1_size+_9_size;//new array size.</code><br>
+	 * <code>_10=append(_1, _1_size,_9, _9_size);//call the 'append' function.<code><br>
+	 * <code>free(_9);</code>
+	 * </p>
+	 * 
+	 * @param code
+	 */
 	private void translate(ListOperator code) {
 		String target = prefix+code.target();
-		//vars.put(target, CodeGeneratorHelper.translate(code.type().element())+"*");
+		//long long* _10;
 		addDeclaration((Type) code.type(), target);
-		//vars.put(target+"_size", "long long");
+		//long long _10_size; 
 		addDeclaration(Type.Int.T_INT, target+"_size");
-
-		String stat = "";
-		stat += indent+target+"_size = ";
+		
+		//_10_size = _1_size+_9_size;
+		String stat = indent+target+"_size = ";
 		boolean isFirst = true;
 		for(int operand: code.operands()){
 			String op = prefix + operand;
@@ -843,9 +850,8 @@ public class CodeGenerator{
 			isFirst = false;
 		}
 		stat +=";\n";
-		//Allocate the array
-		stat += indent+target+"=("+CodeGeneratorHelper.translate(code.type().element())+"*)malloc("+target+"_size*sizeof("+CodeGeneratorHelper.translate(code.type().element())+"));\n";
-		stat += indent+"append(";
+		//Calls the append function.
+		stat += indent + target+ "=append(";
 		isFirst = true;
 		for(int operand: code.operands()){
 			String op = prefix + operand;
@@ -856,7 +862,12 @@ public class CodeGenerator{
 			}
 			isFirst = false;
 		}
-		stat += ", "+target+");";
+		stat += ");\n";
+		
+		//Free the op_2, because op_2 has been appended to the op_1. 
+		stat += indent+"free("+prefix+code.operand(1)+");";
+		
+		//Put it to the statement list.
 		addStatement(code, stat);
 	}
 
