@@ -33,6 +33,7 @@ public final class CodeGeneratorHelper {
 				"#define true 1\n";
 		//Native function declaration
 		stats +="long long* clone(long long *arr, long long size);\n"+
+				"long long* append(long long* op_1, long long op_1_size, long long* op_2, long long op_2_size);\n"+
 				"char* toString(long long arr[], long long size, char *str);\n";
 		
 		for(String func : list_func){

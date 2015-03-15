@@ -323,17 +323,26 @@ public class CodeGenerator{
 	}
 
 	/**
-	 * Generates the code for <code>Codes.Assign</code> code. For example, 
+	 * Generates the code for <code>Codes.Assign</code> code. For example,
 	 * <p>
-	 * <code>assign %11 = %12  : [int]</code>
+	 * <codeassign %1 = %10  : [int]</code>
 	 * </p>
 	 * can be translated into:
 	 * <p>
-	 * <code>_11 = clone(_12, _12_size);//call the clone method.</code><br>
-	 * <code>_11_size = _12_size;//specify the array size</code><br>
-	 * <code>free(_12);//free the cloned list since we dont need it anymore.
-	 * But if it is the input parameter, we dont free its memory.</code> 
+	 * <code>_1 = _10;</code><br>
+	 * <code>_1_size = _10_size;</code>
 	 * </p>
+	 * When we need to assign the input parameter(_0) to the new register, then  
+	 * we need to clone the input and return the result pointer. For example,
+	 * <p>
+	 * <code>assign %4 = %0  : [int]</code>
+	 * </p>
+	 * can be translated into:
+	 * <p>
+	 * <code>_4 = clone(_0, _0_size);//call the clone method.</code><br>
+	 * <code>_4_size = _0_size;//specify the array size</code><br>
+	 * </p>
+	 * 
 	 * @param code
 	 */
 	private void translate(Codes.Assign code){
@@ -344,16 +353,18 @@ public class CodeGenerator{
 		if(code.type()instanceof Type.List){
 			String target_size = target+"_size";
 			//long long _11_size;
-			addDeclaration(Type.Int.T_INT, target_size);			
-			//_11 = clone(_12, _12_size);
-			String stat = indent + target+ " = clone("+ op + ", "+ op+"_size);\n";
-			//_11_size = _12_size;
-			stat += indent + target_size+" = "+op+"_size;\n";
-			//free(_12);
+			addDeclaration(Type.Int.T_INT, target_size);
+			String stat = "";
 			//Check if the op is the input parameters or not.
-			if(!isInputParameters(op)){
-				stat += indent+"free("+op+");";
+			if(isInputParameters(op)){
+				//_4 = clone(_0, _0_size);
+				stat = indent + target + " = clone("+ op + ", "+ op+"_size);\n";
+			}else{
+				//_1 = _10;
+				stat = indent + target + " = "+op +";\n";
 			}			
+			//_1_size = _10_size;
+			stat += indent + target_size+" = "+op+"_size;";			
 			addStatement(code, stat);
 		}else{
 			String stat = indent + target+ " = "+ op + ";";
