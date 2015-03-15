@@ -118,9 +118,9 @@ blklab8:;
 		_22=append(_4, _4_size,_21, _21_size);
 		free(_21);
 		//assign %4 = %22  : [int]
-		free(_4);
 		_4 = clone(_22, _22_size);
 		_4_size = _22_size;
+		free(_22);
 		//assert blklab4
 		{
 			//lengthof %25 = %0 : [int]
@@ -174,8 +174,8 @@ int main(int argc, char** argv){
 		//convert %1 = %1 [int] : [void]
 		//const %3 = 0 : int
 		_3 = 0;
-		//const %4 = 1000000 : int
-		_4 = 1000000;
+		//const %4 = 1000 : int
+		_4 = 1000;
 		//range %5 = %3, %4 : [int]
 		//forall %6 in %5 (%1) : [int]
 		for(_6=_3;_6<_4;_6++){
@@ -191,6 +191,7 @@ int main(int argc, char** argv){
 			//assign %1 = %10  : [int]
 			_1 = clone(_10, _10_size);
 			_1_size = _10_size;
+			free(_10);
 			//nop
 			;
 		//end blklab5
@@ -203,11 +204,13 @@ blklab6:;
 		//assign %11 = %12  : [int]
 		_11 = clone(_12, _12_size);
 		_11_size = _12_size;
+		free(_12);
 		//fieldload %15 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}
 		//fieldload %16 = %15 println : {method(any) => void print,method(any) => void println}
 		//assign %18 = %11  : [int]
 		_18 = clone(_11, _11_size);
 		_18_size = _11_size;
+		free(_11);
 		//convert %18 = %18 any : [int]
 		//invoke %17 = (%18) whiley/lang/Any:toString : function(any) => string
 		_17 = (char*)malloc((_18_size*sizeof(long long)));

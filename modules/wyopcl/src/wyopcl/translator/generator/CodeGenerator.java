@@ -310,20 +310,39 @@ public class CodeGenerator{
 	}
 
 	/**
-	 * Generates the code for <code>Codes.Assign</code> code.
+	 * Generates the code for <code>Codes.Assign</code> code. For example, 
+	 * <p>
+	 * <code>assign %11 = %12  : [int]</code>
+	 * </p>
+	 * can be translated into:
+	 * <p>
+	 * <code>_11 = clone(_12, _12_size);//call the clone method.</code><br>
+	 * <code>_11_size = _12_size;//specify the array size</code><br>
+	 * <code>free(_12);//free the cloned list since we dont need it anymore.
+	 * But if it is the input parameter, we dont free its memory.</code> 
+	 * </p>
 	 * @param code
 	 */
 	private void translate(Codes.Assign code){
 		String target = prefix+code.target();
 		String op = prefix+code.operand(0);
-		//var
+		//long long* _11;
 		addDeclaration(code.type(), target);
 		if(code.type()instanceof Type.List){
 			String target_size = target+"_size";
-			//Add the '_return_size' variable.
-			addDeclaration(Type.Int.T_INT, target_size);
-			String stat = indent + target+ " = clone("+ op + ", "+ op+"_size);\n";			
-			stat += indent + target_size+" = "+op+"_size;";
+			//long long _11_size;
+			addDeclaration(Type.Int.T_INT, target_size);			
+			//_11 = clone(_12, _12_size);
+			String stat = indent + target+ " = clone("+ op + ", "+ op+"_size);\n";
+			//_11_size = _12_size;
+			stat += indent + target_size+" = "+op+"_size;\n";
+			//free(_12);
+			//Check if the op is the input parameters or not.
+			if(!op.equals(prefix+0)){
+				stat += indent+"free("+op+");";
+			}
+			
+			
 			addStatement(code, stat);
 		}else{
 			String stat = indent + target+ " = "+ op + ";";
