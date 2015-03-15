@@ -322,7 +322,7 @@ public class CodeGenerator{
 			String target_size = target+"_size";
 			//Add the '_return_size' variable.
 			addDeclaration(Type.Int.T_INT, target_size);
-			
+
 			String stat = indent + target+ " = clone("+ op + ", "+ op+"_size);\n";
 			//Check if the op is input parameter (reg 0)
 			if(!op.equals("_0")){
@@ -718,13 +718,13 @@ public class CodeGenerator{
 		//Allocate the memory for the list
 		//vars.put(target, type);
 		addDeclaration(code.type(), target);
-		stat = indent + target + "=("+type+")malloc("+(code.operands().length)+"*sizeof("+CodeGeneratorHelper.translate(code.type().element())+"));";
-		addStatement(code, stat);
 		//Add the 'target_size' variable to indicate the length of the list
 		String target_size = target+"_size";
 		//vars.put(target_size, "long long");
 		addDeclaration(Type.Int.T_INT, target_size);
-		stat = indent + target_size+"="+ code.operands().length+";";
+		//Statements
+		stat = indent + target + "=("+type+")malloc("+(code.operands().length)+"*sizeof("+CodeGeneratorHelper.translate(code.type().element())+"));\n";
+		stat += indent + target_size+"="+ code.operands().length+";";
 		addStatement(code, stat);
 		//Initialize the all the elements.
 		int index = 0;

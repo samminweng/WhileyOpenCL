@@ -84,8 +84,8 @@ public final class CodeGeneratorHelper {
 				"		}\n" + 
 				"	}\n" + 
 				"	strcat(str, \"]\");\n" + 
-				"	//free arr[]"+
-				"	free(arr);"+
+				"	//free arr[]\n"+
+				"	free(arr);\n"+
 				"	return str;\n" + 
 				"}";
 		writer.println(stats);
