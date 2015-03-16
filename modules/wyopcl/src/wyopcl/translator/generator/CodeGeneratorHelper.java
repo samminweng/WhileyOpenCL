@@ -15,7 +15,7 @@ public final class CodeGeneratorHelper {
 	private CodeGeneratorHelper(){
 
 	}
-	
+
 	/**
 	 * Writes out the 'include' and 'define' code.
 	 * TODO : generalize the code generation.
@@ -34,8 +34,9 @@ public final class CodeGeneratorHelper {
 		//Native function declaration
 		stats +="long long* clone(long long *arr, long long size);\n"+
 				"long long* append(long long* op_1, long long op_1_size, long long* op_2, long long op_2_size);\n"+
-				"char* toString(long long arr[], long long size, char *str);\n";
-		
+				"char** toString(long long arr[], long long size);\n" + 
+				"void indirect_printf(char** res, int _res_size);\n";
+
 		for(String func : list_func){
 			stats += func + ";\n";
 		}
@@ -44,7 +45,7 @@ public final class CodeGeneratorHelper {
 			System.out.println(stats);
 		}		
 	}
-	
+
 	/**
 	 * Write out the 'include' part
 	 * @param writer
@@ -63,31 +64,23 @@ public final class CodeGeneratorHelper {
 		//Hard-coded the function temporarily.
 		String indent = "\t";
 		String stats = "";		
-		stats +="char* toString(long long arr[], long long size, char *str){\n" + 
+		stats ="/* Convert an array of long long integer into an array of string.*/\n" + 
+				"char** toString(long long arr[], long long size){\n" + 
 				"	long long i;\n" + 
+				"	char** res;\n" + 
+				"	res = (char**)malloc(size*sizeof(char*));\n" + 
 				"	i=0;\n" + 
-				"	strcpy(str, \"[\");\n" + 
-				"	for(i=0;i<size;i++){		\n";
-		if(isBoolType){
-			stats +="		if(arr[i]==true){\n" + 
-				    "			strcat(str, \"true\");\n" + 
-					"		}else{\n" + 
-					"			strcat(str, \"false\");\n" + 
-					"		}\n";
-		}else{
-			stats +="		char c[1024];\n" + 
-					"		sprintf(c, \"%d\", arr[i]);\n" + 
-					"		strcat(str, c);\n";	
-		}
-				 
-	    stats +="		if(i<size-1){\n" + 
-				"			strcat(str, \", \");\n" + 
-				"		}\n" + 
-				"	}\n" + 
-				"	strcat(str, \"]\");\n" + 
-				"	//free arr[]\n"+
-				"	free(arr);\n"+
-				"	return str;\n" + 
+				"	for(i=0;i<size;i++){		\n" + 
+				"		char buffer[1024];\n" + 
+				"		//Write the array element (long long) to the buffer and get the length \n" + 
+				"		int length = sprintf(buffer, \"%lld\", arr[i]);\n" + 
+				"		//Allocate the memory size for the result array, based on the length\n" + 
+				"		res[i] = (char*)malloc(length*sizeof(char));\n" + 
+				"		strcpy(res[i],  buffer);		\n" + 
+				"	}	\n" + 
+				"	//free arr[]\n" + 
+				"	free(arr);\n" + 
+				"	return res;\n" + 
 				"}";
 		writer.println(stats);
 		System.out.println(stats);
@@ -111,11 +104,11 @@ public final class CodeGeneratorHelper {
 				"	}\n" + 
 				"	return ptr;\n" + 
 				"}";				
-	
+
 		writer.println(stats);
 		System.out.println(stats);
 	}
-	
+
 	/**
 	 * Generates the C code to append a op to another and return the result pointer.
 	 * @param writer
@@ -137,11 +130,30 @@ public final class CodeGeneratorHelper {
 				"	}\n" +
 				"	return res;\n" + 
 				"}";				
-	
+
 		writer.println(stats);
 		System.out.println(stats);
 	}
-	
+
+	/**
+	 * Write out the indirect_invoked method to print out each string in a list of string.
+	 * @param writer
+	 */
+	public static void generateIndirectInvoked(PrintWriter writer){		
+		String stats = "/*Print out each string in a list of string.*/\n" + 
+				"void indirect_printf(char** res, int _res_size){\n" + 
+				"	long long i;\n" + 
+				"	printf(\"\\n[\");\n" + 
+				"	for(i=0;i<_res_size;i++){\n" + 
+				"		printf(\"%s,\",res[i]);\n" + 
+				"	}\n" + 
+				"	printf(\"]\\n\");\n" + 
+				"}";
+		writer.println(stats);
+		System.out.println(stats);
+
+	}
+
 	/**
 	 * Translate the WyIL type into the type in C.
 	 * @param type the WyIL type
@@ -169,13 +181,13 @@ public final class CodeGeneratorHelper {
 			}
 			return record.toString();
 		}
-		
+
 		if(type instanceof Type.Strung){
 			return "char*";
 		}
-		
+
 		return null;
 	}
-	
+
 
 }

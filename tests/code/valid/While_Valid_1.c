@@ -24,6 +24,15 @@ long long* append(long long* op_1, long long op_1_size, long long* op_2, long lo
 	}
 	return res;
 }
+/*Print out each string in a list of string.*/
+void indirect_printf(char** res, int _res_size){
+	long long i;
+	printf("\n[");
+	for(i=0;i<_res_size;i++){
+		printf("%s,",res[i]);
+	}
+	printf("]\n");
+}
 long long* reverse(long long* _0, long long _0_size){
 	long long _1;
 	long long _11;
@@ -183,7 +192,8 @@ int main(int argc, char** argv){
 	long long _11_size;
 	long long* _12;
 	size_t _12_size;
-	char* _17;
+	char** _17;
+	size_t _17_size;
 	long long* _18;
 	long long _18_size;
 	long long _1_size;
@@ -207,7 +217,7 @@ int main(int argc, char** argv){
 		//convert %1 = %1 [int] : [void]
 		//const %3 = 0 : int
 		_3 = 0;
-		//const %4 = 100000 : int
+		//const %4 = 1000000 : int
 		_4 = 100000;
 		//range %5 = %3, %4 : [int]
 		//forall %6 in %5 (%1) : [int]
@@ -243,11 +253,11 @@ blklab6:;
 		_18_size = _11_size;
 		//convert %18 = %18 any : [int]
 		//invoke %17 = (%18) whiley/lang/Any:toString : function(any) => string
-		_17 = (char*)malloc((_18_size*sizeof(long long)));
-		toString(_18 , _18_size, _17);
+		_17= toString(_18, _18_size);
+		_17_size =_18_size;
 		//convert %17 = %17 any : string
 		//indirectinvoke %16 (%17) : method(any) => void
-		printf("%s\n",_17);
+		indirect_printf(_17, _17_size);
 		free(_17);
 	}
 	time(&end);
@@ -256,20 +266,21 @@ blklab6:;
 	//return
 	return -1;
 }
-char* toString(long long arr[], long long size, char *str){
+/* Convert an array of long long integer into an array of string.*/
+char** toString(long long arr[], long long size){
 	long long i;
+	char** res;
+	res = (char**)malloc(size*sizeof(char*));
 	i=0;
-	strcpy(str, "[");
 	for(i=0;i<size;i++){		
-		char c[1024];
-		sprintf(c, "%d", arr[i]);
-		strcat(str, c);
-		if(i<size-1){
-			strcat(str, ", ");
-		}
-	}
-	strcat(str, "]");
+		char buffer[1024];
+		//Write the array element (long long) to the buffer and get the length 
+		int length = sprintf(buffer, "%lld", arr[i]);
+		//Allocate the memory size for the result array, based on the length
+		res[i] = (char*)malloc(length*sizeof(char));
+		strcpy(res[i],  buffer);		
+	}	
 	//free arr[]
 	free(arr);
-	return str;
+	return res;
 }

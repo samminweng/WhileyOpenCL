@@ -122,7 +122,8 @@ public class Translator implements Builder{
 			writer = new PrintWriter(config.getFilename()+".c");
 			CodeGeneratorHelper.generateIncludes(writer, config.getFilename());
 			CodeGeneratorHelper.generateClone(writer);		
-			CodeGeneratorHelper.generateAppend(writer);					
+			CodeGeneratorHelper.generateAppend(writer);
+			CodeGeneratorHelper.generateIndirectInvoked(writer);
 			//Iterate each function
 			for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {
 				CodeGenerator generator = new CodeGenerator(config);

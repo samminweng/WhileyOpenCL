@@ -7,7 +7,8 @@
 #define true 1
 long long* clone(long long *arr, long long size);
 long long* append(long long* op_1, long long op_1_size, long long* op_2, long long op_2_size);
-char* toString(long long arr[], long long size, char *str);
+char** toString(long long arr[], long long size);
+void indirect_printf(char** res, int _res_size);
 long long* reverse(long long* _0, long long _0_size);
 int main(int argc, char** argv);
 

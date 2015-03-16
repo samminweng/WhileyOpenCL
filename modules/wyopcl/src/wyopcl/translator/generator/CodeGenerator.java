@@ -147,7 +147,10 @@ public class CodeGenerator{
 			vars.put(var+"_size", "size_t");
 		}else{
 			vars.put(var, CodeGeneratorHelper.translate(type));
-		}		
+		}	
+
+
+
 	}
 
 
@@ -177,7 +180,7 @@ public class CodeGenerator{
 			statements.add(stat);
 		}		
 	}
-	
+
 	/**
 	 * Check if the op is one of the input parameters.
 	 * @param op
@@ -189,7 +192,7 @@ public class CodeGenerator{
 		}		
 		return false;
 	}
-	
+
 
 	/**
 	 * Translates the function or method declaration (e.g. <code>int* play(int* _0, int _0_size){</code>)
@@ -506,8 +509,11 @@ public class CodeGenerator{
 	 * Another case is 
 	 * <p><code>invoke %17 = (%18) whiley/lang/Any:toString : function(any) => string</code></p>
 	 * can be translated into the C code:
-	 * <p><code>_17 = (char*)malloc((_18_size)*sizeof(long long));</code><br>
-	 * <code>toString(_18 , _18_size, _17);</code></p>
+	 * <p>
+	 * <code>char** _17;</code><br>
+	 * <code>size_t _17_size;<code><br>
+	 * <code>_17 = toString(_18 , _18_size);</code><br>
+	 * <code>_17_size = _18_size;</code></p>
 	 * @param code
 	 * @return the generated C code for 'Any.ToString' function call.
 	 */
@@ -526,15 +532,16 @@ public class CodeGenerator{
 		Type paramType = (Type) sym_ctrl.getAttribute(param, "type");
 		//Cast the input as a string				
 		if(paramType instanceof Type.Int){
-
 			stat += "sprintf("+ret+", \"%lld\", "+ prefix+code.operand(0)+");";					
 		}else{
-			//_17 = (char*)malloc((_18_size)*sizeof(long long));
-			stat += prefix+code.target()+" = (char*)malloc(("+prefix+code.operand(0)+"_size*sizeof(long long)));\n";
-			stat += indent+"toString(";
-			//Get type attribute
-			stat += translateParameters(code.operands(), (List<?>)sym_ctrl.getAttributes(code.operands(), prefix, "type"));
-			stat += ", "+ret+");";
+			//char** _17;
+			//size_t _17_size;
+			addDeclaration(Type.List(Type.Strung.T_STRING, false), ret);
+			String op = prefix+code.operand(0);
+			//_17 = toString(_18 , _18_size);
+			stat = indent+ret+"= toString("+op+", "+op+"_size);\n";
+			//_17_size = _18_size;
+			stat += indent+ret+"_size ="+op+"_size;";
 		}
 		return stat;
 	}
@@ -546,7 +553,8 @@ public class CodeGenerator{
 	 * can be translated into the following C code:
 	 * <p><code>_18_size=_1_size;
 	 * _18=play(_1 , _1_size);</code></p>	  
-	 * If the WyIL code calls <code>Any.toString</code>, then use the {@link #transalteWhileyAnyToString(Codes.Invoke)} function. 
+	 * If the WyIL code calls <code>Any.toString</code>, then use the {@link #transalteWhileyAnyToString(Codes.Invoke)} function.
+	 * 
 	 * <p>TODO The size of the returned list requires the symbolic analysis.
 	 * @param code 
 	 */
@@ -810,7 +818,7 @@ public class CodeGenerator{
 		if(code.type() instanceof Type.FunctionOrMethod){
 			//Hard-coded temporarily.
 			String op = prefix+code.parameter(0);
-			stat += indent + "printf(\"%s\\n\","+op+");\n";
+			stat += indent + "indirect_printf("+op+", "+op+"_size);\n";
 			//free the malloc of op
 			stat += indent + "free("+op+");";
 		}		
@@ -877,7 +885,7 @@ public class CodeGenerator{
 		addDeclaration((Type) code.type(), target);
 		//long long _10_size; 
 		addDeclaration(Type.Int.T_INT, target+"_size");
-		
+
 		//_10_size = _1_size+_9_size;
 		String stat = indent+target+"_size = ";
 		boolean isFirst = true;
@@ -904,10 +912,10 @@ public class CodeGenerator{
 			isFirst = false;
 		}
 		stat += ");\n";
-		
+
 		//Free the op_2, because op_2 has been appended to the op_1. 
 		stat += indent+"free("+prefix+code.operand(1)+");";
-		
+
 		//Put it to the statement list.
 		addStatement(code, stat);
 	}
