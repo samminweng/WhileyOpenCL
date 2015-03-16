@@ -44,7 +44,8 @@ public class CodeGenerator{
 	private BinaryOperator loop_condition;
 	private String loop_label;
 	private Stack<String> assert_labels;	
-	private SymbolController sym_ctrl;	
+	private SymbolController sym_ctrl;
+	private List<String> free_vars;//Store all the variables that require free operation
 
 	public CodeGenerator(Configuration config){
 		this.config = config;
@@ -53,6 +54,7 @@ public class CodeGenerator{
 		this.statements = new ArrayList<String>();		
 		this.sym_ctrl = new SymbolController();		
 		this.assert_labels = new Stack<String>();
+		this.free_vars = new ArrayList<String>();
 	}
 	/**
 	 * Add the statements of starting timer and iterations.
@@ -75,12 +77,32 @@ public class CodeGenerator{
 	}
 
 	/**
+	 * Adds a block of code to free any variable whose memory is allocated by 'malloc' 
+	 */
+	private void free_varaibles(){
+		//Free the variables in 'free_vars' list
+		for(String op : this.free_vars){
+			//Get type
+			String type = getVarDeclaration(op);
+			//Check if the type is a pointer of pointer. 
+			if(type != null && type.contains("**")){
+				//Use the free_doublePtr to free the variable.
+				statements.add(indent+"free_doublePtr("+op+", "+op+"_size);");
+			}else{
+				statements.add(indent+"free("+op+");");
+			}		
+		}	
+	}
+	
+	
+	/**
 	 * Adds the ending timer and calculate the execution time
 	 * @param func_name
 	 */
 	private void addEndingTimer(String func_name, Code code){
 		//Adds the ending time and calculate and print out the execution time
 		if(func_name.equals("main") && code instanceof Codes.Return){
+			free_varaibles();	
 			decreaseIndent();
 			//The end of iteration while-loop.
 			statements.add(indent + "}");			
@@ -147,12 +169,21 @@ public class CodeGenerator{
 			vars.put(var+"_size", "size_t");
 		}else{
 			vars.put(var, CodeGeneratorHelper.translate(type));
-		}	
-
-
-
+		}
 	}
 
+	/**
+	 * Get the variable declaration of the given operand.
+	 * @param op
+	 * @return the string of type declaration. Otherwise, return null;
+	 */
+	private String getVarDeclaration(String op){
+		if(vars.containsKey(op)){
+			return vars.get(op);
+		}
+		return null;
+	}
+	
 
 
 	/**
@@ -314,6 +345,8 @@ public class CodeGenerator{
 			if(list.values.isEmpty()){
 				stat = indent + target + "=(long long*)malloc(1*sizeof(long long));\n";
 				stat += indent + target +"_size = 0;";
+				//Added the target to the 'free_vars' list 
+				this.free_vars.add(target);
 			}			
 		}else{
 			//Declare the variables
@@ -583,7 +616,9 @@ public class CodeGenerator{
 			stat += indent + ret+ "="+code.name.name()+"(";
 			//input parameters
 			stat += translateParameters(code.operands(), code.type().params());
-			stat += ");";						
+			stat += ");";
+			//Free the return value
+			this.free_vars.add(ret);
 		}
 		//add the statement
 		addStatement(code, stat);
@@ -819,8 +854,8 @@ public class CodeGenerator{
 			//Hard-coded temporarily.
 			String op = prefix+code.parameter(0);
 			stat += indent + "indirect_printf("+op+", "+op+"_size);\n";
-			//free the malloc of op
-			stat += indent + "free("+op+");";
+			//Free the return value
+			this.free_vars.add(op);
 		}		
 		addStatement(code, stat);		
 	}

@@ -33,6 +33,14 @@ void indirect_printf(char** res, int _res_size){
 	}
 	printf("]\n");
 }
+/**Frees the memory space allocated for the pointer of pointer.*/
+void free_doublePtr(char** res, int res_size){
+	long long i;
+	for(i=0;i<res_size;i++){
+		free(res[i]);
+	}
+	free(res);
+}
 long long* reverse(long long* _0, long long _0_size){
 	long long _1;
 	long long _11;
@@ -218,7 +226,7 @@ int main(int argc, char** argv){
 		//const %3 = 0 : int
 		_3 = 0;
 		//const %4 = 1000000 : int
-		_4 = 100000;
+		_4 = 1000;
 		//range %5 = %3, %4 : [int]
 		//forall %6 in %5 (%1) : [int]
 		for(_6=_3;_6<_4;_6++){
@@ -258,7 +266,10 @@ blklab6:;
 		//convert %17 = %17 any : string
 		//indirectinvoke %16 (%17) : method(any) => void
 		indirect_printf(_17, _17_size);
-		free(_17);
+
+		free(_1);
+		free(_12);
+		free_doublePtr(_17, _17_size);
 	}
 	time(&end);
 	diff = difftime(end, start);
@@ -276,11 +287,10 @@ char** toString(long long arr[], long long size){
 		char buffer[1024];
 		//Write the array element (long long) to the buffer and get the length 
 		int length = sprintf(buffer, "%lld", arr[i]);
-		//Allocate the memory size for the result array, based on the length
-		res[i] = (char*)malloc(length*sizeof(char));
+		//Allocate the memory size for the result array, based on the length.
+		//The string length is the original buffer_size plus 1, so that we can put '\0' at the end of a string.
+		res[i] = (char*)malloc((length+1)*sizeof(char));
 		strcpy(res[i],  buffer);		
 	}	
-	//free arr[]
-	free(arr);
 	return res;
 }

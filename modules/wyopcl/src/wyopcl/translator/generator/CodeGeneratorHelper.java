@@ -35,8 +35,9 @@ public final class CodeGeneratorHelper {
 		stats +="long long* clone(long long *arr, long long size);\n"+
 				"long long* append(long long* op_1, long long op_1_size, long long* op_2, long long op_2_size);\n"+
 				"char** toString(long long arr[], long long size);\n" + 
+				"void free_doublePtr(char** res, int res_size);\n"+
 				"void indirect_printf(char** res, int _res_size);\n";
-
+		
 		for(String func : list_func){
 			stats += func + ";\n";
 		}
@@ -74,12 +75,11 @@ public final class CodeGeneratorHelper {
 				"		char buffer[1024];\n" + 
 				"		//Write the array element (long long) to the buffer and get the length \n" + 
 				"		int length = sprintf(buffer, \"%lld\", arr[i]);\n" + 
-				"		//Allocate the memory size for the result array, based on the length\n" + 
-				"		res[i] = (char*)malloc(length*sizeof(char));\n" + 
+				"		//Allocate the memory size for the result array, based on the length.\n" + 
+				"		//The string length is the original buffer_size plus 1, so that we can put '\\0' at the end of a string.\n" + 
+				"		res[i] = (char*)malloc((length+1)*sizeof(char));\n" + 
 				"		strcpy(res[i],  buffer);		\n" + 
 				"	}	\n" + 
-				"	//free arr[]\n" + 
-				"	free(arr);\n" + 
 				"	return res;\n" + 
 				"}";
 		writer.println(stats);
@@ -152,6 +152,24 @@ public final class CodeGeneratorHelper {
 		writer.println(stats);
 		System.out.println(stats);
 
+	}
+	
+	/**
+	 * Write out the 'free_doublePtr' method to free the memory spaces allocated for the pointer of pointer.
+	 * @param writer
+	 */
+	public static void generateFree_doublePtr(PrintWriter writer){
+		
+		String stats = "/**Frees the memory space allocated for the pointer of pointer.*/\n" + 
+				"void free_doublePtr(char** res, int res_size){\n" + 
+				"	long long i;\n" + 
+				"	for(i=0;i<res_size;i++){\n" + 
+				"		free(res[i]);\n" + 
+				"	}\n" + 
+				"	free(res);\n" + 
+				"}";
+		writer.println(stats);
+		System.out.println(stats);
 	}
 
 	/**

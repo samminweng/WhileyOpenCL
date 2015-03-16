@@ -124,6 +124,7 @@ public class Translator implements Builder{
 			CodeGeneratorHelper.generateClone(writer);		
 			CodeGeneratorHelper.generateAppend(writer);
 			CodeGeneratorHelper.generateIndirectInvoked(writer);
+			CodeGeneratorHelper.generateFree_doublePtr(writer);
 			//Iterate each function
 			for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {
 				CodeGenerator generator = new CodeGenerator(config);
