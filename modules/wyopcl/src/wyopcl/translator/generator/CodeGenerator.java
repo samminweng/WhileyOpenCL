@@ -57,23 +57,44 @@ public class CodeGenerator{
 		this.free_vars = new ArrayList<String>();
 	}
 	/**
-	 * Add the statements of starting timer and iterations.
+	 * Add the statements about iterations.
 	 */
-	private void addTimerAndIterations(String func_name){
+	private void addIterations(String func_name){
 		// Adds the timer to measure the starting time at the main method
-		if(func_name.equals("main")){
-			//Add variable declaration
-			vars.put("start", "time_t");
-			vars.put("end", "time_t");
-			vars.put("diff", "double");
+		if(func_name.equals("main")){			
 			//Add the number of iteration
 			vars.put("iteration", "int");
-			statements.add(indent + "time(&start);");
+			//Add variable declaration
+			vars.put("start", "clock_t");
+			vars.put("end", "clock_t");
+			vars.put("diff", "double");
+			statements.add(indent + "diff=0;");
 			statements.add(indent + "iteration=0;");
 			statements.add(indent + "while(iteration<10){");
 			increaseIndent();
 			statements.add(indent + "iteration++;");
 		}
+	}
+	/**
+	 * Add the statements about the starting timer (CPU time) to measure the execution time of a function.
+	 * @param func_name the name of function.
+	 */
+	private void addStartingTimer(String func_name){
+		if(func_name.equals("reverse")){
+			//Add the starting timer
+			statements.add(indent + "start = clock();");
+		}		
+	}
+	/**
+	 * Add the statement about the ending timer.
+	 */
+	private void addEndingTimer(String func_name){
+		if(func_name.equals("reverse")){
+			//Add the ending timer
+			statements.add(indent + "end = clock();");
+			statements.add(indent + "diff += end - start;");
+		}
+
 	}
 
 	/**
@@ -93,22 +114,22 @@ public class CodeGenerator{
 			}		
 		}	
 	}
-	
-	
+
+
 	/**
 	 * Adds the ending timer and calculate the execution time
 	 * @param func_name
 	 */
-	private void addEndingTimer(String func_name, Code code){
+	private void addEndingIteration(String func_name, Code code){
 		//Adds the ending time and calculate and print out the execution time
 		if(func_name.equals("main") && code instanceof Codes.Return){
 			free_varaibles();	
 			decreaseIndent();
 			//The end of iteration while-loop.
 			statements.add(indent + "}");			
-			statements.add(indent + "time(&end);");
-			statements.add(indent + "diff = difftime(end, start);");
-			statements.add(indent + "printf(\"Execution time:%.3lf seconds\", diff/iteration);");
+			//statements.add(indent + "time(&end);");
+			//statements.add(indent + "diff += difftime(end, start);");
+			statements.add(indent + "printf(\"Execution time:%.10lf seconds\", diff/(CLOCKS_PER_SEC*iteration));");
 		}
 	}
 
@@ -119,14 +140,14 @@ public class CodeGenerator{
 	 * @param func_name
 	 */
 	public void IterateBytecode(List<Code> code_blk, String func_name){
-		addTimerAndIterations(func_name);
+		addIterations(func_name);
 		int line = 0;
 		for(Code code: code_blk){
 			//Get the Block.Entry
 			if(config.isVerbose()){
 				line = printWyILCode(code, func_name, line);
 			}		
-			addEndingTimer(func_name, code);
+			addEndingIteration(func_name, code);
 			dispatch(code);
 		}
 	}
@@ -183,7 +204,7 @@ public class CodeGenerator{
 		}
 		return null;
 	}
-	
+
 
 
 	/**
@@ -592,11 +613,13 @@ public class CodeGenerator{
 	 * @param code 
 	 */
 	private void translate(Codes.Invoke code){
+		//Add the starting timer.
+		addStartingTimer(code.name.name());
 		String stat = "";
 		//The code for calling the whiley.lang.any.toString() function.
 		if(code.name.toString().equals("whiley/lang/Any:toString")){
 			stat = transalteWhileyAnyToString(code);		
-		}else{
+		}else{		
 			String ret = prefix+code.target();
 			Type return_type = code.type().ret();
 			addDeclaration(return_type, ret);
@@ -622,6 +645,8 @@ public class CodeGenerator{
 		}
 		//add the statement
 		addStatement(code, stat);
+		//Add the ending timer.
+		addEndingTimer(code.name.name());
 	}
 
 	/**
@@ -857,7 +882,7 @@ public class CodeGenerator{
 			//Free the return value
 			this.free_vars.add(op);
 		}		
-		addStatement(code, stat);		
+		addStatement(code, stat);
 	}
 
 
