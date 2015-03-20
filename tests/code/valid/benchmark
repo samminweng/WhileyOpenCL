@@ -1,0 +1,16 @@
+#
+# Benchmarking shell script of While_Valid_1 program
+#
+#!/bin/bash
+clear
+echo "Beginning the benchmarks of original program"
+for i in {1..200}
+do
+#incrment is 1 million
+incr=5000000
+#Multiple the increment
+arraysize=`expr $i \* $incr`
+echo "$arraysize"
+./While_Valid_1.slow.out $arraysize > slow.$arraysize.sysout
+./While_Valid_1.fast.out $arraysize > fast.$arraysize.sysout 
+done
