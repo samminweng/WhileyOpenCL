@@ -72,14 +72,27 @@ public class Configuration {
 	}
 	
 	/**
-	 * Get the mode. If there are more than one mode, then return the first one. 
+	 * Get the mode.  
 	 * @return the mode. If no mode is set, return null.
 	 */
 	public String getMode(){
 		if(!this.properties.containsKey("modes")){
 			return null;
 		}		
-		return ((List<String>) this.getProperty("modes")).get(0);
+		//Get the modes
+		List<String> modes = (List<String>) this.getProperty("modes");
+		
+		if(modes.size()>1){
+			//If there are more than one mode, then return the mode that is not 'pattern' mode.
+			//Because the pattern mode is supportive.
+			for(String mode: modes){
+				if(!mode.equals("pattern")){
+					return mode;
+				}				
+			}
+		}
+		//Otherwise, return the first mode.
+		return modes.get(0);		
 	}
 
 	/**
