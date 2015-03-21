@@ -216,9 +216,7 @@ int main(int argc, char** argv){
 	int iteration;
 	clock_t start;
 	diff=0;
-	iteration=0;
-	while(iteration<10){
-		iteration++;
+	for(iteration=0;iteration<10;iteration++){
 		//const %1 = [] : [void]
 		_1=(long long*)malloc(1*sizeof(long long));
 		_1_size = 0;
@@ -255,6 +253,7 @@ blklab6:;
 		_12_size=_1_size;
 		_12=reverse(_1 , _1_size);
 		end = clock();
+		printf("At iteration %d, execution time of reverse function is %.10lf seconds", iteration, ((double)(end - start))/CLOCKS_PER_SEC);
 		diff += end - start;
 		//assign %11 = %12  : [int]
 		_11 = _12;

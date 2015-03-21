@@ -182,9 +182,7 @@ int main(int argc, char** argv){
 	int iteration;
 	clock_t start;
 	diff=0;
-	iteration=0;
-	while(iteration<10){
-		iteration++;
+	for(iteration=0;iteration<10;iteration++){
 		//const %1 = [] : [void]
 		_1=(long long*)malloc(1*sizeof(long long));
 		_1_size = 0;
@@ -192,7 +190,6 @@ int main(int argc, char** argv){
 		//const %3 = 0 : int
 		_3 = 0;
 		//const %4 = 10000 : int
-		//_4 = 10000;
 		//Take input parameter as the array size.
 		sscanf(argv[1], "%lld", &_4);
 		//range %5 = %3, %4 : [int]
@@ -221,6 +218,7 @@ blklab6:;
 		_12_size=_1_size;
 		_12=reverse(_1 , _1_size);
 		end = clock();
+		printf("At iteration %d, execution time of reverse function is %.10lf seconds", iteration, ((double)(end - start))/CLOCKS_PER_SEC);
 		diff += end - start;
 		//assign %11 = %12  : [int]
 		_11 = _12;
