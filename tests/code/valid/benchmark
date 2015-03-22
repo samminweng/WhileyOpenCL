@@ -3,14 +3,26 @@
 #
 #!/bin/bash
 clear
+cd slow
 echo "Beginning the benchmarks of original program"
 for i in {1..200}
 do
-#incrment is 1 million
+#incrment is 5 million
 incr=5000000
 #Multiple the increment
 arraysize=`expr $i \* $incr`
 echo "$arraysize"
-./While_Valid_1.slow.out $arraysize > slow.$arraysize.sysout
-./While_Valid_1.fast.out $arraysize > fast.$arraysize.sysout 
+./While_Valid_1.slow.out $arraysize
+done
+echo "Benchmarks completed."
+cd ../fast
+echo "Beginning the benchmarks of transformed program"
+for i in {1..200}
+do
+#incrment is 5 million
+incr=5000000
+#Multiple the increment
+arraysize=`expr $i \* $incr`
+echo "$arraysize"
+./While_Valid_1.fast.out $arraysize 
 done

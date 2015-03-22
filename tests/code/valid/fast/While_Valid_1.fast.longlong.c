@@ -193,6 +193,7 @@ blklab11:;
 	return _4;
 }
 int main(int argc, char** argv){
+	FILE *fp;
 	long long* _1;
 	long long* _10;
 	long long _10_size;
@@ -253,7 +254,9 @@ blklab6:;
 		_12_size=_1_size;
 		_12=reverse(_1 , _1_size);
 		end = clock();
-		printf("At iteration %d, execution time of reverse function is %.10lf seconds", iteration, ((double)(end - start))/CLOCKS_PER_SEC);
+		fp= fopen("result.txt", "a");
+		fprintf(fp, "Array size:%lld\tIteration:%d\tExecution time of reverse function(seconds):%.10lf\n", _4, iteration, ((double)(end - start))/CLOCKS_PER_SEC);
+		fclose(fp);
 		diff += end - start;
 		//assign %11 = %12  : [int]
 		_11 = _12;
