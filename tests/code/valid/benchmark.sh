@@ -10,9 +10,9 @@ echo "Beginning the benchmarks of slow program with integer type"
 #
 cd int
 #
-#compile the source C file without optimization
+#compile the source C file without optimization (-O0)
 #see https://gcc.gnu.org/onlinedocs/gnat_ugn/Optimization-Levels.html#101
-gcc While_Valid_1.slow.int.c -O0 While_Valid_1.slow.int.out
+gcc -O0 While_Valid_1.slow.int.c -o While_Valid_1.slow.int.out
 #run the array size of 1 million
 ./While_Valid_1.slow.int.out 1000000
 for i in {1..200}
@@ -27,7 +27,7 @@ done
 echo "Beginning the benchmarks of slow program with long long type"
 cd ../longlong
 #compile the source C file.
-gcc While_Valid_1.slow.longlong.c -O0 While_Valid_1.slow.longlong.out
+gcc -O0 While_Valid_1.slow.longlong.c -o While_Valid_1.slow.longlong.out
 #run the array size of 1 million
 ./While_Valid_1.slow.longlong.out 1000000
 for i in {1..200}
@@ -45,7 +45,7 @@ done
 cd ../../fast
 cd int
 #compile the C file
-gcc While_Valid_1.fast.int.c -O0 While_Valid_1.fast.int.out
+gcc -O0 While_Valid_1.fast.int.c -o While_Valid_1.fast.int.out
 #run the array size of 1 million
 ./While_Valid_1.fast.int.out 1000000
 echo "Beginning the benchmarks of transformed program with integer type"
@@ -60,7 +60,7 @@ echo "$arraysize"
 done
 cd ../longlong
 #compile the C file
-gcc While_Valid_1.fast.longlong.c -O0 While_Valid_1.fast.longlong.out
+gcc -O0 While_Valid_1.fast.longlong.c -o While_Valid_1.fast.longlong.out
 #run the array size of 1 million
 ./While_Valid_1.fast.longlong.out 1000000
 echo "Beginning the benchmarks of transformed program with long long type"
