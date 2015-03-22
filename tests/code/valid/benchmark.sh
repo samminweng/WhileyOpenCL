@@ -13,14 +13,14 @@ cd int
 #compile the source C file without optimization (-O0)
 #see https://gcc.gnu.org/onlinedocs/gnat_ugn/Optimization-Levels.html#101
 gcc -O0 While_Valid_1.slow.int.c -o While_Valid_1.slow.int.out
-#run the array size of 1 million
-./While_Valid_1.slow.int.out 1000000
-for i in {1..200}
+#Increments
+Increments="1 5 10 50 100 200 300 400 500 1000"
+#array size starts with 1 million
+arraysize=1000000
+for i in $Increments
 do
-#incrment is 5 million
-incr=5000000
 #Multiple the increment
-arraysize=`expr $i \* $incr`
+arraysize=`expr $i \* $arraysize`
 echo "$arraysize"
 ./While_Valid_1.slow.int.out $arraysize
 done
@@ -29,13 +29,14 @@ cd ../longlong
 #compile the source C file.
 gcc -O0 While_Valid_1.slow.longlong.c -o While_Valid_1.slow.longlong.out
 #run the array size of 1 million
-./While_Valid_1.slow.longlong.out 1000000
-for i in {1..200}
+#Increments
+Increments="1 5 10 50 100 200 300 400 500 1000"
+#array size starts with 1 million
+arraysize=1000000
+for i in $Increments
 do
-#incrment is 5 million
-incr=5000000
 #Multiple the increment
-arraysize=`expr $i \* $incr`
+arraysize=`expr $i \* $arraysize`
 echo "$arraysize"
 ./While_Valid_1.slow.longlong.out $arraysize
 done
@@ -46,31 +47,28 @@ cd ../../fast
 cd int
 #compile the C file
 gcc -O0 While_Valid_1.fast.int.c -o While_Valid_1.fast.int.out
-#run the array size of 1 million
-./While_Valid_1.fast.int.out 1000000
-echo "Beginning the benchmarks of transformed program with integer type"
-for i in {1..200}
+#Increments
+Increments="1 5 10 50 100 200 300 400 500 1000"
+#array size starts with 1 million
+arraysize=1000000
+for i in $Increments
 do
-#incrment is 5 million
-incr=5000000
 #Multiple the increment
-arraysize=`expr $i \* $incr`
+arraysize=`expr $i \* $arraysize`
 echo "$arraysize"
-./While_Valid_1.fast.int.out $arraysize 
+./While_Valid_1.fast.int.out $arraysize
 done
 cd ../longlong
 #compile the C file
 gcc -O0 While_Valid_1.fast.longlong.c -o While_Valid_1.fast.longlong.out
-#run the array size of 1 million
-./While_Valid_1.fast.longlong.out 1000000
-echo "Beginning the benchmarks of transformed program with long long type"
-for i in {1..200}
+#Increments
+Increments="1 5 10 50 100 200 300 400 500 1000"
+#array size starts with 1 million
+arraysize=1000000
+for i in $Increments
 do
-#incrment is 5 million
-incr=5000000
 #Multiple the increment
-arraysize=`expr $i \* $incr`
+arraysize=`expr $i \* $arraysize`
 echo "$arraysize"
-./While_Valid_1.fast.longlong.out $arraysize 
+./While_Valid_1.fast.longlong.out $arraysize
 done
-
