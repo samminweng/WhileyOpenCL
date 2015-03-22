@@ -68,6 +68,9 @@ public class CodeGenerator{
 			vars.put("start", "clock_t");
 			vars.put("end", "clock_t");
 			vars.put("diff", "double");
+			//Add a file pointer
+			vars.put("*fp", "FILE");
+			
 			statements.add(indent + "diff=0;");
 			//Use the for-loop to repeatedly execute the function.
 			statements.add(indent + "for(iteration=0;iteration<10;iteration++){");
@@ -91,10 +94,16 @@ public class CodeGenerator{
 		if(func_name.equals("reverse")){
 			//Add the ending timer
 			statements.add(indent + "end = clock();");
-			//Print out the time at each iteration.
-			statements.add(indent + "printf(\"At iteration %d, "
-					+ "execution time of reverse function is %.10lf seconds\""
-					+ ", iteration, ((double)(end - start))/CLOCKS_PER_SEC);");
+			//Print out .
+			//Create a file
+			statements.add(indent + "fp= fopen(\"result.txt\", \"a\");");
+			//Write out the execution time of each iteration to the txt file.
+			//This is hard-coded
+			statements.add(indent + "fprintf(fp,"
+					+ " \"Array size:%lld\\tIteration:%d\\tExecution time of reverse function(seconds):%.10lf\\n\","
+					+ " _4, iteration, ((double)(end - start))/CLOCKS_PER_SEC);");
+			//Close the txt file
+			statements.add(indent+"fclose(fp);");
 			statements.add(indent + "diff += end - start;");
 		}
 
