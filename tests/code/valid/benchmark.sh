@@ -26,7 +26,7 @@ do
 		echo "$arraysize"
 		./While_Valid_1.slow.int.out $arraysize
 		#Rename the output 'result.txt'
-		mv result.txt result.slow.int.$arraysize.$iteration.txt
+		cat result.txt >> result.slow.int.$arraysize.txt
 	done
 done
 echo "Beginning the benchmarks of slow program with long long type"
@@ -42,7 +42,7 @@ do
                 echo "$arraysize"
                 ./While_Valid_1.slow.longlong.out $arraysize
                 #Rename the output 'result.txt'
-                mv result.txt result.slow.longlong.$arraysize.$iteration.txt
+                cat result.txt >> result.slow.longlong.$arraysize.txt
         done
 done
 #
@@ -62,7 +62,7 @@ do
                 echo "$arraysize"
                 ./While_Valid_1.fast.int.out $arraysize
                 #Rename the output 'result.txt'
-                mv result.txt result.fast.int.$arraysize.$iteration.txt
+                cat result.txt >> result.fast.int.$arraysize.txt
         done
 done
 
@@ -79,7 +79,7 @@ do
                 echo "$arraysize"
                 ./While_Valid_1.fast.int.out $arraysize
                 #Rename the output 'result.txt'
-                mv result.txt result.fast.int.$arraysize.$iteration.txt
+                cat result.txt >> result.fast.int.$arraysize.txt
         done
 done
 
