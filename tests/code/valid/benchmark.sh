@@ -4,15 +4,16 @@
 #
 clear
 cd benchmark/slow
-echo "Beginning the benchmarks of slow program with integer type"
+echo "Beginning the benchmarks of slow program with long type"
 #
 # Benchmark the slow C code
 #
-cd int
+cd long
 #
 #compile the source C file without optimization (-O0)
 #see https://gcc.gnu.org/onlinedocs/gnat_ugn/Optimization-Levels.html#101
-gcc -O0 While_Valid_1.slow.int.c -o While_Valid_1.slow.int.out
+gcc -O0 While_Valid_1.slow.long.c -o While_Valid_1.slow.long.out
+
 #Increments
 Increments="1 5 10 50 100 200 300 400 500 1000"
 #array size starts with 1 million
@@ -23,10 +24,10 @@ do
 	do
 		#Multiple the increment
 		arraysize=`expr $i \* $base`
-		echo "$arraysize"
-		./While_Valid_1.slow.int.out $arraysize
+		echo "$arraysize"		
+		./While_Valid_1.slow.long.out $arraysize
 		#Rename the output 'result.txt'
-		cat result.txt >> result.slow.int.$arraysize.txt
+		cat result.txt >> result.slow.long.$arraysize.txt
 		#delete result.txt
         rm result.txt
 	done
@@ -52,11 +53,11 @@ done
 #
 # Benchmark the fast program
 #
-echo "Beginning the benchmarks of fast program with integer type"
+echo "Beginning the benchmarks of fast program with long type"
 cd ../../fast
-cd int
+cd long
 #compile the C file
-gcc -O0 While_Valid_1.fast.int.c -o While_Valid_1.fast.int.out
+gcc -O0 While_Valid_1.fast.long.c -o While_Valid_1.fast.long.out
 for iteration in {1..3}
 do
         for i in $Increments
@@ -64,9 +65,9 @@ do
                 #Multiple the increment
                 arraysize=`expr $i \* $base`
                 echo "$arraysize"
-                ./While_Valid_1.fast.int.out $arraysize
+                ./While_Valid_1.fast.long.out $arraysize
                 #Rename the output 'result.txt'
-                cat result.txt >> result.fast.int.$arraysize.txt
+                cat result.txt >> result.fast.long.$arraysize.txt
                 #delete result.txt
                 rm result.txt
         done
@@ -83,9 +84,9 @@ do
                 #Multiple the increment
                 arraysize=`expr $i \* $base`
                 echo "$arraysize"
-                ./While_Valid_1.fast.int.out $arraysize
+                ./While_Valid_1.fast.longlong.out $arraysize
                 #Rename the output 'result.txt'
-                cat result.txt >> result.fast.int.$arraysize.txt
+                cat result.txt >> result.fast.longlong.$arraysize.txt
                 #delete result.txt
                 rm result.txt
         done
