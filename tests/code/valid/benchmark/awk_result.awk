@@ -10,6 +10,7 @@ BEGIN {
 	datatypes[""]="";
 	#Store the array size and the value is the number of iterations.
 	arraysizes[""]=0;
+	iterations[""]=0;
 	#execution time 
 	exec_times[""]=0;
 		
@@ -29,9 +30,14 @@ BEGIN {
 	split($2, a, ":");
 	exec_time=a[2];
 	#Increment the number of iteration
-	arraysizes[arraysize]++;
-	iteration = arraysizes[arrayize];
- 	exec_times[program" "datatype" "arraysize" "iteration]= exec_time;
+	arraysizes[arraysize]=arraysize;
+	iterations[program" "datatype" "arraysize]++;
+	iteration = iterations[program" "datatype" "arraysize];
+	#Count for the number of iteration
+	exec_times[program" "datatype" "arraysize" "iteration]= exec_time;
+	#Debug
+	#print "program=" program "datatype=" datatype "arraysize=" arraysize "iteration=" iteration;
+	#print "exec_time=" exec_times[program" "datatype" "arraysize" "iteration];
 }
 END {	
 	#Print out the table header
@@ -40,16 +46,17 @@ END {
 		if(program != ""){
 			for(datatype in datatypes){
 				if(datatype != ""){					
-					#Sort the arraysizes
-					numberofArraysizes=asorti(arraysizes, sortedArraysizes);	
+					#Sort the arraysize
+					num = asort(arraysizes, indices);
 					#Iterate the arraysizes array to get each arraysize
-					for(n=1;n<numberofArraysizes;n++){
-						arraysize=sortedArraysizes[n];
+					for(i=1;i<=num;i++){
+						arraysize = arraysizes[indices[i]];
 						if(arraysize != ""){
 							str = program","datatype","arraysize;
-							for(iteration=0;iteration<arraysizes[arraysize];iteration++){
+							for(iteration=1;iteration<=10;iteration++){
 								exec_time = exec_times[program" "datatype" "arraysize" "iteration];
 								if(exec_time != ""){
+									#print exec_time;
 									str = str "," exec_time;
 								}
 							}
