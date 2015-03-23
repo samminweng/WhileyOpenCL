@@ -214,9 +214,10 @@ int main(int argc, char** argv){
 //.blklab6
 blklab6:;
 	diff=0;
+	_12 = NULL;
 	for(iteration=0;iteration<10;iteration++){
 		start = clock();
-		if(_12!= NULL){ free(_12);}
+		if(_12!=NULL){ free(_12);}
 		//invoke %12 = (%1) While_Valid_1:reverse : function([int]) => [int]
 		_12_size=_1_size;
 		_12=reverse(_1 , _1_size);

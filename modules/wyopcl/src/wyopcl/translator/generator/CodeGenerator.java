@@ -74,6 +74,8 @@ public class CodeGenerator{
 				//Add a file pointer
 				vars.put("*fp", "FILE");				
 				statements.add(indent + "diff=0;");
+				//Initial the return value
+				statements.add(indent +prefix+invoked.target()+"=NULL;");
 				//Use the for-loop to repeatedly execute the function.
 				statements.add(indent + "for(iteration=0;iteration<10;iteration++){");
 				increaseIndent();

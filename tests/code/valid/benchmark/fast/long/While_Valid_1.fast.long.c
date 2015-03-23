@@ -248,6 +248,7 @@ int main(int argc, char** argv){
 //.blklab6
 blklab6:;
 	diff=0;
+	_12 = NULL;
 	for(iteration=0;iteration<10;iteration++){
 		start = clock();
 		if(_12!= NULL){ free(_12);}
