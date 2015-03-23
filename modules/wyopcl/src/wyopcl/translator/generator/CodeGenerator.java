@@ -80,7 +80,7 @@ public class CodeGenerator{
 				//Add the starting timer
 				statements.add(indent + "start = clock();");
 				//check if the return reg is null. If so, nullify it.
-				statements.add(indent +"if("+prefix+invoked.target()+ "!= null){ free("+prefix+invoked.target()+");}");			
+				statements.add(indent +"if("+prefix+invoked.target()+ "!= NULL){ free("+prefix+invoked.target()+");}");			
 			}
 		}
 	}

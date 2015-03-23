@@ -189,7 +189,9 @@ int main(int argc, char** argv){
 	//const %3 = 0 : int
 	_3 = 0;
 	//const %4 = 10000 : int
-	_4 = 10000;
+	//_4 = 10000;
+	//Take input parameter as the array size.
+    sscanf(argv[1], "%ld", &_4);
 	//range %5 = %3, %4 : [int]
 	//forall %6 in %5 (%1) : [int]
 	for(_6=_3;_6<_4;_6++){
@@ -214,7 +216,7 @@ blklab6:;
 	diff=0;
 	for(iteration=0;iteration<10;iteration++){
 		start = clock();
-		if(_12!= null){ free(_12);}
+		if(_12!= NULL){ free(_12);}
 		//invoke %12 = (%1) While_Valid_1:reverse : function([int]) => [int]
 		_12_size=_1_size;
 		_12=reverse(_1 , _1_size);
