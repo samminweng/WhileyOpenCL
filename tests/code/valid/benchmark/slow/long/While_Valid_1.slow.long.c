@@ -24,8 +24,8 @@ long* append(long* op_1, long op_1_size, long* op_2, long op_2_size){
 	}
 	return res;
 }
-/*Prlong out each string in a list of string.*/
-void indirect_printf(char** res, long _res_size){
+/*Print out each string in a list of string.*/
+void indirect_printf(char** res, int _res_size){
 	long i;
 	printf("\n[");
 	for(i=0;i<_res_size;i++){
@@ -33,8 +33,8 @@ void indirect_printf(char** res, long _res_size){
 	}
 	printf("]\n");
 }
-/**Frees the memory space allocated for the polonger of polonger.*/
-void free_doublePtr(char** res, long res_size){
+/**Frees the memory space allocated for the pointer of pointer.*/
+void free_doublePtr(char** res, int res_size){
 	long i;
 	for(i=0;i<res_size;i++){
 		free(res[i]);
@@ -59,19 +59,19 @@ long* reverse(long* _0, long _0_size){
 	long* _4;
 	long _4_size;
 	long _8;
-	//lengthof %3 = %0 : [long]
+	//lengthof %3 = %0 : [int]
 	_3 = _0_size;
-	//assign %1 = %3  : long
+	//assign %1 = %3  : int
 	_1 = _3;
 	//const %4 = [] : [void]
 	_4=(long*)malloc(1*sizeof(long));
 	_4_size = 0;
-	//convert %4 = %4 [long] : [void]
+	//convert %4 = %4 [int] : [void]
 	//assert blklab2
 	{
-		//lengthof %8 = %0 : [long]
+		//lengthof %8 = %0 : [int]
 		_8 = _0_size;
-		//ifle %3, %8 goto blklab2 : long
+		//ifle %3, %8 goto blklab2 : int
 		if(_3<=_8){goto blklab2;}
 		//fail ""loop invariant not satisfied on entry""
 		fprintf(stderr,"fail ""loop invariant not satisfied on entry""");
@@ -82,9 +82,9 @@ blklab2:;
 	//loop (%1, %4)
 	//assume blklab3
 	{
-		//lengthof %11 = %0 : [long]
+		//lengthof %11 = %0 : [int]
 		_11 = _0_size;
-		//ifle %1, %11 goto blklab3 : long
+		//ifle %1, %11 goto blklab3 : int
 		if(_1<=_11){goto blklab3;}
 		//fail """"
 		fprintf(stderr,"fail """"");
@@ -92,30 +92,30 @@ blklab2:;
 	}
 //.blklab3
 blklab3:;
-	//const %13 = 0 : long
+	//const %13 = 0 : int
 	_13 = 0;
-		//ifle %1, %13 goto blklab1 : long
+		//ifle %1, %13 goto blklab1 : int
 	while(_1>_13){
-		//const %15 = 1 : long
+		//const %15 = 1 : int
 		_15 = 1;
-		//sub %16 = %1, %15 : long
+		//sub %16 = %1, %15 : int
 		_16=_1-_15;
-		//assign %1 = %16  : long
+		//assign %1 = %16  : int
 		_1 = _16;
 		//assert blklab8
 		{
-			//const %27 = 0 : long
+			//const %27 = 0 : int
 			_27 = 0;
-			//ifge %16, %27 goto blklab7 : long
+			//ifge %16, %27 goto blklab7 : int
 			if(_16>=_27){goto blklab7;}
 			//fail ""index out of bounds (negative)""
 			fprintf(stderr,"fail ""index out of bounds (negative)""");
 			exit(0);
 //.blklab7
 blklab7:;
-			//lengthof %28 = %0 : [long]
+			//lengthof %28 = %0 : [int]
 			_28 = _0_size;
-			//iflt %16, %28 goto blklab8 : long
+			//iflt %16, %28 goto blklab8 : int
 			if(_16<_28){goto blklab8;}
 			//fail ""index out of bounds (not less than length)""
 			fprintf(stderr,"fail ""index out of bounds (not less than length)""");
@@ -123,25 +123,25 @@ blklab7:;
 		}
 //.blklab8
 blklab8:;
-		//indexof %20 = %0, %16 : [long]
+		//indexof %20 = %0, %16 : [int]
 		_20=_0[_16];
-		//newlist %21 = (%20) : [long]
+		//newlist %21 = (%20) : [int]
 		_21=(long*)malloc(1*sizeof(long));
 		_21_size=1;
-		//newlist %21 = (%20) : [long]
+		//newlist %21 = (%20) : [int]
 		_21[0]=_20;
-		//append %22 = %4, %21 : [long]
+		//append %22 = %4, %21 : [int]
 		_22_size = _4_size+_21_size;
 		_22=append(_4, _4_size,_21, _21_size);
 		free(_21);
-		//assign %4 = %22  : [long]
+		//assign %4 = %22  : [int]
 		_4 = _22;
 		_4_size = _22_size;
 		//assert blklab4
 		{
-			//lengthof %25 = %0 : [long]
+			//lengthof %25 = %0 : [int]
 			_25 = _0_size;
-			//ifle %16, %25 goto blklab4 : long
+			//ifle %16, %25 goto blklab4 : int
 			if(_16<=_25){goto blklab4;}
 			//fail ""loop invariant not restored""
 			fprintf(stderr,"fail ""loop invariant not restored""");
@@ -155,10 +155,10 @@ blklab4:;
 	}
 //.blklab1
 blklab1:;
-	//return %4 : [long]
+	//return %4 : [int]
 	return _4;
 }
-long main(long argc, char** argv){
+int main(int argc, char** argv){
 	FILE *fp;
 	long* _1;
 	long* _10;
@@ -180,70 +180,75 @@ long main(long argc, char** argv){
 	long _9_size;
 	double diff;
 	clock_t end;
+	int iteration;
 	clock_t start;
 	diff=0;
-	//const %1 = [] : [void]
-	_1=(long*)malloc(1*sizeof(long));
-	_1_size = 0;
-	//convert %1 = %1 [long] : [void]
-	//const %3 = 0 : long
-	_3 = 0;
-	//const %4 = 10000 : long
-	//_4 = 10000;
-	//Take input parameter as the array size.
-    sscanf(argv[1], "%ld", &_4);
-	//range %5 = %3, %4 : [long]
-	//forall %6 in %5 (%1) : [long]
-	for(_6=_3;_6<_4;_6++){
-		//newlist %9 = (%6) : [long]
-		_9=(long*)malloc(1*sizeof(long));
-		_9_size=1;
-		//newlist %9 = (%6) : [long]
-		_9[0]=_6;
-		//append %10 = %1, %9 : [long]
-		_10_size = _1_size+_9_size;
-		_10=append(_1, _1_size,_9, _9_size);
-		free(_9);
-		//assign %1 = %10  : [long]
-		_1 = _10;
-		_1_size = _10_size;
-		//nop
-		;
-	//end blklab5
-	}
+	for(iteration=0;iteration<6;iteration++){
+		//const %1 = [] : [void]
+		_1=(long*)malloc(1*sizeof(long));
+		_1_size = 0;
+		//convert %1 = %1 [int] : [void]
+		//const %3 = 0 : int
+		_3 = 0;
+		//const %4 = 10000 : int
+		//_4 = 10000;
+		//Take input parameter as the array size.
+    		sscanf(argv[1], "%ld", &_4);		
+		//range %5 = %3, %4 : [int]
+		//forall %6 in %5 (%1) : [int]
+		for(_6=_3;_6<_4;_6++){
+			//newlist %9 = (%6) : [int]
+			_9=(long*)malloc(1*sizeof(long));
+			_9_size=1;
+			//newlist %9 = (%6) : [int]
+			_9[0]=_6;
+			//append %10 = %1, %9 : [int]
+			_10_size = _1_size+_9_size;
+			_10=append(_1, _1_size,_9, _9_size);
+			free(_9);
+			//assign %1 = %10  : [int]
+			_1 = _10;
+			_1_size = _10_size;
+			//nop
+			;
+		//end blklab5
+		}
 //.blklab6
 blklab6:;
-	start = clock();
-	//invoke %12 = (%1) While_Valid_1:reverse : function([long]) => [long]
-	_12_size=_1_size;
-	_12=reverse(_1 , _1_size);
-	end = clock();
-	fp= fopen("result.txt", "a");
-	fprintf(fp, "Array size:%ld\tExecution time of reverse function(seconds):%.10lf\n", _4, ((double)(end - start))/CLOCKS_PER_SEC);
-	fclose(fp);
-	//assign %11 = %12  : [long]
-	_11 = _12;
-	_11_size = _12_size;
-	//fieldload %15 = %0 out : {[string] args,{method(any) => void prlong,method(any) => void prlongln} out}
-	//fieldload %16 = %15 prlongln : {method(any) => void prlong,method(any) => void prlongln}
-	//assign %18 = %11  : [long]
-	_18 = _11;
-	_18_size = _11_size;
-	//convert %18 = %18 any : [long]
-	//invoke %17 = (%18) whiley/lang/Any:toString : function(any) => string
-	_17= toString(_18, _18_size);
-	_17_size =_18_size;
-	//convert %17 = %17 any : string
-	//indirectinvoke %16 (%17) : method(any) => void
-	indirect_printf(_17, _17_size);
+		start = clock();
+		//invoke %12 = (%1) While_Valid_1:reverse : function([int]) => [int]
+		_12_size=_1_size;
+		_12=reverse(_1 , _1_size);
+		end = clock();
+		fp= fopen("result.txt", "a");
+		fprintf(fp, "Array size:%ld\tExecution time of reverse function(seconds):%.10lf\n", _4, ((double)(end - start))/CLOCKS_PER_SEC);
+		fclose(fp);
+		diff += end - start;
+		//assign %11 = %12  : [int]
+		_11 = _12;
+		_11_size = _12_size;
+		//fieldload %15 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}
+		//fieldload %16 = %15 println : {method(any) => void print,method(any) => void println}
+		//assign %18 = %11  : [int]
+		_18 = _11;
+		_18_size = _11_size;
+		//convert %18 = %18 any : [int]
+		//invoke %17 = (%18) whiley/lang/Any:toString : function(any) => string
+		_17= toString(_18, _18_size);
+		_17_size =_18_size;
+		//convert %17 = %17 any : string
+		//indirectinvoke %16 (%17) : method(any) => void
+		indirect_printf(_17, _17_size);
 
-	free(_1);
-	free(_12);
-	free_doublePtr(_17, _17_size);
+		free(_1);
+		free(_12);
+		free_doublePtr(_17, _17_size);
+	}
+	printf("Execution time:%.10lf seconds", diff/(CLOCKS_PER_SEC*iteration));
 	//return
 	return -1;
 }
-/* Convert an array of long longeger longo an array of string.*/
+/* Convert an array of long integer into an array of string.*/
 char** toString(long arr[], long size){
 	long i;
 	char** res;
@@ -252,7 +257,7 @@ char** toString(long arr[], long size){
 	for(i=0;i<size;i++){		
 		char buffer[1024];
 		//Write the array element (long) to the buffer and get the length 
-		long length = sprintf(buffer, "%ld", arr[i]);
+		int length = sprintf(buffer, "%ld", arr[i]);
 		//Allocate the memory size for the result array, based on the length.
 		//The string length is the original buffer_size plus 1, so that we can put '\0' at the end of a string.
 		res[i] = (char*)malloc((length+1)*sizeof(char));

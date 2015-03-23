@@ -63,7 +63,7 @@ public class CodeGenerator{
 		// Adds the timer to measure the starting time at the main method
 		if(func_name.equals("main")){			
 			//Add the number of iteration
-			//vars.put("iteration", "int");
+			vars.put("iteration", "int");
 			//Add variable declaration
 			vars.put("start", "clock_t");
 			vars.put("end", "clock_t");
@@ -73,8 +73,8 @@ public class CodeGenerator{
 			
 			statements.add(indent + "diff=0;");
 			//Use the for-loop to repeatedly execute the function.
-			//statements.add(indent + "for(iteration=0;iteration<10;iteration++){");
-			//increaseIndent();
+			statements.add(indent + "for(iteration=0;iteration<6;iteration++){");
+			increaseIndent();
 		}
 	}
 	/**
@@ -99,12 +99,12 @@ public class CodeGenerator{
 			statements.add(indent + "fp= fopen(\"result.txt\", \"a\");");
 			//Write out the execution time of each iteration to the txt file.
 			//This is hard-coded
-			statements.add(indent + "fprintf(fp,"
-					+ " \"Array size:%lld\\tExecution time of reverse function(seconds):%.10lf\\n\","
-					+ " _4, ((double)(end - start))/CLOCKS_PER_SEC);");
+			statements.add(indent + "fprintf(fp, \"Array size:%lld\\t"
+					+ "Execution time of reverse function(seconds):%.10lf\\n\""
+					+ ", _4, ((double)(end - start))/CLOCKS_PER_SEC);");
 			//Close the txt file
 			statements.add(indent+"fclose(fp);");
-			//statements.add(indent + "diff += end - start;");
+			statements.add(indent + "diff += end - start;");
 		}
 
 	}
@@ -136,12 +136,10 @@ public class CodeGenerator{
 		//Adds the ending time and calculate and print out the execution time
 		if(func_name.equals("main") && code instanceof Codes.Return){
 			free_varaibles();	
-			//decreaseIndent();
+			decreaseIndent();
 			//The end of iteration while-loop.
-			//statements.add(indent + "}");			
-			//statements.add(indent + "time(&end);");
-			//statements.add(indent + "diff += difftime(end, start);");
-			//statements.add(indent + "printf(\"Execution time:%.10lf seconds\", diff/(CLOCKS_PER_SEC*iteration));");
+			statements.add(indent + "}");
+			statements.add(indent + "printf(\"Execution time:%.10lf seconds\", diff/(CLOCKS_PER_SEC*iteration));");
 		}
 	}
 
