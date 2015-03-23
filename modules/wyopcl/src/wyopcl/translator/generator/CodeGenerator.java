@@ -59,54 +59,30 @@ public class CodeGenerator{
 	/**
 	 * Add the statements about iterations.
 	 */
-	private void addIterations(String func_name){
+	private void addStartingIteration(String func_name, Code code){
 		// Adds the timer to measure the starting time at the main method
-		if(func_name.equals("main")){			
-			//Add the number of iteration
-			vars.put("iteration", "int");
-			//Add variable declaration
-			vars.put("start", "clock_t");
-			vars.put("end", "clock_t");
-			vars.put("diff", "double");
-			//Add a file pointer
-			vars.put("*fp", "FILE");
-			
-			statements.add(indent + "diff=0;");
-			//Use the for-loop to repeatedly execute the function.
-			statements.add(indent + "for(iteration=0;iteration<6;iteration++){");
-			increaseIndent();
+		if(func_name.equals("main")&& code instanceof Codes.Invoke){
+			//Get the invoke code 
+			Codes.Invoke invoked = (Codes.Invoke)code;
+			if(invoked.name.name().equals("reverse")){
+				//Add the number of iteration
+				vars.put("iteration", "int");
+				//Add variable declaration
+				vars.put("start", "clock_t");
+				vars.put("end", "clock_t");
+				vars.put("diff", "double");
+				//Add a file pointer
+				vars.put("*fp", "FILE");				
+				statements.add(indent + "diff=0;");
+				//Use the for-loop to repeatedly execute the function.
+				statements.add(indent + "for(iteration=0;iteration<10;iteration++){");
+				increaseIndent();
+				//Add the starting timer
+				statements.add(indent + "start = clock();");
+				//check if the return reg is null. If so, nullify it.
+				statements.add(indent +"if("+prefix+invoked.target()+ "!= null){ free("+prefix+invoked.target()+");}");			
+			}
 		}
-	}
-	/**
-	 * Add the statements about the starting timer (CPU time) to measure the execution time of a function.
-	 * @param func_name the name of function.
-	 */
-	private void addStartingTimer(String func_name){
-		if(func_name.equals("reverse")){
-			//Add the starting timer
-			statements.add(indent + "start = clock();");
-		}		
-	}
-	/**
-	 * Add the statement about the ending timer.
-	 */
-	private void addEndingTimer(String func_name){
-		if(func_name.equals("reverse")){
-			//Add the ending timer
-			statements.add(indent + "end = clock();");
-			//Print out .
-			//Create a file
-			statements.add(indent + "fp= fopen(\"result.txt\", \"a\");");
-			//Write out the execution time of each iteration to the txt file.
-			//This is hard-coded
-			statements.add(indent + "fprintf(fp, \"Array size:%lld\\t"
-					+ "Execution time of reverse function(seconds):%.10lf\\n\""
-					+ ", _4, ((double)(end - start))/CLOCKS_PER_SEC);");
-			//Close the txt file
-			statements.add(indent+"fclose(fp);");
-			statements.add(indent + "diff += end - start;");
-		}
-
 	}
 
 	/**
@@ -134,12 +110,27 @@ public class CodeGenerator{
 	 */
 	private void addEndingIteration(String func_name, Code code){
 		//Adds the ending time and calculate and print out the execution time
-		if(func_name.equals("main") && code instanceof Codes.Return){
-			free_varaibles();	
-			decreaseIndent();
-			//The end of iteration while-loop.
-			statements.add(indent + "}");
-			statements.add(indent + "printf(\"Execution time:%.10lf seconds\", diff/(CLOCKS_PER_SEC*iteration));");
+		if(func_name.equals("main") && code instanceof Codes.Invoke){
+			Codes.Invoke invoked = (Codes.Invoke)code;
+			if(invoked.name.name().equals("reverse")){
+				//Add the ending timer
+				statements.add(indent + "end = clock();");
+				//Print out .
+				//Create a file
+				statements.add(indent + "fp= fopen(\"result.txt\", \"a\");");
+				//Write out the execution time of each iteration to the txt file.
+				//This is hard-coded
+				statements.add(indent + "fprintf(fp, \"Array size:%lld\\t"
+						+ "Execution time of reverse function(seconds):%.10lf\\n\""
+						+ ", _4, ((double)(end - start))/CLOCKS_PER_SEC);");
+				//Close the txt file
+				statements.add(indent+"fclose(fp);");
+				statements.add(indent + "diff += end - start;");	
+				decreaseIndent();
+				//The end of iteration while-loop.
+				statements.add(indent + "}");
+				statements.add(indent + "printf(\"Execution time:%.10lf seconds\", diff/(CLOCKS_PER_SEC*iteration));");
+			}			
 		}
 	}
 
@@ -150,15 +141,16 @@ public class CodeGenerator{
 	 * @param func_name
 	 */
 	public void IterateBytecode(List<Code> code_blk, String func_name){
-		addIterations(func_name);
+		
 		int line = 0;
 		for(Code code: code_blk){
+			addStartingIteration(func_name, code);
 			//Get the Block.Entry
 			if(config.isVerbose()){
 				line = printWyILCode(code, func_name, line);
-			}		
-			addEndingIteration(func_name, code);
+			}
 			dispatch(code);
+			addEndingIteration(func_name, code);
 		}
 	}
 
@@ -622,9 +614,7 @@ public class CodeGenerator{
 	 * <p>TODO The size of the returned list requires the symbolic analysis.
 	 * @param code 
 	 */
-	private void translate(Codes.Invoke code){
-		//Add the starting timer.
-		addStartingTimer(code.name.name());
+	private void translate(Codes.Invoke code){		
 		String stat = "";
 		//The code for calling the whiley.lang.any.toString() function.
 		if(code.name.toString().equals("whiley/lang/Any:toString")){
@@ -654,9 +644,7 @@ public class CodeGenerator{
 			this.free_vars.add(ret);
 		}
 		//add the statement
-		addStatement(code, stat);
-		//Add the ending timer.
-		addEndingTimer(code.name.name());
+		addStatement(code, stat);		
 	}
 
 	/**
@@ -806,6 +794,7 @@ public class CodeGenerator{
 		if(code.operand != -1){
 			stat += "return "+prefix+code.operand+";";
 		}else{
+			free_varaibles();
 			//The return value of main function.
 			stat += "return -1;";
 		}
