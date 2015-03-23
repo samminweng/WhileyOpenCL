@@ -195,15 +195,15 @@ blklab11:;
 int main(int argc, char** argv){
 	FILE *fp;
 	int* _1;
-	int*  _10;
+	int* _10;
 	int _10_size;
-	int*  _11;
+	int* _11;
 	int _11_size;
-	int*  _12;
+	int* _12;
 	size_t _12_size;
 	char** _17;
 	size_t _17_size;
-	int*  _18;
+	int* _18;
 	int _18_size;
 	int _1_size;
 	int _3;
@@ -214,71 +214,66 @@ int main(int argc, char** argv){
 	int _9_size;
 	double diff;
 	clock_t end;
-	int iteration;
 	clock_t start;
 	diff=0;
-	for(iteration=0;iteration<10;iteration++){
-		//const %1 = [] : [void]
-		_1=(int*)malloc(1*sizeof(int));
-		_1_size = 0;
-		//convert %1 = %1 [int] : [void]
-		//const %3 = 0 : int
-		_3 = 0;
-		//const %4 = 10000 : int
-		//_4 = 10000;
-		//Take input parameter as the array size.
-		sscanf(argv[1], "%d", &_4);
-		//range %5 = %3, %4 : [int]
-		//forall %6 in %5 (%1) : [int]
-		for(_6=_3;_6<_4;_6++){
-			//newlist %9 = (%6) : [int]
-			_9=(int*)malloc(1*sizeof(int));
-			_9_size=1;
-			//newlist %9 = (%6) : [int]
-			_9[0]=_6;
-			//append %10 = %1, %9 : [int]
-			_10_size = _1_size+_9_size;
-			_10=append(_1, _1_size,_9, _9_size);
-			free(_9);
-			//assign %1 = %10  : [int]
-			_1 = _10;
-			_1_size = _10_size;
-			//nop
-			;
-		//end blklab5
-		}
+	//const %1 = [] : [void]
+	_1=(int*)malloc(1*sizeof(int));
+	_1_size = 0;
+	//convert %1 = %1 [int] : [void]
+	//const %3 = 0 : int
+	_3 = 0;
+	//const %4 = 10000 : int
+	//_4 = 10000;
+	//Take input parameter as the array size.
+    sscanf(argv[1], "%lld", &_4);
+	//range %5 = %3, %4 : [int]
+	//forall %6 in %5 (%1) : [int]
+	for(_6=_3;_6<_4;_6++){
+		//newlist %9 = (%6) : [int]
+		_9=(int*)malloc(1*sizeof(int));
+		_9_size=1;
+		//newlist %9 = (%6) : [int]
+		_9[0]=_6;
+		//append %10 = %1, %9 : [int]
+		_10_size = _1_size+_9_size;
+		_10=append(_1, _1_size,_9, _9_size);
+		free(_9);
+		//assign %1 = %10  : [int]
+		_1 = _10;
+		_1_size = _10_size;
+		//nop
+		;
+	//end blklab5
+	}
 //.blklab6
 blklab6:;
-		start = clock();
-		//invoke %12 = (%1) While_Valid_1:reverse : function([int]) => [int]
-		_12_size=_1_size;
-		_12=reverse(_1 , _1_size);
-		end = clock();
-		fp= fopen("result.txt", "a");
-		fprintf(fp, "Array size:%d\tIteration:%d\tExecution time of reverse function(seconds):%.10lf\n", _4, iteration, ((double)(end - start))/CLOCKS_PER_SEC);
-		fclose(fp);
-		diff += end - start;
-		//assign %11 = %12  : [int]
-		_11 = _12;
-		_11_size = _12_size;
-		//fieldload %15 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}
-		//fieldload %16 = %15 println : {method(any) => void print,method(any) => void println}
-		//assign %18 = %11  : [int]
-		_18 = _11;
-		_18_size = _11_size;
-		//convert %18 = %18 any : [int]
-		//invoke %17 = (%18) whiley/lang/Any:toString : function(any) => string
-		_17= toString(_18, _18_size);
-		_17_size =_18_size;
-		//convert %17 = %17 any : string
-		//indirectinvoke %16 (%17) : method(any) => void
-		indirect_printf(_17, _17_size);
+	start = clock();
+	//invoke %12 = (%1) While_Valid_1:reverse : function([int]) => [int]
+	_12_size=_1_size;
+	_12=reverse(_1 , _1_size);
+	end = clock();
+	fp= fopen("result.txt", "a");
+	fprintf(fp, "Array size:%lld\tExecution time of reverse function(seconds):%.10lf\n", _4, ((double)(end - start))/CLOCKS_PER_SEC);
+	fclose(fp);
+	//assign %11 = %12  : [int]
+	_11 = _12;
+	_11_size = _12_size;
+	//fieldload %15 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}
+	//fieldload %16 = %15 println : {method(any) => void print,method(any) => void println}
+	//assign %18 = %11  : [int]
+	_18 = _11;
+	_18_size = _11_size;
+	//convert %18 = %18 any : [int]
+	//invoke %17 = (%18) whiley/lang/Any:toString : function(any) => string
+	_17= toString(_18, _18_size);
+	_17_size =_18_size;
+	//convert %17 = %17 any : string
+	//indirectinvoke %16 (%17) : method(any) => void
+	indirect_printf(_17, _17_size);
 
-		free(_1);
-		free(_12);
-		free_doublePtr(_17, _17_size);
-	}
-	printf("Execution time:%.10lf seconds", diff/(CLOCKS_PER_SEC*iteration));
+	free(_1);
+	free(_12);
+	free_doublePtr(_17, _17_size);
 	//return
 	return -1;
 }
@@ -291,7 +286,7 @@ char** toString(int arr[], int size){
 	for(i=0;i<size;i++){		
 		char buffer[1024];
 		//Write the array element (int) to the buffer and get the length 
-		int length = sprintf(buffer, "%d", arr[i]);
+		int length = sprintf(buffer, "%lld", arr[i]);
 		//Allocate the memory size for the result array, based on the length.
 		//The string length is the original buffer_size plus 1, so that we can put '\0' at the end of a string.
 		res[i] = (char*)malloc((length+1)*sizeof(char));
