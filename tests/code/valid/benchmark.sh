@@ -27,6 +27,8 @@ do
 		./While_Valid_1.slow.int.out $arraysize
 		#Rename the output 'result.txt'
 		cat result.txt >> result.slow.int.$arraysize.txt
+		#delete result.txt
+        rm result.txt
 	done
 done
 echo "Beginning the benchmarks of slow program with long long type"
@@ -41,8 +43,10 @@ do
                 arraysize=`expr $i \* $base`
                 echo "$arraysize"
                 ./While_Valid_1.slow.longlong.out $arraysize
-                #Rename the output 'result.txt'
+                #Append the output 'result.txt' to a text file
                 cat result.txt >> result.slow.longlong.$arraysize.txt
+                #delete result.txt
+                rm result.txt
         done
 done
 #
@@ -63,6 +67,8 @@ do
                 ./While_Valid_1.fast.int.out $arraysize
                 #Rename the output 'result.txt'
                 cat result.txt >> result.fast.int.$arraysize.txt
+                #delete result.txt
+                rm result.txt
         done
 done
 
@@ -80,6 +86,7 @@ do
                 ./While_Valid_1.fast.int.out $arraysize
                 #Rename the output 'result.txt'
                 cat result.txt >> result.fast.int.$arraysize.txt
+                #delete result.txt
+                rm result.txt
         done
 done
-
