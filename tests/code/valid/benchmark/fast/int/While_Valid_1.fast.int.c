@@ -225,7 +225,7 @@ int main(int argc, char** argv){
 	//const %4 = 10000 : int
 	//_4 = 10000;
 	//Take input parameter as the array size.
-    sscanf(argv[1], "%lld", &_4);
+    sscanf(argv[1], "%d", &_4);
 	//range %5 = %3, %4 : [int]
 	//forall %6 in %5 (%1) : [int]
 	for(_6=_3;_6<_4;_6++){
@@ -253,7 +253,7 @@ blklab6:;
 	_12=reverse(_1 , _1_size);
 	end = clock();
 	fp= fopen("result.txt", "a");
-	fprintf(fp, "Array size:%lld\tExecution time of reverse function(seconds):%.10lf\n", _4, ((double)(end - start))/CLOCKS_PER_SEC);
+	fprintf(fp, "Array size:%d\tExecution time of reverse function(seconds):%.10lf\n", _4, ((double)(end - start))/CLOCKS_PER_SEC);
 	fclose(fp);
 	//assign %11 = %12  : [int]
 	_11 = _12;

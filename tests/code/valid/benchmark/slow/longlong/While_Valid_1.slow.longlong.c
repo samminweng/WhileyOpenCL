@@ -219,7 +219,7 @@ blklab6:;
 	_12=reverse(_1 , _1_size);
 	end = clock();
 	fp= fopen("result.txt", "a");
-	fprintf(fp, "Array size:%lld\tIteration:%d\tExecution time of reverse function(seconds):%.10lf\n", _4, iteration, ((double)(end - start))/CLOCKS_PER_SEC);
+	fprintf(fp, "Array size:%lld\tExecution time of reverse function(seconds):%.10lf\n", _4, ((double)(end - start))/CLOCKS_PER_SEC);
 	fclose(fp);
 	//assign %11 = %12  : [int]
 	_11 = _12;
