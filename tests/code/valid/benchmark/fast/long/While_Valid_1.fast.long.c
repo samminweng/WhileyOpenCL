@@ -25,7 +25,7 @@ long* append(long* op_1, long op_1_size, long* op_2, long op_2_size){
 	return res;
 }
 /*Print out each string in a list of string.*/
-void indirect_printf(char** res, int _res_size){
+void indirect_printf(char** res, long _res_size){
 	long i;
 	printf("\n[");
 	for(i=0;i<_res_size;i++){
@@ -34,7 +34,7 @@ void indirect_printf(char** res, int _res_size){
 	printf("]\n");
 }
 /**Frees the memory space allocated for the pointer of pointer.*/
-void free_doublePtr(char** res, int res_size){
+void free_doublePtr(char** res, long res_size){
 	long i;
 	for(i=0;i<res_size;i++){
 		free(res[i]);
@@ -200,15 +200,15 @@ int main(int argc, char** argv){
 	long* _11;
 	long _11_size;
 	long* _12;
-	size_t _12_size;
+	long _12_size;
 	char** _17;
-	size_t _17_size;
+	long _17_size;
 	long* _18;
 	long _18_size;
 	long _1_size;
 	long _3;
 	long _4;
-	size_t _5_size;
+	long _5_size;
 	long _6;
 	long* _9;
 	long _9_size;
