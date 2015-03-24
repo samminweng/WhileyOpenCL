@@ -66,7 +66,7 @@ public class CodeGenerator{
 			Codes.Invoke invoked = (Codes.Invoke)code;
 			if(invoked.name.name().equals("reverse")){
 				//Add the number of iteration
-				vars.put("iteration", "int");
+				vars.put("iteration", CodeGeneratorHelper.translate(Type.Int.T_INT));
 				//Add variable declaration
 				vars.put("start", "clock_t");
 				vars.put("end", "clock_t");
@@ -191,7 +191,7 @@ public class CodeGenerator{
 		}else if (type instanceof Type.List){
 			vars.put(var, CodeGeneratorHelper.translate(type));
 			//add the additional parameter 'reg_size' to indicate the array size.
-			vars.put(var+"_size", "size_t");
+			vars.put(var+"_size", CodeGeneratorHelper.translate(Type.Int.T_INT));
 		}else{
 			vars.put(var, CodeGeneratorHelper.translate(type));
 		}

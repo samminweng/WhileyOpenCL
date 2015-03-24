@@ -35,8 +35,8 @@ public final class CodeGeneratorHelper {
 		stats +="long long* clone(long long *arr, long long size);\n"+
 				"long long* append(long long* op_1, long long op_1_size, long long* op_2, long long op_2_size);\n"+
 				"char** toString(long long arr[], long long size);\n" + 
-				"void free_doublePtr(char** res, int res_size);\n"+
-				"void indirect_printf(char** res, int _res_size);\n";
+				"void free_doublePtr(char** res, long long res_size);\n"+
+				"void indirect_printf(char** res, long long _res_size);\n";
 		
 		for(String func : list_func){
 			stats += func + ";\n";
@@ -141,7 +141,7 @@ public final class CodeGeneratorHelper {
 	 */
 	public static void generateIndirectInvoked(PrintWriter writer){		
 		String stats = "/*Print out each string in a list of string.*/\n" + 
-				"void indirect_printf(char** res, int _res_size){\n" + 
+				"void indirect_printf(char** res, long long _res_size){\n" + 
 				"	long long i;\n" + 
 				"	printf(\"\\n[\");\n" + 
 				"	for(i=0;i<_res_size;i++){\n" + 
@@ -161,7 +161,7 @@ public final class CodeGeneratorHelper {
 	public static void generateFree_doublePtr(PrintWriter writer){
 		
 		String stats = "/**Frees the memory space allocated for the pointer of pointer.*/\n" + 
-				"void free_doublePtr(char** res, int res_size){\n" + 
+				"void free_doublePtr(char** res, long long res_size){\n" + 
 				"	long long i;\n" + 
 				"	for(i=0;i<res_size;i++){\n" + 
 				"		free(res[i]);\n" + 
