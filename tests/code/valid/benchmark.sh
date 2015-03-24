@@ -9,17 +9,16 @@ echo "Beginning the benchmarks of slow program with long type"
 # Benchmark the slow C code
 #
 cd long
-#
-#compile the source C file without optimization (-O0)
-#see https://gcc.gnu.org/onlinedocs/gnat_ugn/Optimization-Levels.html#101
-gcc -O0 While_Valid_1.slow.long.c -o While_Valid_1.slow.long.out
-
 #Increments
 Increments="1 5 10 20 30 40 50 60 70 80 90 100 110 120"
 #array size starts with 1 million
 base=1000000
 for i in $Increments
 do
+	#
+	#compile the source C file without optimization (-O0)
+	#see https://gcc.gnu.org/onlinedocs/gnat_ugn/Optimization-Levels.html#101
+	gcc -O0 While_Valid_1.slow.long.c -o While_Valid_1.slow.long.out
 	#Multiple the increment
 	arraysize=`expr $i \* $base`
 	echo "$arraysize"		
@@ -31,13 +30,13 @@ do
 	#remove the output file
 	rm While_Valid_1.slow.long.out
 done
-
+#############################################
 echo "Beginning the benchmarks of slow program with long long type"
 cd ../longlong
-#compile the source C file.
-gcc -O0 While_Valid_1.slow.longlong.c -o While_Valid_1.slow.longlong.out
 for i in $Increments
 do
+	#compile the source C file.
+	gcc -O0 While_Valid_1.slow.longlong.c -o While_Valid_1.slow.longlong.out
 	#Multiple the increment
     arraysize=`expr $i \* $base`
     echo "$arraysize"
@@ -55,10 +54,10 @@ done
 echo "Beginning the benchmarks of fast program with long type"
 cd ../../fast
 cd long
-#compile the C file
-gcc -O0 While_Valid_1.fast.long.c -o While_Valid_1.fast.long.out
 for i in $Increments
 do
+	   #compile the C file
+	   gcc -O0 While_Valid_1.fast.long.c -o While_Valid_1.fast.long.out
        #Multiple the increment
        arraysize=`expr $i \* $base`
        echo "$arraysize"
@@ -70,13 +69,13 @@ do
 	   #remove the output file
 	   rm While_Valid_1.fast.long.out
 done
-
+#############################################
 echo "Beginning the benchmarks of fast program with long long type"
 cd ../longlong
-#compile the C file
-gcc -O0 While_Valid_1.fast.longlong.c -o While_Valid_1.fast.longlong.out
 for i in $Increments
 do
+        #compile the C file
+		gcc -O0 While_Valid_1.fast.longlong.c -o While_Valid_1.fast.longlong.out
         #Multiple the increment
         arraysize=`expr $i \* $base`
         echo "$arraysize"
