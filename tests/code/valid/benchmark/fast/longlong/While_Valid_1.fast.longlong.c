@@ -4,7 +4,7 @@ long long* clone(long long *arr, long long size){
 	long long i;
 	//Clone all the values from board array due to immutable Whiley value
 	ptr = (long long*)malloc(size*sizeof(long long));
-	//Copy data from 'board' array to 'nboard' array
+	if(ptr == NULL) {fprintf(stderr,"fail to malloc"); exit(0);}	//Copy data from 'board' array to 'nboard' array
 	for(i=0;i<size;i++){
 		ptr[i]=arr[i];
 	}
@@ -19,7 +19,7 @@ long long* append(long long* op_1, long long op_1_size, long long* op_2, long lo
 	res = op_1;
 	res_size = op_1_size+op_2_size;
 	res = (long long*)realloc(res, (op_1_size+op_2_size)*sizeof(long long));
-	for(i=0;i<op_2_size;i++){
+	if(res == NULL) {fprintf(stderr,"fail to realloc"); exit(0);}	for(i=0;i<op_2_size;i++){
 		res[op_1_size+i]=op_2[i];
 	}
 	return res;
@@ -214,15 +214,17 @@ int main(int argc, char** argv){
 	long long _9_size;
 	double diff;
 	clock_t end;
-	int iteration;
+	long long iteration;
 	clock_t start;
 	//const %1 = [] : [void]
 	_1=(long long*)malloc(1*sizeof(long long));
+	if(_1 == NULL) {fprintf(stderr,"fail to malloc"); exit(0);}
 	_1_size = 0;
 	//convert %1 = %1 [int] : [void]
 	//const %3 = 0 : int
 	_3 = 0;
 	//const %4 = 10000 : int
+	//_4 = 10000;
 	//_4 = 10000;
 	//Take input parameter as the array size.
     sscanf(argv[1], "%lld", &_4);
@@ -231,6 +233,7 @@ int main(int argc, char** argv){
 	for(_6=_3;_6<_4;_6++){
 		//newlist %9 = (%6) : [int]
 		_9=(long long*)malloc(1*sizeof(long long));
+		if(_9 == NULL) {fprintf(stderr,"fail to malloc"); exit(0);}
 		_9_size=1;
 		//newlist %9 = (%6) : [int]
 		_9[0]=_6;
@@ -248,7 +251,7 @@ int main(int argc, char** argv){
 //.blklab6
 blklab6:;
 	diff=0;
-	_12 = NULL;
+	_12=NULL;
 	for(iteration=0;iteration<10;iteration++){
 		start = clock();
 		if(_12!= NULL){ free(_12);}
@@ -297,7 +300,7 @@ char** toString(long long arr[], long long size){
 		//Allocate the memory size for the result array, based on the length.
 		//The string length is the original buffer_size plus 1, so that we can put '\0' at the end of a string.
 		res[i] = (char*)malloc((length+1)*sizeof(char));
-		strcpy(res[i],  buffer);		
+		if(res[i] == NULL) {fprintf(stderr,"fail to malloc"); exit(0);}		strcpy(res[i],  buffer);
 	}	
 	return res;
 }

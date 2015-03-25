@@ -78,7 +78,8 @@ public final class CodeGeneratorHelper {
 				"		//Allocate the memory size for the result array, based on the length.\n" + 
 				"		//The string length is the original buffer_size plus 1, so that we can put '\\0' at the end of a string.\n" + 
 				"		res[i] = (char*)malloc((length+1)*sizeof(char));\n" + 
-				"		strcpy(res[i],  buffer);		\n" + 
+				"		if(res[i] == NULL) {fprintf(stderr,\"fail to malloc\"); exit(0);}"+
+				"		strcpy(res[i],  buffer);\n" + 
 				"	}	\n" + 
 				"	return res;\n" + 
 				"}";
@@ -98,6 +99,7 @@ public final class CodeGeneratorHelper {
 				"	long long i;\n" + 
 				"	//Clone all the values from board array due to immutable Whiley value\n" + 
 				"	ptr = (long long*)malloc(size*sizeof(long long));\n" + 
+				"	if(ptr == NULL) {fprintf(stderr,\"fail to malloc\"); exit(0);}"+
 				"	//Copy data from 'board' array to 'nboard' array\n" + 
 				"	for(i=0;i<size;i++){\n" + 
 				"		ptr[i]=arr[i];\n" + 
@@ -124,7 +126,8 @@ public final class CodeGeneratorHelper {
 				"	//Realloc the array size of 'res'\n" + 
 				"	res = op_1;\n" + 
 				"	res_size = op_1_size+op_2_size;\n" + 
-				"	res = (long long*)realloc(res, (op_1_size+op_2_size)*sizeof(long long));\n" + 
+				"	res = (long long*)realloc(res, (op_1_size+op_2_size)*sizeof(long long));\n" +
+				"	if(res == NULL) {fprintf(stderr,\"fail to realloc\"); exit(0);}"+
 				"	for(i=0;i<op_2_size;i++){\n" + 
 				"		res[op_1_size+i]=op_2[i];\n" + 
 				"	}\n" +

@@ -369,6 +369,7 @@ public class CodeGenerator{
 			//Initialize an array
 			if(list.values.isEmpty()){
 				stat = indent + target + "=(long long*)malloc(1*sizeof(long long));\n";
+				stat += indent +"if("+target+" == NULL) {fprintf(stderr,\"fail to malloc\"); exit(0);}\n";
 				stat += indent + target +"_size = 0;";
 				//Added the target to the 'free_vars' list 
 				this.free_vars.add(target);
@@ -828,6 +829,7 @@ public class CodeGenerator{
 		addDeclaration(Type.Int.T_INT, target_size);
 		//Statements
 		stat = indent + target + "=("+type+")malloc("+(code.operands().length)+"*sizeof("+CodeGeneratorHelper.translate(code.type().element())+"));\n";
+		stat += indent + "if("+target+" == NULL) {fprintf(stderr,\"fail to malloc\"); exit(0);}\n";
 		stat += indent + target_size+"="+ code.operands().length+";";
 		addStatement(code, stat);
 		//Initialize the all the elements.
