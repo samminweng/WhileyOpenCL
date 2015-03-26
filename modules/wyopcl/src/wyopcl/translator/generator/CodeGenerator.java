@@ -100,11 +100,13 @@ public class CodeGenerator{
 				//Use the free_doublePtr to free the variable.
 				statements.add(indent+"free_doublePtr("+op+", "+op+"_size);");
 			}else{
-				statements.add(indent+"free("+op+");");
+				//if(_1 !=NULL){free(_1);}
+				//Check if the op is null. If so, nullify the op.
+				statements.add(indent+"if("+op+"!=NULL){free("+op+");};");
 			}		
 		}	
 	}
-
+	
 
 	/**
 	 * Adds the ending timer and calculate the execution time
@@ -593,14 +595,11 @@ public class CodeGenerator{
 		if(paramType instanceof Type.Int){
 			stat += "sprintf("+ret+", \"%lld\", "+ prefix+code.operand(0)+");";					
 		}else{
-			//char** _17;
-			//size_t _17_size;
-			addDeclaration(Type.List(Type.Strung.T_STRING, false), ret);
+			//long long* _17;
+			addDeclaration(paramType, ret);
 			String op = prefix+code.operand(0);
-			//_17 = (char**)malloc(_18_size*sizeof(char*));
-			stat = indent+ret+"= (char**)malloc("+op+"_size*sizeof(char*));\n";
-			//toString(_18, _18_size, _17);
-			stat += indent+"toString("+op+", "+op+"_size, "+ret+");\n";
+			//_17 = _18; //Assign the input ptr to output ptr. 
+			stat = indent+ret+"="+op+";\n";
 			//_17_size = _18_size;
 			stat += indent+ret+"_size ="+op+"_size;";
 		}
@@ -884,8 +883,6 @@ public class CodeGenerator{
 			//Hard-coded temporarily.
 			String op = prefix+code.parameter(0);
 			stat += indent + "indirect_printf("+op+", "+op+"_size);\n";
-			//Free the return value
-			this.free_vars.add(op);
 		}		
 		addStatement(code, stat);
 	}

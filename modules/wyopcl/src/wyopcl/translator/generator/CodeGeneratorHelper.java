@@ -36,7 +36,7 @@ public final class CodeGeneratorHelper {
 				"long long* append(long long* op_1, long long op_1_size, long long* op_2, long long op_2_size);\n"+
 				"void toString(long long arr[], long long size, char** res);\n" + 
 				"void free_doublePtr(char** res, long long res_size);\n"+
-				"void indirect_printf(char** res, long long _res_size);\n";
+				"void indirect_printf(long long* res, long long _res_size);\n";
 		
 		for(String func : list_func){
 			stats += func + ";\n";
@@ -140,16 +140,16 @@ public final class CodeGeneratorHelper {
 	}
 
 	/**
-	 * Write out the indirect_invoked method to print out each string in a list of string.
+	 * Write out the indirect_invoked method to print out each long long integer in a list.
 	 * @param writer
 	 */
 	public static void generateIndirectInvoked(PrintWriter writer){		
 		String stats = "/*Print out each string in a list of string.*/\n" + 
-				"void indirect_printf(char** res, long long _res_size){\n" + 
+				"void indirect_printf(long long* res, long long _res_size){\n" + 
 				"	long long i;\n" + 
 				"	printf(\"\\n[\");\n" + 
 				"	for(i=0;i<_res_size;i++){\n" + 
-				"		printf(\"%s,\",res[i]);\n" + 
+				"		printf(\"%lld,\",res[i]);\n" + 
 				"	}\n" + 
 				"	printf(\"]\\n\");\n" + 
 				"}";

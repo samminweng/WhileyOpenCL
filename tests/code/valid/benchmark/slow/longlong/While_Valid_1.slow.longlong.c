@@ -1,4 +1,4 @@
-#include "./While_Valid_1.h"
+#include "While_Valid_1.h"
 long long* clone(long long *arr, long long size){
 	long long *ptr;
 	long long i;
@@ -25,11 +25,11 @@ long long* append(long long* op_1, long long op_1_size, long long* op_2, long lo
 	return res;
 }
 /*Print out each string in a list of string.*/
-void indirect_printf(char** res, long long _res_size){
+void indirect_printf(long long* res, long long _res_size){
 	long long i;
 	printf("\n[");
 	for(i=0;i<_res_size;i++){
-		printf("%s,",res[i]);
+		printf("%lld,",res[i]);
 	}
 	printf("]\n");
 }
@@ -169,7 +169,7 @@ int main(int argc, char** argv){
 	long long _11_size;
 	long long* _12;
 	long long _12_size;
-	char** _17;
+	long long* _17;
 	long long _17_size;
 	long long* _18;
 	long long _18_size;
@@ -194,7 +194,7 @@ int main(int argc, char** argv){
 	//const %4 = 10000 : int
 	//_4 = 10000;
 	//Take input parameter as the array size.
-    	sscanf(argv[1], "%lld", &_4);		
+    sscanf(argv[1], "%lld", &_4);	
 	//range %5 = %3, %4 : [int]
 	//forall %6 in %5 (%1) : [int]
 	for(_6=_3;_6<_4;_6++){
@@ -242,16 +242,14 @@ blklab6:;
 	_18_size = _11_size;
 	//convert %18 = %18 any : [int]
 	//invoke %17 = (%18) whiley/lang/Any:toString : function(any) => string
-	_17= (char**)malloc(_18_size*sizeof(char*));
-	toString(_18, _18_size, _17);
+	_17=_18;
 	_17_size =_18_size;
 	//convert %17 = %17 any : string
 	//indirectinvoke %16 (%17) : method(any) => void
 	indirect_printf(_17, _17_size);
 
-	free(_1);
-	free(_12);
-	free_doublePtr(_17, _17_size);
+	if(_1!=NULL){free(_1);};
+	if(_12!=NULL){free(_12);};
 	//return
 	return -1;
 }
