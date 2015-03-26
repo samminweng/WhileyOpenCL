@@ -597,8 +597,10 @@ public class CodeGenerator{
 			//size_t _17_size;
 			addDeclaration(Type.List(Type.Strung.T_STRING, false), ret);
 			String op = prefix+code.operand(0);
-			//_17 = toString(_18 , _18_size);
-			stat = indent+ret+"= toString("+op+", "+op+"_size);\n";
+			//_17 = (char**)malloc(_18_size*sizeof(char*));
+			stat = indent+ret+"= (char**)malloc("+op+"_size*sizeof(char*));\n";
+			//toString(_18, _18_size, _17);
+			stat += indent+"toString("+op+", "+op+"_size, "+ret+");\n";
 			//_17_size = _18_size;
 			stat += indent+ret+"_size ="+op+"_size;";
 		}

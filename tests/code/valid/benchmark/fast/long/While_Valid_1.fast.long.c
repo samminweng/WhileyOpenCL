@@ -1,4 +1,4 @@
-#include "While_Valid_1.h"
+#include "./While_Valid_1.h"
 long* clone(long *arr, long size){
 	long *ptr;
 	long i;
@@ -225,9 +225,8 @@ int main(int argc, char** argv){
 	_3 = 0;
 	//const %4 = 10000 : int
 	//_4 = 10000;
-	//_4 = 10000;
 	//Take input parameter as the array size.
-    sscanf(argv[1], "%ld", &_4);
+    	sscanf(argv[1], "%ld", &_4);	
 	//range %5 = %3, %4 : [int]
 	//forall %6 in %5 (%1) : [int]
 	for(_6=_3;_6<_4;_6++){
@@ -275,7 +274,8 @@ blklab6:;
 	_18_size = _11_size;
 	//convert %18 = %18 any : [int]
 	//invoke %17 = (%18) whiley/lang/Any:toString : function(any) => string
-	_17= toString(_18, _18_size);
+	_17= (char**)malloc(_18_size*sizeof(char*));
+	toString(_18, _18_size, _17);
 	_17_size =_18_size;
 	//convert %17 = %17 any : string
 	//indirectinvoke %16 (%17) : method(any) => void
@@ -288,19 +288,21 @@ blklab6:;
 	return -1;
 }
 /* Convert an array of long integer into an array of string.*/
-char** toString(long arr[], long size){
+void toString(long arr[], long size, char** res){
 	long i;
-	char** res;
-	res = (char**)malloc(size*sizeof(char*));
+	char buffer[1024];	
+	if(res == NULL) { fprintf(stderr,"fail to malloc res in toString(long arr[], long size, char** res)"); exit(0);}
 	i=0;
-	for(i=0;i<size;i++){		
-		char buffer[1024];
+	for(i=0;i<size;i++){	
 		//Write the array element (long) to the buffer and get the length 
-		int length = sprintf(buffer, "%ld", arr[i]);
+		long length = sprintf(buffer, "%ld", arr[i]);
 		//Allocate the memory size for the result array, based on the length.
 		//The string length is the original buffer_size plus 1, so that we can put '\0' at the end of a string.
 		res[i] = (char*)malloc((length+1)*sizeof(char));
-		if(res[i] == NULL) {fprintf(stderr,"fail to malloc"); exit(0);}		strcpy(res[i],  buffer);
-	}	
-	return res;
+		if(res[i] == NULL) {
+			fprintf(stderr,"fail to malloc %ld", i);
+		 	exit(0);
+		}
+		strcpy(res[i],  buffer);
+	}
 }

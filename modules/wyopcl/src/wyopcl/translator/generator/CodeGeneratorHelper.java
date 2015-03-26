@@ -34,7 +34,7 @@ public final class CodeGeneratorHelper {
 		//Native function declaration
 		stats +="long long* clone(long long *arr, long long size);\n"+
 				"long long* append(long long* op_1, long long op_1_size, long long* op_2, long long op_2_size);\n"+
-				"char** toString(long long arr[], long long size);\n" + 
+				"void toString(long long arr[], long long size, char** res);\n" + 
 				"void free_doublePtr(char** res, long long res_size);\n"+
 				"void indirect_printf(char** res, long long _res_size);\n";
 		
@@ -66,24 +66,23 @@ public final class CodeGeneratorHelper {
 		String indent = "\t";
 		String stats = "";		
 		stats ="/* Convert an array of long long integer into an array of string.*/\n" + 
-				"char** toString(long long arr[], long long size){\n" + 
+				"void toString(long long arr[], long long size, char** res){\n" + 
 				"	long long i;\n" + 
-				"	char** res;\n" + 
-				"	char buffer[1024];" +
-				"	res = (char**)malloc(size*sizeof(char*));\n" +
-				"	//Check if the double ptr is created successfully. If not, throw out exception."+
-				"	if(res == NULL) {fprintf(stderr,\"fail to malloc res in ToString()\"); exit(0);}"+
+				"	char buffer[1024];	\n" + 
+				"	if(res == NULL) { fprintf(stderr,\"fail to malloc res in toString(long long arr[], long long size, char** res)\"); exit(0);}\n" + 
 				"	i=0;\n" + 
-				"	for(i=0;i<size;i++){		\n" +
+				"	for(i=0;i<size;i++){	\n" + 
 				"		//Write the array element (long long) to the buffer and get the length \n" + 
-				"		int length = sprintf(buffer, \"%lld\", arr[i]);\n" + 
+				"		long long length = sprintf(buffer, \"%lld\", arr[i]);\n" + 
 				"		//Allocate the memory size for the result array, based on the length.\n" + 
 				"		//The string length is the original buffer_size plus 1, so that we can put '\\0' at the end of a string.\n" + 
 				"		res[i] = (char*)malloc((length+1)*sizeof(char));\n" + 
-				"		if(res[i] == NULL) {fprintf(stderr,\"fail to malloc\"); exit(0);}"+
+				"		if(res[i] == NULL) {\n" + 
+				"			fprintf(stderr,\"fail to malloc %lld\", i);\n" + 
+				"		 	exit(0);\n" + 
+				"		}\n" + 
 				"		strcpy(res[i],  buffer);\n" + 
-				"	}	\n" + 
-				"	return res;\n" + 
+				"	}\n" + 
 				"}";
 		writer.println(stats);
 		System.out.println(stats);
