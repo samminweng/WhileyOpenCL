@@ -291,16 +291,19 @@ blklab6:;
 char** toString(long long arr[], long long size){
 	long long i;
 	char** res;
+	char buffer[1024];
 	res = (char**)malloc(size*sizeof(char*));
+	if(res == NULL) {fprintf(stderr,"fail to malloc res in ToString()"); exit(0);}
 	i=0;
-	for(i=0;i<size;i++){		
-		char buffer[1024];
+	for(i=0;i<size;i++){
 		//Write the array element (long long) to the buffer and get the length 
 		int length = sprintf(buffer, "%lld", arr[i]);
 		//Allocate the memory size for the result array, based on the length.
 		//The string length is the original buffer_size plus 1, so that we can put '\0' at the end of a string.
 		res[i] = (char*)malloc((length+1)*sizeof(char));
-		if(res[i] == NULL) {fprintf(stderr,"fail to malloc"); exit(0);}		strcpy(res[i],  buffer);
+		if(res[i] == NULL) {
+			fprintf(stderr,"fail to malloc"); exit(0);}	
+		strcpy(res[i],  buffer);
 	}	
 	return res;
 }

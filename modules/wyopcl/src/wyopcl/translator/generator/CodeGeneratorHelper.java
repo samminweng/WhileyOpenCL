@@ -69,10 +69,12 @@ public final class CodeGeneratorHelper {
 				"char** toString(long long arr[], long long size){\n" + 
 				"	long long i;\n" + 
 				"	char** res;\n" + 
-				"	res = (char**)malloc(size*sizeof(char*));\n" + 
+				"	char buffer[1024];" +
+				"	res = (char**)malloc(size*sizeof(char*));\n" +
+				"	//Check if the double ptr is created successfully. If not, throw out exception."+
+				"	if(res == NULL) {fprintf(stderr,\"fail to malloc res in ToString()\"); exit(0);}"+
 				"	i=0;\n" + 
-				"	for(i=0;i<size;i++){		\n" + 
-				"		char buffer[1024];\n" + 
+				"	for(i=0;i<size;i++){		\n" +
 				"		//Write the array element (long long) to the buffer and get the length \n" + 
 				"		int length = sprintf(buffer, \"%lld\", arr[i]);\n" + 
 				"		//Allocate the memory size for the result array, based on the length.\n" + 
