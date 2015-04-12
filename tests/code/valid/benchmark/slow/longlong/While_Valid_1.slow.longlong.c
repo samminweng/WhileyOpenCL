@@ -2,26 +2,41 @@
 long long* clone(long long *arr, long long size){
 	long long *ptr;
 	long long i;
+	long long threshold;
+	threshold = 1000*1000;
 	//Clone all the values from board array due to immutable Whiley value
 	ptr = (long long*)malloc(size*sizeof(long long));
-	if(ptr == NULL) {fprintf(stderr,"fail to malloc"); exit(0);}	//Copy data from 'board' array to 'nboard' array
+	//ptr = (long long*)tcmalloc(size*sizeof(long long));
+	if(ptr == NULL) {fprintf(stderr,"fail to malloc"); exit(0);}
+	//Copy data from 'board' array to 'nboard' array
 	for(i=0;i<size;i++){
 		ptr[i]=arr[i];
 	}
 	return ptr;
 }
-long long* append(long long* op_1, long long op_1_size, long long* op_2, long long op_2_size){
+//Call by the reference to update the array size.
+long long* append(long long* op_1, long long* op_1_size, long long* op_2, long long* op_2_size, long long* allocated_size){
 	long long i;
 	long long *res;
 	long long res_size;
 	//Assign the res with op. That means both of them address to same memory location. In other word, copy the array.
-	//Realloc the array size of 'res'
 	res = op_1;
-	res_size = op_1_size+op_2_size;
-	res = (long long*)realloc(res, (op_1_size+op_2_size)*sizeof(long long));
-	if(res == NULL) {fprintf(stderr,"fail to realloc"); exit(0);}	for(i=0;i<op_2_size;i++){
-		res[op_1_size+i]=op_2[i];
+	res_size = *op_1_size+*op_2_size;
+	if(res_size > *allocated_size){
+		//Realloc the array size of 'res'. Allocate the array size by power of 2.
+		//res = (long long*)realloc(res, (op_1_size+op_2_size)*sizeof(long long));
+		if(*allocated_size == 0){
+			*allocated_size = 1;
+		}else{
+			*allocated_size *= 2;
+		}				
+		res = (long long*)realloc(res, *allocated_size*sizeof(long long));
 	}
+	if(res == NULL) {fprintf(stderr,"fail to realloc"); exit(0);}
+	for(i=0;i<*op_2_size;i++){
+		res[*op_1_size+i]=op_2[i];
+	}
+	*op_1_size = res_size;
 	return res;
 }
 /*Print out each string in a list of string.*/
@@ -59,14 +74,15 @@ long long* reverse(long long* _0, long long _0_size){
 	long long* _4;
 	long long _4_size;
 	long long _8;
+	//Initialize all the variables of size
+	_22_size = 0;
+	_4_size = 0;
 	//lengthof %3 = %0 : [int]
 	_3 = _0_size;
 	//assign %1 = %3  : int
 	_1 = _3;
 	//const %4 = [] : [void]
-	_4=(long long*)malloc(1*sizeof(long long));
-	if(_4 == NULL) {fprintf(stderr,"fail to malloc"); exit(0);}
-	_4_size = 0;
+	_4=NULL;
 	//convert %4 = %4 [int] : [void]
 	//assert blklab2
 	{
@@ -133,12 +149,11 @@ blklab8:;
 		//newlist %21 = (%20) : [int]
 		_21[0]=_20;
 		//append %22 = %4, %21 : [int]
-		_22_size = _4_size+_21_size;
-		_22=append(_4, _4_size,_21, _21_size);
+		//_22_size = _4_size+_21_size;
+		_22=append(_4, &_4_size,_21, &_21_size, &_22_size);
 		free(_21);
 		//assign %4 = %22  : [int]
 		_4 = _22;
-		_4_size = _22_size;
 		//assert blklab4
 		{
 			//lengthof %25 = %0 : [int]
@@ -184,6 +199,9 @@ int main(int argc, char** argv){
 	clock_t end;
 	long long iteration;
 	clock_t start;
+	//Initialize all the variables.
+	_10_size =0;
+	_12=NULL;
 	//const %1 = [] : [void]
 	_1=(long long*)malloc(1*sizeof(long long));
 	if(_1 == NULL) {fprintf(stderr,"fail to malloc"); exit(0);}
@@ -192,7 +210,7 @@ int main(int argc, char** argv){
 	//const %3 = 0 : int
 	_3 = 0;
 	//const %4 = 10000 : int
-	//_4 = 10000;
+	_4 = 10000;
 	//Take input parameter as the array size.
     sscanf(argv[1], "%lld", &_4);	
 	//range %5 = %3, %4 : [int]
@@ -205,20 +223,19 @@ int main(int argc, char** argv){
 		//newlist %9 = (%6) : [int]
 		_9[0]=_6;
 		//append %10 = %1, %9 : [int]
-		_10_size = _1_size+_9_size;
-		_10=append(_1, _1_size,_9, _9_size);
+		//allocate the size of power of 2
+		_10=append(_1, &_1_size,_9, &_9_size, &_10_size);
 		free(_9);
 		//assign %1 = %10  : [int]
 		_1 = _10;
-		_1_size = _10_size;
+		//_1_size = _10_size;
 		//nop
 		;
 	//end blklab5
 	}
 //.blklab6
 blklab6:;
-	diff=0;
-	_12=NULL;
+	diff=0;	
 	for(iteration=0;iteration<10;iteration++){
 		start = clock();
 		if(_12!= NULL){ free(_12);}
@@ -246,7 +263,7 @@ blklab6:;
 	_17_size =_18_size;
 	//convert %17 = %17 any : string
 	//indirectinvoke %16 (%17) : method(any) => void
-	indirect_printf(_17, _17_size);
+	//indirect_printf(_17, _17_size);
 
 	if(_1!=NULL){free(_1);};
 	if(_12!=NULL){free(_12);};
