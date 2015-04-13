@@ -14,30 +14,37 @@ long long* clone(long long *arr, long long size){
 	}
 	return ptr;
 }
+//Check if the number is a power of 2.
+//See also http://www.exploringbinary.com/ten-ways-to-check-if-an-integer-is-a-power-of-two-in-c/
+int isPowerof2(long long value){
+	//0 is the exceptional case.
+	if(value == 0) return 1;
+	return ((value != 0) && !(value & (value - 1)));
+}
+
 //Call by the reference to update the array size.
-long long* append(long long* op_1, long long* op_1_size, long long* op_2, long long* op_2_size, long long* allocated_size){
+long long* append(long long* op_1, long long* op_1_size, long long* op_2, long long* op_2_size, long long* ret_size){
 	long long i;
-	long long *res;
-	long long res_size;
+	long long *ret;
+	long long allocated_size;
 	//Assign the res with op. That means both of them address to same memory location. In other word, copy the array.
-	res = op_1;
-	res_size = *op_1_size+*op_2_size;
-	if(res_size > *allocated_size){
+	ret = op_1;
+	//Check if the size is a power of 2. If so, then reallocate the array size.
+	if(isPowerof2(*op_1_size)){
+		allocated_size = 2;
 		//Realloc the array size of 'res'. Allocate the array size by power of 2.
-		//res = (long long*)realloc(res, (op_1_size+op_2_size)*sizeof(long long));
-		if(*allocated_size == 0){
-			*allocated_size = 1;
-		}else{
-			*allocated_size *= 2;
+		while(allocated_size < (*op_1_size+*op_2_size)){
+			allocated_size *= 2;
 		}				
-		res = (long long*)realloc(res, *allocated_size*sizeof(long long));
+		ret = (long long*)realloc(ret, allocated_size*sizeof(long long));
+		if(ret == NULL) {fprintf(stderr,"fail to realloc"); exit(0);}
 	}
-	if(res == NULL) {fprintf(stderr,"fail to realloc"); exit(0);}
+	//Update the item in the appended list.
 	for(i=0;i<*op_2_size;i++){
-		res[*op_1_size+i]=op_2[i];
+		ret[*op_1_size+i]=op_2[i];
 	}
-	*op_1_size = res_size;
-	return res;
+	*ret_size = *op_1_size+*op_2_size;
+	return ret;
 }
 /*Print out each string in a list of string.*/
 void indirect_printf(long long* res, long long _res_size){
@@ -56,6 +63,8 @@ void free_doublePtr(char** res, long long res_size){
 	}
 	free(res);
 }
+
+
 long long* reverse(long long* _0, long long _0_size){
 	long long _1;
 	long long _11;
@@ -154,6 +163,7 @@ blklab8:;
 		free(_21);
 		//assign %4 = %22  : [int]
 		_4 = _22;
+		_4_size = _22_size;
 		//assert blklab4
 		{
 			//lengthof %25 = %0 : [int]
@@ -224,11 +234,11 @@ int main(int argc, char** argv){
 		_9[0]=_6;
 		//append %10 = %1, %9 : [int]
 		//allocate the size of power of 2
-		_10=append(_1, &_1_size,_9, &_9_size, &_10_size);
+		_10=append(_1, &_1_size, _9, &_9_size, &_10_size);
 		free(_9);
 		//assign %1 = %10  : [int]
 		_1 = _10;
-		//_1_size = _10_size;
+		_1_size = _10_size;
 		//nop
 		;
 	//end blklab5
@@ -263,7 +273,7 @@ blklab6:;
 	_17_size =_18_size;
 	//convert %17 = %17 any : string
 	//indirectinvoke %16 (%17) : method(any) => void
-	//indirect_printf(_17, _17_size);
+	indirect_printf(_17, _17_size);
 
 	if(_1!=NULL){free(_1);};
 	if(_12!=NULL){free(_12);};
