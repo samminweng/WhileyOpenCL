@@ -10,19 +10,37 @@ long long* clone(long long *arr, long long size){
 	}
 	return ptr;
 }
-long long* append(long long* op_1, long long op_1_size, long long* op_2, long long op_2_size){
+//Check if the number is a power of 2.
+//See also http://www.exploringbinary.com/ten-ways-to-check-if-an-integer-is-a-power-of-two-in-c/
+int isPowerof2(long long value){
+	//0 is the exceptional case.
+	if(value == 0) return 1;
+	return ((value != 0) && !(value & (value - 1)));
+}
+
+//Call by the reference to update the array size.
+long long* append(long long* op_1, long long* op_1_size, long long* op_2, long long* op_2_size, long long* ret_size){
 	long long i;
-	long long *res;
-	long long res_size;
+	long long *ret;
+	long long allocated_size;
 	//Assign the res with op. That means both of them address to same memory location. In other word, copy the array.
-	//Realloc the array size of 'res'
-	res = op_1;
-	res_size = op_1_size+op_2_size;
-	res = (long long*)realloc(res, (op_1_size+op_2_size)*sizeof(long long));
-	if(res == NULL) {fprintf(stderr,"fail to realloc"); exit(0);}	for(i=0;i<op_2_size;i++){
-		res[op_1_size+i]=op_2[i];
+	ret = op_1;
+	//Check if the size is a power of 2. If so, then reallocate the array size.
+	if(isPowerof2(*op_1_size)){
+		allocated_size = 2;
+		//Realloc the array size of 'res'. Allocate the array size by power of 2.
+		while(allocated_size < (*op_1_size+*op_2_size)){
+			allocated_size *= 2;
+		}				
+		ret = (long long*)realloc(ret, allocated_size*sizeof(long long));
+		if(ret == NULL) {fprintf(stderr,"fail to realloc"); exit(0);}
 	}
-	return res;
+	//Update the item in the appended list.
+	for(i=0;i<*op_2_size;i++){
+		ret[*op_1_size+i]=op_2[i];
+	}
+	*ret_size = *op_1_size+*op_2_size;
+	return ret;
 }
 /*Print out each string in a list of string.*/
 void indirect_printf(long long* res, long long _res_size){
@@ -216,6 +234,7 @@ int main(int argc, char** argv){
 	clock_t end;
 	long long iteration;
 	clock_t start;
+	_10_size =0;
 	//const %1 = [] : [void]
 	_1=(long long*)malloc(1*sizeof(long long));
 	if(_1 == NULL) {fprintf(stderr,"fail to malloc"); exit(0);}
@@ -239,8 +258,8 @@ int main(int argc, char** argv){
 		//newlist %9 = (%6) : [int]
 		_9[0]=_6;
 		//append %10 = %1, %9 : [int]
-		_10_size = _1_size+_9_size;
-		_10=append(_1, _1_size,_9, _9_size);
+		//allocate the size of power of 2
+		_10=append(_1, &_1_size, _9, &_9_size, &_10_size);
 		free(_9);
 		//assign %1 = %10  : [int]
 		_1 = _10;
@@ -280,7 +299,8 @@ blklab6:;
 	_17_size =_18_size;
 	//convert %17 = %17 any : string
 	//indirectinvoke %16 (%17) : method(any) => void
-	indirect_printf(_17, _17_size);
+	//For benchmark
+	//indirect_printf(_17, _17_size);
 
 	if(_1!=NULL){free(_1);};
 	if(_12!=NULL){free(_12);};

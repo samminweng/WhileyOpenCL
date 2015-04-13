@@ -12,8 +12,7 @@ BEGIN {
 	arraysizes[""]=0;
 	iterations[""]=0;
 	#execution time 
-	exec_times[""]=0;
-		
+	exec_times[""]=0;		
 }
 {
 	filename=FILENAME;

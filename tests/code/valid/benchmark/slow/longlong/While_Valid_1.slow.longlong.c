@@ -273,7 +273,8 @@ blklab6:;
 	_17_size =_18_size;
 	//convert %17 = %17 any : string
 	//indirectinvoke %16 (%17) : method(any) => void
-	indirect_printf(_17, _17_size);
+	//For benchmark
+	//indirect_printf(_17, _17_size);
 
 	if(_1!=NULL){free(_1);};
 	if(_12!=NULL){free(_12);};
