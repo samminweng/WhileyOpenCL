@@ -179,7 +179,7 @@ blklab8:;
 		_21[0]=_20;
 		//append %22 = %4, %21 : [int]
 		//_22_size = _4_size+_21_size;
-		_22=append(_4, &_4_size,_21, &_21_size, &_22_size);
+		_22=optimized_append(_4, &_4_size,_21, &_21_size, &_22_size);
 		free(_21);
 		//assign %4 = %22  : [int]
 		_4 = _22;
@@ -242,7 +242,7 @@ int main(int argc, char** argv){
 	//const %4 = 10000 : int
 	_4 = 10000;
 	//Take input parameter as the array size.
-    sscanf(argv[1], "%lld", &_4);	
+    	sscanf(argv[1], "%lld", &_4);	
 	//range %5 = %3, %4 : [int]
 	//forall %6 in %5 (%1) : [int]
 	for(_6=_3;_6<_4;_6++){
@@ -254,7 +254,7 @@ int main(int argc, char** argv){
 		_9[0]=_6;
 		//append %10 = %1, %9 : [int]
 		//allocate the size of power of 2
-		_10=append(_1, &_1_size, _9, &_9_size, &_10_size);
+		_10=optimized_append(_1, &_1_size, _9, &_9_size, &_10_size);
 		free(_9);
 		//assign %1 = %10  : [int]
 		_1 = _10;
