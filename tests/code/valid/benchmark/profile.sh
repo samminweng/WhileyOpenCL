@@ -1,48 +1,27 @@
 #!/bin/bash
 #
-# Profiling the generated C code of While_Valid_1 program
+# Profiling the generated C code using GPerfTools
 #
 run_perf(){
-    cd $1/$2
-    #Compile the C program
-    #compile the source C file with L2 optimization (-O2)
+     #profile the program on the array size of 50 million
+    arraysize=150000000
+    workingpath=$(pwd)
+    #Compile the C program with L2 optimization (-O2)
     #see https://gcc.gnu.org/onlinedocs/gnat_ugn/Optimization-Levels.html#101
-    gcc -m64 -O2 -o While_Valid_1.out While_Valid_1.$1.$2.c
-    #perf event list
-    #cpu-cycles OR cycles                               [Hardware event]
-    #instructions                                       [Hardware event]
-    #cache-references                                   [Hardware event]
-    #cache-misses                                       [Hardware event]
-    #branch-instructions OR branches                    [Hardware event]
-    #branch-misses                                      [Hardware event]
-    #bus-cycles                                         [Hardware event]
-    #stalled-cycles-frontend OR idle-cycles-frontend    [Hardware event]
-    #ref-cycles                                         [Hardware event]
-
-    #cpu-clock                                          [Software event]
-    #task-clock                                         [Software event]
-    #page-faults OR faults                              [Software event]
-    #context-switches OR cs                             [Software event]
-    #cpu-migrations OR migrations                       [Software event]
-    #minor-faults                                       [Software event]
-    #major-faults                                       [Software event]
-    #alignment-faults                                   [Software event]
-    #emulation-faults                                   [Software event]
-    #dummy                                              [Software event]
-    eventlist="cycles,instructions,cache-references,cache-misses,branch-instructions,branch-misses,bus-cycles,stalled-cycles-frontend,ref-cycles,cpu-clock,task-clock,page-faults,context-switches,cpu-migrations,minor-faults,major-faults,alignment-faults,emulation-faults,dummy"
-    #profile the program on the array size of 10 million
-    arraysize=10000000
-    #Use the perf
-    echo "Profiling the " $1 " program with " $2 " type on array size of" $arraysize
-    perf stat -r 5 -e $eventlist ./While_Valid_1.out $arraysize
-    #return the working directory
-    cd ../..
+    #Linking the GPerfTools
+    gcc -m64 -O2 -o While_Valid_1.$1.$2.$3.$arraysize.out $1/$2/$3/While_Valid_1.$1.$2.$3.c -Wl,--no-as-needed -lprofiler -Wl,--as-needed
+    #Use the GPerfTools
+    echo "GPerfTools profiles the " $1 " program with " $2 " type and " $3 " append function on array size of" $arraysize
+    #Run the program using the CPUPROFILE env to profile the CPU usage
+    CPUPROFILE=/tmp/prof.out $workingpath/While_Valid_1.$1.$2.$3.$arraysize.out $arraysize
+    #Use pprof to show the profiling results
+    pprof --gv $workingpath/While_Valid_1.$1.$2.$3.$arraysize.out /tmp/prof.out
 }
 #
-# Profile the slow program
+# Profile the slow program that uses the original append function
 #
-run_perf slow longlong
+run_perf slow longlong original
 #
-# Profile the fast program
+# Profile the slow program that uses the optimized append function
 #
-run_perf fast longlong
+#run_perf slow longlong optimized

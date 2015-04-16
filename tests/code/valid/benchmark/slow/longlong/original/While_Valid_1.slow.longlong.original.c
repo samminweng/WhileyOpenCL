@@ -242,9 +242,11 @@ int main(int argc, char** argv){
 	//const %4 = 10000 : int
 	_4 = 10000;
 	//Take input parameter as the array size.
-    sscanf(argv[1], "%lld", &_4);	
+    	sscanf(argv[1], "%lld", &_4);	
 	//range %5 = %3, %4 : [int]
 	//forall %6 in %5 (%1) : [int]
+	//Profile the CPU usage using GPerfTools
+	//ProfilerStart("while_valid_1.prof");
 	for(_6=_3;_6<_4;_6++){
 		//newlist %9 = (%6) : [int]
 		_9=(long long*)malloc(1*sizeof(long long));
@@ -253,8 +255,8 @@ int main(int argc, char** argv){
 		//newlist %9 = (%6) : [int]
 		_9[0]=_6;
 		//append %10 = %1, %9 : [int]
-		//allocate the size of power of 2
-		_10=append(_1, &_1_size, _9, &_9_size, &_10_size);
+		//allocate the size of power of 2		
+		_10=append(_1, &_1_size, _9, &_9_size, &_10_size);		
 		free(_9);
 		//assign %1 = %10  : [int]
 		_1 = _10;
@@ -263,6 +265,7 @@ int main(int argc, char** argv){
 		;
 	//end blklab5
 	}
+	//ProfilerStop();
 //.blklab6
 blklab6:;
 	diff=0;	
