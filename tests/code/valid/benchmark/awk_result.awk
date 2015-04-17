@@ -1,4 +1,4 @@
-#!/bin/awk -f
+#!/usr/bin/awk -f
 BEGIN {
 	#File name
 	filename="";
@@ -46,10 +46,10 @@ END {
 			for(datatype in datatypes){
 				if(datatype != ""){					
 					#Sort the arraysize
-					num = asort(arraysizes, indices);
+					#num = asort(arraysizes, indices);
 					#Iterate the arraysizes array to get each arraysize
-					for(i=1;i<=num;i++){
-						arraysize = arraysizes[indices[i]];
+					for(arraysize in arraysizes){
+						#arraysize = arraysizes[indices[i]];
 						if(arraysize != ""){
 							str = program","datatype","arraysize;
 							for(iteration=1;iteration<=10;iteration++){
