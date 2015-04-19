@@ -131,7 +131,8 @@ public class Pattern extends Object {
 		if(label_AssertOrAssume == null){
 			if(code instanceof Codes.AssertOrAssume){
 				Codes.AssertOrAssume assertOrAssume = (Codes.AssertOrAssume)code;
-				label_AssertOrAssume = assertOrAssume.target;
+				//label_AssertOrAssume = assertOrAssume.target;
+				label_AssertOrAssume = assertOrAssume.toString();
 				return true;
 			}		
 		}else{			

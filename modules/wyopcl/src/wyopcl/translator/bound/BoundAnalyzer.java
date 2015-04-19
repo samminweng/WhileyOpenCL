@@ -21,7 +21,6 @@ import java.util.TreeMap;
 
 import wycc.lang.SyntaxError;
 import wyil.lang.Code;
-import wyil.lang.Code.Block;
 import wyil.lang.Codes;
 import wyil.lang.Codes.Assert;
 import wyil.lang.Codes.AssertOrAssume;
@@ -32,8 +31,7 @@ import wyil.lang.Type.EffectiveList;
 import wyil.lang.Type.Record;
 import wyil.lang.WyilFile;
 import wyil.lang.Type.Tuple;
-import wyil.lang.WyilFile.Case;
-import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
+import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.Configuration;
 import wyopcl.translator.Symbol;
 import wyopcl.translator.SymbolController;
@@ -203,8 +201,6 @@ public class BoundAnalyzer {
 				analyze((Codes.Assign)code);
 			} else if (code instanceof Codes.BinaryOperator) {			
 				analyze((Codes.BinaryOperator)code);
-			} else if (code instanceof Codes.StringOperator) {
-				//StringOperatorInterpreter.getInstance().interpret((Codes.StringOperator)code, stackframe);
 			} else if (code instanceof Codes.Convert) {			
 				analyze((Codes.Convert)code);
 			} else if (code instanceof Codes.Const) {			
@@ -237,8 +233,6 @@ public class BoundAnalyzer {
 				analyze((Codes.ListOperator)code);
 			} else if (code instanceof Codes.Loop) {			
 				analyze((Codes.Loop)code);			
-			} else if (code instanceof Codes.LoopEnd) {
-				analyze((Codes.LoopEnd)code);									
 			} else if (code instanceof Codes.Label) {
 				analyze((Codes.Label)code);
 			} else if (code instanceof Codes.Lambda) {
@@ -267,14 +261,8 @@ public class BoundAnalyzer {
 				//SetOperatorInterpreter.getInstance().interpret((Codes.SetOperator)code, stackframe);
 			} else if (code instanceof Codes.SubList) {
 				analyze((Codes.SubList)code);
-			} else if (code instanceof Codes.SubString) {
-				//SubStringInterpreter.getInstance().interpret((Codes.SubString)code, stackframe);
 			} else if (code instanceof Codes.Switch) {
 				//SwitchInterpreter.getInstance().interpret((Codes.Switch)code, stackframe);
-			} else if (code instanceof Codes.Throw) {
-				//ThrowInterpreter.getInstance().interpret((Codes.Throw)code, stackframe);
-			} else if (code instanceof Codes.TryCatch) {
-				//TryCatchInterpreter.getInstance().interpret((Codes.TryCatch)code, stackframe);
 			} else if (code instanceof Codes.TupleLoad) {
 				analyze((Codes.TupleLoad)code);
 			} else if (code instanceof Codes.UnaryOperator){
@@ -521,7 +509,7 @@ public class BoundAnalyzer {
 	 */
 	private void analyze(Codes.Invoke code){
 		WyilFile module = (WyilFile) config.getProperty("module");
-		FunctionOrMethodDeclaration functionOrMethod = module.functionOrMethod(code.name.name(), code.type());					
+		FunctionOrMethod functionOrMethod = module.functionOrMethod(code.name.name(), code.type());					
 		if(functionOrMethod != null){
 			List<Type> params = functionOrMethod.type().params();
 			//The list of bytecode 
@@ -597,24 +585,28 @@ public class BoundAnalyzer {
 	 */
 	private void analyze(Codes.Return code){		
 		//Get the return operand
-		String retOp = prefix+code.operand;
-		BasicBlock blk = blk_ctrl.getCurrentBlock();		
-		//Check if the return type is integer.
-		if(BoundAnalyzerHelper.isIntType(code.type)){
-			//Add the 'Equals' constraint to the return (ret) variable.	
-			blk.addConstraint((new Assign("return", retOp)));
-		}		
-		Type type = code.type;
-		sym_ctrl.putAttribute("return", "type", type);
-		if(type instanceof Type.List){
-			//Get 'size' att from ret op
-			BigInteger size = (BigInteger)sym_ctrl.getAttribute(retOp, "size");
-			sym_ctrl.putAttribute("return", "size", size);
+		String retOp = prefix+code.operand;	
+		BasicBlock c_blk = blk_ctrl.getCurrentBlock();
+		//Check if the current blk exits. If so, then proceed the following procedure.
+		if(c_blk != null){
+			//Check if the return type is integer.
+			if(BoundAnalyzerHelper.isIntType(code.type)){
+				//Add the 'Equals' constraint to the return (ret) variable.	
+				c_blk.addConstraint((new Assign("return", retOp)));
+			}		
+			Type type = code.type;
+			sym_ctrl.putAttribute("return", "type", type);
+			if(type instanceof Type.List){
+				//Get 'size' att from ret op
+				BigInteger size = (BigInteger)sym_ctrl.getAttribute(retOp, "size");
+				sym_ctrl.putAttribute("return", "size", size);
+			}
+			//Connect the current block with exit block.		
+			c_blk.addChild(blk_ctrl.getBasicBlock("exit", BlockType.EXIT));
+			blk_ctrl.setCurrentBlock(null);
+			isGoto = true;
 		}
-		//Connect the current block with exit block.		
-		blk.addChild(blk_ctrl.getBasicBlock("exit", BlockType.EXIT));
-		blk_ctrl.setCurrentBlock(null);
-		isGoto = true;
+		
 	}
 
 	private void analyze(Codes.ListOperator code){		
@@ -631,39 +623,11 @@ public class BoundAnalyzer {
 			//put 'size' attribute 
 			sym_ctrl.putAttribute(target, "size", size);			
 			break;
-		case LEFT_APPEND:
-
-			break;
-		case RIGHT_APPEND:
-
-			break;
 		default:
 			internalFailure("Not implemented!", "Analyzer.java", null);
 			break;
 		}
 	}
-
-	/**
-	 * Put the attribute and its values into the hashmap
-	 * @param target
-	 * @param att_name
-	 * @param att_value
-	 *//*
-	public void putAttribute(String target, String att_name, Object att_value) {
-		sym_ctrl.putAttribute(target, att_name, att_value);
-	}*/
-
-	/**
-	 * Get 
-	 * @param retOp
-	 * @param string
-	 * @return
-	 *//*
-	public Object getAttribute(String target, String att_name) {
-		// TODO Auto-generated method stub
-		return sym_ctrl.getAttribute(target, att_name);
-	}*/
-
 
 	/**
 	 * Parse 'Unary Operator' bytecode and add the constraints in accordance with operator kind.
@@ -700,7 +664,7 @@ public class BoundAnalyzer {
 	 * @param code the <code>Codes.Forall</code> bytecode
 	 */
 	private void analyze(Codes.ForAll code){		
-		String label = code.target;
+		String label = code.toString();
 		//Creates a loop structure, including the loop header, loop body and loop exit
 		BasicBlock loopheader = blk_ctrl.createBasicBlock(label, BlockType.LOOP_HEADER, blk_ctrl.getCurrentBlock());
 		int blk_num = Integer.parseInt(label.split("blklab")[1])+1;
@@ -743,7 +707,8 @@ public class BoundAnalyzer {
 	 * @param code
 	 */
 	private void analyze(Codes.Loop code){		
-		String label = code.target;
+		//String label = code.target;
+		String label = code.toString();
 		for(int op: code.modifiedOperands){
 			blk_ctrl.addLoopVar(prefix+op);		
 		}
@@ -754,7 +719,7 @@ public class BoundAnalyzer {
 	/**
 	 * 
 	 * @param code
-	 */
+	 *//*
 	private void analyze(Codes.LoopEnd code){
 		BasicBlock loopheader = blk_ctrl.getBasicBlock(code.label, BlockType.LOOP_HEADER);
 		//connect the loopheader and current blk
@@ -764,7 +729,7 @@ public class BoundAnalyzer {
 		blk_ctrl.setCurrentBlock(null);
 		isGoto = true;
 
-	}
+	}*/
 
 	/**
 	 * The bounds of a list/map shall be propagated from the operand to the target. 
@@ -901,12 +866,16 @@ public class BoundAnalyzer {
 		//Get the label name
 		String label = code.target;
 
-		BasicBlock c_blk = blk_ctrl.getCurrentBlock();
-		BasicBlock new_blk = blk_ctrl.getBasicBlock(label);
-		if(new_blk == null){
-			new_blk = blk_ctrl.createBasicBlock(label, BlockType.BLOCK);
+		BasicBlock goto_blk = blk_ctrl.getBasicBlock(label);
+		//Check if the goto block exist. If not, add one.
+		if(goto_blk == null){
+			goto_blk = blk_ctrl.createBasicBlock(label, BlockType.BLOCK);
 		}
-		c_blk.addChild(new_blk);
+		//Get the current blk.
+		BasicBlock c_blk = blk_ctrl.getCurrentBlock();
+		if(c_blk!=null){
+			c_blk.addChild(goto_blk);
+		}		
 		//Set isGoto flag to avoid linking the next block with current block.
 		isGoto = true;
 		blk_ctrl.setCurrentBlock(null);

@@ -73,7 +73,8 @@ public class BlockController {
 		if(code instanceof Codes.AssertOrAssume){
 			Codes.AssertOrAssume assertOrAssume = (Codes.AssertOrAssume)code;
 			if(!checkAssertOrAssume()){
-				assertOrAssume_label = assertOrAssume.target;
+				//assertOrAssume_label = assertOrAssume.target;
+				assertOrAssume_label = assertOrAssume.toString();
 			}			
 		}		
 	}

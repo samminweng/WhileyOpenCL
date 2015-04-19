@@ -10,9 +10,6 @@ import java.util.Map.Entry;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
-import wyil.lang.Code.Block;
-import wyil.lang.WyilFile.Case;
-import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
 import wyopcl.translator.Symbol;
 
 /**

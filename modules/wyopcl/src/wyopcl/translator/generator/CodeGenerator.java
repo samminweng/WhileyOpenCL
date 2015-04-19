@@ -17,14 +17,11 @@ import wyil.lang.Codes;
 import wyil.lang.Codes.BinaryOperator;
 import wyil.lang.Codes.ListOperator;
 import wyil.lang.Codes.Loop;
-import wyil.lang.Codes.StringOperator;
 import wyil.lang.Codes.UnaryOperator;
 import wyil.lang.Constant;
-import wyil.lang.Constant.Strung;
 import wyil.lang.Type;
 import wyil.lang.Type.EffectiveIndexible;
-import wyil.lang.Type.FunctionOrMethod;
-import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
+import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.Configuration;
 import wyopcl.translator.SymbolController;
 import wyopcl.translator.symbolic.PatternMatcher;
@@ -182,7 +179,7 @@ public class CodeGenerator{
 	 * @param var the name of variable
 	 */
 	private void addDeclaration(Type type, String var){
-		if(type instanceof Type.Strung){
+		/*if(type instanceof Type.Strung){
 			//Check if the variable is given an array size. 
 			if(var.contains("[") && var.contains("]")){
 				vars.put(var, CodeGeneratorHelper.translate(type));
@@ -190,7 +187,7 @@ public class CodeGenerator{
 				//If the size is not assigned, use the default size (1024).
 				vars.put(var, CodeGeneratorHelper.translate(type));
 			}			
-		}else if (type instanceof Type.List){
+		}else*/ if (type instanceof Type.List){
 			vars.put(var, CodeGeneratorHelper.translate(type));
 			//add the additional parameter 'reg_size' to indicate the array size.
 			vars.put(var+"_size", CodeGeneratorHelper.translate(Type.Int.T_INT));
@@ -256,16 +253,17 @@ public class CodeGenerator{
 	 * Translates the function or method declaration (e.g. <code>int* play(int* _0, int _0_size){</code>)
 	 * @param functionOrMethod
 	 */
-	public String translate(FunctionOrMethodDeclaration functionOrMethod){
+	public String translate(FunctionOrMethod functionOrMethod){
 		String str = "";
 		//Get the name
 		String name = functionOrMethod.name();		
 		if(name.equals("main")){
 			str = "int main(int argc, char** argv";
 		}else{
+			//Get the type info
+			wyil.lang.Type.FunctionOrMethod type = functionOrMethod.type();
 			//Get the return type
-			FunctionOrMethod type = functionOrMethod.type();
-			Type ret = type.ret();
+			Type ret = type;
 			str += CodeGeneratorHelper.translate(ret)+" ";
 			str += name + "(";
 			boolean isfirst = true;

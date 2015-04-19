@@ -5,18 +5,21 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import wyc.WycMain;
 import wyc.util.WycBuildTask;
 import wycc.lang.SyntaxError;
 import wycc.lang.SyntaxError.InternalFailure;
+import wycc.util.Logger;
 import wycc.util.OptArg;
+import wyopcl.translator.Configuration;
 
 public class WyopclMain extends WycMain{
 	private boolean verbose = false;
 	public static final OptArg[] EXTRA_OPTIONS = {
-		//Add the 'range' option 
-		new OptArg("range", null, OptArg.STRING, "Run bound analysis on whiley program with a specific widening strategy:\n"
+		//Add the 'bound' option 
+		new OptArg("bound", null, OptArg.STRING, "Run bound analysis on whiley program with a specific widening strategy:\n"
 												 + "\t\t\t   [naive]\tWidening the bounds to infinity.\n"
 												 + "\t\t\t   [gradual]\tWidening the bounds to Int16, Int32, Int64 and infinity.")
 	};
@@ -44,10 +47,27 @@ public class WyopclMain extends WycMain{
 	public void configure(Map<String, Object> values) throws IOException {
 		super.configure(values);
 		verbose = values.containsKey("verbose");
-		builder.setVerbose(verbose);
-		if(values.containsKey("range")){
-			String range = (String)values.get("range");
-			((WyopclBuildTask) builder).setRange(range);			
+		if(verbose){
+			builder.setVerbose(verbose);
+		}	
+		
+		//Check if there is only 'verbose' option. If so, then run the interpreter to execute the program.
+		if(values.keySet().size()==0||(values.keySet().size()==1&&verbose)){
+			((WyopclBuildTask)builder).enableInterpreter();
+		}else{
+			//Run the translator with configuration.
+			Configuration config = new Configuration();
+			if(values.containsKey("verbose")){			
+				config.setProperty("logger", new Logger.Default(System.err));
+				config.setProperty("verbose", true);
+			}			
+			//If the options are matched with existing modes, then enable the translator by writing the mode option. 
+			for(Entry<String, Object> entry: values.entrySet()){
+				String option = entry.getKey();
+				Object value = entry.getValue();
+				config.setMode(option, value);
+			}
+			((WyopclBuildTask)builder).setConfig(config);
 		}
 	}
 	

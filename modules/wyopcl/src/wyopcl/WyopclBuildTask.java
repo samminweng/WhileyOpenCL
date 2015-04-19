@@ -1,22 +1,35 @@
 package wyopcl;
 
 import static wycc.lang.SyntaxError.internalFailure;
+
+import java.util.Map;
+import java.util.Map.Entry;
+
 import wybs.lang.Builder;
 import wybs.util.StdBuildRule;
 import wybs.util.StdProject;
 import wycc.util.Logger;
+import wyopcl.translator.Configuration;
+import wyopcl.translator.Translator;
 import wyopcl.util.Interpreter;
 import wyopcl.util.InterpreterConfiguration;
 
-public class WyopclBuildTask extends wyc.util.WycBuildTask {	
+public class WyopclBuildTask extends wyc.util.WycBuildTask {
+	//The configuration of translator
+	private Configuration config;
 	//runtime 	
 	protected String[] arguments;
-	//'range' option
-	private String range= null;
+	//Enable/Disable the interpreter. The default value is off.
+	private boolean enableInterpreter = false;
 	
-	public void setRange(String range) {
-		this.range = range;
+	public void enableInterpreter(){
+		this.enableInterpreter = true;
 	}
+	
+	public void setConfig(Configuration config){
+		this.config = config;
+	}
+	
 
 	public void setArguments(String[] arguments) {
 		this.arguments = arguments;
@@ -32,27 +45,7 @@ public class WyopclBuildTask extends wyc.util.WycBuildTask {
 		super.addBuildRules(project);
 		Builder builder = null;
 		//Check the first argument to determine whether to run the analyzer.		
-		if(range != null){
-			/*//Create a config object to store the properties
-			AnalyzerConfiguration config = new AnalyzerConfiguration(project);
-			config.setProperty("invoked", true);
-			if(range!=null){
-				switch(range){
-				case "naive":
-					config.setProperty("widen", WidenStrategy.NAIVE);
-					break;
-				case "gradual":
-					config.setProperty("widen", WidenStrategy.GRADUAL);
-				}				
-			}
-			
-			if (verbose) {
-				config.setProperty("logger", new Logger.Default(System.err));
-				config.setProperty("verbose", true);
-			}			
-			config.setProperty("argument", arguments);			
-			builder = new BoundAnalyzer(config);*/			
-		}else{
+		if(this.enableInterpreter){
 			// Now, add build rule for interpreting the wyil files by using
 			// the WyilInterpreter.
 			InterpreterConfiguration config = new InterpreterConfiguration(project);
@@ -62,6 +55,8 @@ public class WyopclBuildTask extends wyc.util.WycBuildTask {
 			}
 			config.setProperty("arguments", this.arguments);
 			builder = new Interpreter(config);
+		}else{
+			builder = new Translator(config);
 		}
 
 		project.add(new StdBuildRule(builder, wyilDir, wyilIncludes,
