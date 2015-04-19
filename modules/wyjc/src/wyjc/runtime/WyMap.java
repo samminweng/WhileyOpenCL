@@ -28,31 +28,20 @@ package wyjc.runtime;
 import java.math.BigInteger;
 import java.util.*;
 
-public final class WyMap extends java.util.HashMap<Object,Object> {	
-	/**
-	 * The reference count is use to indicate how many variables are currently
-	 * referencing this compound structure. This is useful for making imperative
-	 * updates more efficient. In particular, when the <code>refCount</code> is
-	 * <code>1</code> we can safely perform an in-place update of the structure.
-	 */
-	int refCount = 100;  // temporary measure
-
+public final class WyMap extends java.util.HashMap<Object,Object> implements Iterable {
+	
 	// ================================================================================
 	// Generic Operations
-	// ================================================================================	 	
-	
+	// ================================================================================
+
 	public WyMap() {
-		
+
 	}
-	
+
 	WyMap(WyMap dict) {
-		super(dict);
-		for(Map.Entry e : dict.entrySet()) {
-			Util.incRefs(e.getKey());
-			Util.incRefs(e.getValue());
-		}
+		super(dict);		
 	}
-	
+
 	public String toString() {
 		String r = "{";
 		boolean firstTime=true;
@@ -64,82 +53,65 @@ public final class WyMap extends java.util.HashMap<Object,Object> {
 				r = r + ", ";
 			}
 			firstTime=false;
-			Object val = get(key);			
-			r = r + whiley.lang.Any$native.toString(key) + "=>" + val;
+			Object val = get(key);
+			r = r + whiley.lang.Any$native.toRealString(key) + "=>" + val;
 		}
 		return r + "}";
-	} 
-	
-	public java.util.Iterator iterator() {
-		return new Iterator(entrySet().iterator());		
 	}
-	
+
+	public java.util.Iterator iterator() {
+		return new Iterator(entrySet().iterator());
+	}
+
 	// ================================================================================
 	// Dictionary Operations
-	// ================================================================================	 	
+	// ================================================================================
 
-	public static Object get(WyMap dict, Object key) {	
-		Object item = dict.get(key);		
-		Util.incRefs(item);
+	public static Object get(WyMap dict, Object key) {
+		Object item = dict.get(key);
 		return item;
 	}
-	
+
 	public static WyMap put(WyMap dict, Object key, Object value) {
-		Util.countRefs(dict);
-		if(dict.refCount > 0) {
-			Util.countClone(dict);			
-			dict = new WyMap(dict);			
-		} else {
-			Util.ndict_inplace_updates++;
-		}
-		Object val = dict.put(key, value);
-		if(val != null) {
-			Util.decRefs(val);			
-		} else {
-			Util.incRefs(key);
-		}
-		Util.incRefs(value);		
+		dict = new WyMap(dict); 
+		Object val = dict.put(key, value);		
 		return dict;
 	}
-	
-	public static BigInteger length(WyMap dict) {		
+
+	public static BigInteger length(WyMap dict) {
 		return BigInteger.valueOf(dict.size());
 	}
-	
+
 	public static final class Iterator implements java.util.Iterator {
 		public java.util.Iterator<Map.Entry> iter;
-		
+
 		public Iterator(java.util.Iterator iter) {
 			this.iter = iter;
 		}
-		
+
 		public boolean hasNext() {
 			return iter.hasNext();
 		}
-		
+
 		public void remove(){
 			iter.remove();
 		}
-		
+
 		public Object next() {
 			Map.Entry e = iter.next();
 			return new WyTuple(e.getKey(),e.getValue());
 		}
 	}
-	
+
 	/**
 	 * This method is not intended for public consumption. It is used internally
 	 * by the compiler during imperative updates only.
-	 * 
+	 *
 	 * @param list
 	 * @param item
 	 * @return
 	 */
-	public static Object internal_get(WyMap dict, Object key) {			
-		Object item = dict.get(key);
-		if(dict.refCount > 0) {
-			Util.incRefs(item);			
-		} 
-		return item;
+	public static Object internal_get(WyMap dict, Object key) {
+		return dict.get(key);
 	}
 }

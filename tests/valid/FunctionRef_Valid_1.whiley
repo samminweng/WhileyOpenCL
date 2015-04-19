@@ -1,16 +1,16 @@
-import whiley.lang.System
+import whiley.lang.*
 
-function f1(int x) => int:
+function f1(int x) -> int:
     return x + 1
 
-function f2(int x) => int:
+function f2(int x) -> int:
     return x * 2
 
-type func_t is function(int) => int
+type func_t is function(int) -> int
 
-function g(func_t func) => int:
+function g(func_t func) -> int:
     return func(1234)
 
-method main(System.Console sys) => void:
-    sys.out.println(Any.toString(g(&f1)))
-    sys.out.println(Any.toString(g(&f2)))
+method main(System.Console sys) -> void:
+    sys.out.println(g(&f1))
+    sys.out.println(g(&f2))

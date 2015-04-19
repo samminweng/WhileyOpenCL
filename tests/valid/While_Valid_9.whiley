@@ -1,6 +1,6 @@
-import whiley.lang.System
+import whiley.lang.*
 
-function extract([int] ls) => ([int] result)
+function extract([int] ls) -> ([int] result)
 // Returned list cannot be empty
 ensures |result| > 0:
     int i = 0
@@ -10,8 +10,8 @@ ensures |result| > 0:
         i = i + 1
     return r
 
-method main(System.Console sys) => void:
+method main(System.Console sys) -> void:
     [int] rs = extract([1, 2, 3, 4, 5, 6, 7])
-    sys.out.println(Any.toString(rs))
+    sys.out.println(rs)
     rs = extract([])
-    sys.out.println(Any.toString(rs))
+    sys.out.println(rs)

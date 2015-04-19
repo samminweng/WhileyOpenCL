@@ -1,15 +1,15 @@
-import whiley.lang.System
+import whiley.lang.*
 
-function f({int} xs, {int} ys, {int} zs) => string:
-    return Any.toString(xs)
+function f({int} xs, {int} ys, {int} zs) -> {int}:
+    return xs
 
-function g({int} ys) => string:
+function g({int} ys) -> {int}:
     return f(ys, ys, ys)
 
-function h({int} ys, {int} zs) => string:
+function h({int} ys, {int} zs) -> {int}:
     return f(ys, zs, ys & zs)
 
-method main(System.Console sys) => void:
+method main(System.Console sys) -> void:
     sys.out.println(g({}))
     sys.out.println(g({2}))
     sys.out.println(g({1, 2, 3}))

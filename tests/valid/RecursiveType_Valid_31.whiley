@@ -1,6 +1,8 @@
+import whiley.lang.System
+
 type Recursive is {Recursive}
 
-function append(Recursive r1, Recursive r2) => Recursive:
+function append(Recursive r1, Recursive r2) -> Recursive:
     if r1 == {}:
         return r2
     else:

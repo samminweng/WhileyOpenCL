@@ -1,17 +1,19 @@
+import whiley.lang.System
+
 type Point is {
     int x,
     int y,
-    function toString(Point) => string,
-    function getX(Point) => int
+    function toString(Point) -> int,
+    function getX(Point) -> int
 }
 
-function toString(Point p) => string:
-    return "(" ++ p.x ++ "," ++ p.y ++ ")"
+function toString(Point p) -> int:
+    return p.x + p.y
 
-function getX(Point p) => int:
+function getX(Point p) -> int:
     return p.x
 
-function Point(int x, int y) => Point:
+function Point(int x, int y) -> Point:
     return {
         x: x,
         y: y,
@@ -21,5 +23,5 @@ function Point(int x, int y) => Point:
 
 method main(System.Console console):
     Point p = Point(1,2)
-    console.out.println("getX() = " ++ p.getX(p))
-    console.out.println("toString() = " ++ p.toString(p))
+    console.out.println(p.getX(p))
+    console.out.println(p.toString(p))

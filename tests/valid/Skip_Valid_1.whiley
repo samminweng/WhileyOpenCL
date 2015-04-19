@@ -1,12 +1,12 @@
-import whiley.lang.System
+import whiley.lang.*
 
-function f(int x) => int:
+function f(int x) -> int:
     if x > 0:
         skip
     else:
         return -1
     return x
 
-method main(System.Console sys) => void:
-    sys.out.println(Any.toString(f(1)))
-    sys.out.println(Any.toString(f(-10)))
+method main(System.Console sys) -> void:
+    sys.out.println(f(1))
+    sys.out.println(f(-10))

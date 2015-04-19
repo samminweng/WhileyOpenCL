@@ -1,19 +1,19 @@
-import whiley.lang.System
+import whiley.lang.*
 
 type BTree is (null | {
     int item,   // data item
     BTree left, // left subtree
     BTree right // right righttree
-} tree) where 
+} tree) where
     // item in left subtree must be below this item
     (tree != null && tree.left != null ==> tree.left.item < tree.item) &&
     // item in right subtree must be above this item
     (tree != null && tree.right != null ==> tree.right.item > tree.item)
 
-public function BTree() => BTree:
+public function BTree() -> BTree:
     return null
 
-public function add(BTree tree, int item) => BTree:
+public function add(BTree tree, int item) -> BTree:
     if tree == null:
         tree = {item: item, left: null, right: null}
     else:
@@ -23,7 +23,7 @@ public function add(BTree tree, int item) => BTree:
             tree.right = add(tree.right, item)
     return tree
 
-function contains(BTree tree, int item) => bool:
+function contains(BTree tree, int item) -> bool:
     if tree == null:
         return false
     else:
@@ -37,12 +37,12 @@ function contains(BTree tree, int item) => bool:
 
 constant items is [5, 4, 6, 3, 7, 2, 8, 1, 9]
 
-public method main(System.Console console) => void:
+public method main(System.Console console) -> void:
     tree = BTree()
     for item in items:
         tree = add(tree, item)
     for item in items:
         if contains(tree, item):
-            console.out.println("TREE CONTAINS: " ++ item)
+            console.out.println_s("TREE CONTAINS: " ++ item)
         else:
-            console.out.println("TREE DOES NOT CONTAIN: " ++ item)
+            console.out.println_s("TREE DOES NOT CONTAIN: " ++ item)

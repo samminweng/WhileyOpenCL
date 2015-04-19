@@ -26,18 +26,19 @@
 package whiley.io
 
 import uint from whiley.lang.Int
+import string from whiley.lang.ASCII
 
 // =================================================================
 // Generic Writer
 // =================================================================
 
-// A generic writer represents an output stream of data items 
+// A generic writer represents an output stream of data items
 // (e.g. bytes or characters), such as being written a file, socket or
 // console.
 public type Writer is {
 
     // Writes a given list of bytes to the output stream.
-    method write([byte]) => uint,
+    method write([byte]) -> uint,
 
     // Flush this output stream thereby forcing those items written
     // thus far to the output device.
@@ -49,7 +50,7 @@ public type Writer is {
 
     // Space for additional operations defined by refinements of
     // InputStream
-    ...        
+    ...
 }
 
 

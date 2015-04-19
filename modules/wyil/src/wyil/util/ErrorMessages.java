@@ -25,6 +25,11 @@
 
 package wyil.util;
 
+import java.util.Collection;
+
+import wycc.lang.SyntaxError.InternalFailure;
+import wyil.attributes.SourceLocation;
+import wyil.lang.Attribute;
 import wyil.lang.Type;
 
 /**
@@ -43,49 +48,49 @@ import wyil.lang.Type;
  * In short, error message reporting is done poorly by modern compilers and it
  * would be nice to do a better job!
  * </p>
- * 
+ *
  * @author David J. Pearce
- * 
+ *
  */
 public class ErrorMessages {
-	
+
 	private static class Msg {
 		String msg;
 		public Msg(String msg) {
 			this.msg = msg;
 		}
 	}
-	
+
 	private static final class MsgWithNoParams extends Msg {
 		public MsgWithNoParams(String msg) {
 			super(msg);
 		}
 	}
-	
-	private static final class MsgWithStringParam extends Msg {		
+
+	private static final class MsgWithStringParam extends Msg {
 		public MsgWithStringParam(String msg) {
-			super(msg);			
+			super(msg);
 		}
 	}
-	
-	private static final class MsgWithTypeParam extends Msg {		
+
+	private static final class MsgWithTypeParam extends Msg {
 		public MsgWithTypeParam(String msg) {
-			super(msg);			
+			super(msg);
 		}
 	}
-	
-	private static final class MsgWithTypeParams extends Msg {		
+
+	private static final class MsgWithTypeParams extends Msg {
 		public MsgWithTypeParams(String msg) {
-			super(msg);			
+			super(msg);
 		}
 	}
-	
-	public static final MsgWithNoParams CYCLIC_CONSTANT_DECLARATION = new MsgWithNoParams("cyclic constant expression"); 
+
+	public static final MsgWithNoParams CYCLIC_CONSTANT_DECLARATION = new MsgWithNoParams("cyclic constant expression");
 	public static final MsgWithNoParams INVALID_CONSTANT_EXPRESSION = new MsgWithNoParams("invalid constant expression");
 	public static final MsgWithNoParams INVALID_BOOLEAN_EXPRESSION = new MsgWithNoParams("invalid boolean expression");
 	public static final MsgWithNoParams INVALID_NUMERIC_EXPRESSION = new MsgWithNoParams("invalid numeric expression");
 	public static final MsgWithNoParams INVALID_UNARY_EXPRESSION = new MsgWithNoParams("invalid unary expression");
-	public static final MsgWithNoParams INVALID_BINARY_EXPRESSION = new MsgWithNoParams("invalid binary expression");	
+	public static final MsgWithNoParams INVALID_BINARY_EXPRESSION = new MsgWithNoParams("invalid binary expression");
 	public static final MsgWithNoParams INVALID_LIST_EXPRESSION  = new MsgWithNoParams("invalid list expression");
 	public static final MsgWithNoParams INVALID_SET_EXPRESSION = new MsgWithNoParams("invalid set expression");
 	public static final MsgWithNoParams INVALID_SET_OR_LIST_EXPRESSION = new MsgWithNoParams("invalid set or list expression");
@@ -93,7 +98,7 @@ public class ErrorMessages {
 	public static final MsgWithNoParams INVALID_LVAL_EXPRESSION = new MsgWithNoParams("invalid assignment expression");
 	public static final MsgWithNoParams INVALID_TUPLE_LVAL = new MsgWithNoParams("invalid tuple lval");
 	public static final MsgWithNoParams INVALID_MODULE_ACCESS = new MsgWithNoParams("invalid module access");
-	public static final MsgWithNoParams INVALID_PACKAGE_ACCESS = new MsgWithNoParams("invalid package access");	
+	public static final MsgWithNoParams INVALID_PACKAGE_ACCESS = new MsgWithNoParams("invalid package access");
 	public static final MsgWithNoParams BREAK_OUTSIDE_LOOP = new MsgWithNoParams("break outside switch or loop");
 	public static final MsgWithStringParam RESOLUTION_ERROR = new MsgWithStringParam("unable to resolve name ($0)");
 	public static final MsgWithNoParams UNKNOWN_VARIABLE = new MsgWithNoParams("unknown variable");
@@ -119,48 +124,222 @@ public class ErrorMessages {
 	public static final MsgWithNoParams BRANCH_ALWAYS_TAKEN = new MsgWithNoParams("branch always taken");
 	public static final MsgWithTypeParams AMBIGUOUS_COERCION = new MsgWithTypeParams("ambiguous coercion (from $0 to $1)");
 	public static final MsgWithNoParams MUST_DECLARE_THROWN_EXCEPTION = new MsgWithNoParams("exception may be thrown which is not declared");
-	
+
 	/**
 	 * Return the error message for an error with no parameters.
-	 * 
+	 *
 	 * @param kind
 	 * @param data
 	 * @return
 	 */
-	public static String errorMessage(MsgWithNoParams msg) {				
-		return msg.msg;		
+	public static String errorMessage(MsgWithNoParams msg) {
+		return msg.msg;
 	}
-	
+
 	/**
 	 * Return the error message for an error with a single string parameter.
-	 * 
+	 *
 	 * @param kind
 	 * @param data
 	 * @return
 	 */
-	public static String errorMessage(MsgWithStringParam msg, String param) {				
-		return msg.msg.replaceAll("\\$0",param);		
+	public static String errorMessage(MsgWithStringParam msg, String param) {
+		return msg.msg.replaceAll("\\$0",param);
 	}
-	
+
 	/**
 	 * Return the error message for an error with a single type parameter.
-	 * 
+	 *
 	 * @param kind
 	 * @param data
 	 * @return
 	 */
-	public static String errorMessage(MsgWithTypeParam msg, Type t1) {				
+	public static String errorMessage(MsgWithTypeParam msg, Type t1) {
 		return msg.msg.replaceAll("\\$0",t1.toString());
+	}
+
+	/**
+	 * Return the error message for an error with two type parameters.
+	 *
+	 * @param kind
+	 * @param data
+	 * @return
+	 */
+	public static String errorMessage(MsgWithTypeParams msg, Type t1, Type t2) {
+		return msg.msg.replaceAll("\\$0",t1.toString()).replaceAll("\\$1",t2.toString());
+	}
+
+	/**
+	 * Helper function for emitting a syntax error with appropriate source
+	 * information.
+	 *
+	 * @param msg
+	 *            Message to report with this syntax error.
+	 * @param filename
+	 *            Filename of enclosing file for entry associated with this
+	 *            syntax error.
+	 * @param entry
+	 *            Code.Entry associated with this syntax error.
+	 */
+	public static void syntaxError(String msg, String filename,
+			Attribute... attributes) {
+		for(Attribute attr : attributes) {
+			if(attr instanceof SourceLocation) {
+				SourceLocation l = (SourceLocation) attr;
+				throw new wycc.lang.SyntaxError(msg,filename,l.start(),l.end());
+			}
+		}
+		// No source information available.
+		throw new wycc.lang.SyntaxError(msg,filename,0,-1);
+	}
+
+	/**
+	 * Helper function for emitting a syntax error with appropriate source
+	 * information.
+	 *
+	 * @param msg
+	 *            Message to report with this syntax error.
+	 * @param filename
+	 *            Filename of enclosing file for entry associated with this
+	 *            syntax error.
+	 * @param entry
+	 *            Code.Entry associated with this syntax error.
+	 */
+	public static void syntaxError(String msg, String filename,
+			Collection<Attribute> attributes) {
+		for(Attribute attr : attributes) {
+			if(attr instanceof SourceLocation) {
+				SourceLocation l = (SourceLocation) attr;
+				throw new wycc.lang.SyntaxError(msg,filename,l.start(),l.end());
+			}
+		}
+		// No source information available.
+		throw new wycc.lang.SyntaxError(msg,filename,0,-1);
 	}
 	
 	/**
-	 * Return the error message for an error with two type parameters.
-	 * 
-	 * @param kind
-	 * @param data
-	 * @return
+	 * Helper function for emitting a syntax error with appropriate source
+	 * information.
+	 *
+	 * @param msg
+	 *            Message to report with this syntax error.
+	 * @param filename
+	 *            Filename of enclosing file for entry associated with this
+	 *            syntax error.
+	 * @param entry
+	 *            Code.Entry associated with this syntax error.
+	 * @param ex
+	 *            Exception which caused this syntax error.
 	 */
-	public static String errorMessage(MsgWithTypeParams msg, Type t1, Type t2) {				
-		return msg.msg.replaceAll("\\$0",t1.toString()).replaceAll("\\$1",t2.toString());
+	public static void syntaxError(String msg, String filename,
+			Throwable ex, Attribute... attributes) {
+		for(Attribute attr : attributes) {
+			if(attr instanceof SourceLocation) {
+				SourceLocation l = (SourceLocation) attr;
+				throw new wycc.lang.SyntaxError(msg,filename,l.start(),l.end(),ex);
+			}
+		}
+		// No source information available.
+		throw new wycc.lang.SyntaxError(msg,filename,0,-1,ex);
+	}
+
+	/**
+	 * Helper function for emitting a internal failure with appropriate source
+	 * information.
+	 *
+	 * @param msg
+	 *            Message to report with this internal failure.
+	 * @param filename
+	 *            Filename of enclosing file for entry associated with this
+	 *            internal failure.
+	 * @param entry
+	 *            Code.Entry associated with this internal failure.
+	 */
+	public static void internalFailure(String msg, String filename,
+			Attribute... attributes) {
+		for(Attribute attr : attributes) {
+			if(attr instanceof SourceLocation) {
+				SourceLocation l = (SourceLocation) attr;
+				throw new wycc.lang.SyntaxError.InternalFailure(msg,filename,l.start(),l.end());
+			}
+		}
+		// No source information available.
+		throw new wycc.lang.SyntaxError.InternalFailure(msg,filename,0,-1);
+	}
+
+	/**
+	 * Helper function for emitting a internal failure with appropriate source
+	 * information.
+	 *
+	 * @param msg
+	 *            Message to report with this internal failure.
+	 * @param filename
+	 *            Filename of enclosing file for entry associated with this
+	 *            internal failure.
+	 * @param entry
+	 *            Code.Entry associated with this internal failure.
+	 */
+	public static void internalFailure(String msg, String filename,
+			Collection<Attribute> attributes) {
+		for(Attribute attr : attributes) {
+			if(attr instanceof SourceLocation) {
+				SourceLocation l = (SourceLocation) attr;
+				throw new wycc.lang.SyntaxError.InternalFailure(msg,filename,l.start(),l.end());
+			}
+		}
+		// No source information available.
+		throw new wycc.lang.SyntaxError.InternalFailure(msg,filename,0,-1);
+	}
+	
+	/**
+	 * Helper function for emitting a internal failure with appropriate source
+	 * information.
+	 *
+	 * @param msg
+	 *            Message to report with this internal failure.
+	 * @param filename
+	 *            Filename of enclosing file for entry associated with this
+	 *            internal failure.
+	 * @param entry
+	 *            Code.Entry associated with this internal failure.
+	 * @param ex
+	 *            Exception which caused this internal failure.
+	 */
+	public static void internalFailure(String msg, String filename,
+			Throwable ex, Attribute... attributes) {
+		for(Attribute attr : attributes) {
+			if(attr instanceof SourceLocation) {
+				SourceLocation l = (SourceLocation) attr;
+				throw new wycc.lang.SyntaxError.InternalFailure(msg,filename,l.start(),l.end(),ex);
+			}
+		}
+		// No source information available.
+		throw new wycc.lang.SyntaxError.InternalFailure(msg,filename,0,-1,ex);
+	}
+	
+	/**
+	 * Helper function for emitting a internal failure with appropriate source
+	 * information.
+	 *
+	 * @param msg
+	 *            Message to report with this internal failure.
+	 * @param filename
+	 *            Filename of enclosing file for entry associated with this
+	 *            internal failure.
+	 * @param entry
+	 *            Code.Entry associated with this internal failure.
+	 * @param ex
+	 *            Exception which caused this internal failure.
+	 */
+	public static void internalFailure(String msg, String filename,
+			Throwable ex, Collection<Attribute> attributes) {
+		for(Attribute attr : attributes) {
+			if(attr instanceof SourceLocation) {
+				SourceLocation l = (SourceLocation) attr;
+				throw new wycc.lang.SyntaxError.InternalFailure(msg,filename,l.start(),l.end(),ex);
+			}
+		}
+		// No source information available.
+		throw new wycc.lang.SyntaxError.InternalFailure(msg,filename,0,-1,ex);
 	}
 }

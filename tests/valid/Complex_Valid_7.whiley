@@ -1,4 +1,6 @@
-function max3(int x, int y, int z) => (int r)
+import whiley.lang.*
+
+function max3(int x, int y, int z) -> (int r)
 // Return value must be as large as each parameter
 ensures r >= x && r >= y && r >= z
 // Return value must match at least one parameter
@@ -25,14 +27,14 @@ method fn(System.Console console, [int] xs):
             int i3 = 0
             while i3 < |xs| where i3 >= 0:
                 int v3 = xs[i3]
-                console.out.println("MAX(" ++ v1 ++ "," ++ v2 ++ "," ++ v2 ++ ")=" ++ max3(v1,v2,v3))
+                console.out.println_s("MAX(" ++ Any.toString(v1) ++ "," ++ Any.toString(v2) ++ "," ++ Any.toString(v2) ++ ")=" ++ Any.toString(max3(v1,v2,v3)))
                 i3 = i3 + 1
             //
             i2 = i2 + 1
         //
         i1 = i1 + 1
-    // Done.    
-    console.out.println("Done.")
+    // Done.
+    console.out.println_s("Done.")
 
 method main(System.Console console):
     fn(console,[1,2,3,4,5,6,7,8])

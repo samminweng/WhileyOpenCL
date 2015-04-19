@@ -1,16 +1,16 @@
-import whiley.lang.System
+import whiley.lang.*
 
-type State is {string input, int pos}
+type State is {[int] input, int pos}
 
-type Expr is {int num} | {int op, Expr rhs, Expr lhs} | {string err}
+type Expr is {int num} | {int op, Expr rhs, Expr lhs} | {[int] err}
 
-function parse(string input) => Expr:
+function parse([int] input) -> Expr:
     {Expr e, State st} r = parseAddSubExpr({input: input, pos: 0})
     return r.e
 
-function parseAddSubExpr(State st) => {Expr e, State st}:
+function parseAddSubExpr(State st) -> {Expr e, State st}:
     return {e: {num: 1}, st: st}
 
-method main(System.Console sys) => void:
+method main(System.Console sys) -> void:
     Expr e = parse("Hello")
-    sys.out.println(Any.toString(e))
+    sys.out.println(e)

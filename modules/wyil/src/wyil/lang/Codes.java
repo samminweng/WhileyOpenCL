@@ -70,37 +70,37 @@ public abstract class Codes {
 	/**
 	 * Construct an <code>assert</code> bytecode which represents a user-defined
 	 * assertion check.
-	 * 
+	 *
 	 * @param message
 	 *            --- message to report upon failure.
 	 * @return
 	 */
-	public static Assert Assert(String target) {
-		return Codes.get(new Assert(target));
+	public static Assert Assert(Collection<Code> bytecodes) {
+		return new Assert(bytecodes);
 	}
-	
+
 	/**
 	 * Construct an <code>assume</code> bytecode which represents a user-defined
 	 * assumption.
-	 * 
+	 *
 	 * @param message
 	 *            --- message to report upon failure.
 	 * @return
 	 */
-	public static Assume Assume(String target) {
-		return Codes.get(new Assume(target));
+	public static Assume Assume(Collection<Code> bytecodes) {
+		return new Assume(bytecodes);
 	}
-	
+
 	public static BinaryOperator BinaryOperator(Type type, int target, int leftOperand,
 			int rightOperand, BinaryOperatorKind op) {
-		return Codes.get(new BinaryOperator(type, target, leftOperand,
-				rightOperand, op));
+		return new BinaryOperator(type, target, leftOperand,
+				rightOperand, op);
 	}
 
 	/**
 	 * Construct a <code>const</code> bytecode which loads a given constant onto
 	 * the stack.
-	 * 
+	 *
 	 * @param afterType
 	 *            --- record type.
 	 * @param field
@@ -108,13 +108,13 @@ public abstract class Codes {
 	 * @return
 	 */
 	public static Const Const(int target, Constant constant) {
-		return Codes.get(new Const(target, constant));
+		return new Const(target, constant);
 	}
 
 	/**
 	 * Construct a <code>copy</code> bytecode which copies the value from a
 	 * given operand register into a given target register.
-	 * 
+	 *
 	 * @param type
 	 *            --- record type.
 	 * @param reg
@@ -122,37 +122,33 @@ public abstract class Codes {
 	 * @return
 	 */
 	public static Assign Assign(Type type, int target, int operand) {
-		return Codes.get(new Assign(type, target, operand));
+		return new Assign(type, target, operand);
 	}
 
 	public static Convert Convert(Type from, int target, int operand, Type to) {
-		return Codes.get(new Convert(from, target, operand, to));
+		return new Convert(from, target, operand, to);
 	}
 
 	public static final Debug Debug(int operand) {
-		return Codes.get(new Debug(operand));
-	}
-
-	public static LoopEnd LoopEnd(String label) {
-		return Codes.get(new LoopEnd(label));
+		return new Debug(operand);
 	}
 
 	/**
 	 * Construct a <code>fail</code> bytecode which halts execution by raising a
 	 * fault.
-	 * 
+	 *
 	 * @param string
 	 *            --- Message to give on error.
 	 * @return
 	 */
-	public static Fail Fail(String message) {
-		return Codes.get(new Fail(message));
+	public static Fail Fail() {
+		return new Fail();
 	}
 
 	/**
 	 * Construct a <code>fieldload</code> bytecode which reads a given field
 	 * from a record of a given type.
-	 * 
+	 *
 	 * @param type
 	 *            --- record type.
 	 * @param field
@@ -161,201 +157,214 @@ public abstract class Codes {
 	 */
 	public static FieldLoad FieldLoad(Type.EffectiveRecord type, int target,
 			int operand, String field) {
-		return Codes.get(new FieldLoad(type, target, operand, field));
+		return new FieldLoad(type, target, operand, field);
 	}
 
 	/**
 	 * Construct a <code>goto</code> bytecode which branches unconditionally to
 	 * a given label.
-	 * 
+	 *
 	 * @param label
 	 *            --- destination label.
 	 * @return
 	 */
 	public static Goto Goto(String label) {
-		return Codes.get(new Goto(label));
+		return new Goto(label);
 	}
 
 	public static Invoke Invoke(Type.FunctionOrMethod fun, int target,
 			Collection<Integer> operands, NameID name) {
-		return Codes.get(new Invoke(fun, target, CodeUtils.toIntArray(operands), name));
+		return new Invoke(fun, target, CodeUtils.toIntArray(operands), name);
 	}
 
 	public static Invoke Invoke(Type.FunctionOrMethod fun, int target,
 			int[] operands, NameID name) {
-		return Codes.get(new Invoke(fun, target, operands, name));
+		return new Invoke(fun, target, operands, name);
 	}
+	
+	/**
+	 * Construct an <code>invariant</code> bytecode which represents a user-defined
+	 * loop invariant.
+	 *
+	 * @param message
+	 *            --- message to report upon failure.
+	 * @return
+	 */
+	public static Invariant Invariant(Collection<Code> bytecodes) {
+		return new Invariant(bytecodes);
+	}
+
 
 	public static Lambda Lambda(Type.FunctionOrMethod fun, int target,
 			Collection<Integer> operands, NameID name) {
-		return Codes.get(new Lambda(fun, target, CodeUtils.toIntArray(operands), name));
+		return new Lambda(fun, target, CodeUtils.toIntArray(operands), name);
 	}
 
 	public static Lambda Lambda(Type.FunctionOrMethod fun, int target,
 			int[] operands, NameID name) {
-		return Codes.get(new Lambda(fun, target, operands, name));
+		return new Lambda(fun, target, operands, name);
 	}
 
 	public static Not Not(int target, int operand) {
-		return Codes.get(new Not(target, operand));
+		return new Not(target, operand);
 	}
 
 	public static LengthOf LengthOf(Type.EffectiveCollection type, int target,
 			int operand) {
-		return Codes.get(new LengthOf(type, target, operand));
+		return new LengthOf(type, target, operand);
 	}
 
 	public static Move Move(Type type, int target, int operand) {
-		return Codes.get(new Move(type, target, operand));
+		return new Move(type, target, operand);
 	}
 
 	public static SubList SubList(Type.EffectiveList type, int target,
 			int sourceOperand, int leftOperand, int rightOperand) {
 		int[] operands = new int[] { sourceOperand, leftOperand, rightOperand };
-		return Codes.get(new SubList(type, target, operands));
+		return new SubList(type, target, operands);
 	}
 
 	public static SubList SubList(Type.EffectiveList type, int target,
 			int[] operands) {
-		return Codes.get(new SubList(type, target, operands));
+		return new SubList(type, target, operands);
 	}
 
 	public static ListOperator ListOperator(Type.EffectiveList type, int target,
 			int leftOperand, int rightOperand, ListOperatorKind dir) {
-		return Codes.get(new ListOperator(type, target, leftOperand, rightOperand,
-				dir));
+		return new ListOperator(type, target, leftOperand, rightOperand,
+				dir);
 	}
 
 	/**
 	 * Construct a <code>listload</code> bytecode which reads a value from a
 	 * given index in a given list.
-	 * 
+	 *
 	 * @param type
 	 *            --- list type.
 	 * @return
 	 */
 	public static IndexOf IndexOf(Type.EffectiveIndexible type, int target,
 			int leftOperand, int rightOperand) {
-		return Codes.get(new IndexOf(type, target, leftOperand, rightOperand));
+		return new IndexOf(type, target, leftOperand, rightOperand);
 	}
 
-	public static Loop Loop(String label, Collection<Integer> operands) {
-		return Codes.get(new Loop(label, CodeUtils.toIntArray(operands)));
+	public static Loop Loop(int[] operands, Collection<Code> bytecodes) {
+		return new Loop(operands,bytecodes);
 	}
 
-	public static Loop Loop(String label, int[] modifies) {
-		return Codes.get(new Loop(label, modifies));
+	public static Loop Loop(int[] operands, Code... bytecodes) {
+		return new Loop(operands,bytecodes);
 	}
 
 	public static ForAll ForAll(Type.EffectiveCollection type,
 			int sourceOperand, int indexOperand,
-			Collection<Integer> modifiedOperands, String label) {
-		return Codes.get(new ForAll(type, sourceOperand, indexOperand,
-				CodeUtils.toIntArray(modifiedOperands), label));
+			int[] modifiedOperands, Collection<Code> bytecodes) {
+		return new ForAll(type, sourceOperand, indexOperand,
+				modifiedOperands, bytecodes);
 	}
 
 	public static ForAll ForAll(Type.EffectiveCollection type,
 			int sourceOperand, int indexOperand, int[] modifiedOperands,
-			String label) {
-		return Codes.get(new ForAll(type, sourceOperand, indexOperand,
-				modifiedOperands, label));
+			Code... bytecodes) {
+		return new ForAll(type, sourceOperand, indexOperand,
+				modifiedOperands, bytecodes);
 	}
 
 	/**
 	 * Construct a <code>newdict</code> bytecode which constructs a new map and
 	 * puts it on the stack.
-	 * 
+	 *
 	 * @param type
 	 * @return
 	 */
 	public static NewMap NewMap(Type.Map type, int target,
 			Collection<Integer> operands) {
-		return Codes.get(new NewMap(type, target, CodeUtils.toIntArray(operands)));
+		return new NewMap(type, target, CodeUtils.toIntArray(operands));
 	}
 
 	public static NewMap NewMap(Type.Map type, int target, int[] operands) {
-		return Codes.get(new NewMap(type, target, operands));
+		return new NewMap(type, target, operands);
 	}
 
 	/**
 	 * Construct a <code>newset</code> bytecode which constructs a new set and
 	 * puts it on the stack.
-	 * 
+	 *
 	 * @param type
 	 * @return
 	 */
 	public static NewSet NewSet(Type.Set type, int target,
 			Collection<Integer> operands) {
-		return Codes.get(new NewSet(type, target, CodeUtils.toIntArray(operands)));
+		return new NewSet(type, target, CodeUtils.toIntArray(operands));
 	}
 
 	public static NewSet NewSet(Type.Set type, int target, int[] operands) {
-		return Codes.get(new NewSet(type, target, operands));
+		return new NewSet(type, target, operands);
 	}
 
 	/**
 	 * Construct a <code>newlist</code> bytecode which constructs a new list and
 	 * puts it on the stack.
-	 * 
+	 *
 	 * @param type
 	 * @return
 	 */
 	public static NewList NewList(Type.List type, int target,
 			Collection<Integer> operands) {
-		return Codes.get(new NewList(type, target, CodeUtils.toIntArray(operands)));
+		return new NewList(type, target, CodeUtils.toIntArray(operands));
 	}
 
 	public static NewList NewList(Type.List type, int target, int[] operands) {
-		return Codes.get(new NewList(type, target, operands));
+		return new NewList(type, target, operands);
 	}
 
 	/**
 	 * Construct a <code>newtuple</code> bytecode which constructs a new tuple
 	 * and puts it on the stack.
-	 * 
+	 *
 	 * @param type
 	 * @return
 	 */
 	public static NewTuple NewTuple(Type.Tuple type, int target,
 			Collection<Integer> operands) {
-		return Codes.get(new NewTuple(type, target, CodeUtils.toIntArray(operands)));
+		return new NewTuple(type, target, CodeUtils.toIntArray(operands));
 	}
 
 	public static NewTuple NewTuple(Type.Tuple type, int target, int[] operands) {
-		return Codes.get(new NewTuple(type, target, operands));
+		return new NewTuple(type, target, operands);
 	}
 
 	/**
 	 * Construct a <code>newrecord</code> bytecode which constructs a new record
 	 * and puts it on the stack.
-	 * 
+	 *
 	 * @param type
 	 * @return
 	 */
 	public static NewRecord NewRecord(Type.Record type, int target,
 			Collection<Integer> operands) {
-		return Codes.get(new NewRecord(type, target, CodeUtils.toIntArray(operands)));
+		return new NewRecord(type, target, CodeUtils.toIntArray(operands));
 	}
 
 	public static NewRecord NewRecord(Type.Record type, int target,
 			int[] operands) {
-		return Codes.get(new NewRecord(type, target, operands));
+		return new NewRecord(type, target, operands);
 	}
 
 	/**
 	 * Construct a return bytecode which does return a value and, hence, its
 	 * type automatically defaults to void.
-	 * 
+	 *
 	 * @return
 	 */
 	public static Return Return() {
-		return Codes.get(new Return(Type.T_VOID, Codes.NULL_REG));
+		return new Return(Type.T_VOID, Codes.NULL_REG);
 	}
 
 	/**
 	 * Construct a return bytecode which reads a value from the operand register
 	 * and returns it.
-	 * 
+	 *
 	 * @param type
 	 *            --- type of the value to be returned (cannot be void).
 	 * @param operand
@@ -363,66 +372,50 @@ public abstract class Codes {
 	 * @return
 	 */
 	public static Return Return(Type type, int operand) {
-		return Codes.get(new Return(type, operand));
+		return new Return(type, operand);
 	}
 
 	public static If If(Type type, int leftOperand, int rightOperand,
 			Comparator cop, String label) {
-		return Codes.get(new If(type, leftOperand, rightOperand, cop, label));
+		return new If(type, leftOperand, rightOperand, cop, label);
 	}
 
 	public static IfIs IfIs(Type type, int leftOperand, Type rightOperand,
 			String label) {
-		return Codes.get(new IfIs(type, leftOperand, rightOperand, label));
+		return new IfIs(type, leftOperand, rightOperand, label);
 	}
 
 	public static IndirectInvoke IndirectInvoke(Type.FunctionOrMethod fun,
 			int target, int operand, Collection<Integer> operands) {
-		return Codes.get(new IndirectInvoke(fun, target, operand, CodeUtils
-				.toIntArray(operands)));
+		return new IndirectInvoke(fun, target, operand, CodeUtils
+				.toIntArray(operands));
 	}
 
 	public static IndirectInvoke IndirectInvoke(Type.FunctionOrMethod fun,
 			int target, int operand, int[] operands) {
-		return Codes.get(new IndirectInvoke(fun, target, operand, operands));
+		return new IndirectInvoke(fun, target, operand, operands);
 	}
 
 	public static Invert Invert(Type type, int target, int operand) {
-		return Codes.get(new Invert(type, target, operand));
+		return new Invert(type, target, operand);
 	}
 
 	public static Label Label(String label) {
-		return Codes.get(new Label(label));
+		return new Label(label);
 	}
 
 	public static final Nop Nop = new Nop();
 
 	public static SetOperator SetOperator(Type.EffectiveSet type, int target,
 			int leftOperand, int rightOperand, SetOperatorKind operation) {
-		return Codes.get(new SetOperator(type, target, leftOperand, rightOperand,
-				operation));
-	}
-
-	public static StringOperator StringOperator(int target, int leftOperand,
-			int rightOperand, StringOperatorKind operation) {
-		return Codes.get(new StringOperator(target, leftOperand, rightOperand,
-				operation));
-	}
-
-	public static SubString SubString(int target, int sourceOperand,
-			int leftOperand, int rightOperand) {
-		int[] operands = new int[] { sourceOperand, leftOperand, rightOperand };
-		return Codes.get(new SubString(target, operands));
-	}
-
-	private static SubString SubString(int target, int[] operands) {
-		return Codes.get(new SubString(target, operands));
+		return new SetOperator(type, target, leftOperand, rightOperand,
+				operation);
 	}
 
 	/**
 	 * Construct a <code>switch</code> bytecode which pops a value off the
 	 * stack, and switches to a given label based on it.
-	 * 
+	 *
 	 * @param type
 	 *            --- value type to switch on.
 	 * @param defaultLabel
@@ -433,75 +426,60 @@ public abstract class Codes {
 	 */
 	public static Switch Switch(Type type, int operand, String defaultLabel,
 			Collection<Pair<Constant, String>> cases) {
-		return Codes.get(new Switch(type, operand, defaultLabel, cases));
+		return new Switch(type, operand, defaultLabel, cases);
 	}
-
-	/**
-	 * Construct a <code>throw</code> bytecode which pops a value off the stack
-	 * and throws it.
-	 * 
-	 * @param afterType
-	 *            --- value type to throw
-	 * @return
-	 */
-	public static Throw Throw(Type type, int operand) {
-		return Codes.get(new Throw(type, operand));
-	}
-
-	/**
-	 * Construct a <code>trycatch</code> bytecode which defines a region of
-	 * bytecodes which are covered by one or more catch handles.
-	 * 
-	 * @param target
-	 *            --- identifies end-of-block label.
-	 * @param catches
-	 *            --- map from types to destination labels.
-	 * @return
-	 */
-	public static TryCatch TryCatch(int operand, String target,
-			Collection<Pair<Type, String>> catches) {
-		return Codes.get(new TryCatch(operand, target, catches));
-	}
-
-	public static TryEnd TryEnd(String label) {
-		return Codes.get(new TryEnd(label));
-	}
-
+	
 	public static TupleLoad TupleLoad(Type.EffectiveTuple type, int target,
 			int operand, int index) {
-		return Codes.get(new TupleLoad(type, target, operand, index));
+		return new TupleLoad(type, target, operand, index);
 	}
 
 	public static NewObject NewObject(Type.Reference type, int target,
 			int operand) {
-		return Codes.get(new NewObject(type, target, operand));
+		return new NewObject(type, target, operand);
 	}
 
 	public static Dereference Dereference(Type.Reference type, int target,
 			int operand) {
-		return Codes.get(new Dereference(type, target, operand));
+		return new Dereference(type, target, operand);
 	}
 
+
+	public static Quantify Quantify(Type.EffectiveCollection type,
+			int sourceOperand, int indexOperand,
+			int[] modifiedOperands, Collection<Code> bytecodes) {
+		return new Quantify(type, sourceOperand, indexOperand,
+				modifiedOperands, bytecodes);
+	}
+
+	public static Quantify Quantify(Type.EffectiveCollection type,
+			int sourceOperand, int indexOperand, int[] modifiedOperands,
+			Code... bytecodes) {
+		return new Quantify(type, sourceOperand, indexOperand,
+				modifiedOperands, bytecodes);
+	}
+
+	
 	public static Update Update(Type beforeType, int target,
 			Collection<Integer> operands, int operand, Type afterType,
 			Collection<String> fields) {
-		return Codes.get(new Update(beforeType, target, 
-				CodeUtils.toIntArray(operands), operand, afterType, fields));
+		return new Update(beforeType, target,
+				CodeUtils.toIntArray(operands), operand, afterType, fields);
 	}
 
 	public static Update Update(Type beforeType, int target, int[] operands,
 			int operand, Type afterType, Collection<String> fields) {
-		return Codes.get(new Update(beforeType, target, operands, operand,
-				afterType, fields));
+		return new Update(beforeType, target, operands, operand,
+				afterType, fields);
 	}
 
 	public static UnaryOperator UnaryOperator(Type type, int target, int operand,
 			UnaryOperatorKind uop) {
-		return Codes.get(new UnaryOperator(type, target, operand, uop));
+		return new UnaryOperator(type, target, operand, uop);
 	}
 
 	public static Void Void(Type type, int[] operands) {
-		return Codes.get(new Void(type, operands));
+		return new Void(type, operands);
 	}
 
 	// ===============================================================
@@ -511,9 +489,9 @@ public abstract class Codes {
 	/**
 	 * Represents a binary operator (e.g. '+','-',etc) that is provided to a
 	 * <code>BinOp</code> bytecode.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public enum BinaryOperatorKind {
 		ADD(0) {
@@ -593,33 +571,33 @@ public abstract class Codes {
 	 * <li><i>leftshift,rightshift</i></li>
 	 * </ul>
 	 * For example, the following Whiley code:
-	 * 
+	 *
 	 * <pre>
-	 * function f(int x, int y) => int:
+	 * function f(int x, int y) -> int:
 	 *     return ((x * y) + 1) / 2
 	 * </pre>
-	 * 
+	 *
 	 * can be translated into the following WyIL code:
-	 * 
+	 *
 	 * <pre>
-	 * function f(int x, int y) => int:
-	 * body: 
-	 *     mul %2 = %0, %1   : int                  
-	 *     const %3 = 1      : int                      
-	 *     add %2 = %2, %3   : int                  
-	 *     const %3 = 2      : int                      
-	 *     const %4 = 0      : int                      
+	 * function f(int x, int y) -> int:
+	 * body:
+	 *     mul %2 = %0, %1   : int
+	 *     const %3 = 1      : int
+	 *     add %2 = %2, %3   : int
+	 *     const %3 = 2      : int
+	 *     const %4 = 0      : int
 	 *     assertne %3, %4 "division by zero" : int
-	 *     div %2 = %2, %3   : int                  
+	 *     div %2 = %2, %3   : int
 	 *     return %2         : int
 	 * </pre>
-	 * 
+	 *
 	 * Here, the <code>assertne</code> bytecode has been included to check
 	 * against division-by-zero. In this particular case the assertion is known
 	 * true at compile time and, in practice, would be compiled away.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class BinaryOperator extends AbstractBinaryAssignable<Type> {
 		public final BinaryOperatorKind kind;
@@ -672,20 +650,20 @@ public abstract class Codes {
 	 * changes. This includes at control-flow meet points, when the value is
 	 * passed as a parameter, assigned to a field, etc. For example, the
 	 * following Whiley code:
-	 * 
+	 *
 	 * <pre>
-	 * function f(int x) => real:
+	 * function f(int x) -> real:
 	 *     return x + 1
 	 * </pre>
-	 * 
+	 *
 	 * can be translated into the following WyIL code:
-	 * 
+	 *
 	 * <pre>
-	 * function f(int x) => real:
-	 * body: 
-	 *     const %2 = 1           : int                      
-	 *     add %1 = %0, %2        : int                  
-	 *     convert %1 = %1 real   : int             
+	 * function f(int x) -> real:
+	 * body:
+	 *     const %2 = 1           : int
+	 *     add %1 = %0, %2        : int
+	 *     convert %1 = %1 real   : int
 	 *     return %1              : real
 	 * </pre>
 	 * <p>
@@ -701,7 +679,7 @@ public abstract class Codes {
 	 * of <code>Object</code>). Thus, no conversion is necessary since
 	 * <code>List</code> can safely flow into <code>Object</code>.
 	 * </p>
-	 * 
+	 *
 	 */
 	public static final class Convert extends AbstractUnaryAssignable<Type> {
 		public final Type result;
@@ -745,37 +723,37 @@ public abstract class Codes {
 	 * Writes a constant value to a target register. This includes
 	 * <i>integers</i>, <i>rationals</i>, <i>lists</i>, <i>sets</i>,
 	 * <i>maps</i>, etc. For example, the following Whiley code:
-	 * 
+	 *
 	 * <pre>
-	 * function f(int x) => int:
+	 * function f(int x) -> int:
 	 *     xs = {1,2.12}
 	 *     return |xs| + 1
 	 * </pre>
-	 * 
+	 *
 	 * can be translated into the following WyIL code:
-	 * 
+	 *
 	 * <pre>
-	 * function f(int x) => int:
-	 * body: 
+	 * function f(int x) -> int:
+	 * body:
 	 *     var xs
-	 *     const %2 = 1               : int                      
-	 *     convert %2 = % 2 int|real  : int         
-	 *     const %3 = 2.12            : real                   
-	 *     convert %3 = % 3 int|real  : real        
-	 *     newset %1 = (%2, %3)       : {int|real}       
-	 *     assign %3 = %1             : {int|real}            
-	 *     lengthof %3 = % 3          : {int|real}          
-	 *     const %4 = 1               : int                      
-	 *     add %2 = % 3, %4           : int                  
+	 *     const %2 = 1               : int
+	 *     convert %2 = % 2 int|real  : int
+	 *     const %3 = 2.12            : real
+	 *     convert %3 = % 3 int|real  : real
+	 *     newset %1 = (%2, %3)       : {int|real}
+	 *     assign %3 = %1             : {int|real}
+	 *     lengthof %3 = % 3          : {int|real}
+	 *     const %4 = 1               : int
+	 *     add %2 = % 3, %4           : int
 	 *     return %2                  : int
 	 * </pre>
-	 * 
+	 *
 	 * Here, we see two kinds of constants values being used: integers (i.e.
 	 * <code>const %2 = 1</code>) and rationals (i.e.
 	 * <code>const %3 = 2.12</code>).
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class Const extends AbstractAssignable {
 		public final Constant constant;
@@ -828,28 +806,28 @@ public abstract class Codes {
 	/**
 	 * Copy the contents from a given operand register into a given target
 	 * register. For example, the following Whiley code:
-	 * 
+	 *
 	 * <pre>
-	 * function f(int x) => int:
+	 * function f(int x) -> int:
 	 *     x = x + 1
 	 *     return x
 	 * </pre>
-	 * 
+	 *
 	 * can be translated into the following WyIL code:
-	 * 
+	 *
 	 * <pre>
-	 * function f(int x) => int:
-	 * body: 
-	 *     assign %1 = %0      : int                   
-	 *     const %2 = 1        : int                      
-	 *     add %0 = %1, %2     : int                                    
+	 * function f(int x) -> int:
+	 * body:
+	 *     assign %1 = %0      : int
+	 *     const %2 = 1        : int
+	 *     add %0 = %1, %2     : int
 	 *     return %0           : int
 	 * </pre>
-	 * 
+	 *
 	 * Here we see that an initial assignment is made from register
 	 * <code>%0</code> to register <code>%1</code>. In fact, this assignment is
 	 * unecessary but is useful to illustrate the <code>assign</code> bytecode.
-	 * 
+	 *
 	 * <p>
 	 * <b>NOTE:</b> on many architectures this operation may not actually clone
 	 * the data in question. Rather, it may copy the <i>reference</i> to the
@@ -857,9 +835,9 @@ public abstract class Codes {
 	 * efficient treatment of large compound structures (e.g. lists, sets, maps
 	 * and records).
 	 * </p>
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class Assign extends AbstractUnaryAssignable<Type> {
 
@@ -890,37 +868,37 @@ public abstract class Codes {
 	/**
 	 * Read a string from the operand register and prints it to the debug
 	 * console. For example, the following Whiley code:
-	 * 
+	 *
 	 * <pre>
 	 * method f(int x):
 	 *     debug "X = " + x
 	 * </pre>
-	 * 
+	 *
 	 * can be translated into the following WyIL code:
-	 * 
+	 *
 	 * <pre>
 	 * method f(int x):
-	 * body: 
-	 *     const %2 = "X = "       : string                                
-	 *     convert %0 = %0 any     : int              
+	 * body:
+	 *     const %2 = "X = "       : string
+	 *     convert %0 = %0 any     : int
 	 *     invoke %0 (%0) whiley/lang/Any:toString : string(any)
-	 *     strappend %1 = %2, %0   : string         
-	 *     debug %1                : string                      
+	 *     strappend %1 = %2, %0   : string
+	 *     debug %1                : string
 	 *     return
 	 * </pre>
-	 * 
+	 *
 	 * <b>NOTE</b> This bytecode is not intended to form part of the program's
 	 * operation. Rather, it is to facilitate debugging within functions (since
 	 * they cannot have side-effects). Furthermore, if debugging is disabled,
 	 * this bytecode is a nop.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
-	public static final class Debug extends AbstractUnaryOp<Type.Strung> {
+	public static final class Debug extends AbstractUnaryOp<Type> {
 
 		private Debug(int operand) {
-			super(Type.T_STRING, operand);
+			super(Type.List(Type.T_INT,false), operand);
 		}
 
 		public int opcode() {
@@ -942,112 +920,103 @@ public abstract class Codes {
 	}
 
 	/**
-	 * Marks the end of a loop block.
-	 * 
-	 * @author David J. Pearce
-	 * 
-	 */
-	public static final class LoopEnd extends Label {
-		LoopEnd(String label) {
-			super(label);
-		}
-
-		public LoopEnd relabel(Map<String, String> labels) {
-			String nlabel = labels.get(label);
-			if (nlabel == null) {
-				return this;
-			} else {
-				return LoopEnd(nlabel);
-			}
-		}
-
-		public int hashCode() {
-			return label.hashCode();
-		}
-
-		public boolean equals(Object o) {
-			if (o instanceof LoopEnd) {
-				LoopEnd e = (LoopEnd) o;
-				return e.label.equals(label);
-			}
-			return false;
-		}
-
-		public String toString() {
-			return "end " + label;
-		}
-	}
-
-	/**
 	 * An abstract class representing either an <code>assert</code> or
 	 * <code>assume</code> bytecode block.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
-	public static abstract class AssertOrAssume extends Code.Unit {
-		public final String target;
-				
-
-		private AssertOrAssume(String target) {
-			this.target = target;
+	public static abstract class AssertOrAssume extends Code.Compound {
+		private AssertOrAssume(Collection<Code> bytecodes) {
+			super(bytecodes);
 		}
 	}
 	/**
 	 * Represents a block of bytecode instructions representing an assertion.
-	 * 
+	 *
 	 * @author David J. Pearce
 	 *
 	 */
-	public static final class Assert extends AssertOrAssume {
-		
-		private Assert(String target) {
-			super(target);
+	public static class Assert extends AssertOrAssume {
+
+		private Assert(Collection<Code> bytecodes) {
+			super(bytecodes);
 		}
-		
+
 		public int opcode() {
 			return OPCODE_assertblock;
 		}
-		
+
 		public String toString() {
-			return "assert " + target;
+			return "assert";
+		}
+
+		public int hashCode() {
+			return bytecodes.hashCode();
+		}
+
+		public boolean equals(Object o) {
+			if (o instanceof Assert) {
+				Assert f = (Assert) o;
+				return bytecodes.equals(f.bytecodes);
+			}
+			return false;
+		}
+
+		@Override
+		public Assert clone() {
+			return new Assert(bytecodes);
 		}
 	}
-	
+
 	/**
 	 * Represents a block of bytecode instructions representing an assumption.
-	 * 
+	 *
 	 * @author David J. Pearce
 	 *
 	 */
 	public static final class Assume extends AssertOrAssume {
-		
-		private Assume(String target) {
-			super(target);
+
+		private Assume(Collection<Code> bytecodes) {
+			super(bytecodes);
 		}
-		
+
 		public int opcode() {
 			return OPCODE_assumeblock;
 		}
-		
+
 		public String toString() {
-			return "assume " + target;
+			return "assume ";
+		}
+		
+		public int hashCode() {
+			return bytecodes.hashCode();
+		}
+
+		public boolean equals(Object o) {
+			if (o instanceof Assume) {
+				Assume f = (Assume) o;
+				return bytecodes.equals(f.bytecodes);
+			}
+			return false;
+		}
+
+		@Override
+		public Assume clone() {
+			return new Assume(bytecodes);
 		}
 	}
-	
+
 	/**
 	 * A bytecode that halts execution by raising a runtime fault. This bytecode
 	 * signals that some has gone wrong, and is typically used to signal an
 	 * assertion failure.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class Fail extends Code.Unit {
-		public final Constant.Strung message;
-		
-		private Fail(String message) {
-			this.message = Constant.V_STRING(message);
+		private Fail() {		
 		}
 
 		@Override
@@ -1056,39 +1025,35 @@ public abstract class Codes {
 		}
 
 		public String toString() {
-			if(message == null) {
-				return "fail";
-			} else {
-				return "fail \"" + message + "\"";
-			}
+			return "fail";			
 		}
 	}
-	
+
 	/**
 	 * Reads a record value from an operand register, extracts the value of a
 	 * given field and writes this to the target register. For example, the
 	 * following Whiley code:
-	 * 
+	 *
 	 * <pre>
 	 * type Point is {int x, int y}
-	 * 
-	 * function f(Point p) => int:
+	 *
+	 * function f(Point p) -> int:
 	 *     return p.x + p.y
 	 * </pre>
-	 * 
+	 *
 	 * can be translated into the following WyIL code:
-	 * 
+	 *
 	 * <pre>
-	 * function f({int x,int y} p) => int:
-	 * body:         
-	 *     fieldload %2 = %0 x    : {int x,int y}            
-	 *     fieldload %3 = %0 y    : {int x,int y}    
-	 *     add %1 = %2, %3        : int                  
+	 * function f({int x,int y} p) -> int:
+	 * body:
+	 *     fieldload %2 = %0 x    : {int x,int y}
+	 *     fieldload %3 = %0 y    : {int x,int y}
+	 *     add %1 = %2, %3        : int
 	 *     return %1              : int
 	 * </pre>
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class FieldLoad extends
 			AbstractUnaryAssignable<Type.EffectiveRecord> {
@@ -1142,43 +1107,43 @@ public abstract class Codes {
 	/**
 	 * Branches unconditionally to the given label. This is typically used for
 	 * if/else statements. For example, the following Whiley code:
-	 * 
+	 *
 	 * <pre>
-	 * function f(int x) => int:
+	 * function f(int x) -> int:
 	 *     if x >= 0:
 	 *         x = 1
 	 *     else:
 	 *         x = -1
 	 *     return x
 	 * </pre>
-	 * 
+	 *
 	 * can be translated into the following WyIL code:
-	 * 
+	 *
 	 * <pre>
-	 * function f(int x) => int:
-	 * body:                   
-	 *     const %1 = 0             : int                      
-	 *     iflt %0, %1 goto blklab0 : int          
-	 *     const %0 = 1             : int                      
-	 *     goto blklab1                            
-	 * .blklab0                                
-	 *     const %0 = 1             : int                      
-	 *     neg %0 = % 0             : int                      
-	 * .blklab1                                                  
+	 * function f(int x) -> int:
+	 * body:
+	 *     const %1 = 0             : int
+	 *     iflt %0, %1 goto blklab0 : int
+	 *     const %0 = 1             : int
+	 *     goto blklab1
+	 * .blklab0
+	 *     const %0 = 1             : int
+	 *     neg %0 = % 0             : int
+	 * .blklab1
 	 *     return %0                : int
 	 * </pre>
-	 * 
+	 *
 	 * Here, we see the <code>goto</code> bytecode being used to jump from the
 	 * end of the true branch over the false branch.
-	 * 
+	 *
 	 * <p>
 	 * <b>Note:</b> in WyIL bytecode, <i>such branches may only go forward</i>.
 	 * Thus, a <code>goto</code> bytecode cannot be used to implement the
 	 * back-edge of a loop. Rather, a loop block must be used for this purpose.
 	 * </p>
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class Goto extends Code.Unit {
 		public final String target;
@@ -1234,9 +1199,9 @@ public abstract class Codes {
 	 * the given type, which additionally must be a set.</li>
 	 * </ul>
 	 * For example, the following Whiley code:
-	 * 
+	 *
 	 * <pre>
-	 * function f(int x, int y) => int:
+	 * function f(int x, int y) -> int:
 	 *     if x < y:
 	 *         return -1
 	 *     else if x > y:
@@ -1244,30 +1209,30 @@ public abstract class Codes {
 	 *     else:
 	 *         return 0
 	 * </pre>
-	 * 
+	 *
 	 * can be translated into the following WyIL code:
-	 * 
+	 *
 	 * <pre>
-	 * function f(int x, int y) => int:
-	 * body: 
-	 *     ifge %0, %1 goto blklab0 : int          
-	 *     const %2 = -1 : int                                          
-	 *     return %2 : int                         
-	 * .blklab0                                
-	 *     ifle %0, %1 goto blklab2 : int          
-	 *     const %2 = 1 : int                      
-	 *     return %2 : int                         
-	 * .blklab2                                
-	 *     const %2 = 0 : int                      
+	 * function f(int x, int y) -> int:
+	 * body:
+	 *     ifge %0, %1 goto blklab0 : int
+	 *     const %2 = -1 : int
+	 *     return %2 : int
+	 * .blklab0
+	 *     ifle %0, %1 goto blklab2 : int
+	 *     const %2 = 1 : int
+	 *     return %2 : int
+	 * .blklab2
+	 *     const %2 = 0 : int
 	 *     return %2 : int
 	 * </pre>
-	 * 
+	 *
 	 * <b>Note:</b> in WyIL bytecode, <i>such branches may only go forward</i>.
 	 * Thus, an <code>ifgoto</code> bytecode cannot be used to implement the
 	 * back-edge of a loop. Rather, a loop block must be used for this purpose.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class If extends AbstractBinaryOp<Type> {
 		public final String target;
@@ -1332,9 +1297,9 @@ public abstract class Codes {
 	/**
 	 * Represents a comparison operator (e.g. '==','!=',etc) that is provided to
 	 * a <code>IfGoto</code> bytecode.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public enum Comparator {
 		EQ(0) {
@@ -1397,39 +1362,39 @@ public abstract class Codes {
 	 * type test. On the true branch, its type is intersected with type test. On
 	 * the false branch, its type is intersected with the <i>negation</i> of the
 	 * type test. For example, the following Whiley code:
-	 * 
+	 *
 	 * <pre>
-	 * function f(int|[int] x) => int:
+	 * function f(int|[int] x) -> int:
 	 *     if x is [int]:
 	 *         return |x|
 	 *     else:
 	 *         return x
 	 * </pre>
-	 * 
+	 *
 	 * can be translated into the following WyIL code:
-	 * 
+	 *
 	 * <pre>
-	 * function f(int|[int] x) => int:
-	 * body: 
-	 *     ifis %0, [int] goto lab    : int|[int] 
-	 *     return %0                  : int     
-	 * .lab                                                
-	 *     lengthof %0 = %0           : [int]               
+	 * function f(int|[int] x) -> int:
+	 * body:
+	 *     ifis %0, [int] goto lab    : int|[int]
+	 *     return %0                  : int
+	 * .lab
+	 *     lengthof %0 = %0           : [int]
 	 *     return %0                  : int
 	 * </pre>
-	 * 
+	 *
 	 * Here, we see that, on the false branch, register <code>%0</code> is
 	 * automatically given type <code>int</code>, whilst on the true branch it
 	 * is automatically given type <code>[int]</code>.
-	 * 
+	 *
 	 * <p>
 	 * <b>Note:</b> in WyIL bytecode, <i>such branches may only go forward</i>.
 	 * Thus, an <code>ifis</code> bytecode cannot be used to implement the
 	 * back-edge of a loop. Rather, a loop block must be used for this purpose.
 	 * </p>
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class IfIs extends AbstractUnaryOp<Type> {
 		public final String target;
@@ -1491,17 +1456,17 @@ public abstract class Codes {
 	/**
 	 * Represents an indirect function call. For example, consider the
 	 * following:
-	 * 
+	 *
 	 * <pre>
-	 * function fun(function (int)=>int f, int x) => int:
+	 * function fun(function (int)->int f, int x) -> int:
 	 *    return f(x)
 	 * </pre>
-	 * 
+	 *
 	 * Here, the function call <code>f(x)</code> is indirect as the called
 	 * function is determined by the variable <code>f</code>.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class IndirectInvoke extends
 			AbstractNaryAssignable<Type.FunctionOrMethod> {
@@ -1510,7 +1475,7 @@ public abstract class Codes {
 		 * Construct an indirect invocation bytecode which assigns to an
 		 * optional target register the result from indirectly invoking a
 		 * function in a given operand with a given set of parameter operands.
-		 * 
+		 *
 		 * @param type
 		 * @param target Register (optional) to which result of invocation is assigned.
 		 * @param operand Register holding function point through which indirect invocation is made.
@@ -1523,33 +1488,33 @@ public abstract class Codes {
 
 		/**
 		 * Return register holding the indirect function/method reference.
-		 * 
+		 *
 		 * @return
 		 */
 		public int reference() {
 			return operands()[0];
 		}
-		
+
 		/**
 		 * Return register holding the ith parameter for the invoked function.
-		 * 
+		 *
 		 * @param i
 		 * @return
 		 */
 		public int parameter(int i) {
 			return operands()[i + 1];
 		}
-		
+
 		/**
 		 * Return registers holding parameters for the invoked function.
-		 * 
+		 *
 		 * @param i
 		 * @return
 		 */
 		public int[] parameters() {
 			return Arrays.copyOfRange(operands(),1,operands().length);
 		}
-		
+
 		public int opcode() {
 			if (type() instanceof Type.Function) {
 				if (target() != Codes.NULL_REG) {
@@ -1590,30 +1555,68 @@ public abstract class Codes {
 			}
 		}
 	}
+	
+	/**
+	 * Represents a block of bytecode instructions representing an assertion.
+	 *
+	 * @author David J. Pearce
+	 *
+	 */
+	public static class Invariant extends Assert {
+
+		private Invariant(Collection<Code> bytecodes) {
+			super(bytecodes);
+		}
+
+		public int opcode() {
+			return OPCODE_invariantblock;
+		}
+
+		public String toString() {
+			return "invariant";
+		}
+
+		public int hashCode() {
+			return bytecodes.hashCode();
+		}
+
+		public boolean equals(Object o) {
+			if (o instanceof Invariant) {
+				Invariant f = (Invariant) o;
+				return bytecodes.equals(f.bytecodes);
+			}
+			return false;
+		}
+
+		@Override
+		public Invariant clone() {
+			return new Invariant(bytecodes);
+		}
+	}
 
 	/**
 	 * Read a boolean value from the operand register, inverts it and writes the
 	 * result to the target register. For example, the following Whiley code:
-	 * 
+	 *
 	 * <pre>
-	 * function f(bool x) => bool:
+	 * function f(bool x) -> bool:
 	 *     return !x
 	 * </pre>
-	 * 
+	 *
 	 * can be translated into the following WyIL:
-	 * 
+	 *
 	 * <pre>
-	 * function f(bool x) => bool:
-	 * body:                    
-	 *     not %0 = %0     : int                      
+	 * function f(bool x) -> bool:
+	 * body:
+	 *     not %0 = %0     : int
 	 *     return %0       : int
 	 * </pre>
-	 * 
+	 *
 	 * This simply reads the parameter <code>x</code> stored in register
 	 * <code>%0</code>, inverts it and then returns the inverted value.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class Not extends AbstractUnaryAssignable<Type.Bool> {
 
@@ -1652,40 +1655,40 @@ public abstract class Codes {
 	 * zero or more operand registers. If a return value is required, this is
 	 * written to a target register afterwards. For example, the following
 	 * Whiley code:
-	 * 
+	 *
 	 * <pre>
-	 * function g(int x, int y, int z) => int:
+	 * function g(int x, int y, int z) -> int:
 	 *     return x * y * z
-	 * 
-	 * function f(int x, int y) => int:
+	 *
+	 * function f(int x, int y) -> int:
 	 *     r = g(x,y,3)
 	 *     return r + 1
 	 * </pre>
-	 * 
+	 *
 	 * can be translated into the following WyIL code:
-	 * 
+	 *
 	 * <pre>
-	 * function g(int x, int y, int z) => int:
-	 * body: 
-	 *     mul %3 = %0, %1   : int                                    
-	 *     mul %3 = %3, %2   : int                  
-	 *     return %3         : int                         
-	 * 
-	 * function f(int x, int y) => int:
-	 * body:              
-	 *     const %2 = 3                    : int                      
-	 *     invoke %2 = (%0, %1, %2) test:g   : int(int,int,int)                  
-	 *     const %3 = 1                    : int                      
-	 *     add %2 = (%2, %3)                : int                  
+	 * function g(int x, int y, int z) -> int:
+	 * body:
+	 *     mul %3 = %0, %1   : int
+	 *     mul %3 = %3, %2   : int
+	 *     return %3         : int
+	 *
+	 * function f(int x, int y) -> int:
+	 * body:
+	 *     const %2 = 3                    : int
+	 *     invoke %2 = (%0, %1, %2) test:g   : int(int,int,int)
+	 *     const %3 = 1                    : int
+	 *     add %2 = (%2, %3)                : int
 	 *     return %2                       : int
 	 * </pre>
-	 * 
+	 *
 	 * Here, we see that arguments to the <code>invoke</code> bytecode are
 	 * supplied in the order they are given in the function or method's
 	 * declaration.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class Invoke extends
 			AbstractNaryAssignable<Type.FunctionOrMethod> {
@@ -1792,9 +1795,9 @@ public abstract class Codes {
 
 	/**
 	 * Represents the labelled destination of a branch or loop statement.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static class Label extends Code.Unit {
 		public final String label;
@@ -1837,16 +1840,6 @@ public abstract class Codes {
 			public String toString() {
 				return "append";
 			}
-		},
-		LEFT_APPEND(1) {
-			public String toString() {
-				return "appendl";
-			}
-		},
-		RIGHT_APPEND(2) {
-			public String toString() {
-				return "appendr";
-			}
 		};
 		public final int offset;
 
@@ -1859,26 +1852,26 @@ public abstract class Codes {
 	 * Reads the (effective) list values from two operand registers, performs an
 	 * operation (e.g. append) on them and writes the result back to a target
 	 * register. For example, the following Whiley code:
-	 * 
+	 *
 	 * <pre>
-	 * function f([int] xs, [int] ys) => [int]:
+	 * function f([int] xs, [int] ys) -> [int]:
 	 *    return xs ++ ys
 	 * </pre>
-	 * 
+	 *
 	 * can be translated into the following WyIL code:
-	 * 
+	 *
 	 * <pre>
-	 * function f([int] xs, [int] ys) => [int]:
-	 * body: 
-	 *    append %2 = %0, %1   : [int]             
+	 * function f([int] xs, [int] ys) -> [int]:
+	 * body:
+	 *    append %2 = %0, %1   : [int]
 	 *    return %2            : [int]
 	 * </pre>
-	 * 
+	 *
 	 * This appends two the parameter lists together writting the new list into
 	 * register <code>%2</code>.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class ListOperator extends
 			AbstractBinaryAssignable<Type.EffectiveList> {
@@ -1926,23 +1919,23 @@ public abstract class Codes {
 	 * Reads an (effective) collection (i.e. a set, list or map) from the
 	 * operand register, and writes its length into the target register. For
 	 * example, the following Whiley code:
-	 * 
+	 *
 	 * <pre>
-	 * function f([int] ls) => int:
+	 * function f([int] ls) -> int:
 	 *     return |ls|
 	 * </pre>
-	 * 
+	 *
 	 * translates to the following WyIL code:
-	 * 
+	 *
 	 * <pre>
-	 * function f([int] ls) => int:
-	 * body:                  
-	 *     lengthof %0 = %0   : [int]               
+	 * function f([int] ls) -> int:
+	 * body:
+	 *     lengthof %0 = %0   : [int]
 	 *     return %0          : int
 	 * </pre>
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class LengthOf extends
 			AbstractUnaryAssignable<Type.EffectiveCollection> {
@@ -1978,9 +1971,9 @@ public abstract class Codes {
 	 * Reads the (effective) list value from a source operand register, and the
 	 * integer values from two index operand registers, computes the sublist and
 	 * writes the result back to a target register.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class SubList extends
 			AbstractNaryAssignable<Type.EffectiveList> {
@@ -2013,28 +2006,28 @@ public abstract class Codes {
 	 * and a key value from the key (right) operand register and returns the
 	 * value associated with that key. If the key does not exist, then a fault
 	 * is raised. For example, the following Whiley code:
-	 * 
+	 *
 	 * <pre>
-	 * function f({int=>string} map, int key) => string:
+	 * function f({int=>string} map, int key) -> string:
 	 *     return map[key]
 	 * </pre>
-	 * 
+	 *
 	 * can be translated into the following WyIL code:
-	 * 
+	 *
 	 * <pre>
-	 * function f({int->string} map, int key) => string:
-	 * body: 
+	 * function f({int->string} map, int key) -> string:
+	 * body:
 	 *     assertky %1, %0 "invalid key"       : {int->string}
-	 *     indexof %2 = %0, %1                 : {int->string}    
+	 *     indexof %2 = %0, %1                 : {int->string}
 	 *     return %2                          : string
 	 * </pre>
-	 * 
+	 *
 	 * Here, we see the <code>assertky</code> bytecode is used to first check
 	 * that the given key exists in <code>map</code>, otherwise a fault is
 	 * raised.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class IndexOf extends
 			AbstractBinaryAssignable<Type.EffectiveIndexible> {
@@ -2075,31 +2068,31 @@ public abstract class Codes {
 	 * that the register is no longer live, which is useful for determining the
 	 * live ranges of registers in a function or method. For example, the
 	 * following Whiley code:
-	 * 
+	 *
 	 * <pre>
-	 * function f(int x, int y) => int:
+	 * function f(int x, int y) -> int:
 	 *     x = x + 1
 	 *     return x
 	 * </pre>
-	 * 
+	 *
 	 * can be translated into the following WyIL code:
-	 * 
+	 *
 	 * <pre>
-	 * function f(int x, int y) => int:
-	 * body: 
-	 *     ifge %0, %1 goto blklab0  : int          
-	 *     move %0 = %1              : int                   
-	 * .blklab0                                                   
+	 * function f(int x, int y) -> int:
+	 * body:
+	 *     ifge %0, %1 goto blklab0  : int
+	 *     move %0 = %1              : int
+	 * .blklab0
 	 *     return %0                 : int
 	 * </pre>
-	 * 
+	 *
 	 * Here we see that when <code>x < y</code> the value of <code>y</code>
 	 * (held in register <code>%1</code>) is <i>moved</i> into variable
 	 * <code>x</code> (held in register <code>%0</code>). This is safe because
 	 * register <code>%1</code> is no longer live at that point.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class Move extends AbstractUnaryAssignable<Type> {
 
@@ -2130,30 +2123,30 @@ public abstract class Codes {
 	/**
 	 * Represents a block of code which loops continuously until e.g. a
 	 * conditional branch is taken out of the block. For example:
-	 * 
+	 *
 	 * <pre>
-	 * function f() => int:
+	 * function f() -> int:
 	 *     r = 0
 	 *     while r < 10:
 	 *         r = r + 1
 	 *     return r
 	 * </pre>
-	 * 
+	 *
 	 * can be translated into the following WyIL code:
-	 * 
+	 *
 	 * <pre>
-	 * function f() => int:
-	 * body: 
-	 *     const %0 = 0             : int                      
-	 *     loop (%0)                                                    
-	 *         const %1 = 10        : int                     
-	 *         ifge %0, %1 goto blklab0 : int                             
-	 *         const %1 = 1         : int                      
+	 * function f() -> int:
+	 * body:
+	 *     const %0 = 0             : int
+	 *     loop (%0)
+	 *         const %1 = 10        : int
+	 *         ifge %0, %1 goto blklab0 : int
+	 *         const %1 = 1         : int
 	 *         add %0 = %0, %1      : int
-	 * .blklab0                                     
+	 * .blklab0
 	 *     return %0                : int
 	 * </pre>
-	 * 
+	 *
 	 * <p>
 	 * Here, we see a loop which increments an accumulator register
 	 * <code>%0</code> until it reaches <code>10</code>, and then exits the loop
@@ -2164,16 +2157,20 @@ public abstract class Codes {
 	 * alongside the bytecode) indicate those operands which are modified at
 	 * some point within the loop.
 	 * </p>
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
-	public static class Loop extends Code.Unit {
-		public final String target;
+	public static class Loop extends Code.Compound {
 		public final int[] modifiedOperands;
 
-		private Loop(String target, int[] modifies) {
-			this.target = target;
+		private Loop(int[] modifies, Code... codes) {
+			super(codes);
+			this.modifiedOperands = modifies;
+		}
+
+		private Loop(int[] modifies, Collection<Code> codes) {
+			super(codes);
 			this.modifiedOperands = modifies;
 		}
 
@@ -2181,43 +2178,45 @@ public abstract class Codes {
 			return OPCODE_loop;
 		}
 
-		public Loop relabel(Map<String, String> labels) {
-			String nlabel = labels.get(target);
-			if (nlabel == null) {
-				return this;
-			} else {
-				return Loop(nlabel, modifiedOperands);
-			}
-		}
-
 		@Override
-		public void registers(java.util.Set<Integer> registers) {
-			for (int operand : modifiedOperands) {
-				registers.add(operand);
-			}
-		}
-
-		@Override
-		public Code.Unit remap(Map<Integer, Integer> binding) {
+		public Code.Compound remap(Map<Integer, Integer> binding) {
 			int[] nOperands = remapOperands(binding, modifiedOperands);
-			if (nOperands != modifiedOperands) {
-				return Loop(target, nOperands);
+			ArrayList<Code> bytecodes = this.bytecodes;
+
+			for (int i = 0; i != bytecodes.size(); ++i) {
+				Code code = bytecodes.get(i);
+				Code nCode = code.remap(binding);
+				if (code != nCode) {
+					if (bytecodes == this.bytecodes) {
+						bytecodes = new ArrayList<Code>(bytecodes);
+					}
+					bytecodes.set(i, nCode);
+				}
+			}
+
+			if (nOperands != modifiedOperands || bytecodes != this.bytecodes) {
+				return Loop(nOperands, bytecodes);
 			} else {
 				return this;
 			}
 		}
 
 		public int hashCode() {
-			return target.hashCode() + Arrays.hashCode(modifiedOperands);
+			return bytecodes.hashCode() + Arrays.hashCode(modifiedOperands);
 		}
 
 		public boolean equals(Object o) {
 			if (o instanceof Loop) {
 				Loop f = (Loop) o;
-				return target.equals(f.target)
+				return bytecodes.equals(f.bytecodes)
 						&& Arrays.equals(modifiedOperands, f.modifiedOperands);
 			}
 			return false;
+		}
+
+		@Override
+		public Loop clone() {
+			return new Loop(modifiedOperands,bytecodes);
 		}
 
 		public String toString() {
@@ -2229,18 +2228,26 @@ public abstract class Codes {
 	 * Pops a set, list or map from the stack and iterates over every element it
 	 * contains. A register is identified to hold the current value being
 	 * iterated over.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
-	public static final class ForAll extends Loop {
+	public static class ForAll extends Loop {
 		public final int sourceOperand;
 		public final int indexOperand;
 		public final Type.EffectiveCollection type;
 
 		private ForAll(Type.EffectiveCollection type, int sourceOperand,
-				int indexOperand, int[] modifies, String target) {
-			super(target, modifies);
+				int indexOperand, int[] modifies, Collection<Code> bytecodes) {
+			super(modifies, bytecodes);
+			this.type = type;
+			this.sourceOperand = sourceOperand;
+			this.indexOperand = indexOperand;
+		}
+
+		private ForAll(Type.EffectiveCollection type, int sourceOperand,
+				int indexOperand, int[] modifies, Code[] bytecodes) {
+			super(modifies, bytecodes);
 			this.type = type;
 			this.sourceOperand = sourceOperand;
 			this.indexOperand = indexOperand;
@@ -2248,16 +2255,6 @@ public abstract class Codes {
 
 		public int opcode() {
 			return OPCODE_forall;
-		}
-
-		public ForAll relabel(Map<String, String> labels) {
-			String nlabel = labels.get(target);
-			if (nlabel == null) {
-				return this;
-			} else {
-				return ForAll(type, sourceOperand, indexOperand,
-						modifiedOperands, nlabel);
-			}
 		}
 
 		@Override
@@ -2268,19 +2265,31 @@ public abstract class Codes {
 		}
 
 		@Override
-		public Code.Unit remap(Map<Integer, Integer> binding) {
+		public Code.Compound remap(Map<Integer, Integer> binding) {
 			int[] nModifiedOperands = remapOperands(binding, modifiedOperands);
+			ArrayList<Code> bytecodes = this.bytecodes;
+
+			for (int i = 0; i != bytecodes.size(); ++i) {
+				Code code = bytecodes.get(i);
+				Code nCode = code.remap(binding);
+				if (code != nCode) {
+					if (bytecodes == this.bytecodes) {
+						bytecodes = new ArrayList<Code>(bytecodes);
+					}
+					bytecodes.set(i, nCode);
+				}
+			}
 			Integer nIndexOperand = binding.get(indexOperand);
 			Integer nSourceOperand = binding.get(sourceOperand);
 			if (nSourceOperand != null || nIndexOperand != null
-					|| nModifiedOperands != modifiedOperands) {
+					|| nModifiedOperands != modifiedOperands || bytecodes != this.bytecodes) {
 				nSourceOperand = nSourceOperand != null ? nSourceOperand
 						: sourceOperand;
 				nIndexOperand = nIndexOperand != null ? nIndexOperand
 						: indexOperand;
 
 				return ForAll(type, nSourceOperand, nIndexOperand,
-						nModifiedOperands, target);
+						nModifiedOperands, bytecodes);
 			} else {
 				return this;
 			}
@@ -2294,10 +2303,11 @@ public abstract class Codes {
 		public boolean equals(Object o) {
 			if (o instanceof ForAll) {
 				ForAll f = (ForAll) o;
-				return target.equals(f.target) && type.equals(f.type)
+				return type.equals(f.type)
 						&& sourceOperand == f.sourceOperand
 						&& indexOperand == f.indexOperand
-						&& Arrays.equals(modifiedOperands, f.modifiedOperands);
+						&& Arrays.equals(modifiedOperands, f.modifiedOperands)
+						&& bytecodes.equals(f.bytecodes);
 			}
 			return false;
 		}
@@ -2308,13 +2318,70 @@ public abstract class Codes {
 		}
 	}
 
+	public static final class Quantify extends ForAll {
+		
+		private Quantify(Type.EffectiveCollection type, int sourceOperand,
+				int indexOperand, int[] modifies, Collection<Code> bytecodes) {
+			super(type,sourceOperand,indexOperand, modifies, bytecodes);
+		}
+		
+		private Quantify(Type.EffectiveCollection type, int sourceOperand,
+				int indexOperand, int[] modifies, Code... bytecodes) {
+			super(type,sourceOperand,indexOperand, modifies, bytecodes);
+		}
+		
+		public int opcode() {
+			return OPCODE_quantify;
+		}
+		
+		@Override
+		public Code.Compound remap(Map<Integer, Integer> binding) {
+			int[] nModifiedOperands = remapOperands(binding, modifiedOperands);
+			ArrayList<Code> bytecodes = this.bytecodes;
+
+			for (int i = 0; i != bytecodes.size(); ++i) {
+				Code code = bytecodes.get(i);
+				Code nCode = code.remap(binding);
+				if (code != nCode) {
+					if (bytecodes == this.bytecodes) {
+						bytecodes = new ArrayList<Code>(bytecodes);
+					}
+					bytecodes.set(i, nCode);
+				}
+			}
+			Integer nIndexOperand = binding.get(indexOperand);
+			Integer nSourceOperand = binding.get(sourceOperand);
+			if (nSourceOperand != null || nIndexOperand != null
+					|| nModifiedOperands != modifiedOperands || bytecodes != this.bytecodes) {
+				nSourceOperand = nSourceOperand != null ? nSourceOperand
+						: sourceOperand;
+				nIndexOperand = nIndexOperand != null ? nIndexOperand
+						: indexOperand;
+
+				return Quantify(type, nSourceOperand, nIndexOperand,
+						nModifiedOperands, bytecodes);
+			} else {
+				return this;
+			}
+		}
+		
+		public boolean equals(Object o) {
+			return super.equals(o) && o instanceof Quantify;
+		}
+		
+		public String toString() {
+			return "quantify %" + indexOperand + " in %" + sourceOperand + " "
+					+ arrayToString(modifiedOperands) + " : " + type;
+		}
+	}
+	
 	/**
 	 * Represents a type which may appear on the left of an assignment
 	 * expression. Lists, Dictionaries, Strings, Records and References are the
 	 * only valid types for an lval.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static abstract class LVal<T> {
 		protected T type;
@@ -2330,9 +2397,9 @@ public abstract class Codes {
 
 	/**
 	 * An LVal with map type.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class MapLVal extends LVal<Type.EffectiveMap> {
 		public final int keyOperand;
@@ -2345,9 +2412,9 @@ public abstract class Codes {
 
 	/**
 	 * An LVal with list type.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class ListLVal extends LVal<Type.EffectiveList> {
 		public final int indexOperand;
@@ -2360,9 +2427,9 @@ public abstract class Codes {
 
 	/**
 	 * An LVal with list type.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class ReferenceLVal extends LVal<Type.Reference> {
 		public ReferenceLVal(Type.Reference t) {
@@ -2371,25 +2438,10 @@ public abstract class Codes {
 	}
 
 	/**
-	 * An LVal with string type.
-	 * 
-	 * @author David J. Pearce
-	 * 
-	 */
-	public static final class StringLVal extends LVal<Type.EffectiveIndexible> {
-		public final int indexOperand;
-
-		public StringLVal(int indexOperand) {
-			super(Type.T_STRING);
-			this.indexOperand = indexOperand;
-		}
-	}
-
-	/**
 	 * An LVal with record type.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class RecordLVal extends LVal<Type.EffectiveRecord> {
 		public final String field;
@@ -2422,10 +2474,7 @@ public abstract class Codes {
 		public LVal next() {
 			Type raw = iter;
 			index--;
-			if (Type.isSubtype(Type.T_STRING, iter)) {
-				iter = Type.T_CHAR;
-				return new StringLVal(operands[operandIndex++]);
-			} else if (Type.isSubtype(Type.Reference(Type.T_ANY), iter)) {
+			if (Type.isSubtype(Type.Reference(Type.T_ANY), iter)) {
 				Type.Reference proc = Type.effectiveReference(iter);
 				iter = proc.element();
 				return new ReferenceLVal(proc);
@@ -2472,9 +2521,9 @@ public abstract class Codes {
 	 * Thus, the worst-case runtime of this operation is linear in the size of
 	 * the compound structure.
 	 * </p>
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class Update extends AbstractNaryAssignable<Type>
 			implements Iterable<LVal> {
@@ -2486,7 +2535,7 @@ public abstract class Codes {
 		 * set of target registers. For indirect map/list updates, an additional
 		 * set of operands is used to generate the appropriate keys. For field
 		 * assignments, a set of fields is provided.
-		 * 
+		 *
 		 * @param beforeType
 		 * @param target
 		 *            Register being assigned
@@ -2521,7 +2570,7 @@ public abstract class Codes {
 			this.afterType = afterType;
 			this.fields = new ArrayList<String>(fields);
 		}
-		
+
 		public int opcode() {
 			return OPCODE_update;
 		}
@@ -2529,33 +2578,33 @@ public abstract class Codes {
 		/**
 		 * Returns register from which assigned value is read. This is also
 		 * known as the "right-hand side".
-		 * 
+		 *
 		 * @return
 		 */
 		public int result() {
 			return operands()[operands().length-1];
 		}
-		
+
 		/**
 		 * Get the given key register (in order of appearance from the left)
 		 * used in a map or list update.
-		 * 
+		 *
 		 * @param index
 		 * @return
 		 */
 		public int key(int index) {
 			return operands()[index];
 		}
-		
+
 		/**
 		 * Return the registers used to hold key values for map or list updates.
-		 * 
+		 *
 		 * @return
 		 */
 		public int[] keys() {
 			return Arrays.copyOf(operands(),operands().length-1);
 		}
-		
+
 		public int level() {
 			int base = -1; // because last operand is rhs
 			if (type() instanceof Type.Reference) {
@@ -2574,7 +2623,7 @@ public abstract class Codes {
 
 		/**
 		 * Extract the type for the right-hand side of this assignment.
-		 * 
+		 *
 		 * @return
 		 */
 		public Type rhs() {
@@ -2582,9 +2631,7 @@ public abstract class Codes {
 
 			int fieldIndex = 0;
 			for (int i = 0; i != level(); ++i) {
-				if (Type.isSubtype(Type.T_STRING, iter)) {
-					iter = Type.T_CHAR;
-				} else if (Type.isSubtype(Type.Reference(Type.T_ANY), iter)) {
+				if (Type.isSubtype(Type.Reference(Type.T_ANY), iter)) {
 					Type.Reference proc = Type.effectiveReference(iter);
 					iter = proc.element();
 				} else if (iter instanceof Type.EffectiveList) {
@@ -2627,9 +2674,6 @@ public abstract class Codes {
 				if (lv instanceof ListLVal) {
 					ListLVal l = (ListLVal) lv;
 					r = r + "[%" + l.indexOperand + "]";
-				} else if (lv instanceof StringLVal) {
-					StringLVal l = (StringLVal) lv;
-					r = r + "[%" + l.indexOperand + "]";
 				} else if (lv instanceof MapLVal) {
 					MapLVal l = (MapLVal) lv;
 					r = r + "[%" + l.keyOperand + "]";
@@ -2650,28 +2694,28 @@ public abstract class Codes {
 	 * Constructs a map value from zero or more key-value pairs on the stack.
 	 * For each pair, the key must occur directly before the value on the stack.
 	 * For example, consider the following Whiley function <code>f()</code>:
-	 * 
+	 *
 	 * <pre>
-	 * function f() => {int=>string}:
+	 * function f() -> {int=>string}:
 	 *     return {1=>"Hello",2=>"World"}
 	 * </pre>
-	 * 
+	 *
 	 * This could be compiled into the following WyIL code using this bytecode:
-	 * 
+	 *
 	 * <pre>
-	 * function f() => {int->string}:
+	 * function f() -> {int->string}:
 	 * body:
-	 *   const %1 = 1                   : int                           
-	 *   const %2 = "Hello"             : string                  
-	 *   const %3 = 2                   : int                           
-	 *   const %4 = "World"             : string                  
+	 *   const %1 = 1                   : int
+	 *   const %2 = "Hello"             : string
+	 *   const %3 = 2                   : int
+	 *   const %4 = "World"             : string
 	 *   newmap %0 = (%1, %2, %3, %4)   : {int=>string}
 	 *   return %0                      : {int=>string}
 	 * </pre>
-	 * 
-	 * 
+	 *
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class NewMap extends AbstractNaryAssignable<Type.Map> {
 
@@ -2705,27 +2749,27 @@ public abstract class Codes {
 	 * register, each of which is associated with a field name. The new record
 	 * value is then written into the target register. For example, the
 	 * following Whiley code:
-	 * 
+	 *
 	 * <pre>
 	 * type Point is {real x, real y}
-	 * 
-	 * function f(real x, real y) => Point:
+	 *
+	 * function f(real x, real y) -> Point:
 	 *     return {x: x, y: x}
 	 * </pre>
-	 * 
+	 *
 	 * can be translated into the following WyIL:
-	 * 
+	 *
 	 * <pre>
-	 * function f(real x, real y) => Point:
-	 * body: 
-	 *     assign %3 = %0         : real                  
-	 *     assign %4 = %0         : real                  
-	 *     newrecord %2 (%3, %4)  : {real x,real y}    
+	 * function f(real x, real y) -> Point:
+	 * body:
+	 *     assign %3 = %0         : real
+	 *     assign %4 = %0         : real
+	 *     newrecord %2 (%3, %4)  : {real x,real y}
 	 *     return %2              : {real x,real y}
 	 * </pre>
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class NewRecord extends
 			AbstractNaryAssignable<Type.Record> {
@@ -2758,28 +2802,28 @@ public abstract class Codes {
 	 * Constructs a new tuple value from the values given by zero or more
 	 * operand registers. The new tuple is then written into the target
 	 * register. For example, the following Whiley code:
-	 * 
+	 *
 	 * <pre>
-	 * function f(int x, int y) => (int,int):
+	 * function f(int x, int y) -> (int,int):
 	 *     return x,y
 	 * </pre>
-	 * 
+	 *
 	 * can be translated into the following WyIL code:
-	 * 
+	 *
 	 * <pre>
-	 * function f(int x, int y) => (int,int):
-	 * body: 
-	 *     assign %3 = %0          : int                   
-	 *     assign %4 = %1          : int                   
-	 *     newtuple %2 = (%3, %4)  : (int,int)         
+	 * function f(int x, int y) -> (int,int):
+	 * body:
+	 *     assign %3 = %0          : int
+	 *     assign %4 = %1          : int
+	 *     newtuple %2 = (%3, %4)  : (int,int)
 	 *     return %2               : (int,int)
 	 * </pre>
-	 * 
+	 *
 	 * This writes the tuple value generated from <code>(x,y)</code> into
 	 * register <code>%2</code> and returns it.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class NewTuple extends
 			AbstractNaryAssignable<Type.Tuple> {
@@ -2813,29 +2857,29 @@ public abstract class Codes {
 	 * Constructs a new set value from the values given by zero or more operand
 	 * registers. The new set is then written into the target register. For
 	 * example, the following Whiley code:
-	 * 
+	 *
 	 * <pre>
-	 * function f(int x, int y, int z) => {int}:
+	 * function f(int x, int y, int z) -> {int}:
 	 *     return {x,y,z}
 	 * </pre>
-	 * 
+	 *
 	 * can be translated into the following WyIL code:
-	 * 
+	 *
 	 * <pre>
-	 * function f(int x, int y, int z) => {int}:
-	 * body: 
-	 *    assign %4 = %0             : int                   
-	 *    assign %5 = %1             : int                   
-	 *    assign %6 = %2             : int                   
-	 *    newset %3 = (%4, %5, %6)   : [int]            
+	 * function f(int x, int y, int z) -> {int}:
+	 * body:
+	 *    assign %4 = %0             : int
+	 *    assign %5 = %1             : int
+	 *    assign %6 = %2             : int
+	 *    newset %3 = (%4, %5, %6)   : [int]
 	 *    return %3                  : [int]
 	 * </pre>
-	 * 
+	 *
 	 * Writes the set value given by <code>{x,y,z}</code> into register
 	 * <code>%3</code> and returns it.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class NewSet extends AbstractNaryAssignable<Type.Set> {
 
@@ -2868,29 +2912,29 @@ public abstract class Codes {
 	 * Constructs a new list value from the values given by zero or more operand
 	 * registers. The new list is then written into the target register. For
 	 * example, the following Whiley code:
-	 * 
+	 *
 	 * <pre>
-	 * function f(int x, int y, int z) => [int]:
+	 * function f(int x, int y, int z) -> [int]:
 	 *     return [x,y,z]
 	 * </pre>
-	 * 
+	 *
 	 * can be translated into the following WyIL code:
-	 * 
+	 *
 	 * <pre>
-	 * function f(int x, int y, int z) => [int]:
-	 * body: 
-	 *    assign %4 = %0             : int                   
-	 *    assign %5 = %1             : int                   
-	 *    assign %6 = %2             : int                   
-	 *    newlist %3 = (%4, %5, %6)  : [int]            
+	 * function f(int x, int y, int z) -> [int]:
+	 * body:
+	 *    assign %4 = %0             : int
+	 *    assign %5 = %1             : int
+	 *    assign %6 = %2             : int
+	 *    newlist %3 = (%4, %5, %6)  : [int]
 	 *    return %3                  : [int]
 	 * </pre>
-	 * 
+	 *
 	 * Writes the list value given by <code>[x,y,z]</code> into register
 	 * <code>%3</code> and returns it.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class NewList extends AbstractNaryAssignable<Type.List> {
 
@@ -2922,9 +2966,9 @@ public abstract class Codes {
 	/**
 	 * Represents a no-operation bytecode which, as the name suggests, does
 	 * nothing.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class Nop extends Code.Unit {
 		private Nop() {
@@ -2943,28 +2987,28 @@ public abstract class Codes {
 	/**
 	 * Returns from the enclosing function or method, possibly returning a
 	 * value. For example, the following Whiley code:
-	 * 
+	 *
 	 * <pre>
-	 * function f(int x, int y) => int:
+	 * function f(int x, int y) -> int:
 	 *     return x + y
 	 * </pre>
-	 * 
+	 *
 	 * can be translated into the following WyIL:
-	 * 
+	 *
 	 * <pre>
-	 * function f(int x, int y) => int:
-	 * body: 
-	 *     assign %3 = %0    : int                   
-	 *     assign %4 = %1    : int                   
-	 *     add %2 = % 3, %4  : int                  
+	 * function f(int x, int y) -> int:
+	 * body:
+	 *     assign %3 = %0    : int
+	 *     assign %4 = %1    : int
+	 *     add %2 = % 3, %4  : int
 	 *     return %2         : int
 	 * </pre>
-	 * 
+	 *
 	 * Here, the
 	 * <code>return<code> bytecode returns the value of its operand register.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class Return extends AbstractUnaryOp<Type> {
 
@@ -3013,40 +3057,15 @@ public abstract class Codes {
 			public String toString() {
 				return "union";
 			}
-		},
-		LEFT_UNION(1) {
-			public String toString() {
-				return "unionl";
-			}
-		},
-		RIGHT_UNION(2) {
-			public String toString() {
-				return "unionl";
-			}
-		},
-		INTERSECTION(3) {
+		},		
+		INTERSECTION(1) {
 			public String toString() {
 				return "intersect";
 			}
 		},
-		LEFT_INTERSECTION(4) {
-			public String toString() {
-				return "intersectl";
-			}
-		},
-		RIGHT_INTERSECTION(5) {
-			public String toString() {
-				return "intersectr";
-			}
-		},
-		DIFFERENCE(6) {
+		DIFFERENCE(2) {
 			public String toString() {
 				return "diff";
-			}
-		},
-		LEFT_DIFFERENCE(7) {
-			public String toString() {
-				return "diffl";
 			}
 		};
 		public final int offset;
@@ -3073,43 +3092,43 @@ public abstract class Codes {
 	 * (effective) set element type.</li>
 	 * </ul>
 	 * For example, the following Whiley code:
-	 * 
+	 *
 	 * <pre>
-	 * function f({int} xs, {int} ys) => {int}:
+	 * function f({int} xs, {int} ys) -> {int}:
 	 *     return xs + ys // set union
-	 * 
-	 * function g(int x, {int} ys) => {int}:
+	 *
+	 * function g(int x, {int} ys) -> {int}:
 	 *     return {x} & ys // set intersection
-	 * 
-	 * function h({int} xs, int y) => {int}:
+	 *
+	 * function h({int} xs, int y) -> {int}:
 	 *     return xs - {y} // set difference
 	 * </pre>
-	 * 
+	 *
 	 * can be translated into the following WyIL code:
-	 * 
+	 *
 	 * <pre>
-	 * function f({int} xs, {int} ys) => {int}:
-	 * body: 
-	 *     union %2 = %0, %1  : {int}               
-	 *     return %2          : {int}                       
-	 * 
-	 * function g({int} xs, {int} ys) => {int}:
-	 * body: 
-	 *     rintersect %2 = %0, %1  : {int}           
+	 * function f({int} xs, {int} ys) -> {int}:
+	 * body:
+	 *     union %2 = %0, %1  : {int}
+	 *     return %2          : {int}
+	 *
+	 * function g({int} xs, {int} ys) -> {int}:
+	 * body:
+	 *     rintersect %2 = %0, %1  : {int}
 	 *     return %2               : {int}
-	 *     
-	 * function h({int} xs, {int} ys) => {int}:
-	 * body: 
-	 *     ldiff %2 = %0, %1    : {int}                
+	 *
+	 * function h({int} xs, {int} ys) -> {int}:
+	 * body:
+	 *     ldiff %2 = %0, %1    : {int}
 	 *     return %2            : {int}
 	 * </pre>
-	 * 
+	 *
 	 * Here, we see that the purpose of the <i>left-</i> and <i>right-</i>
 	 * operations is to avoid creating a temporary set in the common case of a
 	 * single element set on one side. This is largely an optimisation and it is
 	 * expected that the front-end of the compiler will spots such situations
 	 * and compile them down appropriately.
-	 * 
+	 *
 	 * @author David J. Pearce
 	 */
 	public static final class SetOperator extends
@@ -3176,129 +3195,15 @@ public abstract class Codes {
 			this.offset = offset;
 		}
 	}
-
-	/**
-	 * <p>
-	 * A binary operation which reads two string values from the operand
-	 * registers, performs an operation (append) on them and writes the result
-	 * to the target register. The binary set operators are:
-	 * </p>
-	 * <ul>
-	 * <li><i>append</i>. Both operands must be have string type.</li>
-	 * <li><i>left append</i>. The left operand must have string type, whilst
-	 * the right operand has char type.</li>
-	 * <li><i>right append</i>. The right operand must have string type, whilst
-	 * the left operand has char type.</li>
-	 * </ul>
-	 * For example, the following Whiley code:
-	 * 
-	 * <pre>
-	 * function f(string xs, string ys) => string:
-	 *     return xs ++ ys
-	 * 
-	 * function g(string xs, char y) => string:
-	 *     return xs ++ y
-	 * </pre>
-	 * 
-	 * can be translated into the following WyIL code:
-	 * 
-	 * <pre>
-	 * function f(string xs, string ys) => string:
-	 * body: 
-	 *     strappend %2 = %0, %2    : string         
-	 *     return %2                : string
-	 *     
-	 * function g(string xs, char y) => string:
-	 * body: 
-	 *     strappend_l %2 = %0, %1  : string       
-	 *     return %2                : string
-	 * </pre>
-	 * 
-	 * Here, we see that the purpose of the <i>left-</i> and <i>right-</i>
-	 * operations is to avoid creating a temporary string in the common case of
-	 * a single char being appended.
-	 * 
-	 * @author David J. Pearce
-	 */
-	public static final class StringOperator extends
-			AbstractBinaryAssignable<Type.Strung> {
-		public final StringOperatorKind kind;
-
-		private StringOperator(int target, int leftOperand, int rightOperand,
-				StringOperatorKind operation) {
-			super(Type.T_STRING, target, leftOperand, rightOperand);
-			if (operation == null) {
-				throw new IllegalArgumentException(
-						"StringBinOp operation cannot be null");
-			}
-			this.kind = operation;
-		}
-
-		@Override
-		public int opcode() {
-			return OPCODE_sappend + kind.offset;
-		}
-
-		protected Code.Unit clone(int nTarget, int[] nOperands) {
-			return StringOperator(nTarget, nOperands[0], nOperands[1], kind);
-		}
-
-		public boolean equals(Object o) {
-			if (o instanceof StringOperator) {
-				StringOperator setop = (StringOperator) o;
-				return kind.equals(setop.kind) && super.equals(o);
-			}
-			return false;
-		}
-
-		public String toString() {
-			return kind + " %" + target() + " = %" + operand(0) + ", %"
-					+ operand(1) + " : " + type();
-		}
-	}
-
-	/**
-	 * Reads the string value from a source operand register, and the integer
-	 * values from two index operand registers, computes the substring and
-	 * writes the result back to a target register.
-	 * 
-	 * @author David J. Pearce
-	 * 
-	 */
-	public static final class SubString extends AbstractNaryAssignable {
-
-		private SubString(int target, int[] operands) {
-			super(Type.T_STRING, target, operands);
-		}
-
-		@Override
-		public int opcode() {
-			return OPCODE_substring;
-		}
-
-		@Override
-		public final Code.Unit clone(int nTarget, int[] nOperands) {
-			return SubString(nTarget, nOperands);
-		}
-
-		public boolean equals(Object o) {
-			return o instanceof SubString && super.equals(o);
-		}
-
-		public String toString() {
-			return "substr %" + target() + " = %" + operands()[0] + ", %"
-					+ operands()[1] + ", %" + operands()[2] + " : " + type();
-		}
-	}
-
+	
 	/**
 	 * Performs a multi-way branch based on the value contained in the operand
 	 * register. A <i>dispatch table</i> is provided which maps individual
 	 * matched values to their destination labels. For example, the following
 	 * Whiley code:
-	 * 
+	 *
 	 * <pre>
-	 * function f(int x) => string:
+	 * function f(int x) -> string:
 	 *     switch x:
 	 *         case 1:
 	 *             return "ONE"
@@ -3307,32 +3212,32 @@ public abstract class Codes {
 	 *         default:
 	 *             return "OTHER"
 	 * </pre>
-	 * 
+	 *
 	 * can be translated into the following WyIL code:
-	 * 
+	 *
 	 * <pre>
-	 * function f(int x) => string:
-	 * body:              
+	 * function f(int x) -> string:
+	 * body:
 	 *     switch %0 1->blklab1, 2->blklab2, *->blklab3
-	 * .blklab1                                
-	 *     const %1 = "ONE" : string               
-	 *     return %1 : string                      
-	 * .blklab2                                
-	 *     const %1 = "TWO" : string               
-	 *     return %1 : string                      
-	 * .blklab3                                
-	 *     const %1 = "OTHER" : string             
+	 * .blklab1
+	 *     const %1 = "ONE" : string
+	 *     return %1 : string
+	 * .blklab2
+	 *     const %1 = "TWO" : string
+	 *     return %1 : string
+	 * .blklab3
+	 *     const %1 = "OTHER" : string
 	 *     return %1 : string
 	 * </pre>
-	 * 
+	 *
 	 * Here, we see how e.g. value <code>1</code> is mapped to the label
 	 * <code>blklab1</code>. Thus, if the operand register <code>%0</code>
 	 * contains value <code>1</code>, then control will be transferred to that
 	 * label. The final mapping <code>*->blklab3</code> covers the default case
 	 * where the value in the operand is not otherwise matched.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class Switch extends AbstractUnaryOp<Type> {
 		public final ArrayList<Pair<Constant, String>> branches;
@@ -3406,248 +3311,29 @@ public abstract class Codes {
 	}
 
 	/**
-	 * Throws an exception containing the value in the given operand register.
-	 * For example, the following Whiley Code:
-	 * 
-	 * <pre>
-	 * function f(int x) => int 
-	 * throws string:
-	 *     if x < 0:
-	 *         throw "ERROR"
-	 *     else:
-	 *         return 1
-	 * </pre>
-	 * 
-	 * can be translated into the following WyIL code:
-	 * 
-	 * <pre>
-	 * function f(int x) => int 
-	 * throws:
-	 * 	   string
-	 * body:             
-	 *     const %1 = 0 : int                      
-	 *     ifge %0, %1 goto blklab0 : int          
-	 *     const %1 = "ERROR" : string             
-	 *     throw %1 : string                       
-	 * .blklab0                                
-	 *     const %1 = 1 : int                      
-	 *     return %1 : int
-	 * </pre>
-	 * 
-	 * Here, we see an exception containing a <code>string</code> value will be
-	 * thrown when the parameter <code>x</code> is negative.
-	 * 
-	 * @author David J. Pearce
-	 * 
-	 */
-	public static final class Throw extends AbstractUnaryOp<Type> {
-		private Throw(Type type, int operand) {
-			super(type, operand);
-		}
-
-		@Override
-		public int opcode() {
-			return OPCODE_throw;
-		}
-
-		@Override
-		public Code.Unit clone(int nOperand) {
-			return Throw(type, nOperand);
-		}
-
-		public boolean equals(Object o) {
-			if (o instanceof Throw) {
-				return super.equals(o);
-			}
-			return false;
-		}
-
-		public String toString() {
-			return "throw %" + operand + " : " + type;
-		}
-	}
-
-	/**
-	 * Represents a try-catch block within which specified exceptions will
-	 * caught and processed within a handler. For example, the following Whiley
-	 * code:
-	 * 
-	 * <pre>
-	 * function f(int x) => int 
-	 * throws Error:
-	 *     ...
-	 * 
-	 * function g(int x) => int:
-	 *     try:
-	 *         x = f(x)
-	 *     catch(Error e):
-	 *         return 0
-	 * </pre>
-	 * 
-	 * can be translated into the following WyIL code:
-	 * 
-	 * <pre>
-	 * function f(int x) => int:
-	 * throws:
-	 *     Error
-	 * body: 
-	 *     ...                        
-	 * 
-	 * function g(int x) => int:
-	 * body: 
-	 *     trycatch Error -> lab2          
-	 *        assign %3 = %0           : int                   
-	 *        invoke %0 = (%3) test:f  : int(int) throws {string msg}
-	 *     return
-	 * .lab2                          
-	 *     const %3 = 0                : int                      
-	 *     return %3                   : int
-	 * </pre>
-	 * 
-	 * Here, we see that within the try-catch block control is transferred to
-	 * <code>lab2</code> if an exception of type <code>Error</code> is thrown.
-	 * 
-	 * @author David J. Pearce
-	 * 
-	 */
-	public static final class TryCatch extends Code.Unit {
-		public final int operand;
-		public final String target;
-		public final ArrayList<Pair<Type, String>> catches;
-
-		TryCatch(int operand, String label,
-				Collection<Pair<Type, String>> catches) {
-			this.operand = operand;
-			this.catches = new ArrayList<Pair<Type, String>>(catches);
-			this.target = label;
-		}
-
-		@Override
-		public int opcode() {
-			return OPCODE_trycatch;
-		}
-
-		@Override
-		public void registers(java.util.Set<Integer> registers) {
-			registers.add(operand);
-		}
-
-		@Override
-		public Code.Unit remap(Map<Integer, Integer> binding) {
-			Integer nOperand = binding.get(operand);
-			if (nOperand != null) {
-				return TryCatch(nOperand, target, catches);
-			}
-			return this;
-		}
-
-		public TryCatch relabel(Map<String, String> labels) {
-			ArrayList<Pair<Type, String>> nbranches = new ArrayList();
-			for (Pair<Type, String> p : catches) {
-				String nlabel = labels.get(p.second());
-				if (nlabel == null) {
-					nbranches.add(p);
-				} else {
-					nbranches.add(new Pair(p.first(), nlabel));
-				}
-			}
-
-			String ntarget = labels.get(target);
-			if (ntarget != null) {
-				return TryCatch(operand, ntarget, nbranches);
-			} else {
-				return TryCatch(operand, target, nbranches);
-			}
-		}
-
-		public int hashCode() {
-			return operand + target.hashCode() + catches.hashCode();
-		}
-
-		public boolean equals(Object o) {
-			if (o instanceof TryCatch) {
-				TryCatch ig = (TryCatch) o;
-				return operand == ig.operand && target.equals(ig.target)
-						&& catches.equals(ig.catches);
-			}
-			return false;
-		}
-
-		public String toString() {
-			String table = "";
-			boolean firstTime = true;
-			for (Pair<Type, String> p : catches) {
-				if (!firstTime) {
-					table += ", ";
-				}
-				firstTime = false;
-				table += p.first() + "->" + p.second();
-			}
-			return "trycatch " + table;
-		}
-	}
-
-	/**
-	 * Marks the end of a try-catch block.
-	 * 
-	 * @author David J. Pearce
-	 * 
-	 */
-	public static final class TryEnd extends Label {
-		TryEnd(String label) {
-			super(label);
-		}
-
-		public TryEnd relabel(Map<String, String> labels) {
-			String nlabel = labels.get(label);
-			if (nlabel == null) {
-				return this;
-			} else {
-				return TryEnd(nlabel);
-			}
-		}
-
-		public int hashCode() {
-			return label.hashCode();
-		}
-
-		public boolean equals(Object o) {
-			if (o instanceof TryEnd) {
-				TryEnd e = (TryEnd) o;
-				return e.label.equals(label);
-			}
-			return false;
-		}
-
-		public String toString() {
-			return "tryend " + label;
-		}
-	}
-
-	/**
 	 * Corresponds to a bitwise inversion operation, which reads a byte value
 	 * from the operand register, inverts it and writes the result to the target
 	 * resgister. For example, the following Whiley code:
-	 * 
+	 *
 	 * <pre>
-	 * function f(byte x) => byte:
+	 * function f(byte x) -> byte:
 	 *    return ~x
 	 * </pre>
-	 * 
+	 *
 	 * can be translated into the following WyIL code:
-	 * 
+	 *
 	 * <pre>
-	 * function f(byte x) => byte:
-	 * body:                   
-	 *     invert %0 = %0   : byte                  
+	 * function f(byte x) -> byte:
+	 * body:
+	 *     invert %0 = %0   : byte
 	 *     return %0        : byte
 	 * </pre>
-	 * 
+	 *
 	 * Here, the expression <code>~x</code> generates an <code>invert</code>
 	 * bytecode.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class Invert extends AbstractUnaryAssignable<Type> {
 
@@ -3680,30 +3366,30 @@ public abstract class Codes {
 	 * Instantiate a new object from the value in a given operand register, and
 	 * write the result (a reference to that object) to a given target register.
 	 * For example, the following Whiley code:
-	 * 
+	 *
 	 * <pre>
 	 * type PointObj as &{real x, real y}
-	 * 
-	 * method f(real x, real y) => PointObj:
+	 *
+	 * method f(real x, real y) -> PointObj:
 	 *     return new {x: x, y: y}
 	 * </pre>
-	 * 
+	 *
 	 * can be translated into the following WyIL code:
-	 * 
+	 *
 	 * <pre>
-	 * method f(int x, int y) => &{real x,real y}:
-	 * body: 
-	 *     newrecord %2 = (%0, %1)  : {real x,real y}   
-	 *     newobject %2 = %2        : ref {real x,real y}  
+	 * method f(int x, int y) -> &{real x,real y}:
+	 * body:
+	 *     newrecord %2 = (%0, %1)  : {real x,real y}
+	 *     newobject %2 = %2        : ref {real x,real y}
 	 *     return %2                : ref {real x,real y}
 	 * </pre>
-	 * 
+	 *
 	 * <b>NOTE:</b> objects are unlike other data types in WyIL, in that they
 	 * represent mutable state allocated on a heap. Thus, changes to an object
 	 * within a method are visible to those outside of the method.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class NewObject extends
 			AbstractUnaryAssignable<Type.Reference> {
@@ -3737,26 +3423,26 @@ public abstract class Codes {
 	 * Read a tuple value from the operand register, extract the value it
 	 * contains at a given index and write that to the target register. For
 	 * example, the following Whiley code:
-	 * 
+	 *
 	 * <pre>
-	 * function f(int,int tup) => int:
+	 * function f(int,int tup) -> int:
 	 *     return tup[0]
 	 * </pre>
-	 * 
+	 *
 	 * can be translated into the following WyIL code:
-	 * 
+	 *
 	 * <pre>
-	 * function f(int,int tup) => int:
-	 * body: 
-	 *     tupleload %0 = %0 0  : int,int            
+	 * function f(int,int tup) -> int:
+	 * body:
+	 *     tupleload %0 = %0 0  : int,int
 	 *     return %0            : int
 	 * </pre>
-	 * 
+	 *
 	 * This simply reads the parameter <code>x</code> stored in register
 	 * <code>%0</code>, and returns the value stored at index <code>0</code>.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class TupleLoad extends
 			AbstractUnaryAssignable<Type.EffectiveTuple> {
@@ -3798,9 +3484,9 @@ public abstract class Codes {
 	/**
 	 * Reads a reference value from the operand register, dereferences it (i.e.
 	 * extracts the value it refers to) and writes this to the target register.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class Dereference extends
 			AbstractUnaryAssignable<Type.Reference> {
@@ -3863,26 +3549,26 @@ public abstract class Codes {
 	 * Read a number (int or real) from the operand register, perform a unary
 	 * arithmetic operation on it (e.g. negation) and writes the result to the
 	 * target register. For example, the following Whiley code:
-	 * 
+	 *
 	 * <pre>
-	 * function f(int x) => int:
+	 * function f(int x) -> int:
 	 *     return -x
 	 * </pre>
-	 * 
+	 *
 	 * can be translated into the following WyIL:
-	 * 
+	 *
 	 * <pre>
-	 * function f(int x) => int:
-	 * body:                    
-	 *     neg %0 = %0     : int                      
+	 * function f(int x) -> int:
+	 * body:
+	 *     neg %0 = %0     : int
 	 *     return %0       : int
 	 * </pre>
-	 * 
+	 *
 	 * This simply reads the parameter <code>x</code> stored in register
 	 * <code>%0</code>, negates it and then returns the negated value.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static final class UnaryOperator extends AbstractUnaryAssignable<Type> {
 		public final UnaryOperatorKind kind;
@@ -3927,9 +3613,9 @@ public abstract class Codes {
 	 * The void bytecode is used to indicate that the given register(s) are no
 	 * longer live. This is useful for communicating information to the memory
 	 * management system about which values could in principle be collected.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static class Void extends AbstractNaryAssignable<Type> {
 
@@ -3976,19 +3662,5 @@ public abstract class Codes {
 		System.arraycopy(operands,0,noperands,1,operands.length);
 		noperands[0] = operand;
 		return noperands;
-	}
-	
-	private static final ArrayList<Code> values = new ArrayList<Code>();
-	private static final HashMap<Code, Integer> cache = new HashMap<Code, Integer>();
-
-	private static <T extends Code> T get(T type) {
-		Integer idx = cache.get(type);
-		if (idx != null) {
-			return (T) values.get(idx);
-		} else {
-			cache.put(type, values.size());
-			values.add(type);
-			return type;
-		}
 	}
 }

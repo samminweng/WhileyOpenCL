@@ -1,4 +1,4 @@
-// Copyright (c) 2011, David J. Pearce (djp@ecs.vuw.ac.nz)
+	// Copyright (c) 2011, David J. Pearce (djp@ecs.vuw.ac.nz)
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -42,9 +42,9 @@ import wycc.util.Pair;
  * test file is invalid, a successful test occurs when the compiler produces a
  * syntax error for the file. Note that an internal failure does not count as a
  * valid pass, and indicates the test exposed some kind of compiler bug.
- * 
+ *
  * @author David J. Pearce
- * 
+ *
  */
 public class AllInvalidTests {
 
@@ -53,13 +53,13 @@ public class AllInvalidTests {
 	 * corresponds to a file in this directory.
 	 */
 	public final static String WHILEY_SRC_DIR = "../../tests/invalid".replace('/', File.separatorChar);
-	
+
 	/**
 	 * The directory where compiler libraries are stored. This is necessary
 	 * since it will contain the Whiley Runtime.
 	 */
 	public final static String WYC_LIB_DIR = "../../lib/".replace('/', File.separatorChar);
-	
+
 	/**
 	 * The path to the Whiley RunTime (WyRT) library. This contains the Whiley
 	 * standard library, which includes various helper functions, etc.
@@ -79,16 +79,16 @@ public class AllInvalidTests {
 			}
 		}
 	}
-	
+
 	// ======================================================================
 	// Test Harness
 	// ======================================================================
-	
+
 	/**
 	 * Compile a syntactically invalid test case with verification enabled. The
 	 * expectation is that compilation should fail with an error and, hence, the
-	 * test fails if compilation does not. 
-	 * 
+	 * test fails if compilation does not.
+	 *
 	 * @param name
 	 *            Name of the test to run. This must correspond to a whiley
 	 *            source file in the <code>WHILEY_SRC_DIR</code> directory.
@@ -98,14 +98,14 @@ public class AllInvalidTests {
 		String filename = WHILEY_SRC_DIR + File.separatorChar + name + ".whiley";
 
 		Pair<Integer,String> p = TestUtils.compile(
-				"-wd", WHILEY_SRC_DIR,      // location of source directory 
+				"-wd", WHILEY_SRC_DIR,      // location of source directory
 				"-wp", WYRT_PATH,           // add wyrt to whileypath
 				"-verify",                  // enable verification
 				filename);                      // name of test to compile
 
 		int r = p.first();
 		String output = p.second();
-		
+
 		if (r == WycMain.SUCCESS) {
 			// Clearly, the test should not compile.
 			fail("Test compiled when it shouldn't have!");
@@ -117,12 +117,19 @@ public class AllInvalidTests {
 			// contains the sample output for this test
 			String sampleOutputFile = WHILEY_SRC_DIR + File.separatorChar + name
 					+ ".sysout";
-				 		
-	 		// Third, compare the output! 		
-	 		TestUtils.compare(output,sampleOutputFile);	 		
-		}		
+
+//			Following used when sample output changed.
+//			try {
+//				FileWriter fw = new FileWriter(sampleOutputFile);
+//				fw.write(output);
+//				fw.close();
+//			} catch(Exception e) {}
+
+	 		// Third, compare the output!
+	 		TestUtils.compare(output,sampleOutputFile);
+		}
 	}
-			
+
 	// ======================================================================
 	// Tests
 	// ======================================================================
@@ -176,12 +183,12 @@ public class AllInvalidTests {
 	public void Assign_Invalid_8() {
 		runTest("Assign_Invalid_8");
 	}
-	
+
 	@Test
 	public void Assign_Invalid_9() {
 		runTest("Assign_Invalid_9");
 	}
-	
+
 	@Test
 	public void Byte_Invalid_1() {
 		runTest("Byte_Invalid_1");
@@ -205,11 +212,6 @@ public class AllInvalidTests {
 	@Test
 	public void Cast_Invalid_4() {
 		runTest("Cast_Invalid_4");
-	}
-
-	@Test
-	public void Char_Invalid_1() {
-		runTest("Char_Invalid_1");
 	}
 
 	@Test
@@ -336,12 +338,12 @@ public class AllInvalidTests {
 	public void Contractive_Invalid_1() {
 		runTest("Contractive_Invalid_1");
 	}
-	
+
 	@Test
 	public void Contractive_Invalid_2() {
 		runTest("Contractive_Invalid_2");
 	}
-	
+
 	@Test
 	public void DefiniteAssign_Invalid_1() {
 		runTest("DefiniteAssign_Invalid_1");
@@ -366,7 +368,7 @@ public class AllInvalidTests {
 	public void EndOfFile_Invalid_1() {
 		runTest("EndOfFile_Invalid_1");
 	}
-	
+
 	@Test
 	public void Ensures_Invalid_1() {
 		runTest("Ensures_Invalid_1");
@@ -417,7 +419,7 @@ public class AllInvalidTests {
 		runTest("For_Invalid_9");
 	}
 
-	
+
 	@Test
 	public void FunctionRef_Invalid_1() {
 		runTest("FunctionRef_Invalid_1");
@@ -507,7 +509,7 @@ public class AllInvalidTests {
 	public void If_Invalid_5() {
 		runTest("If_Invalid_5");
 	}
-	
+
 	@Test
 	public void Import_Invalid_1() {
 		runTest("Import_Invalid_1");
@@ -633,7 +635,7 @@ public class AllInvalidTests {
 		runTest("ListLength_Invalid_1");
 	}
 
-	@Test
+	@Ignore("Timeout") @Test
 	public void ListLength_Invalid_2() {
 		runTest("ListLength_Invalid_2");
 	}
@@ -698,7 +700,7 @@ public class AllInvalidTests {
 		runTest("List_Invalid_7");
 	}
 
-	
+
 	@Test
 	public void MethodCall_Invalid_1() {
 		runTest("MethodCall_Invalid_1");
@@ -893,12 +895,12 @@ public class AllInvalidTests {
 	public void Rational_Invalid_1() {
 		runTest("Rational_Invalid_1");
 	}
-	
+
 	@Test
 	public void Rational_Invalid_2() {
 		runTest("Rational_Invalid_2");
 	}
-	
+
 	@Test
 	public void RealAdd_Invalid_1() {
 		runTest("RealAdd_Invalid_1");
@@ -943,7 +945,7 @@ public class AllInvalidTests {
 	public void Record_Invalid_3() {
 		runTest("Record_Invalid_3");
 	}
-	
+
 	@Ignore("unclassified") @Test
 	public void RecursiveType_Invalid_1() {
 		runTest("RecursiveType_Invalid_1");
@@ -1070,36 +1072,6 @@ public class AllInvalidTests {
 	}
 
 	@Test
-	public void SetComprehension_Invalid_1() {
-		runTest("SetComprehension_Invalid_1");
-	}
-
-	@Test
-	public void SetComprehension_Invalid_2() {
-		runTest("SetComprehension_Invalid_2");
-	}
-
-	@Test
-	public void SetComprehension_Invalid_3() {
-		runTest("SetComprehension_Invalid_3");
-	}
-
-	@Test
-	public void SetComprehension_Invalid_4() {
-		runTest("SetComprehension_Invalid_4");
-	}
-
-	@Test
-	public void SetComprehension_Invalid_5() {
-		runTest("SetComprehension_Invalid_5");
-	}
-
-	@Test
-	public void SetComprehension_Invalid_6() {
-		runTest("SetComprehension_Invalid_6");
-	}
-
-	@Test
 	public void SetConversion_Invalid_1() {
 		runTest("SetConversion_Invalid_1");
 	}
@@ -1163,7 +1135,7 @@ public class AllInvalidTests {
 	public void SetSubset_Invalid_10() {
 		runTest("SetSubset_Invalid_10");
 	}
-	
+
 	@Test
 	public void SetSubset_Invalid_11() {
 		runTest("SetSubset_Invalid_11");
@@ -1230,11 +1202,6 @@ public class AllInvalidTests {
 	}
 
 	@Test
-	public void String_Invalid_3() {
-		runTest("String_Invalid_3");
-	}
-
-	@Test
 	public void Subtype_Invalid_1() {
 		runTest("Subtype_Invalid_1");
 	}
@@ -1274,7 +1241,7 @@ public class AllInvalidTests {
 		runTest("Subtype_Invalid_8");
 	}
 
-	@Test
+	@Ignore("timeout") @Test
 	public void Subtype_Invalid_9() {
 		runTest("Subtype_Invalid_9");
 	}
@@ -1312,41 +1279,6 @@ public class AllInvalidTests {
 	@Test
 	public void Switch_Invalid_7() {
 		runTest("Switch_Invalid_7");
-	}
-
-	@Test
-	public void Throws_Invalid_1() {
-		runTest("Throws_Invalid_1");
-	}
-
-	@Test
-	public void Throws_Invalid_2() {
-		runTest("Throws_Invalid_2");
-	}
-
-	@Test
-	public void TryCatch_Invalid_1() {
-		runTest("TryCatch_Invalid_1");
-	}
-
-	@Test
-	public void TryCatch_Invalid_2() {
-		runTest("TryCatch_Invalid_2");
-	}
-
-	@Test
-	public void TryCatch_Invalid_3() {
-		runTest("TryCatch_Invalid_3");
-	}
-
-	@Test
-	public void TryCatch_Invalid_4() {
-		runTest("TryCatch_Invalid_4");
-	}
-
-	@Test
-	public void TryCatch_Invalid_5() {
-		runTest("TryCatch_Invalid_5");
 	}
 
 	@Test
@@ -1398,12 +1330,12 @@ public class AllInvalidTests {
 	public void Tuple_Invalid_6() {
 		runTest("Tuple_Invalid_6");
 	}
-	
+
 	@Test
 	public void Tuple_Invalid_7() {
 		runTest("Tuple_Invalid_7");
 	}
-	
+
 	@Test
 	public void TypeEquals_Invalid_1() {
 		runTest("TypeEquals_Invalid_1");
@@ -1488,7 +1420,7 @@ public class AllInvalidTests {
 	public void VarDecl_Invalid_3() {
 		runTest("VarDecl_Invalid_3");
 	}
-	
+
 	@Ignore("unclassified") @Test
 	public void Void_Invalid_1() {
 		runTest("Void_Invalid_1");

@@ -1,13 +1,13 @@
-import whiley.lang.System
+import whiley.lang.*
 
-function f({int} xs, {int} ys) => string
+function f({int} xs, {int} ys) -> bool
 requires xs ⊆ ys:
-    return "XS IS A SUBSET"
+    return true
 
-function g({int} xs, {int} ys) => string
+function g({int} xs, {int} ys) -> bool
 requires xs ⊂ ys:
     return f(xs, ys)
 
-method main(System.Console sys) => void:
+method main(System.Console sys) -> void:
     sys.out.println(g({1, 2}, {1, 2, 3}))
     sys.out.println(g({1}, {1, 2, 3}))

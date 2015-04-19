@@ -1,4 +1,4 @@
-import whiley.lang.System
+import whiley.lang.*
 
 constant Red is 1
 
@@ -6,9 +6,9 @@ constant Blue is 2
 
 constant Green is 3
 
-constant RGB is {Red, Blue, Green}
+type RGB is (int x) where x in {Red, Blue, Green}
 
-function f(RGB c) => int:
+function f(RGB c) -> int:
     switch c:
         case Red:
             return 123
@@ -17,7 +17,7 @@ function f(RGB c) => int:
         default:
             return 456
 
-method main(System.Console sys) => void:
-    sys.out.println("NUM: " ++ f(Red))
-    sys.out.println("NUM: " ++ f(Green))
-    sys.out.println("NUM: " ++ f(Blue))
+method main(System.Console sys) -> void:
+    sys.out.println_s("NUM: " ++ Any.toString(f(Red)))
+    sys.out.println_s("NUM: " ++ Any.toString(f(Green)))
+    sys.out.println_s("NUM: " ++ Any.toString(f(Blue)))

@@ -1,4 +1,4 @@
-import whiley.lang.System
+import whiley.lang.*
 
 type Leaf is int
 
@@ -6,7 +6,7 @@ type Link is {LinkedList next}
 
 type LinkedList is Leaf | Link
 
-function dist(Link list) => Leaf:
+function dist(Link list) -> Leaf:
     LinkedList iter = list
     int distance = 0
     do:
@@ -16,11 +16,11 @@ function dist(Link list) => Leaf:
     //
     return iter + distance
 
-method main(System.Console sys) => void:
+method main(System.Console sys) -> void:
     LinkedList list = 123
     list = {next: list}
     list = {next: list}
-    sys.out.println("DISTANCE: " ++ dist(list))
+    sys.out.println_s("DISTANCE: " ++ Any.toString(dist(list)))
     list = {next: list}
     list = {next: list}
-    sys.out.println("DISTANCE: " ++ dist(list))
+    sys.out.println_s("DISTANCE: " ++ Any.toString(dist(list)))

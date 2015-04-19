@@ -36,9 +36,9 @@ import java.util.Arrays;
 
 /**
  * This exception is thrown when a syntax error occurs in the parser.
- * 
+ *
  * @author David J. Pearce
- * 
+ *
  */
 public class SyntaxError extends RuntimeException {
 	private String msg;
@@ -49,7 +49,7 @@ public class SyntaxError extends RuntimeException {
 
 	/**
 	 * Identify a syntax error at a particular point in a file.
-	 * 
+	 *
 	 * @param msg
 	 *            Message detailing the problem.
 	 * @param filename
@@ -69,7 +69,7 @@ public class SyntaxError extends RuntimeException {
 
 	/**
 	 * Identify a syntax error at a particular point in a file.
-	 * 
+	 *
 	 * @param msg
 	 *            Message detailing the problem.
 	 * @param filename
@@ -99,7 +99,7 @@ public class SyntaxError extends RuntimeException {
 
 	/**
 	 * Error message
-	 * 
+	 *
 	 * @return
 	 */
 	public String msg() {
@@ -108,7 +108,7 @@ public class SyntaxError extends RuntimeException {
 
 	/**
 	 * Filename for file where the error arose.
-	 * 
+	 *
 	 * @return
 	 */
 	public String filename() {
@@ -117,7 +117,7 @@ public class SyntaxError extends RuntimeException {
 
 	/**
 	 * Get index of first character of offending location.
-	 * 
+	 *
 	 * @return
 	 */
 	public int start() {
@@ -126,7 +126,7 @@ public class SyntaxError extends RuntimeException {
 
 	/**
 	 * Get index of last character of offending location.
-	 * 
+	 *
 	 * @return
 	 */
 	public int end() {
@@ -141,7 +141,7 @@ public class SyntaxError extends RuntimeException {
 	public void outputSourceError(PrintStream output) {
 		outputSourceError(output,true);
 	}
-	
+
 	/**
 	 * Output the syntax error to a given output stream in either full or brief
 	 * form. Brief form is intended to be used by 3rd party tools and is easier
@@ -152,18 +152,124 @@ public class SyntaxError extends RuntimeException {
 		if (filename == null) {
 			output.println("syntax error: " + getMessage());
 		} else {
-			printError(output,brief,getMessage(),filename,start,end);
-		}
-		if(context != null && context.length > 0) {			
-			if(!brief) { output.println(); }
-			for(Attribute.Origin o : context) {		
-				printError(output,brief,"",o.filename,o.start,o.end);
+			EnclosingLine enclosing = readEnclosingLine(filename, start, end);
+			if(enclosing == null) {
+				output.println("syntax error: " + getMessage());
+			} else if(brief) {
+				printBriefError(output,filename,enclosing,getMessage());
+			} else {
+				printFullError(output,filename,enclosing,getMessage());
 			}
 		}
 	}
 
-	private static void printError(PrintStream output, boolean brief,
-			String message, String filename, int start, int end) {
+	private void printBriefError(PrintStream output, String filename, EnclosingLine enclosing, String message) {
+		output.print(filename + ":" + enclosing.lineNumber + ":"
+				+ enclosing.columnStart() + ":"
+				+ enclosing.columnEnd() + ":\""
+				+ message.replace("\n", "\\n") + "\"");
+
+		// Now print contextual information (if applicable)
+		if(context != null && context.length > 0) {
+			output.print(":");
+			boolean firstTime=true;
+			for(Attribute.Origin o : context) {
+				if(!firstTime) {
+					output.print(",");
+				}
+				firstTime=false;
+				enclosing = readEnclosingLine(o.filename, o.start, o.end);
+				output.print(filename + ":" + enclosing.lineNumber + ":"
+						+ enclosing.columnStart() + ":"
+						+ enclosing.columnEnd());
+			}
+		}
+
+		// Done
+		output.println();
+	}
+
+	private void printFullError(PrintStream output, String filename,
+			EnclosingLine enclosing, String message) {
+
+		output.println(filename + ":" + enclosing.lineNumber + ": " + message);
+
+		printLineHighlight(output,enclosing);
+
+		// Now print contextual information (if applicable)
+		if(context != null && context.length > 0) {
+			for(Attribute.Origin o : context) {
+				output.println();
+				enclosing = readEnclosingLine(o.filename, o.start, o.end);
+				output.println(o.filename + ":" + enclosing.lineNumber + " (context)");
+				printLineHighlight(output,enclosing);
+			}
+		}
+	}
+
+	private void printLineHighlight(PrintStream output,
+			EnclosingLine enclosing) {
+		// NOTE: in the following lines I don't print characters
+		// individually. The reason for this is that it messes up the
+		// ANT task output.
+		String str = enclosing.lineText;
+
+		if (str.length() > 0 && str.charAt(str.length() - 1) == '\n') {
+			output.print(str);
+		} else {
+			// this must be the very last line of output and, in this
+			// particular case, there is no new-line character provided.
+			// Therefore, we need to provide one ourselves!
+			output.println(str);
+		}
+		str = "";
+		for (int i = 0; i < enclosing.columnStart(); ++i) {
+			if (enclosing.lineText.charAt(i) == '\t') {
+				str += "\t";
+			} else {
+				str += " ";
+			}
+		}
+		for (int i = enclosing.columnStart(); i <= enclosing.columnEnd(); ++i) {
+			str += "^";
+		}
+		output.println(str);
+	}
+
+	private static int parseLine(StringBuilder buf, int index) {
+		while (index < buf.length() && buf.charAt(index) != '\n') {
+			index++;
+		}
+		return index + 1;
+	}
+
+	private static class EnclosingLine {
+		private int lineNumber;
+		private int start;
+		private int end;
+		private int lineStart;
+		private int lineEnd;
+		private String lineText;
+
+		public EnclosingLine(int start, int end, int lineNumber, int lineStart, int lineEnd, String lineText) {
+			this.start = start;
+			this.end = end;
+			this.lineNumber = lineNumber;
+			this.lineStart = lineStart;
+			this.lineEnd = lineEnd;
+			this.lineText = lineText;
+		}
+
+		public int columnStart() {
+			return start - lineStart;
+		}
+
+		public int columnEnd() {
+			return Math.min(end, lineEnd) - lineStart;
+		}
+	}
+
+	private static EnclosingLine readEnclosingLine(String filename, int start, int end) {
 		int line = 0;
 		int lineStart = 0;
 		int lineEnd = 0;
@@ -185,55 +291,14 @@ public class SyntaxError extends RuntimeException {
 				line = line + 1;
 			}
 		} catch (IOException e) {
-			return;
+			return null;
 		}
 		lineEnd = Math.min(lineEnd, text.length());
 
-		if (brief) {
-			// brief form
-			output.println(filename + ":" + line + ":"
-					+ (start - lineStart) + ":" + (end - lineStart) + ":\""
-					+ message.replace("\n","\\n") + "\"");
-		} else {
-			// Full form
-			output.println(filename + ":" + line + ": " + message);
-			// NOTE: in the following lines I don't print characters
-			// individually. The reason for this is that it messes up the
-			// ANT task output.
-			String str = "";
-			for (int i = lineStart; i < lineEnd; ++i) {
-				str = str + text.charAt(i);
-			}
-			if (str.length() > 0 && str.charAt(str.length() - 1) == '\n') {
-				output.print(str);
-			} else {
-				// this must be the very last line of output and, in this
-				// particular case, there is no new-line character provided.
-				// Therefore, we need to provide one ourselves!
-				output.println(str);
-			}
-			str = "";
-			for (int i = lineStart; i < start; ++i) {
-				if (text.charAt(i) == '\t') {
-					str += "\t";
-				} else {
-					str += " ";
-				}
-			}
-			for (int i = start; i <= Math.min(end,lineEnd); ++i) {
-				str += "^";
-			}
-			output.println(str);
-		}
+		return new EnclosingLine(start, end, line, lineStart, lineEnd,
+				text.substring(lineStart, lineEnd));
 	}
-	
-	private static int parseLine(StringBuilder buf, int index) {
-		while (index < buf.length() && buf.charAt(index) != '\n') {
-			index++;
-		}
-		return index + 1;
-	}
-	
+
 	public static final long serialVersionUID = 1l;
 
 	public static void syntaxError(String msg, String filename,
@@ -249,7 +314,7 @@ public class SyntaxError extends RuntimeException {
 		}
 
 		Attribute.Origin context = (Attribute.Origin) elem
-				.attribute(Attribute.Origin.class);		
+				.attribute(Attribute.Origin.class);
 		if(context != null) {
 			throw new SyntaxError(msg, filename, start, end, context);
 		} else {
@@ -282,9 +347,9 @@ public class SyntaxError extends RuntimeException {
 	 * something went wrong whilst processing some piece of syntax. In other
 	 * words, is an internal error in the compiler, rather than a mistake in the
 	 * input program.
-	 * 
+	 *
 	 * @author David J. Pearce
-	 * 
+	 *
 	 */
 	public static class InternalFailure extends SyntaxError {
 		public InternalFailure(String msg, String filename, int start, int end) {

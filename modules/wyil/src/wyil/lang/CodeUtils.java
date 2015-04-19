@@ -6,45 +6,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import wyil.lang.Codes.Comparator;
+import wyil.util.AttributedCodeBlock;
 
 public class CodeUtils {
-	
-	/**
-	 * Rename every label to a new (fresh) label and, likewise, map all
-	 * instructions which use labels accordingly. This is particularly useful
-	 * when importing a block from the same source multiple times into a given
-	 * block.
-	 * 
-	 * @param block
-	 * @return
-	 */
-	public static Code.Block relabel(Code.Block block) {
-		HashMap<String,String> labels = new HashMap<String,String>();
-		
-		for (Code.Block.Entry s : block) {
-			if (s.code instanceof Codes.Label) {
-				Codes.Label l = (Codes.Label) s.code;
-				labels.put(l.label, freshLabel());
-			}
-		}
-		
-		Code.Block nBlock = new Code.Block(block.numInputs());
-		
-		// Finally, apply the binding and relabel any labels as well.
-		for(Code.Block.Entry s : block) {
-			Code ncode = s.code.relabel(labels);
-			nBlock.add(ncode,s.attributes());
-		}
-		
-		return nBlock;
-	}
-	
-	
+
 	private static int _idx=0;
 	public static String freshLabel() {
 		return "blklab" + _idx++;
 	}
-		
+
 	public static String arrayToString(int... operands) {
 		String r = "(";
 		for (int i = 0; i != operands.length; ++i) {
@@ -86,7 +56,7 @@ public class CodeUtils {
 
 	/**
 	 * Determine the inverse comparator, or null if no inverse exists.
-	 * 
+	 *
 	 * @param cop
 	 * @return
 	 */
@@ -106,5 +76,47 @@ public class CodeUtils {
 			return Codes.Comparator.LT;
 		}
 		return null;
+	}
+	
+	/**
+	 * Construct a mapping from labels to their block indices within a root
+	 * block. This is useful so they can easily be resolved during the
+	 * subsequent traversal of the block.
+	 * 
+	 * @param block
+	 * @return
+	 */
+	public static Map<String, CodeBlock.Index> buildLabelMap(AttributedCodeBlock block) {
+		HashMap<String, CodeBlock.Index> labels = new HashMap<String, CodeBlock.Index>();
+		buildLabelMap(new CodeBlock.Index(null), null, labels, block);
+		return labels;
+	}
+
+	/**
+	 * Helper function for buildLabelMap
+	 * 
+	 * @param index
+	 *            Current block index being traversed.
+	 * @param labels
+	 *            Labels map being constructed
+	 * @param block
+	 *            Root block
+	 */
+	private static void buildLabelMap(CodeBlock.Index index, CodeBlock.Index parent,
+			Map<String, CodeBlock.Index> labels, CodeBlock block) {
+		//
+		for (int i = 0; i != block.size(); ++i) {
+			Code code = block.get(i);
+			if (code instanceof Codes.Label) {
+				// Found a label, so register it in the labels map
+				Codes.Label label = (Codes.Label) code;
+				labels.put(label.label, index);
+			} else if (code instanceof CodeBlock) {
+				// Found a subblock, so traverse that
+				CodeBlock subblock = (CodeBlock) code;
+				buildLabelMap(index.firstWithin(), index, labels, subblock);
+			}
+			index = index.next();
+		}
 	}
 }

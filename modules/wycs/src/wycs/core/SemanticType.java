@@ -11,6 +11,8 @@ import wyautl.rw.InferenceRule;
 import wyautl.rw.ReductionRule;
 import wyautl.rw.SimpleRewriteStrategy;
 import wyautl.rw.UnfairStateRuleRewriteStrategy;
+import wycc.lang.NameID;
+import wyfs.lang.Path;
 import static wycs.core.Types.*;
 
 public abstract class SemanticType {
@@ -18,7 +20,7 @@ public abstract class SemanticType {
 	// =============================================================
 	// Public Interface
 	// =============================================================
-	
+
 	public static final Any Any = new Any();
 	public static final Void Void = new Void();
 	public static final Null Null = new Null();
@@ -29,9 +31,13 @@ public abstract class SemanticType {
 	public static final SemanticType IntOrReal = Or(Int,Real);
 	public static final Set SetAny = new Set(true,Any);
 	public static final Set SetTupleAnyAny = Set(true,Tuple(Any,Any));
-	
+
 	public static Var Var(java.lang.String name) {
 		return new Var(name);
+	}
+
+	public static Nominal Nominal(NameID name) {
+		return new Nominal(name);
 	}
 	
 	public static Tuple Tuple(SemanticType... elements) {
@@ -43,7 +49,7 @@ public abstract class SemanticType {
 		}
 		return new Tuple(elements);
 	}
-	
+
 	public static Tuple Tuple(java.util.Collection<SemanticType> elements) {
 		SemanticType[] es = new SemanticType[elements.size()];
 		int i = 0;
@@ -56,21 +62,21 @@ public abstract class SemanticType {
 		}
 		return new Tuple(es);
 	}
-	
+
 	public static Set Set(boolean flag, SemanticType element) {
 		return new Set(flag, element);
 	}
-	
+
 	public static SemanticType Not(SemanticType element) {
 		// FIXME: this could be more efficient
 		return construct(new Not(element).automaton);
 	}
-	
+
 	public static SemanticType And(SemanticType... elements) {
 		// FIXME: this could be more efficient
 		return construct(new And(elements).automaton);
 	}
-	
+
 	public static SemanticType And(java.util.Collection<SemanticType> elements) {
 		SemanticType[] es = new SemanticType[elements.size()];
 		int i = 0;
@@ -80,12 +86,12 @@ public abstract class SemanticType {
 		// FIXME: this could be more efficient
 		return construct(new And(es).automaton);
 	}
-	
+
 	public static SemanticType Or(SemanticType... elements) {
 		// FIXME: this could be more efficient
 		return construct(new Or(elements).automaton);
 	}
-	
+
 	public static SemanticType Or(java.util.Collection<SemanticType> elements) {
 		SemanticType[] es = new SemanticType[elements.size()];
 		int i = 0;
@@ -95,16 +101,16 @@ public abstract class SemanticType {
 		// FIXME: this could be more efficient
 		return construct(new Or(es).automaton);
 	}
-	
+
 	public static Function Function(SemanticType from, SemanticType to,
 			SemanticType... generics) {
 		return new Function(from, to, generics);
 	}
-	
+
 	// ==================================================================
 	// Atoms
 	// ==================================================================
-	
+
 	public static abstract class Atom extends SemanticType {
 		public Atom(int kind) {
 			if (kind != K_AnyT && kind != K_VoidT && kind != K_NullT
@@ -116,13 +122,13 @@ public abstract class SemanticType {
 			automaton.setRoot(0, root);
 		}
 
-		@Override 
+		@Override
 		public SemanticType substitute(Map<java.lang.String, SemanticType> binding) {
 			// atom can never have anything substituted.
 			return this;
 		}
 	}
-	
+
 	public static final class Any extends Atom {
 		private Any() {
 			super(K_AnyT);
@@ -134,13 +140,13 @@ public abstract class SemanticType {
 			super(K_VoidT);
 		}
 	}
-	
+
 	public static final class Null extends Atom {
 		private Null() {
 			super(K_NullT);
 		}
 	}
-	
+
 	public static final class Bool extends Atom {
 		private Bool() {
 			super(K_BoolT);
@@ -164,9 +170,9 @@ public abstract class SemanticType {
 			super(K_StringT);
 		}
 	}
-	
+
 	public static class Var extends SemanticType {
-		public Var(java.lang.String name) {					
+		public Var(java.lang.String name) {
 			int root = Types.VarT(automaton, name);
 			automaton.setRoot(0,root);
 		}
@@ -184,14 +190,33 @@ public abstract class SemanticType {
 			return str.value;
 		}
 	}
-	
+
+	public static class Nominal extends SemanticType {
+		public Nominal(NameID nid) {
+			int root = Types.NominalT(automaton, nid.toString());
+			automaton.setRoot(0,root);
+		}
+		private Nominal(Automaton automaton) {
+			super(automaton);
+			int kind = automaton.get(automaton.getRoot(0)).kind;
+			if (kind != K_NominalT) {
+				throw new IllegalArgumentException("Invalid variable kind");
+			}
+		}
+		public NameID name() {
+			int root = automaton.getRoot(0);
+			Automaton.Term term = (Automaton.Term) automaton.get(root);
+			Automaton.Strung str = (Automaton.Strung) automaton.get(term.contents);
+			return NameID.fromString(str.value);
+		}
+	}
 	
 	// ==================================================================
 	// Unary Terms
 	// ==================================================================
-	
+
 	public static class Not extends SemanticType {
-		public Not(SemanticType element) {		
+		public Not(SemanticType element) {
 			Automaton element_automaton = element.automaton;
 			int elementRoot = automaton.addAll(element_automaton.getRoot(0),
 					element_automaton);
@@ -210,7 +235,7 @@ public abstract class SemanticType {
 			Automaton.Term term = (Automaton.Term) automaton.get(root);
 			return extract(term.contents);
 		}
-	}	
+	}
 
 	public final static class Set extends SemanticType {
 		private Set(boolean flag, SemanticType element) {
@@ -220,11 +245,11 @@ public abstract class SemanticType {
 			children[1] = automaton.addAll(element_automaton.getRoot(0),
 					element_automaton);
 			int compoundRoot = automaton.add(new Automaton.List(children));
-				
+
 			int root = automaton.add(new Automaton.Term(K_SetT, compoundRoot));
 			automaton.setRoot(0,root);
 		}
-		
+
 		private Set(Automaton automaton) {
 			super(automaton);
 			int kind = automaton.get(automaton.getRoot(0)).kind;
@@ -232,7 +257,7 @@ public abstract class SemanticType {
 				throw new IllegalArgumentException("Invalid set kind");
 			}
 		}
-		
+
 		public boolean flag() {
 			int root = automaton.getRoot(0);
 			Automaton.Term term = (Automaton.Term) automaton.get(root);
@@ -240,7 +265,7 @@ public abstract class SemanticType {
 			Automaton.Bool val = (Automaton.Bool) automaton.get(list.get(0));
 			return val.value;
 		}
-		
+
 		public SemanticType element() {
 			int root = automaton.getRoot(0);
 			Automaton.Term term = (Automaton.Term) automaton.get(root);
@@ -248,12 +273,12 @@ public abstract class SemanticType {
 			return extract(list.get(1));
 		}
 	}
-	
-	
+
+
 	// ==================================================================
 	// Nary Terms
 	// ==================================================================
-	
+
 	public static abstract class Nary extends SemanticType {
 		private Nary(Automaton automaton) {
 			super(automaton);
@@ -312,7 +337,7 @@ public abstract class SemanticType {
 			return elements;
 		}
 	}
-	
+
 	public static final class And extends Nary {
 		private And(SemanticType... bounds) {
 			super(K_AndT,wyrl.core.Types.K_Set,bounds);
@@ -320,28 +345,28 @@ public abstract class SemanticType {
 
 		private And(Automaton automaton) {
 			super(automaton);
-		}		
+		}
 	}
-	
+
 	public static class Or extends Nary {
 		private Or(SemanticType... bounds) {
 			super(K_OrT,wyrl.core.Types.K_Set,bounds);
 		}
-		
+
 		private Or(Automaton automaton) {
 			super(automaton);
-		}		
+		}
 	}
-	
+
 	public static class OrTuple extends Or implements EffectiveTuple {
 		private OrTuple(SemanticType... bounds) {
 			super(bounds);
 		}
-		
+
 		private OrTuple(Automaton automaton) {
 			super(automaton);
 		}
-		
+
 		public int size() {
 			int size = Integer.MAX_VALUE;
 			SemanticType[] elements = elements();
@@ -351,7 +376,7 @@ public abstract class SemanticType {
 			}
 			return size;
 		}
-		
+
 		public SemanticType tupleElement(int index) {
 			SemanticType[] elements = elements();
 			SemanticType[] bounds = new SemanticType[elements.length];
@@ -361,7 +386,7 @@ public abstract class SemanticType {
 			}
 			return SemanticType.Or(bounds);
 		}
-		
+
 		public SemanticType.Tuple tupleType() {
 			SemanticType[] elements = elements();
 			SemanticType[] bounds = new SemanticType[size()];
@@ -380,44 +405,44 @@ public abstract class SemanticType {
 				}
 			}
 			return result;
-		}		
+		}
 	}
-	
+
 	// ==================================================================
 	// Compounds
-	// ==================================================================			
-	
+	// ==================================================================
+
 	/**
 	 * An effective tuple is either a tuple, or a union of tuples.
-	 * 
+	 *
 	 * @author djp
-	 * 
+	 *
 	 */
 	public interface EffectiveTuple {
-		
+
 		/**
 		 * Returns the number of direct addressable elements. That is, the
 		 * smallest number of elements in any tuples.
-		 * 
+		 *
 		 * @return
 		 */
 		public int size();
-		
+
 		/**
 		 * Returns the effective type of the element at the given index.
-		 * 
+		 *
 		 * @param index
 		 * @return
 		 */
 		public SemanticType tupleElement(int index);
-		
+
 		/**
 		 * Returns the effective tuple type.
 		 * @return
 		 */
 		public SemanticType.Tuple tupleType();
 	}
-	
+
 	public final static class Tuple extends Nary implements EffectiveTuple {
 		private Tuple(SemanticType... elements) {
 			super(K_TupleT, wyrl.core.Types.K_List, elements);
@@ -426,20 +451,20 @@ public abstract class SemanticType {
 		private Tuple(Automaton automaton) {
 			super(automaton);
 		}
-		
+
 		public int size() {
 			return elements().length;
 		}
-		
+
 		public SemanticType tupleElement(int index) {
 			return element(index);
 		}
-		
+
 		public SemanticType.Tuple tupleType() {
 			return this;
 		}
 	}
-	
+
 	public final static class Function extends Nary {
 		private Function(SemanticType from, SemanticType to, SemanticType... generics) {
 			super(K_FunctionT, wyrl.core.Types.K_List, append(from,to,generics));
@@ -448,15 +473,15 @@ public abstract class SemanticType {
 		private Function(Automaton automaton) {
 			super(automaton);
 		}
-		
+
 		public SemanticType from() {
 			return element(0);
 		}
-		
+
 		public SemanticType to() {
 			return element(1);
 		}
-		
+
 		public SemanticType[] generics() {
 			SemanticType[] elements = elements();
 			SemanticType[] generics = new SemanticType[elements.length-2];
@@ -466,29 +491,29 @@ public abstract class SemanticType {
 			return generics;
 		}
 	}
-	
+
 	// =============================================================
 	// Private Implementation
 	// =============================================================
 
 	protected final Automaton automaton;
-	
+
 	private SemanticType() {
 		this.automaton = new Automaton();
-	}	
-	
+	}
+
 	private SemanticType(Automaton automaton) {
 		this.automaton = automaton;
 	}
-	
+
 	public Automaton automaton() {
 		return automaton;
 	}
-			
+
 	public int hashCode() {
 		return automaton.hashCode();
 	}
-	
+
 	public boolean equals(Object o) {
 		if (o instanceof SemanticType) {
 			SemanticType r = (SemanticType) o;
@@ -500,7 +525,7 @@ public abstract class SemanticType {
 	/**
 	 * Substitute type variables for concrete types according to a given
 	 * binding.
-	 * 
+	 *
 	 * @param binding
 	 *            --- a map from type variable's to concrete types.
 	 * @return
@@ -519,7 +544,7 @@ public abstract class SemanticType {
 				}
 			}
 		}
-		
+
 		if(!matched) {
 			return this;
 		} else {
@@ -534,7 +559,7 @@ public abstract class SemanticType {
 				java.lang.String key = e.getKey();
 				SemanticType type = e.getValue();
 				keys[i] = Types.VarT(nAutomaton, key);
-				types[i++] = nAutomaton.addAll(type.automaton.getRoot(0), type.automaton);			
+				types[i++] = nAutomaton.addAll(type.automaton.getRoot(0), type.automaton);
 			}
 
 			int root = nAutomaton.getRoot(0);
@@ -544,21 +569,21 @@ public abstract class SemanticType {
 			}
 			for(i=0;i!=keys.length;++i) {
 				mapping[keys[i]] = types[i];
-			}		
-			nAutomaton.setRoot(0, nAutomaton.substitute(root, mapping));		
+			}
+			nAutomaton.setRoot(0, nAutomaton.substitute(root, mapping));
 			return construct(nAutomaton);
 		}
 	}
-	
+
 	public java.lang.String toString() {
 		int root = automaton.getRoot(0);
-		int[] headers = new int[automaton.nStates()];		
+		int[] headers = new int[automaton.nStates()];
 		Automata.traverse(automaton,root,headers);
 		return toString(root,headers);
 	}
-	
+
 	public java.lang.String toString(int root, int[] headers) {
-		java.lang.String body = "";	
+		java.lang.String body = "";
 		int header = 0;
 		if(root >= 0) {
 			header = headers[root];
@@ -596,11 +621,17 @@ public abstract class SemanticType {
 			case K_StringT:
 				body += "string";
 				break;
-			case K_VarT:
-				Automaton.Strung s = (Automaton.Strung) automaton.get(term.contents); 
+			case K_VarT: {
+				Automaton.Strung s = (Automaton.Strung) automaton.get(term.contents);
 				body += s.value;
 				break;
-			case K_NotT: 
+			}
+			case K_NominalT: {
+				Automaton.Strung s = (Automaton.Strung) automaton.get(term.contents);
+				body += s.value;
+				break;
+			}
+			case K_NotT:
 				body += "!" + toString(term.contents,headers);
 				break;
 			case K_OrT : {
@@ -625,7 +656,7 @@ public abstract class SemanticType {
 				}
 				break;
 			}
-			case K_SetT: 
+			case K_SetT:
 				Automaton.List set = (Automaton.List) automaton.get(term.contents);
 				Automaton.Bool flag = (Automaton.Bool) automaton.get(set.get(0));
 				if(flag.value) {
@@ -642,8 +673,8 @@ public abstract class SemanticType {
 						tmp += ",";
 					}
 					tmp += toString(elements.get(i),headers);
-				}				
-				body += "(" + tmp + ")";					
+				}
+				body += "(" + tmp + ")";
 				break;
 			}
 			case K_FunctionT: {
@@ -655,29 +686,29 @@ public abstract class SemanticType {
 							tmp += ",";
 						}
 						tmp += toString(elements.get(i),headers);
-					}				
+					}
 					body += "<" + tmp + ">";
 				}
 				body += toString(elements.get(0), headers) + "=>"
-					+ toString(elements.get(1), headers); 
+					+ toString(elements.get(1), headers);
 				break;
-			}			
+			}
 			default:
 				throw new IllegalArgumentException("unknown type encountered (" + SCHEMA.get(term.kind).name + ")");
 		}
-		
+
 		if(header > 1) {
 			body += ">";
 		}
-		
+
 		return body;
-	}				
-	
+	}
+
 	/**
 	 * Extract the type described by a given node in the automaton. This is
 	 * primarily used to extract subcomponents of a type (e.g. the element of a
 	 * reference type).
-	 * 
+	 *
 	 * @param child
 	 *            --- child node to be extracted.
 	 * @return
@@ -688,11 +719,11 @@ public abstract class SemanticType {
 		automaton.setRoot(0,root);
 		return construct(automaton);
 	}
-		
+
 	/**
 	 * Construct a given type from an automaton. This is primarily used to
 	 * reconstruct a type after expansion.
-	 * 
+	 *
 	 * @param automaton
 	 * @return
 	 */
@@ -702,7 +733,7 @@ public abstract class SemanticType {
 		automaton.minimise();
 		automaton.compact();
 		automaton.canonicalise();
-		
+
 		// Second, construct the object representing the type
 		int root = automaton.getRoot(0);
 		Automaton.State state = automaton.get(root);
@@ -722,6 +753,8 @@ public abstract class SemanticType {
 			return Real;
 		case K_VarT:
 			return new SemanticType.Var(automaton);
+		case K_NominalT:
+			return new SemanticType.Nominal(automaton);
 		case K_StringT:
 			return String;
 		// connectives
@@ -745,13 +778,17 @@ public abstract class SemanticType {
 		case K_FunctionT:
 			return new SemanticType.Function(automaton);
 		default:
-			throw new IllegalArgumentException("Unknown kind encountered - " + state.kind);
+			int kind = state.kind;
+			if(kind < 0) {
+				kind = -kind + Automaton.K_FREE;
+			}
+			throw new IllegalArgumentException("Unknown kind encountered - " + SCHEMA.get(kind).name);
 		}
 	}
-	
+
 	/**
 	 * Check whether or not this is a union of tuples
-	 * 
+	 *
 	 * @param type
 	 * @return
 	 */
@@ -763,28 +800,28 @@ public abstract class SemanticType {
 			}
 		}
 		return true;
-	}	
-	
+	}
+
 	/**
 	 * Check that t1 :> t2 or, equivalently, that t2 is a subtype of t1. A type
 	 * <code>t1</code> is said to be a subtype of another type <code>t2</code>
 	 * iff the semantic set described by <code>t1</code> contains that described
 	 * by <code>t2</code>.
-	 * 
+	 *
 	 * @param t1
 	 *            --- Semantic type to test whether contains <code>t2</code>.
 	 * @param t2
-	 *            --- Semantic type to test whether contained by <code>t1</code>.	 
+	 *            --- Semantic type to test whether contained by <code>t1</code>.
 	 */
-	public static boolean isSubtype(SemanticType t1, SemanticType t2) {		
+	public static boolean isSubtype(SemanticType t1, SemanticType t2) {
 		SemanticType result = SemanticType.And(SemanticType.Not(t1),t2);
 //		try {
 //			new PrettyAutomataWriter(System.err, SCHEMA, "And",
 //					"Or").write(result.automaton);
 //			System.out.println();
-//		} catch(IOException e) {}				
+//		} catch(IOException e) {}
 		boolean r = result.equals(SemanticType.Void);
-//		System.out.println("CHECKING SUBTYPE: " + t1 + " :> " + t2 + " : " + r);		
+//		System.out.println("CHECKING SUBTYPE: " + t1 + " :> " + t2 + " : " + r);
 //		try {
 //			new PrettyAutomataWriter(System.err, SCHEMA, "And",
 //					"Or").write(result.automaton);
@@ -792,7 +829,7 @@ public abstract class SemanticType {
 //		} catch(IOException e) {}
 		return r;
 	}
-	
+
 	/**
 	 * Attempt to bind a generic type against a concrete type. This will fail if
 	 * no possible binding exists, otherwise it produces a binding from
@@ -808,10 +845,10 @@ public abstract class SemanticType {
 	 * <li>Binding <code>(T,T)</code> against <code>(int,bool)</code> fails
 	 * produces the binding <code>{T=>(int|bool)}</code>.</li>
 	 * </ul>
-	 * 
+	 *
 	 * <b>NOTE:</b> this function is not yet fully implemented, and will not
 	 * always produce a binding when one exists.
-	 * 
+	 *
 	 * @param generic
 	 *            --- the generic type whose variables we are trying to bind.
 	 * @param concrete
@@ -824,15 +861,15 @@ public abstract class SemanticType {
 	 */
 	public static boolean bind(SemanticType generic, SemanticType concrete,
 			java.util.Map<java.lang.String, SemanticType> binding) {
-						
+
 		// FIXME: this function is broken for recursive types!
-		
+
 		// FIXME: this function should also be moved into SemanticType
-		
+
 		// Whilst this function is cool, it's basically very difficult to make
 		// it work well. I wonder whether or not there's a better way to
 		// implement this?
-		
+
 		if(generic.equals(concrete)) {
 			// this is a match, so we don't need to do anything.
 			return true;
@@ -871,9 +908,9 @@ public abstract class SemanticType {
 			// basically assume failure [though we could do better, e.g. for
 			// unions, etc].
 			return false;
-		}		
+		}
 	}
-	
+
 	private static SemanticType[] append(SemanticType t1, SemanticType t2, SemanticType... ts) {
 		SemanticType[] r = new SemanticType[ts.length+2];
 		r[0] = t1;
@@ -881,7 +918,7 @@ public abstract class SemanticType {
 		System.arraycopy(ts, 0, r, 2, ts.length);
 		return r;
 	}
-	
+
 	private static void reduce(Automaton automaton) {
 		//
 //		try {
@@ -893,7 +930,7 @@ public abstract class SemanticType {
 		IterativeRewriter.Strategy<InferenceRule> inferenceStrategy = new UnfairRuleStateRewriteStrategy<InferenceRule>(
 				automaton, Types.inferences);
 		IterativeRewriter.Strategy<ReductionRule> reductionStrategy = new UnfairRuleStateRewriteStrategy<ReductionRule>(
-				automaton, Types.reductions);		
+				automaton, Types.reductions);
 		IterativeRewriter rw = new IterativeRewriter(automaton,
 				inferenceStrategy, reductionStrategy, Types.SCHEMA);
 		rw.apply();

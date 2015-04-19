@@ -1,13 +1,13 @@
-import whiley.lang.System
+import whiley.lang.*
 
-type imsg is int | {string msg}
+type imsg is int | {[int] msg}
 
-function getMessage(imsg m) => string:
-    if m is {string msg}:
+function getMessage(imsg m) -> any:
+    if m is {[int] msg}:
         return m.msg
     else:
-        return Any.toString(m)
+        return m
 
-method main(System.Console sys) => void:
+method main(System.Console sys) -> void:
     sys.out.println(getMessage({msg: "HELLO WORLD"}))
     sys.out.println(getMessage(1))

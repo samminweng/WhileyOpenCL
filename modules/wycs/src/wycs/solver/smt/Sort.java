@@ -373,8 +373,8 @@ public abstract class Sort {
             // the length of the set minus t
             // TODO: This conjecture really should be iff or xor (going both ways), however using
             // xor causes it to time out, so for now we use implication
-            stmts.add(new Stmt.Assert("(forall ((set " + toString() + ")) (=> (not (= set "
-                    + getEmptyNameAsQualified() + ")) (exists ((t " + type
+            stmts.add(new Stmt.Assert("(forall ((set " + toString() + ")) (=> (distinct set "
+                    + getEmptyNameAsQualified() + ") (exists ((t " + type
                     + ")) (and (contains set t) (= (length set) (+ 1 (length (remove set t))))))))"));
             // lines.add(new Stmt.Assert(
             // "(forall ((set " + toString() + ")) (xor (= set " + FUN_EMPTY_NAME
@@ -408,7 +408,7 @@ public abstract class Sort {
 
             String subseteqExpr;
             String subsetExpr;
-            
+
             // There is a bug here, I'm not 100% sure how to properly use the map function
             /*case Z3:
                     // Z3 supports the map function
@@ -421,7 +421,7 @@ public abstract class Sort {
                     subsetExpr = "(and (subseteq first second) (distinct first second))";
 
                     break;*/
-            
+
             subseteqExpr = "(forall ((t " + type
             		+ ")) (=> (contains first t) (contains second t)))";
             subsetExpr = "(and (subseteq first second) (distinct first second))";

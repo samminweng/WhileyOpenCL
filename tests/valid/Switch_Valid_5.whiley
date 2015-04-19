@@ -1,4 +1,4 @@
-import whiley.lang.System
+import whiley.lang.*
 
 constant IHDR_TYPE is 1380206665
 
@@ -12,7 +12,7 @@ constant PHYS_TYPE is 1935231088
 
 constant TIME_TYPE is 1162692980
 
-public function f(int type) => int:
+public function f(int type) -> int:
     switch type:
         case IHDR_TYPE:
             return 1
@@ -27,9 +27,9 @@ public function f(int type) => int:
         default:
             return 6
 
-public method main(System.Console sys) => void:
-    sys.out.println("GOT: " ++ f(IHDR_TYPE))
-    sys.out.println("GOT: " ++ f(IEND_TYPE))
-    sys.out.println("GOT: " ++ f(PLTE_TYPE))
-    sys.out.println("GOT: " ++ f(PHYS_TYPE))
-    sys.out.println("GOT: " ++ f(TIME_TYPE))
+public method main(System.Console sys) -> void:
+    sys.out.println_s("GOT: " ++ Any.toString(f(IHDR_TYPE)))
+    sys.out.println_s("GOT: " ++ Any.toString(f(IEND_TYPE)))
+    sys.out.println_s("GOT: " ++ Any.toString(f(PLTE_TYPE)))
+    sys.out.println_s("GOT: " ++ Any.toString(f(PHYS_TYPE)))
+    sys.out.println_s("GOT: " ++ Any.toString(f(TIME_TYPE)))

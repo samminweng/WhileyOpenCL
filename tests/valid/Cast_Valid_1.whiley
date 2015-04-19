@@ -1,9 +1,9 @@
-import whiley.lang.System
+import whiley.lang.*
 
 type R1 is {real x}
 
-function f(int i) => real:
+function f(int i) -> real:
     return (real) i
 
-method main(System.Console sys) => void:
-    sys.out.println(Any.toString(f(1)))
+method main(System.Console sys) -> void:
+    sys.out.println(f(1))

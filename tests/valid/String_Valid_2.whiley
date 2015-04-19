@@ -1,6 +1,6 @@
-import whiley.lang.System
+import whiley.lang.*
 
-public function has(char c, string str) => bool:
+public function has(int c, [int] str) -> bool:
     int i = 0
     while i < |str| where i >= 0:
         if str[i] == c:
@@ -8,10 +8,10 @@ public function has(char c, string str) => bool:
         i = i + 1
     return false
 
-method main(System.Console sys) => void:
-    string s = "Hello World"
-    sys.out.println(Any.toString(has('l', s)))
-    sys.out.println(Any.toString(has('e', s)))
-    sys.out.println(Any.toString(has('h', s)))
-    sys.out.println(Any.toString(has('z', s)))
-    sys.out.println(Any.toString(has('H', s)))
+method main(System.Console sys) -> void:
+    [int] s = "Hello World"
+    sys.out.println(has('l', s))
+    sys.out.println(has('e', s))
+    sys.out.println(has('h', s))
+    sys.out.println(has('z', s))
+    sys.out.println(has('H', s))

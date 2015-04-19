@@ -1,4 +1,4 @@
-import whiley.lang.System
+import whiley.lang.*
 
 type tenup is (int x) where x > 10
 
@@ -8,9 +8,9 @@ type msg2 is {int index}
 
 type msgType is msg1 | msg2
 
-function f(msgType m) => string:
-    return Any.toString(m)
+function f(msgType m) -> any:
+    return m
 
-method main(System.Console sys) => void:
+method main(System.Console sys) -> void:
     msg1 x = {op: 11, data: []}
     sys.out.println(f(x))

@@ -1,68 +1,77 @@
 package wyopcl;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
+import static wycc.lang.SyntaxError.internalFailure;
 import wybs.lang.Builder;
 import wybs.util.StdBuildRule;
 import wybs.util.StdProject;
 import wycc.util.Logger;
-import wyopcl.translator.Configuration;
-import wyopcl.translator.Translator;
 import wyopcl.util.Interpreter;
 import wyopcl.util.InterpreterConfiguration;
 
-public class WyopclBuildTask extends wyc.util.WycBuildTask {
-	private Configuration config;
-	private String[] args;
+public class WyopclBuildTask extends wyc.util.WycBuildTask {	
+	//runtime 	
+	protected String[] arguments;
+	//'range' option
+	private String range= null;
+	
+	public void setRange(String range) {
+		this.range = range;
+	}
+
+	public void setArguments(String[] arguments) {
+		this.arguments = arguments;
+	}
+
 	public WyopclBuildTask() {
 		super();
 	}
-	
-	public void setConfig(Map<String, Object> values){
-		this.config = new Configuration();
-		if(values.containsKey("verbose")){			
-			config.setProperty("logger", new Logger.Default(System.err));
-			config.setProperty("verbose", true);
-		}			
-		//If the options are matched with existing modes, then enable the translator by writing the mode option. 
-		for(Entry<String, Object> entry: values.entrySet()){
-			String option = entry.getKey();
-			Object value = entry.getValue();
-			config.setMode(option, value);
-		}		
-	}
-	
-	
-	public void setArguments(List<String> args){
-		this.args = args.toArray(new String[args.size()]);
-	}
-	
-	
+
 	@Override
 	protected void addBuildRules(StdProject project) {
 		// Add default build rule for converting whiley files into wyil files. 
 		super.addBuildRules(project);
-		Builder builder;
+		Builder builder = null;
 		//Check the first argument to determine whether to run the analyzer.		
-		if(config != null && config.getMode() != null){						
-			builder = new Translator(config);
+		if(range != null){
+			/*//Create a config object to store the properties
+			AnalyzerConfiguration config = new AnalyzerConfiguration(project);
+			config.setProperty("invoked", true);
+			if(range!=null){
+				switch(range){
+				case "naive":
+					config.setProperty("widen", WidenStrategy.NAIVE);
+					break;
+				case "gradual":
+					config.setProperty("widen", WidenStrategy.GRADUAL);
+				}				
+			}
+			
+			if (verbose) {
+				config.setProperty("logger", new Logger.Default(System.err));
+				config.setProperty("verbose", true);
+			}			
+			config.setProperty("argument", arguments);			
+			builder = new BoundAnalyzer(config);*/			
 		}else{
 			// Now, add build rule for interpreting the wyil files by using
 			// the WyilInterpreter.
-			InterpreterConfiguration interpreterconfig = new InterpreterConfiguration(project);
+			InterpreterConfiguration config = new InterpreterConfiguration(project);
 			if (verbose) {
-				interpreterconfig.setProperty("logger", new Logger.Default(System.err));
-				interpreterconfig.setProperty("verbose", true);
+				config.setProperty("logger", new Logger.Default(System.err));
+				config.setProperty("verbose", true);
 			}
-			interpreterconfig.setProperty("arguments", args);			
-			builder = new Interpreter(interpreterconfig);
+			config.setProperty("arguments", this.arguments);
+			builder = new Interpreter(config);
 		}
 
 		project.add(new StdBuildRule(builder, wyilDir, wyilIncludes,
 				wyilExcludes, null));
+
+
 	}	
+
+
+
 
 }		
 

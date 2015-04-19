@@ -1,6 +1,6 @@
-import whiley.lang.System
+import whiley.lang.*
 
-function f([int] x) => int:
+function f([int] x) -> int:
     switch x:
         case []:
             return 0
@@ -8,8 +8,8 @@ function f([int] x) => int:
             return -1
     return 10
 
-method main(System.Console sys) => void:
-    sys.out.println(Any.toString(f([])))
-    sys.out.println(Any.toString(f([1])))
-    sys.out.println(Any.toString(f([3])))
-    sys.out.println(Any.toString(f([1, 2, 3])))
+method main(System.Console sys) -> void:
+    sys.out.println(f([]))
+    sys.out.println(f([1]))
+    sys.out.println(f([3]))
+    sys.out.println(f([1, 2, 3]))

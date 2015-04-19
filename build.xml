@@ -14,7 +14,6 @@
 			<fileset dir="modules" includes="wyc/build.xml"/>
 			<fileset dir="modules" includes="wyrt/build.xml"/>
 			<fileset dir="modules" includes="wyjc/build.xml"/>
-			<fileset dir="modules" includes="wycc/build.xml"/>
 			<!--wyopcl-->
 			<fileset dir="modules" includes="wyopcl/build.xml" />
 		</subant>
@@ -87,7 +86,15 @@
 
 <target name="distjars" depends="build-all">
 <subant failonerror="false" target="dist">
-	<fileset dir="modules" includes="*/build.xml"/>
+	<fileset dir="modules" includes="wybs/build.xml"/>
+	<fileset dir="modules" includes="wyrl/build.xml"/>
+	<fileset dir="modules" includes="wycs/build.xml"/>
+	<fileset dir="modules" includes="wyil/build.xml"/>
+	<fileset dir="modules" includes="wyc/build.xml"/>
+	<fileset dir="modules" includes="wyrt/build.xml"/>
+	<fileset dir="modules" includes="wyjc/build.xml"/>
+	<!--wyopcl-->
+	<fileset dir="modules" includes="wyopcl/build.xml" />
 </subant>
 </target>
 

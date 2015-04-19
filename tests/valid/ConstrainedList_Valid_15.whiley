@@ -1,7 +1,7 @@
-import whiley.lang.System
+import whiley.lang.*
 
-function f() => string:
+function f() -> [int]:
     return ""
 
-method main(System.Console sys) => void:
+method main(System.Console sys) -> void:
     sys.out.println(f())

@@ -1,4 +1,6 @@
-function sum([int] xs) => int
+import whiley.lang.System
+
+function sum([int] xs) -> int
 requires |xs| > 0:
     //
     int i = 0
@@ -10,7 +12,7 @@ requires |xs| > 0:
     //
     return r
 
-method main(System.Console sys) => void:
+method main(System.Console sys) -> void:
     sys.out.println(sum([1]))
     sys.out.println(sum([1, 2]))
     sys.out.println(sum([1, 2, 3]))
