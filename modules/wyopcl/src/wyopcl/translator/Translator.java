@@ -20,11 +20,6 @@ import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.bound.BoundAnalyzer;
-import wyopcl.translator.generator.CodeGenerator;
-import wyopcl.translator.generator.CodeGeneratorHelper;
-import wyopcl.translator.symbolic.PatternMatcher;
-import wyopcl.translator.symbolic.PatternTransformer;
-import wyopcl.translator.symbolic.pattern.Pattern;
 /**
  * Main entry point of translator
  * 
@@ -64,14 +59,14 @@ public class Translator implements Builder{
 				analyzeFunctionalBounds(module);
 				message = "Bound analysis completed.\nFile: " + config.getFilename();
 				break;
-			case "code":
+			/*case "code":
 				generateCodeInC(module);
 				message = "Code generation completed.\nFile: "+config.getFilename()+".c";
-				break;
-			case "pattern":
+				break;*/
+			/*case "pattern":
 				patternMatch(module);
 				message = "Pattern matching completed.\nFile: " + config.getFilename();
-				break;
+				break;*/
 			default:
 				break;
 			}			
@@ -107,12 +102,12 @@ public class Translator implements Builder{
 		}		
 	}
 
+/*
 
-
-	/**
+	*//**
 	 * Reads the in-memory WyIL file and generates the code in C
 	 * @param module
-	 */
+	 *//*
 	private void generateCodeInC(WyilFile module){
 		//Check if the Bool type is used in the program.
 		boolean isBoolType = false;
@@ -159,13 +154,13 @@ public class Translator implements Builder{
 			throw new RuntimeException("Error occurs in writing "+config.getFilename()+".h");
 		}
 
-	}
+	}*/
 
 
 	/**
 	 *  Iterate each code of the input function, build up the code blk and then analyze the loop pattern.
 	 * @param module 
-	 */
+	 *//*
 	private void patternMatch(WyilFile module){
 
 		//Iterate each function
@@ -182,7 +177,7 @@ public class Translator implements Builder{
 			System.out.println("\n----------------End of "+func_name+" function----------------\n");
 		}		
 	}
-
+*/
 
 
 

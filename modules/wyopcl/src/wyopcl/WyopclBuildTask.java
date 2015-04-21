@@ -11,8 +11,8 @@ import wybs.util.StdProject;
 import wycc.util.Logger;
 import wyopcl.translator.Configuration;
 import wyopcl.translator.Translator;
-import wyopcl.util.Interpreter;
-import wyopcl.util.InterpreterConfiguration;
+//import wyopcl.util.Interpreter;
+//import wyopcl.util.InterpreterConfiguration;
 
 public class WyopclBuildTask extends wyc.util.WycBuildTask {
 	//The configuration of translator
@@ -48,13 +48,14 @@ public class WyopclBuildTask extends wyc.util.WycBuildTask {
 		if(this.enableInterpreter){
 			// Now, add build rule for interpreting the wyil files by using
 			// the WyilInterpreter.
-			InterpreterConfiguration config = new InterpreterConfiguration(project);
+			//Temporary disable the interpreter.
+			/*InterpreterConfiguration config = new InterpreterConfiguration(project);
 			if (verbose) {
 				config.setProperty("logger", new Logger.Default(System.err));
 				config.setProperty("verbose", true);
 			}
 			config.setProperty("arguments", this.arguments);
-			builder = new Interpreter(config);
+			builder = new Interpreter(config);*/
 		}else{
 			builder = new Translator(config);
 		}

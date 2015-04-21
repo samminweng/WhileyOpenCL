@@ -50,9 +50,6 @@ import wyopcl.translator.bound.constraint.Negate;
 import wyopcl.translator.bound.constraint.Plus;
 import wyopcl.translator.bound.constraint.Range;
 import wyopcl.translator.bound.constraint.Union;
-import wyopcl.translator.symbolic.PatternMatcher;
-import wyopcl.translator.symbolic.PatternTransformer;
-import wyopcl.translator.symbolic.pattern.Pattern;
 
 /***
  * A class to store all the constraints produced in the wyil file and infer the
@@ -226,7 +223,7 @@ public class BoundAnalyzer {
 		blk_ctrl.sortedList();
 		// The least common multiple of naive (4) and graduate (12) widening
 		// strategies plus one.
-		int MaxIteration = 4;
+		int MaxIteration = 5;
 		if(config.isGradualWiden()){
 			MaxIteration = 20;
 		}		
@@ -502,7 +499,8 @@ public class BoundAnalyzer {
 			List<Type> params = functionOrMethod.type().params();
 			// The list of bytecode
 			List<Code> code_blk = TranslatorHelper.getCodeBlock(functionOrMethod);
-			code_blk = TranslatorHelper.patternMatchingandTransformation(config, params, code_blk);
+			//Temporarily disable for upgrade
+			//code_blk = TranslatorHelper.patternMatchingandTransformation(config, params, code_blk);
 			// Infer the bounds
 			Bounds bnd = this.inferBounds();
 			// Create the bound analyzer for the invoked function.
