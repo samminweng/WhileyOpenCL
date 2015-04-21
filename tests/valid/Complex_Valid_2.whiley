@@ -1,4 +1,6 @@
-import whiley.lang.System
+import whiley.lang.*
+
+type string is [int]
 
 constant PAWN is 0
 
@@ -14,7 +16,7 @@ constant KING is 5
 
 constant PIECE_CHARS is ['P', 'N', 'B', 'R', 'Q', 'K']
 
-constant PieceKind is {PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING}
+type PieceKind is (int x) where x in {PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING}
 
 type Piece is {bool colour, PieceKind kind}
 
@@ -68,7 +70,7 @@ constant D3 is {col: 3, row: 2}
 
 constant H1 is {col: 8, row: 1}
 
-function move2str(Move m) => string:
+function move2str(Move m) -> string:
     if m is SingleTake:
         return (((piece2str(m.piece) ++ pos2str(m.from)) ++ "x") ++ piece2str(m.taken)) ++ pos2str(m.to)
     else:
@@ -86,19 +88,19 @@ function move2str(Move m) => string:
                 else:
                     return ""
 
-function piece2str(Piece p) => string:
+function piece2str(Piece p) -> string:
     if p.kind == PAWN:
         return ""
     else:
-        return "" ++ PIECE_CHARS[p.kind]
+        return [PIECE_CHARS[p.kind]]
 
-function pos2str(Pos p) => string:
-    return "" ++ ('a' + (char) p.col) ++ ('1' + (char) p.row)
+function pos2str(Pos p) -> string:
+    return ['a' + p.col,'1' + p.row]
 
-method main(System.Console sys) => void:
+method main(System.Console sys) -> void:
     Move m = {to: A1, from: A2, piece: WHITE_PAWN}
-    sys.out.println(move2str(m))
+    sys.out.println_s(move2str(m))
     m = {to: A1, from: A2, piece: WHITE_KNIGHT}
-    sys.out.println(move2str(m))
+    sys.out.println_s(move2str(m))
     m = {to: A1, taken: BLACK_KING, from: A2, piece: WHITE_QUEEN}
-    sys.out.println(move2str(m))
+    sys.out.println_s(move2str(m))

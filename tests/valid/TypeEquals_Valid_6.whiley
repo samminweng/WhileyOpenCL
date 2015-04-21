@@ -1,23 +1,23 @@
-import whiley.lang.System
+import whiley.lang.*
 
-type SyntaxError is {string msg}
+type SyntaxError is {[int] msg}
 
-function f(int x) => string:
-    SyntaxError|{string input} nst
+function f(int x) -> bool:
+    SyntaxError|{[int] input} nst
     //
     if x > 0:
         nst = {input: "Hello World"}
     else:
         nst = syntaxError("problem")
     //
-    if nst is {string msg}:
-        return "error"
+    if nst is {[int] msg}:
+        return true
     else:
-        return nst.input
+        return false
 
-function syntaxError(string errorMessage) => SyntaxError:
+function syntaxError([int] errorMessage) -> SyntaxError:
     return {msg: errorMessage}
 
-method main(System.Console sys) => void:
+method main(System.Console sys) -> void:
     sys.out.println(f(0))
     sys.out.println(f(1))

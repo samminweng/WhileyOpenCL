@@ -1,4 +1,6 @@
-function contains([int] xs, int x) => (bool r)
+import whiley.lang.System
+
+function contains([int] xs, int x) -> (bool r)
 ensures r ==> x in xs:
     //
     int i = 0
@@ -13,6 +15,4 @@ ensures r ==> x in xs:
 method main(System.Console console):
     [int] ls = [1,2,3,4]
     for l in [3,5,1]:
-        bool b = contains(ls,l)
-        console.out.println(l ++ " in " ++ ls ++ " : " ++ b)
-    
+        console.out.println(contains(ls,l))

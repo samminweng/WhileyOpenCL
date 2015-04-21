@@ -7,7 +7,7 @@ import java.util.List;
 
 import wybs.lang.Builder;
 import wycc.lang.Transform;
-import wyil.lang.Code.Block;
+import wyil.lang.CodeBlock;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
@@ -21,11 +21,11 @@ import wyil.lang.WyilFile;
  * important, for example, when generating verification conditions during the
  * verification process.
  * </p>
- * 
+ *
  * <p>
  * For example, consider this Whiley program:
  * </p>
- * 
+ *
  * <pre>
  * int sum(int stride, [int] list):
  *     r = 0
@@ -41,122 +41,114 @@ import wyil.lang.WyilFile;
  * Note, however, that <code>stride</code> is not a loop variant because it
  * remains constant (i.e. invariant) for the duration of the loop.
  * </p>
- * 
+ *
  * @author David J. Pearce
- * 
+ *
  */
 public class LoopVariants implements Transform<WyilFile> {
 	private String filename;
-	
+
 	/**
 	 * Determines whether constant propagation is enabled or not.
 	 */
 	private boolean enabled = getEnable();
 
 	public LoopVariants(Builder builder) {
-		
+
 	}
 
 	public static String describeEnable() {
 		return "Enable/disable loop variant inference";
 	}
-	
+
 	public static boolean getEnable() {
 		return true; // default value
 	}
-	
+
 	public void setEnable(boolean flag) {
 		this.enabled = flag;
 	}
-		
+
 	public void apply(WyilFile module) {
-		if(enabled) {
+		if (enabled) {
 			filename = module.filename();
-		
-			for(WyilFile.TypeDeclaration type : module.types()) {
+
+			for (WyilFile.Type type : module.types()) {
 				infer(type);
 			}
-			
-			for(WyilFile.FunctionOrMethodDeclaration method : module.functionOrMethods()) {
+
+			for (WyilFile.FunctionOrMethod method : module
+					.functionOrMethods()) {
 				infer(method);
 			}
-			
-			
 		}
 	}
-	
-	public void infer(WyilFile.TypeDeclaration type) {
-		Code.Block invariant = type.invariant();
+
+	public void infer(WyilFile.Type type) {
+		CodeBlock invariant = type.invariant();
 		if (invariant != null) {
-			infer(invariant, 0, invariant.size());
+			infer(invariant);
 		}
 	}
-	
-	public void infer(WyilFile.FunctionOrMethodDeclaration method) {	
-		for (WyilFile.Case c : method.cases()) {
-			Code.Block body = c.body();
-			if(body != null) {		
-				infer(body,0,body.size());
-			}
+
+	public void infer(WyilFile.FunctionOrMethod method) {		
+		CodeBlock body = method.body();
+		if(body != null) {
+			infer(body);
 		}		
 	}
-	
+
 	/**
 	 * Determine the modified variables for a given block of Wyil bytecodes. In
 	 * doing this, infer the modified operands for any loop bytecodes
 	 * encountered.
-	 * 
+	 *
 	 * @param block
 	 * @param method
 	 * @return
 	 */
-	protected BitSet infer(Code.Block block, int start, int end) {
+	protected BitSet infer(CodeBlock block) {
 		BitSet modified = new BitSet(block.numSlots());
-		int size = block.size();		
-		for(int i=start;i<end;++i) {
-			Code.Block.Entry entry = block.get(i);
-			Code code = entry.code;
-			
+		int size = block.size();
+		for(int i=0;i<size;++i) {
+			Code code = block.get(i);
+
 			if (code instanceof Code.AbstractAssignable) {
 				Code.AbstractAssignable aa = (Code.AbstractAssignable) code;
-				if(aa.target() != Codes.NULL_REG) { 
+				if (aa.target() != Codes.NULL_REG) {
 					modified.set(aa.target());
 				}
-			} if(code instanceof Codes.Loop) {
-				Codes.Loop loop = (Codes.Loop) code;
-				int s = i;
-				// Note, I could make this more efficient!					
-				while (++i < block.size()) {
-					Code.Block.Entry nEntry = block.get(i);
-					if (nEntry.code instanceof Codes.LoopEnd) {
-						Codes.Label l = (Codes.Label) nEntry.code;
-						if (l.label.equals(loop.target)) {
-							// end of loop body found
-							break;
-						}
-					}						
-				}
-				
-				BitSet loopModified = infer(block,s+1,i);
+			}
+			if (code instanceof Code.Compound) {
+				Code.Compound body = (Code.Compound) code;
+				BitSet loopModified = infer(body);
 				if (code instanceof Codes.ForAll) {
 					// Unset the modified status of the index operand, it is
 					// already implied that this is modified.
 					Codes.ForAll fall = (Codes.ForAll) code;
 					loopModified.clear(fall.indexOperand);
-					code = Codes.ForAll(fall.type, fall.sourceOperand,
-							fall.indexOperand, toArray(loopModified),
-							fall.target);
-				} else {
-					code = Codes.Loop(loop.target, toArray(loopModified));
+					if(code instanceof Codes.Quantify) {
+						code = Codes.Quantify(fall.type, fall.sourceOperand,
+								fall.indexOperand, toArray(loopModified),
+								fall.bytecodes());
+					} else {
+						code = Codes.ForAll(fall.type, fall.sourceOperand,
+								fall.indexOperand, toArray(loopModified),
+								fall.bytecodes());
+					}
+					block.set(i, code);
+				} else if (code instanceof Codes.Loop) {
+					Codes.Loop loop = (Codes.Loop) code;
+					code = Codes.Loop(toArray(loopModified), loop.bytecodes());
+					block.set(i, code);
 				}
 				
-				block.set(s, code, entry.attributes());
 				modified.or(loopModified);
 			}
 		}
 		return modified;
 	}
-	
+
 	protected int[] toArray(BitSet bs) {
 		int[] arr = new int[bs.cardinality()];
 		for (int i = bs.nextSetBit(0), j = 0; i >= 0; i = bs.nextSetBit(i + 1), ++j) {

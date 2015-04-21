@@ -18,13 +18,8 @@ import wyfs.lang.Path.Root;
 import wyil.lang.Code;
 import wyil.lang.Type;
 import wyil.lang.WyilFile;
-import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
+import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.bound.BoundAnalyzer;
-import wyopcl.translator.generator.CodeGenerator;
-import wyopcl.translator.generator.CodeGeneratorHelper;
-import wyopcl.translator.symbolic.PatternMatcher;
-import wyopcl.translator.symbolic.PatternTransformer;
-import wyopcl.translator.symbolic.pattern.Pattern;
 /**
  * Main entry point of translator
  * 
@@ -61,17 +56,17 @@ public class Translator implements Builder{
 			//Check the mode
 			switch(config.getMode()){
 			case "bound":
-				analyzeFunction(module);
+				analyzeFunctionalBounds(module);
 				message = "Bound analysis completed.\nFile: " + config.getFilename();
 				break;
-			case "code":
+			/*case "code":
 				generateCodeInC(module);
 				message = "Code generation completed.\nFile: "+config.getFilename()+".c";
-				break;
-			case "pattern":
+				break;*/
+			/*case "pattern":
 				patternMatch(module);
 				message = "Pattern matching completed.\nFile: " + config.getFilename();
-				break;
+				break;*/
 			default:
 				break;
 			}			
@@ -87,15 +82,17 @@ public class Translator implements Builder{
 	 * Takes the in-memory wyil file and analyzes the ranges using function call.
 	 * @param module
 	 */
-	private void analyzeFunction(WyilFile module){		
-		try {			
-			FunctionOrMethodDeclaration functionOrMethod = module.functionOrMethod("main").get(0);
+	private void analyzeFunctionalBounds(WyilFile module){		
+		try {
+			//FunctionOrMethodDeclaration functionOrMethod = module.functionOrMethod("main").get(0);
+			//Get code block of main function.
+			FunctionOrMethod functionOrMethod = module.functionOrMethod("main").get(0);
 			//Put the function name to the config
 			this.config.setProperty("function_name", functionOrMethod.name());
 			List<Code> code_blk = TranslatorHelper.getCodeBlock(functionOrMethod);				
-			BoundAnalyzer boundAnalyzer = new BoundAnalyzer(config, code_blk);
+			BoundAnalyzer boundAnalyzer = new BoundAnalyzer(config);
 			boundAnalyzer.propagateBounds(functionOrMethod.type().params());
-			boundAnalyzer.iterateByteCode();
+			boundAnalyzer.iterateByteCodeList(code_blk);
 			//Infer the bounds at the end of main function.
 			boundAnalyzer.inferBounds();			
 			boundAnalyzer = null;			
@@ -105,12 +102,12 @@ public class Translator implements Builder{
 		}		
 	}
 
+/*
 
-
-	/**
+	*//**
 	 * Reads the in-memory WyIL file and generates the code in C
 	 * @param module
-	 */
+	 *//*
 	private void generateCodeInC(WyilFile module){
 		//Check if the Bool type is used in the program.
 		boolean isBoolType = false;
@@ -126,7 +123,7 @@ public class Translator implements Builder{
 			CodeGeneratorHelper.generateIndirectInvoked(writer);
 			CodeGeneratorHelper.generateFree_doublePtr(writer);
 			//Iterate each function
-			for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {
+			for(FunctionOrMethod functionOrMethod : module.functionOrMethods()) {
 				CodeGenerator generator = new CodeGenerator(config);
 				String function_del = generator.translate(functionOrMethod);
 				//Add the function declaration to the list
@@ -157,17 +154,17 @@ public class Translator implements Builder{
 			throw new RuntimeException("Error occurs in writing "+config.getFilename()+".h");
 		}
 
-	}
+	}*/
 
 
 	/**
 	 *  Iterate each code of the input function, build up the code blk and then analyze the loop pattern.
 	 * @param module 
-	 */
+	 *//*
 	private void patternMatch(WyilFile module){
 
 		//Iterate each function
-		for(WyilFile.FunctionOrMethodDeclaration functionOrMethod : module.functionOrMethods()) {
+		for(FunctionOrMethod functionOrMethod : module.functionOrMethods()) {
 			String func_name = functionOrMethod.name();			
 			ArrayList<Type> params = functionOrMethod.type().params();
 			//Begin the function
@@ -180,7 +177,7 @@ public class Translator implements Builder{
 			System.out.println("\n----------------End of "+func_name+" function----------------\n");
 		}		
 	}
-
+*/
 
 
 

@@ -25,204 +25,155 @@
 
 package wyil.util.dfa;
 
-import static wycc.lang.SyntaxError.internalFailure;
-
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import wycc.lang.SyntaxError;
-import wycc.lang.Transform;
 import wycc.util.Pair;
-import wyfs.lang.Path;
+import wyil.attributes.SourceLocation;
 import wyil.lang.*;
-import wyil.lang.Code.Block.Entry;
-import wyil.util.*;
+import wyil.util.AttributedCodeBlock;
+import static wyil.util.ErrorMessages.*;
 
 public abstract class BackwardFlowAnalysis<T> {
+
+	/**
+	 * The filename of the module currently being propagated through
+	 */
 	protected String filename;
-	protected Code.Block block;
-	protected WyilFile.FunctionOrMethodDeclaration method;
-	protected WyilFile.Case methodCase;
-	protected HashMap<String,T> stores;
-	
-	public void apply(WyilFile module) {	
+
+	/**
+	 * The function or method currently being propagated through.
+	 */
+	protected WyilFile.FunctionOrMethod method;
+
+	/**
+	 * The root block currently being propagated through.
+	 */
+	protected AttributedCodeBlock rootBlock;
+
+	/**
+	 * The temporary abstract stores being generated during propagation.
+	 */
+	protected HashMap<String, T> stores;
+
+	public void apply(WyilFile module) {
 		filename = module.filename();
-		
+
 		for(WyilFile.Block d : module.blocks()) {
-			if(d instanceof WyilFile.ConstantDeclaration) {
-				WyilFile.ConstantDeclaration cd = (WyilFile.ConstantDeclaration) d; 
+			if(d instanceof WyilFile.Constant) {
+				WyilFile.Constant cd = (WyilFile.Constant) d;
 				module.replace(cd,propagate((cd)));
-			} else if(d instanceof WyilFile.TypeDeclaration) {
-				WyilFile.TypeDeclaration td = (WyilFile.TypeDeclaration) d;
-				module.replace(td,propagate(td));	
-			} else if(d instanceof WyilFile.FunctionOrMethodDeclaration) {
-				WyilFile.FunctionOrMethodDeclaration md = (WyilFile.FunctionOrMethodDeclaration) d;
+			} else if(d instanceof WyilFile.Type) {
+				WyilFile.Type td = (WyilFile.Type) d;
+				module.replace(td,propagate(td));
+			} else if(d instanceof WyilFile.FunctionOrMethod) {
+				WyilFile.FunctionOrMethod md = (WyilFile.FunctionOrMethod) d;
 				if(!md.hasModifier(Modifier.NATIVE)) {
 					// native functions/methods don't have bodies
 					module.replace(md,propagate(md));
 				}
 			}
-		}				
+		}
 	}
-	
-	protected WyilFile.ConstantDeclaration propagate(WyilFile.ConstantDeclaration constant) {
+
+	protected WyilFile.Constant propagate(WyilFile.Constant constant) {
 		return constant;
 	}
-	protected WyilFile.TypeDeclaration propagate(WyilFile.TypeDeclaration type) {
+	protected WyilFile.Type propagate(WyilFile.Type type) {
 		return type;
 	}
-	
-	protected WyilFile.FunctionOrMethodDeclaration propagate(WyilFile.FunctionOrMethodDeclaration method) {
+
+	protected WyilFile.FunctionOrMethod propagate(
+			WyilFile.FunctionOrMethod method) {
 		this.method = method;
-		ArrayList<WyilFile.Case> cases = new ArrayList<WyilFile.Case>();
-		for (WyilFile.Case c : method.cases()) {
-			cases.add(propagate(c));
-		}
-		return new WyilFile.FunctionOrMethodDeclaration(method.modifiers(), method.name(), method.type(), cases);
-	}
-	
-	protected WyilFile.Case propagate(WyilFile.Case mcase) {
-		this.methodCase = mcase;
 		this.stores = new HashMap<String,T>();
-		this.block = mcase.body();
-		T last = lastStore();						
-		propagate(0, mcase.body().size(), last, Collections.EMPTY_LIST);		
-		return mcase;
-	}		
-	
-	protected T propagate(int start, int end, T store, List<Pair<Type,String>> handlers) {
+		this.rootBlock = method.body();
+		T last = lastStore();
+		propagate(null, rootBlock, last, Collections.EMPTY_LIST);
 		
-		for(int i=end-1;i>=start;--i) {						
-			Entry stmt = block.get(i);						
-			try {				
-				Code code = stmt.code;
-				
+		// FIXME: should we propagate through the precondition and postconditions !?
+		
+		return new WyilFile.FunctionOrMethod(method.modifiers(), method.name(),
+				method.type(), method.body(), method.precondition(),
+				method.postcondition(), method.attributes());
+	}
+
+	/**
+	 * Propagate a given store backwards through this bytecode block. A list of
+	 * exception handlers that are active is provided.
+	 *
+	 * @param parentIndex
+	 *            The bytecode index of the bytecode containing this block, or
+	 *            the empty index otherwise.
+	 * @param block
+	 *            The bytecode block to be propagated through.
+	 * @param store
+	 *            The store which holds at the end of this block.
+	 * @param handlers
+	 *            The list of active exception handlers
+	 * @return
+	 */
+	protected T propagate(CodeBlock.Index parentIndex, CodeBlock block, T store, List<Pair<Type,String>> handlers) {
+
+		for (int i = block.size()-1; i >= 0; --i) {
+			Code code = block.get(i);
+
+			// Construct the bytecode index
+			CodeBlock.Index id = new CodeBlock.Index(parentIndex,i);
+
+			try {
 				// First, check for a label which may have incoming information.
-				if (code instanceof Codes.LoopEnd) {					
-					Codes.Loop loop = null;
-					String label = ((Codes.LoopEnd) code).label;
-					// first, save the store since it might be needed for break
-					// statements.
-					stores.put(label,store);
-					// now, identify the loop body.
-					int loopEnd = i;
-					while (--i >= 0) {						
-						stmt = block.get(i);
-						if (stmt.code instanceof Codes.Loop) {
-							loop = (Codes.Loop) stmt.code;
-							if (label.equals(loop.target)) {
-								// start of loop body found
-								break;
-							}
-						}						
-					}			
-					
-					store = propagate(i, loopEnd, loop, stmt, store, handlers);															
-					continue;
-				} else if (code instanceof Codes.TryEnd) {					
-					Codes.TryCatch tc = null;
-					String label = ((Codes.TryEnd) code).label;
-					stores.put(label,store);
-					// now, identify the try-catch body.
-					int tcEnd = i;
-					while (--i >= 0) {						
-						stmt = block.get(i);
-						if (stmt.code instanceof Codes.TryCatch) {
-							tc = (Codes.TryCatch) stmt.code;
-							if (label.equals(tc.target)) {
-								// start of loop body found
-								break;
-							}
-						}						
-					}			
-					ArrayList<Pair<Type, String>> nhandlers = new ArrayList<Pair<Type, String>>(
-							handlers);
-					nhandlers.addAll(0, tc.catches);					
-					store = propagate(i+1, tcEnd, store, nhandlers);															
+				if (code instanceof Codes.Loop) {
+					Codes.Loop loop = (Codes.Loop) code;
+					store = propagate(id, loop, store, handlers);
 					continue;
 				} else if (code instanceof Codes.Label) {
 					Codes.Label l = (Codes.Label) code;
 					stores.put(l.label,store);
 				} else if (code instanceof Codes.If) {
 					Codes.If ifgoto = (Codes.If) code;
-					T trueStore = stores.get(ifgoto.target);					
-					store = propagate(i, ifgoto, stmt, trueStore,store);										
+					T trueStore = stores.get(ifgoto.target);
+					store = propagate(id, ifgoto, trueStore, store);
 				} else if (code instanceof Codes.IfIs) {
 					Codes.IfIs iftype = (Codes.IfIs) code;
-					T trueStore = stores.get(iftype.target);					
-					store = propagate(i, iftype, stmt, trueStore,store);										
+					T trueStore = stores.get(iftype.target);
+					store = propagate(id, iftype, trueStore, store);
 				} else if (code instanceof Codes.Switch) {
 					Codes.Switch sw = (Codes.Switch) code;
-					
+
 					ArrayList<T> swStores = new ArrayList<T>();
 					for(int j=0;j!=sw.branches.size();++j){
 						String target = sw.branches.get(j).second();
 						swStores.add(stores.get(target));
 					}
 					T defStore = stores.get(sw.defaultTarget);
-					
-					store = propagate(i, sw, stmt, swStores, defStore);																				
+
+					store = propagate(id, sw, swStores, defStore);
 				} else if (code instanceof Codes.Goto) {
-					Codes.Goto gto = (Codes.Goto) stmt.code;
-					store = stores.get(gto.target);					
+					Codes.Goto gto = (Codes.Goto) code;
+					store = stores.get(gto.target);
 				} else {
 					// This indicates a sequential statement was encountered.
 					if (code instanceof Codes.Return
-						|| code instanceof Codes.Throw
 						|| code instanceof Codes.Fail) {
 						store = lastStore();
 					}
-					store = propagate(i, stmt, store);									
+					store = propagate(id, code, store);
 				}
-				
-				store = mergeHandlers(i,code,store,handlers,stores);
 			} catch (SyntaxError se) {
 				throw se;
 			} catch (Throwable ex) {
-				internalFailure("internal failure", filename, stmt, ex);
-			}
+				internalFailure("internal failure", filename, ex, rootBlock.attribute(id,SourceLocation.class));			}
 		}
-		
+
 		return store;
 	}
 
-	protected T mergeHandlers(int index, Code code, T store, List<Pair<Type, String>> handlers,
-			Map<String, T> stores) {
-		if(code instanceof Codes.Throw) {
-			Codes.Throw t = (Codes.Throw) code;	
-			return mergeHandler(t.type,store,handlers,stores);
-		} else if(code instanceof Codes.IndirectInvoke) {
-			Codes.IndirectInvoke i = (Codes.IndirectInvoke) code;			
-			return mergeHandler(i.type().throwsClause(),store,handlers,stores);
-		} else if(code instanceof Codes.Invoke) {
-			Codes.Invoke i = (Codes.Invoke) code;	
-			return mergeHandler(i.type().throwsClause(),store,handlers,stores);
-		} 
-		return store;
-	}
-	
-	protected T mergeHandler(Type type, T store, List<Pair<Type, String>> handlers,
-			Map<String, T> stores) {
-		for(Pair<Type,String> p : handlers) {
-			Type handler = p.first();			
-			T exceptionStore = stores.get(p.second());
-			if(exceptionStore == null) {
-				continue;
-			} else if(Type.isSubtype(handler,type)) {
-				return propagate(handler,store,exceptionStore);				
-			} else if(Type.isSubtype(type, handler)) {
-				store = propagate(handler,store,exceptionStore);				
-				// not completely subsumed
-				type = Type.intersect(type,Type.Negation(handler));
-			} 
-		}
-		
-		return store;
-	}
-	
 	/**
 	 * <p>
 	 * Propagate back from a conditional branch. This produces a potentially
@@ -230,13 +181,11 @@ public abstract class BackwardFlowAnalysis<T> {
 	 * accepts two stores --- one originating from the true branch, and the
 	 * other from the false branch.
 	 * </p>
-	 * 
+	 *
 	 * @param index
-	 *            --- the index of this bytecode in the method's block
+	 *            --- Index of bytecode in root CodeBlock
 	 * @param ifgoto
 	 *            --- the code of this statement
-	 * @param stmt
-	 *            --- this statement
 	 * @param trueStore
 	 *            --- abstract store which holds true immediately after this
 	 *            statement on the true branch.
@@ -245,7 +194,7 @@ public abstract class BackwardFlowAnalysis<T> {
 	 *            statement on the false branch.
 	 * @return
 	 */
-	protected abstract T propagate(int index, Codes.If ifgoto, Entry stmt,
+	protected abstract T propagate(CodeBlock.Index index, Codes.If ifgoto,
 			T trueStore, T falseStore);
 
 	/**
@@ -254,13 +203,11 @@ public abstract class BackwardFlowAnalysis<T> {
 	 * state before the branch. The method accepts two stores --- one
 	 * originating from the true branch, and the other from the false branch.
 	 * </p>
-	 * 
+	 *
 	 * @param index
-	 *            --- the index of this bytecode in the method's block
+	 *            --- Index of bytecode in root CodeBlock
 	 * @param iftype
 	 *            --- the code of this statement
-	 * @param stmt
-	 *            --- this statement
 	 * @param trueStore
 	 *            --- abstract store which holds true immediately after this
 	 *            statement on the true branch.
@@ -269,21 +216,19 @@ public abstract class BackwardFlowAnalysis<T> {
 	 *            statement on the false branch.
 	 * @return
 	 */
-	protected abstract T propagate(int index, Codes.IfIs iftype, Entry stmt,
-			T trueStore, T falseStore);
+	protected abstract T propagate(CodeBlock.Index index, Codes.IfIs iftype, T trueStore,
+			T falseStore);
 
 	/**
 	 * <p>
 	 * Propagate back from a multi-way branch. This accepts multiple stores ---
 	 * one for each of the various branches.
 	 * </p>
-	 * 
+	 *
 	 * @param index
-	 *            --- the index of this bytecode in the method's block
+	 *            --- Index of bytecode in root CodeBlock
 	 * @param sw
 	 *            --- the code of this statement
-	 * @param entry
-	 *            --- block entry for this bytecode
 	 * @param stores
 	 *            --- abstract stores coming from the various branches.
 	 *            statement.
@@ -291,7 +236,7 @@ public abstract class BackwardFlowAnalysis<T> {
 	 *            --- abstract store coming from default branch
 	 * @return
 	 */
-	protected abstract T propagate(int index, Codes.Switch sw, Entry entry,
+	protected abstract T propagate(CodeBlock.Index index, Codes.Switch sw,
 			List<T> stores, T defStore);
 
 	/**
@@ -299,43 +244,39 @@ public abstract class BackwardFlowAnalysis<T> {
 	 * Propagate back from a loop statement, producing a store which holds true
 	 * immediately before the statement
 	 * </p>
-	 * 
-	 * @param index
-	 *            --- the index of this bytecode in the method's block
+	 *
 	 * @param loop
 	 *            --- the code of the block
 	 * @param body
 	 *            --- the body of the block
-	 * @param stmt
-	 *            --- the statement being propagated through
 	 * @param store
 	 *            --- abstract store which holds true immediately before this
 	 *            statement.
 	 * @return
 	 */
-	protected abstract T propagate(int start, int end, Codes.Loop code, Entry stmt,
-			T store, List<Pair<Type,String>> handlers);
+	protected abstract T propagate(CodeBlock.Index index, Codes.Loop code, T store,
+			List<Pair<Type, String>> handlers);
 
 	/**
 	 * <p>
 	 * Propagate back from a sequential statement, producing a store which holds
 	 * true immediately after the statement
 	 * </p>
-	 * 
+	 *
 	 * @param index
-	 *            --- the index of this bytecode in the method's block
-	 * @param stmt
-	 *            --- the statement being propagated through
+	 *            --- Index of bytecode in root CodeBlock
+	 * @param code
+	 *            --- Bytecode being propagated through
 	 * @param store
 	 *            --- abstract store which holds true immediately before this
 	 *            statement.
 	 * @return
 	 */
-	protected abstract T propagate(int index, Entry stmt, T store);
+	protected abstract T propagate(CodeBlock.Index index, Code code, T store);
 
 	/**
 	 * Propagate from an exception handler.
-	 * 
+	 *
 	 * @param handler
 	 *            --- type of handler catching exception
 	 * @param normalStore
@@ -345,15 +286,15 @@ public abstract class BackwardFlowAnalysis<T> {
 	 * @return
 	 */
 	protected abstract T propagate(Type handler, T normalStore, T exceptionStore);
-	
+
 	/**
 	 * Generate the store which holds true immediately after the last statement
 	 * of the method-case body.  By default, this is null and the first return
 	 * statement encountered during the backwards propagation initialises things.
-	 * 
+	 *
 	 * @return
 	 */
 	protected T lastStore() {
 		return null;
-	}	
+	}
 }

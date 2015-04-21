@@ -1,4 +1,4 @@
-import whiley.lang.System
+import whiley.lang.*
 
 type nat is (int x) where x >= 0
 
@@ -22,11 +22,11 @@ constant Value is [1, 5, 10, 20, 50, 100, 500, 1000]
 
 type Cash is ([nat] coins) where |coins| == |Value|
 
-function Cash([nat] coins) => Cash
+function Cash([nat] coins) -> Cash
 requires all { c in coins | c < |Value| }:
     Cash cash = [0, 0, 0, 0, 0, 0, 0, 0]
     int i = 0
-    while i < |coins| 
+    while i < |coins|
         where i >= 0 && |cash| == |Value|
         where all { c in cash | c >= 0 }:
         //
@@ -35,10 +35,10 @@ requires all { c in coins | c < |Value| }:
         i = i + 1
     return cash
 
-method main(System.Console sys) => void:
+method main(System.Console sys) -> void:
     Cash cash = Cash([ONE_DOLLAR, FIVE_CENTS])
-    sys.out.println(Any.toString(cash))
+    sys.out.println(cash)
     cash = Cash([FIVE_DOLLARS, TEN_CENTS, FIFTY_CENTS])
-    sys.out.println(Any.toString(cash))
+    sys.out.println(cash)
     cash = Cash([ONE_DOLLAR, ONE_DOLLAR, TWENTY_CENTS])
-    sys.out.println(Any.toString(cash))
+    sys.out.println(cash)

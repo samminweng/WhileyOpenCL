@@ -1,10 +1,10 @@
-import whiley.lang.System
+import whiley.lang.*
 
-function f({int} xs) => string
+function f({int} xs) -> {int}
 requires no { w in xs | w < 0 }:
-    return Any.toString(xs)
+    return xs
 
-method main(System.Console sys) => void:
+method main(System.Console sys) -> void:
     {int} ys = {1, 2, 3}
     {int} zs = ys
     sys.out.println(f(zs))

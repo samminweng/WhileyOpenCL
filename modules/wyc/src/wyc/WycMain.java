@@ -51,9 +51,9 @@ import static wycc.lang.SyntaxError.*;
  * The main class provides all of the necessary plumbing to process command-line
  * options, construct an appropriate pipeline and then instantiate the Whiley
  * Compiler to generate class files.
- * 
+ *
  * @author David J. Pearce
- * 
+ *
  */
 public class WycMain {
 
@@ -73,9 +73,10 @@ public class WycMain {
 					"Print detailed information on what the compiler is doing"),
 			new OptArg("brief", "Enable brief reporting of error messages"),
 			new OptArg("verify",
-					"Enable detailed verification checking"),
+					"Enable detailed verification checking"),					
 			new OptArg("smt-verify",
 					"Enable detailed verification checking using an external SMT solver"),
+			new OptArg("vcs", "Enable generation of verification conditions"),
 			new OptArg("whileypath", "wp", OptArg.FILELIST,
 					"Specify where to find whiley (binary) files",
 					new ArrayList<String>()),
@@ -102,7 +103,7 @@ public class WycMain {
 	 * information from the enclosing jar file.
 	 */
 	static {
-		
+
 		// determine version numbering from the MANIFEST attributes
 		String versionStr = WycMain.class.getPackage()
 				.getImplementationVersion();
@@ -145,7 +146,7 @@ public class WycMain {
 	 * Stream to which error messages are written
 	 */
 	public PrintStream stderr;
-	
+
 	/**
 	 * Stream to which non-error messages are written
 	 */
@@ -157,7 +158,7 @@ public class WycMain {
 	public WycMain(WycBuildTask builder, OptArg[] options) {
 		this(builder,options,System.out,System.err);
 	}
-	
+
 	public WycMain(WycBuildTask builder, OptArg[] options, OutputStream stdout, OutputStream stderr) {
 		this.options = options;
 		this.builder = builder;
@@ -177,7 +178,7 @@ public class WycMain {
 	public int run(String[] _args) {
 		boolean verbose = false;
 		boolean brief = false;
-		
+
 		try {
 			// =====================================================================
 			// Process Options
@@ -199,19 +200,19 @@ public class WycMain {
 			}
 
 			brief = values.containsKey("brief");
-			
+
 			// =====================================================================
 			// Configure Build Task & Sanity Check
 			// =====================================================================
 			verbose = values.containsKey("verbose");
-			
+
 			configure(values);
-						
+
 			ArrayList<File> delta = new ArrayList<File>();
 			for (String arg : args) {
 				delta.add(new File(arg));
 			}
-			
+
 			// sanity check we've actually compiling things that exist
 			for(File f : delta) {
 				if(!f.exists()) {
@@ -219,7 +220,7 @@ public class WycMain {
 					return INTERNAL_FAILURE;
 				}
 			}
-			
+
 			// =====================================================================
 			// Run Build Task
 			// =====================================================================
@@ -229,19 +230,19 @@ public class WycMain {
 		} catch (InternalFailure e) {
 			e.outputSourceError(stderr,brief);
 			if (verbose) {
-				e.printStackTrace(stderr);
+				printStackTrace(stderr,e);				
 			}
 			return INTERNAL_FAILURE;
 		} catch (SyntaxError e) {
 			e.outputSourceError(stderr,brief);
 			if (verbose) {
-				e.printStackTrace(stderr);
+				printStackTrace(stderr,e);				
 			}
 			return SYNTAX_ERROR;
 		} catch (Throwable e) {
 			stderr.println("internal failure (" + e.getMessage() + ")");
 			if (verbose) {
-				e.printStackTrace(stderr);
+				printStackTrace(stderr,e);				
 			}
 			return INTERNAL_FAILURE;
 		}
@@ -255,10 +256,11 @@ public class WycMain {
 
 	public void configure(Map<String,Object> values) throws IOException {
 		boolean verbose = values.containsKey("verbose");
-				
+
 		builder.setVerbose(verbose);
 		builder.setVerification(values.containsKey("verify"));
 		builder.setSmtVerification(values.containsKey("smt-verify"));
+		builder.setVerificationConditions(values.containsKey("vcs"));
 
 		ArrayList<Pipeline.Modifier> pipelineModifiers = (ArrayList) values
 				.get("pipeline");
@@ -289,19 +291,19 @@ public class WycMain {
 				.get("whileypath");
 		builder.setWhileyPath(whileypath);
 	}
-	
+
 	protected void version() {
 		stdout.println("Whiley Compiler (wyc) version "
 				+ MAJOR_VERSION + "." + MINOR_VERSION + "."
-				+ MINOR_REVISION + " (build " + BUILD_NUMBER + ")");		
+				+ MINOR_REVISION + " (build " + BUILD_NUMBER + ")");
 	}
-	
+
 	protected void usage() {
 		stdout.println("usage: wyc <options> <source-files>");
 		OptArg.usage(stdout, options);
-		usage(stdout, WycBuildTask.defaultPipeline);		
+		usage(stdout, WycBuildTask.defaultPipeline);
 	}
-	
+
 	/**
 	 * Print out the available list of options for the given pipeline
 	 */
@@ -365,6 +367,24 @@ public class WycMain {
 		return r;
 	}
 
+	/**
+	 * Print a complete stack trace. This differs from
+	 * Throwable.printStackTrace() in that it always prints all of the trace.
+	 * 
+	 * @param out
+	 * @param err
+	 */
+	protected static void printStackTrace(PrintStream out, Throwable err) {
+		out.println(err.getClass().getName() + ": " + err.getMessage());
+		for(StackTraceElement ste : err.getStackTrace()) {			
+			out.println("\tat " + ste.toString());
+		}
+		if(err.getCause() != null) {
+			out.print("Caused by: ");
+			printStackTrace(out,err.getCause());
+		}
+	}
+	
 	// =========================================================================
 	// Main Method
 	// =========================================================================

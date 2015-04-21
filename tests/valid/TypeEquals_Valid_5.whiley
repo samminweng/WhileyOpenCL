@@ -1,12 +1,12 @@
-import whiley.lang.System
+import whiley.lang.*
 
-function f(int | null x) => string:
+function f(int | null x) -> bool:
     if x is null:
-        return "GOT NULL"
+        return true
     else:
-        return "GOT INT"
+        return false
 
-method main(System.Console sys) => void:
+method main(System.Console sys) -> void:
     int|null x = null
     sys.out.println(f(x))
     sys.out.println(f(1))

@@ -1,5 +1,5 @@
-import whiley.lang.System
-import SyntaxError from whiley.lang.System
+import whiley.lang.*
+import SyntaxError from whiley.lang.*
 
 constant ADD is 0
 
@@ -9,11 +9,11 @@ constant MUL is 2
 
 constant DIV is 3
 
-constant BOp is {ADD, SUB, MUL, DIV}
+type BOp is (int x) where x in {ADD, SUB, MUL, DIV}
 
 type BinOp is {BOp op, Expr rhs, Expr lhs}
 
-type Var is {string id}
+type Var is {[int] id}
 
 type ListAccess is {Expr index, Expr src}
 
@@ -21,7 +21,7 @@ type Expr is int | BinOp | [Expr] | ListAccess
 
 type Value is int | [Value]
 
-function evaluate(Expr e) => Value:
+function evaluate(Expr e) -> Value:
     if e is int:
         return e
     else:
@@ -41,10 +41,10 @@ function evaluate(Expr e) => Value:
                 else:
                     return 0
 
-method main(System.Console sys) => void:
+method main(System.Console sys) -> void:
     Expr e = {op: ADD, rhs: 1, lhs: 123}
     Value v = evaluate(e)
-    sys.out.println("RESULT: " ++ v)
+    sys.out.println_s("RESULT: " ++ Any.toString(v))
     e = [1]
     v = evaluate(e)
-    sys.out.println("RESULT: " ++ v)
+    sys.out.println_s("RESULT: " ++ Any.toString(v))

@@ -1,10 +1,12 @@
-type Link is {int data}
-type BigLink is {int data, char code}
+import whiley.lang.System
 
-function sum(Link l) => int:
+type Link is {int data}
+type BigLink is {int data, int code}
+
+function sum(Link l) -> int:
     return l.data
 
-function sum2(BigLink l) => int:
+function sum2(BigLink l) -> int:
   return sum((Link) l)
 
 method main(System.Console console):

@@ -1,10 +1,10 @@
-import whiley.lang.System
+import whiley.lang.*
 
 type Point is {int y, int x, ...}
 
 type VecPoint is [Point] | Point
 
-function sum(VecPoint vp) => int:
+function sum(VecPoint vp) -> int:
     if vp is Point:
         return vp.x + vp.y
     else:
@@ -13,7 +13,7 @@ function sum(VecPoint vp) => int:
             r = r + sum(p)
         return r
 
-method main(System.Console sys) => void:
+method main(System.Console sys) -> void:
     VecPoint vp = {y: 2, x: 1}
     sys.out.println(sum(vp))
     vp = [{y: 2, x: 1}, {y: 2, x: 1}]

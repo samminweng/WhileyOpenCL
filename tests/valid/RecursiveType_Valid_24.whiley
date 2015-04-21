@@ -1,8 +1,8 @@
-import whiley.lang.System
+import whiley.lang.*
 
 type Link is null | [Link]
 
-function maxDepth(Link l) => int:
+function maxDepth(Link l) -> int:
     if l is [Link]:
         int r = 0
         for i in l:
@@ -13,12 +13,12 @@ function maxDepth(Link l) => int:
     else:
         return 0
 
-method main(System.Console sys) => void:
+method main(System.Console sys) -> void:
     Link l1 = null
     Link l2 = [l1]
     Link l3 = [l2]
     Link l4 = [l3]
-    sys.out.println(Any.toString(maxDepth(l1)))
-    sys.out.println(Any.toString(maxDepth(l2)))
-    sys.out.println(Any.toString(maxDepth(l3)))
-    sys.out.println(Any.toString(maxDepth(l4)))
+    sys.out.println(maxDepth(l1))
+    sys.out.println(maxDepth(l2))
+    sys.out.println(maxDepth(l3))
+    sys.out.println(maxDepth(l4))

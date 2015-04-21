@@ -1,4 +1,4 @@
-import whiley.lang.System
+import whiley.lang.*
 
 constant BLANK is 0
 
@@ -14,12 +14,12 @@ type Board is {[piece] pieces, nat move} where (move <= 9) && (|pieces| == 9)
 
 type EmptyBoard is (Board b) where no { x in b.pieces | x != BLANK }
 
-function EmptyBoard() => EmptyBoard:
+function EmptyBoard() -> EmptyBoard:
     return {pieces: [BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK, BLANK], move: 0}
 
-method main(System.Console console) => void:
+method main(System.Console console) -> void:
     Board b = EmptyBoard()
     assert b.pieces[0] == BLANK
     assert b.pieces[1] == BLANK
     assert b.pieces[8] == BLANK
-    console.out.println("BOARD: " ++ b)
+    console.out.println_s("BOARD: " ++ Any.toString(b))

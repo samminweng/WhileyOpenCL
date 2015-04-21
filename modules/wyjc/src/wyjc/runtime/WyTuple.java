@@ -28,42 +28,31 @@ package wyjc.runtime;
 import java.math.BigInteger;
 
 
-public final class WyTuple extends java.util.ArrayList {		
-	/**
-	 * The reference count is use to indicate how many variables are currently
-	 * referencing this compound structure. This is useful for making imperative
-	 * updates more efficient. In particular, when the <code>refCount</code> is
-	 * <code>1</code> we can safely perform an in-place update of the structure.
-	 */
-	int refCount = 100; // temporary measure
+public final class WyTuple extends java.util.ArrayList {
 	
 	// ================================================================================
 	// Generic Operations
-	// ================================================================================	 	
-	
+	// ================================================================================
+
 	public WyTuple() {
-		super();				
+		super();
 	}
-	
+
 	public WyTuple(int size) {
-		super(size);			
+		super(size);
 	}
-	
+
 	WyTuple(java.util.Collection items) {
-		super(items);			
-		for(Object item : items) {
-			Util.incRefs(item);
-		}
+		super(items);		
 	}
-	
+
 	WyTuple(Object... items) {
 		super();
-		for(Object item : items) {
-			add(item);
-			Util.incRefs(item);
+		for(Object o : items) {
+			add(o);
 		}
-	}	
-		
+	}
+
 	public String toString() {
 		String r = "(";
 		boolean firstTime=true;
@@ -72,42 +61,40 @@ public final class WyTuple extends java.util.ArrayList {
 				r += ",";
 			}
 			firstTime=false;
-			r += whiley.lang.Any$native.toString(o);
+			r += whiley.lang.Any$native.toRealString(o);
 		}
 		return r + ")";
 	}
-	
+
 	// ================================================================================
 	// List Operations
-	// ================================================================================	 
-	
-	public static Object get(WyTuple tuple, int index) {		
-		Object item = tuple.get(index);
-		Util.incRefs(item);
-		return item;
+	// ================================================================================
+
+	public static Object get(WyTuple tuple, int index) {
+		return tuple.get(index);		
 	}
-		
-	public static BigInteger length(WyTuple tuple) {		
+
+	public static BigInteger length(WyTuple tuple) {
 		return BigInteger.valueOf(tuple.size());
 	}
-	
+
 	public static int size(final WyTuple list) {
 		return list.size();
 	}
-	
+
 	public static java.util.Iterator iterator(WyTuple list) {
 		return list.iterator();
-	}		
-	
+	}
+
 	/**
 	 * This method is not intended for public consumption. It is used internally
 	 * by the compiler during object construction only.
-	 * 
+	 *
 	 * @param list
 	 * @param item
 	 * @return
 	 */
-	public static WyTuple internal_add(WyTuple lhs, Object rhs) {		
+	public static WyTuple internal_add(WyTuple lhs, Object rhs) {
 		lhs.add(rhs);
 		return lhs;
 	}

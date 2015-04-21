@@ -31,9 +31,9 @@ import java.util.*;
 import wybs.lang.Build;
 import wybs.lang.Builder;
 import wyfs.lang.Path;
-import wyil.builders.VcBranch.AssertOrAssumeScope;
+import wyil.attributes.SourceLocationMap;
 import wyil.lang.*;
-import wyil.transforms.RuntimeAssertions;
+import wyil.util.AttributedCodeBlock;
 import wycc.util.Logger;
 import wycc.util.Pair;
 import wycs.syntax.Expr;
@@ -41,10 +41,10 @@ import wycs.syntax.WyalFile;
 
 /**
  * Responsible for converting a Wyil file into a Wycs file which can then be
- * passed into the Whiley Constraint Solver (Wycs).  
- * 
+ * passed into the Whiley Constraint Solver (Wycs).
+ *
  * @author David J. Pearce
- * 
+ *
  */
 public class Wyil2WyalBuilder implements Builder {
 
@@ -61,11 +61,11 @@ public class Wyil2WyalBuilder implements Builder {
 	protected Logger logger = Logger.NULL;
 
 	private String filename;
-	
+
 	public Wyil2WyalBuilder(Build.Project project) {
 		this.project = project;
 	}
-	
+
 	public Build.Project project() {
 		return project;
 	}
@@ -73,14 +73,16 @@ public class Wyil2WyalBuilder implements Builder {
 	public void setLogger(Logger logger) {
 		this.logger = logger;
 	}
-	
+
 	public Set<Path.Entry<?>> build(
 			Collection<Pair<Path.Entry<?>, Path.Root>> delta)
 			throws IOException {
 		Runtime runtime = Runtime.getRuntime();
 		long start = System.currentTimeMillis();
 		long memory = runtime.freeMemory();
-			
+
+		VcGenerator vcg = new VcGenerator(this);
+		
 		// ========================================================================
 		// Translate files
 		// ========================================================================
@@ -90,7 +92,7 @@ public class Wyil2WyalBuilder implements Builder {
 			Path.Root dst = p.second();
 			Path.Entry<WyalFile> df = (Path.Entry<WyalFile>) dst.create(sf.id(), WyalFile.ContentType);
 			generatedFiles.add(df);
-			WyalFile contents = build(sf.read());
+			WyalFile contents = vcg.transform(sf.read());
 			// Write the file into its destination
 			df.write(contents);
 			// Then, flush contents to disk in case we generate an assertion
@@ -98,7 +100,7 @@ public class Wyil2WyalBuilder implements Builder {
 			// syntax errors are no longer implemented as exceptions.
 			df.flush();
 		}
-		
+
 		// ========================================================================
 		// Done
 		// ========================================================================
@@ -106,84 +108,9 @@ public class Wyil2WyalBuilder implements Builder {
 		long endTime = System.currentTimeMillis();
 		logger.logTimedMessage("Wyil => Wyal: compiled " + delta.size()
 				+ " file(s)", endTime - start, memory - runtime.freeMemory());
-		
+
 		return generatedFiles;
 	}
-		
-	protected WyalFile build(WyilFile wyilFile) {
-		this.filename = wyilFile.filename();
 
-		// TODO: definitely need a better module ID here.
-		final WyalFile wyalFile = new WyalFile(wyilFile.id(), filename);
-
-		for (WyilFile.TypeDeclaration type : wyilFile.types()) {
-			transform(type);
-		}
-		for (WyilFile.FunctionOrMethodDeclaration method : wyilFile.functionOrMethods()) {
-			transform(method, wyilFile, wyalFile);
-		}
-
-		return wyalFile;
-	}
-
-	protected void transform(WyilFile.TypeDeclaration def) {
-
-	}
-
-	protected void transform(WyilFile.FunctionOrMethodDeclaration method,
-			WyilFile wyilFile, WyalFile wycsFile) {
-		for (WyilFile.Case c : method.cases()) {
-			transform(c, method, wyilFile, wycsFile);
-		}
-	}
-
-	protected void transform(WyilFile.Case methodCase,
-			WyilFile.FunctionOrMethodDeclaration method, WyilFile wyilFile,
-			WyalFile wycsFile) {
-
-		if (!RuntimeAssertions.getEnable()) {
-			// inline constraints if they have not already been done.
-			RuntimeAssertions rac = new RuntimeAssertions(this, filename);
-			methodCase = rac.transform(methodCase, method);
-		}
-
-		Type.FunctionOrMethod fmm = method.type();
-		int paramStart = 0;
-
-		Code.Block body = methodCase.body();
-
-		VcBranch master = new VcBranch(method, body);
-
-		for (int i = paramStart; i != fmm.params().size(); ++i) {
-			Type paramType = fmm.params().get(i);
-			master.write(i, new Expr.Variable("r" + Integer.toString(i)), paramType);
-		}
-
-		List<Code.Block> requires = methodCase.precondition();
-
-		if (requires.size() > 0) {
-			Code.Block block = new Code.Block(fmm.params().size());
-			for(Code.Block precondition : requires) {
-				block.addAll(precondition);
-			}
-			VcBranch precond = new VcBranch(method, block);
-
-			AssertOrAssumeScope scope = new AssertOrAssumeScope(false, block.size(), Collections.EMPTY_LIST); 
-			precond.scopes.add(scope);
-			
-			// FIXME: following seems like a hack --- there must be a more
-			// elegant way of doing this?
-			for (int i = paramStart; i != fmm.params().size(); ++i) {
-				precond.write(i, master.read(i), master.typeOf(i));
-			}
-
-			Expr constraint = precond.transform(new VcTransformer(this,
-					wycsFile, filename, true));
-
-			precond.scopes.remove(precond.scopes.size()-1);
-			master.add(constraint);
-		}
-
-		master.transform(new VcTransformer(this, wycsFile, filename, false));
-	}		
+	
 }

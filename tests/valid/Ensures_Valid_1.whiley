@@ -1,6 +1,6 @@
-import whiley.lang.System
+import whiley.lang.*
 
-function add(int x, int y) => (int r)
+function add(int x, int y) -> (int r)
 requires x >= 0 && y >= 0
 ensures r > 0:
     //
@@ -9,5 +9,5 @@ ensures r > 0:
     else:
         return x + y
 
-method main(System.Console sys) => void:
-    sys.out.println(Any.toString(1))
+method main(System.Console sys) -> void:
+    sys.out.println(1)

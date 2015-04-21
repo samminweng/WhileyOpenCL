@@ -10,9 +10,6 @@ import java.util.Map.Entry;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
-import wyil.lang.Code.Block;
-import wyil.lang.WyilFile.Case;
-import wyil.lang.WyilFile.FunctionOrMethodDeclaration;
 import wyopcl.translator.Symbol;
 
 /**
@@ -45,7 +42,7 @@ public final class BoundAnalyzerHelper {
 		String font_color_start = "";
 		String font_color_end = "";
 		//Use the ANSI escape color to distinguish the set of bytecode of the assertion.
-		if(blk_ctrl.checkAssertOrAssume()){
+		if(blk_ctrl.checkInvariant()){
 			font_color_start = GRAY;
 			font_color_end = RESET;
 		}

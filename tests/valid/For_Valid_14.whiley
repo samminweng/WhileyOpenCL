@@ -1,15 +1,15 @@
-import whiley.lang.System
+import whiley.lang.*
 
-type liststr is [int] | string
+type list is [int]
 
-function f(liststr ls) => int:
+function f(list ls) -> int:
     int r = 0
     for l in ls:
         r = r + ((int)l)
     return r
 
-method main(System.Console sys) => void:
+method main(System.Console sys) -> void:
     [int] ls = [1, 2, 3, 4, 5, 6, 7, 8]
     sys.out.println(f(ls))
-    string xs = "Hello World"
+    [int] xs = "Hello World"
     sys.out.println(f(xs))

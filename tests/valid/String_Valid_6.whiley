@@ -1,4 +1,4 @@
-import whiley.lang.System
+import whiley.lang.*
 
-method main(System.Console sys) => void:
-    sys.out.println("Hello: " ++ 1223344566)
+method main(System.Console sys) -> void:
+    sys.out.println_s("Hello: " ++ Any.toString(1223344566))

@@ -1,12 +1,12 @@
-import whiley.lang.System
+import whiley.lang.*
 
-function f({int} xs) => string:
-    return Any.toString(xs)
+function f({int} xs) -> {int}:
+    return xs
 
-function g({int} ys) => string:
+function g({int} ys) -> {int}:
     return f(ys & {1, 2, 3})
 
-method main(System.Console sys) => void:
+method main(System.Console sys) -> void:
     sys.out.println(g({1, 2, 3, 4}))
     sys.out.println(g({2}))
     sys.out.println(g({}))

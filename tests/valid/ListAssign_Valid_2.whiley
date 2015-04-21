@@ -1,13 +1,13 @@
-import whiley.lang.System
+import whiley.lang.*
 
 type intlist is int | [int]
 
-function f([intlist] l) => string:
-    return Any.toString(l)
+function f([intlist] l) -> any:
+    return l
 
-method main(System.Console sys) => void:
+method main(System.Console sys) -> void:
     [int|[int]] x
-    
+
     if |sys.args| == 0:
         x = [1, 2, 3]
     else:

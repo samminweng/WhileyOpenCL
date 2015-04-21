@@ -27,44 +27,41 @@ package wyil.checks;
 
 import java.util.*;
 
-import static wycc.lang.SyntaxError.syntaxError;
 import static wyil.util.ErrorMessages.*;
 import wybs.lang.Builder;
-import wycc.lang.SyntacticElement;
 import wycc.lang.Transform;
 import wycc.util.Pair;
-import wyfs.lang.Path;
-import wyil.*;
+import wyil.attributes.SourceLocation;
 import wyil.lang.*;
-import wyil.util.*;
+import wyil.util.AttributedCodeBlock;
 
 /**
  * <p>
  * The point of the coercion check is to check that all convert bytecodes make
  * sense, and are not ambiguous. For example, consider the following code:
  * </p>
- * 
+ *
  * <pre>
  * define Rec1 as { real x, int y }
  * define Rec2 as { int x, real y }
  * define uRec1Rec2 as Rec1 | Rec2
- * 
+ *
  * int f(uRec1Rec2 r):
  *  if r is Rec1:
  *      return r.y
  *  else:
  *      return r.x
- * 
+ *
  * int g():
  *  rec = { x: 1, y: 1}
  *  return f(rec)
  * </pre>
- * 
+ *
  * <p>
  * An implicit coercion will be inserted just before the last statement in
  * <code>g()</code>. This will be:
  * </p>
- * 
+ *
  * <pre>
  * convert {int x,int y} => {real x,int y}|{int x,real y}
  * </pre>
@@ -72,7 +69,7 @@ import wyil.util.*;
  * However, this conversion is <i>ambiguous</i> because we could convert the
  * left-hand side to either of the two options in the right-hand side.
  * </p>
- * 
+ *
  * @author David J. Pearce
  */
 public class CoercionCheck implements Transform<WyilFile> {
@@ -81,30 +78,33 @@ public class CoercionCheck implements Transform<WyilFile> {
 	public CoercionCheck(Builder builder) {
 
 	}
-	
+
 	public void apply(WyilFile module) {
 		filename = module.filename();
-		
-		for(WyilFile.FunctionOrMethodDeclaration method : module.functionOrMethods()) {
+
+		for(WyilFile.FunctionOrMethod method : module.functionOrMethods()) {
 			check(method);
 		}
 	}
-		
-	public void check(WyilFile.FunctionOrMethodDeclaration method) {				
-		for (WyilFile.Case c : method.cases()) {
-			check(c.body(), method);
-		}		
+
+	public void check(WyilFile.FunctionOrMethod method) {
+		check(null, method.body(), method.body(), method);
 	}
-	
-	protected void check(Code.Block block, WyilFile.FunctionOrMethodDeclaration method) {		
+
+	protected void check(CodeBlock.Index index, CodeBlock block, AttributedCodeBlock root, WyilFile.FunctionOrMethod method) {
+		// Examine all entries in this block looking for a conversion bytecode
 		for (int i = 0; i != block.size(); ++i) {
-			Code.Block.Entry stmt = block.get(i);
-			Code code = stmt.code;
+			Code code = block.get(i);
 			if (code instanceof Codes.Convert) {
 				Codes.Convert conv = (Codes.Convert) code;
-				check(conv.type(), conv.result, new HashSet<Pair<Type, Type>>(),
-						stmt);
-			}			
+				check(conv.type(), conv.result,
+						new HashSet<Pair<Type, Type>>(), root.attribute(
+								new CodeBlock.Index(index, i),
+								SourceLocation.class));
+			} else if (code instanceof CodeBlock) {
+				check(new CodeBlock.Index(index, i), (CodeBlock) code, root,
+						method);
+			}
 		}
 	}
 
@@ -112,14 +112,14 @@ public class CoercionCheck implements Transform<WyilFile> {
 	 * Recursively check that there is no ambiguity in coercing type from into
 	 * type to. The visited set is necessary to ensure this process terminates
 	 * in the presence of recursive types.
-	 * 
+	 *
 	 * @param from
 	 * @param to
 	 * @param visited - the set of pairs already checked.
-	 * @param elem - enclosing syntactic element.
+	 * @param location - source location attribute (if applicable).
 	 */
 	protected void check(Type from, Type to, HashSet<Pair<Type, Type>> visited,
-			SyntacticElement elem) {
+			SourceLocation location) {
 		Pair<Type,Type> p = new Pair<Type,Type>(from,to);
 		if(visited.contains(p)) {
 			return; // already checked this pair
@@ -133,114 +133,111 @@ public class CoercionCheck implements Transform<WyilFile> {
 		} else if(from instanceof Type.Tuple && to instanceof Type.Tuple) {
 			Type.Tuple t1 = (Type.Tuple) from;
 			Type.Tuple t2 = (Type.Tuple) to;
-			List<Type> t1_elements = t1.elements(); 
+			List<Type> t1_elements = t1.elements();
 			List<Type> t2_elements = t2.elements();
 			for(int i=0;i!=t2.elements().size();++i) {
 				Type e1 = t1_elements.get(i);
 				Type e2 = t2_elements.get(i);
-				check(e1,e2,visited,elem);
+				check(e1,e2,visited,location);
 			}
 		} else if(from instanceof Type.Reference && to instanceof Type.Reference) {
 			Type.Reference t1 = (Type.Reference) from;
 			Type.Reference t2 = (Type.Reference) to;
-			check(t1.element(),t2.element(),visited,elem);
+			check(t1.element(),t2.element(),visited,location);
 		} else if(from instanceof Type.Set && to instanceof Type.Set) {
 			Type.Set t1 = (Type.Set) from;
 			Type.Set t2 = (Type.Set) to;
-			check(t1.element(),t2.element(),visited,elem);
+			check(t1.element(),t2.element(),visited,location);
 		} else if(from instanceof Type.Map && to instanceof Type.Set) {
 			Type.Map t1 = (Type.Map) from;
 			Type.Set t2 = (Type.Set) to;
 			Type tup = Type.Tuple(t1.key(),t1.value());
-			check(tup,t2.element(),visited,elem);
+			check(tup,t2.element(),visited,location);
 		} else if(from instanceof Type.List && to instanceof Type.Set) {
 			Type.List t1 = (Type.List) from;
 			Type.Set t2 = (Type.Set) to;
-			check(t1.element(),t2.element(),visited,elem);
+			check(t1.element(),t2.element(),visited,location);
 		} else if(from instanceof Type.List && to instanceof Type.Map) {
 			Type.List t1 = (Type.List) from;
 			Type.Map t2 = (Type.Map) to;
-			check(t1.element(),t2.value(),visited,elem);
+			check(t1.element(),t2.value(),visited,location);
 		} else if(from instanceof Type.List && to instanceof Type.List) {
 			Type.List t1 = (Type.List) from;
 			Type.List t2 = (Type.List) to;
-			check(t1.element(),t2.element(),visited,elem);
-		} else if(from instanceof Type.Strung && to instanceof Type.List) {			
-			Type.List t2 = (Type.List) to;
-			check(Type.T_CHAR,t2.element(),visited,elem);
+			check(t1.element(),t2.element(),visited,location);
 		} else if(from instanceof Type.Record && to instanceof Type.Record) {
 			Type.Record t1 = (Type.Record) from;
 			Type.Record t2 = (Type.Record) to;
-			HashMap<String,Type> t1_elements = t1.fields(); 
+			HashMap<String,Type> t1_elements = t1.fields();
 			HashMap<String,Type> t2_elements = t2.fields();
 			ArrayList<String> fields = new ArrayList<String>(t2.keys());
 			for(String s : fields) {
 				Type e1 = t1_elements.get(s);
 				Type e2 = t2_elements.get(s);
-				check(e1,e2,visited,elem);
-			}			
+				check(e1,e2,visited,location);
+			}
 		} else if(from instanceof Type.Function && to instanceof Type.Function) {
 			Type.Function t1 = (Type.Function) from;
 			Type.Function t2 = (Type.Function) to;
-			List<Type> t1_elements = t1.params(); 
-			List<Type> t2_elements = t2.params();			
+			List<Type> t1_elements = t1.params();
+			List<Type> t2_elements = t2.params();
 			for(int i=0;i!=t1_elements.size();++i) {
 				Type e1 = t1_elements.get(i);
 				Type e2 = t2_elements.get(i);
-				check(e1,e2,visited,elem);
-			}			
-			check(t1.ret(),t2.ret(),visited,elem);
-		} else if(from instanceof Type.Union) {
-			Type.Union t1 = (Type.Union) from; 
-			for(Type b : t1.bounds()) {
-				check(b,to,visited,elem);
+				check(e1,e2,visited,location);
 			}
-		} else if(to instanceof Type.Union) {			
-			Type.Union t2 = (Type.Union) to;			
-			
+			check(t1.ret(),t2.ret(),visited,location);
+		} else if(from instanceof Type.Union) {
+			Type.Union t1 = (Type.Union) from;
+			for(Type b : t1.bounds()) {
+				check(b,to,visited,location);
+			}
+		} else if(to instanceof Type.Union) {
+			Type.Union t2 = (Type.Union) to;
+
 			// First, check for identical type (i.e. no coercion necessary)
-			
+
 			for(Type b : t2.bounds()) {
 				if(from.equals(b)) {
 					// no problem
 					return;
 				}
 			}
-			
+
 			// Second, check for single non-coercive match
-			Type match = null;			
-			
+			Type match = null;
+
 			for(Type b : t2.bounds()) {
 				if(Type.isSubtype(b,from)) {
 					if(match != null) {
-						// found ambiguity						
-						syntaxError(errorMessage(AMBIGUOUS_COERCION,from,to), filename, elem);
+						// found ambiguity
+						syntaxError(errorMessage(AMBIGUOUS_COERCION,from,to), filename, location);
 					} else {
-						check(from,b,visited,elem);
-						match = b;						
+						check(from,b,visited,location);
+						match = b;
 					}
 				}
 			}
-			
+
 			if(match != null) {
 				// ok, we have a hit on a non-coercive subtype.
 				return;
 			}
-			
+
 			// Third, test for single coercive match
-			
+
 			for(Type b : t2.bounds()) {
 				if(Type.isExplicitCoerciveSubtype(b,from)) {
 					if(match != null) {
 						// found ambiguity
 						syntaxError("ambiguous coercion (" + from + " => "
-								+ to, filename, elem);
+								+ to, filename, location);
 					} else {
-						check(from,b,visited,elem);
-						match = b;						
+						check(from,b,visited,location);
+						match = b;
 					}
 				}
 			}
-		}		
+		}
 	}
 }

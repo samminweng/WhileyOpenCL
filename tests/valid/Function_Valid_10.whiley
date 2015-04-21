@@ -1,12 +1,10 @@
-import whiley.lang.System
+import whiley.lang.*
 
-constant fcode is {1, 2, 3, 4}
+type fcode is (int x) where x in {1, 2, 3, 4}
 
-constant tcode is {1, 2}
+function g(fcode f) -> int:
+    return f
 
-function g(fcode f) => string:
-    return Any.toString(f)
-
-method main(System.Console sys) => void:
+method main(System.Console sys) -> void:
     int x = 1
     sys.out.println(g(x))

@@ -132,6 +132,9 @@ public class WycsFileReader {
 			int code = input.read_uv();
 			Value constant;
 			switch (code) {
+			case WycsFileWriter.CONSTANT_Null:
+				constant = Value.Null;
+				break;
 			case WycsFileWriter.CONSTANT_False:
 				constant = Value.Bool(false);
 				break;
@@ -237,6 +240,9 @@ public class WycsFileReader {
 		case WycsFileWriter.BLOCK_Macro:
 			block = readMacroBlockBody();
 			break;
+		case WycsFileWriter.BLOCK_Type:
+			block = readTypeBlockBody();
+			break;
 		case WycsFileWriter.BLOCK_Function:
 			block = readFunctionBlockBody();
 			break;
@@ -252,7 +258,7 @@ public class WycsFileReader {
 		}
 
 		input.pad_u8(); // pad out to next byte boundary
-
+		
 		if (expected.isInstance(block)) {
 			return (T) block;
 		} else {
@@ -275,6 +281,19 @@ public class WycsFileReader {
 				(SemanticType.Function) typePool[typeIdx], code);
 	}
 
+	private WycsFile.Declaration readTypeBlockBody() throws IOException {
+		int nameIdx = input.read_uv();
+		int typeIdx = input.read_uv();
+		int nBlocks = input.read_uv();
+		Code<?> code = null;
+		if(nBlocks > 0) {
+			code = readBlock(Code.class);
+		}
+
+		return new WycsFile.Type(stringPool[nameIdx],
+				(SemanticType) typePool[typeIdx], code);
+	}
+	
 	private WycsFile.Declaration readFunctionBlockBody() throws IOException {
 		int nameIdx = input.read_uv();
 		int typeIdx = input.read_uv();
@@ -314,6 +333,14 @@ public class WycsFileReader {
 				int varIdx = input.read_uv();
 				return Code.Variable(type, operands, varIdx);
 			}
+			case CAST: {
+				int targetTypeIdx = input.read_uv();
+				if (operands.length != 1) {
+					throw new RuntimeException(
+							"invalid cast bytecode encountered");
+				}
+				return Code.Cast(type,operands[0],typePool[targetTypeIdx]);
+			}
 			case CONST: {
 				int constIdx = input.read_uv();
 				if (operands.length != 0) {
@@ -346,6 +373,13 @@ public class WycsFileReader {
 							"invalid binary bytecode encountered");
 				}
 				return Code.Binary(type, op, operands[0], operands[1]);
+			case IS:
+				if (operands.length != 1) {
+					throw new RuntimeException(
+							"invalid is bytecode encountered");
+				}
+				int testIdx = input.read_uv();
+				return Code.Is(type, operands[0], typePool[testIdx]);
 			case AND:
 			case OR:
 			case TUPLE:
@@ -381,7 +415,13 @@ public class WycsFileReader {
 							"invalid funcall bytecode encountered");
 				}
 				int nid = input.read_uv();
-				return Code.FunCall((SemanticType.Function) type, operands[0], namePool[nid]);
+				int length = input.read_uv();
+				SemanticType[] binding = new SemanticType[length];
+				for (int i = 0; i != length; ++i) {
+					int pTypeIdx = input.read_uv();
+					binding[i] = typePool[pTypeIdx];					
+				}
+				return Code.FunCall((SemanticType.Function) type, operands[0], namePool[nid], binding);
 			}
 			}
 

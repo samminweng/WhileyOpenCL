@@ -1,7 +1,7 @@
-import whiley.lang.System
+import whiley.lang.*
 
-function f(real x) => real:
+function f(real x) -> real:
     return 0.0 - x
 
-method main(System.Console sys) => void:
-    sys.out.println(Any.toString(f(1.234)))
+method main(System.Console sys) -> void:
+    sys.out.println(f(1.234))

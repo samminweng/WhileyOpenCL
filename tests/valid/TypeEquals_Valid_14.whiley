@@ -1,16 +1,16 @@
-import whiley.lang.System
+import whiley.lang.*
 
 type test is {int x} | {int y}
 
 type src is test | int
 
-function f(src e) => string:
+function f(src e) -> bool:
     if e is test:
-        return "{int x} | {int y}"
+        return true
     else:
-        return "int"
+        return false
 
-method main(System.Console sys) => void:
+method main(System.Console sys) -> void:
     sys.out.println(f({x: 1}))
     sys.out.println(f({y: 2}))
     sys.out.println(f(1))
