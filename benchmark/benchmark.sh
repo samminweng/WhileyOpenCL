@@ -7,16 +7,16 @@ run_benchmark (){
     #
     #compile the source C file with L2 optimization (-O2)
     #see https://gcc.gnu.org/onlinedocs/gnat_ugn/Optimization-Levels.html#101
-    gcc -m64 -O2 -o While_Valid_1.out While_Valid_1.$1.$2.$3.c
+    gcc -m64 -O2 -o $1.out $1.$3.c
     #Increments
-    Increments="1 10 50 100 120 150 200"
+    Increments="1 10"
     #array size starts with 1 million
     base=1000000
     for i in $Increments
     do	
 	#Multiple the increment
 	arraysize=`expr $i \* $base`
-	echo "Beginning the benchmarks of " $1 " program with " $2 " type and " $3 " append method on array size of " $arraysize	
+	echo "Beginning the benchmarks of " $1 " program in " $2 " with " $3 " method on array size of " $arraysize	
 	./While_Valid_1.out $arraysize
 	#Rename the output 'result.txt'
 	mv result.txt result.$1.$2.$3.$arraysize.txt
@@ -30,10 +30,4 @@ run_benchmark (){
 #
 #Benchmark the slow program
 #
-run_benchmark slow longlong original
-run_benchmark slow longlong optimized
-#
-# Benchmark the fast program
-#
-run_benchmark fast longlong original
-run_benchmark fast longlong optimized
+run_benchmark While_Valid_1 c slow
