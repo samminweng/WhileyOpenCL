@@ -42,7 +42,7 @@ public final class BoundAnalyzerHelper {
 		String font_color_start = "";
 		String font_color_end = "";
 		//Use the ANSI escape color to distinguish the set of bytecode of the assertion.
-		if(blk_ctrl.checkAssertOrAssume()){
+		if(blk_ctrl.checkInvariant()){
 			font_color_start = GRAY;
 			font_color_end = RESET;
 		}

@@ -95,9 +95,9 @@ public class Translator implements Builder{
 			//Put the function name to the config
 			this.config.setProperty("function_name", functionOrMethod.name());
 			List<Code> code_blk = TranslatorHelper.getCodeBlock(functionOrMethod);				
-			BoundAnalyzer boundAnalyzer = new BoundAnalyzer(config, code_blk);
+			BoundAnalyzer boundAnalyzer = new BoundAnalyzer(config);
 			boundAnalyzer.propagateBounds(functionOrMethod.type().params());
-			boundAnalyzer.iterateByteCode();
+			boundAnalyzer.iterateByteCodeList(code_blk);
 			//Infer the bounds at the end of main function.
 			boundAnalyzer.inferBounds();			
 			boundAnalyzer = null;			

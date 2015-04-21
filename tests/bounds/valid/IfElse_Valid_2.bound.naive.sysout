@@ -1,0 +1,222 @@
+main.0 [	fieldload %1 = %0 out : {[[int]] args,{method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s} out}]
+main.1 [	fieldload %2 = %1 println : {method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s}]
+main.2 [	const %4 = 1 : int]
+main.3 [	invoke %3 = (%4) IfElse_Valid_2:f : function(int) -> int]
+	domain(%4)	= [1..1]
+	value(%4)	= 1
+Consistency=true
+f.0 [	const %1 = 10 : int]
+f.1 [	ifge %0, %1 goto blklab0 : int]
+f.2 [	const %2 = 1 : int]
+f.3 [	return %2 : int]
+f.4 [	goto blklab1]
+f.5 [.blklab0]
+f.6 [	const %3 = 10 : int]
+f.7 [	ifle %0, %3 goto blklab2 : int]
+f.8 [	const %4 = 2 : int]
+f.9 [	return %4 : int]
+f.10 [.blklab2]
+f.11 [.blklab1]
+f.12 [	const %5 = 0 : int]
+f.13 [	return %5 : int]
+f.14 [	return]
+	domain(%0)	= [1..1]
+	domain(%1)	= [10..10]
+	domain(%2)	= [1..1]
+	domain(return)	= [1..1]
+	value(%0)	= 1
+	value(%1)	= 10
+	value(%2)	= 1
+	value(%3)	= 10
+	value(%4)	= 2
+	value(%5)	= 0
+Consistency=true
+main.4 [	indirectinvoke %2 (%3) : method(any) -> void]
+main.5 [	fieldload %5 = %0 out : {[[int]] args,{method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s} out}]
+main.6 [	fieldload %6 = %5 println : {method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s}]
+main.7 [	const %8 = 10 : int]
+main.8 [	invoke %7 = (%8) IfElse_Valid_2:f : function(int) -> int]
+	domain(%3)	= [1..1]
+	domain(%4)	= [1..1]
+	domain(%8)	= [10..10]
+	value(%4)	= 1
+	value(%8)	= 10
+Consistency=true
+f.0 [	const %1 = 10 : int]
+f.1 [	ifge %0, %1 goto blklab0 : int]
+f.2 [	const %2 = 1 : int]
+f.3 [	return %2 : int]
+f.4 [	goto blklab1]
+f.5 [.blklab0]
+f.6 [	const %3 = 10 : int]
+f.7 [	ifle %0, %3 goto blklab2 : int]
+f.8 [	const %4 = 2 : int]
+f.9 [	return %4 : int]
+f.10 [.blklab2]
+f.11 [.blklab1]
+f.12 [	const %5 = 0 : int]
+f.13 [	return %5 : int]
+f.14 [	return]
+	domain(%0)	= [10..10]
+	domain(%1)	= [10..10]
+	domain(%3)	= [10..10]
+	domain(%5)	= [0..0]
+	domain(return)	= [0..0]
+	value(%0)	= 10
+	value(%1)	= 10
+	value(%2)	= 1
+	value(%3)	= 10
+	value(%4)	= 2
+	value(%5)	= 0
+Consistency=true
+main.9 [	indirectinvoke %6 (%7) : method(any) -> void]
+main.10 [	fieldload %9 = %0 out : {[[int]] args,{method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s} out}]
+main.11 [	fieldload %10 = %9 println : {method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s}]
+main.12 [	const %12 = 11 : int]
+main.13 [	invoke %11 = (%12) IfElse_Valid_2:f : function(int) -> int]
+	domain(%3)	= [1..1]
+	domain(%4)	= [1..1]
+	domain(%7)	= [0..0]
+	domain(%8)	= [10..10]
+	domain(%12)	= [11..11]
+	value(%4)	= 1
+	value(%8)	= 10
+	value(%12)	= 11
+Consistency=true
+f.0 [	const %1 = 10 : int]
+f.1 [	ifge %0, %1 goto blklab0 : int]
+f.2 [	const %2 = 1 : int]
+f.3 [	return %2 : int]
+f.4 [	goto blklab1]
+f.5 [.blklab0]
+f.6 [	const %3 = 10 : int]
+f.7 [	ifle %0, %3 goto blklab2 : int]
+f.8 [	const %4 = 2 : int]
+f.9 [	return %4 : int]
+f.10 [.blklab2]
+f.11 [.blklab1]
+f.12 [	const %5 = 0 : int]
+f.13 [	return %5 : int]
+f.14 [	return]
+	domain(%0)	= [11..11]
+	domain(%1)	= [10..10]
+	domain(%3)	= [10..10]
+	domain(%4)	= [2..2]
+	domain(return)	= [2..2]
+	value(%0)	= 11
+	value(%1)	= 10
+	value(%2)	= 1
+	value(%3)	= 10
+	value(%4)	= 2
+	value(%5)	= 0
+Consistency=true
+main.14 [	indirectinvoke %10 (%11) : method(any) -> void]
+main.15 [	fieldload %13 = %0 out : {[[int]] args,{method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s} out}]
+main.16 [	fieldload %14 = %13 println : {method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s}]
+main.17 [	const %16 = 1212 : int]
+main.18 [	invoke %15 = (%16) IfElse_Valid_2:f : function(int) -> int]
+	domain(%3)	= [1..1]
+	domain(%4)	= [1..1]
+	domain(%7)	= [0..0]
+	domain(%8)	= [10..10]
+	domain(%11)	= [2..2]
+	domain(%12)	= [11..11]
+	domain(%16)	= [1212..1212]
+	value(%4)	= 1
+	value(%8)	= 10
+	value(%12)	= 11
+	value(%16)	= 1212
+Consistency=true
+f.0 [	const %1 = 10 : int]
+f.1 [	ifge %0, %1 goto blklab0 : int]
+f.2 [	const %2 = 1 : int]
+f.3 [	return %2 : int]
+f.4 [	goto blklab1]
+f.5 [.blklab0]
+f.6 [	const %3 = 10 : int]
+f.7 [	ifle %0, %3 goto blklab2 : int]
+f.8 [	const %4 = 2 : int]
+f.9 [	return %4 : int]
+f.10 [.blklab2]
+f.11 [.blklab1]
+f.12 [	const %5 = 0 : int]
+f.13 [	return %5 : int]
+f.14 [	return]
+	domain(%0)	= [1212..1212]
+	domain(%1)	= [10..10]
+	domain(%3)	= [10..10]
+	domain(%4)	= [2..2]
+	domain(return)	= [2..2]
+	value(%0)	= 1212
+	value(%1)	= 10
+	value(%2)	= 1
+	value(%3)	= 10
+	value(%4)	= 2
+	value(%5)	= 0
+Consistency=true
+main.19 [	indirectinvoke %14 (%15) : method(any) -> void]
+main.20 [	fieldload %17 = %0 out : {[[int]] args,{method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s} out}]
+main.21 [	fieldload %18 = %17 println : {method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s}]
+main.22 [	const %20 = 1212 : int]
+main.23 [	neg %21 = %20 : int]
+main.24 [	invoke %19 = (%21) IfElse_Valid_2:f : function(int) -> int]
+	domain(%3)	= [1..1]
+	domain(%4)	= [1..1]
+	domain(%7)	= [0..0]
+	domain(%8)	= [10..10]
+	domain(%11)	= [2..2]
+	domain(%12)	= [11..11]
+	domain(%15)	= [2..2]
+	domain(%16)	= [1212..1212]
+	domain(%20)	= [1212..1212]
+	value(%4)	= 1
+	value(%8)	= 10
+	value(%12)	= 11
+	value(%16)	= 1212
+	value(%20)	= 1212
+Consistency=true
+f.0 [	const %1 = 10 : int]
+f.1 [	ifge %0, %1 goto blklab0 : int]
+f.2 [	const %2 = 1 : int]
+f.3 [	return %2 : int]
+f.4 [	goto blklab1]
+f.5 [.blklab0]
+f.6 [	const %3 = 10 : int]
+f.7 [	ifle %0, %3 goto blklab2 : int]
+f.8 [	const %4 = 2 : int]
+f.9 [	return %4 : int]
+f.10 [.blklab2]
+f.11 [.blklab1]
+f.12 [	const %5 = 0 : int]
+f.13 [	return %5 : int]
+f.14 [	return]
+	domain(%0)	= [-1212..-1212]
+	domain(%1)	= [10..10]
+	domain(%2)	= [1..1]
+	domain(return)	= [1..1]
+	value(%1)	= 10
+	value(%2)	= 1
+	value(%3)	= 10
+	value(%4)	= 2
+	value(%5)	= 0
+Consistency=true
+main.25 [	indirectinvoke %18 (%19) : method(any) -> void]
+main.26 [	return]
+	domain(%3)	= [1..1]
+	domain(%4)	= [1..1]
+	domain(%7)	= [0..0]
+	domain(%8)	= [10..10]
+	domain(%11)	= [2..2]
+	domain(%12)	= [11..11]
+	domain(%15)	= [2..2]
+	domain(%16)	= [1212..1212]
+	domain(%19)	= [1..1]
+	domain(%20)	= [1212..1212]
+	domain(%21)	= [-1212..-1212]
+	value(%4)	= 1
+	value(%8)	= 10
+	value(%12)	= 11
+	value(%16)	= 1212
+	value(%20)	= 1212
+Consistency=true
+Bound analysis completed.

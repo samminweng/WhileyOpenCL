@@ -26,12 +26,12 @@ public class BlockController {
 	private List<BasicBlock> list;
 	//The variables are used in the control flow graph (CFG).	
 	private BasicBlock current_blk;
-	//The label name of the loop condition
-	private String loop_condition;	
+	//The boolean flag indicates the loop structure.
+	private boolean isLoop;	
 	//A list of loop variables.
 	private HashMap<String, BoundChange> loop_variables;
 	//The boolean flag is used to show whether the code is inside an assertion or assumption.	
-	private String assertOrAssume_label = null;
+	private boolean isInvariant;
 
 	public BlockController(Configuration config){
 		this.config = config;
@@ -41,6 +41,8 @@ public class BlockController {
 		createBasicBlock("exit", BlockType.EXIT);		
 		this.current_blk = createBasicBlock("entry", BlockType.ENTRY);
 		this.loop_variables = new HashMap<String, BoundChange>();
+		this.isInvariant = false;
+		this.isLoop = false;
 	}
 	
 	
@@ -50,59 +52,37 @@ public class BlockController {
 	 * @return true if the condition should be inverted. Otherwise, return false.
 	 */
 	public boolean checkInvertCondition(Codes.If code, Code next_code){
-		//Check if the byte-code is inside an assertion or assumption.
-		if(checkAssertOrAssume()){
-			//Check if the code is a fail			
-			if(next_code instanceof Codes.Fail){
-				return false;
-			}
-			//Check if the if byte-code goes outside the assertion or assumption.	
-			if(!code.target.equals(assertOrAssume_label)){
-				return true;
-			}
-		}		
+		//Check if the code is a fail			
+		if(next_code instanceof Codes.Fail){
+			return false;
+		}
+						
 		return false;
 	}
 	
+	/**
+	 * Check if the bytecode inside the invariant.
+	 * @return
+	 */
+	public boolean checkInvariant() {
+		return this.isInvariant;
+	}
 	
 	/**
 	 * Enables the assertion or assumption
 	 * @param assertOrAssume
 	 */
-	public void enabledAssertOrAssume(Code code){
-		if(code instanceof Codes.AssertOrAssume){
-			Codes.AssertOrAssume assertOrAssume = (Codes.AssertOrAssume)code;
-			if(!checkAssertOrAssume()){
-				//assertOrAssume_label = assertOrAssume.target;
-				assertOrAssume_label = assertOrAssume.toString();
-			}			
-		}		
+	public void enabledInvariant(){
+		this.isInvariant = true;
 	}
 	
 	/**
 	 * Disables the assertion or assumption
 	 * @param label
 	 */
-	public void disabledAssertOrAssume(Code code){
-		 if (code instanceof Codes.Label) {
-			 Codes.Label label = (Codes.Label)code;
-			 if(checkAssertOrAssume() && assertOrAssume_label.equals(label.label)){
-					//Nullify the label of an assertion or assumption. 
-					assertOrAssume_label = null;
-				}
-		 }					
+	public void disabledInvariant(){
+		 this.isInvariant = false;					
 	}
-	
-	
-	/**
-	 * Check if the code is inside an assertion or assumption.
-	 * @param code the code.
-	 * @return true if the code belongs to the assertion or assumption. Otherwise, return false.
-	 */
-	public boolean checkAssertOrAssume(){
-		//f the label is not null, then the code is inside the assertion or assumption.
-		return (assertOrAssume_label != null)? true: false;
-	}	
 
 	/**
 	 * Create a basic block with the specific label name
@@ -131,6 +111,9 @@ public class BlockController {
 		return null;
 	}
 
+	
+	
+	
 	/**
 	 * Iterates over all nodes in a list to get the block,
 	 * whose branch name is matched with label.
@@ -263,22 +246,7 @@ public class BlockController {
 	 */
 	public BasicBlock createLoopHeader(String label){
 		BasicBlock loop_header = createBasicBlock(label, BlockType.LOOP_HEADER, getCurrentBlock());
-		loop_condition = label;
 		return loop_header;
-	}
-	
-	/**
-	 * Check if the if bytecode is the loop condition
-	 * @return
-	 */
-	public boolean isLoopCondition(){		
-		//Check if the if-bytecode is the loop condition.
-		if(!checkAssertOrAssume() && loop_condition != null){
-			//Reset the loop condition flag.
-			loop_condition = null;
-			return true;
-		}
-		return false;
 	}
 	
 
@@ -293,11 +261,9 @@ public class BlockController {
 		//Check whether to add if-else blocks or loop-condition blocks.
 		BasicBlock loop_body = createBasicBlock(new_label, BlockType.LOOP_BODY, c_blk);
 		BasicBlock loop_exit = createBasicBlock(new_label, BlockType.LOOP_EXIT, c_blk);
-		//put the opposite constraint to current blk(loopbody)			
+		//put the opposite constraint to the loop body			
 		loop_body.addConstraint(neg_c);	
-		//put the original constraint to the loop_exit			
-		//Should we not put the inverted constraint to the loop_exit?
-		//loop_exit.addConstraint(c);	
+		//put the original constraint to the loop_exit
 		setCurrentBlock(loop_body);
 	}
 	
@@ -360,7 +326,7 @@ public class BlockController {
 				}
 
 				//After three iterations, the bounds is still increasing.
-				if(iteration%3==0){
+				if(iteration%4==0){
 					//Widen the upper bound
 					if(boundChange.isUBIncreasing()){
 						if(config.isGradualWiden()){
@@ -393,5 +359,17 @@ public class BlockController {
 		}
 		return isChanged;
 	}
+
+
+	public boolean isLoop() {
+		return isLoop;
+	}
+
+
+	public void setLoop(boolean isLoop) {
+		this.isLoop = isLoop;
+	}
+
+	
 
 }
