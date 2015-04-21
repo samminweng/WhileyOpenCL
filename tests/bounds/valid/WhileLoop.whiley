@@ -11,4 +11,4 @@ requires limit <= 1000000:
     
 method main(System.Console sys):
     sys.out.println(f(5))    
-    //sys.out.println(f(50000))
+    sys.out.println(f(50000))

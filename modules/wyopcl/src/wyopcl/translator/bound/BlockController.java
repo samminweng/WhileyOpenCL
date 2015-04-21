@@ -257,10 +257,12 @@ public class BlockController {
 	 * @param c constraint
 	 */
 	public void createLoopStructure(String new_label, Constraint c, Constraint neg_c){
-		BasicBlock c_blk = getCurrentBlock();
+		BasicBlock loop_header = getCurrentBlock();
 		//Check whether to add if-else blocks or loop-condition blocks.
-		BasicBlock loop_body = createBasicBlock(new_label, BlockType.LOOP_BODY, c_blk);
-		BasicBlock loop_exit = createBasicBlock(new_label, BlockType.LOOP_EXIT, c_blk);
+		BasicBlock loop_body = createBasicBlock(new_label, BlockType.LOOP_BODY, loop_header);
+		BasicBlock loop_exit = createBasicBlock(new_label, BlockType.LOOP_EXIT, loop_header);
+		//Connect the loop header with the loop body 
+		loop_body.addChild(loop_header);
 		//put the opposite constraint to the loop body			
 		loop_body.addConstraint(neg_c);	
 		//put the original constraint to the loop_exit

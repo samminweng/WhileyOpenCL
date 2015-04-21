@@ -1,323 +1,104 @@
-main.0 [	fieldload %2 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}]
-main.1 [	fieldload %3 = %2 println : {method(any) => void print,method(any) => void println}]
-main.2 [	const %4 = "Sum=" : string]
-main.3 [	const %6 = 5 : int]
-main.4 [	assert blklab13]
-[30;1mmain.5 [	const %9 = 1000000 : int][0m
-[30;1mmain.6 [	ifle %6, %9 goto blklab12 : int][0m
-[30;1mmain.7 [	fail ""precondition not satisfied""][0m
-[30;1mmain.8 [.blklab12][0m
-[30;1mmain.9 [.blklab13][0m
-main.10 [	invoke %5 = (%6) Loop:f : function(int) => int]
-	domain(%6)	= [5..5]
-	domain(%9)	= [1000000..1000000]
-	value(%6)	= 5
-	value(%9)	= 1000000
-Consistency=true
-f.0 [	const %4 = 0 : int]
-f.1 [	assign %3 = %4  : int]
-f.2 [	const %6 = 0 : int]
-f.3 [	assign %5 = %6  : int]
-f.4 [	assert blklab3]
-[30;1mf.5 [	const %8 = 0 : int][0m
-[30;1mf.6 [	ifge %4, %8 goto blklab3 : int][0m
-[30;1mf.7 [	fail ""loop invariant not satisfied on entry""][0m
-[30;1mf.8 [.blklab3][0m
-f.9 [	loop (%3, %5)]
-f.10 [	assume blklab4]
-[30;1mf.11 [	const %10 = 0 : int][0m
-[30;1mf.12 [	ifge %3, %10 goto blklab4 : int][0m
-[30;1mf.13 [	fail """"][0m
-[30;1mf.14 [.blklab4][0m
-f.15 [	ifge %3, %0 goto blklab2 : int]
-f.16 [	add %15 = %5, %3 : int]
-f.17 [	assign %5 = %15  : int]
-f.18 [	const %17 = 1 : int]
-f.19 [	add %18 = %3, %17 : int]
-f.20 [	assign %3 = %18  : int]
-f.21 [	assert blklab5]
-[30;1mf.22 [	const %20 = 0 : int][0m
-[30;1mf.23 [	ifge %18, %20 goto blklab5 : int][0m
-[30;1mf.24 [	fail ""loop invariant not restored""][0m
-[30;1mf.25 [.blklab5][0m
-f.26 [	nop]
-f.27 [end blklab1]
-f.28 [.blklab2]
-f.29 [	return %5 : int]
-	domain(%0)	= [5..5]
-	domain(%3)	= [0..5]
-	domain(%4)	= [0..0]
-	domain(%5)	= [0..47]
-	domain(%6)	= [0..0]
-	domain(%8)	= [0..0]
-	domain(%10)	= [0..0]
-	domain(%15)	= [0..47]
-	domain(%17)	= [1..1]
-	domain(%18)	= [1..5]
-	domain(%20)	= [0..0]
-	domain(return)	= [0..43]
-	value(%0)	= 5
-	value(%4)	= 0
-	value(%6)	= 0
-	value(%8)	= 0
-	value(%10)	= 0
-	value(%17)	= 1
-	value(%20)	= 0
-Consistency=true
-main.11 [	convert %5 = %5 any : int]
-main.12 [	invoke %5 = (%5) whiley/lang/Any:toString : function(any) => string]
-main.13 [	sappend %7 = %4, %5 : string]
-main.14 [	convert %7 = %7 any : string]
-main.15 [	indirectinvoke %3 (%7) : method(any) => void]
-main.16 [	fieldload %9 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}]
-main.17 [	fieldload %10 = %9 println : {method(any) => void print,method(any) => void println}]
-main.18 [	const %11 = "Sum=" : string]
-main.19 [	const %13 = 50000 : int]
-main.20 [	assert blklab15]
-[30;1mmain.21 [	const %16 = 1000000 : int][0m
-[30;1mmain.22 [	ifle %13, %16 goto blklab14 : int][0m
-[30;1mmain.23 [	fail ""precondition not satisfied""][0m
-[30;1mmain.24 [.blklab14][0m
-[30;1mmain.25 [.blklab15][0m
-main.26 [	invoke %12 = (%13) Loop:f : function(int) => int]
-	domain(%5)	= [0..43]
-	domain(%6)	= [5..5]
-	domain(%9)	= [1000000..1000000]
-	domain(%13)	= [50000..50000]
-	domain(%16)	= [1000000..1000000]
-	value(%6)	= 5
-	value(%9)	= 1000000
-	value(%13)	= 50000
-	value(%16)	= 1000000
-Consistency=true
-f.0 [	const %4 = 0 : int]
-f.1 [	assign %3 = %4  : int]
-f.2 [	const %6 = 0 : int]
-f.3 [	assign %5 = %6  : int]
-f.4 [	assert blklab3]
-[30;1mf.5 [	const %8 = 0 : int][0m
-[30;1mf.6 [	ifge %4, %8 goto blklab3 : int][0m
-[30;1mf.7 [	fail ""loop invariant not satisfied on entry""][0m
-[30;1mf.8 [.blklab3][0m
-f.9 [	loop (%3, %5)]
-f.10 [	assume blklab4]
-[30;1mf.11 [	const %10 = 0 : int][0m
-[30;1mf.12 [	ifge %3, %10 goto blklab4 : int][0m
-[30;1mf.13 [	fail """"][0m
-[30;1mf.14 [.blklab4][0m
-f.15 [	ifge %3, %0 goto blklab2 : int]
-f.16 [	add %15 = %5, %3 : int]
-f.17 [	assign %5 = %15  : int]
-f.18 [	const %17 = 1 : int]
-f.19 [	add %18 = %3, %17 : int]
-f.20 [	assign %3 = %18  : int]
-f.21 [	assert blklab5]
-[30;1mf.22 [	const %20 = 0 : int][0m
-[30;1mf.23 [	ifge %18, %20 goto blklab5 : int][0m
-[30;1mf.24 [	fail ""loop invariant not restored""][0m
-[30;1mf.25 [.blklab5][0m
-f.26 [	nop]
-f.27 [end blklab1]
-f.28 [.blklab2]
-f.29 [	return %5 : int]
-	domain(%0)	= [50000..50000]
-	domain(%3)	= [0..50000]
-	domain(%4)	= [0..0]
-	domain(%5)	= [0..549992]
-	domain(%6)	= [0..0]
-	domain(%8)	= [0..0]
-	domain(%10)	= [0..0]
-	domain(%15)	= [0..549992]
-	domain(%17)	= [1..1]
-	domain(%18)	= [1..50000]
-	domain(%20)	= [0..0]
-	domain(return)	= [0..499993]
-	value(%0)	= 50000
-	value(%4)	= 0
-	value(%6)	= 0
-	value(%8)	= 0
-	value(%10)	= 0
-	value(%17)	= 1
-	value(%20)	= 0
-Consistency=true
-main.27 [	convert %12 = %12 any : int]
-main.28 [	invoke %12 = (%12) whiley/lang/Any:toString : function(any) => string]
-main.29 [	sappend %14 = %11, %12 : string]
-main.30 [	convert %14 = %14 any : string]
-main.31 [	indirectinvoke %10 (%14) : method(any) => void]
-main.32 [	fieldload %16 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}]
-main.33 [	fieldload %17 = %16 println : {method(any) => void print,method(any) => void println}]
-main.34 [	const %18 = "Sum=" : string]
-main.35 [	const %20 = 5 : int]
-main.36 [	assert blklab17]
-[30;1mmain.37 [	const %23 = 1000000 : int][0m
-[30;1mmain.38 [	ifle %20, %23 goto blklab16 : int][0m
-[30;1mmain.39 [	fail ""precondition not satisfied""][0m
-[30;1mmain.40 [.blklab16][0m
-[30;1mmain.41 [.blklab17][0m
-main.42 [	invoke %19 = (%20) Loop:f2 : function(int) => int]
-	domain(%5)	= [0..43]
-	domain(%6)	= [5..5]
-	domain(%9)	= [1000000..1000000]
-	domain(%12)	= [0..499993]
-	domain(%13)	= [50000..50000]
-	domain(%16)	= [1000000..1000000]
-	domain(%20)	= [5..5]
-	domain(%23)	= [1000000..1000000]
-	value(%6)	= 5
-	value(%9)	= 1000000
-	value(%13)	= 50000
-	value(%16)	= 1000000
-	value(%20)	= 5
-	value(%23)	= 1000000
-Consistency=true
-f2.0 [	assign %4 = %0  : int]
-f2.1 [	assign %3 = %4  : int]
-f2.2 [	const %6 = 0 : int]
-f2.3 [	assign %5 = %6  : int]
-f2.4 [	assert blklab9]
-[30;1mf2.5 [	ifle %0, %0 goto blklab9 : int][0m
-[30;1mf2.6 [	fail ""loop invariant not satisfied on entry""][0m
-[30;1mf2.7 [.blklab9][0m
-f2.8 [	loop (%3, %5)]
-f2.9 [	assume blklab10]
-[30;1mf2.10 [	ifle %3, %0 goto blklab10 : int][0m
-[30;1mf2.11 [	fail """"][0m
-[30;1mf2.12 [.blklab10][0m
-f2.13 [	const %12 = 0 : int]
-f2.14 [	iflt %3, %12 goto blklab8 : int]
-f2.15 [	add %15 = %5, %3 : int]
-f2.16 [	assign %5 = %15  : int]
-f2.17 [	const %17 = 1 : int]
-f2.18 [	sub %18 = %3, %17 : int]
-f2.19 [	assign %3 = %18  : int]
-f2.20 [	assert blklab11]
-[30;1mf2.21 [	ifle %18, %0 goto blklab11 : int][0m
-[30;1mf2.22 [	fail ""loop invariant not restored""][0m
-[30;1mf2.23 [.blklab11][0m
-f2.24 [	nop]
-f2.25 [end blklab7]
-f2.26 [.blklab8]
-f2.27 [	return %5 : int]
-	domain(%0)	= [5..5]
-	domain(%3)	= [-1..5]
+main.0 [	fieldload %1 = %0 out : {[[int]] args,{method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s} out}]
+main.1 [	fieldload %2 = %1 println : {method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s}]
+main.2 [	const %4 = 5 : int]
+main.3 [	invoke %3 = (%4) WhileLoop:f : function(int) -> int]
 	domain(%4)	= [5..5]
-	domain(%5)	= [0..70]
+	value(%4)	= 5
+Consistency=true
+f.0 [	const %4 = 0 : int]
+f.1 [	assign %3 = %4  : int]
+f.2 [	assign %1 = %3  : int]
+f.3 [	const %6 = 0 : int]
+f.4 [	assign %5 = %6  : int]
+f.5 [	assign %2 = %5  : int]
+f.6 [	loop (%1, %2, %7, %8, %9, %10)]
+f.7 [	invariant]
+[30;1mf.8 [	const %7 = 0 : int][0m
+[30;1mf.9 [	ifge %1, %7 goto blklab2 : int][0m
+[30;1mf.10 [	fail][0m
+[30;1mf.11 [.blklab2][0m
+[30;1mf.12 [	return][0m
+f.13 [	ifge %1, %0 goto blklab1 : int]
+f.14 [	add %8 = %2, %1 : int]
+f.15 [	assign %2 = %8  : int]
+f.16 [	const %9 = 1 : int]
+f.17 [	add %10 = %1, %9 : int]
+f.18 [	assign %1 = %10  : int]
+f.19 [.blklab1]
+f.20 [	return %2 : int]
+f.21 [	return]
+	domain(%0)	= [5..5]
+	domain(%1)	= [0..infinity]
+	domain(%2)	= [0..infinity]
+	domain(%3)	= [0..0]
+	domain(%4)	= [0..0]
+	domain(%5)	= [0..0]
 	domain(%6)	= [0..0]
-	domain(%12)	= [0..0]
-	domain(%15)	= [0..70]
-	domain(%17)	= [-1..-1]
-	domain(%18)	= [-1..4]
-	domain(return)	= [0..65]
+	domain(%8)	= [0..infinity]
+	domain(%9)	= [1..1]
+	domain(%10)	= [1..infinity]
+	domain(return)	= [0..infinity]
 	value(%0)	= 5
+	value(%4)	= 0
 	value(%6)	= 0
-	value(%12)	= 0
-	value(%17)	= 1
+	value(%9)	= 1
 Consistency=true
-main.43 [	convert %19 = %19 any : int]
-main.44 [	invoke %19 = (%19) whiley/lang/Any:toString : function(any) => string]
-main.45 [	sappend %21 = %18, %19 : string]
-main.46 [	convert %21 = %21 any : string]
-main.47 [	indirectinvoke %17 (%21) : method(any) => void]
-main.48 [	fieldload %23 = %0 out : {[string] args,{method(any) => void print,method(any) => void println} out}]
-main.49 [	fieldload %24 = %23 println : {method(any) => void print,method(any) => void println}]
-main.50 [	const %25 = "Sum=" : string]
-main.51 [	const %27 = 50000 : int]
-main.52 [	assert blklab19]
-[30;1mmain.53 [	const %30 = 1000000 : int][0m
-[30;1mmain.54 [	ifle %27, %30 goto blklab18 : int][0m
-[30;1mmain.55 [	fail ""precondition not satisfied""][0m
-[30;1mmain.56 [.blklab18][0m
-[30;1mmain.57 [.blklab19][0m
-main.58 [	invoke %26 = (%27) Loop:f2 : function(int) => int]
-	domain(%5)	= [0..43]
-	domain(%6)	= [5..5]
-	domain(%9)	= [1000000..1000000]
-	domain(%12)	= [0..499993]
-	domain(%13)	= [50000..50000]
-	domain(%16)	= [1000000..1000000]
-	domain(%19)	= [0..65]
-	domain(%20)	= [5..5]
-	domain(%23)	= [1000000..1000000]
-	domain(%27)	= [50000..50000]
-	domain(%30)	= [1000000..1000000]
-	value(%6)	= 5
-	value(%9)	= 1000000
-	value(%13)	= 50000
-	value(%16)	= 1000000
-	value(%20)	= 5
-	value(%23)	= 1000000
-	value(%27)	= 50000
-	value(%30)	= 1000000
+main.4 [	indirectinvoke %2 (%3) : method(any) -> void]
+main.5 [	fieldload %5 = %0 out : {[[int]] args,{method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s} out}]
+main.6 [	fieldload %6 = %5 println : {method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s}]
+main.7 [	const %8 = 50000 : int]
+main.8 [	invoke %7 = (%8) WhileLoop:f : function(int) -> int]
+	domain(%3)	= [0..infinity]
+	domain(%4)	= [5..5]
+	domain(%8)	= [50000..50000]
+	value(%4)	= 5
+	value(%8)	= 50000
 Consistency=true
-f2.0 [	assign %4 = %0  : int]
-f2.1 [	assign %3 = %4  : int]
-f2.2 [	const %6 = 0 : int]
-f2.3 [	assign %5 = %6  : int]
-f2.4 [	assert blklab9]
-[30;1mf2.5 [	ifle %0, %0 goto blklab9 : int][0m
-[30;1mf2.6 [	fail ""loop invariant not satisfied on entry""][0m
-[30;1mf2.7 [.blklab9][0m
-f2.8 [	loop (%3, %5)]
-f2.9 [	assume blklab10]
-[30;1mf2.10 [	ifle %3, %0 goto blklab10 : int][0m
-[30;1mf2.11 [	fail """"][0m
-[30;1mf2.12 [.blklab10][0m
-f2.13 [	const %12 = 0 : int]
-f2.14 [	iflt %3, %12 goto blklab8 : int]
-f2.15 [	add %15 = %5, %3 : int]
-f2.16 [	assign %5 = %15  : int]
-f2.17 [	const %17 = 1 : int]
-f2.18 [	sub %18 = %3, %17 : int]
-f2.19 [	assign %3 = %18  : int]
-f2.20 [	assert blklab11]
-[30;1mf2.21 [	ifle %18, %0 goto blklab11 : int][0m
-[30;1mf2.22 [	fail ""loop invariant not restored""][0m
-[30;1mf2.23 [.blklab11][0m
-f2.24 [	nop]
-f2.25 [end blklab7]
-f2.26 [.blklab8]
-f2.27 [	return %5 : int]
+f.0 [	const %4 = 0 : int]
+f.1 [	assign %3 = %4  : int]
+f.2 [	assign %1 = %3  : int]
+f.3 [	const %6 = 0 : int]
+f.4 [	assign %5 = %6  : int]
+f.5 [	assign %2 = %5  : int]
+f.6 [	loop (%1, %2, %7, %8, %9, %10)]
+f.7 [	invariant]
+[30;1mf.8 [	const %7 = 0 : int][0m
+[30;1mf.9 [	ifge %1, %7 goto blklab2 : int][0m
+[30;1mf.10 [	fail][0m
+[30;1mf.11 [.blklab2][0m
+[30;1mf.12 [	return][0m
+f.13 [	ifge %1, %0 goto blklab1 : int]
+f.14 [	add %8 = %2, %1 : int]
+f.15 [	assign %2 = %8  : int]
+f.16 [	const %9 = 1 : int]
+f.17 [	add %10 = %1, %9 : int]
+f.18 [	assign %1 = %10  : int]
+f.19 [.blklab1]
+f.20 [	return %2 : int]
+f.21 [	return]
 	domain(%0)	= [50000..50000]
-	domain(%3)	= [-1..50000]
-	domain(%4)	= [50000..50000]
-	domain(%5)	= [0..700000]
+	domain(%1)	= [0..infinity]
+	domain(%2)	= [0..infinity]
+	domain(%3)	= [0..0]
+	domain(%4)	= [0..0]
+	domain(%5)	= [0..0]
 	domain(%6)	= [0..0]
-	domain(%12)	= [0..0]
-	domain(%15)	= [0..700000]
-	domain(%17)	= [-1..-1]
-	domain(%18)	= [-1..49999]
-	domain(return)	= [0..650000]
+	domain(%8)	= [0..infinity]
+	domain(%9)	= [1..1]
+	domain(%10)	= [1..infinity]
+	domain(return)	= [0..infinity]
 	value(%0)	= 50000
+	value(%4)	= 0
 	value(%6)	= 0
-	value(%12)	= 0
-	value(%17)	= 1
+	value(%9)	= 1
 Consistency=true
-main.59 [	convert %26 = %26 any : int]
-main.60 [	invoke %26 = (%26) whiley/lang/Any:toString : function(any) => string]
-main.61 [	sappend %28 = %25, %26 : string]
-main.62 [	convert %28 = %28 any : string]
-main.63 [	indirectinvoke %24 (%28) : method(any) => void]
-main.64 [	return]
-	domain(%5)	= [0..43]
-	domain(%6)	= [5..5]
-	domain(%9)	= [1000000..1000000]
-	domain(%12)	= [0..499993]
-	domain(%13)	= [50000..50000]
-	domain(%16)	= [1000000..1000000]
-	domain(%19)	= [0..65]
-	domain(%20)	= [5..5]
-	domain(%23)	= [1000000..1000000]
-	domain(%26)	= [0..650000]
-	domain(%27)	= [50000..50000]
-	domain(%30)	= [1000000..1000000]
-	value(%6)	= 5
-	value(%9)	= 1000000
-	value(%13)	= 50000
-	value(%16)	= 1000000
-	value(%20)	= 5
-	value(%23)	= 1000000
-	value(%27)	= 50000
-	value(%30)	= 1000000
+main.9 [	indirectinvoke %6 (%7) : method(any) -> void]
+main.10 [	return]
+	domain(%3)	= [0..infinity]
+	domain(%4)	= [5..5]
+	domain(%7)	= [0..infinity]
+	domain(%8)	= [50000..50000]
+	value(%4)	= 5
+	value(%8)	= 50000
 Consistency=true
 Bound analysis completed.

@@ -536,12 +536,18 @@ public class BoundAnalyzer {
 		if(blk_ctrl.isLoop()){
 			blk = blk_ctrl.getBasicBlock(label, BlockType.LOOP_EXIT);
 			blk_ctrl.setLoop(false);
-		}else{
+		}else{			
 			// Get the target blk. If it is null, then create a new block.
 			blk = blk_ctrl.getBasicBlock(label);
 			if (blk == null) {
 				blk = blk_ctrl.createBasicBlock(label, BlockType.BLOCK);
-			}
+			}			
+			//Get the current block.
+			BasicBlock c_blk = blk_ctrl.getCurrentBlock();
+			if(c_blk!=null){
+				//Connect the current blk to the assigned block.
+				c_blk.addChild(blk);
+			}						
 		}
 		
 		// Switch the current block
