@@ -3,7 +3,7 @@
 # The shell script of benchmarking the generated C code of While_Valid_1 program
 #
 run_benchmark_c (){    
-	cd $1/c/$2
+	cd "$1"/c/"$2"
     	#compile the source C file with L2 optimization (-O2)
     	#see https://gcc.gnu.org/onlinedocs/gnat_ugn/Optimization-Levels.html#101
     	gcc -m64 -O2 -o $1.out $1.$2.c
@@ -52,6 +52,8 @@ run_benchmark_java(){
 }
 #
 #Benchmark the generated C code
-#run_benchmark_c While_Valid_1 slow
+run_benchmark_c While_Valid_1 slow
+run_benchmark_c While_Valid_1 optimized_slow
+run_benchmark_c While_Valid_1 fast
 #Benchmark the generated Java code
-run_benchmark_java While_Valid_1
+#run_benchmark_java While_Valid_1
