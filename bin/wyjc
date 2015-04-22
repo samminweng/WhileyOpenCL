@@ -42,5 +42,5 @@ LIBS="wyjc wyc wyil wycs wybs wyrl jasm"
 ######################
 # RUN APPLICATION
 ######################
-
+echo $WHILEY_CLASSPATH
 java -server -Xmx128M -cp "$WHILEY_CLASSPATH" wyjc.WyjcMain -bp "$WHILEY_BOOTPATH" "$@"
