@@ -25,31 +25,17 @@ run_benchmark_c (){
 # The shell script of benchmarking the generated Java code of While_Valid_1 program
 #
 run_benchmark_java(){
-	# check for running under cywin
-	cygwin=false
-	case "`uname`" in
-  		CYGWIN*) cygwin=true ;;
-	esac
-	if $cygwin; then
-    		# under cygwin the classpath separator must be ";"
-    		LIBDIR=`cygpath -m "$LIBDIR"`
-    		PATHSEP=";"
-	else
-    		# under UNIX the classpath separator must be ":"
-    		PATHSEP=":"
+        #Change the working directory
+        cd "$1"/"java"
+	WHILEY_CLASSPATH="./../../../bin/../lib/jasm-v0.1.7.jar:./../../../bin/../lib/wyrl-v0.3.33.jar:./../../../bin/../lib/wybs-v0.3.33.jar:./../../../bin/../lib/wycs-v0.3.33.jar:./../../../bin/../lib/wyil-v0.3.33.jar:./../../../bin/../lib/wyc-v0.3.33.jar:./../../../bin/../lib/wyjc-v0.3.33.jar:"
+	#Check if the shell script is run on Cygwin
+	if [ `uname -o` = "Cygwin" ]
+	then
+	    WHILEY_CLASSPATH="./../../../bin/../lib/jasm-v0.1.7.jar;./../../../bin/../lib/wyrl-v0.3.33.jar;./../../../bin/../lib/wybs-v0.3.33.jar;./../../../bin/../lib/wycs-v0.3.33.jar;./../../../bin/../lib/wyil-v0.3.33.jar;./../../../bin/../lib/wyc-v0.3.33.jar;./../../../bin/../lib/wyjc-v0.3.33.jar;"
 	fi
-
-	DIR=`dirname "$0"`/..
-	LIBDIR=$DIR/lib
-	LIBS="wyc wyil wyjc wyrl wybs wycs jasm"
-
-	. $DIR/bin/wy_common.bash
-	WHILEY_CLASSPATH=$WHILEY_CLASSPATH$PATHSEP$JAVA_HOME	
-	#echo $WHILEY_CLASSPATH
-	#change the directory to test case
-	cd $1/java
+	#read -p "Press [Enter] key to start backup..."
 	#compile the Java file with Javac compiler and specified class path
-	javac -classpath "$WHILEY_CLASSPATH" $1.java
+	javac -classpath $WHILEY_CLASSPATH $1.java
 	#array size
 	arraysizes="1000 10000 100000 1000000 10000000"
 	for arraysize in $arraysizes
@@ -61,8 +47,8 @@ run_benchmark_java(){
 		#Added the CPU info
 		cat /proc/cpuinfo >> result.$1.java.$arraysize.txt
     	done
-    	#Return to the working directory
-    	cd ../../
+	#Return the original working directory
+	#cd ../..
 }
 #
 #Benchmark the generated C code
