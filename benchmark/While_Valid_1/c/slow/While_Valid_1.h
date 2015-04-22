@@ -4,7 +4,6 @@
 #include <errno.h>
 #include <time.h>
 #include <math.h> //Use the power function
-#include <gperftools/profiler.h>//Use the GPerftool
 #define false 0
 #define true 1
 long long* clone(long long *arr, long long size);
