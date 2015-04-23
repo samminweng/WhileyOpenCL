@@ -52,8 +52,8 @@ run_benchmark_java(){
 }
 #
 #Benchmark the generated C code
-run_benchmark_c While_Valid_1 slow
-run_benchmark_c While_Valid_1 optimized_slow
-run_benchmark_c While_Valid_1 fast
+#run_benchmark_c While_Valid_1 slow
+#run_benchmark_c While_Valid_1 optimized_slow
+#run_benchmark_c While_Valid_1 fast
 #Benchmark the generated Java code
-#run_benchmark_java While_Valid_1
+run_benchmark_java While_Valid_1
