@@ -7,8 +7,8 @@ import java.util.Map.Entry;
 
 import wyil.lang.Code;
 import wyil.lang.Codes;
+import wyil.lang.Codes.Invariant;
 import wyil.lang.Type;
-import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.pattern.expression.ExprFactory;
 /**
  * The abstract base class to define all the commonly used fields and methods for all its subclass, including the assert_label, data-driven storage and
@@ -18,8 +18,8 @@ import wyopcl.translator.symbolic.pattern.expression.ExprFactory;
  */
 public class Pattern extends Object {
 	public final String prefix = "%";
-	public String type;//The pattern type
-	public boolean isNil;//The flag indicates whether this pattern is matched with the given loop (True: not matched False: Matched).
+	public String pattern_name;//The pattern name
+	public boolean isNil;//The flag indicates whether this pattern is matched with any given pattern (True: not matched False: Matched).
 
 	public ExprFactory factory;
 	public List<Type> params;//The list of parameter types
@@ -28,7 +28,6 @@ public class Pattern extends Object {
 	public int line;//keep track of the current line number.
 	public List<List<Code>> parts;//The collection of all parts in the pattern.
 	public HashMap<Integer, String> part_names;//Store the relation between part index and part name.
-	public String label_AssertOrAssume;//The flag to store the label for an assertion or assumption.
 
 	public Pattern(){
 		this.isNil = true;//By default.
@@ -57,8 +56,6 @@ public class Pattern extends Object {
 	public Pattern(boolean isVerbose, List<Type> params, List<Code> blk){
 		this(isVerbose, params);
 		if(blk != null){
-			//The flag to store the label for an assertion or assumption.	
-			this.label_AssertOrAssume = null;
 			//The list of code in each pattern part.
 			this.parts = new ArrayList<List<Code>>();
 			this.part_names = new HashMap<Integer, String>();
@@ -78,8 +75,8 @@ public class Pattern extends Object {
 	 * Get the pattern type.
 	 * @return the pattern type. 
 	 */
-	public String getType(){
-		return this.type;
+	public String getPatternName(){
+		return this.pattern_name;
 	}
 
 	/**
@@ -128,25 +125,10 @@ public class Pattern extends Object {
 	 * @return true if the code belongs to the assertion or assumption. Otherwise, return false.
 	 */
 	protected boolean checkAssertOrAssume(Code code){
-		if(label_AssertOrAssume == null){
-			if(code instanceof Codes.AssertOrAssume){
-				Codes.AssertOrAssume assertOrAssume = (Codes.AssertOrAssume)code;
-				//label_AssertOrAssume = assertOrAssume.target;
-				label_AssertOrAssume = assertOrAssume.toString();
-				return true;
-			}		
-		}else{			
-			if(code instanceof Codes.Label){
-				Codes.Label label = (Codes.Label)code;
-				if(label_AssertOrAssume.equals(label.label)){
-					//Nullify the label of an assertion or assumption. 
-					label_AssertOrAssume = null;
-					return true;
-				}					
-			}
+		if(code instanceof Codes.Invariant){
+			return true;
 		}
-		//In other cases, if the label is not null, then the code is inside the assertion or assumption.
-		return (label_AssertOrAssume != null)? true: false;
+		return false;
 	}
 
 	@Override

@@ -21,7 +21,7 @@ public class ForAllPattern extends LoopPattern {
 	private RangeExpr range;	
 	public ForAllPattern(boolean isVerbose, List<Type> params, List<Code> blk) {
 		super(isVerbose, params, blk);
-		this.type = "ForAll";
+		this.pattern_name = "ForAll";
 		//Check if the super class is constructed successfully.
 		if(this.init != null ){
 			this.range = forall(blk, this.loop_var, this.line);
@@ -102,7 +102,7 @@ public class ForAllPattern extends LoopPattern {
 	@Override
 	public String toString() {
 		String result = super.toString();		
-		result += "\n" + type + " " +loop_var+" in range"+this.range+
+		result += "\n" + pattern_name + " " +loop_var+" in range"+this.range+
 				"\n=>loop_iters("+loop_var+", " + getNumberOfIterations()+")";
 		return result;
 	}

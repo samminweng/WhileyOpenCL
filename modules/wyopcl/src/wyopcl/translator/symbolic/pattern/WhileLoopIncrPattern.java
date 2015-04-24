@@ -24,7 +24,7 @@ public class WhileLoopIncrPattern extends WhileLoopPattern implements Transforma
 	 */
 	public WhileLoopIncrPattern(boolean isVerbose, List<Type> params, List<Code> blk) {
 		super(isVerbose, params, blk);
-		this.type = "WhileLoopIncrPattern";
+		this.pattern_name = "WhileLoopIncrPattern";
 		//Get the increment and check if it is null.
 		if(this.incr != null){
 			this.line = this.loopbody_after(blk, this.line);
@@ -36,7 +36,7 @@ public class WhileLoopIncrPattern extends WhileLoopPattern implements Transforma
 	@Override
 	public String toString() {
 		String result = super.toString();	
-		result += "\n" + type + " && loop_var("+loop_var+") && incr("+loop_var+", "+incr+")"
+		result += "\n" + pattern_name + " && loop_var("+loop_var+") && incr("+loop_var+", "+incr+")"
 				+ " && init("+loop_var+", "+init+") &&  while_cond("+loop_var+", "+comparatorOp+", "+loop_bound+")"
 				+ "\n=>loop_iters("+loop_var+", " + getNumberOfIterations()+")";
 		return result;

@@ -60,7 +60,7 @@ public final class TranslatorHelper {
 			if (code_blk_after != null) {
 				Pattern transformed_pattern = matcher.analyzePattern(params, code_blk_after);
 				if (!transformed_pattern.isNil) {
-					System.out.println("From " + pattern.getType() + " to " + transformed_pattern.getType()
+					System.out.println("From " + pattern.getPatternName() + " to " + transformed_pattern.getPatternName()
 							+ ", the transformed pattern:\n" + transformed_pattern);
 					return code_blk_after;
 				}

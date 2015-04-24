@@ -22,7 +22,7 @@ public final class BuildListFirstPattern extends WhileLoopPattern {
 
 	public BuildListFirstPattern(boolean isVerbose, List<Type> params, List<Code> blk) {
 		super(isVerbose, params, blk);
-		this.type ="BuildListFirst";
+		this.pattern_name ="BuildListFirst";
 		//Check if the inferred increment or decrement is null. If not, then continue iterating the list of code.
 		//Otherwise, stop constructing the BuildListPattern.
 		if(this.list_var != null && this.list_size!= null && this.list_init != null && this.list_size_init != null
@@ -184,7 +184,7 @@ public final class BuildListFirstPattern extends WhileLoopPattern {
 	@Override
 	public String toString() {
 		String result = super.toString();	
-		result += "\n" + type + " && loop_var("+loop_var+") && list_var("+list_var+") && list_size("+list_size+") && list_capacity("+list_capacity+") &&"
+		result += "\n" + pattern_name + " && loop_var("+loop_var+") && list_var("+list_var+") && list_size("+list_size+") && list_capacity("+list_capacity+") &&"
 				+ "\n" ;
 		if(incr != null){
 			result += "incr("+loop_var+", "+incr+")";

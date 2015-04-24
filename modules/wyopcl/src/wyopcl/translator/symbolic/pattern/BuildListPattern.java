@@ -20,7 +20,7 @@ public final class BuildListPattern extends WhileLoopPattern implements Transfor
 
 	public BuildListPattern(boolean isVerbose, List<Type> params, List<Code> blk) {
 		super(isVerbose, params, blk);
-		this.type ="BuildList";
+		this.pattern_name ="BuildList";
 		//Check if the inferred increment or decrement is null. If not, then continue iterating the list of code.
 		//Otherwise, stop constructing the BuildListPattern.
 		if(this.list_var != null && this.list_init != null && (this.incr != null || this.decr != null)){	
@@ -116,7 +116,7 @@ public final class BuildListPattern extends WhileLoopPattern implements Transfor
 	@Override
 	public String toString() {
 		String result = super.toString();	
-		result += "\n" + type + " && loop_var("+loop_var+") && list_var("+list_var+") && ";
+		result += "\n" + pattern_name + " && loop_var("+loop_var+") && list_var("+list_var+") && ";
 		if(incr != null){
 			result += "incr("+loop_var+", "+incr+")";
 		}

@@ -17,7 +17,7 @@ import wyil.lang.Type;
 public final class WhileLoopDecrPattern extends WhileLoopPattern{
 	public WhileLoopDecrPattern(boolean isVerbose, List<Type> params, List<Code> blk) {
 		super(isVerbose, params, blk);
-		this.type = "WhileLoopDecrPattern";
+		this.pattern_name = "WhileLoopDecrPattern";
 		//Get the decrement
 		if(this.decr != null){
 			this.line = this.loopbody_after(blk, this.line);
