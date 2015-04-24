@@ -63,10 +63,10 @@ public class Translator implements Builder{
 				generateCodeInC(module);
 				message = "Code generation completed.\nFile: "+config.getFilename()+".c";
 				break;*/
-			/*case "pattern":
+			case "pattern":
 				patternMatch(module);
 				message = "Pattern matching completed.\nFile: " + config.getFilename();
-				break;*/
+				break;
 			default:
 				break;
 			}			
@@ -160,7 +160,7 @@ public class Translator implements Builder{
 	/**
 	 *  Iterate each code of the input function, build up the code blk and then analyze the loop pattern.
 	 * @param module 
-	 *//*
+	 */
 	private void patternMatch(WyilFile module){
 
 		//Iterate each function
@@ -177,9 +177,5 @@ public class Translator implements Builder{
 			System.out.println("\n----------------End of "+func_name+" function----------------\n");
 		}		
 	}
-*/
-
-
-
 
 }
