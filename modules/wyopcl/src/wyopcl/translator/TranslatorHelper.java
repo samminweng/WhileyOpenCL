@@ -25,12 +25,14 @@ public final class TranslatorHelper {
 	 *            the function or method declaration.
 	 * @return the list of code.
 	 */
-	public static List<Code> getCodeBlock(FunctionOrMethod functionOrMethod) {
+	public static List<Code> getCodeBlock(FunctionOrMethod functionOrMethod, Configuration config) {
 		List<Code> code_blk = new ArrayList<Code>();
 		// Iterate the code block to add each code to the code block.
 		for (Code code : functionOrMethod.body()) {
-			//For debugging
-			//System.out.println(code);
+			if(config.isVerbose()){
+				//For debugging
+				System.out.println(code);
+			}			
 			// Get each bytecode and add it to the code_blk.
 			code_blk.add(code);
 		}
@@ -52,7 +54,7 @@ public final class TranslatorHelper {
 			List<Code> code_blk) {
 		// Initialize the pattern matcher.
 		if (config.isPatternMatching()) {
-			PatternMatcher matcher = new PatternMatcher(config.isVerbose());
+			PatternMatcher matcher = new PatternMatcher(config);
 			Pattern pattern = matcher.analyzePattern(params, code_blk);
 			System.out.println("The original pattern:\n" + pattern);
 			PatternTransformer transformer = new PatternTransformer();

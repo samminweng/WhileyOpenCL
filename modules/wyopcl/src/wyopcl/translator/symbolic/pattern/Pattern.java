@@ -9,6 +9,7 @@ import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Codes.Invariant;
 import wyil.lang.Type;
+import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.pattern.expression.ExprFactory;
 /**
  * The abstract base class to define all the commonly used fields and methods for all its subclass, including the assert_label, data-driven storage and
@@ -37,9 +38,9 @@ public class Pattern extends Object {
 	 * Base constructor
 	 * @param isVerbose
 	 */
-	private Pattern(boolean isVerbose, List<Type> params){
+	private Pattern(Configuration config, List<Type> params){
 		this();
-		this.factory = new ExprFactory(isVerbose);//Create an expression factory to record all the extracted expressions.
+		this.factory = new ExprFactory(config);//Create an expression factory to record all the extracted expressions.
 		//Add the input parameters to the expression table.
 		this.params = params;
 		for(Type param: params){
@@ -53,8 +54,8 @@ public class Pattern extends Object {
 	 * @param config
 	 * @param params
 	 */
-	public Pattern(boolean isVerbose, List<Type> params, List<Code> blk){
-		this(isVerbose, params);
+	public Pattern(Configuration config, List<Type> params, List<Code> blk){
+		this(config, params);
 		if(blk != null){
 			//The list of code in each pattern part.
 			this.parts = new ArrayList<List<Code>>();

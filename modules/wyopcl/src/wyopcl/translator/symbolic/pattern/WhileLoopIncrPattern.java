@@ -22,12 +22,11 @@ public class WhileLoopIncrPattern extends WhileLoopPattern implements Transforma
 	 * @param params the list of parameter types
 	 * @param blk the list of code block.
 	 */
-	public WhileLoopIncrPattern(boolean isVerbose, List<Type> params, List<Code> blk) {
-		super(isVerbose, params, blk);
+	public WhileLoopIncrPattern(Configuration config, List<Type> params, List<Code> blk) {
+		super(config, params, blk);
 		this.pattern_name = "WhileLoopIncrPattern";
 		//Get the increment and check if it is null.
 		if(this.incr != null){
-			this.line = this.loopbody_after(blk, this.line);
 			this.line = this.loop_exit(blk, this.line);		
 			this.isNil = false;			
 		}

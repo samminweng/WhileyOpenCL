@@ -2,10 +2,12 @@ package wyopcl.translator.symbolic.pattern.expression;
 
 import java.math.BigInteger;
 import java.util.HashMap;
+
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyil.lang.Type;
+import wyopcl.translator.Configuration;
 
 /**
  * Create a factory to generate the expression based on the input type.
@@ -13,13 +15,12 @@ import wyil.lang.Type;
  *
  */
 public class ExprFactory {
-	//private final Configuration config;
-	private final boolean isVerbose;
+	private final Configuration config;
 	private final String prefix ="%";
 	private HashMap<String, Expr> expressiontable;//Store the register along with the corresponding expression.
 	
-	public ExprFactory(boolean isVerbose){
-		this.isVerbose = isVerbose;
+	public ExprFactory(Configuration config){
+		this.config = config;
 		this.expressiontable = new HashMap<String, Expr>();
 	}
 	
@@ -121,7 +122,7 @@ public class ExprFactory {
 		if(expr != null && expr.getTarget()!=null){
 			//Check if the target exists in the expression table.
 			if(!expressiontable.containsKey(expr.getTarget())){
-				if(isVerbose){
+				if(config.isVerbose()){
 					System.out.println(expr.getTarget() + " = "+ expr);
 				}			
 				//Add to the expression table.

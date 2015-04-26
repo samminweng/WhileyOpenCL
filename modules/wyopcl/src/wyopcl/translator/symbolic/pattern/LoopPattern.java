@@ -6,6 +6,7 @@ import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Codes.Loop;
 import wyil.lang.Type;
+import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.pattern.expression.Expr;
 import wyopcl.translator.symbolic.pattern.expression.LinearExpr;
 
@@ -23,8 +24,8 @@ public abstract class LoopPattern extends Pattern {
 	protected String loop_var;
 	protected Expr init;
 
-	public LoopPattern(boolean isVerbose, List<Type> params, List<Code> blk) {
-		super(isVerbose, params, blk);		
+	public LoopPattern(Configuration config, List<Type> params, List<Code> blk) {
+		super(config, params, blk);		
 		// Get the loop variable.
 		this.loop_var = loop_var(blk);
 		// If the list of code contains the loop variable, then proceed the pattern matching.

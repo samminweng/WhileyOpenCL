@@ -20,6 +20,8 @@ import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.bound.BoundAnalyzer;
+import wyopcl.translator.symbolic.PatternMatcher;
+import wyopcl.translator.symbolic.pattern.Pattern;
 /**
  * Main entry point of translator
  * 
@@ -89,7 +91,7 @@ public class Translator implements Builder{
 			FunctionOrMethod functionOrMethod = module.functionOrMethod("main").get(0);
 			//Put the function name to the config
 			this.config.setProperty("function_name", functionOrMethod.name());
-			List<Code> code_blk = TranslatorHelper.getCodeBlock(functionOrMethod);				
+			List<Code> code_blk = TranslatorHelper.getCodeBlock(functionOrMethod, config);				
 			BoundAnalyzer boundAnalyzer = new BoundAnalyzer(config);
 			boundAnalyzer.propagateBounds(functionOrMethod.type().params());
 			boundAnalyzer.iterateByteCodeList(code_blk);
@@ -169,11 +171,15 @@ public class Translator implements Builder{
 			ArrayList<Type> params = functionOrMethod.type().params();
 			//Begin the function
 			System.out.println("\n----------------Start of "+func_name+" function----------------");
+			List<Code> code_blk = TranslatorHelper.getCodeBlock(functionOrMethod, config);	
+			PatternMatcher matcher = new PatternMatcher(config);
+			Pattern pattern = matcher.analyzePattern(params, code_blk);
+			System.out.println("The original pattern:\n" + pattern);
 			//Find the matching pattern and transform the code into more predictable code. 		
-			List<Code> code_blk = TranslatorHelper.patternMatchingandTransformation(
-					config,
-					functionOrMethod.type().params(), 
-					TranslatorHelper.getCodeBlock(functionOrMethod));
+			//List<Code> code_blk = TranslatorHelper.patternMatchingandTransformation(
+			//		config,
+			//		functionOrMethod.type().params(), 
+			//		TranslatorHelper.getCodeBlock(functionOrMethod));
 			System.out.println("\n----------------End of "+func_name+" function----------------\n");
 		}		
 	}
