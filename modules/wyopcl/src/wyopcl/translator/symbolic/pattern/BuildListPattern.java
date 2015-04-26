@@ -50,7 +50,7 @@ public final class BuildListPattern extends WhileLoopPattern implements Transfor
 				Code code = blk.get(index);
 				index++;
 				//Search for loop bytecode
-				if(!checkAssertOrAssume(code)){
+				if(!isInvariant(code)){
 					//Search for the initial assignment for the modified operand.
 					if(code instanceof Codes.Const){
 						Codes.Const constant = (Codes.Const)code;
@@ -90,7 +90,7 @@ public final class BuildListPattern extends WhileLoopPattern implements Transfor
 		while(index<blk.size()){
 			Code code = blk.get(index);
 			index++;			
-			if(!checkAssertOrAssume(code)){
+			if(!isInvariant(code)){
 				//Check if the code initializes the list.
 				if(code instanceof Codes.Assign){
 					Codes.Assign assign = (Codes.Assign)code;

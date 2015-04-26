@@ -5,6 +5,7 @@ import java.util.List;
 
 import wyil.lang.Code;
 import wyil.lang.Codes;
+import wyil.lang.Codes.Invariant;
 import wyil.lang.Codes.Loop;
 import wyil.lang.Type;
 import wyil.lang.Codes.Comparator;
@@ -70,6 +71,8 @@ public abstract class WhileLoopPattern extends LoopPattern {
 					// Get the increment and decrement.
 					incr = factory.extractIncrement(assign, loop_var);
 					decr = factory.extractDecrement(assign, loop_var);
+					//Increment the index
+					++index;
 					break;
 				}
 			}
@@ -177,7 +180,7 @@ public abstract class WhileLoopPattern extends LoopPattern {
 				}
 			} else {
 				// Add the code to loop header
-				AddCodeToPatternPart(code, "loop_header");
+				AddCodeToPatternPart(code, "loop_header");				
 			}
 		}
 
@@ -226,19 +229,10 @@ public abstract class WhileLoopPattern extends LoopPattern {
 	 */
 	private int loopbody_after(List<Code> blk, int line) {
 		int index = line;
-		while (index < blk.size()) {
+		for (;index < blk.size();index++) {
 			Code code = blk.get(index);
-			index++;
 			// Create the expression and put it into the table.
 			AddCodeToPatternPart(code, "loopbody_after");
-			if (!checkAssertOrAssume(code)) {
-				/*
-				 * if(code instanceof Codes.LoopEnd){ //Get the loop end to see
-				 * if the
-				 * if(((Codes.LoopEnd)code).label.equals(this.loop_label)){
-				 * break; } }
-				 */
-			}
 		}
 		return index;
 	}

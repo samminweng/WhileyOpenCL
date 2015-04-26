@@ -170,7 +170,7 @@ public class Translator implements Builder{
 			String func_name = functionOrMethod.name();			
 			ArrayList<Type> params = functionOrMethod.type().params();
 			//Begin the function
-			System.out.println("\n----------------Start of "+func_name+" function----------------");
+			System.out.println("----------------Start of "+func_name+" function----------------");
 			List<Code> code_blk = TranslatorHelper.getCodeBlock(functionOrMethod, config);	
 			PatternMatcher matcher = new PatternMatcher(config);
 			Pattern pattern = matcher.analyzePattern(params, code_blk);
@@ -180,7 +180,7 @@ public class Translator implements Builder{
 			//		config,
 			//		functionOrMethod.type().params(), 
 			//		TranslatorHelper.getCodeBlock(functionOrMethod));
-			System.out.println("\n----------------End of "+func_name+" function----------------\n");
+			System.out.println("----------------End of "+func_name+" function----------------");
 		}		
 	}
 

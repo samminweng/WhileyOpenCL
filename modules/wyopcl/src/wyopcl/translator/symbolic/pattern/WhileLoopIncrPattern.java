@@ -24,10 +24,10 @@ public class WhileLoopIncrPattern extends WhileLoopPattern implements Transforma
 	 */
 	public WhileLoopIncrPattern(Configuration config, List<Type> params, List<Code> blk) {
 		super(config, params, blk);
-		this.pattern_name = "WhileLoopIncrPattern";
 		//Get the increment and check if it is null.
 		if(this.incr != null){
-			this.line = this.loop_exit(blk, this.line);		
+			this.line = this.loop_exit(blk, this.line);
+			this.pattern_name = "WhileLoopIncrPattern";
 			this.isNil = false;			
 		}
 	}

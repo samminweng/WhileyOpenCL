@@ -48,7 +48,7 @@ public class ForAllPattern extends LoopPattern {
 			index++;
 			//Create the expression and put it into the table.
 			AddCodeToPatternPart(code, "loop_body");
-			if(!checkAssertOrAssume(code)){
+			if(!isInvariant(code)){
 				if(code instanceof Codes.LoopEnd){
 					//Get the loop end to see if the 
 					if(((Codes.LoopEnd)code).label.equals(this.loop_label)){
@@ -74,7 +74,7 @@ public class ForAllPattern extends LoopPattern {
 		while(index<code_blk.size()){
 			Code code = code_blk.get(index);
 			++index;
-			if(!checkAssertOrAssume(code) && code instanceof Codes.ForAll){
+			if(!isInvariant(code) && code instanceof Codes.ForAll){
 				AddCodeToPatternPart(code, "loop_header");
 				ForAll forall = (ForAll)code;
 				rangeOp = (RangeExpr) factory.getExpr(prefix+forall.sourceOperand);

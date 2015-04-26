@@ -19,10 +19,11 @@ import wyopcl.translator.Configuration;
 public final class WhileLoopDecrPattern extends WhileLoopPattern{
 	public WhileLoopDecrPattern(Configuration config, List<Type> params, List<Code> blk) {
 		super(config, params, blk);
-		this.pattern_name = "WhileLoopDecrPattern";
+		
 		//Get the decrement
 		if(this.decr != null){
 			this.line = this.loop_exit(blk, this.line);
+			this.pattern_name = "WhileLoopDecrPattern";
 			this.isNil = false;	
 		}
 	}
@@ -32,7 +33,7 @@ public final class WhileLoopDecrPattern extends WhileLoopPattern{
 	@Override
 	public String toString() {
 		String result = super.toString();		
-		result += "\nwhile_loop && loop_var("+loop_var+") && decr("+loop_var+", "+decr+")"
+		result += "\n" + pattern_name + "&& loop_var("+loop_var+") && decr("+loop_var+", "+decr+")"
 				+ " && init("+loop_var+", "+init+") &&  while_cond("+loop_var+", "+comparatorOp+", "+loop_bound+")"
 				+ "\n=>loop_iters("+loop_var+", " + getNumberOfIterations()+")";
 		return result;

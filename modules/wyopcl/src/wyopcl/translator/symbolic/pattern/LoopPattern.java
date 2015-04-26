@@ -67,7 +67,7 @@ public abstract class LoopPattern extends Pattern {
 		for (; index < code_blk.size(); index++) {
 			Code code = code_blk.get(index);
 			// Check if this code assigns the value to the loop variable.
-			if (!checkAssertOrAssume(code)) {
+			if (!isInvariant(code)) {
 				// check if the loop variable is used in the assignment for
 				// while loop pattern
 				if (code instanceof Codes.Assign && loop_var.equals(prefix + ((Codes.Assign) code).target())) {
@@ -120,7 +120,7 @@ public abstract class LoopPattern extends Pattern {
 			Code code = blk.get(index);
 			String part = "init_after";
 			// Search for loop bytecode
-			if (!checkAssertOrAssume(code)) {
+			if (!isInvariant(code)) {
 				if (code instanceof Codes.Loop) {
 					break;
 				}
@@ -140,7 +140,7 @@ public abstract class LoopPattern extends Pattern {
 	protected String loop_var(List<Code> blk) {
 		for (int index = 0; index < blk.size(); index++) {
 			Code code = blk.get(index);
-			if (!checkAssertOrAssume(code)) {
+			if (!isInvariant(code)) {
 				if (code instanceof Codes.Loop) {
 					// Get the code block
 					Codes.Loop loop = (Codes.Loop) code;
@@ -168,7 +168,7 @@ public abstract class LoopPattern extends Pattern {
 		while (index < blk.size()) {
 			Code code = blk.get(index);
 			index++;
-			if (!checkAssertOrAssume(code)) {
+			if (!isInvariant(code)) {
 				if (code instanceof Codes.Return) {
 					AddCodeToPatternPart(code, "return");
 				} else {

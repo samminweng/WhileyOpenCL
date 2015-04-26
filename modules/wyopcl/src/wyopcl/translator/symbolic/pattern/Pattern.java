@@ -125,7 +125,7 @@ public class Pattern extends Object {
 	 * @param code the code.
 	 * @return true if the code belongs to the assertion or assumption. Otherwise, return false.
 	 */
-	protected boolean checkAssertOrAssume(Code code){
+	protected boolean isInvariant(Code code){
 		if(code instanceof Codes.Invariant){
 			return true;
 		}

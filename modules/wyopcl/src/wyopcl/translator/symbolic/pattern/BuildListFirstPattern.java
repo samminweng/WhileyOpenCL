@@ -58,7 +58,7 @@ public final class BuildListFirstPattern extends WhileLoopPattern {
 				AddCodeToPatternPart(code, "list_init");
 				index++;
 				//Search for loop bytecode
-				if(!checkAssertOrAssume(code)){
+				if(!isInvariant(code)){
 					//Search for the initial assignment for the array and array size.
 					if(code instanceof Codes.Assign){
 						Codes.Assign assign = (Codes.Assign)code;
@@ -77,7 +77,7 @@ public final class BuildListFirstPattern extends WhileLoopPattern {
 				index++;
 				AddCodeToPatternPart(code, "list_size_init");
 				//Search for the assignment of 'list_size' variable. 
-				if(!checkAssertOrAssume(code)){
+				if(!isInvariant(code)){
 					//Search for the initial assignment for the array and array size.
 					if(code instanceof Codes.Assign){
 						Codes.Assign assign = (Codes.Assign)code;
@@ -101,7 +101,7 @@ public final class BuildListFirstPattern extends WhileLoopPattern {
 		while(index<blk.size()){
 			Code code = blk.get(index);
 			index++;			
-			if(!checkAssertOrAssume(code)){
+			if(!isInvariant(code)){
 				if(code instanceof Codes.Update){
 					Codes.Update update = (Codes.Update)code;
 					//Check if the target is the list
@@ -133,7 +133,7 @@ public final class BuildListFirstPattern extends WhileLoopPattern {
 			index++;
 			//Create the expression and put it into the table.
 			AddCodeToPatternPart(code, "list_size_update");
-			if(!checkAssertOrAssume(code)){
+			if(!isInvariant(code)){
 				if(code instanceof Codes.Assign){
 					Codes.Assign assign = (Codes.Assign)code;
 					//Check if the target is the list_size
@@ -153,7 +153,7 @@ public final class BuildListFirstPattern extends WhileLoopPattern {
 		while(index<blk.size()){
 			Code code = blk.get(index);
 			index++;			
-			if(checkAssertOrAssume(code)){
+			if(isInvariant(code)){
 				//Create the expression and put it into the table.
 				AddCodeToPatternPart(code, "list_assertion");
 				if(code instanceof Codes.If){
