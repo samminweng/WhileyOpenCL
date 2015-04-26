@@ -1,0 +1,67 @@
+----------------Start of while_incr function----------------
+The original pattern:
+{
+init_before:
+	const %4 = 0 : int
+	assign %3 = %4  : int
+init:
+	assign %1 = %3  : int
+init_after:
+	const %6 = 0 : int
+	assign %5 = %6  : int
+	assign %2 = %5  : int
+loop_header:
+	loop (%1, %2, %7, %8, %9, %10)
+	invariant
+	ifge %1, %0 goto blklab1 : int
+loopbody_before:
+	assign %2 = %8  : int
+	const %9 = 1 : int
+loopbody_update:
+	add %10 = %1, %9 : int
+	assign %1 = %10  : int
+loop_exit:
+	.blklab1
+return:
+	return %2 : int
+	return
+}
+WhileLoopIncrPattern && loop_var(%1) && incr(%1, 1) && init(%1, 0) &&  while_cond(%1, <, 0 + %0)
+=>loop_iters(%1, 0 + %0)
+----------------End of while_incr function----------------
+----------------Start of while_decr function----------------
+The original pattern:
+{
+init_before:
+	assign %3 = %0  : int
+init:
+	assign %1 = %3  : int
+init_after:
+	const %5 = 0 : int
+	assign %4 = %5  : int
+	assign %2 = %4  : int
+loop_header:
+	loop (%1, %2, %6, %7, %8, %9)
+	invariant
+	const %6 = 0 : int
+	iflt %1, %6 goto blklab4 : int
+loopbody_before:
+	assign %2 = %7  : int
+	const %8 = 1 : int
+loopbody_update:
+	sub %9 = %1, %8 : int
+	assign %1 = %9  : int
+loop_exit:
+	.blklab4
+return:
+	return %2 : int
+	return
+}
+WhileLoopDecrPattern&& loop_var(%1) && decr(%1, 1) && init(%1, 0 + %0) &&  while_cond(%1, >=, 0)
+=>loop_iters(%1, 1 + %0)
+----------------End of while_decr function----------------
+----------------Start of main function----------------
+The original pattern:
+Undecidable Pattern
+----------------End of main function----------------
+Pattern matching completed.
