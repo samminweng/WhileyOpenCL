@@ -8,8 +8,7 @@ import org.junit.Test;
 
 public class BoundAnalysisTestCase {
 	private BaseTestUtil util;
-	final String valid_path = System.getProperty("user.dir")+ File.separator + "tests" + File.separator + "bounds"
-						+ File.separator+"valid"+ File.separator;
+	final String valid_path = System.getProperty("user.dir")+ File.separator + "tests" + File.separator + "bounds" + File.separator;
 
 	@Before
 	public void setUp() throws Exception {
@@ -24,37 +23,37 @@ public class BoundAnalysisTestCase {
 	
 	
 	@Test
-	public void test_Loop_Naive() {
-		util.execBoundAnalysis(valid_path, "Loop", "-bound", "naive");
+	public void test_WhileLoop_Naive() {
+		util.execBoundAnalysis(valid_path, "WhileLoop", "bound", "naive");
 	}
 	
 	@Test
-	public void test_Loop_Gradual() {
-		util.execBoundAnalysis(valid_path, "Loop", "-bound", "gradual");
+	public void test_WhileLoop_Gradual() {
+		util.execBoundAnalysis(valid_path, "WhileLoop", "bound", "gradual");
 	}	
 	
 
 	@Test
 	public void test_IfElse_Valid_2_Naive() {
-		util.execBoundAnalysis(valid_path, "IfElse_Valid_2", "-bound", "naive");
+		util.execBoundAnalysis(valid_path, "IfElse_Valid_2", "bound", "naive");
 	}
 	
 	@Test
 	public void test_IfElse_Valid_2_Gradual() {
-		util.execBoundAnalysis(valid_path, "IfElse_Valid_2", "-bound", "gradual");
+		util.execBoundAnalysis(valid_path, "IfElse_Valid_2", "bound", "gradual");
 	}
 	
-	@Test
+	//@Test
 	public void test_While_Valid_1_Naive() {
 		util.execBoundAnalysis(valid_path, "While_Valid_1", "-bound", "naive", "-pattern");
 	}
 	
-	@Test
+	//@Test
 	public void test_While_Valid_1_Gradual() {
 		util.execBoundAnalysis(valid_path, "While_Valid_1", "-bound", "gradual", "-pattern");
 	}
 	
-	@Test
+	/*@Test
 	public void test_BoolList_Valid_2_Naive() {
 		util.execBoundAnalysis(valid_path, "BoolList_Valid_2", "-bound", "naive");
 	}
@@ -62,6 +61,6 @@ public class BoundAnalysisTestCase {
 	@Test
 	public void test_BoolList_Valid_2_Gradual() {
 		util.execBoundAnalysis(valid_path, "BoolList_Valid_2", "-bound", "gradual");
-	}
+	}*/
 	
 }

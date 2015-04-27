@@ -5,16 +5,11 @@ import static org.junit.Assert.assertEquals;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Iterator;
 
 public final class BaseTestUtil {
-	private final String version = "v0.3.31";
+	private final String version = "v0.3.33";
 	// user.dir is the current directory.
 	private final String workspace_path = System.getProperty("user.dir")+ File.separator;
 	private final String lib_path = workspace_path + "lib"+ File.separator;
@@ -47,11 +42,11 @@ public final class BaseTestUtil {
 			// Set the working directory.
 			switch(options.length){
 			case 2:
-				pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, options[0], options[1], file.getName());
+				pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-"+options[0], options[1], file.getName());
 				break;
 			case 3:
 				sysout_file_name += "."+options[2];
-				pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, options[0], options[1], options[2], file.getName());
+				pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-"+options[0], options[1], options[2], file.getName());
 				break;
 			}			
 			sysout_file_name += ".sysout"; 
