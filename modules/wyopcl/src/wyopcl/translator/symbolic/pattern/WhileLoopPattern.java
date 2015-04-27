@@ -10,7 +10,6 @@ import wyil.lang.Codes.Loop;
 import wyil.lang.Type;
 import wyil.lang.Codes.Comparator;
 import wyopcl.translator.Configuration;
-import wyopcl.translator.symbolic.pattern.expression.Expr;
 import wyopcl.translator.symbolic.pattern.expression.LinearExpr;
 
 /**
@@ -23,7 +22,6 @@ import wyopcl.translator.symbolic.pattern.expression.LinearExpr;
  */
 public abstract class WhileLoopPattern extends LoopPattern {
 	// Expressions related to the while-loop condition.
-
 	protected BigInteger decr;
 	protected BigInteger incr;
 
@@ -42,15 +40,12 @@ public abstract class WhileLoopPattern extends LoopPattern {
 			// Split the code before loop byte into three parts: init_before,
 			// init, init_after.
 			this.line = this.init(blk, this.loop_var, this.line);
-			// Get the expression for loop variable.
-			this.init = factory.rewriteExpr(factory.getExpr(loop_var));
 			// Check if the loop pattern is constructed successfully.
 			if (this.init != null) {
 				this.line = while_cond((Loop) blk.get(this.line));
 				if (this.loop_bound != null) {
 					// Simplify the expressions.
 					this.loop_bound = factory.rewriteExpr(this.loop_bound);
-
 				}
 			}
 		}
@@ -126,6 +121,9 @@ public abstract class WhileLoopPattern extends LoopPattern {
 			AddCodeToPatternPart(code, "init_after");
 		}
 
+		// Get the expression for loop variable.
+		this.init = factory.rewriteExpr(factory.getExpr(loop_var));
+
 		return index;
 	}
 
@@ -177,90 +175,6 @@ public abstract class WhileLoopPattern extends LoopPattern {
 		return before_code;
 	}
 
-	/**
-	 * Searches for the loop_update and put the searched code into
-	 * 'loopbody_before'.
-	 * 
-	 * @param blk
-	 *            the list of code
-	 * @param line
-	 *            the starting line number.
-	 */
-	protected int loopbody_before(List<Code> blk, int line) {
-		int index = line;
-		// Put the code in 'loopbody_before' part.
-		for (; index < blk.size(); index++) {
-			Code code = blk.get(index);
-			// Search for the binOp that subtracts the loop variable with a
-			// constant.
-			if (code instanceof Codes.BinaryOperator) {
-				Codes.BinaryOperator binOp = (Codes.BinaryOperator) code;
-				// Search for the decrement
-				if (loop_var.equals(prefix + binOp.operand(0))) {
-					return index;
-				}
-			} else {
-				AddCodeToPatternPart(code, "loopbody_before");
-			}
-		}
-
-		return index;
-	}
-
-	/**
-	 * Search for the code of re-assigning values to the loop variable and put
-	 * the prior code to the 'loopbody_update' part.
-	 * 
-	 * @param blk
-	 *            the list of code.
-	 * @param loop_var
-	 *            the loop variable.
-	 * @param line
-	 *            the starting line number
-	 * @return the ending line number.
-	 */
-	protected int loopbody_update(List<Code> blk, int line) {
-		int index = line;
-		for (; index < blk.size(); index++) {
-			Code code = blk.get(index);
-			AddCodeToPatternPart(code, "loopbody_update");
-			// Search for the decrement that assigns the value to the loop
-			// var.
-			if (code instanceof Codes.Assign) {
-				// Check if the assignment bytecode is to over-write the
-				// value of loop variable.
-				Codes.Assign assign = (Codes.Assign) code;
-				// Check if the target is the loop variable.
-				if ((prefix + assign.target()).equals(loop_var)) {
-					// Get the increment and decrement.
-					incr = factory.extractIncrement(assign, loop_var);
-					decr = factory.extractDecrement(assign, loop_var);
-					// Increment the index
-					++index;
-					break;
-				}
-			}
-
-		}
-
-		return index;
-	}
-
-	/**
-	 * Search for loop end and put the code to 'loopbody_after' part.
-	 * 
-	 * @param blk
-	 * @param line
-	 */
-	protected int loopbody_after(List<Code> blk, int line) {
-		int index = line;
-		for (; index < blk.size(); index++) {
-			Code code = blk.get(index);
-			// Create the expression and put it into the table.
-			AddCodeToPatternPart(code, "loopbody_after");
-		}
-		return index;
-	}
 
 	/**
 	 * Find the bytecode of loop blk and loop condition and put them into the
@@ -315,9 +229,7 @@ public abstract class WhileLoopPattern extends LoopPattern {
 			}
 		}
 
-		index = this.loopbody_before(loop_blk, index);
-		index = this.loopbody_update(loop_blk, index);
-		index = this.loopbody_after(loop_blk, index);
+		loopbody(loop_blk, index);
 
 		return ++this.line;
 	}
@@ -353,6 +265,53 @@ public abstract class WhileLoopPattern extends LoopPattern {
 			numberOfIterations = result;
 		}
 		return numberOfIterations;
+	}
+
+	@Override
+	protected void loopbody(List<Code> loop_blk, int line) {
+		int index = line;
+		// Put the code in 'loopbody_before' part.
+		for (; index < loop_blk.size(); index++) {
+			Code code = loop_blk.get(index);
+			// Search for the binOp that subtracts the loop variable with a
+			// constant.
+			if (code instanceof Codes.BinaryOperator) {
+				Codes.BinaryOperator binOp = (Codes.BinaryOperator) code;
+				// Search for the decrement
+				if (loop_var.equals(prefix + binOp.operand(0))) {
+					break;
+				}
+			} else {
+				AddCodeToPatternPart(code, "loopbody_before");
+			}
+		}
+		//Search for the code of re-assigning values to the loop variable and put the prior code to the 'loopbody_update' part.
+		for (; index < loop_blk.size(); index++) {
+			Code code = loop_blk.get(index);
+			AddCodeToPatternPart(code, "loopbody_update");
+			// Search for the decrement that assigns the value to the loop
+			// var.
+			if (code instanceof Codes.Assign) {
+				// Check if the assignment bytecode is to over-write the
+				// value of loop variable.
+				Codes.Assign assign = (Codes.Assign) code;
+				// Check if the target is the loop variable.
+				if ((prefix + assign.target()).equals(loop_var)) {
+					// Get the increment and decrement.
+					incr = factory.extractIncrement(assign, loop_var);
+					decr = factory.extractDecrement(assign, loop_var);
+					break;
+				}
+			}
+		}
+
+		//Put the remaining code to 'loopbody_after' part.
+		for (; index < loop_blk.size(); index++) {
+			Code code = loop_blk.get(index);
+			// Create the expression and put it into the table.
+			AddCodeToPatternPart(code, "loopbody_after");
+		}
+
 	}
 
 }

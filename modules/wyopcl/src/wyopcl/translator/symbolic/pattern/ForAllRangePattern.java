@@ -87,9 +87,8 @@ public class ForAllRangePattern extends LoopPattern {
 			RangeExpr range = (RangeExpr) factory.getExpr(prefix + forall.sourceOperand);
 			if (range != null) {
 				this.loop_bound = range.getUpper();
-
 				// Put the list of byte-code of a forall
-				loop_body(forall.bytecodes());
+				this.loopbody(forall.bytecodes(), 0);
 			}
 		}
 		return ++line;
@@ -104,9 +103,11 @@ public class ForAllRangePattern extends LoopPattern {
 	 * @param line
 	 * @return
 	 */
-	private void loop_body(List<Code> code_blk) {
+	@Override
+	protected void loopbody(List<Code> code_blk, int line) {
+		int index = line;
 		// Iterate the byte-code in a loop.
-		for (int index = 0; index < code_blk.size(); index++) {
+		for (;index < code_blk.size(); index++) {
 			Code code = code_blk.get(index);
 			// Add the code to 'loop_body' part.
 			AddCodeToPatternPart(code, "loop_body");

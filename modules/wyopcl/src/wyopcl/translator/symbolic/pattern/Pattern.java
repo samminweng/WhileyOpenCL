@@ -18,7 +18,8 @@ import wyopcl.translator.symbolic.pattern.expression.ExprFactory;
  *
  */
 public class Pattern extends Object {
-	public final String prefix = "%";
+	protected final String prefix = "%";
+	protected Configuration config;
 	public String pattern_name;//The pattern name
 	public boolean isNil;//The flag indicates whether this pattern is matched with any given pattern (True: not matched False: Matched).
 
@@ -40,6 +41,7 @@ public class Pattern extends Object {
 	 */
 	private Pattern(Configuration config, List<Type> params){
 		this();
+		this.config = config;
 		this.factory = new ExprFactory(config);//Create an expression factory to record all the extracted expressions.
 		//Add the input parameters to the expression table.
 		this.params = params;
@@ -116,7 +118,10 @@ public class Pattern extends Object {
 		factory.putExpr(code);
 		//Create the expression and put it into the table.
 		List<Code> blk = getPartByName(part_name);
-		blk.add(code);	
+		blk.add(code);
+		if(config.isVerbose()){
+			System.out.println("Part:"+part_name+" Code:"+code);
+		}
 	}
 
 

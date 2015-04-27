@@ -1,8 +1,5 @@
 package wyopcl.translator.symbolic.pattern;
-
-import java.math.BigInteger;
 import java.util.List;
-
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
@@ -53,6 +50,7 @@ public abstract class LoopPattern extends Pattern {
 	 * @return the next line number after initial value assignment
 	 */
 	protected abstract int init(List<Code> code_blk, String var, int line);
+	
 
 	/**
 	 * Extract the list variable from the list of code by searching for the
@@ -61,7 +59,14 @@ public abstract class LoopPattern extends Pattern {
 	 * @return the variable (string). If not found, return null.
 	 */
 	protected abstract String loop_var(List<Code> blk);
-
+	
+	/**
+	 * Split the list of byte-code in a loop body.
+	 * @param loop_blk the code block inside a loop
+	 * @return
+	 */
+	protected abstract void loopbody(List<Code> loop_blk, int line);
+	
 	/**
 	 * Adds the code to the loop exit
 	 * 
