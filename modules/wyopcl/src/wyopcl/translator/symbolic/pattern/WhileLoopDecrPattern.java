@@ -19,7 +19,6 @@ import wyopcl.translator.Configuration;
 public final class WhileLoopDecrPattern extends WhileLoopPattern{
 	public WhileLoopDecrPattern(Configuration config, List<Type> params, List<Code> blk) {
 		super(config, params, blk);
-		
 		//Get the decrement
 		if(this.decr != null){
 			this.line = this.loop_exit(blk, this.line);

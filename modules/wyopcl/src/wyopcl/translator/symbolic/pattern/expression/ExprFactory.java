@@ -70,8 +70,7 @@ public class ExprFactory {
 			}else if(constant.constant instanceof Constant.List){
 				expr = new Expr(prefix+((Codes.Const)code).target(), code);
 			}
-		}else if(code instanceof Codes.BinaryOperator){
-			
+		}else if(code instanceof Codes.BinaryOperator){			
 			Codes.BinaryOperator binOp = (Codes.BinaryOperator)code;
 			switch(binOp.kind){
 			case ADD:

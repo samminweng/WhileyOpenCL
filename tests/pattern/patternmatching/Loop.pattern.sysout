@@ -60,6 +60,30 @@ return:
 WhileLoopDecrPattern&& loop_var(%1) && decr(%1, 1) && init(%1, 0 + %0) &&  while_cond(%1, >=, 0)
 =>loop_iters(%1, 1 + %0)
 ----------------End of while_decr function----------------
+----------------Start of forall_range function----------------
+The original pattern:
+{
+init_before:
+	const %4 = 0 : int
+	assign %3 = %4  : int
+	assign %1 = %3  : int
+	const %5 = 0 : int
+init:
+	range %6 = %5, %0 : [int]
+loop_header:
+	forall %2 in %6 (%1, %7) : [int]
+loop_body:
+	add %7 = %1, %2 : int
+	assign %1 = %7  : int
+loop_exit:
+	.blklab7
+return:
+	return %1 : int
+	return
+}
+ForAllRange %2 in the range %6 from 0 to 0 + %0
+=>loop_iters(%2, 0 + %0)
+----------------End of forall_range function----------------
 ----------------Start of main function----------------
 The original pattern:
 Undecidable Pattern

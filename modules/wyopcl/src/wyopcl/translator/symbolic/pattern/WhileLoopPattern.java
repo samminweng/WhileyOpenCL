@@ -23,60 +23,107 @@ import wyopcl.translator.symbolic.pattern.expression.LinearExpr;
  */
 public abstract class WhileLoopPattern extends LoopPattern {
 	// Expressions related to the while-loop condition.
-	public String comparatorOp;
-	public Expr loop_bound;
-	public BigInteger decr;
-	public BigInteger incr;
 
+	protected BigInteger decr;
+	protected BigInteger incr;
+
+	/**
+	 * Constructor of while loop pattern.
+	 * 
+	 * @param config
+	 * @param params
+	 * @param blk
+	 */
 	public WhileLoopPattern(Configuration config, List<Type> params, List<Code> blk) {
 		super(config, params, blk);
-		// Check if the loop pattern is constructed successfully.
-		if (this.init != null) {
-			this.line = while_cond((Loop) blk.get(this.line));
-			// this.line = while_cond((Loop) blk.get(this.line), this.loop_var,
-			// this.line);
-			if (this.loop_bound != null) {
-				// Simplify the expressions.
-				this.loop_bound = factory.rewriteExpr(this.loop_bound);
+		// If the list of code contains the loop variable, then proceed the
+		// pattern matching.
+		if (loop_var != null) {
+			// Split the code before loop byte into three parts: init_before,
+			// init, init_after.
+			this.line = this.init(blk, this.loop_var, this.line);
+			// Get the expression for loop variable.
+			this.init = factory.rewriteExpr(factory.getExpr(loop_var));
+			// Check if the loop pattern is constructed successfully.
+			if (this.init != null) {
+				this.line = while_cond((Loop) blk.get(this.line));
+				if (this.loop_bound != null) {
+					// Simplify the expressions.
+					this.loop_bound = factory.rewriteExpr(this.loop_bound);
 
+				}
 			}
 		}
+
 	}
 
 	/**
-	 * Search for the code of re-assigning values to the loop variable and put
-	 * the prior code to the 'loopbody_update' part.
-	 * 
-	 * @param blk
-	 *            the list of code.
-	 * @param loop_var
-	 *            the loop variable.
-	 * @param line
-	 *            the starting line number
-	 * @return the ending line number.
+	 * Extract the list variable from the list of code by searching for the
+	 * 'Codes.Loop' bytecode
+	 *
+	 * @return the variable (string). If not found, return null.
 	 */
-	private int loopbody_update(List<Code> blk, int line) {
-		int index = line;
-		for (; index < blk.size(); index++) {
+	protected String loop_var(List<Code> blk) {
+		for (int index = 0; index < blk.size(); index++) {
 			Code code = blk.get(index);
-			AddCodeToPatternPart(code, "loopbody_update");
-			// Search for the decrement that assigns the value to the loop
-			// var.
-			if (code instanceof Codes.Assign) {
-				// Check if the assignment bytecode is to over-write the
-				// value of loop variable.
-				Codes.Assign assign = (Codes.Assign) code;
-				// Check if the target is the loop variable.
-				if ((prefix + assign.target()).equals(loop_var)) {
-					// Get the increment and decrement.
-					incr = factory.extractIncrement(assign, loop_var);
-					decr = factory.extractDecrement(assign, loop_var);
-					//Increment the index
-					++index;
+			if (code instanceof Codes.ForAll) {
+				// Forall loop
+				Codes.ForAll forall = (Codes.ForAll) code;
+				// The loop variable is the index operand
+				return prefix + forall.indexOperand;
+			} else if (code instanceof Codes.Loop) {
+				// Check if the list of bytecode contains a loop bytecode.
+				// While loop
+				Codes.Loop loop = (Codes.Loop) code;
+				// Iterate the modified operands. By default, the loop
+				// variable is the first modified operands.
+				if (loop.modifiedOperands.length >= 1) {
+					return prefix + loop.modifiedOperands[0];
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Get the expression that assigns the initial value the loop variable and
+	 * split the list of code in 'init_pre',' 'init' and 'init_after' parts.
+	 * 
+	 * @param code_blk
+	 *            the list of code.
+	 * @param var
+	 *            the variable that is updated by the initial assignment.
+	 * @param line
+	 *            the starting line of code
+	 * @return the next line number after initial value assignment
+	 */
+	protected int init(List<Code> code_blk, String var, int line) {
+		// Search for the initial value assignment.
+		int index = line;
+		for (; index < code_blk.size(); index++) {
+			Code code = code_blk.get(index);
+			// Check if this code assigns the value to the loop variable.
+			if (!isInvariant(code)) {
+				// check if the loop variable is used in the assignment for
+				// while loop pattern
+				if (code instanceof Codes.Assign && var.equals(prefix + ((Codes.Assign) code).target())) {
+					// Add the code to the 'init' part
+					AddCodeToPatternPart(code, "init");
 					break;
 				}
 			}
+			// Otherwise, add the code to the 'init_before' part
+			AddCodeToPatternPart(code, "init_before");
+		}
 
+		// Search for the loop condition
+		for (index += 1; index < code_blk.size(); index++) {
+			Code code = code_blk.get(index);
+			// Search for loop bytecode
+			if (!isInvariant(code) && (code instanceof Codes.Loop || code instanceof Codes.ForAll)) {
+				break;
+			}
+			AddCodeToPatternPart(code, "init_after");
 		}
 
 		return index;
@@ -123,12 +170,96 @@ public abstract class WhileLoopPattern extends LoopPattern {
 
 			if (new_op != null) {
 				// The loop var is on the right.
-				return Codes.If(before_code.type, before_code.rightOperand, before_code.leftOperand, new_op,
-						before_code.target);
+				return Codes.If(before_code.type, before_code.rightOperand, before_code.leftOperand, new_op, before_code.target);
 			}
 		}
 
 		return before_code;
+	}
+
+	/**
+	 * Searches for the loop_update and put the searched code into
+	 * 'loopbody_before'.
+	 * 
+	 * @param blk
+	 *            the list of code
+	 * @param line
+	 *            the starting line number.
+	 */
+	protected int loopbody_before(List<Code> blk, int line) {
+		int index = line;
+		// Put the code in 'loopbody_before' part.
+		for (; index < blk.size(); index++) {
+			Code code = blk.get(index);
+			// Search for the binOp that subtracts the loop variable with a
+			// constant.
+			if (code instanceof Codes.BinaryOperator) {
+				Codes.BinaryOperator binOp = (Codes.BinaryOperator) code;
+				// Search for the decrement
+				if (loop_var.equals(prefix + binOp.operand(0))) {
+					return index;
+				}
+			} else {
+				AddCodeToPatternPart(code, "loopbody_before");
+			}
+		}
+
+		return index;
+	}
+
+	/**
+	 * Search for the code of re-assigning values to the loop variable and put
+	 * the prior code to the 'loopbody_update' part.
+	 * 
+	 * @param blk
+	 *            the list of code.
+	 * @param loop_var
+	 *            the loop variable.
+	 * @param line
+	 *            the starting line number
+	 * @return the ending line number.
+	 */
+	protected int loopbody_update(List<Code> blk, int line) {
+		int index = line;
+		for (; index < blk.size(); index++) {
+			Code code = blk.get(index);
+			AddCodeToPatternPart(code, "loopbody_update");
+			// Search for the decrement that assigns the value to the loop
+			// var.
+			if (code instanceof Codes.Assign) {
+				// Check if the assignment bytecode is to over-write the
+				// value of loop variable.
+				Codes.Assign assign = (Codes.Assign) code;
+				// Check if the target is the loop variable.
+				if ((prefix + assign.target()).equals(loop_var)) {
+					// Get the increment and decrement.
+					incr = factory.extractIncrement(assign, loop_var);
+					decr = factory.extractDecrement(assign, loop_var);
+					// Increment the index
+					++index;
+					break;
+				}
+			}
+
+		}
+
+		return index;
+	}
+
+	/**
+	 * Search for loop end and put the code to 'loopbody_after' part.
+	 * 
+	 * @param blk
+	 * @param line
+	 */
+	protected int loopbody_after(List<Code> blk, int line) {
+		int index = line;
+		for (; index < blk.size(); index++) {
+			Code code = blk.get(index);
+			// Create the expression and put it into the table.
+			AddCodeToPatternPart(code, "loopbody_after");
+		}
+		return index;
 	}
 
 	/**
@@ -180,7 +311,7 @@ public abstract class WhileLoopPattern extends LoopPattern {
 				}
 			} else {
 				// Add the code to loop header
-				AddCodeToPatternPart(code, "loop_header");				
+				AddCodeToPatternPart(code, "loop_header");
 			}
 		}
 
@@ -192,53 +323,12 @@ public abstract class WhileLoopPattern extends LoopPattern {
 	}
 
 	/**
-	 * Searches for the loop_update and put the searched code into
-	 * 'loopbody_before'.
+	 * Infer the number of iterations.
 	 * 
-	 * @param blk
-	 *            the list of code
-	 * @param line
-	 *            the starting line number.
+	 * @return
 	 */
-	private int loopbody_before(List<Code> blk, int line) {
-		int index = line;
-		// Put the code in 'loopbody_before' part.
-		for (; index < blk.size(); index++) {
-			Code code = blk.get(index);
-			// Search for the binOp that subtracts the loop variable with a
-			// constant.
-			if (code instanceof Codes.BinaryOperator) {
-				Codes.BinaryOperator binOp = (Codes.BinaryOperator) code;
-				// Search for the decrement
-				if (loop_var.equals(prefix + binOp.operand(0))) {
-					return index;
-				}
-			} else {
-				AddCodeToPatternPart(code, "loopbody_before");
-			}
-		}
-
-		return index;
-	}
-
-	/**
-	 * Search for loop end and put the code to 'loopbody_after' part.
-	 * 
-	 * @param blk
-	 * @param line
-	 */
-	private int loopbody_after(List<Code> blk, int line) {
-		int index = line;
-		for (;index < blk.size();index++) {
-			Code code = blk.get(index);
-			// Create the expression and put it into the table.
-			AddCodeToPatternPart(code, "loopbody_after");
-		}
-		return index;
-	}
-
 	@Override
-	public LinearExpr getNumberOfIterations() {
+	protected LinearExpr getNumberOfIterations() {
 		if (numberOfIterations == null) {
 			LinearExpr result = null;
 			switch (comparatorOp) {
