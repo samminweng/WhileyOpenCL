@@ -5,8 +5,6 @@ import java.util.List;
 import wyil.lang.Code;
 import wyil.lang.Type;
 import wyopcl.translator.Configuration;
-import wyopcl.translator.symbolic.pattern.transform.Transformable;
-import wyopcl.translator.symbolic.pattern.transform.Transformer;
 /**
  * The class that implemented the while-loop patterns, as follows:
  * <ul>
@@ -16,7 +14,8 @@ import wyopcl.translator.symbolic.pattern.transform.Transformer;
  * @author Min-Hsien Weng
  *
  */
-public class WhileLoopIncrPattern extends WhileLoopPattern implements Transformable{
+//public class WhileLoopIncrPattern extends WhileLoopPattern implements Transformable{
+public class WhileLoopIncrPattern extends WhileLoopPattern{
 	/**
 	 * Constructor	  
 	 * @param params the list of parameter types
@@ -42,9 +41,9 @@ public class WhileLoopIncrPattern extends WhileLoopPattern implements Transforma
 	}
 
 
-	@Override
+	/*@Override
 	public List<Code> accept(Transformer transformer) {
 		return transformer.transform(this);
-	}
+	}*/
 	
 }

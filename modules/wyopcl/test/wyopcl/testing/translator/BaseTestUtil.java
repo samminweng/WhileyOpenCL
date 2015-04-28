@@ -4,7 +4,9 @@ import static org.junit.Assert.assertEquals;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
@@ -22,19 +24,53 @@ public final class BaseTestUtil {
 			+ lib_path + "wyil-" + version + ".jar" + File.pathSeparator
 			+ lib_path + "wyc-" + version + ".jar" + File.pathSeparator;
 	final String runtime = lib_path + "wyrt-" + version + ".jar";	
-	
-	private ProcessBuilder pb;
-	private Process p;
-
 	public BaseTestUtil() {
-
+		
 	}
+	
+	/**
+	 * Execute the wyopcl with the given option and check if the executed result match with the expected output file. 
+	 * @param pb the process builder
+	 * @param sysout
+	 * @throws IOException
+	 */
+	private void assertOutput(ProcessBuilder pb, String sysout) throws IOException{
+		Process p = pb.start();
+		//Execute the process and read the output results as a buffered reader.
+		BufferedReader executed_reader = new BufferedReader(new InputStreamReader(p.getInputStream(), Charset.forName("UTF-8")));
+		//Read the expected output file.
+		FileReader file_reader = new FileReader(sysout);
+		BufferedReader expected_reader = new BufferedReader(file_reader);
+		String output = null;
+		while ((output = executed_reader.readLine()) != null) {
+			String expected = expected_reader.readLine();
+			if(expected != null){
+				assertEquals(expected, output);
+			}				
+		}
+		//Nullify the file input/output objects.	
+		expected_reader.close();
+		file_reader.close();
+		file_reader = null;
+		expected_reader = null;
+		executed_reader.close();
+		executed_reader =null;
+		//Terminate the process.
+		while (p != null) {
+			p.destroy();
+			p = null;
+		}
+		
+	}
+	
+	
 	/**
 	 * Analyze the bounds of a Whiley program using naive or gradual widening strategy.
 	 * @param path_whiley
 	 * @param widen
 	 */
 	public void execBoundAnalysis(String path, String filename, String... options) {
+		ProcessBuilder pb = null;		
 		File file = new File(path+filename+ ".whiley");
 		try {	
 			
@@ -49,48 +85,50 @@ public final class BaseTestUtil {
 				pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-"+options[0], options[1], options[2], file.getName());
 				break;
 			}			
-			sysout_file_name += ".sysout"; 
-			
+			sysout_file_name += ".sysout";
 			pb.directory(file.getParentFile());
-			System.out.println("" + pb.directory());
-			p = pb.start();
+			assertOutput(pb, sysout_file_name);			
 			
-			BufferedReader executed_reader = new BufferedReader(new InputStreamReader(p.getInputStream(), Charset.forName("UTF-8")));
-			//Write the output to the corresponding files.
-			File sysout_file = new File(sysout_file_name);
-			FileReader file_reader = new FileReader(sysout_file);
-			BufferedReader expected_reader = new BufferedReader(file_reader);
-			
-			String output = null;
-			while ((output = executed_reader.readLine()) != null) {
-				String expected = expected_reader.readLine();
-				//Ignored the memory usage...
-				if(expected != null){
-					assertEquals(expected, output);
-				}				
-			}
-			
-			executed_reader.close();
-			expected_reader.close();
-			file_reader.close();
-			//Nullify the file input/output objects.			
-			executed_reader =null;
-			sysout_file = null;
-			file_reader = null;
-			expected_reader = null;
+		} catch (Exception e) {
+			terminate();
+			throw new RuntimeException("Test file: " + file.getName(), e);
+		}
+		file = null;
+		pb = null;
+	}
+	
+	
+	/**
+	 * Find the pattern for all the functions in a Whiley program using pattern option.
+	 * @param path_whiley
+	 * @param widen
+	 */
+	public void execPattern(String path, String filename, String... options) {
+		ProcessBuilder pb = null;
+		File file = new File(path+filename+ ".whiley");
+		try {
+			String sysout = path+filename+"."+options[0];
+			// Create the process with the given options
+			pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-"+options[0], file.getName());
+			sysout += ".sysout";
+			pb.directory(file.getParentFile());			
+			assertOutput(pb, sysout);
 		} catch (Exception e) {
 			terminate();
 			throw new RuntimeException("Test file: " + file.getName(), e);
 		}
 		
-		file = null;		
+		file = null;
+		pb = null;
 	}
+	
+	
 
 	/**
 	 * Translate a Whiley program into the C code. 
 	 * @param path_whiley
 	 * @param widen
-	 */
+	 *//*
 	public void execCodeGeneration(String path_whiley) {
 		File file = new File(path_whiley+ ".whiley");
 		try {			
@@ -111,16 +149,11 @@ public final class BaseTestUtil {
 			throw new RuntimeException("Test file: " + file.getName(), e);
 		}		
 		file = null;		
-	}
+	}*/
 	
 	
 	public void terminate() {
-		while (p != null) {
-			p.destroy();
-			p = null;
-		}
-
-		pb = null;
+		
 	}
 	
 }

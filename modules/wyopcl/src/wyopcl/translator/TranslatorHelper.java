@@ -7,7 +7,6 @@ import wyil.lang.Code;
 import wyil.lang.Type;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.symbolic.PatternMatcher;
-import wyopcl.translator.symbolic.PatternTransformer;
 import wyopcl.translator.symbolic.pattern.Pattern;
 
 /**
@@ -39,7 +38,7 @@ public final class TranslatorHelper {
 		return code_blk;
 	}
 
-	/**
+/*	*//**
 	 * Given a code block, tries to find the matching pattern and do the pattern
 	 * transformation (if available).
 	 * 
@@ -49,7 +48,7 @@ public final class TranslatorHelper {
 	 *            the list of code for a function
 	 * @return the transformed code. If the pattern is not transformable, then
 	 *         return the original code block.
-	 */
+	 *//*
 	public static List<Code> patternMatchingandTransformation(Configuration config, List<Type> params,
 			List<Code> code_blk) {
 		// Initialize the pattern matcher.
@@ -72,6 +71,6 @@ public final class TranslatorHelper {
 			transformer = null;
 		}
 		return code_blk;
-	}
+	}*/
 
 }

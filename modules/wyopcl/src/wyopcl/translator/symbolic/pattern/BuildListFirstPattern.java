@@ -1,9 +1,11 @@
 package wyopcl.translator.symbolic.pattern;
 
 import java.util.List;
+
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
+import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.pattern.expression.Expr;
 /**
  * This pattern creates a new list (r) with an existing list and initializes the array size (r_size) and capacity (r_capacity).
@@ -20,14 +22,14 @@ public final class BuildListFirstPattern extends WhileLoopPattern {
 	protected Expr list_size_init;
 	protected Expr list_size_update;
 
-	public BuildListFirstPattern(boolean isVerbose, List<Type> params, List<Code> blk) {
-		super(isVerbose, params, blk);
+	public BuildListFirstPattern(Configuration config, List<Type> params, List<Code> blk) {
+		super(config, params, blk);
 		this.pattern_name ="BuildListFirst";
 		//Check if the inferred increment or decrement is null. If not, then continue iterating the list of code.
 		//Otherwise, stop constructing the BuildListPattern.
 		if(this.list_var != null && this.list_size!= null && this.list_init != null && this.list_size_init != null
 				&& (this.incr != null || this.decr != null)){
-			this.line = this.loopbody_after(blk, this.line);
+			//this.line = this.loopbody_after(blk, this.line);
 			if(this.list_update != null && this.list_size_update != null){
 				this.line = this.loop_exit(blk, this.line);
 				if(this.list_capacity != null){
@@ -44,7 +46,7 @@ public final class BuildListFirstPattern extends WhileLoopPattern {
 	 * @param blk the list of code
 	 * @param line the starting line number
 	 * @return the line number that the code contains the loop bytecode 
-	 */
+	 *//*
 	@Override
 	protected int init_after(List<Code> blk, int line){
 		int index = line;		
@@ -178,7 +180,7 @@ public final class BuildListFirstPattern extends WhileLoopPattern {
 		}		
 		
 		return index;
-	}
+	}*/
 	
 
 	@Override

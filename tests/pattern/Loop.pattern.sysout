@@ -20,6 +20,8 @@ loopbody_before:
 loopbody_update:
 	add %10 = %1, %9 : int
 	assign %1 = %10  : int
+loopbody_after:
+	assign %1 = %10  : int
 loop_exit:
 	.blklab1
 return:
@@ -50,6 +52,8 @@ loopbody_before:
 	const %8 = 1 : int
 loopbody_update:
 	sub %9 = %1, %8 : int
+	assign %1 = %9  : int
+loopbody_after:
 	assign %1 = %9  : int
 loop_exit:
 	.blklab4
