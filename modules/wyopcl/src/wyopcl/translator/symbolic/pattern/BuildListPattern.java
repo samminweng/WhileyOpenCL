@@ -93,19 +93,15 @@ public final class BuildListPattern extends WhileLoopPattern {
 			// Search for loop bytecode
 			if (code instanceof Codes.Loop || code instanceof Codes.ForAll) {
 				break;
-			} else if (code instanceof Codes.NewList) {
-				Codes.NewList newlist = (Codes.NewList) code;
-				this.list_var = prefix + newlist.target();
-				// Add the code to the 'init' part
-				AddCodeToPatternPart(code, "list_init");
 			} else if(code instanceof Codes.Assign){
 				Codes.Assign assign = (Codes.Assign)code;
 				//Check if the right operand is list var.
-				if(this.list_var != null && this.list_var.equals(prefix+assign.operand(0))){
+				if(this.list_var != null && this.list_var.equals(prefix+assign.target())){
 					//Reassign the list var
-					this.list_var = prefix+assign.target();
+					AddCodeToPatternPart(code, "list_init");
+				}else{
+					AddCodeToPatternPart(code, "init_after");
 				}				
-				AddCodeToPatternPart(code, "init_after");
 			} else {
 				AddCodeToPatternPart(code, "init_after");
 			}
@@ -134,35 +130,21 @@ public final class BuildListPattern extends WhileLoopPattern {
 			Code code = loop_blk.get(index);			
 			// Search for the binOp that subtracts the loop variable with a
 			// constant.
-			if (code instanceof Codes.BinaryOperator) {
-				Codes.BinaryOperator binOp = (Codes.BinaryOperator) code;
-				// Search for the decrement
-				if (loop_var.equals(prefix + binOp.operand(0))) {
-					break;
-				}
-			} else {
-				AddCodeToPatternPart(code, "loopbody_before");
-			}
-		}
-		// Search for the code of re-assigning values to the loop variable and
-		// put the prior code to the 'loopbody_update' part.
-		for (; index < loop_blk.size(); index++) {
-			Code code = loop_blk.get(index);
-			AddCodeToPatternPart(code, "loopbody_update");
-			// Search for the decrement that assigns the value to the loop
-			// var.
 			if (code instanceof Codes.Assign) {
 				// Check if the assignment bytecode is to over-write the
 				// value of loop variable.
 				Codes.Assign assign = (Codes.Assign) code;
 				// Check if the target is the loop variable.
 				if ((prefix + assign.target()).equals(loop_var)) {
+					AddCodeToPatternPart(code, "loopbody_update");
 					// Get the increment and decrement.
 					incr = factory.extractIncrement(assign, loop_var);
 					decr = factory.extractDecrement(assign, loop_var);
+					++index;
 					break;
 				}
 			}
+			AddCodeToPatternPart(code, "loopbody_before");	
 		}
 
 		// Search for 'list_update'
@@ -174,6 +156,7 @@ public final class BuildListPattern extends WhileLoopPattern {
 				Codes.Assign assign = (Codes.Assign) code;
 				if (this.list_var != null && this.list_var.equals(prefix + assign.target())) {	
 					this.list_update = factory.getExpr(prefix + assign.operand(0));
+					++index;
 					break;
 				}
 			} 		

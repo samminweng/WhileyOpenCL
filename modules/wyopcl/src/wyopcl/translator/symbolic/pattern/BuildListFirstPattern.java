@@ -106,22 +106,15 @@ public final class BuildListFirstPattern extends WhileLoopPattern {
 			// Search for loop bytecode
 			if (code instanceof Codes.Loop || code instanceof Codes.ForAll) {
 				break;
-			} else if (code instanceof Codes.NewList) {
-				Codes.NewList newlist = (Codes.NewList) code;
-				this.list_var = prefix + newlist.target();
-				// Add the code to the 'init' part
-				AddCodeToPatternPart(code, "list_init");
 			} else if (code instanceof Codes.Assign) {
 				Codes.Assign assign = (Codes.Assign) code;
 				// Search for the initial assignment for the array and array
 				// size.
 				// Check if the right operand is list var.
-				if (this.list_var != null && this.list_var.equals(prefix + assign.operand(0))) {
-					// Reassign the list var
-					this.list_var = prefix + assign.target();
+				if (this.list_var != null && this.list_var.equals(prefix + assign.target())) {
 					// Add the code to the 'list_init' part
 					AddCodeToPatternPart(code, "list_init");
-				} else if (this.list_size != null && this.list_size.equals(prefix + assign.operand(0))) {
+				} else if (this.list_size != null && this.list_size.equals(prefix + assign.target())) {
 					// Add the code to the 'list_size_init' part
 					AddCodeToPatternPart(code, "list_size_init");
 				} else {
