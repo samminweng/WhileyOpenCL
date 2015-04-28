@@ -7,7 +7,6 @@ import java.util.Map.Entry;
 
 import wyil.lang.Code;
 import wyil.lang.Codes;
-import wyil.lang.Codes.Invariant;
 import wyil.lang.Type;
 import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.pattern.expression.ExprFactory;
@@ -109,6 +108,28 @@ public class Pattern extends Object {
 	}
 
 	/**
+	 * Print out each byte-code. If the byte-code contains a list of byte-code, then recursively print out each of them. 
+	 * @param code
+	 */
+	private void printOutBytecode(Code code){
+		System.out.println("\t\t"+code);
+		if(code instanceof Codes.Invariant){
+			for(Code inv:((Codes.Invariant)code).bytecodes()){
+				printOutBytecode(inv);
+			}
+		}else if(code instanceof Codes.Assert){
+			for(Code assertion:((Codes.Assert)code).bytecodes()){
+				printOutBytecode(assertion);
+			}
+		}else if(code instanceof Codes.Loop){
+			for(Code loop_code:((Codes.Loop)code).bytecodes()){
+				printOutBytecode(loop_code);
+			}
+		}
+	}
+	
+	
+	/**
 	 * Add the code to the specific pattern part.
 	 * @param code
 	 * @param part_name
@@ -120,7 +141,8 @@ public class Pattern extends Object {
 		List<Code> blk = getPartByName(part_name);
 		blk.add(code);
 		if(config.isVerbose()){
-			System.out.println(part_name+":\t"+code);
+			System.out.println(part_name+":");
+			printOutBytecode(code);			
 		}
 	}
 

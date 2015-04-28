@@ -21,19 +21,21 @@ import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.bound.BoundAnalyzer;
 import wyopcl.translator.symbolic.PatternMatcher;
+import wyopcl.translator.symbolic.PatternTransformer;
 import wyopcl.translator.symbolic.pattern.Pattern;
+
 /**
  * Main entry point of translator
  * 
  * @author Min-Hsien Weng
  *
  */
-public class Translator implements Builder{
-	private Configuration config;	
+public class Translator implements Builder {
+	private Configuration config;
 
-	public Translator(Configuration config){
-		this.config = config;		
-	}	
+	public Translator(Configuration config) {
+		this.config = config;
+	}
 
 	@Override
 	public Project project() {
@@ -47,141 +49,143 @@ public class Translator implements Builder{
 		long memory = runtime.freeMemory();
 		String message = "";
 		HashSet<Path.Entry<?>> generatedFiles = new HashSet<Path.Entry<?>>();
-		for(Pair<Path.Entry<?>,Path.Root> p : delta) {
-			//Path.Root dst = p.second();
+		for (Pair<Path.Entry<?>, Path.Root> p : delta) {
+			// Path.Root dst = p.second();
 			@SuppressWarnings("unchecked")
 			Path.Entry<WyilFile> sf = (Path.Entry<WyilFile>) p.first();
 			WyilFile module = sf.read();
-			//Put the in-memory WyIL file to config for later retrieval.
+			// Put the in-memory WyIL file to config for later retrieval.
 			this.config.setProperty("module", module);
-			this.config.setProperty("filename", module.filename().split(".whiley")[0].replace(".\\", ""));				
-			//Check the mode
-			switch(config.getMode()){
+			this.config.setProperty("filename", module.filename().split(".whiley")[0].replace(".\\", ""));
+			// Check the mode
+			switch (config.getMode()) {
 			case "bound":
 				analyzeFunctionalBounds(module);
 				message = "Bound analysis completed.\nFile: " + config.getFilename();
 				break;
-			/*case "code":
-				generateCodeInC(module);
-				message = "Code generation completed.\nFile: "+config.getFilename()+".c";
-				break;*/
+			/*
+			 * case "code": generateCodeInC(module); message =
+			 * "Code generation completed.\nFile: "+config.getFilename()+".c";
+			 * break;
+			 */
 			case "pattern":
 				patternMatch(module);
 				message = "Pattern matching completed.\nFile: " + config.getFilename();
 				break;
 			default:
 				break;
-			}			
-			//Start generating the code.
+			}
+			// Start generating the code.
 		}
 		long endTime = System.currentTimeMillis();
-		System.out.println(message+" Time: "+(endTime - start)+" ms Memory Usage: "+ memory);	
+		System.out.println(message + " Time: " + (endTime - start) + " ms Memory Usage: " + memory);
 		return generatedFiles;
 	}
 
-
 	/**
-	 * Takes the in-memory wyil file and analyzes the ranges using function call.
+	 * Takes the in-memory wyil file and analyzes the ranges using function
+	 * call.
+	 * 
 	 * @param module
 	 */
-	private void analyzeFunctionalBounds(WyilFile module){		
+	private void analyzeFunctionalBounds(WyilFile module) {
 		try {
-			//FunctionOrMethodDeclaration functionOrMethod = module.functionOrMethod("main").get(0);
-			//Get code block of main function.
+			// FunctionOrMethodDeclaration functionOrMethod =
+			// module.functionOrMethod("main").get(0);
+			// Get code block of main function.
 			FunctionOrMethod functionOrMethod = module.functionOrMethod("main").get(0);
-			//Put the function name to the config
+			// Put the function name to the config
 			this.config.setProperty("function_name", functionOrMethod.name());
-			List<Code> code_blk = TranslatorHelper.getCodeBlock(functionOrMethod, config);				
+			List<Code> code_blk = TranslatorHelper.getCodeBlock(functionOrMethod, config);
 			BoundAnalyzer boundAnalyzer = new BoundAnalyzer(config);
 			boundAnalyzer.propagateBounds(functionOrMethod.type().params());
 			boundAnalyzer.iterateByteCodeList(code_blk);
-			//Infer the bounds at the end of main function.
-			boundAnalyzer.inferBounds();			
-			boundAnalyzer = null;			
+			// Infer the bounds at the end of main function.
+			boundAnalyzer.inferBounds();
+			boundAnalyzer = null;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
+		}
 	}
 
-/*
+	/*
 
 	*//**
 	 * Reads the in-memory WyIL file and generates the code in C
+	 * 
 	 * @param module
-	 *//*
-	private void generateCodeInC(WyilFile module){
-		//Check if the Bool type is used in the program.
-		boolean isBoolType = false;
-		//A list of function declaration. 
-		List<String> function_list = new ArrayList<String>();	
-		//Create a writer to write the C code to a *.c file.
-		PrintWriter writer;		
-		try {
-			writer = new PrintWriter(config.getFilename()+".c");
-			CodeGeneratorHelper.generateIncludes(writer, config.getFilename());
-			CodeGeneratorHelper.generateClone(writer);		
-			CodeGeneratorHelper.generateAppend(writer);
-			CodeGeneratorHelper.generateIndirectInvoked(writer);
-			CodeGeneratorHelper.generateFree_doublePtr(writer);
-			//Iterate each function
-			for(FunctionOrMethod functionOrMethod : module.functionOrMethods()) {
-				CodeGenerator generator = new CodeGenerator(config);
-				String function_del = generator.translate(functionOrMethod);
-				//Add the function declaration to the list
-				function_list.add(function_del);
-				//Find the matching pattern and transform the code into more predictable code. 		
-				List<Code> code_blk = TranslatorHelper.patternMatchingandTransformation(
-						config,
-						functionOrMethod.type().params(), 
-						TranslatorHelper.getCodeBlock(functionOrMethod));
-				//Iterate each byte-code of a function block.	
-				generator.IterateBytecode(code_blk, functionOrMethod.name());
-				isBoolType |= generator.isBoolTypeIntroduced();
-				//Write out the code to *.c
-				generator.printoutCode(writer, function_del);
-				generator = null;
-			}
-			CodeGeneratorHelper.generateToString(writer, isBoolType);
-			writer.close();
-		} catch (FileNotFoundException e) {			
-			throw new RuntimeException("Error occurs in writing "+config.getFilename()+".c");
-		}
-		//Write out the function signatures to *.h file.		
-		try{
-			writer = new PrintWriter(config.getFilename()+".h");
-			CodeGeneratorHelper.generateHeader(writer, function_list, config.isVerbose());
-			writer.close();
-		}catch (FileNotFoundException e) {
-			throw new RuntimeException("Error occurs in writing "+config.getFilename()+".h");
-		}
-
-	}*/
-
+	 */
+	/*
+	 * private void generateCodeInC(WyilFile module){ //Check if the Bool type
+	 * is used in the program. boolean isBoolType = false; //A list of function
+	 * declaration. List<String> function_list = new ArrayList<String>();
+	 * //Create a writer to write the C code to a *.c file. PrintWriter writer;
+	 * try { writer = new PrintWriter(config.getFilename()+".c");
+	 * CodeGeneratorHelper.generateIncludes(writer, config.getFilename());
+	 * CodeGeneratorHelper.generateClone(writer);
+	 * CodeGeneratorHelper.generateAppend(writer);
+	 * CodeGeneratorHelper.generateIndirectInvoked(writer);
+	 * CodeGeneratorHelper.generateFree_doublePtr(writer); //Iterate each
+	 * function for(FunctionOrMethod functionOrMethod :
+	 * module.functionOrMethods()) { CodeGenerator generator = new
+	 * CodeGenerator(config); String function_del =
+	 * generator.translate(functionOrMethod); //Add the function declaration to
+	 * the list function_list.add(function_del); //Find the matching pattern and
+	 * transform the code into more predictable code. List<Code> code_blk =
+	 * TranslatorHelper.patternMatchingandTransformation( config,
+	 * functionOrMethod.type().params(),
+	 * TranslatorHelper.getCodeBlock(functionOrMethod)); //Iterate each
+	 * byte-code of a function block. generator.IterateBytecode(code_blk,
+	 * functionOrMethod.name()); isBoolType |= generator.isBoolTypeIntroduced();
+	 * //Write out the code to *.c generator.printoutCode(writer, function_del);
+	 * generator = null; } CodeGeneratorHelper.generateToString(writer,
+	 * isBoolType); writer.close(); } catch (FileNotFoundException e) { throw
+	 * new
+	 * RuntimeException("Error occurs in writing "+config.getFilename()+".c"); }
+	 * //Write out the function signatures to *.h file. try{ writer = new
+	 * PrintWriter(config.getFilename()+".h");
+	 * CodeGeneratorHelper.generateHeader(writer, function_list,
+	 * config.isVerbose()); writer.close(); }catch (FileNotFoundException e) {
+	 * throw new
+	 * RuntimeException("Error occurs in writing "+config.getFilename()+".h"); }
+	 * 
+	 * }
+	 */
 
 	/**
-	 *  Iterate each code of the input function, build up the code blk and then analyze the loop pattern.
-	 * @param module 
+	 * Iterate each code of the input function, build up the code blk and then
+	 * analyze the loop pattern.
+	 * 
+	 * @param module
 	 */
-	private void patternMatch(WyilFile module){
-
-		//Iterate each function
-		for(FunctionOrMethod functionOrMethod : module.functionOrMethods()) {
-			String func_name = functionOrMethod.name();			
+	private void patternMatch(WyilFile module) {
+		PatternMatcher matcher = new PatternMatcher(config);
+		PatternTransformer transformer = new PatternTransformer();
+		// Iterate each function
+		for (FunctionOrMethod functionOrMethod : module.functionOrMethods()) {
+			String func_name = functionOrMethod.name();
 			ArrayList<Type> params = functionOrMethod.type().params();
-			//Begin the function
-			System.out.println("----------------Start of "+func_name+" function----------------");
-			List<Code> code_blk = TranslatorHelper.getCodeBlock(functionOrMethod, config);	
-			PatternMatcher matcher = new PatternMatcher(config);
+			// Begin the function
+			System.out.println("----------------Start of " + func_name + " function----------------");
+			List<Code> code_blk = TranslatorHelper.getCodeBlock(functionOrMethod, config);
+			// Find the matching pattern and transform the code into more predictable code.
 			Pattern pattern = matcher.analyzePattern(params, code_blk);
 			System.out.println("The original pattern:\n" + pattern);
-			//Find the matching pattern and transform the code into more predictable code. 		
-			//List<Code> code_blk = TranslatorHelper.patternMatchingandTransformation(
-			//		config,
-			//		functionOrMethod.type().params(), 
-			//		TranslatorHelper.getCodeBlock(functionOrMethod));
-			System.out.println("----------------End of "+func_name+" function----------------");
-		}		
+			List<Code> code_blk_after = transformer.transformPatternUsingVisitor(pattern);
+			if (code_blk_after != null) {
+				Pattern transformed_pattern = matcher.analyzePattern(params, code_blk_after);
+				if (!transformed_pattern.isNil) {
+					System.out.println("From " + pattern.getPatternName() + " to " + transformed_pattern.getPatternName()
+							+ ", the transformed pattern:\n" + transformed_pattern);
+				}
+			}
+			System.out.println("----------------End of " + func_name + " function----------------");
+		}
+
+		// Nullify the matcher and transformer
+		matcher = null;
+		transformer = null;
 	}
 
 }

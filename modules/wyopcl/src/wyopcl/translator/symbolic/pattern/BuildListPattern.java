@@ -8,6 +8,8 @@ import wyil.lang.Codes.Loop;
 import wyil.lang.Type;
 import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.pattern.expression.Expr;
+import wyopcl.translator.symbolic.pattern.transform.Transformable;
+import wyopcl.translator.symbolic.pattern.transform.Transformer;
 
 
 /**
@@ -17,8 +19,8 @@ import wyopcl.translator.symbolic.pattern.expression.Expr;
  * @author Min-Hsien Weng
  *
  */
-//public final class BuildListPattern extends WhileLoopPattern implements Transformable {
-public final class BuildListPattern extends WhileLoopPattern {
+public final class BuildListPattern extends WhileLoopPattern implements Transformable {
+//public final class BuildListPattern extends WhileLoopPattern {
 	protected String list_var;
 	protected Expr list_init;
 	protected Expr list_update;
@@ -187,9 +189,9 @@ public final class BuildListPattern extends WhileLoopPattern {
 
 	}
 
-	/*@Override
+	@Override
 	public List<Code> accept(Transformer transformer) {
 		return transformer.transform((Pattern) this);
-	}*/
+	}
 
 }
