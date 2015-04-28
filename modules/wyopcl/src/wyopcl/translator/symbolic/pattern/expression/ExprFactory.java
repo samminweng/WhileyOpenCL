@@ -129,9 +129,9 @@ public class ExprFactory {
 		if (expr != null && expr.getTarget() != null) {
 			// Check if the target exists in the expression table.
 			if (!expressiontable.containsKey(expr.getTarget())) {
-				if (config.isVerbose()) {
+				/*if (config.isVerbose()) {
 					System.out.println(expr.getTarget() + " = " + expr);
-				}
+				}*/
 				// Add to the expression table.
 				expressiontable.put(expr.getTarget(), expr);
 			}

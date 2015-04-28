@@ -29,13 +29,35 @@ public final class BuildListPattern extends WhileLoopPattern {
 		// continue iterating the list of code.
 		// Otherwise, stop constructing the BuildListPattern.
 		if (this.list_var != null && this.list_init != null && (this.incr != null || this.decr != null) && this.list_update != null) {
-			// this.line = this.loopbody_after(blk, this.line);
 			this.line = this.loop_exit(blk, this.line);
 			this.pattern_name = "BuildList";
 			this.isNil = false;
 		}
 	}
 
+	/**
+	 * Infer the loop var, list_var, list_size variable
+	 */
+	@Override
+	protected String loop_var(List<Code> blk) {
+		for (int index = 0; index < blk.size(); index++) {
+			Code code = blk.get(index);
+			if(code instanceof Codes.Loop) {
+				// Check if the list of bytecode contains a loop bytecode.
+				// While loop
+				Codes.Loop loop = (Codes.Loop) code;
+				// Iterate the modified operands. By default, the loop
+				// variable is the first modified operands.
+				if (loop.modifiedOperands.length >= 2) {
+					this.list_var = prefix+loop.modifiedOperands[1];
+					return prefix + loop.modifiedOperands[0];
+				}
+			}
+		}
+		return null;
+	}
+	
+	
 	/**
 	 * Search the loop byte-code and put the code to the 'init_after' part. If
 	 * the code is related to the list , then put it to the 'list_init' part.
@@ -146,19 +168,15 @@ public final class BuildListPattern extends WhileLoopPattern {
 		// Search for 'list_update'
 		for (; index < loop_blk.size(); index++) {
 			Code code = loop_blk.get(index);
+			AddCodeToPatternPart(code, "list_update");
 			// Check if the code initializes the list.
 			if (code instanceof Codes.Assign) {
 				Codes.Assign assign = (Codes.Assign) code;
-				if (this.list_var != null && this.list_var.equals(prefix + assign.target())) {
-					AddCodeToPatternPart(code, "list_update");
+				if (this.list_var != null && this.list_var.equals(prefix + assign.target())) {	
 					this.list_update = factory.getExpr(prefix + assign.operand(0));
 					break;
 				}
-			} else if (code instanceof Codes.IndexOf || code instanceof Codes.NewList || code instanceof Codes.ListOperator) {
-				AddCodeToPatternPart(code, "list_update");
-			} else {
-				AddCodeToPatternPart(code, "list_update_before");
-			}			
+			} 		
 		}
 
 		// Put the remaining code to 'loopbody_after' part.

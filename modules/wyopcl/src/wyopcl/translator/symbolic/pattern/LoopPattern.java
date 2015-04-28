@@ -80,7 +80,7 @@ public abstract class LoopPattern extends Pattern {
 			Code code = blk.get(index);
 			if (code instanceof Codes.Return) {
 				AddCodeToPatternPart(code, "return");
-			} else {
+			} else {				
 				// Create the expression and put it into the table.
 				AddCodeToPatternPart(code, "loop_exit");
 			}

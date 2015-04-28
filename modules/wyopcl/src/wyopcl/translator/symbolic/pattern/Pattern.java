@@ -120,7 +120,7 @@ public class Pattern extends Object {
 		List<Code> blk = getPartByName(part_name);
 		blk.add(code);
 		if(config.isVerbose()){
-			System.out.println("Part:"+part_name+" Code:"+code);
+			System.out.println(part_name+":\t"+code);
 		}
 	}
 

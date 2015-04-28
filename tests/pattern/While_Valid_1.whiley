@@ -8,7 +8,7 @@ function reverse([int] ls) -> [int]:
         r = r ++ [ls[i]]
     return r
    
-/*function rewrite_reverse([int] ls) => [int]:
+function transformed_reverse([int] ls) -> [int]:
     int i = |ls|
     int r_capacity = |ls|
     [int] r = ls
@@ -19,7 +19,6 @@ function reverse([int] ls) -> [int]:
         r_size = r_size +1
     assert r_size == r_capacity
     return r    
-*/    
 
 method main(System.Console sys) -> void:
     [int] rs = reverse([1, 2, 3, 4, 5])
