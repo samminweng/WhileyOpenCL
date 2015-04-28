@@ -7,9 +7,8 @@
       <!--<include name="*/**"/>-->
       <!-- Code Generator -->
       <exclude name="wyopcl/translator/generator/**"/>
-      <!-- Pattern Transformer -->  
-      <exclude name="wyopcl/translator/symbolic/pattern/transform/"/>
-      <exclude name="wyopcl/translator/symbolic/PatternTransform.java"/>
+      <!-- Pattern Transformer -->
+      <exclude name="wyopcl/translator/symbolic/pattern/transform/WhileLoopIncrPatternTransformer.java"/>
       <!-- Interpreter -->
       <exclude name="wyopcl/util/**"/>
     </javac>

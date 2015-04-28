@@ -51,7 +51,6 @@ list_size_init:
 	assign %19 = %18  : int
 loop_header:
 	loop (%1, %17, %19)
-	loop (%1, %2, %7, %8, %9, %10, %11, %12, %13)
 	const %8 = 0 : int
 	ifle %1, %8 goto blklab0 : int
 loopbody_before:

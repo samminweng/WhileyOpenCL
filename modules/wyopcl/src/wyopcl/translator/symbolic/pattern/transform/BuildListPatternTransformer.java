@@ -259,7 +259,7 @@ public class BuildListPatternTransformer extends Transformer {
 		List<Code> loop_blk = new ArrayList<Code>();
 		// Get the loop condition
 		for (Code code : p.getPartByName("loop_header")) {
-			if (!(code instanceof Codes.Invariant)) {
+			if (!(code instanceof Codes.Loop) && !(code instanceof Codes.Invariant)) {
 				loop_blk.add(code);
 			}
 		}
