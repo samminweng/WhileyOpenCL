@@ -498,7 +498,7 @@ public class BoundAnalyzer {
 		if (functionOrMethod != null) {
 			List<Type> params = functionOrMethod.type().params();
 			// The list of bytecode
-			List<Code> code_blk = TranslatorHelper.getCodeBlock(functionOrMethod);
+			List<Code> code_blk = TranslatorHelper.getCodeBlock(functionOrMethod, this.config);
 			//Temporarily disable for upgrade
 			//code_blk = TranslatorHelper.patternMatchingandTransformation(config, params, code_blk);
 			// Infer the bounds

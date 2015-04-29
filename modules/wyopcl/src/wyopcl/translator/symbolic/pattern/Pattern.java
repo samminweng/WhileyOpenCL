@@ -17,9 +17,10 @@ import wyopcl.translator.symbolic.pattern.expression.ExprFactory;
  *
  */
 public class Pattern extends Object {
-	public final String prefix = "%";
-	public String type;//The pattern type
-	public boolean isNil;//The flag indicates whether this pattern is matched with the given loop (True: not matched False: Matched).
+	protected final String prefix = "%";
+	protected Configuration config;
+	public String pattern_name;//The pattern name
+	public boolean isNil;//The flag indicates whether this pattern is matched with any given pattern (True: not matched False: Matched).
 
 	public ExprFactory factory;
 	public List<Type> params;//The list of parameter types
@@ -28,7 +29,6 @@ public class Pattern extends Object {
 	public int line;//keep track of the current line number.
 	public List<List<Code>> parts;//The collection of all parts in the pattern.
 	public HashMap<Integer, String> part_names;//Store the relation between part index and part name.
-	public String label_AssertOrAssume;//The flag to store the label for an assertion or assumption.
 
 	public Pattern(){
 		this.isNil = true;//By default.
@@ -38,9 +38,10 @@ public class Pattern extends Object {
 	 * Base constructor
 	 * @param isVerbose
 	 */
-	private Pattern(boolean isVerbose, List<Type> params){
+	private Pattern(Configuration config, List<Type> params){
 		this();
-		this.factory = new ExprFactory(isVerbose);//Create an expression factory to record all the extracted expressions.
+		this.config = config;
+		this.factory = new ExprFactory(config);//Create an expression factory to record all the extracted expressions.
 		//Add the input parameters to the expression table.
 		this.params = params;
 		for(Type param: params){
@@ -54,11 +55,9 @@ public class Pattern extends Object {
 	 * @param config
 	 * @param params
 	 */
-	public Pattern(boolean isVerbose, List<Type> params, List<Code> blk){
-		this(isVerbose, params);
+	public Pattern(Configuration config, List<Type> params, List<Code> blk){
+		this(config, params);
 		if(blk != null){
-			//The flag to store the label for an assertion or assumption.	
-			this.label_AssertOrAssume = null;
 			//The list of code in each pattern part.
 			this.parts = new ArrayList<List<Code>>();
 			this.part_names = new HashMap<Integer, String>();
@@ -78,8 +77,8 @@ public class Pattern extends Object {
 	 * Get the pattern type.
 	 * @return the pattern type. 
 	 */
-	public String getType(){
-		return this.type;
+	public String getPatternName(){
+		return this.pattern_name;
 	}
 
 	/**
@@ -109,6 +108,28 @@ public class Pattern extends Object {
 	}
 
 	/**
+	 * Print out each byte-code. If the byte-code contains a list of byte-code, then recursively print out each of them. 
+	 * @param code
+	 */
+	private void printOutBytecode(Code code){
+		System.out.println("\t\t"+code);
+		if(code instanceof Codes.Invariant){
+			for(Code inv:((Codes.Invariant)code).bytecodes()){
+				printOutBytecode(inv);
+			}
+		}else if(code instanceof Codes.Assert){
+			for(Code assertion:((Codes.Assert)code).bytecodes()){
+				printOutBytecode(assertion);
+			}
+		}else if(code instanceof Codes.Loop){
+			for(Code loop_code:((Codes.Loop)code).bytecodes()){
+				printOutBytecode(loop_code);
+			}
+		}
+	}
+	
+	
+	/**
 	 * Add the code to the specific pattern part.
 	 * @param code
 	 * @param part_name
@@ -118,7 +139,11 @@ public class Pattern extends Object {
 		factory.putExpr(code);
 		//Create the expression and put it into the table.
 		List<Code> blk = getPartByName(part_name);
-		blk.add(code);	
+		blk.add(code);
+		if(config.isVerbose()){
+			System.out.println(part_name+":");
+			printOutBytecode(code);			
+		}
 	}
 
 
@@ -127,26 +152,11 @@ public class Pattern extends Object {
 	 * @param code the code.
 	 * @return true if the code belongs to the assertion or assumption. Otherwise, return false.
 	 */
-	protected boolean checkAssertOrAssume(Code code){
-		if(label_AssertOrAssume == null){
-			if(code instanceof Codes.AssertOrAssume){
-				Codes.AssertOrAssume assertOrAssume = (Codes.AssertOrAssume)code;
-				//label_AssertOrAssume = assertOrAssume.target;
-				label_AssertOrAssume = assertOrAssume.toString();
-				return true;
-			}		
-		}else{			
-			if(code instanceof Codes.Label){
-				Codes.Label label = (Codes.Label)code;
-				if(label_AssertOrAssume.equals(label.label)){
-					//Nullify the label of an assertion or assumption. 
-					label_AssertOrAssume = null;
-					return true;
-				}					
-			}
+	protected boolean isInvariant(Code code){
+		if(code instanceof Codes.Invariant){
+			return true;
 		}
-		//In other cases, if the label is not null, then the code is inside the assertion or assumption.
-		return (label_AssertOrAssume != null)? true: false;
+		return false;
 	}
 
 	@Override

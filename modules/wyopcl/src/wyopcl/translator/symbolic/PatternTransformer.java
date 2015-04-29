@@ -8,7 +8,6 @@ import wyopcl.translator.symbolic.pattern.Pattern;
 import wyopcl.translator.symbolic.pattern.transform.BuildListPatternTransformer;
 import wyopcl.translator.symbolic.pattern.transform.Transformable;
 import wyopcl.translator.symbolic.pattern.transform.Transformer;
-import wyopcl.translator.symbolic.pattern.transform.WhileLoopIncrPatternTransformer;
 /**
  * 
  * Given a pattern, searches for the suitable transformer to do program transformation and outputs the transformed code.
@@ -20,7 +19,7 @@ public class PatternTransformer {
 	public PatternTransformer(){
 		this.avail_transformers = new ArrayList<Transformer>();
 		//Added the available transformer.
-		this.avail_transformers.add(new WhileLoopIncrPatternTransformer());
+		//this.avail_transformers.add(new WhileLoopIncrPatternTransformer());
 		this.avail_transformers.add(new BuildListPatternTransformer());
 	}
 	

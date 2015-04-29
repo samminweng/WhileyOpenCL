@@ -20,35 +20,79 @@ import wyopcl.translator.symbolic.pattern.Pattern;
 
 /**
  * 
- * Transforms the 'BuildListPattern' to 'BuildListFirstPattern'. The differences on parts of 'BuildListPattern' and 'BuildListFirstPattern'
- * patterns are listed as below:
+ * Transforms the 'BuildListPattern' to 'BuildListFirstPattern'. The differences
+ * on parts of 'BuildListPattern' and 'BuildListFirstPattern' patterns are
+ * listed as below:
  * <p>
  * <table>
- * <tr><th>BuildListPattern</th><th>BuildListFirstPattern</th></tr>
- * <tr><td>init_before</td><td>init_before</td></tr>
- * <tr><td>init</td><td>init</td></tr>
- * <tr><td>list_init</td><td>list_init</td></tr>
- * <tr><td></td><td>list_size_init</td></tr>
- * <tr><td>init_after</td><td>init_after</td></tr>
- * <tr><td>loop_header</td><td>loop_header</td></tr>
- * <tr><td>loopbody_before</td><td>loopbody_before</td></tr>
- * <tr><td>loopbody_update</td><td>loopbody_update</td></tr>
- * <tr><td>list_update_before</td><td>list_update_before</td></tr>
- * <tr><td>list_update</td><td>list_update</td></tr>
- * <tr><td></td><td>list_size_update</td></tr>
- * <tr><td>loopbody_after</td><td>loopbody_after</td></tr>
- * <tr><td>loop_exit</td><td>loop_exit</td></tr>
- * <tr><td></td><td>list_assertion</td></tr>
- * <tr><td>return</td><td>return</td></tr>
+ * <tr>
+ * <th>BuildListPattern</th>
+ * <th>BuildListFirstPattern</th>
+ * </tr>
+ * <tr>
+ * <td>init_before</td>
+ * <td>init_before</td>
+ * </tr>
+ * <tr>
+ * <td>init</td>
+ * <td>init</td>
+ * </tr>
+ * <tr>
+ * <td>init_after</td>
+ * <td>init_after</td>
+ * </tr>
+ * <tr>
+ * <td>list_init</td>
+ * <td>list_init</td>
+ * </tr>
+ * <tr>
+ * <td></td>
+ * <td>list_size_init</td>
+ * </tr>
+ * *
+ * <tr>
+ * <td>loop_header</td>
+ * <td>loop_header</td>
+ * </tr>
+ * <tr>
+ * <td>loopbody_before</td>
+ * <td>loopbody_before</td>
+ * </tr>
+ * <tr>
+ * <td>loopbody_update</td>
+ * <td>loopbody_update</td>
+ * </tr>
+ * <tr>
+ * <td>list_update</td>
+ * <td>list_update</td>
+ * </tr>
+ * <tr>
+ * <td></td>
+ * <td>list_size_update</td>
+ * </tr>
+ * <tr>
+ * <td>loopbody_after</td>
+ * <td>loopbody_after</td>
+ * </tr>
+ * <tr>
+ * <td>loop_exit</td>
+ * <td>loop_exit</td>
+ * </tr>
+ * <tr>
+ * <td>return</td>
+ * <td>return</td>
+ * </tr>
  * </table>
  * </p>
- * The parts that require changes are 'list_init', 'loop_header' and 'list_update'. The new parts are
- * 'list_size_init', 'list_size_update' and 'list_assertion'.
+ * The parts that require changes are 'list_init', 'loop_header' and
+ * 'list_update'. The new parts are 'list_size_init', 'list_size_update' and
+ * 'list_assertion'.
  * 
  */
-public class BuildListPatternTransformer extends Transformer{
+public class BuildListPatternTransformer extends Transformer {
 	private int available_reg;
 	private int reg_input_list;
+	private int reg_loop_var;
 	private int reg_list;
 	private int reg_list_size;
 	private int reg_list_capacity;
@@ -56,252 +100,305 @@ public class BuildListPatternTransformer extends Transformer{
 	/**
 	 * Constructor
 	 */
-	public BuildListPatternTransformer(){
+	public BuildListPatternTransformer() {
 	}
 
 	/**
 	 * Get the unallocated register.
+	 * 
 	 * @param p
 	 * @return
 	 */
-	private int getAvailableReg(){		
+	private int getAvailableReg() {
 		return ++available_reg;
 	}
 
 	/**
-	 * Creates the 'list_init' part of the 'BuildListFirstPattern'. For example,
-	 * 		lengthof %6 = %0 : [int]
-	 * 		assign %7 = %0  : [int]
-	 * where %6 is the list_capacity, %0 is the input list and %7 is the output list.
-	 * @param blk the list of transformed code.
-	 * @param p 
+	 * Creates the 'init_before' part and copy all the byte-code from the
+	 * 'init_before' part of p pattern.
+	 * 
+	 * @param blk
+	 * @param p
 	 */
-	private void list_init(List<Code> blk, BuildListPattern p){
-		//Make change to the 'list_init' part
-		List<Code> list_init = p.getPartByName("list_init");
-		//Add the list_capacity, e.g lengthof %6 = %0 : [int]
-		//This lengthof bytecode is referred to 'init_before' part.
-		Codes.LengthOf lengthof = (LengthOf) p.getPartByName("init_before").get(0);
-		//The register of input list
-		reg_input_list = lengthof.operand(0);
+	private void init_before(List<Code> blk, BuildListPattern p) {
+		blk.addAll(p.getPartByName("init_before"));
+		// Infer the register of input list from lengthof bytecode of
+		// 'init_before' part.
+		// The register of input list
+		this.reg_input_list = ((LengthOf) p.getPartByName("init_before").get(0)).operand(0);
+	}
 
-		reg_list_capacity = getAvailableReg();
-		blk.add(Codes.LengthOf(lengthof.type(), reg_list_capacity, reg_input_list));
+	/**
+	 * Creates the 'init' part and copy all the byte-code from 'init' part of
+	 * 'p' pattern.
+	 * 
+	 * @param blk
+	 * @param p
+	 */
+	private void init(List<Code> blk, BuildListPattern p) {
+		Codes.Assign assign = (Codes.Assign) (p.getPartByName("init")).get(0);
+		this.reg_loop_var = assign.target();
+		blk.add(assign);
+	}
 
-		//Get the list var from list_init part
-		Codes.Convert list = (Codes.Convert)list_init.get(1);
-		reg_list = list.target();
-		//Create an Assign byte-code 
-		blk.add(Codes.Assign(list.result, reg_list, reg_input_list));
+	/**
+	 * Create the 'init_after' part and adds the initial assignment of
+	 * list_capacity. For example,
+	 * 
+	 * <pre>
+	 * <code>
+	 * lengthof %8 = %0 : [int]
+	 * assign %2 = %8  : int
+	 * </code>
+	 * </pre>
+	 * 
+	 * where %2 is the register of list capacity, %0 is the input list and %8
+	 * are the registers of temporary.
+	 * 
+	 * @param blk
+	 * @param p
+	 */
+	private void init_after(List<Code> blk, BuildListPattern p) {
+		// Add the initial assignment of list capacity.
+		// Get the length of the input list
+		int reg_target = getAvailableReg();
+		blk.add(Codes.LengthOf(Type.List(Type.Int.T_INT, false), reg_target, this.reg_input_list));
+		this.reg_list_capacity = getAvailableReg();
+		blk.add(Codes.Assign(Type.Int.T_INT, this.reg_list_capacity, reg_target));
+	}
+
+	/**
+	 * Creates the 'list_init' part of the 'BuildListFirstPattern'. For example,
+	 * 
+	 * <pre>
+	 * <code>
+	 * list_init:
+	 * 				assign %3 = %0  : [int]
+	 * </code>
+	 * </pre>
+	 * 
+	 * where %3 is the copied list variable and %0 is the output list.
+	 * 
+	 * @param blk
+	 *            the list of transformed code.
+	 * @param p
+	 *            the original pattern.
+	 */
+	private void list_init(List<Code> blk, BuildListPattern p) {
+		this.reg_list = getAvailableReg();
+		// Create an Assign byte-code
+		blk.add(Codes.Assign(Type.List(Type.Int.T_INT, false), reg_list, reg_input_list));
 	}
 
 	/**
 	 * Create the 'list_size_init' part. For example,
-	 * 		const %10 = 0 : int
-	 * 		assign %9 = %10  : int
-	 * where %10 is initial value of list_size and %9 is the list_size.
 	 * 
+	 * <pre>
+	 * <code>
+	 *  const %11 = 0 : int
+	 *  assign %4 = %11 : int
+	 * </code>
+	 * </pre>
+	 * 
+	 * where %11 is initial value of list_size and %4 is the list_size.
+	 * 
+	 * @param blk
+	 *            the list of transformed code.
+	 * @param p
+	 *            the original pattern.
 	 */
-	private void list_size_init(List<Code> blk, BuildListPattern p){
-		//Add the new 'list_size_init'
+	private void list_size_init(List<Code> blk, BuildListPattern p) {
 		int reg_zero = getAvailableReg();
 		blk.add(Codes.Const(reg_zero, Constant.V_INTEGER(BigInteger.ZERO)));
-		reg_list_size = getAvailableReg();
+		this.reg_list_size = getAvailableReg();
 		blk.add(Codes.Assign(Type.Int.T_INT, reg_list_size, reg_zero));
 	}
 
 	/**
-	 * Creates the 'loop_header' part. For example,<p>
-	 * 		loop (%1, %7, %9)<br>
-	 *		ifle %1, %22 goto blklab6 : int</p>
-	 * where %1 the loop variable, %7 is the list and %9 is the list_size
+	 * Creates the 'loop' part. For example,
+	 * 
+	 * <pre>
+	 * <code>
+	 * loop (%1, %7, %9)
+	 * </code>
+	 * </pre>
+	 * 
+	 * where %1 the loop variable, %7 is the list and %9 is the list_size. The
+	 * major change to loop block is the 'list_update' and 'list_size_update'
+	 * parts. The 'list_update' part is as follows:
+	 * 
+	 * <pre>
+	 * <code>
+	 * indexof %17 = %0, %1 : [int]
+	 * update %3[%4] = %18 : [int] -> [int]
+	 * </code>
+	 * </pre>
+	 * 
+	 * The 'list_size_update' part is as follows:
+	 * 
+	 * <pre>
+	 * <code>
+	 * const %19 = 1 : int
+	 * add %20 = %4, %19 : int
+	 * assign %4 = %20  : int
+	 * </code>
+	 * </pre>
+	 * 
+	 * @param blk
+	 *            the list of transformed code.
+	 * @param p
+	 *            the original pattern.
 	 */
-	private void loop_header(List<Code> blk, BuildListPattern p){
-		//Get the loop header
-		List<Code> loop_header = p.getPartByName("loop_header");
-		Codes.Loop loop = (Codes.Loop)loop_header.get(0);		
+	private void loop(List<Code> blk, BuildListPattern p) {
+		// ArrayList maintains the order.
+		ArrayList<Integer> ops = new ArrayList<Integer>();
+		ops.add(this.reg_loop_var);
+		ops.add(this.reg_list);
+		ops.add(this.reg_list_size);
 
-		//Convert the array to int[]
-		int[] modifiedOps = new int[loop.modifiedOperands.length+1];
-		int index;
-		for(index=0; index<loop.modifiedOperands.length; index++){
-			modifiedOps[index]= loop.modifiedOperands[index];
+		List<Code> loop_blk = new ArrayList<Code>();
+		// Get the loop condition
+		for (Code code : p.getPartByName("loop_header")) {
+			if (!(code instanceof Codes.Loop) && !(code instanceof Codes.Invariant)) {
+				loop_blk.add(code);
+			}
 		}
-		modifiedOps[index]=reg_list_size;
+		// Add the 'loopbody_before' and 'loopbody_update' part without changes.
+		loop_blk.addAll(p.getPartByName("loopbody_before"));
+		loop_blk.addAll(p.getPartByName("loopbody_update"));
 
-		//Create a new loop byte-code with loop var, list_var and list_size
-		blk.add(Codes.Loop(loop.target, modifiedOps));
-
-		//Add the loop condition
-		blk.add(loop_header.get(1));
-	}
-
-	/**
-	 * Adds an assertion to restrict the range of list size (0<=list_size<lengthof(list))
-	 * For example,
-	 *      assert blklab14<br>
-	 *		const %45 = 0 : int<br>
-	 *		ifge %9, %45 goto blklab13 : int<br>
-	 *		fail ""index out of bounds (negative)""<br>
-	 *		.blklab13<br>
-	 *		lengthof %45 = %7 : [int]<br>
-	 *		iflt %9, %45 goto blklab14 : int<br>
-	 *		fail ""index out of bounds (not less than length)""<br>
-	 *	    .blklab14<br>
-	 */
-	private void list_size_assertion(List<Code> blk, BuildListPattern p){
-		//Add a block of assertion or assumption to ensure the range of list size.
-		String assertLabel = CodeUtils.freshLabel();
-		//assert blklab14
-		blk.add(Codes.Assert(assertLabel));
-		int reg_zero = getAvailableReg();
-		//const %45 = 0 : int
-		blk.add(Codes.Const(reg_zero, Constant.V_INTEGER(BigInteger.ZERO)));
-		String gotoLabel = CodeUtils.freshLabel();
-		//ifge %9, %45 goto blklab13 : int
-		blk.add(Codes.If(Type.Int.T_INT, reg_list_size, reg_zero, Comparator.GTEQ, gotoLabel));
-		//fail ""index out of bounds (negative)""
-		blk.add(Codes.Fail("index out of bounds (negative)"));
-		//.blklab13
-		blk.add(Codes.Label(gotoLabel));
-		//lengthof %45 = %7 : [int]
-		blk.add(Codes.LengthOf(Type.List.List(Type.Int.T_INT, false), reg_zero, reg_list));
-		//iflt %9, %45 goto blklab14 : int
-		blk.add(Codes.If(Type.Int.T_INT, reg_list_size, reg_zero, Comparator.LT, assertLabel));
-		//fail ""index out of bounds (not less than length)""
-		blk.add(Codes.Fail("index out of bounds (not less than length)"));
-		//.blklab14
-		blk.add(Codes.Label(assertLabel));
-	}
-
-
-	/**
-	 * Creates the 'list_update' part. For example,
-	 * <p>
-	 * 		indexof %32 = %0, %25 : [int]<br>
-	 * 		assert blklab14<br>
-	 *		const %45 = 0 : int<br>
-	 *		ifge %9, %45 goto blklab13 : int<br>
-	 *		fail ""index out of bounds (negative)""<br>
-	 *		.blklab13<br>
-	 *		lengthof %45 = %7 : [int]<br>
-	 *		iflt %9, %45 goto blklab14 : int<br>
-	 *		fail ""index out of bounds (not less than length)""<br>
-	 *	    .blklab14<br>
-	 *		update %7[%9] = %32 : [int] -> [int]<br>
-	 * </p>
-	 */
-	private void list_update(List<Code> blk, BuildListPattern p){
-		//Change the list_update part
-		List<Code> list_update = p.getPartByName("list_update");
-		//Get the existing indexof bytecode
-		Codes.IndexOf indexof = (IndexOf) list_update.get(0);		
-		int indexOp = indexof.target();
-		blk.add(indexof);
-		//Add the assertion for list size 
-		list_size_assertion(blk, p);
-
-		//Get the assignment of list
-		Codes.Assign list_assign = (Assign) list_update.get(list_update.size()-1);
-		Collection<Integer> operands = new ArrayList<Integer>();
-		operands.add(reg_list_size);
-		//Create an update byte-code, update %7[%9] = %32 : [int] -> [int]
-		blk.add(Codes.Update(list_assign.type(), reg_list, operands, indexOp, list_assign.assignedType(), new ArrayList<String>()));
-	}
-
-	/**
-	 * Create the 'list_size_update' part. For example,
-	 * <p>
-	 * 		const %34 = 1 : int
-	 *		add %35 = %9, %34 : int
-	 *		assign %9 = %35  : int
-	 * </p>
-	 * where %9 is the list_size.
-	 */
-	private void list_size_update(List<Code> blk, BuildListPattern p){
-		//Add the 'list_size_update' part
-		//Create an constant 1, const %34 = 1 : int 
+		// Get the list_update code
+		for (Code code : p.getPartByName("list_update")) {
+			loop_blk.add(code);
+			if (code instanceof Codes.IndexOf) {
+				Codes.IndexOf indexof = (Codes.IndexOf) code;
+				int[] indexOp = new int[1];
+				indexOp[0] = this.reg_list_size;
+				// Add the update byte-code
+				Codes.Update update = Codes.Update(Type.List(Type.Int.T_INT, false), this.reg_list, indexOp, indexof.target(),
+						Type.List(Type.Int.T_INT, false), new ArrayList<String>());
+				loop_blk.add(update);
+				// Stop adding the code.
+				break;
+			}
+		}
+		// Add the list_size_update part
+		// const %19 = 1 : int
 		int reg_one = getAvailableReg();
-		blk.add(Codes.Const(reg_one, Constant.Integer.V_INTEGER(BigInteger.ONE)));
-		//Create a binary operator to add the list_size to one, add %35 = %9, %34 : int
-		int reg_add_list_size = getAvailableReg();
-		blk.add(Codes.BinaryOperator(Type.Int.T_INT, reg_add_list_size, reg_list_size, reg_one, BinaryOperatorKind.ADD));
-		//Assign the above result to the list_size
-		blk.add(Codes.Assign(Type.Int.T_INT, reg_list_size, reg_add_list_size));
+		loop_blk.add(Codes.Const(reg_one, Constant.V_INTEGER(BigInteger.ONE)));
+		// add %20 = %4, %19 : int
+		int reg_inc = getAvailableReg();
+		loop_blk.add(Codes.BinaryOperator(Type.Int.T_INT, reg_inc, this.reg_list_size, reg_one, BinaryOperatorKind.ADD));
+		// assign %4 = %20 : int
+		loop_blk.add(Codes.Assign(Type.Int.T_INT, this.reg_list_size, reg_inc));
+
+		// Convert the array list to an integer array.
+		int[] modifiedOps = new int[ops.size()];
+		for (int i = 0; i < ops.size(); i++) {
+			if (ops.get(i) != null) {
+				modifiedOps[i] = ops.get(i);
+			}
+		}
+		// Create a new loop byte-code with loop var, list_var and list_size
+		Code loop = Codes.Loop(modifiedOps, loop_blk);
+		blk.add(loop);
+	}
+
+	/**
+	 * Adds an assertion to restrict the range of list size and list capacity.
+	 * For example,
+	 * 
+	 * <pre>
+	 * <code>
+	 * assert
+	 * ifeq %4, %2 goto blklab5 : int
+	 * fail
+	 * .blklab5
+	 * </code>
+	 * </pre>
+	 */
+	private void loop_exit(List<Code> blk, BuildListPattern p) {
+		blk.addAll(p.getPartByName("loop_exit"));
+		// Add an assertion to ensure the range of list size.
+		List<Code> assertion_blk = new ArrayList<Code>();
+		String gotoLabel = CodeUtils.freshLabel();
+		// ifeq %4, %2 goto blklab5 : int
+		assertion_blk.add(Codes.If(Type.Int.T_INT, this.reg_list_size, this.reg_list_capacity, Comparator.EQ, gotoLabel));
+		// fail ""index out of bounds (negative)""
+		assertion_blk.add(Codes.Fail());
+		// .blklab5
+		assertion_blk.add(Codes.Label(gotoLabel));
+		blk.add(Codes.Assert(assertion_blk));
+
 	}
 
 	/**
 	 * Create the 'list_assertion' part. For example,
 	 * <p>
-	 * 		assert blklab13
-	 *		ifeq %9, %6 goto blklab13 : int
-	 *		fail ""assertion failed""
-	 *		.blklab13
+	 * assert blklab13 ifeq %9, %6 goto blklab13 : int fail ""assertion failed""
+	 * .blklab13
 	 * </p>
+	 * 
 	 * @param blk
 	 * @param p
 	 */
-	private void list_assertion(List<Code> blk, BuildListPattern p){
-		//Add the list_assertion to check if list_capacity == list_size
-		String endLab = CodeUtils.freshLabel();
-		blk.add(Codes.Assert(endLab));
-		//Create a ifeq byte-code, ifeq %9, %6 goto blklab13 : int
-		blk.add(Codes.If(Type.Int.T_INT, reg_list_size, reg_list_capacity, Comparator.EQ, endLab));
-		blk.add(Codes.Fail("assertion failed"));
-		blk.add(Codes.Label(endLab));
-	}
+	/*
+	 * private void list_assertion(List<Code> blk, BuildListPattern p) { // Add
+	 * the list_assertion to check if list_capacity == list_size String endLab =
+	 * CodeUtils.freshLabel(); blk.add(Codes.Assert(endLab)); // Create a ifeq
+	 * byte-code, ifeq %9, %6 goto blklab13 : int
+	 * blk.add(Codes.If(Type.Int.T_INT, reg_list_size, reg_list_capacity,
+	 * Comparator.EQ, endLab)); blk.add(Codes.Fail("assertion failed"));
+	 * blk.add(Codes.Label(endLab)); }
+	 */
 
 	/**
-	 * Takes a 'BuildListPattern' and outputs a list of transformed byte-code that matches
-	 * with 'BuildListFirstPattern'.
+	 * Takes a 'BuildListPattern' and outputs a list of transformed byte-code
+	 * that matches with 'BuildListFirstPattern'.
+	 * 
 	 * @param p
 	 * @return
 	 */
-	private List<Code> transform(BuildListPattern p){
-		
-		List<Code> blk = new ArrayList<Code>();//Store all the bytecode for the new pattern.
+	private List<Code> transform(BuildListPattern p) {
+
+		List<Code> blk = new ArrayList<Code>();// Store all the bytecode for the
+												// new pattern.
 		this.available_reg = p.factory.getAvailableReg();
-		
-		blk.addAll(p.getPartByName("init_before"));
-		blk.addAll(p.getPartByName("init"));
-		//Make change to the 'list_init' part
+		// Make 'init_before' part.
+		init_before(blk, p);
+		// Make the 'init' part.
+		init(blk, p);
+		// Make the 'init_after' part.
+		init_after(blk, p);
+		// Make the 'list_init' part
 		list_init(blk, p);
-		//Make changes to the 'list_size_init' part
+		// Make the 'list_size_init' part
 		list_size_init(blk, p);
-		//Add all the code in 'init_after'
-		blk.addAll(p.getPartByName("init_after"));
-		loop_header(blk, p);
-		blk.addAll(p.getPartByName("loopbody_before"));
-		blk.addAll(p.getPartByName("loopbody_update"));
-		blk.addAll(p.getPartByName("list_update_before"));
-		//Make changes to 'list_update' part.
-		list_update(blk, p);
-		//Add the 'list_size_update' part
-		list_size_update(blk, p);
-
-		blk.addAll(p.getPartByName("loopbody_after"));
-		blk.addAll(p.getPartByName("loop_exit"));
-
-		//Add the 'list_assertion' part
-		list_assertion(blk, p);
+		// Make the 'loop' part.
+		loop(blk, p);
+		// Make the 'loop_exit' part.
+		loop_exit(blk, p);
+		// Make the 'return' part
 		blk.addAll(p.getPartByName("return"));
 
 		return blk;
 	}
-	
-	
 
 	/**
-	 * Transform a pattern of 'BuildListPattern' type to that of 'BuildListFirstPattern' type.
+	 * Transform a pattern of 'BuildListPattern' type to that of
+	 * 'BuildListFirstPattern' type.
+	 * 
 	 * @param pattern
-	 * @return a list of code based on the design of 'BuildListFirstPattern'. 
+	 * @return a list of code based on the design of 'BuildListFirstPattern'.
 	 */
 	@Override
-	public List<Code> transform(Pattern pattern){
-		//Check if the input pattern is a BuildListPattern. If not, return null.
-		if(!(pattern instanceof BuildListPattern)) return null;
-	
-		return transform((BuildListPattern)pattern);
+	public List<Code> transform(Pattern pattern) {
+		// Check if the input pattern is a BuildListPattern. If not, return
+		// null.
+		if (!(pattern instanceof BuildListPattern))
+			return null;
+
+		return transform((BuildListPattern) pattern);
 	}
 
 }

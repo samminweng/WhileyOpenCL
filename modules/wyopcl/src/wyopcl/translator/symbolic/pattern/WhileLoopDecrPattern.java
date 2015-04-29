@@ -1,7 +1,9 @@
 package wyopcl.translator.symbolic.pattern;
 import java.util.List;
+
 import wyil.lang.Code;
 import wyil.lang.Type;
+import wyopcl.translator.Configuration;
 /**
  * The final class that implemented the while-loop pattens, as follows:
  * <ul>
@@ -15,14 +17,12 @@ import wyil.lang.Type;
  *
  */
 public final class WhileLoopDecrPattern extends WhileLoopPattern{
-	public WhileLoopDecrPattern(boolean isVerbose, List<Type> params, List<Code> blk) {
-		super(isVerbose, params, blk);
-		this.type = "WhileLoopDecrPattern";
+	public WhileLoopDecrPattern(Configuration config, List<Type> params, List<Code> blk) {
+		super(config, params, blk);
 		//Get the decrement
 		if(this.decr != null){
-			this.line = this.loopbody_after(blk, this.line);
 			this.line = this.loop_exit(blk, this.line);
-			
+			this.pattern_name = "WhileLoopDecrPattern";
 			this.isNil = false;	
 		}
 	}
@@ -32,7 +32,7 @@ public final class WhileLoopDecrPattern extends WhileLoopPattern{
 	@Override
 	public String toString() {
 		String result = super.toString();		
-		result += "\nwhile_loop && loop_var("+loop_var+") && decr("+loop_var+", "+decr+")"
+		result += "\n" + pattern_name + "&& loop_var("+loop_var+") && decr("+loop_var+", "+decr+")"
 				+ " && init("+loop_var+", "+init+") &&  while_cond("+loop_var+", "+comparatorOp+", "+loop_bound+")"
 				+ "\n=>loop_iters("+loop_var+", " + getNumberOfIterations()+")";
 		return result;

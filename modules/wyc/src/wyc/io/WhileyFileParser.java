@@ -672,7 +672,7 @@ public class WhileyFileParser {
 	 * The optional <code>Expression</code> assignment is referred to as an
 	 * <i>initialiser</i>.
 	 *
-	 * @param type
+	 * @param pattern_name
 	 *            The declared type for the variable, which will have already
 	 *            been parsed when disambiguating this statement from another.
 	 * @param wf

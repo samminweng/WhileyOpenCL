@@ -24,7 +24,7 @@ public class CodeGenerationTestCase {
 		util = null;
 	}	
 	
-	@Test
+	/*@Test
 	public void test_While() {
 		util.execCodeGeneration(valid_path+"Loop");
 	}	
@@ -48,5 +48,5 @@ public class CodeGenerationTestCase {
 	@Test
 	public void test_Reverse_List() {
 		util.execCodeGeneration(valid_path+"Reverse_List");
-	}
+	}*/
 }

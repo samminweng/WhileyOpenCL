@@ -1,0 +1,129 @@
+----------------Start of reverse function----------------
+The original pattern:
+{
+init_before:
+	lengthof %4 = %0 : [int]
+	assign %3 = %4  : int
+init:
+	assign %1 = %3  : int
+init_after:
+	newlist %6 = () : [void]
+	assign %5 = %6  : [void]
+list_init:
+	assign %2 = %5  : [int]
+loop_header:
+	loop (%1, %2, %7, %8, %9, %10, %11, %12, %13)
+	invariant
+	const %8 = 0 : int
+	ifle %1, %8 goto blklab0 : int
+loopbody_before:
+	const %9 = 1 : int
+	sub %10 = %1, %9 : int
+loopbody_update:
+	assign %1 = %10  : int
+list_update:
+	indexof %11 = %0, %1 : [int]
+	newlist %12 = (%11) : [int]
+	append %13 = %2, %12 : [int]
+	assign %2 = %13  : [int]
+loop_exit:
+	.blklab0
+return:
+	return %2 : [int]
+	return
+}
+BuildList && loop_var(%1) && list_var(%2) && decr(%1, 1) && init(%1, 0 + |%0|) && list_init(%2, 0 + ()) &&  while_cond(%1, >, 0)
+=>loop_iters(%1, 0 + |%0|)
+From BuildList to BuildListFirst, the transformed pattern:
+{
+init_before:
+	lengthof %4 = %0 : [int]
+	assign %3 = %4  : int
+init:
+	assign %1 = %3  : int
+init_after:
+	lengthof %15 = %0 : [int]
+	assign %16 = %15  : int
+	const %18 = 0 : int
+list_init:
+	assign %17 = %0  : [int]
+list_size_init:
+	assign %19 = %18  : int
+loop_header:
+	loop (%1, %17, %19)
+	const %8 = 0 : int
+	ifle %1, %8 goto blklab0 : int
+loopbody_before:
+	const %9 = 1 : int
+	sub %10 = %1, %9 : int
+loopbody_update:
+	assign %1 = %10  : int
+list_update:
+	indexof %11 = %0, %1 : [int]
+	update %17[%19] = %11 : [int] -> [int]
+list_size_update:
+	const %20 = 1 : int
+	add %21 = %19, %20 : int
+	assign %19 = %21  : int
+loop_exit:
+	.blklab0
+	assert
+return:
+	return %2 : [int]
+	return
+}
+BuildListFirst && loop_var(%1) && list_var(%17) && list_size(%19) && list_capacity(%16) && decr(%1, 1) && init(%1, 0 + |%0|) && list_init(%17, 0 + %0) && list_size_init(%19, 0) && while_cond(%1, >, 0)
+=>loop_iters(%1, 0 + |%0|)
+----------------End of reverse function----------------
+----------------Start of transformed_reverse function----------------
+The original pattern:
+{
+init_before:
+	lengthof %6 = %0 : [int]
+	assign %5 = %6  : int
+init:
+	assign %1 = %5  : int
+init_after:
+	lengthof %8 = %0 : [int]
+	assign %7 = %8  : int
+	assign %2 = %7  : int
+	assign %9 = %0  : [int]
+	const %11 = 0 : int
+	assign %10 = %11  : int
+list_init:
+	assign %3 = %9  : [int]
+list_size_init:
+	assign %4 = %10  : int
+loop_header:
+	loop (%1, %3, %4, %12, %13, %14, %15, %16, %17, %18, %19, %20)
+	invariant
+	const %14 = 0 : int
+	ifle %1, %14 goto blklab2 : int
+loopbody_before:
+	const %15 = 1 : int
+	sub %16 = %1, %15 : int
+loopbody_update:
+	assign %1 = %16  : int
+list_update:
+	indexof %17 = %0, %1 : [int]
+	indexof %18 = %0, %1 : [int]
+	update %3[%4] = %18 : [int] -> [int]
+list_size_update:
+	const %19 = 1 : int
+	add %20 = %4, %19 : int
+	assign %4 = %20  : int
+loop_exit:
+	.blklab2
+	assert
+return:
+	return %3 : [int]
+	return
+}
+BuildListFirst && loop_var(%1) && list_var(%3) && list_size(%4) && list_capacity(%2) && decr(%1, 1) && init(%1, 0 + |%0|) && list_init(%3, 0 + %0) && list_size_init(%4, 0) && while_cond(%1, >, 0)
+=>loop_iters(%1, 0 + |%0|)
+----------------End of transformed_reverse function----------------
+----------------Start of main function----------------
+The original pattern:
+Undecidable Pattern
+----------------End of main function----------------
+Pattern matching completed.

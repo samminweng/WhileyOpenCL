@@ -9,7 +9,7 @@ public final class NullPattern extends Pattern {
 	
 	public NullPattern() {
 		super();
-		this.type = "NullPattern";
+		this.pattern_name = "NullPattern";
 	}
 	
 

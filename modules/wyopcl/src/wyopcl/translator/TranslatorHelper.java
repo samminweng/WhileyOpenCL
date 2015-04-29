@@ -6,6 +6,9 @@ import java.util.List;
 import wyil.lang.Code;
 import wyil.lang.Type;
 import wyil.lang.WyilFile.FunctionOrMethod;
+import wyopcl.translator.symbolic.PatternMatcher;
+import wyopcl.translator.symbolic.PatternTransformer;
+import wyopcl.translator.symbolic.pattern.Pattern;
 
 /**
  * 
@@ -22,12 +25,14 @@ public final class TranslatorHelper {
 	 *            the function or method declaration.
 	 * @return the list of code.
 	 */
-	public static List<Code> getCodeBlock(FunctionOrMethod functionOrMethod) {
+	public static List<Code> getCodeBlock(FunctionOrMethod functionOrMethod, Configuration config) {
 		List<Code> code_blk = new ArrayList<Code>();
 		// Iterate the code block to add each code to the code block.
 		for (Code code : functionOrMethod.body()) {
-			//For debugging
-			//System.out.println(code);
+			if(config.isVerbose()){
+				//For debugging
+				System.out.println(code);
+			}			
 			// Get each bytecode and add it to the code_blk.
 			code_blk.add(code);
 		}
@@ -44,12 +49,12 @@ public final class TranslatorHelper {
 	 *            the list of code for a function
 	 * @return the transformed code. If the pattern is not transformable, then
 	 *         return the original code block.
-	 *//*
+	 */
 	public static List<Code> patternMatchingandTransformation(Configuration config, List<Type> params,
 			List<Code> code_blk) {
 		// Initialize the pattern matcher.
 		if (config.isPatternMatching()) {
-			PatternMatcher matcher = new PatternMatcher(config.isVerbose());
+			PatternMatcher matcher = new PatternMatcher(config);
 			Pattern pattern = matcher.analyzePattern(params, code_blk);
 			System.out.println("The original pattern:\n" + pattern);
 			PatternTransformer transformer = new PatternTransformer();
@@ -57,7 +62,7 @@ public final class TranslatorHelper {
 			if (code_blk_after != null) {
 				Pattern transformed_pattern = matcher.analyzePattern(params, code_blk_after);
 				if (!transformed_pattern.isNil) {
-					System.out.println("From " + pattern.getType() + " to " + transformed_pattern.getType()
+					System.out.println("From " + pattern.getPatternName() + " to " + transformed_pattern.getPatternName()
 							+ ", the transformed pattern:\n" + transformed_pattern);
 					return code_blk_after;
 				}
@@ -67,6 +72,6 @@ public final class TranslatorHelper {
 			transformer = null;
 		}
 		return code_blk;
-	}*/
+	}
 
 }
