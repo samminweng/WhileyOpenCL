@@ -204,9 +204,9 @@ public final class CodeGeneratorHelper {
 			return record.toString();
 		}
 
-		if(type instanceof Type.Strung){
+		/*if(type instanceof Type.Strung){
 			return "char*";
-		}
+		}*/
 
 		return null;
 	}
