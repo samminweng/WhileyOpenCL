@@ -42,7 +42,6 @@
 	<packageset dir="modules/wybs/src">
 		<include name="wyfs/**"/>
 		<include name="wybs/**"/>
-		<include name="wycc/**"/>
 	</packageset>
 	<packageset dir="modules/wycs/src">
 		<include name="wycs/**"/>
@@ -68,7 +67,7 @@
 	<exclude name="wycc/testing/**"/>
       </packageset>
       -->
-	<group title="Whiley Build System (WYBS)" packages="wybs:wyfs.*:wybs.*:wycc.*"/>
+	<group title="Whiley Build System (WYBS)" packages="wybs:wyfs.*:wybs.*"/>
 	<group title="Whiley Compiler (WYC)" packages="wyc:wyc.*"/>
 	<group title="Whiley Intermediate Language (WYIL)" packages="wyil:wyil.*"/>
 	<group title="Whiley-2-Java Compiler (WYJC)" packages="wyjc:wyjc.*:wyjvm.*"/>
@@ -119,7 +118,6 @@
 		<include name="bin/wyc"/>
 		<include name="bin/wyjc"/>
 		<include name="bin/wyj"/>
-		<include name="bin/wycc"/>
 		<include name="bin/wycs"/>
 		<include name="bin/wyrl"/>
 		<include name="bin/wy_common.bash"/>
@@ -184,26 +182,11 @@
 <pathelement path="${build.dir}" />
 </path>
 
-<target name="compile-java" depends="clean, build-all">
-<mkdir dir="build" />
-<javac destdir="build" includeantruntime="false">
-	<classpath refid="master-classpath"/>
-	<src path="modules/wybs/src" />
-	<src path="modules/wyc/src" />
-	<src path="modules/wycc/src" />
-	<src path="modules/wycs/src" />
-	<src path="modules/wyil/src" />
-	<src path="modules/wyjc/src" />
-	<src path="modules/wyrl/src" />
-	<src path="modules/wyopcl/src" />
-	<src path="modules/wyopcl/test" />
-</javac>
-</target>
 <!-- Define the path for the generated junit testing report  -->
 <property name="valid.dir" value="report/interpreter/valid"/>
 <property name="invalid.dir" value="report/interpreter/invalid"/>
 <!-- Interpreting the test cases in valid folder -->
-<target name="test-interpreter-valid" depends="compile-java">
+<target name="test-interpreter-valid" depends="build-all">
 <mkdir dir="${valid.dir}" />
 <junit fork="yes">
 	<formatter type="plain" usefile="false" />
@@ -217,7 +200,7 @@
 </junit>
 </target>
 <!-- Interpreting the test cases in invalid folder -->
-<target name="test-interpreter-invalid" depends="compile-java">
+<target name="test-interpreter-invalid" depends="build-all">
 <mkdir dir="${invalid.dir}"/>
 <junit fork="yes">
 	<formatter type="plain" usefile="false" />
@@ -242,7 +225,7 @@
 </junitreport>
 </target>
 <!-- Test the bound analyzer with test cases.-->
-<target name="test-bound" depends="compile-java">
+<target name="test-bound" depends="build-all">
 <mkdir dir="report/bound"/>
 <junit fork="yes">
 	<formatter type="plain" usefile="false" />
@@ -261,7 +244,27 @@
 	<report todir="report/bound" />
 </junitreport>
 </target>
-<!-- Test the code generator with test cases.-->
+<!-- Test the bound analyzer with test cases.-->
+<target name="test-pattern" depends="build-all">
+<mkdir dir="report/pattern"/>
+<junit fork="yes">
+	<formatter type="plain" usefile="false" />
+	<classpath refid="junit-classpath"/>
+	<formatter type="xml" />
+	<batchtest todir="report/pattern">
+		<fileset dir="modules/wyopcl/test">
+			<include name="**/PatternMatchingTestCase*" />
+		</fileset>
+	</batchtest>
+</junit>
+<junitreport todir="report">
+	<fileset dir="report/pattern">
+		<include name="TEST-*.xml" />
+	</fileset>
+	<report todir="report/pattern" />
+</junitreport>
+</target>
+<!-- Test the code generator with test cases.
 <target name="test-code-generator" depends="compile-java">
 <mkdir dir="report/code"/>
 <junit fork="yes">
@@ -280,6 +283,6 @@
 	</fileset>
 	<report todir="report/code" />
 </junitreport>
-</target>
+</target>-->
 
 </project>

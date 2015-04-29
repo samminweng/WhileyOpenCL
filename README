@@ -46,31 +46,32 @@ use the below commands:
 $ git clone https://github.com/samminweng/WhileyOpenCL
 $ cd WhileyOpenCL/
 $ ant
-$ cd tests/bounds/valid
-$ ./../../../bin/wyopcl -bound naive -pattern While_Valid_1.whiley 
-Or add the verbose option to print out the analyzing process.
-$ ./../../../bin/wyopcl -bound naive -pattern -verbose While_Valid_1.whiley
+$ cd tests/bounds
+$ ./../../bin/wyopcl -bound naive WhileLoop.whiley 
+Or use the gradual widening strategy to get more precise bounds.
+$ ./../../bin/wyopcl -bound gradual WhileLoop.whiley
 
-2.2 Code Generator
-Code Generator aims to translate the Whiley program into C code. To
-run the code generator, use the below commands:
-$ git clone https://github.com/samminweng/WhileyOpenCL
-$ cd WhileyOpenCL/
-$ ant
-$ cd tests/code/valid
-$ ./../../../bin/wyopcl -code BoolList_Valid_2.whiley
-$ gcc BoolList_Valid_2.c -o BoolList_Valid_2.out
-$ ./BoolList_Valid_2.out
-
-2.3 Pattern Matcher
+2.2 Pattern Matching and Transformation
 Pattern matcher finds the list of code block at byte-code level and 
-matches it with predefined patterns. To run the pattern match,
-use the below commands:
+matches it with predefined patterns. If the pattern is transformable, 
+then the pattern matching automatically converts the pattern into the
+predefined pattern. To run the pattern match, use the below commands:
 $ git clone https://github.com/samminweng/WhileyOpenCL
 $ cd WhileyOpenCL/
 $ ant
-$ cd tests/pattern/valid
-$ ./../../../bin/wyopcl -pattern Loop.whiley
+$ cd tests/pattern
+$ ./../../bin/wyopcl -pattern While_Valid_1.whiley
+
+[comment]:2.3 Code Generator
+[comment]:Code Generator aims to translate the Whiley program into C code. To
+[comment]:run the code generator, use the below commands:
+[comment]:$ git clone https://github.com/samminweng/WhileyOpenCL
+[comment]:$ cd WhileyOpenCL/
+[comment]:$ ant
+[comment]:$ cd tests/code/valid
+[comment]:$ ./../../../bin/wyopcl -code BoolList_Valid_2.whiley
+[comment]:$ gcc BoolList_Valid_2.c -o BoolList_Valid_2.out
+[comment]:$ ./BoolList_Valid_2.out
 
 ======================================================================
 Unit Testing
@@ -84,10 +85,13 @@ The current success rate is 95.85% (Failures: 22, Errors: 16, Skipped: 94).
 
 2. Whiley-to-OpenCL translator
 2.1 Bound Analyzer
-The bound analyzer currently is being used to analyze the valid test
-Whiley programs, including {IfElse_Valid_1..2}, {BoolList_Valid_2}, 
-{While_Valid_1}, {For_Valid_1}, {While} and {While_1}. To run the tests,
-use the below commands:
-$ ant bound-analyzer
-The unit test results are summarized at 'report/bounds/index.html'. 
+The bound analyzer is being tested with several Whiley programs, including
+{IfElse_Valid_2} and {WhileLoop}. To run the tests, use the below commands:
+$ ant test-bound
+The unit test results are summarized at 'report/bound/index.html'. 
 
+2.2 Pattern Matching and Transformation
+The pattern module is being tested with several Whiley programs, including
+{Loop} and {While_Valid_1}. To run the tests, use the below commands:
+$ ant test-pattern
+The unit test results are summarized at 'report/pattern/index.html'. 
