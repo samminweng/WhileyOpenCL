@@ -248,7 +248,7 @@
 	</junitreport>
 </target>
 <!-- Test the bound analyzer with test cases.-->
-<target name="test-pattern" depends="build-all">
+<target name="test-pattern" depends="compile-java">
 	<mkdir dir="report/pattern" />
 	<junit fork="yes">
 		<formatter type="plain" usefile="false" />
