@@ -7,13 +7,8 @@ import java.math.BigInteger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-//import wyopcl.bound.ConstraintList;
-
-import wyopcl.testing.interpreter.BaseTestUtil;
 import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.Bounds;
-import wyopcl.translator.bound.Domain;
 import wyopcl.translator.bound.BasicBlock.BlockType;
 import wyopcl.translator.bound.constraint.Const;
 import wyopcl.translator.bound.constraint.Equals;
