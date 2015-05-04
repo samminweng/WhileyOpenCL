@@ -34,7 +34,7 @@ blklab1:
 	//return %5 : int
 	return _5;
 	//return
-	return -1;
+	;
 }
 int main(int argc, char** argv){
 	long long _3 = 0;
@@ -96,5 +96,5 @@ int main(int argc, char** argv){
 	indirect_printf(_19);
 
 	//return
-	return -1;
+	;
 }

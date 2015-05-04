@@ -27,10 +27,13 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(valid_path,"IfElse_Valid_2");
 	}	
 	
-	/*@Test
-	public void test_While() {
-		util.execCodeGeneration(valid_path+"Loop");
+	@Test
+	public void test_WhileLoop() {
+		util.execCodeGeneration(valid_path,"WhileLoop");
 	}	
+	
+	
+	/*
 	
 		
 	

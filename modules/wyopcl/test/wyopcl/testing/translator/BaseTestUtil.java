@@ -73,7 +73,7 @@ public final class BaseTestUtil {
 			sysout += ".sysout";
 			pb.directory(file.getParentFile());
 			//start the process.
-			p = pb.start();
+			p = pb.start();		
 			assertOutput(new BufferedReader(new InputStreamReader(p.getInputStream(), Charset.forName("UTF-8"))),
 					new BufferedReader(new FileReader(sysout)));
 		} catch (Exception e) {
@@ -98,7 +98,7 @@ public final class BaseTestUtil {
 			// Create the process with the given options
 			pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-"+options[0], file.getName());
 			pb.directory(file.getParentFile());
-			p = pb.start();
+			p = pb.start();			
 			assertOutput(new BufferedReader(new InputStreamReader(p.getInputStream(), Charset.forName("UTF-8"))),
 					new BufferedReader(new FileReader(sysout)));
 		} catch (Exception e) {
@@ -126,6 +126,8 @@ public final class BaseTestUtil {
 			pb.directory(file.getParentFile());	
 			//Generate the C code.
 			p = pb.start();
+			//Cause the current thread to Wait until the process has terminated.
+			p.waitFor();
 			//Compare the generated C code with the predefined output.
 			assertOutput(new BufferedReader(new FileReader(path+filename+".c")),
 					new BufferedReader(new FileReader(sysout)));
