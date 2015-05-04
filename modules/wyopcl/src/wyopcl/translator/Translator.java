@@ -20,6 +20,8 @@ import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.bound.BoundAnalyzer;
+import wyopcl.translator.generator.CodeGenerator;
+import wyopcl.translator.generator.CodeGeneratorHelper;
 import wyopcl.translator.symbolic.PatternMatcher;
 import wyopcl.translator.symbolic.PatternTransformer;
 import wyopcl.translator.symbolic.pattern.Pattern;
@@ -63,10 +65,10 @@ public class Translator implements Builder {
 				analyzeFunctionalBounds(module);
 				message = "Bound analysis completed.\nFile: " + config.getFilename();
 				break;
-			/*case "code":
+			case "code":
 				generateCodeInC(module);
 				message = "Code generation completed.\nFile: " + config.getFilename() + ".c";
-				break;*/
+				break;
 			case "pattern":
 				patternMatch(module);
 				message = "Pattern matching completed.\nFile: " + config.getFilename();
@@ -112,11 +114,9 @@ public class Translator implements Builder {
 	 * Reads the in-memory WyIL file and generates the code in C
 	 * 
 	 * @param module
-	 *//*
+	 */
 
 	private void generateCodeInC(WyilFile module) {
-		// Check if the Bool type is used in the program.
-		boolean isBoolType = false;
 		// A list of function declaration.
 		List<String> function_list = new ArrayList<String>();
 		// Create a writer to write the C code to a *.c file. PrintWriter
@@ -124,28 +124,25 @@ public class Translator implements Builder {
 		try {
 			PrintWriter writer = new PrintWriter(config.getFilename() + ".c");
 			CodeGeneratorHelper.generateIncludes(writer, config.getFilename());
-			CodeGeneratorHelper.generateClone(writer);
-			CodeGeneratorHelper.generateAppend(writer);
-			CodeGeneratorHelper.generateIndirectInvoked(writer);
-			CodeGeneratorHelper.generateFree_doublePtr(writer);
 			// Iterate each function
 			for (FunctionOrMethod functionOrMethod : module.functionOrMethods()) {
-				CodeGenerator generator = new CodeGenerator(config);
-				String function_del = generator.translate(functionOrMethod);
+				CodeGenerator generator = new CodeGenerator(config, functionOrMethod);
+				String function_del = generator.declareFunction();
 				// Add the function declaration to the list
 				function_list.add(function_del);
+				generator.declareVariables();
+				
 				// Find the matching pattern and transform the code into more
 				// predictable code.
-				List<Code> code_blk = TranslatorHelper.patternMatchingandTransformation(config, functionOrMethod.type().params(),
-						TranslatorHelper.getCodeBlock(functionOrMethod, config));
+				List<Code> code_blk = TranslatorHelper.getCodeBlock(functionOrMethod, config);
+				//List<Code> code_blk = TranslatorHelper.patternMatchingandTransformation(config, functionOrMethod.type().params(),
+				//		codeBlock);
 				// Iterate each byte-code of a function block.
-				generator.IterateBytecode(code_blk, functionOrMethod.name());
-				isBoolType |= generator.isBoolTypeIntroduced();
+				generator.iterateOverCodeBlock(code_blk);
 				// Write out the code to *.c
-				generator.printoutCode(writer, function_del);
+				generator.writeCodeToFile(writer);
 				generator = null;
 			}
-			CodeGeneratorHelper.generateToString(writer, isBoolType);
 			writer.close();
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException("Error occurs in writing " + config.getFilename() + ".c");
@@ -159,7 +156,7 @@ public class Translator implements Builder {
 			throw new RuntimeException("Error occurs in writing " + config.getFilename() + ".h");
 		}
 
-	}*/
+	}
 
 	/**
 	 * Iterate each code of the input function, build up the code blk and then
