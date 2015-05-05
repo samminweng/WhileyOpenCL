@@ -43,7 +43,7 @@ public class CodeGenerator {
 												// and preserve the insertion
 												// orders of variables.
 	private List<String> statements;// store the list of translated C code.
-	private Boolean is_loop;// indicate whether the byte-code is inside a loop.
+	private Codes.BinaryOperator range;// indicate the range that forall loop iterates over. 
 
 	/**
 	 * Constructor
@@ -57,8 +57,6 @@ public class CodeGenerator {
 		this.var_declarations = this.functionOrMethod.attribute(VariableDeclarations.class);
 		this.vars = new LinkedHashMap<String, Type>();
 		this.statements = new ArrayList<String>();
-		this.is_loop = false;
-
 	}
 
 	/**
@@ -343,28 +341,7 @@ public class CodeGenerator {
 			addDeclaration(declaration.type(), name);
 		}
 	}
-
-	/**
-	 * Enable/Disable the loop flag.
-	 * 
-	 * @param enabled
-	 *            enable the loop flag (true: enabled, false: disabled).
-	 */
-	private void setLoopFlag(Boolean enabled) {
-		this.is_loop = enabled;
-	}
-
-	/**
-	 * Returns the loop flag.
-	 * 
-	 * @return
-	 */
-	private Boolean isLoop() {
-		return this.is_loop;
-	}
-
 	
-
 	/**
 	 * Increase the indentation.
 	 */
@@ -572,6 +549,8 @@ public class CodeGenerator {
 			stat += "%" + right + ";";
 			break;
 		case RANGE:
+			//Assign the range with input code for the translation of 'forall' byte-code.
+			this.range = code;
 			stat = null;
 			break;
 		case BITWISEOR:
@@ -888,11 +867,11 @@ public class CodeGenerator {
 	private void translate(Codes.Return code) {
 		String statement = indent;
 		if (code.operand != -1) {
-			//Translate the Return code.
+			// Translate the Return code.
 			statement += "return " + getVarName(code.operand) + ";";
-		}else{
-			//If operand == -1, then add a simple empty code.
-			statement +=";";
+		} else {
+			// If operand == -1, then add a simple empty code.
+			statement += ";";
 		}
 		addStatement(code, statement);
 	}
@@ -908,29 +887,72 @@ public class CodeGenerator {
 		addStatement(code, stat);
 	}
 
+	/**
+	 * Translates the <code>Codes.NewList</code> byte-code. For example,
+	 * 
+	 * <pre>
+	 * <code>
+	 * newlist %6 = () : [void]
+	 * </code>
+	 * </pre>
+	 * 
+	 * can be translated into:
+	 * 
+	 * <pre>
+	 * <code>
+	 * _6_size=0;
+	 * _6 = NULL;
+	 * </code>
+	 * </pre>
+	 * 
+	 * where '_6_size' is the array size of '_6' array. If the newlist byte-code
+	 * initializes the array with inputs, then the array is allocated
+	 * dynamically on the memory space and the translation is as below:
+	 * 
+	 * <pre>
+	 * <code>
+	 * newlist %12 = (%11) : [int]
+	 * </code>
+	 * </pre>
+	 * 
+	 * can be translated into:
+	 * 
+	 * <pre>
+	 * <code>
+	 * _12_size=0;
+	 * _12 = malloc(_12_size*sizeof(int));
+	 * </code>
+	 * </pre>
+	 * 
+	 * @param code
+	 */
 	private void translate(Codes.NewList code) {
-		String stat = indent;
-		String target = prefix + code.target();
-		String type = translate(code.type());
-		// Allocate the memory for the list
-		// vars.put(target, type);
-		addDeclaration(code.type(), target);
+		String target = getVarName(code.target());
 		// Add the 'target_size' variable to indicate the length of the list
 		String target_size = target + "_size";
-		// vars.put(target_size, "long long");
+		// Add the declaration of target_size variable.
 		addDeclaration(Type.Int.T_INT, target_size);
-		// Statements
-		stat = indent + target + "=(" + type + ")malloc(" + (code.operands().length) + "*sizeof(" + translate(code.type().element()) + "));\n";
-		stat += indent + "if(" + target + " == NULL) {fprintf(stderr,\"fail to malloc\"); exit(0);}\n";
-		stat += indent + target_size + "=" + code.operands().length + ";";
-		addStatement(code, stat);
-		// Initialize the all the elements.
-		int index = 0;
-		for (int operand : code.operands()) {
-			stat = indent + target + "[" + index + "]=" + prefix + operand + ";";
-			addStatement(code, stat);
-			index++;
+		// Assign the array size with the number of operands.
+		String stat = indent + target_size + "=" + code.operands().length + ";\n";
+		// Check if the size of input operand is 0.
+		if (code.operands().length == 0) {
+			// Assign a null pointer to the target.
+			stat += indent + target + "= NULL;\n";
+		} else {
+			// Allocate the target with array size.
+			stat += indent + target + "= malloc(" + target_size + "*sizeof(" + translate(code.type().element()) + ");\n";
+			// Initialize the array.
+			int index = 0;
+			for (int operand : code.operands()) {
+				stat += indent + target + "[" + index + "]=" + getVarName(operand) + ";";
+				index++;
+			}
 		}
+		addStatement(code, stat);
+
+		/*
+		 * // Initialize the all the elements.
+		 */
 
 	}
 
@@ -1049,8 +1071,49 @@ public class CodeGenerator {
 		statement += "){\n";
 		// Increase the indent
 		increaseIndent();
-		addStatement(loop_cond, statement);		
+		addStatement(loop_cond, statement);
 	}
+	
+	/**
+	 * Translates the <code>Codes.ForAll</code> byte-code. For example, 
+	 * <pre><code>
+	 * range %8 = %6, %7 : [int]
+	 * forall %2 in %8 (%1, %9, %10) : [int]
+	 * </code></pre>
+	 * can be translated into:
+	 * <pre><code>
+	 * for(_2 = _6; _2 < _7; _2++ ){
+	 * ...
+	 * }
+	 * </code></pre>
+	 * where '_2' is the loop variable and '_6' and '_7' are lower and upper bound respectively. 
+	 * 
+	 * The range byte-code is stored with a global variable temporarily so that the translation of 'forall' byte-code 
+	 * can retrieve the bound information.
+	 * @param code
+	 */
+	private void translate(Codes.ForAll code){
+		String loop_var = getVarName(code.indexOperand);
+		String lower_bound = getVarName(range.operand(0));
+		String upper_bound = getVarName(range.operand(1));
+		//Construct the loop header.
+		String statement = indent+ "for("+loop_var+"="+lower_bound+"; "+loop_var+"<"+upper_bound+"; "+ loop_var+"++){";
+		addStatement(code, statement);
+		//Increase the indentation
+		this.increaseIndent();
+		//Get the code block inside the forall loop.
+		List<Code> code_blk = code.bytecodes();
+		//Translate each byte-code and output each generated code. 
+		this.iterateOverCodeBlock(code_blk);
+		this.decreaseIndent();
+		statement = indent+"}";
+		addStatement(null, statement);//Ending bracket of the forall loop.
+		//Nullify the range.
+		this.range = null;
+		
+	}
+	
+	
 
 	/**
 	 * Iterate over the list of loop byte-code and translate each code into C
@@ -1060,8 +1123,6 @@ public class CodeGenerator {
 	 * @param code
 	 */
 	private void translate(Loop code) {
-		// Set the isLoop flag to be true.
-		this.setLoopFlag(true);
 		// Increase the indentation.
 		this.increaseIndent();
 		List<Code> loop_body = new ArrayList<Code>();
@@ -1080,12 +1141,10 @@ public class CodeGenerator {
 					loop_body.add(loop_code);
 				}
 			}
-		}		
+		}
 		translateLoopHeader(loop_condition);
 		translate(loop_invariant);
-		iterateOverCodeBlock(loop_body);
-		// Disabled the isLoop flag.
-		this.setLoopFlag(false);
+		iterateOverCodeBlock(loop_body);		
 		// Decrease the indentation.
 		this.decreaseIndent();
 		// Add the ending bracket.
@@ -1111,54 +1170,57 @@ public class CodeGenerator {
 
 	/**
 	 * Translates the append byte-code. For example,
-	 * <p>
-	 * <code>append %10 = %1, %9 : [int]</code>
-	 * </p>
+	 * <pre>
+	 * <code>append %13 = %2, %12 : [int]</code>
+	 * </pre>
 	 * can be translated into:
-	 * <p>
-	 * <code>_10_size = _1_size+_9_size;//new array size.</code><br>
-	 * <code>_10=append(_1, _1_size,_9, _9_size);//call the 'append' function.<code><br>
-	 * <code>free(_9);</code>
-	 * </p>
+	 * 
+	 * <pre>
+	 * <code>_13_size = _2_size+_12_size;//new array size.
+	 * _13=append(_2, &_2_size, _12, &_12_size, &_13_size);//call the 'append' function and pass the size argument by reference for the update.
+	 * free(_12);
+	 * </code>
+	 * </pre>
 	 * 
 	 * @param code
 	 */
 	private void translate(ListOperator code) {
-		String target = prefix + code.target();
-		// long long* _10;
-		addDeclaration((Type) code.type(), target);
+		String target = getVarName(code.target());
 		// long long _10_size;
 		addDeclaration(Type.Int.T_INT, target + "_size");
 
-		// _10_size = _1_size+_9_size;
+		//_13_size = _2_size+_12_size;//new array size
 		String stat = indent + target + "_size = ";
 		boolean isFirst = true;
 		for (int operand : code.operands()) {
-			String op = prefix + operand;
-			if (isFirst) {
-				stat += op + "_size";
-			} else {
+			String op = getVarName(operand);
+			if (!isFirst) {
+				//Add '+' operator before the 'size' variable.
 				stat += "+" + op + "_size";
 			}
+			stat += op + "_size";
+			
 			isFirst = false;
 		}
 		stat += ";\n";
-		// Calls the append function.
+		// Calls the append function. For example, _13=append(_2, &_2_size, _12, &_12_size, &_13_size);
 		stat += indent + target + "=append(";
 		isFirst = true;
 		for (int operand : code.operands()) {
-			String op = prefix + operand;
-			if (isFirst) {
-				stat += op + ", " + op + "_size";
-			} else {
-				stat += "," + op + ", " + op + "_size";
+			String op = getVarName(operand);
+			if (!isFirst) {
+				//Add ',' to separate the arguments.
+				stat += ", ";
 			}
+			stat += op + ", &" + op + "_size";
 			isFirst = false;
 		}
+		//Put the target's array size at the end of the input parameters. 
+		stat += ", &"+target+"_size";
 		stat += ");\n";
 
 		// Free the op_2, because op_2 has been appended to the op_1.
-		stat += indent + "free(" + prefix + code.operand(1) + ");";
+		stat += indent + "free(" + getVarName(code.operand(1)) + ");";
 
 		// Put it to the statement list.
 		addStatement(code, stat);
@@ -1193,10 +1255,6 @@ public class CodeGenerator {
 			}
 			return record.toString();
 		}
-
-		/*
-		 * if(type instanceof Type.Strung){ return "char*"; }
-		 */
 
 		return null;
 	}
