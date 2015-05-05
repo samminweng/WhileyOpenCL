@@ -29,10 +29,13 @@ public class CodeGenerationTestCase {
 	
 	@Test
 	public void test_WhileLoop() {
-		util.execCodeGeneration(valid_path,"WhileLoop");
+		util.execCodeGeneration(valid_path, "WhileLoop");
 	}	
 	
-	
+	@Test
+	public void test_While_Valid_1() {
+		util.execCodeGeneration(valid_path, "While_Valid_1");
+	}
 	/*
 	
 		
@@ -42,10 +45,7 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(valid_path+"BoolList_Valid_2");
 	}
 	
-	@Test
-	public void test_While_Valid_1() {
-		util.execCodeGeneration(valid_path+"While_Valid_1");
-	}
+	
 	
 	
 	@Test

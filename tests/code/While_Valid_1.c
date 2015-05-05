@@ -1,6 +1,5 @@
 #include "While_Valid_1.h"
 long long* reverse(long long* _ls, long long _ls_size){
-	long long _ls_size = 0;
 	long long _i = 0;
 	long long* _r = NULL;
 	long long _r_size = 0;

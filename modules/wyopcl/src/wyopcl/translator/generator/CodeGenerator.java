@@ -353,6 +353,36 @@ public class CodeGenerator {
 	}
 
 	/**
+	 * Given a variable name, check if it is the size variable of input parameter. For example,
+	 * <pre><code>
+	 * long long* reverse(long long* _ls, long long _ls_size)
+	 * </code></pre>
+	 * The '_ls_size' variable is the size variable of input parameter 'ls'. 
+	 * 
+	 * @param var_name
+	 * @return true if the variable is the size variable of input parameter. 
+	 * 
+	 */
+	private Boolean isInputParameterSize(String var_name){
+		// Check if the variable is the size variable of the input
+		// parameter.
+		if (var_name.contains("_size")){
+			//Get the array variable. 
+			String array_var = var_name.split("_size")[0];
+			//Check if the array variable is an number. 
+			//If so, the variable is an intermediate variable. Otherwise, it could be an input parameter.
+			if(!(array_var.matches("^_[0-9]+$"))){
+				//check if the array var matches with the variable at index of 0, which is the input paramter.
+				if(array_var.equals("_"+this.var_declarations.get(0).name())){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	
+	/**
 	 * Write out the generated C code, which starts with variable declarations,
 	 * followed by a list of statements and a list of free statements at the
 	 * end.
@@ -368,16 +398,21 @@ public class CodeGenerator {
 			// If the register is not an input.
 			if (!isInputParameter(reg)) {
 				String var_name = var.getKey();
-				Type var_type = var.getValue();
-				// Assign the initial values for local variables.
-				String init = "";
-				if (var_type instanceof Type.List) {
-					init = "NULL";
-				} else if (var_type instanceof Type.Int) {
-					init = "0";
+				// Check if the variable is the size variable of the input
+				// parameter.
+				if (!isInputParameterSize(var_name)) {
+					//Type declaration and initial value assignment.
+					Type var_type = var.getValue();
+					// Assign the initial values for local variables.
+					String init = "";
+					if (var_type instanceof Type.List) {
+						init = "NULL";
+					} else if (var_type instanceof Type.Int) {
+						init = "0";
+					}
+					// Write out the variable declaration.
+					writer.println("\t" + translate(var_type) + " " + var_name + " = " + init + ";");
 				}
-				// Write out the variable declaration.
-				writer.println("\t" + translate(var_type) + " " + var_name + " = " + init + ";");
 			}
 			// increment the register.
 			reg++;
@@ -899,15 +934,18 @@ public class CodeGenerator {
 	 * </code>
 	 * </pre>
 	 * 
-	 * Note that if the new list is an empty list, then its element type is a 'void', which is not supposed to 
-	 * store any value. For example, 
+	 * Note that if the new list is an empty list, then its element type is a
+	 * 'void', which is not supposed to store any value. For example,
+	 * 
 	 * <pre>
 	 * <code>
 	 * newlist %5 = () : [void]
 	 * </code>
 	 * </pre>
-	 * In this case, the void type is converted into integer type by default because there is no type mapping
-	 * to the 'void' type in C. And there is no translation either.  
+	 * 
+	 * In this case, the void type is converted into integer type by default
+	 * because there is no type mapping to the 'void' type in C. And there is no
+	 * translation either.
 	 * 
 	 * @param code
 	 */
@@ -915,21 +953,21 @@ public class CodeGenerator {
 		String target = getVarName(code.target());
 
 		Type elem_type = code.type().element();
-		//Check if the element type is a void, which cannot hold any value. 
-		if(elem_type instanceof Type.Void){
-			//Change the element type to an integer type.
-			elem_type = Type.Int.T_INT;			
-			//Construct a list type of integer element type.
+		// Check if the element type is a void, which cannot hold any value.
+		if (elem_type instanceof Type.Void) {
+			// Change the element type to an integer type.
+			elem_type = Type.Int.T_INT;
+			// Construct a list type of integer element type.
 			wyil.lang.Type list_type = Type.List(Type.Int.T_INT, false);
-			//Update the type of target variable.
+			// Update the type of target variable.
 			addDeclaration(list_type, target);
-		}		
-		
+		}
+
 		// Add the 'target_size' variable to indicate the length of the list
 		String target_size = target + "_size";
 		// Add the declaration of target_size variable.
 		addDeclaration(Type.Int.T_INT, target_size);
-		
+
 		// Check if the size of input operand is 0.
 		if (code.operands().length != 0) {
 			// Assign the array size with the number of operands.
@@ -943,7 +981,7 @@ public class CodeGenerator {
 				index++;
 			}
 			addStatement(code, stat);
-		}else{
+		} else {
 			addStatement(code, null);
 		}
 
@@ -1021,7 +1059,8 @@ public class CodeGenerator {
 			if (type instanceof Type.List) {
 				// Added the additional 'array_size' variable to indicate the
 				// length of an array.
-				//Due to strictly forbidding the overlapping in C, the function is named differently.
+				// Due to strictly forbidding the overlapping in C, the function
+				// is named differently.
 				statement += indent + "indirect_printf_array(" + var + ", " + var + "_size);\n";
 			} else if (type instanceof Type.Int) {
 				statement += indent + "indirect_printf(" + var + ");\n";
