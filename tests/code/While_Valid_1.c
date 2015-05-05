@@ -110,7 +110,7 @@ int main(int argc, char** argv){
 	//const %6 = 0 : int
 	_6 = 0;
 	//const %7 = 10000 : int
-	_7 = 10000;
+	_7 = 1000*10;
 	//range %8 = %6, %7 : [int]
 	//forall %2 in %8 (%1, %9, %10) : [int]
 	for(_i=_6; _i<_7; _i++){

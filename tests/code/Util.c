@@ -63,10 +63,19 @@ void indirect_printf(long long input){
 	printf("%lld\n", input);
 }
 
-/**Print out an array of long long integer*/
+/**Print out an array of long long integers*/
 void indirect_printf_array(long long* input, long long input_size){
-	int i =0;
+	long long i;
+	//Determines whether to add ','.
+	int isFirst = true;
+	printf("\n[");
 	for(i=0;i<input_size;i++){
-		printf("%lld\n", input[i]);
+		if(isFirst){
+			printf("%lld",input[i]);
+			isFirst = false;
+		}else{
+			printf(",%lld",input[i]);
+		}
 	}
+	printf("]\n");
 }
