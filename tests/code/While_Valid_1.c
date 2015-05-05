@@ -8,7 +8,7 @@ long long* reverse(long long* _ls, long long _ls_size){
 	long long _4 = 0;
 	long long* _5 = NULL;
 	long long _5_size = 0;
-	void* _6 = NULL;
+	long long* _6 = NULL;
 	long long _6_size = 0;
 	long long _7 = 0;
 	long long _8 = 0;
@@ -20,15 +20,12 @@ long long* reverse(long long* _ls, long long _ls_size){
 	long long* _13 = NULL;
 	long long _13_size = 0;
 	//lengthof %4 = %0 : [int]
-	_4 = _0_size;
+	_4 = _ls_size;
 	//assign %3 = %4  : int
 	_3 = _4;
 	//assign %1 = %3  : int
 	_i = _3;
 	//newlist %6 = () : [void]
-	_6_size=0;
-	_6= NULL;
-
 	//assign %5 = %6  : [void]
 	_5 = _6;
 	_5_size = _6_size;
@@ -41,7 +38,7 @@ long long* reverse(long long* _ls, long long _ls_size){
 			//invariant
 			{
 				//lengthof %7 = %0 : [int]
-				_7 = _0_size;
+				_7 = _ls_size;
 				//ifle %1, %7 goto blklab1 : int
 				if(_i<=_7){goto blklab1;}
 				//fail
@@ -62,13 +59,13 @@ blklab1:
 			//assign %1 = %10  : int
 			_i = _10;
 			//indexof %11 = %0, %1 : [int]
-			_11=_0[_1];
+			_11=_ls[_i];
 			//newlist %12 = (%11) : [int]
 			_12_size=1;
-			_12= malloc(_12_size*sizeof(long long);
+			_12=(long long*)malloc(_12_size*sizeof(long long));
 			_12[0]=_11;
 			//append %13 = %2, %12 : [int]
-			_13_size = _r_size+_12_size_12_size;
+			_13_size = _r_size+_12_size;
 			_13=append(_r, &_r_size, _12, &_12_size, &_13_size);
 			free(_12);
 			//assign %2 = %13  : [int]
@@ -90,7 +87,7 @@ int main(int argc, char** argv){
 	long long _rs_size = 0;
 	long long* _4 = NULL;
 	long long _4_size = 0;
-	void* _5 = NULL;
+	long long* _5 = NULL;
 	long long _5_size = 0;
 	long long _6 = 0;
 	long long _7 = 0;
@@ -105,9 +102,6 @@ int main(int argc, char** argv){
 	long long* _12 = NULL;
 	long long _12_size = 0;
 	//newlist %5 = () : [void]
-	_5_size=0;
-	_5= NULL;
-
 	//assign %4 = %5  : [void]
 	_4 = _5;
 	_4_size = _5_size;
@@ -123,10 +117,10 @@ int main(int argc, char** argv){
 	for(_i=_6; _i<_7; _i++){
 		//newlist %9 = (%2) : [int]
 		_9_size=1;
-		_9= malloc(_9_size*sizeof(long long);
+		_9=(long long*)malloc(_9_size*sizeof(long long));
 		_9[0]=_i;
 		//append %10 = %1, %9 : [int]
-		_10_size = _xs_size+_9_size_9_size;
+		_10_size = _xs_size+_9_size;
 		_10=append(_xs, &_xs_size, _9, &_9_size, &_10_size);
 		free(_9);
 		//assign %1 = %10  : [int]
@@ -136,8 +130,8 @@ int main(int argc, char** argv){
 //.blklab2
 blklab2:
 	//invoke %12 = (%1) While_Valid_1:reverse : function([int]) -> [int]
-	_12_size=_1_size;
-	_12=reverse(_1 , _1_size);
+	_12_size=_xs_size;
+	_12=reverse(_xs , _xs_size);
 	//assign %11 = %12  : [int]
 	_11 = _12;
 	_11_size = _12_size;
@@ -147,7 +141,7 @@ blklab2:
 	//fieldload %13 = %0 out : {[[int]] args,{method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s} out}
 	//fieldload %14 = %13 println : {method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s}
 	//indirectinvoke %14 (%3) : method(any) -> void
-	indirect_printf(_rs, _rs_size);
+	indirect_printf_array(_rs, _rs_size);
 
 	//return
 	;

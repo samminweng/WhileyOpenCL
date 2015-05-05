@@ -62,3 +62,11 @@ long long* append(long long* op_1, long long* op_1_size, long long* op_2, long l
 void indirect_printf(long long input){
 	printf("%lld\n", input);
 }
+
+/**Print out an array of long long integer*/
+void indirect_printf_array(long long* input, long long input_size){
+	int i =0;
+	for(i=0;i<input_size;i++){
+		printf("%lld\n", input[i]);
+	}
+}
