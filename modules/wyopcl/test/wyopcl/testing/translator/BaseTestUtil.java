@@ -121,7 +121,12 @@ public final class BaseTestUtil {
 		ProcessBuilder pb = null;
 		File file = new File(path+filename+ ".whiley");
 		try {
-			String sysout = path+filename+".c.sysout";
+			String sysout;
+			if(options.length==0){
+				sysout = path+filename+".c.sysout";
+			}else{
+				sysout = path+filename+"."+options[0]+".c.sysout";
+			}
 			pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-code", file.getName());
 			pb.directory(file.getParentFile());	
 			//Generate the C code.

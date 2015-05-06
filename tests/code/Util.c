@@ -79,3 +79,36 @@ void indirect_printf_array(long long* input, long long input_size){
 	}
 	printf("]\n");
 }
+
+
+//Check if the number is a power of 2.
+//See also http://www.exploringbinary.com/ten-ways-to-check-if-an-integer-is-a-power-of-two-in-c/
+int isPowerof2(long long value){
+	//0 is the exceptional case.
+	if(value == 0) return 1;
+	return ((value != 0) && !(value & (value - 1)));
+}
+//Optimizes the Append function by resizing the array by the power of 2. This reduces the number of resizing tasks.
+long long* optimized_append(long long* op_1, long long* op_1_size, long long* op_2, long long* op_2_size, long long* ret_size){
+	long long i;
+	long long *ret;
+	long long allocated_size;
+	//Assign the res with op. That means both of them address to same memory location. In other word, copy the array.
+	ret = op_1;
+	//Check if the size is a power of 2. If so, then reallocate the array size.
+	if(isPowerof2(*op_1_size)){
+		allocated_size = 2;
+		//Realloc the array size of 'res'. Allocate the array size by power of 2.
+		while(allocated_size < (*op_1_size+*op_2_size)){
+			allocated_size *= 2;
+		}				
+		ret = (long long*)realloc(ret, allocated_size*sizeof(long long));
+		if(ret == NULL) {fprintf(stderr,"fail to realloc"); exit(0);}
+	}
+	//Update the item in the appended list.
+	for(i=0;i<*op_2_size;i++){
+		ret[*op_1_size+i]=op_2[i];
+	}
+	*ret_size = *op_1_size+*op_2_size;
+	return ret;
+}

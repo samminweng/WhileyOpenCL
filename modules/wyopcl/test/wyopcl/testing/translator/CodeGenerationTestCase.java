@@ -33,8 +33,9 @@ public class CodeGenerationTestCase {
 	}	
 	
 	@Test
-	public void test_While_Valid_1() {
-		util.execCodeGeneration(valid_path, "While_Valid_1");
+	public void test_While_Valid_1_slow() {
+		//Generate the naive C code  
+		util.execCodeGeneration(valid_path, "While_Valid_1", "slow");
 	}
 	/*
 	
