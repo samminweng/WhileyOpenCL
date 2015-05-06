@@ -116,8 +116,10 @@ public class BuildListPatternTransformer extends Transformer {
 	 * @return
 	 */
 	private int getAvailableReg(Type type) {
-		int reg=++available_reg;
+		int reg=available_reg;
 		this.vars.add(new Declaration(type, reg+""));
+		//Increment the availabe register for the next call.
+		available_reg++;
 		return reg;
 	}
 	
@@ -196,7 +198,8 @@ public class BuildListPatternTransformer extends Transformer {
 	 *            the original pattern.
 	 */
 	private void list_init(List<Code> blk, BuildListPattern p) {
-		this.reg_list = getAvailableReg(Type.List(Type.Int.T_INT, false));
+		//Get list var from the original BuildList pattern.
+		this.reg_list = Integer.parseInt(p.list_var.replace("%", ""));
 		// Create an Assign byte-code
 		blk.add(Codes.Assign(Type.List(Type.Int.T_INT, false), reg_list, reg_input_list));
 	}
@@ -223,6 +226,7 @@ public class BuildListPatternTransformer extends Transformer {
 		blk.add(Codes.Const(reg_zero, Constant.V_INTEGER(BigInteger.ZERO)));
 		this.reg_list_size = getAvailableReg(Type.Int.T_INT);
 		blk.add(Codes.Assign(Type.Int.T_INT, reg_list_size, reg_zero));
+		
 	}
 
 	/**
@@ -270,7 +274,8 @@ public class BuildListPatternTransformer extends Transformer {
 		List<Code> loop_blk = new ArrayList<Code>();
 		// Get the loop condition
 		for (Code code : p.getPartByName("loop_header")) {
-			if (!(code instanceof Codes.Loop) && !(code instanceof Codes.Invariant)) {
+			//if (!(code instanceof Codes.Loop) && !(code instanceof Codes.Invariant)) {
+			if (!(code instanceof Codes.Loop)) {
 				loop_blk.add(code);
 			}
 		}
@@ -302,7 +307,7 @@ public class BuildListPatternTransformer extends Transformer {
 		loop_blk.add(Codes.BinaryOperator(Type.Int.T_INT, reg_inc, this.reg_list_size, reg_one, BinaryOperatorKind.ADD));
 		// assign %4 = %20 : int
 		loop_blk.add(Codes.Assign(Type.Int.T_INT, this.reg_list_size, reg_inc));
-
+		
 		// Convert the array list to an integer array.
 		int[] modifiedOps = new int[ops.size()];
 		for (int i = 0; i < ops.size(); i++) {
@@ -343,26 +348,7 @@ public class BuildListPatternTransformer extends Transformer {
 
 	}
 
-	/**
-	 * Create the 'list_assertion' part. For example,
-	 * <p>
-	 * assert blklab13 ifeq %9, %6 goto blklab13 : int fail ""assertion failed""
-	 * .blklab13
-	 * </p>
-	 * 
-	 * @param blk
-	 * @param p
-	 */
-	/*
-	 * private void list_assertion(List<Code> blk, BuildListPattern p) { // Add
-	 * the list_assertion to check if list_capacity == list_size String endLab =
-	 * CodeUtils.freshLabel(); blk.add(Codes.Assert(endLab)); // Create a ifeq
-	 * byte-code, ifeq %9, %6 goto blklab13 : int
-	 * blk.add(Codes.If(Type.Int.T_INT, reg_list_size, reg_list_capacity,
-	 * Comparator.EQ, endLab)); blk.add(Codes.Fail("assertion failed"));
-	 * blk.add(Codes.Label(endLab)); }
-	 */
-
+	
 	/**
 	 * Takes a 'BuildListPattern' and outputs a list of transformed byte-code
 	 * that matches with 'BuildListFirstPattern'.

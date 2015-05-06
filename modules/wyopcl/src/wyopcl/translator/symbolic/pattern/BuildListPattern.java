@@ -22,9 +22,9 @@ import wyopcl.translator.symbolic.pattern.transform.Transformer;
  *
  */
 public final class BuildListPattern extends WhileLoopPattern implements Transformable {
-	protected String list_var;
-	protected Expr list_init;
-	protected Expr list_update;
+	public String list_var;
+	public Expr list_init;
+	public Expr list_update;
 
 	public BuildListPattern(Configuration config, FunctionOrMethod functionOrMethod) {
 		super(config, functionOrMethod);

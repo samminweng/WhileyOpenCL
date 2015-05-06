@@ -19,13 +19,13 @@ import wyopcl.translator.symbolic.pattern.expression.Expr;
  *
  */
 public final class BuildListFirstPattern extends WhileLoopPattern {
-	protected String list_var;
-	protected String list_size;
-	protected String list_capacity;
-	protected Expr list_init;
-	protected Expr list_update;
-	protected Expr list_size_init;
-	protected Expr list_size_update;
+	public String list_var;
+	public String list_size;
+	public String list_capacity;
+	public Expr list_init;
+	public Expr list_update;
+	public Expr list_size_init;
+	public Expr list_size_update;
 
 	public BuildListFirstPattern(Configuration config, FunctionOrMethod functionOrMethod) {
 		super(config, functionOrMethod);
