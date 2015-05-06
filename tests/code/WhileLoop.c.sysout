@@ -35,7 +35,7 @@ long long f(long long _limit){
 				fprintf(stderr,"fail");
 				exit(0);
 //.blklab2
-blklab2:
+blklab2:;
 				//return
 				;
 			//invariant
@@ -52,7 +52,7 @@ blklab2:
 			_i = _10;
 		}
 //.blklab1
-blklab1:
+blklab1:;
 		//return %2 : int
 		return _sum;
 		//return

@@ -124,10 +124,18 @@ public final class BaseTestUtil {
 			String sysout;
 			if(options.length==0){
 				sysout = path+filename+".c.sysout";
+				pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-code", file.getName());
 			}else{
+				//Separate the generated C code. If the naive mode is enabled, then compare the C file with 'slow' extension.
+				//If the pattern mode is enabled, then compare the C file with 'fast' extension.
+				if(options[0].equals("slow")){
+					pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-code", file.getName());
+				}else{
+					pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-code", "-pattern", file.getName());
+				}				
 				sysout = path+filename+"."+options[0]+".c.sysout";
 			}
-			pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-code", file.getName());
+			
 			pb.directory(file.getParentFile());	
 			//Generate the C code.
 			p = pb.start();

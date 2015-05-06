@@ -44,13 +44,14 @@ init:
 init_after:
 	lengthof %15 = %0 : [int]
 	assign %16 = %15  : int
-	const %18 = 0 : int
+	const %17 = 0 : int
 list_init:
-	assign %17 = %0  : [int]
+	assign %2 = %0  : [int]
 list_size_init:
-	assign %19 = %18  : int
+	assign %18 = %17  : int
 loop_header:
-	loop (%1, %17, %19)
+	loop (%1, %2, %18)
+	invariant
 	const %8 = 0 : int
 	ifle %1, %8 goto blklab0 : int
 loopbody_before:
@@ -60,11 +61,11 @@ loopbody_update:
 	assign %1 = %10  : int
 list_update:
 	indexof %11 = %0, %1 : [int]
-	update %17[%19] = %11 : [int] -> [int]
+	update %2[%18] = %11 : [int] -> [int]
 list_size_update:
-	const %20 = 1 : int
-	add %21 = %19, %20 : int
-	assign %19 = %21  : int
+	const %19 = 1 : int
+	add %20 = %18, %19 : int
+	assign %18 = %20  : int
 loop_exit:
 	.blklab0
 	assert
@@ -72,7 +73,7 @@ return:
 	return %2 : [int]
 	return
 }
-BuildListFirst && loop_var(%1) && list_var(%17) && list_size(%19) && list_capacity(%16) && decr(%1, 1) && init(%1, 0 + |%0|) && list_init(%17, 0 + %0) && list_size_init(%19, 0) && while_cond(%1, >, 0)
+BuildListFirst && loop_var(%1) && list_var(%2) && list_size(%18) && list_capacity(%16) && decr(%1, 1) && init(%1, 0 + |%0|) && list_init(%2, 0 + %0) && list_size_init(%18, 0) && while_cond(%1, >, 0)
 =>loop_iters(%1, 0 + |%0|)
 ----------------End of reverse function----------------
 ----------------Start of main function----------------

@@ -44,7 +44,7 @@ long long* reverse(long long* _ls, long long _ls_size){
 				fprintf(stderr,"fail");
 				exit(0);
 //.blklab1
-blklab1:
+blklab1:;
 				//return
 				;
 			//invariant
@@ -72,7 +72,7 @@ blklab1:
 			_r_size = _13_size;
 		}
 //.blklab0
-blklab0:
+blklab0:;
 		//return %2 : [int]
 		return _r;
 		//return
@@ -127,7 +127,7 @@ int main(int argc, char** argv){
 		_xs_size = _10_size;
 	}
 //.blklab2
-blklab2:
+blklab2:;
 	//invoke %12 = (%1) While_Valid_1:reverse : function([int]) -> [int]
 	_12_size=_xs_size;
 	_12=reverse(_xs , _xs_size);

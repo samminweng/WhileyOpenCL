@@ -16,7 +16,7 @@ long long f(long long _x){
 	//goto blklab1
 	goto blklab1;
 //.blklab0
-blklab0:
+blklab0:;
 	//const %3 = 10 : int
 	_3 = 10;
 	//ifle %0, %3 goto blklab2 : int
@@ -26,9 +26,9 @@ blklab0:
 	//return %4 : int
 	return _4;
 //.blklab2
-blklab2:
+blklab2:;
 //.blklab1
-blklab1:
+blklab1:;
 	//const %5 = 0 : int
 	_5 = 0;
 	//return %5 : int

@@ -37,6 +37,12 @@ public class CodeGenerationTestCase {
 		//Generate the naive C code  
 		util.execCodeGeneration(valid_path, "While_Valid_1", "slow");
 	}
+	
+	@Test
+	public void test_While_Valid_1_fast() {
+		//Generate the naive C code  
+		util.execCodeGeneration(valid_path, "While_Valid_1", "fast");
+	}
 	/*
 	
 		
