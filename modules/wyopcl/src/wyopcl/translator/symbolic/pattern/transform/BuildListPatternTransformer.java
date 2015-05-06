@@ -361,7 +361,7 @@ public class BuildListPatternTransformer extends Transformer {
 		List<Code> blk = new ArrayList<Code>();// Store all the bytecode for the
 												// new pattern.
 		VariableDeclarations p_vars = p.functionOrMethod.attribute(VariableDeclarations.class);
-		this.available_reg = p_vars.size();
+		this.available_reg = p_vars.size()+1;
 		this.vars = new ArrayList<Declaration>();
 		//Add all the declarations from p pattern.
 		for(int i=0;i<p_vars.size();i++){

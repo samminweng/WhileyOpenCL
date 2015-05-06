@@ -18,30 +18,30 @@ long long* reverse(long long* _ls, long long _ls_size){
 	long long _12_size = 0;
 	long long* _13 = NULL;
 	long long _13_size = 0;
-	long long* _14 = NULL;
-	long long _14_size = 0;
-	long long _15 = 0;
+	long long* _15 = NULL;
+	long long _15_size = 0;
 	long long _16 = 0;
 	long long _17 = 0;
 	long long _18 = 0;
 	long long _19 = 0;
+	long long _20 = 0;
 	//lengthof %4 = %0 : [int]
 	_4 = _ls_size;
 	//assign %3 = %4  : int
 	_3 = _4;
 	//assign %1 = %3  : int
 	_i = _3;
-	//lengthof %14 = %0 : [int]
-	_14 = _ls_size;
-	//assign %15 = %14  : int
-	_15 = _14;
+	//lengthof %15 = %0 : [int]
+	_16 = _ls_size;
+	//assign %16 = %15  : int
+	_17 = _16;
 	//assign %2 = %0  : [int]
 	_r = clone(_ls, _ls_size);
 	_r_size = _ls_size;
-	//const %16 = 0 : int
-	_16 = 0;
-	//assign %17 = %16  : int
-	_17 = _16;
+	//const %17 = 0 : int
+	_18 = 0;
+	//assign %18 = %17  : int
+	_19 = _18;
 			//ifle %1, %8 goto blklab0 : int
 		while(_i>_8){
 
@@ -55,7 +55,7 @@ long long* reverse(long long* _ls, long long _ls_size){
 				fprintf(stderr,"fail");
 				exit(0);
 //.blklab1
-blklab1:
+blklab1:;
 				//return
 				;
 			//invariant
@@ -70,26 +70,26 @@ blklab1:
 			_i = _10;
 			//indexof %11 = %0, %1 : [int]
 			_11=_ls[_i];
-			//update %2[%17] = %11 : [int] -> [int]
-			_2[_17] = _11;
-			//const %18 = 1 : int
-			_18 = 1;
-			//add %19 = %17, %18 : int
-			_19=_17+_18;
-			//assign %17 = %19  : int
-			_17 = _19;
+			//update %2[%18] = %11 : [int] -> [int]
+			_r[_19] = _11;
+			//const %19 = 1 : int
+			_20 = 1;
+			//add %20 = %18, %19 : int
+			_20=_19+_20;
+			//assign %18 = %20  : int
+			_19 = _20;
 		}
 //.blklab0
-blklab0:
+blklab0:;
 		//assert
 		{
-			//ifeq %17, %15 goto blklab3 : int
-			if(_17==_15){goto blklab3;}
+			//ifeq %18, %16 goto blklab3 : int
+			if(_19==_17){goto blklab3;}
 			//fail
 			fprintf(stderr,"fail");
 			exit(0);
 //.blklab3
-blklab3:
+blklab3:;
 		//assert
 		}
 		//return %2 : [int]
@@ -146,7 +146,7 @@ int main(int argc, char** argv){
 		_xs_size = _10_size;
 	}
 //.blklab2
-blklab2:
+blklab2:;
 	//invoke %12 = (%1) While_Valid_1:reverse : function([int]) -> [int]
 	_12_size=_xs_size;
 	_12=reverse(_xs , _xs_size);

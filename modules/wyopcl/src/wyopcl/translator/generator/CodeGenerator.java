@@ -808,13 +808,7 @@ public class CodeGenerator {
 	 * 
 	 */
 	private void translate(Codes.Label code) {
-		/*
-		 * //Check if the label is equal to assert_label
-		 * if(assert_labels.contains(code.label)){ //pop up the label from the
-		 * stack. assert_labels.pop(); decreaseIndent(); //Ending clause.
-		 * addStatement(null, indent+"}"); }
-		 */
-		addStatement(code, code.label + ":");
+		addStatement(code, code.label + ":;");
 	}
 
 	/**
@@ -832,7 +826,7 @@ public class CodeGenerator {
 		String stat = indent;
 		// For List type only
 		if (code.type() instanceof Type.List) {
-			stat += prefix + code.target() + "[" + prefix + code.operand(0) + "] = " + prefix + code.result() + ";";
+			stat += getVarName( code.target()) + "[" + getVarName( code.operand(0)) + "] = " + getVarName(code.result()) + ";";
 			addStatement(code, stat);
 		}
 	}
