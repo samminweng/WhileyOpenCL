@@ -31,52 +31,52 @@ long long* reverse(long long* _ls, long long _ls_size){
 	//assign %2 = %5  : [int]
 	_r = _5;
 	_r_size = _5_size;
-			//ifle %1, %8 goto blklab0 : int
-		while(_i>_8){
+	//ifle %1, %8 goto blklab0 : int
+	while(_i>_8){
 
-			//invariant
-			{
-				//lengthof %7 = %0 : [int]
-				_7 = _ls_size;
-				//ifle %1, %7 goto blklab1 : int
-				if(_i<=_7){goto blklab1;}
-				//fail
-				fprintf(stderr,"fail");
-				exit(0);
-//.blklab1
+		//invariant
+		{
+			//lengthof %7 = %0 : [int]
+			_7 = _ls_size;
+			//ifle %1, %7 goto blklab1 : int
+			if(_i<=_7){goto blklab1;}
+			//fail
+			fprintf(stderr,"fail");
+			exit(0);
+			//.blklab1
 blklab1:;
-				//return
-				;
+			//return
+			;
 			//invariant
-			}
-			//const %8 = 0 : int
-			_8 = 0;
-			//const %9 = 1 : int
-			_9 = 1;
-			//sub %10 = %1, %9 : int
-			_10=_i-_9;
-			//assign %1 = %10  : int
-			_i = _10;
-			//indexof %11 = %0, %1 : [int]
-			_11=_ls[_i];
-			//newlist %12 = (%11) : [int]
-			_12_size=1;
-			_12=(long long*)malloc(_12_size*sizeof(long long));
-			_12[0]=_11;
-			//append %13 = %2, %12 : [int]
-			_13_size = _r_size+_12_size;
-			_13=append(_r, &_r_size, _12, &_12_size, &_13_size);
-			free(_12);
-			//assign %2 = %13  : [int]
-			_r = _13;
-			_r_size = _13_size;
 		}
-//.blklab0
+		//const %8 = 0 : int
+		_8 = 0;
+		//const %9 = 1 : int
+		_9 = 1;
+		//sub %10 = %1, %9 : int
+		_10=_i-_9;
+		//assign %1 = %10  : int
+		_i = _10;
+		//indexof %11 = %0, %1 : [int]
+		_11=_ls[_i];
+		//newlist %12 = (%11) : [int]
+		_12_size=1;
+		_12=(long long*)malloc(_12_size*sizeof(long long));
+		_12[0]=_11;
+		//append %13 = %2, %12 : [int]
+		_13_size = _r_size+_12_size;
+		_13=append(_r, &_r_size, _12, &_12_size, &_13_size);
+		free(_12);
+		//assign %2 = %13  : [int]
+		_r = _13;
+		_r_size = _13_size;
+	}
+	//.blklab0
 blklab0:;
-		//return %2 : [int]
-		return _r;
-		//return
-		;
+	//return %2 : [int]
+	return _r;
+	//return
+	;
 }
 int main(int argc, char** argv){
 	long long* _xs = NULL;
@@ -110,7 +110,9 @@ int main(int argc, char** argv){
 	//const %6 = 0 : int
 	_6 = 0;
 	//const %7 = 10000 : int
-	_7 = 10000;
+	//_7 = 10000;
+	//Take input parameter as the array size.
+	readStringAsInteger(argv[1], &_7);	
 	//range %8 = %6, %7 : [int]
 	//forall %2 in %8 (%1, %9, %10) : [int]
 	for(_i=_6; _i<_7; _i++){
@@ -126,11 +128,13 @@ int main(int argc, char** argv){
 		_xs = _10;
 		_xs_size = _10_size;
 	}
-//.blklab2
+	//.blklab2
 blklab2:;
+	getStartingTime();
 	//invoke %12 = (%1) While_Valid_1:reverse : function([int]) -> [int]
 	_12_size=_xs_size;
 	_12=reverse(_xs , _xs_size);
+	getEndingTime();
 	//assign %11 = %12  : [int]
 	_11 = _12;
 	_11_size = _12_size;

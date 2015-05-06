@@ -110,7 +110,8 @@ int main(int argc, char** argv){
 	//const %6 = 0 : int
 	_6 = 0;
 	//const %7 = 10000 : int
-	_7 = 10000;
+	//_7 = 10000;
+	readStringAsInteger(argv[1], &_7);
 	//range %8 = %6, %7 : [int]
 	//forall %2 in %8 (%1, %9, %10) : [int]
 	for(_i=_6; _i<_7; _i++){
@@ -129,8 +130,10 @@ int main(int argc, char** argv){
 //.blklab2
 blklab2:;
 	//invoke %12 = (%1) While_Valid_1:reverse : function([int]) -> [int]
+	getStartingTime();
 	_12_size=_xs_size;
 	_12=reverse(_xs , _xs_size);
+	getEndingTime();
 	//assign %11 = %12  : [int]
 	_11 = _12;
 	_11_size = _12_size;

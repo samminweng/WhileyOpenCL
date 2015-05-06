@@ -1,19 +1,23 @@
 #include "Util.h"
+//Global variable
+double diff;
+clock_t start;
+clock_t end;
 // Convert an array of long long integer into an array of string.  
 void toString(long long arr[], long long size, char** res){  
-	long long i;  
-	char buffer[1024];	  
+	long long i = 0;  
+	char buffer[1024];
+	long long buffer_size = 0;
 	if(res == NULL) {
 		fprintf(stderr, "fail to malloc res in toString(long long arr[], long long size, char** res)\n");
 		exit(0);
 	}  
-	i=0;  
-	for(i=0;i<size;i){	  
+	for(i=0;i<size;i++){	  
 		//Write the array element (long long) to the buffer and get the length   
-		long long length = sprintf(buffer, "%lld", arr[i]);  
+		buffer_size = sprintf(buffer, "%lld", arr[i]);  
 		//Allocate the memory size for the result array, based on the length.  
 		//The string length is the original buffer_size plus 1, so that we can put '\\0' at the end of a string.  
-		res[i] = (char*)malloc((length+1)*sizeof(char));  
+		res[i] = (char*)malloc((buffer_size+1)*sizeof(char));  
 		if(res[i] == NULL) {  
 			fprintf(stderr,"fail to malloc %lld", i);  
 			exit(0);  
@@ -25,8 +29,6 @@ void toString(long long arr[], long long size, char** res){
 long long* clone(long long *arr, long long size){
 	long long *ptr;
 	long long i;
-	long long threshold;
-	threshold = 1000*1000;
 	//Clone all the values from board array due to immutable Whiley value
 	ptr = (long long*)malloc(size*sizeof(long long));
 	//ptr = (long long*)tcmalloc(size*sizeof(long long));
@@ -50,7 +52,7 @@ long long* append(long long* op_1, long long* op_1_size, long long* op_2, long l
 	//Resize the array size of 'ret'.				
 	ret = (long long*)realloc(ret, allocated_size*sizeof(long long));
 	if(ret == NULL) {fprintf(stderr,"fail to realloc"); exit(0);}
-	
+
 	//Update the item in the appended list.
 	for(i=0;i<*op_2_size;i++){
 		ret[*op_1_size+i]=op_2[i];
@@ -112,3 +114,22 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 	*ret_size = *op_1_size+*op_2_size;
 	return ret;
 }
+//Read the string as a long long integer. 
+void readStringAsInteger(char* str, long long* input){
+	sscanf(str, "%lld", input);
+}
+//Get the starting time.
+void getStartingTime(){
+	//Get the starting time.
+	start = clock();
+}
+//Get the ending time and write out the execution time to 'result.txt' file.
+void getEndingTime(){
+	FILE *fp = NULL;
+	//Get the ending time.
+	end = clock();
+	fp= fopen("result.txt", "a");
+	fprintf(fp, "Execution time of reverse function(seconds):%.10lf\n", ((double)(end - start))/CLOCKS_PER_SEC);
+	fclose(fp);
+}
+
