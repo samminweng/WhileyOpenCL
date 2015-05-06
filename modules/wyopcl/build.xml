@@ -5,8 +5,6 @@
     <javac debug="true" debuglevel="vars,lines,source" source="1.7" includeantruntime="true" classpath="../wyrl/src:../wyil/src:../wyc/src:../wybs/src/:../wyjc/src/:../../${JASM_JAR}"> 
       <src path="src"/>
       <!--<include name="*/**"/>-->
-      <!-- Code Generator 
-      <exclude name="wyopcl/translator/generator/**"/>-->
       <!-- Pattern Transformer -->
       <exclude name="wyopcl/translator/symbolic/pattern/transform/WhileLoopIncrPatternTransformer.java"/>
       <!-- Interpreter -->
