@@ -128,21 +128,16 @@ public class Translator implements Builder {
 			CodeGeneratorHelper.generateIncludes(writer, config.getFilename());
 			// Iterate each function
 			for (FunctionOrMethod functionOrMethod : module.functionOrMethods()) {
+				if(config.isPatternMatching()){
+					functionOrMethod = TranslatorHelper.patternMatchingandTransformation(config, functionOrMethod);
+				}
 				CodeGenerator generator = new CodeGenerator(config, functionOrMethod);
 				String function_del = generator.declareFunction();
 				// Add the function declaration to the list
 				function_list.add(function_del);
 				generator.declareVariables();
-				//Produce a list of byte-code for code generation.
-				List<Code> code_blk = functionOrMethod.body().bytecodes();
-				/*// Find the matching pattern and transform the code into more
-				// predictable code.
-				if(config.isPatternMatching()){
-					code_blk = TranslatorHelper.patternMatchingandTransformation(config, functionOrMethod.type().params(), code_blk);
-				}*/
-				//List<Code> 
-				// Iterate each byte-code of a function block.
-				generator.iterateOverCodeBlock(code_blk);
+				// Iterate each byte-code of a function block and produce a list of C code.
+				generator.iterateOverCodeBlock(functionOrMethod.body().bytecodes());
 				// Write out the code to *.c
 				generator.writeCodeToFile(writer);
 				generator = null;
@@ -168,15 +163,15 @@ public class Translator implements Builder {
 	 * 
 	 * @param module
 	 */
-	private void patternMatch(WyilFile module) {
-		PatternMatcher matcher = new PatternMatcher(config);
-		PatternTransformer transformer = new PatternTransformer();
+	private void patternMatch(WyilFile module) {				
 		// Iterate each function
 		for (FunctionOrMethod functionOrMethod : module.functionOrMethods()) {
 			// Begin the function
 			System.out.println("----------------Start of " + functionOrMethod.name() + " function----------------");
+			PatternMatcher matcher = new PatternMatcher(config);
 			Pattern pattern = matcher.analyzePattern(functionOrMethod);
 			System.out.println("The original pattern:\n" + pattern);
+			PatternTransformer transformer = new PatternTransformer();
 			// Find the matching pattern and transform the code into more predictable code.
 			FunctionOrMethod transformed_func = transformer.transformPatternUsingVisitor(pattern);
 			if (transformed_func != null) {
@@ -187,11 +182,10 @@ public class Translator implements Builder {
 				}
 			}
 			System.out.println("----------------End of " + functionOrMethod.name() + " function----------------");
+			// Nullify the matcher and transformer
+			transformer = null;
+			matcher = null;
 		}
-
-		// Nullify the matcher and transformer
-		matcher = null;
-		//transformer = null;
 	}
 
 }
