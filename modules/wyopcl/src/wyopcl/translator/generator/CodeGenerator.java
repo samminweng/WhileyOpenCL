@@ -233,14 +233,17 @@ public class CodeGenerator {
 	 * 
 	 * @param reg
 	 *            the register
-	 * @return the variable name (starting with "_x")
+	 * @return the variable name (starting with "_")
 	 */
 	private String getVarName(int reg) {
-		Declaration declaration = var_declarations.get(reg);
-		if (declaration != null) {
-			String name = declaration.name();
-			if (name != null && !name.isEmpty()) {
-				return prefix + name;
+		//Check if the register has been kept in the functional variable declarations.
+		if(reg<var_declarations.size()){
+			Declaration declaration = var_declarations.get(reg);
+			if (declaration != null) {
+				String name = declaration.name();
+				if (name != null && !name.isEmpty()) {
+					return prefix + name;
+				}
 			}
 		}
 		return prefix + reg;

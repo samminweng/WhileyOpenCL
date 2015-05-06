@@ -49,13 +49,13 @@ public final class TranslatorHelper {
 	 *            the list of code for a function
 	 * @return the transformed code. If the pattern is not transformable, then
 	 *         return the original code block.
-	 */
+	 *//*
 	public static List<Code> patternMatchingandTransformation(Configuration config, List<Type> params,
 			List<Code> code_blk) {
 		// Initialize the pattern matcher.
 		if (config.isPatternMatching()) {
 			PatternMatcher matcher = new PatternMatcher(config);
-			Pattern pattern = matcher.analyzePattern(params, code_blk);
+			Pattern pattern = matcher.analyzePattern();
 			System.out.println("The original pattern:\n" + pattern);
 			PatternTransformer transformer = new PatternTransformer();
 			List<Code> code_blk_after = transformer.transformPatternUsingVisitor(pattern);
@@ -72,6 +72,6 @@ public final class TranslatorHelper {
 			transformer = null;
 		}
 		return code_blk;
-	}
+	}*/
 
 }

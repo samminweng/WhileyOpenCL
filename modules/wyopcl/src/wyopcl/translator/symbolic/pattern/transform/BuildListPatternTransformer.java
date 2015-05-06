@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import wyil.attributes.VariableDeclarations;
 import wyil.lang.Code;
 import wyil.lang.CodeUtils;
 import wyil.lang.Codes;
@@ -96,6 +97,7 @@ public class BuildListPatternTransformer extends Transformer {
 	private int reg_list;
 	private int reg_list_size;
 	private int reg_list_capacity;
+	
 
 	/**
 	 * Constructor
@@ -363,7 +365,7 @@ public class BuildListPatternTransformer extends Transformer {
 
 		List<Code> blk = new ArrayList<Code>();// Store all the bytecode for the
 												// new pattern.
-		this.available_reg = p.factory.getAvailableReg();
+		this.available_reg = p.vars.size();
 		// Make 'init_before' part.
 		init_before(blk, p);
 		// Make the 'init' part.
@@ -389,6 +391,7 @@ public class BuildListPatternTransformer extends Transformer {
 	 * 'BuildListFirstPattern' type.
 	 * 
 	 * @param pattern
+	 * @param vars the variable declarations.
 	 * @return a list of code based on the design of 'BuildListFirstPattern'.
 	 */
 	@Override

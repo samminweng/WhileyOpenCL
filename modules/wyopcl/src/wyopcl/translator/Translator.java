@@ -19,6 +19,7 @@ import wyil.lang.Code;
 import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
+import wyil.util.AttributedCodeBlock;
 import wyopcl.translator.bound.BoundAnalyzer;
 import wyopcl.translator.generator.CodeGenerator;
 import wyopcl.translator.generator.CodeGeneratorHelper;
@@ -131,12 +132,14 @@ public class Translator implements Builder {
 				// Add the function declaration to the list
 				function_list.add(function_del);
 				generator.declareVariables();
-				
-				// Find the matching pattern and transform the code into more
+				//Produce a list of byte-code for code generation.
+				List<Code> code_blk = functionOrMethod.body().bytecodes();
+				/*// Find the matching pattern and transform the code into more
 				// predictable code.
-				List<Code> code_blk = TranslatorHelper.getCodeBlock(functionOrMethod, config);
-				//List<Code> code_blk = TranslatorHelper.patternMatchingandTransformation(config, functionOrMethod.type().params(),
-				//		codeBlock);
+				if(config.isPatternMatching()){
+					code_blk = TranslatorHelper.patternMatchingandTransformation(config, functionOrMethod.type().params(), code_blk);
+				}*/
+				//List<Code> 
 				// Iterate each byte-code of a function block.
 				generator.iterateOverCodeBlock(code_blk);
 				// Write out the code to *.c
@@ -169,29 +172,35 @@ public class Translator implements Builder {
 		PatternTransformer transformer = new PatternTransformer();
 		// Iterate each function
 		for (FunctionOrMethod functionOrMethod : module.functionOrMethods()) {
-			String func_name = functionOrMethod.name();
-			ArrayList<Type> params = functionOrMethod.type().params();
 			// Begin the function
-			System.out.println("----------------Start of " + func_name + " function----------------");
-			List<Code> code_blk = TranslatorHelper.getCodeBlock(functionOrMethod, config);
+			System.out.println("----------------Start of " + functionOrMethod.name() + " function----------------");
 			// Find the matching pattern and transform the code into more
 			// predictable code.
-			Pattern pattern = matcher.analyzePattern(params, code_blk);
+			Pattern pattern = matcher.analyzePattern(functionOrMethod);
 			System.out.println("The original pattern:\n" + pattern);
-			List<Code> code_blk_after = transformer.transformPatternUsingVisitor(pattern);
-			if (code_blk_after != null) {
-				Pattern transformed_pattern = matcher.analyzePattern(params, code_blk_after);
+			List<Code> transformed_code_blk = transformer.transformPatternUsingVisitor(pattern);
+			if (transformed_code_blk != null) {
+				FunctionOrMethod TransformedFunc = new FunctionOrMethod(functionOrMethod.modifiers(), 
+											functionOrMethod.name(),
+											functionOrMethod.type(),
+											new AttributedCodeBlock(transformed_code_blk),
+											functionOrMethod.precondition(),
+											functionOrMethod.postcondition(),
+											functionOrMethod.attributes()
+											);
+				
+				Pattern transformed_pattern = matcher.analyzePattern(TransformedFunc);
 				if (!transformed_pattern.isNil) {
 					System.out.println("From " + pattern.getPatternName() + " to " + transformed_pattern.getPatternName()
 							+ ", the transformed pattern:\n" + transformed_pattern);
 				}
 			}
-			System.out.println("----------------End of " + func_name + " function----------------");
+			System.out.println("----------------End of " + functionOrMethod.name() + " function----------------");
 		}
 
 		// Nullify the matcher and transformer
 		matcher = null;
-		transformer = null;
+		//transformer = null;
 	}
 
 }

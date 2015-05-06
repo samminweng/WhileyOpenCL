@@ -2,9 +2,11 @@ package wyopcl.translator.symbolic.pattern;
 
 import java.util.List;
 
+import wyil.attributes.VariableDeclarations;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Codes.Loop;
+import wyil.lang.WyilFile.FunctionOrMethod;
 import wyil.lang.Type;
 import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.pattern.expression.Expr;
@@ -20,18 +22,17 @@ import wyopcl.translator.symbolic.pattern.transform.Transformer;
  *
  */
 public final class BuildListPattern extends WhileLoopPattern implements Transformable {
-//public final class BuildListPattern extends WhileLoopPattern {
 	protected String list_var;
 	protected Expr list_init;
 	protected Expr list_update;
 
-	public BuildListPattern(Configuration config, List<Type> params, List<Code> blk) {
-		super(config, params, blk);
+	public BuildListPattern(Configuration config, FunctionOrMethod functionOrMethod) {
+		super(config, functionOrMethod);
 		// Check if the inferred increment or decrement is null. If not, then
 		// continue iterating the list of code.
 		// Otherwise, stop constructing the BuildListPattern.
 		if (this.list_var != null && this.list_init != null && (this.incr != null || this.decr != null) && this.list_update != null) {
-			this.line = this.loop_exit(blk, this.line);
+			this.line = this.loop_exit(functionOrMethod.body().bytecodes(), this.line);
 			this.pattern_name = "BuildList";
 			this.isNil = false;
 		}

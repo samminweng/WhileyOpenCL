@@ -3,6 +3,7 @@ import java.util.List;
 
 import wyil.lang.Code;
 import wyil.lang.Type;
+import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.Configuration;
 /**
  * The final class that implemented the while-loop pattens, as follows:
@@ -17,11 +18,11 @@ import wyopcl.translator.Configuration;
  *
  */
 public final class WhileLoopDecrPattern extends WhileLoopPattern{
-	public WhileLoopDecrPattern(Configuration config, List<Type> params, List<Code> blk) {
-		super(config, params, blk);
+	public WhileLoopDecrPattern(Configuration config, FunctionOrMethod functionOrMethod) {
+		super(config, functionOrMethod);
 		//Get the decrement
 		if(this.decr != null){
-			this.line = this.loop_exit(blk, this.line);
+			this.line = this.loop_exit(functionOrMethod.body().bytecodes(), this.line);
 			this.pattern_name = "WhileLoopDecrPattern";
 			this.isNil = false;	
 		}

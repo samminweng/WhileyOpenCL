@@ -5,9 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import wyil.attributes.VariableDeclarations;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
+import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.pattern.expression.ExprFactory;
 /**
@@ -24,6 +26,7 @@ public class Pattern extends Object {
 
 	public ExprFactory factory;
 	public List<Type> params;//The list of parameter types
+	public VariableDeclarations vars;
 
 	//Store the list of code for each part of the pattern.
 	public int line;//keep track of the current line number.
@@ -36,34 +39,29 @@ public class Pattern extends Object {
 	
 	/**
 	 * Base constructor
-	 * @param isVerbose
+	 * @param config
+	 * @param FunctionOrMethod the function or method declaration, including input parameters type,
+	 * a list of code block inside the function body and variable declarations.
 	 */
-	private Pattern(Configuration config, List<Type> params){
+	protected Pattern(Configuration config, FunctionOrMethod functionOrMethod){
 		this();
 		this.config = config;
 		this.factory = new ExprFactory(config);//Create an expression factory to record all the extracted expressions.
 		//Add the input parameters to the expression table.
-		this.params = params;
+		this.params = functionOrMethod.type().params();
 		for(Type param: params){
 			factory.putExpr(param);
 		}
+		//Pass the variable declaraions to the pattern
+		this.vars = functionOrMethod.attribute(VariableDeclarations.class);
+		//The list of code in each pattern part.
+		this.parts = new ArrayList<List<Code>>();
+		this.part_names = new HashMap<Integer, String>();
+		this.line = 0;
+		
 	}	
 	
-	/**
-	 * Multiple constructor
-	 * @param isVerbose
-	 * @param config
-	 * @param params
-	 */
-	public Pattern(Configuration config, List<Type> params, List<Code> blk){
-		this(config, params);
-		if(blk != null){
-			//The list of code in each pattern part.
-			this.parts = new ArrayList<List<Code>>();
-			this.part_names = new HashMap<Integer, String>();
-			this.line = 0;
-		}
-	}	
+	
 
 	/**
 	 * Check if the pattern is null.

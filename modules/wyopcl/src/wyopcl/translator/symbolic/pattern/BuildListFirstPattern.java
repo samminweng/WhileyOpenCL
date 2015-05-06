@@ -6,6 +6,7 @@ import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyil.lang.Codes.Comparator;
+import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.pattern.expression.Expr;
 
@@ -26,8 +27,8 @@ public final class BuildListFirstPattern extends WhileLoopPattern {
 	protected Expr list_size_init;
 	protected Expr list_size_update;
 
-	public BuildListFirstPattern(Configuration config, List<Type> params, List<Code> blk) {
-		super(config, params, blk);
+	public BuildListFirstPattern(Configuration config, FunctionOrMethod functionOrMethod) {
+		super(config, functionOrMethod);
 		
 		// Check if the inferred increment or decrement is null. If not, then
 		// continue iterating the list of code.
@@ -36,7 +37,7 @@ public final class BuildListFirstPattern extends WhileLoopPattern {
 				&& (this.incr != null || this.decr != null)) {
 			// this.line = this.loopbody_after(blk, this.line);
 			if (this.list_update != null && this.list_size_update != null) {
-				this.line = this.loop_exit(blk, this.line);
+				this.line = this.loop_exit(functionOrMethod.body().bytecodes(), this.line);
 				if (this.list_capacity != null) {
 					this.pattern_name = "BuildListFirst";
 					this.isNil = false;

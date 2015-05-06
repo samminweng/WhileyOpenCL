@@ -1,7 +1,6 @@
 package wyopcl.translator.symbolic.pattern.transform;
 
 import java.util.List;
-
 import wyil.lang.Code;
 import wyopcl.translator.symbolic.pattern.Pattern;
 /**
@@ -13,5 +12,6 @@ import wyopcl.translator.symbolic.pattern.Pattern;
  *
  */
 public abstract class Transformer{
+	//public abstract List<Code> transform(Pattern pattern);
 	public abstract List<Code> transform(Pattern pattern);
 }
