@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 
 import wyil.attributes.VariableDeclarations;
+import wyil.attributes.VariableDeclarations.Declaration;
 import wyil.lang.Code;
 import wyil.lang.CodeUtils;
 import wyil.lang.Codes;
@@ -16,6 +17,9 @@ import wyil.lang.Codes.BinaryOperatorKind;
 import wyil.lang.Codes.Comparator;
 import wyil.lang.Codes.IndexOf;
 import wyil.lang.Codes.LengthOf;
+import wyil.lang.Type.Int;
+import wyil.lang.WyilFile.FunctionOrMethod;
+import wyil.util.AttributedCodeBlock;
 import wyopcl.translator.symbolic.pattern.BuildListPattern;
 import wyopcl.translator.symbolic.pattern.Pattern;
 
@@ -97,8 +101,7 @@ public class BuildListPatternTransformer extends Transformer {
 	private int reg_list;
 	private int reg_list_size;
 	private int reg_list_capacity;
-	
-
+	private List<Declaration> vars;
 	/**
 	 * Constructor
 	 */
@@ -106,14 +109,19 @@ public class BuildListPatternTransformer extends Transformer {
 	}
 
 	/**
-	 * Get the unallocated register.
+	 * Get the unallocated register and add new introduced register to the variable declarations.
 	 * 
 	 * @param p
 	 * @return
 	 */
-	private int getAvailableReg() {
-		return ++available_reg;
+	private int getAvailableReg(Type type) {
+		int reg=++available_reg;
+		this.vars.add(new Declaration(type, reg+""));
+		return reg;
 	}
+	
+	
+	
 
 	/**
 	 * Creates the 'init_before' part and copy all the byte-code from the
@@ -163,9 +171,9 @@ public class BuildListPatternTransformer extends Transformer {
 	private void init_after(List<Code> blk, BuildListPattern p) {
 		// Add the initial assignment of list capacity.
 		// Get the length of the input list
-		int reg_target = getAvailableReg();
+		int reg_target = getAvailableReg(Type.List(Type.Int.T_INT, false));
 		blk.add(Codes.LengthOf(Type.List(Type.Int.T_INT, false), reg_target, this.reg_input_list));
-		this.reg_list_capacity = getAvailableReg();
+		this.reg_list_capacity = getAvailableReg(Type.Int.T_INT);
 		blk.add(Codes.Assign(Type.Int.T_INT, this.reg_list_capacity, reg_target));
 	}
 
@@ -187,7 +195,7 @@ public class BuildListPatternTransformer extends Transformer {
 	 *            the original pattern.
 	 */
 	private void list_init(List<Code> blk, BuildListPattern p) {
-		this.reg_list = getAvailableReg();
+		this.reg_list = getAvailableReg(Type.List(Type.Int.T_INT, false));
 		// Create an Assign byte-code
 		blk.add(Codes.Assign(Type.List(Type.Int.T_INT, false), reg_list, reg_input_list));
 	}
@@ -210,9 +218,9 @@ public class BuildListPatternTransformer extends Transformer {
 	 *            the original pattern.
 	 */
 	private void list_size_init(List<Code> blk, BuildListPattern p) {
-		int reg_zero = getAvailableReg();
+		int reg_zero = getAvailableReg(Type.Int.T_INT);
 		blk.add(Codes.Const(reg_zero, Constant.V_INTEGER(BigInteger.ZERO)));
-		this.reg_list_size = getAvailableReg();
+		this.reg_list_size = getAvailableReg(Type.Int.T_INT);
 		blk.add(Codes.Assign(Type.Int.T_INT, reg_list_size, reg_zero));
 	}
 
@@ -286,10 +294,10 @@ public class BuildListPatternTransformer extends Transformer {
 		}
 		// Add the list_size_update part
 		// const %19 = 1 : int
-		int reg_one = getAvailableReg();
+		int reg_one = getAvailableReg(Type.Int.T_INT);
 		loop_blk.add(Codes.Const(reg_one, Constant.V_INTEGER(BigInteger.ONE)));
 		// add %20 = %4, %19 : int
-		int reg_inc = getAvailableReg();
+		int reg_inc = getAvailableReg(Type.Int.T_INT);
 		loop_blk.add(Codes.BinaryOperator(Type.Int.T_INT, reg_inc, this.reg_list_size, reg_one, BinaryOperatorKind.ADD));
 		// assign %4 = %20 : int
 		loop_blk.add(Codes.Assign(Type.Int.T_INT, this.reg_list_size, reg_inc));
@@ -361,11 +369,18 @@ public class BuildListPatternTransformer extends Transformer {
 	 * @param p
 	 * @return
 	 */
-	private List<Code> transform(BuildListPattern p) {
+	private FunctionOrMethod transform(BuildListPattern p) {
 
 		List<Code> blk = new ArrayList<Code>();// Store all the bytecode for the
 												// new pattern.
-		this.available_reg = p.vars.size();
+		VariableDeclarations p_vars = p.functionOrMethod.attribute(VariableDeclarations.class);
+		this.available_reg = p_vars.size();
+		this.vars = new ArrayList<Declaration>();
+		//Add all the declarations from p pattern.
+		for(int i=0;i<p_vars.size();i++){
+			this.vars.add(p_vars.get(i));
+		}		
+		
 		// Make 'init_before' part.
 		init_before(blk, p);
 		// Make the 'init' part.
@@ -382,8 +397,18 @@ public class BuildListPatternTransformer extends Transformer {
 		loop_exit(blk, p);
 		// Make the 'return' part
 		blk.addAll(p.getPartByName("return"));
+		//Create a function block.
+		FunctionOrMethod TransformedFunc = new FunctionOrMethod(p.functionOrMethod.modifiers(), 
+				p.functionOrMethod.name(),
+				p.functionOrMethod.type(),
+				new AttributedCodeBlock(blk),
+				p.functionOrMethod.precondition(),
+				p.functionOrMethod.postcondition(),
+				p.functionOrMethod.attributes()
+				);
+		
 
-		return blk;
+		return TransformedFunc;
 	}
 
 	/**
@@ -395,7 +420,7 @@ public class BuildListPatternTransformer extends Transformer {
 	 * @return a list of code based on the design of 'BuildListFirstPattern'.
 	 */
 	@Override
-	public List<Code> transform(Pattern pattern) {
+	public FunctionOrMethod transform(Pattern pattern) {
 		// Check if the input pattern is a BuildListPattern. If not, return
 		// null.
 		if (!(pattern instanceof BuildListPattern))

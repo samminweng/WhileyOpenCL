@@ -15,6 +15,7 @@ import wycc.util.Pair;
 import wyfs.lang.Path;
 import wyfs.lang.Path.Entry;
 import wyfs.lang.Path.Root;
+import wyil.lang.Attribute;
 import wyil.lang.Code;
 import wyil.lang.Type;
 import wyil.lang.WyilFile;
@@ -178,18 +179,9 @@ public class Translator implements Builder {
 			// predictable code.
 			Pattern pattern = matcher.analyzePattern(functionOrMethod);
 			System.out.println("The original pattern:\n" + pattern);
-			List<Code> transformed_code_blk = transformer.transformPatternUsingVisitor(pattern);
-			if (transformed_code_blk != null) {
-				FunctionOrMethod TransformedFunc = new FunctionOrMethod(functionOrMethod.modifiers(), 
-											functionOrMethod.name(),
-											functionOrMethod.type(),
-											new AttributedCodeBlock(transformed_code_blk),
-											functionOrMethod.precondition(),
-											functionOrMethod.postcondition(),
-											functionOrMethod.attributes()
-											);
-				
-				Pattern transformed_pattern = matcher.analyzePattern(TransformedFunc);
+			FunctionOrMethod transformed_func = transformer.transformPatternUsingVisitor(pattern);
+			if (transformed_func != null) {
+				Pattern transformed_pattern = matcher.analyzePattern(transformed_func);
 				if (!transformed_pattern.isNil) {
 					System.out.println("From " + pattern.getPatternName() + " to " + transformed_pattern.getPatternName()
 							+ ", the transformed pattern:\n" + transformed_pattern);

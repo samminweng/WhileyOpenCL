@@ -26,7 +26,8 @@ public class Pattern extends Object {
 
 	public ExprFactory factory;
 	public List<Type> params;//The list of parameter types
-	public VariableDeclarations vars;
+	//public VariableDeclarations vars;
+	public FunctionOrMethod functionOrMethod;
 
 	//Store the list of code for each part of the pattern.
 	public int line;//keep track of the current line number.
@@ -53,7 +54,7 @@ public class Pattern extends Object {
 			factory.putExpr(param);
 		}
 		//Pass the variable declaraions to the pattern
-		this.vars = functionOrMethod.attribute(VariableDeclarations.class);
+		this.functionOrMethod = functionOrMethod;
 		//The list of code in each pattern part.
 		this.parts = new ArrayList<List<Code>>();
 		this.part_names = new HashMap<Integer, String>();

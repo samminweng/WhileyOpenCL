@@ -3,6 +3,7 @@ package wyopcl.translator.symbolic.pattern.transform;
 import java.util.List;
 
 import wyil.lang.Code;
+import wyil.lang.WyilFile.FunctionOrMethod;
 
 /**
  * Provides a general transformable interface to allow the pattern transformer to perform the operation. If the pattern type is not implemented with
@@ -14,5 +15,5 @@ import wyil.lang.Code;
  *
  */
 public interface Transformable {
-	public List<Code> accept(Transformer transformer);
+	public FunctionOrMethod accept(Transformer transformer);
 }

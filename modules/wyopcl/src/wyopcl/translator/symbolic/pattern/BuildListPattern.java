@@ -191,7 +191,7 @@ public final class BuildListPattern extends WhileLoopPattern implements Transfor
 	}
 
 	@Override
-	public List<Code> accept(Transformer transformer) {
+	public FunctionOrMethod accept(Transformer transformer) {
 		return transformer.transform((Pattern) this);
 	}
 

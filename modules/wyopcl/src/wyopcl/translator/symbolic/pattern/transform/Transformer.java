@@ -1,7 +1,6 @@
 package wyopcl.translator.symbolic.pattern.transform;
 
-import java.util.List;
-import wyil.lang.Code;
+import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.symbolic.pattern.Pattern;
 /**
  * Implements what to do when visiting a Transformable Pattern. The transformer takes a pattern as input, makes some change to the 
@@ -13,5 +12,5 @@ import wyopcl.translator.symbolic.pattern.Pattern;
  */
 public abstract class Transformer{
 	//public abstract List<Code> transform(Pattern pattern);
-	public abstract List<Code> transform(Pattern pattern);
+	public abstract FunctionOrMethod transform(Pattern pattern);
 }
