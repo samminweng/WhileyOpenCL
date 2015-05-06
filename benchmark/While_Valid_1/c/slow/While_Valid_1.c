@@ -7,7 +7,7 @@ long long* reverse(long long* _ls, long long _ls_size){
 	long long _4 = 0;
 	long long* _5 = NULL;
 	long long _5_size = 0;
-	void* _6 = NULL;
+	long long* _6 = NULL;
 	long long _6_size = 0;
 	long long _7 = 0;
 	long long _8 = 0;
@@ -18,30 +18,19 @@ long long* reverse(long long* _ls, long long _ls_size){
 	long long _12_size = 0;
 	long long* _13 = NULL;
 	long long _13_size = 0;
-	long long* _15 = NULL;
-	long long _15_size = 0;
-	long long _16 = 0;
-	long long _17 = 0;
-	long long _18 = 0;
-	long long _19 = 0;
-	long long _20 = 0;
 	//lengthof %4 = %0 : [int]
 	_4 = _ls_size;
 	//assign %3 = %4  : int
 	_3 = _4;
 	//assign %1 = %3  : int
 	_i = _3;
-	//lengthof %15 = %0 : [int]
-	_16 = _ls_size;
-	//assign %16 = %15  : int
-	_17 = _16;
-	//assign %2 = %0  : [int]
-	_r = clone(_ls, _ls_size);
-	_r_size = _ls_size;
-	//const %17 = 0 : int
-	_18 = 0;
-	//assign %18 = %17  : int
-	_19 = _18;
+	//newlist %6 = () : [void]
+	//assign %5 = %6  : [void]
+	_5 = _6;
+	_5_size = _6_size;
+	//assign %2 = %5  : [int]
+	_r = _5;
+	_r_size = _5_size;
 			//ifle %1, %8 goto blklab0 : int
 		while(_i>_8){
 
@@ -70,28 +59,20 @@ blklab1:;
 			_i = _10;
 			//indexof %11 = %0, %1 : [int]
 			_11=_ls[_i];
-			//update %2[%18] = %11 : [int] -> [int]
-			_r[_19] = _11;
-			//const %19 = 1 : int
-			_20 = 1;
-			//add %20 = %18, %19 : int
-			_20=_19+_20;
-			//assign %18 = %20  : int
-			_19 = _20;
+			//newlist %12 = (%11) : [int]
+			_12_size=1;
+			_12=(long long*)malloc(_12_size*sizeof(long long));
+			_12[0]=_11;
+			//append %13 = %2, %12 : [int]
+			_13_size = _r_size+_12_size;
+			_13=append(_r, &_r_size, _12, &_12_size, &_13_size);
+			free(_12);
+			//assign %2 = %13  : [int]
+			_r = _13;
+			_r_size = _13_size;
 		}
 //.blklab0
 blklab0:;
-		//assert
-		{
-			//ifeq %18, %16 goto blklab3 : int
-			if(_19==_17){goto blklab3;}
-			//fail
-			fprintf(stderr,"fail");
-			exit(0);
-//.blklab3
-blklab3:;
-		//assert
-		}
 		//return %2 : [int]
 		return _r;
 		//return
