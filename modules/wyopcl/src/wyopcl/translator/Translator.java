@@ -175,10 +175,9 @@ public class Translator implements Builder {
 		for (FunctionOrMethod functionOrMethod : module.functionOrMethods()) {
 			// Begin the function
 			System.out.println("----------------Start of " + functionOrMethod.name() + " function----------------");
-			// Find the matching pattern and transform the code into more
-			// predictable code.
 			Pattern pattern = matcher.analyzePattern(functionOrMethod);
 			System.out.println("The original pattern:\n" + pattern);
+			// Find the matching pattern and transform the code into more predictable code.
 			FunctionOrMethod transformed_func = transformer.transformPatternUsingVisitor(pattern);
 			if (transformed_func != null) {
 				Pattern transformed_pattern = matcher.analyzePattern(transformed_func);

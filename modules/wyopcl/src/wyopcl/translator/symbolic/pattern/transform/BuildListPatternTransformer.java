@@ -7,6 +7,7 @@ import java.util.List;
 
 import wyil.attributes.VariableDeclarations;
 import wyil.attributes.VariableDeclarations.Declaration;
+import wyil.lang.Attribute;
 import wyil.lang.Code;
 import wyil.lang.CodeUtils;
 import wyil.lang.Codes;
@@ -367,7 +368,7 @@ public class BuildListPatternTransformer extends Transformer {
 	 * that matches with 'BuildListFirstPattern'.
 	 * 
 	 * @param p
-	 * @return
+	 * @return a function block with updated variable declarations.
 	 */
 	private FunctionOrMethod transform(BuildListPattern p) {
 
@@ -398,13 +399,15 @@ public class BuildListPatternTransformer extends Transformer {
 		// Make the 'return' part
 		blk.addAll(p.getPartByName("return"));
 		//Create a function block.
+		List<Attribute> attributes = new ArrayList<Attribute>();
+		attributes.add(new VariableDeclarations(this.vars));
 		FunctionOrMethod TransformedFunc = new FunctionOrMethod(p.functionOrMethod.modifiers(), 
 				p.functionOrMethod.name(),
 				p.functionOrMethod.type(),
 				new AttributedCodeBlock(blk),
 				p.functionOrMethod.precondition(),
 				p.functionOrMethod.postcondition(),
-				p.functionOrMethod.attributes()
+				attributes
 				);
 		
 
