@@ -268,7 +268,7 @@
 	</junitreport>
 </target>
 <!--Test the code generator with test cases.-->
-<target name="test-code-generator" depends="compile-java">
+<target name="test-code" depends="compile-java">
 <mkdir dir="report/code"/>
 <junit fork="yes">
 	<formatter type="plain" usefile="false" />
