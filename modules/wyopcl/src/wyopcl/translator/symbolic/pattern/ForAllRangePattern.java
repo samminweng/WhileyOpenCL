@@ -7,6 +7,7 @@ import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyil.lang.Codes.Loop;
+import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.pattern.expression.Expr;
 import wyopcl.translator.symbolic.pattern.expression.LinearExpr;
@@ -50,14 +51,14 @@ import wyopcl.translator.symbolic.pattern.expression.RangeExpr;
 public class ForAllRangePattern extends LoopPattern {
 	protected String sourceOp;
 
-	public ForAllRangePattern(Configuration config, List<Type> params, List<Code> blk) {
-		super(config, params, blk);
+	public ForAllRangePattern(Configuration config, FunctionOrMethod functionOrMethod) {
+		super(config, functionOrMethod);
 		// Check If the forall bytecode contains the loop and source variables.
 		if (this.loop_var != null && this.sourceOp != null) {
+			List<Code> blk = functionOrMethod.body().bytecodes();
 			// Split the code before loop byte into three parts: init_before,
 			// init, init_after.
 			this.line = this.init(blk, this.sourceOp, this.line);
-			
 			// Check if the loop pattern is constructed successfully.
 			if (this.init != null) {
 				Codes.ForAll forall = (Codes.ForAll) blk.get(this.line);

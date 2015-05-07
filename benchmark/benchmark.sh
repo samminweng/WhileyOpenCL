@@ -6,13 +6,17 @@ run_benchmark_c (){
 	cd "$1"/c/"$2"
     	#compile the source C file with L2 optimization (-O2)
     	#see https://gcc.gnu.org/onlinedocs/gnat_ugn/Optimization-Levels.html#101
-    	gcc -m64 -O2 -o $1.out $1.$2.c
+    	gcc -m64 -O2 $1.c Util.c -o $1.out
     	#array size
-	arraysizes="1000 10000 100000 1000000 10000000"
+	arraysizes="1000000 10000000 100000000"
 	for arraysize in $arraysizes
-    	do	
-		echo "Beginning the benchmarks of " $1 " program in c with " $2 " method on array size of " $arraysize	
-		./$1.out $arraysize
+    	do
+    	#Repeat running the programs
+		for i in {1..10}
+		do
+			echo "Beginning the benchmarks of " $1 " program in c with " $2 " method on array size of " $arraysize	
+			./$1.out $arraysize
+		done
 		#Rename the output 'result.txt'
 		mv result.txt result.$1.c.$2.$arraysize.txt
 		#Added the CPU info
@@ -52,8 +56,8 @@ run_benchmark_java(){
 }
 #
 #Benchmark the generated C code
-#run_benchmark_c While_Valid_1 slow
-#run_benchmark_c While_Valid_1 optimized_slow
-#run_benchmark_c While_Valid_1 fast
+run_benchmark_c While_Valid_1 slow
+run_benchmark_c While_Valid_1 optimized_slow
+run_benchmark_c While_Valid_1 fast
 #Benchmark the generated Java code
-run_benchmark_java While_Valid_1
+#run_benchmark_java While_Valid_1

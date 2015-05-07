@@ -15,11 +15,15 @@ import wycc.util.Pair;
 import wyfs.lang.Path;
 import wyfs.lang.Path.Entry;
 import wyfs.lang.Path.Root;
+import wyil.lang.Attribute;
 import wyil.lang.Code;
 import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
+import wyil.util.AttributedCodeBlock;
 import wyopcl.translator.bound.BoundAnalyzer;
+import wyopcl.translator.generator.CodeGenerator;
+import wyopcl.translator.generator.CodeGeneratorHelper;
 import wyopcl.translator.symbolic.PatternMatcher;
 import wyopcl.translator.symbolic.PatternTransformer;
 import wyopcl.translator.symbolic.pattern.Pattern;
@@ -63,10 +67,10 @@ public class Translator implements Builder {
 				analyzeFunctionalBounds(module);
 				message = "Bound analysis completed.\nFile: " + config.getFilename();
 				break;
-			/*case "code":
+			case "code":
 				generateCodeInC(module);
 				message = "Code generation completed.\nFile: " + config.getFilename() + ".c";
-				break;*/
+				break;
 			case "pattern":
 				patternMatch(module);
 				message = "Pattern matching completed.\nFile: " + config.getFilename();
@@ -112,11 +116,9 @@ public class Translator implements Builder {
 	 * Reads the in-memory WyIL file and generates the code in C
 	 * 
 	 * @param module
-	 *//*
+	 */
 
 	private void generateCodeInC(WyilFile module) {
-		// Check if the Bool type is used in the program.
-		boolean isBoolType = false;
 		// A list of function declaration.
 		List<String> function_list = new ArrayList<String>();
 		// Create a writer to write the C code to a *.c file. PrintWriter
@@ -124,28 +126,22 @@ public class Translator implements Builder {
 		try {
 			PrintWriter writer = new PrintWriter(config.getFilename() + ".c");
 			CodeGeneratorHelper.generateIncludes(writer, config.getFilename());
-			CodeGeneratorHelper.generateClone(writer);
-			CodeGeneratorHelper.generateAppend(writer);
-			CodeGeneratorHelper.generateIndirectInvoked(writer);
-			CodeGeneratorHelper.generateFree_doublePtr(writer);
 			// Iterate each function
 			for (FunctionOrMethod functionOrMethod : module.functionOrMethods()) {
-				CodeGenerator generator = new CodeGenerator(config);
-				String function_del = generator.translate(functionOrMethod);
+				if(config.isPatternMatching()){
+					functionOrMethod = TranslatorHelper.patternMatchingandTransformation(config, functionOrMethod);
+				}
+				CodeGenerator generator = new CodeGenerator(config, functionOrMethod);
+				String function_del = generator.declareFunction();
 				// Add the function declaration to the list
 				function_list.add(function_del);
-				// Find the matching pattern and transform the code into more
-				// predictable code.
-				List<Code> code_blk = TranslatorHelper.patternMatchingandTransformation(config, functionOrMethod.type().params(),
-						TranslatorHelper.getCodeBlock(functionOrMethod, config));
-				// Iterate each byte-code of a function block.
-				generator.IterateBytecode(code_blk, functionOrMethod.name());
-				isBoolType |= generator.isBoolTypeIntroduced();
+				generator.declareVariables();
+				// Iterate each byte-code of a function block and produce a list of C code.
+				generator.iterateOverCodeBlock(functionOrMethod.body().bytecodes());
 				// Write out the code to *.c
-				generator.printoutCode(writer, function_del);
+				generator.writeCodeToFile(writer);
 				generator = null;
 			}
-			CodeGeneratorHelper.generateToString(writer, isBoolType);
 			writer.close();
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException("Error occurs in writing " + config.getFilename() + ".c");
@@ -159,7 +155,7 @@ public class Translator implements Builder {
 			throw new RuntimeException("Error occurs in writing " + config.getFilename() + ".h");
 		}
 
-	}*/
+	}
 
 	/**
 	 * Iterate each code of the input function, build up the code blk and then
@@ -167,34 +163,29 @@ public class Translator implements Builder {
 	 * 
 	 * @param module
 	 */
-	private void patternMatch(WyilFile module) {
-		PatternMatcher matcher = new PatternMatcher(config);
-		PatternTransformer transformer = new PatternTransformer();
+	private void patternMatch(WyilFile module) {				
 		// Iterate each function
 		for (FunctionOrMethod functionOrMethod : module.functionOrMethods()) {
-			String func_name = functionOrMethod.name();
-			ArrayList<Type> params = functionOrMethod.type().params();
 			// Begin the function
-			System.out.println("----------------Start of " + func_name + " function----------------");
-			List<Code> code_blk = TranslatorHelper.getCodeBlock(functionOrMethod, config);
-			// Find the matching pattern and transform the code into more
-			// predictable code.
-			Pattern pattern = matcher.analyzePattern(params, code_blk);
+			System.out.println("----------------Start of " + functionOrMethod.name() + " function----------------");
+			PatternMatcher matcher = new PatternMatcher(config);
+			Pattern pattern = matcher.analyzePattern(functionOrMethod);
 			System.out.println("The original pattern:\n" + pattern);
-			List<Code> code_blk_after = transformer.transformPatternUsingVisitor(pattern);
-			if (code_blk_after != null) {
-				Pattern transformed_pattern = matcher.analyzePattern(params, code_blk_after);
+			PatternTransformer transformer = new PatternTransformer();
+			// Find the matching pattern and transform the code into more predictable code.
+			FunctionOrMethod transformed_func = transformer.transformPatternUsingVisitor(pattern);
+			if (transformed_func != null) {
+				Pattern transformed_pattern = matcher.analyzePattern(transformed_func);
 				if (!transformed_pattern.isNil) {
 					System.out.println("From " + pattern.getPatternName() + " to " + transformed_pattern.getPatternName()
 							+ ", the transformed pattern:\n" + transformed_pattern);
 				}
 			}
-			System.out.println("----------------End of " + func_name + " function----------------");
+			System.out.println("----------------End of " + functionOrMethod.name() + " function----------------");
+			// Nullify the matcher and transformer
+			transformer = null;
+			matcher = null;
 		}
-
-		// Nullify the matcher and transformer
-		matcher = null;
-		transformer = null;
 	}
 
 }

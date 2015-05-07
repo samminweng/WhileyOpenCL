@@ -9,6 +9,7 @@ import wyil.lang.Codes.Invariant;
 import wyil.lang.Codes.Loop;
 import wyil.lang.Type;
 import wyil.lang.Codes.Comparator;
+import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.pattern.expression.LinearExpr;
 
@@ -32,13 +33,14 @@ public abstract class WhileLoopPattern extends LoopPattern {
 	 * @param params
 	 * @param blk
 	 */
-	public WhileLoopPattern(Configuration config, List<Type> params, List<Code> blk) {
-		super(config, params, blk);
+	public WhileLoopPattern(Configuration config, FunctionOrMethod functionOrMethod) {
+		super(config, functionOrMethod);
 		// If the list of code contains the loop variable, then proceed the
 		// pattern matching.
 		if (loop_var != null) {
 			// Split the code before loop byte into three parts: init_before,
 			// init, init_after.
+			List<Code> blk = functionOrMethod.body().bytecodes();
 			this.line = this.init(blk, this.loop_var, this.line);
 			// Check if the loop pattern is constructed successfully.
 			if (this.init != null) {

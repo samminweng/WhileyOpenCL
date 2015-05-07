@@ -7,6 +7,7 @@ import java.util.List;
 
 import wyil.lang.Code;
 import wyil.lang.Type;
+import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.pattern.BuildListFirstPattern;
 import wyopcl.translator.symbolic.pattern.BuildListPattern;
@@ -46,15 +47,15 @@ public class PatternMatcher {
 	 * @param block the code block
 	 * @return pattern. If not found, return null.
 	 */
-	public Pattern analyzePattern(List<Type> params, List<Code> block){
+	public Pattern analyzePattern(FunctionOrMethod functionOrMethod){
 		Pattern pattern = null;		
 		//Iterate over all the available patterns.
 		for(Class<? extends Pattern> avail_Pattern: avail_Patterns){
 			try {
 				//Get the constructor				
-				Constructor<? extends Pattern> constructor = avail_Pattern.getConstructor(Configuration.class, List.class, List.class);
+				Constructor<? extends Pattern> constructor = avail_Pattern.getConstructor(Configuration.class, FunctionOrMethod.class);
 				if(constructor!=null){
-					pattern = constructor.newInstance(this.config, params, block);
+					pattern = constructor.newInstance(this.config, functionOrMethod);
 					//Check if the loop block is matched with the pattern. If so, then return the pattern. 
 					if(!pattern.isNil()){
 						return pattern;

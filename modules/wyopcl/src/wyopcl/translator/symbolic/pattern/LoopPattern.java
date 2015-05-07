@@ -1,8 +1,11 @@
 package wyopcl.translator.symbolic.pattern;
 import java.util.List;
+
+import wyil.attributes.VariableDeclarations;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
+import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.pattern.expression.Expr;
 import wyopcl.translator.symbolic.pattern.expression.LinearExpr;
@@ -24,10 +27,10 @@ public abstract class LoopPattern extends Pattern {
 	protected String comparatorOp;
 	protected Expr loop_bound;
 
-	public LoopPattern(Configuration config, List<Type> params, List<Code> blk) {
-		super(config, params, blk);
+	public LoopPattern(Configuration config, FunctionOrMethod functionOrMethod) {
+		super(config, functionOrMethod);
 		// Get the loop variable.
-		this.loop_var = loop_var(blk);
+		this.loop_var = loop_var(functionOrMethod.body().bytecodes());
 	}
 
 	/**

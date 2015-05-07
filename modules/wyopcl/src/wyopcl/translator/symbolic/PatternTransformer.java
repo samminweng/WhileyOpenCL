@@ -3,7 +3,9 @@ package wyopcl.translator.symbolic;
 import java.util.ArrayList;
 import java.util.List;
 
+import wyil.attributes.VariableDeclarations.Declaration;
 import wyil.lang.Code;
+import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.symbolic.pattern.Pattern;
 import wyopcl.translator.symbolic.pattern.transform.BuildListPatternTransformer;
 import wyopcl.translator.symbolic.pattern.transform.Transformable;
@@ -28,14 +30,14 @@ public class PatternTransformer {
 	 * @param p
 	 * @return
 	 */
-	public List<Code> transformPatternUsingVisitor(Pattern p) {
+	public FunctionOrMethod transformPatternUsingVisitor(Pattern p) {
 		//Check if the pattern is transformable. If so, then find the corresponding transformer to do program transformation. 
 		if(p instanceof Transformable){
 			//Iterate all the classes
 			for(Transformer avail_transformer : avail_transformers){				
-				List<Code> code_blk = ((Transformable) p).accept(avail_transformer);
-				if(code_blk != null){
-					return code_blk;
+				FunctionOrMethod func = ((Transformable) p).accept(avail_transformer);
+				if(func != null){
+					return func;
 				}
 			}
 		}		

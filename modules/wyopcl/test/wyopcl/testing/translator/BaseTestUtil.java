@@ -22,7 +22,8 @@ public final class BaseTestUtil {
 			+ lib_path + "wybs-"+ version + ".jar" + File.pathSeparator 
 			+ lib_path + "wyil-" + version + ".jar" + File.pathSeparator
 			+ lib_path + "wyc-" + version + ".jar" + File.pathSeparator;
-	final String runtime = lib_path + "wyrt-" + version + ".jar";	
+	final String runtime = lib_path + "wyrt-" + version + ".jar";
+	Process p;
 	public BaseTestUtil() {
 		
 	}
@@ -30,36 +31,22 @@ public final class BaseTestUtil {
 	/**
 	 * Execute the wyopcl with the given option and check if the executed result match with the expected output file. 
 	 * @param pb the process builder
-	 * @param sysout
+	 * @param output_reader the reader of the output (console/file). Execute the process and read the output results as a buffered reader.
+	 * @param expected_reader the reader of the predefined output file (*.sysout). Read the expected output file.
 	 * @throws IOException
 	 */
-	private void assertOutput(ProcessBuilder pb, String sysout) throws IOException{
-		Process p = pb.start();
-		//Execute the process and read the output results as a buffered reader.
-		BufferedReader executed_reader = new BufferedReader(new InputStreamReader(p.getInputStream(), Charset.forName("UTF-8")));
-		//Read the expected output file.
-		FileReader file_reader = new FileReader(sysout);
-		BufferedReader expected_reader = new BufferedReader(file_reader);
-		String output = null;
-		while ((output = executed_reader.readLine()) != null) {
-			String expected = expected_reader.readLine();
-			if(expected != null){
-				assertEquals(expected, output);
-			}				
+	private void assertOutput(BufferedReader output_reader, BufferedReader expected_reader) throws IOException{
+		String expected = null;
+		//Takes out each line from expected file and check if it matches with each line from the output.
+		while ((expected = expected_reader.readLine()) != null) {
+			String output = output_reader.readLine();
+			assertEquals(expected, output);			
 		}
 		//Nullify the file input/output objects.	
 		expected_reader.close();
-		file_reader.close();
-		file_reader = null;
 		expected_reader = null;
-		executed_reader.close();
-		executed_reader =null;
-		//Terminate the process.
-		while (p != null) {
-			p.destroy();
-			p = null;
-		}
-		
+		output_reader.close();
+		output_reader =null;
 	}
 	
 	
@@ -71,23 +58,24 @@ public final class BaseTestUtil {
 	public void execBoundAnalysis(String path, String filename, String... options) {
 		ProcessBuilder pb = null;		
 		File file = new File(path+filename+ ".whiley");
-		try {	
-			
-			String sysout_file_name = path+filename+"."+options[0]+"."+options[1];
+		try {
+			String sysout = path+filename+"."+options[0]+"."+options[1];
 			// Set the working directory.
 			switch(options.length){
 			case 2:
 				pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-"+options[0], options[1], file.getName());
 				break;
 			case 3:
-				sysout_file_name += "."+options[2];
+				sysout += "."+options[2];
 				pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-"+options[0], options[1], options[2], file.getName());
 				break;
 			}			
-			sysout_file_name += ".sysout";
+			sysout += ".sysout";
 			pb.directory(file.getParentFile());
-			assertOutput(pb, sysout_file_name);			
-			
+			//start the process.
+			p = pb.start();		
+			assertOutput(new BufferedReader(new InputStreamReader(p.getInputStream(), Charset.forName("UTF-8"))),
+					new BufferedReader(new FileReader(sysout)));
 		} catch (Exception e) {
 			terminate();
 			throw new RuntimeException("Test file: " + file.getName(), e);
@@ -106,12 +94,13 @@ public final class BaseTestUtil {
 		ProcessBuilder pb = null;
 		File file = new File(path+filename+ ".whiley");
 		try {
-			String sysout = path+filename+"."+options[0];
+			String sysout = path+filename+"."+options[0]+".sysout";
 			// Create the process with the given options
 			pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-"+options[0], file.getName());
-			sysout += ".sysout";
-			pb.directory(file.getParentFile());			
-			assertOutput(pb, sysout);
+			pb.directory(file.getParentFile());
+			p = pb.start();			
+			assertOutput(new BufferedReader(new InputStreamReader(p.getInputStream(), Charset.forName("UTF-8"))),
+					new BufferedReader(new FileReader(sysout)));
 		} catch (Exception e) {
 			terminate();
 			throw new RuntimeException("Test file: " + file.getName(), e);
@@ -127,32 +116,48 @@ public final class BaseTestUtil {
 	 * Translate a Whiley program into the C code. 
 	 * @param path_whiley
 	 * @param widen
-	 *//*
-	public void execCodeGeneration(String path_whiley) {
-		File file = new File(path_whiley+ ".whiley");
-		try {			
-			pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-code", file.getName());
-			pb.directory(file.getParentFile());			
+	 */
+	public void execCodeGeneration(String path, String filename, String... options) {
+		ProcessBuilder pb = null;
+		File file = new File(path+filename+ ".whiley");
+		try {
+			String sysout;
+			if(options.length==0){
+				sysout = path+filename+".c.sysout";
+				pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-code", file.getName());
+			}else{
+				//Separate the generated C code. If the naive mode is enabled, then compare the C file with 'slow' extension.
+				//If the pattern mode is enabled, then compare the C file with 'fast' extension.
+				if(options[0].equals("slow")){
+					pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-code", file.getName());
+				}else{
+					pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-code", "-pattern", file.getName());
+				}				
+				sysout = path+filename+"."+options[0]+".c.sysout";
+			}
+			
+			pb.directory(file.getParentFile());	
+			//Generate the C code.
 			p = pb.start();
-			
-			BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream(), Charset.forName("UTF-8")));
-			String output = null;
-			while ((output = reader.readLine()) != null) {
-				System.out.println(output);
-			}			
-			reader.close();
-			System.out.println("Finish" + pb.directory()+path_whiley+ ".whiley");
-			
+			//Cause the current thread to Wait until the process has terminated.
+			p.waitFor();
+			//Compare the generated C code with the predefined output.
+			assertOutput(new BufferedReader(new FileReader(path+filename+".c")),
+					new BufferedReader(new FileReader(sysout)));
 		} catch (Exception e) {
 			terminate();
 			throw new RuntimeException("Test file: " + file.getName(), e);
 		}		
 		file = null;		
-	}*/
+	}
 	
 	
 	public void terminate() {
-		
+		//Terminate the process.
+		while (p != null) {
+			p.destroy();
+			p = null;
+		}
 	}
 	
 }

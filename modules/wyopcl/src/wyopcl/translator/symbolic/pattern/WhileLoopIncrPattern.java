@@ -4,6 +4,7 @@ import java.util.List;
 
 import wyil.lang.Code;
 import wyil.lang.Type;
+import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.Configuration;
 /**
  * The class that implemented the while-loop patterns, as follows:
@@ -21,11 +22,11 @@ public class WhileLoopIncrPattern extends WhileLoopPattern{
 	 * @param params the list of parameter types
 	 * @param blk the list of code block.
 	 */
-	public WhileLoopIncrPattern(Configuration config, List<Type> params, List<Code> blk) {
-		super(config, params, blk);
+	public WhileLoopIncrPattern(Configuration config, FunctionOrMethod functionOrMethod) {
+		super(config, functionOrMethod);
 		//Get the increment and check if it is null.
 		if(this.incr != null){
-			this.line = this.loop_exit(blk, this.line);
+			this.line = this.loop_exit(functionOrMethod.body().bytecodes(), this.line);
 			this.pattern_name = "WhileLoopIncrPattern";
 			this.isNil = false;			
 		}

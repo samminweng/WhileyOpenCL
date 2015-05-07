@@ -1,5 +1,4 @@
 import whiley.lang.System
-import whiley.lang.Int
 
 function reverse([int] ls) -> [int]:
     int i = |ls|
@@ -23,14 +22,9 @@ function reverse([int] ls) -> [int]:
 */
 
 method main(System.Console sys) -> void:
-	if |sys.args| == 0:
-		sys.out.println("usage: While_Valid_1 <limit>")
-	else:
-		int|null limit = Int.parse(sys.args[0])
-		if limit != null:
-			//Create the input list using the for loop. But this parts takes lots of time
-			[int] xs = []
-			for i in 0.. limit:
-				xs = xs ++ [i]
-			[int] rs = reverse(xs)
-			sys.out.println(rs)
+	//Create the input list using the for loop. But this parts takes lots of time
+	[int] xs = []
+	for i in 0.. 10000:
+		xs = xs ++ [i]
+	[int] rs = reverse(xs)
+	sys.out.println(rs)

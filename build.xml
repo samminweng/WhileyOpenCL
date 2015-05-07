@@ -267,7 +267,7 @@
 		<report todir="report/pattern" />
 	</junitreport>
 </target>
-<!-- Test the code generator with test cases.
+<!--Test the code generator with test cases.-->
 <target name="test-code-generator" depends="compile-java">
 <mkdir dir="report/code"/>
 <junit fork="yes">
@@ -276,7 +276,7 @@
 	<formatter type="xml" />
 	<batchtest todir="report/code">
 		<fileset dir="modules/wyopcl/test">
-			<include name="**/CodeGeneratorTestCase*" />
+			<include name="**/CodeGenerationTestCase*" />
 		</fileset>
 	</batchtest>
 </junit>
@@ -286,6 +286,6 @@
 	</fileset>
 	<report todir="report/code" />
 </junitreport>
-</target>-->
+</target>
 
 </project>
