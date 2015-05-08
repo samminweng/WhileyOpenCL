@@ -71,7 +71,7 @@ void indirect_printf_array(long long* input, long long input_size){
 	//Determines whether to add ','.
 	int isFirst = true;
 	printf("\n[");
-	for(i=0;i<input_size;i++){
+	for(i=0;i<input_size && i < 10;i++){
 		if(isFirst){
 			printf("%lld",input[i]);
 			isFirst = false;
