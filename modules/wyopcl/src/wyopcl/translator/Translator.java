@@ -60,9 +60,8 @@ public class Translator implements Builder {
 			WyilFile module = sf.read();
 			// Put the in-memory WyIL file to config for later retrieval.
 			this.config.setProperty("module", module);
-			//Remove the prefix of file name './' on Linux.
-			//e.g. the file name of './While_Valid_1.whiley' is 'While_Valid_1.whiley' 
-			this.config.setProperty("filename", module.filename().split(".whiley")[0].replace("./", ""));
+			String filename = module.filename().split(".whiley")[0];			
+			this.config.setProperty("filename", filename);
 			// Check the mode
 			switch (config.getMode()) {
 			case "bound":
