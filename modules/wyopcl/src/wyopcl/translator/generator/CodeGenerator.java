@@ -59,27 +59,7 @@ public class CodeGenerator {
 		this.statements = new ArrayList<String>();
 	}
 
-	/**
-	 * Add the statements about iterations.
-	 */
-	/*
-	 * private void addStartingIteration(String func_name, Code code){ // Adds
-	 * the timer to measure the starting time at the main method
-	 * if(func_name.equals("main")&& code instanceof Codes.Invoke){ //Get the
-	 * invoke code Codes.Invoke invoked = (Codes.Invoke)code;
-	 * if(invoked.name.name().equals("reverse")){ //Add the number of iteration
-	 * vars.put("iteration", Type.Int.T_INT); //Add variable declaration
-	 * vars.put("start", "clock_t"); vars.put("end", "clock_t");
-	 * vars.put("diff", "double"); //Add a file pointer vars.put("*fp", "FILE");
-	 * statements.add(indent + "diff=0;"); //Initial the return value
-	 * statements.add(indent +prefix+invoked.target()+"=NULL;"); //Use the
-	 * for-loop to repeatedly execute the function. statements.add(indent +
-	 * "for(iteration=0;iteration<10;iteration++){"); increaseIndent(); //Add
-	 * the starting timer statements.add(indent + "start = clock();"); //check
-	 * if the return reg is null. If so, nullify it. statements.add(indent
-	 * +"if("+prefix+invoked.target()+
-	 * "!= NULL){ free("+prefix+invoked.target()+");}"); } } }
-	 */
+	
 	/**
 	 * Adds a block of code to free any variable whose type is a list as the
 	 * array in C is allocated by malloc.
@@ -96,32 +76,7 @@ public class CodeGenerator {
 				statements.add(indent + "free(" + var_name + ");");
 			}
 		}
-	}
-
-	/*
-	*//**
-	 * Adds the ending timer and calculate the execution time
-	 * 
-	 * @param func_name
-	 */
-	/*
-	 * private void addEndingIteration(String func_name, Code code){ //Adds the
-	 * ending time and calculate and print out the execution time
-	 * if(func_name.equals("main") && code instanceof Codes.Invoke){
-	 * Codes.Invoke invoked = (Codes.Invoke)code;
-	 * if(invoked.name.name().equals("reverse")){ //Add the ending timer
-	 * statements.add(indent + "end = clock();"); //Print out . //Create a file
-	 * statements.add(indent + "fp= fopen(\"result.txt\", \"a\");"); //Write out
-	 * the execution time of each iteration to the txt file. //This is
-	 * hard-coded statements.add(indent + "fprintf(fp, \"Array size:%lld\\t" +
-	 * "Execution time of reverse function(seconds):%.10lf\\n\"" +
-	 * ", _4, ((double)(end - start))/CLOCKS_PER_SEC);"); //Close the txt file
-	 * statements.add(indent+"fclose(fp);"); statements.add(indent +
-	 * "diff += end - start;"); decreaseIndent(); //The end of iteration
-	 * while-loop. statements.add(indent + "}"); statements.add(indent +
-	 * "printf(\"Execution time:%.10lf seconds\", diff/(CLOCKS_PER_SEC*iteration));"
-	 * ); } } }
-	 */
+	}	
 
 	/**
 	 * Iterates over the list of byte-code to generate the corresponding C code.
@@ -907,8 +862,7 @@ public class CodeGenerator {
 	 * 
 	 * <pre>
 	 * <code>
-	 * _6_size=0;
-	 * _6 = NULL;
+	 * _6 = malloc(0);
 	 * </code>
 	 * </pre>
 	 * 
@@ -979,7 +933,9 @@ public class CodeGenerator {
 			}
 			addStatement(code, stat);
 		} else {
-			addStatement(code, null);
+			//Translates the empty list, e.g. 'newlist %3 = () : [void]' can be converted into '_3 = malloc(0);'.
+			String stat = indent + target_size + "= malloc(0);";
+			addStatement(code, stat);
 		}
 
 	}
