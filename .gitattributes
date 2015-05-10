@@ -10,7 +10,14 @@
 *.h text
 
 # Declare files that will always have CRLF line endings on checkout.
-*.sln text eol=crlf
+*.h         eol=crlf
+*.cpp       eol=crlf
+*.rc        eol=crlf
+*.vcproj    eol=crlf
+*.bat       eol=crlf
+*.sln       eol=crlf
+*.java      eol=crlf
+*.ico       -text
 
 # Denote all files that are truly binary and should not be modified.
 *.png binary
