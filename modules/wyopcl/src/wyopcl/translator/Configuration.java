@@ -25,8 +25,18 @@ public class Configuration {
 		this.properties.put("modes", new ArrayList<String>());
 	}	
 
-	public void setProperty(String key, Object value){	
-		this.properties.put(key, value);
+	public void setProperty(String key, Object value){
+		if(key.equals("filename")){
+			String filename = (String)value;
+			//Remove the prefix of file name './' on Linux.
+			//e.g. the file name of './While_Valid_1.whiley' is 'While_Valid_1.whiley' 
+			filename = filename.replace("./", "");
+			//Remove the prefix of file name '.\While_Valid_1.whiley' on Windows.
+			filename = filename.replace(".\\", "");	
+			this.properties.put("filename", filename);
+		}else{
+			this.properties.put(key, value);
+		}
 	}
 
 	public Object getProperty(String key){
