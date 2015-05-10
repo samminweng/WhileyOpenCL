@@ -7,7 +7,7 @@ clock_t end;
 void toString(long long arr[], long long size, char** res){  
 	long long i = 0;  
 	char buffer[1024];
-	long long buffer_size = 0;
+	size_t buffer_size = 0;
 	if(res == NULL) {
 		fprintf(stderr, "fail to malloc res in toString(long long arr[], long long size, char** res)\n");
 		exit(0);
@@ -27,8 +27,8 @@ void toString(long long arr[], long long size, char** res){
 }
 //Clone an array
 long long* clone(long long *arr, long long size){
-	long long *ptr;
-	long long i;
+	long long *ptr = NULL;
+	long long i = 0;
 	//Clone all the values from board array due to immutable Whiley value
 	ptr = (long long*)malloc(size*sizeof(long long));
 	//ptr = (long long*)tcmalloc(size*sizeof(long long));
@@ -42,9 +42,9 @@ long long* clone(long long *arr, long long size){
 //Append op_2 to op_1 and return the op_1.
 //Resize the list one bye one and append each item to the list. Use the 'call by the reference' to update the array size.
 long long* append(long long* op_1, long long* op_1_size, long long* op_2, long long* op_2_size, long long* ret_size){
-	long long i;
-	long long *ret;
-	long long allocated_size;
+	long long i = 0;
+	long long *ret =NULL; 
+	long long allocated_size = 0;
 	//Assign the ret with op. That means both of them address to same memory location. In other word, copy the array.
 	ret = op_1;
 	//The allocated size is the original list size plus the right list size.
@@ -65,19 +65,26 @@ void indirect_printf(long long input){
 	printf("%lld\n", input);
 }
 
-/**Print out an array of long long integers*/
+/**Print out an array of long long integers. If the array size > 10, then 
+print the first 10 items and the last item.*/
 void indirect_printf_array(long long* input, long long input_size){
-	long long i;
+	long long i = 0;
 	//Determines whether to add ','.
 	int isFirst = true;
+	int max_i = 10;
 	printf("\n[");
-	for(i=0;i<input_size;i++){
+	//Print the first 10 items
+	for(i=0;i<input_size&&i<max_i;i++){
 		if(isFirst){
 			printf("%lld",input[i]);
 			isFirst = false;
 		}else{
 			printf(",%lld",input[i]);
 		}
+	}
+	//Print the '...' to represent the remaing items and the last item.
+	if(input_size>i){
+		printf(" ... %lld", input[input_size-1]);
 	}
 	printf("]\n");
 }
