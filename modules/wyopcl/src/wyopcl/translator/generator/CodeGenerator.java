@@ -46,7 +46,7 @@ public class CodeGenerator {
 	private Codes.BinaryOperator range;// indicate the range that forall loop
 										// iterates over.
 
-	// private List<Type.Record> record_types;
+	private List<String> input_params;//Store all the names of input parameters.
 
 	/**
 	 * Constructor
@@ -60,7 +60,11 @@ public class CodeGenerator {
 		this.var_declarations = this.functionOrMethod.attribute(VariableDeclarations.class);
 		this.vars = new LinkedHashMap<String, Type>();
 		this.statements = new ArrayList<String>();
-		// this.record_types = record_types;
+		this.input_params = new ArrayList<String>();
+		//Get the input parameters.
+		for(int reg=0; reg< functionOrMethod.type().params().size();reg++){
+			this.input_params.add(prefix+this.var_declarations.get(reg).name());
+		}
 	}
 
 	/**
@@ -176,20 +180,6 @@ public class CodeGenerator {
 		return null;
 	}
 
-	/**
-	 * Check if the register is an input parameter of the function.
-	 * 
-	 * @param reg
-	 * @return
-	 */
-	private boolean isInputParameter(int reg) {
-		// Check if the register number is less than the input parameter sizes.
-		// If so, then the register is an input.
-		if (reg < this.functionOrMethod.type().params().size()) {
-			return true;
-		}
-		return false;
-	}
 
 	/**
 	 * Get the variable name of the given register
@@ -345,32 +335,26 @@ public class CodeGenerator {
 	 * @return true if the variable is the size variable of input parameter.
 	 * 
 	 */
-	private Boolean isInputParameterSize(String var_name) {
+	private Boolean isInputParameter(String var_name) {
 		// Check if the variable is the size variable of the input
 		// parameter.
-		if (var_name.contains("_size")) {
+		String variable_name = var_name;
+		if (variable_name.contains("_size")) {
 			// Get the array variable.
-			String[] split = var_name.split("_size");
+			String[] split = variable_name.split("_size");
 			// Check if the split variable name has at least two items.
 			if (split.length >= 1) {
-				String array_var = split[0];
-				// Check if the array variable is an number.
-				// If so, the variable is an intermediate variable. Otherwise,
-				// it could be an input parameter.
-				if (!(array_var.matches("^_[0-9]+$"))) {
-					// Get the input parameter.
-					int param_size = functionOrMethod.type().params().size();
-					for (int param = 0; param < param_size; param++) {
-						// check if the array var matches with the input
-						// parameter.
-						if (array_var.equals("_" + this.var_declarations.get(param).name())) {
-							return true;
-						}
-					}
-				}
+				variable_name = split[0];
 			}
-
+		}	
+		// Check if the variable_name is an number.
+		// If so, the variable is an intermediate variable. Otherwise,  it could be an input parameter.
+		if (!variable_name.isEmpty() &&!(variable_name.matches("^_[0-9]+$"))) {
+			// Check if the input parameter contains the variable name.
+			return this.input_params.contains(variable_name);
 		}
+		
+		
 		return false;
 	}
 
@@ -385,30 +369,26 @@ public class CodeGenerator {
 		// function declaration
 		writer.println(func_declaration + "{");
 		// Variable declaration with initial values.
-		int reg = 0;
 		for (Entry<String, Type> var : vars.entrySet()) {
 			// If the register is not an input.
-			if (!isInputParameter(reg)) {
-				String var_name = var.getKey();
-				// Check if the variable is the size variable of the input
-				// parameter.
-				if (!isInputParameterSize(var_name)) {
-					// Type declaration and initial value assignment.
-					Type var_type = var.getValue();
-					// Assign the initial values for local variables.
-					String init = indent + translate(var_type) + " " + var_name;
-					if (var_type instanceof Type.List) {
-						init += " = NULL";
-					} else if (var_type instanceof Type.Int) {
-						init += " = 0";
-					}
-					init += ";";
-					// Write out the variable declaration.
-					writer.println(init);
+			String var_name = var.getKey();
+			// Check if the variable is the size variable of the input
+			// parameter.
+			if (!isInputParameter(var_name)) {
+				// Type declaration and initial value assignment.
+				Type var_type = var.getValue();
+				// Assign the initial values for local variables.
+				String init = indent + translate(var_type) + " " + var_name;
+				if (var_type instanceof Type.List) {
+					init += " = NULL";
+				} else if (var_type instanceof Type.Int) {
+					init += " = 0";
 				}
+				init += ";";
+				// Write out the variable declaration.
+				writer.println(init);
 			}
-			// increment the register.
-			reg++;
+
 		}
 		// Statments
 		for (String stat : statements) {
@@ -504,7 +484,7 @@ public class CodeGenerator {
 			// long long _11_size;
 			addDeclaration(Type.Int.T_INT, target_size);
 			// Check if the op is the input parameters or not.
-			if (isInputParameter(code.operand(0))) {
+			if (isInputParameter(op)) {
 				// If so, then the operand is cloned and
 				// _4 = clone(_0, _0_size);
 				statement = indent + target + " = clone(" + op + ", " + op + "_size);\n";
@@ -514,7 +494,7 @@ public class CodeGenerator {
 			}
 			// _1_size = _10_size;
 			statement += indent + target_size + " = " + op + "_size;";
-		} 
+		}
 		// Add the statement to the list of statements.
 		addStatement(code, statement);
 	}

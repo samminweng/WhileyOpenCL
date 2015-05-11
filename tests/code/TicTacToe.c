@@ -62,7 +62,6 @@ blklab7:;
 	;
 }
 long long countOf(Square* _pieces, long long _pieces_size, Square _s){
-	Square _s;
 	long long _count = 0;
 	long long _size = 0;
 	long long _i = 0;
