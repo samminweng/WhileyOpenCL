@@ -140,10 +140,10 @@ public final class CodeGeneratorHelper {
 				//Use the 'typedef' keyword in C to give the type a new name
 				statements += "typedef long long "+ type.name()+";\n";
 			}else if(type.type() instanceof Type.Record){
-				statements += "struct " + type.name() + "{\n";
+				statements += "typedef struct " + type.name() + "{\n";
 				// Get the 'struct' keyword in C to convert the type into the structure in C. 
 				statements += translate(type.type());
-				statements += "};\n";
+				statements += "} "+type.name()+";\n";
 			}
 		}
 		writer.println(statements);

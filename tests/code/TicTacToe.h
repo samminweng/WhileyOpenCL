@@ -13,10 +13,10 @@ typedef long long nat;
 //Square
 typedef long long Square;
 //Board
-struct Board{
+typedef struct Board{
 Square* pieces;
 nat move;
-};
+} Board;
 
 Board EmptyBoard();
 long long countOf(Square* _pieces, long long _pieces_size, Square _s);
