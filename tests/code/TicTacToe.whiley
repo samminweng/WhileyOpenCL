@@ -1,6 +1,4 @@
 import whiley.lang.System
-type nat is (int x) where x >= 0
-
 // ==================================================================
 // A square on the board is either blank, or holds either a circle or
 // cross.
@@ -10,8 +8,8 @@ constant CIRCLE is 1
 constant CROSS is 2
 constant SQUARESIZE is 9
 
+type nat is (int x) where x >= 0
 type Square is (int x) where x == BLANK || x == CIRCLE || x == CROSS
-
 // ==================================================================
 // A board consists of 9 squares, and a move counter
 // ==================================================================

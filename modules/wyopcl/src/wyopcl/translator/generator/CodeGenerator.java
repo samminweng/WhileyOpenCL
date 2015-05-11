@@ -45,7 +45,8 @@ public class CodeGenerator {
 	private List<String> statements;// store the list of translated C code.
 	private Codes.BinaryOperator range;// indicate the range that forall loop
 										// iterates over.
-
+	//private List<Type.Record> record_types;
+	
 	/**
 	 * Constructor
 	 * 
@@ -58,6 +59,7 @@ public class CodeGenerator {
 		this.var_declarations = this.functionOrMethod.attribute(VariableDeclarations.class);
 		this.vars = new LinkedHashMap<String, Type>();
 		this.statements = new ArrayList<String>();
+		//this.record_types = record_types;
 	}
 
 	
@@ -134,6 +136,11 @@ public class CodeGenerator {
 		// Check if the type is a record and its field contains "println" .
 		if (type instanceof Type.Record) {
 			Type.Record record = (Type.Record) type;
+			//Add the record type to the list
+			//if(!this.record_types.contains(record)){
+			//	this.record_types.add(record);
+			//}				
+			
 			// If so, then the record loads the "println" from the
 			// sys.out.console.
 			// At this stage, we dont use this record.
@@ -1232,6 +1239,14 @@ public class CodeGenerator {
 	 * @return the result string
 	 */
 	private String translate(Type type) {
+		//The existential type, e.g. function EmptyBoard() -> (Board r)
+		//The return type of 'EmptyBoard' function is 'Board'.
+		if(type instanceof Type.Nominal){
+			Type.Nominal nomial = (Type.Nominal)type;
+			return nomial.name().name();
+		}
+		
+		
 		if (type instanceof Type.Int || type instanceof Type.Bool) {
 			return "long long";
 		}
@@ -1372,6 +1387,9 @@ public class CodeGenerator {
 	 */
 	private void translate(NewRecord code) {
 		NewRecord newrecord = (NewRecord)code;
+		
+		
+		
 		String statement = "";
 		int index = 0;
 		//Iterate the record's fields.

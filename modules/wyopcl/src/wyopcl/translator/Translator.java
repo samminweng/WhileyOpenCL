@@ -60,7 +60,7 @@ public class Translator implements Builder {
 			WyilFile module = sf.read();
 			// Put the in-memory WyIL file to config for later retrieval.
 			this.config.setProperty("module", module);
-			String filename = module.filename().split(".whiley")[0];			
+			String filename = module.filename().split(".whiley")[0];
 			this.config.setProperty("filename", filename);
 			// Check the mode
 			switch (config.getMode()) {
@@ -122,15 +122,12 @@ public class Translator implements Builder {
 	private void generateCodeInC(WyilFile module) {
 		// A list of function declaration.
 		List<String> function_list = new ArrayList<String>();
-		// Create a writer to write the C code to a *.c file. PrintWriter
-		// writer;
 		try {
+			// Create a writer to write the C code to a *.c file. 
 			PrintWriter writer = new PrintWriter(config.getFilename() + ".c");
-			CodeGeneratorHelper.generateIncludes(writer, config.getFilename());
-			CodeGeneratorHelper.generateConstant(writer, module.constants());
 			// Iterate each function
 			for (FunctionOrMethod functionOrMethod : module.functionOrMethods()) {
-				if(config.isPatternMatching()){
+				if (config.isPatternMatching()) {
 					functionOrMethod = TranslatorHelper.patternMatchingandTransformation(config, functionOrMethod);
 				}
 				CodeGenerator generator = new CodeGenerator(config, functionOrMethod);
@@ -138,7 +135,8 @@ public class Translator implements Builder {
 				// Add the function declaration to the list
 				function_list.add(function_del);
 				generator.declareVariables();
-				// Iterate each byte-code of a function block and produce a list of C code.
+				// Iterate each byte-code of a function block and produce a list
+				// of C code.
 				generator.iterateOverCodeBlock(functionOrMethod.body().bytecodes());
 				// Write out the code to *.c
 				generator.writeCodeToFile(writer);
@@ -152,6 +150,8 @@ public class Translator implements Builder {
 		try {
 			PrintWriter writer = new PrintWriter(config.getFilename() + ".h");
 			CodeGeneratorHelper.generateHeader(writer, function_list, config.isVerbose());
+			CodeGeneratorHelper.generateIncludes(writer, config.getFilename());
+			CodeGeneratorHelper.generateConstant(writer, module.constants());
 			writer.close();
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException("Error occurs in writing " + config.getFilename() + ".h");
@@ -165,7 +165,7 @@ public class Translator implements Builder {
 	 * 
 	 * @param module
 	 */
-	private void patternMatch(WyilFile module) {				
+	private void patternMatch(WyilFile module) {
 		// Iterate each function
 		for (FunctionOrMethod functionOrMethod : module.functionOrMethods()) {
 			// Begin the function
@@ -174,7 +174,8 @@ public class Translator implements Builder {
 			Pattern pattern = matcher.analyzePattern(functionOrMethod);
 			System.out.println("The original pattern:\n" + pattern);
 			PatternTransformer transformer = new PatternTransformer();
-			// Find the matching pattern and transform the code into more predictable code.
+			// Find the matching pattern and transform the code into more
+			// predictable code.
 			FunctionOrMethod transformed_func = transformer.transformPatternUsingVisitor(pattern);
 			if (transformed_func != null) {
 				Pattern transformed_pattern = matcher.analyzePattern(transformed_func);
