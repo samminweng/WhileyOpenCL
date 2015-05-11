@@ -127,6 +127,7 @@ public class Translator implements Builder {
 		try {
 			PrintWriter writer = new PrintWriter(config.getFilename() + ".c");
 			CodeGeneratorHelper.generateIncludes(writer, config.getFilename());
+			CodeGeneratorHelper.generateConstant(writer, module.constants());
 			// Iterate each function
 			for (FunctionOrMethod functionOrMethod : module.functionOrMethods()) {
 				if(config.isPatternMatching()){

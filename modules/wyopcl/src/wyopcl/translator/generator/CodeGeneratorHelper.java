@@ -1,10 +1,12 @@
 package wyopcl.translator.generator;
 
 import java.io.PrintWriter;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
 import wyil.lang.Type;
+import wyil.lang.WyilFile.Constant;
 
 /**
  * Lists the code generation methods 
@@ -17,13 +19,30 @@ public final class CodeGeneratorHelper {
 	}
 
 	/**
+	 * Extract the type from the constant and translates the type into the C type.
+	 * @param constant
+	 * @return
+	 */
+	private static String translateConstantType(wyil.lang.Constant constant){
+		if(constant instanceof wyil.lang.Constant.Integer){
+			return "long long";
+		}
+		return "null";
+	}
+	
+	/**
+	 * Declares all the constants defined in WyIL modules, e.g.
+	 * <pre><code>
+	 * const in 
+	 * </code></pre>
 	 * 
 	 */
-	public static void generateUtil(){
-		
-		
-		
-		
+	public static void generateConstant(PrintWriter writer, Collection<Constant> collection){
+		String statements = "";
+		for(Constant constant: collection){
+			statements += "const " + translateConstantType(constant.constant())+ " "+ constant.name()+ "=" + constant.constant() + ";\n";
+		}		
+		writer.println(statements);
 	}
 	
 	
@@ -62,24 +81,7 @@ public final class CodeGeneratorHelper {
 
 	
 
-	/**
-	 * Write out the indirect_invoked method to print out each long long integer in a list.
-	 * @param writer
-	 */
-	public static void generateIndirectInvoked(PrintWriter writer){		
-		String stats = "/*Print out each string in a list of string.*/\n" + 
-				"void indirect_printf(long long* res, long long _res_size){\n" + 
-				"	long long i;\n" + 
-				"	printf(\"\\n[\");\n" + 
-				"	for(i=0;i<_res_size;i++){\n" + 
-				"		printf(\"%lld,\",res[i]);\n" + 
-				"	}\n" + 
-				"	printf(\"]\\n\");\n" + 
-				"}";
-		writer.println(stats);
-		System.out.println(stats);
 
-	}
 	
 	/**
 	 * Write out the 'free_doublePtr' method to free the memory spaces allocated for the pointer of pointer.
