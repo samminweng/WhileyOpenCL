@@ -125,6 +125,7 @@ public class Translator implements Builder {
 		try {
 			// Create a writer to write the C code to a *.c file. 
 			PrintWriter writer = new PrintWriter(config.getFilename() + ".c");
+			CodeGeneratorHelper.generateIncludes(writer, config.getFilename());
 			// Iterate each function
 			for (FunctionOrMethod functionOrMethod : module.functionOrMethods()) {
 				if (config.isPatternMatching()) {
@@ -149,9 +150,10 @@ public class Translator implements Builder {
 		// Write out the function signatures to *.h file.
 		try {
 			PrintWriter writer = new PrintWriter(config.getFilename() + ".h");
-			CodeGeneratorHelper.generateHeader(writer, function_list, config.isVerbose());
-			CodeGeneratorHelper.generateIncludes(writer, config.getFilename());
 			CodeGeneratorHelper.generateConstant(writer, module.constants());
+			CodeGeneratorHelper.generateUserDefinedType(writer, module.types());			
+			CodeGeneratorHelper.generateHeader(writer, function_list, config.isVerbose());
+			
 			writer.close();
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException("Error occurs in writing " + config.getFilename() + ".h");

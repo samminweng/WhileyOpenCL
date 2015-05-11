@@ -3,10 +3,13 @@ package wyopcl.translator.generator;
 import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import wyil.lang.Attribute;
 import wyil.lang.Type;
+import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.Constant;
 
 /**
@@ -27,7 +30,7 @@ public final class CodeGeneratorHelper {
 	 * @param constant
 	 * @return
 	 */
-	private static String translateConstantType(wyil.lang.Constant constant) {
+	private static String translate(wyil.lang.Constant constant) {
 		if (constant instanceof wyil.lang.Constant.Integer) {
 			return "long long";
 		}
@@ -54,11 +57,58 @@ public final class CodeGeneratorHelper {
 	 */
 	public static void generateConstant(PrintWriter writer, Collection<Constant> constants) {
 		String statements = "";
+		// Include the standard 'Util' header file.
+		statements += "#include \"Util.h\"\n";
 		for (Constant constant : constants) {
-			statements += "const " + translateConstantType(constant.constant()) + " " + constant.name() + "=" + constant.constant() + ";\n";
+			//Add the comment of original code 
+			statements += "//"+constant.constant()+"\n";
+			statements += "const " + translate(constant.constant()) + " " + constant.name() + "=" + constant.constant() + ";\n";
 		}
 		writer.println(statements);
 	}
+	
+	/**
+	 * Translates the Whiley type into C type, e.g. 
+	 * <pre><code>
+	 * 
+	 *  
+	 * @param type
+	 * @return
+	 */
+	private static String translate(Type type){
+		
+		if(type instanceof Type.Nominal){
+			return ((Type.Nominal) type).name().name();
+		}		
+		
+		//Hard-coded translation due to the lack of variable declaration of 'nat' and 'Square'.
+		if(type instanceof Type.Int){
+			//Add 'long long;'
+			return "long long";
+		}
+		
+		if(type instanceof Type.List){
+			Type.List list = (Type.List)type;
+			return translate(list.element())+ "*";
+		}
+		
+		
+		if(type instanceof Type.Record){
+			Type.Record record = (Type.Record)type;
+			String statement = "";
+			for(Map.Entry<String, Type> field:record.fields().entrySet()){
+				statement += translate(field.getValue()) + " " + field.getKey()+";\n"; 
+			}
+			return statement;
+		}
+		
+		return "null";
+		
+	}
+	
+	
+	
+	
 
 	/**
 	 * Declares all the user defined types in WyIL module, e.g.
@@ -78,20 +128,23 @@ public final class CodeGeneratorHelper {
 	 * </pre>
 	 * 
 	 * @param writer
-	 * @param types
+	 * @param module 
+	 * @param collection
 	 */
-	public static void generateUserDefinedType(PrintWriter writer, List<Type.Record> types) {
+	public static void generateUserDefinedType(PrintWriter writer, Collection<wyil.lang.WyilFile.Type> types) {
 		String statements = "";
-		for (Type.Record type : types) {
-
-			// Get the type name
-			statements += "struct " + type + "{\n";
-			// Iterate the attributes, e.g. 'x'
-			//for (Attribute att : type.attributes()) {
-
-			//}
-			statements += "}\n";
-
+		for (wyil.lang.WyilFile.Type type: types) {
+			//Add the original type
+			statements += "//"+type.name()+"\n";
+			if(type.type() instanceof Type.Int){
+				//Use the 'typedef' keyword in C to give the type a new name
+				statements += "typedef long long "+ type.name()+";\n";
+			}else if(type.type() instanceof Type.Record){
+				statements += "struct " + type.name() + "{\n";
+				// Get the 'struct' keyword in C to convert the type into the structure in C. 
+				statements += translate(type.type());
+				statements += "};\n";
+			}
 		}
 		writer.println(statements);
 	}
@@ -105,8 +158,6 @@ public final class CodeGeneratorHelper {
 	public static void generateHeader(PrintWriter writer, List<String> list_func, boolean isVerbose) {
 		// Include files
 		String stats = "";
-		// Include the user-defined standard 'Util' header file.
-		stats += "#include \"Util.h\"\n";
 		// Declare the function signatures of the function which are defined in
 		// the Whiley program.
 		for (String func : list_func) {

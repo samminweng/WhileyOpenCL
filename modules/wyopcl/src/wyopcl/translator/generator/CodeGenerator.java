@@ -334,15 +334,20 @@ public class CodeGenerator {
 		// parameter.
 		if (var_name.contains("_size")){
 			//Get the array variable. 
-			String array_var = var_name.split("_size")[0];
-			//Check if the array variable is an number. 
-			//If so, the variable is an intermediate variable. Otherwise, it could be an input parameter.
-			if(!(array_var.matches("^_[0-9]+$"))){
-				//check if the array var matches with the variable at index of 0, which is the input paramter.
-				if(array_var.equals("_"+this.var_declarations.get(0).name())){
-					return true;
+			String[] split = var_name.split("_size");
+			//Check if the split variable name has at least two items.
+			if(split.length>=1){
+				String array_var = split[0];
+				//Check if the array variable is an number. 
+				//If so, the variable is an intermediate variable. Otherwise, it could be an input parameter.
+				if(!(array_var.matches("^_[0-9]+$"))){
+					//check if the array var matches with the variable at index of 0, which is the input paramter.
+					if(array_var.equals("_"+this.var_declarations.get(0).name())){
+						return true;
+					}
 				}
 			}
+		
 		}
 		return false;
 	}
@@ -1387,9 +1392,6 @@ public class CodeGenerator {
 	 */
 	private void translate(NewRecord code) {
 		NewRecord newrecord = (NewRecord)code;
-		
-		
-		
 		String statement = "";
 		int index = 0;
 		//Iterate the record's fields.
