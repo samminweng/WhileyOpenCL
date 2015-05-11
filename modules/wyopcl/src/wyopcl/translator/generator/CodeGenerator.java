@@ -329,7 +329,7 @@ public class CodeGenerator {
 	 * @return true if the variable is the size variable of input parameter. 
 	 * 
 	 */
-	private Boolean isInputParameterSize(String var_name){
+	private Boolean isInputParameterSize(String var_name){		
 		// Check if the variable is the size variable of the input
 		// parameter.
 		if (var_name.contains("_size")){
@@ -341,9 +341,13 @@ public class CodeGenerator {
 				//Check if the array variable is an number. 
 				//If so, the variable is an intermediate variable. Otherwise, it could be an input parameter.
 				if(!(array_var.matches("^_[0-9]+$"))){
-					//check if the array var matches with the variable at index of 0, which is the input paramter.
-					if(array_var.equals("_"+this.var_declarations.get(0).name())){
-						return true;
+					//Get the input parameter.
+					int param_size = functionOrMethod.type().params().size();
+					for(int param =0; param<param_size;param++){
+						//check if the array var matches with the input parameter.
+						if(array_var.equals("_"+this.var_declarations.get(param).name())){
+							return true;
+						}
 					}
 				}
 			}
@@ -375,14 +379,15 @@ public class CodeGenerator {
 					//Type declaration and initial value assignment.
 					Type var_type = var.getValue();
 					// Assign the initial values for local variables.
-					String init = "";
+					String init = indent + translate(var_type) + " " + var_name;
 					if (var_type instanceof Type.List) {
-						init = "NULL";
+						init += " = NULL";
 					} else if (var_type instanceof Type.Int) {
-						init = "0";
+						init += " = 0";
 					}
+					init += ";";
 					// Write out the variable declaration.
-					writer.println("\t" + translate(var_type) + " " + var_name + " = " + init + ";");
+					writer.println(init);
 				}
 			}
 			// increment the register.
@@ -875,6 +880,7 @@ public class CodeGenerator {
 	 * 
 	 * <pre>
 	 * <code>
+	 * _6_size = 0;
 	 * _6 = malloc(0);
 	 * </code>
 	 * </pre>
@@ -915,39 +921,26 @@ public class CodeGenerator {
 	 */
 	private void translate(Codes.NewList code) {
 		String target = getVarName(code.target());
-
-		Type elem_type = code.type().element();
-		// Check if the element type is a void, which cannot hold any value.
-		if (elem_type instanceof Type.Void) {
-			// Change the element type to an integer type.
-			elem_type = Type.Int.T_INT;
-			// Construct a list type of integer element type.
-			wyil.lang.Type list_type = Type.List(Type.Int.T_INT, false);
-			// Update the type of target variable.
-			addDeclaration(list_type, target);
-		}
-
 		// Add the 'target_size' variable to indicate the length of the list
 		String target_size = target + "_size";
 		// Add the declaration of target_size variable.
 		addDeclaration(Type.Int.T_INT, target_size);
-
-		// Check if the size of input operand is 0.
-		if (code.operands().length != 0) {
-			// Assign the array size with the number of operands.
-			String stat = indent + target_size + "=" + code.operands().length + ";\n";
+		// Assign the array size with the number of operands.
+		String stat = indent + target_size + " = " + code.operands().length + ";\n";
+		// Check if the size of input operand > 0.
+		if (code.operands().length > 0) {			
 			// Allocate the target with array size.
-			stat += indent + target + "=(" + translate(elem_type) + "*)malloc(" + target_size + "*sizeof(" + translate(elem_type) + "));\n";
+			stat += indent + target + " = (" + translate(code.type().element()) + "*)malloc(" + target_size + "*sizeof(" + translate(code.type().element()) + "));\n";
 			// Initialize the array.
 			int index = 0;
 			for (int operand : code.operands()) {
-				stat += indent + target + "[" + index + "]=" + getVarName(operand) + ";";
+				stat += indent + target + "[" + index + "] = " + getVarName(operand) + ";";
 				index++;
 			}
 			addStatement(code, stat);
 		} else {
-			//Translates the empty list, e.g. 'newlist %3 = () : [void]' can be converted into '_3 = malloc(0);'.
-			String stat = indent + target_size + "= malloc(0);";
+			//Translates the empty list, e.g. 'newlist %3 = () : [void]' can be converted into '_3 = malloc(0);'. 
+			stat += indent + target + " = malloc("+target_size+");";
 			addStatement(code, stat);
 		}
 
@@ -1271,7 +1264,10 @@ public class CodeGenerator {
 			if (fields.containsKey("args")) {
 				return "int argc, char** argv";
 			}
-			return record.toString();
+			
+			//Currently, the type 
+			return "";
+			//return record.toString();
 		}
 
 		return null;
@@ -1285,7 +1281,6 @@ public class CodeGenerator {
 	 */
 	private void dispatch(Code code) {
 		try {
-
 			// enable the assertion
 			if (code instanceof Codes.AssertOrAssume) {
 				translate((Codes.AssertOrAssume) code);

@@ -1,10 +1,11 @@
 #include "TicTacToe.h"
 Board EmptyBoard(){
 	long long* _pieces = NULL;
+	long long _pieces_size = 0;
 	long long _i = 0;
 	long long* _2 = NULL;
 	long long _2_size = 0;
-	long long* _3 = NULL;
+	void* _3 = NULL;
 	long long _3_size = 0;
 	long long _4 = 0;
 	long long _5 = 0;
@@ -16,9 +17,10 @@ Board EmptyBoard(){
 	long long* _9 = NULL;
 	long long _9_size = 0;
 	long long _10 = 0;
-	{int move,[int] pieces} _11 = ;
+	 _11;
 	//newlist %3 = () : [void]
-	_3_size= malloc(0);
+	_3_size = 0;
+	_3 = malloc(_3_size);
 	//assign %2 = %3  : [void]
 	_2 = _3;
 	_2_size = _3_size;
@@ -35,9 +37,9 @@ Board EmptyBoard(){
 		//const %7 = 0 : int
 		_7 = 0;
 		//newlist %8 = (%7) : [int]
-		_8_size=1;
-		_8=(long long*)malloc(_8_size*sizeof(long long));
-		_8[0]=_7;
+		_8_size = 1;
+		_8 = (long long*)malloc(_8_size*sizeof(long long));
+		_8[0] = _7;
 		//append %9 = %0, %8 : [int]
 		_9_size = _pieces_size+_8_size;
 		_9=append(_pieces, &_pieces_size, _8, &_8_size, &_9_size);
@@ -60,7 +62,7 @@ blklab7:;
 	;
 }
 long long countOf(Square* _pieces, long long _pieces_size, Square _s){
-	Square _s = ;
+	Square _s;
 	long long _count = 0;
 	long long _size = 0;
 	long long _i = 0;
@@ -112,9 +114,9 @@ blklab8:;
 	;
 }
 int main(int argc, char** argv){
-	Board _b = ;
-	{int move,[int] pieces} _2 = ;
-	{int move,[int] pieces} _3 = ;
+	Board _b;
+	 _2;
+	 _3;
 	//invoke %3 = () TicTacToe:EmptyBoard : function() -> TicTacToe:Board
 	_3=EmptyBoard();
 	//assign %2 = %3  : {int move,[int] pieces}
