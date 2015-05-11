@@ -43,22 +43,22 @@ ensures r.move == 0:
 // updated with the piece at that position and an incremented the move
 // counter.
 // ===============================================================
-//function play(Board b, nat pos) -> (Board r)
+function play(Board b, nat pos) -> (Board r)
 // Board position to place onto must be valid
-//requires pos < SQUARESIZE && b.move < SQUARESIZE && b.pieces[pos] == BLANK
+requires pos < SQUARESIZE && b.move < SQUARESIZE && b.pieces[pos] == BLANK
 // Ensures move count is incremented
-//ensures r.move == r.move + 1:
+ensures r.move == r.move + 1:
     // decide who's moving
-//    if b.move % 2 == 0:
+    if b.move % 2 == 0:
         // circle on even moves
-//        b.pieces[pos] = CIRCLE
-//    else:
+        b.pieces[pos] = CIRCLE
+    else:
         // cross on odd moves
-//        b.pieces[pos] = CROSS
+        b.pieces[pos] = CROSS
     // update the move counter
-//    b.move = b.move + 1
-    // done
-//    return b
+    b.move = b.move + 1
+   // done
+    return b
 
 // ===============================================================
 // Helper Method
@@ -73,7 +73,6 @@ function countOf([Square] pieces, Square s) -> (int r):
 
 method main(System.Console console) -> void:
     Board b = EmptyBoard()
-    /*
     for p in 0..SQUARESIZE:
         console.out.println(b)
         console.out.println(p)
@@ -81,4 +80,3 @@ method main(System.Console console) -> void:
             console.out.println("INVALID MOVE!")
         else:
             b = play(b,p)
-    */

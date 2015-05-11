@@ -473,12 +473,9 @@ public class CodeGenerator {
 		String target = getVarName(code.target());
 		String op = getVarName(code.operand(0));
 		String statement = "";
-
-		if (code.type() instanceof Type.Int) {
-			statement = indent + target + " = " + op + ";";
-		} else if (code.type() instanceof Type.List) {
-			// Check if the assigned type is an array. If so, we use different
-			// way
+	
+		if (code.type() instanceof Type.List) {
+			// Check if the assigned type is an array. If so, use different way
 			// to copy the array.
 			String target_size = target + "_size";
 			// long long _11_size;
@@ -494,6 +491,8 @@ public class CodeGenerator {
 			}
 			// _1_size = _10_size;
 			statement += indent + target_size + " = " + op + "_size;";
+		}else {
+			statement = indent + target + " = " + op + ";";
 		}
 		// Add the statement to the list of statements.
 		addStatement(code, statement);
@@ -951,7 +950,17 @@ public class CodeGenerator {
 	}
 
 	/**
-	 * Translates FieldLoad byte-code into C code. At this stage, the field load
+	 * Translates FieldLoad byte-code into C code, e.g. 
+	 * <pre><code>
+	 * fieldload %14 = %1 pieces : {int move,[int] pieces}
+	 * </code></pre>
+	 * can be translated into
+	 * <pre><code>
+	 * _14 = _1.pieces;
+	 * </code></pre>
+	 *  
+	 *  
+	 * Note that at this stage, the field load
 	 * code that loads <code>System.out.println</code> is not translated into
 	 * any C code.
 	 * 
@@ -968,10 +977,11 @@ public class CodeGenerator {
 		if (field.equals("out") || field.equals("println")) {
 			addStatement(code, null);
 		} else {
-
-			// throw new Exception("Not implemented!");
+			//Get the target 
+			String statement = indent + getVarName(code.target())+" = "+getVarName(code.operand(0))
+					+ "." + code.field + ";";
+			addStatement(code, statement);
 		}
-
 	}
 
 	/**
@@ -1239,6 +1249,8 @@ public class CodeGenerator {
 	 * @param type
 	 *            the WyIL type
 	 * @return the result string
+	 * TODO Generalize the user-defined types, such as 'Board'.
+	 * 
 	 */
 	private String translate(Type type) {
 		// The existential type, e.g. function EmptyBoard() -> (Board r)
@@ -1269,8 +1281,7 @@ public class CodeGenerator {
 			}
 
 			// Currently, the type
-			return "";
-			// return record.toString();
+			return "Board";
 		}
 
 		return null;

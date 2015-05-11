@@ -19,6 +19,7 @@ nat move;
 } Board;
 
 Board EmptyBoard();
+Board play(Board _b, nat _pos);
 long long countOf(Square* _pieces, long long _pieces_size, Square _s);
 int main(int argc, char** argv);
 
