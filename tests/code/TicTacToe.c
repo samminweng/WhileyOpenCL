@@ -17,15 +17,15 @@ Board EmptyBoard(){
 	long long* _9 = NULL;
 	long long _9_size = 0;
 	long long _10 = 0;
-	 _11;
+	Board _11;
 	//newlist %3 = () : [void]
 	_3_size = 0;
 	_3 = malloc(_3_size);
 	//assign %2 = %3  : [void]
-	_2 = _3;
+	_2 = (long long*)_3;
 	_2_size = _3_size;
 	//assign %0 = %2  : [int]
-	_pieces = _2;
+	_pieces = (long long*)_2;
 	_pieces_size = _2_size;
 	//const %4 = 0 : int
 	_4 = 0;
@@ -45,7 +45,7 @@ Board EmptyBoard(){
 		_9=append(_pieces, &_pieces_size, _8, &_8_size, &_9_size);
 		free(_8);
 		//assign %0 = %9  : [int]
-		_pieces = _9;
+		_pieces = (long long*)_9;
 		_pieces_size = _9_size;
 	}
 //.blklab7
@@ -115,8 +115,8 @@ blklab8:;
 }
 int main(int argc, char** argv){
 	Board _b;
-	 _2;
-	 _3;
+	Board _2;
+	Board _3;
 	//invoke %3 = () TicTacToe:EmptyBoard : function() -> TicTacToe:Board
 	_3=EmptyBoard();
 	//assign %2 = %3  : {int move,[int] pieces}

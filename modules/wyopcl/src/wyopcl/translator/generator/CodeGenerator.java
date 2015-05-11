@@ -45,8 +45,9 @@ public class CodeGenerator {
 	private List<String> statements;// store the list of translated C code.
 	private Codes.BinaryOperator range;// indicate the range that forall loop
 										// iterates over.
-	//private List<Type.Record> record_types;
-	
+
+	// private List<Type.Record> record_types;
+
 	/**
 	 * Constructor
 	 * 
@@ -59,10 +60,9 @@ public class CodeGenerator {
 		this.var_declarations = this.functionOrMethod.attribute(VariableDeclarations.class);
 		this.vars = new LinkedHashMap<String, Type>();
 		this.statements = new ArrayList<String>();
-		//this.record_types = record_types;
+		// this.record_types = record_types;
 	}
 
-	
 	/**
 	 * Adds a block of code to free any variable whose type is a list as the
 	 * array in C is allocated by malloc.
@@ -79,7 +79,7 @@ public class CodeGenerator {
 				statements.add(indent + "free(" + var_name + ");");
 			}
 		}
-	}	
+	}
 
 	/**
 	 * Iterates over the list of byte-code to generate the corresponding C code.
@@ -136,11 +136,11 @@ public class CodeGenerator {
 		// Check if the type is a record and its field contains "println" .
 		if (type instanceof Type.Record) {
 			Type.Record record = (Type.Record) type;
-			//Add the record type to the list
-			//if(!this.record_types.contains(record)){
-			//	this.record_types.add(record);
-			//}				
-			
+			// Add the record type to the list
+			// if(!this.record_types.contains(record)){
+			// this.record_types.add(record);
+			// }
+
 			// If so, then the record loads the "println" from the
 			// sys.out.console.
 			// At this stage, we dont use this record.
@@ -199,8 +199,9 @@ public class CodeGenerator {
 	 * @return the variable name (starting with "_")
 	 */
 	private String getVarName(int reg) {
-		//Check if the register has been kept in the functional variable declarations.
-		if(reg<var_declarations.size()){
+		// Check if the register has been kept in the functional variable
+		// declarations.
+		if (reg < var_declarations.size()) {
 			Declaration declaration = var_declarations.get(reg);
 			if (declaration != null) {
 				String name = declaration.name();
@@ -210,6 +211,16 @@ public class CodeGenerator {
 			}
 		}
 		return prefix + reg;
+	}
+
+	/**
+	 * Get the type of a variable.
+	 * 
+	 * @param reg
+	 * @return
+	 */
+	private Type getVarType(int reg) {
+		return vars.get(getVarName(reg));
 	}
 
 	/**
@@ -319,44 +330,50 @@ public class CodeGenerator {
 	}
 
 	/**
-	 * Given a variable name, check if it is the size variable of input parameter. For example,
-	 * <pre><code>
+	 * Given a variable name, check if it is the size variable of input
+	 * parameter. For example,
+	 * 
+	 * <pre>
+	 * <code>
 	 * long long* reverse(long long* _ls, long long _ls_size)
-	 * </code></pre>
-	 * The '_ls_size' variable is the size variable of input parameter 'ls'. 
+	 * </code>
+	 * </pre>
+	 * 
+	 * The '_ls_size' variable is the size variable of input parameter 'ls'.
 	 * 
 	 * @param var_name
-	 * @return true if the variable is the size variable of input parameter. 
+	 * @return true if the variable is the size variable of input parameter.
 	 * 
 	 */
-	private Boolean isInputParameterSize(String var_name){		
+	private Boolean isInputParameterSize(String var_name) {
 		// Check if the variable is the size variable of the input
 		// parameter.
-		if (var_name.contains("_size")){
-			//Get the array variable. 
+		if (var_name.contains("_size")) {
+			// Get the array variable.
 			String[] split = var_name.split("_size");
-			//Check if the split variable name has at least two items.
-			if(split.length>=1){
+			// Check if the split variable name has at least two items.
+			if (split.length >= 1) {
 				String array_var = split[0];
-				//Check if the array variable is an number. 
-				//If so, the variable is an intermediate variable. Otherwise, it could be an input parameter.
-				if(!(array_var.matches("^_[0-9]+$"))){
-					//Get the input parameter.
+				// Check if the array variable is an number.
+				// If so, the variable is an intermediate variable. Otherwise,
+				// it could be an input parameter.
+				if (!(array_var.matches("^_[0-9]+$"))) {
+					// Get the input parameter.
 					int param_size = functionOrMethod.type().params().size();
-					for(int param =0; param<param_size;param++){
-						//check if the array var matches with the input parameter.
-						if(array_var.equals("_"+this.var_declarations.get(param).name())){
+					for (int param = 0; param < param_size; param++) {
+						// check if the array var matches with the input
+						// parameter.
+						if (array_var.equals("_" + this.var_declarations.get(param).name())) {
 							return true;
 						}
 					}
 				}
 			}
-		
+
 		}
 		return false;
 	}
-	
-	
+
 	/**
 	 * Write out the generated C code, which starts with variable declarations,
 	 * followed by a list of statements and a list of free statements at the
@@ -376,7 +393,7 @@ public class CodeGenerator {
 				// Check if the variable is the size variable of the input
 				// parameter.
 				if (!isInputParameterSize(var_name)) {
-					//Type declaration and initial value assignment.
+					// Type declaration and initial value assignment.
 					Type var_type = var.getValue();
 					// Assign the initial values for local variables.
 					String init = indent + translate(var_type) + " " + var_name;
@@ -447,17 +464,20 @@ public class CodeGenerator {
 	 * 
 	 * <pre>
 	 * <code>
-	 * assign %5 = %6  : int
+	 * long long* _2 = NULL;
+	 * void* _3 = NULL;
+	 * assign %2 = %3  : [void]
 	 * </code>
 	 * </pre>
 	 * 
 	 * can be translated into:
 	 * <p>
 	 * <code>
-	 * _5 = _6;
-	 * </code></pre> When we need to assign the input parameter(_0) to the new
-	 * register, we need to clone the input and return the result pointer. For
-	 * example,
+	 * _2 = (long long*)_3;
+	 * </code></pre> Note that the operand needs the type casting.
+	 * 
+	 * When we need to assign the input parameter(_0) to the new register, we
+	 * need to clone the input and return the result pointer. For example,
 	 * <p>
 	 * <code>assign %4 = %0  : [int]</code>
 	 * </p>
@@ -473,9 +493,13 @@ public class CodeGenerator {
 		String target = getVarName(code.target());
 		String op = getVarName(code.operand(0));
 		String statement = "";
-		// Check if the assigned type is an array. If so, we use different way
-		// to copy the array.
-		if (code.type() instanceof Type.List) {
+
+		if (code.type() instanceof Type.Int) {
+			statement = indent + target + " = " + op + ";";
+		} else if (code.type() instanceof Type.List) {
+			// Check if the assigned type is an array. If so, we use different
+			// way
+			// to copy the array.
 			String target_size = target + "_size";
 			// long long _11_size;
 			addDeclaration(Type.Int.T_INT, target_size);
@@ -485,14 +509,12 @@ public class CodeGenerator {
 				// _4 = clone(_0, _0_size);
 				statement = indent + target + " = clone(" + op + ", " + op + "_size);\n";
 			} else {
-				// _1 = _10;
-				statement = indent + target + " = " + op + ";\n";
+				// _2 = (long long*)_3;
+				statement = indent + target + " = (" + translate(getVarType(code.target())) + ")" + op + ";\n";
 			}
 			// _1_size = _10_size;
 			statement += indent + target_size + " = " + op + "_size;";
-		} else if (code.type() instanceof Type.Int) {
-			statement = indent + target + " = " + op + ";";
-		}
+		} 
 		// Add the statement to the list of statements.
 		addStatement(code, statement);
 	}
@@ -799,7 +821,7 @@ public class CodeGenerator {
 		String stat = indent;
 		// For List type only
 		if (code.type() instanceof Type.List) {
-			stat += getVarName( code.target()) + "[" + getVarName( code.operand(0)) + "] = " + getVarName(code.result()) + ";";
+			stat += getVarName(code.target()) + "[" + getVarName(code.operand(0)) + "] = " + getVarName(code.result()) + ";";
 			addStatement(code, stat);
 		}
 	}
@@ -928,9 +950,10 @@ public class CodeGenerator {
 		// Assign the array size with the number of operands.
 		String stat = indent + target_size + " = " + code.operands().length + ";\n";
 		// Check if the size of input operand > 0.
-		if (code.operands().length > 0) {			
+		if (code.operands().length > 0) {
 			// Allocate the target with array size.
-			stat += indent + target + " = (" + translate(code.type().element()) + "*)malloc(" + target_size + "*sizeof(" + translate(code.type().element()) + "));\n";
+			stat += indent + target + " = (" + translate(code.type().element()) + "*)malloc(" + target_size + "*sizeof("
+					+ translate(code.type().element()) + "));\n";
 			// Initialize the array.
 			int index = 0;
 			for (int operand : code.operands()) {
@@ -939,8 +962,9 @@ public class CodeGenerator {
 			}
 			addStatement(code, stat);
 		} else {
-			//Translates the empty list, e.g. 'newlist %3 = () : [void]' can be converted into '_3 = malloc(0);'. 
-			stat += indent + target + " = malloc("+target_size+");";
+			// Translates the empty list, e.g. 'newlist %3 = () : [void]' can be
+			// converted into '_3 = malloc(0);'.
+			stat += indent + target + " = malloc(" + target_size + ");";
 			addStatement(code, stat);
 		}
 
@@ -964,8 +988,8 @@ public class CodeGenerator {
 		if (field.equals("out") || field.equals("println")) {
 			addStatement(code, null);
 		} else {
-			
-			//throw new Exception("Not implemented!");
+
+			// throw new Exception("Not implemented!");
 		}
 
 	}
@@ -1237,14 +1261,13 @@ public class CodeGenerator {
 	 * @return the result string
 	 */
 	private String translate(Type type) {
-		//The existential type, e.g. function EmptyBoard() -> (Board r)
-		//The return type of 'EmptyBoard' function is 'Board'.
-		if(type instanceof Type.Nominal){
-			Type.Nominal nomial = (Type.Nominal)type;
+		// The existential type, e.g. function EmptyBoard() -> (Board r)
+		// The return type of 'EmptyBoard' function is 'Board'.
+		if (type instanceof Type.Nominal) {
+			Type.Nominal nomial = (Type.Nominal) type;
 			return nomial.name().name();
 		}
-		
-		
+
 		if (type instanceof Type.Int || type instanceof Type.Bool) {
 			return "long long";
 		}
@@ -1264,10 +1287,10 @@ public class CodeGenerator {
 			if (fields.containsKey("args")) {
 				return "int argc, char** argv";
 			}
-			
-			//Currently, the type 
+
+			// Currently, the type
 			return "";
-			//return record.toString();
+			// return record.toString();
 		}
 
 		return null;
@@ -1333,7 +1356,7 @@ public class CodeGenerator {
 			} else if (code instanceof Codes.NewList) {
 				translate((Codes.NewList) code);
 			} else if (code instanceof Codes.NewRecord) {
-				translate((Codes.NewRecord)code);
+				translate((Codes.NewRecord) code);
 			} else if (code instanceof Codes.NewSet) {
 				internalFailure("Not implemented!", code.toString(), null);
 			} else if (code instanceof Codes.NewTuple) {
@@ -1383,26 +1406,26 @@ public class CodeGenerator {
 	 * _11.pieces = _10;
 	 * </code>
 	 * </pre>
-	 * @TODO Fix the sequence of fields in a record type as the order of fields is in the
-	 * reversed direction of operands.
-	 *   
+	 * 
+	 * @TODO Fix the sequence of fields in a record type as the order of fields
+	 *       is in the reversed direction of operands.
+	 * 
 	 * @param code
 	 */
 	private void translate(NewRecord code) {
-		NewRecord newrecord = (NewRecord)code;
+		NewRecord newrecord = (NewRecord) code;
 		String statement = "";
-		//Begin with the last item
+		// Begin with the last item
 		int index = newrecord.type().fields().size();
-		//Iterate the record's fields.
-		for(Map.Entry<String, Type> field: newrecord.type().fields().entrySet()){
-			//Decrement the index
+		// Iterate the record's fields.
+		for (Map.Entry<String, Type> field : newrecord.type().fields().entrySet()) {
+			// Decrement the index
 			index--;
-			//Assess the structure member, such as 'move', and assign the 
-			//operand to 
-			statement += indent + getVarName(newrecord.target())+ "."+field.getKey() 
-					+ " = " + getVarName(newrecord.operand(index))+";\n";
+			// Assess the structure member, such as 'move', and assign the
+			// operand to
+			statement += indent + getVarName(newrecord.target()) + "." + field.getKey() + " = " + getVarName(newrecord.operand(index)) + ";\n";
 		}
-		addStatement(code, statement);		
+		addStatement(code, statement);
 	}
 
 }
