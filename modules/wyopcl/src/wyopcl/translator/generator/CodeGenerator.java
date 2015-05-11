@@ -19,6 +19,7 @@ import wyil.lang.Codes.If;
 import wyil.lang.Codes.Invariant;
 import wyil.lang.Codes.ListOperator;
 import wyil.lang.Codes.Loop;
+import wyil.lang.Codes.NewRecord;
 import wyil.lang.Codes.UnaryOperator;
 import wyil.lang.Constant;
 import wyil.lang.Type;
@@ -958,7 +959,8 @@ public class CodeGenerator {
 		if (field.equals("out") || field.equals("println")) {
 			addStatement(code, null);
 		} else {
-			throw new Exception("Not implemented!");
+			
+			//throw new Exception("Not implemented!");
 		}
 
 	}
@@ -1316,7 +1318,7 @@ public class CodeGenerator {
 			} else if (code instanceof Codes.NewList) {
 				translate((Codes.NewList) code);
 			} else if (code instanceof Codes.NewRecord) {
-				internalFailure("Not implemented!", code.toString(), null);
+				translate((Codes.NewRecord)code);
 			} else if (code instanceof Codes.NewSet) {
 				internalFailure("Not implemented!", code.toString(), null);
 			} else if (code instanceof Codes.NewTuple) {
@@ -1349,6 +1351,39 @@ public class CodeGenerator {
 			internalFailure(ex.getMessage(), "", null, ex);
 		}
 
+	}
+
+	/**
+	 * Translates the new record byte-code. For example,
+	 * 
+	 * <pre>
+	 * <code>newrecord %11 = (%10, %0) : {int move,[int] pieces}</code>
+	 * </pre>
+	 * 
+	 * can be translated into:
+	 * 
+	 * <pre>
+	 * <code>
+	 * _11.move = _10;
+	 * _11.pieces = _0;
+	 * </code>
+	 * </pre>
+	 * @param code
+	 */
+	private void translate(NewRecord code) {
+		NewRecord newrecord = (NewRecord)code;
+		String statement = "";
+		int index = 0;
+		//Iterate the record's fields.
+		for(Map.Entry<String, Type> field: newrecord.type().fields().entrySet()){
+			//Assess the structure member, such as 'move', and assign the 
+			//operand to 
+			statement += indent + getVarName(newrecord.target())+ "."+field.getKey() 
+					+ " = " + getVarName(newrecord.operand(index))+";\n";
+			//Increment the index
+			index++;
+		}
+		addStatement(code, statement);		
 	}
 
 }
