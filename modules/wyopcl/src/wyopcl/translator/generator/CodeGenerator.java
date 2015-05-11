@@ -1379,24 +1379,28 @@ public class CodeGenerator {
 	 * 
 	 * <pre>
 	 * <code>
-	 * _11.move = _10;
-	 * _11.pieces = _0;
+	 * _11.move = _0;
+	 * _11.pieces = _10;
 	 * </code>
 	 * </pre>
+	 * @TODO Fix the sequence of fields in a record type as the order of fields is in the
+	 * reversed direction of operands.
+	 *   
 	 * @param code
 	 */
 	private void translate(NewRecord code) {
 		NewRecord newrecord = (NewRecord)code;
 		String statement = "";
-		int index = 0;
+		//Begin with the last item
+		int index = newrecord.type().fields().size();
 		//Iterate the record's fields.
 		for(Map.Entry<String, Type> field: newrecord.type().fields().entrySet()){
+			//Decrement the index
+			index--;
 			//Assess the structure member, such as 'move', and assign the 
 			//operand to 
 			statement += indent + getVarName(newrecord.target())+ "."+field.getKey() 
 					+ " = " + getVarName(newrecord.operand(index))+";\n";
-			//Increment the index
-			index++;
 		}
 		addStatement(code, statement);		
 	}

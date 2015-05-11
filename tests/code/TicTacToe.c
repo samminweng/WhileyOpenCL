@@ -17,7 +17,7 @@ Board EmptyBoard(){
 	long long* _9 = NULL;
 	long long _9_size = 0;
 	long long _10 = 0;
-	Board _11;
+	 _11;
 	//newlist %3 = () : [void]
 	_3_size = 0;
 	_3 = malloc(_3_size);
@@ -55,14 +55,14 @@ blklab7:;
 	//newrecord %11 = (%10, %0) : {int move,[int] pieces}
 	_11.pieces = _pieces;
 	_11.move = _10;
-	indirect_printf_array(_pieces, _pieces_size);
+
 	//return %11 : {int move,[int] pieces}
 	return _11;
 	//return
 	;
 }
 long long countOf(Square* _pieces, long long _pieces_size, Square _s){
-	//Square _s;
+	Square _s;
 	long long _count = 0;
 	long long _size = 0;
 	long long _i = 0;
@@ -115,8 +115,8 @@ blklab8:;
 }
 int main(int argc, char** argv){
 	Board _b;
-	Board _2;
-	Board _3;
+	 _2;
+	 _3;
 	//invoke %3 = () TicTacToe:EmptyBoard : function() -> TicTacToe:Board
 	_3=EmptyBoard();
 	//assign %2 = %3  : {int move,[int] pieces}
