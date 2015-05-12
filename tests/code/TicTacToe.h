@@ -5,8 +5,8 @@ const long long BLANK=0;
 const long long CIRCLE=1;
 //2
 const long long CROSS=2;
-//9
-const long long SQUARESIZE=9;
+//100
+const long long SQUARESIZE=100;
 
 //nat
 typedef long long nat;

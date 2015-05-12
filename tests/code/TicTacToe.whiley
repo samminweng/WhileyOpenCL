@@ -6,7 +6,7 @@ import whiley.lang.System
 constant BLANK is 0
 constant CIRCLE is 1
 constant CROSS is 2
-constant SQUARESIZE is 9
+constant SQUARESIZE is 100
 
 type nat is (int x) where x >= 0
 type Square is (int x) where x == BLANK || x == CIRCLE || x == CROSS

@@ -1067,10 +1067,17 @@ public class CodeGenerator {
 	 * @param type
 	 * @param var
 	 * @return the translated statement.
+	 * 
+	 * TODO Print out a pointer without array size. Is it possible?
+	 * 
 	 */
 	private String translateIndirectInvokePrintf(Type type, String var) {
 		String statement = "";
-		if (type instanceof Type.List) {
+		if (type instanceof Type.Nominal) {
+			Type.Nominal nominal = (Type.Nominal) type;
+			wyil.lang.WyilFile.Type user_type = getUserDefinedType(nominal.name().name());
+			statement += translateIndirectInvokePrintf(user_type.type(), var);
+		} else if (type instanceof Type.List) {
 			//Print out a pointer without specifying array size.
 			statement += indent + "indirect_printf_array_withoutlength(" + var + ");\n";
 		} else if (type instanceof Type.Int) {
@@ -1127,11 +1134,7 @@ public class CodeGenerator {
 			// Type type = code.type().params().get(0);
 			Type type = getVarDeclaration(var);
 			// Check if the type is a user-defined type.
-			if (type instanceof Type.Nominal) {
-				Type.Nominal nominal = (Type.Nominal) type;
-				wyil.lang.WyilFile.Type user_type = getUserDefinedType(nominal.name().name());
-				statement += translateIndirectInvokePrintf(user_type.type(), var);
-			} else if (type instanceof Type.List) {
+			if (type instanceof Type.List) {
 				// Added the additional 'array_size' variable to indicate the
 				// length of an array.
 				// Due to strictly forbidding the overlapping in C, the function

@@ -29,8 +29,8 @@ Board EmptyBoard(){
 	_pieces_size = _2_size;
 	//const %4 = 0 : int
 	_4 = 0;
-	//const %5 = 9 : int
-	_5 = 9;
+	//const %5 = 100 : int
+	_5 = 100;
 	//range %6 = %4, %5 : [int]
 	//forall %1 in %6 (%0, %7, %8, %9) : [int]
 	for(_i=_4; _i<_5; _i++){
@@ -202,8 +202,8 @@ int main(int argc, char** argv){
 	_b = _3;
 	//const %5 = 0 : int
 	_5 = 0;
-	//const %6 = 9 : int
-	_6 = 9;
+	//const %6 = 100 : int
+	_6 = 100;
 	//range %7 = %5, %6 : [int]
 	//forall %2 in %7 (%1, %8, %9, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22) : [int]
 	for(_p=_5; _p<_6; _p++){
@@ -211,8 +211,9 @@ int main(int argc, char** argv){
 		//fieldload %9 = %8 println : {method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s}
 		//indirectinvoke %9 (%1) : method(any) -> void
 		indrect_printf_string("pieces	");
-		indirect_printf_array_withoutlength(_b.pieces);
+		indirect_printf_array(_b.pieces, _6);
 		indrect_printf_string("move	");
+		indirect_printf(_b.move);
 
 		//fieldload %10 = %0 out : {[[int]] args,{method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s} out}
 		//fieldload %11 = %10 println : {method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s}
@@ -223,8 +224,8 @@ int main(int argc, char** argv){
 		_12 = 0;
 		//iflt %2, %12 goto blklab19 : int
 		if(_p<_12){goto blklab19;}
-		//const %13 = 9 : int
-		_13 = 9;
+		//const %13 = 100 : int
+		_13 = 100;
 		//ifgt %2, %13 goto blklab20 : int
 		if(_p>_13){goto blklab20;}
 		//fieldload %14 = %1 pieces : {int move,[int] pieces}
@@ -237,8 +238,8 @@ int main(int argc, char** argv){
 		if(_15!=_16){goto blklab21;}
 		//fieldload %17 = %1 move : {int move,[int] pieces}
 		_17 = _b.move;
-		//const %18 = 9 : int
-		_18 = 9;
+		//const %18 = 100 : int
+		_18 = 100;
 		//ifne %17, %18 goto blklab17 : int
 		if(_17!=_18){goto blklab17;}
 //.blklab21
