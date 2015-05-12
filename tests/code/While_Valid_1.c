@@ -1,23 +1,23 @@
 #include "While_Valid_1.h"
 long long* reverse(long long* _ls, long long _ls_size){
-	long long _i = 0;
-	long long* _r = NULL;
-	long long _r_size = 0;
-	long long _3 = 0;
-	long long _4 = 0;
-	long long* _5 = NULL;
-	long long _5_size = 0;
-	long long* _6 = NULL;
-	long long _6_size = 0;
-	long long _7 = 0;
-	long long _8 = 0;
-	long long _9 = 0;
-	long long _10 = 0;
-	long long _11 = 0;
-	long long* _12 = NULL;
-	long long _12_size = 0;
-	long long* _13 = NULL;
-	long long _13_size = 0;
+		long long _i = 0;
+		long long* _r = NULL;
+		long long _r_size = 0;
+		long long _3 = 0;
+		long long _4 = 0;
+		long long* _5 = NULL;
+		long long _5_size = 0;
+		void* _6 = NULL;
+		long long _6_size = 0;
+		long long _7 = 0;
+		long long _8 = 0;
+		long long _9 = 0;
+		long long _10 = 0;
+		long long _11 = 0;
+		long long* _12 = NULL;
+		long long _12_size = 0;
+		long long* _13 = NULL;
+		long long _13_size = 0;
 	//lengthof %4 = %0 : [int]
 	_4 = _ls_size;
 	//assign %3 = %4  : int
@@ -25,11 +25,13 @@ long long* reverse(long long* _ls, long long _ls_size){
 	//assign %1 = %3  : int
 	_i = _3;
 	//newlist %6 = () : [void]
+	_6_size = 0;
+	_6 = malloc(_6_size);
 	//assign %5 = %6  : [void]
-	_5 = _6;
+	_5 = (long long*)_6;
 	_5_size = _6_size;
 	//assign %2 = %5  : [int]
-	_r = _5;
+	_r = (long long*)_5;
 	_r_size = _5_size;
 			//ifle %1, %8 goto blklab0 : int
 		while(_i>_8){
@@ -60,15 +62,15 @@ blklab1:;
 			//indexof %11 = %0, %1 : [int]
 			_11=_ls[_i];
 			//newlist %12 = (%11) : [int]
-			_12_size=1;
-			_12=(long long*)malloc(_12_size*sizeof(long long));
-			_12[0]=_11;
+			_12_size = 1;
+			_12 = (long long*)malloc(_12_size*sizeof(long long));
+			_12[0] = _11;
 			//append %13 = %2, %12 : [int]
 			_13_size = _r_size+_12_size;
 			_13=append(_r, &_r_size, _12, &_12_size, &_13_size);
 			free(_12);
 			//assign %2 = %13  : [int]
-			_r = _13;
+			_r = (long long*)_13;
 			_r_size = _13_size;
 		}
 //.blklab0
@@ -86,7 +88,7 @@ int main(int argc, char** argv){
 	long long _rs_size = 0;
 	long long* _4 = NULL;
 	long long _4_size = 0;
-	long long* _5 = NULL;
+	void* _5 = NULL;
 	long long _5_size = 0;
 	long long _6 = 0;
 	long long _7 = 0;
@@ -101,11 +103,13 @@ int main(int argc, char** argv){
 	long long* _12 = NULL;
 	long long _12_size = 0;
 	//newlist %5 = () : [void]
+	_5_size = 0;
+	_5 = malloc(_5_size);
 	//assign %4 = %5  : [void]
-	_4 = _5;
+	_4 = (long long*)_5;
 	_4_size = _5_size;
 	//assign %1 = %4  : [int]
-	_xs = _4;
+	_xs = (long long*)_4;
 	_xs_size = _4_size;
 	//const %6 = 0 : int
 	_6 = 0;
@@ -115,15 +119,15 @@ int main(int argc, char** argv){
 	//forall %2 in %8 (%1, %9, %10) : [int]
 	for(_i=_6; _i<_7; _i++){
 		//newlist %9 = (%2) : [int]
-		_9_size=1;
-		_9=(long long*)malloc(_9_size*sizeof(long long));
-		_9[0]=_i;
+		_9_size = 1;
+		_9 = (long long*)malloc(_9_size*sizeof(long long));
+		_9[0] = _i;
 		//append %10 = %1, %9 : [int]
 		_10_size = _xs_size+_9_size;
 		_10=append(_xs, &_xs_size, _9, &_9_size, &_10_size);
 		free(_9);
 		//assign %1 = %10  : [int]
-		_xs = _10;
+		_xs = (long long*)_10;
 		_xs_size = _10_size;
 	}
 //.blklab2
@@ -132,10 +136,10 @@ blklab2:;
 	_12_size=_xs_size;
 	_12=reverse(_xs , _xs_size);
 	//assign %11 = %12  : [int]
-	_11 = _12;
+	_11 = (long long*)_12;
 	_11_size = _12_size;
 	//assign %3 = %11  : [int]
-	_rs = _11;
+	_rs = (long long*)_11;
 	_rs_size = _11_size;
 	//fieldload %13 = %0 out : {[[int]] args,{method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s} out}
 	//fieldload %14 = %13 println : {method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s}
