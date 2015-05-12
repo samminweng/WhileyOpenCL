@@ -4,6 +4,7 @@ import static wycc.lang.SyntaxError.internalFailure;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -46,7 +47,12 @@ public class CodeGenerator {
 	private Codes.BinaryOperator range;// indicate the range that forall loop
 										// iterates over.
 
-	private List<String> input_params;//Store all the names of input parameters.
+	private List<String> input_params;// Store all the names of input
+										// parameters.
+	private Collection<wyil.lang.WyilFile.Type> userTypes;// Store all the
+															// user-defined
+															// types, e.g.
+															// Board.
 
 	/**
 	 * Constructor
@@ -54,35 +60,14 @@ public class CodeGenerator {
 	 * @param config
 	 * @param functionOrMethod
 	 */
-	public CodeGenerator(Configuration config, FunctionOrMethod functionOrMethod) {
+	public CodeGenerator(Configuration config, FunctionOrMethod functionOrMethod, Collection<wyil.lang.WyilFile.Type> userTypes) {
 		this.config = config;
 		this.functionOrMethod = functionOrMethod;
 		this.var_declarations = this.functionOrMethod.attribute(VariableDeclarations.class);
 		this.vars = new LinkedHashMap<String, Type>();
 		this.statements = new ArrayList<String>();
 		this.input_params = new ArrayList<String>();
-		//Get the input parameters.
-		for(int reg=0; reg< functionOrMethod.type().params().size();reg++){
-			this.input_params.add(prefix+this.var_declarations.get(reg).name());
-		}
-	}
-
-	/**
-	 * Adds a block of code to free any variable whose type is a list as the
-	 * array in C is allocated by malloc.
-	 */
-	private void free_varaibles() {
-		// Iterate the variables and adds statements to free the list variables.
-		for (Map.Entry<String, Type> var : vars.entrySet()) {
-			// Get variable name
-			String var_name = var.getKey();
-			Type type = var.getValue();
-			// Check if the type is an array (pointer of pointer).
-			if (type != null && type instanceof Type.List) {
-				// Free the variable.
-				statements.add(indent + "free(" + var_name + ");");
-			}
-		}
+		this.userTypes = userTypes;
 	}
 
 	/**
@@ -180,7 +165,6 @@ public class CodeGenerator {
 		return null;
 	}
 
-
 	/**
 	 * Get the variable name of the given register
 	 * 
@@ -211,6 +195,52 @@ public class CodeGenerator {
 	 */
 	private Type getVarType(int reg) {
 		return vars.get(getVarName(reg));
+	}
+
+	/**
+	 * Get the user defined type by the name
+	 * 
+	 * @param name
+	 * @return
+	 */
+	private wyil.lang.WyilFile.Type getUserDefinedType(String name) {
+		for (wyil.lang.WyilFile.Type user_type : this.userTypes) {
+			if (user_type.name().equals(name)) {
+				return user_type;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Get the user defined type by checking if the user type has the same
+	 * fields as the given record type.
+	 * 
+	 * @param type
+	 *            the record type.
+	 * @return the user type. Return null if no type is matched.
+	 */
+	private wyil.lang.WyilFile.Type getUserDefinedType(Type.Record type) {
+		for (wyil.lang.WyilFile.Type user_type : this.userTypes) {
+			if (user_type.type() instanceof Type.Record) {
+				Type.Record record = (Type.Record) user_type.type();
+				// check if record and type have the same fields.
+				boolean isTheSame = true;
+				for (Entry<String, Type> field : type.fields().entrySet()) {
+					Type recordFieldType = record.field(field.getKey());
+					if (recordFieldType != null) {
+						isTheSame &= true;
+					} else {
+						isTheSame &= false;
+					}
+				}
+
+				if (isTheSame) {
+					return user_type;
+				}
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -296,6 +326,12 @@ public class CodeGenerator {
 	 * code block.
 	 */
 	public void declareVariables() {
+
+		// Get the input parameters.
+		for (int reg = 0; reg < functionOrMethod.type().params().size(); reg++) {
+			this.input_params.add(prefix + this.var_declarations.get(reg).name());
+		}
+
 		// Iterate over the list of registers.
 		for (int reg = 0; reg < var_declarations.size(); reg++) {
 			Declaration declaration = var_declarations.get(reg);
@@ -346,15 +382,15 @@ public class CodeGenerator {
 			if (split.length >= 1) {
 				variable_name = split[0];
 			}
-		}	
+		}
 		// Check if the variable_name is an number.
-		// If so, the variable is an intermediate variable. Otherwise,  it could be an input parameter.
-		if (!variable_name.isEmpty() &&!(variable_name.matches("^_[0-9]+$"))) {
+		// If so, the variable is an intermediate variable. Otherwise, it could
+		// be an input parameter.
+		if (!variable_name.isEmpty() && !(variable_name.matches("^_[0-9]+$"))) {
 			// Check if the input parameter contains the variable name.
 			return this.input_params.contains(variable_name);
 		}
-		
-		
+
 		return false;
 	}
 
@@ -473,7 +509,7 @@ public class CodeGenerator {
 		String target = getVarName(code.target());
 		String op = getVarName(code.operand(0));
 		String statement = "";
-	
+
 		if (code.type() instanceof Type.List) {
 			// Check if the assigned type is an array. If so, use different way
 			// to copy the array.
@@ -491,7 +527,7 @@ public class CodeGenerator {
 			}
 			// _1_size = _10_size;
 			statement += indent + target_size + " = " + op + "_size;";
-		}else {
+		} else {
 			statement = indent + target + " = " + op + ";";
 		}
 		// Add the statement to the list of statements.
@@ -950,19 +986,25 @@ public class CodeGenerator {
 	}
 
 	/**
-	 * Translates FieldLoad byte-code into C code, e.g. 
-	 * <pre><code>
+	 * Translates FieldLoad byte-code into C code, e.g.
+	 * 
+	 * <pre>
+	 * <code>
 	 * fieldload %14 = %1 pieces : {int move,[int] pieces}
-	 * </code></pre>
+	 * </code>
+	 * </pre>
+	 * 
 	 * can be translated into
-	 * <pre><code>
+	 * 
+	 * <pre>
+	 * <code>
 	 * _14 = _1.pieces;
-	 * </code></pre>
-	 *  
-	 *  
-	 * Note that at this stage, the field load
-	 * code that loads <code>System.out.println</code> is not translated into
-	 * any C code.
+	 * </code>
+	 * </pre>
+	 * 
+	 * 
+	 * Note that at this stage, the field load code that loads
+	 * <code>System.out.println</code> is not translated into any C code.
 	 * 
 	 * @param code
 	 * @throws Exception
@@ -977,9 +1019,8 @@ public class CodeGenerator {
 		if (field.equals("out") || field.equals("println")) {
 			addStatement(code, null);
 		} else {
-			//Get the target 
-			String statement = indent + getVarName(code.target())+" = "+getVarName(code.operand(0))
-					+ "." + code.field + ";";
+			// Get the target
+			String statement = indent + getVarName(code.target()) + " = " + getVarName(code.operand(0)) + "." + code.field + ";";
 			addStatement(code, statement);
 		}
 	}
@@ -997,6 +1038,37 @@ public class CodeGenerator {
 			// Do nothing.
 		}
 		addStatement(code, null);
+	}
+
+	/**
+	 * Based on the variable type, print out the variable by using different
+	 * indirect invoked 'printf' functions.
+	 * 
+	 * @param type
+	 * @param var
+	 * @return the translated statement.
+	 */
+	private String translateIndirectInvokePrintf(Type type, String var) {
+		String statement = "";
+		if (type instanceof Type.List) {
+			//Print out a pointer without specifying array size.
+			statement += indent + "indirect_printf_array_withoutlength(" + var + ");\n";
+		} else if (type instanceof Type.Int) {
+			statement += indent + "indirect_printf(" + var + ");\n";
+		} else if (type instanceof Type.Record) {
+			// Generalize the indirect_invoke_printf function to print out a
+			// record.
+			Type.Record record = (Type.Record) type;
+			for (Entry<String, Type> field : record.fields().entrySet()) {
+				// Print out the field name
+				statement += indent + "indrect_printf_string(\"" + field.getKey() + "\t\");\n";
+				// Based on the field Type, print out the field value using
+				// the different 'printf' functions.
+				statement += translateIndirectInvokePrintf(field.getValue(), var + "." + field.getKey());
+			}
+		}
+		return statement;
+
 	}
 
 	/**
@@ -1020,6 +1092,9 @@ public class CodeGenerator {
 	 * 
 	 * where 'indirect_printf' function is defined in 'Util.c'.
 	 * 
+	 * If the input type is an instance of user defined type, then get the type
+	 * declaration first and convert it into the corresponding type.
+	 * 
 	 * @param code
 	 *            Codes.IndirectInvoke byte-code
 	 * 
@@ -1029,15 +1104,21 @@ public class CodeGenerator {
 		if (code.type() instanceof Type.FunctionOrMethod) {
 			String var = getVarName(code.parameter(0));
 			// Get input type
+			// Type type = code.type().params().get(0);
 			Type type = getVarDeclaration(var);
-			if (type instanceof Type.List) {
+			// Check if the type is a user-defined type.
+			if (type instanceof Type.Nominal) {
+				Type.Nominal nominal = (Type.Nominal) type;
+				wyil.lang.WyilFile.Type user_type = getUserDefinedType(nominal.name().name());
+				statement += translateIndirectInvokePrintf(user_type.type(), var);
+			} else if (type instanceof Type.List) {
 				// Added the additional 'array_size' variable to indicate the
 				// length of an array.
 				// Due to strictly forbidding the overlapping in C, the function
 				// is named differently.
-				statement += indent + "indirect_printf_array(" + var + ", " + var + "_size);\n";
-			} else if (type instanceof Type.Int) {
-				statement += indent + "indirect_printf(" + var + ");\n";
+				statement += indent + "indirect_printf_array(" + var + ", "+ var +"_size);\n";
+			} else {
+				statement += translateIndirectInvokePrintf(type, var);
 			}
 		}
 		addStatement(code, statement);
@@ -1248,8 +1329,8 @@ public class CodeGenerator {
 	 * 
 	 * @param type
 	 *            the WyIL type
-	 * @return the result string
-	 * TODO Generalize the user-defined types, such as 'Board'.
+	 * @return the result string TODO Generalize the user-defined types, such as
+	 *         'Board'.
 	 * 
 	 */
 	private String translate(Type type) {
@@ -1279,9 +1360,11 @@ public class CodeGenerator {
 			if (fields.containsKey("args")) {
 				return "int argc, char** argv";
 			}
-
-			// Currently, the type
-			return "Board";
+			// Check if the type is an instance of user defined type.
+			wyil.lang.WyilFile.Type userDefinedType = getUserDefinedType((Type.Record) type);
+			if (userDefinedType != null) {
+				return userDefinedType.name();
+			}
 		}
 
 		return null;

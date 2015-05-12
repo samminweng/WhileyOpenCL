@@ -204,6 +204,9 @@ int main(int argc, char** argv){
 		//fieldload %8 = %0 out : {[[int]] args,{method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s} out}
 		//fieldload %9 = %8 println : {method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s}
 		//indirectinvoke %9 (%1) : method(any) -> void
+		indrect_printf_string("pieces	");
+		indirect_printf_array_withoutlength(_b.pieces);
+		indrect_printf_string("move	");
 
 		//fieldload %10 = %0 out : {[[int]] args,{method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s} out}
 		//fieldload %11 = %10 println : {method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s}

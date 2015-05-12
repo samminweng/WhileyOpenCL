@@ -60,6 +60,11 @@ long long* append(long long* op_1, long long* op_1_size, long long* op_2, long l
 	*ret_size = *op_1_size+*op_2_size;
 	return ret;
 }
+/*Print out the string*/
+void indrect_printf_string(char* msg){
+	printf("%s", msg);
+}
+
 /**Print out a long long integer*/
 void indirect_printf(long long input){
 	printf("%lld\n", input);
@@ -87,6 +92,26 @@ void indirect_printf_array(long long* input, long long input_size){
 		printf(" ... %lld", input[input_size-1]);
 	}
 	printf("]\n");
+}
+
+/**Print out an array of long long integers without specifying the array size.
+If the array size > 10, then print the first 10 items.*/
+void indirect_printf_array_withoutlength(long long* input){
+	long long i = 0;
+	//Determines whether to add ','.
+	int isFirst = true;
+	int max_i = 10;
+	printf("\n[");
+	//Print the first 10 items
+	for(i=0;i<max_i;i++){
+		if(isFirst){
+			printf("%lld",input[i]);
+			isFirst = false;
+		}else{
+			printf(",%lld",input[i]);
+		}
+	}
+	printf("...]\n");
 }
 
 

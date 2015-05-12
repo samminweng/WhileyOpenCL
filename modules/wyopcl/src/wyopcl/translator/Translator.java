@@ -131,7 +131,7 @@ public class Translator implements Builder {
 				if (config.isPatternMatching()) {
 					functionOrMethod = TranslatorHelper.patternMatchingandTransformation(config, functionOrMethod);
 				}
-				CodeGenerator generator = new CodeGenerator(config, functionOrMethod);
+				CodeGenerator generator = new CodeGenerator(config, functionOrMethod, module.types());
 				String function_del = generator.declareFunction();
 				// Add the function declaration to the list
 				function_list.add(function_del);
