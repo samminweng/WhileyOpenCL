@@ -73,10 +73,10 @@ function countOf([Square] pieces, Square s) -> (int r):
 
 method main(System.Console console) -> void:
     Board b = EmptyBoard()
-    for p in 0..SQUARESIZE:
-        console.out.println(b)
-        console.out.println(p)
+    for p in 0..SQUARESIZE:        
+        //console.out.println(p)
         if p < 0 || p > SQUARESIZE || b.pieces[p] != BLANK || b.move == SQUARESIZE:
             console.out.println("INVALID MOVE!")
         else:
             b = play(b,p)
+    console.out.println(b)	

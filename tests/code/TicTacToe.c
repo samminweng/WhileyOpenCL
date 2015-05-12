@@ -183,17 +183,17 @@ int main(int argc, char** argv){
 	long long _6 = 0;
 	long long* _7 = NULL;
 	long long _7_size = 0;
+	long long _8 = 0;
+	long long _9 = 0;
+	long long* _10 = NULL;
+	long long _10_size = 0;
+	long long _11 = 0;
 	long long _12 = 0;
 	long long _13 = 0;
-	long long* _14 = NULL;
-	long long _14_size = 0;
-	long long _15 = 0;
-	long long _16 = 0;
-	long long _17 = 0;
-	long long _18 = 0;
-	long long* _21 = NULL;
-	long long _21_size = 0;
-	Board _22;
+	long long _14 = 0;
+	long long* _17 = NULL;
+	long long _17_size = 0;
+	Board _18;
 	//invoke %4 = () TicTacToe:EmptyBoard : function() -> TicTacToe:Board
 	_4=EmptyBoard();
 	//assign %3 = %4  : {int move,[int] pieces}
@@ -205,68 +205,63 @@ int main(int argc, char** argv){
 	//const %6 = 100 : int
 	_6 = 100;
 	//range %7 = %5, %6 : [int]
-	//forall %2 in %7 (%1, %8, %9, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22) : [int]
+	//forall %2 in %7 (%1, %8, %9, %10, %11, %12, %13, %14, %15, %16, %17, %18) : [int]
 	for(_p=_5; _p<_6; _p++){
-		//fieldload %8 = %0 out : {[[int]] args,{method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s} out}
-		//fieldload %9 = %8 println : {method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s}
-		//indirectinvoke %9 (%1) : method(any) -> void
-		indrect_printf_string("pieces	");
-		indirect_printf_array(_b.pieces, _6);
-		indrect_printf_string("move	");
-		indirect_printf(_b.move);
-
-		//fieldload %10 = %0 out : {[[int]] args,{method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s} out}
-		//fieldload %11 = %10 println : {method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s}
-		//indirectinvoke %11 (%2) : method(any) -> void
-		indirect_printf(_p);
-
+		//const %8 = 0 : int
+		_8 = 0;
+		//iflt %2, %8 goto blklab19 : int
+		if(_p<_8){goto blklab19;}
+		//const %9 = 100 : int
+		_9 = 100;
+		//ifgt %2, %9 goto blklab20 : int
+		if(_p>_9){goto blklab20;}
+		//fieldload %10 = %1 pieces : {int move,[int] pieces}
+		_10 = _b.pieces;
+		//indexof %11 = %10, %2 : [int]
+		_11=_10[_p];
 		//const %12 = 0 : int
 		_12 = 0;
-		//iflt %2, %12 goto blklab19 : int
-		if(_p<_12){goto blklab19;}
-		//const %13 = 100 : int
-		_13 = 100;
-		//ifgt %2, %13 goto blklab20 : int
-		if(_p>_13){goto blklab20;}
-		//fieldload %14 = %1 pieces : {int move,[int] pieces}
-		_14 = _b.pieces;
-		//indexof %15 = %14, %2 : [int]
-		_15=_14[_p];
-		//const %16 = 0 : int
-		_16 = 0;
-		//ifne %15, %16 goto blklab21 : int
-		if(_15!=_16){goto blklab21;}
-		//fieldload %17 = %1 move : {int move,[int] pieces}
-		_17 = _b.move;
-		//const %18 = 100 : int
-		_18 = 100;
-		//ifne %17, %18 goto blklab17 : int
-		if(_17!=_18){goto blklab17;}
+		//ifne %11, %12 goto blklab21 : int
+		if(_11!=_12){goto blklab21;}
+		//fieldload %13 = %1 move : {int move,[int] pieces}
+		_13 = _b.move;
+		//const %14 = 100 : int
+		_14 = 100;
+		//ifne %13, %14 goto blklab17 : int
+		if(_13!=_14){goto blklab17;}
 //.blklab21
 blklab21:;
 //.blklab20
 blklab20:;
 //.blklab19
 blklab19:;
-		//fieldload %19 = %0 out : {[[int]] args,{method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s} out}
-		//fieldload %20 = %19 println : {method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s}
-		//const %21 = [73,78,86,65,76,73,68,32,77,79,86,69,33] : [int+]
-		//indirectinvoke %20 (%21) : method(any) -> void
-		indirect_printf_array(_21, _21_size);
+		//fieldload %15 = %0 out : {[[int]] args,{method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s} out}
+		//fieldload %16 = %15 println : {method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s}
+		//const %17 = [73,78,86,65,76,73,68,32,77,79,86,69,33] : [int+]
+		//indirectinvoke %16 (%17) : method(any) -> void
+		indirect_printf_array(_17, _17_size);
 
 		//goto blklab18
 		goto blklab18;
 //.blklab17
 blklab17:;
-		//invoke %22 = (%1, %2) TicTacToe:play : function(TicTacToe:Board,TicTacToe:nat) -> TicTacToe:Board
-		_22=play(_b ,_p);
-		//assign %1 = %22  : {int move,[int] pieces}
-		_b = _22;
+		//invoke %18 = (%1, %2) TicTacToe:play : function(TicTacToe:Board,TicTacToe:nat) -> TicTacToe:Board
+		_18=play(_b ,_p);
+		//assign %1 = %18  : {int move,[int] pieces}
+		_b = _18;
 //.blklab18
 blklab18:;
 	}
 //.blklab16
 blklab16:;
+	//fieldload %19 = %0 out : {[[int]] args,{method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s} out}
+	//fieldload %20 = %19 println : {method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s}
+	//indirectinvoke %20 (%1) : method(any) -> void
+	indrect_printf_string("pieces	");
+	indirect_printf_array_withoutlength(_b.pieces);
+	indrect_printf_string("move	");
+	indirect_printf(_b.move);
+
 	//return
 	;
 }
