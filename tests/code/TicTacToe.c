@@ -90,6 +90,8 @@ Board play(Board _b, nat _pos){
 	_6 = 1;
 	//const %7 = 1 : int
 	_7 = 1;
+	//update %0.pieces[%1] = %7 : {int move,[int] pieces} -> {int move,[int] pieces}
+	_b.pieces[_pos] = _7;
 	//goto blklab13
 	goto blklab13;
 //.blklab12
@@ -98,6 +100,8 @@ blklab12:;
 	_8 = 2;
 	//const %9 = 2 : int
 	_9 = 2;
+	//update %0.pieces[%1] = %9 : {int move,[int] pieces} -> {int move,[int] pieces}
+	_b.pieces[_pos] = _9;
 //.blklab13
 blklab13:;
 	//fieldload %10 = %0 move : {int move,[int] pieces}
@@ -112,6 +116,8 @@ blklab13:;
 	_14 = 1;
 	//add %15 = %13, %14 : int
 	_15=_13+_14;
+	//update %0.move = %15 : {int move,[int] pieces} -> {int move,[int] pieces}
+	_b.move = _15;
 	//return %0 : {int move,[int] pieces}
 	return _b;
 	//return

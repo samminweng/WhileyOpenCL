@@ -832,13 +832,33 @@ public class CodeGenerator {
 		addStatement(code, stat);
 	}
 
+	/**
+	 * Translates the update byte-code into C code. For example,
+	 * <pre><code>
+	 * update %0.pieces[%1] = %7 : {int move,[int] pieces} -> {int move,[int] pieces}
+	 * </code></pre>
+	 * can be translated into:
+	 * <pre><code>
+	 * _0.pieces[_1] = _7;
+	 * </code></pre>
+	 * 
+	 * @param code
+	 */
 	private void translate(Codes.Update code) {
-		String stat = indent;
+		String stat = "";
 		// For List type only
 		if (code.type() instanceof Type.List) {
-			stat += getVarName(code.target()) + "[" + getVarName(code.operand(0)) + "] = " + getVarName(code.result()) + ";";
-			addStatement(code, stat);
+			stat += indent +getVarName(code.target()) + "[" + getVarName(code.operand(0)) + "] = " + getVarName(code.result()) + ";";
+		}else if(code.type() instanceof Type.Record){
+			stat += indent + getVarName(code.target()) + "."+ code.fields.get(0);
+			//check	if there are two or more operands. If so, then add the index operand.
+			if(code.operands().length >1 ){
+				stat += "[" + getVarName(code.operand(0)) + "]";
+			}					
+			stat += " = " + getVarName(code.result()) + ";";
 		}
+		
+		addStatement(code, stat);
 	}
 
 	private void translate(Codes.Nop code) {
