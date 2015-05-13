@@ -5,7 +5,7 @@
 run_benchmark_c (){    
 	cd c/"$2"    	
     	#array size
-	arraysizes="100 1000 10000 100000 1000000 10000000"
+	arraysizes="100 1000 10000 100000 1000000 10000000 100000000 150000000 200000000 300000000"
 	for arraysize in $arraysizes
     	do
 		
