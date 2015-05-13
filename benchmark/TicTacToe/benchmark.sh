@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# The shell script of benchmarking the generated C and Java code of TicTacTow program
+# The shell script of benchmarking the generated C code of While_Valid_1 program
 #
 run_benchmark_c (){    
 	cd c/"$2"    	
