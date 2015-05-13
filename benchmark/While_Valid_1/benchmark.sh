@@ -3,7 +3,7 @@
 # The shell script of benchmarking the generated C code of While_Valid_1 program
 #
 run_benchmark_c (){    
-	cd "$1"/c/"$2"
+	cd c/"$2"
     	#compile the source C file with L2 optimization (-O2)
     	#see https://gcc.gnu.org/onlinedocs/gnat_ugn/Optimization-Levels.html#101
     	gcc -m64 -O2 $1.c Util.c -o $1.out
@@ -23,14 +23,14 @@ run_benchmark_c (){
 		cat /proc/cpuinfo >> result.$1.c.$2.$arraysize.txt
     	done
     	#Return to the working directory
-    	cd ../../../
+    	cd ../../
 }
 #
 # The shell script of benchmarking the generated Java code of While_Valid_1 program
 #
 run_benchmark_java(){
         #Change the working directory
-        cd "$1"/"java"
+        cd "java"
 	WHILEY_CLASSPATH="./../../../bin/../lib/jasm-v0.1.7.jar:./../../../bin/../lib/wyrl-v0.3.33.jar:./../../../bin/../lib/wybs-v0.3.33.jar:./../../../bin/../lib/wycs-v0.3.33.jar:./../../../bin/../lib/wyil-v0.3.33.jar:./../../../bin/../lib/wyc-v0.3.33.jar:./../../../bin/../lib/wyjc-v0.3.33.jar:"
 	#Check if the shell script is run on Cygwin
 	if [ `uname -o` = "Cygwin" ]
@@ -52,7 +52,7 @@ run_benchmark_java(){
 		cat /proc/cpuinfo >> result.$1.java.$arraysize.txt
     	done
 	#Return the original working directory
-	#cd ../..
+	cd ..
 }
 #
 #Benchmark the generated C code
