@@ -1,15 +1,15 @@
 #include "WhileLoop.h"
 long long f(long long _limit){
-	long long _i = 0;
-	long long _sum = 0;
-	long long _3 = 0;
-	long long _4 = 0;
-	long long _5 = 0;
-	long long _6 = 0;
-	long long _7 = 0;
-	long long _8 = 0;
-	long long _9 = 0;
-	long long _10 = 0;
+		long long _i = 0;
+		long long _sum = 0;
+		long long _3 = 0;
+		long long _4 = 0;
+		long long _5 = 0;
+		long long _6 = 0;
+		long long _7 = 0;
+		long long _8 = 0;
+		long long _9 = 0;
+		long long _10 = 0;
 	//const %4 = 0 : int
 	_4 = 0;
 	//assign %3 = %4  : int

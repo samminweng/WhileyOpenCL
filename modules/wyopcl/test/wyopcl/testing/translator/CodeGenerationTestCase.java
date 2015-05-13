@@ -43,6 +43,12 @@ public class CodeGenerationTestCase {
 		//Generate the naive C code  
 		util.execCodeGeneration(valid_path, "While_Valid_1", "fast");
 	}
+	
+	@Test
+	public void test_TicTacToe() {
+		util.execCodeGeneration(valid_path, "TicTacToe");
+	}
+	
 	/*
 	
 		
@@ -55,8 +61,5 @@ public class CodeGenerationTestCase {
 	
 	
 	
-	@Test
-	public void test_Reverse_List() {
-		util.execCodeGeneration(valid_path+"Reverse_List");
-	}*/
+	*/
 }

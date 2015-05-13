@@ -4,6 +4,7 @@ import static wycc.lang.SyntaxError.internalFailure;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -19,6 +20,7 @@ import wyil.lang.Codes.If;
 import wyil.lang.Codes.Invariant;
 import wyil.lang.Codes.ListOperator;
 import wyil.lang.Codes.Loop;
+import wyil.lang.Codes.NewRecord;
 import wyil.lang.Codes.UnaryOperator;
 import wyil.lang.Constant;
 import wyil.lang.Type;
@@ -45,83 +47,28 @@ public class CodeGenerator {
 	private Codes.BinaryOperator range;// indicate the range that forall loop
 										// iterates over.
 
+	private List<String> input_params;// Store all the names of input
+										// parameters.
+	private Collection<wyil.lang.WyilFile.Type> userTypes;// Store all the
+															// user-defined
+															// types, e.g.
+															// Board.
+
 	/**
 	 * Constructor
 	 * 
 	 * @param config
 	 * @param functionOrMethod
 	 */
-	public CodeGenerator(Configuration config, FunctionOrMethod functionOrMethod) {
+	public CodeGenerator(Configuration config, FunctionOrMethod functionOrMethod, Collection<wyil.lang.WyilFile.Type> userTypes) {
 		this.config = config;
 		this.functionOrMethod = functionOrMethod;
 		this.var_declarations = this.functionOrMethod.attribute(VariableDeclarations.class);
 		this.vars = new LinkedHashMap<String, Type>();
 		this.statements = new ArrayList<String>();
+		this.input_params = new ArrayList<String>();
+		this.userTypes = userTypes;
 	}
-
-	/**
-	 * Add the statements about iterations.
-	 */
-	/*
-	 * private void addStartingIteration(String func_name, Code code){ // Adds
-	 * the timer to measure the starting time at the main method
-	 * if(func_name.equals("main")&& code instanceof Codes.Invoke){ //Get the
-	 * invoke code Codes.Invoke invoked = (Codes.Invoke)code;
-	 * if(invoked.name.name().equals("reverse")){ //Add the number of iteration
-	 * vars.put("iteration", Type.Int.T_INT); //Add variable declaration
-	 * vars.put("start", "clock_t"); vars.put("end", "clock_t");
-	 * vars.put("diff", "double"); //Add a file pointer vars.put("*fp", "FILE");
-	 * statements.add(indent + "diff=0;"); //Initial the return value
-	 * statements.add(indent +prefix+invoked.target()+"=NULL;"); //Use the
-	 * for-loop to repeatedly execute the function. statements.add(indent +
-	 * "for(iteration=0;iteration<10;iteration++){"); increaseIndent(); //Add
-	 * the starting timer statements.add(indent + "start = clock();"); //check
-	 * if the return reg is null. If so, nullify it. statements.add(indent
-	 * +"if("+prefix+invoked.target()+
-	 * "!= NULL){ free("+prefix+invoked.target()+");}"); } } }
-	 */
-	/**
-	 * Adds a block of code to free any variable whose type is a list as the
-	 * array in C is allocated by malloc.
-	 */
-	private void free_varaibles() {
-		// Iterate the variables and adds statements to free the list variables.
-		for (Map.Entry<String, Type> var : vars.entrySet()) {
-			// Get variable name
-			String var_name = var.getKey();
-			Type type = var.getValue();
-			// Check if the type is an array (pointer of pointer).
-			if (type != null && type instanceof Type.List) {
-				// Free the variable.
-				statements.add(indent + "free(" + var_name + ");");
-			}
-		}
-	}
-
-	/*
-	*//**
-	 * Adds the ending timer and calculate the execution time
-	 * 
-	 * @param func_name
-	 */
-	/*
-	 * private void addEndingIteration(String func_name, Code code){ //Adds the
-	 * ending time and calculate and print out the execution time
-	 * if(func_name.equals("main") && code instanceof Codes.Invoke){
-	 * Codes.Invoke invoked = (Codes.Invoke)code;
-	 * if(invoked.name.name().equals("reverse")){ //Add the ending timer
-	 * statements.add(indent + "end = clock();"); //Print out . //Create a file
-	 * statements.add(indent + "fp= fopen(\"result.txt\", \"a\");"); //Write out
-	 * the execution time of each iteration to the txt file. //This is
-	 * hard-coded statements.add(indent + "fprintf(fp, \"Array size:%lld\\t" +
-	 * "Execution time of reverse function(seconds):%.10lf\\n\"" +
-	 * ", _4, ((double)(end - start))/CLOCKS_PER_SEC);"); //Close the txt file
-	 * statements.add(indent+"fclose(fp);"); statements.add(indent +
-	 * "diff += end - start;"); decreaseIndent(); //The end of iteration
-	 * while-loop. statements.add(indent + "}"); statements.add(indent +
-	 * "printf(\"Execution time:%.10lf seconds\", diff/(CLOCKS_PER_SEC*iteration));"
-	 * ); } } }
-	 */
 
 	/**
 	 * Iterates over the list of byte-code to generate the corresponding C code.
@@ -178,6 +125,11 @@ public class CodeGenerator {
 		// Check if the type is a record and its field contains "println" .
 		if (type instanceof Type.Record) {
 			Type.Record record = (Type.Record) type;
+			// Add the record type to the list
+			// if(!this.record_types.contains(record)){
+			// this.record_types.add(record);
+			// }
+
 			// If so, then the record loads the "println" from the
 			// sys.out.console.
 			// At this stage, we dont use this record.
@@ -214,21 +166,6 @@ public class CodeGenerator {
 	}
 
 	/**
-	 * Check if the register is an input parameter of the function.
-	 * 
-	 * @param reg
-	 * @return
-	 */
-	private boolean isInputParameter(int reg) {
-		// Check if the register number is less than the input parameter sizes.
-		// If so, then the register is an input.
-		if (reg < this.functionOrMethod.type().params().size()) {
-			return true;
-		}
-		return false;
-	}
-
-	/**
 	 * Get the variable name of the given register
 	 * 
 	 * @param reg
@@ -236,8 +173,9 @@ public class CodeGenerator {
 	 * @return the variable name (starting with "_")
 	 */
 	private String getVarName(int reg) {
-		//Check if the register has been kept in the functional variable declarations.
-		if(reg<var_declarations.size()){
+		// Check if the register has been kept in the functional variable
+		// declarations.
+		if (reg < var_declarations.size()) {
 			Declaration declaration = var_declarations.get(reg);
 			if (declaration != null) {
 				String name = declaration.name();
@@ -247,6 +185,62 @@ public class CodeGenerator {
 			}
 		}
 		return prefix + reg;
+	}
+
+	/**
+	 * Get the type of a variable.
+	 * 
+	 * @param reg
+	 * @return
+	 */
+	private Type getVarType(int reg) {
+		return vars.get(getVarName(reg));
+	}
+
+	/**
+	 * Get the user defined type by the name
+	 * 
+	 * @param name
+	 * @return
+	 */
+	private wyil.lang.WyilFile.Type getUserDefinedType(String name) {
+		for (wyil.lang.WyilFile.Type user_type : this.userTypes) {
+			if (user_type.name().equals(name)) {
+				return user_type;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Get the user defined type by checking if the user type has the same
+	 * fields as the given record type.
+	 * 
+	 * @param type
+	 *            the record type.
+	 * @return the user type. Return null if no type is matched.
+	 */
+	private wyil.lang.WyilFile.Type getUserDefinedType(Type.Record type) {
+		for (wyil.lang.WyilFile.Type user_type : this.userTypes) {
+			if (user_type.type() instanceof Type.Record) {
+				Type.Record record = (Type.Record) user_type.type();
+				// check if record and type have the same fields.
+				boolean isTheSame = true;
+				for (Entry<String, Type> field : type.fields().entrySet()) {
+					Type recordFieldType = record.field(field.getKey());
+					if (recordFieldType != null) {
+						isTheSame &= true;
+					} else {
+						isTheSame &= false;
+					}
+				}
+
+				if (isTheSame) {
+					return user_type;
+				}
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -332,6 +326,12 @@ public class CodeGenerator {
 	 * code block.
 	 */
 	public void declareVariables() {
+
+		// Get the input parameters.
+		for (int reg = 0; reg < functionOrMethod.type().params().size(); reg++) {
+			this.input_params.add(prefix + this.var_declarations.get(reg).name());
+		}
+
 		// Iterate over the list of registers.
 		for (int reg = 0; reg < var_declarations.size(); reg++) {
 			Declaration declaration = var_declarations.get(reg);
@@ -356,35 +356,44 @@ public class CodeGenerator {
 	}
 
 	/**
-	 * Given a variable name, check if it is the size variable of input parameter. For example,
-	 * <pre><code>
+	 * Given a variable name, check if it is the size variable of input
+	 * parameter. For example,
+	 * 
+	 * <pre>
+	 * <code>
 	 * long long* reverse(long long* _ls, long long _ls_size)
-	 * </code></pre>
-	 * The '_ls_size' variable is the size variable of input parameter 'ls'. 
+	 * </code>
+	 * </pre>
+	 * 
+	 * The '_ls_size' variable is the size variable of input parameter 'ls'.
 	 * 
 	 * @param var_name
-	 * @return true if the variable is the size variable of input parameter. 
+	 * @return true if the variable is the size variable of input parameter.
 	 * 
 	 */
-	private Boolean isInputParameterSize(String var_name){
+	private Boolean isInputParameter(String var_name) {
 		// Check if the variable is the size variable of the input
 		// parameter.
-		if (var_name.contains("_size")){
-			//Get the array variable. 
-			String array_var = var_name.split("_size")[0];
-			//Check if the array variable is an number. 
-			//If so, the variable is an intermediate variable. Otherwise, it could be an input parameter.
-			if(!(array_var.matches("^_[0-9]+$"))){
-				//check if the array var matches with the variable at index of 0, which is the input paramter.
-				if(array_var.equals("_"+this.var_declarations.get(0).name())){
-					return true;
-				}
+		String variable_name = var_name;
+		if (variable_name.contains("_size")) {
+			// Get the array variable.
+			String[] split = variable_name.split("_size");
+			// Check if the split variable name has at least two items.
+			if (split.length >= 1) {
+				variable_name = split[0];
 			}
 		}
+		// Check if the variable_name is an number.
+		// If so, the variable is an intermediate variable. Otherwise, it could
+		// be an input parameter.
+		if (!variable_name.isEmpty() && !(variable_name.matches("^_[0-9]+$"))) {
+			// Check if the input parameter contains the variable name.
+			return this.input_params.contains(variable_name);
+		}
+
 		return false;
 	}
-	
-	
+
 	/**
 	 * Write out the generated C code, which starts with variable declarations,
 	 * followed by a list of statements and a list of free statements at the
@@ -396,29 +405,26 @@ public class CodeGenerator {
 		// function declaration
 		writer.println(func_declaration + "{");
 		// Variable declaration with initial values.
-		int reg = 0;
 		for (Entry<String, Type> var : vars.entrySet()) {
 			// If the register is not an input.
-			if (!isInputParameter(reg)) {
-				String var_name = var.getKey();
-				// Check if the variable is the size variable of the input
-				// parameter.
-				if (!isInputParameterSize(var_name)) {
-					//Type declaration and initial value assignment.
-					Type var_type = var.getValue();
-					// Assign the initial values for local variables.
-					String init = "";
-					if (var_type instanceof Type.List) {
-						init = "NULL";
-					} else if (var_type instanceof Type.Int) {
-						init = "0";
-					}
-					// Write out the variable declaration.
-					writer.println("\t" + translate(var_type) + " " + var_name + " = " + init + ";");
+			String var_name = var.getKey();
+			// Check if the variable is the size variable of the input
+			// parameter.
+			if (!isInputParameter(var_name)) {
+				// Type declaration and initial value assignment.
+				Type var_type = var.getValue();
+				// Assign the initial values for local variables.
+				String init = indent + translate(var_type) + " " + var_name;
+				if (var_type instanceof Type.List) {
+					init += " = NULL";
+				} else if (var_type instanceof Type.Int) {
+					init += " = 0";
 				}
+				init += ";";
+				// Write out the variable declaration.
+				writer.println(init);
 			}
-			// increment the register.
-			reg++;
+
 		}
 		// Statments
 		for (String stat : statements) {
@@ -474,17 +480,20 @@ public class CodeGenerator {
 	 * 
 	 * <pre>
 	 * <code>
-	 * assign %5 = %6  : int
+	 * long long* _2 = NULL;
+	 * void* _3 = NULL;
+	 * assign %2 = %3  : [void]
 	 * </code>
 	 * </pre>
 	 * 
 	 * can be translated into:
 	 * <p>
 	 * <code>
-	 * _5 = _6;
-	 * </code></pre> When we need to assign the input parameter(_0) to the new
-	 * register, we need to clone the input and return the result pointer. For
-	 * example,
+	 * _2 = (long long*)_3;
+	 * </code></pre> Note that the operand needs the type casting.
+	 * 
+	 * When we need to assign the input parameter(_0) to the new register, we
+	 * need to clone the input and return the result pointer. For example,
 	 * <p>
 	 * <code>assign %4 = %0  : [int]</code>
 	 * </p>
@@ -500,24 +509,25 @@ public class CodeGenerator {
 		String target = getVarName(code.target());
 		String op = getVarName(code.operand(0));
 		String statement = "";
-		// Check if the assigned type is an array. If so, we use different way
-		// to copy the array.
+
 		if (code.type() instanceof Type.List) {
+			// Check if the assigned type is an array. If so, use different way
+			// to copy the array.
 			String target_size = target + "_size";
 			// long long _11_size;
 			addDeclaration(Type.Int.T_INT, target_size);
 			// Check if the op is the input parameters or not.
-			if (isInputParameter(code.operand(0))) {
+			if (isInputParameter(op)) {
 				// If so, then the operand is cloned and
 				// _4 = clone(_0, _0_size);
 				statement = indent + target + " = clone(" + op + ", " + op + "_size);\n";
 			} else {
-				// _1 = _10;
-				statement = indent + target + " = " + op + ";\n";
+				// _2 = (long long*)_3;
+				statement = indent + target + " = (" + translate(getVarType(code.target())) + ")" + op + ";\n";
 			}
 			// _1_size = _10_size;
 			statement += indent + target_size + " = " + op + "_size;";
-		} else if (code.type() instanceof Type.Int) {
+		} else {
 			statement = indent + target + " = " + op + ";";
 		}
 		// Add the statement to the list of statements.
@@ -822,13 +832,33 @@ public class CodeGenerator {
 		addStatement(code, stat);
 	}
 
+	/**
+	 * Translates the update byte-code into C code. For example,
+	 * <pre><code>
+	 * update %0.pieces[%1] = %7 : {int move,[int] pieces} -> {int move,[int] pieces}
+	 * </code></pre>
+	 * can be translated into:
+	 * <pre><code>
+	 * _0.pieces[_1] = _7;
+	 * </code></pre>
+	 * 
+	 * @param code
+	 */
 	private void translate(Codes.Update code) {
-		String stat = indent;
+		String stat = "";
 		// For List type only
 		if (code.type() instanceof Type.List) {
-			stat += getVarName( code.target()) + "[" + getVarName( code.operand(0)) + "] = " + getVarName(code.result()) + ";";
-			addStatement(code, stat);
+			stat += indent +getVarName(code.target()) + "[" + getVarName(code.operand(0)) + "] = " + getVarName(code.result()) + ";";
+		}else if(code.type() instanceof Type.Record){
+			stat += indent + getVarName(code.target()) + "."+ code.fields.get(0);
+			//check	if there are two or more operands. If so, then add the index operand.
+			if(code.operands().length >1 ){
+				stat += "[" + getVarName(code.operand(0)) + "]";
+			}					
+			stat += " = " + getVarName(code.result()) + ";";
 		}
+		
+		addStatement(code, stat);
 	}
 
 	private void translate(Codes.Nop code) {
@@ -907,8 +937,8 @@ public class CodeGenerator {
 	 * 
 	 * <pre>
 	 * <code>
-	 * _6_size=0;
-	 * _6 = NULL;
+	 * _6_size = 0;
+	 * _6 = malloc(0);
 	 * </code>
 	 * </pre>
 	 * 
@@ -948,46 +978,53 @@ public class CodeGenerator {
 	 */
 	private void translate(Codes.NewList code) {
 		String target = getVarName(code.target());
-
-		Type elem_type = code.type().element();
-		// Check if the element type is a void, which cannot hold any value.
-		if (elem_type instanceof Type.Void) {
-			// Change the element type to an integer type.
-			elem_type = Type.Int.T_INT;
-			// Construct a list type of integer element type.
-			wyil.lang.Type list_type = Type.List(Type.Int.T_INT, false);
-			// Update the type of target variable.
-			addDeclaration(list_type, target);
-		}
-
 		// Add the 'target_size' variable to indicate the length of the list
 		String target_size = target + "_size";
 		// Add the declaration of target_size variable.
 		addDeclaration(Type.Int.T_INT, target_size);
-
-		// Check if the size of input operand is 0.
-		if (code.operands().length != 0) {
-			// Assign the array size with the number of operands.
-			String stat = indent + target_size + "=" + code.operands().length + ";\n";
+		// Assign the array size with the number of operands.
+		String stat = indent + target_size + " = " + code.operands().length + ";\n";
+		// Check if the size of input operand > 0.
+		if (code.operands().length > 0) {
 			// Allocate the target with array size.
-			stat += indent + target + "=(" + translate(elem_type) + "*)malloc(" + target_size + "*sizeof(" + translate(elem_type) + "));\n";
+			stat += indent + target + " = (" + translate(code.type().element()) + "*)malloc(" + target_size + "*sizeof("
+					+ translate(code.type().element()) + "));\n";
 			// Initialize the array.
 			int index = 0;
 			for (int operand : code.operands()) {
-				stat += indent + target + "[" + index + "]=" + getVarName(operand) + ";";
+				stat += indent + target + "[" + index + "] = " + getVarName(operand) + ";";
 				index++;
 			}
 			addStatement(code, stat);
 		} else {
-			addStatement(code, null);
+			// Translates the empty list, e.g. 'newlist %3 = () : [void]' can be
+			// converted into '_3 = malloc(0);'.
+			stat += indent + target + " = malloc(" + target_size + ");";
+			addStatement(code, stat);
 		}
 
 	}
 
 	/**
-	 * Translates FieldLoad byte-code into C code. At this stage, the field load
-	 * code that loads <code>System.out.println</code> is not translated into
-	 * any C code.
+	 * Translates FieldLoad byte-code into C code, e.g.
+	 * 
+	 * <pre>
+	 * <code>
+	 * fieldload %14 = %1 pieces : {int move,[int] pieces}
+	 * </code>
+	 * </pre>
+	 * 
+	 * can be translated into
+	 * 
+	 * <pre>
+	 * <code>
+	 * _14 = _1.pieces;
+	 * </code>
+	 * </pre>
+	 * 
+	 * 
+	 * Note that at this stage, the field load code that loads
+	 * <code>System.out.println</code> is not translated into any C code.
 	 * 
 	 * @param code
 	 * @throws Exception
@@ -1002,9 +1039,10 @@ public class CodeGenerator {
 		if (field.equals("out") || field.equals("println")) {
 			addStatement(code, null);
 		} else {
-			throw new Exception("Not implemented!");
+			// Get the target
+			String statement = indent + getVarName(code.target()) + " = " + getVarName(code.operand(0)) + "." + code.field + ";";
+			addStatement(code, statement);
 		}
-
 	}
 
 	/**
@@ -1020,6 +1058,44 @@ public class CodeGenerator {
 			// Do nothing.
 		}
 		addStatement(code, null);
+	}
+
+	/**
+	 * Based on the variable type, print out the variable by using different
+	 * indirect invoked 'printf' functions.
+	 * 
+	 * @param type
+	 * @param var
+	 * @return the translated statement.
+	 * 
+	 * TODO Print out a pointer without array size. Is it possible?
+	 * 
+	 */
+	private String translateIndirectInvokePrintf(Type type, String var) {
+		String statement = "";
+		if (type instanceof Type.Nominal) {
+			Type.Nominal nominal = (Type.Nominal) type;
+			wyil.lang.WyilFile.Type user_type = getUserDefinedType(nominal.name().name());
+			statement += translateIndirectInvokePrintf(user_type.type(), var);
+		} else if (type instanceof Type.List) {
+			//Print out a pointer without specifying array size.
+			statement += indent + "indirect_printf_array_withoutlength(" + var + ");\n";
+		} else if (type instanceof Type.Int) {
+			statement += indent + "indirect_printf(" + var + ");\n";
+		} else if (type instanceof Type.Record) {
+			// Generalize the indirect_invoke_printf function to print out a
+			// record.
+			Type.Record record = (Type.Record) type;
+			for (Entry<String, Type> field : record.fields().entrySet()) {
+				// Print out the field name
+				statement += indent + "indrect_printf_string(\"" + field.getKey() + "\t\");\n";
+				// Based on the field Type, print out the field value using
+				// the different 'printf' functions.
+				statement += translateIndirectInvokePrintf(field.getValue(), var + "." + field.getKey());
+			}
+		}
+		return statement;
+
 	}
 
 	/**
@@ -1043,6 +1119,9 @@ public class CodeGenerator {
 	 * 
 	 * where 'indirect_printf' function is defined in 'Util.c'.
 	 * 
+	 * If the input type is an instance of user defined type, then get the type
+	 * declaration first and convert it into the corresponding type.
+	 * 
 	 * @param code
 	 *            Codes.IndirectInvoke byte-code
 	 * 
@@ -1052,15 +1131,17 @@ public class CodeGenerator {
 		if (code.type() instanceof Type.FunctionOrMethod) {
 			String var = getVarName(code.parameter(0));
 			// Get input type
+			// Type type = code.type().params().get(0);
 			Type type = getVarDeclaration(var);
+			// Check if the type is a user-defined type.
 			if (type instanceof Type.List) {
 				// Added the additional 'array_size' variable to indicate the
 				// length of an array.
 				// Due to strictly forbidding the overlapping in C, the function
 				// is named differently.
-				statement += indent + "indirect_printf_array(" + var + ", " + var + "_size);\n";
-			} else if (type instanceof Type.Int) {
-				statement += indent + "indirect_printf(" + var + ");\n";
+				statement += indent + "indirect_printf_array(" + var + ", "+ var +"_size);\n";
+			} else {
+				statement += translateIndirectInvokePrintf(type, var);
 			}
 		}
 		addStatement(code, statement);
@@ -1271,9 +1352,18 @@ public class CodeGenerator {
 	 * 
 	 * @param type
 	 *            the WyIL type
-	 * @return the result string
+	 * @return the result string TODO Generalize the user-defined types, such as
+	 *         'Board'.
+	 * 
 	 */
 	private String translate(Type type) {
+		// The existential type, e.g. function EmptyBoard() -> (Board r)
+		// The return type of 'EmptyBoard' function is 'Board'.
+		if (type instanceof Type.Nominal) {
+			Type.Nominal nomial = (Type.Nominal) type;
+			return nomial.name().name();
+		}
+
 		if (type instanceof Type.Int || type instanceof Type.Bool) {
 			return "long long";
 		}
@@ -1293,7 +1383,11 @@ public class CodeGenerator {
 			if (fields.containsKey("args")) {
 				return "int argc, char** argv";
 			}
-			return record.toString();
+			// Check if the type is an instance of user defined type.
+			wyil.lang.WyilFile.Type userDefinedType = getUserDefinedType((Type.Record) type);
+			if (userDefinedType != null) {
+				return userDefinedType.name();
+			}
 		}
 
 		return null;
@@ -1307,7 +1401,6 @@ public class CodeGenerator {
 	 */
 	private void dispatch(Code code) {
 		try {
-
 			// enable the assertion
 			if (code instanceof Codes.AssertOrAssume) {
 				translate((Codes.AssertOrAssume) code);
@@ -1360,7 +1453,7 @@ public class CodeGenerator {
 			} else if (code instanceof Codes.NewList) {
 				translate((Codes.NewList) code);
 			} else if (code instanceof Codes.NewRecord) {
-				internalFailure("Not implemented!", code.toString(), null);
+				translate((Codes.NewRecord) code);
 			} else if (code instanceof Codes.NewSet) {
 				internalFailure("Not implemented!", code.toString(), null);
 			} else if (code instanceof Codes.NewTuple) {
@@ -1393,6 +1486,43 @@ public class CodeGenerator {
 			internalFailure(ex.getMessage(), "", null, ex);
 		}
 
+	}
+
+	/**
+	 * Translates the new record byte-code. For example,
+	 * 
+	 * <pre>
+	 * <code>newrecord %11 = (%10, %0) : {int move,[int] pieces}</code>
+	 * </pre>
+	 * 
+	 * can be translated into:
+	 * 
+	 * <pre>
+	 * <code>
+	 * _11.move = _0;
+	 * _11.pieces = _10;
+	 * </code>
+	 * </pre>
+	 * 
+	 * @TODO Fix the sequence of fields in a record type as the order of fields
+	 *       is in the reversed direction of operands.
+	 * 
+	 * @param code
+	 */
+	private void translate(NewRecord code) {
+		NewRecord newrecord = (NewRecord) code;
+		String statement = "";
+		// Begin with the last item
+		int index = newrecord.type().fields().size();
+		// Iterate the record's fields.
+		for (Map.Entry<String, Type> field : newrecord.type().fields().entrySet()) {
+			// Decrement the index
+			index--;
+			// Assess the structure member, such as 'move', and assign the
+			// operand to
+			statement += indent + getVarName(newrecord.target()) + "." + field.getKey() + " = " + getVarName(newrecord.operand(index)) + ";\n";
+		}
+		addStatement(code, statement);
 	}
 
 }
