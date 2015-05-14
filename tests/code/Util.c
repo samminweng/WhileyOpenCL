@@ -41,6 +41,7 @@ long long* clone(long long *arr, long long size){
 }
 //Append op_2 to op_1 and return the op_1.
 //Resize the list one bye one and append each item to the list. Use the 'call by the reference' to update the array size.
+//see http://rosettacode.org/wiki/Array_concatenation#C
 long long* append(long long* op_1, long long* op_1_size, long long* op_2, long long* op_2_size, long long* ret_size){
 	long long i = 0;
 	long long *ret =NULL; 
@@ -53,18 +54,13 @@ long long* append(long long* op_1, long long* op_1_size, long long* op_2, long l
 	ret = (long long*)realloc(ret, allocated_size*sizeof(long long));
 	if(ret == NULL) {fprintf(stderr,"fail to realloc"); exit(0);}
 
-	//Update the item in the appended list.
-	for(i=0;i<*op_2_size;i++){
-		ret[*op_1_size+i]=op_2[i];
-	}
+	//Copy the items from op_2 source and append them to the pointer of ret array at index of op_1_size. 
+	memcpy(&ret[*op_1_size], op_2, *op_2_size*sizeof(long long));
 	*ret_size = *op_1_size+*op_2_size;
+
+	indirect_printf_array(ret, *ret_size);
 	return ret;
 }
-/*Print out the string*/
-void indrect_printf_string(char* msg){
-	printf("%s", msg);
-}
-
 /**Print out a long long integer*/
 void indirect_printf(long long input){
 	printf("%lld\n", input);
@@ -92,26 +88,6 @@ void indirect_printf_array(long long* input, long long input_size){
 		printf(" ... %lld", input[input_size-1]);
 	}
 	printf("]\n");
-}
-
-/**Print out an array of long long integers without specifying the array size.
-If the array size > 10, then print the first 10 items.*/
-void indirect_printf_array_withoutlength(long long* input){
-	long long i = 0;
-	//Determines whether to add ','.
-	int isFirst = true;
-	int max_i = 10;
-	printf("\n[");
-	//Print the first 10 items
-	for(i=0;i<max_i;i++){
-		if(isFirst){
-			printf("%lld",input[i]);
-			isFirst = false;
-		}else{
-			printf(",%lld",input[i]);
-		}
-	}
-	printf("...]\n");
 }
 
 
