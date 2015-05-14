@@ -130,10 +130,10 @@ int main(int argc, char** argv){
 //.blklab2
 blklab2:;
 	//invoke %12 = (%1) While_Valid_1:reverse : function([int]) -> [int]
-	getStartingTime();
+	//getStartingTime();
 	_12_size=_xs_size;
 	_12=reverse(_xs , _xs_size);
-	getEndingTime();
+	//getEndingTime();
 	//assign %11 = %12  : [int]
 	_11 = _12;
 	_11_size = _12_size;

@@ -57,8 +57,6 @@ long long* append(long long* op_1, long long* op_1_size, long long* op_2, long l
 	//Copy the items from op_2 source and append them to the pointer of ret array at index of op_1_size. 
 	memcpy(&ret[*op_1_size], op_2, *op_2_size*sizeof(long long));
 	*ret_size = *op_1_size+*op_2_size;
-
-	indirect_printf_array(ret, *ret_size);
 	return ret;
 }
 /**Print out a long long integer*/

@@ -14,8 +14,12 @@ run_benchmark_c (){
     	#Repeat running the programs
 		for i in {1..10}
 		do
-			echo "Beginning the benchmarks of While_Valid_1 program in c with " $1 " method on array size of " $arraysize	
+			echo "Beginning the benchmarks of While_Valid_1 program in c with " $1 " method on array size of " $arraysize
+			start=`date +%s%N`	
 			./While_Valid_1.out $arraysize
+			end=`date +%s%N`
+			runtime=$((end-start))
+			printf 'Arraysize:%s\tExecutionTime:%s\tnanoseconds.\n' $arraysize  $runtime >> result.txt
 		done
 		#Rename the output 'result.txt'
 		mv result.txt result.While_Valid_1.c.$1.$arraysize.txt
