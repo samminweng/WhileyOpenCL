@@ -64,13 +64,12 @@ long long* append(long long* op_1, long long* op_1_size, long long* op_2, long l
 	long long allocated_size = 0;
 	char str[80];
 	//Assign the ret with op. That means both of them address to same memory location. In other word, copy the array.
-	//ret = op_1;
+	ret = op_1;
 	//The allocated size is the original list size plus the right list size.
 	allocated_size = (*op_1_size+*op_2_size)*sizeof(long long);
-	//Resize the array size of 'ret'.				
-	//ret = (long long*)realloc(ret, allocated_size*sizeof(long long));
+	//Resize the array size of 'ret'.
 	getStartingTime();
-	ret = (long long*)malloc(allocated_size);
+	ret = (long long*)realloc(ret, allocated_size*sizeof(long long));
 	if(ret == NULL) {fprintf(stderr,"fail to malloc %lld bytes in append function", allocated_size); exit(0);}
 	//print out the allocated memory space and the required time at array size of 1 million
 	if(allocated_size%(1000000*sizeof(long long))==0){
@@ -78,10 +77,6 @@ long long* append(long long* op_1, long long* op_1_size, long long* op_2, long l
 		getEndingTime(str);
 	}
 
-	//Copy the items from op_1 source
-	memcpy(ret, op_1, *op_1_size*sizeof(long long));
-	//Free op_1
-	free(op_1);
 	//Copy the items from op_2 source and append them to the pointer of ret array at index of op_1_size. 
 	memcpy(&ret[*op_1_size], op_2, *op_2_size*sizeof(long long));
 	*ret_size = *op_1_size+*op_2_size;
