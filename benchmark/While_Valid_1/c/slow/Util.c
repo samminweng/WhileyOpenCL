@@ -39,6 +39,22 @@ long long* clone(long long *arr, long long size){
 	}
 	return ptr;
 }
+
+//Get the starting time.
+void getStartingTime(){
+	//Get the starting time.
+	start = clock();
+}
+//Get the ending time and write out the execution time to 'result.txt' file.
+void getEndingTime(char* msg){
+	FILE *fp = NULL;
+	//Get the ending time.
+	end = clock();
+	fp= fopen("append.txt", "a");
+	fprintf(fp, "%s\tExecution time(seconds):%.10lf\n", msg, ((double)(end - start))/CLOCKS_PER_SEC);
+	fclose(fp);
+}
+
 //Append op_2 to op_1 and return the op_1.
 //Resize the list one bye one and append each item to the list. Use the 'call by the reference' to update the array size.
 //see http://rosettacode.org/wiki/Array_concatenation#C
@@ -46,14 +62,26 @@ long long* append(long long* op_1, long long* op_1_size, long long* op_2, long l
 	long long i = 0;
 	long long *ret =NULL; 
 	long long allocated_size = 0;
+	char str[80];
 	//Assign the ret with op. That means both of them address to same memory location. In other word, copy the array.
-	ret = op_1;
+	//ret = op_1;
 	//The allocated size is the original list size plus the right list size.
-	allocated_size = *op_1_size+*op_2_size;
+	allocated_size = (*op_1_size+*op_2_size)*sizeof(long long);
 	//Resize the array size of 'ret'.				
-	ret = (long long*)realloc(ret, allocated_size*sizeof(long long));
-	if(ret == NULL) {fprintf(stderr,"fail to realloc"); exit(0);}
+	//ret = (long long*)realloc(ret, allocated_size*sizeof(long long));
+	getStartingTime();
+	ret = (long long*)malloc(allocated_size);
+	if(ret == NULL) {fprintf(stderr,"fail to malloc %lld bytes in append function", allocated_size); exit(0);}
+	//print out the allocated memory space and the required time at array size of 1 million
+	if(allocated_size%(1000000*sizeof(long long))==0){
+		sprintf(str, "Allocated %lld byte in append function", allocated_size);
+		getEndingTime(str);
+	}
 
+	//Copy the items from op_1 source
+	memcpy(ret, op_1, *op_1_size*sizeof(long long));
+	//Free op_1
+	free(op_1);
 	//Copy the items from op_2 source and append them to the pointer of ret array at index of op_1_size. 
 	memcpy(&ret[*op_1_size], op_2, *op_2_size*sizeof(long long));
 	*ret_size = *op_1_size+*op_2_size;
@@ -123,19 +151,5 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 //Read the string as a long long integer. 
 void readStringAsInteger(char* str, long long* input){
 	sscanf(str, "%lld", input);
-}
-//Get the starting time.
-void getStartingTime(){
-	//Get the starting time.
-	start = clock();
-}
-//Get the ending time and write out the execution time to 'result.txt' file.
-void getEndingTime(){
-	FILE *fp = NULL;
-	//Get the ending time.
-	end = clock();
-	fp= fopen("result.txt", "a");
-	fprintf(fp, "Execution time of reverse function(seconds):%.10lf\n", ((double)(end - start))/CLOCKS_PER_SEC);
-	fclose(fp);
 }
 

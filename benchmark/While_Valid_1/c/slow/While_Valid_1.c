@@ -147,5 +147,5 @@ blklab2:;
 	indirect_printf_array(_rs, _rs_size);
 
 	//return
-	;
+	return;
 }
