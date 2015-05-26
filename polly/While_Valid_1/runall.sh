@@ -1,6 +1,6 @@
 #!/bin/sh
 # Variable declaration
-program=While_Valid_1.slow
+program=While_Valid_1.fast
 export PATH_TO_POLLY_LIB="/home/sam/polly/llvm_build/lib"
 alias opt="opt -load ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
 
