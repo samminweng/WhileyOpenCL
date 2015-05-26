@@ -58,7 +58,7 @@ runExe(){
     #echo "-->Time the executables"
     #Array sizes from 1 million up 100 million
     #arraysizes="1000000 10000000 100000000"
-    arraysizes="10000000 20000000 30000000 40000000 50000000 60000000 70000000 80000000 90000000 100000000"
+    arraysizes="1000000 10000000 20000000 30000000 40000000 50000000 60000000 70000000 80000000 90000000 100000000"
     for arraysize in $arraysizes
     	do
     	#Repeat running the programs
@@ -70,11 +70,15 @@ runExe(){
 			runtime=$((end-start))
 			echo "Iteration:"$i"\tArraysize:"$arraysize"\tExecutionTime(nanoseconds):"$runtime | sed ':a;s/\B[0-9]\{3\}\>/,&/;ta'
 			#Write the exe time to txt file
-			printf 'Arraysize:%s\tExecutionTime:%s\tnanoseconds.\n' $arraysize  $runtime >> result.$program.$optimisation.$arraysize.txt
+			printf 'Arraysize:%s\tExecutionTime:%s\tnanoseconds.\n' $arraysize  $runtime >> result.$program.$1.$optimisation.$arraysize.txt
 		done
 		#Added the CPU info
-		cat /proc/cpuinfo >> result.$program.$optimisation.$arraysize.txt
+		cat /proc/cpuinfo >> result.$program.$1.$optimisation.$arraysize.txt
     done
+
+    # move all the *.txt to benchmark
+    mkdir benchmarks
+    mv *.txt benchmarks/
 }
 
 
@@ -113,7 +117,7 @@ opt -basicaa -polly-import-jscop -polly-ast -analyze $program.preopt.ll \
 opt -basicaa -polly-import-jscop -polly-ast -analyze $program.preopt.ll \
     -polly-import-jscop-postfix=interchanged+tiled+vector
 
-runExe GCC O2
+runExe gcc o2
 runExe polly normalopt
 runExe polly interchanged
 runExe polly interchanged+tiled
