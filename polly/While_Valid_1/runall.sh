@@ -58,7 +58,7 @@ runExe(){
     #echo "-->Time the executables"
     #Array sizes from 1 million up 100 million
     #arraysizes="1000000 10000000 100000000"
-    arraysizes="1000000 20000000"
+    arraysizes="10000000 20000000 30000000 40000000 50000000 60000000 70000000 80000000 90000000 100000000"
     for arraysize in $arraysizes
     	do
     	#Repeat running the programs
