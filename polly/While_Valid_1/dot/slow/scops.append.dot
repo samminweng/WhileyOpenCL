@@ -1,0 +1,21 @@
+digraph "Scop Graph for 'append' function" {
+	label="Scop Graph for 'append' function";
+
+	Node0x474ade0 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0x474ade0 -> Node0x47272b0;
+	Node0x47272b0 [shape=record,label="{entry.split:                                      \l  %0 = load i64, i64* %op_1_size, align 8\l  %1 = load i64, i64* %op_2_size, align 8\l  %add = add nsw i64 %1, %0\l  %2 = bitcast i64* %op_1 to i8*\l  %mul = shl i64 %add, 3\l  %call = tail call i8* @realloc(i8* %2, i64 %mul) #4\l  %3 = bitcast i8* %call to i64*\l  %cmp = icmp eq i8* %call, null\l  br i1 %cmp, label %if.then, label %if.end\l}"];
+	Node0x47272b0 -> Node0x4722f70;
+	Node0x47272b0 -> Node0x4734630;
+	Node0x4722f70 [shape=record,label="{if.then:                                          \l  %4 = load %struct._IO_FILE*, %struct._IO_FILE** @stderr, align 8\l  %5 = tail call i64 @fwrite(i8* getelementptr inbounds ([16 x i8], [16 x i8]*\l... @.str.4, i64 0, i64 0), i64 15, i64 1, %struct._IO_FILE* %4) #5\l  tail call void @exit(i32 0) #6\l  unreachable\l}"];
+	Node0x4734630 [shape=record,label="{if.end:                                           \l  %6 = load i64, i64* %op_1_size, align 8\l  %arrayidx = getelementptr inbounds i64, i64* %3, i64 %6\l  %7 = bitcast i64* %arrayidx to i8*\l  %8 = bitcast i64* %op_2 to i8*\l  %9 = load i64, i64* %op_2_size, align 8\l  %mul2 = shl i64 %9, 3\l  tail call void @llvm.memcpy.p0i8.p0i8.i64(i8* %7, i8* %8, i64 %mul2, i32 8,\l... i1 false)\l  %10 = load i64, i64* %op_1_size, align 8\l  %11 = load i64, i64* %op_2_size, align 8\l  %add3 = add nsw i64 %11, %10\l  store i64 %add3, i64* %ret_size, align 8\l  ret i64* %3\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0x47748a0 {
+          label = "";
+          style = solid;
+          color = 1
+          Node0x474ade0;
+          Node0x47272b0;
+          Node0x4722f70;
+          Node0x4734630;
+        }
+}

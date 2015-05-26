@@ -1,6 +1,6 @@
 #!/bin/sh
 # Variable declaration
-program=While_Valid_1.fast
+program=While_Valid_1.slow
 export PATH_TO_POLLY_LIB="/home/sam/polly/llvm_build/lib"
 alias opt="opt -load ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
 
@@ -62,7 +62,7 @@ runExe(){
     for arraysize in $arraysizes
     	do
     	#Repeat running the programs
-		for i in {1..10}
+		for i in 1 2 3 4 5 6 7 8 9 10
 		do
 			start=`date +%s%N`
 			./$program.$optimisation.exe $arraysize
@@ -88,12 +88,12 @@ opt -S -polly-canonicalize $program.s > $program.preopt.ll
 echo "-->3. Show the ScoPs dectected Polly"
 opt -basicaa -polly-ast -analyze -q $program.preopt.ll
 
-echo "-->4. Generate SCoPs in DOT/PNG files, viewd by Graphviz"
-opt -basicaa -dot-scops -disable-output $program.preopt.ll
-for i in `ls *.dot`; do dot -Tpng $i > $i.png; done
-#Move all the *.dot and *.png to dot folder
-mkdir dot
-mv *.dot *.png dot/
+#echo "-->4. Generate SCoPs in DOT/PNG files, viewd by Graphviz"
+#opt -basicaa -dot-scops -disable-output $program.preopt.ll
+#for i in `ls *.dot`; do dot -Tpng $i > $i.png; done
+##Move all the *.dot and *.png to dot folder
+#mkdir dot
+#mv *.dot *.png dot/
 
 echo "-->5. Display polyhedral representation of SCoPs."
 opt -basicaa -polly-scops -analyze $program.preopt.ll

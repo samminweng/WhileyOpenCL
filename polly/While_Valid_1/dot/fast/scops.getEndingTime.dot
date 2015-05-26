@@ -1,0 +1,15 @@
+digraph "Scop Graph for 'getEndingTime' function" {
+	label="Scop Graph for 'getEndingTime' function";
+
+	Node0x58cc480 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0x58cc480 -> Node0x58c0ca0;
+	Node0x58c0ca0 [shape=record,label="{entry.split:                                      \l  %call = tail call i64 @clock() #4\l  store i64 %call, i64* @end, align 8\l  %call1 = tail call %struct._IO_FILE* @fopen(i8* getelementptr inbounds ([11\l... x i8], [11 x i8]* @.str.10, i64 0, i64 0), i8* getelementptr inbounds ([2 x\l... i8], [2 x i8]* @.str.11, i64 0, i64 0)) #4\l  %0 = load i64, i64* @end, align 8\l  %1 = load i64, i64* @start, align 8\l  %sub = sub nsw i64 %0, %1\l  %conv = sitofp i64 %sub to double\l  %div = fdiv double %conv, 1.000000e+06\l  %call2 = tail call i32 (%struct._IO_FILE*, i8*, ...)\l... @fprintf(%struct._IO_FILE* %call1, i8* getelementptr inbounds ([52 x i8], [52\l... x i8]* @.str.12, i64 0, i64 0), double %div) #4\l  %call3 = tail call i32 @fclose(%struct._IO_FILE* %call1) #4\l  ret void\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0x590b740 {
+          label = "";
+          style = solid;
+          color = 1
+          Node0x58cc480;
+          Node0x58c0ca0;
+        }
+}

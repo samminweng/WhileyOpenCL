@@ -1,0 +1,27 @@
+digraph "Scop Graph for 'isPowerof2' function" {
+	label="Scop Graph for 'isPowerof2' function";
+
+	Node0x590bd40 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0x590bd40 -> Node0x58c7fb0;
+	Node0x58c7fb0 [shape=record,label="{entry.split:                                      \l  %cmp = icmp eq i64 %value, 0\l  br i1 %cmp, label %return, label %land.rhs\l}"];
+	Node0x58c7fb0 -> Node0x58c5760;
+	Node0x58c7fb0 -> Node0x58b90e0;
+	Node0x58c5760 [shape=record,label="{return:                                           \l  %retval.0 = phi i32 [ %land.ext, %land.rhs ], [ 1, %entry.split ]\l  ret i32 %retval.0\l}"];
+	Node0x58b90e0 [shape=record,label="{land.rhs:                                         \l  %sub = add nsw i64 %value, -1\l  %and = and i64 %sub, %value\l  %lnot = icmp eq i64 %and, 0\l  %land.ext = zext i1 %lnot to i32\l  br label %return\l}"];
+	Node0x58b90e0 -> Node0x58c5760;
+	colorscheme = "paired12"
+        subgraph cluster_0x58e19f0 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0x590b610 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0x58c7fb0;
+            Node0x58b90e0;
+          }
+          Node0x590bd40;
+          Node0x58c5760;
+        }
+}

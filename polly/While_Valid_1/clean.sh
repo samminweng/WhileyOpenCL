@@ -1,3 +1,3 @@
 #!/bin/sh
 
-rm *.s *.dot *.ll *.exe *.png *.jscop
+rm *.s *.ll *.exe *.jscop

@@ -1,0 +1,41 @@
+digraph "Scop Graph for 'reverse' function" {
+	label="Scop Graph for 'reverse' function";
+
+	Node0x58bca20 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0x58bca20 -> Node0x58cc800;
+	Node0x58cc800 [shape=record,label="{entry.split:                                      \l  %call = tail call i64* @clone(i64* %_ls, i64 %_ls_size)\l  %cmp.2 = icmp sgt i64 %_ls_size, 0\l  br i1 %cmp.2, label %while.body.lr.ph, label %blklab0\l}"];
+	Node0x58cc800 -> Node0x58cc9b0;
+	Node0x58cc800 -> Node0x58c26a0;
+	Node0x58cc9b0 [shape=record,label="{while.body.lr.ph:                                 \l  br label %while.body\l}"];
+	Node0x58cc9b0 -> Node0x58c05e0;
+	Node0x58c05e0 [shape=record,label="{while.body:                                       \l  %_19.04 = phi i64 [ 0, %while.body.lr.ph ], [ %add, %blklab1 ]\l  %_i.03 = phi i64 [ %_ls_size, %while.body.lr.ph ], [ %sub, %blklab1 ]\l  %cmp1 = icmp sgt i64 %_i.03, %_ls_size\l  br i1 %cmp1, label %if.end, label %blklab1\l}"];
+	Node0x58c05e0 -> Node0x58b90e0;
+	Node0x58c05e0 -> Node0x590d0b0;
+	Node0x58b90e0 [shape=record,label="{if.end:                                           \l  %0 = load %struct._IO_FILE*, %struct._IO_FILE** @stderr, align 8\l  %1 = tail call i64 @fwrite(i8* getelementptr inbounds ([5 x i8], [5 x i8]*\l... @.str.13, i64 0, i64 0), i64 4, i64 1, %struct._IO_FILE* %0) #5\l  tail call void @exit(i32 0) #6\l  unreachable\l}"];
+	Node0x590d0b0 [shape=record,label="{blklab1:                                          \l  %sub = add nsw i64 %_i.03, -1\l  %arrayidx = getelementptr inbounds i64, i64* %_ls, i64 %sub\l  %2 = load i64, i64* %arrayidx, align 8\l  %arrayidx3 = getelementptr inbounds i64, i64* %call, i64 %_19.04\l  store i64 %2, i64* %arrayidx3, align 8\l  %add = add nsw i64 %_19.04, 1\l  %cmp = icmp sgt i64 %_i.03, 1\l  br i1 %cmp, label %while.body, label %while.cond.blklab0_crit_edge\l}"];
+	Node0x590d0b0 -> Node0x58c05e0;
+	Node0x590d0b0 -> Node0x58b9f70;
+	Node0x58b9f70 [shape=record,label="{while.cond.blklab0_crit_edge:                     \l  br label %blklab0\l}"];
+	Node0x58b9f70 -> Node0x58c26a0;
+	Node0x58c26a0 [shape=record,label="{blklab0:                                          \l  %_19.0.lcssa = phi i64 [ %add, %while.cond.blklab0_crit_edge ], [ 0,\l... %entry.split ]\l  %cmp4 = icmp eq i64 %_19.0.lcssa, %_ls_size\l  br i1 %cmp4, label %blklab3, label %if.end.6\l}"];
+	Node0x58c26a0 -> Node0x58cf2e0;
+	Node0x58c26a0 -> Node0x58c9690;
+	Node0x58cf2e0 [shape=record,label="{blklab3:                                          \l  ret i64* %call\l}"];
+	Node0x58c9690 [shape=record,label="{if.end.6:                                         \l  %3 = load %struct._IO_FILE*, %struct._IO_FILE** @stderr, align 8\l  %4 = tail call i64 @fwrite(i8* getelementptr inbounds ([5 x i8], [5 x i8]*\l... @.str.13, i64 0, i64 0), i64 4, i64 1, %struct._IO_FILE* %3) #5\l  tail call void @exit(i32 0) #6\l  unreachable\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0x590b740 {
+          label = "";
+          style = solid;
+          color = 1
+          Node0x58bca20;
+          Node0x58cc800;
+          Node0x58cc9b0;
+          Node0x58c05e0;
+          Node0x58b90e0;
+          Node0x590d0b0;
+          Node0x58b9f70;
+          Node0x58c26a0;
+          Node0x58cf2e0;
+          Node0x58c9690;
+        }
+}
