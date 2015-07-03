@@ -15,6 +15,17 @@ import java.util.concurrent.TimeoutException;
 import wyc.testing.TestUtils;
 import junit.framework.AssertionFailedError;
 import static org.junit.Assert.*;
+/**
+ * @deprecated Due to rapid upgrade in Whiley compiler, the WyIL interpreter temporarily is 
+ *             deprecated and not for use.
+ *             
+ * <blockquote>        
+ * 
+ * Provides the commonly used function to run the tests on the interpreter.
+ * @author Min-Hsien Weng
+ * 
+ * 
+ */
 @Deprecated
 public final class BaseTestUtil {
 	private final String version = "v0.3.31";
@@ -49,7 +60,14 @@ public final class BaseTestUtil {
 		}
 
 	}
-
+	/**
+	 * @deprecated  
+	 * <blockquote>
+	 * Execute the interpreter to run the test case.
+	 * 
+	 * @param file_name
+	 */
+	@Deprecated
 	private void exec_valid(String file_name) {
 		try {
 
@@ -58,7 +76,10 @@ public final class BaseTestUtil {
 			// Set the working directory.
 			pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, path_whiley);
 			pb.directory(new File(valid_path));
-
+			
+			/**
+			 * 
+			 */
 			String output = "";
 			//String output = TestUtils.exec(classpath,valid_path,"wyopcl.WyopclMain", "-bp", runtime, path_whiley);
 			

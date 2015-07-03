@@ -9,7 +9,18 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestRule;
 import org.junit.rules.Timeout;
-
+/**
+ * @deprecated Due to rapid upgrade in Whiley compiler, the WyIL interpreter temporarily is 
+ *             deprecated and not for use.
+ *             
+ * <blockquote>        
+ * 
+ * Test the interpreter with all valid test cases inside 'tests/valid' folder
+ * @author Min-Hsien Weng
+ * 
+ * 
+ */
+@Deprecated
 public class AllValidTestCase {
 	@Rule
 	public TestRule timeout = new Timeout(25000);
