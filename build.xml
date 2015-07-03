@@ -185,10 +185,11 @@
 	<exclude name="wyopcl/testing/translator/BoundTestCase.java"/>
 </javac>
 </target>
-<!-- Define the path for the generated junit testing report  -->
+<!-- Define the path for the generated junit testing report 
 <property name="valid.dir" value="report/interpreter/valid" />
 <property name="invalid.dir" value="report/interpreter/invalid" />
-<!-- Interpreting the test cases in valid folder -->
+ -->
+<!-- Interpreting the test cases in valid folder 
 <target name="test-interpreter-valid" depends="build-all">
 	<mkdir dir="${valid.dir}" />
 	<junit fork="yes">
@@ -201,8 +202,8 @@
 			</fileset>
 		</batchtest>
 	</junit>
-</target>
-<!-- Interpreting the test cases in invalid folder -->
+</target>-->
+<!-- Interpreting the test cases in invalid folder 
 <target name="test-interpreter-invalid" depends="build-all">
 	<mkdir dir="${invalid.dir}" />
 	<junit fork="yes">
@@ -226,7 +227,7 @@
 		</fileset>
 		<report todir="report/interpreter" />
 	</junitreport>
-</target>
+</target>-->
 <!-- Test the bound analyzer with test cases.-->
 <target name="test-bound" depends="compile-java">
 	<mkdir dir="report/bound" />
