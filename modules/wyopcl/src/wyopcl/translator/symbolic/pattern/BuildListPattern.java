@@ -94,7 +94,7 @@ public final class BuildListPattern extends WhileLoopPattern implements Transfor
 		for (index += 1; index < code_blk.size(); index++) {
 			Code code = code_blk.get(index);
 			// Search for loop bytecode
-			if (code instanceof Codes.Loop || code instanceof Codes.ForAll) {
+			if (code instanceof Codes.Loop) {
 				break;
 			} else if(code instanceof Codes.Assign){
 				Codes.Assign assign = (Codes.Assign)code;

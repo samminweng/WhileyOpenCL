@@ -1213,6 +1213,7 @@ public class CodeGenerator {
 	 * 
 	 * @param code
 	 */
+	/*
 	private void translate(Codes.ForAll code) {
 		String loop_var = getVarName(code.indexOperand);
 		String lower_bound = getVarName(range.operand(0));
@@ -1231,8 +1232,7 @@ public class CodeGenerator {
 		addStatement(null, statement);// Ending bracket of the forall loop.
 		// Nullify the range.
 		this.range = null;
-
-	}
+	}*/
 
 	/**
 	 * Iterate over the list of loop byte-code and translate each code into C
@@ -1420,8 +1420,6 @@ public class CodeGenerator {
 				translate((Codes.Fail) code);
 			} else if (code instanceof Codes.FieldLoad) {
 				translate((Codes.FieldLoad) code);
-			} else if (code instanceof Codes.ForAll) {
-				translate((Codes.ForAll) code);
 			} else if (code instanceof Codes.Goto) {
 				translate((Codes.Goto) code);
 			} else if (code instanceof Codes.If) {
@@ -1448,14 +1446,10 @@ public class CodeGenerator {
 				translate((Codes.LengthOf) code);
 			} else if (code instanceof Codes.Move) {
 				internalFailure("Not implemented!", code.toString(), null);
-			} else if (code instanceof Codes.NewMap) {
-				internalFailure("Not implemented!", code.toString(), null);
 			} else if (code instanceof Codes.NewList) {
 				translate((Codes.NewList) code);
 			} else if (code instanceof Codes.NewRecord) {
 				translate((Codes.NewRecord) code);
-			} else if (code instanceof Codes.NewSet) {
-				internalFailure("Not implemented!", code.toString(), null);
 			} else if (code instanceof Codes.NewTuple) {
 				internalFailure("Not implemented!", code.toString(), null);
 			} else if (code instanceof Codes.Return) {
@@ -1464,8 +1458,6 @@ public class CodeGenerator {
 				internalFailure("Not implemented!", code.toString(), null);
 			} else if (code instanceof Codes.Nop) {
 				translate((Codes.Nop) code);
-			} else if (code instanceof Codes.SetOperator) {
-				internalFailure("Not implemented!", code.toString(), null);
 			} else if (code instanceof Codes.SubList) {
 				internalFailure("Not implemented!", code.toString(), null);
 			} else if (code instanceof Codes.Switch) {

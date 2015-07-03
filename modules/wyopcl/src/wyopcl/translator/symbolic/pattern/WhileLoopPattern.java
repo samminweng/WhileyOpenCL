@@ -63,12 +63,7 @@ public abstract class WhileLoopPattern extends LoopPattern {
 	protected String loop_var(List<Code> blk) {
 		for (int index = 0; index < blk.size(); index++) {
 			Code code = blk.get(index);
-			if (code instanceof Codes.ForAll) {
-				// Forall loop
-				Codes.ForAll forall = (Codes.ForAll) code;
-				// The loop variable is the index operand
-				return prefix + forall.indexOperand;
-			} else if (code instanceof Codes.Loop) {
+			if (code instanceof Codes.Loop) {
 				// Check if the list of bytecode contains a loop bytecode.
 				// While loop
 				Codes.Loop loop = (Codes.Loop) code;
@@ -117,7 +112,7 @@ public abstract class WhileLoopPattern extends LoopPattern {
 		for (index += 1; index < code_blk.size(); index++) {
 			Code code = code_blk.get(index);
 			// Search for loop bytecode
-			if (!isInvariant(code) && (code instanceof Codes.Loop || code instanceof Codes.ForAll)) {
+			if (!isInvariant(code) && (code instanceof Codes.Loop)) {
 				break;
 			}
 			AddCodeToPatternPart(code, "init_after");

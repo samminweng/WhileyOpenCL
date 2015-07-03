@@ -130,9 +130,7 @@ public class BoundAnalyzer {
 						// DereferenceInterpreter.getInstance().interpret((Codes.Dereference)code,
 						// stackframe);
 					} else if (code instanceof Codes.FieldLoad) {
-						analyze((Codes.FieldLoad) code);
-					} else if (code instanceof Codes.ForAll) {
-						analyze((Codes.ForAll) code);
+						analyze((Codes.FieldLoad) code);					
 					} else if (code instanceof Codes.Goto) {
 						analyze((Codes.Goto) code);
 					} else if (code instanceof Codes.If) {
@@ -163,15 +161,10 @@ public class BoundAnalyzer {
 						analyze((Codes.LengthOf) code);
 					} else if (code instanceof Codes.Move) {
 						internalFailure("Not implemented!", "", null);
-					} else if (code instanceof Codes.NewMap) {
-						analyze((Codes.NewMap) code);
 					} else if (code instanceof Codes.NewList) {
 						analyze((Codes.NewList) code);
 					} else if (code instanceof Codes.NewRecord) {
 						// NewRecordInterpreter.getInstance().interpret((Codes.NewRecord)code,
-						// stackframe);
-					} else if (code instanceof Codes.NewSet) {
-						// NewSetInterpreter.getInstance().interpret((Codes.NewSet)code,
 						// stackframe);
 					} else if (code instanceof Codes.NewTuple) {
 						analyze((Codes.NewTuple) code);
@@ -182,9 +175,6 @@ public class BoundAnalyzer {
 						// stackframe);
 					} else if (code instanceof Codes.Nop) {
 						// NopInterpreter.getInstance().interpret((Codes.Nop)code,
-						// stackframe);
-					} else if (code instanceof Codes.SetOperator) {
-						// SetOperatorInterpreter.getInstance().interpret((Codes.SetOperator)code,
 						// stackframe);
 					} else if (code instanceof Codes.SubList) {
 						analyze((Codes.SubList) code);
@@ -406,13 +396,7 @@ public class BoundAnalyzer {
 				break;
 			case IN:
 				System.err.println("Not implemented!");
-				break;
-			case SUBSET:
-				System.err.println("Not implemented!");
-				break;
-			case SUBSETEQ:
-				System.err.println("Not implemented!");
-				break;
+				break;			
 			default:
 				System.err.println("Not implemented!");
 
@@ -659,7 +643,7 @@ public class BoundAnalyzer {
 	 * @param code
 	 *            the <code>Codes.Forall</code> bytecode
 	 */
-	private void analyze(Codes.ForAll code) {
+	/*private void analyze(Codes.ForAll code) {
 		String label = code.toString();
 		// Creates a loop structure, including the loop header, loop body and
 		// loop exit
@@ -680,7 +664,7 @@ public class BoundAnalyzer {
 		}
 
 		blk_ctrl.setCurrentBlock(loopbody);
-	}
+	}*/
 
 	/**
 	 * Add the range to the target register.
@@ -810,7 +794,7 @@ public class BoundAnalyzer {
 	 * @param code
 	 *            the <code>Codes.NewMap</code> byte-code.
 	 */
-	private void analyze(Codes.NewMap code) {
+	/*private void analyze(Codes.NewMap code) {
 		Type.Map map = code.type();
 		int index = 1;
 		while (index < code.operands().length) {
@@ -820,8 +804,7 @@ public class BoundAnalyzer {
 			}
 			index += 2;
 		}
-
-	}
+	}*/
 
 	/**
 	 * Load the tuple values at the given index and assign the bounds of the

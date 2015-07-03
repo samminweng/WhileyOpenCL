@@ -48,6 +48,7 @@ import wyopcl.translator.symbolic.pattern.expression.RangeExpr;
  * @author Min-Hsien Weng
  *
  */
+@Deprecated
 public class ForAllRangePattern extends LoopPattern {
 	protected String sourceOp;
 
@@ -61,8 +62,8 @@ public class ForAllRangePattern extends LoopPattern {
 			this.line = this.init(blk, this.sourceOp, this.line);
 			// Check if the loop pattern is constructed successfully.
 			if (this.init != null) {
-				Codes.ForAll forall = (Codes.ForAll) blk.get(this.line);
-				this.line = this.forall(forall, this.line);
+				/*Codes.ForAll forall = (Codes.ForAll) blk.get(this.line);
+				this.line = this.forall(forall, this.line);*/
 				if (this.loop_bound != null) {
 					this.line = this.loop_exit(blk, this.line);
 					this.pattern_name = "ForAllRange";
@@ -80,7 +81,7 @@ public class ForAllRangePattern extends LoopPattern {
 	 * @param line
 	 * @return
 	 */
-	protected int forall(Codes.ForAll forall, int line) {
+	/*protected int forall(Codes.ForAll forall, int line) {
 		AddCodeToPatternPart(forall, "loop_header");
 		if (forall.modifiedOperands.length >= 2) {
 			// Get the expression
@@ -93,7 +94,7 @@ public class ForAllRangePattern extends LoopPattern {
 			}
 		}
 		return ++line;
-	}
+	}*/
 
 	/**
 	 * Iterate over the list of byte-code inside a forall loop and put the code
@@ -124,16 +125,17 @@ public class ForAllRangePattern extends LoopPattern {
 	}
 
 	@Override
+	@Deprecated
 	protected String loop_var(List<Code> blk) {
 		for (int index = 0; index < blk.size(); index++) {
 			Code code = blk.get(index);
-			if (code instanceof Codes.ForAll) {
+			/*if (code instanceof Codes.ForAll) {
 				// Forall loop
 				Codes.ForAll forall = (Codes.ForAll) code;
 				this.sourceOp = prefix + forall.sourceOperand;
 				// The loop variable is the index operand
 				return prefix + forall.indexOperand;
-			}
+			}*/
 		}
 		return null;
 	}
@@ -174,7 +176,7 @@ public class ForAllRangePattern extends LoopPattern {
 		for (index += 1; index < code_blk.size(); index++) {
 			Code code = code_blk.get(index);
 			// Search for loop bytecode
-			if (!isInvariant(code) && (code instanceof Codes.Loop || code instanceof Codes.ForAll)) {
+			if (!isInvariant(code) && (code instanceof Codes.Loop)) {
 				break;
 			}
 			AddCodeToPatternPart(code, "init_after");

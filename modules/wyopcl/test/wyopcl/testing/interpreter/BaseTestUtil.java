@@ -15,7 +15,7 @@ import java.util.concurrent.TimeoutException;
 import wyc.testing.TestUtils;
 import junit.framework.AssertionFailedError;
 import static org.junit.Assert.*;
-
+@Deprecated
 public final class BaseTestUtil {
 	private final String version = "v0.3.31";
 	// user.dir is the current directory.
@@ -59,7 +59,8 @@ public final class BaseTestUtil {
 			pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, path_whiley);
 			pb.directory(new File(valid_path));
 
-			String output = TestUtils.exec(classpath,valid_path,"wyopcl.WyopclMain", "-bp", runtime, path_whiley);
+			String output = "";
+			//String output = TestUtils.exec(classpath,valid_path,"wyopcl.WyopclMain", "-bp", runtime, path_whiley);
 			
 			// The name of the file which contains the output for this test
 			String sampleOutputFile = valid_path + File.separatorChar

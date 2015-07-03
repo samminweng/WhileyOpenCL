@@ -134,11 +134,11 @@ public final class BoundAnalyzerHelper {
 			return true;
 		}
 
-		if(type instanceof Type.Map){
+		/*if(type instanceof Type.Map){
 			Type.Map map = (Type.Map)type;
 			//Check the type of values in the map.
 			return isIntType(map.key()) || isIntType(map.value());			
-		}
+		}*/
 
 		if(type instanceof Type.List){
 			return isIntType(((Type.List)type).element());
