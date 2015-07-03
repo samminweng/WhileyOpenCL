@@ -1,12 +1,12 @@
-import * from whiley.lang.*
-
 function play([bool] board) -> [bool]:
     [bool] nboard = board
-    for i in 0 .. |board|:
+    int i = 0
+    while i < |board|:
         if isAlive(i, board):
             nboard[i] = true
         else:
             nboard[i] = false
+        i = i + 1
     return nboard
 
 function isAlive(int i, [bool] board) -> bool:
@@ -15,8 +15,14 @@ function isAlive(int i, [bool] board) -> bool:
     else:
         return false
 
-method main(System.Console console) -> void:
+public export method test() -> void:
     [bool] xs = [true, true, true, true, true, true, true]
-    for i in 0 .. 5:
-        console.out.println(xs)
-        xs = play(xs)
+    assume xs == [true, true, true, true, true, true, true]
+    xs = play(xs)
+    assume xs == [false, true, true, true, true, true, false]
+    xs = play(xs)
+    assume xs == [false, false, true, true, true, false, false]
+    xs = play(xs)
+    assume xs == [false, false, false, true, false, false, false]
+    xs = play(xs)
+    assume xs == [false, false, false, false, false, false, false]

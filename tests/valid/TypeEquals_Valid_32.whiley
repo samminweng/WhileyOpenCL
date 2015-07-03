@@ -1,18 +1,18 @@
-import whiley.lang.*
 
-type expr is {int} | bool
 
-function g({int} input) -> {int}:
-    return input + {-1}
+type expr is [int] | bool
 
-function f(expr e) -> {int}:
-    if e is {int}:
-        {int} t = g(e)
+function g([int] input) -> [int]:
+    return input ++ [-1]
+
+function f(expr e) -> [int]:
+    if e is [int]:
+        [int] t = g(e)
         return t
     else:
-        return {}
+        return []
 
-method main(System.Console sys) -> void:
-    {int} e = {1, 2, 3, 4}
-    sys.out.println(f(e))
-    sys.out.println(f(false))
+public export method test() -> void:
+    [int] e = [1, 2, 3, 4]
+    assume f(e) == [1, 2, 3, 4, -1]
+    assume f(false) == []

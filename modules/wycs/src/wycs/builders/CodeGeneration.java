@@ -595,7 +595,7 @@ public class CodeGeneration {
 	 *
 	 * @param nid
 	 *            --- name identifier for the named function
-	 * @param pattern_name
+	 * @param type
 	 *            --- the supplied argument type
 	 * @return
 	 */

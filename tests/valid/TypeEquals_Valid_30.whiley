@@ -1,4 +1,4 @@
-import whiley.lang.*
+
 
 constant ADD is 0
 
@@ -8,7 +8,7 @@ constant MUL is 2
 
 constant DIV is 3
 
-type BOp is (int x) where x in {ADD, SUB, MUL, DIV}
+type BOp is (int x) where ADD <= x && x <= DIV
 
 type BinOp is {BOp op, Expr rhs, Expr lhs}
 
@@ -33,12 +33,12 @@ function evaluate(Expr e) -> int:
                 else:
                     return -1
 
-method main(System.Console sys) -> void:
+public export method test() -> void:
     Expr e = 1
-    sys.out.println(evaluate(e))
+    assume evaluate(e) == 1
     e = {op: ADD, rhs: e, lhs: e}
-    sys.out.println(evaluate(e))
+    assume evaluate(e) == 2
     e = [e]
-    sys.out.println(evaluate(e))
+    assume evaluate(e) == 3
     e = {index: 1, src: e}
-    sys.out.println(evaluate(e))
+    assume evaluate(e) == 4

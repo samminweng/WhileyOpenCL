@@ -1,11 +1,39 @@
-import whiley.lang.*
-
 function append([int] input) -> [int]:
     [int] rs = []
-    for i in 0 .. |input|:
+    int i = 0
+    while i < |input|:
         rs = rs ++ [input[i]]
+        i = i + 1
     return rs
 
-method main(System.Console sys) -> void:
+public export method test() -> void:
     [int] xs = append("abcdefghijklmnopqrstuvwxyz")
-    sys.out.println_s(Any.toString(xs))
+    assume xs == [
+            'a',
+            'b',
+            'c',
+            'd',
+            'e',
+            'f',
+            'g',
+            'h',
+            'i',
+            'j',
+            'k',
+            'l',
+            'm',
+            'n',
+            'o',
+            'p',
+            'q',
+            'r',
+            's',
+            't',
+            'u',
+            'v',
+            'w',
+            'x',
+            'y',
+            'z'
+            ]
+

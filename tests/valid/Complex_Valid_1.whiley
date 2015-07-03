@@ -1,4 +1,4 @@
-import whiley.lang.*
+
 
 constant PAWN is 0
 
@@ -14,7 +14,7 @@ constant KING is 5
 
 constant PIECE_CHARS is ['P', 'N', 'B', 'R', 'Q', 'K']
 
-type PieceKind is (int x) where x in {PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING}
+type PieceKind is (int x) where PAWN <= x && x <= KING
 
 type Piece is {bool colour, PieceKind kind}
 
@@ -85,8 +85,6 @@ constant A3 is {col: 1, row: 3}
 
 constant D3 is {col: 4, row: 3}
 
-method main(System.Console sys) -> void:
-    bool r = clearRowExcept(A1, H1, startingChessBoard)
-    sys.out.println_s("GOT: " ++ Any.toString(r))
-    r = clearRowExcept(A3, D3, startingChessBoard)
-    sys.out.println_s("GOT: " ++ Any.toString(r))
+public export method test() -> void:
+    assume clearRowExcept(A1, H1, startingChessBoard) == false
+    assume clearRowExcept(A3, D3, startingChessBoard) == true

@@ -1,4 +1,4 @@
-import whiley.lang.*
+
 
 type Point is {int y, int x, ...}
 
@@ -9,12 +9,14 @@ function sum(VecPoint vp) -> int:
         return vp.x + vp.y
     else:
         int r = 0
-        for p in vp:
-            r = r + sum(p)
+        int i = 0
+        while i < |vp|:
+            r = r + sum(vp[i])
+            i = i + 1
         return r
 
-method main(System.Console sys) -> void:
+public export method test() -> void:
     VecPoint vp = {y: 2, x: 1}
-    sys.out.println(sum(vp))
-    vp = [{y: 2, x: 1}, {y: 2, x: 1}]
-    sys.out.println(sum(vp))
+    assume sum(vp) == 3
+    vp = [{y: 2, x: 1}, {y: 4, x: -1}]
+    assume sum(vp) == 6

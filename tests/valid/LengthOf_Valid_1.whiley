@@ -1,12 +1,12 @@
-import whiley.lang.*
 
-type listset is [int] | {int}
 
-function len(listset l) -> int:
+type list is [int] | [bool]
+
+function len(list l) -> int:
     return |l|
 
-method main(System.Console sys) -> void:
+public export method test() -> void:
     [int] l = [1, 2, 3]
-    sys.out.println(len(l))
-    {int} s = {1, 2, 3, 4, 5, 6}
-    sys.out.println(len(s))
+    assume len(l) == 3
+    [bool] s = [true,false,true]
+    assume len(s) == 3

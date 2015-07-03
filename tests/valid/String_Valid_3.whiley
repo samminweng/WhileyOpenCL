@@ -1,15 +1,17 @@
-import whiley.lang.*
+
 
 public function has(int c1, [int] str) -> bool:
-    for c2 in str:
-        if c1 == c2:
+    int i = 0
+    while i < |str|:
+        if c1 == str[i]:
             return true
+        i = i + 1
     return false
 
-method main(System.Console sys) -> void:
+public export method test() -> void:
     [int] s = "Hello World"
-    sys.out.println(has('l', s))
-    sys.out.println(has('e', s))
-    sys.out.println(has('h', s))
-    sys.out.println(has('z', s))
-    sys.out.println(has('H', s))
+    assume has('l', s) == true
+    assume has('e', s) == true
+    assume has('h', s) == false
+    assume has('z', s) == false
+    assume has('H', s) == true

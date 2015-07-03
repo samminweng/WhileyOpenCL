@@ -205,17 +205,7 @@ public final class WyilFileReader {
 				}
 				constant = Constant.V_LIST(values);
 				break;
-			}
-			case WyilFileWriter.CONSTANT_Set: {
-				int len = input.read_uv();
-				ArrayList<Constant> values = new ArrayList<Constant>();
-				for (int j = 0; j != len; ++j) {
-					int index = input.read_uv();
-					values.add(myConstantPool[index]);
-				}
-				constant = Constant.V_SET(values);
-				break;
-			}
+			}			
 			case WyilFileWriter.CONSTANT_Tuple: {
 				int len = input.read_uv();
 				ArrayList<Constant> values = new ArrayList<Constant>();
@@ -224,19 +214,6 @@ public final class WyilFileReader {
 					values.add(myConstantPool[index]);
 				}
 				constant = Constant.V_TUPLE(values);
-				break;
-			}
-			case WyilFileWriter.CONSTANT_Map: {
-				int len = input.read_uv();
-				HashSet<Pair<Constant, Constant>> values = new HashSet<Pair<Constant, Constant>>();
-				for (int j = 0; j != len; ++j) {
-					int keyIndex = input.read_uv();
-					int valIndex = input.read_uv();
-					Constant key = myConstantPool[keyIndex];
-					Constant val = myConstantPool[valIndex];
-					values.add(new Pair<Constant, Constant>(key, val));
-				}
-				constant = Constant.V_MAP(values);
 				break;
 			}
 			case WyilFileWriter.CONSTANT_Record: {
@@ -361,7 +338,7 @@ public final class WyilFileReader {
 
 	private WyilFile.FunctionOrMethod readFunctionBlock()
 			throws IOException {
-		int nameIdx = input.read_uv();		
+		int nameIdx = input.read_uv();
 		int modifiers = input.read_uv();
 		int typeIdx = input.read_uv();
 
@@ -376,7 +353,7 @@ public final class WyilFileReader {
 				bodies.second());
 	}
 
-	private WyilFile.FunctionOrMethod readMethodBlock() throws IOException {		
+	private WyilFile.FunctionOrMethod readMethodBlock() throws IOException {
 		int nameIdx = input.read_uv();
 		// System.out.println("=== METHOD " + stringPool[nameIdx]);
 		int modifiers = input.read_uv();
@@ -475,7 +452,7 @@ public final class WyilFileReader {
 	 * nested bytecodes (e.g. loop bytecode). Therefore, we need to track the
 	 * offset within the flat bytecode array against that of the now nested
 	 * bytecode structure.
-	 * 
+	 *
 	 * @param offset
 	 *            The current offset within the flat bytecode array.
 	 * @param bytecodes
@@ -492,7 +469,7 @@ public final class WyilFileReader {
 			// First, check whether there is a label to insert
 			Codes.Label label = labels.get(offset++);
 			if (label != null) { bytecodes.add(i++, label); }
-			
+
 			// Second, check whether we have a nested block which needs to be
 			// explored.
 			if (bytecode instanceof Code.Compound) {
@@ -503,20 +480,20 @@ public final class WyilFileReader {
 				bytecodes.set(i,updateBytecodes(block,blkBytecodes));
 			}
 		}
-		
+
 		// Finally, check whether or not there is a label at the end of this
 		// block.
 		Codes.Label label = labels.get(offset);
 		if (label != null) { bytecodes.add(bytecodes.size(), label); }
-		
+
 		// Done
 		return offset;
 	}
-	
+
 	/**
 	 * This method reconstructs a given compound bytecode with a new list of
 	 * bytecodes representing its body.
-	 * 
+	 *
 	 * @param compound
 	 *            The compound bytecode being updated.
 	 * @param bytecodes
@@ -529,19 +506,15 @@ public final class WyilFileReader {
 			Codes.Quantify l = (Codes.Quantify) compound;
 			return Codes.Quantify(l.type, l.sourceOperand, l.indexOperand,
 					l.modifiedOperands, bytecodes);
-		} else if(compound instanceof Codes.ForAll) {
-			Codes.ForAll l = (Codes.ForAll) compound;
-			return Codes.ForAll(l.type, l.sourceOperand, l.indexOperand,
-					l.modifiedOperands, bytecodes);
 		} else if(compound instanceof Codes.Loop) {
 			Codes.Loop l = (Codes.Loop) compound;
 			return Codes.Loop(l.modifiedOperands, bytecodes);
+		} else if(compound instanceof Codes.Invariant) {
+			return Codes.Invariant(bytecodes);
 		} else if(compound instanceof Codes.Assert) {
 			return Codes.Assert(bytecodes);
 		} else if(compound instanceof Codes.Assume) {
 			return Codes.Assume(bytecodes);
-		} else if(compound instanceof Codes.Invariant) {
-			return Codes.Invariant(bytecodes);
 		} else {
 			throw new IllegalArgumentException("Unknown compound bytecode encountered: " + compound.getClass().getName());
 		}
@@ -549,7 +522,7 @@ public final class WyilFileReader {
 
 	/**
 	 * Read all bytecodes between two given offsets.
-	 * 
+	 *
 	 * @param offset
 	 *            Starting offset to read from
 	 * @param count
@@ -574,7 +547,7 @@ public final class WyilFileReader {
 	 * format corresponds to exactly one in the object representation. However,
 	 * in the case of compound bytecodes (e.g. loop, forall, etc) then it
 	 * represents one plus the number contained within the block itself.
-	 * 
+	 *
 	 * @param code
 	 * @return
 	 */
@@ -749,10 +722,10 @@ public final class WyilFileReader {
 			return Codes.NewObject((Type.Reference) type, target, operand);
 		}
 		case Code.OPCODE_lengthof: {
-			if (!(type instanceof Type.EffectiveCollection)) {
+			if (!(type instanceof Type.EffectiveList)) {
 				throw new RuntimeException("expected collection type");
 			}
-			return Codes.LengthOf((Type.EffectiveCollection) type, target,
+			return Codes.LengthOf((Type.EffectiveList) type, target,
 					operand);
 		}
 		case Code.OPCODE_move:
@@ -777,7 +750,7 @@ public final class WyilFileReader {
 				throw new RuntimeException("expected tuple type");
 			}
 			int index = readRest(wideRest);
-			return Codes.TupleLoad((Type.Tuple) type, target, operand, index);
+			return Codes.TupleLoad((Type.EffectiveTuple) type, target, operand, index);
 		}
 
 		}
@@ -831,12 +804,12 @@ public final class WyilFileReader {
 					- Code.OPCODE_append];
 			return Codes.ListOperator((Type.EffectiveList) type, target,
 					leftOperand, rightOperand, kind);
-		}		
+		}
 		case Code.OPCODE_indexof: {
-			if (!(type instanceof Type.EffectiveIndexible)) {
+			if (!(type instanceof Type.EffectiveList)) {
 				throw new RuntimeException("expecting indexible type");
 			}
-			return Codes.IndexOf((Type.EffectiveIndexible) type, target,
+			return Codes.IndexOf((Type.EffectiveList) type, target,
 					leftOperand, rightOperand);
 		}
 		case Code.OPCODE_add:
@@ -855,23 +828,6 @@ public final class WyilFileReader {
 			return Codes.BinaryOperator(type, target, leftOperand,
 					rightOperand, kind);
 		}
-		case Code.OPCODE_union:
-		case Code.OPCODE_unionl:
-		case Code.OPCODE_unionr:
-		case Code.OPCODE_intersect:
-		case Code.OPCODE_intersectl:
-		case Code.OPCODE_intersectr:
-		case Code.OPCODE_difference:
-		case Code.OPCODE_differencel: {
-			if (!(type instanceof Type.EffectiveSet)) {
-				throw new RuntimeException("expecting set type");
-			}
-			Codes.SetOperatorKind kind = Codes.SetOperatorKind.values()[opcode
-					- Code.OPCODE_union];
-			return Codes.SetOperator((Type.EffectiveSet) type, target,
-					leftOperand, rightOperand, kind);
-		}
-
 		}
 		throw new RuntimeException("unknown opcode encountered (" + opcode
 				+ ")");
@@ -899,21 +855,16 @@ public final class WyilFileReader {
 		switch (opcode) {
 		case Code.OPCODE_quantify:
 		case Code.OPCODE_forall: {
-			if (!(type instanceof Type.EffectiveCollection)) {
+			if (!(type instanceof Type.EffectiveList)) {
 				throw new RuntimeException("expected collection type");
 			}
 			int count = readRest(wideRest);
 			int indexOperand = operands[0];
 			int sourceOperand = operands[1];
 			operands = Arrays.copyOfRange(operands, 2, operands.length);
-			ArrayList<Code> bytecodes = readCodeBlock(offset + 1, count, labels);
-			if (opcode == Code.OPCODE_forall) {
-				return Codes.ForAll((Type.EffectiveCollection) type,
-						sourceOperand, indexOperand, operands, bytecodes);
-			} else {
-				return Codes.Quantify((Type.EffectiveCollection) type,
-						sourceOperand, indexOperand, operands, bytecodes);
-			}
+			ArrayList<Code> bytecodes = readCodeBlock(offset + 1, count, labels);			
+			return Codes.Quantify((Type.EffectiveList) type,
+					sourceOperand, indexOperand, operands, bytecodes);
 		}
 		case Code.OPCODE_indirectinvokefnv:
 		case Code.OPCODE_indirectinvokemdv: {
@@ -985,12 +936,6 @@ public final class WyilFileReader {
 			return Codes.Lambda((Type.FunctionOrMethod) type, target, operands,
 					nid);
 		}
-		case Code.OPCODE_newmap: {
-			if (!(type instanceof Type.Map)) {
-				throw new RuntimeException("expected map type");
-			}
-			return Codes.NewMap((Type.Map) type, target, operands);
-		}
 		case Code.OPCODE_newrecord: {
 			if (!(type instanceof Type.Record)) {
 				throw new RuntimeException("expected record type");
@@ -1002,13 +947,7 @@ public final class WyilFileReader {
 				throw new RuntimeException("expected list type");
 			}
 			return Codes.NewList((Type.List) type, target, operands);
-		}
-		case Code.OPCODE_newset: {
-			if (!(type instanceof Type.Set)) {
-				throw new RuntimeException("expected set type");
-			}
-			return Codes.NewSet((Type.Set) type, target, operands);
-		}
+		}	
 		case Code.OPCODE_newtuple: {
 			if (!(type instanceof Type.Tuple)) {
 				throw new RuntimeException("expected tuple type");
@@ -1021,7 +960,7 @@ public final class WyilFileReader {
 			}
 			return Codes.SubList((Type.EffectiveList) type, target,
 					operands[0], operands[1], operands[2]);
-		}		
+		}
 		}
 		throw new RuntimeException("unknown opcode encountered (" + opcode
 				+ ")");
@@ -1052,17 +991,17 @@ public final class WyilFileReader {
 		}
 		case Code.OPCODE_assertblock: {
 			int count = readRest(wideRest);
-			ArrayList<Code> bytecodes = readCodeBlock(offset + 1, count, labels);			
+			ArrayList<Code> bytecodes = readCodeBlock(offset + 1, count, labels);
 			return Codes.Assert(bytecodes);
 		}
 		case Code.OPCODE_assumeblock: {
 			int count = readRest(wideRest);
-			ArrayList<Code> bytecodes = readCodeBlock(offset + 1, count, labels);			
+			ArrayList<Code> bytecodes = readCodeBlock(offset + 1, count, labels);
 			return Codes.Assume(bytecodes);
 		}
 		case Code.OPCODE_invariantblock: {
 			int count = readRest(wideRest);
-			ArrayList<Code> bytecodes = readCodeBlock(offset + 1, count, labels);			
+			ArrayList<Code> bytecodes = readCodeBlock(offset + 1, count, labels);
 			return Codes.Invariant(bytecodes);
 		}
 		}

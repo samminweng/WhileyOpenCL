@@ -1,14 +1,14 @@
-import whiley.lang.*
 
-type listsetdict is [int] | {int} | {int=>int}
 
-function len(listsetdict l) -> int:
+type listibr is [int] | [bool] | [real]
+
+function len(listibr l) -> int:
     return |l|
 
-method main(System.Console sys) -> void:
-    {int} s = {1, 2, 3}
-    sys.out.println(len(s))
+public export method test() -> void:
+    [bool] s = [true,false,true]
+    assume len(s) == 3
     [int] l = [1, 2]
-    sys.out.println(len(l))
-    {int=>int} m = {1=>2, 3=>4, 5=>6, 7=>8}
-    sys.out.println(len(m))
+    assume len(l) == 2
+    [real] m = [1.0,2.0,3.0,4.0]
+    assume len(m) == 4

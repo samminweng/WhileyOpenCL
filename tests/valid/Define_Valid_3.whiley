@@ -1,7 +1,7 @@
-import whiley.lang.*
 
-type odd is (int x) where x in {1, 3, 5}
 
-method main(System.Console sys) -> void:
+type odd is (int x) where x == 1 || x == 3 || x == 5
+
+public export method test() -> void:
     odd y = 1
-    sys.out.println(y)
+    assert y == 1

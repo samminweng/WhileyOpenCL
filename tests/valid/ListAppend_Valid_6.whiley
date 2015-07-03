@@ -1,13 +1,16 @@
-import whiley.lang.*
+
 
 function test([real] xs, [int] ys) -> bool:
-    for x in xs ++ ys:
-        if x is int:
+    [int|real] zs = xs ++ ys
+    int i = 0
+    while i < |zs|:
+        if zs[i] is int:
             return true
+        i = i + 1
     return false
 
-method main(System.Console sys) -> void:
+public export method test() -> void:
     bool s = test([1.2, 2.3, 3.4], [1, 2, 3, 4, 5, 6, 7, 8])
-    sys.out.println(s)
+    assume s == true    
     s = test([1.2, 2.3, 3.4], [])
-    sys.out.println(s)
+    assume s == false

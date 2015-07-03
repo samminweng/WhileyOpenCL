@@ -1,11 +1,11 @@
-import whiley.lang.*
-
 type Sum is &{int result, [int] items}
 
 method start(Sum this) -> void:
     int sum = 0
-    for i in this->items:
-        sum = sum + i
+    int i = 0
+    while i < |this->items|:
+        sum = sum + this->items[i]
+        i = i + 1
     this->result = sum
 
 method get(Sum this) -> int:
@@ -16,8 +16,10 @@ method create([int] items) -> Sum:
 
 method seqSum([int] items) -> int:
     int r = 0
-    for i in items:
-        r = r + i
+    int i = 0
+    while i < |items|:
+        r = r + items[i]
+        i = i + 1
     return r
 
 method parSum([int] items) -> int:
@@ -30,9 +32,9 @@ type pst is method ([int])->int
 method sum(pst m, [int] data) -> int:
     return m(data)
 
-method main(System.Console sys) -> void:
-    [int] data = [1, 3, 5, 7, 3, 198, 1, 4, 6]
+public export method test() -> void:
+    [int] data = [1, 3, 5, 7, 3, 93, 1, 4, 6]
     int s1 = sum(&parSum, data)
-    sys.out.println_s("SUM: " ++ Any.toString(s1))
+    assume s1 == 123
     int s2 = sum(&seqSum, data)
-    sys.out.println_s("SUM: " ++ Any.toString(s2))
+    assume s1 == 123

@@ -1,5 +1,3 @@
-import whiley.lang.*
-
 constant PAWN is 0
 
 constant KNIGHT is 1
@@ -12,7 +10,7 @@ constant QUEEN is 4
 
 constant KING is 5
 
-type PieceKind is (int x) where x in {PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING}
+type PieceKind is (int x) where PAWN <= x && x <= KING
 
 type Piece is {bool colour, PieceKind kind}
 
@@ -28,6 +26,6 @@ requires |board.rows| > 0:
     board.rows[0] = BLACK_PAWN
     return board
 
-method main(System.Console sys) -> void:
+public export method test() -> void:
     Board r1 = {flag: false, rows: [WHITE_PAWN]}
-    sys.out.println(f(r1))
+    assume f(r1) == {flag:false,rows:[{colour:false,kind:0}]}

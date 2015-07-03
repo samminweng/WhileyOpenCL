@@ -1,4 +1,4 @@
-import whiley.lang.*
+
 
 constant Red is 1
 
@@ -6,7 +6,7 @@ constant Blue is 2
 
 constant Green is 3
 
-type RGB is (int x) where x in {Red, Blue, Green}
+type RGB is (int x) where x == Red || x == Blue || x == Green
 
 function f(RGB c) -> int:
     switch c:
@@ -17,7 +17,7 @@ function f(RGB c) -> int:
         default:
             return 456
 
-method main(System.Console sys) -> void:
-    sys.out.println_s("NUM: " ++ Any.toString(f(Red)))
-    sys.out.println_s("NUM: " ++ Any.toString(f(Green)))
-    sys.out.println_s("NUM: " ++ Any.toString(f(Blue)))
+public export method test() -> void:
+    assume f(Red) == 123
+    assume f(Green) == 456
+    assume f(Blue) == 234

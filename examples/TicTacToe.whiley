@@ -16,15 +16,15 @@ type Square is (int x) where x == BLANK || x == CIRCLE || x == CROSS
 type Board is {
     nat move,
     [Square] pieces // 3 x 3
-} where |pieces| == 9 && move <= 9 && 
+} where |pieces| == 9 && move <= 9 &&
     countOf(pieces,BLANK) == (9 - move) &&
-    (countOf(pieces,CIRCLE) == countOf(pieces,CROSS) ||    
+    (countOf(pieces,CIRCLE) == countOf(pieces,CROSS) ||
      countOf(pieces,CIRCLE) == countOf(pieces,CROSS)+1)
 
 // ==================================================================
 // An empty board is one where all pieces are blank
 // ==================================================================
-function EmptyBoard() => (Board r)
+function EmptyBoard() -> (Board r)
 // Empty board has no moves yet
 ensures r.move == 0:
     //
@@ -40,7 +40,7 @@ ensures r.move == 0:
 // updated with the piece at that position and an incremented the move
 // counter.
 // ===============================================================
-function play(Board b, nat pos) => (Board r)
+function play(Board b, nat pos) -> (Board r)
 // Board position to place onto must be valid
 requires pos < 9 && b.move < 9 && b.pieces[pos] == BLANK
 // Ensures move count is incremented
@@ -60,11 +60,14 @@ ensures r.move == r.move + 1:
 // ===============================================================
 // Helper Method
 // ===============================================================
-function countOf([Square] pieces, Square s) => (int r)
-ensures r == |{ i | i in 0..|pieces|, pieces[i] == s }|:
+function countOf([Square] pieces, Square s) -> (int r):
     //
-    {int} matches = { i | i in 0..|pieces|, pieces[i] == s }
-    return |matches|
+    int count = 0
+    for i in 0..|pieces|:
+        if pieces[i] == s:
+            count = count + 1
+    //
+    return count
 
 // ===============================================================
 // Test Game
@@ -74,8 +77,8 @@ constant GAME is [0,1,2,3,4,5,6,7,8]
 method main(System.Console console):
     Board b = EmptyBoard()
     for p in GAME:
-        console.out.println("BOARD: " ++ b)
-        console.out.println("MOVE: " ++ p)
+        console.out.println("BOARD: " ++ Any.toString(b))
+        console.out.println("MOVE: " ++ Any.toString(p))
         if p < 0 || p > 9 || b.pieces[p] != BLANK || b.move == 9:
             console.out.println("INVALID MOVE!")
             break
@@ -86,6 +89,5 @@ method main(System.Console console):
 
 
 
-    
-    
-    
+
+

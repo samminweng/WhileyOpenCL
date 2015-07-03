@@ -1,4 +1,4 @@
-import whiley.lang.*
+
 
 type nat is (int x) where x >= 0
 
@@ -20,26 +20,32 @@ requires A.width == B.height
 ensures (C.width == B.width) && (C.height == A.height):
     //
     [[int]] C_data = []
-    for i in 0 .. A.height:
+    int i = 0
+    while i < A.height:
         [int] row = []
-        for j in 0 .. B.width:
+        int j = 0
+        while j < B.width:
             int r = 0
-            for k in 0 .. A.width:
+            int k = 0
+            while k < A.width:
                 r = r + (A.data[i][k] * B.data[k][j])
+                k = k + 1
             row = row ++ [r]
+            j = j + 1
         C_data = C_data ++ [row]
+        i = i + 1
     return Matrix(B.width, A.height, C_data)
 
-method main(System.Console sys) -> void:
+public export method test() -> void:
     Matrix m1 = Matrix(2, 2, [[1, 0], [-3, 2]])
     Matrix m2 = Matrix(2, 2, [[-1, 4], [3, 5]])
     Matrix m3 = run(m1, m2)
-    sys.out.println(m3)
+    assume m3 == {data:[[-1, 4], [9, -2]],height:2,width:2}
     m1 = Matrix(3, 2, [[1, 2, 3], [4, 5, 6]])
     m2 = Matrix(2, 3, [[1, 2], [3, 4], [5, 6]])
     m3 = run(m1, m2)
-    sys.out.println(m3)
+    assume m3 == {data:[[22, 28], [49, 64]],height:2,width:2}
     m1 = Matrix(3, 2, [[1, 2, 3], [4, 5, 6]])
     m2 = Matrix(4, 3, [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]])
     m3 = run(m1, m2)
-    sys.out.println(m3)
+    assume m3 == {data:[[38, 44, 50, 56], [83, 98, 113, 128]],height:2,width:4}

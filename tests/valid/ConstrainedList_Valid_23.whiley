@@ -1,4 +1,4 @@
-import whiley.lang.*
+
 
 type Matrix is ([[int]] rows)
     where no {
@@ -8,18 +8,24 @@ type Matrix is ([[int]] rows)
 function run(Matrix A, Matrix B) -> Matrix
 requires (|A| > 0) && ((|B| > 0) && (|B| == |A[0]|)):
     [[int]] C = []
-    for i in 0 .. |A|:
+    int i = 0
+    while i < |A|:
         [int] row = []
-        for j in 0 .. |B[0]|:
+        int j = 0
+        while j < |B[0]|:
             int r = 0
-            for k in 0 .. |B|:
+            int k = 0 
+            while k < |B|:
                 r = r + (A[i][k] * B[k][j])
+                k = k + 1            
             row = row ++ [r]
+            j = j + 1        
         C = C ++ [row]
+        i = i + 1
     return C
 
-method main(System.Console sys) -> void:
+public export method test() -> void:
     Matrix m1 = [[1, 2], [3, 4]]
     Matrix m2 = [[5, 6], [7, 8]]
     Matrix m3 = run(m1, m2)
-    sys.out.println(m3)
+    assume m3 == [[19, 22], [43, 50]]

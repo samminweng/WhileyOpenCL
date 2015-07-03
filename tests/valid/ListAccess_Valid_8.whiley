@@ -1,12 +1,24 @@
-import whiley.lang.*
+// Convert a byte into an unsigned int.  This assumes a little endian
+// encoding.
+public function toUnsignedInt(byte b) -> int:
+    int r = 0
+    int base = 1
+    while b != 0b:
+        if (b & 00000001b) == 00000001b:
+            r = r + base
+        b = b >> 1
+        base = base * 2
+    return r
 
 public function meth([byte] bytes) -> [int]:
     [int] data = []
-    for i in 0 .. |bytes|:
-        data = data ++ [Byte.toUnsignedInt(bytes[i])]
+    int i = 0
+    while i < |bytes|:
+        data = data ++ [toUnsignedInt(bytes[i])]
+        i = i + 1
     return data
 
-public method main(System.Console sys) -> void:
+public export method test() -> void:
     [byte] bytes = [00000000b, 00000001b, 00000011b, 00000111b]
-    [int] ints = meth(bytes)
-    sys.out.println(ints)
+    assume meth(bytes) == [0,1,3,7]
+
