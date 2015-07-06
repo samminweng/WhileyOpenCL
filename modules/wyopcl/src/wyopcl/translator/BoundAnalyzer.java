@@ -87,7 +87,7 @@ public class BoundAnalyzer {
 	 * 
 	 * @param code_blk the list of byte-code
 	 */
-	public void buildCFG(List<Code> code_blk) {
+	public void iterateByteCode(List<Code> code_blk) {
 		String func_name = (String) config.getProperty("function_name");
 		// Parse each byte-code and add the constraints accordingly.
 		for (Code code : code_blk) {
@@ -263,7 +263,7 @@ public class BoundAnalyzer {
 	 */
 	private void analyze(Codes.Invariant code) {
 		blk_ctrl.enabledInvariant();
-		this.buildCFG(code.bytecodes());
+		this.iterateByteCode(code.bytecodes());
 		blk_ctrl.disabledInvariant();
 
 	}
@@ -340,51 +340,52 @@ public class BoundAnalyzer {
 		String right = prefix + code.rightOperand;
 
 		Constraint c = null;
-		Constraint inverted_c = null;
+		Constraint neg_c = null;
 		if (BoundAnalyzerHelper.isIntType(code.type)) {
 			switch (code.op) {
 			case EQ:
 				c = new Equals(left, right);
-				inverted_c = new Equals(left, right);
+				neg_c = new Equals(left, right);
 				break;
 			case NEQ:
 
 				break;
 			case LT:
 				c = new LessThan(left, right);
-				inverted_c = new GreaterThanEquals(left, right);
+				neg_c = new GreaterThanEquals(left, right);
 				break;
 			case LTEQ:
 				// Add the 'left <= right' constraint to the branched list.
 				c = new LessThanEquals(left, right);
-				inverted_c = new GreaterThan(left, right);
+				neg_c = new GreaterThan(left, right);
 				break;
 			case GT:
 				c = new GreaterThan(left, right);
-				inverted_c = new LessThanEquals(left, right);
+				neg_c = new LessThanEquals(left, right);
 				break;
 			case GTEQ:
 				// Branch and add the left >= right constraint to
 				c = new GreaterThanEquals(left, right);
-				inverted_c = new LessThan(left, right);
+				neg_c = new LessThan(left, right);
 				// Add the constraint 'left< right' to current constraint list.
 				break;
 			case IN:
-				System.err.println("Not implemented!");
-				break;			
+				throw new RuntimeException("Un-implemented comparator ("+code+")");			
 			default:
-				System.err.println("Not implemented!");
+				throw new RuntimeException("Unknow operator ("+code+")");	
 
 			}
+			
+			// Check if the 'if' bytecode is the loop condition.
+			if (blk_ctrl.isLoop()) {
+				// Create a loop body and loop exit.
+				blk_ctrl.createLoopStructure(code.target, c, neg_c);
+			} else {
+				// Create if and else branches.
+				blk_ctrl.createIfElseBranch(code.target, c, neg_c);
+			}
 		}
-		// Check if the 'if' bytecode is the loop condition.
-		if (blk_ctrl.isLoop()) {
-			// Create a loop body and loop exit.
-			blk_ctrl.createLoopStructure(code.target, c, inverted_c);
-		} else {
-			// Create if and else branches.
-			blk_ctrl.createIfElseBranch(code.target, c, inverted_c);
-		}
+		
 	}
 
 	/**
@@ -469,7 +470,7 @@ public class BoundAnalyzer {
 			BoundAnalyzer invokeboundAnalyzer = new BoundAnalyzer(config);
 			// Propagate the bounds of input parameters to the function.
 			propagateBoundsToFunctionCall(invokeboundAnalyzer, params, code.operands(), bnd);
-			invokeboundAnalyzer.buildCFG(code_blk);
+			invokeboundAnalyzer.iterateByteCode(code_blk);
 			// Infer the bounds at the end of invoked function.
 			Bounds ret_bnd = invokeboundAnalyzer.inferBounds();
 			propagateBoundsFromFunctionCall(invokeboundAnalyzer, prefix + code.target(), code.type().ret(), ret_bnd);
@@ -480,34 +481,21 @@ public class BoundAnalyzer {
 	}
 
 	/**
-	 * Parse the 'label' bytecode, get the constraint list by the label and set
-	 * it to the current constraint list. If the constraint list does not exist,
-	 * then create a constraint list and put it to the map with the key of label
-	 * and value of the newly created list.
+	 * Get the block by the label from Label byte-code.
+	 * If the block is not found, then create a new block with the given label.
+	 * And set the current block to that block.
 	 * 
-	 * @param code
+	 * @param code {@link wyil.lang.Codes.Label} byte-code
 	 */
 	private void analyze(Codes.Label code) {
 		String label = code.label;
-		BasicBlock blk = null;
-		//Check if the label is the loop structure
-		if(blk_ctrl.isLoop()){
-			blk = blk_ctrl.getBasicBlock(label, BlockType.LOOP_EXIT);
-			blk_ctrl.setLoop(false);
-		}else{			
-			// Get the target blk. If it is null, then create a new block.
-			blk = blk_ctrl.getBasicBlock(label);
-			if (blk == null) {
-				blk = blk_ctrl.createBasicBlock(label, BlockType.BLOCK);
-			}			
-			//Get the current block.
-			BasicBlock c_blk = blk_ctrl.getCurrentBlock();
-			if(c_blk!=null){
-				//Connect the current blk to the assigned block.
-				c_blk.addChild(blk);
-			}						
-		}
-		
+		// Get the target blk. If it is null, then create a new block.
+		BasicBlock blk = blk_ctrl.getBasicBlock(label);
+		//Get the current block 
+		BasicBlock c_blk = blk_ctrl.getCurrentBlock();
+		if(c_blk != null && !(c_blk.equals(blk))){
+			c_blk.addChild(blk);			
+		}		
 		// Switch the current block
 		blk_ctrl.setCurrentBlock(blk);
 	}
@@ -641,7 +629,7 @@ public class BoundAnalyzer {
 		//Set the loop flag to be true.
 		blk_ctrl.setLoop(true);
 		// Get the list of byte-code and iterate through the list.
-		this.buildCFG(code.bytecodes());
+		this.iterateByteCode(code.bytecodes());
 	}
 
 	/**
@@ -779,25 +767,17 @@ public class BoundAnalyzer {
 	}
 
 	/**
-	 * Update the current block's branch with the given target.
+	 * Checks or creates the goto block and updates the current block to 
+	 * be null. 
 	 * 
-	 * @param code
+	 * @param code Goto ({@link wyil.lang.Codes.Goto } byte-code
 	 */
 	private void analyze(Codes.Goto code) {
 		// Get the label name
 		String label = code.target;
-
 		BasicBlock goto_blk = blk_ctrl.getBasicBlock(label);
-		// Check if the goto block exist. If not, add one.
-		if (goto_blk == null) {
-			goto_blk = blk_ctrl.createBasicBlock(label, BlockType.BLOCK);
-		}
-		// Get the current blk.
-		BasicBlock c_blk = blk_ctrl.getCurrentBlock();
-		if (c_blk != null) {
-			c_blk.addChild(goto_blk);
-		}
-		// Set isGoto flag to avoid linking the next block with current block.
+		
+		//Set the current blk to null blk
 		blk_ctrl.setCurrentBlock(null);
 	}
 

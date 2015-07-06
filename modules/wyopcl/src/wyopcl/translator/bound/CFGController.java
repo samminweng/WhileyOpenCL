@@ -122,23 +122,34 @@ public class CFGController {
 	}
 
 	/**
-	 * Iterates over all nodes in a list to get the block, whose branch name is
-	 * matched with label.
+	 * Get the block by comparing block name with blocks of several types, including 'Block', 'ELSE' 
+	 * and 'LOOP_EXIT'. 
+	 * <br>
+	 * If no blocks is matched, then create a new block.
 	 * 
 	 * @param label
-	 * @return blk
+	 * @return blk the matched block
 	 */
 	public BasicBlock getBasicBlock(String label) {
-		BasicBlock blk = getBasicBlock(label, BlockType.BLOCK);
-		if (blk == null) {
-			// Get the block of If branch
-			blk = getBasicBlock(label, BlockType.IF_BRANCH);
+		BasicBlock blk = null;
+		blk = getBasicBlock(label, BlockType.BLOCK);
+		if (blk != null) {
+			return blk;
+		}		
+		// Get the block of else branch type
+		blk = getBasicBlock(label, BlockType.ELSE_BRANCH);
+		if (blk != null) {
+			return blk;
 		}
-		if (blk == null) {
-			// Get the block of Loop Exit
-			blk = getBasicBlock(label, BlockType.LOOP_EXIT);
+		
+		// Get the block of Loop Exit type
+		blk = getBasicBlock(label, BlockType.LOOP_EXIT);
+		if(blk != null){
+			setLoop(false);
+			return blk;
 		}
-		return blk;
+		//If no blocks is found, then return/create a new block.
+		return createBasicBlock(label, BlockType.BLOCK);
 	}
 
 	/***
@@ -232,8 +243,8 @@ public class CFGController {
 	}
 
 	/**
-	 * Branches the current block and adds the if_then_else blocks. And set the
-	 * current block to the left one.
+	 * Branches out the current block to add if/else blocks and set the current block to 
+	 * the if branch (left one).
 	 * 
 	 * @param new_label
 	 *            the name of new branch.
@@ -244,12 +255,13 @@ public class CFGController {
 		BasicBlock c_blk = getCurrentBlock();
 		// Branch out the block
 		// The left block does not have the name
-		BasicBlock leftBlock = createBasicBlock(new_label, BlockType.ELSE_BRANCH, c_blk);
-		BasicBlock rightBlock = createBasicBlock(new_label, BlockType.IF_BRANCH, c_blk);
+		BasicBlock leftBlock = createBasicBlock(new_label, BlockType.IF_BRANCH, c_blk);
+		BasicBlock rightBlock = createBasicBlock(new_label, BlockType.ELSE_BRANCH, c_blk);
 
 		// Add the constraint to the left block
 		leftBlock.addConstraint(neg_c);
 		rightBlock.addConstraint(c);
+		
 		// Set the current block to the left
 		setCurrentBlock(leftBlock);
 	}

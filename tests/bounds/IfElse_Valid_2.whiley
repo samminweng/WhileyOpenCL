@@ -1,6 +1,7 @@
 import whiley.lang.*
 
-function f(int x) -> int:
+function f(int x) -> (int r)
+ensures r > 0:
     if x < 10:
         return 1
     else:
