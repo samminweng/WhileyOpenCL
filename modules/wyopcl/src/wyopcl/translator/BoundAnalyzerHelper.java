@@ -11,7 +11,7 @@ import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyopcl.translator.bound.BasicBlock;
-import wyopcl.translator.bound.ControlFlowBlockController;
+import wyopcl.translator.bound.CFGController;
 import wyopcl.translator.bound.Bounds;
 import wyopcl.translator.bound.Domain;
 
@@ -40,7 +40,7 @@ public final class BoundAnalyzerHelper {
 	 * @param line
 	 * @see <a href="http://en.wikipedia.org/wiki/ANSI_escape_code">ANSI escape code</a>
 	 */
-	protected static int printWyILCode(Code code, String name, int line, ControlFlowBlockController blk_ctrl){
+	protected static int printWyILCode(Code code, String name, int line, CFGController blk_ctrl){
 		//Print out the bytecode with the format (e.g. 'main.9 [const %12 = 2345 : int]')
 		String font_color_start = "";
 		String font_color_end = "";

@@ -99,7 +99,7 @@ public class Translator implements Builder {
 			this.config.setProperty("function_name", functionOrMethod.name());
 			List<Code> code_blk = functionOrMethod.body().bytecodes();
 			BoundAnalyzer boundAnalyzer = new BoundAnalyzer(config);
-			boundAnalyzer.iterateByteCodeList(code_blk);
+			boundAnalyzer.buildCFG(code_blk);
 			// Infer the bounds at the end of main function.
 			//boundAnalyzer.propagateBounds(functionOrMethod.type().params());
 			boundAnalyzer.inferBounds();

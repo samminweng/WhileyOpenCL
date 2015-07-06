@@ -15,13 +15,12 @@ import wyopcl.translator.bound.BasicBlock.BlockType;
 import wyopcl.translator.bound.constraint.Constraint;
 
 /**
- * Creates, retrieves and stores the blocks for a function. This class also
- * infers the bounds.
- * 
+ * Creates, retrieves and stores the blocks for a function. 
+ *  
  * @author Min-Hsien Weng
  *
  */
-public class ControlFlowBlockController {
+public class CFGController {
 	private final String prefix = "%";
 	private final Configuration config;
 	// The list of basic block;
@@ -36,7 +35,7 @@ public class ControlFlowBlockController {
 	// or assumption.
 	private boolean isInvariant;	
 
-	public ControlFlowBlockController(Configuration config) {
+	public CFGController(Configuration config) {
 		this.config = config;
 		// Initialize the variables
 		this.list = new ArrayList<BasicBlock>();
@@ -394,4 +393,15 @@ public class ControlFlowBlockController {
 		this.isLoop = isLoop;
 	}
 
+	
+	/**
+	 * Adds the constraint to the current block.
+	 * 
+	 * @param c
+	 */
+	public void addConstraint(Constraint c) {
+		getCurrentBlock().addConstraint(c);
+	}
+
+	
 }

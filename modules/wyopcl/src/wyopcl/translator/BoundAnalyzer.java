@@ -14,7 +14,7 @@ import wyil.lang.Type.Tuple;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.bound.BasicBlock;
-import wyopcl.translator.bound.ControlFlowBlockController;
+import wyopcl.translator.bound.CFGController;
 import wyopcl.translator.bound.Bounds;
 import wyopcl.translator.bound.BasicBlock.BlockType;
 import wyopcl.translator.bound.constraint.Assign;
@@ -49,7 +49,7 @@ public class BoundAnalyzer {
 	private final String prefix = "%";
 	// Stores all the extracted symbols.
 	private SymbolController sym_ctrl;
-	private ControlFlowBlockController blk_ctrl;
+	private CFGController blk_ctrl;
 	// The line number
 	private int line;
 
@@ -63,7 +63,7 @@ public class BoundAnalyzer {
 		this.config = config;		
 		// Initialize the variables
 		this.sym_ctrl = new SymbolController();
-		this.blk_ctrl = new ControlFlowBlockController(this.config);		
+		this.blk_ctrl = new CFGController(this.config);		
 		this.line = 0;
 	}
 
@@ -81,12 +81,13 @@ public class BoundAnalyzer {
 	}
 
 	/**
-	 * Iterate each bytecode
+	 * Build up the control flow graph: iterating each byte-code to extract the constraints, create
+	 * the block (e.g. loop structure/if-else branches) or reuse the current block to put the constraints
+	 * into the corresponding block.  
 	 * 
-	 * @param analyzer
-	 * @param functionOrMethod
+	 * @param code_blk the list of byte-code
 	 */
-	public void iterateByteCodeList(List<Code> code_blk) {
+	public void buildCFG(List<Code> code_blk) {
 		String func_name = (String) config.getProperty("function_name");
 		// Parse each byte-code and add the constraints accordingly.
 		for (Code code : code_blk) {
@@ -253,14 +254,7 @@ public class BoundAnalyzer {
 		return bnd;
 	}
 
-	/**
-	 * Adds the constraint to the current block.
-	 * 
-	 * @param c
-	 */
-	private void addConstraint(Constraint c) {
-		blk_ctrl.getCurrentBlock().addConstraint(c);
-	}
+	
 
 	/**
 	 * Analyze the invariant
@@ -269,7 +263,7 @@ public class BoundAnalyzer {
 	 */
 	private void analyze(Codes.Invariant code) {
 		blk_ctrl.enabledInvariant();
-		this.iterateByteCodeList(code.bytecodes());
+		this.buildCFG(code.bytecodes());
 		blk_ctrl.disabledInvariant();
 
 	}
@@ -281,7 +275,7 @@ public class BoundAnalyzer {
 		// Check if the assigned value is an integer
 		if (BoundAnalyzerHelper.isIntType(code.type())) {
 			// Add the constraint 'target = operand'
-			addConstraint(new Assign(target, operand));
+			blk_ctrl.addConstraint(new Assign(target, operand));
 		}
 
 		if (code.type() instanceof Type.List) {
@@ -307,7 +301,7 @@ public class BoundAnalyzer {
 		if (constant instanceof Constant.Integer) {
 			// Add the 'Const' constraint.
 			BigInteger value = ((Constant.Integer) constant).value;
-			addConstraint(new Const(target, value));
+			blk_ctrl.addConstraint(new Const(target, value));
 			sym_ctrl.putAttribute(target, "value", value);
 		}
 
@@ -331,7 +325,7 @@ public class BoundAnalyzer {
 			String target = prefix + code.target();
 			String op = prefix + code.operand(0);
 			String index = prefix + code.operand(1);
-			addConstraint(new Equals(target, op));
+			blk_ctrl.addConstraint(new Equals(target, op));
 		}
 	}
 
@@ -439,7 +433,7 @@ public class BoundAnalyzer {
 
 		if (BoundAnalyzerHelper.isIntType(ret_type)) {
 			// propagate the bounds of return value.
-			addConstraint(new Range(ret_reg, bnd.getLower("return"), bnd.getUpper("return")));
+			blk_ctrl.addConstraint(new Range(ret_reg, bnd.getLower("return"), bnd.getUpper("return")));
 			// Add 'type' attribute
 			sym_ctrl.putAttribute(ret_reg, "type", ret_type);
 		}
@@ -475,7 +469,7 @@ public class BoundAnalyzer {
 			BoundAnalyzer invokeboundAnalyzer = new BoundAnalyzer(config);
 			// Propagate the bounds of input parameters to the function.
 			propagateBoundsToFunctionCall(invokeboundAnalyzer, params, code.operands(), bnd);
-			invokeboundAnalyzer.iterateByteCodeList(code_blk);
+			invokeboundAnalyzer.buildCFG(code_blk);
 			// Infer the bounds at the end of invoked function.
 			Bounds ret_bnd = invokeboundAnalyzer.inferBounds();
 			propagateBoundsFromFunctionCall(invokeboundAnalyzer, prefix + code.target(), code.type().ret(), ret_bnd);
@@ -528,7 +522,7 @@ public class BoundAnalyzer {
 		sym_ctrl.putAttribute(target, "type", code.type());
 		if (BoundAnalyzerHelper.isIntType(code.type())) {
 			for (int operand : code.operands()) {
-				addConstraint(new Union(prefix + code.target(), prefix + operand));
+				blk_ctrl.addConstraint(new Union(prefix + code.target(), prefix + operand));
 			}
 		}
 		// Add the 'size' attribute
@@ -575,7 +569,7 @@ public class BoundAnalyzer {
 			for (int operand : code.operands()) {
 				String op = prefix + operand;
 				size = size.add((BigInteger) sym_ctrl.getAttribute(op, "size"));
-				addConstraint(new Equals(target, prefix + operand));
+				blk_ctrl.addConstraint(new Equals(target, prefix + operand));
 			}
 			// put 'size' attribute
 			sym_ctrl.putAttribute(target, "size", size);
@@ -599,17 +593,14 @@ public class BoundAnalyzer {
 		//
 		switch (kind) {
 		case NEG:
-			addConstraint(new Negate(x, y));
+			blk_ctrl.addConstraint(new Negate(x, y));
 			break;
 		case NUMERATOR:
-			System.err.println("Not implemented!");
-			break;
+			throw new RuntimeException("Unimplemeted unary operator encountered ("+code+")");
 		case DENOMINATOR:
-			System.err.println("Not implemented!");
-			break;
+			throw new RuntimeException("Unimplemeted unary operator encountered ("+code+")");
 		default:
-			System.err.println("Not implemented!");
-			break;
+			throw new RuntimeException("unknown unary operator encountered ("+code+")");
 		}
 
 	}
@@ -631,7 +622,7 @@ public class BoundAnalyzer {
 		sym_ctrl.putAttribute(target, "type", type);
 		// Add 'value' att
 		sym_ctrl.putAttribute(target, "value", size);
-		addConstraint(new Const(target, size));
+		blk_ctrl.addConstraint(new Const(target, size));
 	}
 
 	/**
@@ -650,7 +641,7 @@ public class BoundAnalyzer {
 		//Set the loop flag to be true.
 		blk_ctrl.setLoop(true);
 		// Get the list of byte-code and iterate through the list.
-		this.iterateByteCodeList(code.bytecodes());
+		this.buildCFG(code.bytecodes());
 	}
 
 	/**
@@ -662,7 +653,7 @@ public class BoundAnalyzer {
 	private void analyze(Codes.SubList code) {
 		if (code.type().element() instanceof Type.Int) {
 			for (int operand : code.operands()) {
-				addConstraint(new Equals(prefix + code.target(), prefix + operand));
+				blk_ctrl.addConstraint(new Equals(prefix + code.target(), prefix + operand));
 			}
 		}
 
@@ -686,13 +677,13 @@ public class BoundAnalyzer {
 			switch (code.kind) {
 			case ADD:
 				// Use the left plus to represent the addition
-				addConstraint(new LeftPlus(prefix + code.operand(0), prefix + code.operand(1), target));
+				blk_ctrl.addConstraint(new LeftPlus(prefix + code.operand(0), prefix + code.operand(1), target));
 				break;
 			case SUB:
 				// Negated the operand
-				addConstraint(new Negate(prefix + code.operand(1), prefix + code.operand(1)));
+				blk_ctrl.addConstraint(new Negate(prefix + code.operand(1), prefix + code.operand(1)));
 				// Use the left plus to represent the subtraction.
-				addConstraint(new LeftPlus(prefix + code.operand(0), prefix + code.operand(1), target));
+				blk_ctrl.addConstraint(new LeftPlus(prefix + code.operand(0), prefix + code.operand(1), target));
 				break;
 			case MUL:
 				break;
@@ -702,7 +693,7 @@ public class BoundAnalyzer {
 				break;
 			case RANGE:
 				// Take the union of operands
-				addConstraint(new Range(target, left, right.subtract(BigInteger.ONE)));
+				blk_ctrl.addConstraint(new Range(target, left, right.subtract(BigInteger.ONE)));
 				// Add the size att
 				sym_ctrl.putAttribute(target, "size", right.subtract(left).subtract(BigInteger.ONE));
 				break;
@@ -753,7 +744,7 @@ public class BoundAnalyzer {
 		if (index % 2 == 1) {
 			Type.Tuple tuple = (Tuple) code.type();
 			if (BoundAnalyzerHelper.isIntType(tuple.element(index))) {
-				addConstraint(new Equals(prefix + code.target(), prefix + code.operand(0)));
+				blk_ctrl.addConstraint(new Equals(prefix + code.target(), prefix + code.operand(0)));
 			}
 		}
 
@@ -771,7 +762,7 @@ public class BoundAnalyzer {
 		int index = 1;
 		while (index < code.operands().length) {
 			if (BoundAnalyzerHelper.isIntType(tuple.element(index))) {
-				addConstraint(new Union(prefix + code.target(), prefix + code.operand(index)));
+				blk_ctrl.addConstraint(new Union(prefix + code.target(), prefix + code.operand(index)));
 			}
 			index += 2;
 		}
