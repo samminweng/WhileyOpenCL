@@ -1,36 +1,17 @@
 package wyopcl.translator.bound;
 
-import static wycc.lang.SyntaxError.internalFailure;
+//import static wycc.lang.SyntaxError.internalFailure;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Stack;
-import java.util.TreeMap;
 
-import wycc.lang.SyntaxError;
 import wyil.lang.Code;
 import wyil.lang.Codes;
-import wyil.lang.Codes.Assert;
-import wyil.lang.Codes.AssertOrAssume;
-import wyil.lang.Codes.Fail;
 import wyil.lang.Codes.UnaryOperatorKind;
 import wyil.lang.Constant;
 import wyil.lang.Type;
-import wyil.lang.Type.EffectiveList;
-import wyil.lang.Type.Record;
-import wyil.lang.WyilFile;
 import wyil.lang.Type.Tuple;
+import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.Configuration;
 import wyopcl.translator.Symbol;
@@ -47,7 +28,6 @@ import wyopcl.translator.bound.constraint.LeftPlus;
 import wyopcl.translator.bound.constraint.LessThan;
 import wyopcl.translator.bound.constraint.LessThanEquals;
 import wyopcl.translator.bound.constraint.Negate;
-import wyopcl.translator.bound.constraint.Plus;
 import wyopcl.translator.bound.constraint.Range;
 import wyopcl.translator.bound.constraint.Union;
 
@@ -160,7 +140,7 @@ public class BoundAnalyzer {
 					} else if (code instanceof Codes.LengthOf) {
 						analyze((Codes.LengthOf) code);
 					} else if (code instanceof Codes.Move) {
-						internalFailure("Not implemented!", "", null);
+						throw new RuntimeException("Not implemented!");
 					} else if (code instanceof Codes.NewList) {
 						analyze((Codes.NewList) code);
 					} else if (code instanceof Codes.NewRecord) {
@@ -188,12 +168,10 @@ public class BoundAnalyzer {
 					} else if (code instanceof Codes.Update) {
 						analyze((Codes.Update) code);
 					} else {
-						internalFailure("unknown wyil code encountered (" + code + ")", "", null);
+						throw new RuntimeException("unknown wyil code encountered (" + code + ")");
 					}
-				} catch (SyntaxError ex) {
-					throw ex;
 				} catch (Exception ex) {
-					internalFailure(ex.getMessage(), "", null, ex);
+					throw new RuntimeException(ex.getMessage());
 				}
 			}
 		}
@@ -601,8 +579,7 @@ public class BoundAnalyzer {
 			sym_ctrl.putAttribute(target, "size", size);
 			break;
 		default:
-			internalFailure("Not implemented!", "Analyzer.java", null);
-			break;
+			throw new RuntimeException("unknown list operator encountered ("+code+")");
 		}
 	}
 
@@ -635,36 +612,7 @@ public class BoundAnalyzer {
 
 	}
 
-	/**
-	 * Parses the 'ForAll' bytecode and adds the assign constraint, e.g. <br>
-	 * <code>forall %5 in %0 () : [int]</code> adds the constraint '%5 = %0',
-	 * which propagates the bounds from %0 to %5.
-	 * 
-	 * @param code
-	 *            the <code>Codes.Forall</code> bytecode
-	 */
-	/*private void analyze(Codes.ForAll code) {
-		String label = code.toString();
-		// Creates a loop structure, including the loop header, loop body and
-		// loop exit
-		BasicBlock loopheader = blk_ctrl.createBasicBlock(label, BlockType.LOOP_HEADER, blk_ctrl.getCurrentBlock());
-		int blk_num = Integer.parseInt(label.split("blklab")[1]) + 1;
-		String branch = "blklab" + blk_num;
-		BasicBlock loopbody = blk_ctrl.createBasicBlock(branch, BlockType.LOOP_BODY, loopheader);
-		BasicBlock loopexit = blk_ctrl.createBasicBlock(branch, BlockType.LOOP_EXIT, loopheader);
-
-		// Check if each element is an integer
-		if (BoundAnalyzerHelper.isIntType((Type) code.type)) {
-			String indexOp = prefix + code.indexOperand;
-			sym_ctrl.putAttribute(indexOp, "type", code.type.element());
-			String sourceOp = prefix + code.sourceOperand;
-			// Propagate the range of source register to the index reg
-			loopbody.addConstraint(new Equals(indexOp, sourceOp));
-			// Do not add any constraint to loop exit.
-		}
-
-		blk_ctrl.setCurrentBlock(loopbody);
-	}*/
+	
 
 	/**
 	 * Add the range to the target register.
@@ -702,21 +650,6 @@ public class BoundAnalyzer {
 		// Get the list of byte-code and iterate through the list.
 		this.iterateByteCodeList(code.bytecodes());
 	}
-
-	/**
-	 * 
-	 * @param code
-	 */
-	/*
-	 * private void analyze(Codes.LoopEnd code){ BasicBlock loopheader =
-	 * blk_ctrl.getBasicBlock(code.label, BlockType.LOOP_HEADER); //connect the
-	 * loopheader and current blk BasicBlock c_blk = blk_ctrl.getCurrentBlock();
-	 * c_blk.addChild(loopheader);
-	 * 
-	 * blk_ctrl.setCurrentBlock(null); isGoto = true;
-	 * 
-	 * }
-	 */
 
 	/**
 	 * The bounds of a list/map shall be propagated from the operand to the
@@ -782,7 +715,7 @@ public class BoundAnalyzer {
 			case RIGHTSHIFT:
 				break;
 			default:
-				internalFailure("unknown binary expression encountered", "Analyzer.java", null);
+				throw new RuntimeException("unknown binary expression encountered ("+code+")");
 			}
 		}
 
