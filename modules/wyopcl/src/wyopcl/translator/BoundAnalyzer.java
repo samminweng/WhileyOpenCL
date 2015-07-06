@@ -14,7 +14,7 @@ import wyil.lang.Type.Tuple;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.bound.BasicBlock;
-import wyopcl.translator.bound.BlockController;
+import wyopcl.translator.bound.ControlFlowBlockController;
 import wyopcl.translator.bound.Bounds;
 import wyopcl.translator.bound.BasicBlock.BlockType;
 import wyopcl.translator.bound.constraint.Assign;
@@ -49,7 +49,7 @@ public class BoundAnalyzer {
 	private final String prefix = "%";
 	// Stores all the extracted symbols.
 	private SymbolController sym_ctrl;
-	private BlockController blk_ctrl;
+	private ControlFlowBlockController blk_ctrl;
 	// The line number
 	private int line;
 
@@ -63,17 +63,21 @@ public class BoundAnalyzer {
 		this.config = config;		
 		// Initialize the variables
 		this.sym_ctrl = new SymbolController();
-		this.blk_ctrl = new BlockController(this.config);		
+		this.blk_ctrl = new ControlFlowBlockController(this.config);		
 		this.line = 0;
 	}
 
 	/**
+	 * @deprecated This function is no longer used because of the design of cached control flow graph. 
+	 * 
 	 * Propagate the input bounds.
 	 * 
 	 * @param params
+	 * 
 	 */
+	@Deprecated
 	public void propagateBounds(List<Type> params) {
-		blk_ctrl.createEntryNode(params);
+		blk_ctrl.propagateInputBounds(params);
 	}
 
 	/**
@@ -390,7 +394,7 @@ public class BoundAnalyzer {
 	}
 
 	/**
-	 * Propagate the bounds to the input parameters of a function call.
+	 * Propagate the input bounds to the called function.
 	 * 
 	 * @param invokeboundAnalyzer
 	 *            the analyzer of invoked function.

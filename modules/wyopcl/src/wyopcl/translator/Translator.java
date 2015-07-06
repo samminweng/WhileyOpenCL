@@ -64,7 +64,7 @@ public class Translator implements Builder {
 			// Check the mode
 			switch (config.getMode()) {
 			case "bound":
-				analyzeFunctionalBounds(module);
+				analyzeBounds(module);
 				message = "Bound analysis completed.\nFile: " + config.getFilename();
 				break;
 			case "code":
@@ -86,24 +86,22 @@ public class Translator implements Builder {
 	}
 
 	/**
-	 * Takes the in-memory wyil file and analyzes the ranges using function
-	 * call.
+	 * Takes the in-memory wyil file and analyzes the bounds of integer variables in Main function.
+	 * using function call.
 	 * 
-	 * @param module
+	 * @param module 
 	 */
-	private void analyzeFunctionalBounds(WyilFile module) {
+	private void analyzeBounds(WyilFile module) {
 		try {
-			// FunctionOrMethodDeclaration functionOrMethod =
-			// module.functionOrMethod("main").get(0);
 			// Get code block of main function.
 			FunctionOrMethod functionOrMethod = module.functionOrMethod("main").get(0);
 			// Put the function name to the config
 			this.config.setProperty("function_name", functionOrMethod.name());
 			List<Code> code_blk = TranslatorHelper.getCodeBlock(functionOrMethod, config);
 			BoundAnalyzer boundAnalyzer = new BoundAnalyzer(config);
-			boundAnalyzer.propagateBounds(functionOrMethod.type().params());
 			boundAnalyzer.iterateByteCodeList(code_blk);
 			// Infer the bounds at the end of main function.
+			//boundAnalyzer.propagateBounds(functionOrMethod.type().params());
 			boundAnalyzer.inferBounds();
 			boundAnalyzer = null;
 		} catch (Exception e) {
