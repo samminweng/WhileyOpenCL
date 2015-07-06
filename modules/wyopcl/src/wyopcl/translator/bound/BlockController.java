@@ -9,6 +9,7 @@ import java.util.List;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
+import wyopcl.translator.BoundAnalyzerHelper;
 import wyopcl.translator.Configuration;
 import wyopcl.translator.bound.BasicBlock.BlockType;
 import wyopcl.translator.bound.constraint.Constraint;
@@ -286,7 +287,7 @@ public class BlockController {
 	 * @param iteration the iteration number.
 	 * @return true if bounds are unchanged. Otherwise, return false.
 	 */
-	protected boolean inferBlockBounds(BasicBlock blk, boolean isChanged, int iteration){
+	public boolean inferBlockBounds(BasicBlock blk, boolean isChanged, int iteration){
 		Bounds bnd_before = null, bnd_after = null;
 		//Before the bound inference
 		//The bound before bound inference. 

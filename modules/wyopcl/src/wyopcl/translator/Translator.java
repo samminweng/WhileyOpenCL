@@ -21,7 +21,6 @@ import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyil.util.AttributedCodeBlock;
-import wyopcl.translator.bound.BoundAnalyzer;
 import wyopcl.translator.generator.CodeGenerator;
 import wyopcl.translator.generator.CodeGeneratorHelper;
 import wyopcl.translator.symbolic.PatternMatcher;

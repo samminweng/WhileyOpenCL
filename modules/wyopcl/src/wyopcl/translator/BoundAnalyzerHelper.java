@@ -1,4 +1,4 @@
-package wyopcl.translator.bound;
+package wyopcl.translator;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -10,7 +10,10 @@ import java.util.Map.Entry;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
-import wyopcl.translator.Symbol;
+import wyopcl.translator.bound.BasicBlock;
+import wyopcl.translator.bound.BlockController;
+import wyopcl.translator.bound.Bounds;
+import wyopcl.translator.bound.Domain;
 
 /**
  * Utility class for bound analyzer.
@@ -129,7 +132,7 @@ public final class BoundAnalyzerHelper {
 	 * @param type 
 	 * @return true if the type is or contains an integer type. 
 	 */
-	protected static boolean isIntType(Type type){
+	public static boolean isIntType(Type type){
 		if(type instanceof Type.Int){
 			return true;
 		}

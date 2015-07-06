@@ -1,4 +1,4 @@
-package wyopcl.translator.bound;
+package wyopcl.translator;
 
 //import static wycc.lang.SyntaxError.internalFailure;
 
@@ -13,10 +13,9 @@ import wyil.lang.Type;
 import wyil.lang.Type.Tuple;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
-import wyopcl.translator.Configuration;
-import wyopcl.translator.Symbol;
-import wyopcl.translator.SymbolController;
-import wyopcl.translator.TranslatorHelper;
+import wyopcl.translator.bound.BasicBlock;
+import wyopcl.translator.bound.BlockController;
+import wyopcl.translator.bound.Bounds;
 import wyopcl.translator.bound.BasicBlock.BlockType;
 import wyopcl.translator.bound.constraint.Assign;
 import wyopcl.translator.bound.constraint.Const;
