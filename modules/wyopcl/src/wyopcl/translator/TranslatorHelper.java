@@ -19,12 +19,15 @@ import wyopcl.translator.symbolic.pattern.Pattern;
  */
 public final class TranslatorHelper {
 	/**
+	 * @deprecated This method is no longer used and replaced by {@link wyil.lang.CodeBlock#bytecodes()}. 
+	 * 
 	 * Get the list of code for a function.
 	 * 
 	 * @param functionOrMethod
 	 *            the function or method declaration.
 	 * @return the list of code.
 	 */
+	@Deprecated
 	public static List<Code> getCodeBlock(FunctionOrMethod functionOrMethod, Configuration config) {
 		List<Code> code_blk = new ArrayList<Code>();
 		// Iterate the code block to add each code to the code block.

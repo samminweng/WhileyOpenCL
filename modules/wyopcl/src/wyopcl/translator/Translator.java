@@ -97,7 +97,7 @@ public class Translator implements Builder {
 			FunctionOrMethod functionOrMethod = module.functionOrMethod("main").get(0);
 			// Put the function name to the config
 			this.config.setProperty("function_name", functionOrMethod.name());
-			List<Code> code_blk = TranslatorHelper.getCodeBlock(functionOrMethod, config);
+			List<Code> code_blk = functionOrMethod.body().bytecodes();
 			BoundAnalyzer boundAnalyzer = new BoundAnalyzer(config);
 			boundAnalyzer.iterateByteCodeList(code_blk);
 			// Infer the bounds at the end of main function.

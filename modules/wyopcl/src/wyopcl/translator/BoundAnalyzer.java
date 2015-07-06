@@ -452,8 +452,9 @@ public class BoundAnalyzer {
 	}
 
 	/**
-	 * Parses the invoke bytecode and adds the constraints to the list. The
-	 * possible constraints include: none....
+	 * Get the list of bytecode of the invoked function and infer the bounds of the function 
+	 * in the context of input bounds. And then propagate the bounds of return value back to
+	 * the caller.
 	 * 
 	 * @param code
 	 */
@@ -463,9 +464,7 @@ public class BoundAnalyzer {
 		if (functionOrMethod != null) {
 			List<Type> params = functionOrMethod.type().params();
 			// The list of bytecode
-			List<Code> code_blk = TranslatorHelper.getCodeBlock(functionOrMethod, this.config);
-			//Temporarily disable for upgrade
-			//code_blk = TranslatorHelper.patternMatchingandTransformation(config, params, code_blk);
+			List<Code> code_blk = functionOrMethod.body().bytecodes();
 			// Infer the bounds
 			Bounds bnd = this.inferBounds();
 			// Create the bound analyzer for the invoked function.
