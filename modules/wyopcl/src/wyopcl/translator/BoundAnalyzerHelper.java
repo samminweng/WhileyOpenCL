@@ -65,7 +65,7 @@ public final class BoundAnalyzerHelper {
 	 * @param filename the name of input file.
 	 * @param func_name the name of function.
 	 */
-	protected static void printCFG(List<BasicBlock> blks, String filename, String func_name){
+	public static void printCFG(List<BasicBlock> blks, String filename, String func_name){
 		//Sort the blks.
 		//blk_ctrl.sortedList();
 		String dot_string= "digraph "+func_name+"{\n";		

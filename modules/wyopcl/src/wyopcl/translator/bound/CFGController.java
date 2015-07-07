@@ -5,10 +5,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-
-import wyil.attributes.VariableDeclarations;
-import wyil.lang.Code;
-import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyopcl.translator.BoundAnalyzerHelper;
 import wyopcl.translator.Configuration;
@@ -31,7 +27,7 @@ public class CFGController {
 	// The boolean flag indicates the loop structure.
 	private boolean isLoop;
 	// A list of loop variables.
-	private HashMap<String, BoundChange> loop_variables;
+	//private HashMap<String, BoundChange> loop_variables;
 	// The boolean flag is used to show whether the code is inside an assertion
 	// or assumption.
 	private boolean isInvariant;	
@@ -43,7 +39,7 @@ public class CFGController {
 		// Initialize
 		createBasicBlock("exit", BlockType.EXIT);
 		this.current_blk = createBasicBlock("entry", BlockType.ENTRY);
-		this.loop_variables = new HashMap<String, BoundChange>();
+		//this.loop_variables = new HashMap<String, BoundChange>();
 		this.isInvariant = false;
 		this.isLoop = false;
 	}
@@ -241,7 +237,6 @@ public class CFGController {
 			addParamBounds(paramType, prefix + index, null, null);
 			index++;
 		}
-
 	}
 
 	/**
@@ -306,11 +301,11 @@ public class CFGController {
 	 * 
 	 * @param target
 	 */
-	public void addLoopVar(String target) {
+	/*public void addLoopVar(String target) {
 		if (!loop_variables.containsKey(target)) {
 			loop_variables.put(target, new BoundChange(target));
 		}
-	}
+	}*/
 
 	/**
 	 * Infer the bounds for a block.
@@ -323,7 +318,7 @@ public class CFGController {
 	 *            the iteration number.
 	 * @return true if bounds are unchanged. Otherwise, return false.
 	 */
-	public boolean inferBlockBounds(BasicBlock blk, boolean isChanged, int iteration) {
+	/*public boolean inferBlockBounds(BasicBlock blk, boolean isChanged, int iteration) {
 		Bounds bnd_before = null, bnd_after = null;
 		// Before the bound inference
 		// The bound before bound inference.
@@ -397,7 +392,7 @@ public class CFGController {
 			System.out.println("isChanged=" + isChanged);
 		}
 		return isChanged;
-	}
+	}*/
 
 	public boolean isLoop() {
 		return isLoop;

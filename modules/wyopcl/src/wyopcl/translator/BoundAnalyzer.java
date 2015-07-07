@@ -16,6 +16,7 @@ import wyil.lang.Type.Tuple;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.bound.BasicBlock;
+import wyopcl.translator.bound.BoundInferenceController;
 import wyopcl.translator.bound.CFGController;
 import wyopcl.translator.bound.Bounds;
 import wyopcl.translator.bound.Domain;
@@ -53,7 +54,7 @@ public class BoundAnalyzer {
 	// Stores all the extracted symbols.
 	private SymbolController sym_ctrl;
 	private CFGController blk_ctrl;
-
+	private BoundInferenceController infer_ctrl;
 	/**
 	 * Constructor of bound analyzer
 	 * 
@@ -65,7 +66,8 @@ public class BoundAnalyzer {
 		this.config = config;		
 		// Initialize the variables
 		this.sym_ctrl = new SymbolController();
-		this.blk_ctrl = new CFGController(this.config);
+		this.blk_ctrl = new CFGController(config);
+		this.infer_ctrl = new BoundInferenceController(config);
 		this.variableDeclarations = variableDeclarations;
 	}
 
@@ -238,6 +240,10 @@ public class BoundAnalyzer {
 		System.out.println(str);		
 	}
 	
+	
+	
+	
+	
 	/**
 	 * Repeatedly iterates over all blocks, starting from the entry block to the
 	 * exit block, and infer the bounds consistent with all the constraints in
@@ -245,7 +251,16 @@ public class BoundAnalyzer {
 	 * 
 	 * @return the bounds
 	 */
-	public Bounds inferBounds() {
+	public Bounds inferBounds(){
+		// Sort the blks
+		blk_ctrl.sortedList();
+		List<BasicBlock> list = blk_ctrl.getList();
+		Bounds bnds = infer_ctrl.inferBounds(list);
+		printBounds(bnds);
+		return bnds;
+	}
+	
+	/*public Bounds inferBounds() {
 		// Sort the blks
 		blk_ctrl.sortedList();
 		// The least common multiple of naive (4) and graduate (12) widening
@@ -307,7 +322,7 @@ public class BoundAnalyzer {
 		}
 		printBounds(bnd);
 		return bnd;
-	}
+	}*/
 
 	
 
@@ -677,7 +692,7 @@ public class BoundAnalyzer {
 		// Loop header
 		String label = code.toString();
 		for (int op : code.modifiedOperands) {
-			blk_ctrl.addLoopVar(prefix + op);
+			infer_ctrl.addLoopVar(prefix + op);
 		}
 		BasicBlock loopheader = blk_ctrl.createLoopHeader(label);
 		blk_ctrl.setCurrentBlock(loopheader);
