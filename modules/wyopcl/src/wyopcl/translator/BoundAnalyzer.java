@@ -199,21 +199,18 @@ public class BoundAnalyzer {
 	
 	
 	/**
-	 * Print out the bounds.
+	 * Print out the bounds, symbol and values.
 	 * @param bnd the bounds
 	 */
-	protected void printBounds(List<Symbol> sortedSymbols, Bounds bnds){
+	protected void printBounds(Bounds bnds){
 		String str = "";
+		List<Domain> sortedDomains = bnds.sortedDomains();
 		//Print out the bounds
-		for(Symbol symbol : sortedSymbols){
-			//String str_symbols = "";
-			String name = symbol.getName();
-			if(bnds.isExisting(name)){
-				Domain d = bnds.getDomain(name);
-				str+="\tdomain("+getVarName(d)+")\t="+d.getBounds()+"\n";
-			}			
+		for(Domain d : sortedDomains){
+			str+="\tdomain("+getVarName(d)+")\t="+d.getBounds()+"\n";			
 		}
 
+		List<Symbol> sortedSymbols = sym_ctrl.sortedSymbols();
 		//Print out the values of available variables
 		for(Symbol symbol : sortedSymbols){
 			//String str_symbols = "";
@@ -308,7 +305,7 @@ public class BoundAnalyzer {
 			BoundAnalyzerHelper.printCFG(blk_ctrl.getList(), config.getFilename(),
 					(String) config.getProperty("function_name"));
 		}
-		printBounds(sym_ctrl.sortedSymbols(), bnd);
+		printBounds(bnd);
 		return bnd;
 	}
 

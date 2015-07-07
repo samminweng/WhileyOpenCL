@@ -8,6 +8,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
+import wyopcl.translator.Symbol;
+
 /***
  * adds the upper or lower bounds and keeps track of the bounds for all
  * variables.
@@ -57,6 +59,19 @@ public class Bounds implements Cloneable{
 		bounds = new HashMap<String, Domain>();
 	}
 
+	
+	/**
+	 * Sorts the domains in the Hashmap by their domain names
+	 * @return
+	 */
+	public List<Domain> sortedDomains(){
+		//Sort the symbol tables		
+		List<Domain> sortedDomains = new ArrayList<Domain>(bounds.values());
+		Collections.sort(sortedDomains);
+		return sortedDomains;		
+	}
+	
+	
 	/**
 	 * Get the domain by name
 	 * 
@@ -375,9 +390,7 @@ public class Bounds implements Cloneable{
 	public String toString() {
 		String str = "";
 		// Sort all the domains
-		List<Domain> domains = new ArrayList<Domain>(bounds.values());
-		//All the domains are sorted by names.
-		Collections.sort(domains);
+		List<Domain> domains = sortedDomains();
 		for (Domain d : domains) {
 			str += "\n\t"+ d.toString();
 		}		
