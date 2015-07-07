@@ -5,6 +5,8 @@ package wyopcl.translator;
 import java.math.BigInteger;
 import java.util.List;
 
+import wyil.attributes.VariableDeclarations;
+import wyil.attributes.VariableDeclarations.Declaration;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Codes.UnaryOperatorKind;
@@ -16,6 +18,7 @@ import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.CFGController;
 import wyopcl.translator.bound.Bounds;
+import wyopcl.translator.bound.Domain;
 import wyopcl.translator.bound.BasicBlock.BlockType;
 import wyopcl.translator.bound.constraint.Assign;
 import wyopcl.translator.bound.constraint.Const;
@@ -44,42 +47,29 @@ import wyopcl.translator.bound.constraint.Union;
  *
  */
 public class BoundAnalyzer {
-	private Configuration config;	
-	// private final WyilFile module;
+	private Configuration config;
 	private final String prefix = "%";
+	private final VariableDeclarations variableDeclarations;
 	// Stores all the extracted symbols.
 	private SymbolController sym_ctrl;
 	private CFGController blk_ctrl;
-	// The line number
-	private int line;
 
 	/**
 	 * Constructor of bound analyzer
 	 * 
 	 * @param config
+	 * @param variableDeclarations 
 	 * @param code_blk
 	 */
-	public BoundAnalyzer(Configuration config) {
+	public BoundAnalyzer(Configuration config, VariableDeclarations variableDeclarations) {
 		this.config = config;		
 		// Initialize the variables
 		this.sym_ctrl = new SymbolController();
-		this.blk_ctrl = new CFGController(this.config);		
-		this.line = 0;
+		this.blk_ctrl = new CFGController(this.config);
+		this.variableDeclarations = variableDeclarations;
 	}
 
-	/**
-	 * @deprecated This function is no longer used because of the design of cached control flow graph. 
-	 * 
-	 * Propagate the input bounds.
-	 * 
-	 * @param params
-	 * 
-	 */
-	@Deprecated
-	public void propagateBounds(List<Type> params) {
-		blk_ctrl.propagateInputBounds(params);
-	}
-
+	
 	/**
 	 * Build up the control flow graph: iterating each byte-code to extract the constraints, create
 	 * the block (e.g. loop structure/if-else branches) or reuse the current block to put the constraints
@@ -89,6 +79,8 @@ public class BoundAnalyzer {
 	 */
 	public void iterateByteCode(List<Code> code_blk) {
 		String func_name = (String) config.getProperty("function_name");
+		// The line number
+		int line = 0;
 		// Parse each byte-code and add the constraints accordingly.
 		for (Code code : code_blk) {
 			// Get the Block.Entry
@@ -181,13 +173,79 @@ public class BoundAnalyzer {
 		}
 	}
 
+	
+	/**
+	 * Given the register, get the variable name from variable declarations.
+	 * 
+	 * @param domain
+	 *            the domain that contains the register and bounds.
+	 * @return the variable name (starting with "%")
+	 */
+	private String getVarName(Domain domain) {
+		int reg = domain.getReg();
+		// Check if the register has been kept in the functional variable
+		// declarations.
+		if (reg < variableDeclarations.size()) {
+			Declaration declaration = variableDeclarations.get(reg);
+			if (declaration != null) {
+				String name = declaration.name();
+				if (name != null && !name.isEmpty()) {
+					return name;
+				}
+			}
+		}
+		return domain.getName();
+	}
+	
+	
+	/**
+	 * Print out the bounds.
+	 * @param bnd the bounds
+	 */
+	protected void printBounds(List<Symbol> sortedSymbols, Bounds bnds){
+		String str = "";
+		//Print out the bounds
+		for(Symbol symbol : sortedSymbols){
+			//String str_symbols = "";
+			String name = symbol.getName();
+			if(bnds.isExisting(name)){
+				Domain d = bnds.getDomain(name);
+				str+="\tdomain("+getVarName(d)+")\t="+d.getBounds()+"\n";
+			}			
+		}
+
+		//Print out the values of available variables
+		for(Symbol symbol : sortedSymbols){
+			//String str_symbols = "";
+			String name = symbol.getName();					
+			//print the 'value' attribute
+			Object val = symbol.getAttribute("value");
+			if(val != null){
+				str += "\tvalue("+name+")\t= "+val+"\n";
+			}			
+		}
+
+		//Print out the size of available variables
+		for(Symbol symbol : sortedSymbols){
+			//String str_symbols = "";
+			String name = symbol.getName();
+			//get the 'type' attribute
+			Type type = (Type) symbol.getAttribute("type");						
+			//print the 'size' att
+			if(type instanceof Type.List){
+				Object size = symbol.getAttribute("size");
+				str += "\tsize("+name+")\t= "+size+"\n";
+			}			
+		}
+		str += "Consistency="+bnds.checkBoundConsistency();
+		System.out.println(str);		
+	}
+	
 	/**
 	 * Repeatedly iterates over all blocks, starting from the entry block to the
 	 * exit block, and infer the bounds consistent with all the constraints in
 	 * each block.
 	 * 
-	 * @param isEnd
-	 *            indicates if it is called at the end of a function.
 	 * @return the bounds
 	 */
 	public Bounds inferBounds() {
@@ -250,7 +308,7 @@ public class BoundAnalyzer {
 			BoundAnalyzerHelper.printCFG(blk_ctrl.getList(), config.getFilename(),
 					(String) config.getProperty("function_name"));
 		}
-		BoundAnalyzerHelper.printBounds(sym_ctrl.sortedSymbols(), bnd);
+		printBounds(sym_ctrl.sortedSymbols(), bnd);
 		return bnd;
 	}
 
@@ -467,7 +525,7 @@ public class BoundAnalyzer {
 			String function_name = (String) config.getProperty("function_name");
 			// Set the function name
 			config.setProperty("function_name", functionOrMethod.name());
-			BoundAnalyzer invokeboundAnalyzer = new BoundAnalyzer(config);
+			BoundAnalyzer invokeboundAnalyzer = new BoundAnalyzer(config, functionOrMethod.attribute(VariableDeclarations.class));
 			// Propagate the bounds of input parameters to the function.
 			propagateBoundsToFunctionCall(invokeboundAnalyzer, params, code.operands(), bnd);
 			invokeboundAnalyzer.iterateByteCode(code_blk);

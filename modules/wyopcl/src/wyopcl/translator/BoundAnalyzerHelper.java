@@ -156,64 +156,9 @@ public final class BoundAnalyzerHelper {
 		return false;
 	}
 
-	/**
-	 * Get the list of code for a function.
-	 * @param functionOrMethod the function or method declaration.
-	 * @return the list of code.
-	 *//*
-	public static List<Code> getCodeBlock(FunctionOrMethodDeclaration functionOrMethod){
-		List<Code> code_blk = new ArrayList<Code>();
-		for(Case mcase : functionOrMethod.cases()){
-			for(Block.Entry entry :mcase.body()){
-				//Get each bytecode and add it to the code_blk.
-				code_blk.add(entry.code);		
-			}
-		}		
-		return code_blk;
-	}*/
+	
 
 	
-	/**
-	 * Print out the bounds.
-	 * @param bnd the bounds
-	 */
-	protected static void printBounds(List<Symbol> sortedSymbols, Bounds bnd){
-		String str = "";
-		//Print out the bounds
-		for(Symbol symbol : sortedSymbols){
-			//String str_symbols = "";
-			String name = symbol.getName();
-			if(bnd.isExisting(name)){
-				Domain d = bnd.getDomain(name);
-				str+="\t"+d+"\n";
-			}			
-		}
-
-		//Print out the values of available variables
-		for(Symbol symbol : sortedSymbols){
-			//String str_symbols = "";
-			String name = symbol.getName();					
-			//print the 'value' attribute
-			Object val = symbol.getAttribute("value");
-			if(val != null){
-				str += "\tvalue("+name+")\t= "+val+"\n";
-			}			
-		}
-
-		//Print out the size of available variables
-		for(Symbol symbol : sortedSymbols){
-			//String str_symbols = "";
-			String name = symbol.getName();
-			//get the 'type' attribute
-			Type type = (Type) symbol.getAttribute("type");						
-			//print the 'size' att
-			if(type instanceof Type.List){
-				Object size = symbol.getAttribute("size");
-				str += "\tsize("+name+")\t= "+size+"\n";
-			}			
-		}
-		str += "Consistency="+bnd.checkBoundConsistency();
-		System.out.println(str);		
-	}
+	
 
 }

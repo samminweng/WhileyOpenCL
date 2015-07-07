@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import wyil.attributes.VariableDeclarations;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
@@ -22,7 +23,7 @@ import wyopcl.translator.bound.constraint.Constraint;
  */
 public class CFGController {
 	private final String prefix = "%";
-	private final Configuration config;
+	private final Configuration config;	
 	// The list of basic block;
 	private List<BasicBlock> list;
 	// The variables are used in the control flow graph (CFG).
@@ -36,7 +37,7 @@ public class CFGController {
 	private boolean isInvariant;	
 
 	public CFGController(Configuration config) {
-		this.config = config;
+		this.config = config;		
 		// Initialize the variables
 		this.list = new ArrayList<BasicBlock>();
 		// Initialize
@@ -47,6 +48,7 @@ public class CFGController {
 		this.isLoop = false;
 	}
 
+	
 	/**
 	 * Check whether the condition should be inverted or not
 	 * 
@@ -54,14 +56,14 @@ public class CFGController {
 	 * @return true if the condition should be inverted. Otherwise, return
 	 *         false.
 	 */
-	public boolean checkInvertCondition(Codes.If code, Code next_code) {
+	/*public boolean checkInvertCondition(Codes.If code, Code next_code) {
 		// Check if the code is a fail
 		if (next_code instanceof Codes.Fail) {
 			return false;
 		}
 
 		return false;
-	}
+	}*/
 
 	/**
 	 * Check if the bytecode inside the invariant.

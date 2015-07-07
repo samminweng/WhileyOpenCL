@@ -15,6 +15,7 @@ import wycc.util.Pair;
 import wyfs.lang.Path;
 import wyfs.lang.Path.Entry;
 import wyfs.lang.Path.Root;
+import wyil.attributes.VariableDeclarations;
 import wyil.lang.Attribute;
 import wyil.lang.Code;
 import wyil.lang.Type;
@@ -98,7 +99,7 @@ public class Translator implements Builder {
 			// Put the function name to the config
 			this.config.setProperty("function_name", functionOrMethod.name());
 			List<Code> code_blk = functionOrMethod.body().bytecodes();
-			BoundAnalyzer boundAnalyzer = new BoundAnalyzer(config);
+			BoundAnalyzer boundAnalyzer = new BoundAnalyzer(config, functionOrMethod.attribute(VariableDeclarations.class));
 			boundAnalyzer.iterateByteCode(code_blk);
 			// Infer the bounds at the end of main function.
 			//boundAnalyzer.propagateBounds(functionOrMethod.type().params());
