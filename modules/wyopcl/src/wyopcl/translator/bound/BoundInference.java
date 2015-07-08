@@ -15,13 +15,11 @@ import wyopcl.translator.bound.BasicBlock.BlockType;
  * @author Min-Hsien Weng
  *
  */
-public class BoundInferenceController {
+public class BoundInference {
 	private final String prefix = "%";
-	private final Configuration config;
 	// A list of loop variables.
 	private HashMap<String, BoundChange> loop_variables;
-	public BoundInferenceController(Configuration config){
-		this.config = config;
+	public BoundInference(){
 		this.loop_variables = new HashMap<String, BoundChange>();
 	}
 	
@@ -66,7 +64,7 @@ public class BoundInferenceController {
 	 *            the iteration number.
 	 * @return true if bounds are unchanged. Otherwise, return false.
 	 */
-	private boolean inferBlockBounds(BasicBlock blk, boolean isChanged, int iteration) {
+	private boolean inferBlockBounds(Configuration config, BasicBlock blk, boolean isChanged, int iteration) {
 		Bounds bnd_before = null, bnd_after = null;
 		// Before the bound inference
 		// The bound before bound inference.
@@ -153,7 +151,7 @@ public class BoundInferenceController {
 	 * 
 	 * @return the bounds
 	 */
-	public Bounds inferBounds(List<BasicBlock> list) {
+	public Bounds inferBounds(Configuration config, List<BasicBlock> list) {
 		// Sort the blks
 		//blk_ctrl.sortedList();
 		// The least common multiple of naive (4) and graduate (12) widening
@@ -186,7 +184,7 @@ public class BoundInferenceController {
 					for (BasicBlock parent : blk.getParentNodes()) {
 						blk.unionBounds(parent);
 					}
-					isChanged = inferBlockBounds(blk, isChanged, iteration);
+					isChanged = inferBlockBounds(config, blk, isChanged, iteration);
 					// Use bitwise 'AND' to combine all the results
 					isFixedPointed &= (!isChanged);
 				}
@@ -209,10 +207,10 @@ public class BoundInferenceController {
 
 		Bounds bnd = exit_blk.getBounds();
 		// check the verbose to determine whether to print out the CFG
-		if (config.isVerbose()) {
-			BoundAnalyzerHelper.printCFG(list, config.getFilename(),
-					(String) config.getProperty("function_name"));
-		}
+		//if (config.isVerbose()) {
+		//	BoundAnalyzerHelper.printCFG(list, config.getFilename(),
+		//			(String) config.getProperty("function_name"));
+		//}
 		return bnd;
 	}
 	

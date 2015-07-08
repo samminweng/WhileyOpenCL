@@ -1,13 +1,19 @@
 package wyopcl.translator.bound;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
+
+import wyil.lang.Code;
+import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyopcl.translator.BoundAnalyzerHelper;
 import wyopcl.translator.Configuration;
+import wyopcl.translator.SymbolController;
 import wyopcl.translator.bound.BasicBlock.BlockType;
 import wyopcl.translator.bound.constraint.Constraint;
 
@@ -17,9 +23,9 @@ import wyopcl.translator.bound.constraint.Constraint;
  * @author Min-Hsien Weng
  *
  */
-public class CFGController {
+public class CFGraph {
 	private final String prefix = "%";
-	private final Configuration config;	
+	//private final Configuration config;	
 	// The list of basic block;
 	private List<BasicBlock> list;
 	// The variables are used in the control flow graph (CFG).
@@ -30,41 +36,24 @@ public class CFGController {
 	//private HashMap<String, BoundChange> loop_variables;
 	// The boolean flag is used to show whether the code is inside an assertion
 	// or assumption.
-	private boolean isInvariant;	
+	private boolean isInvariant;
 
-	public CFGController(Configuration config) {
-		this.config = config;		
+	public CFGraph() {
+		//this.config = config;		
 		// Initialize the variables
 		this.list = new ArrayList<BasicBlock>();
 		// Initialize
 		createBasicBlock("exit", BlockType.EXIT);
 		this.current_blk = createBasicBlock("entry", BlockType.ENTRY);
-		//this.loop_variables = new HashMap<String, BoundChange>();
 		this.isInvariant = false;
 		this.isLoop = false;
 	}
 
 	
 	/**
-	 * Check whether the condition should be inverted or not
-	 * 
-	 * @param code
-	 * @return true if the condition should be inverted. Otherwise, return
-	 *         false.
-	 */
-	/*public boolean checkInvertCondition(Codes.If code, Code next_code) {
-		// Check if the code is a fail
-		if (next_code instanceof Codes.Fail) {
-			return false;
-		}
-
-		return false;
-	}*/
-
-	/**
 	 * Check if the bytecode inside the invariant.
 	 * 
-	 * @return
+	 * @return true if the code is inside an assertion or assumption. Otherwise, return false.
 	 */
 	public boolean checkInvariant() {
 		return this.isInvariant;
@@ -296,103 +285,8 @@ public class CFGController {
 		setCurrentBlock(loop_body);
 	}
 
-	/**
-	 * Added loop variable to the hashmap
-	 * 
-	 * @param target
-	 */
-	/*public void addLoopVar(String target) {
-		if (!loop_variables.containsKey(target)) {
-			loop_variables.put(target, new BoundChange(target));
-		}
-	}*/
+	
 
-	/**
-	 * Infer the bounds for a block.
-	 * 
-	 * @param blk
-	 *            the target block.
-	 * @param isChanged
-	 *            the bound
-	 * @param iteration
-	 *            the iteration number.
-	 * @return true if bounds are unchanged. Otherwise, return false.
-	 */
-	/*public boolean inferBlockBounds(BasicBlock blk, boolean isChanged, int iteration) {
-		Bounds bnd_before = null, bnd_after = null;
-		// Before the bound inference
-		// The bound before bound inference.
-		if (blk.getType().equals(BlockType.LOOP_BODY)) {
-			bnd_before = (Bounds) blk.getBounds().clone();
-		}
-		// If bounds remain unchanged, then isChanged = true.
-		isChanged |= blk.inferBounds();
-
-		if (blk.getType().equals(BlockType.LOOP_BODY)) {
-			bnd_after = (Bounds) blk.getBounds().clone();
-			// check loop variable is increasing
-			for (String loop_var : loop_variables.keySet()) {
-				// Upper bounds
-				BigInteger upper_before = bnd_before.getUpper(loop_var);
-				BigInteger upper_after = bnd_after.getUpper(loop_var);
-				BoundChange boundChange = loop_variables.get(loop_var);
-				if (upper_before != null && upper_after != null) {
-					// Check if the upper bounds is increasing
-					if (upper_before.compareTo(upper_after) < 0) {
-						boolean isIncreasing = boundChange.isUBIncreasing();
-						isIncreasing |= true;
-						boundChange.setUBIncreasing(isIncreasing);
-						loop_variables.put(loop_var, boundChange);
-					}
-				}
-
-				// Lower bounds
-				BigInteger lower_before = bnd_before.getLower(loop_var);
-				BigInteger lower_after = bnd_after.getLower(loop_var);
-				if (lower_before != null && lower_after != null) {
-					// Check if the lower bound is decreasing
-					if (lower_before.compareTo(lower_after) > 0) {
-						boolean isDecreasing = boundChange.isLBDecreasing();
-						isDecreasing |= true;
-						boundChange.setLBDecreasing(isDecreasing);
-						loop_variables.put(loop_var, boundChange);
-					}
-				}
-
-				// After three iterations, the bounds is still increasing.
-				if (iteration % 4 == 0) {
-					// Widen the upper bound
-					if (boundChange.isUBIncreasing()) {
-						if (config.isGradualWiden()) {
-							isChanged |= blk.getBounds().widenUpperBoundsAgainstThresholds(loop_var);
-						} else {
-							isChanged |= blk.getBounds().widenUpperBoundsToInf(loop_var);
-						}
-					}
-					// Reset the increasing flag
-					boundChange.setUBIncreasing(false);
-					// Widen the lower bound
-					if (boundChange.isLBDecreasing()) {
-						if (config.isGradualWiden()) {
-							isChanged |= blk.getBounds().widenLowerBoundsAgainstThresholds(loop_var);
-						} else {
-							isChanged |= blk.getBounds().widenLowerBoundsToInf(loop_var);
-						}
-					}
-					// Reset the decreasing flag
-					boundChange.setLBDecreasing(false);
-					loop_variables.put(loop_var, boundChange);
-				}
-			}
-		}
-
-		// Print out the bounds.
-		if (config.isVerbose()) {
-			System.out.println(blk);
-			System.out.println("isChanged=" + isChanged);
-		}
-		return isChanged;
-	}*/
 
 	public boolean isLoop() {
 		return isLoop;
@@ -412,5 +306,37 @@ public class CFGController {
 		getCurrentBlock().addConstraint(c);
 	}
 
+	/**
+	 * Outputs the control flow graphs (*.dot).
+	 * @param blks the list of block
+	 * @param filename the name of input file.
+	 * @param func_name the name of function.
+	 */
+	public void printCFG(List<BasicBlock> blks, String filename, String func_name){
+		//Sort the blks.
+		//blk_ctrl.sortedList();
+		String dot_string= "digraph "+func_name+"{\n";		
+
+		for(BasicBlock blk: blks){
+			if(!blk.isLeaf()){
+				for(BasicBlock child: blk.getChildNodes()){
+					dot_string += "\""+blk.getBranch()+" [" +blk.getType()+"]\"->\""+ child.getBranch() +" ["+child.getType() + "]\";\n";
+				}
+			}
+		}
+		dot_string += "\n}";
+		//Write out the CFG-function_name.dot
+		try {
+			PrintWriter cfg_writer = new PrintWriter(filename+"-"+func_name+".dot", "UTF-8");
+			cfg_writer.println(dot_string);
+			cfg_writer.close();
+		} catch (FileNotFoundException | UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
 	
 }
