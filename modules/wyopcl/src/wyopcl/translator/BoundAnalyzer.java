@@ -312,17 +312,17 @@ public class BoundAnalyzer {
 				break;
 			case LTEQ:
 				// Add the 'left <= right' constraint to the branched list.
-				neg_c = new LessThanEquals(left, right);
-				c = new GreaterThan(left, right);
+				c = new LessThanEquals(left, right);
+				neg_c = new GreaterThan(left, right);
 				break;
 			case GT:
-				neg_c = new GreaterThan(left, right);
-				c = new LessThanEquals(left, right);
+				c = new GreaterThan(left, right);
+				neg_c = new LessThanEquals(left, right);
 				break;
 			case GTEQ:
 				// Branch and add the left >= right constraint to
-				neg_c = new GreaterThanEquals(left, right);
-				c = new LessThan(left, right);
+				c = new GreaterThanEquals(left, right);
+				neg_c = new LessThan(left, right);
 				// Add the constraint 'left< right' to current constraint list.
 				break;
 			case IN:
