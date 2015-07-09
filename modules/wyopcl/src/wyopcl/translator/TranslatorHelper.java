@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import wyil.lang.Code;
+import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.symbolic.PatternMatcher;
@@ -79,4 +80,52 @@ public final class TranslatorHelper {
 		
 	}
 
+	/**
+	 * Check if the type is instance of Integer by inferring the type from
+	 * <code>wyil.Lang.Type</code> objects, including the effective collection
+	 * types.
+	 * 
+	 * @param type
+	 * @return true if the type is or contains an integer type.
+	 */
+	public static boolean isIntType(Type type) {
+		if (type instanceof Type.Int) {
+			return true;
+		}
+
+		if (type instanceof Type.List) {
+			return isIntType(((Type.List) type).element());
+		}
+
+		if (type instanceof Type.Tuple) {
+			// Check the type of value field.
+			Type element = ((Type.Tuple) type).element(1);
+			return isIntType(element);
+		}
+
+		return false;
+	}
+	
+	/**
+	 * Prints out each bytecode with line number and indentation.
+	 * 
+	 * @param name
+	 * @param line
+	 * @see <a href="http://en.wikipedia.org/wiki/ANSI_escape_code">ANSI escape
+	 *      code</a>
+	 */
+	public static int printWyILCode(Code code, String name, int line) {
+		// Print out the bytecode with the format (e.g. 'main.9 [const %12 =
+		// 2345 : int]')
+		String font_color_start = "";
+		String font_color_end = "";		
+		if (code instanceof Codes.Label) {
+			// System.out.println(font_color_start+name+"."+line+"."+depth+" ["+code+"]"+font_color_end);
+			System.out.println(font_color_start + name + "." + line + " [" + code + "]" + font_color_end);
+		} else {
+			// System.out.println(font_color_start+name+"."+line+"."+depth+" [\t"+code+"]"+font_color_end);
+			System.out.println(font_color_start + name + "." + line + " [\t" + code + "]" + font_color_end);
+		}
+		return ++line;
+	}
 }

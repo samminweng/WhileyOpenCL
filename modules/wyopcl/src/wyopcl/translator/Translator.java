@@ -93,18 +93,13 @@ public class Translator implements Builder {
 	 * @param module 
 	 */
 	private void analyzeBounds(WyilFile module) {
+		BoundAnalyzer boundAnalyzer = BoundAnalyzer.getInstance();
 		try {
 			// Get code block of main function.
 			FunctionOrMethod functionOrMethod = module.functionOrMethod("main").get(0);
-			// Put the function name to the config
-			this.config.setProperty("function_name", functionOrMethod.name());
-			List<Code> code_blk = functionOrMethod.body().bytecodes();
-			BoundAnalyzer boundAnalyzer = new BoundAnalyzer(config, functionOrMethod.attribute(VariableDeclarations.class));
-			boundAnalyzer.iterateByteCode(code_blk);
+			boundAnalyzer.buildCFG(config, functionOrMethod);
 			// Infer the bounds at the end of main function.
-			//boundAnalyzer.propagateBounds(functionOrMethod.type().params());
-			boundAnalyzer.inferBounds();
-			boundAnalyzer = null;
+			boundAnalyzer.inferBounds("main");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

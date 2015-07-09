@@ -15,7 +15,7 @@ import wyopcl.translator.bound.constraint.Constraint;
  *
  */
 public class BasicBlock implements Comparable<BasicBlock>{
-	private List<Constraint> constraintList;
+	private List<Constraint> constraints;
 	private List<BasicBlock> childNodes = null;
 	private List<BasicBlock> parentNodes = null;
 	//The branch name
@@ -86,7 +86,7 @@ public class BasicBlock implements Comparable<BasicBlock>{
 	 */
 	private BasicBlock(){
 		this.unionOfBounds = new Bounds();
-		this.constraintList = new ArrayList<Constraint>();
+		this.constraints = new ArrayList<Constraint>();
 	}	
 	/**
 	 * Constructing a basic block with a specific name and block type.
@@ -101,6 +101,20 @@ public class BasicBlock implements Comparable<BasicBlock>{
 		this.isChanged = false;
 	}
 	
+	/**
+	 * clear all the constraints.
+	 */
+	public void emptyConstraints(){
+		this.constraints.clear();
+		
+	}
+	/**
+	 * Empty the bounds.
+	 */
+	public void emptyBounds(){
+		this.unionOfBounds = null;
+		this.unionOfBounds = new Bounds();
+	}
 
 	/**
 	 * Adds a child node to the current node
@@ -212,8 +226,8 @@ public class BasicBlock implements Comparable<BasicBlock>{
 	 * @param c the constraint
 	 */
 	public void addConstraint(Constraint c){
-		if(c != null && !constraintList.contains(c)){
-			constraintList.add(c);
+		if(c != null && !constraints.contains(c)){
+			constraints.add(c);
 		}
 	}	
 	
@@ -248,7 +262,7 @@ public class BasicBlock implements Comparable<BasicBlock>{
 		//Clone the inferred bounds and assign it to the existing bounds.
 		Bounds existingBounds = (Bounds) this.unionOfBounds.clone();
 		//Iterate through the constraints to infer the bounds.
-		for(Constraint c: this.constraintList){
+		for(Constraint c: this.constraints){
 			//The inferBound method returns False if the bounds remain unchanged.
 			c.inferBound(this.unionOfBounds);
 		}		
@@ -275,7 +289,7 @@ public class BasicBlock implements Comparable<BasicBlock>{
 			//Initialize the isFixedPointed
 			isFixedPointed = true;
 			//Iterate through the constraints to infer the bounds.
-			for(Constraint c: this.constraintList){
+			for(Constraint c: this.constraints){
 				//The inferBound method returns false when all the bounds.
 				//So we negated the result and use the AND bitwise to combine all the results.
 				boolean isChanged = c.inferBound(this.unionOfBounds);
@@ -293,7 +307,7 @@ public class BasicBlock implements Comparable<BasicBlock>{
 				+ ", branch=" + branch + ", unionOfBounds=" + unionOfBounds + "]";*/
 		return  "---------------------------------------\n"
 				+ String.format("%s %-20s %s%n", "Name", "Type", "Constraints")
-				+ String.format("%s %-15s %s%n", this.branch, this.type, this.constraintList)
+				+ String.format("%s %-15s %s%n", this.branch, this.type, this.constraints)
 				+ this.unionOfBounds+"\n"
 				+"---------------------------------------\n"
 				+"IsConsistent="+isConsistent();

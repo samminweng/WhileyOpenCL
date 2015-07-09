@@ -14,6 +14,7 @@ import wyil.lang.Type;
 import wyopcl.translator.BoundAnalyzerHelper;
 import wyopcl.translator.Configuration;
 import wyopcl.translator.SymbolController;
+import wyopcl.translator.TranslatorHelper;
 import wyopcl.translator.bound.BasicBlock.BlockType;
 import wyopcl.translator.bound.constraint.Constraint;
 
@@ -27,7 +28,7 @@ public class CFGraph {
 	private final String prefix = "%";
 	//private final Configuration config;	
 	// The list of basic block;
-	private List<BasicBlock> list;
+	private List<BasicBlock> blocks;
 	// The variables are used in the control flow graph (CFG).
 	private BasicBlock current_blk;
 	// The boolean flag indicates the loop structure.
@@ -37,18 +38,32 @@ public class CFGraph {
 	// The boolean flag is used to show whether the code is inside an assertion
 	// or assumption.
 	private boolean isInvariant;
+	// Status
+	public enum STATUS{
+		INIT, PROCESSING, COMPLETE
+	}
 
+	private STATUS status;	
+	
 	public CFGraph() {
 		//this.config = config;		
 		// Initialize the variables
-		this.list = new ArrayList<BasicBlock>();
+		this.blocks = new ArrayList<BasicBlock>();
 		// Initialize
 		createBasicBlock("exit", BlockType.EXIT);
 		this.current_blk = createBasicBlock("entry", BlockType.ENTRY);
 		this.isInvariant = false;
 		this.isLoop = false;
+		this.status = STATUS.INIT;
 	}
 
+	public STATUS getStatus(){
+		return status;
+	}
+	
+	public void setStatus(STATUS newStatus){
+		this.status = newStatus;
+	}
 	
 	/**
 	 * Check if the bytecode inside the invariant.
@@ -91,15 +106,15 @@ public class CFGraph {
 	public BasicBlock createBasicBlock(String label, BlockType type, BasicBlock... parents) {
 		BasicBlock blk = new BasicBlock(label, type);
 		// Check if the block exists
-		if (!list.contains(blk)) {
-			list.add(blk);
+		if (!blocks.contains(blk)) {
+			blocks.add(blk);
 			BasicBlock parent = parents.length > 0 ? parents[0] : null;
 			if (parent != null) {
 				parent.addChild(blk);
 			}
 			return blk;
 		} else {
-			for (BasicBlock block : list) {
+			for (BasicBlock block : blocks) {
 				if (blk.equals(block)) {
 					return block;
 				}
@@ -147,7 +162,7 @@ public class CFGraph {
 	 * @return
 	 */
 	public BasicBlock getBasicBlock(String label, BlockType type) {
-		for (BasicBlock blk : list) {
+		for (BasicBlock blk : blocks) {
 			if (blk.getBranch().equals(label)) {
 				if (blk.getType().equals(type)) {
 					return blk;
@@ -164,7 +179,7 @@ public class CFGraph {
 	 */
 	public void sortedList() {
 		// Sort the blks.
-		Collections.sort(list);
+		Collections.sort(blocks);
 	}
 
 	/**
@@ -173,7 +188,7 @@ public class CFGraph {
 	 * @return
 	 */
 	public List<BasicBlock> getList() {
-		return list;
+		return blocks;
 	}
 
 	/**
@@ -200,33 +215,35 @@ public class CFGraph {
 	}
 
 	/**
-	 * Create an entry node
+	 *  Propagate the input bounds to entry node
 	 * 
 	 * @param paramType
 	 * @param param
 	 * @param min
 	 * @param max
 	 */
-	public void addParamBounds(Type paramType, String param, BigInteger min, BigInteger max) {
-		if (BoundAnalyzerHelper.isIntType(paramType)) {
-			getCurrentBlock().addBounds(param, min, max);
+	public void addInputBounds(List<Type> params, int[] operands, Bounds bnd) {
+		//clear all the bounds in each block
+		for(BasicBlock blk: blocks){
+			blk.emptyBounds();
 		}
-	}
-
-	/**
-	 * Propagate the input bounds to entry node
-	 * 
-	 * @param paramTypes
-	 */
-	public void propagateInputBounds(List<Type> paramTypes) {
-		BasicBlock blk = getBasicBlock("code", BlockType.ENTRY);
-		setCurrentBlock(blk);
+		
+		BasicBlock entry = getBasicBlock("entry", BlockType.ENTRY);
+		//Clear all the constraints/bounds in entry block.		
+		entry.emptyConstraints();
 		int index = 0;
-		for (Type paramType : paramTypes) {
-			addParamBounds(paramType, prefix + index, null, null);
+		for (Type paramType : params) {
+			String param = prefix + index;
+			String operand = prefix + operands[index];
+			// Check parameter type
+			if (TranslatorHelper.isIntType(paramType)) {
+				entry.addBounds(param, bnd.getLower(operand),  bnd.getUpper(operand));
+			}	
 			index++;
 		}
+		
 	}
+
 
 	/**
 	 * Branches out the current block to add if/else blocks and set the current block to 
