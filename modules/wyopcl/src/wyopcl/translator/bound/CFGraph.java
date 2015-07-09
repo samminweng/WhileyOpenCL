@@ -49,9 +49,11 @@ public class CFGraph {
 		//this.config = config;		
 		// Initialize the variables
 		this.blocks = new ArrayList<BasicBlock>();
-		// Initialize
-		createBasicBlock("exit", BlockType.EXIT);
-		this.current_blk = createBasicBlock("entry", BlockType.ENTRY);
+		// Entry and Exit block
+		BasicBlock exit = createBasicBlock("exit", BlockType.EXIT);
+		BasicBlock entry = createBasicBlock("entry", BlockType.ENTRY);
+		// First code block.
+		this.current_blk = createBasicBlock("code", BlockType.BLOCK, entry);
 		this.isInvariant = false;
 		this.isLoop = false;
 		this.status = STATUS.INIT;

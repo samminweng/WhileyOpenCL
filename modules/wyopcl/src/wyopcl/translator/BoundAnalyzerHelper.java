@@ -1,5 +1,8 @@
 package wyopcl.translator;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
@@ -25,10 +28,11 @@ public final class BoundAnalyzerHelper {
 	private static final String RED = (char) 27 + "[31;1m";
 	private static final String RESET = (char) 27 + "[0m";
 	// Maps of CFGs, symbols
+	// Stores all the extracted symbols
 	private static HashMap<String, SymbolController> symbol_ctrls = new HashMap<String, SymbolController>();
 	private static HashMap<String, CFGraph> cfgraphs = new HashMap<String, CFGraph>();
 	// Bound inference processor
-	private static BoundInference infer_ctrl = new BoundInference();
+	private static BoundInference bound_infer = new BoundInference();
 
 	/**
 	 * Checks if the CFGraph of the given function exist.
@@ -53,18 +57,18 @@ public final class BoundAnalyzerHelper {
 
 	/**
 	 * Promote and update the status of CF graph.
+	 * 
 	 * @param name
 	 */
-	public static void promoteCFGStatus(String name){
+	public static void promoteCFGStatus(String name) {
 		CFGraph graph = getCFGraph(name);
-		if(graph.getStatus() == STATUS.INIT){
+		if (graph.getStatus() == STATUS.INIT) {
 			graph.setStatus(STATUS.PROCESSING);
-		}else if(graph.getStatus() == STATUS.PROCESSING){
+		} else if (graph.getStatus() == STATUS.PROCESSING) {
 			graph.setStatus(STATUS.COMPLETE);
 		}
 	}
-	
-	
+
 	/**
 	 * Given a function name, get the CFGraph.
 	 * 
@@ -158,6 +162,7 @@ public final class BoundAnalyzerHelper {
 				str += "\tsize(" + name + ")\t= " + size + "\n";
 			}
 		}
+		
 		str += "Consistency=" + bnds.checkBoundConsistency();
 		System.out.println(str);
 	}
@@ -167,22 +172,33 @@ public final class BoundAnalyzerHelper {
 		// Sort the blks
 		graph.sortedList();
 		List<BasicBlock> list = graph.getList();
-		Bounds bnds = infer_ctrl.inferBounds(config, list);
+		Bounds bnds = bound_infer.inferBounds(config, list);
 		return bnds;
 	}
 
-	public static void passSymbols(String name, String operand, String param) {
-		SymbolController sym_ctrl = getSymbolController(name);
-		// pass the symbol
-		Symbol symbol = sym_ctrl.getSymbol(operand).clone();
-		// Update the name
-		symbol.setName(param);
-		sym_ctrl.putSymbol(param, symbol);
-		symbol_ctrls.put(name, sym_ctrl);
+	private static void passSymbols(SymbolController sym_ctrl, List<Type> params, int[] operands) {
+		int reg = 0;
+		// Pass the bounds of input parameters.
+		for (Type paramType : params) {
+			String param = prefix + reg;
+			String operand = prefix + operands[reg];
+			// pass the symbol
+			Symbol symbol = sym_ctrl.getSymbol(operand).clone();
+			// Update the name
+			symbol.setName(param);
+			sym_ctrl.putSymbol(param, symbol);
+			reg++;
+		}
 	}
 
 	/**
-	 * Propagate the input bounds to the called function.
+	 * Propagate the input bounds to the callee function.
+	 * 
+	 * @param caller_name
+	 *            the name of caller function.
+	 * 
+	 * @param callee_name
+	 *            the name of callee function.
 	 * 
 	 * @param invokeboundAnalyzer
 	 *            the analyzer of invoked function.
@@ -191,17 +207,11 @@ public final class BoundAnalyzerHelper {
 	 * @param bnd
 	 *            the bounds of caller function
 	 */
-	public static void propagateBoundsToFunctionCall(String caller_name, String callee_name, List<Type> params, int[] operands, Bounds bnd) {
-		CFGraph graph = BoundAnalyzerHelper.getCFGraph(callee_name);		
+	public static void propagateInputBoundsToFunctionCall(String caller_name, String callee_name, List<Type> params, int[] operands, Bounds bnd) {
+		CFGraph graph = getCFGraph(callee_name);
 		graph.addInputBounds(params, operands, bnd);
-		int index = 0;
-		// Pass the bounds of input parameters.
-		for (Type paramType : params) {
-			String param = prefix + index;
-			String operand = prefix + operands[index];
-			BoundAnalyzerHelper.passSymbols(callee_name, operand, param);
-			index++;
-		}
+		SymbolController sym_ctrl = getSymbolController(callee_name);
+		passSymbols(sym_ctrl, params, operands);
 	}
 
 	/**
@@ -260,8 +270,38 @@ public final class BoundAnalyzerHelper {
 	 */
 	public static void addLoopVar(int[] operands) {
 		for (int op : operands) {
-			infer_ctrl.addLoopVar(prefix + op);
+			bound_infer.addLoopVar(prefix + op);
 		}
 	}
 
+	/**
+	 * Outputs the control flow graphs (*.dot).
+	 * @param blks the list of block
+	 * @param filename the name of input file.
+	 * @param func_name the name of function.
+	 */
+	public static void printCFG(String name){
+		
+		String dot_string= "digraph "+name+"{\n";
+		CFGraph graph = getCFGraph(name);
+		List<BasicBlock> blks = graph.getList();
+		for(BasicBlock blk: blks){
+			if(!blk.isLeaf()){
+				for(BasicBlock child: blk.getChildNodes()){
+					dot_string += "\""+blk.getBranch()+" [" +blk.getType()+"]\"->\""+ child.getBranch() +" ["+child.getType() + "]\";\n";
+				}
+			}
+		}
+		dot_string += "\n}";
+		//Write out the CFG-function_name.dot
+		try {
+			PrintWriter cfg_writer = new PrintWriter(name+".dot", "UTF-8");
+			cfg_writer.println(dot_string);
+			cfg_writer.close();
+		} catch (FileNotFoundException | UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 }

@@ -2,6 +2,9 @@ package wyopcl.translator;
 
 //import static wycc.lang.SyntaxError.internalFailure;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
@@ -36,65 +39,63 @@ import wyopcl.translator.bound.constraint.Range;
 import wyopcl.translator.bound.constraint.Union;
 
 /***
- * A class to store all the constraints produced in the wyil file and infer the
- * bounds consistent with all the constraints. The class variables
- * 'constraintListMap' and 'label' have only one instance.
+ * A class is to store all the constraints, produced from the wyil file, with
+ * CFGraph, and infer the bounds consistent with all the constraints.
  * 
- * 
+ * This class is implemented with singleton design pattern to ensure that there
+ * is only one instance of bound analyzer.
  * 
  * @author Min-Hsien Weng
  *
  */
-public class BoundAnalyzer {	
+public class BoundAnalyzer {
 	private final String prefix = "%";
 	private FunctionOrMethod functionOrMethod;
-	// Stores all the extracted symbols.
 	private Configuration config;
-	
-
-
+	// Static instance
 	private static BoundAnalyzer instance = new BoundAnalyzer();
+
 	/**
 	 * Constructor
 	 */
-	public BoundAnalyzer(){
-		
+	public BoundAnalyzer() {
+
 	}
-	
-	public static BoundAnalyzer getInstance(){
+
+	public static BoundAnalyzer getInstance() {
 		return instance;
 	}
-	
-	
+
 	/**
 	 * Constructor of bound analyzer
 	 * 
 	 * @param config
-	 * @param variableDeclarations 
+	 * @param variableDeclarations
 	 * @param code_blk
 	 */
 	public void buildCFG(Configuration config, FunctionOrMethod functionOrMethod) {
 		String name = functionOrMethod.name();
 		this.config = config;
 		// Set the function name
-	    this.config.setProperty("function_name", functionOrMethod.name());
+		this.config.setProperty("function_name", functionOrMethod.name());
 		// Initialize the variables
-		this.functionOrMethod = functionOrMethod;		
-		//Check if the CFG graph is built and cached in the map. 
-		//If not, run the CFG building procedure.
-		if(!BoundAnalyzerHelper.isCached(name)){
+		this.functionOrMethod = functionOrMethod;
+		// Check if the CFG graph is built and cached in the map.
+		// If not, run the CFG building procedure.
+		if (!BoundAnalyzerHelper.isCached(name)) {
 			BoundAnalyzerHelper.promoteCFGStatus(name);
 			iterateBytecode(functionOrMethod.body().bytecodes());
 		}
 	}
-	
-	
+
 	/**
-	 * Build up the control flow graph: iterating each byte-code to extract the constraints, create
-	 * the block (e.g. loop structure/if-else branches) or reuse the current block to put the constraints
-	 * into the corresponding block.  
+	 * Build up the control flow graph: iterating each byte-code to extract the
+	 * constraints, create the block (e.g. loop structure/if-else branches) or
+	 * reuse the current block to put the constraints into the corresponding
+	 * block.
 	 * 
-	 * @param code_blk the list of byte-code
+	 * @param code_blk
+	 *            the list of byte-code
 	 */
 	private void iterateBytecode(List<Code> code_blk) {
 		String func_name = BoundAnalyzerHelper.getFunctionName(this.config);
@@ -107,9 +108,9 @@ public class BoundAnalyzer {
 		for (Code code : code_blk) {
 			// Get the Block.Entry
 			line = TranslatorHelper.printWyILCode(code, func_name, line);
-			if(code instanceof Codes.Invoke){
+			if (code instanceof Codes.Invoke) {
 				analyze((Codes.Invoke) code);
-			}else{
+			} else {
 				// Parse each byte-code and add the constraints accordingly.
 				try {
 					if (code instanceof Codes.Invariant) {
@@ -193,28 +194,29 @@ public class BoundAnalyzer {
 			}
 		}
 	}
-	
+
 	/**
 	 * Repeatedly iterates over all blocks, starting from the entry block to the
 	 * exit block, and infer the bounds consistent with all the constraints in
 	 * each block.
-	 * @param name the function name
+	 * 
+	 * @param name
+	 *            the function name
 	 * 
 	 * @return the bounds
 	 */
-	public Bounds inferBounds(String name){
-		//String name = getFunctionName();
+	public Bounds inferBounds(String name) {
 		Bounds bnds = BoundAnalyzerHelper.inferBounds(config, name);
 		BoundAnalyzerHelper.printBounds(bnds, functionOrMethod);
+		BoundAnalyzerHelper.printCFG(name);
 		return bnds;
 	}
 
-	
-
 	/**
-	 * Analyze the invariant
+	 * Analyze the invariant byte-code
 	 * 
 	 * @param code
+	 *            Invariant {@link wyil.lang.Codes.Invariant}
 	 */
 	private void analyze(CFGraph graph, SymbolController sym_ctrl, Codes.Invariant code) {
 		graph.enabledInvariant();
@@ -225,7 +227,7 @@ public class BoundAnalyzer {
 	private void analyze(CFGraph graph, SymbolController sym_ctrl, Codes.Assign code) {
 		String target = prefix + code.target();
 		String operand = prefix + code.operand(0);
-		sym_ctrl.putAttribute(target, "type", code.type());
+
 		// Check if the assigned value is an integer
 		if (TranslatorHelper.isIntType(code.type())) {
 			// Add the constraint 'target = operand'
@@ -233,6 +235,7 @@ public class BoundAnalyzer {
 		}
 
 		if (code.type() instanceof Type.List) {
+			sym_ctrl.putAttribute(target, "type", code.type());
 			// Get the 'size' attribute from
 			BigInteger size = (BigInteger) sym_ctrl.getAttribute(operand, "size");
 			sym_ctrl.putAttribute(target, "size", size);
@@ -245,21 +248,20 @@ public class BoundAnalyzer {
 	 * @param code
 	 */
 	private void analyze(CFGraph graph, SymbolController sym_ctrl, Codes.Const code) {
-
 		Constant constant = code.constant;
 		String target = prefix + code.target();
-		// Add type attribute
-		sym_ctrl.putAttribute(target, "type", code.assignedType());
 
 		// Check the value is an Constant.Integer
 		if (constant instanceof Constant.Integer) {
 			// Add the 'Const' constraint.
 			BigInteger value = ((Constant.Integer) constant).value;
 			graph.addConstraint(new Const(target, value));
-			sym_ctrl.putAttribute(target, "value", value);
+			// sym_ctrl.putAttribute(target, "value", value);
 		}
 
 		if (constant instanceof Constant.List) {
+			// Add type attribute
+			sym_ctrl.putAttribute(target, "type", code.assignedType());
 			List<Constant> list = ((Constant.List) constant).values;
 			sym_ctrl.putAttribute(target, "value", list);
 			sym_ctrl.putAttribute(target, "size", BigInteger.valueOf(list.size()));
@@ -310,17 +312,17 @@ public class BoundAnalyzer {
 				break;
 			case LTEQ:
 				// Add the 'left <= right' constraint to the branched list.
-				c = new LessThanEquals(left, right);
-				neg_c = new GreaterThan(left, right);
+				neg_c = new LessThanEquals(left, right);
+				c = new GreaterThan(left, right);
 				break;
 			case GT:
-				c = new GreaterThan(left, right);
-				neg_c = new LessThanEquals(left, right);
+				neg_c = new GreaterThan(left, right);
+				c = new LessThanEquals(left, right);
 				break;
 			case GTEQ:
 				// Branch and add the left >= right constraint to
-				c = new GreaterThanEquals(left, right);
-				neg_c = new LessThan(left, right);
+				neg_c = new GreaterThanEquals(left, right);
+				c = new LessThan(left, right);
 				// Add the constraint 'left< right' to current constraint list.
 				break;
 			case IN:
@@ -366,7 +368,7 @@ public class BoundAnalyzer {
 	/**
 	 * Add the 'equal' constraints of the target and operand register.
 	 * 
-	 * @param code
+	 * @param code the new list byte-code
 	 */
 	private void analyze(CFGraph graph, SymbolController sym_ctrl, Codes.NewList code) {
 		String target = prefix + code.target();
@@ -392,14 +394,15 @@ public class BoundAnalyzer {
 		// Check if the current blk exits. If so, then proceed the following
 		// procedure.
 		if (c_blk != null) {
+			Type type = code.type;
 			// Check if the return type is integer.
 			if (TranslatorHelper.isIntType(code.type)) {
 				// Add the 'Equals' constraint to the return (ret) variable.
 				c_blk.addConstraint((new Assign("return", retOp)));
 			}
-			Type type = code.type;
-			sym_ctrl.putAttribute("return", "type", type);
+			
 			if (type instanceof Type.List) {
+				sym_ctrl.putAttribute("return", "type", type);
 				// Get 'size' att from ret op
 				BigInteger size = (BigInteger) sym_ctrl.getAttribute(retOp, "size");
 				sym_ctrl.putAttribute("return", "size", size);
@@ -410,10 +413,15 @@ public class BoundAnalyzer {
 		}
 
 	}
-
+	/**
+	 * Parses ListOperator byte-code.
+	 * @param graph
+	 * @param sym_ctrl
+	 * @param code
+	 */
 	private void analyze(CFGraph graph, SymbolController sym_ctrl, Codes.ListOperator code) {
 		String target = prefix + code.target();
-		sym_ctrl.putAttribute(target, "type", code.type());
+		
 		switch (code.kind) {
 		case APPEND:
 			BigInteger size = BigInteger.ZERO;
@@ -422,6 +430,8 @@ public class BoundAnalyzer {
 				size = size.add((BigInteger) sym_ctrl.getAttribute(op, "size"));
 				graph.addConstraint(new Equals(target, prefix + operand));
 			}
+			//put 'type' attribute
+			sym_ctrl.putAttribute(target, "type", code.type());
 			// put 'size' attribute
 			sym_ctrl.putAttribute(target, "size", size);
 			break;
@@ -457,7 +467,7 @@ public class BoundAnalyzer {
 	}
 
 	/**
-	 * Add the range to the target register.
+	 * Extract LengthOf byte-code.
 	 * 
 	 * @param code
 	 */
@@ -642,41 +652,43 @@ public class BoundAnalyzer {
 		}
 
 	}
+
 	/**
-	 * Get the list of bytecode of the invoked function and infer the bounds of the function 
-	 * in the context of input bounds. And then propagate the bounds of return value back to
-	 * the caller.
+	 * Get the list of bytecode of the invoked function and infer the bounds of
+	 * the function in the context of input bounds. And then propagate the
+	 * bounds of return value back to the caller.
 	 * 
 	 * @param code
 	 */
 	private void analyze(Codes.Invoke code) {
 		FunctionOrMethod callee = BoundAnalyzerHelper.getFunctionOrMethod(this.config, code.name.name(), code.type());
 		if (callee != null) {
-			// Caller name			
-			String caller_name = BoundAnalyzerHelper.getFunctionName(this.config);
-			//Callee name
+			// Callee name
 			String callee_name = callee.name();
+			// Caller name
+			String caller_name = BoundAnalyzerHelper.getFunctionName(this.config);
+
 			// Infer the bounds of caller function.
 			Bounds input_bnds = inferBounds(caller_name);
-			
-			//Build CFGraph for callee.
+
+			// Build CFGraph for callee.
 			buildCFG(config, callee);
 			// Propagate the bounds of input parameters to the function.
-			BoundAnalyzerHelper.propagateBoundsToFunctionCall(caller_name, callee_name, callee.type().params(), code.operands(), input_bnds);
-			
+			BoundAnalyzerHelper.propagateInputBoundsToFunctionCall(caller_name, callee_name, callee.type().params(), code.operands(), input_bnds);
+
 			// Set the function name with
 			config.setProperty("function_name", callee_name);
 			// Infer the bounds of callee function.
 			Bounds ret_bnd = inferBounds(callee_name);
-			//Promote the status of callee's CF graph to be 'complete'
+			// Promote the status of callee's CF graph to be 'complete'
 			BoundAnalyzerHelper.promoteCFGStatus(callee_name);
 			BoundAnalyzerHelper.propagateBoundsFromFunctionCall(caller_name, callee_name, prefix + code.target(), code.type().ret(), ret_bnd);
 			// Set the function name with
 			config.setProperty("function_name", caller_name);
 		}
 	}
-
-
+	
+	
 	
 
 }

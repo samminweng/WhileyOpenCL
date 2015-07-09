@@ -7,9 +7,10 @@ import java.util.List;
 
 import wyil.lang.Type;
 
-
 /**
- * This symbol factory creates, retrieve and maintain the symbols in a function.
+ * This symbol factory creates, retrieve and maintain the symbols for a function.
+ * All the extracted symbols are store in a hashmap.
+ * 
  * @author Min-Hsien Weng
  *
  */
@@ -107,7 +108,6 @@ public class SymbolController {
 		}		
 		return isTypeUsed;		
 	}
-	
 	
 	
 }
