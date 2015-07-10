@@ -103,7 +103,7 @@ public final class BoundAnalyzerHelper {
 	 *            the domain that contains the register and bounds.
 	 * @return the variable name (starting with "%")
 	 */
-	public static String getVarName(Domain domain, VariableDeclarations variables) {
+	private static String getVarName(Domain domain, VariableDeclarations variables) {
 		int reg = domain.getReg();
 		// Check if the register has been kept in the functional variable
 		// declarations.
@@ -125,11 +125,11 @@ public final class BoundAnalyzerHelper {
 	 * @param bnd
 	 *            the bounds
 	 */
-	public static void printBounds(Bounds bnds, String name, VariableDeclarations variables) {
+	public static void printBounds(Configuration config, Bounds bnds, String name) {
+		FunctionOrMethod functionOrMethod = getFunctionOrMethod(config, name);
+		VariableDeclarations variables = functionOrMethod.attribute(VariableDeclarations.class);
 		
 		String str = "Bound Analysis of " + name + ":\n";
-	
-
 		List<Domain> sortedDomains = bnds.sortedDomains();
 		// Print out the bounds
 		for (Domain d : sortedDomains) {
@@ -288,8 +288,12 @@ public final class BoundAnalyzerHelper {
 	 * @param func_name
 	 *            the name of function.
 	 */
-	public static void printCFG(String name) {
-
+	public static void printCFG(Configuration config, String name) {
+		//Check if the verbose is on.
+		if(!config.isVerbose()){
+			return;
+		}
+		
 		String dot_string = "digraph " + name + "{\n";
 		CFGraph graph = getCFGraph(name);
 		List<BasicBlock> blks = graph.getList();

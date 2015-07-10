@@ -88,15 +88,16 @@ public class Translator implements Builder {
 
 	/**
 	 * Takes the in-memory wyil file and analyzes the bounds of integer variables in Main function.
-	 * using function call.
+	 * If any function call is encountered, then propagate the input bounds to the callee and then 
+	 * analyze the bounds and produces the context-sensitive bounds for the invoked function.
+	 * The bounds of return value is propagated to the caller function.
 	 * 
 	 * @param module 
 	 */
 	private void analyzeBounds(WyilFile module) {
 		BoundAnalyzer boundAnalyzer = BoundAnalyzer.getInstance();
 		try {
-			// Get code block of main function.
-			//FunctionOrMethod functionOrMethod = module.functionOrMethod("main").get(0);
+			// Start with main function.
 			boundAnalyzer.buildCFG(config, "main");
 			// Infer the bounds at the end of main function.
 			boundAnalyzer.inferBounds("main");
