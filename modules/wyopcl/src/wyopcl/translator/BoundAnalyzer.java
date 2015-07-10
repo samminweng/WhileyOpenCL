@@ -50,7 +50,8 @@ import wyopcl.translator.bound.constraint.Union;
  */
 public class BoundAnalyzer {
 	private final String prefix = "%";
-	private FunctionOrMethod functionOrMethod;
+	// The function name that currently is being analyzed.
+	private String function_name;
 	private Configuration config;
 	// Static instance
 	private static BoundAnalyzer instance = new BoundAnalyzer();
@@ -73,17 +74,14 @@ public class BoundAnalyzer {
 	 * @param variableDeclarations
 	 * @param code_blk
 	 */
-	public void buildCFG(Configuration config, FunctionOrMethod functionOrMethod) {
-		String name = functionOrMethod.name();
+	public void buildCFG(Configuration config, String name) {
 		this.config = config;
-		// Set the function name
-		this.config.setProperty("function_name", functionOrMethod.name());
-		// Initialize the variables
-		this.functionOrMethod = functionOrMethod;
+		this.function_name = name;
+		FunctionOrMethod functionOrMethod = BoundAnalyzerHelper.getFunctionOrMethod(config, name);
 		// Check if the CFG graph is built and cached in the map.
 		// If not, run the CFG building procedure.
-		if (!BoundAnalyzerHelper.isCached(name)) {
-			BoundAnalyzerHelper.promoteCFGStatus(name);
+		if (!BoundAnalyzerHelper.isCached(this.function_name)) {
+			BoundAnalyzerHelper.promoteCFGStatus(this.function_name);
 			iterateBytecode(functionOrMethod.body().bytecodes());
 		}
 	}
@@ -98,16 +96,16 @@ public class BoundAnalyzer {
 	 *            the list of byte-code
 	 */
 	private void iterateBytecode(List<Code> code_blk) {
-		String func_name = BoundAnalyzerHelper.getFunctionName(this.config);
+		//String func_name = BoundAnalyzerHelper.getFunctionName(this.config);
 		// Get the CFGraph
-		CFGraph graph = BoundAnalyzerHelper.getCFGraph(func_name);
-		SymbolController sym_ctrl = BoundAnalyzerHelper.getSymbolController(func_name);
+		CFGraph graph = BoundAnalyzerHelper.getCFGraph(this.function_name);
+		SymbolController sym_ctrl = BoundAnalyzerHelper.getSymbolController(this.function_name);
 		// The line number
 		int line = 0;
 		// Parse each byte-code and add the constraints accordingly.
 		for (Code code : code_blk) {
 			// Get the Block.Entry
-			line = TranslatorHelper.printWyILCode(code, func_name, line);
+			line = TranslatorHelper.printWyILCode(code, this.function_name, line);
 			if (code instanceof Codes.Invoke) {
 				analyze((Codes.Invoke) code);
 			} else {
@@ -206,9 +204,11 @@ public class BoundAnalyzer {
 	 * @return the bounds
 	 */
 	public Bounds inferBounds(String name) {
-		Bounds bnds = BoundAnalyzerHelper.inferBounds(config, name);
-		BoundAnalyzerHelper.printBounds(bnds, functionOrMethod);
-		BoundAnalyzerHelper.printCFG(name);
+		this.function_name = name;
+		Bounds bnds = BoundAnalyzerHelper.inferBounds(config, this.function_name);
+		FunctionOrMethod functionOrMethod = BoundAnalyzerHelper.getFunctionOrMethod(config, this.function_name);
+		BoundAnalyzerHelper.printBounds(bnds, this.function_name, functionOrMethod.attribute(VariableDeclarations.class));
+		BoundAnalyzerHelper.printCFG(this.function_name);
 		return bnds;
 	}
 
@@ -661,30 +661,29 @@ public class BoundAnalyzer {
 	 * @param code
 	 */
 	private void analyze(Codes.Invoke code) {
-		FunctionOrMethod callee = BoundAnalyzerHelper.getFunctionOrMethod(this.config, code.name.name(), code.type());
+		FunctionOrMethod callee = BoundAnalyzerHelper.getFunctionOrMethod(this.config, code.name.name());
 		if (callee != null) {
 			// Callee name
 			String callee_name = callee.name();
 			// Caller name
-			String caller_name = BoundAnalyzerHelper.getFunctionName(this.config);
+			String caller_name = this.function_name;
 
 			// Infer the bounds of caller function.
 			Bounds input_bnds = inferBounds(caller_name);
 
 			// Build CFGraph for callee.
-			buildCFG(config, callee);
+			buildCFG(config, callee_name);
 			// Propagate the bounds of input parameters to the function.
 			BoundAnalyzerHelper.propagateInputBoundsToFunctionCall(caller_name, callee_name, callee.type().params(), code.operands(), input_bnds);
 
-			// Set the function name with
-			config.setProperty("function_name", callee_name);
 			// Infer the bounds of callee function.
 			Bounds ret_bnd = inferBounds(callee_name);
 			// Promote the status of callee's CF graph to be 'complete'
 			BoundAnalyzerHelper.promoteCFGStatus(callee_name);
 			BoundAnalyzerHelper.propagateBoundsFromFunctionCall(caller_name, callee_name, prefix + code.target(), code.type().ret(), ret_bnd);
-			// Set the function name with
-			config.setProperty("function_name", caller_name);
+			
+			//Update the function name to be caller's name after executing the function.
+			this.function_name = caller_name;
 		}
 	}
 	

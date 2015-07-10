@@ -125,9 +125,10 @@ public final class BoundAnalyzerHelper {
 	 * @param bnd
 	 *            the bounds
 	 */
-	public static void printBounds(Bounds bnds, FunctionOrMethod functionOrMethod) {
-		String str = "";
-		VariableDeclarations variables = functionOrMethod.attribute(VariableDeclarations.class);
+	public static void printBounds(Bounds bnds, String name, VariableDeclarations variables) {
+		
+		String str = "Bound Analysis of " + name + ":\n";
+	
 
 		List<Domain> sortedDomains = bnds.sortedDomains();
 		// Print out the bounds
@@ -135,44 +136,51 @@ public final class BoundAnalyzerHelper {
 			str += "\tdomain(" + getVarName(d, variables) + ")\t=" + d.getBounds() + "\n";
 		}
 
-		String func_name = functionOrMethod.name();
-		SymbolController sym_ctrl = getSymbolController(func_name);
+		SymbolController sym_ctrl = getSymbolController(name);
 
 		List<Symbol> sortedSymbols = sym_ctrl.sortedSymbols();
 		// Print out the values of available variables
 		for (Symbol symbol : sortedSymbols) {
 			// String str_symbols = "";
-			String name = symbol.getName();
+			String symbol_name = symbol.getName();
 			// print the 'value' attribute
 			Object val = symbol.getAttribute("value");
 			if (val != null) {
-				str += "\tvalue(" + name + ")\t= " + val + "\n";
+				str += "\tvalue(" + symbol_name + ")\t= " + val + "\n";
 			}
 		}
 
 		// Print out the size of available variables
 		for (Symbol symbol : sortedSymbols) {
 			// String str_symbols = "";
-			String name = symbol.getName();
+			String symbol_name = symbol.getName();
 			// get the 'type' attribute
 			Type type = (Type) symbol.getAttribute("type");
 			// print the 'size' att
 			if (type instanceof Type.List) {
 				Object size = symbol.getAttribute("size");
-				str += "\tsize(" + name + ")\t= " + size + "\n";
+				str += "\tsize(" + symbol_name + ")\t= " + size + "\n";
 			}
 		}
-		
+
 		str += "Consistency=" + bnds.checkBoundConsistency();
 		System.out.println(str);
+
 	}
 
+	/**
+	 * Infer the bounds of a function
+	 * 
+	 * @param config
+	 * @param name
+	 *            the function name
+	 * @return
+	 */
 	public static Bounds inferBounds(Configuration config, String name) {
 		CFGraph graph = getCFGraph(name);
 		// Sort the blks
 		graph.sortedList();
-		List<BasicBlock> list = graph.getList();
-		Bounds bnds = bound_infer.inferBounds(config, list);
+		Bounds bnds = bound_infer.inferBounds(config, graph.getList());
 		return bnds;
 	}
 
@@ -245,24 +253,20 @@ public final class BoundAnalyzerHelper {
 	}
 
 	/**
+	 * TODO : Add the type check to find the extract function declaration.
+	 * 
+	 * Gets the function declaration by name.
+	 * 
 	 * 
 	 * @param config
 	 * @param name
-	 * @param type
+	 *            the function name
+	 *            
 	 * @return
 	 */
-	public static FunctionOrMethod getFunctionOrMethod(Configuration config, String name, wyil.lang.Type.FunctionOrMethod type) {
+	public static FunctionOrMethod getFunctionOrMethod(Configuration config, String name) {
 		WyilFile module = (WyilFile) config.getProperty("module");
-		return module.functionOrMethod(name, type);
-	}
-
-	/**
-	 * Gets the function name.
-	 * 
-	 * @return
-	 */
-	public static String getFunctionName(Configuration config) {
-		return (String) config.getProperty("function_name");
+		return module.functionOrMethod(name).get(0);
 	}
 
 	/**
@@ -276,26 +280,30 @@ public final class BoundAnalyzerHelper {
 
 	/**
 	 * Outputs the control flow graphs (*.dot).
-	 * @param blks the list of block
-	 * @param filename the name of input file.
-	 * @param func_name the name of function.
+	 * 
+	 * @param blks
+	 *            the list of block
+	 * @param filename
+	 *            the name of input file.
+	 * @param func_name
+	 *            the name of function.
 	 */
-	public static void printCFG(String name){
-		
-		String dot_string= "digraph "+name+"{\n";
+	public static void printCFG(String name) {
+
+		String dot_string = "digraph " + name + "{\n";
 		CFGraph graph = getCFGraph(name);
 		List<BasicBlock> blks = graph.getList();
-		for(BasicBlock blk: blks){
-			if(!blk.isLeaf()){
-				for(BasicBlock child: blk.getChildNodes()){
-					dot_string += "\""+blk.getBranch()+" [" +blk.getType()+"]\"->\""+ child.getBranch() +" ["+child.getType() + "]\";\n";
+		for (BasicBlock blk : blks) {
+			if (!blk.isLeaf()) {
+				for (BasicBlock child : blk.getChildNodes()) {
+					dot_string += "\"" + blk.getBranch() + " [" + blk.getType() + "]\"->\"" + child.getBranch() + " [" + child.getType() + "]\";\n";
 				}
 			}
 		}
 		dot_string += "\n}";
-		//Write out the CFG-function_name.dot
+		// Write out the CFG-function_name.dot
 		try {
-			PrintWriter cfg_writer = new PrintWriter(name+".dot", "UTF-8");
+			PrintWriter cfg_writer = new PrintWriter(name + ".dot", "UTF-8");
 			cfg_writer.println(dot_string);
 			cfg_writer.close();
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
@@ -303,5 +311,5 @@ public final class BoundAnalyzerHelper {
 			e.printStackTrace();
 		}
 	}
-	
+
 }

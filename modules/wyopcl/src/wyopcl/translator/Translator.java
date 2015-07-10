@@ -96,8 +96,8 @@ public class Translator implements Builder {
 		BoundAnalyzer boundAnalyzer = BoundAnalyzer.getInstance();
 		try {
 			// Get code block of main function.
-			FunctionOrMethod functionOrMethod = module.functionOrMethod("main").get(0);
-			boundAnalyzer.buildCFG(config, functionOrMethod);
+			//FunctionOrMethod functionOrMethod = module.functionOrMethod("main").get(0);
+			boundAnalyzer.buildCFG(config, "main");
 			// Infer the bounds at the end of main function.
 			boundAnalyzer.inferBounds("main");
 		} catch (Exception e) {
