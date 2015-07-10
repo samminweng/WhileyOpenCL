@@ -29,7 +29,7 @@ public final class BoundAnalyzerHelper {
 	private static final String RESET = (char) 27 + "[0m";
 	// Maps of CFGs, symbols
 	// Stores all the extracted symbols
-	private static HashMap<String, SymbolController> symbol_ctrls = new HashMap<String, SymbolController>();
+	private static HashMap<String, SymbolFactory> symbol_factorys = new HashMap<String, SymbolFactory>();
 	private static HashMap<String, CFGraph> cfgraphs = new HashMap<String, CFGraph>();
 	// Bound inference processor
 	private static BoundInference bound_infer = new BoundInference();
@@ -49,7 +49,7 @@ public final class BoundAnalyzerHelper {
 		} else {
 			// Create an graph and symbol control
 			cfgraphs.put(name, new CFGraph());
-			symbol_ctrls.put(name, new SymbolController());
+			symbol_factorys.put(name, new SymbolFactory());
 		}
 
 		return false;
@@ -89,9 +89,9 @@ public final class BoundAnalyzerHelper {
 	 *            the function name
 	 * @return
 	 */
-	public static SymbolController getSymbolController(String name) {
-		if (symbol_ctrls.containsKey(name)) {
-			return symbol_ctrls.get(name);
+	public static SymbolFactory getSymbolFactory(String name) {
+		if (symbol_factorys.containsKey(name)) {
+			return symbol_factorys.get(name);
 		}
 		return null;
 	}
@@ -136,7 +136,7 @@ public final class BoundAnalyzerHelper {
 			str += "\tdomain(" + getVarName(d, variables) + ")\t=" + d.getBounds() + "\n";
 		}
 
-		SymbolController sym_ctrl = getSymbolController(name);
+		SymbolFactory sym_ctrl = getSymbolFactory(name);
 
 		List<Symbol> sortedSymbols = sym_ctrl.sortedSymbols();
 		// Print out the values of available variables
@@ -184,21 +184,6 @@ public final class BoundAnalyzerHelper {
 		return bnds;
 	}
 
-	private static void passSymbols(SymbolController sym_ctrl, List<Type> params, int[] operands) {
-		int reg = 0;
-		// Pass the bounds of input parameters.
-		for (Type paramType : params) {
-			String param = prefix + reg;
-			String operand = prefix + operands[reg];
-			// pass the symbol
-			Symbol symbol = sym_ctrl.getSymbol(operand).clone();
-			// Update the name
-			symbol.setName(param);
-			sym_ctrl.putSymbol(param, symbol);
-			reg++;
-		}
-	}
-
 	/**
 	 * Propagate the input bounds to the callee function.
 	 * 
@@ -218,8 +203,10 @@ public final class BoundAnalyzerHelper {
 	public static void propagateInputBoundsToFunctionCall(String caller_name, String callee_name, List<Type> params, int[] operands, Bounds bnd) {
 		CFGraph graph = getCFGraph(callee_name);
 		graph.addInputBounds(params, operands, bnd);
-		SymbolController sym_ctrl = getSymbolController(callee_name);
-		passSymbols(sym_ctrl, params, operands);
+		SymbolFactory caller_factory = getSymbolFactory(caller_name);
+		SymbolFactory callee_factory = getSymbolFactory(callee_name);
+		
+		callee_factory.addInputSymbols(caller_factory, operands, params);
 	}
 
 	/**
@@ -232,24 +219,14 @@ public final class BoundAnalyzerHelper {
 	 */
 	public static void propagateBoundsFromFunctionCall(String caller_name, String callee_name, String ret_reg, Type ret_type, Bounds bnd) {
 		CFGraph graph = getCFGraph(caller_name);
-		SymbolController caller_sym_ctrl = getSymbolController(caller_name);
-		SymbolController callee_sym_ctrl = getSymbolController(callee_name);
-
-		// put the 'type' attribute of 'return_reg'
-		caller_sym_ctrl.putAttribute(ret_reg, "type", ret_type);
-
 		if (TranslatorHelper.isIntType(ret_type)) {
 			// propagate the bounds of return value.
 			graph.addConstraint(new Range(ret_reg, bnd.getLower("return"), bnd.getUpper("return")));
-			// Add 'type' attribute
-			caller_sym_ctrl.putAttribute(ret_reg, "type", ret_type);
 		}
 
-		// Add 'size' attribute
-		if (ret_type instanceof Type.List) {
-			BigInteger size = (BigInteger) callee_sym_ctrl.getAttribute("return", "size");
-			caller_sym_ctrl.putAttribute(ret_reg, "size", size);
-		}
+		SymbolFactory caller_factory = getSymbolFactory(caller_name);
+		SymbolFactory callee_factory = getSymbolFactory(callee_name);		
+		caller_factory.addOutputSymbols(callee_factory, ret_reg, ret_type);
 	}
 
 	/**

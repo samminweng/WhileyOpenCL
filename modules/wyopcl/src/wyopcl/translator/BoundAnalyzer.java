@@ -86,7 +86,7 @@ public class BoundAnalyzer {
 	private void iterateBytecode(String name, List<Code> code_blk) {
 		// Get the CFGraph
 		CFGraph graph = BoundAnalyzerHelper.getCFGraph(name);
-		SymbolController sym_ctrl = BoundAnalyzerHelper.getSymbolController(name);
+		SymbolFactory sym_factory = BoundAnalyzerHelper.getSymbolFactory(name);
 		// The line number
 		int line = 0;
 		// Parse each byte-code and add the constraints accordingly.
@@ -99,15 +99,15 @@ public class BoundAnalyzer {
 				// Parse each byte-code and add the constraints accordingly.
 				try {
 					if (code instanceof Codes.Invariant) {
-						analyze(graph, sym_ctrl, (Codes.Invariant) code, name);
+						analyze(graph, sym_factory, (Codes.Invariant) code, name);
 					} else if (code instanceof Codes.Assign) {
-						analyze(graph, sym_ctrl, (Codes.Assign) code);
+						analyze(graph, sym_factory, (Codes.Assign) code);
 					} else if (code instanceof Codes.BinaryOperator) {
-						analyze(graph, sym_ctrl, (Codes.BinaryOperator) code);
+						analyze(graph, sym_factory, (Codes.BinaryOperator) code);
 					} else if (code instanceof Codes.Convert) {
-						analyze(graph, sym_ctrl, (Codes.Convert) code);
+						analyze(graph, sym_factory, (Codes.Convert) code);
 					} else if (code instanceof Codes.Const) {
-						analyze(graph, sym_ctrl, (Codes.Const) code);
+						analyze(graph, sym_factory, (Codes.Const) code);
 					} else if (code instanceof Codes.Debug) {
 						// DebugInterpreter.getInstance().interpret((Codes.Debug)code,
 						// stackframe);
@@ -115,16 +115,16 @@ public class BoundAnalyzer {
 						// DereferenceInterpreter.getInstance().interpret((Codes.Dereference)code,
 						// stackframe);
 					} else if (code instanceof Codes.FieldLoad) {
-						analyze(graph, sym_ctrl, (Codes.FieldLoad) code);
+						analyze(graph, sym_factory, (Codes.FieldLoad) code);
 					} else if (code instanceof Codes.Goto) {
-						analyze(graph, sym_ctrl, (Codes.Goto) code);
+						analyze(graph, sym_factory, (Codes.Goto) code);
 					} else if (code instanceof Codes.If) {
-						analyze(graph, sym_ctrl, (Codes.If) code);
+						analyze(graph, sym_factory, (Codes.If) code);
 					} else if (code instanceof Codes.IfIs) {
 						// IfIsInterpreter.getInstance().interpret((Codes.IfIs)code,
 						// stackframe);
 					} else if (code instanceof Codes.IndexOf) {
-						analyze(graph, sym_ctrl, (Codes.IndexOf) code);
+						analyze(graph, sym_factory, (Codes.IndexOf) code);
 					} else if (code instanceof Codes.IndirectInvoke) {
 						// IndirectInvokeInterpreter.getInstance().interpret((Codes.IndirectInvoke)code,
 						// stackframe);
@@ -132,27 +132,27 @@ public class BoundAnalyzer {
 						// InvertInterpreter.getInstance().interpret((Codes.Invert)code,
 						// stackframe);
 					} else if (code instanceof Codes.ListOperator) {
-						analyze(graph, sym_ctrl, (Codes.ListOperator) code);
+						analyze(graph, sym_factory, (Codes.ListOperator) code);
 					} else if (code instanceof Codes.Loop) {
-						analyze(graph, sym_ctrl, (Codes.Loop) code, name);
+						analyze(graph, sym_factory, (Codes.Loop) code, name);
 					} else if (code instanceof Codes.Label) {
-						analyze(graph, sym_ctrl, (Codes.Label) code);
+						analyze(graph, sym_factory, (Codes.Label) code);
 					} else if (code instanceof Codes.Lambda) {
 						// LambdaInterpreter.getInstance().interpret((Codes.Lambda)code,
 						// stackframe);
 					} else if (code instanceof Codes.LengthOf) {
-						analyze(graph, sym_ctrl, (Codes.LengthOf) code);
+						analyze(graph, sym_factory, (Codes.LengthOf) code);
 					} else if (code instanceof Codes.Move) {
 						throw new RuntimeException("Not implemented!");
 					} else if (code instanceof Codes.NewList) {
-						analyze(graph, sym_ctrl, (Codes.NewList) code);
+						analyze(graph, sym_factory, (Codes.NewList) code);
 					} else if (code instanceof Codes.NewRecord) {
 						// NewRecordInterpreter.getInstance().interpret((Codes.NewRecord)code,
 						// stackframe);
 					} else if (code instanceof Codes.NewTuple) {
-						analyze(graph, sym_ctrl, (Codes.NewTuple) code);
+						analyze(graph, sym_factory, (Codes.NewTuple) code);
 					} else if (code instanceof Codes.Return) {
-						analyze(graph, sym_ctrl, (Codes.Return) code);
+						analyze(graph, sym_factory, (Codes.Return) code);
 					} else if (code instanceof Codes.NewObject) {
 						// NewObjectInterpreter.getInstance().interpret((Codes.NewObject)code,
 						// stackframe);
@@ -160,16 +160,16 @@ public class BoundAnalyzer {
 						// NopInterpreter.getInstance().interpret((Codes.Nop)code,
 						// stackframe);
 					} else if (code instanceof Codes.SubList) {
-						analyze(graph, sym_ctrl, (Codes.SubList) code);
+						analyze(graph, sym_factory, (Codes.SubList) code);
 					} else if (code instanceof Codes.Switch) {
 						// SwitchInterpreter.getInstance().interpret((Codes.Switch)code,
 						// stackframe);
 					} else if (code instanceof Codes.TupleLoad) {
-						analyze(graph, sym_ctrl, (Codes.TupleLoad) code);
+						analyze(graph, sym_factory, (Codes.TupleLoad) code);
 					} else if (code instanceof Codes.UnaryOperator) {
-						analyze(graph, sym_ctrl, (Codes.UnaryOperator) code);
+						analyze(graph, sym_factory, (Codes.UnaryOperator) code);
 					} else if (code instanceof Codes.Update) {
-						analyze(graph, sym_ctrl, (Codes.Update) code);
+						analyze(graph, sym_factory, (Codes.Update) code);
 					} else {
 						throw new RuntimeException("unknown wyil code encountered (" + code + ")");
 					}
@@ -204,13 +204,13 @@ public class BoundAnalyzer {
 	 * @param code
 	 *            Invariant {@link wyil.lang.Codes.Invariant}
 	 */
-	private void analyze(CFGraph graph, SymbolController sym_ctrl, Codes.Invariant code, String name) {
+	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.Invariant code, String name) {
 		graph.enabledInvariant();
 		iterateBytecode(name, code.bytecodes());
 		graph.disabledInvariant();
 	}
 
-	private void analyze(CFGraph graph, SymbolController sym_ctrl, Codes.Assign code) {
+	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.Assign code) {
 		String target = prefix + code.target();
 		String operand = prefix + code.operand(0);
 
@@ -233,7 +233,7 @@ public class BoundAnalyzer {
 	 * 
 	 * @param code
 	 */
-	private void analyze(CFGraph graph, SymbolController sym_ctrl, Codes.Const code) {
+	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.Const code) {
 		Constant constant = code.constant;
 		String target = prefix + code.target();
 
@@ -262,7 +262,7 @@ public class BoundAnalyzer {
 	 * 
 	 * @param code
 	 */
-	private void analyze(CFGraph graph, SymbolController sym_ctrl, Codes.IndexOf code) {
+	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.IndexOf code) {
 		if (TranslatorHelper.isIntType((Type) code.type())) {
 			String target = prefix + code.target();
 			String op = prefix + code.operand(0);
@@ -277,7 +277,7 @@ public class BoundAnalyzer {
 	 * @param code
 	 * @throws CloneNotSupportedException
 	 */
-	private void analyze(CFGraph graph, SymbolController sym_ctrl, Codes.If code) {
+	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.If code) {
 		String left = prefix + code.leftOperand;
 		String right = prefix + code.rightOperand;
 
@@ -338,7 +338,7 @@ public class BoundAnalyzer {
 	 * @param code
 	 *            {@link wyil.lang.Codes.Label} byte-code
 	 */
-	private void analyze(CFGraph graph, SymbolController sym_ctrl, Codes.Label code) {
+	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.Label code) {
 		String label = code.label;
 		// Get the target blk. If it is null, then create a new block.
 		BasicBlock blk = graph.getBasicBlock(label);
@@ -357,7 +357,7 @@ public class BoundAnalyzer {
 	 * @param code
 	 *            the new list byte-code
 	 */
-	private void analyze(CFGraph graph, SymbolController sym_ctrl, Codes.NewList code) {
+	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.NewList code) {
 		String target = prefix + code.target();
 		sym_ctrl.putAttribute(target, "type", code.type());
 		if (TranslatorHelper.isIntType(code.type())) {
@@ -374,7 +374,7 @@ public class BoundAnalyzer {
 	 * 
 	 * @param code
 	 */
-	private void analyze(CFGraph graph, SymbolController sym_ctrl, Codes.Return code) {
+	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.Return code) {
 		// Get the return operand
 		String retOp = prefix + code.operand;
 		BasicBlock c_blk = graph.getCurrentBlock();
@@ -408,7 +408,7 @@ public class BoundAnalyzer {
 	 * @param sym_ctrl
 	 * @param code
 	 */
-	private void analyze(CFGraph graph, SymbolController sym_ctrl, Codes.ListOperator code) {
+	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.ListOperator code) {
 		String target = prefix + code.target();
 
 		switch (code.kind) {
@@ -436,7 +436,7 @@ public class BoundAnalyzer {
 	 * 
 	 * @param code
 	 */
-	private void analyze(CFGraph graph, SymbolController sym_ctrl, Codes.UnaryOperator code) {
+	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.UnaryOperator code) {
 		UnaryOperatorKind kind = code.kind;
 		String x = prefix + code.operand(0);
 		String y = prefix + code.target();
@@ -460,7 +460,7 @@ public class BoundAnalyzer {
 	 * 
 	 * @param code
 	 */
-	private void analyze(CFGraph graph, SymbolController sym_ctrl, Codes.LengthOf code) {
+	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.LengthOf code) {
 		// Get the size att
 		String op = prefix + code.operand(0);
 		BigInteger size = (BigInteger) sym_ctrl.getAttribute(op, "size");
@@ -478,7 +478,7 @@ public class BoundAnalyzer {
 	 * 
 	 * @param code
 	 */
-	private void analyze(CFGraph graph, SymbolController sym_ctrl, Codes.Loop code, String name) {
+	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.Loop code, String name) {
 		// Loop header
 		String label = code.toString();
 		BoundAnalyzerHelper.addLoopVar(code.modifiedOperands);
@@ -496,7 +496,7 @@ public class BoundAnalyzer {
 	 * 
 	 * @param code
 	 */
-	private void analyze(CFGraph graph, SymbolController sym_ctrl, Codes.SubList code) {
+	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.SubList code) {
 		if (code.type().element() instanceof Type.Int) {
 			for (int operand : code.operands()) {
 				graph.addConstraint(new Equals(prefix + code.target(), prefix + operand));
@@ -511,7 +511,7 @@ public class BoundAnalyzer {
 	 * 
 	 * @param code
 	 */
-	private void analyze(CFGraph graph, SymbolController sym_ctrl, Codes.BinaryOperator code) {
+	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.BinaryOperator code) {
 		String target = prefix + code.target();
 		// Add the type att
 		Type type = code.assignedType();
@@ -566,7 +566,7 @@ public class BoundAnalyzer {
 	 * 
 	 * @param code
 	 */
-	private void analyze(CFGraph graph, SymbolController sym_ctrl, Codes.TupleLoad code) {
+	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.TupleLoad code) {
 		// Check if the index is that of value field (1).
 		int index = code.index;
 		if (index % 2 == 1) {
@@ -583,7 +583,7 @@ public class BoundAnalyzer {
 	 * 
 	 * @param code
 	 */
-	private void analyze(CFGraph graph, SymbolController sym_ctrl, Codes.NewTuple code) {
+	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.NewTuple code) {
 		// Assing the bounds of value field to the target
 		Type.Tuple tuple = code.type();
 		int index = 1;
@@ -601,7 +601,7 @@ public class BoundAnalyzer {
 	 * 
 	 * @param code
 	 */
-	private void analyze(CFGraph graph, SymbolController sym_ctrl, Codes.Update code) {
+	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.Update code) {
 
 	}
 
@@ -612,7 +612,7 @@ public class BoundAnalyzer {
 	 * @param code
 	 *            Goto ({@link wyil.lang.Codes.Goto } byte-code
 	 */
-	private void analyze(CFGraph graph, SymbolController sym_ctrl, Codes.Goto code) {
+	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.Goto code) {
 		// Get the label name
 		String label = code.target;
 		BasicBlock goto_blk = graph.getBasicBlock(label);
@@ -621,7 +621,7 @@ public class BoundAnalyzer {
 		graph.setCurrentBlock(null);
 	}
 
-	private void analyze(CFGraph graph, SymbolController sym_ctrl, Codes.FieldLoad code) {
+	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.FieldLoad code) {
 		String target = prefix + code.target();
 		String record = prefix + code.operand(0);
 		// add the type to the record
@@ -631,7 +631,7 @@ public class BoundAnalyzer {
 		sym_ctrl.putAttribute(target, "field", code.field);
 	}
 
-	private void analyze(CFGraph graph, SymbolController sym_ctrl, Codes.Convert code) {
+	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.Convert code) {
 		String target = prefix + code.target();
 		sym_ctrl.putAttribute(target, "type", code.result);
 
