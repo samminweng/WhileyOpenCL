@@ -5,6 +5,7 @@ import java.util.List;
 
 import wyil.lang.Code;
 import wyil.lang.Codes;
+import wyil.lang.Codes.Fail;
 import wyil.lang.Codes.UnaryOperatorKind;
 import wyil.lang.Constant;
 import wyil.lang.Type;
@@ -120,6 +121,8 @@ public class BoundAnalyzer {
 						// stackframe);
 					} else if (code instanceof Codes.FieldLoad) {
 						analyze(graph, sym_factory, (Codes.FieldLoad) code);
+					} else if (code instanceof Codes.Fail){
+						analyze(graph, sym_factory, (Codes.Fail)code);
 					} else if (code instanceof Codes.Goto) {
 						analyze(graph, sym_factory, (Codes.Goto) code);
 					} else if (code instanceof Codes.If) {
@@ -183,6 +186,18 @@ public class BoundAnalyzer {
 			}
 		}
 	}
+	
+	/**
+	 * 
+	 * @param graph
+	 * @param sym_factory
+	 * @param code
+	 */
+	private void analyze(CFGraph graph, SymbolFactory sym_factory, Fail code) {
+		// Do nothing due to the fact that fail byte-code does not extract  
+		// any bound or symbol.
+		
+	}
 
 	/**
 	 * Infer the bounds of a function by repeatedly iterating over all blocks in
@@ -204,15 +219,16 @@ public class BoundAnalyzer {
 	}
 
 	/**
-	 * Analyze the invariant byte-code
+	 * Analyze the invariant byte-code. Currently skip the byte-code of invariant.
 	 * 
 	 * @param code
 	 *            Invariant {@link wyil.lang.Codes.Invariant}
 	 */
 	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.Invariant code, String name) {
-		graph.enabledInvariant();
-		iterateBytecode(name, code.bytecodes());
-		graph.disabledInvariant();
+		// Skip the byte-code inside an invariant 
+		//graph.enabledInvariant();
+		//iterateBytecode(name, code.bytecodes());
+		//graph.disabledInvariant();
 	}
 
 	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.Assign code) {

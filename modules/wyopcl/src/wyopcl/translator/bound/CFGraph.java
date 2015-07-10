@@ -34,10 +34,7 @@ public class CFGraph {
 	// The boolean flag indicates the loop structure.
 	private boolean isLoop;
 	// A list of loop variables.
-	//private HashMap<String, BoundChange> loop_variables;
-	// The boolean flag is used to show whether the code is inside an assertion
-	// or assumption.
-	private boolean isInvariant;
+	//private HashMap<String, BoundChange> loop_variables;	
 	// Status
 	public enum STATUS{
 		INIT, PROCESSING, COMPLETE
@@ -54,7 +51,7 @@ public class CFGraph {
 		BasicBlock entry = createBasicBlock("entry", BlockType.ENTRY);
 		// First code block.
 		this.current_blk = createBasicBlock("code", BlockType.BLOCK, entry);
-		this.isInvariant = false;
+		//this.isInvariant = false;
 		this.isLoop = false;
 		this.status = STATUS.INIT;
 	}
@@ -65,34 +62,7 @@ public class CFGraph {
 	
 	public void setStatus(STATUS newStatus){
 		this.status = newStatus;
-	}
-	
-	/**
-	 * Check if the bytecode inside the invariant.
-	 * 
-	 * @return true if the code is inside an assertion or assumption. Otherwise, return false.
-	 */
-	public boolean checkInvariant() {
-		return this.isInvariant;
-	}
-
-	/**
-	 * Enables the assertion or assumption
-	 * 
-	 * @param assertOrAssume
-	 */
-	public void enabledInvariant() {
-		this.isInvariant = true;
-	}
-
-	/**
-	 * Disables the assertion or assumption
-	 * 
-	 * @param label
-	 */
-	public void disabledInvariant() {
-		this.isInvariant = false;
-	}
+	}	
 
 	/**
 	 * Create a basic block with the specific label name
