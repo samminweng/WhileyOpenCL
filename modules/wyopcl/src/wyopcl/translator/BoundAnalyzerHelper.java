@@ -19,7 +19,13 @@ import wyopcl.translator.bound.CFGraph;
 import wyopcl.translator.bound.CFGraph.STATUS;
 import wyopcl.translator.bound.Domain;
 import wyopcl.translator.bound.constraint.Range;
-
+/**
+ * Aims to assist the bound analyzer to build up CFGraph, propagate bounds
+ * between caller and callee, and store and retrieve symbols.  
+ * 
+ * @author Min-Hsien Weng
+ *
+ */
 public final class BoundAnalyzerHelper {
 	private static final String prefix = "%";
 	// Color code
@@ -28,11 +34,8 @@ public final class BoundAnalyzerHelper {
 	private static final String RED = (char) 27 + "[31;1m";
 	private static final String RESET = (char) 27 + "[0m";
 	// Maps of CFGs, symbols
-	// Stores all the extracted symbols
 	private static HashMap<String, SymbolFactory> symbol_factorys = new HashMap<String, SymbolFactory>();
 	private static HashMap<String, CFGraph> cfgraphs = new HashMap<String, CFGraph>();
-	// Bound inference processor
-	private static BoundInference bound_infer = new BoundInference();
 
 	/**
 	 * Checks if the CFGraph of the given function exist.
@@ -125,7 +128,7 @@ public final class BoundAnalyzerHelper {
 	 * @param bnd
 	 *            the bounds
 	 */
-	public static void printBounds(Configuration config, Bounds bnds, String name) {
+	public static void printBoundsAndSymbols(Configuration config, Bounds bnds, String name) {
 		FunctionOrMethod functionOrMethod = getFunctionOrMethod(config, name);
 		VariableDeclarations variables = functionOrMethod.attribute(VariableDeclarations.class);
 		
@@ -168,22 +171,7 @@ public final class BoundAnalyzerHelper {
 
 	}
 
-	/**
-	 * Infer the bounds of a function
-	 * 
-	 * @param config
-	 * @param name
-	 *            the function name
-	 * @return
-	 */
-	public static Bounds inferBounds(Configuration config, String name) {
-		CFGraph graph = getCFGraph(name);
-		// Sort the blks
-		graph.sortedList();
-		Bounds bnds = bound_infer.inferBounds(config, graph.getList());
-		return bnds;
-	}
-
+	
 	/**
 	 * Propagate the input bounds to the callee function.
 	 * 
@@ -246,14 +234,6 @@ public final class BoundAnalyzerHelper {
 		return module.functionOrMethod(name).get(0);
 	}
 
-	/**
-	 * Add loop variables to bound inference processor.
-	 */
-	public static void addLoopVar(int[] operands) {
-		for (int op : operands) {
-			bound_infer.addLoopVar(prefix + op);
-		}
-	}
 
 	/**
 	 * Outputs the control flow graphs (*.dot).

@@ -2,6 +2,7 @@ package wyopcl.translator;
 
 import java.math.BigInteger;
 import java.util.List;
+
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Codes.UnaryOperatorKind;
@@ -11,6 +12,7 @@ import wyil.lang.Type.Tuple;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.BasicBlock.BlockType;
+import wyopcl.translator.bound.BoundInference;
 import wyopcl.translator.bound.Bounds;
 import wyopcl.translator.bound.CFGraph;
 import wyopcl.translator.bound.constraint.Assign;
@@ -39,6 +41,8 @@ import wyopcl.translator.bound.constraint.Union;
 public class BoundAnalyzer {
 	private final String prefix = "%";
 	private Configuration config;
+	// Bound inference processor
+	private BoundInference bound_infer_proc;
 	// Static instance
 	private static BoundAnalyzer instance = new BoundAnalyzer();
 
@@ -46,7 +50,7 @@ public class BoundAnalyzer {
 	 * Constructor
 	 */
 	public BoundAnalyzer() {
-
+		bound_infer_proc = new BoundInference();
 	}
 
 	public static BoundAnalyzer getInstance() {
@@ -181,19 +185,20 @@ public class BoundAnalyzer {
 	}
 
 	/**
-	 * Repeatedly iterates over all blocks, starting from the entry block to the
-	 * exit block, and infer the bounds consistent with all the constraints in
-	 * each block.
+	 * Infer the bounds of a function by repeatedly iterating over all blocks in
+	 * CFGraph from the entry block to the exit block, and then inferring the
+	 * bounds consistent with all the constraints in each block.
 	 * 
 	 * @param name
 	 *            the function name
-	 * 
 	 * @return the bounds
 	 */
 	public Bounds inferBounds(String name) {
-		// this.function_name = name;
-		Bounds bnds = BoundAnalyzerHelper.inferBounds(config, name);
-		BoundAnalyzerHelper.printBounds(config, bnds, name);
+		CFGraph graph = BoundAnalyzerHelper.getCFGraph(name);
+		// Sort the blks
+		graph.sortedList();
+		Bounds bnds = bound_infer_proc.inferBounds(config, graph.getList());
+		BoundAnalyzerHelper.printBoundsAndSymbols(config, bnds, name);
 		BoundAnalyzerHelper.printCFG(config, name);
 		return bnds;
 	}
@@ -479,9 +484,12 @@ public class BoundAnalyzer {
 	 * @param code
 	 */
 	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.Loop code, String name) {
-		// Loop header
+		// Add loop variables to bound inference processor.
 		String label = code.toString();
-		BoundAnalyzerHelper.addLoopVar(code.modifiedOperands);
+		for (int op : code.modifiedOperands) {
+			bound_infer_proc.addLoopVar(prefix + op);
+		}
+
 		BasicBlock loopheader = graph.createLoopHeader(label);
 		graph.setCurrentBlock(loopheader);
 		// Set the loop flag to be true.

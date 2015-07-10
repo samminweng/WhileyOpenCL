@@ -5,9 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-
 import wyil.lang.Type;
-import wyopcl.translator.bound.constraint.Range;
 
 /**
  * This symbol factory creates, retrieve and maintain the symbols for a function.
