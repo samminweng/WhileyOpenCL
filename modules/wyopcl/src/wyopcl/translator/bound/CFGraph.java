@@ -25,16 +25,11 @@ import wyopcl.translator.bound.constraint.Constraint;
  *
  */
 public class CFGraph {
-	private final String prefix = "%";
-	//private final Configuration config;	
+	private final String prefix = "%";	
 	// The list of basic block;
 	private List<BasicBlock> blocks;
 	// The variables are used in the control flow graph (CFG).
 	private BasicBlock current_blk;
-	// The boolean flag indicates the loop structure.
-	private boolean isLoop;
-	// A list of loop variables.
-	//private HashMap<String, BoundChange> loop_variables;	
 	// Status
 	public enum STATUS{
 		INIT, PROCESSING, COMPLETE
@@ -43,7 +38,6 @@ public class CFGraph {
 	private STATUS status;	
 	
 	public CFGraph() {
-		//this.config = config;		
 		// Initialize the variables
 		this.blocks = new ArrayList<BasicBlock>();
 		// Entry and Exit block
@@ -51,8 +45,6 @@ public class CFGraph {
 		BasicBlock entry = createBasicBlock("entry", BlockType.ENTRY);
 		// First code block.
 		this.current_blk = createBasicBlock("code", BlockType.BLOCK, entry);
-		//this.isInvariant = false;
-		this.isLoop = false;
 		this.status = STATUS.INIT;
 	}
 
@@ -119,7 +111,6 @@ public class CFGraph {
 		// Get the block of Loop Exit type
 		blk = getBasicBlock(label, BlockType.LOOP_EXIT);
 		if(blk != null){
-			setLoop(false);
 			return blk;
 		}
 		//If no blocks is found, then return/create a new block.
@@ -242,19 +233,8 @@ public class CFGraph {
 	}
 
 	/**
-	 * Create a loop header and appends it to the current block.
-	 * 
-	 * @param label
-	 * @param c
-	 */
-	public BasicBlock createLoopHeader(String label) {
-		BasicBlock loop_header = createBasicBlock(label, BlockType.LOOP_HEADER, getCurrentBlock());
-		return loop_header;
-	}
-
-	/**
-	 * Branches the current block and adds the loop header, loop body and loop
-	 * exit. And set the current block to the .
+	 * Creates the loop header, loop body and loop exit and
+	 * set the current block to the loop body.
 	 * 
 	 * @param new_label
 	 *            the name of new branch.
@@ -262,7 +242,12 @@ public class CFGraph {
 	 *            constraint
 	 */
 	public void createLoopStructure(String new_label, Constraint c, Constraint neg_c) {
-		BasicBlock loop_header = getCurrentBlock();
+		//BasicBlock loop_header = getCurrentBlock();
+		//Create the loop header
+		BasicBlock loop_header = createBasicBlock(new_label, BlockType.LOOP_HEADER, getCurrentBlock());
+		// Set loop_header to be the current block
+		setCurrentBlock(loop_header);
+		// Set the loop flag to be true.
 		// Check whether to add if-else blocks or loop-condition blocks.
 		BasicBlock loop_body = createBasicBlock(new_label, BlockType.LOOP_BODY, loop_header);
 		BasicBlock loop_exit = createBasicBlock(new_label, BlockType.LOOP_EXIT, loop_header);
@@ -271,19 +256,21 @@ public class CFGraph {
 		// put the opposite constraint to the loop body
 		loop_body.addConstraint(neg_c);
 		// put the original constraint to the loop_exit
+		loop_exit.addConstraint(c);
+		
 		setCurrentBlock(loop_body);
 	}
 
 	
 
 
-	public boolean isLoop() {
+	/*public boolean isLoop() {
 		return isLoop;
 	}
 
 	public void setLoop(boolean isLoop) {
 		this.isLoop = isLoop;
-	}
+	}*/
 
 	
 	/**

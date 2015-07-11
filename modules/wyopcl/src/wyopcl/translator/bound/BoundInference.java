@@ -7,9 +7,10 @@ import java.util.List;
 import wyopcl.translator.BoundAnalyzerHelper;
 import wyopcl.translator.Configuration;
 import wyopcl.translator.bound.BasicBlock.BlockType;
+
 /**
- * Given a list of CFG blocks, infer the bounds for each block and output the result
- * bounds of return value.
+ * Given a list of CFG blocks, infer the bounds for each block and output the
+ * result bounds of return value.
  * 
  * 
  * @author Min-Hsien Weng
@@ -19,10 +20,11 @@ public class BoundInference {
 	private final String prefix = "%";
 	// A list of loop variables.
 	private HashMap<String, BoundChange> loop_variables;
-	public BoundInference(){
+
+	public BoundInference() {
 		this.loop_variables = new HashMap<String, BoundChange>();
 	}
-	
+
 	/**
 	 * Added loop variable to the hashmap
 	 * 
@@ -33,7 +35,7 @@ public class BoundInference {
 			loop_variables.put(target, new BoundChange(target));
 		}
 	}
-	
+
 	/***
 	 * Finds the block by the branch name and block types
 	 * 
@@ -51,28 +53,29 @@ public class BoundInference {
 		}
 		return null;
 	}
-	
-	
+
 	/**
 	 * Infer the bounds for a block.
 	 * 
 	 * @param blk
 	 *            the target block.
-	 * @param isChanged
-	 *            the bound
 	 * @param iteration
 	 *            the iteration number.
 	 * @return true if bounds are unchanged. Otherwise, return false.
 	 */
-	private boolean inferBlockBounds(Configuration config, BasicBlock blk, boolean isChanged, int iteration) {
+	private boolean inferBlockBounds(Configuration config, BasicBlock blk, int iteration) {
 		Bounds bnd_before = null, bnd_after = null;
+		// boolean isChanged = false;
+
 		// Before the bound inference
 		// The bound before bound inference.
 		if (blk.getType().equals(BlockType.LOOP_BODY)) {
 			bnd_before = (Bounds) blk.getBounds().clone();
 		}
 		// If bounds remain unchanged, then isChanged = true.
-		isChanged |= blk.inferBounds();
+		boolean isChanged = blk.inferBounds();
+		// blk.inferBounds();
+		// bnd_after = (Bounds) blk.getBounds().clone();
 
 		if (blk.getType().equals(BlockType.LOOP_BODY)) {
 			bnd_after = (Bounds) blk.getBounds().clone();
@@ -139,11 +142,7 @@ public class BoundInference {
 		}
 		return isChanged;
 	}
-	
-	
-	
-	
-	
+
 	/**
 	 * Repeatedly iterates over all blocks, starting from the entry block to the
 	 * exit block, and infer the bounds consistent with all the constraints in
@@ -152,14 +151,12 @@ public class BoundInference {
 	 * @return the bounds
 	 */
 	public Bounds inferBounds(Configuration config, List<BasicBlock> list) {
-		// Sort the blks
-		//blk_ctrl.sortedList();
 		// The least common multiple of naive (4) and graduate (12) widening
 		// strategies plus one.
 		int MaxIteration = 5;
-		if(config.isGradualWiden()){
+		if (config.isGradualWiden()) {
 			MaxIteration = 20;
-		}		
+		}
 
 		boolean isFixedPointed = false;
 		int iteration = 1;
@@ -168,23 +165,23 @@ public class BoundInference {
 		// by using AND operator to combine these two condition.
 		// If both of two conditions are evaluated to be true, then enter the
 		// loop.
-		while (!isFixedPointed && iteration <= MaxIteration) {
+		// while (!isFixedPointed && iteration <= MaxIteration) {
+		while (!isFixedPointed) {
 			if (config.isVerbose()) {
 				System.out.println("Iteration " + iteration + " => ");
 			}
 			// Initialize the isFixedPointed
 			isFixedPointed = true;
-			// If bounds has changed, then isChanged = false.
-			boolean isChanged = false;
 			// Iterate all the blocks, except Exit block.
 			for (BasicBlock blk : list) {
-				// Take the union of all blocks for exit block
+				// Take the union of all blocks, except for exit block. 
 				if (!blk.getType().equals(BlockType.EXIT)) {
 					// Take the union of parents' bounds.
 					for (BasicBlock parent : blk.getParentNodes()) {
 						blk.unionBounds(parent);
 					}
-					isChanged = inferBlockBounds(config, blk, isChanged, iteration);
+					// If bounds has changed, then isChanged = false.
+					boolean isChanged = inferBlockBounds(config, blk, iteration);
 					// Use bitwise 'AND' to combine all the results
 					isFixedPointed &= (!isChanged);
 				}
@@ -207,11 +204,11 @@ public class BoundInference {
 
 		Bounds bnd = exit_blk.getBounds();
 		// check the verbose to determine whether to print out the CFG
-		//if (config.isVerbose()) {
-		//	BoundAnalyzerHelper.printCFG(list, config.getFilename(),
-		//			(String) config.getProperty("function_name"));
-		//}
+		// if (config.isVerbose()) {
+		// BoundAnalyzerHelper.printCFG(list, config.getFilename(),
+		// (String) config.getProperty("function_name"));
+		// }
 		return bnd;
 	}
-	
+
 }

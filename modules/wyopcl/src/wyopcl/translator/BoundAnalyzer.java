@@ -44,6 +44,8 @@ public class BoundAnalyzer {
 	private Configuration config;
 	// Bound inference processor
 	private BoundInference bound_infer_proc;
+	// The boolean flag indicates the loop structure.
+	private boolean isLoop;
 	// Static instance
 	private static BoundAnalyzer instance = new BoundAnalyzer();
 
@@ -121,8 +123,8 @@ public class BoundAnalyzer {
 						// stackframe);
 					} else if (code instanceof Codes.FieldLoad) {
 						analyze(graph, sym_factory, (Codes.FieldLoad) code);
-					} else if (code instanceof Codes.Fail){
-						analyze(graph, sym_factory, (Codes.Fail)code);
+					} else if (code instanceof Codes.Fail) {
+						analyze(graph, sym_factory, (Codes.Fail) code);
 					} else if (code instanceof Codes.Goto) {
 						analyze(graph, sym_factory, (Codes.Goto) code);
 					} else if (code instanceof Codes.If) {
@@ -186,7 +188,7 @@ public class BoundAnalyzer {
 			}
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param graph
@@ -194,9 +196,9 @@ public class BoundAnalyzer {
 	 * @param code
 	 */
 	private void analyze(CFGraph graph, SymbolFactory sym_factory, Fail code) {
-		// Do nothing due to the fact that fail byte-code does not extract  
+		// Do nothing due to the fact that fail byte-code does not extract
 		// any bound or symbol.
-		
+
 	}
 
 	/**
@@ -219,16 +221,17 @@ public class BoundAnalyzer {
 	}
 
 	/**
-	 * Analyze the invariant byte-code. Currently skip the byte-code of invariant.
+	 * Analyze the invariant byte-code. Currently skip the byte-code of
+	 * invariant.
 	 * 
 	 * @param code
 	 *            Invariant {@link wyil.lang.Codes.Invariant}
 	 */
 	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.Invariant code, String name) {
-		// Skip the byte-code inside an invariant 
-		//graph.enabledInvariant();
-		//iterateBytecode(name, code.bytecodes());
-		//graph.disabledInvariant();
+		// Skip the byte-code inside an invariant
+		// graph.enabledInvariant();
+		// iterateBytecode(name, code.bytecodes());
+		// graph.disabledInvariant();
 	}
 
 	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.Assign code) {
@@ -340,7 +343,7 @@ public class BoundAnalyzer {
 			}
 
 			// Check if the 'if' bytecode is the loop condition.
-			if (graph.isLoop()) {
+			if (isLoop) {
 				// Create a loop body and loop exit.
 				graph.createLoopStructure(code.target, c, neg_c);
 			} else {
@@ -352,9 +355,12 @@ public class BoundAnalyzer {
 	}
 
 	/**
-	 * Get the block by the label from Label byte-code. If the block is not
-	 * found, then create a new block with the given label. And set the current
+	 * Gets the block by the label byte-code and sets the current
 	 * block to that block.
+	 * 
+	 * If the current and target blocks are not the same and target block
+	 * is not a Loop Exit, then add the parent-child relation to these
+	 * two blocks.
 	 * 
 	 * @param code
 	 *            {@link wyil.lang.Codes.Label} byte-code
@@ -365,8 +371,12 @@ public class BoundAnalyzer {
 		BasicBlock blk = graph.getBasicBlock(label);
 		// Get the current block
 		BasicBlock c_blk = graph.getCurrentBlock();
+		
 		if (c_blk != null && !(c_blk.equals(blk))) {
-			c_blk.addChild(blk);
+			// Check if the target blk is not a loop structure. 
+			if(!blk.getType().equals(BlockType.LOOP_EXIT)){
+				c_blk.addChild(blk);
+			}			
 		}
 		// Switch the current block
 		graph.setCurrentBlock(blk);
@@ -501,17 +511,16 @@ public class BoundAnalyzer {
 	 */
 	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.Loop code, String name) {
 		// Add loop variables to bound inference processor.
-		String label = code.toString();
 		for (int op : code.modifiedOperands) {
 			bound_infer_proc.addLoopVar(prefix + op);
 		}
-
-		BasicBlock loopheader = graph.createLoopHeader(label);
-		graph.setCurrentBlock(loopheader);
-		// Set the loop flag to be true.
-		graph.setLoop(true);
+		// Set the loop flag to be true,
+		// in order to indentify the bytecode is inside a loop
+		isLoop = true;
 		// Get the list of byte-code and iterate through the list.
 		iterateBytecode(name, code.bytecodes());
+		// Set the flag to be false after finishing iterating all the byte-code.
+		isLoop = false;
 	}
 
 	/**
@@ -671,7 +680,8 @@ public class BoundAnalyzer {
 	 * the function in the context of input bounds. And then propagate the
 	 * bounds of return value back to the caller.
 	 * 
-	 * @param caller_name the name of caller function.
+	 * @param caller_name
+	 *            the name of caller function.
 	 * @param code
 	 */
 	private void analyze(Codes.Invoke code, String caller_name) {

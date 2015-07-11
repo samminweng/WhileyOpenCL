@@ -246,9 +246,12 @@ public class Bounds implements Cloneable{
 			//Lower bounds
 			BigInteger new_min = new_bnd.getLower(var);
 			//Upper bounds
-			BigInteger new_max = new_bnd.getUpper(var);			
+			BigInteger new_max = new_bnd.getUpper(var);	
+			this.addLowerBound(var, new_min);					
+			this.addUpperBound(var, new_max);
+			
 			//Check if the existing bounds contains the variable.
-			if(this.isExisting(var)){
+			/*if(this.isExisting(var)){
 				BigInteger existing_min = this.getLower(var);
 				//Find the min (this, parent)
 				if(new_min!=null){
@@ -268,7 +271,7 @@ public class Bounds implements Cloneable{
 			}else{
 				this.addLowerBound(var, new_min);					
 				this.addUpperBound(var, new_max);
-			}			
+			}*/			
 		}		
 	}
 	
@@ -418,12 +421,15 @@ public class Bounds implements Cloneable{
 	public boolean equals(Object obj) {
 		if(obj instanceof Bounds){
 			Bounds bnd = (Bounds)obj;
+			return this.bounds.equals(bnd.bounds);
 			//Test the key set
-			if(this.bounds.keySet().equals(bnd.bounds.keySet())){
-				if(this.bounds.values().containsAll(bnd.bounds.values())){
-					return true;
-				}
-			}
+			//if(this.bounds.keySet().equals(bnd.bounds.keySet())){
+				//Check if each bound is equal to bounds of 'bnd'
+				
+				//if(this.bounds.values().equals(bnd.bounds.values())){
+				//	return true;
+				//}
+			//}
 		}
 		return false;
 	}
