@@ -5,11 +5,11 @@ package wyopcl.translator.bound;
  *
  */
 public class BoundChange {
-	private String name;
+	private String loop_var;
 	private boolean isUBIncreasing = false;
 	private boolean isLBDecreasing = false;
 	public BoundChange(String name){
-		this.name = name;
+		this.loop_var = name;
 		this.isUBIncreasing = false;
 		this.isLBDecreasing = false;
 	}

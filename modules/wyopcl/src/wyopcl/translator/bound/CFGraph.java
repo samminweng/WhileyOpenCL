@@ -242,7 +242,6 @@ public class CFGraph {
 	 *            constraint
 	 */
 	public void createLoopStructure(String new_label, Constraint c, Constraint neg_c) {
-		//BasicBlock loop_header = getCurrentBlock();
 		//Create the loop header
 		BasicBlock loop_header = createBasicBlock(new_label, BlockType.LOOP_HEADER, getCurrentBlock());
 		// Set loop_header to be the current block
@@ -257,21 +256,25 @@ public class CFGraph {
 		loop_body.addConstraint(neg_c);
 		// put the original constraint to the loop_exit
 		loop_exit.addConstraint(c);
-		
+		// Set the current block to be loop body.
 		setCurrentBlock(loop_body);
 	}
 
-	
-
-
-	/*public boolean isLoop() {
-		return isLoop;
+	/**
+	 * Given a block type, get a list of blocks. 
+	 * @param blk_type
+	 * @return
+	 */
+	public List<BasicBlock> getBasicBlockByType(BlockType blk_type){
+		List<BasicBlock> blks = new ArrayList<BasicBlock>();
+		for(BasicBlock blk: blocks){
+			if(blk.getType().equals(blk_type)){
+				blks.add(blk);
+			}
+		}
+		
+		return blks;
 	}
-
-	public void setLoop(boolean isLoop) {
-		this.isLoop = isLoop;
-	}*/
-
 	
 	/**
 	 * Adds the constraint to the current block.

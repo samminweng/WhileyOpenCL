@@ -7,9 +7,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
-
-import wyopcl.translator.Symbol;
-
 /***
  * adds the upper or lower bounds and keeps track of the bounds for all
  * variables.
@@ -69,6 +66,13 @@ public class Bounds implements Cloneable{
 		List<Domain> sortedDomains = new ArrayList<Domain>(bounds.values());
 		Collections.sort(sortedDomains);
 		return sortedDomains;		
+	}
+	/**
+	 * Gets all the stored bounds data, including variables and their domains
+	 * @return
+	 */
+	public HashMap<String, Domain> getBounds(){
+		return bounds;
 	}
 	
 	
@@ -245,33 +249,22 @@ public class Bounds implements Cloneable{
 		for(String var: new_bnd.bounds.keySet()){			
 			//Lower bounds
 			BigInteger new_min = new_bnd.getLower(var);
+			//if(this.getLower(var) != null){
+			this.addLowerBound(var, new_min);	
+			//}			
 			//Upper bounds
 			BigInteger new_max = new_bnd.getUpper(var);	
-			this.addLowerBound(var, new_min);					
-			this.addUpperBound(var, new_max);
+			BigInteger old_max = this.getUpper(var);
 			
-			//Check if the existing bounds contains the variable.
-			/*if(this.isExisting(var)){
-				BigInteger existing_min = this.getLower(var);
-				//Find the min (this, parent)
-				if(new_min!=null){
-					if(existing_min != null){
-						new_min = new_min.min(existing_min);
-					}
-				}
-				this.setLowerBound(var, new_min);
-				BigInteger existing_max = this.getUpper(var);
-				//Find the max (this, parent)
-				if(new_max!=null){
-					if(existing_max != null){
-						new_max = new_max.max(existing_max);
-					}					
-				}
-				this.setUpperBound(var, new_max);
+			//Check if the current upper is inf.
+			//If so, then do not update the upper bound 
+			if(new_max == null ||(new_max != null && old_max != null && new_max.compareTo(old_max) >0)){
+					//Widen the upper bound
+				this.widenUpperBound(var, new_max);
 			}else{
-				this.addLowerBound(var, new_min);					
 				this.addUpperBound(var, new_max);
-			}*/			
+			}
+			
 		}		
 	}
 	

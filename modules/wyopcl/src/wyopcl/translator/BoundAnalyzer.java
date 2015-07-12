@@ -214,7 +214,7 @@ public class BoundAnalyzer {
 		CFGraph graph = BoundAnalyzerHelper.getCFGraph(name);
 		// Sort the blks
 		graph.sortedList();
-		Bounds bnds = bound_infer_proc.inferBounds(config, graph.getList());
+		Bounds bnds = bound_infer_proc.inferBounds(config, graph);
 		BoundAnalyzerHelper.printBoundsAndSymbols(config, bnds, name);
 		BoundAnalyzerHelper.printCFG(config, name);
 		return bnds;
@@ -511,9 +511,9 @@ public class BoundAnalyzer {
 	 */
 	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.Loop code, String name) {
 		// Add loop variables to bound inference processor.
-		for (int op : code.modifiedOperands) {
-			bound_infer_proc.addLoopVar(prefix + op);
-		}
+		//for (int op : code.modifiedOperands) {
+		//	bound_infer_proc.addLoopVar(prefix + op);
+		//}
 		// Set the loop flag to be true,
 		// in order to indentify the bytecode is inside a loop
 		isLoop = true;
