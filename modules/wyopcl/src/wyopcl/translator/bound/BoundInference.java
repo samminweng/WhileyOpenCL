@@ -215,9 +215,14 @@ public class BoundInference {
 					if (config.isVerbose()) {
 						System.out.println(blk);
 						System.out.println("isChanged=" + isChanged);
-					}					
-					// Use bitwise 'AND' to combine all the results
-					isFixedPointed &= (!isChanged);
+					}
+					
+					
+					if(blk.isConsistent()){
+						// Use bitwise 'AND' to combine all the results
+						isFixedPointed &= (!isChanged);
+					}
+					
 				}
 			}
 			
