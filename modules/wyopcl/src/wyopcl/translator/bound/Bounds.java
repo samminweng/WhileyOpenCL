@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
+
+import wyopcl.translator.Configuration;
+
 /***
  * adds the upper or lower bounds and keeps track of the bounds for all
  * variables.
@@ -14,41 +17,47 @@ import java.util.Map.Entry;
  * @author Min-Hsien Weng
  *
  */
-public class Bounds implements Cloneable{
+public class Bounds implements Cloneable {
 	// Every subclass shares the 'bounds' variable;
 	private HashMap<String, Domain> bounds;
 	public boolean isChanged = false;
-	
-	public enum Threshold{
-		_I64_MIN(){
-			public BigInteger getValue(){
-				return  new BigInteger("-9223372036854775808");	
+
+	public enum Threshold {
+		_I64_MIN() {
+			public BigInteger getValue() {
+				return new BigInteger("-9223372036854775808");
 			}
-		}, INT_MIN(){
-			public BigInteger getValue(){
+		},
+		INT_MIN() {
+			public BigInteger getValue() {
 				return new BigInteger("-2147483648");
 			}
-		}, SHRT_MIN(){
-			public BigInteger getValue(){
+		},
+		SHRT_MIN() {
+			public BigInteger getValue() {
 				return new BigInteger("-32768");
 			}
-		}, SHRT_MAX(){
-			public BigInteger getValue(){
+		},
+		SHRT_MAX() {
+			public BigInteger getValue() {
 				return new BigInteger("32767");
 			}
-		}, INT_MAX(){
-			public BigInteger getValue(){
+		},
+		INT_MAX() {
+			public BigInteger getValue() {
 				return new BigInteger("2147483647");
 			}
-		}, _I64_MAX(){
-			public BigInteger getValue(){
+		},
+		_I64_MAX() {
+			public BigInteger getValue() {
 				return new BigInteger("9223372036854775807");
 			}
 		};
-		
+
 		public abstract BigInteger getValue();
-		private Threshold(){
-			
+
+		private Threshold() {
+
 		}
 	}
 
@@ -56,26 +65,27 @@ public class Bounds implements Cloneable{
 		bounds = new HashMap<String, Domain>();
 	}
 
-	
 	/**
 	 * Sorts the domains in the Hashmap by their domain names
+	 * 
 	 * @return
 	 */
-	public List<Domain> sortedDomains(){
-		//Sort the symbol tables		
+	public List<Domain> sortedDomains() {
+		// Sort the symbol tables
 		List<Domain> sortedDomains = new ArrayList<Domain>(bounds.values());
 		Collections.sort(sortedDomains);
-		return sortedDomains;		
+		return sortedDomains;
 	}
+
 	/**
 	 * Gets all the stored bounds data, including variables and their domains
+	 * 
 	 * @return
 	 */
-	public HashMap<String, Domain> getBounds(){
+	public HashMap<String, Domain> getBounds() {
 		return bounds;
 	}
-	
-	
+
 	/**
 	 * Get the domain by name
 	 * 
@@ -89,56 +99,60 @@ public class Bounds implements Cloneable{
 		}
 		return bounds.get(name);
 	}
+
 	/**
 	 * Check if variable has been existed in bounds HashMap.
+	 * 
 	 * @param name
 	 * @return
 	 */
-	public boolean isExisting(String name){
+	public boolean isExisting(String name) {
 		return bounds.containsKey(name);
 	}
 
 	public BigInteger getLower(String name) {
 		return getDomain(name).getLowerBound();
 	}
-	
-	public boolean setLowerBound(String name, BigInteger lower_bound){
+
+	public boolean setLowerBound(String name, BigInteger lower_bound) {
 		BigInteger existing_bound = getLower(name);
-		//Check if existing bound == lower_bound
-		if(existing_bound == null && lower_bound == null){
-			return false;			
+		// Check if existing bound == lower_bound
+		if (existing_bound == null && lower_bound == null) {
+			return false;
 		}
-		if(existing_bound != null && lower_bound != null && existing_bound.compareTo(lower_bound)==0){
-			return false;			
-		}		
+		if (existing_bound != null && lower_bound != null && existing_bound.compareTo(lower_bound) == 0) {
+			return false;
+		}
 		getDomain(name).setLowerBound(lower_bound);
 		return true;
 	}
-	
+
 	public BigInteger getUpper(String name) {
 		return getDomain(name).getUpperBound();
 	}
-	
-	public boolean setUpperBound(String name, BigInteger upper_bound){
+
+	public boolean setUpperBound(String name, BigInteger upper_bound) {
 		BigInteger existing_bound = getUpper(name);
-		//Check if existing bound == upper_bound
-		if(existing_bound == null && upper_bound == null){
-			return false;			
+		// Check if existing bound == upper_bound
+		if (existing_bound == null && upper_bound == null) {
+			return false;
 		}
-		if(existing_bound != null && upper_bound != null && existing_bound.compareTo(upper_bound)==0){
-			return false;			
-		}		
+		if (existing_bound != null && upper_bound != null && existing_bound.compareTo(upper_bound) == 0) {
+			return false;
+		}
 		getDomain(name).setUpperBound(upper_bound);
 		return true;
 	}
-	
-	
+
 	/**
 	 * 
-	 * Widens the lower bound if existing lower bound > the new lower bound or 
+	 * Widens the lower bound if existing lower bound > the new lower bound or
 	 * existing lower bound is -infinity.
-	 * @param name the variable name
-	 * @param new_min the new lower bound
+	 * 
+	 * @param name
+	 *            the variable name
+	 * @param new_min
+	 *            the new lower bound
 	 * @return true if the lower bound is changed.
 	 */
 	public boolean widenLowerBound(String name, BigInteger new_min) {
@@ -147,7 +161,7 @@ public class Bounds implements Cloneable{
 			Domain new_domain = (Domain) existing_domain.clone();
 			new_domain.setLowerBound(new_min);
 			// Check if the new domain is smaller than existing domain.
-			if(!existing_domain.equals(new_domain)){
+			if (!existing_domain.equals(new_domain)) {
 				if (existing_domain.getLowerBound() != null || existing_domain.compareTo(new_domain) > 0) {
 					bounds.put(name, new_domain);
 					return true;
@@ -158,9 +172,11 @@ public class Bounds implements Cloneable{
 		}
 		return false;
 	}
+
 	/**
 	 * Widens the upper bound if existing upper bound is < the new bound or
-	 * existing upper bound is infinity 
+	 * existing upper bound is infinity
+	 * 
 	 * @param name
 	 * @param new_max
 	 * @return
@@ -169,24 +185,24 @@ public class Bounds implements Cloneable{
 		try {
 			Domain existing_domain = getDomain(name);
 			Domain new_domain = (Domain) existing_domain.clone();
-			new_domain.setUpperBound(new_max);			
+			new_domain.setUpperBound(new_max);
 			// Check if new domain is stronger than existing one.
-			if(!existing_domain.equals(new_domain)){
-				//if (existing_domain.getUpperBound() != null || existing_domain.compareTo(new_domain) < 0) {
-					bounds.put(name, new_domain);
-					return true;
-				//}
+			if (!existing_domain.equals(new_domain)) {
+				// if (existing_domain.getUpperBound() != null ||
+				// existing_domain.compareTo(new_domain) < 0) {
+				bounds.put(name, new_domain);
+				return true;
+				// }
 			}
 		} catch (Exception ex) {
 			throw new RuntimeException(ex.getMessage());
 		}
 		return false;
 	}
-	
-	
-	
+
 	/**
 	 * Adds the lower bounds of a variable.
+	 * 
 	 * @param name
 	 * @param new_min
 	 * @return true if bounds change. Otherwise, return false.
@@ -197,13 +213,14 @@ public class Bounds implements Cloneable{
 		try {
 			new_domain = (Domain) existing_domain.clone();
 			new_domain.setLowerBound(new_min);
-			if(!existing_domain.equals(new_domain)){
+			if (!existing_domain.equals(new_domain)) {
 				// Check the lower bound and update the lower bound
-				// When the existing bound in '-infinity' Or the new lower bound is
+				// When the existing bound in '-infinity' Or the new lower bound
+				// is
 				// 'larger'.
 				if (new_domain.compareTo(existing_domain) > 0) {
 					// new_domain.setMin(new_min);
-					bounds.put(name, new_domain);				
+					bounds.put(name, new_domain);
 					return true;
 				}
 			}
@@ -213,10 +230,10 @@ public class Bounds implements Cloneable{
 		}
 		return false;
 	}
-	
-	
+
 	/**
 	 * Adds the upper bounds
+	 * 
 	 * @param name
 	 * @param new_max
 	 * @return true if bounds change. Otherwise, return false.
@@ -227,145 +244,147 @@ public class Bounds implements Cloneable{
 		try {
 			new_domain = (Domain) existing_domain.clone();
 			new_domain.setUpperBound(new_max);
-			if(!existing_domain.equals(new_domain)){
+			if (!existing_domain.equals(new_domain)) {
 				// Check new domain is smaller (stronger) than existing one.
 				if (new_domain.compareTo(existing_domain) < 0) {
 					bounds.put(name, new_domain);
 					return true;
 				}
-			}			
+			}
 		} catch (Exception ex) {
 			throw new RuntimeException(ex.getMessage());
 		}
 		return false;
 	}
 
-
 	/**
 	 * Take the union of existing and new bounds to produce the final bounds.
-	 * @param new_bnd new bounds
+	 * 
+	 * @param new_bnd
+	 *            new bounds
 	 */
-	public void union(Bounds new_bnd){		
-		for(String var: new_bnd.bounds.keySet()){			
-			//Lower bounds
+	public void union(Bounds new_bnd) {
+		for (String var : new_bnd.bounds.keySet()) {
+			// Lower bounds
 			BigInteger new_min = new_bnd.getLower(var);
 			BigInteger old_min = this.getLower(var);
-			if(new_min == null || (new_min != null && old_min != null
-					&& new_min.compareTo(old_min)<0)){
+			if (new_min == null || (new_min != null && old_min != null && new_min.compareTo(old_min) < 0)) {
 				this.widenLowerBound(var, new_min);
-			}else{
-				this.addLowerBound(var, new_min);	
+			} else {
+				this.addLowerBound(var, new_min);
 			}
-						
-			//Upper bounds
-			BigInteger new_max = new_bnd.getUpper(var);	
+
+			// Upper bounds
+			BigInteger new_max = new_bnd.getUpper(var);
 			BigInteger old_max = this.getUpper(var);
-			
-			//Check if the current upper is inf.
-			//If so, then do not update the upper bound 
-			if(new_max == null ||(new_max != null && old_max != null && new_max.compareTo(old_max) >0)){
-					//Widen the upper bound
+
+			// Check if the current upper is inf.
+			// If so, then do not update the upper bound
+			if (new_max == null || (new_max != null && old_max != null && new_max.compareTo(old_max) > 0)) {
+				// Widen the upper bound
 				this.widenUpperBound(var, new_max);
-			}else{
+			} else {
 				this.addUpperBound(var, new_max);
 			}
-			
-		}		
+
+		}
 	}
-	
+
 	/**
 	 * Widens the upper bounds against a list of max values of integer types.
 	 * (i.e. short, int and long long).
+	 * 
 	 * @param name
 	 * @return
 	 */
-	public boolean widenUpperBoundsAgainstThresholds(String name){
+	public boolean widenUpperBoundsAgainstThresholds(String name) {
 		BigInteger max = getUpper(name);
-		if(max!= null){
-			//Check the max values and widen the upper bound
+		if (max != null) {
+			// Check the max values and widen the upper bound
 			BigInteger threshold = Threshold.SHRT_MAX.getValue();
-			if(max.compareTo(threshold)<0){
+			if (max.compareTo(threshold) < 0) {
 				return widenUpperBound(name, threshold);
-			}else{
+			} else {
 				threshold = Threshold.INT_MAX.getValue();
-				if(max.compareTo(threshold)<0){
+				if (max.compareTo(threshold) < 0) {
 					return widenUpperBound(name, threshold);
-				}else{
+				} else {
 					threshold = Threshold._I64_MAX.getValue();
-					if(max.compareTo(threshold)<0){
+					if (max.compareTo(threshold) < 0) {
 						return widenUpperBound(name, threshold);
-					}else{
-						//Widen the upper bound to inf
+					} else {
+						// Widen the upper bound to inf
 						return widenUpperBound(name, null);
 					}
 				}
 			}
 		}
-		
+
 		return false;
-	}	
+	}
 
 	/**
 	 * Widens the lower bounds against a list of min values of integer types.
 	 * (i.e. short, int and long long).
+	 * 
 	 * @param name
 	 * @return
 	 */
-	public boolean widenLowerBoundsAgainstThresholds(String name){
+	public boolean widenLowerBoundsAgainstThresholds(String name) {
 		BigInteger min = getLower(name);
-		if(min!= null){
-			//Check the max values and widen the upper bound
+		if (min != null) {
+			// Check the max values and widen the upper bound
 			BigInteger threshold = Threshold.SHRT_MIN.getValue();
-			if(min.compareTo(threshold)<0){
+			if (min.compareTo(threshold) < 0) {
 				return widenLowerBound(name, threshold);
-			}else{
+			} else {
 				threshold = Threshold.INT_MIN.getValue();
-				if(min.compareTo(threshold)<0){
+				if (min.compareTo(threshold) < 0) {
 					return widenLowerBound(name, threshold);
-				}else{
+				} else {
 					threshold = Threshold._I64_MIN.getValue();
-					if(min.compareTo(threshold)<0){
+					if (min.compareTo(threshold) < 0) {
 						return widenLowerBound(name, threshold);
-					}else{
-						//Widen the upper bound to inf
+					} else {
+						// Widen the upper bound to inf
 						return widenLowerBound(name, null);
 					}
 				}
 			}
 		}
-		
+
 		return false;
 	}
-	
-	
+
 	/**
 	 * Widen the upper bounds to + infinity (null)
+	 * 
 	 * @param name
 	 * @return
 	 */
-	public boolean widenUpperBoundsToInf(String name){
+	public boolean widenUpperBoundsToInf(String name) {
 		BigInteger max = getUpper(name);
-		if(max != null){			
+		if (max != null) {
 			this.getDomain(name).setUpperBound(null);
 			return true;
-		}		
+		}
 		return false;
 	}
-	
+
 	/**
 	 * Widen the lower bounds to - infinity (null)
+	 * 
 	 * @param name
 	 * @return
 	 */
-	public boolean widenLowerBoundsToInf(String name){
+	public boolean widenLowerBoundsToInf(String name) {
 		BigInteger min = getLower(name);
-		if(min != null){			
+		if (min != null) {
 			this.getDomain(name).setLowerBound(null);
 			return true;
-		}		
+		}
 		return false;
 	}
-	
 
 	/**
 	 * Check if all the bounds are consistent (lower bound <= upper bound)
@@ -378,7 +397,7 @@ public class Bounds implements Cloneable{
 		while (iterator.hasNext()) {
 			Entry<String, Domain> bnd = iterator.next();
 			Domain d = bnd.getValue();
-			// Check upper bound < lower bound. If so, return false;			
+			// Check upper bound < lower bound. If so, return false;
 			isConsistent &= d.isConsistent();
 		}
 		return isConsistent;
@@ -393,17 +412,17 @@ public class Bounds implements Cloneable{
 		// Sort all the domains
 		List<Domain> domains = sortedDomains();
 		for (Domain d : domains) {
-			str += "\n\t"+ d.toString();
-		}		
+			str += "\n\t" + d.toString();
+		}
 		domains = null;
 		return str;
 	}
-	
+
 	@Override
 	public Object clone() {
 		Bounds bnd = new Bounds();
 		Iterator<Entry<String, Domain>> iterator = this.bounds.entrySet().iterator();
-		while(iterator.hasNext()){
+		while (iterator.hasNext()) {
 			Entry<String, Domain> entry = iterator.next();
 			try {
 				bnd.bounds.put(entry.getKey(), (Domain) entry.getValue().clone());
@@ -416,26 +435,99 @@ public class Bounds implements Cloneable{
 	}
 
 	/**
-	 * Compare two bounds 
+	 * Compare two bounds
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if(obj instanceof Bounds){
-			Bounds bnd = (Bounds)obj;
-			//Check that both bounds are the same size.
-			if(this.bounds.size() != bnd.bounds.size()){
+		if (obj instanceof Bounds) {
+			Bounds bnd = (Bounds) obj;
+			// Check that both bounds are the same size.
+			if (this.bounds.size() != bnd.bounds.size()) {
 				return false;
-			}	
-			//For each variable, check that the domain from this bounds is equal to the domain from
+			}
+			// For each variable, check that the domain from this bounds is
+			// equal to the domain from
 			// the obj bounds.
-			for(String var: this.bounds.keySet()){
-				if(!this.getDomain(var).equals(bnd.getDomain(var))){
-					return false;	
+			for (String var : this.bounds.keySet()) {
+				if (!this.getDomain(var).equals(bnd.getDomain(var))) {
+					return false;
 				}
 			}
-			return true;	
+			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * Check if the upper bound is large than that of previous iteration.
+	 * 
+	 * @param previous_iter
+	 *            the domain of previous iteration
+	 */
+	public void checkBoundChange(Bounds prev) {
+
+		for (String var : this.bounds.keySet()) {
+			// Upper bound
+			BigInteger upper_prev = prev.getUpper(var);
+			BigInteger upper_curr = this.getUpper(var);
+			if (upper_prev != null && upper_curr != null) {
+				// Check if the upper bounds is increasing
+				if (upper_prev.compareTo(upper_curr) < 0) {
+					Domain d = this.getDomain(var);
+					boolean isIncreasing = d.isUpperBoundIncreasing();
+					isIncreasing |= true;
+					d.setUpperBoundIncreasing(isIncreasing);
+				}
+			}
+
+			// Lower bound
+			BigInteger lower_prev = prev.getUpper(var);
+			BigInteger lower_curr = this.getUpper(var);
+			if (lower_prev != null && lower_curr != null) {
+				// Check if the upper bounds is increasing
+				if (lower_prev.compareTo(lower_curr) > 0) {
+					Domain d = this.getDomain(var);
+					boolean isDecreasing = d.isLowerBoundDecreasing();
+					isDecreasing |= true;
+					d.setUpperBoundIncreasing(isDecreasing);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Widens the upper/lower bounds against thresholds, according to the bound
+	 * changes and widen strategy
+	 * 
+	 * @param config
+	 * @param blk
+	 *            the block
+	 */
+	public void widenBounds(Configuration config) {
+		for (String var : bounds.keySet()) {
+			Domain d = getDomain(var);
+			// Widen the upper bound
+			if (d.isUpperBoundIncreasing()) {
+				if (config.isGradualWiden()) {
+					widenUpperBoundsAgainstThresholds(var);
+				} else {
+					widenUpperBoundsToInf(var);
+				}
+			}
+
+			// Widen the lower bound
+			if (d.isLowerBoundDecreasing()) {
+				if (config.isGradualWiden()) {
+					widenLowerBoundsAgainstThresholds(var);
+				} else {
+					widenLowerBoundsToInf(var);
+				}
+			}
+
+			// Reset the increasing and decreasing flag
+			d.setLowerBoundDecreasing(false);
+			d.setUpperBoundIncreasing(false);
+		}
 	}
 
 }

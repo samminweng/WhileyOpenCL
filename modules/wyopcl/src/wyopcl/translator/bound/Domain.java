@@ -8,14 +8,19 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 	private final String name;
 	private String var_name;
 	private BigInteger lower_bound = null;
-	private BigInteger upper_bound = null;	
-
+	private BigInteger upper_bound = null;
+	// Indicate the upper bound is increasing with iterations.
+	private boolean isUpperBoundIncreasing = false;
+	private boolean isLowerBoundDecreasing = false;
+	
 	public Domain(String name) {
 		this.name = name;
+		this.setLowerBoundDecreasing(false);
+		this.isUpperBoundIncreasing = false;
 	}
 
 	public Domain(String name, BigInteger lower_bound, BigInteger upper_bound) {
-		this.name = name;
+		this(name);
 		this.lower_bound = lower_bound;
 		this.upper_bound = upper_bound;
 	}
@@ -187,4 +192,19 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 		}
 	}
 
+	public boolean isUpperBoundIncreasing() {
+		return isUpperBoundIncreasing;
+	}
+
+	public void setUpperBoundIncreasing(boolean isUpperBoundIncreasing) {
+		this.isUpperBoundIncreasing = isUpperBoundIncreasing;
+	}
+
+	public boolean isLowerBoundDecreasing() {
+		return isLowerBoundDecreasing;
+	}
+
+	public void setLowerBoundDecreasing(boolean isLowerBoundDecreasing) {
+		this.isLowerBoundDecreasing = isLowerBoundDecreasing;
+	}
 }
