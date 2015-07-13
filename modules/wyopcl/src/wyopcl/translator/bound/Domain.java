@@ -6,15 +6,21 @@ import java.util.regex.Pattern;
 
 public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain> {
 	private final String name;
+	private String var_name;
 	private BigInteger lower_bound = null;
-	private BigInteger upper_bound = null;	
-
+	private BigInteger upper_bound = null;
+	// Indicate the upper bound is increasing with iterations.
+	private boolean isUpperBoundIncreasing = false;
+	private boolean isLowerBoundDecreasing = false;
+	
 	public Domain(String name) {
 		this.name = name;
+		this.setLowerBoundDecreasing(false);
+		this.isUpperBoundIncreasing = false;
 	}
 
 	public Domain(String name, BigInteger lower_bound, BigInteger upper_bound) {
-		this.name = name;
+		this(name);
 		this.lower_bound = lower_bound;
 		this.upper_bound = upper_bound;
 	}
@@ -22,8 +28,11 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 	public String getName() {
 		return name;
 	}
-	
-	private int getReg(){
+	/**
+	 * Get the register
+	 * @return
+	 */
+	public int getReg(){
 		//return the register no.
 		if(name.matches("^%\\d.*")){
 			if(name.contains("_")){
@@ -130,13 +139,22 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 
 	@Override
 	public String toString() {
+		//Change the string format
+		//return "Domain [name=" + name + ", lower_bound=" + this.lower_bound + ", upper_bound=" + this.upper_bound + "]";
+		return "domain("+this.name+")\t= "+getBounds();
+	}
+	/**
+	 * Gets the upper and lower bounds, and converts them to a string 
+	 * @return 
+	 */
+	public String getBounds(){
 		String lb = (this.lower_bound == null) ? "-infinity" : this.lower_bound.toString();
 		String ub = (this.upper_bound == null) ? "infinity" : this.upper_bound.toString();
 		//Change the string format
 		//return "Domain [name=" + name + ", lower_bound=" + this.lower_bound + ", upper_bound=" + this.upper_bound + "]";
-		return "domain("+this.name+")\t= [" + lb + ".."  + ub + "]";
+		return "[" + lb + ".."  + ub + "]";
 	}
-
+	
 	@Override
 	public Object clone() throws CloneNotSupportedException {
 		Domain d = new Domain(this.name);
@@ -174,4 +192,19 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 		}
 	}
 
+	public boolean isUpperBoundIncreasing() {
+		return isUpperBoundIncreasing;
+	}
+
+	public void setUpperBoundIncreasing(boolean isUpperBoundIncreasing) {
+		this.isUpperBoundIncreasing = isUpperBoundIncreasing;
+	}
+
+	public boolean isLowerBoundDecreasing() {
+		return isLowerBoundDecreasing;
+	}
+
+	public void setLowerBoundDecreasing(boolean isLowerBoundDecreasing) {
+		this.isLowerBoundDecreasing = isLowerBoundDecreasing;
+	}
 }

@@ -15,6 +15,7 @@ import wycc.util.Pair;
 import wyfs.lang.Path;
 import wyfs.lang.Path.Entry;
 import wyfs.lang.Path.Root;
+import wyil.attributes.VariableDeclarations;
 import wyil.lang.Attribute;
 import wyil.lang.Code;
 import wyil.lang.Type;
@@ -87,23 +88,19 @@ public class Translator implements Builder {
 
 	/**
 	 * Takes the in-memory wyil file and analyzes the bounds of integer variables in Main function.
-	 * using function call.
+	 * If any function call is encountered, then propagate the input bounds to the callee and then 
+	 * analyze the bounds and produces the context-sensitive bounds for the invoked function.
+	 * The bounds of return value is propagated to the caller function.
 	 * 
 	 * @param module 
 	 */
 	private void analyzeBounds(WyilFile module) {
+		BoundAnalyzer boundAnalyzer = BoundAnalyzer.getInstance();
 		try {
-			// Get code block of main function.
-			FunctionOrMethod functionOrMethod = module.functionOrMethod("main").get(0);
-			// Put the function name to the config
-			this.config.setProperty("function_name", functionOrMethod.name());
-			List<Code> code_blk = functionOrMethod.body().bytecodes();
-			BoundAnalyzer boundAnalyzer = new BoundAnalyzer(config);
-			boundAnalyzer.iterateByteCodeList(code_blk);
+			// Start with main function.
+			boundAnalyzer.buildCFG(config, "main");
 			// Infer the bounds at the end of main function.
-			//boundAnalyzer.propagateBounds(functionOrMethod.type().params());
-			boundAnalyzer.inferBounds();
-			boundAnalyzer = null;
+			boundAnalyzer.inferBounds("main");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -3,217 +3,272 @@ package wyopcl.translator;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Map.Entry;
 
-import wyil.lang.Code;
-import wyil.lang.Codes;
+import wyil.attributes.VariableDeclarations;
+import wyil.attributes.VariableDeclarations.Declaration;
 import wyil.lang.Type;
+import wyil.lang.WyilFile;
+import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.bound.BasicBlock;
-import wyopcl.translator.bound.ControlFlowBlockController;
 import wyopcl.translator.bound.Bounds;
+import wyopcl.translator.bound.CFGraph;
+import wyopcl.translator.bound.CFGraph.STATUS;
 import wyopcl.translator.bound.Domain;
-
+import wyopcl.translator.bound.constraint.Range;
 /**
- * Utility class for bound analyzer.
+ * Aims to assist the bound analyzer to build up CFGraph, propagate bounds
+ * between caller and callee, and store and retrieve symbols.  
+ * 
  * @author Min-Hsien Weng
  *
  */
 public final class BoundAnalyzerHelper {
-	private static String prefix = "%";
-	//The boolean flag is used to show whether the code is inside an assertion or assumption.	
-	private static String assertOrAssume_label = null;
-	//Color code
-	private static String GRAY = (char)27 +"[30;1m";
-	private static String BLUE = (char)27 +"[34;1m";
-	private static String RED = (char)27 + "[31;1m";
-	private static String RESET = (char)27 + "[0m";	
-	
-	private BoundAnalyzerHelper(){
+	private static final String prefix = "%";
+	// Color code
+	private static final String GRAY = (char) 27 + "[30;1m";
+	private static final String BLUE = (char) 27 + "[34;1m";
+	private static final String RED = (char) 27 + "[31;1m";
+	private static final String RESET = (char) 27 + "[0m";
+	// Maps of CFGs, symbols
+	private static HashMap<String, SymbolFactory> symbol_factorys = new HashMap<String, SymbolFactory>();
+	private static HashMap<String, CFGraph> cfgraphs = new HashMap<String, CFGraph>();
 
-	}
-	
 	/**
-	 * Prints out each bytecode with line number and indentation.
+	 * Checks if the CFGraph of the given function exist.
+	 * 
 	 * @param name
-	 * @param line
-	 * @see <a href="http://en.wikipedia.org/wiki/ANSI_escape_code">ANSI escape code</a>
-	 */
-	protected static int printWyILCode(Code code, String name, int line, ControlFlowBlockController blk_ctrl){
-		//Print out the bytecode with the format (e.g. 'main.9 [const %12 = 2345 : int]')
-		String font_color_start = "";
-		String font_color_end = "";
-		//Use the ANSI escape color to distinguish the set of bytecode of the assertion.
-		if(blk_ctrl.checkInvariant()){
-			font_color_start = GRAY;
-			font_color_end = RESET;
-		}
-		if(code instanceof Codes.Label){
-			//System.out.println(font_color_start+name+"."+line+"."+depth+" ["+code+"]"+font_color_end);
-			System.out.println(font_color_start+name+"."+line+" ["+code+"]"+font_color_end);
-		}else{
-			//System.out.println(font_color_start+name+"."+line+"."+depth+" [\t"+code+"]"+font_color_end);
-			System.out.println(font_color_start+name+"."+line+" [\t"+code+"]"+font_color_end);
-		}
-		return ++line;
-	}
-	
-	/**
-	 * Outputs the control flow graphs (*.dot).
-	 * @param blks the list of block
-	 * @param filename the name of input file.
-	 * @param func_name the name of function.
-	 */
-	protected static void printCFG(List<BasicBlock> blks, String filename, String func_name){
-		//Sort the blks.
-		//blk_ctrl.sortedList();
-		String dot_string= "digraph "+func_name+"{\n";		
-
-		for(BasicBlock blk: blks){
-			if(!blk.isLeaf()){
-				for(BasicBlock child: blk.getChildNodes()){
-					dot_string += "\""+blk.getBranch()+" [" +blk.getType()+"]\"->\""+ child.getBranch() +" ["+child.getType() + "]\";\n";
-				}
-			}
-		}
-		dot_string += "\n}";
-		//Write out the CFG-function_name.dot
-		try {
-			PrintWriter cfg_writer = new PrintWriter(filename+"-"+func_name+".dot", "UTF-8");
-			cfg_writer.println(dot_string);
-			cfg_writer.close();
-		} catch (FileNotFoundException | UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-
-	/**
-	 * Extract the function name.
-	 * @param functionOrMethod
 	 * @return
-	 *//*
-	protected static String castDeclarationtoString(FunctionOrMethodDeclaration functionOrMethod){
-		String declaration = functionOrMethod.type().ret() + " "+functionOrMethod.name()+"(";
-		if(!functionOrMethod.name().equals("main")){			
-			boolean isFirst = true;
-			int index=0;
-			for(Type paramType : functionOrMethod.type().params()){
-				//input parameter
-				if(isFirst){
-					declaration += paramType+" "+prefix+index;
-				}else{
-					declaration += ", "+paramType+ " "+prefix+index;
-				}
-				isFirst = false;
-				index++;
-			}		
-		}else{
-			boolean isFirst = true;
-			Type.Record paramType = (Type.Record) functionOrMethod.type().params().get(0);
-			for(Entry<String, Type> entry :paramType.fields().entrySet()){
-				if(isFirst){
-					declaration += entry.getValue() + " "+entry.getKey();
-				}else{
-					declaration += ", " +entry.getValue() + " "+entry.getKey();
-				}
-				isFirst = false;
-			}			
-		}
-		declaration +=")";
-		return declaration;
-	}*/
-
-	/**
-	 * Check if the type is instance of Integer by inferring the type from 
-	 * <code>wyil.Lang.Type</code> objects, including the effective collection types.
-	 * @param type 
-	 * @return true if the type is or contains an integer type. 
 	 */
-	public static boolean isIntType(Type type){
-		if(type instanceof Type.Int){
-			return true;
-		}
-
-		/*if(type instanceof Type.Map){
-			Type.Map map = (Type.Map)type;
-			//Check the type of values in the map.
-			return isIntType(map.key()) || isIntType(map.value());			
-		}*/
-
-		if(type instanceof Type.List){
-			return isIntType(((Type.List)type).element());
-		}
-
-		if (type instanceof Type.Tuple){
-			//Check the type of value field. 
-			Type element = ((Type.Tuple)type).element(1);
-			return isIntType(element);	
+	public static boolean isCached(String name) {
+		CFGraph graph = getCFGraph(name);
+		if (graph != null) {
+			if (graph.getStatus() == STATUS.COMPLETE) {
+				return true;
+			}
+		} else {
+			// Create an graph and symbol control
+			cfgraphs.put(name, new CFGraph());
+			symbol_factorys.put(name, new SymbolFactory());
 		}
 
 		return false;
 	}
 
 	/**
-	 * Get the list of code for a function.
-	 * @param functionOrMethod the function or method declaration.
-	 * @return the list of code.
-	 *//*
-	public static List<Code> getCodeBlock(FunctionOrMethodDeclaration functionOrMethod){
-		List<Code> code_blk = new ArrayList<Code>();
-		for(Case mcase : functionOrMethod.cases()){
-			for(Block.Entry entry :mcase.body()){
-				//Get each bytecode and add it to the code_blk.
-				code_blk.add(entry.code);		
+	 * Promote and update the status of CF graph.
+	 * 
+	 * @param name
+	 */
+	public static void promoteCFGStatus(String name) {
+		CFGraph graph = getCFGraph(name);
+		if (graph.getStatus() == STATUS.INIT) {
+			graph.setStatus(STATUS.PROCESSING);
+		} else if (graph.getStatus() == STATUS.PROCESSING) {
+			graph.setStatus(STATUS.COMPLETE);
+		}
+	}
+
+	/**
+	 * Given a function name, get the CFGraph.
+	 * 
+	 * @param name
+	 *            the function name
+	 * @return the cached CFGraph. If no cached graph is found, return null.
+	 */
+	public static CFGraph getCFGraph(String name) {
+		if (cfgraphs.containsKey(name))
+			return cfgraphs.get(name);
+		return null;
+	}
+
+	/**
+	 * Given a function name, get the symbol controller
+	 * 
+	 * @param name
+	 *            the function name
+	 * @return
+	 */
+	public static SymbolFactory getSymbolFactory(String name) {
+		if (symbol_factorys.containsKey(name)) {
+			return symbol_factorys.get(name);
+		}
+		return null;
+	}
+
+	/**
+	 * Given the register, get the variable name from variable declarations.
+	 * 
+	 * @param domain
+	 *            the domain that contains the register and bounds.
+	 * @return the variable name (starting with "%")
+	 */
+	private static String getVarName(Domain domain, VariableDeclarations variables) {
+		int reg = domain.getReg();
+		// Check if the register has been kept in the functional variable
+		// declarations.
+		if (reg < variables.size()) {
+			Declaration variable = variables.get(reg);
+			if (variable != null) {
+				String name = variable.name();
+				if (name != null && !name.isEmpty()) {
+					return name;
+				}
 			}
-		}		
-		return code_blk;
-	}*/
+		}
+		return domain.getName();
+	}
+
+	/**
+	 * Print out the bounds, symbol and values.
+	 * 
+	 * @param bnd
+	 *            the bounds
+	 */
+	public static void printBoundsAndSymbols(Configuration config, Bounds bnds, String name) {
+		FunctionOrMethod functionOrMethod = getFunctionOrMethod(config, name);
+		VariableDeclarations variables = functionOrMethod.attribute(VariableDeclarations.class);
+		
+		String str = "Bound Analysis of " + name + ":\n";
+		List<Domain> sortedDomains = bnds.sortedDomains();
+		// Print out the bounds
+		for (Domain d : sortedDomains) {
+			str += "\tdomain(" + getVarName(d, variables) + ")\t=" + d.getBounds() + "\n";
+		}
+
+		SymbolFactory sym_ctrl = getSymbolFactory(name);
+
+		List<Symbol> sortedSymbols = sym_ctrl.sortedSymbols();
+		// Print out the values of available variables
+		for (Symbol symbol : sortedSymbols) {
+			// String str_symbols = "";
+			String symbol_name = symbol.getName();
+			// print the 'value' attribute
+			Object val = symbol.getAttribute("value");
+			if (val != null) {
+				str += "\tvalue(" + symbol_name + ")\t= " + val + "\n";
+			}
+		}
+
+		// Print out the size of available variables
+		for (Symbol symbol : sortedSymbols) {
+			// String str_symbols = "";
+			String symbol_name = symbol.getName();
+			// get the 'type' attribute
+			Type type = (Type) symbol.getAttribute("type");
+			// print the 'size' att
+			if (type instanceof Type.List) {
+				Object size = symbol.getAttribute("size");
+				str += "\tsize(" + symbol_name + ")\t= " + size + "\n";
+			}
+		}
+
+		str += "Consistency=" + bnds.checkBoundConsistency();
+		System.out.println(str);
+
+	}
 
 	
 	/**
-	 * Print out the bounds.
-	 * @param bnd the bounds
+	 * Propagate the input bounds to the callee function.
+	 * 
+	 * @param caller_name
+	 *            the name of caller function.
+	 * 
+	 * @param callee_name
+	 *            the name of callee function.
+	 * 
+	 * @param invokeboundAnalyzer
+	 *            the analyzer of invoked function.
+	 * @param operands
+	 *            the operands of calling function
+	 * @param bnd
+	 *            the bounds of caller function
 	 */
-	protected static void printBounds(List<Symbol> sortedSymbols, Bounds bnd){
-		String str = "";
-		//Print out the bounds
-		for(Symbol symbol : sortedSymbols){
-			//String str_symbols = "";
-			String name = symbol.getName();
-			if(bnd.isExisting(name)){
-				Domain d = bnd.getDomain(name);
-				str+="\t"+d+"\n";
-			}			
+	public static void propagateInputBoundsToFunctionCall(String caller_name, String callee_name, List<Type> params, int[] operands, Bounds bnd) {
+		CFGraph graph = getCFGraph(callee_name);
+		graph.addInputBounds(params, operands, bnd);
+		SymbolFactory caller_factory = getSymbolFactory(caller_name);
+		SymbolFactory callee_factory = getSymbolFactory(callee_name);
+		
+		callee_factory.addInputSymbols(caller_factory, operands, params);
+	}
+
+	/**
+	 * Propagate the bounds of return value to the caller.
+	 * 
+	 * @param invokeboundAnalyzer
+	 * @param ret_reg
+	 * @param ret_type
+	 * @param bnd
+	 */
+	public static void propagateBoundsFromFunctionCall(String caller_name, String callee_name, String ret_reg, Type ret_type, Bounds bnd) {
+		CFGraph graph = getCFGraph(caller_name);
+		if (TranslatorHelper.isIntType(ret_type)) {
+			// propagate the bounds of return value.
+			graph.addConstraint(new Range(ret_reg, bnd.getLower("return"), bnd.getUpper("return")));
 		}
 
-		//Print out the values of available variables
-		for(Symbol symbol : sortedSymbols){
-			//String str_symbols = "";
-			String name = symbol.getName();					
-			//print the 'value' attribute
-			Object val = symbol.getAttribute("value");
-			if(val != null){
-				str += "\tvalue("+name+")\t= "+val+"\n";
-			}			
-		}
+		SymbolFactory caller_factory = getSymbolFactory(caller_name);
+		SymbolFactory callee_factory = getSymbolFactory(callee_name);		
+		caller_factory.addOutputSymbols(callee_factory, ret_reg, ret_type);
+	}
 
-		//Print out the size of available variables
-		for(Symbol symbol : sortedSymbols){
-			//String str_symbols = "";
-			String name = symbol.getName();
-			//get the 'type' attribute
-			Type type = (Type) symbol.getAttribute("type");						
-			//print the 'size' att
-			if(type instanceof Type.List){
-				Object size = symbol.getAttribute("size");
-				str += "\tsize("+name+")\t= "+size+"\n";
-			}			
+	/**
+	 * TODO : Add the type check to find the extract function declaration.
+	 * 
+	 * Gets the function declaration by name.
+	 * 
+	 * 
+	 * @param config
+	 * @param name
+	 *            the function name
+	 *            
+	 * @return
+	 */
+	public static FunctionOrMethod getFunctionOrMethod(Configuration config, String name) {
+		WyilFile module = (WyilFile) config.getProperty("module");
+		return module.functionOrMethod(name).get(0);
+	}
+
+
+	/**
+	 * Outputs the control flow graphs (*.dot).
+	 * 
+	 * @param blks
+	 *            the list of block
+	 * @param filename
+	 *            the name of input file.
+	 * @param func_name
+	 *            the name of function.
+	 */
+	public static void printCFG(Configuration config, String name) {
+		//Check if the verbose is on.
+		if(!config.isVerbose()){
+			return;
 		}
-		str += "Consistency="+bnd.checkBoundConsistency();
-		System.out.println(str);		
+		
+		String dot_string = "digraph " + name + "{\n";
+		CFGraph graph = getCFGraph(name);
+		List<BasicBlock> blks = graph.getList();
+		for (BasicBlock blk : blks) {
+			if (!blk.isLeaf()) {
+				for (BasicBlock child : blk.getChildNodes()) {
+					dot_string += "\"" + blk.getBranch() + " [" + blk.getType() + "]\"->\"" + child.getBranch() + " [" + child.getType() + "]\";\n";
+				}
+			}
+		}
+		dot_string += "\n}";
+		// Write out the CFG-function_name.dot
+		try {
+			PrintWriter cfg_writer = new PrintWriter(name + ".dot", "UTF-8");
+			cfg_writer.println(dot_string);
+			cfg_writer.close();
+		} catch (FileNotFoundException | UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
