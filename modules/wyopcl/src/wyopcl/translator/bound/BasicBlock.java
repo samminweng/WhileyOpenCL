@@ -258,18 +258,15 @@ public class BasicBlock implements Comparable<BasicBlock>{
 	 * @return true if the bounds are changed. Return false if bounds remain unchanged.
 	 */
 	public boolean inferBounds(){
-		isChanged = true;
-		//Clone the inferred bounds and assign it to the existing bounds.
-		Bounds existingBounds = (Bounds) this.unionOfBounds.clone();
+		//isChanged = false;
+		
+		//Bounds existingBounds = (Bounds) this.unionOfBounds.clone();
 		//Iterate through the constraints to infer the bounds.
 		for(Constraint c: this.constraints){
 			//The inferBound method returns False if the bounds remain unchanged.
 			c.inferBound(this.unionOfBounds);
 		}		
-		//Test the equality of existing and newly inferred bounds.
-		if(existingBounds!= null && existingBounds.equals(this.unionOfBounds)){
-			isChanged = false;
-		}
+		
 		return isChanged;
 	}
 

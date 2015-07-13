@@ -249,9 +249,14 @@ public class Bounds implements Cloneable{
 		for(String var: new_bnd.bounds.keySet()){			
 			//Lower bounds
 			BigInteger new_min = new_bnd.getLower(var);
-			//if(this.getLower(var) != null){
-			this.addLowerBound(var, new_min);	
-			//}			
+			BigInteger old_min = this.getLower(var);
+			if(new_min == null || (new_min != null && old_min != null
+					&& new_min.compareTo(old_min)<0)){
+				this.widenLowerBound(var, new_min);
+			}else{
+				this.addLowerBound(var, new_min);	
+			}
+						
 			//Upper bounds
 			BigInteger new_max = new_bnd.getUpper(var);	
 			BigInteger old_max = this.getUpper(var);
@@ -410,19 +415,25 @@ public class Bounds implements Cloneable{
 		return bnd;
 	}
 
+	/**
+	 * Compare two bounds 
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if(obj instanceof Bounds){
 			Bounds bnd = (Bounds)obj;
-			return this.bounds.equals(bnd.bounds);
-			//Test the key set
-			//if(this.bounds.keySet().equals(bnd.bounds.keySet())){
-				//Check if each bound is equal to bounds of 'bnd'
-				
-				//if(this.bounds.values().equals(bnd.bounds.values())){
-				//	return true;
-				//}
-			//}
+			//Check that both bounds are the same size.
+			if(this.bounds.size() != bnd.bounds.size()){
+				return false;
+			}	
+			//For each variable, check that the domain from this bounds is equal to the domain from
+			// the obj bounds.
+			for(String var: this.bounds.keySet()){
+				if(!this.getDomain(var).equals(bnd.getDomain(var))){
+					return false;	
+				}
+			}
+			return true;	
 		}
 		return false;
 	}

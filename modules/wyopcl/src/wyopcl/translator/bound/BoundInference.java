@@ -83,46 +83,14 @@ public class BoundInference {
 	}
 
 	/**
-	 * Infer the bounds for a block.
-	 * 
-	 * @param blk
-	 *            the target block.
-	 * @param iteration
-	 *            the iteration number.
-	 * @return true if bounds are unchanged. Otherwise, return false.
-	 */
-	private boolean inferBlockBounds(Configuration config, BasicBlock blk, int iteration) {
-		Bounds bnd_before = null, bnd_after = null;
-		// boolean isChanged = false;
-
-		// Before the bound inference
-		// The bound before bound inference.
-		if (blk.getType().equals(BlockType.LOOP_BODY)) {
-			bnd_before = (Bounds) blk.getBounds().clone();
-		}
-		// If bounds remain unchanged, then isChanged = true.
-		boolean isChanged = blk.inferBounds();
-		// blk.inferBounds();
-		// bnd_after = (Bounds) blk.getBounds().clone();
-
-		if (blk.getType().equals(BlockType.LOOP_BODY)) {
-			bnd_after = (Bounds) blk.getBounds().clone();
-			checkLoopVarBoundChange(config, bnd_before, bnd_after, iteration, blk);
-		}
-
-		return isChanged;
-	}
-
-	/**
-	 * Widens the upper/lower bounds to thresholds, according to the bound
-	 * changes and widen strategy,
+	 * Widens the upper/lower bounds against thresholds, according to the bound changes and widen strategy
 	 * 
 	 * @param config
 	 * @param blk
-	 *            the loop header block
+	 *            the block
 	 */
-	private boolean widenLoopVarBounds(Configuration config, BasicBlock blk) {
-		boolean isChange = false;
+	private void widenLoopVarBounds(Configuration config, BasicBlock blk) {
+		//boolean isChange = false;
 		for(String var: blk.getBounds().getBounds().keySet()){
 			if(loop_variables.keySet().contains(var)){
 				String loop_var = var;
@@ -130,9 +98,9 @@ public class BoundInference {
 				// Widen the upper bound
 				if (boundChange.isUBIncreasing()) {
 					if (config.isGradualWiden()) {
-						isChange |= blk.getBounds().widenUpperBoundsAgainstThresholds(loop_var);
+						blk.getBounds().widenUpperBoundsAgainstThresholds(loop_var);
 					} else {
-						isChange |= blk.getBounds().widenUpperBoundsToInf(loop_var);
+						blk.getBounds().widenUpperBoundsToInf(loop_var);
 					}
 				}
 				// Reset the increasing flag
@@ -140,26 +108,16 @@ public class BoundInference {
 				// Widen the lower bound
 				if (boundChange.isLBDecreasing()) {
 					if (config.isGradualWiden()) {
-						isChange |= blk.getBounds().widenLowerBoundsAgainstThresholds(loop_var);
+						blk.getBounds().widenLowerBoundsAgainstThresholds(loop_var);
 					} else {
-						isChange |= blk.getBounds().widenLowerBoundsToInf(loop_var);
+						blk.getBounds().widenLowerBoundsToInf(loop_var);
 					}
 				}
 			}
 		}
-		//for (BasicBlock loop_header : graph.getBasicBlockByType(BlockType.LOOP_HEADER)) {
-			//for (String loop_var : loop_variables.keySet()) {
-				
-				// Reset the decreasing flag
-				// boundChange.setLBDecreasing(false);
-				// loop_variables.put(loop_var, boundChange);
-			//}
-		//}
-
 		// Clear all the bound changes
 		//loop_variables.clear();
-
-		return isChange;
+		//return isChange;
 
 	}
 
@@ -201,16 +159,29 @@ public class BoundInference {
 			// because the widening operator forces the loop variable to
 			// blow out to inf
 			for (BasicBlock blk : list) {
-				boolean isChanged;
+				boolean isChanged = false;
 				// Take the union of all blocks, except for exit block.
 				if (!blk.getType().equals(BlockType.EXIT)) {
+					Bounds bnd_before = null, bnd_after = null;
+					//Before the bound inference, clone and assign the inferred bounds to the bnd_before.
+					bnd_before = (Bounds) blk.getBounds().clone();
 					// Take the union of parents' bounds.
 					for (BasicBlock parent : blk.getParentNodes()) {
 						blk.unionBounds(parent);
 					}									
-					// End of bound inference for all constraints in all blks.
-					// If bounds has changed, then isChanged = false.
-					isChanged = inferBlockBounds(config, blk, iteration);
+					
+					blk.inferBounds();// End of bound inference for all constraints in all blks.
+					
+					bnd_after = (Bounds) blk.getBounds();
+					if (blk.getType().equals(BlockType.LOOP_BODY)) {
+						checkLoopVarBoundChange(config, bnd_before, bnd_after, iteration, blk);
+					}
+					//Test the equality of existing and newly inferred bounds.
+					if(bnd_before!= null && !bnd_before.equals(bnd_after)){
+						// If bounds has changed, then isChanged = false.
+						isChanged = true;
+					}
+					
 					// Print out the bounds.
 					if (config.isVerbose()) {
 						System.out.println(blk);
@@ -218,10 +189,8 @@ public class BoundInference {
 					}
 					
 					
-					if(blk.isConsistent()){
-						// Use bitwise 'AND' to combine all the results
-						isFixedPointed &= (!isChanged);
-					}
+					// Use bitwise 'AND' to combine all the results
+					isFixedPointed &= (!isChanged);
 					
 				}
 			}
@@ -230,13 +199,14 @@ public class BoundInference {
 				System.out.println("isFixedPointed=" + isFixedPointed);
 			}
 			
-			//Reset the iterations
+			// Repeat the bound inference for (maximal) three iterations
 			if(iteration == 3){
+				//Widen the bounds of loop variables in all blocks.
 				for(BasicBlock blk: list){
 					widenLoopVarBounds(config, blk);
-				}				
+				}
+				//Reset the iteration
 				iteration = 0;
-//				break;
 			}else{
 				iteration++;
 			}
@@ -253,8 +223,7 @@ public class BoundInference {
 			}
 		}
 
-		Bounds bnd = exit_blk.getBounds();
-		return bnd;
+		return exit_blk.getBounds();
 	}
 
 }
