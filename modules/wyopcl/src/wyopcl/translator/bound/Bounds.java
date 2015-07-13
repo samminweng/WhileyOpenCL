@@ -459,7 +459,11 @@ public class Bounds implements Cloneable {
 	}
 
 	/**
-	 * Check if the upper bound is large than that of previous iteration.
+	 * 
+	 * Check the bound change for variables in the bound Hashmap. For each variable,
+	 * if the upper bound is larger than that of previous bound, then the variable
+	 * has an increasing upper bound. In the same manner, if the lower bound is lower
+	 * than that of previous one, then the variable has a decreasing lower bound. 
 	 * 
 	 * @param previous_iter
 	 *            the domain of previous iteration

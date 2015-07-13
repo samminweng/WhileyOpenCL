@@ -3,7 +3,6 @@ package wyopcl.translator;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,7 +12,6 @@ import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.bound.BasicBlock;
-import wyopcl.translator.bound.BoundInference;
 import wyopcl.translator.bound.Bounds;
 import wyopcl.translator.bound.CFGraph;
 import wyopcl.translator.bound.CFGraph.STATUS;
