@@ -10,7 +10,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
 public final class BaseTestUtil {
-	private final String version = "v0.3.33";
+	private final String version = "v0.3.35";
 	// user.dir is the current directory.
 	private final String workspace_path = System.getProperty("user.dir")+ File.separator;
 	private final String lib_path = workspace_path + "lib"+ File.separator;
