@@ -62,13 +62,13 @@ $ ./While_Valid_1.out
 @Deprecated
 This interpreter could not function well due to the change in WyIL
 structures and upgrades of Whiley compiler.
-~~2. WyIL (Whiley Intermediate Language) Interpreter~~  
-~~----------------------------------------------------------------------~~
-~~To play with WyIL interpreter, use the commands:~~
-~~$ cd examples/~~
-~~$ ./../bin/wyopcl sieve.whiley 100~~
-~~Or add the verbose option to print out the interpretation.~~
-~~$ ./../bin/wyopcl -verbose sieve.whiley 100~~
+~~ 2. WyIL (Whiley Intermediate Language) Interpreter ~~  
+~~ ---------------------------------------------------------------------- ~~
+~~ To play with WyIL interpreter, use the commands: ~~
+~~ $ cd examples/ ~~
+~~ $ ./../bin/wyopcl sieve.whiley 100 ~~
+~~ Or add the verbose option to print out the interpretation. ~~
+~~ $ ./../bin/wyopcl -verbose sieve.whiley 100 ~~
 
 
 ======================================================================
@@ -95,10 +95,10 @@ $ ant test-code
 The unit test results are summarized at 'report/code/index.html'. 
 
 
-~~2. WyIL Interpreter~~
-~~The interpreter can be verified with 915 test cases by using the commands:~~
-~~$ ant interpreter~~
-~~The unit test results are summarized at 'report/interpreter/index.html'.~~ 
-~~The current success rate is 95.85% (Failures: 22, Errors: 16, Skipped: 94).~~
+~~ 2. WyIL Interpreter ~~
+~~ The interpreter can be verified with 915 test cases by using the commands: ~~
+~~ $ ant interpreter ~~
+~~ The unit test results are summarized at 'report/interpreter/index.html'. ~~ 
+~~ The current success rate is 95.85% (Failures: 22, Errors: 16, Skipped: 94). ~~
 
 
