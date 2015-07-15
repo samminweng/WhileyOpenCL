@@ -18,7 +18,7 @@ import wyopcl.translator.bound.constraint.LessThanEquals;
 import wyopcl.translator.bound.constraint.Negate;
 import wyopcl.translator.bound.constraint.Plus;
 
-public class BoundTestCase {
+public class ConstraintTestCase {
 
 	@Before
 	public void setUp() throws Exception {
@@ -240,8 +240,7 @@ public class BoundTestCase {
 	 * Given D(x) =[-10..10] Test the constraints ( x == y ^ y == z)
 	 * 
 	 * @see <a
-	 *      href="http://sourceforge.net/p/czt/code/ci/master/tree/zlive/src/test
-	 *      /java/net/sourceforge/czt/animation/eval/flatpred/BoundsTest.java#l226">
+	 *      href="http://sourceforge.net/p/czt/code/ci/master/tree/zlive/src/test/java/net/sourceforge/czt/animation/eval/flatpred/BoundsTest.java#l226">
 	 *      net.sourceforge.czt.animation.eval.flatpred.BoundsTest#testEquals()</a>
 	 */
 	@Test
@@ -475,7 +474,7 @@ public class BoundTestCase {
 		blk.addBounds("z", new BigInteger("2"), new BigInteger("2"));
 		// x = y+z
 		blk.addConstraint(new Plus("x", "y", "z"));
-		assertTrue(blk.inferFixedPoint(1));
+		assertTrue(blk.inferFixedPoint());
 		assertEquals(new BigInteger("2"), blk.getLower("x"));
 		assertEquals(new BigInteger("5"), blk.getUpper("x"));
 

@@ -254,17 +254,15 @@ public class BasicBlock implements Comparable<BasicBlock>{
 	}	
 	
 	/**
-	 * Infer the bounds 
+	 * Iterate through the constraints to infer the bounds 
 	 * @return true if the bounds are changed. Return false if bounds remain unchanged.
 	 */
 	public boolean inferBounds(){
-		//isChanged = false;
-		
-		//Bounds existingBounds = (Bounds) this.unionOfBounds.clone();
+		isChanged = false;
 		//Iterate through the constraints to infer the bounds.
 		for(Constraint c: this.constraints){
 			//The inferBound method returns False if the bounds remain unchanged.
-			c.inferBound(this.unionOfBounds);
+			isChanged |= c.inferBound(this.unionOfBounds);
 		}		
 		
 		return isChanged;
@@ -274,26 +272,23 @@ public class BasicBlock implements Comparable<BasicBlock>{
 
 
 	/**
+	 *  
 	 * Repeatedly infer the Bound consistent with all the constraints.
 	 * @param iterations optional parameter. iterations[0] specifies the number of iterations. If not specifies, 
 	 * the default value is 5. 
 	 * @return true if bounds remain 'unchanged'. Otherwise, return false.
 	 */
+
 	public boolean inferFixedPoint(int... iterations){
 		int MaxIteration = iterations.length >0 ? iterations[0] : 5;
-		boolean isFixedPointed = true;
+		boolean isFixedPoint = true;
 		for(int i=0;i<MaxIteration;i++){
 			//Initialize the isFixedPointed
-			isFixedPointed = true;
-			//Iterate through the constraints to infer the bounds.
-			for(Constraint c: this.constraints){
-				//The inferBound method returns false when all the bounds.
-				//So we negated the result and use the AND bitwise to combine all the results.
-				boolean isChanged = c.inferBound(this.unionOfBounds);
-				isFixedPointed |= isChanged;
-			}			
+			isFixedPoint = true;
+			//Use the OR bitwise operator to combine all the results.
+			isFixedPoint |= inferBounds();	
 		}		
-		return isFixedPointed;
+		return isFixedPoint;
 	}
 
 	@Override
