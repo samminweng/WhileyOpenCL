@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import wyil.attributes.VariableDeclarations;
 import wyil.attributes.VariableDeclarations.Declaration;
@@ -16,6 +17,7 @@ import wyopcl.translator.bound.Bounds;
 import wyopcl.translator.bound.CFGraph;
 import wyopcl.translator.bound.CFGraph.STATUS;
 import wyopcl.translator.bound.Domain;
+import wyopcl.translator.bound.constraint.Constraint;
 import wyopcl.translator.bound.constraint.Range;
 /**
  * Aims to assist the bound analyzer to build up CFGraph, propagate bounds
@@ -57,6 +59,20 @@ public final class BoundAnalyzerHelper {
 	}
 
 	/**
+	 * Given a constraint, add it to the CFGraph of a funcion
+	 * @param name the function name
+	 * @param c the constraint
+	 */
+	/*public static void addConstraint(String name, Constraint c){
+		if(!isCached(name)){
+			CFGraph graph = getCFGraph(name);
+			graph.addConstraint(c);
+		}
+	}*/
+	
+	
+	
+	/**
 	 * Promote and update the status of CF graph.
 	 * 
 	 * @param name
@@ -91,10 +107,10 @@ public final class BoundAnalyzerHelper {
 	 * @return
 	 */
 	public static SymbolFactory getSymbolFactory(String name) {
-		if (symbol_factorys.containsKey(name)) {
-			return symbol_factorys.get(name);
+		if (!symbol_factorys.containsKey(name)) {
+			symbol_factorys.put(name, new SymbolFactory());
 		}
-		return null;
+		return symbol_factorys.get(name);
 	}
 
 	/**
@@ -189,12 +205,15 @@ public final class BoundAnalyzerHelper {
 	public static void propagateInputBoundsToFunctionCall(String caller_name, String callee_name, List<Type> params, int[] operands, Bounds bnd) {
 		CFGraph graph = getCFGraph(callee_name);
 		graph.addInputBounds(params, operands, bnd);
+	}
+
+	public static void propagateInputSymbolsToFunctionCall(String caller_name, String callee_name, List<Type> params, int[] operands) {
 		SymbolFactory caller_factory = getSymbolFactory(caller_name);
 		SymbolFactory callee_factory = getSymbolFactory(callee_name);
 		
 		callee_factory.addInputSymbols(caller_factory, operands, params);
 	}
-
+	
 	/**
 	 * Propagate the bounds of return value to the caller.
 	 * 
