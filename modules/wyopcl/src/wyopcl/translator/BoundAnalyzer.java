@@ -329,16 +329,13 @@ public class BoundAnalyzer {
 	}
 
 	private void analyze(Codes.Assign code, String name) {
-		String target = prefix + code.target();
-		String operand = prefix + code.operand(0);
+		String target_reg = prefix + code.target();
+		String op_reg = prefix + code.operand(0);
 		if (code.type() instanceof Type.List) {
-			SymbolFactory sym_factory = BoundAnalyzerHelper.getSymbolFactory(name);
-			sym_factory.putAttribute(target, "type", code.type());
-			// Get the 'size' attribute from
-			Object size_att = sym_factory.getAttribute(operand, "size");
-			if (size_att != null) {
-				BigInteger size = (BigInteger) size_att;
-				sym_factory.putAttribute(target, "size", size);
+			// Get the 'size' attribute 
+			BigInteger size = BoundAnalyzerHelper.getSizeInfo(name, op_reg);
+			if (size != null) {
+				BoundAnalyzerHelper.addSizeInfo(name, target_reg, size);
 			}
 		}
 
@@ -347,7 +344,7 @@ public class BoundAnalyzer {
 			// Add the constraint 'target = operand'
 			if (!BoundAnalyzerHelper.isCached(name)) {
 				CFGraph graph = BoundAnalyzerHelper.getCFGraph(name);
-				graph.addConstraint(new Assign(target, operand));
+				graph.addConstraint(new Assign(target_reg, op_reg));
 			}
 		}
 	}
@@ -614,16 +611,20 @@ public class BoundAnalyzer {
 	 * @param code
 	 */
 	private void analyze(Codes.LengthOf code, String name) {
-		SymbolFactory sym_factory = BoundAnalyzerHelper.getSymbolFactory(name);
+		//SymbolFactory sym_factory = BoundAnalyzerHelper.getSymbolFactory(name);
 		// Get the size att
-		String op = prefix + code.operand(0);
-		BigInteger size = (BigInteger) sym_factory.getAttribute(op, "size");
-		String target = prefix + code.target();
+		String op_reg = prefix + code.operand(0);
+		String target_reg = prefix + code.target();
 		Type type = code.assignedType();
-		// Add 'type' att
-		sym_factory.putAttribute(target, "type", type);
-		// Add 'value' att
-		sym_factory.putAttribute(target, "value", size);
+		BigInteger size = (BigInteger) BoundAnalyzerHelper.getSizeInfo(name, op_reg);
+		if(size != null){
+			// Add 'size' att
+			BoundAnalyzerHelper.addSizeInfo(name, target_reg, size);
+		}
+		
+		
+		
+		
 		// graph.addConstraint(new Const(target, size));
 	}
 
@@ -819,7 +820,7 @@ public class BoundAnalyzer {
 			// Infer the bounds of caller function.
 			Bounds input_bnds = inferBounds(caller_name);
 
-			BoundAnalyzerHelper.propagateInputSymbolsToFunctionCall(caller_name, callee_name, callee.type().params(), code.operands());
+			BoundAnalyzerHelper.propagateSizeInfoToFunctionCall(caller_name, callee_name, callee.type().params(), code.operands());
 			// Build CFGraph for callee.
 			buildCFG(config, callee_name);
 			// Propagate the bounds of input parameters to the function.

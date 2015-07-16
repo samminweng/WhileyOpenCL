@@ -111,26 +111,6 @@ public class SymbolFactory {
 	}
 
 	/**
-	 * Propagate the symbols of input parameters from the caller to callee 
-	 * @param caller_factory the symbol factory of caller.
-	 * @param param
-	 */
-	public void addInputSymbols(SymbolFactory caller_factory, int[] operands, List<Type> params){
-		int reg = 0;
-		// Pass the bounds of input parameters.
-		while (reg < params.size()) {
-			String param = prefix + reg;
-			String operand = prefix + operands[reg];
-			// pass the symbol
-			Symbol symbol = caller_factory.getSymbol(operand).clone();
-			// Update the name
-			symbol.setName(param);
-			this.putSymbol(param, symbol);
-			reg++;
-		}
-	}
-
-	/**
 	 * Propagates the symbol of return value from callee to caller.
 	 * @param callee the symbol factory of callee
 	 */

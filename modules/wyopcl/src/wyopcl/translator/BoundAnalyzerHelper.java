@@ -3,6 +3,7 @@ package wyopcl.translator;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -52,26 +53,12 @@ public final class BoundAnalyzerHelper {
 		} else {
 			// Create an graph and symbol control
 			cfgraphs.put(name, new CFGraph());
-			symbol_factorys.put(name, new SymbolFactory());
 		}
 
 		return false;
 	}
 
-	/**
-	 * Given a constraint, add it to the CFGraph of a funcion
-	 * @param name the function name
-	 * @param c the constraint
-	 */
-	/*public static void addConstraint(String name, Constraint c){
-		if(!isCached(name)){
-			CFGraph graph = getCFGraph(name);
-			graph.addConstraint(c);
-		}
-	}*/
-	
-	
-	
+
 	/**
 	 * Promote and update the status of CF graph.
 	 * 
@@ -145,7 +132,7 @@ public final class BoundAnalyzerHelper {
 	public static void printBoundsAndSymbols(Configuration config, Bounds bnds, String name) {
 		FunctionOrMethod functionOrMethod = getFunctionOrMethod(config, name);
 		VariableDeclarations variables = functionOrMethod.attribute(VariableDeclarations.class);
-		
+
 		String str = "Bound Analysis of " + name + ":\n";
 		List<Domain> sortedDomains = bnds.sortedDomains();
 		// Print out the bounds
@@ -185,7 +172,7 @@ public final class BoundAnalyzerHelper {
 
 	}
 
-	
+
 	/**
 	 * Propagate the input bounds to the callee function.
 	 * 
@@ -206,14 +193,53 @@ public final class BoundAnalyzerHelper {
 		CFGraph graph = getCFGraph(callee_name);
 		graph.addInputBounds(params, operands, bnd);
 	}
-
-	public static void propagateInputSymbolsToFunctionCall(String caller_name, String callee_name, List<Type> params, int[] operands) {
-		SymbolFactory caller_factory = getSymbolFactory(caller_name);
-		SymbolFactory callee_factory = getSymbolFactory(callee_name);
-		
-		callee_factory.addInputSymbols(caller_factory, operands, params);
+	/**
+	 * Get the size info of input parameters for a function call and pass the sizes to the invoked function.
+	 * @param caller_name
+	 * @param callee_name
+	 * @param params
+	 * @param operands
+	 */
+	public static void propagateSizeInfoToFunctionCall(String caller_name, String callee_name, List<Type> params, int[] operands) {
+		// Pass the bounds of input parameters.
+		for (int index=0;index < params.size();index++) {			
+			String op_reg = prefix + operands[index];
+			String param_reg = prefix + index;
+			//Get size info from caller
+			BigInteger size = getSizeInfo(caller_name, op_reg);
+			if(size != null){
+				//Pass size to callee
+				addSizeInfo(callee_name, param_reg, size);	
+			}
+		}
 	}
-	
+
+	/**
+	 * Add size info for the specific register.
+	 * @param name the function name
+	 * @param reg register
+	 */
+	public static void addSizeInfo(String name, String reg, BigInteger size){
+		SymbolFactory sym_factory = getSymbolFactory(name);
+		// Get the 'size' attribute from
+		sym_factory.putAttribute(reg, "size", size);
+	}
+	/**
+	 * Get the size info for 
+	 * @param name the function name
+	 * @param reg register
+	 */
+	public static BigInteger getSizeInfo(String name, String reg){
+		SymbolFactory sym_factory = getSymbolFactory(name);
+		Object size = sym_factory.getAttribute(reg, "size");
+		if(size != null){
+			return (BigInteger)size;
+		}
+		
+		return null;
+	}
+
+
 	/**
 	 * Propagate the bounds of return value to the caller.
 	 * 
@@ -267,7 +293,7 @@ public final class BoundAnalyzerHelper {
 		if(!config.isVerbose()){
 			return;
 		}
-		
+
 		String dot_string = "digraph " + name + "{\n";
 		CFGraph graph = getCFGraph(name);
 		List<BasicBlock> blks = graph.getList();
