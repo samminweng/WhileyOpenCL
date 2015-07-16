@@ -41,7 +41,8 @@ public class BoundAnalyzer {
 	private Configuration config;
 	// The boolean flag indicates the byte-code is inside loop structure.
 	private boolean isLoop;
-
+	// The line number
+	private int line;
 	// Static instance
 	private static BoundAnalyzer instance = new BoundAnalyzer();
 
@@ -70,7 +71,7 @@ public class BoundAnalyzer {
 		if (!BoundAnalyzerHelper.isCached(name)) {
 			BoundAnalyzerHelper.promoteCFGStatus(name);
 		}
-
+		this.line = 0;
 		iterateBytecode(name, functionOrMethod.body().bytecodes());
 		// Check if the CFG graph is built and cached in the map.
 		// If not, run the CFG building procedure.
@@ -92,8 +93,6 @@ public class BoundAnalyzer {
 	 *            the list of byte-code
 	 */
 	private void iterateBytecode(String name, List<Code> code_blk) {
-		// The line number
-		int line = 0;
 		// Parse each byte-code and add the constraints accordingly.
 		for (Code code : code_blk) {
 			if (!BoundAnalyzerHelper.isCached(name)) {
@@ -815,6 +814,7 @@ public class BoundAnalyzer {
 	private void analyze(Codes.Invoke code, String caller_name) {
 		FunctionOrMethod callee = BoundAnalyzerHelper.getFunctionOrMethod(this.config, code.name.name());
 		if (callee != null) {
+			int caller_line = line;
 			// Callee name
 			String callee_name = callee.name();
 			// Infer the bounds of caller function.
@@ -831,7 +831,8 @@ public class BoundAnalyzer {
 			// Promote the status of callee's CF graph to be 'complete'
 			BoundAnalyzerHelper.promoteCFGStatus(callee_name);
 			BoundAnalyzerHelper.propagateBoundsFromFunctionCall(caller_name, callee_name, prefix + code.target(), code.type().ret(), ret_bnd);
-
+			//Reset the line number
+			this.line = caller_line;
 		}
 	}
 
