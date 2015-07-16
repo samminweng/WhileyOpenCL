@@ -308,7 +308,7 @@ public class BoundAnalyzer {
 		// Bounds bnds = bound_infer_proc.inferBounds(config, graph);
 		Bounds bnds = exit_blk.getBounds();
 
-		BoundAnalyzerHelper.printBoundsAndSymbols(config, bnds, name);
+		BoundAnalyzerHelper.printBoundsAndSize(config, bnds, name);
 		BoundAnalyzerHelper.printCFG(config, name);
 		return bnds;
 	}

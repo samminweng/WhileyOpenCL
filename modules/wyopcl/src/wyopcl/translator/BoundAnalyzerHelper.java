@@ -107,8 +107,7 @@ public final class BoundAnalyzerHelper {
 	 *            the domain that contains the register and bounds.
 	 * @return the variable name (starting with "%")
 	 */
-	private static String getVarName(Domain domain, VariableDeclarations variables) {
-		int reg = domain.getReg();
+	private static String getVarName(int reg, VariableDeclarations variables) {
 		// Check if the register has been kept in the functional variable
 		// declarations.
 		if (reg < variables.size()) {
@@ -120,7 +119,7 @@ public final class BoundAnalyzerHelper {
 				}
 			}
 		}
-		return domain.getName();
+		return "%"+reg;
 	}
 
 	/**
@@ -129,7 +128,7 @@ public final class BoundAnalyzerHelper {
 	 * @param bnd
 	 *            the bounds
 	 */
-	public static void printBoundsAndSymbols(Configuration config, Bounds bnds, String name) {
+	public static void printBoundsAndSize(Configuration config, Bounds bnds, String name) {
 		FunctionOrMethod functionOrMethod = getFunctionOrMethod(config, name);
 		VariableDeclarations variables = functionOrMethod.attribute(VariableDeclarations.class);
 
@@ -137,34 +136,26 @@ public final class BoundAnalyzerHelper {
 		List<Domain> sortedDomains = bnds.sortedDomains();
 		// Print out the bounds
 		for (Domain d : sortedDomains) {
-			str += "\tdomain(" + getVarName(d, variables) + ")\t=" + d.getBounds() + "\n";
+			String varName = d.getName();
+			if(d.getReg() >= 0){
+				varName = getVarName(d.getReg(), variables);
+			}			
+			str += "\tdomain(" + varName + ")\t=" + d.getBounds() + "\n";
 		}
 
-		SymbolFactory sym_ctrl = getSymbolFactory(name);
+		SymbolFactory factory = getSymbolFactory(name);
 
-		List<Symbol> sortedSymbols = sym_ctrl.sortedSymbols();
-		// Print out the values of available variables
-		for (Symbol symbol : sortedSymbols) {
-			// String str_symbols = "";
-			String symbol_name = symbol.getName();
-			// print the 'value' attribute
-			Object val = symbol.getAttribute("value");
-			if (val != null) {
-				str += "\tvalue(" + symbol_name + ")\t= " + val + "\n";
-			}
-		}
-
+		List<Symbol> sortedSymbols = factory.sortedSymbols();
 		// Print out the size of available variables
 		for (Symbol symbol : sortedSymbols) {
-			// String str_symbols = "";
-			String symbol_name = symbol.getName();
-			// get the 'type' attribute
-			Type type = (Type) symbol.getAttribute("type");
-			// print the 'size' att
-			if (type instanceof Type.List) {
-				Object size = symbol.getAttribute("size");
-				str += "\tsize(" + symbol_name + ")\t= " + size + "\n";
+			String varName = symbol.getName();
+			if(symbol.getName().contains("%")){
+				int reg = Integer.parseInt(symbol.getName().split("%")[1]);
+				varName = getVarName(reg, variables);
 			}
+			// print the 'size' att
+			Object size = symbol.getAttribute("size");
+			str += "\tsize(" + varName + ")\t= " + size + "\n";
 		}
 
 		str += "Consistency=" + bnds.checkBoundConsistency();
@@ -305,7 +296,7 @@ public final class BoundAnalyzerHelper {
 			}
 		}
 		dot_string += "\n}";
-		// Write out the CFG-function_name.dot
+		// )Write out the CFG-function_name.dot
 		try {
 			PrintWriter cfg_writer = new PrintWriter(name + ".dot", "UTF-8");
 			cfg_writer.println(dot_string);
