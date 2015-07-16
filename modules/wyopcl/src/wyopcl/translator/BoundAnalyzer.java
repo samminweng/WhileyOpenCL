@@ -109,6 +109,8 @@ public class BoundAnalyzer {
 						analyze((Codes.Invariant) code, name);
 					} else if (code instanceof Codes.Assign) {
 						analyze((Codes.Assign) code, name);
+					} else if (code instanceof Codes.Assume){
+						analyze((Codes.Assume)code, name);
 					} else if (code instanceof Codes.BinaryOperator) {
 						analyze((Codes.BinaryOperator) code, name);
 					} else if (code instanceof Codes.Convert) {
@@ -321,6 +323,12 @@ public class BoundAnalyzer {
 		// iterateBytecode(name, code.bytecodes());
 		// graph.disabledInvariant();
 	}
+	
+	
+	private void analyze(Codes.Assume code, String name){
+		iterateBytecode(name, code.bytecodes());
+	}
+	
 
 	private void analyze(Codes.Assign code, String name) {
 		String target_reg = prefix + code.target();

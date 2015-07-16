@@ -53,4 +53,14 @@ public class BoundAnalysisTestCase {
 		util.execBoundAnalysis(valid_path, "BoolList_Valid_2", "bound", "gradual");
 	}
 	
+	@Test
+	public void test_ListAppend_Valid_3_Naive() {
+		util.execBoundAnalysis(valid_path, "ListAppend_Valid_3", "bound", "naive");
+	}
+	
+	@Test
+	public void test_ListAppend_Valid_3_Gradual() {
+		util.execBoundAnalysis(valid_path, "ListAppend_Valid_3", "bound", "gradual");
+	}
+	
 }

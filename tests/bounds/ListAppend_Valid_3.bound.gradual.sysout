@@ -1,0 +1,95 @@
+main.0 [	const %5 = 1 : int]
+main.1 [	const %6 = 2 : int]
+main.2 [	const %7 = 3 : int]
+main.3 [	newlist %8 = (%5, %6, %7) : [int]]
+main.4 [	assign %4 = %8  : [int]]
+main.5 [	assign %1 = %4  : [int]]
+main.6 [	const %10 = 5 : int]
+main.7 [	const %11 = 6 : int]
+main.8 [	const %12 = 7 : int]
+main.9 [	newlist %13 = (%10, %11, %12) : [int]]
+main.10 [	assign %9 = %13  : [int]]
+main.11 [	assign %2 = %9  : [int]]
+main.12 [	invoke %15 = (%1, %2) ListAppend_Valid_3:f : function([ListAppend_Valid_3:nat],[ListAppend_Valid_3:nat]) -> [ListAppend_Valid_3:nat]]
+Bound Analysis of main:
+	domain(left)	=[1..3]
+	domain(%10)	=[5..5]
+	domain(%11)	=[6..6]
+	domain(%12)	=[7..7]
+	domain(%13)	=[5..7]
+	domain(right)	=[5..7]
+	domain(%4)	=[1..3]
+	domain(%5)	=[1..1]
+	domain(%6)	=[2..2]
+	domain(%7)	=[3..3]
+	domain(%8)	=[1..3]
+	domain(%9)	=[5..7]
+	size(left)	= 3
+	size(right)	= 3
+	size(%4)	= 3
+	size(%8)	= 3
+	size(%9)	= 3
+	size(%13)	= 3
+Consistency=true
+f.0 [	append %2 = %0, %1 : [int]]
+f.1 [	return %2 : [int]]
+f.2 [	return]
+Bound Analysis of f:
+	domain(xs)	=[-infinity..infinity]
+	domain(ys)	=[-infinity..infinity]
+	domain(%2)	=[-infinity..infinity]
+	domain(return)	=[-infinity..infinity]
+	size(xs)	= 3
+	size(ys)	= 3
+	size(%2)	= 6
+	size(return)	= 6
+Consistency=true
+main.13 [	assign %14 = %15  : [int]]
+main.14 [	assign %3 = %14  : [int]]
+main.15 [	assume ]
+main.16 [	const %16 = 1 : int]
+main.17 [	const %17 = 2 : int]
+main.18 [	const %18 = 3 : int]
+main.19 [	const %19 = 5 : int]
+main.20 [	const %20 = 6 : int]
+main.21 [	const %21 = 7 : int]
+main.22 [	newlist %22 = (%16, %17, %18, %19, %20, %21) : [int]]
+main.23 [	ifeq %3, %22 goto blklab1 : [int]]
+main.24 [	fail]
+main.25 [.blklab1]
+main.26 [	return]
+Bound Analysis of main:
+	domain(left)	=[1..3]
+	domain(%10)	=[5..5]
+	domain(%11)	=[6..6]
+	domain(%12)	=[7..7]
+	domain(%13)	=[5..7]
+	domain(%14)	=[-infinity..infinity]
+	domain(%15)	=[-infinity..infinity]
+	domain(%16)	=[1..1]
+	domain(%17)	=[2..2]
+	domain(%18)	=[3..3]
+	domain(%19)	=[5..5]
+	domain(right)	=[5..7]
+	domain(%20)	=[6..6]
+	domain(%21)	=[7..7]
+	domain(%22)	=[1..7]
+	domain(r)	=[1..7]
+	domain(%4)	=[1..3]
+	domain(%5)	=[1..1]
+	domain(%6)	=[2..2]
+	domain(%7)	=[3..3]
+	domain(%8)	=[1..3]
+	domain(%9)	=[5..7]
+	size(left)	= 3
+	size(right)	= 3
+	size(r)	= 6
+	size(%4)	= 3
+	size(%8)	= 3
+	size(%9)	= 3
+	size(%13)	= 3
+	size(%14)	= 6
+	size(%15)	= 6
+	size(%22)	= 6
+Consistency=true
+Bound analysis completed.
