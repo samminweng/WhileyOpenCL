@@ -14,6 +14,7 @@ import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.bound.BasicBlock;
+import wyopcl.translator.bound.BasicBlock.BlockType;
 import wyopcl.translator.bound.Bounds;
 import wyopcl.translator.bound.CFGraph;
 import wyopcl.translator.bound.CFGraph.STATUS;
@@ -182,7 +183,24 @@ public final class BoundAnalyzerHelper {
 	 */
 	public static void propagateInputBoundsToFunctionCall(String caller_name, String callee_name, List<Type> params, int[] operands, Bounds bnd) {
 		CFGraph graph = getCFGraph(callee_name);
-		graph.addInputBounds(params, operands, bnd);
+		//clear all the bounds in each block
+		for(BasicBlock blk: graph.getList()){
+			blk.emptyBounds();
+		}
+		
+		BasicBlock entry = graph.getBasicBlock("entry", BlockType.ENTRY);
+		//Clear all the constraints/bounds in entry block.		
+		entry.emptyConstraints();
+		int index = 0;
+		for (Type paramType : params) {
+			String param = prefix + index;
+			String operand = prefix + operands[index];
+			// Check parameter type
+			if (TranslatorHelper.isIntType(paramType)) {
+				entry.addBounds(param, bnd.getLower(operand),  bnd.getUpper(operand));
+			}	
+			index++;
+		}
 	}
 	/**
 	 * Get the size info of input parameters for a function call and pass the sizes to the invoked function.
@@ -245,10 +263,26 @@ public final class BoundAnalyzerHelper {
 			// propagate the bounds of return value.
 			graph.addConstraint(new Range(ret_reg, bnd.getLower("return"), bnd.getUpper("return")));
 		}
-
-		SymbolFactory caller_factory = getSymbolFactory(caller_name);
-		SymbolFactory callee_factory = getSymbolFactory(callee_name);		
-		caller_factory.addOutputSymbols(callee_factory, ret_reg, ret_type);
+	}
+	
+	/**
+	 * Get the size info of the return list from callee and propagate the size to caller. 
+	 * @param caller_name
+	 * @param callee_name
+	 * @param ret_reg
+	 * @param ret_type
+	 */
+	public static void propagateSizeFromFunctionCall(String caller_name, String callee_name, String ret_reg, Type ret_type) {
+		//Check if the return value is a list.
+		if (ret_type instanceof Type.List) {
+			// Get 'size' attribute from callee
+			BigInteger size = (BigInteger) getSizeInfo(callee_name, "return");			
+			if(size != null){
+				// Add 'size' info to caller
+				addSizeInfo(caller_name, ret_reg, size);
+			}
+			
+		}
 	}
 
 	/**

@@ -213,11 +213,8 @@ public class BoundAnalyzer {
 	public Bounds inferBounds(String name) {
 		CFGraph graph = BoundAnalyzerHelper.getCFGraph(name);
 
-		// Repeatedly iterates over all blocks, starting from the entry block to
-		// the
-		// exit block, and infer the bounds consistent with all the constraints
-		// in
-		// each block.
+		// Repeatedly iterates over all blocks, starting from the entry block to the
+		// exit block, and infer the bounds consistent with all the constraints in each block.
 		List<BasicBlock> list = graph.getList();
 		boolean isFixedPoint = false;
 		int iteration = 0;
@@ -258,9 +255,7 @@ public class BoundAnalyzer {
 
 					bnd_after = (Bounds) blk.getBounds();
 					if (blk.getType().equals(BlockType.LOOP_BODY)) {
-						bnd_after.checkBoundChange(bnd_before);
-						// checkLoopVarBoundChange(config, bnd_before,
-						// bnd_after, iteration, blk);
+						bnd_after.checkBoundChange(bnd_before);						
 					}
 					// Test the equality of existing and newly inferred bounds.
 					if (bnd_before != null && !bnd_before.equals(bnd_after)) {
@@ -779,16 +774,17 @@ public class BoundAnalyzer {
 			graph.setCurrentBlock(null);
 		}
 	}
-
+	
+	/**
+	 * Analyze the FieldLoad byte-code. 
+	 * 
+	 * 
+	 * @param code
+	 * @param name
+	 */
 	private void analyze(Codes.FieldLoad code, String name) {
 		String target = prefix + code.target();
 		String record = prefix + code.operand(0);
-		SymbolFactory sym_factory = BoundAnalyzerHelper.getSymbolFactory(name);
-		// add the type to the record
-		sym_factory.putAttribute(record, "type", code.type());
-		// Target
-		sym_factory.putAttribute(target, "type", code.fieldType());
-		sym_factory.putAttribute(target, "field", code.field);
 	}
 
 	private void analyze(Codes.Convert code, String name) {
@@ -831,6 +827,7 @@ public class BoundAnalyzer {
 			// Promote the status of callee's CF graph to be 'complete'
 			BoundAnalyzerHelper.promoteCFGStatus(callee_name);
 			BoundAnalyzerHelper.propagateBoundsFromFunctionCall(caller_name, callee_name, prefix + code.target(), code.type().ret(), ret_bnd);
+			BoundAnalyzerHelper.propagateSizeFromFunctionCall(caller_name, callee_name, prefix + code.target(), code.type().ret());
 			//Reset the line number
 			this.line = caller_line;
 		}
