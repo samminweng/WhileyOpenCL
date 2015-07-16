@@ -42,8 +42,9 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 			return Integer.parseInt(name.split("^%")[1]);
 		}
 	
+		return -1;
 		//Return the maximal values for other cases.
-		return Integer.MAX_VALUE;
+		//return Integer.MAX_VALUE;
 	}
 	
 	private int getLabel(){

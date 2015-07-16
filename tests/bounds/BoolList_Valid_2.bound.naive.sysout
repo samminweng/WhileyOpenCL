@@ -1,0 +1,125 @@
+main.0 [	const %4 = true : bool]
+main.1 [	const %5 = true : bool]
+main.2 [	const %6 = true : bool]
+main.3 [	const %7 = true : bool]
+main.4 [	const %8 = true : bool]
+main.5 [	const %9 = true : bool]
+main.6 [	const %10 = true : bool]
+main.7 [	newlist %11 = (%4, %5, %6, %7, %8, %9, %10) : [bool]]
+main.8 [	assign %3 = %11  : [bool]]
+main.9 [	assign %1 = %3  : [bool]]
+main.10 [	const %13 = 0 : int]
+main.11 [	assign %12 = %13  : int]
+main.12 [	assign %2 = %12  : int]
+main.13 [	loop (%1, %14, %15, %16, %17)]
+main.14 [	const %14 = 5 : int]
+main.15 [	ifge %2, %14 goto blklab8 : int]
+main.16 [	fieldload %15 = %0 out : {[[int]] args,{method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s} out}]
+main.17 [	fieldload %16 = %15 println : {method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s}]
+main.18 [	indirectinvoke %16 (%1) : method(any) -> void]
+main.19 [	invoke %17 = (%1) BoolList_Valid_2:play : function([bool]) -> [bool]]
+Bound Analysis of main:
+	domain(%12)	=[0..0]
+	domain(%13)	=[0..0]
+	domain(%14)	=[5..5]
+	domain(i)	=[0..0]
+	size(xs)	= 7
+	size(%3)	= 7
+	size(%11)	= 7
+Consistency=true
+play.0 [	assign %3 = %0  : [bool]]
+play.1 [	assign %1 = %3  : [bool]]
+play.2 [	const %5 = 0 : int]
+play.3 [	assign %4 = %5  : int]
+play.4 [	assign %2 = %4  : int]
+play.5 [	loop (%1, %6, %7, %8, %9, %10, %11, %12)]
+play.6 [	lengthof %6 = %0 : [bool]]
+play.7 [	ifge %2, %6 goto blklab0 : int]
+play.8 [	invoke %7 = (%2, %0) BoolList_Valid_2:isAlive : function(int,[bool]) -> bool]
+Bound Analysis of play:
+	domain(i)	=[0..0]
+	domain(%4)	=[0..0]
+	domain(%5)	=[0..0]
+	domain(%6)	=[-infinity..infinity]
+	size(board)	= 7
+	size(nboard)	= 7
+	size(%3)	= 7
+	size(%6)	= 7
+Consistency=true
+isAlive.0 [	const %2 = 0 : int]
+isAlive.1 [	ifle %0, %2 goto blklab4 : int]
+isAlive.2 [	const %3 = 1 : int]
+isAlive.3 [	add %4 = %0, %3 : int]
+isAlive.4 [	lengthof %5 = %1 : [bool]]
+isAlive.5 [	ifge %4, %5 goto blklab4 : int]
+isAlive.6 [	const %6 = 1 : int]
+isAlive.7 [	sub %7 = %0, %6 : int]
+isAlive.8 [	indexof %8 = %1, %7 : [bool]]
+isAlive.9 [	const %9 = true : bool]
+isAlive.10 [	ifeq %8, %9 goto blklab6 : bool]
+isAlive.11 [	goto blklab4]
+isAlive.12 [.blklab6]
+isAlive.13 [	const %10 = 1 : int]
+isAlive.14 [	add %11 = %0, %10 : int]
+isAlive.15 [	indexof %12 = %1, %11 : [bool]]
+isAlive.16 [	const %13 = true : bool]
+isAlive.17 [	ifeq %12, %13 goto blklab7 : bool]
+isAlive.18 [	goto blklab4]
+isAlive.19 [.blklab7]
+isAlive.20 [	const %14 = true : bool]
+isAlive.21 [	return %14 : bool]
+isAlive.22 [	goto blklab5]
+isAlive.23 [.blklab4]
+isAlive.24 [	const %15 = false : bool]
+isAlive.25 [	return %15 : bool]
+isAlive.26 [.blklab5]
+isAlive.27 [	return]
+Bound Analysis of isAlive:
+	domain(i)	=[-infinity..infinity]
+	domain(%10)	=[1..1]
+	domain(%11)	=[-infinity..infinity]
+	domain(%2)	=[0..0]
+	size(board)	= 7
+	size(%5)	= 7
+Consistency=true
+play.9 [	const %8 = true : bool]
+play.10 [	ifeq %7, %8 goto blklab3 : bool]
+play.11 [	goto blklab1]
+play.12 [.blklab3]
+play.13 [	const %9 = true : bool]
+play.14 [	const %10 = true : bool]
+play.15 [	update %1[%2] = %10 : [bool] -> [bool]]
+play.16 [	goto blklab2]
+play.17 [.blklab1]
+play.18 [	const %11 = false : bool]
+play.19 [	const %12 = false : bool]
+play.20 [	update %1[%2] = %12 : [bool] -> [bool]]
+play.21 [.blklab2]
+play.22 [.blklab0]
+play.23 [	return %1 : [bool]]
+play.24 [	return]
+Bound Analysis of play:
+	domain(i)	=[0..0]
+	domain(%4)	=[0..0]
+	domain(%5)	=[0..0]
+	domain(%6)	=[-infinity..infinity]
+	size(board)	= 7
+	size(nboard)	= 7
+	size(%3)	= 7
+	size(%6)	= 7
+	size(return)	= 7
+Consistency=true
+main.20 [	assign %1 = %17  : [bool]]
+main.21 [.blklab8]
+main.22 [	return]
+Bound Analysis of main:
+	domain(%12)	=[0..0]
+	domain(%13)	=[0..0]
+	domain(%14)	=[5..5]
+	domain(i)	=[0..0]
+	size(xs)	= 7
+	size(%3)	= 7
+	size(%11)	= 7
+	size(%17)	= 7
+Consistency=true
+Bound analysis completed.

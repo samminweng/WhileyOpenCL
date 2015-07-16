@@ -43,24 +43,24 @@ public class BoundAnalysisTestCase {
 		util.execBoundAnalysis(valid_path, "IfElse_Valid_2", "bound", "gradual");
 	}
 	
-	//@Test
-	public void test_While_Valid_1_Naive() {
-		util.execBoundAnalysis(valid_path, "While_Valid_1", "-bound", "naive", "-pattern");
-	}
-	
-	//@Test
-	public void test_While_Valid_1_Gradual() {
-		util.execBoundAnalysis(valid_path, "While_Valid_1", "-bound", "gradual", "-pattern");
-	}
-	
-	/*@Test
+	@Test
 	public void test_BoolList_Valid_2_Naive() {
-		util.execBoundAnalysis(valid_path, "BoolList_Valid_2", "-bound", "naive");
+		util.execBoundAnalysis(valid_path, "BoolList_Valid_2", "bound", "naive");
 	}
 	
 	@Test
 	public void test_BoolList_Valid_2_Gradual() {
-		util.execBoundAnalysis(valid_path, "BoolList_Valid_2", "-bound", "gradual");
-	}*/
+		util.execBoundAnalysis(valid_path, "BoolList_Valid_2", "bound", "gradual");
+	}
+	
+	@Test
+	public void test_ListAppend_Valid_3_Naive() {
+		util.execBoundAnalysis(valid_path, "ListAppend_Valid_3", "bound", "naive");
+	}
+	
+	@Test
+	public void test_ListAppend_Valid_3_Gradual() {
+		util.execBoundAnalysis(valid_path, "ListAppend_Valid_3", "bound", "gradual");
+	}
 	
 }

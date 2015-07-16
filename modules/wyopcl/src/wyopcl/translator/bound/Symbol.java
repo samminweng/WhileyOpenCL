@@ -1,4 +1,4 @@
-package wyopcl.translator;
+package wyopcl.translator.bound;
 
 import java.util.Properties;
 /**

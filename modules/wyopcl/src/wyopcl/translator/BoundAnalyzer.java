@@ -2,7 +2,6 @@ package wyopcl.translator;
 
 import java.math.BigInteger;
 import java.util.List;
-
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Codes.Fail;
@@ -25,7 +24,6 @@ import wyopcl.translator.bound.constraint.LeftPlus;
 import wyopcl.translator.bound.constraint.LessThan;
 import wyopcl.translator.bound.constraint.LessThanEquals;
 import wyopcl.translator.bound.constraint.Negate;
-import wyopcl.translator.bound.constraint.Range;
 import wyopcl.translator.bound.constraint.Union;
 
 /***
@@ -41,8 +39,10 @@ import wyopcl.translator.bound.constraint.Union;
 public class BoundAnalyzer {
 	private final String prefix = "%";
 	private Configuration config;
-	// The boolean flag indicates the loop structure.
+	// The boolean flag indicates the byte-code is inside loop structure.
 	private boolean isLoop;
+	// The line number
+	private int line;
 	// Static instance
 	private static BoundAnalyzer instance = new BoundAnalyzer();
 
@@ -50,7 +50,6 @@ public class BoundAnalyzer {
 	 * Constructor
 	 */
 	public BoundAnalyzer() {
-		//bound_infer_proc = new BoundInference();
 	}
 
 	public static BoundAnalyzer getInstance() {
@@ -68,14 +67,20 @@ public class BoundAnalyzer {
 		this.config = config;
 		// this.function_name = name;
 		FunctionOrMethod functionOrMethod = BoundAnalyzerHelper.getFunctionOrMethod(config, name);
-		// Check if the CFG graph is built and cached in the map.
-		// If not, run the CFG building procedure.
+
 		if (!BoundAnalyzerHelper.isCached(name)) {
 			BoundAnalyzerHelper.promoteCFGStatus(name);
-			iterateBytecode(name, functionOrMethod.body().bytecodes());
 		}
+		this.line = 0;
+		iterateBytecode(name, functionOrMethod.body().bytecodes());
+		// Check if the CFG graph is built and cached in the map.
+		// If not, run the CFG building procedure.
+		if (BoundAnalyzerHelper.isCached(name)) {
+			BoundAnalyzerHelper.promoteCFGStatus(name);
+		}
+
 	}
-	
+
 	/**
 	 * Build up the control flow graph: iterating each byte-code to extract the
 	 * constraints, create the block (e.g. loop structure/if-else branches) or
@@ -88,30 +93,30 @@ public class BoundAnalyzer {
 	 *            the list of byte-code
 	 */
 	private void iterateBytecode(String name, List<Code> code_blk) {
-		// Get the CFGraph
-		CFGraph graph = BoundAnalyzerHelper.getCFGraph(name);
-		SymbolFactory sym_factory = BoundAnalyzerHelper.getSymbolFactory(name);
-		// The line number
-		int line = 0;
 		// Parse each byte-code and add the constraints accordingly.
 		for (Code code : code_blk) {
-			// Get the Block.Entry
-			line = TranslatorHelper.printWyILCode(code, name, line);
+			if (!BoundAnalyzerHelper.isCached(name)) {
+				// Get the Block.Entry and print out each byte-code
+				line = TranslatorHelper.printWyILCode(code, name, line);
+			}
+
 			if (code instanceof Codes.Invoke) {
 				analyze((Codes.Invoke) code, name);
 			} else {
 				// Parse each byte-code and add the constraints accordingly.
 				try {
 					if (code instanceof Codes.Invariant) {
-						analyze(graph, sym_factory, (Codes.Invariant) code, name);
+						analyze((Codes.Invariant) code, name);
 					} else if (code instanceof Codes.Assign) {
-						analyze(graph, sym_factory, (Codes.Assign) code);
+						analyze((Codes.Assign) code, name);
+					} else if (code instanceof Codes.Assume){
+						analyze((Codes.Assume)code, name);
 					} else if (code instanceof Codes.BinaryOperator) {
-						analyze(graph, sym_factory, (Codes.BinaryOperator) code);
+						analyze((Codes.BinaryOperator) code, name);
 					} else if (code instanceof Codes.Convert) {
-						analyze(graph, sym_factory, (Codes.Convert) code);
+						analyze((Codes.Convert) code, name);
 					} else if (code instanceof Codes.Const) {
-						analyze(graph, sym_factory, (Codes.Const) code);
+						analyze((Codes.Const) code, name);
 					} else if (code instanceof Codes.Debug) {
 						// DebugInterpreter.getInstance().interpret((Codes.Debug)code,
 						// stackframe);
@@ -119,18 +124,18 @@ public class BoundAnalyzer {
 						// DereferenceInterpreter.getInstance().interpret((Codes.Dereference)code,
 						// stackframe);
 					} else if (code instanceof Codes.FieldLoad) {
-						analyze(graph, sym_factory, (Codes.FieldLoad) code);
+						analyze((Codes.FieldLoad) code, name);
 					} else if (code instanceof Codes.Fail) {
-						analyze(graph, sym_factory, (Codes.Fail) code);
+						analyze((Codes.Fail) code, name);
 					} else if (code instanceof Codes.Goto) {
-						analyze(graph, sym_factory, (Codes.Goto) code);
+						analyze((Codes.Goto) code, name);
 					} else if (code instanceof Codes.If) {
-						analyze(graph, sym_factory, (Codes.If) code);
+						analyze((Codes.If) code, name);
 					} else if (code instanceof Codes.IfIs) {
 						// IfIsInterpreter.getInstance().interpret((Codes.IfIs)code,
 						// stackframe);
 					} else if (code instanceof Codes.IndexOf) {
-						analyze(graph, sym_factory, (Codes.IndexOf) code);
+						analyze((Codes.IndexOf) code, name);
 					} else if (code instanceof Codes.IndirectInvoke) {
 						// IndirectInvokeInterpreter.getInstance().interpret((Codes.IndirectInvoke)code,
 						// stackframe);
@@ -138,27 +143,27 @@ public class BoundAnalyzer {
 						// InvertInterpreter.getInstance().interpret((Codes.Invert)code,
 						// stackframe);
 					} else if (code instanceof Codes.ListOperator) {
-						analyze(graph, sym_factory, (Codes.ListOperator) code);
+						analyze((Codes.ListOperator) code, name);
 					} else if (code instanceof Codes.Loop) {
-						analyze(graph, sym_factory, (Codes.Loop) code, name);
+						analyze((Codes.Loop) code, name);
 					} else if (code instanceof Codes.Label) {
-						analyze(graph, sym_factory, (Codes.Label) code);
+						analyze((Codes.Label) code, name);
 					} else if (code instanceof Codes.Lambda) {
 						// LambdaInterpreter.getInstance().interpret((Codes.Lambda)code,
 						// stackframe);
 					} else if (code instanceof Codes.LengthOf) {
-						analyze(graph, sym_factory, (Codes.LengthOf) code);
+						analyze((Codes.LengthOf) code, name);
 					} else if (code instanceof Codes.Move) {
 						throw new RuntimeException("Not implemented!");
 					} else if (code instanceof Codes.NewList) {
-						analyze(graph, sym_factory, (Codes.NewList) code);
+						analyze((Codes.NewList) code, name);
 					} else if (code instanceof Codes.NewRecord) {
 						// NewRecordInterpreter.getInstance().interpret((Codes.NewRecord)code,
 						// stackframe);
 					} else if (code instanceof Codes.NewTuple) {
-						analyze(graph, sym_factory, (Codes.NewTuple) code);
+						analyze((Codes.NewTuple) code, name);
 					} else if (code instanceof Codes.Return) {
-						analyze(graph, sym_factory, (Codes.Return) code);
+						analyze((Codes.Return) code, name);
 					} else if (code instanceof Codes.NewObject) {
 						// NewObjectInterpreter.getInstance().interpret((Codes.NewObject)code,
 						// stackframe);
@@ -166,16 +171,16 @@ public class BoundAnalyzer {
 						// NopInterpreter.getInstance().interpret((Codes.Nop)code,
 						// stackframe);
 					} else if (code instanceof Codes.SubList) {
-						analyze(graph, sym_factory, (Codes.SubList) code);
+						analyze((Codes.SubList) code, name);
 					} else if (code instanceof Codes.Switch) {
 						// SwitchInterpreter.getInstance().interpret((Codes.Switch)code,
 						// stackframe);
 					} else if (code instanceof Codes.TupleLoad) {
-						analyze(graph, sym_factory, (Codes.TupleLoad) code);
+						analyze((Codes.TupleLoad) code, name);
 					} else if (code instanceof Codes.UnaryOperator) {
-						analyze(graph, sym_factory, (Codes.UnaryOperator) code);
+						analyze((Codes.UnaryOperator) code, name);
 					} else if (code instanceof Codes.Update) {
-						analyze(graph, sym_factory, (Codes.Update) code);
+						analyze((Codes.Update) code, name);
 					} else {
 						throw new RuntimeException("unknown wyil code encountered (" + code + ")");
 					}
@@ -187,12 +192,12 @@ public class BoundAnalyzer {
 	}
 
 	/**
+	 * Analyze the fail byte-code.
 	 * 
-	 * @param graph
 	 * @param sym_factory
 	 * @param code
 	 */
-	private void analyze(CFGraph graph, SymbolFactory sym_factory, Fail code) {
+	private void analyze(Fail code, String name) {
 		// Do nothing due to the fact that fail byte-code does not extract
 		// any bound or symbol.
 
@@ -208,19 +213,11 @@ public class BoundAnalyzer {
 	 * @return the bounds
 	 */
 	public Bounds inferBounds(String name) {
-		CFGraph graph = BoundAnalyzerHelper.getCFGraph(name);	
-		
+		CFGraph graph = BoundAnalyzerHelper.getCFGraph(name);
+
 		// Repeatedly iterates over all blocks, starting from the entry block to the
-		// exit block, and infer the bounds consistent with all the constraints in
-		// each block.
+		// exit block, and infer the bounds consistent with all the constraints in each block.
 		List<BasicBlock> list = graph.getList();
-		// The least common multiple of naive (4) and graduate (12) widening
-		// strategies plus one.
-		/*int MaxIteration = 5;
-		if (config.isGradualWiden()) {
-			MaxIteration = 20;
-		}*/
-		
 		boolean isFixedPoint = false;
 		int iteration = 0;
 		// Stop the loop when the program reaches the fixed point or
@@ -228,7 +225,6 @@ public class BoundAnalyzer {
 		// by using AND operator to combine these two condition.
 		// If both of two conditions are evaluated to be true, then enter the
 		// loop.
-		// while (!isFixedPointed && iteration <= MaxIteration) {
 		while (!isFixedPoint) {
 			if (config.isVerbose()) {
 				System.out.println("Iteration " + iteration + " => ");
@@ -247,56 +243,56 @@ public class BoundAnalyzer {
 				// Take the union of all blocks, except for exit block.
 				if (!blk.getType().equals(BlockType.EXIT)) {
 					Bounds bnd_before = null, bnd_after = null;
-					//Before the bound inference, clone and assign the inferred bounds to the bnd_before.
+					// Before the bound inference, clone and assign the inferred
+					// bounds to the bnd_before.
 					bnd_before = (Bounds) blk.getBounds().clone();
-					// Take the union of parents' bounds to produce the input bounds for bound inference.
+					// Take the union of parents' bounds to produce the input
+					// bounds for bound inference.
 					for (BasicBlock parent : blk.getParentNodes()) {
 						blk.unionBounds(parent);
-					}									
-					
+					}
+
 					blk.inferBounds();
 					// End of bound inference for each blks.
-					
+
 					bnd_after = (Bounds) blk.getBounds();
 					if (blk.getType().equals(BlockType.LOOP_BODY)) {
-						bnd_after.checkBoundChange(bnd_before);
-						//checkLoopVarBoundChange(config, bnd_before, bnd_after, iteration, blk);
+						bnd_after.checkBoundChange(bnd_before);						
 					}
-					//Test the equality of existing and newly inferred bounds.
-					if(bnd_before!= null && !bnd_before.equals(bnd_after)){
+					// Test the equality of existing and newly inferred bounds.
+					if (bnd_before != null && !bnd_before.equals(bnd_after)) {
 						// If bounds has changed, then isChanged = false.
 						isChanged = true;
 					}
-					
+
 					// Print out the bounds.
 					if (config.isVerbose()) {
 						System.out.println(blk);
 						System.out.println("isChanged=" + isChanged);
 					}
-					
+
 					// Use bitwise 'AND' to combine all the results
 					isFixedPoint &= (!isChanged);
 				}
 			}
-			
+
 			if (config.isVerbose()) {
 				System.out.println("isFixedPoint=" + isFixedPoint);
 			}
-			
+
 			// Repeat the bound inference for (maximal) three iterations
-			if(iteration == 3){
-				//Widen the bounds of loop variables in all blocks.
-				for(BasicBlock blk: list){
+			if (iteration == 3) {
+				// Widen the bounds of loop variables in all blocks.
+				for (BasicBlock blk : list) {
 					blk.getBounds().widenBounds(config);
 				}
-				//Reset the iteration
+				// Reset the iteration
 				iteration = 0;
-			}else{
+			} else {
 				iteration++;
 			}
-			
 		}
-		
+
 		// Take the union of all blocks to produce the functional result
 		BasicBlock exit_blk = graph.getBasicBlock("exit", BlockType.EXIT);
 		for (BasicBlock blk : list) {
@@ -306,10 +302,10 @@ public class BoundAnalyzer {
 				exit_blk.unionBounds(blk);
 			}
 		}
-		//Bounds bnds = bound_infer_proc.inferBounds(config, graph);
+		// Bounds bnds = bound_infer_proc.inferBounds(config, graph);
 		Bounds bnds = exit_blk.getBounds();
-		
-		BoundAnalyzerHelper.printBoundsAndSymbols(config, bnds, name);
+
+		BoundAnalyzerHelper.printBoundsAndSize(config, bnds, name);
 		BoundAnalyzerHelper.printCFG(config, name);
 		return bnds;
 	}
@@ -321,28 +317,37 @@ public class BoundAnalyzer {
 	 * @param code
 	 *            Invariant {@link wyil.lang.Codes.Invariant}
 	 */
-	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.Invariant code, String name) {
+	private void analyze(Codes.Invariant code, String name) {
 		// Skip the byte-code inside an invariant
 		// graph.enabledInvariant();
 		// iterateBytecode(name, code.bytecodes());
 		// graph.disabledInvariant();
 	}
+	
+	
+	private void analyze(Codes.Assume code, String name){
+		iterateBytecode(name, code.bytecodes());
+	}
+	
 
-	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.Assign code) {
-		String target = prefix + code.target();
-		String operand = prefix + code.operand(0);
+	private void analyze(Codes.Assign code, String name) {
+		String target_reg = prefix + code.target();
+		String op_reg = prefix + code.operand(0);
+		if (code.type() instanceof Type.List) {
+			// Get the 'size' attribute 
+			BigInteger size = BoundAnalyzerHelper.getSizeInfo(name, op_reg);
+			if (size != null) {
+				BoundAnalyzerHelper.addSizeInfo(name, target_reg, size);
+			}
+		}
 
 		// Check if the assigned value is an integer
 		if (TranslatorHelper.isIntType(code.type())) {
 			// Add the constraint 'target = operand'
-			graph.addConstraint(new Assign(target, operand));
-		}
-
-		if (code.type() instanceof Type.List) {
-			sym_ctrl.putAttribute(target, "type", code.type());
-			// Get the 'size' attribute from
-			BigInteger size = (BigInteger) sym_ctrl.getAttribute(operand, "size");
-			sym_ctrl.putAttribute(target, "size", size);
+			if (!BoundAnalyzerHelper.isCached(name)) {
+				CFGraph graph = BoundAnalyzerHelper.getCFGraph(name);
+				graph.addConstraint(new Assign(target_reg, op_reg));
+			}
 		}
 	}
 
@@ -351,24 +356,22 @@ public class BoundAnalyzer {
 	 * 
 	 * @param code
 	 */
-	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.Const code) {
+	private void analyze(Codes.Const code, String name) {
 		Constant constant = code.constant;
-		String target = prefix + code.target();
+		String target_reg = prefix + code.target();
 
 		// Check the value is an Constant.Integer
-		if (constant instanceof Constant.Integer) {
+		if (constant instanceof Constant.Integer && !BoundAnalyzerHelper.isCached(name)) {
 			// Add the 'Const' constraint.
 			BigInteger value = ((Constant.Integer) constant).value;
-			graph.addConstraint(new Const(target, value));
-			// sym_ctrl.putAttribute(target, "value", value);
+			CFGraph graph = BoundAnalyzerHelper.getCFGraph(name);
+			graph.addConstraint(new Const(target_reg, value));
 		}
 
 		if (constant instanceof Constant.List) {
-			// Add type attribute
-			sym_ctrl.putAttribute(target, "type", code.assignedType());
-			List<Constant> list = ((Constant.List) constant).values;
-			sym_ctrl.putAttribute(target, "value", list);
-			sym_ctrl.putAttribute(target, "size", BigInteger.valueOf(list.size()));
+			// Get the list and extract the size info.
+			BigInteger size = BigInteger.valueOf((((Constant.List) constant).values).size());
+			BoundAnalyzerHelper.addSizeInfo(name, target_reg, size);
 		}
 
 	}
@@ -380,11 +383,13 @@ public class BoundAnalyzer {
 	 * 
 	 * @param code
 	 */
-	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.IndexOf code) {
-		if (TranslatorHelper.isIntType((Type) code.type())) {
+	private void analyze(Codes.IndexOf code, String name) {
+		if (TranslatorHelper.isIntType((Type) code.type()) && !BoundAnalyzerHelper.isCached(name)) {
 			String target = prefix + code.target();
 			String op = prefix + code.operand(0);
 			String index = prefix + code.operand(1);
+			// Get the CFGraph
+			CFGraph graph = BoundAnalyzerHelper.getCFGraph(name);
 			graph.addConstraint(new Equals(target, op));
 		}
 	}
@@ -395,85 +400,90 @@ public class BoundAnalyzer {
 	 * @param code
 	 * @throws CloneNotSupportedException
 	 */
-	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.If code) {
+	private void analyze(Codes.If code, String name) {
 		String left = prefix + code.leftOperand;
 		String right = prefix + code.rightOperand;
+		if (!BoundAnalyzerHelper.isCached(name)) {
+			// Get CF graph.
+			CFGraph graph = BoundAnalyzerHelper.getCFGraph(name);
+			Constraint c = null;
+			Constraint neg_c = null;
+			if (TranslatorHelper.isIntType(code.type)) {
+				switch (code.op) {
+				case EQ:
+					c = new Equals(left, right);
+					neg_c = new Equals(left, right);
+					break;
+				case NEQ:
 
-		Constraint c = null;
-		Constraint neg_c = null;
-		if (TranslatorHelper.isIntType(code.type)) {
-			switch (code.op) {
-			case EQ:
-				c = new Equals(left, right);
-				neg_c = new Equals(left, right);
-				break;
-			case NEQ:
+					break;
+				case LT:
+					c = new LessThan(left, right);
+					neg_c = new GreaterThanEquals(left, right);
+					break;
+				case LTEQ:
+					// Add the 'left <= right' constraint to the branched list.
+					c = new LessThanEquals(left, right);
+					neg_c = new GreaterThan(left, right);
+					break;
+				case GT:
+					c = new GreaterThan(left, right);
+					neg_c = new LessThanEquals(left, right);
+					break;
+				case GTEQ:
+					// Branch and add the left >= right constraint to
+					c = new GreaterThanEquals(left, right);
+					neg_c = new LessThan(left, right);
+					// Add the constraint 'left< right' to current constraint
+					// list.
+					break;
+				case IN:
+					throw new RuntimeException("Un-implemented comparator (" + code + ")");
+				default:
+					throw new RuntimeException("Unknow operator (" + code + ")");
 
-				break;
-			case LT:
-				c = new LessThan(left, right);
-				neg_c = new GreaterThanEquals(left, right);
-				break;
-			case LTEQ:
-				// Add the 'left <= right' constraint to the branched list.
-				c = new LessThanEquals(left, right);
-				neg_c = new GreaterThan(left, right);
-				break;
-			case GT:
-				c = new GreaterThan(left, right);
-				neg_c = new LessThanEquals(left, right);
-				break;
-			case GTEQ:
-				// Branch and add the left >= right constraint to
-				c = new GreaterThanEquals(left, right);
-				neg_c = new LessThan(left, right);
-				// Add the constraint 'left< right' to current constraint list.
-				break;
-			case IN:
-				throw new RuntimeException("Un-implemented comparator (" + code + ")");
-			default:
-				throw new RuntimeException("Unknow operator (" + code + ")");
+				}
 
-			}
-
-			// Check if the 'if' bytecode is the loop condition.
-			if (isLoop) {
-				// Create a loop body and loop exit.
-				graph.createLoopStructure(code.target, c, neg_c);
-			} else {
-				// Create if and else branches.
-				graph.createIfElseBranch(code.target, c, neg_c);
+				// Check if the 'if' bytecode is the loop condition.
+				if (isLoop) {
+					// Create a loop body and loop exit.
+					graph.createLoopStructure(code.target, c, neg_c);
+				} else {
+					// Create if and else branches.
+					graph.createIfElseBranch(code.target, c, neg_c);
+				}
 			}
 		}
-
 	}
 
 	/**
-	 * Gets the block by the label byte-code and sets the current
-	 * block to that block.
+	 * Gets the block by the label byte-code and sets the current block to that
+	 * block.
 	 * 
-	 * If the current and target blocks are not the same and target block
-	 * is not a Loop Exit, then add the parent-child relation to these
-	 * two blocks.
+	 * If the current and target blocks are not the same and target block is not
+	 * a Loop Exit, then add the parent-child relation to these two blocks.
 	 * 
 	 * @param code
 	 *            {@link wyil.lang.Codes.Label} byte-code
 	 */
-	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.Label code) {
+	private void analyze(Codes.Label code, String name) {
 		String label = code.label;
-		// Get the target blk. If it is null, then create a new block.
-		BasicBlock blk = graph.getBasicBlock(label);
-		// Get the current block
-		BasicBlock c_blk = graph.getCurrentBlock();
-		
-		if (c_blk != null && !(c_blk.equals(blk))) {
-			// Check if the target blk is not a loop structure. 
-			if(!blk.getType().equals(BlockType.LOOP_EXIT)){
-				c_blk.addChild(blk);
-			}			
+		if (!BoundAnalyzerHelper.isCached(name)) {
+			// Get the CFGraph
+			CFGraph graph = BoundAnalyzerHelper.getCFGraph(name);
+			// Get the target blk. If it is null, then create a new block.
+			BasicBlock blk = graph.getBasicBlock(label);
+			// Get the current block
+			BasicBlock c_blk = graph.getCurrentBlock();
+			if (c_blk != null && !(c_blk.equals(blk))) {
+				// Check if the target blk is not a loop structure.
+				if (!blk.getType().equals(BlockType.LOOP_EXIT)) {
+					c_blk.addChild(blk);
+				}
+			}
+			// Switch the current block
+			graph.setCurrentBlock(blk);
 		}
-		// Switch the current block
-		graph.setCurrentBlock(blk);
 	}
 
 	/**
@@ -482,16 +492,17 @@ public class BoundAnalyzer {
 	 * @param code
 	 *            the new list byte-code
 	 */
-	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.NewList code) {
+	private void analyze(Codes.NewList code, String name) {
 		String target = prefix + code.target();
-		sym_ctrl.putAttribute(target, "type", code.type());
-		if (TranslatorHelper.isIntType(code.type())) {
+		if (TranslatorHelper.isIntType(code.type()) && !BoundAnalyzerHelper.isCached(name)) {
+			// Get the CFGraph
+			CFGraph graph = BoundAnalyzerHelper.getCFGraph(name);
 			for (int operand : code.operands()) {
 				graph.addConstraint(new Union(prefix + code.target(), prefix + operand));
 			}
 		}
 		// Add the 'size' attribute
-		sym_ctrl.putAttribute(target, "size", BigInteger.valueOf(code.operands().length));
+		BoundAnalyzerHelper.addSizeInfo(name, target, BigInteger.valueOf(code.operands().length));
 	}
 
 	/**
@@ -499,29 +510,33 @@ public class BoundAnalyzer {
 	 * 
 	 * @param code
 	 */
-	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.Return code) {
+	private void analyze(Codes.Return code, String name) {
 		// Get the return operand
 		String retOp = prefix + code.operand;
-		BasicBlock c_blk = graph.getCurrentBlock();
-		// Check if the current blk exits. If so, then proceed the following
-		// procedure.
-		if (c_blk != null) {
-			Type type = code.type;
-			// Check if the return type is integer.
-			if (TranslatorHelper.isIntType(code.type)) {
-				// Add the 'Equals' constraint to the return (ret) variable.
-				c_blk.addConstraint((new Assign("return", retOp)));
-			}
+		Type type = code.type;
 
-			if (type instanceof Type.List) {
-				sym_ctrl.putAttribute("return", "type", type);
-				// Get 'size' att from ret op
-				BigInteger size = (BigInteger) sym_ctrl.getAttribute(retOp, "size");
-				sym_ctrl.putAttribute("return", "size", size);
+		if (!BoundAnalyzerHelper.isCached(name)) {
+			// Get the CFGraph
+			CFGraph graph = BoundAnalyzerHelper.getCFGraph(name);
+			BasicBlock c_blk = graph.getCurrentBlock();
+			// Check if the current blk exits. If so, then proceed the following
+			// procedure.
+			if (c_blk != null) {
+				// Check if the return type is integer.
+				if (TranslatorHelper.isIntType(code.type)) {
+					// Add the 'Equals' constraint to the return (ret) variable.
+					c_blk.addConstraint((new Assign("return", retOp)));
+				}
+				// Connect the current block with exit block.
+				c_blk.addChild(graph.getBasicBlock("exit", BlockType.EXIT));
+				graph.setCurrentBlock(null);
 			}
-			// Connect the current block with exit block.
-			c_blk.addChild(graph.getBasicBlock("exit", BlockType.EXIT));
-			graph.setCurrentBlock(null);
+		}
+
+		if (type instanceof Type.List) {
+			// Get 'size' info from the register of return value.
+			BigInteger size = (BigInteger) BoundAnalyzerHelper.getSizeInfo(name, retOp);
+			BoundAnalyzerHelper.addSizeInfo(name, "return", size);
 		}
 
 	}
@@ -533,21 +548,27 @@ public class BoundAnalyzer {
 	 * @param sym_ctrl
 	 * @param code
 	 */
-	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.ListOperator code) {
-		String target = prefix + code.target();
-
+	private void analyze(Codes.ListOperator code, String name) {
+		String target_reg = prefix + code.target();
+		//SymbolFactory sym_factory = BoundAnalyzerHelper.getSymbolFactory(name);
 		switch (code.kind) {
 		case APPEND:
 			BigInteger size = BigInteger.ZERO;
 			for (int operand : code.operands()) {
-				String op = prefix + operand;
-				size = size.add((BigInteger) sym_ctrl.getAttribute(op, "size"));
-				graph.addConstraint(new Equals(target, prefix + operand));
+				String op_reg = prefix + operand;
+				//Get size info
+				BoundAnalyzerHelper.getSizeInfo(name, op_reg);
+				size = size.add(BoundAnalyzerHelper.getSizeInfo(name, op_reg));
+				//size = size.add((BigInteger) sym_factory.getAttribute(op, "size"));
+				if (!BoundAnalyzerHelper.isCached(name)) {
+					// Get the CFGraph
+					CFGraph graph = BoundAnalyzerHelper.getCFGraph(name);
+					graph.addConstraint(new Equals(target_reg, prefix + operand));
+				}
 			}
-			// put 'type' attribute
-			sym_ctrl.putAttribute(target, "type", code.type());
-			// put 'size' attribute
-			sym_ctrl.putAttribute(target, "size", size);
+			
+			// put 'size' attribute to the target reg
+			BoundAnalyzerHelper.addSizeInfo(name, target_reg, size);
 			break;
 		default:
 			throw new RuntimeException("unknown list operator encountered (" + code + ")");
@@ -561,11 +582,12 @@ public class BoundAnalyzer {
 	 * 
 	 * @param code
 	 */
-	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.UnaryOperator code) {
+	private void analyze(Codes.UnaryOperator code, String name) {
 		UnaryOperatorKind kind = code.kind;
 		String x = prefix + code.operand(0);
 		String y = prefix + code.target();
-		//
+		// Get a graph
+		CFGraph graph = BoundAnalyzerHelper.getCFGraph(name);
 		switch (kind) {
 		case NEG:
 			graph.addConstraint(new Negate(x, y));
@@ -585,17 +607,22 @@ public class BoundAnalyzer {
 	 * 
 	 * @param code
 	 */
-	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.LengthOf code) {
+	private void analyze(Codes.LengthOf code, String name) {
+		//SymbolFactory sym_factory = BoundAnalyzerHelper.getSymbolFactory(name);
 		// Get the size att
-		String op = prefix + code.operand(0);
-		BigInteger size = (BigInteger) sym_ctrl.getAttribute(op, "size");
-		String target = prefix + code.target();
+		String op_reg = prefix + code.operand(0);
+		String target_reg = prefix + code.target();
 		Type type = code.assignedType();
-		// Add 'type' att
-		sym_ctrl.putAttribute(target, "type", type);
-		// Add 'value' att
-		sym_ctrl.putAttribute(target, "value", size);
-		graph.addConstraint(new Const(target, size));
+		BigInteger size = (BigInteger) BoundAnalyzerHelper.getSizeInfo(name, op_reg);
+		if(size != null){
+			// Add 'size' att
+			BoundAnalyzerHelper.addSizeInfo(name, target_reg, size);
+		}
+		
+		
+		
+		
+		// graph.addConstraint(new Const(target, size));
 	}
 
 	/**
@@ -603,13 +630,9 @@ public class BoundAnalyzer {
 	 * 
 	 * @param code
 	 */
-	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.Loop code, String name) {
-		// Add loop variables to bound inference processor.
-		//for (int op : code.modifiedOperands) {
-		//	bound_infer_proc.addLoopVar(prefix + op);
-		//}
+	private void analyze(Codes.Loop code, String name) {
 		// Set the loop flag to be true,
-		// in order to indentify the bytecode is inside a loop
+		// in order to identify the bytecode is inside a loop
 		isLoop = true;
 		// Get the list of byte-code and iterate through the list.
 		iterateBytecode(name, code.bytecodes());
@@ -623,7 +646,8 @@ public class BoundAnalyzer {
 	 * 
 	 * @param code
 	 */
-	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.SubList code) {
+	private void analyze(Codes.SubList code, String name) {
+		CFGraph graph = BoundAnalyzerHelper.getCFGraph(name);
 		if (code.type().element() instanceof Type.Int) {
 			for (int operand : code.operands()) {
 				graph.addConstraint(new Equals(prefix + code.target(), prefix + operand));
@@ -638,15 +662,13 @@ public class BoundAnalyzer {
 	 * 
 	 * @param code
 	 */
-	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.BinaryOperator code) {
+	private void analyze(Codes.BinaryOperator code, String name) {
 		String target = prefix + code.target();
 		// Add the type att
 		Type type = code.assignedType();
-		sym_ctrl.putAttribute(target, "type", type);
-		if (TranslatorHelper.isIntType(code.type())) {
+		if (TranslatorHelper.isIntType(code.type()) && !BoundAnalyzerHelper.isCached(name)) {
 			// Get the values
-			BigInteger left = (BigInteger) sym_ctrl.getAttribute(prefix + code.operand(0), "value");
-			BigInteger right = (BigInteger) sym_ctrl.getAttribute(prefix + code.operand(1), "value");
+			CFGraph graph = BoundAnalyzerHelper.getCFGraph(name);
 			switch (code.kind) {
 			case ADD:
 				// Use the left plus to represent the addition
@@ -666,9 +688,11 @@ public class BoundAnalyzer {
 				break;
 			case RANGE:
 				// Take the union of operands
-				graph.addConstraint(new Range(target, left, right.subtract(BigInteger.ONE)));
+				// graph.addConstraint(new Range(target, left,
+				// right.subtract(BigInteger.ONE)));
 				// Add the size att
-				sym_ctrl.putAttribute(target, "size", right.subtract(left).subtract(BigInteger.ONE));
+				// sym_ctrl.putAttribute(target, "size",
+				// right.subtract(left).subtract(BigInteger.ONE));
 				break;
 			case BITWISEAND:
 				break;
@@ -693,8 +717,9 @@ public class BoundAnalyzer {
 	 * 
 	 * @param code
 	 */
-	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.TupleLoad code) {
+	private void analyze(Codes.TupleLoad code, String name) {
 		// Check if the index is that of value field (1).
+		CFGraph graph = BoundAnalyzerHelper.getCFGraph(name);
 		int index = code.index;
 		if (index % 2 == 1) {
 			Type.Tuple tuple = (Tuple) code.type();
@@ -710,17 +735,20 @@ public class BoundAnalyzer {
 	 * 
 	 * @param code
 	 */
-	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.NewTuple code) {
+	private void analyze(Codes.NewTuple code, String name) {
 		// Assing the bounds of value field to the target
 		Type.Tuple tuple = code.type();
-		int index = 1;
-		while (index < code.operands().length) {
-			if (TranslatorHelper.isIntType(tuple.element(index))) {
-				graph.addConstraint(new Union(prefix + code.target(), prefix + code.operand(index)));
+		if (!BoundAnalyzerHelper.isCached(name)) {
+			// Get the CFGraph
+			CFGraph graph = BoundAnalyzerHelper.getCFGraph(name);
+			int index = 1;
+			while (index < code.operands().length) {
+				if (TranslatorHelper.isIntType(tuple.element(index))) {
+					graph.addConstraint(new Union(prefix + code.target(), prefix + code.operand(index)));
+				}
+				index += 2;
 			}
-			index += 2;
 		}
-
 	}
 
 	/**
@@ -728,7 +756,7 @@ public class BoundAnalyzer {
 	 * 
 	 * @param code
 	 */
-	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.Update code) {
+	private void analyze(Codes.Update code, String name) {
 
 	}
 
@@ -739,28 +767,32 @@ public class BoundAnalyzer {
 	 * @param code
 	 *            Goto ({@link wyil.lang.Codes.Goto } byte-code
 	 */
-	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.Goto code) {
-		// Get the label name
-		String label = code.target;
-		BasicBlock goto_blk = graph.getBasicBlock(label);
-
-		// Set the current blk to null blk
-		graph.setCurrentBlock(null);
+	private void analyze(Codes.Goto code, String name) {
+		if (!BoundAnalyzerHelper.isCached(name)) {
+			// Get the label name
+			String label = code.target;
+			CFGraph graph = BoundAnalyzerHelper.getCFGraph(name);
+			BasicBlock goto_blk = graph.getBasicBlock(label);
+			// Set the current blk to null blk
+			graph.setCurrentBlock(null);
+		}
 	}
-
-	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.FieldLoad code) {
+	
+	/**
+	 * Analyze the FieldLoad byte-code. 
+	 * 
+	 * 
+	 * @param code
+	 * @param name
+	 */
+	private void analyze(Codes.FieldLoad code, String name) {
 		String target = prefix + code.target();
 		String record = prefix + code.operand(0);
-		// add the type to the record
-		sym_ctrl.putAttribute(record, "type", code.type());
-		// Target
-		sym_ctrl.putAttribute(target, "type", code.fieldType());
-		sym_ctrl.putAttribute(target, "field", code.field);
 	}
 
-	private void analyze(CFGraph graph, SymbolFactory sym_ctrl, Codes.Convert code) {
+	private void analyze(Codes.Convert code, String name) {
 		String target = prefix + code.target();
-		sym_ctrl.putAttribute(target, "type", code.result);
+		// sym_ctrl.putAttribute(target, "type", code.result);
 
 		if (code.result instanceof Type.List) {
 			// Get the value
@@ -781,11 +813,13 @@ public class BoundAnalyzer {
 	private void analyze(Codes.Invoke code, String caller_name) {
 		FunctionOrMethod callee = BoundAnalyzerHelper.getFunctionOrMethod(this.config, code.name.name());
 		if (callee != null) {
+			int caller_line = line;
 			// Callee name
 			String callee_name = callee.name();
 			// Infer the bounds of caller function.
 			Bounds input_bnds = inferBounds(caller_name);
 
+			BoundAnalyzerHelper.propagateSizeInfoToFunctionCall(caller_name, callee_name, callee.type().params(), code.operands());
 			// Build CFGraph for callee.
 			buildCFG(config, callee_name);
 			// Propagate the bounds of input parameters to the function.
@@ -796,7 +830,9 @@ public class BoundAnalyzer {
 			// Promote the status of callee's CF graph to be 'complete'
 			BoundAnalyzerHelper.promoteCFGStatus(callee_name);
 			BoundAnalyzerHelper.propagateBoundsFromFunctionCall(caller_name, callee_name, prefix + code.target(), code.type().ret(), ret_bnd);
-
+			BoundAnalyzerHelper.propagateSizeFromFunctionCall(caller_name, callee_name, prefix + code.target(), code.type().ret());
+			//Reset the line number
+			this.line = caller_line;
 		}
 	}
 

@@ -1,11 +1,13 @@
-package wyopcl.translator;
+package wyopcl.translator.bound;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+
 import wyil.lang.Type;
+import wyopcl.translator.TranslatorHelper;
 
 /**
  * This symbol factory creates, retrieve and maintain the symbols for a function.
@@ -108,26 +110,6 @@ public class SymbolFactory {
 			}			
 		}		
 		return isTypeUsed;		
-	}
-
-	/**
-	 * Propagate the symbols of input parameters from the caller to callee 
-	 * @param caller_factory the symbol factory of caller.
-	 * @param param
-	 */
-	public void addInputSymbols(SymbolFactory caller_factory, int[] operands, List<Type> params){
-		int reg = 0;
-		// Pass the bounds of input parameters.
-		while (reg < params.size()) {
-			String param = prefix + reg;
-			String operand = prefix + operands[reg];
-			// pass the symbol
-			Symbol symbol = caller_factory.getSymbol(operand).clone();
-			// Update the name
-			symbol.setName(param);
-			this.putSymbol(param, symbol);
-			reg++;
-		}
 	}
 
 	/**
