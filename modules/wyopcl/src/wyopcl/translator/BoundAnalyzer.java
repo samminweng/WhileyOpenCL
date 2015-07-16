@@ -350,23 +350,20 @@ public class BoundAnalyzer {
 	 */
 	private void analyze(Codes.Const code, String name) {
 		Constant constant = code.constant;
-		String target = prefix + code.target();
+		String target_reg = prefix + code.target();
 
 		// Check the value is an Constant.Integer
 		if (constant instanceof Constant.Integer && !BoundAnalyzerHelper.isCached(name)) {
 			// Add the 'Const' constraint.
 			BigInteger value = ((Constant.Integer) constant).value;
 			CFGraph graph = BoundAnalyzerHelper.getCFGraph(name);
-			graph.addConstraint(new Const(target, value));
+			graph.addConstraint(new Const(target_reg, value));
 		}
 
 		if (constant instanceof Constant.List) {
-			SymbolFactory sym_factory = BoundAnalyzerHelper.getSymbolFactory(name);
-			// Add type attribute
-			sym_factory.putAttribute(target, "type", code.assignedType());
-			List<Constant> list = ((Constant.List) constant).values;
-			sym_factory.putAttribute(target, "value", list);
-			sym_factory.putAttribute(target, "size", BigInteger.valueOf(list.size()));
+			// Get the list and extract the size info.
+			BigInteger size = BigInteger.valueOf((((Constant.List) constant).values).size());
+			BoundAnalyzerHelper.addSizeInfo(name, target_reg, size);
 		}
 
 	}
@@ -497,9 +494,7 @@ public class BoundAnalyzer {
 			}
 		}
 		// Add the 'size' attribute
-		SymbolFactory sym_factory = BoundAnalyzerHelper.getSymbolFactory(name);
-		sym_factory.putAttribute(target, "type", code.type());
-		sym_factory.putAttribute(target, "size", BigInteger.valueOf(code.operands().length));
+		BoundAnalyzerHelper.addSizeInfo(name, target, BigInteger.valueOf(code.operands().length));
 	}
 
 	/**
@@ -530,12 +525,10 @@ public class BoundAnalyzer {
 			}
 		}
 
-		SymbolFactory sym_factory = BoundAnalyzerHelper.getSymbolFactory(name);
 		if (type instanceof Type.List) {
-			sym_factory.putAttribute("return", "type", type);
-			// Get 'size' att from ret op
-			BigInteger size = (BigInteger) sym_factory.getAttribute(retOp, "size");
-			sym_factory.putAttribute("return", "size", size);
+			// Get 'size' info from the register of return value.
+			BigInteger size = (BigInteger) BoundAnalyzerHelper.getSizeInfo(name, retOp);
+			BoundAnalyzerHelper.addSizeInfo(name, "return", size);
 		}
 
 	}
@@ -548,24 +541,26 @@ public class BoundAnalyzer {
 	 * @param code
 	 */
 	private void analyze(Codes.ListOperator code, String name) {
-		String target = prefix + code.target();
-		SymbolFactory sym_factory = BoundAnalyzerHelper.getSymbolFactory(name);
+		String target_reg = prefix + code.target();
+		//SymbolFactory sym_factory = BoundAnalyzerHelper.getSymbolFactory(name);
 		switch (code.kind) {
 		case APPEND:
 			BigInteger size = BigInteger.ZERO;
 			for (int operand : code.operands()) {
-				String op = prefix + operand;
-				size = size.add((BigInteger) sym_factory.getAttribute(op, "size"));
+				String op_reg = prefix + operand;
+				//Get size info
+				BoundAnalyzerHelper.getSizeInfo(name, op_reg);
+				size = size.add(BoundAnalyzerHelper.getSizeInfo(name, op_reg));
+				//size = size.add((BigInteger) sym_factory.getAttribute(op, "size"));
 				if (!BoundAnalyzerHelper.isCached(name)) {
 					// Get the CFGraph
 					CFGraph graph = BoundAnalyzerHelper.getCFGraph(name);
-					graph.addConstraint(new Equals(target, prefix + operand));
+					graph.addConstraint(new Equals(target_reg, prefix + operand));
 				}
 			}
-			// put 'type' attribute
-			sym_factory.putAttribute(target, "type", code.type());
-			// put 'size' attribute
-			sym_factory.putAttribute(target, "size", size);
+			
+			// put 'size' attribute to the target reg
+			BoundAnalyzerHelper.addSizeInfo(name, target_reg, size);
 			break;
 		default:
 			throw new RuntimeException("unknown list operator encountered (" + code + ")");

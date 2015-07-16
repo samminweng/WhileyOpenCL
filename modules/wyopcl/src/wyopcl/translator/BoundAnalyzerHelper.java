@@ -94,7 +94,7 @@ public final class BoundAnalyzerHelper {
 	 *            the function name
 	 * @return
 	 */
-	public static SymbolFactory getSymbolFactory(String name) {
+	private static SymbolFactory getSymbolFactory(String name) {
 		if (!symbol_factorys.containsKey(name)) {
 			symbol_factorys.put(name, new SymbolFactory());
 		}
@@ -214,12 +214,16 @@ public final class BoundAnalyzerHelper {
 		for (int index=0;index < params.size();index++) {			
 			String op_reg = prefix + operands[index];
 			String param_reg = prefix + index;
-			//Get size info from caller
-			BigInteger size = getSizeInfo(caller_name, op_reg);
-			if(size != null){
-				//Pass size to callee
-				addSizeInfo(callee_name, param_reg, size);	
+			//Check parameter type
+			if(params.get(index) instanceof Type.List){
+				//Get size info from caller
+				BigInteger size = getSizeInfo(caller_name, op_reg);
+				if(size != null){
+					//Pass size to callee
+					addSizeInfo(callee_name, param_reg, size);	
+				}
 			}
+			
 		}
 	}
 
