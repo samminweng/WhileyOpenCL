@@ -17,6 +17,8 @@ import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.BasicBlock.BlockType;
 import wyopcl.translator.bound.Bounds;
 import wyopcl.translator.bound.CFGraph;
+import wyopcl.translator.bound.Symbol;
+import wyopcl.translator.bound.SymbolFactory;
 import wyopcl.translator.bound.CFGraph.STATUS;
 import wyopcl.translator.bound.Domain;
 import wyopcl.translator.bound.constraint.Constraint;

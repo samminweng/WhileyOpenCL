@@ -11,7 +11,6 @@ import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.Configuration;
 import wyopcl.translator.symbolic.pattern.BuildListFirstPattern;
 import wyopcl.translator.symbolic.pattern.BuildListPattern;
-import wyopcl.translator.symbolic.pattern.ForAllRangePattern;
 import wyopcl.translator.symbolic.pattern.NullPattern;
 import wyopcl.translator.symbolic.pattern.Pattern;
 import wyopcl.translator.symbolic.pattern.WhileLoopDecrPattern;
@@ -36,8 +35,7 @@ public class PatternMatcher {
 		this.avail_Patterns.add(BuildListFirstPattern.class);
 		this.avail_Patterns.add(BuildListPattern.class);
 		this.avail_Patterns.add(WhileLoopDecrPattern.class);
-		this.avail_Patterns.add(WhileLoopIncrPattern.class);
-		this.avail_Patterns.add(ForAllRangePattern.class);	
+		this.avail_Patterns.add(WhileLoopIncrPattern.class);	
 	}	
 
 	/**

@@ -1,11 +1,13 @@
-package wyopcl.translator;
+package wyopcl.translator.bound;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+
 import wyil.lang.Type;
+import wyopcl.translator.TranslatorHelper;
 
 /**
  * This symbol factory creates, retrieve and maintain the symbols for a function.

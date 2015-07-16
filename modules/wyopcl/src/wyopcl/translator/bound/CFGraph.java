@@ -13,7 +13,6 @@ import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyopcl.translator.BoundAnalyzerHelper;
 import wyopcl.translator.Configuration;
-import wyopcl.translator.SymbolFactory;
 import wyopcl.translator.TranslatorHelper;
 import wyopcl.translator.bound.BasicBlock.BlockType;
 import wyopcl.translator.bound.constraint.Constraint;
