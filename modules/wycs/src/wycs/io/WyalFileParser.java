@@ -1109,7 +1109,7 @@ public class WyalFileParser {
 	/**
 	 * Parse a set union expression, which is of the form:
 	 * <pre>
-	 * UnionExpr ::= IntersectExpr ( "¡å" IntersectExpr )*
+	 * UnionExpr ::= IntersectExpr ( "âˆª" IntersectExpr )*
 	 * </pre>
 	 *
 	 * @param lookahead
@@ -1156,7 +1156,7 @@ public class WyalFileParser {
 	/**
 	 * Parse a set intersection expression, which is of the form:
 	 * <pre>
-	 * AppendExpr ::= AppendExpr ( "¡ä" AppendExpr )*
+	 * AppendExpr ::= AppendExpr ( "âˆ©" AppendExpr )*
 	 * </pre>
 	 *
 	 * @param lookahead
