@@ -161,14 +161,10 @@
 	<fileset dir="report" />
 </delete>
 </target>
-<!---JUnit testing for Wyopecl -->
+
+<!---JUnit testing for Wyopcl -->
 <property name="build.dir" value="build" />
-<path id="master-classpath">
-<fileset dir="lib">
-	<include name="*.jar" />
-</fileset>
-<pathelement path="${build.dir}" />
-</path>
+<!-- Class path for Junit -->
 <path id="junit-classpath">
 <fileset dir="lib">
 	<include name="*hamcrest*.jar" />
@@ -176,102 +172,52 @@
 </fileset>
 <pathelement path="${build.dir}" />
 </path>
-<!-- Compile all the test cases -->
-<target name="compile-java" depends="clean, build-all">
-<mkdir dir="build" />
-<javac destdir="build" includeantruntime="false" encoding="UTF-8">
-	<classpath refid="master-classpath" />
-	<src path="modules/wyopcl/test/wyopcl/testing/translator/" />
-	<exclude name="wyopcl/testing/translator/BoundTestCase.java"/>
-</javac>
-</target>
-<!-- Define the path for the generated junit testing report 
-<property name="valid.dir" value="report/interpreter/valid" />
-<property name="invalid.dir" value="report/interpreter/invalid" />
- -->
-<!-- Interpreting the test cases in valid folder 
-<target name="test-interpreter-valid" depends="build-all">
-	<mkdir dir="${valid.dir}" />
-	<junit fork="yes">
-		<formatter type="plain" usefile="false" />
-		<classpath refid="junit-classpath" />
-		<formatter type="xml" />
-		<batchtest todir="${valid.dir}">
-			<fileset dir="modules/wyopcl/test/">
-				<include name="**/*AllValidTestCase*" />
-			</fileset>
-		</batchtest>
-	</junit>
-</target>-->
-<!-- Interpreting the test cases in invalid folder 
-<target name="test-interpreter-invalid" depends="build-all">
-	<mkdir dir="${invalid.dir}" />
-	<junit fork="yes">
-		<formatter type="plain" usefile="false" />
-		<classpath refid="junit-classpath" />
-		<formatter type="xml" />
-		<batchtest todir="${invalid.dir}">
-			<fileset dir="modules/wyopcl/test/">
-				<include name="**/*AllInvalidTestCase*" />
-			</fileset>
-		</batchtest>
-	</junit>
-</target>
-<target name="interpreter" depends="test-interpreter-valid, test-interpreter-invalid">
-	<junitreport todir="report">
-		<fileset dir="${valid.dir}">
-			<include name="TEST-*.xml" />
-		</fileset>
-		<fileset dir="${invalid.dir}">
-			<include name="TEST-*.xml" />
-		</fileset>
-		<report todir="report/interpreter" />
-	</junitreport>
-</target>-->
+
+
 <!-- Test the bound analyzer with test cases.-->
-<target name="test-bound" depends="compile-java">
-	<mkdir dir="report/bound" />
-	<junit fork="yes">
-		<formatter type="plain" usefile="false" />
-		<classpath refid="junit-classpath" />
-		<formatter type="xml" />
-		<batchtest todir="report/bound">
-			<fileset dir="modules/wyopcl/test">
-				<include name="**/BoundAnalysisTestCase*" />
-			</fileset>
-		</batchtest>
-	</junit>
-	<junitreport todir="report">
-		<fileset dir="report/bound">
-			<include name="TEST-*.xml" />
+<target name="test-bound" depends="clean, build-all">
+<mkdir dir="report/bound" />
+<junit fork="yes" dir=".">
+	<formatter type="plain" usefile="false" />
+	<classpath refid="junit-classpath" />
+	<formatter type="xml" />
+	<batchtest todir="report/bound">
+		<fileset dir="modules/wyopcl/test">
+			<include name="**/BoundAnalysisTestCase*" />
 		</fileset>
-		<report todir="report/bound" />
-	</junitreport>
+	</batchtest>
+</junit>
+<junitreport todir="report">
+	<fileset dir="report/bound">
+		<include name="TEST-*.xml" />
+	</fileset>
+	<report todir="report/bound" />
+</junitreport>
 </target>
 <!-- Test the bound analyzer with test cases.-->
-<target name="test-pattern" depends="compile-java">
-	<mkdir dir="report/pattern" />
-	<junit fork="yes">
-		<formatter type="plain" usefile="false" />
-		<classpath refid="junit-classpath" />
-		<formatter type="xml" />
-		<batchtest todir="report/pattern">
-			<fileset dir="modules/wyopcl/test">
-				<include name="**/PatternMatchingTestCase*" />
-			</fileset>
-		</batchtest>
-	</junit>
-	<junitreport todir="report">
-		<fileset dir="report/pattern">
-			<include name="TEST-*.xml" />
+<target name="test-pattern" depends="clean, build-all">
+<mkdir dir="report/pattern" />
+<junit fork="yes" dir=".">
+	<formatter type="plain" usefile="false" />
+	<classpath refid="junit-classpath" />
+	<formatter type="xml" />
+	<batchtest todir="report/pattern">
+		<fileset dir="modules/wyopcl/test">
+			<include name="**/PatternMatchingTestCase*" />
 		</fileset>
-		<report todir="report/pattern" />
-	</junitreport>
+	</batchtest>
+</junit>
+<junitreport todir="report">
+	<fileset dir="report/pattern">
+		<include name="TEST-*.xml" />
+	</fileset>
+	<report todir="report/pattern" />
+</junitreport>
 </target>
 <!--Test the code generator with test cases.-->
-<target name="test-code" depends="compile-java">
+<target name="test-code" depends="clean, build-all">
 <mkdir dir="report/code"/>
-<junit fork="yes">
+<junit fork="yes" dir=".">
 	<formatter type="plain" usefile="false" />
 	<classpath refid="junit-classpath"/>
 	<formatter type="xml" />

@@ -1,16 +1,24 @@
 <project name="wyopcl" default="build">  
-  <import file="../../config.xml"/>  
-
+  <import file="../../config.xml"/>
+  <path id="master-classpath">
+	<fileset dir="../../lib">
+		<include name="*.jar" />
+	</fileset>
+	<pathelement path="../../build" />
+   </path>
   <target name="compile-wyopcl">
-    <javac debug="true" debuglevel="vars,lines,source" source="1.7" includeantruntime="true" classpath="../wyrl/src:../wyil/src:../wyc/src:../wybs/src/:../wyjc/src/:../../${JASM_JAR}"> 
-      <src path="src"/>
-      <!--<include name="*/**"/>-->
-      <!-- Pattern Transformer -->
+  	<mkdir dir="../../build"/>
+  	<javac destdir="../../build" encoding="UTF-8" debug="true" debuglevel="vars,lines,source" source="1.7" includeantruntime="true"> 
+  	  <classpath refid="master-classpath" />
+  	  <src path="src"/>
+      <src path="test"/>
+      <include name="*/**"/>
+      <!-- Excluding Pattern Transformer -->
       <exclude name="wyopcl/translator/symbolic/pattern/transform/WhileLoopIncrPatternTransformer.java"/>
-      <!-- Interpreter -->
+      <!-- Excluding Interpreter -->
       <exclude name="wyopcl/util/**"/>
+      <exclude name="wyopcl/testing/interpreter/**"/>	
     </javac>
-    <taskdef name="wyopcl" classname="wyopcl.WyopclAntTask" classpath="src/:../wyil/src/:../wyc/src:../wyrl/src:../wycs/src:../wybs/src/:../wyjc/src/:../../${JASM_JAR}"/>
   </target>
 
   <target name="build" depends="compile-wyopcl">
