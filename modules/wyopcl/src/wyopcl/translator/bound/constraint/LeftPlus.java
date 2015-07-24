@@ -1,14 +1,13 @@
 package wyopcl.translator.bound.constraint;
-
-import static wycc.lang.SyntaxError.internalFailure;
-
 import java.math.BigInteger;
 
 import wyopcl.translator.bound.Bounds;
-import wyopcl.translator.bound.Domain;
+
 
 /**
- * Implemented the Propagation rule for constraint (X+Y=Z)
+ * Implemented the Propagation rule for constraint (X+Y=Z) 
+ * Assign the lower/upper bounds of Z with the addition results (X+Y). 
+ * 
  * 
  * @author Min-Hsien Weng
  *
@@ -34,49 +33,16 @@ public class LeftPlus extends Constraint {
 		min_z = bnd.getLower(z);
 		max_z = bnd.getUpper(z);
 
-		/*// X = Z - Y 
-		// Add the lower bound of y variable.
-		if (min_z != null && max_y != null) {
-			// max(min_x, min_z - max_y)
-			bnd.isChanged |= bnd.addLowerBound(x, min_z.subtract(max_y));
-		}
-		// Add the upper bound of y variable.
-		if (max_z != null && min_y != null) {
-			// min(max_x, max_z - min_y)
-			bnd.isChanged |= bnd.addUpperBound(x, max_z.subtract(min_y));
-		}
-
-		// Y = Z - X
-		// Add the lower bound of z variable.
-		if (min_z != null && max_x != null) {
-			// max (min_y, min_z - max_x)
-			bnd.isChanged |= bnd.addLowerBound(y, min_z.subtract(max_x));
-		}
-
-		if (max_z != null && min_x != null) {
-			// min (max_y, max_z - min_x)
-			bnd.isChanged |= bnd.addUpperBound(y, max_z.subtract(min_x));
-		}
-*/
+		
 		// Z = X + Y
-		// Propagate the lower bound of z variable. 
+		// Assign the lower bound of z variable with lower bound of x + y
 		if (min_x != null && min_y != null) {
-			// max (min_z, min_x + min_y)
-			//bnd.isChanged |= bnd.addLowerBound(z, min_x.add(min_y));
-			BigInteger add = min_x.add(min_y);
-			if(min_z != null){
-				add = min_z.min(min_x.add(min_y));
-			}			
+			BigInteger add = min_x.add(min_y);			
 			bnd.isChanged |= bnd.setLowerBound(z, add);
 		}
-		// Add the upper bound of z variable.
+		// Assign the upper bound of z variable with upper bound of x + y 
 		if (max_x != null && max_y != null) {
-			// min (max_z, max_x + max_y)
-			//bnd.isChanged |= bnd.addUpperBound(z, max_x.add(max_y));
-			BigInteger add = max_x.add(max_y);
-			if(max_z!= null){
-				add = max_z.max(max_x.add(max_y));
-			}			
+			BigInteger add = max_x.add(max_y);	
 			bnd.isChanged |= bnd.setUpperBound(z, add);
 		}
 
