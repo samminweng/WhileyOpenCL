@@ -2,7 +2,7 @@ package wyopcl.translator.bound;
 
 import java.math.BigInteger;
 import java.util.Comparator;
-import java.util.regex.Pattern;
+
 
 public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain> {
 	private final String name;
@@ -142,7 +142,9 @@ public class Domain implements Comparable<Domain>, Cloneable, Comparator<Domain>
 	public String toString() {
 		//Change the string format
 		//return "Domain [name=" + name + ", lower_bound=" + this.lower_bound + ", upper_bound=" + this.upper_bound + "]";
-		return "domain("+this.name+")\t= "+getBounds();
+		return "domain("+this.name+")\t= "+getBounds() + "\t"
+				+ "UB=" + this.isUpperBoundIncreasing +"\t"
+				+ "LB=" + this.isLowerBoundDecreasing; 
 	}
 	/**
 	 * Gets the upper and lower bounds, and converts them to a string 
