@@ -24,8 +24,8 @@ f.15 [	return %2 : int]
 f.16 [	return]
 Bound Analysis of f:
 	domain(limit)	=[5..5]
-	domain(i)	=[5..32767]
-	domain(%10)	=[1..32767]
+	domain(i)	=[5..5]
+	domain(%10)	=[1..5]
 	domain(sum)	=[0..infinity]
 	domain(%3)	=[0..0]
 	domain(%4)	=[0..0]
@@ -47,8 +47,8 @@ Bound Analysis of main:
 Consistency=true
 Bound Analysis of f:
 	domain(limit)	=[50000..50000]
-	domain(i)	=[50000..2147483647]
-	domain(%10)	=[1..2147483647]
+	domain(i)	=[50000..50000]
+	domain(%10)	=[1..50000]
 	domain(sum)	=[0..infinity]
 	domain(%3)	=[0..0]
 	domain(%4)	=[0..0]

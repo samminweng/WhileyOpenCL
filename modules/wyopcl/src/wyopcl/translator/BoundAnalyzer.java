@@ -231,16 +231,11 @@ public class BoundAnalyzer {
 			}
 			// Initialize the isFixedPointed
 			isFixedPoint = true;
-			// Iterate all the blocks, except Exit block.
-			// After three iterations, widen the bounds of loop variable
-			// in loop header.
-			// The bounds in loop header does not need to go through
-			// bound inference procedure
-			// because the widening operator forces the loop variable to
-			// blow out to inf
+			
+			// Iterate all blocks (Order does not matter).
 			for (BasicBlock blk : list) {
 				boolean isChanged = false;
-				// Take the union of all blocks, except for exit block.
+				// Iterate all the blocks, except Exit block.
 				if (!blk.getType().equals(BlockType.EXIT)) {
 					Bounds bnd_before = null, bnd_after = null;
 					// Before the bound inference, clone and assign the inferred
@@ -251,27 +246,29 @@ public class BoundAnalyzer {
 					for (BasicBlock parent : blk.getParentNodes()) {
 						blk.unionBounds(parent);
 					}
-
+					
+					// Beginning of bound inference.
 					blk.inferBounds();
-					// End of bound inference for each blks.
+					// End of bound inference.
 
 					bnd_after = (Bounds) blk.getBounds();
-					if (blk.getType().equals(BlockType.LOOP_BODY)) {
-						bnd_after.checkBoundChange(bnd_before);						
-					}
+					// Check bound change at each block.
+					bnd_after.checkBoundChange(bnd_before);						
+					
 					// Test the equality of existing and newly inferred bounds.
 					if (bnd_before != null && !bnd_before.equals(bnd_after)) {
 						// If bounds has changed, then isChanged = false.
 						isChanged = true;
 					}
 
-					// Print out the bounds.
+					// Debug
 					if (config.isVerbose()) {
+						// Print out the bounds.
 						System.out.println(blk);
 						System.out.println("isChanged=" + isChanged);
 					}
 
-					// Use bitwise 'AND' to combine all the results
+					// Use bitwise 'AND' to combine the bound change of each block. 
 					isFixedPoint &= (!isChanged);
 				}
 			}
@@ -282,9 +279,11 @@ public class BoundAnalyzer {
 
 			// Repeat the bound inference for (maximal) three iterations
 			if (iteration == 3) {
-				// Widen the bounds of loop variables in all blocks.
+				// After three iterations, widen the bounds of variables whose upper bounds are increasing
+				// or whose lower bounds are decreasing.
 				for (BasicBlock blk : list) {
-					blk.getBounds().widenBounds(config);
+					//Widen the bounds
+					blk.getBounds().widenBounds(config);					
 				}
 				// Reset the iteration
 				iteration = 0;
@@ -293,18 +292,17 @@ public class BoundAnalyzer {
 			}
 		}
 
-		// Take the union of all blocks to produce the functional result
+		// Take the union of all blocks to produce the bounds of a function.
 		BasicBlock exit_blk = graph.getBasicBlock("exit", BlockType.EXIT);
 		for (BasicBlock blk : list) {
-			// Consider the consistent bounds without taking into the
-			// inconsistent bounds.
+			// Consider the bounds of consistent block and discard the bounds of inconsistent block.
 			if (blk.isConsistent() && blk.getType() != BlockType.EXIT) {
 				exit_blk.unionBounds(blk);
 			}
 		}
-		// Bounds bnds = bound_infer_proc.inferBounds(config, graph);
+		// Produce the aggregated bounds of a function.
 		Bounds bnds = exit_blk.getBounds();
-
+		// Print out bounds along with size information.
 		BoundAnalyzerHelper.printBoundsAndSize(config, bnds, name);
 		BoundAnalyzerHelper.printCFG(config, name);
 		return bnds;
