@@ -162,18 +162,13 @@
 </delete>
 </target>
 
-<!---JUnit testing for Wyopcl -->
-<property name="build.dir" value="build" />
 <!-- Class path for Junit -->
 <path id="junit-classpath">
 <fileset dir="lib">
-	<include name="*hamcrest*.jar" />
-	<include name="*junit*.jar" />
+	<include name="*.jar" />
 </fileset>
-<pathelement path="${build.dir}" />
+<pathelement path="build" />
 </path>
-
-
 <!-- Test the bound analyzer with test cases.-->
 <target name="test-bound" depends="clean, build-all">
 <mkdir dir="report/bound" />
@@ -234,5 +229,4 @@
 	<report todir="report/code" />
 </junitreport>
 </target>
-
 </project>

@@ -7,9 +7,8 @@
 	<classpathentry kind="src" path="modules/wyrt/src"/>
 	<classpathentry kind="src" path="modules/wyjc/src"/>
 	<classpathentry excluding="wyopcl/translator/symbolic/pattern/transform/WhileLoopIncrPatternTransformer.java|wyopcl/util/" kind="src" path="modules/wyopcl/src"/>
-	<classpathentry kind="src" path="modules/wyopcl/test"/>
+	<classpathentry excluding="wyopcl/testing/interpreter/" kind="src" path="modules/wyopcl/test"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/ant.jar"/>
 	<classpathentry kind="lib" path="lib/hamcrest-core-1.3.jar"/>
 	<classpathentry kind="lib" path="lib/junit-4.12-beta-3.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
@@ -22,5 +21,6 @@
 	<classpathentry kind="lib" path="lib/wyrl-v0.3.35.jar"/>
 	<classpathentry kind="lib" path="lib/wyrt-v0.3.35.jar"/>
 	<classpathentry kind="lib" path="lib/wyopcl-v0.3.35.jar"/>
+	<classpathentry kind="var" path="ECLIPSE_HOME/plugins/org.apache.ant_1.9.2.v201404171502/lib/ant.jar"/>
 	<classpathentry kind="output" path="build"/>
 </classpath>
