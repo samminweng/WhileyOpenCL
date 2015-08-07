@@ -57,7 +57,7 @@ public class BoundAnalyzer {
 	}
 
 	/**
-	 * Constructor of bound analyzer
+	 * Build up Control Flow Graph.
 	 * 
 	 * @param config
 	 * @param variableDeclarations
