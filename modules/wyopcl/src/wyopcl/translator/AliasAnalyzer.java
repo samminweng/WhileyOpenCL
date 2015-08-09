@@ -85,23 +85,21 @@ public class AliasAnalyzer {
 	 */
 	public void applyLiveAnalysis(WyilFile module){
 		liveAnalyzer.setEnable(true);		
-		liveAnalyzer.setNops(true);		
+		liveAnalyzer.setNops(true);
+		
 		for(FunctionOrMethod func: module.functionOrMethods()){
-			System.out.println("Before live analysis.");
-			//Print out byte-code before Live variable analysis
-			//printBytecode(func);
 			Env env = new Env();
+			System.out.println("=== Before live analysis for "+func.name() +" function. ===");
 			List<Code> codes = func.body().bytecodes(); 
 			for(int i=codes.size()-1; i>0; i--){
 				Code code = codes.get(i);
 				CodeBlock.Index id = new CodeBlock.Index(null,i);
+				System.out.println("In["+i+"]"+":{"+getLiveVars(env, func)+"}");
 				env = liveAnalyzer.propagate(id, code, env);
-				System.out.println("\n"+i+":"+code+"\nLive Vars:{"+getLiveVars(env, func)+"}");
+				System.out.println(i+":{"+code+"}\nOut["+i+"]:{"+getLiveVars(env, func)+"}\n");
 			}
-			
-			//FunctionOrMethod transformed = liveAnalyzer.propagate(func);
-			System.out.println("After live analysis.");
-			
+			env = null;
+			System.out.println("=== After live analysis for "+func.name()+ " function. ===");
 		}
 		
 		
