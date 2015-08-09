@@ -64,6 +64,10 @@ public class Translator implements Builder {
 			this.config.setProperty("filename", filename);
 			// Check the mode
 			switch (config.getMode()) {
+			case "alias":
+				analyzeAlias(module);
+				message = "Alias analysis completed.\nFile: " + config.getFilename();
+				break;
 			case "bound":
 				analyzeBounds(module);
 				message = "Bound analysis completed.\nFile: " + config.getFilename();
@@ -187,4 +191,18 @@ public class Translator implements Builder {
 		}
 	}
 
+	/**
+	 * Iterate the bytecode and analyze the alias of array variables to determine the necessary array copies (unique)
+	 * and eliminate the un-necessary array copies (non-unique) 
+	 * 
+	 * @param module
+	 */
+	private void analyzeAlias(WyilFile module){
+		AliasAnalyzer analyzer = new AliasAnalyzer(this);
+		analyzer.applyLiveAnalysis(module);
+		
+		
+	}
+	
+	
 }

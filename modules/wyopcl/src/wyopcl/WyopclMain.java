@@ -18,12 +18,16 @@ import wyopcl.translator.Configuration;
 public class WyopclMain extends WycMain{
 	private boolean verbose = false;
 	public static final OptArg[] EXTRA_OPTIONS = {		
+		//Add the 'alias' option
+		new OptArg("alias", "Run the alias analysis to eliminate the un-necessary array copies at byte-code level.\n" ),
+		
 		//Add the 'bound' option 
 		new OptArg("bound", OptArg.STRING, "Run bound analysis on whiley program with a specific widening strategy:\n"
 												 + "\t\t\t   [naive]\tWidening the bounds to infinity.\n"
 												 + "\t\t\t   [gradual]\tWidening the bounds to Int16, Int32, Int64 and infinity."),		
 		//Add the 'pattern' option
 		new OptArg("pattern", "Run the pattern matching to analyze the pattern of a given Whiley Program\n" ),
+		
 		//Add the 'code' option
 		new OptArg("code", "Run the code generate to trasnlate the given Whiley Program into C code.\n" ),
 												 
