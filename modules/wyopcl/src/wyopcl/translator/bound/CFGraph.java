@@ -11,7 +11,7 @@ import java.util.List;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
-import wyopcl.translator.BoundAnalyzerHelper;
+import wyopcl.translator.AnalyzerHelper;
 import wyopcl.translator.Configuration;
 import wyopcl.translator.TranslatorHelper;
 import wyopcl.translator.bound.BasicBlock.BlockType;
@@ -145,11 +145,11 @@ public class CFGraph {
 	}
 
 	/**
-	 * Return the list.
+	 * Return the list of basic blocks.
 	 * 
 	 * @return
 	 */
-	public List<BasicBlock> getList() {
+	public List<BasicBlock> getBlockList() {
 		return blocks;
 	}
 
@@ -314,7 +314,13 @@ public class CFGraph {
 		}
 	}
 	
-	
-	
+	/**
+	 * Add byte-code to the current block.
+	 * @param code
+	 */
+	public void addCode(Code code){
+		BasicBlock blk = getCurrentBlock();
+		blk.addCode(code);
+	}
 	
 }

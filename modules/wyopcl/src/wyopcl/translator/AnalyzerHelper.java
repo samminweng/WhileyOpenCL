@@ -10,6 +10,7 @@ import java.util.Optional;
 
 import wyil.attributes.VariableDeclarations;
 import wyil.attributes.VariableDeclarations.Declaration;
+import wyil.lang.Code;
 import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
@@ -24,13 +25,13 @@ import wyopcl.translator.bound.Domain;
 import wyopcl.translator.bound.constraint.Constraint;
 import wyopcl.translator.bound.constraint.Range;
 /**
- * Aims to assist the bound analyzer to build up CFGraph, propagate bounds
+ * Aims to assist the analyzer to build up CFGraph, propagate bounds
  * between caller and callee, and store and retrieve symbols.  
  * 
  * @author Min-Hsien Weng
  *
  */
-public final class BoundAnalyzerHelper {
+public final class AnalyzerHelper {
 	private static final String prefix = "%";
 	// Color code
 	private static final String GRAY = (char) 27 + "[30;1m";
@@ -186,7 +187,7 @@ public final class BoundAnalyzerHelper {
 	public static void propagateInputBoundsToFunctionCall(String caller_name, String callee_name, List<Type> params, int[] operands, Bounds bnd) {
 		CFGraph graph = getCFGraph(callee_name);
 		//clear all the bounds in each block
-		for(BasicBlock blk: graph.getList()){
+		for(BasicBlock blk: graph.getBlockList()){
 			blk.emptyBounds();
 		}
 		
@@ -327,7 +328,7 @@ public final class BoundAnalyzerHelper {
 
 		String dot_string = "digraph " + name + "{\n";
 		CFGraph graph = getCFGraph(name);
-		List<BasicBlock> blks = graph.getList();
+		List<BasicBlock> blks = graph.getBlockList();
 		for (BasicBlock blk : blks) {
 			if (!blk.isLeaf()) {
 				for (BasicBlock child : blk.getChildNodes()) {
@@ -346,5 +347,17 @@ public final class BoundAnalyzerHelper {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Add the byte-code to the current block in a CFGraph.
+	 * @param name
+	 * @param code
+	 */
+	public static void addByteCodeToBlock(String name, Code code){
+		isCached(name);
+		CFGraph graph = getCFGraph(name);
+		graph.addCode(code);
+	}
+	
 
 }

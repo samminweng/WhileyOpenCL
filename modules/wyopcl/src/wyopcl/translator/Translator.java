@@ -198,10 +198,8 @@ public class Translator implements Builder {
 	 * @param module
 	 */
 	private void analyzeAlias(WyilFile module){
-		AliasAnalyzer analyzer = new AliasAnalyzer(this);
-		analyzer.applyLiveAnalysis(module);
-		
-		
+		AliasAnalyzer analyzer = new AliasAnalyzer(this, config);
+		analyzer.applyLiveAnalysis(module);		
 	}
 	
 	
