@@ -1,5 +1,6 @@
 package wyopcl.translator;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -79,14 +80,33 @@ public class AliasAnalyzer {
 	private void applyLiveAnalysisOnEachCode(String name, VariableDeclarations vars, BasicBlock block) {
 		List<Code> codes = block.getCodes();
 		Env env = new Env();		
-		for (int i = codes.size() - 1; i > 0; i--) {
+		for (int i = codes.size() - 1; i >= 0; i--) {
 			Code code = codes.get(i);
 			// Construct an Index object.
 			CodeBlock.Index id = new CodeBlock.Index(null, i);
-			System.out.println("In[" + i + "]" + ":{" + getLiveVars(env, vars) + "}");
+			Env out = (Env) env.clone();
 			env = liveAnalyzer.propagate(id, code, env);
-			System.out.println(i + ":{" + code + "}\nOut[" + i + "]:{" + getLiveVars(env, vars) + "}\n");
+			System.out.println("In[" + i + "]" + "={" + getLiveVars(env, vars) + "}\n"
+								+ "L."+i+" = "+ code + "\n"
+								+"Out[" + i + "]:{" + getLiveVars(out, vars) + "}\n");
 		}
+		env = null;
+	}
+	
+	/**
+	 * Apply live variable analysis on each block and display in/out set. 
+	 * @param name
+	 * @param vars
+	 * @param block
+	 */
+	@SuppressWarnings("unchecked")
+	private void applyLiveAnalysisOnBlock(String name, VariableDeclarations vars, BasicBlock block){
+		List<Code> codes = block.getCodes();
+		Env env = new Env();
+		CodeBlock codeblock = new CodeBlock(codes);
+		System.out.println("In" + "={" + getLiveVars(env, vars) + "}");
+		env = liveAnalyzer.propagate(null, codeblock, env, Collections.EMPTY_LIST);
+		System.out.println(block + "Out" + ":{" + getLiveVars(env, vars) + "}\n");
 		env = null;
 	}
 
@@ -107,6 +127,7 @@ public class AliasAnalyzer {
 
 			for(BasicBlock blk : graph.getBlockList()){
 				applyLiveAnalysisOnEachCode(name, vars, blk);
+				//applyLiveAnalysisOnBlock(name, vars, blk);
 			}
 			System.out.println("=== After live analysis for " + name + " function. ===");
 		}
