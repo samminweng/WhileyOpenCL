@@ -105,7 +105,7 @@ public class AliasAnalyzer {
 		Env env = new Env();
 		CodeBlock codeblock = new CodeBlock(codes);
 		System.out.println("In" + "={" + getLiveVars(env, vars) + "}");
-		env = liveAnalyzer.propagate(null, codeblock, env, Collections.EMPTY_LIST);
+		//env = liveAnalyzer.propagate(null, codeblock, env, Collections.EMPTY_LIST);
 		System.out.println(block + "Out" + ":{" + getLiveVars(env, vars) + "}\n");
 		env = null;
 	}
@@ -124,7 +124,6 @@ public class AliasAnalyzer {
 				//Print out CFGraph
 				AnalyzerHelper.printCFG(config, name);
 			}
-
 			for(BasicBlock blk : graph.getBlockList()){
 				applyLiveAnalysisOnEachCode(name, vars, blk);
 				//applyLiveAnalysisOnBlock(name, vars, blk);

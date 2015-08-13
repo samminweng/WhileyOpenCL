@@ -118,7 +118,7 @@ public abstract class BackwardFlowAnalysis<T> {
 	 *            The list of active exception handlers
 	 * @return
 	 */
-	public T propagate(CodeBlock.Index parentIndex, CodeBlock block, T store, List<Pair<Type,String>> handlers) {
+	protected T propagate(CodeBlock.Index parentIndex, CodeBlock block, T store, List<Pair<Type,String>> handlers) {
 
 		for (int i = block.size()-1; i >= 0; --i) {
 			Code code = block.get(i);
