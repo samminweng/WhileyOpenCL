@@ -1,5 +1,6 @@
 package wyopcl.translator;
 
+import java.math.BigInteger;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -9,12 +10,37 @@ import wyil.attributes.VariableDeclarations;
 import wyil.attributes.VariableDeclarations.Declaration;
 import wyil.lang.Code;
 import wyil.lang.CodeBlock;
+import wyil.lang.Type;
+import wyil.lang.Codes.Assign;
+import wyil.lang.Codes.Assume;
+import wyil.lang.Codes.BinaryOperator;
+import wyil.lang.Codes.Const;
+import wyil.lang.Codes.Convert;
+import wyil.lang.Codes.Fail;
+import wyil.lang.Codes.FieldLoad;
+import wyil.lang.Codes.Goto;
+import wyil.lang.Codes.If;
+import wyil.lang.Codes.IndexOf;
+import wyil.lang.Codes.Invariant;
+import wyil.lang.Codes.Invoke;
+import wyil.lang.Codes.Label;
+import wyil.lang.Codes.LengthOf;
+import wyil.lang.Codes.ListOperator;
+import wyil.lang.Codes.Loop;
+import wyil.lang.Codes.NewList;
+import wyil.lang.Codes.NewTuple;
+import wyil.lang.Codes.Return;
+import wyil.lang.Codes.SubList;
+import wyil.lang.Codes.TupleLoad;
+import wyil.lang.Codes.UnaryOperator;
+import wyil.lang.Codes.Update;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyil.transforms.LiveVariablesAnalysis;
 import wyil.transforms.LiveVariablesAnalysis.Env;
 import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.CFGraph;
+import wyopcl.translator.bound.BasicBlock.BlockType;
 
 /**
  * Analyze the alias in the WyIL code to find all the necessary array copies and
@@ -23,20 +49,21 @@ import wyopcl.translator.bound.CFGraph;
  * @author Min-Hsien Weng
  *
  */
-public class AliasAnalyzer {
+public class AliasAnalyzer extends Analyzer {
 	private final String prefix = "%";
-	private Configuration config;
-	private int line;
+
 	private LiveVariablesAnalysis liveAnalyzer;
+	private Analyzer analyer;
+
 
 	/**
 	 * Basic Constructor
 	 */
 	public AliasAnalyzer(Builder builder, Configuration config) {
-		liveAnalyzer = new LiveVariablesAnalysis(builder);
-		liveAnalyzer.setEnable(true);
-		liveAnalyzer.setNops(true);
-		this.config = config;
+		super(config);
+		this.liveAnalyzer = new LiveVariablesAnalysis(builder);
+		this.liveAnalyzer.setEnable(true);
+		this.liveAnalyzer.setNops(true);		
 	}
 
 	/**
@@ -76,7 +103,9 @@ public class AliasAnalyzer {
 	 * 
 	 * @param module
 	 */
-	private void applyLiveAnalysisOnBlock(String name, VariableDeclarations vars, BasicBlock block) {
+	private void applyLiveAnalysisOnBlock(VariableDeclarations vars, BasicBlock block) {
+
+
 		List<Code> codes = block.getCodes();
 		Env env = new Env();
 		System.out.println("In" + "={" + getLiveVars(env, vars) + "}");
@@ -94,48 +123,38 @@ public class AliasAnalyzer {
 			out = null;			
 		}
 		System.out.println(block + "Out" + ":{" + getLiveVars(env, vars) + "}\n");
-		
+
 		env = null;
 	}
-	
 
+	/**
+	 * Apply live variable analysis on each basic block.
+	 * @param module
+	 */
 	public void applyLiveAnalysis(WyilFile module) {
 		// Iterate each function to build up CFG
-		for (FunctionOrMethod func : module.functionOrMethods()) {
-			line = 0;
-			VariableDeclarations vars = func.attribute(VariableDeclarations.class);
-			String name = func.name();
+		for (FunctionOrMethod function : module.functionOrMethods()) {
+			String name = function.name();
 			System.out.println("=== Before live analysis for " + name + " function. ===");
-			iterateBytecode(func.name(), func.body().bytecodes());
-			//Print out each basic block.
-			CFGraph graph = AnalyzerHelper.getCFGraph(name);
+			//Build CFG for function.
+			CFGraph graph = buildCFG(function);
 			if(config.isVerbose()){
-				//Print out CFGraph
-				AnalyzerHelper.printCFG(config, name);
+				//Print out CFGraph.
+				this.printCFG(function);
 			}
-			for(BasicBlock blk : graph.getBlockList()){
-				applyLiveAnalysisOnBlock(name, vars, blk);
-			}
+
+
+			//Get the blocks.
+			for(BasicBlock block: graph.getBlockList()){
+				//Perform live variable analysis on each block.
+				//Get variable declaration.
+				applyLiveAnalysisOnBlock(function.attribute(VariableDeclarations.class), block);
+			}			
 			System.out.println("=== After live analysis for " + name + " function. ===");
 		}
 	}
 
-	/**
-	 * Iterate each byte-code to build up CFG.
-	 * 
-	 * @param name
-	 * @param code_blk
-	 */
-	private void iterateBytecode(String name, List<Code> code_blk) {
-		// Parse each byte-code and add the constraints accordingly.
-		for (Code code : code_blk) {
-			if (config.isVerbose()) {
-				// Get the Block.Entry and print out each byte-code
-				line = TranslatorHelper.printWyILCode(code, name, line);
-			}
-			AnalyzerHelper.addByteCodeToBlock(name, code);
-		}
 
-	}
+
 
 }

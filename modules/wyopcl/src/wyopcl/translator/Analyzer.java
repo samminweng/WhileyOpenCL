@@ -1,10 +1,14 @@
 package wyopcl.translator;
 
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 
 import wyil.lang.Code;
 import wyil.lang.Codes;
+import wyil.lang.Type;
 import wyil.lang.Codes.Assign;
 import wyil.lang.Codes.Assume;
 import wyil.lang.Codes.BinaryOperator;
@@ -29,8 +33,11 @@ import wyil.lang.Codes.TupleLoad;
 import wyil.lang.Codes.UnaryOperator;
 import wyil.lang.Codes.Update;
 import wyil.lang.WyilFile.FunctionOrMethod;
+import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.CFGraph;
 import wyopcl.translator.bound.SymbolFactory;
+import wyopcl.translator.bound.BasicBlock.BlockType;
+import wyopcl.translator.bound.CFGraph.STATUS;
 /**
  * Aims to build control flow graph for a function.
  * 
@@ -40,175 +47,182 @@ import wyopcl.translator.bound.SymbolFactory;
  */
 public abstract class Analyzer {
 	private static final String prefix = "%";
-	// Maps of CFGs, symbols
-	private static HashMap<String, SymbolFactory> symbol_factorys = new HashMap<String, SymbolFactory>();
-	private static HashMap<String, CFGraph> cfgraphs = new HashMap<String, CFGraph>();
-	
-	
-	public void analyze(FunctionOrMethod function){
-		
-		
-	}
-	
-	
+	protected Configuration config;
+	// Maps of CFGs	
+	protected HashMap<FunctionOrMethod, CFGraph> cfgraphs;
+
 	/**
-	 * Build up the control flow graph: iterating each byte-code to extract the
-	 * constraints, create the block (e.g. loop structure/if-else branches) or
-	 * reuse the current block to put the constraints into the corresponding
-	 * block.
+	 * Constructor
+	 */
+	public Analyzer(Configuration config){
+		this.cfgraphs = new HashMap<FunctionOrMethod, CFGraph>();
+		this.config = config;
+	}
+
+
+	/**
+	 * Given a function name, get the CFGraph.
 	 * 
 	 * @param name
-	 *            the function name that is currently being analyzed.
-	 * @param code_blk
-	 *            the list of byte-code
+	 *            the function name
+	 * @return the cached CFGraph. If no cached graph is found, return null.
 	 */
-	protected void analyze(String name, List<Code> code_blk, int line) {
-		// Parse each byte-code and add the constraints accordingly.
-		for (Code code : code_blk) {
-			if (!AnalyzerHelper.isCached(name)) {
-				// Get the Block.Entry and print out each byte-code
-				line = TranslatorHelper.printWyILCode(code, name, line);
+	protected CFGraph getCFGraph(FunctionOrMethod function) {
+		if (cfgraphs.containsKey(function))
+			return cfgraphs.get(function);
+		return null;
+	}
+
+
+	/**
+	 * Checks if the CFGraph of the given function exist.
+	 * 
+	 * @param name
+	 * @return
+	 */
+	private boolean isCached(FunctionOrMethod function) {
+		CFGraph graph = getCFGraph(function);
+		if (graph != null) {
+			if (graph.getStatus() == STATUS.COMPLETE) {
+				return true;
 			}
-			
-			if (code instanceof Codes.Invoke) {
-				analyze((Codes.Invoke) code, name);
-			} else {
-				// Parse each byte-code and add the constraints accordingly.
-				try {
-					if (code instanceof Codes.Invariant) {
-						analyze((Codes.Invariant) code, name);
-					} else if (code instanceof Codes.Assign) {
-						analyze((Codes.Assign) code, name);
-					} else if (code instanceof Codes.Assume){
-						analyze((Codes.Assume)code, name);
-					} else if (code instanceof Codes.BinaryOperator) {
-						analyze((Codes.BinaryOperator) code, name);
-					} else if (code instanceof Codes.Convert) {
-						analyze((Codes.Convert) code, name);
-					} else if (code instanceof Codes.Const) {
-						analyze((Codes.Const) code, name);
-					} else if (code instanceof Codes.Debug) {
-						throw new RuntimeException("Not implemented!");
-					} else if (code instanceof Codes.Dereference) {
-						throw new RuntimeException("Not implemented!");
-					} else if (code instanceof Codes.FieldLoad) {
-						analyze((Codes.FieldLoad) code, name);
-					} else if (code instanceof Codes.Fail) {
-						analyze((Codes.Fail) code, name);
-					} else if (code instanceof Codes.Goto) {
-						analyze((Codes.Goto) code, name);
-					} else if (code instanceof Codes.If) {
-						analyze((Codes.If) code, name);
-					} else if (code instanceof Codes.IfIs) {
-						throw new RuntimeException("Not implemented!");
-					} else if (code instanceof Codes.IndexOf) {
-						analyze((Codes.IndexOf) code, name);
-					} else if (code instanceof Codes.IndirectInvoke) {
-						throw new RuntimeException("Not implemented!");
-					} else if (code instanceof Codes.Invert) {
-						throw new RuntimeException("Not implemented!");
-					} else if (code instanceof Codes.ListOperator) {
-						analyze((Codes.ListOperator) code, name);
-					} else if (code instanceof Codes.Loop) {
-						analyze((Codes.Loop) code, name);
-					} else if (code instanceof Codes.Label) {
-						analyze((Codes.Label) code, name);
-					} else if (code instanceof Codes.Lambda) {
-						throw new RuntimeException("Not implemented!");
-					} else if (code instanceof Codes.LengthOf) {
-						analyze((Codes.LengthOf) code, name);
-					} else if (code instanceof Codes.Move) {
-						throw new RuntimeException("Not implemented!");
-					} else if (code instanceof Codes.NewList) {
-						analyze((Codes.NewList) code, name);
-					} else if (code instanceof Codes.NewRecord) {
-						throw new RuntimeException("Not implemented!");
-					} else if (code instanceof Codes.NewTuple) {
-						analyze((Codes.NewTuple) code, name);
-					} else if (code instanceof Codes.Return) {
-						analyze((Codes.Return) code, name);
-					} else if (code instanceof Codes.NewObject) {
-						throw new RuntimeException("Not implemented!");
-					} else if (code instanceof Codes.Nop) {
-						throw new RuntimeException("Not implemented!");
-					} else if (code instanceof Codes.SubList) {
-						analyze((Codes.SubList) code, name);
-					} else if (code instanceof Codes.Switch) {
-						throw new RuntimeException("Not implemented!");
-					} else if (code instanceof Codes.TupleLoad) {
-						analyze((Codes.TupleLoad) code, name);
-					} else if (code instanceof Codes.UnaryOperator) {
-						analyze((Codes.UnaryOperator) code, name);
-					} else if (code instanceof Codes.Update) {
-						analyze((Codes.Update) code, name);
-					} else {
-						throw new RuntimeException("unknown wyil code encountered (" + code + ")");
-					}
-				} catch (Exception ex) {
-					throw new RuntimeException(ex.getMessage());
+		} else {
+			// Create an graph and symbol control
+			cfgraphs.put(function, new CFGraph());
+		}
+
+		return false;
+	}
+
+
+	/**
+	 * Outputs the control flow graphs (*.dot).
+	 * 
+	 * @param blks
+	 *            the list of block
+	 * @param filename
+	 *            the name of input file.
+	 * @param func_name
+	 *            the name of function.
+	 */
+	public void printCFG(FunctionOrMethod function) {
+		//Get the function name.
+		String name = function.name();		
+		String dot_string = "digraph " + name + "{\n";
+		CFGraph graph = getCFGraph(function);
+		List<BasicBlock> blks = graph.getBlockList();
+		for (BasicBlock blk : blks) {
+			if (!blk.isLeaf()) {
+				for (BasicBlock child : blk.getChildNodes()) {
+					dot_string += "\"" + blk.getBranch() + " [" + blk.getType() + "]\"->\"" + child.getBranch() + " [" + child.getType() + "]\";\n";
 				}
 			}
 		}
+		dot_string += "\n}";
+		// )Write out the CFG-function_name.dot
+		try {
+			PrintWriter cfg_writer = new PrintWriter(name + ".dot", "UTF-8");
+			cfg_writer.println(dot_string);
+			cfg_writer.close();
+		} catch (FileNotFoundException | UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+
+	/**
+	 * Apply analysis on the function to build up control flow graph for a function.
+	 * @param function
+	 */
+	public CFGraph buildCFG(FunctionOrMethod function){
+		if (!isCached(function)) {
+			int line = 0;
+			iterateWyilCode(function, function.body().bytecodes(), line);
+		}		
+		return getCFGraph(function);
 	}
 
 	/**
-	 * <p>
-	 * Analyze the Update code at the function.
-	 * </p>
-	 * @param code
+	 * Prints out each bytecode with line number and indentation.
+	 * 
 	 * @param name
+	 * @param line
 	 */
-	protected abstract void analyze(Update code, String name);
+	private int printWyILCode(FunctionOrMethod function, Code code, int line) {
+		String name = function.name();
+		// Print out the bytecode with the format (e.g. 'main.9 [const %12 = 2345 : int]')
+		if (code instanceof Codes.Label) {			
+			System.out.println( name + "." + line + " [" + code + "]");
+		} else {
+
+			System.out.println(name + "." + line + " [\t" + code + "]");
+		}
+		return ++line;
+	}
 
 	/**
-	 * <p>
-	 * Analyze the UnaryOperator code of function.
-	 * </p>
+	 * Build up the control flow graph: iterating each byte-code to create the block
+	 * (e.g. loop structure/if-else branches) or reuse the current block to put
+	 * the constraints into the corresponding block.
+	 * 
+	 * @param function
+	 *            the function that is currently being analyzed.
+	 * @param code_blk
+	 *            the list of byte-code
+	 */
+	protected void iterateWyilCode(FunctionOrMethod function, List<Code> code_blk, int line) {
+		// Parse each byte-code and add the constraints accordingly.
+		for (Code code : code_blk) {			
+			// Get the Block.Entry and print out each byte-code
+			line = printWyILCode(function, code, line);
+			// Parse each byte-code and add the constraints accordingly.
+			try {
+				if (code instanceof Codes.If) {
+					analyze((Codes.If) code, function);
+				}else if (code instanceof Codes.Return) {
+					analyze((Codes.Return) code, function);
+				} else {
+					//Add the byte-code to the current block in a CFGraph.
+					CFGraph graph = getCFGraph(function);
+					graph.getCurrentBlock().addCode(code);
+				}				
+			} catch (Exception ex) {
+				throw new RuntimeException(ex.getMessage());
+			}
+		}
+	}
+	
+	/**
+	 * Analyze the 'If' byte-code 
+	 * @param code
+	 * @param function
+	 */
+	protected void analyze(If code, FunctionOrMethod function) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	/**
+	 * Analyze the 'return' byte-code to connect the current to Exit block.
 	 * @param code
 	 * @param name
 	 */
-	protected abstract void analyze(UnaryOperator code, String name);
+	protected void analyze(Return code, FunctionOrMethod function){	
+		// Get the CFGraph
+		CFGraph graph = getCFGraph(function);
+		BasicBlock c_blk = graph.getCurrentBlock();
+		// Check if the current blk exits. 
+		//If so, connect the current block with exit block.
+		if (c_blk != null) {
+			c_blk.addCode(code);
+			c_blk.addChild(graph.getBasicBlock("exit", BlockType.EXIT));
+		}
+	}
 
-	protected abstract void analyze(TupleLoad code, String name);
-
-	protected abstract void analyze(SubList code, String name);
-
-	protected abstract void analyze(Return code, String name);
-
-	protected abstract void analyze(NewTuple code, String name);
-
-	protected abstract void analyze(NewList code, String name);
-
-	protected abstract void analyze(LengthOf code, String name);
-
-	protected abstract void analyze(Label code, String name);
-
-	protected abstract void analyze(Loop code, String name);
-
-	protected abstract void analyze(ListOperator code, String name);
-
-	protected abstract void analyze(IndexOf code, String name);
-
-	protected abstract void analyze(If code, String name);
-
-	protected abstract void analyze(Goto code, String name);
-
-	protected abstract void analyze(Fail code, String name);
-
-	protected abstract void analyze(FieldLoad code, String name);
-
-	protected abstract void analyze(Const code, String name);
-
-	protected abstract void analyze(Convert code, String name);
-
-	protected abstract void analyze(BinaryOperator code, String name);
-
-	protected abstract void analyze(Assume code, String name); 
-
-	protected abstract void analyze(Assign code, String name);
-
-	protected abstract void analyze(Invariant code, String name);
-
-	protected abstract void analyze(Invoke code, String name);
 	
+
+
+
 }

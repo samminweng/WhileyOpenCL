@@ -314,13 +314,6 @@ public class CFGraph {
 		}
 	}
 	
-	/**
-	 * Add byte-code to the current block.
-	 * @param code
-	 */
-	public void addCode(Code code){
-		BasicBlock blk = getCurrentBlock();
-		blk.addCode(code);
-	}
+	
 	
 }

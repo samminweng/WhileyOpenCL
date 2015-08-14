@@ -348,16 +348,7 @@ public final class AnalyzerHelper {
 		}
 	}
 	
-	/**
-	 * Add the byte-code to the current block in a CFGraph.
-	 * @param name
-	 * @param code
-	 */
-	public static void addByteCodeToBlock(String name, Code code){
-		isCached(name);
-		CFGraph graph = getCFGraph(name);
-		graph.addCode(code);
-	}
+	
 	
 
 }
