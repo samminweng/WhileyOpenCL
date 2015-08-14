@@ -72,43 +72,32 @@ public class AliasAnalyzer {
 	}
 
 	/**
-	 * Applies the live analysis of Whiley compiler on each line of code for a
-	 * function, and display the transformed bytecode
+	 * Apply live variable analysis on each block and display in/out set.
 	 * 
 	 * @param module
 	 */
-	private void applyLiveAnalysisOnEachCode(String name, VariableDeclarations vars, BasicBlock block) {
+	private void applyLiveAnalysisOnBlock(String name, VariableDeclarations vars, BasicBlock block) {
 		List<Code> codes = block.getCodes();
-		Env env = new Env();		
+		Env env = new Env();
+		System.out.println("In" + "={" + getLiveVars(env, vars) + "}");
 		for (int i = codes.size() - 1; i >= 0; i--) {
 			Code code = codes.get(i);
 			// Construct an Index object.
 			CodeBlock.Index id = new CodeBlock.Index(null, i);
 			Env out = (Env) env.clone();
 			env = liveAnalyzer.propagate(id, code, env);
-			System.out.println("In[" + i + "]" + "={" + getLiveVars(env, vars) + "}\n"
-								+ "L."+i+" = "+ code + "\n"
-								+"Out[" + i + "]:{" + getLiveVars(out, vars) + "}\n");
+			if(config.isVerbose()){
+				System.out.println("In[" + i + "]" + "={" + getLiveVars(env, vars) + "}\n"
+						+ "L."+i+" = "+ code + "\n"
+						+"Out[" + i + "]:{" + getLiveVars(out, vars) + "}\n");
+			}
+			out = null;			
 		}
+		System.out.println(block + "Out" + ":{" + getLiveVars(env, vars) + "}\n");
+		
 		env = null;
 	}
 	
-	/**
-	 * Apply live variable analysis on each block and display in/out set. 
-	 * @param name
-	 * @param vars
-	 * @param block
-	 */
-	@SuppressWarnings("unchecked")
-	private void applyLiveAnalysisOnBlock(String name, VariableDeclarations vars, BasicBlock block){
-		List<Code> codes = block.getCodes();
-		Env env = new Env();
-		CodeBlock codeblock = new CodeBlock(codes);
-		System.out.println("In" + "={" + getLiveVars(env, vars) + "}");
-		//env = liveAnalyzer.propagate(null, codeblock, env, Collections.EMPTY_LIST);
-		System.out.println(block + "Out" + ":{" + getLiveVars(env, vars) + "}\n");
-		env = null;
-	}
 
 	public void applyLiveAnalysis(WyilFile module) {
 		// Iterate each function to build up CFG
@@ -125,8 +114,7 @@ public class AliasAnalyzer {
 				AnalyzerHelper.printCFG(config, name);
 			}
 			for(BasicBlock blk : graph.getBlockList()){
-				applyLiveAnalysisOnEachCode(name, vars, blk);
-				//applyLiveAnalysisOnBlock(name, vars, blk);
+				applyLiveAnalysisOnBlock(name, vars, blk);
 			}
 			System.out.println("=== After live analysis for " + name + " function. ===");
 		}
