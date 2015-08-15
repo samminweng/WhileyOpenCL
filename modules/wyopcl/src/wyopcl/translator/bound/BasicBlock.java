@@ -3,10 +3,7 @@ package wyopcl.translator.bound;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map.Entry;
 
 import wyil.lang.Code;
 import wyopcl.translator.bound.constraint.Constraint;
@@ -23,7 +20,7 @@ public class BasicBlock implements Comparable<BasicBlock> {
 	private List<BasicBlock> childNodes = null;
 	private List<BasicBlock> parentNodes = null;
 	// The branch name
-	private String branch;
+	private String label;
 	private BlockType type;
 	private Bounds unionOfBounds;
 	// Indicate if the bounds remain unchanged. False: unchanged. True: changed.
@@ -99,15 +96,15 @@ public class BasicBlock implements Comparable<BasicBlock> {
 	/**
 	 * Constructing a basic block with a specific name and block type.
 	 * 
-	 * @param branch
+	 * @param label
 	 *            the name of blk
 	 * @param type
 	 *            the type of blk
 	 */
-	public BasicBlock(String branch, BlockType type) {
+	public BasicBlock(String label, BlockType type) {
 		// Use the nested constructor to create the BasicBlock object.
 		this();
-		this.branch = branch;
+		this.label = label;
 		this.type = type;
 		this.isChanged = false;
 	}
@@ -214,14 +211,21 @@ public class BasicBlock implements Comparable<BasicBlock> {
 	}
 
 	/**
-	 * Return the blk name.
+	 * Return the blk label.
 	 * 
 	 * @return the name of blk.
 	 */
-	public String getBranch() {
-		return this.branch;
+	public String getLabel() {
+		return this.label;
 	}
-
+	/**
+	 * Set the block label.
+	 * @param label
+	 */
+	public void setLabel(String label){
+		this.label = label;
+	}
+	
 	/**
 	 * Return the block type.
 	 * 
@@ -335,7 +339,7 @@ public class BasicBlock implements Comparable<BasicBlock> {
 	public String toString() {
 		String str = "======================================\n";
 		str += String.format("%s %-20s %n", "Name", "Type");
-		str += String.format("%s %-15s %n", this.branch, this.type);
+		str += String.format("%s %-15s %n", this.label, this.type);
 		for (Code code : codes) {
 			str += code + "\n";
 		}
@@ -357,7 +361,7 @@ public class BasicBlock implements Comparable<BasicBlock> {
 			return false;
 		}
 		BasicBlock blk = (BasicBlock) obj;
-		if (this.getBranch().equals(blk.getBranch())) {
+		if (this.getLabel().equals(blk.getLabel())) {
 			if (this.getType().equals(blk.getType())) {
 				return true;
 			}

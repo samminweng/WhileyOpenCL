@@ -53,6 +53,9 @@ public abstract class Analyzer {
 	protected HashMap<FunctionOrMethod, CFGraph> cfgraphs;
 	// The boolean flag indicates the byte-code is inside loop structure.
 	private boolean isLoop;
+	// The line number
+	private int line;
+	
 
 	/**
 	 * Constructor
@@ -117,7 +120,7 @@ public abstract class Analyzer {
 		for (BasicBlock blk : blks) {
 			if (!blk.isLeaf()) {
 				for (BasicBlock child : blk.getChildNodes()) {
-					dot_string += "\"" + blk.getBranch() + " [" + blk.getType() + "]\"->\"" + child.getBranch() + " [" + child.getType() + "]\";\n";
+					dot_string += "\"" + blk.getLabel() + " [" + blk.getType() + "]\"->\"" + child.getLabel() + " [" + child.getType() + "]\";\n";
 				}
 			}
 		}
@@ -140,8 +143,8 @@ public abstract class Analyzer {
 	 */
 	public CFGraph buildCFG(FunctionOrMethod function){
 		if (!isCached(function)) {
-			int line = 0;
-			iterateWyilCode(function, function.body().bytecodes(), line);
+			line = 0;
+			iterateWyilCode(function, function.body().bytecodes());
 		}		
 		return getCFGraph(function);
 	}
@@ -174,14 +177,16 @@ public abstract class Analyzer {
 	 * @param code_blk
 	 *            the list of byte-code
 	 */
-	protected void iterateWyilCode(FunctionOrMethod function, List<Code> code_blk, int line) {
+	protected void iterateWyilCode(FunctionOrMethod function, List<Code> code_blk) {
 		// Parse each byte-code and add the constraints accordingly.
 		for (Code code : code_blk) {			
 			// Get the Block.Entry and print out each byte-code
 			line = printWyILCode(function, code, line);
 			// Parse each byte-code and add the constraints accordingly.
 			try {
-				if (code instanceof Codes.If) {
+				if(code instanceof Codes.Invariant){
+					analyze((Codes.Invariant)code, function);
+				}else if (code instanceof Codes.If) {
 					analyze((Codes.If) code, function);
 				}else if (code instanceof Codes.Return) {
 					analyze((Codes.Return) code, function);
@@ -189,6 +194,8 @@ public abstract class Analyzer {
 					analyze((Codes.Goto)code, function);
 				}else if (code instanceof Codes.Label){
 					analyze((Codes.Label)code, function);
+				}else if (code instanceof Codes.Loop){
+					analyze((Codes.Loop)code, function);
 				} else {
 					//Add the byte-code to the current block in a CFGraph.
 					CFGraph graph = getCFGraph(function);
@@ -198,6 +205,38 @@ public abstract class Analyzer {
 				throw new RuntimeException(ex.getMessage());
 			}
 		}
+	}
+
+	protected void analyze(Invariant code, FunctionOrMethod function) {
+		//Add the invariant to the current block.
+		CFGraph graph = getCFGraph(function);
+		BasicBlock c_blk = graph.getCurrentBlock();
+		c_blk.addCode(code);
+	}
+
+
+	/**
+	 * Iterate the bytecode inside the loop.
+	 * @param code
+	 * @param function
+	 */
+	protected void analyze(Loop code, FunctionOrMethod function) {
+		// Set the loop flag to be true,
+		// in order to identify the bytecode is inside a loop
+		isLoop = true;
+		
+		CFGraph graph = getCFGraph(function);
+		BasicBlock c_blk = graph.getCurrentBlock();
+		
+		//Create the loop header
+		BasicBlock loop_header = graph.createBasicBlock("", BlockType.LOOP_HEADER, c_blk);
+		//Set the current block to be loop header.
+		graph.setCurrentBlock(loop_header);
+		// Get the list of byte-code and iterate through the list.
+		iterateWyilCode(function, code.bytecodes());
+		// Set the flag to be false after finishing iterating all the byte-code.
+		isLoop = false;
+
 	}
 
 
@@ -217,8 +256,6 @@ public abstract class Analyzer {
 			//Create a new block
 			graph.createBasicBlock(label, BlockType.BLOCK, null);
 		}
-		
-		
 		// Set the current blk to null blk
 		graph.setCurrentBlock(null);
 	}
@@ -241,13 +278,15 @@ public abstract class Analyzer {
 		BasicBlock c_blk = graph.getCurrentBlock();		
 		// Get the target block (else branch or loop exit). 
 		BasicBlock blk = graph.getBasicBlock(label);
-		// Add current block to the target block.
-		if(c_blk != null){
+		//Check if target block is loop exit.
+		//If so, no needs to connect current block to target block.
+		if(c_blk != null&&(blk!=null&&!blk.getType().equals(BlockType.LOOP_EXIT))){
+			// Add current block to the target block.
 			c_blk.addChild(blk);
 		}		
 		// Switch the current block to the target block
 		graph.setCurrentBlock(blk);
-		
+
 	}
 	/**
 	 * Analyze the 'If' byte-code to create if/else branches or loop structure. 
@@ -256,7 +295,7 @@ public abstract class Analyzer {
 	 */
 	protected void analyze(If code, FunctionOrMethod function) {
 		CFGraph graph = getCFGraph(function);
-		
+
 		//The original condition is 'ifge %0, %1 goto blklab1 : int'
 		//The negated condition is iflt %0, %1 goto blklab1
 		If neg_code = null;
@@ -283,7 +322,7 @@ public abstract class Analyzer {
 		default:
 			throw new RuntimeException("Unknown comparator.");
 		}
-		
+
 		// Check if the 'if' bytecode is the loop condition.
 		if (isLoop) {
 			// Create a loop body and loop exit.
@@ -300,7 +339,7 @@ public abstract class Analyzer {
 			//Add the original condition to the else branch.
 			graph.getBasicBlock(code.target, BlockType.ELSE_BRANCH).addCode(code);
 		}
-		
+
 	}
 
 
@@ -312,8 +351,7 @@ public abstract class Analyzer {
 	protected void analyze(Return code, FunctionOrMethod function){	
 		// Get the CFGraph
 		CFGraph graph = getCFGraph(function);
-		BasicBlock c_blk = graph.getCurrentBlock();
-		
+		BasicBlock c_blk = graph.getCurrentBlock();		
 		// Check if the current blk exits.
 		if (c_blk != null) {
 			//Add the code to current block.

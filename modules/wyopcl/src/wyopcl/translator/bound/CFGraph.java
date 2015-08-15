@@ -125,7 +125,7 @@ public class CFGraph {
 	 */
 	public BasicBlock getBasicBlock(String label, BlockType type) {
 		for (BasicBlock blk : blocks) {
-			if (blk.getBranch().equals(label)) {
+			if (blk.getLabel().equals(label)) {
 				if (blk.getType().equals(type)) {
 					return blk;
 				}
@@ -253,11 +253,10 @@ public class CFGraph {
 	 *            the name of new branch.
 	 */
 	public void createLoopStructure(String new_label) {
-		//Create the loop header
-		BasicBlock loop_header = createBasicBlock(new_label, BlockType.LOOP_HEADER, getCurrentBlock());
-		// Set loop_header to be the current block
-		setCurrentBlock(loop_header);
-		// Set the loop flag to be true.
+		
+		BasicBlock loop_header = getCurrentBlock();
+		//update the label
+		loop_header.setLabel(new_label);
 		// Check whether to add if-else blocks or loop-condition blocks.
 		BasicBlock loop_body = createBasicBlock(new_label, BlockType.LOOP_BODY, loop_header);
 		BasicBlock loop_exit = createBasicBlock(new_label, BlockType.LOOP_EXIT, loop_header);
@@ -336,7 +335,7 @@ public class CFGraph {
 		for(BasicBlock blk: blks){
 			if(!blk.isLeaf()){
 				for(BasicBlock child: blk.getChildNodes()){
-					dot_string += "\""+blk.getBranch()+" [" +blk.getType()+"]\"->\""+ child.getBranch() +" ["+child.getType() + "]\";\n";
+					dot_string += "\""+blk.getLabel()+" [" +blk.getType()+"]\"->\""+ child.getLabel() +" ["+child.getType() + "]\";\n";
 				}
 			}
 		}
