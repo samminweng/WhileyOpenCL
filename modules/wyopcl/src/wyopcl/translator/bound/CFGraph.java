@@ -206,6 +206,20 @@ public class CFGraph {
 		
 	}
 
+	/**
+	 * Create if/else branch without adding any constraint.
+	 * @param new_label
+	 */
+	public void createIfElseBranch(String new_label) {
+		BasicBlock c_blk = getCurrentBlock();
+		// Branch out the block
+		// The left block does not have the name
+		BasicBlock leftBlock = createBasicBlock(new_label, BlockType.IF_BRANCH, c_blk);
+		BasicBlock rightBlock = createBasicBlock(new_label, BlockType.ELSE_BRANCH, c_blk);
+		// Set the current block to the left
+		setCurrentBlock(leftBlock);
+	}
+	
 
 	/**
 	 * Branches out the current block to add if/else blocks and set the current block to 
@@ -230,6 +244,30 @@ public class CFGraph {
 		// Set the current block to the left
 		setCurrentBlock(leftBlock);
 	}
+	
+	
+	/**
+	 * Creates the loop header, loop body and loop exit. And set the current block to the loop body.
+	 * 
+	 * @param new_label
+	 *            the name of new branch.
+	 */
+	public void createLoopStructure(String new_label) {
+		//Create the loop header
+		BasicBlock loop_header = createBasicBlock(new_label, BlockType.LOOP_HEADER, getCurrentBlock());
+		// Set loop_header to be the current block
+		setCurrentBlock(loop_header);
+		// Set the loop flag to be true.
+		// Check whether to add if-else blocks or loop-condition blocks.
+		BasicBlock loop_body = createBasicBlock(new_label, BlockType.LOOP_BODY, loop_header);
+		BasicBlock loop_exit = createBasicBlock(new_label, BlockType.LOOP_EXIT, loop_header);
+		// Connect the loop header with the loop body
+		loop_body.addChild(loop_header);
+		// Set the current block to be loop body.
+		setCurrentBlock(loop_body);
+	}
+	
+	
 
 	/**
 	 * Creates the loop header, loop body and loop exit and

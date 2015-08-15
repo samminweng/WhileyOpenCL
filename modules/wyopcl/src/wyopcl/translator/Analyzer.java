@@ -12,6 +12,7 @@ import wyil.lang.Type;
 import wyil.lang.Codes.Assign;
 import wyil.lang.Codes.Assume;
 import wyil.lang.Codes.BinaryOperator;
+import wyil.lang.Codes.Comparator;
 import wyil.lang.Codes.Const;
 import wyil.lang.Codes.Convert;
 import wyil.lang.Codes.Fail;
@@ -50,6 +51,8 @@ public abstract class Analyzer {
 	protected Configuration config;
 	// Maps of CFGs	
 	protected HashMap<FunctionOrMethod, CFGraph> cfgraphs;
+	// The boolean flag indicates the byte-code is inside loop structure.
+	private boolean isLoop;
 
 	/**
 	 * Constructor
@@ -182,6 +185,10 @@ public abstract class Analyzer {
 					analyze((Codes.If) code, function);
 				}else if (code instanceof Codes.Return) {
 					analyze((Codes.Return) code, function);
+				}else if (code instanceof Codes.Goto){
+					analyze((Codes.Goto)code, function);
+				}else if (code instanceof Codes.Label){
+					analyze((Codes.Label)code, function);
 				} else {
 					//Add the byte-code to the current block in a CFGraph.
 					CFGraph graph = getCFGraph(function);
@@ -192,14 +199,107 @@ public abstract class Analyzer {
 			}
 		}
 	}
-	
+
+
 	/**
-	 * Analyze the 'If' byte-code 
+	 * Checks or creates the goto block and updates the current block to be
+	 * null.
+	 * 
+	 * @param code
+	 *            Goto ({@link wyil.lang.Codes.Goto } byte-code
+	 */
+	protected void analyze(Codes.Goto code, FunctionOrMethod function) {
+		// Get the label name
+		String label = code.target;
+		CFGraph graph = getCFGraph(function);
+		BasicBlock goto_blk = graph.getBasicBlock(label);
+		if(goto_blk == null){
+			//Create a new block
+			graph.createBasicBlock(label, BlockType.BLOCK, null);
+		}
+		
+		
+		// Set the current blk to null blk
+		graph.setCurrentBlock(null);
+	}
+
+	/**
+	 * Gets the block by the label byte-code and sets the current block to that
+	 * block.
+	 * 
+	 * If the current and target blocks are not the same and target block is not
+	 * a Loop Exit, then add the parent-child relation to these two blocks.
+	 * 
+	 * @param code
+	 *            {@link wyil.lang.Codes.Label} byte-code
+	 */
+	protected void analyze(Codes.Label code, FunctionOrMethod function) {
+		String label = code.label;
+		// Get the CFGraph
+		CFGraph graph = getCFGraph(function);
+		// Get the current block
+		BasicBlock c_blk = graph.getCurrentBlock();		
+		// Get the target block (else branch or loop exit). 
+		BasicBlock blk = graph.getBasicBlock(label);
+		// Add current block to the target block.
+		if(c_blk != null){
+			c_blk.addChild(blk);
+		}		
+		// Switch the current block to the target block
+		graph.setCurrentBlock(blk);
+		
+	}
+	/**
+	 * Analyze the 'If' byte-code to create if/else branches or loop structure. 
 	 * @param code
 	 * @param function
 	 */
 	protected void analyze(If code, FunctionOrMethod function) {
-		// TODO Auto-generated method stub
+		CFGraph graph = getCFGraph(function);
+		
+		//The original condition is 'ifge %0, %1 goto blklab1 : int'
+		//The negated condition is iflt %0, %1 goto blklab1
+		If neg_code = null;
+		//Create an negated condition.
+		switch(code.op){
+		case EQ:
+			neg_code = Codes.If(code.type, code.leftOperand, code.rightOperand, Comparator.NEQ, code.target);
+			break;
+		case NEQ:
+			neg_code = Codes.If(code.type, code.leftOperand, code.rightOperand, Comparator.EQ, code.target);
+			break;		
+		case LT:
+			neg_code = Codes.If(code.type, code.leftOperand, code.rightOperand, Comparator.GTEQ, code.target);
+			break;
+		case LTEQ:
+			neg_code = Codes.If(code.type, code.leftOperand, code.rightOperand, Comparator.GT, code.target);
+			break;
+		case GT:
+			neg_code = Codes.If(code.type, code.leftOperand, code.rightOperand, Comparator.LTEQ, code.target);
+			break;
+		case GTEQ:
+			neg_code = Codes.If(code.type, code.leftOperand, code.rightOperand, Comparator.LT, code.target);
+			break;
+		default:
+			throw new RuntimeException("Unknown comparator.");
+		}
+		
+		// Check if the 'if' bytecode is the loop condition.
+		if (isLoop) {
+			// Create a loop body and loop exit.
+			graph.createLoopStructure(code.target);
+			//Added the negated condition to loop body
+			graph.getBasicBlock(code.target, BlockType.LOOP_BODY).addCode(neg_code);
+			//Added the condition to loop exit
+			graph.getBasicBlock(code.target, BlockType.LOOP_EXIT).addCode(code);
+		} else {			
+			// Create if/else branches, and set the if branch as the current block.
+			graph.createIfElseBranch(code.target);
+			//Added the negated condition to the if branch.
+			graph.getBasicBlock(code.target, BlockType.IF_BRANCH).addCode(neg_code);
+			//Add the original condition to the else branch.
+			graph.getBasicBlock(code.target, BlockType.ELSE_BRANCH).addCode(code);
+		}
 		
 	}
 
@@ -213,15 +313,19 @@ public abstract class Analyzer {
 		// Get the CFGraph
 		CFGraph graph = getCFGraph(function);
 		BasicBlock c_blk = graph.getCurrentBlock();
-		// Check if the current blk exits. 
-		//If so, connect the current block with exit block.
+		
+		// Check if the current blk exits.
 		if (c_blk != null) {
-			c_blk.addCode(code);
+			//Add the code to current block.
+			c_blk.addCode(code);			
+			//If so, connect the current block with exit block.
 			c_blk.addChild(graph.getBasicBlock("exit", BlockType.EXIT));
 		}
+		//Set the current block to null
+		graph.setCurrentBlock(null);
 	}
 
-	
+
 
 
 

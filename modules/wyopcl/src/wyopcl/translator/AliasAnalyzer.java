@@ -113,14 +113,14 @@ public class AliasAnalyzer extends Analyzer {
 			Code code = codes.get(i);
 			// Construct an Index object.
 			CodeBlock.Index id = new CodeBlock.Index(null, i);
-			Env out = (Env) env.clone();
+			//Env out = (Env) env.clone();
 			env = liveAnalyzer.propagate(id, code, env);
-			if(config.isVerbose()){
+			/*if(config.isVerbose()){
 				System.out.println("In[" + i + "]" + "={" + getLiveVars(env, vars) + "}\n"
 						+ "L."+i+" = "+ code + "\n"
 						+"Out[" + i + "]:{" + getLiveVars(out, vars) + "}\n");
-			}
-			out = null;			
+			}*/
+			//out = null;			
 		}
 		System.out.println(block + "Out" + ":{" + getLiveVars(env, vars) + "}\n");
 

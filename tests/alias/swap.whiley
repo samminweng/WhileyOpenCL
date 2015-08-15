@@ -9,5 +9,5 @@ function swap([int] xs, int i0, int i1) -> [int]:
 
 method main(System.Console console):
     [int] xs = [0,2,1,3,4]
-    [int] r = swap(xs,1,2)
-    console.out.println(r)
+    [int] ys = swap(xs,1,2)
+    console.out.println(ys)
