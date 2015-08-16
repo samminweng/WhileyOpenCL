@@ -40,7 +40,7 @@ public class CFGraph {
 		// Initialize the variables
 		this.blocks = new ArrayList<BasicBlock>();
 		// Entry and Exit block
-		BasicBlock exit = createBasicBlock("exit", BlockType.EXIT);
+		//BasicBlock exit = createBasicBlock("exit", BlockType.EXIT);
 		BasicBlock entry = createBasicBlock("entry", BlockType.ENTRY);
 		// First code block.
 		this.current_blk = createBasicBlock("code", BlockType.BLOCK, entry);

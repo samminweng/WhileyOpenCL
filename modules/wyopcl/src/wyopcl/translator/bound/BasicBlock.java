@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import wyil.lang.Code;
+import wyil.lang.CodeBlock;
 import wyopcl.translator.bound.constraint.Constraint;
 
 /**
@@ -15,7 +16,7 @@ import wyopcl.translator.bound.constraint.Constraint;
  *
  */
 public class BasicBlock implements Comparable<BasicBlock> {
-	private List<Code> codes;// Store all the byte-code for a block
+	private CodeBlock codeBlock;// Store all the byte-code for a block
 	private List<Constraint> constraints;
 	private List<BasicBlock> childNodes = null;
 	private List<BasicBlock> parentNodes = null;
@@ -90,7 +91,7 @@ public class BasicBlock implements Comparable<BasicBlock> {
 	private BasicBlock() {
 		this.unionOfBounds = new Bounds();
 		this.constraints = new ArrayList<Constraint>();
-		this.codes = new ArrayList<Code>();
+		this.codeBlock = new CodeBlock();
 	}
 
 	/**
@@ -131,14 +132,14 @@ public class BasicBlock implements Comparable<BasicBlock> {
 	 * @param code
 	 */
 	public void addCode(Code code) {
-		this.codes.add(code);
+		this.codeBlock.add(code);
 	}
 	/**
 	 * Get the list of codes.
 	 * @return
 	 */
-	public List<Code> getCodes(){
-		return this.codes;
+	public CodeBlock getCodeBlock(){
+		return this.codeBlock;
 	}
 	
 	/**
@@ -340,18 +341,17 @@ public class BasicBlock implements Comparable<BasicBlock> {
 		String str = "======================================\n";
 		str += String.format("%s %-20s %n", "Name", "Type");
 		str += String.format("%s %-15s %n", this.label, this.type);
-		for (Code code : codes) {
-			str += code + "\n";
-		}
-		
+		for(Code code: this.codeBlock){
+			str += "\n"+code;	
+		}			
 		if(!constraints.isEmpty()){
 			//Print out the constraints
-			str += "---------------------------------------\n";
+			str += "\n---------------------------------------\n";
 			str += String.format("%s %s%n", "Constraints", this.constraints);
 			str += this.unionOfBounds + "\n";
 			str += "IsConsistent=" + isConsistent()+"\n";
 		}		
-		str += "======================================\n";
+		str += "\n======================================\n";
 		return str;
 	}
 

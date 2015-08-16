@@ -9,6 +9,7 @@ import java.util.List;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
+import wyil.lang.WyilFile;
 import wyil.lang.Codes.Assign;
 import wyil.lang.Codes.Assume;
 import wyil.lang.Codes.BinaryOperator;
@@ -55,7 +56,7 @@ public abstract class Analyzer {
 	private boolean isLoop;
 	// The line number
 	private int line;
-	
+
 
 	/**
 	 * Constructor
@@ -138,15 +139,22 @@ public abstract class Analyzer {
 
 
 	/**
-	 * Apply analysis on the function to build up control flow graph for a function.
+	 * Build up control flow graph for a whiley program.
 	 * @param function
 	 */
-	public CFGraph buildCFG(FunctionOrMethod function){
-		if (!isCached(function)) {
-			line = 0;
-			iterateWyilCode(function, function.body().bytecodes());
-		}		
-		return getCFGraph(function);
+	public void buildCFG(WyilFile module){
+		// Iterate each function to build up CFG
+		for (FunctionOrMethod function : module.functionOrMethods()) {
+			if (!isCached(function)) {
+				line = 0;
+				iterateWyilCode(function, function.body().bytecodes());
+			}
+			
+			if(config.isVerbose()){
+				//Print out CFGraph.
+				this.printCFG(function);
+			}
+		}
 	}
 
 	/**
@@ -224,10 +232,10 @@ public abstract class Analyzer {
 		// Set the loop flag to be true,
 		// in order to identify the bytecode is inside a loop
 		isLoop = true;
-		
+
 		CFGraph graph = getCFGraph(function);
 		BasicBlock c_blk = graph.getCurrentBlock();
-		
+
 		//Create the loop header
 		BasicBlock loop_header = graph.createBasicBlock("", BlockType.LOOP_HEADER, c_blk);
 		//Set the current block to be loop header.
@@ -355,9 +363,15 @@ public abstract class Analyzer {
 		// Check if the current blk exits.
 		if (c_blk != null) {
 			//Add the code to current block.
-			c_blk.addCode(code);			
-			//If so, connect the current block with exit block.
-			c_blk.addChild(graph.getBasicBlock("exit", BlockType.EXIT));
+			c_blk.addCode(code);
+			//Get the exit node.
+			BasicBlock exit = graph.getBasicBlock("exit", BlockType.EXIT);
+			if(exit == null){
+				exit = graph.createBasicBlock("exit", BlockType.EXIT, c_blk);
+			}else{
+				//If so, connect the current block with exit block.
+				c_blk.addChild(exit);
+			}
 		}
 		//Set the current block to null
 		graph.setCurrentBlock(null);

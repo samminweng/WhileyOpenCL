@@ -1,46 +1,22 @@
 package wyopcl.translator;
 
-import java.math.BigInteger;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
 import wybs.lang.Builder;
 import wyil.attributes.VariableDeclarations;
-import wyil.attributes.VariableDeclarations.Declaration;
 import wyil.lang.Code;
 import wyil.lang.CodeBlock;
-import wyil.lang.Type;
-import wyil.lang.Codes.Assign;
-import wyil.lang.Codes.Assume;
-import wyil.lang.Codes.BinaryOperator;
-import wyil.lang.Codes.Const;
-import wyil.lang.Codes.Convert;
-import wyil.lang.Codes.Fail;
-import wyil.lang.Codes.FieldLoad;
-import wyil.lang.Codes.Goto;
-import wyil.lang.Codes.If;
-import wyil.lang.Codes.IndexOf;
-import wyil.lang.Codes.Invariant;
-import wyil.lang.Codes.Invoke;
-import wyil.lang.Codes.Label;
-import wyil.lang.Codes.LengthOf;
-import wyil.lang.Codes.ListOperator;
-import wyil.lang.Codes.Loop;
-import wyil.lang.Codes.NewList;
-import wyil.lang.Codes.NewTuple;
-import wyil.lang.Codes.Return;
-import wyil.lang.Codes.SubList;
-import wyil.lang.Codes.TupleLoad;
-import wyil.lang.Codes.UnaryOperator;
-import wyil.lang.Codes.Update;
+import wyil.lang.CodeBlock.Index;
+import wyil.lang.Codes;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyil.transforms.LiveVariablesAnalysis;
 import wyil.transforms.LiveVariablesAnalysis.Env;
+import wyil.util.dfa.BackwardFlowAnalysis;
 import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.CFGraph;
-import wyopcl.translator.bound.BasicBlock.BlockType;
 
 /**
  * Analyze the alias in the WyIL code to find all the necessary array copies and
@@ -51,10 +27,7 @@ import wyopcl.translator.bound.BasicBlock.BlockType;
  */
 public class AliasAnalyzer extends Analyzer {
 	private final String prefix = "%";
-
 	private LiveVariablesAnalysis liveAnalyzer;
-	private Analyzer analyer;
-
 
 	/**
 	 * Basic Constructor
@@ -62,8 +35,9 @@ public class AliasAnalyzer extends Analyzer {
 	public AliasAnalyzer(Builder builder, Configuration config) {
 		super(config);
 		this.liveAnalyzer = new LiveVariablesAnalysis(builder);
-		this.liveAnalyzer.setEnable(true);
-		this.liveAnalyzer.setNops(true);		
+		// Diabled the constant propagation
+		this.liveAnalyzer.setEnable(false);
+		this.liveAnalyzer.setNops(true);
 	}
 
 	/**
@@ -99,62 +73,144 @@ public class AliasAnalyzer extends Analyzer {
 	}
 
 	/**
-	 * Apply live variable analysis on each block and display in/out set.
+	 * Apply the live variable analysis on a list of bytecode
+	 * 
+	 * @param codes
+	 */
+	private void applyLiveAnalysisByCode(FunctionOrMethod function) {
+		VariableDeclarations vars = function.attribute(VariableDeclarations.class);
+		String name = function.name();
+		System.out.println("###### Live analysis for " + name + " function. ######");
+		Env env = new Env();
+		List<Code> codes = function.body().bytecodes();
+		System.out.println("In" + "={" + getLiveVars(env, vars) + "}");
+		for (int iter = 0; iter < 5; iter++) {
+			System.out.println("Iteration: "+iter);
+			for (int i = codes.size() - 1; i >= 0; i--) {
+				Code code = codes.get(i);
+				// Construct an Index object.
+				CodeBlock.Index id = new CodeBlock.Index(null, i);
+				Env out = (Env) env.clone();
+
+				// if(code instanceof Codes.Loop){
+				// env = liveAnalyzer.propagate(id, (Codes.Loop)code, env,
+				// null);
+				// }else{
+				env = liveAnalyzer.propagate(id, code, env);
+				// }
+
+				if (config.isVerbose()) {
+					System.out.println("In[" + i + "]" + "={" + getLiveVars(env, vars) + "}\n" + "L." + i + " = " + code + "\n" + "Out[" + i + "]:{"
+							+ getLiveVars(out, vars) + "}\n");
+				}
+				out = null;
+			}
+		}
+
+		Env out = liveAnalyzer.lastStore();
+		System.out.println("Out" + ":{" + getLiveVars(env, vars) + "}\n");
+
+	}
+
+	/**
+	 * Apply live variable analysis on the function, and get in/out set of each
+	 * block.
 	 * 
 	 * @param module
 	 */
-	private void applyLiveAnalysisOnBlock(VariableDeclarations vars, BasicBlock block) {
+	private void applyLiveAnalysisByBlock(FunctionOrMethod function) {
+		VariableDeclarations vars = function.attribute(VariableDeclarations.class);
+		String name = function.name();
+		CFGraph graph = this.getCFGraph(function);
+		System.out.println("###### Live analysis for " + name + " function. ######");
+		// Store in/out set for each block.
 
-
-		List<Code> codes = block.getCodes();
-		Env env = new Env();
-		System.out.println("In" + "={" + getLiveVars(env, vars) + "}");
-		for (int i = codes.size() - 1; i >= 0; i--) {
-			Code code = codes.get(i);
-			// Construct an Index object.
-			CodeBlock.Index id = new CodeBlock.Index(null, i);
-			//Env out = (Env) env.clone();
-			env = liveAnalyzer.propagate(id, code, env);
-			/*if(config.isVerbose()){
-				System.out.println("In[" + i + "]" + "={" + getLiveVars(env, vars) + "}\n"
-						+ "L."+i+" = "+ code + "\n"
-						+"Out[" + i + "]:{" + getLiveVars(out, vars) + "}\n");
-			}*/
-			//out = null;			
+		LivenessStore store = new LivenessStore(graph.getBlockList());
+		for (int iter = 0; iter < 5; iter++) {
+			System.out.println("Iteration: "+iter);
+			// Get the blocks.
+			for (BasicBlock block : graph.getBlockList()) {
+				// Get the child block
+				Env out = store.getOut(block);
+				Env in = (Env) out.clone();
+				CodeBlock codeBlock = block.getCodeBlock();
+				for (int i = codeBlock.size() - 1; i >= 0; i--) {
+					in = liveAnalyzer.propagate(null, codeBlock.get(i), in);
+				}
+				// Update the in set for the block.
+				store.setIn(block, in);
+				System.out.println("In" + ":{" + getLiveVars(in, vars) + "}\n" + block + "Out" + ":{" + getLiveVars(out, vars) + "}\n");
+			}
 		}
-		System.out.println(block + "Out" + ":{" + getLiveVars(env, vars) + "}\n");
 
-		env = null;
 	}
 
 	/**
 	 * Apply live variable analysis on each basic block.
+	 * 
 	 * @param module
 	 */
 	public void applyLiveAnalysis(WyilFile module) {
+		this.buildCFG(module);
 		// Iterate each function to build up CFG
 		for (FunctionOrMethod function : module.functionOrMethods()) {
-			String name = function.name();
-			System.out.println("=== Before live analysis for " + name + " function. ===");
-			//Build CFG for function.
-			CFGraph graph = buildCFG(function);
-			if(config.isVerbose()){
-				//Print out CFGraph.
-				this.printCFG(function);
-			}
-
-
-			//Get the blocks.
-			for(BasicBlock block: graph.getBlockList()){
-				//Perform live variable analysis on each block.
-				//Get variable declaration.
-				applyLiveAnalysisOnBlock(function.attribute(VariableDeclarations.class), block);
-			}			
-			System.out.println("=== After live analysis for " + name + " function. ===");
+			applyLiveAnalysisByBlock(function);
+			//applyLiveAnalysisByCode(function);
 		}
+
 	}
 
+	/**
+	 * Stores the liveness for each block, including 'in' and 'out' set.
+	 * 
+	 * @author Min-Hsien Weng
+	 *
+	 */
+	protected class LivenessStore {
+		private HashMap<BasicBlock, Env> inSet;
+		private HashMap<BasicBlock, Env> outSet;
 
+		public LivenessStore(List<BasicBlock> blocks) {
+			this.inSet = new HashMap<BasicBlock, Env>();
+			this.outSet = new HashMap<BasicBlock, Env>();
+			for (BasicBlock block : blocks) {
+				inSet.put(block, new Env());
+				outSet.put(block, new Env());
+			}
+		}
 
+		/**
+		 * Return 'in' set for a block.
+		 * 
+		 * @param block
+		 * @return
+		 */
+		protected Env setIn(BasicBlock block, Env in) {
+			return inSet.put(block, in);
+		}
+
+		/**
+		 * Returns 'out' set for a block. Take the union of in sets of child
+		 * blocks to produce the out set.
+		 * 
+		 * @param set
+		 */
+		protected Env getOut(BasicBlock block) {
+			// Check if the block has the child blocks.
+			if (!block.isLeaf()) {
+				Env out = outSet.get(block);
+				// Get child nodes of the block
+				for (BasicBlock child : block.getChildNodes()) {
+					Env in = inSet.get(child);
+					out.addAll(in);
+				}
+				// Update the out set
+				outSet.put(block, out);
+			}
+
+			return outSet.get(block);
+		}
+
+	}
 
 }
