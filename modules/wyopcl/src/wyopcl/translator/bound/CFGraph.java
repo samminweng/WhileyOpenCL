@@ -54,7 +54,7 @@ public class CFGraph {
 	public void setStatus(STATUS newStatus){
 		this.status = newStatus;
 	}	
-
+		
 	/**
 	 * Create a basic block with the specific label name
 	 * 
@@ -67,7 +67,22 @@ public class CFGraph {
 	 * @return the blk
 	 */
 	public BasicBlock createBasicBlock(String label, BlockType type, BasicBlock... parents) {
-		BasicBlock blk = new BasicBlock(label, type);
+		BasicBlock blk = getBasicBlock(label, type);
+		// Check if the block exists
+		if (blk == null) {
+			//Create a new block
+			blk = new BasicBlock(label, type);
+			//Add this block to the block list.
+			blocks.add(blk);
+		}
+		//Connect the block with the given parent blocks.
+		BasicBlock parent = parents.length > 0 ? parents[0] : null;
+		if (parent != null) {
+			parent.addChild(blk);
+		}
+		return blk;
+		
+		/*BasicBlock blk = new BasicBlock(label, type);
 		// Check if the block exists
 		if (!blocks.contains(blk)) {
 			blocks.add(blk);
@@ -84,6 +99,7 @@ public class CFGraph {
 			}
 		}
 		return null;
+		*/
 	}
 
 	/**

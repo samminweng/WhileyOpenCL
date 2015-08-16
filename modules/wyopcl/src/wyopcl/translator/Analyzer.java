@@ -193,17 +193,17 @@ public abstract class Analyzer {
 			// Parse each byte-code and add the constraints accordingly.
 			try {
 				if(code instanceof Codes.Invariant){
-					analyze((Codes.Invariant)code, function);
+					buildCFG((Codes.Invariant)code, function);
 				}else if (code instanceof Codes.If) {
-					analyze((Codes.If) code, function);
+					buildCFG((Codes.If) code, function);
 				}else if (code instanceof Codes.Return) {
-					analyze((Codes.Return) code, function);
+					buildCFG((Codes.Return) code, function);
 				}else if (code instanceof Codes.Goto){
-					analyze((Codes.Goto)code, function);
+					buildCFG((Codes.Goto)code, function);
 				}else if (code instanceof Codes.Label){
-					analyze((Codes.Label)code, function);
+					buildCFG((Codes.Label)code, function);
 				}else if (code instanceof Codes.Loop){
-					analyze((Codes.Loop)code, function);
+					buildCFG((Codes.Loop)code, function);
 				} else {
 					//Add the byte-code to the current block in a CFGraph.
 					CFGraph graph = getCFGraph(function);
@@ -215,7 +215,7 @@ public abstract class Analyzer {
 		}
 	}
 
-	protected void analyze(Invariant code, FunctionOrMethod function) {
+	protected void buildCFG(Invariant code, FunctionOrMethod function) {
 		//Add the invariant to the current block.
 		CFGraph graph = getCFGraph(function);
 		BasicBlock c_blk = graph.getCurrentBlock();
@@ -228,7 +228,7 @@ public abstract class Analyzer {
 	 * @param code
 	 * @param function
 	 */
-	protected void analyze(Loop code, FunctionOrMethod function) {
+	protected void buildCFG(Loop code, FunctionOrMethod function) {
 		// Set the loop flag to be true,
 		// in order to identify the bytecode is inside a loop
 		isLoop = true;
@@ -255,14 +255,14 @@ public abstract class Analyzer {
 	 * @param code
 	 *            Goto ({@link wyil.lang.Codes.Goto } byte-code
 	 */
-	protected void analyze(Codes.Goto code, FunctionOrMethod function) {
+	protected void buildCFG(Codes.Goto code, FunctionOrMethod function) {
 		// Get the label name
 		String label = code.target;
 		CFGraph graph = getCFGraph(function);
 		BasicBlock goto_blk = graph.getBasicBlock(label);
 		if(goto_blk == null){
 			//Create a new block
-			graph.createBasicBlock(label, BlockType.BLOCK, null);
+			graph.createBasicBlock(label, BlockType.BLOCK);
 		}
 		// Set the current blk to null blk
 		graph.setCurrentBlock(null);
@@ -278,7 +278,7 @@ public abstract class Analyzer {
 	 * @param code
 	 *            {@link wyil.lang.Codes.Label} byte-code
 	 */
-	protected void analyze(Codes.Label code, FunctionOrMethod function) {
+	protected void buildCFG(Codes.Label code, FunctionOrMethod function) {
 		String label = code.label;
 		// Get the CFGraph
 		CFGraph graph = getCFGraph(function);
@@ -301,7 +301,7 @@ public abstract class Analyzer {
 	 * @param code
 	 * @param function
 	 */
-	protected void analyze(If code, FunctionOrMethod function) {
+	protected void buildCFG(If code, FunctionOrMethod function) {
 		CFGraph graph = getCFGraph(function);
 
 		//The original condition is 'ifge %0, %1 goto blklab1 : int'
@@ -357,7 +357,7 @@ public abstract class Analyzer {
 	 * @param code
 	 * @param name
 	 */
-	protected void analyze(Return code, FunctionOrMethod function){	
+	protected void buildCFG(Return code, FunctionOrMethod function){	
 		// Get the CFGraph
 		CFGraph graph = getCFGraph(function);
 		BasicBlock c_blk = graph.getCurrentBlock();		
