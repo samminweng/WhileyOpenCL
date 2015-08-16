@@ -116,12 +116,15 @@ public class AliasAnalyzer extends Analyzer {
 		String name = function.name();
 		CFGraph graph = this.getCFGraph(function);
 		System.out.println("###### Live analysis for " + name + " function. ######");
+		List<BasicBlock> blocks = graph.getBlockList();
 		// Store in/out set for each block.
-		LivenessStore store = new LivenessStore(graph.getBlockList());
+		LivenessStore store = new LivenessStore(blocks);
 		for (int iter = 0; iter < 5; iter++) {
 			System.out.println("Iteration: "+iter);
-			// Get the blocks.
-			for (BasicBlock block : graph.getBlockList()) {
+			//Traverse the blocks in the reverse order.
+			for (int b= blocks.size()-1;b>=0;b--) {
+				// Get the block
+				BasicBlock block = blocks.get(b);
 				// Get the child block
 				Env out = store.getOut(block);
 				Env in = (Env) out.clone();
@@ -138,13 +141,11 @@ public class AliasAnalyzer extends Analyzer {
 						}						
 					}else{
 						in = liveAnalyzer.propagate(null, codeBlock.get(i), in);
-					}
-					
-					
+					}					
 				}
 				// Update the in set for the block.
 				store.setIn(block, in);
-				System.out.println("In" + ":{" + getLiveVars(in, vars) + "}\n" + block + "Out" + ":{" + getLiveVars(out, vars) + "}\n");
+				System.out.println("In" + ":{" + getLiveVars(in, vars) + "}\n" + block + "\nOut" + ":{" + getLiveVars(out, vars) + "}\n");
 			}
 		}
 

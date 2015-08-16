@@ -338,20 +338,28 @@ public class BasicBlock implements Comparable<BasicBlock> {
 
 	@Override
 	public String toString() {
-		String str = "-------------------------------\n";
-		str += String.format("%s %-20s %n", "Name", "Type");
-		str += String.format("%s %-15s %n", this.label, this.type);
-		for(Code code: this.codeBlock){
-			str += "\n"+code;	
-		}			
+		//String str = "-------------------------------\n";
+		String str = "";
+		str += String.format("%s [%s] ", this.label, this.type);
+		//Display the list of byte-code
+		if(this.codeBlock.size()>0){
+			str += "\n-------------------------------";
+			int index=0;
+			for(Code code: this.codeBlock){
+				str += "\nl."+index+":"+code;
+				index++;
+			}
+			str += "\n-------------------------------";
+		}
+		//Display the bounds and constraints.
 		if(!constraints.isEmpty()){
 			//Print out the constraints
 			//str += "\n---------------------------------------\n";
 			str += String.format("%n%s %s%n", "Constraints", this.constraints);
 			str += this.unionOfBounds + "\n";
 			str += "IsConsistent=" + isConsistent()+"\n";
-		}		
-		str += "\n-------------------------------\n";
+			str += "\n-------------------------------\n";
+		}
 		return str;
 	}
 
