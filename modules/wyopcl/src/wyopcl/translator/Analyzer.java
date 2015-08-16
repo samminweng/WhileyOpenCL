@@ -335,10 +335,11 @@ public abstract class Analyzer {
 		if (isLoop) {
 			// Create a loop body and loop exit.
 			graph.createLoopStructure(code.target);
-			//Added the negated condition to loop body
-			graph.getBasicBlock(code.target, BlockType.LOOP_BODY).addCode(neg_code);
+			//Added the condition to loop body
+			graph.getBasicBlock(code.target, BlockType.LOOP_BODY).addCode(code);
+			//graph.getBasicBlock(code.target, BlockType.LOOP_BODY).addCode(neg_code);
 			//Added the condition to loop exit
-			graph.getBasicBlock(code.target, BlockType.LOOP_EXIT).addCode(code);
+			//graph.getBasicBlock(code.target, BlockType.LOOP_EXIT).addCode(code);
 		} else {			
 			// Create if/else branches, and set the if branch as the current block.
 			graph.createIfElseBranch(code.target);

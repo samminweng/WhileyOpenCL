@@ -338,7 +338,7 @@ public class BasicBlock implements Comparable<BasicBlock> {
 
 	@Override
 	public String toString() {
-		String str = "======================================\n";
+		String str = "-------------------------------\n";
 		str += String.format("%s %-20s %n", "Name", "Type");
 		str += String.format("%s %-15s %n", this.label, this.type);
 		for(Code code: this.codeBlock){
@@ -346,12 +346,12 @@ public class BasicBlock implements Comparable<BasicBlock> {
 		}			
 		if(!constraints.isEmpty()){
 			//Print out the constraints
-			str += "\n---------------------------------------\n";
-			str += String.format("%s %s%n", "Constraints", this.constraints);
+			//str += "\n---------------------------------------\n";
+			str += String.format("%n%s %s%n", "Constraints", this.constraints);
 			str += this.unionOfBounds + "\n";
 			str += "IsConsistent=" + isConsistent()+"\n";
 		}		
-		str += "\n======================================\n";
+		str += "\n-------------------------------\n";
 		return str;
 	}
 

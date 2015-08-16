@@ -91,17 +91,10 @@ public class AliasAnalyzer extends Analyzer {
 				// Construct an Index object.
 				CodeBlock.Index id = new CodeBlock.Index(null, i);
 				Env out = (Env) env.clone();
-
-				// if(code instanceof Codes.Loop){
-				// env = liveAnalyzer.propagate(id, (Codes.Loop)code, env,
-				// null);
-				// }else{
 				env = liveAnalyzer.propagate(id, code, env);
-				// }
-
 				if (config.isVerbose()) {
 					System.out.println("In[" + i + "]" + "={" + getLiveVars(env, vars) + "}\n" + "L." + i + " = " + code + "\n" + "Out[" + i + "]:{"
-							+ getLiveVars(out, vars) + "}\n");
+							+ getLiveVars(out, vars) + "}\n\n");
 				}
 				out = null;
 			}
@@ -124,7 +117,6 @@ public class AliasAnalyzer extends Analyzer {
 		CFGraph graph = this.getCFGraph(function);
 		System.out.println("###### Live analysis for " + name + " function. ######");
 		// Store in/out set for each block.
-
 		LivenessStore store = new LivenessStore(graph.getBlockList());
 		for (int iter = 0; iter < 5; iter++) {
 			System.out.println("Iteration: "+iter);
@@ -135,7 +127,20 @@ public class AliasAnalyzer extends Analyzer {
 				Env in = (Env) out.clone();
 				CodeBlock codeBlock = block.getCodeBlock();
 				for (int i = codeBlock.size() - 1; i >= 0; i--) {
-					in = liveAnalyzer.propagate(null, codeBlock.get(i), in);
+					Code code = codeBlock.get(i);
+					//Special case
+					if(code instanceof Codes.Return){
+						Codes.Return r = (Codes.Return)code;
+						if(r.operand != Codes.NULL_REG){
+							//Add the return value to out set.
+							out.add(r.operand);
+							store.setOut(block, out);
+						}						
+					}else{
+						in = liveAnalyzer.propagate(null, codeBlock.get(i), in);
+					}
+					
+					
 				}
 				// Update the in set for the block.
 				store.setIn(block, in);
@@ -180,7 +185,7 @@ public class AliasAnalyzer extends Analyzer {
 		}
 
 		/**
-		 * Return 'in' set for a block.
+		 * Set 'in' set for a block.
 		 * 
 		 * @param block
 		 * @return
@@ -189,6 +194,17 @@ public class AliasAnalyzer extends Analyzer {
 			return inSet.put(block, in);
 		}
 
+		/**
+		 * Set 'out' set for a block.
+		 * @param block
+		 * @param out
+		 * @return
+		 */
+		protected Env setOut(BasicBlock block, Env out){
+			return outSet.put(block, out);
+		}
+		
+		
 		/**
 		 * Returns 'out' set for a block. Take the union of in sets of child
 		 * blocks to produce the out set.
