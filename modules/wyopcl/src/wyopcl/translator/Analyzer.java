@@ -79,7 +79,7 @@ public abstract class Analyzer {
 			return cfgraphs.get(function);
 		return null;
 	}
-
+	
 
 	/**
 	 * Checks if the CFGraph of the given function exist.

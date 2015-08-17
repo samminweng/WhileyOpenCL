@@ -28,6 +28,9 @@ import wyopcl.translator.bound.CFGraph;
 public class AliasAnalyzer extends Analyzer {
 	private final String prefix = "%";
 	private LiveVariablesAnalysis liveAnalyzer;
+	//Store the liveness analysis for each function
+	private HashMap<FunctionOrMethod, Liveness> store;
+	
 
 	/**
 	 * Basic Constructor
@@ -38,6 +41,8 @@ public class AliasAnalyzer extends Analyzer {
 		// Diabled the constant propagation
 		this.liveAnalyzer.setEnable(false);
 		this.liveAnalyzer.setNops(true);
+		//Initialize the liveness stores.
+		this.store = new HashMap<FunctionOrMethod, Liveness>();
 	}
 
 	/**
@@ -104,7 +109,30 @@ public class AliasAnalyzer extends Analyzer {
 		System.out.println("Out" + ":{" + getLiveVars(env, vars) + "}\n");
 
 	}
-
+	/**
+	 * Print out the liveness for a given function.
+	 * @param function
+	 * @param store
+	 */
+	private void printLivenss(FunctionOrMethod function){
+		VariableDeclarations vars = function.attribute(VariableDeclarations.class);
+		Liveness liveness = store.get(function);
+		//Get function name
+		String name = function.name();
+	    System.out.println("###### Live analysis for " + name + " function. ######");
+	    for(BasicBlock block: liveness.getBlocks()){
+	    	Env in = liveness.getIn(block);
+	    	Env out = liveness.getOut(block);
+	    	//Print out the in/out set for the block.
+	    	System.out.println("In" + ":{" + getLiveVars(in, vars) + "}\n" + block + "\nOut" + ":{" + getLiveVars(out, vars) + "}\n");
+	    }
+	    
+		
+	}
+	
+	
+	
+	
 	/**
 	 * Apply live variable analysis on the function, and get in/out set of each
 	 * block.
@@ -115,18 +143,24 @@ public class AliasAnalyzer extends Analyzer {
 		VariableDeclarations vars = function.attribute(VariableDeclarations.class);
 		String name = function.name();
 		CFGraph graph = this.getCFGraph(function);
-		System.out.println("###### Live analysis for " + name + " function. ######");
+		
 		List<BasicBlock> blocks = graph.getBlockList();
 		// Store in/out set for each block.
-		LivenessStore store = new LivenessStore(blocks);
-		for (int iter = 0; iter < 5; iter++) {
-			System.out.println("Iteration: "+iter);
+		Liveness liveness = new Liveness(blocks);
+		int iter = 0;
+		do {
+			if(config.isVerbose()){
+				System.out.println("###### Live analysis for " + name + " function. ######");
+				System.out.println("Iteration " + iter);
+			}			
+			//Set the initial value of isChanged.
+			liveness.setIsChanged(false);
 			//Traverse the blocks in the reverse order.
 			for (int b= blocks.size()-1;b>=0;b--) {
 				// Get the block
 				BasicBlock block = blocks.get(b);
 				// Get the child block
-				Env out = store.getOut(block);
+				Env out = (Env)liveness.getOut(block).clone();
 				Env in = (Env) out.clone();
 				CodeBlock codeBlock = block.getCodeBlock();
 				for (int i = codeBlock.size() - 1; i >= 0; i--) {
@@ -137,18 +171,23 @@ public class AliasAnalyzer extends Analyzer {
 						if(r.operand != Codes.NULL_REG){
 							//Add the return value to out set.
 							out.add(r.operand);
-							store.setOut(block, out);
+							liveness.setOut(block, out);
 						}						
 					}else{
 						in = liveAnalyzer.propagate(null, codeBlock.get(i), in);
 					}					
 				}
 				// Update the in set for the block.
-				store.setIn(block, in);
-				System.out.println("In" + ":{" + getLiveVars(in, vars) + "}\n" + block + "\nOut" + ":{" + getLiveVars(out, vars) + "}\n");
+				liveness.setIn(block, in);
+				if(config.isVerbose()){
+					System.out.println("In" + ":{" + getLiveVars(in, vars) + "}\n" + block + "\nOut" + ":{" + getLiveVars(out, vars) + "}\n");
+				}				
 			}
-		}
-
+			//Increment the iteration.
+			iter++;
+		}while(liveness.isChanged);
+		//Store the liveness analysis for the function. 
+		store.put(function, liveness);
 	}
 
 	/**
@@ -161,7 +200,7 @@ public class AliasAnalyzer extends Analyzer {
 		// Iterate each function to build up CFG
 		for (FunctionOrMethod function : module.functionOrMethods()) {
 			applyLiveAnalysisByBlock(function);
-			//applyLiveAnalysisByCode(function);
+			printLivenss(function);
 		}
 
 	}
@@ -172,11 +211,15 @@ public class AliasAnalyzer extends Analyzer {
 	 * @author Min-Hsien Weng
 	 *
 	 */
-	protected class LivenessStore {
+	protected class Liveness {
+		private List<BasicBlock> blocks;
+		//Indicate if there is any change of in/out set.
+		private boolean isChanged;
 		private HashMap<BasicBlock, Env> inSet;
 		private HashMap<BasicBlock, Env> outSet;
 
-		public LivenessStore(List<BasicBlock> blocks) {
+		public Liveness(List<BasicBlock> blocks) {
+			this.blocks = blocks;
 			this.inSet = new HashMap<BasicBlock, Env>();
 			this.outSet = new HashMap<BasicBlock, Env>();
 			for (BasicBlock block : blocks) {
@@ -184,16 +227,54 @@ public class AliasAnalyzer extends Analyzer {
 				outSet.put(block, new Env());
 			}
 		}
-
+		
+		/**
+		 * Get the list of basic blocks.
+		 * @return
+		 */
+		public List<BasicBlock> getBlocks(){
+			return this.blocks;
+		}
+		
+		
+		/**
+		 * Set the isChanged flag.
+		 * @param isChanged
+		 */
+		public void setIsChanged(boolean isChanged){
+			this.isChanged = isChanged;
+		}
+		
+		public boolean isChanged(){
+			return this.isChanged;
+		}
+		
 		/**
 		 * Set 'in' set for a block.
 		 * 
 		 * @param block
 		 * @return
 		 */
-		protected Env setIn(BasicBlock block, Env in) {
-			return inSet.put(block, in);
+		protected void setIn(BasicBlock block, Env new_in) {
+			//Check if new and existing in set are the same
+			Env in = inSet.get(block);
+			if(!in.containsAll(new_in)){
+				//Use logic OR operator to combine the result of 'isChanged' flag.
+				this.isChanged |= true;
+				//Update in set
+				inSet.put(block, new_in);
+			}
 		}
+		
+		/**
+		 * Get the in set.
+		 * @param block
+		 * @return
+		 */
+		public Env getIn(BasicBlock block){
+			return inSet.get(block);
+		}
+		
 
 		/**
 		 * Set 'out' set for a block.
@@ -201,8 +282,13 @@ public class AliasAnalyzer extends Analyzer {
 		 * @param out
 		 * @return
 		 */
-		protected Env setOut(BasicBlock block, Env out){
-			return outSet.put(block, out);
+		protected void setOut(BasicBlock block, Env new_out){
+			Env out = outSet.get(block);
+			if(!out.containsAll(new_out)){
+				this.isChanged |= true;
+				//Update the out set.
+				outSet.put(block, new_out);
+			}			 
 		}
 		
 		
@@ -215,14 +301,21 @@ public class AliasAnalyzer extends Analyzer {
 		protected Env getOut(BasicBlock block) {
 			// Check if the block has the child blocks.
 			if (!block.isLeaf()) {
-				Env out = outSet.get(block);
+				Env out_old = outSet.get(block);
+				Env out = (Env)out_old.clone();
 				// Get child nodes of the block
 				for (BasicBlock child : block.getChildNodes()) {
 					Env in = inSet.get(child);
 					out.addAll(in);
 				}
-				// Update the out set
-				outSet.put(block, out);
+				
+				//Check if old and new out set are the same.
+				if(!out.containsAll(out_old)){
+					this.isChanged &= true;
+					// Update the out set
+					outSet.put(block, out);
+				}
+				
 			}
 
 			return outSet.get(block);
