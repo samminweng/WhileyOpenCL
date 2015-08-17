@@ -165,16 +165,25 @@ public class AliasAnalyzer extends Analyzer {
 				CodeBlock codeBlock = block.getCodeBlock();
 				for (int i = codeBlock.size() - 1; i >= 0; i--) {
 					Code code = codeBlock.get(i);
-					//Special case
+					//Special cases
 					if(code instanceof Codes.Return){
 						Codes.Return r = (Codes.Return)code;
 						if(r.operand != Codes.NULL_REG){
-							//Add the return value to out set.
+							//Add the return value to both in and out set.
+							in.add(r.operand);
+							liveness.setIn(block, in);
 							out.add(r.operand);
 							liveness.setOut(block, out);
 						}						
-					}else{
-						in = liveAnalyzer.propagate(null, codeBlock.get(i), in);
+					}else if (code instanceof Codes.Invariant){
+						//Iterate the code block inside the invariant.
+						Codes.Invariant inv = (Codes.Invariant)code;
+						List<Code> inv_codes = inv.bytecodes();
+						for(int j=inv_codes.size()-1;j>=0;j--){
+							in = liveAnalyzer.propagate(null, inv_codes.get(j), in);
+						}
+					}else {
+						in = liveAnalyzer.propagate(null, code, in);
 					}					
 				}
 				// Update the in set for the block.
@@ -199,6 +208,10 @@ public class AliasAnalyzer extends Analyzer {
 		this.buildCFG(module);
 		// Iterate each function to build up CFG
 		for (FunctionOrMethod function : module.functionOrMethods()) {
+			//Print out the CFGraph
+			if(config.isVerbose()){
+				this.printCFG(function);
+			}			
 			applyLiveAnalysisByBlock(function);
 			printLivenss(function);
 		}
@@ -258,7 +271,7 @@ public class AliasAnalyzer extends Analyzer {
 		protected void setIn(BasicBlock block, Env new_in) {
 			//Check if new and existing in set are the same
 			Env in = inSet.get(block);
-			if(!in.containsAll(new_in)){
+			if(!in.equals(new_in)){
 				//Use logic OR operator to combine the result of 'isChanged' flag.
 				this.isChanged |= true;
 				//Update in set
@@ -284,7 +297,7 @@ public class AliasAnalyzer extends Analyzer {
 		 */
 		protected void setOut(BasicBlock block, Env new_out){
 			Env out = outSet.get(block);
-			if(!out.containsAll(new_out)){
+			if(!out.equals(new_out)){
 				this.isChanged |= true;
 				//Update the out set.
 				outSet.put(block, new_out);
@@ -309,8 +322,8 @@ public class AliasAnalyzer extends Analyzer {
 					out.addAll(in);
 				}
 				
-				//Check if old and new out set are the same.
-				if(!out.containsAll(out_old)){
+				//Check if old and new out set are the same by using 'equal' operator.
+				if(!out.equals(out_old)){
 					this.isChanged &= true;
 					// Update the out set
 					outSet.put(block, out);
