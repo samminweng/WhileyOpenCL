@@ -3,6 +3,7 @@ package wyopcl.translator;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -78,6 +79,22 @@ public abstract class Analyzer {
 		if (cfgraphs.containsKey(function))
 			return cfgraphs.get(function);
 		return null;
+	}
+	
+	/**
+	 * Gets the list of basic blocks for a function.
+	 * @param function
+	 * @return
+	 */
+	protected List<BasicBlock> getBlocks(FunctionOrMethod function){
+		//Get the graph
+		CFGraph graph = getCFGraph(function);
+		if(graph != null){
+			//Return the list of blocks.
+			return graph.getBlockList();
+		}
+		//Return an empty list
+		return new ArrayList<BasicBlock>();
 	}
 	
 

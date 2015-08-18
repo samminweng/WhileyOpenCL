@@ -31,7 +31,7 @@ public class AliasAnalyzer extends Analyzer {
 	//Store the liveness analysis for each function
 	private HashMap<FunctionOrMethod, Liveness> store;
 	
-
+	
 	/**
 	 * Basic Constructor
 	 */
@@ -116,13 +116,16 @@ public class AliasAnalyzer extends Analyzer {
 	 */
 	private void printLivenss(FunctionOrMethod function){
 		VariableDeclarations vars = function.attribute(VariableDeclarations.class);
-		Liveness liveness = store.get(function);
 		//Get function name
-		String name = function.name();
-	    System.out.println("###### Live analysis for " + name + " function. ######");
-	    for(BasicBlock block: liveness.getBlocks()){
-	    	Env in = liveness.getIn(block);
-	    	Env out = liveness.getOut(block);
+				String name = function.name();
+			    System.out.println("###### Live analysis for " + name + " function. ######");
+		//Get liveness 
+		Liveness liveness = store.get(function);
+		//Get the list of blocks for the function.
+		List<BasicBlock> blocks = this.getBlocks(function);
+	    for(BasicBlock block: blocks){
+	    	Env in = liveness.getInSet(block);
+	    	Env out = liveness.getOutSet(block);
 	    	//Print out the in/out set for the block.
 	    	System.out.println("In" + ":{" + getLiveVars(in, vars) + "}\n" + block + "\nOut" + ":{" + getLiveVars(out, vars) + "}\n");
 	    }
@@ -147,7 +150,7 @@ public class AliasAnalyzer extends Analyzer {
 		List<BasicBlock> blocks = graph.getBlockList();
 		// Store in/out set for each block.
 		Liveness liveness = new Liveness(blocks);
-		int iter = 0;
+		int iter = 1;//Start with 1st iteration.
 		do {
 			if(config.isVerbose()){
 				System.out.println("###### Live analysis for " + name + " function. ######");
@@ -160,7 +163,7 @@ public class AliasAnalyzer extends Analyzer {
 				// Get the block
 				BasicBlock block = blocks.get(b);
 				// Get the child block
-				Env out = (Env)liveness.getOut(block).clone();
+				Env out = (Env)liveness.getOutSet(block).clone();
 				Env in = (Env) out.clone();
 				CodeBlock codeBlock = block.getCodeBlock();
 				for (int i = codeBlock.size() - 1; i >= 0; i--) {
@@ -171,9 +174,9 @@ public class AliasAnalyzer extends Analyzer {
 						if(r.operand != Codes.NULL_REG){
 							//Add the return value to both in and out set.
 							in.add(r.operand);
-							liveness.setIn(block, in);
+							liveness.setInSet(block, in);
 							out.add(r.operand);
-							liveness.setOut(block, out);
+							liveness.setOutSet(block, out);
 						}						
 					}else if (code instanceof Codes.Invariant){
 						//Iterate the code block inside the invariant.
@@ -187,7 +190,7 @@ public class AliasAnalyzer extends Analyzer {
 					}					
 				}
 				// Update the in set for the block.
-				liveness.setIn(block, in);
+				liveness.setInSet(block, in);
 				if(config.isVerbose()){
 					System.out.println("In" + ":{" + getLiveVars(in, vars) + "}\n" + block + "\nOut" + ":{" + getLiveVars(out, vars) + "}\n");
 				}				
@@ -225,28 +228,23 @@ public class AliasAnalyzer extends Analyzer {
 	 *
 	 */
 	protected class Liveness {
-		private List<BasicBlock> blocks;
 		//Indicate if there is any change of in/out set.
 		private boolean isChanged;
-		private HashMap<BasicBlock, Env> inSet;
-		private HashMap<BasicBlock, Env> outSet;
-
-		public Liveness(List<BasicBlock> blocks) {
-			this.blocks = blocks;
-			this.inSet = new HashMap<BasicBlock, Env>();
-			this.outSet = new HashMap<BasicBlock, Env>();
-			for (BasicBlock block : blocks) {
-				inSet.put(block, new Env());
-				outSet.put(block, new Env());
-			}
-		}
+		private HashMap<BasicBlock, Env> inSetStore;
+		private HashMap<BasicBlock, Env> outSetStore;
 		
 		/**
-		 * Get the list of basic blocks.
-		 * @return
+		 * Constructor with a list of blocks.
+		 * @param blocks
 		 */
-		public List<BasicBlock> getBlocks(){
-			return this.blocks;
+		public Liveness(List<BasicBlock> blocks) {
+			this.inSetStore = new HashMap<BasicBlock, Env>();
+			this.outSetStore = new HashMap<BasicBlock, Env>();
+			//Initialize in/out set for each block.
+			for(BasicBlock block: blocks){
+				inSetStore.put(block, new Env());
+				outSetStore.put(block, new Env());
+			}
 		}
 		
 		
@@ -268,14 +266,14 @@ public class AliasAnalyzer extends Analyzer {
 		 * @param block
 		 * @return
 		 */
-		protected void setIn(BasicBlock block, Env new_in) {
+		protected void setInSet(BasicBlock block, Env new_in) {
 			//Check if new and existing in set are the same
-			Env in = inSet.get(block);
+			Env in = getInSet(block);
 			if(!in.equals(new_in)){
 				//Use logic OR operator to combine the result of 'isChanged' flag.
 				this.isChanged |= true;
 				//Update in set
-				inSet.put(block, new_in);
+				inSetStore.put(block, new_in);
 			}
 		}
 		
@@ -284,8 +282,8 @@ public class AliasAnalyzer extends Analyzer {
 		 * @param block
 		 * @return
 		 */
-		public Env getIn(BasicBlock block){
-			return inSet.get(block);
+		public Env getInSet(BasicBlock block){			
+			return inSetStore.get(block);
 		}
 		
 
@@ -295,12 +293,12 @@ public class AliasAnalyzer extends Analyzer {
 		 * @param out
 		 * @return
 		 */
-		protected void setOut(BasicBlock block, Env new_out){
-			Env out = outSet.get(block);
+		protected void setOutSet(BasicBlock block, Env new_out){
+			Env out = outSetStore.get(block);
 			if(!out.equals(new_out)){
 				this.isChanged |= true;
 				//Update the out set.
-				outSet.put(block, new_out);
+				outSetStore.put(block, new_out);
 			}			 
 		}
 		
@@ -311,14 +309,14 @@ public class AliasAnalyzer extends Analyzer {
 		 * 
 		 * @param set
 		 */
-		protected Env getOut(BasicBlock block) {
+		protected Env getOutSet(BasicBlock block) {
 			// Check if the block has the child blocks.
 			if (!block.isLeaf()) {
-				Env out_old = outSet.get(block);
+				Env out_old = outSetStore.get(block);
 				Env out = (Env)out_old.clone();
 				// Get child nodes of the block
 				for (BasicBlock child : block.getChildNodes()) {
-					Env in = inSet.get(child);
+					Env in = inSetStore.get(child);
 					out.addAll(in);
 				}
 				
@@ -326,14 +324,35 @@ public class AliasAnalyzer extends Analyzer {
 				if(!out.equals(out_old)){
 					this.isChanged &= true;
 					// Update the out set
-					outSet.put(block, out);
+					outSetStore.put(block, out);
 				}
-				
 			}
-
-			return outSet.get(block);
+			return outSetStore.get(block);
 		}
 
 	}
+	
+	/**
+	 * Represents the alias between two variables for a block to show that
+	 *  left operand is aliased to right operand at block u
+	 * 
+	 * 
+	 * @author Min-Hsien Weng
+	 *
+	 */
+	protected class AliasPair{
+		private int left;
+		private int right;
+		private BasicBlock block;
+		public AliasPair(int left, int right, BasicBlock block){
+			this.left = left;
+			this.right = right;
+			this.block = block;
+		}
+		
+		
+	}
+	
+	
 
 }
