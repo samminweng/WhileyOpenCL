@@ -3,12 +3,10 @@ package wyopcl.translator.bound;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map.Entry;
 
 import wyil.lang.Code;
+import wyil.lang.CodeBlock;
 import wyopcl.translator.bound.constraint.Constraint;
 
 /**
@@ -18,12 +16,12 @@ import wyopcl.translator.bound.constraint.Constraint;
  *
  */
 public class BasicBlock implements Comparable<BasicBlock> {
-	private List<Code> codes;// Store all the byte-code for a block
+	private CodeBlock codeBlock;// Store all the byte-code for a block
 	private List<Constraint> constraints;
 	private List<BasicBlock> childNodes = null;
 	private List<BasicBlock> parentNodes = null;
 	// The branch name
-	private String branch;
+	private String label;
 	private BlockType type;
 	private Bounds unionOfBounds;
 	// Indicate if the bounds remain unchanged. False: unchanged. True: changed.
@@ -93,21 +91,21 @@ public class BasicBlock implements Comparable<BasicBlock> {
 	private BasicBlock() {
 		this.unionOfBounds = new Bounds();
 		this.constraints = new ArrayList<Constraint>();
-		this.codes = new ArrayList<Code>();
+		this.codeBlock = new CodeBlock();
 	}
 
 	/**
 	 * Constructing a basic block with a specific name and block type.
 	 * 
-	 * @param branch
+	 * @param label
 	 *            the name of blk
 	 * @param type
 	 *            the type of blk
 	 */
-	public BasicBlock(String branch, BlockType type) {
+	public BasicBlock(String label, BlockType type) {
 		// Use the nested constructor to create the BasicBlock object.
 		this();
-		this.branch = branch;
+		this.label = label;
 		this.type = type;
 		this.isChanged = false;
 	}
@@ -134,14 +132,14 @@ public class BasicBlock implements Comparable<BasicBlock> {
 	 * @param code
 	 */
 	public void addCode(Code code) {
-		this.codes.add(code);
+		this.codeBlock.add(code);
 	}
 	/**
 	 * Get the list of codes.
 	 * @return
 	 */
-	public List<Code> getCodes(){
-		return this.codes;
+	public CodeBlock getCodeBlock(){
+		return this.codeBlock;
 	}
 	
 	/**
@@ -214,14 +212,21 @@ public class BasicBlock implements Comparable<BasicBlock> {
 	}
 
 	/**
-	 * Return the blk name.
+	 * Return the blk label.
 	 * 
 	 * @return the name of blk.
 	 */
-	public String getBranch() {
-		return this.branch;
+	public String getLabel() {
+		return this.label;
 	}
-
+	/**
+	 * Set the block label.
+	 * @param label
+	 */
+	public void setLabel(String label){
+		this.label = label;
+	}
+	
 	/**
 	 * Return the block type.
 	 * 
@@ -333,21 +338,28 @@ public class BasicBlock implements Comparable<BasicBlock> {
 
 	@Override
 	public String toString() {
-		String str = "======================================\n";
-		str += String.format("%s %-20s %n", "Name", "Type");
-		str += String.format("%s %-15s %n", this.branch, this.type);
-		for (Code code : codes) {
-			str += code + "\n";
+		//String str = "-------------------------------\n";
+		String str = "";
+		str += String.format("%s [%s] ", this.label, this.type);
+		//Display the list of byte-code
+		if(this.codeBlock.size()>0){
+			str += "\n-------------------------------";
+			int index=0;
+			for(Code code: this.codeBlock){
+				str += "\nl."+index+":"+code;
+				index++;
+			}
+			str += "\n-------------------------------";
 		}
-		
+		//Display the bounds and constraints.
 		if(!constraints.isEmpty()){
 			//Print out the constraints
-			str += "---------------------------------------\n";
-			str += String.format("%s %s%n", "Constraints", this.constraints);
+			//str += "\n---------------------------------------\n";
+			str += String.format("%n%s %s%n", "Constraints", this.constraints);
 			str += this.unionOfBounds + "\n";
 			str += "IsConsistent=" + isConsistent()+"\n";
-		}		
-		str += "======================================\n";
+			str += "\n-------------------------------\n";
+		}
 		return str;
 	}
 
@@ -357,7 +369,7 @@ public class BasicBlock implements Comparable<BasicBlock> {
 			return false;
 		}
 		BasicBlock blk = (BasicBlock) obj;
-		if (this.getBranch().equals(blk.getBranch())) {
+		if (this.getLabel().equals(blk.getLabel())) {
 			if (this.getType().equals(blk.getType())) {
 				return true;
 			}

@@ -332,7 +332,7 @@ public final class AnalyzerHelper {
 		for (BasicBlock blk : blks) {
 			if (!blk.isLeaf()) {
 				for (BasicBlock child : blk.getChildNodes()) {
-					dot_string += "\"" + blk.getBranch() + " [" + blk.getType() + "]\"->\"" + child.getBranch() + " [" + child.getType() + "]\";\n";
+					dot_string += "\"" + blk.getLabel() + " [" + blk.getType() + "]\"->\"" + child.getLabel() + " [" + child.getType() + "]\";\n";
 				}
 			}
 		}
@@ -348,16 +348,7 @@ public final class AnalyzerHelper {
 		}
 	}
 	
-	/**
-	 * Add the byte-code to the current block in a CFGraph.
-	 * @param name
-	 * @param code
-	 */
-	public static void addByteCodeToBlock(String name, Code code){
-		isCached(name);
-		CFGraph graph = getCFGraph(name);
-		graph.addCode(code);
-	}
+	
 	
 
 }

@@ -1,18 +1,20 @@
 package wyopcl.translator;
 
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
 import wybs.lang.Builder;
 import wyil.attributes.VariableDeclarations;
-import wyil.attributes.VariableDeclarations.Declaration;
 import wyil.lang.Code;
 import wyil.lang.CodeBlock;
+import wyil.lang.CodeBlock.Index;
+import wyil.lang.Codes;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyil.transforms.LiveVariablesAnalysis;
 import wyil.transforms.LiveVariablesAnalysis.Env;
+import wyil.util.dfa.BackwardFlowAnalysis;
 import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.CFGraph;
 
@@ -23,20 +25,24 @@ import wyopcl.translator.bound.CFGraph;
  * @author Min-Hsien Weng
  *
  */
-public class AliasAnalyzer {
+public class AliasAnalyzer extends Analyzer {
 	private final String prefix = "%";
-	private Configuration config;
-	private int line;
 	private LiveVariablesAnalysis liveAnalyzer;
-
+	//Store the liveness analysis for each function
+	private HashMap<FunctionOrMethod, Liveness> store;
+	
+	
 	/**
 	 * Basic Constructor
 	 */
 	public AliasAnalyzer(Builder builder, Configuration config) {
-		liveAnalyzer = new LiveVariablesAnalysis(builder);
-		liveAnalyzer.setEnable(true);
-		liveAnalyzer.setNops(true);
-		this.config = config;
+		super(config);
+		this.liveAnalyzer = new LiveVariablesAnalysis(builder);
+		// Diabled the constant propagation
+		this.liveAnalyzer.setEnable(false);
+		this.liveAnalyzer.setNops(true);
+		//Initialize the liveness stores.
+		this.store = new HashMap<FunctionOrMethod, Liveness>();
 	}
 
 	/**
@@ -72,82 +78,281 @@ public class AliasAnalyzer {
 	}
 
 	/**
-	 * Applies the live analysis of Whiley compiler on each line of code for a
-	 * function, and display the transformed bytecode
+	 * Apply the live variable analysis on a list of bytecode
+	 * 
+	 * @param codes
+	 */
+	private void applyLiveAnalysisByCode(FunctionOrMethod function) {
+		VariableDeclarations vars = function.attribute(VariableDeclarations.class);
+		String name = function.name();
+		System.out.println("###### Live analysis for " + name + " function. ######");
+		Env env = new Env();
+		List<Code> codes = function.body().bytecodes();
+		System.out.println("In" + "={" + getLiveVars(env, vars) + "}");
+		for (int iter = 0; iter < 5; iter++) {
+			System.out.println("Iteration: "+iter);
+			for (int i = codes.size() - 1; i >= 0; i--) {
+				Code code = codes.get(i);
+				// Construct an Index object.
+				CodeBlock.Index id = new CodeBlock.Index(null, i);
+				Env out = (Env) env.clone();
+				env = liveAnalyzer.propagate(id, code, env);
+				if (config.isVerbose()) {
+					System.out.println("In[" + i + "]" + "={" + getLiveVars(env, vars) + "}\n" + "L." + i + " = " + code + "\n" + "Out[" + i + "]:{"
+							+ getLiveVars(out, vars) + "}\n\n");
+				}
+				out = null;
+			}
+		}
+
+		Env out = liveAnalyzer.lastStore();
+		System.out.println("Out" + ":{" + getLiveVars(env, vars) + "}\n");
+
+	}
+	/**
+	 * Print out the liveness for a given function.
+	 * @param function
+	 * @param store
+	 */
+	private void printLivenss(FunctionOrMethod function){
+		VariableDeclarations vars = function.attribute(VariableDeclarations.class);
+		//Get function name
+				String name = function.name();
+			    System.out.println("###### Live analysis for " + name + " function. ######");
+		//Get liveness 
+		Liveness liveness = store.get(function);
+		//Get the list of blocks for the function.
+		List<BasicBlock> blocks = this.getBlocks(function);
+	    for(BasicBlock block: blocks){
+	    	Env in = liveness.getInSet(block);
+	    	Env out = liveness.getOutSet(block);
+	    	//Print out the in/out set for the block.
+	    	System.out.println("In" + ":{" + getLiveVars(in, vars) + "}\n" + block + "\nOut" + ":{" + getLiveVars(out, vars) + "}\n");
+	    }
+	    
+		
+	}
+	
+	
+	
+	
+	/**
+	 * Apply live variable analysis on the function, and get in/out set of each
+	 * block.
 	 * 
 	 * @param module
 	 */
-	private void applyLiveAnalysisOnEachCode(String name, VariableDeclarations vars, BasicBlock block) {
-		List<Code> codes = block.getCodes();
-		Env env = new Env();		
-		for (int i = codes.size() - 1; i >= 0; i--) {
-			Code code = codes.get(i);
-			// Construct an Index object.
-			CodeBlock.Index id = new CodeBlock.Index(null, i);
-			Env out = (Env) env.clone();
-			env = liveAnalyzer.propagate(id, code, env);
-			System.out.println("In[" + i + "]" + "={" + getLiveVars(env, vars) + "}\n"
-								+ "L."+i+" = "+ code + "\n"
-								+"Out[" + i + "]:{" + getLiveVars(out, vars) + "}\n");
+	private void applyLiveAnalysisByBlock(FunctionOrMethod function) {
+		VariableDeclarations vars = function.attribute(VariableDeclarations.class);
+		String name = function.name();
+		CFGraph graph = this.getCFGraph(function);
+		
+		List<BasicBlock> blocks = graph.getBlockList();
+		// Store in/out set for each block.
+		Liveness liveness = new Liveness(blocks);
+		int iter = 1;//Start with 1st iteration.
+		do {
+			if(config.isVerbose()){
+				System.out.println("###### Live analysis for " + name + " function. ######");
+				System.out.println("Iteration " + iter);
+			}			
+			//Set the initial value of isChanged.
+			liveness.setIsChanged(false);
+			//Traverse the blocks in the reverse order.
+			for (int b= blocks.size()-1;b>=0;b--) {
+				// Get the block
+				BasicBlock block = blocks.get(b);
+				// Get the child block
+				Env out = (Env)liveness.getOutSet(block).clone();
+				Env in = (Env) out.clone();
+				CodeBlock codeBlock = block.getCodeBlock();
+				for (int i = codeBlock.size() - 1; i >= 0; i--) {
+					Code code = codeBlock.get(i);
+					//Special cases
+					if(code instanceof Codes.Return){
+						Codes.Return r = (Codes.Return)code;
+						if(r.operand != Codes.NULL_REG){
+							//Add the return value to both in and out set.
+							in.add(r.operand);
+							liveness.setInSet(block, in);
+							out.add(r.operand);
+							liveness.setOutSet(block, out);
+						}						
+					}else if (code instanceof Codes.Invariant){
+						//Iterate the code block inside the invariant.
+						Codes.Invariant inv = (Codes.Invariant)code;
+						List<Code> inv_codes = inv.bytecodes();
+						for(int j=inv_codes.size()-1;j>=0;j--){
+							in = liveAnalyzer.propagate(null, inv_codes.get(j), in);
+						}
+					}else {
+						in = liveAnalyzer.propagate(null, code, in);
+					}					
+				}
+				// Update the in set for the block.
+				liveness.setInSet(block, in);
+				if(config.isVerbose()){
+					System.out.println("In" + ":{" + getLiveVars(in, vars) + "}\n" + block + "\nOut" + ":{" + getLiveVars(out, vars) + "}\n");
+				}				
+			}
+			//Increment the iteration.
+			iter++;
+		}while(liveness.isChanged);
+		//Store the liveness analysis for the function. 
+		store.put(function, liveness);
+	}
+
+	/**
+	 * Apply live variable analysis on each basic block.
+	 * 
+	 * @param module
+	 */
+	public void applyLiveAnalysis(WyilFile module) {
+		this.buildCFG(module);
+		// Iterate each function to build up CFG
+		for (FunctionOrMethod function : module.functionOrMethods()) {
+			//Print out the CFGraph
+			if(config.isVerbose()){
+				this.printCFG(function);
+			}			
+			applyLiveAnalysisByBlock(function);
+			printLivenss(function);
 		}
-		env = null;
+
+	}
+
+	/**
+	 * Stores the liveness for each block, including 'in' and 'out' set.
+	 * 
+	 * @author Min-Hsien Weng
+	 *
+	 */
+	protected class Liveness {
+		//Indicate if there is any change of in/out set.
+		private boolean isChanged;
+		private HashMap<BasicBlock, Env> inSetStore;
+		private HashMap<BasicBlock, Env> outSetStore;
+		
+		/**
+		 * Constructor with a list of blocks.
+		 * @param blocks
+		 */
+		public Liveness(List<BasicBlock> blocks) {
+			this.inSetStore = new HashMap<BasicBlock, Env>();
+			this.outSetStore = new HashMap<BasicBlock, Env>();
+			//Initialize in/out set for each block.
+			for(BasicBlock block: blocks){
+				inSetStore.put(block, new Env());
+				outSetStore.put(block, new Env());
+			}
+		}
+		
+		
+		/**
+		 * Set the isChanged flag.
+		 * @param isChanged
+		 */
+		public void setIsChanged(boolean isChanged){
+			this.isChanged = isChanged;
+		}
+		
+		public boolean isChanged(){
+			return this.isChanged;
+		}
+		
+		/**
+		 * Set 'in' set for a block.
+		 * 
+		 * @param block
+		 * @return
+		 */
+		protected void setInSet(BasicBlock block, Env new_in) {
+			//Check if new and existing in set are the same
+			Env in = getInSet(block);
+			if(!in.equals(new_in)){
+				//Use logic OR operator to combine the result of 'isChanged' flag.
+				this.isChanged |= true;
+				//Update in set
+				inSetStore.put(block, new_in);
+			}
+		}
+		
+		/**
+		 * Get the in set.
+		 * @param block
+		 * @return
+		 */
+		public Env getInSet(BasicBlock block){			
+			return inSetStore.get(block);
+		}
+		
+
+		/**
+		 * Set 'out' set for a block.
+		 * @param block
+		 * @param out
+		 * @return
+		 */
+		protected void setOutSet(BasicBlock block, Env new_out){
+			Env out = outSetStore.get(block);
+			if(!out.equals(new_out)){
+				this.isChanged |= true;
+				//Update the out set.
+				outSetStore.put(block, new_out);
+			}			 
+		}
+		
+		
+		/**
+		 * Returns 'out' set for a block. Take the union of in sets of child
+		 * blocks to produce the out set.
+		 * 
+		 * @param set
+		 */
+		protected Env getOutSet(BasicBlock block) {
+			// Check if the block has the child blocks.
+			if (!block.isLeaf()) {
+				Env out_old = outSetStore.get(block);
+				Env out = (Env)out_old.clone();
+				// Get child nodes of the block
+				for (BasicBlock child : block.getChildNodes()) {
+					Env in = inSetStore.get(child);
+					out.addAll(in);
+				}
+				
+				//Check if old and new out set are the same by using 'equal' operator.
+				if(!out.equals(out_old)){
+					this.isChanged &= true;
+					// Update the out set
+					outSetStore.put(block, out);
+				}
+			}
+			return outSetStore.get(block);
+		}
+
 	}
 	
 	/**
-	 * Apply live variable analysis on each block and display in/out set. 
-	 * @param name
-	 * @param vars
-	 * @param block
-	 */
-	@SuppressWarnings("unchecked")
-	private void applyLiveAnalysisOnBlock(String name, VariableDeclarations vars, BasicBlock block){
-		List<Code> codes = block.getCodes();
-		Env env = new Env();
-		CodeBlock codeblock = new CodeBlock(codes);
-		System.out.println("In" + "={" + getLiveVars(env, vars) + "}");
-		//env = liveAnalyzer.propagate(null, codeblock, env, Collections.EMPTY_LIST);
-		System.out.println(block + "Out" + ":{" + getLiveVars(env, vars) + "}\n");
-		env = null;
-	}
-
-	public void applyLiveAnalysis(WyilFile module) {
-		// Iterate each function to build up CFG
-		for (FunctionOrMethod func : module.functionOrMethods()) {
-			line = 0;
-			VariableDeclarations vars = func.attribute(VariableDeclarations.class);
-			String name = func.name();
-			System.out.println("=== Before live analysis for " + name + " function. ===");
-			iterateBytecode(func.name(), func.body().bytecodes());
-			//Print out each basic block.
-			CFGraph graph = AnalyzerHelper.getCFGraph(name);
-			if(config.isVerbose()){
-				//Print out CFGraph
-				AnalyzerHelper.printCFG(config, name);
-			}
-			for(BasicBlock blk : graph.getBlockList()){
-				applyLiveAnalysisOnEachCode(name, vars, blk);
-				//applyLiveAnalysisOnBlock(name, vars, blk);
-			}
-			System.out.println("=== After live analysis for " + name + " function. ===");
-		}
-	}
-
-	/**
-	 * Iterate each byte-code to build up CFG.
+	 * Represents the alias between two variables for a block to show that
+	 *  left operand is aliased to right operand at block u
 	 * 
-	 * @param name
-	 * @param code_blk
+	 * 
+	 * @author Min-Hsien Weng
+	 *
 	 */
-	private void iterateBytecode(String name, List<Code> code_blk) {
-		// Parse each byte-code and add the constraints accordingly.
-		for (Code code : code_blk) {
-			if (config.isVerbose()) {
-				// Get the Block.Entry and print out each byte-code
-				line = TranslatorHelper.printWyILCode(code, name, line);
-			}
-			AnalyzerHelper.addByteCodeToBlock(name, code);
+	protected class AliasPair{
+		private int left;
+		private int right;
+		private BasicBlock block;
+		public AliasPair(int left, int right, BasicBlock block){
+			this.left = left;
+			this.right = right;
+			this.block = block;
 		}
-
+		
+		
 	}
+	
+	
 
 }

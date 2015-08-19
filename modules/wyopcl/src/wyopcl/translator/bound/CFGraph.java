@@ -40,7 +40,7 @@ public class CFGraph {
 		// Initialize the variables
 		this.blocks = new ArrayList<BasicBlock>();
 		// Entry and Exit block
-		BasicBlock exit = createBasicBlock("exit", BlockType.EXIT);
+		//BasicBlock exit = createBasicBlock("exit", BlockType.EXIT);
 		BasicBlock entry = createBasicBlock("entry", BlockType.ENTRY);
 		// First code block.
 		this.current_blk = createBasicBlock("code", BlockType.BLOCK, entry);
@@ -54,7 +54,7 @@ public class CFGraph {
 	public void setStatus(STATUS newStatus){
 		this.status = newStatus;
 	}	
-
+		
 	/**
 	 * Create a basic block with the specific label name
 	 * 
@@ -67,7 +67,22 @@ public class CFGraph {
 	 * @return the blk
 	 */
 	public BasicBlock createBasicBlock(String label, BlockType type, BasicBlock... parents) {
-		BasicBlock blk = new BasicBlock(label, type);
+		BasicBlock blk = getBasicBlock(label, type);
+		// Check if the block exists
+		if (blk == null) {
+			//Create a new block
+			blk = new BasicBlock(label, type);
+			//Add this block to the block list.
+			blocks.add(blk);
+		}
+		//Connect the block with the given parent blocks.
+		BasicBlock parent = parents.length > 0 ? parents[0] : null;
+		if (parent != null) {
+			parent.addChild(blk);
+		}
+		return blk;
+		
+		/*BasicBlock blk = new BasicBlock(label, type);
 		// Check if the block exists
 		if (!blocks.contains(blk)) {
 			blocks.add(blk);
@@ -84,6 +99,7 @@ public class CFGraph {
 			}
 		}
 		return null;
+		*/
 	}
 
 	/**
@@ -125,7 +141,7 @@ public class CFGraph {
 	 */
 	public BasicBlock getBasicBlock(String label, BlockType type) {
 		for (BasicBlock blk : blocks) {
-			if (blk.getBranch().equals(label)) {
+			if (blk.getLabel().equals(label)) {
 				if (blk.getType().equals(type)) {
 					return blk;
 				}
@@ -206,6 +222,20 @@ public class CFGraph {
 		
 	}
 
+	/**
+	 * Create if/else branch without adding any constraint.
+	 * @param new_label
+	 */
+	public void createIfElseBranch(String new_label) {
+		BasicBlock c_blk = getCurrentBlock();
+		// Branch out the block
+		// The left block does not have the name
+		BasicBlock leftBlock = createBasicBlock(new_label, BlockType.IF_BRANCH, c_blk);
+		BasicBlock rightBlock = createBasicBlock(new_label, BlockType.ELSE_BRANCH, c_blk);
+		// Set the current block to the left
+		setCurrentBlock(leftBlock);
+	}
+	
 
 	/**
 	 * Branches out the current block to add if/else blocks and set the current block to 
@@ -230,6 +260,29 @@ public class CFGraph {
 		// Set the current block to the left
 		setCurrentBlock(leftBlock);
 	}
+	
+	
+	/**
+	 * Creates the loop header, loop body and loop exit. And set the current block to the loop body.
+	 * 
+	 * @param new_label
+	 *            the name of new branch.
+	 */
+	public void createLoopStructure(String new_label) {
+		
+		BasicBlock loop_header = getCurrentBlock();
+		//update the label
+		loop_header.setLabel(new_label);
+		// Check whether to add if-else blocks or loop-condition blocks.
+		BasicBlock loop_body = createBasicBlock(new_label, BlockType.LOOP_BODY, loop_header);
+		BasicBlock loop_exit = createBasicBlock(new_label, BlockType.LOOP_EXIT, loop_header);
+		// Connect the loop header with the loop body
+		loop_body.addChild(loop_header);
+		// Set the current block to be loop body.
+		setCurrentBlock(loop_body);
+	}
+	
+	
 
 	/**
 	 * Creates the loop header, loop body and loop exit and
@@ -298,7 +351,7 @@ public class CFGraph {
 		for(BasicBlock blk: blks){
 			if(!blk.isLeaf()){
 				for(BasicBlock child: blk.getChildNodes()){
-					dot_string += "\""+blk.getBranch()+" [" +blk.getType()+"]\"->\""+ child.getBranch() +" ["+child.getType() + "]\";\n";
+					dot_string += "\""+blk.getLabel()+" [" +blk.getType()+"]\"->\""+ child.getLabel() +" ["+child.getType() + "]\";\n";
 				}
 			}
 		}
@@ -314,13 +367,6 @@ public class CFGraph {
 		}
 	}
 	
-	/**
-	 * Add byte-code to the current block.
-	 * @param code
-	 */
-	public void addCode(Code code){
-		BasicBlock blk = getCurrentBlock();
-		blk.addCode(code);
-	}
+	
 	
 }
