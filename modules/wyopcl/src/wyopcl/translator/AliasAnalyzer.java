@@ -30,8 +30,8 @@ public class AliasAnalyzer extends Analyzer {
 	private LiveVariablesAnalysis liveAnalyzer;
 	//Store the liveness analysis for each function
 	private HashMap<FunctionOrMethod, Liveness> store;
-	
-	
+
+
 	/**
 	 * Basic Constructor
 	 */
@@ -117,25 +117,25 @@ public class AliasAnalyzer extends Analyzer {
 	private void printLivenss(FunctionOrMethod function){
 		VariableDeclarations vars = function.attribute(VariableDeclarations.class);
 		//Get function name
-				String name = function.name();
-			    System.out.println("###### Live analysis for " + name + " function. ######");
+		String name = function.name();
+		System.out.println("###### Live analysis for " + name + " function. ######");
 		//Get liveness 
 		Liveness liveness = store.get(function);
 		//Get the list of blocks for the function.
 		List<BasicBlock> blocks = this.getBlocks(function);
-	    for(BasicBlock block: blocks){
-	    	Env in = liveness.getInSet(block);
-	    	Env out = liveness.getOutSet(block);
-	    	//Print out the in/out set for the block.
-	    	System.out.println("In" + ":{" + getLiveVars(in, vars) + "}\n" + block + "\nOut" + ":{" + getLiveVars(out, vars) + "}\n");
-	    }
-	    
-		
+		for(BasicBlock block: blocks){
+			Env in = liveness.getInSet(block);
+			Env out = liveness.getOutSet(block);
+			//Print out the in/out set for the block.
+			System.out.println("In" + ":{" + getLiveVars(in, vars) + "}\n" + block + "\nOut" + ":{" + getLiveVars(out, vars) + "}\n");
+		}
+
+
 	}
-	
-	
-	
-	
+
+
+
+
 	/**
 	 * Apply live variable analysis on the function, and get in/out set of each
 	 * block.
@@ -146,7 +146,7 @@ public class AliasAnalyzer extends Analyzer {
 		VariableDeclarations vars = function.attribute(VariableDeclarations.class);
 		String name = function.name();
 		CFGraph graph = this.getCFGraph(function);
-		
+
 		List<BasicBlock> blocks = graph.getBlockList();
 		// Store in/out set for each block.
 		Liveness liveness = new Liveness(blocks);
@@ -172,11 +172,17 @@ public class AliasAnalyzer extends Analyzer {
 					if(code instanceof Codes.Return){
 						Codes.Return r = (Codes.Return)code;
 						if(r.operand != Codes.NULL_REG){
-							//Add the return value to both in and out set.
-							in.add(r.operand);
-							liveness.setInSet(block, in);
-							out.add(r.operand);
-							liveness.setOutSet(block, out);
+							//Check if return value is in/out set.
+							if(!in.contains(r.operand)){
+								//Add the return value to both in and out set.
+								in.add(r.operand);
+								liveness.setInSet(block, in);
+							}
+							
+							if(!out.contains(r.operand)){
+								out.add(r.operand);
+								liveness.setOutSet(block, out);
+							}							
 						}						
 					}else if (code instanceof Codes.Invariant){
 						//Iterate the code block inside the invariant.
@@ -232,7 +238,7 @@ public class AliasAnalyzer extends Analyzer {
 		private boolean isChanged;
 		private HashMap<BasicBlock, Env> inSetStore;
 		private HashMap<BasicBlock, Env> outSetStore;
-		
+
 		/**
 		 * Constructor with a list of blocks.
 		 * @param blocks
@@ -246,8 +252,8 @@ public class AliasAnalyzer extends Analyzer {
 				outSetStore.put(block, new Env());
 			}
 		}
-		
-		
+
+
 		/**
 		 * Set the isChanged flag.
 		 * @param isChanged
@@ -255,11 +261,11 @@ public class AliasAnalyzer extends Analyzer {
 		public void setIsChanged(boolean isChanged){
 			this.isChanged = isChanged;
 		}
-		
+
 		public boolean isChanged(){
 			return this.isChanged;
 		}
-		
+
 		/**
 		 * Set 'in' set for a block.
 		 * 
@@ -268,7 +274,7 @@ public class AliasAnalyzer extends Analyzer {
 		 */
 		protected void setInSet(BasicBlock block, Env new_in) {
 			//Check if new and existing in set are the same
-			Env in = getInSet(block);
+			Env in = inSetStore.get(block);
 			if(!in.equals(new_in)){
 				//Use logic OR operator to combine the result of 'isChanged' flag.
 				this.isChanged |= true;
@@ -276,7 +282,7 @@ public class AliasAnalyzer extends Analyzer {
 				inSetStore.put(block, new_in);
 			}
 		}
-		
+
 		/**
 		 * Get the in set.
 		 * @param block
@@ -285,7 +291,7 @@ public class AliasAnalyzer extends Analyzer {
 		public Env getInSet(BasicBlock block){			
 			return inSetStore.get(block);
 		}
-		
+
 
 		/**
 		 * Set 'out' set for a block.
@@ -301,15 +307,12 @@ public class AliasAnalyzer extends Analyzer {
 				outSetStore.put(block, new_out);
 			}			 
 		}
-		
-		
 		/**
-		 * Returns 'out' set for a block. Take the union of in sets of child
-		 * blocks to produce the out set.
-		 * 
-		 * @param set
+		 * Compute the out set 
+		 * @param block
+		 * @return
 		 */
-		protected Env getOutSet(BasicBlock block) {
+		private void computeOutSet(BasicBlock block){
 			// Check if the block has the child blocks.
 			if (!block.isLeaf()) {
 				Env out_old = outSetStore.get(block);
@@ -319,7 +322,7 @@ public class AliasAnalyzer extends Analyzer {
 					Env in = inSetStore.get(child);
 					out.addAll(in);
 				}
-				
+
 				//Check if old and new out set are the same by using 'equal' operator.
 				if(!out.equals(out_old)){
 					this.isChanged &= true;
@@ -327,11 +330,23 @@ public class AliasAnalyzer extends Analyzer {
 					outSetStore.put(block, out);
 				}
 			}
+		}
+
+
+
+		/**
+		 * Returns 'out' set for a block. Take the union of in sets of child
+		 * blocks to produce the out set.
+		 * 
+		 * @param set
+		 */
+		protected Env getOutSet(BasicBlock block) {
+			computeOutSet(block);
 			return outSetStore.get(block);
 		}
 
 	}
-	
+
 	/**
 	 * Represents the alias between two variables for a block to show that
 	 *  left operand is aliased to right operand at block u
@@ -349,10 +364,10 @@ public class AliasAnalyzer extends Analyzer {
 			this.right = right;
 			this.block = block;
 		}
-		
-		
+
+
 	}
-	
-	
+
+
 
 }
