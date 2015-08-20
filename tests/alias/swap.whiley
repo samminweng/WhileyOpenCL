@@ -8,6 +8,12 @@ function swap([int] xs, int i0, int i1) -> [int]:
     return xs
 
 method main(System.Console console):
-    [int] xs = [0,2,1,3,4]
-    [int] ys = swap(xs,1,2)
-    console.out.println(ys)
+    [int] xs = [0,1,2,3,4,5]
+    //Not aliased, so no copy needed
+    xs = swap(xs,3,5)
+    //assert xs == [0,1,2,5,4,3] 
+    //Aliased. Copy of xs needed before calling swap
+    //(or inside swap) if swap mutates xs.
+    [int] ys = swap(xs, 3, 5)
+    assert ys == [0,1,2,3,4,5]
+    assert xs == [0,1,2,5,4,3]

@@ -97,7 +97,6 @@ public abstract class Analyzer {
 		return new ArrayList<BasicBlock>();
 	}
 	
-
 	/**
 	 * Checks if the CFGraph of the given function exist.
 	 * 
@@ -221,7 +220,9 @@ public abstract class Analyzer {
 					buildCFG((Codes.Label)code, function);
 				}else if (code instanceof Codes.Loop){
 					buildCFG((Codes.Loop)code, function);
-				} else {
+				}else if (code instanceof Codes.Invoke){
+					buildCFG((Codes.Invoke)code, function);
+				}else {
 					//Add the byte-code to the current block in a CFGraph.
 					CFGraph graph = getCFGraph(function);
 					graph.getCurrentBlock().addCode(code);
@@ -231,6 +232,23 @@ public abstract class Analyzer {
 			}
 		}
 	}
+
+	/**
+	 * Builds up a basic block for the calling function.
+	 * @param code Invoke byte-code 		
+	 * @param function
+	 */
+	private void buildCFG(Invoke code, FunctionOrMethod function) {
+		//Get the graph
+		CFGraph graph = getCFGraph(function);
+		BasicBlock c_blk = graph.getCurrentBlock();
+		//Get the label name.
+		String label = code.name.name();
+		//Create a new block.
+		BasicBlock blk = graph.createBasicBlock(label, BlockType.BLOCK, c_blk);
+		blk.addCode(code);
+	}
+
 
 	protected void buildCFG(Invariant code, FunctionOrMethod function) {
 		//Add the invariant to the current block.

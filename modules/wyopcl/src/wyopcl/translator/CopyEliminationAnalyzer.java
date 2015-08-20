@@ -25,7 +25,7 @@ import wyopcl.translator.bound.CFGraph;
  * @author Min-Hsien Weng
  *
  */
-public class AliasAnalyzer extends Analyzer {
+public class CopyEliminationAnalyzer extends Analyzer {
 	private final String prefix = "%";
 	private LiveVariablesAnalysis liveAnalyzer;
 	//Store the liveness analysis for each function
@@ -35,7 +35,7 @@ public class AliasAnalyzer extends Analyzer {
 	/**
 	 * Basic Constructor
 	 */
-	public AliasAnalyzer(Builder builder, Configuration config) {
+	public CopyEliminationAnalyzer(Builder builder, Configuration config) {
 		super(config);
 		this.liveAnalyzer = new LiveVariablesAnalysis(builder);
 		// Diabled the constant propagation
@@ -213,7 +213,7 @@ public class AliasAnalyzer extends Analyzer {
 	 * 
 	 * @param module
 	 */
-	public void applyLiveAnalysis(WyilFile module) {
+	public void apply(WyilFile module) {
 		this.buildCFG(module);
 		// Iterate each function to build up CFG
 		for (FunctionOrMethod function : module.functionOrMethods()) {

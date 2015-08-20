@@ -19,7 +19,7 @@ public class WyopclMain extends WycMain{
 	private boolean verbose = false;
 	public static final OptArg[] EXTRA_OPTIONS = {		
 		//Add the 'alias' option
-		new OptArg("alias", "Run the alias analysis to eliminate the un-necessary array copies at byte-code level.\n" ),
+		new OptArg("copy", "Run the copy elimination analysis to remove the un-necessary array copies at byte-code level.\n" ),
 		
 		//Add the 'bound' option 
 		new OptArg("bound", OptArg.STRING, "Run bound analysis on whiley program with a specific widening strategy:\n"

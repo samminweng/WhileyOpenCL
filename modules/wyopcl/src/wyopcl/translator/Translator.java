@@ -64,9 +64,9 @@ public class Translator implements Builder {
 			this.config.setProperty("filename", filename);
 			// Check the mode
 			switch (config.getMode()) {
-			case "alias":
-				analyzeAlias(module);
-				message = "Alias analysis completed.\nFile: " + config.getFilename();
+			case "copy":
+				analyzeCopyElimination(module);
+				message = "Copy elimination analysis completed.\nFile: " + config.getFilename();
 				break;
 			case "bound":
 				analyzeBounds(module);
@@ -197,9 +197,9 @@ public class Translator implements Builder {
 	 * 
 	 * @param module
 	 */
-	private void analyzeAlias(WyilFile module){
-		AliasAnalyzer analyzer = new AliasAnalyzer(this, config);
-		analyzer.applyLiveAnalysis(module);		
+	private void analyzeCopyElimination(WyilFile module){
+		CopyEliminationAnalyzer analyzer = new CopyEliminationAnalyzer(this, config);
+		analyzer.apply(module);		
 	}
 	
 	
