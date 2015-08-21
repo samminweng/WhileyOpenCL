@@ -54,7 +54,9 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	 *            the hash map, which maps register to the variable name.
 	 * @return
 	 */
-	private String getLiveVars(Env env, VariableDeclarations vars) {
+	private String getLiveVars(Env env, FunctionOrMethod function) {
+		//Get the mapping table between variable name and register.
+		VariableDeclarations vars = function.attribute(VariableDeclarations.class);
 		String str = "";
 		Boolean isFirst = true;
 		Iterator<Integer> iterator = env.iterator();
@@ -82,7 +84,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	 * 
 	 * @param codes
 	 */
-	private void applyLiveAnalysisByCode(FunctionOrMethod function) {
+	/*private void applyLiveAnalysisByCode(FunctionOrMethod function) {
 		VariableDeclarations vars = function.attribute(VariableDeclarations.class);
 		String name = function.name();
 		System.out.println("###### Live analysis for " + name + " function. ######");
@@ -108,7 +110,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		Env out = liveAnalyzer.lastStore();
 		System.out.println("Out" + ":{" + getLiveVars(env, vars) + "}\n");
 
-	}
+	}*/
 	/**
 	 * Print out the liveness for a given function.
 	 * @param function
@@ -127,7 +129,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 			Env in = liveness.getInSet(block);
 			Env out = liveness.getOutSet(block);
 			//Print out the in/out set for the block.
-			System.out.println("In" + ":{" + getLiveVars(in, vars) + "}\n" + block + "\nOut" + ":{" + getLiveVars(out, vars) + "}\n");
+			System.out.println("In" + ":{" + getLiveVars(in, function) + "}\n" + block + "\nOut" + ":{" + getLiveVars(out, function) + "}\n");
 		}
 
 
@@ -179,7 +181,29 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	
 	}
 	
-
+	/**
+	 * Iterate each code from the block to compute the live variables.
+	 * @param codeblock the code block that contains a list of byte-code.
+	 */
+	private void compute(CodeBlock codeBlock, Env in, Env out){
+		for (int i = codeBlock.size() - 1; i >= 0; i--) {
+			Code code = codeBlock.get(i);
+			//Compute the live variables, and store the results in in/out set.
+			//Special cases
+			if(code instanceof Codes.Return){
+				compute((Codes.Return)code, in, out);						
+			}else if (code instanceof Codes.Invariant){
+				compute((Codes.Invariant)code, in, out);
+			}else if (code instanceof Codes.Invoke){
+				compute((Codes.Invoke)code, in, out);
+			} else {
+				in = liveAnalyzer.propagate(null, code, in);
+			}
+		}
+		return;
+	}	
+	
+	
 	/**
 	 * Apply live variable analysis on the function, and get in/out set of each
 	 * block.
@@ -187,10 +211,8 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	 * @param module
 	 */
 	private void applyLiveAnalysisByBlock(FunctionOrMethod function) {
-		VariableDeclarations vars = function.attribute(VariableDeclarations.class);
 		String name = function.name();
 		CFGraph graph = this.getCFGraph(function);
-
 		List<BasicBlock> blocks = graph.getBlockList();
 		// Store in/out set for each block.
 		Liveness liveness = new Liveness(blocks);
@@ -209,27 +231,15 @@ public class CopyEliminationAnalyzer extends Analyzer {
 				// Get the child block
 				Env out = (Env)liveness.getOutSet(block).clone();
 				Env in = (Env) out.clone();
-				CodeBlock codeBlock = block.getCodeBlock();
-				for (int i = codeBlock.size() - 1; i >= 0; i--) {
-					Code code = codeBlock.get(i);
-					//Special cases
-					if(code instanceof Codes.Return){
-						compute((Codes.Return)code, in, out);						
-					}else if (code instanceof Codes.Invariant){
-						compute((Codes.Invariant)code, in, out);
-					}else if (code instanceof Codes.Invoke){
-						compute((Codes.Invariant)code, in, out);
-					} else {
-						in = liveAnalyzer.propagate(null, code, in);
-					}					
-				}
-				
-				// Update the in set for the block.
+				//Compute the live variables
+				compute(block.getCodeBlock(), in, out);				
+				// Update the in set of the block.
 				liveness.setInSet(block, in);
-				// Update the out set for the block.
+				// Update the out set of the block.
 				liveness.setOutSet(block, out);				
 				if(config.isVerbose()){
-					System.out.println("In" + ":{" + getLiveVars(in, vars) + "}\n" + block + "\nOut" + ":{" + getLiveVars(out, vars) + "}\n");
+					System.out.println("In" + ":{" + getLiveVars(in, function) + "}\n"
+							+ block + "\nOut" + ":{" + getLiveVars(out, function) + "}\n");
 				}				
 			}
 			//Increment the iteration.
