@@ -238,15 +238,17 @@ public abstract class Analyzer {
 	 * @param code Invoke byte-code 		
 	 * @param function
 	 */
-	private void buildCFG(Invoke code, FunctionOrMethod function) {
+	protected void buildCFG(Invoke code, FunctionOrMethod function) {
 		//Get the graph
 		CFGraph graph = getCFGraph(function);
 		BasicBlock c_blk = graph.getCurrentBlock();
-		//Get the label name.
-		String label = code.name.name();
+		//Get the label name (e.g. swap12).
+		String label = code.name.name()+line;
 		//Create a new block.
 		BasicBlock blk = graph.createBasicBlock(label, BlockType.BLOCK, c_blk);
 		blk.addCode(code);
+		//Set the current block.
+		graph.setCurrentBlock(blk);
 	}
 
 
