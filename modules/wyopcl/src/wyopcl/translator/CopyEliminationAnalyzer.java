@@ -134,7 +134,51 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	}
 
 
-
+	
+	/**
+	 * Computes the live variables for return byte-code
+	 * @param code
+	 */
+	private void compute(Codes.Return code, Env in, Env out){
+		if(code.operand != Codes.NULL_REG){
+			//Check if return value is in/out set.
+			if(!in.contains(code.operand)){
+				//Add the return value to both in and out set.
+				in.add(code.operand);
+			}
+			
+			if(!out.contains(code.operand)){
+				out.add(code.operand);
+			}							
+		}
+	}
+	
+	/**
+	 * Computes live variables for invariant
+	 * @param code
+	 * @param in
+	 * @param out
+	 */
+	private void compute(Codes.Invariant code, Env in, Env out){
+		//Get the list of byte-code from invariant
+		List<Code> codes = code.bytecodes();
+		//Iterate each byte-code.
+		for(int j=codes.size()-1;j>=0;j--){
+			in = liveAnalyzer.propagate(null, codes.get(j), in);
+		}		
+	}
+	
+	/**
+	 * 
+	 * @param code
+	 * @param in
+	 * @param out
+	 */
+	private void compute(Codes.Invoke code, Env in, Env out){
+		//Get the callee
+	
+	}
+	
 
 	/**
 	 * Apply live variable analysis on the function, and get in/out set of each
@@ -170,33 +214,20 @@ public class CopyEliminationAnalyzer extends Analyzer {
 					Code code = codeBlock.get(i);
 					//Special cases
 					if(code instanceof Codes.Return){
-						Codes.Return r = (Codes.Return)code;
-						if(r.operand != Codes.NULL_REG){
-							//Check if return value is in/out set.
-							if(!in.contains(r.operand)){
-								//Add the return value to both in and out set.
-								in.add(r.operand);
-								liveness.setInSet(block, in);
-							}
-							
-							if(!out.contains(r.operand)){
-								out.add(r.operand);
-								liveness.setOutSet(block, out);
-							}							
-						}						
+						compute((Codes.Return)code, in, out);						
 					}else if (code instanceof Codes.Invariant){
-						//Iterate the code block inside the invariant.
-						Codes.Invariant inv = (Codes.Invariant)code;
-						List<Code> inv_codes = inv.bytecodes();
-						for(int j=inv_codes.size()-1;j>=0;j--){
-							in = liveAnalyzer.propagate(null, inv_codes.get(j), in);
-						}
-					}else {
+						compute((Codes.Invariant)code, in, out);
+					}else if (code instanceof Codes.Invoke){
+						compute((Codes.Invariant)code, in, out);
+					} else {
 						in = liveAnalyzer.propagate(null, code, in);
 					}					
 				}
+				
 				// Update the in set for the block.
 				liveness.setInSet(block, in);
+				// Update the out set for the block.
+				liveness.setOutSet(block, out);				
 				if(config.isVerbose()){
 					System.out.println("In" + ":{" + getLiveVars(in, vars) + "}\n" + block + "\nOut" + ":{" + getLiveVars(out, vars) + "}\n");
 				}				
@@ -214,17 +245,27 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	 * @param module
 	 */
 	public void apply(WyilFile module) {
-		this.buildCFG(module);
 		// Iterate each function to build up CFG
+		this.buildCFG(module);
+		// Apply live analysis on each function, except for main function.
 		for (FunctionOrMethod function : module.functionOrMethods()) {
-			//Print out the CFGraph
-			if(config.isVerbose()){
-				this.printCFG(function);
-			}			
-			applyLiveAnalysisByBlock(function);
-			printLivenss(function);
+			//if(function.name().equals("main")){
+				//Print out the CFGraph
+				if(config.isVerbose()){
+					this.printCFG(function);
+				}			
+				applyLiveAnalysisByBlock(function);
+				printLivenss(function);
+			//}
 		}
 
+		//Get the main function
+		FunctionOrMethod main_function = module.functionOrMethod("main").get(0);
+		//Iterate each block
+		//for(BasicBlock blockthis.getBlocks(main_function)
+		
+		
+		
 	}
 
 	/**
