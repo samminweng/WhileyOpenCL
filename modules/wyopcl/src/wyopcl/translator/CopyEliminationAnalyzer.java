@@ -7,16 +7,12 @@ import java.util.List;
 import wybs.lang.Builder;
 import wyil.attributes.VariableDeclarations;
 import wyil.lang.Code;
-import wyil.lang.CodeBlock;
-import wyil.lang.CodeBlock.Index;
 import wyil.lang.Codes;
-import wyil.lang.Codes.Assert;
 import wyil.lang.Codes.Return;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyil.transforms.LiveVariablesAnalysis;
 import wyil.transforms.LiveVariablesAnalysis.Env;
-import wyil.util.dfa.BackwardFlowAnalysis;
 import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.BasicBlock.BlockType;
 import wyopcl.translator.bound.CFGraph;
@@ -29,7 +25,7 @@ import wyopcl.translator.bound.CFGraph;
  *
  */
 public class CopyEliminationAnalyzer extends Analyzer {
-	private final String prefix = "%";
+	//private final String prefix = "%";
 	private LiveVariablesAnalysis liveAnalyzer;
 	//Store the liveness analysis for each function (Key: function name, Value:Liveness information).
 	private HashMap<String, Liveness> livenessStore;
@@ -96,7 +92,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		//Get the list of blocks for the function.
 		List<BasicBlock> blocks = this.getBlocks(function);
 		for(BasicBlock block: blocks){
-			Env in = liveness.getInSet(block);
+			Env in = liveness.getIn(block);
 			Env out = liveness.getOut(block);
 			//Print out the in/out set for the block.
 			System.out.println("In" + ":{" + getLiveVars(in, function) + "}\n" 
@@ -196,7 +192,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 					// Compute the store in set of the block.
 					in = computeIn(block.getCodeBlock().bytecodes(), in);					
 					// Update 'in' set of the block.
-					liveness.setInSet(block, in);	
+					liveness.setIn(block, in);	
 					if(config.isVerbose()){
 						System.out.println("In" + ":{" + getLiveVars(in, function) + "}\n"
 								+ block + "\nOut" + ":{" + getLiveVars(out, function) + "}\n");
@@ -220,23 +216,13 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		this.buildCFG(module);
 		// Apply live analysis on each function, except for main function.
 		for (FunctionOrMethod function : module.functionOrMethods()) {
-			//if(function.name().equals("main")){
 			//Print out the CFGraph
 			if(config.isVerbose()){
 				this.printCFG(function);
 			}			
 			applyLiveAnalysisByBlock(function);
 			printLivenss(function);
-			//}
 		}
-
-		//Get the main function
-		FunctionOrMethod main_function = module.functionOrMethod("main").get(0);
-		//Iterate each block
-		//for(BasicBlock blockthis.getBlocks(main_function)
-
-
-
 	}
 
 	/**
@@ -293,7 +279,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		 * @param block
 		 * @return
 		 */
-		protected void setInSet(BasicBlock block, Env new_in) {
+		protected void setIn(BasicBlock block, Env new_in) {
 			//Check if new and existing in set are the same
 			Env in = inStore.get(block);
 			if(!in.equals(new_in)){
@@ -302,7 +288,6 @@ public class CopyEliminationAnalyzer extends Analyzer {
 			}
 			//Update in set
 			inStore.put(block, new_in);
-
 		}
 
 		/**
@@ -310,7 +295,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		 * @param block
 		 * @return
 		 */
-		public Env getInSet(BasicBlock block){			
+		public Env getIn(BasicBlock block){			
 			return inStore.get(block);
 		}
 
@@ -334,30 +319,22 @@ public class CopyEliminationAnalyzer extends Analyzer {
 			}
 			return outStore.get(block);
 		}
-
-	}
-
-	/**
-	 * Represents the alias between two variables for a block to show that
-	 *  left operand is aliased to right operand at block u
-	 * 
-	 * 
-	 * @author Min-Hsien Weng
-	 *
-	 */
-	/*protected class AliasPair{
-		private int left;
-		private int right;
-		private BasicBlock block;
-		public AliasPair(int left, int right, BasicBlock block){
-			this.left = left;
-			this.right = right;
-			this.block = block;
+		
+		
+		/**
+		 * Check if a register is live at a given block.
+		 *
+		 * 
+		 * @param reg
+		 * @param blk
+		 * @return
+		 */
+		protected boolean isLive(int reg, BasicBlock blk){
+			//Get the in set of the block
+			Env in = getIn(blk);
+			//Check if 'in' set contains the register
+			return in.contains(reg);
 		}
-
-
-	}*/
-
-
-
+		
+	}
 }
