@@ -8,38 +8,19 @@ import java.util.HashMap;
 import java.util.List;
 
 import wyil.lang.Code;
+import wyil.lang.CodeBlock;
 import wyil.lang.Codes;
-import wyil.lang.Type;
-import wyil.lang.WyilFile;
-import wyil.lang.Codes.Assign;
-import wyil.lang.Codes.Assume;
-import wyil.lang.Codes.BinaryOperator;
 import wyil.lang.Codes.Comparator;
-import wyil.lang.Codes.Const;
-import wyil.lang.Codes.Convert;
-import wyil.lang.Codes.Fail;
-import wyil.lang.Codes.FieldLoad;
-import wyil.lang.Codes.Goto;
 import wyil.lang.Codes.If;
-import wyil.lang.Codes.IndexOf;
 import wyil.lang.Codes.Invariant;
 import wyil.lang.Codes.Invoke;
-import wyil.lang.Codes.Label;
-import wyil.lang.Codes.LengthOf;
-import wyil.lang.Codes.ListOperator;
 import wyil.lang.Codes.Loop;
-import wyil.lang.Codes.NewList;
-import wyil.lang.Codes.NewTuple;
 import wyil.lang.Codes.Return;
-import wyil.lang.Codes.SubList;
-import wyil.lang.Codes.TupleLoad;
-import wyil.lang.Codes.UnaryOperator;
-import wyil.lang.Codes.Update;
+import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.bound.BasicBlock;
-import wyopcl.translator.bound.CFGraph;
-import wyopcl.translator.bound.SymbolFactory;
 import wyopcl.translator.bound.BasicBlock.BlockType;
+import wyopcl.translator.bound.CFGraph;
 import wyopcl.translator.bound.CFGraph.STATUS;
 /**
  * Aims to build control flow graph for a function.
@@ -49,7 +30,7 @@ import wyopcl.translator.bound.CFGraph.STATUS;
  *
  */
 public abstract class Analyzer {
-	private static final String prefix = "%";
+	//private static final String prefix = "%";
 	protected Configuration config;
 	// Maps of CFGs	
 	protected HashMap<FunctionOrMethod, CFGraph> cfgraphs;
@@ -80,6 +61,27 @@ public abstract class Analyzer {
 			return cfgraphs.get(function);
 		return null;
 	}
+	
+	/**
+	 * Get the block that contains the given code.
+	 * @param function
+	 * @return
+	 */
+	protected BasicBlock getBlockbyCode(FunctionOrMethod function, Code code){
+		CFGraph graph = getCFGraph(function);
+		//Get the list of block for the function.
+		for(BasicBlock blk: graph.getBlockList()){
+			//Get the list of code.
+			CodeBlock codeBlk = blk.getCodeBlock();
+			//Check if code blk contains this byte-code.
+			if(codeBlk.bytecodes().contains(code)){
+				return blk;
+			}
+		}	
+		
+		return null;
+	}
+	
 	
 	/**
 	 * Gets the list of basic blocks for a function.
