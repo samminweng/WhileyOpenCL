@@ -72,7 +72,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// If the variable is an array, then add the extra 'size'
 			// variable.
 			if (type instanceof Type.List) {
-				stat += indent + ";\n"+indent+"long long " + (var + "_size");
+				stat += indent + ";\n" + indent + "long long " + (var + "_size");
 			}
 
 			store.addStatement(null, stat);
@@ -202,21 +202,21 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.Const code, FunctionOrMethod function) {
 		String stat = null;
-		String target = getVarName(code.target(), function);
+		CodeStore store = this.getCodeStore(function);
+		String target = store.getVar(code.target());
+		String indent = store.getIndent();
 		if (code.assignedType() instanceof Type.List) {
-			Constant.List list = (Constant.List) code.constant;
 			// Initialize an array
-			if (list.values.isEmpty()) {
-				stat = getIndent() + target + "=(long long*)malloc(1*sizeof(long long));\n";
-				stat += getIndent() + "if(" + target + " == NULL) {fprintf(stderr,\"fail to malloc\"); exit(0);}\n";
-				stat += getIndent() + target + "_size = 0;";
+			if (((Constant.List) code.constant).values.isEmpty()) {
+				stat = indent + target + "=(long long*)malloc(1*sizeof(long long));\n";
+				stat += indent + "if(" + target + " == NULL) {fprintf(stderr,\"fail to malloc\"); exit(0);}\n";
+				stat += indent + target + "_size = 0;";
 			}
 		} else {
 			// Add a statement
-			stat = getIndent() + target + " = " + code.constant + ";";
+			stat = indent + target + " = " + code.constant + ";";
 		}
-
-		addStatement(code, stat);
+		store.addStatement(code, stat);
 	}
 
 	/**
@@ -252,32 +252,37 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 */
 	protected void translate(Codes.Assign code, FunctionOrMethod function) {
-		String target = getVarName(code.target(), function);
-		String op = getVarName(code.operand(0), function);
-		String statement = "";
 
+		CodeStore store = this.getCodeStore(function);
+
+		String target = store.getVar(code.target());
+		String op = store.getVar(code.operand(0));
+		String statement = "";
+		String indent = store.getIndent();
 		if (code.type() instanceof Type.List) {
 			// Check if the assigned type is an array. If so, use different way
 			// to copy the array.
 			String target_size = target + "_size";
 			// long long _11_size;
-			addDeclaration(Type.Int.T_INT, target_size);
+			// store.addDeclaration(Type.Int.T_INT, target_size);
 			// Check if the op is the input parameters or not.
-			if (isInputParameter(op)) {
-				// If so, then the operand is cloned and
-				// _4 = clone(_0, _0_size);
-				statement = indent + target + " = clone(" + op + ", " + op + "_size);\n";
-			} else {
-				// _2 = (long long*)_3;
-				statement = indent + target + " = (" + translate(getVarType(code.target())) + ")" + op + ";\n";
-			}
+			// if (isInputParameter(op)) {
+			// If so, then the operand is cloned and
+			// _4 = clone(_0, _0_size);
+			// statement = indent + target + " = clone(" + op + ", " + op +
+			// "_size);\n";
+			// } else {
+
+			// _2 = (long long*)_3;
+			statement = indent + target + " = (" + translate(store.getVarType(code.target())) + ")" + op + ";\n";
+			// }
 			// _1_size = _10_size;
 			statement += indent + target_size + " = " + op + "_size;";
 		} else {
 			statement = indent + target + " = " + op + ";";
 		}
 		// Add the statement to the list of statements.
-		addStatement(code, statement);
+		store.addStatement(code, statement);
 	}
 
 	/**
@@ -300,8 +305,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 */
 	protected void translate(Codes.LengthOf code, FunctionOrMethod function) {
-		String stat = indent + getVarName(code.target(), function) + " = " + getVarName(code.operand(0), function) + "_size;";
-		addStatement(code, stat);
+		CodeStore store = this.getCodeStore(function);
+		String stat = store.getIndent() + store.getVar(code.target()) + " = " + store.getVar(code.operand(0)) + "_size;";
+		store.addStatement(code, stat);
 	}
 
 	/**
@@ -325,13 +331,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 */
 	protected void translate(Codes.BinaryOperator code, FunctionOrMethod function) {
-		Type type = code.type();
-		String target = getVarName(code.target(), function);
-		String left = getVarName(code.operand(0), function);
-		String right = getVarName(code.operand(1), function);
+		CodeStore store = this.getCodeStore(function);
+		// Type type = code.type();
+		String target = store.getVar(code.target());
+		String left = store.getVar(code.operand(0));
+		String right = store.getVar(code.operand(1));
 		// vars.put(target, CodeGeneratorHelper.translate(type));
-		addDeclaration(type, target);
-		String stat = indent;
+		// addDeclaration(type, target);
+		String stat = store.getIndent();
 		stat += target + "=" + left;
 		switch (code.kind) {
 		case ADD:
@@ -366,7 +373,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		case RIGHTSHIFT:
 			break;
 		}
-		addStatement(code, stat);
+		store.addStatement(code, stat);
 	}
 
 	/**
@@ -391,8 +398,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 */
 	protected void translate(Codes.Invoke code, FunctionOrMethod function) {
+		
+		CodeStore store = this.getCodeStore(function);
 		String stat = "";
-		String ret = getVarName(code.target(), function);
+		String ret = store.getVar(code.target());
 		Type return_type = code.type().ret();
 		// Assign both of lists to have the same array size, e.g.
 		// '_12_size=_xs_size;'
@@ -401,17 +410,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			for (int index = 0; index < code.operands().length; index++) {
 				Type type = code.type().params().get(index);
 				if (type instanceof Type.List) {
-					stat += indent + (ret + "_size") + "=" + getVarName(code.operand(index), function) + "_size;\n";
+					stat += store.getIndent() + (ret + "_size") + "=" + store.getVar(code.operand(index)) + "_size;\n";
 				}
 			}
 		}
 		//
-		stat += indent + ret + "=" + code.name.name() + "(";
+		stat += store.getIndent() + ret + "=" + code.name.name() + "(";
 		// Translate the input parameters of called function, e.g.
 		// '_12=reverse(_xs , _xs_size);'
 		boolean isFirst = true;
 		for (int index = 0; index < code.operands().length; index++) {
-			String param = getVarName(code.operand(index), function);
+			String param = store.getVar(code.operand(index));
 			if (!isFirst) {
 				stat += " ,";
 			}
@@ -425,7 +434,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		}
 		stat += ");";
 		// add the statement
-		addStatement(code, stat);
+		store.addStatement(code, stat);
 	}
 
 	/**
@@ -501,9 +510,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 *            <code>Codes.If</code> code
 	 */
 	protected void translate(Codes.If code, FunctionOrMethod function) {
-		String statement = indent;
-		String left = getVarName(code.leftOperand, function);
-		String right = getVarName(code.rightOperand, function);
+		CodeStore store = this.getCodeStore(function);
+		String statement = store.getIndent();
+		String left = store.getVar(code.leftOperand);
+		String right = store.getVar(code.rightOperand);
 
 		statement += "if(" + left;
 		// The condition
@@ -513,7 +523,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		statement += "goto " + code.target + ";";
 		statement += "}";
 
-		addStatement(code, statement);
+		store.addStatement(code, statement);
 	}
 
 	/**
@@ -525,20 +535,21 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 */
 	protected void translate(Codes.AssertOrAssume code, FunctionOrMethod function) {
+		CodeStore store = this.getCodeStore(function);
 		// Add the starting clause for the assertion
-		addStatement(code, indent + "{");
+		store.addStatement(code, store.getIndent() + "{");
 		// Increase the indent
-		this.increaseIndent();
+		store.increaseIndent();
 		iterateOverCodeBlock(code.bytecodes(), function);
-		this.decreaseIndent();
-		addStatement(code, indent + "}");
+		store.decreaseIndent();
+		store.addStatement(code, store.getIndent() + "}");
 
 	}
 
 	protected void translate(Codes.Goto code, FunctionOrMethod function) {
-		String stat = indent;
-		stat += "goto " + code.target + ";";
-		addStatement(code, stat);
+		CodeStore store = this.getCodeStore(function);
+		String stat = store.getIndent() + "goto " + code.target + ";";
+		store.addStatement(code, stat);
 	}
 
 	/**
@@ -564,7 +575,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 */
 	protected void translate(Codes.Label code, FunctionOrMethod function) {
-		addStatement(code, code.label + ":;");
+		CodeStore store = this.getCodeStore(function);
+		store.addStatement(code, code.label + ":;");
 	}
 
 	/**
@@ -573,9 +585,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 */
 	protected void translate(Codes.Fail code, FunctionOrMethod function) {
+		CodeStore store = this.getCodeStore(function);
+		String indent = store.getIndent();
 		String stat = indent + "fprintf(stderr,\"" + code + "\");\n";
 		stat += indent + "exit(0);";
-		addStatement(code, stat);
+		store.addStatement(code, stat);
 	}
 
 	/**
@@ -597,29 +611,31 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * @param code
 	 */
-	protected void translate(Codes.Update code, FunctionOrMethod function) {
+	protected void translate(Codes.Update code, FunctionOrMethod function) {		
+		CodeStore store = this.getCodeStore(function);
+		String indent = store.getIndent();
 		String stat = "";
 		// For List type only
 		if (code.type() instanceof Type.List) {
-			stat += indent + getVarName(code.target(), function) + "[" + getVarName(code.operand(0), function) + "] = "
-					+ getVarName(code.result(), function) + ";";
+			stat += indent + store.getVar(code.target()) + "[" + store.getVar(code.operand(0)) + "] = "
+					+ store.getVar(code.result()) + ";";
 		} else if (code.type() instanceof Type.Record) {
-			stat += indent + getVarName(code.target(), function) + "." + code.fields.get(0);
+			stat += indent + store.getVar(code.target()) + "." + code.fields.get(0);
 			// check if there are two or more operands. If so, then add the
 			// index operand.
 			if (code.operands().length > 1) {
-				stat += "[" + getVarName(code.operand(0), function) + "]";
+				stat += "[" + store.getVar(code.operand(0)) + "]";
 			}
-			stat += " = " + getVarName(code.result(), function) + ";";
+			stat += " = " + store.getVar(code.result()) + ";";
 		}
 
-		addStatement(code, stat);
+		store.addStatement(code, stat);
 	}
 
 	protected void translate(Codes.Nop code, FunctionOrMethod function) {
 		// Do nothing
-		String stat = indent + ";";
-		addStatement(code, stat);
+		CodeStore store = this.getCodeStore(function);
+		store.addStatement(code, store.getIndent() + ";");
 	}
 
 	/**
@@ -643,15 +659,16 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 */
 	protected void translate(Codes.Return code, FunctionOrMethod function) {
-		String statement = indent;
+		CodeStore store = this.getCodeStore(function);
+		String statement = store.getIndent();
 		if (code.operand != -1) {
 			// Translate the Return code.
-			statement += "return " + getVarName(code.operand, function) + ";";
+			statement += "return " + store.getVar(code.operand) + ";";
 		} else {
 			// If operand == -1, then add a simple empty code.
 			statement += ";";
 		}
-		addStatement(code, statement);
+		store.addStatement(code, statement);
 	}
 
 	/**
@@ -674,10 +691,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 */
 	protected void translate(Codes.IndexOf code, FunctionOrMethod function) {
-		// EffectiveIndexible type = code.type();
-		String stat = indent + getVarName(code.target(), function) + "=" + getVarName(code.operand(0), function) + "["
-				+ getVarName(code.operand(1), function) + "];";
-		addStatement(code, stat);
+		CodeStore store = this.getCodeStore(function);
+		String stat = store.getIndent() + store.getVar(code.target()) + "=" 
+				+ store.getVar(code.operand(0)) + "[" + store.getVar(code.operand(1)) + "];";
+		store.addStatement(code, stat);
 	}
 
 	/**
@@ -733,12 +750,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 */
 	protected void translate(Codes.NewList code, FunctionOrMethod function) {
-		String target = getVarName(code.target(), function);
+		CodeStore store = this.getCodeStore(function);
+		String target = store.getVar(code.target());
 		// Add the 'target_size' variable to indicate the length of the list
 		String target_size = target + "_size";
 		// Add the declaration of target_size variable.
-		addDeclaration(Type.Int.T_INT, target_size);
+		//addDeclaration(Type.Int.T_INT, target_size);
 		// Assign the array size with the number of operands.
+		String indent = store.getIndent();
 		String stat = indent + target_size + " = " + code.operands().length + ";\n";
 		// Check if the size of input operand > 0.
 		if (code.operands().length > 0) {
@@ -748,15 +767,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Initialize the array.
 			int index = 0;
 			for (int operand : code.operands()) {
-				stat += indent + target + "[" + index + "] = " + getVarName(operand, function) + ";";
+				stat += indent + target + "[" + index + "] = " + store.getVar(operand) + ";";
 				index++;
 			}
-			addStatement(code, stat);
+			store.addStatement(code, stat);
 		} else {
 			// Translates the empty list, e.g. 'newlist %3 = () : [void]' can be
 			// converted into '_3 = malloc(0);'.
 			stat += indent + target + " = malloc(" + target_size + ");";
-			addStatement(code, stat);
+			store.addStatement(code, stat);
 		}
 
 	}
@@ -792,12 +811,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		 * Type fieldType = record.field(code.field); } }
 		 */
 		String field = code.field;
+		CodeStore store = this.getCodeStore(function);
 		if (field.equals("out") || field.equals("println")) {
-			addStatement(code, null);
+			store.addStatement(code, null);
 		} else {
 			// Get the target
-			String statement = indent + getVarName(code.target(), function) + " = " + getVarName(code.operand(0), function) + "." + code.field + ";";
-			addStatement(code, statement);
+			String statement = store.getIndent() + store.getVar(code.target()) + " = " + store.getVar(code.operand(0)) + "." + code.field + ";";
+			store.addStatement(code, statement);
 		}
 	}
 
@@ -808,12 +828,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.Convert code, FunctionOrMethod function) {
 		// Converts Constant to Any type
-		if (code.result instanceof Type.Any) {
-			// sym_ctrl.putAttribute(prefix+code.operand(0), "type",
-			// code.type());
-			// Do nothing.
-		}
-		addStatement(code, null);
+		// if (code.result instanceof Type.Any) {
+		// sym_ctrl.putAttribute(prefix+code.operand(0), "type",
+		// code.type());
+		// Do nothing.
+		// }
+		CodeStore store = this.getCodeStore(function);
+		store.addStatement(code, null);
 	}
 
 	/**
@@ -822,17 +843,20 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * @param type
 	 * @param var
+	 * @param function 
 	 * @return the translated statement.
 	 * 
 	 *         TODO Print out a pointer without array size. Is it possible?
 	 * 
 	 */
-	private String translateIndirectInvokePrintf(Type type, String var) {
+	private String translateIndirectInvokePrintf(Type type, String var, FunctionOrMethod function) {
+		CodeStore store = this.getCodeStore(function);
+		String indent = store.getIndent();
 		String statement = "";
 		if (type instanceof Type.Nominal) {
 			Type.Nominal nominal = (Type.Nominal) type;
 			wyil.lang.WyilFile.Type user_type = getUserDefinedType(nominal.name().name());
-			statement += translateIndirectInvokePrintf(user_type.type(), var);
+			statement += translateIndirectInvokePrintf(user_type.type(), var, function);
 		} else if (type instanceof Type.List) {
 			// Print out a pointer without specifying array size.
 			statement += indent + "indirect_printf_array_withoutlength(" + var + ");\n";
@@ -847,7 +871,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statement += indent + "indrect_printf_string(\"" + field.getKey() + "\t\");\n";
 				// Based on the field Type, print out the field value using
 				// the different 'printf' functions.
-				statement += translateIndirectInvokePrintf(field.getValue(), var + "." + field.getKey());
+				statement += translateIndirectInvokePrintf(field.getValue(), var + "." + field.getKey(), function);
 			}
 		}
 		return statement;
@@ -884,31 +908,34 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.IndirectInvoke code, FunctionOrMethod function) {
 		String statement = "";
+		CodeStore store = this.getCodeStore(function);
 		if (code.type() instanceof Type.FunctionOrMethod) {
-			String var = getVarName(code.parameter(0), function);
+			String var = store.getVar(code.parameter(0));
 			// Get input type
 			// Type type = code.type().params().get(0);
-			Type type = getVarDeclaration(var);
+			//Type type = getVarDeclaration(var);
+			Type type = store.getVarType(code.parameter(0));
 			// Check if the type is a user-defined type.
 			if (type instanceof Type.List) {
 				// Added the additional 'array_size' variable to indicate the
 				// length of an array.
 				// Due to strictly forbidding the overlapping in C, the function
 				// is named differently.
-				statement += indent + "indirect_printf_array(" + var + ", " + var + "_size);\n";
+				statement += store.getIndent() + "indirect_printf_array(" + var + ", " + var + "_size);\n";
 			} else {
-				statement += translateIndirectInvokePrintf(type, var);
+				statement += translateIndirectInvokePrintf(type, var, function);
 			}
 		}
-		addStatement(code, statement);
+		store.addStatement(code, statement);
 	}
 
 	protected void translate(UnaryOperator code, FunctionOrMethod function) {
+		CodeStore store = this.getCodeStore(function);
 		String target = prefix + code.target();
 		// vars.put(target, CodeGeneratorHelper.translate(code.type()));
-		addDeclaration(code.type(), target);
-		String stat = indent + target + "= -" + prefix + code.operand(0) + ";";
-		addStatement(code, stat);
+		//store.addDeclaration(code.type(), target);
+		String stat = store.getIndent() + target + "= -" + prefix + code.operand(0) + ";";
+		store.addStatement(code, stat);
 	}
 
 	/**
@@ -928,17 +955,18 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param loop_cond
 	 */
 	private void translateLoopHeader(Codes.If loop_cond, FunctionOrMethod function) {
-		String statement = indent;
-		String left = getVarName(loop_cond.leftOperand, function);
-		String right = getVarName(loop_cond.rightOperand, function);
+		CodeStore store = this.getCodeStore(function);
+		String statement = store.getIndent();
+		String left = store.getVar(loop_cond.leftOperand);
+		String right = store.getVar(loop_cond.rightOperand);
 		statement += "while(" + left;
 		// The negated operator
 		statement += translate(loop_cond.op, true);
 		statement += right;
 		statement += "){\n";
 		// Increase the indent
-		increaseIndent();
-		addStatement(loop_cond, statement);
+		store.increaseIndent();
+		store.addStatement(loop_cond, statement);
 	}
 
 	/**
@@ -993,8 +1021,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 */
 	protected void translate(Loop code, FunctionOrMethod function) {
+		CodeStore store = this.getCodeStore(function);
+		
 		// Increase the indentation.
-		this.increaseIndent();
+		store.increaseIndent();
 		List<Code> loop_body = new ArrayList<Code>();
 		Codes.Invariant loop_invariant = null;
 		Codes.If loop_condition = null;
@@ -1016,9 +1046,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		translate(loop_invariant, function);
 		iterateOverCodeBlock(loop_body, function);
 		// Decrease the indentation.
-		this.decreaseIndent();
+		store.decreaseIndent();
 		// Add the ending bracket.
-		addStatement(null, indent + "}");
+		store.addStatement(null, store.getIndent() + "}");
 	}
 
 	/**
@@ -1057,15 +1087,16 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 */
 	protected void translate(ListOperator code, FunctionOrMethod function) {
-		String target = getVarName(code.target(), function);
+		CodeStore store = this.getCodeStore(function);
+		String target = store.getVar(code.target());
 		// long long _10_size;
-		addDeclaration(Type.Int.T_INT, target + "_size");
+		//addDeclaration(Type.Int.T_INT, target + "_size");
 
 		// _13_size = _2_size+_12_size;//new array size
-		String stat = indent + target + "_size = ";
+		String stat = store.getIndent() + target + "_size = ";
 		boolean isFirst = true;
 		for (int operand : code.operands()) {
-			String op = getVarName(operand, function);
+			String op = store.getVar(operand);
 			if (!isFirst) {
 				// Add '+' operator before the 'size' variable.
 				stat += "+";
@@ -1076,10 +1107,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		stat += ";\n";
 		// Calls the append function. For example, _13=append(_2, &_2_size, _12,
 		// &_12_size, &_13_size);
-		stat += indent + target + "=append(";
+		stat += store.getIndent() + target + "=append(";
 		isFirst = true;
 		for (int operand : code.operands()) {
-			String op = getVarName(operand, function);
+			String op = store.getVar(operand);
 			if (!isFirst) {
 				// Add ',' to separate the arguments.
 				stat += ", ";
@@ -1092,10 +1123,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		stat += ");\n";
 
 		// Free the op_2, because op_2 has been appended to the op_1.
-		stat += indent + "free(" + getVarName(code.operand(1), function) + ");";
+		stat += store.getIndent() + "free(" + store.getVar(code.operand(1)) + ");";
 
 		// Put it to the statement list.
-		addStatement(code, stat);
+		store.addStatement(code, stat);
 	}
 
 	/**
@@ -1166,6 +1197,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 */
 	protected void translate(NewRecord code, FunctionOrMethod function) {
+		CodeStore store = this.getCodeStore(function);
 		NewRecord newrecord = (NewRecord) code;
 		String statement = "";
 		// Begin with the last item
@@ -1176,10 +1208,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			index--;
 			// Assess the structure member, such as 'move', and assign the
 			// operand to
-			statement += indent + getVarName(newrecord.target(), function) + "." + field.getKey() + " = "
-					+ getVarName(newrecord.operand(index), function) + ";\n";
+			statement += store.getIndent() + store.getVar(newrecord.target()) + "." + field.getKey() + " = "
+					+ store.getVar(newrecord.operand(index)) + ";\n";
 		}
-		addStatement(code, statement);
+		store.addStatement(code, statement);
 	}
 
 	/**

@@ -236,19 +236,15 @@ public abstract class AbstractCodeGenerator {
 	 * @author Min-Hsien Weng
 	 *
 	 */
-	protected class CodeStore{
-		
-		protected String indent;
-		protected FunctionOrMethod function;
-		protected List<String> statements;// store the list of translated C code.
-		//protected LinkedHashMap<String, Type> vars;// stores the variable type declaration and preserve the insertion orders of variables.
-		//protected List<String> input_params;// Store all the names of input parameters.
+	protected class CodeStore{		
+		private String indent;
+		private FunctionOrMethod function;
+		private List<String> statements;// store the list of translated C code.
 		
 		public CodeStore(FunctionOrMethod function){
 			this.indent = "\t";
 			this.function = function;
 			this.statements = new ArrayList<String>();
-			//this.input_params = new ArrayList<String>();
 		}
 		
 		/**
