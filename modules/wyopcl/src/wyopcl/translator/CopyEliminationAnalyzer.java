@@ -157,9 +157,6 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		return in;
 	}
 
-
-	
-
 	/**
 	 * Apply live variable analysis on the function, and get in/out set of each
 	 * block.

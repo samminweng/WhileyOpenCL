@@ -2,6 +2,8 @@ package wyopcl.translator.generator;
 
 import static wycc.lang.SyntaxError.internalFailure;
 
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import wyc.lang.Stmt.VariableDeclaration;
 import wycc.lang.SyntaxError;
 import wyil.attributes.VariableDeclarations;
 import wyil.attributes.VariableDeclarations.Declaration;
@@ -35,9 +38,9 @@ import wyopcl.translator.Configuration;
  */
 public class CodeGenerator extends AbstractCodeGenerator {
 	private Collection<wyil.lang.WyilFile.Type> userTypes;// Store all the
-															// user-defined
-															// types, e.g.
-															// Board.
+	// user-defined
+	// types, e.g.
+	// Board.
 
 	/**
 	 * Constructor
@@ -54,12 +57,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * Local variables are defined and initialized with values at the top of the
 	 * code block.
 	 */
-	protected void declareVariables(FunctionOrMethod function) {
+	protected String declareVariables(FunctionOrMethod function) {
 		// Get variable declaration
 		VariableDeclarations vars = function.attribute(VariableDeclarations.class);
 		// Get code storage
 		CodeStore store = this.getCodeStore(function);
 		String indent = store.getIndent();
+
+		// The string declaration.
+		String del = "";
 		// Skip the input parameters
 		// Iterate over the list of registers.
 		int inputs = function.type().params().size();
@@ -67,16 +73,21 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			Type type = vars.get(reg).type();
 			// Get the variable name.
 			String var = store.getVar(reg);
-			String stat = indent + translate(type) + " " + var + ";";
-
-			// If the variable is an array, then add the extra 'size'
-			// variable.
 			if (type instanceof Type.List) {
-				stat += indent + ";\n" + indent + "long long " + (var + "_size");
+				// Type declaration and initial value assignment.
+				// Assign 'null' to a list
+				del += indent + translate(type) + " " + var + " = NULL;\n";
+				// If the variable is an array, then add the extra 'size'
+				// variable.
+				del += indent + "long long " + var + "_size = 0;\n";
+			} else if (type instanceof Type.Int) {
+				del += indent + translate(type) + " " + var + " = 0;\n";
+			} else {
+				// Type declaration without any initialization.
+				del += indent + translate(type) + " " + var + ";\n";
 			}
-
-			store.addStatement(null, stat);
 		}
+		return del;
 	}
 
 	protected String translateInputParameter(FunctionOrMethod function) {
@@ -306,7 +317,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.LengthOf code, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
-		String stat = store.getIndent() + store.getVar(code.target()) + " = " + store.getVar(code.operand(0)) + "_size;";
+		String stat = store.getIndent() + store.getVar(code.target()) + " = " + store.getVar(code.operand(0))
+				+ "_size;";
 		store.addStatement(code, stat);
 	}
 
@@ -398,7 +410,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 */
 	protected void translate(Codes.Invoke code, FunctionOrMethod function) {
-		
+
 		CodeStore store = this.getCodeStore(function);
 		String stat = "";
 		String ret = store.getVar(code.target());
@@ -611,7 +623,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * @param code
 	 */
-	protected void translate(Codes.Update code, FunctionOrMethod function) {		
+	protected void translate(Codes.Update code, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
 		String indent = store.getIndent();
 		String stat = "";
@@ -692,8 +704,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.IndexOf code, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
-		String stat = store.getIndent() + store.getVar(code.target()) + "=" 
-				+ store.getVar(code.operand(0)) + "[" + store.getVar(code.operand(1)) + "];";
+		String stat = store.getIndent() + store.getVar(code.target()) + "=" + store.getVar(code.operand(0)) + "["
+				+ store.getVar(code.operand(1)) + "];";
 		store.addStatement(code, stat);
 	}
 
@@ -755,7 +767,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Add the 'target_size' variable to indicate the length of the list
 		String target_size = target + "_size";
 		// Add the declaration of target_size variable.
-		//addDeclaration(Type.Int.T_INT, target_size);
+		// addDeclaration(Type.Int.T_INT, target_size);
 		// Assign the array size with the number of operands.
 		String indent = store.getIndent();
 		String stat = indent + target_size + " = " + code.operands().length + ";\n";
@@ -816,7 +828,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			store.addStatement(code, null);
 		} else {
 			// Get the target
-			String statement = store.getIndent() + store.getVar(code.target()) + " = " + store.getVar(code.operand(0)) + "." + code.field + ";";
+			String statement = store.getIndent() + store.getVar(code.target()) + " = " + store.getVar(code.operand(0))
+					+ "." + code.field + ";";
 			store.addStatement(code, statement);
 		}
 	}
@@ -843,7 +856,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * @param type
 	 * @param var
-	 * @param function 
+	 * @param function
 	 * @return the translated statement.
 	 * 
 	 *         TODO Print out a pointer without array size. Is it possible?
@@ -913,7 +926,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			String var = store.getVar(code.parameter(0));
 			// Get input type
 			// Type type = code.type().params().get(0);
-			//Type type = getVarDeclaration(var);
+			// Type type = getVarDeclaration(var);
 			Type type = store.getVarType(code.parameter(0));
 			// Check if the type is a user-defined type.
 			if (type instanceof Type.List) {
@@ -933,7 +946,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		CodeStore store = this.getCodeStore(function);
 		String target = prefix + code.target();
 		// vars.put(target, CodeGeneratorHelper.translate(code.type()));
-		//store.addDeclaration(code.type(), target);
+		// store.addDeclaration(code.type(), target);
 		String stat = store.getIndent() + target + "= -" + prefix + code.operand(0) + ";";
 		store.addStatement(code, stat);
 	}
@@ -1022,7 +1035,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Loop code, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
-		
+
 		// Increase the indentation.
 		store.increaseIndent();
 		List<Code> loop_body = new ArrayList<Code>();
@@ -1090,7 +1103,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		CodeStore store = this.getCodeStore(function);
 		String target = store.getVar(code.target());
 		// long long _10_size;
-		//addDeclaration(Type.Int.T_INT, target + "_size");
+		// addDeclaration(Type.Int.T_INT, target + "_size");
 
 		// _13_size = _2_size+_12_size;//new array size
 		String stat = store.getIndent() + target + "_size = ";
@@ -1221,37 +1234,35 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * @param writer
 	 */
-	protected void writeCodeToFile(PrintWriter writer, FunctionOrMethod function) {
-		// function declaration
-		writer.println(declareFunction(function) + "{");
-		// Variable declaration with initial values.
-		for (Entry<String, Type> var : vars.entrySet()) {
-			// If the register is not an input.
-			String var_name = var.getKey();
-			// Check if the variable is the size variable of the input
-			// parameter.
-			if (!isInputParameter(var_name)) {
-				// Type declaration and initial value assignment.
-				Type var_type = var.getValue();
-				// Assign the initial values for local variables.
-				String init = indent + translate(var_type) + " " + var_name;
-				if (var_type instanceof Type.List) {
-					init += " = NULL";
-				} else if (var_type instanceof Type.Int) {
-					init += " = 0";
-				}
-				init += ";";
-				// Write out the variable declaration.
-				writer.println(init);
-			}
+	protected void writeCodeToFile(FunctionOrMethod function) {
+		// Get the code store
+		CodeStore store = this.getCodeStore(function);
 
+		// Create a writer to write the C code to a *.c file.
+		try {
+			
+			FileWriter writer = new FileWriter(config.getFilename() + ".c", true);
+			// Write function declaration
+			writer.append(this.declareFunction(function) + "{\n");
+			// Write Variable declaration with initial values.
+			writer.append(this.declareVariables(function));
+			// Get all Statments
+			List<String> statements = store.getStatements();
+			for (String statement : statements) {
+				writer.append(statement);
+			}
+			// Ending clause
+			writer.append("}\n");
+			// Close the file writer.
+			writer.close();
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		// Statments
-		for (String stat : statements) {
-			writer.println(stat.toString());
-		}
-		// Ending clause
-		writer.println("}");
+
+		
+	
 		// clear vars
 		vars.clear();
 		// Clear statements

@@ -2,6 +2,7 @@ package wyopcl.translator.generator;
 
 import static wycc.lang.SyntaxError.internalFailure;
 
+import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,15 +42,17 @@ import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.Configuration;
+
 /**
  * Defines the functions for code generator.
+ * 
  * @author Min-Hsien Weng
  *
  */
-public abstract class AbstractCodeGenerator {	
+public abstract class AbstractCodeGenerator {
 	protected final String prefix = "_";
 	protected final Configuration config;
-	//Store generated code
+	// Store generated code
 	protected HashMap<FunctionOrMethod, CodeStore> stores = new HashMap<FunctionOrMethod, CodeStore>();
 
 	public AbstractCodeGenerator(Configuration config) {
@@ -58,33 +61,35 @@ public abstract class AbstractCodeGenerator {
 
 	/**
 	 * Takes the byte-code and produces the code.
+	 * 
 	 * @param module
 	 */
 	public void apply(WyilFile module) {
-		// Apply live analysis on each function, except for main function.
-		for (FunctionOrMethod function : module.functionOrMethods()) {			
-			//Declare function signature
-			declareFunction(function);
-			//Declare variables.
-			declareVariables(function);
+		// Translate each function
+		for (FunctionOrMethod function : module.functionOrMethods()) {
+			// Iterate and translate each code into the target language.
+			this.iterateOverCodeBlock(function.body().bytecodes(), function);
+			// Write the code
+			this.writeCodeToFile(function);
 		}
+
 	}
 
 	/**
 	 * Get the code store of the given function.
+	 * 
 	 * @param function
 	 * @return
 	 */
-	protected CodeStore getCodeStore(FunctionOrMethod function){
-		//Lazy initailization. 
-		if(!stores.containsKey(function)){
-			//Put the code store into the stores
+	protected CodeStore getCodeStore(FunctionOrMethod function) {
+		// Lazy initailization.
+		if (!stores.containsKey(function)) {
+			// Put the code store into the stores
 			stores.put(function, new CodeStore(function));
-		}		
+		}
 		return stores.get(function);
 	}
-	
-	
+
 	protected abstract void translate(Update code, FunctionOrMethod function);
 
 	protected abstract void translate(UnaryOperator code, FunctionOrMethod function);
@@ -131,12 +136,12 @@ public abstract class AbstractCodeGenerator {
 
 	protected abstract String declareFunction(FunctionOrMethod function);
 
-	protected abstract void declareVariables(FunctionOrMethod function);
-	
+	protected abstract String declareVariables(FunctionOrMethod function);
+
 	protected abstract String translate(Type type);
 
-	protected abstract void writeCodeToFile(PrintWriter writer, FunctionOrMethod function);
-	
+	protected abstract void writeCodeToFile(FunctionOrMethod function);
+
 	/**
 	 * Iterates over the list of byte-code to generate the corresponding C code.
 	 * Checks the type of the wyil code and dispatches the code to the analyzer
@@ -218,7 +223,7 @@ public abstract class AbstractCodeGenerator {
 				} else {
 					internalFailure("unknown wyil code encountered (" + code + ")", "", null);
 				}
-			
+
 			} catch (SyntaxError ex) {
 				throw ex;
 			} catch (Exception ex) {
@@ -227,26 +232,23 @@ public abstract class AbstractCodeGenerator {
 		}
 	}
 
-	
-
-	
-
 	/**
 	 * Stores the generated code for a function.
+	 * 
 	 * @author Min-Hsien Weng
 	 *
 	 */
-	protected class CodeStore{		
+	protected class CodeStore {
 		private String indent;
 		private FunctionOrMethod function;
 		private List<String> statements;// store the list of translated C code.
-		
-		public CodeStore(FunctionOrMethod function){
+
+		public CodeStore(FunctionOrMethod function) {
 			this.indent = "\t";
 			this.function = function;
 			this.statements = new ArrayList<String>();
 		}
-		
+
 		/**
 		 * Given a variable name, check if it is the size variable of input
 		 * parameter. For example,
@@ -263,7 +265,7 @@ public abstract class AbstractCodeGenerator {
 		 * @return true if the variable is the size variable of input parameter.
 		 * 
 		 */
-		private Boolean isInputParameter(String var_name) {
+		protected Boolean isInputParameter(String var_name) {
 			// Check if the variable is the size variable of the input
 			// parameter.
 			String variable_name = var_name;
@@ -276,22 +278,21 @@ public abstract class AbstractCodeGenerator {
 				}
 			}
 			// Check if the variable_name is an number.
-			// If so, the variable is an intermediate variable. Otherwise, it could
+			// If so, the variable is an intermediate variable. Otherwise, it
+			// could
 			// be an input parameter.
 			if (!variable_name.isEmpty() && !(variable_name.matches("^_[0-9]+$"))) {
 				// Check if the input parameter contains the variable name.
-				
-
-				//if(function.type().params().size()
-				
-				//return this.input_params.contains(variable_name);
+				int reg = Integer.parseInt(variable_name);
+				// Check if the register <= parameter size.
+				if (reg < function.type().params().size()) {
+					return true;
+				}
 			}
 
 			return false;
 		}
-		
-	
-	
+
 		/**
 		 * Adds the type declaration for a variable. But serveral types are not
 		 * added to the table. For example,
@@ -307,41 +308,33 @@ public abstract class AbstractCodeGenerator {
 		 * @param var
 		 *            the name of variable
 		 */
-		/*protected void addDeclaration(Type type, String var) {
-			// Check if the type is a record and its field contains "println" .
-			if (type instanceof Type.Record) {
-				Type.Record record = (Type.Record) type;
-				// Add the record type to the list
-				// if(!this.record_types.contains(record)){
-				// this.record_types.add(record);
-				// }
+		/*
+		 * protected void addDeclaration(Type type, String var) { // Check if
+		 * the type is a record and its field contains "println" . if (type
+		 * instanceof Type.Record) { Type.Record record = (Type.Record) type; //
+		 * Add the record type to the list //
+		 * if(!this.record_types.contains(record)){ //
+		 * this.record_types.add(record); // }
+		 * 
+		 * // If so, then the record loads the "println" from the //
+		 * sys.out.console. // At this stage, we dont use this record. if
+		 * (record.field("println") != null) { return; } }
+		 * 
+		 * if (type instanceof Type.Method) { return; }
+		 * 
+		 * if (type instanceof Type.List) { vars.put(var, type); // add the
+		 * additional parameter 'reg_size' to indicate the array // size.
+		 * vars.put(var + "_size", Type.Int.T_INT); } else { vars.put(var,
+		 * type); } }
+		 */
 
-				// If so, then the record loads the "println" from the
-				// sys.out.console.
-				// At this stage, we dont use this record.
-				if (record.field("println") != null) {
-					return;
-				}
-			}
+		protected List<String> getStatements() {
+			return this.statements;
+		}
 
-			if (type instanceof Type.Method) {
-				return;
-			}
-
-			if (type instanceof Type.List) {
-				vars.put(var, type);
-				// add the additional parameter 'reg_size' to indicate the array
-				// size.
-				vars.put(var + "_size", Type.Int.T_INT);
-			} else {
-				vars.put(var, type);
-			}
-		}*/
-		
-		
 		/**
-		 * Adds the statement to the list and print out the statement if the verbose
-		 * option is on.
+		 * Adds the statement to the list and print out the statement if the
+		 * verbose option is on.
 		 * 
 		 * @param code
 		 *            the WyIL code
@@ -367,7 +360,7 @@ public abstract class AbstractCodeGenerator {
 				statements.add(stat);
 			}
 		}
-		
+
 		/**
 		 * Increase the indentation.
 		 */
@@ -385,8 +378,7 @@ public abstract class AbstractCodeGenerator {
 		protected void decreaseIndent() {
 			this.indent = this.indent.replaceFirst("\t", "");
 		}
-		
-		
+
 		/**
 		 * Get the type of a variable.
 		 * 
@@ -395,11 +387,10 @@ public abstract class AbstractCodeGenerator {
 		 */
 		protected Type getVarType(int reg) {
 			VariableDeclarations vars = function.attribute(VariableDeclarations.class);
-			Declaration declaration = vars.get(reg); 
+			Declaration declaration = vars.get(reg);
 			return declaration.type();
 		}
-		
-		
+
 		/**
 		 * Get the variable name of the given register
 		 * 
@@ -411,22 +402,18 @@ public abstract class AbstractCodeGenerator {
 			VariableDeclarations vars = function.attribute(VariableDeclarations.class);
 			// Check if the register has been kept in the functional variable
 			// declarations.
-			//if (reg < vars.size()) {
-				Declaration declaration = vars.get(reg);
-				if (declaration != null) {
-					String name = declaration.name();
-					if (name != null && !name.isEmpty()) {
-						return prefix + name;
-					}
+			// if (reg < vars.size()) {
+			Declaration declaration = vars.get(reg);
+			if (declaration != null) {
+				String name = declaration.name();
+				if (name != null && !name.isEmpty()) {
+					return prefix + name;
 				}
-			//}
+			}
+			// }
 			return prefix + reg;
 		}
-		
-		
-		
+
 	}
-	
-	
-	
+
 }
