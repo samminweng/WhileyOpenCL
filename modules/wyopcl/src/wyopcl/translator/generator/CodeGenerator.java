@@ -34,7 +34,6 @@ import wyopcl.translator.Configuration;
  *
  */
 public class CodeGenerator extends AbstractCodeGenerator {
-	
 	private Collection<wyil.lang.WyilFile.Type> userTypes;// Store all the
 															// user-defined
 															// types, e.g.
@@ -55,25 +54,57 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * Local variables are defined and initialized with values at the top of the
 	 * code block.
 	 */
-	public void declareVariables(FunctionOrMethod function) {
+	protected void declareVariables(FunctionOrMethod function) {
 		// Get variable declaration
 		VariableDeclarations vars = function.attribute(VariableDeclarations.class);
-
-		// Get code store
-		CodeStore store = stores.get(function);
-
-		// Get the input parameters.
-		for (int reg = 0; reg < function.type().params().size(); reg++) {
-			this.input_params.add(prefix + vars.get(reg).name());
-		}
-
+		// Get code storage
+		CodeStore store = this.getCodeStore(function);
+		String indent = store.getIndent();
+		// Skip the input parameters
 		// Iterate over the list of registers.
-		for (int reg = 0; reg < vars.size(); reg++) {
-			Declaration declaration = vars.get(reg);
+		int inputs = function.type().params().size();
+		for (int reg = inputs; reg < vars.size(); reg++) {
+			Type type = vars.get(reg).type();
 			// Get the variable name.
-			String name = getVarName(reg, function);
-			addDeclaration(declaration.type(), name);
+			String var = store.getVar(reg);
+			String stat = indent + translate(type) + " " + var + ";";
+
+			// If the variable is an array, then add the extra 'size'
+			// variable.
+			if (type instanceof Type.List) {
+				stat += indent + ";\n"+indent+"long long " + (var + "_size");
+			}
+
+			store.addStatement(null, stat);
 		}
+	}
+
+	protected String translateInputParameter(FunctionOrMethod function) {
+		// Get the code storage
+		CodeStore store = this.getCodeStore(function);
+		boolean isfirst = true;
+		int register = 0;
+		String stat = "";
+		for (Type param : function.type().params()) {
+			if (isfirst) {
+				stat += translate(param);
+			} else {
+				stat += ", " + translate(param);
+			}
+			String var = store.getVar(register);
+			// Add the variable names
+			stat += " " + var;
+			// If the variable is an array, then add the extra 'size'
+			// variable.
+			if (param instanceof Type.List) {
+				String var_size = var + "_size";
+				stat += ", long long " + var_size;
+			}
+			isfirst = false;
+			register++;
+		}
+		store.addStatement(null, stat);
+		return stat;
 	}
 
 	/**
@@ -84,47 +115,27 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 *            the code block of a function
 	 * @return func_declartion the function signature.
 	 */
-	public String declareFunction(FunctionOrMethod function) {
+	protected String declareFunction(FunctionOrMethod function) {
 		// Function declaration.
-		String func_declaration = "";
+		String del = "";
 		// Get the name
 		String name = function.name();
 		if (name.equals("main")) {
-			func_declaration = "int main(int argc, char** argv)";
+			del = "int main(int argc, char** argv)";
 		} else {
-			func_declaration = "";
+			del = "";
 			// Get the type info
-			wyil.lang.Type.FunctionOrMethod type = function.type();
 			// Get the return type
-			func_declaration += translate(type.ret()) + " ";
-			func_declaration += name + "(";
-			boolean isfirst = true;
-			int register = 0;
-			for (Type param : type.params()) {
-				if (isfirst) {
-					func_declaration += translate(param);
-				} else {
-					func_declaration += ", " + translate(param);
-				}
-				String var = getVarName(register, function);
-				// Add the variable names
-				func_declaration += " " + var;
-				// If the variable is an array, then add the extra 'size'
-				// variable.
-				if (param instanceof Type.List) {
-					String var_size = var + "_size";
-					func_declaration += ", long long " + var_size;
-				}
-				isfirst = false;
-				register++;
-			}
-			func_declaration += ")";
+			del += translate(function.type().ret()) + " ";
+			del += name + "(";
+			del += translateInputParameter(function);
+			del += ")";
 		}
 
 		if (config.isVerbose()) {
-			System.out.println(func_declaration);
+			System.out.println(del);
 		}
-		return func_declaration;
+		return del;
 	}
 
 	/**
@@ -590,7 +601,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String stat = "";
 		// For List type only
 		if (code.type() instanceof Type.List) {
-			stat += indent + getVarName(code.target(), function) + "[" + getVarName(code.operand(0), function) + "] = " + getVarName(code.result(), function) + ";";
+			stat += indent + getVarName(code.target(), function) + "[" + getVarName(code.operand(0), function) + "] = "
+					+ getVarName(code.result(), function) + ";";
 		} else if (code.type() instanceof Type.Record) {
 			stat += indent + getVarName(code.target(), function) + "." + code.fields.get(0);
 			// check if there are two or more operands. If so, then add the
@@ -663,7 +675,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.IndexOf code, FunctionOrMethod function) {
 		// EffectiveIndexible type = code.type();
-		String stat = indent + getVarName(code.target(), function) + "=" + getVarName(code.operand(0), function) + "[" + getVarName(code.operand(1), function) + "];";
+		String stat = indent + getVarName(code.target(), function) + "=" + getVarName(code.operand(0), function) + "["
+				+ getVarName(code.operand(1), function) + "];";
 		addStatement(code, stat);
 	}
 
@@ -1094,7 +1107,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 *         'Board'.
 	 * 
 	 */
-	private String translate(Type type) {
+	protected String translate(Type type) {
 		// The existential type, e.g. function EmptyBoard() -> (Board r)
 		// The return type of 'EmptyBoard' function is 'Board'.
 		if (type instanceof Type.Nominal) {
@@ -1163,9 +1176,56 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			index--;
 			// Assess the structure member, such as 'move', and assign the
 			// operand to
-			statement += indent + getVarName(newrecord.target(), function) + "." + field.getKey() + " = " + getVarName(newrecord.operand(index), function) + ";\n";
+			statement += indent + getVarName(newrecord.target(), function) + "." + field.getKey() + " = "
+					+ getVarName(newrecord.operand(index), function) + ";\n";
 		}
 		addStatement(code, statement);
+	}
+
+	/**
+	 * Write out the generated C code, which starts with variable declarations,
+	 * followed by a list of statements and a list of free statements at the
+	 * end.
+	 * 
+	 * @param writer
+	 */
+	protected void writeCodeToFile(PrintWriter writer, FunctionOrMethod function) {
+		// function declaration
+		writer.println(declareFunction(function) + "{");
+		// Variable declaration with initial values.
+		for (Entry<String, Type> var : vars.entrySet()) {
+			// If the register is not an input.
+			String var_name = var.getKey();
+			// Check if the variable is the size variable of the input
+			// parameter.
+			if (!isInputParameter(var_name)) {
+				// Type declaration and initial value assignment.
+				Type var_type = var.getValue();
+				// Assign the initial values for local variables.
+				String init = indent + translate(var_type) + " " + var_name;
+				if (var_type instanceof Type.List) {
+					init += " = NULL";
+				} else if (var_type instanceof Type.Int) {
+					init += " = 0";
+				}
+				init += ";";
+				// Write out the variable declaration.
+				writer.println(init);
+			}
+
+		}
+		// Statments
+		for (String stat : statements) {
+			writer.println(stat.toString());
+		}
+		// Ending clause
+		writer.println("}");
+		// clear vars
+		vars.clear();
+		// Clear statements
+		statements.clear();
+		// Reset the indent
+		indent = "\t";
 	}
 
 }

@@ -118,7 +118,10 @@ public class Translator implements Builder {
 	 */
 
 	private void generateCodeInC(WyilFile module) {
-		// A list of function declaration.
+		CodeGenerator generator = new CodeGenerator(config);
+		generator.apply(module);
+		
+		/*// A list of function declaration.
 		List<String> function_list = new ArrayList<String>();
 		try {
 			// Create a writer to write the C code to a *.c file. 
@@ -156,7 +159,7 @@ public class Translator implements Builder {
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException("Error occurs in writing " + config.getFilename() + ".h");
 		}
-
+	*/
 	}
 
 	/**
