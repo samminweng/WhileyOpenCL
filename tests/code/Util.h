@@ -19,3 +19,4 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 void readStringAsInteger(char* str, long long* input);
 void getStartingTime();
 void getEndingTime();
+int isArrayEqual(long long* arr1, long long arr1_size, long long* arr2, long long arr2_size);

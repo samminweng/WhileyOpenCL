@@ -65,7 +65,8 @@ public class Translator implements Builder {
 			// Check the mode
 			switch (config.getMode()) {
 			case "copy":
-				analyzeCopyElimination(module);
+				CopyEliminationAnalyzer analyzer = new CopyEliminationAnalyzer(this, config);
+				analyzer.apply(module);
 				message = "Copy elimination analysis completed.\nFile: " + config.getFilename();
 				break;
 			case "bound":
@@ -204,17 +205,6 @@ public class Translator implements Builder {
 			transformer = null;
 			matcher = null;
 		}
-	}
-
-	/**
-	 * Iterate the bytecode and analyze the alias of array variables to determine the necessary array copies (unique)
-	 * and eliminate the un-necessary array copies (non-unique) 
-	 * 
-	 * @param module
-	 */
-	private void analyzeCopyElimination(WyilFile module){
-		CopyEliminationAnalyzer analyzer = new CopyEliminationAnalyzer(this, config);
-		analyzer.apply(module);		
 	}
 	
 	

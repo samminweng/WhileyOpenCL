@@ -3,6 +3,24 @@
 double diff;
 clock_t start;
 clock_t end;
+//Check if both arrays are the same. 1: true, 0: false.
+int isArrayEqual(long long* arr1, long long arr1_size, long long* arr2, long long arr2_size){
+	long long i = 0;
+	//Check if array size is the same.
+	if(arr1_size != arr2_size){
+		return 0;
+	}
+	//Compare each element.
+	for(i=0;i<arr1_size;i++){
+		if(arr1[i]!=arr2[i]){
+			return 0;
+		}
+	}
+	//Both of arrays are the same. Return true
+	return 1;
+}
+
+
 // Convert an array of long long integer into an array of string.  
 void toString(long long arr[], long long size, char** res){  
 	long long i = 0;  
