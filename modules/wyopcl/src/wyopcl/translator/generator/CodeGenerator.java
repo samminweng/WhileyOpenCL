@@ -1,5 +1,6 @@
 package wyopcl.translator.generator;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -113,8 +114,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}
 			isfirst = false;
 			register++;
-		}
-		store.addStatement(null, stat);
+		}		
 		return stat;
 	}
 
@@ -1278,11 +1278,38 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void writeCodeToFile(FunctionOrMethod function) {
 		// Get the code store
 		CodeStore store = this.getCodeStore(function);
-
+		//Write out the header file
+		String filename = config.getFilename();
+		FileWriter writer;
+		try {
+			//Check if the header file exits.
+			File f = new File(filename+".h");
+			if(!f.exists()){
+				writer = new FileWriter(f);
+				//If no such a file, write the include files to include Util.h
+				writer.append("#include \"Util.h\"\n");
+			}else{
+				writer = new FileWriter(f, true);
+			}
+			//Write out function declaration.
+			writer.append(this.declareFunction(function)+";\n");
+			writer.close();
+			f = null;
+		} catch (IOException e1) {
+			throw new RuntimeException("Error occurrs in writing "+filename+".h");
+		}
+		
 		// Create a writer to write the C code to a *.c file.
 		try {
-			
-			FileWriter writer = new FileWriter(config.getFilename() + ".c", true);
+			//Chekc if the C file exist.
+			File f = new File(filename+".c");
+			if(!f.exists()){
+				writer = new FileWriter(f);
+				//If no such a file, write the include files to include Util.h
+				writer.append("#include \""+filename+".h\"\n");
+			}else{
+				writer = new FileWriter(f, true);
+			}			
 			// Write function declaration
 			writer.append(this.declareFunction(function) + "{\n");
 			// Write Variable declaration with initial values.
@@ -1290,16 +1317,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Get all Statments
 			List<String> statements = store.getStatements();
 			for (String statement : statements) {
-				writer.append(statement);
+				writer.append(statement+"\n");
 			}
 			// Ending clause
 			writer.append("}\n");
 			// Close the file writer.
-			writer.close();
-			
+			writer.close();			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException("Error occurs in writing "+filename+".c");
 		}
 	}
 

@@ -1,7 +1,11 @@
 package wyopcl.translator.generator;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -62,7 +66,19 @@ public abstract class AbstractCodeGenerator {
 	 * 
 	 * @param module
 	 */
-	public void apply(WyilFile module) {
+	public void apply(WyilFile module) {		
+		//Remove the generated *.c and *.h files to have a clean folder.
+		try {
+			//Delete *.c
+			Path path = Paths.get(config.getFilename()+".c");
+			Files.deleteIfExists(path);
+			//Delete *.h
+			path = Paths.get(config.getFilename()+".h");
+			Files.deleteIfExists(path);
+		} catch (IOException e) {
+			throw new RuntimeException("Errors occurs in deleting files");
+		}
+		
 		// Translate each function
 		for (FunctionOrMethod function : module.functionOrMethods()) {
 			// Iterate and translate each code into the target language.
