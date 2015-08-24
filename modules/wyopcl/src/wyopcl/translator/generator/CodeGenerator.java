@@ -1,9 +1,8 @@
 package wyopcl.translator.generator;
 
-import static wycc.lang.SyntaxError.internalFailure;
-
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,6 +18,7 @@ import wyil.attributes.VariableDeclarations;
 import wyil.attributes.VariableDeclarations.Declaration;
 import wyil.lang.Code;
 import wyil.lang.Codes;
+import wyil.lang.Codes.Comparator;
 import wyil.lang.Codes.If;
 import wyil.lang.Codes.Invariant;
 import wyil.lang.Codes.ListOperator;
@@ -420,7 +420,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Check if the return is also an array.
 		if (return_type instanceof Type.List) {
 			for (int index = 0; index < code.operands().length; index++) {
-				Type type = code.type().params().get(index);
+				Type type = code.type().params().get(index);				
 				if (type instanceof Type.List) {
 					stat += store.getIndent() + (ret + "_size") + "=" + store.getVar(code.operand(index)) + "_size;\n";
 				}
@@ -432,15 +432,29 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// '_12=reverse(_xs , _xs_size);'
 		boolean isFirst = true;
 		for (int index = 0; index < code.operands().length; index++) {
-			String param = store.getVar(code.operand(index));
+			
 			if (!isFirst) {
 				stat += " ,";
 			}
-			stat += param;
+			String param = store.getVar(code.operand(index));
 			// Add the '*_size' parameter
 			Type paramType = (Type) code.type().params().get(index);
 			if (paramType instanceof Type.List) {
-				stat += " , " + param + "_size";
+				/**
+				 * Clone the array first and then pass the cloned array to the function.
+				 * So that the original array will not be overwritten and its value is safely preserved.
+				 * For example, the byte-code
+				 * 	'invoke %12 = (%1, %13, %14) swap:swap : function([int],int,int) -> [int]
+				 * can be translated into C code
+				 * 	_12_size=_xs_size;
+				 *	_12=swap(clone(_xs, _xs_size) , _xs_size ,_13 ,_14);
+				 * 
+				 */
+				//
+				//
+				stat += "clone("+param+", "+param+"_size), " + param + "_size";
+			}else{
+				stat += param;
 			}
 			isFirst = false;
 		}
@@ -526,14 +540,41 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String statement = store.getIndent();
 		String left = store.getVar(code.leftOperand);
 		String right = store.getVar(code.rightOperand);
-
-		statement += "if(" + left;
-		// The condition
-		statement += translate(code.op, false);
-		statement += right;
+		//get the type of left/right
+		Type left_type = store.getVarType(code.leftOperand);
+		Type right_type = store.getVarType(code.rightOperand);
+		//Special case for comparing two arrays.
+		if(left_type.equals(right_type) && left_type instanceof Type.List){
+			/**
+			 * 
+			 * For example, the byte-code: 
+			 * <code> ifeq %1, %38 goto blklab2 : [int]</code>
+			 * can be translated into C code:
+			 * if(isArrayEqual(_xs,_xs_size,_38,_38_size)==1){goto blklab2;}
+			 * 
+			 */
+			if(code.op.equals(Comparator.EQ)){
+				statement += "if(isArrayEqual(" + left + ", "+left+"_size";
+				// Check if both of arrays are the same (1: true, 0:false).
+				statement += "," + right+", "+right+"_size)==1";
+			}else{
+				
+			}
+			
+			
+		}else{
+			statement += "if(" + left;
+			// The condition
+			statement += translate(code.op, false);
+			statement += right;
+			
+		}
+		
+		//The goto statement
 		statement += "){";
 		statement += "goto " + code.target + ";";
 		statement += "}";
+		
 
 		store.addStatement(code, statement);
 	}
@@ -1256,19 +1297,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Close the file writer.
 			writer.close();
 			
-		} catch (FileNotFoundException e) {
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		
-	
-		// clear vars
-		vars.clear();
-		// Clear statements
-		statements.clear();
-		// Reset the indent
-		indent = "\t";
 	}
 
 }

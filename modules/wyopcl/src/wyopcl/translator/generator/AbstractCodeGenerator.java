@@ -1,7 +1,5 @@
 package wyopcl.translator.generator;
 
-import static wycc.lang.SyntaxError.internalFailure;
-
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -165,9 +163,9 @@ public abstract class AbstractCodeGenerator {
 				} else if (code instanceof Codes.Const) {
 					translate((Codes.Const) code, function);
 				} else if (code instanceof Codes.Debug) {
-					internalFailure("Not implemented!", code.toString(), null);
+					throw new RuntimeException("Not implemented! "+ code.toString(), null);
 				} else if (code instanceof Codes.Dereference) {
-					internalFailure("Not implemented!", code.toString(), null);
+					throw new RuntimeException("Not implemented! "+ code.toString(), null);
 				} else if (code instanceof Codes.Fail) {
 					translate((Codes.Fail) code, function);
 				} else if (code instanceof Codes.FieldLoad) {
@@ -177,7 +175,7 @@ public abstract class AbstractCodeGenerator {
 				} else if (code instanceof Codes.If) {
 					translate((Codes.If) code, function);
 				} else if (code instanceof Codes.IfIs) {
-					internalFailure("Not implemented!", code.toString(), null);
+					throw new RuntimeException("Not implemented! "+ code.toString(), null);
 				} else if (code instanceof Codes.IndexOf) {
 					translate((Codes.IndexOf) code, function);
 				} else if (code instanceof Codes.IndirectInvoke) {
@@ -185,7 +183,7 @@ public abstract class AbstractCodeGenerator {
 				} else if (code instanceof Codes.Invoke) {
 					translate((Codes.Invoke) code, function);
 				} else if (code instanceof Codes.Invert) {
-					internalFailure("Not implemented!", code.toString(), null);
+					throw new RuntimeException("Not implemented! "+ code.toString(), null);
 				} else if (code instanceof Codes.ListOperator) {
 					translate((Codes.ListOperator) code, function);
 				} else if (code instanceof Codes.Loop) {
@@ -193,41 +191,42 @@ public abstract class AbstractCodeGenerator {
 				} else if (code instanceof Codes.Label) {
 					translate((Codes.Label) code, function);
 				} else if (code instanceof Codes.Lambda) {
-					internalFailure("Not implemented!", code.toString(), null);
+					throw new RuntimeException("Not implemented! "+ code.toString(), null);
 				} else if (code instanceof Codes.LengthOf) {
 					translate((Codes.LengthOf) code, function);
 				} else if (code instanceof Codes.Move) {
-					internalFailure("Not implemented!", code.toString(), null);
+					throw new RuntimeException("Not implemented! "+ code.toString(), null);
 				} else if (code instanceof Codes.NewList) {
 					translate((Codes.NewList) code, function);
 				} else if (code instanceof Codes.NewRecord) {
 					translate((Codes.NewRecord) code, function);
 				} else if (code instanceof Codes.NewTuple) {
-					internalFailure("Not implemented!", code.toString(), null);
+					throw new RuntimeException("Not implemented! "+ code.toString(), null);
 				} else if (code instanceof Codes.Return) {
 					translate((Codes.Return) code, function);
 				} else if (code instanceof Codes.NewObject) {
-					internalFailure("Not implemented!", code.toString(), null);
+					throw new RuntimeException("Not implemented! "+ code.toString(), null);
 				} else if (code instanceof Codes.Nop) {
 					translate((Codes.Nop) code, function);
 				} else if (code instanceof Codes.SubList) {
-					internalFailure("Not implemented!", code.toString(), null);
+					throw new RuntimeException("Not implemented! "+ code.toString(), null);
 				} else if (code instanceof Codes.Switch) {
-					internalFailure("Not implemented!", code.toString(), null);
+					throw new RuntimeException("Not implemented! "+ code.toString(), null);
 				} else if (code instanceof Codes.TupleLoad) {
-					internalFailure("Not implemented!", code.toString(), null);
+					throw new RuntimeException("Not implemented! "+ code.toString(), null);
 				} else if (code instanceof Codes.UnaryOperator) {
 					translate((Codes.UnaryOperator) code, function);
 				} else if (code instanceof Codes.Update) {
 					translate((Codes.Update) code, function);
 				} else {
-					internalFailure("unknown wyil code encountered (" + code + ")", "", null);
+					throw new RuntimeException("Not implemented! "+ code.toString(), null);
 				}
 
 			} catch (SyntaxError ex) {
 				throw ex;
 			} catch (Exception ex) {
-				internalFailure(ex.getMessage(), "", null, ex);
+				throw new RuntimeException(ex.getMessage(), null);
+				//internalFailure(ex.getMessage(), "", null, ex);
 			}
 		}
 	}
