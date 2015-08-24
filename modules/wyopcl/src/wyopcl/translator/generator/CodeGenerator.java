@@ -30,6 +30,7 @@ import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.Configuration;
+import wyopcl.translator.CopyEliminationAnalyzer;
 
 /**
  * Takes a list of functional byte-code and converts it into C code.
@@ -42,6 +43,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	// user-defined
 	// types, e.g.
 	// Board.
+	
+	private CopyEliminationAnalyzer analyzer;
 
 	/**
 	 * Constructor
@@ -54,6 +57,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// this.userTypes = userTypes;
 	}
 
+	public CodeGenerator(Configuration config, CopyEliminationAnalyzer analyzer){
+		this(config);
+		this.analyzer = analyzer;
+	}
+	
+	
 	/**
 	 * Local variables are defined and initialized with values at the top of the
 	 * code block.
@@ -450,9 +459,21 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				 *	_12=swap(clone(_xs, _xs_size) , _xs_size ,_13 ,_14);
 				 * 
 				 */
-				//
-				//
-				stat += "clone("+param+", "+param+"_size), " + param + "_size";
+				boolean isClone = true;
+				if(this.analyzer != null){
+					//Use the copy analyzer to determine whether to clone 
+					if(!this.analyzer.isLive(code.operand(index), code, function)){
+						//That means this param variable is not live (used) in this block.
+						//Then we dont need to clone it
+						isClone = false;
+					}
+				}
+				if(isClone){
+					stat += "clone("+param+", "+param+"_size), " + param + "_size";
+				}else{
+					stat += param + ", "+param+"_size";
+				}
+				
 			}else{
 				stat += param;
 			}

@@ -59,8 +59,8 @@ public abstract class AbstractCodeGenerator {
 
 	public AbstractCodeGenerator(Configuration config) {
 		this.config = config;
-	}
-
+	}	
+	
 	/**
 	 * Takes the byte-code and produces the code.
 	 * 

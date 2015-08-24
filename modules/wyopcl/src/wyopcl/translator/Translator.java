@@ -118,8 +118,20 @@ public class Translator implements Builder {
 	 */
 
 	private void generateCodeInC(WyilFile module) {
-		CodeGenerator generator = new CodeGenerator(config);
-		generator.apply(module);
+		if(config.isModeOn("copy")){
+			CopyEliminationAnalyzer analyzer = new CopyEliminationAnalyzer(this, config);
+			analyzer.apply(module);
+			//Generate the code without copy analysis.
+			CodeGenerator generator = new CodeGenerator(config, analyzer);
+			generator.apply(module);
+		}else{
+			//Generate the code without copy analysis.
+			CodeGenerator generator = new CodeGenerator(config);
+			generator.apply(module);
+		}
+			
+		
+	
 		
 		/*// A list of function declaration.
 		List<String> function_list = new ArrayList<String>();

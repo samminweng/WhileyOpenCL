@@ -88,7 +88,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		String name = function.name();
 		System.out.println("###### Live analysis for " + name + " function. ######");
 		//Get liveness 
-		Liveness liveness = livenessStore.get(name);
+		Liveness liveness = getLiveness(function);
 		//Get the list of blocks for the function.
 		List<BasicBlock> blocks = this.getBlocks(function);
 		for(BasicBlock block: blocks){
@@ -99,10 +99,16 @@ public class CopyEliminationAnalyzer extends Analyzer {
 					+ block + "\nOut" + ":{" + getLiveVars(out, function) + "}\n");
 		}
 
-
 	}
 
 
+	private Liveness getLiveness(FunctionOrMethod function){
+		//Get function name
+		String name = function.name();
+		return livenessStore.get(name);
+		
+	}
+	
 
 	/**
 	 * 
@@ -220,6 +226,20 @@ public class CopyEliminationAnalyzer extends Analyzer {
 			applyLiveAnalysisByBlock(function);
 			printLivenss(function);
 		}
+	}
+	
+	/**
+	 * Gets the liveness of register at 'code' program point.
+	 * @param reg
+	 * @param code
+	 * @param function
+	 * @return true if the register is live. Otherwise, return false.
+	 */
+	public boolean isLive(int reg, Code code, FunctionOrMethod function){
+		//Get basic block that contains the given code.
+		BasicBlock blk = this.getBlockbyCode(function, code);
+		Liveness liveness = this.getLiveness(function);
+		return liveness.isLive(reg, blk);
 	}
 
 	/**

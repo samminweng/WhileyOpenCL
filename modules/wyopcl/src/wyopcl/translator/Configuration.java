@@ -126,6 +126,20 @@ public class Configuration {
 	}
 	
 	/**
+	 * Check if the given mode is on/off.
+	 * @param property
+	 * @return 
+	 */
+	public boolean isModeOn(String mode){
+		List<String> modes = (List<String>)this.properties.get("modes");
+		if(modes.contains(mode)){
+			return true;
+		}
+		return false;
+	}
+	
+
+	/**
 	 * Check if setting the gradual widen strategy. 
 	 * @return
 	 */
