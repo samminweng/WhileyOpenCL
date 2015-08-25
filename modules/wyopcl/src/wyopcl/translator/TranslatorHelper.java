@@ -53,6 +53,7 @@ public final class TranslatorHelper {
 	 * @return the transformed functional code block. If the pattern is not transformable, then
 	 *         return the original one.
 	 */
+	@Deprecated
 	public static FunctionOrMethod patternMatchingandTransformation(Configuration config, FunctionOrMethod functionOrMethod) {
 		// Begin the function	
 		PatternMatcher matcher = new PatternMatcher(config);
@@ -77,9 +78,8 @@ public final class TranslatorHelper {
 		matcher = null;
 		//If no pattern is found or the transformation failed, then return the original functional code block.
 		return functionOrMethod;
-		
 	}
-
+	
 	/**
 	 * Check if the type is instance of Integer by inferring the type from
 	 * <code>wyil.Lang.Type</code> objects, including the effective collection
@@ -114,6 +114,7 @@ public final class TranslatorHelper {
 	 * @see <a href="http://en.wikipedia.org/wiki/ANSI_escape_code">ANSI escape
 	 *      code</a>
 	 */
+	@Deprecated
 	public static int printWyILCode(Code code, String name, int line) {
 		// Print out the bytecode with the format (e.g. 'main.9 [const %12 =
 		// 2345 : int]')

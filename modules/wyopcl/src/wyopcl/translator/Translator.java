@@ -165,10 +165,13 @@ public class Translator implements Builder {
 	}
 
 	/**
-	 * Iterate each code of the input function, build up the code blk and then
-	 * analyze the loop pattern.
-	 * 
+	 * Given a code block, tries to find the matching pattern and transform the code into more predictable code.
+	 * If no pattern is matched, then no change is made.
 	 * @param module
+	 *            	 * @param functionOrMethod
+	 *            the function code block.
+	 * @return the transformed functional code block. If the pattern is not transformable, then
+	 *         return the original one.
 	 */
 	private void patternMatch(WyilFile module) {
 		// Iterate each function

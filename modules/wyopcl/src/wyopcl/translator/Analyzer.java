@@ -10,6 +10,7 @@ import java.util.List;
 import wyil.lang.Code;
 import wyil.lang.CodeBlock;
 import wyil.lang.Codes;
+import wyil.lang.Type;
 import wyil.lang.Codes.Comparator;
 import wyil.lang.Codes.If;
 import wyil.lang.Codes.Invariant;
@@ -48,6 +49,33 @@ public abstract class Analyzer {
 		this.config = config;
 	}
 
+	
+	/**
+	 * Check if the type is instance of Integer by inferring the type from
+	 * <code>wyil.Lang.Type</code> objects, including the effective collection
+	 * types.
+	 * 
+	 * @param type
+	 * @return true if the type is or contains an integer type.
+	 */
+	public boolean isIntType(Type type) {
+		if (type instanceof Type.Int) {
+			return true;
+		}
+
+		if (type instanceof Type.List) {
+			return isIntType(((Type.List) type).element());
+		}
+
+		if (type instanceof Type.Tuple) {
+			// Check the type of value field.
+			Type element = ((Type.Tuple) type).element(1);
+			return isIntType(element);
+		}
+
+		return false;
+	}
+	
 
 	/**
 	 * Given a function name, get the CFGraph.
