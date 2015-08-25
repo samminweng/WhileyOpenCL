@@ -398,10 +398,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Determines whether to make a copy of array.
-	 * @param reg
-	 * @param code
-	 * @param function
+	 * Determines whether to make a copy of array by checking liveness information.
+	 * 
+	 * If the array variable is live, then the copy is necessary.
+	 * Otherwise, the register can be overwritten safely.
+	 * 
+	 * @param reg the register of array variable	 
+	 * @param code the byte-code of function call.
+	 * @param function the caller function
 	 * @return
 	 */
 	private boolean isNecessaryCopy(int reg, Code code, FunctionOrMethod function){
