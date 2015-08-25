@@ -1,14 +1,8 @@
 package wyopcl;
 
-import static wycc.lang.SyntaxError.internalFailure;
-
-import java.util.Map;
-import java.util.Map.Entry;
-
 import wybs.lang.Builder;
 import wybs.util.StdBuildRule;
 import wybs.util.StdProject;
-import wycc.util.Logger;
 import wyopcl.translator.Configuration;
 import wyopcl.translator.Translator;
 //import wyopcl.util.Interpreter;

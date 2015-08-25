@@ -1,7 +1,9 @@
 package wyopcl.translator.generator;
 
-import static wycc.lang.SyntaxError.internalFailure;
-
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,11 +13,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import wyc.lang.Stmt.VariableDeclaration;
 import wycc.lang.SyntaxError;
 import wyil.attributes.VariableDeclarations;
 import wyil.attributes.VariableDeclarations.Declaration;
 import wyil.lang.Code;
 import wyil.lang.Codes;
+import wyil.lang.Codes.Comparator;
 import wyil.lang.Codes.If;
 import wyil.lang.Codes.Invariant;
 import wyil.lang.Codes.ListOperator;
@@ -26,6 +30,7 @@ import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.Configuration;
+import wyopcl.translator.CopyEliminationAnalyzer;
 
 /**
  * Takes a list of functional byte-code and converts it into C code.
@@ -33,26 +38,13 @@ import wyopcl.translator.Configuration;
  * @author Min-Hsien Weng
  *
  */
-public class CodeGenerator {
-	private final Configuration config;
-	private final String prefix = "_";
-	private final FunctionOrMethod functionOrMethod;
-	private final VariableDeclarations var_declarations;
-	private String indent = "\t";
-	private String func_declaration;// function declaration.
-	private LinkedHashMap<String, Type> vars;// stores the variable declaration
-												// and preserve the insertion
-												// orders of variables.
-	private List<String> statements;// store the list of translated C code.
-	private Codes.BinaryOperator range;// indicate the range that forall loop
-										// iterates over.
-
-	private List<String> input_params;// Store all the names of input
-										// parameters.
+public class CodeGenerator extends AbstractCodeGenerator {
 	private Collection<wyil.lang.WyilFile.Type> userTypes;// Store all the
-															// user-defined
-															// types, e.g.
-															// Board.
+	// user-defined
+	// types, e.g.
+	// Board.
+	
+	private CopyEliminationAnalyzer analyzer;
 
 	/**
 	 * Constructor
@@ -60,141 +52,110 @@ public class CodeGenerator {
 	 * @param config
 	 * @param functionOrMethod
 	 */
-	public CodeGenerator(Configuration config, FunctionOrMethod functionOrMethod, Collection<wyil.lang.WyilFile.Type> userTypes) {
-		this.config = config;
-		this.functionOrMethod = functionOrMethod;
-		this.var_declarations = this.functionOrMethod.attribute(VariableDeclarations.class);
-		this.vars = new LinkedHashMap<String, Type>();
-		this.statements = new ArrayList<String>();
-		this.input_params = new ArrayList<String>();
-		this.userTypes = userTypes;
+	public CodeGenerator(Configuration config) {
+		super(config);
+		// this.userTypes = userTypes;
 	}
 
+	public CodeGenerator(Configuration config, CopyEliminationAnalyzer analyzer){
+		this(config);
+		this.analyzer = analyzer;
+	}
+	
+	
 	/**
-	 * Iterates over the list of byte-code to generate the corresponding C code.
-	 * 
-	 * @param code_blk
-	 * @param func_name
+	 * Local variables are defined and initialized with values at the top of the
+	 * code block.
 	 */
-	public void iterateOverCodeBlock(List<Code> code_blk) {
+	protected String declareVariables(FunctionOrMethod function) {
+		// Get variable declaration
+		VariableDeclarations vars = function.attribute(VariableDeclarations.class);
+		// Get code storage
+		CodeStore store = this.getCodeStore(function);
+		String indent = store.getIndent();
 
-		int line = 0;
-		for (Code code : code_blk) {
-			// Get the Block.Entry
-			if (config.isVerbose()) {
-				line = printWyILCode(code, line);
+		// The string declaration.
+		String del = "";
+		// Skip the input parameters
+		// Iterate over the list of registers.
+		int inputs = function.type().params().size();
+		for (int reg = inputs; reg < vars.size(); reg++) {
+			Type type = vars.get(reg).type();
+			// Get the variable name.
+			String var = store.getVar(reg);
+			if (type instanceof Type.List) {
+				// Type declaration and initial value assignment.
+				// Assign 'null' to a list
+				del += indent + translate(type) + " " + var + " = NULL;\n";
+				// If the variable is an array, then add the extra 'size'
+				// variable.
+				del += indent + "long long " + var + "_size = 0;\n";
+			} else if (type instanceof Type.Int) {
+				del += indent + translate(type) + " " + var + " = 0;\n";
+			} else {
+				// Type declaration without any initialization.
+				del += indent + translate(type) + " " + var + ";\n";
 			}
-			dispatch(code);
 		}
+		return del;
+	}
+
+	protected String translateInputParameter(FunctionOrMethod function) {
+		// Get the code storage
+		CodeStore store = this.getCodeStore(function);
+		boolean isfirst = true;
+		int register = 0;
+		String stat = "";
+		for (Type param : function.type().params()) {
+			if (isfirst) {
+				stat += translate(param);
+			} else {
+				stat += ", " + translate(param);
+			}
+			String var = store.getVar(register);
+			// Add the variable names
+			stat += " " + var;
+			// If the variable is an array, then add the extra 'size'
+			// variable.
+			if (param instanceof Type.List) {
+				String var_size = var + "_size";
+				stat += ", long long " + var_size;
+			}
+			isfirst = false;
+			register++;
+		}		
+		return stat;
 	}
 
 	/**
-	 * Prints out each bytecode with the line number and the correct
-	 * indentation.
+	 * Translates the function or method declaration (e.g.
+	 * <code>int* play(int* _0, int _0_size){</code>)
 	 * 
-	 * @param name
-	 * @param line
+	 * @param functionOrMethod
+	 *            the code block of a function
+	 * @return func_declartion the function signature.
 	 */
-	private int printWyILCode(Code code, int line) {
-		// Print out the bytecode using the format (e.g. 'main.9 [const %12 =
-		// 2345 : int]')
-		if (code instanceof Codes.Label) {
-			System.out.println(this.functionOrMethod.name() + "." + line + " [" + code + "]");
+	protected String declareFunction(FunctionOrMethod function) {
+		// Function declaration.
+		String del = "";
+		// Get the name
+		String name = function.name();
+		if (name.equals("main")) {
+			del = "int main(int argc, char** argv)";
 		} else {
-			System.out.println(this.functionOrMethod.name() + "." + line + " [\t" + code + "]");
-		}
-		return ++line;
-	}
-
-	/**
-	 * Adds the type declaration for a variable. But serveral types are not
-	 * added to the table. For example,
-	 * 
-	 * <pre>
-	 * <code>
-	 * method(any) -> void
-	 * </code>
-	 * </pre>
-	 * 
-	 * @param type
-	 *            the Whiley type
-	 * @param var
-	 *            the name of variable
-	 */
-	private void addDeclaration(Type type, String var) {
-		// Check if the type is a record and its field contains "println" .
-		if (type instanceof Type.Record) {
-			Type.Record record = (Type.Record) type;
-			// Add the record type to the list
-			// if(!this.record_types.contains(record)){
-			// this.record_types.add(record);
-			// }
-
-			// If so, then the record loads the "println" from the
-			// sys.out.console.
-			// At this stage, we dont use this record.
-			if (record.field("println") != null) {
-				return;
-			}
+			del = "";
+			// Get the type info
+			// Get the return type
+			del += translate(function.type().ret()) + " ";
+			del += name + "(";
+			del += translateInputParameter(function);
+			del += ")";
 		}
 
-		if (type instanceof Type.Method) {
-			return;
+		if (config.isVerbose()) {
+			System.out.println(del);
 		}
-
-		if (type instanceof Type.List) {
-			vars.put(var, type);
-			// add the additional parameter 'reg_size' to indicate the array
-			// size.
-			vars.put(var + "_size", Type.Int.T_INT);
-		} else {
-			vars.put(var, type);
-		}
-	}
-
-	/**
-	 * Get the variable declaration of the given operand.
-	 * 
-	 * @param var
-	 * @return Type declaration. Otherwise, return null;
-	 */
-	private Type getVarDeclaration(String var) {
-		if (vars.containsKey(var)) {
-			return vars.get(var);
-		}
-		return null;
-	}
-
-	/**
-	 * Get the variable name of the given register
-	 * 
-	 * @param reg
-	 *            the register
-	 * @return the variable name (starting with "_")
-	 */
-	private String getVarName(int reg) {
-		// Check if the register has been kept in the functional variable
-		// declarations.
-		if (reg < var_declarations.size()) {
-			Declaration declaration = var_declarations.get(reg);
-			if (declaration != null) {
-				String name = declaration.name();
-				if (name != null && !name.isEmpty()) {
-					return prefix + name;
-				}
-			}
-		}
-		return prefix + reg;
-	}
-
-	/**
-	 * Get the type of a variable.
-	 * 
-	 * @param reg
-	 * @return
-	 */
-	private Type getVarType(int reg) {
-		return vars.get(getVarName(reg));
+		return del;
 	}
 
 	/**
@@ -244,203 +205,6 @@ public class CodeGenerator {
 	}
 
 	/**
-	 * Adds the statement to the list and print out the statement if the verbose
-	 * option is on.
-	 * 
-	 * @param code
-	 *            the WyIL code
-	 * @param stat
-	 *            the C code
-	 */
-	private void addStatement(Code code, String stat) {
-		// Add the WyIL code as a comment
-		if (code != null) {
-			if (code instanceof Codes.Label) {
-				// No indentation for label bytecode
-				statements.add("//" + code.toString());
-			} else {
-				statements.add(indent + "//" + code.toString());
-			}
-
-		}
-		// Add the translated statement.
-		if (stat != null) {
-			if (config.isVerbose()) {
-				System.out.println(stat);
-			}
-			statements.add(stat);
-		}
-	}
-
-	/**
-	 * Translates the function or method declaration (e.g.
-	 * <code>int* play(int* _0, int _0_size){</code>)
-	 * 
-	 * @param functionOrMethod
-	 *            the code block of a function
-	 * @return func_declartion the function signature.
-	 */
-	public String declareFunction() {
-		// Get the name
-		String name = functionOrMethod.name();
-		if (name.equals("main")) {
-			func_declaration = "int main(int argc, char** argv)";
-		} else {
-			func_declaration = "";
-			// Get the type info
-			wyil.lang.Type.FunctionOrMethod type = functionOrMethod.type();
-			// Get the return type
-			func_declaration += translate(type.ret()) + " ";
-			func_declaration += name + "(";
-			boolean isfirst = true;
-			int register = 0;
-			for (Type param : type.params()) {
-				if (isfirst) {
-					func_declaration += translate(param);
-				} else {
-					func_declaration += ", " + translate(param);
-				}
-				String var = getVarName(register);
-				// Add the variable names
-				func_declaration += " " + var;
-				// If the variable is an array, then add the extra 'size'
-				// variable.
-				if (param instanceof Type.List) {
-					String var_size = var + "_size";
-					func_declaration += ", long long " + var_size;
-				}
-				isfirst = false;
-				register++;
-			}
-			func_declaration += ")";
-		}
-
-		if (config.isVerbose()) {
-			System.out.println(func_declaration);
-		}
-		return func_declaration;
-	}
-
-	/**
-	 * Local variables are defined and initialized with values at the top of the
-	 * code block.
-	 */
-	public void declareVariables() {
-
-		// Get the input parameters.
-		for (int reg = 0; reg < functionOrMethod.type().params().size(); reg++) {
-			this.input_params.add(prefix + this.var_declarations.get(reg).name());
-		}
-
-		// Iterate over the list of registers.
-		for (int reg = 0; reg < var_declarations.size(); reg++) {
-			Declaration declaration = var_declarations.get(reg);
-			// Get the variable name.
-			String name = getVarName(reg);
-			addDeclaration(declaration.type(), name);
-		}
-	}
-
-	/**
-	 * Increase the indentation.
-	 */
-	private void increaseIndent() {
-		this.indent += "\t";
-	}
-
-	/**
-	 * Decrease the indentation.
-	 */
-	private void decreaseIndent() {
-		this.indent = this.indent.replaceFirst("\t", "");
-	}
-
-	/**
-	 * Given a variable name, check if it is the size variable of input
-	 * parameter. For example,
-	 * 
-	 * <pre>
-	 * <code>
-	 * long long* reverse(long long* _ls, long long _ls_size)
-	 * </code>
-	 * </pre>
-	 * 
-	 * The '_ls_size' variable is the size variable of input parameter 'ls'.
-	 * 
-	 * @param var_name
-	 * @return true if the variable is the size variable of input parameter.
-	 * 
-	 */
-	private Boolean isInputParameter(String var_name) {
-		// Check if the variable is the size variable of the input
-		// parameter.
-		String variable_name = var_name;
-		if (variable_name.contains("_size")) {
-			// Get the array variable.
-			String[] split = variable_name.split("_size");
-			// Check if the split variable name has at least two items.
-			if (split.length >= 1) {
-				variable_name = split[0];
-			}
-		}
-		// Check if the variable_name is an number.
-		// If so, the variable is an intermediate variable. Otherwise, it could
-		// be an input parameter.
-		if (!variable_name.isEmpty() && !(variable_name.matches("^_[0-9]+$"))) {
-			// Check if the input parameter contains the variable name.
-			return this.input_params.contains(variable_name);
-		}
-
-		return false;
-	}
-
-	/**
-	 * Write out the generated C code, which starts with variable declarations,
-	 * followed by a list of statements and a list of free statements at the
-	 * end.
-	 * 
-	 * @param writer
-	 */
-	public void writeCodeToFile(PrintWriter writer) {
-		// function declaration
-		writer.println(func_declaration + "{");
-		// Variable declaration with initial values.
-		for (Entry<String, Type> var : vars.entrySet()) {
-			// If the register is not an input.
-			String var_name = var.getKey();
-			// Check if the variable is the size variable of the input
-			// parameter.
-			if (!isInputParameter(var_name)) {
-				// Type declaration and initial value assignment.
-				Type var_type = var.getValue();
-				// Assign the initial values for local variables.
-				String init = indent + translate(var_type) + " " + var_name;
-				if (var_type instanceof Type.List) {
-					init += " = NULL";
-				} else if (var_type instanceof Type.Int) {
-					init += " = 0";
-				}
-				init += ";";
-				// Write out the variable declaration.
-				writer.println(init);
-			}
-
-		}
-		// Statments
-		for (String stat : statements) {
-			writer.println(stat.toString());
-		}
-		// Ending clause
-		writer.println("}");
-		// clear vars
-		vars.clear();
-		// Clear statements
-		statements.clear();
-		// Reset the indent
-		indent = "\t";
-	}
-
-	/**
 	 * Generates the C code for Codes.Const byte-code. For example,
 	 * 
 	 * <pre>
@@ -456,13 +220,14 @@ public class CodeGenerator {
 	 * @param code
 	 * @see Codes.Const
 	 */
-	private void translate(Codes.Const code) {
+	protected void translate(Codes.Const code, FunctionOrMethod function) {
 		String stat = null;
-		String target = getVarName(code.target());
+		CodeStore store = this.getCodeStore(function);
+		String target = store.getVar(code.target());
+		String indent = store.getIndent();
 		if (code.assignedType() instanceof Type.List) {
-			Constant.List list = (Constant.List) code.constant;
 			// Initialize an array
-			if (list.values.isEmpty()) {
+			if (((Constant.List) code.constant).values.isEmpty()) {
 				stat = indent + target + "=(long long*)malloc(1*sizeof(long long));\n";
 				stat += indent + "if(" + target + " == NULL) {fprintf(stderr,\"fail to malloc\"); exit(0);}\n";
 				stat += indent + target + "_size = 0;";
@@ -471,8 +236,7 @@ public class CodeGenerator {
 			// Add a statement
 			stat = indent + target + " = " + code.constant + ";";
 		}
-
-		addStatement(code, stat);
+		store.addStatement(code, stat);
 	}
 
 	/**
@@ -490,7 +254,9 @@ public class CodeGenerator {
 	 * <p>
 	 * <code>
 	 * _2 = (long long*)_3;
-	 * </code></pre> Note that the operand needs the type casting.
+	 * </code>
+	 * </pre>
+	 * Note that the operand needs the type casting.
 	 * 
 	 * When we need to assign the input parameter(_0) to the new register, we
 	 * need to clone the input and return the result pointer. For example,
@@ -505,33 +271,38 @@ public class CodeGenerator {
 	 * 
 	 * @param code
 	 */
-	private void translate(Codes.Assign code) {
-		String target = getVarName(code.target());
-		String op = getVarName(code.operand(0));
-		String statement = "";
+	protected void translate(Codes.Assign code, FunctionOrMethod function) {
 
+		CodeStore store = this.getCodeStore(function);
+
+		String target = store.getVar(code.target());
+		String op = store.getVar(code.operand(0));
+		String statement = "";
+		String indent = store.getIndent();
 		if (code.type() instanceof Type.List) {
 			// Check if the assigned type is an array. If so, use different way
 			// to copy the array.
 			String target_size = target + "_size";
 			// long long _11_size;
-			addDeclaration(Type.Int.T_INT, target_size);
+			// store.addDeclaration(Type.Int.T_INT, target_size);
 			// Check if the op is the input parameters or not.
-			if (isInputParameter(op)) {
-				// If so, then the operand is cloned and
-				// _4 = clone(_0, _0_size);
-				statement = indent + target + " = clone(" + op + ", " + op + "_size);\n";
-			} else {
-				// _2 = (long long*)_3;
-				statement = indent + target + " = (" + translate(getVarType(code.target())) + ")" + op + ";\n";
-			}
+			// if (isInputParameter(op)) {
+			// If so, then the operand is cloned and
+			// _4 = clone(_0, _0_size);
+			// statement = indent + target + " = clone(" + op + ", " + op +
+			// "_size);\n";
+			// } else {
+
+			// _2 = (long long*)_3;
+			statement = indent + target + " = (" + translate(store.getVarType(code.target())) + ")" + op + ";\n";
+			// }
 			// _1_size = _10_size;
 			statement += indent + target_size + " = " + op + "_size;";
 		} else {
 			statement = indent + target + " = " + op + ";";
 		}
 		// Add the statement to the list of statements.
-		addStatement(code, statement);
+		store.addStatement(code, statement);
 	}
 
 	/**
@@ -553,9 +324,11 @@ public class CodeGenerator {
 	 * 
 	 * @param code
 	 */
-	private void translate(Codes.LengthOf code) {
-		String stat = indent + getVarName(code.target()) + " = " + getVarName(code.operand(0)) + "_size;";
-		addStatement(code, stat);
+	protected void translate(Codes.LengthOf code, FunctionOrMethod function) {
+		CodeStore store = this.getCodeStore(function);
+		String stat = store.getIndent() + store.getVar(code.target()) + " = " + store.getVar(code.operand(0))
+				+ "_size;";
+		store.addStatement(code, stat);
 	}
 
 	/**
@@ -578,14 +351,15 @@ public class CodeGenerator {
 	 * 
 	 * @param code
 	 */
-	private void translate(Codes.BinaryOperator code) {
-		Type type = code.type();
-		String target = getVarName(code.target());
-		String left = getVarName(code.operand(0));
-		String right = getVarName(code.operand(1));
+	protected void translate(Codes.BinaryOperator code, FunctionOrMethod function) {
+		CodeStore store = this.getCodeStore(function);
+		// Type type = code.type();
+		String target = store.getVar(code.target());
+		String left = store.getVar(code.operand(0));
+		String right = store.getVar(code.operand(1));
 		// vars.put(target, CodeGeneratorHelper.translate(type));
-		addDeclaration(type, target);
-		String stat = indent;
+		// addDeclaration(type, target);
+		String stat = store.getIndent();
 		stat += target + "=" + left;
 		switch (code.kind) {
 		case ADD:
@@ -606,7 +380,7 @@ public class CodeGenerator {
 		case RANGE:
 			// Assign the range with input code for the translation of 'forall'
 			// byte-code.
-			this.range = code;
+			// this.range = code;
 			stat = null;
 			break;
 		case BITWISEOR:
@@ -620,9 +394,32 @@ public class CodeGenerator {
 		case RIGHTSHIFT:
 			break;
 		}
-		addStatement(code, stat);
+		store.addStatement(code, stat);
 	}
 
+	/**
+	 * Determines whether to make a copy of array by checking liveness information.
+	 * 
+	 * If the array variable is live, then the copy is necessary.
+	 * Otherwise, the register can be overwritten safely.
+	 * 
+	 * @param reg the register of array variable	 
+	 * @param code the byte-code of function call.
+	 * @param function the caller function
+	 * @return
+	 */
+	private boolean isNecessaryCopy(int reg, Code code, FunctionOrMethod function){
+		if(this.analyzer != null){
+			//Use the copy analyzer to determine whether to clone 
+			if(!this.analyzer.isLive(reg, code, function)){
+				//That means this param variable is not live (used) in this block.
+				//Then we dont need to clone it
+				return false;
+			}
+		}		
+		return true;
+	}	
+	
 	/**
 	 * Produces the code for <code>Codes.Invoke</code> code. For example, the
 	 * following WyIL code:
@@ -636,50 +433,58 @@ public class CodeGenerator {
 	 * <pre>
 	 * <code>
 	 * _12_size=_xs_size;
-	 * _12=reverse(_xs , _xs_size);
+	 * _12=reverse(clone(_xs, _xs_size), _xs_size);
 	 * </code>
 	 * </pre>
 	 * 
-	 * TODO The size of the returned list requires the symbolic analysis.
+	 * Before invoking the function, clone the array ('xs') first and then pass the cloned array to the function.
+	 * So that the original array will not be overwritten and its value is safely preserved.
 	 * 
 	 * @param code
 	 */
-	private void translate(Codes.Invoke code) {
+	protected void translate(Codes.Invoke code, FunctionOrMethod function) {
+		CodeStore store = this.getCodeStore(function);
 		String stat = "";
-		String ret = getVarName(code.target());
+		String ret = store.getVar(code.target());
 		Type return_type = code.type().ret();
 		// Assign both of lists to have the same array size, e.g.
 		// '_12_size=_xs_size;'
 		// Check if the return is also an array.
 		if (return_type instanceof Type.List) {
 			for (int index = 0; index < code.operands().length; index++) {
-				Type type = code.type().params().get(index);
+				Type type = code.type().params().get(index);				
 				if (type instanceof Type.List) {
-					stat += indent + (ret + "_size") + "=" + getVarName(code.operand(index)) + "_size;\n";
+					stat += store.getIndent() + (ret + "_size") + "=" + store.getVar(code.operand(index)) + "_size;\n";
 				}
 			}
 		}
 		//
-		stat += indent + ret + "=" + code.name.name() + "(";
+		stat += store.getIndent() + ret + "=" + code.name.name() + "(";
 		// Translate the input parameters of called function, e.g.
 		// '_12=reverse(_xs , _xs_size);'
 		boolean isFirst = true;
 		for (int index = 0; index < code.operands().length; index++) {
-			String param = getVarName(code.operand(index));
 			if (!isFirst) {
 				stat += " ,";
 			}
-			stat += param;
+			int reg = code.operand(index);
+			String param = store.getVar(reg);
+			Type paramType = store.getVarType(reg);
 			// Add the '*_size' parameter
-			Type paramType = (Type) code.type().params().get(index);
-			if (paramType instanceof Type.List) {
-				stat += " , " + param + "_size";
+			if (paramType instanceof Type.List) {		
+				if(isNecessaryCopy(reg, code, function)){
+					stat += "clone("+param+", "+param+"_size), " + param + "_size";
+				}else{
+					stat += param + ", "+param+"_size";
+				}				
+			}else{
+				stat += param;
 			}
 			isFirst = false;
 		}
 		stat += ");";
 		// add the statement
-		addStatement(code, stat);
+		store.addStatement(code, stat);
 	}
 
 	/**
@@ -754,20 +559,48 @@ public class CodeGenerator {
 	 * @param code
 	 *            <code>Codes.If</code> code
 	 */
-	private void translate(Codes.If code) {
-		String statement = indent;
-		String left = getVarName(code.leftOperand);
-		String right = getVarName(code.rightOperand);
-
-		statement += "if(" + left;
-		// The condition
-		statement += translate(code.op, false);
-		statement += right;
+	protected void translate(Codes.If code, FunctionOrMethod function) {
+		CodeStore store = this.getCodeStore(function);
+		String statement = store.getIndent();
+		String left = store.getVar(code.leftOperand);
+		String right = store.getVar(code.rightOperand);
+		//get the type of left/right
+		Type left_type = store.getVarType(code.leftOperand);
+		Type right_type = store.getVarType(code.rightOperand);
+		//Special case for comparing two arrays.
+		if(left_type.equals(right_type) && left_type instanceof Type.List){
+			/**
+			 * 
+			 * For example, the byte-code: 
+			 * <code> ifeq %1, %38 goto blklab2 : [int]</code>
+			 * can be translated into C code:
+			 * if(isArrayEqual(_xs,_xs_size,_38,_38_size)==1){goto blklab2;}
+			 * 
+			 */
+			if(code.op.equals(Comparator.EQ)){
+				statement += "if(isArrayEqual(" + left + ", "+left+"_size";
+				// Check if both of arrays are the same (1: true, 0:false).
+				statement += "," + right+", "+right+"_size)==1";
+			}else{
+				
+			}
+			
+			
+		}else{
+			statement += "if(" + left;
+			// The condition
+			statement += translate(code.op, false);
+			statement += right;
+			
+		}
+		
+		//The goto statement
 		statement += "){";
 		statement += "goto " + code.target + ";";
 		statement += "}";
+		
 
-		addStatement(code, statement);
+		store.addStatement(code, statement);
 	}
 
 	/**
@@ -778,21 +611,22 @@ public class CodeGenerator {
 	 * 
 	 * @param code
 	 */
-	private void translate(Codes.AssertOrAssume code) {
+	protected void translate(Codes.AssertOrAssume code, FunctionOrMethod function) {
+		CodeStore store = this.getCodeStore(function);
 		// Add the starting clause for the assertion
-		addStatement(code, indent + "{");
+		store.addStatement(code, store.getIndent() + "{");
 		// Increase the indent
-		this.increaseIndent();
-		iterateOverCodeBlock(code.bytecodes());
-		this.decreaseIndent();
-		addStatement(code, indent + "}");
+		store.increaseIndent();
+		iterateOverCodeBlock(code.bytecodes(), function);
+		store.decreaseIndent();
+		store.addStatement(code, store.getIndent() + "}");
 
 	}
 
-	private void translate(Codes.Goto code) {
-		String stat = indent;
-		stat += "goto " + code.target + ";";
-		addStatement(code, stat);
+	protected void translate(Codes.Goto code, FunctionOrMethod function) {
+		CodeStore store = this.getCodeStore(function);
+		String stat = store.getIndent() + "goto " + code.target + ";";
+		store.addStatement(code, stat);
 	}
 
 	/**
@@ -817,8 +651,9 @@ public class CodeGenerator {
 	 *            Codes.Lable byte-code
 	 * 
 	 */
-	private void translate(Codes.Label code) {
-		addStatement(code, code.label + ":;");
+	protected void translate(Codes.Label code, FunctionOrMethod function) {
+		CodeStore store = this.getCodeStore(function);
+		store.addStatement(code, code.label + ":;");
 	}
 
 	/**
@@ -826,45 +661,58 @@ public class CodeGenerator {
 	 * 
 	 * @param code
 	 */
-	private void translate(Codes.Fail code) {
+	protected void translate(Codes.Fail code, FunctionOrMethod function) {
+		CodeStore store = this.getCodeStore(function);
+		String indent = store.getIndent();
 		String stat = indent + "fprintf(stderr,\"" + code + "\");\n";
 		stat += indent + "exit(0);";
-		addStatement(code, stat);
+		store.addStatement(code, stat);
 	}
 
 	/**
 	 * Translates the update byte-code into C code. For example,
-	 * <pre><code>
+	 * 
+	 * <pre>
+	 * <code>
 	 * update %0.pieces[%1] = %7 : {int move,[int] pieces} -> {int move,[int] pieces}
-	 * </code></pre>
+	 * </code>
+	 * </pre>
+	 * 
 	 * can be translated into:
-	 * <pre><code>
+	 * 
+	 * <pre>
+	 * <code>
 	 * _0.pieces[_1] = _7;
-	 * </code></pre>
+	 * </code>
+	 * </pre>
 	 * 
 	 * @param code
 	 */
-	private void translate(Codes.Update code) {
+	protected void translate(Codes.Update code, FunctionOrMethod function) {
+		CodeStore store = this.getCodeStore(function);
+		String indent = store.getIndent();
 		String stat = "";
 		// For List type only
 		if (code.type() instanceof Type.List) {
-			stat += indent +getVarName(code.target()) + "[" + getVarName(code.operand(0)) + "] = " + getVarName(code.result()) + ";";
-		}else if(code.type() instanceof Type.Record){
-			stat += indent + getVarName(code.target()) + "."+ code.fields.get(0);
-			//check	if there are two or more operands. If so, then add the index operand.
-			if(code.operands().length >1 ){
-				stat += "[" + getVarName(code.operand(0)) + "]";
-			}					
-			stat += " = " + getVarName(code.result()) + ";";
+			stat += indent + store.getVar(code.target()) + "[" + store.getVar(code.operand(0)) + "] = "
+					+ store.getVar(code.result()) + ";";
+		} else if (code.type() instanceof Type.Record) {
+			stat += indent + store.getVar(code.target()) + "." + code.fields.get(0);
+			// check if there are two or more operands. If so, then add the
+			// index operand.
+			if (code.operands().length > 1) {
+				stat += "[" + store.getVar(code.operand(0)) + "]";
+			}
+			stat += " = " + store.getVar(code.result()) + ";";
 		}
-		
-		addStatement(code, stat);
+
+		store.addStatement(code, stat);
 	}
 
-	private void translate(Codes.Nop code) {
+	protected void translate(Codes.Nop code, FunctionOrMethod function) {
 		// Do nothing
-		String stat = indent + ";";
-		addStatement(code, stat);
+		CodeStore store = this.getCodeStore(function);
+		store.addStatement(code, store.getIndent() + ";");
 	}
 
 	/**
@@ -887,16 +735,17 @@ public class CodeGenerator {
 	 * 
 	 * @param code
 	 */
-	private void translate(Codes.Return code) {
-		String statement = indent;
+	protected void translate(Codes.Return code, FunctionOrMethod function) {
+		CodeStore store = this.getCodeStore(function);
+		String statement = store.getIndent();
 		if (code.operand != -1) {
 			// Translate the Return code.
-			statement += "return " + getVarName(code.operand) + ";";
+			statement += "return " + store.getVar(code.operand) + ";";
 		} else {
 			// If operand == -1, then add a simple empty code.
 			statement += ";";
 		}
-		addStatement(code, statement);
+		store.addStatement(code, statement);
 	}
 
 	/**
@@ -918,10 +767,11 @@ public class CodeGenerator {
 	 * 
 	 * @param code
 	 */
-	private void translate(Codes.IndexOf code) {
-		// EffectiveIndexible type = code.type();
-		String stat = indent + getVarName(code.target()) + "=" + getVarName(code.operand(0)) + "[" + getVarName(code.operand(1)) + "];";
-		addStatement(code, stat);
+	protected void translate(Codes.IndexOf code, FunctionOrMethod function) {
+		CodeStore store = this.getCodeStore(function);
+		String stat = store.getIndent() + store.getVar(code.target()) + "=" + store.getVar(code.operand(0)) + "["
+				+ store.getVar(code.operand(1)) + "];";
+		store.addStatement(code, stat);
 	}
 
 	/**
@@ -976,13 +826,15 @@ public class CodeGenerator {
 	 * 
 	 * @param code
 	 */
-	private void translate(Codes.NewList code) {
-		String target = getVarName(code.target());
+	protected void translate(Codes.NewList code, FunctionOrMethod function) {
+		CodeStore store = this.getCodeStore(function);
+		String target = store.getVar(code.target());
 		// Add the 'target_size' variable to indicate the length of the list
 		String target_size = target + "_size";
 		// Add the declaration of target_size variable.
-		addDeclaration(Type.Int.T_INT, target_size);
+		// addDeclaration(Type.Int.T_INT, target_size);
 		// Assign the array size with the number of operands.
+		String indent = store.getIndent();
 		String stat = indent + target_size + " = " + code.operands().length + ";\n";
 		// Check if the size of input operand > 0.
 		if (code.operands().length > 0) {
@@ -992,15 +844,15 @@ public class CodeGenerator {
 			// Initialize the array.
 			int index = 0;
 			for (int operand : code.operands()) {
-				stat += indent + target + "[" + index + "] = " + getVarName(operand) + ";";
+				stat += indent + target + "[" + index + "] = " + store.getVar(operand) + ";";
 				index++;
 			}
-			addStatement(code, stat);
+			store.addStatement(code, stat);
 		} else {
 			// Translates the empty list, e.g. 'newlist %3 = () : [void]' can be
 			// converted into '_3 = malloc(0);'.
 			stat += indent + target + " = malloc(" + target_size + ");";
-			addStatement(code, stat);
+			store.addStatement(code, stat);
 		}
 
 	}
@@ -1029,19 +881,21 @@ public class CodeGenerator {
 	 * @param code
 	 * @throws Exception
 	 */
-	private void translate(Codes.FieldLoad code) throws Exception {
+	protected void translate(Codes.FieldLoad code, FunctionOrMethod function) {
 		/*
 		 * Type param = params.get(code.operand(0)); if(param != null){ if(param
 		 * instanceof Type.Record){ Type.Record record = (Type.Record) param;
 		 * Type fieldType = record.field(code.field); } }
 		 */
 		String field = code.field;
+		CodeStore store = this.getCodeStore(function);
 		if (field.equals("out") || field.equals("println")) {
-			addStatement(code, null);
+			store.addStatement(code, null);
 		} else {
 			// Get the target
-			String statement = indent + getVarName(code.target()) + " = " + getVarName(code.operand(0)) + "." + code.field + ";";
-			addStatement(code, statement);
+			String statement = store.getIndent() + store.getVar(code.target()) + " = " + store.getVar(code.operand(0))
+					+ "." + code.field + ";";
+			store.addStatement(code, statement);
 		}
 	}
 
@@ -1050,14 +904,15 @@ public class CodeGenerator {
 	 * 
 	 * @param code
 	 */
-	private void translate(Codes.Convert code) {
+	protected void translate(Codes.Convert code, FunctionOrMethod function) {
 		// Converts Constant to Any type
-		if (code.result instanceof Type.Any) {
-			// sym_ctrl.putAttribute(prefix+code.operand(0), "type",
-			// code.type());
-			// Do nothing.
-		}
-		addStatement(code, null);
+		// if (code.result instanceof Type.Any) {
+		// sym_ctrl.putAttribute(prefix+code.operand(0), "type",
+		// code.type());
+		// Do nothing.
+		// }
+		CodeStore store = this.getCodeStore(function);
+		store.addStatement(code, null);
 	}
 
 	/**
@@ -1066,19 +921,22 @@ public class CodeGenerator {
 	 * 
 	 * @param type
 	 * @param var
+	 * @param function
 	 * @return the translated statement.
 	 * 
-	 * TODO Print out a pointer without array size. Is it possible?
+	 *         TODO Print out a pointer without array size. Is it possible?
 	 * 
 	 */
-	private String translateIndirectInvokePrintf(Type type, String var) {
+	private String translateIndirectInvokePrintf(Type type, String var, FunctionOrMethod function) {
+		CodeStore store = this.getCodeStore(function);
+		String indent = store.getIndent();
 		String statement = "";
 		if (type instanceof Type.Nominal) {
 			Type.Nominal nominal = (Type.Nominal) type;
 			wyil.lang.WyilFile.Type user_type = getUserDefinedType(nominal.name().name());
-			statement += translateIndirectInvokePrintf(user_type.type(), var);
+			statement += translateIndirectInvokePrintf(user_type.type(), var, function);
 		} else if (type instanceof Type.List) {
-			//Print out a pointer without specifying array size.
+			// Print out a pointer without specifying array size.
 			statement += indent + "indirect_printf_array_withoutlength(" + var + ");\n";
 		} else if (type instanceof Type.Int) {
 			statement += indent + "indirect_printf(" + var + ");\n";
@@ -1091,7 +949,7 @@ public class CodeGenerator {
 				statement += indent + "indrect_printf_string(\"" + field.getKey() + "\t\");\n";
 				// Based on the field Type, print out the field value using
 				// the different 'printf' functions.
-				statement += translateIndirectInvokePrintf(field.getValue(), var + "." + field.getKey());
+				statement += translateIndirectInvokePrintf(field.getValue(), var + "." + field.getKey(), function);
 			}
 		}
 		return statement;
@@ -1126,33 +984,36 @@ public class CodeGenerator {
 	 *            Codes.IndirectInvoke byte-code
 	 * 
 	 */
-	private void translate(Codes.IndirectInvoke code) {
+	protected void translate(Codes.IndirectInvoke code, FunctionOrMethod function) {
 		String statement = "";
+		CodeStore store = this.getCodeStore(function);
 		if (code.type() instanceof Type.FunctionOrMethod) {
-			String var = getVarName(code.parameter(0));
+			String var = store.getVar(code.parameter(0));
 			// Get input type
 			// Type type = code.type().params().get(0);
-			Type type = getVarDeclaration(var);
+			// Type type = getVarDeclaration(var);
+			Type type = store.getVarType(code.parameter(0));
 			// Check if the type is a user-defined type.
 			if (type instanceof Type.List) {
 				// Added the additional 'array_size' variable to indicate the
 				// length of an array.
 				// Due to strictly forbidding the overlapping in C, the function
 				// is named differently.
-				statement += indent + "indirect_printf_array(" + var + ", "+ var +"_size);\n";
+				statement += store.getIndent() + "indirect_printf_array(" + var + ", " + var + "_size);\n";
 			} else {
-				statement += translateIndirectInvokePrintf(type, var);
+				statement += translateIndirectInvokePrintf(type, var, function);
 			}
 		}
-		addStatement(code, statement);
+		store.addStatement(code, statement);
 	}
 
-	private void translate(UnaryOperator code) {
+	protected void translate(UnaryOperator code, FunctionOrMethod function) {
+		CodeStore store = this.getCodeStore(function);
 		String target = prefix + code.target();
 		// vars.put(target, CodeGeneratorHelper.translate(code.type()));
-		addDeclaration(code.type(), target);
-		String stat = indent + target + "= -" + prefix + code.operand(0) + ";";
-		addStatement(code, stat);
+		// store.addDeclaration(code.type(), target);
+		String stat = store.getIndent() + target + "= -" + prefix + code.operand(0) + ";";
+		store.addStatement(code, stat);
 	}
 
 	/**
@@ -1166,23 +1027,24 @@ public class CodeGenerator {
 	 * 
 	 * can be translated into:
 	 * 
-	 * <pre><code>
-	 * while(_i<_limit){
-	 * 	
+	 * <pre>
+	 * <code> while(_i<_limit){
+	 * 
 	 * @param loop_cond
 	 */
-	private void translateLoopHeader(Codes.If loop_cond) {
-		String statement = indent;
-		String left = getVarName(loop_cond.leftOperand);
-		String right = getVarName(loop_cond.rightOperand);
+	private void translateLoopHeader(Codes.If loop_cond, FunctionOrMethod function) {
+		CodeStore store = this.getCodeStore(function);
+		String statement = store.getIndent();
+		String left = store.getVar(loop_cond.leftOperand);
+		String right = store.getVar(loop_cond.rightOperand);
 		statement += "while(" + left;
 		// The negated operator
 		statement += translate(loop_cond.op, true);
 		statement += right;
 		statement += "){\n";
 		// Increase the indent
-		increaseIndent();
-		addStatement(loop_cond, statement);
+		store.increaseIndent();
+		store.addStatement(loop_cond, statement);
 	}
 
 	/**
@@ -1214,25 +1076,20 @@ public class CodeGenerator {
 	 * @param code
 	 */
 	/*
-	private void translate(Codes.ForAll code) {
-		String loop_var = getVarName(code.indexOperand);
-		String lower_bound = getVarName(range.operand(0));
-		String upper_bound = getVarName(range.operand(1));
-		// Construct the loop header.
-		String statement = indent + "for(" + loop_var + "=" + lower_bound + "; " + loop_var + "<" + upper_bound + "; " + loop_var + "++){";
-		addStatement(code, statement);
-		// Increase the indentation
-		this.increaseIndent();
-		// Get the code block inside the forall loop.
-		List<Code> code_blk = code.bytecodes();
-		// Translate each byte-code and output each generated code.
-		this.iterateOverCodeBlock(code_blk);
-		this.decreaseIndent();
-		statement = indent + "}";
-		addStatement(null, statement);// Ending bracket of the forall loop.
-		// Nullify the range.
-		this.range = null;
-	}*/
+	 * private void translate(Codes.ForAll code) { String loop_var =
+	 * getVarName(code.indexOperand); String lower_bound =
+	 * getVarName(range.operand(0)); String upper_bound =
+	 * getVarName(range.operand(1)); // Construct the loop header. String
+	 * statement = indent + "for(" + loop_var + "=" + lower_bound + "; " +
+	 * loop_var + "<" + upper_bound + "; " + loop_var + "++){";
+	 * addStatement(code, statement); // Increase the indentation
+	 * this.increaseIndent(); // Get the code block inside the forall loop.
+	 * List<Code> code_blk = code.bytecodes(); // Translate each byte-code and
+	 * output each generated code. this.iterateOverCodeBlock(code_blk);
+	 * this.decreaseIndent(); statement = indent + "}"; addStatement(null,
+	 * statement);// Ending bracket of the forall loop. // Nullify the range.
+	 * this.range = null; }
+	 */
 
 	/**
 	 * Iterate over the list of loop byte-code and translate each code into C
@@ -1241,9 +1098,11 @@ public class CodeGenerator {
 	 * 
 	 * @param code
 	 */
-	private void translate(Loop code) {
+	protected void translate(Loop code, FunctionOrMethod function) {
+		CodeStore store = this.getCodeStore(function);
+
 		// Increase the indentation.
-		this.increaseIndent();
+		store.increaseIndent();
 		List<Code> loop_body = new ArrayList<Code>();
 		Codes.Invariant loop_invariant = null;
 		Codes.If loop_condition = null;
@@ -1261,13 +1120,13 @@ public class CodeGenerator {
 				}
 			}
 		}
-		translateLoopHeader(loop_condition);
-		translate(loop_invariant);
-		iterateOverCodeBlock(loop_body);
+		translateLoopHeader(loop_condition, function);
+		translate(loop_invariant, function);
+		iterateOverCodeBlock(loop_body, function);
 		// Decrease the indentation.
-		this.decreaseIndent();
+		store.decreaseIndent();
 		// Add the ending bracket.
-		addStatement(null, indent + "}");
+		store.addStatement(null, store.getIndent() + "}");
 	}
 
 	/**
@@ -1279,8 +1138,8 @@ public class CodeGenerator {
 	 * prefix+code.operand(1);
 	 * 
 	 * //Check the operator switch (code.kind){ case APPEND: stat += indent +
-	 * "strcpy("+target+", "+left+");\n"; stat += indent +
-	 * "strcat("+target+", "+right+"_str);"; break; case LEFT_APPEND:
+	 * "strcpy("+target+", "+left+");\n"; stat += indent + "strcat("+target+", "
+	 * +right+"_str);"; break; case LEFT_APPEND:
 	 * 
 	 * break; case RIGHT_APPEND:
 	 * 
@@ -1305,16 +1164,17 @@ public class CodeGenerator {
 	 * 
 	 * @param code
 	 */
-	private void translate(ListOperator code) {
-		String target = getVarName(code.target());
+	protected void translate(ListOperator code, FunctionOrMethod function) {
+		CodeStore store = this.getCodeStore(function);
+		String target = store.getVar(code.target());
 		// long long _10_size;
-		addDeclaration(Type.Int.T_INT, target + "_size");
+		// addDeclaration(Type.Int.T_INT, target + "_size");
 
 		// _13_size = _2_size+_12_size;//new array size
-		String stat = indent + target + "_size = ";
+		String stat = store.getIndent() + target + "_size = ";
 		boolean isFirst = true;
 		for (int operand : code.operands()) {
-			String op = getVarName(operand);
+			String op = store.getVar(operand);
 			if (!isFirst) {
 				// Add '+' operator before the 'size' variable.
 				stat += "+";
@@ -1325,10 +1185,10 @@ public class CodeGenerator {
 		stat += ";\n";
 		// Calls the append function. For example, _13=append(_2, &_2_size, _12,
 		// &_12_size, &_13_size);
-		stat += indent + target + "=append(";
+		stat += store.getIndent() + target + "=append(";
 		isFirst = true;
 		for (int operand : code.operands()) {
-			String op = getVarName(operand);
+			String op = store.getVar(operand);
 			if (!isFirst) {
 				// Add ',' to separate the arguments.
 				stat += ", ";
@@ -1341,10 +1201,10 @@ public class CodeGenerator {
 		stat += ");\n";
 
 		// Free the op_2, because op_2 has been appended to the op_1.
-		stat += indent + "free(" + getVarName(code.operand(1)) + ");";
+		stat += store.getIndent() + "free(" + store.getVar(code.operand(1)) + ");";
 
 		// Put it to the statement list.
-		addStatement(code, stat);
+		store.addStatement(code, stat);
 	}
 
 	/**
@@ -1356,7 +1216,7 @@ public class CodeGenerator {
 	 *         'Board'.
 	 * 
 	 */
-	private String translate(Type type) {
+	protected String translate(Type type) {
 		// The existential type, e.g. function EmptyBoard() -> (Board r)
 		// The return type of 'EmptyBoard' function is 'Board'.
 		if (type instanceof Type.Nominal) {
@@ -1394,93 +1254,6 @@ public class CodeGenerator {
 	}
 
 	/**
-	 * Checks the type of the wyil code and dispatches the code to the analyzer
-	 * for being executed by the <code>analyze(code)</code>
-	 * 
-	 * @param entry
-	 */
-	private void dispatch(Code code) {
-		try {
-			// enable the assertion
-			if (code instanceof Codes.AssertOrAssume) {
-				translate((Codes.AssertOrAssume) code);
-			} else if (code instanceof Codes.Assign) {
-				translate((Codes.Assign) code);
-			} else if (code instanceof Codes.BinaryOperator) {
-				translate((Codes.BinaryOperator) code);
-			} else if (code instanceof Codes.Convert) {
-				translate((Codes.Convert) code);
-			} else if (code instanceof Codes.Const) {
-				translate((Codes.Const) code);
-			} else if (code instanceof Codes.Debug) {
-				internalFailure("Not implemented!", code.toString(), null);
-			} else if (code instanceof Codes.Dereference) {
-				internalFailure("Not implemented!", code.toString(), null);
-			} else if (code instanceof Codes.Fail) {
-				translate((Codes.Fail) code);
-			} else if (code instanceof Codes.FieldLoad) {
-				translate((Codes.FieldLoad) code);
-			} else if (code instanceof Codes.Goto) {
-				translate((Codes.Goto) code);
-			} else if (code instanceof Codes.If) {
-				translate((Codes.If) code);
-			} else if (code instanceof Codes.IfIs) {
-				internalFailure("Not implemented!", code.toString(), null);
-			} else if (code instanceof Codes.IndexOf) {
-				translate((Codes.IndexOf) code);
-			} else if (code instanceof Codes.IndirectInvoke) {
-				translate((Codes.IndirectInvoke) code);
-			} else if (code instanceof Codes.Invoke) {
-				translate((Codes.Invoke) code);
-			} else if (code instanceof Codes.Invert) {
-				internalFailure("Not implemented!", code.toString(), null);
-			} else if (code instanceof Codes.ListOperator) {
-				translate((Codes.ListOperator) code);
-			} else if (code instanceof Codes.Loop) {
-				translate((Codes.Loop) code);
-			} else if (code instanceof Codes.Label) {
-				translate((Codes.Label) code);
-			} else if (code instanceof Codes.Lambda) {
-				internalFailure("Not implemented!", code.toString(), null);
-			} else if (code instanceof Codes.LengthOf) {
-				translate((Codes.LengthOf) code);
-			} else if (code instanceof Codes.Move) {
-				internalFailure("Not implemented!", code.toString(), null);
-			} else if (code instanceof Codes.NewList) {
-				translate((Codes.NewList) code);
-			} else if (code instanceof Codes.NewRecord) {
-				translate((Codes.NewRecord) code);
-			} else if (code instanceof Codes.NewTuple) {
-				internalFailure("Not implemented!", code.toString(), null);
-			} else if (code instanceof Codes.Return) {
-				translate((Codes.Return) code);
-			} else if (code instanceof Codes.NewObject) {
-				internalFailure("Not implemented!", code.toString(), null);
-			} else if (code instanceof Codes.Nop) {
-				translate((Codes.Nop) code);
-			} else if (code instanceof Codes.SubList) {
-				internalFailure("Not implemented!", code.toString(), null);
-			} else if (code instanceof Codes.Switch) {
-				internalFailure("Not implemented!", code.toString(), null);
-			} else if (code instanceof Codes.TupleLoad) {
-				internalFailure("Not implemented!", code.toString(), null);
-			} else if (code instanceof Codes.UnaryOperator) {
-				translate((Codes.UnaryOperator) code);
-			} else if (code instanceof Codes.Update) {
-				translate((Codes.Update) code);
-			} else {
-				internalFailure("unknown wyil code encountered (" + code + ")", "", null);
-			}
-
-		} catch (SyntaxError ex) {
-			throw ex;
-		} catch (Exception ex) {
-			internalFailure(ex.getMessage(), "", null, ex);
-		}
-
-	}
-
-	/**
 	 * Translates the new record byte-code. For example,
 	 * 
 	 * <pre>
@@ -1501,7 +1274,8 @@ public class CodeGenerator {
 	 * 
 	 * @param code
 	 */
-	private void translate(NewRecord code) {
+	protected void translate(NewRecord code, FunctionOrMethod function) {
+		CodeStore store = this.getCodeStore(function);
 		NewRecord newrecord = (NewRecord) code;
 		String statement = "";
 		// Begin with the last item
@@ -1512,9 +1286,70 @@ public class CodeGenerator {
 			index--;
 			// Assess the structure member, such as 'move', and assign the
 			// operand to
-			statement += indent + getVarName(newrecord.target()) + "." + field.getKey() + " = " + getVarName(newrecord.operand(index)) + ";\n";
+			statement += store.getIndent() + store.getVar(newrecord.target()) + "." + field.getKey() + " = "
+					+ store.getVar(newrecord.operand(index)) + ";\n";
 		}
-		addStatement(code, statement);
+		store.addStatement(code, statement);
+	}
+
+	/**
+	 * Write out the generated C code, which starts with variable declarations,
+	 * followed by a list of statements and a list of free statements at the
+	 * end.
+	 * 
+	 * @param writer
+	 */
+	protected void writeCodeToFile(FunctionOrMethod function) {
+		// Get the code store
+		CodeStore store = this.getCodeStore(function);
+		//Write out the header file
+		String filename = config.getFilename();
+		FileWriter writer;
+		try {
+			//Check if the header file exits.
+			File f = new File(filename+".h");
+			if(!f.exists()){
+				writer = new FileWriter(f);
+				//If no such a file, write the include files to include Util.h
+				writer.append("#include \"Util.h\"\n");
+			}else{
+				writer = new FileWriter(f, true);
+			}
+			//Write out function declaration.
+			writer.append(this.declareFunction(function)+";\n");
+			writer.close();
+			f = null;
+		} catch (IOException e1) {
+			throw new RuntimeException("Error occurrs in writing "+filename+".h");
+		}
+		
+		// Create a writer to write the C code to a *.c file.
+		try {
+			//Chekc if the C file exist.
+			File f = new File(filename+".c");
+			if(!f.exists()){
+				writer = new FileWriter(f);
+				//If no such a file, write the include files to include Util.h
+				writer.append("#include \""+filename+".h\"\n");
+			}else{
+				writer = new FileWriter(f, true);
+			}			
+			// Write function declaration
+			writer.append(this.declareFunction(function) + "{\n");
+			// Write Variable declaration with initial values.
+			writer.append(this.declareVariables(function));
+			// Get all Statments
+			List<String> statements = store.getStatements();
+			for (String statement : statements) {
+				writer.append(statement+"\n");
+			}
+			// Ending clause
+			writer.append("}\n");
+			// Close the file writer.
+			writer.close();			
+		} catch (IOException e) {
+			throw new RuntimeException("Error occurs in writing "+filename+".c");
+		}
 	}
 
 }

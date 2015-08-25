@@ -82,6 +82,30 @@ public class BoundAnalyzer {
 	}
 
 	/**
+	 * Prints out each bytecode with line number and indentation.
+	 * 
+	 * @param name
+	 * @param line
+	 * @see <a href="http://en.wikipedia.org/wiki/ANSI_escape_code">ANSI escape
+	 *      code</a>
+	 */
+	private int printWyILCode(Code code, String name, int line) {
+		// Print out the bytecode with the format (e.g. 'main.9 [const %12 =
+		// 2345 : int]')
+		String font_color_start = "";
+		String font_color_end = "";		
+		if (code instanceof Codes.Label) {
+			// System.out.println(font_color_start+name+"."+line+"."+depth+" ["+code+"]"+font_color_end);
+			System.out.println(font_color_start + name + "." + line + " [" + code + "]" + font_color_end);
+		} else {
+			// System.out.println(font_color_start+name+"."+line+"."+depth+" [\t"+code+"]"+font_color_end);
+			System.out.println(font_color_start + name + "." + line + " [\t" + code + "]" + font_color_end);
+		}
+		return ++line;
+	}
+	
+	
+	/**
 	 * Build up the control flow graph: iterating each byte-code to extract the
 	 * constraints, create the block (e.g. loop structure/if-else branches) or
 	 * reuse the current block to put the constraints into the corresponding
@@ -97,7 +121,7 @@ public class BoundAnalyzer {
 		for (Code code : code_blk) {
 			if (!AnalyzerHelper.isCached(name)) {
 				// Get the Block.Entry and print out each byte-code
-				line = TranslatorHelper.printWyILCode(code, name, line);
+				line = printWyILCode(code, name, line);
 			}
 
 			if (code instanceof Codes.Invoke) {

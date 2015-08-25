@@ -19,7 +19,7 @@ public class WyopclMain extends WycMain{
 	private boolean verbose = false;
 	public static final OptArg[] EXTRA_OPTIONS = {		
 		//Add the 'alias' option
-		new OptArg("alias", "Run the alias analysis to eliminate the un-necessary array copies at byte-code level.\n" ),
+		new OptArg("copy", "Run the copy elimination analysis to remove the un-necessary array copies at byte-code level.\n" ),
 		
 		//Add the 'bound' option 
 		new OptArg("bound", OptArg.STRING, "Run bound analysis on whiley program with a specific widening strategy:\n"
@@ -66,15 +66,15 @@ public class WyopclMain extends WycMain{
 		}else{
 			//Run the translator with configuration.
 			Configuration config = new Configuration();
-			if(values.containsKey("verbose")){			
-				config.setProperty("logger", new Logger.Default(System.err));
-				config.setProperty("verbose", true);
-			}			
+			/*if(values.containsKey("verbose")){			
+				//config.setProperty("logger", new Logger.Default(System.err));
+				config.setOption("verbose", true);
+			}*/			
 			//If the options are matched with existing modes, then enable the translator by writing the mode option. 
 			for(Entry<String, Object> entry: values.entrySet()){
 				String option = entry.getKey();
 				Object value = entry.getValue();
-				config.setMode(option, value);
+				config.setOption(option, value);
 			}
 			((WyopclBuildTask)builder).setConfig(config);
 		}

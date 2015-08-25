@@ -8,38 +8,20 @@ import java.util.HashMap;
 import java.util.List;
 
 import wyil.lang.Code;
+import wyil.lang.CodeBlock;
 import wyil.lang.Codes;
 import wyil.lang.Type;
-import wyil.lang.WyilFile;
-import wyil.lang.Codes.Assign;
-import wyil.lang.Codes.Assume;
-import wyil.lang.Codes.BinaryOperator;
 import wyil.lang.Codes.Comparator;
-import wyil.lang.Codes.Const;
-import wyil.lang.Codes.Convert;
-import wyil.lang.Codes.Fail;
-import wyil.lang.Codes.FieldLoad;
-import wyil.lang.Codes.Goto;
 import wyil.lang.Codes.If;
-import wyil.lang.Codes.IndexOf;
 import wyil.lang.Codes.Invariant;
 import wyil.lang.Codes.Invoke;
-import wyil.lang.Codes.Label;
-import wyil.lang.Codes.LengthOf;
-import wyil.lang.Codes.ListOperator;
 import wyil.lang.Codes.Loop;
-import wyil.lang.Codes.NewList;
-import wyil.lang.Codes.NewTuple;
 import wyil.lang.Codes.Return;
-import wyil.lang.Codes.SubList;
-import wyil.lang.Codes.TupleLoad;
-import wyil.lang.Codes.UnaryOperator;
-import wyil.lang.Codes.Update;
+import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.bound.BasicBlock;
-import wyopcl.translator.bound.CFGraph;
-import wyopcl.translator.bound.SymbolFactory;
 import wyopcl.translator.bound.BasicBlock.BlockType;
+import wyopcl.translator.bound.CFGraph;
 import wyopcl.translator.bound.CFGraph.STATUS;
 /**
  * Aims to build control flow graph for a function.
@@ -49,7 +31,7 @@ import wyopcl.translator.bound.CFGraph.STATUS;
  *
  */
 public abstract class Analyzer {
-	private static final String prefix = "%";
+	//private static final String prefix = "%";
 	protected Configuration config;
 	// Maps of CFGs	
 	protected HashMap<FunctionOrMethod, CFGraph> cfgraphs;
@@ -67,6 +49,33 @@ public abstract class Analyzer {
 		this.config = config;
 	}
 
+	
+	/**
+	 * Check if the type is instance of Integer by inferring the type from
+	 * <code>wyil.Lang.Type</code> objects, including the effective collection
+	 * types.
+	 * 
+	 * @param type
+	 * @return true if the type is or contains an integer type.
+	 */
+	public boolean isIntType(Type type) {
+		if (type instanceof Type.Int) {
+			return true;
+		}
+
+		if (type instanceof Type.List) {
+			return isIntType(((Type.List) type).element());
+		}
+
+		if (type instanceof Type.Tuple) {
+			// Check the type of value field.
+			Type element = ((Type.Tuple) type).element(1);
+			return isIntType(element);
+		}
+
+		return false;
+	}
+	
 
 	/**
 	 * Given a function name, get the CFGraph.
@@ -80,6 +89,27 @@ public abstract class Analyzer {
 			return cfgraphs.get(function);
 		return null;
 	}
+	
+	/**
+	 * Get the block that contains the given code.
+	 * @param function
+	 * @return
+	 */
+	protected BasicBlock getBlockbyCode(FunctionOrMethod function, Code code){
+		CFGraph graph = getCFGraph(function);
+		//Get the list of block for the function.
+		for(BasicBlock blk: graph.getBlockList()){
+			//Get the list of code.
+			CodeBlock codeBlk = blk.getCodeBlock();
+			//Check if code blk contains this byte-code.
+			if(codeBlk.bytecodes().contains(code)){
+				return blk;
+			}
+		}	
+		
+		return null;
+	}
+	
 	
 	/**
 	 * Gets the list of basic blocks for a function.
@@ -97,7 +127,6 @@ public abstract class Analyzer {
 		return new ArrayList<BasicBlock>();
 	}
 	
-
 	/**
 	 * Checks if the CFGraph of the given function exist.
 	 * 
@@ -221,7 +250,9 @@ public abstract class Analyzer {
 					buildCFG((Codes.Label)code, function);
 				}else if (code instanceof Codes.Loop){
 					buildCFG((Codes.Loop)code, function);
-				} else {
+				}else if (code instanceof Codes.Invoke){
+					buildCFG((Codes.Invoke)code, function);
+				}else {
 					//Add the byte-code to the current block in a CFGraph.
 					CFGraph graph = getCFGraph(function);
 					graph.getCurrentBlock().addCode(code);
@@ -231,6 +262,25 @@ public abstract class Analyzer {
 			}
 		}
 	}
+
+	/**
+	 * Builds up a basic block for the calling function.
+	 * @param code Invoke byte-code 		
+	 * @param function
+	 */
+	protected void buildCFG(Invoke code, FunctionOrMethod function) {
+		//Get the graph
+		CFGraph graph = getCFGraph(function);
+		BasicBlock c_blk = graph.getCurrentBlock();
+		//Get the label name (e.g. swap12).
+		String label = code.name.name()+line;
+		//Create a new block.
+		BasicBlock blk = graph.createBasicBlock(label, BlockType.BLOCK, c_blk);
+		blk.addCode(code);
+		//Set the current block.
+		graph.setCurrentBlock(blk);
+	}
+
 
 	protected void buildCFG(Invariant code, FunctionOrMethod function) {
 		//Add the invariant to the current block.
