@@ -66,15 +66,15 @@ public class WyopclMain extends WycMain{
 		}else{
 			//Run the translator with configuration.
 			Configuration config = new Configuration();
-			if(values.containsKey("verbose")){			
-				config.setProperty("logger", new Logger.Default(System.err));
-				config.setProperty("verbose", true);
-			}			
+			/*if(values.containsKey("verbose")){			
+				//config.setProperty("logger", new Logger.Default(System.err));
+				config.setOption("verbose", true);
+			}*/			
 			//If the options are matched with existing modes, then enable the translator by writing the mode option. 
 			for(Entry<String, Object> entry: values.entrySet()){
 				String option = entry.getKey();
 				Object value = entry.getValue();
-				config.setMode(option, value);
+				config.setOption(option, value);
 			}
 			((WyopclBuildTask)builder).setConfig(config);
 		}

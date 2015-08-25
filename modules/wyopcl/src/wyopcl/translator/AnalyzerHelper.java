@@ -305,7 +305,7 @@ public final class AnalyzerHelper {
 	 * @return
 	 */
 	public static FunctionOrMethod getFunctionOrMethod(Configuration config, String name) {
-		WyilFile module = (WyilFile) config.getProperty("module");
+		WyilFile module = config.getWyilFile();
 		return module.functionOrMethod(name).get(0);
 	}
 

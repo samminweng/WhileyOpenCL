@@ -398,6 +398,25 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
+	 * Determines whether to make a copy of array.
+	 * @param reg
+	 * @param code
+	 * @param function
+	 * @return
+	 */
+	private boolean isNecessaryCopy(int reg, Code code, FunctionOrMethod function){
+		if(this.analyzer != null){
+			//Use the copy analyzer to determine whether to clone 
+			if(!this.analyzer.isLive(reg, code, function)){
+				//That means this param variable is not live (used) in this block.
+				//Then we dont need to clone it
+				return false;
+			}
+		}		
+		return true;
+	}	
+	
+	/**
 	 * Produces the code for <code>Codes.Invoke</code> code. For example, the
 	 * following WyIL code:
 	 * 
@@ -410,16 +429,16 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * <pre>
 	 * <code>
 	 * _12_size=_xs_size;
-	 * _12=reverse(_xs , _xs_size);
+	 * _12=reverse(clone(_xs, _xs_size), _xs_size);
 	 * </code>
 	 * </pre>
 	 * 
-	 * TODO The size of the returned list requires the symbolic analysis.
+	 * Before invoking the function, clone the array ('xs') first and then pass the cloned array to the function.
+	 * So that the original array will not be overwritten and its value is safely preserved.
 	 * 
 	 * @param code
 	 */
 	protected void translate(Codes.Invoke code, FunctionOrMethod function) {
-
 		CodeStore store = this.getCodeStore(function);
 		String stat = "";
 		String ret = store.getVar(code.target());
@@ -441,39 +460,19 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// '_12=reverse(_xs , _xs_size);'
 		boolean isFirst = true;
 		for (int index = 0; index < code.operands().length; index++) {
-			
 			if (!isFirst) {
 				stat += " ,";
 			}
-			String param = store.getVar(code.operand(index));
+			int reg = code.operand(index);
+			String param = store.getVar(reg);
+			Type paramType = store.getVarType(reg);
 			// Add the '*_size' parameter
-			Type paramType = (Type) code.type().params().get(index);
-			if (paramType instanceof Type.List) {
-				/**
-				 * Clone the array first and then pass the cloned array to the function.
-				 * So that the original array will not be overwritten and its value is safely preserved.
-				 * For example, the byte-code
-				 * 	'invoke %12 = (%1, %13, %14) swap:swap : function([int],int,int) -> [int]
-				 * can be translated into C code
-				 * 	_12_size=_xs_size;
-				 *	_12=swap(clone(_xs, _xs_size) , _xs_size ,_13 ,_14);
-				 * 
-				 */
-				boolean isClone = true;
-				if(this.analyzer != null){
-					//Use the copy analyzer to determine whether to clone 
-					if(!this.analyzer.isLive(code.operand(index), code, function)){
-						//That means this param variable is not live (used) in this block.
-						//Then we dont need to clone it
-						isClone = false;
-					}
-				}
-				if(isClone){
+			if (paramType instanceof Type.List) {		
+				if(isNecessaryCopy(reg, code, function)){
 					stat += "clone("+param+", "+param+"_size), " + param + "_size";
 				}else{
 					stat += param + ", "+param+"_size";
-				}
-				
+				}				
 			}else{
 				stat += param;
 			}

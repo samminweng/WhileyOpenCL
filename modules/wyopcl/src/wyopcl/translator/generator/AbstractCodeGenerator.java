@@ -280,7 +280,7 @@ public abstract class AbstractCodeGenerator {
 		 * @return true if the variable is the size variable of input parameter.
 		 * 
 		 */
-		protected Boolean isInputParameter(String var_name) {
+		private Boolean isInputParameter(String var_name) {
 			// Check if the variable is the size variable of the input
 			// parameter.
 			String variable_name = var_name;
@@ -304,44 +304,8 @@ public abstract class AbstractCodeGenerator {
 					return true;
 				}
 			}
-
 			return false;
 		}
-
-		/**
-		 * Adds the type declaration for a variable. But serveral types are not
-		 * added to the table. For example,
-		 * 
-		 * <pre>
-		 * <code>
-		 * method(any) -> void
-		 * </code>
-		 * </pre>
-		 * 
-		 * @param type
-		 *            the Whiley type
-		 * @param var
-		 *            the name of variable
-		 */
-		/*
-		 * protected void addDeclaration(Type type, String var) { // Check if
-		 * the type is a record and its field contains "println" . if (type
-		 * instanceof Type.Record) { Type.Record record = (Type.Record) type; //
-		 * Add the record type to the list //
-		 * if(!this.record_types.contains(record)){ //
-		 * this.record_types.add(record); // }
-		 * 
-		 * // If so, then the record loads the "println" from the //
-		 * sys.out.console. // At this stage, we dont use this record. if
-		 * (record.field("println") != null) { return; } }
-		 * 
-		 * if (type instanceof Type.Method) { return; }
-		 * 
-		 * if (type instanceof Type.List) { vars.put(var, type); // add the
-		 * additional parameter 'reg_size' to indicate the array // size.
-		 * vars.put(var + "_size", Type.Int.T_INT); } else { vars.put(var,
-		 * type); } }
-		 */
 
 		protected List<String> getStatements() {
 			return this.statements;
