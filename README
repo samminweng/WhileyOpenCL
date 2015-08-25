@@ -58,11 +58,11 @@ $ ./../../bin/wyopcl -code While_Valid_1.whiley
 $ gcc While_Valid_1.c Util.c -o While_Valid_1.out
 $ ./While_Valid_1.out
 
-1.4 Alias Analysis
-Alias analysis aims to eliminate the un-necessary array copies at
-byte-code. 
-$ cd tests/alias
-$ ./../../bin/wyopcl -alias swap.whiley
+1.4 Copy Elimination Analysis
+Copy Elimination analysis aims to eliminate the un-necessary array
+copies at Wyil level. 
+$ cd tests/copy
+$ ./../../bin/wyopcl -copy swap.whiley
 
 
 @Deprecated
