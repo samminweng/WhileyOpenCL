@@ -8,6 +8,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 public final class BaseTestUtil {
 	private final String version = "v0.3.35";
@@ -132,18 +135,20 @@ public final class BaseTestUtil {
 		ProcessBuilder pb = null;
 		File file = new File(path + filename + ".whiley");
 		try {
-			String sysout = null;
+			// The source path of header file
+			String h_sysout = path + filename + ".h";
+			// The source path of c file.
+			String c_sysout = null;
 			// No extra options
 			switch (options.length) {
 			case 0:
-				sysout = path + filename + ".c.sysout";
+				c_sysout = path + filename + ".c.sysout";
 				pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-code",
 						file.getName());
 				break;
 			case 1:
-
 				// Specify the output file name
-				sysout = path + filename + "." + options[0] + ".c.sysout";
+				c_sysout = path + filename + "." + options[0] + ".c.sysout";
 				// Create the Java process to run the code generator.
 				pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-code",
 						"-" + options[0], file.getName());
@@ -168,13 +173,35 @@ public final class BaseTestUtil {
 			// Cause the current thread to Wait until the process has
 			// terminated.
 			p.waitFor();
+			
+			//Compare the header file
+			assertOutput(new BufferedReader(new FileReader(path + filename + ".h")),
+					new BufferedReader(new FileReader(h_sysout)));
+			
 			// Compare the generated C code with the predefined output.
 			assertOutput(new BufferedReader(new FileReader(path + filename + ".c")),
-					new BufferedReader(new FileReader(sysout)));
+					new BufferedReader(new FileReader(c_sysout)));
+			
+			//Delete the generated *.c and *.h			
+			Path c_path = FileSystems.getDefault().getPath(path + filename + ".c");
+			Files.deleteIfExists(c_path);
+			Path h_path = FileSystems.getDefault().getPath(path + filename + ".h");
+			Files.deleteIfExists(h_path);
+			
+			//Delete the *.wyil
+			Path wyil_path = FileSystems.getDefault().getPath(path + filename + ".wyil");
+			Files.deleteIfExists(wyil_path);
+			
 		} catch (Exception e) {
 			terminate();
 			throw new RuntimeException("Test file: " + file.getName(), e);
 		}
+		
+		//
+		
+		
+		
+		
 		file = null;
 	}
 

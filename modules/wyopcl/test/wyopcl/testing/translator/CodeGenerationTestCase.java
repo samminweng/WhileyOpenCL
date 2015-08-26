@@ -37,10 +37,20 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(valid_path,"IfElse_Valid_2");
 	}	
 	
-	//@Test
+	@Test
+	public void test_copy_IfElse_Valid_2() {
+		util.execCodeGeneration(valid_path,"IfElse_Valid_2", "copy");
+	}
+	
+	@Test
 	public void test_WhileLoop() {
 		util.execCodeGeneration(valid_path, "WhileLoop");
 	}	
+	
+	@Test
+	public void test_copy_WhileLoop() {
+		util.execCodeGeneration(valid_path, "WhileLoop", "copy");
+	}
 	
 	//@Test
 	public void test_While_Valid_1_slow() {
