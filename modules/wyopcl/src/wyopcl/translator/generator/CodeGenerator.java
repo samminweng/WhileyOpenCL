@@ -1035,7 +1035,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * @param loop_cond
 	 */
-	private void translateLoopHeader(Codes.If loop_cond, FunctionOrMethod function) {
+	private void translateLoopCondition(Codes.If loop_cond, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
 		String statement = store.getIndent();
 		String left = store.getVar(loop_cond.leftOperand);
@@ -1103,29 +1103,59 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Loop code, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
-
 		// Increase the indentation.
 		store.increaseIndent();
-		List<Code> loop_body = new ArrayList<Code>();
+		
+		//Create loop_header
+		List<Code> loop_header = new ArrayList<Code>();
 		Codes.Invariant loop_invariant = null;
 		Codes.If loop_condition = null;
+		int index =0;
+		//Split the loop header and loop body
+		for (index=0; index<code.bytecodes().size();index++) {
+			Code loop_code = code.bytecodes().get(index);
+			if (loop_code instanceof Codes.If) {
+				//Assign the loop condition 
+				loop_condition = (Codes.If)loop_code;
+				//Increment the index
+				index++;
+				break;
+			}else if(loop_code instanceof Codes.Invariant){
+				loop_invariant = (Codes.Invariant)loop_code;
+			}else{
+				//Add the code to loop header
+				loop_header.add(loop_code);
+			}			
+		}
+		
+		
+		List<Code> loop_body = new ArrayList<Code>();
 		// Reorder the sequence of loop code and put the loop invariant next to
 		// loop condition.
-		for (Code loop_code : code.bytecodes()) {
+		for (;index<code.bytecodes().size();index++) {
 			// Get the loop invariant
-			if (loop_code instanceof Invariant) {
-				loop_invariant = (Invariant) loop_code;
-			} else {
-				if (loop_code instanceof Codes.If && loop_condition == null) {
-					loop_condition = (If) loop_code;
-				} else {
-					loop_body.add(loop_code);
-				}
-			}
+			loop_body.add(code.bytecodes().get(index));
 		}
-		translateLoopHeader(loop_condition, function);
-		translate(loop_invariant, function);
-		iterateOverCodeBlock(loop_body, function);
+		
+		//Translate the loop header
+		this.iterateOverCodeBlock(loop_header, function);
+		
+		
+		//Translate the loop condition
+		if(loop_condition != null){
+			translateLoopCondition(loop_condition, function);
+		}
+		
+		//Translate the loop invariant
+		if(loop_invariant != null){
+			translate(loop_invariant, function);
+		}
+		
+		//Translate the loop body
+		if(loop_body != null){
+			iterateOverCodeBlock(loop_body, function);
+		}
+		
 		// Decrease the indentation.
 		store.decreaseIndent();
 		// Add the ending bracket.
