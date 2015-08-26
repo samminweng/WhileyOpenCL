@@ -83,18 +83,21 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			Type type = vars.get(reg).type();
 			// Get the variable name.
 			String var = store.getVar(reg);
-			if (type instanceof Type.List) {
-				// Type declaration and initial value assignment.
-				// Assign 'null' to a list
-				del += indent + translate(type) + " " + var + " = NULL;\n";
-				// If the variable is an array, then add the extra 'size'
-				// variable.
-				del += indent + "long long " + var + "_size = 0;\n";
-			} else if (type instanceof Type.Int) {
-				del += indent + translate(type) + " " + var + " = 0;\n";
-			} else {
-				// Type declaration without any initialization.
-				del += indent + translate(type) + " " + var + ";\n";
+			String s_type = translate(type);
+			if(s_type != null){
+				if (type instanceof Type.List) {
+					// Type declaration and initial value assignment.
+					// Assign 'null' to a list
+					del += indent + translate(type) + " " + var + " = NULL;\n";
+					// If the variable is an array, then add the extra 'size'
+					// variable.
+					del += indent + "long long " + var + "_size = 0;\n";
+				} else if (type instanceof Type.Int) {
+					del += indent + translate(type) + " " + var + " = 0;\n";
+				} else {
+					// Type declaration without any initialization.
+					del += indent + translate(type) + " " + var + ";\n";
+				}				
 			}
 		}
 		return del;
@@ -1212,7 +1215,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * @param type
 	 *            the WyIL type
-	 * @return the result string TODO Generalize the user-defined types, such as
+	 * @return the result string. Return null if the type can not be translated,
+	 * e.g. the function call of print, printf... 
+	 *
+	 * TODO Generalize the user-defined types, such as
 	 *         'Board'.
 	 * 
 	 */
@@ -1240,9 +1246,19 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		if (type instanceof Type.Record) {
 			Type.Record record = (Type.Record) type;
 			HashMap<String, Type> fields = record.fields();
+			//Check if the var is the function call of print,...
+			if(fields.containsKey("print") || fields.containsKey("println")
+					|| fields.containsKey("print_s") 
+					|| fields.containsKey("println_s")){
+				//No needs to do the translation.
+				return null;
+			}
+			
+			//Check
 			if (fields.containsKey("args")) {
 				return "int argc, char** argv";
 			}
+			
 			// Check if the type is an instance of user defined type.
 			wyil.lang.WyilFile.Type userDefinedType = getUserDefinedType((Type.Record) type);
 			if (userDefinedType != null) {

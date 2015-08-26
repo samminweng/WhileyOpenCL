@@ -22,29 +22,39 @@ public class CodeGenerationTestCase {
 		util = null;
 	}
 	
+	@Test 
+	public void test_swap(){
+		util.execCodeGeneration(valid_path,"swap");
+	}
+	
+	@Test 
+	public void test_copy_swap(){
+		util.execCodeGeneration(valid_path,"swap", "copy");
+	}
+	
 	@Test
 	public void test_IfElse_Valid_2() {
 		util.execCodeGeneration(valid_path,"IfElse_Valid_2");
 	}	
 	
-	@Test
+	//@Test
 	public void test_WhileLoop() {
 		util.execCodeGeneration(valid_path, "WhileLoop");
 	}	
 	
-	@Test
+	//@Test
 	public void test_While_Valid_1_slow() {
 		//Generate the naive C code  
 		util.execCodeGeneration(valid_path, "While_Valid_1", "slow");
 	}
 	
-	@Test
+	//@Test
 	public void test_While_Valid_1_fast() {
 		//Generate the naive C code  
 		util.execCodeGeneration(valid_path, "While_Valid_1", "fast");
 	}
 	
-	@Test
+	//@Test
 	public void test_TicTacToe() {
 		util.execCodeGeneration(valid_path, "TicTacToe");
 	}

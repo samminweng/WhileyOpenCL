@@ -37,64 +37,109 @@ blklab1:;
 	;
 }
 int main(int argc, char** argv){
+	long long _1 = 0;
+	long long _2 = 0;
 	long long _3 = 0;
 	long long _4 = 0;
+	long long _5 = 0;
+	long long _6 = 0;
 	long long _7 = 0;
 	long long _8 = 0;
+	long long _9 = 0;
+	long long _10 = 0;
 	long long _11 = 0;
 	long long _12 = 0;
+	long long _13 = 0;
+	long long _14 = 0;
 	long long _15 = 0;
 	long long _16 = 0;
-	long long _19 = 0;
-	long long _20 = 0;
-	long long _21 = 0;
-	//fieldload %1 = %0 out : {[[int]] args,{method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s} out}
-	//fieldload %2 = %1 println : {method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s}
-	//const %4 = 1 : int
-	_4 = 1;
-	//invoke %3 = (%4) IfElse_Valid_2:f : function(int) -> int
-	_3=f(_4);
-	//indirectinvoke %2 (%3) : method(any) -> void
-	indirect_printf(_3);
-
-	//fieldload %5 = %0 out : {[[int]] args,{method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s} out}
-	//fieldload %6 = %5 println : {method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s}
-	//const %8 = 10 : int
-	_8 = 10;
-	//invoke %7 = (%8) IfElse_Valid_2:f : function(int) -> int
-	_7=f(_8);
-	//indirectinvoke %6 (%7) : method(any) -> void
-	indirect_printf(_7);
-
-	//fieldload %9 = %0 out : {[[int]] args,{method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s} out}
-	//fieldload %10 = %9 println : {method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s}
-	//const %12 = 11 : int
-	_12 = 11;
-	//invoke %11 = (%12) IfElse_Valid_2:f : function(int) -> int
-	_11=f(_12);
-	//indirectinvoke %10 (%11) : method(any) -> void
-	indirect_printf(_11);
-
-	//fieldload %13 = %0 out : {[[int]] args,{method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s} out}
-	//fieldload %14 = %13 println : {method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s}
-	//const %16 = 1212 : int
-	_16 = 1212;
-	//invoke %15 = (%16) IfElse_Valid_2:f : function(int) -> int
-	_15=f(_16);
-	//indirectinvoke %14 (%15) : method(any) -> void
-	indirect_printf(_15);
-
-	//fieldload %17 = %0 out : {[[int]] args,{method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s} out}
-	//fieldload %18 = %17 println : {method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s}
-	//const %20 = 1212 : int
-	_20 = 1212;
-	//neg %21 = %20 : int
-	_21= -_20;
-	//invoke %19 = (%21) IfElse_Valid_2:f : function(int) -> int
-	_19=f(_21);
-	//indirectinvoke %18 (%19) : method(any) -> void
-	indirect_printf(_19);
-
+	//assert
+	{
+		//const %2 = 1 : int
+		_2 = 1;
+		//invoke %1 = (%2) IfElse_Valid_2:f : function(int) -> int
+		_1=f(_2);
+		//const %3 = 1 : int
+		_3 = 1;
+		//ifeq %1, %3 goto blklab3 : int
+		if(_1==_3){goto blklab3;}
+		//fail
+		fprintf(stderr,"fail");
+		exit(0);
+//.blklab3
+blklab3:;
+	//assert
+	}
+	//assert
+	{
+		//const %5 = 10 : int
+		_5 = 10;
+		//invoke %4 = (%5) IfElse_Valid_2:f : function(int) -> int
+		_4=f(_5);
+		//const %6 = 0 : int
+		_6 = 0;
+		//ifeq %4, %6 goto blklab4 : int
+		if(_4==_6){goto blklab4;}
+		//fail
+		fprintf(stderr,"fail");
+		exit(0);
+//.blklab4
+blklab4:;
+	//assert
+	}
+	//assert
+	{
+		//const %8 = 11 : int
+		_8 = 11;
+		//invoke %7 = (%8) IfElse_Valid_2:f : function(int) -> int
+		_7=f(_8);
+		//const %9 = 2 : int
+		_9 = 2;
+		//ifeq %7, %9 goto blklab5 : int
+		if(_7==_9){goto blklab5;}
+		//fail
+		fprintf(stderr,"fail");
+		exit(0);
+//.blklab5
+blklab5:;
+	//assert
+	}
+	//assert
+	{
+		//const %11 = 1212 : int
+		_11 = 1212;
+		//invoke %10 = (%11) IfElse_Valid_2:f : function(int) -> int
+		_10=f(_11);
+		//const %12 = 2 : int
+		_12 = 2;
+		//ifeq %10, %12 goto blklab6 : int
+		if(_10==_12){goto blklab6;}
+		//fail
+		fprintf(stderr,"fail");
+		exit(0);
+//.blklab6
+blklab6:;
+	//assert
+	}
+	//assert
+	{
+		//const %14 = 1212 : int
+		_14 = 1212;
+		//neg %15 = %14 : int
+		_15= -_14;
+		//invoke %13 = (%15) IfElse_Valid_2:f : function(int) -> int
+		_13=f(_15);
+		//const %16 = 1 : int
+		_16 = 1;
+		//ifeq %13, %16 goto blklab7 : int
+		if(_13==_16){goto blklab7;}
+		//fail
+		fprintf(stderr,"fail");
+		exit(0);
+//.blklab7
+blklab7:;
+	//assert
+	}
 	//return
 	;
 }
