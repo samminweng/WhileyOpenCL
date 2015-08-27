@@ -83,18 +83,21 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			Type type = vars.get(reg).type();
 			// Get the variable name.
 			String var = store.getVar(reg);
-			if (type instanceof Type.List) {
-				// Type declaration and initial value assignment.
-				// Assign 'null' to a list
-				del += indent + translate(type) + " " + var + " = NULL;\n";
-				// If the variable is an array, then add the extra 'size'
-				// variable.
-				del += indent + "long long " + var + "_size = 0;\n";
-			} else if (type instanceof Type.Int) {
-				del += indent + translate(type) + " " + var + " = 0;\n";
-			} else {
-				// Type declaration without any initialization.
-				del += indent + translate(type) + " " + var + ";\n";
+			String s_type = translate(type);
+			if(s_type != null){
+				if (type instanceof Type.List) {
+					// Type declaration and initial value assignment.
+					// Assign 'null' to a list
+					del += indent + translate(type) + " " + var + " = NULL;\n";
+					// If the variable is an array, then add the extra 'size'
+					// variable.
+					del += indent + "long long " + var + "_size = 0;\n";
+				} else if (type instanceof Type.Int) {
+					del += indent + translate(type) + " " + var + " = 0;\n";
+				} else {
+					// Type declaration without any initialization.
+					del += indent + translate(type) + " " + var + ";\n";
+				}				
 			}
 		}
 		return del;
@@ -279,25 +282,26 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String op = store.getVar(code.operand(0));
 		String statement = "";
 		String indent = store.getIndent();
+		// Check if the assigned type is an array.
 		if (code.type() instanceof Type.List) {
-			// Check if the assigned type is an array. If so, use different way
-			// to copy the array.
-			String target_size = target + "_size";
-			// long long _11_size;
-			// store.addDeclaration(Type.Int.T_INT, target_size);
-			// Check if the op is the input parameters or not.
-			// if (isInputParameter(op)) {
-			// If so, then the operand is cloned and
-			// _4 = clone(_0, _0_size);
-			// statement = indent + target + " = clone(" + op + ", " + op +
-			// "_size);\n";
-			// } else {
-
-			// _2 = (long long*)_3;
-			statement = indent + target + " = (" + translate(store.getVarType(code.target())) + ")" + op + ";\n";
-			// }
-			// _1_size = _10_size;
-			statement += indent + target_size + " = " + op + "_size;";
+			// Clone the array and assign the cloned to the target. 
+			statement += indent + (target + "_size") + " = " + op + "_size;\n";
+			/**
+			 * 
+			 * For example, the below bytecode
+			 * 		assign %3 = %0  : [bool]
+			 * can be translated in the C code:
+			 * 		_3_size = _board_size;
+			 * 		_3 = clone(_board, _board_size);
+			 * 
+			 */
+			if(isNecessaryCopy(code.operand(0), code, function)){
+				//Make a copy of right operand.
+				statement += indent + target + " = clone("+op+", "+op+"_size);";
+			}else{
+				//In-place update
+				statement += indent + target + " = (" + translate(store.getVarType(code.target())) + ")" + op + ";";
+			}
 		} else {
 			statement = indent + target + " = " + op + ";";
 		}
@@ -1032,7 +1036,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * @param loop_cond
 	 */
-	private void translateLoopHeader(Codes.If loop_cond, FunctionOrMethod function) {
+	private void translateLoopCondition(Codes.If loop_cond, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
 		String statement = store.getIndent();
 		String left = store.getVar(loop_cond.leftOperand);
@@ -1100,29 +1104,59 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Loop code, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
-
 		// Increase the indentation.
 		store.increaseIndent();
-		List<Code> loop_body = new ArrayList<Code>();
+		
+		//Create loop_header
+		List<Code> loop_header = new ArrayList<Code>();
 		Codes.Invariant loop_invariant = null;
 		Codes.If loop_condition = null;
+		int index =0;
+		//Split the loop header and loop body
+		for (index=0; index<code.bytecodes().size();index++) {
+			Code loop_code = code.bytecodes().get(index);
+			if (loop_code instanceof Codes.If) {
+				//Assign the loop condition 
+				loop_condition = (Codes.If)loop_code;
+				//Increment the index
+				index++;
+				break;
+			}else if(loop_code instanceof Codes.Invariant){
+				loop_invariant = (Codes.Invariant)loop_code;
+			}else{
+				//Add the code to loop header
+				loop_header.add(loop_code);
+			}			
+		}
+		
+		
+		List<Code> loop_body = new ArrayList<Code>();
 		// Reorder the sequence of loop code and put the loop invariant next to
 		// loop condition.
-		for (Code loop_code : code.bytecodes()) {
+		for (;index<code.bytecodes().size();index++) {
 			// Get the loop invariant
-			if (loop_code instanceof Invariant) {
-				loop_invariant = (Invariant) loop_code;
-			} else {
-				if (loop_code instanceof Codes.If && loop_condition == null) {
-					loop_condition = (If) loop_code;
-				} else {
-					loop_body.add(loop_code);
-				}
-			}
+			loop_body.add(code.bytecodes().get(index));
 		}
-		translateLoopHeader(loop_condition, function);
-		translate(loop_invariant, function);
-		iterateOverCodeBlock(loop_body, function);
+		
+		//Translate the loop header
+		this.iterateOverCodeBlock(loop_header, function);
+		
+		
+		//Translate the loop condition
+		if(loop_condition != null){
+			translateLoopCondition(loop_condition, function);
+		}
+		
+		//Translate the loop invariant
+		if(loop_invariant != null){
+			translate(loop_invariant, function);
+		}
+		
+		//Translate the loop body
+		if(loop_body != null){
+			iterateOverCodeBlock(loop_body, function);
+		}
+		
 		// Decrease the indentation.
 		store.decreaseIndent();
 		// Add the ending bracket.
@@ -1212,7 +1246,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * @param type
 	 *            the WyIL type
-	 * @return the result string TODO Generalize the user-defined types, such as
+	 * @return the result string. Return null if the type can not be translated,
+	 * e.g. the function call of print, printf... 
+	 *
+	 * TODO Generalize the user-defined types, such as
 	 *         'Board'.
 	 * 
 	 */
@@ -1240,9 +1277,19 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		if (type instanceof Type.Record) {
 			Type.Record record = (Type.Record) type;
 			HashMap<String, Type> fields = record.fields();
+			//Check if the var is the function call of print,...
+			if(fields.containsKey("print") || fields.containsKey("println")
+					|| fields.containsKey("print_s") 
+					|| fields.containsKey("println_s")){
+				//No needs to do the translation.
+				return null;
+			}
+			
+			//Check
 			if (fields.containsKey("args")) {
 				return "int argc, char** argv";
 			}
+			
 			// Check if the type is an instance of user defined type.
 			wyil.lang.WyilFile.Type userDefinedType = getUserDefinedType((Type.Record) type);
 			if (userDefinedType != null) {

@@ -10,5 +10,5 @@ requires limit <= 1000000:
     return sum
 
 method main(System.Console sys) -> void:
-    sys.out.println(f(5))    
-    sys.out.println(f(50000))
+    assert f(5) == 10    
+    assert f(50000) == 1249975000
