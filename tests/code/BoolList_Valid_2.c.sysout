@@ -17,11 +17,11 @@ long long* play(long long* _board, long long _board_size){
 		long long _13 = 0;
 		long long _14 = 0;
 	//assign %3 = %0  : [bool]
-	_3 = (long long*)_board;
 	_3_size = _board_size;
+	_3 = clone(_board, _board_size);
 	//assign %1 = %3  : [bool]
-	_nboard = (long long*)_3;
 	_nboard_size = _3_size;
+	_nboard = clone(_3, _3_size);
 	//const %5 = 0 : int
 	_5 = 0;
 	//assign %4 = %5  : int
@@ -233,11 +233,11 @@ int main(int argc, char** argv){
 	_10 = (long long*)malloc(_10_size*sizeof(long long));
 	_10[0] = _3;	_10[1] = _4;	_10[2] = _5;	_10[3] = _6;	_10[4] = _7;	_10[5] = _8;	_10[6] = _9;
 	//assign %2 = %10  : [bool]
-	_2 = (long long*)_10;
 	_2_size = _10_size;
+	_2 = clone(_10, _10_size);
 	//assign %1 = %2  : [bool]
-	_xs = (long long*)_2;
 	_xs_size = _2_size;
+	_xs = clone(_2, _2_size);
 	//assume 
 	{
 		//const %11 = true : bool
@@ -271,8 +271,8 @@ blklab8:;
 	_19_size=_xs_size;
 	_19=play(clone(_xs, _xs_size), _xs_size);
 	//assign %1 = %19  : [bool]
-	_xs = (long long*)_19;
 	_xs_size = _19_size;
+	_xs = clone(_19, _19_size);
 	//assume 
 	{
 		//const %20 = false : bool
@@ -306,8 +306,8 @@ blklab9:;
 	_28_size=_xs_size;
 	_28=play(clone(_xs, _xs_size), _xs_size);
 	//assign %1 = %28  : [bool]
-	_xs = (long long*)_28;
 	_xs_size = _28_size;
+	_xs = clone(_28, _28_size);
 	//assume 
 	{
 		//const %29 = false : bool
@@ -341,8 +341,8 @@ blklab10:;
 	_37_size=_xs_size;
 	_37=play(clone(_xs, _xs_size), _xs_size);
 	//assign %1 = %37  : [bool]
-	_xs = (long long*)_37;
 	_xs_size = _37_size;
+	_xs = clone(_37, _37_size);
 	//assume 
 	{
 		//const %38 = false : bool
@@ -376,8 +376,8 @@ blklab11:;
 	_46_size=_xs_size;
 	_46=play(clone(_xs, _xs_size), _xs_size);
 	//assign %1 = %46  : [bool]
-	_xs = (long long*)_46;
 	_xs_size = _46_size;
+	_xs = clone(_46, _46_size);
 	//assume 
 	{
 		//const %47 = false : bool

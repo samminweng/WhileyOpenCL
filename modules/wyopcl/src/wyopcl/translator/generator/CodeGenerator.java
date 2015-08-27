@@ -282,25 +282,21 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String op = store.getVar(code.operand(0));
 		String statement = "";
 		String indent = store.getIndent();
+		// Check if the assigned type is an array.
 		if (code.type() instanceof Type.List) {
-			// Check if the assigned type is an array. If so, use different way
-			// to copy the array.
-			String target_size = target + "_size";
-			// long long _11_size;
-			// store.addDeclaration(Type.Int.T_INT, target_size);
-			// Check if the op is the input parameters or not.
-			// if (isInputParameter(op)) {
-			// If so, then the operand is cloned and
-			// _4 = clone(_0, _0_size);
-			// statement = indent + target + " = clone(" + op + ", " + op +
-			// "_size);\n";
-			// } else {
-
-			// _2 = (long long*)_3;
-			statement = indent + target + " = (" + translate(store.getVarType(code.target())) + ")" + op + ";\n";
-			// }
-			// _1_size = _10_size;
-			statement += indent + target_size + " = " + op + "_size;";
+			// Clone the array and assign the cloned to the target. 
+			/**
+			 * 
+			 * For example, the below bytecode
+			 * 		assign %3 = %0  : [bool]
+			 * can be translated in the C code:
+			 * 		_3_size = _board_size;
+			 * 		_3 = clone(_board, _board_size);
+			 * 
+			 */
+			statement += indent + (target + "_size") + " = " + op + "_size;\n";
+			statement += indent + target + " = clone("+op+", "+op+"_size);";
+			//statement = indent + target + " = (" + translate(store.getVarType(code.target())) + ")" + op + ";\n";
 		} else {
 			statement = indent + target + " = " + op + ";";
 		}
