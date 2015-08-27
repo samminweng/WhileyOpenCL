@@ -52,6 +52,11 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(valid_path, "WhileLoop", "copy");
 	}
 	
+	@Test
+	public void test_BoolList_Valid_2(){
+		util.execCodeGeneration(valid_path, "BoolList_Valid_2");
+	}
+
 	//@Test
 	public void test_While_Valid_1_slow() {
 		//Generate the naive C code  

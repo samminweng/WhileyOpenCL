@@ -102,11 +102,11 @@ int main(int argc, char** argv){
 	_10 = (long long*)malloc(_10_size*sizeof(long long));
 	_10[0] = _4;	_10[1] = _5;	_10[2] = _6;	_10[3] = _7;	_10[4] = _8;	_10[5] = _9;
 	//assign %3 = %10  : [int]
-	_3 = (long long*)_10;
 	_3_size = _10_size;
+	_3 = clone(_10, _10_size);
 	//assign %1 = %3  : [int]
-	_xs = (long long*)_3;
 	_xs_size = _3_size;
+	_xs = clone(_3, _3_size);
 	//const %13 = 3 : int
 	_13 = 3;
 	//const %14 = 5 : int
@@ -115,11 +115,11 @@ int main(int argc, char** argv){
 	_12_size=_xs_size;
 	_12=swap(clone(_xs, _xs_size), _xs_size ,_13 ,_14);
 	//assign %11 = %12  : [int]
-	_11 = (long long*)_12;
 	_11_size = _12_size;
+	_11 = clone(_12, _12_size);
 	//assign %2 = %11  : [int]
-	_ys = (long long*)_11;
 	_ys_size = _11_size;
+	_ys = clone(_11, _11_size);
 	//assert
 	{
 		//const %15 = 0 : int
@@ -182,8 +182,8 @@ blklab1:;
 	_29_size=_xs_size;
 	_29=swap(clone(_xs, _xs_size), _xs_size ,_30 ,_31);
 	//assign %1 = %29  : [int]
-	_xs = (long long*)_29;
 	_xs_size = _29_size;
+	_xs = clone(_29, _29_size);
 	//assert
 	{
 		//const %32 = 0 : int

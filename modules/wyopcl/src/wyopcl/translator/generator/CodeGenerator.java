@@ -285,6 +285,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Check if the assigned type is an array.
 		if (code.type() instanceof Type.List) {
 			// Clone the array and assign the cloned to the target. 
+			statement += indent + (target + "_size") + " = " + op + "_size;\n";
 			/**
 			 * 
 			 * For example, the below bytecode
@@ -294,9 +295,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			 * 		_3 = clone(_board, _board_size);
 			 * 
 			 */
-			statement += indent + (target + "_size") + " = " + op + "_size;\n";
-			statement += indent + target + " = clone("+op+", "+op+"_size);";
-			//statement = indent + target + " = (" + translate(store.getVarType(code.target())) + ")" + op + ";\n";
+			if(isNecessaryCopy(code.operand(0), code, function)){
+				//Make a copy of right operand.
+				statement += indent + target + " = clone("+op+", "+op+"_size);";
+			}else{
+				//In-place update
+				statement += indent + target + " = (" + translate(store.getVarType(code.target())) + ")" + op + ";";
+			}
 		} else {
 			statement = indent + target + " = " + op + ";";
 		}
