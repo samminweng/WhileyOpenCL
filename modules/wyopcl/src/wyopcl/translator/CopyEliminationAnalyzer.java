@@ -155,7 +155,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 			}else if (code instanceof Codes.Invariant){
 				in = computeIn(((Codes.Invariant)code).bytecodes(), in);
 			}else if (code instanceof Codes.Invoke){
-				in = computeIn((Codes.Invoke)code, in);
+				//in = computeIn((Codes.Invoke)code, in);
 			}else{
 				in = liveAnalyzer.propagate(null, code, in);
 			}
@@ -224,7 +224,10 @@ public class CopyEliminationAnalyzer extends Analyzer {
 				this.printCFG(function);
 			}			
 			applyLiveAnalysisByBlock(function);
-			printLivenss(function);
+			//Print out result when 'verbose' option is enabled.
+			if(config.isVerbose()){
+				printLivenss(function);
+			}		
 		}
 	}
 	

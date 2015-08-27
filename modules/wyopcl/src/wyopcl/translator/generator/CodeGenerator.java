@@ -44,7 +44,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	// types, e.g.
 	// Board.
 	
-	private CopyEliminationAnalyzer analyzer;
+	private CopyEliminationAnalyzer analyzer = null;
 
 	/**
 	 * Constructor
