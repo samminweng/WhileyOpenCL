@@ -38,6 +38,7 @@ import wyil.lang.Codes.NewList;
 import wyil.lang.Codes.NewRecord;
 import wyil.lang.Codes.Nop;
 import wyil.lang.Codes.Return;
+import wyil.lang.Codes.SubList;
 import wyil.lang.Codes.UnaryOperator;
 import wyil.lang.Codes.Update;
 import wyil.lang.Type;
@@ -225,7 +226,7 @@ public abstract class AbstractCodeGenerator {
 				} else if (code instanceof Codes.Nop) {
 					translate((Codes.Nop) code, function);
 				} else if (code instanceof Codes.SubList) {
-					throw new RuntimeException("Not implemented! "+ code.toString(), null);
+					translate((Codes.SubList)code, function);
 				} else if (code instanceof Codes.Switch) {
 					throw new RuntimeException("Not implemented! "+ code.toString(), null);
 				} else if (code instanceof Codes.TupleLoad) {
@@ -246,6 +247,9 @@ public abstract class AbstractCodeGenerator {
 			}
 		}
 	}
+
+	
+	protected abstract void translate(SubList code, FunctionOrMethod function);
 
 	/**
 	 * Stores the generated code for a function.
