@@ -574,8 +574,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// get the type of left/right
 		Type left_type = store.getVarType(code.leftOperand);
 		Type right_type = store.getVarType(code.rightOperand);
-		// Special case for comparing two arrays.
-		if (left_type.equals(right_type) && left_type instanceof Type.List) {
+		// Added a special case to compare two arrays.
+		if (left_type instanceof Type.List ||right_type instanceof Type.List) {
 			/**
 			 * 
 			 * For example, the byte-code:
@@ -588,10 +588,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statement += "if(isArrayEqual(" + left + ", " + left + "_size";
 				// Check if both of arrays are the same (1: true, 0:false).
 				statement += "," + right + ", " + right + "_size)==1";
-			} else {
-
 			}
-
 		} else {
 			statement += "if(" + left;
 			// The condition
