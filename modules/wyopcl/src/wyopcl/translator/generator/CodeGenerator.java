@@ -749,8 +749,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Translate the Return code.
 			statement += "return " + store.getVar(code.operand) + ";";
 		} else {
-			// If operand == -1, then add a simple empty code.
-			statement += ";";
+			// If operand == -1, then add a simple exit code with value of 0.
+			statement += "exit(0);";
 		}
 		store.addStatement(code, statement);
 	}
