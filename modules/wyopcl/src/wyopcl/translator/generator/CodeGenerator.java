@@ -72,8 +72,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		VariableDeclarations vars = function.attribute(VariableDeclarations.class);
 		// Get code storage
 		CodeStore store = this.getCodeStore(function);
-		String indent = store.getIndent();
-
 		// The string declaration.
 		String del = "";
 		// Skip the input parameters
@@ -88,15 +86,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				if (type instanceof Type.List) {
 					// Type declaration and initial value assignment.
 					// Assign 'null' to a list
-					del += indent + translate(type) + " " + var + " = NULL;\n";
+					del += "\t"+translate(type) + " " + var + " = NULL;\n";
 					// If the variable is an array, then add the extra 'size'
 					// variable.
-					del += indent + "long long " + var + "_size = 0;\n";
+					del += "\tlong long " + var + "_size = 0;\n";
 				} else if (type instanceof Type.Int) {
-					del += indent + translate(type) + " " + var + " = 0;\n";
+					del += "\t"+translate(type) + " " + var + " = 0;\n";
 				} else {
 					// Type declaration without any initialization.
-					del += indent + translate(type) + " " + var + ";\n";
+					del += "\t"+translate(type) + " " + var + ";\n";
 				}
 			}
 		}
@@ -1048,10 +1046,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// The negated operator
 		statement += translate(loop_cond.op, true);
 		statement += right;
-		statement += "){\n";
-		// Increase the indent
-		store.increaseIndent();
-		store.addStatement(loop_cond, statement);
+		statement += "){";
+		store.addStatement(loop_cond, statement);		
 	}
 
 	/**
@@ -1107,10 +1103,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Loop code, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
-		// Increase the indentation.
-		store.increaseIndent();
-
-		// Create loop_header
+		// Get loop_header
 		List<Code> loop_header = new ArrayList<Code>();
 		Codes.Invariant loop_invariant = null;
 		Codes.If loop_condition = null;
@@ -1152,13 +1145,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		if (loop_invariant != null) {
 			translate(loop_invariant, function);
 		}
-
+		
+		// Increase the indent for loop body.
+		store.increaseIndent();
 		// Translate the loop body
 		if (loop_body != null) {
 			iterateOverCodeBlock(loop_body, function);
 		}
-
-		// Decrease the indentation.
+		// Decrease the indentation after loop body.
 		store.decreaseIndent();
 		// Add the ending bracket.
 		store.addStatement(null, store.getIndent() + "}");
