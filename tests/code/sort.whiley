@@ -38,28 +38,23 @@ function sort([int] items) -> [int]:
     return items
 
 method main(System.Console sys):
-    /*  For testing only.
+    /*  For testing only.*/
     [int] xs = []
     xs = sort(xs)
     assert xs == []
-    xs = [4,3,5,2,1]
-    xs = sort(xs)
+    xs = sort([4,3,5,2,1])
     assert xs == [1,2,3,4,5]
-    xs = [3,4,7,1,2] 
-    xs = sort(xs)
+    xs = sort([3,4,7,1,2] )
     assert xs == [1,2,3,4,7]
-    xs = [3,4,7,2] 
-    xs = sort(xs)
+    xs = sort([3,4,7,2])
     assert xs == [2,3,4,7]
-    xs = [1,2,3,4]
-    xs = sort(xs)
+    xs = sort([1,2,3,4])
     assert xs == [1,2,3,4]
     xs = [1,2,3,4,5]
     xs = sort(xs)
     assert xs == [1,2,3,4,5]
-    */
     /**Benchmark merge sorting**/
-    int max = 10000
+    int max = 10
     [int] ys = []
     int index = 0
     /**Fill in the array in the reverse order (max..0)**/
