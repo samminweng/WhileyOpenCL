@@ -232,7 +232,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Initialize an array
 			if (((Constant.List) code.constant).values.isEmpty()) {
 				stat = indent + target + "=(long long*)malloc(1*sizeof(long long));\n";
-				stat += indent + "if(" + target + " == NULL) {fprintf(stderr,\"fail to malloc\"); exit(0);}\n";
+				stat += indent + "if(" + target + " == NULL) {fprintf(stderr,\"fail to malloc\");\n "
+						+ "exit(-1);}\n";
 				stat += indent + target + "_size = 0;";
 			}
 		} else {
@@ -671,7 +672,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		CodeStore store = this.getCodeStore(function);
 		String indent = store.getIndent();
 		String stat = indent + "fprintf(stderr,\"" + code + "\");\n";
-		stat += indent + "exit(0);";
+		stat += indent + "exit(-1);";//Exit value (-1) means the failure of assertions. 
 		store.addStatement(code, stat);
 	}
 
@@ -1398,7 +1399,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	/**
 	 * Translate the sublist byte-code into C code, e.g.
 	 * <code> sublist %16 = %0, %15, %1 : [int]</code> can be translated into C
-	 * code: <code> _16 = sublist(clone(_0, _0_size), _15, _1);
+	 * code: <code> 
+	 * _16 = sublist(clone(_0, _0_size), _15, _1);
+	 * _16_size = _1 - _15;
+	 * </code>
 	 * 
 	 * @param code
 	 * @param function
@@ -1409,11 +1413,18 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		int[] ops = code.operands();
 		// Generate the C code.
 		String statement = "";
+
+		// Generate the size of sublist
+		statement += store.getIndent() + store.getVar(code.target()) + "_size = " + store.getVar(ops[2]) + " - "
+				+ store.getVar(ops[1]) + ";\n";
+
+		// Generate the function call of 'sublist'
 		// LHS
 		statement += store.getIndent() + store.getVar(code.target());
 		// RHS
 		statement += " = sublist(clone(" + store.getVar(ops[0]) + ", " + store.getVar(ops[0]) + "_size), "
 				+ store.getVar(ops[1]) + ", " + store.getVar(ops[2]) + ");";
+
 		store.addStatement(code, statement);
 	}
 }
