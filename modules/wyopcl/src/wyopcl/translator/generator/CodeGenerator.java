@@ -1298,13 +1298,25 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 			// Check
 			if (fields.containsKey("args")) {
-				return "int argc, char** argv";
+				return "int argc, char** args";
 			}
 
 			// Check if the type is an instance of user defined type.
 			wyil.lang.WyilFile.Type userDefinedType = getUserDefinedType((Type.Record) type);
 			if (userDefinedType != null) {
 				return userDefinedType.name();
+			}
+		}
+		
+		
+		if(type instanceof Type.Union){
+			Type.Union union = (Type.Union)type;
+			//Check if type is an union type of integer. 
+			//If so, return the integer type. 
+			if(union.bounds().contains(Type.T_INT)){
+				return "long long";
+			}else{
+				throw new RuntimeException("Un-implemented Type"+union);
 			}
 		}
 
