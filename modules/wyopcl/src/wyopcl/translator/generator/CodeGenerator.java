@@ -86,15 +86,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				if (type instanceof Type.List) {
 					// Type declaration and initial value assignment.
 					// Assign 'null' to a list
-					del += "\t" + translate(type) + " " + var + " = NULL;\n";
+					del += "\t"+translate(type) + " " + var + " = NULL;\n";
 					// If the variable is an array, then add the extra 'size'
 					// variable.
 					del += "\tlong long " + var + "_size = 0;\n";
 				} else if (type instanceof Type.Int) {
-					del += "\t" + translate(type) + " " + var + " = 0;\n";
+					del += "\t"+translate(type) + " " + var + " = 0;\n";
 				} else {
 					// Type declaration without any initialization.
-					del += "\t" + translate(type) + " " + var + ";\n";
+					del += "\t"+translate(type) + " " + var + ";\n";
 				}
 			}
 		}
@@ -230,7 +230,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Initialize an array
 			if (((Constant.List) code.constant).values.isEmpty()) {
 				stat = indent + target + "=(long long*)malloc(1*sizeof(long long));\n";
-				stat += indent + "if(" + target + " == NULL) {fprintf(stderr,\"fail to malloc\");\n " + "exit(-1);}\n";
+				stat += indent + "if(" + target + " == NULL) {fprintf(stderr,\"fail to malloc\");\n "
+						+ "exit(-1);}\n";
 				stat += indent + target + "_size = 0;";
 			}
 		} else {
@@ -326,7 +327,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.LengthOf code, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
-		String stat = store.getIndent() + store.getVar(code.target()) + " = " + store.getVar(code.operand(0)) + "_size;";
+		String stat = store.getIndent() + store.getVar(code.target()) + " = " + store.getVar(code.operand(0))
+				+ "_size;";
 		store.addStatement(code, stat);
 	}
 
@@ -568,8 +570,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		CodeStore store = this.getCodeStore(function);
 		String statement = store.getIndent();
 		String left = store.getVar(code.leftOperand);
-		String right = store.getVar(code.rightOperand);
-
+		String right = store.getVar(code.rightOperand);		
+		
 		// Added a special case to compare two arrays.
 		if (code.type instanceof Type.List) {
 			/**
@@ -579,28 +581,28 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			 * into C code: if(isArrayEqual(_xs,_xs_size,_38,_38_size)==1){goto
 			 * blklab2;}
 			 * 
-			 * Note that isArrayEqual function checks if both of arrays are the
-			 * same (1: true, 0:false).
+			 * Note that isArrayEqual function checks if both of arrays are
+			 * the same (1: true, 0:false).
 			 * 
 			 */
 			if (code.op.equals(Comparator.EQ)) {
 				// get the type of left/right
 				Type left_type = store.getVarType(code.leftOperand);
-				Type right_type = store.getVarType(code.rightOperand);
-				// Check the left type is an array of integers.
-				if (this.isIntType(left_type)) {
+				Type right_type = store.getVarType(code.rightOperand);				
+				//Check the left type is an array of integers.				
+				if(this.isIntType(left_type)){
 					statement += "if(isArrayEqual(" + left + ", " + left + "_size";
-				} else {
-					// If not, use type casting.
-					statement += "if(isArrayEqual((" + translate(right_type) + ")" + left + ", " + left + "_size";
+				}else{
+					//If not, use type casting.
+					statement += "if(isArrayEqual((" +translate(right_type)+")"+ left + ", " + left + "_size";
 				}
-
-				// Check the right type is an array
-				if (this.isIntType(right_type)) {
+				
+				//Check the right type is an array
+				if(this.isIntType(right_type)){
 					statement += "," + right + ", " + right + "_size)==1";
-				} else {
-					// Cast the right to an array.
-					statement += ", (" + translate(left_type) + ")" + right + ", " + right + "_size)==1";
+				}else{
+					//Cast the right to an array.
+					statement += ", (" +translate(left_type)+")"+ right + ", " + right + "_size)==1";
 				}
 			}
 		} else {
@@ -681,8 +683,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		CodeStore store = this.getCodeStore(function);
 		String indent = store.getIndent();
 		String stat = indent + "fprintf(stderr,\"" + code + "\");\n";
-		stat += indent + "exit(-1);";// Exit value (-1) means the failure of
-										// assertions.
+		stat += indent + "exit(-1);";//Exit value (-1) means the failure of assertions. 
 		store.addStatement(code, stat);
 	}
 
@@ -711,7 +712,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String stat = "";
 		// For List type only
 		if (code.type() instanceof Type.List) {
-			stat += indent + store.getVar(code.target()) + "[" + store.getVar(code.operand(0)) + "] = " + store.getVar(code.result()) + ";";
+			stat += indent + store.getVar(code.target()) + "[" + store.getVar(code.operand(0)) + "] = "
+					+ store.getVar(code.result()) + ";";
 		} else if (code.type() instanceof Type.Record) {
 			stat += indent + store.getVar(code.target()) + "." + code.fields.get(0);
 			// check if there are two or more operands. If so, then add the
@@ -785,8 +787,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.IndexOf code, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
-		String stat = store.getIndent() + store.getVar(code.target()) + "=" + store.getVar(code.operand(0)) + "[" + store.getVar(code.operand(1))
-				+ "];";
+		String stat = store.getIndent() + store.getVar(code.target()) + "=" + store.getVar(code.operand(0)) + "["
+				+ store.getVar(code.operand(1)) + "];";
 		store.addStatement(code, stat);
 	}
 
@@ -909,7 +911,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			store.addStatement(code, null);
 		} else {
 			// Get the target
-			String statement = store.getIndent() + store.getVar(code.target()) + " = " + store.getVar(code.operand(0)) + "." + code.field + ";";
+			String statement = store.getIndent() + store.getVar(code.target()) + " = " + store.getVar(code.operand(0))
+					+ "." + code.field + ";";
 			store.addStatement(code, statement);
 		}
 	}
@@ -1057,7 +1060,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		statement += translate(loop_cond.op, true);
 		statement += right;
 		statement += "){";
-		store.addStatement(loop_cond, statement);
+		store.addStatement(loop_cond, statement);		
 	}
 
 	/**
@@ -1155,7 +1158,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		if (loop_invariant != null) {
 			translate(loop_invariant, function);
 		}
-
+		
 		// Increase the indent for loop body.
 		store.increaseIndent();
 		// Translate the loop body
@@ -1280,7 +1283,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			Type.Record record = (Type.Record) type;
 			HashMap<String, Type> fields = record.fields();
 			// Check if the var is the function call of print,...
-			if (fields.containsKey("print") || fields.containsKey("println") || fields.containsKey("print_s") || fields.containsKey("println_s")) {
+			if (fields.containsKey("print") || fields.containsKey("println") || fields.containsKey("print_s")
+					|| fields.containsKey("println_s")) {
 				// No needs to do the translation.
 				return null;
 			}
@@ -1333,8 +1337,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			index--;
 			// Assess the structure member, such as 'move', and assign the
 			// operand to
-			statement += store.getIndent() + store.getVar(newrecord.target()) + "." + field.getKey() + " = " + store.getVar(newrecord.operand(index))
-					+ ";\n";
+			statement += store.getIndent() + store.getVar(newrecord.target()) + "." + field.getKey() + " = "
+					+ store.getVar(newrecord.operand(index)) + ";\n";
 		}
 		store.addStatement(code, statement);
 	}
@@ -1418,20 +1422,23 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String statement = "";
 
 		// Generate the size of sublist
-		statement += store.getIndent() + store.getVar(code.target()) + "_size = " + store.getVar(ops[2]) + " - " + store.getVar(ops[1]) + ";\n";
+		statement += store.getIndent() + store.getVar(code.target()) + "_size = " + store.getVar(ops[2]) + " - "
+				+ store.getVar(ops[1]) + ";\n";
 
 		// Generate the function call of 'sublist'
 		// LHS
 		statement += store.getIndent() + store.getVar(code.target());
 		// RHS
-		// Check if the array copy is needed
-		if (isNecessaryCopy(ops[0], code, function)) {
-			statement += " = sublist(clone(" + store.getVar(ops[0]) + ", " + store.getVar(ops[0]) + "_size), " + store.getVar(ops[1]) + ", "
-					+ store.getVar(ops[2]) + ");";
-		} else {
-			statement += " = sublist(" + store.getVar(ops[0]) + ", " + store.getVar(ops[1]) + ", " + store.getVar(ops[2]) + ");";
+		//Check if the array copy is needed
+		if(isNecessaryCopy(ops[0], code, function)){
+			statement += " = sublist(clone(" + store.getVar(ops[0]) + ", " + store.getVar(ops[0]) + "_size), "
+					+ store.getVar(ops[1]) + ", " + store.getVar(ops[2]) + ");";
+		}else{
+			statement += " = sublist(" + store.getVar(ops[0]) + ", " + store.getVar(ops[1]) 
+			+ ", " + store.getVar(ops[2]) + ");";
 		}
-
+		
+		
 		store.addStatement(code, statement);
 	}
 }
