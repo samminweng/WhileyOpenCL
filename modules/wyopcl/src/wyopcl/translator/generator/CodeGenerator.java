@@ -570,12 +570,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		CodeStore store = this.getCodeStore(function);
 		String statement = store.getIndent();
 		String left = store.getVar(code.leftOperand);
-		String right = store.getVar(code.rightOperand);
-		// get the type of left/right
-		Type left_type = store.getVarType(code.leftOperand);
-		Type right_type = store.getVarType(code.rightOperand);
+		String right = store.getVar(code.rightOperand);		
+		
 		// Added a special case to compare two arrays.
-		if (left_type instanceof Type.List ||right_type instanceof Type.List) {
+		if (code.type instanceof Type.List) {
 			/**
 			 * 
 			 * For example, the byte-code:
@@ -583,11 +581,29 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			 * into C code: if(isArrayEqual(_xs,_xs_size,_38,_38_size)==1){goto
 			 * blklab2;}
 			 * 
+			 * Note that isArrayEqual function checks if both of arrays are
+			 * the same (1: true, 0:false).
+			 * 
 			 */
 			if (code.op.equals(Comparator.EQ)) {
-				statement += "if(isArrayEqual(" + left + ", " + left + "_size";
-				// Check if both of arrays are the same (1: true, 0:false).
-				statement += "," + right + ", " + right + "_size)==1";
+				// get the type of left/right
+				Type left_type = store.getVarType(code.leftOperand);
+				Type right_type = store.getVarType(code.rightOperand);				
+				//Check the left type is an array of integers.				
+				if(this.isIntType(left_type)){
+					statement += "if(isArrayEqual(" + left + ", " + left + "_size";
+				}else{
+					//If not, use type casting.
+					statement += "if(isArrayEqual((" +translate(right_type)+")"+ left + ", " + left + "_size";
+				}
+				
+				//Check the right type is an array
+				if(this.isIntType(right_type)){
+					statement += "," + right + ", " + right + "_size)==1";
+				}else{
+					//Cast the right to an array.
+					statement += ", (" +translate(left_type)+")"+ right + ", " + right + "_size)==1";
+				}
 			}
 		} else {
 			statement += "if(" + left;
