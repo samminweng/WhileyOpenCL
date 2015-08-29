@@ -21,6 +21,7 @@ import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Codes.Comparator;
 import wyil.lang.Codes.If;
+import wyil.lang.Codes.IfIs;
 import wyil.lang.Codes.Invariant;
 import wyil.lang.Codes.ListOperator;
 import wyil.lang.Codes.Loop;
@@ -142,7 +143,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Get the name
 		String name = function.name();
 		if (name.equals("main")) {
-			del = "int main(int argc, char** argv)";
+			del = "int main(int argc, char** args)";
 		} else {
 			del = "";
 			// Get the type info
@@ -892,10 +893,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * </code>
 	 * </pre>
 	 * 
-	 * 
-	 * Note that at this stage, the field load code that loads
-	 * <code>System.out.println</code> is not translated into any C code.
-	 * 
+	 * Special case:
+	 * <ul>
+	 * <li>Note that at this stage, the field load code that loads
+	 * <code>System.out.println</code> is not translated into any C code.</li>
+	 * <li> The field code, that loads <code>fieldload %6 = %0 args</code>
+	 * is translated into <code>_6 = convertCharToInt(argc, args);</code>
 	 * @param code
 	 * @throws Exception
 	 */
@@ -906,12 +909,16 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		 * Type fieldType = record.field(code.field); } }
 		 */
 		String field = code.field;
-		CodeStore store = this.getCodeStore(function);
+		CodeStore store = this.getCodeStore(function);		
+		String statement = store.getIndent();
+		
 		if (field.equals("out") || field.equals("println")) {
 			store.addStatement(code, null);
+		}else if (field.equals("args")){
+			statement += store.getVar(code.target()) + " = convertCharToInt(argc, args);";
 		} else {
 			// Get the target
-			String statement = store.getIndent() + store.getVar(code.target()) + " = " + store.getVar(code.operand(0))
+			statement += store.getVar(code.target()) + " = " + store.getVar(code.operand(0))
 					+ "." + code.field + ";";
 			store.addStatement(code, statement);
 		}
@@ -1439,6 +1446,27 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		}
 		
 		
+		store.addStatement(code, statement);
+	}
+	/**
+	 * Translate ifis Wyil code into C code. This code checks that the register is the given value.
+	 * 
+	 * For example, the ifis Wyil code
+	 * <code>ifis %1, null goto blklab6 : null|int</code>
+	 * can be translated int C code
+	 * <code>if(_1 == NULL) {goto blklab6;}
+	 * 
+	 */
+	@Override
+	protected void translate(IfIs code, FunctionOrMethod function) {
+		CodeStore store = this.getCodeStore(function);
+		String statement = "";
+		//The ifis code checks if the register is NULL or not.
+		if(code.rightOperand instanceof Type.Null){
+			statement += "if("+store.getVar(code.operand)+" == NULL) { goto "+code.target+";}";
+		}else{
+			throw new RuntimeException("Not implemented!"+code);
+		}		
 		store.addStatement(code, statement);
 	}
 }

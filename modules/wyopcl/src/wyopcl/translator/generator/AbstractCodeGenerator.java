@@ -27,6 +27,7 @@ import wyil.lang.Codes.Fail;
 import wyil.lang.Codes.FieldLoad;
 import wyil.lang.Codes.Goto;
 import wyil.lang.Codes.If;
+import wyil.lang.Codes.IfIs;
 import wyil.lang.Codes.IndexOf;
 import wyil.lang.Codes.IndirectInvoke;
 import wyil.lang.Codes.Invoke;
@@ -219,7 +220,7 @@ public abstract class AbstractCodeGenerator {
 				} else if (code instanceof Codes.If) {
 					translate((Codes.If) code, function);
 				} else if (code instanceof Codes.IfIs) {
-					throw new RuntimeException("Not implemented! "+ code.toString(), null);
+					translate((Codes.IfIs)code, function);
 				} else if (code instanceof Codes.IndexOf) {
 					translate((Codes.IndexOf) code, function);
 				} else if (code instanceof Codes.IndirectInvoke) {
@@ -276,6 +277,8 @@ public abstract class AbstractCodeGenerator {
 	}
 
 	
+	protected abstract void translate(IfIs code, FunctionOrMethod function);
+
 	protected abstract void translate(SubList code, FunctionOrMethod function);
 
 	/**
