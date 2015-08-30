@@ -10,7 +10,8 @@ then
 	WHILEY_CLASSPATH="./../../../bin/../lib/jasm-v0.1.7.jar;./../../../bin/../lib/wyrl-$version.jar;./../../../bin/../lib/wybs-$version.jar;./../../../bin/../lib/wycs-$version.jar;./../../../bin/../lib/wyil-$version.jar;./../../../bin/../lib/wyc-$version.jar;./../../../bin/../lib/wyjc-$version.jar;"
 fi
 parameters="10 100 1000"
-
+# Large scaled parameters.
+#parameters="10 100 1000 10000 100000 1000000 10000000 20000000 30000000 40000000 50000000 60000000 70000000 80000000 90000000 100000000 150000000 200000000"
 #
 # Run the benchmarks of generated Java programs.
 #

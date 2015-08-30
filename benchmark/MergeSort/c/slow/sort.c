@@ -267,9 +267,6 @@ int main(int argc, char** args){
 	long long* _18 = NULL;
 	long long _18_size = 0;
 	long long _19 = 0;
-	long long _20 = 0;
-	long long _21 = 0;
-	long long _22 = 0;
 	//fieldload %6 = %0 args : {[[int]] args,{method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s} out}
 	_6 = convertArgsToIntArray(argc, args, _6_size);
 	//const %7 = 0 : int
@@ -329,37 +326,22 @@ blklab7:;
 	//assign %2 = %18  : [int]
 	_ys_size = _18_size;
 	_ys = clone(_18, _18_size);
-	//const %19 = 0 : int
-	_19 = 0;
-	//assign %3 = %19  : int
-	_index = _19;
-	//ifgt %3, %1 goto blklab8 : int
-	while(_index<=_max){
-		//assert
-		{
-			//indexof %20 = %2, %3 : [int]
-			_20=_ys[_index];
-			//ifeq %20, %3 goto blklab9 : int
-			if(_20==_index){goto blklab9;}
-			//fail
-			fprintf(stderr,"fail");
-			exit(-1);
-//.blklab9
-blklab9:;
-		//assert
-		}
-		//const %21 = 1 : int
-		_21 = 1;
-		//add %22 = %3, %21 : int
-		_22=_index+_21;
-		//assign %3 = %22  : int
-		_index = _22;
-	}
+	//assert
+	{
+		//indexof %19 = %2, %1 : [int]
+		_19=_ys[_max];
+		//ifeq %19, %1 goto blklab8 : int
+		if(_19==_max){goto blklab8;}
+		//fail
+		fprintf(stderr,"fail");
+		exit(-1);
 //.blklab8
 blklab8:;
-	//fieldload %23 = %0 out : {[[int]] args,{method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s} out}
-	//fieldload %24 = %23 println : {method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s}
-	//indirectinvoke %24 (%2) : method(any) -> void
+	//assert
+	}
+	//fieldload %20 = %0 out : {[[int]] args,{method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s} out}
+	//fieldload %21 = %20 println : {method(any) -> void print,method([int]) -> void print_s,method(any) -> void println,method([int]) -> void println_s}
+	//indirectinvoke %21 (%2) : method(any) -> void
 	indirect_printf_array(_ys, _ys_size);
 
 //.blklab6
