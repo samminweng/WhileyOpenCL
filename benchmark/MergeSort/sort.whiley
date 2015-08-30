@@ -49,11 +49,7 @@ method main(System.Console sys):
             index = index + 1
         /**Use merge sort to sort the array**/
         ys = sort(ys)
-        /**Check the sorted and unsorted array one-by-one**/
-        index = 0
-        while index <= max:
-            // Should be in the ascending order (0..max)
-            assert ys[index] == index
-            index = index + 1
+        /**Check the last element of sorted array */
+        assert ys[max] == max
         /** Print out the sorted array */
         sys.out.println(ys)
