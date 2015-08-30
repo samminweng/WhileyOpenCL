@@ -276,33 +276,49 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 */
 	protected void translate(Codes.Assign code, FunctionOrMethod function) {
-
 		CodeStore store = this.getCodeStore(function);
 
-		String target = store.getVar(code.target());
-		String op = store.getVar(code.operand(0));
+		String rhs = store.getVar(code.target());
+		String lhs = store.getVar(code.operand(0));
 		String statement = "";
 		String indent = store.getIndent();
 		// Check if the assigned type is an array.
 		if (code.type() instanceof Type.List) {
 			// Clone the array and assign the cloned to the target.
-			statement += indent + (target + "_size") + " = " + op + "_size;\n";
+			statement += indent + (rhs + "_size") + " = " + lhs + "_size;\n";
 			/**
 			 * 
 			 * For example, the below bytecode assign %3 = %0 : [bool] can be
-			 * translated in the C code: _3_size = _board_size; _3 =
-			 * clone(_board, _board_size);
-			 * 
+			 * translated in the C code:
+			 * <code>
+			 *  _3_size = _board_size; 
+			 *  _3 = clone(_board, _board_size);
+			 * </code>
 			 */
 			if (isNecessaryCopy(code.operand(0), code, function)) {
-				// Make a copy of right operand.
-				statement += indent + target + " = clone(" + op + ", " + op + "_size);";
+				
+				// Check the types of left is an integers 
+				if(!this.isIntType(store.getVarType(code.operand(0)))){
+					Type rhs_type = store.getVarType(code.target());					
+					//
+					/**
+					 * If not, the type casting is needed.
+					 * 
+					 * //assign %9 = %10  : [void]
+					 * _9_size = _10_size;
+					 * _9 = clone((long long*)_10, _10_size);
+					 */
+					statement += indent + rhs + " = clone(("+translate(rhs_type) +")"+ lhs + ", " + lhs + "_size);";
+				}else{
+					/** Make a copy of right operand.*/
+					statement += indent + rhs + " = clone(" + lhs + ", " + lhs + "_size);";
+				}
 			} else {
 				// In-place update
-				statement += indent + target + " = (" + translate(store.getVarType(code.target())) + ")" + op + ";";
+				statement += indent + rhs + " = (" + translate(store.getVarType(code.target())) + ")" + lhs + ";";
 			}
 		} else {
-			statement = indent + target + " = " + op + ";";
+			statement = indent + rhs + " = " + lhs + ";";
 		}
 		// Add the statement to the list of statements.
 		store.addStatement(code, statement);
@@ -1494,7 +1510,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String statement = "";
 		//The ifis code checks if the register is NULL or not.
 		if(code.rightOperand instanceof Type.Null){
-			statement += "if("+store.getVar(code.operand)+" == NULL) { goto "+code.target+";}";
+			statement += store.getIndent() + "if("+store.getVar(code.operand)+" == NULL) { goto "+code.target+";}";
 		}else{
 			throw new RuntimeException("Not implemented!"+code);
 		}		
