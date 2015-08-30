@@ -15,6 +15,7 @@ import java.util.Map.Entry;
 
 import wyc.lang.Stmt.VariableDeclaration;
 import wycc.lang.SyntaxError;
+import wyfs.lang.Path.ID;
 import wyil.attributes.VariableDeclarations;
 import wyil.attributes.VariableDeclarations.Declaration;
 import wyil.lang.Code;
@@ -329,7 +330,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(Codes.LengthOf code, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
 		String stat = store.getIndent() + store.getVar(code.target()) + " = " + store.getVar(code.operand(0))
-				+ "_size;";
+		+ "_size;";
 		store.addStatement(code, stat);
 	}
 
@@ -448,51 +449,71 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * the cloned array to the function. So that the original array will not be
 	 * overwritten and its value is safely preserved.
 	 * 
+	 * Special cases:
+	 * <ul><li>Integer parsing:<br>
+	 * <code>invoke %5 = (%8) whiley/lang/Int:parse : function(whiley/lang/ASCII:string) -> null|int</code><br>
+	 * can be translated into <br>
+	 * <code>_5=parseInteger(_8);</code>
+	 * 
+	 * 
 	 * @param code
 	 */
 	protected void translate(Codes.Invoke code, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
-		String stat = "";
-		String ret = store.getVar(code.target());
-		Type return_type = code.type().ret();
-		// Assign both of lists to have the same array size, e.g.
-		// '_12_size=_xs_size;'
-		// Check if the return is also an array.
-		if (return_type instanceof Type.List) {
+		String statement = "";
+		//Check if the called function is whiley/lang/Int 
+		if(code.name.module().toString().equals("whiley/lang/Int")){
+			switch(code.name.name()){
+			case "parse":
+				statement += store.getIndent()+store.getVar(code.target())+" = "
+						+ "parseInteger(" + store.getVar(code.operand(0))+");";
+				break;
+			default:
+				throw new RuntimeException("Un-implemented code:"+code);
+			}			
+		}else{
+			String ret = store.getVar(code.target());
+			Type return_type = code.type().ret();
+			// Assign both of lists to have the same array size, e.g.
+			// '_12_size=_xs_size;'
+			// Check if the return is also an array.
+			if (return_type instanceof Type.List) {
+				for (int index = 0; index < code.operands().length; index++) {
+					Type type = code.type().params().get(index);
+					if (type instanceof Type.List) {
+						statement += store.getIndent() + (ret + "_size") + "=" + store.getVar(code.operand(index)) + "_size;\n";
+					}
+				}
+			}
+			//
+			statement += store.getIndent() + ret + "=" + code.name.name() + "(";
+			// Translate the input parameters of called function, e.g.
+			// '_12=reverse(_xs , _xs_size);'
+			boolean isFirst = true;
 			for (int index = 0; index < code.operands().length; index++) {
-				Type type = code.type().params().get(index);
-				if (type instanceof Type.List) {
-					stat += store.getIndent() + (ret + "_size") + "=" + store.getVar(code.operand(index)) + "_size;\n";
+				if (!isFirst) {
+					statement += " ,";
 				}
-			}
-		}
-		//
-		stat += store.getIndent() + ret + "=" + code.name.name() + "(";
-		// Translate the input parameters of called function, e.g.
-		// '_12=reverse(_xs , _xs_size);'
-		boolean isFirst = true;
-		for (int index = 0; index < code.operands().length; index++) {
-			if (!isFirst) {
-				stat += " ,";
-			}
-			int reg = code.operand(index);
-			String param = store.getVar(reg);
-			Type paramType = store.getVarType(reg);
-			// Add the '*_size' parameter
-			if (paramType instanceof Type.List) {
-				if (isNecessaryCopy(reg, code, function)) {
-					stat += "clone(" + param + ", " + param + "_size), " + param + "_size";
+				int reg = code.operand(index);
+				String param = store.getVar(reg);
+				Type paramType = store.getVarType(reg);
+				// Add the '*_size' parameter
+				if (paramType instanceof Type.List) {
+					if (isNecessaryCopy(reg, code, function)) {
+						statement += "clone(" + param + ", " + param + "_size), " + param + "_size";
+					} else {
+						statement += param + ", " + param + "_size";
+					}
 				} else {
-					stat += param + ", " + param + "_size";
+					statement += param;
 				}
-			} else {
-				stat += param;
+				isFirst = false;
 			}
-			isFirst = false;
-		}
-		stat += ");";
+			statement += ");";
+		}		
+
 		// add the statement
-		store.addStatement(code, stat);
+		store.addStatement(code, statement);
 	}
 
 	/**
@@ -572,7 +593,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String statement = store.getIndent();
 		String left = store.getVar(code.leftOperand);
 		String right = store.getVar(code.rightOperand);		
-		
+
 		// Added a special case to compare two arrays.
 		if (code.type instanceof Type.List) {
 			/**
@@ -597,7 +618,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					//If not, use type casting.
 					statement += "if(isArrayEqual((" +translate(right_type)+")"+ left + ", " + left + "_size";
 				}
-				
+
 				//Check the right type is an array
 				if(this.isIntType(right_type)){
 					statement += "," + right + ", " + right + "_size)==1";
@@ -898,30 +919,28 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * <li>Note that at this stage, the field load code that loads
 	 * <code>System.out.println</code> is not translated into any C code.</li>
 	 * <li> The field code, that loads <code>fieldload %6 = %0 args</code>
-	 * is translated into <code>_6 = convertCharToInt(argc, args);</code>
+	 * is translated into <code>_6 = convertArgsToIntArray(argc, args, _6_size);</code>
 	 * @param code
 	 * @throws Exception
 	 */
 	protected void translate(Codes.FieldLoad code, FunctionOrMethod function) {
-		/*
-		 * Type param = params.get(code.operand(0)); if(param != null){ if(param
-		 * instanceof Type.Record){ Type.Record record = (Type.Record) param;
-		 * Type fieldType = record.field(code.field); } }
-		 */
 		String field = code.field;
 		CodeStore store = this.getCodeStore(function);		
 		String statement = store.getIndent();
-		
+
 		if (field.equals("out") || field.equals("println")) {
-			store.addStatement(code, null);
+			statement = null;
 		}else if (field.equals("args")){
-			statement += store.getVar(code.target()) + " = convertCharToInt(argc, args);";
+			//Convert the arguments into an array of integer array (long long**).
+			//
+			statement += store.getVar(code.target()) + " = convertArgsToIntArray(argc, args, "
+					+ store.getVar(code.target())+"_size);";
 		} else {
 			// Get the target
 			statement += store.getVar(code.target()) + " = " + store.getVar(code.operand(0))
-					+ "." + code.field + ";";
-			store.addStatement(code, statement);
+			+ "." + code.field + ";";		
 		}
+		store.addStatement(code, statement);		
 	}
 
 	/**
@@ -1165,7 +1184,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		if (loop_invariant != null) {
 			translate(loop_invariant, function);
 		}
-		
+
 		// Increase the indent for loop body.
 		store.increaseIndent();
 		// Translate the loop body
@@ -1307,8 +1326,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				return userDefinedType.name();
 			}
 		}
-		
-		
+
+
 		if(type instanceof Type.Union){
 			Type.Union union = (Type.Union)type;
 			//Check if type is an union type of integer. 
@@ -1456,8 +1475,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement += " = sublist(" + store.getVar(ops[0]) + ", " + store.getVar(ops[1]) 
 			+ ", " + store.getVar(ops[2]) + ");";
 		}
-		
-		
+
+
 		store.addStatement(code, statement);
 	}
 	/**
