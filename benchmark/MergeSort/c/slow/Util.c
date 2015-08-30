@@ -3,7 +3,9 @@
 double diff;
 clock_t start;
 clock_t end;
-/** Converts each char into an integers (0 ~ 9).**/
+/** Converts command list arugments into an array of integers (0 ~ 9),
+e.g. args[1]={'1', '0'} is converted into arr[0] = {1, 0}.
+**/
 long long** convertArgsToIntArray(int argc, char** args, long long arr_size){
 	long long** arr;
 	long long i;
@@ -13,7 +15,7 @@ long long** convertArgsToIntArray(int argc, char** args, long long arr_size){
 		fprintf(stderr, "Missing the command line arguments");
 		exit(-2);
 	}
-
+	//Check if the memeory is allocated successfully.
 	arr = (long long**) malloc(argc*sizeof(long long*));
 	if(arr == NULL){
 		fprintf(stderr,
@@ -21,9 +23,9 @@ long long** convertArgsToIntArray(int argc, char** args, long long arr_size){
 		exit(-2);
 	}
 
-	//Convert each char to int
-	//Skip 1st arguement as it is the exec file name.
 	arr_size=0;
+	//Convert each argument into an array of digits
+	//Skip 1st arguement as it is the exec file name.
 	for(i=1;i<argc;i++){
 		//Check args[i][0] is an integer or not.
 		if(isdigit(args[i][0])){
@@ -42,6 +44,7 @@ long long** convertArgsToIntArray(int argc, char** args, long long arr_size){
 		}
 	}
 
+	//Check if the conversion is successful and array size should be >= 1.
 	if(arr_size == 0){
 		fprintf(stderr,
 			"No number is passed via command line arguments.");
@@ -53,7 +56,8 @@ long long** convertArgsToIntArray(int argc, char** args, long long arr_size){
 
 
 /**
-Combine an array of integers into an integer  
+Combine an array of integers into an integer, 
+e.g. arr = {1, 0} is converted into 10.
 */
 long long parseInteger(long long* arr){
 	long long value;

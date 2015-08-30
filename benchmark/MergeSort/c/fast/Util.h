@@ -1,15 +1,17 @@
-//Remove the security check about unsafe 'scanf' or 'sprintf' in VS tool
-//This definition allows the portability of C code across the platforms.
-#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>  
 #include <stdlib.h>  
 #include <string.h>  
 #include <errno.h>  
 #include <time.h>
 #include <ctype.h>
-
+//Define the boolean values
 #define false 0  
 #define true 1
+//Remove the security check about unsafe 'scanf' or 'sprintf' in VS tool
+//This definition allows the portability of C code across the platforms.
+#define _CRT_SECURE_NO_WARNINGS
+
+//Built-in functions
 long long* clone(long long *arr, long long size);
 void indirect_printf(long long input);
 //No overlapping is allowed: function name must be different.
