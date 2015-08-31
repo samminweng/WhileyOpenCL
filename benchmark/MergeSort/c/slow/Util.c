@@ -1,64 +1,66 @@
 #include "Util.h"
 //Global variable
-double diff;
+/*double diff;
 clock_t start;
-clock_t end;
+clock_t end;*/
 /** Converts command list arugments into an array of integers (0 ~ 9),
 e.g. args[1]={'1', '0'} is converted into arr[0] = {1, 0}.
+The arr_size is passed by reference, so its value is updated after
+the function call.
 **/
-long long** convertArgsToIntArray(int argc, char** args, long long arr_size){
+long long** convertArgsToIntArray(int argc, char** args, int arr_size){
 	long long** arr;
 	long long i;
 	long long j;
+	long long max_j;
 	//Check if there is any command line argument
 	if(argc < 2){
 		fprintf(stderr, "Missing the command line arguments");
 		exit(-2);
 	}
-	//Check if the memeory is allocated successfully.
-	arr = (long long**) malloc(argc*sizeof(long long*));
+	//Allocate the target array ('arr').
+	arr = (long long**) malloc((argc-1)*sizeof(long long*));
 	if(arr == NULL){
 		fprintf(stderr,
 			"fail to allocate the memory at convertCharToInt function in Util.c");
 		exit(-2);
 	}
-
+	//Convert each argument into an array of digits	
 	arr_size=0;
-	//Convert each argument into an array of digits
 	//Skip 1st arguement as it is the exec file name.
 	for(i=1;i<argc;i++){
 		//Check args[i][0] is an integer or not.
 		if(isdigit(args[i][0])){
-			arr[arr_size] = (long long*) malloc(sizeof(long long*));
-			j=0;
+			//Allocated the array of 'arr'.
+			max_j=0;
 			//check if the char is a number or it is not ending char.
-			while(args[i][j] != '\0' || isdigit(args[i][j])){				
-				arr[arr_size][j] = (long long) malloc(sizeof(long long));
-				arr[arr_size][j] = args[i][j] - '0';
-				j++;
+			//And calculate the arr_size
+			while(args[i][max_j] != '\0' || isdigit(args[i][max_j])){
+				max_j++;
 			}
-			arr[arr_size][j] = (long long) malloc(sizeof(long long));
+			//Allocate the array of arr[arr_size]
+			arr[arr_size] = (long long*)malloc((max_j+1)*sizeof(long long));
+			//Fill in the array
+			for(j=0;j<max_j;j++){
+				arr[arr_size][j] = args[i][j] - '0';
+			}
 			//Adding the negative value to indicate the end of the array. 
 			arr[arr_size][j] = -1;
 			arr_size++;
 		}
 	}
-
 	//Check if the conversion is successful and array size should be >= 1.
 	if(arr_size == 0){
 		fprintf(stderr,
 			"No number is passed via command line arguments.");
 		exit(-2);
 	}
-
 	return arr;
 }
 
 
-/**
-Combine an array of integers into an integer, 
-e.g. arr = {1, 0} is converted into 10.
-*/
+/** Combine an array of integers into an integer, 
+e.g. arr = {1, 0} is converted into 10.*/
 long long parseInteger(long long* arr){
 	long long value;
 	long long i;
@@ -95,21 +97,21 @@ long long* sublist(long long* arr, int start, int end) {
 }
 
 //Check if both arrays are the same. 1: true, 0: false.
-int isArrayEqual(long long* arr1, long long arr1_size, long long* arr2,
-				 long long arr2_size) {
-					 long long i = 0;
-					 //Check if array size is the same.
-					 if (arr1_size != arr2_size) {
-						 return 0;
-					 }
-					 //Compare each element.
-					 for (i = 0; i < arr1_size; i++) {
-						 if (arr1[i] != arr2[i]) {
-							 return 0;
-						 }
-					 }
-					 //Both of arrays are the same. Return true
-					 return 1;
+int isArrayEqual(long long* arr1, long long arr1_size,
+				 long long* arr2, long long arr2_size) {
+	long long i = 0;
+	//Check if array size is the same.
+	if (arr1_size != arr2_size) {
+		return 0;
+	}
+	//Compare each element.
+	for (i = 0; i < arr1_size; i++) {
+		if (arr1[i] != arr2[i]) {
+			return 0;
+		}
+	}
+	//Both of arrays are the same. Return true
+	return 1;
 }
 
 // Convert an array of long long integer into an array of string.  
@@ -156,23 +158,23 @@ long long* clone(long long *arr, long long size) {
 * This append function meets value semantics
 * as it creates a new array and makes no change to op1 and op2 arrays.
 */
-long long* append(long long *arr1, long long arr1_size, long long* arr2,
-				  long long arr2_size) {
-					  long long *ret_arr = NULL;
-					  long long size = 0;
-					  //Get the size of return array.
-					  size = arr1_size + arr2_size;
-					  //Allocate the return array.
-					  ret_arr = (long long*) realloc(arr1, size * sizeof(long long));
-					  //
-					  if (ret_arr == NULL) {
-						  fprintf(stderr, "fail to allocate the memory in append function");
-						  exit(-2);
-					  }
-					  //Fill in op_2 array
-					  memcpy(&ret_arr[arr1_size], arr2, arr2_size * sizeof(long long));
-					  //Return the array
-					  return ret_arr;
+long long* append(long long *arr1, long long arr1_size,
+				  long long* arr2, long long arr2_size) {
+	long long *ret_arr = NULL;
+	long long size = 0;
+	//Get the size of return array.
+	size = arr1_size + arr2_size;
+	//Allocate the return array.
+	ret_arr = (long long*) realloc(arr1, size * sizeof(long long));
+	//Check if the memory allocation is successful.
+	if (ret_arr == NULL) {
+		fprintf(stderr, "fail to allocate the memory in append function");
+		exit(-2);
+	}
+	 //Fill in op_2 array
+	memcpy(&ret_arr[arr1_size], arr2, arr2_size * sizeof(long long));
+	//Return the array
+	return ret_arr;
 }
 
 //Append op_2 to op_1 and return the op_1.
@@ -260,11 +262,11 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 	return ret;
 }
 //Read the string as a long long integer. 
-void readStringAsInteger(char* str, long long* input) {
+/*void readStringAsInteger(char* str, long long* input) {
 	sscanf(str, "%lld", input);
-}
+}*/
 //Get the starting time.
-void getStartingTime() {
+/*void getStartingTime() {
 	//Get the starting time.
 	start = clock();
 }
@@ -278,4 +280,4 @@ void getEndingTime() {
 		((double) (end - start)) / CLOCKS_PER_SEC);
 	fclose(fp);
 }
-
+*/

@@ -18,11 +18,11 @@ void indirect_printf(long long input);
 void indirect_printf_array(long long* input, long long input_size);
 int isPowerof2(long long value);
 long long* optimized_append(long long* op_1, long long* op_1_size, long long* op_2, long long* op_2_size, long long* ret_size);
-void readStringAsInteger(char* str, long long* input);
+/*void readStringAsInteger(char* str, long long* input);
 void getStartingTime();
-void getEndingTime();
+void getEndingTime();*/
 int isArrayEqual(long long* arr1, long long arr1_size, long long* arr2, long long arr2_size);
 long long* append(long long *arr1, long long arr1_size, long long* arr2, long long arr2_size);
 long long* sublist(long long* arr, int start, int end);
-long long** convertArgsToIntArray(int argc, char** args, long long arr_size);
+long long** convertArgsToIntArray(int argc, char** args, int arr_size);
 long long parseInteger(long long* arr);

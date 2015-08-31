@@ -53,7 +53,7 @@ method main(System.Console sys):
     xs = [1,2,3,4,5]
     xs = sort(xs)
     assert xs == [1,2,3,4,5]
-    /**Benchmark merge sorting**/
+    /**Merge sorting on a reverse array ([10 ... 0])**/
     int max = 10
     [int] ys = []
     int index = 0
@@ -63,9 +63,5 @@ method main(System.Console sys):
         index = index + 1
     /**Use merge sort to sort the array**/
     ys = sort(ys)
-    /**Check the sorted and unsorted array one-by-one**/
-    index = 0
-    while index <= max:
-        // Should be in the ascending order (0..max)
-        assert ys[index] == index
-        index = index + 1
+    // Should be in the ascending order [0..10]
+    assert ys == [0,1,2,3,4,5,6,7,8,9,10]
