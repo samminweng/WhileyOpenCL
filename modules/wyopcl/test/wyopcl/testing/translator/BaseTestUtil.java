@@ -10,7 +10,6 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
-import java.nio.file.Path;
 
 public final class BaseTestUtil {
 	private final String version = "v0.3.35";
@@ -204,24 +203,28 @@ public final class BaseTestUtil {
 			// terminated.
 			p.waitFor();
 
-			// Compare the header file
-			// assertOutput(new BufferedReader(new FileReader(path + filename +
-			// ".h")),
-			// new BufferedReader(new FileReader(h_sysout)));
-
-			// Compare the generated C code with the predefined output.
-			// assertOutput(new BufferedReader(new FileReader(path + filename +
-			// ".c")),
-			// new BufferedReader(new FileReader(c_sysout)));
-
-			// Compile the C program
-			int exitValue = runExec("cmd /c gcc " + path + filename + ".c " + path + "Util.c -o " + path + filename + ".out");
-			//Check if exit value is 0. If not, the compilation process has errors.
-			assertEquals(exitValue, 0);
-			exitValue = runExec("cmd /c "+path+filename+".out");			
-			//Check if exit value is 0. If not, .
-			assertEquals(exitValue, 0);
-
+			//Get Operation System.
+			String os = System.getProperty("os.name").toLowerCase();
+			if(os.indexOf("win") >= 0){
+				//Run Windows commands
+				// Compile the C program
+				int exitValue = runExec("cmd /c gcc " + path + filename + ".c " + path + "Util.c -o " + path + filename + ".out");
+				//Check if exit value is 0. If not, the compilation process has errors.
+				assertEquals(exitValue, 0);
+				exitValue = runExec("cmd /c "+path+filename+".out");			
+				//Check if exit value is 0. If not, .
+				assertEquals(exitValue, 0);
+			}else{
+				//Run Linux commands
+				// Compile the C program
+				int exitValue = runExec("gcc " + path + filename + ".c " + path + "Util.c -o " + path + filename + ".out");
+				//Check if exit value is 0. If not, the compilation process has errors.
+				assertEquals(exitValue, 0);
+				exitValue = runExec("./"+path+filename+".out");			
+				//Check if exit value is 0. If not, .
+				assertEquals(exitValue, 0);
+			}
+			
 			// Delete the generated *.c, *.h and *.out
 			Files.deleteIfExists(FileSystems.getDefault().getPath(path + filename + ".c"));
 			Files.deleteIfExists(FileSystems.getDefault().getPath(path + filename + ".h"));
