@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.nio.charset.Charset;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
@@ -138,13 +139,25 @@ public final class BaseTestUtil {
 		try {
 			pr = rt.exec(cmd);
 			exitValue = pr.waitFor();
-			BufferedReader stdError = new BufferedReader(new InputStreamReader(pr.getErrorStream()));
-			String s = null;
-			while ((s = stdError.readLine()) != null) {
-				System.out.println(s);
+			if(exitValue != 0){
+				//Print error messages.
+				BufferedReader stdError = new BufferedReader(new InputStreamReader(pr.getErrorStream()));
+				String s;
+				while ((s = stdError.readLine()) != null) {
+					System.err.println(s);
+				}
+			}else{
+				//Print output messages.
+				BufferedReader stdIn = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+				String s;
+				while ((s = stdIn.readLine()) != null) {
+					System.out.println(s);
+				}
 			}
-		} catch (IOException | InterruptedException e) {
-			throw new RuntimeException("Error occurs in" + cmd);
+			
+			
+		} catch (IOException | InterruptedException e) {			
+			throw new RuntimeException("Errors occurs in executing '"+cmd+"'");
 		}
 		return exitValue;
 
@@ -164,21 +177,15 @@ public final class BaseTestUtil {
 		ProcessBuilder pb = null;
 		File file = new File(path + filename + ".whiley");
 		try {
-			// The source path of header file
-			// String h_sysout = path + filename + ".h";
-			// The source path of c file.
-			// String c_sysout = null;
-			// No extra options
+			
 			switch (options.length) {
 			case 0:
-				// c_sysout = path + filename + ".c.sysout";
+				// No extra options
 				pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-code",
 						file.getName());
 				break;
 			case 1:
-				// Specify the output file name
-				// c_sysout = path + filename + "." + options[0] + ".c.sysout";
-				// Create the Java process to run the code generator.
+				// Create the Java process to run the code generator with optimization.
 				pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-code",
 						"-" + options[0], file.getName());
 
@@ -199,36 +206,39 @@ public final class BaseTestUtil {
 			pb.directory(file.getParentFile());
 			// Generate the C code.
 			p = pb.start();
-			// Cause the current thread to Wait until the process has
-			// terminated.
+			// Cause the current thread to Wait until the process has terminated.
 			p.waitFor();
 
 			//Get Operation System.
 			String os = System.getProperty("os.name").toLowerCase();
+			//Run Windows commands
 			if(os.indexOf("win") >= 0){
-				//Run Windows commands
 				// Compile the C program
 				int exitValue = runExec("cmd /c gcc " + path + filename + ".c " + path + "Util.c -o " + path + filename + ".out");
 				//Check if exit value is 0. If not, the compilation process has errors.
 				assertEquals(exitValue, 0);
-				exitValue = runExec("cmd /c "+path+filename+".out");			
-				//Check if exit value is 0. If not, .
+				exitValue = runExec("cmd /c "+path+filename+".out");
 				assertEquals(exitValue, 0);
 			}else{
-				//Run Linux commands
-				// Compile the C program
-				int exitValue = runExec("gcc " + path + filename + ".c " + path + "Util.c -o " + path + filename + ".out");
-				//Check if exit value is 0. If not, the compilation process has errors.
+				//Run Linux commands			
+				// Compile the C program into *.out and place it in current working directory
+				int exitValue = runExec("gcc " + path + filename + ".c " + path + "Util.c -o " + filename + ".out");
 				assertEquals(exitValue, 0);
-				exitValue = runExec("./"+path+filename+".out");			
-				//Check if exit value is 0. If not, .
+				//Run the generated out file
+				exitValue = runExec("./"+filename+".out");
 				assertEquals(exitValue, 0);
 			}
 			
 			// Delete the generated *.c, *.h and *.out
 			Files.deleteIfExists(FileSystems.getDefault().getPath(path + filename + ".c"));
 			Files.deleteIfExists(FileSystems.getDefault().getPath(path + filename + ".h"));
-			Files.deleteIfExists(FileSystems.getDefault().getPath(path + filename + ".out"));
+			
+			if(os.indexOf("win") >= 0){
+				Files.deleteIfExists(FileSystems.getDefault().getPath(path + filename + ".out"));
+			}else{
+				// The compiled out file is in current directory.
+				Files.deleteIfExists(FileSystems.getDefault().getPath(filename + ".out"));
+			}			
 			// Delete the *.wyil
 			Files.deleteIfExists(FileSystems.getDefault().getPath(path + filename + ".wyil"));
 
