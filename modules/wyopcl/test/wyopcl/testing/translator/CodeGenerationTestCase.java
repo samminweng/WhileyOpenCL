@@ -28,7 +28,7 @@ public class CodeGenerationTestCase {
 	}
 	
 	@Test 
-	public void test_copy_swap(){
+	public void test_swap_copy(){
 		util.execCodeGeneration(valid_path,"swap", "copy");
 	}
 	
@@ -38,7 +38,7 @@ public class CodeGenerationTestCase {
 	}	
 	
 	@Test
-	public void test_copy_IfElse_Valid_2() {
+	public void test_IfElse_Valid_2_copy() {
 		util.execCodeGeneration(valid_path,"IfElse_Valid_2", "copy");
 	}
 	
@@ -48,7 +48,7 @@ public class CodeGenerationTestCase {
 	}	
 	
 	@Test
-	public void test_copy_WhileLoop() {
+	public void test_WhileLoop_copy() {
 		util.execCodeGeneration(valid_path, "WhileLoop", "copy");
 	}
 	
@@ -58,7 +58,7 @@ public class CodeGenerationTestCase {
 	}
 
 	@Test
-	public void test_copy_BoolList_Valid_2(){
+	public void test_BoolList_Valid_2_copy(){
 		util.execCodeGeneration(valid_path, "BoolList_Valid_2", "copy");
 	}
 	
@@ -80,17 +80,5 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(valid_path, "TicTacToe");
 	}
 	
-	/*
-	
-		
-	
-	@Test
-	public void test_BoolList_Valid_2() {
-		util.execCodeGeneration(valid_path+"BoolList_Valid_2");
-	}
-	
-	
-	
-	
-	*/
+
 }
