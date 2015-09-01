@@ -2,13 +2,6 @@
 #
 # The shell script of benchmarking the generated Java code of Whiley program
 #
-version="v0.3.35"
-WHILEY_CLASSPATH="./../../../bin/../lib/jasm-v0.1.7.jar:./../../../bin/../lib/wyrl-$version.jar:./../../../bin/../lib/wybs-$version.jar:./../../../bin/../lib/wycs-$version.jar:./../../../bin/../lib/wyil-$version.jar:./../../../bin/../lib/wyc-$version.jar:./../../../bin/../lib/wyjc-$version.jar:"
-#Check if the shell script is run on Cygwin
-if [ `uname -o` = "Cygwin" ]
-then
-	WHILEY_CLASSPATH="./../../../bin/../lib/jasm-v0.1.7.jar;./../../../bin/../lib/wyrl-$version.jar;./../../../bin/../lib/wybs-$version.jar;./../../../bin/../lib/wycs-$version.jar;./../../../bin/../lib/wyil-$version.jar;./../../../bin/../lib/wyc-$version.jar;./../../../bin/../lib/wyjc-$version.jar;"
-fi
 parameters="10 100 1000"
 # Large scaled parameters.
 #parameters="10 100 1000 10000 100000 1000000 10000000 20000000 30000000 40000000 50000000 60000000 70000000 80000000 90000000 100000000 150000000 200000000"
@@ -16,23 +9,30 @@ parameters="10 100 1000"
 # Run the benchmarks of generated Java programs.
 #
 run_benchmark_java(){
+	# Compile the sort whiley program
+	./../../bin/wyjc sort.whiley
+	# mv the *.class to java folder
+	mv sort.class java
     #Change the working directory
     cd "java"
-	#read -p "Press [Enter] key to start backup..."
-	#compile the Java file with Javac compiler and specified class path
-	javac -classpath $WHILEY_CLASSPATH $1.java
+    #Remove results files.
+	rm result.*.txt
 	#array size
 	for parameter in $parameters
-    	do	
-		echo "Beginning the benchmarks of $1 Java program with parameter = " $parameter	
-		java -cp "$WHILEY_CLASSPATH" $1 $parameter
-		#Rename the output 'result.txt'
-		mv result.txt result.$1.$parameter.java.txt
-		#Added the CPU info
-		cat /proc/cpuinfo >> result.While_Valid_1.java.$parameter.txt
-    	done
-	#Remove the class
-	rm While_Valid_1.class
+    do	
+    	#Repeat running the programs
+		for i in {1..10}
+		do
+			echo "Beginning the benchmarks of $1 Java program with parameter = " $parameter
+			start=`date +%s%N`	
+			./../../../bin/wyj sort $parameter >> result.$1.slow.java.txt
+			end=`date +%s%N`
+			runtime=$((end-start))
+			printf 'Parameter:%s\tExecutionTime:%s\tnanoseconds.\n' $parameter  $runtime >> result.$1.slow.java.txt
+		done
+    done
+	#Added the CPU info
+	cat /proc/cpuinfo >> result.$1.slow.java.txt
 	#Return the original working directory
 	cd ..
 }
@@ -49,7 +49,7 @@ run_benchmark_c (){
 	rm result.*.txt
 	#parameters
 	for parameter in $parameters
-	    do
+	do
 	    #Repeat running the programs
 		for i in {1..10}
 		do
@@ -71,7 +71,7 @@ run_benchmark_c (){
 
 #
 #Benchmark the generated C code
-run_benchmark_c sort fast
-run_benchmark_c sort slow
+#run_benchmark_c sort fast
+#run_benchmark_c sort slow
 #Benchmark the generated Java code
-#run_benchmark_java sort
+run_benchmark_java sort
