@@ -12,7 +12,7 @@ run_benchmark_java(){
 	# Compile the sort whiley program
 	./../../bin/wyjc sort.whiley
 	# mv the *.class to java folder
-	mv sort.class java
+	mv sort.class "java"/sort.class
     #Change the working directory
     cd "java"
     #Remove results files.
