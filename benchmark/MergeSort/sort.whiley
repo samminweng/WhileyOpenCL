@@ -52,4 +52,4 @@ method main(System.Console sys):
         /**Check the last element of sorted array */
         assert ys[max] == max
         /** Print out the sorted array */
-        sys.out.println(ys)
+        sys.out.println(ys[max])
