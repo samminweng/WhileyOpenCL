@@ -38,28 +38,23 @@ function sort([int] items) -> [int]:
     return items
 
 method main(System.Console sys):
-    /*  For testing only.
+    /*  For testing only.*/
     [int] xs = []
     xs = sort(xs)
     assert xs == []
-    xs = [4,3,5,2,1]
-    xs = sort(xs)
+    xs = sort([4,3,5,2,1])
     assert xs == [1,2,3,4,5]
-    xs = [3,4,7,1,2] 
-    xs = sort(xs)
+    xs = sort([3,4,7,1,2] )
     assert xs == [1,2,3,4,7]
-    xs = [3,4,7,2] 
-    xs = sort(xs)
+    xs = sort([3,4,7,2])
     assert xs == [2,3,4,7]
-    xs = [1,2,3,4]
-    xs = sort(xs)
+    xs = sort([1,2,3,4])
     assert xs == [1,2,3,4]
     xs = [1,2,3,4,5]
     xs = sort(xs)
     assert xs == [1,2,3,4,5]
-    */
-    /**Benchmark merge sorting**/
-    int max = 10000
+    /**Merge sorting on a reverse array ([10 ... 0])**/
+    int max = 10
     [int] ys = []
     int index = 0
     /**Fill in the array in the reverse order (max..0)**/
@@ -68,9 +63,5 @@ method main(System.Console sys):
         index = index + 1
     /**Use merge sort to sort the array**/
     ys = sort(ys)
-    /**Check the sorted and unsorted array one-by-one**/
-    index = 0
-    while index <= max:
-        // Should be in the ascending order (0..max)
-        assert ys[index] == index
-        index = index + 1
+    // Should be in the ascending order [0..10]
+    assert ys == [0,1,2,3,4,5,6,7,8,9,10]

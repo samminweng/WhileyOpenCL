@@ -53,40 +53,44 @@ public class Translator implements Builder {
 		long start = System.currentTimeMillis();
 		long memory = runtime.freeMemory();
 		String message = "";
+		WyilFile module = null;
+
 		HashSet<Path.Entry<?>> generatedFiles = new HashSet<Path.Entry<?>>();
 		for (Pair<Path.Entry<?>, Path.Root> p : delta) {
 			// Path.Root dst = p.second();
 			@SuppressWarnings("unchecked")
 			Path.Entry<WyilFile> sf = (Path.Entry<WyilFile>) p.first();
-			WyilFile module = sf.read();
-			// Put the in-memory WyIL file to config for later retrieval.
-			this.config.setOption("module", module);
-
-			// Check if the copy elimination analysis is enabled.
-			CopyEliminationAnalyzer copyAnalyzer = null;
-			if (config.isEnabled("copy")) {
-				copyAnalyzer = new CopyEliminationAnalyzer(this, config);
-				copyAnalyzer.apply(module);
-				message = "Copy elimination analysis completed.\nFile: " + config.getFilename();
-			}
-
-			if (config.isEnabled("bound")) {
-				analyzeBounds(module);
-				message = "Bound analysis completed.\nFile: " + config.getFilename();
-			}
-			if (config.isEnabled("pattern")) {
-				patternMatch(module);
-				message = "Pattern matching completed.\nFile: " + config.getFilename();
-			}
-			
-			// Reads the in-memory WyIL file and generates the code in C
-			if (config.isEnabled("code")) {
-				CodeGenerator generator = new CodeGenerator(config, copyAnalyzer);
-				generator.apply(module);
-				message = "Code Generation completed.\nFile: " + config.getFilename() + ".c, " + config.getFilename()
-						+ ".h";
-			}
+			module = sf.read();			
 		}
+
+		// Put the in-memory WyIL file to config for later retrieval.
+		this.config.setOption("module", module);
+
+		// Check if the copy elimination analysis is enabled.
+		CopyEliminationAnalyzer copyAnalyzer = null;
+		if (config.isEnabled("copy")) {
+			copyAnalyzer = new CopyEliminationAnalyzer(this, config);
+			copyAnalyzer.apply(module);
+			message = "Copy elimination analysis completed.\nFile: " + config.getFilename();
+		}
+
+		if (config.isEnabled("bound")) {
+			analyzeBounds(module);
+			message = "Bound analysis completed.\nFile: " + config.getFilename();
+		}
+		if (config.isEnabled("pattern")) {
+			patternMatch(module);
+			message = "Pattern matching completed.\nFile: " + config.getFilename();
+		}
+
+		// Reads the in-memory WyIL file and generates the code in C
+		if (config.isEnabled("code")) {
+			CodeGenerator generator = new CodeGenerator(config, copyAnalyzer);
+			generator.apply(module);
+			message = "Code Generation completed.\nFile: " + config.getFilename() + ".c, " + config.getFilename()
+			+ ".h";
+		}
+
 		long endTime = System.currentTimeMillis();
 		System.out.println(message + " Time: " + (endTime - start) + " ms Memory Usage: " + memory);
 		return generatedFiles;
@@ -189,8 +193,8 @@ public class Translator implements Builder {
 				Pattern transformed_pattern = matcher.analyzePattern(transformed_func);
 				if (!transformed_pattern.isNil) {
 					System.out
-							.println("From " + pattern.getPatternName() + " to " + transformed_pattern.getPatternName()
-									+ ", the transformed pattern:\n" + transformed_pattern);
+					.println("From " + pattern.getPatternName() + " to " + transformed_pattern.getPatternName()
+					+ ", the transformed pattern:\n" + transformed_pattern);
 				}
 			}
 			System.out.println("----------------End of " + functionOrMethod.name() + " function----------------");

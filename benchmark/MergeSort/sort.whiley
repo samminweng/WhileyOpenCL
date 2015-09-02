@@ -1,4 +1,4 @@
-
+import whiley.io.File.*
 import whiley.lang.*
 
 /**
@@ -37,40 +37,19 @@ function sort([int] items) -> [int]:
     // Done
     return items
 
-method main(System.Console sys):
-    /*  For testing only.
-    [int] xs = []
-    xs = sort(xs)
-    assert xs == []
-    xs = [4,3,5,2,1]
-    xs = sort(xs)
-    assert xs == [1,2,3,4,5]
-    xs = [3,4,7,1,2] 
-    xs = sort(xs)
-    assert xs == [1,2,3,4,7]
-    xs = [3,4,7,2] 
-    xs = sort(xs)
-    assert xs == [2,3,4,7]
-    xs = [1,2,3,4]
-    xs = sort(xs)
-    assert xs == [1,2,3,4]
-    xs = [1,2,3,4,5]
-    xs = sort(xs)
-    assert xs == [1,2,3,4,5]
-    */
+method main(System.Console sys):  
     /**Benchmark merge sorting**/
-    int max = 10000
-    [int] ys = []
-    int index = 0
-    /**Fill in the array in the reverse order (max..0)**/
-    while index <= max:
-        ys = ys ++ [max - index] 
-        index = index + 1
-    /**Use merge sort to sort the array**/
-    ys = sort(ys)
-    /**Check the sorted and unsorted array one-by-one**/
-    index = 0
-    while index <= max:
-        // Should be in the ascending order (0..max)
-        assert ys[index] == index
-        index = index + 1
+    int|null max = Int.parse(sys.args[0])
+    if max != null:
+        [int] ys = []
+        int index = 0
+        /**Fill in the array in the reverse order (max..0)**/
+        while index <= max:
+            ys = ys ++ [max - index] 
+            index = index + 1
+        /**Use merge sort to sort the array**/
+        ys = sort(ys)
+        /**Check the last element of sorted array */
+        assert ys[max] == max
+        /** Print out the sorted array */
+        sys.out.println(ys[max])

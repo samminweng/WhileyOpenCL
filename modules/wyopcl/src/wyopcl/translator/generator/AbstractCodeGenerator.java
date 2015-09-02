@@ -27,6 +27,7 @@ import wyil.lang.Codes.Fail;
 import wyil.lang.Codes.FieldLoad;
 import wyil.lang.Codes.Goto;
 import wyil.lang.Codes.If;
+import wyil.lang.Codes.IfIs;
 import wyil.lang.Codes.IndexOf;
 import wyil.lang.Codes.IndirectInvoke;
 import wyil.lang.Codes.Invoke;
@@ -38,6 +39,7 @@ import wyil.lang.Codes.NewList;
 import wyil.lang.Codes.NewRecord;
 import wyil.lang.Codes.Nop;
 import wyil.lang.Codes.Return;
+import wyil.lang.Codes.SubList;
 import wyil.lang.Codes.UnaryOperator;
 import wyil.lang.Codes.Update;
 import wyil.lang.Type;
@@ -86,8 +88,35 @@ public abstract class AbstractCodeGenerator {
 			// Write the code
 			this.writeCodeToFile(function);
 		}
-
 	}
+	
+	
+	/**
+	 * Check if the type is instance of Integer by inferring the type from
+	 * <code>wyil.Lang.Type</code> objects, including the effective collection
+	 * types.
+	 * 
+	 * @param type
+	 * @return true if the type is or contains an integer type.
+	 */
+	public boolean isIntType(Type type) {
+		if (type instanceof Type.Int) {
+			return true;
+		}
+
+		if (type instanceof Type.List) {
+			return isIntType(((Type.List) type).element());
+		}
+
+		if (type instanceof Type.Tuple) {
+			// Check the type of value field.
+			Type element = ((Type.Tuple) type).element(1);
+			return isIntType(element);
+		}
+
+		return false;
+	}
+	
 
 	/**
 	 * Get the code store of the given function.
@@ -191,7 +220,7 @@ public abstract class AbstractCodeGenerator {
 				} else if (code instanceof Codes.If) {
 					translate((Codes.If) code, function);
 				} else if (code instanceof Codes.IfIs) {
-					throw new RuntimeException("Not implemented! "+ code.toString(), null);
+					translate((Codes.IfIs)code, function);
 				} else if (code instanceof Codes.IndexOf) {
 					translate((Codes.IndexOf) code, function);
 				} else if (code instanceof Codes.IndirectInvoke) {
@@ -225,7 +254,7 @@ public abstract class AbstractCodeGenerator {
 				} else if (code instanceof Codes.Nop) {
 					translate((Codes.Nop) code, function);
 				} else if (code instanceof Codes.SubList) {
-					throw new RuntimeException("Not implemented! "+ code.toString(), null);
+					translate((Codes.SubList)code, function);
 				} else if (code instanceof Codes.Switch) {
 					throw new RuntimeException("Not implemented! "+ code.toString(), null);
 				} else if (code instanceof Codes.TupleLoad) {
@@ -246,6 +275,11 @@ public abstract class AbstractCodeGenerator {
 			}
 		}
 	}
+
+	
+	protected abstract void translate(IfIs code, FunctionOrMethod function);
+
+	protected abstract void translate(SubList code, FunctionOrMethod function);
 
 	/**
 	 * Stores the generated code for a function.
