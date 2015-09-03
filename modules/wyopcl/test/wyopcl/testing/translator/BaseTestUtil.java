@@ -238,11 +238,14 @@ public final class BaseTestUtil {
 			// Move *.c and *.h to workingDir
 			cFile.renameTo(new File(workingDir + File.separator + filename + ".c"));
 			hFile.renameTo(new File(workingDir + File.separator + filename + ".h"));
+
+			File cUtil = new File(workingDir + File.separator + "Util.c");
+			File hUtil = new File(workingDir + File.separator + "Util.h");
+			Files.deleteIfExists(cUtil.toPath());
+			Files.deleteIfExists(hUtil.toPath());
 			// Copy Util.c and Util.h
-			Files.copy(new File(codeDir + "Util.c").toPath(),
-					new File(workingDir + File.separator + "Util.c").toPath(), StandardCopyOption.COPY_ATTRIBUTES);
-			Files.copy(new File(codeDir + "Util.h").toPath(),
-					new File(workingDir + File.separator + "Util.h").toPath(), StandardCopyOption.COPY_ATTRIBUTES);
+			Files.copy(new File(codeDir + "Util.c").toPath(), cUtil.toPath(), StandardCopyOption.COPY_ATTRIBUTES);
+			Files.copy(new File(codeDir + "Util.h").toPath(), hUtil.toPath(), StandardCopyOption.COPY_ATTRIBUTES);
 
 			// As each test case is exported as a separate function,
 			// The main function must be written out (testMain.c)
@@ -278,16 +281,8 @@ public final class BaseTestUtil {
 				assertEquals(exitValue, 0);
 			}
 
-			/*
-			 * if(os.indexOf("win") >= 0){
-			 * //Files.deleteIfExists(FileSystems.getDefault().getPath(path +
-			 * filename + ".out")); }else{ // The compiled out file is in
-			 * current directory.
-			 * Files.deleteIfExists(FileSystems.getDefault().getPath(filename +
-			 * ".out")); } // Delete the *.wyil
-			 * Files.deleteIfExists(FileSystems.getDefault().getPath(path +
-			 * filename + ".wyil"));
-			 */
+			//Delete the Wyil files inside 'valid' folder
+			Files.deleteIfExists(FileSystems.getDefault().getPath(validDir + filename + ".wyil"));
 		} catch (Exception e) {
 			terminate();
 			throw new RuntimeException("Test file: " + filename + ".whiley", e);

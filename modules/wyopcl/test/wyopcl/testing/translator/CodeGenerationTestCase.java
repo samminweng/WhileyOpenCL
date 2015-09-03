@@ -39,7 +39,7 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(validDir, codeDir,"IfElse_Valid_2");
 	}	
 	
-	//@Test
+	@Test
 	public void test_IfElse_Valid_2_copy() {
 		util.execCodeGeneration(validDir, codeDir,"IfElse_Valid_2", "copy");
 	}
@@ -59,7 +59,7 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(validDir, codeDir, "BoolList_Valid_2");
 	}
 
-	//@Test
+	@Test
 	public void test_BoolList_Valid_2_copy(){
 		util.execCodeGeneration(validDir, codeDir, "BoolList_Valid_2", "copy");
 	}
