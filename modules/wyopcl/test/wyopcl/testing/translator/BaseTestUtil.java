@@ -8,9 +8,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.file.FileSystems;
 import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 public final class BaseTestUtil {
 	private final String version = "v0.3.35";
@@ -131,7 +133,7 @@ public final class BaseTestUtil {
 	 * @param cmd
 	 */
 	private int runExec(String cmd) {
-		//Get the runtime.
+		// Get the runtime.
 		Runtime rt = Runtime.getRuntime();
 		// Compile the C program
 		Process pr;
@@ -139,25 +141,24 @@ public final class BaseTestUtil {
 		try {
 			pr = rt.exec(cmd);
 			exitValue = pr.waitFor();
-			if(exitValue != 0){
-				//Print error messages.
+			if (exitValue != 0) {
+				// Print error messages.
 				BufferedReader stdError = new BufferedReader(new InputStreamReader(pr.getErrorStream()));
 				String s;
 				while ((s = stdError.readLine()) != null) {
 					System.err.println(s);
 				}
-			}else{
-				//Print output messages.
+			} else {
+				// Print output messages.
 				BufferedReader stdIn = new BufferedReader(new InputStreamReader(pr.getInputStream()));
 				String s;
 				while ((s = stdIn.readLine()) != null) {
 					System.out.println(s);
 				}
 			}
-			
-			
-		} catch (IOException | InterruptedException e) {			
-			throw new RuntimeException("Errors occurs in executing '"+cmd+"'");
+
+		} catch (IOException | InterruptedException e) {
+			throw new RuntimeException("Errors occurs in executing '" + cmd + "'");
 		}
 		return exitValue;
 
@@ -166,29 +167,39 @@ public final class BaseTestUtil {
 	/**
 	 * Translate a Whiley program into the C code.
 	 * 
-	 * The validation is to compile and run the generated C code
-	 * and check if the exit value is 0. 
+	 * The validation is to compile and run the generated C code and check if
+	 * the exit value is 0.
 	 * 
-	 * @param path the working path
-	 * @param filename the file name
-	 * @param options the extra options, e.g. 'copy' 
+	 * 
+	 * 
+	 * 
+	 * @param validDir
+	 *            the directory of test case.
+	 * @param codeDir
+	 *            the working directory
+	 * @param filename
+	 *            the file name
+	 * @param options
+	 *            the extra options, e.g. 'copy'
 	 */
-	public void execCodeGeneration(String path, String filename, String... options) {
-		ProcessBuilder pb = null;
-		File file = new File(path + filename + ".whiley");
+	public void execCodeGeneration(String validDir, String codeDir, String filename, String... options) {
 		try {
-			
-			switch (options.length) {
-			case 0:
+			ProcessBuilder pb = null;
+			// Set working directory to be 'copy/TestCaseName/'
+			File workingDir;
+			if (options.length == 0) {
 				// No extra options
 				pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-code",
-						file.getName());
-				break;
-			case 1:
-				// Create the Java process to run the code generator with optimization.
+						filename + ".whiley");
+				// Set working directory to be 'code/TestCaseName/slow'
+				workingDir = new File(codeDir + filename + File.separator + "slow"+ File.separator);
+			} else {
+				// Create the Java process to run the code generator with
+				// optimization.
 				pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", runtime, "-code",
-						"-" + options[0], file.getName());
-
+						"-" + options[0], filename + ".whiley");
+				// Set working directory to be 'code/TestCaseName/fast'
+				workingDir = new File(codeDir + filename + File.separator + "fast" + File.separator);
 				// Separate the generated C code. If the naive mode is enabled,
 				// then compare the C file with 'slow' extension.
 				// If the pattern mode is enabled, then compare the C file with
@@ -200,56 +211,87 @@ public final class BaseTestUtil {
 				 * ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain",
 				 * "-bp", runtime, "-code", "-pattern", file.getName()); }
 				 */
-				break;
 			}
 
-			pb.directory(file.getParentFile());
+			// If workingDir does not exist, then create it.
+			if (!workingDir.exists()) {
+				//Create the 'TestCase' folder.
+				Files.createDirectories(workingDir.toPath().getParent());
+				//Create 'fast' or 'slow' subfolder
+				Files.createDirectories(workingDir.toPath());
+			}
+
+			// Set the working dir to 'workingDir
+			pb.directory(new File(validDir));
 			// Generate the C code.
 			p = pb.start();
-			// Cause the current thread to Wait until the process has terminated.
+			// Cause the current thread to Wait until the process has
+			// terminated.
 			p.waitFor();
 
-			//Get Operation System.
+			// Get the generated *.c and *.h
+			File cFile = new File(validDir + filename + ".c");
+			File hFile = new File(validDir + filename + ".h");
+			// Check if the C program is generated or not.
+			assertEquals(cFile.exists(), true);
+			assertEquals(hFile.exists(), true);
+			// Move *.c and *.h to workingDir
+			cFile.renameTo(new File(workingDir + File.separator + filename + ".c"));
+			hFile.renameTo(new File(workingDir + File.separator + filename + ".h"));
+			// Copy Util.c and Util.h
+			Files.copy(new File(codeDir + "Util.c").toPath(),
+					new File(workingDir + File.separator + "Util.c").toPath(), StandardCopyOption.COPY_ATTRIBUTES);
+			Files.copy(new File(codeDir + "Util.h").toPath(),
+					new File(workingDir + File.separator + "Util.h").toPath(), StandardCopyOption.COPY_ATTRIBUTES);
+
+			// As each test case is exported as a separate function,
+			// The main function must be written out (testMain.c)
+			// to call the function of test case.
+			String testMain = "#include \"" + filename + ".h\"\n" + "int main(int argc, char** args){\n"
+					+ "	test();\n" + "	exit(0);\n" + "}\n";
+			PrintWriter writer = new PrintWriter(workingDir + File.separator + "testMain.c");
+			writer.print(testMain);
+			writer.flush();
+			writer.close();
+			// Get Operation System.
 			String os = System.getProperty("os.name").toLowerCase();
-			//Run Windows commands
-			if(os.indexOf("win") >= 0){
-				// Compile the C program
-				int exitValue = runExec("cmd /c gcc " + path + filename + ".c " + path + "Util.c -o " + path + filename + ".out");
-				//Check if exit value is 0. If not, the compilation process has errors.
+			// Run Windows commands
+			if (os.indexOf("win") >= 0) {
+				// Compile the C programs, including testMain.c TestCase.c
+				int exitValue = runExec("cmd /c gcc " + workingDir + File.separator + "testMain.c " + workingDir
+						+ File.separator + filename + ".c " + codeDir + "Util.c -o " + workingDir + File.separator
+						+ filename + ".out");
+				// Check if exit value is 0. If not, the compilation process has
+				// errors.
 				assertEquals(exitValue, 0);
-				exitValue = runExec("cmd /c "+path+filename+".out");
+				exitValue = runExec("cmd /c " + workingDir + File.separator + filename + ".out");
 				assertEquals(exitValue, 0);
-			}else{
-				//Run Linux commands			
-				// Compile the C program into *.out and place it in current working directory
-				int exitValue = runExec("gcc " + path + filename + ".c " + path + "Util.c -o " + filename + ".out");
+			} else {
+				// Run Linux commands
+				// Compile the C program into *.out and place it in current
+				// working directory
+				int exitValue = runExec(
+						"gcc " + workingDir + filename + ".c " + workingDir + "Util.c -o " + filename + ".out");
 				assertEquals(exitValue, 0);
-				//Run the generated out file
-				exitValue = runExec("./"+filename+".out");
+				// Run the generated out file
+				exitValue = runExec("./" + filename + ".out");
 				assertEquals(exitValue, 0);
 			}
-			
-			// Delete the generated *.c, *.h and *.out
-			Files.deleteIfExists(FileSystems.getDefault().getPath(path + filename + ".c"));
-			Files.deleteIfExists(FileSystems.getDefault().getPath(path + filename + ".h"));
-			
-			if(os.indexOf("win") >= 0){
-				Files.deleteIfExists(FileSystems.getDefault().getPath(path + filename + ".out"));
-			}else{
-				// The compiled out file is in current directory.
-				Files.deleteIfExists(FileSystems.getDefault().getPath(filename + ".out"));
-			}			
-			// Delete the *.wyil
-			Files.deleteIfExists(FileSystems.getDefault().getPath(path + filename + ".wyil"));
 
+			/*
+			 * if(os.indexOf("win") >= 0){
+			 * //Files.deleteIfExists(FileSystems.getDefault().getPath(path +
+			 * filename + ".out")); }else{ // The compiled out file is in
+			 * current directory.
+			 * Files.deleteIfExists(FileSystems.getDefault().getPath(filename +
+			 * ".out")); } // Delete the *.wyil
+			 * Files.deleteIfExists(FileSystems.getDefault().getPath(path +
+			 * filename + ".wyil"));
+			 */
 		} catch (Exception e) {
 			terminate();
-			throw new RuntimeException("Test file: " + file.getName(), e);
+			throw new RuntimeException("Test file: " + filename + ".whiley", e);
 		}
-
-		//
-
-		file = null;
 	}
 
 	public void terminate() {
