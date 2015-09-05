@@ -9,6 +9,6 @@ requires limit <= 1000000:
         i=i+1
     return sum
 
-method main(System.Console sys) -> void:
+public export method test() -> void:
     assert f(5) == 10    
     assert f(50000) == 1249975000

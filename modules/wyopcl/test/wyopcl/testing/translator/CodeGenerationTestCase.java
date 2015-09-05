@@ -1,6 +1,8 @@
 package wyopcl.testing.translator;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.junit.After;
 import org.junit.Before;
@@ -8,10 +10,8 @@ import org.junit.Test;
 
 public class CodeGenerationTestCase {
 	private BaseTestUtil util;
-	final String codeDir = System.getProperty("user.dir")+ File.separator + "tests" + File.separator + "code"
-						+ File.separator;
-	final String validDir = System.getProperty("user.dir")+ File.separator + "tests" + File.separator + "valid"
-			+ File.separator;
+	final Path codeDir = Paths.get(System.getProperty("user.dir")+ File.separator + "tests" + File.separator + "code");
+	final Path validDir = Paths.get(System.getProperty("user.dir")+ File.separator + "tests" + File.separator + "valid");
 
 	@Before
 	public void setUp() throws Exception {
@@ -24,14 +24,14 @@ public class CodeGenerationTestCase {
 		util = null;
 	}
 	
-	//@Test 
+	@Test 
 	public void test_swap(){
-		util.execCodeGeneration(validDir, codeDir,"swap");
+		util.execCodeGeneration(codeDir, codeDir, "swap");
 	}
 	
-	//@Test 
+	@Test 
 	public void test_swap_copy(){
-		util.execCodeGeneration(validDir, codeDir,"swap", "copy");
+		util.execCodeGeneration(codeDir, codeDir,"swap", "-copy");
 	}
 	
 	@Test
@@ -41,17 +41,17 @@ public class CodeGenerationTestCase {
 	
 	@Test
 	public void test_IfElse_Valid_2_copy() {
-		util.execCodeGeneration(validDir, codeDir,"IfElse_Valid_2", "copy");
+		util.execCodeGeneration(validDir, codeDir,"IfElse_Valid_2", "-copy");
 	}
 	
-	//@Test
+	@Test
 	public void test_WhileLoop() {
-		util.execCodeGeneration(validDir, codeDir, "WhileLoop");
+		util.execCodeGeneration(codeDir, codeDir, "WhileLoop");
 	}	
 	
-	//@Test
+	@Test
 	public void test_WhileLoop_copy() {
-		util.execCodeGeneration(validDir, codeDir, "WhileLoop", "copy");
+		util.execCodeGeneration(codeDir, codeDir, "WhileLoop", "-copy");
 	}
 	
 	@Test
@@ -61,7 +61,7 @@ public class CodeGenerationTestCase {
 
 	@Test
 	public void test_BoolList_Valid_2_copy(){
-		util.execCodeGeneration(validDir, codeDir, "BoolList_Valid_2", "copy");
+		util.execCodeGeneration(validDir, codeDir, "BoolList_Valid_2", "-copy");
 	}
 	
 	
