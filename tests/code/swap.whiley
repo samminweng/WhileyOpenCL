@@ -7,7 +7,7 @@ function swap([int] xs, int i0, int i1) -> [int]:
     xs[i1] = v0
     return xs
 
-method main(System.Console console):
+public export method test() -> void:
     [int] xs = [0,1,2,3,4,5]
     //Aliased. Copy of xs needed before calling swap
     //(or inside swap) if swap mutates xs.
