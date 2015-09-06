@@ -22,10 +22,8 @@ long long* sort(long long* _items, long long _items_size, long long _start, long
 	long long _17_size = 0;
 	long long* _18 = NULL;
 	long long _18_size = 0;
-	long long* _19 = NULL;
-	long long _19_size = 0;
-	long long* _20 = NULL;
-	long long _20_size = 0;
+	long long _19 = 0;
+	long long _20 = 0;
 	long long _21 = 0;
 	long long _22 = 0;
 	long long _23 = 0;
@@ -95,82 +93,84 @@ long long* sort(long long* _items, long long _items_size, long long _start, long
 	//assign %5 = %17  : [int]
 	_rhs_size = _17_size;
 	_rhs = clone(_17, _17_size);
-	//sublist %19 = %0, %1, %3 : [int]
-	_19_size = _pivot - _start;
-	_19 = sublist(clone(_items, _items_size), _start, _pivot);
-	//assign %4 = %19  : [int]
-	_lhs_size = _19_size;
-	_lhs = clone(_19, _19_size);
-	//sublist %20 = %0, %3, %2 : [int]
-	_20_size = _end - _pivot;
-	_20 = sublist(clone(_items, _items_size), _pivot, _end);
-	//assign %5 = %20  : [int]
-	_rhs_size = _20_size;
-	_rhs = clone(_20, _20_size);
+	//const %20 = 0 : int
+	_20 = 0;
+	//assign %19 = %20  : int
+	_19 = _20;
+	//assign %6 = %19  : int
+	_l = _19;
 	//const %22 = 0 : int
 	_22 = 0;
 	//assign %21 = %22  : int
 	_21 = _22;
-	//assign %6 = %21  : int
-	_l = _21;
+	//assign %7 = %21  : int
+	_r = _21;
 	//const %24 = 0 : int
 	_24 = 0;
 	//assign %23 = %24  : int
 	_23 = _24;
-	//assign %7 = %23  : int
-	_r = _23;
-	//const %26 = 0 : int
-	_26 = 0;
-	//assign %25 = %26  : int
-	_25 = _26;
-	//assign %8 = %25  : int
-	_i = _25;
-	//lengthof %27 = %0 : [int]
-	_27 = _items_size;
-	//ifge %8, %27 goto blklab1 : int
-	while(_i<_27){
-		//lengthof %28 = %4 : [int]
-		_28 = _lhs_size;
-		//ifge %6, %28 goto blklab1 : int
-		if(_l>=_28){goto blklab1;}
-		//lengthof %29 = %5 : [int]
-		_29 = _rhs_size;
-		//ifge %7, %29 goto blklab1 : int
-		if(_r>=_29){goto blklab1;}
+	//assign %8 = %23  : int
+	_i = _23;
+	//lengthof %25 = %0 : [int]
+	_25 = _items_size;
+	//ifge %8, %25 goto blklab1 : int
+	while(_i<_25){
+		//lengthof %26 = %4 : [int]
+		_26 = _lhs_size;
+		//ifge %6, %26 goto blklab1 : int
+		if(_l>=_26){goto blklab1;}
+		//lengthof %27 = %5 : [int]
+		_27 = _rhs_size;
+		//ifge %7, %27 goto blklab1 : int
+		if(_r>=_27){goto blklab1;}
+		//iflt %8, %1 goto blklab2 : int
+		if(_i<_start){goto blklab2;}
+		//indexof %28 = %4, %6 : [int]
+		_28=_lhs[_l];
+		//indexof %29 = %5, %7 : [int]
+		_29=_rhs[_r];
+		//ifgt %28, %29 goto blklab4 : int
+		if(_28>_29){goto blklab4;}
 		//indexof %30 = %4, %6 : [int]
 		_30=_lhs[_l];
-		//indexof %31 = %5, %7 : [int]
-		_31=_rhs[_r];
-		//ifgt %30, %31 goto blklab2 : int
-		if(_30>_31){goto blklab2;}
-		//indexof %32 = %4, %6 : [int]
-		_32=_lhs[_l];
-		//indexof %33 = %4, %6 : [int]
-		_33=_lhs[_l];
-		//update %0[%8] = %33 : [int] -> [int]
-		_items[_i] = _33;
-		//const %34 = 1 : int
-		_34 = 1;
-		//add %35 = %6, %34 : int
-		_35=_l+_34;
-		//assign %6 = %35  : int
-		_l = _35;
+		//indexof %31 = %4, %6 : [int]
+		_31=_lhs[_l];
+		//update %0[%8] = %31 : [int] -> [int]
+		_items[_i] = _31;
+		//const %32 = 1 : int
+		_32 = 1;
+		//add %33 = %6, %32 : int
+		_33=_l+_32;
+		//assign %6 = %33  : int
+		_l = _33;
+		//goto blklab5
+		goto blklab5;
+//.blklab4
+blklab4:;
+		//indexof %34 = %5, %7 : [int]
+		_34=_rhs[_r];
+		//indexof %35 = %5, %7 : [int]
+		_35=_rhs[_r];
+		//update %0[%8] = %35 : [int] -> [int]
+		_items[_i] = _35;
+		//const %36 = 1 : int
+		_36 = 1;
+		//add %37 = %7, %36 : int
+		_37=_r+_36;
+		//assign %7 = %37  : int
+		_r = _37;
+//.blklab5
+blklab5:;
 		//goto blklab3
 		goto blklab3;
 //.blklab2
 blklab2:;
-		//indexof %36 = %5, %7 : [int]
-		_36=_rhs[_r];
-		//indexof %37 = %5, %7 : [int]
-		_37=_rhs[_r];
-		//update %0[%8] = %37 : [int] -> [int]
-		_items[_i] = _37;
-		//const %38 = 1 : int
-		_38 = 1;
-		//add %39 = %7, %38 : int
-		_39=_r+_38;
-		//assign %7 = %39  : int
-		_r = _39;
+		//indexof %38 = %0, %8 : [int]
+		_38=_items[_i];
+		//indexof %39 = %0, %8 : [int]
+		_39=_items[_i];
+		//update %0[%8] = %39 : [int] -> [int]
+		_items[_i] = _39;
 //.blklab3
 blklab3:;
 		//const %40 = 1 : int
@@ -184,7 +184,7 @@ blklab3:;
 blklab1:;
 	//lengthof %42 = %4 : [int]
 	_42 = _lhs_size;
-	//ifge %6, %42 goto blklab4 : int
+	//ifge %6, %42 goto blklab6 : int
 	while(_l<_42){
 		//indexof %43 = %4, %6 : [int]
 		_43=_lhs[_l];
@@ -205,11 +205,11 @@ blklab1:;
 		//assign %6 = %48  : int
 		_l = _48;
 	}
-//.blklab4
-blklab4:;
+//.blklab6
+blklab6:;
 	//lengthof %49 = %5 : [int]
 	_49 = _rhs_size;
-	//ifge %7, %49 goto blklab5 : int
+	//ifge %7, %49 goto blklab7 : int
 	while(_r<_49){
 		//indexof %50 = %5, %7 : [int]
 		_50=_rhs[_r];
@@ -230,8 +230,8 @@ blklab4:;
 		//assign %7 = %55  : int
 		_r = _55;
 	}
-//.blklab5
-blklab5:;
+//.blklab7
+blklab7:;
 //.blklab0
 blklab0:;
 	//return %0 : [int]
@@ -313,13 +313,13 @@ int main(int argc, char** args){
 		_18_size = 5;
 		_18 = (long long*)malloc(_18_size*sizeof(long long));
 		_18[0] = _13;		_18[1] = _14;		_18[2] = _15;		_18[3] = _16;		_18[4] = _17;
-		//ifeq %1, %18 goto blklab6 : [int]
-		if(isArrayEqual(_xs, _xs_size,_18, _18_size)==1){goto blklab6;}
+		//ifeq %1, %18 goto blklab8 : [int]
+		if(isArrayEqual(_xs, _xs_size,_18, _18_size)==1){goto blklab8;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
-//.blklab6
-blklab6:;
+//.blklab8
+blklab8:;
 	//assert
 	}
 	//return
