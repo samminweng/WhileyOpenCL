@@ -46,22 +46,21 @@ import whiley.lang.*
  * return the sorted array
  */
 //function sort(&[int] items) -> [int]:
-function sort([int] items, int start, int end, System.Console sys) -> [int]:
+function sort([int] items, int start, int end) -> [int]:
 //function sort([int] items, int start, int end, System.Console sys) -> [int]:
      // Check the length is > 1.
     if (start+1) < end:
         // First, split unsorted items into left and right sub-lists 
         int pivot = (start+end) / 2
-        //sys.out.println(start)
         //sys.out.println(pivot)
-        //sys.out.println_s("=========")
-        //sys.out.println(end)
-        // Recursively split left sublist
+        // Get the sublist
         [int] lhs = items[..pivot]
-        lhs = sort(lhs, 0, |lhs|, sys)
-        // Recursively Split right sublist
+        // Recursively split left sublist
+        lhs = sort(lhs, 0, |lhs|)
+        // Get the sublist
         [int] rhs = items[pivot..]
-        rhs = sort(rhs, 0, |rhs|, sys)
+        // Recursively Split right sublist
+        rhs = sort(rhs, 0, |rhs|)
         //sys.out.println(lhs)
         //sys.out.println(rhs)
         // Second, merge left and right sublists into
@@ -69,7 +68,6 @@ function sort([int] items, int start, int end, System.Console sys) -> [int]:
         int l = 0   // Starting index of left sublist
         int r = 0   // Starting index of right sublist
         int i = 0   // Starting index of items list
-        //sys.out.println_s("Starting")
         // Update items with the smaller element from left and right sublists.
         while i < |items| && l < |lhs| && r < |rhs|:
             if lhs[l] <= rhs[r]:
@@ -90,28 +88,30 @@ function sort([int] items, int start, int end, System.Console sys) -> [int]:
             i=i+1
             r=r+1
         // Done
-    sys.out.println(items)
+    //sys.out.println(items)
     return items
 
 method main(System.Console sys):
     /*  For testing only.*/
-    //[int] xs = []
-    /*xs = sort(xs, 0, 0)
-    assert xs == []*/
-    [int] xs = [4,3,5,2,1]
-    xs = sort(xs, 0, |xs|, sys)
-    //xs = sort(xs)
+    [int] xs = []
+    xs = sort(xs, 0, |xs|)
+    assert xs == []
+    xs = [4,3,5,2,1]
+    xs = sort(xs, 0, |xs|)
     assert xs == [1,2,3,4,5]
-    /*xs = sort([3,4,7,1,2], 0, 5)
+    xs = [3,4,7,1,2]
+    xs = sort(xs, 0, |xs|)
     assert xs == [1,2,3,4,7]
-    xs = sort([3,4,7,2], 0, 4)
+    xs = [3,4,7,2]
+    xs = sort(xs, 0, |xs|)
     assert xs == [2,3,4,7]
-    xs = sort([1,2,3,4], 0, 4)
+    xs = [1,2,3,4]
+    xs = sort(xs, 0, |xs|)
     assert xs == [1,2,3,4]
     xs = [1,2,3,4,5]
-    xs = sort(xs, 0, 5)
-    assert xs == [1,2,3,4,5]*/
-    /**Merge sorting on a reverse array ([10 ... 0])
+    xs = sort(xs, 0, |xs|)
+    assert xs == [1,2,3,4,5]
+    /**Merge sorting on a reverse array ([10 ... 0])*/
     int max = 10
     [int] ys = []
     int index = 0
@@ -120,7 +120,6 @@ method main(System.Console sys):
         ys = ys ++ [max - index] 
         index = index + 1
     //Use merge sort to sort the array
-    ys = sort(ys)
+    ys = sort(ys, 0, |ys|)
     // Should be in the ascending order [0..10]
     assert ys == [0,1,2,3,4,5,6,7,8,9,10]
-    **/
