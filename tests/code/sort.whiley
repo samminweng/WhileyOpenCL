@@ -91,7 +91,8 @@ function sort([int] items, int start, int end) -> [int]:
     //sys.out.println(items)
     return items
 
-method main(System.Console sys):
+//method main(System.Console sys):
+public export method test() -> void:
     /*  For testing only.*/
     [int] xs = []
     xs = sort(xs, 0, |xs|)

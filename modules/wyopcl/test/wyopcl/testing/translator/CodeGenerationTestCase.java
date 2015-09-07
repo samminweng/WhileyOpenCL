@@ -64,6 +64,15 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(validDir, codeDir, "BoolList_Valid_2", "-copy");
 	}
 	
+	@Test
+	public void test_sort(){
+		util.execCodeGeneration(codeDir, codeDir, "sort");
+	}
+
+	@Test
+	public void test_sort_copy(){
+		util.execCodeGeneration(codeDir, codeDir, "sort", "-copy");
+	}
 	
 	//@Test
 	public void test_While_Valid_1_slow() {
