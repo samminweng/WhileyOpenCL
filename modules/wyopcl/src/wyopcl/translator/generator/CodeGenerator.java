@@ -1484,13 +1484,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		statement += store.getIndent() + store.getVar(code.target());
 		// RHS
 		//Check if the array copy is needed
-		if(isNecessaryCopy(ops[0], code, function)){
+		/*if(isNecessaryCopy(ops[0], code, function)){
 			statement += " = sublist(clone(" + store.getVar(ops[0]) + ", " + store.getVar(ops[0]) + "_size), "
 					+ store.getVar(ops[1]) + ", " + store.getVar(ops[2]) + ");";
-		}else{
+		}else{*/
 			statement += " = sublist(" + store.getVar(ops[0]) + ", " + store.getVar(ops[1]) 
 			+ ", " + store.getVar(ops[2]) + ");";
-		}
+		//}
 
 
 		store.addStatement(code, statement);
