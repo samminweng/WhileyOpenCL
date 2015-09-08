@@ -808,8 +808,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Translate the Return code.
 			statement += "return " + store.getVar(code.operand) + ";";
 		} else {
-			// If operand == -1, then add a simple exit code with value of 0.
-			statement += "exit(0);";
+			if(function.name().equals("main")){
+				// If the method is "main", then
+				//add a simple exit code with value of 0.
+				statement += "exit(0);";
+			}else{
+				//Return without exit value.
+				statement += "return ;";
+			}
 		}
 		store.addStatement(code, statement);
 	}
