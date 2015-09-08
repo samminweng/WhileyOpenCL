@@ -1365,6 +1365,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}
 		}
 
+		// Translate reference type in Whiley to pointer type in C. 
+		if(type instanceof Type.Reference){
+			Type.Reference ref = (Type.Reference)type;
+			// Types are passed as a pointer type
+			return translate(ref.element())+"*";
+		}
+		
 		return null;
 	}
 
@@ -1558,11 +1565,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * For example, 
 	 * <code>
-	 * newobject %19 = %18 : &[int]
+	 * newobject %4 = %3 : &[void]
 	 * </code>
 	 * can translate this into
 	 * <code>
-	 * _19 = &clone(_18, _18_size);
+	 * long long* _3_value = clone(_3, _3_size);
+	 * _4 =(void**)&(_3_value);
 	 * </code>
 	 * 
 	 * 
@@ -1570,11 +1578,21 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	@Override
 	protected void translate(NewObject code, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
-		String statement = store.getIndent();
+		String statement = "";
 		//Check that the given value is an array.
 		if(code.type().element() instanceof Type.List){
-			statement += store.getVar(code.target())+" = &clone("+ store.getVar(code.operand(0))
-			+", "+store.getVar(code.operand(0))+"_size);";
+			String rhs = store.getVar(code.operand(0));
+			Type rhs_type = store.getVarType(code.operand(0));
+			//Get the value of rhs operand
+			//long long* _3_value = clone(_3, _3_size);
+			statement += store.getIndent() + translate(rhs_type)+ " " + rhs + "_value"
+					+" = clone(" + rhs+", "+rhs+"_size);\n";
+			// Get the address of rhs and assign it to lhs with type casting.
+			String lhs = store.getVar(code.target());
+			Type lhs_type = store.getVarType(code.target());
+			//_4 =(void**)&(_3_value);
+			statement += store.getIndent() + lhs +" = ("+ translate(lhs_type)+")"
+			+"&("+rhs+"_value);";
 		}else{
 			throw new RuntimeException("Not implemented! "+code);
 		}
