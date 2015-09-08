@@ -23,6 +23,7 @@ import wyil.lang.Codes.Assign;
 import wyil.lang.Codes.BinaryOperator;
 import wyil.lang.Codes.Const;
 import wyil.lang.Codes.Convert;
+import wyil.lang.Codes.Dereference;
 import wyil.lang.Codes.Fail;
 import wyil.lang.Codes.FieldLoad;
 import wyil.lang.Codes.Goto;
@@ -36,6 +37,7 @@ import wyil.lang.Codes.LengthOf;
 import wyil.lang.Codes.ListOperator;
 import wyil.lang.Codes.Loop;
 import wyil.lang.Codes.NewList;
+import wyil.lang.Codes.NewObject;
 import wyil.lang.Codes.NewRecord;
 import wyil.lang.Codes.Nop;
 import wyil.lang.Codes.Return;
@@ -84,7 +86,7 @@ public abstract class AbstractCodeGenerator {
 		// Translate each function
 		for (FunctionOrMethod function : module.functionOrMethods()) {
 			// Iterate and translate each code into the target language.
-			this.iterateOverCodeBlock(function.body().bytecodes(), function);
+			this.iterateCodes(function.body().bytecodes(), function);
 			// Write the code
 			this.writeCodeToFile(function);
 		}
@@ -193,7 +195,7 @@ public abstract class AbstractCodeGenerator {
 	 * @param code_blk
 	 * @param func_name
 	 */
-	protected void iterateOverCodeBlock(List<Code> code_blk, FunctionOrMethod function) {
+	protected void iterateCodes(List<Code> code_blk, FunctionOrMethod function) {
 		for (Code code : code_blk) {
 			try {
 				// enable the assertion
@@ -210,7 +212,7 @@ public abstract class AbstractCodeGenerator {
 				} else if (code instanceof Codes.Debug) {
 					throw new RuntimeException("Not implemented! "+ code.toString(), null);
 				} else if (code instanceof Codes.Dereference) {
-					throw new RuntimeException("Not implemented! "+ code.toString(), null);
+					translate((Codes.Dereference)code, function);
 				} else if (code instanceof Codes.Fail) {
 					translate((Codes.Fail) code, function);
 				} else if (code instanceof Codes.FieldLoad) {
@@ -250,7 +252,7 @@ public abstract class AbstractCodeGenerator {
 				} else if (code instanceof Codes.Return) {
 					translate((Codes.Return) code, function);
 				} else if (code instanceof Codes.NewObject) {
-					throw new RuntimeException("Not implemented! "+ code.toString(), null);
+					translate((Codes.NewObject)code, function);
 				} else if (code instanceof Codes.Nop) {
 					translate((Codes.Nop) code, function);
 				} else if (code instanceof Codes.SubList) {
@@ -271,12 +273,14 @@ public abstract class AbstractCodeGenerator {
 				throw ex;
 			} catch (Exception ex) {
 				throw new RuntimeException(ex.getMessage(), null);
-				//internalFailure(ex.getMessage(), "", null, ex);
 			}
 		}
 	}
 
-	
+	protected abstract void translate(NewObject code, FunctionOrMethod function);
+
+	protected abstract void translate(Dereference code, FunctionOrMethod function);
+
 	protected abstract void translate(IfIs code, FunctionOrMethod function);
 
 	protected abstract void translate(SubList code, FunctionOrMethod function);
@@ -351,10 +355,10 @@ public abstract class AbstractCodeGenerator {
 		 * 
 		 * @param code
 		 *            the WyIL code
-		 * @param stat
+		 * @param statement
 		 *            the C code
 		 */
-		protected void addStatement(Code code, String stat) {
+		protected void addStatement(Code code, String statement) {
 			// Add the WyIL code as a comment
 			if (code != null) {
 				if (code instanceof Codes.Label) {
@@ -366,11 +370,11 @@ public abstract class AbstractCodeGenerator {
 
 			}
 			// Add the translated statement.
-			if (stat != null) {
+			if (statement != null) {
 				if (config.isVerbose()) {
-					System.out.println(stat);
+					System.out.println(statement);
 				}
-				statements.add(stat);
+				statements.add(statement);
 			}
 		}
 

@@ -21,11 +21,13 @@ import wyil.attributes.VariableDeclarations.Declaration;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Codes.Comparator;
+import wyil.lang.Codes.Dereference;
 import wyil.lang.Codes.If;
 import wyil.lang.Codes.IfIs;
 import wyil.lang.Codes.Invariant;
 import wyil.lang.Codes.ListOperator;
 import wyil.lang.Codes.Loop;
+import wyil.lang.Codes.NewObject;
 import wyil.lang.Codes.NewRecord;
 import wyil.lang.Codes.SubList;
 import wyil.lang.Codes.UnaryOperator;
@@ -488,21 +490,29 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				throw new RuntimeException("Un-implemented code:"+code);
 			}			
 		}else{
-			String ret = store.getVar(code.target());
-			Type return_type = code.type().ret();
-			// Assign both of lists to have the same array size, e.g.
-			// '_12_size=_xs_size;'
-			// Check if the return is also an array.
-			if (return_type instanceof Type.List) {
-				for (int index = 0; index < code.operands().length; index++) {
-					Type type = code.type().params().get(index);
-					if (type instanceof Type.List) {
-						statement += store.getIndent() + (ret + "_size") + "=" + store.getVar(code.operand(index)) + "_size;\n";
+			//Translate the return value of invoked function.
+			//If no return value, no needs for translation.
+			if(code.target()>0){
+				String ret = store.getVar(code.target());
+				Type return_type = code.type().ret();
+				// Assign both of lists to have the same array size, e.g.
+				// '_12_size=_xs_size;'
+				// Check if the return is also an array.
+				if (return_type instanceof Type.List) {
+					for (int index = 0; index < code.operands().length; index++) {
+						Type type = code.type().params().get(index);
+						if (type instanceof Type.List) {
+							statement += store.getIndent() + (ret + "_size") + "=" + store.getVar(code.operand(index)) + "_size;\n";
+						}
 					}
 				}
+				// Call the function and assign the return value to lhs register.
+				statement += store.getIndent() + ret + "=" + code.name.name() + "(";
+			}else{
+				// call the function/method
+				statement += store.getIndent() + code.name.name() + "(";
 			}
-			//
-			statement += store.getIndent() + ret + "=" + code.name.name() + "(";
+			
 			// Translate the input parameters of called function, e.g.
 			// '_12=reverse(_xs , _xs_size);'
 			boolean isFirst = true;
@@ -673,7 +683,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		store.addStatement(code, store.getIndent() + "{");
 		// Increase the indent
 		store.increaseIndent();
-		iterateOverCodeBlock(code.bytecodes(), function);
+		iterateCodes(code.bytecodes(), function);
 		store.decreaseIndent();
 		store.addStatement(code, store.getIndent() + "}");
 
@@ -1189,7 +1199,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		}
 
 		// Translate the loop header
-		this.iterateOverCodeBlock(loop_header, function);
+		this.iterateCodes(loop_header, function);
 
 		// Translate the loop condition
 		if (loop_condition != null) {
@@ -1205,7 +1215,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		store.increaseIndent();
 		// Translate the loop body
 		if (loop_body != null) {
-			iterateOverCodeBlock(loop_body, function);
+			iterateCodes(loop_body, function);
 		}
 		// Decrease the indentation after loop body.
 		store.decreaseIndent();
@@ -1514,6 +1524,60 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		}else{
 			throw new RuntimeException("Not implemented!"+code);
 		}		
+		store.addStatement(code, statement);
+	}
+	/**
+	 * Translate deference Wyil code into C code. Deference in C is to
+	 * use '*' operator to get the value of lhs operand and assign it
+	 * to rhs operand.     
+	 * 
+	 * For example, 
+	 * <code>
+	 * deref %16 = %0 : &[int]
+	 * </code>
+	 * can translate this into
+	 * <code>
+	 * _16 = *_0;
+	 * </code>
+	 * 
+	 * 
+	 * @param code Dereference Wyil code
+	 * @param function function
+	 */
+	@Override
+	protected void translate(Dereference code, FunctionOrMethod function) {
+		CodeStore store = this.getCodeStore(function);
+		String statement = store.getIndent() +store.getVar(code.target())+" = *"+ store.getVar(code.operand(0))+";";
+		store.addStatement(code, statement);
+	}
+	
+	/**
+	 * Translate newobject Wyil code into C code. The newObject code creates a
+	 * new object from the value of 'rhs' and assign the address of new object
+	 * to 'lhs'.
+	 * 
+	 * For example, 
+	 * <code>
+	 * newobject %19 = %18 : &[int]
+	 * </code>
+	 * can translate this into
+	 * <code>
+	 * _19 = &clone(_18, _18_size);
+	 * </code>
+	 * 
+	 * 
+	 */
+	@Override
+	protected void translate(NewObject code, FunctionOrMethod function) {
+		CodeStore store = this.getCodeStore(function);
+		String statement = store.getIndent();
+		//Check that the given value is an array.
+		if(code.type().element() instanceof Type.List){
+			statement += store.getVar(code.target())+" = &clone("+ store.getVar(code.operand(0))
+			+", "+store.getVar(code.operand(0))+"_size);";
+		}else{
+			throw new RuntimeException("Not implemented! "+code);
+		}
 		store.addStatement(code, statement);
 	}
 }
