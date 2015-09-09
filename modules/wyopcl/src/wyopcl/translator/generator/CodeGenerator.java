@@ -768,6 +768,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * </code>
 	 * </pre>
 	 * 
+	 * 
+	 * Special cases 
+	 * <ul><li>
+	 * Referenced array: the update of reference is different, for example,
+	 * <code>update (*%0)[%6] = %51 : &[int] -> &[int]</code>
+	 * can transform this to:
+	 * <code>(*_0)[_6] = _51;</code>
+	 * 
+	 * 
 	 * @param code
 	 */
 	protected void translate(Codes.Update code, FunctionOrMethod function) {
@@ -786,6 +795,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				stat += "[" + store.getVar(code.operand(0)) + "]";
 			}
 			stat += " = " + store.getVar(code.result()) + ";";
+		} else if (code.type() instanceof Type.Reference && ((Type.Reference)code.type()).element() instanceof Type.List){
+			stat += indent + "(*"+store.getVar(code.target())+")[" + store.getVar(code.operand(0)) + "]" 
+		            +" = " + store.getVar(code.result()) + ";"; 
+		} else {
+			throw new RuntimeException("Not implemented"+code);
 		}
 
 		store.addStatement(code, stat);
