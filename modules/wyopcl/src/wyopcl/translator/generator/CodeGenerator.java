@@ -537,13 +537,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				String param = store.getVar(reg);
 				Type paramType = store.getVarType(reg);
 				// Add the '*_size' parameter
-				if (paramType instanceof Type.List || (paramType instanceof Type.Reference
-						&& ((Type.Reference)paramType).element() instanceof Type.List)) {
+				if (paramType instanceof Type.List) {
 					if (isNecessaryCopy(reg, code, function)) {
 						statement += "clone(" + param + ", " + param + "_size), " + param + "_size";
 					} else {
 						statement += param + ", " + param + "_size";
 					}
+				} else if((paramType instanceof Type.Reference
+						&& ((Type.Reference)paramType).element() instanceof Type.List)){
+					statement += param + ", " + param + "_size"; 
 				} else {
 					statement += param;
 				}
