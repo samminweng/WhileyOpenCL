@@ -505,7 +505,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		}else{
 			//Translate the return value of invoked function.
 			//If no return value, no needs for translation.
-			if(code.target()>0){
+			if(code.target()>=0){
 				String ret = store.getVar(code.target());
 				Type return_type = code.type().ret();
 				// Assign both of lists to have the same array size, e.g.
