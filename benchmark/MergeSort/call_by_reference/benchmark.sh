@@ -43,15 +43,15 @@ run_benchmark_java(){
 run_benchmark_c (){    
 	cd c/"$2"
 	# Copy sort.whiley
-	if [ "$2" == "fast" ]
-	then
-		echo "$2"
+	#if [ "$2" == "fast" ]
+	#then
+	#	echo "$2"
 		# Generate the copy-optimized code using wyopcl shell script.
-		./../../../../../bin/wyopcl -code -copy sort.whiley
-	else
+	#	./../../../../../bin/wyopcl -code -copy sort.whiley
+	#else
 		# Generate the naive code using wyopcl shell.
-		./../../../../../bin/wyopcl -code sort.whiley
-	fi
+	#	./../../../../../bin/wyopcl -code sort.whiley
+	#fi
 	#compile the source C file with L2 optimization (-O2)
 	#see https://gcc.gnu.org/onlinedocs/gnat_ugn/Optimization-Levels.html#101
 	gcc -m64 -O2 $1.c Util.c -o $1.out
