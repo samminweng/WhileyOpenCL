@@ -74,6 +74,17 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(codeDir, codeDir, "sort", "-copy");
 	}
 	
+	@Test
+	public void test_sort_call_by_reference(){
+		util.execCodeGeneration(codeDir, codeDir, "sort_call_by_reference");
+	}
+
+	@Test
+	public void test_sort_call_by_reference_copy(){
+		util.execCodeGeneration(codeDir, codeDir, "sort_call_by_reference", "-copy");
+	}
+	
+	
 	//@Test
 	public void test_While_Valid_1_slow() {
 		//Generate the naive C code  

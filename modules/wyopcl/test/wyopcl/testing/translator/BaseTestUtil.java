@@ -278,7 +278,9 @@ public final class BaseTestUtil {
 			// The main function must be written out (testMain.c)
 			// to call the function of test case.
 			String testMain = "#include \"" + testcase + ".h\"\n" + "int main(int argc, char** args){\n"
-					+ "	test();\n}\n";
+					+ "\ttest();\n"
+					+ "\t// Add the exit value of '0' for validation.\n"
+					+ "\texit(0);\n}\n";
 			PrintWriter writer = new PrintWriter(destDir + File.separator + "testMain.c");
 			writer.print(testMain);
 			writer.flush();

@@ -834,18 +834,20 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(Codes.Return code, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
 		String statement = store.getIndent();
-		if (code.operand != -1) {
+		if (code.operand >= 0) {
 			// Translate the Return code.
 			statement += "return " + store.getVar(code.operand) + ";";
 		} else {
-			if(function.name().equals("main")){
+			// Negative register means this function/method does not have return value.
+			// So we do need to generate the code.
+			/*if(function.name().equals("main")){
 				// If the method is "main", then
 				//add a simple exit code with value of 0.
 				statement += "exit(0);";
 			}else{
 				//Return without exit value.
 				statement += "return ;";
-			}
+			}*/
 		}
 		store.addStatement(code, statement);
 	}

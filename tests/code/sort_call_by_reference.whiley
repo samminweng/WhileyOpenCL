@@ -88,8 +88,8 @@ method sortV2(&([int]) items, int start, int end):
     // Done
 
 
-method main(System.Console sys):
-//public export method test() -> void:
+//method main(System.Console sys):
+public export method test() -> void:
     /*  For testing call-by-reference sortV2 method*/
     &([int]) xs = new []
     sortV2(xs, 0, |(*xs)|)
@@ -123,4 +123,4 @@ method main(System.Console sys):
     sortV2(xs, 0, |(*xs)|)
     // Should be in the ascending order [0..10]
     assert (*xs) == [0,1,2,3,4,5,6,7,8,9,10]
-    sys.out.println((*xs))
+    //sys.out.println((*xs))
