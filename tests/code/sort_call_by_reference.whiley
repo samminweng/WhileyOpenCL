@@ -1,4 +1,3 @@
-
 import whiley.lang.*
 
 /**
