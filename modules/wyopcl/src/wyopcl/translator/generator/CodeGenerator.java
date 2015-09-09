@@ -87,7 +87,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			String var = store.getVar(reg);
 			String s_type = translate(type);
 			if (s_type != null) {
-				if (type instanceof Type.List) {
+				if (type instanceof Type.List || (type instanceof Type.Reference 
+						&& ((Type.Reference)type).element() instanceof Type.List)) {
 					// Type declaration and initial value assignment.
 					// Assign 'null' to a list
 					del += "\t"+translate(type) + " " + var + " = NULL;\n";
@@ -120,9 +121,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			String var = store.getVar(register);
 			// Add the variable names
 			stat += " " + var;
-			// If the variable is an array, then add the extra 'size'
-			// variable.
-			if (param instanceof Type.List) {
+			// If the variable is an array or the referenced value is an array,
+			//then add the extra 'size' variable.
+			if (param instanceof Type.List || (param instanceof Type.Reference 
+					&& ((Type.Reference)param).element() instanceof Type.List)) {
 				String var_size = var + "_size";
 				stat += ", long long " + var_size;
 			}
@@ -275,6 +277,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * <code>_4_size = _0_size;//specify the array size</code><br>
 	 * </p>
 	 * 
+	 * Special cases:
+	 * <ul><li>Referenced array: reference type is free of array copies in nature  
+	 * as it extracts the value from the register and assigns to target register.
+	 * But if the referenced value is an array, we still need to propagate the
+	 * array size to new register.
+	 * </li>
+	 * 
+	 * </ul>
 	 * @param code
 	 */
 	protected void translate(Codes.Assign code, FunctionOrMethod function) {
@@ -297,8 +307,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			 *  _3 = clone(_board, _board_size);
 			 * </code>
 			 */
-			if (isNecessaryCopy(code.operand(0), code, function)) {
-				
+			if (isNecessaryCopy(code.operand(0), code, function)) {				
 				// Check the types of left is an integers 
 				if(!this.isIntType(store.getVarType(code.operand(0)))){
 					Type rhs_type = store.getVarType(code.target());					
@@ -319,7 +328,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// In-place update
 				statement += indent + rhs + " = (" + translate(store.getVarType(code.target())) + ")" + lhs + ";";
 			}
-		} else {
+		} else if(code.type() instanceof Type.Reference
+				&& ((Type.Reference)code.type()).element() instanceof Type.List){
+			statement += indent + rhs + " = " + lhs + ";\n";
+			statement += indent + rhs + "_size = " + lhs + "_size;";
+		}else {
 			statement = indent + rhs + " = " + lhs + ";";
 		}
 		// Add the statement to the list of statements.
@@ -524,7 +537,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				String param = store.getVar(reg);
 				Type paramType = store.getVarType(reg);
 				// Add the '*_size' parameter
-				if (paramType instanceof Type.List) {
+				if (paramType instanceof Type.List || (paramType instanceof Type.Reference
+						&& ((Type.Reference)paramType).element() instanceof Type.List)) {
 					if (isNecessaryCopy(reg, code, function)) {
 						statement += "clone(" + param + ", " + param + "_size), " + param + "_size";
 					} else {
@@ -1550,7 +1564,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * </code>
 	 * can translate this into
 	 * <code>
-	 * _16 = *_0;
+	 * _16 = *(_0);
 	 * </code>
 	 * 
 	 * 
@@ -1560,7 +1574,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	@Override
 	protected void translate(Dereference code, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
-		String statement = store.getIndent() +store.getVar(code.target())+" = *"+ store.getVar(code.operand(0))+";";
+		String statement = store.getIndent() +store.getVar(code.target())+" = *("+ store.getVar(code.operand(0))+");";
+		//Check if the value in the rhs register is an array.
+		if(code.type().element() instanceof Type.List){
+			//Assign the array size to lhs register
+			statement += "\n" + store.getIndent() + store.getVar(code.target())+"_size = " 
+					+ store.getVar(code.operand(0))+"_size;";
+		}
 		store.addStatement(code, statement);
 	}
 	
@@ -1577,6 +1597,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * <code>
 	 * long long* _3_value = clone(_3, _3_size);
 	 * _4 =(void**)&(_3_value);
+	 * _4_size = _3_size;
 	 * </code>
 	 * 
 	 * 
@@ -1598,7 +1619,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			Type lhs_type = store.getVarType(code.target());
 			//_4 =(void**)&(_3_value);
 			statement += store.getIndent() + lhs +" = ("+ translate(lhs_type)+")"
-			+"&("+rhs+"_value);";
+			+"&("+rhs+"_value);\n";
+			//Propagate array size from rhs to lhs
+			statement += store.getIndent() + lhs +"_size = "+rhs+"_size;";	
 		}else{
 			throw new RuntimeException("Not implemented! "+code);
 		}
