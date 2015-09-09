@@ -151,21 +151,24 @@ public final class BaseTestUtil {
 		Process pr;
 		int exitValue = -1;
 		try {
+			/**Due to the limited buffer size, Windows/Linux may fail to 
+			write the large output from code generator, to the input stream and
+			may cause the process to block, and even deadlock. 
+			*/
 			pr = rt.exec(cmd, null, workingDir.toFile());
+			//Instantly write out the output message to avoid the process to block. 
+			BufferedReader stdIn = new BufferedReader(new InputStreamReader(pr.getInputStream()));
+			String s;
+			while ((s = stdIn.readLine()) != null) {
+				System.out.println(s);
+			}
+			//Get the return value.
 			exitValue = pr.waitFor();
 			if (exitValue != 0) {
 				// If not success, then print error messages.
 				BufferedReader stdError = new BufferedReader(new InputStreamReader(pr.getErrorStream()));
-				String s;
 				while ((s = stdError.readLine()) != null) {
 					System.err.println(s);
-				}
-			} else {
-				// If success, then print output messages.
-				BufferedReader stdIn = new BufferedReader(new InputStreamReader(pr.getInputStream()));
-				String s;
-				while ((s = stdIn.readLine()) != null) {
-					System.out.println(s);
 				}
 			}
 		} catch (IOException | InterruptedException e) {
@@ -275,7 +278,9 @@ public final class BaseTestUtil {
 			// The main function must be written out (testMain.c)
 			// to call the function of test case.
 			String testMain = "#include \"" + testcase + ".h\"\n" + "int main(int argc, char** args){\n"
-					+ "	test();\n}\n";
+					+ "\ttest();\n"
+					+ "\t// Add the exit value of '0' for validation.\n"
+					+ "\texit(0);\n}\n";
 			PrintWriter writer = new PrintWriter(destDir + File.separator + "testMain.c");
 			writer.print(testMain);
 			writer.flush();

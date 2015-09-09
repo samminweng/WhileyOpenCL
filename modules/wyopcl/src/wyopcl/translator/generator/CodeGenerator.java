@@ -21,11 +21,13 @@ import wyil.attributes.VariableDeclarations.Declaration;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Codes.Comparator;
+import wyil.lang.Codes.Dereference;
 import wyil.lang.Codes.If;
 import wyil.lang.Codes.IfIs;
 import wyil.lang.Codes.Invariant;
 import wyil.lang.Codes.ListOperator;
 import wyil.lang.Codes.Loop;
+import wyil.lang.Codes.NewObject;
 import wyil.lang.Codes.NewRecord;
 import wyil.lang.Codes.SubList;
 import wyil.lang.Codes.UnaryOperator;
@@ -85,7 +87,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			String var = store.getVar(reg);
 			String s_type = translate(type);
 			if (s_type != null) {
-				if (type instanceof Type.List) {
+				if (type instanceof Type.List || (type instanceof Type.Reference 
+						&& ((Type.Reference)type).element() instanceof Type.List)) {
 					// Type declaration and initial value assignment.
 					// Assign 'null' to a list
 					del += "\t"+translate(type) + " " + var + " = NULL;\n";
@@ -118,9 +121,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			String var = store.getVar(register);
 			// Add the variable names
 			stat += " " + var;
-			// If the variable is an array, then add the extra 'size'
-			// variable.
-			if (param instanceof Type.List) {
+			// If the variable is an array or the referenced value is an array,
+			//then add the extra 'size' variable.
+			if (param instanceof Type.List || (param instanceof Type.Reference 
+					&& ((Type.Reference)param).element() instanceof Type.List)) {
 				String var_size = var + "_size";
 				stat += ", long long " + var_size;
 			}
@@ -273,6 +277,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * <code>_4_size = _0_size;//specify the array size</code><br>
 	 * </p>
 	 * 
+	 * Special cases:
+	 * <ul><li>Referenced array: reference type is free of array copies in nature  
+	 * as it extracts the value from the register and assigns to target register.
+	 * But if the referenced value is an array, we still need to propagate the
+	 * array size to new register.
+	 * </li>
+	 * 
+	 * </ul>
 	 * @param code
 	 */
 	protected void translate(Codes.Assign code, FunctionOrMethod function) {
@@ -295,8 +307,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			 *  _3 = clone(_board, _board_size);
 			 * </code>
 			 */
-			if (isNecessaryCopy(code.operand(0), code, function)) {
-				
+			if (isNecessaryCopy(code.operand(0), code, function)) {				
 				// Check the types of left is an integers 
 				if(!this.isIntType(store.getVarType(code.operand(0)))){
 					Type rhs_type = store.getVarType(code.target());					
@@ -317,7 +328,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// In-place update
 				statement += indent + rhs + " = (" + translate(store.getVarType(code.target())) + ")" + lhs + ";";
 			}
-		} else {
+		} else if(code.type() instanceof Type.Reference
+				&& ((Type.Reference)code.type()).element() instanceof Type.List){
+			statement += indent + rhs + " = " + lhs + ";\n";
+			statement += indent + rhs + "_size = " + lhs + "_size;";
+		}else {
 			statement = indent + rhs + " = " + lhs + ";";
 		}
 		// Add the statement to the list of statements.
@@ -488,21 +503,29 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				throw new RuntimeException("Un-implemented code:"+code);
 			}			
 		}else{
-			String ret = store.getVar(code.target());
-			Type return_type = code.type().ret();
-			// Assign both of lists to have the same array size, e.g.
-			// '_12_size=_xs_size;'
-			// Check if the return is also an array.
-			if (return_type instanceof Type.List) {
-				for (int index = 0; index < code.operands().length; index++) {
-					Type type = code.type().params().get(index);
-					if (type instanceof Type.List) {
-						statement += store.getIndent() + (ret + "_size") + "=" + store.getVar(code.operand(index)) + "_size;\n";
+			//Translate the return value of invoked function.
+			//If no return value, no needs for translation.
+			if(code.target()>=0){
+				String ret = store.getVar(code.target());
+				Type return_type = code.type().ret();
+				// Assign both of lists to have the same array size, e.g.
+				// '_12_size=_xs_size;'
+				// Check if the return is also an array.
+				if (return_type instanceof Type.List) {
+					for (int index = 0; index < code.operands().length; index++) {
+						Type type = code.type().params().get(index);
+						if (type instanceof Type.List) {
+							statement += store.getIndent() + (ret + "_size") + "=" + store.getVar(code.operand(index)) + "_size;\n";
+						}
 					}
 				}
+				// Call the function and assign the return value to lhs register.
+				statement += store.getIndent() + ret + "=" + code.name.name() + "(";
+			}else{
+				// call the function/method
+				statement += store.getIndent() + code.name.name() + "(";
 			}
-			//
-			statement += store.getIndent() + ret + "=" + code.name.name() + "(";
+			
 			// Translate the input parameters of called function, e.g.
 			// '_12=reverse(_xs , _xs_size);'
 			boolean isFirst = true;
@@ -520,6 +543,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					} else {
 						statement += param + ", " + param + "_size";
 					}
+				} else if((paramType instanceof Type.Reference
+						&& ((Type.Reference)paramType).element() instanceof Type.List)){
+					statement += param + ", " + param + "_size"; 
 				} else {
 					statement += param;
 				}
@@ -673,7 +699,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		store.addStatement(code, store.getIndent() + "{");
 		// Increase the indent
 		store.increaseIndent();
-		iterateOverCodeBlock(code.bytecodes(), function);
+		iterateCodes(code.bytecodes(), function);
 		store.decreaseIndent();
 		store.addStatement(code, store.getIndent() + "}");
 
@@ -742,6 +768,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * </code>
 	 * </pre>
 	 * 
+	 * 
+	 * Special cases 
+	 * <ul><li>
+	 * Referenced array: the update of reference is different, for example,
+	 * <code>update (*%0)[%6] = %51 : &[int] -> &[int]</code>
+	 * can transform this to:
+	 * <code>(*_0)[_6] = _51;</code>
+	 * 
+	 * 
 	 * @param code
 	 */
 	protected void translate(Codes.Update code, FunctionOrMethod function) {
@@ -760,6 +795,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				stat += "[" + store.getVar(code.operand(0)) + "]";
 			}
 			stat += " = " + store.getVar(code.result()) + ";";
+		} else if (code.type() instanceof Type.Reference && ((Type.Reference)code.type()).element() instanceof Type.List){
+			stat += indent + "(*"+store.getVar(code.target())+")[" + store.getVar(code.operand(0)) + "]" 
+		            +" = " + store.getVar(code.result()) + ";"; 
+		} else {
+			throw new RuntimeException("Not implemented"+code);
 		}
 
 		store.addStatement(code, stat);
@@ -794,12 +834,20 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(Codes.Return code, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
 		String statement = store.getIndent();
-		if (code.operand != -1) {
+		if (code.operand >= 0) {
 			// Translate the Return code.
 			statement += "return " + store.getVar(code.operand) + ";";
 		} else {
-			// If operand == -1, then add a simple exit code with value of 0.
-			statement += "exit(0);";
+			// Negative register means this function/method does not have return value.
+			// So we do need to generate the code.
+			/*if(function.name().equals("main")){
+				// If the method is "main", then
+				//add a simple exit code with value of 0.
+				statement += "exit(0);";
+			}else{
+				//Return without exit value.
+				statement += "return ;";
+			}*/
 		}
 		store.addStatement(code, statement);
 	}
@@ -1189,7 +1237,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		}
 
 		// Translate the loop header
-		this.iterateOverCodeBlock(loop_header, function);
+		this.iterateCodes(loop_header, function);
 
 		// Translate the loop condition
 		if (loop_condition != null) {
@@ -1205,7 +1253,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		store.increaseIndent();
 		// Translate the loop body
 		if (loop_body != null) {
-			iterateOverCodeBlock(loop_body, function);
+			iterateCodes(loop_body, function);
 		}
 		// Decrease the indentation after loop body.
 		store.decreaseIndent();
@@ -1355,6 +1403,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}
 		}
 
+		// Translate reference type in Whiley to pointer type in C. 
+		if(type instanceof Type.Reference){
+			Type.Reference ref = (Type.Reference)type;
+			// Types are passed as a pointer type
+			return translate(ref.element())+"*";
+		}
+		
 		return null;
 	}
 
@@ -1484,13 +1539,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		statement += store.getIndent() + store.getVar(code.target());
 		// RHS
 		//Check if the array copy is needed
-		if(isNecessaryCopy(ops[0], code, function)){
+		/*if(isNecessaryCopy(ops[0], code, function)){
 			statement += " = sublist(clone(" + store.getVar(ops[0]) + ", " + store.getVar(ops[0]) + "_size), "
 					+ store.getVar(ops[1]) + ", " + store.getVar(ops[2]) + ");";
-		}else{
+		}else{*/
 			statement += " = sublist(" + store.getVar(ops[0]) + ", " + store.getVar(ops[1]) 
 			+ ", " + store.getVar(ops[2]) + ");";
-		}
+		//}
 
 
 		store.addStatement(code, statement);
@@ -1514,6 +1569,80 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		}else{
 			throw new RuntimeException("Not implemented!"+code);
 		}		
+		store.addStatement(code, statement);
+	}
+	/**
+	 * Translate deference Wyil code into C code. Deference in C is to
+	 * use '*' operator to get the value of lhs operand and assign it
+	 * to rhs operand.     
+	 * 
+	 * For example, 
+	 * <code>
+	 * deref %16 = %0 : &[int]
+	 * </code>
+	 * can translate this into
+	 * <code>
+	 * _16 = *(_0);
+	 * </code>
+	 * 
+	 * 
+	 * @param code Dereference Wyil code
+	 * @param function function
+	 */
+	@Override
+	protected void translate(Dereference code, FunctionOrMethod function) {
+		CodeStore store = this.getCodeStore(function);
+		String statement = store.getIndent() +store.getVar(code.target())+" = *("+ store.getVar(code.operand(0))+");";
+		//Check if the value in the rhs register is an array.
+		if(code.type().element() instanceof Type.List){
+			//Assign the array size to lhs register
+			statement += "\n" + store.getIndent() + store.getVar(code.target())+"_size = " 
+					+ store.getVar(code.operand(0))+"_size;";
+		}
+		store.addStatement(code, statement);
+	}
+	
+	/**
+	 * Translate newobject Wyil code into C code. The newObject code creates a
+	 * new object from the value of 'rhs' and assign the address of new object
+	 * to 'lhs'.
+	 * 
+	 * For example, 
+	 * <code>
+	 * newobject %4 = %3 : &[void]
+	 * </code>
+	 * can translate this into
+	 * <code>
+	 * long long* _3_value = clone(_3, _3_size);
+	 * _4 =(void**)&(_3_value);
+	 * _4_size = _3_size;
+	 * </code>
+	 * 
+	 * 
+	 */
+	@Override
+	protected void translate(NewObject code, FunctionOrMethod function) {
+		CodeStore store = this.getCodeStore(function);
+		String statement = "";
+		//Check that the given value is an array.
+		if(code.type().element() instanceof Type.List){
+			String rhs = store.getVar(code.operand(0));
+			Type rhs_type = store.getVarType(code.operand(0));
+			//Get the value of rhs operand
+			//long long* _3_value = clone(_3, _3_size);
+			statement += store.getIndent() + translate(rhs_type)+ " " + rhs + "_value"
+					+" = clone(" + rhs+", "+rhs+"_size);\n";
+			// Get the address of rhs and assign it to lhs with type casting.
+			String lhs = store.getVar(code.target());
+			Type lhs_type = store.getVarType(code.target());
+			//_4 =(void**)&(_3_value);
+			statement += store.getIndent() + lhs +" = ("+ translate(lhs_type)+")"
+			+"&("+rhs+"_value);\n";
+			//Propagate array size from rhs to lhs
+			statement += store.getIndent() + lhs +"_size = "+rhs+"_size;";	
+		}else{
+			throw new RuntimeException("Not implemented! "+code);
+		}
 		store.addStatement(code, statement);
 	}
 }
