@@ -25,11 +25,9 @@ import wyil.lang.Codes.Dereference;
 import wyil.lang.Codes.If;
 import wyil.lang.Codes.IfIs;
 import wyil.lang.Codes.Invariant;
-import wyil.lang.Codes.ListOperator;
 import wyil.lang.Codes.Loop;
 import wyil.lang.Codes.NewObject;
 import wyil.lang.Codes.NewRecord;
-import wyil.lang.Codes.SubList;
 import wyil.lang.Codes.UnaryOperator;
 import wyil.lang.Constant;
 import wyil.lang.Type;
@@ -87,8 +85,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			String var = store.getVar(reg);
 			String s_type = translate(type);
 			if (s_type != null) {
-				if (type instanceof Type.List || (type instanceof Type.Reference 
-						&& ((Type.Reference)type).element() instanceof Type.List)) {
+				if (type instanceof Type.Array || (type instanceof Type.Reference 
+						&& ((Type.Reference)type).element() instanceof Type.Array)) {
 					// Type declaration and initial value assignment.
 					// Assign 'null' to a list
 					del += "\t"+translate(type) + " " + var + " = NULL;\n";
@@ -123,8 +121,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			stat += " " + var;
 			// If the variable is an array or the referenced value is an array,
 			//then add the extra 'size' variable.
-			if (param instanceof Type.List || (param instanceof Type.Reference 
-					&& ((Type.Reference)param).element() instanceof Type.List)) {
+			if (param instanceof Type.Array || (param instanceof Type.Reference 
+					&& ((Type.Reference)param).element() instanceof Type.Array)) {
 				String var_size = var + "_size";
 				stat += ", long long " + var_size;
 			}
@@ -232,7 +230,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		CodeStore store = this.getCodeStore(function);
 		String target = store.getVar(code.target());
 		String indent = store.getIndent();
-		if (code.assignedType() instanceof Type.List) {
+		if (code.assignedType() instanceof Type.Array) {
 			// Initialize an array
 			if (((Constant.List) code.constant).values.isEmpty()) {
 				stat = indent + target + "=(long long*)malloc(1*sizeof(long long));\n";
@@ -295,7 +293,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String statement = "";
 		String indent = store.getIndent();
 		// Check if the assigned type is an array.
-		if (code.type() instanceof Type.List) {
+		if (code.type() instanceof Type.Array) {
 			// Clone the array and assign the cloned to the target.
 			statement += indent + (rhs + "_size") + " = " + lhs + "_size;\n";
 			/**
@@ -329,7 +327,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statement += indent + rhs + " = (" + translate(store.getVarType(code.target())) + ")" + lhs + ";";
 			}
 		} else if(code.type() instanceof Type.Reference
-				&& ((Type.Reference)code.type()).element() instanceof Type.List){
+				&& ((Type.Reference)code.type()).element() instanceof Type.Array){
 			statement += indent + rhs + " = " + lhs + ";\n";
 			statement += indent + rhs + "_size = " + lhs + "_size;";
 		}else {
@@ -411,12 +409,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		case REM:
 			stat += "%" + right + ";";
 			break;
-		case RANGE:
+		/*case RANGE:
 			// Assign the range with input code for the translation of 'forall'
 			// byte-code.
 			// this.range = code;
 			stat = null;
-			break;
+			break;*/
 		case BITWISEOR:
 			break;
 		case BITWISEXOR:
@@ -511,10 +509,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// Assign both of lists to have the same array size, e.g.
 				// '_12_size=_xs_size;'
 				// Check if the return is also an array.
-				if (return_type instanceof Type.List) {
+				if (return_type instanceof Type.Array) {
 					for (int index = 0; index < code.operands().length; index++) {
 						Type type = code.type().params().get(index);
-						if (type instanceof Type.List) {
+						if (type instanceof Type.Array) {
 							statement += store.getIndent() + (ret + "_size") + "=" + store.getVar(code.operand(index)) + "_size;\n";
 						}
 					}
@@ -537,14 +535,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				String param = store.getVar(reg);
 				Type paramType = store.getVarType(reg);
 				// Add the '*_size' parameter
-				if (paramType instanceof Type.List) {
+				if (paramType instanceof Type.Array) {
 					if (isNecessaryCopy(reg, code, function)) {
 						statement += "clone(" + param + ", " + param + "_size), " + param + "_size";
 					} else {
 						statement += param + ", " + param + "_size";
 					}
 				} else if((paramType instanceof Type.Reference
-						&& ((Type.Reference)paramType).element() instanceof Type.List)){
+						&& ((Type.Reference)paramType).element() instanceof Type.Array)){
 					statement += param + ", " + param + "_size"; 
 				} else {
 					statement += param;
@@ -637,7 +635,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String right = store.getVar(code.rightOperand);		
 
 		// Added a special case to compare two arrays.
-		if (code.type instanceof Type.List) {
+		if (code.type instanceof Type.Array) {
 			/**
 			 * 
 			 * For example, the byte-code:
@@ -784,7 +782,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String indent = store.getIndent();
 		String stat = "";
 		// For List type only
-		if (code.type() instanceof Type.List) {
+		if (code.type() instanceof Type.Array) {
 			stat += indent + store.getVar(code.target()) + "[" + store.getVar(code.operand(0)) + "] = "
 					+ store.getVar(code.result()) + ";";
 		} else if (code.type() instanceof Type.Record) {
@@ -795,7 +793,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				stat += "[" + store.getVar(code.operand(0)) + "]";
 			}
 			stat += " = " + store.getVar(code.result()) + ";";
-		} else if (code.type() instanceof Type.Reference && ((Type.Reference)code.type()).element() instanceof Type.List){
+		} else if (code.type() instanceof Type.Reference && ((Type.Reference)code.type()).element() instanceof Type.Array){
 			stat += indent + "(*"+store.getVar(code.target())+")[" + store.getVar(code.operand(0)) + "]" 
 		            +" = " + store.getVar(code.result()) + ";"; 
 		} else {
@@ -1043,7 +1041,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			Type.Nominal nominal = (Type.Nominal) type;
 			wyil.lang.WyilFile.Type user_type = getUserDefinedType(nominal.name().name());
 			statement += translateIndirectInvokePrintf(user_type.type(), var, function);
-		} else if (type instanceof Type.List) {
+		} else if (type instanceof Type.Array) {
 			// Print out a pointer without specifying array size.
 			statement += indent + "indirect_printf_array_withoutlength(" + var + ");\n";
 		} else if (type instanceof Type.Int) {
@@ -1102,7 +1100,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Type type = getVarDeclaration(var);
 			Type type = store.getVarType(code.parameter(0));
 			// Check if the type is a user-defined type.
-			if (type instanceof Type.List) {
+			if (type instanceof Type.Array) {
 				// Added the additional 'array_size' variable to indicate the
 				// length of an array.
 				// Due to strictly forbidding the overlapping in C, the function
@@ -1262,23 +1260,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * private void translate(StringOperator code) { String stat = ""; String
-	 * target = prefix+code.target(); //vars.put(target+"[1024]", "char");
-	 * addDeclaration(code.type(), target);
+	 * Deprecated due to v0.3.36
 	 * 
-	 * String left = prefix+code.operand(0); String right =
-	 * prefix+code.operand(1);
-	 * 
-	 * //Check the operator switch (code.kind){ case APPEND: stat += indent +
-	 * "strcpy("+target+", "+left+");\n"; stat += indent + "strcat("+target+", "
-	 * +right+"_str);"; break; case LEFT_APPEND:
-	 * 
-	 * break; case RIGHT_APPEND:
-	 * 
-	 * default: break; } addStatement(code, stat); }
-	 **/
-
-	/**
 	 * Translates the append byte-code. For example,
 	 * 
 	 * <pre>
@@ -1296,7 +1279,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * @param code
 	 */
-	protected void translate(ListOperator code, FunctionOrMethod function) {
+	/*protected void translate(ListOperator code, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
 		String target = store.getVar(code.target());
 
@@ -1329,14 +1312,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Add the ending clause.
 		stat += ");\n";
 
-		/*
-		 * Free the op_2, because op_2 has been appended to the op_1. stat +=
-		 * store.getIndent() + "free(" + store.getVar(code.operand(1)) + ");";
-		 */
+		// Free the op_2, because op_2 has been appended to the op_1. stat +=
+		// store.getIndent() + "free(" + store.getVar(code.operand(1)) + ");";
+		//
 		// Put it to the statement list.
 		store.addStatement(code, stat);
 	}
-
+*/
 	/**
 	 * Translate the WyIL type into the type in C.
 	 * 
@@ -1360,8 +1342,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			return "long long";
 		}
 
-		if (type instanceof Type.List) {
-			Type.List listType = (Type.List) type;
+		if (type instanceof Type.Array) {
+			Type.Array listType = (Type.Array) type;
 			return translate(listType.element()) + "*";
 		}
 
@@ -1513,6 +1495,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
+	 * Deprecated due to v0.3.36
+	 * 
 	 * Translate the sublist byte-code into C code, e.g.
 	 * <code> sublist %16 = %0, %15, %1 : [int]</code> can be translated into C
 	 * code: <code> 
@@ -1523,7 +1507,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 * @param function
 	 */
-	@Override
+	@Deprecated
+	/*@Override
 	protected void translate(SubList code, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
 		int[] ops = code.operands();
@@ -1539,17 +1524,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		statement += store.getIndent() + store.getVar(code.target());
 		// RHS
 		//Check if the array copy is needed
-		/*if(isNecessaryCopy(ops[0], code, function)){
-			statement += " = sublist(clone(" + store.getVar(ops[0]) + ", " + store.getVar(ops[0]) + "_size), "
-					+ store.getVar(ops[1]) + ", " + store.getVar(ops[2]) + ");";
-		}else{*/
+		//if(isNecessaryCopy(ops[0], code, function)){
+		//	statement += " = sublist(clone(" + store.getVar(ops[0]) + ", " + store.getVar(ops[0]) + "_size), "
+		//			+ store.getVar(ops[1]) + ", " + store.getVar(ops[2]) + ");";
+		//}else{
 			statement += " = sublist(" + store.getVar(ops[0]) + ", " + store.getVar(ops[1]) 
 			+ ", " + store.getVar(ops[2]) + ");";
 		//}
-
-
 		store.addStatement(code, statement);
-	}
+	}*/
 	/**
 	 * Translate ifis Wyil code into C code. This code checks that the register is the given value.
 	 * 
@@ -1594,7 +1577,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		CodeStore store = this.getCodeStore(function);
 		String statement = store.getIndent() +store.getVar(code.target())+" = *("+ store.getVar(code.operand(0))+");";
 		//Check if the value in the rhs register is an array.
-		if(code.type().element() instanceof Type.List){
+		if(code.type().element() instanceof Type.Array){
 			//Assign the array size to lhs register
 			statement += "\n" + store.getIndent() + store.getVar(code.target())+"_size = " 
 					+ store.getVar(code.operand(0))+"_size;";
@@ -1625,7 +1608,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		CodeStore store = this.getCodeStore(function);
 		String statement = "";
 		//Check that the given value is an array.
-		if(code.type().element() instanceof Type.List){
+		if(code.type().element() instanceof Type.Array){
 			String rhs = store.getVar(code.operand(0));
 			Type rhs_type = store.getVarType(code.operand(0));
 			//Get the value of rhs operand

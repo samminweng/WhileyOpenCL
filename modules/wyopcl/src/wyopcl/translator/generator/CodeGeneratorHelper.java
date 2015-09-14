@@ -87,9 +87,8 @@ public final class CodeGeneratorHelper {
 			return "long long";
 		}
 		
-		if(type instanceof Type.List){
-			Type.List list = (Type.List)type;
-			return translate(list.element())+ "*";
+		if(type instanceof Type.Array){
+			return translate(((Type.Array)type).element())+ "*";
 		}
 		
 		

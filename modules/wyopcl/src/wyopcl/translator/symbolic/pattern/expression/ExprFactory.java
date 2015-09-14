@@ -91,11 +91,11 @@ public class ExprFactory {
 				((LinearExpr) expr).addVar(BigInteger.ONE, prefix + binOp.operand(0));
 				((LinearExpr) expr).addVar(BigInteger.ONE.negate(), prefix + binOp.operand(1));// -1*v2
 				break;
-			case RANGE:
+			/*case RANGE:
 				// target = [op_0 ... op_1]
 				expr = new RangeExpr(prefix + binOp.target(), (LinearExpr) getExpr(prefix + binOp.operand(0)), (LinearExpr) getExpr(prefix
 						+ binOp.operand(1)));
-				break;
+				break;*/
 			default:
 				throw new RuntimeException(binOp.kind + "Not implemented");
 			}
@@ -112,9 +112,6 @@ public class ExprFactory {
 			expr = new LinearExpr(prefix + newlist.target());
 			// Add the
 			((LinearExpr) expr).addVar(BigInteger.ONE, "()");
-		} else if (code instanceof Codes.ListOperator) {
-			Codes.ListOperator listOp = (Codes.ListOperator) code;
-			expr = new Expr(prefix + listOp.target(), code);
 		}
 		return expr;
 	}

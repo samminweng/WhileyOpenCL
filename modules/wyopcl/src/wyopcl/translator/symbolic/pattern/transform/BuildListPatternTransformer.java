@@ -174,8 +174,8 @@ public class BuildListPatternTransformer extends Transformer {
 	private void init_after(List<Code> blk, BuildListPattern p) {
 		// Add the initial assignment of list capacity.
 		// Get the length of the input list
-		int reg_target = getAvailableReg(Type.List(Type.Int.T_INT, false));
-		blk.add(Codes.LengthOf(Type.List(Type.Int.T_INT, false), reg_target, this.reg_input_list));
+		int reg_target = getAvailableReg(Type.Array(Type.Int.T_INT, false));
+		blk.add(Codes.LengthOf(Type.Array(Type.Int.T_INT, false), reg_target, this.reg_input_list));
 		this.reg_list_capacity = getAvailableReg(Type.Int.T_INT);
 		blk.add(Codes.Assign(Type.Int.T_INT, this.reg_list_capacity, reg_target));
 	}
@@ -201,7 +201,7 @@ public class BuildListPatternTransformer extends Transformer {
 		//Get list var from the original BuildList pattern.
 		this.reg_list = Integer.parseInt(p.list_var.replace("%", ""));
 		// Create an Assign byte-code
-		blk.add(Codes.Assign(Type.List(Type.Int.T_INT, false), reg_list, reg_input_list));
+		blk.add(Codes.Assign(Type.Array(Type.Int.T_INT, false), reg_list, reg_input_list));
 	}
 
 	/**
@@ -291,8 +291,8 @@ public class BuildListPatternTransformer extends Transformer {
 				int[] indexOp = new int[1];
 				indexOp[0] = this.reg_list_size;
 				// Add the update byte-code
-				Codes.Update update = Codes.Update(Type.List(Type.Int.T_INT, false), this.reg_list, indexOp, indexof.target(),
-						Type.List(Type.Int.T_INT, false), new ArrayList<String>());
+				Codes.Update update = Codes.Update(Type.Array(Type.Int.T_INT, false), this.reg_list, indexOp, indexof.target(),
+						Type.Array(Type.Int.T_INT, false), new ArrayList<String>());
 				loop_blk.add(update);
 				// Stop adding the code.
 				break;
