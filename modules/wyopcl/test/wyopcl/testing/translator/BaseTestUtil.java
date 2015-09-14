@@ -289,8 +289,10 @@ public final class BaseTestUtil {
 			String os = System.getProperty("os.name").toLowerCase();
 			//4. Compile and run the C code.
 			if (os.indexOf("win") >= 0) {
-				// Compile the  testMain.c, TestCase.c and Util.c
-				int exitValue = runCmd("cmd /c gcc " + "testMain.c Util.c " + testcase + ".c  -o " + testcase + ".out", destDir);
+				// Compile the testMain.c, TestCase.c and Util.c using Windows command 
+				// This option requires the installation of Cygwin and gcc. 
+				// As gcc is a link (Windows command does not get it), we need to use actual name (i.e. gcc-3 or gcc-4) 
+				int exitValue = runCmd("cmd /c gcc-4 " + "testMain.c Util.c " + testcase + ".c  -o " + testcase + ".out", destDir);
 				// Check if exit value is 0. If not, the compilation process has
 				// errors.
 				assertEquals(exitValue, 0);
