@@ -1,16 +1,15 @@
-
 import whiley.lang.*
 
 /**
  * Original version :Perform a merge sort of integer items.
  */
-/*function sort([int] items) -> [int]:
+/*function sort(int[] items) -> int[]:
     //
     if |items| > 1:
         // First, sort left and right sub-lists
         int pivot = |items| / 2
-        [int] lhs = sort(items[..pivot])
-        [int] rhs = sort(items[pivot..])
+        int[] lhs = sort(Array.slice(items,0,pivot))
+        int[] rhs = sort(Array.slice(items,pivot,|items|))
         // Second, merge left and right sublists into
         // original list.
         int l = 0 // left sublist index
@@ -47,18 +46,18 @@ import whiley.lang.*
  * param end the ending index
  * return the sorted array
  */
-function sortV1([int] items, int start, int end) -> [int]:
+function sortV1(int[] items, int start, int end) -> int[]:
      // Check the length is > 1.
     if (start+1) < end:
         // First, split unsorted items into left and right sub-lists 
         int pivot = (start+end) / 2
         //sys.out.println(pivot)
         // Get the sublist
-        [int] lhs = items[..pivot]
+        int[] lhs = Array.slice(items,0,pivot)
         // Recursively split left sublist
         lhs = sortV1(lhs, 0, |lhs|)
         // Get the sublist
-        [int] rhs = items[pivot..]
+        int[] rhs = Array.slice(items,pivot,|items|)
         // Recursively Split right sublist
         rhs = sortV1(rhs, 0, |rhs|)
         // Second, merge left and right sublists into
@@ -91,10 +90,7 @@ function sortV1([int] items, int start, int end) -> [int]:
 //method main(System.Console sys):
 public export method test() -> void:
     /* For testing call-by-value sortV1 function*/
-    [int] ys = []
-    ys = sortV1(ys, 0, |ys|)
-    assert ys == []
-    ys = [3,4,7,1,2]
+    int[] ys = [3,4,7,1,2]
     ys = sortV1(ys, 0, |ys|)
     assert ys == [1,2,3,4,7]
     ys = [3,4,7,2]
@@ -109,14 +105,15 @@ public export method test() -> void:
     //Merge sorting on a reverse array 'arr' ([10 ... 0])
     int max = 10
     int index = 0
-    [int] arr = []
+    int[] arr = [0;max+1]
+    //sys.out.println(arr)
     //Fill in the array in the reverse order (max..0)
     while index <= max:
-        arr = arr  ++ [max - index] 
+        arr[index] = max - index 
         index = index + 1
-    //Assign 'arr' to input array
-    ys = arr
     //Use merge sort to sort the array
-    ys = sortV1(ys, 0, |ys|)
+    arr = sortV1(arr, 0, |arr|)
     // Should be in the ascending order [0..10]
-    assert ys == [0,1,2,3,4,5,6,7,8,9,10]
+    //sys.out.println(arr)
+    assert arr == [0,1,2,3,4,5,6,7,8,9,10]
+    
