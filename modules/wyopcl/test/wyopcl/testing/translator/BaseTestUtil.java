@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.file.FileSystems;
@@ -16,13 +15,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
-import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public final class BaseTestUtil {
-	private final String version = "v0.3.35";
+	private final String version = "v0.3.36";
 	// user.dir is the current directory.
 	private final String workspace_path = System.getProperty("user.dir") + File.separator;
 	private final String lib_path = workspace_path + "lib" + File.separator;
