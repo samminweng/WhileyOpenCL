@@ -25,6 +25,7 @@ import wyil.lang.Codes.Dereference;
 import wyil.lang.Codes.If;
 import wyil.lang.Codes.IfIs;
 import wyil.lang.Codes.Invariant;
+import wyil.lang.Codes.ListGenerator;
 import wyil.lang.Codes.Loop;
 import wyil.lang.Codes.NewObject;
 import wyil.lang.Codes.NewRecord;
@@ -42,11 +43,7 @@ import wyopcl.translator.CopyEliminationAnalyzer;
  *
  */
 public class CodeGenerator extends AbstractCodeGenerator {
-	private Collection<wyil.lang.WyilFile.Type> userTypes;// Store all the
-	// user-defined
-	// types, e.g.
-	// Board.
-
+	private Collection<wyil.lang.WyilFile.Type> userTypes;// Store all the user-defined types, e.g. Board.
 	private CopyEliminationAnalyzer analyzer = null;
 
 	/**
@@ -501,11 +498,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				throw new RuntimeException("Un-implemented code:"+code);
 			}			
 		}else{
+			Type return_type = code.type().ret();
 			//Translate the return value of invoked function.
 			//If no return value, no needs for translation.
 			if(code.target()>=0){
 				String ret = store.getVar(code.target());
-				Type return_type = code.type().ret();
 				// Assign both of lists to have the same array size, e.g.
 				// '_12_size=_xs_size;'
 				// Check if the return is also an array.
@@ -525,7 +522,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}
 			
 			// Translate the input parameters of called function, e.g.
-			// '_12=reverse(_xs , _xs_size);'
+			// '_12=reverse(_xs , _xs_size);'		
 			boolean isFirst = true;
 			for (int index = 0; index < code.operands().length; index++) {
 				if (!isFirst) {
@@ -549,6 +546,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				}
 				isFirst = false;
 			}
+			// Pass the array size into the function to mutate the array size.
+			/*if(return_type instanceof Type.Array){
+				statement += ", &"+ store.getVar(code.target())+"_size";
+			}*/
+			
 			statement += ");";
 		}		
 
@@ -1626,6 +1628,26 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		}else{
 			throw new RuntimeException("Not implemented! "+code);
 		}
+		store.addStatement(code, statement);
+	}
+
+	/***
+	 * Translate 'ListGenerator' wyil code into C code. For example, 
+	 * 
+	 * <code>
+	 * listgen %69 = [66; 68] : int[]
+	 * </code>
+	 * can translate this into
+	 * <code>
+	 * _69 = genArray(_66, _68);
+	 * </code>
+	 * 
+	 */
+	@Override
+	protected void translate(ListGenerator code, FunctionOrMethod function) {
+		CodeStore store = this.getCodeStore(function);
+		String statement = store.getVar(code.target())+" = genArray(" + store.getVar(code.operand(0)) 
+								+ ", " + store.getVar(code.operand(1))+");" ;
 		store.addStatement(code, statement);
 	}
 }

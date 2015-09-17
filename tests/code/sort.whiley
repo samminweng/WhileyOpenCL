@@ -53,20 +53,20 @@ function sortV1(int[] items, int start, int end) -> int[]:
         int pivot = (start+end) / 2
         //sys.out.println(pivot)
         // Get the sublist
-        int[] lhs = Array.slice(items,0,pivot)
+        int[] lhs = Array.slice(items,start,pivot)
         // Recursively split left sublist
-        lhs = sortV1(lhs, 0, |lhs|)
+        lhs = sortV1(lhs, 0, pivot)
         // Get the sublist
-        int[] rhs = Array.slice(items,pivot,|items|)
+        int[] rhs = Array.slice(items,pivot,end)
         // Recursively Split right sublist
-        rhs = sortV1(rhs, 0, |rhs|)
+        rhs = sortV1(rhs, 0, (end-pivot))
         // Second, merge left and right sublists into
         // original list.
         int l = 0   // Starting index of left sublist
         int r = 0   // Starting index of right sublist
         int i = 0   // Starting index of items list
         // Update items with the smaller element from left and right sublists.
-        while i < |items| && l < |lhs| && r < |rhs|:
+        while i < (end-start) && l < (pivot-start) && r < (end-pivot):
             if lhs[l] <= rhs[r]:
                 items[i] = lhs[l]
                 l=l+1
@@ -75,32 +75,32 @@ function sortV1(int[] items, int start, int end) -> int[]:
                 r=r+1
             i=i+1
         // Tidy up remaining items in left sublist
-        while l < |lhs|:
+        while l < (pivot-start):
             items[i] = lhs[l]
             i=i+1
             l=l+1
         // Tidy up remaining items in right sublist
-        while r < |rhs|:
+        while r < (end-pivot):
             items[i] = rhs[r]
             i=i+1
             r=r+1
         // Done
     return items
 
-//method main(System.Console sys):
-public export method test() -> void:
+method main(System.Console sys):
+//public export method test() -> void:
     /* For testing call-by-value sortV1 function*/
     int[] ys = [3,4,7,1,2]
-    ys = sortV1(ys, 0, |ys|)
+    ys = sortV1(ys, 0, 5)
     assert ys == [1,2,3,4,7]
     ys = [3,4,7,2]
-    ys = sortV1(ys, 0, |ys|)
+    ys = sortV1(ys, 0, 4)
     assert ys == [2,3,4,7]
     ys = [1,2,3,4]
-    ys = sortV1(ys, 0, |ys|)
+    ys = sortV1(ys, 0, 4)
     assert ys == [1,2,3,4]
     ys = [1,2,3,4,5]
-    ys = sortV1(ys, 0, |ys|)
+    ys = sortV1(ys, 0, 5)
     assert ys == [1,2,3,4,5]
     //Merge sorting on a reverse array 'arr' ([10 ... 0])
     int max = 10
@@ -112,7 +112,7 @@ public export method test() -> void:
         arr[index] = max - index 
         index = index + 1
     //Use merge sort to sort the array
-    arr = sortV1(arr, 0, |arr|)
+    arr = sortV1(arr, 0, max+1)
     // Should be in the ascending order [0..10]
     //sys.out.println(arr)
     assert arr == [0,1,2,3,4,5,6,7,8,9,10]

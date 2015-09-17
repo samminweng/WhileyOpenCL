@@ -1,12 +1,37 @@
 #include "Util.h"
 //Global variable
-/*double diff;
-clock_t start;
-clock_t end;*/
-/** Converts command list arugments into an array of integers (0 ~ 9),
-e.g. args[1]={'1', '0'} is converted into arr[0] = {1, 0}.
-The arr_size is passed by reference, so its value is updated after
-the function call.
+
+/**
+ * Slice the array into two array from start to end (exclusively).
+ */
+long long* slice(long long* arr, long long arr_size, long long start, long long end){
+	long long* sub_arr = NULL;
+	long long i = 0;
+	memcpy(sub_arr, &arr[start], end - start);
+	return sub_arr;
+}
+
+/**
+ * Generate an array with given size and initial value.
+ */
+long long* genArray(int value, int arr_size){
+	long long* arr = NULL;
+	long long i = 0;
+	// Allocate the array
+	arr = (long long*)malloc(arr_size*sizeof(long long));
+	// Initialize each element with the given value.
+	for(i=0;i<arr_size;i++){
+		arr[i] = value;
+	}
+	return arr;
+}
+
+/**
+ *
+ *  Converts command list arugments into an array of integers (0 ~ 9),
+ *  e.g. args[1]={'1', '0'} is converted into arr[0] = {1, 0}.
+ *  The arr_size is passed by reference, so its value is updated after
+ *  the function call.
 **/
 long long** convertArgsToIntArray(int argc, char** args, int arr_size){
 	long long** arr;
@@ -59,8 +84,10 @@ long long** convertArgsToIntArray(int argc, char** args, int arr_size){
 }
 
 
-/** Combine an array of integers into an integer, 
-e.g. arr = {1, 0} is converted into 10.*/
+/**
+ *  Combine an array of integers into an integer,
+ *  e.g. arr = {1, 0} is converted into 10.\
+ *  */
 long long parseInteger(long long* arr){
 	long long value;
 	long long i;
@@ -261,23 +288,3 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 	*ret_size = *op_1_size + *op_2_size;
 	return ret;
 }
-//Read the string as a long long integer. 
-/*void readStringAsInteger(char* str, long long* input) {
-	sscanf(str, "%lld", input);
-}*/
-//Get the starting time.
-/*void getStartingTime() {
-	//Get the starting time.
-	start = clock();
-}
-//Get the ending time and write out the execution time to 'result.txt' file.
-void getEndingTime() {
-	FILE *fp = NULL;
-	//Get the ending time.
-	end = clock();
-	fp = fopen("result.txt", "a");
-	fprintf(fp, "Execution time of reverse function(seconds):%.10lf\n",
-		((double) (end - start)) / CLOCKS_PER_SEC);
-	fclose(fp);
-}
-*/
