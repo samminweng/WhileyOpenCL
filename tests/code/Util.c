@@ -5,7 +5,8 @@
  */
 long long* slice(long long* arr, long long arr_size, long long start, long long end){
 	long long* sub_arr = NULL;
-	memcpy(sub_arr, &arr[start], end - start);
+	sub_arr = (long long*)malloc((end - start)*sizeof(long long));
+	memcpy(sub_arr, &arr[start], (end - start)*sizeof(long long));
 	return sub_arr;
 }
 

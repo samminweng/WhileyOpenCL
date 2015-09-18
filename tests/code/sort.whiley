@@ -87,8 +87,8 @@ function sortV1(int[] items, int start, int end) -> int[]:
         // Done
     return items
 
-method main(System.Console sys):
-//public export method test() -> void:
+//method main(System.Console sys):
+public export method test() -> void:
     /* For testing call-by-value sortV1 function*/
     int[] ys = [3,4,7,1,2]
     ys = sortV1(ys, 0, 5)
