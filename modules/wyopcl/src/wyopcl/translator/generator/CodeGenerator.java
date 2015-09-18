@@ -1640,14 +1640,18 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * can translate this into
 	 * <code>
 	 * _69 = genArray(_66, _68);
+	 * _69_size = _68;
 	 * </code>
-	 * 
+	 * The array is initialized with '_66' and allocated with '_68' size.
 	 */
 	@Override
 	protected void translate(ListGenerator code, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
-		String statement = store.getVar(code.target())+" = genArray(" + store.getVar(code.operand(0)) 
-								+ ", " + store.getVar(code.operand(1))+");" ;
+		// Call genArray function to generate the array
+		String statement = store.getIndent() + store.getVar(code.target())+" = genArray(" + store.getVar(code.operand(0)) 
+								+ ", " + store.getVar(code.operand(1))+");\n" ;
+		// Assign array size.
+		statement += store.getIndent() + store.getVar(code.target()) + "_size = " + store.getVar(code.operand(1)) + ";";
 		store.addStatement(code, statement);
 	}
 }
