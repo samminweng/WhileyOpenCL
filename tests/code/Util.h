@@ -5,10 +5,10 @@
 #include <time.h>
 #include <ctype.h>
 
-
-//Define the boolean values
+// Define the boolean values
 #define false 0  
 #define true 1
+
 /**
  * Remove the security check about unsafe 'scanf' or 'sprintf' in VS tool
  * This definition allows the portability of C code across the platforms.
@@ -28,4 +28,5 @@ long long* sublist(long long* arr, int start, int end);
 long long** convertArgsToIntArray(int argc, char** args, int arr_size);
 long long parseInteger(long long* arr);
 long long* genArray(int value, int arr_size);
-long long* slice(long long* arr, long long arr_size, long long start, long long end, long long sub_arr_size);
+long long* slice(long long* arr, long long arr_size, long long start, long long end);
+

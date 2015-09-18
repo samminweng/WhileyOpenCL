@@ -1,12 +1,10 @@
 #include "Util.h"
 //Global variable
-
 /**
  * Slice the array into two array from start to end (exclusively).
  */
 long long* slice(long long* arr, long long arr_size, long long start, long long end){
 	long long* sub_arr = NULL;
-	long long i = 0;
 	memcpy(sub_arr, &arr[start], end - start);
 	return sub_arr;
 }

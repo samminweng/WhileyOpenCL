@@ -23,10 +23,11 @@ public final class BaseTestUtil {
 	private final String workspace_path = System.getProperty("user.dir") + File.separator;
 	private final String lib_path = workspace_path + "lib" + File.separator;
 
-	protected final String classpath = lib_path + "wyjc-" + version + ".jar" + File.pathSeparator + lib_path + "wyopcl-" + version + ".jar"
-			+ File.pathSeparator + lib_path + "wyrl-" + version + ".jar" + File.pathSeparator + lib_path + "wycs-" + version + ".jar"
-			+ File.pathSeparator + lib_path + "wybs-" + version + ".jar" + File.pathSeparator + lib_path + "wyil-" + version + ".jar"
-			+ File.pathSeparator + lib_path + "wyc-" + version + ".jar" + File.pathSeparator;
+	protected final String classpath = lib_path + "wyjc-" + version + ".jar" + File.pathSeparator + lib_path + "wyopcl-"
+			+ version + ".jar" + File.pathSeparator + lib_path + "wyrl-" + version + ".jar" + File.pathSeparator
+			+ lib_path + "wycs-" + version + ".jar" + File.pathSeparator + lib_path + "wybs-" + version + ".jar"
+			+ File.pathSeparator + lib_path + "wyil-" + version + ".jar" + File.pathSeparator + lib_path + "wyc-"
+			+ version + ".jar" + File.pathSeparator;
 	protected final String whiley_runtime_lib = lib_path + "wyrt-" + version + ".jar";
 	Process p;
 
@@ -78,13 +79,13 @@ public final class BaseTestUtil {
 			// Set the working directory.
 			switch (options.length) {
 			case 2:
-				pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", whiley_runtime_lib, "-" + options[0], options[1],
-						file.getName());
+				pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", whiley_runtime_lib,
+						"-" + options[0], options[1], file.getName());
 				break;
 			case 3:
 				sysout += "." + options[2];
-				pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", whiley_runtime_lib, "-" + options[0], options[1],
-						options[2], file.getName());
+				pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", whiley_runtime_lib,
+						"-" + options[0], options[1], options[2], file.getName());
 				break;
 			}
 			sysout += ".sysout";
@@ -114,7 +115,8 @@ public final class BaseTestUtil {
 		try {
 			String sysout = path + filename + "." + options[0] + ".sysout";
 			// Create the process with the given options
-			pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", whiley_runtime_lib, "-" + options[0], file.getName());
+			pb = new ProcessBuilder("java", "-cp", classpath, "wyopcl.WyopclMain", "-bp", whiley_runtime_lib,
+					"-" + options[0], file.getName());
 			pb.directory(file.getParentFile());
 			p = pb.start();
 			assertOutput(new BufferedReader(new InputStreamReader(p.getInputStream(), Charset.forName("UTF-8"))),
@@ -244,8 +246,10 @@ public final class BaseTestUtil {
 			Files.copy(whileyFile, Paths.get(destDir + File.separator + testcase + ".whiley"));
 
 			// 2. Copy Util.c and Util.h from parent folder to destDir
-			Files.copy(Paths.get(destDir.getParent().getParent() + File.separator + "Util.c"), Paths.get(destDir + File.separator + "Util.c"));
-			Files.copy(Paths.get(destDir.getParent().getParent() + File.separator + "Util.h"), Paths.get(destDir + File.separator + "Util.h"));
+			Files.copy(Paths.get(destDir.getParent().getParent() + File.separator + "Util.c"),
+					Paths.get(destDir + File.separator + "Util.c"));
+			Files.copy(Paths.get(destDir.getParent().getParent() + File.separator + "Util.h"),
+					Paths.get(destDir + File.separator + "Util.h"));
 
 			// 3. Generate the C code.
 			String cmd = "java";
@@ -282,26 +286,30 @@ public final class BaseTestUtil {
 			String os = System.getProperty("os.name").toLowerCase();
 			// 4. Compile and run the C code.
 			if (os.indexOf("win") >= 0) {
-				// This option requires the installation of Cygwin and gcc.
+				// This option requires the installation of Cygwin and gcc, or
+				// MinGW
 				// Compile the *.c using GCC
-				Boolean isRun = false;
-				String path = System.getenv("PATH");
-				for (String p : path.split(File.pathSeparator)) {
-					// Check gcc exists in cygwin folder
-					if (p.contains("cygwin")) {
-						// As gcc is a link (Windows command does not get it),
-						// we need to use actual name (i.e. gcc-3 or gcc-4)
-						// Check if exit value is 0.
-						// If not, the compilation process has errors.
-						assertEquals(runCmd("cmd /c gcc-3 testMain.c Util.c " + testcase + ".c  -o " + testcase + ".out", destDir), 0);
-						// Run the output file.
-						assertEquals(runCmd("cmd /c " + testcase + ".out", destDir), 0);
-						isRun = true;
-						break;
-					}
+				String path = System.getenv("PATH");// Get PATH environment
+													// variable.
+				if (path.contains("MinGW")) {// Check MinGW exists.
+					// Check if exit value is 0.
+					// If not, the compilation process has errors.
+					assertEquals(
+							runCmd("cmd /c gcc testMain.c Util.c " + testcase + ".c  -o " + testcase + ".out", destDir),
+							0);
+					// Run the output file.
+					assertEquals(runCmd("cmd /c " + testcase + ".out", destDir), 0);
+				} else if (path.contains("cygwin")) {// Check gcc exists in
+														// cygwin folder
+					// As gcc is a link (Windows command does not get it),
+					// we need to use actual name (i.e. gcc-3 or gcc-4)
+					assertEquals(runCmd("cmd /c gcc-3 testMain.c Util.c " + testcase + ".c  -o " + testcase + ".out",
+							destDir), 0);
+					// Run the output file.
+					assertEquals(runCmd("cmd /c " + testcase + ".out", destDir), 0);
+				} else {
+					throw new RuntimeException("Missing C compiler, such as gcc or MinGW.");
 				}
-				// Check if compilation is run.
-				assertEquals(isRun, true);
 			} else {
 				// Run Linux commands
 				// Compile the C program into *.out and place it in current
