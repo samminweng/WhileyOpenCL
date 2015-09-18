@@ -6,14 +6,14 @@ import java.math.BigInteger;
 import wyautl.util.BigRational;
 import wyautl.io.*;
 import wyautl.core.*;
-import wyautl.rw.*;
+import wyrw.core.*;
 import wyrl.core.*;
 import wyrl.util.Runtime;
 import wyrl.util.Pair;
 import wyrl.util.AbstractRewriteRule;
 
 public final class Solver {
-	// term $4<NotT($2<^Type<$4|Atom<NotT($16<^Proton<TupleT(^[$16...])|SetT(^[^bool,$16])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$16...])|SetT(^[^bool,$16])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|OrT(^{$2...})|AndT(^{$2...})|SetT(^[^bool,$2])|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>)>
+	// term $4<NotT($2<^Type<$4|Atom<NotT($16<^Proton<TupleT(^[$16...])|ArrayT($16)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$16...])|ArrayT($16)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|OrT(^{$2...})|AndT(^{$2...})|ArrayT($2)|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>)>
 	public final static int K_NotT = 0;
 	public final static int NotT(Automaton automaton, int r0) {
 		return automaton.add(new Automaton.Term(K_NotT, r0));
@@ -236,7 +236,7 @@ public final class Solver {
 		public final int minimum() { return 2; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $7<AndT($5<^{$2<^Type<$7|Atom<NotT($19<^Proton<TupleT(^[$19...])|SetT(^[^bool,$19])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$19...])|SetT(^[^bool,$19])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT($5)|SetT(^[^bool,$2])|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>...}>)>
+	// term $7<AndT($5<^{$2<^Type<$7|Atom<NotT($19<^Proton<TupleT(^[$19...])|ArrayT($19)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$19...])|ArrayT($19)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT($5)|ArrayT($2)|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>...}>)>
 	public final static int K_AndT = 1;
 	public final static int AndT(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.Set(r0));
@@ -459,7 +459,7 @@ public final class Solver {
 		public final int minimum() { return 3; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $7<OrT($5<^{$2<^Type<$7|Atom<NotT($19<^Proton<TupleT(^[$19...])|SetT(^[^bool,$19])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$19...])|SetT(^[^bool,$19])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|AndT($5)|SetT(^[^bool,$2])|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>...}>)>
+	// term $7<OrT($5<^{$2<^Type<$7|Atom<NotT($19<^Proton<TupleT(^[$19...])|ArrayT($19)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$19...])|ArrayT($19)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|AndT($5)|ArrayT($2)|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>...}>)>
 	public final static int K_OrT = 2;
 	public final static int OrT(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.Set(r0));
@@ -610,7 +610,7 @@ public final class Solver {
 		public final int minimum() { return 3; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $7<TupleT(^[$2<^Type<$7|Atom<NotT($19<^Proton<TupleT(^[$19...])|SetT(^[^bool,$19])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$19...])|SetT(^[^bool,$19])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT(^{$2...})|AndT(^{$2...})|SetT(^[^bool,$2])|FunctionT(^[$2,$2,$2...])>>...])>
+	// term $7<TupleT(^[$2<^Type<$7|Atom<NotT($19<^Proton<TupleT(^[$19...])|ArrayT($19)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$19...])|ArrayT($19)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT(^{$2...})|AndT(^{$2...})|ArrayT($2)|FunctionT(^[$2,$2,$2...])>>...])>
 	public final static int K_TupleT = 3;
 	public final static int TupleT(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
@@ -958,65 +958,10 @@ public final class Solver {
 		public final int minimum() { return 6; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $9<SetT(^[^bool,$3<^Type<$9|Atom<NotT($21<^Proton<TupleT(^[$21...])|SetT(^[^bool,$21])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$21...])|SetT(^[^bool,$21])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($3)|OrT(^{$3...})|AndT(^{$3...})|TupleT(^[$3...])|FunctionT(^[$3,$3,$3...])>>])>
-	public final static int K_SetT = 4;
-	public final static int SetT(Automaton automaton, int... r0) {
-		int r1 = automaton.add(new Automaton.List(r0));
-		return automaton.add(new Automaton.Term(K_SetT, r1));
-	}
-	public final static int SetT(Automaton automaton, List<Integer> r0) {
-		int r1 = automaton.add(new Automaton.List(r0));
-		return automaton.add(new Automaton.Term(K_SetT, r1));
-	}
-
-	// SetType_1
+	// TupleType_4
 	private final static class Reduction_17 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_17(Pattern.Term pattern) { super(pattern); }
-
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
-			Automaton.State s0 = automaton.get(r0);
-			if(s0.kind == K_SetT) {
-				Automaton.Term t0 = (Automaton.Term) s0;
-				int r1 = t0.contents;
-				Automaton.State s1 = automaton.get(r1);
-				Automaton.List l1 = (Automaton.List) s1;
-				int r2 = l1.get(0);
-				int r3 = l1.get(1);
-				if(Runtime.accepts(type1,automaton,automaton.get(r3), SCHEMA)) {
-					int[] state = {r0, r1, r2, r3};
-					activations.add(new Activation(this,null,state));
-				}
-			}
-		}
-
-		public final int apply(Automaton automaton, int[] state) {
-			int nStates = automaton.nStates();
-			int r0 = state[0];
-			int r2 = state[2]; // b
-			boolean r4 = ((Automaton.Bool)automaton.get(r2)).value;
-			boolean r5 = !r4;              // !b
-			if(r5) {
-				Automaton.Term r6 = VoidT;
-				int r7 = automaton.add(r6);
-				if(r0 != r7) {
-					return automaton.rewrite(r0, r7);
-				}
-			}
-			automaton.resize(nStates);
-			return Automaton.K_VOID;
-		}
-		public final String name() { return "SetType_1"; }
-		public final int rank() { return 0; }
-
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
-	}
-	// SetType_2
-	private final static class Reduction_18 extends AbstractRewriteRule implements ReductionRule {
-
-		public Reduction_18(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -1030,26 +975,25 @@ public final class Solver {
 					for(int r3=0;r3!=c1.size();++r3) {
 						int r2 = c1.get(r3);
 						Automaton.State s2 = automaton.get(r2);
-						if(s2.kind == K_SetT) {
+						if(s2.kind == K_TupleT) {
 							Automaton.Term t2 = (Automaton.Term) s2;
 							int r4 = t2.contents;
 							Automaton.State s4 = automaton.get(r4);
 							Automaton.List l4 = (Automaton.List) s4;
-							int r5 = l4.get(0);
-							int r6 = l4.get(1);
-							for(int r8=0;r8!=c1.size();++r8) {
-								if(r8 == r3) { continue; }
-								int r7 = c1.get(r8);
-								Automaton.State s7 = automaton.get(r7);
-								if(s7.kind == K_SetT) {
-									Automaton.Term t7 = (Automaton.Term) s7;
-									int r9 = t7.contents;
-									Automaton.State s9 = automaton.get(r9);
-									Automaton.List l9 = (Automaton.List) s9;
-									int r10 = l9.get(0);
-									int r11 = l9.get(1);
-									int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, 0};
-									activations.add(new Activation(this,null,state));
+							for(int r7=0;r7!=c1.size();++r7) {
+								if(r7 == r3) { continue; }
+								int r6 = c1.get(r7);
+								Automaton.State s6 = automaton.get(r6);
+								if(s6.kind == K_NotT) {
+									Automaton.Term t6 = (Automaton.Term) s6;
+									int r8 = t6.contents;
+									Automaton.State s8 = automaton.get(r8);
+									if(s8.kind == K_ArrayT) {
+										Automaton.Term t8 = (Automaton.Term) s8;
+										int r9 = t8.contents;
+										int[] state = {r0, r1, r2, r3, r4, 0, r6, r7, r8, r9, 0};
+										activations.add(new Activation(this,null,state));
+									}
 								}
 							}
 						}
@@ -1061,51 +1005,75 @@ public final class Solver {
 		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
+			int r2 = state[2]; // t1
 			int r3 = state[3];
-			int r5 = state[5]; // b1
-			int r6 = state[6]; // t1
-			int r8 = state[8];
-			int r10 = state[10]; // b2
-			int r11 = state[11]; // t2
+			int r7 = state[7];
 			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
 			int[] s1children = new int[s1.size() - 2];
 			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
-				if(s1i == r3 || s1i == r8) { continue; }
+				if(s1i == r3 || s1i == r7) { continue; }
 				s1children[s1j++] = s1.get(s1i);
 			}
-			Automaton.Set r12 = new Automaton.Set(s1children);
-			boolean r13 = ((Automaton.Bool)automaton.get(r5)).value;
-			boolean r14 = false;           // b1 && b2
-			if(r13) {
-				boolean r15 = ((Automaton.Bool)automaton.get(r10)).value;
-				r14 = r15;
-			}
-			int r16 = automaton.add(r14 ? Automaton.TRUE : Automaton.FALSE);
-			Automaton.Set r17 = new Automaton.Set(r6, r11); // {t1t2}
-			int r18 = automaton.add(r17);
-			Automaton.Term r19 = new Automaton.Term(K_AndT, r18);
-			int r20 = automaton.add(r19);
-			Automaton.List r21 = new Automaton.List(r16, r20); // [b1 && b2AndT({t1t2})]
-			int r22 = automaton.add(r21);
-			Automaton.Term r23 = new Automaton.Term(K_SetT, r22);
-			int r24 = automaton.add(r23);
-			Automaton.Set r25 = r12.appendFront(r24); // SetT([b1 && b2AndT({t1t2})]) append ts
-			int r26 = automaton.add(r25);
-			Automaton.Term r27 = new Automaton.Term(K_AndT, r26);
-			int r28 = automaton.add(r27);
-			if(r0 != r28) {
-				return automaton.rewrite(r0, r28);
+			Automaton.Set r10 = new Automaton.Set(s1children);
+			Automaton.Set r11 = new Automaton.Set(r2); // {t1}
+			Automaton.Set r12 = r11.append(r10); // {t1} append ts
+			int r13 = automaton.add(r12);
+			Automaton.Term r14 = new Automaton.Term(K_AndT, r13);
+			int r15 = automaton.add(r14);
+			if(r0 != r15) {
+				return automaton.rewrite(r0, r15);
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "SetType_2"; }
+		public final String name() { return "TupleType_4"; }
 		public final int rank() { return 2; }
 
-		public final int minimum() { return 9; }
+		public final int minimum() { return 6; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// SetType_3
+	// term $4<ArrayT($2<^Type<$4|Atom<NotT($16<^Proton<TupleT(^[$16...])|ArrayT($16)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$16...])|ArrayT($16)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT(^{$2...})|AndT(^{$2...})|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>)>
+	public final static int K_ArrayT = 4;
+	public final static int ArrayT(Automaton automaton, int r0) {
+		return automaton.add(new Automaton.Term(K_ArrayT, r0));
+	}
+
+	// ArrayType_1
+	private final static class Reduction_18 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_18(Pattern.Term pattern) { super(pattern); }
+
+		public final void probe(Automaton automaton, int root, List<Activation> activations) {
+			int r0 = root;
+			Automaton.State s0 = automaton.get(r0);
+			if(s0.kind == K_ArrayT) {
+				Automaton.Term t0 = (Automaton.Term) s0;
+				int r1 = t0.contents;
+				if(Runtime.accepts(type1,automaton,automaton.get(r1), SCHEMA)) {
+					int[] state = {r0, r1};
+					activations.add(new Activation(this,null,state));
+				}
+			}
+		}
+
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
+			int r0 = state[0];
+			Automaton.Term r2 = VoidT;
+			int r3 = automaton.add(r2);
+			if(r0 != r3) {
+				return automaton.rewrite(r0, r3);
+			}
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
+		}
+		public final String name() { return "ArrayType_1"; }
+		public final int rank() { return 0; }
+
+		public final int minimum() { return 1; }
+		public final int maximum() { return Integer.MAX_VALUE; }
+	}
+	// ArrayType_2
 	private final static class Reduction_19 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_19(Pattern.Term pattern) { super(pattern); }
@@ -1122,31 +1090,18 @@ public final class Solver {
 					for(int r3=0;r3!=c1.size();++r3) {
 						int r2 = c1.get(r3);
 						Automaton.State s2 = automaton.get(r2);
-						if(s2.kind == K_SetT) {
+						if(s2.kind == K_ArrayT) {
 							Automaton.Term t2 = (Automaton.Term) s2;
 							int r4 = t2.contents;
-							Automaton.State s4 = automaton.get(r4);
-							Automaton.List l4 = (Automaton.List) s4;
-							int r5 = l4.get(0);
-							int r6 = l4.get(1);
-							for(int r8=0;r8!=c1.size();++r8) {
-								if(r8 == r3) { continue; }
-								int r7 = c1.get(r8);
-								Automaton.State s7 = automaton.get(r7);
-								if(s7.kind == K_NotT) {
-									Automaton.Term t7 = (Automaton.Term) s7;
-									int r9 = t7.contents;
-									Automaton.State s9 = automaton.get(r9);
-									if(s9.kind == K_SetT) {
-										Automaton.Term t9 = (Automaton.Term) s9;
-										int r10 = t9.contents;
-										Automaton.State s10 = automaton.get(r10);
-										Automaton.List l10 = (Automaton.List) s10;
-										int r11 = l10.get(0);
-										int r12 = l10.get(1);
-										int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, 0};
-										activations.add(new Activation(this,null,state));
-									}
+							for(int r6=0;r6!=c1.size();++r6) {
+								if(r6 == r3) { continue; }
+								int r5 = c1.get(r6);
+								Automaton.State s5 = automaton.get(r5);
+								if(s5.kind == K_ArrayT) {
+									Automaton.Term t5 = (Automaton.Term) s5;
+									int r7 = t5.contents;
+									int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, 0};
+									activations.add(new Activation(this,null,state));
 								}
 							}
 						}
@@ -1159,53 +1114,39 @@ public final class Solver {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r3 = state[3];
-			int r5 = state[5]; // b1
-			int r6 = state[6]; // t1
-			int r8 = state[8];
-			int r11 = state[11]; // b2
-			int r12 = state[12]; // t2
+			int r4 = state[4]; // t1
+			int r6 = state[6];
+			int r7 = state[7]; // t2
 			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
 			int[] s1children = new int[s1.size() - 2];
 			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
-				if(s1i == r3 || s1i == r8) { continue; }
+				if(s1i == r3 || s1i == r6) { continue; }
 				s1children[s1j++] = s1.get(s1i);
 			}
-			Automaton.Set r13 = new Automaton.Set(s1children);
-			boolean r14 = ((Automaton.Bool)automaton.get(r5)).value;
-			boolean r15 = false;           // b1 && !b2
-			if(r14) {
-				boolean r16 = ((Automaton.Bool)automaton.get(r11)).value;
-				boolean r17 = !r16;            // !b2
-				r15 = r17;
-			}
-			int r18 = automaton.add(r15 ? Automaton.TRUE : Automaton.FALSE);
-			Automaton.Term r19 = new Automaton.Term(K_NotT, r12);
-			int r20 = automaton.add(r19);
-			Automaton.Set r21 = new Automaton.Set(r6, r20); // {t1NotT(t2)}
-			int r22 = automaton.add(r21);
-			Automaton.Term r23 = new Automaton.Term(K_AndT, r22);
-			int r24 = automaton.add(r23);
-			Automaton.List r25 = new Automaton.List(r18, r24); // [b1 && !b2AndT({t1NotT(t2)})]
-			int r26 = automaton.add(r25);
-			Automaton.Term r27 = new Automaton.Term(K_SetT, r26);
-			int r28 = automaton.add(r27);
-			Automaton.Set r29 = r13.appendFront(r28); // SetT([b1 && !b2AndT({t1NotT(t2)})]) append ts
-			int r30 = automaton.add(r29);
-			Automaton.Term r31 = new Automaton.Term(K_AndT, r30);
-			int r32 = automaton.add(r31);
-			if(r0 != r32) {
-				return automaton.rewrite(r0, r32);
+			Automaton.Set r8 = new Automaton.Set(s1children);
+			Automaton.Set r9 = new Automaton.Set(r4, r7); // {t1t2}
+			int r10 = automaton.add(r9);
+			Automaton.Term r11 = new Automaton.Term(K_AndT, r10);
+			int r12 = automaton.add(r11);
+			Automaton.Term r13 = new Automaton.Term(K_ArrayT, r12);
+			int r14 = automaton.add(r13);
+			Automaton.Set r15 = r8.appendFront(r14); // ArrayT(AndT({t1t2})) append ts
+			int r16 = automaton.add(r15);
+			Automaton.Term r17 = new Automaton.Term(K_AndT, r16);
+			int r18 = automaton.add(r17);
+			if(r0 != r18) {
+				return automaton.rewrite(r0, r18);
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "SetType_3"; }
+		public final String name() { return "ArrayType_2"; }
 		public final int rank() { return 2; }
 
-		public final int minimum() { return 10; }
+		public final int minimum() { return 5; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// SetType_4
+	// ArrayType_3
 	private final static class Reduction_20 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_20(Pattern.Term pattern) { super(pattern); }
@@ -1222,18 +1163,168 @@ public final class Solver {
 					for(int r3=0;r3!=c1.size();++r3) {
 						int r2 = c1.get(r3);
 						Automaton.State s2 = automaton.get(r2);
-						if(s2.kind == K_SetT) {
+						if(s2.kind == K_ArrayT) {
 							Automaton.Term t2 = (Automaton.Term) s2;
 							int r4 = t2.contents;
-							Automaton.State s4 = automaton.get(r4);
-							Automaton.List l4 = (Automaton.List) s4;
-							int r5 = l4.get(0);
-							int r6 = l4.get(1);
-							for(int r8=0;r8!=c1.size();++r8) {
-								if(r8 == r3) { continue; }
-								int r7 = c1.get(r8);
-								if(Runtime.accepts(type4,automaton,automaton.get(r7), SCHEMA)) {
-									int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, 0};
+							for(int r6=0;r6!=c1.size();++r6) {
+								if(r6 == r3) { continue; }
+								int r5 = c1.get(r6);
+								Automaton.State s5 = automaton.get(r5);
+								if(s5.kind == K_NotT) {
+									Automaton.Term t5 = (Automaton.Term) s5;
+									int r7 = t5.contents;
+									Automaton.State s7 = automaton.get(r7);
+									if(s7.kind == K_ArrayT) {
+										Automaton.Term t7 = (Automaton.Term) s7;
+										int r8 = t7.contents;
+										int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, 0};
+										activations.add(new Activation(this,null,state));
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
+			int r0 = state[0];
+			int r3 = state[3];
+			int r4 = state[4]; // t1
+			int r6 = state[6];
+			int r8 = state[8]; // t2
+			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] s1children = new int[s1.size() - 2];
+			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+				if(s1i == r3 || s1i == r6) { continue; }
+				s1children[s1j++] = s1.get(s1i);
+			}
+			Automaton.Set r9 = new Automaton.Set(s1children);
+			Automaton.Term r10 = new Automaton.Term(K_NotT, r8);
+			int r11 = automaton.add(r10);
+			Automaton.Set r12 = new Automaton.Set(r4, r11); // {t1NotT(t2)}
+			int r13 = automaton.add(r12);
+			Automaton.Term r14 = new Automaton.Term(K_AndT, r13);
+			int r15 = automaton.add(r14);
+			Automaton.Term r16 = new Automaton.Term(K_ArrayT, r15);
+			int r17 = automaton.add(r16);
+			Automaton.Set r18 = r9.appendFront(r17); // ArrayT(AndT({t1NotT(t2)})) append ts
+			int r19 = automaton.add(r18);
+			Automaton.Term r20 = new Automaton.Term(K_AndT, r19);
+			int r21 = automaton.add(r20);
+			if(r0 != r21) {
+				return automaton.rewrite(r0, r21);
+			}
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
+		}
+		public final String name() { return "ArrayType_3"; }
+		public final int rank() { return 2; }
+
+		public final int minimum() { return 6; }
+		public final int maximum() { return Integer.MAX_VALUE; }
+	}
+	// ArrayType_3b
+	private final static class Reduction_21 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_21(Pattern.Term pattern) { super(pattern); }
+
+		public final void probe(Automaton automaton, int root, List<Activation> activations) {
+			int r0 = root;
+			Automaton.State s0 = automaton.get(r0);
+			if(s0.kind == K_AndT) {
+				Automaton.Term t0 = (Automaton.Term) s0;
+				int r1 = t0.contents;
+				Automaton.State s1 = automaton.get(r1);
+				Automaton.Collection c1 = (Automaton.Collection) s1;
+				if(c1.size() >= 2) {
+					for(int r3=0;r3!=c1.size();++r3) {
+						int r2 = c1.get(r3);
+						Automaton.State s2 = automaton.get(r2);
+						if(s2.kind == K_ArrayT) {
+							Automaton.Term t2 = (Automaton.Term) s2;
+							int r4 = t2.contents;
+							for(int r6=0;r6!=c1.size();++r6) {
+								if(r6 == r3) { continue; }
+								int r5 = c1.get(r6);
+								Automaton.State s5 = automaton.get(r5);
+								if(s5.kind == K_NotT) {
+									Automaton.Term t5 = (Automaton.Term) s5;
+									int r7 = t5.contents;
+									Automaton.State s7 = automaton.get(r7);
+									if(s7.kind == K_TupleT) {
+										Automaton.Term t7 = (Automaton.Term) s7;
+										int r8 = t7.contents;
+										Automaton.State s8 = automaton.get(r8);
+										Automaton.List l8 = (Automaton.List) s8;
+										int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, 0, 0};
+										activations.add(new Activation(this,null,state));
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
+			int r0 = state[0];
+			int r2 = state[2]; // t1
+			int r3 = state[3];
+			int r6 = state[6];
+			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] s1children = new int[s1.size() - 2];
+			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+				if(s1i == r3 || s1i == r6) { continue; }
+				s1children[s1j++] = s1.get(s1i);
+			}
+			Automaton.Set r10 = new Automaton.Set(s1children);
+			Automaton.Set r11 = new Automaton.Set(r2); // {t1}
+			Automaton.Set r12 = r11.append(r10); // {t1} append ts
+			int r13 = automaton.add(r12);
+			Automaton.Term r14 = new Automaton.Term(K_AndT, r13);
+			int r15 = automaton.add(r14);
+			if(r0 != r15) {
+				return automaton.rewrite(r0, r15);
+			}
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
+		}
+		public final String name() { return "ArrayType_3b"; }
+		public final int rank() { return 2; }
+
+		public final int minimum() { return 6; }
+		public final int maximum() { return Integer.MAX_VALUE; }
+	}
+	// ArrayType_4
+	private final static class Reduction_22 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_22(Pattern.Term pattern) { super(pattern); }
+
+		public final void probe(Automaton automaton, int root, List<Activation> activations) {
+			int r0 = root;
+			Automaton.State s0 = automaton.get(r0);
+			if(s0.kind == K_AndT) {
+				Automaton.Term t0 = (Automaton.Term) s0;
+				int r1 = t0.contents;
+				Automaton.State s1 = automaton.get(r1);
+				Automaton.Collection c1 = (Automaton.Collection) s1;
+				if(c1.size() >= 2) {
+					for(int r3=0;r3!=c1.size();++r3) {
+						int r2 = c1.get(r3);
+						Automaton.State s2 = automaton.get(r2);
+						if(s2.kind == K_ArrayT) {
+							Automaton.Term t2 = (Automaton.Term) s2;
+							int r4 = t2.contents;
+							for(int r6=0;r6!=c1.size();++r6) {
+								if(r6 == r3) { continue; }
+								int r5 = c1.get(r6);
+								if(Runtime.accepts(type3,automaton,automaton.get(r5), SCHEMA)) {
+									int[] state = {r0, r1, r2, r3, r4, r5, r6, 0};
 									activations.add(new Activation(this,null,state));
 								}
 							}
@@ -1248,37 +1339,37 @@ public final class Solver {
 			int r0 = state[0];
 			int r2 = state[2]; // s
 			int r3 = state[3];
-			int r7 = state[7]; // p
-			int r8 = state[8];
+			int r5 = state[5]; // p
+			int r6 = state[6];
 			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
 			int[] s1children = new int[s1.size() - 2];
 			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
-				if(s1i == r3 || s1i == r8) { continue; }
+				if(s1i == r3 || s1i == r6) { continue; }
 				s1children[s1j++] = s1.get(s1i);
 			}
-			Automaton.Set r9 = new Automaton.Set(s1children);
-			boolean r10 = Runtime.accepts(type5, automaton, r7, SCHEMA); // p is ^AnyT
-			boolean r11 = !r10;            // !p is ^AnyT
-			if(r11) {
-				Automaton.Term r12 = VoidT;
-				int r13 = automaton.add(r12);
-				if(r0 != r13) {
-					return automaton.rewrite(r0, r13);
+			Automaton.Set r7 = new Automaton.Set(s1children);
+			boolean r8 = Runtime.accepts(type4, automaton, r5, SCHEMA); // p is ^AnyT
+			boolean r9 = !r8;              // !p is ^AnyT
+			if(r9) {
+				Automaton.Term r10 = VoidT;
+				int r11 = automaton.add(r10);
+				if(r0 != r11) {
+					return automaton.rewrite(r0, r11);
 				}
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "SetType_4"; }
+		public final String name() { return "ArrayType_4"; }
 		public final int rank() { return 1; }
 
 		public final int minimum() { return 0; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// SetType_5
-	private final static class Reduction_21 extends AbstractRewriteRule implements ReductionRule {
+	// ArrayType_5
+	private final static class Reduction_23 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_21(Pattern.Term pattern) { super(pattern); }
+		public Reduction_23(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -1292,25 +1383,17 @@ public final class Solver {
 					for(int r3=0;r3!=c1.size();++r3) {
 						int r2 = c1.get(r3);
 						Automaton.State s2 = automaton.get(r2);
-						if(s2.kind == K_SetT) {
+						if(s2.kind == K_ArrayT) {
 							Automaton.Term t2 = (Automaton.Term) s2;
 							int r4 = t2.contents;
-							Automaton.State s4 = automaton.get(r4);
-							Automaton.List l4 = (Automaton.List) s4;
-							int r5 = l4.get(0);
-							int r6 = l4.get(1);
-							for(int r8=0;r8!=c1.size();++r8) {
-								if(r8 == r3) { continue; }
-								int r7 = c1.get(r8);
-								Automaton.State s7 = automaton.get(r7);
-								if(s7.kind == K_SetT) {
-									Automaton.Term t7 = (Automaton.Term) s7;
-									int r9 = t7.contents;
-									Automaton.State s9 = automaton.get(r9);
-									Automaton.List l9 = (Automaton.List) s9;
-									int r10 = l9.get(0);
-									int r11 = l9.get(1);
-									int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, 0};
+							for(int r6=0;r6!=c1.size();++r6) {
+								if(r6 == r3) { continue; }
+								int r5 = c1.get(r6);
+								Automaton.State s5 = automaton.get(r5);
+								if(s5.kind == K_ArrayT) {
+									Automaton.Term t5 = (Automaton.Term) s5;
+									int r7 = t5.contents;
+									int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, 0};
 									activations.add(new Activation(this,null,state));
 								}
 							}
@@ -1325,71 +1408,32 @@ public final class Solver {
 			int r0 = state[0];
 			int r2 = state[2]; // s1
 			int r3 = state[3];
-			int r5 = state[5]; // b1
-			int r6 = state[6]; // t1
-			int r7 = state[7]; // s2
-			int r8 = state[8];
-			int r10 = state[10]; // b2
-			int r11 = state[11]; // t2
+			int r4 = state[4]; // t1
+			int r5 = state[5]; // s2
+			int r6 = state[6];
+			int r7 = state[7]; // t2
 			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
 			int[] s1children = new int[s1.size() - 2];
 			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
-				if(s1i == r3 || s1i == r8) { continue; }
+				if(s1i == r3 || s1i == r6) { continue; }
 				s1children[s1j++] = s1.get(s1i);
 			}
-			Automaton.Set r12 = new Automaton.Set(s1children);
-			boolean r13 = r6 == r11;       // t1 eq t2
-			boolean r14 = false;           // t1 eq t2 && b1 && !b2
-			if(r13) {
-				boolean r15 = ((Automaton.Bool)automaton.get(r5)).value;
-				boolean r16 = false;           // b1 && !b2
-				if(r15) {
-					boolean r17 = ((Automaton.Bool)automaton.get(r10)).value;
-					boolean r18 = !r17;            // !b2
-					r16 = r18;
-				}
-				r14 = r16;
-			}
-			if(r14) {
-				Automaton.Set r19 = new Automaton.Set(r2); // {s1}
-				Automaton.Set r20 = r19.append(r12); // {s1} append ts
-				int r21 = automaton.add(r20);
-				Automaton.Term r22 = new Automaton.Term(K_OrT, r21);
-				int r23 = automaton.add(r22);
-				if(r0 != r23) {
-					return automaton.rewrite(r0, r23);
-				}
-			}
-			Automaton.Term r24 = VoidT;
-			Object r25 = (Object) automaton.get(r11);
-			boolean r26 = r25.equals(r24); // t2 eq VoidT
-			boolean r27 = false;           // t2 eq VoidT && b2
-			if(r26) {
-				boolean r28 = ((Automaton.Bool)automaton.get(r10)).value;
-				r27 = r28;
-			}
-			if(r27) {
-				boolean r29 = ((Automaton.Bool)automaton.get(r5)).value;
-				boolean r30 = ((Automaton.Bool)automaton.get(r10)).value;
-				boolean r31 = r29 || r30;      // b1 || b2
-				int r32 = automaton.add(r31 ? Automaton.TRUE : Automaton.FALSE);
-				Automaton.List r33 = new Automaton.List(r32, r6); // [b1 || b2t1]
-				int r34 = automaton.add(r33);
-				Automaton.Term r35 = new Automaton.Term(K_SetT, r34);
-				int r36 = automaton.add(r35);
-				Automaton.Set r37 = new Automaton.Set(r36); // {SetT([b1 || b2t1])}
-				Automaton.Set r38 = r37.append(r12); // {SetT([b1 || b2t1])} append ts
-				int r39 = automaton.add(r38);
-				Automaton.Term r40 = new Automaton.Term(K_OrT, r39);
-				int r41 = automaton.add(r40);
-				if(r0 != r41) {
-					return automaton.rewrite(r0, r41);
+			Automaton.Set r8 = new Automaton.Set(s1children);
+			boolean r9 = r4 == r7;         // t1 eq t2
+			if(r9) {
+				Automaton.Set r10 = new Automaton.Set(r2); // {s1}
+				Automaton.Set r11 = r10.append(r8); // {s1} append ts
+				int r12 = automaton.add(r11);
+				Automaton.Term r13 = new Automaton.Term(K_OrT, r12);
+				int r14 = automaton.add(r13);
+				if(r0 != r14) {
+					return automaton.rewrite(r0, r14);
 				}
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "SetType_5"; }
+		public final String name() { return "ArrayType_5"; }
 		public final int rank() { return 2; }
 
 		public final int minimum() { return 0; }
@@ -1438,9 +1482,9 @@ public final class Solver {
 	}
 
 	// AtomType_1
-	private final static class Reduction_22 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_24 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_22(Pattern.Term pattern) { super(pattern); }
+		public Reduction_24(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -1488,9 +1532,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// AtomType_2
-	private final static class Reduction_23 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_25 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_23(Pattern.Term pattern) { super(pattern); }
+		public Reduction_25(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -1539,9 +1583,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// AtomType_3
-	private final static class Reduction_24 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_26 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_24(Pattern.Term pattern) { super(pattern); }
+		public Reduction_26(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -1554,11 +1598,11 @@ public final class Solver {
 				if(c1.size() >= 2) {
 					for(int r3=0;r3!=c1.size();++r3) {
 						int r2 = c1.get(r3);
-						if(Runtime.accepts(type6,automaton,automaton.get(r2), SCHEMA)) {
+						if(Runtime.accepts(type5,automaton,automaton.get(r2), SCHEMA)) {
 							for(int r5=0;r5!=c1.size();++r5) {
 								if(r5 == r3) { continue; }
 								int r4 = c1.get(r5);
-								if(Runtime.accepts(type4,automaton,automaton.get(r4), SCHEMA)) {
+								if(Runtime.accepts(type3,automaton,automaton.get(r4), SCHEMA)) {
 									int[] state = {r0, r1, r2, r3, r4, r5, 0};
 									activations.add(new Activation(this,null,state));
 								}
@@ -1615,9 +1659,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// AtomType_4
-	private final static class Reduction_25 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_27 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_25(Pattern.Term pattern) { super(pattern); }
+		public Reduction_27(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -1630,7 +1674,7 @@ public final class Solver {
 				if(c1.size() >= 2) {
 					for(int r3=0;r3!=c1.size();++r3) {
 						int r2 = c1.get(r3);
-						if(Runtime.accepts(type6,automaton,automaton.get(r2), SCHEMA)) {
+						if(Runtime.accepts(type5,automaton,automaton.get(r2), SCHEMA)) {
 							for(int r5=0;r5!=c1.size();++r5) {
 								if(r5 == r3) { continue; }
 								int r4 = c1.get(r5);
@@ -1638,7 +1682,7 @@ public final class Solver {
 								if(s4.kind == K_NotT) {
 									Automaton.Term t4 = (Automaton.Term) s4;
 									int r6 = t4.contents;
-									if(Runtime.accepts(type4,automaton,automaton.get(r6), SCHEMA)) {
+									if(Runtime.accepts(type3,automaton,automaton.get(r6), SCHEMA)) {
 										int[] state = {r0, r1, r2, r3, r4, r5, r6, 0};
 										activations.add(new Activation(this,null,state));
 									}
@@ -1694,9 +1738,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// AtomType_5
-	private final static class Reduction_26 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_28 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_26(Pattern.Term pattern) { super(pattern); }
+		public Reduction_28(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -1744,9 +1788,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// AtomType_5
-	private final static class Reduction_27 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_29 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_27(Pattern.Term pattern) { super(pattern); }
+		public Reduction_29(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -1794,7 +1838,7 @@ public final class Solver {
 		public final int minimum() { return 2; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $8<FunctionT(^[$2<^Type<$8|Atom<NotT($20<^Proton<TupleT(^[$20...])|SetT(^[^bool,$20])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$20...])|SetT(^[^bool,$20])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT(^{$2...})|AndT(^{$2...})|SetT(^[^bool,$2])|TupleT(^[$2...])>>,$2,$2...])>
+	// term $8<FunctionT(^[$2<^Type<$8|Atom<NotT($20<^Proton<TupleT(^[$20...])|ArrayT($20)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$20...])|ArrayT($20)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT(^{$2...})|AndT(^{$2...})|ArrayT($2)|TupleT(^[$2...])>>,$2,$2...])>
 	public final static int K_FunctionT = 14;
 	public final static int FunctionT(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
@@ -1835,7 +1879,7 @@ public final class Solver {
 		return automaton.add(new Automaton.Term(K_Var, r1));
 	}
 
-	// term $7<Tuple(^[$2<^Expr<$7|$44<Value<Null|Tuple(^[^$44...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$44...})>>|Fn(^[^string,$2...])|$90<BExpr<Bool<True|False>|VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|And(^{^$90...})|Or(^{^$90...})|Not(^$90)|Equals(^[$122<^Type<Atom<NotT($145<^Proton<TupleT(^[$145...])|SetT(^[^bool,$145])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$145...])|SetT(^[^bool,$145])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($122)|OrT(^{$122...})|AndT(^{$122...})|SetT(^[^bool,$122])|TupleT(^[$122...])|FunctionT(^[$122,$122,$122...])>>,^{|$2,$2|}[$2,$2]])|Inequality(^[^AType<IntT|RealT>,$228<^AExpr<Num(^real)|VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|Sum(^[^real,^{|$228...|}[$228...]])|Mul(^[^real,^{|$228...|}[$228...]])|Div(^[$228,$228])>>])|Equation(^[^AType<IntT|RealT>,$228])|SubsetEq(^[^SetT(^[^bool,$122]),^SExpr<VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|Set(^{$2...})>,^SExpr<VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|Set(^{$2...})>])|ForAll(^[^{^[^Var(^string),$122]...},^$90])|Exists(^[^{^[^Var(^string),$122]...},^$90])>>|AExpr<Num(^real)|VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|Sum(^[^real,^{|$228...|}[$228...]])|Mul(^[^real,^{|$228...|}[$228...]])|Div(^[$228,$228])>|SExpr<VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|Set(^{$2...})>>>...])>
+	// term $7<Tuple($5<^[$2<^Expr<$7|$40<Value<Null|Tuple(^[^$40...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$40...])>>|$77<BExpr<Bool<True|False>|VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>|And(^{^$77...})|Or(^{^$77...})|Not(^$77)|Equals(^[$123<^Type<Atom<NotT($146<^Proton<TupleT(^[$146...])|ArrayT($146)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$146...])|ArrayT($146)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($123)|OrT(^{$123...})|AndT(^{$123...})|ArrayT($123)|TupleT(^[$123...])|FunctionT(^[$123,$123,$123...])>>,^{|$2,$2|}[$2,$2]])|Inequality(^[^AType<IntT|RealT>,$220<^AExpr<Num(^real)|VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>>])|Equation(^[^AType<IntT|RealT>,$220])|ForAll(^[^{^[^Var(^string),$123]...},^$77])|Exists(^[^{^[^Var(^string),$123]...},^$77])>>|AExpr<Num(^real)|VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>|SExpr<VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>|Array($5)>>>...]>)>
 	public final static int K_Tuple = 20;
 	public final static int Tuple(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
@@ -1846,7 +1890,7 @@ public final class Solver {
 		return automaton.add(new Automaton.Term(K_Tuple, r1));
 	}
 
-	// term $9<Load(^[$2<^Expr<$47<Value<Null|Tuple(^[^$47...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$47...})>>|Tuple(^[$2...])|Fn(^[^string,$2...])|$98<BExpr<Bool<True|False>|VExpr<$9|Fn(^[^string,$2...])|Var(^string)|LengthOf($2)>|And(^{^$98...})|Or(^{^$98...})|Not(^$98)|Equals(^[$122<^Type<Atom<NotT($145<^Proton<TupleT(^[$145...])|SetT(^[^bool,$145])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$145...])|SetT(^[^bool,$145])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($122)|OrT(^{$122...})|AndT(^{$122...})|SetT(^[^bool,$122])|TupleT(^[$122...])|FunctionT(^[$122,$122,$122...])>>,^{|$2,$2|}[$2,$2]])|Inequality(^[^AType<IntT|RealT>,$228<^AExpr<Num(^real)|VExpr<$9|Fn(^[^string,$2...])|Var(^string)|LengthOf($2)>|Sum(^[^real,^{|$228...|}[$228...]])|Mul(^[^real,^{|$228...|}[$228...]])|Div(^[$228,$228])>>])|Equation(^[^AType<IntT|RealT>,$228])|SubsetEq(^[^SetT(^[^bool,$122]),^SExpr<VExpr<$9|Fn(^[^string,$2...])|Var(^string)|LengthOf($2)>|Set(^{$2...})>,^SExpr<VExpr<$9|Fn(^[^string,$2...])|Var(^string)|LengthOf($2)>|Set(^{$2...})>])|ForAll(^[^{^[^Var(^string),$122]...},^$98])|Exists(^[^{^[^Var(^string),$122]...},^$98])>>|AExpr<Num(^real)|VExpr<$9|Fn(^[^string,$2...])|Var(^string)|LengthOf($2)>|Sum(^[^real,^{|$228...|}[$228...]])|Mul(^[^real,^{|$228...|}[$228...]])|Div(^[$228,$228])>|SExpr<VExpr<$9|Fn(^[^string,$2...])|Var(^string)|LengthOf($2)>|Set(^{$2...})>>>,^int])>
+	// term $9<Load(^[$2<^Expr<$43<Value<Null|Tuple(^[^$43...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$43...])>>|Tuple(^[$2...])|$85<BExpr<Bool<True|False>|VExpr<$9|Var(^string)|Fn(^[^string,$2...])|LengthOf($2)|IndexOf(^[$2,$2])>|And(^{^$85...})|Or(^{^$85...})|Not(^$85)|Equals(^[$123<^Type<Atom<NotT($146<^Proton<TupleT(^[$146...])|ArrayT($146)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$146...])|ArrayT($146)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($123)|OrT(^{$123...})|AndT(^{$123...})|ArrayT($123)|TupleT(^[$123...])|FunctionT(^[$123,$123,$123...])>>,^{|$2,$2|}[$2,$2]])|Inequality(^[^AType<IntT|RealT>,$220<^AExpr<Num(^real)|VExpr<$9|Var(^string)|Fn(^[^string,$2...])|LengthOf($2)|IndexOf(^[$2,$2])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>>])|Equation(^[^AType<IntT|RealT>,$220])|ForAll(^[^{^[^Var(^string),$123]...},^$85])|Exists(^[^{^[^Var(^string),$123]...},^$85])>>|AExpr<Num(^real)|VExpr<$9|Var(^string)|Fn(^[^string,$2...])|LengthOf($2)|IndexOf(^[$2,$2])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>|SExpr<VExpr<$9|Var(^string)|Fn(^[^string,$2...])|LengthOf($2)|IndexOf(^[$2,$2])>|Array(^[$2...])>>>,^int])>
 	public final static int K_Load = 21;
 	public final static int Load(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
@@ -1858,9 +1902,9 @@ public final class Solver {
 	}
 
 	// Load_1
-	private final static class Reduction_28 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_30 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_28(Pattern.Term pattern) { super(pattern); }
+		public Reduction_30(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -1915,16 +1959,16 @@ public final class Solver {
 		public final int minimum() { return 0; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $4<LengthOf($2<^Expr<$42<Value<Null|Tuple(^[^$42...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$42...})>>|Tuple(^[$2...])|Fn(^[^string,$2...])|$93<BExpr<Bool<True|False>|VExpr<$4|Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])>|And(^{^$93...})|Or(^{^$93...})|Not(^$93)|Equals(^[$122<^Type<Atom<NotT($145<^Proton<TupleT(^[$145...])|SetT(^[^bool,$145])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$145...])|SetT(^[^bool,$145])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($122)|OrT(^{$122...})|AndT(^{$122...})|SetT(^[^bool,$122])|TupleT(^[$122...])|FunctionT(^[$122,$122,$122...])>>,^{|$2,$2|}[$2,$2]])|Inequality(^[^AType<IntT|RealT>,$228<^AExpr<Num(^real)|VExpr<$4|Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])>|Sum(^[^real,^{|$228...|}[$228...]])|Mul(^[^real,^{|$228...|}[$228...]])|Div(^[$228,$228])>>])|Equation(^[^AType<IntT|RealT>,$228])|SubsetEq(^[^SetT(^[^bool,$122]),^SExpr<VExpr<$4|Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])>|Set(^{$2...})>,^SExpr<VExpr<$4|Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])>|Set(^{$2...})>])|ForAll(^[^{^[^Var(^string),$122]...},^$93])|Exists(^[^{^[^Var(^string),$122]...},^$93])>>|AExpr<Num(^real)|VExpr<$4|Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])>|Sum(^[^real,^{|$228...|}[$228...]])|Mul(^[^real,^{|$228...|}[$228...]])|Div(^[$228,$228])>|SExpr<VExpr<$4|Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])>|Set(^{$2...})>>>)>
+	// term $4<LengthOf($2<^Expr<$38<Value<Null|Tuple(^[^$38...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$38...])>>|Tuple(^[$2...])|$80<BExpr<Bool<True|False>|VExpr<$4|Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|IndexOf(^[$2,$2])>|And(^{^$80...})|Or(^{^$80...})|Not(^$80)|Equals(^[$123<^Type<Atom<NotT($146<^Proton<TupleT(^[$146...])|ArrayT($146)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$146...])|ArrayT($146)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($123)|OrT(^{$123...})|AndT(^{$123...})|ArrayT($123)|TupleT(^[$123...])|FunctionT(^[$123,$123,$123...])>>,^{|$2,$2|}[$2,$2]])|Inequality(^[^AType<IntT|RealT>,$220<^AExpr<Num(^real)|VExpr<$4|Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|IndexOf(^[$2,$2])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>>])|Equation(^[^AType<IntT|RealT>,$220])|ForAll(^[^{^[^Var(^string),$123]...},^$80])|Exists(^[^{^[^Var(^string),$123]...},^$80])>>|AExpr<Num(^real)|VExpr<$4|Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|IndexOf(^[$2,$2])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>|SExpr<VExpr<$4|Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|IndexOf(^[$2,$2])>|Array(^[$2...])>>>)>
 	public final static int K_LengthOf = 22;
 	public final static int LengthOf(Automaton automaton, int r0) {
 		return automaton.add(new Automaton.Term(K_LengthOf, r0));
 	}
 
 	// LengthOf_1
-	private final static class Reduction_29 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_31 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_29(Pattern.Term pattern) { super(pattern); }
+		public Reduction_31(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -1966,9 +2010,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// EqualsTuple_1
-	private final static class Reduction_30 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_32 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_30(Pattern.Term pattern) { super(pattern); }
+		public Reduction_32(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -2067,9 +2111,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// EqualsTuple_2
-	private final static class Reduction_31 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_33 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_31(Pattern.Term pattern) { super(pattern); }
+		public Reduction_33(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -2094,11 +2138,11 @@ public final class Solver {
 							Automaton.Collection c6 = (Automaton.Collection) s6;
 							for(int r8=0;r8!=c6.size();++r8) {
 								int r7 = c6.get(r8);
-								if(Runtime.accepts(type9,automaton,automaton.get(r7), SCHEMA)) {
+								if(Runtime.accepts(type8,automaton,automaton.get(r7), SCHEMA)) {
 									for(int r10=0;r10!=c6.size();++r10) {
 										if(r10 == r8) { continue; }
 										int r9 = c6.get(r10);
-										if(Runtime.accepts(type10,automaton,automaton.get(r9), SCHEMA)) {
+										if(Runtime.accepts(type9,automaton,automaton.get(r9), SCHEMA)) {
 											int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, 0};
 											activations.add(new Activation(this,null,state));
 										}
@@ -2151,7 +2195,7 @@ public final class Solver {
 		public final int minimum() { return 8; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $9<Fn(^[^string,$3<^Expr<$9|$46<Value<Null|Tuple(^[^$46...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$46...})>>|Tuple(^[$3...])|$90<BExpr<Bool<True|False>|VExpr<$9|Var(^string)|Load(^[$3,^int])|LengthOf($3)>|And(^{^$90...})|Or(^{^$90...})|Not(^$90)|Equals(^[$122<^Type<Atom<NotT($145<^Proton<TupleT(^[$145...])|SetT(^[^bool,$145])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$145...])|SetT(^[^bool,$145])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($122)|OrT(^{$122...})|AndT(^{$122...})|SetT(^[^bool,$122])|TupleT(^[$122...])|FunctionT(^[$122,$122,$122...])>>,^{|$3,$3|}[$3,$3]])|Inequality(^[^AType<IntT|RealT>,$228<^AExpr<Num(^real)|VExpr<$9|Var(^string)|Load(^[$3,^int])|LengthOf($3)>|Sum(^[^real,^{|$228...|}[$228...]])|Mul(^[^real,^{|$228...|}[$228...]])|Div(^[$228,$228])>>])|Equation(^[^AType<IntT|RealT>,$228])|SubsetEq(^[^SetT(^[^bool,$122]),^SExpr<VExpr<$9|Var(^string)|Load(^[$3,^int])|LengthOf($3)>|Set(^{$3...})>,^SExpr<VExpr<$9|Var(^string)|Load(^[$3,^int])|LengthOf($3)>|Set(^{$3...})>])|ForAll(^[^{^[^Var(^string),$122]...},^$90])|Exists(^[^{^[^Var(^string),$122]...},^$90])>>|AExpr<Num(^real)|VExpr<$9|Var(^string)|Load(^[$3,^int])|LengthOf($3)>|Sum(^[^real,^{|$228...|}[$228...]])|Mul(^[^real,^{|$228...|}[$228...]])|Div(^[$228,$228])>|SExpr<VExpr<$9|Var(^string)|Load(^[$3,^int])|LengthOf($3)>|Set(^{$3...})>>>...])>
+	// term $9<Fn(^[^string,$3<^Expr<$43<Value<Null|Tuple(^[^$43...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$43...])>>|Tuple(^[$3...])|$84<BExpr<Bool<True|False>|VExpr<$9|Var(^string)|Load(^[$3,^int])|LengthOf($3)|IndexOf(^[$3,$3])>|And(^{^$84...})|Or(^{^$84...})|Not(^$84)|Equals(^[$123<^Type<Atom<NotT($146<^Proton<TupleT(^[$146...])|ArrayT($146)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$146...])|ArrayT($146)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($123)|OrT(^{$123...})|AndT(^{$123...})|ArrayT($123)|TupleT(^[$123...])|FunctionT(^[$123,$123,$123...])>>,^{|$3,$3|}[$3,$3]])|Inequality(^[^AType<IntT|RealT>,$220<^AExpr<Num(^real)|VExpr<$9|Var(^string)|Load(^[$3,^int])|LengthOf($3)|IndexOf(^[$3,$3])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>>])|Equation(^[^AType<IntT|RealT>,$220])|ForAll(^[^{^[^Var(^string),$123]...},^$84])|Exists(^[^{^[^Var(^string),$123]...},^$84])>>|AExpr<Num(^real)|VExpr<$9|Var(^string)|Load(^[$3,^int])|LengthOf($3)|IndexOf(^[$3,$3])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>|SExpr<VExpr<$9|Var(^string)|Load(^[$3,^int])|LengthOf($3)|IndexOf(^[$3,$3])>|Array(^[$3...])>>>...])>
 	public final static int K_Fn = 23;
 	public final static int Fn(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
@@ -2169,16 +2213,16 @@ public final class Solver {
 		return automaton.add(new Automaton.Term(K_String, r1));
 	}
 
-	// term $4<Not($2<^$28<BExpr<$4|$38<VExpr<Var(^string)|$49<Fn(^[^string,$43<^Expr<$28|$49|$84<Value<Null|Tuple(^[^$84...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$84...})>>|Tuple(^[$43...])|$111<AExpr<$38|Num(^real)|Sum(^[^real,^{|^$111...|}[^$111...]])|Mul(^[^real,^{|^$111...|}[^$111...]])|Div(^[^$111,^$111])>>|SExpr<$38|Set(^{$43...})>>>...])>|Load(^[$43,^int])|LengthOf($43)>>|Bool<True|False>|And(^{$2...})|Or(^{$2...})|Equals(^[$156<^Type<Atom<NotT($179<^Proton<TupleT(^[$179...])|SetT(^[^bool,$179])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$179...])|SetT(^[^bool,$179])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($156)|OrT(^{$156...})|AndT(^{$156...})|SetT(^[^bool,$156])|TupleT(^[$156...])|FunctionT(^[$156,$156,$156...])>>,^{|$43,$43|}[$43,$43]])|Inequality(^[^AType<IntT|RealT>,^$111])|Equation(^[^AType<IntT|RealT>,^$111])|SubsetEq(^[^SetT(^[^bool,$156]),^SExpr<$38|Set(^{$43...})>,^SExpr<$38|Set(^{$43...})>])|ForAll(^[^{^[^Var(^string),$156]...},$2])|Exists(^[^{^[^Var(^string),$156]...},$2])>>>)>
+	// term $4<Not($2<^$25<BExpr<$4|$36<VExpr<Var(^string)|Fn(^[^string,$41<^Expr<$25|$79<Value<Null|Tuple(^[^$79...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$79...])>>|Tuple(^[$41...])|$106<AExpr<$36|Num(^real)|Sum(^[^real,^{|^$106...|}[^$106...]])|Mul(^[^real,^{|^$106...|}[^$106...]])|Div(^[^$106,^$106])>>|SExpr<$36|Array(^[$41...])>>>...])|Load(^[$41,^int])|LengthOf($41)|IndexOf(^[$41,$41])>>|Bool<True|False>|And(^{$2...})|Or(^{$2...})|Equals(^[$154<^Type<Atom<NotT($177<^Proton<TupleT(^[$177...])|ArrayT($177)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$177...])|ArrayT($177)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($154)|OrT(^{$154...})|AndT(^{$154...})|ArrayT($154)|TupleT(^[$154...])|FunctionT(^[$154,$154,$154...])>>,^{|$41,$41|}[$41,$41]])|Inequality(^[^AType<IntT|RealT>,^$106])|Equation(^[^AType<IntT|RealT>,^$106])|ForAll(^[^{^[^Var(^string),$154]...},$2])|Exists(^[^{^[^Var(^string),$154]...},$2])>>>)>
 	public final static int K_Not = 25;
 	public final static int Not(Automaton automaton, int r0) {
 		return automaton.add(new Automaton.Term(K_Not, r0));
 	}
 
 	// Not_1
-	private final static class Reduction_32 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_34 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_32(Pattern.Term pattern) { super(pattern); }
+		public Reduction_34(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -2186,7 +2230,7 @@ public final class Solver {
 			if(s0.kind == K_Not) {
 				Automaton.Term t0 = (Automaton.Term) s0;
 				int r1 = t0.contents;
-				if(Runtime.accepts(type12,automaton,automaton.get(r1), SCHEMA)) {
+				if(Runtime.accepts(type11,automaton,automaton.get(r1), SCHEMA)) {
 					int[] state = {r0, r1};
 					activations.add(new Activation(this,null,state));
 				}
@@ -2222,9 +2266,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Not_2
-	private final static class Reduction_33 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_35 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_33(Pattern.Term pattern) { super(pattern); }
+		public Reduction_35(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -2259,9 +2303,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Not_3
-	private final static class Reduction_34 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_36 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_34(Pattern.Term pattern) { super(pattern); }
+		public Reduction_36(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -2314,9 +2358,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Not_4
-	private final static class Reduction_35 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_37 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_35(Pattern.Term pattern) { super(pattern); }
+		public Reduction_37(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -2368,7 +2412,7 @@ public final class Solver {
 		public final int minimum() { return 2; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $7<And($5<^{$2<^$31<BExpr<$7|$41<VExpr<Var(^string)|$52<Fn(^[^string,$46<^Expr<$31|$52|$87<Value<Null|Tuple(^[^$87...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$87...})>>|Tuple(^[$46...])|$114<AExpr<$41|Num(^real)|Sum(^[^real,^{|^$114...|}[^$114...]])|Mul(^[^real,^{|^$114...|}[^$114...]])|Div(^[^$114,^$114])>>|SExpr<$41|Set(^{$46...})>>>...])>|Load(^[$46,^int])|LengthOf($46)>>|Bool<True|False>|Or($5)|Not($2)|Equals(^[$156<^Type<Atom<NotT($179<^Proton<TupleT(^[$179...])|SetT(^[^bool,$179])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$179...])|SetT(^[^bool,$179])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($156)|OrT(^{$156...})|AndT(^{$156...})|SetT(^[^bool,$156])|TupleT(^[$156...])|FunctionT(^[$156,$156,$156...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,^$114])|Equation(^[^AType<IntT|RealT>,^$114])|SubsetEq(^[^SetT(^[^bool,$156]),^SExpr<$41|Set(^{$46...})>,^SExpr<$41|Set(^{$46...})>])|ForAll(^[^{^[^Var(^string),$156]...},$2])|Exists(^[^{^[^Var(^string),$156]...},$2])>>>...}>)>
+	// term $7<And($5<^{$2<^$28<BExpr<$7|$39<VExpr<Var(^string)|Fn(^[^string,$44<^Expr<$28|$82<Value<Null|Tuple(^[^$82...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$82...])>>|Tuple(^[$44...])|$109<AExpr<$39|Num(^real)|Sum(^[^real,^{|^$109...|}[^$109...]])|Mul(^[^real,^{|^$109...|}[^$109...]])|Div(^[^$109,^$109])>>|SExpr<$39|Array(^[$44...])>>>...])|Load(^[$44,^int])|LengthOf($44)|IndexOf(^[$44,$44])>>|Bool<True|False>|Or($5)|Not($2)|Equals(^[$154<^Type<Atom<NotT($177<^Proton<TupleT(^[$177...])|ArrayT($177)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$177...])|ArrayT($177)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($154)|OrT(^{$154...})|AndT(^{$154...})|ArrayT($154)|TupleT(^[$154...])|FunctionT(^[$154,$154,$154...])>>,^{|$44,$44|}[$44,$44]])|Inequality(^[^AType<IntT|RealT>,^$109])|Equation(^[^AType<IntT|RealT>,^$109])|ForAll(^[^{^[^Var(^string),$154]...},$2])|Exists(^[^{^[^Var(^string),$154]...},$2])>>>...}>)>
 	public final static int K_And = 26;
 	public final static int And(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.Set(r0));
@@ -2380,9 +2424,9 @@ public final class Solver {
 	}
 
 	// And_1
-	private final static class Reduction_36 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_38 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_36(Pattern.Term pattern) { super(pattern); }
+		public Reduction_38(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -2420,9 +2464,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// And_2
-	private final static class Reduction_37 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_39 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_37(Pattern.Term pattern) { super(pattern); }
+		public Reduction_39(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -2435,7 +2479,7 @@ public final class Solver {
 				if(c1.size() >= 1) {
 					for(int r3=0;r3!=c1.size();++r3) {
 						int r2 = c1.get(r3);
-						if(Runtime.accepts(type14,automaton,automaton.get(r2), SCHEMA)) {
+						if(Runtime.accepts(type13,automaton,automaton.get(r2), SCHEMA)) {
 							int[] state = {r0, r1, r2, r3, 0};
 							activations.add(new Activation(this,null,state));
 						}
@@ -2470,9 +2514,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// And_3
-	private final static class Reduction_38 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_40 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_38(Pattern.Term pattern) { super(pattern); }
+		public Reduction_40(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -2485,7 +2529,7 @@ public final class Solver {
 				if(c1.size() >= 1) {
 					for(int r3=0;r3!=c1.size();++r3) {
 						int r2 = c1.get(r3);
-						if(Runtime.accepts(type15,automaton,automaton.get(r2), SCHEMA)) {
+						if(Runtime.accepts(type14,automaton,automaton.get(r2), SCHEMA)) {
 							int[] state = {r0, r1, r2, r3, 0};
 							activations.add(new Activation(this,null,state));
 						}
@@ -2531,9 +2575,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// And_4
-	private final static class Reduction_39 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_41 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_39(Pattern.Term pattern) { super(pattern); }
+		public Reduction_41(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -2594,9 +2638,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// And_5
-	private final static class Reduction_40 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_42 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_40(Pattern.Term pattern) { super(pattern); }
+		public Reduction_42(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -2657,9 +2701,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// And_6
-	private final static class Reduction_41 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_43 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_41(Pattern.Term pattern) { super(pattern); }
+		public Reduction_43(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -2728,7 +2772,7 @@ public final class Solver {
 		public final int minimum() { return 3; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $7<Or($5<^{$2<^$31<BExpr<$7|$41<VExpr<Var(^string)|$52<Fn(^[^string,$46<^Expr<$31|$52|$87<Value<Null|Tuple(^[^$87...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$87...})>>|Tuple(^[$46...])|$114<AExpr<$41|Num(^real)|Sum(^[^real,^{|^$114...|}[^$114...]])|Mul(^[^real,^{|^$114...|}[^$114...]])|Div(^[^$114,^$114])>>|SExpr<$41|Set(^{$46...})>>>...])>|Load(^[$46,^int])|LengthOf($46)>>|Bool<True|False>|And($5)|Not($2)|Equals(^[$156<^Type<Atom<NotT($179<^Proton<TupleT(^[$179...])|SetT(^[^bool,$179])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$179...])|SetT(^[^bool,$179])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($156)|OrT(^{$156...})|AndT(^{$156...})|SetT(^[^bool,$156])|TupleT(^[$156...])|FunctionT(^[$156,$156,$156...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,^$114])|Equation(^[^AType<IntT|RealT>,^$114])|SubsetEq(^[^SetT(^[^bool,$156]),^SExpr<$41|Set(^{$46...})>,^SExpr<$41|Set(^{$46...})>])|ForAll(^[^{^[^Var(^string),$156]...},$2])|Exists(^[^{^[^Var(^string),$156]...},$2])>>>...}>)>
+	// term $7<Or($5<^{$2<^$28<BExpr<$7|$39<VExpr<Var(^string)|Fn(^[^string,$44<^Expr<$28|$82<Value<Null|Tuple(^[^$82...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$82...])>>|Tuple(^[$44...])|$109<AExpr<$39|Num(^real)|Sum(^[^real,^{|^$109...|}[^$109...]])|Mul(^[^real,^{|^$109...|}[^$109...]])|Div(^[^$109,^$109])>>|SExpr<$39|Array(^[$44...])>>>...])|Load(^[$44,^int])|LengthOf($44)|IndexOf(^[$44,$44])>>|Bool<True|False>|And($5)|Not($2)|Equals(^[$154<^Type<Atom<NotT($177<^Proton<TupleT(^[$177...])|ArrayT($177)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$177...])|ArrayT($177)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($154)|OrT(^{$154...})|AndT(^{$154...})|ArrayT($154)|TupleT(^[$154...])|FunctionT(^[$154,$154,$154...])>>,^{|$44,$44|}[$44,$44]])|Inequality(^[^AType<IntT|RealT>,^$109])|Equation(^[^AType<IntT|RealT>,^$109])|ForAll(^[^{^[^Var(^string),$154]...},$2])|Exists(^[^{^[^Var(^string),$154]...},$2])>>>...}>)>
 	public final static int K_Or = 27;
 	public final static int Or(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.Set(r0));
@@ -2740,9 +2784,9 @@ public final class Solver {
 	}
 
 	// Or_1
-	private final static class Reduction_42 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_44 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_42(Pattern.Term pattern) { super(pattern); }
+		public Reduction_44(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -2780,9 +2824,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Or_2
-	private final static class Reduction_43 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_45 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_43(Pattern.Term pattern) { super(pattern); }
+		public Reduction_45(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -2795,7 +2839,7 @@ public final class Solver {
 				if(c1.size() >= 1) {
 					for(int r3=0;r3!=c1.size();++r3) {
 						int r2 = c1.get(r3);
-						if(Runtime.accepts(type15,automaton,automaton.get(r2), SCHEMA)) {
+						if(Runtime.accepts(type14,automaton,automaton.get(r2), SCHEMA)) {
 							int[] state = {r0, r1, r2, r3, 0};
 							activations.add(new Activation(this,null,state));
 						}
@@ -2830,9 +2874,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Or_3
-	private final static class Reduction_44 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_46 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_44(Pattern.Term pattern) { super(pattern); }
+		public Reduction_46(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -2845,7 +2889,7 @@ public final class Solver {
 				if(c1.size() >= 1) {
 					for(int r3=0;r3!=c1.size();++r3) {
 						int r2 = c1.get(r3);
-						if(Runtime.accepts(type14,automaton,automaton.get(r2), SCHEMA)) {
+						if(Runtime.accepts(type13,automaton,automaton.get(r2), SCHEMA)) {
 							int[] state = {r0, r1, r2, r3, 0};
 							activations.add(new Activation(this,null,state));
 						}
@@ -2891,9 +2935,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Or_4
-	private final static class Reduction_45 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_47 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_45(Pattern.Term pattern) { super(pattern); }
+		public Reduction_47(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -2954,9 +2998,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Or_5
-	private final static class Reduction_46 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_48 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_46(Pattern.Term pattern) { super(pattern); }
+		public Reduction_48(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -3016,7 +3060,7 @@ public final class Solver {
 		public final int minimum() { return 3; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $14<Equals(^[$2<^Type<Atom<NotT($27<^Proton<TupleT(^[$27...])|SetT(^[^bool,$27])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$27...])|SetT(^[^bool,$27])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT(^{$2...})|AndT(^{$2...})|SetT(^[^bool,$2])|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>,^{|$4<^Expr<$146<Value<Null|Tuple(^[^$146...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$146...})>>|Tuple(^[$4...])|Fn(^[^string,$4...])|$195<BExpr<$14|Bool<True|False>|VExpr<Fn(^[^string,$4...])|Var(^string)|Load(^[$4,^int])|LengthOf($4)>|And(^{^$195...})|Or(^{^$195...})|Not(^$195)|Inequality(^[^AType<IntT|RealT>,$228<^AExpr<Num(^real)|VExpr<Fn(^[^string,$4...])|Var(^string)|Load(^[$4,^int])|LengthOf($4)>|Sum(^[^real,^{|$228...|}[$228...]])|Mul(^[^real,^{|$228...|}[$228...]])|Div(^[$228,$228])>>])|Equation(^[^AType<IntT|RealT>,$228])|SubsetEq(^[^SetT(^[^bool,$2]),^SExpr<VExpr<Fn(^[^string,$4...])|Var(^string)|Load(^[$4,^int])|LengthOf($4)>|Set(^{$4...})>,^SExpr<VExpr<Fn(^[^string,$4...])|Var(^string)|Load(^[$4,^int])|LengthOf($4)>|Set(^{$4...})>])|ForAll(^[^{^[^Var(^string),$2]...},^$195])|Exists(^[^{^[^Var(^string),$2]...},^$195])>>|AExpr<Num(^real)|VExpr<Fn(^[^string,$4...])|Var(^string)|Load(^[$4,^int])|LengthOf($4)>|Sum(^[^real,^{|$228...|}[$228...]])|Mul(^[^real,^{|$228...|}[$228...]])|Div(^[$228,$228])>|SExpr<VExpr<Fn(^[^string,$4...])|Var(^string)|Load(^[$4,^int])|LengthOf($4)>|Set(^{$4...})>>>,$4|}[$4<^Expr<$146<Value<Null|Tuple(^[^$146...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$146...})>>|Tuple(^[$4...])|Fn(^[^string,$4...])|$195<BExpr<$14|Bool<True|False>|VExpr<Fn(^[^string,$4...])|Var(^string)|Load(^[$4,^int])|LengthOf($4)>|And(^{^$195...})|Or(^{^$195...})|Not(^$195)|Inequality(^[^AType<IntT|RealT>,$228<^AExpr<Num(^real)|VExpr<Fn(^[^string,$4...])|Var(^string)|Load(^[$4,^int])|LengthOf($4)>|Sum(^[^real,^{|$228...|}[$228...]])|Mul(^[^real,^{|$228...|}[$228...]])|Div(^[$228,$228])>>])|Equation(^[^AType<IntT|RealT>,$228])|SubsetEq(^[^SetT(^[^bool,$2]),^SExpr<VExpr<Fn(^[^string,$4...])|Var(^string)|Load(^[$4,^int])|LengthOf($4)>|Set(^{$4...})>,^SExpr<VExpr<Fn(^[^string,$4...])|Var(^string)|Load(^[$4,^int])|LengthOf($4)>|Set(^{$4...})>])|ForAll(^[^{^[^Var(^string),$2]...},^$195])|Exists(^[^{^[^Var(^string),$2]...},^$195])>>|AExpr<Num(^real)|VExpr<Fn(^[^string,$4...])|Var(^string)|Load(^[$4,^int])|LengthOf($4)>|Sum(^[^real,^{|$228...|}[$228...]])|Mul(^[^real,^{|$228...|}[$228...]])|Div(^[$228,$228])>|SExpr<VExpr<Fn(^[^string,$4...])|Var(^string)|Load(^[$4,^int])|LengthOf($4)>|Set(^{$4...})>>>,$4]])>
+	// term $14<Equals(^[$2<^Type<Atom<NotT($27<^Proton<TupleT(^[$27...])|ArrayT($27)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$27...])|ArrayT($27)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT(^{$2...})|AndT(^{$2...})|ArrayT($2)|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>,^{|$4<^Expr<$133<Value<Null|Tuple(^[^$133...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$133...])>>|Tuple(^[$4...])|$173<BExpr<$14|Bool<True|False>|VExpr<Var(^string)|Fn(^[^string,$4...])|Load(^[$4,^int])|LengthOf($4)|IndexOf(^[$4,$4])>|And(^{^$173...})|Or(^{^$173...})|Not(^$173)|Inequality(^[^AType<IntT|RealT>,$220<^AExpr<Num(^real)|VExpr<Var(^string)|Fn(^[^string,$4...])|Load(^[$4,^int])|LengthOf($4)|IndexOf(^[$4,$4])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>>])|Equation(^[^AType<IntT|RealT>,$220])|ForAll(^[^{^[^Var(^string),$2]...},^$173])|Exists(^[^{^[^Var(^string),$2]...},^$173])>>|AExpr<Num(^real)|VExpr<Var(^string)|Fn(^[^string,$4...])|Load(^[$4,^int])|LengthOf($4)|IndexOf(^[$4,$4])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>|SExpr<VExpr<Var(^string)|Fn(^[^string,$4...])|Load(^[$4,^int])|LengthOf($4)|IndexOf(^[$4,$4])>|Array(^[$4...])>>>,$4|}[$4<^Expr<$133<Value<Null|Tuple(^[^$133...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$133...])>>|Tuple(^[$4...])|$173<BExpr<$14|Bool<True|False>|VExpr<Var(^string)|Fn(^[^string,$4...])|Load(^[$4,^int])|LengthOf($4)|IndexOf(^[$4,$4])>|And(^{^$173...})|Or(^{^$173...})|Not(^$173)|Inequality(^[^AType<IntT|RealT>,$220<^AExpr<Num(^real)|VExpr<Var(^string)|Fn(^[^string,$4...])|Load(^[$4,^int])|LengthOf($4)|IndexOf(^[$4,$4])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>>])|Equation(^[^AType<IntT|RealT>,$220])|ForAll(^[^{^[^Var(^string),$2]...},^$173])|Exists(^[^{^[^Var(^string),$2]...},^$173])>>|AExpr<Num(^real)|VExpr<Var(^string)|Fn(^[^string,$4...])|Load(^[$4,^int])|LengthOf($4)|IndexOf(^[$4,$4])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>|SExpr<VExpr<Var(^string)|Fn(^[^string,$4...])|Load(^[$4,^int])|LengthOf($4)|IndexOf(^[$4,$4])>|Array(^[$4...])>>>,$4]])>
 	public final static int K_Equals = 28;
 	public final static int Equals(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
@@ -3028,9 +3072,9 @@ public final class Solver {
 	}
 
 	// Equals_1
-	private final static class Reduction_47 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_49 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_47(Pattern.Term pattern) { super(pattern); }
+		public Reduction_49(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -3073,12 +3117,12 @@ public final class Solver {
 				}
 			}
 			boolean r11 = r4 != r6;        // x neq y
-			boolean r12 = false;           // x neq y && x is $1<^Value<Null|Tuple(^[$1...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{$1...})>> && y is $1<^Value<Null|Tuple(^[$1...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{$1...})>>
+			boolean r12 = false;           // x neq y && x is $1<^Value<Null|Tuple(^[$1...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[$1...])>> && y is $1<^Value<Null|Tuple(^[$1...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[$1...])>>
 			if(r11) {
-				boolean r13 = Runtime.accepts(type16, automaton, r4, SCHEMA); // x is $1<^Value<Null|Tuple(^[$1...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{$1...})>>
-				boolean r14 = false;           // x is $1<^Value<Null|Tuple(^[$1...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{$1...})>> && y is $1<^Value<Null|Tuple(^[$1...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{$1...})>>
+				boolean r13 = Runtime.accepts(type15, automaton, r4, SCHEMA); // x is $1<^Value<Null|Tuple(^[$1...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[$1...])>>
+				boolean r14 = false;           // x is $1<^Value<Null|Tuple(^[$1...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[$1...])>> && y is $1<^Value<Null|Tuple(^[$1...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[$1...])>>
 				if(r13) {
-					boolean r15 = Runtime.accepts(type16, automaton, r6, SCHEMA); // y is $1<^Value<Null|Tuple(^[$1...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{$1...})>>
+					boolean r15 = Runtime.accepts(type15, automaton, r6, SCHEMA); // y is $1<^Value<Null|Tuple(^[$1...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[$1...])>>
 					r14 = r15;
 				}
 				r12 = r14;
@@ -3100,9 +3144,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Equals_2
-	private final static class Reduction_48 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_50 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_48(Pattern.Term pattern) { super(pattern); }
+		public Reduction_50(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -3127,11 +3171,11 @@ public final class Solver {
 							Automaton.Collection c6 = (Automaton.Collection) s6;
 							for(int r8=0;r8!=c6.size();++r8) {
 								int r7 = c6.get(r8);
-								if(Runtime.accepts(type9,automaton,automaton.get(r7), SCHEMA)) {
+								if(Runtime.accepts(type8,automaton,automaton.get(r7), SCHEMA)) {
 									for(int r10=0;r10!=c6.size();++r10) {
 										if(r10 == r8) { continue; }
 										int r9 = c6.get(r10);
-										if(Runtime.accepts(type17,automaton,automaton.get(r9), SCHEMA)) {
+										if(Runtime.accepts(type16,automaton,automaton.get(r9), SCHEMA)) {
 											int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, 0};
 											activations.add(new Activation(this,null,state));
 										}
@@ -3212,11 +3256,11 @@ public final class Solver {
 							Automaton.Collection c6 = (Automaton.Collection) s6;
 							for(int r8=0;r8!=c6.size();++r8) {
 								int r7 = c6.get(r8);
-								if(Runtime.accepts(type9,automaton,automaton.get(r7), SCHEMA)) {
+								if(Runtime.accepts(type8,automaton,automaton.get(r7), SCHEMA)) {
 									for(int r10=0;r10!=c6.size();++r10) {
 										if(r10 == r8) { continue; }
 										int r9 = c6.get(r10);
-										if(Runtime.accepts(type9,automaton,automaton.get(r9), SCHEMA)) {
+										if(Runtime.accepts(type8,automaton,automaton.get(r9), SCHEMA)) {
 											int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, 0};
 											activations.add(new Activation(this,null,state));
 										}
@@ -3275,7 +3319,7 @@ public final class Solver {
 		public final int minimum() { return 0; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $12<Mul($10<^[^real,^{|$3<^$20<AExpr<$12|Num(^real)|Sum($10)|Div(^[$3,$3])|$40<VExpr<Var(^string)|$51<Fn(^[^string,$45<^Expr<$20|$51|$86<Value<Num(^real)|Null|Tuple(^[^$86...])|Bool<True|False>|String(^string)|Set(^{^$86...})>>|Tuple(^[$45...])|$126<BExpr<$40|Bool<True|False>|And(^{^$126...})|Or(^{^$126...})|Not(^$126)|Equals(^[$138<^Type<Atom<NotT($161<^Proton<TupleT(^[$161...])|SetT(^[^bool,$161])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$161...])|SetT(^[^bool,$161])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($138)|OrT(^{$138...})|AndT(^{$138...})|SetT(^[^bool,$138])|TupleT(^[$138...])|FunctionT(^[$138,$138,$138...])>>,^{|$45,$45|}[$45,$45]])|Inequality(^[^AType<IntT|RealT>,$3])|Equation(^[^AType<IntT|RealT>,$3])|SubsetEq(^[^SetT(^[^bool,$138]),^SExpr<$40|Set(^{$45...})>,^SExpr<$40|Set(^{$45...})>])|ForAll(^[^{^[^Var(^string),$138]...},^$126])|Exists(^[^{^[^Var(^string),$138]...},^$126])>>|SExpr<$40|Set(^{$45...})>>>...])>|Load(^[$45,^int])|LengthOf($45)>>>>>...|}[$3<^$20<AExpr<$12|Num(^real)|Sum($10)|Div(^[$3,$3])|$40<VExpr<Var(^string)|$51<Fn(^[^string,$45<^Expr<$20|$51|$86<Value<Num(^real)|Null|Tuple(^[^$86...])|Bool<True|False>|String(^string)|Set(^{^$86...})>>|Tuple(^[$45...])|$126<BExpr<$40|Bool<True|False>|And(^{^$126...})|Or(^{^$126...})|Not(^$126)|Equals(^[$138<^Type<Atom<NotT($161<^Proton<TupleT(^[$161...])|SetT(^[^bool,$161])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$161...])|SetT(^[^bool,$161])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($138)|OrT(^{$138...})|AndT(^{$138...})|SetT(^[^bool,$138])|TupleT(^[$138...])|FunctionT(^[$138,$138,$138...])>>,^{|$45,$45|}[$45,$45]])|Inequality(^[^AType<IntT|RealT>,$3])|Equation(^[^AType<IntT|RealT>,$3])|SubsetEq(^[^SetT(^[^bool,$138]),^SExpr<$40|Set(^{$45...})>,^SExpr<$40|Set(^{$45...})>])|ForAll(^[^{^[^Var(^string),$138]...},^$126])|Exists(^[^{^[^Var(^string),$138]...},^$126])>>|SExpr<$40|Set(^{$45...})>>>...])>|Load(^[$45,^int])|LengthOf($45)>>>>>...]]>)>
+	// term $12<Mul($10<^[^real,^{|$3<^$20<AExpr<$12|Num(^real)|Sum($10)|Div(^[$3,$3])|$41<VExpr<Var(^string)|Fn(^[^string,$46<^Expr<$20|$84<Value<Num(^real)|Null|Tuple(^[^$84...])|Bool<True|False>|String(^string)|Array(^[^$84...])>>|Tuple(^[$46...])|$121<BExpr<$41|Bool<True|False>|And(^{^$121...})|Or(^{^$121...})|Not(^$121)|Equals(^[$133<^Type<Atom<NotT($156<^Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($133)|OrT(^{$133...})|AndT(^{$133...})|ArrayT($133)|TupleT(^[$133...])|FunctionT(^[$133,$133,$133...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$3])|Equation(^[^AType<IntT|RealT>,$3])|ForAll(^[^{^[^Var(^string),$133]...},^$121])|Exists(^[^{^[^Var(^string),$133]...},^$121])>>|SExpr<$41|Array(^[$46...])>>>...])|Load(^[$46,^int])|LengthOf($46)|IndexOf(^[$46,$46])>>>>>...|}[$3<^$20<AExpr<$12|Num(^real)|Sum($10)|Div(^[$3,$3])|$41<VExpr<Var(^string)|Fn(^[^string,$46<^Expr<$20|$84<Value<Num(^real)|Null|Tuple(^[^$84...])|Bool<True|False>|String(^string)|Array(^[^$84...])>>|Tuple(^[$46...])|$121<BExpr<$41|Bool<True|False>|And(^{^$121...})|Or(^{^$121...})|Not(^$121)|Equals(^[$133<^Type<Atom<NotT($156<^Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($133)|OrT(^{$133...})|AndT(^{$133...})|ArrayT($133)|TupleT(^[$133...])|FunctionT(^[$133,$133,$133...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$3])|Equation(^[^AType<IntT|RealT>,$3])|ForAll(^[^{^[^Var(^string),$133]...},^$121])|Exists(^[^{^[^Var(^string),$133]...},^$121])>>|SExpr<$41|Array(^[$46...])>>>...])|Load(^[$46,^int])|LengthOf($46)|IndexOf(^[$46,$46])>>>>>...]]>)>
 	public final static int K_Mul = 29;
 	public final static int Mul(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
@@ -3287,9 +3331,9 @@ public final class Solver {
 	}
 
 	// Multiplication_1
-	private final static class Reduction_49 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_51 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_49(Pattern.Term pattern) { super(pattern); }
+		public Reduction_51(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -3342,9 +3386,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Multiplication_2
-	private final static class Reduction_50 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_52 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_50(Pattern.Term pattern) { super(pattern); }
+		public Reduction_52(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -3408,9 +3452,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Multiplication_3
-	private final static class Reduction_51 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_53 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_51(Pattern.Term pattern) { super(pattern); }
+		public Reduction_53(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -3487,9 +3531,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Multiplication_4
-	private final static class Reduction_52 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_54 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_52(Pattern.Term pattern) { super(pattern); }
+		public Reduction_54(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -3584,7 +3628,7 @@ public final class Solver {
 		public final int minimum() { return 7; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $8<Div(^[$2<^$16<AExpr<$8|Num(^real)|Sum(^[^real,^{|$2...|}[$2...]])|Mul(^[^real,^{|$2...|}[$2...]])|$40<VExpr<Var(^string)|$51<Fn(^[^string,$45<^Expr<$16|$51|$86<Value<Num(^real)|Null|Tuple(^[^$86...])|Bool<True|False>|String(^string)|Set(^{^$86...})>>|Tuple(^[$45...])|$126<BExpr<$40|Bool<True|False>|And(^{^$126...})|Or(^{^$126...})|Not(^$126)|Equals(^[$138<^Type<Atom<NotT($161<^Proton<TupleT(^[$161...])|SetT(^[^bool,$161])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$161...])|SetT(^[^bool,$161])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($138)|OrT(^{$138...})|AndT(^{$138...})|SetT(^[^bool,$138])|TupleT(^[$138...])|FunctionT(^[$138,$138,$138...])>>,^{|$45,$45|}[$45,$45]])|Inequality(^[^AType<IntT|RealT>,$2])|Equation(^[^AType<IntT|RealT>,$2])|SubsetEq(^[^SetT(^[^bool,$138]),^SExpr<$40|Set(^{$45...})>,^SExpr<$40|Set(^{$45...})>])|ForAll(^[^{^[^Var(^string),$138]...},^$126])|Exists(^[^{^[^Var(^string),$138]...},^$126])>>|SExpr<$40|Set(^{$45...})>>>...])>|Load(^[$45,^int])|LengthOf($45)>>>>>,$2])>
+	// term $8<Div(^[$2<^$16<AExpr<$8|Num(^real)|Sum(^[^real,^{|$2...|}[$2...]])|Mul(^[^real,^{|$2...|}[$2...]])|$41<VExpr<Var(^string)|Fn(^[^string,$46<^Expr<$16|$84<Value<Num(^real)|Null|Tuple(^[^$84...])|Bool<True|False>|String(^string)|Array(^[^$84...])>>|Tuple(^[$46...])|$121<BExpr<$41|Bool<True|False>|And(^{^$121...})|Or(^{^$121...})|Not(^$121)|Equals(^[$133<^Type<Atom<NotT($156<^Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($133)|OrT(^{$133...})|AndT(^{$133...})|ArrayT($133)|TupleT(^[$133...])|FunctionT(^[$133,$133,$133...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$2])|Equation(^[^AType<IntT|RealT>,$2])|ForAll(^[^{^[^Var(^string),$133]...},^$121])|Exists(^[^{^[^Var(^string),$133]...},^$121])>>|SExpr<$41|Array(^[$46...])>>>...])|Load(^[$46,^int])|LengthOf($46)|IndexOf(^[$46,$46])>>>>>,$2])>
 	public final static int K_Div = 30;
 	public final static int Div(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
@@ -3596,9 +3640,9 @@ public final class Solver {
 	}
 
 	// Division_1
-	private final static class Reduction_53 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_55 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_53(Pattern.Term pattern) { super(pattern); }
+		public Reduction_55(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -3649,9 +3693,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Division_2
-	private final static class Reduction_54 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_56 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_54(Pattern.Term pattern) { super(pattern); }
+		public Reduction_56(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -3708,9 +3752,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Division_3
-	private final static class Reduction_55 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_57 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_55(Pattern.Term pattern) { super(pattern); }
+		public Reduction_57(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -3767,9 +3811,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Division_4
-	private final static class Reduction_56 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_58 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_56(Pattern.Term pattern) { super(pattern); }
+		public Reduction_58(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -3840,9 +3884,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Division_5
-	private final static class Reduction_57 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_59 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_57(Pattern.Term pattern) { super(pattern); }
+		public Reduction_59(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -3900,7 +3944,7 @@ public final class Solver {
 					return automaton.rewrite(r0, r15);
 				}
 			}
-			boolean r16 = Runtime.accepts(type20, automaton, r9, SCHEMA); // y is ^Num(^real)
+			boolean r16 = Runtime.accepts(type19, automaton, r9, SCHEMA); // y is ^Num(^real)
 			if(r16) {
 				Automaton.Term r17 = (Automaton.Term) automaton.get(r9);
 				int r18 = r17.contents;
@@ -3927,9 +3971,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Division_6
-	private final static class Reduction_58 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_60 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_58(Pattern.Term pattern) { super(pattern); }
+		public Reduction_60(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -4005,9 +4049,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Division_7
-	private final static class Reduction_59 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_61 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_59(Pattern.Term pattern) { super(pattern); }
+		public Reduction_61(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -4072,7 +4116,7 @@ public final class Solver {
 		public final int minimum() { return 7; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $12<Sum($10<^[^real,^{|$3<^$20<AExpr<$12|Num(^real)|Mul($10)|Div(^[$3,$3])|$40<VExpr<Var(^string)|$51<Fn(^[^string,$45<^Expr<$20|$51|$86<Value<Num(^real)|Null|Tuple(^[^$86...])|Bool<True|False>|String(^string)|Set(^{^$86...})>>|Tuple(^[$45...])|$126<BExpr<$40|Bool<True|False>|And(^{^$126...})|Or(^{^$126...})|Not(^$126)|Equals(^[$138<^Type<Atom<NotT($161<^Proton<TupleT(^[$161...])|SetT(^[^bool,$161])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$161...])|SetT(^[^bool,$161])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($138)|OrT(^{$138...})|AndT(^{$138...})|SetT(^[^bool,$138])|TupleT(^[$138...])|FunctionT(^[$138,$138,$138...])>>,^{|$45,$45|}[$45,$45]])|Inequality(^[^AType<IntT|RealT>,$3])|Equation(^[^AType<IntT|RealT>,$3])|SubsetEq(^[^SetT(^[^bool,$138]),^SExpr<$40|Set(^{$45...})>,^SExpr<$40|Set(^{$45...})>])|ForAll(^[^{^[^Var(^string),$138]...},^$126])|Exists(^[^{^[^Var(^string),$138]...},^$126])>>|SExpr<$40|Set(^{$45...})>>>...])>|Load(^[$45,^int])|LengthOf($45)>>>>>...|}[$3<^$20<AExpr<$12|Num(^real)|Mul($10)|Div(^[$3,$3])|$40<VExpr<Var(^string)|$51<Fn(^[^string,$45<^Expr<$20|$51|$86<Value<Num(^real)|Null|Tuple(^[^$86...])|Bool<True|False>|String(^string)|Set(^{^$86...})>>|Tuple(^[$45...])|$126<BExpr<$40|Bool<True|False>|And(^{^$126...})|Or(^{^$126...})|Not(^$126)|Equals(^[$138<^Type<Atom<NotT($161<^Proton<TupleT(^[$161...])|SetT(^[^bool,$161])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$161...])|SetT(^[^bool,$161])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($138)|OrT(^{$138...})|AndT(^{$138...})|SetT(^[^bool,$138])|TupleT(^[$138...])|FunctionT(^[$138,$138,$138...])>>,^{|$45,$45|}[$45,$45]])|Inequality(^[^AType<IntT|RealT>,$3])|Equation(^[^AType<IntT|RealT>,$3])|SubsetEq(^[^SetT(^[^bool,$138]),^SExpr<$40|Set(^{$45...})>,^SExpr<$40|Set(^{$45...})>])|ForAll(^[^{^[^Var(^string),$138]...},^$126])|Exists(^[^{^[^Var(^string),$138]...},^$126])>>|SExpr<$40|Set(^{$45...})>>>...])>|Load(^[$45,^int])|LengthOf($45)>>>>>...]]>)>
+	// term $12<Sum($10<^[^real,^{|$3<^$20<AExpr<$12|Num(^real)|Mul($10)|Div(^[$3,$3])|$41<VExpr<Var(^string)|Fn(^[^string,$46<^Expr<$20|$84<Value<Num(^real)|Null|Tuple(^[^$84...])|Bool<True|False>|String(^string)|Array(^[^$84...])>>|Tuple(^[$46...])|$121<BExpr<$41|Bool<True|False>|And(^{^$121...})|Or(^{^$121...})|Not(^$121)|Equals(^[$133<^Type<Atom<NotT($156<^Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($133)|OrT(^{$133...})|AndT(^{$133...})|ArrayT($133)|TupleT(^[$133...])|FunctionT(^[$133,$133,$133...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$3])|Equation(^[^AType<IntT|RealT>,$3])|ForAll(^[^{^[^Var(^string),$133]...},^$121])|Exists(^[^{^[^Var(^string),$133]...},^$121])>>|SExpr<$41|Array(^[$46...])>>>...])|Load(^[$46,^int])|LengthOf($46)|IndexOf(^[$46,$46])>>>>>...|}[$3<^$20<AExpr<$12|Num(^real)|Mul($10)|Div(^[$3,$3])|$41<VExpr<Var(^string)|Fn(^[^string,$46<^Expr<$20|$84<Value<Num(^real)|Null|Tuple(^[^$84...])|Bool<True|False>|String(^string)|Array(^[^$84...])>>|Tuple(^[$46...])|$121<BExpr<$41|Bool<True|False>|And(^{^$121...})|Or(^{^$121...})|Not(^$121)|Equals(^[$133<^Type<Atom<NotT($156<^Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($133)|OrT(^{$133...})|AndT(^{$133...})|ArrayT($133)|TupleT(^[$133...])|FunctionT(^[$133,$133,$133...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$3])|Equation(^[^AType<IntT|RealT>,$3])|ForAll(^[^{^[^Var(^string),$133]...},^$121])|Exists(^[^{^[^Var(^string),$133]...},^$121])>>|SExpr<$41|Array(^[$46...])>>>...])|Load(^[$46,^int])|LengthOf($46)|IndexOf(^[$46,$46])>>>>>...]]>)>
 	public final static int K_Sum = 31;
 	public final static int Sum(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
@@ -4084,9 +4128,9 @@ public final class Solver {
 	}
 
 	// Sum_1
-	private final static class Reduction_60 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_62 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_60(Pattern.Term pattern) { super(pattern); }
+		public Reduction_62(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -4126,9 +4170,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Sum_2
-	private final static class Reduction_61 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_63 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_61(Pattern.Term pattern) { super(pattern); }
+		public Reduction_63(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -4158,7 +4202,7 @@ public final class Solver {
 							if(c8.size() == 1) {
 								for(int r10=0;r10!=c8.size();++r10) {
 									int r9 = c8.get(r10);
-									if(Runtime.accepts(type9,automaton,automaton.get(r9), SCHEMA)) {
+									if(Runtime.accepts(type8,automaton,automaton.get(r9), SCHEMA)) {
 										int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10};
 										activations.add(new Activation(this,null,state));
 									}
@@ -4203,9 +4247,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Sum_3
-	private final static class Reduction_62 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_64 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_62(Pattern.Term pattern) { super(pattern); }
+		public Reduction_64(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -4242,12 +4286,12 @@ public final class Solver {
 				s3children[s3j++] = s3.get(s3i);
 			}
 			Automaton.Bag r6 = new Automaton.Bag(s3children);
-			boolean r7 = Runtime.accepts(type20, automaton, r4, SCHEMA); // x is ^Num(^real)
-			boolean r8 = Runtime.accepts(type21, automaton, r4, SCHEMA); // x is ^$13<Sum($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$41<VExpr<Var(^string)|$52<Fn(^[^string,$46<^Expr<$21|$52|$87<Value<Num(^real)|Null|Tuple(^[^$87...])|Bool<True|False>|String(^string)|Set(^{^$87...})>>|Tuple(^[$46...])|$127<BExpr<$41|Bool<True|False>|And(^{^$127...})|Or(^{^$127...})|Not(^$127)|Equals(^[$139<^Type<Atom<NotT($162<^Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($139)|OrT(^{$139...})|AndT(^{$139...})|SetT(^[^bool,$139])|TupleT(^[$139...])|FunctionT(^[$139,$139,$139...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|SubsetEq(^[^SetT(^[^bool,$139]),^SExpr<$41|Set(^{$46...})>,^SExpr<$41|Set(^{$46...})>])|ForAll(^[^{^[^Var(^string),$139]...},^$127])|Exists(^[^{^[^Var(^string),$139]...},^$127])>>|SExpr<$41|Set(^{$46...})>>>...])>|Load(^[$46,^int])|LengthOf($46)>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$41<VExpr<Var(^string)|$52<Fn(^[^string,$46<^Expr<$21|$52|$87<Value<Num(^real)|Null|Tuple(^[^$87...])|Bool<True|False>|String(^string)|Set(^{^$87...})>>|Tuple(^[$46...])|$127<BExpr<$41|Bool<True|False>|And(^{^$127...})|Or(^{^$127...})|Not(^$127)|Equals(^[$139<^Type<Atom<NotT($162<^Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($139)|OrT(^{$139...})|AndT(^{$139...})|SetT(^[^bool,$139])|TupleT(^[$139...])|FunctionT(^[$139,$139,$139...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|SubsetEq(^[^SetT(^[^bool,$139]),^SExpr<$41|Set(^{$46...})>,^SExpr<$41|Set(^{$46...})>])|ForAll(^[^{^[^Var(^string),$139]...},^$127])|Exists(^[^{^[^Var(^string),$139]...},^$127])>>|SExpr<$41|Set(^{$46...})>>>...])>|Load(^[$46,^int])|LengthOf($46)>>>>>...]]>)>
-			boolean r9 = Runtime.accepts(type22, automaton, r4, SCHEMA); // x is ^$13<Mul($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$41<VExpr<Var(^string)|$52<Fn(^[^string,$46<^Expr<$21|$52|$87<Value<Num(^real)|Null|Tuple(^[^$87...])|Bool<True|False>|String(^string)|Set(^{^$87...})>>|Tuple(^[$46...])|$127<BExpr<$41|Bool<True|False>|And(^{^$127...})|Or(^{^$127...})|Not(^$127)|Equals(^[$139<^Type<Atom<NotT($162<^Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($139)|OrT(^{$139...})|AndT(^{$139...})|SetT(^[^bool,$139])|TupleT(^[$139...])|FunctionT(^[$139,$139,$139...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|SubsetEq(^[^SetT(^[^bool,$139]),^SExpr<$41|Set(^{$46...})>,^SExpr<$41|Set(^{$46...})>])|ForAll(^[^{^[^Var(^string),$139]...},^$127])|Exists(^[^{^[^Var(^string),$139]...},^$127])>>|SExpr<$41|Set(^{$46...})>>>...])>|Load(^[$46,^int])|LengthOf($46)>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$41<VExpr<Var(^string)|$52<Fn(^[^string,$46<^Expr<$21|$52|$87<Value<Num(^real)|Null|Tuple(^[^$87...])|Bool<True|False>|String(^string)|Set(^{^$87...})>>|Tuple(^[$46...])|$127<BExpr<$41|Bool<True|False>|And(^{^$127...})|Or(^{^$127...})|Not(^$127)|Equals(^[$139<^Type<Atom<NotT($162<^Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($139)|OrT(^{$139...})|AndT(^{$139...})|SetT(^[^bool,$139])|TupleT(^[$139...])|FunctionT(^[$139,$139,$139...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|SubsetEq(^[^SetT(^[^bool,$139]),^SExpr<$41|Set(^{$46...})>,^SExpr<$41|Set(^{$46...})>])|ForAll(^[^{^[^Var(^string),$139]...},^$127])|Exists(^[^{^[^Var(^string),$139]...},^$127])>>|SExpr<$41|Set(^{$46...})>>>...])>|Load(^[$46,^int])|LengthOf($46)>>>>>...]]>)>
-			boolean r10 = r8 || r9;        // x is ^$13<Sum($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$41<VExpr<Var(^string)|$52<Fn(^[^string,$46<^Expr<$21|$52|$87<Value<Num(^real)|Null|Tuple(^[^$87...])|Bool<True|False>|String(^string)|Set(^{^$87...})>>|Tuple(^[$46...])|$127<BExpr<$41|Bool<True|False>|And(^{^$127...})|Or(^{^$127...})|Not(^$127)|Equals(^[$139<^Type<Atom<NotT($162<^Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($139)|OrT(^{$139...})|AndT(^{$139...})|SetT(^[^bool,$139])|TupleT(^[$139...])|FunctionT(^[$139,$139,$139...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|SubsetEq(^[^SetT(^[^bool,$139]),^SExpr<$41|Set(^{$46...})>,^SExpr<$41|Set(^{$46...})>])|ForAll(^[^{^[^Var(^string),$139]...},^$127])|Exists(^[^{^[^Var(^string),$139]...},^$127])>>|SExpr<$41|Set(^{$46...})>>>...])>|Load(^[$46,^int])|LengthOf($46)>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$41<VExpr<Var(^string)|$52<Fn(^[^string,$46<^Expr<$21|$52|$87<Value<Num(^real)|Null|Tuple(^[^$87...])|Bool<True|False>|String(^string)|Set(^{^$87...})>>|Tuple(^[$46...])|$127<BExpr<$41|Bool<True|False>|And(^{^$127...})|Or(^{^$127...})|Not(^$127)|Equals(^[$139<^Type<Atom<NotT($162<^Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($139)|OrT(^{$139...})|AndT(^{$139...})|SetT(^[^bool,$139])|TupleT(^[$139...])|FunctionT(^[$139,$139,$139...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|SubsetEq(^[^SetT(^[^bool,$139]),^SExpr<$41|Set(^{$46...})>,^SExpr<$41|Set(^{$46...})>])|ForAll(^[^{^[^Var(^string),$139]...},^$127])|Exists(^[^{^[^Var(^string),$139]...},^$127])>>|SExpr<$41|Set(^{$46...})>>>...])>|Load(^[$46,^int])|LengthOf($46)>>>>>...]]>)> || x is ^$13<Mul($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$41<VExpr<Var(^string)|$52<Fn(^[^string,$46<^Expr<$21|$52|$87<Value<Num(^real)|Null|Tuple(^[^$87...])|Bool<True|False>|String(^string)|Set(^{^$87...})>>|Tuple(^[$46...])|$127<BExpr<$41|Bool<True|False>|And(^{^$127...})|Or(^{^$127...})|Not(^$127)|Equals(^[$139<^Type<Atom<NotT($162<^Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($139)|OrT(^{$139...})|AndT(^{$139...})|SetT(^[^bool,$139])|TupleT(^[$139...])|FunctionT(^[$139,$139,$139...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|SubsetEq(^[^SetT(^[^bool,$139]),^SExpr<$41|Set(^{$46...})>,^SExpr<$41|Set(^{$46...})>])|ForAll(^[^{^[^Var(^string),$139]...},^$127])|Exists(^[^{^[^Var(^string),$139]...},^$127])>>|SExpr<$41|Set(^{$46...})>>>...])>|Load(^[$46,^int])|LengthOf($46)>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$41<VExpr<Var(^string)|$52<Fn(^[^string,$46<^Expr<$21|$52|$87<Value<Num(^real)|Null|Tuple(^[^$87...])|Bool<True|False>|String(^string)|Set(^{^$87...})>>|Tuple(^[$46...])|$127<BExpr<$41|Bool<True|False>|And(^{^$127...})|Or(^{^$127...})|Not(^$127)|Equals(^[$139<^Type<Atom<NotT($162<^Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($139)|OrT(^{$139...})|AndT(^{$139...})|SetT(^[^bool,$139])|TupleT(^[$139...])|FunctionT(^[$139,$139,$139...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|SubsetEq(^[^SetT(^[^bool,$139]),^SExpr<$41|Set(^{$46...})>,^SExpr<$41|Set(^{$46...})>])|ForAll(^[^{^[^Var(^string),$139]...},^$127])|Exists(^[^{^[^Var(^string),$139]...},^$127])>>|SExpr<$41|Set(^{$46...})>>>...])>|Load(^[$46,^int])|LengthOf($46)>>>>>...]]>)>
-			boolean r11 = r7 || r10;       // x is ^Num(^real) || x is ^$13<Sum($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$41<VExpr<Var(^string)|$52<Fn(^[^string,$46<^Expr<$21|$52|$87<Value<Num(^real)|Null|Tuple(^[^$87...])|Bool<True|False>|String(^string)|Set(^{^$87...})>>|Tuple(^[$46...])|$127<BExpr<$41|Bool<True|False>|And(^{^$127...})|Or(^{^$127...})|Not(^$127)|Equals(^[$139<^Type<Atom<NotT($162<^Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($139)|OrT(^{$139...})|AndT(^{$139...})|SetT(^[^bool,$139])|TupleT(^[$139...])|FunctionT(^[$139,$139,$139...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|SubsetEq(^[^SetT(^[^bool,$139]),^SExpr<$41|Set(^{$46...})>,^SExpr<$41|Set(^{$46...})>])|ForAll(^[^{^[^Var(^string),$139]...},^$127])|Exists(^[^{^[^Var(^string),$139]...},^$127])>>|SExpr<$41|Set(^{$46...})>>>...])>|Load(^[$46,^int])|LengthOf($46)>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$41<VExpr<Var(^string)|$52<Fn(^[^string,$46<^Expr<$21|$52|$87<Value<Num(^real)|Null|Tuple(^[^$87...])|Bool<True|False>|String(^string)|Set(^{^$87...})>>|Tuple(^[$46...])|$127<BExpr<$41|Bool<True|False>|And(^{^$127...})|Or(^{^$127...})|Not(^$127)|Equals(^[$139<^Type<Atom<NotT($162<^Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($139)|OrT(^{$139...})|AndT(^{$139...})|SetT(^[^bool,$139])|TupleT(^[$139...])|FunctionT(^[$139,$139,$139...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|SubsetEq(^[^SetT(^[^bool,$139]),^SExpr<$41|Set(^{$46...})>,^SExpr<$41|Set(^{$46...})>])|ForAll(^[^{^[^Var(^string),$139]...},^$127])|Exists(^[^{^[^Var(^string),$139]...},^$127])>>|SExpr<$41|Set(^{$46...})>>>...])>|Load(^[$46,^int])|LengthOf($46)>>>>>...]]>)> || x is ^$13<Mul($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$41<VExpr<Var(^string)|$52<Fn(^[^string,$46<^Expr<$21|$52|$87<Value<Num(^real)|Null|Tuple(^[^$87...])|Bool<True|False>|String(^string)|Set(^{^$87...})>>|Tuple(^[$46...])|$127<BExpr<$41|Bool<True|False>|And(^{^$127...})|Or(^{^$127...})|Not(^$127)|Equals(^[$139<^Type<Atom<NotT($162<^Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($139)|OrT(^{$139...})|AndT(^{$139...})|SetT(^[^bool,$139])|TupleT(^[$139...])|FunctionT(^[$139,$139,$139...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|SubsetEq(^[^SetT(^[^bool,$139]),^SExpr<$41|Set(^{$46...})>,^SExpr<$41|Set(^{$46...})>])|ForAll(^[^{^[^Var(^string),$139]...},^$127])|Exists(^[^{^[^Var(^string),$139]...},^$127])>>|SExpr<$41|Set(^{$46...})>>>...])>|Load(^[$46,^int])|LengthOf($46)>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$41<VExpr<Var(^string)|$52<Fn(^[^string,$46<^Expr<$21|$52|$87<Value<Num(^real)|Null|Tuple(^[^$87...])|Bool<True|False>|String(^string)|Set(^{^$87...})>>|Tuple(^[$46...])|$127<BExpr<$41|Bool<True|False>|And(^{^$127...})|Or(^{^$127...})|Not(^$127)|Equals(^[$139<^Type<Atom<NotT($162<^Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($139)|OrT(^{$139...})|AndT(^{$139...})|SetT(^[^bool,$139])|TupleT(^[$139...])|FunctionT(^[$139,$139,$139...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|SubsetEq(^[^SetT(^[^bool,$139]),^SExpr<$41|Set(^{$46...})>,^SExpr<$41|Set(^{$46...})>])|ForAll(^[^{^[^Var(^string),$139]...},^$127])|Exists(^[^{^[^Var(^string),$139]...},^$127])>>|SExpr<$41|Set(^{$46...})>>>...])>|Load(^[$46,^int])|LengthOf($46)>>>>>...]]>)>
-			boolean r12 = !r11;            // !x is ^Num(^real) || x is ^$13<Sum($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$41<VExpr<Var(^string)|$52<Fn(^[^string,$46<^Expr<$21|$52|$87<Value<Num(^real)|Null|Tuple(^[^$87...])|Bool<True|False>|String(^string)|Set(^{^$87...})>>|Tuple(^[$46...])|$127<BExpr<$41|Bool<True|False>|And(^{^$127...})|Or(^{^$127...})|Not(^$127)|Equals(^[$139<^Type<Atom<NotT($162<^Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($139)|OrT(^{$139...})|AndT(^{$139...})|SetT(^[^bool,$139])|TupleT(^[$139...])|FunctionT(^[$139,$139,$139...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|SubsetEq(^[^SetT(^[^bool,$139]),^SExpr<$41|Set(^{$46...})>,^SExpr<$41|Set(^{$46...})>])|ForAll(^[^{^[^Var(^string),$139]...},^$127])|Exists(^[^{^[^Var(^string),$139]...},^$127])>>|SExpr<$41|Set(^{$46...})>>>...])>|Load(^[$46,^int])|LengthOf($46)>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$41<VExpr<Var(^string)|$52<Fn(^[^string,$46<^Expr<$21|$52|$87<Value<Num(^real)|Null|Tuple(^[^$87...])|Bool<True|False>|String(^string)|Set(^{^$87...})>>|Tuple(^[$46...])|$127<BExpr<$41|Bool<True|False>|And(^{^$127...})|Or(^{^$127...})|Not(^$127)|Equals(^[$139<^Type<Atom<NotT($162<^Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($139)|OrT(^{$139...})|AndT(^{$139...})|SetT(^[^bool,$139])|TupleT(^[$139...])|FunctionT(^[$139,$139,$139...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|SubsetEq(^[^SetT(^[^bool,$139]),^SExpr<$41|Set(^{$46...})>,^SExpr<$41|Set(^{$46...})>])|ForAll(^[^{^[^Var(^string),$139]...},^$127])|Exists(^[^{^[^Var(^string),$139]...},^$127])>>|SExpr<$41|Set(^{$46...})>>>...])>|Load(^[$46,^int])|LengthOf($46)>>>>>...]]>)> || x is ^$13<Mul($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$41<VExpr<Var(^string)|$52<Fn(^[^string,$46<^Expr<$21|$52|$87<Value<Num(^real)|Null|Tuple(^[^$87...])|Bool<True|False>|String(^string)|Set(^{^$87...})>>|Tuple(^[$46...])|$127<BExpr<$41|Bool<True|False>|And(^{^$127...})|Or(^{^$127...})|Not(^$127)|Equals(^[$139<^Type<Atom<NotT($162<^Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($139)|OrT(^{$139...})|AndT(^{$139...})|SetT(^[^bool,$139])|TupleT(^[$139...])|FunctionT(^[$139,$139,$139...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|SubsetEq(^[^SetT(^[^bool,$139]),^SExpr<$41|Set(^{$46...})>,^SExpr<$41|Set(^{$46...})>])|ForAll(^[^{^[^Var(^string),$139]...},^$127])|Exists(^[^{^[^Var(^string),$139]...},^$127])>>|SExpr<$41|Set(^{$46...})>>>...])>|Load(^[$46,^int])|LengthOf($46)>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$41<VExpr<Var(^string)|$52<Fn(^[^string,$46<^Expr<$21|$52|$87<Value<Num(^real)|Null|Tuple(^[^$87...])|Bool<True|False>|String(^string)|Set(^{^$87...})>>|Tuple(^[$46...])|$127<BExpr<$41|Bool<True|False>|And(^{^$127...})|Or(^{^$127...})|Not(^$127)|Equals(^[$139<^Type<Atom<NotT($162<^Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($139)|OrT(^{$139...})|AndT(^{$139...})|SetT(^[^bool,$139])|TupleT(^[$139...])|FunctionT(^[$139,$139,$139...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|SubsetEq(^[^SetT(^[^bool,$139]),^SExpr<$41|Set(^{$46...})>,^SExpr<$41|Set(^{$46...})>])|ForAll(^[^{^[^Var(^string),$139]...},^$127])|Exists(^[^{^[^Var(^string),$139]...},^$127])>>|SExpr<$41|Set(^{$46...})>>>...])>|Load(^[$46,^int])|LengthOf($46)>>>>>...]]>)>
+			boolean r7 = Runtime.accepts(type19, automaton, r4, SCHEMA); // x is ^Num(^real)
+			boolean r8 = Runtime.accepts(type20, automaton, r4, SCHEMA); // x is ^$13<Sum($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...]]>)>
+			boolean r9 = Runtime.accepts(type21, automaton, r4, SCHEMA); // x is ^$13<Mul($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...]]>)>
+			boolean r10 = r8 || r9;        // x is ^$13<Sum($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...]]>)> || x is ^$13<Mul($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...]]>)>
+			boolean r11 = r7 || r10;       // x is ^Num(^real) || x is ^$13<Sum($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...]]>)> || x is ^$13<Mul($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...]]>)>
+			boolean r12 = !r11;            // !x is ^Num(^real) || x is ^$13<Sum($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...]]>)> || x is ^$13<Mul($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...]]>)>
 			if(r12) {
 				Automaton.Real r13 = new Automaton.Real(1); // 1.0
 				int r14 = automaton.add(r13);
@@ -4277,9 +4321,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Sum_4
-	private final static class Reduction_63 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_65 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_63(Pattern.Term pattern) { super(pattern); }
+		public Reduction_65(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -4343,9 +4387,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Sum_5
-	private final static class Reduction_64 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_66 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_64(Pattern.Term pattern) { super(pattern); }
+		public Reduction_66(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -4442,9 +4486,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Sum_6
-	private final static class Reduction_65 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_67 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_65(Pattern.Term pattern) { super(pattern); }
+		public Reduction_67(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -4520,7 +4564,7 @@ public final class Solver {
 		public final int minimum() { return 7; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $10<Equation($8<^[^AType<IntT|RealT>,$4<^$29<AExpr<Num(^real)|Sum(^[^real,^{|$4...|}[$4...]])|Mul(^[^real,^{|$4...|}[$4...]])|Div(^[$4,$4])|$59<VExpr<Var(^string)|$70<Fn(^[^string,$64<^Expr<$29|$70|$105<Value<Num(^real)|Null|Tuple(^[^$105...])|Bool<True|False>|String(^string)|Set(^{^$105...})>>|Tuple(^[$64...])|$144<BExpr<$59|Bool<True|False>|And(^{^$144...})|Or(^{^$144...})|Not(^$144)|Equals(^[$156<^Type<Atom<NotT($179<^Proton<TupleT(^[$179...])|SetT(^[^bool,$179])|Quark<IntT|RealT|AnyT|NullT|VoidT|BoolT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$179...])|SetT(^[^bool,$179])|Quark<IntT|RealT|AnyT|NullT|VoidT|BoolT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($156)|OrT(^{$156...})|AndT(^{$156...})|SetT(^[^bool,$156])|TupleT(^[$156...])|FunctionT(^[$156,$156,$156...])>>,^{|$64,$64|}[$64,$64]])|$10|Inequality($8)|SubsetEq(^[^SetT(^[^bool,$156]),^SExpr<$59|Set(^{$64...})>,^SExpr<$59|Set(^{$64...})>])|ForAll(^[^{^[^Var(^string),$156]...},^$144])|Exists(^[^{^[^Var(^string),$156]...},^$144])>>|SExpr<$59|Set(^{$64...})>>>...])>|Load(^[$64,^int])|LengthOf($64)>>>>>]>)>
+	// term $10<Equation($8<^[^AType<IntT|RealT>,$4<^$29<AExpr<Num(^real)|Sum(^[^real,^{|$4...|}[$4...]])|Mul(^[^real,^{|$4...|}[$4...]])|Div(^[$4,$4])|$60<VExpr<Var(^string)|Fn(^[^string,$65<^Expr<$29|$103<Value<Num(^real)|Null|Tuple(^[^$103...])|Bool<True|False>|String(^string)|Array(^[^$103...])>>|Tuple(^[$65...])|$139<BExpr<$60|Bool<True|False>|And(^{^$139...})|Or(^{^$139...})|Not(^$139)|Equals(^[$151<^Type<Atom<NotT($174<^Proton<TupleT(^[$174...])|ArrayT($174)|Quark<IntT|RealT|AnyT|NullT|VoidT|BoolT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$174...])|ArrayT($174)|Quark<IntT|RealT|AnyT|NullT|VoidT|BoolT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($151)|OrT(^{$151...})|AndT(^{$151...})|ArrayT($151)|TupleT(^[$151...])|FunctionT(^[$151,$151,$151...])>>,^{|$65,$65|}[$65,$65]])|$10|Inequality($8)|ForAll(^[^{^[^Var(^string),$151]...},^$139])|Exists(^[^{^[^Var(^string),$151]...},^$139])>>|SExpr<$60|Array(^[$65...])>>>...])|Load(^[$65,^int])|LengthOf($65)|IndexOf(^[$65,$65])>>>>>]>)>
 	public final static int K_Equation = 32;
 	public final static int Equation(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
@@ -4532,9 +4576,9 @@ public final class Solver {
 	}
 
 	// Equation_1
-	private final static class Reduction_66 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_68 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_66(Pattern.Term pattern) { super(pattern); }
+		public Reduction_68(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -4585,9 +4629,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Equation_1b
-	private final static class Reduction_67 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_69 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_67(Pattern.Term pattern) { super(pattern); }
+		public Reduction_69(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -4687,9 +4731,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Equation_Gcd_1
-	private final static class Reduction_68 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_70 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_68(Pattern.Term pattern) { super(pattern); }
+		public Reduction_70(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -4714,7 +4758,7 @@ public final class Solver {
 					boolean m6_0 = true;
 					for(int i7=0;i7!=c6.size();++i7) {
 						int r7 = c6.get(i7);
-						if(Runtime.accepts(type24,automaton,automaton.get(r7), SCHEMA)) {
+						if(Runtime.accepts(type23,automaton,automaton.get(r7), SCHEMA)) {
 							continue;
 						}
 						m6_0 = false;
@@ -4854,7 +4898,7 @@ public final class Solver {
 													for(int i17=0;i17!=c9.size();++i17) {
 														if(i17 == r11) { continue; }
 														int r17 = c9.get(i17);
-														if(Runtime.accepts(type24,automaton,automaton.get(r17), SCHEMA)) {
+														if(Runtime.accepts(type23,automaton,automaton.get(r17), SCHEMA)) {
 															continue;
 														}
 														m9_1 = false;
@@ -4983,7 +5027,7 @@ public final class Solver {
 							Automaton.List l4 = (Automaton.List) s4;
 							int r5 = l4.get(0);
 							int r6 = l4.get(1);
-							if(Runtime.accepts(type9,automaton,automaton.get(r6), SCHEMA)) {
+							if(Runtime.accepts(type8,automaton,automaton.get(r6), SCHEMA)) {
 								int[] state = {r0, r1, r2, r3, r4, r5, r6, 0};
 								activations.add(new Activation(this,null,state));
 							}
@@ -5035,9 +5079,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Equation_4
-	private final static class Reduction_69 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_71 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_69(Pattern.Term pattern) { super(pattern); }
+		public Reduction_71(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -5052,7 +5096,7 @@ public final class Solver {
 					Automaton.State s2 = automaton.get(r2);
 					Automaton.List l2 = (Automaton.List) s2;
 					int r3 = l2.get(0);
-					if(Runtime.accepts(type25,automaton,automaton.get(r3), SCHEMA)) {
+					if(Runtime.accepts(type24,automaton,automaton.get(r3), SCHEMA)) {
 						int r4 = l2.get(1);
 						int[] state = {r0, r1, r2, r3, r4};
 						activations.add(new Activation(this,null,state));
@@ -5118,9 +5162,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Equation_5
-	private final static class Reduction_70 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_72 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_70(Pattern.Term pattern) { super(pattern); }
+		public Reduction_72(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -5135,7 +5179,7 @@ public final class Solver {
 					Automaton.State s2 = automaton.get(r2);
 					Automaton.List l2 = (Automaton.List) s2;
 					int r3 = l2.get(0);
-					if(Runtime.accepts(type26,automaton,automaton.get(r3), SCHEMA)) {
+					if(Runtime.accepts(type25,automaton,automaton.get(r3), SCHEMA)) {
 						int r4 = l2.get(1);
 						int[] state = {r0, r1, r2, r3, r4};
 						activations.add(new Activation(this,null,state));
@@ -5183,9 +5227,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Equation_6
-	private final static class Reduction_71 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_73 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_71(Pattern.Term pattern) { super(pattern); }
+		public Reduction_73(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -5196,17 +5240,17 @@ public final class Solver {
 				Automaton.State s1 = automaton.get(r1);
 				Automaton.List l1 = (Automaton.List) s1;
 				int r2 = l1.get(0);
-				if(Runtime.accepts(type23,automaton,automaton.get(r2), SCHEMA)) {
+				if(Runtime.accepts(type22,automaton,automaton.get(r2), SCHEMA)) {
 					int r3 = l1.get(1);
 					Automaton.State s3 = automaton.get(r3);
 					Automaton.Collection c3 = (Automaton.Collection) s3;
 					for(int r5=0;r5!=c3.size();++r5) {
 						int r4 = c3.get(r5);
-						if(Runtime.accepts(type19,automaton,automaton.get(r4), SCHEMA)) {
+						if(Runtime.accepts(type18,automaton,automaton.get(r4), SCHEMA)) {
 							for(int r7=0;r7!=c3.size();++r7) {
 								if(r7 == r5) { continue; }
 								int r6 = c3.get(r7);
-								if(Runtime.accepts(type19,automaton,automaton.get(r6), SCHEMA)) {
+								if(Runtime.accepts(type18,automaton,automaton.get(r6), SCHEMA)) {
 									int[] state = {r0, r1, r2, r3, r4, r5, r6, r7};
 									activations.add(new Activation(this,null,state));
 								}
@@ -5258,7 +5302,7 @@ public final class Solver {
 		public final int minimum() { return 7; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $10<Inequality($8<^[^AType<IntT|RealT>,$4<^$29<AExpr<Num(^real)|Sum(^[^real,^{|$4...|}[$4...]])|Mul(^[^real,^{|$4...|}[$4...]])|Div(^[$4,$4])|$59<VExpr<Var(^string)|$70<Fn(^[^string,$64<^Expr<$29|$70|$105<Value<Num(^real)|Null|Tuple(^[^$105...])|Bool<True|False>|String(^string)|Set(^{^$105...})>>|Tuple(^[$64...])|$144<BExpr<$59|Bool<True|False>|And(^{^$144...})|Or(^{^$144...})|Not(^$144)|Equals(^[$156<^Type<Atom<NotT($179<^Proton<TupleT(^[$179...])|SetT(^[^bool,$179])|Quark<IntT|RealT|AnyT|NullT|VoidT|BoolT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$179...])|SetT(^[^bool,$179])|Quark<IntT|RealT|AnyT|NullT|VoidT|BoolT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($156)|OrT(^{$156...})|AndT(^{$156...})|SetT(^[^bool,$156])|TupleT(^[$156...])|FunctionT(^[$156,$156,$156...])>>,^{|$64,$64|}[$64,$64]])|$10|Equation($8)|SubsetEq(^[^SetT(^[^bool,$156]),^SExpr<$59|Set(^{$64...})>,^SExpr<$59|Set(^{$64...})>])|ForAll(^[^{^[^Var(^string),$156]...},^$144])|Exists(^[^{^[^Var(^string),$156]...},^$144])>>|SExpr<$59|Set(^{$64...})>>>...])>|Load(^[$64,^int])|LengthOf($64)>>>>>]>)>
+	// term $10<Inequality($8<^[^AType<IntT|RealT>,$4<^$29<AExpr<Num(^real)|Sum(^[^real,^{|$4...|}[$4...]])|Mul(^[^real,^{|$4...|}[$4...]])|Div(^[$4,$4])|$60<VExpr<Var(^string)|Fn(^[^string,$65<^Expr<$29|$103<Value<Num(^real)|Null|Tuple(^[^$103...])|Bool<True|False>|String(^string)|Array(^[^$103...])>>|Tuple(^[$65...])|$139<BExpr<$60|Bool<True|False>|And(^{^$139...})|Or(^{^$139...})|Not(^$139)|Equals(^[$151<^Type<Atom<NotT($174<^Proton<TupleT(^[$174...])|ArrayT($174)|Quark<IntT|RealT|AnyT|NullT|VoidT|BoolT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$174...])|ArrayT($174)|Quark<IntT|RealT|AnyT|NullT|VoidT|BoolT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($151)|OrT(^{$151...})|AndT(^{$151...})|ArrayT($151)|TupleT(^[$151...])|FunctionT(^[$151,$151,$151...])>>,^{|$65,$65|}[$65,$65]])|$10|Equation($8)|ForAll(^[^{^[^Var(^string),$151]...},^$139])|Exists(^[^{^[^Var(^string),$151]...},^$139])>>|SExpr<$60|Array(^[$65...])>>>...])|Load(^[$65,^int])|LengthOf($65)|IndexOf(^[$65,$65])>>>>>]>)>
 	public final static int K_Inequality = 33;
 	public final static int Inequality(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
@@ -5270,9 +5314,9 @@ public final class Solver {
 	}
 
 	// Inequality_1
-	private final static class Reduction_72 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_74 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_72(Pattern.Term pattern) { super(pattern); }
+		public Reduction_74(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -5341,9 +5385,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Inequality_2
-	private final static class Reduction_73 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_75 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_73(Pattern.Term pattern) { super(pattern); }
+		public Reduction_75(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -5358,7 +5402,7 @@ public final class Solver {
 					Automaton.State s2 = automaton.get(r2);
 					Automaton.List l2 = (Automaton.List) s2;
 					int r3 = l2.get(0);
-					if(Runtime.accepts(type25,automaton,automaton.get(r3), SCHEMA)) {
+					if(Runtime.accepts(type24,automaton,automaton.get(r3), SCHEMA)) {
 						int r4 = l2.get(1);
 						int[] state = {r0, r1, r2, r3, r4};
 						activations.add(new Activation(this,null,state));
@@ -5407,9 +5451,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Inequality_Gcd_1
-	private final static class Reduction_74 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_76 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_74(Pattern.Term pattern) { super(pattern); }
+		public Reduction_76(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -5434,7 +5478,7 @@ public final class Solver {
 					boolean m6_0 = true;
 					for(int i7=0;i7!=c6.size();++i7) {
 						int r7 = c6.get(i7);
-						if(Runtime.accepts(type24,automaton,automaton.get(r7), SCHEMA)) {
+						if(Runtime.accepts(type23,automaton,automaton.get(r7), SCHEMA)) {
 							continue;
 						}
 						m6_0 = false;
@@ -5520,10 +5564,10 @@ public final class Solver {
 		public final int minimum() { return 0; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// 
-	private final static class Reduction_75 extends AbstractRewriteRule implements ReductionRule {
+	// Inequality_2a
+	private final static class Reduction_77 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_75(Pattern.Term pattern) { super(pattern); }
+		public Reduction_77(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -5543,7 +5587,7 @@ public final class Solver {
 							Automaton.State s4 = automaton.get(r4);
 							Automaton.List l4 = (Automaton.List) s4;
 							int r5 = l4.get(0);
-							if(Runtime.accepts(type25,automaton,automaton.get(r5), SCHEMA)) {
+							if(Runtime.accepts(type24,automaton,automaton.get(r5), SCHEMA)) {
 								int r6 = l4.get(1);
 								Automaton.State s6 = automaton.get(r6);
 								if(s6.kind == K_Sum) {
@@ -5555,7 +5599,7 @@ public final class Solver {
 									int r9 = l7.get(1);
 									Automaton.State s9 = automaton.get(r9);
 									Automaton.Collection c9 = (Automaton.Collection) s9;
-									if(c9.size() == 1) {
+									if(c9.size() == 2) {
 										for(int r11=0;r11!=c9.size();++r11) {
 											int r10 = c9.get(r11);
 											Automaton.State s10 = automaton.get(r10);
@@ -5568,43 +5612,93 @@ public final class Solver {
 												int r14 = l12.get(1);
 												Automaton.State s14 = automaton.get(r14);
 												Automaton.Collection c14 = (Automaton.Collection) s14;
-												for(int r17=0;r17!=c1.size();++r17) {
-													if(r17 == r3) { continue; }
-													int r16 = c1.get(r17);
-													Automaton.State s16 = automaton.get(r16);
-													if(s16.kind == K_Inequality) {
-														Automaton.Term t16 = (Automaton.Term) s16;
-														int r18 = t16.contents;
-														Automaton.State s18 = automaton.get(r18);
-														Automaton.List l18 = (Automaton.List) s18;
-														int r19 = l18.get(0);
-														if(Runtime.accepts(type25,automaton,automaton.get(r19), SCHEMA)) {
-															int r20 = l18.get(1);
-															Automaton.State s20 = automaton.get(r20);
-															if(s20.kind == K_Sum) {
-																Automaton.Term t20 = (Automaton.Term) s20;
-																int r21 = t20.contents;
+												if(c14.size() == 1) {
+													for(int r16=0;r16!=c14.size();++r16) {
+														int r15 = c14.get(r16);
+														for(int r18=0;r18!=c9.size();++r18) {
+															if(r18 == r11) { continue; }
+															int r17 = c9.get(r18);
+															Automaton.State s17 = automaton.get(r17);
+															if(s17.kind == K_Mul) {
+																Automaton.Term t17 = (Automaton.Term) s17;
+																int r19 = t17.contents;
+																Automaton.State s19 = automaton.get(r19);
+																Automaton.List l19 = (Automaton.List) s19;
+																int r20 = l19.get(0);
+																int r21 = l19.get(1);
 																Automaton.State s21 = automaton.get(r21);
-																Automaton.List l21 = (Automaton.List) s21;
-																int r22 = l21.get(0);
-																int r23 = l21.get(1);
-																Automaton.State s23 = automaton.get(r23);
-																Automaton.Collection c23 = (Automaton.Collection) s23;
-																if(c23.size() == 1) {
-																	for(int r25=0;r25!=c23.size();++r25) {
-																		int r24 = c23.get(r25);
-																		Automaton.State s24 = automaton.get(r24);
-																		if(s24.kind == K_Mul) {
-																			Automaton.Term t24 = (Automaton.Term) s24;
-																			int r26 = t24.contents;
-																			Automaton.State s26 = automaton.get(r26);
-																			Automaton.List l26 = (Automaton.List) s26;
-																			int r27 = l26.get(0);
-																			int r28 = l26.get(1);
-																			Automaton.State s28 = automaton.get(r28);
-																			Automaton.Collection c28 = (Automaton.Collection) s28;
-																			int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, 0, r16, r17, r18, r19, r20, r21, r22, r23, r24, r25, r26, r27, r28, 0, 0};
-																			activations.add(new Activation(this,null,state));
+																Automaton.Collection c21 = (Automaton.Collection) s21;
+																if(c21.size() == 1) {
+																	for(int r23=0;r23!=c21.size();++r23) {
+																		int r22 = c21.get(r23);
+																		for(int r25=0;r25!=c1.size();++r25) {
+																			if(r25 == r3) { continue; }
+																			int r24 = c1.get(r25);
+																			Automaton.State s24 = automaton.get(r24);
+																			if(s24.kind == K_Inequality) {
+																				Automaton.Term t24 = (Automaton.Term) s24;
+																				int r26 = t24.contents;
+																				Automaton.State s26 = automaton.get(r26);
+																				Automaton.List l26 = (Automaton.List) s26;
+																				int r27 = l26.get(0);
+																				if(Runtime.accepts(type24,automaton,automaton.get(r27), SCHEMA)) {
+																					int r28 = l26.get(1);
+																					Automaton.State s28 = automaton.get(r28);
+																					if(s28.kind == K_Sum) {
+																						Automaton.Term t28 = (Automaton.Term) s28;
+																						int r29 = t28.contents;
+																						Automaton.State s29 = automaton.get(r29);
+																						Automaton.List l29 = (Automaton.List) s29;
+																						int r30 = l29.get(0);
+																						int r31 = l29.get(1);
+																						Automaton.State s31 = automaton.get(r31);
+																						Automaton.Collection c31 = (Automaton.Collection) s31;
+																						if(c31.size() == 2) {
+																							for(int r33=0;r33!=c31.size();++r33) {
+																								int r32 = c31.get(r33);
+																								Automaton.State s32 = automaton.get(r32);
+																								if(s32.kind == K_Mul) {
+																									Automaton.Term t32 = (Automaton.Term) s32;
+																									int r34 = t32.contents;
+																									Automaton.State s34 = automaton.get(r34);
+																									Automaton.List l34 = (Automaton.List) s34;
+																									int r35 = l34.get(0);
+																									int r36 = l34.get(1);
+																									Automaton.State s36 = automaton.get(r36);
+																									Automaton.Collection c36 = (Automaton.Collection) s36;
+																									if(c36.size() == 1) {
+																										for(int r38=0;r38!=c36.size();++r38) {
+																											int r37 = c36.get(r38);
+																											for(int r40=0;r40!=c31.size();++r40) {
+																												if(r40 == r33) { continue; }
+																												int r39 = c31.get(r40);
+																												Automaton.State s39 = automaton.get(r39);
+																												if(s39.kind == K_Mul) {
+																													Automaton.Term t39 = (Automaton.Term) s39;
+																													int r41 = t39.contents;
+																													Automaton.State s41 = automaton.get(r41);
+																													Automaton.List l41 = (Automaton.List) s41;
+																													int r42 = l41.get(0);
+																													int r43 = l41.get(1);
+																													Automaton.State s43 = automaton.get(r43);
+																													Automaton.Collection c43 = (Automaton.Collection) s43;
+																													if(c43.size() == 1) {
+																														for(int r45=0;r45!=c43.size();++r45) {
+																															int r44 = c43.get(r45);
+																															int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18, r19, r20, r21, r22, r23, r24, r25, r26, r27, r28, r29, r30, r31, r32, r33, r34, r35, r36, r37, r38, r39, r40, r41, r42, r43, r44, r45, 0};
+																															activations.add(new Activation(this,null,state));
+																														}
+																													}
+																												}
+																											}
+																										}
+																									}
+																								}
+																							}
+																						}
+																					}
+																				}
+																			}
 																		}
 																	}
 																}
@@ -5630,217 +5724,83 @@ public final class Solver {
 			int r3 = state[3];
 			int r6 = state[6]; // s1
 			int r8 = state[8]; // x1
-			int r10 = state[10]; // xs
 			int r11 = state[11];
 			int r13 = state[13]; // x2
-			Automaton.Collection s14 = (Automaton.Collection) automaton.get(state[14]);
-			int[] s14children = new int[s14.size() - 0];
-			for(int s14i=0, s14j=0; s14i != s14.size();++s14i) {
-				s14children[s14j++] = s14.get(s14i);
-			}
-			Automaton.Bag r15 = new Automaton.Bag(s14children);
-			int r16 = state[16]; // ieq2
-			int r17 = state[17];
-			int r20 = state[20]; // s2
-			int r22 = state[22]; // y1
-			int r24 = state[24]; // ys
-			int r25 = state[25];
-			int r27 = state[27]; // y2
-			Automaton.Collection s28 = (Automaton.Collection) automaton.get(state[28]);
-			int[] s28children = new int[s28.size() - 0];
-			for(int s28i=0, s28j=0; s28i != s28.size();++s28i) {
-				s28children[s28j++] = s28.get(s28i);
-			}
-			Automaton.Bag r29 = new Automaton.Bag(s28children);
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 2];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
-				if(s1i == r3 || s1i == r17) { continue; }
-				s1children[s1j++] = s1.get(s1i);
-			}
-			Automaton.Set r30 = new Automaton.Set(s1children);
-			Automaton.Real r31 = (Automaton.Real) automaton.get(r22);
-			Automaton.Real r32 = r31.negate(); // -y1
-			Automaton.Real r33 = (Automaton.Real) automaton.get(r8);
-			boolean r34 = r33.equals(r32); // x1 eq -y1
-			boolean r35 = false;           // x1 eq -y1 && x2 eq -y2 && v1s eq v2s
-			if(r34) {
-				Automaton.Real r36 = (Automaton.Real) automaton.get(r27);
-				Automaton.Real r37 = r36.negate(); // -y2
-				Automaton.Real r38 = (Automaton.Real) automaton.get(r13);
-				boolean r39 = r38.equals(r37); // x2 eq -y2
-				boolean r40 = false;           // x2 eq -y2 && v1s eq v2s
-				if(r39) {
-					boolean r41 = r15.equals(r29); // v1s eq v2s
-					r40 = r41;
-				}
-				r35 = r40;
-			}
-			if(r35) {
-				Automaton.Term r42 = IntT;
-				int r43 = automaton.add(r42);
-				Automaton.List r44 = new Automaton.List(r43, r6); // [IntTs1]
-				int r45 = automaton.add(r44);
-				Automaton.Term r46 = new Automaton.Term(K_Equation, r45);
-				int r47 = automaton.add(r46);
-				Automaton.Set r48 = r30.appendFront(r47); // Equation([IntTs1]) append rest
-				int r49 = automaton.add(r48);
-				Automaton.Term r50 = new Automaton.Term(K_And, r49);
-				int r51 = automaton.add(r50);
-				if(r0 != r51) {
-					return automaton.rewrite(r0, r51);
-				}
-			}
-			automaton.resize(nStates);
-			return Automaton.K_VOID;
-		}
-		public final String name() { return ""; }
-		public final int rank() { return 0; }
-
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
-	}
-	// 
-	private final static class Reduction_76 extends AbstractRewriteRule implements ReductionRule {
-
-		public Reduction_76(Pattern.Term pattern) { super(pattern); }
-
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
-			Automaton.State s0 = automaton.get(r0);
-			if(s0.kind == K_And) {
-				Automaton.Term t0 = (Automaton.Term) s0;
-				int r1 = t0.contents;
-				Automaton.State s1 = automaton.get(r1);
-				Automaton.Collection c1 = (Automaton.Collection) s1;
-				if(c1.size() >= 2) {
-					for(int r3=0;r3!=c1.size();++r3) {
-						int r2 = c1.get(r3);
-						Automaton.State s2 = automaton.get(r2);
-						if(s2.kind == K_Inequality) {
-							Automaton.Term t2 = (Automaton.Term) s2;
-							int r4 = t2.contents;
-							Automaton.State s4 = automaton.get(r4);
-							Automaton.List l4 = (Automaton.List) s4;
-							int r5 = l4.get(0);
-							if(Runtime.accepts(type25,automaton,automaton.get(r5), SCHEMA)) {
-								int r6 = l4.get(1);
-								if(Runtime.accepts(type9,automaton,automaton.get(r6), SCHEMA)) {
-									for(int r8=0;r8!=c1.size();++r8) {
-										if(r8 == r3) { continue; }
-										int r7 = c1.get(r8);
-										Automaton.State s7 = automaton.get(r7);
-										if(s7.kind == K_Inequality) {
-											Automaton.Term t7 = (Automaton.Term) s7;
-											int r9 = t7.contents;
-											Automaton.State s9 = automaton.get(r9);
-											Automaton.List l9 = (Automaton.List) s9;
-											int r10 = l9.get(0);
-											if(Runtime.accepts(type25,automaton,automaton.get(r10), SCHEMA)) {
-												int r11 = l9.get(1);
-												Automaton.State s11 = automaton.get(r11);
-												if(s11.kind == K_Sum) {
-													Automaton.Term t11 = (Automaton.Term) s11;
-													int r12 = t11.contents;
-													Automaton.State s12 = automaton.get(r12);
-													Automaton.List l12 = (Automaton.List) s12;
-													int r13 = l12.get(0);
-													int r14 = l12.get(1);
-													Automaton.State s14 = automaton.get(r14);
-													Automaton.Collection c14 = (Automaton.Collection) s14;
-													if(c14.size() == 1) {
-														for(int r16=0;r16!=c14.size();++r16) {
-															int r15 = c14.get(r16);
-															Automaton.State s15 = automaton.get(r15);
-															if(s15.kind == K_Mul) {
-																Automaton.Term t15 = (Automaton.Term) s15;
-																int r17 = t15.contents;
-																Automaton.State s17 = automaton.get(r17);
-																Automaton.List l17 = (Automaton.List) s17;
-																int r18 = l17.get(0);
-																int r19 = l17.get(1);
-																Automaton.State s19 = automaton.get(r19);
-																Automaton.Collection c19 = (Automaton.Collection) s19;
-																if(c19.size() == 1) {
-																	for(int r21=0;r21!=c19.size();++r21) {
-																		int r20 = c19.get(r21);
-																		int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18, r19, r20, r21, 0};
-																		activations.add(new Activation(this,null,state));
-																	}
-																}
-															}
-														}
-													}
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-
-		public final int apply(Automaton automaton, int[] state) {
-			int nStates = automaton.nStates();
-			int r0 = state[0];
-			int r2 = state[2]; // ieq1
-			int r3 = state[3];
-			int r6 = state[6]; // v1
-			int r7 = state[7]; // ieq2
-			int r8 = state[8];
-			int r11 = state[11]; // s2
-			int r13 = state[13]; // y1
-			int r15 = state[15]; // ys
+			int r15 = state[15]; // vx1
 			int r16 = state[16];
-			int r18 = state[18]; // y2
-			int r20 = state[20]; // v2
-			int r21 = state[21];
+			int r18 = state[18];
+			int r20 = state[20]; // x3
+			int r22 = state[22]; // vx2
+			int r23 = state[23];
+			int r24 = state[24]; // ieq2
+			int r25 = state[25];
+			int r28 = state[28]; // s2
+			int r30 = state[30]; // y1
+			int r33 = state[33];
+			int r35 = state[35]; // y2
+			int r37 = state[37]; // vy1
+			int r38 = state[38];
+			int r40 = state[40];
+			int r42 = state[42]; // y3
+			int r44 = state[44]; // vy2
+			int r45 = state[45];
 			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
 			int[] s1children = new int[s1.size() - 2];
 			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
-				if(s1i == r3 || s1i == r8) { continue; }
+				if(s1i == r3 || s1i == r25) { continue; }
 				s1children[s1j++] = s1.get(s1i);
 			}
-			Automaton.Set r22 = new Automaton.Set(s1children);
-			Automaton.Real r23 = new Automaton.Real(0); // 0.0
-			Automaton.Real r24 = (Automaton.Real) automaton.get(r13);
-			boolean r25 = r24.equals(r23); // y1 eq 0.0
-			boolean r26 = false;           // y1 eq 0.0 && y2 eq -1.0 && v1 eq v2
-			if(r25) {
-				Automaton.Real r27 = new Automaton.Real(1); // 1.0
-				Automaton.Real r28 = r27.negate(); // -1.0
-				Automaton.Real r29 = (Automaton.Real) automaton.get(r18);
-				boolean r30 = r29.equals(r28); // y2 eq -1.0
-				boolean r31 = false;           // y2 eq -1.0 && v1 eq v2
-				if(r30) {
-					boolean r32 = r6 == r20;       // v1 eq v2
-					r31 = r32;
+			Automaton.Set r46 = new Automaton.Set(s1children);
+			Automaton.Real r47 = (Automaton.Real) automaton.get(r30);
+			Automaton.Real r48 = r47.negate(); // -y1
+			Automaton.Real r49 = (Automaton.Real) automaton.get(r8);
+			boolean r50 = r49.equals(r48); // x1 eq -y1
+			boolean r51 = false;           // x1 eq -y1 && x2 eq -y2 && x3 eq -y3 && vx1 eq vy1 && vx2 eq vy2
+			if(r50) {
+				Automaton.Real r52 = (Automaton.Real) automaton.get(r35);
+				Automaton.Real r53 = r52.negate(); // -y2
+				Automaton.Real r54 = (Automaton.Real) automaton.get(r13);
+				boolean r55 = r54.equals(r53); // x2 eq -y2
+				boolean r56 = false;           // x2 eq -y2 && x3 eq -y3 && vx1 eq vy1 && vx2 eq vy2
+				if(r55) {
+					Automaton.Real r57 = (Automaton.Real) automaton.get(r42);
+					Automaton.Real r58 = r57.negate(); // -y3
+					Automaton.Real r59 = (Automaton.Real) automaton.get(r20);
+					boolean r60 = r59.equals(r58); // x3 eq -y3
+					boolean r61 = false;           // x3 eq -y3 && vx1 eq vy1 && vx2 eq vy2
+					if(r60) {
+						boolean r62 = r15 == r37;      // vx1 eq vy1
+						boolean r63 = false;           // vx1 eq vy1 && vx2 eq vy2
+						if(r62) {
+							boolean r64 = r22 == r44;      // vx2 eq vy2
+							r63 = r64;
+						}
+						r61 = r63;
+					}
+					r56 = r61;
 				}
-				r26 = r31;
+				r51 = r56;
 			}
-			if(r26) {
-				Automaton.Term r33 = IntT;
-				int r34 = automaton.add(r33);
-				Automaton.List r35 = new Automaton.List(r34, r6); // [IntTv1]
-				int r36 = automaton.add(r35);
-				Automaton.Term r37 = new Automaton.Term(K_Equation, r36);
-				int r38 = automaton.add(r37);
-				Automaton.Set r39 = r22.appendFront(r38); // Equation([IntTv1]) append rest
-				int r40 = automaton.add(r39);
-				Automaton.Term r41 = new Automaton.Term(K_And, r40);
-				int r42 = automaton.add(r41);
-				if(r0 != r42) {
-					return automaton.rewrite(r0, r42);
+			if(r51) {
+				Automaton.Term r65 = IntT;
+				int r66 = automaton.add(r65);
+				Automaton.List r67 = new Automaton.List(r66, r6); // [IntTs1]
+				int r68 = automaton.add(r67);
+				Automaton.Term r69 = new Automaton.Term(K_Equation, r68);
+				int r70 = automaton.add(r69);
+				Automaton.Set r71 = r46.appendFront(r70); // Equation([IntTs1]) append rest
+				int r72 = automaton.add(r71);
+				Automaton.Term r73 = new Automaton.Term(K_And, r72);
+				int r74 = automaton.add(r73);
+				if(r0 != r74) {
+					return automaton.rewrite(r0, r74);
 				}
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return ""; }
-		public final int rank() { return 0; }
+		public final String name() { return "Inequality_2a"; }
+		public final int rank() { return 1; }
 
 		public final int minimum() { return 0; }
 		public final int maximum() { return Integer.MAX_VALUE; }
@@ -5899,7 +5859,7 @@ public final class Solver {
 													for(int i17=0;i17!=c9.size();++i17) {
 														if(i17 == r11) { continue; }
 														int r17 = c9.get(i17);
-														if(Runtime.accepts(type24,automaton,automaton.get(r17), SCHEMA)) {
+														if(Runtime.accepts(type23,automaton,automaton.get(r17), SCHEMA)) {
 															continue;
 														}
 														m9_1 = false;
@@ -5947,7 +5907,7 @@ public final class Solver {
 																						for(int i33=0;i33!=c25.size();++i33) {
 																							if(i33 == r27) { continue; }
 																							int r33 = c25.get(i33);
-																							if(Runtime.accepts(type24,automaton,automaton.get(r33), SCHEMA)) {
+																							if(Runtime.accepts(type23,automaton,automaton.get(r33), SCHEMA)) {
 																								continue;
 																							}
 																							m25_1 = false;
@@ -6166,7 +6126,7 @@ public final class Solver {
 													for(int i17=0;i17!=c9.size();++i17) {
 														if(i17 == r11) { continue; }
 														int r17 = c9.get(i17);
-														if(Runtime.accepts(type24,automaton,automaton.get(r17), SCHEMA)) {
+														if(Runtime.accepts(type23,automaton,automaton.get(r17), SCHEMA)) {
 															continue;
 														}
 														m9_1 = false;
@@ -6184,7 +6144,7 @@ public final class Solver {
 																Automaton.List l20 = (Automaton.List) s20;
 																int r21 = l20.get(0);
 																int r22 = l20.get(1);
-																if(Runtime.accepts(type9,automaton,automaton.get(r22), SCHEMA)) {
+																if(Runtime.accepts(type8,automaton,automaton.get(r22), SCHEMA)) {
 																	int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, 0, r18, r19, r20, r21, r22, 0};
 																	activations.add(new Activation(this,null,state));
 																}
@@ -6282,104 +6242,17 @@ public final class Solver {
 		public final int minimum() { return 0; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $7<Set(^{$2<^Expr<$44<Value<Null|Tuple(^[^$44...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$44...})>>|Tuple(^[$2...])|Fn(^[^string,$2...])|$95<BExpr<Bool<True|False>|VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|And(^{^$95...})|Or(^{^$95...})|Not(^$95)|Equals(^[$127<^Type<Atom<NotT($150<^Proton<TupleT(^[$150...])|SetT(^[^bool,$150])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$150...])|SetT(^[^bool,$150])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($127)|OrT(^{$127...})|AndT(^{$127...})|SetT(^[^bool,$127])|TupleT(^[$127...])|FunctionT(^[$127,$127,$127...])>>,^{|$2,$2|}[$2,$2]])|Inequality(^[^AType<IntT|RealT>,$233<^AExpr<Num(^real)|VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|Sum(^[^real,^{|$233...|}[$233...]])|Mul(^[^real,^{|$233...|}[$233...]])|Div(^[$233,$233])>>])|Equation(^[^AType<IntT|RealT>,$233])|SubsetEq(^[^SetT(^[^bool,$127]),^SExpr<$7|VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>>,^SExpr<$7|VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>>])|ForAll(^[^{^[^Var(^string),$127]...},^$95])|Exists(^[^{^[^Var(^string),$127]...},^$95])>>|AExpr<Num(^real)|VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|Sum(^[^real,^{|$233...|}[$233...]])|Mul(^[^real,^{|$233...|}[$233...]])|Div(^[$233,$233])>|SExpr<$7|VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>>>>...})>
-	public final static int K_Set = 34;
-	public final static int Set(Automaton automaton, int... r0) {
-		int r1 = automaton.add(new Automaton.Set(r0));
-		return automaton.add(new Automaton.Term(K_Set, r1));
+	// term $7<Array($5<^[$2<^Expr<$40<Value<Null|Tuple(^[^$40...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$40...])>>|Tuple($5)|$79<BExpr<Bool<True|False>|VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>|And(^{^$79...})|Or(^{^$79...})|Not(^$79)|Equals(^[$125<^Type<Atom<NotT($148<^Proton<TupleT(^[$148...])|ArrayT($148)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$148...])|ArrayT($148)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($125)|OrT(^{$125...})|AndT(^{$125...})|ArrayT($125)|TupleT(^[$125...])|FunctionT(^[$125,$125,$125...])>>,^{|$2,$2|}[$2,$2]])|Inequality(^[^AType<IntT|RealT>,$222<^AExpr<Num(^real)|VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>|Sum(^[^real,^{|$222...|}[$222...]])|Mul(^[^real,^{|$222...|}[$222...]])|Div(^[$222,$222])>>])|Equation(^[^AType<IntT|RealT>,$222])|ForAll(^[^{^[^Var(^string),$125]...},^$79])|Exists(^[^{^[^Var(^string),$125]...},^$79])>>|AExpr<Num(^real)|VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>|Sum(^[^real,^{|$222...|}[$222...]])|Mul(^[^real,^{|$222...|}[$222...]])|Div(^[$222,$222])>|SExpr<$7|VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>>>>...]>)>
+	public final static int K_Array = 34;
+	public final static int Array(Automaton automaton, int... r0) {
+		int r1 = automaton.add(new Automaton.List(r0));
+		return automaton.add(new Automaton.Term(K_Array, r1));
 	}
-	public final static int Set(Automaton automaton, List<Integer> r0) {
-		int r1 = automaton.add(new Automaton.Set(r0));
-		return automaton.add(new Automaton.Term(K_Set, r1));
+	public final static int Array(Automaton automaton, List<Integer> r0) {
+		int r1 = automaton.add(new Automaton.List(r0));
+		return automaton.add(new Automaton.Term(K_Array, r1));
 	}
 
-	// 
-	private final static class Reduction_77 extends AbstractRewriteRule implements ReductionRule {
-
-		public Reduction_77(Pattern.Term pattern) { super(pattern); }
-
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
-			Automaton.State s0 = automaton.get(r0);
-			if(s0.kind == K_Equals) {
-				Automaton.Term t0 = (Automaton.Term) s0;
-				int r1 = t0.contents;
-				Automaton.State s1 = automaton.get(r1);
-				Automaton.List l1 = (Automaton.List) s1;
-				int r2 = l1.get(0);
-				int r3 = l1.get(1);
-				Automaton.State s3 = automaton.get(r3);
-				Automaton.Collection c3 = (Automaton.Collection) s3;
-				for(int r5=0;r5!=c3.size();++r5) {
-					int r4 = c3.get(r5);
-					Automaton.State s4 = automaton.get(r4);
-					if(s4.kind == K_Set) {
-						Automaton.Term t4 = (Automaton.Term) s4;
-						int r6 = t4.contents;
-						Automaton.State s6 = automaton.get(r6);
-						Automaton.Collection c6 = (Automaton.Collection) s6;
-						for(int r9=0;r9!=c3.size();++r9) {
-							if(r9 == r5) { continue; }
-							int r8 = c3.get(r9);
-							Automaton.State s8 = automaton.get(r8);
-							if(s8.kind == K_Set) {
-								Automaton.Term t8 = (Automaton.Term) s8;
-								int r10 = t8.contents;
-								Automaton.State s10 = automaton.get(r10);
-								Automaton.Collection c10 = (Automaton.Collection) s10;
-								int[] state = {r0, r1, r2, r3, r4, r5, r6, 0, r8, r9, r10, 0};
-								activations.add(new Activation(this,null,state));
-							}
-						}
-					}
-				}
-			}
-		}
-
-		public final int apply(Automaton automaton, int[] state) {
-			int nStates = automaton.nStates();
-			int r0 = state[0];
-			int r2 = state[2]; // t
-			int r5 = state[5];
-			Automaton.Collection s6 = (Automaton.Collection) automaton.get(state[6]);
-			int[] s6children = new int[s6.size() - 0];
-			for(int s6i=0, s6j=0; s6i != s6.size();++s6i) {
-				s6children[s6j++] = s6.get(s6i);
-			}
-			Automaton.Set r7 = new Automaton.Set(s6children);
-			int r9 = state[9];
-			Automaton.Collection s10 = (Automaton.Collection) automaton.get(state[10]);
-			int[] s10children = new int[s10.size() - 0];
-			for(int s10i=0, s10j=0; s10i != s10.size();++s10i) {
-				s10children[s10j++] = s10.get(s10i);
-			}
-			Automaton.Set r11 = new Automaton.Set(s10children);
-			Automaton.Int r12 = r7.lengthOf(); // |xs|
-			Automaton.Int r13 = new Automaton.Int(0); // 0
-			boolean r14 = r12.equals(r13); // |xs| eq 0
-			boolean r15 = false;           // |xs| eq 0 && |ys| neq 0
-			if(r14) {
-				Automaton.Int r16 = r11.lengthOf(); // |ys|
-				Automaton.Int r17 = new Automaton.Int(0); // 0
-				boolean r18 = !r16.equals(r17); // |ys| neq 0
-				r15 = r18;
-			}
-			if(r15) {
-				Automaton.Term r19 = False;
-				int r20 = automaton.add(r19);
-				if(r0 != r20) {
-					return automaton.rewrite(r0, r20);
-				}
-			}
-			automaton.resize(nStates);
-			return Automaton.K_VOID;
-		}
-		public final String name() { return ""; }
-		public final int rank() { return 1; }
-
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
-	}
 	// 
 	private final static class Reduction_78 extends AbstractRewriteRule implements ReductionRule {
 
@@ -6388,113 +6261,17 @@ public final class Solver {
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
 			Automaton.State s0 = automaton.get(r0);
-			if(s0.kind == K_And) {
-				Automaton.Term t0 = (Automaton.Term) s0;
-				int r1 = t0.contents;
-				Automaton.State s1 = automaton.get(r1);
-				Automaton.Collection c1 = (Automaton.Collection) s1;
-				if(c1.size() >= 1) {
-					for(int r3=0;r3!=c1.size();++r3) {
-						int r2 = c1.get(r3);
-						Automaton.State s2 = automaton.get(r2);
-						if(s2.kind == K_Equals) {
-							Automaton.Term t2 = (Automaton.Term) s2;
-							int r4 = t2.contents;
-							Automaton.State s4 = automaton.get(r4);
-							Automaton.List l4 = (Automaton.List) s4;
-							int r5 = l4.get(0);
-							int r6 = l4.get(1);
-							Automaton.State s6 = automaton.get(r6);
-							Automaton.Collection c6 = (Automaton.Collection) s6;
-							for(int r8=0;r8!=c6.size();++r8) {
-								int r7 = c6.get(r8);
-								if(Runtime.accepts(type9,automaton,automaton.get(r7), SCHEMA)) {
-									for(int r10=0;r10!=c6.size();++r10) {
-										if(r10 == r8) { continue; }
-										int r9 = c6.get(r10);
-										if(Runtime.accepts(type27,automaton,automaton.get(r9), SCHEMA)) {
-											int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, 0};
-											activations.add(new Activation(this,null,state));
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-
-		public final int apply(Automaton automaton, int[] state) {
-			int nStates = automaton.nStates();
-			int r0 = state[0];
-			int r2 = state[2]; // eq
-			int r3 = state[3];
-			int r5 = state[5]; // t
-			int r7 = state[7]; // x
-			int r8 = state[8];
-			int r9 = state[9]; // y
-			int r10 = state[10];
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 1];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
-				if(s1i == r3) { continue; }
-				s1children[s1j++] = s1.get(s1i);
-			}
-			Automaton.Set r11 = new Automaton.Set(s1children);
-			Automaton.List t12 = new Automaton.List();
-			for(int i13=0;i13<r11.size();i13++) {
-				int r13 = (int) r11.get(i13);
-				int r14 = automaton.substitute(r13, r7, r9);
-				t12.add(r14);
-			}
-			Automaton.Set r12 = new Automaton.Set(t12.toArray());
-			Automaton.Set r15 = r12.appendFront(r2); // eq append cs
-			int r16 = automaton.add(r15);
-			Automaton.Term r17 = new Automaton.Term(K_And, r16);
-			int r18 = automaton.add(r17);
-			if(r0 != r18) {
-				return automaton.rewrite(r0, r18);
-			}
-			automaton.resize(nStates);
-			return Automaton.K_VOID;
-		}
-		public final String name() { return ""; }
-		public final int rank() { return 0; }
-
-		public final int minimum() { return 8; }
-		public final int maximum() { return Integer.MAX_VALUE; }
-	}
-	// Set_LengthOf_1
-	private final static class Reduction_79 extends AbstractRewriteRule implements ReductionRule {
-
-		public Reduction_79(Pattern.Term pattern) { super(pattern); }
-
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
-			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_LengthOf) {
 				Automaton.Term t0 = (Automaton.Term) s0;
 				int r1 = t0.contents;
 				Automaton.State s1 = automaton.get(r1);
-				if(s1.kind == K_Set) {
+				if(s1.kind == K_Array) {
 					Automaton.Term t1 = (Automaton.Term) s1;
 					int r2 = t1.contents;
 					Automaton.State s2 = automaton.get(r2);
-					Automaton.Collection c2 = (Automaton.Collection) s2;
-					boolean m2_0 = true;
-					for(int i3=0;i3!=c2.size();++i3) {
-						int r3 = c2.get(i3);
-						if(Runtime.accepts(type17,automaton,automaton.get(r3), SCHEMA)) {
-							continue;
-						}
-						m2_0 = false;
-						break;
-					}
-					if(m2_0) {
-						int[] state = {r0, r1, r2, 0};
-						activations.add(new Activation(this,null,state));
-					}
+					Automaton.List l2 = (Automaton.List) s2;
+					int[] state = {r0, r1, r2, 0};
+					activations.add(new Activation(this,null,state));
 				}
 			}
 		}
@@ -6502,12 +6279,7 @@ public final class Solver {
 		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
-			Automaton.Collection s2 = (Automaton.Collection) automaton.get(state[2]);
-			int[] s2children = new int[s2.size() - 0];
-			for(int s2i=0, s2j=0; s2i != s2.size();++s2i) {
-				s2children[s2j++] = s2.get(s2i);
-			}
-			Automaton.Set r3 = new Automaton.Set(s2children);
+			Automaton.List r3 = ((Automaton.List) automaton.get(state[2])).sublist(0);
 			Automaton.Int r4 = r3.lengthOf(); // |xs|
 			Automaton.Real r5 = new Automaton.Real(r4.value);
 			int r6 = automaton.add(r5);
@@ -6519,200 +6291,49 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Set_LengthOf_1"; }
+		public final String name() { return ""; }
 		public final int rank() { return 0; }
 
 		public final int minimum() { return 2; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Set_LengthOf_2
-	private final static class Reduction_80 extends AbstractRewriteRule implements ReductionRule {
-
-		public Reduction_80(Pattern.Term pattern) { super(pattern); }
-
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
-			Automaton.State s0 = automaton.get(r0);
-			if(s0.kind == K_Equals) {
-				Automaton.Term t0 = (Automaton.Term) s0;
-				int r1 = t0.contents;
-				Automaton.State s1 = automaton.get(r1);
-				Automaton.List l1 = (Automaton.List) s1;
-				int r2 = l1.get(0);
-				if(Runtime.accepts(type25,automaton,automaton.get(r2), SCHEMA)) {
-					int r3 = l1.get(1);
-					Automaton.State s3 = automaton.get(r3);
-					Automaton.Collection c3 = (Automaton.Collection) s3;
-					for(int r5=0;r5!=c3.size();++r5) {
-						int r4 = c3.get(r5);
-						Automaton.State s4 = automaton.get(r4);
-						if(s4.kind == K_LengthOf) {
-							Automaton.Term t4 = (Automaton.Term) s4;
-							int r6 = t4.contents;
-							if(Runtime.accepts(type28,automaton,automaton.get(r6), SCHEMA)) {
-								for(int r8=0;r8!=c3.size();++r8) {
-									if(r8 == r5) { continue; }
-									int r7 = c3.get(r8);
-									Automaton.State s7 = automaton.get(r7);
-									if(s7.kind == K_Num) {
-										Automaton.Term t7 = (Automaton.Term) s7;
-										int r9 = t7.contents;
-										int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9};
-										activations.add(new Activation(this,null,state));
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-
-		public final int apply(Automaton automaton, int[] state) {
-			int nStates = automaton.nStates();
-			int r0 = state[0];
-			int r5 = state[5];
-			int r6 = state[6]; // x
-			int r8 = state[8];
-			int r9 = state[9]; // y
-			Automaton.Real r10 = new Automaton.Real(0); // 0.0
-			Automaton.Real r11 = (Automaton.Real) automaton.get(r9);
-			boolean r12 = r11.equals(r10); // y eq 0.0
-			if(r12) {
-				boolean r13 = true;            // true
-				int r14 = automaton.add(r13 ? Automaton.TRUE : Automaton.FALSE);
-				Automaton.Term r15 = VoidT;
-				int r16 = automaton.add(r15);
-				Automaton.List r17 = new Automaton.List(r14, r16); // [trueVoidT]
-				int r18 = automaton.add(r17);
-				Automaton.Term r19 = new Automaton.Term(K_SetT, r18);
-				int r20 = automaton.add(r19);
-				Automaton.Set r21 = new Automaton.Set(); // {}
-				int r22 = automaton.add(r21);
-				Automaton.Term r23 = new Automaton.Term(K_Set, r22);
-				int r24 = automaton.add(r23);
-				Automaton.Bag r25 = new Automaton.Bag(r6, r24); // {|xSet({})|}
-				int r26 = automaton.add(r25);
-				Automaton.List r27 = new Automaton.List(r20, r26); // [SetT([trueVoidT]){|xSet({})|}]
-				int r28 = automaton.add(r27);
-				Automaton.Term r29 = new Automaton.Term(K_Equals, r28);
-				int r30 = automaton.add(r29);
-				if(r0 != r30) {
-					return automaton.rewrite(r0, r30);
-				}
-			}
-			automaton.resize(nStates);
-			return Automaton.K_VOID;
-		}
-		public final String name() { return "Set_LengthOf_2"; }
-		public final int rank() { return 1; }
-
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
+	// term $8<IndexOf(^[$2<^Expr<$42<Value<Null|Tuple(^[^$42...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$42...])>>|Tuple(^[$2...])|$84<BExpr<Bool<True|False>|VExpr<$8|Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)>|And(^{^$84...})|Or(^{^$84...})|Not(^$84)|Equals(^[$123<^Type<Atom<NotT($146<^Proton<TupleT(^[$146...])|ArrayT($146)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$146...])|ArrayT($146)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($123)|OrT(^{$123...})|AndT(^{$123...})|ArrayT($123)|TupleT(^[$123...])|FunctionT(^[$123,$123,$123...])>>,^{|$2,$2|}[$2,$2]])|Inequality(^[^AType<IntT|RealT>,$220<^AExpr<Num(^real)|VExpr<$8|Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>>])|Equation(^[^AType<IntT|RealT>,$220])|ForAll(^[^{^[^Var(^string),$123]...},^$84])|Exists(^[^{^[^Var(^string),$123]...},^$84])>>|AExpr<Num(^real)|VExpr<$8|Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>|SExpr<VExpr<$8|Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)>|Array(^[$2...])>>>,$2])>
+	public final static int K_IndexOf = 35;
+	public final static int IndexOf(Automaton automaton, int... r0) {
+		int r1 = automaton.add(new Automaton.List(r0));
+		return automaton.add(new Automaton.Term(K_IndexOf, r1));
 	}
+	public final static int IndexOf(Automaton automaton, List<Integer> r0) {
+		int r1 = automaton.add(new Automaton.List(r0));
+		return automaton.add(new Automaton.Term(K_IndexOf, r1));
+	}
+
 	// 
-	private final static class Reduction_81 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_79 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_81(Pattern.Term pattern) { super(pattern); }
+		public Reduction_79(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
 			Automaton.State s0 = automaton.get(r0);
-			if(s0.kind == K_Equation) {
+			if(s0.kind == K_IndexOf) {
 				Automaton.Term t0 = (Automaton.Term) s0;
 				int r1 = t0.contents;
 				Automaton.State s1 = automaton.get(r1);
 				Automaton.List l1 = (Automaton.List) s1;
 				int r2 = l1.get(0);
-				if(Runtime.accepts(type25,automaton,automaton.get(r2), SCHEMA)) {
-					int r3 = l1.get(1);
+				Automaton.State s2 = automaton.get(r2);
+				if(s2.kind == K_Array) {
+					Automaton.Term t2 = (Automaton.Term) s2;
+					int r3 = t2.contents;
 					Automaton.State s3 = automaton.get(r3);
-					if(s3.kind == K_LengthOf) {
-						Automaton.Term t3 = (Automaton.Term) s3;
-						int r4 = t3.contents;
-						if(Runtime.accepts(type28,automaton,automaton.get(r4), SCHEMA)) {
-							int[] state = {r0, r1, r2, r3, r4};
-							activations.add(new Activation(this,null,state));
-						}
-					}
-				}
-			}
-		}
-
-		public final int apply(Automaton automaton, int[] state) {
-			int nStates = automaton.nStates();
-			int r0 = state[0];
-			int r4 = state[4]; // x
-			boolean r5 = true;             // true
-			int r6 = automaton.add(r5 ? Automaton.TRUE : Automaton.FALSE);
-			Automaton.Term r7 = VoidT;
-			int r8 = automaton.add(r7);
-			Automaton.List r9 = new Automaton.List(r6, r8); // [trueVoidT]
-			int r10 = automaton.add(r9);
-			Automaton.Term r11 = new Automaton.Term(K_SetT, r10);
-			int r12 = automaton.add(r11);
-			Automaton.Set r13 = new Automaton.Set(); // {}
-			int r14 = automaton.add(r13);
-			Automaton.Term r15 = new Automaton.Term(K_Set, r14);
-			int r16 = automaton.add(r15);
-			Automaton.Bag r17 = new Automaton.Bag(r4, r16); // {|xSet({})|}
-			int r18 = automaton.add(r17);
-			Automaton.List r19 = new Automaton.List(r12, r18); // [SetT([trueVoidT]){|xSet({})|}]
-			int r20 = automaton.add(r19);
-			Automaton.Term r21 = new Automaton.Term(K_Equals, r20);
-			int r22 = automaton.add(r21);
-			if(r0 != r22) {
-				return automaton.rewrite(r0, r22);
-			}
-			automaton.resize(nStates);
-			return Automaton.K_VOID;
-		}
-		public final String name() { return ""; }
-		public final int rank() { return 0; }
-
-		public final int minimum() { return 4; }
-		public final int maximum() { return Integer.MAX_VALUE; }
-	}
-	// term $10<SubsetEq(^[^$19<SetT(^[^bool,$13<^Type<$19|Atom<NotT($31<^Proton<TupleT(^[$31...])|SetT(^[^bool,$31])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$31...])|SetT(^[^bool,$31])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($13)|OrT(^{$13...})|AndT(^{$13...})|TupleT(^[$13...])|FunctionT(^[$13,$13,$13...])>>])>,^$111<SExpr<$121<VExpr<Var(^string)|$131<Fn(^[^string,$125<^Expr<$111|$131|$166<Value<Null|Tuple(^[^$166...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$166...})>>|Tuple(^[$125...])|$208<BExpr<$10|$121|Bool<True|False>|And(^{^$208...})|Or(^{^$208...})|Not(^$208)|Equals(^[$13,^{|$125,$125|}[$125,$125]])|Inequality(^[^AType<IntT|RealT>,$231<^AExpr<$121|Num(^real)|Sum(^[^real,^{|$231...|}[$231...]])|Mul(^[^real,^{|$231...|}[$231...]])|Div(^[$231,$231])>>])|Equation(^[^AType<IntT|RealT>,$231])|ForAll(^[^{^[^Var(^string),$13]...},^$208])|Exists(^[^{^[^Var(^string),$13]...},^$208])>>|AExpr<$121|Num(^real)|Sum(^[^real,^{|$231...|}[$231...]])|Mul(^[^real,^{|$231...|}[$231...]])|Div(^[$231,$231])>>>...])>|Load(^[$125,^int])|LengthOf($125)>>|Set(^{$125...})>>,^$111])>
-	public final static int K_SubsetEq = 35;
-	public final static int SubsetEq(Automaton automaton, int... r0) {
-		int r1 = automaton.add(new Automaton.List(r0));
-		return automaton.add(new Automaton.Term(K_SubsetEq, r1));
-	}
-	public final static int SubsetEq(Automaton automaton, List<Integer> r0) {
-		int r1 = automaton.add(new Automaton.List(r0));
-		return automaton.add(new Automaton.Term(K_SubsetEq, r1));
-	}
-
-	// Set_SubsetEq_1
-	private final static class Reduction_82 extends AbstractRewriteRule implements ReductionRule {
-
-		public Reduction_82(Pattern.Term pattern) { super(pattern); }
-
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
-			Automaton.State s0 = automaton.get(r0);
-			if(s0.kind == K_SubsetEq) {
-				Automaton.Term t0 = (Automaton.Term) s0;
-				int r1 = t0.contents;
-				Automaton.State s1 = automaton.get(r1);
-				Automaton.List l1 = (Automaton.List) s1;
-				int r2 = l1.get(0);
-				int r3 = l1.get(1);
-				Automaton.State s3 = automaton.get(r3);
-				if(s3.kind == K_Set) {
-					Automaton.Term t3 = (Automaton.Term) s3;
-					int r4 = t3.contents;
-					Automaton.State s4 = automaton.get(r4);
-					Automaton.Collection c4 = (Automaton.Collection) s4;
-					int r6 = l1.get(2);
-					Automaton.State s6 = automaton.get(r6);
-					if(s6.kind == K_Set) {
-						Automaton.Term t6 = (Automaton.Term) s6;
-						int r7 = t6.contents;
-						Automaton.State s7 = automaton.get(r7);
-						Automaton.Collection c7 = (Automaton.Collection) s7;
-						int[] state = {r0, r1, r2, r3, r4, 0, r6, r7, 0};
+					Automaton.List l3 = (Automaton.List) s3;
+					int r5 = l1.get(1);
+					Automaton.State s5 = automaton.get(r5);
+					if(s5.kind == K_Num) {
+						Automaton.Term t5 = (Automaton.Term) s5;
+						int r6 = t5.contents;
+						int[] state = {r0, r1, r2, r3, 0, r5, r6};
 						activations.add(new Activation(this,null,state));
 					}
 				}
@@ -6722,783 +6343,34 @@ public final class Solver {
 		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
-			int r2 = state[2]; // t
-			int r3 = state[3]; // s1
-			Automaton.Collection s4 = (Automaton.Collection) automaton.get(state[4]);
-			int[] s4children = new int[s4.size() - 0];
-			for(int s4i=0, s4j=0; s4i != s4.size();++s4i) {
-				s4children[s4j++] = s4.get(s4i);
+			Automaton.List r4 = ((Automaton.List) automaton.get(state[3])).sublist(0);
+			int r6 = state[6]; // i
+			Automaton.Real r7 = (Automaton.Real) automaton.get(r6);
+			Automaton.Int r8 = r7.numerator(); // |i|
+			Automaton.Int r9 = new Automaton.Int(0); // 0
+			boolean r10 = r8.compareTo(r9)>=0; // j ge 0
+			boolean r11 = false;           // j ge 0 && j lt |xs|
+			if(r10) {
+				Automaton.Int r12 = r4.lengthOf(); // |xs|
+				boolean r13 = r8.compareTo(r12)<0; // j lt |xs|
+				r11 = r13;
 			}
-			Automaton.Set r5 = new Automaton.Set(s4children);
-			int r6 = state[6]; // s2
-			Automaton.Collection s7 = (Automaton.Collection) automaton.get(state[7]);
-			int[] s7children = new int[s7.size() - 0];
-			for(int s7i=0, s7j=0; s7i != s7.size();++s7i) {
-				s7children[s7j++] = s7.get(s7i);
-			}
-			Automaton.Set r8 = new Automaton.Set(s7children);
-			Automaton.Int r9 = r5.lengthOf(); // |xs|
-			Automaton.Int r10 = new Automaton.Int(0); // 0
-			boolean r11 = r9.equals(r10);  // |xs| eq 0
 			if(r11) {
-				Automaton.Term r12 = True;
-				int r13 = automaton.add(r12);
-				if(r0 != r13) {
-					return automaton.rewrite(r0, r13);
-				}
-			}
-			Automaton.Int r14 = r8.lengthOf(); // |ys|
-			Automaton.Int r15 = new Automaton.Int(0); // 0
-			boolean r16 = r14.equals(r15); // |ys| eq 0
-			if(r16) {
-				Automaton.Term r17 = False;
-				int r18 = automaton.add(r17);
-				if(r0 != r18) {
-					return automaton.rewrite(r0, r18);
-				}
-			}
-			Automaton.Int r19 = r5.lengthOf(); // |xs|
-			Automaton.Int r20 = r8.lengthOf(); // |ys|
-			boolean r21 = r19.compareTo(r20)<=0; // |xs| le |ys|
-			boolean r22 = false;           // |xs| le |ys| && wyrl.core.Expr$Comprehension@ecfbe65
-			if(r21) {
-				Automaton.List t23 = new Automaton.List();
-				boolean r23 = true;
-				outer:
-				for(int i24=0;i24<r5.size();i24++) {
-					int r24 = (int) r5.get(i24);
-					boolean r25 = r8.contains(r24); // x in ys
-					boolean r26 = !r25;            // !x in ys
-					if(r26) {
-						r23 = false;
-						break outer;
-					}
-				}
-				r22 = r23;
-			}
-			if(r22) {
-				Automaton.Term r27 = True;
-				int r28 = automaton.add(r27);
-				if(r0 != r28) {
-					return automaton.rewrite(r0, r28);
-				}
-			}
-			boolean r29 = Runtime.accepts(type30, automaton, r3, SCHEMA); // s1 is ^$7<Set(^{$2<^Value<$7|Null|Tuple(^[$2...])|Bool<True|False>|Num(^real)|String(^string)>>...})>
-			boolean r30 = false;           // s1 is ^$7<Set(^{$2<^Value<$7|Null|Tuple(^[$2...])|Bool<True|False>|Num(^real)|String(^string)>>...})> && s2 is ^$7<Set(^{$2<^Value<$7|Null|Tuple(^[$2...])|Bool<True|False>|Num(^real)|String(^string)>>...})>
-			if(r29) {
-				boolean r31 = Runtime.accepts(type30, automaton, r6, SCHEMA); // s2 is ^$7<Set(^{$2<^Value<$7|Null|Tuple(^[$2...])|Bool<True|False>|Num(^real)|String(^string)>>...})>
-				r30 = r31;
-			}
-			if(r30) {
-				Automaton.Term r32 = False;
-				int r33 = automaton.add(r32);
-				if(r0 != r33) {
-					return automaton.rewrite(r0, r33);
+				int r14 = r4.indexOf(r8);      // xs[j]
+				if(r0 != r14) {
+					return automaton.rewrite(r0, r14);
 				}
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Set_SubsetEq_1"; }
-		public final int rank() { return 2; }
-
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
-	}
-	// Set_SubsetEq_2
-	private final static class Reduction_83 extends AbstractRewriteRule implements ReductionRule {
-
-		public Reduction_83(Pattern.Term pattern) { super(pattern); }
-
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
-			Automaton.State s0 = automaton.get(r0);
-			if(s0.kind == K_SubsetEq) {
-				Automaton.Term t0 = (Automaton.Term) s0;
-				int r1 = t0.contents;
-				Automaton.State s1 = automaton.get(r1);
-				Automaton.List l1 = (Automaton.List) s1;
-				int r2 = l1.get(0);
-				int r3 = l1.get(1);
-				int r4 = l1.get(2);
-				int[] state = {r0, r1, r2, r3, r4};
-				activations.add(new Activation(this,null,state));
-			}
-		}
-
-		public final int apply(Automaton automaton, int[] state) {
-			int nStates = automaton.nStates();
-			int r0 = state[0];
-			int r2 = state[2]; // t
-			int r3 = state[3]; // x
-			int r4 = state[4]; // y
-			boolean r5 = r3 == r4;         // x eq y
-			if(r5) {
-				Automaton.Term r6 = True;
-				int r7 = automaton.add(r6);
-				if(r0 != r7) {
-					return automaton.rewrite(r0, r7);
-				}
-			}
-			boolean r8 = Runtime.accepts(type31, automaton, r3, SCHEMA); // x is ^$8<Set(^{$3<^Expr<$45<Value<Null|Tuple(^[^$45...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$45...})>>|Tuple(^[$3...])|Fn(^[^string,$3...])|$96<BExpr<Bool<True|False>|VExpr<Fn(^[^string,$3...])|Var(^string)|Load(^[$3,^int])|LengthOf($3)>|And(^{^$96...})|Or(^{^$96...})|Not(^$96)|Equals(^[$128<^Type<Atom<NotT($151<^Proton<TupleT(^[$151...])|SetT(^[^bool,$151])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$151...])|SetT(^[^bool,$151])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($128)|OrT(^{$128...})|AndT(^{$128...})|SetT(^[^bool,$128])|TupleT(^[$128...])|FunctionT(^[$128,$128,$128...])>>,^{|$3,$3|}[$3,$3]])|Inequality(^[^AType<IntT|RealT>,$234<^AExpr<Num(^real)|VExpr<Fn(^[^string,$3...])|Var(^string)|Load(^[$3,^int])|LengthOf($3)>|Sum(^[^real,^{|$234...|}[$234...]])|Mul(^[^real,^{|$234...|}[$234...]])|Div(^[$234,$234])>>])|Equation(^[^AType<IntT|RealT>,$234])|SubsetEq(^[^SetT(^[^bool,$128]),^SExpr<$8|VExpr<Fn(^[^string,$3...])|Var(^string)|Load(^[$3,^int])|LengthOf($3)>>,^SExpr<$8|VExpr<Fn(^[^string,$3...])|Var(^string)|Load(^[$3,^int])|LengthOf($3)>>])|ForAll(^[^{^[^Var(^string),$128]...},^$96])|Exists(^[^{^[^Var(^string),$128]...},^$96])>>|AExpr<Num(^real)|VExpr<Fn(^[^string,$3...])|Var(^string)|Load(^[$3,^int])|LengthOf($3)>|Sum(^[^real,^{|$234...|}[$234...]])|Mul(^[^real,^{|$234...|}[$234...]])|Div(^[$234,$234])>|SExpr<$8|VExpr<Fn(^[^string,$3...])|Var(^string)|Load(^[$3,^int])|LengthOf($3)>>>>...})>
-			boolean r9 = false;            // x is ^$8<Set(^{$3<^Expr<$45<Value<Null|Tuple(^[^$45...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$45...})>>|Tuple(^[$3...])|Fn(^[^string,$3...])|$96<BExpr<Bool<True|False>|VExpr<Fn(^[^string,$3...])|Var(^string)|Load(^[$3,^int])|LengthOf($3)>|And(^{^$96...})|Or(^{^$96...})|Not(^$96)|Equals(^[$128<^Type<Atom<NotT($151<^Proton<TupleT(^[$151...])|SetT(^[^bool,$151])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$151...])|SetT(^[^bool,$151])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($128)|OrT(^{$128...})|AndT(^{$128...})|SetT(^[^bool,$128])|TupleT(^[$128...])|FunctionT(^[$128,$128,$128...])>>,^{|$3,$3|}[$3,$3]])|Inequality(^[^AType<IntT|RealT>,$234<^AExpr<Num(^real)|VExpr<Fn(^[^string,$3...])|Var(^string)|Load(^[$3,^int])|LengthOf($3)>|Sum(^[^real,^{|$234...|}[$234...]])|Mul(^[^real,^{|$234...|}[$234...]])|Div(^[$234,$234])>>])|Equation(^[^AType<IntT|RealT>,$234])|SubsetEq(^[^SetT(^[^bool,$128]),^SExpr<$8|VExpr<Fn(^[^string,$3...])|Var(^string)|Load(^[$3,^int])|LengthOf($3)>>,^SExpr<$8|VExpr<Fn(^[^string,$3...])|Var(^string)|Load(^[$3,^int])|LengthOf($3)>>])|ForAll(^[^{^[^Var(^string),$128]...},^$96])|Exists(^[^{^[^Var(^string),$128]...},^$96])>>|AExpr<Num(^real)|VExpr<Fn(^[^string,$3...])|Var(^string)|Load(^[$3,^int])|LengthOf($3)>|Sum(^[^real,^{|$234...|}[$234...]])|Mul(^[^real,^{|$234...|}[$234...]])|Div(^[$234,$234])>|SExpr<$8|VExpr<Fn(^[^string,$3...])|Var(^string)|Load(^[$3,^int])|LengthOf($3)>>>>...})> && |*x| eq 0
-			if(r8) {
-				Automaton.Term r10 = (Automaton.Term) automaton.get(r3);
-				int r11 = r10.contents;
-				Automaton.Set r12 = (Automaton.Set) automaton.get(r11);
-				Automaton.Int r13 = r12.lengthOf(); // |*x|
-				Automaton.Int r14 = new Automaton.Int(0); // 0
-				boolean r15 = r13.equals(r14); // |*x| eq 0
-				r9 = r15;
-			}
-			if(r9) {
-				Automaton.Term r16 = True;
-				int r17 = automaton.add(r16);
-				if(r0 != r17) {
-					return automaton.rewrite(r0, r17);
-				}
-			}
-			boolean r18 = Runtime.accepts(type31, automaton, r4, SCHEMA); // y is ^$8<Set(^{$3<^Expr<$45<Value<Null|Tuple(^[^$45...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$45...})>>|Tuple(^[$3...])|Fn(^[^string,$3...])|$96<BExpr<Bool<True|False>|VExpr<Fn(^[^string,$3...])|Var(^string)|Load(^[$3,^int])|LengthOf($3)>|And(^{^$96...})|Or(^{^$96...})|Not(^$96)|Equals(^[$128<^Type<Atom<NotT($151<^Proton<TupleT(^[$151...])|SetT(^[^bool,$151])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$151...])|SetT(^[^bool,$151])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($128)|OrT(^{$128...})|AndT(^{$128...})|SetT(^[^bool,$128])|TupleT(^[$128...])|FunctionT(^[$128,$128,$128...])>>,^{|$3,$3|}[$3,$3]])|Inequality(^[^AType<IntT|RealT>,$234<^AExpr<Num(^real)|VExpr<Fn(^[^string,$3...])|Var(^string)|Load(^[$3,^int])|LengthOf($3)>|Sum(^[^real,^{|$234...|}[$234...]])|Mul(^[^real,^{|$234...|}[$234...]])|Div(^[$234,$234])>>])|Equation(^[^AType<IntT|RealT>,$234])|SubsetEq(^[^SetT(^[^bool,$128]),^SExpr<$8|VExpr<Fn(^[^string,$3...])|Var(^string)|Load(^[$3,^int])|LengthOf($3)>>,^SExpr<$8|VExpr<Fn(^[^string,$3...])|Var(^string)|Load(^[$3,^int])|LengthOf($3)>>])|ForAll(^[^{^[^Var(^string),$128]...},^$96])|Exists(^[^{^[^Var(^string),$128]...},^$96])>>|AExpr<Num(^real)|VExpr<Fn(^[^string,$3...])|Var(^string)|Load(^[$3,^int])|LengthOf($3)>|Sum(^[^real,^{|$234...|}[$234...]])|Mul(^[^real,^{|$234...|}[$234...]])|Div(^[$234,$234])>|SExpr<$8|VExpr<Fn(^[^string,$3...])|Var(^string)|Load(^[$3,^int])|LengthOf($3)>>>>...})>
-			boolean r19 = false;           // y is ^$8<Set(^{$3<^Expr<$45<Value<Null|Tuple(^[^$45...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$45...})>>|Tuple(^[$3...])|Fn(^[^string,$3...])|$96<BExpr<Bool<True|False>|VExpr<Fn(^[^string,$3...])|Var(^string)|Load(^[$3,^int])|LengthOf($3)>|And(^{^$96...})|Or(^{^$96...})|Not(^$96)|Equals(^[$128<^Type<Atom<NotT($151<^Proton<TupleT(^[$151...])|SetT(^[^bool,$151])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$151...])|SetT(^[^bool,$151])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($128)|OrT(^{$128...})|AndT(^{$128...})|SetT(^[^bool,$128])|TupleT(^[$128...])|FunctionT(^[$128,$128,$128...])>>,^{|$3,$3|}[$3,$3]])|Inequality(^[^AType<IntT|RealT>,$234<^AExpr<Num(^real)|VExpr<Fn(^[^string,$3...])|Var(^string)|Load(^[$3,^int])|LengthOf($3)>|Sum(^[^real,^{|$234...|}[$234...]])|Mul(^[^real,^{|$234...|}[$234...]])|Div(^[$234,$234])>>])|Equation(^[^AType<IntT|RealT>,$234])|SubsetEq(^[^SetT(^[^bool,$128]),^SExpr<$8|VExpr<Fn(^[^string,$3...])|Var(^string)|Load(^[$3,^int])|LengthOf($3)>>,^SExpr<$8|VExpr<Fn(^[^string,$3...])|Var(^string)|Load(^[$3,^int])|LengthOf($3)>>])|ForAll(^[^{^[^Var(^string),$128]...},^$96])|Exists(^[^{^[^Var(^string),$128]...},^$96])>>|AExpr<Num(^real)|VExpr<Fn(^[^string,$3...])|Var(^string)|Load(^[$3,^int])|LengthOf($3)>|Sum(^[^real,^{|$234...|}[$234...]])|Mul(^[^real,^{|$234...|}[$234...]])|Div(^[$234,$234])>|SExpr<$8|VExpr<Fn(^[^string,$3...])|Var(^string)|Load(^[$3,^int])|LengthOf($3)>>>>...})> && |*y| eq 0
-			if(r18) {
-				Automaton.Term r20 = (Automaton.Term) automaton.get(r4);
-				int r21 = r20.contents;
-				Automaton.Set r22 = (Automaton.Set) automaton.get(r21);
-				Automaton.Int r23 = r22.lengthOf(); // |*y|
-				Automaton.Int r24 = new Automaton.Int(0); // 0
-				boolean r25 = r23.equals(r24); // |*y| eq 0
-				r19 = r25;
-			}
-			if(r19) {
-				Automaton.Bag r26 = new Automaton.Bag(r3, r4); // {|xy|}
-				int r27 = automaton.add(r26);
-				Automaton.List r28 = new Automaton.List(r2, r27); // [t{|xy|}]
-				int r29 = automaton.add(r28);
-				Automaton.Term r30 = new Automaton.Term(K_Equals, r29);
-				int r31 = automaton.add(r30);
-				if(r0 != r31) {
-					return automaton.rewrite(r0, r31);
-				}
-			}
-			automaton.resize(nStates);
-			return Automaton.K_VOID;
-		}
-		public final String name() { return "Set_SubsetEq_2"; }
-		public final int rank() { return 1; }
-
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
-	}
-	// Set_SubsetEq_3
-	private final static class Reduction_84 extends AbstractRewriteRule implements ReductionRule {
-
-		public Reduction_84(Pattern.Term pattern) { super(pattern); }
-
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
-			Automaton.State s0 = automaton.get(r0);
-			if(s0.kind == K_SubsetEq) {
-				Automaton.Term t0 = (Automaton.Term) s0;
-				int r1 = t0.contents;
-				Automaton.State s1 = automaton.get(r1);
-				Automaton.List l1 = (Automaton.List) s1;
-				int r2 = l1.get(0);
-				Automaton.State s2 = automaton.get(r2);
-				Automaton.Term t2 = (Automaton.Term) s2;
-				int r3 = t2.contents;
-				Automaton.State s3 = automaton.get(r3);
-				Automaton.List l3 = (Automaton.List) s3;
-				int r4 = l3.get(0);
-				int r5 = l3.get(1);
-				int r6 = l1.get(1);
-				Automaton.State s6 = automaton.get(r6);
-				if(s6.kind == K_Set) {
-					Automaton.Term t6 = (Automaton.Term) s6;
-					int r7 = t6.contents;
-					Automaton.State s7 = automaton.get(r7);
-					Automaton.Collection c7 = (Automaton.Collection) s7;
-					if(c7.size() >= 1) {
-						for(int r9=0;r9!=c7.size();++r9) {
-							int r8 = c7.get(r9);
-							int r11 = l1.get(2);
-							Automaton.State s11 = automaton.get(r11);
-							if(s11.kind == K_Set) {
-								Automaton.Term t11 = (Automaton.Term) s11;
-								int r12 = t11.contents;
-								Automaton.State s12 = automaton.get(r12);
-								Automaton.Collection c12 = (Automaton.Collection) s12;
-								int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, 0, r11, r12, 0};
-								activations.add(new Activation(this,null,state));
-							}
-						}
-					}
-				}
-			}
-		}
-
-		public final int apply(Automaton automaton, int[] state) {
-			int nStates = automaton.nStates();
-			int r0 = state[0];
-			int r2 = state[2]; // t
-			int r4 = state[4]; // b
-			int r5 = state[5]; // e
-			int r6 = state[6]; // s1
-			int r8 = state[8]; // x
-			int r9 = state[9];
-			Automaton.Collection s7 = (Automaton.Collection) automaton.get(state[7]);
-			int[] s7children = new int[s7.size() - 1];
-			for(int s7i=0, s7j=0; s7i != s7.size();++s7i) {
-				if(s7i == r9) { continue; }
-				s7children[s7j++] = s7.get(s7i);
-			}
-			Automaton.Set r10 = new Automaton.Set(s7children);
-			int r11 = state[11]; // s2
-			Automaton.Collection s12 = (Automaton.Collection) automaton.get(state[12]);
-			int[] s12children = new int[s12.size() - 0];
-			for(int s12i=0, s12j=0; s12i != s12.size();++s12i) {
-				s12children[s12j++] = s12.get(s12i);
-			}
-			Automaton.Set r13 = new Automaton.Set(s12children);
-			boolean r14 = Runtime.accepts(type16, automaton, r8, SCHEMA); // x is $1<^Value<Null|Tuple(^[$1...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{$1...})>>
-			boolean r15 = !r14;            // !x is $1<^Value<Null|Tuple(^[$1...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{$1...})>>
-			boolean r16 = false;           // !x is $1<^Value<Null|Tuple(^[$1...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{$1...})>> && |ys| gt 0
-			if(r15) {
-				Automaton.Int r17 = r13.lengthOf(); // |ys|
-				Automaton.Int r18 = new Automaton.Int(0); // 0
-				boolean r19 = r17.compareTo(r18)>0; // |ys| gt 0
-				r16 = r19;
-			}
-			if(r16) {
-				Automaton.List t20 = new Automaton.List();
-				for(int i21=0;i21<r13.size();i21++) {
-					int r21 = (int) r13.get(i21);
-					Automaton.Bag r22 = new Automaton.Bag(r8, r21); // {|xy|}
-					int r23 = automaton.add(r22);
-					Automaton.List r24 = new Automaton.List(r5, r23); // [e{|xy|}]
-					int r25 = automaton.add(r24);
-					Automaton.Term r26 = new Automaton.Term(K_Equals, r25);
-					int r27 = automaton.add(r26);
-					t20.add(r27);
-				}
-				Automaton.Set r20 = new Automaton.Set(t20.toArray());
-				int r28 = automaton.add(r20);
-				Automaton.Term r29 = new Automaton.Term(K_Or, r28);
-				int r30 = automaton.add(r29);
-				int r31 = automaton.add(r10);
-				Automaton.Term r32 = new Automaton.Term(K_Set, r31);
-				int r33 = automaton.add(r32);
-				Automaton.List r34 = new Automaton.List(r2, r33, r11); // [tSet(xs)s2]
-				int r35 = automaton.add(r34);
-				Automaton.Term r36 = new Automaton.Term(K_SubsetEq, r35);
-				int r37 = automaton.add(r36);
-				Automaton.Set r38 = new Automaton.Set(r30, r37); // {Or(zs)SubsetEq([tSet(xs)s2])}
-				int r39 = automaton.add(r38);
-				Automaton.Term r40 = new Automaton.Term(K_And, r39);
-				int r41 = automaton.add(r40);
-				if(r0 != r41) {
-					return automaton.rewrite(r0, r41);
-				}
-			}
-			automaton.resize(nStates);
-			return Automaton.K_VOID;
-		}
-		public final String name() { return "Set_SubsetEq_3"; }
-		public final int rank() { return 4; }
-
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
-	}
-	// Set_SubsetEq_4
-	private final static class Reduction_85 extends AbstractRewriteRule implements ReductionRule {
-
-		public Reduction_85(Pattern.Term pattern) { super(pattern); }
-
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
-			Automaton.State s0 = automaton.get(r0);
-			if(s0.kind == K_And) {
-				Automaton.Term t0 = (Automaton.Term) s0;
-				int r1 = t0.contents;
-				Automaton.State s1 = automaton.get(r1);
-				Automaton.Collection c1 = (Automaton.Collection) s1;
-				if(c1.size() >= 2) {
-					for(int r3=0;r3!=c1.size();++r3) {
-						int r2 = c1.get(r3);
-						Automaton.State s2 = automaton.get(r2);
-						if(s2.kind == K_SubsetEq) {
-							Automaton.Term t2 = (Automaton.Term) s2;
-							int r4 = t2.contents;
-							Automaton.State s4 = automaton.get(r4);
-							Automaton.List l4 = (Automaton.List) s4;
-							int r5 = l4.get(0);
-							Automaton.State s5 = automaton.get(r5);
-							Automaton.Term t5 = (Automaton.Term) s5;
-							int r6 = t5.contents;
-							Automaton.State s6 = automaton.get(r6);
-							Automaton.List l6 = (Automaton.List) s6;
-							int r7 = l6.get(0);
-							int r8 = l6.get(1);
-							int r9 = l4.get(1);
-							Automaton.State s9 = automaton.get(r9);
-							if(s9.kind == K_Set) {
-								Automaton.Term t9 = (Automaton.Term) s9;
-								int r10 = t9.contents;
-								Automaton.State s10 = automaton.get(r10);
-								Automaton.Collection c10 = (Automaton.Collection) s10;
-								int r12 = l4.get(2);
-								for(int r14=0;r14!=c1.size();++r14) {
-									if(r14 == r3) { continue; }
-									int r13 = c1.get(r14);
-									Automaton.State s13 = automaton.get(r13);
-									if(s13.kind == K_SubsetEq) {
-										Automaton.Term t13 = (Automaton.Term) s13;
-										int r15 = t13.contents;
-										Automaton.State s15 = automaton.get(r15);
-										Automaton.List l15 = (Automaton.List) s15;
-										int r16 = l15.get(0);
-										Automaton.State s16 = automaton.get(r16);
-										Automaton.Term t16 = (Automaton.Term) s16;
-										int r17 = t16.contents;
-										Automaton.State s17 = automaton.get(r17);
-										Automaton.List l17 = (Automaton.List) s17;
-										int r18 = l17.get(0);
-										int r19 = l17.get(1);
-										int r20 = l15.get(1);
-										Automaton.State s20 = automaton.get(r20);
-										if(s20.kind == K_Set) {
-											Automaton.Term t20 = (Automaton.Term) s20;
-											int r21 = t20.contents;
-											Automaton.State s21 = automaton.get(r21);
-											Automaton.Collection c21 = (Automaton.Collection) s21;
-											int r23 = l15.get(2);
-											int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, 0, r12, r13, r14, r15, r16, r17, r18, r19, r20, r21, 0, r23, 0};
-											activations.add(new Activation(this,null,state));
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-
-		public final int apply(Automaton automaton, int[] state) {
-			int nStates = automaton.nStates();
-			int r0 = state[0];
-			int r3 = state[3];
-			int r7 = state[7]; // b1
-			int r8 = state[8]; // e1
-			Automaton.Collection s10 = (Automaton.Collection) automaton.get(state[10]);
-			int[] s10children = new int[s10.size() - 0];
-			for(int s10i=0, s10j=0; s10i != s10.size();++s10i) {
-				s10children[s10j++] = s10.get(s10i);
-			}
-			Automaton.Set r11 = new Automaton.Set(s10children);
-			int r12 = state[12]; // x
-			int r14 = state[14];
-			int r18 = state[18]; // b2
-			int r19 = state[19]; // e2
-			Automaton.Collection s21 = (Automaton.Collection) automaton.get(state[21]);
-			int[] s21children = new int[s21.size() - 0];
-			for(int s21i=0, s21j=0; s21i != s21.size();++s21i) {
-				s21children[s21j++] = s21.get(s21i);
-			}
-			Automaton.Set r22 = new Automaton.Set(s21children);
-			int r23 = state[23]; // y
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 2];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
-				if(s1i == r3 || s1i == r14) { continue; }
-				s1children[s1j++] = s1.get(s1i);
-			}
-			Automaton.Set r24 = new Automaton.Set(s1children);
-			boolean r25 = r12 == r23;      // x eq y
-			if(r25) {
-				Automaton.Set r26 = r11.append(r22); // xs append ys
-				boolean r27 = ((Automaton.Bool)automaton.get(r7)).value;
-				boolean r28 = ((Automaton.Bool)automaton.get(r18)).value;
-				boolean r29 = r27 || r28;      // b1 || b2
-				int r30 = automaton.add(r29 ? Automaton.TRUE : Automaton.FALSE);
-				Automaton.Set r31 = new Automaton.Set(r8, r19); // {e1e2}
-				int r32 = automaton.add(r31);
-				Automaton.Term r33 = new Automaton.Term(K_OrT, r32);
-				int r34 = automaton.add(r33);
-				Automaton.List r35 = new Automaton.List(r30, r34); // [b1 || b2OrT({e1e2})]
-				int r36 = automaton.add(r35);
-				Automaton.Term r37 = new Automaton.Term(K_SetT, r36);
-				int r38 = automaton.add(r37);
-				int r39 = automaton.add(r26);
-				Automaton.Term r40 = new Automaton.Term(K_Set, r39);
-				int r41 = automaton.add(r40);
-				Automaton.List r42 = new Automaton.List(r38, r41, r12); // [SetT([b1 || b2OrT({e1e2})])Set(zs)x]
-				int r43 = automaton.add(r42);
-				Automaton.Term r44 = new Automaton.Term(K_SubsetEq, r43);
-				int r45 = automaton.add(r44);
-				Automaton.Set r46 = r24.appendFront(r45); // SubsetEq([SetT([b1 || b2OrT({e1e2})])Set(zs)x]) append rest
-				int r47 = automaton.add(r46);
-				Automaton.Term r48 = new Automaton.Term(K_And, r47);
-				int r49 = automaton.add(r48);
-				if(r0 != r49) {
-					return automaton.rewrite(r0, r49);
-				}
-			}
-			automaton.resize(nStates);
-			return Automaton.K_VOID;
-		}
-		public final String name() { return "Set_SubsetEq_4"; }
-		public final int rank() { return 3; }
-
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
-	}
-	// Set_SubsetEq_5
-	private final static class Reduction_86 extends AbstractRewriteRule implements ReductionRule {
-
-		public Reduction_86(Pattern.Term pattern) { super(pattern); }
-
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
-			Automaton.State s0 = automaton.get(r0);
-			if(s0.kind == K_And) {
-				Automaton.Term t0 = (Automaton.Term) s0;
-				int r1 = t0.contents;
-				Automaton.State s1 = automaton.get(r1);
-				Automaton.Collection c1 = (Automaton.Collection) s1;
-				if(c1.size() >= 2) {
-					for(int r3=0;r3!=c1.size();++r3) {
-						int r2 = c1.get(r3);
-						Automaton.State s2 = automaton.get(r2);
-						if(s2.kind == K_SubsetEq) {
-							Automaton.Term t2 = (Automaton.Term) s2;
-							int r4 = t2.contents;
-							Automaton.State s4 = automaton.get(r4);
-							Automaton.List l4 = (Automaton.List) s4;
-							int r5 = l4.get(0);
-							Automaton.State s5 = automaton.get(r5);
-							Automaton.Term t5 = (Automaton.Term) s5;
-							int r6 = t5.contents;
-							Automaton.State s6 = automaton.get(r6);
-							Automaton.List l6 = (Automaton.List) s6;
-							int r7 = l6.get(0);
-							int r8 = l6.get(1);
-							int r9 = l4.get(1);
-							int r10 = l4.get(2);
-							Automaton.State s10 = automaton.get(r10);
-							if(s10.kind == K_Set) {
-								Automaton.Term t10 = (Automaton.Term) s10;
-								int r11 = t10.contents;
-								Automaton.State s11 = automaton.get(r11);
-								Automaton.Collection c11 = (Automaton.Collection) s11;
-								for(int r14=0;r14!=c1.size();++r14) {
-									if(r14 == r3) { continue; }
-									int r13 = c1.get(r14);
-									Automaton.State s13 = automaton.get(r13);
-									if(s13.kind == K_SubsetEq) {
-										Automaton.Term t13 = (Automaton.Term) s13;
-										int r15 = t13.contents;
-										Automaton.State s15 = automaton.get(r15);
-										Automaton.List l15 = (Automaton.List) s15;
-										int r16 = l15.get(0);
-										Automaton.State s16 = automaton.get(r16);
-										Automaton.Term t16 = (Automaton.Term) s16;
-										int r17 = t16.contents;
-										Automaton.State s17 = automaton.get(r17);
-										Automaton.List l17 = (Automaton.List) s17;
-										int r18 = l17.get(0);
-										int r19 = l17.get(1);
-										int r20 = l15.get(1);
-										int r21 = l15.get(2);
-										Automaton.State s21 = automaton.get(r21);
-										if(s21.kind == K_Set) {
-											Automaton.Term t21 = (Automaton.Term) s21;
-											int r22 = t21.contents;
-											Automaton.State s22 = automaton.get(r22);
-											Automaton.Collection c22 = (Automaton.Collection) s22;
-											int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, 0, r13, r14, r15, r16, r17, r18, r19, r20, r21, r22, 0, 0};
-											activations.add(new Activation(this,null,state));
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-
-		public final int apply(Automaton automaton, int[] state) {
-			int nStates = automaton.nStates();
-			int r0 = state[0];
-			int r3 = state[3];
-			int r7 = state[7]; // b1
-			int r8 = state[8]; // e1
-			int r9 = state[9]; // x
-			Automaton.Collection s11 = (Automaton.Collection) automaton.get(state[11]);
-			int[] s11children = new int[s11.size() - 0];
-			for(int s11i=0, s11j=0; s11i != s11.size();++s11i) {
-				s11children[s11j++] = s11.get(s11i);
-			}
-			Automaton.Set r12 = new Automaton.Set(s11children);
-			int r14 = state[14];
-			int r18 = state[18]; // b2
-			int r19 = state[19]; // e2
-			int r20 = state[20]; // y
-			Automaton.Collection s22 = (Automaton.Collection) automaton.get(state[22]);
-			int[] s22children = new int[s22.size() - 0];
-			for(int s22i=0, s22j=0; s22i != s22.size();++s22i) {
-				s22children[s22j++] = s22.get(s22i);
-			}
-			Automaton.Set r23 = new Automaton.Set(s22children);
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 2];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
-				if(s1i == r3 || s1i == r14) { continue; }
-				s1children[s1j++] = s1.get(s1i);
-			}
-			Automaton.Set r24 = new Automaton.Set(s1children);
-			boolean r25 = r9 == r20;       // x eq y
-			if(r25) {
-				Automaton.List t26 = new Automaton.List();
-				for(int i27=0;i27<r12.size();i27++) {
-					int r27 = (int) r12.get(i27);
-					boolean r28 = true;            // true
-					boolean r29 = false;           // true && z in ys
-					if(r28) {
-						boolean r30 = r23.contains(r27); // z in ys
-						r29 = r30;
-					}
-					if(r29) {
-						t26.add(r27);
-					}
-				}
-				Automaton.Set r26 = new Automaton.Set(t26.toArray());
-				boolean r31 = ((Automaton.Bool)automaton.get(r7)).value;
-				boolean r32 = ((Automaton.Bool)automaton.get(r18)).value;
-				boolean r33 = r31 || r32;      // b1 || b2
-				int r34 = automaton.add(r33 ? Automaton.TRUE : Automaton.FALSE);
-				Automaton.Set r35 = new Automaton.Set(r8, r19); // {e1e2}
-				int r36 = automaton.add(r35);
-				Automaton.Term r37 = new Automaton.Term(K_OrT, r36);
-				int r38 = automaton.add(r37);
-				Automaton.List r39 = new Automaton.List(r34, r38); // [b1 || b2OrT({e1e2})]
-				int r40 = automaton.add(r39);
-				Automaton.Term r41 = new Automaton.Term(K_SetT, r40);
-				int r42 = automaton.add(r41);
-				int r43 = automaton.add(r26);
-				Automaton.Term r44 = new Automaton.Term(K_Set, r43);
-				int r45 = automaton.add(r44);
-				Automaton.List r46 = new Automaton.List(r42, r9, r45); // [SetT([b1 || b2OrT({e1e2})])xSet(zs)]
-				int r47 = automaton.add(r46);
-				Automaton.Term r48 = new Automaton.Term(K_SubsetEq, r47);
-				int r49 = automaton.add(r48);
-				Automaton.Set r50 = r24.appendFront(r49); // SubsetEq([SetT([b1 || b2OrT({e1e2})])xSet(zs)]) append rest
-				int r51 = automaton.add(r50);
-				Automaton.Term r52 = new Automaton.Term(K_And, r51);
-				int r53 = automaton.add(r52);
-				if(r0 != r53) {
-					return automaton.rewrite(r0, r53);
-				}
-			}
-			automaton.resize(nStates);
-			return Automaton.K_VOID;
-		}
-		public final String name() { return "Set_SubsetEq_5"; }
-		public final int rank() { return 3; }
-
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
-	}
-	// Set_SubsetEq_6
-	private final static class Reduction_87 extends AbstractRewriteRule implements ReductionRule {
-
-		public Reduction_87(Pattern.Term pattern) { super(pattern); }
-
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
-			Automaton.State s0 = automaton.get(r0);
-			if(s0.kind == K_And) {
-				Automaton.Term t0 = (Automaton.Term) s0;
-				int r1 = t0.contents;
-				Automaton.State s1 = automaton.get(r1);
-				Automaton.Collection c1 = (Automaton.Collection) s1;
-				if(c1.size() >= 2) {
-					for(int r3=0;r3!=c1.size();++r3) {
-						int r2 = c1.get(r3);
-						Automaton.State s2 = automaton.get(r2);
-						if(s2.kind == K_SubsetEq) {
-							Automaton.Term t2 = (Automaton.Term) s2;
-							int r4 = t2.contents;
-							Automaton.State s4 = automaton.get(r4);
-							Automaton.List l4 = (Automaton.List) s4;
-							int r5 = l4.get(0);
-							int r6 = l4.get(1);
-							int r7 = l4.get(2);
-							for(int r9=0;r9!=c1.size();++r9) {
-								if(r9 == r3) { continue; }
-								int r8 = c1.get(r9);
-								Automaton.State s8 = automaton.get(r8);
-								if(s8.kind == K_SubsetEq) {
-									Automaton.Term t8 = (Automaton.Term) s8;
-									int r10 = t8.contents;
-									Automaton.State s10 = automaton.get(r10);
-									Automaton.List l10 = (Automaton.List) s10;
-									int r11 = l10.get(0);
-									int r12 = l10.get(1);
-									int r13 = l10.get(2);
-									int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, 0};
-									activations.add(new Activation(this,null,state));
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-
-		public final int apply(Automaton automaton, int[] state) {
-			int nStates = automaton.nStates();
-			int r0 = state[0];
-			int r2 = state[2]; // s1
-			int r3 = state[3];
-			int r5 = state[5]; // t1
-			int r6 = state[6]; // x
-			int r7 = state[7]; // y
-			int r8 = state[8]; // s2
-			int r9 = state[9];
-			int r11 = state[11]; // t2
-			int r12 = state[12]; // u
-			int r13 = state[13]; // v
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 2];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
-				if(s1i == r3 || s1i == r9) { continue; }
-				s1children[s1j++] = s1.get(s1i);
-			}
-			Automaton.Set r14 = new Automaton.Set(s1children);
-			boolean r15 = r7 == r12;       // y eq u
-			boolean r16 = false;           // y eq u && v eq x
-			if(r15) {
-				boolean r17 = r13 == r6;       // v eq x
-				r16 = r17;
-			}
-			if(r16) {
-				Automaton.Bag r18 = new Automaton.Bag(r6, r7); // {|xy|}
-				int r19 = automaton.add(r18);
-				Automaton.List r20 = new Automaton.List(r5, r19); // [t1{|xy|}]
-				int r21 = automaton.add(r20);
-				Automaton.Term r22 = new Automaton.Term(K_Equals, r21);
-				int r23 = automaton.add(r22);
-				Automaton.Set r24 = new Automaton.Set(r23); // {Equals([t1{|xy|}])}
-				Automaton.Set r25 = r24.append(r14); // {Equals([t1{|xy|}])} append rest
-				int r26 = automaton.add(r25);
-				Automaton.Term r27 = new Automaton.Term(K_And, r26);
-				int r28 = automaton.add(r27);
-				if(r0 != r28) {
-					return automaton.rewrite(r0, r28);
-				}
-			}
-			automaton.resize(nStates);
-			return Automaton.K_VOID;
-		}
-		public final String name() { return "Set_SubsetEq_6"; }
+		public final String name() { return ""; }
 		public final int rank() { return 0; }
 
 		public final int minimum() { return 0; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Set_SubsetEq_7
-	private final static class Inference_5 extends AbstractRewriteRule implements InferenceRule {
-
-		public Inference_5(Pattern.Term pattern) { super(pattern); }
-
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
-			Automaton.State s0 = automaton.get(r0);
-			if(s0.kind == K_And) {
-				Automaton.Term t0 = (Automaton.Term) s0;
-				int r1 = t0.contents;
-				Automaton.State s1 = automaton.get(r1);
-				Automaton.Collection c1 = (Automaton.Collection) s1;
-				if(c1.size() >= 2) {
-					for(int r3=0;r3!=c1.size();++r3) {
-						int r2 = c1.get(r3);
-						Automaton.State s2 = automaton.get(r2);
-						if(s2.kind == K_SubsetEq) {
-							Automaton.Term t2 = (Automaton.Term) s2;
-							int r4 = t2.contents;
-							Automaton.State s4 = automaton.get(r4);
-							Automaton.List l4 = (Automaton.List) s4;
-							int r5 = l4.get(0);
-							int r6 = l4.get(1);
-							int r7 = l4.get(2);
-							for(int r9=0;r9!=c1.size();++r9) {
-								if(r9 == r3) { continue; }
-								int r8 = c1.get(r9);
-								Automaton.State s8 = automaton.get(r8);
-								if(s8.kind == K_SubsetEq) {
-									Automaton.Term t8 = (Automaton.Term) s8;
-									int r10 = t8.contents;
-									Automaton.State s10 = automaton.get(r10);
-									Automaton.List l10 = (Automaton.List) s10;
-									int r11 = l10.get(0);
-									int r12 = l10.get(1);
-									int r13 = l10.get(2);
-									int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, 0};
-									activations.add(new Activation(this,null,state));
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-
-		public final int apply(Automaton automaton, int[] state) {
-			int nStates = automaton.nStates();
-			int r0 = state[0];
-			int r2 = state[2]; // s1
-			int r3 = state[3];
-			int r5 = state[5]; // t1
-			int r6 = state[6]; // x
-			int r7 = state[7]; // y
-			int r8 = state[8]; // s2
-			int r9 = state[9];
-			int r11 = state[11]; // t2
-			int r12 = state[12]; // u
-			int r13 = state[13]; // v
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 2];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
-				if(s1i == r3 || s1i == r9) { continue; }
-				s1children[s1j++] = s1.get(s1i);
-			}
-			Automaton.Set r14 = new Automaton.Set(s1children);
-			boolean r15 = r7 == r12;       // y eq u
-			if(r15) {
-				Automaton.List r16 = new Automaton.List(r5, r6, r13); // [t1xv]
-				int r17 = automaton.add(r16);
-				Automaton.Term r18 = new Automaton.Term(K_SubsetEq, r17);
-				int r19 = automaton.add(r18);
-				Automaton.Set r20 = new Automaton.Set(r2, r8, r19); // {s1s2SubsetEq([t1xv])}
-				Automaton.Set r21 = r20.append(r14); // {s1s2SubsetEq([t1xv])} append rest
-				int r22 = automaton.add(r21);
-				Automaton.Term r23 = new Automaton.Term(K_And, r22);
-				int r24 = automaton.add(r23);
-				if(r0 != r24) {
-					return automaton.rewrite(r0, r24);
-				}
-			}
-			automaton.resize(nStates);
-			return Automaton.K_VOID;
-		}
-		public final String name() { return "Set_SubsetEq_7"; }
-		public final int rank() { return 2; }
-
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
-	}
-	// term $19<ForAll($17<^[^{^[^Var(^string),$4<^Type<Atom<NotT($35<^Proton<TupleT(^[$35...])|SetT(^[^bool,$35])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$35...])|SetT(^[^bool,$35])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($4)|OrT(^{$4...})|AndT(^{$4...})|SetT(^[^bool,$4])|TupleT(^[$4...])|FunctionT(^[$4,$4,$4...])>>]...},$13<^$139<BExpr<$148<VExpr<Var(^string)|$156<Fn(^[^string,$150<^Expr<$139|$156|$191<Value<Null|Tuple(^[^$191...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$191...})>>|Tuple(^[$150...])|$218<AExpr<$148|Num(^real)|Sum(^[^real,^{|^$218...|}[^$218...]])|Mul(^[^real,^{|^$218...|}[^$218...]])|Div(^[^$218,^$218])>>|SExpr<$148|Set(^{$150...})>>>...])>|Load(^[$150,^int])|LengthOf($150)>>|Bool<True|False>|And(^{$13...})|Or(^{$13...})|Not($13)|Equals(^[$4,^{|$150,$150|}[$150,$150]])|Inequality(^[^AType<IntT|RealT>,^$218])|Equation(^[^AType<IntT|RealT>,^$218])|SubsetEq(^[^SetT(^[^bool,$4]),^SExpr<$148|Set(^{$150...})>,^SExpr<$148|Set(^{$150...})>])|$19|Exists($17)>>>]>)>
+	// term $19<ForAll($17<^[^{^[^Var(^string),$4<^Type<Atom<NotT($35<^Proton<TupleT(^[$35...])|ArrayT($35)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$35...])|ArrayT($35)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($4)|OrT(^{$4...})|AndT(^{$4...})|ArrayT($4)|TupleT(^[$4...])|FunctionT(^[$4,$4,$4...])>>]...},$13<^$127<BExpr<$137<VExpr<Var(^string)|Fn(^[^string,$139<^Expr<$127|$177<Value<Null|Tuple(^[^$177...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$177...])>>|Tuple(^[$139...])|$204<AExpr<$137|Num(^real)|Sum(^[^real,^{|^$204...|}[^$204...]])|Mul(^[^real,^{|^$204...|}[^$204...]])|Div(^[^$204,^$204])>>|SExpr<$137|Array(^[$139...])>>>...])|Load(^[$139,^int])|LengthOf($139)|IndexOf(^[$139,$139])>>|Bool<True|False>|And(^{$13...})|Or(^{$13...})|Not($13)|Equals(^[$4,^{|$139,$139|}[$139,$139]])|Inequality(^[^AType<IntT|RealT>,^$204])|Equation(^[^AType<IntT|RealT>,^$204])|$19|Exists($17)>>>]>)>
 	public final static int K_ForAll = 36;
 	public final static int ForAll(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
@@ -7510,9 +6382,9 @@ public final class Solver {
 	}
 
 	// ForAll_1
-	private final static class Reduction_88 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_80 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_88(Pattern.Term pattern) { super(pattern); }
+		public Reduction_80(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -7541,7 +6413,7 @@ public final class Solver {
 			}
 			Automaton.Set r3 = new Automaton.Set(s2children);
 			int r4 = state[4]; // be
-			boolean r5 = Runtime.accepts(type33, automaton, r4, SCHEMA); // be is ^Bool<True|False>
+			boolean r5 = Runtime.accepts(type27, automaton, r4, SCHEMA); // be is ^Bool<True|False>
 			Automaton.Int r6 = r3.lengthOf(); // |qs|
 			Automaton.Int r7 = new Automaton.Int(0); // 0
 			boolean r8 = r6.equals(r7);    // |qs| eq 0
@@ -7561,9 +6433,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// ForAll_2
-	private final static class Reduction_89 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_81 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_89(Pattern.Term pattern) { super(pattern); }
+		public Reduction_81(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -7611,9 +6483,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// ForAll_3
-	private final static class Reduction_90 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_82 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_90(Pattern.Term pattern) { super(pattern); }
+		public Reduction_82(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -7670,9 +6542,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// ForAll_4
-	private final static class Reduction_91 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_83 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_91(Pattern.Term pattern) { super(pattern); }
+		public Reduction_83(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -7736,9 +6608,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// ForAll_5
-	private final static class Inference_6 extends AbstractRewriteRule implements InferenceRule {
+	private final static class Inference_5 extends AbstractRewriteRule implements InferenceRule {
 
-		public Inference_6(Pattern.Term pattern) { super(pattern); }
+		public Inference_5(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -7751,30 +6623,28 @@ public final class Solver {
 				if(c1.size() >= 2) {
 					for(int r3=0;r3!=c1.size();++r3) {
 						int r2 = c1.get(r3);
-						if(Runtime.accepts(type34,automaton,automaton.get(r2), SCHEMA)) {
-							for(int r5=0;r5!=c1.size();++r5) {
-								if(r5 == r3) { continue; }
-								int r4 = c1.get(r5);
-								Automaton.State s4 = automaton.get(r4);
-								if(s4.kind == K_ForAll) {
-									Automaton.Term t4 = (Automaton.Term) s4;
-									int r6 = t4.contents;
-									Automaton.State s6 = automaton.get(r6);
-									Automaton.List l6 = (Automaton.List) s6;
-									int r7 = l6.get(0);
-									Automaton.State s7 = automaton.get(r7);
-									Automaton.Collection c7 = (Automaton.Collection) s7;
-									if(c7.size() >= 1) {
-										for(int r9=0;r9!=c7.size();++r9) {
-											int r8 = c7.get(r9);
-											Automaton.State s8 = automaton.get(r8);
-											Automaton.List l8 = (Automaton.List) s8;
-											int r10 = l8.get(0);
-											int r11 = l8.get(1);
-											int r13 = l6.get(1);
-											int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, 0, r13, 0};
-											activations.add(new Activation(this,null,state));
-										}
+						for(int r5=0;r5!=c1.size();++r5) {
+							if(r5 == r3) { continue; }
+							int r4 = c1.get(r5);
+							Automaton.State s4 = automaton.get(r4);
+							if(s4.kind == K_ForAll) {
+								Automaton.Term t4 = (Automaton.Term) s4;
+								int r6 = t4.contents;
+								Automaton.State s6 = automaton.get(r6);
+								Automaton.List l6 = (Automaton.List) s6;
+								int r7 = l6.get(0);
+								Automaton.State s7 = automaton.get(r7);
+								Automaton.Collection c7 = (Automaton.Collection) s7;
+								if(c7.size() >= 1) {
+									for(int r9=0;r9!=c7.size();++r9) {
+										int r8 = c7.get(r9);
+										Automaton.State s8 = automaton.get(r8);
+										Automaton.List l8 = (Automaton.List) s8;
+										int r10 = l8.get(0);
+										int r11 = l8.get(1);
+										int r13 = l6.get(1);
+										int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, 0, r13, 0};
+										activations.add(new Activation(this,null,state));
 									}
 								}
 							}
@@ -7803,18 +6673,24 @@ public final class Solver {
 			Automaton.Set r14 = new Automaton.Set(s1children);
 			Automaton.List r15 = new Automaton.List(r2, r7, r13); // [e1vse2]
 			Automaton.Set r16 = Solver$native.instantiate(automaton, r15);
-			Automaton.Int r17 = r16.lengthOf(); // |instantiations|
-			Automaton.Int r18 = new Automaton.Int(0); // 0
-			boolean r19 = r17.compareTo(r18)>0; // |instantiations| gt 0
+			boolean r17 = Runtime.accepts(type28, automaton, r2, SCHEMA); // e1 is ^$20<ForAll($18<^[^{^[^Var(^string),$5<^Type<Atom<NotT($36<^Proton<TupleT(^[$36...])|ArrayT($36)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$36...])|ArrayT($36)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($5)|OrT(^{$5...})|AndT(^{$5...})|ArrayT($5)|TupleT(^[$5...])|FunctionT(^[$5,$5,$5...])>>]...},$14<^$128<BExpr<$138<VExpr<Var(^string)|Fn(^[^string,$140<^Expr<$128|$178<Value<Null|Tuple(^[^$178...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$178...])>>|Tuple(^[$140...])|$205<AExpr<$138|Num(^real)|Sum(^[^real,^{|^$205...|}[^$205...]])|Mul(^[^real,^{|^$205...|}[^$205...]])|Div(^[^$205,^$205])>>|SExpr<$138|Array(^[$140...])>>>...])|Load(^[$140,^int])|LengthOf($140)|IndexOf(^[$140,$140])>>|Bool<True|False>|And(^{$14...})|Or(^{$14...})|Not($14)|Equals(^[$5,^{|$140,$140|}[$140,$140]])|Inequality(^[^AType<IntT|RealT>,^$205])|Equation(^[^AType<IntT|RealT>,^$205])|$20|Exists($18)>>>]>)>
+			boolean r18 = !r17;            // !e1 is ^$20<ForAll($18<^[^{^[^Var(^string),$5<^Type<Atom<NotT($36<^Proton<TupleT(^[$36...])|ArrayT($36)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$36...])|ArrayT($36)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($5)|OrT(^{$5...})|AndT(^{$5...})|ArrayT($5)|TupleT(^[$5...])|FunctionT(^[$5,$5,$5...])>>]...},$14<^$128<BExpr<$138<VExpr<Var(^string)|Fn(^[^string,$140<^Expr<$128|$178<Value<Null|Tuple(^[^$178...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$178...])>>|Tuple(^[$140...])|$205<AExpr<$138|Num(^real)|Sum(^[^real,^{|^$205...|}[^$205...]])|Mul(^[^real,^{|^$205...|}[^$205...]])|Div(^[^$205,^$205])>>|SExpr<$138|Array(^[$140...])>>>...])|Load(^[$140,^int])|LengthOf($140)|IndexOf(^[$140,$140])>>|Bool<True|False>|And(^{$14...})|Or(^{$14...})|Not($14)|Equals(^[$5,^{|$140,$140|}[$140,$140]])|Inequality(^[^AType<IntT|RealT>,^$205])|Equation(^[^AType<IntT|RealT>,^$205])|$20|Exists($18)>>>]>)>
+			boolean r19 = false;           // !e1 is ^$20<ForAll($18<^[^{^[^Var(^string),$5<^Type<Atom<NotT($36<^Proton<TupleT(^[$36...])|ArrayT($36)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$36...])|ArrayT($36)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($5)|OrT(^{$5...})|AndT(^{$5...})|ArrayT($5)|TupleT(^[$5...])|FunctionT(^[$5,$5,$5...])>>]...},$14<^$128<BExpr<$138<VExpr<Var(^string)|Fn(^[^string,$140<^Expr<$128|$178<Value<Null|Tuple(^[^$178...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$178...])>>|Tuple(^[$140...])|$205<AExpr<$138|Num(^real)|Sum(^[^real,^{|^$205...|}[^$205...]])|Mul(^[^real,^{|^$205...|}[^$205...]])|Div(^[^$205,^$205])>>|SExpr<$138|Array(^[$140...])>>>...])|Load(^[$140,^int])|LengthOf($140)|IndexOf(^[$140,$140])>>|Bool<True|False>|And(^{$14...})|Or(^{$14...})|Not($14)|Equals(^[$5,^{|$140,$140|}[$140,$140]])|Inequality(^[^AType<IntT|RealT>,^$205])|Equation(^[^AType<IntT|RealT>,^$205])|$20|Exists($18)>>>]>)> && |instantiations| gt 0
+			if(r18) {
+				Automaton.Int r20 = r16.lengthOf(); // |instantiations|
+				Automaton.Int r21 = new Automaton.Int(0); // 0
+				boolean r22 = r20.compareTo(r21)>0; // |instantiations| gt 0
+				r19 = r22;
+			}
 			if(r19) {
-				Automaton.Set r20 = new Automaton.Set(r2, r4); // {e1qf}
-				Automaton.Set r21 = r14.append(r16); // es append instantiations
-				Automaton.Set r22 = r20.append(r21); // {e1qf} append es append instantiations
-				int r23 = automaton.add(r22);
-				Automaton.Term r24 = new Automaton.Term(K_And, r23);
-				int r25 = automaton.add(r24);
-				if(r0 != r25) {
-					return automaton.rewrite(r0, r25);
+				Automaton.Set r23 = new Automaton.Set(r2, r4); // {e1qf}
+				Automaton.Set r24 = r14.append(r16); // es append instantiations
+				Automaton.Set r25 = r23.append(r24); // {e1qf} append es append instantiations
+				int r26 = automaton.add(r25);
+				Automaton.Term r27 = new Automaton.Term(K_And, r26);
+				int r28 = automaton.add(r27);
+				if(r0 != r28) {
+					return automaton.rewrite(r0, r28);
 				}
 			}
 			automaton.resize(nStates);
@@ -7826,104 +6702,7 @@ public final class Solver {
 		public final int minimum() { return 0; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// ForAll_6
-	private final static class Inference_7 extends AbstractRewriteRule implements InferenceRule {
-
-		public Inference_7(Pattern.Term pattern) { super(pattern); }
-
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
-			Automaton.State s0 = automaton.get(r0);
-			if(s0.kind == K_And) {
-				Automaton.Term t0 = (Automaton.Term) s0;
-				int r1 = t0.contents;
-				Automaton.State s1 = automaton.get(r1);
-				Automaton.Collection c1 = (Automaton.Collection) s1;
-				if(c1.size() >= 2) {
-					for(int r3=0;r3!=c1.size();++r3) {
-						int r2 = c1.get(r3);
-						Automaton.State s2 = automaton.get(r2);
-						if(s2.kind == K_Not) {
-							Automaton.Term t2 = (Automaton.Term) s2;
-							int r4 = t2.contents;
-							if(Runtime.accepts(type34,automaton,automaton.get(r4), SCHEMA)) {
-								for(int r6=0;r6!=c1.size();++r6) {
-									if(r6 == r3) { continue; }
-									int r5 = c1.get(r6);
-									Automaton.State s5 = automaton.get(r5);
-									if(s5.kind == K_ForAll) {
-										Automaton.Term t5 = (Automaton.Term) s5;
-										int r7 = t5.contents;
-										Automaton.State s7 = automaton.get(r7);
-										Automaton.List l7 = (Automaton.List) s7;
-										int r8 = l7.get(0);
-										Automaton.State s8 = automaton.get(r8);
-										Automaton.Collection c8 = (Automaton.Collection) s8;
-										if(c8.size() >= 1) {
-											for(int r10=0;r10!=c8.size();++r10) {
-												int r9 = c8.get(r10);
-												Automaton.State s9 = automaton.get(r9);
-												Automaton.List l9 = (Automaton.List) s9;
-												int r11 = l9.get(0);
-												int r12 = l9.get(1);
-												int r14 = l7.get(1);
-												int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, 0, r14, 0};
-												activations.add(new Activation(this,null,state));
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-
-		public final int apply(Automaton automaton, int[] state) {
-			int nStates = automaton.nStates();
-			int r0 = state[0];
-			int r2 = state[2]; // ne1
-			int r3 = state[3];
-			int r4 = state[4]; // e1
-			int r5 = state[5]; // qf
-			int r6 = state[6];
-			int r8 = state[8]; // vs
-			int r10 = state[10];
-			int r14 = state[14]; // e2
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 2];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
-				if(s1i == r3 || s1i == r6) { continue; }
-				s1children[s1j++] = s1.get(s1i);
-			}
-			Automaton.Set r15 = new Automaton.Set(s1children);
-			Automaton.List r16 = new Automaton.List(r4, r8, r14); // [e1vse2]
-			Automaton.Set r17 = Solver$native.instantiate(automaton, r16);
-			Automaton.Int r18 = r17.lengthOf(); // |instantiations|
-			Automaton.Int r19 = new Automaton.Int(0); // 0
-			boolean r20 = r18.compareTo(r19)>0; // |instantiations| gt 0
-			if(r20) {
-				Automaton.Set r21 = new Automaton.Set(r2, r5); // {ne1qf}
-				Automaton.Set r22 = r15.append(r17); // es append instantiations
-				Automaton.Set r23 = r21.append(r22); // {ne1qf} append es append instantiations
-				int r24 = automaton.add(r23);
-				Automaton.Term r25 = new Automaton.Term(K_And, r24);
-				int r26 = automaton.add(r25);
-				if(r0 != r26) {
-					return automaton.rewrite(r0, r26);
-				}
-			}
-			automaton.resize(nStates);
-			return Automaton.K_VOID;
-		}
-		public final String name() { return "ForAll_6"; }
-		public final int rank() { return 3; }
-
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
-	}
-	// term $19<Exists($17<^[^{^[^Var(^string),$4<^Type<Atom<NotT($35<^Proton<TupleT(^[$35...])|SetT(^[^bool,$35])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$35...])|SetT(^[^bool,$35])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($4)|OrT(^{$4...})|AndT(^{$4...})|SetT(^[^bool,$4])|TupleT(^[$4...])|FunctionT(^[$4,$4,$4...])>>]...},$13<^$139<BExpr<$148<VExpr<Var(^string)|$156<Fn(^[^string,$150<^Expr<$139|$156|$191<Value<Null|Tuple(^[^$191...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$191...})>>|Tuple(^[$150...])|$218<AExpr<$148|Num(^real)|Sum(^[^real,^{|^$218...|}[^$218...]])|Mul(^[^real,^{|^$218...|}[^$218...]])|Div(^[^$218,^$218])>>|SExpr<$148|Set(^{$150...})>>>...])>|Load(^[$150,^int])|LengthOf($150)>>|Bool<True|False>|And(^{$13...})|Or(^{$13...})|Not($13)|Equals(^[$4,^{|$150,$150|}[$150,$150]])|Inequality(^[^AType<IntT|RealT>,^$218])|Equation(^[^AType<IntT|RealT>,^$218])|SubsetEq(^[^SetT(^[^bool,$4]),^SExpr<$148|Set(^{$150...})>,^SExpr<$148|Set(^{$150...})>])|$19|ForAll($17)>>>]>)>
+	// term $19<Exists($17<^[^{^[^Var(^string),$4<^Type<Atom<NotT($35<^Proton<TupleT(^[$35...])|ArrayT($35)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$35...])|ArrayT($35)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($4)|OrT(^{$4...})|AndT(^{$4...})|ArrayT($4)|TupleT(^[$4...])|FunctionT(^[$4,$4,$4...])>>]...},$13<^$127<BExpr<$137<VExpr<Var(^string)|Fn(^[^string,$139<^Expr<$127|$177<Value<Null|Tuple(^[^$177...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$177...])>>|Tuple(^[$139...])|$204<AExpr<$137|Num(^real)|Sum(^[^real,^{|^$204...|}[^$204...]])|Mul(^[^real,^{|^$204...|}[^$204...]])|Div(^[^$204,^$204])>>|SExpr<$137|Array(^[$139...])>>>...])|Load(^[$139,^int])|LengthOf($139)|IndexOf(^[$139,$139])>>|Bool<True|False>|And(^{$13...})|Or(^{$13...})|Not($13)|Equals(^[$4,^{|$139,$139|}[$139,$139]])|Inequality(^[^AType<IntT|RealT>,^$204])|Equation(^[^AType<IntT|RealT>,^$204])|$19|ForAll($17)>>>]>)>
 	public final static int K_Exists = 37;
 	public final static int Exists(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
@@ -7935,9 +6714,9 @@ public final class Solver {
 	}
 
 	// Exists_1
-	private final static class Reduction_92 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_84 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_92(Pattern.Term pattern) { super(pattern); }
+		public Reduction_84(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -7966,7 +6745,7 @@ public final class Solver {
 			}
 			Automaton.Set r3 = new Automaton.Set(s2children);
 			int r4 = state[4]; // be
-			boolean r5 = Runtime.accepts(type33, automaton, r4, SCHEMA); // be is ^Bool<True|False>
+			boolean r5 = Runtime.accepts(type27, automaton, r4, SCHEMA); // be is ^Bool<True|False>
 			Automaton.Int r6 = r3.lengthOf(); // |qs|
 			Automaton.Int r7 = new Automaton.Int(0); // 0
 			boolean r8 = r6.equals(r7);    // |qs| eq 0
@@ -7986,9 +6765,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Exists_2
-	private final static class Reduction_93 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_85 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_93(Pattern.Term pattern) { super(pattern); }
+		public Reduction_85(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -8036,9 +6815,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Exists_3
-	private final static class Reduction_94 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_86 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_94(Pattern.Term pattern) { super(pattern); }
+		public Reduction_86(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -8095,9 +6874,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Exists_4
-	private final static class Reduction_95 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_87 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_95(Pattern.Term pattern) { super(pattern); }
+		public Reduction_87(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -8161,16 +6940,16 @@ public final class Solver {
 		public final int minimum() { return 5; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term Inhabited($2<^Type<Atom<NotT($17<^Proton<TupleT(^[$17...])|SetT(^[^bool,$17])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$17...])|SetT(^[^bool,$17])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT(^{$2...})|AndT(^{$2...})|SetT(^[^bool,$2])|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>)
+	// term Inhabited($2<^Type<Atom<NotT($17<^Proton<TupleT(^[$17...])|ArrayT($17)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$17...])|ArrayT($17)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT(^{$2...})|AndT(^{$2...})|ArrayT($2)|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>)
 	public final static int K_Inhabited = 38;
 	public final static int Inhabited(Automaton automaton, int r0) {
 		return automaton.add(new Automaton.Term(K_Inhabited, r0));
 	}
 
 	// Inhabited_1
-	private final static class Reduction_96 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_88 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_96(Pattern.Term pattern) { super(pattern); }
+		public Reduction_88(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -8178,7 +6957,7 @@ public final class Solver {
 			if(s0.kind == K_Inhabited) {
 				Automaton.Term t0 = (Automaton.Term) s0;
 				int r1 = t0.contents;
-				if(Runtime.accepts(type35,automaton,automaton.get(r1), SCHEMA)) {
+				if(Runtime.accepts(type29,automaton,automaton.get(r1), SCHEMA)) {
 					int[] state = {r0, r1};
 					activations.add(new Activation(this,null,state));
 				}
@@ -8220,9 +6999,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Inhabited_2
-	private final static class Reduction_97 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_89 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_97(Pattern.Term pattern) { super(pattern); }
+		public Reduction_89(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -8243,7 +7022,7 @@ public final class Solver {
 						if(s3.kind == K_NotT) {
 							Automaton.Term t3 = (Automaton.Term) s3;
 							int r4 = t3.contents;
-							if(Runtime.accepts(type4,automaton,automaton.get(r4), SCHEMA)) {
+							if(Runtime.accepts(type3,automaton,automaton.get(r4), SCHEMA)) {
 								continue;
 							}
 						}
@@ -8297,9 +7076,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Inhabited_3
-	private final static class Reduction_98 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_90 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_98(Pattern.Term pattern) { super(pattern); }
+		public Reduction_90(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -8308,14 +7087,10 @@ public final class Solver {
 				Automaton.Term t0 = (Automaton.Term) s0;
 				int r1 = t0.contents;
 				Automaton.State s1 = automaton.get(r1);
-				if(s1.kind == K_SetT) {
+				if(s1.kind == K_ArrayT) {
 					Automaton.Term t1 = (Automaton.Term) s1;
 					int r2 = t1.contents;
-					Automaton.State s2 = automaton.get(r2);
-					Automaton.List l2 = (Automaton.List) s2;
-					int r3 = l2.get(0);
-					int r4 = l2.get(1);
-					int[] state = {r0, r1, r2, r3, r4};
+					int[] state = {r0, r1, r2};
 					activations.add(new Activation(this,null,state));
 				}
 			}
@@ -8324,21 +7099,11 @@ public final class Solver {
 		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
-			int r3 = state[3]; // b1
-			int r4 = state[4]; // t
-			boolean r5 = ((Automaton.Bool)automaton.get(r3)).value;
-			boolean r6 = !r5;              // !b1
-			if(r6) {
-				Automaton.Term r7 = new Automaton.Term(K_Inhabited, r4);
-				int r8 = automaton.add(r7);
-				if(r0 != r8) {
-					return automaton.rewrite(r0, r8);
-				}
-			}
-			Automaton.Term r9 = True;
-			int r10 = automaton.add(r9);
-			if(r0 != r10) {
-				return automaton.rewrite(r0, r10);
+			int r2 = state[2]; // t
+			Automaton.Term r3 = new Automaton.Term(K_Inhabited, r2);
+			int r4 = automaton.add(r3);
+			if(r0 != r4) {
+				return automaton.rewrite(r0, r4);
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
@@ -8346,10 +7111,10 @@ public final class Solver {
 		public final String name() { return "Inhabited_3"; }
 		public final int rank() { return 0; }
 
-		public final int minimum() { return 4; }
+		public final int minimum() { return 2; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term Is(^[$2<^Expr<$48<Value<Null|Tuple(^[^$48...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$48...})>>|Tuple(^[$2...])|Fn(^[^string,$2...])|$99<BExpr<Bool<True|False>|VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|And(^{^$99...})|Or(^{^$99...})|Not(^$99)|Equals(^[$4<^Type<Atom<NotT($152<^Proton<TupleT(^[$152...])|SetT(^[^bool,$152])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$152...])|SetT(^[^bool,$152])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($4)|OrT(^{$4...})|AndT(^{$4...})|SetT(^[^bool,$4])|TupleT(^[$4...])|FunctionT(^[$4,$4,$4...])>>,^{|$2,$2|}[$2,$2]])|Inequality(^[^AType<IntT|RealT>,$235<^AExpr<Num(^real)|VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|Sum(^[^real,^{|$235...|}[$235...]])|Mul(^[^real,^{|$235...|}[$235...]])|Div(^[$235,$235])>>])|Equation(^[^AType<IntT|RealT>,$235])|SubsetEq(^[^SetT(^[^bool,$4]),^SExpr<VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|Set(^{$2...})>,^SExpr<VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|Set(^{$2...})>])|ForAll(^[^{^[^Var(^string),$4]...},^$99])|Exists(^[^{^[^Var(^string),$4]...},^$99])>>|AExpr<Num(^real)|VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|Sum(^[^real,^{|$235...|}[$235...]])|Mul(^[^real,^{|$235...|}[$235...]])|Div(^[$235,$235])>|SExpr<VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|Set(^{$2...})>>>,$4])
+	// term Is(^[$2<^Expr<$44<Value<Null|Tuple(^[^$44...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$44...])>>|Tuple(^[$2...])|$86<BExpr<Bool<True|False>|VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>|And(^{^$86...})|Or(^{^$86...})|Not(^$86)|Equals(^[$4<^Type<Atom<NotT($153<^Proton<TupleT(^[$153...])|ArrayT($153)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$153...])|ArrayT($153)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($4)|OrT(^{$4...})|AndT(^{$4...})|ArrayT($4)|TupleT(^[$4...])|FunctionT(^[$4,$4,$4...])>>,^{|$2,$2|}[$2,$2]])|Inequality(^[^AType<IntT|RealT>,$227<^AExpr<Num(^real)|VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>|Sum(^[^real,^{|$227...|}[$227...]])|Mul(^[^real,^{|$227...|}[$227...]])|Div(^[$227,$227])>>])|Equation(^[^AType<IntT|RealT>,$227])|ForAll(^[^{^[^Var(^string),$4]...},^$86])|Exists(^[^{^[^Var(^string),$4]...},^$86])>>|AExpr<Num(^real)|VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>|Sum(^[^real,^{|$227...|}[$227...]])|Mul(^[^real,^{|$227...|}[$227...]])|Div(^[$227,$227])>|SExpr<VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>|Array(^[$2...])>>>,$4])
 	public final static int K_Is = 39;
 	public final static int Is(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
@@ -8361,9 +7126,9 @@ public final class Solver {
 	}
 
 	// Is_1
-	private final static class Reduction_99 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_91 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_99(Pattern.Term pattern) { super(pattern); }
+		public Reduction_91(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -8401,9 +7166,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Is_2
-	private final static class Reduction_100 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_92 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_100(Pattern.Term pattern) { super(pattern); }
+		public Reduction_92(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -8449,9 +7214,9 @@ public final class Solver {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// Is_3
-	private final static class Reduction_101 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_93 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_101(Pattern.Term pattern) { super(pattern); }
+		public Reduction_93(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -8542,16 +7307,16 @@ public final class Solver {
 	// =========================================================================
 
 	public static final Schema SCHEMA = new Schema(new Schema.Term[]{
-		// $4<NotT($2<^Type<$4|Atom<NotT($16<^Proton<TupleT(^[$16...])|SetT(^[^bool,$16])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$16...])|SetT(^[^bool,$16])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|OrT(^{$2...})|AndT(^{$2...})|SetT(^[^bool,$2])|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>)>
-		Schema.Term("NotT",Schema.Or(Schema.Any, Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.String), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Any,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any)))),
-		// $7<AndT($5<^{$2<^Type<$7|Atom<NotT($19<^Proton<TupleT(^[$19...])|SetT(^[^bool,$19])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$19...])|SetT(^[^bool,$19])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT($5)|SetT(^[^bool,$2])|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>...}>)>
+		// $4<NotT($2<^Type<$4|Atom<NotT($16<^Proton<TupleT(^[$16...])|ArrayT($16)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$16...])|ArrayT($16)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|OrT(^{$2...})|AndT(^{$2...})|ArrayT($2)|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>)>
+		Schema.Term("NotT",Schema.Or(Schema.Any, Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("ArrayT",Schema.Any), Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.String), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("ArrayT",Schema.Any), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any)))),
+		// $7<AndT($5<^{$2<^Type<$7|Atom<NotT($19<^Proton<TupleT(^[$19...])|ArrayT($19)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$19...])|ArrayT($19)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT($5)|ArrayT($2)|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>...}>)>
 		Schema.Term("AndT",Schema.Set(true)),
-		// $7<OrT($5<^{$2<^Type<$7|Atom<NotT($19<^Proton<TupleT(^[$19...])|SetT(^[^bool,$19])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$19...])|SetT(^[^bool,$19])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|AndT($5)|SetT(^[^bool,$2])|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>...}>)>
+		// $7<OrT($5<^{$2<^Type<$7|Atom<NotT($19<^Proton<TupleT(^[$19...])|ArrayT($19)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$19...])|ArrayT($19)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|AndT($5)|ArrayT($2)|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>...}>)>
 		Schema.Term("OrT",Schema.Set(true)),
-		// $7<TupleT(^[$2<^Type<$7|Atom<NotT($19<^Proton<TupleT(^[$19...])|SetT(^[^bool,$19])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$19...])|SetT(^[^bool,$19])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT(^{$2...})|AndT(^{$2...})|SetT(^[^bool,$2])|FunctionT(^[$2,$2,$2...])>>...])>
+		// $7<TupleT(^[$2<^Type<$7|Atom<NotT($19<^Proton<TupleT(^[$19...])|ArrayT($19)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$19...])|ArrayT($19)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT(^{$2...})|AndT(^{$2...})|ArrayT($2)|FunctionT(^[$2,$2,$2...])>>...])>
 		Schema.Term("TupleT",Schema.List(true)),
-		// $9<SetT(^[^bool,$3<^Type<$9|Atom<NotT($21<^Proton<TupleT(^[$21...])|SetT(^[^bool,$21])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$21...])|SetT(^[^bool,$21])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($3)|OrT(^{$3...})|AndT(^{$3...})|TupleT(^[$3...])|FunctionT(^[$3,$3,$3...])>>])>
-		Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Or(Schema.Any, Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("SetT",Schema.List(true,Schema.Any,Schema.Any)), Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.String), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))))),
+		// $4<ArrayT($2<^Type<$4|Atom<NotT($16<^Proton<TupleT(^[$16...])|ArrayT($16)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$16...])|ArrayT($16)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT(^{$2...})|AndT(^{$2...})|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>)>
+		Schema.Term("ArrayT",Schema.Or(Schema.Any, Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("ArrayT",Schema.Any), Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.String), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any)))),
 		// AnyT
 		Schema.Term("AnyT"),
 		// VoidT
@@ -8570,8 +7335,8 @@ public final class Solver {
 		Schema.Term("VarT",Schema.String),
 		// NominalT(^string)
 		Schema.Term("NominalT",Schema.String),
-		// $8<FunctionT(^[$2<^Type<$8|Atom<NotT($20<^Proton<TupleT(^[$20...])|SetT(^[^bool,$20])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$20...])|SetT(^[^bool,$20])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT(^{$2...})|AndT(^{$2...})|SetT(^[^bool,$2])|TupleT(^[$2...])>>,$2,$2...])>
-		Schema.Term("FunctionT",Schema.List(true,Schema.Or(Schema.Any, Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.String), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Any,Schema.Any)), Schema.Term("TupleT",Schema.List(true))),Schema.Any)),
+		// $8<FunctionT(^[$2<^Type<$8|Atom<NotT($20<^Proton<TupleT(^[$20...])|ArrayT($20)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$20...])|ArrayT($20)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT(^{$2...})|AndT(^{$2...})|ArrayT($2)|TupleT(^[$2...])>>,$2,$2...])>
+		Schema.Term("FunctionT",Schema.List(true,Schema.Or(Schema.Any, Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("ArrayT",Schema.Any), Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.String), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("ArrayT",Schema.Any), Schema.Term("TupleT",Schema.List(true))),Schema.Any)),
 		// Null
 		Schema.Term("Null"),
 		// True
@@ -8582,46 +7347,46 @@ public final class Solver {
 		Schema.Term("Num",Schema.Real),
 		// Var(^string)
 		Schema.Term("Var",Schema.String),
-		// $7<Tuple(^[$2<^Expr<$7|$44<Value<Null|Tuple(^[^$44...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$44...})>>|Fn(^[^string,$2...])|$90<BExpr<Bool<True|False>|VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|And(^{^$90...})|Or(^{^$90...})|Not(^$90)|Equals(^[$122<^Type<Atom<NotT($145<^Proton<TupleT(^[$145...])|SetT(^[^bool,$145])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$145...])|SetT(^[^bool,$145])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($122)|OrT(^{$122...})|AndT(^{$122...})|SetT(^[^bool,$122])|TupleT(^[$122...])|FunctionT(^[$122,$122,$122...])>>,^{|$2,$2|}[$2,$2]])|Inequality(^[^AType<IntT|RealT>,$228<^AExpr<Num(^real)|VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|Sum(^[^real,^{|$228...|}[$228...]])|Mul(^[^real,^{|$228...|}[$228...]])|Div(^[$228,$228])>>])|Equation(^[^AType<IntT|RealT>,$228])|SubsetEq(^[^SetT(^[^bool,$122]),^SExpr<VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|Set(^{$2...})>,^SExpr<VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|Set(^{$2...})>])|ForAll(^[^{^[^Var(^string),$122]...},^$90])|Exists(^[^{^[^Var(^string),$122]...},^$90])>>|AExpr<Num(^real)|VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|Sum(^[^real,^{|$228...|}[$228...]])|Mul(^[^real,^{|$228...|}[$228...]])|Div(^[$228,$228])>|SExpr<VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|Set(^{$2...})>>>...])>
+		// $7<Tuple($5<^[$2<^Expr<$7|$40<Value<Null|Tuple(^[^$40...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$40...])>>|$77<BExpr<Bool<True|False>|VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>|And(^{^$77...})|Or(^{^$77...})|Not(^$77)|Equals(^[$123<^Type<Atom<NotT($146<^Proton<TupleT(^[$146...])|ArrayT($146)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$146...])|ArrayT($146)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($123)|OrT(^{$123...})|AndT(^{$123...})|ArrayT($123)|TupleT(^[$123...])|FunctionT(^[$123,$123,$123...])>>,^{|$2,$2|}[$2,$2]])|Inequality(^[^AType<IntT|RealT>,$220<^AExpr<Num(^real)|VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>>])|Equation(^[^AType<IntT|RealT>,$220])|ForAll(^[^{^[^Var(^string),$123]...},^$77])|Exists(^[^{^[^Var(^string),$123]...},^$77])>>|AExpr<Num(^real)|VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>|SExpr<VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>|Array($5)>>>...]>)>
 		Schema.Term("Tuple",Schema.List(true)),
-		// $9<Load(^[$2<^Expr<$47<Value<Null|Tuple(^[^$47...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$47...})>>|Tuple(^[$2...])|Fn(^[^string,$2...])|$98<BExpr<Bool<True|False>|VExpr<$9|Fn(^[^string,$2...])|Var(^string)|LengthOf($2)>|And(^{^$98...})|Or(^{^$98...})|Not(^$98)|Equals(^[$122<^Type<Atom<NotT($145<^Proton<TupleT(^[$145...])|SetT(^[^bool,$145])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$145...])|SetT(^[^bool,$145])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($122)|OrT(^{$122...})|AndT(^{$122...})|SetT(^[^bool,$122])|TupleT(^[$122...])|FunctionT(^[$122,$122,$122...])>>,^{|$2,$2|}[$2,$2]])|Inequality(^[^AType<IntT|RealT>,$228<^AExpr<Num(^real)|VExpr<$9|Fn(^[^string,$2...])|Var(^string)|LengthOf($2)>|Sum(^[^real,^{|$228...|}[$228...]])|Mul(^[^real,^{|$228...|}[$228...]])|Div(^[$228,$228])>>])|Equation(^[^AType<IntT|RealT>,$228])|SubsetEq(^[^SetT(^[^bool,$122]),^SExpr<VExpr<$9|Fn(^[^string,$2...])|Var(^string)|LengthOf($2)>|Set(^{$2...})>,^SExpr<VExpr<$9|Fn(^[^string,$2...])|Var(^string)|LengthOf($2)>|Set(^{$2...})>])|ForAll(^[^{^[^Var(^string),$122]...},^$98])|Exists(^[^{^[^Var(^string),$122]...},^$98])>>|AExpr<Num(^real)|VExpr<$9|Fn(^[^string,$2...])|Var(^string)|LengthOf($2)>|Sum(^[^real,^{|$228...|}[$228...]])|Mul(^[^real,^{|$228...|}[$228...]])|Div(^[$228,$228])>|SExpr<VExpr<$9|Fn(^[^string,$2...])|Var(^string)|LengthOf($2)>|Set(^{$2...})>>>,^int])>
-		Schema.Term("Load",Schema.List(true,Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Term("Null"), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("Num",Schema.Real), Schema.Term("String",Schema.String)), Schema.Term("Set",Schema.Set(true))), Schema.Term("Tuple",Schema.List(true)), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Any, Schema.Any, Schema.Term("Var",Schema.Any)), Schema.Term("LengthOf",Schema.Any)), Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.Any), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Any,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Or(Schema.Any, Schema.Any, Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any))))), Schema.Term("Equation",Schema.Any))), Schema.Term("SubsetEq",Schema.List(true,Schema.Any,Schema.Or(Schema.Any, Schema.Term("Set",Schema.Set(true))),Schema.Any))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any)))), Schema.Any), Schema.Any),Schema.Int)),
-		// $4<LengthOf($2<^Expr<$42<Value<Null|Tuple(^[^$42...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$42...})>>|Tuple(^[$2...])|Fn(^[^string,$2...])|$93<BExpr<Bool<True|False>|VExpr<$4|Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])>|And(^{^$93...})|Or(^{^$93...})|Not(^$93)|Equals(^[$122<^Type<Atom<NotT($145<^Proton<TupleT(^[$145...])|SetT(^[^bool,$145])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$145...])|SetT(^[^bool,$145])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($122)|OrT(^{$122...})|AndT(^{$122...})|SetT(^[^bool,$122])|TupleT(^[$122...])|FunctionT(^[$122,$122,$122...])>>,^{|$2,$2|}[$2,$2]])|Inequality(^[^AType<IntT|RealT>,$228<^AExpr<Num(^real)|VExpr<$4|Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])>|Sum(^[^real,^{|$228...|}[$228...]])|Mul(^[^real,^{|$228...|}[$228...]])|Div(^[$228,$228])>>])|Equation(^[^AType<IntT|RealT>,$228])|SubsetEq(^[^SetT(^[^bool,$122]),^SExpr<VExpr<$4|Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])>|Set(^{$2...})>,^SExpr<VExpr<$4|Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])>|Set(^{$2...})>])|ForAll(^[^{^[^Var(^string),$122]...},^$93])|Exists(^[^{^[^Var(^string),$122]...},^$93])>>|AExpr<Num(^real)|VExpr<$4|Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])>|Sum(^[^real,^{|$228...|}[$228...]])|Mul(^[^real,^{|$228...|}[$228...]])|Div(^[$228,$228])>|SExpr<VExpr<$4|Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])>|Set(^{$2...})>>>)>
-		Schema.Term("LengthOf",Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Term("Null"), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("Num",Schema.Real), Schema.Term("String",Schema.String)), Schema.Term("Set",Schema.Set(true))), Schema.Term("Tuple",Schema.List(true)), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Any, Schema.Or(Schema.Any, Schema.Term("Var",Schema.Any), Schema.Term("Load",Schema.List(true,Schema.Any,Schema.Int)))), Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.Any), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Any,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Or(Schema.Any, Schema.Any, Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any))))), Schema.Term("Equation",Schema.Any))), Schema.Term("SubsetEq",Schema.List(true,Schema.Any,Schema.Or(Schema.Any, Schema.Term("Set",Schema.Set(true))),Schema.Any))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any)))), Schema.Any), Schema.Any)),
-		// $9<Fn(^[^string,$3<^Expr<$9|$46<Value<Null|Tuple(^[^$46...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$46...})>>|Tuple(^[$3...])|$90<BExpr<Bool<True|False>|VExpr<$9|Var(^string)|Load(^[$3,^int])|LengthOf($3)>|And(^{^$90...})|Or(^{^$90...})|Not(^$90)|Equals(^[$122<^Type<Atom<NotT($145<^Proton<TupleT(^[$145...])|SetT(^[^bool,$145])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$145...])|SetT(^[^bool,$145])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($122)|OrT(^{$122...})|AndT(^{$122...})|SetT(^[^bool,$122])|TupleT(^[$122...])|FunctionT(^[$122,$122,$122...])>>,^{|$3,$3|}[$3,$3]])|Inequality(^[^AType<IntT|RealT>,$228<^AExpr<Num(^real)|VExpr<$9|Var(^string)|Load(^[$3,^int])|LengthOf($3)>|Sum(^[^real,^{|$228...|}[$228...]])|Mul(^[^real,^{|$228...|}[$228...]])|Div(^[$228,$228])>>])|Equation(^[^AType<IntT|RealT>,$228])|SubsetEq(^[^SetT(^[^bool,$122]),^SExpr<VExpr<$9|Var(^string)|Load(^[$3,^int])|LengthOf($3)>|Set(^{$3...})>,^SExpr<VExpr<$9|Var(^string)|Load(^[$3,^int])|LengthOf($3)>|Set(^{$3...})>])|ForAll(^[^{^[^Var(^string),$122]...},^$90])|Exists(^[^{^[^Var(^string),$122]...},^$90])>>|AExpr<Num(^real)|VExpr<$9|Var(^string)|Load(^[$3,^int])|LengthOf($3)>|Sum(^[^real,^{|$228...|}[$228...]])|Mul(^[^real,^{|$228...|}[$228...]])|Div(^[$228,$228])>|SExpr<VExpr<$9|Var(^string)|Load(^[$3,^int])|LengthOf($3)>|Set(^{$3...})>>>...])>
+		// $9<Load(^[$2<^Expr<$43<Value<Null|Tuple(^[^$43...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$43...])>>|Tuple(^[$2...])|$85<BExpr<Bool<True|False>|VExpr<$9|Var(^string)|Fn(^[^string,$2...])|LengthOf($2)|IndexOf(^[$2,$2])>|And(^{^$85...})|Or(^{^$85...})|Not(^$85)|Equals(^[$123<^Type<Atom<NotT($146<^Proton<TupleT(^[$146...])|ArrayT($146)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$146...])|ArrayT($146)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($123)|OrT(^{$123...})|AndT(^{$123...})|ArrayT($123)|TupleT(^[$123...])|FunctionT(^[$123,$123,$123...])>>,^{|$2,$2|}[$2,$2]])|Inequality(^[^AType<IntT|RealT>,$220<^AExpr<Num(^real)|VExpr<$9|Var(^string)|Fn(^[^string,$2...])|LengthOf($2)|IndexOf(^[$2,$2])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>>])|Equation(^[^AType<IntT|RealT>,$220])|ForAll(^[^{^[^Var(^string),$123]...},^$85])|Exists(^[^{^[^Var(^string),$123]...},^$85])>>|AExpr<Num(^real)|VExpr<$9|Var(^string)|Fn(^[^string,$2...])|LengthOf($2)|IndexOf(^[$2,$2])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>|SExpr<VExpr<$9|Var(^string)|Fn(^[^string,$2...])|LengthOf($2)|IndexOf(^[$2,$2])>|Array(^[$2...])>>>,^int])>
+		Schema.Term("Load",Schema.List(true,Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Term("Null"), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("Num",Schema.Real), Schema.Term("String",Schema.String)), Schema.Term("Array",Schema.Any)), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Any, Schema.Term("Var",Schema.Any), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("LengthOf",Schema.Any)), Schema.Term("IndexOf",Schema.List(true,Schema.Any,Schema.Any))), Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("ArrayT",Schema.Any), Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.Any), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("ArrayT",Schema.Any), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Or(Schema.Any, Schema.Any, Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any))))), Schema.Term("Equation",Schema.Any))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any)))), Schema.Any), Schema.Or(Schema.Any, Schema.Term("Array",Schema.Any))),Schema.Int)),
+		// $4<LengthOf($2<^Expr<$38<Value<Null|Tuple(^[^$38...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$38...])>>|Tuple(^[$2...])|$80<BExpr<Bool<True|False>|VExpr<$4|Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|IndexOf(^[$2,$2])>|And(^{^$80...})|Or(^{^$80...})|Not(^$80)|Equals(^[$123<^Type<Atom<NotT($146<^Proton<TupleT(^[$146...])|ArrayT($146)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$146...])|ArrayT($146)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($123)|OrT(^{$123...})|AndT(^{$123...})|ArrayT($123)|TupleT(^[$123...])|FunctionT(^[$123,$123,$123...])>>,^{|$2,$2|}[$2,$2]])|Inequality(^[^AType<IntT|RealT>,$220<^AExpr<Num(^real)|VExpr<$4|Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|IndexOf(^[$2,$2])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>>])|Equation(^[^AType<IntT|RealT>,$220])|ForAll(^[^{^[^Var(^string),$123]...},^$80])|Exists(^[^{^[^Var(^string),$123]...},^$80])>>|AExpr<Num(^real)|VExpr<$4|Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|IndexOf(^[$2,$2])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>|SExpr<VExpr<$4|Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|IndexOf(^[$2,$2])>|Array(^[$2...])>>>)>
+		Schema.Term("LengthOf",Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Term("Null"), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("Num",Schema.Real), Schema.Term("String",Schema.String)), Schema.Term("Array",Schema.Any)), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Any, Schema.Term("Var",Schema.Any), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("Load",Schema.List(true,Schema.Any,Schema.Int))), Schema.Term("IndexOf",Schema.List(true,Schema.Any,Schema.Any))), Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("ArrayT",Schema.Any), Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.Any), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("ArrayT",Schema.Any), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Or(Schema.Any, Schema.Any, Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any))))), Schema.Term("Equation",Schema.Any))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any)))), Schema.Any), Schema.Or(Schema.Any, Schema.Term("Array",Schema.Any)))),
+		// $9<Fn(^[^string,$3<^Expr<$43<Value<Null|Tuple(^[^$43...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$43...])>>|Tuple(^[$3...])|$84<BExpr<Bool<True|False>|VExpr<$9|Var(^string)|Load(^[$3,^int])|LengthOf($3)|IndexOf(^[$3,$3])>|And(^{^$84...})|Or(^{^$84...})|Not(^$84)|Equals(^[$123<^Type<Atom<NotT($146<^Proton<TupleT(^[$146...])|ArrayT($146)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$146...])|ArrayT($146)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($123)|OrT(^{$123...})|AndT(^{$123...})|ArrayT($123)|TupleT(^[$123...])|FunctionT(^[$123,$123,$123...])>>,^{|$3,$3|}[$3,$3]])|Inequality(^[^AType<IntT|RealT>,$220<^AExpr<Num(^real)|VExpr<$9|Var(^string)|Load(^[$3,^int])|LengthOf($3)|IndexOf(^[$3,$3])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>>])|Equation(^[^AType<IntT|RealT>,$220])|ForAll(^[^{^[^Var(^string),$123]...},^$84])|Exists(^[^{^[^Var(^string),$123]...},^$84])>>|AExpr<Num(^real)|VExpr<$9|Var(^string)|Load(^[$3,^int])|LengthOf($3)|IndexOf(^[$3,$3])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>|SExpr<VExpr<$9|Var(^string)|Load(^[$3,^int])|LengthOf($3)|IndexOf(^[$3,$3])>|Array(^[$3...])>>>...])>
 		Schema.Term("Fn",Schema.List(true,Schema.String)),
 		// String(^string)
 		Schema.Term("String",Schema.String),
-		// $4<Not($2<^$28<BExpr<$4|$38<VExpr<Var(^string)|$49<Fn(^[^string,$43<^Expr<$28|$49|$84<Value<Null|Tuple(^[^$84...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$84...})>>|Tuple(^[$43...])|$111<AExpr<$38|Num(^real)|Sum(^[^real,^{|^$111...|}[^$111...]])|Mul(^[^real,^{|^$111...|}[^$111...]])|Div(^[^$111,^$111])>>|SExpr<$38|Set(^{$43...})>>>...])>|Load(^[$43,^int])|LengthOf($43)>>|Bool<True|False>|And(^{$2...})|Or(^{$2...})|Equals(^[$156<^Type<Atom<NotT($179<^Proton<TupleT(^[$179...])|SetT(^[^bool,$179])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$179...])|SetT(^[^bool,$179])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($156)|OrT(^{$156...})|AndT(^{$156...})|SetT(^[^bool,$156])|TupleT(^[$156...])|FunctionT(^[$156,$156,$156...])>>,^{|$43,$43|}[$43,$43]])|Inequality(^[^AType<IntT|RealT>,^$111])|Equation(^[^AType<IntT|RealT>,^$111])|SubsetEq(^[^SetT(^[^bool,$156]),^SExpr<$38|Set(^{$43...})>,^SExpr<$38|Set(^{$43...})>])|ForAll(^[^{^[^Var(^string),$156]...},$2])|Exists(^[^{^[^Var(^string),$156]...},$2])>>>)>
-		Schema.Term("Not",Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Term("Var",Schema.String), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("Load",Schema.List(true,Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Any, Schema.Or(Schema.Or(Schema.Term("Null"), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("Num",Schema.Real), Schema.Term("String",Schema.Any)), Schema.Term("Set",Schema.Set(true))), Schema.Term("Tuple",Schema.List(true))), Schema.Or(Schema.Any, Schema.Any, Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Any, Schema.Term("Set",Schema.Set(true)))),Schema.Int))), Schema.Term("LengthOf",Schema.Any)), Schema.Any, Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.Any), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Any,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Any)), Schema.Term("Equation",Schema.Any))), Schema.Term("SubsetEq",Schema.List(true,Schema.Any,Schema.Any,Schema.Any))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any)))),
-		// $7<And($5<^{$2<^$31<BExpr<$7|$41<VExpr<Var(^string)|$52<Fn(^[^string,$46<^Expr<$31|$52|$87<Value<Null|Tuple(^[^$87...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$87...})>>|Tuple(^[$46...])|$114<AExpr<$41|Num(^real)|Sum(^[^real,^{|^$114...|}[^$114...]])|Mul(^[^real,^{|^$114...|}[^$114...]])|Div(^[^$114,^$114])>>|SExpr<$41|Set(^{$46...})>>>...])>|Load(^[$46,^int])|LengthOf($46)>>|Bool<True|False>|Or($5)|Not($2)|Equals(^[$156<^Type<Atom<NotT($179<^Proton<TupleT(^[$179...])|SetT(^[^bool,$179])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$179...])|SetT(^[^bool,$179])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($156)|OrT(^{$156...})|AndT(^{$156...})|SetT(^[^bool,$156])|TupleT(^[$156...])|FunctionT(^[$156,$156,$156...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,^$114])|Equation(^[^AType<IntT|RealT>,^$114])|SubsetEq(^[^SetT(^[^bool,$156]),^SExpr<$41|Set(^{$46...})>,^SExpr<$41|Set(^{$46...})>])|ForAll(^[^{^[^Var(^string),$156]...},$2])|Exists(^[^{^[^Var(^string),$156]...},$2])>>>...}>)>
+		// $4<Not($2<^$25<BExpr<$4|$36<VExpr<Var(^string)|Fn(^[^string,$41<^Expr<$25|$79<Value<Null|Tuple(^[^$79...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$79...])>>|Tuple(^[$41...])|$106<AExpr<$36|Num(^real)|Sum(^[^real,^{|^$106...|}[^$106...]])|Mul(^[^real,^{|^$106...|}[^$106...]])|Div(^[^$106,^$106])>>|SExpr<$36|Array(^[$41...])>>>...])|Load(^[$41,^int])|LengthOf($41)|IndexOf(^[$41,$41])>>|Bool<True|False>|And(^{$2...})|Or(^{$2...})|Equals(^[$154<^Type<Atom<NotT($177<^Proton<TupleT(^[$177...])|ArrayT($177)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$177...])|ArrayT($177)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($154)|OrT(^{$154...})|AndT(^{$154...})|ArrayT($154)|TupleT(^[$154...])|FunctionT(^[$154,$154,$154...])>>,^{|$41,$41|}[$41,$41]])|Inequality(^[^AType<IntT|RealT>,^$106])|Equation(^[^AType<IntT|RealT>,^$106])|ForAll(^[^{^[^Var(^string),$154]...},$2])|Exists(^[^{^[^Var(^string),$154]...},$2])>>>)>
+		Schema.Term("Not",Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Term("Var",Schema.String), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("Load",Schema.List(true,Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Term("Null"), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("Num",Schema.Real), Schema.Term("String",Schema.Any)), Schema.Term("Array",Schema.Any)), Schema.Term("Tuple",Schema.List(true))), Schema.Or(Schema.Any, Schema.Any, Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Any, Schema.Term("Array",Schema.Any))),Schema.Int)), Schema.Term("LengthOf",Schema.Any)), Schema.Term("IndexOf",Schema.List(true,Schema.Any,Schema.Any))), Schema.Any, Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("ArrayT",Schema.Any), Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.Any), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("ArrayT",Schema.Any), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Any)), Schema.Term("Equation",Schema.Any))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any)))),
+		// $7<And($5<^{$2<^$28<BExpr<$7|$39<VExpr<Var(^string)|Fn(^[^string,$44<^Expr<$28|$82<Value<Null|Tuple(^[^$82...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$82...])>>|Tuple(^[$44...])|$109<AExpr<$39|Num(^real)|Sum(^[^real,^{|^$109...|}[^$109...]])|Mul(^[^real,^{|^$109...|}[^$109...]])|Div(^[^$109,^$109])>>|SExpr<$39|Array(^[$44...])>>>...])|Load(^[$44,^int])|LengthOf($44)|IndexOf(^[$44,$44])>>|Bool<True|False>|Or($5)|Not($2)|Equals(^[$154<^Type<Atom<NotT($177<^Proton<TupleT(^[$177...])|ArrayT($177)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$177...])|ArrayT($177)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($154)|OrT(^{$154...})|AndT(^{$154...})|ArrayT($154)|TupleT(^[$154...])|FunctionT(^[$154,$154,$154...])>>,^{|$44,$44|}[$44,$44]])|Inequality(^[^AType<IntT|RealT>,^$109])|Equation(^[^AType<IntT|RealT>,^$109])|ForAll(^[^{^[^Var(^string),$154]...},$2])|Exists(^[^{^[^Var(^string),$154]...},$2])>>>...}>)>
 		Schema.Term("And",Schema.Set(true)),
-		// $7<Or($5<^{$2<^$31<BExpr<$7|$41<VExpr<Var(^string)|$52<Fn(^[^string,$46<^Expr<$31|$52|$87<Value<Null|Tuple(^[^$87...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$87...})>>|Tuple(^[$46...])|$114<AExpr<$41|Num(^real)|Sum(^[^real,^{|^$114...|}[^$114...]])|Mul(^[^real,^{|^$114...|}[^$114...]])|Div(^[^$114,^$114])>>|SExpr<$41|Set(^{$46...})>>>...])>|Load(^[$46,^int])|LengthOf($46)>>|Bool<True|False>|And($5)|Not($2)|Equals(^[$156<^Type<Atom<NotT($179<^Proton<TupleT(^[$179...])|SetT(^[^bool,$179])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$179...])|SetT(^[^bool,$179])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($156)|OrT(^{$156...})|AndT(^{$156...})|SetT(^[^bool,$156])|TupleT(^[$156...])|FunctionT(^[$156,$156,$156...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,^$114])|Equation(^[^AType<IntT|RealT>,^$114])|SubsetEq(^[^SetT(^[^bool,$156]),^SExpr<$41|Set(^{$46...})>,^SExpr<$41|Set(^{$46...})>])|ForAll(^[^{^[^Var(^string),$156]...},$2])|Exists(^[^{^[^Var(^string),$156]...},$2])>>>...}>)>
+		// $7<Or($5<^{$2<^$28<BExpr<$7|$39<VExpr<Var(^string)|Fn(^[^string,$44<^Expr<$28|$82<Value<Null|Tuple(^[^$82...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$82...])>>|Tuple(^[$44...])|$109<AExpr<$39|Num(^real)|Sum(^[^real,^{|^$109...|}[^$109...]])|Mul(^[^real,^{|^$109...|}[^$109...]])|Div(^[^$109,^$109])>>|SExpr<$39|Array(^[$44...])>>>...])|Load(^[$44,^int])|LengthOf($44)|IndexOf(^[$44,$44])>>|Bool<True|False>|And($5)|Not($2)|Equals(^[$154<^Type<Atom<NotT($177<^Proton<TupleT(^[$177...])|ArrayT($177)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$177...])|ArrayT($177)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($154)|OrT(^{$154...})|AndT(^{$154...})|ArrayT($154)|TupleT(^[$154...])|FunctionT(^[$154,$154,$154...])>>,^{|$44,$44|}[$44,$44]])|Inequality(^[^AType<IntT|RealT>,^$109])|Equation(^[^AType<IntT|RealT>,^$109])|ForAll(^[^{^[^Var(^string),$154]...},$2])|Exists(^[^{^[^Var(^string),$154]...},$2])>>>...}>)>
 		Schema.Term("Or",Schema.Set(true)),
-		// $14<Equals(^[$2<^Type<Atom<NotT($27<^Proton<TupleT(^[$27...])|SetT(^[^bool,$27])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$27...])|SetT(^[^bool,$27])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT(^{$2...})|AndT(^{$2...})|SetT(^[^bool,$2])|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>,^{|$4<^Expr<$146<Value<Null|Tuple(^[^$146...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$146...})>>|Tuple(^[$4...])|Fn(^[^string,$4...])|$195<BExpr<$14|Bool<True|False>|VExpr<Fn(^[^string,$4...])|Var(^string)|Load(^[$4,^int])|LengthOf($4)>|And(^{^$195...})|Or(^{^$195...})|Not(^$195)|Inequality(^[^AType<IntT|RealT>,$228<^AExpr<Num(^real)|VExpr<Fn(^[^string,$4...])|Var(^string)|Load(^[$4,^int])|LengthOf($4)>|Sum(^[^real,^{|$228...|}[$228...]])|Mul(^[^real,^{|$228...|}[$228...]])|Div(^[$228,$228])>>])|Equation(^[^AType<IntT|RealT>,$228])|SubsetEq(^[^SetT(^[^bool,$2]),^SExpr<VExpr<Fn(^[^string,$4...])|Var(^string)|Load(^[$4,^int])|LengthOf($4)>|Set(^{$4...})>,^SExpr<VExpr<Fn(^[^string,$4...])|Var(^string)|Load(^[$4,^int])|LengthOf($4)>|Set(^{$4...})>])|ForAll(^[^{^[^Var(^string),$2]...},^$195])|Exists(^[^{^[^Var(^string),$2]...},^$195])>>|AExpr<Num(^real)|VExpr<Fn(^[^string,$4...])|Var(^string)|Load(^[$4,^int])|LengthOf($4)>|Sum(^[^real,^{|$228...|}[$228...]])|Mul(^[^real,^{|$228...|}[$228...]])|Div(^[$228,$228])>|SExpr<VExpr<Fn(^[^string,$4...])|Var(^string)|Load(^[$4,^int])|LengthOf($4)>|Set(^{$4...})>>>,$4|}[$4<^Expr<$146<Value<Null|Tuple(^[^$146...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$146...})>>|Tuple(^[$4...])|Fn(^[^string,$4...])|$195<BExpr<$14|Bool<True|False>|VExpr<Fn(^[^string,$4...])|Var(^string)|Load(^[$4,^int])|LengthOf($4)>|And(^{^$195...})|Or(^{^$195...})|Not(^$195)|Inequality(^[^AType<IntT|RealT>,$228<^AExpr<Num(^real)|VExpr<Fn(^[^string,$4...])|Var(^string)|Load(^[$4,^int])|LengthOf($4)>|Sum(^[^real,^{|$228...|}[$228...]])|Mul(^[^real,^{|$228...|}[$228...]])|Div(^[$228,$228])>>])|Equation(^[^AType<IntT|RealT>,$228])|SubsetEq(^[^SetT(^[^bool,$2]),^SExpr<VExpr<Fn(^[^string,$4...])|Var(^string)|Load(^[$4,^int])|LengthOf($4)>|Set(^{$4...})>,^SExpr<VExpr<Fn(^[^string,$4...])|Var(^string)|Load(^[$4,^int])|LengthOf($4)>|Set(^{$4...})>])|ForAll(^[^{^[^Var(^string),$2]...},^$195])|Exists(^[^{^[^Var(^string),$2]...},^$195])>>|AExpr<Num(^real)|VExpr<Fn(^[^string,$4...])|Var(^string)|Load(^[$4,^int])|LengthOf($4)>|Sum(^[^real,^{|$228...|}[$228...]])|Mul(^[^real,^{|$228...|}[$228...]])|Div(^[$228,$228])>|SExpr<VExpr<Fn(^[^string,$4...])|Var(^string)|Load(^[$4,^int])|LengthOf($4)>|Set(^{$4...})>>>,$4]])>
-		Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.String), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Any,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Term("Null"), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("Num",Schema.Real), Schema.Term("String",Schema.Any)), Schema.Term("Set",Schema.Set(true))), Schema.Term("Tuple",Schema.List(true)), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Any, Schema.Or(Schema.Or(Schema.Any, Schema.Term("Var",Schema.Any), Schema.Term("Load",Schema.List(true,Schema.Any,Schema.Int))), Schema.Term("LengthOf",Schema.Any)), Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any)), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Or(Schema.Any, Schema.Any, Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any))))), Schema.Term("Equation",Schema.Any))), Schema.Term("SubsetEq",Schema.List(true,Schema.Any,Schema.Or(Schema.Any, Schema.Term("Set",Schema.Set(true))),Schema.Any))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any)))), Schema.Any), Schema.Any),Schema.Any))),
-		// $12<Mul($10<^[^real,^{|$3<^$20<AExpr<$12|Num(^real)|Sum($10)|Div(^[$3,$3])|$40<VExpr<Var(^string)|$51<Fn(^[^string,$45<^Expr<$20|$51|$86<Value<Num(^real)|Null|Tuple(^[^$86...])|Bool<True|False>|String(^string)|Set(^{^$86...})>>|Tuple(^[$45...])|$126<BExpr<$40|Bool<True|False>|And(^{^$126...})|Or(^{^$126...})|Not(^$126)|Equals(^[$138<^Type<Atom<NotT($161<^Proton<TupleT(^[$161...])|SetT(^[^bool,$161])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$161...])|SetT(^[^bool,$161])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($138)|OrT(^{$138...})|AndT(^{$138...})|SetT(^[^bool,$138])|TupleT(^[$138...])|FunctionT(^[$138,$138,$138...])>>,^{|$45,$45|}[$45,$45]])|Inequality(^[^AType<IntT|RealT>,$3])|Equation(^[^AType<IntT|RealT>,$3])|SubsetEq(^[^SetT(^[^bool,$138]),^SExpr<$40|Set(^{$45...})>,^SExpr<$40|Set(^{$45...})>])|ForAll(^[^{^[^Var(^string),$138]...},^$126])|Exists(^[^{^[^Var(^string),$138]...},^$126])>>|SExpr<$40|Set(^{$45...})>>>...])>|Load(^[$45,^int])|LengthOf($45)>>>>>...|}[$3<^$20<AExpr<$12|Num(^real)|Sum($10)|Div(^[$3,$3])|$40<VExpr<Var(^string)|$51<Fn(^[^string,$45<^Expr<$20|$51|$86<Value<Num(^real)|Null|Tuple(^[^$86...])|Bool<True|False>|String(^string)|Set(^{^$86...})>>|Tuple(^[$45...])|$126<BExpr<$40|Bool<True|False>|And(^{^$126...})|Or(^{^$126...})|Not(^$126)|Equals(^[$138<^Type<Atom<NotT($161<^Proton<TupleT(^[$161...])|SetT(^[^bool,$161])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$161...])|SetT(^[^bool,$161])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($138)|OrT(^{$138...})|AndT(^{$138...})|SetT(^[^bool,$138])|TupleT(^[$138...])|FunctionT(^[$138,$138,$138...])>>,^{|$45,$45|}[$45,$45]])|Inequality(^[^AType<IntT|RealT>,$3])|Equation(^[^AType<IntT|RealT>,$3])|SubsetEq(^[^SetT(^[^bool,$138]),^SExpr<$40|Set(^{$45...})>,^SExpr<$40|Set(^{$45...})>])|ForAll(^[^{^[^Var(^string),$138]...},^$126])|Exists(^[^{^[^Var(^string),$138]...},^$126])>>|SExpr<$40|Set(^{$45...})>>>...])>|Load(^[$45,^int])|LengthOf($45)>>>>>...]]>)>
+		// $14<Equals(^[$2<^Type<Atom<NotT($27<^Proton<TupleT(^[$27...])|ArrayT($27)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$27...])|ArrayT($27)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT(^{$2...})|AndT(^{$2...})|ArrayT($2)|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>,^{|$4<^Expr<$133<Value<Null|Tuple(^[^$133...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$133...])>>|Tuple(^[$4...])|$173<BExpr<$14|Bool<True|False>|VExpr<Var(^string)|Fn(^[^string,$4...])|Load(^[$4,^int])|LengthOf($4)|IndexOf(^[$4,$4])>|And(^{^$173...})|Or(^{^$173...})|Not(^$173)|Inequality(^[^AType<IntT|RealT>,$220<^AExpr<Num(^real)|VExpr<Var(^string)|Fn(^[^string,$4...])|Load(^[$4,^int])|LengthOf($4)|IndexOf(^[$4,$4])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>>])|Equation(^[^AType<IntT|RealT>,$220])|ForAll(^[^{^[^Var(^string),$2]...},^$173])|Exists(^[^{^[^Var(^string),$2]...},^$173])>>|AExpr<Num(^real)|VExpr<Var(^string)|Fn(^[^string,$4...])|Load(^[$4,^int])|LengthOf($4)|IndexOf(^[$4,$4])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>|SExpr<VExpr<Var(^string)|Fn(^[^string,$4...])|Load(^[$4,^int])|LengthOf($4)|IndexOf(^[$4,$4])>|Array(^[$4...])>>>,$4|}[$4<^Expr<$133<Value<Null|Tuple(^[^$133...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$133...])>>|Tuple(^[$4...])|$173<BExpr<$14|Bool<True|False>|VExpr<Var(^string)|Fn(^[^string,$4...])|Load(^[$4,^int])|LengthOf($4)|IndexOf(^[$4,$4])>|And(^{^$173...})|Or(^{^$173...})|Not(^$173)|Inequality(^[^AType<IntT|RealT>,$220<^AExpr<Num(^real)|VExpr<Var(^string)|Fn(^[^string,$4...])|Load(^[$4,^int])|LengthOf($4)|IndexOf(^[$4,$4])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>>])|Equation(^[^AType<IntT|RealT>,$220])|ForAll(^[^{^[^Var(^string),$2]...},^$173])|Exists(^[^{^[^Var(^string),$2]...},^$173])>>|AExpr<Num(^real)|VExpr<Var(^string)|Fn(^[^string,$4...])|Load(^[$4,^int])|LengthOf($4)|IndexOf(^[$4,$4])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>|SExpr<VExpr<Var(^string)|Fn(^[^string,$4...])|Load(^[$4,^int])|LengthOf($4)|IndexOf(^[$4,$4])>|Array(^[$4...])>>>,$4]])>
+		Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("ArrayT",Schema.Any), Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.String), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("ArrayT",Schema.Any), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Term("Null"), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("Num",Schema.Real), Schema.Term("String",Schema.Any)), Schema.Term("Array",Schema.Any)), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Any, Schema.Or(Schema.Or(Schema.Term("Var",Schema.Any), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("Load",Schema.List(true,Schema.Any,Schema.Int)), Schema.Term("LengthOf",Schema.Any)), Schema.Term("IndexOf",Schema.List(true,Schema.Any,Schema.Any))), Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any)), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Or(Schema.Any, Schema.Any, Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any))))), Schema.Term("Equation",Schema.Any))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any)))), Schema.Any), Schema.Or(Schema.Any, Schema.Term("Array",Schema.Any))),Schema.Any))),
+		// $12<Mul($10<^[^real,^{|$3<^$20<AExpr<$12|Num(^real)|Sum($10)|Div(^[$3,$3])|$41<VExpr<Var(^string)|Fn(^[^string,$46<^Expr<$20|$84<Value<Num(^real)|Null|Tuple(^[^$84...])|Bool<True|False>|String(^string)|Array(^[^$84...])>>|Tuple(^[$46...])|$121<BExpr<$41|Bool<True|False>|And(^{^$121...})|Or(^{^$121...})|Not(^$121)|Equals(^[$133<^Type<Atom<NotT($156<^Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($133)|OrT(^{$133...})|AndT(^{$133...})|ArrayT($133)|TupleT(^[$133...])|FunctionT(^[$133,$133,$133...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$3])|Equation(^[^AType<IntT|RealT>,$3])|ForAll(^[^{^[^Var(^string),$133]...},^$121])|Exists(^[^{^[^Var(^string),$133]...},^$121])>>|SExpr<$41|Array(^[$46...])>>>...])|Load(^[$46,^int])|LengthOf($46)|IndexOf(^[$46,$46])>>>>>...|}[$3<^$20<AExpr<$12|Num(^real)|Sum($10)|Div(^[$3,$3])|$41<VExpr<Var(^string)|Fn(^[^string,$46<^Expr<$20|$84<Value<Num(^real)|Null|Tuple(^[^$84...])|Bool<True|False>|String(^string)|Array(^[^$84...])>>|Tuple(^[$46...])|$121<BExpr<$41|Bool<True|False>|And(^{^$121...})|Or(^{^$121...})|Not(^$121)|Equals(^[$133<^Type<Atom<NotT($156<^Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($133)|OrT(^{$133...})|AndT(^{$133...})|ArrayT($133)|TupleT(^[$133...])|FunctionT(^[$133,$133,$133...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$3])|Equation(^[^AType<IntT|RealT>,$3])|ForAll(^[^{^[^Var(^string),$133]...},^$121])|Exists(^[^{^[^Var(^string),$133]...},^$121])>>|SExpr<$41|Array(^[$46...])>>>...])|Load(^[$46,^int])|LengthOf($46)|IndexOf(^[$46,$46])>>>>>...]]>)>
 		Schema.Term("Mul",Schema.List(true,Schema.Real,Schema.Bag(true))),
-		// $8<Div(^[$2<^$16<AExpr<$8|Num(^real)|Sum(^[^real,^{|$2...|}[$2...]])|Mul(^[^real,^{|$2...|}[$2...]])|$40<VExpr<Var(^string)|$51<Fn(^[^string,$45<^Expr<$16|$51|$86<Value<Num(^real)|Null|Tuple(^[^$86...])|Bool<True|False>|String(^string)|Set(^{^$86...})>>|Tuple(^[$45...])|$126<BExpr<$40|Bool<True|False>|And(^{^$126...})|Or(^{^$126...})|Not(^$126)|Equals(^[$138<^Type<Atom<NotT($161<^Proton<TupleT(^[$161...])|SetT(^[^bool,$161])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$161...])|SetT(^[^bool,$161])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($138)|OrT(^{$138...})|AndT(^{$138...})|SetT(^[^bool,$138])|TupleT(^[$138...])|FunctionT(^[$138,$138,$138...])>>,^{|$45,$45|}[$45,$45]])|Inequality(^[^AType<IntT|RealT>,$2])|Equation(^[^AType<IntT|RealT>,$2])|SubsetEq(^[^SetT(^[^bool,$138]),^SExpr<$40|Set(^{$45...})>,^SExpr<$40|Set(^{$45...})>])|ForAll(^[^{^[^Var(^string),$138]...},^$126])|Exists(^[^{^[^Var(^string),$138]...},^$126])>>|SExpr<$40|Set(^{$45...})>>>...])>|Load(^[$45,^int])|LengthOf($45)>>>>>,$2])>
-		Schema.Term("Div",Schema.List(true,Schema.Or(Schema.Any, Schema.Term("Num",Schema.Real), Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Or(Schema.Or(Schema.Term("Var",Schema.String), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("Load",Schema.List(true,Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Any, Schema.Term("Null"), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("String",Schema.Any)), Schema.Term("Set",Schema.Set(true))), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Any, Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.Any), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Any,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Any)), Schema.Term("Equation",Schema.Any))), Schema.Term("SubsetEq",Schema.List(true,Schema.Any,Schema.Or(Schema.Any, Schema.Term("Set",Schema.Set(true))),Schema.Any))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any))))), Schema.Any),Schema.Int))), Schema.Term("LengthOf",Schema.Any))),Schema.Any)),
-		// $12<Sum($10<^[^real,^{|$3<^$20<AExpr<$12|Num(^real)|Mul($10)|Div(^[$3,$3])|$40<VExpr<Var(^string)|$51<Fn(^[^string,$45<^Expr<$20|$51|$86<Value<Num(^real)|Null|Tuple(^[^$86...])|Bool<True|False>|String(^string)|Set(^{^$86...})>>|Tuple(^[$45...])|$126<BExpr<$40|Bool<True|False>|And(^{^$126...})|Or(^{^$126...})|Not(^$126)|Equals(^[$138<^Type<Atom<NotT($161<^Proton<TupleT(^[$161...])|SetT(^[^bool,$161])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$161...])|SetT(^[^bool,$161])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($138)|OrT(^{$138...})|AndT(^{$138...})|SetT(^[^bool,$138])|TupleT(^[$138...])|FunctionT(^[$138,$138,$138...])>>,^{|$45,$45|}[$45,$45]])|Inequality(^[^AType<IntT|RealT>,$3])|Equation(^[^AType<IntT|RealT>,$3])|SubsetEq(^[^SetT(^[^bool,$138]),^SExpr<$40|Set(^{$45...})>,^SExpr<$40|Set(^{$45...})>])|ForAll(^[^{^[^Var(^string),$138]...},^$126])|Exists(^[^{^[^Var(^string),$138]...},^$126])>>|SExpr<$40|Set(^{$45...})>>>...])>|Load(^[$45,^int])|LengthOf($45)>>>>>...|}[$3<^$20<AExpr<$12|Num(^real)|Mul($10)|Div(^[$3,$3])|$40<VExpr<Var(^string)|$51<Fn(^[^string,$45<^Expr<$20|$51|$86<Value<Num(^real)|Null|Tuple(^[^$86...])|Bool<True|False>|String(^string)|Set(^{^$86...})>>|Tuple(^[$45...])|$126<BExpr<$40|Bool<True|False>|And(^{^$126...})|Or(^{^$126...})|Not(^$126)|Equals(^[$138<^Type<Atom<NotT($161<^Proton<TupleT(^[$161...])|SetT(^[^bool,$161])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$161...])|SetT(^[^bool,$161])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($138)|OrT(^{$138...})|AndT(^{$138...})|SetT(^[^bool,$138])|TupleT(^[$138...])|FunctionT(^[$138,$138,$138...])>>,^{|$45,$45|}[$45,$45]])|Inequality(^[^AType<IntT|RealT>,$3])|Equation(^[^AType<IntT|RealT>,$3])|SubsetEq(^[^SetT(^[^bool,$138]),^SExpr<$40|Set(^{$45...})>,^SExpr<$40|Set(^{$45...})>])|ForAll(^[^{^[^Var(^string),$138]...},^$126])|Exists(^[^{^[^Var(^string),$138]...},^$126])>>|SExpr<$40|Set(^{$45...})>>>...])>|Load(^[$45,^int])|LengthOf($45)>>>>>...]]>)>
+		// $8<Div(^[$2<^$16<AExpr<$8|Num(^real)|Sum(^[^real,^{|$2...|}[$2...]])|Mul(^[^real,^{|$2...|}[$2...]])|$41<VExpr<Var(^string)|Fn(^[^string,$46<^Expr<$16|$84<Value<Num(^real)|Null|Tuple(^[^$84...])|Bool<True|False>|String(^string)|Array(^[^$84...])>>|Tuple(^[$46...])|$121<BExpr<$41|Bool<True|False>|And(^{^$121...})|Or(^{^$121...})|Not(^$121)|Equals(^[$133<^Type<Atom<NotT($156<^Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($133)|OrT(^{$133...})|AndT(^{$133...})|ArrayT($133)|TupleT(^[$133...])|FunctionT(^[$133,$133,$133...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$2])|Equation(^[^AType<IntT|RealT>,$2])|ForAll(^[^{^[^Var(^string),$133]...},^$121])|Exists(^[^{^[^Var(^string),$133]...},^$121])>>|SExpr<$41|Array(^[$46...])>>>...])|Load(^[$46,^int])|LengthOf($46)|IndexOf(^[$46,$46])>>>>>,$2])>
+		Schema.Term("Div",Schema.List(true,Schema.Or(Schema.Any, Schema.Term("Num",Schema.Real), Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Or(Schema.Or(Schema.Term("Var",Schema.String), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("Load",Schema.List(true,Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Term("Null"), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("String",Schema.Any)), Schema.Term("Array",Schema.Any)), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Any, Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("ArrayT",Schema.Any), Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.Any), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("ArrayT",Schema.Any), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Any)), Schema.Term("Equation",Schema.Any))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any))))), Schema.Or(Schema.Any, Schema.Term("Array",Schema.Any))),Schema.Int)), Schema.Term("LengthOf",Schema.Any)), Schema.Term("IndexOf",Schema.List(true,Schema.Any,Schema.Any)))),Schema.Any)),
+		// $12<Sum($10<^[^real,^{|$3<^$20<AExpr<$12|Num(^real)|Mul($10)|Div(^[$3,$3])|$41<VExpr<Var(^string)|Fn(^[^string,$46<^Expr<$20|$84<Value<Num(^real)|Null|Tuple(^[^$84...])|Bool<True|False>|String(^string)|Array(^[^$84...])>>|Tuple(^[$46...])|$121<BExpr<$41|Bool<True|False>|And(^{^$121...})|Or(^{^$121...})|Not(^$121)|Equals(^[$133<^Type<Atom<NotT($156<^Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($133)|OrT(^{$133...})|AndT(^{$133...})|ArrayT($133)|TupleT(^[$133...])|FunctionT(^[$133,$133,$133...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$3])|Equation(^[^AType<IntT|RealT>,$3])|ForAll(^[^{^[^Var(^string),$133]...},^$121])|Exists(^[^{^[^Var(^string),$133]...},^$121])>>|SExpr<$41|Array(^[$46...])>>>...])|Load(^[$46,^int])|LengthOf($46)|IndexOf(^[$46,$46])>>>>>...|}[$3<^$20<AExpr<$12|Num(^real)|Mul($10)|Div(^[$3,$3])|$41<VExpr<Var(^string)|Fn(^[^string,$46<^Expr<$20|$84<Value<Num(^real)|Null|Tuple(^[^$84...])|Bool<True|False>|String(^string)|Array(^[^$84...])>>|Tuple(^[$46...])|$121<BExpr<$41|Bool<True|False>|And(^{^$121...})|Or(^{^$121...})|Not(^$121)|Equals(^[$133<^Type<Atom<NotT($156<^Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($133)|OrT(^{$133...})|AndT(^{$133...})|ArrayT($133)|TupleT(^[$133...])|FunctionT(^[$133,$133,$133...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$3])|Equation(^[^AType<IntT|RealT>,$3])|ForAll(^[^{^[^Var(^string),$133]...},^$121])|Exists(^[^{^[^Var(^string),$133]...},^$121])>>|SExpr<$41|Array(^[$46...])>>>...])|Load(^[$46,^int])|LengthOf($46)|IndexOf(^[$46,$46])>>>>>...]]>)>
 		Schema.Term("Sum",Schema.List(true,Schema.Real,Schema.Bag(true))),
-		// $10<Equation($8<^[^AType<IntT|RealT>,$4<^$29<AExpr<Num(^real)|Sum(^[^real,^{|$4...|}[$4...]])|Mul(^[^real,^{|$4...|}[$4...]])|Div(^[$4,$4])|$59<VExpr<Var(^string)|$70<Fn(^[^string,$64<^Expr<$29|$70|$105<Value<Num(^real)|Null|Tuple(^[^$105...])|Bool<True|False>|String(^string)|Set(^{^$105...})>>|Tuple(^[$64...])|$144<BExpr<$59|Bool<True|False>|And(^{^$144...})|Or(^{^$144...})|Not(^$144)|Equals(^[$156<^Type<Atom<NotT($179<^Proton<TupleT(^[$179...])|SetT(^[^bool,$179])|Quark<IntT|RealT|AnyT|NullT|VoidT|BoolT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$179...])|SetT(^[^bool,$179])|Quark<IntT|RealT|AnyT|NullT|VoidT|BoolT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($156)|OrT(^{$156...})|AndT(^{$156...})|SetT(^[^bool,$156])|TupleT(^[$156...])|FunctionT(^[$156,$156,$156...])>>,^{|$64,$64|}[$64,$64]])|$10|Inequality($8)|SubsetEq(^[^SetT(^[^bool,$156]),^SExpr<$59|Set(^{$64...})>,^SExpr<$59|Set(^{$64...})>])|ForAll(^[^{^[^Var(^string),$156]...},^$144])|Exists(^[^{^[^Var(^string),$156]...},^$144])>>|SExpr<$59|Set(^{$64...})>>>...])>|Load(^[$64,^int])|LengthOf($64)>>>>>]>)>
-		Schema.Term("Equation",Schema.List(true,Schema.Or(Schema.Term("IntT"), Schema.Term("RealT")),Schema.Or(Schema.Term("Num",Schema.Real), Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any)), Schema.Or(Schema.Or(Schema.Term("Var",Schema.String), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("Load",Schema.List(true,Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Any, Schema.Term("Null"), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("String",Schema.Any)), Schema.Term("Set",Schema.Set(true))), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Any, Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Or(Schema.Any, Schema.Any, Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.Any), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Any,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Any, Schema.Term("Inequality",Schema.Any))), Schema.Term("SubsetEq",Schema.List(true,Schema.Any,Schema.Or(Schema.Any, Schema.Term("Set",Schema.Set(true))),Schema.Any))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any))))), Schema.Any),Schema.Int))), Schema.Term("LengthOf",Schema.Any))))),
-		// $10<Inequality($8<^[^AType<IntT|RealT>,$4<^$29<AExpr<Num(^real)|Sum(^[^real,^{|$4...|}[$4...]])|Mul(^[^real,^{|$4...|}[$4...]])|Div(^[$4,$4])|$59<VExpr<Var(^string)|$70<Fn(^[^string,$64<^Expr<$29|$70|$105<Value<Num(^real)|Null|Tuple(^[^$105...])|Bool<True|False>|String(^string)|Set(^{^$105...})>>|Tuple(^[$64...])|$144<BExpr<$59|Bool<True|False>|And(^{^$144...})|Or(^{^$144...})|Not(^$144)|Equals(^[$156<^Type<Atom<NotT($179<^Proton<TupleT(^[$179...])|SetT(^[^bool,$179])|Quark<IntT|RealT|AnyT|NullT|VoidT|BoolT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$179...])|SetT(^[^bool,$179])|Quark<IntT|RealT|AnyT|NullT|VoidT|BoolT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($156)|OrT(^{$156...})|AndT(^{$156...})|SetT(^[^bool,$156])|TupleT(^[$156...])|FunctionT(^[$156,$156,$156...])>>,^{|$64,$64|}[$64,$64]])|$10|Equation($8)|SubsetEq(^[^SetT(^[^bool,$156]),^SExpr<$59|Set(^{$64...})>,^SExpr<$59|Set(^{$64...})>])|ForAll(^[^{^[^Var(^string),$156]...},^$144])|Exists(^[^{^[^Var(^string),$156]...},^$144])>>|SExpr<$59|Set(^{$64...})>>>...])>|Load(^[$64,^int])|LengthOf($64)>>>>>]>)>
-		Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Term("IntT"), Schema.Term("RealT")),Schema.Or(Schema.Term("Num",Schema.Real), Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any)), Schema.Or(Schema.Or(Schema.Term("Var",Schema.String), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("Load",Schema.List(true,Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Any, Schema.Term("Null"), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("String",Schema.Any)), Schema.Term("Set",Schema.Set(true))), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Any, Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Or(Schema.Any, Schema.Any, Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.Any), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Any,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Any, Schema.Term("Equation",Schema.Any))), Schema.Term("SubsetEq",Schema.List(true,Schema.Any,Schema.Or(Schema.Any, Schema.Term("Set",Schema.Set(true))),Schema.Any))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any))))), Schema.Any),Schema.Int))), Schema.Term("LengthOf",Schema.Any))))),
-		// $7<Set(^{$2<^Expr<$44<Value<Null|Tuple(^[^$44...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$44...})>>|Tuple(^[$2...])|Fn(^[^string,$2...])|$95<BExpr<Bool<True|False>|VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|And(^{^$95...})|Or(^{^$95...})|Not(^$95)|Equals(^[$127<^Type<Atom<NotT($150<^Proton<TupleT(^[$150...])|SetT(^[^bool,$150])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$150...])|SetT(^[^bool,$150])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($127)|OrT(^{$127...})|AndT(^{$127...})|SetT(^[^bool,$127])|TupleT(^[$127...])|FunctionT(^[$127,$127,$127...])>>,^{|$2,$2|}[$2,$2]])|Inequality(^[^AType<IntT|RealT>,$233<^AExpr<Num(^real)|VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|Sum(^[^real,^{|$233...|}[$233...]])|Mul(^[^real,^{|$233...|}[$233...]])|Div(^[$233,$233])>>])|Equation(^[^AType<IntT|RealT>,$233])|SubsetEq(^[^SetT(^[^bool,$127]),^SExpr<$7|VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>>,^SExpr<$7|VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>>])|ForAll(^[^{^[^Var(^string),$127]...},^$95])|Exists(^[^{^[^Var(^string),$127]...},^$95])>>|AExpr<Num(^real)|VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|Sum(^[^real,^{|$233...|}[$233...]])|Mul(^[^real,^{|$233...|}[$233...]])|Div(^[$233,$233])>|SExpr<$7|VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>>>>...})>
-		Schema.Term("Set",Schema.Set(true)),
-		// $10<SubsetEq(^[^$19<SetT(^[^bool,$13<^Type<$19|Atom<NotT($31<^Proton<TupleT(^[$31...])|SetT(^[^bool,$31])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$31...])|SetT(^[^bool,$31])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($13)|OrT(^{$13...})|AndT(^{$13...})|TupleT(^[$13...])|FunctionT(^[$13,$13,$13...])>>])>,^$111<SExpr<$121<VExpr<Var(^string)|$131<Fn(^[^string,$125<^Expr<$111|$131|$166<Value<Null|Tuple(^[^$166...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$166...})>>|Tuple(^[$125...])|$208<BExpr<$10|$121|Bool<True|False>|And(^{^$208...})|Or(^{^$208...})|Not(^$208)|Equals(^[$13,^{|$125,$125|}[$125,$125]])|Inequality(^[^AType<IntT|RealT>,$231<^AExpr<$121|Num(^real)|Sum(^[^real,^{|$231...|}[$231...]])|Mul(^[^real,^{|$231...|}[$231...]])|Div(^[$231,$231])>>])|Equation(^[^AType<IntT|RealT>,$231])|ForAll(^[^{^[^Var(^string),$13]...},^$208])|Exists(^[^{^[^Var(^string),$13]...},^$208])>>|AExpr<$121|Num(^real)|Sum(^[^real,^{|$231...|}[$231...]])|Mul(^[^real,^{|$231...|}[$231...]])|Div(^[$231,$231])>>>...])>|Load(^[$125,^int])|LengthOf($125)>>|Set(^{$125...})>>,^$111])>
-		Schema.Term("SubsetEq",Schema.List(true,Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Or(Schema.Any, Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("SetT",Schema.List(true,Schema.Any,Schema.Any)), Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.String), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))))),Schema.Or(Schema.Or(Schema.Or(Schema.Term("Var",Schema.Any), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("Load",Schema.List(true,Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Term("Null"), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("Num",Schema.Real), Schema.Term("String",Schema.Any)), Schema.Term("Set",Schema.Set(true))), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Any, Schema.Any, Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Any,Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Or(Schema.Any, Schema.Any, Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any))))), Schema.Term("Equation",Schema.Any)))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any)))), Schema.Any)),Schema.Int))), Schema.Term("LengthOf",Schema.Any)), Schema.Term("Set",Schema.Set(true))),Schema.Any)),
-		// $19<ForAll($17<^[^{^[^Var(^string),$4<^Type<Atom<NotT($35<^Proton<TupleT(^[$35...])|SetT(^[^bool,$35])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$35...])|SetT(^[^bool,$35])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($4)|OrT(^{$4...})|AndT(^{$4...})|SetT(^[^bool,$4])|TupleT(^[$4...])|FunctionT(^[$4,$4,$4...])>>]...},$13<^$139<BExpr<$148<VExpr<Var(^string)|$156<Fn(^[^string,$150<^Expr<$139|$156|$191<Value<Null|Tuple(^[^$191...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$191...})>>|Tuple(^[$150...])|$218<AExpr<$148|Num(^real)|Sum(^[^real,^{|^$218...|}[^$218...]])|Mul(^[^real,^{|^$218...|}[^$218...]])|Div(^[^$218,^$218])>>|SExpr<$148|Set(^{$150...})>>>...])>|Load(^[$150,^int])|LengthOf($150)>>|Bool<True|False>|And(^{$13...})|Or(^{$13...})|Not($13)|Equals(^[$4,^{|$150,$150|}[$150,$150]])|Inequality(^[^AType<IntT|RealT>,^$218])|Equation(^[^AType<IntT|RealT>,^$218])|SubsetEq(^[^SetT(^[^bool,$4]),^SExpr<$148|Set(^{$150...})>,^SExpr<$148|Set(^{$150...})>])|$19|Exists($17)>>>]>)>
-		Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Term("Var",Schema.String), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("Load",Schema.List(true,Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Any, Schema.Or(Schema.Or(Schema.Term("Null"), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("Num",Schema.Real), Schema.Term("String",Schema.Any)), Schema.Term("Set",Schema.Set(true))), Schema.Term("Tuple",Schema.List(true))), Schema.Or(Schema.Any, Schema.Any, Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Any, Schema.Term("Set",Schema.Set(true)))),Schema.Int))), Schema.Term("LengthOf",Schema.Any)), Schema.Any, Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.Any), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Any,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Any)), Schema.Term("Equation",Schema.Any))), Schema.Term("SubsetEq",Schema.List(true,Schema.Any,Schema.Any,Schema.Any))), Schema.Or(Schema.Any, Schema.Term("Exists",Schema.Any))))),
-		// $19<Exists($17<^[^{^[^Var(^string),$4<^Type<Atom<NotT($35<^Proton<TupleT(^[$35...])|SetT(^[^bool,$35])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$35...])|SetT(^[^bool,$35])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($4)|OrT(^{$4...})|AndT(^{$4...})|SetT(^[^bool,$4])|TupleT(^[$4...])|FunctionT(^[$4,$4,$4...])>>]...},$13<^$139<BExpr<$148<VExpr<Var(^string)|$156<Fn(^[^string,$150<^Expr<$139|$156|$191<Value<Null|Tuple(^[^$191...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$191...})>>|Tuple(^[$150...])|$218<AExpr<$148|Num(^real)|Sum(^[^real,^{|^$218...|}[^$218...]])|Mul(^[^real,^{|^$218...|}[^$218...]])|Div(^[^$218,^$218])>>|SExpr<$148|Set(^{$150...})>>>...])>|Load(^[$150,^int])|LengthOf($150)>>|Bool<True|False>|And(^{$13...})|Or(^{$13...})|Not($13)|Equals(^[$4,^{|$150,$150|}[$150,$150]])|Inequality(^[^AType<IntT|RealT>,^$218])|Equation(^[^AType<IntT|RealT>,^$218])|SubsetEq(^[^SetT(^[^bool,$4]),^SExpr<$148|Set(^{$150...})>,^SExpr<$148|Set(^{$150...})>])|$19|ForAll($17)>>>]>)>
-		Schema.Term("Exists",Schema.List(true,Schema.Set(true),Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Term("Var",Schema.String), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("Load",Schema.List(true,Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Any, Schema.Or(Schema.Or(Schema.Term("Null"), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("Num",Schema.Real), Schema.Term("String",Schema.Any)), Schema.Term("Set",Schema.Set(true))), Schema.Term("Tuple",Schema.List(true))), Schema.Or(Schema.Any, Schema.Any, Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Any, Schema.Term("Set",Schema.Set(true)))),Schema.Int))), Schema.Term("LengthOf",Schema.Any)), Schema.Any, Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.Any), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Any,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Any)), Schema.Term("Equation",Schema.Any))), Schema.Term("SubsetEq",Schema.List(true,Schema.Any,Schema.Any,Schema.Any))), Schema.Or(Schema.Any, Schema.Term("ForAll",Schema.Any))))),
-		// Inhabited($2<^Type<Atom<NotT($17<^Proton<TupleT(^[$17...])|SetT(^[^bool,$17])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$17...])|SetT(^[^bool,$17])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT(^{$2...})|AndT(^{$2...})|SetT(^[^bool,$2])|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>)
-		Schema.Term("Inhabited",Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.String), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Any,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any)))),
-		// Is(^[$2<^Expr<$48<Value<Null|Tuple(^[^$48...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$48...})>>|Tuple(^[$2...])|Fn(^[^string,$2...])|$99<BExpr<Bool<True|False>|VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|And(^{^$99...})|Or(^{^$99...})|Not(^$99)|Equals(^[$4<^Type<Atom<NotT($152<^Proton<TupleT(^[$152...])|SetT(^[^bool,$152])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$152...])|SetT(^[^bool,$152])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($4)|OrT(^{$4...})|AndT(^{$4...})|SetT(^[^bool,$4])|TupleT(^[$4...])|FunctionT(^[$4,$4,$4...])>>,^{|$2,$2|}[$2,$2]])|Inequality(^[^AType<IntT|RealT>,$235<^AExpr<Num(^real)|VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|Sum(^[^real,^{|$235...|}[$235...]])|Mul(^[^real,^{|$235...|}[$235...]])|Div(^[$235,$235])>>])|Equation(^[^AType<IntT|RealT>,$235])|SubsetEq(^[^SetT(^[^bool,$4]),^SExpr<VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|Set(^{$2...})>,^SExpr<VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|Set(^{$2...})>])|ForAll(^[^{^[^Var(^string),$4]...},^$99])|Exists(^[^{^[^Var(^string),$4]...},^$99])>>|AExpr<Num(^real)|VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|Sum(^[^real,^{|$235...|}[$235...]])|Mul(^[^real,^{|$235...|}[$235...]])|Div(^[$235,$235])>|SExpr<VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|Set(^{$2...})>>>,$4])
-		Schema.Term("Is",Schema.List(true,Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Term("Null"), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("Num",Schema.Real), Schema.Term("String",Schema.String)), Schema.Term("Set",Schema.Set(true))), Schema.Term("Tuple",Schema.List(true)), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Any, Schema.Term("Var",Schema.Any), Schema.Term("Load",Schema.List(true,Schema.Any,Schema.Int))), Schema.Term("LengthOf",Schema.Any)), Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.Any), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Any,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Or(Schema.Any, Schema.Any, Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any))))), Schema.Term("Equation",Schema.Any))), Schema.Term("SubsetEq",Schema.List(true,Schema.Any,Schema.Or(Schema.Any, Schema.Term("Set",Schema.Set(true))),Schema.Any))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any)))), Schema.Any), Schema.Any),Schema.Any))
+		// $10<Equation($8<^[^AType<IntT|RealT>,$4<^$29<AExpr<Num(^real)|Sum(^[^real,^{|$4...|}[$4...]])|Mul(^[^real,^{|$4...|}[$4...]])|Div(^[$4,$4])|$60<VExpr<Var(^string)|Fn(^[^string,$65<^Expr<$29|$103<Value<Num(^real)|Null|Tuple(^[^$103...])|Bool<True|False>|String(^string)|Array(^[^$103...])>>|Tuple(^[$65...])|$139<BExpr<$60|Bool<True|False>|And(^{^$139...})|Or(^{^$139...})|Not(^$139)|Equals(^[$151<^Type<Atom<NotT($174<^Proton<TupleT(^[$174...])|ArrayT($174)|Quark<IntT|RealT|AnyT|NullT|VoidT|BoolT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$174...])|ArrayT($174)|Quark<IntT|RealT|AnyT|NullT|VoidT|BoolT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($151)|OrT(^{$151...})|AndT(^{$151...})|ArrayT($151)|TupleT(^[$151...])|FunctionT(^[$151,$151,$151...])>>,^{|$65,$65|}[$65,$65]])|$10|Inequality($8)|ForAll(^[^{^[^Var(^string),$151]...},^$139])|Exists(^[^{^[^Var(^string),$151]...},^$139])>>|SExpr<$60|Array(^[$65...])>>>...])|Load(^[$65,^int])|LengthOf($65)|IndexOf(^[$65,$65])>>>>>]>)>
+		Schema.Term("Equation",Schema.List(true,Schema.Or(Schema.Term("IntT"), Schema.Term("RealT")),Schema.Or(Schema.Term("Num",Schema.Real), Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any)), Schema.Or(Schema.Or(Schema.Term("Var",Schema.String), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("Load",Schema.List(true,Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Term("Null"), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("String",Schema.Any)), Schema.Term("Array",Schema.Any)), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Any, Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("ArrayT",Schema.Any), Schema.Or(Schema.Any, Schema.Any, Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.Any), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("ArrayT",Schema.Any), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Any, Schema.Term("Inequality",Schema.Any))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any))))), Schema.Or(Schema.Any, Schema.Term("Array",Schema.Any))),Schema.Int)), Schema.Term("LengthOf",Schema.Any)), Schema.Term("IndexOf",Schema.List(true,Schema.Any,Schema.Any)))))),
+		// $10<Inequality($8<^[^AType<IntT|RealT>,$4<^$29<AExpr<Num(^real)|Sum(^[^real,^{|$4...|}[$4...]])|Mul(^[^real,^{|$4...|}[$4...]])|Div(^[$4,$4])|$60<VExpr<Var(^string)|Fn(^[^string,$65<^Expr<$29|$103<Value<Num(^real)|Null|Tuple(^[^$103...])|Bool<True|False>|String(^string)|Array(^[^$103...])>>|Tuple(^[$65...])|$139<BExpr<$60|Bool<True|False>|And(^{^$139...})|Or(^{^$139...})|Not(^$139)|Equals(^[$151<^Type<Atom<NotT($174<^Proton<TupleT(^[$174...])|ArrayT($174)|Quark<IntT|RealT|AnyT|NullT|VoidT|BoolT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$174...])|ArrayT($174)|Quark<IntT|RealT|AnyT|NullT|VoidT|BoolT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($151)|OrT(^{$151...})|AndT(^{$151...})|ArrayT($151)|TupleT(^[$151...])|FunctionT(^[$151,$151,$151...])>>,^{|$65,$65|}[$65,$65]])|$10|Equation($8)|ForAll(^[^{^[^Var(^string),$151]...},^$139])|Exists(^[^{^[^Var(^string),$151]...},^$139])>>|SExpr<$60|Array(^[$65...])>>>...])|Load(^[$65,^int])|LengthOf($65)|IndexOf(^[$65,$65])>>>>>]>)>
+		Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Term("IntT"), Schema.Term("RealT")),Schema.Or(Schema.Term("Num",Schema.Real), Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any)), Schema.Or(Schema.Or(Schema.Term("Var",Schema.String), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("Load",Schema.List(true,Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Term("Null"), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("String",Schema.Any)), Schema.Term("Array",Schema.Any)), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Any, Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("ArrayT",Schema.Any), Schema.Or(Schema.Any, Schema.Any, Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.Any), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("ArrayT",Schema.Any), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Any, Schema.Term("Equation",Schema.Any))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any))))), Schema.Or(Schema.Any, Schema.Term("Array",Schema.Any))),Schema.Int)), Schema.Term("LengthOf",Schema.Any)), Schema.Term("IndexOf",Schema.List(true,Schema.Any,Schema.Any)))))),
+		// $7<Array($5<^[$2<^Expr<$40<Value<Null|Tuple(^[^$40...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$40...])>>|Tuple($5)|$79<BExpr<Bool<True|False>|VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>|And(^{^$79...})|Or(^{^$79...})|Not(^$79)|Equals(^[$125<^Type<Atom<NotT($148<^Proton<TupleT(^[$148...])|ArrayT($148)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$148...])|ArrayT($148)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($125)|OrT(^{$125...})|AndT(^{$125...})|ArrayT($125)|TupleT(^[$125...])|FunctionT(^[$125,$125,$125...])>>,^{|$2,$2|}[$2,$2]])|Inequality(^[^AType<IntT|RealT>,$222<^AExpr<Num(^real)|VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>|Sum(^[^real,^{|$222...|}[$222...]])|Mul(^[^real,^{|$222...|}[$222...]])|Div(^[$222,$222])>>])|Equation(^[^AType<IntT|RealT>,$222])|ForAll(^[^{^[^Var(^string),$125]...},^$79])|Exists(^[^{^[^Var(^string),$125]...},^$79])>>|AExpr<Num(^real)|VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>|Sum(^[^real,^{|$222...|}[$222...]])|Mul(^[^real,^{|$222...|}[$222...]])|Div(^[$222,$222])>|SExpr<$7|VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>>>>...]>)>
+		Schema.Term("Array",Schema.List(true)),
+		// $8<IndexOf(^[$2<^Expr<$42<Value<Null|Tuple(^[^$42...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$42...])>>|Tuple(^[$2...])|$84<BExpr<Bool<True|False>|VExpr<$8|Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)>|And(^{^$84...})|Or(^{^$84...})|Not(^$84)|Equals(^[$123<^Type<Atom<NotT($146<^Proton<TupleT(^[$146...])|ArrayT($146)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$146...])|ArrayT($146)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($123)|OrT(^{$123...})|AndT(^{$123...})|ArrayT($123)|TupleT(^[$123...])|FunctionT(^[$123,$123,$123...])>>,^{|$2,$2|}[$2,$2]])|Inequality(^[^AType<IntT|RealT>,$220<^AExpr<Num(^real)|VExpr<$8|Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>>])|Equation(^[^AType<IntT|RealT>,$220])|ForAll(^[^{^[^Var(^string),$123]...},^$84])|Exists(^[^{^[^Var(^string),$123]...},^$84])>>|AExpr<Num(^real)|VExpr<$8|Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>|SExpr<VExpr<$8|Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)>|Array(^[$2...])>>>,$2])>
+		Schema.Term("IndexOf",Schema.List(true,Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Term("Null"), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("Num",Schema.Real), Schema.Term("String",Schema.String)), Schema.Term("Array",Schema.Any)), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Any, Schema.Or(Schema.Term("Var",Schema.Any), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("Load",Schema.List(true,Schema.Any,Schema.Int)), Schema.Term("LengthOf",Schema.Any))), Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("ArrayT",Schema.Any), Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.Any), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("ArrayT",Schema.Any), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Or(Schema.Any, Schema.Any, Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any))))), Schema.Term("Equation",Schema.Any))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any)))), Schema.Any), Schema.Or(Schema.Any, Schema.Term("Array",Schema.Any))),Schema.Any)),
+		// $19<ForAll($17<^[^{^[^Var(^string),$4<^Type<Atom<NotT($35<^Proton<TupleT(^[$35...])|ArrayT($35)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$35...])|ArrayT($35)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($4)|OrT(^{$4...})|AndT(^{$4...})|ArrayT($4)|TupleT(^[$4...])|FunctionT(^[$4,$4,$4...])>>]...},$13<^$127<BExpr<$137<VExpr<Var(^string)|Fn(^[^string,$139<^Expr<$127|$177<Value<Null|Tuple(^[^$177...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$177...])>>|Tuple(^[$139...])|$204<AExpr<$137|Num(^real)|Sum(^[^real,^{|^$204...|}[^$204...]])|Mul(^[^real,^{|^$204...|}[^$204...]])|Div(^[^$204,^$204])>>|SExpr<$137|Array(^[$139...])>>>...])|Load(^[$139,^int])|LengthOf($139)|IndexOf(^[$139,$139])>>|Bool<True|False>|And(^{$13...})|Or(^{$13...})|Not($13)|Equals(^[$4,^{|$139,$139|}[$139,$139]])|Inequality(^[^AType<IntT|RealT>,^$204])|Equation(^[^AType<IntT|RealT>,^$204])|$19|Exists($17)>>>]>)>
+		Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Term("Var",Schema.String), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("Load",Schema.List(true,Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Term("Null"), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("Num",Schema.Real), Schema.Term("String",Schema.Any)), Schema.Term("Array",Schema.Any)), Schema.Term("Tuple",Schema.List(true))), Schema.Or(Schema.Any, Schema.Any, Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Any, Schema.Term("Array",Schema.Any))),Schema.Int)), Schema.Term("LengthOf",Schema.Any)), Schema.Term("IndexOf",Schema.List(true,Schema.Any,Schema.Any))), Schema.Any, Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("ArrayT",Schema.Any), Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.Any), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("ArrayT",Schema.Any), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Any)), Schema.Term("Equation",Schema.Any))), Schema.Or(Schema.Any, Schema.Term("Exists",Schema.Any))))),
+		// $19<Exists($17<^[^{^[^Var(^string),$4<^Type<Atom<NotT($35<^Proton<TupleT(^[$35...])|ArrayT($35)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$35...])|ArrayT($35)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($4)|OrT(^{$4...})|AndT(^{$4...})|ArrayT($4)|TupleT(^[$4...])|FunctionT(^[$4,$4,$4...])>>]...},$13<^$127<BExpr<$137<VExpr<Var(^string)|Fn(^[^string,$139<^Expr<$127|$177<Value<Null|Tuple(^[^$177...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$177...])>>|Tuple(^[$139...])|$204<AExpr<$137|Num(^real)|Sum(^[^real,^{|^$204...|}[^$204...]])|Mul(^[^real,^{|^$204...|}[^$204...]])|Div(^[^$204,^$204])>>|SExpr<$137|Array(^[$139...])>>>...])|Load(^[$139,^int])|LengthOf($139)|IndexOf(^[$139,$139])>>|Bool<True|False>|And(^{$13...})|Or(^{$13...})|Not($13)|Equals(^[$4,^{|$139,$139|}[$139,$139]])|Inequality(^[^AType<IntT|RealT>,^$204])|Equation(^[^AType<IntT|RealT>,^$204])|$19|ForAll($17)>>>]>)>
+		Schema.Term("Exists",Schema.List(true,Schema.Set(true),Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Term("Var",Schema.String), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("Load",Schema.List(true,Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Term("Null"), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("Num",Schema.Real), Schema.Term("String",Schema.Any)), Schema.Term("Array",Schema.Any)), Schema.Term("Tuple",Schema.List(true))), Schema.Or(Schema.Any, Schema.Any, Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Any, Schema.Term("Array",Schema.Any))),Schema.Int)), Schema.Term("LengthOf",Schema.Any)), Schema.Term("IndexOf",Schema.List(true,Schema.Any,Schema.Any))), Schema.Any, Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("ArrayT",Schema.Any), Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.Any), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("ArrayT",Schema.Any), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Any)), Schema.Term("Equation",Schema.Any))), Schema.Or(Schema.Any, Schema.Term("ForAll",Schema.Any))))),
+		// Inhabited($2<^Type<Atom<NotT($17<^Proton<TupleT(^[$17...])|ArrayT($17)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$17...])|ArrayT($17)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT(^{$2...})|AndT(^{$2...})|ArrayT($2)|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>)
+		Schema.Term("Inhabited",Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("ArrayT",Schema.Any), Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.String), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("ArrayT",Schema.Any), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any)))),
+		// Is(^[$2<^Expr<$44<Value<Null|Tuple(^[^$44...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$44...])>>|Tuple(^[$2...])|$86<BExpr<Bool<True|False>|VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>|And(^{^$86...})|Or(^{^$86...})|Not(^$86)|Equals(^[$4<^Type<Atom<NotT($153<^Proton<TupleT(^[$153...])|ArrayT($153)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$153...])|ArrayT($153)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($4)|OrT(^{$4...})|AndT(^{$4...})|ArrayT($4)|TupleT(^[$4...])|FunctionT(^[$4,$4,$4...])>>,^{|$2,$2|}[$2,$2]])|Inequality(^[^AType<IntT|RealT>,$227<^AExpr<Num(^real)|VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>|Sum(^[^real,^{|$227...|}[$227...]])|Mul(^[^real,^{|$227...|}[$227...]])|Div(^[$227,$227])>>])|Equation(^[^AType<IntT|RealT>,$227])|ForAll(^[^{^[^Var(^string),$4]...},^$86])|Exists(^[^{^[^Var(^string),$4]...},^$86])>>|AExpr<Num(^real)|VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>|Sum(^[^real,^{|$227...|}[$227...]])|Mul(^[^real,^{|$227...|}[$227...]])|Div(^[$227,$227])>|SExpr<VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>|Array(^[$2...])>>>,$4])
+		Schema.Term("Is",Schema.List(true,Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Or(Schema.Term("Null"), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Term("True"), Schema.Term("False")), Schema.Term("Num",Schema.Real), Schema.Term("String",Schema.String)), Schema.Term("Array",Schema.Any)), Schema.Term("Tuple",Schema.List(true)), Schema.Or(Schema.Or(Schema.Or(Schema.Any, Schema.Or(Schema.Or(Schema.Term("Var",Schema.Any), Schema.Term("Fn",Schema.List(true,Schema.Any)), Schema.Term("Load",Schema.List(true,Schema.Any,Schema.Int)), Schema.Term("LengthOf",Schema.Any)), Schema.Term("IndexOf",Schema.List(true,Schema.Any,Schema.Any))), Schema.Term("And",Schema.Set(true)), Schema.Term("Or",Schema.Any), Schema.Term("Not",Schema.Any), Schema.Term("Equals",Schema.List(true,Schema.Or(Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("ArrayT",Schema.Any), Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.Any), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("ArrayT",Schema.Any), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))),Schema.Bag(true,Schema.Any,Schema.Any)))), Schema.Or(Schema.Term("Inequality",Schema.List(true,Schema.Or(Schema.Any, Schema.Any),Schema.Or(Schema.Any, Schema.Any, Schema.Term("Sum",Schema.List(true,Schema.Any,Schema.Bag(true))), Schema.Term("Mul",Schema.Any), Schema.Term("Div",Schema.List(true,Schema.Any,Schema.Any))))), Schema.Term("Equation",Schema.Any))), Schema.Or(Schema.Term("ForAll",Schema.List(true,Schema.Set(true),Schema.Any)), Schema.Term("Exists",Schema.Any)))), Schema.Any), Schema.Or(Schema.Any, Schema.Term("Array",Schema.Any))),Schema.Any))
 	});
 
 	// =========================================================================
@@ -8632,74 +7397,62 @@ public final class Solver {
 	private static Type type0 = Runtime.Type("2G0tLTJCWDggIk2");
 	// VoidT
 	private static Type type1 = Runtime.Type("2KLxLPZGp3ukmD0E");
-	// $11<Type<Atom<NotT($13<^Proton<TupleT(^[$13...])|SetT(^[^bool,$13])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$13...])|SetT(^[^bool,$13])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT(^$11)|OrT(^{^$11...})|AndT(^{^$11...})|SetT(^[^bool,^$11])|TupleT(^[^$11...])|FunctionT(^[^$11,^$11,^$11...])>>
-	private static Type type2 = Runtime.Type("763GKTkK5G0GrQhGZIjG6KowZRJGJFiG5K3CKOoG4OJK6RgK5KJ55KbQYGMPjt5KlpKmWn0qWrluGyl59CXDAp1IZ0_RjGrQidXUYknIgVK7Otr5PCmDQp1MJ4KSW8rPYw3Atw_9cC1HdlXPekl7gxo7SoLDidmQYw2TgZMBfdbjl5vCXIwpHU34ZQtGp3zl1X0KDK6QgGp395ggNF_Kj_5OJCGY0AD5J8oQjl5KIVOkHa0G8t5SJCla0AR5J8KOWl5KIsOkmb0SIGbRdtqOJCGe0Ae53OKNmG_9OB1fGf0Ai535DxLQdtLNgGp7s5h5gZQ3OZNkNwNcOoOVPgPwPcQglil7TlQoHjW9CC1Ez5gVRBmjl9jcRcmml7xkRkHnl7ykRkmnl7gxQBH6O6tcScmql7zkSkHrl7z5gZnrW9c6YVJu0Ae6YwQwQBmj0vGDh6esTBHHj6gVU3Cx");
-	// bool
-	private static Type type3 = Runtime.Type("Fk0");
-	// $20<Proton<TupleT(^[^$20...])|SetT(^[^bool,^$20])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>
-	private static Type type4 = Runtime.Type("hG5Jmx5Sjt5KGKMNmh5OJK6RgK5Kesp7xkHDycmEYk2HgZ3GIK5SJd16YkJEYoGItsZ9ECmHNlHLlcZLT5Qgp7ukKASGJFi_6KIw4AcG_Ipl5QJCWPgg5KLxLPZGp3hlXQJ8oQjl5KIV6AtGJHiG6KIg6AwG_J_45QJCWUgw6SIGbRdtqOJCGX0A953OKNmG_9OB1YGY0AD535DxLQdtLNgGp7N5C5gZO3OZ5QjdMU75A5E5P5QgOBmDR5hoO3Tx");
+	// $11<Type<Atom<NotT($13<^Proton<TupleT(^[$13...])|ArrayT($13)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$13...])|ArrayT($13)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT(^$11)|OrT(^{^$11...})|AndT(^{^$11...})|ArrayT(^$11)|TupleT(^[^$11...])|FunctionT(^[^$11,^$11,^$11...])>>
+	private static Type type2 = Runtime.Type("j53GKTkK5G0GrQhGZIjG6KowZRJGJFiG5KZ4ZRm4LTJG5Kp06Q_G4_WGptqNo_qQiGKRSlQZRgRoRcSVTgWHYcnHhk3OF8rQoxaQeZr7ww3AN4HLthWLYgnLhk4KGKMNmhq7ElHDUd1PYVJPgcq7zw3Ag4nPh_QgWQYsoQhV6G0tLTJCWTgg6KDK6QgGp3xlXUJOpQdG5KIVNkHX0K1xqQgGp3A5gkNFJHiG6KIsNkmY0KHKLNgGp3O5gcOFrJo8MPiS5KIkOkHb0GL4aRJdH5YwOVPkHe0WWIjpLPi45QJCme0e0Ag5G5wxbXGY0alaWbWeGfl5i5YspfGAs5eoo7wcQkmil7u5fwHjW9y5Yonj0A76Ysnj0A96YwYi0AB6YcQkHDD6ewRB1HN6gZSBXiWil7u5Q6tkScHrl78tSkmrGo3");
+	// $15<Proton<TupleT(^[^$15...])|ArrayT(^$15)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>
+	private static Type type3 = Runtime.Type("cG5Jmx5Sjt5KGKMNmh5OJK6RgK5KeZp7xkHDycmEYk2HgZ3O08bRW_6KYgJEgkJB9pJal5DCXDEp1L34ZQtGp3PlmLJtJSgl5KIo4ATG_Kj_5OJC0PgZ5K1xqQgGp3fl1Q3_ZQoGp3ilmQJ8KOWl5KIZ6AuGrJo8MPiS5KIk6AxGZKW86KeZl7zWNkHX0WWIjpLPi45QJCmX0X0AB5G5Rx_PhWrTydNoNgWYl7vwNo1aGZ4");
 	// ^AnyT
-	private static Type type5 = Runtime.Type("3G0tLTJCWDggY9w3x$");
+	private static Type type4 = Runtime.Type("3G0tLTJCWDggY9w3x$");
 	// Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>
-	private static Type type6 = Runtime.Type("8GKJp4aRfGJFi_6KIg2AwF_Ipl5QJCWEgw2KLxLPZGp38lXHJ8oQjl5KIk3ACGJHiG6KIw3ANG_J_45QJCWLgg4SIGbRdtqOJCGMgs4GL4aRJdH5YVLPgc5WWIjpLPi45QJC1QdlHQG5xVoHD_4MUhaQQwq7uVMAt4ux");
-	// $14<Expr<$38<Value<Null|Tuple(^[^$38...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$38...})>>|Tuple(^[^$14...])|Fn(^[^string,^$14...])|$90<BExpr<Bool<True|False>|VExpr<Fn(^[^string,^$14...])|Var(^string)|Load(^[^$14,^int])|LengthOf(^$14)>|And(^{^$90...})|Or(^{^$90...})|Not(^$90)|Equals(^[$122<^Type<Atom<NotT($145<^Proton<TupleT(^[$145...])|SetT(^[^bool,$145])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$145...])|SetT(^[^bool,$145])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($122)|OrT(^{$122...})|AndT(^{$122...})|SetT(^[^bool,$122])|TupleT(^[$122...])|FunctionT(^[$122,$122,$122...])>>,^{|^$14,^$14|}[^$14,^$14]])|Inequality(^[^AType<IntT|RealT>,$228<^AExpr<Num(^real)|VExpr<Fn(^[^string,^$14...])|Var(^string)|Load(^[^$14,^int])|LengthOf(^$14)>|Sum(^[^real,^{|$228...|}[$228...]])|Mul(^[^real,^{|$228...|}[$228...]])|Div(^[$228,$228])>>])|Equation(^[^AType<IntT|RealT>,$228])|SubsetEq(^[^SetT(^[^bool,$122]),^SExpr<VExpr<Fn(^[^string,^$14...])|Var(^string)|Load(^[^$14,^int])|LengthOf(^$14)>|Set(^{^$14...})>,^SExpr<VExpr<Fn(^[^string,^$14...])|Var(^string)|Load(^[^$14,^int])|LengthOf(^$14)>|Set(^{^$14...})>])|ForAll(^[^{^[^Var(^string),$122]...},^$90])|Exists(^[^{^[^Var(^string),$122]...},^$90])>>|AExpr<Num(^real)|VExpr<Fn(^[^string,^$14...])|Var(^string)|Load(^[^$14,^int])|LengthOf(^$14)>|Sum(^[^real,^{|$228...|}[$228...]])|Mul(^[^real,^{|$228...|}[$228...]])|Div(^[$228,$228])>|SExpr<VExpr<Fn(^[^string,^$14...])|Var(^string)|Load(^[^$14,^int])|LengthOf(^$14)>|Set(^{^$14...})>>>
-	private static Type type7 = Runtime.Type("PI3K3Tk86KL45QpK5KJK6RgK585t5K1K3Tk8MF75i5w5g6Qw2K0K3Tk8M77x8hWHJCKGs0bRWgZro5CCXDDpmI3tJSglq3OlXL38oQjl5CDKMQZC4Sm_aQbd1Xl7UlHDcdHPYkYPggLJQlaaGb0el5hGnJ_Gr7UhmAsdHTYwaTggM7ilr5xCmDypmU3G_RpKq385gcNF_GWlqR_C0Y0AC5WgNsNglYl7RWOoHaW9PBHMQ5gkOcH5Ys_b0AU5eVp7d5gZYeW9f5Yk2f0Ah5IsOBHelfGDs5eZQBHEu5ggQF_K4W6RmGIFiG58E86CDx5SZKJRp45Qn4aaGzWb1eXeXjm596Z58tLOlKMNg_5StGNJJRp45SdxaQWk7dBhWnG7A6E6QVSFNBKSXCMOoKJRWZScChlq0O5xaR0l5QZK3TdC6Sn4HXpXp5U6WkSVTgGul7ycTomu0CL4aR3loQWGLBw5z6D9QwTFNkJOiS5ScxZOWVUVdgWyl7x5v6hkUBHvWb0Ay6egl7d579YoGXHD99egcBXv0Y1AC9YZUZPkmYX9g6YZdgmAP9egdBXj0b1AS9YwQkdkmbm776O9gZeF3Kt0MOeZh7HeGel7SoeVYfX9j9YkeVfBH6t9tcfcmim786w9gofFJFoxLQ3toQoG4CE86K34ZQZG4GIK5SJG5Kp06Q_G4_WGptqNo_qQiGKRdAAENEPEcEhEvEQsgBmemnHANAZ0_RjGrQidXXn77AQAgkh3HrXXn5TAYwfwho1u1KGKMNmhq7QAgZnuX9gAYkgoikXvX9RB1ymqm7SZjZYyX9vAYggkjkHzHBjAyA8EQwjBXq1XIA8D34ZQtGp3ADgksF_Ipl5QJCWY2AEDJOpQdG5KIZtkXa2K1xqQgGp3RDgotFJHiG6KIwtk1e2KHKLNgGp3eDgguFrJo8MPiS5KIoukXf2GL4aRJC1iYb0AtD35DxLQdtLNgGp7vDT5gkv3OosVtgtstZukuwucvovgWjn7eAzDhVwB1m1f1A9EYkegmABEeowBHmXn2AEEYcgswkHqn7sAg9YolqIDREeoxBmmXr2AUEYkekHDdEecyB1nmu2AgEYkekeB1fXvIDjEeVzBHnHy2AuEJ43Kt0MOeV8dmbo7xEyEYolzID7HeZ7C1nWX3AAHWZukugGYo7wEDHhw7GnJpp5CCK6QoFJPq4KbGz0iZi3mo5RHYZJbJATHYszg1DcHeZ9CmaWeo7Sg9_2fZ9hHYZ8t9lmfo7PHiHgZACXzYzn7SgA_2jZ9xHYg8tAlmjo7C69HgZBd1uY9TIngBlBlBCH6CItsBdmno7P6NIgZC4Hzluo5QIYk3rJASIYZPgmAUIeVDCmQdIgcDdmzl7gIg9YoGvJDiIewDC1yo9jZEdXyo7vIO9Yo0zJDxIesECHrlz3A7LYsSwElXXKVp2");
+	private static Type type5 = Runtime.Type("8GKJp4aRfGJFi_6KIg2AwF_Ipl5QJCWEgw2KLxLPZGp38lXHJ8oQjl5KIk3ACGJHiG6KIw3ANG_J_45QJCWLgg4SIGbRdtqOJCGMgs4GL4aRJdH5YVLPgc5WWIjpLPi45QJC1QdlHQG5xVoHD_4MUhaQQwq7uVMAt4ux");
+	// $13<Expr<$34<Value<Null|Tuple(^[^$34...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$34...])>>|Tuple(^[^$13...])|$77<BExpr<Bool<True|False>|VExpr<Var(^string)|Fn(^[^string,^$13...])|Load(^[^$13,^int])|LengthOf(^$13)|IndexOf(^[^$13,^$13])>|And(^{^$77...})|Or(^{^$77...})|Not(^$77)|Equals(^[$123<^Type<Atom<NotT($146<^Proton<TupleT(^[$146...])|ArrayT($146)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$146...])|ArrayT($146)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($123)|OrT(^{$123...})|AndT(^{$123...})|ArrayT($123)|TupleT(^[$123...])|FunctionT(^[$123,$123,$123...])>>,^{|^$13,^$13|}[^$13,^$13]])|Inequality(^[^AType<IntT|RealT>,$220<^AExpr<Num(^real)|VExpr<Var(^string)|Fn(^[^string,^$13...])|Load(^[^$13,^int])|LengthOf(^$13)|IndexOf(^[^$13,^$13])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>>])|Equation(^[^AType<IntT|RealT>,$220])|ForAll(^[^{^[^Var(^string),$123]...},^$77])|Exists(^[^{^[^Var(^string),$123]...},^$77])>>|AExpr<Num(^real)|VExpr<Var(^string)|Fn(^[^string,^$13...])|Load(^[^$13,^int])|LengthOf(^$13)|IndexOf(^[^$13,^$13])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>|SExpr<VExpr<Var(^string)|Fn(^[^string,^$13...])|Load(^[^$13,^int])|LengthOf(^$13)|IndexOf(^[^$13,^$13])>|Array(^[^$13...])>>>
+	private static Type type6 = Runtime.Type("jH3K3Tk86KL45QpK5KJK6RgK5K1K3Tk8MBwdPwRgWEJ4JGs0bRWwnYo58GpJ4W6Rm4XHTIQko7uoJADGZIpl5QIV4AOGZFjx5QosJShGqJo8MPiSa9wCXMgZnMeVq7wZ5Ae4_LftNZOkOg0QJ4ZRm4LTYsLPgwL7hWr5tCmDupmT3G_RpKq3xlXUJOJNgCMOIVNkHXG7zdNglXl7QlNoHYW9PB1ME5gVOcH5Yo_a0AQ5ewo7S5gZYbW9U5Yk2e0Ad5JOKGs0bRo3ZQZGmImGYIjG6O44MSWlqRWtNcTwdZegewfg0i0dGHiKLRp45QdGMT3544MSWGMPjtL7wEuHQkQ3HiGjl5y5ZOoQm43QgGLGs_qRoCM7NIPIQcR3mjlml5B6YoInGAD6oNKNmGXGiG3Ij45O35BKaQbG6PEOLFg6u689A9QkSFMHiGLOsxZOWoSZdglrl7f5c6hZTB1qWa0Af6IcOBHbGvGDi6ewTBHq0y0At6egl7S5v6Yo0zGDx6esUBXqlz0A79YgSoOkXXm7S5S5Yo0YHDC9escBXrlY1AN9ewRBXam9jgdc1bm7g5S9gsdBHfGb1Ac9YsPcdkXe1GJ_6R_dXqX7S5S5YoWf1Dj9eVfBHfHim7ScfZniX9w9YwPofkXj1G0GrQhGZIjG6KowZRJGJFiG5KZ4ZRm4LTJG5Kp06Q_G4_WGptqNo_qQiGKReAzDBEDENESEfEQwgB1f1qHAOAZ0_RjGrQidXzm78ARAgoh3XrXzm5UAYVgVioHu1KGKMNmhq7RAgZ2vX9hAYogsikmvm7BARAgZj32yXyHjn5vAYghkjoHz1G0tLTJClz1A7DJtJSgl5KIcskmX2KLxLPZGp3CDgssF_Fjx5QJC0a2AOD3_ZQoGp3QDgktF_J_45QJCWb2AUDoC4Sm_aQbGp3dDgcuFZKW86KYkucOkHf2WWIjpLPi45QJCmfYa0AsDG58DBDEDPDSDcDfDiDtDQcvBmumiIAwDYZgoekXjn7h9fw1mY98EYcgcwkmmn7AA9EgowB1nHf1AEEYoekHDOEecxBHnmq2AREYoeoeBHfXrIDUEeVyBXnHu2AeEJ43Kt0MOeV7dmYo7hEiEYolvIDsEeZzBXiWy2AvEWotVugGzn7gEyEhwzFnJpp5CCK6QoFJPq4KaWu0eZe3io5BHYVJYJADHYsyg1DNHeZ8CmYWao7Sg8_2bZ9SHYZ7t8lmbo79HTHgZ9CXvYvn7Sg9_2fZ9hHYg7t9lmfo7v5uEgZAd1vl7vHh9Yo0jJDxHesACmjo9jVBdHmo79IP9YolmJDBIeoBC1mWn3AEIYZRsBlHqJ7e6cIQgCCmHRIhoCCXQc5gwC4Ex");
 	// int
-	private static Type type8 = Runtime.Type("Fg0");
-	// $10<VExpr<Var(^string)|$21<Fn(^[^string,$15<^Expr<$21|$58<Value<Null|Tuple(^[^$58...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$58...})>>|Tuple(^[$15...])|$101<BExpr<$10|Bool<True|False>|And(^{^$101...})|Or(^{^$101...})|Not(^$101)|Equals(^[$113<^Type<Atom<NotT($136<^Proton<TupleT(^[$136...])|SetT(^[^bool,$136])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$136...])|SetT(^[^bool,$136])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($113)|OrT(^{$113...})|AndT(^{$113...})|SetT(^[^bool,$113])|TupleT(^[$113...])|FunctionT(^[$113,$113,$113...])>>,^{|$15,$15|}[$15,$15]])|Inequality(^[^AType<IntT|RealT>,$219<^AExpr<$10|Num(^real)|Sum(^[^real,^{|$219...|}[$219...]])|Mul(^[^real,^{|$219...|}[$219...]])|Div(^[$219,$219])>>])|Equation(^[^AType<IntT|RealT>,$219])|SubsetEq(^[^SetT(^[^bool,$113]),^SExpr<$10|Set(^{$15...})>,^SExpr<$10|Set(^{$15...})>])|ForAll(^[^{^[^Var(^string),$113]...},^$101])|Exists(^[^{^[^Var(^string),$113]...},^$101])>>|AExpr<$10|Num(^real)|Sum(^[^real,^{|$219...|}[$219...]])|Mul(^[^real,^{|$219...|}[$219...]])|Div(^[$219,$219])>|SExpr<$10|Set(^{$15...})>>>...])>|Load(^[$15,^int])|LengthOf($15)>>
-	private static Type type9 = Runtime.Type("PIJOKGs0bRoNKNmGXGiG3Ij45OlwoM8LQs2W0I_tqOoWqIa4mEALQZo7ucJAAdH5YgIIgs3G4W6Rmd1UIoo7OdKDQd1MYkIMgs4KL45QpK5KJK6RgK5K1K3Tk8MFUlPVSwUglPJ4JGs0bRWkaYo5iGpJ4W6Rm4mQCIQZr7NdMAvGZIpl5QIo6AyGZFjx5QosJShGqJo8MPiSa9g5YgNkHDB5eoNBHPD5gwN3pUN5y586A6QZOFnJ_Gr7A5fw1bW9S5YgOsOkmbG7P5c5QZPB1Pe5hgPF3KmKMOIoPkXf0K545QnKq3s5gZQ3mfWil5v5YVNkQoHjW9PBHXlj0A76YcNo3A96YZ4AtkRcHnl7dtRkmn0C0t5OZwZRosoQoGLGlKMNgCMNBtQocwcZdoegGr0dGHiKLRp45QdGMT3544MSWGMPjtL7vEtHQZT3XrWul5f635IKbNnK5S44M7g68IQsTFaGj8MFgl5O4WMPnGrRWVEdEhWyG7j6v6QkUBXPx6hsUcmzl779fwHXX999YZSgck1Ym7P6A9gscBmq0X1AN93GKTkKa97AXZKLYo0b1DS9esdBmambm7SVeZIeX9e9YkSgek1f1G0GrQhGZIjG6KowZRJGJFiG5K3CKOoG4OJK6RgK5KJ55KbQYGMPjt5KlWhcvwvZwwwkxcygGjm7P9y9hwfF5Jmx5Sjta9tAYwecgkmmH7BAtAQogBXfXnHAEAJ4KSW8rPYcgkHDPAeghBmi1r1ASAekl7UA9AYo0uHDdAeciBXimu1AgAlshoiVvgWvm78AjAhVjFJFi_6KIcjkmy1KDK6QgGp3xAgsjF_Kj_5OJC0X2A8DJ8oQjl5KIgsk1Y2G8t5SJCWY2AEDJ8KOWl5KIZtkXa2SIGbRdtqOJC0b2ASD3OKNmGp7UDCl1e2WWIjpLPi45QJCXeIIggu3OkjwjcsosVtgtstZukugGfn7OAiDhwuBmfma1AtDYgdgmAvDekvB1iHj2AyDYZfovk1mn7UAQ9YoWmIDAEekwBXiHn2ADEYgdkHDNEeZxBmiXq2AQEYgdgdBmaHrIDTEewxB1j1u2AdEJ43Kt0MOewzcXYo7gEhEYoWvIDjEeVzBmrGy2AuEWVtgtg0zn7fExEhszFnJpp5CCK6QoFJPq44I86UHdHjHQg7CHQBHho7CHvn9sw7d1ao7z5OHYoWaJDQHek8C1XJb3ATHYZ7p8l1eo7hEhEYoWeJDfHek9CXXJf3AiHYVTZzk1iZ9EEeoBCYioioio7SkA_IjZ9yHYoTwAl1mJ7BdChWmo7shBp1no7OhmADIewBCma0q3AOIewo7QIQ9Yo0rJDSIesCCmro9jVDdHuo7eI79YoluJDgIeoDC1yWv3AjIYZUsDlHyZ9QBHLvIYo0zJDxIesECHEzIgVNC1HOlXXKko2");
-	// $7<Tuple(^[$2<^Expr<$7|$44<Value<Null|Tuple(^[^$44...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$44...})>>|Fn(^[^string,$2...])|$90<BExpr<Bool<True|False>|VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|And(^{^$90...})|Or(^{^$90...})|Not(^$90)|Equals(^[$122<^Type<Atom<NotT($145<^Proton<TupleT(^[$145...])|SetT(^[^bool,$145])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$145...])|SetT(^[^bool,$145])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($122)|OrT(^{$122...})|AndT(^{$122...})|SetT(^[^bool,$122])|TupleT(^[$122...])|FunctionT(^[$122,$122,$122...])>>,^{|$2,$2|}[$2,$2]])|Inequality(^[^AType<IntT|RealT>,$228<^AExpr<Num(^real)|VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|Sum(^[^real,^{|$228...|}[$228...]])|Mul(^[^real,^{|$228...|}[$228...]])|Div(^[$228,$228])>>])|Equation(^[^AType<IntT|RealT>,$228])|SubsetEq(^[^SetT(^[^bool,$122]),^SExpr<VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|Set(^{$2...})>,^SExpr<VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|Set(^{$2...})>])|ForAll(^[^{^[^Var(^string),$122]...},^$90])|Exists(^[^{^[^Var(^string),$122]...},^$90])>>|AExpr<Num(^real)|VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|Sum(^[^real,^{|$228...|}[$228...]])|Mul(^[^real,^{|$228...|}[$228...]])|Div(^[$228,$228])>|SExpr<VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|Set(^{$2...})>>>...])>
-	private static Type type10 = Runtime.Type("PIJGKSklLO3K3Tk8b9TC1EgZIEesn7uw2A7G_KWlLS_GXGiG_F4W6Rm4JHD5w5g6Qo3K0K3Tk8M7Dx8h0LJCKGs0bRWZ_ro5QCmDRpHM3tJSglq3Ul1P38oQjl5CDKMQZC4Sm_aQbdXYl7hlHDidmQYc2TgZMJdd6eleWfl5vGnJ_Gr7hhmAydmUYo6X0A85WkbXl5A5Yc3YGAC53G_RpKq3E5gVOF_GWlqR_CWa0AQ5WZOkOgGbl7etOombW9PBmPd5gcPcH5Yk5f0Ah5IkPB1Ej5tVQcHil7AdQkmi0KLK3Tk86C0t5OZwZRosoQoGLGlKMNgCMNc5x6T9c9e9y9QcRFPZZQ_4MSWlLPo_6WGGlKMNo_qQi41YZmo5D6WgRwRg0q0WlJp8qR_GMGl4HqWqo5Q6ZOoQm43QgGLGs_qRoCM78LALQwS31r0ul5d6YkZuGAf6oNKNmG3Ij45OlkQwUscglv0W0I_tqOoWqIa41y0am5u6YoQgUo1zl7h6g5gsUcm5Yk2Xm7SZcZYXX9A9YsTkckHYm7t6wkmYX9g6YZdgmAP9egdBXj0b1AS9YwQkdkmbm776O9gZeF3Kt0MOeZh71EwBH6h9ssecmfm7g9s9YoGiHDu9egfBHm0j1Ax9343Sjp5GDx5SJGnImG4G0t5OJGoJ_G6KZGKSklLOJGONJSiC5SdxaQJ4Mumm2qYq2uIvnyn5DAYgewgo1q1OF8rQoxaQecsB1mmq1ARAWohcsgWrm7z9UAhViFKJp4aRfCmq1Atgic1vm7BAhAgsic16YVjghBH6tAtcjcmym7AAwAgoj3nvXzHmn5zAYchVsoHX2G0tLTJClX2ABDJtJSgl5KIsskmY2KLxLPZGp3ODgctF_Fjx5QJC0b2ASD3_ZQoGp3UDgVuF_J_45QJCWe2AfDoC4Sm_aQbGp3hDgsuFZKW86KYVvkPkHi2WWIjpLPi45QJCmi2f0AwDG5CDNDQDTDdDgDjDuDxDQsvBXumjIA7EYVgkekXmn7g9fw1nY9CEYZgswkmnn79ADEgZxB1y1fm7SgxZ2rY9SEYggsxkmrn7g9gZIuY9eEYkggyk1vn7g9g9YkesyZnvY9sEYogZzkXy2K0GKTkKa9NHew8CHzYzn7SwzZ2XZ98HYkRc7lmXJ7dDgDQo7C1zYYJAEHoBKShGIIpl5C3_aSGhPoUVAdAWBh0bo7Ep8pXbo7yEfV2eZ9dHYZPc9CH6fHtk9dHfo7OHiHgw9CXaZf3AtHYszszBH6vHtkAdHjo7QHyHgwACHnWX3A8IeVycXroBAIBIBIYoGnJDDIewBCXq0q3AOIWoUgDhlqo7PlCpHro7wgmAUIeVDCHUdIgcDdmzl7gIg9YoGvJDiIewDC1yo9jZEdXyo7vIO9Yo0zJDxIesECHrlz3A7LYsSwElXXKZo2");
-	// $25<BExpr<$35<VExpr<Var(^string)|$46<Fn(^[^string,$40<^Expr<$25|$46|$81<Value<Null|Tuple(^[^$81...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$81...})>>|Tuple(^[$40...])|$108<AExpr<$35|Num(^real)|Sum(^[^real,^{|^$108...|}[^$108...]])|Mul(^[^real,^{|^$108...|}[^$108...]])|Div(^[^$108,^$108])>>|SExpr<$35|Set(^{$40...})>>>...])>|Load(^[$40,^int])|LengthOf($40)>>|Bool<True|False>|And(^{^$25...})|Or(^{^$25...})|Not(^$25)|Equals(^[$156<^Type<Atom<NotT($179<^Proton<TupleT(^[$179...])|SetT(^[^bool,$179])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$179...])|SetT(^[^bool,$179])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($156)|OrT(^{$156...})|AndT(^{$156...})|SetT(^[^bool,$156])|TupleT(^[$156...])|FunctionT(^[$156,$156,$156...])>>,^{|$40,$40|}[$40,$40]])|Inequality(^[^AType<IntT|RealT>,^$108])|Equation(^[^AType<IntT|RealT>,^$108])|SubsetEq(^[^SetT(^[^bool,$156]),^SExpr<$35|Set(^{$40...})>,^SExpr<$35|Set(^{$40...})>])|ForAll(^[^{^[^Var(^string),$156]...},^$25])|Exists(^[^{^[^Var(^string),$156]...},^$25])>>
-	private static Type type11 = Runtime.Type("PIJ8JGs0bRJOKGs0bR38oQjl5C0t5OZwZRosoQoGLGlKMNgCMNxpTVicikiVsgGHZ58tLOlKMNg_5StGNJJRp45SdxaQWoBhChGIWcZIQw3WlJp8qR_GMGl41LfIQc4O5xaR0l5QZK3TdC6Sn4HXpXp5T4mLUh0PYcIPhc5CL4aRZNZQ3loQWGLB75N5NAQw5W0I_tqOoWqIa41TPAQcr7vgMAwdH5YkaUgw6G4W6Rmd1fl3yCXXlXGDB5eoNBHQD5gwNF_KWlLS_G4Kp06Q_4oPN5Q6z6QgOFKF4W6Rm41bWYm5T5JCKGs0bRWwOkfgGel785e5hgPFZIpl5QIoPkXf0CDKMQZC4Sm_aQbdmql7u5gZniW9w5YcOoQkXjGJj5z5h6s6u6QVRFnJ_Gr7u5fwmmW9B6YcRoRkXnG786E6QVSBHaGqGAP63G_RpKq3R6goSF_GWlqR_Clr0Ac6WsSZTgWul7wgTo1vW9PB1iWv0Aj6YZQs6At6YcNkHDv6ekUBXaGz0Ay6oBKShGIIpl5C3_aSGp6y0eXe1im5A9YoOkcoHYX9D9Ywcg1DN9eZdBXvWam7SgdZ2bX9S9YVcsdkmbm789T9gZeBmYmYm7SgeZ2fX9h9YccsekmfH7x_ggGim7c5u9hgfBXXl9jofcXjm796z9gVgcm5YcNcgBH6AAtkgcHnm7itgkmnm7tdNkHqX9fCmqm9jkhcHrm7xshkmrm7yshkHum7zghkmu1GJ_6R_dmaY79595Yolv1DsAeZjBXvXym7SgjZ2zX9xAYVZz1AzA343Sjp5GDx5SJGnImG4G0t5OJGoJ_G6KZGKSklLOJGONJSiC5SdxaQJ4reIYZa3bZeofJjo5NDYoiZtoXa2OF8rQoxaQekwBXXIb2ATDWwtkwg0en78DdDhcuFKJp4aRfCHb2AtoucXfn7DDjDgVvc16YcvotBH6vDtkvcHjn7CDyDgwv3Ii2mnXo58EYktcwomm2G0tLTJCGn2ADEJtJSgl5KIVxkHq2KLxLPZGp3QEgkxF_Fjx5QJCWr2AUE3_ZQoGp3dEgcyF_J_45QJC0v2AhEoC4Sm_aQbGp3jEgVzFZKW86KYczs6AvE35DxLQdtLNgGp7xEylXzIZlnYqIr2unuYvIy2znzn57HYkuZ7pXXo79DiAgk7CXvm9js7dmYo7ADNHgZ8C1Y2a3AQHYcvsiBH6SHts8dmbo7CDcHgZ9CXv1Atg9d1fo7DDhHgs9CXvXvm7iAsHtZAdXio7EDvHgkAGKFJ_6R_dHqo7zHE9Yo0mJD8IecBCmHAIgkB4muYvn5DIYsAxBp1qo7BhBlXqZ9eHekfB2rJrJro7SsC_nrZ9cIYZKu3AeIeVNB1vZvm7SoD_YvZ9jIYVEhmAtIecECmyoqm7SkE_IzZ9yIYkpz3A7LYopz3A9LlPE");
+	private static Type type7 = Runtime.Type("Fg0");
+	// $11<VExpr<Var(^string)|Fn(^[^string,$16<^Expr<$56<Value<Null|Tuple(^[^$56...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$56...])>>|Tuple(^[$16...])|$96<BExpr<$11|Bool<True|False>|And(^{^$96...})|Or(^{^$96...})|Not(^$96)|Equals(^[$108<^Type<Atom<NotT($131<^Proton<TupleT(^[$131...])|ArrayT($131)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$131...])|ArrayT($131)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($108)|OrT(^{$108...})|AndT(^{$108...})|ArrayT($108)|TupleT(^[$108...])|FunctionT(^[$108,$108,$108...])>>,^{|$16,$16|}[$16,$16]])|Inequality(^[^AType<IntT|RealT>,$205<^AExpr<$11|Num(^real)|Sum(^[^real,^{|$205...|}[$205...]])|Mul(^[^real,^{|$205...|}[$205...]])|Div(^[$205,$205])>>])|Equation(^[^AType<IntT|RealT>,$205])|ForAll(^[^{^[^Var(^string),$108]...},^$96])|Exists(^[^{^[^Var(^string),$108]...},^$96])>>|AExpr<$11|Num(^real)|Sum(^[^real,^{|$205...|}[$205...]])|Mul(^[^real,^{|$205...|}[$205...]])|Div(^[$205,$205])>|SExpr<$11|Array(^[$16...])>>>...])|Load(^[$16,^int])|LengthOf($16)|IndexOf(^[$16,$16])>>
+	private static Type type8 = Runtime.Type("jHJOKGs0bRoNKNmGXGiG3Ij45O35BKaQbG6PEOLFNW5qZqo5zFMHiGLOsxZOWV3uo59CXDAp1IeZl7vs3AEGJGs0bReor3DCXLQ_2Meop7ws4AUG_KWlLS_G4Kp06Q_G_F4W6Rm4YeWnWyl5gGKF4W6Rm4HQsEQw5KIK3Tk8M7sxAhWTYZpThk6GDK6QgCWUgw6G1xqQgGYIpp5OIGbRdtqOecPB1Y0AtoNcXYl7exNk1aGJ75O5w5z586QcOFKFm8MNtC1blY0AS5WgOsOglbl7dWPoHe0GJ8MS_Cle0Ag5JOJNgCMOIsPkmfG7h5s5QZQBHXWiGAv5ecl795x5gsQBmXWIgVRBXLgZYmW9A6Yc5n0AC6o3ZQZGmImGYIjG6O44MSWlqRWp3j0XXX1Y1em5Q6Z58tLOlKMNg_5StGNJJRp45SdxaQWoxg8hlrG7R6c6QZTFaGj8MFgl5O4WMPnGrRWZAhAhGvG7e6i6QwTBmPs6hZUcXyl7v6fw1zW9x6YwRsUkmzl7N6y6gZcBHqly0AA93GKTkKa9v9Xc_LYolY1DN9eZdBXYXam7SgdZ2bX9S9YcSsdkmb1G0GrQhGZIjG6KowZRJGJFiG5KZ4ZRm4LTJG5Kp06Q_G4_WGptqNo_qQiGKRAAcDhDjDtDyDBEQVfBHYHiHAu9Z0_RjGrQidmrm7e9x9gsf3mjmrm57AYZeZgoXm1KGKMNmhq7x9gZInX9DAYsewgk1qm7h9x9gch3IqmqXbn5RAYkfohoXr1G0tLTJC0u1AdAJtJSgl5KIgik1v1KLxLPZGp3iAgwiF_Fjx5QJCGy1AuA3_ZQoGp3wAgojF_J_45QJClz1A7DoC4Sm_aQbGp39DggsFZKW86KYoss3ADD35DxLQdtLNgGp7NDDlHaIZWuHv1ymyXzHX2YnYYan5QDYkgktoHbn7e9D9gwtBXYm9jZucXen7f9fDgkuB1fme2AiDYoesck1in7D9gZYiY9vDYsekvkHjn7D9D9YscwvZ2mY98EYwecwkmm2K0GKTkKa9dEeVzBXnnnn7SVxZIqY9PEYoSgxk1rI7yA8DQsxBHnnrIAcEoBKShGIIpl5C3_aSGpojGXoXJao5hEYsavIAjEYwwg1DtEeczBHjlyn7SkzZIzY9yEYcywzk1Xo7fEzEgc7Cmnnnn7Sk7_IYZ9DHYkyw7l1ao7T6QEgc8d1LYk8tcBH6SHts8dmbo7cHfwHeZ9eHYg9hUBH6gHto9dXfo7f6jHgVAC1vlf3AuHWoJmo5wHYZMjJAyHYkOkRk1mZ9QBXL9IYolmJDBIeoBCHEDIgwBCXEPlHqo7Pdp7SgC_2rZ9SIYZZr3AUIGI");
+	// $7<Tuple($5<^[$2<^Expr<$7|$40<Value<Null|Tuple(^[^$40...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$40...])>>|$77<BExpr<Bool<True|False>|VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>|And(^{^$77...})|Or(^{^$77...})|Not(^$77)|Equals(^[$123<^Type<Atom<NotT($146<^Proton<TupleT(^[$146...])|ArrayT($146)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$146...])|ArrayT($146)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($123)|OrT(^{$123...})|AndT(^{$123...})|ArrayT($123)|TupleT(^[$123...])|FunctionT(^[$123,$123,$123...])>>,^{|$2,$2|}[$2,$2]])|Inequality(^[^AType<IntT|RealT>,$220<^AExpr<Num(^real)|VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>>])|Equation(^[^AType<IntT|RealT>,$220])|ForAll(^[^{^[^Var(^string),$123]...},^$77])|Exists(^[^{^[^Var(^string),$123]...},^$77])>>|AExpr<Num(^real)|VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>|SExpr<VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>|Array($5)>>>...]>)>
+	private static Type type9 = Runtime.Type("jHJGKSklLO3K3Tk8b9SC1EgZIEesn7uw2A7G_KWlLS_G_F4W6Rm4IH95E6Qk3K0K3Tk8M7Cx7hlIJCKGs0bRWV_ro5PCmDQp1M3tJSglq3TlmM38oQjl5CDKMQZC4Sm_aQbdXXl7glHDhdXQYcnQgVMJc_6blbWel5uGKFm8MNtC1UjlHUWgbUQwr79WNoHX0GJ8MS_ClX0AB5JOJNgCMOIsNkmYG7C5N5QZOBHPP5hgOcX5YcLb0AT5eZl7fWPkHe0KLK3Tk86C0t5OZwZRosoQoGLGlKMNgCMNR5e6U9d9f9z9QVQFPZZQ_4MSWlLPo_6WGGlKMNo_qQi41zYio5w5WZQoQgWj0O5xaR0l5QZK3TdC6Sn41qZqo596WwQgRg0nl7ApRoXn0CL4aRZNZQ3loQWG5W0I_tqOoWqIa43vWyGXmXm5R6o_ZQZK5TEOL7S6O9QwSBme0uGAd6YVSVPkmul3c5YkIvGDi6ewTBHq0y0At6egl7wgUBH6w6toUcXzl7P6z6gVcBmq0EgccB1EwBH6B9toccXYm7T6E9gVdcmnl7P9fwmaX9R9YkPodkXbm7h5S9gVeBXfWa1Ae93GKTkKa9PAXk2EYoWf1Dj9eVfBHfHim7ScfZniX9w9YwPofkXj1G0GrQhGZIjG6KowZRJGJFiG5KZ4ZRm4LTJG5Kp06Q_G4_WGptqNo_qQiGKReAzDBEDENESEfEQwgB1f1qHAOAZ0_RjGrQidXzm78ARAgoh3XrXzm5UAYVgVioHu1KGKMNmhq7RAgZ2vX9hAYogsikmvm7BARAgZj32yXyHjn5vAYghkjoHz1G0tLTJClz1A7DJtJSgl5KIcskmX2KLxLPZGp3CDgssF_Fjx5QJC0a2AOD3_ZQoGp3QDgktF_J_45QJCWb2AUDoC4Sm_aQbGp3dDgcuFZKW86KYkuVPkHf2WWIjpLPi45QJCmf2e0AsDG58DBDEDPDSDcDfDiDtDQcvBmumiIAwDYZgoekXjn7h9fw1mY98EYcgcwkmmn7AA9EgowB1nHf1AEEYoekHDOEecxBHnmq2AREYoeoeBHfXrIDUEeVyBXnHu2AeEJ43Kt0MOeV7dmYo7hEiEYolvIDsEeZzBXiWy2AvEWotVugGzn7gEyEhwzFnJpp5CCK6QoFJPq4pbWu0eZe3io5BHYsJYJADHYsyg1DNHeZ8CHbWao7Sg8_2bZ9SHYZ7t8lmbo79HTHgZ9CXvYvn7Sg9_2fZ9hHYg7t9lmfo7v5uEgZAd1vl7vHh9Yo0jJDxHesACmjo9jVBdHmo79IP9YolmJDBIeoBC1mWn3AEIYZRsBlHqJ7e6cIQgCCHLRIhoCC1UzkmrJZ3");
+	// $22<BExpr<$33<VExpr<Var(^string)|Fn(^[^string,$38<^Expr<$22|$76<Value<Null|Tuple(^[^$76...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$76...])>>|Tuple(^[$38...])|$103<AExpr<$33|Num(^real)|Sum(^[^real,^{|^$103...|}[^$103...]])|Mul(^[^real,^{|^$103...|}[^$103...]])|Div(^[^$103,^$103])>>|SExpr<$33|Array(^[$38...])>>>...])|Load(^[$38,^int])|LengthOf($38)|IndexOf(^[$38,$38])>>|Bool<True|False>|And(^{^$22...})|Or(^{^$22...})|Not(^$22)|Equals(^[$154<^Type<Atom<NotT($177<^Proton<TupleT(^[$177...])|ArrayT($177)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$177...])|ArrayT($177)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($154)|OrT(^{$154...})|AndT(^{$154...})|ArrayT($154)|TupleT(^[$154...])|FunctionT(^[$154,$154,$154...])>>,^{|$38,$38|}[$38,$38]])|Inequality(^[^AType<IntT|RealT>,^$103])|Equation(^[^AType<IntT|RealT>,^$103])|ForAll(^[^{^[^Var(^string),$154]...},^$22])|Exists(^[^{^[^Var(^string),$154]...},^$22])>>
+	private static Type type10 = Runtime.Type("jHJ8JGs0bRJOKGs0bR38oQjl5C0t5OZwZRosoQoGLGlKMNgCMNvWTshVicisjgGHZ58tLOlKMNg_5StGNJJRp45SdxaQWcAWBhGIWcZIQw3O5xaR0l5QZK3TdC6Sn4Xr3uo5Q41LRhGMYcYMhw4CL4aRZNZQ3loQWG5W0I_tqOoWqIa4ZUD57A9AQo5S8t5O_WrIa4XQNAQVr7vZMAudH5YZ5Ugo6G4W6RmdXel3wC1XGXGD95egNBXPB5goNF_KWlLS_G4Kp06Q_42PD6u6QZOFKF4W6Rm4XaGXm5R5JCKGs0bRWoOweglbl7zWPoHe0GDK6QgCle0Ag5osJShGqJo8MPiSa9D6YVQkHDt5ecQB1ali0Aw5GpPoQVTgToTgWj0K08bRW_r776v5gZR3mjWml5A6YwNkRoHn0GJ8MS_Cln0AN6JOJNgCMOIcSkmqG7O6R6QoSB1ET6hwScX5YsPZTkXul7j5wl1vl775gZYvW9j6YVOVUkHy0CIKMQooJSgG2GdOMJvhTgdodgegWzl7Q5z6hVccHXm799fVnXX9B9YZTocBH6D9twcc1am7v6O9gcdB1zGa1AR9YccccBH6T9twdc1em7x6d9gce3mTt9QkeBXbGfHAi9YVRVUk1iX9QB1XWim7SgfZ2jX9x9Ygaj1Az9Yk5X0A8AYVNVNBH6AAtkgcHnm7jtgkmnX9cCHqm9jchcmqm7xkhkHrm7ykhkmrm7zZhkHu1GJ_6R_dHaY77575YoGv1DiAewiB1v1ym7SZjZYyX9vAYV3z1AxA343Sjp5GDx5SJGnImG4G0t5OJGLFm8MNtG4OJK6RgK5KJ55KbQYGMPjt5Kl_uszg7p7x7l8d9hWYn7fAEDhVtF5Jmx5Sjta9xDYVsgtk1bI7SDxDQstBmzmbIAcDJ4KSW8rPYgtkHDfDekuB1YIf2AiDYgsgtk1iIBjDtDwEQcvBXaniIAwD34ZQtGp3yDgwvF_Ipl5QJCGm2A9EJOpQdG5KIkwkHn2K1xqQgGp3EEgVxFJHiG6KIcxkmq2KHKLNgGp3SEgsxFrJo8MPiS5KIVykHu2GL4aRJCmu2UgkyFNsoQh_aQWl5KYsyk6AjEG57EAEDEOEREUEeEhEsEQZzBXeYyIAvEYVskikHzn7gAfwmzY97HYZsZ7lXXo79D8Hgk7CmX2v1ADHYkikHDNHeZ8C1YYa3AQHYkikiB1vHbJDTHew8CHY2e3AdHJ43Kt0MOesAC1fZXm7So9_YfZ9jHYg3i3AtHWkxwxglio7fHwHhoAC1IsHgwAdXUYZBliBH69ItgBd1no7CIfwXnZ9EIYVC_hBH6OItcCdmqo7OlClHro7PlClmrJVq2");
 	// Bool<True|False>
-	private static Type type12 = Runtime.Type("QFZFjx5Q3G_RpKq3vk1EJOJNgCMOIs2Az3HE7hGHYcYHhgJko2");
+	private static Type type11 = Runtime.Type("QFZFjx5Q3G_RpKq3vk1EJOJNgCMOIs2Az3HE7hGHYcYHhgJko2");
 	// any
-	private static Type type13 = Runtime.Type("Fs0");
+	private static Type type12 = Runtime.Type("Fs0");
 	// False
-	private static Type type14 = Runtime.Type("2K545QnKq3ukmD0E");
+	private static Type type13 = Runtime.Type("2K545QnKq3ukmD0E");
 	// True
-	private static Type type15 = Runtime.Type("2GJ8MS_CWDggIk2");
-	// $1<^Value<Null|Tuple(^[$1...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{$1...})>>
-	private static Type type16 = Runtime.Type("PG_KWlLS_dmP3tJSglq3wkHE38oQjl5CDKMQZC4Sm_aQbG4Kp06Q_CmDgZnHeko79p3AD4_EEp6XlXl5NGnJ_Gr7vgmAQd1MYcKMgsK7Oxp5cCXDdpXP3G_RpKq3glHQJOJNgCMOIw5As4XQthWTYwnThkb9PB1HylmUeZl78_NkXXGgn2");
-	// $25<Value<Null|Tuple(^[^$25...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$25...})>>
-	private static Type type17 = Runtime.Type("PG_KWlLS_GZIpl5QIg2AwFZFjx5QosJShGqJo8MPiS5KJK6RgKa9fCXHgZnHeko78p3AD4KEEp6XlXl5NGnJ_Gr79hmAQd1MYcKMgsK7Oxp5cCXDdpXP3G_RpKq3glHQJOJNgCMOIw5As4XQthWTYsnThkb9PBmEylmUeZl77_NkXXGgq2");
+	private static Type type14 = Runtime.Type("2GJ8MS_CWDggIk2");
+	// $1<^Value<Null|Tuple(^[$1...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[$1...])>>
+	private static Type type15 = Runtime.Type("EG_KWlLS_d1P3tJSglq3wkHE38oQjl5CDKMQZC4Sm_aQbG4Kp06Q_CmDgZnHeko79p3AD4_EEdMU75QV4K08bRW_r7Pp3AQ4HLRhGMYcYMhw4GJ8MS_CGPgc5K545QnKq3glHQWgaQQwq7zVMAtdX5YVoTgkb9OBHHylmUlD");
+	// $22<Value<Null|Tuple(^[^$22...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$22...])>>
+	private static Type type16 = Runtime.Type("EG_KWlLS_GZIpl5QIg2AwFZFjx5QosJShGqJo8MPiS5KJK6RgKa9cCXHgZnHeko78p3AD4KEEdMU75QV4K08bRW_r7Pp3AQ4HLRhGMYcYMhw4GJ8MS_CGPgc5K545QnKq3glHQWgaQQwq7yVMAtdX5YwnTgkb9OB1HylmU0P");
 	// real
-	private static Type type18 = Runtime.Type("Fc0");
-	// $9<AExpr<Num(^real)|Sum(^[^real,^{|^$9...|}[^$9...]])|Mul(^[^real,^{|^$9...|}[^$9...]])|Div(^[^$9,^$9])|$40<VExpr<Var(^string)|$51<Fn(^[^string,$45<^Expr<$9|$51|$86<Value<Num(^real)|Null|Tuple(^[^$86...])|Bool<True|False>|String(^string)|Set(^{^$86...})>>|Tuple(^[$45...])|$126<BExpr<$40|Bool<True|False>|And(^{^$126...})|Or(^{^$126...})|Not(^$126)|Equals(^[$138<^Type<Atom<NotT($161<^Proton<TupleT(^[$161...])|SetT(^[^bool,$161])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$161...])|SetT(^[^bool,$161])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($138)|OrT(^{$138...})|AndT(^{$138...})|SetT(^[^bool,$138])|TupleT(^[$138...])|FunctionT(^[$138,$138,$138...])>>,^{|$45,$45|}[$45,$45]])|Inequality(^[^AType<IntT|RealT>,^$9])|Equation(^[^AType<IntT|RealT>,^$9])|SubsetEq(^[^SetT(^[^bool,$138]),^SExpr<$40|Set(^{$45...})>,^SExpr<$40|Set(^{$45...})>])|ForAll(^[^{^[^Var(^string),$138]...},^$126])|Exists(^[^{^[^Var(^string),$138]...},^$126])>>|SExpr<$40|Set(^{$45...})>>>...])>|Load(^[$45,^int])|LengthOf($45)>>>>
-	private static Type type19 = Runtime.Type("PIJ4JGs0bRosJShGnJpp5CCK6QoFJPqG_K4W6Rm4_Icd5T95QVo7uZJA9dX5Yg2IgoZ9ACmIfV2LeZp7Bdp7SgKDRdHMYkYMgwp7xs4AdCmIECH6f_2Qeoq7ys5AjGYKW8685t5GBxLNZ4IYGbGXp5wGNkJOiS5ScxZOWorXp5zCmE75hZNcH5YZrX0AB53K3Tk8b9t5IgNBmY0aGDO5ecOBXTQ5gkOF_KWlLS_G4Kp06Q_G_F4W6Rm4Jb0uGX1im5d5WgZel5f5JCKGs0bRWkPoBhWfl7D5j5hVQFZIpl5QIcQkmi0G1xqQgGqJo8MPiSa9c6YwQkHD76eZRBmbWm0AA6Gt3j0nWy0zl5C6oBKOoCmjl9jVScHql7E6P6ggS3Xn0rl5S6YsOsSomr0GJ8MS_CGu0Ae6JOJNgCMOIkTkHvG7f6i6QwTBHj0yGAt6YsQgNkmyl7E5gZIzW9y6YwOwUk1X1C0t5OZwZRosoQoGLGlKMNgCMN95u6y97A9ATAQscFPZZQ_4MSWlLPo_6WGGlKMNo_qQi4meJio5P9Wwcgdg0b1WlJp8qR_GMGl4HbHmo5U9ZOoQm43QgGLGs_qRoCM7sIuIQge31e1fm5h9YVPseomfX9s9YZfgmAu9egfBXX1j1Ax9Ygckfkmjm7B9t9gZgF3Kt0MOeZj7mYlYl7SogVYnX9EAYkgVhBH6OAtchcmqm7C9RAgohFJFoxLQ3toQoG4CE86K34ZQZG4GIK5SJG5Kp06Q_G4_WGptqNo_qQiGKR8DfEsEuE7HCHQHQsiBmmmvHAsAZ0_RjGrQidXen7cAvAgkj3HzXen5yAYwhwjo1X2KGKMNmhq7vAgZnXY9BDYkioskXYY9RB1anym7SZtZYaY9QDYgiktkHbIBEDTDdEQwtBXy1eIAdD34ZQtGp3fDgkuF_Ipl5QJCWf2AjDJOpQdG5KIZvkXi2K1xqQgGp3wDgovFJHiG6KIwvk1m2KHKLNgGp39EggwFrJo8MPiS5KIowkXn2GL4aRJC1qnX0AOE35DxLQdtLNgGp7QEA5gkx3OouVvgvsvZwkwwwcxoxgWrn79DUEhVyB1u1n1AeEYkggmAgEeoyBHuXv2AjEYcisykHyn7NDBAYolyIDwEeozBmuXz2AzEYkgkHD8Hec7C1vmX3ABHYkgkgB1nXYJDEHeV8CHvHa3APHJ43Kt0MOew9CHboIYoWbJDUHeV9C1aHe3AeHWZwkwg0fo7RHhHhs9CHaHe3AsHeV7dHnoBuHvHvHYo0jJDxHesACXbmj3A7IWcNcChWmo7h5AIhkBCmYl9jsBdmno7E6NIgZCdHYl7QIBAYo0rJDSIesCCmro9jVDdHuo7eIt9YoluJDgIeoDCHeXv3AjIYcesDlHyZ9QBmYlyo7SkE_IzZ9yIYgrz3A7LYsrY0A9LlHE");
+	private static Type type17 = Runtime.Type("Fc0");
+	// $9<AExpr<Num(^real)|Sum(^[^real,^{|^$9...|}[^$9...]])|Mul(^[^real,^{|^$9...|}[^$9...]])|Div(^[^$9,^$9])|$41<VExpr<Var(^string)|Fn(^[^string,$46<^Expr<$9|$84<Value<Num(^real)|Null|Tuple(^[^$84...])|Bool<True|False>|String(^string)|Array(^[^$84...])>>|Tuple(^[$46...])|$121<BExpr<$41|Bool<True|False>|And(^{^$121...})|Or(^{^$121...})|Not(^$121)|Equals(^[$133<^Type<Atom<NotT($156<^Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($133)|OrT(^{$133...})|AndT(^{$133...})|ArrayT($133)|TupleT(^[$133...])|FunctionT(^[$133,$133,$133...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,^$9])|Equation(^[^AType<IntT|RealT>,^$9])|ForAll(^[^{^[^Var(^string),$133]...},^$121])|Exists(^[^{^[^Var(^string),$133]...},^$121])>>|SExpr<$41|Array(^[$46...])>>>...])|Load(^[$46,^int])|LengthOf($46)|IndexOf(^[$46,$46])>>>>
+	private static Type type18 = Runtime.Type("jHJ4JGs0bRosJShGnJpp5CCK6QoFJPqG_K4W6Rm4_Icd5TA5QVo7uZJA9dX5Yg2IgoZ9ACmIfV2LeZp7Bdp7SgKDRdHMYkYMgwp7xs4AdCmIECH6f_2Qeoq7ys5AjGYKW8685t5GBxLNZGNkJOiS5ScxZO0tNsOVCdChGUo_ZQZK5TEOL7yWDh0Xl7zZNoXXW9OBHTB5goNFJGs0bRecQB0Yl7N5O5tcOcmal7ulOkHb0KL45QpK5KJK6RgK5K1K3Tk8MBT6z6f9QcP3mHf5QkPFpJ4W6Rm4Hfljo5j5YwNVQoHi0GDK6QgCli0Aw538oQjl5OIGbRdtqOesSB1m0AtZRcXml7c5A6gkR3_Ix5C6s6u6QsRFKFm8MNtC1qlm0AO6WwRcSglql7U5R6hoSF3KmKMOIwSk1u0K545QnKq3e6ggT3Hu0vl5h6YsQsTomvl7z5B5gZUB1a0AtgUc1zl7c5x6gsUFIFiG58E86CDx5SZKJRp45Qn4qX0yGimiHjHqm5B9Z58tLOlKMNg_5StGNJJRp45SdxaQWo7h8h0aH7C9O9QcdFaGj8MFgl5O4WMPnGrRWZAhAhWbH7Q9U9QVeBHeGeHAe9egeB1fm9joecXfm779j9gVfBHXmf1Au9Ycckek1j1GJ_6R_d1vX7N5N5Yo0m1D8AecgBmjmmm7SkgZInX9DAYgcwgk1q1G0GrQhGZIjG6KowZRJGJFiG5KZ4ZRm4LTJG5Kp06Q_G4_WGptqNo_qQiGKRwAOETEcEeEjExEQZiBXjXuHAfAZ0_RjGrQid1an7QAiAgwi31y1an5tAYchcjomy1KGKMNmhq7iAgZYzX9zAYwhVskHXn7TAiAggs3YX2Ynnn5CDYoissomY2G0tLTJCGa2APDJtJSgl5KIktkHb2KLxLPZGp3UDgVuF_Fjx5QJCWe2AfD3_ZQoGp3hDgsuF_J_45QJC0i2AtDoC4Sm_aQbGp3vDgkvFZKW86KYsvkNkmj2WWIjpLPi45QJCHm2Y0A9EG5QDTDdDgDjDuDxD7EAEQkwBHzHnIADEYghwfk1qn7z9fwXqY9QEYkhkxkHrn7SAREgwxBXrmj1AdEYwfkHDfEekyBmrHv2AiEYwfwfBmj1yIDtEeczB1umy2AwEJ43Kt0MOeZ8CmznIYo0XJD8Hec7CXYmX3ABHWwucvgWYo7yEEHhV8CmYmX3APHesNB1bojm7So8_YbZ9UHYV9hmAdHec9Cme3fm7Sk9_IfZ9iHYkdw9l1io7S9jHgcA4mXGmo5wHYsPoApXjo7N6x6gVBdm5YVOcBCH6AItkBdHno7vtBlmno7wWOkHqo7N5N5YolqJDRIeoCCmUTIgwC4A0");
 	// ^Num(^real)
-	private static Type type20 = Runtime.Type("4CDKMQesY9PBXDwkHElD");
-	// ^$13<Sum($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$41<VExpr<Var(^string)|$52<Fn(^[^string,$46<^Expr<$21|$52|$87<Value<Num(^real)|Null|Tuple(^[^$87...])|Bool<True|False>|String(^string)|Set(^{^$87...})>>|Tuple(^[$46...])|$127<BExpr<$41|Bool<True|False>|And(^{^$127...})|Or(^{^$127...})|Not(^$127)|Equals(^[$139<^Type<Atom<NotT($162<^Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($139)|OrT(^{$139...})|AndT(^{$139...})|SetT(^[^bool,$139])|TupleT(^[$139...])|FunctionT(^[$139,$139,$139...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|SubsetEq(^[^SetT(^[^bool,$139]),^SExpr<$41|Set(^{$46...})>,^SExpr<$41|Set(^{$46...})>])|ForAll(^[^{^[^Var(^string),$139]...},^$127])|Exists(^[^{^[^Var(^string),$139]...},^$127])>>|SExpr<$41|Set(^{$46...})>>>...])>|Load(^[$46,^int])|LengthOf($46)>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$41<VExpr<Var(^string)|$52<Fn(^[^string,$46<^Expr<$21|$52|$87<Value<Num(^real)|Null|Tuple(^[^$87...])|Bool<True|False>|String(^string)|Set(^{^$87...})>>|Tuple(^[$46...])|$127<BExpr<$41|Bool<True|False>|And(^{^$127...})|Or(^{^$127...})|Not(^$127)|Equals(^[$139<^Type<Atom<NotT($162<^Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($139)|OrT(^{$139...})|AndT(^{$139...})|SetT(^[^bool,$139])|TupleT(^[$139...])|FunctionT(^[$139,$139,$139...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|SubsetEq(^[^SetT(^[^bool,$139]),^SExpr<$41|Set(^{$46...})>,^SExpr<$41|Set(^{$46...})>])|ForAll(^[^{^[^Var(^string),$139]...},^$127])|Exists(^[^{^[^Var(^string),$139]...},^$127])>>|SExpr<$41|Set(^{$46...})>>>...])>|Load(^[$46,^int])|LengthOf($46)>>>>>...]]>)>
-	private static Type type21 = Runtime.Type("QIoBKShdmIec0K0K3Tk8b9UCXEfVnEeVo7wZo7ScJDAd1IYcIIgs3CDKMQooJSgG2GdO6KLK3Tk8MJE_qPthNg0MYoIMhsp7Nl2AcCHLClXPYsYEYo0Qtoa9iCXLjl1ToNKNmGXGiG3Ij45OlsNsOcNhGU35BKaQbG6PEOL7ylNh0Xl7Q_NoXXW9OBXTB5goNFJGs0bRecQB0Yl7N5O5tcOcmal7vlOkHb0KL45QpK5KJK6RgK5K1K3Tk8MFT5d699t9QcP3mMf5QkPFpJ4W6Rm4HfWno5j5YwNVQoHi0GDK6QgCli0Aw538oQjl5OIGbRdtqOeZTB1m0AtZRcXml7c5A6gkR3KPx5C6v6x6QsRFnJ_Gr776fwHqW9P6YVSgSk1rG7E6S6QsSBmblrGAc63G_RpKq3e6ggTF_GWlqR_CGv0Ai6WkTwTg0yl7y5t6hcUBmj0Y0Aw6YVOkHDy6ewUB1e0X1A89o3ZQZGmImGYIjG6O44MSWlqRWhNgUwfZgggwhglY1dGHiKLRp45QdGMT3544MSWGMPjtL7gHuHQgd31a1bm5S935IKbNnK5S44M7T99IQVeFaGj8MFgl5O4WMPnGrRWZEhEh0fH7d9h9QseBHelfHAs9eZfBXim9jgfc1jm7A9x9gsfB1YHj1A7AYoccfkXm1GJ_6R_dXyX7N5N5YoWn1DEAeVhBHnHqm7SchZnqX9RAYscohkXr1G0GrQhGZIjG6KowZRJGJFiG5K3CKOoG4OJK6RgK5KJ55KbQYGMPjt5KldskyZzgzZ7t7l8hlvm7BAsAhZjF5Jmx5Sjta9fDYZikjkHzH7yAfDQwjB1u1XIA8DJ4KSW8rPYkjkHDBDeosBHvXY2AEDekl7ODwAYoWaIDQDektB1vHb2ATDlVtwtcyg0en7vAdDhcuFJFi_6KIkukHf2KDK6QgGp3jDgVvF_Kj_5OJCWi2AvDJ8oQjl5KIovkXj2G8t5SJC0m2A8EJ8KOWl5KIgwk1n2SIGbRdtqOJCWn2AEE3OKNmGp7OEB5gcxFNsoQh_aQWl5KYkxkNkHrIZWfIi2jnjYmIn2qnqYrn5UEYgsVyoHun7dACAggyBHnm9joycXvn7eAjEgVzBmumv2AuEYZtogBH6wEtozcXzn7gAzEgV7CHn1Atc7dmXo7hABHgo7CHnHnm7CAEHtV8dHao7iAPHgg8GKFJ_6R_d1io7THyBH6UHtV9dHeo7O9eHgg94XmInn5hHYo8t9pmfo7P9eHgZAdHXZ9DIngAlAlACH6xHtsAdmjo7U97IgZB4mXlqo5AIYsPkBpHno7N5fwmnZ9NIYVSZClXqZ9D5YkCpgBH6SItsCdmro7cIfwHuZ9eIYgDdfBH6gItoDdXvo7e9jIgVECmemv3AuIegl7N5wIYoGzJDyIewEC1U7LgZNCmUN5ggN4v$");
-	// ^$13<Mul($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$41<VExpr<Var(^string)|$52<Fn(^[^string,$46<^Expr<$21|$52|$87<Value<Num(^real)|Null|Tuple(^[^$87...])|Bool<True|False>|String(^string)|Set(^{^$87...})>>|Tuple(^[$46...])|$127<BExpr<$41|Bool<True|False>|And(^{^$127...})|Or(^{^$127...})|Not(^$127)|Equals(^[$139<^Type<Atom<NotT($162<^Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($139)|OrT(^{$139...})|AndT(^{$139...})|SetT(^[^bool,$139])|TupleT(^[$139...])|FunctionT(^[$139,$139,$139...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|SubsetEq(^[^SetT(^[^bool,$139]),^SExpr<$41|Set(^{$46...})>,^SExpr<$41|Set(^{$46...})>])|ForAll(^[^{^[^Var(^string),$139]...},^$127])|Exists(^[^{^[^Var(^string),$139]...},^$127])>>|SExpr<$41|Set(^{$46...})>>>...])>|Load(^[$46,^int])|LengthOf($46)>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$41<VExpr<Var(^string)|$52<Fn(^[^string,$46<^Expr<$21|$52|$87<Value<Num(^real)|Null|Tuple(^[^$87...])|Bool<True|False>|String(^string)|Set(^{^$87...})>>|Tuple(^[$46...])|$127<BExpr<$41|Bool<True|False>|And(^{^$127...})|Or(^{^$127...})|Not(^$127)|Equals(^[$139<^Type<Atom<NotT($162<^Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$162...])|SetT(^[^bool,$162])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($139)|OrT(^{$139...})|AndT(^{$139...})|SetT(^[^bool,$139])|TupleT(^[$139...])|FunctionT(^[$139,$139,$139...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|SubsetEq(^[^SetT(^[^bool,$139]),^SExpr<$41|Set(^{$46...})>,^SExpr<$41|Set(^{$46...})>])|ForAll(^[^{^[^Var(^string),$139]...},^$127])|Exists(^[^{^[^Var(^string),$139]...},^$127])>>|SExpr<$41|Set(^{$46...})>>>...])>|Load(^[$46,^int])|LengthOf($46)>>>>>...]]>)>
-	private static Type type22 = Runtime.Type("QIooJSgdmIec0K0K3Tk8b9UCXEfVnEeVo7wZo7ScJDAd1IYcIIgs3CDKMQoBKShG2GdO6KLK3Tk8MJE_qPthNg0MYoIMhsp7Nl2AcCHLClXPYsYEYo0Qtoa9iCXLjl1ToNKNmGXGiG3Ij45OlsNsOcNhGU35BKaQbG6PEOL7ylNh0Xl7Q_NoXXW9OBXTB5goNFJGs0bRecQB0Yl7N5O5tcOcmal7vlOkHb0KL45QpK5KJK6RgK5K1K3Tk8MFT5d699t9QcP3mMf5QkPFpJ4W6Rm4HfWno5j5YwNVQoHi0GDK6QgCli0Aw538oQjl5OIGbRdtqOeZTB1m0AtZRcXml7c5A6gkR3KPx5C6v6x6QsRFnJ_Gr776fwHqW9P6YVSgSk1rG7E6S6QsSBmblrGAc63G_RpKq3e6ggTF_GWlqR_CGv0Ai6WkTwTg0yl7y5t6hcUBmj0Y0Aw6YVOkHDy6ewUB1e0X1A89o3ZQZGmImGYIjG6O44MSWlqRWhNgUwfZgggwhglY1dGHiKLRp45QdGMT3544MSWGMPjtL7gHuHQgd31a1bm5S935IKbNnK5S44M7T99IQVeFaGj8MFgl5O4WMPnGrRWZEhEh0fH7d9h9QseBHelfHAs9eZfBXim9jgfc1jm7A9x9gsfB1YHj1A7AYoccfkXm1GJ_6R_dXyX7N5N5YoWn1DEAeVhBHnHqm7SchZnqX9RAYscohkXr1G0GrQhGZIjG6KowZRJGJFiG5K3CKOoG4OJK6RgK5KJ55KbQYGMPjt5KldskyZzgzZ7t7l8hlvm7BAsAhZjF5Jmx5Sjta9fDYZikjkHzH7yAfDQwjB1u1XIA8DJ4KSW8rPYkjkHDBDeosBHvXY2AEDekl7ODwAYoWaIDQDektB1vHb2ATDlVtwtcyg0en7vAdDhcuFJFi_6KIkukHf2KDK6QgGp3jDgVvF_Kj_5OJCWi2AvDJ8oQjl5KIovkXj2G8t5SJC0m2A8EJ8KOWl5KIgwk1n2SIGbRdtqOJCWn2AEE3OKNmGp7OEB5gcxFNsoQh_aQWl5KYkxkNkHrIZWfIi2jnjYmIn2qnqYrn5UEYgsVyoHun7dACAggyBHnm9joycXvn7eAjEgVzBmumv2AuEYZtogBH6wEtozcXzn7gAzEgV7CHn1Atc7dmXo7hABHgo7CHnHnm7CAEHtV8dHao7iAPHgg8GKFJ_6R_d1io7THyBH6UHtV9dHeo7O9eHgg94XmInn5hHYo8t9pmfo7P9eHgZAdHXZ9DIngAlAlACH6xHtsAdmjo7U97IgZB4mXlqo5AIYsPkBpHno7N5fwmnZ9NIYVSZClXqZ9D5YkCpgBH6SItsCdmro7cIfwHuZ9eIYgDdfBH6gItoDdXvo7e9jIgVECmemv3AuIegl7N5wIYoGzJDyIewEC1U7LgZNCmUN5ggN4v$");
+	private static Type type19 = Runtime.Type("4CDKMQesY9PBXDwkHElD");
+	// ^$13<Sum($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...]]>)>
+	private static Type type20 = Runtime.Type("sHoBKShdmIec0K0K3Tk8b9UCXEfVnEeVo7wZo7ScJDAd1IYcIIgs3CDKMQooJSgG2GdO6KLK3Tk8MJE_qPtlNg0MYoIMhsp7Nl2AcCHLClXPYsYEYo0Qtoa9iCXLjl1ToNKNmGXGiG3Ij45O35BKaQbG6PEOLFE5U5OIQIQs6S8t5O_WrIa4mUdIQZNBmL95hgNcH5YcMY0AD53K3Tk8b9v5IoNBHaWaGDQ5ekOBmTS5gsOF_KWlLS_G4Kp06Q_G_F4W6Rm4nr0X1fm5f5Ww4fl5h5JCKGs0bRWsPVBh0il7N5t5hcQFZIpl5QIkQkHj0G1xqQgGqJo8MPiSa9U6YZRkHD96egRBHe0n0AC6G_ajWnGylyl5E6J4ZRm4LTYZSkRkXqG7N6Q6QkSB1eGrGAT63G_RpKq3c6gZTF_GWlqR_Clu0Ag6WcToTgWvl7z5j6hVUB1mGY0Au6YZOkHDw6eoUBHeWz0Az6o3ZQZGmImGYIjG6O44MSWlqRWlNZUcfkfsfchgGY1dGHiKLRp45QdGMT3544MSWGMPjtL7DHRHQZd3XYXam5Q9ZOoQm43QgGLGs_qRoCM7uHwHQwd31b1em5d9YcPceomeX9g9YoegmAi9eweBHX1i1At9YccVfkmim7A9h9gofF3Kt0MOeoi7HaGal7SZgVYmX9AAYVgkgBH6CAtsgcmnm7B9NAgZhFJFoxLQ3toQoG4CE86K34ZQZG4O08bRW_6KZGKSklLOJGONJSiC5SdxaQJ4MzXqnrIunu2yYzn5eAYwfgio1v1OF8rQoxaQeZtB1rmv1AsAWZjZtgWym7QAvAhkjFKJp4aRfCmv1Atwjc1Xn7cA8DgcsBmrmv1ABDlgsosVxgWYn7iAEDhVtFJFi_6KIctkma2KDK6QgGp3SDgstF_Kj_5OJC0e2AdDJ8oQjl5KIguk1f2G8t5SJCWf2AjDJ8KOWl5KIZvkXi2SIGbRdtqOJC0j2AxD3OKNmGp7zDC5gVwFNsoQh_aQWl5KYcwoNkmmIZ0bnbYeIf2iniYjIm2nn5CEYsjswomnn7RA7AgZxB1mm9jgxc1rn7SASEgsxBXrHr2AcEYwhVgkXun77AgZ2vY9hEYVisykmvn77A7AYVgZzZYyY9vEYZikzkHz2K0GKTkKa9PHYV7tn7SZ7_YXZ9AHYwck7lHYJ7sDvDQw7Cmz2aJAOHYVdk7lmaZ9E5Yo8WgBH6THtw8d1eo7dHfwXeZ9fHYk9peBH6hHts9dmfo7S9sHgZACXb1i3AvHWkNcBhGjo7j5yHhwACHqWz0A8Iegl7O5AIYo0nJDCIesBC1UEIgVCCHUO5gcCCHaGal7SkC_IrZ9TIYVNwCl1uJgn2");
+	// ^$13<Mul($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...]]>)>
+	private static Type type21 = Runtime.Type("sHooJSgdmIec0K0K3Tk8b9UCXEfVnEeVo7wZo7ScJDAd1IYcIIgs3CDKMQoBKShG2GdO6KLK3Tk8MJE_qPtlNg0MYoIMhsp7Nl2AcCHLClXPYsYEYo0Qtoa9iCXLjl1ToNKNmGXGiG3Ij45O35BKaQbG6PEOLFE5U5OIQIQs6S8t5O_WrIa4mUdIQZNBmL95hgNcH5YcMY0AD53K3Tk8b9v5IoNBHaWaGDQ5ekOBmTS5gsOF_KWlLS_G4Kp06Q_G_F4W6Rm4nr0X1fm5f5Ww4fl5h5JCKGs0bRWsPVBh0il7N5t5hcQFZIpl5QIkQkHj0G1xqQgGqJo8MPiSa9U6YZRkHD96egRBHe0n0AC6G_ajWnGylyl5E6J4ZRm4LTYZSkRkXqG7N6Q6QkSB1eGrGAT63G_RpKq3c6gZTF_GWlqR_Clu0Ag6WcToTgWvl7z5j6hVUB1mGY0Au6YZOkHDw6eoUBHeWz0Az6o3ZQZGmImGYIjG6O44MSWlqRWlNZUcfkfsfchgGY1dGHiKLRp45QdGMT3544MSWGMPjtL7DHRHQZd3XYXam5Q9ZOoQm43QgGLGs_qRoCM7uHwHQwd31b1em5d9YcPceomeX9g9YoegmAi9eweBHX1i1At9YccVfkmim7A9h9gofF3Kt0MOeoi7HaGal7SZgVYmX9AAYVgkgBH6CAtsgcmnm7B9NAgZhFJFoxLQ3toQoG4CE86K34ZQZG4O08bRW_6KZGKSklLOJGONJSiC5SdxaQJ4MzXqnrIunu2yYzn5eAYwfgio1v1OF8rQoxaQeZtB1rmv1AsAWZjZtgWym7QAvAhkjFKJp4aRfCmv1Atwjc1Xn7cA8DgcsBmrmv1ABDlgsosVxgWYn7iAEDhVtFJFi_6KIctkma2KDK6QgGp3SDgstF_Kj_5OJC0e2AdDJ8oQjl5KIguk1f2G8t5SJCWf2AjDJ8KOWl5KIZvkXi2SIGbRdtqOJC0j2AxD3OKNmGp7zDC5gVwFNsoQh_aQWl5KYcwoNkmmIZ0bnbYeIf2iniYjIm2nn5CEYsjswomnn7RA7AgZxB1mm9jgxc1rn7SASEgsxBXrHr2AcEYwhVgkXun77AgZ2vY9hEYVisykmvn77A7AYVgZzZYyY9vEYZikzkHz2K0GKTkKa9PHYV7tn7SZ7_YXZ9AHYwck7lHYJ7sDvDQw7Cmz2aJAOHYVdk7lmaZ9E5Yo8WgBH6THtw8d1eo7dHfwXeZ9fHYk9peBH6hHts9dmfo7S9sHgZACXb1i3AvHWkNcBhGjo7j5yHhwACHqWz0A8Iegl7O5AIYo0nJDCIesBC1UEIgVCCHUO5gcCCHaGal7SkC_IrZ9TIYVNwCl1uJgn2");
 	// AType<IntT|RealT>
-	private static Type type23 = Runtime.Type("QFKFJ_6R_GJHiG6KIg2AwF_J_45QJCWEgwI7xVo58CXD9pmH0IE");
-	// $12<Mul($10<^[^real,^{|$3<^$20<AExpr<$12|Num(^real)|Sum($10)|Div(^[$3,$3])|$40<VExpr<Var(^string)|$51<Fn(^[^string,$45<^Expr<$20|$51|$86<Value<Num(^real)|Null|Tuple(^[^$86...])|Bool<True|False>|String(^string)|Set(^{^$86...})>>|Tuple(^[$45...])|$126<BExpr<$40|Bool<True|False>|And(^{^$126...})|Or(^{^$126...})|Not(^$126)|Equals(^[$138<^Type<Atom<NotT($161<^Proton<TupleT(^[$161...])|SetT(^[^bool,$161])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$161...])|SetT(^[^bool,$161])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($138)|OrT(^{$138...})|AndT(^{$138...})|SetT(^[^bool,$138])|TupleT(^[$138...])|FunctionT(^[$138,$138,$138...])>>,^{|$45,$45|}[$45,$45]])|Inequality(^[^AType<IntT|RealT>,$3])|Equation(^[^AType<IntT|RealT>,$3])|SubsetEq(^[^SetT(^[^bool,$138]),^SExpr<$40|Set(^{$45...})>,^SExpr<$40|Set(^{$45...})>])|ForAll(^[^{^[^Var(^string),$138]...},^$126])|Exists(^[^{^[^Var(^string),$138]...},^$126])>>|SExpr<$40|Set(^{$45...})>>>...])>|Load(^[$45,^int])|LengthOf($45)>>>>>...|}[$3<^$20<AExpr<$12|Num(^real)|Sum($10)|Div(^[$3,$3])|$40<VExpr<Var(^string)|$51<Fn(^[^string,$45<^Expr<$20|$51|$86<Value<Num(^real)|Null|Tuple(^[^$86...])|Bool<True|False>|String(^string)|Set(^{^$86...})>>|Tuple(^[$45...])|$126<BExpr<$40|Bool<True|False>|And(^{^$126...})|Or(^{^$126...})|Not(^$126)|Equals(^[$138<^Type<Atom<NotT($161<^Proton<TupleT(^[$161...])|SetT(^[^bool,$161])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$161...])|SetT(^[^bool,$161])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($138)|OrT(^{$138...})|AndT(^{$138...})|SetT(^[^bool,$138])|TupleT(^[$138...])|FunctionT(^[$138,$138,$138...])>>,^{|$45,$45|}[$45,$45]])|Inequality(^[^AType<IntT|RealT>,$3])|Equation(^[^AType<IntT|RealT>,$3])|SubsetEq(^[^SetT(^[^bool,$138]),^SExpr<$40|Set(^{$45...})>,^SExpr<$40|Set(^{$45...})>])|ForAll(^[^{^[^Var(^string),$138]...},^$126])|Exists(^[^{^[^Var(^string),$138]...},^$126])>>|SExpr<$40|Set(^{$45...})>>>...])>|Load(^[$45,^int])|LengthOf($45)>>>>>...]]>)>
-	private static Type type24 = Runtime.Type("PIooJSgdX5J4JGs0bResp7xg1DycmEYg2HYoGHtcZ9ACXDBlHIosJShGnJpp5C3_aSJOKGs0bRGt3PeWbXl5QC1ERpHMYwoDgwp7Nl3AdCHExBH6f_2Qeoq7Ot5AjGYKW8685t5GBxLNZ4IYGbGXp5wGNkJOiS5ScxZOWorXp5zCXL75hZNcH5YZrX0AB53K3Tk8b9t5IgNBmY0aGDO5ecOBXTQ5gkOF_KWlLS_G4Kp06Q_G_F4W6Rm4Jb0uGX1im5d5Ws_el5f5JCKGs0bRWkPoBhWfl7D5j5hVQFZIpl5QIcQkmi0G1xqQgGqJo8MPiSa9c6YwQkHD76eZRBmbWm0AA6GW5j0nWy0zl5C6oBKOoCmjl9jVScHql7E6P6ggS3Xn0rl5S6YsOsSomr0GJ8MS_CGu0Ae6JOJNgCMOIkTkHvG7f6i6QwTBHj0yGAt6YsQgNkmyl7E5gZIzW9y6YwOwUk1X1C0t5OZwZRosoQoGLGlKMNgCMN95u6y97A9ATAQscFPZZQ_4MSWlLPo_6WGGlKMNo_qQi4meJio5P9Wwcgdg0b1WlJp8qR_GMGl4HbHmo5U9ZOoQm43QgGLGs_qRoCM7sIuIQge31e1fm5h9YVPseomfX9s9YZfgmAu9egfBXX1j1Ax9Ygckfkmjm7B9t9gZgF3Kt0MOeZj7mYlYl7SogVYnX9EAYkgVhBH6OAtchcmqm7C9RAgohFJFoxLQ3toQoG4CE86K34ZQZG4GIK5SJG5Kp06Q_G4_WGptqNo_qQiGKR8DfEsEuE7HCHQHQsiBmmmvHAsAZ0_RjGrQidXen7cAvAgkj3HzXen5yAYwhwjo1X2KGKMNmhq7vAgZnXY9BDYkioskXYY9RB1anym7SZtZYaY9QDYgiktkHbIBEDTDdEQwtBXy1eIAdD34ZQtGp3fDgkuF_Ipl5QJCWf2AjDJOpQdG5KIZvkXi2K1xqQgGp3wDgovFJHiG6KIwvk1m2KHKLNgGp39EggwFrJo8MPiS5KIowkXn2GL4aRJC1qnX0AOE35DxLQdtLNgGp7QEA5gkx3OouVvgvsvZwkwwwcxoxgWrn79DUEhVyB1u1n1AeEYkggmAgEeoyBHuXv2AjEYcisykHyn7NDBAYolyIDwEeozBmuXz2AzEYkgkHD8Hec7C1vmX3ABHYkgkgB1nXYJDEHeV8CHvHa3APHJ43Kt0MOew9CHbJEYoWbJDUHeV9C1aHe3AeHWZwkwg0fo7RHhHhs9CHaHe3AsHeV7dHnoBuHvHvHYo0jJDxHesACXbmj3A7IWcNcChWmo7h5AIhkBCmYl9jsBdmno7E6NIgZCdHYl7QIBAYo0rJDSIesCCmro9jVDdHuo7eIt9YoluJDgIeoDCHeXv3AjIYcesDlHyZ9QBmYlyo7SkE_IzZ9yIYgrz3A7LYsrY0A9LWIE");
+	private static Type type22 = Runtime.Type("QFKFJ_6R_GJHiG6KIg2AwF_J_45QJCWEgwI7xVo58CXD9pmH0IE");
+	// $12<Mul($10<^[^real,^{|$3<^$20<AExpr<$12|Num(^real)|Sum($10)|Div(^[$3,$3])|$41<VExpr<Var(^string)|Fn(^[^string,$46<^Expr<$20|$84<Value<Num(^real)|Null|Tuple(^[^$84...])|Bool<True|False>|String(^string)|Array(^[^$84...])>>|Tuple(^[$46...])|$121<BExpr<$41|Bool<True|False>|And(^{^$121...})|Or(^{^$121...})|Not(^$121)|Equals(^[$133<^Type<Atom<NotT($156<^Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($133)|OrT(^{$133...})|AndT(^{$133...})|ArrayT($133)|TupleT(^[$133...])|FunctionT(^[$133,$133,$133...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$3])|Equation(^[^AType<IntT|RealT>,$3])|ForAll(^[^{^[^Var(^string),$133]...},^$121])|Exists(^[^{^[^Var(^string),$133]...},^$121])>>|SExpr<$41|Array(^[$46...])>>>...])|Load(^[$46,^int])|LengthOf($46)|IndexOf(^[$46,$46])>>>>>...|}[$3<^$20<AExpr<$12|Num(^real)|Sum($10)|Div(^[$3,$3])|$41<VExpr<Var(^string)|Fn(^[^string,$46<^Expr<$20|$84<Value<Num(^real)|Null|Tuple(^[^$84...])|Bool<True|False>|String(^string)|Array(^[^$84...])>>|Tuple(^[$46...])|$121<BExpr<$41|Bool<True|False>|And(^{^$121...})|Or(^{^$121...})|Not(^$121)|Equals(^[$133<^Type<Atom<NotT($156<^Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($133)|OrT(^{$133...})|AndT(^{$133...})|ArrayT($133)|TupleT(^[$133...])|FunctionT(^[$133,$133,$133...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$3])|Equation(^[^AType<IntT|RealT>,$3])|ForAll(^[^{^[^Var(^string),$133]...},^$121])|Exists(^[^{^[^Var(^string),$133]...},^$121])>>|SExpr<$41|Array(^[$46...])>>>...])|Load(^[$46,^int])|LengthOf($46)|IndexOf(^[$46,$46])>>>>>...]]>)>
+	private static Type type23 = Runtime.Type("jHooJSgdX5J4JGs0bResp7xg1DycmEYg2HYoGHtcZ9ACXDBlHIosJShGnJpp5C3_aSJOKGs0bRGt3PeWrXl5QC1ERpHMYwoDgwp7Nl3AdCHExBH6f_2Qeoq7Ot5AjGYKW8685t5GBxLNZGNkJOiS5ScxZO0tNsOVCdChGUo_ZQZK5TEOL7yWDh0Xl7P_NoXXW9OBHTB5goNFJGs0bRecQB0Yl7N5O5tcOcmal7ulOkHb0KL45QpK5KJK6RgK5K1K3Tk8MBT6z6f9QcP3XMf5QkPFpJ4W6Rm4Hfljo5j5YwNVQoHi0GDK6QgCli0Aw538oQjl5OIGbRdtqOesSB1m0AtZRcXml7c5A6gkR34Px5C6s6u6QsRFKFm8MNtC1qlm0AO6WwRcSglql7U5R6hoSF3KmKMOIwSk1u0K545QnKq3e6ggT3Hu0vl5h6YsQsTomvl7z5B5gZUB1a0AtgUc1zl7c5x6gsUFIFiG58E86CDx5SZKJRp45Qn4qX0yGimiHjHqm5B9Z58tLOlKMNg_5StGNJJRp45SdxaQWo7h8h0aH7C9O9QcdFaGj8MFgl5O4WMPnGrRWZAhAhWbH7Q9U9QVeBHeGeHAe9egeB1fm9joecXfm779j9gVfBHXmf1Au9Ycckek1j1GJ_6R_d1vX7N5N5Yo0m1D8AecgBmjmmm7SkgZInX9DAYgcwgk1q1G0GrQhGZIjG6KowZRJGJFiG5KZ4ZRm4LTJG5Kp06Q_G4_WGptqNo_qQiGKRwAOETEcEeEjExEQZiBXjXuHAfAZ0_RjGrQid1an7QAiAgwi31y1an5tAYchcjomy1KGKMNmhq7iAgZYzX9zAYwhVskHXn7TAiAggs3YX2Ynnn5CDYoissomY2G0tLTJCGa2APDJtJSgl5KIktkHb2KLxLPZGp3UDgVuF_Fjx5QJCWe2AfD3_ZQoGp3hDgsuF_J_45QJC0i2AtDoC4Sm_aQbGp3vDgkvFZKW86KYsvkNkmj2WWIjpLPi45QJCHm2Y0A9EG5QDTDdDgDjDuDxD7EAEQkwBHzHnIADEYghwfk1qn7z9fwXqY9QEYkhkxkHrn7SAREgwxBXrmj1AdEYwfkHDfEekyBmrHv2AiEYwfwfBmj1yIDtEeczB1umy2AwEJ43Kt0MOeZ8CmzIEYo0XJD8Hec7CXYmX3ABHWwucvgWYo7yEEHhV8CmYmX3APHesNB1bojm7So8_YbZ9UHYV9hmAdHec9Cme3fm7Sk9_IfZ9iHYkdw9l1io7S9jHgcA4mXGmo5wHYsPoApXjo7N6x6gVBdm5YVOcBCH6AItkBdHno7vtBlmno7wWOkHqo7N5N5YolqJDRIeoCCmUTIgwC4D0");
 	// IntT
-	private static Type type25 = Runtime.Type("2G8t5SJCWDggIk2");
+	private static Type type24 = Runtime.Type("2G8t5SJCWDggIk2");
 	// RealT
-	private static Type type26 = Runtime.Type("2KHKLNgGp3ukmD0E");
-	// $7<Set(^{$2<^Expr<$44<Value<Null|Tuple(^[^$44...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$44...})>>|Tuple(^[$2...])|Fn(^[^string,$2...])|$95<BExpr<Bool<True|False>|VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|And(^{^$95...})|Or(^{^$95...})|Not(^$95)|Equals(^[$127<^Type<Atom<NotT($150<^Proton<TupleT(^[$150...])|SetT(^[^bool,$150])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$150...])|SetT(^[^bool,$150])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($127)|OrT(^{$127...})|AndT(^{$127...})|SetT(^[^bool,$127])|TupleT(^[$127...])|FunctionT(^[$127,$127,$127...])>>,^{|$2,$2|}[$2,$2]])|Inequality(^[^AType<IntT|RealT>,$233<^AExpr<Num(^real)|VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|Sum(^[^real,^{|$233...|}[$233...]])|Mul(^[^real,^{|$233...|}[$233...]])|Div(^[$233,$233])>>])|Equation(^[^AType<IntT|RealT>,$233])|SubsetEq(^[^SetT(^[^bool,$127]),^SExpr<$7|VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>>,^SExpr<$7|VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>>])|ForAll(^[^{^[^Var(^string),$127]...},^$95])|Exists(^[^{^[^Var(^string),$127]...},^$95])>>|AExpr<Num(^real)|VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>|Sum(^[^real,^{|$233...|}[$233...]])|Mul(^[^real,^{|$233...|}[$233...]])|Div(^[$233,$233])>|SExpr<$7|VExpr<Fn(^[^string,$2...])|Var(^string)|Load(^[$2,^int])|LengthOf($2)>>>>...})>
-	private static Type type27 = Runtime.Type("PIoBKOoGJGs0bRewp7wgmAxcXEYcnEgV3KL45QpK5KJK6RgK585t5K1K3Tk8MFD5v586t6Qs3K0K3Tk8M7El9hGLJCKGs0bRWcpuo5RCmDSpXM3tJSglq3clHP38oQjl5CDKMQZC4Sm_aQbdXYl7ilHDjd1TYgJTgcMJeh6eleWfl5wCXQfwXUewr7uVNkHXG7xdNglXl79lNoHY0GJ8MS_ClY0AN5JOJNgCMOIcOkmaG7O5R5QoOBmPT5hwOcX5YkLe0Ae5eZl7hlPkHfl7wkHDj5eVQBmHt5gcQB0fl7wkQZIjW9y5Ykoj0A76JOKGs0bRo3ZQZGmImGYIjG6O44MSWlqRWWPccgeoewegggln0dGHiKLRp45QdGMT3544MSWGMPjtL7OHEIQgS31q0rl5S635IKbNnK5S44M7T6UIQVTFaGj8MFgl5O4WMPnGrRWZNhNh0vG7d6h6QsTBHIj6hVUFYKW86GBxLNZ4Im0Ymam5w635BKaQbG6PEOL7x6S9QwUBXm0XHA89YcUkPkmXX9QB1EC9YoWYHDE9eVdBmyGa1AP9YsUk2AR9eZUBXbm9jwdc1em7A6d9gceB1nGe1Ag9YoRsdkXf1GJ_6R_dXrX7wkn7ScfVniX9w9YZfofBH6y9twfc1mm7D68AgcgFJFoxLQ3toQoG4CE86K34ZQZG4GIK5SJG5Kp06Q_G4_WGptqNo_qQiGKRiANESEUEhEuE7HQghB1i1rHASAZ0_RjGrQidmYn7CAcAgZi3XumYn5fAYkgkioHv1KGKMNmhq7cAgZ2yX9tAYZhcjkmyX9RBHz1um7SsjZnzX97DYVhZskXXIBwAADDEQksBmrHYIADD34ZQtGp3NDgZtF_Ipl5QJCla2ARDJOpQdG5KIstkmb2K1xqQgGp3dDgcuFJHiG6KIkukHf2KHKLNgGp3jDgVvFrJo8MPiS5KIcvkmi2GL4aRJCHj2f0AyD35DxLQdtLNgGp77Eg5gZw3OctotVugusuZvkvwvcwglmn7jABEhowBHnHi1AEEYZfgmAOEecxBXnmq2AREYwggxkXrn7xAt9Yo0uIDdEecyB1qmu2AgEYZfkHDiEewyBHq1y2AtEYZfZfBHimyIDwEeozBXqXz2AzEJ43Kt0MOeo8d1fo79HAHYo0YJDCHes7CHqlY3ANHWsuZvgWao78HQHhk8GnJpp5CCK6QoFJPq4peWXHjojJno5dHYV_eJAfHYg7h1DhHes9CHelfo7SVA_IiZ9uHYs8hAl1jo7UHvHgsACmXoXo7SVB_ImZ99IYV9hBl1no7P6EHgsBdHvY9fInVC_C_CCH6PItgCd1ro7U6SIgsC4HH99QVDCmLdIhcDd1Ym7gIt9YoGvJDiIewDC1yo9jZEdXyo7vIT9Yo0zJDxIesECXulz3A7LYgTwElXXKZo2");
-	// $6<SExpr<$16<VExpr<Var(^string)|$27<Fn(^[^string,$21<^Expr<$6|$27|$62<Value<Null|Tuple(^[^$62...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$62...})>>|Tuple(^[$21...])|$105<BExpr<$16|Bool<True|False>|And(^{^$105...})|Or(^{^$105...})|Not(^$105)|Equals(^[$117<^Type<Atom<NotT($140<^Proton<TupleT(^[$140...])|SetT(^[^bool,$140])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$140...])|SetT(^[^bool,$140])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($117)|OrT(^{$117...})|AndT(^{$117...})|SetT(^[^bool,$117])|TupleT(^[$117...])|FunctionT(^[$117,$117,$117...])>>,^{|$21,$21|}[$21,$21]])|Inequality(^[^AType<IntT|RealT>,$223<^AExpr<$16|Num(^real)|Sum(^[^real,^{|$223...|}[$223...]])|Mul(^[^real,^{|$223...|}[$223...]])|Div(^[$223,$223])>>])|Equation(^[^AType<IntT|RealT>,$223])|SubsetEq(^[^SetT(^[^bool,$117]),^$6,^$6])|ForAll(^[^{^[^Var(^string),$117]...},^$105])|Exists(^[^{^[^Var(^string),$117]...},^$105])>>|AExpr<$16|Num(^real)|Sum(^[^real,^{|$223...|}[$223...]])|Mul(^[^real,^{|$223...|}[$223...]])|Div(^[$223,$223])>>>...])>|Load(^[$21,^int])|LengthOf($21)>>|Set(^{$21...})>>
-	private static Type type28 = Runtime.Type("PIJCKGs0bRJOKGs0bRoBKOo4XLALQon7usIAzFYKW8685t5GBxLNZ4IMhlEh0I35BKaQbG6PEOL7CtEhlIYg2LhZ_9OBHHQl1M3K3Tk8b985Igp7UWLDddXPYcoPgk5KL45QpK5KJK6RgK5K1K3Tk8MFhWQkSgcgGTJ4JGs0bRWcbao5w41HxhWUYspUhVNFZIpl5QIcNkmX0G1xqQgGYIpp5OIGbRdtqOeVQB1a0AtZOcXal7jhOk1bGJB5S596C6E6QsOB1al9jVPcHel7wcPkmeG7U5g5QoPBXQi5hwPF3KmKMOIZQkXi0K545QnKq3w5goQ3miWjl5z5YoNVRoHmW9PBXYlm0AB6YwNg4AD6Yw4AtVScHql7jdSkmq0C0t5OZwZRosoQoGLGlKMNgCMNPdRZdgdodZfgGu0dGHiKLRp45QdGMT3544MSWGMPjtL7zExHQoT3XuWvl5j635IKbNnK5S44M7s6CIQcUFaGj8MFgl5O4WMPnGrRWgDpDhWzG7v6z6QVcB1T89hcccmXm7B9fwHYX9D9YoSwck1am7T6E9gcdBmr0Y1AR93GKTkKa9BAXwpMYo0e1Dd9eceBmbmem7SkeZIfX9i9YVTwek1i1G0GrQhGZIjG6KowZRJGJFiG5K3CKOoG4OJK6RgK5KJ55KbQYGMPjt5KllhsvgwowgxVysygGmm7T99AhggF5Jmx5Sjta9xAYgfsgkmnH7NAxAQZhBXiXqHAQAJ4KSW8rPYsgkHDTAewhBmj1u1AdAekl7fADAYo0vHDhAesiBXjmv1AsAlciZjkvgWym7CAvAhkjFJFi_6KIsjkmz1KDK6QgGp38DgcsF_Kj_5OJC0Y2ACDJ8oQjl5KIwsk1a2G8t5SJCWa2AQDJ8KOWl5KIotkXb2SIGbRdtqOJC0e2AdD3OKNmGp7fDQl1f2WWIjpLPi45QJCXfnLgwu3OVsgsssZtktwtcuouVvgGin7SAuDhgvBmimb1AxDYwdgmAzDeVwB1jHm2A9EYofZwk1nn7fAU9YoWnIDEEeVxBXjHq2APEYwdkHDREeoxBmjXr2AUEYwdwdBmbHuIDeEegyB1m1v2AhEJ43Kt0MOeg7dXao7sEtEYoWyIDvEekzBmuGz2AyEWktwtg0Xo7jE8Hhc7GnJpp5CCK6QoFJPq4_LC6fHhHvHQw7CmTNHhZ8CHyn9sg8d1bo7A6SHYoWbJDUHeV9C1YJe3AeHYo7_9l1fo7tEtEYoWfJDjHeVACXYJi3AuHYkTozk1jZ9QEeVoByHzHzHYo0mJD8IecBCHylm3ABIeop7DIU9YolnJDNIeZCCXqo9jgCd1ro7SIB9YoWrJDUIeVDC1zGu3AeIYoUZDl1vZ9QBmMiIYolvJDsIeZECmHuIggECXIUlHzo7UhmAzIeVNC1E8LgcN47x");
-	// $9<SetT(^[^bool,$3<^Type<$9|Atom<NotT($21<^Proton<TupleT(^[$21...])|SetT(^[^bool,$21])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$21...])|SetT(^[^bool,$21])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($3)|OrT(^{$3...})|AndT(^{$3...})|TupleT(^[$3...])|FunctionT(^[$3,$3,$3...])>>])>
-	private static Type type29 = Runtime.Type("763CKOoG_9RF3Kt0MOeop7von7SsIDzc1HYcIHgc3G0GrQhGZIjG6KowZRJGJFiG5KZGKSklLOJGONJSiC5SdxaQJ4rHhxRkSsSgTZUgWLYknLhk4OF8rQoxaQeoNBHIUl1PWZLYl5eC1Ifp1QJ4KSW8rPYw4Atwa9sC1LtlXTYgnMYo0Utob9yCXDzl1XGBv_NoRgWXl7ThNo1Y0G0tLTJCWY0AE5JtJSgl5KIZOkXa0KLxLPZGp3R5goOF_Fjx5QJClb0Ac53_ZQoGp3e5ggPF_J_45QJCGf0Ai5oC4Sm_aQbGp3s5gZQFZKW86KeZl7v5w5goQFNsoQh_aQWl5KYwQkQk1mGZ0alaWbGe0flfWiWjGml596YsqmGAB6YoJEgsRBHEfw1qW9O6YsZq0AQ6YwZq0AS6Yo2AtwSc1ul7N_TkXul7xon7xkTZIvW9i6YZpv0As6lH");
-	// ^$7<Set(^{$2<^Value<$7|Null|Tuple(^[$2...])|Bool<True|False>|Num(^real)|String(^string)>>...})>
-	private static Type type30 = Runtime.Type("QGnJ_G6KL45QpKa9gC1EfwHEesn7uw2A7dHH3tJSglq3Al1I38oQjl5CDKMQZC4Sm_aQbG4Kp06Q_C1EgZYLegp7Ol4AS4KITtMX0Yl5U4HHchGPYgYPhg5GJ8MS_CGQgs5K545QnKq3slHTWwaTQgr7DlMAxdX5YwoUgVNcH5YV_X0AA5WH");
-	// ^$8<Set(^{$3<^Expr<$45<Value<Null|Tuple(^[^$45...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$45...})>>|Tuple(^[$3...])|Fn(^[^string,$3...])|$96<BExpr<Bool<True|False>|VExpr<Fn(^[^string,$3...])|Var(^string)|Load(^[$3,^int])|LengthOf($3)>|And(^{^$96...})|Or(^{^$96...})|Not(^$96)|Equals(^[$128<^Type<Atom<NotT($151<^Proton<TupleT(^[$151...])|SetT(^[^bool,$151])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$151...])|SetT(^[^bool,$151])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($128)|OrT(^{$128...})|AndT(^{$128...})|SetT(^[^bool,$128])|TupleT(^[$128...])|FunctionT(^[$128,$128,$128...])>>,^{|$3,$3|}[$3,$3]])|Inequality(^[^AType<IntT|RealT>,$234<^AExpr<Num(^real)|VExpr<Fn(^[^string,$3...])|Var(^string)|Load(^[$3,^int])|LengthOf($3)>|Sum(^[^real,^{|$234...|}[$234...]])|Mul(^[^real,^{|$234...|}[$234...]])|Div(^[$234,$234])>>])|Equation(^[^AType<IntT|RealT>,$234])|SubsetEq(^[^SetT(^[^bool,$128]),^SExpr<$8|VExpr<Fn(^[^string,$3...])|Var(^string)|Load(^[$3,^int])|LengthOf($3)>>,^SExpr<$8|VExpr<Fn(^[^string,$3...])|Var(^string)|Load(^[$3,^int])|LengthOf($3)>>])|ForAll(^[^{^[^Var(^string),$128]...},^$96])|Exists(^[^{^[^Var(^string),$128]...},^$96])>>|AExpr<Num(^real)|VExpr<Fn(^[^string,$3...])|Var(^string)|Load(^[$3,^int])|LengthOf($3)>|Sum(^[^real,^{|$234...|}[$234...]])|Mul(^[^real,^{|$234...|}[$234...]])|Div(^[$234,$234])>|SExpr<$8|VExpr<Fn(^[^string,$3...])|Var(^string)|Load(^[$3,^int])|LengthOf($3)>>>>...})>
-	private static Type type31 = Runtime.Type("QIoBKOodXH3K3Tk8b9cCHEfwXEewn7uV3A8G_KWlLS_G4Kp06Q_GXGiG_F4W6Rm4oY0jWmWyl5EGKF4W6Rm41LhHQc4KIK3Tk8M7QlDhGMYkYMhw4GDK6QgCGPgc5G1xqQgGYIpp5OIGbRdtqOewNBmQgZ2TeZr7Bd6Av4pPw_PkPwPgGUYwq9jwb975YcIX0A95WsrXl5B5YgJYGAD53G_RpKq3N5gZOF_GWlqR_Cla0AR5WcOoOgWbl7gxOo1eW9PBHQe5ggPcH5YsLf0Ai5Yo2AtVQcHil7BdQkmil3h5YoIjGDy5ewQBHI76gZRF_K4W6RmGIFiG58E86CDx5SZKJRp45Qn4LelX1fXf1i1nm5N6Z58tLOlKMNg_5StGNJJRp45SdxaQWc8WCh0rG7O6S6QsSFNBKSXCMOoKJRWwSVDhGu0O5xaR0l5QZK3TdC6Sn4XX4Yp5h6WcTsTglvl7DWUoHy0CL4aR3loQWGLB96C9R9QoUFNkJOiS5ScxZOWsUsdg0Xm7A689hccBmyGf0AB9egl7xscBH6E9tVdcHam7w6P9ggdBmzGEgodcXyl7U9fw1eX9d9YkRcekmem7C6e9goeBXnlb1Aj93GKTkKa9UAXoIEYoli1Dw9eofBXiXjm7SwfZ2mX98AYwRcgkmm1G0GrQhGZIjG6KowZRJGJFiG5K3CKOoG4OJK6RgK5KJ55KbQYGMPjt5KlxiZxsxVysygzZ7h0rm7t9SAhshF5Jmx5Sjta9NDYsgZikXuH7fANDQkiBHnHvHAiAJ4KSW8rPYZikHDtAecjBXqmy1AwAekl7yAdAYolzHD7DeZsBHqXX2AADlojkswwgGYn7cADDhwsFJFi_6KIZtkXa2KDK6QgGp3RDgotF_Kj_5OJClb2AcDJ8oQjl5KIcukme2G8t5SJCGf2AiDJ8KOWl5KIVvkHi2SIGbRdtqOJCli2AwD3OKNmGp7yDh5gwvFNsoQh_aQWl5KYZwoPkXmIZlaYbIe2fnfYiIj2mnmn5BEYVjowoXnn7DAu9gVxBXim9jcxcmqn7EAREgoxB1q1r2AUEYsjcfBH6dEtcycmun7OAgEgoyBXi1Atwyc1yn7PAtEgczBXiXim7u9wEtozcXzn7QAzEgV7GKFJ_6R_dXbZ9hHYg7l7CH6CHts7dmYo7P6NHgZ84mfYin5QHYc7l8pHb3CIKMQooJSgG2GdOMJg5A9yH7IDIQc9CHLfHhk9C1Yo9ss9dmfo7e5sHYoGiJDuHegACmb3j3AxHYV9lAlmjo7BHBHYoGmJD9IegBCHe3n3ACIYgSV8lmnZ9iEekDCIqZqZqo7SgC_2rZ9SIYVTsClmrJ79hcgGuo7RdDpmuZ9C9YoDdfBH6iItwDd1yo7tIfwXyZ9vIYkExdBH6xItsEdmzo7f67LgZNC1v0X4AALlD");
+	private static Type type25 = Runtime.Type("2KHKLNgGp3ukmD0E");
 	// Var(^string)
-	private static Type type32 = Runtime.Type("3CL4aReZl7ug2Aw3x$");
+	private static Type type26 = Runtime.Type("3CL4aReZl7ug2Aw3x$");
 	// ^Bool<True|False>
-	private static Type type33 = Runtime.Type("RFZFjx5Qeo3GJ8MS_C0Ego2K545QnKq3zk1HWsIHQco7ugJAB4vw");
-	// $10<SubsetEq(^[^$19<SetT(^[^bool,$13<^Type<$19|Atom<NotT($31<^Proton<TupleT(^[$31...])|SetT(^[^bool,$31])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$31...])|SetT(^[^bool,$31])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($13)|OrT(^{$13...})|AndT(^{$13...})|TupleT(^[$13...])|FunctionT(^[$13,$13,$13...])>>])>,^$111<SExpr<$121<VExpr<Var(^string)|$131<Fn(^[^string,$125<^Expr<$111|$131|$166<Value<Null|Tuple(^[^$166...])|Bool<True|False>|Num(^real)|String(^string)|Set(^{^$166...})>>|Tuple(^[$125...])|$208<BExpr<$10|$121|Bool<True|False>|And(^{^$208...})|Or(^{^$208...})|Not(^$208)|Equals(^[$13,^{|$125,$125|}[$125,$125]])|Inequality(^[^AType<IntT|RealT>,$231<^AExpr<$121|Num(^real)|Sum(^[^real,^{|$231...|}[$231...]])|Mul(^[^real,^{|$231...|}[$231...]])|Div(^[$231,$231])>>])|Equation(^[^AType<IntT|RealT>,$231])|ForAll(^[^{^[^Var(^string),$13]...},^$208])|Exists(^[^{^[^Var(^string),$13]...},^$208])>>|AExpr<$121|Num(^real)|Sum(^[^real,^{|$231...|}[$231...]])|Mul(^[^real,^{|$231...|}[$231...]])|Div(^[$231,$231])>>>...])>|Load(^[$125,^int])|LengthOf($125)>>|Set(^{$125...})>>,^$111])>
-	private static Type type34 = Runtime.Type("PI35IKbNnK5S446GIK5SJdHMJCKGs0bReZdB2Eysn7SwID7dHHYcYHggZ9RF3Kt0MOewq7Cxo7SVKDOdXLYgnLgk4G0GrQhGZIjG6KowZRJGJFiG5KZGKSklLOJGONJSiC5SdxaQJ4MMz_TsTVUoUgcg0QYsJQhs5OF8rQoxaQewOBmMtlXTWgrbl5wCXMxpXUJ4KSW8rPYZ6AtZNcXXl7ehNk1Yl7C_r7SsNZnYW9N5YgIa0AP5loNgOwSg0bl7spOoXb0G0tLTJC0e0Ad5JtJSgl5KIgPk1f0KLxLPZGp3i5gwPF_Fjx5QJCGi0Au53_ZQoGp3w5goQF_J_45QJClj0A76oC4Sm_aQbGp396ggRFZKW86KeZl7C6D6gwRFNsoQh_aQWl5KYZSsRkXqGZWeGf0iliWjGm0n0qlql5R6YVNoSoXrl7Ux3Ac6Ywo9jcTcmul7clTkHvl7dlTkmvl7ElHDt6ecUBXPv6gkUBmIECmIy6twUc1Xm7f_ckXX1KLK3Tk86CIK5SWgegNhWYm7xwco1a1CL4aRZNZQ3loQWGLBh9x9wIQodFNkJOiS5ScxZOWsdsEh0em7B9d9hceBXaXn0Ag93K3Tk8b9OAIsRBmf1iHDt9ecfBmami1Aw9JOKNgKMOJGKSklLOJ8JGs0bR0pfVskucxgGm1K0K3Tk8M79AeHQkg3HaHnm5DAYsewgo1q1GDK6QgCWq1AQA38oQjl5CDKMQZC4Sm_aQbd1Xn7cAgZIuX9eAYwfgik1vHJRAhAPDSDUDQsiB1um9jVjcHym7C9uAggj3mv1zm5xAYsfsjomz1GJ8MS_CGX2A9DJOJNgCMOIkskHYI7ADDDQwsBHr1aIAODecl7TAQDgktBmrXn0ATDYwekHDcDeZuBmjXe2AfDo3ZQZGmImGYIjG6O44MSWlqRWhectVycykyszgGi2dGHiKLRp45QdGMT3544MSWGMPjtL7EHCIQov3XiYjn5zDWk3mn58EZOoQm43QgGLGs_qRoCM7fIhIQow3XmYnn5EEYVgVxoHqY9PEYgxgmAREeoxBHfYr2AUEYsusxkHun7jDQEggy7mfmfm7SoyVYvY9jEYw3yn7SZzZYyY9vEYVvkzkHz2K0GKTkKa9QHec9C1XJXo7Sc7_nXZ9BHYgvo7lXYJ7y586QV8CmzIaJAPHoBKShGIIpl5C3_aSGheotgApAhBhlbo7AAcHhZ9CHXo9sg9d1fo7QDhHYoWfJDjHeVAC1bJi3AuHYo8_Al1jo78H8HYoWjJDzHeVBCXbJm3A9IYkvo7l1nZ9h9YsBxo7SwB_2qZ9OIYcChmAQIekCCHroqn7SsC_nrZ9cIYgwZDlXuo7BEdIgkDdm5YwesDCH6jItVEdHyo7R9uIggECmbmf1AxIYwegmAzIeVNCHYHX4A9L0I");
-	// Atom<NotT($3<^Proton<TupleT(^[$3...])|SetT(^[^bool,$3])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$3...])|SetT(^[^bool,$3])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>
-	private static Type type35 = Runtime.Type("xGJFoxLQZ0_RjGrQiGZIjG6Kesq7wo2Ay3mEih0HYcIHhc3KGKMNmh5OJK6RgK5KYo2AtsZ9ECHINlHL3CKOoG_9RB1MxBH6S_YMewp7QW5Ad4YLetPglPYg2Qho5G0tLTJClQgV6KDK6QgGp3ulmTJOpQdG5KIo6AyG_Fjx5QJC0X0A853_ZQoGp3A5gkNF_J_45QJCWY0AE5oC4Sm_aQbGp3O5gcOFZKW86KeZl7R5S5gsOFNsoQh_aQWl5KYVPoOkHeGZGTwxbXGY0alalbWel5f5Yk3fGAh5lHE");
+	private static Type type27 = Runtime.Type("RFZFjx5Qeo3GJ8MS_C0Ego2K545QnKq3zk1HWsIHQco7ugJAB4vw");
+	// ^$20<ForAll($18<^[^{^[^Var(^string),$5<^Type<Atom<NotT($36<^Proton<TupleT(^[$36...])|ArrayT($36)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$36...])|ArrayT($36)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($5)|OrT(^{$5...})|AndT(^{$5...})|ArrayT($5)|TupleT(^[$5...])|FunctionT(^[$5,$5,$5...])>>]...},$14<^$128<BExpr<$138<VExpr<Var(^string)|Fn(^[^string,$140<^Expr<$128|$178<Value<Null|Tuple(^[^$178...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$178...])>>|Tuple(^[$140...])|$205<AExpr<$138|Num(^real)|Sum(^[^real,^{|^$205...|}[^$205...]])|Mul(^[^real,^{|^$205...|}[^$205...]])|Div(^[^$205,^$205])>>|SExpr<$138|Array(^[$140...])>>>...])|Load(^[$140,^int])|LengthOf($140)|IndexOf(^[$140,$140])>>|Bool<True|False>|And(^{$14...})|Or(^{$14...})|Not($14)|Equals(^[$5,^{|$140,$140|}[$140,$140]])|Inequality(^[^AType<IntT|RealT>,^$205])|Equation(^[^AType<IntT|RealT>,^$205])|$20|Exists($18)>>>]>)>
+	private static Type type28 = Runtime.Type("sHZOoQm43QgdXMoNKNmdHP3GKTkKa9wCHEzBH67_IHeco7AhmABdHIJ8JGs0bRecfBXINCH6O_YLegp7uk4ASdH5YknMgV5G0GrQhGZIjG6KowZRJGJFiG5KZ4ZRm4LTJG5Kp06Q_G4_WGptqNo_qQiGKRB5d6i6s6u6z6C9QZr7ycMAvG5Jmx5Sjta9c5YgaUgwM775c5QZNBXP95hgNFKJp4aRfCXUgZYYW9E5Yw5a0AO5YsaUggO3Ya0blrl5S5YobbGAU534ZQtGp3d5gcPF_Ipl5QJC0f0Ah5JOpQdG5KIwPk1i0K1xqQgGp3u5ggQFJHiG6KIoQkXj0KHKLNgGp376gZRFrJo8MPiS5KIgRk1n0GL4aRJCXnlMgwRFNsoQh_aQWl5KYZSw4AP6G5f5i5t5w5z596C6N6Q6QkSBHYGrGAT6YgqEgVTBmEfwXuW9f6Yk5v0Ah6Yo5v0Aj6YsqEgZUBmEgZnyW9w6YwLz0Ay6YwnEYw2XHD89eccB1TA9gkcF_K4W6RmGZFjx5Qo3ZQZGmImGYIjG6O44MSWlqRWlgsug9p9x9_Bh0b1dGHiKLRp45QdGMT3544MSWGMPjtL7OIUIQVe3HbHem5e9ZK3TdC6Sn4XMdIQoe3meXfm5j9Yw3iHAt9ZNZQ3loQWG5W0I_tqOoWqIa4JPRADHNHQsfFMHiGLOsxZOWwfs8hGmm7D99AhggFJGs0bReVjBlMYsgwgZ2qX9OAYgfchkmq1KL45QpK5KJK6RgKLBu9RD7EQwhFKF4W6Rm41umnn5eAJCKGs0bRWgiozgGvm7CAiAhwiFZIpl5QIZjkXy1CDKMQZC4Sm_aQbd1bn7yAgZnzX97DYshZskXXIJvAADiDtDvDQksFKFm8MNtCXYIX2AEDWosVtgGan7SAPDhgtF3KmKMOIotkXb2K545QnKq3cDgZu3mbYen5fDYwckuoHfY9PB1zmf2AsDYojw4AuDYsgkHDwDeovBXrXj2AzDoBKShGIIpl5C3_aSGlgZvZygyZzg0nn7dACEhswcmnn7NEfVIqY9PEYwugxBH6REtoxcXrn78EUEgVyBXmnr2AeEYVxVxBH6gEtoycXvn7AEjEgVz31nmzn5uEYkigzo1zn7DDyDgszcm5YsgV7CH68Htc7dmXo7w9BHgo7CHjXn1AEHYsgsgBH6OHtc8dmao77ARHgo8C1LfwmbZ9cHYVdZ9lXeo7O9dHgk9CXa1Lgs98XnXnm7SVAWIiZ9uHYwnio7SkA_IjZ9yHYgdwAl1m3K0GKTkKa9SIYgBWxBH6BItoBdXno7T9EIgVC4mjWml5PIYcBhCp1ro7U9EIgsCC1f1MgVD4vw");
+	// Atom<NotT($3<^Proton<TupleT(^[$3...])|ArrayT($3)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$3...])|ArrayT($3)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>
+	private static Type type29 = Runtime.Type("sGJFoxLQZ0_RjGrQiGZIjG6KeZq7wo2Ay3mEdh0HYcIHhc3KGKMNmh5OJK6RgK5KYo2AtsZ9ECHINlHLZ4ZRm4LTJCmLxk1MlcKMd5Qsp7vwKAcGJFi_6KIc5AfG_Ipl5QJCGQgs5KLxLPZGp3slHTJ8oQjl5KIg6AwGJHiG6KIs6AzG_J_45QJCGX0A95oC4Sm_aQbGp3B5goNFZKW86KeZl7E5N5gZOFNsoQh_aQWl5KYgOVOk1bGZ0QjdMU75A5D5P5S5QsOB1IU5hVP3A0");
 
 	// =========================================================================
 	// Patterns
@@ -8804,114 +7557,124 @@ public final class Solver {
 				null),null), 
 			new Pair(new Pattern.Leaf(type2), "ts")}),
 		null);
-	private final static Pattern.Term pattern17 = new Pattern.Term("SetT",
-		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type3), "b"), 
-			new Pair(new Pattern.Leaf(type1),null)}),
-		null);
-	private final static Pattern.Term pattern18 = new Pattern.Term("AndT",
+	private final static Pattern.Term pattern17 = new Pattern.Term("AndT",
 		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Term("SetT",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type3), "b1"), 
-					new Pair(new Pattern.Leaf(type2), "t1")}),
-				null),null), 
-			new Pair(new Pattern.Term("SetT",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type3), "b2"), 
-					new Pair(new Pattern.Leaf(type2), "t2")}),
-				null),null), 
-			new Pair(new Pattern.Leaf(type2), "ts")}),
-		null);
-	private final static Pattern.Term pattern19 = new Pattern.Term("AndT",
-		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Term("SetT",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type3), "b1"), 
-					new Pair(new Pattern.Leaf(type2), "t1")}),
-				null),null), 
+			new Pair(new Pattern.Term("TupleT",
+				new Pattern.List(true, new Pair[]{
+					new Pair(new Pattern.Leaf(type2),null)}),
+				null), "t1"), 
 			new Pair(new Pattern.Term("NotT",
-				new Pattern.Term("SetT",
-					new Pattern.List(false, new Pair[]{
-						new Pair(new Pattern.Leaf(type3), "b2"), 
-						new Pair(new Pattern.Leaf(type2), "t2")}),
+				new Pattern.Term("ArrayT",
+					new Pattern.Leaf(type2),
 					null),
 				null),null), 
 			new Pair(new Pattern.Leaf(type2), "ts")}),
 		null);
-	private final static Pattern.Term pattern20 = new Pattern.Term("AndT",
+	private final static Pattern.Term pattern18 = new Pattern.Term("ArrayT",
+		new Pattern.Leaf(type1),
+		null);
+	private final static Pattern.Term pattern19 = new Pattern.Term("AndT",
 		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Term("SetT",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type3),null), 
-					new Pair(new Pattern.Leaf(type2),null)}),
-				null), "s"), 
-			new Pair(new Pattern.Leaf(type4), "p"), 
+			new Pair(new Pattern.Term("ArrayT",
+				new Pattern.Leaf(type2),
+				"t1"),null), 
+			new Pair(new Pattern.Term("ArrayT",
+				new Pattern.Leaf(type2),
+				"t2"),null), 
 			new Pair(new Pattern.Leaf(type2), "ts")}),
 		null);
-	private final static Pattern.Term pattern21 = new Pattern.Term("OrT",
+	private final static Pattern.Term pattern20 = new Pattern.Term("AndT",
 		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Term("SetT",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type3), "b1"), 
-					new Pair(new Pattern.Leaf(type2), "t1")}),
-				null), "s1"), 
-			new Pair(new Pattern.Term("SetT",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type3), "b2"), 
-					new Pair(new Pattern.Leaf(type2), "t2")}),
-				null), "s2"), 
+			new Pair(new Pattern.Term("ArrayT",
+				new Pattern.Leaf(type2),
+				"t1"),null), 
+			new Pair(new Pattern.Term("NotT",
+				new Pattern.Term("ArrayT",
+					new Pattern.Leaf(type2),
+					"t2"),
+				null),null), 
+			new Pair(new Pattern.Leaf(type2), "ts")}),
+		null);
+	private final static Pattern.Term pattern21 = new Pattern.Term("AndT",
+		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Term("ArrayT",
+				new Pattern.Leaf(type2),
+				null), "t1"), 
+			new Pair(new Pattern.Term("NotT",
+				new Pattern.Term("TupleT",
+					new Pattern.List(true, new Pair[]{
+						new Pair(new Pattern.Leaf(type2),null)}),
+					null),
+				null),null), 
 			new Pair(new Pattern.Leaf(type2), "ts")}),
 		null);
 	private final static Pattern.Term pattern22 = new Pattern.Term("AndT",
 		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Leaf(type1),null), 
-			new Pair(new Pattern.Leaf(type2), "xs")}),
+			new Pair(new Pattern.Term("ArrayT",
+				new Pattern.Leaf(type2),
+				null), "s"), 
+			new Pair(new Pattern.Leaf(type3), "p"), 
+			new Pair(new Pattern.Leaf(type2), "ts")}),
 		null);
-	private final static Pattern.Term pattern23 = new Pattern.Term("AndT",
+	private final static Pattern.Term pattern23 = new Pattern.Term("OrT",
 		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Leaf(type0),null), 
-			new Pair(new Pattern.Leaf(type2), "xs")}),
+			new Pair(new Pattern.Term("ArrayT",
+				new Pattern.Leaf(type2),
+				"t1"), "s1"), 
+			new Pair(new Pattern.Term("ArrayT",
+				new Pattern.Leaf(type2),
+				"t2"), "s2"), 
+			new Pair(new Pattern.Leaf(type2), "ts")}),
 		null);
 	private final static Pattern.Term pattern24 = new Pattern.Term("AndT",
 		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Leaf(type6), "a1"), 
-			new Pair(new Pattern.Leaf(type4), "a2"), 
-			new Pair(new Pattern.Leaf(type2), "ts")}),
+			new Pair(new Pattern.Leaf(type1),null), 
+			new Pair(new Pattern.Leaf(type2), "xs")}),
 		null);
 	private final static Pattern.Term pattern25 = new Pattern.Term("AndT",
-		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Leaf(type6), "a1"), 
-			new Pair(new Pattern.Term("NotT",
-				new Pattern.Leaf(type4),
-				"a2"),null), 
-			new Pair(new Pattern.Leaf(type2), "ts")}),
-		null);
-	private final static Pattern.Term pattern26 = new Pattern.Term("OrT",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Leaf(type0),null), 
 			new Pair(new Pattern.Leaf(type2), "xs")}),
 		null);
-	private final static Pattern.Term pattern27 = new Pattern.Term("OrT",
+	private final static Pattern.Term pattern26 = new Pattern.Term("AndT",
+		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Leaf(type5), "a1"), 
+			new Pair(new Pattern.Leaf(type3), "a2"), 
+			new Pair(new Pattern.Leaf(type2), "ts")}),
+		null);
+	private final static Pattern.Term pattern27 = new Pattern.Term("AndT",
+		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Leaf(type5), "a1"), 
+			new Pair(new Pattern.Term("NotT",
+				new Pattern.Leaf(type3),
+				"a2"),null), 
+			new Pair(new Pattern.Leaf(type2), "ts")}),
+		null);
+	private final static Pattern.Term pattern28 = new Pattern.Term("OrT",
+		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Leaf(type0),null), 
+			new Pair(new Pattern.Leaf(type2), "xs")}),
+		null);
+	private final static Pattern.Term pattern29 = new Pattern.Term("OrT",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Leaf(type1),null), 
 			new Pair(new Pattern.Leaf(type2), "xs")}),
 		null);
-	private final static Pattern.Term pattern28 = new Pattern.Term("Load",
+	private final static Pattern.Term pattern30 = new Pattern.Term("Load",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Term("Tuple",
 				new Pattern.List(true, new Pair[]{
-					new Pair(new Pattern.Leaf(type7), "ls")}),
+					new Pair(new Pattern.Leaf(type6), "ls")}),
 				null),null), 
-			new Pair(new Pattern.Leaf(type8), "idx")}),
+			new Pair(new Pattern.Leaf(type7), "idx")}),
 		null);
-	private final static Pattern.Term pattern29 = new Pattern.Term("LengthOf",
+	private final static Pattern.Term pattern31 = new Pattern.Term("LengthOf",
 		new Pattern.Term("Tuple",
 			new Pattern.List(true, new Pair[]{
-				new Pair(new Pattern.Leaf(type7), "xs")}),
+				new Pair(new Pattern.Leaf(type6), "xs")}),
 			null),
 		null);
-	private final static Pattern.Term pattern30 = new Pattern.Term("Equals",
+	private final static Pattern.Term pattern32 = new Pattern.Term("Equals",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Term("TupleT",
 				new Pattern.List(true, new Pair[]{
@@ -8920,887 +7683,694 @@ public final class Solver {
 			new Pair(new Pattern.Bag(false, new Pair[]{
 				new Pair(new Pattern.Term("Tuple",
 					new Pattern.List(true, new Pair[]{
-						new Pair(new Pattern.Leaf(type7), "xs")}),
+						new Pair(new Pattern.Leaf(type6), "xs")}),
 					null),null), 
 				new Pair(new Pattern.Term("Tuple",
 					new Pattern.List(true, new Pair[]{
-						new Pair(new Pattern.Leaf(type7), "ys")}),
+						new Pair(new Pattern.Leaf(type6), "ys")}),
 					null),null)}),null)}),
 		null);
-	private final static Pattern.Term pattern31 = new Pattern.Term("And",
+	private final static Pattern.Term pattern33 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Term("Equals",
 				new Pattern.List(false, new Pair[]{
 					new Pair(new Pattern.Leaf(type2), "t"), 
 					new Pair(new Pattern.Bag(false, new Pair[]{
-						new Pair(new Pattern.Leaf(type9), "x"), 
-						new Pair(new Pattern.Leaf(type10), "y")}),null)}),
+						new Pair(new Pattern.Leaf(type8), "x"), 
+						new Pair(new Pattern.Leaf(type9), "y")}),null)}),
 				null), "eq"), 
-			new Pair(new Pattern.Leaf(type11), "bs")}),
-		null);
-	private final static Pattern.Term pattern32 = new Pattern.Term("Not",
-		new Pattern.Leaf(type12),
-		"b");
-	private final static Pattern.Term pattern33 = new Pattern.Term("Not",
-		new Pattern.Term("Not",
-			new Pattern.Leaf(type13),
-			"x"),
+			new Pair(new Pattern.Leaf(type10), "bs")}),
 		null);
 	private final static Pattern.Term pattern34 = new Pattern.Term("Not",
+		new Pattern.Leaf(type11),
+		"b");
+	private final static Pattern.Term pattern35 = new Pattern.Term("Not",
+		new Pattern.Term("Not",
+			new Pattern.Leaf(type12),
+			"x"),
+		null);
+	private final static Pattern.Term pattern36 = new Pattern.Term("Not",
 		new Pattern.Term("And",
 			new Pattern.Set(true, new Pair[]{
-				new Pair(new Pattern.Leaf(type11), "xs")}),
+				new Pair(new Pattern.Leaf(type10), "xs")}),
 			null),
 		null);
-	private final static Pattern.Term pattern35 = new Pattern.Term("Not",
+	private final static Pattern.Term pattern37 = new Pattern.Term("Not",
 		new Pattern.Term("Or",
 			new Pattern.Set(true, new Pair[]{
-				new Pair(new Pattern.Leaf(type11), "xs")}),
+				new Pair(new Pattern.Leaf(type10), "xs")}),
 			null),
 		null);
-	private final static Pattern.Term pattern36 = new Pattern.Term("And",
-		new Pattern.Set(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type11), "x")}),
-		null);
-	private final static Pattern.Term pattern37 = new Pattern.Term("And",
-		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Leaf(type14),null), 
-			new Pair(new Pattern.Leaf(type11), "xs")}),
-		null);
 	private final static Pattern.Term pattern38 = new Pattern.Term("And",
-		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Leaf(type15),null), 
-			new Pair(new Pattern.Leaf(type11), "xs")}),
+		new Pattern.Set(false, new Pair[]{
+			new Pair(new Pattern.Leaf(type10), "x")}),
 		null);
 	private final static Pattern.Term pattern39 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Term("And",
-				new Pattern.Set(true, new Pair[]{
-					new Pair(new Pattern.Leaf(type11), "xs")}),
-				null),null), 
-			new Pair(new Pattern.Leaf(type11), "ys")}),
+			new Pair(new Pattern.Leaf(type13),null), 
+			new Pair(new Pattern.Leaf(type10), "xs")}),
 		null);
 	private final static Pattern.Term pattern40 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Term("Not",
-				new Pattern.Leaf(type11),
-				"x"),null), 
-			new Pair(new Pattern.Leaf(type11), "y"), 
-			new Pair(new Pattern.Leaf(type11), "ys")}),
+			new Pair(new Pattern.Leaf(type14),null), 
+			new Pair(new Pattern.Leaf(type10), "xs")}),
 		null);
 	private final static Pattern.Term pattern41 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Term("And",
+				new Pattern.Set(true, new Pair[]{
+					new Pair(new Pattern.Leaf(type10), "xs")}),
+				null),null), 
+			new Pair(new Pattern.Leaf(type10), "ys")}),
+		null);
+	private final static Pattern.Term pattern42 = new Pattern.Term("And",
+		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Term("Not",
+				new Pattern.Leaf(type10),
+				"x"),null), 
+			new Pair(new Pattern.Leaf(type10), "y"), 
+			new Pair(new Pattern.Leaf(type10), "ys")}),
+		null);
+	private final static Pattern.Term pattern43 = new Pattern.Term("And",
+		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Term("Or",
 				new Pattern.Set(true, new Pair[]{
-					new Pair(new Pattern.Leaf(type11), "xs")}),
+					new Pair(new Pattern.Leaf(type10), "xs")}),
 				null),null), 
-			new Pair(new Pattern.Leaf(type11), "ys")}),
-		null);
-	private final static Pattern.Term pattern42 = new Pattern.Term("Or",
-		new Pattern.Set(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type11), "x")}),
-		null);
-	private final static Pattern.Term pattern43 = new Pattern.Term("Or",
-		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Leaf(type15),null), 
-			new Pair(new Pattern.Leaf(type11), "xs")}),
+			new Pair(new Pattern.Leaf(type10), "ys")}),
 		null);
 	private final static Pattern.Term pattern44 = new Pattern.Term("Or",
-		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Leaf(type14),null), 
-			new Pair(new Pattern.Leaf(type11), "xs")}),
+		new Pattern.Set(false, new Pair[]{
+			new Pair(new Pattern.Leaf(type10), "x")}),
 		null);
 	private final static Pattern.Term pattern45 = new Pattern.Term("Or",
 		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Term("Not",
-				new Pattern.Leaf(type11),
-				"x"),null), 
-			new Pair(new Pattern.Leaf(type11), "y"), 
-			new Pair(new Pattern.Leaf(type11), "ys")}),
+			new Pair(new Pattern.Leaf(type14),null), 
+			new Pair(new Pattern.Leaf(type10), "xs")}),
 		null);
 	private final static Pattern.Term pattern46 = new Pattern.Term("Or",
 		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Leaf(type13),null), 
+			new Pair(new Pattern.Leaf(type10), "xs")}),
+		null);
+	private final static Pattern.Term pattern47 = new Pattern.Term("Or",
+		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Term("Not",
+				new Pattern.Leaf(type10),
+				"x"),null), 
+			new Pair(new Pattern.Leaf(type10), "y"), 
+			new Pair(new Pattern.Leaf(type10), "ys")}),
+		null);
+	private final static Pattern.Term pattern48 = new Pattern.Term("Or",
+		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Term("Or",
 				new Pattern.Set(true, new Pair[]{
-					new Pair(new Pattern.Leaf(type11), "xs")}),
+					new Pair(new Pattern.Leaf(type10), "xs")}),
 				null),null), 
-			new Pair(new Pattern.Leaf(type11), "ys")}),
+			new Pair(new Pattern.Leaf(type10), "ys")}),
 		null);
-	private final static Pattern.Term pattern47 = new Pattern.Term("Equals",
+	private final static Pattern.Term pattern49 = new Pattern.Term("Equals",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Leaf(type2), "t"), 
 			new Pair(new Pattern.Bag(false, new Pair[]{
-				new Pair(new Pattern.Leaf(type7), "x"), 
-				new Pair(new Pattern.Leaf(type7), "y")}),null)}),
+				new Pair(new Pattern.Leaf(type6), "x"), 
+				new Pair(new Pattern.Leaf(type6), "y")}),null)}),
 		null);
-	private final static Pattern.Term pattern48 = new Pattern.Term("And",
+	private final static Pattern.Term pattern50 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Term("Equals",
 				new Pattern.List(false, new Pair[]{
 					new Pair(new Pattern.Leaf(type2), "t"), 
 					new Pair(new Pattern.Bag(false, new Pair[]{
-						new Pair(new Pattern.Leaf(type9), "x"), 
-						new Pair(new Pattern.Leaf(type17), "y")}),null)}),
+						new Pair(new Pattern.Leaf(type8), "x"), 
+						new Pair(new Pattern.Leaf(type16), "y")}),null)}),
 				null), "eq"), 
-			new Pair(new Pattern.Leaf(type11), "bs")}),
+			new Pair(new Pattern.Leaf(type10), "bs")}),
 		null);
-	private final static Pattern.Term pattern49 = new Pattern.Term("And",
+	private final static Pattern.Term pattern51 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Term("Equals",
 				new Pattern.List(false, new Pair[]{
 					new Pair(new Pattern.Leaf(type2), "t"), 
 					new Pair(new Pattern.Bag(false, new Pair[]{
-						new Pair(new Pattern.Leaf(type9),null), 
-						new Pair(new Pattern.Leaf(type9),null)}), "vs")}),
+						new Pair(new Pattern.Leaf(type8),null), 
+						new Pair(new Pattern.Leaf(type8),null)}), "vs")}),
 				null), "eq"), 
-			new Pair(new Pattern.Leaf(type11), "bs")}),
-		null);
-	private final static Pattern.Term pattern50 = new Pattern.Term("Mul",
-		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type18), "n"), 
-			new Pair(new Pattern.Bag(true, new Pair[]{
-				new Pair(new Pattern.Leaf(type19), "rest")}),null)}),
-		null);
-	private final static Pattern.Term pattern51 = new Pattern.Term("Mul",
-		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type18), "x"), 
-			new Pair(new Pattern.Bag(true, new Pair[]{
-				new Pair(new Pattern.Term("Num",
-					new Pattern.Leaf(type18),
-					"y"),null), 
-				new Pair(new Pattern.Leaf(type19), "rest")}),null)}),
+			new Pair(new Pattern.Leaf(type10), "bs")}),
 		null);
 	private final static Pattern.Term pattern52 = new Pattern.Term("Mul",
 		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type18), "n1"), 
+			new Pair(new Pattern.Leaf(type17), "n"), 
 			new Pair(new Pattern.Bag(true, new Pair[]{
-				new Pair(new Pattern.Term("Mul",
-					new Pattern.List(false, new Pair[]{
-						new Pair(new Pattern.Leaf(type18), "n2"), 
-						new Pair(new Pattern.Bag(true, new Pair[]{
-							new Pair(new Pattern.Leaf(type19), "xs")}),null)}),
-					null),null), 
-				new Pair(new Pattern.Leaf(type19), "ys")}),null)}),
+				new Pair(new Pattern.Leaf(type18), "rest")}),null)}),
 		null);
 	private final static Pattern.Term pattern53 = new Pattern.Term("Mul",
 		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type18), "n1"), 
+			new Pair(new Pattern.Leaf(type17), "x"), 
+			new Pair(new Pattern.Bag(true, new Pair[]{
+				new Pair(new Pattern.Term("Num",
+					new Pattern.Leaf(type17),
+					"y"),null), 
+				new Pair(new Pattern.Leaf(type18), "rest")}),null)}),
+		null);
+	private final static Pattern.Term pattern54 = new Pattern.Term("Mul",
+		new Pattern.List(false, new Pair[]{
+			new Pair(new Pattern.Leaf(type17), "n1"), 
+			new Pair(new Pattern.Bag(true, new Pair[]{
+				new Pair(new Pattern.Term("Mul",
+					new Pattern.List(false, new Pair[]{
+						new Pair(new Pattern.Leaf(type17), "n2"), 
+						new Pair(new Pattern.Bag(true, new Pair[]{
+							new Pair(new Pattern.Leaf(type18), "xs")}),null)}),
+					null),null), 
+				new Pair(new Pattern.Leaf(type18), "ys")}),null)}),
+		null);
+	private final static Pattern.Term pattern55 = new Pattern.Term("Mul",
+		new Pattern.List(false, new Pair[]{
+			new Pair(new Pattern.Leaf(type17), "n1"), 
 			new Pair(new Pattern.Bag(true, new Pair[]{
 				new Pair(new Pattern.Term("Sum",
 					new Pattern.List(false, new Pair[]{
-						new Pair(new Pattern.Leaf(type18), "n2"), 
+						new Pair(new Pattern.Leaf(type17), "n2"), 
 						new Pair(new Pattern.Bag(true, new Pair[]{
-							new Pair(new Pattern.Leaf(type19), "xs")}),null)}),
+							new Pair(new Pattern.Leaf(type18), "xs")}),null)}),
 					null),null), 
-				new Pair(new Pattern.Leaf(type19), "ys")}),null)}),
-		null);
-	private final static Pattern.Term pattern54 = new Pattern.Term("Div",
-		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Term("Num",
-				new Pattern.Leaf(type18),
-				"x"),null), 
-			new Pair(new Pattern.Term("Num",
-				new Pattern.Leaf(type18),
-				"y"),null)}),
-		null);
-	private final static Pattern.Term pattern55 = new Pattern.Term("Div",
-		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type19), "x"), 
-			new Pair(new Pattern.Term("Div",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type19), "y"), 
-					new Pair(new Pattern.Leaf(type19), "z")}),
-				null),null)}),
+				new Pair(new Pattern.Leaf(type18), "ys")}),null)}),
 		null);
 	private final static Pattern.Term pattern56 = new Pattern.Term("Div",
 		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Term("Div",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type19), "x"), 
-					new Pair(new Pattern.Leaf(type19), "y")}),
-				null),null), 
-			new Pair(new Pattern.Leaf(type19), "z")}),
+			new Pair(new Pattern.Term("Num",
+				new Pattern.Leaf(type17),
+				"x"),null), 
+			new Pair(new Pattern.Term("Num",
+				new Pattern.Leaf(type17),
+				"y"),null)}),
 		null);
 	private final static Pattern.Term pattern57 = new Pattern.Term("Div",
 		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type19), "x"), 
-			new Pair(new Pattern.Term("Num",
-				new Pattern.Leaf(type18),
-				"n"),null)}),
+			new Pair(new Pattern.Leaf(type18), "x"), 
+			new Pair(new Pattern.Term("Div",
+				new Pattern.List(false, new Pair[]{
+					new Pair(new Pattern.Leaf(type18), "y"), 
+					new Pair(new Pattern.Leaf(type18), "z")}),
+				null),null)}),
 		null);
 	private final static Pattern.Term pattern58 = new Pattern.Term("Div",
 		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Term("Mul",
+			new Pair(new Pattern.Term("Div",
 				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type18), "n"), 
-					new Pair(new Pattern.Bag(true, new Pair[]{
-						new Pair(new Pattern.Leaf(type19), "x"), 
-						new Pair(new Pattern.Leaf(type19), "xs")}),null)}),
+					new Pair(new Pattern.Leaf(type18), "x"), 
+					new Pair(new Pattern.Leaf(type18), "y")}),
 				null),null), 
-			new Pair(new Pattern.Leaf(type19), "y")}),
+			new Pair(new Pattern.Leaf(type18), "z")}),
 		null);
 	private final static Pattern.Term pattern59 = new Pattern.Term("Div",
 		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Term("Sum",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type18), "n"), 
-					new Pair(new Pattern.Bag(true, new Pair[]{
-						new Pair(new Pattern.Leaf(type19), "xs")}),null)}),
-				null),null), 
-			new Pair(new Pattern.Leaf(type19), "y")}),
+			new Pair(new Pattern.Leaf(type18), "x"), 
+			new Pair(new Pattern.Term("Num",
+				new Pattern.Leaf(type17),
+				"n"),null)}),
 		null);
 	private final static Pattern.Term pattern60 = new Pattern.Term("Div",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Term("Mul",
 				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type18), "n"), 
+					new Pair(new Pattern.Leaf(type17), "n"), 
 					new Pair(new Pattern.Bag(true, new Pair[]{
-						new Pair(new Pattern.Leaf(type19), "xs")}),null)}),
+						new Pair(new Pattern.Leaf(type18), "x"), 
+						new Pair(new Pattern.Leaf(type18), "xs")}),null)}),
 				null),null), 
-			new Pair(new Pattern.Leaf(type19), "y")}),
+			new Pair(new Pattern.Leaf(type18), "y")}),
 		null);
-	private final static Pattern.Term pattern61 = new Pattern.Term("Sum",
+	private final static Pattern.Term pattern61 = new Pattern.Term("Div",
 		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type18), "n"), 
-			new Pair(new Pattern.Bag(false, new Pair[]{}),null)}),
+			new Pair(new Pattern.Term("Sum",
+				new Pattern.List(false, new Pair[]{
+					new Pair(new Pattern.Leaf(type17), "n"), 
+					new Pair(new Pattern.Bag(true, new Pair[]{
+						new Pair(new Pattern.Leaf(type18), "xs")}),null)}),
+				null),null), 
+			new Pair(new Pattern.Leaf(type18), "y")}),
 		null);
-	private final static Pattern.Term pattern62 = new Pattern.Term("Sum",
+	private final static Pattern.Term pattern62 = new Pattern.Term("Div",
 		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type18), "n"), 
-			new Pair(new Pattern.Bag(false, new Pair[]{
-				new Pair(new Pattern.Term("Mul",
-					new Pattern.List(false, new Pair[]{
-						new Pair(new Pattern.Leaf(type18), "m"), 
-						new Pair(new Pattern.Bag(false, new Pair[]{
-							new Pair(new Pattern.Leaf(type9), "x")}),null)}),
-					null),null)}),null)}),
+			new Pair(new Pattern.Term("Mul",
+				new Pattern.List(false, new Pair[]{
+					new Pair(new Pattern.Leaf(type17), "n"), 
+					new Pair(new Pattern.Bag(true, new Pair[]{
+						new Pair(new Pattern.Leaf(type18), "xs")}),null)}),
+				null),null), 
+			new Pair(new Pattern.Leaf(type18), "y")}),
 		null);
 	private final static Pattern.Term pattern63 = new Pattern.Term("Sum",
 		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type18), "n"), 
-			new Pair(new Pattern.Bag(true, new Pair[]{
-				new Pair(new Pattern.Leaf(type19), "x"), 
-				new Pair(new Pattern.Leaf(type19), "rest")}),null)}),
+			new Pair(new Pattern.Leaf(type17), "n"), 
+			new Pair(new Pattern.Bag(false, new Pair[]{}),null)}),
 		null);
 	private final static Pattern.Term pattern64 = new Pattern.Term("Sum",
 		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type18), "x"), 
-			new Pair(new Pattern.Bag(true, new Pair[]{
-				new Pair(new Pattern.Term("Num",
-					new Pattern.Leaf(type18),
-					"y"),null), 
-				new Pair(new Pattern.Leaf(type19), "rest")}),null)}),
+			new Pair(new Pattern.Leaf(type17), "n"), 
+			new Pair(new Pattern.Bag(false, new Pair[]{
+				new Pair(new Pattern.Term("Mul",
+					new Pattern.List(false, new Pair[]{
+						new Pair(new Pattern.Leaf(type17), "m"), 
+						new Pair(new Pattern.Bag(false, new Pair[]{
+							new Pair(new Pattern.Leaf(type8), "x")}),null)}),
+					null),null)}),null)}),
 		null);
 	private final static Pattern.Term pattern65 = new Pattern.Term("Sum",
 		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type18), "n"), 
+			new Pair(new Pattern.Leaf(type17), "n"), 
 			new Pair(new Pattern.Bag(true, new Pair[]{
-				new Pair(new Pattern.Term("Mul",
-					new Pattern.List(false, new Pair[]{
-						new Pair(new Pattern.Leaf(type18), "x"), 
-						new Pair(new Pattern.Bag(true, new Pair[]{
-							new Pair(new Pattern.Leaf(type19),null)}), "xs")}),
-					null),null), 
-				new Pair(new Pattern.Term("Mul",
-					new Pattern.List(false, new Pair[]{
-						new Pair(new Pattern.Leaf(type18), "y"), 
-						new Pair(new Pattern.Bag(true, new Pair[]{
-							new Pair(new Pattern.Leaf(type19),null)}), "ys")}),
-					null),null), 
-				new Pair(new Pattern.Leaf(type19), "zs")}),null)}),
+				new Pair(new Pattern.Leaf(type18), "x"), 
+				new Pair(new Pattern.Leaf(type18), "rest")}),null)}),
 		null);
 	private final static Pattern.Term pattern66 = new Pattern.Term("Sum",
 		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type18), "x"), 
+			new Pair(new Pattern.Leaf(type17), "x"), 
+			new Pair(new Pattern.Bag(true, new Pair[]{
+				new Pair(new Pattern.Term("Num",
+					new Pattern.Leaf(type17),
+					"y"),null), 
+				new Pair(new Pattern.Leaf(type18), "rest")}),null)}),
+		null);
+	private final static Pattern.Term pattern67 = new Pattern.Term("Sum",
+		new Pattern.List(false, new Pair[]{
+			new Pair(new Pattern.Leaf(type17), "n"), 
+			new Pair(new Pattern.Bag(true, new Pair[]{
+				new Pair(new Pattern.Term("Mul",
+					new Pattern.List(false, new Pair[]{
+						new Pair(new Pattern.Leaf(type17), "x"), 
+						new Pair(new Pattern.Bag(true, new Pair[]{
+							new Pair(new Pattern.Leaf(type18),null)}), "xs")}),
+					null),null), 
+				new Pair(new Pattern.Term("Mul",
+					new Pattern.List(false, new Pair[]{
+						new Pair(new Pattern.Leaf(type17), "y"), 
+						new Pair(new Pattern.Bag(true, new Pair[]{
+							new Pair(new Pattern.Leaf(type18),null)}), "ys")}),
+					null),null), 
+				new Pair(new Pattern.Leaf(type18), "zs")}),null)}),
+		null);
+	private final static Pattern.Term pattern68 = new Pattern.Term("Sum",
+		new Pattern.List(false, new Pair[]{
+			new Pair(new Pattern.Leaf(type17), "x"), 
 			new Pair(new Pattern.Bag(true, new Pair[]{
 				new Pair(new Pattern.Term("Sum",
 					new Pattern.List(false, new Pair[]{
-						new Pair(new Pattern.Leaf(type18), "y"), 
+						new Pair(new Pattern.Leaf(type17), "y"), 
 						new Pair(new Pattern.Bag(true, new Pair[]{
-							new Pair(new Pattern.Leaf(type19), "ys")}),null)}),
+							new Pair(new Pattern.Leaf(type18), "ys")}),null)}),
 					null),null), 
-				new Pair(new Pattern.Leaf(type19), "xs")}),null)}),
-		null);
-	private final static Pattern.Term pattern67 = new Pattern.Term("Equation",
-		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type23),null), 
-			new Pair(new Pattern.Term("Num",
-				new Pattern.Leaf(type18),
-				"v"),null)}),
-		null);
-	private final static Pattern.Term pattern68 = new Pattern.Term("Equation",
-		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type23), "t"), 
-			new Pair(new Pattern.Term("Sum",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type18), "n"), 
-					new Pair(new Pattern.Bag(false, new Pair[]{
-						new Pair(new Pattern.Term("Mul",
-							new Pattern.List(false, new Pair[]{
-								new Pair(new Pattern.Leaf(type18), "m"), 
-								new Pair(new Pattern.Bag(true, new Pair[]{
-									new Pair(new Pattern.Leaf(type19), "xs")}),null)}),
-							null),null)}),null)}),
-				null),null)}),
+				new Pair(new Pattern.Leaf(type18), "xs")}),null)}),
 		null);
 	private final static Pattern.Term pattern69 = new Pattern.Term("Equation",
 		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type23), "t"), 
+			new Pair(new Pattern.Leaf(type22),null), 
+			new Pair(new Pattern.Term("Num",
+				new Pattern.Leaf(type17),
+				"v"),null)}),
+		null);
+	private final static Pattern.Term pattern70 = new Pattern.Term("Equation",
+		new Pattern.List(false, new Pair[]{
+			new Pair(new Pattern.Leaf(type22), "t"), 
 			new Pair(new Pattern.Term("Sum",
 				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type18), "n"), 
-					new Pair(new Pattern.Bag(true, new Pair[]{
-						new Pair(new Pattern.Leaf(type24), "xs")}), "ms")}),
+					new Pair(new Pattern.Leaf(type17), "n"), 
+					new Pair(new Pattern.Bag(false, new Pair[]{
+						new Pair(new Pattern.Term("Mul",
+							new Pattern.List(false, new Pair[]{
+								new Pair(new Pattern.Leaf(type17), "m"), 
+								new Pair(new Pattern.Bag(true, new Pair[]{
+									new Pair(new Pattern.Leaf(type18), "xs")}),null)}),
+							null),null)}),null)}),
 				null),null)}),
 		null);
-	private final static Pattern.Term pattern70 = new Pattern.Term("And",
+	private final static Pattern.Term pattern71 = new Pattern.Term("Equation",
+		new Pattern.List(false, new Pair[]{
+			new Pair(new Pattern.Leaf(type22), "t"), 
+			new Pair(new Pattern.Term("Sum",
+				new Pattern.List(false, new Pair[]{
+					new Pair(new Pattern.Leaf(type17), "n"), 
+					new Pair(new Pattern.Bag(true, new Pair[]{
+						new Pair(new Pattern.Leaf(type23), "xs")}), "ms")}),
+				null),null)}),
+		null);
+	private final static Pattern.Term pattern72 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Term("Equation",
 				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type23), "t"), 
+					new Pair(new Pattern.Leaf(type22), "t"), 
 					new Pair(new Pattern.Term("Sum",
 						new Pattern.List(false, new Pair[]{
-							new Pair(new Pattern.Leaf(type18), "c"), 
+							new Pair(new Pattern.Leaf(type17), "c"), 
 							new Pair(new Pattern.Bag(true, new Pair[]{
 								new Pair(new Pattern.Term("Mul",
 									new Pattern.List(false, new Pair[]{
-										new Pair(new Pattern.Leaf(type18), "vc"), 
+										new Pair(new Pattern.Leaf(type17), "vc"), 
 										new Pair(new Pattern.Bag(false, new Pair[]{
-											new Pair(new Pattern.Leaf(type19), "v")}),null)}),
+											new Pair(new Pattern.Leaf(type18), "v")}),null)}),
 									null),null), 
-								new Pair(new Pattern.Leaf(type24), "ms")}), "xs")}),
+								new Pair(new Pattern.Leaf(type23), "ms")}), "xs")}),
 						null),null)}),
 				null), "eq"), 
-			new Pair(new Pattern.Leaf(type11), "bs")}),
+			new Pair(new Pattern.Leaf(type10), "bs")}),
 		null);
-	private final static Pattern.Term pattern71 = new Pattern.Term("And",
+	private final static Pattern.Term pattern73 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Term("Equation",
 				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type23), "t"), 
-					new Pair(new Pattern.Leaf(type9), "v")}),
+					new Pair(new Pattern.Leaf(type22), "t"), 
+					new Pair(new Pattern.Leaf(type8), "v")}),
 				null), "eq"), 
-			new Pair(new Pattern.Leaf(type11), "bs")}),
+			new Pair(new Pattern.Leaf(type10), "bs")}),
 		null);
-	private final static Pattern.Term pattern72 = new Pattern.Term("Not",
+	private final static Pattern.Term pattern74 = new Pattern.Term("Not",
+		new Pattern.Term("Equation",
+			new Pattern.List(false, new Pair[]{
+				new Pair(new Pattern.Leaf(type24), "t"), 
+				new Pair(new Pattern.Leaf(type18), "e")}),
+			null),
+		null);
+	private final static Pattern.Term pattern75 = new Pattern.Term("Not",
 		new Pattern.Term("Equation",
 			new Pattern.List(false, new Pair[]{
 				new Pair(new Pattern.Leaf(type25), "t"), 
-				new Pair(new Pattern.Leaf(type19), "e")}),
+				new Pair(new Pattern.Leaf(type18), "e")}),
 			null),
 		null);
-	private final static Pattern.Term pattern73 = new Pattern.Term("Not",
-		new Pattern.Term("Equation",
-			new Pattern.List(false, new Pair[]{
-				new Pair(new Pattern.Leaf(type26), "t"), 
-				new Pair(new Pattern.Leaf(type19), "e")}),
-			null),
-		null);
-	private final static Pattern.Term pattern74 = new Pattern.Term("Equals",
+	private final static Pattern.Term pattern76 = new Pattern.Term("Equals",
 		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type23), "t"), 
+			new Pair(new Pattern.Leaf(type22), "t"), 
 			new Pair(new Pattern.Bag(false, new Pair[]{
-				new Pair(new Pattern.Leaf(type19), "e1"), 
-				new Pair(new Pattern.Leaf(type19), "e2")}),null)}),
-		null);
-	private final static Pattern.Term pattern75 = new Pattern.Term("Inequality",
-		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type23), "t"), 
-			new Pair(new Pattern.Term("Num",
-				new Pattern.Leaf(type18),
-				"v"),null)}),
-		null);
-	private final static Pattern.Term pattern76 = new Pattern.Term("Not",
-		new Pattern.Term("Inequality",
-			new Pattern.List(false, new Pair[]{
-				new Pair(new Pattern.Leaf(type25), "t"), 
-				new Pair(new Pattern.Leaf(type19), "e")}),
-			null),
+				new Pair(new Pattern.Leaf(type18), "e1"), 
+				new Pair(new Pattern.Leaf(type18), "e2")}),null)}),
 		null);
 	private final static Pattern.Term pattern77 = new Pattern.Term("Inequality",
 		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type23), "t"), 
+			new Pair(new Pattern.Leaf(type22), "t"), 
+			new Pair(new Pattern.Term("Num",
+				new Pattern.Leaf(type17),
+				"v"),null)}),
+		null);
+	private final static Pattern.Term pattern78 = new Pattern.Term("Not",
+		new Pattern.Term("Inequality",
+			new Pattern.List(false, new Pair[]{
+				new Pair(new Pattern.Leaf(type24), "t"), 
+				new Pair(new Pattern.Leaf(type18), "e")}),
+			null),
+		null);
+	private final static Pattern.Term pattern79 = new Pattern.Term("Inequality",
+		new Pattern.List(false, new Pair[]{
+			new Pair(new Pattern.Leaf(type22), "t"), 
 			new Pair(new Pattern.Term("Sum",
 				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type18), "n"), 
+					new Pair(new Pattern.Leaf(type17), "n"), 
 					new Pair(new Pattern.Bag(true, new Pair[]{
-						new Pair(new Pattern.Leaf(type24), "xs")}), "ms")}),
+						new Pair(new Pattern.Leaf(type23), "xs")}), "ms")}),
 				null),null)}),
-		null);
-	private final static Pattern.Term pattern78 = new Pattern.Term("And",
-		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Term("Inequality",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type25),null), 
-					new Pair(new Pattern.Term("Sum",
-						new Pattern.List(false, new Pair[]{
-							new Pair(new Pattern.Leaf(type18), "x1"), 
-							new Pair(new Pattern.Bag(false, new Pair[]{
-								new Pair(new Pattern.Term("Mul",
-									new Pattern.List(false, new Pair[]{
-										new Pair(new Pattern.Leaf(type18), "x2"), 
-										new Pair(new Pattern.Bag(true, new Pair[]{
-											new Pair(new Pattern.Leaf(type19), "v1s")}),null)}),
-									null), "xs")}),null)}),
-						null), "s1")}),
-				null), "ieq1"), 
-			new Pair(new Pattern.Term("Inequality",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type25),null), 
-					new Pair(new Pattern.Term("Sum",
-						new Pattern.List(false, new Pair[]{
-							new Pair(new Pattern.Leaf(type18), "y1"), 
-							new Pair(new Pattern.Bag(false, new Pair[]{
-								new Pair(new Pattern.Term("Mul",
-									new Pattern.List(false, new Pair[]{
-										new Pair(new Pattern.Leaf(type18), "y2"), 
-										new Pair(new Pattern.Bag(true, new Pair[]{
-											new Pair(new Pattern.Leaf(type19), "v2s")}),null)}),
-									null), "ys")}),null)}),
-						null), "s2")}),
-				null), "ieq2"), 
-			new Pair(new Pattern.Leaf(type11), "rest")}),
-		null);
-	private final static Pattern.Term pattern79 = new Pattern.Term("And",
-		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Term("Inequality",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type25),null), 
-					new Pair(new Pattern.Leaf(type9), "v1")}),
-				null), "ieq1"), 
-			new Pair(new Pattern.Term("Inequality",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type25),null), 
-					new Pair(new Pattern.Term("Sum",
-						new Pattern.List(false, new Pair[]{
-							new Pair(new Pattern.Leaf(type18), "y1"), 
-							new Pair(new Pattern.Bag(false, new Pair[]{
-								new Pair(new Pattern.Term("Mul",
-									new Pattern.List(false, new Pair[]{
-										new Pair(new Pattern.Leaf(type18), "y2"), 
-										new Pair(new Pattern.Bag(false, new Pair[]{
-											new Pair(new Pattern.Leaf(type19), "v2")}),null)}),
-									null), "ys")}),null)}),
-						null), "s2")}),
-				null), "ieq2"), 
-			new Pair(new Pattern.Leaf(type11), "rest")}),
 		null);
 	private final static Pattern.Term pattern80 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Term("Inequality",
 				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type23), "t1"), 
+					new Pair(new Pattern.Leaf(type24),null), 
 					new Pair(new Pattern.Term("Sum",
 						new Pattern.List(false, new Pair[]{
-							new Pair(new Pattern.Leaf(type18), "x1"), 
-							new Pair(new Pattern.Bag(true, new Pair[]{
+							new Pair(new Pattern.Leaf(type17), "x1"), 
+							new Pair(new Pattern.Bag(false, new Pair[]{
 								new Pair(new Pattern.Term("Mul",
 									new Pattern.List(false, new Pair[]{
-										new Pair(new Pattern.Leaf(type18), "x2"), 
+										new Pair(new Pattern.Leaf(type17), "x2"), 
 										new Pair(new Pattern.Bag(false, new Pair[]{
-											new Pair(new Pattern.Leaf(type19), "v1")}),null)}),
+											new Pair(new Pattern.Leaf(type18), "vx1")}),null)}),
 									null),null), 
-								new Pair(new Pattern.Leaf(type24), "xs")}), "xxs")}),
+								new Pair(new Pattern.Term("Mul",
+									new Pattern.List(false, new Pair[]{
+										new Pair(new Pattern.Leaf(type17), "x3"), 
+										new Pair(new Pattern.Bag(false, new Pair[]{
+											new Pair(new Pattern.Leaf(type18), "vx2")}),null)}),
+									null),null)}),null)}),
 						null), "s1")}),
-				null), "eq1"), 
+				null), "ieq1"), 
 			new Pair(new Pattern.Term("Inequality",
 				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type23), "t2"), 
+					new Pair(new Pattern.Leaf(type24),null), 
 					new Pair(new Pattern.Term("Sum",
 						new Pattern.List(false, new Pair[]{
-							new Pair(new Pattern.Leaf(type18), "y1"), 
-							new Pair(new Pattern.Bag(true, new Pair[]{
+							new Pair(new Pattern.Leaf(type17), "y1"), 
+							new Pair(new Pattern.Bag(false, new Pair[]{
 								new Pair(new Pattern.Term("Mul",
 									new Pattern.List(false, new Pair[]{
-										new Pair(new Pattern.Leaf(type18), "y2"), 
+										new Pair(new Pattern.Leaf(type17), "y2"), 
 										new Pair(new Pattern.Bag(false, new Pair[]{
-											new Pair(new Pattern.Leaf(type19), "v2")}),null)}),
+											new Pair(new Pattern.Leaf(type18), "vy1")}),null)}),
 									null),null), 
-								new Pair(new Pattern.Leaf(type24), "ys")}), "yys")}),
+								new Pair(new Pattern.Term("Mul",
+									new Pattern.List(false, new Pair[]{
+										new Pair(new Pattern.Leaf(type17), "y3"), 
+										new Pair(new Pattern.Bag(false, new Pair[]{
+											new Pair(new Pattern.Leaf(type18), "vy2")}),null)}),
+									null),null)}),null)}),
 						null), "s2")}),
-				null), "eq2"), 
-			new Pair(new Pattern.Leaf(type11), "rest")}),
+				null), "ieq2"), 
+			new Pair(new Pattern.Leaf(type10), "rest")}),
 		null);
 	private final static Pattern.Term pattern81 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Term("Inequality",
 				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type23), "t1"), 
+					new Pair(new Pattern.Leaf(type22), "t1"), 
 					new Pair(new Pattern.Term("Sum",
 						new Pattern.List(false, new Pair[]{
-							new Pair(new Pattern.Leaf(type18), "x1"), 
+							new Pair(new Pattern.Leaf(type17), "x1"), 
 							new Pair(new Pattern.Bag(true, new Pair[]{
 								new Pair(new Pattern.Term("Mul",
 									new Pattern.List(false, new Pair[]{
-										new Pair(new Pattern.Leaf(type18), "x2"), 
+										new Pair(new Pattern.Leaf(type17), "x2"), 
 										new Pair(new Pattern.Bag(false, new Pair[]{
-											new Pair(new Pattern.Leaf(type19), "v1")}),null)}),
+											new Pair(new Pattern.Leaf(type18), "v1")}),null)}),
 									null),null), 
-								new Pair(new Pattern.Leaf(type24), "xs")}), "xxs")}),
+								new Pair(new Pattern.Leaf(type23), "xs")}), "xxs")}),
 						null), "s1")}),
 				null), "eq1"), 
 			new Pair(new Pattern.Term("Inequality",
 				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type23), "t2"), 
-					new Pair(new Pattern.Leaf(type9), "v2")}),
+					new Pair(new Pattern.Leaf(type22), "t2"), 
+					new Pair(new Pattern.Term("Sum",
+						new Pattern.List(false, new Pair[]{
+							new Pair(new Pattern.Leaf(type17), "y1"), 
+							new Pair(new Pattern.Bag(true, new Pair[]{
+								new Pair(new Pattern.Term("Mul",
+									new Pattern.List(false, new Pair[]{
+										new Pair(new Pattern.Leaf(type17), "y2"), 
+										new Pair(new Pattern.Bag(false, new Pair[]{
+											new Pair(new Pattern.Leaf(type18), "v2")}),null)}),
+									null),null), 
+								new Pair(new Pattern.Leaf(type23), "ys")}), "yys")}),
+						null), "s2")}),
 				null), "eq2"), 
-			new Pair(new Pattern.Leaf(type11), "rest")}),
+			new Pair(new Pattern.Leaf(type10), "rest")}),
 		null);
-	private final static Pattern.Term pattern82 = new Pattern.Term("Equals",
-		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type2), "t"), 
-			new Pair(new Pattern.Bag(false, new Pair[]{
-				new Pair(new Pattern.Term("Set",
-					new Pattern.Set(true, new Pair[]{
-						new Pair(new Pattern.Leaf(type7), "xs")}),
-					null),null), 
-				new Pair(new Pattern.Term("Set",
-					new Pattern.Set(true, new Pair[]{
-						new Pair(new Pattern.Leaf(type7), "ys")}),
-					null),null)}),null)}),
-		null);
-	private final static Pattern.Term pattern83 = new Pattern.Term("And",
+	private final static Pattern.Term pattern82 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Term("Equals",
+			new Pair(new Pattern.Term("Inequality",
 				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type2), "t"), 
-					new Pair(new Pattern.Bag(false, new Pair[]{
-						new Pair(new Pattern.Leaf(type9), "x"), 
-						new Pair(new Pattern.Leaf(type27), "y")}),null)}),
-				null), "eq"), 
-			new Pair(new Pattern.Leaf(type11), "bs")}),
+					new Pair(new Pattern.Leaf(type22), "t1"), 
+					new Pair(new Pattern.Term("Sum",
+						new Pattern.List(false, new Pair[]{
+							new Pair(new Pattern.Leaf(type17), "x1"), 
+							new Pair(new Pattern.Bag(true, new Pair[]{
+								new Pair(new Pattern.Term("Mul",
+									new Pattern.List(false, new Pair[]{
+										new Pair(new Pattern.Leaf(type17), "x2"), 
+										new Pair(new Pattern.Bag(false, new Pair[]{
+											new Pair(new Pattern.Leaf(type18), "v1")}),null)}),
+									null),null), 
+								new Pair(new Pattern.Leaf(type23), "xs")}), "xxs")}),
+						null), "s1")}),
+				null), "eq1"), 
+			new Pair(new Pattern.Term("Inequality",
+				new Pattern.List(false, new Pair[]{
+					new Pair(new Pattern.Leaf(type22), "t2"), 
+					new Pair(new Pattern.Leaf(type8), "v2")}),
+				null), "eq2"), 
+			new Pair(new Pattern.Leaf(type10), "rest")}),
 		null);
-	private final static Pattern.Term pattern84 = new Pattern.Term("LengthOf",
-		new Pattern.Term("Set",
-			new Pattern.Set(true, new Pair[]{
-				new Pair(new Pattern.Leaf(type17), "xs")}),
+	private final static Pattern.Term pattern83 = new Pattern.Term("LengthOf",
+		new Pattern.Term("Array",
+			new Pattern.List(true, new Pair[]{
+				new Pair(new Pattern.Leaf(type6), "xs")}),
 			null),
 		null);
-	private final static Pattern.Term pattern85 = new Pattern.Term("Equals",
+	private final static Pattern.Term pattern84 = new Pattern.Term("IndexOf",
 		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type25),null), 
-			new Pair(new Pattern.Bag(false, new Pair[]{
-				new Pair(new Pattern.Term("LengthOf",
-					new Pattern.Leaf(type28),
-					"x"),null), 
-				new Pair(new Pattern.Term("Num",
-					new Pattern.Leaf(type18),
-					"y"),null)}),null)}),
-		null);
-	private final static Pattern.Term pattern86 = new Pattern.Term("Equation",
-		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type25),null), 
-			new Pair(new Pattern.Term("LengthOf",
-				new Pattern.Leaf(type28),
-				"x"),null)}),
-		null);
-	private final static Pattern.Term pattern87 = new Pattern.Term("SubsetEq",
-		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type29), "t"), 
-			new Pair(new Pattern.Term("Set",
-				new Pattern.Set(true, new Pair[]{
-					new Pair(new Pattern.Leaf(type7), "xs")}),
-				null), "s1"), 
-			new Pair(new Pattern.Term("Set",
-				new Pattern.Set(true, new Pair[]{
-					new Pair(new Pattern.Leaf(type7), "ys")}),
-				null), "s2")}),
-		null);
-	private final static Pattern.Term pattern88 = new Pattern.Term("SubsetEq",
-		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type29), "t"), 
-			new Pair(new Pattern.Leaf(type28), "x"), 
-			new Pair(new Pattern.Leaf(type28), "y")}),
-		null);
-	private final static Pattern.Term pattern89 = new Pattern.Term("SubsetEq",
-		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Term("SetT",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type3), "b"), 
-					new Pair(new Pattern.Leaf(type2), "e")}),
-				null), "t"), 
-			new Pair(new Pattern.Term("Set",
-				new Pattern.Set(true, new Pair[]{
-					new Pair(new Pattern.Leaf(type7), "x"), 
-					new Pair(new Pattern.Leaf(type7), "xs")}),
-				null), "s1"), 
-			new Pair(new Pattern.Term("Set",
-				new Pattern.Set(true, new Pair[]{
-					new Pair(new Pattern.Leaf(type7), "ys")}),
-				null), "s2")}),
-		null);
-	private final static Pattern.Term pattern90 = new Pattern.Term("And",
-		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Term("SubsetEq",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Term("SetT",
-						new Pattern.List(false, new Pair[]{
-							new Pair(new Pattern.Leaf(type3), "b1"), 
-							new Pair(new Pattern.Leaf(type2), "e1")}),
-						null),null), 
-					new Pair(new Pattern.Term("Set",
-						new Pattern.Set(true, new Pair[]{
-							new Pair(new Pattern.Leaf(type7), "xs")}),
-						null),null), 
-					new Pair(new Pattern.Leaf(type13), "x")}),
+			new Pair(new Pattern.Term("Array",
+				new Pattern.List(true, new Pair[]{
+					new Pair(new Pattern.Leaf(type6), "xs")}),
 				null),null), 
-			new Pair(new Pattern.Term("SubsetEq",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Term("SetT",
-						new Pattern.List(false, new Pair[]{
-							new Pair(new Pattern.Leaf(type3), "b2"), 
-							new Pair(new Pattern.Leaf(type2), "e2")}),
-						null),null), 
-					new Pair(new Pattern.Term("Set",
-						new Pattern.Set(true, new Pair[]{
-							new Pair(new Pattern.Leaf(type7), "ys")}),
-						null),null), 
-					new Pair(new Pattern.Leaf(type28), "y")}),
-				null),null), 
-			new Pair(new Pattern.Leaf(type11), "rest")}),
+			new Pair(new Pattern.Term("Num",
+				new Pattern.Leaf(type17),
+				"i"),null)}),
 		null);
-	private final static Pattern.Term pattern91 = new Pattern.Term("And",
-		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Term("SubsetEq",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Term("SetT",
-						new Pattern.List(false, new Pair[]{
-							new Pair(new Pattern.Leaf(type3), "b1"), 
-							new Pair(new Pattern.Leaf(type2), "e1")}),
-						null),null), 
-					new Pair(new Pattern.Leaf(type28), "x"), 
-					new Pair(new Pattern.Term("Set",
-						new Pattern.Set(true, new Pair[]{
-							new Pair(new Pattern.Leaf(type7), "xs")}),
-						null),null)}),
-				null),null), 
-			new Pair(new Pattern.Term("SubsetEq",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Term("SetT",
-						new Pattern.List(false, new Pair[]{
-							new Pair(new Pattern.Leaf(type3), "b2"), 
-							new Pair(new Pattern.Leaf(type2), "e2")}),
-						null),null), 
-					new Pair(new Pattern.Leaf(type28), "y"), 
-					new Pair(new Pattern.Term("Set",
-						new Pattern.Set(true, new Pair[]{
-							new Pair(new Pattern.Leaf(type7), "ys")}),
-						null),null)}),
-				null),null), 
-			new Pair(new Pattern.Leaf(type11), "rest")}),
-		null);
-	private final static Pattern.Term pattern92 = new Pattern.Term("And",
-		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Term("SubsetEq",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type29), "t1"), 
-					new Pair(new Pattern.Leaf(type28), "x"), 
-					new Pair(new Pattern.Leaf(type28), "y")}),
-				null), "s1"), 
-			new Pair(new Pattern.Term("SubsetEq",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type29), "t2"), 
-					new Pair(new Pattern.Leaf(type28), "u"), 
-					new Pair(new Pattern.Leaf(type28), "v")}),
-				null), "s2"), 
-			new Pair(new Pattern.Leaf(type11), "rest")}),
-		null);
-	private final static Pattern.Term pattern93 = new Pattern.Term("And",
-		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Term("SubsetEq",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type29), "t1"), 
-					new Pair(new Pattern.Leaf(type28), "x"), 
-					new Pair(new Pattern.Leaf(type28), "y")}),
-				null), "s1"), 
-			new Pair(new Pattern.Term("SubsetEq",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type29), "t2"), 
-					new Pair(new Pattern.Leaf(type28), "u"), 
-					new Pair(new Pattern.Leaf(type28), "v")}),
-				null), "s2"), 
-			new Pair(new Pattern.Leaf(type11), "rest")}),
-		null);
-	private final static Pattern.Term pattern94 = new Pattern.Term("ForAll",
+	private final static Pattern.Term pattern85 = new Pattern.Term("ForAll",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Set(true, new Pair[]{
 				new Pair(new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type32),null), 
+					new Pair(new Pattern.Leaf(type26),null), 
 					new Pair(new Pattern.Leaf(type2),null)}), "qs")}),null), 
-			new Pair(new Pattern.Leaf(type11), "be")}),
+			new Pair(new Pattern.Leaf(type10), "be")}),
 		null);
-	private final static Pattern.Term pattern95 = new Pattern.Term("Not",
+	private final static Pattern.Term pattern86 = new Pattern.Term("Not",
 		new Pattern.Term("ForAll",
 			new Pattern.List(false, new Pair[]{
 				new Pair(new Pattern.Set(true, new Pair[]{
 					new Pair(new Pattern.List(false, new Pair[]{
-						new Pair(new Pattern.Leaf(type32),null), 
+						new Pair(new Pattern.Leaf(type26),null), 
 						new Pair(new Pattern.Leaf(type2),null)}),null)}), "vars"), 
-				new Pair(new Pattern.Leaf(type11), "be")}),
+				new Pair(new Pattern.Leaf(type10), "be")}),
 			null),
 		null);
-	private final static Pattern.Term pattern96 = new Pattern.Term("ForAll",
+	private final static Pattern.Term pattern87 = new Pattern.Term("ForAll",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Set(true, new Pair[]{
 				new Pair(new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type32),null), 
+					new Pair(new Pattern.Leaf(type26),null), 
 					new Pair(new Pattern.Leaf(type2),null)}),null)}), "xs"), 
 			new Pair(new Pattern.Term("ForAll",
 				new Pattern.List(false, new Pair[]{
 					new Pair(new Pattern.Set(true, new Pair[]{
 						new Pair(new Pattern.List(false, new Pair[]{
-							new Pair(new Pattern.Leaf(type32),null), 
+							new Pair(new Pattern.Leaf(type26),null), 
 							new Pair(new Pattern.Leaf(type2),null)}),null)}), "ys"), 
-					new Pair(new Pattern.Leaf(type11), "e")}),
+					new Pair(new Pattern.Leaf(type10), "e")}),
 				null),null)}),
 		null);
-	private final static Pattern.Term pattern97 = new Pattern.Term("ForAll",
+	private final static Pattern.Term pattern88 = new Pattern.Term("ForAll",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Set(true, new Pair[]{
 				new Pair(new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type32), "v"), 
+					new Pair(new Pattern.Leaf(type26), "v"), 
 					new Pair(new Pattern.Leaf(type2),null)}),null), 
 				new Pair(new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type32),null), 
+					new Pair(new Pattern.Leaf(type26),null), 
 					new Pair(new Pattern.Leaf(type2),null)}), "xs")}),null), 
-			new Pair(new Pattern.Leaf(type11), "e")}),
+			new Pair(new Pattern.Leaf(type10), "e")}),
 		null);
-	private final static Pattern.Term pattern98 = new Pattern.Term("And",
+	private final static Pattern.Term pattern89 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Leaf(type34), "e1"), 
+			new Pair(new Pattern.Leaf(type10), "e1"), 
 			new Pair(new Pattern.Term("ForAll",
 				new Pattern.List(false, new Pair[]{
 					new Pair(new Pattern.Set(true, new Pair[]{
 						new Pair(new Pattern.List(false, new Pair[]{
-							new Pair(new Pattern.Leaf(type32),null), 
+							new Pair(new Pattern.Leaf(type26),null), 
 							new Pair(new Pattern.Leaf(type2),null)}),null), 
 						new Pair(new Pattern.List(false, new Pair[]{
-							new Pair(new Pattern.Leaf(type32),null), 
+							new Pair(new Pattern.Leaf(type26),null), 
 							new Pair(new Pattern.Leaf(type2),null)}),null)}), "vs"), 
-					new Pair(new Pattern.Leaf(type11), "e2")}),
+					new Pair(new Pattern.Leaf(type10), "e2")}),
 				null), "qf"), 
-			new Pair(new Pattern.Leaf(type11), "es")}),
+			new Pair(new Pattern.Leaf(type10), "es")}),
 		null);
-	private final static Pattern.Term pattern99 = new Pattern.Term("And",
-		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Term("Not",
-				new Pattern.Leaf(type34),
-				"e1"), "ne1"), 
-			new Pair(new Pattern.Term("ForAll",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Set(true, new Pair[]{
-						new Pair(new Pattern.List(false, new Pair[]{
-							new Pair(new Pattern.Leaf(type32),null), 
-							new Pair(new Pattern.Leaf(type2),null)}),null), 
-						new Pair(new Pattern.List(false, new Pair[]{
-							new Pair(new Pattern.Leaf(type32),null), 
-							new Pair(new Pattern.Leaf(type2),null)}),null)}), "vs"), 
-					new Pair(new Pattern.Leaf(type11), "e2")}),
-				null), "qf"), 
-			new Pair(new Pattern.Leaf(type11), "es")}),
-		null);
-	private final static Pattern.Term pattern100 = new Pattern.Term("Exists",
+	private final static Pattern.Term pattern90 = new Pattern.Term("Exists",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Set(true, new Pair[]{
 				new Pair(new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type32),null), 
+					new Pair(new Pattern.Leaf(type26),null), 
 					new Pair(new Pattern.Leaf(type2),null)}), "qs")}),null), 
-			new Pair(new Pattern.Leaf(type11), "be")}),
+			new Pair(new Pattern.Leaf(type10), "be")}),
 		null);
-	private final static Pattern.Term pattern101 = new Pattern.Term("Not",
+	private final static Pattern.Term pattern91 = new Pattern.Term("Not",
 		new Pattern.Term("Exists",
 			new Pattern.List(false, new Pair[]{
 				new Pair(new Pattern.Set(true, new Pair[]{
 					new Pair(new Pattern.List(false, new Pair[]{
-						new Pair(new Pattern.Leaf(type32),null), 
+						new Pair(new Pattern.Leaf(type26),null), 
 						new Pair(new Pattern.Leaf(type2),null)}),null)}), "vars"), 
-				new Pair(new Pattern.Leaf(type11), "be")}),
+				new Pair(new Pattern.Leaf(type10), "be")}),
 			null),
 		null);
-	private final static Pattern.Term pattern102 = new Pattern.Term("Exists",
+	private final static Pattern.Term pattern92 = new Pattern.Term("Exists",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Set(true, new Pair[]{
 				new Pair(new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type32),null), 
+					new Pair(new Pattern.Leaf(type26),null), 
 					new Pair(new Pattern.Leaf(type2),null)}),null)}), "xs"), 
 			new Pair(new Pattern.Term("Exists",
 				new Pattern.List(false, new Pair[]{
 					new Pair(new Pattern.Set(true, new Pair[]{
 						new Pair(new Pattern.List(false, new Pair[]{
-							new Pair(new Pattern.Leaf(type32),null), 
+							new Pair(new Pattern.Leaf(type26),null), 
 							new Pair(new Pattern.Leaf(type2),null)}),null)}), "ys"), 
-					new Pair(new Pattern.Leaf(type11), "e")}),
+					new Pair(new Pattern.Leaf(type10), "e")}),
 				null),null)}),
 		null);
-	private final static Pattern.Term pattern103 = new Pattern.Term("And",
+	private final static Pattern.Term pattern93 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Term("Exists",
 				new Pattern.List(false, new Pair[]{
 					new Pair(new Pattern.Set(true, new Pair[]{
 						new Pair(new Pattern.List(false, new Pair[]{
-							new Pair(new Pattern.Leaf(type32),null), 
+							new Pair(new Pattern.Leaf(type26),null), 
 							new Pair(new Pattern.Leaf(type2),null)}),null)}), "vs"), 
-					new Pair(new Pattern.Leaf(type11), "e")}),
+					new Pair(new Pattern.Leaf(type10), "e")}),
 				null),null), 
-			new Pair(new Pattern.Leaf(type11), "es")}),
+			new Pair(new Pattern.Leaf(type10), "es")}),
 		null);
-	private final static Pattern.Term pattern104 = new Pattern.Term("Inhabited",
-		new Pattern.Leaf(type35),
+	private final static Pattern.Term pattern94 = new Pattern.Term("Inhabited",
+		new Pattern.Leaf(type29),
 		"t");
-	private final static Pattern.Term pattern105 = new Pattern.Term("Inhabited",
+	private final static Pattern.Term pattern95 = new Pattern.Term("Inhabited",
 		new Pattern.Term("AndT",
 			new Pattern.Set(true, new Pair[]{
 				new Pair(new Pattern.Term("NotT",
-					new Pattern.Leaf(type4),
+					new Pattern.Leaf(type3),
 					null), "ts")}),
 			null),
 		null);
-	private final static Pattern.Term pattern106 = new Pattern.Term("Inhabited",
-		new Pattern.Term("SetT",
-			new Pattern.List(false, new Pair[]{
-				new Pair(new Pattern.Leaf(type3), "b1"), 
-				new Pair(new Pattern.Leaf(type2), "t")}),
-			null),
+	private final static Pattern.Term pattern96 = new Pattern.Term("Inhabited",
+		new Pattern.Term("ArrayT",
+			new Pattern.Leaf(type2),
+			"t"),
 		null);
-	private final static Pattern.Term pattern107 = new Pattern.Term("Is",
+	private final static Pattern.Term pattern97 = new Pattern.Term("Is",
 		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type7), "e"), 
+			new Pair(new Pattern.Leaf(type6), "e"), 
 			new Pair(new Pattern.Leaf(type1),null)}),
 		null);
-	private final static Pattern.Term pattern108 = new Pattern.Term("Not",
+	private final static Pattern.Term pattern98 = new Pattern.Term("Not",
 		new Pattern.Term("Is",
 			new Pattern.List(false, new Pair[]{
-				new Pair(new Pattern.Leaf(type7), "e"), 
+				new Pair(new Pattern.Leaf(type6), "e"), 
 				new Pair(new Pattern.Leaf(type2), "t")}),
 			null),
 		null);
-	private final static Pattern.Term pattern109 = new Pattern.Term("And",
+	private final static Pattern.Term pattern99 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Term("Is",
 				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type7), "e1"), 
+					new Pair(new Pattern.Leaf(type6), "e1"), 
 					new Pair(new Pattern.Leaf(type2), "t1")}),
 				null),null), 
 			new Pair(new Pattern.Term("Is",
 				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type7), "e2"), 
+					new Pair(new Pattern.Leaf(type6), "e2"), 
 					new Pair(new Pattern.Leaf(type2), "t2")}),
 				null),null), 
-			new Pair(new Pattern.Leaf(type11), "bs")}),
+			new Pair(new Pattern.Leaf(type10), "bs")}),
 		null);
 	// =========================================================================
 	// rules
 	// =========================================================================
 
 	public static final InferenceRule[] inferences = new InferenceRule[]{
-		new Inference_0(pattern49),
-		new Inference_1(pattern70),
-		new Inference_2(pattern71),
-		new Inference_3(pattern80),
-		new Inference_4(pattern81),
-		new Inference_5(pattern93),
-		new Inference_6(pattern98),
-		new Inference_7(pattern99)
+		new Inference_0(pattern51),
+		new Inference_1(pattern72),
+		new Inference_2(pattern73),
+		new Inference_3(pattern81),
+		new Inference_4(pattern82),
+		new Inference_5(pattern89)
 	};
 	public static final ReductionRule[] reductions = new ReductionRule[]{
 		new Reduction_0(pattern0),
@@ -9852,8 +8422,8 @@ public final class Solver {
 		new Reduction_46(pattern46),
 		new Reduction_47(pattern47),
 		new Reduction_48(pattern48),
-		new Reduction_49(pattern50),
-		new Reduction_50(pattern51),
+		new Reduction_49(pattern49),
+		new Reduction_50(pattern50),
 		new Reduction_51(pattern52),
 		new Reduction_52(pattern53),
 		new Reduction_53(pattern54),
@@ -9872,39 +8442,31 @@ public final class Solver {
 		new Reduction_66(pattern67),
 		new Reduction_67(pattern68),
 		new Reduction_68(pattern69),
-		new Reduction_69(pattern72),
-		new Reduction_70(pattern73),
+		new Reduction_69(pattern70),
+		new Reduction_70(pattern71),
 		new Reduction_71(pattern74),
 		new Reduction_72(pattern75),
 		new Reduction_73(pattern76),
 		new Reduction_74(pattern77),
 		new Reduction_75(pattern78),
 		new Reduction_76(pattern79),
-		new Reduction_77(pattern82),
+		new Reduction_77(pattern80),
 		new Reduction_78(pattern83),
 		new Reduction_79(pattern84),
 		new Reduction_80(pattern85),
 		new Reduction_81(pattern86),
 		new Reduction_82(pattern87),
 		new Reduction_83(pattern88),
-		new Reduction_84(pattern89),
-		new Reduction_85(pattern90),
-		new Reduction_86(pattern91),
-		new Reduction_87(pattern92),
+		new Reduction_84(pattern90),
+		new Reduction_85(pattern91),
+		new Reduction_86(pattern92),
+		new Reduction_87(pattern93),
 		new Reduction_88(pattern94),
 		new Reduction_89(pattern95),
 		new Reduction_90(pattern96),
 		new Reduction_91(pattern97),
-		new Reduction_92(pattern100),
-		new Reduction_93(pattern101),
-		new Reduction_94(pattern102),
-		new Reduction_95(pattern103),
-		new Reduction_96(pattern104),
-		new Reduction_97(pattern105),
-		new Reduction_98(pattern106),
-		new Reduction_99(pattern107),
-		new Reduction_100(pattern108),
-		new Reduction_101(pattern109)
+		new Reduction_92(pattern98),
+		new Reduction_93(pattern99)
 	};
 
 
@@ -9913,30 +8475,6 @@ public final class Solver {
 	// =========================================================================
 
 	public static void main(String[] args) throws IOException {
-		try {
-			PrettyAutomataReader reader = new PrettyAutomataReader(System.in,SCHEMA);
-			PrettyAutomataWriter writer = new PrettyAutomataWriter(System.out,SCHEMA);
-			Automaton automaton = reader.read();
-			System.out.print("PARSED: ");
-			print(automaton);
-			IterativeRewriter.Strategy<InferenceRule> inferenceStrategy = new SimpleRewriteStrategy<InferenceRule>(automaton, inferences);
-			IterativeRewriter.Strategy<ReductionRule> reductionStrategy = new SimpleRewriteStrategy<ReductionRule>(automaton, reductions);
-			IterativeRewriter rw = new IterativeRewriter(automaton,inferenceStrategy, reductionStrategy, SCHEMA);
-			rw.apply();
-			System.out.print("REWROTE: ");
-			print(automaton);
-			System.out.println("\n\n=> (" + rw.getStats() + ")\n");
-		} catch(PrettyAutomataReader.SyntaxError ex) {
-			System.err.println(ex.getMessage());
-		}
-	}
-	
-	static void print(Automaton automaton) {
-		try {
-			PrettyAutomataWriter writer = new PrettyAutomataWriter(System.out,SCHEMA);
-			writer.write(automaton);
-			writer.flush();
-			System.out.println();
-		} catch(IOException e) { System.err.println("I/O error printing automaton"); }
+		new wyrl.ConsoleRewriter(SCHEMA,inferences,reductions).readEvaluatePrintLoop();
 	}
 }

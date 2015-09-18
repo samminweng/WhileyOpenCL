@@ -6,14 +6,14 @@ import java.math.BigInteger;
 import wyautl.util.BigRational;
 import wyautl.io.*;
 import wyautl.core.*;
-import wyautl.rw.*;
+import wyrw.core.*;
 import wyrl.core.*;
 import wyrl.util.Runtime;
 import wyrl.util.Pair;
 import wyrl.util.AbstractRewriteRule;
 
 public final class Types {
-	// term $4<NotT($2<^Type<$4|Atom<NotT($16<^Proton<TupleT(^[$16...])|SetT(^[^bool,$16])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$16...])|SetT(^[^bool,$16])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|OrT(^{$2...})|AndT(^{$2...})|SetT(^[^bool,$2])|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>)>
+	// term $4<NotT($2<^Type<$4|Atom<NotT($16<^Proton<TupleT(^[$16...])|ArrayT($16)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$16...])|ArrayT($16)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|OrT(^{$2...})|AndT(^{$2...})|ArrayT($2)|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>)>
 	public final static int K_NotT = 0;
 	public final static int NotT(Automaton automaton, int r0) {
 		return automaton.add(new Automaton.Term(K_NotT, r0));
@@ -236,7 +236,7 @@ public final class Types {
 		public final int minimum() { return 2; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $7<AndT($5<^{$2<^Type<$7|Atom<NotT($19<^Proton<TupleT(^[$19...])|SetT(^[^bool,$19])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$19...])|SetT(^[^bool,$19])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT($5)|SetT(^[^bool,$2])|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>...}>)>
+	// term $7<AndT($5<^{$2<^Type<$7|Atom<NotT($19<^Proton<TupleT(^[$19...])|ArrayT($19)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$19...])|ArrayT($19)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT($5)|ArrayT($2)|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>...}>)>
 	public final static int K_AndT = 1;
 	public final static int AndT(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.Set(r0));
@@ -459,7 +459,7 @@ public final class Types {
 		public final int minimum() { return 3; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $7<OrT($5<^{$2<^Type<$7|Atom<NotT($19<^Proton<TupleT(^[$19...])|SetT(^[^bool,$19])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$19...])|SetT(^[^bool,$19])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|AndT($5)|SetT(^[^bool,$2])|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>...}>)>
+	// term $7<OrT($5<^{$2<^Type<$7|Atom<NotT($19<^Proton<TupleT(^[$19...])|ArrayT($19)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$19...])|ArrayT($19)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|AndT($5)|ArrayT($2)|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>...}>)>
 	public final static int K_OrT = 2;
 	public final static int OrT(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.Set(r0));
@@ -610,7 +610,7 @@ public final class Types {
 		public final int minimum() { return 3; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $7<TupleT(^[$2<^Type<$7|Atom<NotT($19<^Proton<TupleT(^[$19...])|SetT(^[^bool,$19])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$19...])|SetT(^[^bool,$19])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT(^{$2...})|AndT(^{$2...})|SetT(^[^bool,$2])|FunctionT(^[$2,$2,$2...])>>...])>
+	// term $7<TupleT(^[$2<^Type<$7|Atom<NotT($19<^Proton<TupleT(^[$19...])|ArrayT($19)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$19...])|ArrayT($19)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT(^{$2...})|AndT(^{$2...})|ArrayT($2)|FunctionT(^[$2,$2,$2...])>>...])>
 	public final static int K_TupleT = 3;
 	public final static int TupleT(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
@@ -958,65 +958,10 @@ public final class Types {
 		public final int minimum() { return 6; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $9<SetT(^[^bool,$3<^Type<$9|Atom<NotT($21<^Proton<TupleT(^[$21...])|SetT(^[^bool,$21])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$21...])|SetT(^[^bool,$21])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($3)|OrT(^{$3...})|AndT(^{$3...})|TupleT(^[$3...])|FunctionT(^[$3,$3,$3...])>>])>
-	public final static int K_SetT = 4;
-	public final static int SetT(Automaton automaton, int... r0) {
-		int r1 = automaton.add(new Automaton.List(r0));
-		return automaton.add(new Automaton.Term(K_SetT, r1));
-	}
-	public final static int SetT(Automaton automaton, List<Integer> r0) {
-		int r1 = automaton.add(new Automaton.List(r0));
-		return automaton.add(new Automaton.Term(K_SetT, r1));
-	}
-
-	// SetType_1
+	// TupleType_4
 	private final static class Reduction_17 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_17(Pattern.Term pattern) { super(pattern); }
-
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
-			Automaton.State s0 = automaton.get(r0);
-			if(s0.kind == K_SetT) {
-				Automaton.Term t0 = (Automaton.Term) s0;
-				int r1 = t0.contents;
-				Automaton.State s1 = automaton.get(r1);
-				Automaton.List l1 = (Automaton.List) s1;
-				int r2 = l1.get(0);
-				int r3 = l1.get(1);
-				if(Runtime.accepts(type1,automaton,automaton.get(r3), SCHEMA)) {
-					int[] state = {r0, r1, r2, r3};
-					activations.add(new Activation(this,null,state));
-				}
-			}
-		}
-
-		public final int apply(Automaton automaton, int[] state) {
-			int nStates = automaton.nStates();
-			int r0 = state[0];
-			int r2 = state[2]; // b
-			boolean r4 = ((Automaton.Bool)automaton.get(r2)).value;
-			boolean r5 = !r4;              // !b
-			if(r5) {
-				Automaton.Term r6 = VoidT;
-				int r7 = automaton.add(r6);
-				if(r0 != r7) {
-					return automaton.rewrite(r0, r7);
-				}
-			}
-			automaton.resize(nStates);
-			return Automaton.K_VOID;
-		}
-		public final String name() { return "SetType_1"; }
-		public final int rank() { return 0; }
-
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
-	}
-	// SetType_2
-	private final static class Reduction_18 extends AbstractRewriteRule implements ReductionRule {
-
-		public Reduction_18(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -1030,26 +975,25 @@ public final class Types {
 					for(int r3=0;r3!=c1.size();++r3) {
 						int r2 = c1.get(r3);
 						Automaton.State s2 = automaton.get(r2);
-						if(s2.kind == K_SetT) {
+						if(s2.kind == K_TupleT) {
 							Automaton.Term t2 = (Automaton.Term) s2;
 							int r4 = t2.contents;
 							Automaton.State s4 = automaton.get(r4);
 							Automaton.List l4 = (Automaton.List) s4;
-							int r5 = l4.get(0);
-							int r6 = l4.get(1);
-							for(int r8=0;r8!=c1.size();++r8) {
-								if(r8 == r3) { continue; }
-								int r7 = c1.get(r8);
-								Automaton.State s7 = automaton.get(r7);
-								if(s7.kind == K_SetT) {
-									Automaton.Term t7 = (Automaton.Term) s7;
-									int r9 = t7.contents;
-									Automaton.State s9 = automaton.get(r9);
-									Automaton.List l9 = (Automaton.List) s9;
-									int r10 = l9.get(0);
-									int r11 = l9.get(1);
-									int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, 0};
-									activations.add(new Activation(this,null,state));
+							for(int r7=0;r7!=c1.size();++r7) {
+								if(r7 == r3) { continue; }
+								int r6 = c1.get(r7);
+								Automaton.State s6 = automaton.get(r6);
+								if(s6.kind == K_NotT) {
+									Automaton.Term t6 = (Automaton.Term) s6;
+									int r8 = t6.contents;
+									Automaton.State s8 = automaton.get(r8);
+									if(s8.kind == K_ArrayT) {
+										Automaton.Term t8 = (Automaton.Term) s8;
+										int r9 = t8.contents;
+										int[] state = {r0, r1, r2, r3, r4, 0, r6, r7, r8, r9, 0};
+										activations.add(new Activation(this,null,state));
+									}
 								}
 							}
 						}
@@ -1061,51 +1005,75 @@ public final class Types {
 		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
+			int r2 = state[2]; // t1
 			int r3 = state[3];
-			int r5 = state[5]; // b1
-			int r6 = state[6]; // t1
-			int r8 = state[8];
-			int r10 = state[10]; // b2
-			int r11 = state[11]; // t2
+			int r7 = state[7];
 			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
 			int[] s1children = new int[s1.size() - 2];
 			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
-				if(s1i == r3 || s1i == r8) { continue; }
+				if(s1i == r3 || s1i == r7) { continue; }
 				s1children[s1j++] = s1.get(s1i);
 			}
-			Automaton.Set r12 = new Automaton.Set(s1children);
-			boolean r13 = ((Automaton.Bool)automaton.get(r5)).value;
-			boolean r14 = false;           // b1 && b2
-			if(r13) {
-				boolean r15 = ((Automaton.Bool)automaton.get(r10)).value;
-				r14 = r15;
-			}
-			int r16 = automaton.add(r14 ? Automaton.TRUE : Automaton.FALSE);
-			Automaton.Set r17 = new Automaton.Set(r6, r11); // {t1t2}
-			int r18 = automaton.add(r17);
-			Automaton.Term r19 = new Automaton.Term(K_AndT, r18);
-			int r20 = automaton.add(r19);
-			Automaton.List r21 = new Automaton.List(r16, r20); // [b1 && b2AndT({t1t2})]
-			int r22 = automaton.add(r21);
-			Automaton.Term r23 = new Automaton.Term(K_SetT, r22);
-			int r24 = automaton.add(r23);
-			Automaton.Set r25 = r12.appendFront(r24); // SetT([b1 && b2AndT({t1t2})]) append ts
-			int r26 = automaton.add(r25);
-			Automaton.Term r27 = new Automaton.Term(K_AndT, r26);
-			int r28 = automaton.add(r27);
-			if(r0 != r28) {
-				return automaton.rewrite(r0, r28);
+			Automaton.Set r10 = new Automaton.Set(s1children);
+			Automaton.Set r11 = new Automaton.Set(r2); // {t1}
+			Automaton.Set r12 = r11.append(r10); // {t1} append ts
+			int r13 = automaton.add(r12);
+			Automaton.Term r14 = new Automaton.Term(K_AndT, r13);
+			int r15 = automaton.add(r14);
+			if(r0 != r15) {
+				return automaton.rewrite(r0, r15);
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "SetType_2"; }
+		public final String name() { return "TupleType_4"; }
 		public final int rank() { return 2; }
 
-		public final int minimum() { return 9; }
+		public final int minimum() { return 6; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// SetType_3
+	// term $4<ArrayT($2<^Type<$4|Atom<NotT($16<^Proton<TupleT(^[$16...])|ArrayT($16)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$16...])|ArrayT($16)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT(^{$2...})|AndT(^{$2...})|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>)>
+	public final static int K_ArrayT = 4;
+	public final static int ArrayT(Automaton automaton, int r0) {
+		return automaton.add(new Automaton.Term(K_ArrayT, r0));
+	}
+
+	// ArrayType_1
+	private final static class Reduction_18 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_18(Pattern.Term pattern) { super(pattern); }
+
+		public final void probe(Automaton automaton, int root, List<Activation> activations) {
+			int r0 = root;
+			Automaton.State s0 = automaton.get(r0);
+			if(s0.kind == K_ArrayT) {
+				Automaton.Term t0 = (Automaton.Term) s0;
+				int r1 = t0.contents;
+				if(Runtime.accepts(type1,automaton,automaton.get(r1), SCHEMA)) {
+					int[] state = {r0, r1};
+					activations.add(new Activation(this,null,state));
+				}
+			}
+		}
+
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
+			int r0 = state[0];
+			Automaton.Term r2 = VoidT;
+			int r3 = automaton.add(r2);
+			if(r0 != r3) {
+				return automaton.rewrite(r0, r3);
+			}
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
+		}
+		public final String name() { return "ArrayType_1"; }
+		public final int rank() { return 0; }
+
+		public final int minimum() { return 1; }
+		public final int maximum() { return Integer.MAX_VALUE; }
+	}
+	// ArrayType_2
 	private final static class Reduction_19 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_19(Pattern.Term pattern) { super(pattern); }
@@ -1122,31 +1090,18 @@ public final class Types {
 					for(int r3=0;r3!=c1.size();++r3) {
 						int r2 = c1.get(r3);
 						Automaton.State s2 = automaton.get(r2);
-						if(s2.kind == K_SetT) {
+						if(s2.kind == K_ArrayT) {
 							Automaton.Term t2 = (Automaton.Term) s2;
 							int r4 = t2.contents;
-							Automaton.State s4 = automaton.get(r4);
-							Automaton.List l4 = (Automaton.List) s4;
-							int r5 = l4.get(0);
-							int r6 = l4.get(1);
-							for(int r8=0;r8!=c1.size();++r8) {
-								if(r8 == r3) { continue; }
-								int r7 = c1.get(r8);
-								Automaton.State s7 = automaton.get(r7);
-								if(s7.kind == K_NotT) {
-									Automaton.Term t7 = (Automaton.Term) s7;
-									int r9 = t7.contents;
-									Automaton.State s9 = automaton.get(r9);
-									if(s9.kind == K_SetT) {
-										Automaton.Term t9 = (Automaton.Term) s9;
-										int r10 = t9.contents;
-										Automaton.State s10 = automaton.get(r10);
-										Automaton.List l10 = (Automaton.List) s10;
-										int r11 = l10.get(0);
-										int r12 = l10.get(1);
-										int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, 0};
-										activations.add(new Activation(this,null,state));
-									}
+							for(int r6=0;r6!=c1.size();++r6) {
+								if(r6 == r3) { continue; }
+								int r5 = c1.get(r6);
+								Automaton.State s5 = automaton.get(r5);
+								if(s5.kind == K_ArrayT) {
+									Automaton.Term t5 = (Automaton.Term) s5;
+									int r7 = t5.contents;
+									int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, 0};
+									activations.add(new Activation(this,null,state));
 								}
 							}
 						}
@@ -1159,53 +1114,39 @@ public final class Types {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r3 = state[3];
-			int r5 = state[5]; // b1
-			int r6 = state[6]; // t1
-			int r8 = state[8];
-			int r11 = state[11]; // b2
-			int r12 = state[12]; // t2
+			int r4 = state[4]; // t1
+			int r6 = state[6];
+			int r7 = state[7]; // t2
 			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
 			int[] s1children = new int[s1.size() - 2];
 			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
-				if(s1i == r3 || s1i == r8) { continue; }
+				if(s1i == r3 || s1i == r6) { continue; }
 				s1children[s1j++] = s1.get(s1i);
 			}
-			Automaton.Set r13 = new Automaton.Set(s1children);
-			boolean r14 = ((Automaton.Bool)automaton.get(r5)).value;
-			boolean r15 = false;           // b1 && !b2
-			if(r14) {
-				boolean r16 = ((Automaton.Bool)automaton.get(r11)).value;
-				boolean r17 = !r16;            // !b2
-				r15 = r17;
-			}
-			int r18 = automaton.add(r15 ? Automaton.TRUE : Automaton.FALSE);
-			Automaton.Term r19 = new Automaton.Term(K_NotT, r12);
-			int r20 = automaton.add(r19);
-			Automaton.Set r21 = new Automaton.Set(r6, r20); // {t1NotT(t2)}
-			int r22 = automaton.add(r21);
-			Automaton.Term r23 = new Automaton.Term(K_AndT, r22);
-			int r24 = automaton.add(r23);
-			Automaton.List r25 = new Automaton.List(r18, r24); // [b1 && !b2AndT({t1NotT(t2)})]
-			int r26 = automaton.add(r25);
-			Automaton.Term r27 = new Automaton.Term(K_SetT, r26);
-			int r28 = automaton.add(r27);
-			Automaton.Set r29 = r13.appendFront(r28); // SetT([b1 && !b2AndT({t1NotT(t2)})]) append ts
-			int r30 = automaton.add(r29);
-			Automaton.Term r31 = new Automaton.Term(K_AndT, r30);
-			int r32 = automaton.add(r31);
-			if(r0 != r32) {
-				return automaton.rewrite(r0, r32);
+			Automaton.Set r8 = new Automaton.Set(s1children);
+			Automaton.Set r9 = new Automaton.Set(r4, r7); // {t1t2}
+			int r10 = automaton.add(r9);
+			Automaton.Term r11 = new Automaton.Term(K_AndT, r10);
+			int r12 = automaton.add(r11);
+			Automaton.Term r13 = new Automaton.Term(K_ArrayT, r12);
+			int r14 = automaton.add(r13);
+			Automaton.Set r15 = r8.appendFront(r14); // ArrayT(AndT({t1t2})) append ts
+			int r16 = automaton.add(r15);
+			Automaton.Term r17 = new Automaton.Term(K_AndT, r16);
+			int r18 = automaton.add(r17);
+			if(r0 != r18) {
+				return automaton.rewrite(r0, r18);
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "SetType_3"; }
+		public final String name() { return "ArrayType_2"; }
 		public final int rank() { return 2; }
 
-		public final int minimum() { return 10; }
+		public final int minimum() { return 5; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// SetType_4
+	// ArrayType_3
 	private final static class Reduction_20 extends AbstractRewriteRule implements ReductionRule {
 
 		public Reduction_20(Pattern.Term pattern) { super(pattern); }
@@ -1222,18 +1163,168 @@ public final class Types {
 					for(int r3=0;r3!=c1.size();++r3) {
 						int r2 = c1.get(r3);
 						Automaton.State s2 = automaton.get(r2);
-						if(s2.kind == K_SetT) {
+						if(s2.kind == K_ArrayT) {
 							Automaton.Term t2 = (Automaton.Term) s2;
 							int r4 = t2.contents;
-							Automaton.State s4 = automaton.get(r4);
-							Automaton.List l4 = (Automaton.List) s4;
-							int r5 = l4.get(0);
-							int r6 = l4.get(1);
-							for(int r8=0;r8!=c1.size();++r8) {
-								if(r8 == r3) { continue; }
-								int r7 = c1.get(r8);
-								if(Runtime.accepts(type4,automaton,automaton.get(r7), SCHEMA)) {
-									int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, 0};
+							for(int r6=0;r6!=c1.size();++r6) {
+								if(r6 == r3) { continue; }
+								int r5 = c1.get(r6);
+								Automaton.State s5 = automaton.get(r5);
+								if(s5.kind == K_NotT) {
+									Automaton.Term t5 = (Automaton.Term) s5;
+									int r7 = t5.contents;
+									Automaton.State s7 = automaton.get(r7);
+									if(s7.kind == K_ArrayT) {
+										Automaton.Term t7 = (Automaton.Term) s7;
+										int r8 = t7.contents;
+										int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, 0};
+										activations.add(new Activation(this,null,state));
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
+			int r0 = state[0];
+			int r3 = state[3];
+			int r4 = state[4]; // t1
+			int r6 = state[6];
+			int r8 = state[8]; // t2
+			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] s1children = new int[s1.size() - 2];
+			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+				if(s1i == r3 || s1i == r6) { continue; }
+				s1children[s1j++] = s1.get(s1i);
+			}
+			Automaton.Set r9 = new Automaton.Set(s1children);
+			Automaton.Term r10 = new Automaton.Term(K_NotT, r8);
+			int r11 = automaton.add(r10);
+			Automaton.Set r12 = new Automaton.Set(r4, r11); // {t1NotT(t2)}
+			int r13 = automaton.add(r12);
+			Automaton.Term r14 = new Automaton.Term(K_AndT, r13);
+			int r15 = automaton.add(r14);
+			Automaton.Term r16 = new Automaton.Term(K_ArrayT, r15);
+			int r17 = automaton.add(r16);
+			Automaton.Set r18 = r9.appendFront(r17); // ArrayT(AndT({t1NotT(t2)})) append ts
+			int r19 = automaton.add(r18);
+			Automaton.Term r20 = new Automaton.Term(K_AndT, r19);
+			int r21 = automaton.add(r20);
+			if(r0 != r21) {
+				return automaton.rewrite(r0, r21);
+			}
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
+		}
+		public final String name() { return "ArrayType_3"; }
+		public final int rank() { return 2; }
+
+		public final int minimum() { return 6; }
+		public final int maximum() { return Integer.MAX_VALUE; }
+	}
+	// ArrayType_3b
+	private final static class Reduction_21 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_21(Pattern.Term pattern) { super(pattern); }
+
+		public final void probe(Automaton automaton, int root, List<Activation> activations) {
+			int r0 = root;
+			Automaton.State s0 = automaton.get(r0);
+			if(s0.kind == K_AndT) {
+				Automaton.Term t0 = (Automaton.Term) s0;
+				int r1 = t0.contents;
+				Automaton.State s1 = automaton.get(r1);
+				Automaton.Collection c1 = (Automaton.Collection) s1;
+				if(c1.size() >= 2) {
+					for(int r3=0;r3!=c1.size();++r3) {
+						int r2 = c1.get(r3);
+						Automaton.State s2 = automaton.get(r2);
+						if(s2.kind == K_ArrayT) {
+							Automaton.Term t2 = (Automaton.Term) s2;
+							int r4 = t2.contents;
+							for(int r6=0;r6!=c1.size();++r6) {
+								if(r6 == r3) { continue; }
+								int r5 = c1.get(r6);
+								Automaton.State s5 = automaton.get(r5);
+								if(s5.kind == K_NotT) {
+									Automaton.Term t5 = (Automaton.Term) s5;
+									int r7 = t5.contents;
+									Automaton.State s7 = automaton.get(r7);
+									if(s7.kind == K_TupleT) {
+										Automaton.Term t7 = (Automaton.Term) s7;
+										int r8 = t7.contents;
+										Automaton.State s8 = automaton.get(r8);
+										Automaton.List l8 = (Automaton.List) s8;
+										int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, 0, 0};
+										activations.add(new Activation(this,null,state));
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
+			int r0 = state[0];
+			int r2 = state[2]; // t1
+			int r3 = state[3];
+			int r6 = state[6];
+			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] s1children = new int[s1.size() - 2];
+			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+				if(s1i == r3 || s1i == r6) { continue; }
+				s1children[s1j++] = s1.get(s1i);
+			}
+			Automaton.Set r10 = new Automaton.Set(s1children);
+			Automaton.Set r11 = new Automaton.Set(r2); // {t1}
+			Automaton.Set r12 = r11.append(r10); // {t1} append ts
+			int r13 = automaton.add(r12);
+			Automaton.Term r14 = new Automaton.Term(K_AndT, r13);
+			int r15 = automaton.add(r14);
+			if(r0 != r15) {
+				return automaton.rewrite(r0, r15);
+			}
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
+		}
+		public final String name() { return "ArrayType_3b"; }
+		public final int rank() { return 2; }
+
+		public final int minimum() { return 6; }
+		public final int maximum() { return Integer.MAX_VALUE; }
+	}
+	// ArrayType_4
+	private final static class Reduction_22 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_22(Pattern.Term pattern) { super(pattern); }
+
+		public final void probe(Automaton automaton, int root, List<Activation> activations) {
+			int r0 = root;
+			Automaton.State s0 = automaton.get(r0);
+			if(s0.kind == K_AndT) {
+				Automaton.Term t0 = (Automaton.Term) s0;
+				int r1 = t0.contents;
+				Automaton.State s1 = automaton.get(r1);
+				Automaton.Collection c1 = (Automaton.Collection) s1;
+				if(c1.size() >= 2) {
+					for(int r3=0;r3!=c1.size();++r3) {
+						int r2 = c1.get(r3);
+						Automaton.State s2 = automaton.get(r2);
+						if(s2.kind == K_ArrayT) {
+							Automaton.Term t2 = (Automaton.Term) s2;
+							int r4 = t2.contents;
+							for(int r6=0;r6!=c1.size();++r6) {
+								if(r6 == r3) { continue; }
+								int r5 = c1.get(r6);
+								if(Runtime.accepts(type3,automaton,automaton.get(r5), SCHEMA)) {
+									int[] state = {r0, r1, r2, r3, r4, r5, r6, 0};
 									activations.add(new Activation(this,null,state));
 								}
 							}
@@ -1248,37 +1339,37 @@ public final class Types {
 			int r0 = state[0];
 			int r2 = state[2]; // s
 			int r3 = state[3];
-			int r7 = state[7]; // p
-			int r8 = state[8];
+			int r5 = state[5]; // p
+			int r6 = state[6];
 			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
 			int[] s1children = new int[s1.size() - 2];
 			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
-				if(s1i == r3 || s1i == r8) { continue; }
+				if(s1i == r3 || s1i == r6) { continue; }
 				s1children[s1j++] = s1.get(s1i);
 			}
-			Automaton.Set r9 = new Automaton.Set(s1children);
-			boolean r10 = Runtime.accepts(type5, automaton, r7, SCHEMA); // p is ^AnyT
-			boolean r11 = !r10;            // !p is ^AnyT
-			if(r11) {
-				Automaton.Term r12 = VoidT;
-				int r13 = automaton.add(r12);
-				if(r0 != r13) {
-					return automaton.rewrite(r0, r13);
+			Automaton.Set r7 = new Automaton.Set(s1children);
+			boolean r8 = Runtime.accepts(type4, automaton, r5, SCHEMA); // p is ^AnyT
+			boolean r9 = !r8;              // !p is ^AnyT
+			if(r9) {
+				Automaton.Term r10 = VoidT;
+				int r11 = automaton.add(r10);
+				if(r0 != r11) {
+					return automaton.rewrite(r0, r11);
 				}
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "SetType_4"; }
+		public final String name() { return "ArrayType_4"; }
 		public final int rank() { return 1; }
 
 		public final int minimum() { return 0; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// SetType_5
-	private final static class Reduction_21 extends AbstractRewriteRule implements ReductionRule {
+	// ArrayType_5
+	private final static class Reduction_23 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_21(Pattern.Term pattern) { super(pattern); }
+		public Reduction_23(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -1292,25 +1383,17 @@ public final class Types {
 					for(int r3=0;r3!=c1.size();++r3) {
 						int r2 = c1.get(r3);
 						Automaton.State s2 = automaton.get(r2);
-						if(s2.kind == K_SetT) {
+						if(s2.kind == K_ArrayT) {
 							Automaton.Term t2 = (Automaton.Term) s2;
 							int r4 = t2.contents;
-							Automaton.State s4 = automaton.get(r4);
-							Automaton.List l4 = (Automaton.List) s4;
-							int r5 = l4.get(0);
-							int r6 = l4.get(1);
-							for(int r8=0;r8!=c1.size();++r8) {
-								if(r8 == r3) { continue; }
-								int r7 = c1.get(r8);
-								Automaton.State s7 = automaton.get(r7);
-								if(s7.kind == K_SetT) {
-									Automaton.Term t7 = (Automaton.Term) s7;
-									int r9 = t7.contents;
-									Automaton.State s9 = automaton.get(r9);
-									Automaton.List l9 = (Automaton.List) s9;
-									int r10 = l9.get(0);
-									int r11 = l9.get(1);
-									int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, 0};
+							for(int r6=0;r6!=c1.size();++r6) {
+								if(r6 == r3) { continue; }
+								int r5 = c1.get(r6);
+								Automaton.State s5 = automaton.get(r5);
+								if(s5.kind == K_ArrayT) {
+									Automaton.Term t5 = (Automaton.Term) s5;
+									int r7 = t5.contents;
+									int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, 0};
 									activations.add(new Activation(this,null,state));
 								}
 							}
@@ -1325,71 +1408,32 @@ public final class Types {
 			int r0 = state[0];
 			int r2 = state[2]; // s1
 			int r3 = state[3];
-			int r5 = state[5]; // b1
-			int r6 = state[6]; // t1
-			int r7 = state[7]; // s2
-			int r8 = state[8];
-			int r10 = state[10]; // b2
-			int r11 = state[11]; // t2
+			int r4 = state[4]; // t1
+			int r5 = state[5]; // s2
+			int r6 = state[6];
+			int r7 = state[7]; // t2
 			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
 			int[] s1children = new int[s1.size() - 2];
 			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
-				if(s1i == r3 || s1i == r8) { continue; }
+				if(s1i == r3 || s1i == r6) { continue; }
 				s1children[s1j++] = s1.get(s1i);
 			}
-			Automaton.Set r12 = new Automaton.Set(s1children);
-			boolean r13 = r6 == r11;       // t1 eq t2
-			boolean r14 = false;           // t1 eq t2 && b1 && !b2
-			if(r13) {
-				boolean r15 = ((Automaton.Bool)automaton.get(r5)).value;
-				boolean r16 = false;           // b1 && !b2
-				if(r15) {
-					boolean r17 = ((Automaton.Bool)automaton.get(r10)).value;
-					boolean r18 = !r17;            // !b2
-					r16 = r18;
-				}
-				r14 = r16;
-			}
-			if(r14) {
-				Automaton.Set r19 = new Automaton.Set(r2); // {s1}
-				Automaton.Set r20 = r19.append(r12); // {s1} append ts
-				int r21 = automaton.add(r20);
-				Automaton.Term r22 = new Automaton.Term(K_OrT, r21);
-				int r23 = automaton.add(r22);
-				if(r0 != r23) {
-					return automaton.rewrite(r0, r23);
-				}
-			}
-			Automaton.Term r24 = VoidT;
-			Object r25 = (Object) automaton.get(r11);
-			boolean r26 = r25.equals(r24); // t2 eq VoidT
-			boolean r27 = false;           // t2 eq VoidT && b2
-			if(r26) {
-				boolean r28 = ((Automaton.Bool)automaton.get(r10)).value;
-				r27 = r28;
-			}
-			if(r27) {
-				boolean r29 = ((Automaton.Bool)automaton.get(r5)).value;
-				boolean r30 = ((Automaton.Bool)automaton.get(r10)).value;
-				boolean r31 = r29 || r30;      // b1 || b2
-				int r32 = automaton.add(r31 ? Automaton.TRUE : Automaton.FALSE);
-				Automaton.List r33 = new Automaton.List(r32, r6); // [b1 || b2t1]
-				int r34 = automaton.add(r33);
-				Automaton.Term r35 = new Automaton.Term(K_SetT, r34);
-				int r36 = automaton.add(r35);
-				Automaton.Set r37 = new Automaton.Set(r36); // {SetT([b1 || b2t1])}
-				Automaton.Set r38 = r37.append(r12); // {SetT([b1 || b2t1])} append ts
-				int r39 = automaton.add(r38);
-				Automaton.Term r40 = new Automaton.Term(K_OrT, r39);
-				int r41 = automaton.add(r40);
-				if(r0 != r41) {
-					return automaton.rewrite(r0, r41);
+			Automaton.Set r8 = new Automaton.Set(s1children);
+			boolean r9 = r4 == r7;         // t1 eq t2
+			if(r9) {
+				Automaton.Set r10 = new Automaton.Set(r2); // {s1}
+				Automaton.Set r11 = r10.append(r8); // {s1} append ts
+				int r12 = automaton.add(r11);
+				Automaton.Term r13 = new Automaton.Term(K_OrT, r12);
+				int r14 = automaton.add(r13);
+				if(r0 != r14) {
+					return automaton.rewrite(r0, r14);
 				}
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "SetType_5"; }
+		public final String name() { return "ArrayType_5"; }
 		public final int rank() { return 2; }
 
 		public final int minimum() { return 0; }
@@ -1438,9 +1482,9 @@ public final class Types {
 	}
 
 	// AtomType_1
-	private final static class Reduction_22 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_24 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_22(Pattern.Term pattern) { super(pattern); }
+		public Reduction_24(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -1488,9 +1532,9 @@ public final class Types {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// AtomType_2
-	private final static class Reduction_23 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_25 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_23(Pattern.Term pattern) { super(pattern); }
+		public Reduction_25(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -1539,9 +1583,9 @@ public final class Types {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// AtomType_3
-	private final static class Reduction_24 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_26 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_24(Pattern.Term pattern) { super(pattern); }
+		public Reduction_26(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -1554,11 +1598,11 @@ public final class Types {
 				if(c1.size() >= 2) {
 					for(int r3=0;r3!=c1.size();++r3) {
 						int r2 = c1.get(r3);
-						if(Runtime.accepts(type6,automaton,automaton.get(r2), SCHEMA)) {
+						if(Runtime.accepts(type5,automaton,automaton.get(r2), SCHEMA)) {
 							for(int r5=0;r5!=c1.size();++r5) {
 								if(r5 == r3) { continue; }
 								int r4 = c1.get(r5);
-								if(Runtime.accepts(type4,automaton,automaton.get(r4), SCHEMA)) {
+								if(Runtime.accepts(type3,automaton,automaton.get(r4), SCHEMA)) {
 									int[] state = {r0, r1, r2, r3, r4, r5, 0};
 									activations.add(new Activation(this,null,state));
 								}
@@ -1615,9 +1659,9 @@ public final class Types {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// AtomType_4
-	private final static class Reduction_25 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_27 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_25(Pattern.Term pattern) { super(pattern); }
+		public Reduction_27(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -1630,7 +1674,7 @@ public final class Types {
 				if(c1.size() >= 2) {
 					for(int r3=0;r3!=c1.size();++r3) {
 						int r2 = c1.get(r3);
-						if(Runtime.accepts(type6,automaton,automaton.get(r2), SCHEMA)) {
+						if(Runtime.accepts(type5,automaton,automaton.get(r2), SCHEMA)) {
 							for(int r5=0;r5!=c1.size();++r5) {
 								if(r5 == r3) { continue; }
 								int r4 = c1.get(r5);
@@ -1638,7 +1682,7 @@ public final class Types {
 								if(s4.kind == K_NotT) {
 									Automaton.Term t4 = (Automaton.Term) s4;
 									int r6 = t4.contents;
-									if(Runtime.accepts(type4,automaton,automaton.get(r6), SCHEMA)) {
+									if(Runtime.accepts(type3,automaton,automaton.get(r6), SCHEMA)) {
 										int[] state = {r0, r1, r2, r3, r4, r5, r6, 0};
 										activations.add(new Activation(this,null,state));
 									}
@@ -1694,9 +1738,9 @@ public final class Types {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// AtomType_5
-	private final static class Reduction_26 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_28 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_26(Pattern.Term pattern) { super(pattern); }
+		public Reduction_28(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -1744,9 +1788,9 @@ public final class Types {
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// AtomType_5
-	private final static class Reduction_27 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_29 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_27(Pattern.Term pattern) { super(pattern); }
+		public Reduction_29(Pattern.Term pattern) { super(pattern); }
 
 		public final void probe(Automaton automaton, int root, List<Activation> activations) {
 			int r0 = root;
@@ -1794,7 +1838,7 @@ public final class Types {
 		public final int minimum() { return 2; }
 		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// term $8<FunctionT(^[$2<^Type<$8|Atom<NotT($20<^Proton<TupleT(^[$20...])|SetT(^[^bool,$20])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$20...])|SetT(^[^bool,$20])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT(^{$2...})|AndT(^{$2...})|SetT(^[^bool,$2])|TupleT(^[$2...])>>,$2,$2...])>
+	// term $8<FunctionT(^[$2<^Type<$8|Atom<NotT($20<^Proton<TupleT(^[$20...])|ArrayT($20)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$20...])|ArrayT($20)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT(^{$2...})|AndT(^{$2...})|ArrayT($2)|TupleT(^[$2...])>>,$2,$2...])>
 	public final static int K_FunctionT = 14;
 	public final static int FunctionT(Automaton automaton, int... r0) {
 		int r1 = automaton.add(new Automaton.List(r0));
@@ -1810,16 +1854,16 @@ public final class Types {
 	// =========================================================================
 
 	public static final Schema SCHEMA = new Schema(new Schema.Term[]{
-		// $4<NotT($2<^Type<$4|Atom<NotT($16<^Proton<TupleT(^[$16...])|SetT(^[^bool,$16])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$16...])|SetT(^[^bool,$16])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|OrT(^{$2...})|AndT(^{$2...})|SetT(^[^bool,$2])|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>)>
-		Schema.Term("NotT",Schema.Or(Schema.Any, Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.String), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Any,Schema.Any)), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any)))),
-		// $7<AndT($5<^{$2<^Type<$7|Atom<NotT($19<^Proton<TupleT(^[$19...])|SetT(^[^bool,$19])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$19...])|SetT(^[^bool,$19])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT($5)|SetT(^[^bool,$2])|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>...}>)>
+		// $4<NotT($2<^Type<$4|Atom<NotT($16<^Proton<TupleT(^[$16...])|ArrayT($16)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$16...])|ArrayT($16)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|OrT(^{$2...})|AndT(^{$2...})|ArrayT($2)|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>)>
+		Schema.Term("NotT",Schema.Or(Schema.Any, Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("ArrayT",Schema.Any), Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.String), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("ArrayT",Schema.Any), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any)))),
+		// $7<AndT($5<^{$2<^Type<$7|Atom<NotT($19<^Proton<TupleT(^[$19...])|ArrayT($19)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$19...])|ArrayT($19)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT($5)|ArrayT($2)|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>...}>)>
 		Schema.Term("AndT",Schema.Set(true)),
-		// $7<OrT($5<^{$2<^Type<$7|Atom<NotT($19<^Proton<TupleT(^[$19...])|SetT(^[^bool,$19])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$19...])|SetT(^[^bool,$19])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|AndT($5)|SetT(^[^bool,$2])|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>...}>)>
+		// $7<OrT($5<^{$2<^Type<$7|Atom<NotT($19<^Proton<TupleT(^[$19...])|ArrayT($19)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$19...])|ArrayT($19)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|AndT($5)|ArrayT($2)|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>...}>)>
 		Schema.Term("OrT",Schema.Set(true)),
-		// $7<TupleT(^[$2<^Type<$7|Atom<NotT($19<^Proton<TupleT(^[$19...])|SetT(^[^bool,$19])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$19...])|SetT(^[^bool,$19])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT(^{$2...})|AndT(^{$2...})|SetT(^[^bool,$2])|FunctionT(^[$2,$2,$2...])>>...])>
+		// $7<TupleT(^[$2<^Type<$7|Atom<NotT($19<^Proton<TupleT(^[$19...])|ArrayT($19)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$19...])|ArrayT($19)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT(^{$2...})|AndT(^{$2...})|ArrayT($2)|FunctionT(^[$2,$2,$2...])>>...])>
 		Schema.Term("TupleT",Schema.List(true)),
-		// $9<SetT(^[^bool,$3<^Type<$9|Atom<NotT($21<^Proton<TupleT(^[$21...])|SetT(^[^bool,$21])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$21...])|SetT(^[^bool,$21])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($3)|OrT(^{$3...})|AndT(^{$3...})|TupleT(^[$3...])|FunctionT(^[$3,$3,$3...])>>])>
-		Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Or(Schema.Any, Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("SetT",Schema.List(true,Schema.Any,Schema.Any)), Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.String), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any))))),
+		// $4<ArrayT($2<^Type<$4|Atom<NotT($16<^Proton<TupleT(^[$16...])|ArrayT($16)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$16...])|ArrayT($16)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT(^{$2...})|AndT(^{$2...})|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>)>
+		Schema.Term("ArrayT",Schema.Or(Schema.Any, Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("ArrayT",Schema.Any), Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.String), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("TupleT",Schema.List(true)), Schema.Term("FunctionT",Schema.List(true,Schema.Any,Schema.Any)))),
 		// AnyT
 		Schema.Term("AnyT"),
 		// VoidT
@@ -1838,8 +1882,8 @@ public final class Types {
 		Schema.Term("VarT",Schema.String),
 		// NominalT(^string)
 		Schema.Term("NominalT",Schema.String),
-		// $8<FunctionT(^[$2<^Type<$8|Atom<NotT($20<^Proton<TupleT(^[$20...])|SetT(^[^bool,$20])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$20...])|SetT(^[^bool,$20])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT(^{$2...})|AndT(^{$2...})|SetT(^[^bool,$2])|TupleT(^[$2...])>>,$2,$2...])>
-		Schema.Term("FunctionT",Schema.List(true,Schema.Or(Schema.Any, Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("SetT",Schema.List(true,Schema.Bool,Schema.Any)), Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.String), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("SetT",Schema.List(true,Schema.Any,Schema.Any)), Schema.Term("TupleT",Schema.List(true))),Schema.Any))
+		// $8<FunctionT(^[$2<^Type<$8|Atom<NotT($20<^Proton<TupleT(^[$20...])|ArrayT($20)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$20...])|ArrayT($20)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT(^{$2...})|AndT(^{$2...})|ArrayT($2)|TupleT(^[$2...])>>,$2,$2...])>
+		Schema.Term("FunctionT",Schema.List(true,Schema.Or(Schema.Any, Schema.Or(Schema.Term("NotT",Schema.Or(Schema.Term("TupleT",Schema.List(true)), Schema.Term("ArrayT",Schema.Any), Schema.Or(Schema.Term("AnyT"), Schema.Term("NullT"), Schema.Term("VoidT"), Schema.Term("BoolT"), Schema.Term("IntT"), Schema.Term("RealT"), Schema.Term("StringT"), Schema.Term("VarT",Schema.String), Schema.Term("NominalT",Schema.Any)))), Schema.Any), Schema.Term("NotT",Schema.Any), Schema.Term("OrT",Schema.Set(true)), Schema.Term("AndT",Schema.Any), Schema.Term("ArrayT",Schema.Any), Schema.Term("TupleT",Schema.List(true))),Schema.Any))
 	});
 
 	// =========================================================================
@@ -1850,16 +1894,14 @@ public final class Types {
 	private static Type type0 = Runtime.Type("2G0tLTJCWDggIk2");
 	// VoidT
 	private static Type type1 = Runtime.Type("2KLxLPZGp3ukmD0E");
-	// $11<Type<Atom<NotT($13<^Proton<TupleT(^[$13...])|SetT(^[^bool,$13])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$13...])|SetT(^[^bool,$13])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT(^$11)|OrT(^{^$11...})|AndT(^{^$11...})|SetT(^[^bool,^$11])|TupleT(^[^$11...])|FunctionT(^[^$11,^$11,^$11...])>>
-	private static Type type2 = Runtime.Type("763GKTkK5G0GrQhGZIjG6KowZRJGJFiG5K3CKOoG4OJK6RgK5KJ55KbQYGMPjt5KlpKmWn0qWrluGyl59CXDAp1IZ0_RjGrQidXUYknIgVK7Otr5PCmDQp1MJ4KSW8rPYw3Atw_9cC1HdlXPekl7gxo7SoLDidmQYw2TgZMBfdbjl5vCXIwpHU34ZQtGp3zl1X0KDK6QgGp395ggNF_Kj_5OJCGY0AD5J8oQjl5KIVOkHa0G8t5SJCla0AR5J8KOWl5KIsOkmb0SIGbRdtqOJCGe0Ae53OKNmG_9OB1fGf0Ai535DxLQdtLNgGp7s5h5gZQ3OZNkNwNcOoOVPgPwPcQglil7TlQoHjW9CC1Ez5gVRBmjl9jcRcmml7xkRkHnl7ykRkmnl7gxQBH6O6tcScmql7zkSkHrl7z5gZnrW9c6YVJu0Ae6YwQwQBmj0vGDh6esTBHHj6gVU3Cx");
-	// bool
-	private static Type type3 = Runtime.Type("Fk0");
-	// $20<Proton<TupleT(^[^$20...])|SetT(^[^bool,^$20])|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>
-	private static Type type4 = Runtime.Type("hG5Jmx5Sjt5KGKMNmh5OJK6RgK5Kesp7xkHDycmEYk2HgZ3GIK5SJd16YkJEYoGItsZ9ECmHNlHLlcZLT5Qgp7ukKASGJFi_6KIw4AcG_Ipl5QJCWPgg5KLxLPZGp3hlXQJ8oQjl5KIV6AtGJHiG6KIg6AwG_J_45QJCWUgw6SIGbRdtqOJCGX0A953OKNmG_9OB1YGY0AD535DxLQdtLNgGp7N5C5gZO3OZ5QjdMU75A5E5P5QgOBmDR5hoO3Tx");
+	// $11<Type<Atom<NotT($13<^Proton<TupleT(^[$13...])|ArrayT($13)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$13...])|ArrayT($13)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT(^$11)|OrT(^{^$11...})|AndT(^{^$11...})|ArrayT(^$11)|TupleT(^[^$11...])|FunctionT(^[^$11,^$11,^$11...])>>
+	private static Type type2 = Runtime.Type("j53GKTkK5G0GrQhGZIjG6KowZRJGJFiG5KZ4ZRm4LTJG5Kp06Q_G4_WGptqNo_qQiGKRSlQZRgRoRcSVTgWHYcnHhk3OF8rQoxaQeZr7ww3AN4HLthWLYgnLhk4KGKMNmhq7ElHDUd1PYVJPgcq7zw3Ag4nPh_QgWQYsoQhV6G0tLTJCWTgg6KDK6QgGp3xlXUJOpQdG5KIVNkHX0K1xqQgGp3A5gkNFJHiG6KIsNkmY0KHKLNgGp3O5gcOFrJo8MPiS5KIkOkHb0GL4aRJdH5YwOVPkHe0WWIjpLPi45QJCme0e0Ag5G5wxbXGY0alaWbWeGfl5i5YspfGAs5eoo7wcQkmil7u5fwHjW9y5Yonj0A76Ysnj0A96YwYi0AB6YcQkHDD6ewRB1HN6gZSBXiWil7u5Q6tkScHrl78tSkmrGo3");
+	// $15<Proton<TupleT(^[^$15...])|ArrayT(^$15)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>
+	private static Type type3 = Runtime.Type("cG5Jmx5Sjt5KGKMNmh5OJK6RgK5KeZp7xkHDycmEYk2HgZ3O08bRW_6KYgJEgkJB9pJal5DCXDEp1L34ZQtGp3PlmLJtJSgl5KIo4ATG_Kj_5OJC0PgZ5K1xqQgGp3fl1Q3_ZQoGp3ilmQJ8KOWl5KIZ6AuGrJo8MPiS5KIk6AxGZKW86KeZl7zWNkHX0WWIjpLPi45QJCmX0X0AB5G5Rx_PhWrTydNoNgWYl7vwNo1aGZ4");
 	// ^AnyT
-	private static Type type5 = Runtime.Type("3G0tLTJCWDggY9w3x$");
+	private static Type type4 = Runtime.Type("3G0tLTJCWDggY9w3x$");
 	// Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>
-	private static Type type6 = Runtime.Type("8GKJp4aRfGJFi_6KIg2AwF_Ipl5QJCWEgw2KLxLPZGp38lXHJ8oQjl5KIk3ACGJHiG6KIw3ANG_J_45QJCWLgg4SIGbRdtqOJCGMgs4GL4aRJdH5YVLPgc5WWIjpLPi45QJC1QdlHQG5xVoHD_4MUhaQQwq7uVMAt4ux");
+	private static Type type5 = Runtime.Type("8GKJp4aRfGJFi_6KIg2AwF_Ipl5QJCWEgw2KLxLPZGp38lXHJ8oQjl5KIk3ACGJHiG6KIw3ANG_J_45QJCWLgg4SIGbRdtqOJCGMgs4GL4aRJdH5YVLPgc5WWIjpLPi45QJC1QdlHQG5xVoHD_4MUhaQQwq7uVMAt4ux");
 
 	// =========================================================================
 	// Patterns
@@ -1964,95 +2006,105 @@ public final class Types {
 				null),null), 
 			new Pair(new Pattern.Leaf(type2), "ts")}),
 		null);
-	private final static Pattern.Term pattern17 = new Pattern.Term("SetT",
-		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type3), "b"), 
-			new Pair(new Pattern.Leaf(type1),null)}),
-		null);
-	private final static Pattern.Term pattern18 = new Pattern.Term("AndT",
+	private final static Pattern.Term pattern17 = new Pattern.Term("AndT",
 		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Term("SetT",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type3), "b1"), 
-					new Pair(new Pattern.Leaf(type2), "t1")}),
-				null),null), 
-			new Pair(new Pattern.Term("SetT",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type3), "b2"), 
-					new Pair(new Pattern.Leaf(type2), "t2")}),
-				null),null), 
-			new Pair(new Pattern.Leaf(type2), "ts")}),
-		null);
-	private final static Pattern.Term pattern19 = new Pattern.Term("AndT",
-		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Term("SetT",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type3), "b1"), 
-					new Pair(new Pattern.Leaf(type2), "t1")}),
-				null),null), 
+			new Pair(new Pattern.Term("TupleT",
+				new Pattern.List(true, new Pair[]{
+					new Pair(new Pattern.Leaf(type2),null)}),
+				null), "t1"), 
 			new Pair(new Pattern.Term("NotT",
-				new Pattern.Term("SetT",
-					new Pattern.List(false, new Pair[]{
-						new Pair(new Pattern.Leaf(type3), "b2"), 
-						new Pair(new Pattern.Leaf(type2), "t2")}),
+				new Pattern.Term("ArrayT",
+					new Pattern.Leaf(type2),
 					null),
 				null),null), 
 			new Pair(new Pattern.Leaf(type2), "ts")}),
 		null);
-	private final static Pattern.Term pattern20 = new Pattern.Term("AndT",
+	private final static Pattern.Term pattern18 = new Pattern.Term("ArrayT",
+		new Pattern.Leaf(type1),
+		null);
+	private final static Pattern.Term pattern19 = new Pattern.Term("AndT",
 		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Term("SetT",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type3),null), 
-					new Pair(new Pattern.Leaf(type2),null)}),
-				null), "s"), 
-			new Pair(new Pattern.Leaf(type4), "p"), 
+			new Pair(new Pattern.Term("ArrayT",
+				new Pattern.Leaf(type2),
+				"t1"),null), 
+			new Pair(new Pattern.Term("ArrayT",
+				new Pattern.Leaf(type2),
+				"t2"),null), 
 			new Pair(new Pattern.Leaf(type2), "ts")}),
 		null);
-	private final static Pattern.Term pattern21 = new Pattern.Term("OrT",
+	private final static Pattern.Term pattern20 = new Pattern.Term("AndT",
 		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Term("SetT",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type3), "b1"), 
-					new Pair(new Pattern.Leaf(type2), "t1")}),
-				null), "s1"), 
-			new Pair(new Pattern.Term("SetT",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type3), "b2"), 
-					new Pair(new Pattern.Leaf(type2), "t2")}),
-				null), "s2"), 
+			new Pair(new Pattern.Term("ArrayT",
+				new Pattern.Leaf(type2),
+				"t1"),null), 
+			new Pair(new Pattern.Term("NotT",
+				new Pattern.Term("ArrayT",
+					new Pattern.Leaf(type2),
+					"t2"),
+				null),null), 
+			new Pair(new Pattern.Leaf(type2), "ts")}),
+		null);
+	private final static Pattern.Term pattern21 = new Pattern.Term("AndT",
+		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Term("ArrayT",
+				new Pattern.Leaf(type2),
+				null), "t1"), 
+			new Pair(new Pattern.Term("NotT",
+				new Pattern.Term("TupleT",
+					new Pattern.List(true, new Pair[]{
+						new Pair(new Pattern.Leaf(type2),null)}),
+					null),
+				null),null), 
 			new Pair(new Pattern.Leaf(type2), "ts")}),
 		null);
 	private final static Pattern.Term pattern22 = new Pattern.Term("AndT",
 		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Leaf(type1),null), 
-			new Pair(new Pattern.Leaf(type2), "xs")}),
+			new Pair(new Pattern.Term("ArrayT",
+				new Pattern.Leaf(type2),
+				null), "s"), 
+			new Pair(new Pattern.Leaf(type3), "p"), 
+			new Pair(new Pattern.Leaf(type2), "ts")}),
 		null);
-	private final static Pattern.Term pattern23 = new Pattern.Term("AndT",
+	private final static Pattern.Term pattern23 = new Pattern.Term("OrT",
 		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Leaf(type0),null), 
-			new Pair(new Pattern.Leaf(type2), "xs")}),
+			new Pair(new Pattern.Term("ArrayT",
+				new Pattern.Leaf(type2),
+				"t1"), "s1"), 
+			new Pair(new Pattern.Term("ArrayT",
+				new Pattern.Leaf(type2),
+				"t2"), "s2"), 
+			new Pair(new Pattern.Leaf(type2), "ts")}),
 		null);
 	private final static Pattern.Term pattern24 = new Pattern.Term("AndT",
 		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Leaf(type6), "a1"), 
-			new Pair(new Pattern.Leaf(type4), "a2"), 
-			new Pair(new Pattern.Leaf(type2), "ts")}),
+			new Pair(new Pattern.Leaf(type1),null), 
+			new Pair(new Pattern.Leaf(type2), "xs")}),
 		null);
 	private final static Pattern.Term pattern25 = new Pattern.Term("AndT",
-		new Pattern.Set(true, new Pair[]{
-			new Pair(new Pattern.Leaf(type6), "a1"), 
-			new Pair(new Pattern.Term("NotT",
-				new Pattern.Leaf(type4),
-				"a2"),null), 
-			new Pair(new Pattern.Leaf(type2), "ts")}),
-		null);
-	private final static Pattern.Term pattern26 = new Pattern.Term("OrT",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Leaf(type0),null), 
 			new Pair(new Pattern.Leaf(type2), "xs")}),
 		null);
-	private final static Pattern.Term pattern27 = new Pattern.Term("OrT",
+	private final static Pattern.Term pattern26 = new Pattern.Term("AndT",
+		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Leaf(type5), "a1"), 
+			new Pair(new Pattern.Leaf(type3), "a2"), 
+			new Pair(new Pattern.Leaf(type2), "ts")}),
+		null);
+	private final static Pattern.Term pattern27 = new Pattern.Term("AndT",
+		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Leaf(type5), "a1"), 
+			new Pair(new Pattern.Term("NotT",
+				new Pattern.Leaf(type3),
+				"a2"),null), 
+			new Pair(new Pattern.Leaf(type2), "ts")}),
+		null);
+	private final static Pattern.Term pattern28 = new Pattern.Term("OrT",
+		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Leaf(type0),null), 
+			new Pair(new Pattern.Leaf(type2), "xs")}),
+		null);
+	private final static Pattern.Term pattern29 = new Pattern.Term("OrT",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Leaf(type1),null), 
 			new Pair(new Pattern.Leaf(type2), "xs")}),
@@ -2092,7 +2144,9 @@ public final class Types {
 		new Reduction_24(pattern24),
 		new Reduction_25(pattern25),
 		new Reduction_26(pattern26),
-		new Reduction_27(pattern27)
+		new Reduction_27(pattern27),
+		new Reduction_28(pattern28),
+		new Reduction_29(pattern29)
 	};
 
 
@@ -2101,30 +2155,6 @@ public final class Types {
 	// =========================================================================
 
 	public static void main(String[] args) throws IOException {
-		try {
-			PrettyAutomataReader reader = new PrettyAutomataReader(System.in,SCHEMA);
-			PrettyAutomataWriter writer = new PrettyAutomataWriter(System.out,SCHEMA);
-			Automaton automaton = reader.read();
-			System.out.print("PARSED: ");
-			print(automaton);
-			IterativeRewriter.Strategy<InferenceRule> inferenceStrategy = new SimpleRewriteStrategy<InferenceRule>(automaton, inferences);
-			IterativeRewriter.Strategy<ReductionRule> reductionStrategy = new SimpleRewriteStrategy<ReductionRule>(automaton, reductions);
-			IterativeRewriter rw = new IterativeRewriter(automaton,inferenceStrategy, reductionStrategy, SCHEMA);
-			rw.apply();
-			System.out.print("REWROTE: ");
-			print(automaton);
-			System.out.println("\n\n=> (" + rw.getStats() + ")\n");
-		} catch(PrettyAutomataReader.SyntaxError ex) {
-			System.err.println(ex.getMessage());
-		}
-	}
-	
-	static void print(Automaton automaton) {
-		try {
-			PrettyAutomataWriter writer = new PrettyAutomataWriter(System.out,SCHEMA);
-			writer.write(automaton);
-			writer.flush();
-			System.out.println();
-		} catch(IOException e) { System.err.println("I/O error printing automaton"); }
+		new wyrl.ConsoleRewriter(SCHEMA,inferences,reductions).readEvaluatePrintLoop();
 	}
 }
