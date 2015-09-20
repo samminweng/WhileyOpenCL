@@ -187,21 +187,30 @@ public abstract class Analyzer {
 	 * 
 	 * @param function
 	 */
-	public void buildCFG(WyilFile module) {
+	protected void buildCFG(WyilFile module) {
 		// Iterate each function to build up CFG
 		for (FunctionOrMethod function : module.functionOrMethods()) {
-			if (!isCached(function)) {
-				line = 0;
-				iterateWyilCode(function, function.body().bytecodes());
-			}
-
-			if (config.isVerbose()) {
-				// Print out CFGraph.
-				this.printCFG(function);
-			}
+			this.buildCFG(function);
 		}
 	}
 
+	/**
+	 * Build a control flow graph for a function. 
+	 * @param function the function code block.
+	 */
+	protected void buildCFG(FunctionOrMethod function){
+		if (!isCached(function)) {
+			line = 0;
+			iterateWyilCode(function, function.body().bytecodes());
+		}
+
+		if (config.isVerbose()) {
+			// Print out CFGraph.
+			this.printCFG(function);
+		}
+	}
+	
+	
 	/**
 	 * Prints out each bytecode with line number and indentation.
 	 * 
@@ -277,7 +286,7 @@ public abstract class Analyzer {
 		// Get the label name (e.g. swap12).
 		String label = code.name.name() + line;
 		// Create a new single block for invoke wyil code.
-		BasicBlock invoke_blk = graph.createBasicBlock(label, BlockType.INVOKE_BLOCK, c_blk);
+		BasicBlock invoke_blk = graph.createBasicBlock(label, BlockType.INVOKE, c_blk);
 		invoke_blk.addCode(code);
 		// Create another block
 		BasicBlock blk = graph.createBasicBlock(label, BlockType.BLOCK, invoke_blk);
@@ -436,7 +445,7 @@ public abstract class Analyzer {
 		// Check if there is any return value. If no, no needs of making a "Return" block.
 		if (code.operand >= 0) {
 			// Create the return block, using target as the label.
-			blk = graph.createBasicBlock(this.getActualVarName(code.operand, function), BlockType.RETURN_BLOCK, blk);
+			blk = graph.createBasicBlock(this.getActualVarName(code.operand, function), BlockType.RETURN, blk);
 			// Add the code to current block.
 			blk.addCode(code);
 			// Set current block.
