@@ -95,7 +95,7 @@ public abstract class Analyzer {
 	 * @param function
 	 * @return
 	 */
-	protected BasicBlock getBlockbyCode(FunctionOrMethod function, Code code) {
+	public BasicBlock getBlockbyCode(FunctionOrMethod function, Code code) {
 		CFGraph graph = getCFGraph(function);
 		// Get the list of block for the function.
 		for (BasicBlock blk : graph.getBlockList()) {

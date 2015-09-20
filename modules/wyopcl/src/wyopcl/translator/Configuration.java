@@ -1,7 +1,10 @@
 package wyopcl.translator;
 
 import java.util.Properties;
+
+import wycc.lang.NameID;
 import wyil.lang.WyilFile;
+import wyil.lang.WyilFile.FunctionOrMethod;
 /**
  * Provides a container for the configuration of the translator.
  * @author Min-Hsien Weng
@@ -43,6 +46,15 @@ public class Configuration {
 	public WyilFile getWyilFile(){
 		return this.module;
 	}	
+	
+	/**
+	 * Get the function or method by name.
+	 * @param name
+	 * @return
+	 */
+	public FunctionOrMethod getFunctionOrMethod(NameID nameId){
+		return this.module.functionOrMethod(nameId.name()).get(0);
+	}
 	
 	/**
 	 * Add the option and value.

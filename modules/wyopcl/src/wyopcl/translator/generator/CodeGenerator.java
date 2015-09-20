@@ -33,8 +33,10 @@ import wyil.lang.Codes.UnaryOperator;
 import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyil.lang.WyilFile.FunctionOrMethod;
+import wyil.transforms.LiveVariablesAnalysis.Env;
 import wyopcl.translator.Configuration;
 import wyopcl.translator.CopyEliminationAnalyzer;
+import wyopcl.translator.bound.BasicBlock;
 
 /**
  * Takes a list of functional byte-code and converts it into C code.
@@ -302,7 +304,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			 *  _3 = clone(_board, _board_size);
 			 * </code>
 			 */
-			if (isNecessaryCopy(code.operand(0), code, function)) {				
+			if (!isCopyEliminated(code.operand(0), code, function)) {				
 				// Check the types of left is an integers 
 				if(!this.isIntType(store.getVarType(code.operand(0)))){
 					Type rhs_type = store.getVarType(code.target());					
@@ -320,7 +322,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					statement += indent + rhs + " = clone(" + lhs + ", " + lhs + "_size);";
 				}
 			} else {
-				// In-place update
+				// Do not need to make a copy and have in-place update
 				statement += indent + rhs + " = (" + translate(store.getVarType(code.target())) + ")" + lhs + ";";
 			}
 		} else if(code.type() instanceof Type.Reference
@@ -425,10 +427,31 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		}
 		store.addStatement(code, stat);
 	}
+	
+	
+	/**
+	 * Check if the array 'r' is updated inside the function.
+	 * @param r the array 
+	 * @param f the function
+	 * @return true if the array 'r' is updated.
+	 */
+	private boolean mutate(String r, FunctionOrMethod f){
+		//Get the list of wyil code 
+		for(Code code: f.body().bytecodes()){
+			// Check the array is updated.
+			if(code instanceof Codes.Update){
+				String target = this.analyzer.getActualVarName(((Codes.Update) code).target(), f);
+				if(target.equals(r)){
+					return true;// Modified Array.
+				}
+			}
+		}
+		// Read-only array.
+		return false;
+	}
 
 	/**
-	 * Determines whether to make a copy of array by checking liveness
-	 * information.
+	 * Determines whether to make a copy of array by checking liveness information or read-only property.
 	 * 
 	 * If the array variable is live, then the copy is necessary. Otherwise, the
 	 * register can be overwritten safely.
@@ -437,21 +460,28 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 *            the register of array variable
 	 * @param code
 	 *            the byte-code of function call.
-	 * @param function
+	 * @param f
 	 *            the caller function
-	 * @return ture if the copy is needed. Otherwise, return false.
+	 * @return ture if the copy is un-needed and can be avoid. Otherwise, return false.
 	 */
-	private boolean isNecessaryCopy(int reg, Code code, FunctionOrMethod function) {
+	private boolean isCopyEliminated(int reg, Code code, FunctionOrMethod f) {
 		if (this.analyzer != null) {
-			// Use the copy analyzer to determine whether to clone
-			if (!this.analyzer.isLive(reg, code, function)) {
-				// That means this param variable is not live (used) in this
-				// block.
-				// Then we dont need to clone it
-				return false;
+			CopyEliminationAnalyzer copy_analyzer = this.analyzer;
+			// Check the array is read-only.
+			boolean isReadOnly = false;
+			if(code instanceof Codes.Invoke){
+				String r_name = copy_analyzer.getActualVarName(reg, f);
+				FunctionOrMethod invoked_function = config.getFunctionOrMethod(((Codes.Invoke)code).name);
+				//Check if the array r is modified inside 'invoked_function'.
+				isReadOnly = !mutate(r_name, invoked_function);
 			}
+			// Check the array is live. 
+			BasicBlock blk = copy_analyzer.getBlockbyCode(f, code);// Get basic block that contains the given code.
+			Env outSet = copy_analyzer.getLiveness(f).getOutSet(blk);
+			boolean isLive = outSet.contains(reg);
+			return (isReadOnly || !isLive);
 		}
-		return true;
+		return false;
 	}
 
 	/**
@@ -533,9 +563,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				Type paramType = store.getVarType(reg);
 				// Add the '*_size' parameter
 				if (paramType instanceof Type.Array) {
-					if (isNecessaryCopy(reg, code, function)) {
+					if (!isCopyEliminated(reg, code, function)) {
 						statement += "clone(" + param + ", " + param + "_size), " + param + "_size";
 					} else {
+						// Do not need any copy
 						statement += param + ", " + param + "_size";
 					}
 				} else if((paramType instanceof Type.Reference

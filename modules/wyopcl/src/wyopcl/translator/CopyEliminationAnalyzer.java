@@ -92,7 +92,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	 * @param function
 	 * @return
 	 */
-	private Liveness getLiveness(FunctionOrMethod function) {
+	public Liveness getLiveness(FunctionOrMethod function) {
 		// Get function name
 		return livenessStore.get(function);
 	}
@@ -153,21 +153,11 @@ public class CopyEliminationAnalyzer extends Analyzer {
 			computeLiveVariableBlocks(function);
 		}
 	}
-
-	/**
-	 * Gets the liveness of register at 'code' program point.
-	 * 
-	 * @param reg
-	 * @param code
-	 * @param function
-	 * @return true if the register is live. Otherwise, return false.
-	 */
-	public boolean isLive(int reg, Code code, FunctionOrMethod function) {
-		// Get basic block that contains the given code.
-		BasicBlock blk = this.getBlockbyCode(function, code);
-		Liveness liveness = this.getLiveness(function);
-		return liveness.isLive(reg, blk);
-	}
+	
+	
+	
+	
+	
 
 	/**
 	 * Stores and computes the liveness information for a function, including each block's 'in' and 'out' set.
@@ -175,7 +165,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	 * @author Min-Hsien Weng
 	 *
 	 */
-	protected class Liveness {
+	public class Liveness {
 		private boolean isChanged;// Indicate if there is any change of in/out  set.
 		private HashMap<BasicBlock, Env> inSets;// Each env stores the register numbers.
 		private HashMap<BasicBlock, Env> outSets;
@@ -331,8 +321,8 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		 */
 		public Env getOutSet(BasicBlock block) {
 			return outSets.get(block);
-		}
-
+		}		
+		
 		/**
 		 * Compute 'out' set for a block. Take the union of in sets of child blocks to produce the out set.
 		 * 
@@ -351,19 +341,6 @@ public class CopyEliminationAnalyzer extends Analyzer {
 				setOutSet(block, out);
 			}
 			return getOutSet(block);
-		}
-
-		/**
-		 * Check if a register is live at a given block.
-		 *
-		 * 
-		 * @param reg
-		 * @param blk
-		 * @return true if the register is live. Otherwise, return false.
-		 */
-		protected boolean isLive(int reg, BasicBlock blk) {
-			// Check if 'in' set contains the register
-			return getOutSet(blk).contains(reg);
 		}
 
 	}
