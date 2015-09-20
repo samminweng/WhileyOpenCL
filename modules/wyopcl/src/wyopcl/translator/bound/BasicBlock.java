@@ -73,7 +73,19 @@ public class BasicBlock implements Comparable<BasicBlock> {
 				return "ELSE";
 			}
 		},
-		EXIT(9) {
+		// Store function call code only.
+		INVOKE_BLOCK(9){
+			public String toString(){
+				return "INVOKE";
+			}
+		},
+		// Store return code only.
+		RETURN_BLOCK(10){
+			public String toString(){
+				return "RETURN";
+			}
+		},		
+		EXIT(11) {
 			public String toString() {
 				return "EXIT";
 			}

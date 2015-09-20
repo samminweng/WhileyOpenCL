@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import wyil.attributes.VariableDeclarations;
 import wyil.lang.Code;
 import wyil.lang.CodeBlock;
 import wyil.lang.Codes;
@@ -23,6 +24,7 @@ import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.BasicBlock.BlockType;
 import wyopcl.translator.bound.CFGraph;
 import wyopcl.translator.bound.CFGraph.STATUS;
+
 /**
  * Aims to build control flow graph for a function.
  * 
@@ -31,25 +33,23 @@ import wyopcl.translator.bound.CFGraph.STATUS;
  *
  */
 public abstract class Analyzer {
-	//private static final String prefix = "%";
+	// private static final String prefix = "%";
 	protected Configuration config;
-	// Maps of CFGs	
+	// Maps of CFGs
 	protected HashMap<FunctionOrMethod, CFGraph> cfgraphs;
 	// The boolean flag indicates the byte-code is inside loop structure.
 	private boolean isLoop;
 	// The line number
 	private int line;
 
-
 	/**
 	 * Constructor
 	 */
-	public Analyzer(Configuration config){
+	public Analyzer(Configuration config) {
 		this.cfgraphs = new HashMap<FunctionOrMethod, CFGraph>();
 		this.config = config;
 	}
 
-	
 	/**
 	 * Check if the type is instance of Integer by inferring the type from
 	 * <code>wyil.Lang.Type</code> objects, including the effective collection
@@ -75,7 +75,6 @@ public abstract class Analyzer {
 
 		return false;
 	}
-	
 
 	/**
 	 * Given a function name, get the CFGraph.
@@ -89,44 +88,45 @@ public abstract class Analyzer {
 			return cfgraphs.get(function);
 		return null;
 	}
-	
+
 	/**
 	 * Get the block that contains the given code.
+	 * 
 	 * @param function
 	 * @return
 	 */
-	protected BasicBlock getBlockbyCode(FunctionOrMethod function, Code code){
+	protected BasicBlock getBlockbyCode(FunctionOrMethod function, Code code) {
 		CFGraph graph = getCFGraph(function);
-		//Get the list of block for the function.
-		for(BasicBlock blk: graph.getBlockList()){
-			//Get the list of code.
+		// Get the list of block for the function.
+		for (BasicBlock blk : graph.getBlockList()) {
+			// Get the list of code.
 			CodeBlock codeBlk = blk.getCodeBlock();
-			//Check if code blk contains this byte-code.
-			if(codeBlk.bytecodes().contains(code)){
+			// Check if code blk contains this byte-code.
+			if (codeBlk.bytecodes().contains(code)) {
 				return blk;
 			}
-		}	
-		
+		}
+
 		return null;
 	}
-	
-	
+
 	/**
 	 * Gets the list of basic blocks for a function.
+	 * 
 	 * @param function
 	 * @return
 	 */
-	protected List<BasicBlock> getBlocks(FunctionOrMethod function){
-		//Get the graph
+	protected List<BasicBlock> getBlocks(FunctionOrMethod function) {
+		// Get the graph
 		CFGraph graph = getCFGraph(function);
-		if(graph != null){
-			//Return the list of blocks.
+		if (graph != null) {
+			// Return the list of blocks.
 			return graph.getBlockList();
 		}
-		//Return an empty list
+		// Return an empty list
 		return new ArrayList<BasicBlock>();
 	}
-	
+
 	/**
 	 * Checks if the CFGraph of the given function exist.
 	 * 
@@ -147,7 +147,6 @@ public abstract class Analyzer {
 		return false;
 	}
 
-
 	/**
 	 * Outputs the control flow graphs (*.dot).
 	 * 
@@ -159,8 +158,8 @@ public abstract class Analyzer {
 	 *            the name of function.
 	 */
 	public void printCFG(FunctionOrMethod function) {
-		//Get the function name.
-		String name = function.name();		
+		// Get the function name.
+		String name = function.name();
 		String dot_string = "digraph " + name + "{\n";
 		CFGraph graph = getCFGraph(function);
 		List<BasicBlock> blks = graph.getBlockList();
@@ -183,21 +182,21 @@ public abstract class Analyzer {
 		}
 	}
 
-
 	/**
 	 * Build up control flow graph for a whiley program.
+	 * 
 	 * @param function
 	 */
-	public void buildCFG(WyilFile module){
+	public void buildCFG(WyilFile module) {
 		// Iterate each function to build up CFG
 		for (FunctionOrMethod function : module.functionOrMethods()) {
 			if (!isCached(function)) {
 				line = 0;
 				iterateWyilCode(function, function.body().bytecodes());
 			}
-			
-			if(config.isVerbose()){
-				//Print out CFGraph.
+
+			if (config.isVerbose()) {
+				// Print out CFGraph.
 				this.printCFG(function);
 			}
 		}
@@ -211,9 +210,10 @@ public abstract class Analyzer {
 	 */
 	private int printWyILCode(FunctionOrMethod function, Code code, int line) {
 		String name = function.name();
-		// Print out the bytecode with the format (e.g. 'main.9 [const %12 = 2345 : int]')
-		if (code instanceof Codes.Label) {			
-			System.out.println( name + "." + line + " [" + code + "]");
+		// Print out the bytecode with the format (e.g. 'main.9 [const %12 =
+		// 2345 : int]')
+		if (code instanceof Codes.Label) {
+			System.out.println(name + "." + line + " [" + code + "]");
 		} else {
 
 			System.out.println(name + "." + line + " [\t" + code + "]");
@@ -222,9 +222,9 @@ public abstract class Analyzer {
 	}
 
 	/**
-	 * Build up the control flow graph: iterating each byte-code to create the block
-	 * (e.g. loop structure/if-else branches) or reuse the current block to put
-	 * the constraints into the corresponding block.
+	 * Build up the control flow graph: iterating each byte-code to create the
+	 * block (e.g. loop structure/if-else branches) or reuse the current block
+	 * to put the constraints into the corresponding block.
 	 * 
 	 * @param function
 	 *            the function that is currently being analyzed.
@@ -233,30 +233,30 @@ public abstract class Analyzer {
 	 */
 	protected void iterateWyilCode(FunctionOrMethod function, List<Code> code_blk) {
 		// Parse each byte-code and add the constraints accordingly.
-		for (Code code : code_blk) {			
+		for (Code code : code_blk) {
 			// Get the Block.Entry and print out each byte-code
 			line = printWyILCode(function, code, line);
 			// Parse each byte-code and add the constraints accordingly.
 			try {
-				if(code instanceof Codes.Invariant){
-					buildCFG((Codes.Invariant)code, function);
-				}else if (code instanceof Codes.If) {
+				if (code instanceof Codes.Invariant) {
+					buildCFG((Codes.Invariant) code, function);
+				} else if (code instanceof Codes.If) {
 					buildCFG((Codes.If) code, function);
-				}else if (code instanceof Codes.Return) {
+				} else if (code instanceof Codes.Return) {
 					buildCFG((Codes.Return) code, function);
-				}else if (code instanceof Codes.Goto){
-					buildCFG((Codes.Goto)code, function);
-				}else if (code instanceof Codes.Label){
-					buildCFG((Codes.Label)code, function);
-				}else if (code instanceof Codes.Loop){
-					buildCFG((Codes.Loop)code, function);
-				}else if (code instanceof Codes.Invoke){
-					buildCFG((Codes.Invoke)code, function);
-				}else {
-					//Add the byte-code to the current block in a CFGraph.
+				} else if (code instanceof Codes.Goto) {
+					buildCFG((Codes.Goto) code, function);
+				} else if (code instanceof Codes.Label) {
+					buildCFG((Codes.Label) code, function);
+				} else if (code instanceof Codes.Loop) {
+					buildCFG((Codes.Loop) code, function);
+				} else if (code instanceof Codes.Invoke) {
+					buildCFG((Codes.Invoke) code, function);
+				} else {
+					// Add the byte-code to the current block in a CFGraph.
 					CFGraph graph = getCFGraph(function);
 					graph.getCurrentBlock().addCode(code);
-				}				
+				}
 			} catch (Exception ex) {
 				throw new RuntimeException(ex.getMessage());
 			}
@@ -265,33 +265,36 @@ public abstract class Analyzer {
 
 	/**
 	 * Builds up a basic block for the calling function.
-	 * @param code Invoke byte-code 		
+	 * 
+	 * @param code
+	 *            Invoke byte-code
 	 * @param function
 	 */
 	protected void buildCFG(Invoke code, FunctionOrMethod function) {
-		//Get the graph
+		// Get the graph
 		CFGraph graph = getCFGraph(function);
 		BasicBlock c_blk = graph.getCurrentBlock();
-		//Get the label name (e.g. swap12).
-		String label = code.name.name()+line;
-		//Create a new block.
-		BasicBlock blk = graph.createBasicBlock(label, BlockType.BLOCK, c_blk);
-		blk.addCode(code);
-		//Set the current block.
+		// Get the label name (e.g. swap12).
+		String label = code.name.name() + line;
+		// Create a new single block for invoke wyil code.
+		BasicBlock invoke_blk = graph.createBasicBlock(label, BlockType.INVOKE_BLOCK, c_blk);
+		invoke_blk.addCode(code);
+		// Create another block
+		BasicBlock blk = graph.createBasicBlock(label, BlockType.BLOCK, invoke_blk);
+		// Set next_blk to be the current block.
 		graph.setCurrentBlock(blk);
 	}
 
-
 	protected void buildCFG(Invariant code, FunctionOrMethod function) {
-		//Add the invariant to the current block.
+		// Add the invariant to the current block.
 		CFGraph graph = getCFGraph(function);
 		BasicBlock c_blk = graph.getCurrentBlock();
 		c_blk.addCode(code);
 	}
 
-
 	/**
 	 * Iterate the bytecode inside the loop.
+	 * 
 	 * @param code
 	 * @param function
 	 */
@@ -303,9 +306,9 @@ public abstract class Analyzer {
 		CFGraph graph = getCFGraph(function);
 		BasicBlock c_blk = graph.getCurrentBlock();
 
-		//Create the loop header
+		// Create the loop header
 		BasicBlock loop_header = graph.createBasicBlock("", BlockType.LOOP_HEADER, c_blk);
-		//Set the current block to be loop header.
+		// Set the current block to be loop header.
 		graph.setCurrentBlock(loop_header);
 		// Get the list of byte-code and iterate through the list.
 		iterateWyilCode(function, code.bytecodes());
@@ -313,7 +316,6 @@ public abstract class Analyzer {
 		isLoop = false;
 
 	}
-
 
 	/**
 	 * Checks or creates the goto block and updates the current block to be
@@ -327,8 +329,8 @@ public abstract class Analyzer {
 		String label = code.target;
 		CFGraph graph = getCFGraph(function);
 		BasicBlock goto_blk = graph.getBasicBlock(label);
-		if(goto_blk == null){
-			//Create a new block
+		if (goto_blk == null) {
+			// Create a new block
 			graph.createBasicBlock(label, BlockType.BLOCK);
 		}
 		// Set the current blk to null blk
@@ -350,38 +352,40 @@ public abstract class Analyzer {
 		// Get the CFGraph
 		CFGraph graph = getCFGraph(function);
 		// Get the current block
-		BasicBlock c_blk = graph.getCurrentBlock();		
-		// Get the target block (else branch or loop exit). 
+		BasicBlock c_blk = graph.getCurrentBlock();
+		// Get the target block (else branch or loop exit).
 		BasicBlock blk = graph.getBasicBlock(label);
-		//Check if target block is loop exit.
-		//If so, no needs to connect current block to target block.
-		if(c_blk != null&&(blk!=null&&!blk.getType().equals(BlockType.LOOP_EXIT))){
+		// Check if target block is loop exit.
+		// If so, no needs to connect current block to target block.
+		if (c_blk != null && (blk != null && !blk.getType().equals(BlockType.LOOP_EXIT))) {
 			// Add current block to the target block.
 			c_blk.addChild(blk);
-		}		
+		}
 		// Switch the current block to the target block
 		graph.setCurrentBlock(blk);
 
 	}
+
 	/**
-	 * Analyze the 'If' byte-code to create if/else branches or loop structure. 
+	 * Analyze the 'If' byte-code to create if/else branches or loop structure.
+	 * 
 	 * @param code
 	 * @param function
 	 */
 	protected void buildCFG(If code, FunctionOrMethod function) {
 		CFGraph graph = getCFGraph(function);
 
-		//The original condition is 'ifge %0, %1 goto blklab1 : int'
-		//The negated condition is iflt %0, %1 goto blklab1
+		// The original condition is 'ifge %0, %1 goto blklab1 : int'
+		// The negated condition is iflt %0, %1 goto blklab1
 		If neg_code = null;
-		//Create an negated condition.
-		switch(code.op){
+		// Create an negated condition.
+		switch (code.op) {
 		case EQ:
 			neg_code = Codes.If(code.type, code.leftOperand, code.rightOperand, Comparator.NEQ, code.target);
 			break;
 		case NEQ:
 			neg_code = Codes.If(code.type, code.leftOperand, code.rightOperand, Comparator.EQ, code.target);
-			break;		
+			break;
 		case LT:
 			neg_code = Codes.If(code.type, code.leftOperand, code.rightOperand, Comparator.GTEQ, code.target);
 			break;
@@ -402,51 +406,76 @@ public abstract class Analyzer {
 		if (isLoop) {
 			// Create a loop body and loop exit.
 			graph.createLoopStructure(code.target);
-			//Added the condition to loop body
+			// Added the condition to loop body
 			graph.getBasicBlock(code.target, BlockType.LOOP_BODY).addCode(code);
-			//graph.getBasicBlock(code.target, BlockType.LOOP_BODY).addCode(neg_code);
-			//Added the condition to loop exit
-			//graph.getBasicBlock(code.target, BlockType.LOOP_EXIT).addCode(code);
-		} else {			
-			// Create if/else branches, and set the if branch as the current block.
+		} else {
+			// Create if/else branches, and set the if branch as the current
+			// block.
 			graph.createIfElseBranch(code.target);
-			//Added the negated condition to the if branch.
+			// Added the negated condition to the if branch.
 			graph.getBasicBlock(code.target, BlockType.IF_BRANCH).addCode(neg_code);
-			//Add the original condition to the else branch.
+			// Add the original condition to the else branch.
 			graph.getBasicBlock(code.target, BlockType.ELSE_BRANCH).addCode(code);
 		}
 
 	}
 
-
 	/**
-	 * Analyze the 'return' byte-code to connect the current to Exit block.
+	 * Analyze the 'return' byte-code, to create an return block. 
+	 * 
+	 * If the return code does not have return value, then create
+	 * an exit block.
+	 * 
 	 * @param code
 	 * @param name
 	 */
-	protected void buildCFG(Return code, FunctionOrMethod function){	
+	protected void buildCFG(Return code, FunctionOrMethod function) {
 		// Get the CFGraph
 		CFGraph graph = getCFGraph(function);
-		BasicBlock c_blk = graph.getCurrentBlock();		
-		// Check if the current blk exits.
-		if (c_blk != null) {
-			//Add the code to current block.
-			c_blk.addCode(code);
-			//Get the exit node.
+		BasicBlock blk = graph.getCurrentBlock();
+		// Check if there is any return value. If no, no needs of making a "Return" block.
+		if (code.operand >= 0) {
+			// Create the return block, using target as the label.
+			blk = graph.createBasicBlock(this.getActualVarName(code.operand, function), BlockType.RETURN_BLOCK, blk);
+			// Add the code to current block.
+			blk.addCode(code);
+			// Set current block.
+			graph.setCurrentBlock(blk);
+		}else{
+			// Connect current block to exit block.
 			BasicBlock exit = graph.getBasicBlock("exit", BlockType.EXIT);
-			if(exit == null){
-				exit = graph.createBasicBlock("exit", BlockType.EXIT, c_blk);
-			}else{
-				//If so, connect the current block with exit block.
-				c_blk.addChild(exit);
+			if (exit == null) {
+				exit = graph.createBasicBlock("exit", BlockType.EXIT, blk);
+			} else {
+				// If so, connect the current block with exit block.
+				blk.addChild(exit);
 			}
 		}
-		//Set the current block to null
-		graph.setCurrentBlock(null);
+		// Set the current block to null
+		//graph.setCurrentBlock(null);
 	}
-
-
-
-
+	
+	
+	/**
+	 * Get the actual (source-level) variable name of a register
+	 *   
+	 * @param reg
+	 * @param function
+	 * @return
+	 */
+	public String getActualVarName(int register, FunctionOrMethod function){
+		//Get the mapping table between variable name and register.
+		VariableDeclarations vars = function.attribute(VariableDeclarations.class);
+		String var_name = vars.get(register).name();
+		if (var_name == null) {
+			// If it is a temporary variable at byte-code, then print out
+			// the register
+			var_name = "%" + register;
+		}
+		return var_name;
+	}
+	
+	
+	
 
 }

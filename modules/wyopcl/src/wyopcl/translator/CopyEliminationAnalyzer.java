@@ -93,7 +93,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		List<BasicBlock> blocks = this.getBlocks(function);
 		for(BasicBlock block: blocks){
 			Env in = liveness.getIn(block);
-			Env out = liveness.getOut(block);
+			Env out = liveness.computeOut(block);
 			//Print out the in/out set for the block.
 			System.out.println("In" + ":{" + getLiveVars(in, function) + "}\n" 
 					+ block + "\nOut" + ":{" + getLiveVars(out, function) + "}\n");
@@ -190,7 +190,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 				BasicBlock block = blocks.get(b);
 				if(!block.getType().equals(BlockType.EXIT)){
 					// Get in/out set of the block.
-					Env out = (Env)liveness.getOut(block).clone();
+					Env out = (Env)liveness.computeOut(block).clone();
 					Env in = (Env) out.clone();
 					// Compute the store in set of the block.
 					in = computeIn(block.getCodeBlock().bytecodes(), in);					
@@ -224,10 +224,8 @@ public class CopyEliminationAnalyzer extends Analyzer {
 				this.printCFG(function);
 			}			
 			applyLiveAnalysisByBlock(function);
-			//Print out result when 'verbose' option is enabled.
-			if(config.isVerbose()){
-				printLivenss(function);
-			}		
+			//Print out analysis result
+			printLivenss(function);
 		}
 	}
 	
@@ -262,10 +260,19 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		 * @param blocks
 		 */
 		private void initialize(List<BasicBlock> blocks){
-			//Initialize in/out set for each block.
+			// Initialize in/out set for each block.
 			for(BasicBlock block: blocks){
-				inStore.put(block, new Env());
-				outStore.put(block, new Env());
+				Env in = new Env();
+				Env out = new Env();
+				// Use different initial values for return block. 
+				if(block.getType().equals(BlockType.RETURN_BLOCK)){
+					Codes.Return code = (Return) block.getCodeBlock().get(0);
+					// Add the return register to both in/out set.
+					in.add(code.operand);
+					out.add(code.operand);
+				}
+				inStore.put(block, in);
+				outStore.put(block, out);
 			}
 		}
 
@@ -319,25 +326,33 @@ public class CopyEliminationAnalyzer extends Analyzer {
 			return inStore.get(block);
 		}
 
-
 		/**
-		 * Returns 'out' set for a block. Take the union of in sets of child
+		 * Get the out set.
+		 * @param block
+		 * @return
+		 */
+		public Env getOut(BasicBlock block){
+			return outStore.get(block);
+		}
+		
+		/**
+		 * Compute 'out' set for a block. Take the union of in sets of child
 		 * blocks to produce the out set.
 		 * 
 		 * @param set
 		 */
-		protected Env getOut(BasicBlock block) {
-			// Check if the block has the child blocks.
-			if (!block.isLeaf()) {
-				Env out = outStore.get(block);
-				// Get child nodes of the block
+		public Env computeOut(BasicBlock block) {
+			// Check if the block is not exit block.
+			if (!block.getType().equals(BlockType.EXIT)) {
+				Env out = getOut(block);
+				// Take the union of child blocks' in set.
 				for (BasicBlock child : block.getChildNodes()) {
 					Env in = inStore.get(child);
 					out.addAll(in);
-				}	
+				}
 				outStore.put(block, out);
 			}
-			return outStore.get(block);
+			return getOut(block);
 		}
 		
 		
@@ -347,13 +362,11 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		 * 
 		 * @param reg
 		 * @param blk
-		 * @return
+		 * @return true if the register is live. Otherwise, return false.
 		 */
 		protected boolean isLive(int reg, BasicBlock blk){
-			//Get the in set of the block
-			Env in = getIn(blk);
 			//Check if 'in' set contains the register
-			return in.contains(reg);
+			return getOut(blk).contains(reg);
 		}
 		
 	}
