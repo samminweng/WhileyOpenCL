@@ -5,6 +5,9 @@
 #include <time.h>
 #include <ctype.h>
 
+// Define the NULL pointer
+#define NULL ( (void *) 0)
+
 // Define the boolean values
 #define false 0  
 #define true 1
