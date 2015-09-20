@@ -117,8 +117,19 @@ public abstract class AbstractCodeGenerator {
 
 		return false;
 	}
+	/**
+	 * Get the actual (source-level) variable name of a register
+	 *   
+	 * @param reg
+	 * @param function
+	 * @return
+	 */
+	public String getActualVarName(int reg, FunctionOrMethod function){
+		//Get the mapping table between variable name and register.
+		CodeStore store = stores.get(function);
+		return store.getVar(reg);
+	}
 	
-
 	/**
 	 * Get the code store of the given function.
 	 * 
@@ -182,7 +193,7 @@ public abstract class AbstractCodeGenerator {
 
 	protected abstract String declareVariables(FunctionOrMethod function);
 
-	protected abstract String translate(Type type);
+	protected abstract String translateType(Type type);
 
 	protected abstract void writeCodeToFile(FunctionOrMethod function);
 
@@ -266,10 +277,9 @@ public abstract class AbstractCodeGenerator {
 					throw new RuntimeException("Not implemented! "+ code.toString(), null);
 				}
 
-			} catch (SyntaxError ex) {
-				throw ex;
 			} catch (Exception ex) {
-				throw new RuntimeException(ex.getMessage(), null);
+				// Print out the error message along with code.
+				throw new RuntimeException(ex.getMessage() + " at " + code, null);
 			}
 		}
 	}
