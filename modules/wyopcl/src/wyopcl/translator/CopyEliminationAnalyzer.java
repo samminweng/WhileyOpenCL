@@ -3,9 +3,7 @@ package wyopcl.translator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-
 import wybs.lang.Builder;
-import wyil.attributes.VariableDeclarations;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Codes.Return;
@@ -15,7 +13,7 @@ import wyil.transforms.LiveVariablesAnalysis;
 import wyil.transforms.LiveVariablesAnalysis.Env;
 import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.BasicBlock.BlockType;
-import wyopcl.translator.bound.CFGraph;
+
 
 /**
  * Analyze the alias in the WyIL code to find all the necessary array copies and eliminate un-necessary copies.

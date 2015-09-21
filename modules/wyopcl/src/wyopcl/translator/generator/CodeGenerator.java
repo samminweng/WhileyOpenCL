@@ -467,7 +467,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	private boolean isCopyEliminated(int reg, Code code, FunctionOrMethod f) {
 		if (this.analyzer != null) {
 			CopyEliminationAnalyzer copy_analyzer = this.analyzer;
-			// Check the array is read-only.
+			// Check the array is read-only. By default, the array is assumed not read-only but modified.
 			boolean isReadOnly = false;
 			if (code instanceof Codes.Invoke) {
 				String r_name = copy_analyzer.getActualVarName(reg, f);
@@ -603,7 +603,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		} else {
 			// Translate the function call, e.g.
 			// '_12=reverse(_xs , _xs_size);'
-			statement += store.getIndent() + translateLHSFunctionCall(code, function);
+			statement += translateLHSFunctionCall(code, function);
 			// call the function/method
 			statement += code.name.name() +"(";
 			statement += translateRHSFunctionCall(code, function);
