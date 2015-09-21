@@ -34,14 +34,13 @@ import wyil.lang.Codes.IndirectInvoke;
 import wyil.lang.Codes.Invoke;
 import wyil.lang.Codes.Label;
 import wyil.lang.Codes.LengthOf;
-import wyil.lang.Codes.ListOperator;
+import wyil.lang.Codes.ListGenerator;
 import wyil.lang.Codes.Loop;
 import wyil.lang.Codes.NewList;
 import wyil.lang.Codes.NewObject;
 import wyil.lang.Codes.NewRecord;
 import wyil.lang.Codes.Nop;
 import wyil.lang.Codes.Return;
-import wyil.lang.Codes.SubList;
 import wyil.lang.Codes.UnaryOperator;
 import wyil.lang.Codes.Update;
 import wyil.lang.Type;
@@ -106,8 +105,8 @@ public abstract class AbstractCodeGenerator {
 			return true;
 		}
 
-		if (type instanceof Type.List) {
-			return isIntType(((Type.List) type).element());
+		if (type instanceof Type.Array) {
+			return isIntType(((Type.Array) type).element());
 		}
 
 		if (type instanceof Type.Tuple) {
@@ -118,8 +117,19 @@ public abstract class AbstractCodeGenerator {
 
 		return false;
 	}
+	/**
+	 * Get the actual (source-level) variable name of a register
+	 *   
+	 * @param reg
+	 * @param function
+	 * @return
+	 */
+	public String getActualVarName(int reg, FunctionOrMethod function){
+		//Get the mapping table between variable name and register.
+		CodeStore store = stores.get(function);
+		return store.getVar(reg);
+	}
 	
-
 	/**
 	 * Get the code store of the given function.
 	 * 
@@ -153,7 +163,7 @@ public abstract class AbstractCodeGenerator {
 
 	protected abstract void translate(Loop code, FunctionOrMethod function);
 
-	protected abstract void translate(ListOperator code, FunctionOrMethod function);
+	//protected abstract void translate(ListOperator code, FunctionOrMethod function);
 
 	protected abstract void translate(IndirectInvoke code, FunctionOrMethod function);
 
@@ -183,7 +193,7 @@ public abstract class AbstractCodeGenerator {
 
 	protected abstract String declareVariables(FunctionOrMethod function);
 
-	protected abstract String translate(Type type);
+	protected abstract String translateType(Type type);
 
 	protected abstract void writeCodeToFile(FunctionOrMethod function);
 
@@ -231,8 +241,6 @@ public abstract class AbstractCodeGenerator {
 					translate((Codes.Invoke) code, function);
 				} else if (code instanceof Codes.Invert) {
 					throw new RuntimeException("Not implemented! "+ code.toString(), null);
-				} else if (code instanceof Codes.ListOperator) {
-					translate((Codes.ListOperator) code, function);
 				} else if (code instanceof Codes.Loop) {
 					translate((Codes.Loop) code, function);
 				} else if (code instanceof Codes.Label) {
@@ -241,6 +249,8 @@ public abstract class AbstractCodeGenerator {
 					throw new RuntimeException("Not implemented! "+ code.toString(), null);
 				} else if (code instanceof Codes.LengthOf) {
 					translate((Codes.LengthOf) code, function);
+				} else if (code instanceof Codes.ListGenerator){
+					translate((Codes.ListGenerator)code, function);
 				} else if (code instanceof Codes.Move) {
 					throw new RuntimeException("Not implemented! "+ code.toString(), null);
 				} else if (code instanceof Codes.NewList) {
@@ -255,8 +265,6 @@ public abstract class AbstractCodeGenerator {
 					translate((Codes.NewObject)code, function);
 				} else if (code instanceof Codes.Nop) {
 					translate((Codes.Nop) code, function);
-				} else if (code instanceof Codes.SubList) {
-					translate((Codes.SubList)code, function);
 				} else if (code instanceof Codes.Switch) {
 					throw new RuntimeException("Not implemented! "+ code.toString(), null);
 				} else if (code instanceof Codes.TupleLoad) {
@@ -269,13 +277,14 @@ public abstract class AbstractCodeGenerator {
 					throw new RuntimeException("Not implemented! "+ code.toString(), null);
 				}
 
-			} catch (SyntaxError ex) {
-				throw ex;
 			} catch (Exception ex) {
-				throw new RuntimeException(ex.getMessage(), null);
+				// Print out the error message along with code.
+				throw new RuntimeException(ex.getMessage() + " at " + code, null);
 			}
 		}
 	}
+
+	protected abstract void translate(ListGenerator code, FunctionOrMethod function);
 
 	protected abstract void translate(NewObject code, FunctionOrMethod function);
 
@@ -283,7 +292,7 @@ public abstract class AbstractCodeGenerator {
 
 	protected abstract void translate(IfIs code, FunctionOrMethod function);
 
-	protected abstract void translate(SubList code, FunctionOrMethod function);
+	//protected abstract void translate(SubList code, FunctionOrMethod function);
 
 	/**
 	 * Stores the generated code for a function.

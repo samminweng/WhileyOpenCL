@@ -1,16 +1,15 @@
-
 import whiley.lang.*
 
 /**
  * Perform a merge sort of integer items.
  */
-function sort([int] items) -> [int]:
+function sort(int[] items) -> int[]:
     //
     if |items| > 1:
         // First, sort left and right sub-lists
         int pivot = |items| / 2
-        [int] lhs = sort(items[..pivot])
-        [int] rhs = sort(items[pivot..])
+        int[] lhs = sort(Array.slice(items,0,pivot))
+        int[] rhs = sort(Array.slice(items,pivot,|items|))
         // Second, merge left and right sublists into
         // original list.
         int l = 0 // left sublist index
@@ -38,39 +37,10 @@ function sort([int] items) -> [int]:
     return items
 
 method main(System.Console sys):
-    /*  For testing only.
-    [int] xs = []
-    xs = sort(xs)
-    assert xs == []
-    xs = [4,3,5,2,1]
-    xs = sort(xs)
-    assert xs == [1,2,3,4,5]
-    xs = [3,4,7,1,2] 
-    xs = sort(xs)
-    assert xs == [1,2,3,4,7]
-    xs = [3,4,7,2] 
-    xs = sort(xs)
-    assert xs == [2,3,4,7]
-    xs = [1,2,3,4]
-    xs = sort(xs)
-    assert xs == [1,2,3,4]
-    xs = [1,2,3,4,5]
-    xs = sort(xs)
-    assert xs == [1,2,3,4,5]
-    */
-    /**Benchmark merge sorting**/
-    int max = 10000
-    [int] ys = []
-    int index = 0
-    /**Fill in the array in the reverse order (max..0)**/
-    while index <= max:
-        ys = ys ++ [max - index] 
-        index = index + 1
-    /**Use merge sort to sort the array**/
-    ys = sort(ys)
-    /**Check the sorted and unsorted array one-by-one**/
-    index = 0
-    while index <= max:
-        // Should be in the ascending order (0..max)
-        assert ys[index] == index
-        index = index + 1
+    sys.out.println(sort([0;0]))
+    sys.out.println(sort([4,3,5,2,1]))
+    sys.out.println(sort([3,4,7,1,2]))
+    sys.out.println(sort([3,4,7,2]))
+    sys.out.println(sort([2,3,4,2]))
+    sys.out.println(sort([1,2,3,4]))
+    sys.out.println(sort([1,2,3,4,5]))

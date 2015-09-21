@@ -93,8 +93,8 @@ public final class TranslatorHelper {
 			return true;
 		}
 
-		if (type instanceof Type.List) {
-			return isIntType(((Type.List) type).element());
+		if (type instanceof Type.Array) {
+			return isIntType(((Type.Array) type).element());
 		}
 
 		if (type instanceof Type.Tuple) {

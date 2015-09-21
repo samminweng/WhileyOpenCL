@@ -123,7 +123,7 @@ public class SymbolFactory {
 		}
 
 		// Add 'size' attribute
-		if (ret_type instanceof Type.List) {
+		if (ret_type instanceof Type.Array) {
 			BigInteger size = (BigInteger) callee_factory.getAttribute("return", "size");
 			this.putAttribute(ret_reg, "size", size);
 		}

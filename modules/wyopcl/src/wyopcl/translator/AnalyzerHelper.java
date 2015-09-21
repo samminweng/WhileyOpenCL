@@ -218,7 +218,7 @@ public final class AnalyzerHelper {
 			String op_reg = prefix + operands[index];
 			String param_reg = prefix + index;
 			//Check parameter type
-			if(params.get(index) instanceof Type.List){
+			if(params.get(index) instanceof Type.Array){
 				//Get size info from caller
 				BigInteger size = getSizeInfo(caller_name, op_reg);
 				if(size != null){
@@ -281,7 +281,7 @@ public final class AnalyzerHelper {
 	 */
 	public static void propagateSizeFromFunctionCall(String caller_name, String callee_name, String ret_reg, Type ret_type) {
 		//Check if the return value is a list.
-		if (ret_type instanceof Type.List) {
+		if (ret_type instanceof Type.Array) {
 			// Get 'size' attribute from callee
 			BigInteger size = (BigInteger) getSizeInfo(callee_name, "return");			
 			if(size != null){
@@ -348,7 +348,31 @@ public final class AnalyzerHelper {
 		}
 	}
 	
-	
+	/**
+	 * Check if the type is instance of Integer by inferring the type from
+	 * <code>wyil.Lang.Type</code> objects, including the effective collection
+	 * types.
+	 * 
+	 * @param type
+	 * @return true if the type is or contains an integer type.
+	 */
+	public static boolean isIntType(Type type) {
+		if (type instanceof Type.Int) {
+			return true;
+		}
+
+		if (type instanceof Type.Array) {
+			return isIntType(((Type.Array) type).element());
+		}
+
+		if (type instanceof Type.Tuple) {
+			// Check the type of value field.
+			Type element = ((Type.Tuple) type).element(1);
+			return isIntType(element);
+		}
+
+		return false;
+	}
 	
 
 }

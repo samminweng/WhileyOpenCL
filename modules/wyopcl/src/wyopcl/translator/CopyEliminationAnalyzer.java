@@ -3,9 +3,7 @@ package wyopcl.translator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-
 import wybs.lang.Builder;
-import wyil.attributes.VariableDeclarations;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Codes.Return;
@@ -15,20 +13,18 @@ import wyil.transforms.LiveVariablesAnalysis;
 import wyil.transforms.LiveVariablesAnalysis.Env;
 import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.BasicBlock.BlockType;
-import wyopcl.translator.bound.CFGraph;
+
 
 /**
- * Analyze the alias in the WyIL code to find all the necessary array copies and
- * eliminate un-necessary copies.
+ * Analyze the alias in the WyIL code to find all the necessary array copies and eliminate un-necessary copies.
  * 
  * @author Min-Hsien Weng
  *
  */
 public class CopyEliminationAnalyzer extends Analyzer {
-	//private final String prefix = "%";
 	private LiveVariablesAnalysis liveAnalyzer;
-	//Store the liveness analysis for each function (Key: function name, Value:Liveness information).
-	private HashMap<String, Liveness> livenessStore;
+	// Store the liveness analysis for each function (Key: function, Value:Liveness information).
+	private HashMap<FunctionOrMethod, Liveness> livenessStore;
 
 	/**
 	 * Basic Constructor
@@ -39,8 +35,8 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		// Diabled the constant propagation
 		this.liveAnalyzer.setEnable(false);
 		this.liveAnalyzer.setNops(true);
-		//Initialize the liveness stores.
-		this.livenessStore = new HashMap<String, Liveness>();
+		// Initialize the liveness stores.
+		this.livenessStore = new HashMap<FunctionOrMethod, Liveness>();
 	}
 
 	/**
@@ -52,9 +48,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	 *            the hash map, which maps register to the variable name.
 	 * @return
 	 */
-	private String getLiveVars(Env env, FunctionOrMethod function) {
-		//Get the mapping table between variable name and register.
-		VariableDeclarations vars = function.attribute(VariableDeclarations.class);
+	private String getLiveVariables(Env env, FunctionOrMethod function) {
 		String str = "";
 		Boolean isFirst = true;
 		Iterator<Integer> iterator = env.iterator();
@@ -66,295 +60,286 @@ public class CopyEliminationAnalyzer extends Analyzer {
 				isFirst = false;
 			}
 			// Get the variable name from register
-			String var_name = vars.get(register).name();
-			if (var_name == null) {
-				// If it is a temporary variable at byte-code, then print out
-				// the register
-				var_name = "%" + register;
-			}
-			str += var_name;
+			str += this.getActualVarName(register, function);
 		}
 		return str;
 	}
 
-
 	/**
 	 * Print out the liveness for a given function.
+	 * 
 	 * @param function
 	 * @param livenessStore
 	 */
-	private void printLivenss(FunctionOrMethod function){
-		//Get function name
-		String name = function.name();
-		System.out.println("###### Live analysis for " + name + " function. ######");
-		//Get liveness 
+	private void printLivenss(FunctionOrMethod function) {
+		// Get function name
+		System.out.println("###### Live analysis for " + function.name() + " function. ######");
+		// Get liveness
 		Liveness liveness = getLiveness(function);
-		//Get the list of blocks for the function.
-		List<BasicBlock> blocks = this.getBlocks(function);
-		for(BasicBlock block: blocks){
-			Env in = liveness.getIn(block);
-			Env out = liveness.getOut(block);
-			//Print out the in/out set for the block.
-			System.out.println("In" + ":{" + getLiveVars(in, function) + "}\n" 
-					+ block + "\nOut" + ":{" + getLiveVars(out, function) + "}\n");
+		// Get the list of blocks for the function.
+		for (BasicBlock block : this.getBlocks(function)) {
+			// Print out the in/out set for the block.
+			System.out.println("In" + ":{" + getLiveVariables(liveness.getInSet(block), function) + "}\n" + block
+					+ "\nOut" + ":{" + getLiveVariables(liveness.getOutSet(block), function) + "}\n");
 		}
-
 	}
-
-
-	private Liveness getLiveness(FunctionOrMethod function){
-		//Get function name
-		String name = function.name();
-		return livenessStore.get(name);
-		
-	}
-	
 
 	/**
+	 * Get the live analysis results of the function.
 	 * 
-	 * @param code
-	 * @param in
-	 * @param out
+	 * @param function
+	 * @return
 	 */
-	private Env computeIn(Codes.Invoke code, Env in){
-		//Get the callee (called function).
-		String callee = code.name.name();
-		//Get callee's liveness 
-		Liveness liveness = livenessStore.get(callee);
-		//Check if the information has been produced.
-		if(liveness != null){
-
-		}
-		
-		return in;
-
-	}
-
-	
-	/**
-	 * Compute the liveness information for a list of code.
-	 * @param block the basic block that contains a list of byte-code.
-	 * @param in the in set
-	 * @return 
-	 */
-	private Env computeIn(List<Code> codes, Env in){
-		// Compute the live variables, and store the results in in/out set.
-		for(int i = codes.size()-1; i>=0; i--){
-			Code code = codes.get(i);
-			if(code instanceof Codes.Assert){
-				in = computeIn(((Codes.Assert)code).bytecodes(), in);
-			}else if(code instanceof Codes.Return){
-				Return r = (Codes.Return)code;
-				if(r.operand != Codes.NULL_REG){
-					//Check if return value is in/out set.
-					if(!in.contains(r.operand)){
-						//Add the return value to both in and out set.
-						in.add(r.operand);
-					}							
-				}					
-			}else if (code instanceof Codes.Invariant){
-				in = computeIn(((Codes.Invariant)code).bytecodes(), in);
-			}else if (code instanceof Codes.Invoke){
-				//in = computeIn((Codes.Invoke)code, in);
-			}else{
-				in = liveAnalyzer.propagate(null, code, in);
-			}
-		}		
-		return in;
+	public Liveness getLiveness(FunctionOrMethod function) {
+		// Get function name
+		return livenessStore.get(function);
 	}
 
 	/**
-	 * Apply live variable analysis on the function, and get in/out set of each
-	 * block.
+	 * Applies live variable analysis on the function, in order to get in/out set of each block.
 	 * 
-	 * @param module
+	 * @param function
+	 *            code block of function
 	 */
-	private void applyLiveAnalysisByBlock(FunctionOrMethod function) {
-		String name = function.name();
-		//Get the graph
-		CFGraph graph = this.getCFGraph(function);
-		List<BasicBlock> blocks = graph.getBlockList();
+	private void computeLiveVariableBlocks(FunctionOrMethod function) {
+		// Get the graph
+		List<BasicBlock> blocks = this.getCFGraph(function).getBlockList();
 		// Store in/out set for each block.
 		Liveness liveness = new Liveness(blocks);
-
-		int iter = 1;//Start with 1st iteration.
+		int iter = 1;// Start with 1st iteration.
 		do {
-			if(config.isVerbose()){
-				System.out.println("###### Live analysis for " + name + " function. ######");
+			if (config.isVerbose()) {
+				System.out.println("###### Live analysis for " + function.name() + " function. ######");
 				System.out.println("Iteration " + iter);
-			}			
-			//Set the initial value of isChanged.
-			liveness.setIsChanged(false);
-			//Traverse the blocks in the reverse order other than exit block
-			for (int b= blocks.size()-1;b>=0;b--) {
-				BasicBlock block = blocks.get(b);
-				if(!block.getType().equals(BlockType.EXIT)){
-					// Get in/out set of the block.
-					Env out = (Env)liveness.getOut(block).clone();
-					Env in = (Env) out.clone();
-					// Compute the store in set of the block.
-					in = computeIn(block.getCodeBlock().bytecodes(), in);					
-					// Update 'in' set of the block.
-					liveness.setIn(block, in);	
-					if(config.isVerbose()){
-						System.out.println("In" + ":{" + getLiveVars(in, function) + "}\n"
-								+ block + "\nOut" + ":{" + getLiveVars(out, function) + "}\n");
-					}
-				}				
 			}
-			//Increment the iteration.
+			// Set the initial value of isChanged.
+			liveness.setChanged(false);
+			// Traverse the blocks in the reverse order other than exit block
+			for (int index = blocks.size() - 1; index >= 0; index--) {
+				BasicBlock block = blocks.get(index);
+				// Compute in/out blocks, except for exit or return block.
+				if (!block.getType().equals(BlockType.EXIT) || !block.getType().equals(BlockType.RETURN)) {
+					// Get in/out set of the block.
+					Env out = (Env) liveness.computeOut(block);
+					// Compute the store in set of the block.
+					Env in = liveness.computeIn(block, (Env) out.clone(), liveAnalyzer);
+					if (config.isVerbose()) {
+						System.out.println("In" + ":{" + getLiveVariables(in, function) + "}\n" + block 
+								+ "\nOut" + ":{" + getLiveVariables(out, function) + "}\n");
+					}
+				}
+			}
+			// Increment the iteration.
 			iter++;
-		}while(liveness.isChanged);	
-		//Store the liveness analysis for the function. 
-		livenessStore.put(name, liveness);
+		} while (liveness.isChanged);
+		// Store the liveness analysis for the function.
+		livenessStore.put(function, liveness);
+		// Print out analysis result
+		printLivenss(function);
 	}
 
 	/**
-	 * Apply live variable analysis on each basic block.
+	 * Applies live variable analysis on each basic block.
 	 * 
 	 * @param module
 	 */
 	public void apply(WyilFile module) {
-		// Iterate each function to build up CFG
-		this.buildCFG(module);
 		// Apply live analysis on each function, except for main function.
 		for (FunctionOrMethod function : module.functionOrMethods()) {
-			//Print out the CFGraph
-			if(config.isVerbose()){
-				this.printCFG(function);
-			}			
-			applyLiveAnalysisByBlock(function);
-			//Print out result when 'verbose' option is enabled.
-			if(config.isVerbose()){
-				printLivenss(function);
-			}		
+			// Builds up a CFG of the function.
+			this.buildCFG(function);
+			computeLiveVariableBlocks(function);
 		}
 	}
 	
-	/**
-	 * Gets the liveness of register at 'code' program point.
-	 * @param reg
-	 * @param code
-	 * @param function
-	 * @return true if the register is live. Otherwise, return false.
-	 */
-	public boolean isLive(int reg, Code code, FunctionOrMethod function){
-		//Get basic block that contains the given code.
-		BasicBlock blk = this.getBlockbyCode(function, code);
-		Liveness liveness = this.getLiveness(function);
-		return liveness.isLive(reg, blk);
-	}
+	
+	
+	
+	
 
 	/**
-	 * Stores the liveness for each block, including 'in' and 'out' set.
+	 * Stores and computes the liveness information for a function, including each block's 'in' and 'out' set.
 	 * 
 	 * @author Min-Hsien Weng
 	 *
 	 */
-	protected class Liveness {
-		//Indicate if there is any change of in/out set.
-		private boolean isChanged;
-		private HashMap<BasicBlock, Env> inStore;
-		private HashMap<BasicBlock, Env> outStore;
-
-		/**
-		 * Initializes the in set for each block.
-		 * @param blocks
-		 */
-		private void initialize(List<BasicBlock> blocks){
-			//Initialize in/out set for each block.
-			for(BasicBlock block: blocks){
-				inStore.put(block, new Env());
-				outStore.put(block, new Env());
-			}
-		}
-
+	public class Liveness {
+		private boolean isChanged;// Indicate if there is any change of in/out  set.
+		private HashMap<BasicBlock, Env> inSets;// Each env stores the register numbers.
+		private HashMap<BasicBlock, Env> outSets;
 		/**
 		 * Constructor with a list of blocks.
+		 * 
 		 * @param blocks
 		 */
 		public Liveness(List<BasicBlock> blocks) {
-			this.inStore = new HashMap<BasicBlock, Env>();
-			this.outStore = new HashMap<BasicBlock, Env>();	
-			initialize(blocks);
-		}		
+			this.inSets = new HashMap<BasicBlock, Env>();
+			this.outSets = new HashMap<BasicBlock, Env>();
+			// Initialize in/out set for each block.
+			for (BasicBlock block : blocks) {
+				Env in = new Env();
+				Env out = new Env();
+				// Use different initial values for return block.
+				if (block.getType().equals(BlockType.RETURN)) {
+					Codes.Return code = (Return) block.getCodeBlock().get(0);
+					// Add the return register to both in/out set.
+					in.add(code.operand);
+					out.add(code.operand);
+				}
+				inSets.put(block, in);
+				outSets.put(block, out);
+			}
+			this.isChanged = true;
+		}
 
 		/**
 		 * Set the isChanged flag.
+		 * 
 		 * @param isChanged
 		 */
-		public void setIsChanged(boolean isChanged){
+		public void setChanged(boolean isChanged) {
 			this.isChanged = isChanged;
 		}
 
-		public boolean isChanged(){
+		public boolean isChanged() {
 			return this.isChanged;
 		}
 
 		/**
-		 * Set 'in' set for a block and check if 'new_in' is 
-		 * different from existing 'in'. If so, then update 
-		 * 'isChanged' flag to indicate there is a change. 
+		 * 
+		 * @param code
+		 * @param in
+		 * @param out
+		 */
+		private Env computeIn(Codes.Invoke code, Env in) {
+			// Get the callee (called function).
+			String callee = code.name.name();
+			// Get callee's liveness
+			Liveness liveness = livenessStore.get(callee);
+			// Check if the information has been produced.
+			if (liveness != null) {
+
+			}
+
+			return in;
+		}
+
+		/**
+		 * Compute 'in' set for a list of code.
+		 * 
+		 * @param codes
+		 *            the list of wyil code.
+		 * @param in
+		 *            the 'in' set
+		 * @return the resulting 'in' set.
+		 */
+		private Env computeIn(List<Code> codes, Env in, LiveVariablesAnalysis liveAnalyzer) {
+			// Traverse the wyil code in the reverse order.
+			for (int i = codes.size() - 1; i >= 0; i--) {
+				// Compute the live variables, and store the results in in/out set.
+				Code code = codes.get(i);
+				if (code instanceof Codes.Assert) {
+					in = computeIn(((Codes.Assert) code).bytecodes(), in, liveAnalyzer);
+				} else if (code instanceof Codes.Invariant) {
+					in = computeIn(((Codes.Invariant) code).bytecodes(), in, liveAnalyzer);
+				} else if (code instanceof Codes.Invoke) {
+					// in = computeIn((Codes.Invoke)code, in);
+				} else {
+					in = liveAnalyzer.propagate(null, code, in);
+				}
+			}
+			return in;
+		}
+
+		/**
+		 * Compute the liveness information for a list of code.
+		 * 
+		 * @param block
+		 *            the basic block that contains a list of byte-code.
+		 * @param in
+		 *            the initial 'in' set
+		 * @return
+		 */
+		public Env computeIn(BasicBlock block, Env in, LiveVariablesAnalysis liveAnalyzer) {
+			List<Code> codes = block.getCodeBlock().bytecodes();
+			in = computeIn(codes, in, liveAnalyzer);
+			// Update 'in' set of the block.
+			setInSet(block, in);
+			return in;
+		}
+
+		/**
+		 * Set 'in' set for a block and check if 'new_in' is different from existing 'in'. If so, then update
+		 * 'isChanged' flag to indicate there is a change.
 		 * 
 		 * @param block
 		 * @return
 		 */
-		protected void setIn(BasicBlock block, Env new_in) {
-			//Check if new and existing in set are the same
-			Env in = inStore.get(block);
-			if(!in.equals(new_in)){
-				//Use logic OR operator to combine the result of 'isChanged' flag.
-				this.isChanged |= true;				
+		protected void setInSet(BasicBlock blk, Env new_in) {
+			// Check if new 'in' set is different from existing 'in' set.
+			Env in = getInSet(blk);
+			if (!in.equals(new_in)) {
+				// Use logic OR operator to combine the result of 'isChanged'
+				// flag.
+				this.isChanged |= true;
+				// Update 'in' set
+				inSets.put(blk, new_in);
 			}
-			//Update in set
-			inStore.put(block, new_in);
+		}
+
+		/**
+		 * Set 'out' set and check if there is any change in 'out' set.
+		 * 
+		 * @param block
+		 * @param new_out
+		 */
+		protected void setOutSet(BasicBlock blk, Env new_out) {
+			Env out = getOutSet(blk);
+			if (!out.equals(new_out)) {
+				this.isChanged |= true;
+				outSets.put(blk, new_out);
+			}
 		}
 
 		/**
 		 * Get the in set.
+		 * 
 		 * @param block
 		 * @return
 		 */
-		public Env getIn(BasicBlock block){			
-			return inStore.get(block);
+		public Env getInSet(BasicBlock block) {
+			return inSets.get(block);
 		}
 
-
 		/**
-		 * Returns 'out' set for a block. Take the union of in sets of child
-		 * blocks to produce the out set.
+		 * Get the out set.
+		 * 
+		 * @param block
+		 * @return
+		 */
+		public Env getOutSet(BasicBlock block) {
+			return outSets.get(block);
+		}		
+		
+		/**
+		 * Compute 'out' set for a block. Take the union of in sets of child blocks to produce the out set.
 		 * 
 		 * @param set
 		 */
-		protected Env getOut(BasicBlock block) {
-			// Check if the block has the child blocks.
-			if (!block.isLeaf()) {
-				Env out = outStore.get(block);
-				// Get child nodes of the block
+		protected Env computeOut(BasicBlock block) {
+			// Check if the block is not exit block.
+			Env out = getOutSet(block);
+			// Check if block has the children.
+			if(!block.isLeaf()){
+				// Take the union of child blocks' in set.
 				for (BasicBlock child : block.getChildNodes()) {
-					Env in = inStore.get(child);
+					Env in = getInSet(child);
 					out.addAll(in);
-				}	
-				outStore.put(block, out);
+				}
+				setOutSet(block, out);
 			}
-			return outStore.get(block);
+			return getOutSet(block);
 		}
-		
-		
-		/**
-		 * Check if a register is live at a given block.
-		 *
-		 * 
-		 * @param reg
-		 * @param blk
-		 * @return
-		 */
-		protected boolean isLive(int reg, BasicBlock blk){
-			//Get the in set of the block
-			Env in = getIn(blk);
-			//Check if 'in' set contains the register
-			return in.contains(reg);
-		}
-		
+
 	}
 }

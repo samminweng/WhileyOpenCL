@@ -166,8 +166,6 @@ public class BoundAnalyzer {
 					} else if (code instanceof Codes.Invert) {
 						// InvertInterpreter.getInstance().interpret((Codes.Invert)code,
 						// stackframe);
-					} else if (code instanceof Codes.ListOperator) {
-						analyze((Codes.ListOperator) code, name);
 					} else if (code instanceof Codes.Loop) {
 						analyze((Codes.Loop) code, name);
 					} else if (code instanceof Codes.Label) {
@@ -194,8 +192,6 @@ public class BoundAnalyzer {
 					} else if (code instanceof Codes.Nop) {
 						// NopInterpreter.getInstance().interpret((Codes.Nop)code,
 						// stackframe);
-					} else if (code instanceof Codes.SubList) {
-						analyze((Codes.SubList) code, name);
 					} else if (code instanceof Codes.Switch) {
 						// SwitchInterpreter.getInstance().interpret((Codes.Switch)code,
 						// stackframe);
@@ -355,7 +351,7 @@ public class BoundAnalyzer {
 	private void analyze(Codes.Assign code, String name) {
 		String target_reg = prefix + code.target();
 		String op_reg = prefix + code.operand(0);
-		if (code.type() instanceof Type.List) {
+		if (code.type() instanceof Type.Array) {
 			// Get the 'size' attribute 
 			BigInteger size = AnalyzerHelper.getSizeInfo(name, op_reg);
 			if (size != null) {
@@ -459,8 +455,8 @@ public class BoundAnalyzer {
 					// Add the constraint 'left< right' to current constraint
 					// list.
 					break;
-				case IN:
-					throw new RuntimeException("Un-implemented comparator (" + code + ")");
+				/*case IN:
+					throw new RuntimeException("Un-implemented comparator (" + code + ")");*/
 				default:
 					throw new RuntimeException("Unknow operator (" + code + ")");
 
@@ -555,7 +551,7 @@ public class BoundAnalyzer {
 			}
 		}
 
-		if (type instanceof Type.List) {
+		if (type instanceof Type.Array) {
 			// Get 'size' info from the register of return value.
 			BigInteger size = (BigInteger) AnalyzerHelper.getSizeInfo(name, retOp);
 			AnalyzerHelper.addSizeInfo(name, "return", size);
@@ -564,12 +560,16 @@ public class BoundAnalyzer {
 	}
 
 	/**
+	 * Deprecated due to v0.3.36
+	 * 
 	 * Parses ListOperator byte-code.
 	 * 
 	 * @param graph
 	 * @param sym_ctrl
 	 * @param code
 	 */
+	@Deprecated
+	/*
 	private void analyze(Codes.ListOperator code, String name) {
 		String target_reg = prefix + code.target();
 		//SymbolFactory sym_factory = BoundAnalyzerHelper.getSymbolFactory(name);
@@ -595,7 +595,7 @@ public class BoundAnalyzer {
 		default:
 			throw new RuntimeException("unknown list operator encountered (" + code + ")");
 		}
-	}
+	}*/
 
 	/**
 	 * Parse 'Unary Operator' bytecode and add the constraints in accordance
@@ -663,11 +663,14 @@ public class BoundAnalyzer {
 	}
 
 	/**
+	 * Deprecated due to v0.3.36
 	 * The bounds of a list/map shall be propagated from the operand to the
 	 * target.
 	 * 
 	 * @param code
 	 */
+	@Deprecated
+	/*
 	private void analyze(Codes.SubList code, String name) {
 		CFGraph graph = AnalyzerHelper.getCFGraph(name);
 		if (code.type().element() instanceof Type.Int) {
@@ -676,7 +679,7 @@ public class BoundAnalyzer {
 			}
 		}
 
-	}
+	}*/
 
 	/**
 	 * Implemented the propagation rule for <code>Codes.BinaryOperator</code>
@@ -708,14 +711,14 @@ public class BoundAnalyzer {
 				break;
 			case REM:
 				break;
-			case RANGE:
+			/*case RANGE:
 				// Take the union of operands
 				// graph.addConstraint(new Range(target, left,
 				// right.subtract(BigInteger.ONE)));
 				// Add the size att
 				// sym_ctrl.putAttribute(target, "size",
 				// right.subtract(left).subtract(BigInteger.ONE));
-				break;
+				break;*/
 			case BITWISEAND:
 				break;
 			case BITWISEOR:
@@ -816,9 +819,8 @@ public class BoundAnalyzer {
 		String target = prefix + code.target();
 		// sym_ctrl.putAttribute(target, "type", code.result);
 
-		if (code.result instanceof Type.List) {
+		if (code.result instanceof Type.Array) {
 			// Get the value
-
 		}
 
 	}

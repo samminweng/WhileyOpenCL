@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.file.FileSystems;
@@ -16,13 +15,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
-import java.nio.file.StandardCopyOption;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.ArrayList;
-import java.util.List;
 
 public final class BaseTestUtil {
-	private final String version = "v0.3.35";
+	private final String version = "v0.3.36";
 	// user.dir is the current directory.
 	private final String workspace_path = System.getProperty("user.dir") + File.separator;
 	private final String lib_path = workspace_path + "lib" + File.separator;
@@ -151,18 +147,20 @@ public final class BaseTestUtil {
 		Process pr;
 		int exitValue = -1;
 		try {
-			/**Due to the limited buffer size, Windows/Linux may fail to 
-			write the large output from code generator, to the input stream and
-			may cause the process to block, and even deadlock. 
-			*/
+			/**
+			 * Due to the limited buffer size, Windows/Linux may fail to write
+			 * the large output from code generator, to the input stream and may
+			 * cause the process to block, and even deadlock.
+			 */
 			pr = rt.exec(cmd, null, workingDir.toFile());
-			//Instantly write out the output message to avoid the process to block. 
+			// Instantly write out the output message to avoid the process to
+			// block.
 			BufferedReader stdIn = new BufferedReader(new InputStreamReader(pr.getInputStream()));
 			String s;
 			while ((s = stdIn.readLine()) != null) {
 				System.out.println(s);
 			}
-			//Get the return value.
+			// Get the return value.
 			exitValue = pr.waitFor();
 			if (exitValue != 0) {
 				// If not success, then print error messages.
@@ -189,7 +187,7 @@ public final class BaseTestUtil {
 			if (!Files.exists(destDir.getParent())) {
 				Files.createDirectories(destDir.getParent());
 			}
-			// Create the destDir folder. 
+			// Create the destDir folder.
 			if (Files.exists(destDir)) {
 				// If destDir exists, then delete it.
 				// Recursively Delete files in the destDir folder.
@@ -240,31 +238,33 @@ public final class BaseTestUtil {
 			// Create destDir
 			createDestDir(destDir);
 
-			//1. Copy source Whiley program to destDir directory.
+			// 1. Copy source Whiley program to destDir directory.
 			Path whileyFile = Paths.get(sourceDir + File.separator + testcase + ".whiley");
 			// Check if whiley file exists.
 			assertEquals(Files.exists(whileyFile), true);
 			// Copy source.whiley to destDir folder
-			Files.copy(whileyFile, Paths.get(destDir+File.separator+testcase + ".whiley"));
-			
-			//2. Copy Util.c and Util.h from parent folder to destDir
-			Files.copy(Paths.get(destDir.getParent().getParent() + File.separator + "Util.c"), Paths.get(destDir + File.separator + "Util.c"));
-			Files.copy(Paths.get(destDir.getParent().getParent() + File.separator + "Util.h"), Paths.get(destDir + File.separator + "Util.h"));
-			
-			//3. Generate the C code.
+			Files.copy(whileyFile, Paths.get(destDir + File.separator + testcase + ".whiley"));
+
+			// 2. Copy Util.c and Util.h from parent folder to destDir
+			Files.copy(Paths.get(destDir.getParent().getParent() + File.separator + "Util.c"),
+					Paths.get(destDir + File.separator + "Util.c"));
+			Files.copy(Paths.get(destDir.getParent().getParent() + File.separator + "Util.h"),
+					Paths.get(destDir + File.separator + "Util.h"));
+
+			// 3. Generate the C code.
 			String cmd = "java";
 			// A list of arguments.
-			cmd += " -cp "+classpath;// class path
+			cmd += " -cp " + classpath;// class path
 			cmd += " wyopcl.WyopclMain";// main class
-			cmd += " -bp "+whiley_runtime_lib;// Whiley runtime library
+			cmd += " -bp " + whiley_runtime_lib;// Whiley runtime library
 			cmd += " -code";// Generate code.
 			// Add extra optimization option.
 			for (String option : options) {
 				// Run the code generator with optimization.
-				cmd += " "+ option;
+				cmd += " " + option;
 			}
 			// Add test case name
-			cmd += " "+testcase + ".whiley";
+			cmd += " " + testcase + ".whiley";
 			runCmd(cmd, destDir);
 
 			// Check if *.c and *.h files are generated or not.
@@ -272,41 +272,51 @@ public final class BaseTestUtil {
 			Path hFile = Paths.get(destDir + File.separator + testcase + ".h");
 			assertEquals(Files.exists(cFile), true);
 			assertEquals(Files.exists(hFile), true);
-		
 
 			// As each test case is exported as a separate function,
 			// The main function must be written out (testMain.c)
 			// to call the function of test case.
-			String testMain = "#include \"" + testcase + ".h\"\n" + "int main(int argc, char** args){\n"
-					+ "\ttest();\n"
-					+ "\t// Add the exit value of '0' for validation.\n"
-					+ "\texit(0);\n}\n";
+			String testMain = "#include \"" + testcase + ".h\"\n" + "int main(int argc, char** args){\n" + "\ttest();\n"
+					+ "\t// Add the exit value of '0' for validation.\n" + "\texit(0);\n}\n";
 			PrintWriter writer = new PrintWriter(destDir + File.separator + "testMain.c");
 			writer.print(testMain);
 			writer.flush();
 			writer.close();
 			// Get Operation System.
 			String os = System.getProperty("os.name").toLowerCase();
-			//4. Compile and run the C code.
+			// 4. Compile and run the C code.
 			if (os.indexOf("win") >= 0) {
-				// Compile the testMain.c, TestCase.c and Util.c using Windows command 
-				// This option requires the installation of Cygwin and gcc. 
-				// As gcc is a link (Windows command does not get it), we need to use actual name (i.e. gcc-3 or gcc-4) 
-				int exitValue = runCmd("cmd /c gcc-4 " + "testMain.c Util.c " + testcase + ".c  -o " + testcase + ".out", destDir);
-				// Check if exit value is 0. If not, the compilation process has
-				// errors.
-				assertEquals(exitValue, 0);
-				exitValue = runCmd("cmd /c " + testcase + ".out", destDir);
-				assertEquals(exitValue, 0);
+				// This option requires the installation of Cygwin and gcc, or
+				// MinGW
+				// Compile the *.c using GCC
+				String path = System.getenv("PATH");// Get PATH environment
+													// variable.
+				if (path.contains("MinGW")) {// Check MinGW exists.
+					// Check if exit value is 0.
+					// If not, the compilation process has errors.
+					assertEquals(
+							runCmd("cmd /c gcc testMain.c Util.c " + testcase + ".c  -o " + testcase + ".out", destDir),
+							0);
+					// Run the output file.
+					assertEquals(runCmd("cmd /c " + testcase + ".out", destDir), 0);
+				} else if (path.contains("cygwin")) {// Check gcc exists in
+														// cygwin folder
+					// As gcc is a link (Windows command does not get it),
+					// we need to use actual name (i.e. gcc-3 or gcc-4)
+					assertEquals(runCmd("cmd /c gcc-3 testMain.c Util.c " + testcase + ".c  -o " + testcase + ".out",
+							destDir), 0);
+					// Run the output file.
+					assertEquals(runCmd("cmd /c " + testcase + ".out", destDir), 0);
+				} else {
+					throw new RuntimeException("Missing C compiler, such as gcc or MinGW.");
+				}
 			} else {
 				// Run Linux commands
 				// Compile the C program into *.out and place it in current
 				// working directory
-				int exitValue = runCmd("gcc " + "testMain.c Util.c " + testcase + ".c  -o " + testcase + ".out", destDir);
-				assertEquals(exitValue, 0);
+				assertEquals(runCmd("gcc testMain.c Util.c " + testcase + ".c  -o " + testcase + ".out", destDir), 0);
 				// Run the generated out file
-				exitValue = runCmd("./" + testcase + ".out", destDir);
-				assertEquals(exitValue, 0);
+				assertEquals(runCmd("./" + testcase + ".out", destDir), 0);
 			}
 			// Delete the Wyil files inside 'valid' folder
 			Files.deleteIfExists(FileSystems.getDefault().getPath(sourceDir + testcase + ".wyil"));
