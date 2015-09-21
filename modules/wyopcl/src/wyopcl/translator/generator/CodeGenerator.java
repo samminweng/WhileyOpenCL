@@ -472,8 +472,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			if (code instanceof Codes.Invoke) {
 				String r_name = copy_analyzer.getActualVarName(reg, f);
 				FunctionOrMethod invoked_function = config.getFunctionOrMethod(((Codes.Invoke) code).name);
-				// Check if the array r is modified inside 'invoked_function'.
-				isReadOnly = !mutate(r_name, invoked_function);
+				if(invoked_function != null){
+					// Check if the array r is modified inside 'invoked_function'.
+					isReadOnly = !mutate(r_name, invoked_function);
+				}
 			}
 			// Check the array is live.
 			BasicBlock blk = copy_analyzer.getBlockbyCode(f, code);// Get basic block that contains the given code.
@@ -569,7 +571,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * <pre>
 	 * <code>
 	 * _12_size=_xs_size;
-	 * _12=reverse(clone(_xs, _xs_size), _xs_size);
+	 * _12=slice(clone(_xs, _xs_size), _xs_size);
 	 * </code>
 	 * </pre>
 	 * 
@@ -582,10 +584,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * <code>invoke %5 = (%8) whiley/lang/Int:parse : function(whiley/lang/ASCII:string) -> null|int</code><br>
 	 * can be translated into <br>
 	 * <code>_5=parseInteger(_8);</code>
-	 * <li>Slice an array into sub-array, starting at given start and ending at given end (Exclusively).<br>
-	 * <code>invoke %16 = (%0, %1, %3) whiley/lang/Array:slice : function(int[],int,int) -> int[]</code>
-	 * can translate this into <br>
-	 * <code>_16=slice(_xs, _xs_size, start, pivot);
 	 * @param code
 	 */
 	protected void translate(Codes.Invoke code, FunctionOrMethod function) {
