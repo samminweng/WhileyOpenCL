@@ -2,9 +2,9 @@
 #
 # The shell script of benchmarking the generated Java code of Whiley program
 #
-parameters="10 100 1000"
+#parameters="10 100 1000"
 # Large scaled parameters.
-#parameters="10 100 1000 10000 100000 1000000 10000000 20000000 30000000 40000000 50000000 60000000 70000000 80000000 90000000 100000000 150000000 200000000"
+parameters="10 100 1000 10000 100000 1000000 10000000 20000000 30000000 40000000 50000000 60000000 70000000 80000000 90000000 100000000 150000000 200000000"
 #
 # Run the benchmarks of generated Java programs.
 #
@@ -83,7 +83,7 @@ run_benchmark_c (){
 		do
 			echo "Beginning the benchmarks of $WHILEYSRC C program method with parameter =" $parameter
 			start=`date +%s%N`	
-			#./"$WHILEYSRC".out $parameter >> $RESULT
+			./"$WHILEYSRC".out $parameter >> $RESULT
 			end=`date +%s%N`
 			runtime=$((end-start))
 			printf 'Parameter:%s\tExecutionTime:%s\tnanoseconds.\n' $parameter  $runtime >> $RESULT
