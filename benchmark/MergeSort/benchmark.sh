@@ -74,7 +74,7 @@ run_benchmark_c (){
 	fi
 	#compile the source C file with L2 optimization (-O2)
 	#see https://gcc.gnu.org/onlinedocs/gnat_ugn/Optimization-Levels.html#101
-	gcc -O2 *.c -o "$WHILEYSRC".out
+	gcc -m64 -O2 *.c -o "$WHILEYSRC".out
 	#parameters
 	for parameter in $parameters
 	do

@@ -102,13 +102,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		return del;
 	}
 
-	
-	
-	
-	
-	
 	/**
 	 * Translate the input parameters for the given function.
+	 * 
 	 * @param function
 	 * @return
 	 */
@@ -318,7 +314,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					 * 
 					 * //assign %9 = %10 : [void] _9_size = _10_size; _9 = clone((long long*)_10, _10_size);
 					 */
-					statement += indent + rhs + " = clone((" + translateType(rhs_type) + ")" + lhs + ", " + lhs + "_size);";
+					statement += indent + rhs + " = clone((" + translateType(rhs_type) + ")" + lhs + ", " + lhs
+							+ "_size);";
 				} else {
 					/** Make a copy of right operand. */
 					statement += indent + rhs + " = clone(" + lhs + ", " + lhs + "_size);";
@@ -472,7 +469,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			if (code instanceof Codes.Invoke) {
 				String r_name = copy_analyzer.getActualVarName(reg, f);
 				FunctionOrMethod invoked_function = config.getFunctionOrMethod(((Codes.Invoke) code).name);
-				if(invoked_function != null){
+				if (invoked_function != null) {
 					// Check if the array r is modified inside 'invoked_function'.
 					isReadOnly = !mutate(r_name, invoked_function);
 				}
@@ -485,15 +482,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		}
 		return false;
 	}
-	
+
 	/**
-	 * Translate the lhs of a function call. 
+	 * Translate the lhs of a function call.
 	 * 
 	 * @param code
 	 * @param f
 	 * @return
 	 */
-	private String translateLHSFunctionCall(Codes.Invoke code, FunctionOrMethod f){
+	private String translateLHSFunctionCall(Codes.Invoke code, FunctionOrMethod f) {
 		CodeStore store = stores.get(f);
 		String statement = "";
 		// Translate the return value of a function call.
@@ -516,18 +513,19 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Call the function and assign the return value to lhs register.
 			statement += store.getIndent() + ret + " = ";
 		}
-		return statement;		
+		return statement;
 	}
-	
+
 	/**
-	 * Translate the rhs of a function call 
+	 * Translate the rhs of a function call
+	 * 
 	 * @param code
 	 * @param f
 	 * @return
 	 */
-	private String translateRHSFunctionCall(Codes.Invoke code, FunctionOrMethod f){
+	private String translateRHSFunctionCall(Codes.Invoke code, FunctionOrMethod f) {
 		// Get code store of f function
-		CodeStore store = stores.get(f);		
+		CodeStore store = stores.get(f);
 		boolean isFirst = true;
 		String statement = "";
 		for (int index = 0; index < code.operands().length; index++) {
@@ -554,11 +552,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			isFirst = false;
 		}
 		// Pass the array size into the function to mutate the array size.
-		//if(return_type instanceof Type.Array){ statement += ", &"+ store.getVar(code.target())+"_size"; }
+		// if(return_type instanceof Type.Array){ statement += ", &"+ store.getVar(code.target())+"_size"; }
 		return statement;
 	}
-	
-	
+
 	/**
 	 * Produces the code for <code>Codes.Invoke</code> code. For example, the following WyIL code:
 	 * 
@@ -571,7 +568,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * <pre>
 	 * <code>
 	 * _12_size=_xs_size;
-	 * _12=slice(clone(_xs, _xs_size), _xs_size);
+	 * _12=reverse(clone(_xs, _xs_size), _xs_size);
 	 * </code>
 	 * </pre>
 	 * 
@@ -580,22 +577,44 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * Special cases:
 	 * <ul>
-	 * <li>Integer parsing:<br>
+	 * <li>Parse Integer<br>
 	 * <code>invoke %5 = (%8) whiley/lang/Int:parse : function(whiley/lang/ASCII:string) -> null|int</code><br>
-	 * can be translated into <br>
+	 * can translate this into <br>
 	 * <code>_5=parseInteger(_8);</code>
+	 * <li>Slice Array<br>
+	 * <code>invoke %16 = (_items, _start, _pivot) whiley/lang/Array:slice : function(int[],int,int) -> int[]<code><br>
+	 * can translate this into <br>
+	 * <code>
+	 * _16 = slice(_items, _items_size, _start,  _pivot);<br>
+	 * _16_size = _pivot - _start;
+	 * </code>
+	 * 
 	 * @param code
+	 *            the Invoked Wyil code
+	 * 
 	 */
 	protected void translate(Codes.Invoke code, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
 		String statement = "";
 		// Check if the called function is whiley/lang/Int
-		if (code.name.module().toString().contains("whiley/lang/Int")) {
+		if (code.name.module().toString().contains("whiley/lang")) {
 			switch (code.name.name()) {
 			// Parse a string into an integer.
 			case "parse":
 				statement += store.getIndent() + store.getVar(code.target()) + " = " + "parseInteger("
 						+ store.getVar(code.operand(0)) + ");";
+				break;
+			// Slice an array into a new sub-array at given starting and ending index.
+			case "slice":
+				// Call the 'slice' function.
+				String arr_name = store.getVar(code.operand(0));
+				String start = store.getVar(code.operand(1));
+				String end = store.getVar(code.operand(2));
+				// Add 'slice' function call.
+				statement += store.getIndent() + store.getVar(code.target()) + " = slice(" + arr_name + ", " + arr_name + "_size, " + start
+						+ "," + end + ");\n";
+				// Add array size.
+				statement += store.getIndent() + store.getVar(code.target()) + "_size = " + end + " - " + start + ";";
 				break;
 			default:
 				throw new RuntimeException("Un-implemented code:" + code);
@@ -605,11 +624,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// '_12=reverse(_xs , _xs_size);'
 			statement += translateLHSFunctionCall(code, function);
 			// call the function/method
-			statement += code.name.name() +"(";
+			statement += code.name.name() + "(";
 			statement += translateRHSFunctionCall(code, function);
 			statement += ");";
 		}
-
 		// add the statement
 		store.addStatement(code, statement);
 	}
@@ -985,8 +1003,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Check if the size of input operand > 0.
 		if (code.operands().length > 0) {
 			// Allocate the target with array size.
-			stat += indent + target + " = (" + translateType(code.type().element()) + "*)malloc(" + target_size + "*sizeof("
-					+ translateType(code.type().element()) + "));\n";
+			stat += indent + target + " = (" + translateType(code.type().element()) + "*)malloc(" + target_size
+					+ "*sizeof(" + translateType(code.type().element()) + "));\n";
 			// Initialize the array.
 			int index = 0;
 			for (int operand : code.operands()) {
@@ -1603,8 +1621,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			Type rhs_type = store.getVarType(code.operand(0));
 			// Get the value of rhs operand
 			// long long* _3_value = clone(_3, _3_size);
-			statement += store.getIndent() + translateType(rhs_type) + " " + rhs + "_value" + " = clone(" + rhs + ", " + rhs
-					+ "_size);\n";
+			statement += store.getIndent() + translateType(rhs_type) + " " + rhs + "_value" + " = clone(" + rhs + ", "
+					+ rhs + "_size);\n";
 			// Get the address of rhs and assign it to lhs with type casting.
 			String lhs = store.getVar(code.target());
 			Type lhs_type = store.getVarType(code.target());
