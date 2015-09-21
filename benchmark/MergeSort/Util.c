@@ -6,6 +6,11 @@
 long long* slice(long long* arr, long long arr_size, long long start, long long end){
 	long long* sub_arr = NULL;
 	sub_arr = (long long*)malloc((end - start)*sizeof(long long));
+	if(sub_arr == NULL){
+		fprintf(stderr,
+			"fail to allocate the memory at slice function in Util.c");
+		exit(-2);
+	}	
 	memcpy(sub_arr, &arr[start], (end - start)*sizeof(long long));
 	return sub_arr;
 }
@@ -18,6 +23,11 @@ long long* genArray(int value, int arr_size){
 	long long i = 0;
 	// Allocate the array
 	arr = (long long*)malloc(arr_size*sizeof(long long));
+	if(arr == NULL){
+		fprintf(stderr,
+			"fail to allocate the memory at genArray function in Util.c");
+		exit(-2);
+	}
 	// Initialize each element with the given value.
 	for(i=0;i<arr_size;i++){
 		arr[i] = value;
@@ -103,7 +113,7 @@ long long parseInteger(long long* arr){
 /**
 * Split the array into a sub list from 'start' to 'end', and return the sublist.
 */
-long long* sublist(long long* arr, int start, int end) {
+/*long long* sublist(long long* arr, int start, int end) {
 	long long* sublist = NULL;
 	long long size = 0;
 	long long index = 0;
@@ -120,7 +130,7 @@ long long* sublist(long long* arr, int start, int end) {
 		sublist[index] = arr[index + start];
 	}
 	return sublist;
-}
+}*/
 
 //Check if both arrays are the same. 1: true, 0: false.
 int isArrayEqual(long long* arr1, long long arr1_size,
