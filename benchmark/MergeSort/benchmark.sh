@@ -14,12 +14,15 @@ run_benchmark_java(){
 	OUT="$NAME"_"$CALL".out
 	RESULT=result.$NAME.$CALL.java.txt
 	WHILEYSRC="$NAME"_"$CALL"
-	#Remove files inside the folders.
-	rm $CALL/"java"/*.*
+	DIR="$CALL/JavaCode"
+	# Make dir
+	mkdir -p $DIR
+	# Remove files inside the folders.
+	rm $DIR/*.*
 	# move C and Header files to working directory.
-	cp "$WHILEYSRC".whiley $CALL/"java"
+	cp "$WHILEYSRC".whiley $DIR
 	#Change the working directory
-    cd $CALL/"java"   
+    cd $DIR   
 	# Compile the sort whiley program
 	./../../../../bin/wyjc "$WHILEYSRC".whiley
 	#array size
@@ -51,12 +54,15 @@ run_benchmark_c (){
 	OP=$3
 	RESULT=result.$NAME.$CALL.c.$OP.txt
 	WHILEYSRC="$NAME"_"$CALL"
+	DIR="$CALL/CCode/$OP"
+	# make the folder
+	mkdir -p $DIR
 	# Removes all the files inside folder
-	rm "$CALL"/c/"$OP"/*.*
+	rm $DIR/*.*
 	# move C and Header files to working directory.
-	cp "$WHILEYSRC".whiley Util.c Util.h $CALL/c/$OP
+	cp "$WHILEYSRC".whiley Util.c Util.h $DIR
 	# Change to working directory 
-	cd "$CALL"/c/"$OP"	
+	cd $DIR	
 	# Use wyopcl shell script to generate C code
 	if [ "$OP" = "slow" ]
 	then
@@ -69,7 +75,6 @@ run_benchmark_c (){
 	#compile the source C file with L2 optimization (-O2)
 	#see https://gcc.gnu.org/onlinedocs/gnat_ugn/Optimization-Levels.html#101
 	gcc -O2 *.c -o "$WHILEYSRC".out
-	
 	#parameters
 	for parameter in $parameters
 	do
@@ -78,7 +83,7 @@ run_benchmark_c (){
 		do
 			echo "Beginning the benchmarks of $WHILEYSRC C program method with parameter =" $parameter
 			start=`date +%s%N`	
-			./"$WHILEYSRC".out $parameter >> $RESULT
+			#./"$WHILEYSRC".out $parameter >> $RESULT
 			end=`date +%s%N`
 			runtime=$((end-start))
 			printf 'Parameter:%s\tExecutionTime:%s\tnanoseconds.\n' $parameter  $runtime >> $RESULT
