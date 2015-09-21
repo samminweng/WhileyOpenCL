@@ -81,7 +81,7 @@ run_benchmark_c (){
 	    #Repeat running the programs
 		for i in {1..10}
 		do
-			echo "Beginning the benchmarks of $WHILEYSRC C program method with parameter =" $parameter
+			echo "Beginning the benchmarks of $WHILEYSRC C program method with $OP and array size =" $parameter
 			start=`date +%s%N`	
 			./"$WHILEYSRC".out $parameter >> $RESULT
 			end=`date +%s%N`
