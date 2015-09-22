@@ -7,8 +7,7 @@ long long* slice(long long* arr, long long arr_size, long long start, long long 
 	long long* sub_arr = NULL;
 	sub_arr = (long long*)malloc((end - start)*sizeof(long long));
 	if(sub_arr == NULL){
-		fprintf(stderr,
-			"fail to allocate the memory at slice function in Util.c");
+		printf("fail to allocate the memory at slice function in Util.c");
 		exit(-2);
 	}	
 	memcpy(sub_arr, &arr[start], (end - start)*sizeof(long long));
@@ -24,8 +23,7 @@ long long* genArray(int value, int arr_size){
 	// Allocate the array
 	arr = (long long*)malloc(arr_size*sizeof(long long));
 	if(arr == NULL){
-		fprintf(stderr,
-			"fail to allocate the memory at genArray function in Util.c");
+		printf("fail to allocate the memory at genArray function in Util.c");
 		exit(-2);
 	}
 	// Initialize each element with the given value.
@@ -49,14 +47,13 @@ long long** convertArgsToIntArray(int argc, char** args, int arr_size){
 	long long max_j;
 	//Check if there is any command line argument
 	if(argc < 2){
-		fprintf(stderr, "Missing the command line arguments");
+		printf("Missing the command line arguments");
 		exit(-2);
 	}
 	//Allocate the target array ('arr').
 	arr = (long long**) malloc((argc-1)*sizeof(long long*));
 	if(arr == NULL){
-		fprintf(stderr,
-			"fail to allocate the memory at convertCharToInt function in Util.c");
+		printf("fail to allocate the memory at convertCharToInt function in Util.c");
 		exit(-2);
 	}
 	//Convert each argument into an array of digits	
@@ -85,8 +82,7 @@ long long** convertArgsToIntArray(int argc, char** args, int arr_size){
 	}
 	//Check if the conversion is successful and array size should be >= 1.
 	if(arr_size == 0){
-		fprintf(stderr,
-			"No number is passed via command line arguments.");
+		printf("No number is passed via command line arguments.");
 		exit(-2);
 	}
 	return arr;
@@ -181,7 +177,7 @@ long long* clone(long long *arr, long long size) {
 	ptr = (long long*) malloc(size * sizeof(long long));
 	//ptr = (long long*)tcmalloc(size*sizeof(long long));
 	if (ptr == NULL) {
-		fprintf(stderr, "fail to malloc");
+		printf("fail to malloc at clone function in Util.c");
 		exit(-2);
 	}
 	//Use memcpy to clone an array
@@ -204,7 +200,7 @@ long long* append(long long *arr1, long long arr1_size,
 	ret_arr = (long long*) realloc(arr1, size * sizeof(long long));
 	//Check if the memory allocation is successful.
 	if (ret_arr == NULL) {
-		fprintf(stderr, "fail to allocate the memory in append function");
+		printf("fail to allocate the memory at append function in Util.c");
 		exit(-2);
 	}
 	 //Fill in op_2 array
@@ -286,7 +282,7 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 		}
 		ret = (long long*) realloc(ret, allocated_size * sizeof(long long));
 		if (ret == NULL) {
-			fprintf(stderr, "fail to realloc");
+			printf("fail to realloc at optimized_append functon in Util.c");
 			exit(-2);
 		}
 	}
