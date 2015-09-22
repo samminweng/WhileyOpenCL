@@ -4,7 +4,7 @@
 #
 # parameters="10 100 1000"
 # Large scaled parameters.
-parameters="10 100 1000 10000 100000 1000000 10000000 100000000 1000000000"
+parameters="10 100 1000 10000 100000 1000000 10000000 20000000 30000000 40000000 50000000 60000000 70000000 80000000 90000000 100000000"
 #
 # Run the benchmarks of generated Java programs.
 #
@@ -81,7 +81,7 @@ run_benchmark_c (){
 	fi
 	#compile the source C file with L2 optimization (-O2)
 	#see https://gcc.gnu.org/onlinedocs/gnat_ugn/Optimization-Levels.html#101
-	gcc -m64 -O2 *.c -o "$WHILEYSRC".out >> $RESULT
+	gcc -m64 *.c -o "$WHILEYSRC".out >> $RESULT
 	#parameters
 	for parameter in $parameters
 	do
