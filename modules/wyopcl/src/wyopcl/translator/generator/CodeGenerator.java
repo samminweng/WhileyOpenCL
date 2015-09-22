@@ -905,11 +905,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement += "return " + store.getVar(code.operand) + ";";
 		} else {
 			// Negative register means this function/method does not have return value.
-			// So we do need to generate the code.
-			/*
-			 * if(function.name().equals("main")){ // If the method is "main", then //add a simple exit code with value
-			 * of 0. statement += "exit(0);"; }else{ //Return without exit value. statement += "return ;"; }
-			 */
+			// So we do need to generate the code, except for main method.
+			if(function.name().equals("main")){ 
+				// If the method is "main", then add a simple exit code with value
+				statement += "exit(0);";
+			}
 		}
 		store.addStatement(code, statement);
 	}
