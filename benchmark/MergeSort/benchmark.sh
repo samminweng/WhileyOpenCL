@@ -29,19 +29,19 @@ run_benchmark_java(){
     	#Repeat running the programs
 		for i in {1..10}
 		do
-			echo "Beginning the benchmarks of $WHILEYSRC Java program with array size = " $parameter >> $RESULT
+			echo "Beginning the benchmarks of $WHILEYSRC Java program on array size = " $parameter >> $RESULT
 			start=`date +%s%N`	
 			./../../../../bin/wyj $WHILEYSRC $parameter >> $RESULT
 			# Check if the program completes the task.
 			if [ "$?" = 0 ]
 			then
 				# Print out success messages.
-				echo "Success in running $WHILEYSRC Java program with array size = " $parameter
+				echo "Success in running $WHILEYSRC Java program on array size = " $parameter
 			else
 				# Print out error messages.
-				echo "Errors in running $WHILEYSRC Java program with array size = " $parameter
-				# Terminate the loop.
-				break
+				echo "Errors in running $WHILEYSRC Java program on array size = " $parameter
+				# Terminate the nested loop.
+				break 2
 			fi
 			end=`date +%s%N`
 			runtime=$((end-start))
@@ -88,19 +88,19 @@ run_benchmark_c (){
 	    #Repeat running the programs
 		for i in {1..10}
 		do
-			echo "Beginning the benchmarks of $WHILEYSRC C program method with $OP and array size =" $parameter >> $RESULT
+			echo "Beginning the benchmarks of $OP $WHILEYSRC C program method on array size =" $parameter >> $RESULT
 			start=`date +%s%N`	
 			./"$WHILEYSRC".out $parameter >> $RESULT
 			# Check if the program completes the task.
 			if [ "$?" = 0 ]
 			then
 				# Print out success messages.
-				echo "Success in running ./$WHILEYSRC C program with $OP and array size =" $parameter 
+				echo "Success in running $OP $WHILEYSRC C program on array size =" $parameter 
 			else
 				# Print out error messages.
-				echo "Errors in running ./$WHILEYSRC C program with $OP and array size =" $parameter 
-				# Terminate the loop.
-				break
+				echo "Errors in running $OP $WHILEYSRC C program on array size =" $parameter 
+				# Terminate the nested loop.
+				break 2
 			fi
 			end=`date +%s%N`
 			runtime=$((end-start))
@@ -125,5 +125,5 @@ run_benchmark_c sort call_by_value slow
 run_benchmark_c sort call_by_reference fast
 run_benchmark_c sort call_by_reference slow
 #Benchmark the generated Java code
-#run_benchmark_java sort call_by_value
-#run_benchmark_java sort call_by_reference
+run_benchmark_java sort call_by_value
+run_benchmark_java sort call_by_reference
