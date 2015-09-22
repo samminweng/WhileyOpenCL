@@ -492,7 +492,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	private String translateLHSFunctionCall(Codes.Invoke code, FunctionOrMethod f) {
 		CodeStore store = stores.get(f);
-		String statement = "";
+		String statement = store.getIndent();
 		// Translate the return value of a function call.
 		// If no return value, no needs for translation.
 		if (code.target() >= 0) {
@@ -505,13 +505,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				for (int index = 0; index < code.operands().length; index++) {
 					Type type = code.type().params().get(index);
 					if (type instanceof Type.Array) {
-						statement += store.getIndent() + (ret + "_size") + "=" + store.getVar(code.operand(index))
+						statement += (ret + "_size") + "=" + store.getVar(code.operand(index))
 								+ "_size;\n";
 					}
 				}
 			}
 			// Call the function and assign the return value to lhs register.
-			statement += store.getIndent() + ret + " = ";
+			statement += ret + " = ";
 		}
 		return statement;
 	}
@@ -1620,9 +1620,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			String rhs = store.getVar(code.operand(0));
 			Type rhs_type = store.getVarType(code.operand(0));
 			// Get the value of rhs operand
-			// long long* _3_value = clone(_3, _3_size);
-			statement += store.getIndent() + translateType(rhs_type) + " " + rhs + "_value" + " = clone(" + rhs + ", "
-					+ rhs + "_size);\n";
+			if(!isCopyEliminated(code.operand(0), code, function)){
+				// long long* _3_value = clone(_3, _3_size);
+				statement += store.getIndent() + translateType(rhs_type) + " " + rhs + "_value" + " = clone(" + rhs + ", "
+						+ rhs + "_size);\n";
+			}else{
+				// No copies is needed, e.g. 'long long _3_value = _3;' 
+				statement += store.getIndent() + translateType(rhs_type) + " " + rhs + "_value" + " = " + rhs + ";\n";
+			}
+			
 			// Get the address of rhs and assign it to lhs with type casting.
 			String lhs = store.getVar(code.target());
 			Type lhs_type = store.getVarType(code.target());
