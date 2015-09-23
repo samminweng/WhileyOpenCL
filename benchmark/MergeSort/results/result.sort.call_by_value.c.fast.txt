@@ -1,0 +1,1039 @@
+sortV1.0 [	const %9 = 1 : int]
+sortV1.1 [	add %10 = %1, %9 : int]
+sortV1.2 [	ifge %10, %2 goto blklab0 : int]
+sortV1.3 [	add %12 = %1, %2 : int]
+sortV1.4 [	const %13 = 2 : int]
+sortV1.5 [	div %14 = %12, %13 : int]
+sortV1.6 [	assign %11 = %14  : int]
+sortV1.7 [	assign %3 = %11  : int]
+sortV1.8 [	invoke %16 = (%0, %1, %3) whiley/lang/Array:slice : function(int[],int,int) -> int[]]
+sortV1.9 [	assign %15 = %16  : int[]]
+sortV1.10 [	assign %4 = %15  : int[]]
+sortV1.11 [	const %18 = 0 : int]
+sortV1.12 [	invoke %17 = (%4, %18, %3) sort_call_by_value:sortV1 : function(int[],int,int) -> int[]]
+sortV1.13 [	assign %4 = %17  : int[]]
+sortV1.14 [	invoke %20 = (%0, %3, %2) whiley/lang/Array:slice : function(int[],int,int) -> int[]]
+sortV1.15 [	assign %19 = %20  : int[]]
+sortV1.16 [	assign %5 = %19  : int[]]
+sortV1.17 [	const %22 = 0 : int]
+sortV1.18 [	sub %23 = %2, %3 : int]
+sortV1.19 [	invoke %21 = (%5, %22, %23) sort_call_by_value:sortV1 : function(int[],int,int) -> int[]]
+sortV1.20 [	assign %5 = %21  : int[]]
+sortV1.21 [	const %25 = 0 : int]
+sortV1.22 [	assign %24 = %25  : int]
+sortV1.23 [	assign %6 = %24  : int]
+sortV1.24 [	const %27 = 0 : int]
+sortV1.25 [	assign %26 = %27  : int]
+sortV1.26 [	assign %7 = %26  : int]
+sortV1.27 [	const %29 = 0 : int]
+sortV1.28 [	assign %28 = %29  : int]
+sortV1.29 [	assign %8 = %28  : int]
+sortV1.30 [	loop (%0, %6, %7, %8, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42, %43, %44)]
+sortV1.31 [	sub %30 = %2, %1 : int]
+sortV1.32 [	ifge %8, %30 goto blklab1 : int]
+sortV1.33 [	sub %31 = %3, %1 : int]
+sortV1.34 [	ifge %6, %31 goto blklab1 : int]
+sortV1.35 [	sub %32 = %2, %3 : int]
+sortV1.36 [	ifge %7, %32 goto blklab1 : int]
+sortV1.37 [	indexof %33 = %4, %6 : int[]]
+sortV1.38 [	indexof %34 = %5, %7 : int[]]
+sortV1.39 [	ifgt %33, %34 goto blklab2 : int]
+sortV1.40 [	indexof %35 = %4, %6 : int[]]
+sortV1.41 [	indexof %36 = %4, %6 : int[]]
+sortV1.42 [	update %0[%8] = %36 : int[] -> int[]]
+sortV1.43 [	const %37 = 1 : int]
+sortV1.44 [	add %38 = %6, %37 : int]
+sortV1.45 [	assign %6 = %38  : int]
+sortV1.46 [	goto blklab3]
+sortV1.47 [.blklab2]
+sortV1.48 [	indexof %39 = %5, %7 : int[]]
+sortV1.49 [	indexof %40 = %5, %7 : int[]]
+sortV1.50 [	update %0[%8] = %40 : int[] -> int[]]
+sortV1.51 [	const %41 = 1 : int]
+sortV1.52 [	add %42 = %7, %41 : int]
+sortV1.53 [	assign %7 = %42  : int]
+sortV1.54 [.blklab3]
+sortV1.55 [	const %43 = 1 : int]
+sortV1.56 [	add %44 = %8, %43 : int]
+sortV1.57 [	assign %8 = %44  : int]
+sortV1.58 [.blklab1]
+sortV1.59 [	loop (%0, %6, %8, %45, %46, %47, %48, %49, %50, %51)]
+sortV1.60 [	sub %45 = %3, %1 : int]
+sortV1.61 [	ifge %6, %45 goto blklab4 : int]
+sortV1.62 [	indexof %46 = %4, %6 : int[]]
+sortV1.63 [	indexof %47 = %4, %6 : int[]]
+sortV1.64 [	update %0[%8] = %47 : int[] -> int[]]
+sortV1.65 [	const %48 = 1 : int]
+sortV1.66 [	add %49 = %8, %48 : int]
+sortV1.67 [	assign %8 = %49  : int]
+sortV1.68 [	const %50 = 1 : int]
+sortV1.69 [	add %51 = %6, %50 : int]
+sortV1.70 [	assign %6 = %51  : int]
+sortV1.71 [.blklab4]
+sortV1.72 [	loop (%0, %7, %8, %52, %53, %54, %55, %56, %57, %58)]
+sortV1.73 [	sub %52 = %2, %3 : int]
+sortV1.74 [	ifge %7, %52 goto blklab5 : int]
+sortV1.75 [	indexof %53 = %5, %7 : int[]]
+sortV1.76 [	indexof %54 = %5, %7 : int[]]
+sortV1.77 [	update %0[%8] = %54 : int[] -> int[]]
+sortV1.78 [	const %55 = 1 : int]
+sortV1.79 [	add %56 = %8, %55 : int]
+sortV1.80 [	assign %8 = %56  : int]
+sortV1.81 [	const %57 = 1 : int]
+sortV1.82 [	add %58 = %7, %57 : int]
+sortV1.83 [	assign %7 = %58  : int]
+sortV1.84 [.blklab5]
+sortV1.85 [.blklab0]
+sortV1.86 [	return %0 : int[]]
+sortV1.87 [	return]
+###### Live analysis for sortV1 function. ######
+In:{items, start, %17, end, %21}
+entry [ENTRY] 
+Out:{items, start, %17, end, %21}
+
+In:{items, start, %17, end, %21}
+code [BLOCK] 
+-------------------------------
+l.0:const %9 = 1 : int
+l.1:add %10 = %1, %9 : int
+-------------------------------
+Out:{items, start, %17, end, %21, %10}
+
+In:{items, start, %17, end, %21, %10}
+blklab0 [IF] 
+-------------------------------
+l.0:iflt %10, %2 goto blklab0 : int
+l.1:add %12 = %1, %2 : int
+l.2:const %13 = 2 : int
+l.3:div %14 = %12, %13 : int
+l.4:assign %11 = %14  : int
+l.5:assign %3 = %11  : int
+-------------------------------
+Out:{items, start, %17, end, pivot, %21, %10}
+
+In:{items, %10, end}
+blklab0 [ELSE] 
+-------------------------------
+l.0:ifge %10, %2 goto blklab0 : int
+-------------------------------
+Out:{items}
+
+In:{items, start, %17, end, pivot, %21, %10}
+slice9 [INVOKE] 
+-------------------------------
+l.0:invoke %16 = (%0, %1, %3) whiley/lang/Array:slice : function(int[],int,int) -> int[]
+-------------------------------
+Out:{items, start, %17, end, pivot, %21, %10}
+
+In:{items, start, %17, end, pivot, %21, %10}
+slice9 [BLOCK] 
+-------------------------------
+l.0:assign %15 = %16  : int[]
+l.1:assign %4 = %15  : int[]
+l.2:const %18 = 0 : int
+-------------------------------
+Out:{items, start, %17, end, pivot, %21, %10}
+
+In:{items, start, %17, end, pivot, %21, %10}
+sortV113 [INVOKE] 
+-------------------------------
+l.0:invoke %17 = (%4, %18, %3) sort_call_by_value:sortV1 : function(int[],int,int) -> int[]
+-------------------------------
+Out:{items, start, %17, end, pivot, %21, %10}
+
+In:{items, start, %17, end, pivot, %21, %10}
+sortV113 [BLOCK] 
+-------------------------------
+l.0:assign %4 = %17  : int[]
+-------------------------------
+Out:{items, start, end, pivot, lhs, %21, %10}
+
+In:{items, start, end, pivot, lhs, %21, %10}
+slice15 [INVOKE] 
+-------------------------------
+l.0:invoke %20 = (%0, %3, %2) whiley/lang/Array:slice : function(int[],int,int) -> int[]
+-------------------------------
+Out:{items, start, end, pivot, lhs, %21, %10}
+
+In:{items, start, end, pivot, lhs, %21, %10}
+slice15 [BLOCK] 
+-------------------------------
+l.0:assign %19 = %20  : int[]
+l.1:assign %5 = %19  : int[]
+l.2:const %22 = 0 : int
+l.3:sub %23 = %2, %3 : int
+-------------------------------
+Out:{items, start, end, pivot, lhs, %21, %10}
+
+In:{items, start, end, pivot, lhs, %21, %10}
+sortV120 [INVOKE] 
+-------------------------------
+l.0:invoke %21 = (%5, %22, %23) sort_call_by_value:sortV1 : function(int[],int,int) -> int[]
+-------------------------------
+Out:{items, start, end, pivot, lhs, %21, %10}
+
+In:{items, start, end, pivot, lhs, %21, %10}
+sortV120 [BLOCK] 
+-------------------------------
+l.0:assign %5 = %21  : int[]
+l.1:const %25 = 0 : int
+l.2:assign %24 = %25  : int
+l.3:assign %6 = %24  : int
+l.4:const %27 = 0 : int
+l.5:assign %26 = %27  : int
+l.6:assign %7 = %26  : int
+l.7:const %29 = 0 : int
+l.8:assign %28 = %29  : int
+l.9:assign %8 = %28  : int
+-------------------------------
+Out:{items, start, end, pivot, lhs, rhs, l, r, i, %10}
+
+In:{items, start, end, pivot, lhs, rhs, l, r, i, %10}
+blklab1 [LOOP_HEADER] 
+-------------------------------
+l.0:sub %30 = %2, %1 : int
+-------------------------------
+Out:{items, start, end, pivot, lhs, rhs, l, r, i, %10, %30}
+
+In:{items, start, end, pivot, lhs, rhs, l, r, i, %10, %30}
+blklab2 [LOOP_BODY] 
+-------------------------------
+l.0:ifge %8, %30 goto blklab1 : int
+l.1:sub %31 = %3, %1 : int
+l.2:ifge %6, %31 goto blklab1 : int
+l.3:sub %32 = %2, %3 : int
+l.4:ifge %7, %32 goto blklab1 : int
+l.5:indexof %33 = %4, %6 : int[]
+l.6:indexof %34 = %5, %7 : int[]
+l.7:ifgt %33, %34 goto blklab2 : int
+l.8:indexof %35 = %4, %6 : int[]
+l.9:indexof %36 = %4, %6 : int[]
+l.10:update %0[%8] = %36 : int[] -> int[]
+l.11:const %37 = 1 : int
+l.12:add %38 = %6, %37 : int
+l.13:assign %6 = %38  : int
+-------------------------------
+Out:{items, start, end, pivot, lhs, rhs, l, r, i, %10, %30}
+
+In:{items, start, end, pivot, lhs, rhs, l, r, i, %10}
+blklab1 [LOOP_EXIT] 
+Out:{items, start, end, pivot, lhs, rhs, l, r, i, %10}
+
+In:{}
+blklab2 [LOOP_EXIT] 
+-------------------------------
+l.0:indexof %39 = %5, %7 : int[]
+l.1:indexof %40 = %5, %7 : int[]
+l.2:update %0[%8] = %40 : int[] -> int[]
+l.3:const %41 = 1 : int
+l.4:add %42 = %7, %41 : int
+l.5:assign %7 = %42  : int
+-------------------------------
+Out:{}
+
+In:{}
+blklab3 [BLOCK] 
+-------------------------------
+l.0:const %43 = 1 : int
+l.1:add %44 = %8, %43 : int
+l.2:assign %8 = %44  : int
+-------------------------------
+Out:{}
+
+In:{items, start, end, pivot, lhs, rhs, l, r, i, %10}
+blklab4 [LOOP_HEADER] 
+-------------------------------
+l.0:sub %45 = %3, %1 : int
+-------------------------------
+Out:{items, start, end, pivot, lhs, rhs, l, r, i, %10, %45}
+
+In:{items, start, end, pivot, lhs, rhs, l, r, i, %10, %45}
+blklab4 [LOOP_BODY] 
+-------------------------------
+l.0:ifge %6, %45 goto blklab4 : int
+l.1:indexof %46 = %4, %6 : int[]
+l.2:indexof %47 = %4, %6 : int[]
+l.3:update %0[%8] = %47 : int[] -> int[]
+l.4:const %48 = 1 : int
+l.5:add %49 = %8, %48 : int
+l.6:assign %8 = %49  : int
+l.7:const %50 = 1 : int
+l.8:add %51 = %6, %50 : int
+l.9:assign %6 = %51  : int
+-------------------------------
+Out:{items, start, end, pivot, lhs, rhs, l, r, i, %10}
+
+In:{items, end, pivot, rhs, r, i, %10}
+blklab4 [LOOP_EXIT] 
+Out:{items, end, pivot, rhs, r, i, %10}
+
+In:{items, end, pivot, rhs, r, i, %10}
+blklab5 [LOOP_HEADER] 
+-------------------------------
+l.0:sub %52 = %2, %3 : int
+-------------------------------
+Out:{items, end, pivot, %52, rhs, r, i, %10}
+
+In:{items, end, pivot, %52, rhs, r, i, %10}
+blklab5 [LOOP_BODY] 
+-------------------------------
+l.0:ifge %7, %52 goto blklab5 : int
+l.1:indexof %53 = %5, %7 : int[]
+l.2:indexof %54 = %5, %7 : int[]
+l.3:update %0[%8] = %54 : int[] -> int[]
+l.4:const %55 = 1 : int
+l.5:add %56 = %8, %55 : int
+l.6:assign %8 = %56  : int
+l.7:const %57 = 1 : int
+l.8:add %58 = %7, %57 : int
+l.9:assign %7 = %58  : int
+-------------------------------
+Out:{items, end, pivot, rhs, r, i, %10}
+
+In:{items, end, %10}
+blklab5 [LOOP_EXIT] 
+Out:{items, end, %10}
+
+In:{items}
+items [RETURN] 
+-------------------------------
+l.0:return %0 : int[]
+-------------------------------
+Out:{items}
+
+In:{}
+exit [EXIT] 
+Out:{}
+
+main.0 [	fieldload %6 = %0 args : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}]
+main.1 [	const %7 = 0 : int]
+main.2 [	indexof %8 = %6, %7 : int[][]]
+main.3 [	invoke %5 = (%8) whiley/lang/Int:parse : function(whiley/lang/ASCII:string) -> null|int]
+main.4 [	assign %4 = %5  : null|int]
+main.5 [	assign %1 = %4  : null|int]
+main.6 [	ifis %1, null goto blklab6 : null|int]
+main.7 [	const %10 = 0 : int]
+main.8 [	assign %9 = %10  : int]
+main.9 [	assign %2 = %9  : int]
+main.10 [	const %12 = 0 : int]
+main.11 [	const %13 = 1 : int]
+main.12 [	add %14 = %1, %13 : int]
+main.13 [	listgen %15 = [12; 14] : int[]]
+main.14 [	assign %11 = %15  : int[]]
+main.15 [	assign %3 = %11  : int[]]
+main.16 [	loop (%2, %3, %16, %17, %18, %19)]
+main.17 [	ifgt %2, %1 goto blklab7 : int]
+main.18 [	sub %16 = %1, %2 : int]
+main.19 [	sub %17 = %1, %2 : int]
+main.20 [	update %3[%2] = %17 : int[] -> int[]]
+main.21 [	const %18 = 1 : int]
+main.22 [	add %19 = %2, %18 : int]
+main.23 [	assign %2 = %19  : int]
+main.24 [.blklab7]
+main.25 [	const %21 = 0 : int]
+main.26 [	const %22 = 1 : int]
+main.27 [	add %23 = %1, %22 : int]
+main.28 [	invoke %20 = (%3, %21, %23) sort_call_by_value:sortV1 : function(int[],int,int) -> int[]]
+main.29 [	assign %3 = %20  : int[]]
+main.30 [	assert]
+main.31 [	assert]
+main.32 [	fieldload %28 = %0 out : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}]
+main.33 [	fieldload %29 = %28 println : {method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s}]
+main.34 [	indexof %30 = %3, %1 : int[]]
+main.35 [	indirectinvoke %29 (%30) : method(any) -> void]
+main.36 [.blklab6]
+main.37 [	return]
+###### Live analysis for main function. ######
+In:{sys, %20, %5}
+entry [ENTRY] 
+Out:{sys, %20, %5}
+
+In:{sys, %20, %5}
+code [BLOCK] 
+-------------------------------
+l.0:fieldload %6 = %0 args : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
+l.1:const %7 = 0 : int
+l.2:indexof %8 = %6, %7 : int[][]
+-------------------------------
+Out:{sys, %20, %5}
+
+In:{sys, %20, %5}
+parse4 [INVOKE] 
+-------------------------------
+l.0:invoke %5 = (%8) whiley/lang/Int:parse : function(whiley/lang/ASCII:string) -> null|int
+-------------------------------
+Out:{sys, %20, %5}
+
+In:{sys, %20, %5}
+parse4 [BLOCK] 
+-------------------------------
+l.0:assign %4 = %5  : null|int
+l.1:assign %1 = %4  : null|int
+l.2:ifis %1, null goto blklab6 : null|int
+l.3:const %10 = 0 : int
+l.4:assign %9 = %10  : int
+l.5:assign %2 = %9  : int
+l.6:const %12 = 0 : int
+l.7:const %13 = 1 : int
+l.8:add %14 = %1, %13 : int
+l.9:listgen %15 = [12; 14] : int[]
+l.10:assign %11 = %15  : int[]
+l.11:assign %3 = %11  : int[]
+-------------------------------
+Out:{sys, max, index, %20}
+
+In:{sys, max, index, %20}
+blklab7 [LOOP_HEADER] 
+Out:{sys, max, index, %20}
+
+In:{sys, max, index, %20}
+blklab7 [LOOP_BODY] 
+-------------------------------
+l.0:ifgt %2, %1 goto blklab7 : int
+l.1:sub %16 = %1, %2 : int
+l.2:sub %17 = %1, %2 : int
+l.3:update %3[%2] = %17 : int[] -> int[]
+l.4:const %18 = 1 : int
+l.5:add %19 = %2, %18 : int
+l.6:assign %2 = %19  : int
+-------------------------------
+Out:{sys, max, index, %20}
+
+In:{sys, max, %20}
+blklab7 [LOOP_EXIT] 
+-------------------------------
+l.0:const %21 = 0 : int
+l.1:const %22 = 1 : int
+l.2:add %23 = %1, %22 : int
+-------------------------------
+Out:{sys, max, %20}
+
+In:{sys, max, %20}
+sortV129 [INVOKE] 
+-------------------------------
+l.0:invoke %20 = (%3, %21, %23) sort_call_by_value:sortV1 : function(int[],int,int) -> int[]
+-------------------------------
+Out:{sys, max, %20}
+
+In:{sys, max, %20}
+sortV129 [BLOCK] 
+-------------------------------
+l.0:assign %3 = %20  : int[]
+l.1:assert
+l.2:assert
+l.3:fieldload %28 = %0 out : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
+l.4:fieldload %29 = %28 println : {method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s}
+l.5:indexof %30 = %3, %1 : int[]
+l.6:indirectinvoke %29 (%30) : method(any) -> void
+-------------------------------
+Out:{}
+
+In:{}
+blklab6 [BLOCK] 
+Out:{}
+
+In:{}
+exit [EXIT] 
+Out:{}
+
+Code Generation completed.
+File: sort_call_by_value.c, sort_call_by_value.h Time: 202 ms Memory Usage: 126440920
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 10
+10
+Parameter:10	ExecutionTime:3592365	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 10
+10
+Parameter:10	ExecutionTime:3073214	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 10
+10
+Parameter:10	ExecutionTime:3086822	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 10
+10
+Parameter:10	ExecutionTime:3305882	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 10
+10
+Parameter:10	ExecutionTime:2866951	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 10
+10
+Parameter:10	ExecutionTime:2978369	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 10
+10
+Parameter:10	ExecutionTime:2950096	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 10
+10
+Parameter:10	ExecutionTime:2705321	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 10
+10
+Parameter:10	ExecutionTime:2961193	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 10
+10
+Parameter:10	ExecutionTime:2651955	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 100
+100
+Parameter:100	ExecutionTime:2675868	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 100
+100
+Parameter:100	ExecutionTime:2667231	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 100
+100
+Parameter:100	ExecutionTime:2933646	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 100
+100
+Parameter:100	ExecutionTime:2856009	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 100
+100
+Parameter:100	ExecutionTime:3165743	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 100
+100
+Parameter:100	ExecutionTime:5996680	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 100
+100
+Parameter:100	ExecutionTime:6773940	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 100
+100
+Parameter:100	ExecutionTime:6238025	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 100
+100
+Parameter:100	ExecutionTime:5902286	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 100
+100
+Parameter:100	ExecutionTime:6197621	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 1000
+1000
+Parameter:1000	ExecutionTime:6238887	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 1000
+1000
+Parameter:1000	ExecutionTime:6194237	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 1000
+1000
+Parameter:1000	ExecutionTime:6146524	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 1000
+1000
+Parameter:1000	ExecutionTime:5904813	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 1000
+1000
+Parameter:1000	ExecutionTime:6445957	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 1000
+1000
+Parameter:1000	ExecutionTime:6332333	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 1000
+1000
+Parameter:1000	ExecutionTime:6075701	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 1000
+1000
+Parameter:1000	ExecutionTime:6114292	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 1000
+1000
+Parameter:1000	ExecutionTime:6936945	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 1000
+1000
+Parameter:1000	ExecutionTime:6071503	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 10000
+10000
+Parameter:10000	ExecutionTime:13540962	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 10000
+10000
+Parameter:10000	ExecutionTime:9156061	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 10000
+10000
+Parameter:10000	ExecutionTime:8036614	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 10000
+10000
+Parameter:10000	ExecutionTime:8483072	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 10000
+10000
+Parameter:10000	ExecutionTime:8775675	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 10000
+10000
+Parameter:10000	ExecutionTime:8730336	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 10000
+10000
+Parameter:10000	ExecutionTime:8686849	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 10000
+10000
+Parameter:10000	ExecutionTime:8153464	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 10000
+10000
+Parameter:10000	ExecutionTime:7414336	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 10000
+10000
+Parameter:10000	ExecutionTime:9067572	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 100000
+100000
+Parameter:100000	ExecutionTime:37348244	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 100000
+100000
+Parameter:100000	ExecutionTime:33378657	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 100000
+100000
+Parameter:100000	ExecutionTime:30520216	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 100000
+100000
+Parameter:100000	ExecutionTime:31586783	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 100000
+100000
+Parameter:100000	ExecutionTime:31267990	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 100000
+100000
+Parameter:100000	ExecutionTime:32398738	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 100000
+100000
+Parameter:100000	ExecutionTime:32101354	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 100000
+100000
+Parameter:100000	ExecutionTime:32632215	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 100000
+100000
+Parameter:100000	ExecutionTime:33336701	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 100000
+100000
+Parameter:100000	ExecutionTime:32411557	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 1000000
+1000000
+Parameter:1000000	ExecutionTime:264918996	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 1000000
+1000000
+Parameter:1000000	ExecutionTime:264158617	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 1000000
+1000000
+Parameter:1000000	ExecutionTime:264577229	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 1000000
+1000000
+Parameter:1000000	ExecutionTime:264291211	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 1000000
+1000000
+Parameter:1000000	ExecutionTime:264703201	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 1000000
+1000000
+Parameter:1000000	ExecutionTime:264831649	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 1000000
+1000000
+Parameter:1000000	ExecutionTime:265075037	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 1000000
+1000000
+Parameter:1000000	ExecutionTime:264518095	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 1000000
+1000000
+Parameter:1000000	ExecutionTime:264639383	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 1000000
+1000000
+Parameter:1000000	ExecutionTime:264377009	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 10000000
+10000000
+Parameter:10000000	ExecutionTime:2775813842	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 10000000
+10000000
+Parameter:10000000	ExecutionTime:2782226468	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 10000000
+10000000
+Parameter:10000000	ExecutionTime:2779900800	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 10000000
+10000000
+Parameter:10000000	ExecutionTime:2777269490	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 10000000
+10000000
+Parameter:10000000	ExecutionTime:2779558033	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 10000000
+10000000
+Parameter:10000000	ExecutionTime:2778677966	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 10000000
+10000000
+Parameter:10000000	ExecutionTime:2774593937	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 10000000
+10000000
+Parameter:10000000	ExecutionTime:2779262150	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 10000000
+10000000
+Parameter:10000000	ExecutionTime:2789078218	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 10000000
+10000000
+Parameter:10000000	ExecutionTime:2787076228	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 20000000
+20000000
+Parameter:20000000	ExecutionTime:5668937627	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 20000000
+20000000
+Parameter:20000000	ExecutionTime:5676217626	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 20000000
+20000000
+Parameter:20000000	ExecutionTime:5686382147	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 20000000
+20000000
+Parameter:20000000	ExecutionTime:5658248015	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 20000000
+20000000
+Parameter:20000000	ExecutionTime:5684039840	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 20000000
+20000000
+Parameter:20000000	ExecutionTime:5729667128	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 20000000
+20000000
+Parameter:20000000	ExecutionTime:5672939721	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 20000000
+20000000
+Parameter:20000000	ExecutionTime:5666684020	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 20000000
+20000000
+Parameter:20000000	ExecutionTime:5679320293	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 20000000
+20000000
+Parameter:20000000	ExecutionTime:5668221506	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 30000000
+30000000
+Parameter:30000000	ExecutionTime:8588437030	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 30000000
+30000000
+Parameter:30000000	ExecutionTime:8600452355	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 30000000
+30000000
+Parameter:30000000	ExecutionTime:8602546178	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 30000000
+30000000
+Parameter:30000000	ExecutionTime:8602298397	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 30000000
+30000000
+Parameter:30000000	ExecutionTime:8605806369	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 30000000
+30000000
+Parameter:30000000	ExecutionTime:8620081374	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 30000000
+30000000
+Parameter:30000000	ExecutionTime:8607854933	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 30000000
+30000000
+Parameter:30000000	ExecutionTime:8588820510	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 30000000
+30000000
+Parameter:30000000	ExecutionTime:8632427893	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 30000000
+30000000
+Parameter:30000000	ExecutionTime:8604638062	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 40000000
+40000000
+Parameter:40000000	ExecutionTime:11572800045	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 40000000
+40000000
+Parameter:40000000	ExecutionTime:11577508152	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 40000000
+40000000
+Parameter:40000000	ExecutionTime:11574715936	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 40000000
+40000000
+Parameter:40000000	ExecutionTime:11564205426	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 40000000
+40000000
+Parameter:40000000	ExecutionTime:11566611190	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 40000000
+40000000
+Parameter:40000000	ExecutionTime:11569217502	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 40000000
+40000000
+Parameter:40000000	ExecutionTime:11578528889	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 40000000
+40000000
+Parameter:40000000	ExecutionTime:11575591800	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 40000000
+40000000
+Parameter:40000000	ExecutionTime:11564599887	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 40000000
+40000000
+Parameter:40000000	ExecutionTime:11566075211	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 50000000
+50000000
+Parameter:50000000	ExecutionTime:14491377134	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 50000000
+50000000
+Parameter:50000000	ExecutionTime:14514900265	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 50000000
+50000000
+Parameter:50000000	ExecutionTime:14488833084	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 50000000
+50000000
+Parameter:50000000	ExecutionTime:14514834437	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 50000000
+50000000
+Parameter:50000000	ExecutionTime:14583975551	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 50000000
+50000000
+Parameter:50000000	ExecutionTime:14502767225	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 50000000
+50000000
+Parameter:50000000	ExecutionTime:14497911956	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 50000000
+50000000
+Parameter:50000000	ExecutionTime:14525709507	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 50000000
+50000000
+Parameter:50000000	ExecutionTime:14527008201	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 50000000
+50000000
+Parameter:50000000	ExecutionTime:14525651492	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 60000000
+60000000
+Parameter:60000000	ExecutionTime:17564710884	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 60000000
+60000000
+Parameter:60000000	ExecutionTime:17553620977	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 60000000
+60000000
+Parameter:60000000	ExecutionTime:17573713899	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 60000000
+60000000
+Parameter:60000000	ExecutionTime:17556114239	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 60000000
+60000000
+Parameter:60000000	ExecutionTime:17568832718	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 60000000
+60000000
+Parameter:60000000	ExecutionTime:17572404421	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 60000000
+60000000
+Parameter:60000000	ExecutionTime:17542292214	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 60000000
+60000000
+Parameter:60000000	ExecutionTime:17553302301	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 60000000
+60000000
+Parameter:60000000	ExecutionTime:17565662006	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 60000000
+60000000
+Parameter:60000000	ExecutionTime:17566908932	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 70000000
+70000000
+Parameter:70000000	ExecutionTime:81533504010	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 70000000
+70000000
+Parameter:70000000	ExecutionTime:85381963146	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 70000000
+70000000
+Parameter:70000000	ExecutionTime:85783573028	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 70000000
+70000000
+Parameter:70000000	ExecutionTime:75999932593	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 70000000
+70000000
+Parameter:70000000	ExecutionTime:79342825684	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 70000000
+70000000
+Parameter:70000000	ExecutionTime:96403832074	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 70000000
+70000000
+Parameter:70000000	ExecutionTime:79226528416	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 70000000
+70000000
+Parameter:70000000	ExecutionTime:83604675507	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 70000000
+70000000
+Parameter:70000000	ExecutionTime:81883699323	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 70000000
+70000000
+Parameter:70000000	ExecutionTime:80316062586	nanoseconds.
+Beginning the benchmarks of fast sort_call_by_value C program method on array size = 80000000
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 0
+cpu cores	: 4
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.98
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 1
+cpu cores	: 4
+apicid		: 2
+initial apicid	: 2
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.98
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 2
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 2
+cpu cores	: 4
+apicid		: 4
+initial apicid	: 4
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.98
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 3
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 3
+cpu cores	: 4
+apicid		: 6
+initial apicid	: 6
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.98
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 4
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 3401.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 0
+cpu cores	: 4
+apicid		: 1
+initial apicid	: 1
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.98
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 5
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 1
+cpu cores	: 4
+apicid		: 3
+initial apicid	: 3
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.98
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 6
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 2
+cpu cores	: 4
+apicid		: 5
+initial apicid	: 5
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.98
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 7
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 3
+cpu cores	: 4
+apicid		: 7
+initial apicid	: 7
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.98
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
