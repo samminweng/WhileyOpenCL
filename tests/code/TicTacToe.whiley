@@ -1,4 +1,7 @@
-import whiley.lang.System
+import whiley.lang.*
+
+type nat is (int x) where x >= 0
+
 // ==================================================================
 // A square on the board is either blank, or holds either a circle or
 // cross.
@@ -6,19 +9,18 @@ import whiley.lang.System
 constant BLANK is 0
 constant CIRCLE is 1
 constant CROSS is 2
-constant SQUARESIZE is 100
 
-type nat is (int x) where x >= 0
 type Square is (int x) where x == BLANK || x == CIRCLE || x == CROSS
+
 // ==================================================================
 // A board consists of 9 squares, and a move counter
 // ==================================================================
 type Board is {
     nat move,
-    [Square] pieces // 3 x 3
-} where |pieces| == SQUARESIZE && move <= SQUARESIZE && 
-    countOf(pieces,BLANK) == (SQUARESIZE - move) &&
-    (countOf(pieces,CIRCLE) == countOf(pieces,CROSS) ||    
+    Square[] pieces // 3 x 3
+} where |pieces| == 9 && move <= 9 &&
+    countOf(pieces,BLANK) == (9 - move) &&
+    (countOf(pieces,CIRCLE) == countOf(pieces,CROSS) ||
      countOf(pieces,CIRCLE) == countOf(pieces,CROSS)+1)
 
 // ==================================================================
@@ -27,15 +29,12 @@ type Board is {
 function EmptyBoard() -> (Board r)
 // Empty board has no moves yet
 ensures r.move == 0:
-    [int] pieces = []
-    for i in 0..SQUARESIZE:
-        pieces = pieces ++ [BLANK]
+    //
     return {
         move: 0,
-        pieces: pieces
-        //pieces: [BLANK,BLANK,BLANK,
-        //         BLANK,BLANK,BLANK,
-        //         BLANK,BLANK,BLANK]
+        pieces: [BLANK,BLANK,BLANK,
+                 BLANK,BLANK,BLANK,
+                 BLANK,BLANK,BLANK]
     }
 
 // ===============================================================
@@ -45,7 +44,7 @@ ensures r.move == 0:
 // ===============================================================
 function play(Board b, nat pos) -> (Board r)
 // Board position to place onto must be valid
-requires pos < SQUARESIZE && b.move < SQUARESIZE && b.pieces[pos] == BLANK
+requires pos < 9 && b.move < 9 && b.pieces[pos] == BLANK
 // Ensures move count is incremented
 ensures r.move == r.move + 1:
     // decide who's moving
@@ -57,26 +56,40 @@ ensures r.move == r.move + 1:
         b.pieces[pos] = CROSS
     // update the move counter
     b.move = b.move + 1
-   // done
+    // done
     return b
 
 // ===============================================================
 // Helper Method
 // ===============================================================
-function countOf([Square] pieces, Square s) -> (int r):
+function countOf(Square[] pieces, Square s) -> (int r):
+    //
     int count = 0
-    int size = |pieces|
-    for i in 0..size:
+    int i = 0
+    while i < |pieces|:
         if pieces[i] == s:
             count = count + 1
+        i = i + 1
+    //
     return count
 
-method main(System.Console console) -> void:
+// ===============================================================
+// Test Game
+// ===============================================================
+constant GAME is [0,1,2,3,4,5,6,7,8]
+
+method main(System.Console console):
     Board b = EmptyBoard()
-    for p in 0..SQUARESIZE:        
-        //console.out.println(p)
-        if p < 0 || p > SQUARESIZE || b.pieces[p] != BLANK || b.move == SQUARESIZE:
-            console.out.println("INVALID MOVE!")
+    int i = 0
+    while i < |GAME|:
+        int p = GAME[i]
+        console.out.print_s("BOARD: ")
+        console.out.println(Any.toString(b))
+        console.out.print_s("MOVE: ")
+        console.out.println(Any.toString(p))
+        if p < 0 || p > 9 || b.pieces[p] != BLANK || b.move == 9:
+            console.out.println_s("INVALID MOVE!")
+            break
         else:
             b = play(b,p)
-    console.out.println(b)	
+        i = i + 1

@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +46,7 @@ import wyopcl.translator.bound.BasicBlock;
  *
  */
 public class CodeGenerator extends AbstractCodeGenerator {
-	private Collection<wyil.lang.WyilFile.Type> userTypes;// Store all the user-defined types, e.g. Board.
+
 	private CopyEliminationAnalyzer analyzer = null;
 
 	/**
@@ -56,7 +57,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	public CodeGenerator(Configuration config) {
 		super(config);
-		// this.userTypes = userTypes;
 	}
 
 	public CodeGenerator(Configuration config, CopyEliminationAnalyzer analyzer) {
@@ -164,51 +164,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			System.out.println(del);
 		}
 		return del;
-	}
-
-	/**
-	 * Get the user defined type by the name
-	 * 
-	 * @param name
-	 * @return
-	 */
-	private wyil.lang.WyilFile.Type getUserDefinedType(String name) {
-		for (wyil.lang.WyilFile.Type user_type : this.userTypes) {
-			if (user_type.name().equals(name)) {
-				return user_type;
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * Get the user defined type by checking if the user type has the same fields as the given record type.
-	 * 
-	 * @param type
-	 *            the record type.
-	 * @return the user type. Return null if no type is matched.
-	 */
-	private wyil.lang.WyilFile.Type getUserDefinedType(Type.Record type) {
-		for (wyil.lang.WyilFile.Type user_type : this.userTypes) {
-			if (user_type.type() instanceof Type.Record) {
-				Type.Record record = (Type.Record) user_type.type();
-				// check if record and type have the same fields.
-				boolean isTheSame = true;
-				for (Entry<String, Type> field : type.fields().entrySet()) {
-					Type recordFieldType = record.field(field.getKey());
-					if (recordFieldType != null) {
-						isTheSame &= true;
-					} else {
-						isTheSame &= false;
-					}
-				}
-
-				if (isTheSame) {
-					return user_type;
-				}
-			}
-		}
-		return null;
 	}
 
 	/**
@@ -505,8 +460,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				for (int index = 0; index < code.operands().length; index++) {
 					Type type = code.type().params().get(index);
 					if (type instanceof Type.Array) {
-						statement += (ret + "_size") + "=" + store.getVar(code.operand(index))
-								+ "_size;\n";
+						statement += (ret + "_size") + "=" + store.getVar(code.operand(index)) + "_size;\n";
 					}
 				}
 			}
@@ -588,6 +542,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * _16 = slice(_items, _items_size, _start,  _pivot);<br>
 	 * _16_size = _pivot - _start;
 	 * </code>
+	 * <li>Any.toString<br>
+	 * <code>invoke %18 = (%1) whiley/lang/Any:toString </code>
+	 * 
 	 * 
 	 * @param code
 	 *            the Invoked Wyil code
@@ -611,10 +568,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				String start = store.getVar(code.operand(1));
 				String end = store.getVar(code.operand(2));
 				// Add 'slice' function call.
-				statement += store.getIndent() + store.getVar(code.target()) + " = slice(" + arr_name + ", " + arr_name + "_size, " + start
-						+ "," + end + ");\n";
+				statement += store.getIndent() + store.getVar(code.target()) + " = slice(" + arr_name + ", " + arr_name
+						+ "_size, " + start + "," + end + ");\n";
 				// Add array size.
 				statement += store.getIndent() + store.getVar(code.target()) + "_size = " + end + " - " + start + ";";
+				break;
+			case "toString":
+				String target = store.getVar(code.target());
+				statement += store.getIndent() + target + " = " + code.operand(0);
 				break;
 			default:
 				throw new RuntimeException("Un-implemented code:" + code);
@@ -906,7 +867,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		} else {
 			// Negative register means this function/method does not have return value.
 			// So we do need to generate the code, except for main method.
-			if(function.name().equals("main")){ 
+			if (function.name().equals("main")) {
 				// If the method is "main", then add a simple exit code with value
 				statement += "exit(0);";
 			}
@@ -1380,25 +1341,21 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		}
 
 		if (type instanceof Type.Record) {
-			Type.Record record = (Type.Record) type;
-			HashMap<String, Type> fields = record.fields();
-			// Check if the var is the function call of print,...
+			HashMap<String, Type> fields = ((Type.Record) type).fields();
+			// Check if the field is the function call of print,...
 			if (fields.containsKey("print") || fields.containsKey("println") || fields.containsKey("print_s")
 					|| fields.containsKey("println_s")) {
 				// No needs to do the translation.
 				return null;
 			}
 
-			// Check
+			// The input 'type' is input arguments of main method.
 			if (fields.containsKey("args")) {
 				return "int argc, char** args";
 			}
 
 			// Check if the type is an instance of user defined type.
-			wyil.lang.WyilFile.Type userDefinedType = getUserDefinedType((Type.Record) type);
-			if (userDefinedType != null) {
-				return userDefinedType.name();
-			}
+			return getUserDefinedType((Type.Record) type).name();
 		}
 
 		if (type instanceof Type.Union) {
@@ -1620,15 +1577,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			String rhs = store.getVar(code.operand(0));
 			Type rhs_type = store.getVarType(code.operand(0));
 			// Get the value of rhs operand
-			if(!isCopyEliminated(code.operand(0), code, function)){
+			if (!isCopyEliminated(code.operand(0), code, function)) {
 				// long long* _3_value = clone(_3, _3_size);
-				statement += store.getIndent() + translateType(rhs_type) + " " + rhs + "_value" + " = clone(" + rhs + ", "
-						+ rhs + "_size);\n";
-			}else{
-				// No copies is needed, e.g. 'long long _3_value = _3;' 
+				statement += store.getIndent() + translateType(rhs_type) + " " + rhs + "_value" + " = clone(" + rhs
+						+ ", " + rhs + "_size);\n";
+			} else {
+				// No copies is needed, e.g. 'long long _3_value = _3;'
 				statement += store.getIndent() + translateType(rhs_type) + " " + rhs + "_value" + " = " + rhs + ";\n";
 			}
-			
+
 			// Get the address of rhs and assign it to lhs with type casting.
 			String lhs = store.getVar(code.target());
 			Type lhs_type = store.getVarType(code.target());
@@ -1661,5 +1618,85 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Assign array size.
 		statement += store.getIndent() + store.getVar(code.target()) + "_size = " + store.getVar(code.operand(1)) + ";";
 		store.addStatement(code, statement);
+	}
+
+	/**
+	 * Translate the user defined data types, e.g.
+	 * 
+	 * <code>
+	 * typedef struct{<br>
+	 * 		int x;<br>
+	 * } Square;<br>
+	 * </code>
+	 */
+	@Override
+	protected void writeCodeToFile(List<wyil.lang.WyilFile.Type> userTypes) {
+		String filename = config.getFilename();
+		FileWriter writer;
+		try {
+			// Check if the header file exits.
+			File f = new File(filename + ".h");
+			if (!f.exists()) {
+				writer = new FileWriter(f);
+				// If no such a file, write the include files to include Util.h
+				writer.append("#include \"Util.h\"\n");
+			} else {
+				writer = new FileWriter(f, true);
+			}
+			String del = "";
+			for (wyil.lang.WyilFile.Type userType : userTypes) {
+				del += "typedef struct{\n";
+				Type type = userType.type();
+				if(type instanceof Type.Int){
+					del += "\t" + translateType(type) + " x;\n";
+				}else if(type instanceof Type.Record){
+					Iterator<Entry<String, Type>> iterator = ((Type.Record)type).fields().entrySet().iterator();
+					while(iterator.hasNext()){
+						Entry<String, Type> field = iterator.next();
+						del += "\t"+ translateType(field.getValue()) + " "+ field.getKey()+ ";\n";
+					}
+				}
+				del += "} " + userType.name() + ";\n";
+			}
+			// Write out user defined types
+			writer.append(del);
+			writer.close();
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		}
+	}
+	/**
+	 * Defines constants, e.g.
+	 * <code>
+	 * #define BLANK 0
+	 * </code>
+	 * 
+	 * 
+	 */
+	@Override
+	protected void wrieteCodeToFile(List<wyil.lang.WyilFile.Constant> constants) {
+		String filename = config.getFilename();
+		FileWriter writer;
+		try {
+			// Check if the header file exits.
+			File f = new File(filename + ".h");
+			if (!f.exists()) {
+				writer = new FileWriter(f);
+				// If no such a file, write the include files to include Util.h
+				writer.append("#include \"Util.h\"\n");
+			} else {
+				writer = new FileWriter(f, true);
+			}
+			String del = "";
+			for (wyil.lang.WyilFile.Constant constant : constants) {
+				del += "#define " +constant.name() +" "+constant.constant() +"\n"; 
+			}
+			// Write out user defined types
+			writer.append(del);
+			writer.close();
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		}
+		
 	}
 }
