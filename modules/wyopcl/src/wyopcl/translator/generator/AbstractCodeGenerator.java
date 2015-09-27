@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import wyc.lang.Stmt.VariableDeclaration;
 import wycc.lang.SyntaxError;
@@ -364,11 +365,13 @@ public abstract class AbstractCodeGenerator {
 		private String indent;
 		private FunctionOrMethod function;
 		private List<String> statements;// store the list of translated C code.
-
+		private HashMap<Integer, String> fields;// Stores the fields of register, e.g. 'println', 'print_s', 'println_s'
+		
 		public CodeStore(FunctionOrMethod function) {
 			this.indent = "\t";
 			this.function = function;
 			this.statements = new ArrayList<String>();
+			this.fields = new HashMap<Integer, String>();
 		}
 
 		/**
@@ -387,7 +390,7 @@ public abstract class AbstractCodeGenerator {
 		 * @return true if the variable is the size variable of input parameter.
 		 * 
 		 */
-		private Boolean isInputParameter(String var_name) {
+		/*private Boolean isInputParameter(String var_name) {
 			// Check if the variable is the size variable of the input
 			// parameter.
 			String variable_name = var_name;
@@ -412,8 +415,24 @@ public abstract class AbstractCodeGenerator {
 				}
 			}
 			return false;
+		}*/
+		/**
+		 * Load the field to the given register.
+		 * @param reg
+		 * @param field
+		 */
+		protected void loadField(int reg, String field){
+			this.fields.put(reg, field);
 		}
-
+		/**
+		 * Get the field of the given register.
+		 * @param reg
+		 * @return
+		 */
+		protected String getField(int reg){
+			return this.fields.get(reg);
+		}
+		
 		protected List<String> getStatements() {
 			return this.statements;
 		}

@@ -1026,6 +1026,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String statement = store.getIndent();
 		// Skip printing statements, e.g. 'print_s' 
 		if (field.equals("out") || field.equals("println") || field.equals("print_s") || field.equals("println_s")) {
+			// Load the field to the target register.
+			store.loadField(code.target(), field);
 			statement = null;
 		} else if (field.equals("args")) {
 			// Convert the arguments into an array of integer array (long long**).
@@ -1075,7 +1077,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement += translateIndirectInvokePrintf(user_type.type(), var, function);
 		} else if (type instanceof Type.Array) {
 			// Print out a pointer without specifying array size.
-			statement += indent + "indirect_printf_array_withoutlength(" + var + ");\n";
+			statement += indent + "printf_array_withoutlength(" + var + ");\n";
 		} else if (type instanceof Type.Int) {
 			statement += indent + "indirect_printf(" + var + ");\n";
 		} else if (type instanceof Type.Record) {
@@ -1123,23 +1125,32 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 */
 	protected void translate(Codes.IndirectInvoke code, FunctionOrMethod function) {
-		String statement = "";
 		CodeStore store = this.getCodeStore(function);
-		if (code.type() instanceof Type.FunctionOrMethod) {
-			String var = store.getVar(code.parameter(0));
-			// Get input type
-			// Type type = code.type().params().get(0);
-			// Type type = getVarDeclaration(var);
-			Type type = store.getVarType(code.parameter(0));
-			// Check if the type is a user-defined type.
-			if (type instanceof Type.Array) {
-				// Added the additional 'array_size' variable to indicate the
-				// length of an array.
-				// Due to strictly forbidding the overlapping in C, the function
-				// is named differently.
-				statement += store.getIndent() + "indirect_printf_array(" + var + ", " + var + "_size);\n";
-			} else {
-				statement += translateIndirectInvokePrintf(type, var, function);
+		String statement = store.getIndent();
+		if (code.type() instanceof Type.FunctionOrMethod) {	
+			// Get the function name, e.g. 'printf'.  
+			String print_name = store.getField(code.operand(0));
+			// Get the input
+			String input = store.getVar(code.operand(1));
+			switch(print_name){
+			case "print_s":
+				// E.g. 'println("%s", str);'
+				statement += "printf(\"%s\","+ input +");";
+				break;
+			case "println_s":
+				statement += "printf(\"%s\\n\"," + input+");";
+				break;
+			case "println":
+				// Check input's type to call different println function.
+				Type type = store.getVarType(code.operand(1));
+				if (type instanceof Type.Array) {
+					// Print out a pointer without specifying array size.
+					statement += "println_array(" + input + ", "+input+"_size);\n";
+				}else{
+					throw new RuntimeException("Not implemented."+code);
+				}
+				
+				break;
 			}
 		}
 		store.addStatement(code, statement);
