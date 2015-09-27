@@ -24,7 +24,7 @@ check_exit (){
 
 
 # Parameters for checking memeory on Megatron using Valgrind and JAVA profiker. 
-arraysizes="10 100 1000 10000 100000 1000000"
+arraysizes="10 100 1000 10000 100000 1000000 10000000 2000000"
 #
 # Generate and compile Java code using Whiley compiler
 #
@@ -146,11 +146,9 @@ mem_c (){
 # Measure the memory usage of the generated C code
 rm -rf $PWD/mem/valgrind
 mem_c sort call_by_value fast
-mem_c sort call_by_value slow
-mem_c sort call_by_reference fast
 mem_c sort call_by_reference fast
 # Remove previous GC files.
-rm -rf $PWD/mem/GC/*.*
+#rm -rf $PWD/mem/GC/*.*
 # Profile the GC activities of generated Java code
-mem_java sort call_by_value
-mem_java sort call_by_reference
+#mem_java sort call_by_value
+#mem_java sort call_by_reference
