@@ -186,17 +186,22 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String stat = null;
 		CodeStore store = this.getCodeStore(function);
 		String target = store.getVar(code.target());
+		Constant constant = code.constant;
 		String indent = store.getIndent();
 		if (code.assignedType() instanceof Type.Array) {
+			// Convert it into a constant list
+			Constant.List list = (Constant.List) constant;
 			// Initialize an array
-			if (((Constant.List) code.constant).values.isEmpty()) {
+			if (list.values.isEmpty()) {
 				stat = indent + target + "=(long long*)malloc(1*sizeof(long long));\n";
 				stat += indent + "if(" + target + " == NULL) {fprintf(stderr,\"fail to malloc\");\n " + "exit(-1);}\n";
 				stat += indent + target + "_size = 0;";
+			}else{
+				stat = indent + target + "="+list.values+";";
 			}
 		} else {
 			// Add a statement
-			stat = indent + target + " = " + code.constant + ";";
+			stat = indent + target + " = " + constant + ";";
 		}
 		store.addStatement(code, stat);
 	}
@@ -575,7 +580,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				break;
 			case "toString":
 				String target = store.getVar(code.target());
-				statement += store.getIndent() + target + " = " + code.operand(0);
+				statement += store.getIndent() + target + " = " + code.operand(0)+";";
 				break;
 			default:
 				throw new RuntimeException("Un-implemented code:" + code);
@@ -1013,12 +1018,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String field = code.field;
 		CodeStore store = this.getCodeStore(function);
 		String statement = store.getIndent();
-
-		if (field.equals("out") || field.equals("println")) {
+		// Skip printing statements, e.g. 'print_s' 
+		if (field.equals("out") || field.equals("println") || field.equals("print_s") || field.equals("println_s")) {
 			statement = null;
 		} else if (field.equals("args")) {
 			// Convert the arguments into an array of integer array (long long**).
-			//
 			statement += store.getVar(code.target()) + " = convertArgsToIntArray(argc, args, "
 					+ store.getVar(code.target()) + "_size);";
 		} else {
