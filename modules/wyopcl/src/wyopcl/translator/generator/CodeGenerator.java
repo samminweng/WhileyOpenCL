@@ -197,7 +197,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				stat += indent + "if(" + target + " == NULL) {fprintf(stderr,\"fail to malloc\");\n " + "exit(-1);}\n";
 				stat += indent + target + "_size = 0;";
 			}else{
-				stat = indent + target + "="+list.values+";";
+				// E.g. 'const %8 = [0,1,2,3,4,5,6,7,8] : int[]' wyil code can be translated into
+				// Trim '[' and ']' from the array string. 
+				String array_values = list.values.toString().replace("[", "").replace("]", "");
+				// long long _8_value[] =  {0, 1, 2, 3, 4, 5, 6, 7, 8}; // Introduce 'value' variable.
+				stat = indent +translateType(list.type().element()) + " " + target + "_value = {"+array_values+"};\n";
+				// _8 = _8_value;
+				stat += indent +target+" = " + target+"_value;";
 			}
 		} else {
 			// Add a statement
