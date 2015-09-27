@@ -1645,18 +1645,21 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}
 			String del = "";
 			for (wyil.lang.WyilFile.Type userType : userTypes) {
-				del += "typedef struct{\n";
 				Type type = userType.type();
 				if(type instanceof Type.Int){
-					del += "\t" + translateType(type) + " x;\n";
+					// This gives primity integer type a new name,
+					// e.g. 'typedef long long Square' defines Square for a long long integer.
+					del += "typedef " + translateType(type) + " "+userType.name()+";\n";
 				}else if(type instanceof Type.Record){
+					del += "typedef struct{\n";
 					Iterator<Entry<String, Type>> iterator = ((Type.Record)type).fields().entrySet().iterator();
 					while(iterator.hasNext()){
 						Entry<String, Type> field = iterator.next();
 						del += "\t"+ translateType(field.getValue()) + " "+ field.getKey()+ ";\n";
 					}
+					del += "} " + userType.name() + ";\n";
 				}
-				del += "} " + userType.name() + ";\n";
+				
 			}
 			// Write out user defined types
 			writer.append(del);
