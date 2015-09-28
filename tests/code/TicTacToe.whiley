@@ -93,3 +93,5 @@ method main(System.Console console):
         else:
             b = play(b,p)
         i = i + 1
+    assert b.move == 9
+    assert b.pieces == [1, 2, 1, 2, 1, 2, 1, 2, 1]
