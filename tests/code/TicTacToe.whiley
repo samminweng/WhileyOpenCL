@@ -84,9 +84,9 @@ method main(System.Console console):
     while i < |GAME|:
         int p = GAME[i]
         console.out.print_s("BOARD: ")
-        console.out.println(Any.toString(b))
+        console.out.println(b)
         console.out.print_s("MOVE: ")
-        console.out.println(Any.toString(p))
+        console.out.println(p)
         if p < 0 || p > 9 || b.pieces[p] != BLANK || b.move == 9:
             console.out.println_s("INVALID MOVE!")
             break

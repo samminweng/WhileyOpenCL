@@ -1137,21 +1137,26 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			switch(print_name){
 			case "print_s":
 				// E.g. 'println("%s", str);'
-				statement += "printf(\"%s\","+ input +");";
+				statement += "printf_s("+ input +", "+input+"_size);";
 				break;
 			case "println_s":
-				statement += "printf(\"%s\\n\"," + input+");";
+				statement += "println_s("+ input +", "+input+"_size);";
 				break;
 			case "println":
 				// Check input's type to call different println function.
 				Type type = store.getVarType(code.operand(1));
-				if (type instanceof Type.Array) {
+				if(type instanceof Type.Int){
+					statement += "printf(\"%d\\n\", "+input+");";
+				}else if (type instanceof Type.Array) {
 					// Print out a pointer without specifying array size.
-					statement += "println_array(" + input + ", "+input+"_size);\n";
+					statement += "println_array(" + input + ", "+input+"_size);";
+				}else if (type instanceof Type.Nominal) {
+					Type.Nominal nominal = (Type.Nominal) type;
+					// Print out a user-defined type structure
+					statement += "println_"+nominal.name().name()+"("+input+");";
 				}else{
 					throw new RuntimeException("Not implemented."+code);
 				}
-				
 				break;
 			}
 		}
