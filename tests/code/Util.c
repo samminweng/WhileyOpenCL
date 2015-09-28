@@ -246,7 +246,7 @@ void println_s(long long* input, long long input_size){
 }
 /**Print out an array of long long integers. If the array size > 10, then 
 print the first 10 items and the last item.*/
-void println_array(long long* input, long long input_size) {
+void printf_array(long long* input, long long input_size) {
 	long long i = 0;
 	//Determines whether to add ','.
 	int isFirst = true;

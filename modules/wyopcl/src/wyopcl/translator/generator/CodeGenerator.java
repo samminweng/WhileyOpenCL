@@ -48,7 +48,6 @@ import wyopcl.translator.bound.BasicBlock;
  *
  */
 public class CodeGenerator extends AbstractCodeGenerator {
-
 	private CopyEliminationAnalyzer analyzer = null;
 
 	/**
@@ -198,16 +197,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				stat = indent + target + "=(long long*)malloc(1*sizeof(long long));\n";
 				stat += indent + "if(" + target + " == NULL) {fprintf(stderr,\"fail to malloc\");\n " + "exit(-1);}\n";
 				stat += indent + target + "_size = 0;";
-			}else{
+			} else {
 				// E.g. 'const %8 = [0,1,2,3,4,5,6,7,8] : int[]' wyil code can be translated into
-				// Trim '[' and ']' from the array string. 
+				// Trim '[' and ']' from the array string.
 				String array_values = list.values.toString().replace("[", "").replace("]", "");
-				// long long _8_value[] =  {0, 1, 2, 3, 4, 5, 6, 7, 8}; // Introduce 'value' variable.
-				stat = indent +translateType(list.type().element()) + " " + target + "_value[] = {"+array_values+"};\n";
+				// long long _8_value[] = {0, 1, 2, 3, 4, 5, 6, 7, 8}; // Introduce 'value' variable.
+				stat = indent + translateType(list.type().element()) + " " + target + "_value[] = {" + array_values
+						+ "};\n";
 				// _8 = _8_value;
-				stat += indent +target+" = " + target+"_value;\n";
+				stat += indent + target + " = " + target + "_value;\n";
 				// _8_size = 9;
-				stat += indent + target+"_size = " + list.values.size() +";";
+				stat += indent + target + "_size = " + list.values.size() + ";";
 			}
 		} else {
 			// Add a statement
@@ -590,7 +590,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				break;
 			case "toString":
 				String target = store.getVar(code.target());
-				statement += store.getIndent() + target + " = " + code.operand(0)+";";
+				statement += store.getIndent() + target + " = " + code.operand(0) + ";";
 				break;
 			default:
 				throw new RuntimeException("Un-implemented code:" + code);
@@ -1028,7 +1028,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String field = code.field;
 		CodeStore store = this.getCodeStore(function);
 		String statement = store.getIndent();
-		// Skip printing statements, e.g. 'print_s' 
+		// Skip printing statements, e.g. 'print_s'
 		if (field.equals("out") || field.equals("println") || field.equals("print_s") || field.equals("println_s")) {
 			// Load the field to the target register.
 			store.loadField(code.target(), field);
@@ -1071,34 +1071,20 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 *         TODO Print out a pointer without array size. Is it possible?
 	 * 
 	 */
-	private String translateIndirectInvokePrintf(Type type, String var, FunctionOrMethod function) {
-		CodeStore store = this.getCodeStore(function);
-		String indent = store.getIndent();
-		String statement = "";
-		if (type instanceof Type.Nominal) {
-			Type.Nominal nominal = (Type.Nominal) type;
-			wyil.lang.WyilFile.Type user_type = getUserDefinedType(nominal.name().name());
-			statement += translateIndirectInvokePrintf(user_type.type(), var, function);
-		} else if (type instanceof Type.Array) {
-			// Print out a pointer without specifying array size.
-			statement += indent + "printf_array_withoutlength(" + var + ");\n";
-		} else if (type instanceof Type.Int) {
-			statement += indent + "indirect_printf(" + var + ");\n";
-		} else if (type instanceof Type.Record) {
-			// Generalize the indirect_invoke_printf function to print out a
-			// record.
-			Type.Record record = (Type.Record) type;
-			for (Entry<String, Type> field : record.fields().entrySet()) {
-				// Print out the field name
-				statement += indent + "indrect_printf_string(\"" + field.getKey() + "\t\");\n";
-				// Based on the field Type, print out the field value using
-				// the different 'printf' functions.
-				statement += translateIndirectInvokePrintf(field.getValue(), var + "." + field.getKey(), function);
-			}
-		}
-		return statement;
-
-	}
+	/*
+	 * private String translateIndirectInvokePrintf(Type type, String var, FunctionOrMethod function) { CodeStore store
+	 * = this.getCodeStore(function); String indent = store.getIndent(); String statement = ""; if (type instanceof
+	 * Type.Nominal) { Type.Nominal nominal = (Type.Nominal) type; wyil.lang.WyilFile.Type user_type =
+	 * getUserDefinedType(nominal.name().name()); statement += translateIndirectInvokePrintf(user_type.type(), var,
+	 * function); } else if (type instanceof Type.Array) { // Print out a pointer without specifying array size.
+	 * statement += indent + "printf_array_withoutlength(" + var + ");\n"; } else if (type instanceof Type.Int) {
+	 * statement += indent + "indirect_printf(" + var + ");\n"; } else if (type instanceof Type.Record) { // Generalize
+	 * the indirect_invoke_printf function to print out a // record. Type.Record record = (Type.Record) type; for
+	 * (Entry<String, Type> field : record.fields().entrySet()) { // Print out the field name statement += indent +
+	 * "indrect_printf_string(\"" + field.getKey() + "\t\");\n"; // Based on the field Type, print out the field value
+	 * using // the different 'printf' functions. statement += translateIndirectInvokePrintf(field.getValue(), var + "."
+	 * + field.getKey(), function); } } return statement; }
+	 */
 
 	/**
 	 * Generates the C code for <code>Codes.IndirectInvoke</code>. For example,
@@ -1131,33 +1117,33 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(Codes.IndirectInvoke code, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
 		String statement = store.getIndent();
-		if (code.type() instanceof Type.FunctionOrMethod) {	
-			// Get the function name, e.g. 'printf'.  
+		if (code.type() instanceof Type.FunctionOrMethod) {
+			// Get the function name, e.g. 'printf'.
 			String print_name = store.getField(code.operand(0));
 			// Get the input
 			String input = store.getVar(code.operand(1));
-			switch(print_name){
+			switch (print_name) {
 			case "print_s":
 				// E.g. 'println("%s", str);'
-				statement += "printf_s("+ input +", "+input+"_size);";
+				statement += "printf_s(" + input + ", " + input + "_size);";
 				break;
 			case "println_s":
-				statement += "println_s("+ input +", "+input+"_size);";
+				statement += "println_s(" + input + ", " + input + "_size);";
 				break;
 			case "println":
 				// Check input's type to call different println function.
 				Type type = store.getVarType(code.operand(1));
-				if(type instanceof Type.Int){
-					statement += "printf(\"%d\\n\", "+input+");";
-				}else if (type instanceof Type.Array) {
+				if (type instanceof Type.Int) {
+					statement += "printf(\"%d\\n\", " + input + ");";
+				} else if (type instanceof Type.Array) {
 					// Print out a pointer without specifying array size.
-					statement += "printf_array(" + input + ", "+input+"_size);";
-				}else if (type instanceof Type.Nominal) {
+					statement += "printf_array(" + input + ", " + input + "_size);";
+				} else if (type instanceof Type.Nominal) {
 					Type.Nominal nominal = (Type.Nominal) type;
 					// Print out a user-defined type structure
-					statement += "printf_"+nominal.name().name()+"("+input+");";
-				}else{
-					throw new RuntimeException("Not implemented."+code);
+					statement += "printf_" + nominal.name().name() + "(" + input + ");";
+				} else {
+					throw new RuntimeException("Not implemented." + code);
 				}
 				break;
 			}
@@ -1435,24 +1421,24 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		CodeStore store = this.getCodeStore(function);
 		HashMap<String, Type> fields = code.type().fields();
 		String statement = "";
-		// Get the set of field names and convert it to an array of string. 
+		// Get the set of field names and convert it to an array of string.
 		String[] names = fields.keySet().toArray(new String[fields.size()]);
-		for(int index = names.length-1; index>=0; index--){
+		for (int index = names.length - 1; index >= 0; index--) {
 			// Get field name
 			String field_name = names[index];
 			// Get field type
 			Type type = fields.get(field_name);
 			// Get field value
-			String field_value = store.getVar(code.operand(names.length-1-index));
-			// Assess the structure member, such as 'move', and assign the operand to it, e. g. '_11.move = 
-			statement += store.getIndent() + store.getVar(code.target()) + "." + field_name + " = "
-					+ field_value + ";\n";
-			// Propagate '_size' variable. 
-			if(type instanceof Type.Array){
+			String field_value = store.getVar(code.operand(names.length - 1 - index));
+			// Assess the structure member, such as 'move', and assign the operand to it, e. g. '_11.move =
+			statement += store.getIndent() + store.getVar(code.target()) + "." + field_name + " = " + field_value
+					+ ";\n";
+			// Propagate '_size' variable.
+			if (type instanceof Type.Array) {
 				statement += store.getIndent() + store.getVar(code.target()) + "." + field_name + "_size = "
 						+ field_value + "_size;\n";
 			}
-			
+
 		}
 		store.addStatement(code, statement);
 	}
@@ -1660,19 +1646,120 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Translate the user defined data types, e.g.
+	 * Adds the implementation of 'printf_*' function to *.c file.
 	 * 
+	 * The 'printf_*' function takes a user-defined structure, iterates each field and print out the values. For
+	 * example,
+	 * 
+	 * <pre>
 	 * <code>
-	 * typedef struct{<br>
-	 * 		int x;<br>
-	 * } Square;<br>
+	 * void printf_Board(Board s){
+	 *		printf("{");
+	 *		printf("pieces");
+	 *		printf_array(s.pieces, s.pieces_size);
+	 *		printf("move");
+	 *		printf("%d,", s.move);
+	 *		printf("}");
+	 * }
 	 * </code>
+	 * </pre>
+	 * 
+	 * @param userType
 	 */
-	@Override
-	protected void writeCodeToFile(List<wyil.lang.WyilFile.Type> userTypes) {
-		String filename = config.getFilename();
+	private void writeCodeToSourceFile(wyil.lang.WyilFile.Type userType) {
+		String type_name = userType.name();
+		String statement = "void printf_" + type_name + "(" + type_name + " s){\n";
+		// Add starting "}".
+		statement += "\tprintf(\"{\");\n";
+		HashMap<String, Type> fields = ((Type.Record) userType.type()).fields();
+		// Get all field names
+		String[] names = fields.keySet().toArray(new String[fields.size()]);
+		// Print out each field.
+		for (int i = 0; i < names.length; i++) {
+			String field_name = names[i];
+			// Add field name
+			statement += "\tprintf(\" " + field_name + ":\");\n";
+			Type fieldtype = fields.get(field_name);
+			if (fieldtype instanceof Type.Nominal) {
+				// Add field values.
+				statement += "\tprintf(\"%d\", s." + field_name + ");\n";
+			} else if (fieldtype instanceof Type.Array) {
+				statement += "\tprintf_array(s." + field_name + ", s." + field_name + "_size);\n";
+			} else {
+				throw new RuntimeException("Not implemented!");
+			}
+		}
+		// Add ending "}"
+		statement += "\tprintf(\"}\");\n";
+		statement += "}\n";
+		// Write the statements to source file (*.c)
+		FileWriter writer = null;
+		try {
+			String filename = config.getFilename();
+			// Check if the header file exits.
+			File f = new File(filename + ".c");
+			if (!f.exists()) {
+				writer = new FileWriter(f);
+				// If no such a file, write the include files to include Util.h
+				writer.append("#include \"" + filename + ".h\"\n");
+			} else {
+				writer = new FileWriter(f, true);
+			}
+			// Write out the 'printf' function.
+			writer.append(statement);
+			writer.close();
+		} catch (Exception ex) {
+			throw new RuntimeException(ex);
+		}
+
+	}
+
+	/**
+	 * Write the user-defined structure to *.h file, e.g. 
+	 * <pre>
+	 * <code>
+	 * typedef struct{
+	 *		Square* pieces;
+	 *		long long pieces_size;
+	 * 		nat move;
+	 * } Board;<br>
+	 * </code>
+	 * </pre>
+	 * @param userType
+	 */
+	private void writeCodeToHeaderFile(wyil.lang.WyilFile.Type userType) {
+		String del = "";
+		Type type = userType.type();
+		if (type instanceof Type.Int) {
+			// This gives primitive integer type a new name,
+			// e.g. 'typedef long long Square' defines Square for a long long integer.
+			del += "typedef " + translateType(type) + " " + userType.name() + ";\n";
+		} else if (type instanceof Type.Record) {
+			String typeName = userType.name();
+			// Define a structure
+			del += "typedef struct{\n";
+			HashMap<String, Type> fields = ((Type.Record) type).fields();
+			// Get all field names
+			String[] names = fields.keySet().toArray(new String[fields.size()]);
+			for (int i = 0; i < names.length; i++) {
+				String field_name = names[i];
+				Type fieldtype = fields.get(field_name);
+				del += "\t" + translateType(fieldtype) + " " + field_name + ";\n";
+				if (fieldtype instanceof Type.Array) {
+					// Add a 'size' field
+					del += "\t" + "long long " + field_name + "_size;\n";
+				}
+			}
+			del += "} " + typeName + ";\n";
+			// Add function signation, e.g. 'void printf_Board(Board s){'
+			del += "void printf_" + typeName + "(" + typeName + " s);\n";
+		} else {
+			throw new RuntimeException("Not implmented");
+		}
+
 		FileWriter writer;
 		try {
+			String filename = config.getFilename();
 			// Check if the header file exits.
 			File f = new File(filename + ".h");
 			if (!f.exists()) {
@@ -1682,32 +1769,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			} else {
 				writer = new FileWriter(f, true);
 			}
-			String del = "";
-			for (wyil.lang.WyilFile.Type userType : userTypes) {
-				Type type = userType.type();
-				if(type instanceof Type.Int){
-					// This gives primitive integer type a new name,
-					// e.g. 'typedef long long Square' defines Square for a long long integer.
-					del += "typedef " + translateType(type) + " "+userType.name()+";\n";
-				}else if(type instanceof Type.Record){
-					// Define a structure,
-					del += "typedef struct{\n";
-					HashMap<String, Type> fields = ((Type.Record)type).fields();
-					// Get all field names
-					String[] names = fields.keySet().toArray(new String[fields.size()]);
-					for(int i=0;i<names.length;i++){
-						String field_name = names[i];
-						Type fieldtype = fields.get(field_name);
-						del += "\t"+ translateType(fieldtype) + " "+ field_name+ ";\n";			
-						if(fieldtype instanceof Type.Array){
-							// Add a 'size' field
-							del += "\t"+ "long long "+ field_name+ "_size;\n";
-						}
-					}
-					del += "} " + userType.name() + ";\n";
-				}
-				
-			}
 			// Write out user defined types
 			writer.append(del);
 			writer.close();
@@ -1715,9 +1776,30 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			throw new RuntimeException(ex);
 		}
 	}
+
 	/**
-	 * Defines constants, e.g.
-	 * <code>
+	 * Write the user defined data types to *.h file, e.g. <code>
+	 * typedef struct{
+	 *		Square* pieces;
+	 *		long long pieces_size;
+	 * 		nat move;
+	 * } Board;<br>
+	 * </code> Also, add a 'print' function to print out the structure.
+	 */
+	@Override
+	protected void writeCodeToFile(List<wyil.lang.WyilFile.Type> userTypes) {
+		// Iterate each user type and write out code to source and header files.
+		for (wyil.lang.WyilFile.Type userType : userTypes) {
+			this.writeCodeToHeaderFile(userType);
+			// Check if userType is a typedef structure.
+			if(userType.type() instanceof Type.Record){
+				this.writeCodeToSourceFile(userType);
+			}
+		}
+	}
+
+	/**
+	 * Defines constants, e.g. <code>
 	 * #define BLANK 0
 	 * </code>
 	 * 
@@ -1739,7 +1821,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}
 			String del = "";
 			for (wyil.lang.WyilFile.Constant constant : constants) {
-				del += "#define " +constant.name() +" "+constant.constant() +"\n"; 
+				del += "#define " + constant.name() + " " + constant.constant() + "\n";
 			}
 			// Write out user defined types
 			writer.append(del);
@@ -1747,6 +1829,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		}
-		
+
 	}
 }
