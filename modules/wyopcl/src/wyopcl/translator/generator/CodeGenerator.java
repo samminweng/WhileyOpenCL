@@ -203,7 +203,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// long long _8_value[] =  {0, 1, 2, 3, 4, 5, 6, 7, 8}; // Introduce 'value' variable.
 				stat = indent +translateType(list.type().element()) + " " + target + "_value = {"+array_values+"};\n";
 				// _8 = _8_value;
-				stat += indent +target+" = " + target+"_value;";
+				stat += indent +target+" = " + target+"_value;\n";
+				// _8_size = 9;
+				stat += indent + target+"_size = " + list.values.size() +";";
 			}
 		} else {
 			// Add a statement
