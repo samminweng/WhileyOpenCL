@@ -201,7 +201,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// Trim '[' and ']' from the array string. 
 				String array_values = list.values.toString().replace("[", "").replace("]", "");
 				// long long _8_value[] =  {0, 1, 2, 3, 4, 5, 6, 7, 8}; // Introduce 'value' variable.
-				stat = indent +translateType(list.type().element()) + " " + target + "_value = {"+array_values+"};\n";
+				stat = indent +translateType(list.type().element()) + " " + target + "_value[] = {"+array_values+"};\n";
 				// _8 = _8_value;
 				stat += indent +target+" = " + target+"_value;\n";
 				// _8_size = 9;
