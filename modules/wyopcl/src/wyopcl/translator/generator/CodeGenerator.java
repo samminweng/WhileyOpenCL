@@ -13,6 +13,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import wyc.lang.Stmt.VariableDeclaration;
 import wycc.lang.SyntaxError;
@@ -33,6 +34,7 @@ import wyil.lang.Codes.NewRecord;
 import wyil.lang.Codes.UnaryOperator;
 import wyil.lang.Constant;
 import wyil.lang.Type;
+import wyil.lang.Type.Record;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyil.transforms.LiveVariablesAnalysis.Env;
 import wyopcl.translator.Configuration;
@@ -1420,6 +1422,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * <code>
 	 * _11.move = _0;
 	 * _11.pieces = _10;
+	 * _11.pieces_size = _10_size;
 	 * </code>
 	 * </pre>
 	 * 
@@ -1430,18 +1433,26 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(NewRecord code, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
-		NewRecord newrecord = (NewRecord) code;
+		HashMap<String, Type> fields = code.type().fields();
 		String statement = "";
-		// Begin with the last item
-		int index = newrecord.type().fields().size();
-		// Iterate the record's fields.
-		for (Map.Entry<String, Type> field : newrecord.type().fields().entrySet()) {
-			// Decrement the index
-			index--;
-			// Assess the structure member, such as 'move', and assign the
-			// operand to
-			statement += store.getIndent() + store.getVar(newrecord.target()) + "." + field.getKey() + " = "
-					+ store.getVar(newrecord.operand(index)) + ";\n";
+		// Get the set of field names and convert it to an array of string. 
+		String[] names = fields.keySet().toArray(new String[fields.size()]);
+		for(int index = names.length-1; index>=0; index--){
+			// Get field name
+			String field_name = names[index];
+			// Get field type
+			Type type = fields.get(field_name);
+			// Get field value
+			String field_value = store.getVar(code.operand(names.length-1-index));
+			// Assess the structure member, such as 'move', and assign the operand to it, e. g. '_11.move = 
+			statement += store.getIndent() + store.getVar(code.target()) + "." + field_name + " = "
+					+ field_value + ";\n";
+			// Propagate '_size' variable. 
+			if(type instanceof Type.Array){
+				statement += store.getIndent() + store.getVar(code.target()) + "." + field_name + "_size = "
+						+ field_value + "_size;\n";
+			}
+			
 		}
 		store.addStatement(code, statement);
 	}
@@ -1675,15 +1686,23 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			for (wyil.lang.WyilFile.Type userType : userTypes) {
 				Type type = userType.type();
 				if(type instanceof Type.Int){
-					// This gives primity integer type a new name,
+					// This gives primitive integer type a new name,
 					// e.g. 'typedef long long Square' defines Square for a long long integer.
 					del += "typedef " + translateType(type) + " "+userType.name()+";\n";
 				}else if(type instanceof Type.Record){
+					// Define a structure,
 					del += "typedef struct{\n";
-					Iterator<Entry<String, Type>> iterator = ((Type.Record)type).fields().entrySet().iterator();
-					while(iterator.hasNext()){
-						Entry<String, Type> field = iterator.next();
-						del += "\t"+ translateType(field.getValue()) + " "+ field.getKey()+ ";\n";
+					HashMap<String, Type> fields = ((Type.Record)type).fields();
+					// Get all field names
+					String[] names = fields.keySet().toArray(new String[fields.size()]);
+					for(int i=0;i<names.length;i++){
+						String field_name = names[i];
+						Type fieldtype = fields.get(field_name);
+						del += "\t"+ translateType(fieldtype) + " "+ field_name+ ";\n";			
+						if(fieldtype instanceof Type.Array){
+							// Add a 'size' field
+							del += "\t"+ "long long "+ field_name+ "_size;\n";
+						}
 					}
 					del += "} " + userType.name() + ";\n";
 				}
