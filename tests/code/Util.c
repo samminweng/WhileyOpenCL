@@ -229,11 +229,21 @@ memcpy(&ret[*op_1_size], op_2, *op_2_size*sizeof(long long));
 *ret_size = *op_1_size+*op_2_size;
 return ret;
 }*/
-/**Print out a long long integer*/
-void indirect_printf(long long input) {
-	printf("%lld\n", input);
+/** Convert an array of ASCII code into a String and print out the string.*/
+void printf_s(long long* input, long long input_size) {
+	long long i=0;
+	for(i=0;i<input_size;i++){
+		printf("%c",input[i]);
+	}
 }
-
+/** Similar to printf_s with addtional new line.**/
+void println_s(long long* input, long long input_size){
+	long long i=0;
+	for(i=0;i<input_size;i++){
+		printf("%c",input[i]);
+	}
+	printf("\n");
+}
 /**Print out an array of long long integers. If the array size > 10, then 
 print the first 10 items and the last item.*/
 void println_array(long long* input, long long input_size) {
@@ -241,7 +251,7 @@ void println_array(long long* input, long long input_size) {
 	//Determines whether to add ','.
 	int isFirst = true;
 	int max_i = 10;
-	printf("\n[");
+	printf("[");
 	//Print the first 10 items
 	for (i = 0; i < input_size && i < max_i; i++) {
 		if (isFirst) {
@@ -255,7 +265,7 @@ void println_array(long long* input, long long input_size) {
 	if (input_size > i) {
 		printf(" ... %lld", input[input_size - 1]);
 	}
-	printf("]\n");
+	printf("]");
 }
 
 //Check if the number is a power of 2.

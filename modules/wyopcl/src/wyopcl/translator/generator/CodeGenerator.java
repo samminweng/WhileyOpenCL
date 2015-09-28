@@ -1151,11 +1151,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					statement += "printf(\"%d\\n\", "+input+");";
 				}else if (type instanceof Type.Array) {
 					// Print out a pointer without specifying array size.
-					statement += "println_array(" + input + ", "+input+"_size);";
+					statement += "printf_array(" + input + ", "+input+"_size);";
 				}else if (type instanceof Type.Nominal) {
 					Type.Nominal nominal = (Type.Nominal) type;
 					// Print out a user-defined type structure
-					statement += "println_"+nominal.name().name()+"("+input+");";
+					statement += "printf_"+nominal.name().name()+"("+input+");";
 				}else{
 					throw new RuntimeException("Not implemented."+code);
 				}
