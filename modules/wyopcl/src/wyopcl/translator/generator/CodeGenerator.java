@@ -1027,7 +1027,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(Codes.FieldLoad code, FunctionOrMethod function) {
 		String field = code.field;
 		CodeStore store = this.getCodeStore(function);
-		String statement = store.getIndent();
+		String target = store.getVar(code.target());
+		String indent = store.getIndent();
+		String statement = "";
 		// Skip printing statements, e.g. 'print_s'
 		if (field.equals("out") || field.equals("println") || field.equals("print_s") || field.equals("println_s")) {
 			// Load the field to the target register.
@@ -1035,11 +1037,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement = null;
 		} else if (field.equals("args")) {
 			// Convert the arguments into an array of integer array (long long**).
-			statement += store.getVar(code.target()) + " = convertArgsToIntArray(argc, args, "
-					+ store.getVar(code.target()) + "_size);";
+			statement = indent + target + " = convertArgsToIntArray(argc, args, "+ target + "_size);";
 		} else {
 			// Get the target
-			statement += store.getVar(code.target()) + " = " + store.getVar(code.operand(0)) + "." + code.field + ";";
+			statement = indent + target + " = " + store.getVar(code.operand(0)) + "." + code.field + ";";
+			// Check if field type is an array.
+			if (code.fieldType() instanceof Type.Array){
+				// Propagate 
+				statement += "\n" + indent + target +"_size = " + store.getVar(code.operand(0)) + "." + code.field+"_size;";
+			}
 		}
 		store.addStatement(code, statement);
 	}
