@@ -96,10 +96,14 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(codeDir, codeDir, "reverse", "-copy");
 	}
 	
-	//@Test
-	public void test_TicTacToe() {
-		util.execCodeGeneration(validDir, codeDir, "TicTacToe");
+	@Test
+	public void test_TicTacToe_slow() {
+		util.execCodeGeneration(codeDir, codeDir, "TicTacToe");
 	}
 	
+	@Test
+	public void test_TicTacToe_fast() {
+		util.execCodeGeneration(codeDir, codeDir, "TicTacToe", "-copy");
+	}
 
 }

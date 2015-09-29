@@ -78,17 +78,18 @@ function countOf(Square[] pieces, Square s) -> (int r):
 // ===============================================================
 constant GAME is [0,1,2,3,4,5,6,7,8]
 
-method main(System.Console console):
+//method main(System.Console console):
+public export method test() -> void:
     Board b = EmptyBoard()
     int i = 0
     while i < |GAME|:
         int p = GAME[i]
-        console.out.print_s("BOARD: ")
-        console.out.println(b)
-        console.out.print_s("MOVE: ")
-        console.out.println(p)
+        //console.out.print_s("BOARD: ")
+        //console.out.println(b)
+        //console.out.print_s("MOVE: ")
+        //console.out.println(p)
         if p < 0 || p > 9 || b.pieces[p] != BLANK || b.move == 9:
-            console.out.println_s("INVALID MOVE!")
+            //console.out.println_s("INVALID MOVE!")
             break
         else:
             b = play(b,p)
