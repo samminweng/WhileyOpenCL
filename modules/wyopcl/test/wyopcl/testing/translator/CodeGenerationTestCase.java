@@ -84,23 +84,26 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(codeDir, codeDir, "sort_call_by_reference", "-copy");
 	}
 	
-	
-	//@Test
-	public void test_While_Valid_1_slow() {
+	@Test
+	public void test_reverse_slow() {
 		//Generate the naive C code  
-		util.execCodeGeneration(validDir, codeDir, "While_Valid_1", "slow");
+		util.execCodeGeneration(codeDir, codeDir, "reverse");
 	}
 	
-	//@Test
-	public void test_While_Valid_1_fast() {
+	@Test
+	public void test_reverse_fast() {
 		//Generate the naive C code  
-		util.execCodeGeneration(validDir, codeDir, "While_Valid_1", "fast");
+		util.execCodeGeneration(codeDir, codeDir, "reverse", "-copy");
 	}
 	
-	//@Test
-	public void test_TicTacToe() {
-		util.execCodeGeneration(validDir, codeDir, "TicTacToe");
+	@Test
+	public void test_TicTacToe_slow() {
+		util.execCodeGeneration(codeDir, codeDir, "TicTacToe");
 	}
 	
+	@Test
+	public void test_TicTacToe_fast() {
+		util.execCodeGeneration(codeDir, codeDir, "TicTacToe", "-copy");
+	}
 
 }

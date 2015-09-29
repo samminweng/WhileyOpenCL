@@ -7,10 +7,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import wyc.lang.Stmt.VariableDeclaration;
 import wycc.lang.SyntaxError;
@@ -45,6 +47,7 @@ import wyil.lang.Codes.UnaryOperator;
 import wyil.lang.Codes.Update;
 import wyil.lang.Type;
 import wyil.lang.WyilFile;
+import wyil.lang.WyilFile.Constant;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.Configuration;
 
@@ -58,10 +61,13 @@ public abstract class AbstractCodeGenerator {
 	protected final String prefix = "_";
 	protected final Configuration config;
 	// Store generated code
-	protected HashMap<FunctionOrMethod, CodeStore> stores = new HashMap<FunctionOrMethod, CodeStore>();
-
+	protected HashMap<FunctionOrMethod, CodeStore> stores;
+	private List<wyil.lang.WyilFile.Type> userTypes;// Store all the user-defined types at source level, e.g. Board.
+	
 	public AbstractCodeGenerator(Configuration config) {
 		this.config = config;
+		this.stores = new HashMap<FunctionOrMethod, CodeStore>();
+		this.userTypes = new ArrayList<wyil.lang.WyilFile.Type>();
 	}	
 	
 	/**
@@ -81,6 +87,12 @@ public abstract class AbstractCodeGenerator {
 		} catch (IOException e) {
 			throw new RuntimeException("Errors occurs in deleting files");
 		}
+		// Write out the contants
+		this.wrieteCodeToFile((List<Constant>)module.constants());
+		// Get and add all the user-defined types.
+		userTypes = (List<wyil.lang.WyilFile.Type>) module.types();
+		// Write out user defined types to header file (*.h)
+		this.writeCodeToFile(userTypes);
 		
 		// Translate each function
 		for (FunctionOrMethod function : module.functionOrMethods()) {
@@ -89,6 +101,51 @@ public abstract class AbstractCodeGenerator {
 			// Write the code
 			this.writeCodeToFile(function);
 		}
+	}
+	
+	/**
+	 * Get the user defined type by the name
+	 * 
+	 * @param name
+	 * @return
+	 */
+	protected wyil.lang.WyilFile.Type getUserDefinedType(String name) {
+		for (wyil.lang.WyilFile.Type user_type : this.userTypes) {
+			if (user_type.name().equals(name)) {
+				return user_type;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Get the user defined type by checking if the user type has the same fields as the given record type.
+	 * 
+	 * @param type
+	 *            the record type.
+	 * @return the user type. Return null if no type is matched.
+	 */
+	protected wyil.lang.WyilFile.Type getUserDefinedType(Type.Record type) {
+		for (wyil.lang.WyilFile.Type user_type : this.userTypes) {
+			if (user_type.type() instanceof Type.Record) {
+				Type.Record record = (Type.Record) user_type.type();
+				// check if record and type have the same fields.
+				boolean isTheSame = true;
+				for (Entry<String, Type> field : type.fields().entrySet()) {
+					Type recordFieldType = record.field(field.getKey());
+					if (recordFieldType != null) {
+						isTheSame &= true;
+					} else {
+						isTheSame &= false;
+					}
+				}
+
+				if (isTheSame) {
+					return user_type;
+				}
+			}
+		}
+		return null;
 	}
 	
 	
@@ -124,11 +181,11 @@ public abstract class AbstractCodeGenerator {
 	 * @param function
 	 * @return
 	 */
-	public String getActualVarName(int reg, FunctionOrMethod function){
+	/*public String getActualVarName(int reg, FunctionOrMethod function){
 		//Get the mapping table between variable name and register.
 		CodeStore store = stores.get(function);
 		return store.getVar(reg);
-	}
+	}*/
 	
 	/**
 	 * Get the code store of the given function.
@@ -194,7 +251,11 @@ public abstract class AbstractCodeGenerator {
 	protected abstract String declareVariables(FunctionOrMethod function);
 
 	protected abstract String translateType(Type type);
+	
+	protected abstract void wrieteCodeToFile(List<Constant> constants);
 
+	protected abstract void writeCodeToFile(List<wyil.lang.WyilFile.Type> userTypes);
+	
 	protected abstract void writeCodeToFile(FunctionOrMethod function);
 
 	/**
@@ -304,11 +365,13 @@ public abstract class AbstractCodeGenerator {
 		private String indent;
 		private FunctionOrMethod function;
 		private List<String> statements;// store the list of translated C code.
-
+		private HashMap<Integer, String> fields;// Stores the fields of register, e.g. 'println', 'print_s', 'println_s'
+		
 		public CodeStore(FunctionOrMethod function) {
 			this.indent = "\t";
 			this.function = function;
 			this.statements = new ArrayList<String>();
+			this.fields = new HashMap<Integer, String>();
 		}
 
 		/**
@@ -327,7 +390,7 @@ public abstract class AbstractCodeGenerator {
 		 * @return true if the variable is the size variable of input parameter.
 		 * 
 		 */
-		private Boolean isInputParameter(String var_name) {
+		/*private Boolean isInputParameter(String var_name) {
 			// Check if the variable is the size variable of the input
 			// parameter.
 			String variable_name = var_name;
@@ -352,8 +415,24 @@ public abstract class AbstractCodeGenerator {
 				}
 			}
 			return false;
+		}*/
+		/**
+		 * Load the field to the given register.
+		 * @param reg
+		 * @param field
+		 */
+		protected void loadField(int reg, String field){
+			this.fields.put(reg, field);
 		}
-
+		/**
+		 * Get the field of the given register.
+		 * @param reg
+		 * @return
+		 */
+		protected String getField(int reg){
+			return this.fields.get(reg);
+		}
+		
 		protected List<String> getStatements() {
 			return this.statements;
 		}
