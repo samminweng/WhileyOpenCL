@@ -4,7 +4,7 @@
 #
 # parameters="10 100 1000"
 # Large scaled parameters.
-parameters="10 100 1000 10000 100000 1000000 10000000 20000000 30000000 40000000 50000000 60000000 70000000 80000000 90000000 100000000"
+parameters="10 100 1000 10000 100000 1000000 10000000 100000000"
 #
 # Run the benchmarks of generated Java programs.
 #
@@ -55,6 +55,23 @@ run_benchmark_java(){
 }
 
 #
+# Generate the C code using Wyopcl project
+#
+generate_c_code(){
+	# Use wyopcl shell script to generate C code
+	if [ "$OP" = "slow" ]
+	then
+		# Generate naive C code
+		./../../../../../bin/wyopcl -code "$WHILEYSRC".whiley >> $RESULT
+	else
+		# Generate copy-eliminated C code
+		./../../../../../bin/wyopcl -code -copy "$WHILEYSRC".whiley >> $RESULT
+	fi
+}
+
+
+
+#
 # Benchmarking the generated C code
 #
 run_benchmark_c (){
@@ -65,20 +82,12 @@ run_benchmark_c (){
 	WHILEYSRC="$NAME"_"$CALL"
 	DIR="$CALL/CCode/$OP"	
 	# make the folder
-	mkdir -p $DIR >> $RESULT
+	mkdir -p $DIR
 	# move C and Header files to working directory.
-	cp "$WHILEYSRC".whiley Util.c Util.h $DIR >> $RESULT
+	cp "$WHILEYSRC".whiley Util.c Util.h $DIR 
 	# Change to working directory 
-	cd $DIR	>> $RESULT
-	# Use wyopcl shell script to generate C code
-	if [ "$OP" = "slow" ]
-	then
-		# Generate naive C code
-		./../../../../../bin/wyopcl -code "$WHILEYSRC".whiley >> $RESULT
-	else
-		# Generate copy-eliminated C code
-		./../../../../../bin/wyopcl -code -copy "$WHILEYSRC".whiley >> $RESULT
-	fi
+	cd $DIR
+	#generate_c_code
 	#compile the source C file with L2 optimization (-O2)
 	#see https://gcc.gnu.org/onlinedocs/gnat_ugn/Optimization-Levels.html#101
 	gcc -m64 *.c -o "$WHILEYSRC".out >> $RESULT
@@ -115,15 +124,15 @@ run_benchmark_c (){
 
 
 # Removes all the files inside folder
-rm result.*.txt 
-rm -rf call_by_value
-rm -rf call_by_reference
+#rm result.*.txt 
+#rm -rf call_by_value
+#rm -rf call_by_reference
 #
 #Benchmark the generated C code
 run_benchmark_c sort call_by_value fast
 run_benchmark_c sort call_by_value slow
-run_benchmark_c sort call_by_reference fast
-run_benchmark_c sort call_by_reference slow
+#run_benchmark_c sort call_by_reference fast
+#run_benchmark_c sort call_by_reference slow
 #Benchmark the generated Java code
-run_benchmark_java sort call_by_value
-run_benchmark_java sort call_by_reference
+#run_benchmark_java sort call_by_value
+#run_benchmark_java sort call_by_reference
