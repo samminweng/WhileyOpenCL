@@ -20,11 +20,8 @@ check_exit (){
 
 }
 
-
-
-
 # Parameters for checking memeory on Megatron using Valgrind and JAVA profiker. 
-arraysizes="10 100 1000 10000 100000 1000000 10000000 2000000"
+arraysizes="10000000 20000000 40000000 60000000 80000000 100000000"
 #
 # Generate and compile Java code using Whiley compiler
 #
@@ -76,13 +73,7 @@ mem_java(){
 # and compile it using 'gcc'
 #
 generate_c_code (){
-	DIR="$CALL/CCode/$OP"
-	# make the folder
-	mkdir -p $DIR
-	# move C and Header files to working directory.
-	cp "$WHILEYSRC".whiley Util.c Util.h $DIR 
-	# # Change to working directory 
-	cd $DIR
+	
 	# Use wyopcl shell script to generate C code
 	if [ "$OP" = "slow" ]
 	then
@@ -92,8 +83,6 @@ generate_c_code (){
 		# Generate copy-eliminated C code
 		./../../../../../bin/wyopcl -code -copy "$WHILEYSRC".whiley
 	fi
-	# Compile the C files with debugging info enabled (-g option) and turned-off optimization.
-	gcc -m64 -O -g *.c -o "$WHILEYSRC".out
 }
 
 
@@ -106,29 +95,38 @@ mem_c (){
 	OP=$3
 	ROOTDIR=$PWD/mem/valgrind
 	WHILEYSRC="$NAME"_"$CALL"
-	generate_c_code
+	DIR="$CALL/CCode/$OP"
+	# make the folder
+	mkdir -p $DIR
+	# move C and Header files to working directory.
+	cp "$WHILEYSRC".whiley Util.c Util.h $DIR 
+	# # Change to working directory 
+	cd $DIR
+	#generate_c_code
+	# Compile the C files with debugging info enabled (-g option) and turned-off optimization.
+	gcc -m64 -O -g *.c -o "$WHILEYSRC".out
 	# Change the arraysize
 	for arraysize in $arraysizes
 	do
 		DIR=$ROOTDIR/$arraysize
 		# make dir
 		mkdir -p $DIR
-		MEMORY=$DIR/$NAME.$CALL.c.$OP
+		MEMORY=$DIR/$NAME.$CALL.c.$OP.$arraysize
 		#  run valgrind to collect/detect memory leak in C code.
 		#  Ref: http://valgrind.org/docs/manual/manual.html
 		# Run Valgrind memcheck tool to find memory leak on Megatron, and write out results to output file.   
 		valgrind --tool=memcheck --log-file="$MEMORY".leak.txt ./"$WHILEYSRC".out $arraysize 
 		# Run Valgrind full memcheck to see details of leaks memory
-		valgrind --leak-check=full --log-file="$MEMORY".leak.full.txt ./"$WHILEYSRC".out $arraysize
+		#valgrind --leak-check=full --log-file="$MEMORY".leak.full.txt ./"$WHILEYSRC".out $arraysize
 		# Find uninitialized memory
-		valgrind -v --leak-check=yes --log-file="$MEMORY".uninitialized.txt ./"$WHILEYSRC".out $arraysize
+		#valgrind -v --leak-check=yes --log-file="$MEMORY".uninitialized.txt ./"$WHILEYSRC".out $arraysize
 		# Find cache miss
-		valgrind --tool=cachegrind --log-file="$MEMORY".cachemiss.txt ./"$WHILEYSRC".out $arraysize
+		#valgrind --tool=cachegrind --log-file="$MEMORY".cachemiss.txt ./"$WHILEYSRC".out $arraysize
 		# Generate call graph and 
 		# valgrind --tool=callgrind --log-file="$MEMORY".callgrind.txt ./"$WHILEYSRC".out $arraysize
 		# Profile Heap memory using Massif
-		echo "Heap Memory Profiler"
-		valgrind --tool=massif --massif-out-file=$WHILEYSRC.massif.out ./"$WHILEYSRC".out $arraysize
+		#echo "Heap Memory Profiler"
+		#valgrind --tool=massif --massif-out-file=$WHILEYSRC.massif.out ./"$WHILEYSRC".out $arraysize
 		check_exit $? "C"
 		if [ "$?" != 0 ]
 		then
@@ -136,16 +134,17 @@ mem_c (){
 			break 2
 		fi
 		# Print out the information gathered by massif
-		ms_print $WHILEYSRC.massif.out > $MEMORY.massif.txt
+		#ms_print $WHILEYSRC.massif.out > $MEMORY.massif.txt
 		#Added the CPU info
-		cat /proc/cpuinfo >> $MEMORY.massif.txt
+		#cat /proc/cpuinfo >> $MEMORY.massif.txt
     done
     # Return to the working directory
     cd ../../../
 }
 # Measure the memory usage of the generated C code
-rm -rf $PWD/mem/valgrind
+#rm -rf $PWD/mem/valgrind
 mem_c sort call_by_value fast
+#mem_c sort call_by_value slow
 mem_c sort call_by_reference fast
 # Remove previous GC files.
 #rm -rf $PWD/mem/GC/*.*
