@@ -2,7 +2,6 @@
 #
 # The shell script of benchmarking the generated Java code of Whiley program
 #
-
 check_exit (){
 	EXITVALUE=$1
 	LANG=$2
@@ -21,7 +20,7 @@ check_exit (){
 }
 
 # Parameters for checking memeory on Megatron using Valgrind and JAVA profiker. 
-arraysizes="10000000 20000000 40000000 60000000 80000000 100000000"
+arraysizes="100000 1000000 2000000 4000000 6000000 8000000 10000000 12000000 14000000 16000000 18000000 20000000"
 #
 # Generate and compile Java code using Whiley compiler
 #
@@ -143,8 +142,8 @@ mem_c (){
 }
 # Measure the memory usage of the generated C code
 #rm -rf $PWD/mem/valgrind
+mem_c sort call_by_value slow
 mem_c sort call_by_value fast
-#mem_c sort call_by_value slow
 mem_c sort call_by_reference fast
 # Remove previous GC files.
 #rm -rf $PWD/mem/GC/*.*

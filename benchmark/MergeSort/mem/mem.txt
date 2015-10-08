@@ -1,0 +1,38 @@
+Memory Leak (bytes)
+FunctionCallType   ProgramType Arraysizdefinite losindirect lopossible loreachable loss
+call_by_value      fast          100000     800,016         56          0            0
+call_by_value      fast         1000000   8,000,016         64          0            0
+call_by_value      fast         2000000  16,000,016         64          0            0
+call_by_value      fast         4000000           8         64 32,000,008            0
+call_by_value      fast         6000000           8         64 48,000,008            0
+call_by_value      fast         8000000           8         64 64,000,008            0
+call_by_value      fast        10000000           8         72 80,000,008            0
+call_by_value      fast        12000000           8         72 96,000,008            0
+call_by_value      fast        14000000           8         72112,000,008            0
+call_by_value      fast        16000000           8         72128,000,008            0
+call_by_value      fast        18000000           8         72144,000,008            0
+call_by_value      fast        20000000           8         72160,000,008            0
+call_by_value      slow          100000  17,351,616         56          0            0
+call_by_value      slow         1000000 191,611,584         64  8,000,024            0
+call_by_value      slow         2000000 399,223,000         64 16,000,008            0
+call_by_value      slow         4000000 798,430,152         64 64,015,648            0
+call_by_value      slow         60000001,174,141,35         64150,750,024            0
+call_by_value      slow         80000001,596,828,85         64192,062,520            0
+call_by_value      slow        100000002,105,781,71         72160,000,808            0
+call_by_value      slow        120000002,493,782,31         72252,000,208            0
+call_by_value      slow        140000003,001,768,72         72224,013,792            0
+call_by_value      slow        160000003,321,782,34         72384,000,176            0
+call_by_value      slow        180000004,051,547,21         72144,017,584            0
+call_by_value      slow        200000004,511,564,44         72180,000,344            8
+call_by_reference  fast          100000           8         56          0      800,008
+call_by_reference  fast         1000000           8         64          0    8,000,008
+call_by_reference  fast         2000000           8         64          0   16,000,008
+call_by_reference  fast         4000000           8         64          0   32,000,008
+call_by_reference  fast         6000000           8         64          0   48,000,008
+call_by_reference  fast         8000000           8         64          0   64,000,008
+call_by_reference  fast        10000000           8         72          0   80,000,008
+call_by_reference  fast        12000000           8         72          0   96,000,008
+call_by_reference  fast        14000000           8         72          0  112,000,008
+call_by_reference  fast        16000000           8         72          0  128,000,008
+call_by_reference  fast        18000000           8         72          0  144,000,008
+call_by_reference  fast        20000000           8         72          0  160,000,008

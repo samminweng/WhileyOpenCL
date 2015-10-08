@@ -1,21 +1,21 @@
-==3981== Memcheck, a memory error detector
-==3981== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==3981== Using Valgrind-3.10.0.SVN and LibVEX; rerun with -h for copyright info
-==3981== Command: ./sort_call_by_value.out 2000000
-==3981== Parent PID: 3968
-==3981== 
-==3981== 
-==3981== HEAP SUMMARY:
-==3981==     in use at exit: 351,223,040 bytes in 4,000,003 blocks
-==3981==   total heap usage: 8,000,003 allocs, 4,000,000 frees, 686,446,000 bytes allocated
-==3981== 
-==3981== LEAK SUMMARY:
-==3981==    definitely lost: 343,221,008 bytes in 3,999,999 blocks
-==3981==    indirectly lost: 64 bytes in 1 blocks
-==3981==      possibly lost: 8,001,968 bytes in 3 blocks
-==3981==    still reachable: 0 bytes in 0 blocks
-==3981==         suppressed: 0 bytes in 0 blocks
-==3981== Rerun with --leak-check=full to see details of leaked memory
-==3981== 
-==3981== For counts of detected and suppressed errors, rerun with: -v
-==3981== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==6570== Memcheck, a memory error detector
+==6570== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==6570== Using Valgrind-3.10.0.SVN and LibVEX; rerun with -h for copyright info
+==6570== Command: ./sort_call_by_value.out 2000000
+==6570== Parent PID: 6434
+==6570== 
+==6570== 
+==6570== HEAP SUMMARY:
+==6570==     in use at exit: 16,000,080 bytes in 3 blocks
+==6570==   total heap usage: 4,000,003 allocs, 4,000,000 frees, 351,223,040 bytes allocated
+==6570== 
+==6570== LEAK SUMMARY:
+==6570==    definitely lost: 16,000,016 bytes in 2 blocks
+==6570==    indirectly lost: 64 bytes in 1 blocks
+==6570==      possibly lost: 0 bytes in 0 blocks
+==6570==    still reachable: 0 bytes in 0 blocks
+==6570==         suppressed: 0 bytes in 0 blocks
+==6570== Rerun with --leak-check=full to see details of leaked memory
+==6570== 
+==6570== For counts of detected and suppressed errors, rerun with: -v
+==6570== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

@@ -93,7 +93,7 @@ long long* sortV1(long long* _items, long long _items_size, long long _start, lo
 	_18 = 0;
 	//invoke %17 = (%4, %18, %3) sort_call_by_value:sortV1 : function(int[],int,int) -> int[]
 	_17_size=_lhs_size;
-	_17 = sortV1(clone(_lhs, _lhs_size), _lhs_size ,_18 ,_pivot);
+	_17 = sortV1(_lhs, _lhs_size ,_18 ,_pivot);
 	//assign %4 = %17  : int[]
 	_lhs_size = _17_size;
 	_lhs = (long long*)_17;
@@ -112,7 +112,7 @@ long long* sortV1(long long* _items, long long _items_size, long long _start, lo
 	_23=_end-_pivot;
 	//invoke %21 = (%5, %22, %23) sort_call_by_value:sortV1 : function(int[],int,int) -> int[]
 	_21_size=_rhs_size;
-	_21 = sortV1(clone(_rhs, _rhs_size), _rhs_size ,_22 ,_23);
+	_21 = sortV1(_rhs, _rhs_size ,_22 ,_23);
 	//assign %5 = %21  : int[]
 	_rhs_size = _21_size;
 	_rhs = (long long*)_21;
