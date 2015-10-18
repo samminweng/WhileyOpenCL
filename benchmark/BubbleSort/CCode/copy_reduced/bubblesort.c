@@ -173,10 +173,10 @@ int main(int argc, char** args){
 	_15_size = _14;
 	//assign %11 = %15  : int[]
 	_11_size = _15_size;
-	_11 = clone(_15, _15_size);
+	_11 = (long long*)_15;
 	//assign %3 = %11  : int[]
 	_arr_size = _11_size;
-	_arr = clone(_11, _11_size);
+	_arr = (long long*)_11;
 	//ifgt %2, %1 goto blklab4 : int
 	while(_index<=_max){
 		//sub %16 = %1, %2 : int
@@ -196,11 +196,10 @@ int main(int argc, char** args){
 blklab4:;
 	//invoke %20 = (%3) bubblesort:bubbleSort : function(int[]) -> int[]
 	_20_size=_arr_size;
-	_20 = bubbleSort(clone(_arr, _arr_size), _arr_size);
+	_20 = bubbleSort(_arr, _arr_size);
 	//assign %3 = %20  : int[]
-	free(_arr);
 	_arr_size = _20_size;
-	_arr = clone(_20, _20_size);
+	_arr = (long long*)_20;
 	//assert
 	{
 		//const %21 = 0 : int
@@ -240,10 +239,7 @@ blklab6:;
 //.blklab3
 blklab3:;
 	freeDoublePointer(_6, _6_size);
-	free(_15);
-	free(_11);
-	free(_20);
-	free(_arr);
+	free(_arr);	
 	//return
 	exit(0);
 }
