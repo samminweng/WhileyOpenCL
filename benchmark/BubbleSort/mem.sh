@@ -1,6 +1,6 @@
 #!/bin/bash
 
-arraysizes="1000 10000"
+arraysizes="10 100 1000 10000 100000"
 # Parameters for checking memeory on Megatron using Valgrind and JAVA profiker. 
 #arraysizes="100000 1000000 2000000 4000000 6000000 8000000 10000000 12000000 14000000 16000000 18000000 20000000"
 #
@@ -86,16 +86,17 @@ check_exit (){
 #
 mem_c (){
 	NAME=$1
-	OP=$2
+	CALL=$2
+	CODE=$3
+	OP=$4
 	ROOTDIR=$PWD/mem/valgrind
 	WHILEYSRC="$NAME"
-	DIR="CCode/$OP"
+	DIR="$CALL/$CODE/$OP"
 	# make the folder
 	mkdir -p $DIR
 	# move C and Header files to working directory.
 	#cp "$WHILEYSRC".whiley Util.c Util.h $DIR 
 	# # Change to working directory
-	echo $DIR 
 	cd $DIR
 	#generate_c_code
 	# Compile the C files with debugging info enabled (-g option) and turned-off optimization.
@@ -112,7 +113,7 @@ mem_c (){
 		# Run Valgrind memcheck tool to find memory leak on Megatron, and write out results to output file.   
 		valgrind --tool=memcheck --log-file="$MEMORY".leak.txt ./"$WHILEYSRC".out $arraysize 
 		# Run Valgrind full memcheck to see details of leaks memory
-		valgrind --leak-check=full --log-file="$MEMORY".leak.full.txt ./"$WHILEYSRC".out $arraysize
+		#valgrind --leak-check=full --log-file="$MEMORY".leak.full.txt ./"$WHILEYSRC".out $arraysize
 		# Find uninitialized memory
 		#valgrind -v --leak-check=yes --log-file="$MEMORY".uninitialized.txt ./"$WHILEYSRC".out $arraysize
 		# Find cache miss
@@ -134,14 +135,11 @@ mem_c (){
 		#cat /proc/cpuinfo >> $MEMORY.massif.txt
     done
     # Return to the working directory
-    cd ../../
+    cd ../../../
 }
 # Measure the memory usage of the generated C code
-#rm -rf $PWD/mem/valgrind
-mem_c bubblesort naive
-mem_c bubblesort copy_reduced
-# Remove previous GC files.
-#rm -rf $PWD/mem/GC/*.*
-# Profile the GC activities of generated Java code
-#mem_java sort call_by_value
-#mem_java sort call_by_reference
+rm -rf $PWD/mem/valgrind
+mem_c bubblesort call_by_value CCode copy_reduced
+mem_c bubblesort call_by_value CCode copy_reduced_noleaks
+mem_c bubblesort call_by_value CCode naive
+mem_c bubblesort call_by_value CCode naive_noleaks

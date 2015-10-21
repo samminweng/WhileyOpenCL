@@ -1,0 +1,15 @@
+==17187== Memcheck, a memory error detector
+==17187== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==17187== Using Valgrind-3.10.0.SVN and LibVEX; rerun with -h for copyright info
+==17187== Command: ./bubblesort.out 100
+==17187== Parent PID: 16212
+==17187== 
+==17187== 
+==17187== HEAP SUMMARY:
+==17187==     in use at exit: 0 bytes in 0 blocks
+==17187==   total heap usage: 7 allocs, 7 frees, 4,080 bytes allocated
+==17187== 
+==17187== All heap blocks were freed -- no leaks are possible
+==17187== 
+==17187== For counts of detected and suppressed errors, rerun with: -v
+==17187== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

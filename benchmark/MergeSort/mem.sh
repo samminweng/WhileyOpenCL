@@ -1,26 +1,8 @@
 #!/bin/bash
-#
-# The shell script of benchmarking the generated Java code of Whiley program
-#
-check_exit (){
-	EXITVALUE=$1
-	LANG=$2
-	# Check if the program completes the task.
-	if [ "$EXITVALUE" = 0 ]
-	then
-		# Print out success messages.
-		echo "Success in running $WHILEYSRC $LANG program on array size = " $arraysize
-	else
-		# Print out error messages.
-		echo "Errors in running $WHILEYSRC $LANG program on array size = " $arraysize
-		# Terminate the nested loop.
-		break 2
-	fi
 
-}
-
+arraysizes="10 100 1000 10000 100000 1000000"
 # Parameters for checking memeory on Megatron using Valgrind and JAVA profiker. 
-arraysizes="100000 1000000 2000000 4000000 6000000 8000000 10000000 12000000 14000000 16000000 18000000 20000000"
+#arraysizes="100000 1000000 2000000 4000000 6000000 8000000 10000000 12000000 14000000 16000000 18000000 20000000"
 #
 # Generate and compile Java code using Whiley compiler
 #
@@ -67,39 +49,54 @@ mem_java(){
 }
 
 
+# #
+# # Translates the Whiley program into C code using our code generator
+# # and compile it using 'gcc'
+# #
+# generate_c_code (){
+# 	# Use wyopcl shell script to generate C code
+# 	if [ "$OP" = "slow" ]
+# 	then
+# 		# Generate naive C code
+# 		./../../../../../bin/wyopcl -code "$WHILEYSRC".whiley
+# 	else
+# 		# Generate copy-eliminated C code
+# 		./../../../../../bin/wyopcl -code -copy "$WHILEYSRC".whiley
+# 	fi
+# }
 #
-# Translates the Whiley program into C code using our code generator
-# and compile it using 'gcc'
+# The shell script of benchmarking the generated Java code of Whiley program
 #
-generate_c_code (){
-	
-	# Use wyopcl shell script to generate C code
-	if [ "$OP" = "slow" ]
+check_exit (){
+	EXITVALUE=$1
+	# Check if the program completes the task.
+	if [ "$EXITVALUE" = 0 ]
 	then
-		# Generate naive C code
-		./../../../../../bin/wyopcl -code "$WHILEYSRC".whiley
+		# Print out success messages.
+		echo "Success in running $NAME $OP program on array size = " $arraysize
 	else
-		# Generate copy-eliminated C code
-		./../../../../../bin/wyopcl -code -copy "$WHILEYSRC".whiley
+		# Print out error messages.
+		echo "Errors in running $NAME $OP program on array size = " $arraysize
+		# Terminate the nested loop.
+		break 2
 	fi
 }
-
-
 #
 # Collects the memory usage of the generated C code
 #
 mem_c (){
 	NAME=$1
 	CALL=$2
-	OP=$3
+	CODE=$3
+	OP=$4
 	ROOTDIR=$PWD/mem/valgrind
-	WHILEYSRC="$NAME"_"$CALL"
-	DIR="$CALL/CCode/$OP"
+	WHILEYSRC="$NAME"
+	DIR="$CALL/$CODE/$OP"
 	# make the folder
 	mkdir -p $DIR
 	# move C and Header files to working directory.
-	cp "$WHILEYSRC".whiley Util.c Util.h $DIR 
-	# # Change to working directory 
+	#cp "$WHILEYSRC".whiley Util.c Util.h $DIR 
+	# # Change to working directory
 	cd $DIR
 	#generate_c_code
 	# Compile the C files with debugging info enabled (-g option) and turned-off optimization.
@@ -126,7 +123,7 @@ mem_c (){
 		# Profile Heap memory using Massif
 		#echo "Heap Memory Profiler"
 		#valgrind --tool=massif --massif-out-file=$WHILEYSRC.massif.out ./"$WHILEYSRC".out $arraysize
-		check_exit $? "C"
+		check_exit $? $NAME $OP "C"
 		if [ "$?" != 0 ]
 		then
 			# Terminate the nested loop.
@@ -141,12 +138,8 @@ mem_c (){
     cd ../../../
 }
 # Measure the memory usage of the generated C code
-#rm -rf $PWD/mem/valgrind
-mem_c sort call_by_value slow
-mem_c sort call_by_value fast
-mem_c sort call_by_reference fast
-# Remove previous GC files.
-#rm -rf $PWD/mem/GC/*.*
-# Profile the GC activities of generated Java code
-#mem_java sort call_by_value
-#mem_java sort call_by_reference
+rm -rf $PWD/mem/valgrind
+mem_c mergesort call_by_value CCode copy_reduced
+mem_c mergesort call_by_value CCode copy_reduced_noleaks
+mem_c mergesort call_by_value CCode naive
+mem_c mergesort call_by_value CCode naive_noleaks

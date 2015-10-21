@@ -1,0 +1,15 @@
+==14489== Memcheck, a memory error detector
+==14489== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==14489== Using Valgrind-3.10.0.SVN and LibVEX; rerun with -h for copyright info
+==14489== Command: ./mergesort.out 100000
+==14489== Parent PID: 14409
+==14489== 
+==14489== 
+==14489== HEAP SUMMARY:
+==14489==     in use at exit: 0 bytes in 0 blocks
+==14489==   total heap usage: 1,000,007 allocs, 1,000,007 frees, 70,757,944 bytes allocated
+==14489== 
+==14489== All heap blocks were freed -- no leaks are possible
+==14489== 
+==14489== For counts of detected and suppressed errors, rerun with: -v
+==14489== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

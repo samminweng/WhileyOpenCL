@@ -4,7 +4,7 @@ BEGIN {
 	filename = "";
 	FS = "\t";
 	# Test case name
-	testcase = "sort";
+	testcase = "bubblesort";
 	# Call type
 	calls["call_by_value"] = "call_by_value";
 	#calls["call_by_reference"] = "call_by_reference";

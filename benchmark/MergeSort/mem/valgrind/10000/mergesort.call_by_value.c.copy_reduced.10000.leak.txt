@@ -1,0 +1,21 @@
+==14426== Memcheck, a memory error detector
+==14426== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==14426== Using Valgrind-3.10.0.SVN and LibVEX; rerun with -h for copyright info
+==14426== Command: ./mergesort.out 10000
+==14426== Parent PID: 14409
+==14426== 
+==14426== 
+==14426== HEAP SUMMARY:
+==14426==     in use at exit: 1,149,112 bytes in 20,003 blocks
+==14426==   total heap usage: 20,003 allocs, 0 frees, 1,149,112 bytes allocated
+==14426== 
+==14426== LEAK SUMMARY:
+==14426==    definitely lost: 1,149,064 bytes in 20,002 blocks
+==14426==    indirectly lost: 48 bytes in 1 blocks
+==14426==      possibly lost: 0 bytes in 0 blocks
+==14426==    still reachable: 0 bytes in 0 blocks
+==14426==         suppressed: 0 bytes in 0 blocks
+==14426== Rerun with --leak-check=full to see details of leaked memory
+==14426== 
+==14426== For counts of detected and suppressed errors, rerun with: -v
+==14426== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
