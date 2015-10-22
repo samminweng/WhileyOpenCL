@@ -480,7 +480,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				}
 			}
 			// Call the function and assign the return value to lhs register.
-			statement += ret + " = ";
+			statement += store.getIndent() + ret + " = ";
 		}
 		return statement;
 	}
@@ -600,7 +600,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// '_12=reverse(_xs , _xs_size);'
 			statement += translateLHSFunctionCall(code, function);
 			// call the function/method
-			statement += code.name.name() + "(";
+			statement +=  code.name.name() + "(";
 			statement += translateRHSFunctionCall(code, function);
 			statement += ");";
 		}
