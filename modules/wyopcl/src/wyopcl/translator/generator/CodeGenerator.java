@@ -1037,7 +1037,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement = null;
 		} else if (field.equals("args")) {
 			// Convert the arguments into an array of integer array (long long**).
-			statement = indent + target + " = convertArgsToIntArray(argc, args, "+ target + "_size);";
+			statement = indent + target + " = convertArgsToIntArray(argc, args);";
+			statement += indent + target + "_size = argc - 1;";
 		} else {
 			// Get the target
 			statement = indent + target + " = " + store.getVar(code.operand(0)) + "." + code.field + ";";
