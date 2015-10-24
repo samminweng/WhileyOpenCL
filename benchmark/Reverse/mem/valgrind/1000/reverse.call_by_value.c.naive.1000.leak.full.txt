@@ -1,0 +1,68 @@
+==12114== Memcheck, a memory error detector
+==12114== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==12114== Using Valgrind-3.10.0.SVN and LibVEX; rerun with -h for copyright info
+==12114== Command: ./reverse.out 1000
+==12114== Parent PID: 12080
+==12114== 
+==12114== 
+==12114== HEAP SUMMARY:
+==12114==     in use at exit: 64,112 bytes in 10 blocks
+==12114==   total heap usage: 10 allocs, 0 frees, 64,112 bytes allocated
+==12114== 
+==12114== 48 (8 direct, 40 indirect) bytes in 1 blocks are definitely lost in loss record 2 of 10
+==12114==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12114==    by 0x400B06: convertArgsToIntArray (Util.c:84)
+==12114==    by 0x4008C7: main (reverse_call_by_value.c:130)
+==12114== 
+==12114== 8,008 bytes in 1 blocks are definitely lost in loss record 3 of 10
+==12114==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12114==    by 0x400A5D: genArray (Util.c:37)
+==12114==    by 0x4008EB: main (reverse_call_by_value.c:156)
+==12114== 
+==12114== 8,008 bytes in 1 blocks are definitely lost in loss record 4 of 10
+==12114==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12114==    by 0x400CB9: clone (Util.c:192)
+==12114==    by 0x4008F6: main (reverse_call_by_value.c:160)
+==12114== 
+==12114== 8,008 bytes in 1 blocks are definitely lost in loss record 5 of 10
+==12114==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12114==    by 0x400CB9: clone (Util.c:192)
+==12114==    by 0x400901: main (reverse_call_by_value.c:163)
+==12114== 
+==12114== 8,008 bytes in 1 blocks are definitely lost in loss record 6 of 10
+==12114==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12114==    by 0x400CB9: clone (Util.c:192)
+==12114==    by 0x400929: main (reverse_call_by_value.c:183)
+==12114== 
+==12114== 8,008 bytes in 1 blocks are definitely lost in loss record 7 of 10
+==12114==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12114==    by 0x400A5D: genArray (Util.c:37)
+==12114==    by 0x400852: reverse (reverse_call_by_value.c:36)
+==12114==    by 0x400934: main (reverse_call_by_value.c:183)
+==12114== 
+==12114== 8,008 bytes in 1 blocks are definitely lost in loss record 8 of 10
+==12114==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12114==    by 0x400CB9: clone (Util.c:192)
+==12114==    by 0x40085D: reverse (reverse_call_by_value.c:40)
+==12114==    by 0x400934: main (reverse_call_by_value.c:183)
+==12114== 
+==12114== 8,008 bytes in 1 blocks are definitely lost in loss record 9 of 10
+==12114==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12114==    by 0x400CB9: clone (Util.c:192)
+==12114==    by 0x400868: reverse (reverse_call_by_value.c:43)
+==12114==    by 0x400934: main (reverse_call_by_value.c:183)
+==12114== 
+==12114== 8,008 bytes in 1 blocks are definitely lost in loss record 10 of 10
+==12114==    at 0x4C2AB80: malloc (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12114==    by 0x400CB9: clone (Util.c:192)
+==12114==    by 0x40093F: main (reverse_call_by_value.c:186)
+==12114== 
+==12114== LEAK SUMMARY:
+==12114==    definitely lost: 64,072 bytes in 9 blocks
+==12114==    indirectly lost: 40 bytes in 1 blocks
+==12114==      possibly lost: 0 bytes in 0 blocks
+==12114==    still reachable: 0 bytes in 0 blocks
+==12114==         suppressed: 0 bytes in 0 blocks
+==12114== 
+==12114== For counts of detected and suppressed errors, rerun with: -v
+==12114== ERROR SUMMARY: 9 errors from 9 contexts (suppressed: 0 from 0)
