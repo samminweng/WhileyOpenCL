@@ -298,6 +298,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				&& ((Type.Reference) code.type()).element() instanceof Type.Array) {
 			statement += indent + rhs + " = " + lhs + ";\n";
 			statement += indent + rhs + "_size = " + lhs + "_size;";
+		} else if (code.type() instanceof Type.Record){
+			wyil.lang.WyilFile.Type userType = getUserDefinedType((Type.Record)code.type());
+			statement += indent + rhs + " = clone_"+userType.name()+"(" + lhs + ");";
 		} else {
 			statement = indent + rhs + " = " + lhs + ";";
 		}
@@ -480,7 +483,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				}
 			}
 			// Call the function and assign the return value to lhs register.
-			statement += store.getIndent() + ret + " = ";
+			statement += ret + " = ";
 		}
 		return statement;
 	}
