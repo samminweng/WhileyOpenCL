@@ -1043,12 +1043,19 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement = indent + target + " = convertArgsToIntArray(argc, args);\n";
 			statement += indent + target + "_size = argc - 1;";
 		} else {
-			// Get the target
-			statement = indent + target + " = " + store.getVar(code.operand(0)) + "." + code.field + ";";
 			// Check if field type is an array.
 			if (code.fieldType() instanceof Type.Array){
-				// Propagate 
-				statement += "\n" + indent + target +"_size = " + store.getVar(code.operand(0)) + "." + code.field+"_size;";
+				// 'fieldload %34 = %3 pieces : {int move,int[] pieces}'
+				// _34_size = _b.pieces_size;
+				// _34 = clone(_b.pieces, _b.pieces_size);
+				String var = store.getVar(code.operand(0));
+				// Assign the array size
+				statement += indent + target +"_size = " + var + "." + code.field+"_size;\n";
+				// Assing and clones the array.
+				statement += indent + target + " = clone(" + var+ "." + code.field + ", "+var+"."+code.field+"_size);";
+			}else{
+				// Get the target
+				statement = indent + target + " = " + store.getVar(code.operand(0)) + "." + code.field + ";";
 			}
 		}
 		store.addStatement(code, statement);
