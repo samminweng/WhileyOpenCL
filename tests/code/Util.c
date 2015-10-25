@@ -1,6 +1,19 @@
 #include "Util.h"
 //Global variable
 /**
+* Free a pointer of a pointer 
+*/
+void freeDoublePointer(long long** ptr, long long size){
+	long long i;
+	// Free each sub-pointer.
+	for(i=0;i<size;i++){
+		free(ptr[i]);
+	}
+	//Free top-level pointer.
+	free(ptr);
+}
+
+/**
  * Slice the array into two array from start to end (exclusively).
  */
 long long* slice(long long* arr, long long arr_size, long long start, long long end){
@@ -34,14 +47,31 @@ long long* genArray(int value, int arr_size){
 }
 
 /**
+ *  Combine an array of integers into an integer,
+ *  e.g. arr = {1, 0} is converted into 10.\
+ *  */
+long long parseInteger(long long* arr){
+	long long value;
+	long long i;
+	value = 0;
+	i=0;
+	while(arr[i]>=0&&arr[i]<=9){
+		value = value*10+arr[i];
+		i++;
+	}
+	return value;
+}
+
+/**
  *
  *  Converts command list arugments into an array of integers (0 ~ 9),
  *  e.g. args[1]={'1', '0'} is converted into arr[0] = {1, 0}.
  *  The arr_size is passed by reference, so its value is updated after
  *  the function call.
 **/
-long long** convertArgsToIntArray(int argc, char** args, int arr_size){
+long long** convertArgsToIntArray(int argc, char** args){
 	long long** arr;
+	long long arr_size;
 	long long i;
 	long long j;
 	long long max_j;
@@ -66,7 +96,11 @@ long long** convertArgsToIntArray(int argc, char** args, int arr_size){
 			max_j=0;
 			//check if the char is a number or it is not ending char.
 			//And calculate the arr_size
-			while(args[i][max_j] != '\0' || isdigit(args[i][max_j])){
+			while(args[i][max_j] != '\0'){
+				if(!isdigit(args[i][max_j])){
+					printf("None numbers is passed via command line arguments\n");
+					exit(-2);
+				}
 				max_j++;
 			}
 			//Allocate the array of arr[arr_size]
@@ -80,30 +114,11 @@ long long** convertArgsToIntArray(int argc, char** args, int arr_size){
 			arr_size++;
 		}
 	}
-	//Check if the conversion is successful and array size should be >= 1.
-	if(arr_size == 0){
-		printf("No number is passed via command line arguments\n");
-		exit(-2);
-	}
+
 	return arr;
 }
 
 
-/**
- *  Combine an array of integers into an integer,
- *  e.g. arr = {1, 0} is converted into 10.\
- *  */
-long long parseInteger(long long* arr){
-	long long value;
-	long long i;
-	value = 0;
-	i=0;
-	while(arr[i]>=0&&arr[i]<=9){
-		value = value*10+arr[i];
-		i++;
-	}
-	return value;
-}
 
 
 /**
@@ -229,29 +244,19 @@ memcpy(&ret[*op_1_size], op_2, *op_2_size*sizeof(long long));
 *ret_size = *op_1_size+*op_2_size;
 return ret;
 }*/
-/** Convert an array of ASCII code into a String and print out the string.*/
-void printf_s(long long* input, long long input_size) {
-	long long i=0;
-	for(i=0;i<input_size;i++){
-		printf("%c",input[i]);
-	}
+/**Print out a long long integer*/
+void indirect_printf(long long input) {
+	printf("%lld\n", input);
 }
-/** Similar to printf_s with addtional new line.**/
-void println_s(long long* input, long long input_size){
-	long long i=0;
-	for(i=0;i<input_size;i++){
-		printf("%c",input[i]);
-	}
-	printf("\n");
-}
+
 /**Print out an array of long long integers. If the array size > 10, then 
 print the first 10 items and the last item.*/
-void printf_array(long long* input, long long input_size) {
+void indirect_printf_array(long long* input, long long input_size) {
 	long long i = 0;
 	//Determines whether to add ','.
 	int isFirst = true;
 	int max_i = 10;
-	printf("[");
+	printf("\n[");
 	//Print the first 10 items
 	for (i = 0; i < input_size && i < max_i; i++) {
 		if (isFirst) {
@@ -265,7 +270,7 @@ void printf_array(long long* input, long long input_size) {
 	if (input_size > i) {
 		printf(" ... %lld", input[input_size - 1]);
 	}
-	printf("]");
+	printf("]\n");
 }
 
 //Check if the number is a power of 2.
