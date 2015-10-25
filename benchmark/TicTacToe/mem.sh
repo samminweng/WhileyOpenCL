@@ -1,6 +1,6 @@
 #!/bin/bash
 
-arraysizes="1000"
+arraysizes="10"
 # Parameters for checking memeory on Megatron using Valgrind and JAVA profiker. 
 #arraysizes="100000 1000000 2000000 4000000 6000000 8000000 10000000 12000000 14000000 16000000 18000000 20000000"
 #
@@ -139,7 +139,7 @@ mem_c (){
 }
 # Measure the memory usage of the generated C code
 rm -rf $PWD/mem/valgrind
-#mem_c reverse call_by_value CCode copy_reduced
-#mem_c reverse call_by_value CCode copy_reduced_noleaks
-mem_c TicTacToe call_by_value CCode naive
-#mem_c reverse call_by_value CCode naive_noleaks
+#mem_c TicTacToe call_by_value CCode copy_reduced
+#mem_c TicTacToe call_by_value CCode copy_reduced_noleaks
+#mem_c TicTacToe call_by_value CCode naive
+mem_c TicTacToe call_by_value CCode naive_noleaks
