@@ -258,7 +258,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.Assign code, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
-
 		String rhs = store.getVar(code.target());
 		String lhs = store.getVar(code.operand(0));
 		String statement = "";
@@ -518,6 +517,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			} else if ((paramType instanceof Type.Reference
 					&& ((Type.Reference) paramType).element() instanceof Type.Array)) {
 				statement += param + ", " + param + "_size";
+			} else if(paramType instanceof Type.Record){
+				wyil.lang.WyilFile.Type userType = this.getUserDefinedType((Type.Record)paramType);
+				statement += "clone_"+userType.name()+"("+param+")";
+			} else if(paramType instanceof Type.Nominal){
+				String userType = ((Type.Nominal)paramType).name().name();
+				statement += "clone_"+userType+"("+param+")";
 			} else {
 				statement += param;
 			}
