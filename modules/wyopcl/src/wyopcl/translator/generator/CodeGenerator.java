@@ -1452,13 +1452,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			Type type = fields.get(field_name);
 			// Get field value
 			String field_value = store.getVar(code.operand(names.length - 1 - index));
-			// Assess the structure member, such as 'move', and assign the operand to it, e. g. '_11.move =
-			statement += store.getIndent() + store.getVar(code.target()) + "." + field_name + " = " + field_value
-					+ ";\n";
 			// Propagate '_size' variable.
 			if (type instanceof Type.Array) {
 				statement += store.getIndent() + store.getVar(code.target()) + "." + field_name + "_size = "
 						+ field_value + "_size;\n";
+				statement += store.getIndent() + store.getVar(code.target()) + "." + field_name + " = clone(" + field_value
+						+ ", "+field_value + "_size);";
+			}else{
+				statement += store.getIndent() + store.getVar(code.target()) + "." + field_name + " = " + field_value
+						+ ";\n";
 			}
 
 		}
