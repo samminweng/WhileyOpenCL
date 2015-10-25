@@ -1037,7 +1037,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement = null;
 		} else if (field.equals("args")) {
 			// Convert the arguments into an array of integer array (long long**).
-			statement = indent + target + " = convertArgsToIntArray(argc, args);";
+			statement = indent + target + " = convertArgsToIntArray(argc, args);\n";
 			statement += indent + target + "_size = argc - 1;";
 		} else {
 			// Get the target
@@ -1143,7 +1143,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				if (type instanceof Type.Int) {
 					statement += "printf(\"%d\\n\", " + input + ");";
 				} else if (type instanceof Type.Array) {
-					// Print out a pointer without specifying array size.
+					// Print out an array with given array size.
 					statement += "printf_array(" + input + ", " + input + "_size);";
 				} else if (type instanceof Type.Nominal) {
 					Type.Nominal nominal = (Type.Nominal) type;
