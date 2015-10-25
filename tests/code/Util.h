@@ -22,7 +22,9 @@
 long long* clone(long long *arr, long long size);
 void indirect_printf(long long input);
 //No overlapping is allowed: function name must be different.
-void indirect_printf_array(long long* input, long long input_size);
+void printf_array(long long* input, long long input_size);
+void printf_s(long long* input, long long input_size);
+void println_s(long long* input, long long input_size);
 int isPowerof2(long long value);
 long long* optimized_append(long long* op_1, long long* op_1_size, long long* op_2, long long* op_2_size, long long* ret_size);
 int isArrayEqual(long long* arr1, long long arr1_size, long long* arr2, long long arr2_size);

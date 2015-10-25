@@ -251,7 +251,7 @@ void indirect_printf(long long input) {
 
 /**Print out an array of long long integers. If the array size > 10, then 
 print the first 10 items and the last item.*/
-void indirect_printf_array(long long* input, long long input_size) {
+void printf_array(long long* input, long long input_size) {
 	long long i = 0;
 	//Determines whether to add ','.
 	int isFirst = true;
@@ -270,9 +270,26 @@ void indirect_printf_array(long long* input, long long input_size) {
 	if (input_size > i) {
 		printf(" ... %lld", input[input_size - 1]);
 	}
-	printf("]\n");
+	printf("]");
 }
-
+/**
+ * Print out an array of ASCII numbers into an array of chars.
+ */
+void printf_s(long long* input, long long input_size) {
+	long long i = 0;
+	for (i = 0; i < input_size ; i++) {
+		// Make int to char
+		char c = input[i];
+		printf("%c", c);
+	}
+}
+/**
+ * Print out an array of integers with a new line.
+ */
+void println_s(long long* input, long long input_size) {
+	printf_s(input, input_size);
+	printf("\n");
+}
 //Check if the number is a power of 2.
 //See also http://www.exploringbinary.com/ten-ways-to-check-if-an-integer-is-a-power-of-two-in-c/
 int isPowerof2(long long value) {
