@@ -78,20 +78,28 @@ function countOf(Square[] pieces, Square s) -> (int r):
 // ===============================================================
 constant GAME is [0,1,2,3,4,5,6,7,8]
 
-method main(System.Console console):
-    Board b = EmptyBoard()
-    int i = 0
-    while i < |GAME|:
-        int p = GAME[i]
-        console.out.print_s("BOARD: ")
-        console.out.println(b)
-        console.out.print_s("MOVE: ")
-        console.out.println(p)
-        if p < 0 || p > 9 || b.pieces[p] != BLANK || b.move == 9:
-            console.out.println_s("INVALID MOVE!")
-            break
-        else:
-            b = play(b,p)
-        i = i + 1
-    assert b.move == 9
-    assert b.pieces == [1, 2, 1, 2, 1, 2, 1, 2, 1]
+method main(System.Console sys):
+    int|null max = Int.parse(sys.args[0])
+    if max != null:
+        int repeat=0
+        while repeat < max:
+            Board b = EmptyBoard()
+            int i = 0
+            while i < |GAME|:
+                int p = GAME[i]
+                sys.out.print_s("BOARD: ")
+                sys.out.println(b)
+                sys.out.print_s("MOVE: ")
+                sys.out.println(p)
+                if p < 0 || p > 9 || b.pieces[p] != BLANK || b.move == 9:
+                    sys.out.println_s("INVALID MOVE!")
+                    break
+                else:
+                    b = play(b,p)
+                i = i + 1
+            assert b.move == 9
+            assert b.pieces == [1, 2, 1, 2, 1, 2, 1, 2, 1]
+            repeat = repeat + 1
+            sys.out.print_s("REPEAT: ")
+            sys.out.println(repeat)
+
