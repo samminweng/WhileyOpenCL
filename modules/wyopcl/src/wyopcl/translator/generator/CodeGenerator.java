@@ -1677,11 +1677,20 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	@Override
 	protected void translate(ListGenerator code, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
+		String target = store.getVar(code.target());
+		String origial = store.getVar(code.operand(0));
 		// Call genArray function to generate the array
-		String statement = store.getIndent() + store.getVar(code.target()) + " = genArray("
-				+ store.getVar(code.operand(0)) + ", " + store.getVar(code.operand(1)) + ");\n";
-		// Assign array size.
-		statement += store.getIndent() + store.getVar(code.target()) + "_size = " + store.getVar(code.operand(1)) + ";";
+		String statement = store.getIndent() + target + " = genArray("
+				+ origial + ", " + store.getVar(code.operand(1)) + ");\n";
+		statement += store.getIndent() + target + "_size = ";
+		// Check if oringial reg is an array
+		if(store.getVarType(code.operand(0)) instanceof Type.Array){
+			// Assign array size * subarray size, e.g. '_8_size = _height*_7_size;'
+			statement += store.getVar(code.operand(1)) + "*"+ origial+"_size;";
+		}else{
+			// Assign array size, e.g. '_7_size = _width;'
+			statement += store.getVar(code.operand(1)) + ";";
+		}	
 		store.addStatement(code, statement);
 	}
 
