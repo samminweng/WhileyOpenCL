@@ -530,8 +530,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					String userType = nomial.name().name();
 					statement += "clone_"+userType+"("+param+")";
 				}
-				
-				
+
+
 			} else {
 				statement += param;
 			}
@@ -1461,30 +1461,26 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(NewRecord code, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
-		HashMap<String, Type> fields = code.type().fields();
-		String statement = "";
-		// Get the set of field names and convert it to an array of string.
-		String[] names = fields.keySet().toArray(new String[fields.size()]);
-		for (int index = names.length - 1; index >= 0; index--) {
-			// Get field name
-			String field_name = names[index];
-			// Get field type
-			Type type = fields.get(field_name);
-			// Get field value
-			String field_value = store.getVar(code.operand(names.length - 1 - index));
+		String s = "";
+		String indent = store.getIndent();
+		String target = store.getVar(code.target());
+		// Creates a list of field names
+		String[] names = (String[]) code.type().keys().toArray(new String[code.type().keys().size()]);
+		for(int i=0;i<code.operands().length; i++){
+			String var = store.getVar(code.operand(i));
+			String name = names[i];
+			Type type = store.getVarType(code.operand(i));
 			// Propagate '_size' variable.
 			if (type instanceof Type.Array) {
-				statement += store.getIndent() + store.getVar(code.target()) + "." + field_name + "_size = "
-						+ field_value + "_size;\n";
-				statement += store.getIndent() + store.getVar(code.target()) + "." + field_name + " = clone(" + field_value
-						+ ", "+field_value + "_size);";
+				s += indent + target  + "." + name + "_size = "
+						+ var + "_size;\n";
+				s += indent + target + "." + name + " = clone(" + var+ ", "+var + "_size);\n";
 			}else{
-				statement += store.getIndent() + store.getVar(code.target()) + "." + field_name + " = " + field_value
-						+ ";\n";
+				s += indent + target + "." + name + " = " + var	+ ";\n";
 			}
-
 		}
-		store.addStatement(code, statement);
+		// Get the set of field names and convert it to an array of string.
+		store.addStatement(code, s);
 	}
 
 	/**
