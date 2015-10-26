@@ -841,28 +841,32 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(Codes.Update code, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
 		String indent = store.getIndent();
-		String stat = "";
+		String s = "";
 		// For List type only
 		if (code.type() instanceof Type.Array) {
-			stat += indent + store.getVar(code.target()) + "[" + store.getVar(code.operand(0)) + "] = "
-					+ store.getVar(code.result()) + ";";
+			s += indent + store.getVar(code.target());
+			// Iterates operands to increase the depths. 
+			for(int i=0;i<code.operands().length-1;i++){
+				s += "[" + store.getVar(code.operand(i)) + "]";
+			}
+			s += " = " + store.getVar(code.result()) + ";";
 		} else if (code.type() instanceof Type.Record) {
-			stat += indent + store.getVar(code.target()) + "." + code.fields.get(0);
+			s += indent + store.getVar(code.target()) + "." + code.fields.get(0);
 			// check if there are two or more operands. If so, then add the
 			// index operand.
 			if (code.operands().length > 1) {
-				stat += "[" + store.getVar(code.operand(0)) + "]";
+				s += "[" + store.getVar(code.operand(0)) + "]";
 			}
-			stat += " = " + store.getVar(code.result()) + ";";
+			s += " = " + store.getVar(code.result()) + ";";
 		} else if (code.type() instanceof Type.Reference
 				&& ((Type.Reference) code.type()).element() instanceof Type.Array) {
-			stat += indent + "(*" + store.getVar(code.target()) + ")[" + store.getVar(code.operand(0)) + "]" + " = "
+			s += indent + "(*" + store.getVar(code.target()) + ")[" + store.getVar(code.operand(0)) + "]" + " = "
 					+ store.getVar(code.result()) + ";";
 		} else {
 			throw new RuntimeException("Not implemented" + code);
 		}
 
-		store.addStatement(code, stat);
+		store.addStatement(code, s);
 	}
 
 	protected void translate(Codes.Nop code, FunctionOrMethod function) {
