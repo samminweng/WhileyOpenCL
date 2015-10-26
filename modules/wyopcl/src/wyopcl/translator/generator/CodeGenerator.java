@@ -1140,34 +1140,36 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		CodeStore store = this.getCodeStore(function);
 		String statement = store.getIndent();
 		if (code.type() instanceof Type.FunctionOrMethod) {
-			// Get the function name, e.g. 'printf'.
-			String print_name = store.getField(code.operand(0));
-			// Get the input
-			String input = store.getVar(code.operand(1));
-			switch (print_name) {
-			case "print_s":
-				// E.g. 'println("%s", str);'
-				statement += "printf_s(" + input + ", " + input + "_size);";
-				break;
-			case "println_s":
-				statement += "println_s(" + input + ", " + input + "_size);";
-				break;
-			case "println":
-				// Check input's type to call different println function.
-				Type type = store.getVarType(code.operand(1));
-				if (type instanceof Type.Int) {
-					statement += "printf(\"%d\\n\", " + input + ");";
-				} else if (type instanceof Type.Array) {
-					// Print out an array with given array size.
-					statement += "printf_array(" + input + ", " + input + "_size);";
-				} else if (type instanceof Type.Nominal) {
-					Type.Nominal nominal = (Type.Nominal) type;
-					// Print out a user-defined type structure
-					statement += "printf_" + nominal.name().name() + "(" + input + ");";
-				} else {
-					throw new RuntimeException("Not implemented." + code);
+			if(code.target()>0){
+				// Get the function name, e.g. 'printf'.
+				String print_name = store.getField(code.operand(0));
+				// Get the input
+				String input = store.getVar(code.operand(1));
+				switch (print_name) {
+				case "print_s":
+					// E.g. 'println("%s", str);'
+					statement += "printf_s(" + input + ", " + input + "_size);";
+					break;
+				case "println_s":
+					statement += "println_s(" + input + ", " + input + "_size);";
+					break;
+				case "println":
+					// Check input's type to call different println function.
+					Type type = store.getVarType(code.operand(1));
+					if (type instanceof Type.Int) {
+						statement += "printf(\"%d\\n\", " + input + ");";
+					} else if (type instanceof Type.Array) {
+						// Print out an array with given array size.
+						statement += "printf_array(" + input + ", " + input + "_size);";
+					} else if (type instanceof Type.Nominal) {
+						Type.Nominal nominal = (Type.Nominal) type;
+						// Print out a user-defined type structure
+						statement += "printf_" + nominal.name().name() + "(" + input + ");";
+					} else {
+						throw new RuntimeException("Not implemented." + code);
+					}
+					break;
 				}
-				break;
 			}
 		}
 		store.addStatement(code, statement);
@@ -1704,7 +1706,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Add field name
 			statement += "\tprintf(\" " + field_name + ":\");\n";
 			Type fieldtype = fields.get(field_name);
-			if (fieldtype instanceof Type.Nominal) {
+			if (fieldtype instanceof Type.Nominal || fieldtype instanceof Type.Int) {
 				// Add field values.
 				statement += "\tprintf(\"%d\", s." + field_name + ");\n";
 			} else if (fieldtype instanceof Type.Array) {
