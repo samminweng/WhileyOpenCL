@@ -58,8 +58,7 @@ Board EmptyBoard(){
 	//newrecord %11 = (%0, %10) : {int move,int[] pieces}
 	_11.move = _0;
 	_11.pieces_size = _10_size;
-	_11.pieces = clone(_10, _10_size);
-	free(_10);
+	_11.pieces = _10;
 	//return %11 : {int move,int[] pieces}
 	return _11;
 	//return
@@ -270,9 +269,9 @@ int main(int argc, char** args){
 		//invoke %14 = () TicTacToe_call_by_value:EmptyBoard : function() -> TicTacToe_call_by_value:Board
 		_14 = EmptyBoard();
 		//assign %13 = %14  : {int move,int[] pieces}
-		_13 = clone_Board(_14);
+		_13 = _14;
 		//assign %3 = %13  : {int move,int[] pieces}
-		_b = clone_Board(_13);
+		_b = _13;
 		//const %16 = 0 : int
 		_16 = 0;
 		//assign %15 = %16  : int
@@ -366,10 +365,10 @@ blklab20:;
 //.blklab18
 blklab18:;
 			//invoke %42 = (%3, %5) TicTacToe_call_by_value:play : function(TicTacToe_call_by_value:Board,TicTacToe_call_by_value:nat) -> TicTacToe_call_by_value:Board
-			_42 = play(clone_Board(_b) ,_p);
+			_42 = play(clone_Board(_b), _p);
 			//assign %3 = %42  : {int move,int[] pieces}
 			free_Board(_b);
-			_b = clone_Board(_42);
+			_b = _42;
 //.blklab19
 blklab19:;
 			//const %43 = 1 : int
@@ -379,7 +378,6 @@ blklab19:;
 			//assign %4 = %44  : int
 			_i = _44;
 			// End of 'blklab17'
-			free_Board(_42);
 			free(_34);
 		}
 //.blklab17
@@ -456,8 +454,6 @@ blklab24:
 		//indirectinvoke %64 (%2) : method(any) -> void
 		printf("%d\n", _repeat);
 		//End of 'blklab16' loop.
-		free_Board(_14);
-		free_Board(_13);
 		free_Board(_b);
 	}
 //.blklab16
