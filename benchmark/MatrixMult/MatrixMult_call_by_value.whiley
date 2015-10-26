@@ -29,7 +29,7 @@ type Matrix is {
     int[][] data
 } where |data| == height && no { i in 0..height | |data[i]| != width }
 
-function Matrix(nat width, nat height, int[][] data) -> (Matrix r)
+function matrix(nat width, nat height, int[][] data) -> (Matrix r)
 // Input array must match matrix height
 requires |data| == height
 // Elements of input array must match matrix width
@@ -68,7 +68,7 @@ ensures C.width == B.width && C.height == A.height:
             j = j + 1
         i = i + 1
     //
-    return Matrix(B.width,A.height,C_data)
+    return matrix(B.width,A.height,C_data)
 // ========================================================
 // Parser Code
 // ========================================================
@@ -187,7 +187,7 @@ function genMatrix(nat height, nat width) -> (Matrix r):
             rows[i][j] = 1
             j = j + 1
         i = i + 1
-    return Matrix(width,height,rows)
+    return matrix(width,height,rows)
 
 method main(System.Console sys):
     int|null max = Int.parse(sys.args[0])

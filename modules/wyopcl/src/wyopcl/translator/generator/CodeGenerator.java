@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import wyc.lang.Nominal;
 import wyc.lang.Stmt.VariableDeclaration;
 import wycc.lang.SyntaxError;
 import wyfs.lang.Path.ID;
@@ -116,6 +117,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		int register = 0;
 		String stat = "";
 		for (Type param : function.type().params()) {
+			//Check if the param is Console. If so, skip it.
 			if (isfirst) {
 				stat += translateType(param);
 			} else {
@@ -329,7 +331,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(Codes.LengthOf code, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
 		String stat = store.getIndent() + store.getVar(code.target()) + " = " + store.getVar(code.operand(0))
-				+ "_size;";
+		+ "_size;";
 		store.addStatement(code, stat);
 	}
 
@@ -378,10 +380,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		case REM:
 			stat += "%" + right + ";";
 			break;
-		/*
-		 * case RANGE: // Assign the range with input code for the translation of 'forall' // byte-code. // this.range =
-		 * code; stat = null; break;
-		 */
+			/*
+			 * case RANGE: // Assign the range with input code for the translation of 'forall' // byte-code. // this.range =
+			 * code; stat = null; break;
+			 */
 		case BITWISEOR:
 			break;
 		case BITWISEXOR:
@@ -521,8 +523,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				wyil.lang.WyilFile.Type userType = this.getUserDefinedType((Type.Record)paramType);
 				statement += "clone_"+userType.name()+"("+param+")";
 			} else if(paramType instanceof Type.Nominal){
-				String userType = ((Type.Nominal)paramType).name().name();
-				statement += "clone_"+userType+"("+param+")";
+				Type.Nominal nomial = ((Type.Nominal)paramType);
+				if(nomial.name().name().equals("Console")){
+					statement += "stdout";
+				}else{
+					String userType = nomial.name().name();
+					statement += "clone_"+userType+"("+param+")";
+				}
+				
+				
 			} else {
 				statement += param;
 			}
@@ -584,7 +593,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statement += store.getIndent() + store.getVar(code.target()) + " = " + "parseInteger("
 						+ store.getVar(code.operand(0)) + ");";
 				break;
-			// Slice an array into a new sub-array at given starting and ending index.
+				// Slice an array into a new sub-array at given starting and ending index.
 			case "slice":
 				// Call the 'slice' function.
 				String arr_name = store.getVar(code.operand(0));
@@ -1039,7 +1048,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String indent = store.getIndent();
 		String statement = "";
 		// Skip printing statements, e.g. 'print_s'
-		if (field.equals("out") || field.equals("println") || field.equals("print_s") || field.equals("println_s")) {
+		if (field.equals("out") || field.equals("print") || field.equals("println") || field.equals("print_s") || field.equals("println_s")) {
 			// Load the field to the target register.
 			store.loadField(code.target(), field);
 			statement = null;
@@ -1364,6 +1373,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// The return type of 'EmptyBoard' function is 'Board'.
 		if (type instanceof Type.Nominal) {
 			Type.Nominal nomial = (Type.Nominal) type;
+			// Check is type is a System.Console. 
+			if(nomial.name().name().equals("Console")){
+				// Use FILE type.
+				return "FILE*";
+			}
 			return nomial.name().name();
 		}
 
@@ -1595,7 +1609,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(Dereference code, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
 		String statement = store.getIndent() + store.getVar(code.target()) + " = *(" + store.getVar(code.operand(0))
-				+ ");";
+		+ ");";
 		// Check if the value in the rhs register is an array.
 		if (code.type().element() instanceof Type.Array) {
 			// Assign the array size to lhs register
