@@ -305,11 +305,11 @@ int main(int argc, char** args){
 			_24 = _24_value;
 			_24_size = 7;
 			//indirectinvoke %23 (%24) : method(int[]) -> void
-			printf_s(_24, _24_size);
+			//printf_s(_24, _24_size);
 			//fieldload %25 = %0 out : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 			//fieldload %26 = %25 println : {method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s}
 			//indirectinvoke %26 (%3) : method(any) -> void
-			printf_Board(_b);
+			//printf_Board(_b);
 			//fieldload %27 = %0 out : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 			//fieldload %28 = %27 print_s : {method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s}
 			//const %29 = [77,79,86,69,58,32] : int[]
@@ -317,11 +317,11 @@ int main(int argc, char** args){
 			_29 = _29_value;
 			_29_size = 6;
 			//indirectinvoke %28 (%29) : method(int[]) -> void
-			printf_s(_29, _29_size);
+			//printf_s(_29, _29_size);
 			//fieldload %30 = %0 out : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 			//fieldload %31 = %30 println : {method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s}
 			//indirectinvoke %31 (%5) : method(any) -> void
-			printf("%d\n", _p);
+			//printf("%d\n", _p);
 			//const %32 = 0 : int
 			_32 = 0;
 			//iflt %5, %32 goto blklab20 : int
@@ -358,7 +358,7 @@ blklab20:;
 			_41 = _41_value;
 			_41_size = 13;
 			//indirectinvoke %40 (%41) : method(int[]) -> void
-			println_s(_41, _41_size);
+			//println_s(_41, _41_size);
 			//goto blklab17
 			goto blklab17;
 			//goto blklab19
@@ -450,16 +450,17 @@ blklab24:
 		_62 = _62_value;
 		_62_size = 8;
 		//indirectinvoke %61 (%62) : method(int[]) -> void
-		printf_s(_62, _62_size);
+		//printf_s(_62, _62_size);
 		//fieldload %63 = %0 out : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 		//fieldload %64 = %63 println : {method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s}
 		//indirectinvoke %64 (%2) : method(any) -> void
-		printf("%d\n", _repeat);
+		//printf(" %d ", _repeat);
 		//End of 'blklab16' loop.
 		free_Board(_14);
 		free_Board(_13);
 		free_Board(_b);
 	}
+	printf(" %d ", _repeat);
 //.blklab16
 blklab16:;
 //.blklab15
