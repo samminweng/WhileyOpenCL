@@ -1,4 +1,8 @@
 #include "MatrixMult_call_by_value.h"
+void free_Matrix(Matrix m){
+	free2DArray(m.data, m.data_size);
+}
+
 Matrix clone_Matrix(Matrix m){
 	Matrix newMatrix;
 	newMatrix.height = m.height;
@@ -376,6 +380,10 @@ blklab19:;
 blklab18:;
 	//invoke %19 = (%1, %0, %2) MatrixMult_callBy_value:matrix : function(MatrixMult_callBy_value:nat,MatrixMult_callBy_value:nat,int[][]) -> MatrixMultCallBy_value:Matrix
 	_19 = matrix(_width, _height, clone2DArray(_rows, _rows_size, _rows_size_size), _rows_size, _rows_size_size);
+	free(_7);
+	free2DArray(_8, _8_size);
+	free2DArray(_5, _5_size);
+	free2DArray(_rows, _rows_size);
 	//return %19 : {int[][] data,int height,int width}
 	return _19;
 	//return
@@ -499,6 +507,15 @@ blklab23:;
 	printMat(stdout ,clone_Matrix(C));
 //.blklab20
 blklab20:;
+	free_Matrix(_10);
+	free_Matrix(_11);
+	free_Matrix(A);
+	free_Matrix(_13);
+	free_Matrix(_12);
+	free_Matrix(B);
+	free_Matrix(_15);
+	free_Matrix(_14);
+	free_Matrix(C);
 	//return
 	exit(0);
 }
