@@ -1,8 +1,4 @@
 #include "MatrixMult_call_by_value.h"
-void free_Matrix(Matrix m){
-	free2DArray(m.data, m.data_size);
-}
-
 Matrix clone_Matrix(Matrix m){
 	Matrix newMatrix;
 	newMatrix.height = m.height;
@@ -166,8 +162,6 @@ Matrix multiply(Matrix A, Matrix B){
 				_33=_k+_32;
 				//assign %6 = %33  : int
 				_k = _33;
-				free2DArray(_24, _24_size);
-				free2DArray(_27, _27_size);
 			}
 //.blklab15
 blklab15:;
@@ -198,7 +192,6 @@ blklab13:;
 	//invoke %38 = (%39, %40, %2) MatrixMult_callBy_value:matrix : function(MatrixMult_callBy_value:nat,MatrixMult_callBy_value:nat,int[][]) -> MatrixMult_callBy_value:Matrix
 	_38 = matrix(_39 ,_40 , C_data, C_data_size, C_data_size_size);
 	//return %38 : {int[][] data,int height,int width}
-	free(_10);
 	return _38;
 	//return
 	
@@ -292,7 +285,6 @@ blklab17:;
 		_24_size = 0;
 		//indirectinvoke %23 (%24) : method(int[]) -> void
 		println_s(_24, _24_size);
-		free(_24);
 	}
 //.blklab16
 blklab16:;
@@ -384,8 +376,6 @@ blklab19:;
 blklab18:;
 	//invoke %19 = (%1, %0, %2) MatrixMult_callBy_value:matrix : function(MatrixMult_callBy_value:nat,MatrixMult_callBy_value:nat,int[][]) -> MatrixMultCallBy_value:Matrix
 	_19 = matrix(_width, _height, _rows, _rows_size, _rows_size_size);
-	free(_rows);
-	free(_7);
 	//return %19 : {int[][] data,int height,int width}
 	return _19;
 	//return
@@ -476,7 +466,6 @@ int main(int argc, char** args){
 		exit(-1);
 //.blklab21
 blklab21:;
-		free2DArray(_16, _16_size);
 	//assert
 	}
 	//assert
@@ -508,9 +497,6 @@ blklab23:;
 	//invoke %(%0, %4) MatrixMult_callBy_value:printMat : method(whiley/lang/System:Console,MatrixMult_callBy_value:Matrix) -> void
 	printf("%d", C.data[0][0]);
 	//printMat(stdout ,clone_Matrix(C));
-	free_Matrix(A);
-	free_Matrix(B);
-	free_Matrix(C);
 //.blklab20
 blklab20:;
 	//return
