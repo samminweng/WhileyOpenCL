@@ -1,9 +1,18 @@
 #include "MatrixMult_call_by_value.h"
+Matrix clone_Matrix(Matrix m){
+	Matrix newMatrix;
+	newMatrix.height = m.height;
+	newMatrix.width = m.width;
+	newMatrix.data_size = m.data_size;
+	newMatrix.data = clone2DArray(m.data, m.data_size);
+	return newMatrix;
+}
+
 Matrix matrix(nat _width, nat _height, long long** _data, long long _data_size){
 	Matrix _3;
 	//newrecord %3 = (%2, %1, %0) : {int[][] data,int height,int width}
 	_3.data_size = _data_size;
-	_3.data = clone(_data, _data_size);
+	_3.data = clone2DArray(_data, _data_size);
 	_3.width = _width;
 	_3.height = _height;
 	//return %3 : {int[][] data,int height,int width}
@@ -11,9 +20,9 @@ Matrix matrix(nat _width, nat _height, long long** _data, long long _data_size){
 	//return
 	
 }
-Matrix multiply(Matrix _A, Matrix _B){
-	long long** _C_data = NULL;
-	long long _C_data_size = 0;
+Matrix multiply(Matrix A, Matrix B){
+	long long** C_data = NULL;
+	long long C_data_size = 0;
 	nat _i;
 	nat _j;
 	long long _r = 0;
@@ -62,12 +71,12 @@ Matrix multiply(Matrix _A, Matrix _B){
 	//const %8 = 0 : int
 	_8 = 0;
 	//fieldload %9 = %1 width : {int[][] data,int height,int width}
-	_9 = _B.width;
+	_9 = B.width;
 	//listgen %10 = [8; 9] : int[]
 	_10 = genArray(_8, _9);
 	_10_size = _9;
 	//fieldload %11 = %0 height : {int[][] data,int height,int width}
-	_11 = _A.height;
+	_11 = A.height;
 	//listgen %12 = [10; 11] : int[][]
 	_12 = gen2DArray(_10, _10_size, _11);
 	_12_size = _11*_10_size;
@@ -75,8 +84,8 @@ Matrix multiply(Matrix _A, Matrix _B){
 	_7_size = _12_size;
 	_7 = clone2DArray(_12, _12_size);
 	//assign %2 = %7  : int[][]
-	_C_data_size = _7_size;
-	_C_data = clone2DArray(_7, _7_size);
+	C_data_size = _7_size;
+	C_data = clone2DArray(_7, _7_size);
 	//const %14 = 0 : int
 	_14 = 0;
 	//assign %13 = %14  : int
@@ -84,7 +93,7 @@ Matrix multiply(Matrix _A, Matrix _B){
 	//assign %3 = %13  : int
 	_i = _13;
 	//fieldload %15 = %0 height : {int[][] data,int height,int width}
-	_15 = _A.height;
+	_15 = A.height;
 	//ifge %3, %15 goto blklab13 : int
 	while(_i<_15){
 		//const %17 = 0 : int
@@ -94,7 +103,7 @@ Matrix multiply(Matrix _A, Matrix _B){
 		//assign %4 = %16  : int
 		_j = _16;
 		//fieldload %18 = %1 width : {int[][] data,int height,int width}
-		_18 = _B.width;
+		_18 = B.width;
 		//ifge %4, %18 goto blklab14 : int
 		while(_j<_18){
 			//const %20 = 0 : int
@@ -110,19 +119,19 @@ Matrix multiply(Matrix _A, Matrix _B){
 			//assign %6 = %21  : int
 			_k = _21;
 			//fieldload %23 = %0 width : {int[][] data,int height,int width}
-			_23 = _A.width;
+			_23 = A.width;
 			//ifge %6, %23 goto blklab15 : int
 			while(_k<_23){
 				//fieldload %24 = %0 data : {int[][] data,int height,int width}
-				_24_size = _A.data_size;
-				_24 = clone2DArray(_A.data, _A.data_size);
+				_24_size = A.data_size;
+				_24 = clone2DArray(A.data, A.data_size);
 				//indexof %25 = %24, %3 : int[][]
 				_25=_24[_i];
 				//indexof %26 = %25, %6 : int[]
 				_26=_25[_k];
 				//fieldload %27 = %1 data : {int[][] data,int height,int width}
-				_27_size = _B.data_size;
-				_27 = clone2DArray(_B.data, _B.data_size);
+				_27_size = B.data_size;
+				_27 = clone2DArray(B.data, B.data_size);
 				//indexof %28 = %27, %6 : int[][]
 				_28=_27[_k];
 				//indexof %29 = %28, %4 : int[]
@@ -143,7 +152,7 @@ Matrix multiply(Matrix _A, Matrix _B){
 //.blklab15
 blklab15:;
 			//update %2[%3][%4] = %5 : int[][] -> int[][]
-			_C_data[_i][_j] = _r;
+			C_data[_i][_j] = _r;
 			//const %34 = 1 : int
 			_34 = 1;
 			//add %35 = %4, %34 : int
@@ -163,17 +172,17 @@ blklab14:;
 //.blklab13
 blklab13:;
 	//fieldload %39 = %1 width : {int[][] data,int height,int width}
-	_39 = _B.width;
+	_39 = B.width;
 	//fieldload %40 = %0 height : {int[][] data,int height,int width}
-	_40 = _A.height;
-	//invoke %38 = (%39, %40, %2) MatrixMult_call_by_value:matrix : function(MatrixMult_call_by_value:nat,MatrixMult_call_by_value:nat,int[][]) -> MatrixMult_call_by_value:Matrix
-	_38 = matrix(_39 ,_40 ,clone2DArray(_C_data, _C_data_size), _C_data_size);
+	_40 = A.height;
+	//invoke %38 = (%39, %40, %2) MatrixMult_callBy_value:matrix : function(MatrixMult_callBy_value:nat,MatrixMult_callBy_value:nat,int[][]) -> MatrixMult_callBy_value:Matrix
+	_38 = matrix(_39 ,_40 ,clone2DArray(C_data, C_data_size), C_data_size);
 	//return %38 : {int[][] data,int height,int width}
 	return _38;
 	//return
 	
 }
-void printMat(FILE* _sys, Matrix _A){
+void printMat(FILE* _sys, Matrix A){
 	long long _i = 0;
 	long long _j = 0;
 	long long _4 = 0;
@@ -202,7 +211,7 @@ void printMat(FILE* _sys, Matrix _A){
 	//assign %2 = %4  : int
 	_i = _4;
 	//fieldload %6 = %1 height : {int[][] data,int height,int width}
-	_6 = _A.height;
+	_6 = A.height;
 	//ifge %2, %6 goto blklab16 : int
 	while(_i<_6){
 		//const %8 = 0 : int
@@ -212,14 +221,14 @@ void printMat(FILE* _sys, Matrix _A){
 		//assign %3 = %7  : int
 		_j = _7;
 		//fieldload %9 = %1 width : {int[][] data,int height,int width}
-		_9 = _A.width;
+		_9 = A.width;
 		//ifge %3, %9 goto blklab17 : int
 		while(_j<_9){
 			//fieldload %10 = %0 out : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 			//fieldload %11 = %10 print : {method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s}
 			//fieldload %12 = %1 data : {int[][] data,int height,int width}
-			_12_size = _A.data_size;
-			_12 = clone2DArray(_A.data, _A.data_size);
+			_12_size = A.data_size;
+			_12 = clone2DArray(A.data, A.data_size);
 			//indexof %13 = %12, %2 : int[][]
 			_13=_12[_i];
 			//indexof %14 = %13, %3 : int[]
@@ -341,7 +350,7 @@ blklab19:;
 	}
 //.blklab18
 blklab18:;
-	//invoke %19 = (%1, %0, %2) MatrixMult_call_by_value:matrix : function(MatrixMult_call_by_value:nat,MatrixMult_call_by_value:nat,int[][]) -> MatrixMult_call_by_value:Matrix
+	//invoke %19 = (%1, %0, %2) MatrixMult_callBy_value:matrix : function(MatrixMult_callBy_value:nat,MatrixMult_callBy_value:nat,int[][]) -> MatrixMultCallBy_value:Matrix
 	_19 = matrix(_width, _height, clone2DArray(_rows, _rows_size), _rows_size);
 	//return %19 : {int[][] data,int height,int width}
 	return _19;
@@ -350,9 +359,9 @@ blklab18:;
 }
 int main(int argc, char** args){
 	long long _max;
-	Matrix _A;
-	Matrix _B;
-	Matrix _C;
+	Matrix A;
+	Matrix B;
+	Matrix C;
 	long long _5;
 	long long _6;
 	long long** _7 = NULL;
@@ -390,29 +399,29 @@ int main(int argc, char** args){
 	_max = _5;
 	//ifis %1, null goto blklab20 : null|int
 	if(_max == NULL) { goto blklab20;}
-	//invoke %11 = (%1, %1) MatrixMult_call_by_value:genMatrix : function(MatrixMult_call_by_value:nat,MatrixMult_call_by_value:nat) -> MatrixMult_call_by_value:Matrix
+	//invoke %11 = (%1, %1) MatrixMult_callBy_value:genMatrix : function(MatrixMult_callBy_value:nat,MatrixMult_callBy_value:nat) -> MatrixMult_callBy_value:Matrix
 	_11 = genMatrix(_max ,_max);
 	//assign %10 = %11  : {int[][] data,int height,int width}
 	_10 = clone_Matrix(_11);
 	//assign %2 = %10  : {int[][] data,int height,int width}
-	_A = clone_Matrix(_10);
-	//invoke %13 = (%1, %1) MatrixMult_call_by_value:genMatrix : function(MatrixMult_call_by_value:nat,MatrixMult_call_by_value:nat) -> MatrixMult_call_by_value:Matrix
+	A = clone_Matrix(_10);
+	//invoke %13 = (%1, %1) MatrixMult_callBy_value:genMatrix : function(MatrixMult_callBy_value:nat,MatrixMult_callBy_value:nat) -> MatrixMult_callBy_value:Matrix
 	_13 = genMatrix(_max ,_max);
 	//assign %12 = %13  : {int[][] data,int height,int width}
 	_12 = clone_Matrix(_13);
 	//assign %3 = %12  : {int[][] data,int height,int width}
-	_B = clone_Matrix(_12);
-	//invoke %15 = (%2, %3) MatrixMult_call_by_value:multiply : function(MatrixMult_call_by_value:Matrix,MatrixMult_call_by_value:Matrix) -> MatrixMult_call_by_value:Matrix
-	_15 = multiply(clone_Matrix(_A) ,clone_Matrix(_B));
+	B = clone_Matrix(_12);
+	//invoke %15 = (%2, %3) MatrixMult_callBy_value:multiply : function(MatrixMult_callBy_value:Matrix,MatrixMult_callBy_value:Matrix) -> MatrixMult_callBy_value:Matrix
+	_15 = multiply(clone_Matrix(A) ,clone_Matrix(B));
 	//assign %14 = %15  : {int[][] data,int height,int width}
 	_14 = clone_Matrix(_15);
 	//assign %4 = %14  : {int[][] data,int height,int width}
-	_C = clone_Matrix(_14);
+	C = clone_Matrix(_14);
 	//assert
 	{
 		//fieldload %16 = %4 data : {int[][] data,int height,int width}
-		_16_size = _C.data_size;
-		_16 = clone(_C.data, _C.data_size);
+		_16_size = C.data_size;
+		_16 = clone2DArray(C.data, C.data_size);
 		//const %17 = 0 : int
 		_17 = 0;
 		//indexof %18 = %16, %17 : int[][]
@@ -433,7 +442,7 @@ blklab21:;
 	//assert
 	{
 		//fieldload %21 = %4 width : {int[][] data,int height,int width}
-		_21 = _C.width;
+		_21 = C.width;
 		//ifeq %21, %1 goto blklab22 : int
 		if(_21==_max){goto blklab22;}
 		//fail
@@ -446,7 +455,7 @@ blklab22:;
 	//assert
 	{
 		//fieldload %22 = %4 height : {int[][] data,int height,int width}
-		_22 = _C.height;
+		_22 = C.height;
 		//ifeq %22, %1 goto blklab23 : int
 		if(_22==_max){goto blklab23;}
 		//fail
@@ -456,8 +465,8 @@ blklab22:;
 blklab23:;
 	//assert
 	}
-	//invoke %(%0, %4) MatrixMult_call_by_value:printMat : method(whiley/lang/System:Console,MatrixMult_call_by_value:Matrix) -> void
-	printMat(stdout ,clone_Matrix(_C));
+	//invoke %(%0, %4) MatrixMult_callBy_value:printMat : method(whiley/lang/System:Console,MatrixMult_callBy_value:Matrix) -> void
+	printMat(stdout ,clone_Matrix(C));
 //.blklab20
 blklab20:;
 	//return
