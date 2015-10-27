@@ -198,7 +198,7 @@ method main(System.Console sys):
         assert C.data[0][0] ==  max
         assert C.width == max
         assert C.height == max
-        printMat(sys, C)
+        //printMat(sys, C)
     /*if |sys.args| == 0:
         sys.out.println("usage: matrix <input-file>")
     else:

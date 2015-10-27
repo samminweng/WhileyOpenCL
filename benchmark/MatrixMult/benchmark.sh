@@ -13,10 +13,10 @@ check_exit (){
 	if [ "$EXITVALUE" = 0 ]
 	then
 		# Print out success messages.
-		echo "Success in running $NAME $OP program on array size = " $parameter
+		echo "Success in running $NAME $OP $CODE program on array size = " $parameter
 	else
 		# Print out error messages.
-		echo "Errors in running $NAME $OP program on array size = " $parameter
+		echo "Errors in running $NAME $OP $CODE program on array size = " $parameter
 	fi
 }
 
@@ -113,6 +113,6 @@ rm result.*.txt
 #run_benchmark MatrixMult call_by_value CCode copy_reduced
 #run_benchmark MatrixMult call_by_value CCode copy_reduced_noleaks
 run_benchmark MatrixMult call_by_value CCode naive
-#run_benchmark MatrixMult call_by_value CCode naive_noleaks
+run_benchmark MatrixMult call_by_value CCode naive_noleaks
 #Benchmark the generated Java code
-#run_benchmark MatrixMult call_by_value JAVACode naive
+run_benchmark MatrixMult call_by_value JAVACode naive

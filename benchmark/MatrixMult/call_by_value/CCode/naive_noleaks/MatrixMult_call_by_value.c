@@ -196,8 +196,12 @@ blklab13:;
 	//fieldload %40 = %0 height : {int[][] data,int height,int width}
 	_40 = A.height;
 	//invoke %38 = (%39, %40, %2) MatrixMult_callBy_value:matrix : function(MatrixMult_callBy_value:nat,MatrixMult_callBy_value:nat,int[][]) -> MatrixMult_callBy_value:Matrix
-	_38 = matrix(_39 ,_40 ,clone2DArray(C_data, C_data_size, C_data_size_size), C_data_size, C_data_size_size);
+	_38 = matrix(_39, _40, clone2DArray(C_data, C_data_size, C_data_size_size), C_data_size, C_data_size_size);
 	//return %38 : {int[][] data,int height,int width}
+	free(_10);
+	free2DArray(_12, _12_size);
+	free2DArray(_7, _7_size);
+	free2DArray(C_data, C_data_size);
 	return _38;
 	//return
 	
@@ -271,6 +275,7 @@ void printMat(FILE* _sys, Matrix A){
 			_19=_j+_18;
 			//assign %3 = %19  : int
 			_j = _19;
+			free(_12);
 		}
 //.blklab17
 blklab17:;
@@ -284,11 +289,14 @@ blklab17:;
 		//fieldload %23 = %22 println_s : {method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s}
 		//const %24 = [] : void[]
 		_24=(long long*)malloc(1*sizeof(long long));
-		if(_24 == NULL) {fprintf(stderr,"fail to malloc");
- exit(-1);}
+		if(_24 == NULL) {
+			fprintf(stderr,"fail to malloc");
+			exit(-1);
+		}
 		_24_size = 0;
 		//indirectinvoke %23 (%24) : method(int[]) -> void
 		println_s(_24, _24_size);
+		free(_24);
 	}
 //.blklab16
 blklab16:;
@@ -475,6 +483,7 @@ int main(int argc, char** args){
 //.blklab21
 blklab21:;
 		free2DArray(_16, _16_size);
+		free(_20);
 	//assert
 	}
 	//assert
@@ -504,9 +513,8 @@ blklab23:;
 	//assert
 	}
 	//invoke %(%0, %4) MatrixMult_callBy_value:printMat : method(whiley/lang/System:Console,MatrixMult_callBy_value:Matrix) -> void
-	printMat(stdout ,clone_Matrix(C));
-//.blklab20
-blklab20:;
+	printf("%d", C.data[0][0]);
+	//printMat(stdout ,clone_Matrix(C));
 	free_Matrix(_10);
 	free_Matrix(_11);
 	free_Matrix(A);
@@ -516,6 +524,9 @@ blklab20:;
 	free_Matrix(_15);
 	free_Matrix(_14);
 	free_Matrix(C);
+	free2DArray(_7, _7_size);
+//.blklab20
+blklab20:;
 	//return
 	exit(0);
 }
