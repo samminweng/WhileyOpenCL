@@ -162,8 +162,6 @@ Matrix multiply(Matrix A, Matrix B){
 				_33=_k+_32;
 				//assign %6 = %33  : int
 				_k = _33;
-				free2DArray(_24, _24_size);
-				free2DArray(_27, _27_size);
 			}
 //.blklab15
 blklab15:;
@@ -466,7 +464,6 @@ int main(int argc, char** args){
 		exit(-1);
 //.blklab21
 blklab21:;
-		free2DArray(_16, _16_size);
 	//assert
 	}
 	//assert
