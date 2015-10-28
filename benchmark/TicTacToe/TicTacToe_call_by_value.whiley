@@ -87,10 +87,10 @@ method main(System.Console sys):
             int i = 0
             while i < |GAME|:
                 int p = GAME[i]
-                sys.out.print_s("BOARD: ")
-                sys.out.println(b)
-                sys.out.print_s("MOVE: ")
-                sys.out.println(p)
+                //sys.out.print_s("BOARD: ")
+                //sys.out.println(b)
+                //sys.out.print_s("MOVE: ")
+                //sys.out.println(p)
                 if p < 0 || p > 9 || b.pieces[p] != BLANK || b.move == 9:
                     sys.out.println_s("INVALID MOVE!")
                     break
@@ -100,6 +100,6 @@ method main(System.Console sys):
             assert b.move == 9
             assert b.pieces == [1, 2, 1, 2, 1, 2, 1, 2, 1]
             repeat = repeat + 1
-            sys.out.print_s("REPEAT: ")
-            sys.out.println(repeat)
+            //sys.out.print_s("REPEAT: ")
+            sys.out.print(repeat)
 
