@@ -20,10 +20,14 @@ $ git clone https://github.com/samminweng/WhileyOpenCL
 $ cd WhileyOpenCL/
 $ ant  
 
-The libraries are created and put inside 'lib' folder. To update the
-code from GitHub, use the below commands:
+To update the code from GitHub, use the below commands:
 $ git reset --hard HEAD
+$ git clean -dfx
 $ git pull
+
+'git reset' resets the code base to the most recent commit.
+'git clean -dfx' removes all the untracked files. 
+'git checkout -- <file>' undoes the changes of a file.
 
 ======================================================================
 Usage
