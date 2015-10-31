@@ -331,7 +331,7 @@ int main(int argc, char** args){
 			if(_p>_33){goto blklab21;}
 			//fieldload %34 = %3 pieces : {int move,int[] pieces}
 			_34_size = _b.pieces_size;
-			_34 = clone(_b.pieces, _b.pieces_size);
+			_34 = _b.pieces;
 			//indexof %35 = %34, %5 : int[]
 			_35=_34[_p];
 			//const %36 = 0 : int
@@ -378,7 +378,6 @@ blklab19:;
 			//assign %4 = %44  : int
 			_i = _44;
 			// End of 'blklab17'
-			free(_34);
 		}
 //.blklab17
 blklab17:;
@@ -401,7 +400,7 @@ blklab23:;
 		{
 			//fieldload %47 = %3 pieces : {int move,int[] pieces}
 			_47_size = _b.pieces_size;
-			_47 = clone(_b.pieces, _b.pieces_size);
+			_47 = _b.pieces;
 			//const %48 = 1 : int
 			_48 = 1;
 			//const %49 = 2 : int
@@ -431,7 +430,6 @@ blklab23:;
 			exit(-1);
 //.blklab24
 blklab24:
-			free(_47);
 			free(_57);
 		//assert
 		}

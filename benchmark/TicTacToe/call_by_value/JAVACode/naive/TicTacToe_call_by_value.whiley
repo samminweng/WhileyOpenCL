@@ -101,5 +101,5 @@ method main(System.Console sys):
             assert b.pieces == [1, 2, 1, 2, 1, 2, 1, 2, 1]
             repeat = repeat + 1
             //sys.out.print_s("REPEAT: ")
-            sys.out.print(repeat)
+        sys.out.print(repeat)
 

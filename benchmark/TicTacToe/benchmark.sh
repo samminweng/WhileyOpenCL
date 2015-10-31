@@ -3,7 +3,7 @@
 # The shell script of benchmarking the generated Java code of Whiley program
 #
 #parameters="10 100 1000 10000 100000"
-parameters="1000 10000 100000"
+parameters="1000"
 # Large scaled parameters.
 #parameters="10 100 1000 10000 100000 1000000 10000000 100000000 200000000 300000000 400000000 500000000 600000000 700000000 800000000 900000000 1000000000"
 
@@ -79,7 +79,7 @@ run_benchmark (){
 	for parameter in $parameters
 	do
 	    #Repeat running the programs
-		for i in {1..10}
+		for i in {1..1}
 		do
 			echo "Beginning the benchmarks of $OP $SRC $CODE program method on array size =" $parameter >> $RESULT
 			start=`date +%s%N`
@@ -112,7 +112,7 @@ rm result.*.txt
 #Benchmark the generated C code
 run_benchmark TicTacToe call_by_value CCode copy_reduced
 run_benchmark TicTacToe call_by_value CCode copy_reduced_noleaks
-run_benchmark TicTacToe call_by_value CCode naive
-run_benchmark TicTacToe call_by_value CCode naive_noleaks
+#run_benchmark TicTacToe call_by_value CCode naive
+#run_benchmark TicTacToe call_by_value CCode naive_noleaks
 #Benchmark the generated Java code
 run_benchmark TicTacToe call_by_value JAVACode naive
