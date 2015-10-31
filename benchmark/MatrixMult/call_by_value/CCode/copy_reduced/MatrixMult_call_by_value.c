@@ -137,7 +137,7 @@ Matrix multiply(Matrix A, Matrix B){
 				//fieldload %24 = %0 data : {int[][] data,int height,int width}
 				_24_size = A.data_size;
 				_24_size_size = A.data_size_size;
-				_24 = clone2DArray(A.data, A.data_size, A.data_size_size);
+				_24 = A.data;
 				//indexof %25 = %24, %3 : int[][]
 				_25=_24[_i];
 				//indexof %26 = %25, %6 : int[]
@@ -145,7 +145,7 @@ Matrix multiply(Matrix A, Matrix B){
 				//fieldload %27 = %1 data : {int[][] data,int height,int width}
 				_27_size = B.data_size;
 				_27_size_size = B.data_size_size;
-				_27 = clone2DArray(B.data,B.data_size, B.data_size_size);
+				_27 = B.data;
 				//indexof %28 = %27, %6 : int[][]
 				_28=_27[_k];
 				//indexof %29 = %28, %4 : int[]
@@ -450,7 +450,7 @@ int main(int argc, char** args){
 		//fieldload %16 = %4 data : {int[][] data,int height,int width}
 		_16_size = C.data_size;
 		_16_size_size = C.data_size_size;
-		_16 = clone2DArray(C.data, C.data_size, C.data_size_size);
+		_16 = C.data;
 		//const %17 = 0 : int
 		_17 = 0;
 		//indexof %18 = %16, %17 : int[][]
@@ -495,8 +495,7 @@ blklab23:;
 	//assert
 	}
 	//invoke %(%0, %4) MatrixMult_callBy_value:printMat : method(whiley/lang/System:Console,MatrixMult_callBy_value:Matrix) -> void
-	printf("%d", C.data[0][0]);
-	//printMat(stdout ,clone_Matrix(C));
+	printf("%d\n", C.data[0][0]);
 //.blklab20
 blklab20:;
 	//return

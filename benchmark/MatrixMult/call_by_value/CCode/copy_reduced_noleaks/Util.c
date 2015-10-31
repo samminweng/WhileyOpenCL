@@ -30,19 +30,17 @@ long long* slice(long long* arr, long long arr_size, long long start, long long 
 /**
  * Generate an array with given size and initial value.
  */
-long long* genArray(int value, int arr_size){
+long long* gen1DArray(int value, int arr_size){
 	long long* arr = NULL;
 	long long i = 0;
 	// Allocate the array
 	arr = (long long*)malloc(arr_size*sizeof(long long));
 	if(arr == NULL){
-		printf("fail to allocate the memory at genArray function in Util.c\n");
+		printf("fail to allocate the memory at gen1DArray function in Util.c\n");
 		exit(-2);
 	}
 	// Initialize each element with the given value.
-	for(i=0;i<arr_size;i++){
-		arr[i] = value;
-	}
+	memset(arr, value, arr_size*sizeof(long long));
 	return arr;
 }
 /**
@@ -54,13 +52,18 @@ long long** gen2DArray(long long* arr,  long long size, long long arr_size){
 	// Allocate the array
 	_2DArray = (long long**)malloc(size*sizeof(long long*));
 	if(_2DArray == NULL){
-		printf("fail to allocate the memory at genArray function in Util.c\n");
+		printf("fail to allocate the memory at gen2DArray function in Util.c\n");
 		exit(-2);
 	}
-	//memcpy(_2DArray, arr, arr_size * size*sizeof(long long));
+
 	for(i=0;i<size;i++){
 		// Copy the input array and assign it to matrix.
-		_2DArray[i] = clone(arr, arr_size);
+		_2DArray[i] = (long long*)malloc(arr_size*sizeof(long long));
+		if(_2DArray[i] == NULL){
+		printf("fail to allocate the memory at gen2DArray function in Util.c\n");
+		exit(-2);
+	}
+		memcpy(_2DArray[i], arr, arr_size);
 	}
 	return _2DArray;
 }

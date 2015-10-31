@@ -86,7 +86,7 @@ Matrix multiply(Matrix A, Matrix B){
 	//fieldload %9 = %1 width : {int[][] data,int height,int width}
 	_9 = B.width;
 	//listgen %10 = [8; 9] : int[]
-	_10 = genArray(_8, _9);
+	_10 = gen1DArray(_8, _9);
 	_10_size = _9;
 	//fieldload %11 = %0 height : {int[][] data,int height,int width}
 	_11 = A.height;
@@ -141,7 +141,7 @@ Matrix multiply(Matrix A, Matrix B){
 				//fieldload %24 = %0 data : {int[][] data,int height,int width}
 				_24_size = A.data_size;
 				_24_size_size = A.data_size_size;
-				_24 = clone2DArray(A.data, A.data_size, A.data_size_size);
+				_24 = A.data;
 				//indexof %25 = %24, %3 : int[][]
 				_25=_24[_i];
 				//indexof %26 = %25, %6 : int[]
@@ -149,7 +149,7 @@ Matrix multiply(Matrix A, Matrix B){
 				//fieldload %27 = %1 data : {int[][] data,int height,int width}
 				_27_size = B.data_size;
 				_27_size_size = B.data_size_size;
-				_27 = clone2DArray(B.data,B.data_size, B.data_size_size);
+				_27 = B.data;
 				//indexof %28 = %27, %6 : int[][]
 				_28=_27[_k];
 				//indexof %29 = %28, %4 : int[]
@@ -166,8 +166,8 @@ Matrix multiply(Matrix A, Matrix B){
 				_33=_k+_32;
 				//assign %6 = %33  : int
 				_k = _33;
-				free2DArray(_24, _24_size);
-				free2DArray(_27, _27_size);
+				//free2DArray(_24, _24_size);
+				//free2DArray(_27, _27_size);
 			}
 //.blklab15
 blklab15:;
@@ -328,7 +328,7 @@ Matrix genMatrix(nat _height, nat _width){
 	//const %6 = 0 : int
 	_6 = 0;
 	//listgen %7 = [6; 1] : int[]
-	_7 = genArray(_6, _width);
+	_7 = gen1DArray(_6, _width);
 	_7_size = _width;
 	//listgen %8 = [7; 0] : int[][]
 	_8_size = _height;
@@ -506,13 +506,14 @@ blklab23:;
 	//assert
 	}
 	//invoke %(%0, %4) MatrixMult_callBy_value:printMat : method(whiley/lang/System:Console,MatrixMult_callBy_value:Matrix) -> void
-	printf("%d", C.data[0][0]);
+	printf("%d\n", C.data[0][0]);
 	//printMat(stdout ,clone_Matrix(C));
 	free_Matrix(A);
 	free_Matrix(B);
 	free_Matrix(C);
 //.blklab20
 blklab20:;
+	free2DArray(_7, _7_size);
 	//return
 	exit(0);
 }

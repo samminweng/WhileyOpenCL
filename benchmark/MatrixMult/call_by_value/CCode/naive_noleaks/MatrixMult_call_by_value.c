@@ -513,7 +513,7 @@ blklab23:;
 	//assert
 	}
 	//invoke %(%0, %4) MatrixMult_callBy_value:printMat : method(whiley/lang/System:Console,MatrixMult_callBy_value:Matrix) -> void
-	printf("%d", C.data[0][0]);
+	printf("%d\n", C.data[0][0]);
 	//printMat(stdout ,clone_Matrix(C));
 	free_Matrix(_10);
 	free_Matrix(_11);
