@@ -18,7 +18,7 @@ Matrix matrix(nat _width, nat _height, long long** _data, long long _data_size, 
 	//newrecord %3 = (%2, %1, %0) : {int[][] data,int height,int width}
 	_3.data_size = _data_size;
 	_3.data_size_size = _data_size_size;
-	_3.data = clone2DArray(_data, _data_size, _data_size_size);
+	_3.data = _data;
 	_3.width = _width;
 	_3.height = _height;
 	//return %3 : {int[][] data,int height,int width}
@@ -196,7 +196,7 @@ blklab13:;
 	//fieldload %40 = %0 height : {int[][] data,int height,int width}
 	_40 = A.height;
 	//invoke %38 = (%39, %40, %2) MatrixMult_callBy_value:matrix : function(MatrixMult_callBy_value:nat,MatrixMult_callBy_value:nat,int[][]) -> MatrixMult_callBy_value:Matrix
-	_38 = matrix(_39 ,_40 , C_data, C_data_size, C_data_size_size);
+	_38 = matrix(_39, _40, C_data, C_data_size, C_data_size_size);
 	//return %38 : {int[][] data,int height,int width}
 	free(_10);
 	return _38;
@@ -384,7 +384,6 @@ blklab19:;
 blklab18:;
 	//invoke %19 = (%1, %0, %2) MatrixMult_callBy_value:matrix : function(MatrixMult_callBy_value:nat,MatrixMult_callBy_value:nat,int[][]) -> MatrixMultCallBy_value:Matrix
 	_19 = matrix(_width, _height, _rows, _rows_size, _rows_size_size);
-	free(_rows);
 	free(_7);
 	//return %19 : {int[][] data,int height,int width}
 	return _19;
@@ -460,7 +459,7 @@ int main(int argc, char** args){
 		//fieldload %16 = %4 data : {int[][] data,int height,int width}
 		_16_size = C.data_size;
 		_16_size_size = C.data_size_size;
-		_16 = clone2DArray(C.data, C.data_size, C.data_size_size);
+		_16 = C.data;
 		//const %17 = 0 : int
 		_17 = 0;
 		//indexof %18 = %16, %17 : int[][]
@@ -476,7 +475,6 @@ int main(int argc, char** args){
 		exit(-1);
 //.blklab21
 blklab21:;
-		free2DArray(_16, _16_size);
 	//assert
 	}
 	//assert
@@ -507,7 +505,6 @@ blklab23:;
 	}
 	//invoke %(%0, %4) MatrixMult_callBy_value:printMat : method(whiley/lang/System:Console,MatrixMult_callBy_value:Matrix) -> void
 	printf("%d\n", C.data[0][0]);
-	//printMat(stdout ,clone_Matrix(C));
 	free_Matrix(A);
 	free_Matrix(B);
 	free_Matrix(C);

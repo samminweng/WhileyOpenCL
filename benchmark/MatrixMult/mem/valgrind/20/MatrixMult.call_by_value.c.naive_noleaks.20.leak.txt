@@ -1,26 +1,21 @@
-==31674== Memcheck, a memory error detector
-==31674== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==31674== Using Valgrind-3.10.0.SVN and LibVEX; rerun with -h for copyright info
-==31674== Command: ./MatrixMult.out 20
-==31674== Parent PID: 31617
-==31674== 
-==31674== Invalid free() / delete / delete[] / realloc()
-==31674==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
-==31674==    by 0x401002: main (MatrixMult_call_by_value.c:486)
-==31674==  Address 0x14 is not stack'd, malloc'd or (recently) free'd
-==31674== 
-==31674== 
-==31674== HEAP SUMMARY:
-==31674==     in use at exit: 16,800 bytes in 105 blocks
-==31674==   total heap usage: 336,509 allocs, 336,405 frees, 53,841,152 bytes allocated
-==31674== 
-==31674== LEAK SUMMARY:
-==31674==    definitely lost: 480 bytes in 3 blocks
-==31674==    indirectly lost: 9,600 bytes in 60 blocks
-==31674==      possibly lost: 0 bytes in 0 blocks
-==31674==    still reachable: 6,720 bytes in 42 blocks
-==31674==         suppressed: 0 bytes in 0 blocks
-==31674== Rerun with --leak-check=full to see details of leaked memory
-==31674== 
-==31674== For counts of detected and suppressed errors, rerun with: -v
-==31674== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==4477== Memcheck, a memory error detector
+==4477== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==4477== Using Valgrind-3.11.0 and LibVEX; rerun with -h for copyright info
+==4477== Command: ./MatrixMult.out 20
+==4477== Parent PID: 4418
+==4477== 
+==4477== 
+==4477== HEAP SUMMARY:
+==4477==     in use at exit: 6,720 bytes in 42 blocks
+==4477==   total heap usage: 336,509 allocs, 336,467 frees, 53,841,152 bytes allocated
+==4477== 
+==4477== LEAK SUMMARY:
+==4477==    definitely lost: 0 bytes in 0 blocks
+==4477==    indirectly lost: 0 bytes in 0 blocks
+==4477==      possibly lost: 0 bytes in 0 blocks
+==4477==    still reachable: 6,720 bytes in 42 blocks
+==4477==         suppressed: 0 bytes in 0 blocks
+==4477== Rerun with --leak-check=full to see details of leaked memory
+==4477== 
+==4477== For counts of detected and suppressed errors, rerun with: -v
+==4477== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

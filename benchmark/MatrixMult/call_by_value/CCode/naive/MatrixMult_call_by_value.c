@@ -82,7 +82,7 @@ Matrix multiply(Matrix A, Matrix B){
 	//fieldload %9 = %1 width : {int[][] data,int height,int width}
 	_9 = B.width;
 	//listgen %10 = [8; 9] : int[]
-	_10 = genArray(_8, _9);
+	_10 = gen1DArray(_8, _9);
 	_10_size = _9;
 	//fieldload %11 = %0 height : {int[][] data,int height,int width}
 	_11 = A.height;
@@ -318,7 +318,7 @@ Matrix genMatrix(nat _height, nat _width){
 	//const %6 = 0 : int
 	_6 = 0;
 	//listgen %7 = [6; 1] : int[]
-	_7 = genArray(_6, _width);
+	_7 = gen1DArray(_6, _width);
 	_7_size = _width;
 	//listgen %8 = [7; 0] : int[][]
 	_8_size = _height;
@@ -493,7 +493,7 @@ blklab23:;
 	//assert
 	}
 	//invoke %(%0, %4) MatrixMult_callBy_value:printMat : method(whiley/lang/System:Console,MatrixMult_callBy_value:Matrix) -> void
-	printf("%d", C.data[0][0]);
+	printf("%d\n", C.data[0][0]);
 	//printMat(stdout ,clone_Matrix(C));
 //.blklab20
 blklab20:;

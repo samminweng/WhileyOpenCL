@@ -21,6 +21,7 @@ Matrix matrix(nat _width, nat _height, long long** _data, long long _data_size, 
 	_3.data = clone2DArray(_data, _data_size, _data_size_size);
 	_3.width = _width;
 	_3.height = _height;
+	free2DArray(_data, _data_size);
 	//return %3 : {int[][] data,int height,int width}
 	return _3;
 	//return
@@ -86,7 +87,7 @@ Matrix multiply(Matrix A, Matrix B){
 	//fieldload %9 = %1 width : {int[][] data,int height,int width}
 	_9 = B.width;
 	//listgen %10 = [8; 9] : int[]
-	_10 = genArray(_8, _9);
+	_10 = gen1DArray(_8, _9);
 	_10_size = _9;
 	//fieldload %11 = %0 height : {int[][] data,int height,int width}
 	_11 = A.height;
@@ -332,7 +333,7 @@ Matrix genMatrix(nat _height, nat _width){
 	//const %6 = 0 : int
 	_6 = 0;
 	//listgen %7 = [6; 1] : int[]
-	_7 = genArray(_6, _width);
+	_7 = gen1DArray(_6, _width);
 	_7_size = _width;
 	//listgen %8 = [7; 0] : int[][]
 	_8_size = _height;
@@ -483,7 +484,6 @@ int main(int argc, char** args){
 //.blklab21
 blklab21:;
 		free2DArray(_16, _16_size);
-		free(_20);
 	//assert
 	}
 	//assert

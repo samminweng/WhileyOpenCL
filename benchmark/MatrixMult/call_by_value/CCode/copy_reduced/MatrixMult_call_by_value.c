@@ -14,7 +14,7 @@ Matrix matrix(nat _width, nat _height, long long** _data, long long _data_size, 
 	//newrecord %3 = (%2, %1, %0) : {int[][] data,int height,int width}
 	_3.data_size = _data_size;
 	_3.data_size_size = _data_size_size;
-	_3.data = clone2DArray(_data, _data_size, _data_size_size);
+	_3.data = _data;
 	_3.width = _width;
 	_3.height = _height;
 	//return %3 : {int[][] data,int height,int width}
@@ -82,7 +82,7 @@ Matrix multiply(Matrix A, Matrix B){
 	//fieldload %9 = %1 width : {int[][] data,int height,int width}
 	_9 = B.width;
 	//listgen %10 = [8; 9] : int[]
-	_10 = genArray(_8, _9);
+	_10 = gen1DArray(_8, _9);
 	_10_size = _9;
 	//fieldload %11 = %0 height : {int[][] data,int height,int width}
 	_11 = A.height;
@@ -190,7 +190,7 @@ blklab13:;
 	//fieldload %40 = %0 height : {int[][] data,int height,int width}
 	_40 = A.height;
 	//invoke %38 = (%39, %40, %2) MatrixMult_callBy_value:matrix : function(MatrixMult_callBy_value:nat,MatrixMult_callBy_value:nat,int[][]) -> MatrixMult_callBy_value:Matrix
-	_38 = matrix(_39 ,_40 , C_data, C_data_size, C_data_size_size);
+	_38 = matrix(_39 ,_40, C_data, C_data_size, C_data_size_size);
 	//return %38 : {int[][] data,int height,int width}
 	return _38;
 	//return
@@ -320,7 +320,7 @@ Matrix genMatrix(nat _height, nat _width){
 	//const %6 = 0 : int
 	_6 = 0;
 	//listgen %7 = [6; 1] : int[]
-	_7 = genArray(_6, _width);
+	_7 = gen1DArray(_6, _width);
 	_7_size = _width;
 	//listgen %8 = [7; 0] : int[][]
 	_8_size = _height;

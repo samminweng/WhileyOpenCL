@@ -1,6 +1,6 @@
 #!/bin/bash
 
-arraysizes="10 20 50"
+arraysizes="10 20"
 # Parameters for checking memeory on Megatron using Valgrind and JAVA profiker. 
 #arraysizes="100000 1000000 2000000 4000000 6000000 8000000 10000000 12000000 14000000 16000000 18000000 20000000"
 #
@@ -113,13 +113,13 @@ mem_c (){
 		# Run Valgrind memcheck tool to find memory leak on Megatron, and write out results to output file.   
 		valgrind --tool=memcheck --log-file="$MEMORY".leak.txt ./"$WHILEYSRC".out $arraysize 
 		# Run Valgrind full memcheck to see details of leaks memory
-		#valgrind --leak-check=full --log-file="$MEMORY".leak.full.txt ./"$WHILEYSRC".out $arraysize
+		valgrind --leak-check=full --log-file="$MEMORY".leak.full.txt ./"$WHILEYSRC".out $arraysize
 		# Find uninitialized memory
 		#valgrind -v --leak-check=yes --log-file="$MEMORY".uninitialized.txt ./"$WHILEYSRC".out $arraysize
 		# Find cache miss
 		#valgrind --tool=cachegrind --log-file="$MEMORY".cachemiss.txt ./"$WHILEYSRC".out $arraysize
 		# Generate call graph and 
-		# valgrind --tool=callgrind --log-file="$MEMORY".callgrind.txt ./"$WHILEYSRC".out $arraysize
+		#valgrind --tool=callgrind --log-file="$MEMORY".callgrind.txt ./"$WHILEYSRC".out $arraysize
 		# Profile Heap memory using Massif
 		#echo "Heap Memory Profiler"
 		#valgrind --tool=massif --massif-out-file=$WHILEYSRC.massif.out ./"$WHILEYSRC".out $arraysize
