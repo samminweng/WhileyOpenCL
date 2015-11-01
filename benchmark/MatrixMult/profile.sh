@@ -23,6 +23,8 @@ run_gprof(){
 		"./$NAME.out" $size
 		# Run gprof tool
 		gprof -a "$NAME.out" "gmon.out" > "$ProfDIR/Analysis.$CODE.$OP.$size.txt"
+		# Delete output files
+		rm *.out 
 	done
 	cd ../../../
 }
