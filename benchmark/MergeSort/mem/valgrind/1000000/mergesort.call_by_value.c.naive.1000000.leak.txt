@@ -1,21 +1,21 @@
-==14471== Memcheck, a memory error detector
-==14471== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==14471== Using Valgrind-3.10.0.SVN and LibVEX; rerun with -h for copyright info
-==14471== Command: ./mergesort.out 1000000
-==14471== Parent PID: 14409
-==14471== 
-==14471== 
-==14471== HEAP SUMMARY:
-==14471==     in use at exit: 838,057,912 bytes in 10,000,007 blocks
-==14471==   total heap usage: 10,000,007 allocs, 0 frees, 838,057,912 bytes allocated
-==14471== 
-==14471== LEAK SUMMARY:
-==14471==    definitely lost: 829,995,320 bytes in 10,000,002 blocks
-==14471==    indirectly lost: 64 bytes in 1 blocks
-==14471==      possibly lost: 8,062,528 bytes in 4 blocks
-==14471==    still reachable: 0 bytes in 0 blocks
-==14471==         suppressed: 0 bytes in 0 blocks
-==14471== Rerun with --leak-check=full to see details of leaked memory
-==14471== 
-==14471== For counts of detected and suppressed errors, rerun with: -v
-==14471== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==3070== Memcheck, a memory error detector
+==3070== Copyright (C) 2002-2015, and GNU GPL'd, by Julian Seward et al.
+==3070== Using Valgrind-3.11.0 and LibVEX; rerun with -h for copyright info
+==3070== Command: ./mergesort.out 1000000
+==3070== Parent PID: 3004
+==3070== 
+==3070== 
+==3070== HEAP SUMMARY:
+==3070==     in use at exit: 838,057,912 bytes in 10,000,007 blocks
+==3070==   total heap usage: 10,000,007 allocs, 0 frees, 838,057,912 bytes allocated
+==3070== 
+==3070== LEAK SUMMARY:
+==3070==    definitely lost: 830,057,712 bytes in 10,000,003 blocks
+==3070==    indirectly lost: 64 bytes in 1 blocks
+==3070==      possibly lost: 8,000,136 bytes in 3 blocks
+==3070==    still reachable: 0 bytes in 0 blocks
+==3070==         suppressed: 0 bytes in 0 blocks
+==3070== Rerun with --leak-check=full to see details of leaked memory
+==3070== 
+==3070== For counts of detected and suppressed errors, rerun with: -v
+==3070== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

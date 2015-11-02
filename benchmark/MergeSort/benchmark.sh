@@ -2,24 +2,11 @@
 #
 # The shell script of benchmarking the generated Java code of Whiley program
 #
-#parameters="10 100 1000 10000 100000"
-parameters="10 100 1000 10000 100000 1000000"
+#parameters="10000 100000 1000000 10000000"
+parameters="10000 100000 1000000 10000000 100000000 1000000000"
+TIMEOUT="1800s"
 # Large scaled parameters.
 #parameters="10 100 1000 10000 100000 1000000 10000000 100000000 200000000 300000000 400000000 500000000 600000000 700000000 800000000 900000000 1000000000"
-
-check_exit (){
-	EXITVALUE=$1
-	# Check if the program completes the task.
-	if [ "$EXITVALUE" = 0 ]
-	then
-		# Print out success messages.
-		echo "Success in running $NAME $OP program on array size = " $parameter
-	else
-		# Print out error messages.
-		echo "Errors in running $NAME $OP program on array size = " $parameter
-	fi
-}
-
 #
 # Generate the Java or C code
 #
@@ -46,14 +33,17 @@ generate_code(){
 		gcc -m64 *.c -o "$SRC".out
 	fi	
 }
-
+#
+# Run compiled C code or Java code with timeout of 30 minutes.
+#
 run_code (){
 	if [ "$CODE" = "JAVACode" ]
 	then
 		# Run Java code
-		./../../../../../bin/wyj $SRC $parameter >> $RESULT
+		timeout $TIMEOUT ./../../../../../bin/wyj $SRC $parameter >> $RESULT
 	else
-		./"$SRC".out $parameter >> $RESULT
+		# Set time out 
+		timeout $TIMEOUT ./"$SRC".out $parameter >> $RESULT
 	fi
 }
 
@@ -86,9 +76,13 @@ run_benchmark (){
 			echo $PWD
 			run_code $parameter
 			# Check if the program completes the task.
-			check_exit $?
-			if [ "$?" != 0 ]
+			if [ "$?" = 0 ]
 			then
+				# Print out success messages.
+				echo "Success in running $NAME $OP $CODE program on array size = " $parameter
+			else
+				# Print out error messages.
+				echo "Errors in running $NAME $OP $CODE program on array size = " $parameter
 				# Terminate the nested loop.
 				break 2
 			fi
@@ -111,8 +105,8 @@ rm result.*.txt
 #
 #Benchmark the generated C code
 #run_benchmark mergesort call_by_value CCode copy_reduced
-#run_benchmark mergesort call_by_value CCode copy_reduced_noleaks
+run_benchmark mergesort call_by_value CCode copy_reduced_noleaks
 #run_benchmark mergesort call_by_value CCode naive
-#run_benchmark mergesort call_by_value CCode naive_noleaks
+run_benchmark mergesort call_by_value CCode naive_noleaks
 #Benchmark the generated Java code
 run_benchmark mergesort call_by_value JAVACode naive
