@@ -10,9 +10,9 @@ BEGIN {
 	#calls["call_by_reference"] = "call_by_reference";
 	# Program type
 	programs["java_naive"] = "java_naive";
-	programs["c_naive"] = "c_naive";
+	#programs["c_naive"] = "c_naive";
 	programs["c_naive_noleaks"] = "c_naive_noleaks";
-	programs["c_copy_reduced"] = "c_copy_reduced";
+	#programs["c_copy_reduced"] = "c_copy_reduced";
 	programs["c_copy_reduced_noleaks"] = "c_copy_reduced_noleaks";
 	# Parameter
 	arraysizes[""] = "";
