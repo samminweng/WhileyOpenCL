@@ -1,18 +1,10 @@
 Memory Leak (bytes)
 FunctionCallType	Optimization	Arraysize	definite loss	indirect loss	possible loss	reachable loss
-call_by_value	copy_reduced_noleaks	1000				
-call_by_value	copy_reduced_noleaks	10000				
 call_by_value	copy_reduced_noleaks	100000				
 call_by_value	copy_reduced_noleaks					
-call_by_value	naive_noleaks	1000	8,008	0	0	0
-call_by_value	naive_noleaks	10000	80,008	0	0	0
 call_by_value	naive_noleaks	100000	800,008	0	0	0
 call_by_value	naive_noleaks					
-call_by_value	copy_reduced	1000	16,024	40	0	0
-call_by_value	copy_reduced	10000	160,024	48	0	0
 call_by_value	copy_reduced	100000	1,600,024	56	0	0
 call_by_value	copy_reduced					
-call_by_value	naive	1000	64,072	40	0	0
-call_by_value	naive	10000	640,072	48	0	0
 call_by_value	naive	100000	6,400,072	56	0	0
 call_by_value	naive					
