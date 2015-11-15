@@ -1664,6 +1664,21 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		store.addStatement(code, statement);
 	}
 
+	/**
+	 * Given an Array Type, compute the array dimension.
+	 * @param arrayType
+	 * @return
+	 */
+	private int computeArrayDimension(wyil.lang.Type type){
+		int d = 1;
+		// If element is an array, then increment the dimension.
+		while(type != null && type instanceof Type.Array){
+			type = ((Type.Array)type).element();
+			d++;
+		}
+		return d;
+	}
+	
 	/***
 	 * Translate 'ListGenerator' wyil code into C code. For example,
 	 * 
@@ -1677,19 +1692,23 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	@Override
 	protected void translate(ListGenerator code, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
-		String target = store.getVar(code.target());
-		String origial = store.getVar(code.operand(0));
+		String indent = store.getIndent();
+		String array_name = store.getVar(code.target());
+		String array_size = store.getVar(code.target())+"_size"; 
+		String rhs_name = store.getVar(code.operand(0));
+		String rhs_size = store.getVar(code.operand(1));
+		Type type = store.getVarType(code.operand(0));
+		int d = computeArrayDimension(type);
 		// Call genArray function to generate the array
-		String statement = store.getIndent() + target + " = genArray("
-				+ origial + ", " + store.getVar(code.operand(1)) + ");\n";
-		statement += store.getIndent() + target + "_size = ";
-		// Check if oringial reg is an array
-		if(store.getVarType(code.operand(0)) instanceof Type.Array){
-			// Assign array size * subarray size, e.g. '_8_size = _height*_7_size;'
-			statement += store.getVar(code.operand(1)) + "*"+ origial+"_size;";
-		}else{
-			// Assign array size, e.g. '_7_size = _width;'
-			statement += store.getVar(code.operand(1)) + ";";
+		String statement = indent + array_name + " = gen"+d+"DArray("+rhs_name + ", " + rhs_size + ");\n";
+		// Assign rhs_size to the array size
+		statement += indent + array_size + " = "+rhs_size+";\n";
+		// Propagate the sub-array size
+		while(d > 1){
+			array_size += "_size";
+			rhs_size += "_size";
+			statement += indent + array_size+ "_size = " +rhs_size+";\n";
+			d--;
 		}	
 		store.addStatement(code, statement);
 	}
