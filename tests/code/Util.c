@@ -1,15 +1,15 @@
 #include "Util.h"
 //Global variable
 /**
-* Free a pointer of a pointer 
-*/
-void freeDoublePointer(long long** ptr, long long size){
+ * Free a pointer of a pointer
+ */
+void free2DArray(long long** ptr, long long size){
 	long long i;
 	// Free each sub-pointer.
 	for(i=0;i<size;i++){
 		free(ptr[i]);
 	}
-	//Free top-level pointer.
+	// Free top-level pointer.
 	free(ptr);
 }
 
@@ -30,21 +30,45 @@ long long* slice(long long* arr, long long arr_size, long long start, long long 
 /**
  * Generate an array with given size and initial value.
  */
-long long* genArray(int value, int arr_size){
+long long* gen1DArray(int value, int arr_size){
 	long long* arr = NULL;
 	long long i = 0;
 	// Allocate the array
 	arr = (long long*)malloc(arr_size*sizeof(long long));
 	if(arr == NULL){
-		printf("fail to allocate the memory at genArray function in Util.c\n");
+		printf("fail to allocate the memory at gen1DArray function in Util.c\n");
 		exit(-2);
 	}
 	// Initialize each element with the given value.
-	for(i=0;i<arr_size;i++){
-		arr[i] = value;
-	}
+	memset(arr, value, arr_size*sizeof(long long));
 	return arr;
 }
+/**
+ * Generate an 2D array (N*M)
+ */
+long long** gen2DArray(long long* arr,  long long size_N, long long size_M){
+	long long** _2DArray = NULL;
+	long long i = 0;
+	long long size =0;
+	// Allocate the array
+	_2DArray = (long long**)malloc(size_N*sizeof(long long*));
+	if(_2DArray == NULL){
+		printf("fail to allocate the memory at gen2DArray function in Util.c\n");
+		exit(-2);
+	}
+	size = size_M*sizeof(long long);
+	for(i=0;i<size_N;i++){
+		// Copy the input array and assign it to matrix.
+		_2DArray[i] = (long long*)malloc(size_M*sizeof(long long));
+		if(_2DArray[i] == NULL){
+			printf("fail to allocate the memory at gen2DArray function in Util.c\n");
+			exit(-2);
+		}
+		memcpy(_2DArray[i], arr, size_M);
+	}
+	return _2DArray;
+}
+
 
 /**
  *  Combine an array of integers into an integer,
@@ -68,7 +92,7 @@ long long parseInteger(long long* arr){
  *  e.g. args[1]={'1', '0'} is converted into arr[0] = {1, 0}.
  *  The arr_size is passed by reference, so its value is updated after
  *  the function call.
-**/
+ **/
 long long** convertArgsToIntArray(int argc, char** args){
 	long long** arr;
 	long long arr_size;
@@ -122,8 +146,8 @@ long long** convertArgsToIntArray(int argc, char** args){
 
 
 /**
-* Split the array into a sub list from 'start' to 'end', and return the sublist.
-*/
+ * Split the array into a sub list from 'start' to 'end', and return the sublist.
+ */
 /*long long* sublist(long long* arr, int start, int end) {
 	long long* sublist = NULL;
 	long long size = 0;
@@ -145,7 +169,7 @@ long long** convertArgsToIntArray(int argc, char** args){
 
 //Check if both arrays are the same. 1: true, 0: false.
 int isArrayEqual(long long* arr1, long long arr1_size,
-				 long long* arr2, long long arr2_size) {
+		long long* arr2, long long arr2_size) {
 	long long i = 0;
 	//Check if array size is the same.
 	if (arr1_size != arr2_size) {
@@ -184,7 +208,8 @@ exit(-2);
 strcpy(res[i], buffer);
 }
 }
-*/
+ */
+
 //Clone an array
 long long* clone(long long *arr, long long size) {
 	long long *ptr = NULL;
@@ -199,14 +224,30 @@ long long* clone(long long *arr, long long size) {
 	memcpy(ptr, arr, size * sizeof(long long));
 	return ptr;
 }
+// Clone 2D array with given array size.
+long long** clone2DArray(long long **arr, long long arr_size, long long size){
+	long long **newMatrix = NULL;
+	long long i =0;
+	newMatrix = (long long**) malloc(size*sizeof(long long*));
+	if(newMatrix == NULL){
+		printf("fail to malloc at clone2DArray function in Util.c\n");
+		exit(-2);
+	}
+	for(i=0;i<size;i++){
+		newMatrix[i] = (long long*)malloc(arr_size*sizeof(long long));
+		memcpy(newMatrix[i], arr[i], arr_size*sizeof(long long));
+	}
+
+	return newMatrix;
+}
 
 /**
-* Append op1 and op2 arrays into a new array.
-* This append function meets value semantics
-* as it creates a new array and makes no change to op1 and op2 arrays.
-*/
+ * Append op1 and op2 arrays into a new array.
+ * This append function meets value semantics
+ * as it creates a new array and makes no change to op1 and op2 arrays.
+ */
 long long* append(long long *arr1, long long arr1_size,
-				  long long* arr2, long long arr2_size) {
+		long long* arr2, long long arr2_size) {
 	long long *ret_arr = NULL;
 	long long size = 0;
 	//Get the size of return array.
@@ -218,7 +259,7 @@ long long* append(long long *arr1, long long arr1_size,
 		printf("fail to allocate the memory at append function in Util.c\n");
 		exit(-2);
 	}
-	 //Fill in op_2 array
+	//Fill in op_2 array
 	memcpy(&ret_arr[arr1_size], arr2, arr2_size * sizeof(long long));
 	//Return the array
 	return ret_arr;
@@ -241,7 +282,7 @@ if(ret == NULL) {fprintf(stderr,"fail to realloc"); exit(0);}
 
 //Copy the items from op_2 source and append them to the pointer of ret array at index of op_1_size.
 memcpy(&ret[*op_1_size], op_2, *op_2_size*sizeof(long long));
-*ret_size = *op_1_size+*op_2_size;
+ *ret_size = *op_1_size+*op_2_size;
 return ret;
 }*/
 /**Print out a long long integer*/
@@ -256,7 +297,7 @@ void printf_array(long long* input, long long input_size) {
 	//Determines whether to add ','.
 	int isFirst = true;
 	int max_i = 10;
-	printf("\n[");
+	printf("[");
 	//Print the first 10 items
 	for (i = 0; i < input_size && i < max_i; i++) {
 		if (isFirst) {
