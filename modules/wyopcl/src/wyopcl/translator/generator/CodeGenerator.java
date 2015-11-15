@@ -942,7 +942,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * <pre>
 	 * <code>
-	 * newlist %6 = () : [void]
+	 * newlist %11 = (%6, %7, %8, %9, %10) : int[]
 	 * </code>
 	 * </pre>
 	 * 
@@ -950,28 +950,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * <pre>
 	 * <code>
-	 * _6_size = 0;
-	 * _6 = malloc(0);
+	 *_11_size = 5;
+	 *long long _11_value = {_6, _7, _8, _9, _10};
+	 *_11 = _11_value;
 	 * </code>
 	 * </pre>
-	 * 
-	 * where '_6_size' is the array size of '_6' array. If the newlist byte-code initializes the array with inputs, then
-	 * the array is allocated dynamically on the memory space and the translation is as below:
-	 * 
-	 * <pre>
-	 * <code>
-	 * newlist %12 = (%11) : [int]
-	 * </code>
-	 * </pre>
-	 * 
-	 * can be translated into:
-	 * 
-	 * <pre>
-	 * <code>
-	 * _12_size=0;
-	 * _12 = malloc(_12_size*sizeof(int));
-	 * </code>
-	 * </pre>
+	 * _11_value is an array with 5 elements and it is assigned to array pointer '_11'.     
 	 * 
 	 * Note that if the new list is an empty list, then its element type is a 'void', which is not supposed to store any
 	 * value. For example,
@@ -989,33 +973,40 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.NewList code, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
-		String target = store.getVar(code.target());
-		// Add the 'target_size' variable to indicate the length of the list
-		String target_size = target + "_size";
-		// Add the declaration of target_size variable.
-		// addDeclaration(Type.Int.T_INT, target_size);
-		// Assign the array size with the number of operands.
 		String indent = store.getIndent();
-		String stat = indent + target_size + " = " + code.operands().length + ";\n";
-		// Check if the size of input operand > 0.
-		if (code.operands().length > 0) {
-			// Allocate the target with array size.
-			stat += indent + target + " = (" + translateType(code.type().element()) + "*)malloc(" + target_size
-					+ "*sizeof(" + translateType(code.type().element()) + "));\n";
-			// Initialize the array.
-			int index = 0;
+		
+		// Get array names
+		String array_name = store.getVar(code.target());
+		// Add the 'size' variable to store the array length
+		String array_size = array_name + "_size";
+		// Assign array size with the number of operands.
+		String statement = indent + array_size + " = " + code.operands().length + ";\n";
+		// Construct array value
+		String elmType = translateType(code.type().element());
+		if(code.operands().length > 0 ){			
+			// Add the 'value' variable to store array values 
+			String array_value = array_name + "_value";
+			// Assign array value 
+			statement += indent + elmType + " "+ array_value + " = {"; 
+			boolean isFirst = true;
 			for (int operand : code.operands()) {
-				stat += indent + target + "[" + index + "] = " + store.getVar(operand) + ";";
-				index++;
+				if(isFirst){
+					isFirst = false;
+				}else{
+					statement += ", ";
+				}
+				statement += store.getVar(operand);
 			}
-			store.addStatement(code, stat);
-		} else {
-			// Translates the empty list, e.g. 'newlist %3 = () : [void]' can be
-			// converted into '_3 = malloc(0);'.
-			stat += indent + target + " = malloc(" + target_size + ");";
-			store.addStatement(code, stat);
+			statement += "};\n";
+			
+			// Assign the pointer to array values 
+			statement += indent + array_name + " = " + array_value+";";			
+		}else{
+			// For empty array, we initialize the array with one element. 
+			statement += indent + array_name + " = malloc(sizeof(" +elmType+"));";
 		}
-
+		
+		store.addStatement(code, statement);
 	}
 
 	/**
