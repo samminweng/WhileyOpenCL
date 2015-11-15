@@ -1272,10 +1272,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(Loop code, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
 		// Get loop_header
-		List<Code> loop_header = new ArrayList<Code>();
+		/*List<Code> loop_header = new ArrayList<Code>();
 		Codes.Invariant loop_invariant = null;
 		Codes.If loop_condition = null;
-		int index = 0;
+		
 		// Split the loop header and loop body
 		for (index = 0; index < code.bytecodes().size(); index++) {
 			Code loop_code = code.bytecodes().get(index);
@@ -1291,35 +1291,40 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// Add the code to loop header
 				loop_header.add(loop_code);
 			}
-		}
-
-		List<Code> loop_body = new ArrayList<Code>();
+		}*/
+		
+		/*List<Code> loop_body = new ArrayList<Code>();
 		// Reorder the sequence of loop code and put the loop invariant next to
 		// loop condition.
-		for (; index < code.bytecodes().size(); index++) {
+		for (int index=0; index < code.bytecodes().size(); index++) {
 			// Get the loop invariant
 			loop_body.add(code.bytecodes().get(index));
 		}
 
 		// Translate the loop header
 		this.iterateCodes(loop_header, function);
-
+		*/
 		// Translate the loop condition
-		if (loop_condition != null) {
+		/*if (loop_condition != null) {
 			translateLoopCondition(loop_condition, function);
 		}
 
 		// Translate the loop invariant
 		if (loop_invariant != null) {
 			translate(loop_invariant, function);
-		}
+		}*/
+		
+		
+		String indent = store.getIndent();
+		String statement = indent + "while(true){";
+		store.addStatement(code, statement);
+		
 
 		// Increase the indent for loop body.
 		store.increaseIndent();
 		// Translate the loop body
-		if (loop_body != null) {
-			iterateCodes(loop_body, function);
-		}
+		iterateCodes(code.bytecodes(), function);
+		
 		// Decrease the indentation after loop body.
 		store.decreaseIndent();
 		// Add the ending bracket.
