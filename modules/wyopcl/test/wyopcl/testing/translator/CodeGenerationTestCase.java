@@ -23,7 +23,7 @@ public class CodeGenerationTestCase {
 		util.terminate();
 		util = null;
 	}
-	
+	/*
 	@Test 
 	public void test_swap(){
 		util.execCodeGeneration(codeDir, codeDir, "swap");
@@ -83,19 +83,19 @@ public class CodeGenerationTestCase {
 	public void test_sort_call_by_reference_copy(){
 		util.execCodeGeneration(codeDir, codeDir, "sort_call_by_reference", "-copy");
 	}
-	
+	*/
 	@Test
-	public void test_reverse_slow() {
+	public void test_reverse_naive() {
 		//Generate the naive C code  
 		util.execCodeGeneration(codeDir, codeDir, "reverse");
 	}
 	
-	@Test
+	/*@Test
 	public void test_reverse_fast() {
 		//Generate the naive C code  
 		util.execCodeGeneration(codeDir, codeDir, "reverse", "-copy");
-	}
-	
+	}*/
+	/*
 	@Test
 	public void test_TicTacToe_slow() {
 		util.execCodeGeneration(codeDir, codeDir, "TicTacToe");
@@ -105,5 +105,5 @@ public class CodeGenerationTestCase {
 	public void test_TicTacToe_fast() {
 		util.execCodeGeneration(codeDir, codeDir, "TicTacToe", "-copy");
 	}
-
+	*/
 }

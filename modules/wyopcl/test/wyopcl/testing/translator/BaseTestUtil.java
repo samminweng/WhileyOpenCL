@@ -225,12 +225,11 @@ public final class BaseTestUtil {
 	 */
 	public void execCodeGeneration(Path sourceDir, Path destDir, String testcase, String... options) {
 		try {
-			// Separate the generated C code. If no optimization is enabled,
-			// then generate C code in 'slow' extension.
+			// Separate the generated C code.
 			if (options.length == 0) {
 				// No extra options
-				// Set destDir directory to be 'code/TestCaseName/slow'
-				destDir = Paths.get(destDir + File.separator + testcase + File.separator + "slow" + File.separator);
+				// Set destDir directory to be 'code/TestCaseName/naive'
+				destDir = Paths.get(destDir + File.separator + testcase + File.separator + "naive" + File.separator);
 			} else {
 				// Set working directory to be 'code/TestCaseName/fast'
 				destDir = Paths.get(destDir + File.separator + testcase + File.separator + "fast" + File.separator);
@@ -252,12 +251,7 @@ public final class BaseTestUtil {
 					Paths.get(destDir + File.separator + "Util.h"));
 
 			// 3. Generate the C code.
-			String cmd = "java";
-			// A list of arguments.
-			cmd += " -cp " + classpath;// class path
-			cmd += " wyopcl.WyopclMain";// main class
-			cmd += " -bp " + whiley_runtime_lib;// Whiley runtime library
-			cmd += " -code";// Generate code.
+			String cmd = "java -cp " + classpath + " wyopcl.WyopclMain -bp " + whiley_runtime_lib + " -code";
 			// Add extra optimization option.
 			for (String option : options) {
 				// Run the code generator with optimization.
@@ -268,57 +262,36 @@ public final class BaseTestUtil {
 			runCmd(cmd, destDir);
 
 			// Check if *.c and *.h files are generated or not.
-			Path cFile = Paths.get(destDir + File.separator + testcase + ".c");
-			Path hFile = Paths.get(destDir + File.separator + testcase + ".h");
-			assertEquals(Files.exists(cFile), true);
-			assertEquals(Files.exists(hFile), true);
+			assertEquals(Files.exists(Paths.get(destDir + File.separator + testcase + ".c")), true);
+			assertEquals(Files.exists(Paths.get(destDir + File.separator + testcase + ".h")), true);
 
-			// As each test case is exported as a separate function,
-			// The main function must be written out (testMain.c)
-			// to call the function of test case.
-			String testMain = "#include \"" + testcase + ".h\"\n" + "int main(int argc, char** args){\n" + "\ttest();\n"
-					+ "\t// Add the exit value of '0' for validation.\n" + "\texit(0);\n}\n";
-			PrintWriter writer = new PrintWriter(destDir + File.separator + "testMain.c");
-			writer.print(testMain);
-			writer.flush();
-			writer.close();
 			// Get Operation System.
-			String os = System.getProperty("os.name").toLowerCase();
 			// 4. Compile and run the C code.
-			if (os.indexOf("win") >= 0) {
-				// This option requires the installation of Cygwin and gcc, or
-				// MinGW
+			if (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0) {
+				// This option requires the Cygwin and gcc, or MinGW
 				// Compile the *.c using GCC
-				String path = System.getenv("PATH");// Get PATH environment
-													// variable.
-				if (path.contains("MinGW")) {// Check MinGW exists.
-					// Check if exit value is 0.
-					// If not, the compilation process has errors.
-					assertEquals(
-							runCmd("cmd /c gcc testMain.c Util.c " + testcase + ".c  -o " + testcase + ".out", destDir),
-							0);
-					// Run the output file.
-					assertEquals(runCmd("cmd /c " + testcase + ".out", destDir), 0);
-				} else if (path.contains("cygwin")) {// Check gcc exists in
-														// cygwin folder
-					// As gcc is a link (Windows command does not get it),
-					// we need to use actual name (i.e. gcc-3 or gcc-4)
-					assertEquals(runCmd("cmd /c gcc-3 testMain.c Util.c " + testcase + ".c  -o " + testcase + ".out",
-							destDir), 0);
+				String path = System.getenv("PATH");// Get PATH environment variable.
+				if (path.contains("MinGW")) {
+					// Check the exit value. If not 0, the compilation has errors.
+					assertEquals(runCmd("cmd /c gcc *.c  -o " + testcase + ".out", destDir), 0);
+				} else if (path.contains("cygwin")) {
+					// Gcc is a link (Windows command does not get it), so call its actual name (i.e. gcc-3 or gcc-4)
+					assertEquals(runCmd("cmd /c gcc-3 *.c  -o " + testcase + ".out", destDir), 0);
 					// Run the output file.
 					assertEquals(runCmd("cmd /c " + testcase + ".out", destDir), 0);
 				} else {
 					throw new RuntimeException("Missing C compiler, such as gcc or MinGW.");
 				}
+				
+				// Run the output file.
+				assertEquals(runCmd("cmd /c " + testcase + ".out", destDir), 0);
 			} else {
-				// Run Linux commands
-				// Compile the C program into *.out and place it in current
-				// working directory
-				assertEquals(runCmd("gcc testMain.c Util.c " + testcase + ".c  -o " + testcase + ".out", destDir), 0);
+				// Compile the C program into *.out and place it in current working directory
+				assertEquals(runCmd("gcc *.c -o " + testcase + ".out", destDir), 0);
 				// Run the generated out file
 				assertEquals(runCmd("./" + testcase + ".out", destDir), 0);
 			}
-			// Delete the Wyil files inside 'valid' folder
+			// Delete the Wyil files inside folder
 			Files.deleteIfExists(FileSystems.getDefault().getPath(sourceDir + testcase + ".wyil"));
 		} catch (Exception e) {
 			terminate();
