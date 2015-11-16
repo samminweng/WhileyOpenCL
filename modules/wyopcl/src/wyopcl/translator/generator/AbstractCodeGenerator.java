@@ -174,18 +174,6 @@ public abstract class AbstractCodeGenerator {
 
 		return false;
 	}
-	/**
-	 * Get the actual (source-level) variable name of a register
-	 *   
-	 * @param reg
-	 * @param function
-	 * @return
-	 */
-	/*public String getActualVarName(int reg, FunctionOrMethod function){
-		//Get the mapping table between variable name and register.
-		CodeStore store = stores.get(function);
-		return store.getVar(reg);
-	}*/
 	
 	/**
 	 * Get the code store of the given function.
@@ -374,48 +362,6 @@ public abstract class AbstractCodeGenerator {
 			this.fields = new HashMap<Integer, String>();
 		}
 
-		/**
-		 * Given a variable name, check if it is the size variable of input
-		 * parameter. For example,
-		 * 
-		 * <pre>
-		 * <code>
-		 * long long* reverse(long long* _ls, long long _ls_size)
-		 * </code>
-		 * </pre>
-		 * 
-		 * The '_ls_size' variable is the size variable of input parameter 'ls'.
-		 * 
-		 * @param var_name
-		 * @return true if the variable is the size variable of input parameter.
-		 * 
-		 */
-		/*private Boolean isInputParameter(String var_name) {
-			// Check if the variable is the size variable of the input
-			// parameter.
-			String variable_name = var_name;
-			if (variable_name.contains("_size")) {
-				// Get the array variable.
-				String[] split = variable_name.split("_size");
-				// Check if the split variable name has at least two items.
-				if (split.length >= 1) {
-					variable_name = split[0];
-				}
-			}
-			// Check if the variable_name is an number.
-			// If so, the variable is an intermediate variable. Otherwise, it
-			// could
-			// be an input parameter.
-			if (!variable_name.isEmpty() && !(variable_name.matches("^_[0-9]+$"))) {
-				// Check if the input parameter contains the variable name.
-				int reg = Integer.parseInt(variable_name);
-				// Check if the register <= parameter size.
-				if (reg < function.type().params().size()) {
-					return true;
-				}
-			}
-			return false;
-		}*/
 		/**
 		 * Load the field to the given register.
 		 * @param reg

@@ -951,7 +951,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * <pre>
 	 * <code>
 	 *_11_size = 5;
-	 *long long _11_value = {_6, _7, _8, _9, _10};
+	 *long long _11_value[5] = {_6, _7, _8, _9, _10};
 	 *_11 = _11_value;
 	 * </code>
 	 * </pre>
@@ -983,11 +983,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String statement = indent + array_size + " = " + code.operands().length + ";\n";
 		// Construct array value
 		String elmType = translateType(code.type().element());
-		if(code.operands().length > 0 ){			
+		int length = code.operands().length;
+		if(length > 0 ){			
 			// Add the 'value' variable to store array values 
 			String array_value = array_name + "_value";
 			// Assign array value 
-			statement += indent + elmType + " "+ array_value + " = {"; 
+			statement += indent + elmType + " "+ array_value + "["+length+"] = {"; 
 			boolean isFirst = true;
 			for (int operand : code.operands()) {
 				if(isFirst){
