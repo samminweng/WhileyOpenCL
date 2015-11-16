@@ -21,6 +21,12 @@ public class CodeGenerationTestCase {
 		util.terminate();
 		util = null;
 	}
+	
+	@Test
+	public void test_swap_naive() {
+		//Generate the naive C code  
+		util.execCodeGeneration(codeDir, "swap");
+	}
 
 	@Test
 	public void test_reverse_naive() {
