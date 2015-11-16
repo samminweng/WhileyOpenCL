@@ -1486,7 +1486,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * @param writer
 	 */
-	protected void writeCodeToFile(FunctionOrMethod function) {
+	protected void writeFunction(FunctionOrMethod function) {
 		// Get the code store
 		CodeStore store = this.getCodeStore(function);
 		// Write out the header file
@@ -1711,7 +1711,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Adds the implementation of 'printf_*' function to *.c file.
+	 * Adds the default implementation of 'copy', 'free' and 'prinf' function for a user-defined structure
 	 * 
 	 * The 'printf_*' function takes a user-defined structure, iterates each field and print out the values. For
 	 * example,
@@ -1729,9 +1729,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * </code>
 	 * </pre>
 	 * 
+	 * 
+	 * 
 	 * @param userType
 	 */
-	private void writeCodeToSourceFile(wyil.lang.WyilFile.Type userType) {
+	private void writeCopyPrintFreeFunction(wyil.lang.WyilFile.Type userType) {
 		String type_name = userType.name();
 		String statement = "void printf_" + type_name + "(" + type_name + " s){\n";
 		// Add starting "}".
@@ -1763,13 +1765,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			String filename = config.getFilename();
 			// Check if the header file exits.
 			File f = new File(filename + ".c");
-			if (!f.exists()) {
-				writer = new FileWriter(f);
-				// If no such a file, write the include files to include Util.h
-				writer.append("#include \"" + filename + ".h\"\n");
-			} else {
-				writer = new FileWriter(f, true);
-			}
+			writer = new FileWriter(f, true);
 			// Write out the 'printf' function.
 			writer.append(statement);
 			writer.close();
@@ -1852,13 +1848,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * </code> Also, add a 'print' function to print out the structure.
 	 */
 	@Override
-	protected void writeCodeToFile(List<wyil.lang.WyilFile.Type> userTypes) {
+	protected void writeUserTypes(List<wyil.lang.WyilFile.Type> userTypes) {
 		// Iterate each user type and write out code to source and header files.
 		for (wyil.lang.WyilFile.Type userType : userTypes) {
 			this.writeCodeToHeaderFile(userType);
 			// Check if userType is a typedef structure.
 			if(userType.type() instanceof Type.Record){
-				this.writeCodeToSourceFile(userType);
+				this.writeCopyPrintFreeFunction(userType);
 			}
 		}
 	}
@@ -1871,7 +1867,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 */
 	@Override
-	protected void wrieteCodeToFile(List<wyil.lang.WyilFile.Constant> constants) {
+	protected void writeConstants(List<wyil.lang.WyilFile.Constant> constants) {
 		String filename = config.getFilename();
 		FileWriter writer;
 		try {
