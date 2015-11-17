@@ -1680,7 +1680,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param fields
 	 * @return
 	 */
-	private String generatePrintf(String struct, HashMap<String, Type> fields){
+	private String generatePrintfFunction(String struct, HashMap<String, Type> fields){
 		
 		String input = "_"+struct.toLowerCase();
 		String indent = "\t";
@@ -1692,16 +1692,16 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String[] names = fields.keySet().toArray(new String[fields.size()]);
 		// Print out each field.
 		for (int i = 0; i < names.length; i++) {
-			String field_name = names[i];
-			Type fieldtype = fields.get(field_name);
-			String member_name = input + "." +field_name;
+			String member = names[i];
+			String input_member = input + "." +member;
 			// Add field name
-			statement += indent + "printf(\" " + field_name + ":\");\n";
+			statement += indent + "printf(\" " + member + ":\");\n";
+			Type fieldtype = fields.get(member);
 			if (fieldtype instanceof Type.Nominal || fieldtype instanceof Type.Int) {
 				// Add field values.
-				statement += indent + "printf(\"%d\", " + member_name + ");\n";
+				statement += indent + "printf(\"%d\", " + input_member + ");\n";
 			} else if (fieldtype instanceof Type.Array) {
-				statement += indent + "printf_array(" + member_name + ", " + member_name + "_size);\n";
+				statement += indent + "printf_array(" + input_member + ", " + input_member + "_size);\n";
 			} else {
 				throw new RuntimeException("Not implemented!");
 			}
@@ -1726,7 +1726,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param fields
 	 * @return
 	 */
-	private String generateCopy(String struct, HashMap<String, Type> fields){
+	private String generateCopyFunction(String struct, HashMap<String, Type> fields){
 		String input = "_"+struct.toLowerCase();
 		String copy = "new_"+struct.toLowerCase();
 		String statement = struct+" clone_"+struct+ "(" + struct + " "+input+"){\n";;
@@ -1735,15 +1735,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		statement += indent + struct + " "+copy+";\n";
 		String[] names = fields.keySet().toArray(new String[fields.size()]);
 		for (int i = 0; i < names.length; i++) {
-			String field_name = names[i];
-			Type fieldtype = fields.get(field_name);
-			String member_name = input + "." + field_name;
-			String copy_member = copy + "." + field_name;
+			String member = names[i];			
+			String input_member = input + "." + member;
+			String copy_member = copy + "." + member;
+			Type fieldtype = fields.get(member);
 			if (fieldtype instanceof Type.Nominal || fieldtype instanceof Type.Int) {
-				statement += indent + copy_member + " = " + member_name+";\n"; 
+				statement += indent + copy_member + " = " + input_member+";\n"; 
 			} else if (fieldtype instanceof Type.Array) {
-				statement += indent + copy_member + " = clone("+member_name + ", "+member_name+"_size);\n";
-				statement += indent + copy_member + "_size = " + member_name + "_size;\n";
+				statement += indent + copy_member + " = clone("+input_member + ", "+input_member+"_size);\n";
+				statement += indent + copy_member + "_size = " + input_member + "_size;\n";
 			} else {
 				throw new RuntimeException("Not implemented!");
 			}
@@ -1753,7 +1753,29 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		statement += "}";
 		return statement;
 	}
-	
+	/**
+	 * 
+	 * @param struct
+	 * @param fields
+	 * @return
+	 */
+	private String generateFreeFunction(String struct, HashMap<String, Type> fields){
+		String input = "_"+struct;
+		String indent = "\t";
+		
+		String statement = "void free_"+struct+"("+struct+ " "+input+"){\n";
+		String[] names = fields.keySet().toArray(new String[fields.size()]);
+		for (int i = 0; i < names.length; i++) {
+			String member = names[i];
+			Type type = fields.get(member);
+			String input_member = input +"."+member;
+			if(type instanceof Type.Array){
+				statement += indent+ "free("+input_member+");\n";
+			}
+		}
+		statement += "}";// Add ending bracket.
+		return statement;
+	}
 	
 	/**
 	 * Adds the default implementation of 'copy', 'free' and 'prinf' function for a user-defined structure
@@ -1766,28 +1788,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String filename = config.getFilename();
 		
 		List<String> statements = new ArrayList<String>();
-		statements.add(generatePrintf(struct, fields));
-		statements.add(generateCopy(struct, fields));
+		statements.add(generatePrintfFunction(struct, fields));
+		statements.add(generateCopyFunction(struct, fields));
+		statements.add(generateFreeFunction(struct, fields));
 		try {
 			Files.write(Paths.get(filename + ".c"), statements, StandardOpenOption.APPEND);
 		} catch (IOException e) {
 			throw new RuntimeException("Errors in writing "+statements+" to "+filename + ".c");
 		}
-		
-		// Write the statements to source file (*.c)
-//		FileWriter writer = null;
-//		try {
-//			String filename = config.getFilename();
-//			// Check if the header file exits.
-//			File f = new File(filename + ".c");
-//			writer = new FileWriter(f, true);
-//			// Write out the 'printf' function.
-//			writer.append(statement);
-//			writer.close();
-//		} catch (Exception ex) {
-//			throw new RuntimeException(ex);
-//		}
-
 	}
 
 	/**
