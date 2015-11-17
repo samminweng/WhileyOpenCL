@@ -5,6 +5,10 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -1188,36 +1192,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String stat = store.getIndent() + target + "= -" + prefix + code.operand(0) + ";";
 		store.addStatement(code, stat);
 	}
-
-	/**
-	 * Translate the loop condition and loop variant. For example,
-	 * 
-	 * <pre>
-	 * <code>
-	 * ifge %1, %0 goto blklab1 : int
-	 * </code>
-	 * </pre>
-	 * 
-	 * can be translated into:
-	 * 
-	 * <pre>
-	 * <code> while(_i<_limit){
-	 * 
-	 * @param loop_cond
-	 */
-	private void translateLoopCondition(Codes.If loop_cond, FunctionOrMethod function) {
-		CodeStore store = this.getCodeStore(function);
-		String statement = store.getIndent();
-		String left = store.getVar(loop_cond.leftOperand);
-		String right = store.getVar(loop_cond.rightOperand);
-		statement += "while(" + left;
-		// The negated operator
-		statement += translate(loop_cond.op, true);
-		statement += right;
-		statement += "){";
-		store.addStatement(loop_cond, statement);
-	}
-
+	
 	/**
 	 * Translates the <code>Codes.ForAll</code> byte-code. For example,
 	 * 
@@ -1539,32 +1514,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		}
 	}
 
-	/**
-	 * Deprecated due to v0.3.36
-	 * 
-	 * Translate the sublist byte-code into C code, e.g. <code> sublist %16 = %0, %15, %1 : [int]</code> can be
-	 * translated into C code: <code> 
-	 * _16 = sublist(clone(_0, _0_size), _15, _1);
-	 * _16_size = _1 - _15;
-	 * </code>
-	 * 
-	 * @param code
-	 * @param function
-	 */
-	@Deprecated
-	/*
-	 * @Override protected void translate(SubList code, FunctionOrMethod function) { CodeStore store =
-	 * this.getCodeStore(function); int[] ops = code.operands(); // Generate the C code. String statement = "";
-	 * 
-	 * // Generate the size of sublist statement += store.getIndent() + store.getVar(code.target()) + "_size = " +
-	 * store.getVar(ops[2]) + " - " + store.getVar(ops[1]) + ";\n";
-	 * 
-	 * // Generate the function call of 'sublist' // LHS statement += store.getIndent() + store.getVar(code.target());
-	 * // RHS //Check if the array copy is needed //if(isNecessaryCopy(ops[0], code, function)){ // statement +=
-	 * " = sublist(clone(" + store.getVar(ops[0]) + ", " + store.getVar(ops[0]) + "_size), " // + store.getVar(ops[1]) +
-	 * ", " + store.getVar(ops[2]) + ");"; //}else{ statement += " = sublist(" + store.getVar(ops[0]) + ", " +
-	 * store.getVar(ops[1]) + ", " + store.getVar(ops[2]) + ");"; //} store.addStatement(code, statement); }
-	 */
+	
 	/**
 	 * Translate ifis Wyil code into C code. This code checks that the register is the given value.
 	 * 
@@ -1710,12 +1660,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		store.addStatement(code, statement);
 	}
 
-	/**
-	 * Adds the default implementation of 'copy', 'free' and 'prinf' function for a user-defined structure
+	
+	/***
 	 * 
-	 * The 'printf_*' function takes a user-defined structure, iterates each field and print out the values. For
-	 * example,
-	 * 
+	 * Given a user-defined structure, generate 'printf_*' function to print out its value. For example,	 * 
 	 * <pre>
 	 * <code>
 	 * void printf_Board(Board s){
@@ -1727,51 +1675,118 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 *		printf("}");
 	 * }
 	 * </code>
-	 * </pre>
 	 * 
-	 * 
-	 * 
-	 * @param userType
+	 * @param struct
+	 * @param fields
+	 * @return
 	 */
-	private void writeCopyPrintFreeFunction(wyil.lang.WyilFile.Type userType) {
-		String type_name = userType.name();
-		String statement = "void printf_" + type_name + "(" + type_name + " s){\n";
-		// Add starting "}".
-		statement += "\tprintf(\"{\");\n";
-		HashMap<String, Type> fields = ((Type.Record) userType.type()).fields();
+	private String generatePrintf(String struct, HashMap<String, Type> fields){
+		
+		String input = "_"+struct.toLowerCase();
+		String indent = "\t";
+		
+		String statement = "void printf_" + struct + "(" + struct + " "+input+"){\n";
+		// Add open bracket
+		statement += indent + "printf(\"{\");\n"; 
 		// Get all field names
 		String[] names = fields.keySet().toArray(new String[fields.size()]);
 		// Print out each field.
 		for (int i = 0; i < names.length; i++) {
 			String field_name = names[i];
-			// Add field name
-			statement += "\tprintf(\" " + field_name + ":\");\n";
 			Type fieldtype = fields.get(field_name);
+			String member_name = input + "." +field_name;
+			// Add field name
+			statement += indent + "printf(\" " + field_name + ":\");\n";
 			if (fieldtype instanceof Type.Nominal || fieldtype instanceof Type.Int) {
 				// Add field values.
-				statement += "\tprintf(\"%d\", s." + field_name + ");\n";
+				statement += indent + "printf(\"%d\", " + member_name + ");\n";
 			} else if (fieldtype instanceof Type.Array) {
-				statement += "\tprintf_array(s." + field_name + ", s." + field_name + "_size);\n";
+				statement += indent + "printf_array(" + member_name + ", " + member_name + "_size);\n";
 			} else {
 				throw new RuntimeException("Not implemented!");
 			}
 		}
 		// Add ending "}"
-		statement += "\tprintf(\"}\");\n";
-		statement += "}\n";
-		// Write the statements to source file (*.c)
-		FileWriter writer = null;
-		try {
-			String filename = config.getFilename();
-			// Check if the header file exits.
-			File f = new File(filename + ".c");
-			writer = new FileWriter(f, true);
-			// Write out the 'printf' function.
-			writer.append(statement);
-			writer.close();
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
+		statement += indent + "printf(\"}\");\n";
+		statement += "}";
+		
+		return statement;
+	}
+	/**
+	 * Given a structure, generate 'clone_*' function to make and return a copy of this structure, e.g. 
+	 * 
+	 * Board clone_Board(Board b){
+	 *		Board new_b;
+	 *		new_b.pieces = clone(b.pieces, b.pieces_size);
+	 *		new_b.pieces_size = b.pieces_size;
+	 * 		new_b.move = b.move;
+	 *		return new_b; 
+	 * } 
+	 * @param struct
+	 * @param fields
+	 * @return
+	 */
+	private String generateCopy(String struct, HashMap<String, Type> fields){
+		String input = "_"+struct.toLowerCase();
+		String copy = "new_"+struct.toLowerCase();
+		String statement = struct+" clone_"+struct+ "(" + struct + " "+input+"){\n";;
+		// Declare local copy.
+		String indent = "\t";
+		statement += indent + struct + " "+copy+";\n";
+		String[] names = fields.keySet().toArray(new String[fields.size()]);
+		for (int i = 0; i < names.length; i++) {
+			String field_name = names[i];
+			Type fieldtype = fields.get(field_name);
+			String member_name = input + "." + field_name;
+			String copy_member = copy + "." + field_name;
+			if (fieldtype instanceof Type.Nominal || fieldtype instanceof Type.Int) {
+				statement += indent + copy_member + " = " + member_name+";\n"; 
+			} else if (fieldtype instanceof Type.Array) {
+				statement += indent + copy_member + " = clone("+member_name + ", "+member_name+"_size);\n";
+				statement += indent + copy_member + "_size = " + member_name + "_size;\n";
+			} else {
+				throw new RuntimeException("Not implemented!");
+			}
 		}
+		// Add return statement
+		statement += indent + "return "+copy+";\n";
+		statement += "}";
+		return statement;
+	}
+	
+	
+	/**
+	 * Adds the default implementation of 'copy', 'free' and 'prinf' function for a user-defined structure
+	 * 
+	 * @param userType
+	 */
+	private void writeCopyPrintFree(wyil.lang.WyilFile.Type userType) {
+		String struct = userType.name();		
+		HashMap<String, Type> fields = ((Type.Record) userType.type()).fields();
+		String filename = config.getFilename();
+		
+		List<String> statements = new ArrayList<String>();
+		statements.add(generatePrintf(struct, fields));
+		statements.add(generateCopy(struct, fields));
+		try {
+			Files.write(Paths.get(filename + ".c"), statements, StandardOpenOption.APPEND);
+		} catch (IOException e) {
+			throw new RuntimeException("Errors in writing "+statements+" to "+filename + ".c");
+		}
+		
+		// Write the statements to source file (*.c)
+//		FileWriter writer = null;
+//		try {
+//			String filename = config.getFilename();
+//			// Check if the header file exits.
+//			File f = new File(filename + ".c");
+//			writer = new FileWriter(f, true);
+//			// Write out the 'printf' function.
+//			writer.append(statement);
+//			writer.close();
+//		} catch (Exception ex) {
+//			throw new RuntimeException(ex);
+//		}
 
 	}
 
@@ -1854,7 +1869,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			this.writeCodeToHeaderFile(userType);
 			// Check if userType is a typedef structure.
 			if(userType.type() instanceof Type.Record){
-				this.writeCopyPrintFreeFunction(userType);
+				this.writeCopyPrintFree(userType);
 			}
 		}
 	}
