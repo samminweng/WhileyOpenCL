@@ -980,7 +980,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(Codes.NewList code, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
 		String indent = store.getIndent();
-		
+
 		// Get array names
 		String array_name = store.getVar(code.target());
 		// Add the 'size' variable to store the array length
@@ -1005,14 +1005,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statement += store.getVar(operand);
 			}
 			statement += "};\n";
-			
+
 			// Assign the pointer to array values 
 			statement += indent + array_name + " = " + array_value+";";			
 		}else{
 			// For empty array, we initialize the array with one element. 
 			statement += indent + array_name + " = malloc(sizeof(" +elmType+"));";
 		}
-		
+
 		store.addStatement(code, statement);
 	}
 
@@ -1194,7 +1194,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String stat = store.getIndent() + target + "= -" + prefix + code.operand(0) + ";";
 		store.addStatement(code, stat);
 	}
-	
+
 	/**
 	 * Translates the <code>Codes.ForAll</code> byte-code. For example,
 	 * 
@@ -1244,7 +1244,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		/*List<Code> loop_header = new ArrayList<Code>();
 		Codes.Invariant loop_invariant = null;
 		Codes.If loop_condition = null;
-		
+
 		// Split the loop header and loop body
 		for (index = 0; index < code.bytecodes().size(); index++) {
 			Code loop_code = code.bytecodes().get(index);
@@ -1261,7 +1261,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				loop_header.add(loop_code);
 			}
 		}*/
-		
+
 		/*List<Code> loop_body = new ArrayList<Code>();
 		// Reorder the sequence of loop code and put the loop invariant next to
 		// loop condition.
@@ -1272,7 +1272,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 		// Translate the loop header
 		this.iterateCodes(loop_header, function);
-		*/
+		 */
 		// Translate the loop condition
 		/*if (loop_condition != null) {
 			translateLoopCondition(loop_condition, function);
@@ -1282,18 +1282,18 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		if (loop_invariant != null) {
 			translate(loop_invariant, function);
 		}*/
-		
-		
+
+
 		String indent = store.getIndent();
 		String statement = indent + "while(true){";
 		store.addStatement(code, statement);
-		
+
 
 		// Increase the indent for loop body.
 		store.increaseIndent();
 		// Translate the loop body
 		iterateCodes(code.bytecodes(), function);
-		
+
 		// Decrease the indentation after loop body.
 		store.decreaseIndent();
 		// Add the ending bracket.
@@ -1437,13 +1437,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		CodeStore store = this.getCodeStore(function);
 		String indent = store.getIndent();
 		String lhs = store.getVar(code.target());
-		
+
 		// Creates a list of member names
 		HashMap<String, Type> fields = code.type().fields();
 		String[] members = fields.keySet().toArray(new String[fields.size()]);
 		// Reverse the 'members' array due to inconsistent order as 'operands' array.
 		Collections.reverse(Arrays.asList(members));
-		
+
 		String statement = "";
 		for(int i=0;i<code.operands().length; i++){
 			// Get operand 
@@ -1524,7 +1524,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		}
 	}
 
-	
+
 	/**
 	 * Translate ifis Wyil code into C code. This code checks that the register is the given value.
 	 * 
@@ -1635,7 +1635,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		}
 		return d;
 	}
-	
+
 	/***
 	 * Translate 'ListGenerator' wyil code into C code. For example,
 	 * 
@@ -1670,7 +1670,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		store.addStatement(code, statement);
 	}
 
-	
+
 	/***
 	 * 
 	 * Given a user-defined structure, generate 'printf_*' function to print out its value. For example,	 * 
@@ -1691,10 +1691,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @return
 	 */
 	private String generatePrintfFunction(String struct, HashMap<String, Type> fields){
-		
+
 		String input = "_"+struct.toLowerCase();
 		String indent = "\t";
-		
+
 		String statement = "void printf_" + struct + "(" + struct + " "+input+"){\n";
 		// Add open bracket
 		statement += indent + "printf(\"{\");\n"; 
@@ -1719,7 +1719,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Add ending "}"
 		statement += indent + "printf(\"}\");\n";
 		statement += "}";
-		
+
 		return statement;
 	}
 	/**
@@ -1772,7 +1772,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	private String generateFreeFunction(String struct, HashMap<String, Type> fields){
 		String input = "_"+struct;
 		String indent = "\t";
-		
+
 		String statement = "void free_"+struct+"("+struct+ " "+input+"){\n";
 		String[] names = fields.keySet().toArray(new String[fields.size()]);
 		for (int i = 0; i < names.length; i++) {
@@ -1785,27 +1785,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		}
 		statement += "}";// Add ending bracket.
 		return statement;
-	}
-	
-	/**
-	 * Adds the default implementation of 'copy', 'free' and 'prinf' function for a user-defined structure
-	 * 
-	 * @param userType
-	 */
-	private void writeCopyPrintFree(wyil.lang.WyilFile.Type userType) {
-		String struct = userType.name();		
-		HashMap<String, Type> fields = ((Type.Record) userType.type()).fields();
-		String filename = config.getFilename();
-		
-		List<String> statements = new ArrayList<String>();
-		statements.add(generatePrintfFunction(struct, fields));
-		statements.add(generateCopyFunction(struct, fields));
-		statements.add(generateFreeFunction(struct, fields));
-		try {
-			Files.write(Paths.get(filename + ".c"), statements, StandardOpenOption.APPEND);
-		} catch (IOException e) {
-			throw new RuntimeException("Errors in writing "+statements+" to "+filename + ".c");
-		}
 	}
 
 	/**
@@ -1821,54 +1800,28 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * </pre>
 	 * @param userType
 	 */
-	private void writeCodeToHeaderFile(wyil.lang.WyilFile.Type userType) {
-		String del = "";
-		Type type = userType.type();
-		if (type instanceof Type.Int) {
-			// This gives primitive integer type a new name,
-			// e.g. 'typedef long long Square' defines Square for a long long integer.
-			del += "typedef " + translateType(type) + " " + userType.name() + ";\n";
-		} else if (type instanceof Type.Record) {
-			String typeName = userType.name();
-			// Define a structure
-			del += "typedef struct{\n";
-			HashMap<String, Type> fields = ((Type.Record) type).fields();
-			// Get all field names
-			String[] names = fields.keySet().toArray(new String[fields.size()]);
-			for (int i = 0; i < names.length; i++) {
-				String field_name = names[i];
-				Type fieldtype = fields.get(field_name);
-				del += "\t" + translateType(fieldtype) + " " + field_name + ";\n";
-				if (fieldtype instanceof Type.Array) {
-					// Add a 'size' field
-					del += "\t" + "long long " + field_name + "_size;\n";
-				}
-			}
-			del += "} " + typeName + ";\n";
-			// Add function signation, e.g. 'void printf_Board(Board s){'
-			del += "void printf_" + typeName + "(" + typeName + " s);\n";
-		} else {
-			throw new RuntimeException("Not implmented");
-		}
+	private List<String> generateStruct(String typeName, HashMap<String, Type> fields) {
+		List<String> struct = new ArrayList<String>();
+		// Get all field names
+		String[] names = fields.keySet().toArray(new String[fields.size()]);
 
-		FileWriter writer;
-		try {
-			String filename = config.getFilename();
-			// Check if the header file exits.
-			File f = new File(filename + ".h");
-			if (!f.exists()) {
-				writer = new FileWriter(f);
-				// If no such a file, write the include files to include Util.h
-				writer.append("#include \"Util.h\"\n");
-			} else {
-				writer = new FileWriter(f, true);
+		// Define a structure
+		struct.add("typedef struct{");
+		for (int i = 0; i < names.length; i++) {
+			String field_name = names[i];
+			Type fieldtype = fields.get(field_name);
+			struct.add("\t" + translateType(fieldtype) + " " + field_name + ";");
+			if (fieldtype instanceof Type.Array) {
+				// Add a 'size' field
+				struct.add("\t" + "long long " + field_name + "_size;");
 			}
-			// Write out user defined types
-			writer.append(del);
-			writer.close();
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
 		}
+		struct.add( "} " + typeName + ";");
+		// Add built-in function signatures, e.g. 'void printf_Board(Board s);'
+		struct.add("void printf_" + typeName + "(" + typeName + " _"+typeName.toLowerCase()+");");
+		struct.add(typeName + " copy_"+typeName+ "("+typeName + " _"+typeName.toLowerCase()+");");
+		struct.add("void free_"+ typeName+"("+typeName+" _"+typeName.toLowerCase()+");"); 	
+		return struct;
 	}
 
 	/**
@@ -1882,13 +1835,39 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	@Override
 	protected void writeUserTypes(List<wyil.lang.WyilFile.Type> userTypes) {
+		String filename = this.config.getFilename();
+		List<String> structs = new ArrayList<String>();
+		List<String> statements = new ArrayList<String>();
+
 		// Iterate each user type and write out code to source and header files.
 		for (wyil.lang.WyilFile.Type userType : userTypes) {
-			this.writeCodeToHeaderFile(userType);
+			String struct = userType.name();
 			// Check if userType is a typedef structure.
-			if(userType.type() instanceof Type.Record){
-				this.writeCopyPrintFree(userType);
+			if(userType.type() instanceof Type.Int){
+				structs.add("typedef " + translateType(userType.type()) + " " + struct + ";");
+			}else if(userType.type() instanceof Type.Record){
+				HashMap<String, Type> fields = ((Type.Record) userType.type()).fields();
+				structs.addAll(this.generateStruct(struct, fields));
+				statements.add(this.generatePrintfFunction(struct, fields));
+				statements.add(this.generateCopyFunction(struct, fields));
+				statements.add(this.generateFreeFunction(struct, fields));
+			}else{
+				throw new RuntimeException("Not Implemented!");
 			}
+		}
+
+		// Write out user-defined structures to *.h
+		try {
+			Files.write(Paths.get(filename + ".h"), structs, StandardOpenOption.APPEND);
+		} catch (IOException e) {
+			throw new RuntimeException("Errors occurs in writing "+structs+" to "+filename+".h");
+		}
+
+		// Write out statements to *.c
+		try {
+			Files.write(Paths.get(filename + ".c"), statements, StandardOpenOption.APPEND);
+		} catch (IOException e) {
+			throw new RuntimeException("Errors in writing "+statements+" to "+filename + ".c");
 		}
 	}
 
