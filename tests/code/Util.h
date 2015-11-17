@@ -30,8 +30,8 @@ long long parseInteger(long long* arr);
 // Array Operator
 long long** convertArgsToIntArray(int argc, char** args);
 long long* gen1DArray(int value, int arr_size);
-long long* clone(long long *arr, long long size);
-long long** clone2DArray(long long **arr, long long arr_size, long long size);
+long long* copy(long long *arr, long long size);
+long long** copy2DArray(long long **arr, long long arr_size, long long size);
 long long** gen2DArray(long long* arr, long long arr_size, long long size);
 void free2DArray(long long** ptr, long long size);
 int isArrayEqual(long long* arr1, long long arr1_size, long long* arr2, long long arr2_size);

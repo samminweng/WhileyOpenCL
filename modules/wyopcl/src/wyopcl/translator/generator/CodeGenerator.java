@@ -243,14 +243,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * </pre>
 	 * Note that the operand needs the type casting.
 	 * 
-	 * When we need to assign the input parameter(_0) to the new register, we need to clone the input and return the
+	 * When we need to assign the input parameter(_0) to the new register, we need to copy the input and return the
 	 * result pointer. For example,
 	 * <p>
 	 * <code>assign %4 = %0  : [int]</code>
 	 * </p>
 	 * can be translated into:
 	 * <p>
-	 * <code>_4 = clone(_0, _0_size);//call the clone method.</code><br>
+	 * <code>_4 = copy(_0, _0_size);//call the copy method.</code><br>
 	 * <code>_4_size = _0_size;//specify the array size</code><br>
 	 * </p>
 	 * 
@@ -272,13 +272,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String indent = store.getIndent();
 		// Check if the assigned type is an array.
 		if (code.type() instanceof Type.Array) {
-			// Clone the array and assign the cloned to the target.
+			// copy the array and assign the cloned to the target.
 			statement += indent + (rhs + "_size") + " = " + lhs + "_size;\n";
 			/**
 			 * 
 			 * For example, the below bytecode assign %3 = %0 : [bool] can be translated in the C code: <code>
 			 *  _3_size = _board_size; 
-			 *  _3 = clone(_board, _board_size);
+			 *  _3 = copy(_board, _board_size);
 			 * </code>
 			 */
 			if (!isCopyEliminated(code.operand(0), code, function)) {
@@ -289,13 +289,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					/**
 					 * If not, the type casting is needed.
 					 * 
-					 * //assign %9 = %10 : [void] _9_size = _10_size; _9 = clone((long long*)_10, _10_size);
+					 * //assign %9 = %10 : [void] _9_size = _10_size; _9 = copy((long long*)_10, _10_size);
 					 */
-					statement += indent + rhs + " = clone((" + translateType(rhs_type) + ")" + lhs + ", " + lhs
+					statement += indent + rhs + " = copy((" + translateType(rhs_type) + ")" + lhs + ", " + lhs
 							+ "_size);";
 				} else {
 					/** Make a copy of right operand. */
-					statement += indent + rhs + " = clone(" + lhs + ", " + lhs + "_size);";
+					statement += indent + rhs + " = copy(" + lhs + ", " + lhs + "_size);";
 				}
 			} else {
 				// Do not need to make a copy and have in-place update
@@ -307,7 +307,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement += indent + rhs + "_size = " + lhs + "_size;";
 		} else if (code.type() instanceof Type.Record){
 			wyil.lang.WyilFile.Type userType = getUserDefinedType((Type.Record)code.type());
-			statement += indent + rhs + " = clone_"+userType.name()+"(" + lhs + ");";
+			statement += indent + rhs + " = copy_"+userType.name()+"(" + lhs + ");";
 		} else {
 			statement = indent + rhs + " = " + lhs + ";";
 		}
@@ -517,7 +517,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Add the '*_size' parameter
 			if (paramType instanceof Type.Array) {
 				if (!isCopyEliminated(reg, code, f)) {
-					statement += "clone(" + param + ", " + param + "_size), " + param + "_size";
+					statement += "copy(" + param + ", " + param + "_size), " + param + "_size";
 				} else {
 					// Do not need any copy
 					statement += param + ", " + param + "_size";
@@ -534,7 +534,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					statement += "stdout";
 				}else{
 					String userType = nomial.name().name();
-					statement += "clone_"+userType+"("+param+")";
+					statement += "copy_"+userType+"("+param+")";
 				}
 
 
@@ -560,11 +560,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * <pre>
 	 * <code>
 	 * _12_size=_xs_size;
-	 * _12=reverse(clone(_xs, _xs_size), _xs_size);
+	 * _12=reverse(copy(_xs, _xs_size), _xs_size);
 	 * </code>
 	 * </pre>
 	 * 
-	 * Before invoking the function, clone the array ('xs') first and then pass the cloned array to the function. So
+	 * Before invoking the function, copy the array ('xs') first and then pass the cloned array to the function. So
 	 * that the original array will not be overwritten and its value is safely preserved.
 	 * 
 	 * Special cases:
@@ -1063,12 +1063,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			if (code.fieldType() instanceof Type.Array){
 				// 'fieldload %34 = %3 pieces : {int move,int[] pieces}'
 				// _34_size = _b.pieces_size;
-				// _34 = clone(_b.pieces, _b.pieces_size);
+				// _34 = copy(_b.pieces, _b.pieces_size);
 				String var = store.getVar(code.operand(0));
 				// Assign the array size
 				statement += indent + target +"_size = " + var + "." + code.field+"_size;\n";
 				// Assing and clones the array.
-				statement += indent + target + " = clone(" + var+ "." + code.field + ", "+var+"."+code.field+"_size);";
+				statement += indent + target + " = copy(" + var+ "." + code.field + ", "+var+"."+code.field+"_size);";
 			}else{
 				// Get the target
 				statement = indent + target + " = " + store.getVar(code.operand(0)) + "." + code.field + ";";
@@ -1454,7 +1454,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Propagate '_size' variable.
 			if (type instanceof Type.Array) {
 				statement += indent + lhs  + "." + member + "_size = " + op + "_size;\n";
-				statement += indent + lhs + "." + member + " = clone(" + op+ ", "+op + "_size);\n";
+				statement += indent + lhs + "." + member + " = copy(" + op+ ", "+op + "_size);\n";
 			}else if(type instanceof Type.Int){
 				statement += indent + lhs + "." + member + " = " + op + ";\n";
 			}else {
@@ -1583,7 +1583,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * For example, <code>
 	 * newobject %4 = %3 : &[void]
 	 * </code> can translate this into <code>
-	 * long long* _3_value = clone(_3, _3_size);
+	 * long long* _3_value = copy(_3, _3_size);
 	 * _4 =(void**)&(_3_value);
 	 * _4_size = _3_size;
 	 * </code>
@@ -1600,8 +1600,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			Type rhs_type = store.getVarType(code.operand(0));
 			// Get the value of rhs operand
 			if (!isCopyEliminated(code.operand(0), code, function)) {
-				// long long* _3_value = clone(_3, _3_size);
-				statement += store.getIndent() + translateType(rhs_type) + " " + rhs + "_value" + " = clone(" + rhs
+				// long long* _3_value = copy(_3, _3_size);
+				statement += store.getIndent() + translateType(rhs_type) + " " + rhs + "_value" + " = copy(" + rhs
 						+ ", " + rhs + "_size);\n";
 			} else {
 				// No copies is needed, e.g. 'long long _3_value = _3;'
@@ -1727,7 +1727,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * Board clone_Board(Board b){
 	 *		Board new_b;
-	 *		new_b.pieces = clone(b.pieces, b.pieces_size);
+	 *		new_b.pieces = copy(b.pieces, b.pieces_size);
 	 *		new_b.pieces_size = b.pieces_size;
 	 * 		new_b.move = b.move;
 	 *		return new_b; 
@@ -1739,7 +1739,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	private String generateCopyFunction(String struct, HashMap<String, Type> fields){
 		String input = "_"+struct.toLowerCase();
 		String copy = "new_"+struct.toLowerCase();
-		String statement = struct+" clone_"+struct+ "(" + struct + " "+input+"){\n";;
+		String statement = struct+" copy_"+struct+ "(" + struct + " "+input+"){\n";;
 		// Declare local copy.
 		String indent = "\t";
 		statement += indent + struct + " "+copy+";\n";
@@ -1752,7 +1752,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			if (fieldtype instanceof Type.Nominal || fieldtype instanceof Type.Int) {
 				statement += indent + copy_member + " = " + input_member+";\n"; 
 			} else if (fieldtype instanceof Type.Array) {
-				statement += indent + copy_member + " = clone("+input_member + ", "+input_member+"_size);\n";
+				statement += indent + copy_member + " = copy("+input_member + ", "+input_member+"_size);\n";
 				statement += indent + copy_member + "_size = " + input_member + "_size;\n";
 			} else {
 				throw new RuntimeException("Not implemented!");

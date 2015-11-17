@@ -210,8 +210,8 @@ strcpy(res[i], buffer);
 }
  */
 
-//Clone an array
-long long* clone(long long *arr, long long size) {
+//Copy an array
+long long* copy(long long *arr, long long size) {
 	long long *ptr = NULL;
 	//Clone all the values from board array due to immutable Whiley value
 	ptr = (long long*) malloc(size * sizeof(long long));
@@ -225,19 +225,19 @@ long long* clone(long long *arr, long long size) {
 	return ptr;
 }
 // Clone 2D array with given array size.
-long long** clone2DArray(long long **arr, long long arr_size, long long size){
+long long** copy2DArray(long long **arr, long long arr_size, long long size){
 	long long **newMatrix = NULL;
-	long long i =0;
+	long long i = 0;
+	long long actual_size = arr_size*sizeof(long long);
 	newMatrix = (long long**) malloc(size*sizeof(long long*));
 	if(newMatrix == NULL){
 		printf("fail to malloc at clone2DArray function in Util.c\n");
 		exit(-2);
 	}
 	for(i=0;i<size;i++){
-		newMatrix[i] = (long long*)malloc(arr_size*sizeof(long long));
-		memcpy(newMatrix[i], arr[i], arr_size*sizeof(long long));
+		newMatrix[i] = (long long*)malloc(actual_size);
+		memcpy(newMatrix[i], arr[i], actual_size);
 	}
-
 	return newMatrix;
 }
 
