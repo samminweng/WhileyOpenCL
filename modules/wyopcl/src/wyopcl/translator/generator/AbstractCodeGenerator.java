@@ -74,7 +74,7 @@ public abstract class AbstractCodeGenerator {
 	 * Write out 'includes' both in 'test_case.c' and 'test_case.h'
 	 * @param test_case
 	 */
-	private void writeIncludes(String test_case){
+	/*private void writeIncludes(String test_case){
 		//Remove the generated *.c and *.h files to have a clean folder.
 		FileWriter writer;
 		try {
@@ -98,7 +98,7 @@ public abstract class AbstractCodeGenerator {
 
 
 	}
-
+*/
 
 	/**
 	 * Takes the byte-code and produces the code.
@@ -106,7 +106,8 @@ public abstract class AbstractCodeGenerator {
 	 * @param module
 	 */
 	public void apply(WyilFile module) {
-		this.writeIncludes(this.config.getFilename());
+		//this.writeIncludes(this.config.getFilename());
+		this.writeIncludes();
 		// Defines constants
 		this.writeConstants((List<Constant>)module.constants());
 		
@@ -265,6 +266,9 @@ public abstract class AbstractCodeGenerator {
 	protected abstract void writeUserTypes(List<wyil.lang.WyilFile.Type> userTypes);
 
 	protected abstract void writeFunction(FunctionOrMethod function);
+	
+	protected abstract void writeIncludes();
+	
 
 	/**
 	 * Iterates over the list of byte-code to generate the corresponding C code.

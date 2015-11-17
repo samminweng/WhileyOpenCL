@@ -1880,8 +1880,24 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	@Override
 	protected void writeConstants(List<wyil.lang.WyilFile.Constant> constants) {
+		// Generates declarations
+		List<String> declarations = new ArrayList<String>();
+		for (wyil.lang.WyilFile.Constant constant : constants) {
+			declarations.add("#define " + constant.name() + " " + constant.constant());
+		}
+		
 		String filename = config.getFilename();
-		FileWriter writer;
+		
+		try {
+			Files.write(Paths.get(filename + ".h"), declarations, StandardOpenOption.APPEND);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	
+		/*FileWriter writer;
 		try {
 			// Check if the header file exits.
 			File f = new File(filename + ".h");
@@ -1902,6 +1918,32 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		} catch (Exception ex) {
 			throw new RuntimeException(ex);
 		}
+		
+		*/
 
+	}
+
+	
+	/**
+	 * Write out 'includes' both in 'test_case.c' and 'test_case.h'
+	 */
+	@Override
+	protected void writeIncludes() {
+		String file_name = this.config.getFilename();
+		// Writes out #include "Util.h" to test_case.h 
+		String includes = "#include \"Util.h\"\n";
+		try {
+			Files.write(Paths.get(file_name+".h"), includes.getBytes(), StandardOpenOption.CREATE);
+		} catch (IOException e) {
+			throw new RuntimeException("Errors occur in writeIncludes()");
+		}
+		
+		// Writes out #include "test_case.h" to test_case.c
+		includes = "#include \""+file_name+".h";
+		try {
+			Files.write(Paths.get(file_name+".c"), includes.getBytes(), StandardOpenOption.CREATE);
+		} catch (IOException e) {
+			throw new RuntimeException("Errors occur in writeIncludes()");
+		}
 	}
 }
