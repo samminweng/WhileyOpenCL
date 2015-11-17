@@ -40,16 +40,19 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(codeDir, "mergesort");
 	}
 	
+	@Test
+	public void test_TicTacToe_naive() {
+		util.execCodeGeneration(codeDir, "TicTacToe");
+	}
+	
+	
 	/*@Test
 	public void test_reverse_fast() {
 		//Generate the naive C code  
 		util.execCodeGeneration(codeDir, codeDir, "reverse", "-copy");
 	}*/
 	/*
-	@Test
-	public void test_TicTacToe_slow() {
-		util.execCodeGeneration(codeDir, codeDir, "TicTacToe");
-	}
+	
 	
 	@Test
 	public void test_TicTacToe_fast() {
