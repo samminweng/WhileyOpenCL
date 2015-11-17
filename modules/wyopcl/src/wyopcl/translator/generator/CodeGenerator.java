@@ -10,7 +10,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -1433,26 +1435,34 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(NewRecord code, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
-		String s = "";
 		String indent = store.getIndent();
-		String target = store.getVar(code.target());
-		// Creates a list of field names
-		String[] names = (String[]) code.type().keys().toArray(new String[code.type().keys().size()]);
+		String lhs = store.getVar(code.target());
+		
+		// Creates a list of member names
+		HashMap<String, Type> fields = code.type().fields();
+		String[] members = fields.keySet().toArray(new String[fields.size()]);
+		// Reverse the 'members' array due to inconsistent order as 'operands' array.
+		Collections.reverse(Arrays.asList(members));
+		
+		String statement = "";
 		for(int i=0;i<code.operands().length; i++){
-			String var = store.getVar(code.operand(i));
-			String name = names[i];
-			Type type = store.getVarType(code.operand(i));
+			// Get operand 
+			String op = store.getVar(code.operand(i));
+			String member = members[i];
+			//Type type = store.getVarType(code.operand(i));
+			Type type = fields.get(member);
 			// Propagate '_size' variable.
 			if (type instanceof Type.Array) {
-				s += indent + target  + "." + name + "_size = "
-						+ var + "_size;\n";
-				s += indent + target + "." + name + " = clone(" + var+ ", "+var + "_size);\n";
-			}else{
-				s += indent + target + "." + name + " = " + var	+ ";\n";
+				statement += indent + lhs  + "." + member + "_size = " + op + "_size;\n";
+				statement += indent + lhs + "." + member + " = clone(" + op+ ", "+op + "_size);\n";
+			}else if(type instanceof Type.Int){
+				statement += indent + lhs + "." + member + " = " + op + ";\n";
+			}else {
+				throw new RuntimeException("Not Implemented!");
 			}
 		}
 		// Get the set of field names and convert it to an array of string.
-		store.addStatement(code, s);
+		store.addStatement(code, statement);
 	}
 
 	/**
