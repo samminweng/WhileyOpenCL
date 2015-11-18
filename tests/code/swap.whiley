@@ -8,3 +8,4 @@ method main(System.Console sys):
     b = tmp
     assert a == [1,1,1,1,1]
     assert b == [0,0,0,0,0]
+    sys.out.print_s("Pass swap test case")

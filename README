@@ -58,9 +58,9 @@ $ ./../../bin/wyopcl -pattern While_Valid_1.whiley
 1.3 Code Generator
 Code Generator aims to translate the Whiley program into C code.
 $ cd tests/code
-$ ./../../bin/wyopcl -code While_Valid_1.whiley
-$ gcc While_Valid_1.c Util.c -o While_Valid_1.out
-$ ./While_Valid_1.out
+$ ./../../bin/wyopcl -code swap.whiley
+$ gcc swap.c Util.c -o swap.out
+$ ./swap.out
 
 1.4 Copy Elimination Analysis
 Copy Elimination analysis aims to eliminate the un-necessary array
@@ -98,8 +98,8 @@ $ ant test-pattern
 The unit test results are summarized at 'report/pattern/index.html'.
 
 1.3 Code Generator
-The code generator is tested with several Whiley programs, including
-{IfElse_Valid_2}, {WhileLoop} and {While_Valid_1}. To run the tests,
+The code generator is tested with 5 Whiley programs, including
+{swap}, {reverse}, {mergesort}, {TicTacToe} and {MatrixMult}. To run the tests,
 use the below commands:
 $ ant test-code
 The unit test results are summarized at 'report/code/index.html'. 
