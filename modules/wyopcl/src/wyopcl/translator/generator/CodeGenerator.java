@@ -516,7 +516,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * <pre>
 	 * <code>
-	 * 	_data_size,
+	 * 	_data_size, _data_size_size
 	 * </code>
 	 * </pre>
 	 * @param array_name
@@ -537,6 +537,18 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			size_vars += size_var;
 		}
 		return size_vars;
+	}
+	
+	private String generateSizeAssigns(String indent, String lhs, String rhs, int dimension){
+		String lhs_size = lhs;
+		String rhs_size = rhs;
+		String size_assigns = "";
+		for(int d=dimension;d>0;d--){
+			lhs_size += "_size";
+			rhs_size += "_size";
+			size_assigns += indent+ lhs_size +" = "+rhs_size+";\n";
+		}
+		return size_assigns;
 	}
 	
 	
@@ -565,13 +577,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				if (!isCopyEliminated(reg, code, f)) {
 					int dimension = computeArrayDimension(paramType);
 					if(dimension>1){
-						statement += "copy"+dimension+"DArray(" + param;
-						// Generate size variables according to dimensions.
-						String size_vars = generateSizeVars(param, dimension);
-						statement += ","+ size_vars + "), "+ size_vars;
+						statement += "copy"+dimension+"DArray(";
 					}else{
-						statement += "copy(" + param + ", " + param + "_size), " + param + "_size";
+						statement += "copy(";
 					}
+					// Generate size variables according to dimensions.
+					String size_vars = generateSizeVars(param, dimension);
+					statement += param + ","+ size_vars + "), "+ size_vars;
+					
 				} else {
 					// Do not need any copy
 					statement += param + ", " + param + "_size";
@@ -1117,11 +1130,23 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// 'fieldload %34 = %3 pieces : {int move,int[] pieces}'
 				// _34_size = _b.pieces_size;
 				// _34 = copy(_b.pieces, _b.pieces_size);
-				String var = store.getVar(code.operand(0));
+				String var = store.getVar(code.operand(0))+ "." + code.field;
+				int dimension = computeArrayDimension(code.fieldType());
+				
 				// Assign the array size
-				statement += indent + target +"_size = " + var + "." + code.field+"_size;\n";
-				// Assing and clones the array.
-				statement += indent + target + " = copy(" + var+ "." + code.field + ", "+var+"."+code.field+"_size);";
+				//statement += indent + target +"_size = " + var +"_size;\n";
+				statement += generateSizeAssigns(indent, target, var, dimension);
+			
+				// Assing and clones the array.	
+				String size_vars = generateSizeVars(var, dimension);
+				statement += indent + target + " = copy";
+				if(dimension>1){
+					statement += dimension+"DArray(";
+				}else{
+					statement += "(";
+				}
+				statement += var + ", "+size_vars+");";
+				
 			}else{
 				// Get the target
 				statement = indent + target + " = " + store.getVar(code.operand(0)) + "." + code.field + ";";
