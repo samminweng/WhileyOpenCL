@@ -514,8 +514,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/***
-	 * Given a array name and dimension, generates the lists of size variables, e.g.
-	 * 'data' is a 2D array and the list of size variables is
+	 * Generates the lists of size variables w.r.t the array dimension, e.g.
+	 * 'data' is a 2D array and its size variables are
 	 * 
 	 * <pre>
 	 * <code>
@@ -526,7 +526,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param dimension
 	 * @return
 	 */
-	private String generateSizeVars(String array_name, int dimension){
+	private String generateArraySizeVars(String array_name, int dimension){
 		String size_var = array_name;
 		String size_vars = "";
 		boolean isFirst = true;
@@ -541,8 +541,25 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		}
 		return size_vars;
 	}
-	
-	private String generateSizeAssigns(String indent, String lhs, String rhs, int dimension){
+	/**
+	 * Generates the array code, including the copy function call and the list of array size variables, e.g.
+	 * <code>
+	 * assign %2 = %7  : int[][]
+	 * </code>
+	 * can be translated into
+	 * <pre><code>
+	 *	 _C_data_size = _7_size;
+	 *	_C_data_size_size = _7_size_size;
+	 *	_C_data = copy2DArray(_7, _7_size, _7_size_size);
+	 * </code></pre>
+	 * @param indent
+	 * @param lhs
+	 * @param rhs
+	 * @param dimension
+	 * @return
+	 */
+	private String generateArrayCopy(String indent, String lhs, String rhs, int dimension){
+		String arrayCopy = "";
 		String lhs_size = lhs;
 		String rhs_size = rhs;
 		String size_assigns = "";
@@ -551,13 +568,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			rhs_size += "_size";
 			size_assigns += indent+ lhs_size +" = "+rhs_size+";\n";
 		}
-		return size_assigns;
-	}
-	
-	private String generateArrayCopy(String indent, String lhs, String rhs, int dimension){
-		String arrayCopy = "";
-		arrayCopy += generateSizeAssigns(indent, lhs, rhs, dimension);
-		String size_vars = generateSizeVars(rhs, dimension);
+		arrayCopy += size_assigns;
+		String size_vars = generateArraySizeVars(rhs, dimension);
 		arrayCopy += indent + lhs + " = copy";
 		if(dimension > 1){
 			arrayCopy += dimension + "DArray"; 
@@ -578,6 +590,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	private String translateRHSFunctionCall(Codes.Invoke code, FunctionOrMethod f) {
 		// Get code store of f function
 		CodeStore store = stores.get(f);
+		String indent = store.getIndent();
+		
 		boolean isFirst = true;
 		String statement = "";
 		for (int index = 0; index < code.operands().length; index++) {
@@ -591,13 +605,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			if (paramType instanceof Type.Array) {
 				if (!isCopyEliminated(reg, code, f)) {
 					int dimension = computeArrayDimension(paramType);
+					statement += "copy";
 					if(dimension>1){
-						statement += "copy"+dimension+"DArray(";
-					}else{
-						statement += "copy(";
+						statement += dimension+"DArray";
 					}
+					statement += "(";
 					// Generate size variables according to dimensions.
-					String size_vars = generateSizeVars(param, dimension);
+					String size_vars = generateArraySizeVars(param, dimension);
 					statement += param + ","+ size_vars + "), "+ size_vars;
 					
 				} else {
@@ -1784,9 +1798,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		}
 		
 		// Call 'gen' function to generate an array of given dimension.
-		String size_vars = generateSizeVars(array_name, dimension);
 		statement += indent + array_name + " = gen"+dimension+"DArray("+store.getVar(code.operand(0));
-		statement += ", " + size_vars+");";
+		statement += ", " + generateArraySizeVars(array_name, dimension)+");";
 		store.addStatement(code, statement);
 	}
 
