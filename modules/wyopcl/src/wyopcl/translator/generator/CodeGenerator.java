@@ -14,6 +14,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -42,6 +43,7 @@ import wyil.lang.Codes.UnaryOperator;
 import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyil.lang.Type.Record;
+import wyil.lang.Type.Record.State;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyil.transforms.LiveVariablesAnalysis.Env;
 import wyopcl.translator.Configuration;
@@ -589,9 +591,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	private String translateRHSFunctionCall(Codes.Invoke code, FunctionOrMethod f) {
 		// Get code store of f function
-		CodeStore store = stores.get(f);
-		String indent = store.getIndent();
-		
+		CodeStore store = stores.get(f);		
 		boolean isFirst = true;
 		String statement = "";
 		for (int index = 0; index < code.operands().length; index++) {
@@ -639,7 +639,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			isFirst = false;
 		}
 		// Pass the array size into the function to mutate the array size.
-		// if(return_type instanceof Type.Array){ statement += ", &"+ store.getVar(code.target())+"_size"; }
 		return statement;
 	}
 
@@ -1520,6 +1519,33 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
+	 * Get the fields from a record type. 
+	 * 
+	 * Although record type provides 'keys()' function to get the fields set,
+	 * the fields are returned by a Hashset, and their orders are not preserved and inconsistent with operands. 
+	 * 
+	 * That makes trouble when generating newrecord bytecode. For example, the 'newrecord' code for creating a matrix
+	 * <pre>
+	 * <code> 
+	 * newrecord %3 = (%2, %1, %0) : {int[][] data,int height,int width}
+	 * </code>
+	 * </pre>
+	 * The 'data' fields is mapped to %0, 'height' to %1 and 'width' to %2.
+	 * But the return key set  
+	 * <code>
+	 * [data, width, height]
+	 * </code> has a different orders.
+	 * @param record
+	 * @return
+	 */
+	private String[] getMemebers(Type.Record record){
+		//System.out.println(record.keys());
+		State fields = (State) record.automaton.states[0].data;
+		String[] members = fields.toArray(new String[fields.size()]);
+		return members;
+	}
+	
+	/**
 	 * Translates the new record byte-code. For example,
 	 * 
 	 * <pre>
@@ -1547,18 +1573,16 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String lhs = store.getVar(code.target());
 
 		// Creates a list of member names
-		HashMap<String, Type> fields = code.type().fields();
-		String[] members = fields.keySet().toArray(new String[fields.size()]);
-		// Reverse the 'members' array due to inconsistent order as 'operands' array.
-		//Collections.reverse(Arrays.asList(members));
+		String[] members = getMemebers(code.type());
+		int[] operands = code.operands();
 
 		String statement = "";
-		for(int i=0;i<code.operands().length; i++){
+		for(int i=0;i<operands.length; i++){
 			// Get operand 
-			String op = store.getVar(code.operand(i));
+			String op = store.getVar(operands[i]);
 			String member = members[i];
 			//Type type = store.getVarType(code.operand(i));
-			Type type = fields.get(member);
+			Type type = code.type().field(member);
 			// Propagate '_size' variable.
 			if (type instanceof Type.Array) {
 				// Get array dimension
