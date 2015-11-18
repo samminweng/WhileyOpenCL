@@ -292,7 +292,7 @@ void indirect_printf(long long input) {
 
 /**Print out an array of long long integers. If the array size > 10, then 
 print the first 10 items and the last item.*/
-void printf_array(long long* input, long long input_size) {
+void printf1DArray(long long* input, long long input_size) {
 	long long i = 0;
 	//Determines whether to add ','.
 	int isFirst = true;
@@ -313,6 +313,23 @@ void printf_array(long long* input, long long input_size) {
 	}
 	printf("]");
 }
+// Print out the first 10 array in an 2D array
+void printf2DArray(long long* input, long long input_size, long long input_size_size){
+	long long i = 0;
+	//Determines whether to add ','.
+	int isFirst = true;
+	int max_i = 10;
+	printf("[");
+	for (i = 0; i < input_size && i < max_i; i++) {
+		printf1DArray(input[i], input_size_size);
+	}
+	if (input_size > i) {
+		printf(" ...\n"); 
+		printf1DArray(input[input_size - 1], input_size_size);
+	}
+	printf("]");
+}
+
 /**
  * Print out an array of ASCII numbers into an array of chars.
  */

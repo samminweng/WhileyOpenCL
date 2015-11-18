@@ -96,9 +96,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					// Type declaration and initial value assignment.
 					// Assign 'null' to a list
 					del += "\t" + translateType(type) + " " + var + " = NULL;\n";
-					// If the variable is an array, then add the extra 'size'
-					// variable.
-					del += "\tlong long " + var + "_size = 0;\n";
+					// Add the extra 'size' variable.
+					int dimension = computeArrayDimension(type);
+					String size_var = var;
+					for(int d= dimension;d>0;d--){
+						size_var += "_size";
+						del += "\tlong long " + size_var + " = 0;\n";
+					}
 				} else if (type instanceof Type.Int) {
 					del += "\t" + translateType(type) + " " + var + " = 0;\n";
 				} else {
@@ -119,30 +123,41 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	private String translateInputParameter(FunctionOrMethod function) {
 		// Get the code storage
 		CodeStore store = this.getCodeStore(function);
+		List<Type> params = function.type().params();
+		
+		// Generate input parameters 
 		boolean isfirst = true;
-		int register = 0;
-		String stat = "";
-		for (Type param : function.type().params()) {
+		String statement = "";
+		for (int op=0;op<params.size();op++) {
+			Type param = params.get(op);
+			String var = store.getVar(op);
+			
 			//Check if the param is Console. If so, skip it.
 			if (isfirst) {
-				stat += translateType(param);
+				isfirst = false;
 			} else {
-				stat += ", " + translateType(param);
+				statement += ", ";
 			}
-			String var = store.getVar(register);
-			// Add the variable names
-			stat += " " + var;
-			// If the variable is an array or the referenced value is an array,
-			// then add the extra 'size' variable.
-			if (param instanceof Type.Array
+			
+			if(param instanceof Type.Int || param instanceof Type.Nominal){
+				statement += translateType(param) + " " + var;				
+			}else if (param instanceof Type.Array
 					|| (param instanceof Type.Reference && ((Type.Reference) param).element() instanceof Type.Array)) {
-				String var_size = var + "_size";
-				stat += ", long long " + var_size;
+				// Add the additional 'size' variable.
+				statement += translateType(param) + " " + var;
+				String var_size = var;
+				// Generate size variables according to the dimensions, e.g. 2D array has two 'size' variables.
+				int d = computeArrayDimension(param);
+				while(d>0){
+					var_size += "_size";
+					statement += ", long long " + var_size;
+					d--;
+				}
+			}else{
+				throw new RuntimeException("Not Implemented!");
 			}
-			isfirst = false;
-			register++;
 		}
-		return stat;
+		return statement;
 	}
 
 	/**
@@ -495,6 +510,37 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		return statement;
 	}
 
+	/***
+	 * Given a array name and dimension, generates the lists of size variables, e.g.
+	 * 'data' is a 2D array and the list of size variables is
+	 * 
+	 * <pre>
+	 * <code>
+	 * 	_data_size,
+	 * </code>
+	 * </pre>
+	 * @param array_name
+	 * @param dimension
+	 * @return
+	 */
+	private String generateSizeVars(String array_name, int dimension){
+		String size_var = array_name;
+		String size_vars = "";
+		boolean isFirst = true;
+		for(int d=dimension;d>0;d--){
+			size_var += "_size";
+			if(isFirst){
+				isFirst = false;
+			}else{
+				size_vars += ", ";
+			}
+			size_vars += size_var;
+		}
+		return size_vars;
+	}
+	
+	
+	
 	/**
 	 * Translate the rhs of a function call
 	 * 
@@ -517,7 +563,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Add the '*_size' parameter
 			if (paramType instanceof Type.Array) {
 				if (!isCopyEliminated(reg, code, f)) {
-					statement += "copy(" + param + ", " + param + "_size), " + param + "_size";
+					int dimension = computeArrayDimension(paramType);
+					if(dimension>1){
+						statement += "copy"+dimension+"DArray(" + param;
+						// Generate size variables according to dimensions.
+						String size_vars = generateSizeVars(param, dimension);
+						statement += ","+ size_vars + "), "+ size_vars;
+					}else{
+						statement += "copy(" + param + ", " + param + "_size), " + param + "_size";
+					}
 				} else {
 					// Do not need any copy
 					statement += param + ", " + param + "_size";
@@ -533,11 +587,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				if(nomial.name().name().equals("Console")){
 					statement += "stdout";
 				}else{
-					String userType = nomial.name().name();
-					statement += "copy_"+userType+"("+param+")";
+					statement += param;
+					//String userType = nomial.name().name();
+					//statement += "copy_"+userType+"("+param+")";
 				}
-
-
 			} else {
 				statement += param;
 			}
@@ -1442,7 +1495,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		HashMap<String, Type> fields = code.type().fields();
 		String[] members = fields.keySet().toArray(new String[fields.size()]);
 		// Reverse the 'members' array due to inconsistent order as 'operands' array.
-		Collections.reverse(Arrays.asList(members));
+		//Collections.reverse(Arrays.asList(members));
 
 		String statement = "";
 		for(int i=0;i<code.operands().length; i++){
@@ -1453,8 +1506,27 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			Type type = fields.get(member);
 			// Propagate '_size' variable.
 			if (type instanceof Type.Array) {
-				statement += indent + lhs  + "." + member + "_size = " + op + "_size;\n";
-				statement += indent + lhs + "." + member + " = copy(" + op+ ", "+op + "_size);\n";
+				// Get array dimension
+				int dimension = computeArrayDimension(type);
+				String size_var = member;
+				String op_size = op;
+				for(int d= dimension;d>0;d--){
+					size_var += "_size";
+					op_size += "_size";
+					statement += indent + lhs  + "." + size_var + " = " + op_size + ";\n";
+				}
+				if(dimension >1){
+					statement += indent + lhs + "." + member + " = copy"+dimension+"DArray(" + op;
+					op_size = op;
+					for(int d= dimension;d>0;d--){
+						op_size += "_size";
+						statement += ", " +op_size;
+					}
+					statement += ");\n";
+				}else{
+					statement += indent + lhs + "." + member + " = copy(" + op+ ", "+op + "_size);\n";
+				}
+				
 			}else if(type instanceof Type.Int){
 				statement += indent + lhs + "." + member + " = " + op + ";\n";
 			}else {
@@ -1627,7 +1699,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @return
 	 */
 	private int computeArrayDimension(wyil.lang.Type type){
-		int d = 1;
+		int d = 0;
 		// If element is an array, then increment the dimension.
 		while(type != null && type instanceof Type.Array){
 			type = ((Type.Array)type).element();
@@ -1651,21 +1723,26 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		CodeStore store = this.getCodeStore(function);
 		String indent = store.getIndent();
 		String array_name = store.getVar(code.target());
-		String array_size = store.getVar(code.target())+"_size"; 
-		String rhs_name = store.getVar(code.operand(0));
-		String rhs_size = store.getVar(code.operand(1));
+		String size = store.getVar(code.operand(1));
 		Type type = store.getVarType(code.operand(0));
-		int d = computeArrayDimension(type);
+		int dimension = computeArrayDimension(type) + 1;
 		// Call genArray function to generate the array
-		String statement = indent + array_name + " = gen"+d+"DArray("+rhs_name + ", " + rhs_size + ");\n";
-		// Assign rhs_size to the array size
-		statement += indent + array_size + " = "+rhs_size+";\n";
-		// Propagate the sub-array size
-		while(d > 1){
-			array_size += "_size";
-			rhs_size += "_size";
-			statement += indent + array_size+ "_size = " +rhs_size+";\n";
-			d--;
+		String statement = indent + array_name + " = gen"+dimension+"DArray("+store.getVar(code.operand(0)) + ", " + size;
+		String size_var = array_name;
+		for (int d=dimension;d>1;d--){
+			size_var += "_size";
+			statement += ", " +size_var;
+		}
+		statement += ");\n";
+		size_var = array_name + "_size";
+		// Assign size to size variable
+		statement += indent + size_var + " = "+size+";\n";
+		String extra_size = array_name;
+		// Propagate additional array size (>= 2D array)
+		for(int d=dimension;d>1;d--){
+			size_var += "_size";
+			extra_size += "_size";
+			statement += indent + size_var+ " = " +extra_size+";\n";
 		}	
 		store.addStatement(code, statement);
 	}
@@ -1706,12 +1783,20 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			String input_member = input + "." +member;
 			// Add field name
 			statement += indent + "printf(\" " + member + ":\");\n";
-			Type fieldtype = fields.get(member);
-			if (fieldtype instanceof Type.Nominal || fieldtype instanceof Type.Int) {
+			Type member_type = fields.get(member);
+			if (member_type instanceof Type.Nominal || member_type instanceof Type.Int) {
 				// Add field values.
 				statement += indent + "printf(\"%d\", " + input_member + ");\n";
-			} else if (fieldtype instanceof Type.Array) {
-				statement += indent + "printf_array(" + input_member + ", " + input_member + "_size);\n";
+			} else if (member_type instanceof Type.Array) {
+				int d = computeArrayDimension(member_type);
+				statement += indent + "printf"+d+"DArray(" + input_member ;
+				String size_var = input_member;
+				while(d>0){
+					size_var += "_size"; 
+					statement += ", " + size_var;
+					d--;
+				}
+				statement += ");\n";
 			} else {
 				throw new RuntimeException("Not implemented!");
 			}
@@ -1808,12 +1893,19 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Define a structure
 		struct.add("typedef struct{");
 		for (int i = 0; i < names.length; i++) {
-			String field_name = names[i];
-			Type fieldtype = fields.get(field_name);
-			struct.add("\t" + translateType(fieldtype) + " " + field_name + ";");
-			if (fieldtype instanceof Type.Array) {
-				// Add a 'size' field
-				struct.add("\t" + "long long " + field_name + "_size;");
+			String member = names[i];
+			Type memeber_type = fields.get(member);
+			struct.add("\t" + translateType(memeber_type) + " " + member + ";");
+			if (memeber_type instanceof Type.Array) {
+				int d = computeArrayDimension(memeber_type);
+				String size_var = member;
+				// Add 'size' variables w.r.t. array dimension.
+				while(d>0){
+					size_var += "_size";
+					struct.add("\t" + "long long " + size_var + ";");
+					d--;
+				}
+				
 			}
 		}
 		struct.add( "} " + typeName + ";");

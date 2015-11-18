@@ -22,19 +22,21 @@
 
 void indirect_printf(long long input);
 //No overlapping is allowed: function name must be different.
-void printf_array(long long* input, long long input_size);
 void printf_s(long long* input, long long input_size);
 void println_s(long long* input, long long input_size);
 // Parser
 long long parseInteger(long long* arr);
-// Array Operator
+// 1D Array Operator
 long long** convertArgsToIntArray(int argc, char** args);
-long long* gen1DArray(int value, int arr_size);
 long long* copy(long long *arr, long long size);
+long long* gen1DArray(int value, int arr_size);
+void printf1Darray(long long* input, long long input_size);
+int isArrayEqual(long long* arr1, long long arr1_size, long long* arr2, long long arr2_size);
+// 2D Array Operator
 long long** copy2DArray(long long **arr, long long arr_size, long long size);
 long long** gen2DArray(long long* arr, long long arr_size, long long size);
 void free2DArray(long long** ptr, long long size);
-int isArrayEqual(long long* arr1, long long arr1_size, long long* arr2, long long arr2_size);
+void printf2Darray(long long* input, long long input_size, long long input_size_size);
 // List Operator.
 long long* slice(long long* arr, long long arr_size, long long start, long long end);
 long long* append(long long *arr1, long long arr1_size, long long* arr2, long long arr2_size);
