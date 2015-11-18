@@ -1906,7 +1906,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Writes out #include "Util.h" to test_case.h 
 		String includes = "#include \"Util.h\"\n";
 		try {
-			Files.write(Paths.get(file_name+".h"), includes.getBytes(), StandardOpenOption.CREATE);
+			// Create a new one or over-write an existing one.
+			Files.write(Paths.get(file_name+".h"), includes.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 		} catch (IOException e) {
 			throw new RuntimeException("Errors occur in writeIncludes()");
 		}
@@ -1914,7 +1915,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Writes out #include "test_case.h" to test_case.c
 		includes = "#include \""+file_name+".h\"\n";
 		try {
-			Files.write(Paths.get(file_name+".c"), includes.getBytes(), StandardOpenOption.CREATE);
+			Files.write(Paths.get(file_name+".c"), includes.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 		} catch (IOException e) {
 			throw new RuntimeException("Errors occur in writeIncludes()");
 		}
