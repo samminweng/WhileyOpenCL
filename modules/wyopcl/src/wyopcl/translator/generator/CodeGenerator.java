@@ -1894,33 +1894,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-	
-		/*FileWriter writer;
-		try {
-			// Check if the header file exits.
-			File f = new File(filename + ".h");
-			if (!f.exists()) {
-				writer = new FileWriter(f);
-				// If no such a file, write the include files to include Util.h
-				writer.append("#include \"Util.h\"\n");
-			} else {
-				writer = new FileWriter(f, true);
-			}
-			String del = "";
-			for (wyil.lang.WyilFile.Constant constant : constants) {
-				del += "#define " + constant.name() + " " + constant.constant() + "\n";
-			}
-			// Write out user defined types
-			writer.append(del);
-			writer.close();
-		} catch (Exception ex) {
-			throw new RuntimeException(ex);
-		}
-		
-		*/
-
 	}
 
 	
@@ -1939,7 +1912,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		}
 		
 		// Writes out #include "test_case.h" to test_case.c
-		includes = "#include \""+file_name+".h";
+		includes = "#include \""+file_name+".h\"\n";
 		try {
 			Files.write(Paths.get(file_name+".c"), includes.getBytes(), StandardOpenOption.CREATE);
 		} catch (IOException e) {
