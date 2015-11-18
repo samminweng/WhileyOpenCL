@@ -281,14 +281,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.Assign code, FunctionOrMethod function) {
 		CodeStore store = this.getCodeStore(function);
-		String rhs = store.getVar(code.target());
-		String lhs = store.getVar(code.operand(0));
+		String lhs = store.getVar(code.target());
+		String rhs = store.getVar(code.operand(0));
 		String statement = "";
 		String indent = store.getIndent();
 		// Check if the assigned type is an array.
 		if (code.type() instanceof Type.Array) {
+			
+			int dimension = computeArrayDimension(code.type());
 			// copy the array and assign the cloned to the target.
-			statement += indent + (rhs + "_size") + " = " + lhs + "_size;\n";
+			//statement += indent + (rhs + "_size") + " = " + lhs + "_size;\n";
+			//statement += generateSizeAssigns(indent, lhs, rhs, dimension);
 			/**
 			 * 
 			 * For example, the below bytecode assign %3 = %0 : [bool] can be translated in the C code: <code>
@@ -306,25 +309,25 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					 * 
 					 * //assign %9 = %10 : [void] _9_size = _10_size; _9 = copy((long long*)_10, _10_size);
 					 */
-					statement += indent + rhs + " = copy((" + translateType(rhs_type) + ")" + lhs + ", " + lhs
+					statement += indent + lhs + " = copy((" + translateType(rhs_type) + ")" + rhs + ", " + rhs
 							+ "_size);";
 				} else {
 					/** Make a copy of right operand. */
-					statement += indent + rhs + " = copy(" + lhs + ", " + lhs + "_size);";
+					statement += generateArrayCopy(indent, lhs, rhs, dimension);
 				}
 			} else {
 				// Do not need to make a copy and have in-place update
-				statement += indent + rhs + " = (" + translateType(store.getVarType(code.target())) + ")" + lhs + ";";
+				statement += indent + lhs + " = (" + translateType(store.getVarType(code.target())) + ")" + rhs + ";";
 			}
 		} else if (code.type() instanceof Type.Reference
 				&& ((Type.Reference) code.type()).element() instanceof Type.Array) {
-			statement += indent + rhs + " = " + lhs + ";\n";
-			statement += indent + rhs + "_size = " + lhs + "_size;";
+			statement += indent + lhs + " = " + rhs + ";\n";
+			statement += indent + lhs + "_size = " + rhs + "_size;";
 		} else if (code.type() instanceof Type.Record){
 			wyil.lang.WyilFile.Type userType = getUserDefinedType((Type.Record)code.type());
-			statement += indent + rhs + " = copy_"+userType.name()+"(" + lhs + ");";
+			statement += indent + lhs + " = copy_"+userType.name()+"(" + rhs + ");";
 		} else {
-			statement = indent + rhs + " = " + lhs + ";";
+			statement = indent + lhs + " = " + rhs + ";";
 		}
 		// Add the statement to the list of statements.
 		store.addStatement(code, statement);
@@ -551,6 +554,18 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		return size_assigns;
 	}
 	
+	private String generateArrayCopy(String indent, String lhs, String rhs, int dimension){
+		String arrayCopy = "";
+		arrayCopy += generateSizeAssigns(indent, lhs, rhs, dimension);
+		String size_vars = generateSizeVars(rhs, dimension);
+		arrayCopy += indent + lhs + " = copy";
+		if(dimension > 1){
+			arrayCopy += dimension + "DArray"; 
+		}
+		arrayCopy += "("+ rhs +", " + size_vars+");\n"; 
+		
+		return arrayCopy;
+	}
 	
 	
 	/**
@@ -1132,13 +1147,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// _34 = copy(_b.pieces, _b.pieces_size);
 				String var = store.getVar(code.operand(0))+ "." + code.field;
 				int dimension = computeArrayDimension(code.fieldType());
-				
+				statement += generateArrayCopy(indent, target, var, dimension);
 				// Assign the array size
 				//statement += indent + target +"_size = " + var +"_size;\n";
-				statement += generateSizeAssigns(indent, target, var, dimension);
+				//statement += generateSizeAssigns(indent, target, var, dimension);
 			
 				// Assing and clones the array.	
-				String size_vars = generateSizeVars(var, dimension);
+				/*String size_vars = generateSizeVars(var, dimension);
 				statement += indent + target + " = copy";
 				if(dimension>1){
 					statement += dimension+"DArray(";
@@ -1146,6 +1161,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					statement += "(";
 				}
 				statement += var + ", "+size_vars+");";
+				*/
 				
 			}else{
 				// Get the target
@@ -1752,15 +1768,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		Type type = store.getVarType(code.operand(0));
 		int dimension = computeArrayDimension(type) + 1;
 		// Call genArray function to generate the array
-		String statement = indent + array_name + " = gen"+dimension+"DArray("+store.getVar(code.operand(0)) + ", " + size;
-		String size_var = array_name;
-		for (int d=dimension;d>1;d--){
-			size_var += "_size";
-			statement += ", " +size_var;
-		}
-		statement += ");\n";
-		size_var = array_name + "_size";
+		String statement ="";
+		
+		
+		
 		// Assign size to size variable
+		String size_var = array_name +"_size";
 		statement += indent + size_var + " = "+size+";\n";
 		String extra_size = array_name;
 		// Propagate additional array size (>= 2D array)
@@ -1768,7 +1781,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			size_var += "_size";
 			extra_size += "_size";
 			statement += indent + size_var+ " = " +extra_size+";\n";
-		}	
+		}
+		
+		// Call 'gen' function to generate an array of given dimension.
+		String size_vars = generateSizeVars(array_name, dimension);
+		statement += indent + array_name + " = gen"+dimension+"DArray("+store.getVar(code.operand(0));
+		statement += ", " + size_vars+");";
 		store.addStatement(code, statement);
 	}
 
@@ -1862,8 +1880,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			if (fieldtype instanceof Type.Nominal || fieldtype instanceof Type.Int) {
 				statement += indent + copy_member + " = " + input_member+";\n"; 
 			} else if (fieldtype instanceof Type.Array) {
-				statement += indent + copy_member + " = copy("+input_member + ", "+input_member+"_size);\n";
-				statement += indent + copy_member + "_size = " + input_member + "_size;\n";
+				int dimension = computeArrayDimension(fieldtype);
+				statement += generateArrayCopy(indent, copy_member, input_member, dimension);
 			} else {
 				throw new RuntimeException("Not implemented!");
 			}
