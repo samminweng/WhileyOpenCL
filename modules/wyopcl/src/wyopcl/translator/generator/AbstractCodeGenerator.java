@@ -475,17 +475,14 @@ public abstract class AbstractCodeGenerator {
 		 */
 		protected String getVar(int reg) {
 			VariableDeclarations vars = function.attribute(VariableDeclarations.class);
-			// Check if the register has been kept in the functional variable
-			// declarations.
-			// if (reg < vars.size()) {
+			// Check if the register has been kept in the declarations.
 			Declaration declaration = vars.get(reg);
 			if (declaration != null) {
 				String name = declaration.name();
 				if (name != null && !name.isEmpty()) {
-					return prefix + name;
+					return name;
 				}
 			}
-			// }
 			return prefix + reg;
 		}
 
