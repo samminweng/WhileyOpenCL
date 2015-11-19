@@ -1258,20 +1258,20 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		CodeStore store = this.getCodeStore(function);
 		String statement = store.getIndent();
 		if (code.type() instanceof Type.FunctionOrMethod) {
-			if(code.target()>0){
-				// Get the function name, e.g. 'printf'.
-				String print_name = store.getField(code.operand(0));
-				// Get the input
-				String input = store.getVar(code.operand(1));
-				switch (print_name) {
-				case "print_s":
-					// E.g. 'println("%s", str);'
-					statement += "printf_s(" + input + ", " + input + "_size);";
-					break;
-				case "println_s":
-					statement += "println_s(" + input + ", " + input + "_size);";
-					break;
-				case "println":
+			// Get the function name, e.g. 'printf'.
+			String print_name = store.getField(code.operand(0));
+			// Get the input
+			String input = store.getVar(code.operand(1));
+			switch (print_name) {
+			case "print_s":
+				// E.g. 'println("%s", str);'
+				statement += "printf_s(" + input + ", " + input + "_size);";
+				break;
+			case "println_s":
+				statement += "println_s(" + input + ", " + input + "_size);";
+				break;
+			case "println":
+				if(code.target()>0){
 					// Check input's type to call different println function.
 					Type type = store.getVarType(code.operand(1));
 					if (type instanceof Type.Int) {
@@ -1286,9 +1286,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					} else {
 						throw new RuntimeException("Not implemented." + code);
 					}
-					break;
 				}
+				break;
 			}
+
 		}
 		store.addStatement(code, statement);
 	}
