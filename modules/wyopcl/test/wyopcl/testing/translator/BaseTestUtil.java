@@ -275,7 +275,7 @@ public final class BaseTestUtil {
 					assertEquals(runCmd("cmd /c gcc *.c  -o " + testcase + ".out", destDir), 0);
 				} else if (path.contains("cygwin")) {
 					// Gcc is a link (Windows command does not get it), so call its actual name (i.e. gcc-3 or gcc-4)
-					assertEquals(runCmd("cmd /c gcc-3 *.c  -o " + testcase + ".out", destDir), 0);
+					assertEquals(runCmd("cmd /c gcc-4 *.c  -o " + testcase + ".out", destDir), 0);
 					// Run the output file.
 					//assertEquals(runCmd("cmd /c " + testcase + ".out", destDir), 0);
 				} else {

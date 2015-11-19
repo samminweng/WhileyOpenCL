@@ -108,3 +108,4 @@ method main(System.Console sys):
     assert C.width == max
     assert C.height == max
     sys.out.println(C.data[0][0])
+    sys.out.print_s("Pass MatrixMult test case")

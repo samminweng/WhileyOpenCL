@@ -78,7 +78,7 @@ function countOf(Square[] pieces, Square s) -> (int r):
 // ===============================================================
 constant GAME is [0,1,2,3,4,5,6,7,8]
 
-method main(System.Console console):
+method main(System.Console sys):
     Board b = EmptyBoard()
     int i = 0
     while i < |GAME|:
@@ -91,3 +91,4 @@ method main(System.Console console):
         i = i + 1
     assert b.move == 9
     assert b.pieces == [1, 2, 1, 2, 1, 2, 1, 2, 1]
+    sys.out.print_s("Pass TicTacToe test case")

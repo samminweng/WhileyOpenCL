@@ -25,3 +25,4 @@ method main(System.Console sys):
     /**Check the last element of sorted array */
     assert arr[0] == 0
     assert arr[max] == max
+    sys.out.print_s("Pass reverse test case")
