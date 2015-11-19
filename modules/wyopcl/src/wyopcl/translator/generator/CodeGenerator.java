@@ -476,7 +476,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}
 			// Check the array is live.
 			BasicBlock blk = copy_analyzer.getBlockbyCode(f, code);// Get basic block that contains the given code.
-			Env outSet = copy_analyzer.getLiveness(f).getOutSet(blk);
+			Env outSet = copy_analyzer.getLiveness(f).getOUT(blk);
 			boolean isLive = outSet.contains(reg);
 			return (isReadOnly || !isLive);
 		}
