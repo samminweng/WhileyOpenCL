@@ -36,7 +36,7 @@ int isArrayEqual(long long* arr1, long long arr1_size, long long* arr2, long lon
 long long** copy2DArray(long long **arr, long long arr_size, long long size);
 long long** gen2DArray(long long* arr, long long arr_size, long long size);
 void free2DArray(long long** ptr, long long size);
-void printf2Darray(long long* input, long long input_size, long long input_size_size);
+void printf2DArray(long long** input, long long input_size, long long input_size_size);
 // List Operator.
 long long* slice(long long* arr, long long arr_size, long long start, long long end);
 long long* append(long long *arr1, long long arr1_size, long long* arr2, long long arr2_size);

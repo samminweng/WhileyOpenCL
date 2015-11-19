@@ -314,7 +314,7 @@ void printf1DArray(long long* input, long long input_size) {
 	printf("]");
 }
 // Print out the first 10 array in an 2D array
-void printf2DArray(long long* input, long long input_size, long long input_size_size){
+void printf2DArray(long long** input, long long input_size, long long input_size_size){
 	long long i = 0;
 	//Determines whether to add ','.
 	int isFirst = true;
