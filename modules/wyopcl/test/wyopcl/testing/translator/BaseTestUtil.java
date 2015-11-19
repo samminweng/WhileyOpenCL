@@ -285,8 +285,9 @@ public final class BaseTestUtil {
 				// Run the output file.
 				assertEquals(runCmd("cmd /c " + testcase + ".out", destDir), 0);
 			} else {
+				//runCmd("cd "+destDir, destDir);
 				// Compile the C program into *.out and place it in current working directory
-				assertEquals(runCmd("gcc *.c -o " + testcase + ".out", destDir), 0);
+				assertEquals(runCmd("gcc Util.c " +testcase+".c -o " + testcase + ".out", destDir), 0);
 				// Run the generated out file
 				assertEquals(runCmd("./" + testcase + ".out", destDir), 0);
 			}
