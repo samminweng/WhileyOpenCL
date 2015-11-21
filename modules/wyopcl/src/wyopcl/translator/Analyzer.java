@@ -484,7 +484,6 @@ public abstract class Analyzer {
 		return var_name;
 	}
 	
-	
-	
 
+	
 }
