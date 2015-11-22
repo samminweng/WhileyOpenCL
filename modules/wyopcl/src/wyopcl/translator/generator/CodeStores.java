@@ -11,6 +11,7 @@ import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyil.lang.WyilFile.FunctionOrMethod;
+import wyopcl.translator.Configuration;
 
 /**
  * Stores the generated code and provides common functionality for code generator.
@@ -20,12 +21,14 @@ import wyil.lang.WyilFile.FunctionOrMethod;
  */
 public class CodeStores {
 	private String prefix = "_";
+	private Configuration config;
 	private boolean isVerbose;
 	private List<wyil.lang.WyilFile.Type> userTypes;// Store all the user-defined types at source level, e.g. Board.
 	protected HashMap<FunctionOrMethod, CodeStore> stores; // Store generated code for each function
 	
-	public CodeStores(boolean isVerbose, List<wyil.lang.WyilFile.Type> userTypes){
-		this.isVerbose = isVerbose;		
+	public CodeStores(Configuration config, List<wyil.lang.WyilFile.Type> userTypes){
+		this.config = config;
+		this.isVerbose = config.isVerbose();		
 		this.stores = new HashMap<FunctionOrMethod, CodeStore>();
 		this.userTypes = userTypes;
 	}

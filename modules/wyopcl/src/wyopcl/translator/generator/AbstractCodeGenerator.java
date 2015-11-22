@@ -64,7 +64,6 @@ public abstract class AbstractCodeGenerator {
 	protected final Configuration config;
 	// Store generated code
 	protected CodeStores stores;
-	protected List<wyil.lang.WyilFile.Type> userTypes;// Store all the user-defined types at source level, e.g. Board.
 
 	public AbstractCodeGenerator(Configuration config) {
 		this.config = config;
@@ -78,7 +77,7 @@ public abstract class AbstractCodeGenerator {
 	 */
 	public void apply(WyilFile module) {
 		// Get and Set up user-defined types
-		this.stores = new CodeStores(config.isVerbose(), (List<wyil.lang.WyilFile.Type>) module.types());
+		this.stores = new CodeStores(config, (List<wyil.lang.WyilFile.Type>) module.types());
 		
 		this.writeIncludes();
 		// Defines constants

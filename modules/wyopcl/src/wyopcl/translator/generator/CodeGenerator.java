@@ -100,7 +100,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					// Assign 'null' to a list
 					del += "\t" + translateType(type) + " " + var + " = NULL;\n";
 					// Add the extra 'size' variable.
-					int dimension = computeArrayDimension(type);
+					int dimension = CodeGeneratorHelper.computeArrayDimension(type);
 					String size_var = var;
 					for(int d= dimension;d>0;d--){
 						size_var += "_size";
@@ -150,7 +150,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statement += translateType(param) + " " + var;
 				String var_size = var;
 				// Generate size variables according to the dimensions, e.g. 2D array has two 'size' variables.
-				int d = computeArrayDimension(param);
+				int d = CodeGeneratorHelper.computeArrayDimension(param);
 				while(d>0){
 					var_size += "_size";
 					statement += ", long long " + var_size;
@@ -291,7 +291,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Check if the assigned type is an array.
 		if (code.type() instanceof Type.Array) {
 			
-			int dimension = computeArrayDimension(code.type());
+			int dimension = CodeGeneratorHelper.computeArrayDimension(code.type());
 			// copy the array and assign the cloned to the target.
 			//statement += indent + (rhs + "_size") + " = " + lhs + "_size;\n";
 			//statement += generateSizeAssigns(indent, lhs, rhs, dimension);
@@ -316,7 +316,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 							+ "_size);";
 				} else {
 					/** Make a copy of right operand. */
-					statement += generateArrayCopy(indent, lhs, rhs, dimension);
+					statement += CodeGeneratorHelper.generateArrayCopy(indent, lhs, rhs, dimension);
 				}
 			} else {
 				// Do not need to make a copy and have in-place update
@@ -517,71 +517,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		return statement;
 	}
 
-	/***
-	 * Generates the lists of size variables w.r.t the array dimension, e.g.
-	 * 'data' is a 2D array and its size variables are
-	 * 
-	 * <pre>
-	 * <code>
-	 * 	_data_size, _data_size_size
-	 * </code>
-	 * </pre>
-	 * @param array_name
-	 * @param dimension
-	 * @return
-	 */
-	private String generateArraySizeVars(String array_name, int dimension){
-		String size_var = array_name;
-		String size_vars = "";
-		boolean isFirst = true;
-		for(int d=dimension;d>0;d--){
-			size_var += "_size";
-			if(isFirst){
-				isFirst = false;
-			}else{
-				size_vars += ", ";
-			}
-			size_vars += size_var;
-		}
-		return size_vars;
-	}
-	/**
-	 * Generates the array code, including the copy function call and the list of array size variables, e.g.
-	 * <code>
-	 * assign %2 = %7  : int[][]
-	 * </code>
-	 * can be translated into
-	 * <pre><code>
-	 *	 _C_data_size = _7_size;
-	 *	_C_data_size_size = _7_size_size;
-	 *	_C_data = copy2DArray(_7, _7_size, _7_size_size);
-	 * </code></pre>
-	 * @param indent
-	 * @param lhs
-	 * @param rhs
-	 * @param dimension
-	 * @return
-	 */
-	private String generateArrayCopy(String indent, String lhs, String rhs, int dimension){
-		String arrayCopy = "";
-		String lhs_size = lhs;
-		String rhs_size = rhs;
-		String size_assigns = "";
-		for(int d=dimension;d>0;d--){
-			lhs_size += "_size";
-			rhs_size += "_size";
-			size_assigns += indent+ lhs_size +" = "+rhs_size+";\n";
-		}
-		arrayCopy += size_assigns;
-		String size_vars = generateArraySizeVars(rhs, dimension);
-		arrayCopy += indent + lhs + " = copy";
-		if(dimension > 1){
-			arrayCopy += dimension + "DArray"; 
-		}
-		arrayCopy += "("+ rhs +", " + size_vars+");\n"; 
-		
-		return arrayCopy;
-	}
+	
+	
 	
 	
 	/**
@@ -606,14 +543,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Add the '*_size' parameter
 			if (paramType instanceof Type.Array) {
 				if (!isCopyEliminated(reg, code, f)) {
-					int dimension = computeArrayDimension(paramType);
+					int dimension = CodeGeneratorHelper.computeArrayDimension(paramType);
 					statement += "copy";
 					if(dimension>1){
 						statement += dimension+"DArray";
 					}
 					statement += "(";
 					// Generate size variables according to dimensions.
-					String size_vars = generateArraySizeVars(param, dimension);
+					String size_vars = CodeGeneratorHelper.generateArraySizeVars(param, dimension);
 					statement += param + ","+ size_vars + "), "+ size_vars;
 					
 				} else {
@@ -1162,8 +1099,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// _34_size = _b.pieces_size;
 				// _34 = copy(_b.pieces, _b.pieces_size);
 				String var = store.getVar(code.operand(0))+ "." + code.field;
-				int dimension = computeArrayDimension(code.fieldType());
-				statement += generateArrayCopy(indent, target, var, dimension);
+				int dimension = CodeGeneratorHelper.computeArrayDimension(code.fieldType());
+				statement += CodeGeneratorHelper.generateArrayCopy(indent, target, var, dimension);
 				// Assign the array size
 				//statement += indent + target +"_size = " + var +"_size;\n";
 				//statement += generateSizeAssigns(indent, target, var, dimension);
@@ -1409,32 +1346,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		return null;
 	}
 
-	/**
-	 * Get the fields from a record type. 
-	 * 
-	 * Although record type provides 'keys()' function to get the fields set,
-	 * the fields are returned by a Hashset, and their orders are not preserved and inconsistent with operands. 
-	 * 
-	 * That makes trouble when generating newrecord bytecode. For example, the 'newrecord' code for creating a matrix
-	 * <pre>
-	 * <code> 
-	 * newrecord %3 = (%2, %1, %0) : {int[][] data,int height,int width}
-	 * </code>
-	 * </pre>
-	 * The 'data' fields is mapped to %0, 'height' to %1 and 'width' to %2.
-	 * But the return key set  
-	 * <code>
-	 * [data, width, height]
-	 * </code> has a different orders.
-	 * @param record
-	 * @return
-	 */
-	private String[] getMemebers(Type.Record record){
-		//System.out.println(record.keys());
-		State fields = (State) record.automaton.states[0].data;
-		String[] members = fields.toArray(new String[fields.size()]);
-		return members;
-	}
+	
 	
 	/**
 	 * Translates the new record byte-code. For example,
@@ -1464,7 +1376,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String lhs = store.getVar(code.target());
 
 		// Creates a list of member names
-		String[] members = getMemebers(code.type());
+		String[] members = CodeGeneratorHelper.getMemebers(code.type());
 		int[] operands = code.operands();
 
 		String statement = "";
@@ -1477,7 +1389,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Propagate '_size' variable.
 			if (type instanceof Type.Array) {
 				// Get array dimension
-				int dimension = computeArrayDimension(type);
+				int dimension = CodeGeneratorHelper.computeArrayDimension(type);
 				String size_var = member;
 				String op_size = op;
 				for(int d= dimension;d>0;d--){
@@ -1663,20 +1575,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		store.addStatement(code, statement);
 	}
 
-	/**
-	 * Given an Array Type, compute the array dimension.
-	 * @param arrayType
-	 * @return
-	 */
-	private int computeArrayDimension(wyil.lang.Type type){
-		int d = 0;
-		// If element is an array, then increment the dimension.
-		while(type != null && type instanceof Type.Array){
-			type = ((Type.Array)type).element();
-			d++;
-		}
-		return d;
-	}
+	
 
 	/***
 	 * Translate 'ListGenerator' wyil code into C code. For example,
@@ -1695,7 +1594,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String array_name = store.getVar(code.target());
 		String size = store.getVar(code.operand(1));
 		Type type = store.getVarType(code.operand(0));
-		int dimension = computeArrayDimension(type) + 1;
+		int dimension = CodeGeneratorHelper.computeArrayDimension(type) + 1;
 		// Call genArray function to generate the array
 		String statement ="";
 		
@@ -1714,178 +1613,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		
 		// Call 'gen' function to generate an array of given dimension.
 		statement += indent + array_name + " = gen"+dimension+"DArray("+store.getVar(code.operand(0));
-		statement += ", " + generateArraySizeVars(array_name, dimension)+");";
+		statement += ", " + CodeGeneratorHelper.generateArraySizeVars(array_name, dimension)+");";
 		store.addStatement(code, statement);
 	}
 
-
-	/***
-	 * 
-	 * Given a user-defined structure, generate 'printf_*' function to print out its value. For example,	 * 
-	 * <pre>
-	 * <code>
-	 * void printf_Board(Board s){
-	 *		printf("{");
-	 *		printf("pieces");
-	 *		printf_array(s.pieces, s.pieces_size);
-	 *		printf("move");
-	 *		printf("%d,", s.move);
-	 *		printf("}");
-	 * }
-	 * </code>
-	 * 
-	 * @param struct
-	 * @param fields
-	 * @return
-	 */
-	private String generatePrintfFunction(String struct, HashMap<String, Type> fields){
-
-		String input = "_"+struct.toLowerCase();
-		String indent = "\t";
-
-		String statement = "void printf_" + struct + "(" + struct + " "+input+"){\n";
-		// Add open bracket
-		statement += indent + "printf(\"{\");\n"; 
-		// Get all field names
-		String[] names = fields.keySet().toArray(new String[fields.size()]);
-		// Print out each field.
-		for (int i = 0; i < names.length; i++) {
-			String member = names[i];
-			String input_member = input + "." +member;
-			// Add field name
-			statement += indent + "printf(\" " + member + ":\");\n";
-			Type member_type = fields.get(member);
-			if (member_type instanceof Type.Nominal || member_type instanceof Type.Int) {
-				// Add field values.
-				statement += indent + "printf(\"%d\", " + input_member + ");\n";
-			} else if (member_type instanceof Type.Array) {
-				int d = computeArrayDimension(member_type);
-				statement += indent + "printf"+d+"DArray(" + input_member ;
-				String size_var = input_member;
-				while(d>0){
-					size_var += "_size"; 
-					statement += ", " + size_var;
-					d--;
-				}
-				statement += ");\n";
-			} else {
-				throw new RuntimeException("Not implemented!");
-			}
-		}
-		// Add ending "}"
-		statement += indent + "printf(\"}\");\n";
-		statement += "}";
-
-		return statement;
-	}
-	/**
-	 * Given a structure, generate 'clone_*' function to make and return a copy of this structure, e.g. 
-	 * 
-	 * Board clone_Board(Board b){
-	 *		Board new_b;
-	 *		new_b.pieces = copy(b.pieces, b.pieces_size);
-	 *		new_b.pieces_size = b.pieces_size;
-	 * 		new_b.move = b.move;
-	 *		return new_b; 
-	 * } 
-	 * @param struct
-	 * @param fields
-	 * @return
-	 */
-	private String generateCopyFunction(String struct, HashMap<String, Type> fields){
-		String input = "_"+struct.toLowerCase();
-		String copy = "new_"+struct.toLowerCase();
-		String statement = struct+" copy_"+struct+ "(" + struct + " "+input+"){\n";;
-		// Declare local copy.
-		String indent = "\t";
-		statement += indent + struct + " "+copy+";\n";
-		String[] names = fields.keySet().toArray(new String[fields.size()]);
-		for (int i = 0; i < names.length; i++) {
-			String member = names[i];			
-			String input_member = input + "." + member;
-			String copy_member = copy + "." + member;
-			Type fieldtype = fields.get(member);
-			if (fieldtype instanceof Type.Nominal || fieldtype instanceof Type.Int) {
-				statement += indent + copy_member + " = " + input_member+";\n"; 
-			} else if (fieldtype instanceof Type.Array) {
-				int dimension = computeArrayDimension(fieldtype);
-				statement += generateArrayCopy(indent, copy_member, input_member, dimension);
-			} else {
-				throw new RuntimeException("Not implemented!");
-			}
-		}
-		// Add return statement
-		statement += indent + "return "+copy+";\n";
-		statement += "}";
-		return statement;
-	}
-	/**
-	 * 
-	 * @param struct
-	 * @param fields
-	 * @return
-	 */
-	private String generateFreeFunction(String struct, HashMap<String, Type> fields){
-		String input = "_"+struct;
-		String indent = "\t";
-
-		String statement = "void free_"+struct+"("+struct+ " "+input+"){\n";
-		String[] names = fields.keySet().toArray(new String[fields.size()]);
-		for (int i = 0; i < names.length; i++) {
-			String member = names[i];
-			Type type = fields.get(member);
-			String input_member = input +"."+member;
-			if(type instanceof Type.Array){
-				statement += indent+ "free("+input_member+");\n";
-			}
-		}
-		statement += "}";// Add ending bracket.
-		return statement;
-	}
-
-	/**
-	 * Write the user-defined structure to *.h file, e.g. 
-	 * <pre>
-	 * <code>
-	 * typedef struct{
-	 *		Square* pieces;
-	 *		long long pieces_size;
-	 * 		nat move;
-	 * } Board;<br>
-	 * </code>
-	 * </pre>
-	 * @param userType
-	 */
-	private List<String> generateStruct(String typeName, HashMap<String, Type> fields) {
-		List<String> struct = new ArrayList<String>();
-		// Get all field names
-		String[] names = fields.keySet().toArray(new String[fields.size()]);
-
-		// Define a structure
-		struct.add("typedef struct{");
-		for (int i = 0; i < names.length; i++) {
-			String member = names[i];
-			Type memeber_type = fields.get(member);
-			struct.add("\t" + translateType(memeber_type) + " " + member + ";");
-			if (memeber_type instanceof Type.Array) {
-				int d = computeArrayDimension(memeber_type);
-				String size_var = member;
-				// Add 'size' variables w.r.t. array dimension.
-				while(d>0){
-					size_var += "_size";
-					struct.add("\t" + "long long " + size_var + ";");
-					d--;
-				}
-				
-			}
-		}
-		struct.add( "} " + typeName + ";");
-		// Add built-in function signatures, e.g. 'void printf_Board(Board s);'
-		struct.add("void printf_" + typeName + "(" + typeName + " _"+typeName.toLowerCase()+");");
-		struct.add(typeName + " copy_"+typeName+ "("+typeName + " _"+typeName.toLowerCase()+");");
-		struct.add("void free_"+ typeName+"("+typeName+" _"+typeName.toLowerCase()+");"); 	
-		return struct;
-	}
+	
 
 	/**
 	 * Write the user defined data types to *.h file, e.g. <code>
@@ -1910,10 +1642,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				structs.add("typedef " + translateType(userType.type()) + " " + struct + ";");
 			}else if(userType.type() instanceof Type.Record){
 				HashMap<String, Type> fields = ((Type.Record) userType.type()).fields();
-				structs.addAll(this.generateStruct(struct, fields));
-				statements.add(this.generatePrintfFunction(struct, fields));
-				statements.add(this.generateCopyFunction(struct, fields));
-				statements.add(this.generateFreeFunction(struct, fields));
+				structs.addAll(CodeGeneratorHelper.generateStruct(struct, fields, stores));
+				statements.add(CodeGeneratorHelper.generatePrintfFunction(struct, fields));
+				statements.add(CodeGeneratorHelper.generateCopyFunction(struct, fields));
+				statements.add(CodeGeneratorHelper.generateFreeFunction(struct, fields));
 			}else{
 				throw new RuntimeException("Not Implemented!");
 			}
