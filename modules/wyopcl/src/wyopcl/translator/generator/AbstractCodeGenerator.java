@@ -63,12 +63,12 @@ public abstract class AbstractCodeGenerator {
 	protected final String prefix = "_";
 	protected final Configuration config;
 	// Store generated code
-	protected HashMap<FunctionOrMethod, CodeStore> stores;
-	private List<wyil.lang.WyilFile.Type> userTypes;// Store all the user-defined types at source level, e.g. Board.
+	protected CodeStores stores;
+	protected List<wyil.lang.WyilFile.Type> userTypes;// Store all the user-defined types at source level, e.g. Board.
 
 	public AbstractCodeGenerator(Configuration config) {
 		this.config = config;
-		this.stores = new HashMap<FunctionOrMethod, CodeStore>();
+		
 	}	
 	
 	/**
@@ -77,15 +77,15 @@ public abstract class AbstractCodeGenerator {
 	 * @param module
 	 */
 	public void apply(WyilFile module) {
-		//this.writeIncludes(this.config.getFilename());
+		// Get and Set up user-defined types
+		this.stores = new CodeStores(config.isVerbose(), (List<wyil.lang.WyilFile.Type>) module.types());
+		
 		this.writeIncludes();
 		// Defines constants
 		this.writeConstants((List<Constant>)module.constants());
 		
-		// Get and add all the user-defined types.
-		this.userTypes = (List<wyil.lang.WyilFile.Type>) module.types();
 		// Write out user-defined types.
-		this.writeUserTypes(userTypes);
+		this.writeUserTypes((List<wyil.lang.WyilFile.Type>) module.types());
 		
 		// Translate each function
 		for (FunctionOrMethod function : module.functionOrMethods()) {
@@ -94,80 +94,6 @@ public abstract class AbstractCodeGenerator {
 			// Write the code
 			this.writeFunction(function);
 		}
-	}
-
-	
-
-	/**
-	 * Get the user defined type by checking if the user type has the same fields as the given record type.
-	 * 
-	 * @param type
-	 *            the record type.
-	 * @return the user type. Return null if no type is matched.
-	 */
-	protected wyil.lang.WyilFile.Type getUserDefinedType(Type.Record type) {
-		for (wyil.lang.WyilFile.Type user_type : this.userTypes) {
-			if (user_type.type() instanceof Type.Record) {
-				Type.Record record = (Type.Record) user_type.type();
-				// check if record and type have the same fields.
-				boolean isTheSame = true;
-				for (Entry<String, Type> field : type.fields().entrySet()) {
-					Type recordFieldType = record.field(field.getKey());
-					if (recordFieldType != null) {
-						isTheSame &= true;
-					} else {
-						isTheSame &= false;
-					}
-				}
-
-				if (isTheSame) {
-					return user_type;
-				}
-			}
-		}
-		return null;
-	}
-
-
-	/**
-	 * Check if the type is instance of Integer by inferring the type from
-	 * <code>wyil.Lang.Type</code> objects, including the effective collection
-	 * types.
-	 * 
-	 * @param type
-	 * @return true if the type is or contains an integer type.
-	 */
-	/*public boolean isIntType(Type type) {
-		if (type instanceof Type.Int) {
-			return true;
-		}
-
-		if (type instanceof Type.Array) {
-			return isIntType(((Type.Array) type).element());
-		}
-
-		if (type instanceof Type.Tuple) {
-			// Check the type of value field.
-			Type element = ((Type.Tuple) type).element(1);
-			return isIntType(element);
-		}
-
-		return false;
-	}*/
-
-	/**
-	 * Get the code store of the given function.
-	 * 
-	 * @param function
-	 * @return
-	 */
-	protected CodeStore getCodeStore(FunctionOrMethod function) {
-		// Lazy initailization.
-		if (!stores.containsKey(function)) {
-			// Put the code store into the stores
-			stores.put(function, new CodeStore(function, config.isVerbose()));
-		}
-		return stores.get(function);
 	}
 
 	protected abstract void translate(Update code, FunctionOrMethod function);

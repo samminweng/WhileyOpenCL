@@ -49,6 +49,7 @@ import wyil.transforms.LiveVariablesAnalysis.Env;
 import wyopcl.translator.Configuration;
 import wyopcl.translator.CopyEliminationAnalyzer;
 import wyopcl.translator.bound.BasicBlock;
+import wyopcl.translator.generator.CodeStores.CodeStore;
 
 /**
  * Takes a list of functional byte-code and converts it into C code.
@@ -58,7 +59,6 @@ import wyopcl.translator.bound.BasicBlock;
  */
 public class CodeGenerator extends AbstractCodeGenerator {
 	private CopyEliminationAnalyzer analyzer = null;
-	private CodeGeneratorHelper helper;
 
 	/**
 	 * Constructor
@@ -82,7 +82,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Get variable declaration
 		VariableDeclarations vars = function.attribute(VariableDeclarations.class);
 		// Get code storage
-		CodeStore store = this.getCodeStore(function);
+		CodeStore store = stores.getCodeStore(function);
 		// The string declaration.
 		String del = "";
 		// Skip the input parameters
@@ -125,7 +125,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	private String translateInputParameter(FunctionOrMethod function) {
 		// Get the code storage
-		CodeStore store = this.getCodeStore(function);
+		CodeStore store = stores.getCodeStore(function);
 		List<Type> params = function.type().params();
 		
 		// Generate input parameters 
@@ -211,7 +211,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.Const code, FunctionOrMethod function) {
 		String stat = null;
-		CodeStore store = this.getCodeStore(function);
+		CodeStore store = stores.getCodeStore(function);
 		String target = store.getVar(code.target());
 		Constant constant = code.constant;
 		String indent = store.getIndent();
@@ -283,7 +283,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 */
 	protected void translate(Codes.Assign code, FunctionOrMethod function) {
-		CodeStore store = this.getCodeStore(function);
+		CodeStore store = stores.getCodeStore(function);
 		String lhs = store.getVar(code.target());
 		String rhs = store.getVar(code.operand(0));
 		String statement = "";
@@ -304,7 +304,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			 */
 			if (!isCopyEliminated(code.operand(0), code, function)) {
 				// Check the types of left is an integers
-				if (!helper.isIntType(store.getVarType(code.operand(0)))) {
+				if (!CodeGeneratorHelper.isIntType(store.getVarType(code.operand(0)))) {
 					Type rhs_type = store.getVarType(code.target());
 					//
 					/**
@@ -327,8 +327,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement += indent + lhs + " = " + rhs + ";\n";
 			statement += indent + lhs + "_size = " + rhs + "_size;";
 		} else if (code.type() instanceof Type.Record){
-			wyil.lang.WyilFile.Type userType = getUserDefinedType((Type.Record)code.type());
-			statement += indent + lhs + " = copy_"+userType.name()+"(" + rhs + ");";
+			//wyil.lang.WyilFile.Type userType = getUserDefinedType((Type.Record)code.type());
+			//statement += indent + lhs + " = copy_"+userType.name()+"(" + rhs + ");";
+			statement += indent + lhs + " = copy_"+translateType(code.type())+"(" + rhs + ");";
 		} else {
 			statement = indent + lhs + " = " + rhs + ";";
 		}
@@ -356,7 +357,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 */
 	protected void translate(Codes.LengthOf code, FunctionOrMethod function) {
-		CodeStore store = this.getCodeStore(function);
+		CodeStore store = stores.getCodeStore(function);
 		String stat = store.getIndent() + store.getVar(code.target()) + " = " + store.getVar(code.operand(0))
 		+ "_size;";
 		store.addStatement(code, stat);
@@ -382,7 +383,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 */
 	protected void translate(Codes.BinaryOperator code, FunctionOrMethod function) {
-		CodeStore store = this.getCodeStore(function);
+		CodeStore store = stores.getCodeStore(function);
 		// Type type = code.type();
 		String target = store.getVar(code.target());
 		String left = store.getVar(code.operand(0));
@@ -492,7 +493,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @return
 	 */
 	private String translateLHSFunctionCall(Codes.Invoke code, FunctionOrMethod f) {
-		CodeStore store = stores.get(f);
+		CodeStore store = stores.getCodeStore(f);
 		String statement = store.getIndent();
 		// Translate the return value of a function call.
 		// If no return value, no needs for translation.
@@ -592,7 +593,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	private String translateRHSFunctionCall(Codes.Invoke code, FunctionOrMethod f) {
 		// Get code store of f function
-		CodeStore store = stores.get(f);		
+		CodeStore store = stores.getCodeStore(f);		
 		boolean isFirst = true;
 		String statement = "";
 		for (int index = 0; index < code.operands().length; index++) {
@@ -623,8 +624,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					&& ((Type.Reference) paramType).element() instanceof Type.Array)) {
 				statement += param + ", " + param + "_size";
 			} else if(paramType instanceof Type.Record){
-				wyil.lang.WyilFile.Type userType = this.getUserDefinedType((Type.Record)paramType);
-				statement += "clone_"+userType.name()+"("+param+")";
+				//wyil.lang.WyilFile.Type userType = this.getUserDefinedType((Type.Record)paramType);
+				//statement += "clone_"+userType.name()+"("+param+")";
+				statement += "copy_"+translateType(paramType)+"("+param+")";
 			} else if(paramType instanceof Type.Nominal){
 				Type.Nominal nomial = ((Type.Nominal)paramType);
 				if(nomial.name().name().equals("Console")){
@@ -684,7 +686,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 */
 	protected void translate(Codes.Invoke code, FunctionOrMethod function) {
-		CodeStore store = this.getCodeStore(function);
+		CodeStore store = stores.getCodeStore(function);
 		String statement = "";
 		// Check if the called function is whiley/lang/Int
 		if (code.name.module().toString().contains("whiley/lang")) {
@@ -798,7 +800,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 *            <code>Codes.If</code> code
 	 */
 	protected void translate(Codes.If code, FunctionOrMethod function) {
-		CodeStore store = this.getCodeStore(function);
+		CodeStore store = stores.getCodeStore(function);
 		String statement = store.getIndent();
 		String left = store.getVar(code.leftOperand);
 		String right = store.getVar(code.rightOperand);
@@ -818,7 +820,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				Type left_type = store.getVarType(code.leftOperand);
 				Type right_type = store.getVarType(code.rightOperand);
 				// Check the left type is an array of integers.
-				if (helper.isIntType(left_type)) {
+				if (CodeGeneratorHelper.isIntType(left_type)) {
 					statement += "if(isArrayEqual(" + left + ", " + left + "_size";
 				} else {
 					// If not, use type casting.
@@ -826,7 +828,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				}
 
 				// Check the right type is an array
-				if (helper.isIntType(right_type)) {
+				if (CodeGeneratorHelper.isIntType(right_type)) {
 					statement += "," + right + ", " + right + "_size)==1";
 				} else {
 					// Cast the right to an array.
@@ -857,7 +859,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 */
 	protected void translate(Codes.AssertOrAssume code, FunctionOrMethod function) {
-		CodeStore store = this.getCodeStore(function);
+		CodeStore store = stores.getCodeStore(function);
 		// Add the starting clause for the assertion
 		store.addStatement(code, store.getIndent() + "{");
 		// Increase the indent
@@ -869,7 +871,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	protected void translate(Codes.Goto code, FunctionOrMethod function) {
-		CodeStore store = this.getCodeStore(function);
+		CodeStore store = stores.getCodeStore(function);
 		String stat = store.getIndent() + "goto " + code.target + ";";
 		store.addStatement(code, stat);
 	}
@@ -896,7 +898,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 */
 	protected void translate(Codes.Label code, FunctionOrMethod function) {
-		CodeStore store = this.getCodeStore(function);
+		CodeStore store = stores.getCodeStore(function);
 		store.addStatement(code, code.label + ":;");
 	}
 
@@ -906,7 +908,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 */
 	protected void translate(Codes.Fail code, FunctionOrMethod function) {
-		CodeStore store = this.getCodeStore(function);
+		CodeStore store = stores.getCodeStore(function);
 		String indent = store.getIndent();
 		String stat = indent + "fprintf(stderr,\"" + code + "\");\n";
 		stat += indent + "exit(-1);";// Exit value (-1) means the failure of assertions.
@@ -940,7 +942,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 */
 	protected void translate(Codes.Update code, FunctionOrMethod function) {
-		CodeStore store = this.getCodeStore(function);
+		CodeStore store = stores.getCodeStore(function);
 		String indent = store.getIndent();
 		String s = "";
 		// For List type only
@@ -972,7 +974,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 	protected void translate(Codes.Nop code, FunctionOrMethod function) {
 		// Do nothing
-		CodeStore store = this.getCodeStore(function);
+		CodeStore store = stores.getCodeStore(function);
 		store.addStatement(code, store.getIndent() + ";");
 	}
 
@@ -996,7 +998,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 */
 	protected void translate(Codes.Return code, FunctionOrMethod function) {
-		CodeStore store = this.getCodeStore(function);
+		CodeStore store = stores.getCodeStore(function);
 		String statement = store.getIndent();
 		if (code.operand >= 0) {
 			// Translate the Return code.
@@ -1032,7 +1034,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 */
 	protected void translate(Codes.IndexOf code, FunctionOrMethod function) {
-		CodeStore store = this.getCodeStore(function);
+		CodeStore store = stores.getCodeStore(function);
 		String stat = store.getIndent() + store.getVar(code.target()) + "=" + store.getVar(code.operand(0)) + "["
 				+ store.getVar(code.operand(1)) + "];";
 		store.addStatement(code, stat);
@@ -1073,7 +1075,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 */
 	protected void translate(Codes.NewList code, FunctionOrMethod function) {
-		CodeStore store = this.getCodeStore(function);
+		CodeStore store = stores.getCodeStore(function);
 		String indent = store.getIndent();
 
 		// Get array names
@@ -1140,7 +1142,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.FieldLoad code, FunctionOrMethod function) {
 		String field = code.field;
-		CodeStore store = this.getCodeStore(function);
+		CodeStore store = stores.getCodeStore(function);
 		String target = store.getVar(code.target());
 		String indent = store.getIndent();
 		String statement = "";
@@ -1197,7 +1199,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// code.type());
 		// Do nothing.
 		// }
-		CodeStore store = this.getCodeStore(function);
+		CodeStore store = stores.getCodeStore(function);
 		store.addStatement(code, null);
 	}
 
@@ -1214,7 +1216,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	/*
 	 * private String translateIndirectInvokePrintf(Type type, String var, FunctionOrMethod function) { CodeStore store
-	 * = this.getCodeStore(function); String indent = store.getIndent(); String statement = ""; if (type instanceof
+	 * = stores.getCodeStore(function); String indent = store.getIndent(); String statement = ""; if (type instanceof
 	 * Type.Nominal) { Type.Nominal nominal = (Type.Nominal) type; wyil.lang.WyilFile.Type user_type =
 	 * getUserDefinedType(nominal.name().name()); statement += translateIndirectInvokePrintf(user_type.type(), var,
 	 * function); } else if (type instanceof Type.Array) { // Print out a pointer without specifying array size.
@@ -1256,7 +1258,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 */
 	protected void translate(Codes.IndirectInvoke code, FunctionOrMethod function) {
-		CodeStore store = this.getCodeStore(function);
+		CodeStore store = stores.getCodeStore(function);
 		String statement = store.getIndent();
 		if (code.type() instanceof Type.FunctionOrMethod) {
 			// Get the function name, e.g. 'printf'.
@@ -1296,7 +1298,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	protected void translate(UnaryOperator code, FunctionOrMethod function) {
-		CodeStore store = this.getCodeStore(function);
+		CodeStore store = stores.getCodeStore(function);
 		String target = prefix + code.target();
 		// vars.put(target, CodeGeneratorHelper.translate(code.type()));
 		// store.addDeclaration(code.type(), target);
@@ -1304,42 +1306,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		store.addStatement(code, stat);
 	}
 
-	/**
-	 * Translates the <code>Codes.ForAll</code> byte-code. For example,
-	 * 
-	 * <pre>
-	 * <code>
-	 * range %8 = %6, %7 : [int]
-	 * forall %2 in %8 (%1, %9, %10) : [int]
-	 * </code>
-	 * </pre>
-	 * 
-	 * can be translated into:
-	 * 
-	 * <pre>
-	 * <code>
-	 * for(_2 = _6; _2 < _7; _2++ ){
-	 * ...
-	 * }
-	 * </code>
-	 * </pre>
-	 * 
-	 * where '_2' is the loop variable and '_6' and '_7' are lower and upper bound respectively.
-	 * 
-	 * The range byte-code is stored with a global variable temporarily so that the translation of 'forall' byte-code
-	 * can retrieve the bound information.
-	 * 
-	 * @param code
-	 */
-	/*
-	 * private void translate(Codes.ForAll code) { String loop_var = getVarName(code.indexOperand); String lower_bound =
-	 * getVarName(range.operand(0)); String upper_bound = getVarName(range.operand(1)); // Construct the loop header.
-	 * String statement = indent + "for(" + loop_var + "=" + lower_bound + "; " + loop_var + "<" + upper_bound + "; " +
-	 * loop_var + "++){"; addStatement(code, statement); // Increase the indentation this.increaseIndent(); // Get the
-	 * code block inside the forall loop. List<Code> code_blk = code.bytecodes(); // Translate each byte-code and output
-	 * each generated code. this.iterateOverCodeBlock(code_blk); this.decreaseIndent(); statement = indent + "}";
-	 * addStatement(null, statement);// Ending bracket of the forall loop. // Nullify the range. this.range = null; }
-	 */
 
 	/**
 	 * Iterate over the list of loop byte-code and translate each code into C code. To separate the bytecode inside a
@@ -1348,51 +1314,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 */
 	protected void translate(Loop code, FunctionOrMethod function) {
-		CodeStore store = this.getCodeStore(function);
-		// Get loop_header
-		/*List<Code> loop_header = new ArrayList<Code>();
-		Codes.Invariant loop_invariant = null;
-		Codes.If loop_condition = null;
-
-		// Split the loop header and loop body
-		for (index = 0; index < code.bytecodes().size(); index++) {
-			Code loop_code = code.bytecodes().get(index);
-			if (loop_code instanceof Codes.If) {
-				// Assign the loop condition
-				loop_condition = (Codes.If) loop_code;
-				// Increment the index
-				index++;
-				break;
-			} else if (loop_code instanceof Codes.Invariant) {
-				loop_invariant = (Codes.Invariant) loop_code;
-			} else {
-				// Add the code to loop header
-				loop_header.add(loop_code);
-			}
-		}*/
-
-		/*List<Code> loop_body = new ArrayList<Code>();
-		// Reorder the sequence of loop code and put the loop invariant next to
-		// loop condition.
-		for (int index=0; index < code.bytecodes().size(); index++) {
-			// Get the loop invariant
-			loop_body.add(code.bytecodes().get(index));
-		}
-
-		// Translate the loop header
-		this.iterateCodes(loop_header, function);
-		 */
-		// Translate the loop condition
-		/*if (loop_condition != null) {
-			translateLoopCondition(loop_condition, function);
-		}
-
-		// Translate the loop invariant
-		if (loop_invariant != null) {
-			translate(loop_invariant, function);
-		}*/
-
-
+		CodeStore store = stores.getCodeStore(function);
+	
 		String indent = store.getIndent();
 		String statement = indent + "while(true){";
 		store.addStatement(code, statement);
@@ -1409,41 +1332,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		store.addStatement(null, store.getIndent() + "}");
 	}
 
-	/**
-	 * Deprecated due to v0.3.36
-	 * 
-	 * Translates the append byte-code. For example,
-	 * 
-	 * <pre>
-	 * <code>append %13 = %2, %12 : [int]</code>
-	 * </pre>
-	 * 
-	 * can be translated into:
-	 * 
-	 * <pre>
-	 * <code>_13_size = _2_size+_12_size;//new array size.
-	 * _13=append(_2, &_2_size, _12, &_12_size, &_13_size);//call the 'append' function and pass the size argument by reference for the update.
-	 * free(_12);
-	 * </code>
-	 * </pre>
-	 * 
-	 * @param code
-	 */
-	/*
-	 * protected void translate(ListOperator code, FunctionOrMethod function) { CodeStore store =
-	 * this.getCodeStore(function); String target = store.getVar(code.target());
-	 * 
-	 * // _13_size = _2_size+_12_size;//new array size String stat = store.getIndent() + target + "_size = "; boolean
-	 * isFirst = true; for (int operand : code.operands()) { String op = store.getVar(operand); if (!isFirst) { // Add
-	 * '+' operator before the 'size' variable. stat += "+"; } stat += op + "_size"; isFirst = false; } stat += ";\n";
-	 * // Calls the append function. For example, // _13=append(_2, _2_size, _12, _12_size); stat += store.getIndent() +
-	 * target + "=append("; isFirst = true; for (int operand : code.operands()) { String op = store.getVar(operand); if
-	 * (!isFirst) { // Add ',' to separate the arguments. stat += ", "; } stat += op + ", " + op + "_size"; isFirst =
-	 * false; } // Add the ending clause. stat += ");\n";
-	 * 
-	 * // Free the op_2, because op_2 has been appended to the op_1. stat += // store.getIndent() + "free(" +
-	 * store.getVar(code.operand(1)) + ");"; // // Put it to the statement list. store.addStatement(code, stat); }
-	 */
+	
 	/**
 	 * Translate the WyIL type into the type in C.
 	 * 
@@ -1496,7 +1385,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}
 
 			// Check if the type is an instance of user defined type.
-			return getUserDefinedType((Type.Record) type).name();
+			return stores.getUserDefinedType((Type.Record) type).name();
 		}
 
 		if (type instanceof Type.Union) {
@@ -1570,7 +1459,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 */
 	protected void translate(NewRecord code, FunctionOrMethod function) {
-		CodeStore store = this.getCodeStore(function);
+		CodeStore store = stores.getCodeStore(function);
 		String indent = store.getIndent();
 		String lhs = store.getVar(code.target());
 
@@ -1626,7 +1515,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void writeFunction(FunctionOrMethod function) {
 		// Get the code store
-		CodeStore store = this.getCodeStore(function);
+		CodeStore store = stores.getCodeStore(function);
 		// Write out the header file
 		String filename = config.getFilename();
 		FileWriter writer;
@@ -1687,7 +1576,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	@Override
 	protected void translate(IfIs code, FunctionOrMethod function) {
-		CodeStore store = this.getCodeStore(function);
+		CodeStore store = stores.getCodeStore(function);
 		String statement = "";
 		// The ifis code checks if the register is NULL or not.
 		if (code.rightOperand instanceof Type.Null) {
@@ -1717,7 +1606,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	@Override
 	protected void translate(Dereference code, FunctionOrMethod function) {
-		CodeStore store = this.getCodeStore(function);
+		CodeStore store = stores.getCodeStore(function);
 		String statement = store.getIndent() + store.getVar(code.target()) + " = *(" + store.getVar(code.operand(0))
 		+ ");";
 		// Check if the value in the rhs register is an array.
@@ -1745,7 +1634,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	@Override
 	protected void translate(NewObject code, FunctionOrMethod function) {
-		CodeStore store = this.getCodeStore(function);
+		CodeStore store = stores.getCodeStore(function);
 		String statement = "";
 		// Check that the given value is an array.
 		if (code.type().element() instanceof Type.Array) {
@@ -1801,7 +1690,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	@Override
 	protected void translate(ListGenerator code, FunctionOrMethod function) {
-		CodeStore store = this.getCodeStore(function);
+		CodeStore store = stores.getCodeStore(function);
 		String indent = store.getIndent();
 		String array_name = store.getVar(code.target());
 		String size = store.getVar(code.operand(1));

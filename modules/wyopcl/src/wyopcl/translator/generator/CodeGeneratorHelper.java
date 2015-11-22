@@ -23,37 +23,6 @@ public final class CodeGeneratorHelper {
 	private CodeGeneratorHelper() {
 
 	}
-
-	/**
-	 * Get the user defined type by checking if the user type has the same fields as the given record type.
-	 * 
-	 * @param type
-	 *            the record type.
-	 * @return the user type. Return null if no type is matched.
-	 */
-	public static wyil.lang.WyilFile.Type getUserDefinedType(Type.Record type, List<wyil.lang.WyilFile.Type> userTypes) {
-		for (wyil.lang.WyilFile.Type user_type : userTypes) {
-			if (user_type.type() instanceof Type.Record) {
-				Type.Record record = (Type.Record) user_type.type();
-				// check if record and type have the same fields.
-				boolean isTheSame = true;
-				for (Entry<String, Type> field : type.fields().entrySet()) {
-					Type recordFieldType = record.field(field.getKey());
-					if (recordFieldType != null) {
-						isTheSame &= true;
-					} else {
-						isTheSame &= false;
-					}
-				}
-
-				if (isTheSame) {
-					return user_type;
-				}
-			}
-		}
-		return null;
-	}
-	
 	
 	/**
 	 * Check if the type is instance of Integer by inferring the type from
