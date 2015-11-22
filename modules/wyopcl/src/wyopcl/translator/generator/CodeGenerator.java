@@ -92,13 +92,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			Type type = vars.get(reg).type();
 			// Get the variable name.
 			String var = store.getVar(reg);
-			String s_type = translateType(type);
+			String s_type = CodeGeneratorHelper.translateType(type, stores);
 			if (s_type != null) {
 				if (type instanceof Type.Array || (type instanceof Type.Reference
 						&& ((Type.Reference) type).element() instanceof Type.Array)) {
 					// Type declaration and initial value assignment.
 					// Assign 'null' to a list
-					del += "\t" + translateType(type) + " " + var + " = NULL;\n";
+					del += "\t" + CodeGeneratorHelper.translateType(type, stores) + " " + var + " = NULL;\n";
 					// Add the extra 'size' variable.
 					int dimension = CodeGeneratorHelper.computeArrayDimension(type);
 					String size_var = var;
@@ -107,10 +107,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						del += "\tlong long " + size_var + " = 0;\n";
 					}
 				} else if (type instanceof Type.Int) {
-					del += "\t" + translateType(type) + " " + var + " = 0;\n";
+					del += "\t" + CodeGeneratorHelper.translateType(type, stores) + " " + var + " = 0;\n";
 				} else {
 					// Type declaration without any initialization.
-					del += "\t" + translateType(type) + " " + var + ";\n";
+					del += "\t" + CodeGeneratorHelper.translateType(type, stores) + " " + var + ";\n";
 				}
 			}
 		}
@@ -143,11 +143,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}
 			
 			if(param instanceof Type.Int || param instanceof Type.Nominal){
-				statement += translateType(param) + " " + var;				
+				statement += CodeGeneratorHelper.translateType(param, stores) + " " + var;				
 			}else if (param instanceof Type.Array
 					|| (param instanceof Type.Reference && ((Type.Reference) param).element() instanceof Type.Array)) {
 				// Add the additional 'size' variable.
-				statement += translateType(param) + " " + var;
+				statement += CodeGeneratorHelper.translateType(param, stores) + " " + var;
 				String var_size = var;
 				// Generate size variables according to the dimensions, e.g. 2D array has two 'size' variables.
 				int d = CodeGeneratorHelper.computeArrayDimension(param);
@@ -181,7 +181,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			del = "";
 			// Get the type info
 			// Get the return type
-			del += translateType(function.type().ret()) + " ";
+			del += CodeGeneratorHelper.translateType(function.type().ret(), stores) + " ";
 			del += name + "(";
 			del += translateInputParameter(function);
 			del += ")";
@@ -228,7 +228,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// Trim '[' and ']' from the array string.
 				String array_values = list.values.toString().replace("[", "").replace("]", "");
 				// long long _8_value[] = {0, 1, 2, 3, 4, 5, 6, 7, 8}; // Introduce 'value' variable.
-				stat = indent + translateType(list.type().element()) + " " + target + "_value[] = {" + array_values
+				stat = indent + CodeGeneratorHelper.translateType(list.type().element(), stores) + " " + target + "_value[] = {" + array_values
 						+ "};\n";
 				// _8 = _8_value;
 				stat += indent + target + " = " + target + "_value;\n";
@@ -289,12 +289,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String statement = "";
 		String indent = store.getIndent();
 		// Check if the assigned type is an array.
-		if (code.type() instanceof Type.Array) {
-			
+		if (code.type() instanceof Type.Array) {			
 			int dimension = CodeGeneratorHelper.computeArrayDimension(code.type());
 			// copy the array and assign the cloned to the target.
-			//statement += indent + (rhs + "_size") + " = " + lhs + "_size;\n";
-			//statement += generateSizeAssigns(indent, lhs, rhs, dimension);
 			/**
 			 * 
 			 * For example, the below bytecode assign %3 = %0 : [bool] can be translated in the C code: <code>
@@ -312,7 +309,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					 * 
 					 * //assign %9 = %10 : [void] _9_size = _10_size; _9 = copy((long long*)_10, _10_size);
 					 */
-					statement += indent + lhs + " = copy((" + translateType(rhs_type) + ")" + rhs + ", " + rhs
+					statement += indent + lhs + " = copy((" + CodeGeneratorHelper.translateType(rhs_type, stores) + ")" + rhs + ", " + rhs
 							+ "_size);";
 				} else {
 					/** Make a copy of right operand. */
@@ -320,16 +317,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				}
 			} else {
 				// Do not need to make a copy and have in-place update
-				statement += indent + lhs + " = (" + translateType(store.getVarType(code.target())) + ")" + rhs + ";";
+				statement += indent + lhs + " = (" + CodeGeneratorHelper.translateType(store.getVarType(code.target()), stores) + ")" + rhs + ";";
 			}
 		} else if (code.type() instanceof Type.Reference
 				&& ((Type.Reference) code.type()).element() instanceof Type.Array) {
 			statement += indent + lhs + " = " + rhs + ";\n";
 			statement += indent + lhs + "_size = " + rhs + "_size;";
 		} else if (code.type() instanceof Type.Record){
-			//wyil.lang.WyilFile.Type userType = getUserDefinedType((Type.Record)code.type());
-			//statement += indent + lhs + " = copy_"+userType.name()+"(" + rhs + ");";
-			statement += indent + lhs + " = copy_"+translateType(code.type())+"(" + rhs + ");";
+			statement += indent + lhs + " = copy_"+CodeGeneratorHelper.translateType(code.type(), stores)+"(" + rhs + ");";
 		} else {
 			statement = indent + lhs + " = " + rhs + ";";
 		}
@@ -563,7 +558,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			} else if(paramType instanceof Type.Record){
 				//wyil.lang.WyilFile.Type userType = this.getUserDefinedType((Type.Record)paramType);
 				//statement += "clone_"+userType.name()+"("+param+")";
-				statement += "copy_"+translateType(paramType)+"("+param+")";
+				statement += "copy_"+CodeGeneratorHelper.translateType(paramType, stores)+"("+param+")";
 			} else if(paramType instanceof Type.Nominal){
 				Type.Nominal nomial = ((Type.Nominal)paramType);
 				if(nomial.name().name().equals("Console")){
@@ -761,7 +756,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					statement += "if(isArrayEqual(" + left + ", " + left + "_size";
 				} else {
 					// If not, use type casting.
-					statement += "if(isArrayEqual((" + translateType(right_type) + ")" + left + ", " + left + "_size";
+					statement += "if(isArrayEqual((" + CodeGeneratorHelper.translateType(right_type, stores) + ")" + left + ", " + left + "_size";
 				}
 
 				// Check the right type is an array
@@ -769,7 +764,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					statement += "," + right + ", " + right + "_size)==1";
 				} else {
 					// Cast the right to an array.
-					statement += ", (" + translateType(left_type) + ")" + right + ", " + right + "_size)==1";
+					statement += ", (" + CodeGeneratorHelper.translateType(left_type, stores) + ")" + right + ", " + right + "_size)==1";
 				}
 			}
 		} else {
@@ -1022,7 +1017,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Assign array size with the number of operands.
 		String statement = indent + array_size + " = " + code.operands().length + ";\n";
 		// Construct array value
-		String elmType = translateType(code.type().element());
+		String elmType = CodeGeneratorHelper.translateType(code.type().element(), stores);
 		int length = code.operands().length;
 		if(length > 0 ){			
 			// Add the 'value' variable to store array values 
@@ -1268,84 +1263,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Add the ending bracket.
 		store.addStatement(null, store.getIndent() + "}");
 	}
-
-	
-	/**
-	 * Translate the WyIL type into the type in C.
-	 * 
-	 * @param type
-	 *            the WyIL type
-	 * @return the result string. Return null if the type can not be translated, e.g. the function call of print,
-	 *         printf...
-	 *
-	 *         TODO Generalize the user-defined types, such as 'Board'.
-	 * 
-	 */
-	protected String translateType(Type type) {
-		// The existential type, e.g. function EmptyBoard() -> (Board r)
-		// The return type of 'EmptyBoard' function is 'Board'.
-		if (type instanceof Type.Nominal) {
-			Type.Nominal nomial = (Type.Nominal) type;
-			// Check is type is a System.Console. 
-			if(nomial.name().name().equals("Console")){
-				// Use FILE type.
-				return "FILE*";
-			}
-			return nomial.name().name();
-		}
-
-		if (type instanceof Type.Int || type instanceof Type.Bool) {
-			return "long long";
-		}
-
-		if (type instanceof Type.Array) {
-			Type.Array listType = (Type.Array) type;
-			return translateType(listType.element()) + "*";
-		}
-
-		if (type instanceof Type.Void) {
-			return "void";
-		}
-
-		if (type instanceof Type.Record) {
-			HashMap<String, Type> fields = ((Type.Record) type).fields();
-			// Check if the field is the function call of print,...
-			if (fields.containsKey("print") || fields.containsKey("println") || fields.containsKey("print_s")
-					|| fields.containsKey("println_s")) {
-				// No needs to do the translation.
-				return null;
-			}
-
-			// The input 'type' is input arguments of main method.
-			if (fields.containsKey("args")) {
-				return "int argc, char** args";
-			}
-
-			// Check if the type is an instance of user defined type.
-			return stores.getUserDefinedType((Type.Record) type).name();
-		}
-
-		if (type instanceof Type.Union) {
-			Type.Union union = (Type.Union) type;
-			// Check if type is an union type of integer.
-			// If so, return the integer type.
-			if (union.bounds().contains(Type.T_INT)) {
-				return "long long";
-			} else {
-				throw new RuntimeException("Un-implemented Type" + union);
-			}
-		}
-
-		// Translate reference type in Whiley to pointer type in C.
-		if (type instanceof Type.Reference) {
-			Type.Reference ref = (Type.Reference) type;
-			// Types are passed as a pointer type
-			return translateType(ref.element()) + "*";
-		}
-
-		return null;
-	}
-
 	
 	
 	/**
@@ -1555,18 +1472,18 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Get the value of rhs operand
 			if (!isCopyEliminated(code.operand(0), code, function)) {
 				// long long* _3_value = copy(_3, _3_size);
-				statement += store.getIndent() + translateType(rhs_type) + " " + rhs + "_value" + " = copy(" + rhs
+				statement += store.getIndent() + CodeGeneratorHelper.translateType(rhs_type, stores) + " " + rhs + "_value" + " = copy(" + rhs
 						+ ", " + rhs + "_size);\n";
 			} else {
 				// No copies is needed, e.g. 'long long _3_value = _3;'
-				statement += store.getIndent() + translateType(rhs_type) + " " + rhs + "_value" + " = " + rhs + ";\n";
+				statement += store.getIndent() + CodeGeneratorHelper.translateType(rhs_type, stores) + " " + rhs + "_value" + " = " + rhs + ";\n";
 			}
 
 			// Get the address of rhs and assign it to lhs with type casting.
 			String lhs = store.getVar(code.target());
 			Type lhs_type = store.getVarType(code.target());
 			// _4 =(void**)&(_3_value);
-			statement += store.getIndent() + lhs + " = (" + translateType(lhs_type) + ")" + "&(" + rhs + "_value);\n";
+			statement += store.getIndent() + lhs + " = (" + CodeGeneratorHelper.translateType(lhs_type, stores) + ")" + "&(" + rhs + "_value);\n";
 			// Propagate array size from rhs to lhs
 			statement += store.getIndent() + lhs + "_size = " + rhs + "_size;";
 		} else {
@@ -1639,7 +1556,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			String struct = userType.name();
 			// Check if userType is a typedef structure.
 			if(userType.type() instanceof Type.Int){
-				structs.add("typedef " + translateType(userType.type()) + " " + struct + ";");
+				structs.add("typedef " + CodeGeneratorHelper.translateType(userType.type(), stores) + " " + struct + ";");
 			}else if(userType.type() instanceof Type.Record){
 				HashMap<String, Type> fields = ((Type.Record) userType.type()).fields();
 				structs.addAll(CodeGeneratorHelper.generateStruct(struct, fields, stores));

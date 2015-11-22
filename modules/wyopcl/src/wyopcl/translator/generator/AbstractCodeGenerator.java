@@ -141,8 +141,6 @@ public abstract class AbstractCodeGenerator {
 
 	protected abstract String declareVariables(FunctionOrMethod function);
 
-	protected abstract String translateType(Type type);
-
 	protected abstract void writeConstants(List<Constant> constants);
 
 	protected abstract void writeUserTypes(List<wyil.lang.WyilFile.Type> userTypes);
