@@ -116,14 +116,19 @@ public final class CodeGeneratorHelper {
 	 * @param fields
 	 * @return
 	 */
-	public static String generatePrintfFunction(String struct, HashMap<String, Type> fields){
-
+	public static List<String> generatePrintfFunction(WyilFile.Type type, CodeStores stores){
+		
+		String struct = type.name();
+		HashMap<String, Type> fields = ((Type.Record)type.type()).fields();
+		
+		
 		String input = "_"+struct.toLowerCase();
 		String indent = "\t";
-
-		String statement = "void printf_" + struct + "(" + struct + " "+input+"){\n";
+		List<String> statement = new ArrayList<String>();
+		
+		statement.add("void printf_" + struct + "(" + struct + " "+input+"){");
 		// Add open bracket
-		statement += indent + "printf(\"{\");\n"; 
+		statement.add(indent + "printf(\"{\");"); 
 		// Get all field names
 		String[] names = fields.keySet().toArray(new String[fields.size()]);
 		// Print out each field.
@@ -131,28 +136,29 @@ public final class CodeGeneratorHelper {
 			String member = names[i];
 			String input_member = input + "." +member;
 			// Add field name
-			statement += indent + "printf(\" " + member + ":\");\n";
+			statement.add(indent + "printf(\" " + member + ":\");");
 			Type member_type = fields.get(member);
 			if (member_type instanceof Type.Nominal || member_type instanceof Type.Int) {
 				// Add field values.
-				statement += indent + "printf(\"%d\", " + input_member + ");\n";
+				statement.add(indent + "printf(\"%d\", " + input_member + ");");
 			} else if (member_type instanceof Type.Array) {
 				int d = computeArrayDimension(member_type);
-				statement += indent + "printf"+d+"DArray(" + input_member ;
+				String s = indent + "printf"+d+"DArray(" + input_member;
 				String size_var = input_member;
 				while(d>0){
 					size_var += "_size"; 
-					statement += ", " + size_var;
+					s += ", " + size_var;
 					d--;
 				}
-				statement += ");\n";
+				s += ");";
+				statement.add(s);
 			} else {
 				throw new RuntimeException("Not implemented!");
 			}
 		}
 		// Add ending "}"
-		statement += indent + "printf(\"}\");\n";
-		statement += "}";
+		statement.add(indent + "printf(\"}\");");
+		statement.add("}");
 
 		return statement;
 	}
@@ -170,13 +176,18 @@ public final class CodeGeneratorHelper {
 	 * @param fields
 	 * @return
 	 */
-	public static String generateCopyFunction(String struct, HashMap<String, Type> fields){
+	public static List<String> generateCopyFunction(WyilFile.Type type, CodeStores stores){
+		String struct = type.name();
+		HashMap<String, Type> fields = ((Type.Record)type.type()).fields();
+		
 		String input = "_"+struct.toLowerCase();
 		String copy = "new_"+struct.toLowerCase();
-		String statement = struct+" copy_"+struct+ "(" + struct + " "+input+"){\n";;
+		List<String> statement = new ArrayList<String>();
+		
+		statement.add(struct+" copy_"+struct+ "(" + struct + " "+input+"){");;
 		// Declare local copy.
 		String indent = "\t";
-		statement += indent + struct + " "+copy+";\n";
+		statement.add(indent + struct + " "+copy+";");
 		String[] names = fields.keySet().toArray(new String[fields.size()]);
 		for (int i = 0; i < names.length; i++) {
 			String member = names[i];			
@@ -184,17 +195,17 @@ public final class CodeGeneratorHelper {
 			String copy_member = copy + "." + member;
 			Type fieldtype = fields.get(member);
 			if (fieldtype instanceof Type.Nominal || fieldtype instanceof Type.Int) {
-				statement += indent + copy_member + " = " + input_member+";\n"; 
+				statement.add(indent + copy_member + " = " + input_member+";"); 
 			} else if (fieldtype instanceof Type.Array) {
 				int dimension = computeArrayDimension(fieldtype);
-				statement += generateArrayCopy(indent, copy_member, input_member, dimension);
+				statement.add(generateArrayCopy(indent, copy_member, input_member, dimension));
 			} else {
 				throw new RuntimeException("Not implemented!");
 			}
 		}
 		// Add return statement
-		statement += indent + "return "+copy+";\n";
-		statement += "}";
+		statement.add(indent + "return "+copy+";");
+		statement.add("}");
 		return statement;
 	}
 	/**
@@ -203,21 +214,24 @@ public final class CodeGeneratorHelper {
 	 * @param fields
 	 * @return
 	 */
-	public static String generateFreeFunction(String struct, HashMap<String, Type> fields){
+	public static List<String> generateFreeFunction(WyilFile.Type type, CodeStores stores){
+		String struct = type.name();
+		HashMap<String, Type> fields = ((Type.Record)type.type()).fields();
+		
 		String input = "_"+struct;
 		String indent = "\t";
-
-		String statement = "void free_"+struct+"("+struct+ " "+input+"){\n";
+		List<String> statement = new ArrayList<String>();
+		statement.add("void free_"+struct+"("+struct+ " "+input+"){");
 		String[] names = fields.keySet().toArray(new String[fields.size()]);
 		for (int i = 0; i < names.length; i++) {
 			String member = names[i];
-			Type type = fields.get(member);
+			Type member_type = fields.get(member);
 			String input_member = input +"."+member;
-			if(type instanceof Type.Array){
-				statement += indent+ "free("+input_member+");\n";
+			if(member_type instanceof Type.Array){
+				statement.add(indent+ "free("+input_member+");");
 			}
 		}
-		statement += "}";// Add ending bracket.
+		statement.add("}");// Add ending bracket.
 		return statement;
 	}
 	
@@ -379,11 +393,12 @@ public final class CodeGeneratorHelper {
 	 * </pre>
 	 * @param userType
 	 */
-	public static List<String> generateStruct(String typeName, HashMap<String, Type> fields, CodeStores stores) {
+	public static List<String> generateStruct(WyilFile.Type type, CodeStores stores) {
 		List<String> struct = new ArrayList<String>();
+		String typeName = type.name();
+		HashMap<String, Type> fields = ((Type.Record)type.type()).fields();
 		// Get all field names
 		String[] names = fields.keySet().toArray(new String[fields.size()]);
-
 		// Define a structure
 		struct.add("typedef struct{");
 		for (int i = 0; i < names.length; i++) {

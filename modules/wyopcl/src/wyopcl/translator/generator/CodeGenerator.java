@@ -1558,11 +1558,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			if(userType.type() instanceof Type.Int){
 				structs.add("typedef " + CodeGeneratorHelper.translateType(userType.type(), stores) + " " + struct + ";");
 			}else if(userType.type() instanceof Type.Record){
-				HashMap<String, Type> fields = ((Type.Record) userType.type()).fields();
-				structs.addAll(CodeGeneratorHelper.generateStruct(struct, fields, stores));
-				statements.add(CodeGeneratorHelper.generatePrintfFunction(struct, fields));
-				statements.add(CodeGeneratorHelper.generateCopyFunction(struct, fields));
-				statements.add(CodeGeneratorHelper.generateFreeFunction(struct, fields));
+				structs.addAll(CodeGeneratorHelper.generateStruct(userType, stores));
+				statements.addAll(CodeGeneratorHelper.generatePrintfFunction(userType, stores));
+				statements.addAll(CodeGeneratorHelper.generateCopyFunction(userType, stores));
+				statements.addAll(CodeGeneratorHelper.generateFreeFunction(userType, stores));
 			}else{
 				throw new RuntimeException("Not Implemented!");
 			}
