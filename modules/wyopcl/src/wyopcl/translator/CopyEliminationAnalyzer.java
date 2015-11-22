@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import wybs.lang.Builder;
+import wyil.lang.Code;
+import wyil.lang.Codes;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyil.transforms.LiveVariablesAnalysis;
@@ -120,5 +122,61 @@ public class CopyEliminationAnalyzer extends Analyzer {
 			this.buildCFG(function);
 			computeLiveness(function);
 		}
+	}
+
+
+	/**
+	 * Check if the array 'r' is updated inside the function.
+	 * 
+	 * @param r
+	 *            the array
+	 * @param f
+	 *            the function
+	 * @return true if the array 'r' is updated.
+	 */
+	private boolean mutate(String r, FunctionOrMethod f) {
+		// Get the list of wyil code
+		for (Code code : f.body().bytecodes()) {
+			// Check the array is updated.
+			if (code instanceof Codes.Update) {
+				String target = getActualVarName(((Codes.Update) code).target(), f);
+				if (target.equals(r)) {
+					return true;// Modified Array.
+				}
+			}
+		}
+		// Read-only array.
+		return false;
+	}
+
+	/**
+	 * Determines whether to make a copy of array by checking liveness information or read-only property.
+	 * 
+	 * If the array variable is live, then the copy is necessary. Otherwise, the register can be overwritten safely.
+	 * 
+	 * @param reg
+	 *            the register of array variable
+	 * @param code
+	 *            the byte-code of function call.
+	 * @param f
+	 *            the caller function
+	 * @return ture if the copy is un-needed and can be avoid. Otherwise, return false.
+	 */
+	public boolean isCopyEliminated(int reg, Code code, FunctionOrMethod f) {
+		// Check the array is read-only. By default, the array is assumed not read-only but modified.
+		boolean isReadOnly = false;
+		if (code instanceof Codes.Invoke) {
+			String r_name = getActualVarName(reg, f);
+			FunctionOrMethod invoked_function = config.getFunctionOrMethod(((Codes.Invoke) code).name);
+			if (invoked_function != null) {
+				// Check if the array r is modified inside 'invoked_function'.
+				isReadOnly = !mutate(r_name, invoked_function);
+			}
+		}
+		// Check the array is live.
+		BasicBlock blk = getBlockbyCode(f, code);// Get basic block that contains the given code.
+		Env outSet = getLiveness(f).getOUT(blk);
+		boolean isLive = outSet.contains(reg);
+		return (isReadOnly || !isLive);
 	}
 }

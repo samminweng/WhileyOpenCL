@@ -1,40 +1,20 @@
 package wyopcl.translator.generator;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
-import wyc.lang.Nominal;
-import wyc.lang.Stmt.VariableDeclaration;
-import wycc.lang.SyntaxError;
-import wyfs.lang.Path.ID;
 import wyil.attributes.VariableDeclarations;
-import wyil.attributes.VariableDeclarations.Declaration;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Codes.Comparator;
 import wyil.lang.Codes.Dereference;
-import wyil.lang.Codes.If;
 import wyil.lang.Codes.IfIs;
-import wyil.lang.Codes.Invariant;
 import wyil.lang.Codes.ListGenerator;
 import wyil.lang.Codes.Loop;
 import wyil.lang.Codes.NewObject;
@@ -42,8 +22,6 @@ import wyil.lang.Codes.NewRecord;
 import wyil.lang.Codes.UnaryOperator;
 import wyil.lang.Constant;
 import wyil.lang.Type;
-import wyil.lang.Type.Record;
-import wyil.lang.Type.Record.State;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyil.transforms.LiveVariablesAnalysis.Env;
 import wyopcl.translator.Configuration;
@@ -58,7 +36,7 @@ import wyopcl.translator.generator.CodeStores.CodeStore;
  *
  */
 public class CodeGenerator extends AbstractCodeGenerator {
-	private CopyEliminationAnalyzer analyzer = null;
+	private CopyEliminationAnalyzer copyAnalyzer = null;
 
 	/**
 	 * Constructor
@@ -72,7 +50,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 	public CodeGenerator(Configuration config, CopyEliminationAnalyzer analyzer) {
 		this(config);
-		this.analyzer = analyzer;
+		this.copyAnalyzer = analyzer;
 	}
 
 	/**
@@ -302,15 +280,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			if (!isCopyEliminated(code.operand(0), code, function)) {
 				// Check the types of left is an integers
 				if (!CodeGeneratorHelper.isIntType(store.getVarType(code.operand(0)))) {
-					Type rhs_type = store.getVarType(code.target());
-					//
-					/**
-					 * If not, the type casting is needed.
-					 * 
-					 * //assign %9 = %10 : [void] _9_size = _10_size; _9 = copy((long long*)_10, _10_size);
-					 */
-					statement += indent + lhs + " = copy((" + CodeGeneratorHelper.translateType(rhs_type, stores) + ")" + rhs + ", " + rhs
-							+ "_size);";
+					throw new RuntimeException("Not implemented");
 				} else {
 					/** Make a copy of right operand. */
 					statement += CodeGeneratorHelper.generateArrayCopy(code.type(), indent, lhs, rhs);
@@ -422,34 +392,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		store.addStatement(code, stat);
 	}
 
-	/**
-	 * Check if the array 'r' is updated inside the function.
-	 * 
-	 * @param r
-	 *            the array
-	 * @param f
-	 *            the function
-	 * @return true if the array 'r' is updated.
-	 */
-	private boolean mutate(String r, FunctionOrMethod f) {
-		// Get the list of wyil code
-		for (Code code : f.body().bytecodes()) {
-			// Check the array is updated.
-			if (code instanceof Codes.Update) {
-				String target = this.analyzer.getActualVarName(((Codes.Update) code).target(), f);
-				if (target.equals(r)) {
-					return true;// Modified Array.
-				}
-			}
-		}
-		// Read-only array.
-		return false;
-	}
+	
 
 	/**
-	 * Determines whether to make a copy of array by checking liveness information or read-only property.
-	 * 
-	 * If the array variable is live, then the copy is necessary. Otherwise, the register can be overwritten safely.
+	 * Calls copy analyzer to check if the variable (reg) is alive afterwards, or passed as a read-only parameter.
 	 * 
 	 * @param reg
 	 *            the register of array variable
@@ -460,23 +406,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @return ture if the copy is un-needed and can be avoid. Otherwise, return false.
 	 */
 	private boolean isCopyEliminated(int reg, Code code, FunctionOrMethod f) {
-		if (this.analyzer != null) {
-			CopyEliminationAnalyzer copy_analyzer = this.analyzer;
-			// Check the array is read-only. By default, the array is assumed not read-only but modified.
-			boolean isReadOnly = false;
-			if (code instanceof Codes.Invoke) {
-				String r_name = copy_analyzer.getActualVarName(reg, f);
-				FunctionOrMethod invoked_function = config.getFunctionOrMethod(((Codes.Invoke) code).name);
-				if (invoked_function != null) {
-					// Check if the array r is modified inside 'invoked_function'.
-					isReadOnly = !mutate(r_name, invoked_function);
-				}
-			}
-			// Check the array is live.
-			BasicBlock blk = copy_analyzer.getBlockbyCode(f, code);// Get basic block that contains the given code.
-			Env outSet = copy_analyzer.getLiveness(f).getOUT(blk);
-			boolean isLive = outSet.contains(reg);
-			return (isReadOnly || !isLive);
+		if (this.copyAnalyzer != null) {
+			return this.copyAnalyzer.isCopyEliminated(reg, code, f);
 		}
 		return false;
 	}

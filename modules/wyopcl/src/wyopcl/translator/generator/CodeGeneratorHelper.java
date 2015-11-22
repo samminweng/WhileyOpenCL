@@ -262,6 +262,7 @@ public final class CodeGeneratorHelper {
 		}
 		return size_vars;
 	}
+	
 	/**
 	 * Generates assigment C code to specify the size variables of multi-dimensional array, e.g. 
 	 * 
