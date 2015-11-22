@@ -58,6 +58,7 @@ import wyopcl.translator.bound.BasicBlock;
  */
 public class CodeGenerator extends AbstractCodeGenerator {
 	private CopyEliminationAnalyzer analyzer = null;
+	private CodeGeneratorHelper helper;
 
 	/**
 	 * Constructor
@@ -303,7 +304,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			 */
 			if (!isCopyEliminated(code.operand(0), code, function)) {
 				// Check the types of left is an integers
-				if (!this.isIntType(store.getVarType(code.operand(0)))) {
+				if (!helper.isIntType(store.getVarType(code.operand(0)))) {
 					Type rhs_type = store.getVarType(code.target());
 					//
 					/**
@@ -817,7 +818,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				Type left_type = store.getVarType(code.leftOperand);
 				Type right_type = store.getVarType(code.rightOperand);
 				// Check the left type is an array of integers.
-				if (this.isIntType(left_type)) {
+				if (helper.isIntType(left_type)) {
 					statement += "if(isArrayEqual(" + left + ", " + left + "_size";
 				} else {
 					// If not, use type casting.
@@ -825,7 +826,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				}
 
 				// Check the right type is an array
-				if (this.isIntType(right_type)) {
+				if (helper.isIntType(right_type)) {
 					statement += "," + right + ", " + right + "_size)==1";
 				} else {
 					// Cast the right to an array.

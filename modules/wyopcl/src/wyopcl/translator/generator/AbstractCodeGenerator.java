@@ -70,36 +70,7 @@ public abstract class AbstractCodeGenerator {
 		this.config = config;
 		this.stores = new HashMap<FunctionOrMethod, CodeStore>();
 	}	
-	/**
-	 * Write out 'includes' both in 'test_case.c' and 'test_case.h'
-	 * @param test_case
-	 */
-	/*private void writeIncludes(String test_case){
-		//Remove the generated *.c and *.h files to have a clean folder.
-		FileWriter writer;
-		try {
-			// Create a new 'test_case.h' or over-write an existing one
-			File header = new File(test_case+".h");
-			writer = new FileWriter(header, false);
-			writer.append("#include \"Util.h\"\n");
-			writer.close();
-			header = null;
-			
-			// Create a new 'test_case.c'
-			File source = new File(test_case + ".c");
-			writer = new FileWriter(source, false);
-			writer.append("#include \""+test_case+".h\"\n");
-			writer.close();
-			source = null;
-			
-		} catch (IOException e) {
-			throw new RuntimeException("Errors occurs in deleting files");
-		}
-
-
-	}
-*/
-
+	
 	/**
 	 * Takes the byte-code and produces the code.
 	 * 
@@ -125,21 +96,7 @@ public abstract class AbstractCodeGenerator {
 		}
 	}
 
-	/**
-	 * Get the user defined type by the name
-	 * 
-	 * @param name
-	 * @return
-	 */
-	/*protected wyil.lang.WyilFile.Type getUserDefinedType(String name) {
-		List<wyil.lang.WyilFile.Type> userTypes = (List<wyil.lang.WyilFile.Type>) module.types();
-		for (wyil.lang.WyilFile.Type user_type : this.userTypes) {
-			if (user_type.name().equals(name)) {
-				return user_type;
-			}
-		}
-		return null;
-	}*/
+	
 
 	/**
 	 * Get the user defined type by checking if the user type has the same fields as the given record type.
@@ -180,7 +137,7 @@ public abstract class AbstractCodeGenerator {
 	 * @param type
 	 * @return true if the type is or contains an integer type.
 	 */
-	public boolean isIntType(Type type) {
+	/*public boolean isIntType(Type type) {
 		if (type instanceof Type.Int) {
 			return true;
 		}
@@ -196,7 +153,7 @@ public abstract class AbstractCodeGenerator {
 		}
 
 		return false;
-	}
+	}*/
 
 	/**
 	 * Get the code store of the given function.
@@ -364,7 +321,5 @@ public abstract class AbstractCodeGenerator {
 	protected abstract void translate(Dereference code, FunctionOrMethod function);
 
 	protected abstract void translate(IfIs code, FunctionOrMethod function);
-
-	//protected abstract void translate(SubList code, FunctionOrMethod function);
 
 }
