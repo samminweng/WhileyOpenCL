@@ -197,8 +197,7 @@ public final class CodeGeneratorHelper {
 			if (fieldtype instanceof Type.Nominal || fieldtype instanceof Type.Int) {
 				statement.add(indent + copy_member + " = " + input_member+";"); 
 			} else if (fieldtype instanceof Type.Array) {
-				int dimension = computeArrayDimension(fieldtype);
-				statement.add(generateArrayCopy(indent, copy_member, input_member, dimension));
+				statement.add(generateArrayCopy(fieldtype, indent, copy_member, input_member));
 			} else {
 				throw new RuntimeException("Not implemented!");
 			}
@@ -263,7 +262,30 @@ public final class CodeGeneratorHelper {
 		}
 		return size_vars;
 	}
-	
+	/**
+	 * Generates assigment C code to specify the size variables of multi-dimensional array, e.g. 
+	 * 
+	 * <pre><code>
+	 * _7_size = _12_size;
+	 * _7_size_size = _12_size_size; 
+	 * </code></pre>
+	 * where '_7' and '_12' are two 2D arrays and variables with '_size' postfix are size variables. 
+	 * @param type
+	 * @param indent
+	 * @param lhs
+	 * @param rhs
+	 * @return
+	 */
+	public static String generateSizeAssign(Type type, String indent, String lhs, String rhs){
+		int dimension = computeArrayDimension(type);
+		String statement = "";
+		String post_fix = "";
+		for(int d=dimension;d>0;d--){
+			post_fix += "_size";
+			statement += indent+ lhs +post_fix +" = "+ rhs +post_fix +";\n"; 
+		}
+		return statement;
+	}
 	
 	/**
 	 * Generates the array code, including the copy function call and the list of array size variables, e.g.
@@ -282,16 +304,10 @@ public final class CodeGeneratorHelper {
 	 * @param dimension
 	 * @return
 	 */
-	public static String generateArrayCopy(String indent, String lhs, String rhs, int dimension){
+	public static String generateArrayCopy(Type type, String indent, String lhs, String rhs){
+		int dimension = computeArrayDimension(type);
 		String arrayCopy = "";
-		String lhs_size = lhs;
-		String rhs_size = rhs;
-		String size_assigns = "";
-		for(int d=dimension;d>0;d--){
-			lhs_size += "_size";
-			rhs_size += "_size";
-			size_assigns += indent+ lhs_size +" = "+rhs_size+";\n";
-		}
+		String size_assigns = generateSizeAssign(type, indent, lhs, rhs);
 		arrayCopy += size_assigns;
 		String size_vars = generateArraySizeVars(rhs, dimension);
 		arrayCopy += indent + lhs + " = copy";

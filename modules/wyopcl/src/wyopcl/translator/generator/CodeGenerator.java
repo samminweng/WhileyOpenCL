@@ -290,7 +290,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String indent = store.getIndent();
 		// Check if the assigned type is an array.
 		if (code.type() instanceof Type.Array) {			
-			int dimension = CodeGeneratorHelper.computeArrayDimension(code.type());
+			//int dimension = CodeGeneratorHelper.computeArrayDimension(code.type());
 			// copy the array and assign the cloned to the target.
 			/**
 			 * 
@@ -313,11 +313,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 							+ "_size);";
 				} else {
 					/** Make a copy of right operand. */
-					statement += CodeGeneratorHelper.generateArrayCopy(indent, lhs, rhs, dimension);
+					statement += CodeGeneratorHelper.generateArrayCopy(code.type(), indent, lhs, rhs);
 				}
 			} else {
 				// Do not need to make a copy and have in-place update
 				statement += indent + lhs + " = (" + CodeGeneratorHelper.translateType(store.getVarType(code.target()), stores) + ")" + rhs + ";";
+				statement += CodeGeneratorHelper.generateSizeAssign(code.type(), indent, lhs, rhs);
 			}
 		} else if (code.type() instanceof Type.Reference
 				&& ((Type.Reference) code.type()).element() instanceof Type.Array) {
@@ -1094,23 +1095,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// _34_size = _b.pieces_size;
 				// _34 = copy(_b.pieces, _b.pieces_size);
 				String var = store.getVar(code.operand(0))+ "." + code.field;
-				int dimension = CodeGeneratorHelper.computeArrayDimension(code.fieldType());
-				statement += CodeGeneratorHelper.generateArrayCopy(indent, target, var, dimension);
-				// Assign the array size
-				//statement += indent + target +"_size = " + var +"_size;\n";
-				//statement += generateSizeAssigns(indent, target, var, dimension);
-			
-				// Assing and clones the array.	
-				/*String size_vars = generateSizeVars(var, dimension);
-				statement += indent + target + " = copy";
-				if(dimension>1){
-					statement += dimension+"DArray(";
-				}else{
-					statement += "(";
-				}
-				statement += var + ", "+size_vars+");";
-				*/
-				
+				//int dimension = CodeGeneratorHelper.computeArrayDimension(code.fieldType());
+				statement += CodeGeneratorHelper.generateArrayCopy(code.fieldType(), indent, target, var);	
 			}else{
 				// Get the target
 				statement = indent + target + " = " + store.getVar(code.operand(0)) + "." + code.field + ";";
@@ -1125,41 +1111,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 */
 	protected void translate(Codes.Convert code, FunctionOrMethod function) {
-		// Converts Constant to Any type
-		// if (code.result instanceof Type.Any) {
-		// sym_ctrl.putAttribute(prefix+code.operand(0), "type",
-		// code.type());
-		// Do nothing.
-		// }
 		CodeStore store = stores.getCodeStore(function);
 		store.addStatement(code, null);
 	}
 
-	/**
-	 * Based on the variable type, print out the variable by using different indirect invoked 'printf' functions.
-	 * 
-	 * @param type
-	 * @param var
-	 * @param function
-	 * @return the translated statement.
-	 * 
-	 *         TODO Print out a pointer without array size. Is it possible?
-	 * 
-	 */
-	/*
-	 * private String translateIndirectInvokePrintf(Type type, String var, FunctionOrMethod function) { CodeStore store
-	 * = stores.getCodeStore(function); String indent = store.getIndent(); String statement = ""; if (type instanceof
-	 * Type.Nominal) { Type.Nominal nominal = (Type.Nominal) type; wyil.lang.WyilFile.Type user_type =
-	 * getUserDefinedType(nominal.name().name()); statement += translateIndirectInvokePrintf(user_type.type(), var,
-	 * function); } else if (type instanceof Type.Array) { // Print out a pointer without specifying array size.
-	 * statement += indent + "printf_array_withoutlength(" + var + ");\n"; } else if (type instanceof Type.Int) {
-	 * statement += indent + "indirect_printf(" + var + ");\n"; } else if (type instanceof Type.Record) { // Generalize
-	 * the indirect_invoke_printf function to print out a // record. Type.Record record = (Type.Record) type; for
-	 * (Entry<String, Type> field : record.fields().entrySet()) { // Print out the field name statement += indent +
-	 * "indrect_printf_string(\"" + field.getKey() + "\t\");\n"; // Based on the field Type, print out the field value
-	 * using // the different 'printf' functions. statement += translateIndirectInvokePrintf(field.getValue(), var + "."
-	 * + field.getKey(), function); } } return statement; }
-	 */
+	
 
 	/**
 	 * Generates the C code for <code>Codes.IndirectInvoke</code>. For example,
