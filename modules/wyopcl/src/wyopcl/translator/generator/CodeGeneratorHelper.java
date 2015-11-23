@@ -8,12 +8,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 
 import wyil.lang.Attribute;
+import wyil.lang.Code;
+import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.Type.Record.State;
 import wyil.lang.WyilFile.Constant;
+import wyil.lang.WyilFile.FunctionOrMethod;
+import wyopcl.translator.generator.CodeStores.CodeStore;
 
 /**
  * Lists the code generation methods
@@ -197,7 +202,8 @@ public final class CodeGeneratorHelper {
 			if (fieldtype instanceof Type.Nominal || fieldtype instanceof Type.Int) {
 				statement.add(indent + copy_member + " = " + input_member+";"); 
 			} else if (fieldtype instanceof Type.Array) {
-				statement.add(generateArrayCopy(fieldtype, indent, copy_member, input_member));
+				throw new RuntimeException("Not implemented!");
+				//statement.add(generateArrayCopy(fieldtype, indent, copy_member, input_member, false));
 			} else {
 				throw new RuntimeException("Not implemented!");
 			}
@@ -247,9 +253,10 @@ public final class CodeGeneratorHelper {
 	 * @param dimension
 	 * @return
 	 */
-	public static String generateArraySizeVars(String array_name, int dimension){
+	public static String generateArraySizeVars(String array_name, Type type){
 		String size_var = array_name;
 		String size_vars = "";
+		int dimension = computeArrayDimension(type);
 		boolean isFirst = true;
 		for(int d=dimension;d>0;d--){
 			size_var += "_size";
@@ -288,6 +295,7 @@ public final class CodeGeneratorHelper {
 		return statement;
 	}
 	
+
 	/**
 	 * Generates the array code, including the copy function call and the list of array size variables, e.g.
 	 * <code>
@@ -305,19 +313,22 @@ public final class CodeGeneratorHelper {
 	 * @param dimension
 	 * @return
 	 */
-	public static String generateArrayCopy(Type type, String indent, String lhs, String rhs){
-		int dimension = computeArrayDimension(type);
-		String arrayCopy = "";
-		String size_assigns = generateSizeAssign(type, indent, lhs, rhs);
-		arrayCopy += size_assigns;
-		String size_vars = generateArraySizeVars(rhs, dimension);
-		arrayCopy += indent + lhs + " = copy";
-		if(dimension > 1){
-			arrayCopy += dimension + "DArray"; 
+	public static String generateArrayCopy(Type type, String var, boolean isCopyEliminated){
+		if(isCopyEliminated){
+			return var;
 		}
-		arrayCopy += "("+ rhs +", " + size_vars+");\n"; 
 		
-		return arrayCopy;
+		String statement = "";
+		int dimension = CodeGeneratorHelper.computeArrayDimension(type);
+		statement += "copy";
+		if(dimension>1){
+			statement += dimension+"DArray";
+		}
+		statement += "("+var+", ";
+		// Generate size variables according to dimensions.
+		statement += CodeGeneratorHelper.generateArraySizeVars(var, type) + ")";
+		
+		return statement;
 	}
 	
 	/**
@@ -331,10 +342,10 @@ public final class CodeGeneratorHelper {
 	 *         TODO Generalize the user-defined types, such as 'Board'.
 	 * 
 	 */
-	public static String translateType(Type type, CodeStores stores) {
-		// The existential type, e.g. function EmptyBoard() -> (Board r)
-		// The return type of 'EmptyBoard' function is 'Board'.
+	public static String translateType(Type type, CodeStores stores) {	
 		if (type instanceof Type.Nominal) {
+			// The existential type, e.g. function EmptyBoard() -> (Board r)
+			// The return type of 'EmptyBoard' function is 'Board'.
 			Type.Nominal nomial = (Type.Nominal) type;
 			// Check is type is a System.Console. 
 			if(nomial.name().name().equals("Console")){
@@ -363,7 +374,7 @@ public final class CodeGeneratorHelper {
 			if (fields.containsKey("print") || fields.containsKey("println") || fields.containsKey("print_s")
 					|| fields.containsKey("println_s")) {
 				// No needs to do the translation.
-				return null;
+				return "";
 			}
 
 			// The input 'type' is input arguments of main method.
@@ -372,7 +383,11 @@ public final class CodeGeneratorHelper {
 			}
 
 			// Check if the type is an instance of user defined type.
-			return stores.getUserDefinedType((Type.Record) type).name();
+			if(stores != null){
+				return stores.getUserDefinedType((Type.Record) type).name();
+			}else{
+				throw new RuntimeException("Missing CodeStores");
+			}
 		}
 
 		if (type instanceof Type.Union) {
@@ -393,9 +408,8 @@ public final class CodeGeneratorHelper {
 			return translateType(ref.element(), stores) + "*";
 		}
 
-		return null;
+		throw new RuntimeException("Not Implemented!");
 	}
-	
 	
 	/**
 	 * Write the user-defined structure to *.h file, e.g. 
