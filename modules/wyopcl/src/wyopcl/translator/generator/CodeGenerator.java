@@ -54,7 +54,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 	/**
-	 * Local variables are defined and initialized with values at the top of the code block.
+	 * Given a function, defines and initialize local variables
 	 */
 	protected List<String> declareVariables(FunctionOrMethod function) {
 		// Get variable declaration
@@ -73,20 +73,23 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			if (type instanceof Type.Array || (type instanceof Type.Reference
 					&& ((Type.Reference) type).element() instanceof Type.Array)) {
 				// Type declaration and initial value assignment.
-				// Assign 'null' to a list
 				declarations.add("\t" + translateType + " " + var + " = NULL;");
 				// Add the extra 'size' variable.
-				int dimension = CodeGeneratorHelper.computeArrayDimension(type);
-				String size_var = var;
-				for(int d= dimension;d>0;d--){
-					size_var += "_size";
-					declarations.add("\tlong long " + size_var + " = 0;");
-				}
+				declarations.addAll(CodeGeneratorHelper.generateArraySizeVarsDeclaration(var, type));
 			} else if (type instanceof Type.Int) {
 				declarations.add("\t" + translateType + " " + var + " = 0;");
-			} else if (type instanceof Type.Record && !translateType.equals("")){
-				declarations.add("\t"+translateType+ " " + var + " = NULL;");
+			} else if (type instanceof Type.Record){
+				if(!translateType.equals("")){
+					declarations.add("\t"+translateType+ " " + var + ";");
+				}else{
+					// Skip translation
+				}
+			} else if (type instanceof Type.Nominal){
+				declarations.add("\t"+translateType+ " "+var+";");
+			} else if (type instanceof Type.Method){
+				// Skip translation
 			} else{
+				throw new RuntimeException("Not implemented");
 				// Skip Type declaration without any initialization.
 				//del += "\t" + CodeGeneratorHelper.translateType(type, stores) + " " + var + ";\n";
 			}
@@ -986,7 +989,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(Codes.FieldLoad code, FunctionOrMethod function) {
 		String field = code.field;
 		CodeStore store = stores.getCodeStore(function);
-		String target = store.getVar(code.target());
+		String lhs = store.getVar(code.target());
 		String indent = store.getIndent();
 		String statement = "";
 		// Skip printing statements, e.g. 'print_s'
@@ -996,24 +999,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement = null;
 		} else if (field.equals("args")) {
 			// Convert the arguments into an array of integer array (long long**).
-			statement = indent + target + " = convertArgsToIntArray(argc, args);\n";
-			statement += indent + target + "_size = argc - 1;";
+			statement = indent + lhs + " = convertArgsToIntArray(argc, args);\n";
+			statement += indent + lhs + "_size = argc - 1;";
 		} else {
 			String rhs = store.getVar(code.operand(0)) + "." + code.field;
-			statement += CodeGeneratorHelper.generateArraySizeAssign(code.fieldType(), indent, target, rhs);
-			statement += indent + target + " = "+ optimizeCode(code.operand(0), code, function);
-			/*// Check if field type is an array.
-			if (code.fieldType() instanceof Type.Array){
-				// 'fieldload %34 = %3 pieces : {int move,int[] pieces}'
-				// _34_size = _b.pieces_size;
-				// _34 = copy(_b.pieces, _b.pieces_size);
-				String var = store.getVar(code.operand(0))+ "." + code.field;
-				//int dimension = CodeGeneratorHelper.computeArrayDimension(code.fieldType());
-				statement += CodeGeneratorHelper.generateArrayCopy(code.fieldType(), indent, target, var);	
-			}else{
-				// Get the target
-				statement = indent + target + " = " + store.getVar(code.operand(0)) + "." + code.field + ";";
-			}*/
+			statement += CodeGeneratorHelper.generateArraySizeAssign(code.fieldType(), indent, lhs, rhs);
+			statement += indent + lhs + " = "+ rhs+";";
 		}
 		store.addStatement(code, statement);
 	}

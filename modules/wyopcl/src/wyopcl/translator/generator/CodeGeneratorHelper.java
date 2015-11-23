@@ -260,10 +260,11 @@ public final class CodeGeneratorHelper {
 			return "";
 		}
 		
-		String size_var = var;
+		
 		String size_vars = "";
 		int dimension = computeArrayDimension(type);
 		boolean isFirst = true;
+		String size_var = var;
 		for(int d=dimension;d>0;d--){
 			size_var += "_size";
 			if(isFirst){
@@ -285,19 +286,18 @@ public final class CodeGeneratorHelper {
 	 * @param type
 	 * @return
 	 */
-	private static String generateArraySizeVarsDeclaration(String var, Type type){
-		if(!(type instanceof Type.Array)){
-			return "";
-		}
+	public static List<String> generateArraySizeVarsDeclaration(String var, Type type){
+		List<String> statement = new ArrayList<String>();
 		
-		String statement = "";
-		String var_size = var;
-		// Generate size variables according to the dimensions, e.g. 2D array has two 'size' variables.
-		int d = CodeGeneratorHelper.computeArrayDimension(type);
-		while(d>0){
-			var_size += "_size";
-			statement += ", long long " + var_size;
-			d--;
+		if(type instanceof Type.Array){
+			String var_size = var;
+			// Generate size variables according to the dimensions, e.g. 2D array has two 'size' variables.
+			int d = CodeGeneratorHelper.computeArrayDimension(type);
+			while(d>0){
+				var_size += "_size";
+				statement.add("long long " + var_size + " = 0;");
+				d--;
+			}
 		}
 		return statement;
 	}
@@ -334,7 +334,16 @@ public final class CodeGeneratorHelper {
 
 			statement += translateType(param, stores) + " " + var;
 			// Add the additional 'size' variable.
-			statement += generateArraySizeVarsDeclaration(var, param);
+			if(param instanceof Type.Array){
+				String var_size = var;
+				// Generate size variables according to the dimensions, e.g. 2D array has two 'size' variables.
+				int d = CodeGeneratorHelper.computeArrayDimension(param);
+				while(d>0){
+					var_size += "_size";
+					statement += ", long long " + var_size;
+					d--;
+				}
+			}
 		}
 		
 		statement += ")";
@@ -430,7 +439,7 @@ public final class CodeGeneratorHelper {
 	 * @return the result string. Return null if the type can not be translated, e.g. the function call of print,
 	 *         printf...
 	 *
-	 *         TODO Generalize the user-defined types, such as 'Board'.
+	 *         
 	 * 
 	 */
 	public static String translateType(Type type, CodeStores stores) {	
