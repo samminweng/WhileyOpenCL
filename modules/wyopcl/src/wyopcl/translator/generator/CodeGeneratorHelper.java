@@ -276,6 +276,79 @@ public final class CodeGeneratorHelper {
 	}
 	
 	/**
+	 * Given an type, generates corresponding size variables used in function declaration, e.g.
+	 * 
+	 * 
+	 * 
+	 * @param var
+	 * @param type
+	 * @return
+	 */
+	private static String generateArraySizeVarsDeclaration(String var, Type type){
+		if(!(type instanceof Type.Array)){
+			return "";
+		}
+		
+		String statement = "";
+		String var_size = var;
+		// Generate size variables according to the dimensions, e.g. 2D array has two 'size' variables.
+		int d = CodeGeneratorHelper.computeArrayDimension(type);
+		while(d>0){
+			var_size += "_size";
+			statement += ", long long " + var_size;
+			d--;
+		}
+		return statement;
+	}
+	
+	
+	/**
+	 * Given a function, translates it into function declaration including function name and input parameters, e.g. 
+	 * <pre><code>
+	 * long long* reverse(long long* ls, long long ls_size)
+	 * </code></pre>
+	 * where 'reverse' is function name and its input declaration
+	 * @param function
+	 * @return
+	 */
+	public static String translateFunctionDeclaration(FunctionOrMethod function, CodeStores stores) {
+		// Get the code storage
+		CodeStore store = stores.getCodeStore(function);
+		String statement = "";
+		statement += CodeGeneratorHelper.translateType(function.type().ret(), stores) + " ";
+		statement += function.name() + "(";
+		List<Type> params = function.type().params();
+		// Generate input parameters 
+		boolean isfirst = true;		
+		for (int op=0;op<params.size();op++) {
+			Type param = params.get(op);
+			String var = store.getVar(op);
+
+			//Check if the param is Console. If so, skip it.
+			if (isfirst) {
+				isfirst = false;
+			} else {
+				statement += ", ";
+			}
+
+			if(param instanceof Type.Int || param instanceof Type.Nominal){
+				statement += translateType(param, stores) + " " + var;				
+			}else if (param instanceof Type.Array
+					|| (param instanceof Type.Reference && ((Type.Reference) param).element() instanceof Type.Array)) {
+				// Add the additional 'size' variable.
+				statement += translateType(param, stores) + " " + var;
+				statement += generateArraySizeVarsDeclaration(var, param);
+			}else{
+				throw new RuntimeException("Not Implemented!");
+			}
+		}
+		
+		statement += ")";
+		
+		return statement;
+	}
+	
+	/**
 	 * Generates assigment C code to specify the size variables of multi-dimensional array, e.g. 
 	 * 
 	 * <pre><code>

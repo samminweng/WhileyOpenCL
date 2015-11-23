@@ -98,7 +98,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param function
 	 * @return
 	 */
-	private String translateInputParameter(FunctionOrMethod function) {
+	/*private String translateInputParameter(FunctionOrMethod function) {
 		// Get the code storage
 		CodeStore store = stores.getCodeStore(function);
 		List<Type> params = function.type().params();
@@ -123,22 +123,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					|| (param instanceof Type.Reference && ((Type.Reference) param).element() instanceof Type.Array)) {
 				// Add the additional 'size' variable.
 				statement += CodeGeneratorHelper.translateType(param, stores) + " " + var;
-				statement += CodeGeneratorHelper.generateArraySizeVars(var, param);
-				
-				/*String var_size = var;
-				// Generate size variables according to the dimensions, e.g. 2D array has two 'size' variables.
-				int d = CodeGeneratorHelper.computeArrayDimension(param);
-				while(d>0){
-					var_size += "_size";
-					statement += ", long long " + var_size;
-					d--;
-				}*/
+				statement += CodeGeneratorHelper.generateArraySizeVarsDeclaration(var, param);
 			}else{
 				throw new RuntimeException("Not Implemented!");
 			}
 		}
 		return statement;
-	}
+	}*/
 
 	/**
 	 * Translates the function or method declaration (e.g. <code>int* play(int* _0, int _0_size){</code>)
@@ -155,13 +146,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		if (name.equals("main")) {
 			del = "int main(int argc, char** args)";
 		} else {
-			del = "";
-			// Get the type info
-			// Get the return type
-			del += CodeGeneratorHelper.translateType(function.type().ret(), stores) + " ";
-			del += name + "(";
-			del += translateInputParameter(function);
-			del += ")";
+			// Translate function declaration in C
+			del = CodeGeneratorHelper.translateFunctionDeclaration(function, stores);
 		}
 
 		if (config.isVerbose()) {
@@ -420,7 +406,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	private String translateLHSFunctionCall(Codes.Invoke code, FunctionOrMethod f) {
 		CodeStore store = stores.getCodeStore(f);
-		String statement = store.getIndent();
+		String indent = store.getIndent();
+		
+		
+		String statement = "";
 		// Translate the return value of a function call.
 		// If no return value, no needs for translation.
 		if (code.target() >= 0) {
@@ -433,12 +422,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				for (int index = 0; index < code.operands().length; index++) {
 					Type type = code.type().params().get(index);
 					if (type instanceof Type.Array) {
-						statement += (ret + "_size") + "=" + store.getVar(code.operand(index)) + "_size;\n";
+						String var = store.getVar(code.operand(index));
+						statement += CodeGeneratorHelper.generateSizeAssign(code.type().ret(), indent, ret, var);
 					}
 				}
 			}
+			
+			
 			// Call the function and assign the return value to lhs register.
-			statement += ret + " = ";
+			statement += indent + ret + " = ";
 		}
 		return statement;
 	}
