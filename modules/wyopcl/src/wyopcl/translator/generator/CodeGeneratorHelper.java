@@ -241,7 +241,7 @@ public final class CodeGeneratorHelper {
 	}
 	
 	/***
-	 * Generates the lists of size variables w.r.t the array dimension, e.g.
+	 * Given a type, generates size variables according to array dimension, e.g.
 	 * 'data' is a 2D array and its size variables are
 	 * 
 	 * <pre>
@@ -249,12 +249,17 @@ public final class CodeGeneratorHelper {
 	 * 	_data_size, _data_size_size
 	 * </code>
 	 * </pre>
-	 * @param array_name
-	 * @param dimension
-	 * @return
+	 * @param var array variable
+	 * @param type type
+	 * @return a string of array sizes variables in C. If type is not an array, return empty
 	 */
-	public static String generateArraySizeVars(String array_name, Type type){
-		String size_var = array_name;
+	public static String generateArraySizeVars(String var, Type type){
+		// Return empty string for none-array type
+		if(!(type instanceof Type.Array)){
+			return "";
+		}
+		
+		String size_var = var;
 		String size_vars = "";
 		int dimension = computeArrayDimension(type);
 		boolean isFirst = true;

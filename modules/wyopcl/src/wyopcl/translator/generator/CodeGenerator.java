@@ -396,13 +396,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		}
 	
 		String statement = "";
-		if(code instanceof Codes.Assign){			
-			Type type = ((Codes.Assign)code).type();
-			String type_name = CodeGeneratorHelper.translateType(type, stores);
-			statement += CodeGeneratorHelper.generateCopyCode(type, type_name, store.getVar(op), isCopyEliminated)+";"; 
+		String var = store.getVar(op);
+		Type type = store.getVarType(op);
+		String type_name = CodeGeneratorHelper.translateType(type, stores);
+		if(code instanceof Codes.Assign ){
+			statement += CodeGeneratorHelper.generateCopyCode(type, type_name, var, isCopyEliminated)+";"; 
 		}else if (code instanceof Codes.Invoke){
-			Codes.Invoke invoke = (Codes.Invoke)code;
-			throw new RuntimeException("Not implemented");
+			statement += CodeGeneratorHelper.generateCopyCode(type, type_name, var, isCopyEliminated)+", "
+					+ CodeGeneratorHelper.generateArraySizeVars(var, type); 
 		}else{
 			throw new RuntimeException("Not implemented");
 		}
