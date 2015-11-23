@@ -263,40 +263,21 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		CodeStore store = stores.getCodeStore(function);
 		String lhs = store.getVar(code.target());
 		String rhs = store.getVar(code.operand(0));
-		String statement = "";
 		String indent = store.getIndent();
+		String statement = "";
 		// Check if the assigned type is an array.
 		if (code.type() instanceof Type.Array) {
 			// copy the array and assign the cloned to the target.
-			/**
-			 * 
-			 * For example, the below bytecode assign %3 = %0 : [bool] can be translated in the C code: <code>
-			 *  _3_size = _board_size; 
-			 *  _3 = copy(_board, _board_size);
-			 * </code>
-			 */
-			/*if (!isCopyEliminated(code.operand(0), code, function)) {
-				// Check the types of left is an integers
-				if (!CodeGeneratorHelper.isIntType(store.getVarType(code.operand(0)))) {
-					throw new RuntimeException("Not implemented");
-				} else {
-					/// Make a copy of right operand. 
-					statement += CodeGeneratorHelper.generateArrayCopy(code.type(), indent, lhs, rhs);
-				}
-			} else {
-				// Do not need to make a copy and have in-place update
-				statement += indent + lhs + " = (" + CodeGeneratorHelper.translateType(store.getVarType(code.target()), stores) + ")" + rhs + ";";
-				statement += CodeGeneratorHelper.generateSizeAssign(code.type(), indent, lhs, rhs);
-			}*/
-			statement += optimizeCode(code, function);
-
+			statement += CodeGeneratorHelper.generateSizeAssign(code.type(), indent, lhs, rhs);
+			statement += indent + lhs + " = "+ optimizeCode(code.operand(0), code, function);
 		} else if (code.type() instanceof Type.Reference
 				&& ((Type.Reference) code.type()).element() instanceof Type.Array) {
-			statement += indent + lhs + " = " + rhs + ";\n";
-			statement += indent + lhs + "_size = " + rhs + "_size;";
+			/*statement += indent + lhs + " = " + rhs + ";\n";
+			statement += indent + lhs + "_size = " + rhs + "_size;";*/
+			throw new RuntimeException("Not Implemented!");
 		} else if (code.type() instanceof Type.Record){
 			statement += indent + lhs + " = copy_"+CodeGeneratorHelper.translateType(code.type(), stores)+"(" + rhs + ");";
-		} else {
+		} else if (code.type() instanceof Type.Int) {
 			statement = indent + lhs + " = " + rhs + ";";
 		}
 		// Add the statement to the list of statements.
@@ -395,37 +376,33 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 
 	/**
-	 * Calls copy analyzer to check if the variable (reg) is alive afterwards, or passed as a read-only parameter.
+	 * Given one line of code, get (copy) analysis results to produce optimized C code. 
+	 * If copy analysis is not enabled, return naive (copy) C code.
+	 *
 	 * 
 	 * @param reg
-	 *            the register of array variable
+	 *            the register of the variable
 	 * @param code
-	 *            the byte-code of function call.
-	 * @param f
-	 *            the caller function
-	 * @return ture if the copy is un-needed and can be avoid. Otherwise, return false.
+	 *            the byte-code.
+	 * @param function
+	 *            the function
+	 * @return the generated C code with/without copying 
 	 */
-	private String optimizeCode(Code code, FunctionOrMethod function) {
+	private String optimizeCode(int op, Code code, FunctionOrMethod function) {
 		CodeStore store = stores.getCodeStore(function);
-		String indent = store.getIndent();
 		boolean isCopyEliminated = false;
+		if(this.copyAnalyzer != null){
+			isCopyEliminated = this.copyAnalyzer.isCopyEliminated(op, code, function);
+		}
+	
 		String statement = "";
-		
-		if(code instanceof Codes.Assign){
-			Codes.Assign assign = (Codes.Assign)code;
-			String lhs = store.getVar(assign.target());
-			String rhs = store.getVar(assign.operand(0));
-			statement += CodeGeneratorHelper.generateSizeAssign(assign.type(), indent, lhs, rhs);
-			statement += indent + lhs + " = ";
-			if(this.copyAnalyzer != null){
-				isCopyEliminated = this.copyAnalyzer.isCopyEliminated(assign.operand(1), code, function);
-			}
-			statement += CodeGeneratorHelper.generateArrayCopy(assign.type(), rhs, isCopyEliminated)+";\n"; 
+		if(code instanceof Codes.Assign){			
+			Type type = ((Codes.Assign)code).type();
+			String type_name = CodeGeneratorHelper.translateType(type, stores);
+			statement += CodeGeneratorHelper.generateCopyCode(type, type_name, store.getVar(op), isCopyEliminated)+";"; 
 		}else if (code instanceof Codes.Invoke){
 			Codes.Invoke invoke = (Codes.Invoke)code;
 			throw new RuntimeException("Not implemented");
-
-
 		}else{
 			throw new RuntimeException("Not implemented");
 		}
@@ -490,7 +467,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			Type paramType = store.getVarType(reg);
 			// Add the '*_size' parameter
 			if (paramType instanceof Type.Array) {
-				statement += optimizeCode(code, f);
+				statement += optimizeCode(reg, code, f);
 			} else if ((paramType instanceof Type.Reference
 					&& ((Type.Reference) paramType).element() instanceof Type.Array)) {
 				statement += param + ", " + param + "_size";
@@ -1027,7 +1004,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement = indent + target + " = convertArgsToIntArray(argc, args);\n";
 			statement += indent + target + "_size = argc - 1;";
 		} else {
-			statement += optimizeCode(code, function);
+			statement += indent + target + " = " + optimizeCode(code.operand(0), code, function);
 			/*// Check if field type is an array.
 			if (code.fieldType() instanceof Type.Array){
 				// 'fieldload %34 = %3 pieces : {int move,int[] pieces}'
@@ -1373,7 +1350,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// No copies is needed, e.g. 'long long _3_value = _3;'
 				statement += store.getIndent() + CodeGeneratorHelper.translateType(rhs_type, stores) + " " + rhs + "_value" + " = " + rhs + ";\n";
 			}*/
-			statement += optimizeCode(code, function);
+			statement += optimizeCode(code.operand(0), code, function);
 
 			// Get the address of rhs and assign it to lhs with type casting.
 			String lhs = store.getVar(code.target());

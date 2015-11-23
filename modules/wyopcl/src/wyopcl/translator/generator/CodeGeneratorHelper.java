@@ -313,20 +313,28 @@ public final class CodeGeneratorHelper {
 	 * @param dimension
 	 * @return
 	 */
-	public static String generateArrayCopy(Type type, String var, boolean isCopyEliminated){
+	public static String generateCopyCode(Type type, String type_name, String var, boolean isCopyEliminated){
 		if(isCopyEliminated){
+			// Do not need to make a copy of 'var' 
 			return var;
 		}
-		
 		String statement = "";
-		int dimension = CodeGeneratorHelper.computeArrayDimension(type);
-		statement += "copy";
-		if(dimension>1){
-			statement += dimension+"DArray";
+		if(type instanceof Type.Array){
+			// Add si
+			int dimension = computeArrayDimension(type);
+			statement += "copy";
+			if(dimension>1){
+				statement += dimension+"DArray";
+			}
+			statement += "("+var+", ";
+			// Generate size variables according to dimensions.
+			statement += generateArraySizeVars(var, type) + ")";	
+		}else if (type instanceof Type.Record){
+			statement += "copy_"+type_name+"(" + var + ");";
+		}else{
+			throw new RuntimeException("Not implemented");
 		}
-		statement += "("+var+", ";
-		// Generate size variables according to dimensions.
-		statement += CodeGeneratorHelper.generateArraySizeVars(var, type) + ")";
+		
 		
 		return statement;
 	}
