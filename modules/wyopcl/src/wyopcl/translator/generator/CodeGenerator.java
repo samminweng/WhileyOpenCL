@@ -452,7 +452,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String statement = "";
 		for (int index = 0; index < code.operands().length; index++) {
 			if (!isFirst) {
-				statement += " ,";
+				statement += ", ";
 			}
 			int reg = code.operand(index);
 			String param = store.getVar(reg);

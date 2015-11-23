@@ -331,22 +331,19 @@ public final class CodeGeneratorHelper {
 				statement += ", ";
 			}
 
-			if(param instanceof Type.Int || param instanceof Type.Nominal){
-				statement += translateType(param, stores) + " " + var;				
-			}else if (param instanceof Type.Array
-					|| (param instanceof Type.Reference && ((Type.Reference) param).element() instanceof Type.Array)) {
-				// Add the additional 'size' variable.
-				statement += translateType(param, stores) + " " + var;
-				statement += generateArraySizeVarsDeclaration(var, param);
-			}else{
-				throw new RuntimeException("Not Implemented!");
-			}
+			statement += translateType(param, stores) + " " + var;
+			// Add the additional 'size' variable.
+			statement += generateArraySizeVarsDeclaration(var, param);
 		}
 		
 		statement += ")";
 		
 		return statement;
 	}
+	
+	
+	
+	
 	
 	/**
 	 * Generates assigment C code to specify the size variables of multi-dimensional array, e.g. 

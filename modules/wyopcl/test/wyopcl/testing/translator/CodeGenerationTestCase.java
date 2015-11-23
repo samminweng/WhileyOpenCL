@@ -46,10 +46,16 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(codeDir, "reverse", "copy");
 	}
 	
-	//@Test
+	@Test
 	public void test_mergesort_naive() {
 		//Generate the naive C code  
 		util.execCodeGeneration(codeDir, "mergesort");
+	}
+	
+	@Test
+	public void test_mergesort_copy() {
+		//Generate the naive C code  
+		util.execCodeGeneration(codeDir, "mergesort", "copy");
 	}
 	
 	//@Test
