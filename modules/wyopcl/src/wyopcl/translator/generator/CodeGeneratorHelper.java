@@ -196,14 +196,15 @@ public final class CodeGeneratorHelper {
 		String[] names = fields.keySet().toArray(new String[fields.size()]);
 		for (int i = 0; i < names.length; i++) {
 			String member = names[i];			
-			String input_member = input + "." + member;
-			String copy_member = copy + "." + member;
+			String rhs = input + "." + member;
+			String lhs = copy + "." + member;
 			Type fieldtype = fields.get(member);
 			if (fieldtype instanceof Type.Nominal || fieldtype instanceof Type.Int) {
-				statement.add(indent + copy_member + " = " + input_member+";"); 
-			} else if (fieldtype instanceof Type.Array) {
-				throw new RuntimeException("Not implemented!");
-				//statement.add(generateArrayCopy(fieldtype, indent, copy_member, input_member, false));
+				statement.add(indent + lhs + " = " + rhs+";"); 
+			} else if (fieldtype instanceof Type.Array) {	
+				statement.add(generateArraySizeAssign(fieldtype, indent, lhs, rhs));
+				statement.add(indent + lhs + " = " + generateCopy(fieldtype, translateType(fieldtype, stores),
+						rhs, true)+";");
 			} else {
 				throw new RuntimeException("Not implemented!");
 			}
@@ -359,7 +360,12 @@ public final class CodeGeneratorHelper {
 	 * @param rhs
 	 * @return
 	 */
-	public static String generateSizeAssign(Type type, String indent, String lhs, String rhs){
+	public static String generateArraySizeAssign(Type type, String indent, String lhs, String rhs){
+		if(!(type instanceof Type.Array)){
+			return "";
+		}
+		
+		
 		int dimension = computeArrayDimension(type);
 		String statement = "";
 		String post_fix = "";
@@ -388,7 +394,7 @@ public final class CodeGeneratorHelper {
 	 * @param dimension
 	 * @return
 	 */
-	public static String generateCopyCode(Type type, String type_name, String var, boolean isCopyEliminated){
+	public static String generateCopy(Type type, String type_name, String var, boolean isCopyEliminated){
 		if(isCopyEliminated){
 			// Do not need to make a copy of 'var' 
 			return var;
@@ -406,7 +412,9 @@ public final class CodeGeneratorHelper {
 			statement += generateArraySizeVars(var, type) + ")";	
 		}else if (type instanceof Type.Record){
 			statement += "copy_"+type_name+"(" + var + ");";
-		}else{
+		}else if (type instanceof Type.Nominal){
+			statement += "("+type_name+")" + var + ";";
+		} else{
 			throw new RuntimeException("Not implemented");
 		}
 		
@@ -491,6 +499,11 @@ public final class CodeGeneratorHelper {
 			return translateType(ref.element(), stores) + "*";
 		}
 
+		if(type instanceof Type.Method){
+			return "";
+		}
+		
+		
 		throw new RuntimeException("Not Implemented!");
 	}
 	

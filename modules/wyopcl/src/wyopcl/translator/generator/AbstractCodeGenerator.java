@@ -139,7 +139,7 @@ public abstract class AbstractCodeGenerator {
 
 	protected abstract String declareFunction(FunctionOrMethod function);
 
-	protected abstract String declareVariables(FunctionOrMethod function);
+	protected abstract List<String> declareVariables(FunctionOrMethod function);
 
 	protected abstract void writeConstants(List<Constant> constants);
 

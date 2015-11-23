@@ -56,40 +56,43 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	/**
 	 * Local variables are defined and initialized with values at the top of the code block.
 	 */
-	protected String declareVariables(FunctionOrMethod function) {
+	protected List<String> declareVariables(FunctionOrMethod function) {
 		// Get variable declaration
 		VariableDeclarations vars = function.attribute(VariableDeclarations.class);
 		// Get code storage
 		CodeStore store = stores.getCodeStore(function);
 		// The string declaration.
-		String del = "";
+		List<String> declarations = new ArrayList<String>();
 		// Iterate over the list of registers.
 		int inputs = function.type().params().size();
 		for (int reg = inputs; reg < vars.size(); reg++) {
 			Type type = vars.get(reg).type();
 			// Get the variable name.
 			String var = store.getVar(reg);
+			String translateType = CodeGeneratorHelper.translateType(type, stores);
 			if (type instanceof Type.Array || (type instanceof Type.Reference
 					&& ((Type.Reference) type).element() instanceof Type.Array)) {
 				// Type declaration and initial value assignment.
 				// Assign 'null' to a list
-				del += "\t" + CodeGeneratorHelper.translateType(type, stores) + " " + var + " = NULL;\n";
+				declarations.add("\t" + translateType + " " + var + " = NULL;");
 				// Add the extra 'size' variable.
 				int dimension = CodeGeneratorHelper.computeArrayDimension(type);
 				String size_var = var;
 				for(int d= dimension;d>0;d--){
 					size_var += "_size";
-					del += "\tlong long " + size_var + " = 0;\n";
+					declarations.add("\tlong long " + size_var + " = 0;");
 				}
 			} else if (type instanceof Type.Int) {
-				del += "\t" + CodeGeneratorHelper.translateType(type, stores) + " " + var + " = 0;\n";
+				declarations.add("\t" + translateType + " " + var + " = 0;");
+			} else if (type instanceof Type.Record && !translateType.equals("")){
+				declarations.add("\t"+translateType+ " " + var + " = NULL;");
 			} else{
 				// Skip Type declaration without any initialization.
 				//del += "\t" + CodeGeneratorHelper.translateType(type, stores) + " " + var + ";\n";
 			}
 
 		}
-		return del;
+		return declarations;
 	}
 
 	/**
@@ -253,7 +256,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Check if the assigned type is an array.
 		if (code.type() instanceof Type.Array) {
 			// copy the array and assign the cloned to the target.
-			statement += CodeGeneratorHelper.generateSizeAssign(code.type(), indent, lhs, rhs);
+			statement += CodeGeneratorHelper.generateArraySizeAssign(code.type(), indent, lhs, rhs);
 			statement += indent + lhs + " = "+ optimizeCode(code.operand(0), code, function);
 		} else if (code.type() instanceof Type.Reference
 				&& ((Type.Reference) code.type()).element() instanceof Type.Array) {
@@ -384,10 +387,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String var = store.getVar(op);
 		Type type = store.getVarType(op);
 		String type_name = CodeGeneratorHelper.translateType(type, stores);
-		if(code instanceof Codes.Assign ){
-			statement += CodeGeneratorHelper.generateCopyCode(type, type_name, var, isCopyEliminated)+";"; 
+		if(code instanceof Codes.Assign || code instanceof Codes.FieldLoad){
+			statement += CodeGeneratorHelper.generateCopy(type, type_name, var, isCopyEliminated)+";"; 
 		}else if (code instanceof Codes.Invoke){
-			statement += CodeGeneratorHelper.generateCopyCode(type, type_name, var, isCopyEliminated)+", "
+			statement += CodeGeneratorHelper.generateCopy(type, type_name, var, isCopyEliminated)+", "
 					+ CodeGeneratorHelper.generateArraySizeVars(var, type); 
 		}else{
 			throw new RuntimeException("Not implemented");
@@ -422,7 +425,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					Type type = code.type().params().get(index);
 					if (type instanceof Type.Array) {
 						String var = store.getVar(code.operand(index));
-						statement += CodeGeneratorHelper.generateSizeAssign(code.type().ret(), indent, ret, var);
+						statement += CodeGeneratorHelper.generateArraySizeAssign(code.type().ret(), indent, ret, var);
 					}
 				}
 			}
@@ -996,7 +999,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement = indent + target + " = convertArgsToIntArray(argc, args);\n";
 			statement += indent + target + "_size = argc - 1;";
 		} else {
-			statement += indent + target + " = " + optimizeCode(code.operand(0), code, function);
+			String rhs = store.getVar(code.operand(0)) + "." + code.field;
+			statement += CodeGeneratorHelper.generateArraySizeAssign(code.fieldType(), indent, target, rhs);
+			statement += indent + target + " = "+ optimizeCode(code.operand(0), code, function);
 			/*// Check if field type is an array.
 			if (code.fieldType() instanceof Type.Array){
 				// 'fieldload %34 = %3 pieces : {int move,int[] pieces}'
@@ -1210,53 +1215,35 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Get the code store
 		CodeStore store = stores.getCodeStore(function);
 		// Write out the header file
-		String filename = config.getFilename();
-		FileWriter writer;
+		
+		// Function header
+		List<String> function_header = new ArrayList<String>();
+		function_header.add(this.declareFunction(function) + ";");
+		String file_name = config.getFilename();
 		try {
-			// Check if the header file exits.
-			File f = new File(filename + ".h");
-			if (!f.exists()) {
-				writer = new FileWriter(f);
-				// If no such a file, write the include files to include Util.h
-				writer.append("#include \"Util.h\"\n");
-			} else {
-				writer = new FileWriter(f, true);
-			}
-			// Write out function declaration.
-			writer.append(this.declareFunction(function) + ";\n");
-			writer.close();
-			f = null;
-		} catch (IOException e1) {
-			throw new RuntimeException("Error occurrs in writing " + filename + ".h");
-		}
-
-		// Create a writer to write the C code to a *.c file.
-		try {
-			// Chekc if the C file exist.
-			File f = new File(filename + ".c");
-			if (!f.exists()) {
-				writer = new FileWriter(f);
-				// If no such a file, write the include files to include Util.h
-				writer.append("#include \"" + filename + ".h\"\n");
-			} else {
-				writer = new FileWriter(f, true);
-			}
-			// Write function declaration
-			writer.append(this.declareFunction(function) + "{\n");
-			// Write Variable declaration with initial values.
-			writer.append(this.declareVariables(function));
-			// Get all Statments
-			List<String> statements = store.getStatements();
-			for (String statement : statements) {
-				writer.append(statement + "\n");
-			}
-			// Ending clause
-			writer.append("}\n");
-			// Close the file writer.
-			writer.close();
+			// Create a new one or over-write an existing one.
+			Files.write(Paths.get(file_name+".h"), function_header, StandardOpenOption.APPEND);
 		} catch (IOException e) {
-			throw new RuntimeException("Error occurs in writing " + filename + ".c");
+			throw new RuntimeException("Errors occur in writeIncludes()");
 		}
+		
+		
+		
+		// Function body
+		List<String> function_body = new ArrayList<String>();
+		function_body.add(this.declareFunction(function) + "{");
+		function_body.addAll(this.declareVariables(function));
+		function_body.addAll(store.getStatements());
+		function_body.add("}\n");
+		
+		
+		try {
+			// Create a new one or over-write an existing one.
+			Files.write(Paths.get(file_name+".c"), function_body, StandardOpenOption.APPEND);
+		} catch (IOException e) {
+			throw new RuntimeException("Errors occur in writeIncludes()");
+		}
+		
 	}
 
 
