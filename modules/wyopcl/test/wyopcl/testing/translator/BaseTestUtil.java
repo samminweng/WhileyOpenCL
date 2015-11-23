@@ -227,14 +227,21 @@ public final class BaseTestUtil {
 		try {
 			Path destDir;
 			// Separate the generated C code.
-			if (options.length == 0) {
+			switch(options.length){
+			case 0:
 				// No extra options
 				// Set destDir directory to be 'code/TestCaseName/naive'
 				destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "naive" + File.separator);
-			} else {
-				// Set working directory to be 'code/TestCaseName/fast'
-				destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "fast" + File.separator);
+				break;
+			case 1:
+				// Set working directory to be 'code/TestCaseName/copy'
+				destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "copy" + File.separator);
+				break;
+			default:
+				throw new RuntimeException("Not implemented");
 			}
+			
+			
 			// Create destDir
 			createDestDir(destDir);
 

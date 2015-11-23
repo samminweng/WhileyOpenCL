@@ -29,23 +29,29 @@ public class CodeGenerationTestCase {
 	}
 
 	@Test
+	public void test_swap_copy() {
+		//Generate the naive C code  
+		util.execCodeGeneration(codeDir, "swap", "copy");
+	}
+	
+	//@Test
 	public void test_reverse_naive() {
 		//Generate the naive C code  
 		util.execCodeGeneration(codeDir, "reverse");
 	}
 	
-	@Test
+	//@Test
 	public void test_mergesort_naive() {
 		//Generate the naive C code  
 		util.execCodeGeneration(codeDir, "mergesort");
 	}
 	
-	@Test
+	//@Test
 	public void test_TicTacToe_naive() {
 		util.execCodeGeneration(codeDir, "TicTacToe");
 	}
 	
-	@Test
+	//@Test
 	public void test_MatrixMult_naive() {
 		util.execCodeGeneration(codeDir, "MatrixMult");
 	}
