@@ -142,8 +142,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Function declaration.
 		String del = "";
 		// Get the name
-		String name = function.name();
-		if (name.equals("main")) {
+		if (function.name().equals("main")) {
 			del = "int main(int argc, char** args)";
 		} else {
 			// Translate function declaration in C

@@ -34,10 +34,16 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(codeDir, "swap", "copy");
 	}
 	
-	//@Test
+	@Test
 	public void test_reverse_naive() {
 		//Generate the naive C code  
 		util.execCodeGeneration(codeDir, "reverse");
+	}
+	
+	@Test
+	public void test_reverse_copy() {
+		//Generate the naive C code  
+		util.execCodeGeneration(codeDir, "reverse", "copy");
 	}
 	
 	//@Test
