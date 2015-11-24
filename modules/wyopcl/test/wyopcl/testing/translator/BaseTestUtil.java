@@ -235,7 +235,7 @@ public final class BaseTestUtil {
 				break;
 			case 1:
 				// Set working directory to be 'code/TestCaseName/copy'
-				destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "copy" + File.separator);
+				destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "copy_reduced" + File.separator);
 				break;
 			default:
 				throw new RuntimeException("Not implemented");

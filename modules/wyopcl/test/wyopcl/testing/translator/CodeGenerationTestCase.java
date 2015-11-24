@@ -58,9 +58,14 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(codeDir, "mergesort", "copy");
 	}
 	
-	//@Test
+	@Test
 	public void test_TicTacToe_naive() {
 		util.execCodeGeneration(codeDir, "TicTacToe");
+	}
+	
+	@Test
+	public void test_TicTacToe_copy() {
+		util.execCodeGeneration(codeDir, "TicTacToe", "copy");
 	}
 	
 	//@Test

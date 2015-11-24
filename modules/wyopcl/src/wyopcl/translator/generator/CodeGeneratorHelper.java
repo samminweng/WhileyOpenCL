@@ -295,7 +295,7 @@ public final class CodeGeneratorHelper {
 			int d = CodeGeneratorHelper.computeArrayDimension(type);
 			while(d>0){
 				var_size += "_size";
-				statement.add("long long " + var_size + " = 0;");
+				statement.add("\tlong long " + var_size + " = 0;");
 				d--;
 			}
 		}
@@ -370,18 +370,16 @@ public final class CodeGeneratorHelper {
 	 * @return
 	 */
 	public static String generateArraySizeAssign(Type type, String indent, String lhs, String rhs){
-		if(!(type instanceof Type.Array)){
-			return "";
-		}
-		
-		
-		int dimension = computeArrayDimension(type);
 		String statement = "";
-		String post_fix = "";
-		for(int d=dimension;d>0;d--){
-			post_fix += "_size";
-			statement += indent+ lhs +post_fix +" = "+ rhs +post_fix +";\n"; 
+		if(type instanceof Type.Array){
+			int dimension = computeArrayDimension(type);
+			String post_fix = "";
+			for(int d=dimension;d>0;d--){
+				post_fix += "_size";
+				statement += "\n"+indent+ lhs +post_fix +" = "+ rhs +post_fix +";"; 
+			}
 		}
+		
 		return statement;
 	}
 	
