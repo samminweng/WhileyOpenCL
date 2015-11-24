@@ -261,7 +261,7 @@ public final class BaseTestUtil {
 			// Add extra optimization option.
 			for (String option : options) {
 				// Run the code generator with optimization.
-				cmd += " " + option;
+				cmd += " -" + option;
 			}
 			// Add test case name
 			cmd += " " + testcase + ".whiley";
