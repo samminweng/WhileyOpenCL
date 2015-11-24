@@ -68,15 +68,14 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(codeDir, "TicTacToe", "copy");
 	}
 	
-	//@Test
+	@Test
 	public void test_MatrixMult_naive() {
 		util.execCodeGeneration(codeDir, "MatrixMult");
 	}
 	
-	/*@Test
-	public void test_reverse_fast() {
-		//Generate the naive C code  
-		util.execCodeGeneration(codeDir, codeDir, "reverse", "-copy");
-	}*/
+	@Test
+	public void test_MatrixMult_copy() {
+		util.execCodeGeneration(codeDir, "MatrixMult", "copy");
+	}
 	
 }

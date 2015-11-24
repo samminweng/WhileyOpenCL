@@ -977,9 +977,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement = indent + lhs + " = convertArgsToIntArray(argc, args);\n";
 			statement += indent + lhs + "_size = argc - 1;";
 		} else {
-			String rhs = store.getVar(code.operand(0)) + "." + code.field;
-			statement += CodeGeneratorHelper.generateArraySizeAssign(code.fieldType(), indent, lhs, rhs);
-			statement += indent + lhs + " = "+ rhs+";";
+			statement += CodeGeneratorHelper.generateArraySizeAssign(code.fieldType(), indent, lhs, store.getVar(code.operand(0)) + "." + code.field);
+			statement += indent + lhs + " = "+ (store.getVar(code.operand(0)) + "." + code.field)+";";
 		}
 		store.addStatement(code, statement);
 	}
