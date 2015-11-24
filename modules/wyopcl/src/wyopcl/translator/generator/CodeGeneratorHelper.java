@@ -374,9 +374,15 @@ public final class CodeGeneratorHelper {
 		if(type instanceof Type.Array){
 			int dimension = computeArrayDimension(type);
 			String post_fix = "";
+			boolean isFirst = true;
 			for(int d=dimension;d>0;d--){
 				post_fix += "_size";
-				statement += "\n"+indent+ lhs +post_fix +" = "+ rhs +post_fix +";"; 
+				if(!isFirst){
+					statement +="\n";
+				}else{
+					isFirst = false;
+				}
+				statement += indent+ lhs +post_fix +" = "+ rhs +post_fix +";"; 
 			}
 		}
 		

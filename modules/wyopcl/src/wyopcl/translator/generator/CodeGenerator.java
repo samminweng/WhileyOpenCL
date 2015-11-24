@@ -216,30 +216,20 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * <pre>
 	 * <code>
-	 * long long* _2 = NULL;
-	 * void* _3 = NULL;
-	 * assign %2 = %3  : [void]
+	 * assign %4 = %5  : {int move,int[] pieces}
 	 * </code>
 	 * </pre>
 	 * 
 	 * can be translated into:
 	 * <p>
 	 * <code>
-	 * _2 = (long long*)_3;
+	 * _4 = copy_Board(_5);
 	 * </code>
 	 * </pre>
-	 * Note that the operand needs the type casting.
 	 * 
-	 * When we need to assign the input parameter(_0) to the new register, we need to copy the input and return the
-	 * result pointer. For example,
-	 * <p>
-	 * <code>assign %4 = %0  : [int]</code>
-	 * </p>
-	 * can be translated into:
-	 * <p>
-	 * <code>_4 = copy(_0, _0_size);//call the copy method.</code><br>
-	 * <code>_4_size = _0_size;//specify the array size</code><br>
-	 * </p>
+	 * Note that we need to copy input parameter(_5) to ensure value-semantics in Whiley, but the copy can eliminated 
+	 * by our copy analyzer. For example,
+	 * <p><code> _4 = _5;//Remove the copy.</code></p>
 	 * 
 	 * Special cases:
 	 * <ul>
@@ -254,23 +244,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(Codes.Assign code, FunctionOrMethod function) {
 		CodeStore store = stores.getCodeStore(function);
 		String lhs = store.getVar(code.target());
-		String rhs = store.getVar(code.operand(0));
 		String indent = store.getIndent();
 		String statement = "";
 		// Check if the assigned type is an array.
-		if (code.type() instanceof Type.Array) {
+		if (code.type() instanceof Type.Array || code.type() instanceof Type.Record) {
 			// copy the array and assign the cloned to the target.
-			statement += CodeGeneratorHelper.generateArraySizeAssign(code.type(), indent, lhs, rhs);
+			statement += CodeGeneratorHelper.generateArraySizeAssign(code.type(), indent, lhs, store.getVar(code.operand(0)));
 			statement += indent + lhs + " = "+ optimizeCode(code.operand(0), code, function);
-		} else if (code.type() instanceof Type.Reference
-				&& ((Type.Reference) code.type()).element() instanceof Type.Array) {
-			/*statement += indent + lhs + " = " + rhs + ";\n";
-			statement += indent + lhs + "_size = " + rhs + "_size;";*/
-			throw new RuntimeException("Not Implemented!");
-		} else if (code.type() instanceof Type.Record){
-			statement += indent + lhs + " = copy_"+CodeGeneratorHelper.translateType(code.type(), stores)+"(" + rhs + ");";
 		} else if (code.type() instanceof Type.Int) {
-			statement = indent + lhs + " = " + rhs + ";";
+			statement = indent + lhs + " = " + store.getVar(code.operand(0)) + ";";
+		}else{
+			throw new RuntimeException("Not Implemented!");
 		}
 		// Add the statement to the list of statements.
 		store.addStatement(code, statement);
@@ -995,7 +979,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		} else {
 			String rhs = store.getVar(code.operand(0)) + "." + code.field;
 			statement += CodeGeneratorHelper.generateArraySizeAssign(code.fieldType(), indent, lhs, rhs);
-			statement += "\n"+indent + lhs + " = "+ rhs+";";
+			statement += indent + lhs + " = "+ rhs+";";
 		}
 		store.addStatement(code, statement);
 	}
