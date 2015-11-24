@@ -204,7 +204,7 @@ public final class CodeGeneratorHelper {
 			} else if (fieldtype instanceof Type.Array) {	
 				statement.add(generateArraySizeAssign(fieldtype, indent, lhs, rhs));
 				statement.add(indent + lhs + " = " + generateCopy(fieldtype, translateType(fieldtype, stores),
-						rhs, true)+";");
+						rhs, false)+";");
 			} else {
 				throw new RuntimeException("Not implemented!");
 			}
@@ -406,6 +406,7 @@ public final class CodeGeneratorHelper {
 			// Do not need to make a copy of 'var' 
 			return var;
 		}
+		
 		String statement = "";
 		if(type instanceof Type.Array){
 			// Add si

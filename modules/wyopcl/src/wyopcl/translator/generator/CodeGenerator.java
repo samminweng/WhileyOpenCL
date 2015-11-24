@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import wyil.attributes.VariableDeclarations;
@@ -390,7 +391,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String var = store.getVar(op);
 		Type type = store.getVarType(op);
 		String type_name = CodeGeneratorHelper.translateType(type, stores);
-		if(code instanceof Codes.Assign || code instanceof Codes.FieldLoad){
+		if(code instanceof Codes.Assign || code instanceof Codes.FieldLoad || code instanceof Codes.NewRecord){
 			statement += CodeGeneratorHelper.generateCopy(type, type_name, var, isCopyEliminated)+";"; 
 		}else if (code instanceof Codes.Invoke){
 			statement += CodeGeneratorHelper.generateCopy(type, type_name, var, isCopyEliminated)+", "
@@ -891,7 +892,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * <pre>
 	 * <code>
-	 * newlist %11 = (%6, %7, %8, %9, %10) : int[]
+	 * newlist %10 = (%1, %2, %3, %4, %5, %6, %7, %8, %9) : int[]
 	 * </code>
 	 * </pre>
 	 * 
@@ -899,12 +900,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * <pre>
 	 * <code>
-	 *_11_size = 5;
-	 *long long _11_value[5] = {_6, _7, _8, _9, _10};
-	 *_11 = _11_value;
+	 * _10_size = 9;
+	 * _10 = malloc(_10_size*sizeof(long long));
+	 * _10[0] = _1; _10[1] = _2; _10[2] = _3; _10[3] = _4; _10[4] = _5; _10[5] = _6; _10[6] = _7; _10[7] = _8; _10[8] = _9;
 	 * </code>
 	 * </pre>
-	 * _11_value is an array with 5 elements and it is assigned to array pointer '_11'.     
+	 *      
 	 * 
 	 * Note that if the new list is an empty list, then its element type is a 'void', which is not supposed to store any
 	 * value. For example,
@@ -925,37 +926,27 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String indent = store.getIndent();
 
 		// Get array names
-		String array_name = store.getVar(code.target());
+		String lhs = store.getVar(code.target());
 		// Add the 'size' variable to store the array length
-		String array_size = array_name + "_size";
+		String lhs_size = lhs + "_size";
 		// Assign array size with the number of operands.
-		String statement = indent + array_size + " = " + code.operands().length + ";\n";
+		String statement = indent + lhs_size + " = " + code.operands().length + ";\n";
 		// Construct array value
 		String elmType = CodeGeneratorHelper.translateType(code.type().element(), stores);
 		int length = code.operands().length;
-		if(length > 0 ){			
-			// Add the 'value' variable to store array values 
-			String array_value = array_name + "_value";
-			// Assign array value 
-			statement += indent + elmType + " "+ array_value + "["+length+"] = {"; 
-			boolean isFirst = true;
-			for (int operand : code.operands()) {
-				if(isFirst){
-					isFirst = false;
-				}else{
-					statement += ", ";
-				}
-				statement += store.getVar(operand);
-			}
-			statement += "};\n";
-
+		if(length > 0 ){
 			// Assign the pointer to array values 
-			statement += indent + array_name + " = " + array_value+";";			
+			statement += indent + lhs + " = malloc("+length+"*sizeof(" +elmType+"));\n";
+			statement += indent;
+			// Initialize the array
+			for (int i=0; i<code.operands().length;i++) {
+				statement += lhs+"["+i+"] = "+store.getVar(code.operand(i))+";\t";
+			}
 		}else{
 			// For empty array, we initialize the array with one element. 
-			statement += indent + array_name + " = malloc(sizeof(" +elmType+"));";
+			statement += indent + lhs + " = malloc(sizeof(" +elmType+"));";
 		}
-
+		
 		store.addStatement(code, statement);
 	}
 
@@ -1004,7 +995,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		} else {
 			String rhs = store.getVar(code.operand(0)) + "." + code.field;
 			statement += CodeGeneratorHelper.generateArraySizeAssign(code.fieldType(), indent, lhs, rhs);
-			statement += indent + lhs + " = "+ rhs+";";
+			statement += "\n"+indent + lhs + " = "+ rhs+";";
 		}
 		store.addStatement(code, statement);
 	}
@@ -1159,22 +1150,28 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String statement = "";
 		for(int i=0;i<operands.length; i++){
 			// Get operand 
-			String op = store.getVar(operands[i]);
+			String rhs = store.getVar(operands[i]);
 			String member = members[i];
 			//Type type = store.getVarType(code.operand(i));
 			Type type = code.type().field(member);
 			// Propagate '_size' variable.
 			if (type instanceof Type.Array) {
+				
+				
+				
 				// Get array dimension
-				int dimension = CodeGeneratorHelper.computeArrayDimension(type);
+				/*int dimension = CodeGeneratorHelper.computeArrayDimension(type);
 				String size_var = member;
 				String op_size = op;
 				for(int d= dimension;d>0;d--){
 					size_var += "_size";
 					op_size += "_size";
 					statement += indent + lhs  + "." + size_var + " = " + op_size + ";\n";
-				}
-				if(dimension >1){
+				}*/
+				statement += CodeGeneratorHelper.generateArraySizeAssign(type, indent, lhs + "." + member, rhs);
+				statement += "\n"+indent + lhs + "." + member + " = " + optimizeCode(operands[i], code, function);
+				
+				/*if(dimension >1){
 					statement += indent + lhs + "." + member + " = copy"+dimension+"DArray(" + op;
 					op_size = op;
 					for(int d= dimension;d>0;d--){
@@ -1182,12 +1179,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						statement += ", " +op_size;
 					}
 					statement += ");\n";
+					
+					
 				}else{
 					statement += indent + lhs + "." + member + " = copy(" + op+ ", "+op + "_size);\n";
-				}
+				}*/
 
 			}else if(type instanceof Type.Int){
-				statement += indent + lhs + "." + member + " = " + op + ";\n";
+				statement += indent + lhs + "." + member + " = " + rhs + ";\n";
 			}else {
 				throw new RuntimeException("Not Implemented!");
 			}
