@@ -1306,26 +1306,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(ListGenerator code, FunctionOrMethod function) {
 		CodeStore store = stores.getCodeStore(function);
 		String indent = store.getIndent();
-		String array_name = store.getVar(code.target());
-		String size = store.getVar(code.operand(1));
-		Type type = store.getVarType(code.operand(0));
-		int dimension = CodeGeneratorHelper.computeArrayDimension(type) + 1;
-		// Call genArray function to generate the array
-		String statement ="";
-
-		// Assign size to size variable
-		String size_var = array_name +"_size";
-		statement += indent + size_var + " = "+size+";\n";
-		String extra_size = array_name;
-		// Propagate additional array size (>= 2D array)
-		for(int d=dimension;d>1;d--){
-			size_var += "_size";
-			extra_size += "_size";
-			statement += indent + size_var+ " = " +extra_size+";\n";
-		}
-		// Call 'gen' function to generate an array of given dimension.
-		statement += indent + array_name + " = gen"+dimension+"DArray("+store.getVar(code.operand(0));
-		statement += ", " + CodeGeneratorHelper.generateArraySizeVars(array_name, code.assignedType())+");";
+		String lhs = store.getVar(code.target());
+		String rhs0 = store.getVar(code.operand(0));
+		String rhs1 = store.getVar(code.operand(1));
+		String statement = CodeGeneratorHelper.generateListGen(code.assignedType(), indent, lhs, rhs0, rhs1, stores);
 		store.addStatement(code, statement);
 	}
 
