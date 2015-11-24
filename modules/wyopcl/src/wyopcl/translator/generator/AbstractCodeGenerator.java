@@ -63,58 +63,28 @@ public abstract class AbstractCodeGenerator {
 	protected final String prefix = "_";
 	protected final Configuration config;
 	// Store generated code
-	protected HashMap<FunctionOrMethod, CodeStore> stores;
-	private List<wyil.lang.WyilFile.Type> userTypes;// Store all the user-defined types at source level, e.g. Board.
+	protected CodeStores stores;
 
 	public AbstractCodeGenerator(Configuration config) {
 		this.config = config;
-		this.stores = new HashMap<FunctionOrMethod, CodeStore>();
+		
 	}	
-	/**
-	 * Write out 'includes' both in 'test_case.c' and 'test_case.h'
-	 * @param test_case
-	 */
-	/*private void writeIncludes(String test_case){
-		//Remove the generated *.c and *.h files to have a clean folder.
-		FileWriter writer;
-		try {
-			// Create a new 'test_case.h' or over-write an existing one
-			File header = new File(test_case+".h");
-			writer = new FileWriter(header, false);
-			writer.append("#include \"Util.h\"\n");
-			writer.close();
-			header = null;
-			
-			// Create a new 'test_case.c'
-			File source = new File(test_case + ".c");
-			writer = new FileWriter(source, false);
-			writer.append("#include \""+test_case+".h\"\n");
-			writer.close();
-			source = null;
-			
-		} catch (IOException e) {
-			throw new RuntimeException("Errors occurs in deleting files");
-		}
-
-
-	}
-*/
-
+	
 	/**
 	 * Takes the byte-code and produces the code.
 	 * 
 	 * @param module
 	 */
 	public void apply(WyilFile module) {
-		//this.writeIncludes(this.config.getFilename());
+		// Get and Set up user-defined types
+		this.stores = new CodeStores(config, (List<wyil.lang.WyilFile.Type>) module.types());
+		
 		this.writeIncludes();
 		// Defines constants
 		this.writeConstants((List<Constant>)module.constants());
 		
-		// Get and add all the user-defined types.
-		this.userTypes = (List<wyil.lang.WyilFile.Type>) module.types();
 		// Write out user-defined types.
-		this.writeUserTypes(userTypes);
+		this.writeUserTypes((List<wyil.lang.WyilFile.Type>) module.types());
 		
 		// Translate each function
 		for (FunctionOrMethod function : module.functionOrMethods()) {
@@ -123,94 +93,6 @@ public abstract class AbstractCodeGenerator {
 			// Write the code
 			this.writeFunction(function);
 		}
-	}
-
-	/**
-	 * Get the user defined type by the name
-	 * 
-	 * @param name
-	 * @return
-	 */
-	/*protected wyil.lang.WyilFile.Type getUserDefinedType(String name) {
-		List<wyil.lang.WyilFile.Type> userTypes = (List<wyil.lang.WyilFile.Type>) module.types();
-		for (wyil.lang.WyilFile.Type user_type : this.userTypes) {
-			if (user_type.name().equals(name)) {
-				return user_type;
-			}
-		}
-		return null;
-	}*/
-
-	/**
-	 * Get the user defined type by checking if the user type has the same fields as the given record type.
-	 * 
-	 * @param type
-	 *            the record type.
-	 * @return the user type. Return null if no type is matched.
-	 */
-	protected wyil.lang.WyilFile.Type getUserDefinedType(Type.Record type) {
-		for (wyil.lang.WyilFile.Type user_type : this.userTypes) {
-			if (user_type.type() instanceof Type.Record) {
-				Type.Record record = (Type.Record) user_type.type();
-				// check if record and type have the same fields.
-				boolean isTheSame = true;
-				for (Entry<String, Type> field : type.fields().entrySet()) {
-					Type recordFieldType = record.field(field.getKey());
-					if (recordFieldType != null) {
-						isTheSame &= true;
-					} else {
-						isTheSame &= false;
-					}
-				}
-
-				if (isTheSame) {
-					return user_type;
-				}
-			}
-		}
-		return null;
-	}
-
-
-	/**
-	 * Check if the type is instance of Integer by inferring the type from
-	 * <code>wyil.Lang.Type</code> objects, including the effective collection
-	 * types.
-	 * 
-	 * @param type
-	 * @return true if the type is or contains an integer type.
-	 */
-	public boolean isIntType(Type type) {
-		if (type instanceof Type.Int) {
-			return true;
-		}
-
-		if (type instanceof Type.Array) {
-			return isIntType(((Type.Array) type).element());
-		}
-
-		if (type instanceof Type.Tuple) {
-			// Check the type of value field.
-			Type element = ((Type.Tuple) type).element(1);
-			return isIntType(element);
-		}
-
-		return false;
-	}
-
-	/**
-	 * Get the code store of the given function.
-	 * 
-	 * @param function
-	 * @return
-	 */
-	protected CodeStore getCodeStore(FunctionOrMethod function) {
-		// Lazy initailization.
-		if (!stores.containsKey(function)) {
-			// Put the code store into the stores
-			stores.put(function, new CodeStore(function));
-		}
-		return stores.get(function);
 	}
 
 	protected abstract void translate(Update code, FunctionOrMethod function);
@@ -257,9 +139,7 @@ public abstract class AbstractCodeGenerator {
 
 	protected abstract String declareFunction(FunctionOrMethod function);
 
-	protected abstract String declareVariables(FunctionOrMethod function);
-
-	protected abstract String translateType(Type type);
+	protected abstract List<String> declareVariables(FunctionOrMethod function);
 
 	protected abstract void writeConstants(List<Constant> constants);
 
@@ -364,128 +244,5 @@ public abstract class AbstractCodeGenerator {
 	protected abstract void translate(Dereference code, FunctionOrMethod function);
 
 	protected abstract void translate(IfIs code, FunctionOrMethod function);
-
-	//protected abstract void translate(SubList code, FunctionOrMethod function);
-
-	/**
-	 * Stores the generated code for a function.
-	 * 
-	 * @author Min-Hsien Weng
-	 *
-	 */
-	protected class CodeStore {
-		private String indent;
-		private FunctionOrMethod function;
-		private List<String> statements;// store the list of translated C code.
-		private HashMap<Integer, String> fields;// Stores the fields of register, e.g. 'println', 'print_s', 'println_s'
-
-		public CodeStore(FunctionOrMethod function) {
-			this.indent = "\t";
-			this.function = function;
-			this.statements = new ArrayList<String>();
-			this.fields = new HashMap<Integer, String>();
-		}
-
-		/**
-		 * Load the field to the given register.
-		 * @param reg
-		 * @param field
-		 */
-		protected void loadField(int reg, String field){
-			this.fields.put(reg, field);
-		}
-		/**
-		 * Get the field of the given register.
-		 * @param reg
-		 * @return
-		 */
-		protected String getField(int reg){
-			return this.fields.get(reg);
-		}
-
-		protected List<String> getStatements() {
-			return this.statements;
-		}
-
-		/**
-		 * Adds the statement to the list and print out the statement if the
-		 * verbose option is on.
-		 * 
-		 * @param code
-		 *            the WyIL code
-		 * @param statement
-		 *            the C code
-		 */
-		protected void addStatement(Code code, String statement) {
-			// Add the WyIL code as a comment
-			if (code != null) {
-				if (code instanceof Codes.Label) {
-					// No indentation for label bytecode
-					statements.add("//" + code.toString());
-				} else {
-					statements.add(indent + "//" + code.toString());
-				}
-
-			}
-			// Add the translated statement.
-			if (statement != null) {
-				if (config.isVerbose()) {
-					System.out.println(statement);
-				}
-				statements.add(statement);
-			}
-		}
-
-		/**
-		 * Increase the indentation.
-		 */
-		protected void increaseIndent() {
-			this.indent += "\t";
-		}
-
-		protected String getIndent() {
-			return this.indent;
-		}
-
-		/**
-		 * Decrease the indentation.
-		 */
-		protected void decreaseIndent() {
-			this.indent = this.indent.replaceFirst("\t", "");
-		}
-
-		/**
-		 * Get the type of a variable.
-		 * 
-		 * @param reg
-		 * @return
-		 */
-		protected Type getVarType(int reg) {
-			VariableDeclarations vars = function.attribute(VariableDeclarations.class);
-			Declaration declaration = vars.get(reg);
-			return declaration.type();
-		}
-
-		/**
-		 * Get the variable name of the given register
-		 * 
-		 * @param reg
-		 *            the register
-		 * @return the variable name (starting with "_")
-		 */
-		protected String getVar(int reg) {
-			VariableDeclarations vars = function.attribute(VariableDeclarations.class);
-			// Check if the register has been kept in the declarations.
-			Declaration declaration = vars.get(reg);
-			if (declaration != null) {
-				String name = declaration.name();
-				if (name != null && !name.isEmpty()) {
-					return name;
-				}
-			}
-			return prefix + reg;
-		}
-
-	}
 
 }

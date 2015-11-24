@@ -29,9 +29,21 @@ public class CodeGenerationTestCase {
 	}
 
 	@Test
+	public void test_swap_copy() {
+		//Generate the naive C code  
+		util.execCodeGeneration(codeDir, "swap", "copy");
+	}
+	
+	@Test
 	public void test_reverse_naive() {
 		//Generate the naive C code  
 		util.execCodeGeneration(codeDir, "reverse");
+	}
+	
+	@Test
+	public void test_reverse_copy() {
+		//Generate the naive C code  
+		util.execCodeGeneration(codeDir, "reverse", "copy");
 	}
 	
 	@Test
@@ -41,8 +53,19 @@ public class CodeGenerationTestCase {
 	}
 	
 	@Test
+	public void test_mergesort_copy() {
+		//Generate the naive C code  
+		util.execCodeGeneration(codeDir, "mergesort", "copy");
+	}
+	
+	@Test
 	public void test_TicTacToe_naive() {
 		util.execCodeGeneration(codeDir, "TicTacToe");
+	}
+	
+	@Test
+	public void test_TicTacToe_copy() {
+		util.execCodeGeneration(codeDir, "TicTacToe", "copy");
 	}
 	
 	@Test
@@ -50,10 +73,9 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(codeDir, "MatrixMult");
 	}
 	
-	/*@Test
-	public void test_reverse_fast() {
-		//Generate the naive C code  
-		util.execCodeGeneration(codeDir, codeDir, "reverse", "-copy");
-	}*/
+	@Test
+	public void test_MatrixMult_copy() {
+		util.execCodeGeneration(codeDir, "MatrixMult", "copy");
+	}
 	
 }
