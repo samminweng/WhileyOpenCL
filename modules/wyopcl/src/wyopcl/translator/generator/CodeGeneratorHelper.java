@@ -201,10 +201,8 @@ public final class CodeGeneratorHelper {
 			Type fieldtype = fields.get(member);
 			if (fieldtype instanceof Type.Nominal || fieldtype instanceof Type.Int) {
 				statement.add(indent + lhs + " = " + rhs+";"); 
-			} else if (fieldtype instanceof Type.Array) {	
-				statement.add(generateArraySizeAssign(fieldtype, indent, lhs, rhs));
-				statement.add(indent + lhs + " = " + generateCopy(fieldtype, translateType(fieldtype, stores),
-						rhs, false)+";");
+			} else if (fieldtype instanceof Type.Array) {
+				statement.add(generateArraySizeAssign(fieldtype, indent, lhs, rhs) + indent + lhs + " = " + generateCopy(fieldtype, translateType(fieldtype, stores), rhs, false)+";");
 			} else {
 				throw new RuntimeException("Not implemented!");
 			}

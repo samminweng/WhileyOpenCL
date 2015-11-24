@@ -1139,35 +1139,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			Type type = code.type().field(member);
 			// Propagate '_size' variable.
 			if (type instanceof Type.Array) {
-				
-				
-				
-				// Get array dimension
-				/*int dimension = CodeGeneratorHelper.computeArrayDimension(type);
-				String size_var = member;
-				String op_size = op;
-				for(int d= dimension;d>0;d--){
-					size_var += "_size";
-					op_size += "_size";
-					statement += indent + lhs  + "." + size_var + " = " + op_size + ";\n";
-				}*/
 				statement += CodeGeneratorHelper.generateArraySizeAssign(type, indent, lhs + "." + member, rhs);
-				statement += "\n"+indent + lhs + "." + member + " = " + optimizeCode(operands[i], code, function);
-				
-				/*if(dimension >1){
-					statement += indent + lhs + "." + member + " = copy"+dimension+"DArray(" + op;
-					op_size = op;
-					for(int d= dimension;d>0;d--){
-						op_size += "_size";
-						statement += ", " +op_size;
-					}
-					statement += ");\n";
-					
-					
-				}else{
-					statement += indent + lhs + "." + member + " = copy(" + op+ ", "+op + "_size);\n";
-				}*/
-
+				statement += indent + lhs + "." + member + " = " + optimizeCode(operands[i], code, function);
 			}else if(type instanceof Type.Int){
 				statement += indent + lhs + "." + member + " = " + rhs + ";\n";
 			}else {
