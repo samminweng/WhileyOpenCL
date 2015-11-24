@@ -415,7 +415,7 @@ public final class CodeGeneratorHelper {
 		
 		String statement = "";
 		if(type instanceof Type.Array){
-			// Add si
+			// Add 'copy' function call w.r.t. Array dimension
 			int dimension = computeArrayDimension(type);
 			statement += "copy";
 			if(dimension>1){
@@ -425,9 +425,9 @@ public final class CodeGeneratorHelper {
 			// Generate size variables according to dimensions.
 			statement += generateArraySizeVars(var, type) + ")";	
 		}else if (type instanceof Type.Record){
-			statement += "copy_"+type_name+"(" + var + ");";
+			statement += "copy_"+type_name+"(" + var + ")";
 		}else if (type instanceof Type.Nominal){
-			statement += "("+type_name+")" + var + ";";
+			statement += "("+type_name+")" + var;
 		} else{
 			throw new RuntimeException("Not implemented");
 		}
