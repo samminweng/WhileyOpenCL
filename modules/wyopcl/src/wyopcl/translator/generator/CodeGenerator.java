@@ -9,6 +9,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import wyil.attributes.VariableDeclarations;
 import wyil.lang.Code;
@@ -75,8 +76,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					&& ((Type.Reference) type).element() instanceof Type.Array)) {
 				// Type declaration and initial value assignment.
 				declarations.add("\t" + translateType + " " + var + " = NULL;");
-				// Add the extra 'size' variable.
-				declarations.addAll(CodeGeneratorHelper.generateArraySizeVarsDeclaration(var, type));
+				// Declare the extra 'size' variables.
+				// Generate size variables according to the dimensions, e.g. 2D array has two 'size' variables.
+				List<String> size_vars = CodeGeneratorHelper.getArraySizeVars(var, type);
+				size_vars.forEach(size_var -> declarations.add("\tlong long "+size_var+" = 0;"));
 			} else if (type instanceof Type.Int) {
 				declarations.add("\t" + translateType + " " + var + " = 0;");
 			} else if (type instanceof Type.Record){
@@ -99,67 +102,52 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		return declarations;
 	}
 
+	
 	/**
-	 * Translate the input parameters for the given function.
-	 * 
+	 * Given a function, translates it into function declaration including function name and input parameters, e.g. 
+	 * <pre><code>
+	 * long long* reverse(long long* ls, long long ls_size)
+	 * </code></pre>
+	 * where 'reverse' is function name and its input declaration
 	 * @param function
-	 * @return
-	 */
-	/*private String translateInputParameter(FunctionOrMethod function) {
-		// Get the code storage
-		CodeStore store = stores.getCodeStore(function);
-		List<Type> params = function.type().params();
-
-		// Generate input parameters 
-		boolean isfirst = true;
-		String statement = "";
-		for (int op=0;op<params.size();op++) {
-			Type param = params.get(op);
-			String var = store.getVar(op);
-
-			//Check if the param is Console. If so, skip it.
-			if (isfirst) {
-				isfirst = false;
-			} else {
-				statement += ", ";
-			}
-
-			if(param instanceof Type.Int || param instanceof Type.Nominal){
-				statement += CodeGeneratorHelper.translateType(param, stores) + " " + var;				
-			}else if (param instanceof Type.Array
-					|| (param instanceof Type.Reference && ((Type.Reference) param).element() instanceof Type.Array)) {
-				// Add the additional 'size' variable.
-				statement += CodeGeneratorHelper.translateType(param, stores) + " " + var;
-				statement += CodeGeneratorHelper.generateArraySizeVarsDeclaration(var, param);
-			}else{
-				throw new RuntimeException("Not Implemented!");
-			}
-		}
-		return statement;
-	}*/
-
-	/**
-	 * Translates the function or method declaration (e.g. <code>int* play(int* _0, int _0_size){</code>)
-	 * 
-	 * @param functionOrMethod
-	 *            the code block of a function
-	 * @return func_declartion the function signature.
+	 * @return the function declaration.
 	 */
 	protected String declareFunction(FunctionOrMethod function) {
 		// Function declaration.
-		String del = "";
+		String declaration = "";
 		// Get the name
 		if (function.name().equals("main")) {
-			del = "int main(int argc, char** args)";
+			declaration = "int main(int argc, char** args)";
 		} else {
 			// Translate function declaration in C
-			del = CodeGeneratorHelper.translateFunctionDeclaration(function, stores);
+			// Get the code storage
+			CodeStore store = stores.getCodeStore(function);
+			declaration += CodeGeneratorHelper.translateType(function.type().ret(), stores) + " " + function.name() + "(";
+			List<Type> params = function.type().params();
+			// Generate input parameters separated by comma
+			List<String> parameters = new ArrayList<String>();
+			for (int op=0;op<params.size();op++) {
+				Type type = params.get(op);
+				String var = store.getVar(op);
+				parameters.add(CodeGeneratorHelper.translateType(type, stores) + " " + var);
+				// Add the additional 'size' variable.
+				if(type instanceof Type.Array){
+					List<String> size_vars = CodeGeneratorHelper.getArraySizeVars(var, type);
+					size_vars.forEach(size_var -> parameters.add("long long " + size_var));
+				}
+			}
+			
+			declaration += parameters.stream()
+						  .map(i->i.toString())
+						  .collect(Collectors.joining(", "));
+			
+			declaration += ")";
 		}
 
 		if (config.isVerbose()) {
-			System.out.println(del);
+			System.out.println(declaration);
 		}
-		return del;
+		return declaration;
 	}
 
 	/**
@@ -376,9 +364,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		Type type = store.getVarType(op);
 		String type_name = CodeGeneratorHelper.translateType(type, stores);
 		if(code instanceof Codes.Assign || code instanceof Codes.FieldLoad || code instanceof Codes.NewRecord){
-			statement += CodeGeneratorHelper.generateCopy(type, type_name, var, isCopyEliminated)+";"; 
+			statement += CodeGeneratorHelper.generateCopyUpdateCode(type, type_name, var, isCopyEliminated)+";"; 
 		}else if (code instanceof Codes.Invoke){
-			statement += CodeGeneratorHelper.generateCopy(type, type_name, var, isCopyEliminated)+", "
+			statement += CodeGeneratorHelper.generateCopyUpdateCode(type, type_name, var, isCopyEliminated)+", "
 					+ CodeGeneratorHelper.generateArraySizeVars(var, type); 
 		}else{
 			throw new RuntimeException("Not implemented");

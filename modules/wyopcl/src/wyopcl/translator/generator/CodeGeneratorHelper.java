@@ -233,7 +233,7 @@ public final class CodeGeneratorHelper {
 			if (fieldtype instanceof Type.Nominal || fieldtype instanceof Type.Int) {
 				statement.add(indent + lhs + " = " + rhs+";"); 
 			} else if (fieldtype instanceof Type.Array) {
-				statement.add(generateArraySizeAssign(fieldtype, indent, lhs, rhs) + indent + lhs + " = " + generateCopy(fieldtype, translateType(fieldtype, stores), rhs, false)+";");
+				statement.add(generateArraySizeAssign(fieldtype, indent, lhs, rhs) + indent + lhs + " = " + generateCopyUpdateCode(fieldtype, translateType(fieldtype, stores), rhs, false)+";");
 			} else {
 				throw new RuntimeException("Not implemented!");
 			}
@@ -270,7 +270,7 @@ public final class CodeGeneratorHelper {
 		return statement;
 	}
 	
-	private static List<String> getArraySizeVars(String var, Type type){
+	public static List<String> getArraySizeVars(String var, Type type){
 		List<String> size_vars = new ArrayList<String>();
 		int dimension = computeArrayDimension(type);
 		//boolean isFirst = true;
@@ -310,86 +310,10 @@ public final class CodeGeneratorHelper {
 		.collect(Collectors.joining(", "));
 	}
 	
-	/**
-	 * Given an type, generates corresponding size variables used in function declaration, e.g.
-	 * 
-	 * 
-	 * 
-	 * @param var
-	 * @param type
-	 * @return
-	 */
-	public static List<String> generateArraySizeVarsDeclaration(String var, Type type){
-		List<String> statement = new ArrayList<String>();
-		
-		if(type instanceof Type.Array){
-			String var_size = var;
-			// Generate size variables according to the dimensions, e.g. 2D array has two 'size' variables.
-			int d = computeArrayDimension(type);
-			while(d>0){
-				var_size += "_size";
-				statement.add("\tlong long " + var_size + " = 0;");
-				d--;
-			}
-		}
-		return statement;
-	}
 	
 	
 	/**
-	 * Given a function, translates it into function declaration including function name and input parameters, e.g. 
-	 * <pre><code>
-	 * long long* reverse(long long* ls, long long ls_size)
-	 * </code></pre>
-	 * where 'reverse' is function name and its input declaration
-	 * @param function
-	 * @return
-	 */
-	public static String translateFunctionDeclaration(FunctionOrMethod function, CodeStores stores) {
-		// Get the code storage
-		CodeStore store = stores.getCodeStore(function);
-		String statement = "";
-		statement += translateType(function.type().ret(), stores) + " ";
-		statement += function.name() + "(";
-		List<Type> params = function.type().params();
-		// Generate input parameters 
-		boolean isfirst = true;		
-		for (int op=0;op<params.size();op++) {
-			Type param = params.get(op);
-			String var = store.getVar(op);
-
-			//Check if the param is Console. If so, skip it.
-			if (isfirst) {
-				isfirst = false;
-			} else {
-				statement += ", ";
-			}
-
-			statement += translateType(param, stores) + " " + var;
-			// Add the additional 'size' variable.
-			if(param instanceof Type.Array){
-				String var_size = var;
-				// Generate size variables according to the dimensions, e.g. 2D array has two 'size' variables.
-				int d = computeArrayDimension(param);
-				while(d>0){
-					var_size += "_size";
-					statement += ", long long " + var_size;
-					d--;
-				}
-			}
-		}
-		
-		statement += ")";
-		
-		return statement;
-	}
-	
-	
-	
-	
-	
-	/**
-	 * Generates assigment C code to specify the size variables of multi-dimensional array, e.g. 
+	 * Generates assignment C code to specify the size variables of multi-dimensional array, e.g. 
 	 * 
 	 * <pre><code>
 	 * _7_size = _12_size;
@@ -435,7 +359,7 @@ public final class CodeGeneratorHelper {
 	 * @param dimension
 	 * @return
 	 */
-	public static String generateCopy(Type type, String type_name, String var, boolean isCopyEliminated){
+	public static String generateCopyUpdateCode(Type type, String type_name, String var, boolean isCopyEliminated){
 		if(isCopyEliminated){
 			// Do not need to make a copy of 'var' 
 			return var;
