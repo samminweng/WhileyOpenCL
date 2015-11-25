@@ -90,7 +90,7 @@ public final class CodeGeneratorHelper {
 	 * @param arrayType
 	 * @return
 	 */
-	public static int computeArrayDimension(wyil.lang.Type type){
+	private static int computeArrayDimension(wyil.lang.Type type){
 		int d = 0;
 		// If element is an array, then increment the dimension.
 		while(type != null && type instanceof Type.Array){
@@ -126,7 +126,7 @@ public final class CodeGeneratorHelper {
 		
 		// Call 'gen' function to generate an array of given dimension.
 		statements += indent + lhs + " = gen"+dimension+"DArray("+rhs0;
-		statements += ", " + CodeGeneratorHelper.generateArraySizeVars(lhs, type)+");";
+		statements += ", " + generateArraySizeVars(lhs, type)+");";
 		
 		return statements;
 	}
@@ -150,7 +150,7 @@ public final class CodeGeneratorHelper {
 	 * @param fields
 	 * @return
 	 */
-	public static List<String> generatePrintfFunction(WyilFile.Type type, CodeStores stores){
+	public static List<String> generateStructPrintf(WyilFile.Type type, CodeStores stores){
 		
 		String struct = type.name();
 		HashMap<String, Type> fields = ((Type.Record)type.type()).fields();
@@ -197,9 +197,9 @@ public final class CodeGeneratorHelper {
 		return statement;
 	}
 	/**
-	 * Given a structure, generate 'clone_*' function to make and return a copy of this structure, e.g. 
+	 * Given a structure, generate 'copy_*' function to make a copy of the structure, e.g. 
 	 * 
-	 * Board clone_Board(Board b){
+	 * Board copy_Board(Board b){
 	 *		Board new_b;
 	 *		new_b.pieces = copy(b.pieces, b.pieces_size);
 	 *		new_b.pieces_size = b.pieces_size;
@@ -210,7 +210,7 @@ public final class CodeGeneratorHelper {
 	 * @param fields
 	 * @return
 	 */
-	public static List<String> generateCopyFunction(WyilFile.Type type, CodeStores stores){
+	public static List<String> generateStructCopy(WyilFile.Type type, CodeStores stores){
 		String struct = type.name();
 		HashMap<String, Type> fields = ((Type.Record)type.type()).fields();
 		
@@ -247,7 +247,7 @@ public final class CodeGeneratorHelper {
 	 * @param fields
 	 * @return
 	 */
-	public static List<String> generateFreeFunction(WyilFile.Type type, CodeStores stores){
+	public static List<String> generateStructFree(WyilFile.Type type, CodeStores stores){
 		String struct = type.name();
 		HashMap<String, Type> fields = ((Type.Record)type.type()).fields();
 		
@@ -277,17 +277,12 @@ public final class CodeGeneratorHelper {
 	 * 	_data_size, _data_size_size
 	 * </code>
 	 * </pre>
+	 * where each variable is separated by comma (,).
 	 * @param var array variable
 	 * @param type type
 	 * @return a string of array sizes variables in C. If type is not an array, return empty
 	 */
 	public static String generateArraySizeVars(String var, Type type){
-		// Return empty string for none-array type
-		if(!(type instanceof Type.Array)){
-			return "";
-		}
-		
-		
 		String size_vars = "";
 		int dimension = computeArrayDimension(type);
 		boolean isFirst = true;
@@ -319,7 +314,7 @@ public final class CodeGeneratorHelper {
 		if(type instanceof Type.Array){
 			String var_size = var;
 			// Generate size variables according to the dimensions, e.g. 2D array has two 'size' variables.
-			int d = CodeGeneratorHelper.computeArrayDimension(type);
+			int d = computeArrayDimension(type);
 			while(d>0){
 				var_size += "_size";
 				statement.add("\tlong long " + var_size + " = 0;");
@@ -343,7 +338,7 @@ public final class CodeGeneratorHelper {
 		// Get the code storage
 		CodeStore store = stores.getCodeStore(function);
 		String statement = "";
-		statement += CodeGeneratorHelper.translateType(function.type().ret(), stores) + " ";
+		statement += translateType(function.type().ret(), stores) + " ";
 		statement += function.name() + "(";
 		List<Type> params = function.type().params();
 		// Generate input parameters 
@@ -364,7 +359,7 @@ public final class CodeGeneratorHelper {
 			if(param instanceof Type.Array){
 				String var_size = var;
 				// Generate size variables according to the dimensions, e.g. 2D array has two 'size' variables.
-				int d = CodeGeneratorHelper.computeArrayDimension(param);
+				int d = computeArrayDimension(param);
 				while(d>0){
 					var_size += "_size";
 					statement += ", long long " + var_size;
@@ -401,14 +396,8 @@ public final class CodeGeneratorHelper {
 		if(type instanceof Type.Array){
 			int dimension = computeArrayDimension(type);
 			String post_fix = "";
-			//boolean isFirst = true;
 			for(int d=dimension;d>0;d--){
 				post_fix += "_size";
-				/*if(!isFirst){
-					statement +="\n";
-				}else{
-					isFirst = false;
-				}*/
 				statement += indent+ lhs +post_fix +" = "+ rhs +post_fix +";\n"; 
 			}
 		}
@@ -574,7 +563,7 @@ public final class CodeGeneratorHelper {
 			Type memeber_type = fields.get(member);
 			struct.add("\t" + translateType(memeber_type, stores) + " " + member + ";");
 			if (memeber_type instanceof Type.Array) {
-				int d = CodeGeneratorHelper.computeArrayDimension(memeber_type);
+				int d = computeArrayDimension(memeber_type);
 				String size_var = member;
 				// Add 'size' variables w.r.t. array dimension.
 				while(d>0){
