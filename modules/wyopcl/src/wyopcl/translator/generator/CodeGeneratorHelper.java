@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import wyil.lang.Attribute;
 import wyil.lang.Code;
@@ -268,6 +270,22 @@ public final class CodeGeneratorHelper {
 		return statement;
 	}
 	
+	private static List<String> getArraySizeVars(String var, Type type){
+		List<String> size_vars = new ArrayList<String>();
+		int dimension = computeArrayDimension(type);
+		//boolean isFirst = true;
+		String size_var = var;
+		for(int d=dimension;d>0;d--){
+			size_var += "_size";
+			size_vars.add(size_var);
+		}
+		
+		return size_vars;
+		
+	}
+	
+	
+	
 	/***
 	 * Given a type, generates size variables according to array dimension, e.g.
 	 * 'data' is a 2D array and its size variables are
@@ -278,25 +296,18 @@ public final class CodeGeneratorHelper {
 	 * </code>
 	 * </pre>
 	 * where each variable is separated by comma (,).
+	 * 
+	 * @see https://docs.oracle.com/javase/8/docs/api/java/util/StringJoiner.html
 	 * @param var array variable
 	 * @param type type
 	 * @return a string of array sizes variables in C. If type is not an array, return empty
 	 */
 	public static String generateArraySizeVars(String var, Type type){
-		String size_vars = "";
-		int dimension = computeArrayDimension(type);
-		boolean isFirst = true;
-		String size_var = var;
-		for(int d=dimension;d>0;d--){
-			size_var += "_size";
-			if(isFirst){
-				isFirst = false;
-			}else{
-				size_vars += ", ";
-			}
-			size_vars += size_var;
-		}
-		return size_vars;
+		List<String> size_vars = getArraySizeVars(var, type);
+		
+		return size_vars.stream()
+		.map(i -> i.toString())
+		.collect(Collectors.joining(", "));
 	}
 	
 	/**
@@ -394,12 +405,13 @@ public final class CodeGeneratorHelper {
 	public static String generateArraySizeAssign(Type type, String indent, String lhs, String rhs){
 		String statement = "";
 		if(type instanceof Type.Array){
-			int dimension = computeArrayDimension(type);
-			String post_fix = "";
-			for(int d=dimension;d>0;d--){
-				post_fix += "_size";
-				statement += indent+ lhs +post_fix +" = "+ rhs +post_fix +";\n"; 
+			List<String> lhs_sizes = getArraySizeVars(lhs, type);
+			List<String> rhs_sizes = getArraySizeVars(rhs, type);
+	
+			for(int i=0;i<lhs_sizes.size();i++){
+				statement += indent+ lhs_sizes.get(i) +" = "+ rhs_sizes.get(i) +";\n"; 
 			}
+			
 		}
 		
 		return statement;
