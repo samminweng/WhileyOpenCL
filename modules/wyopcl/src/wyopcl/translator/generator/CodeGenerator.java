@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import wyil.attributes.VariableDeclarations;
 import wyil.lang.Code;
@@ -1281,24 +1282,40 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 
 	/***
-	 * Translate 'ListGenerator' wyil code into C code. For example,
-	 * 
+	 *  Generates a multi-dimensional array with 'genXDArray' built-in C function in C, e.g.
+	 * <pre>
 	 * <code>
-	 * listgen %69 = [66; 68] : int[]
-	 * </code> can translate this into <code>
-	 * _69 = genArray(_66, _68);
-	 * _69_size = _68;
-	 * </code> The array is initialized with '_66' and allocated with '_68' size.
+	 * listgen %12 = [10; 11] : int[][]
+	 * </code> 
+	 * </pre>
+	 * can translate this into
+	 * <pre><code>
+	 * _12_size = _11;
+	 * _12_size_size = _10_size;
+	 * _12 = gen2DArray(_10, _12_size, _12_size_size);
+	 * </code></pre>
+	 *  Creates a 2D array ( _11*_10_size) with initial '_10' value.
 	 */
 	@Override
 	protected void translate(ListGenerator code, FunctionOrMethod function) {
 		CodeStore store = stores.getCodeStore(function);
 		String indent = store.getIndent();
 		String lhs = store.getVar(code.target());
-		String rhs0 = store.getVar(code.operand(0));
-		String rhs1 = store.getVar(code.operand(1));
-		String statement = CodeGeneratorHelper.generateListGen(code.assignedType(), indent, lhs, rhs0, rhs1, stores);
-		store.addStatement(code, statement);
+		String rhs = store.getVar(code.operand(0));
+		String size = store.getVar(code.operand(1));
+		List<String> statements = new ArrayList<String>();
+		List<String> lhs_sizes = CodeGeneratorHelper.getArraySizeVars(lhs, code.type());
+		List<String> rhs_sizes = CodeGeneratorHelper.getArraySizeVars(rhs, code.type());
+		// Assign lhs sizes 
+		statements.add(indent + lhs_sizes.get(0) + " = " + size+";");
+		
+		// Propagate the remaining lhs sizes
+		IntStream.range(1, lhs_sizes.size())
+		.forEach(i-> statements.add(indent + lhs_sizes.get(i) + " = " + rhs_sizes.get(i-1) + ";"));
+		
+		// Call 'genXArray' function to create an array with given sizes.
+		statements.add(indent + lhs + " = gen"+lhs_sizes.size()+"DArray("+rhs + ", " + CodeGeneratorHelper.generateArraySizeVars(lhs, code.type())+");");
+		store.addAllStatements(code, statements);
 	}
 
 

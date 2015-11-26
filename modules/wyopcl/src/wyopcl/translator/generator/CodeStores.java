@@ -143,6 +143,33 @@ public class CodeStores {
 				statements.add(statement);
 			}
 		}
+		
+		/**
+		 * Add a list of statements w.r.t. one line of Wyil code
+		 * 
+		 * @param code
+		 * @param statement
+		 */
+		public void addAllStatements(Code code, List<String> statement) {
+			// Add the WyIL code as a comment
+			if (code != null) {
+				if (code instanceof Codes.Label) {
+					// No indentation for label bytecode
+					statements.add("//" + code.toString());
+				} else {
+					statements.add(indent + "//" + code.toString());
+				}
+
+			}
+			// Add the translated statement.
+			if (statement != null) {
+				if (isVerbose) {
+					System.out.println(statement);
+				}
+				statements.addAll(statement);
+			}
+		}
+		
 
 		/**
 		 * Increase the indentation.

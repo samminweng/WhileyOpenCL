@@ -101,37 +101,7 @@ public final class CodeGeneratorHelper {
 		}
 		return d;
 	}
-	/**
-	 * Generates a multi-dimensional array with 'genXDArray' built-in function 
-	 * 
-	 * 
-	 * @param type
-	 * @param stores
-	 * @return
-	 */
-	public static String generateListGen(wyil.lang.Type type, String indent, String lhs, String rhs0, String rhs1, CodeStores stores){
-		String statements = "";
-		int dimension = computeArrayDimension(type);
-		// Assign sizes to size variable
-		statements += indent + lhs + "_size = "+ rhs1+";\n";
-		int d = dimension;
-		String lhs_size_var = lhs + "_size";
-		String rhs_size_var = rhs0;
-		// Propagate the remaining size variables 
-		while(d>1){
-			lhs_size_var += "_size";
-			rhs_size_var += "_size";
-			// Propagate the '_size' variables
-			statements += indent + lhs_size_var + " = " + rhs_size_var+";\n"; 
-			d--;
-		}
-		
-		// Call 'gen' function to generate an array of given dimension.
-		statements += indent + lhs + " = gen"+dimension+"DArray("+rhs0;
-		statements += ", " + generateArraySizeVars(lhs, type)+");";
-		
-		return statements;
-	}
+	
 	
 	/***
 	 * 
@@ -269,7 +239,12 @@ public final class CodeGeneratorHelper {
 		statement.add("}");// Add ending bracket.
 		return statement;
 	}
-	
+	/**
+	 * 
+	 * @param var
+	 * @param type
+	 * @return
+	 */
 	public static List<String> getArraySizeVars(String var, Type type){
 		List<String> size_vars = new ArrayList<String>();
 		int dimension = computeArrayDimension(type);
