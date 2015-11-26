@@ -4,13 +4,13 @@
 #include <errno.h>  
 #include <time.h>
 #include <ctype.h>
+#include <stdbool.h>
 
 // Define the NULL pointer
 // #define NULL ( (void *) 0)
-
 // Define the boolean values
-#define false 0  
-#define true 1
+// #define false 0
+// #define true 1
 
 /**
  * Remove the security check about unsafe 'scanf' or 'sprintf' in VS tool
