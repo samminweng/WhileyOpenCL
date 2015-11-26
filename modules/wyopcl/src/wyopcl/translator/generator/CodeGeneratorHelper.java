@@ -133,14 +133,7 @@ public final class CodeGeneratorHelper {
 				statement.add(indent + "printf(\"%d\", " + input_member + ");");
 			} else if (member_type instanceof Type.Array) {
 				List<String> size_vars = getArraySizeVars(input_member, member_type);
-				String s = indent + "printf"+size_vars.size()+"DArray(" + input_member;
-				/*int d = computeArrayDimension(member_type);
-				String size_var = input_member;
-				while(d>0){
-					size_var += "_size"; 
-					s += ", " + size_var;
-					d--;
-				}*/
+				String s = indent + "printf"+size_vars.size()+"DArray(" + input_member;				
 				s += ", " + generateArraySizeVars(input_member, member_type);
 				s += ");";
 				statement.add(s);
@@ -226,15 +219,15 @@ public final class CodeGeneratorHelper {
 		return statement;
 	}
 	/**
-	 * 
-	 * @param var
-	 * @param type
+	 * Return a list of size variables w.r.t. array dimension.
+	 * @param var array variable
+	 * @param type array type
 	 * @return
 	 */
 	public static List<String> getArraySizeVars(String var, Type type){
 		List<String> size_vars = new ArrayList<String>();
 		int dimension = 0;
-		// If element is an array, then increment the dimension.
+		// Compute array dimension.
 		while(type != null && type instanceof Type.Array){
 			type = ((Type.Array)type).element();
 			dimension++;
@@ -334,7 +327,6 @@ public final class CodeGeneratorHelper {
 		String statement = "";
 		if(type instanceof Type.Array){
 			// Add 'copy' function call w.r.t. Array dimension
-			//int dimension = computeArrayDimension(type);
 			List<String> size_vars = getArraySizeVars(var, type);
 			statement += "copy";
 			if(size_vars.size()>1){
