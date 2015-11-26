@@ -87,22 +87,6 @@ public final class CodeGeneratorHelper {
 		return members;
 	}
 	
-	/**
-	 * Given an Array Type, compute the array dimension.
-	 * @param arrayType
-	 * @return
-	 */
-	private static int computeArrayDimension(wyil.lang.Type type){
-		int d = 0;
-		// If element is an array, then increment the dimension.
-		while(type != null && type instanceof Type.Array){
-			type = ((Type.Array)type).element();
-			d++;
-		}
-		return d;
-	}
-	
-	
 	/***
 	 * 
 	 * Given a user-defined structure, generate 'printf_*' function to print out its value. For example,	 * 
@@ -148,14 +132,16 @@ public final class CodeGeneratorHelper {
 				// Add field values.
 				statement.add(indent + "printf(\"%d\", " + input_member + ");");
 			} else if (member_type instanceof Type.Array) {
-				int d = computeArrayDimension(member_type);
-				String s = indent + "printf"+d+"DArray(" + input_member;
+				List<String> size_vars = getArraySizeVars(input_member, member_type);
+				String s = indent + "printf"+size_vars.size()+"DArray(" + input_member;
+				/*int d = computeArrayDimension(member_type);
 				String size_var = input_member;
 				while(d>0){
 					size_var += "_size"; 
 					s += ", " + size_var;
 					d--;
-				}
+				}*/
+				s += ", " + generateArraySizeVars(input_member, member_type);
 				s += ");";
 				statement.add(s);
 			} else {
@@ -247,8 +233,13 @@ public final class CodeGeneratorHelper {
 	 */
 	public static List<String> getArraySizeVars(String var, Type type){
 		List<String> size_vars = new ArrayList<String>();
-		int dimension = computeArrayDimension(type);
-		//boolean isFirst = true;
+		int dimension = 0;
+		// If element is an array, then increment the dimension.
+		while(type != null && type instanceof Type.Array){
+			type = ((Type.Array)type).element();
+			dimension++;
+		}
+		
 		String size_var = var;
 		for(int d=dimension;d>0;d--){
 			size_var += "_size";
@@ -343,10 +334,11 @@ public final class CodeGeneratorHelper {
 		String statement = "";
 		if(type instanceof Type.Array){
 			// Add 'copy' function call w.r.t. Array dimension
-			int dimension = computeArrayDimension(type);
+			//int dimension = computeArrayDimension(type);
+			List<String> size_vars = getArraySizeVars(var, type);
 			statement += "copy";
-			if(dimension>1){
-				statement += dimension+"DArray";
+			if(size_vars.size()>1){
+				statement += size_vars.size()+"DArray";
 			}
 			statement += "("+var+", ";
 			// Generate size variables according to dimensions.
@@ -474,15 +466,9 @@ public final class CodeGeneratorHelper {
 			Type memeber_type = fields.get(member);
 			struct.add("\t" + translateType(memeber_type, stores) + " " + member + ";");
 			if (memeber_type instanceof Type.Array) {
-				int d = computeArrayDimension(memeber_type);
-				String size_var = member;
-				// Add 'size' variables w.r.t. array dimension.
-				while(d>0){
-					size_var += "_size";
-					struct.add("\t" + "long long " + size_var + ";");
-					d--;
-				}
-				
+				List<String> size_vars = getArraySizeVars(member, memeber_type);
+				size_vars.stream()
+				.forEach(size_var -> struct.add("\t" + "long long " + size_var + ";"));
 			}
 		}
 		struct.add( "} " + typeName + ";");
