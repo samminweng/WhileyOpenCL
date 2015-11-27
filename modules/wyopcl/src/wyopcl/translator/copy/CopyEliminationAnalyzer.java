@@ -1,4 +1,4 @@
-package wyopcl.translator;
+package wyopcl.translator.copy;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -11,9 +11,9 @@ import wyil.lang.WyilFile.FunctionOrMethod;
 import wyil.transforms.LiveVariablesAnalysis;
 import wyil.transforms.LiveVariablesAnalysis.Env;
 import wyopcl.Configuration;
+import wyopcl.translator.Analyzer;
 import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.BasicBlock.BlockType;
-import wyopcl.translator.copy.LiveVariables;
 
 
 /**

@@ -30,8 +30,8 @@ import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyil.transforms.LiveVariablesAnalysis.Env;
 import wyopcl.Configuration;
-import wyopcl.translator.CopyEliminationAnalyzer;
 import wyopcl.translator.bound.BasicBlock;
+import wyopcl.translator.copy.CopyEliminationAnalyzer;
 import wyopcl.translator.deallocate.DeallocationAnalyzer;
 import wyopcl.translator.generator.CodeStores.CodeStore;
 
