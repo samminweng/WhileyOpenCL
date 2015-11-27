@@ -60,6 +60,7 @@ public final class CodeGeneratorHelper {
 	}
 	
 	
+	
 	/**
 	 * Get the fields from a record type. 
 	 * 
@@ -243,6 +244,26 @@ public final class CodeGeneratorHelper {
 		
 	}
 	
+	/**
+	 * Returns the variable name of ownership flag
+	 * @param var
+	 * @param type
+	 * @return
+	 */
+	public static String getOwnershipFlag(String var){
+		return var+"_has_ownership";
+	}
+	
+	/**
+	 * Returns a list of free statements to release array memory spaces.
+	 * @param vars
+	 * @return
+	 */
+	public static List<String> generateFreeArrayVariables(List<String> vars){
+		List<String> statements = new ArrayList<String>();
+		vars.forEach(var -> statements.add("if("+getOwnershipFlag(var)+"){free(var);}"));
+		return statements;
+	}
 	
 	
 	/***

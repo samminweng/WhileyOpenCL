@@ -2,6 +2,7 @@ package wyopcl.translator.generator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -84,16 +85,19 @@ public class CodeStores {
 		private String indent;
 		
 		private FunctionOrMethod function;
-		private List<String> statements;// store the list of translated C code.
+		private List<String> statements;// Store the list of translated C code.
 		private HashMap<Integer, String> fields;// Stores the fields of register, e.g. 'println', 'print_s', 'println_s'
-
+		
+		
 		public CodeStore(FunctionOrMethod function) {
 			this.indent = "\t";
 			this.function = function;
 			this.statements = new ArrayList<String>();
-			this.fields = new HashMap<Integer, String>();			
+			this.fields = new HashMap<Integer, String>();
 		}
 
+		
+		
 		/**
 		 * Load the field to the given register.
 		 * @param reg
@@ -208,7 +212,7 @@ public class CodeStores {
 		 *            the register
 		 * @return the variable name (starting with "_")
 		 */
-		protected String getVar(int reg) {
+		public String getVar(int reg) {
 			VariableDeclarations vars = function.attribute(VariableDeclarations.class);
 			// Check if the register has been kept in the declarations.
 			Declaration declaration = vars.get(reg);
@@ -221,11 +225,4 @@ public class CodeStores {
 			return prefix + reg;
 		}
 	}
-	
-	
-	
-
-	
-	
-	
 }

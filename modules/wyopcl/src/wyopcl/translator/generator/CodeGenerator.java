@@ -77,10 +77,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					&& ((Type.Reference) type).element() instanceof Type.Array)) {
 				// Type declaration and initial value assignment.
 				declarations.add("\t" + translateType + " " + var + " = NULL;");
-				// Declare the extra 'size' variables.
+				
 				// Generate size variables according to the dimensions, e.g. 2D array has two 'size' variables.
 				List<String> size_vars = CodeGeneratorHelper.getArraySizeVars(var, type);
+				
+				// Declare the extra 'size' variables.
 				size_vars.forEach(size_var -> declarations.add("\tlong long "+size_var+" = 0;"));
+				// Declare the extra 'has_ownership' boolean variables
+				declarations.add("\tbool "+CodeGeneratorHelper.getOwnershipFlag(var)+" = true;");
+				
 			} else if (type instanceof Type.Int) {
 				declarations.add("\t" + translateType + " " + var + " = 0;");
 			} else if (type instanceof Type.Record){
