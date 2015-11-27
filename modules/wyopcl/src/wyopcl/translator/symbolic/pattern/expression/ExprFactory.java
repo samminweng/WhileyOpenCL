@@ -7,7 +7,7 @@ import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Constant;
 import wyil.lang.Type;
-import wyopcl.translator.Configuration;
+import wyopcl.Configuration;
 
 /**
  * Create a factory to generate the expression based on the input type.

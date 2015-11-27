@@ -23,6 +23,7 @@ import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyil.util.AttributedCodeBlock;
+import wyopcl.Configuration;
 import wyopcl.translator.generator.CodeGenerator;
 import wyopcl.translator.generator.CodeGeneratorHelper;
 import wyopcl.translator.symbolic.PatternMatcher;

@@ -7,6 +7,7 @@ import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyil.lang.WyilFile.FunctionOrMethod;
+import wyopcl.Configuration;
 import wyopcl.translator.symbolic.PatternMatcher;
 import wyopcl.translator.symbolic.PatternTransformer;
 import wyopcl.translator.symbolic.pattern.Pattern;

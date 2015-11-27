@@ -13,7 +13,6 @@ import wycc.lang.SyntaxError;
 import wycc.lang.SyntaxError.InternalFailure;
 import wycc.util.Logger;
 import wycc.util.OptArg;
-import wyopcl.translator.Configuration;
 
 public class WyopclMain extends WycMain{
 	private boolean verbose = false;

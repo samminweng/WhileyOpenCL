@@ -27,7 +27,7 @@ import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyil.transforms.LiveVariablesAnalysis.Env;
-import wyopcl.translator.Configuration;
+import wyopcl.Configuration;
 import wyopcl.translator.CopyEliminationAnalyzer;
 import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.generator.CodeStores.CodeStore;

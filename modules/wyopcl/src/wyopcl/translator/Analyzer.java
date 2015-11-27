@@ -20,6 +20,7 @@ import wyil.lang.Codes.Loop;
 import wyil.lang.Codes.Return;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
+import wyopcl.Configuration;
 import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.BasicBlock.BlockType;
 import wyopcl.translator.bound.CFGraph;

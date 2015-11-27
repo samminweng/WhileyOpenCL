@@ -10,6 +10,7 @@ import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyil.lang.Type.Tuple;
 import wyil.lang.WyilFile.FunctionOrMethod;
+import wyopcl.Configuration;
 import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.BasicBlock.BlockType;
 import wyopcl.translator.bound.Bounds;
