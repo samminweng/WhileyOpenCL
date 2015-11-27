@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,11 +26,13 @@ import wyil.lang.Codes.NewRecord;
 import wyil.lang.Codes.UnaryOperator;
 import wyil.lang.Constant;
 import wyil.lang.Type;
+import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyil.transforms.LiveVariablesAnalysis.Env;
 import wyopcl.Configuration;
 import wyopcl.translator.CopyEliminationAnalyzer;
 import wyopcl.translator.bound.BasicBlock;
+import wyopcl.translator.deallocate.DeallocationAnalyzer;
 import wyopcl.translator.generator.CodeStores.CodeStore;
 
 /**
@@ -40,6 +43,7 @@ import wyopcl.translator.generator.CodeStores.CodeStore;
  */
 public class CodeGenerator extends AbstractCodeGenerator {
 	private CopyEliminationAnalyzer copyAnalyzer = null;
+	private DeallocationAnalyzer deallocatedAnalyzer = null;
 
 	/**
 	 * Constructor
@@ -49,12 +53,39 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	public CodeGenerator(Configuration config) {
 		super(config);
+		this.deallocatedAnalyzer = new DeallocationAnalyzer(config);
 	}
 
 	public CodeGenerator(Configuration config, CopyEliminationAnalyzer analyzer) {
 		this(config);
 		this.copyAnalyzer = analyzer;
 	}
+	
+	/**
+	 * Takes the byte-code and produces the code.
+	 * 
+	 * @param module
+	 */
+	public void apply(WyilFile module) {
+		// Get and Set up user-defined types
+		this.stores = new CodeStores(config, (List<wyil.lang.WyilFile.Type>) module.types());
+		
+		this.writeIncludes();
+		// Defines constants
+		this.writeConstants(module.constants());
+		
+		// Write out user-defined types.
+		this.writeUserTypes((List<wyil.lang.WyilFile.Type>) module.types());
+		
+		// Translate each function
+		for (FunctionOrMethod function : module.functionOrMethods()) {
+			// Iterate and translate each code into the target language.
+			this.iterateCodes(function.body().bytecodes(), function);
+			// Write the code
+			this.writeFunction(function);
+		}
+	}
+	
 
 	/**
 	 * Given a function, defines and initialize local variables
@@ -344,6 +375,16 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 
+	private void initializeOwnership(FunctionOrMethod function){
+		// Get variable declaration
+		VariableDeclarations var_declarations = function.attribute(VariableDeclarations.class);
+		
+		
+		
+		// Add 'var' to ownership 
+		//this.deallocatedAnalyzer.addOwnership(reg, function);
+	}
+	
 
 	/**
 	 * Given one line of code, get (copy) analysis results to produce optimized C code. 
@@ -1334,7 +1375,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * } Board;<br>
 	 * </code> Also, add a 'print' function to print out the structure.
 	 */
-	@Override
 	protected void writeUserTypes(List<wyil.lang.WyilFile.Type> userTypes) {
 		String filename = this.config.getFilename();
 		List<String> structs = new ArrayList<String>();
@@ -1378,16 +1418,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * 
 	 */
-	@Override
-	protected void writeConstants(List<wyil.lang.WyilFile.Constant> constants) {
+	protected void writeConstants(Collection<WyilFile.Constant> constants) {
 		// Generates declarations
 		List<String> declarations = new ArrayList<String>();
-		for (wyil.lang.WyilFile.Constant constant : constants) {
-			declarations.add("#define " + constant.name() + " " + constant.constant());
-		}
+		constants.forEach(c -> declarations.add("#define " + c.name() + " " + c.constant()));
 
 		String filename = config.getFilename();
-
 		try {
 			Files.write(Paths.get(filename + ".h"), declarations, StandardOpenOption.APPEND);
 		} catch (IOException e) {
@@ -1400,7 +1436,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	/**
 	 * Write out 'includes' both in 'test_case.c' and 'test_case.h'
 	 */
-	@Override
 	protected void writeIncludes() {
 		String file_name = this.config.getFilename();
 		// Writes out #include "Util.h" to test_case.h 
