@@ -193,49 +193,48 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * Generates the C code for Codes.Const byte-code. For example,
 	 * 
 	 * <pre>
-	 * <code>const %1 = 10 : int</code>
+	 * <code>const %33 = [80,97,115,115,32,115,119,97,112,32,116,101,115,116,32,99,97,115,101] : int[]</code>
 	 * </pre>
 	 * 
 	 * can be translated into:
 	 * 
 	 * <pre>
-	 * <code>_1 = 10;</code>
+	 * <code>_33_size = 19;
+	 * _33=(long long*)malloc(19*sizeof(long long));
+	 * _33[0] = 80; _33[1] = 97; _33[2] = 115; _33[3] = 115; _33[4] = 32; _33[5] = 115; _33[6] = 119; _33[7] = 97; _33[8] = 112; _33[9] = 32; _33[10] = 116; _33[11] = 101; _33[12] = 115; _33[13] = 116; _33[14] = 32; _33[15] = 99; _33[16] = 97; _33[17] = 115; _33[18] = 101; </code>
 	 * </pre>
 	 * 
 	 * @param code
 	 * @see Codes.Const
 	 */
 	protected void translate(Codes.Const code, FunctionOrMethod function) {
-		String stat = null;
+		List<String> statements = new ArrayList<String>();
 		CodeStore store = stores.getCodeStore(function);
-		String target = store.getVar(code.target());
-		Constant constant = code.constant;
+		String lhs = store.getVar(code.target());
 		String indent = store.getIndent();
 		if (code.assignedType() instanceof Type.Array) {
 			// Convert it into a constant list
-			Constant.List list = (Constant.List) constant;
+			Constant.List list = (Constant.List) code.constant;
 			// Initialize an array
 			if (list.values.isEmpty()) {
-				stat = indent + target + "=(long long*)malloc(1*sizeof(long long));\n";
-				stat += indent + "if(" + target + " == NULL) {fprintf(stderr,\"fail to malloc\");\n " + "exit(-1);}\n";
-				stat += indent + target + "_size = 0;";
+				statements.add(indent + lhs + "_size = 0;");
+				statements.add(indent + lhs + "=(long long*)malloc(1*sizeof(long long));");
 			} else {
 				// E.g. 'const %8 = [0,1,2,3,4,5,6,7,8] : int[]' wyil code can be translated into
-				// Trim '[' and ']' from the array string.
-				String array_values = list.values.toString().replace("[", "").replace("]", "");
 				// long long _8_value[] = {0, 1, 2, 3, 4, 5, 6, 7, 8}; // Introduce 'value' variable.
-				stat = indent + CodeGeneratorHelper.translateType(list.type().element(), stores) + " " + target + "_value[] = {" + array_values
-						+ "};\n";
-				// _8 = _8_value;
-				stat += indent + target + " = " + target + "_value;\n";
-				// _8_size = 9;
-				stat += indent + target + "_size = " + list.values.size() + ";";
+				statements.add(indent + lhs + "_size = " + list.values.size() + ";");
+				statements.add(indent + lhs + "=(long long*)malloc("+list.values.size()+"*sizeof(long long));");
+				String s = indent;
+				for(int i=0;i<list.values.size();i++){
+					s += lhs + "["+i+"] = " + list.values.get(i)+"; ";
+				}
+				statements.add(s);
 			}
 		} else {
 			// Add a statement
-			stat = indent + target + " = " + constant + ";";
+			statements.add(indent + lhs + " = " + code.constant + ";");
 		}
-		store.addStatement(code, stat);
+		store.addAllStatements(code, statements);
 	}
 
 	/**
