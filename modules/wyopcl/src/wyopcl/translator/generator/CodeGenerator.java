@@ -79,10 +79,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		
 		// Translate each function
 		for (FunctionOrMethod function : module.functionOrMethods()) {
+			this.deallocatedAnalyzer.initializeOwnership(function);
 			// Iterate and translate each code into the target language.
 			this.iterateCodes(function.body().bytecodes(), function);
 			// Write the code
 			this.writeFunction(function);
+			
 		}
 	}
 	
@@ -115,7 +117,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// Declare the extra 'size' variables.
 				size_vars.forEach(size_var -> declarations.add("\tlong long "+size_var+" = 0;"));
 				// Declare the extra 'has_ownership' boolean variables
-				declarations.add("\tbool "+CodeGeneratorHelper.getOwnershipFlag(var)+" = true;");
+				declarations.add(CodeGeneratorHelper.generateOwnershipDeclaration(var));
 				
 			} else if (type instanceof Type.Int) {
 				declarations.add("\t" + translateType + " " + var + " = 0;");
@@ -375,15 +377,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 
 
-	private void initializeOwnership(FunctionOrMethod function){
-		// Get variable declaration
-		VariableDeclarations var_declarations = function.attribute(VariableDeclarations.class);
-		
-		
-		
-		// Add 'var' to ownership 
-		//this.deallocatedAnalyzer.addOwnership(reg, function);
-	}
+	
 	
 
 	/**
@@ -865,19 +859,23 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.Return code, FunctionOrMethod function) {
 		CodeStore store = stores.getCodeStore(function);
-		String statement = store.getIndent();
+		List<String> statements = new ArrayList<String>();
+		String indent = store.getIndent();
 		if (code.operand >= 0) {
+			this.deallocatedAnalyzer.transferOwnership(code.operand, function);
+			statements.addAll(CodeGeneratorHelper.generateDeallocationCode(this.deallocatedAnalyzer.getOwnerships(function), indent));
 			// Translate the Return code.
-			statement += "return " + store.getVar(code.operand) + ";";
+			statements.add(store.getIndent() + "return " + store.getVar(code.operand) + ";");
 		} else {
 			// Negative register means this function/method does not have return value.
 			// So we do need to generate the code, except for main method.
 			if (function.name().equals("main")) {
+				statements.addAll(CodeGeneratorHelper.generateDeallocationCode(this.deallocatedAnalyzer.getOwnerships(function), indent));
 				// If the method is "main", then add a simple exit code with value
-				statement += "exit(0);";
+				statements.add(store.getIndent() + "exit(0);");
 			}
 		}
-		store.addStatement(code, statement);
+		store.addAllStatements(code, statements);
 	}
 
 	/**

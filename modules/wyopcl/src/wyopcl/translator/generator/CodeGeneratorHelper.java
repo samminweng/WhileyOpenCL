@@ -245,23 +245,29 @@ public final class CodeGeneratorHelper {
 	}
 	
 	/**
-	 * Returns the variable name of ownership flag
+	 * Generate the declaration of ownership variable, e.g.
+	 * 
+	 * <pre><code>
+	 * bool a_has_ownership = true;
+	 * </code></pre>
 	 * @param var
-	 * @param type
 	 * @return
 	 */
-	public static String getOwnershipFlag(String var){
-		return var+"_has_ownership";
+	public static String generateOwnershipDeclaration(String var){
+		return "\tbool "+var+"_has_ownership = true;";
 	}
+	
 	
 	/**
 	 * Returns a list of free statements to release array memory spaces.
 	 * @param vars
 	 * @return
 	 */
-	public static List<String> generateFreeArrayVariables(List<String> vars){
+	public static List<String> generateDeallocationCode(List<String> vars, String indent){
 		List<String> statements = new ArrayList<String>();
-		vars.forEach(var -> statements.add("if("+getOwnershipFlag(var)+"){free(var);}"));
+		
+		vars.stream()	
+		.forEach(var -> statements.add(indent+"if("+var.replace("%", "_")+"_has_ownership){free("+var.replace("%", "_")+");}"));
 		return statements;
 	}
 	
