@@ -51,6 +51,8 @@ public abstract class Analyzer {
 		this.config = config;
 	}
 
+	public abstract void apply(WyilFile module);
+	
 	/**
 	 * Check if the type is instance of Integer by inferring the type from
 	 * <code>wyil.Lang.Type</code> objects, including the effective collection

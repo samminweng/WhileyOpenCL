@@ -7,7 +7,9 @@ import java.util.stream.IntStream;
 
 import wybs.lang.Builder;
 import wyil.attributes.VariableDeclarations;
+import wyil.lang.Codes;
 import wyil.lang.Type;
+import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
 import wyopcl.translator.Analyzer;
@@ -25,7 +27,14 @@ public class DeallocationAnalyzer extends Analyzer {
 		this.ownerships = new HashMap<FunctionOrMethod, OwnershipVariables>();
 	}
 	
-	public void initializeOwnership(FunctionOrMethod function){
+	
+	
+	/**
+	 * Initialize the 'ownership' set for a given function
+	 * 
+	 * @param function
+	 */
+	private void initializeOwnership(FunctionOrMethod function){
 		// Intialize the ownership variables
 		if(this.ownerships.getOrDefault(function, null)== null){
 			this.ownerships.put(function,  new OwnershipVariables());
@@ -67,7 +76,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param reg
 	 * @param function
 	 */
-	public void transferOwnership(int reg, FunctionOrMethod function){
+	private void transferOwnership(int reg, FunctionOrMethod function){
 		this.ownerships.get(function).transferOwnership(reg);
 	}
 
@@ -83,6 +92,22 @@ public class DeallocationAnalyzer extends Analyzer {
 		}
 		
 		return var+"_has_ownership";
+	}
+
+
+
+
+	@Override
+	public void apply(WyilFile module) {
+		for(FunctionOrMethod function: module.functionOrMethods()){
+			this.initializeOwnership(function);
+			
+			function.body().bytecodes().stream()
+			.filter(c -> c instanceof Codes.Return)
+			.forEach(c -> transferOwnership(((Codes.Return)c).operand, function));
+			
+		}
+		
 	}
 	
 	

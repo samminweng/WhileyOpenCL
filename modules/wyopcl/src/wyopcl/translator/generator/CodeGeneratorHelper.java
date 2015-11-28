@@ -20,6 +20,7 @@ import wyil.lang.WyilFile;
 import wyil.lang.Type.Record.State;
 import wyil.lang.WyilFile.Constant;
 import wyil.lang.WyilFile.FunctionOrMethod;
+import wyopcl.translator.deallocate.DeallocationAnalyzer;
 import wyopcl.translator.generator.CodeStores.CodeStore;
 
 /**
@@ -263,11 +264,16 @@ public final class CodeGeneratorHelper {
 	 * @param vars
 	 * @return
 	 */
-	public static List<String> generateDeallocationCode(List<String> vars, String indent){
+	public static List<String> generateDeallocationCode(DeallocationAnalyzer analyzer, FunctionOrMethod function, String indent){
 		List<String> statements = new ArrayList<String>();
 		
-		vars.stream()	
-		.forEach(var -> statements.add(indent+"if("+var.replace("%", "_")+"_has_ownership){free("+var.replace("%", "_")+");}"));
+		if(analyzer != null){
+			List<String> vars = analyzer.getOwnerships(function);
+			
+			vars.stream()	
+			.forEach(var -> statements.add(indent+"if("+var.replace("%", "_")+"_has_ownership){free("+var.replace("%", "_")+");}"));
+		}
+		
 		return statements;
 	}
 	

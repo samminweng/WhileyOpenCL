@@ -25,6 +25,7 @@ import wyil.lang.WyilFile.FunctionOrMethod;
 import wyil.util.AttributedCodeBlock;
 import wyopcl.Configuration;
 import wyopcl.translator.copy.CopyEliminationAnalyzer;
+import wyopcl.translator.deallocate.DeallocationAnalyzer;
 import wyopcl.translator.generator.CodeGenerator;
 import wyopcl.translator.generator.CodeGeneratorHelper;
 import wyopcl.translator.symbolic.PatternMatcher;
@@ -43,11 +44,6 @@ public class Translator implements Builder {
 	public Translator(Configuration config) {
 		this.config = config;
 	}
-
-	/*
-	 * @Override public Project project() { return (Project)
-	 * config.getProperty("project"); }
-	 */
 
 	@Override
 	public Set<Entry<?>> build(Collection<Pair<Entry<?>, Root>> delta) throws IOException {
@@ -68,6 +64,14 @@ public class Translator implements Builder {
 		// Put the in-memory WyIL file to config for later retrieval.
 		this.config.setOption("module", module);
 
+		// Check if deallocation analysis is enabled or not
+		DeallocationAnalyzer deallocationAnalyzer = null;
+		if(config.isEnabled("dealloc")){
+			deallocationAnalyzer = new DeallocationAnalyzer(config);
+			deallocationAnalyzer.apply(module);
+			message = "Deallocation analysis completed.\nFile: " + config.getFilename();
+		}
+		
 		// Check if the copy elimination analysis is enabled.
 		CopyEliminationAnalyzer copyAnalyzer = null;
 		if (config.isEnabled("copy")) {
