@@ -55,15 +55,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		super(config);
 	}
 
-	public CodeGenerator(Configuration config, CopyEliminationAnalyzer analyzer) {
+	public CodeGenerator(Configuration config, CopyEliminationAnalyzer copyAnalyzer, DeallocationAnalyzer deallcAnalyzer) {
 		this(config);
-		this.copyAnalyzer = analyzer;
+		this.copyAnalyzer = copyAnalyzer;
+		this.deallocatedAnalyzer = deallcAnalyzer;
 	}
 	
-	public CodeGenerator(Configuration config, DeallocationAnalyzer analyzer){
-		this(config);
-		this.deallocatedAnalyzer = analyzer;
-	}
 	
 	
 	/**

@@ -65,10 +65,10 @@ public class Translator implements Builder {
 		this.config.setOption("module", module);
 
 		// Check if deallocation analysis is enabled or not
-		DeallocationAnalyzer deallocationAnalyzer = null;
+		DeallocationAnalyzer deallocAnalyzer = null;
 		if(config.isEnabled("dealloc")){
-			deallocationAnalyzer = new DeallocationAnalyzer(config);
-			deallocationAnalyzer.apply(module);
+			deallocAnalyzer = new DeallocationAnalyzer(config);
+			deallocAnalyzer.apply(module);
 			message = "Deallocation analysis completed.\nFile: " + config.getFilename();
 		}
 		
@@ -91,7 +91,7 @@ public class Translator implements Builder {
 
 		// Reads the in-memory WyIL file and generates the code in C
 		if (config.isEnabled("code")) {
-			CodeGenerator generator = new CodeGenerator(config, copyAnalyzer);
+			CodeGenerator generator = new CodeGenerator(config, copyAnalyzer, deallocAnalyzer);
 			generator.apply(module);
 			message = "Code Generation completed.\nFile: " + config.getFilename() + ".c, " + config.getFilename()
 			+ ".h";
@@ -124,56 +124,7 @@ public class Translator implements Builder {
 		}
 	}
 
-	/**
-	 * 
-	 * 
-	 * @param module
-	 */
-
-	private void generateCodeInC(WyilFile module) {
-		/*
-		 * if(config.isModeOn("copy")){ CopyEliminationAnalyzer analyzer = new
-		 * CopyEliminationAnalyzer(this, config); analyzer.apply(module);
-		 * //Generate the code without copy analysis. CodeGenerator generator =
-		 * new CodeGenerator(config, analyzer); generator.apply(module); }else{
-		 * //Generate the code without copy analysis. CodeGenerator generator =
-		 * new CodeGenerator(config); generator.apply(module); }
-		 * 
-		 */
-
-		/*
-		 * // A list of function declaration. List<String> function_list = new
-		 * ArrayList<String>(); try { // Create a writer to write the C code to
-		 * a *.c file. PrintWriter writer = new PrintWriter(config.getFilename()
-		 * + ".c"); CodeGeneratorHelper.generateIncludes(writer,
-		 * config.getFilename()); // Iterate each function for (FunctionOrMethod
-		 * functionOrMethod : module.functionOrMethods()) { if
-		 * (config.isPatternMatching()) { functionOrMethod =
-		 * TranslatorHelper.patternMatchingandTransformation(config,
-		 * functionOrMethod); } CodeGenerator generator = new
-		 * CodeGenerator(config, functionOrMethod, module.types()); String
-		 * function_del = generator.declareFunction(); // Add the function
-		 * declaration to the list function_list.add(function_del);
-		 * generator.declareVariables(); // Iterate each byte-code of a function
-		 * block and produce a list // of C code.
-		 * generator.iterateOverCodeBlock(functionOrMethod.body().bytecodes());
-		 * // Write out the code to *.c generator.writeCodeToFile(writer);
-		 * generator = null; } writer.close(); } catch (FileNotFoundException e)
-		 * { throw new RuntimeException("Error occurs in writing " +
-		 * config.getFilename() + ".c"); } // Write out the function signatures
-		 * to *.h file. try { PrintWriter writer = new
-		 * PrintWriter(config.getFilename() + ".h");
-		 * CodeGeneratorHelper.generateConstant(writer, module.constants());
-		 * CodeGeneratorHelper.generateUserDefinedType(writer, module.types());
-		 * CodeGeneratorHelper.generateHeader(writer, function_list,
-		 * config.isVerbose());
-		 * 
-		 * writer.close(); } catch (FileNotFoundException e) { throw new
-		 * RuntimeException("Error occurs in writing " + config.getFilename() +
-		 * ".h"); }
-		 */
-	}
-
+	
 	/**
 	 * Given a code block, tries to find the matching pattern and transform the code into more predictable code.
 	 * If no pattern is matched, then no change is made.
