@@ -1,9 +1,14 @@
 package wyopcl.translator.generator;
 
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -464,6 +469,7 @@ public final class CodeGeneratorHelper {
 		
 		throw new RuntimeException("Not Implemented!");
 	}
+	
 	
 	/**
 	 * Write the user-defined structure to *.h file, e.g. 

@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -81,6 +82,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		
 		// Translate each function
 		for (FunctionOrMethod function : module.functionOrMethods()) {
+			
 			// Iterate and translate each code into the target language.
 			this.iterateCodes(function.body().bytecodes(), function);
 			// Write the code
@@ -94,6 +96,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * Given a function, defines and initialize local variables
 	 */
 	protected List<String> declareVariables(FunctionOrMethod function) {
+		
 		// Get variable declaration
 		VariableDeclarations vars = function.attribute(VariableDeclarations.class);
 		// Get code storage
@@ -132,13 +135,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				declarations.add("\t"+translateType+ " "+var+";");
 			} else if (type instanceof Type.Method){
 				// Skip translation
+			} else if (type instanceof Type.Union){
+				declarations.add("\tunion UNION "+var+";");
 			} else{
 				throw new RuntimeException("Not implemented");
 				// Skip Type declaration without any initialization.
 				//del += "\t" + CodeGeneratorHelper.translateType(type, stores) + " " + var + ";\n";
 			}
-
 		}
+		
+		
+		
 		return declarations;
 	}
 
@@ -280,7 +287,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement += indent + lhs + " = "+ optimizeCode(code.operand(0), code, function);
 		} else if (code.type() instanceof Type.Int) {
 			statement = indent + lhs + " = " + store.getVar(code.operand(0)) + ";";
-		}else{
+		} else if (code.type() instanceof Type.Union && ((Type.Union)code.type()).bounds().contains(Type.Int.T_INT)) {
+			// Assign the values
+			statement = indent + lhs + " = " + store.getVar(code.operand(0)) + ";";
+		} else{
 			throw new RuntimeException("Not Implemented!");
 		}
 		// Add the statement to the list of statements.
@@ -333,30 +343,36 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 */
 	protected void translate(Codes.BinaryOperator code, FunctionOrMethod function) {
-		CodeStore store = stores.getCodeStore(function);
-		// Type type = code.type();
-		String target = store.getVar(code.target());
-		String left = store.getVar(code.operand(0));
-		String right = store.getVar(code.operand(1));
-		// vars.put(target, CodeGeneratorHelper.translate(type));
-		// addDeclaration(type, target);
+		CodeStore store = stores.getCodeStore(function);	
+		String lhs = store.getVar(code.target());
+		String rhs0 = store.getVar(code.operand(0));
+		// Append 'integer' member for union type
+		if(store.getVarType(code.operand(0)) instanceof Type.Union){
+			rhs0 += ".integer";
+		}
+		String rhs1 = store.getVar(code.operand(1));
+		// Append 'integer' member
+		if(store.getVarType(code.operand(1)) instanceof Type.Union){
+			rhs1 += ".integer";
+		}
+		
 		String stat = store.getIndent();
-		stat += target + "=" + left;
+		stat += lhs + "=" + rhs0;
 		switch (code.kind) {
 		case ADD:
-			stat += "+" + right + ";";
+			stat += "+" + rhs1 + ";";
 			break;
 		case SUB:
-			stat += "-" + right + ";";
+			stat += "-" + rhs1 + ";";
 			break;
 		case MUL:
-			stat += "*" + right + ";";
+			stat += "*" + rhs1 + ";";
 			break;
 		case DIV:
-			stat += "/" + right + ";";
+			stat += "/" + rhs1 + ";";
 			break;
 		case REM:
-			stat += "%" + right + ";";
+			stat += "%" + rhs1 + ";";
 			break;
 			/*
 			 * case RANGE: // Assign the range with input code for the translation of 'forall' // byte-code. // this.range =
@@ -662,8 +678,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(Codes.If code, FunctionOrMethod function) {
 		CodeStore store = stores.getCodeStore(function);
 		String statement = store.getIndent();
-		String left = store.getVar(code.leftOperand);
-		String right = store.getVar(code.rightOperand);
+		String lhs = store.getVar(code.leftOperand);
+		String rhs = store.getVar(code.rightOperand);
 
 		// Added a special case to compare two arrays.
 		if (code.type instanceof Type.Array) {
@@ -681,26 +697,36 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				Type right_type = store.getVarType(code.rightOperand);
 				// Check the left type is an array of integers.
 				if (CodeGeneratorHelper.isIntType(left_type)) {
-					statement += "if(isArrayEqual(" + left + ", " + left + "_size";
+					statement += "if(isArrayEqual(" + lhs + ", " + lhs + "_size";
 				} else {
 					// If not, use type casting.
-					statement += "if(isArrayEqual((" + CodeGeneratorHelper.translateType(right_type, stores) + ")" + left + ", " + left + "_size";
+					statement += "if(isArrayEqual((" + CodeGeneratorHelper.translateType(right_type, stores) + ")" + lhs + ", " + lhs + "_size";
 				}
 
 				// Check the right type is an array
 				if (CodeGeneratorHelper.isIntType(right_type)) {
-					statement += "," + right + ", " + right + "_size)==1";
+					statement += "," + rhs + ", " + rhs + "_size)==1";
 				} else {
 					// Cast the right to an array.
-					statement += ", (" + CodeGeneratorHelper.translateType(left_type, stores) + ")" + right + ", " + right + "_size)==1";
+					statement += ", (" + CodeGeneratorHelper.translateType(left_type, stores) + ")" + rhs + ", " + rhs + "_size)==1";
 				}
 			}
 		} else {
-			statement += "if(" + left;
+			statement += "if(" + lhs;
 			// The condition
 			statement += translate(code.op, false);
-			statement += right;
-
+			// Check type rhs operand
+			Type rhs_type = store.getVarType(code.rightOperand);
+			if(rhs_type instanceof Type.Union){
+				statement += rhs+".integer";
+			}else{
+				statement += rhs;
+			}
+			
+			
+			
+			
+			
 		}
 
 		// The goto statement
@@ -898,8 +924,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.IndexOf code, FunctionOrMethod function) {
 		CodeStore store = stores.getCodeStore(function);
-		String stat = store.getIndent() + store.getVar(code.target()) + "=" + store.getVar(code.operand(0)) + "["
-				+ store.getVar(code.operand(1)) + "];";
+		String stat = store.getIndent() + store.getVar(code.target()) + "=" + store.getVar(code.operand(0)) + "[";
+		// Get rhs type
+		Type rhs_type = store.getVarType(code.operand(1));
+		if(rhs_type instanceof Type.Union){
+			stat += store.getVar(code.operand(1)) + ".integer];";
+		}else{
+			stat += store.getVar(code.operand(1)) + "];";
+		}
+		
 		store.addStatement(code, stat);
 	}
 
@@ -1098,8 +1131,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(UnaryOperator code, FunctionOrMethod function) {
 		CodeStore store = stores.getCodeStore(function);
 		String target = prefix + code.target();
-		// vars.put(target, CodeGeneratorHelper.translate(code.type()));
-		// store.addDeclaration(code.type(), target);
 		String stat = store.getIndent() + target + "= -" + prefix + code.operand(0) + ";";
 		store.addStatement(code, stat);
 	}
@@ -1238,7 +1269,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String statement = "";
 		// The ifis code checks if the register is NULL or not.
 		if (code.rightOperand instanceof Type.Null) {
-			statement += store.getIndent() + "if(" + store.getVar(code.operand) + " == NULL) { goto " + code.target
+			statement += store.getIndent() + "if(" + store.getVar(code.operand) + ".null == NULL) { goto " + code.target
 					+ ";}";
 		} else {
 			throw new RuntimeException("Not implemented!" + code);
@@ -1297,18 +1328,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Check that the given value is an array.
 		if (code.type().element() instanceof Type.Array) {
 			String rhs = store.getVar(code.operand(0));
-			Type rhs_type = store.getVarType(code.operand(0));
-			// Get the value of rhs operand
-			/*if (!isCopyEliminated(code.operand(0), code, function)) {
-				// long long* _3_value = copy(_3, _3_size);
-				statement += store.getIndent() + CodeGeneratorHelper.translateType(rhs_type, stores) + " " + rhs + "_value" + " = copy(" + rhs
-						+ ", " + rhs + "_size);\n";
-			} else {
-				// No copies is needed, e.g. 'long long _3_value = _3;'
-				statement += store.getIndent() + CodeGeneratorHelper.translateType(rhs_type, stores) + " " + rhs + "_value" + " = " + rhs + ";\n";
-			}*/
 			statement += optimizeCode(code.operand(0), code, function);
-
 			// Get the address of rhs and assign it to lhs with type casting.
 			String lhs = store.getVar(code.target());
 			Type lhs_type = store.getVarType(code.target());
