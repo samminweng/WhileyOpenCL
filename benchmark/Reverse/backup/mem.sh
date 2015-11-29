@@ -49,21 +49,45 @@ mem_java(){
 }
 
 
-# #
-# # Translates the Whiley program into C code using our code generator
-# # and compile it using 'gcc'
-# #
-# generate_c_code (){
-# 	# Use wyopcl shell script to generate C code
-# 	if [ "$OP" = "slow" ]
-# 	then
-# 		# Generate naive C code
-# 		./../../../../../bin/wyopcl -code "$WHILEYSRC".whiley
-# 	else
-# 		# Generate copy-eliminated C code
-# 		./../../../../../bin/wyopcl -code -copy "$WHILEYSRC".whiley
-# 	fi
-# }
+#
+# Generate the Java or C code
+#
+generate_code(){
+	#echo "Current DIR" . $PWD
+	if [ "$CODE" = "JAVACode" ]
+	then
+		echo "Compile whiley into Java Code"
+		# Compile the sort whiley program
+		./../../../../../bin/wyjc "$SRC".whiley
+	else
+		# Use wyopcl shell script to generate C code
+		# The 'case esac' example is http://www.tutorialspoint.com/unix/case-esac-statement.htm 
+		case "$OP" in
+			"naive")
+				# Generate naive C code
+			 	./../../../../../bin/wyopcl -code "$SRC".whiley >> $RESULT
+			 	;;
+			"copy_reduced")
+				# Generate copy-eliminated C code
+			 	./../../../../../bin/wyopcl -code -copy "$SRC".whiley >> $RESULT
+				;;
+		esac
+		#compile the source C file with L2 optimization (-O2)
+		#see https://gcc.gnu.org/onlinedocs/gnat_ugn/Optimization-Levels.html#101
+		echo "Compile C Code"
+		gcc -m64 *.c -o "$SRC".out
+	fi	
+}
+
+run_code (){
+	if [ "$CODE" = "JAVACode" ]
+	then
+		# Run Java code
+		./../../../../../bin/wyj $SRC $parameter >> $RESULT
+	else
+		./"$SRC".out $parameter >> $RESULT
+	fi
+}
 #
 # The shell script of benchmarking the generated Java code of Whiley program
 #

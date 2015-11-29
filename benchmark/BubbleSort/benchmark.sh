@@ -31,14 +31,17 @@ generate_code(){
 		./../../../../../bin/wyjc "$SRC".whiley
 	else
 		# Use wyopcl shell script to generate C code
-		# if [ "$OP" = "slow" ]
-		# then
-		# 	# Generate naive C code
-		# 	./../../../../../bin/wyopcl -code "$WHILEYSRC".whiley >> $RESULT
-		# else
-		# 	# Generate copy-eliminated C code
-		# 	./../../../../../bin/wyopcl -code -copy "$WHILEYSRC".whiley >> $RESULT
-		# fi
+		# The 'case esac' example is http://www.tutorialspoint.com/unix/case-esac-statement.htm 
+		case "$OP" in
+			"naive")
+				# Generate naive C code
+			 	./../../../../../bin/wyopcl -code "$SRC".whiley >> $RESULT
+			 	;;
+			"copy_reduced")
+				# Generate copy-eliminated C code
+			 	./../../../../../bin/wyopcl -code -copy "$SRC".whiley >> $RESULT
+				;;
+		esac
 		#compile the source C file with L2 optimization (-O2)
 		#see https://gcc.gnu.org/onlinedocs/gnat_ugn/Optimization-Levels.html#101
 		echo "Compile C Code"
@@ -61,12 +64,11 @@ run_code (){
 #
 run_benchmark (){
 	NAME=$1
-	CALL=$2
-	CODE=$3
-	OP=$4
-	RESULT=$PWD/result.$NAME.$CALL.$CODE.$OP.txt
-	SRC="$NAME"_"$CALL"
-	DIR="$CALL/$CODE/$OP"	
+	CODE=$2
+	OP=$3
+	RESULT=$PWD/result.$NAME.$CODE.$OP.txt
+	SRC="$NAME"
+	DIR="Impl/$CODE/$OP"	
 	# make the folder
 	mkdir -p $DIR
 	# move C and Header files to working directory.
@@ -74,6 +76,7 @@ run_benchmark (){
 	# Change to working directory 
 	cd $DIR
 	generate_code
+	read -p "Press any key..."
 	#parameters
 	for parameter in $parameters
 	do
@@ -105,15 +108,13 @@ run_benchmark (){
 
 
 # Removes all the files inside folder
-rm result.*.txt 
-#rm -rf call_by_value
-#rm -rf call_by_reference
+rm result.*.txt
 #
 #Benchmark the generated C code
-#run_benchmark bubblesort call_by_value CCode copy_reduced
+run_benchmark bubblesort CCode copy_reduced
 #run_benchmark bubblesort call_by_value CCode copy_reduced_noleaks
-#run_benchmark bubblesort call_by_value CCode naive
+run_benchmark bubblesort CCode naive
 #run_benchmark bubblesort call_by_value CCode naive_noleaks
 #Benchmark the generated Java code
-run_benchmark bubblesort call_by_value JAVACode naive
+#run_benchmark bubblesort call_by_value JAVACode naive
 #run_benchmark_java sort call_by_reference
