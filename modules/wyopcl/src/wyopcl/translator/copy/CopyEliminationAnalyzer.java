@@ -123,6 +123,8 @@ public class CopyEliminationAnalyzer extends Analyzer {
 			this.buildCFG(function);
 			computeLiveness(function);
 		}
+		
+		super.apply(module);
 	}
 
 
@@ -167,9 +169,11 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		// Check the array is read-only. By default, the array is assumed not read-only but modified.
 		boolean isReadOnly = false;
 		if (code instanceof Codes.Invoke) {
-			String r_name = getActualVarName(reg, f);
-			FunctionOrMethod invoked_function = config.getFunctionOrMethod(((Codes.Invoke) code).name);
+			Codes.Invoke invoked = (Codes.Invoke)code;
+			FunctionOrMethod invoked_function = this.getModule().functionOrMethod(invoked.name.name(), invoked.type());
 			if (invoked_function != null) {
+				String r_name = getActualVarName(reg, f);
+				
 				// Check if the array r is modified inside 'invoked_function'.
 				isReadOnly = !mutate(r_name, invoked_function);
 			}

@@ -8,6 +8,7 @@ import wyil.lang.Codes.Fail;
 import wyil.lang.Codes.UnaryOperatorKind;
 import wyil.lang.Constant;
 import wyil.lang.Type;
+import wyil.lang.WyilFile;
 import wyil.lang.Type.Tuple;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
@@ -44,16 +45,23 @@ public class BoundAnalyzer {
 	private boolean isLoop;
 	// The line number
 	private int line;
+	private WyilFile module;
+	
+	
 	// Static instance
-	private static BoundAnalyzer instance = new BoundAnalyzer();
+	private static BoundAnalyzer instance;
 
 	/**
 	 * Constructor
 	 */
-	public BoundAnalyzer() {
+	public BoundAnalyzer(WyilFile module) {
+		this.module = module;
 	}
 
-	public static BoundAnalyzer getInstance() {
+	public static BoundAnalyzer getInstance(WyilFile module) {
+		if(instance == null){
+			instance = new BoundAnalyzer(module);
+		}
 		return instance;
 	}
 
@@ -66,9 +74,9 @@ public class BoundAnalyzer {
 	 */
 	public void buildCFG(Configuration config, String name) {
 		this.config = config;
-		// this.function_name = name;
-		FunctionOrMethod functionOrMethod = AnalyzerHelper.getFunctionOrMethod(config, name);
-
+		//FunctionOrMethod functionOrMethod = AnalyzerHelper.getFunctionOrMethod(config, name);
+		FunctionOrMethod functionOrMethod = this.module.functionOrMethod(name).get(0);
+		
 		if (!AnalyzerHelper.isCached(name)) {
 			AnalyzerHelper.promoteCFGStatus(name);
 		}
@@ -324,7 +332,7 @@ public class BoundAnalyzer {
 		// Produce the aggregated bounds of a function.
 		Bounds bnds = exit_blk.getBounds();
 		// Print out bounds along with size information.
-		AnalyzerHelper.printBoundsAndSize(config, bnds, name);
+		AnalyzerHelper.printBoundsAndSize(this.module, bnds, name);
 		AnalyzerHelper.printCFG(config, name);
 		return bnds;
 	}
@@ -836,7 +844,8 @@ public class BoundAnalyzer {
 	 * @param code
 	 */
 	private void analyze(Codes.Invoke code, String caller_name) {
-		FunctionOrMethod callee = AnalyzerHelper.getFunctionOrMethod(this.config, code.name.name());
+		//FunctionOrMethod callee = AnalyzerHelper.getFunctionOrMethod(this.config, code.name.name());
+		FunctionOrMethod callee = this.module.functionOrMethod(code.name.name(), code.type());
 		if (callee != null) {
 			int caller_line = line;
 			// Callee name

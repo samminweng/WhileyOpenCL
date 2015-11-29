@@ -42,6 +42,8 @@ public abstract class Analyzer {
 	private boolean isLoop;
 	// The line number
 	private int line;
+	// Wyil byte-code
+	private WyilFile module;
 
 	/**
 	 * Constructor
@@ -50,8 +52,19 @@ public abstract class Analyzer {
 		this.cfgraphs = new HashMap<FunctionOrMethod, CFGraph>();
 		this.config = config;
 	}
-
-	public abstract void apply(WyilFile module);
+	
+	
+	/**
+	 * Assign module to analyzer
+	 * @param module
+	 */
+	public void apply(WyilFile module){
+		this.module = module;
+	}
+	
+	public WyilFile getModule(){
+		return this.module;
+	}
 	
 	/**
 	 * Check if the type is instance of Integer by inferring the type from

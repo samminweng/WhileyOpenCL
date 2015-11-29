@@ -112,7 +112,7 @@ public class Translator implements Builder {
 	 * @param module
 	 */
 	private void analyzeBounds(WyilFile module) {
-		BoundAnalyzer boundAnalyzer = BoundAnalyzer.getInstance();
+		BoundAnalyzer boundAnalyzer = BoundAnalyzer.getInstance(module);
 		try {
 			// Start with main function.
 			boundAnalyzer.buildCFG(config, "main");

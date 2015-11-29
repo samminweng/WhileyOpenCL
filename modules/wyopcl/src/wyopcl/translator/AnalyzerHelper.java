@@ -133,8 +133,8 @@ public final class AnalyzerHelper {
 	 * @param bnd
 	 *            the bounds
 	 */
-	public static void printBoundsAndSize(Configuration config, Bounds bnds, String name) {
-		FunctionOrMethod functionOrMethod = getFunctionOrMethod(config, name);
+	public static void printBoundsAndSize(WyilFile module, Bounds bnds, String name) {
+		FunctionOrMethod functionOrMethod = module.functionOrMethod(name).get(0);
 		VariableDeclarations variables = functionOrMethod.attribute(VariableDeclarations.class);
 
 		String str = "Bound Analysis of " + name + ":\n";
@@ -305,10 +305,10 @@ public final class AnalyzerHelper {
 	 *            
 	 * @return
 	 */
-	public static FunctionOrMethod getFunctionOrMethod(Configuration config, String name) {
+	/*public static FunctionOrMethod getFunctionOrMethod(Configuration config, String name) {
 		WyilFile module = config.getWyilFile();
 		return module.functionOrMethod(name).get(0);
-	}
+	}*/
 
 
 	/**

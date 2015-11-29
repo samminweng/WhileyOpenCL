@@ -108,6 +108,7 @@ public class DeallocationAnalyzer extends Analyzer {
 			
 		}
 		
+		super.apply(module);
 	}
 	
 	

@@ -13,7 +13,6 @@ import wyil.lang.WyilFile.FunctionOrMethod;
  */
 public class Configuration {
 	private String filename;// The processing file name
-	private WyilFile module;// In-memory Wyil byte-code
 	private Properties options;
 
 	public Configuration() {
@@ -45,29 +44,7 @@ public class Configuration {
 		return this.filename;
 	}
 
-	/**
-	 * Get the in-memory wyil byte-code
-	 * 
-	 * @return
-	 */
-	public WyilFile getWyilFile() {
-		return this.module;
-	}
-
-	/**
-	 * Get the function or method by name.
-	 * 
-	 * @param name
-	 * @return the called function. If not found, return null.
-	 */
-	public FunctionOrMethod getFunctionOrMethod(NameID nameId) {
-		if (this.module.functionOrMethod(nameId.name()) != null
-				&& !this.module.functionOrMethod(nameId.name()).isEmpty()) {
-			return this.module.functionOrMethod(nameId.name()).get(0);
-		}
-		return null;
-	}
-
+	
 	/**
 	 * Add the option and value.
 	 * 
@@ -79,8 +56,8 @@ public class Configuration {
 			return;	
 		}
 		if(option.equals("module")){
-			this.module = (WyilFile) value;
-			this.filename = module.filename().split(".whiley")[0];
+			//this.module = (WyilFile) value;
+			this.filename = ((WyilFile) value).filename().split(".whiley")[0];
 			// Remove the prefix of file name './' on Linux.
 			// e.g. the file name of './While_Valid_1.whiley' is 'While_Valid_1.whiley'
 			filename = filename.replace("./", "");
