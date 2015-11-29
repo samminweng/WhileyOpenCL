@@ -7,6 +7,9 @@ define_parameters(){
 		"Reverse")
 			parameters="100 1000 10000"
 			;;
+		"MergeSort")
+			parameters="100 1000 10000"
+			;;
 	esac
 	
 }
@@ -149,5 +152,7 @@ mem_c (){
 # Get the folder of Util.c and Util.h
 UTILDIR=$PWD/../tests/code
 # Measure the memory usage of the generated C code
-mem_c Reverse CCode naive
-mem_c Reverse CCode copy_reduced
+#mem_c Reverse CCode naive
+#mem_c Reverse CCode copy_reduced
+mem_c MergeSort CCode naive
+mem_c MergeSort CCode copy_reduced

@@ -105,5 +105,4 @@ method main(System.Console sys):
         assert arr[0] == 0
         assert arr[max] == max
         /** Print out the sorted array */
-        sys.out.println(arr[max])
-    
+        sys.out.print_s("Pass MergeSort test case")
