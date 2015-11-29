@@ -74,16 +74,16 @@ long long** gen2DArray(long long* arr,  long long size_N, long long size_M){
  *  Combine an array of integers into an integer,
  *  e.g. arr = {1, 0} is converted into 10.\
  *  */
-long long parseInteger(long long* arr){
-	long long value;
-	long long i;
-	value = 0;
-	i=0;
+union UNION parseInteger(long long* arr){
+	union UNION result;
+	long long value = 0;
+	long long i=0;
 	while(arr[i]>=0&&arr[i]<=9){
 		value = value*10+arr[i];
 		i++;
 	}
-	return value;
+	result.integer = i;
+	return result;
 }
 
 /**

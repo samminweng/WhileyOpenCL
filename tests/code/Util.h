@@ -8,9 +8,6 @@
 
 // Define the NULL pointer
 // #define NULL ( (void *) 0)
-// Define the boolean values
-// #define false 0
-// #define true 1
 
 /**
  * Remove the security check about unsafe 'scanf' or 'sprintf' in VS tool
@@ -18,14 +15,24 @@
  */
 #define _CRT_SECURE_NO_WARNINGS
 
+// null|int
+// This code snippet aims to deal with union type in C
+union UNION {
+	int integer;
+	char *string;
+	float real;
+	void *null;
+};
+
+
 //Built-in functions
 
 void indirect_printf(long long input);
 //No overlapping is allowed: function name must be different.
 void printf_s(long long* input, long long input_size);
 void println_s(long long* input, long long input_size);
-// Parser
-long long parseInteger(long long* arr);
+// Parser a string into an integer
+union UNION parseInteger(long long* arr);
 // 1D Array Operator
 long long** convertArgsToIntArray(int argc, char** args);
 long long* copy(long long *arr, long long size);
