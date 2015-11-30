@@ -102,5 +102,6 @@ method main(System.Console sys):
             repeat = repeat + 1
             //sys.out.print_s("REPEAT: ")
          /** Print out the successful message */
-        sys.out.print_s("Pass TicTacToe test case")
+        sys.out.print_s("Pass TicTacToe test case with input = ")
+        sys.out.println(max)
 

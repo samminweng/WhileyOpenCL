@@ -198,7 +198,8 @@ method main(System.Console sys):
         assert C.data[0][0] ==  max
         assert C.width == max
         assert C.height == max
-        sys.out.print_s("Pass MatrixMult test case")
+        sys.out.print_s("Pass MatrixMult test case with input = ")
+        sys.out.println(max)
         //printMat(sys, C)
     /*if |sys.args| == 0:
         sys.out.println("usage: matrix <input-file>")
