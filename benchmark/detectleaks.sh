@@ -159,5 +159,6 @@ UTILDIR=$PWD/../tests/code
 #mem_c Reverse CCode copy_reduced
 #mem_c MergeSort CCode naive
 #mem_c MergeSort CCode copy_reduced
-mem_c TicTacToe CCode naive
-mem_c TicTacToe CCode copy_reduced
+#mem_c TicTacToe CCode naive
+#mem_c TicTacToe CCode copy_reduced
+mem_c MatrixMult CCode naive
