@@ -489,19 +489,19 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		for (int index = 0; index < code.operands().length; index++) {
 			if (!isFirst) {
 				statement += ", ";
+			}else{
+				isFirst = false;
 			}
+			
 			int reg = code.operand(index);
 			String param = store.getVar(reg);
 			Type paramType = store.getVarType(reg);
 			// Add the '*_size' parameter
-			if (paramType instanceof Type.Array) {
+			if(paramType instanceof Type.Int){
+				statement += param;
+			}else if (paramType instanceof Type.Array) {
 				statement += optimizeCode(reg, code, f);
-			} else if ((paramType instanceof Type.Reference
-					&& ((Type.Reference) paramType).element() instanceof Type.Array)) {
-				statement += param + ", " + param + "_size";
-			} else if(paramType instanceof Type.Record){
-				//wyil.lang.WyilFile.Type userType = this.getUserDefinedType((Type.Record)paramType);
-				//statement += "clone_"+userType.name()+"("+param+")";
+			} else if(paramType instanceof Type.Record){	
 				statement += "copy_"+CodeGeneratorHelper.translateType(paramType, stores)+"("+param+")";
 			} else if(paramType instanceof Type.Nominal){
 				Type.Nominal nomial = ((Type.Nominal)paramType);
@@ -509,15 +509,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					statement += "stdout";
 				}else{
 					statement += param;
-					//String userType = nomial.name().name();
-					//statement += "copy_"+userType+"("+param+")";
 				}
+			} else if(paramType instanceof Type.Union){
+				// Access the 'integer' member for union-typed variable
+				statement += param + ".integer";
 			} else {
-				statement += param;
-			}
-			isFirst = false;
+				throw new RuntimeException("Not Implemented");
+			}	
 		}
-		// Pass the array size into the function to mutate the array size.
 		return statement;
 	}
 
