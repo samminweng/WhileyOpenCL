@@ -10,6 +10,9 @@ define_parameters(){
 		"MergeSort")
 			parameters="100 1000 10000"
 			;;
+		"TicTacToe")
+			parameters="100 1000 10000"
+			;;
 	esac
 	
 }
@@ -154,5 +157,7 @@ UTILDIR=$PWD/../tests/code
 # Measure the memory usage of the generated C code
 #mem_c Reverse CCode naive
 #mem_c Reverse CCode copy_reduced
-mem_c MergeSort CCode naive
-mem_c MergeSort CCode copy_reduced
+#mem_c MergeSort CCode naive
+#mem_c MergeSort CCode copy_reduced
+mem_c TicTacToe CCode naive
+mem_c TicTacToe CCode copy_reduced
