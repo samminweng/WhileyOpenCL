@@ -1096,6 +1096,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Get the input
 			String input = store.getVar(code.operand(1));
 			switch (print_name) {
+			case "print":
+				statement += "printf(\"%d\\n\", " + input + ");";
+				break;
 			case "print_s":
 				// E.g. 'println("%s", str);'
 				statement += "printf_s(" + input + ", " + input + "_size);";
@@ -1104,23 +1107,25 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statement += "println_s(" + input + ", " + input + "_size);";
 				break;
 			case "println":
-				if(code.target()>0){
-					// Check input's type to call different println function.
-					Type type = store.getVarType(code.operand(1));
-					if (type instanceof Type.Int) {
-						statement += "printf(\"%d\\n\", " + input + ");";
-					} else if (type instanceof Type.Array) {
-						// Print out an array with given array size.
-						statement += "printf_array(" + input + ", " + input + "_size);";
-					} else if (type instanceof Type.Nominal) {
-						Type.Nominal nominal = (Type.Nominal) type;
-						// Print out a user-defined type structure
-						statement += "printf_" + nominal.name().name() + "(" + input + ");";
-					} else {
-						throw new RuntimeException("Not implemented." + code);
-					}
+				// Check input's type to call different println function.
+				Type type = store.getVarType(code.operand(1));
+				if (type instanceof Type.Int) {
+					statement += "printf(\"%d\\n\", " + input + ");";
+				} else if (type instanceof Type.Array) {
+					// Print out an array with given array size.
+					statement += "printf_array(" + input + ", " + input + "_size);";
+				} else if (type instanceof Type.Nominal) {
+					Type.Nominal nominal = (Type.Nominal) type;
+					// Print out a user-defined type structure
+					statement += "printf_" + nominal.name().name() + "(" + input + ");";
+				} else if (type instanceof Type.Union){
+					statement += "printf(\"%d\\n\", " + input + ".integer);";
+				} else {
+					throw new RuntimeException("Not implemented." + code);
 				}
 				break;
+			default:
+				throw new RuntimeException("Not implemented." + code);
 			}
 
 		}
