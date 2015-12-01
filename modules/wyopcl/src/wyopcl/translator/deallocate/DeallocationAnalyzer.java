@@ -40,10 +40,17 @@ public class DeallocationAnalyzer extends Analyzer {
 			this.ownerships.put(function,  new OwnershipVariables());
 		}
 		
+		// Set the starting register, excluding function input parameters.
+		int startingIndex = 0;
+		if(!function.name().equals("main")){
+			// Skip the input parameters
+			startingIndex = function.type().params().size();
+		}
+		
 		// Get variable declaration
 		VariableDeclarations var_declarations = function.attribute(VariableDeclarations.class);
 		
-		IntStream.range(0, var_declarations.size())
+		IntStream.range(startingIndex, var_declarations.size())
 		// Get array reference type
 		.filter(register -> var_declarations.get(register).type() instanceof Type.Array)
 		// Add 'register' to ownership 
