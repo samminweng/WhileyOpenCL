@@ -177,11 +177,23 @@ public class CopyEliminationAnalyzer extends Analyzer {
 				// Check if the array r is modified inside 'invoked_function'.
 				isReadOnly = !mutate(r_name, invoked_function);
 			}
+		}else if(code instanceof Codes.FieldLoad){
+			Codes.FieldLoad fieldload = (Codes.FieldLoad)code;
+			String lhs = getActualVarName(fieldload.target(), f);
+			
+			// Check if the lhs is modified in 'f' funciton
+			isReadOnly = !mutate(lhs, f);
+			//isReadOnly = true;
 		}
+		boolean isLive = true;
+
 		// Check the array is live.
 		BasicBlock blk = getBlockbyCode(f, code);// Get basic block that contains the given code.
-		Env outSet = getLiveness(f).getOUT(blk);
-		boolean isLive = outSet.contains(reg);
+		if(blk != null){
+			Env outSet = getLiveness(f).getOUT(blk);
+			isLive = outSet.contains(reg);
+		}		
+		
 		return (isReadOnly || !isLive);
 	}
 }

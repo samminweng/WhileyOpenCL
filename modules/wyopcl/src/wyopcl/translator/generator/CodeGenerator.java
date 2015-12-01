@@ -420,12 +420,19 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String var = store.getVar(op);
 		Type type = store.getVarType(op);
 		String type_name = CodeGeneratorHelper.translateType(type, stores);
-		if(code instanceof Codes.Assign || code instanceof Codes.FieldLoad || code instanceof Codes.NewRecord){
+		if(code instanceof Codes.Assign || code instanceof Codes.NewRecord){
 			statement += CodeGeneratorHelper.generateCopyUpdateCode(type, type_name, var, isCopyEliminated)+";"; 
 		}else if (code instanceof Codes.Invoke){
 			statement += CodeGeneratorHelper.generateCopyUpdateCode(type, type_name, var, isCopyEliminated)+", "
 					+ CodeGeneratorHelper.generateArraySizeVars(var, type); 
-		}else{
+		}else if (code instanceof Codes.FieldLoad){
+			Codes.FieldLoad fieldload = (Codes.FieldLoad)code;
+			type_name = CodeGeneratorHelper.translateType(fieldload.fieldType(), stores);
+			
+			// Access the member
+			statement += CodeGeneratorHelper.generateCopyUpdateCode(fieldload.fieldType(), type_name, var+"."+fieldload.field,
+					isCopyEliminated);
+		} else{
 			throw new RuntimeException("Not implemented");
 		}
 
@@ -1042,7 +1049,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement += indent + lhs + "_size = argc - 1;";
 		} else {
 			statement += CodeGeneratorHelper.generateArraySizeAssign(code.fieldType(), indent, lhs, store.getVar(code.operand(0)) + "." + code.field);
-			statement += indent + lhs + " = "+ (store.getVar(code.operand(0)) + "." + code.field)+";";
+			statement += indent + lhs + " = "+ optimizeCode(code.operand(0), code, function)+";";
+			//statement += indent + lhs + " = "+ (store.getVar(code.operand(0)) + "." + code.field)+";";
+			
 		}
 		store.addStatement(code, statement);
 	}

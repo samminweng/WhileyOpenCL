@@ -377,6 +377,8 @@ public final class CodeGeneratorHelper {
 			statement += "copy_"+type_name+"(" + var + ")";
 		}else if (type instanceof Type.Nominal){
 			statement += "("+type_name+")" + var;
+		}else if(type instanceof Type.Int){
+			statement += ""+var;
 		} else{
 			throw new RuntimeException("Not implemented");
 		}
