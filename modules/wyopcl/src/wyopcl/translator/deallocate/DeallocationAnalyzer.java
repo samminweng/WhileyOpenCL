@@ -51,23 +51,37 @@ public class DeallocationAnalyzer extends Analyzer {
 		// Get variable declaration
 		VariableDeclarations var_declarations = function.attribute(VariableDeclarations.class);
 		
-		IntStream.range(startingIndex, var_declarations.size())
-		// Get array reference type
-		.filter(register -> var_declarations.get(register).type() instanceof Type.Array)
-		// Add 'register' to ownership 
-		.forEach(register -> addOwnership(register, function));
+		for(int register=startingIndex;register<var_declarations.size();register++){
+			Type var_type = var_declarations.get(register).type();
+			if(var_type instanceof Type.Array){
+				addOwnership(register, function);
+			}else if(var_type instanceof Type.Record){
+				Type.Record r = (Type.Record)var_type;
+				// Check if the variable contains 'printf' field. 
+				long nonePrintFields = r.fields().keySet().stream()
+				.filter(f -> !f.contains("print") && !f.contains("println") && !f.contains("print_s") && !f.contains("println_s") )
+				.count();
+				
+				// If NOT a printf field, then add ownership.
+				if(nonePrintFields>0){
+					addOwnership(register, function);
+				}
+			}else{
+				// Do nothing
+			}
+		}
 	}
 	
 	
-	
-	public List<String> getOwnerships(FunctionOrMethod function){
-		List<String> array_variables = new ArrayList<String>();
+	/**
+	 * Returns the ownership set
+	 * @param function
+	 * @return
+	 */
+	public List<Integer> getOwnerships(FunctionOrMethod function){
+		return this.ownerships.getOrDefault(function, new OwnershipVariables())
+		.getOwnership();
 		
-		this.ownerships.getOrDefault(function, new OwnershipVariables())
-		.getOwnership()
-		.forEach(register -> array_variables.add(this.getActualVarName(register, function)));
-		
-		return array_variables;
 	}
 	
 	

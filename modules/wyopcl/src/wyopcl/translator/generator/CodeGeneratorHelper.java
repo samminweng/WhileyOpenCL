@@ -269,14 +269,29 @@ public final class CodeGeneratorHelper {
 	 * @param vars
 	 * @return
 	 */
-	public static List<String> generateDeallocationCode(DeallocationAnalyzer analyzer, FunctionOrMethod function, String indent){
+	public static List<String> generateDeallocationCode(DeallocationAnalyzer analyzer, FunctionOrMethod function, CodeStores stores){
+		CodeStore store = stores.getCodeStore(function);
+		String indent = store.getIndent();
 		List<String> statements = new ArrayList<String>();
-		
 		if(analyzer != null){
-			List<String> vars = analyzer.getOwnerships(function);
-			
-			vars.stream()	
-			.forEach(var -> statements.add(indent+"if("+var.replace("%", "_")+"_has_ownership){free("+var.replace("%", "_")+");}"));
+			List<Integer> registers = analyzer.getOwnerships(function);
+			// Generate the code to release memory spaces of ownership variables.
+			for(int register : registers){
+				// Get variable type
+				Type var_type = store.getVarType(register);
+				String var = store.getVar(register);
+				String s = indent + "if(";
+				s += var+"_has_ownership){free";
+				// Check if var_type is a structure
+				if(var_type instanceof Type.Record){
+					s+= "_"+translateType(var_type, stores);
+				}
+				s+="("+var+");";
+				s+="}";
+				statements.add(s);
+			}
+			/*vars.stream()	
+			.forEach(var -> statements.add(indent+"if("+var.replace("%", "_")+"_has_ownership){free("+var.replace("%", "_")+");}"));*/
 		}
 		
 		return statements;

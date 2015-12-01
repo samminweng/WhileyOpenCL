@@ -894,14 +894,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		List<String> statements = new ArrayList<String>();
 		String indent = store.getIndent();
 		if (code.operand >= 0) {
-			statements.addAll(CodeGeneratorHelper.generateDeallocationCode(this.deallocatedAnalyzer, function, indent));
+			statements.addAll(CodeGeneratorHelper.generateDeallocationCode(this.deallocatedAnalyzer, function, stores));
 			// Translate the Return code.
 			statements.add(store.getIndent() + "return " + store.getVar(code.operand) + ";");
 		} else {
 			// Negative register means this function/method does not have return value.
 			// So we do need to generate the code, except for main method.
 			if (function.name().equals("main")) {
-				statements.addAll(CodeGeneratorHelper.generateDeallocationCode(this.deallocatedAnalyzer, function, indent));
+				statements.addAll(CodeGeneratorHelper.generateDeallocationCode(this.deallocatedAnalyzer, function, stores));
 				// If the method is "main", then add a simple exit code with value
 				statements.add(store.getIndent() + "exit(0);");
 			}
