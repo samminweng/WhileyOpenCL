@@ -128,6 +128,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			} else if (type instanceof Type.Record){
 				if(!translateType.equals("")){
 					declarations.add("\t"+translateType+ " " + var + ";");
+					declarations.add(CodeGeneratorHelper.generateOwnershipDeclaration(var));
 				}else{
 					// Skip translation
 				}
