@@ -82,7 +82,7 @@ union UNION parseInteger(long long* arr){
 		value = value*10+arr[i];
 		i++;
 	}
-	result.integer = i;
+	result.integer = value;
 	return result;
 }
 

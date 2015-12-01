@@ -29,4 +29,5 @@ method main(System.Console sys):
         assert arr[0] == 0
         assert arr[max] == max
         /** Print out the successful message */
-        sys.out.print_s("Pass Reverse test case")
+        sys.out.print_s("Pass Reverse test case with input = ")
+        sys.out.println(max)

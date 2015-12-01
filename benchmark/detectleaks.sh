@@ -1,17 +1,22 @@
 #!/bin/bash
+# Set timeout limit
+TIMEOUT="30"
 # Parameters for checking memeory on Megatron using Valgrind and JAVA profiker. 
 parameters=""
 
 define_parameters(){
 	case "$NAME" in
 		"Reverse")
-			parameters="100 1000 10000"
+			parameters="1000 10000 100000 1000000 10000000 100000000"
 			;;
 		"MergeSort")
-			parameters="100 1000 10000"
+			parameters="1000 10000 100000 1000000 10000000"
 			;;
 		"TicTacToe")
-			parameters="100 1000 10000"
+			parameters="1000 10000 100000 1000000"
+			;;
+		"MatrixMult")
+			parameters="10 20 30 40 50 60 70 80 90 100"
 			;;
 	esac
 	
@@ -92,16 +97,6 @@ generate_code(){
 	fi	
 }
 
-# run_code (){
-# 	if [ "$CODE" = "JAVACode" ]
-# 	then
-# 		# Run Java code
-# 		./../../../../../bin/wyj $SRC $parameter
-# 	else
-# 		./"$SRC".out $parameter
-# 	fi
-# }
-
 #
 # Collects the memory usage of the generated C code
 #
@@ -132,7 +127,7 @@ mem_c (){
 		#  run valgrind to collect/detect memory leak in C code.
 		#  Ref: http://valgrind.org/docs/manual/manual.html
 		# Run Valgrind memcheck tool to find memory leak on Megatron, and write out results to output file.   
-		valgrind --tool=memcheck --log-file="$MEMORYLEAKS" ./"$SRC".out $parameter 
+		valgrind --tool=memcheck --log-file="$MEMORYLEAKS" ./"$SRC".out $parameter
 		# Run Valgrind full memcheck to see details of leaks memory
 		#valgrind --leak-check=full --log-file="$MEMORYLEAKS".leak.full.txt ./"$WHILEYSRC".out $parameter
 		# Find uninitialized memory
@@ -150,15 +145,16 @@ mem_c (){
 		#cat /proc/cpuinfo >> $MEMORY.massif.txt
     done
     # Return to the working directory
-    cd ../../../
+    cd ../../../../
 }
 # Get the folder of Util.c and Util.h
 UTILDIR=$PWD/../tests/code
 # Measure the memory usage of the generated C code
-#mem_c Reverse CCode naive
-#mem_c Reverse CCode copy_reduced
-#mem_c MergeSort CCode naive
-#mem_c MergeSort CCode copy_reduced
-#mem_c TicTacToe CCode naive
-#mem_c TicTacToe CCode copy_reduced
+mem_c Reverse CCode naive
+mem_c Reverse CCode copy_reduced
+mem_c MergeSort CCode naive
+mem_c MergeSort CCode copy_reduced
+mem_c TicTacToe CCode naive
+mem_c TicTacToe CCode copy_reduced
 mem_c MatrixMult CCode naive
+mem_c MatrixMult CCode copy_reduced

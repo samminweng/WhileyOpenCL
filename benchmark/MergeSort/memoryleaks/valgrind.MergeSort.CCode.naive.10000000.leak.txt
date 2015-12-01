@@ -1,0 +1,34 @@
+==3459== Memcheck, a memory error detector
+==3459== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==3459== Using Valgrind-3.10.0.SVN and LibVEX; rerun with -h for copyright info
+==3459== Command: ./MergeSort.out 10000000
+==3459== Parent PID: 2572
+==3459== 
+--3459-- core    : 3191869440/3191869440  max/curr mmap'd, 7/0 unsplit/split sb unmmap'd,  3166961664/3166955344 max/curr,      100600/3978913040 totalloc-blocks/bytes,       91133 searches 8 rzB
+--3459-- dinfo   : 20713472/12517376  max/curr mmap'd, 4/2 unsplit/split sb unmmap'd,  19377216/11045744 max/curr,       84656/  40444016 totalloc-blocks/bytes,       84767 searches 8 rzB
+--3459-- client  : 12395843584/12395843584  max/curr mmap'd, 0/0 unsplit/split sb unmmap'd,  7676255616/7676255616 max/curr,    73741743/7676255616 totalloc-blocks/bytes,    73741008 searches 24 rzB
+--3459-- demangle:        0/       0  max/curr mmap'd, 0/0 unsplit/split sb unmmap'd,         0/       0 max/curr,           0/         0 totalloc-blocks/bytes,           0 searches 8 rzB
+--3459-- ttaux   :    65536/   65536  max/curr mmap'd, 0/0 unsplit/split sb unmmap'd,     50320/   36304 max/curr,         314/     92864 totalloc-blocks/bytes,         314 searches 8 rzB
+==3459== 
+==3459==     Valgrind's memory management: out of memory:
+==3459==        newSuperblock's request for 65536 bytes failed.
+==3459==        18769223680 bytes have already been allocated.
+==3459==     Valgrind cannot continue.  Sorry.
+==3459== 
+==3459==     There are several possible reasons for this.
+==3459==     - You have some kind of memory limit in place.  Look at the
+==3459==       output of 'ulimit -a'.  Is there a limit on the size of
+==3459==       virtual memory or address space?
+==3459==     - You have run out of swap space.
+==3459==     - Valgrind has a bug.  If you think this is the case or you are
+==3459==     not sure, please let us know and we'll try to fix it.
+==3459==     Please note that programs can take substantially more memory than
+==3459==     normal when running under Valgrind tools, eg. up to twice or
+==3459==     more, depending on the tool.  On a 64-bit machine, Valgrind
+==3459==     should be able to make use of up 32GB memory.  On a 32-bit
+==3459==     machine, Valgrind should be able to use all the memory available
+==3459==     to a single process, up to 4GB if that's how you have your
+==3459==     kernel configured.  Most 32-bit Linux setups allow a maximum of
+==3459==     3GB per process.
+==3459== 
+==3459==     Whatever the reason, Valgrind cannot continue.  Sorry.

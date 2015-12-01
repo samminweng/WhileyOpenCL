@@ -4,16 +4,12 @@ BEGIN {
 	filename = "";
 	FS = "\t";
 	# Test case name
-	testcase = "Reverse";
-	# Call type
-	#calls["call_by_value"] = "call_by_value";
-	#calls["call_by_reference"] = "call_by_reference";
-	call = "call_by_value";
+	testcases["Reverse"] = "Reverse";
 	# Optimization
 	ops["naive"] = "naive";
-	ops["naive_noleaks"] = "naive_noleaks";
+	#ops["naive_noleaks"] = "naive_noleaks";
 	ops["copy_reduced"] = "copy_reduced";
-	ops["copy_reduced_noleaks"] = "copy_reduced_noleaks";
+	#ops["copy_reduced_noleaks"] = "copy_reduced_noleaks";
 	# Parameter
 	arraysizes[""] = "";
 	# Leak
@@ -22,14 +18,14 @@ BEGIN {
 {
 	filename=FILENAME;
 	n=split(filename, arr, ".");
-	# Get call type
-	call=arr[2];
+	# Get test case
+	testcase=arr[2];
 	# Get optimization
 	op=arr[4];
 	# Get array size
 	arraysize = arr[5];
 	arraysizes[arraysize]=arraysize;
-	key = call","op","arraysize;
+	key = testcase","op","arraysize;
 	# Get definite loss.
 	if(match($1, "definitely lost:")){
 		# Get Parameter
@@ -79,18 +75,22 @@ BEGIN {
 END {	
 
 	print "Memory Leak (bytes)";
-	print "FunctionCallType\tOptimization\tArraysize\tdefinite loss\tindirect loss\tpossible loss\treachable loss";
-	# Get Optimization Type
-	for(op in ops){
-		# Sort the arraysizes 
-		total = asort(arraysizes);
-		for(n=1;n<=total;n++){
-			arraysize = arraysizes[n];
-			# Slow program
-			key = call","op","arraysize;
-			str = call"\t"op"\t"arraysize"\t"leaks[key",definiteloss"]"\t"leaks[key",indirectloss"]"\t"leaks[key",possibleloss"]"\t"leaks[key",reachableloss"];
-			print str;
+	print "TestCase\tOptimization\tArraysize\tdefinite loss\tindirect loss\tpossible loss\treachable loss";
+	for (testcase in testcases){
+		
+		# Get Optimization Type
+		for(op in ops){
+			# Sort the arraysizes 
+			total = asort(arraysizes);
+			for(n=1;n<=total;n++){
+				arraysize = arraysizes[n];
+				# Slow program
+				key = testcase","op","arraysize;
+				str = testcase"\t"op"\t"arraysize"\t"leaks[key",definiteloss"]"\t"leaks[key",indirectloss"]"\t"leaks[key",possibleloss"]"\t"leaks[key",reachableloss"];
+				#print str;
+			}
 		}
 	}
+	
 	
 }

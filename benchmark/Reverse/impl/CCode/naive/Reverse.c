@@ -232,12 +232,16 @@ blklab6:;
 	}
 	//fieldload %25 = %0 out : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 	//fieldload %26 = %25 print_s : {method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s}
-	//const %27 = [80,97,115,115,32,82,101,118,101,114,115,101,32,116,101,115,116,32,99,97,115,101] : int[]
-	_27_size = 22;
-	_27=(long long*)malloc(22*sizeof(long long));
-	_27[0] = 80; _27[1] = 97; _27[2] = 115; _27[3] = 115; _27[4] = 32; _27[5] = 82; _27[6] = 101; _27[7] = 118; _27[8] = 101; _27[9] = 114; _27[10] = 115; _27[11] = 101; _27[12] = 32; _27[13] = 116; _27[14] = 101; _27[15] = 115; _27[16] = 116; _27[17] = 32; _27[18] = 99; _27[19] = 97; _27[20] = 115; _27[21] = 101; 
+	//const %27 = [80,97,115,115,32,82,101,118,101,114,115,101,32,116,101,115,116,32,99,97,115,101,32,119,105,116,104,32,105,110,112,117,116,32,61,32] : int[]
+	_27_size = 36;
+	_27=(long long*)malloc(36*sizeof(long long));
+	_27[0] = 80; _27[1] = 97; _27[2] = 115; _27[3] = 115; _27[4] = 32; _27[5] = 82; _27[6] = 101; _27[7] = 118; _27[8] = 101; _27[9] = 114; _27[10] = 115; _27[11] = 101; _27[12] = 32; _27[13] = 116; _27[14] = 101; _27[15] = 115; _27[16] = 116; _27[17] = 32; _27[18] = 99; _27[19] = 97; _27[20] = 115; _27[21] = 101; _27[22] = 32; _27[23] = 119; _27[24] = 105; _27[25] = 116; _27[26] = 104; _27[27] = 32; _27[28] = 105; _27[29] = 110; _27[30] = 112; _27[31] = 117; _27[32] = 116; _27[33] = 32; _27[34] = 61; _27[35] = 32; 
 	//indirectinvoke %26 (%27) : method(int[]) -> void
 	printf_s(_27, _27_size);
+	//fieldload %28 = %0 out : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
+	//fieldload %29 = %28 println : {method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s}
+	//indirectinvoke %29 (%1) : method(any) -> void
+	printf("%d\n", max.integer);
 //.blklab3
 blklab3:;
 	//return

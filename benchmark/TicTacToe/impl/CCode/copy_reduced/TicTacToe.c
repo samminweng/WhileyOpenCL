@@ -429,12 +429,16 @@ blklab24:;
 blklab16:;
 	//fieldload %50 = %0 out : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 	//fieldload %51 = %50 print_s : {method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s}
-	//const %52 = [80,97,115,115,32,84,105,99,84,97,99,84,111,101,32,116,101,115,116,32,99,97,115,101] : int[]
-	_52_size = 24;
-	_52=(long long*)malloc(24*sizeof(long long));
-	_52[0] = 80; _52[1] = 97; _52[2] = 115; _52[3] = 115; _52[4] = 32; _52[5] = 84; _52[6] = 105; _52[7] = 99; _52[8] = 84; _52[9] = 97; _52[10] = 99; _52[11] = 84; _52[12] = 111; _52[13] = 101; _52[14] = 32; _52[15] = 116; _52[16] = 101; _52[17] = 115; _52[18] = 116; _52[19] = 32; _52[20] = 99; _52[21] = 97; _52[22] = 115; _52[23] = 101; 
+	//const %52 = [80,97,115,115,32,84,105,99,84,97,99,84,111,101,32,116,101,115,116,32,99,97,115,101,32,119,105,116,104,32,105,110,112,117,116,32,61,32] : int[]
+	_52_size = 38;
+	_52=(long long*)malloc(38*sizeof(long long));
+	_52[0] = 80; _52[1] = 97; _52[2] = 115; _52[3] = 115; _52[4] = 32; _52[5] = 84; _52[6] = 105; _52[7] = 99; _52[8] = 84; _52[9] = 97; _52[10] = 99; _52[11] = 84; _52[12] = 111; _52[13] = 101; _52[14] = 32; _52[15] = 116; _52[16] = 101; _52[17] = 115; _52[18] = 116; _52[19] = 32; _52[20] = 99; _52[21] = 97; _52[22] = 115; _52[23] = 101; _52[24] = 32; _52[25] = 119; _52[26] = 105; _52[27] = 116; _52[28] = 104; _52[29] = 32; _52[30] = 105; _52[31] = 110; _52[32] = 112; _52[33] = 117; _52[34] = 116; _52[35] = 32; _52[36] = 61; _52[37] = 32; 
 	//indirectinvoke %51 (%52) : method(int[]) -> void
 	printf_s(_52, _52_size);
+	//fieldload %53 = %0 out : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
+	//fieldload %54 = %53 println : {method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s}
+	//indirectinvoke %54 (%1) : method(any) -> void
+	printf("%d\n", max.integer);
 //.blklab15
 blklab15:;
 	//return
