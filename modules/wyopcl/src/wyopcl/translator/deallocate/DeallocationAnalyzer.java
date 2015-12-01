@@ -7,6 +7,7 @@ import java.util.stream.IntStream;
 
 import wybs.lang.Builder;
 import wyil.attributes.VariableDeclarations;
+import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyil.lang.WyilFile;
@@ -75,7 +76,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param reg
 	 * @param f
 	 */
-	public void addOwnership(int reg, FunctionOrMethod function){
+	private void addOwnership(int reg, FunctionOrMethod function){
 		this.ownerships.get(function).addOwnership(reg);
 	}
 	/**
@@ -93,26 +94,40 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param type
 	 * @return
 	 */
-	public String getOwnershipFlag(String var){
+	/*private String getOwnershipFlag(String var){
 		if(var.startsWith("%")){
 			var = var.replace("%", "_");
 		}
 		
 		return var+"_has_ownership";
+	}*/
+	/**
+	 * Iterate each code and compute the ownership set.
+	 * @param code
+	 * @param function
+	 */
+	private void iterateCode(Code code, FunctionOrMethod function){
+		if(code instanceof Codes.Return){
+			// For Return code, transfer out the ownership of return value.
+			Codes.Return r = (Codes.Return)code;
+			this.transferOwnership(r.operand, function);
+		}else{
+			// Do nothing
+		}
+		
 	}
 
-
-
-
+	
 	@Override
 	public void apply(WyilFile module) {
+		// Compute ownership set for each function.
 		for(FunctionOrMethod function: module.functionOrMethods()){
+			// Initialize the 'ownership' set with each of true value.
 			this.initializeOwnership(function);
-			
-			function.body().bytecodes().stream()
-			.filter(c -> c instanceof Codes.Return)
-			.forEach(c -> transferOwnership(((Codes.Return)c).operand, function));
-			
+			// Compute 'ownership' set
+			for(Code code: function.body().bytecodes()){
+				this.iterateCode(code, function);
+			}
 		}
 		
 		super.apply(module);

@@ -48,6 +48,12 @@ public class CodeGenerationTestCase {
 	}
 	
 	@Test
+	public void test_reverse_naive_dealloc() {
+		//Generate the naive C code  
+		util.execCodeGeneration(codeDir, "reverse", "dealloc");
+	}
+	
+	@Test
 	public void test_reverse_copy() {
 		//Generate the naive C code  
 		util.execCodeGeneration(codeDir, "reverse", "copy");
