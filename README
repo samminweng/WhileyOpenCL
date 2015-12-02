@@ -1,73 +1,54 @@
-=====================================================================
+============================================================================================
 Introduction
-======================================================================
+============================================================================================
 
-The Whiley programming language employs the extended static checking
-to eliminate he errors at the compile time, and compiles the
-high-level Whiley program into different kinds of implementations.
-However, the C implementations that the Whiley compiler generates are
-currently quite inefficient, due to always using unbounded integers,
-unbounded data structures with frequent copying, etc. This project
-aims to use the program analysis techniques to generate efficient
-parallel implementations in C and OpenCL and to gain the speed-up
-across heterogeneous platforms.
+The Whiley programming language employs the extended static checking to eliminate the errors at the compile time, and compiles the high-level Whiley program into different kinds of implementations. However, the C implementations that the Whiley compiler generates are currently quite inefficient, due to always using unbounded integers, unbounded data structures with frequent copying, etc. This project aims to use the program analysis techniques to generate efficient parallel implementations in C and OpenCL and to gain the speed-up across heterogeneous platforms.
 
-======================================================================
+============================================================================================
 Installation
-======================================================================
+============================================================================================
+
 Please Open Cygwin/terminal and follow the below instructions.
-$ git clone https://github.com/samminweng/WhileyOpenCL
-$ cd WhileyOpenCL/
-$ ant  
+$ git clone https://github.com/samminweng/WhileyOpenCL && cd WhileyOpenCL/ && ant  
 
 To update the code from GitHub, use the below commands:
-$ git reset --hard HEAD
-$ git clean -dfx
-$ git pull
+$ git reset --hard HEAD && git clean -dfx && git pull
 
 'git reset' resets the code base to the most recent commit.
 'git clean -dfx' removes all the untracked files. 
 'git checkout -- <file>' undoes the changes of a file.
 
-======================================================================
+============================================================================================
 Usage
-======================================================================
+============================================================================================
+
 1. Whiley-to-OpenCL translator
-The Whiley-to-OpenCL translator is written in Java and aims to generate
-C/OpenCL code and proof obligation. At this stage, we will use the prime
-example as the main test case (perhaps we need more) to manually generate
-its OpenCL code and produce the proof obligations in SMT syntax, which
-allows us to make use of different SMT solvers (e.g. Z3). 
+The Whiley-to-OpenCL translator is written in Java and aims to generate C/OpenCL code and proof obligation. At this stage, we will use the prime example as the main test case (perhaps we need more) to manually generate its OpenCL code and produce the proof obligations in SMT syntax, which allows us to make use of different SMT solvers (e.g. Z3). 
 ----------------------------------------------------------------------
 1.1 Bound Analyzer
-Bound analyzer aims to infer the bounds and check the bounds consistent
-with all constraints. To run the bound analyzer, use the below commands:
-$ cd tests/bounds
-$ ./../../bin/wyopcl -bound naive WhileLoop.whiley 
+Bound analyzer aims to infer the bounds and check the bounds consistent with all constraints. To run the bound analyzer, use the below commands:
+$ cd tests/bounds && ./../../bin/wyopcl -bound naive WhileLoop.whiley 
 Or use the gradual widening strategy to get more precise bounds.
 $ ./../../bin/wyopcl -bound gradual WhileLoop.whiley
 
 1.2 Pattern Matching and Transformation
-Pattern matcher finds the list of code block at byte-code level and 
-matches it with predefined patterns. If the pattern is transformable, 
-then the pattern matching automatically converts the pattern into the
-predefined pattern.
-$ cd tests/pattern
-$ ./../../bin/wyopcl -pattern While_Valid_1.whiley
+Pattern matcher finds the list of code block at byte-code level, and matches it with predefined patterns and transforms the program w.r.t the pattern.
+$ cd tests/pattern && ./../../bin/wyopcl -pattern While_Valid_1.whiley
 
 1.3 Code Generator
 Code Generator aims to translate the Whiley program into C code.
 $ cd tests/code
-$ ./../../bin/wyopcl -code swap.whiley
-$ gcc swap.c Util.c -o swap.out
-$ ./swap.out
+$ ./../../bin/wyopcl -code swap.whiley && gcc swap.c Util.c -o swap.out && ./swap.out
 
 1.4 Copy Elimination Analysis
-Copy Elimination analysis aims to eliminate the un-necessary array
-copies at Wyil level. 
-$ cd tests/copy
+Copy Elimination analysis aims to eliminate the un-necessary copies at Wyil level. 
+$ cd tests/code
 $ ./../../bin/wyopcl -copy swap.whiley
 
+1.5 Deallocation Analysis
+Deallocation analysis aims to compute ownership variable set for releasing memory at block end.
+$ cd tests/code
+$ ./../../bin/wyopcl -code -dealloc swap.whiley
 
 @Deprecated
 This interpreter could not function well due to the change in WyIL
@@ -75,32 +56,27 @@ structures and upgrades of Whiley compiler.
 ~~ 2. WyIL (Whiley Intermediate Language) Interpreter ~~  
 ~~ ---------------------------------------------------------------------- ~~
 ~~ To play with WyIL interpreter, use the commands: ~~
-~~ $ cd examples/ ~~
-~~ $ ./../bin/wyopcl sieve.whiley 100 ~~
+~~ $ cd examples && ./../bin/wyopcl sieve.whiley 100 ~~
 ~~ Or add the verbose option to print out the interpretation. ~~
 ~~ $ ./../bin/wyopcl -verbose sieve.whiley 100 ~~
 
 
-======================================================================
+============================================================================================
 Unit Testing
-======================================================================
+============================================================================================
 1. Whiley-to-OpenCL translator
 1.1 Bound Analyzer
-The bound analyzer is being tested with several Whiley programs, including
-{IfElse_Valid_2} and {WhileLoop}. To run the tests, use the below commands:
+The bound analyzer is being tested with several Whiley programs. Use the below commands:
 $ ant test-bound
 The unit test results are summarized at 'report/bound/index.html'. 
 
 1.2 Pattern Matching and Transformation
-The pattern module is being tested with several Whiley programs, including
-{Loop} and {While_Valid_1}. To run the tests, use the below commands:
+The pattern module is being tested with several Whiley programs. Use the below commands:
 $ ant test-pattern
 The unit test results are summarized at 'report/pattern/index.html'.
 
 1.3 Code Generator
-The code generator is tested with 5 Whiley programs, including
-{swap}, {reverse}, {mergesort}, {TicTacToe} and {MatrixMult}. To run the tests,
-use the below commands:
+The code generator is tested with 5 Whiley programs. Use the below commands:
 $ ant test-code
 The unit test results are summarized at 'report/code/index.html'. 
 
