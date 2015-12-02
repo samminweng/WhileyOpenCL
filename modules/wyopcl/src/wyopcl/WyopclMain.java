@@ -13,13 +13,14 @@ import wycc.lang.SyntaxError;
 import wycc.lang.SyntaxError.InternalFailure;
 import wycc.util.Logger;
 import wycc.util.OptArg;
-import wyopcl.translator.Configuration;
 
 public class WyopclMain extends WycMain{
 	private boolean verbose = false;
 	public static final OptArg[] EXTRA_OPTIONS = {		
-		//Add the 'alias' option
-		new OptArg("copy", "Run the copy elimination analysis to remove the un-necessary array copies at byte-code level.\n" ),
+		new OptArg("dealloc", "Run the deallocation analysis to release un-used memory"),
+			
+		//Add the 'copy' option to eliminate un-needed copies
+		new OptArg("copy", "Run the copy elimination analysis to eliminate the un-necessary array copies at byte-code level.\n" ),
 		
 		//Add the 'bound' option 
 		new OptArg("bound", OptArg.STRING, "Run bound analysis on whiley program with a specific widening strategy:\n"
@@ -65,11 +66,7 @@ public class WyopclMain extends WycMain{
 			((WyopclBuildTask)builder).enableInterpreter();
 		}else{
 			//Run the translator with configuration.
-			Configuration config = new Configuration();
-			/*if(values.containsKey("verbose")){			
-				//config.setProperty("logger", new Logger.Default(System.err));
-				config.setOption("verbose", true);
-			}*/			
+			Configuration config = new Configuration();	
 			//If the options are matched with existing modes, then enable the translator by writing the mode option. 
 			for(Entry<String, Object> entry: values.entrySet()){
 				String option = entry.getKey();

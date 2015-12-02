@@ -1,0 +1,21 @@
+==3977== Memcheck, a memory error detector
+==3977== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==3977== Using Valgrind-3.10.0.SVN and LibVEX; rerun with -h for copyright info
+==3977== Command: ./TicTacToe.out 10000
+==3977== Parent PID: 3000
+==3977== 
+==3977== 
+==3977== HEAP SUMMARY:
+==3977==     in use at exit: 30,239,424 bytes in 419,992 blocks
+==3977==   total heap usage: 430,003 allocs, 10,011 frees, 30,960,360 bytes allocated
+==3977== 
+==3977== LEAK SUMMARY:
+==3977==    definitely lost: 30,239,280 bytes in 419,990 blocks
+==3977==    indirectly lost: 0 bytes in 0 blocks
+==3977==      possibly lost: 72 bytes in 1 blocks
+==3977==    still reachable: 72 bytes in 1 blocks
+==3977==         suppressed: 0 bytes in 0 blocks
+==3977== Rerun with --leak-check=full to see details of leaked memory
+==3977== 
+==3977== For counts of detected and suppressed errors, rerun with: -v
+==3977== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

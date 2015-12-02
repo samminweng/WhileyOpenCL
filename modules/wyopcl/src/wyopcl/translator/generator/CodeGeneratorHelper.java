@@ -1,9 +1,14 @@
 package wyopcl.translator.generator;
 
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +25,7 @@ import wyil.lang.WyilFile;
 import wyil.lang.Type.Record.State;
 import wyil.lang.WyilFile.Constant;
 import wyil.lang.WyilFile.FunctionOrMethod;
+import wyopcl.translator.deallocate.DeallocationAnalyzer;
 import wyopcl.translator.generator.CodeStores.CodeStore;
 
 /**
@@ -58,6 +64,7 @@ public final class CodeGeneratorHelper {
 
 		return false;
 	}
+	
 	
 	
 	/**
@@ -243,6 +250,52 @@ public final class CodeGeneratorHelper {
 		
 	}
 	
+	/**
+	 * Generate the declaration of ownership variable, e.g.
+	 * 
+	 * <pre><code>
+	 * bool a_has_ownership = true;
+	 * </code></pre>
+	 * @param var
+	 * @return
+	 */
+	public static String generateOwnershipDeclaration(String var){
+		return "\tbool "+var+"_has_ownership = true;";
+	}
+	
+	
+	/**
+	 * Returns a list of free statements to release array memory spaces.
+	 * @param vars
+	 * @return
+	 */
+	public static List<String> generateDeallocationCode(DeallocationAnalyzer analyzer, FunctionOrMethod function, CodeStores stores){
+		CodeStore store = stores.getCodeStore(function);
+		String indent = store.getIndent();
+		List<String> statements = new ArrayList<String>();
+		if(analyzer != null){
+			List<Integer> registers = analyzer.getOwnerships(function);
+			// Generate the code to release memory spaces of ownership variables.
+			for(int register : registers){
+				// Get variable type
+				Type var_type = store.getVarType(register);
+				String var = store.getVar(register);
+				String s = indent + "if(";
+				s += var+"_has_ownership){free";
+				// Check if var_type is a structure
+				if(var_type instanceof Type.Record){
+					s+= "_"+translateType(var_type, stores);
+				}
+				s+="("+var+");";
+				s+="}";
+				statements.add(s);
+			}
+			/*vars.stream()	
+			.forEach(var -> statements.add(indent+"if("+var.replace("%", "_")+"_has_ownership){free("+var.replace("%", "_")+");}"));*/
+		}
+		
+		return statements;
+	}
 	
 	
 	/***
@@ -339,6 +392,8 @@ public final class CodeGeneratorHelper {
 			statement += "copy_"+type_name+"(" + var + ")";
 		}else if (type instanceof Type.Nominal){
 			statement += "("+type_name+")" + var;
+		}else if(type instanceof Type.Int){
+			statement += ""+var;
 		} else{
 			throw new RuntimeException("Not implemented");
 		}
@@ -431,6 +486,7 @@ public final class CodeGeneratorHelper {
 		
 		throw new RuntimeException("Not Implemented!");
 	}
+	
 	
 	/**
 	 * Write the user-defined structure to *.h file, e.g. 

@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
-import wyopcl.translator.Configuration;
+import wyopcl.Configuration;
 
 /***
  * adds the upper or lower bounds and keeps track of the bounds for all

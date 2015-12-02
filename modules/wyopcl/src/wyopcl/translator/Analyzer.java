@@ -20,6 +20,7 @@ import wyil.lang.Codes.Loop;
 import wyil.lang.Codes.Return;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
+import wyopcl.Configuration;
 import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.BasicBlock.BlockType;
 import wyopcl.translator.bound.CFGraph;
@@ -41,6 +42,8 @@ public abstract class Analyzer {
 	private boolean isLoop;
 	// The line number
 	private int line;
+	// Wyil byte-code
+	private WyilFile module;
 
 	/**
 	 * Constructor
@@ -49,7 +52,20 @@ public abstract class Analyzer {
 		this.cfgraphs = new HashMap<FunctionOrMethod, CFGraph>();
 		this.config = config;
 	}
-
+	
+	
+	/**
+	 * Assign module to analyzer
+	 * @param module
+	 */
+	public void apply(WyilFile module){
+		this.module = module;
+	}
+	
+	public WyilFile getModule(){
+		return this.module;
+	}
+	
 	/**
 	 * Check if the type is instance of Integer by inferring the type from
 	 * <code>wyil.Lang.Type</code> objects, including the effective collection

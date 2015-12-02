@@ -8,7 +8,7 @@ import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyil.lang.Codes.Loop;
 import wyil.lang.WyilFile.FunctionOrMethod;
-import wyopcl.translator.Configuration;
+import wyopcl.Configuration;
 import wyopcl.translator.symbolic.pattern.expression.Expr;
 import wyopcl.translator.symbolic.pattern.expression.LinearExpr;
 import wyopcl.translator.symbolic.pattern.expression.RangeExpr;

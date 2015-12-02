@@ -5,7 +5,7 @@ import java.util.List;
 import wyil.lang.Code;
 import wyil.lang.Type;
 import wyil.lang.WyilFile.FunctionOrMethod;
-import wyopcl.translator.Configuration;
+import wyopcl.Configuration;
 /**
  * The class that implemented the while-loop patterns, as follows:
  * <ul>

@@ -7,7 +7,7 @@ import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyil.lang.Codes.Comparator;
 import wyil.lang.WyilFile.FunctionOrMethod;
-import wyopcl.translator.Configuration;
+import wyopcl.Configuration;
 import wyopcl.translator.symbolic.pattern.expression.Expr;
 
 /**

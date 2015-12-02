@@ -3,7 +3,6 @@ package wyopcl;
 import wybs.lang.Builder;
 import wybs.util.StdBuildRule;
 import wybs.util.StdProject;
-import wyopcl.translator.Configuration;
 import wyopcl.translator.Translator;
 //import wyopcl.util.Interpreter;
 //import wyopcl.util.InterpreterConfiguration;

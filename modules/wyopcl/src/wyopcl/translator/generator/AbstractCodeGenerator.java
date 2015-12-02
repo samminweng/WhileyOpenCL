@@ -51,7 +51,7 @@ import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.Constant;
 import wyil.lang.WyilFile.FunctionOrMethod;
-import wyopcl.translator.Configuration;
+import wyopcl.Configuration;
 
 /**
  * Defines the functions for code generator.
@@ -70,31 +70,9 @@ public abstract class AbstractCodeGenerator {
 		
 	}	
 	
-	/**
-	 * Takes the byte-code and produces the code.
-	 * 
-	 * @param module
-	 */
-	public void apply(WyilFile module) {
-		// Get and Set up user-defined types
-		this.stores = new CodeStores(config, (List<wyil.lang.WyilFile.Type>) module.types());
-		
-		this.writeIncludes();
-		// Defines constants
-		this.writeConstants((List<Constant>)module.constants());
-		
-		// Write out user-defined types.
-		this.writeUserTypes((List<wyil.lang.WyilFile.Type>) module.types());
-		
-		// Translate each function
-		for (FunctionOrMethod function : module.functionOrMethods()) {
-			// Iterate and translate each code into the target language.
-			this.iterateCodes(function.body().bytecodes(), function);
-			// Write the code
-			this.writeFunction(function);
-		}
-	}
 
+	protected abstract void apply(WyilFile module);
+	
 	protected abstract void translate(Update code, FunctionOrMethod function);
 
 	protected abstract void translate(UnaryOperator code, FunctionOrMethod function);
@@ -140,14 +118,6 @@ public abstract class AbstractCodeGenerator {
 	protected abstract String declareFunction(FunctionOrMethod function);
 
 	protected abstract List<String> declareVariables(FunctionOrMethod function);
-
-	protected abstract void writeConstants(List<Constant> constants);
-
-	protected abstract void writeUserTypes(List<wyil.lang.WyilFile.Type> userTypes);
-
-	protected abstract void writeFunction(FunctionOrMethod function);
-	
-	protected abstract void writeIncludes();
 	
 
 	/**

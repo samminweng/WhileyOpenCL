@@ -8,7 +8,7 @@ import java.util.List;
 import wyil.lang.Code;
 import wyil.lang.Type;
 import wyil.lang.WyilFile.FunctionOrMethod;
-import wyopcl.translator.Configuration;
+import wyopcl.Configuration;
 import wyopcl.translator.symbolic.pattern.BuildListFirstPattern;
 import wyopcl.translator.symbolic.pattern.BuildListPattern;
 import wyopcl.translator.symbolic.pattern.NullPattern;
