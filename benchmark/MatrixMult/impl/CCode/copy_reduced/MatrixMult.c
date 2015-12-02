@@ -23,6 +23,7 @@ void free_Matrix(Matrix _Matrix){
 }
 Matrix matrix(nat width, nat height, long long** data, long long data_size, long long data_size_size){
 	Matrix _3;
+	bool _3_has_ownership = true;
 	//newrecord %3 = (%2, %1, %0) : {int[][] data,int height,int width}
 	_3.data_size = data_size;
 	_3.data_size_size = data_size_size;
@@ -93,6 +94,7 @@ Matrix multiply(Matrix A, Matrix B){
 	long long _36 = 0;
 	long long _37 = 0;
 	Matrix _38;
+	bool _38_has_ownership = true;
 	long long _39 = 0;
 	long long _40 = 0;
 	//const %8 = 0 : int
@@ -349,6 +351,7 @@ Matrix genMatrix(nat height, nat width){
 	long long _17 = 0;
 	long long _18 = 0;
 	Matrix _19;
+	bool _19_has_ownership = true;
 	//const %6 = 0 : int
 	_6 = 0;
 	//listgen %7 = [6; 1] : int[]
@@ -433,11 +436,17 @@ int main(int argc, char** args){
 	long long _9_size = 0;
 	bool _9_has_ownership = true;
 	Matrix _10;
+	bool _10_has_ownership = true;
 	Matrix _11;
+	bool _11_has_ownership = true;
 	Matrix _12;
+	bool _12_has_ownership = true;
 	Matrix _13;
+	bool _13_has_ownership = true;
 	Matrix _14;
+	bool _14_has_ownership = true;
 	Matrix _15;
+	bool _15_has_ownership = true;
 	long long** _16 = NULL;
 	long long _16_size = 0;
 	long long _16_size_size = 0;

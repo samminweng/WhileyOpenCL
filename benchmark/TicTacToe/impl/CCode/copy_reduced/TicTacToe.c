@@ -32,6 +32,7 @@ Board EmptyBoard(){
 	long long _10_size = 0;
 	bool _10_has_ownership = true;
 	Board _11;
+	bool _11_has_ownership = true;
 	//const %0 = 0 : int
 	_0 = 0;
 	//const %1 = 0 : int
@@ -203,7 +204,9 @@ int main(int argc, char** args){
 	long long _11 = 0;
 	long long _12 = 0;
 	Board _13;
+	bool _13_has_ownership = true;
 	Board _14;
+	bool _14_has_ownership = true;
 	long long _15 = 0;
 	long long _16 = 0;
 	long long* _17 = NULL;
@@ -228,6 +231,7 @@ int main(int argc, char** args){
 	long long _31_size = 0;
 	bool _31_has_ownership = true;
 	Board _32;
+	bool _32_has_ownership = true;
 	long long _33 = 0;
 	long long _34 = 0;
 	long long _35 = 0;

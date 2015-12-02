@@ -10,11 +10,12 @@ BEGIN {
 	testcases["MatrixMult"] = "MatrixMult";
 	# Optimization
 	ops["naive"] = "naive";
-	#ops["naive_noleaks"] = "naive_noleaks";
+	ops["naive_dealloc"] = "naive_dealloc";
 	ops["copy_reduced"] = "copy_reduced";
 	#ops["copy_reduced_noleaks"] = "copy_reduced_noleaks";
 	# Parameter
 	arraysizes[""] = "";
+	count[""]=0;
 	# Leak
 	leaks[""]=0;
 }
@@ -28,6 +29,7 @@ BEGIN {
 	# Get array size
 	arraysize = arr[5];
 	arraysizes[arraysize]=arraysize;
+	count[testcase","arraysize]++;
 	key = testcase","op","arraysize;
 	# Get definite loss.
 	if(match($1, "definitely lost:")){
@@ -90,10 +92,14 @@ END {
 			total = asort(arraysizes);
 			for(n=1;n<=total;n++){
 				arraysize = arraysizes[n];
-				# Slow program
-				key = testcase","op","arraysize;
-				str = testcase"\t"op"\t"arraysize"\t"leaks[key",definiteloss"]"\t"leaks[key",indirectloss"]"\t"leaks[key",possibleloss"]"\t"leaks[key",reachableloss"];
-				print str;
+				# Check if there is the memory leak result.
+				if(count[testcase","arraysize]>0){
+					# Slow program
+					key = testcase","op","arraysize;
+					str = testcase"\t"op"\t"arraysize"\t"leaks[key",definiteloss"]"\t"leaks[key",indirectloss"]"\t"leaks[key",possibleloss"]"\t"leaks[key",reachableloss"];
+					print str;
+				}
+				
 			}
 		}
 	}

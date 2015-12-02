@@ -16,7 +16,7 @@ define_parameters(){
 			parameters="1000 10000 100000 1000000"
 			;;
 		"MatrixMult")
-			parameters="10 20 30 40 50 60 70 80 90 100"
+			parameters="10 20 30 40 50"
 			;;
 	esac
 	
@@ -85,6 +85,10 @@ generate_code(){
 				# Generate naive C code
 			 	./../../../../../bin/wyopcl -code "$SRC".whiley
 			 	;;
+			"naive_dealloc")
+				# Generate naive C code
+			 	./../../../../../bin/wyopcl -code -dealloc "$SRC".whiley
+			 	;;
 			"copy_reduced")
 				# Generate copy-eliminated C code
 			 	./../../../../../bin/wyopcl -code -copy "$SRC".whiley
@@ -151,10 +155,14 @@ mem_c (){
 UTILDIR=$PWD/../tests/code
 # Measure the memory usage of the generated C code
 mem_c Reverse CCode naive
+mem_c Reverse CCode naive_dealloc
 mem_c Reverse CCode copy_reduced
 mem_c MergeSort CCode naive
+mem_c MergeSort CCode naive_dealloc
 mem_c MergeSort CCode copy_reduced
 mem_c TicTacToe CCode naive
+mem_c TicTacToe CCode naive_dealloc
 mem_c TicTacToe CCode copy_reduced
 mem_c MatrixMult CCode naive
+mem_c MatrixMult CCode naive_dealloc
 mem_c MatrixMult CCode copy_reduced
