@@ -60,10 +60,20 @@ public abstract class Analyzer {
 	 */
 	public void apply(WyilFile module){
 		this.module = module;
+		// Iterate each function to build up CFG
+		for (FunctionOrMethod function : module.functionOrMethods()) {
+			this.buildCFG(function);
+		}	
 	}
 	
-	public WyilFile getModule(){
-		return this.module;
+	/**
+	 * Returns the function
+	 * @param name
+	 * @param type
+	 * @return
+	 */
+	public FunctionOrMethod getFunction(String name, Type.FunctionOrMethod type){
+		return this.module.functionOrMethod(name, type);
 	}
 	
 	/**
@@ -74,7 +84,7 @@ public abstract class Analyzer {
 	 * @param type
 	 * @return true if the type is or contains an integer type.
 	 */
-	public boolean isIntType(Type type) {
+	private boolean isIntType(Type type) {
 		if (type instanceof Type.Int) {
 			return true;
 		}
@@ -173,7 +183,7 @@ public abstract class Analyzer {
 	 * @param func_name
 	 *            the name of function.
 	 */
-	public void printCFG(FunctionOrMethod function) {
+	private void printCFG(FunctionOrMethod function) {
 		// Get the function name.
 		String name = function.name();
 		String dot_string = "digraph " + name + "{\n";
@@ -199,22 +209,10 @@ public abstract class Analyzer {
 	}
 
 	/**
-	 * Build up control flow graph for a whiley program.
-	 * 
-	 * @param function
-	 */
-	protected void buildCFG(WyilFile module) {
-		// Iterate each function to build up CFG
-		for (FunctionOrMethod function : module.functionOrMethods()) {
-			this.buildCFG(function);
-		}
-	}
-
-	/**
 	 * Build a control flow graph for a function. 
 	 * @param function the function code block.
 	 */
-	protected void buildCFG(FunctionOrMethod function){
+	private void buildCFG(FunctionOrMethod function){
 		if (!isCached(function)) {
 			line = 0;
 			iterateWyilCode(function, function.body().bytecodes());
@@ -256,7 +254,7 @@ public abstract class Analyzer {
 	 * @param code_blk
 	 *            the list of byte-code
 	 */
-	protected void iterateWyilCode(FunctionOrMethod function, List<Code> code_blk) {
+	private void iterateWyilCode(FunctionOrMethod function, List<Code> code_blk) {
 		// Parse each byte-code and add the constraints accordingly.
 		for (Code code : code_blk) {
 			// Get the Block.Entry and print out each byte-code
@@ -295,7 +293,7 @@ public abstract class Analyzer {
 	 *            Invoke byte-code
 	 * @param function
 	 */
-	protected void buildCFG(Invoke code, FunctionOrMethod function) {
+	private void buildCFG(Invoke code, FunctionOrMethod function) {
 		// Get the graph
 		CFGraph graph = getCFGraph(function);
 		BasicBlock c_blk = graph.getCurrentBlock();
@@ -310,7 +308,7 @@ public abstract class Analyzer {
 		graph.setCurrentBlock(blk);
 	}
 
-	protected void buildCFG(Invariant code, FunctionOrMethod function) {
+	private void buildCFG(Invariant code, FunctionOrMethod function) {
 		// Add the invariant to the current block.
 		CFGraph graph = getCFGraph(function);
 		BasicBlock c_blk = graph.getCurrentBlock();
@@ -323,7 +321,7 @@ public abstract class Analyzer {
 	 * @param code
 	 * @param function
 	 */
-	protected void buildCFG(Loop code, FunctionOrMethod function) {
+	private void buildCFG(Loop code, FunctionOrMethod function) {
 		// Set the loop flag to be true,
 		// in order to identify the bytecode is inside a loop
 		isLoop = true;
@@ -349,7 +347,7 @@ public abstract class Analyzer {
 	 * @param code
 	 *            Goto ({@link wyil.lang.Codes.Goto } byte-code
 	 */
-	protected void buildCFG(Codes.Goto code, FunctionOrMethod function) {
+	private void buildCFG(Codes.Goto code, FunctionOrMethod function) {
 		// Get the label name
 		String label = code.target;
 		CFGraph graph = getCFGraph(function);
@@ -372,7 +370,7 @@ public abstract class Analyzer {
 	 * @param code
 	 *            {@link wyil.lang.Codes.Label} byte-code
 	 */
-	protected void buildCFG(Codes.Label code, FunctionOrMethod function) {
+	private void buildCFG(Codes.Label code, FunctionOrMethod function) {
 		String label = code.label;
 		// Get the CFGraph
 		CFGraph graph = getCFGraph(function);
@@ -397,7 +395,7 @@ public abstract class Analyzer {
 	 * @param code
 	 * @param function
 	 */
-	protected void buildCFG(If code, FunctionOrMethod function) {
+	private void buildCFG(If code, FunctionOrMethod function) {
 		CFGraph graph = getCFGraph(function);
 
 		// The original condition is 'ifge %0, %1 goto blklab1 : int'
@@ -454,7 +452,7 @@ public abstract class Analyzer {
 	 * @param code
 	 * @param name
 	 */
-	protected void buildCFG(Return code, FunctionOrMethod function) {
+	private void buildCFG(Return code, FunctionOrMethod function) {
 		// Get the CFGraph
 		CFGraph graph = getCFGraph(function);
 		BasicBlock blk = graph.getCurrentBlock();

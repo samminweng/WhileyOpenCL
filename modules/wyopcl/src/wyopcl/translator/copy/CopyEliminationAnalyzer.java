@@ -117,14 +117,14 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	 * @param module
 	 */
 	public void apply(WyilFile module) {
+		// Builds up a CFG of the function.
+		super.apply(module);
 		// Apply live analysis on each function, except for main function.
 		for (FunctionOrMethod function : module.functionOrMethods()) {
-			// Builds up a CFG of the function.
-			this.buildCFG(function);
 			computeLiveness(function);
 		}
 		
-		super.apply(module);
+		//
 	}
 
 
@@ -170,10 +170,9 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		boolean isReadOnly = false;
 		if (code instanceof Codes.Invoke) {
 			Codes.Invoke invoked = (Codes.Invoke)code;
-			FunctionOrMethod invoked_function = this.getModule().functionOrMethod(invoked.name.name(), invoked.type());
+			FunctionOrMethod invoked_function = this.getFunction(invoked.name.name(), invoked.type());
 			if (invoked_function != null) {
 				String r_name = getActualVarName(reg, f);
-				
 				// Check if the array r is modified inside 'invoked_function'.
 				isReadOnly = !mutate(r_name, invoked_function);
 			}
