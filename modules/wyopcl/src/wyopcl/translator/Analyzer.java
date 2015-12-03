@@ -6,12 +6,14 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import wyil.attributes.VariableDeclarations;
 import wyil.lang.Code;
 import wyil.lang.CodeBlock;
 import wyil.lang.Codes;
 import wyil.lang.Type;
+import wyil.lang.Codes.Assert;
 import wyil.lang.Codes.Comparator;
 import wyil.lang.Codes.If;
 import wyil.lang.Codes.Invariant;
@@ -261,7 +263,9 @@ public abstract class Analyzer {
 			line = printWyILCode(function, code, line);
 			// Parse each byte-code and add the constraints accordingly.
 			try {
-				if (code instanceof Codes.Invariant) {
+				if(code instanceof Codes.Assert){
+					buildCFG((Codes.Assert)code, function);
+				} else if (code instanceof Codes.Invariant) {
 					buildCFG((Codes.Invariant) code, function);
 				} else if (code instanceof Codes.If) {
 					buildCFG((Codes.If) code, function);
@@ -285,6 +289,35 @@ public abstract class Analyzer {
 			}
 		}
 	}
+
+	/**
+	 * Builds an 'ASSERT' block to store the code representing the assertion.
+	 * 
+	 * 
+	 * @param code
+	 * @param function
+	 */
+	private void buildCFG(Assert code, FunctionOrMethod function) {
+		// Get label code from the list of assertion code
+		String label = code.bytecodes().stream()
+		.filter(c -> c instanceof Codes.Label)
+		.map(c -> ((Codes.Label)c).label)
+		.collect(Collectors.joining(", "));
+		
+		// Get current block
+		CFGraph graph = this.getCFGraph(function);
+		BasicBlock parent = graph.getCurrentBlock();
+		// Create an assert block
+		BasicBlock blk = graph.createBasicBlock(label, BlockType.ASSERT, parent);
+		// Add the code to blk
+		code.bytecodes().stream()
+		.forEach(c -> blk.addCode(c));
+		
+		// Set current blk to the original blk
+		graph.setCurrentBlock(parent);
+		
+	}
+
 
 	/**
 	 * Builds up a basic block for the calling function.
