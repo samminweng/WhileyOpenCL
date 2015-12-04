@@ -3,10 +3,12 @@ package wyopcl.translator.deallocate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import wybs.lang.Builder;
 import wyil.attributes.VariableDeclarations;
+import wyil.attributes.VariableDeclarations.Declaration;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
@@ -36,40 +38,14 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param function
 	 */
 	private void initializeOwnership(FunctionOrMethod function){
-		// Intialize the ownership variables
+		// Initialize the ownership variables
 		if(this.ownerships.getOrDefault(function, null)== null){
 			this.ownerships.put(function,  new OwnershipVariables());
 		}
-		
-		// Set the starting register, excluding function input parameters.
-		int startingIndex = 0;
-		if(!function.name().equals("main")){
-			// Skip the input parameters
-			startingIndex = function.type().params().size();
-		}
-		
-		// Get variable declaration
-		VariableDeclarations var_declarations = function.attribute(VariableDeclarations.class);
-		
-		for(int register=startingIndex;register<var_declarations.size();register++){
-			Type var_type = var_declarations.get(register).type();
-			if(var_type instanceof Type.Array){
-				addOwnership(register, function);
-			}else if(var_type instanceof Type.Record){
-				Type.Record r = (Type.Record)var_type;
-				// Check if the variable contains 'printf' field. 
-				long nonePrintFields = r.fields().keySet().stream()
-				.filter(f -> !f.contains("print") && !f.contains("println") && !f.contains("print_s") && !f.contains("println_s") )
-				.count();
-				
-				// If NOT a printf field, then add ownership.
-				if(nonePrintFields>0){
-					addOwnership(register, function);
-				}
-			}else{
-				// Do nothing
-			}
-		}
+
+		// Add function input parameters to ownership set.
+		//IntStream.range(0, function.type().params().size())
+		//.forEach(register -> this.addOwnership(register, function));
 	}
 	
 	
@@ -79,9 +55,46 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @return
 	 */
 	public List<Integer> getOwnerships(FunctionOrMethod function){
-		return this.ownerships.getOrDefault(function, new OwnershipVariables())
-		.getOwnership();
+		List<Integer> ownership = this.ownerships.get(function).getOwnership();
 		
+		if(config.isVerbose()){
+			System.out.println("Ownerships = {"+
+					ownership.stream()
+					.map(o -> o.toString())
+					.collect(Collectors.joining(", ")) + "}"
+					);
+		}
+		
+		return ownership;
+	}
+	
+	/**
+	 * Check if the type of given register is an array or record (excluding 'print' fields)
+	 * 
+	 * @param register
+	 * @param function
+	 * @return
+	 */
+	private boolean isCompoundType(int register, FunctionOrMethod function){
+		VariableDeclarations declarations = function.attribute(VariableDeclarations.class);
+		Type type = declarations.get(register).type();
+		
+		if(type instanceof Type.Array){
+			return true;
+		}else if(type instanceof Type.Record){
+			Type.Record record = (Type.Record)type;
+			// Check if the variable contains 'printf' field. 
+			long nonePrintFields = record.fields().keySet().stream()
+			.filter(f -> !f.contains("print") && !f.contains("println") && !f.contains("print_s") && !f.contains("println_s") )
+			.count();
+			
+			// If NOT a printf field, then add ownership.
+			if(nonePrintFields>0){
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	
@@ -90,8 +103,11 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param reg
 	 * @param f
 	 */
-	private void addOwnership(int reg, FunctionOrMethod function){
-		this.ownerships.get(function).addOwnership(reg);
+	private void addOwnership(int register, FunctionOrMethod function){
+		// Check if the type is an array
+		if(isCompoundType(register, function)){
+			this.ownerships.get(function).addOwnership(register);
+		}
 	}
 	/**
 	 * Takes out 'reg' from 'ownership' set
@@ -103,19 +119,6 @@ public class DeallocationAnalyzer extends Analyzer {
 	}
 
 	/**
-	 * Returns the variable name of ownership flag
-	 * @param var
-	 * @param type
-	 * @return
-	 */
-	/*private String getOwnershipFlag(String var){
-		if(var.startsWith("%")){
-			var = var.replace("%", "_");
-		}
-		
-		return var+"_has_ownership";
-	}*/
-	/**
 	 * Iterate each code and compute the ownership set.
 	 * @param code
 	 * @param function
@@ -123,8 +126,9 @@ public class DeallocationAnalyzer extends Analyzer {
 	private void iterateCode(Code code, FunctionOrMethod function){
 		if(code instanceof Codes.Return){
 			// For Return code, transfer out the ownership of return value.
-			Codes.Return r = (Codes.Return)code;
-			this.transferOwnership(r.operand, function);
+			this.transferOwnership(((Codes.Return)code).operand, function);
+		}else if (code instanceof Codes.Assign){
+			this.addOwnership(((Codes.Assign)code).target(), function);
 		}else{
 			// Do nothing
 		}
@@ -143,8 +147,7 @@ public class DeallocationAnalyzer extends Analyzer {
 				this.iterateCode(code, function);
 			}
 		}
-		
-		super.apply(module);
+		//super.apply(module);
 	}
 	
 	
