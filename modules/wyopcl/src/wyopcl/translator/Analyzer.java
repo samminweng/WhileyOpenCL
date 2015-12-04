@@ -209,14 +209,14 @@ public abstract class Analyzer {
 	 * @param line
 	 */
 	private int printWyILCode(FunctionOrMethod function, Code code, int line) {
-		String name = function.name();
-		// Print out the bytecode with the format (e.g. 'main.9 [const %12 =
-		// 2345 : int]')
-		if (code instanceof Codes.Label) {
-			System.out.println(name + "." + line + " [" + code + "]");
-		} else {
-
-			System.out.println(name + "." + line + " [\t" + code + "]");
+		if(config.isVerbose()){
+			String name = function.name();
+			// Print out the bytecode
+			if (code instanceof Codes.Label) {
+				System.out.println(name + "." + line + " [" + code + "]");
+			} else {
+				System.out.println(name + "." + line + " [\t" + code + "]");
+			}
 		}
 		return ++line;
 	}
@@ -239,7 +239,7 @@ public abstract class Analyzer {
 			// Parse each byte-code and add the constraints accordingly.
 			try {
 				if(code instanceof Codes.Assert){
-					buildCFG((Codes.Assert)code, function);
+					//buildCFG((Codes.Assert)code, function);
 				} else if (code instanceof Codes.Invariant) {
 					buildCFG((Codes.Invariant) code, function);
 				} else if (code instanceof Codes.If) {
@@ -289,7 +289,7 @@ public abstract class Analyzer {
 		.forEach(c -> blk.addCode(c));
 		
 		// Set current blk to the original blk
-		graph.setCurrentBlock(parent);
+		graph.setCurrentBlock(blk);
 		
 	}
 

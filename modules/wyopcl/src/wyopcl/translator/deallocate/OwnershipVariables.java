@@ -14,8 +14,6 @@ import java.util.stream.Collectors;
  *
  */
 public class OwnershipVariables {
-	
-	
 	private HashSet<Integer> ownerships;// Stores registers of array variables
 	
 	public OwnershipVariables(){
@@ -45,4 +43,6 @@ public class OwnershipVariables {
 	protected List<Integer> getOwnership(){
 		return this.ownerships.stream().collect(Collectors.toList());
 	}
+	
+	
 }

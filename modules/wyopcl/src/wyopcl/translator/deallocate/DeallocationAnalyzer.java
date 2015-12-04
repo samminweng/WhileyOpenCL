@@ -58,11 +58,7 @@ public class DeallocationAnalyzer extends Analyzer {
 		List<Integer> ownership = this.ownerships.get(function).getOwnership();
 		
 		if(config.isVerbose()){
-			System.out.println("Ownerships = {"+
-					ownership.stream()
-					.map(o -> o.toString())
-					.collect(Collectors.joining(", ")) + "}"
-					);
+			
 		}
 		
 		return ownership;
@@ -129,15 +125,38 @@ public class DeallocationAnalyzer extends Analyzer {
 			this.transferOwnership(((Codes.Return)code).operand, function);
 		}else if (code instanceof Codes.Assign){
 			this.addOwnership(((Codes.Assign)code).target(), function);
-		}else{
+		}else if (code instanceof Codes.Assert){
+			// Iterate the list of code inside an assertion.
+			((Codes.Assert)code).bytecodes().stream()
+			.forEach(c -> iterateCode(c, function));
+		}else if(code instanceof Codes.NewList){
+			// lhs of NewList code is assigned with ownership.
+			this.addOwnership(((Codes.NewList)code).target(), function);
+		} else{
 			// Do nothing
 		}
 		
 	}
 
+	/**
+	 * Print out ownership
+	 */
+	private void printOwnership(FunctionOrMethod function){
+		List<Integer> ownership = this.getOwnerships(function);
+		// Print out ownership variables (comma-separated string).
+		System.out.println("Ownerships = {"+
+				ownership.stream()
+				.map(o -> this.getActualVarName(o, function))
+				.collect(Collectors.joining(", ")) + "}"
+				);
+		
+	}
+	
 	
 	@Override
 	public void apply(WyilFile module) {
+		super.apply(module);
+		
 		// Compute ownership set for each function.
 		for(FunctionOrMethod function: module.functionOrMethods()){
 			// Initialize the 'ownership' set with each of true value.
@@ -146,8 +165,10 @@ public class DeallocationAnalyzer extends Analyzer {
 			for(Code code: function.body().bytecodes()){
 				this.iterateCode(code, function);
 			}
+			if(config.isVerbose()){
+				this.printOwnership(function);
+			}
 		}
-		//super.apply(module);
 	}
 	
 	
