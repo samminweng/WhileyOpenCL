@@ -17,6 +17,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import wyil.attributes.VariableDeclarations;
 import wyil.lang.Attribute;
 import wyil.lang.Code;
 import wyil.lang.Codes;
@@ -250,6 +251,37 @@ public final class CodeGeneratorHelper {
 		
 	}
 	
+	
+	/**
+	 * Check if the type of given register is an array or record (excluding 'print' fields)
+	 * 
+	 * @param register
+	 * @param function
+	 * @return
+	 */
+	private static boolean isCompoundType(Type type){
+		if(type instanceof Type.Array){
+			return true;
+		}else if(type instanceof Type.Record){
+			Type.Record record = (Type.Record)type;
+			// Check if the variable contains 'printf' field. 
+			long nonePrintFields = record.fields().keySet().stream()
+			.filter(f -> !f.contains("print") && !f.contains("println") && !f.contains("print_s") && !f.contains("println_s") )
+			.count();
+			
+			// If NOT a printf field, then add ownership.
+			if(nonePrintFields>0){
+				return true;
+			}
+		}else if(type instanceof Type.Nominal){
+			// Get nominal type
+			if(!((Type.Nominal)type).name().toString().contains("Console")){
+				return true;
+			}
+		}
+		
+		return false;
+	}
 	/**
 	 * Generate the declaration of ownership variable, e.g.
 	 * 
@@ -259,8 +291,8 @@ public final class CodeGeneratorHelper {
 	 * @param var
 	 * @return
 	 */
-	protected static String generateOwnership(DeallocationAnalyzer analyzer, String indent, String var){
-		if(analyzer != null){
+	protected static String generateOwnership(DeallocationAnalyzer analyzer, Type type, String indent, String var){
+		if(analyzer != null && isCompoundType(type)){
 			return indent + var+"_has_ownership = true;";
 		}
 		return "";
@@ -274,6 +306,9 @@ public final class CodeGeneratorHelper {
 	 * @return
 	 */
 	protected static String generateDeallocatedCode(String indent, String var, Type type, CodeStores stores){
+		if(!isCompoundType(type)){
+			return "";
+		}
 		String s = indent + "if(";
 		s += var+"_has_ownership){free";
 		// Check if var_type is a structure

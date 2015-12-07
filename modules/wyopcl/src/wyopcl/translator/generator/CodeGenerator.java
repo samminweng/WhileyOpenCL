@@ -223,6 +223,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String lhs = store.getVar(code.target());
 		String indent = store.getIndent();
 		if (code.assignedType() instanceof Type.Array) {
+			// Free lhs
+			statements.add(CodeGeneratorHelper.generateDeallocatedCode(indent, lhs, code.assignedType(), stores));
 			// Convert it into a constant list
 			Constant.List list = (Constant.List) code.constant;
 			// Initialize an array
@@ -241,7 +243,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statements.add(s);
 			}
 			// Assign ownership to lhs
-			statements.add(CodeGeneratorHelper.generateOwnership(this.deallocatedAnalyzer, indent, lhs));
+			statements.add(CodeGeneratorHelper.generateOwnership(this.deallocatedAnalyzer, code.assignedType(), indent, lhs));
 		} else {
 			// Add a statement
 			statements.add(indent + lhs + " = " + code.constant + ";");
@@ -282,17 +284,18 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(Codes.Assign code, FunctionOrMethod function) {
 		CodeStore store = stores.getCodeStore(function);
 		String lhs = store.getVar(code.target());
+		Type lhs_type = store.getVarType(code.target());
 		String indent = store.getIndent();
 		List<String> statement = new ArrayList<String>();
 		// Check if the assigned type is an array.
 		if (code.type() instanceof Type.Array || code.type() instanceof Type.Record) {
 			// Deallocate the lhs
-			statement.add(CodeGeneratorHelper.generateDeallocatedCode(indent, lhs, code.type(), stores));
+			statement.add(CodeGeneratorHelper.generateDeallocatedCode(indent, lhs, lhs_type, stores));
 			// copy the array and assign the cloned to the target.
 			statement.add(CodeGeneratorHelper.generateArraySizeAssign(code.type(), indent, lhs, store.getVar(code.operand(0))));
 			statement.add(indent + lhs + " = "+ optimizeCode(code.operand(0), code, function));
 			// Assigned the ownership to lhs
-			statement.add(CodeGeneratorHelper.generateOwnership(deallocatedAnalyzer, indent, lhs));
+			statement.add(CodeGeneratorHelper.generateOwnership(deallocatedAnalyzer, lhs_type, indent, lhs));
 		} else if (code.type() instanceof Type.Int) {
 			statement.add(indent + lhs + " = " + store.getVar(code.operand(0)) + ";");
 		} else if (code.type() instanceof Type.Union && ((Type.Union)code.type()).bounds().contains(Type.Int.T_INT)) {
@@ -621,7 +624,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement += ");";
 			// Assign ownership to lhs
 			if(lhs != null){
-				statement += "\n"+CodeGeneratorHelper.generateOwnership(this.deallocatedAnalyzer, store.getIndent(), lhs);
+				statement += "\n"+CodeGeneratorHelper.generateOwnership(this.deallocatedAnalyzer, code.type(), store.getIndent(), lhs);
 			}
 		}
 		// add the statement
@@ -1054,6 +1057,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String field = code.field;
 		CodeStore store = stores.getCodeStore(function);
 		String lhs = store.getVar(code.target());
+		Type lhs_type = store.getVarType(code.target());
 		String indent = store.getIndent();
 		String statement = "";
 		// Skip printing statements, e.g. 'print_s'
@@ -1066,10 +1070,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement = indent + lhs + " = convertArgsToIntArray(argc, args);\n";
 			statement += indent + lhs + "_size = argc - 1;";
 		} else {
+			// Free lhs
+			statement += CodeGeneratorHelper.generateDeallocatedCode(indent, lhs, lhs_type, stores)+"\n";
 			statement += CodeGeneratorHelper.generateArraySizeAssign(code.fieldType(), indent, lhs, store.getVar(code.operand(0)) + "." + code.field);
-			statement += indent + lhs + " = "+ optimizeCode(code.operand(0), code, function)+";";
-			//statement += indent + lhs + " = "+ (store.getVar(code.operand(0)) + "." + code.field)+";";
-			
+			statement += indent + lhs + " = "+ optimizeCode(code.operand(0), code, function)+";\n";
+			// Assign ownership to lhs variable of fieldload code
+			statement += CodeGeneratorHelper.generateOwnership(this.deallocatedAnalyzer, lhs_type, indent, lhs);
 		}
 		store.addStatement(code, statement);
 	}
