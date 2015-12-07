@@ -429,8 +429,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		if(code instanceof Codes.Assign || code instanceof Codes.NewRecord){
 			statement += CodeGeneratorHelper.generateCopyUpdateCode(type, type_name, var, isCopyEliminated)+";"; 
 		}else if (code instanceof Codes.Invoke){
-			statement += CodeGeneratorHelper.generateCopyUpdateCode(type, type_name, var, isCopyEliminated)+", "
-					+ CodeGeneratorHelper.generateArraySizeVars(var, type); 
+			statement += CodeGeneratorHelper.generateCopyUpdateCode(type, type_name, var, isCopyEliminated); 
 		}else if (code instanceof Codes.FieldLoad){
 			Codes.FieldLoad fieldload = (Codes.FieldLoad)code;
 			type_name = CodeGeneratorHelper.translateType(fieldload.fieldType(), stores);
@@ -509,19 +508,23 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			int reg = code.operand(index);
 			String param = store.getVar(reg);
 			Type paramType = store.getVarType(reg);
-			// Add the '*_size' parameter
+			
 			if(paramType instanceof Type.Int){
 				statement += param;
 			}else if (paramType instanceof Type.Array) {
 				statement += optimizeCode(reg, code, f);
+				// Add the '*_size' parameter
+				statement += ", " + CodeGeneratorHelper.generateArraySizeVars(param, paramType);
 			} else if(paramType instanceof Type.Record){	
-				statement += "copy_"+CodeGeneratorHelper.translateType(paramType, stores)+"("+param+")";
+				statement += optimizeCode(reg, code, f);
+				//statement += "copy_"+CodeGeneratorHelper.translateType(paramType, stores)+"("+param+")";
 			} else if(paramType instanceof Type.Nominal){
 				Type.Nominal nomial = ((Type.Nominal)paramType);
 				if(nomial.name().name().equals("Console")){
 					statement += "stdout";
 				}else{
-					statement += param;
+					statement += optimizeCode(reg, code, f);
+					//statement += param;
 				}
 			} else if(paramType instanceof Type.Union){
 				// Access the 'integer' member for union-typed variable

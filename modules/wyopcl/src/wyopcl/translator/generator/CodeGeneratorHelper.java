@@ -403,7 +403,7 @@ public final class CodeGeneratorHelper {
 		}else if (type instanceof Type.Record){
 			statement += "copy_"+type_name+"(" + var + ")";
 		}else if (type instanceof Type.Nominal){
-			statement += "("+type_name+")" + var;
+			statement += "copy_"+type_name+"(" + var + ")";
 		}else if(type instanceof Type.Int){
 			statement += ""+var;
 		} else{
