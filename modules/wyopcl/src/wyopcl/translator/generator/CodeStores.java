@@ -49,6 +49,14 @@ public class CodeStores {
 		return stores.get(function);
 	}
 	
+	public wyil.lang.WyilFile.Type getNominalType(Type.Nominal nominal){
+		for (wyil.lang.WyilFile.Type user_type : this.userTypes) {
+			if(user_type.name().equals(nominal.name().name())){
+				return user_type;
+			}
+		}
+		return null;
+	}
 	
 	/**
 	 * Get the user defined type by checking if the user type has the same fields as the given record type.

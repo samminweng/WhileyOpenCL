@@ -47,7 +47,7 @@ public final class CodeGeneratorHelper {
 	 * @param type
 	 * @return true if the type is or contains an integer type.
 	 */
-	public static boolean isIntType(Type type) {
+	protected static boolean isIntType(Type type) {
 		if (type instanceof Type.Int) {
 			return true;
 		}
@@ -87,7 +87,7 @@ public final class CodeGeneratorHelper {
 	 * @param record
 	 * @return
 	 */
-	public static String[] getMemebers(Type.Record record){
+	protected static String[] getMemebers(Type.Record record){
 		//System.out.println(record.keys());
 		State fields = (State) record.automaton.states[0].data;
 		String[] members = fields.toArray(new String[fields.size()]);
@@ -113,7 +113,7 @@ public final class CodeGeneratorHelper {
 	 * @param fields
 	 * @return
 	 */
-	public static List<String> generateStructPrintf(WyilFile.Type type, CodeStores stores){
+	protected static List<String> generateStructPrintf(WyilFile.Type type, CodeStores stores){
 		
 		String struct = type.name();
 		HashMap<String, Type> fields = ((Type.Record)type.type()).fields();
@@ -168,7 +168,7 @@ public final class CodeGeneratorHelper {
 	 * @param fields
 	 * @return
 	 */
-	public static List<String> generateStructCopy(WyilFile.Type type, CodeStores stores){
+	protected static List<String> generateStructCopy(WyilFile.Type type, CodeStores stores){
 		String struct = type.name();
 		HashMap<String, Type> fields = ((Type.Record)type.type()).fields();
 		
@@ -189,7 +189,7 @@ public final class CodeGeneratorHelper {
 			if (fieldtype instanceof Type.Nominal || fieldtype instanceof Type.Int) {
 				statement.add(indent + lhs + " = " + rhs+";"); 
 			} else if (fieldtype instanceof Type.Array) {
-				statement.add(generateArraySizeAssign(fieldtype, indent, lhs, rhs) + indent + lhs + " = " + generateCopyUpdateCode(fieldtype, translateType(fieldtype, stores), rhs, false)+";");
+				statement.add(generateArraySizeAssign(fieldtype, indent, lhs, rhs) + indent + lhs + " = " + generateCopyUpdateCode(fieldtype, stores, rhs, false)+";");
 			} else {
 				throw new RuntimeException("Not implemented!");
 			}
@@ -205,7 +205,7 @@ public final class CodeGeneratorHelper {
 	 * @param fields
 	 * @return
 	 */
-	public static List<String> generateStructFree(WyilFile.Type type, CodeStores stores){
+	protected static List<String> generateStructFree(WyilFile.Type type, CodeStores stores){
 		String struct = type.name();
 		HashMap<String, Type> fields = ((Type.Record)type.type()).fields();
 		
@@ -327,7 +327,7 @@ public final class CodeGeneratorHelper {
 	 * @param type type
 	 * @return a string of array sizes variables in C. If type is not an array, return empty
 	 */
-	public static String generateArraySizeVars(String var, Type type){
+	protected static String generateArraySizeVars(String var, Type type){
 		List<String> size_vars = getArraySizeVars(var, type);
 		
 		return size_vars.stream()
@@ -351,7 +351,7 @@ public final class CodeGeneratorHelper {
 	 * @param rhs
 	 * @return
 	 */
-	public static String generateArraySizeAssign(Type type, String indent, String lhs, String rhs){
+	protected static String generateArraySizeAssign(Type type, String indent, String lhs, String rhs){
 		String statement = "";
 		if(type instanceof Type.Array){
 			List<String> lhs_sizes = getArraySizeVars(lhs, type);
@@ -383,13 +383,15 @@ public final class CodeGeneratorHelper {
 	 * @param dimension
 	 * @return
 	 */
-	public static String generateCopyUpdateCode(Type type, String type_name, String var, boolean isCopyEliminated){
+	protected static String generateCopyUpdateCode(Type type, CodeStores stores, String var, boolean isCopyEliminated){
 		if(isCopyEliminated){
 			// Do not need to make a copy of 'var' 
 			return var;
 		}
 		
 		String statement = "";
+		String type_name = translateType(type, stores);
+		
 		if(type instanceof Type.Array){
 			// Add 'copy' function call w.r.t. Array dimension
 			List<String> size_vars = getArraySizeVars(var, type);
@@ -403,13 +405,13 @@ public final class CodeGeneratorHelper {
 		}else if (type instanceof Type.Record){
 			statement += "copy_"+type_name+"(" + var + ")";
 		}else if (type instanceof Type.Nominal){
-			// Skip copy for nat type
-			if(((Type.Nominal) type).name().name().equals("nat")){
+			WyilFile.Type nominal = stores.getNominalType(((Type.Nominal)type));
+			// Skip copy for int typed nominal
+			if(nominal.type() instanceof Type.Int){
 				statement += ""+var;
 			}else{
 				statement += "copy_"+type_name+"(" + var + ")";
 			}
-			
 		}else if(type instanceof Type.Int){
 			statement += ""+var;
 		} else{
@@ -431,7 +433,7 @@ public final class CodeGeneratorHelper {
 	 *         
 	 * 
 	 */
-	public static String translateType(Type type, CodeStores stores) {	
+	protected static String translateType(Type type, CodeStores stores) {	
 		if (type instanceof Type.Nominal) {
 			// The existential type, e.g. function EmptyBoard() -> (Board r)
 			// The return type of 'EmptyBoard' function is 'Board'.
@@ -519,7 +521,7 @@ public final class CodeGeneratorHelper {
 	 * </pre>
 	 * @param userType
 	 */
-	public static List<String> generateStruct(WyilFile.Type type, CodeStores stores) {
+	protected static List<String> generateStruct(WyilFile.Type type, CodeStores stores) {
 		List<String> struct = new ArrayList<String>();
 		String typeName = type.name();
 		HashMap<String, Type> fields = ((Type.Record)type.type()).fields();

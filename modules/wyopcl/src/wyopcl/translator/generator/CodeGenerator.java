@@ -425,17 +425,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String statement = "";
 		String var = store.getVar(op);
 		Type type = store.getVarType(op);
-		String type_name = CodeGeneratorHelper.translateType(type, stores);
 		if(code instanceof Codes.Assign || code instanceof Codes.NewRecord){
-			statement += CodeGeneratorHelper.generateCopyUpdateCode(type, type_name, var, isCopyEliminated)+";"; 
+			statement += CodeGeneratorHelper.generateCopyUpdateCode(type, stores, var, isCopyEliminated)+";"; 
 		}else if (code instanceof Codes.Invoke){
-			statement += CodeGeneratorHelper.generateCopyUpdateCode(type, type_name, var, isCopyEliminated); 
+			statement += CodeGeneratorHelper.generateCopyUpdateCode(type, stores, var, isCopyEliminated); 
 		}else if (code instanceof Codes.FieldLoad){
 			Codes.FieldLoad fieldload = (Codes.FieldLoad)code;
-			type_name = CodeGeneratorHelper.translateType(fieldload.fieldType(), stores);
-			
 			// Access the member
-			statement += CodeGeneratorHelper.generateCopyUpdateCode(fieldload.fieldType(), type_name, var+"."+fieldload.field,
+			statement += CodeGeneratorHelper.generateCopyUpdateCode(fieldload.fieldType(), stores, var+"."+fieldload.field,
 					isCopyEliminated);
 		} else{
 			throw new RuntimeException("Not implemented");
