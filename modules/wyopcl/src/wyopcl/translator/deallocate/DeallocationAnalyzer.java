@@ -45,8 +45,8 @@ public class DeallocationAnalyzer extends Analyzer {
 		}
 
 		// Add function input parameters to ownership set.
-		//IntStream.range(0, function.type().params().size())
-		//.forEach(register -> this.addOwnership(register, function));
+		IntStream.range(0, function.type().params().size())
+		.forEach(register -> this.addOwnership(register, function));
 	}
 	
 	
