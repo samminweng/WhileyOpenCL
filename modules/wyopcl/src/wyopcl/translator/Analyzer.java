@@ -45,7 +45,7 @@ public abstract class Analyzer {
 	// The line number
 	private int line;
 	// Wyil byte-code
-	private WyilFile module;
+	protected WyilFile module;
 
 	/**
 	 * Constructor

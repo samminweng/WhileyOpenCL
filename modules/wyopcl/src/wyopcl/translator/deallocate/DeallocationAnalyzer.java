@@ -11,6 +11,7 @@ import wyil.attributes.VariableDeclarations;
 import wyil.attributes.VariableDeclarations.Declaration;
 import wyil.lang.Code;
 import wyil.lang.Codes;
+import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
@@ -77,7 +78,6 @@ public class DeallocationAnalyzer extends Analyzer {
 	private boolean isCompoundType(int register, FunctionOrMethod function){
 		VariableDeclarations declarations = function.attribute(VariableDeclarations.class);
 		Type type = declarations.get(register).type();
-		
 		if(type instanceof Type.Array){
 			return true;
 		}else if(type instanceof Type.Record){
@@ -89,6 +89,11 @@ public class DeallocationAnalyzer extends Analyzer {
 			
 			// If NOT a printf field, then add ownership.
 			if(nonePrintFields>0){
+				return true;
+			}
+		}else if(type instanceof Type.Nominal){
+			// Get nominal type
+			if(!((Type.Nominal)type).name().toString().contains("Console")){
 				return true;
 			}
 		}
@@ -123,7 +128,10 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param function
 	 */
 	private void iterateCode(Code code, FunctionOrMethod function){
-		if(code instanceof Codes.Return){
+		if(code instanceof Codes.Loop){
+			((Codes.Loop)code).bytecodes().stream()
+			.forEach(c -> iterateCode(c, function));
+		}else if(code instanceof Codes.Return){
 			// For Return code, transfer out the ownership of return value.
 			this.transferOwnership(((Codes.Return)code).operand, function);
 		}else if (code instanceof Codes.Assign){
@@ -137,6 +145,8 @@ public class DeallocationAnalyzer extends Analyzer {
 			this.addOwnership(((Codes.NewList)code).target(), function);
 		}else if(code instanceof Codes.Invoke){
 			this.addOwnership(((Codes.Invoke)code).target(), function);
+		}else if (code instanceof Codes.Const){
+			this.addOwnership(((Codes.Const)code).target(), function);
 		} else{
 			// Do nothing
 		}
