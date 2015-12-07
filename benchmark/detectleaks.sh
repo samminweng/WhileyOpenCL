@@ -10,7 +10,7 @@ define_parameters(){
 			parameters="1000 10000 100000 1000000 10000000 100000000"
 			;;
 		"MergeSort")
-			parameters="1000 10000 100000 1000000 10000000"
+			parameters="1000 10000 100000 1000000"
 			;;
 		"TicTacToe")
 			parameters="1000 10000 100000 1000000"
