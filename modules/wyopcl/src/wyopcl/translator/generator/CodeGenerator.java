@@ -240,6 +240,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				}
 				statements.add(s);
 			}
+			// Assign ownership to lhs
+			statements.add(CodeGeneratorHelper.generateOwnership(this.deallocatedAnalyzer, indent, lhs));
 		} else {
 			// Add a statement
 			statements.add(indent + lhs + " = " + code.constant + ";");
