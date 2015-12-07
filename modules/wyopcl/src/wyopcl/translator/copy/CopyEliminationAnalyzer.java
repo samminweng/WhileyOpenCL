@@ -108,7 +108,9 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		// Store the liveness analysis for the function.
 		livenessStore.put(function, liveness);
 		// Print out analysis result
-		printLivenss(function);
+		if(config.isVerbose()){
+			printLivenss(function);
+		}
 	}
 
 	/**

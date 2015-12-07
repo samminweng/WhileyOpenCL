@@ -58,7 +58,10 @@ public class DeallocationAnalyzer extends Analyzer {
 		List<Integer> ownership = this.ownerships.get(function).getOwnership();
 		
 		if(config.isVerbose()){
-			
+			System.out.println("Ownership = " +
+			ownership.stream()
+			.map(i -> i.toString())
+			.collect(Collectors.joining(", ")));
 		}
 		
 		return ownership;
@@ -132,6 +135,8 @@ public class DeallocationAnalyzer extends Analyzer {
 		}else if(code instanceof Codes.NewList){
 			// lhs of NewList code is assigned with ownership.
 			this.addOwnership(((Codes.NewList)code).target(), function);
+		}else if(code instanceof Codes.Invoke){
+			this.addOwnership(((Codes.Invoke)code).target(), function);
 		} else{
 			// Do nothing
 		}

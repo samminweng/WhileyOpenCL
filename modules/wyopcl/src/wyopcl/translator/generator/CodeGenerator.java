@@ -134,7 +134,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				}
 			} else if (type instanceof Type.Nominal){
 				declarations.add("\t"+translateType+ " "+var+";");
-				declarations.add("\t bool "+var + "_has_ownership = false;");
+				declarations.add("\tbool "+var + "_has_ownership = false;");
 			} else if (type instanceof Type.Method){
 				// Skip translation
 			} else if (type instanceof Type.Union){
@@ -452,17 +452,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		CodeStore store = stores.getCodeStore(f);
 		String indent = store.getIndent();
 		
-		
 		String statement = "";
 		// Translate the return value of a function call.
 		// If no return value, no needs for translation.
 		if (code.target() >= 0) {
 			Type return_type = code.type().ret();
 			String ret = store.getVar(code.target());
-			// Assign both of lists to have the same array size, e.g.
-			// '_12_size=_xs_size;'
-			// Check if the return is also an array.
+			
+			
+			// Assign both of lists to have the same array size, e.g. '_12_size=_xs_size;'
 			if (return_type instanceof Type.Array) {
+				// Get input Array
 				for (int index = 0; index < code.operands().length; index++) {
 					Type type = code.type().params().get(index);
 					if (type instanceof Type.Array) {
@@ -604,13 +604,23 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				throw new RuntimeException("Un-implemented code:" + code);
 			}
 		} else {
+			String lhs = store.getVar(code.target());
+			String indent = store.getIndent();
 			// Translate the function call, e.g.
+			// Free lhs 
+			if(lhs != null){
+				statement += CodeGeneratorHelper.generateDeallocatedCode(indent, lhs, code.type().ret(), stores);
+			}
 			// '_12=reverse(_xs , _xs_size);'
 			statement += translateLHSFunctionCall(code, function);
 			// call the function/method
 			statement +=  code.name.name() + "(";
 			statement += translateRHSFunctionCall(code, function);
 			statement += ");";
+			// Assign ownership to lhs
+			if(lhs != null){
+				statement += "\n"+CodeGeneratorHelper.generateOwnership(this.deallocatedAnalyzer, store.getIndent(), lhs);
+			}
 		}
 		// add the statement
 		store.addStatement(code, statement);

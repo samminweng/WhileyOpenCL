@@ -230,6 +230,8 @@ public class CodeStores {
 				if (name != null && !name.isEmpty()) {
 					return name;
 				}
+			}else{
+				return null;
 			}
 			return prefix + reg;
 		}

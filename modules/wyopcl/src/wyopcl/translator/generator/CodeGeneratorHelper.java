@@ -279,6 +279,11 @@ public final class CodeGeneratorHelper {
 		// Check if var_type is a structure
 		if(type instanceof Type.Record){
 			s+= "_"+translateType(type, stores);
+		}else if(type instanceof Type.Nominal){
+			WyilFile.Type nominal = stores.getNominalType((Type.Nominal) type);
+			if(nominal != null){
+				s+= "_"+translateType(type, stores); 
+			}
 		}
 		s+="("+var+");";
 		s+="}";
