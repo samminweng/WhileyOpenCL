@@ -435,15 +435,17 @@ public final class CodeGeneratorHelper {
 	 */
 	protected static String translateType(Type type, CodeStores stores) {	
 		if (type instanceof Type.Nominal) {
-			// The existential type, e.g. function EmptyBoard() -> (Board r)
-			// The return type of 'EmptyBoard' function is 'Board'.
-			Type.Nominal nomial = (Type.Nominal) type;
-			// Check is type is a System.Console. 
-			if(nomial.name().name().equals("Console")){
-				// Use FILE type.
-				return "FILE*";
+			// The existential type, e.g. 'Board' is an nominal type in TicTacToe test case.
+			WyilFile.Type nominal = stores.getNominalType((Type.Nominal) type);
+			if(nominal == null){
+				// Check is type is a System.Console. 
+				if(((Type.Nominal) type).name().name().equals("Console")){
+					// Use FILE type.
+					return "FILE*";
+				}
+				throw new RuntimeException("Not Implemented");
 			}
-			return nomial.name().name();
+			return nominal.name();
 		}
 
 		if (type instanceof Type.Int || type instanceof Type.Bool) {
@@ -475,7 +477,7 @@ public final class CodeGeneratorHelper {
 
 			// Check if the type is an instance of user defined type.
 			if(stores != null){
-				return stores.getUserDefinedType((Type.Record) type).name();
+				return stores.getRecordType((Type.Record) type).name();
 			}else{
 				throw new RuntimeException("Missing CodeStores");
 			}

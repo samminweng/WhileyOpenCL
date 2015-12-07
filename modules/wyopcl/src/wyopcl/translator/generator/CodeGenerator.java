@@ -121,14 +121,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// Declare the extra 'size' variables.
 				size_vars.forEach(size_var -> declarations.add("\tlong long "+size_var+" = 0;"));
 				// Declare the extra 'has_ownership' boolean variables
-				declarations.add("\t bool "+var + "_has_ownership = false;");
+				declarations.add("\tbool "+var + "_has_ownership = false;");
 				
 			} else if (type instanceof Type.Int) {
 				declarations.add("\t" + translateType + " " + var + " = 0;");
 			} else if (type instanceof Type.Record){
 				if(!translateType.equals("")){
 					declarations.add("\t"+translateType+ " " + var + ";");
-					declarations.add("\t bool "+var + "_has_ownership = false;");
+					declarations.add("\tbool "+var + "_has_ownership = false;");
 				}else{
 					// Skip translation
 				}

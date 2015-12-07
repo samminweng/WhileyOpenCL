@@ -11,6 +11,7 @@ import wyil.attributes.VariableDeclarations.Declaration;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
+import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
 
@@ -49,7 +50,7 @@ public class CodeStores {
 		return stores.get(function);
 	}
 	
-	public wyil.lang.WyilFile.Type getNominalType(Type.Nominal nominal){
+	public WyilFile.Type getNominalType(Type.Nominal nominal){
 		for (wyil.lang.WyilFile.Type user_type : this.userTypes) {
 			if(user_type.name().equals(nominal.name().name())){
 				return user_type;
@@ -65,7 +66,7 @@ public class CodeStores {
 	 *            the record type.
 	 * @return the user type. Return null if no type is matched.
 	 */
-	public wyil.lang.WyilFile.Type getUserDefinedType(Type.Record type) {
+	public WyilFile.Type getRecordType(Type.Record type) {
 		for (wyil.lang.WyilFile.Type user_type : this.userTypes) {
 			if (user_type.type() instanceof Type.Record) {
 				Type.Record record = (Type.Record) user_type.type();
