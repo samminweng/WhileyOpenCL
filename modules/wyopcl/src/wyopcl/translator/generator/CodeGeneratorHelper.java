@@ -190,7 +190,7 @@ public final class CodeGeneratorHelper {
 			if (fieldtype instanceof Type.Nominal || fieldtype instanceof Type.Int) {
 				statement.add(indent + lhs + " = " + rhs+";"); 
 			} else if (fieldtype instanceof Type.Array) {
-				statement.add(generateArraySizeAssign(fieldtype, indent, lhs, rhs) + indent + lhs + " = " + generateCopyUpdateCode(fieldtype, stores, rhs, false)+";");
+				statement.add(indent + generateArraySizeAssign(fieldtype, lhs, rhs) + " " + lhs + " = " + generateCopyUpdateCode(fieldtype, stores, rhs, false)+";");
 			} else {
 				throw new RuntimeException("Not implemented!");
 			}
@@ -259,7 +259,7 @@ public final class CodeGeneratorHelper {
 	 * @param function
 	 * @return
 	 */
-	private static boolean isCompoundType(Type type){
+	protected static boolean isCompoundType(Type type){
 		if(type instanceof Type.Array){
 			return true;
 		}else if(type instanceof Type.Record){
@@ -283,6 +283,16 @@ public final class CodeGeneratorHelper {
 		return false;
 	}
 	/**
+	 * Return ownership flag for a given variable
+	 * @param var
+	 * @return
+	 */
+	protected static String getOwnership(String var){
+		return var+"_has_ownership";
+	}
+	
+	
+	/**
 	 * Generate the declaration of ownership variable, e.g.
 	 * 
 	 * <pre><code>
@@ -291,12 +301,13 @@ public final class CodeGeneratorHelper {
 	 * @param var
 	 * @return
 	 */
-	protected static String generateOwnership(DeallocationAnalyzer analyzer, Type type, String indent, String var){
+	protected static String generateOwnership(DeallocationAnalyzer analyzer, Type type, String var){
 		if(analyzer != null && isCompoundType(type)){
-			return indent + var+"_has_ownership = true;";
+			return getOwnership(var)+" = true;";
 		}
 		return "";
 	}
+	
 	/**
 	 * Generate the code to release the memory for a given variable.
 	 * @param indent
@@ -305,12 +316,12 @@ public final class CodeGeneratorHelper {
 	 * @param stores
 	 * @return
 	 */
-	protected static String generateDeallocatedCode(String indent, String var, Type type, CodeStores stores){
+	protected static String generateDeallocatedCode(String var, Type type, CodeStores stores){
 		if(!isCompoundType(type)){
 			return "";
 		}
-		String s = indent + "if(";
-		s += var+"_has_ownership){free";
+		String s = "if(";
+		s += getOwnership(var)+"){free";
 		// Check if var_type is a structure
 		if(type instanceof Type.Record){
 			s+= "_"+translateType(type, stores);
@@ -320,7 +331,7 @@ public final class CodeGeneratorHelper {
 				s+= "_"+translateType(type, stores); 
 			}
 		}
-		s+="("+var+");";
+		s+="("+var+"); "+getOwnership(var)+" = false;";
 		s+="}";
 		
 		return s;
@@ -332,7 +343,7 @@ public final class CodeGeneratorHelper {
 	 * @param vars
 	 * @return
 	 */
-	protected static List<String> generateDeallocationCode(DeallocationAnalyzer analyzer, FunctionOrMethod function, CodeStores stores){
+	protected static List<String> generateDeallocatedCode(DeallocationAnalyzer analyzer, FunctionOrMethod function, CodeStores stores){
 		CodeStore store = stores.getCodeStore(function);
 		String indent = store.getIndent();
 		List<String> statements = new ArrayList<String>();
@@ -343,7 +354,7 @@ public final class CodeGeneratorHelper {
 				// Get variable type
 				Type var_type = store.getVarType(register);
 				String var = store.getVar(register);
-				statements.add(generateDeallocatedCode(indent, var, var_type, stores));
+				statements.add(indent + generateDeallocatedCode(var, var_type, stores));
 			}
 		}
 		
@@ -391,14 +402,14 @@ public final class CodeGeneratorHelper {
 	 * @param rhs
 	 * @return
 	 */
-	protected static String generateArraySizeAssign(Type type, String indent, String lhs, String rhs){
+	protected static String generateArraySizeAssign(Type type, String lhs, String rhs){
 		String statement = "";
 		if(type instanceof Type.Array){
 			List<String> lhs_sizes = getArraySizeVars(lhs, type);
 			List<String> rhs_sizes = getArraySizeVars(rhs, type);
 	
 			for(int i=0;i<lhs_sizes.size();i++){
-				statement += indent+ lhs_sizes.get(i) +" = "+ rhs_sizes.get(i) +";\t"; 
+				statement += lhs_sizes.get(i) +" = "+ rhs_sizes.get(i) +"; "; 
 			}
 			
 		}
