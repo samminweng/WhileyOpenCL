@@ -121,19 +121,20 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// Declare the extra 'size' variables.
 				size_vars.forEach(size_var -> declarations.add("\tlong long "+size_var+" = 0;"));
 				// Declare the extra 'has_ownership' boolean variables
-				declarations.add(CodeGeneratorHelper.generateOwnershipDeclaration(var));
+				declarations.add("\t bool "+var + "_has_ownership = false;");
 				
 			} else if (type instanceof Type.Int) {
 				declarations.add("\t" + translateType + " " + var + " = 0;");
 			} else if (type instanceof Type.Record){
 				if(!translateType.equals("")){
 					declarations.add("\t"+translateType+ " " + var + ";");
-					declarations.add(CodeGeneratorHelper.generateOwnershipDeclaration(var));
+					declarations.add("\t bool "+var + "_has_ownership = false;");
 				}else{
 					// Skip translation
 				}
 			} else if (type instanceof Type.Nominal){
 				declarations.add("\t"+translateType+ " "+var+";");
+				declarations.add("\t bool "+var + "_has_ownership = false;");
 			} else if (type instanceof Type.Method){
 				// Skip translation
 			} else if (type instanceof Type.Union){
@@ -280,22 +281,26 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		CodeStore store = stores.getCodeStore(function);
 		String lhs = store.getVar(code.target());
 		String indent = store.getIndent();
-		String statement = "";
+		List<String> statement = new ArrayList<String>();
 		// Check if the assigned type is an array.
 		if (code.type() instanceof Type.Array || code.type() instanceof Type.Record) {
+			// Deallocate the lhs
+			statement.add(CodeGeneratorHelper.generateDeallocatedCode(indent, lhs, code.type(), stores));
 			// copy the array and assign the cloned to the target.
-			statement += CodeGeneratorHelper.generateArraySizeAssign(code.type(), indent, lhs, store.getVar(code.operand(0)));
-			statement += indent + lhs + " = "+ optimizeCode(code.operand(0), code, function);
+			statement.add(CodeGeneratorHelper.generateArraySizeAssign(code.type(), indent, lhs, store.getVar(code.operand(0))));
+			statement.add(indent + lhs + " = "+ optimizeCode(code.operand(0), code, function));
+			// Assigned the ownership to lhs
+			statement.add(CodeGeneratorHelper.generateOwnership(deallocatedAnalyzer, indent, lhs));
 		} else if (code.type() instanceof Type.Int) {
-			statement = indent + lhs + " = " + store.getVar(code.operand(0)) + ";";
+			statement.add(indent + lhs + " = " + store.getVar(code.operand(0)) + ";");
 		} else if (code.type() instanceof Type.Union && ((Type.Union)code.type()).bounds().contains(Type.Int.T_INT)) {
 			// Assign the values
-			statement = indent + lhs + " = " + store.getVar(code.operand(0)) + ";";
+			statement.add(indent + lhs + " = " + store.getVar(code.operand(0)) + ";");
 		} else{
 			throw new RuntimeException("Not Implemented!");
 		}
 		// Add the statement to the list of statements.
-		store.addStatement(code, statement);
+		store.addAllStatements(code, statement);
 	}
 
 	/**

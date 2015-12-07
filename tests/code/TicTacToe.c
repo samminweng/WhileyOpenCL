@@ -9,8 +9,7 @@ void printf_Board(Board _board){
 }
 Board copy_Board(Board _board){
 	Board new_board;
-	new_board.pieces_size = _board.pieces_size;
-	new_board.pieces = copy(_board.pieces, _board.pieces_size);
+	new_board.pieces_size = _board.pieces_size;		new_board.pieces = copy(_board.pieces, _board.pieces_size);
 	new_board.move = _board.move;
 	return new_board;
 }
@@ -30,9 +29,9 @@ Board EmptyBoard(){
 	long long _9 = 0;
 	long long* _10 = NULL;
 	long long _10_size = 0;
-	bool _10_has_ownership = true;
+	 bool _10_has_ownership = false;
 	Board _11;
-	bool _11_has_ownership = true;
+	 bool _11_has_ownership = false;
 	//const %0 = 0 : int
 	_0 = 0;
 	//const %1 = 0 : int
@@ -59,8 +58,7 @@ Board EmptyBoard(){
 	_10[0] = _1;	_10[1] = _2;	_10[2] = _3;	_10[3] = _4;	_10[4] = _5;	_10[5] = _6;	_10[6] = _7;	_10[7] = _8;	_10[8] = _9;	
 	//newrecord %11 = (%0, %10) : {int move,int[] pieces}
 	_11.move = _0;
-	_11.pieces_size = _10_size;
-	_11.pieces = copy(_10, _10_size);
+	_11.pieces_size = _10_size;		_11.pieces = copy(_10, _10_size);
 	//return %11 : {int move,int[] pieces}
 	if(_10_has_ownership){free(_10);}
 	return _11;
@@ -188,41 +186,42 @@ blklab13:;
 
 int main(int argc, char** args){
 	Board b;
+	 bool b_has_ownership = false;
 	long long i = 0;
 	long long p = 0;
 	Board _4;
-	bool _4_has_ownership = true;
+	 bool _4_has_ownership = false;
 	Board _5;
-	bool _5_has_ownership = true;
+	 bool _5_has_ownership = false;
 	long long _6 = 0;
 	long long _7 = 0;
 	long long* _8 = NULL;
 	long long _8_size = 0;
-	bool _8_has_ownership = true;
+	 bool _8_has_ownership = false;
 	long long _9 = 0;
 	long long _10 = 0;
 	long long* _11 = NULL;
 	long long _11_size = 0;
-	bool _11_has_ownership = true;
+	 bool _11_has_ownership = false;
 	long long _12 = 0;
 	long long _13 = 0;
 	long long _14 = 0;
 	long long* _15 = NULL;
 	long long _15_size = 0;
-	bool _15_has_ownership = true;
+	 bool _15_has_ownership = false;
 	long long _16 = 0;
 	long long _17 = 0;
 	long long _18 = 0;
 	long long _19 = 0;
 	Board _20;
-	bool _20_has_ownership = true;
+	 bool _20_has_ownership = false;
 	long long _21 = 0;
 	long long _22 = 0;
 	long long _23 = 0;
 	long long _24 = 0;
 	long long* _25 = NULL;
 	long long _25_size = 0;
-	bool _25_has_ownership = true;
+	 bool _25_has_ownership = false;
 	long long _26 = 0;
 	long long _27 = 0;
 	long long _28 = 0;
@@ -234,16 +233,22 @@ int main(int argc, char** args){
 	long long _34 = 0;
 	long long* _35 = NULL;
 	long long _35_size = 0;
-	bool _35_has_ownership = true;
+	 bool _35_has_ownership = false;
 	long long* _38 = NULL;
 	long long _38_size = 0;
-	bool _38_has_ownership = true;
+	 bool _38_has_ownership = false;
 	//invoke %5 = () TicTacToe:EmptyBoard : function() -> TicTacToe:Board
 	_5 = EmptyBoard();
 	//assign %4 = %5  : {int move,int[] pieces}
+	if(_4_has_ownership){free_Board(_4);}
+
 	_4 = copy_Board(_5);
+	_4_has_ownership = true;
 	//assign %1 = %4  : {int move,int[] pieces}
+	if(b_has_ownership){free_Board(b);}
+
 	b = copy_Board(_4);
+	b_has_ownership = true;
 	//const %7 = 0 : int
 	_7 = 0;
 	//assign %6 = %7  : int
@@ -279,8 +284,7 @@ int main(int argc, char** args){
 		//ifgt %3, %14 goto blklab19 : int
 		if(p>_14){goto blklab19;}
 		//fieldload %15 = %1 pieces : {int move,int[] pieces}
-		_15_size = b.pieces_size;
-		_15 = copy(b.pieces, b.pieces_size);
+		_15_size = b.pieces_size;			_15 = copy(b.pieces, b.pieces_size);
 		//indexof %16 = %15, %3 : int[]
 		_16=_15[p];
 		//const %17 = 0 : int
@@ -308,7 +312,10 @@ blklab16:;
 		//invoke %20 = (%1, %3) TicTacToe:play : function(TicTacToe:Board,TicTacToe:nat) -> TicTacToe:Board
 		_20 = play(b, p);
 		//assign %1 = %20  : {int move,int[] pieces}
+		if(b_has_ownership){free_Board(b);}
+
 		b = copy_Board(_20);
+		b_has_ownership = true;
 //.blklab17
 blklab17:;
 		//const %21 = 1 : int
@@ -338,8 +345,7 @@ blklab21:;
 	//assert
 	{
 		//fieldload %25 = %1 pieces : {int move,int[] pieces}
-		_25_size = b.pieces_size;
-		_25 = copy(b.pieces, b.pieces_size);
+		_25_size = b.pieces_size;			_25 = copy(b.pieces, b.pieces_size);
 		//const %26 = 1 : int
 		_26 = 1;
 		//const %27 = 2 : int
@@ -382,13 +388,6 @@ blklab22:;
 	//return
 	if(_35_has_ownership){free(_35);}
 	if(_4_has_ownership){free_Board(_4);}
-	if(_20_has_ownership){free_Board(_20);}
-	if(_5_has_ownership){free_Board(_5);}
-	if(_38_has_ownership){free(_38);}
-	if(_8_has_ownership){free(_8);}
-	if(_25_has_ownership){free(_25);}
-	if(_11_has_ownership){free(_11);}
-	if(_15_has_ownership){free(_15);}
 	exit(0);
 }
 

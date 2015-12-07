@@ -231,7 +231,7 @@ public final class CodeGeneratorHelper {
 	 * @param type array type
 	 * @return
 	 */
-	public static List<String> getArraySizeVars(String var, Type type){
+	protected static List<String> getArraySizeVars(String var, Type type){
 		List<String> size_vars = new ArrayList<String>();
 		int dimension = 0;
 		// Compute array dimension.
@@ -259,8 +259,31 @@ public final class CodeGeneratorHelper {
 	 * @param var
 	 * @return
 	 */
-	public static String generateOwnershipDeclaration(String var){
-		return "\tbool "+var+"_has_ownership = true;";
+	protected static String generateOwnership(DeallocationAnalyzer analyzer, String indent, String var){
+		if(analyzer != null){
+			return indent + var+"_has_ownership = true;";
+		}
+		return "";
+	}
+	/**
+	 * Generate the code to release the memory for a given variable.
+	 * @param indent
+	 * @param var
+	 * @param type
+	 * @param stores
+	 * @return
+	 */
+	protected static String generateDeallocatedCode(String indent, String var, Type type, CodeStores stores){
+		String s = indent + "if(";
+		s += var+"_has_ownership){free";
+		// Check if var_type is a structure
+		if(type instanceof Type.Record){
+			s+= "_"+translateType(type, stores);
+		}
+		s+="("+var+");";
+		s+="}";
+		
+		return s;
 	}
 	
 	
@@ -269,7 +292,7 @@ public final class CodeGeneratorHelper {
 	 * @param vars
 	 * @return
 	 */
-	public static List<String> generateDeallocationCode(DeallocationAnalyzer analyzer, FunctionOrMethod function, CodeStores stores){
+	protected static List<String> generateDeallocationCode(DeallocationAnalyzer analyzer, FunctionOrMethod function, CodeStores stores){
 		CodeStore store = stores.getCodeStore(function);
 		String indent = store.getIndent();
 		List<String> statements = new ArrayList<String>();
@@ -280,18 +303,8 @@ public final class CodeGeneratorHelper {
 				// Get variable type
 				Type var_type = store.getVarType(register);
 				String var = store.getVar(register);
-				String s = indent + "if(";
-				s += var+"_has_ownership){free";
-				// Check if var_type is a structure
-				if(var_type instanceof Type.Record){
-					s+= "_"+translateType(var_type, stores);
-				}
-				s+="("+var+");";
-				s+="}";
-				statements.add(s);
+				statements.add(generateDeallocatedCode(indent, var, var_type, stores));
 			}
-			/*vars.stream()	
-			.forEach(var -> statements.add(indent+"if("+var.replace("%", "_")+"_has_ownership){free("+var.replace("%", "_")+");}"));*/
 		}
 		
 		return statements;
@@ -345,14 +358,13 @@ public final class CodeGeneratorHelper {
 			List<String> rhs_sizes = getArraySizeVars(rhs, type);
 	
 			for(int i=0;i<lhs_sizes.size();i++){
-				statement += indent+ lhs_sizes.get(i) +" = "+ rhs_sizes.get(i) +";\n"; 
+				statement += indent+ lhs_sizes.get(i) +" = "+ rhs_sizes.get(i) +";\t"; 
 			}
 			
 		}
 		
 		return statement;
 	}
-	
 
 	/**
 	 * Generates the array code, including the copy function call and the list of array size variables, e.g.
