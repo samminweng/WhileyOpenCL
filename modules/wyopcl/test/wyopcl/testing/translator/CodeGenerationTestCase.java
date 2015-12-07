@@ -29,13 +29,13 @@ public class CodeGenerationTestCase {
 	}
 	
 	
-	@Test
+	//@Test
 	public void test_swap_naive_dealloc() {
 		//Generate the naive C code  
 		util.execCodeGeneration(codeDir, "swap", "dealloc");
 	}
 
-	@Test
+	//@Test
 	public void test_swap_copy() {
 		//Generate the naive C code  
 		util.execCodeGeneration(codeDir, "swap", "copy");
@@ -47,13 +47,13 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(codeDir, "reverse");
 	}
 	
-	@Test
+	//@Test
 	public void test_reverse_naive_dealloc() {
 		//Generate the naive C code  
 		util.execCodeGeneration(codeDir, "reverse", "dealloc");
 	}
 	
-	@Test
+	//@Test
 	public void test_reverse_copy() {
 		//Generate the naive C code  
 		util.execCodeGeneration(codeDir, "reverse", "copy");
@@ -65,14 +65,14 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(codeDir, "mergesort");
 	}
 	
-	@Test
+	//@Test
 	public void test_mergesort_naive_dealloc() {
 		//Generate the naive C code  
 		util.execCodeGeneration(codeDir, "mergesort", "dealloc");
 	}
 	
 	
-	@Test
+	//@Test
 	public void test_mergesort_copy() {
 		//Generate the naive C code  
 		util.execCodeGeneration(codeDir, "mergesort", "copy");
@@ -83,12 +83,12 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(codeDir, "TicTacToe");
 	}
 	
-	@Test
+	//@Test
 	public void test_TicTacToe_naive_dealloc() {
 		util.execCodeGeneration(codeDir, "TicTacToe", "dealloc");
 	}
 	
-	@Test
+	//@Test
 	public void test_TicTacToe_copy() {
 		util.execCodeGeneration(codeDir, "TicTacToe", "copy");
 	}
@@ -98,13 +98,13 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(codeDir, "MatrixMult");
 	}
 	
-	@Test
+	//@Test
 	public void test_MatrixMult_naive_dealloc() {
 		util.execCodeGeneration(codeDir, "MatrixMult", "dealloc");
 	}
 	
 	
-	@Test
+	//@Test
 	public void test_MatrixMult_copy() {
 		util.execCodeGeneration(codeDir, "MatrixMult", "copy");
 	}

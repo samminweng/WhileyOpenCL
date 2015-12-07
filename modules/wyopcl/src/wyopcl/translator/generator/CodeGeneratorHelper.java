@@ -26,6 +26,7 @@ import wyil.lang.WyilFile;
 import wyil.lang.Type.Record.State;
 import wyil.lang.WyilFile.Constant;
 import wyil.lang.WyilFile.FunctionOrMethod;
+import wyopcl.translator.copy.CopyEliminationAnalyzer;
 import wyopcl.translator.deallocate.DeallocationAnalyzer;
 import wyopcl.translator.generator.CodeStores.CodeStore;
 
@@ -309,6 +310,58 @@ public final class CodeGeneratorHelper {
 	}
 	
 	/**
+	 * Declare ownership variable
+	 * @param type
+	 * @param var
+	 * @param analyzer
+	 * @return
+	 */
+	protected static String declareOwnership(Type type, String var, DeallocationAnalyzer analyzer){
+		if(analyzer != null && isCompoundType(type)){
+			return "\tbool "+var + "_has_ownership";
+		}
+		return "";
+	}
+	/**
+	 * Declare
+	 * @param type
+	 * @param var
+	 * @param analyzer
+	 * @param ownership
+	 * @return
+	 */
+	protected static String declareOwnership(Type type, String var, DeallocationAnalyzer analyzer, boolean ownership){
+		String s = declareOwnership(type, var, analyzer);
+		if(s.equals("")){
+			return "";
+		}
+		// Initialize ownership with value
+		return s + " = " +ownership + ";"; 
+	}
+	/**
+	 * Return ownership to a function. If deallocation is enabled, then pass the ownership to a function. 
+	 * The ownership value is based on copy analysis results.  
+	 * 
+	 * 
+	 * @param deallocAnalyzer
+	 * @param copyAnalyzer
+	 * @return 
+	 */
+	protected static String passOwnershipToFunction(DeallocationAnalyzer deallocatedAnalyzer, CopyEliminationAnalyzer copyAnalyzer){
+		if(deallocatedAnalyzer == null){
+			return "";
+		}
+		
+		if(copyAnalyzer != null){
+			// For copy-reduced implementation, the calling function does not own the array. 
+			return ", false";
+		}else{
+			// For naive implementation, the copy is always made and thus calling function owns the array
+			return ", true";
+		}
+	}
+	
+	/**
 	 * Generate the code to release the memory for a given variable.
 	 * @param indent
 	 * @param var
@@ -316,8 +369,8 @@ public final class CodeGeneratorHelper {
 	 * @param stores
 	 * @return
 	 */
-	protected static String generateDeallocatedCode(String var, Type type, CodeStores stores){
-		if(!isCompoundType(type)){
+	protected static String addDeallocatedCode(String var, Type type, CodeStores stores, DeallocationAnalyzer analyzer){
+		if(analyzer == null || !isCompoundType(type)){
 			return "";
 		}
 		String s = "if(";
@@ -354,7 +407,7 @@ public final class CodeGeneratorHelper {
 				// Get variable type
 				Type var_type = store.getVarType(register);
 				String var = store.getVar(register);
-				statements.add(indent + generateDeallocatedCode(var, var_type, stores));
+				statements.add(indent + addDeallocatedCode(var, var_type, stores, analyzer));
 			}
 		}
 		
