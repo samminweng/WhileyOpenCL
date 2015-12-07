@@ -281,7 +281,7 @@ public final class CodeGeneratorHelper {
 			s+= "_"+translateType(type, stores);
 		}else if(type instanceof Type.Nominal){
 			WyilFile.Type nominal = stores.getNominalType((Type.Nominal) type);
-			if(nominal != null){
+			if(nominal != null && nominal.type() instanceof Type.Record){
 				s+= "_"+translateType(type, stores); 
 			}
 		}
