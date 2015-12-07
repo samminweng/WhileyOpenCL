@@ -301,7 +301,7 @@ public final class CodeGeneratorHelper {
 	 * @param var
 	 * @return
 	 */
-	protected static String generateOwnership(DeallocationAnalyzer analyzer, Type type, String var){
+	protected static String assignOwnership(Type type, String var, DeallocationAnalyzer analyzer){
 		if(analyzer != null && isCompoundType(type)){
 			return getOwnership(var)+" = true;";
 		}
