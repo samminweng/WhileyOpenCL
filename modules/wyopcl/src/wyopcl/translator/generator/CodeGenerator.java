@@ -591,30 +591,36 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.Invoke code, FunctionOrMethod function) {
 		CodeStore store = stores.getCodeStore(function);
-		String statement = "";
+		List<String> statement = new ArrayList<String>();
+		String indent = store.getIndent();
 		// Check if the called function is whiley/lang/Int
 		if (code.name.module().toString().contains("whiley/lang")) {
+			String lhs = store.getVar(code.target());
+			
 			switch (code.name.name()) {
 			// Parse a string into an integer.
 			case "parse":
-				statement += store.getIndent() + store.getVar(code.target()) + " = " + "parseInteger("
-						+ store.getVar(code.operand(0)) + ");";
+				statement.add(indent + lhs + " = " + "parseInteger("+ store.getVar(code.operand(0)) + ");");
 				break;
 				// Slice an array into a new sub-array at given starting and ending index.
 			case "slice":
+				
+				Type lhs_type = store.getVarType(code.target());
+				statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores, this.deallocatedAnalyzer));
+				
 				// Call the 'slice' function.
 				String arr_name = store.getVar(code.operand(0));
 				String start = store.getVar(code.operand(1));
 				String end = store.getVar(code.operand(2));
 				// Add 'slice' function call.
-				statement += store.getIndent() + store.getVar(code.target()) + " = slice(" + arr_name + ", " + arr_name
-						+ "_size, " + start + "," + end + ");\n";
+				statement.add(indent + lhs + " = slice(" + arr_name + ", " + arr_name + "_size, " + start + "," + end + ");");
 				// Add array size.
-				statement += store.getIndent() + store.getVar(code.target()) + "_size = " + end + " - " + start + ";";
+				statement.add(indent + lhs + "_size = " + end + " - " + start + ";");
+				// Assign ownership
+				statement.add(indent +  CodeGeneratorHelper.assignOwnership(lhs_type, lhs, this.deallocatedAnalyzer));
 				break;
 			case "toString":
-				String target = store.getVar(code.target());
-				statement += store.getIndent() + target + " = " + code.operand(0) + ";";
+				statement.add(indent + lhs + " = " + code.operand(0) + ";");
 				break;
 			default:
 				throw new RuntimeException("Un-implemented code:" + code);
@@ -623,24 +629,19 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Translate the function call, e.g.
 			String lhs = store.getVar(code.target());
 			Type lhs_type = store.getVarType(code.target());
-			String indent = store.getIndent();
 			// Free lhs 
 			if(lhs != null){
-				statement += indent + CodeGeneratorHelper.addDeallocatedCode(lhs, code.type().ret(), stores, this.deallocatedAnalyzer)+"\n";
+				statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, code.type().ret(), stores, this.deallocatedAnalyzer));
 			}
-			// '_12=reverse(_xs , _xs_size);'
-			statement += translateLHSFunctionCall(code, function);
-			// call the function/method
-			statement +=  code.name.name() + "(";
-			statement += translateRHSFunctionCall(code, function);
-			statement += ");";
+			// call the function/method, e.g. '_12=reverse(_xs , _xs_size);'
+			statement.add(translateLHSFunctionCall(code, function) + code.name.name() + "("+ translateRHSFunctionCall(code, function)+");");
 			// Assign ownership to lhs
 			if(lhs != null){
-				statement += "\n"+indent + CodeGeneratorHelper.assignOwnership(lhs_type, lhs, this.deallocatedAnalyzer);
+				statement.add(indent + CodeGeneratorHelper.assignOwnership(lhs_type, lhs, this.deallocatedAnalyzer));
 			}
 		}
 		// add the statement
-		store.addStatement(code, statement);
+		store.addAllStatements(code, statement);
 	}
 
 	/**

@@ -65,7 +65,7 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(codeDir, "mergesort");
 	}
 	
-	//@Test
+	@Test
 	public void test_mergesort_naive_dealloc() {
 		//Generate the naive C code  
 		util.execCodeGeneration(codeDir, "mergesort", "dealloc");
