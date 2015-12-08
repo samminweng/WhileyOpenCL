@@ -163,6 +163,6 @@ mem_c MergeSort CCode naive_dealloc
 mem_c TicTacToe CCode naive
 mem_c TicTacToe CCode naive_dealloc
 # mem_c TicTacToe CCode copy_reduced
-# mem_c MatrixMult CCode naive
-# mem_c MatrixMult CCode naive_dealloc
+mem_c MatrixMult CCode naive
+mem_c MatrixMult CCode naive_dealloc
 # mem_c MatrixMult CCode copy_reduced
