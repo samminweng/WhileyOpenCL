@@ -128,7 +128,9 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param function
 	 */
 	private void iterateCode(Code code, FunctionOrMethod function){
-		if(code instanceof Codes.Loop){
+		if(code instanceof Codes.FieldLoad){
+			this.addOwnership(((Codes.FieldLoad)code).target(), function);
+		}else if(code instanceof Codes.Loop){
 			((Codes.Loop)code).bytecodes().stream()
 			.forEach(c -> iterateCode(c, function));
 		}else if(code instanceof Codes.Return){
