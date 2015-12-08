@@ -47,7 +47,7 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(codeDir, "reverse");
 	}
 	
-	//@Test
+	@Test
 	public void test_reverse_naive_dealloc() {
 		//Generate the naive C code  
 		util.execCodeGeneration(codeDir, "reverse", "dealloc");
