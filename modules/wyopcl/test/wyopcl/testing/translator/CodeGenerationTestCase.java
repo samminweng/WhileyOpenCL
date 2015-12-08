@@ -83,7 +83,7 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(codeDir, "TicTacToe");
 	}
 	
-	//@Test
+	@Test
 	public void test_TicTacToe_naive_dealloc() {
 		util.execCodeGeneration(codeDir, "TicTacToe", "dealloc");
 	}
