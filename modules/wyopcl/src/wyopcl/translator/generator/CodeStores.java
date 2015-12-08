@@ -179,7 +179,12 @@ public class CodeStores {
 				if (isVerbose) {
 					System.out.println(statement);
 				}
-				statements.addAll(statement);
+				// Filter empty s
+				statement.stream()
+				// Remove 'tab' in a string and check if the string is empty
+				.filter(s -> !s.equals("") && !s.replaceAll("\t", "").equals(""))
+				.forEach(s -> statements.add(s));
+				//statements.addAll(statement);
 			}
 		}
 		

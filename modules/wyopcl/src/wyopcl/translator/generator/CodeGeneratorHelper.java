@@ -318,7 +318,7 @@ public final class CodeGeneratorHelper {
 	 */
 	protected static String declareOwnership(Type type, String var, DeallocationAnalyzer analyzer){
 		if(analyzer != null && isCompoundType(type)){
-			return "\tbool "+var + "_has_ownership";
+			return "bool "+var + "_has_ownership";
 		}
 		return "";
 	}
