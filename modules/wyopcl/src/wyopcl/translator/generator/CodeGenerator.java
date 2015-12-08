@@ -228,10 +228,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String lhs = store.getVar(code.target());
 		String indent = store.getIndent();
 		if (code.assignedType() instanceof Type.Array) {
-			// Free lhs
-			statements.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, code.assignedType(), stores, this.deallocatedAnalyzer));
+			
 			// Convert it into a constant list
 			Constant.List list = (Constant.List) code.constant;
+			
+			
+			
 			// Initialize an array
 			if (list.values.isEmpty()) {
 				statements.add(indent + lhs + "_size = 0;");
@@ -240,6 +242,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// E.g. 'const %8 = [0,1,2,3,4,5,6,7,8] : int[]' wyil code can be translated into
 				// long long _8_value[] = {0, 1, 2, 3, 4, 5, 6, 7, 8}; // Introduce 'value' variable.
 				statements.add(indent + lhs + "_size = " + list.values.size() + ";");
+				// Free lhs
+				statements.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, code.assignedType(), stores, this.deallocatedAnalyzer));
 				statements.add(indent + lhs + "=(long long*)malloc("+list.values.size()+"*sizeof(long long));");
 				String s = indent;
 				for(int i=0;i<list.values.size();i++){
@@ -294,11 +298,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		List<String> statement = new ArrayList<String>();
 		// Check if the assigned type is an array.
 		if (code.type() instanceof Type.Array || code.type() instanceof Type.Record) {
-			// Deallocate the lhs
+			// Propagate array sizes
+			statement.add(indent + CodeGeneratorHelper.generateArraySizeAssign(code.type(), lhs, store.getVar(code.operand(0))));
+			// Deallocate the lhs array
 			statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores, this.deallocatedAnalyzer));
 			// copy the array and assign the cloned to the target.
-			statement.add(indent + CodeGeneratorHelper.generateArraySizeAssign(code.type(), lhs, store.getVar(code.operand(0)))
-					+ lhs + " = "+ optimizeCode(code.operand(0), code, function));
+			statement.add(indent + lhs + " = "+ optimizeCode(code.operand(0), code, function));
 			// Assigned the ownership to lhs
 			statement.add(indent + CodeGeneratorHelper.assignOwnership(lhs_type, lhs, this.stores, deallocatedAnalyzer));
 		} else if (code.type() instanceof Type.Int) {
@@ -1078,10 +1083,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement.add(indent + lhs + " = convertArgsToIntArray(argc, args);");
 			statement.add(indent + lhs + "_size = argc - 1;");
 		} else {
-			// Free lhs
-			statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores, this.deallocatedAnalyzer));
 			// Propagate rhs array sizes to lhs
 			statement.add(indent + CodeGeneratorHelper.generateArraySizeAssign(code.fieldType(), lhs, store.getVar(code.operand(0)) + "." + code.field));
+			// Free lhs
+			statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores, this.deallocatedAnalyzer));
 			// Assign member values
 			statement.add(indent + lhs + " = "+ optimizeCode(code.operand(0), code, function)+";");
 			// Assign ownership to lhs variable of fieldload code
@@ -1403,14 +1408,16 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 *  Generates a multi-dimensional array with 'genXDArray' built-in C function in C, e.g.
 	 * <pre>
 	 * <code>
-	 * listgen %12 = [10; 11] : int[][]
+	 * listgen a = [b; c] : int[][]
 	 * </code> 
 	 * </pre>
 	 * can translate this into
 	 * <pre><code>
-	 * _12_size = _11;
-	 * _12_size_size = _10_size;
-	 * _12 = gen2DArray(_10, _12_size, _12_size_size);
+	 * a_size = c;
+	 *	if(a_has_ownership){free2DArray(a, a_size); a_has_ownership = false;}
+	 * a_size_size = __size;
+	 * a = gen2DArray(b, a_size, a_size_size);
+	 * a_has_ownership = true;
 	 * </code></pre>
 	 *  Creates a 2D array ( _11*_10_size) with initial '_10' value.
 	 */
@@ -1424,12 +1431,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		List<String> statements = new ArrayList<String>();
 		List<String> lhs_sizes = CodeGeneratorHelper.getArraySizeVars(lhs, code.type());
 		List<String> rhs_sizes = CodeGeneratorHelper.getArraySizeVars(rhs, code.type());
+		
+		// Propagate array sizes 
+		statements.add(indent + lhs_sizes.get(0) + " = " + size+";");
 		// Deallocate lhs
 		statements.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, code.type(), stores, this.deallocatedAnalyzer));
-		
-		// Assign lhs sizes 
-		statements.add(indent + lhs_sizes.get(0) + " = " + size+";");
-		
 		// Propagate the remaining lhs sizes
 		IntStream.range(1, lhs_sizes.size())
 		.forEach(i-> statements.add(indent + lhs_sizes.get(i) + " = " + rhs_sizes.get(i-1) + ";"));
