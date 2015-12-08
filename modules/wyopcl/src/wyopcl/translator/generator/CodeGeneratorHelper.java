@@ -260,7 +260,7 @@ public final class CodeGeneratorHelper {
 	 * @param function
 	 * @return
 	 */
-	protected static boolean isCompoundType(Type type){
+	protected static boolean isCompoundType(Type type, CodeStores stores){
 		if(type instanceof Type.Array){
 			return true;
 		}else if(type instanceof Type.Record){
@@ -276,9 +276,13 @@ public final class CodeGeneratorHelper {
 			}
 		}else if(type instanceof Type.Nominal){
 			// Get nominal type
-			if(!((Type.Nominal)type).name().toString().contains("Console")){
-				return true;
+			Type.Nominal nominal = (Type.Nominal)type;
+			if(!nominal.name().toString().contains("Console") &&
+				// Check if the nominal type is aliased Integer type
+				stores.getNominalType(nominal).type() instanceof Type.Int){
+				return false;
 			}
+			
 		}
 		
 		return false;
@@ -302,8 +306,8 @@ public final class CodeGeneratorHelper {
 	 * @param var
 	 * @return
 	 */
-	protected static String assignOwnership(Type type, String var, DeallocationAnalyzer analyzer){
-		if(analyzer != null && isCompoundType(type)){
+	protected static String assignOwnership(Type type, String var, CodeStores stores, DeallocationAnalyzer analyzer){
+		if(analyzer != null && isCompoundType(type, stores)){
 			return getOwnership(var)+" = true;";
 		}
 		return "";
@@ -316,8 +320,8 @@ public final class CodeGeneratorHelper {
 	 * @param analyzer
 	 * @return
 	 */
-	protected static String declareOwnership(Type type, String var, DeallocationAnalyzer analyzer){
-		if(analyzer != null && isCompoundType(type)){
+	protected static String declareOwnership(Type type, String var, CodeStores stores, DeallocationAnalyzer analyzer){
+		if(analyzer != null && isCompoundType(type, stores)){
 			return "bool "+var + "_has_ownership";
 		}
 		return "";
@@ -330,8 +334,8 @@ public final class CodeGeneratorHelper {
 	 * @param ownership
 	 * @return
 	 */
-	protected static String declareOwnership(Type type, String var, DeallocationAnalyzer analyzer, boolean ownership){
-		String s = declareOwnership(type, var, analyzer);
+	protected static String declareOwnership(Type type, String var, CodeStores stores, DeallocationAnalyzer analyzer, boolean ownership){
+		String s = declareOwnership(type, var, stores, analyzer);
 		if(s.equals("")){
 			return "";
 		}
@@ -370,7 +374,7 @@ public final class CodeGeneratorHelper {
 	 * @return
 	 */
 	protected static String addDeallocatedCode(String var, Type type, CodeStores stores, DeallocationAnalyzer analyzer){
-		if(analyzer == null || !isCompoundType(type)){
+		if(analyzer == null || !isCompoundType(type, stores)){
 			return "";
 		}
 		String s = "if(";
