@@ -279,8 +279,8 @@ public final class CodeGeneratorHelper {
 			Type.Nominal nominal = (Type.Nominal)type;
 			if(!nominal.name().toString().contains("Console") &&
 				// Check if the nominal type is aliased Integer type
-				stores.getNominalType(nominal).type() instanceof Type.Int){
-				return false;
+				!(stores.getNominalType(nominal).type() instanceof Type.Int)){
+				return true;
 			}
 			
 		}
