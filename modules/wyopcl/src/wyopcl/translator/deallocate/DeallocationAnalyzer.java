@@ -147,6 +147,8 @@ public class DeallocationAnalyzer extends Analyzer {
 			this.addOwnership(((Codes.Invoke)code).target(), function);
 		}else if (code instanceof Codes.Const){
 			this.addOwnership(((Codes.Const)code).target(), function);
+		}else if(code instanceof Codes.ListGenerator){
+			this.addOwnership(((Codes.ListGenerator)code).target(), function);
 		} else{
 			// Do nothing
 		}

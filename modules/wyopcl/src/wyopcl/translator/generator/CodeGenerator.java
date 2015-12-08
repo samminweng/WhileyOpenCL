@@ -1425,6 +1425,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		List<String> statements = new ArrayList<String>();
 		List<String> lhs_sizes = CodeGeneratorHelper.getArraySizeVars(lhs, code.type());
 		List<String> rhs_sizes = CodeGeneratorHelper.getArraySizeVars(rhs, code.type());
+		// Deallocate lhs
+		statements.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, code.type(), stores, this.deallocatedAnalyzer));
+		
 		// Assign lhs sizes 
 		statements.add(indent + lhs_sizes.get(0) + " = " + size+";");
 		
@@ -1435,7 +1438,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Call 'genXArray' function to create an array with given sizes.
 		statements.add(indent + lhs + " = gen"+lhs_sizes.size()+"DArray("+rhs + ", " + CodeGeneratorHelper.generateArraySizeVars(lhs, code.type())+");");
 		
-		
+		// Assign ownership
+		statements.add(indent + CodeGeneratorHelper.assignOwnership(code.type(), lhs, this.deallocatedAnalyzer));
 		
 		store.addAllStatements(code, statements);
 	}
