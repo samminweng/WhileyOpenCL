@@ -379,8 +379,14 @@ public final class CodeGeneratorHelper {
 		}
 		String s = "if(";
 		s += getOwnership(var)+"){free";
+		int dimension = 0;
 		// Check if var_type is a structure
-		if(type instanceof Type.Record){
+		if(type instanceof Type.Array){
+			dimension = getArraySizeVars(var, type).size();
+			if(dimension== 2){
+				s+=dimension+"DArray";
+			}
+		}else if(type instanceof Type.Record){
 			s+= "_"+translateType(type, stores);
 		}else if(type instanceof Type.Nominal){
 			WyilFile.Type nominal = stores.getNominalType((Type.Nominal) type);
@@ -388,7 +394,12 @@ public final class CodeGeneratorHelper {
 				s+= "_"+translateType(type, stores); 
 			}
 		}
-		s+="("+var+"); "+getOwnership(var)+" = false;";
+		s+="("+var;
+		if(dimension==2){
+			// Pass size variable of 2D array to release the memory
+			s += ", "+var+"_size";
+		}
+		s+= "); "+getOwnership(var)+" = false;";
 		s+="}";
 		
 		return s;
