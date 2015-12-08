@@ -523,17 +523,18 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statement += optimizeCode(reg, code, f);
 				// pass the ownership flag
 				statement += CodeGeneratorHelper.passOwnershipToFunction(this.deallocatedAnalyzer, this.copyAnalyzer);
-				
 				// pass the '*_size' parameter
 				statement += ", " + CodeGeneratorHelper.generateArraySizeVars(param, paramType);
 			} else if(paramType instanceof Type.Record){	
 				statement += optimizeCode(reg, code, f);
+				statement += CodeGeneratorHelper.passOwnershipToFunction(this.deallocatedAnalyzer, this.copyAnalyzer);
 			} else if(paramType instanceof Type.Nominal){
 				Type.Nominal nomial = ((Type.Nominal)paramType);
 				if(nomial.name().name().equals("Console")){
 					statement += "stdout";
 				}else{
 					statement += optimizeCode(reg, code, f);
+					statement += CodeGeneratorHelper.passOwnershipToFunction(this.deallocatedAnalyzer, this.copyAnalyzer);
 				}
 			} else if(paramType instanceof Type.Union){
 				// Access the 'integer' member for union-typed variable
