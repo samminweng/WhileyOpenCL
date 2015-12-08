@@ -221,7 +221,12 @@ public final class CodeGeneratorHelper {
 			Type member_type = fields.get(member);
 			String input_member = input +"."+member;
 			if(member_type instanceof Type.Array){
-				statement.add(indent+ "free("+input_member+");");
+				if(getArraySizeVars(input_member, member_type).size()== 2){
+					// Release 2D array by using built-in 'free2DArray' function
+					statement.add(indent + "free2DArray("+input_member+", "+input_member+"_size);");
+				}else{
+					statement.add(indent+ "free("+input_member+");");
+				}
 			}
 		}
 		statement.add("}");// Add ending bracket.
