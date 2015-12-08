@@ -98,7 +98,7 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(codeDir, "MatrixMult");
 	}
 	
-	//@Test
+	@Test
 	public void test_MatrixMult_naive_dealloc() {
 		util.execCodeGeneration(codeDir, "MatrixMult", "dealloc");
 	}

@@ -503,47 +503,42 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	private String translateRHSFunctionCall(Codes.Invoke code, FunctionOrMethod f) {
 		// Get code store of f function
-		CodeStore store = stores.getCodeStore(f);		
-		boolean isFirst = true;
-		String statement = "";
+		CodeStore store = stores.getCodeStore(f);
+		List<String> statement = new ArrayList<String>();
 		for (int index = 0; index < code.operands().length; index++) {
-			if (!isFirst) {
-				statement += ", ";
-			}else{
-				isFirst = false;
-			}
+			int register = code.operand(index);
+			String var = store.getVar(register);
+			Type type = store.getVarType(register);
 			
-			int reg = code.operand(index);
-			String param = store.getVar(reg);
-			Type paramType = store.getVarType(reg);
-			
-			if(paramType instanceof Type.Int){
-				statement += param;
-			}else if (paramType instanceof Type.Array) {
-				statement += optimizeCode(reg, code, f);
-				// pass the ownership flag
-				statement += CodeGeneratorHelper.passOwnershipToFunction(this.deallocatedAnalyzer, this.copyAnalyzer);
-				// pass the '*_size' parameter
-				statement += ", " + CodeGeneratorHelper.generateArraySizeVars(param, paramType);
-			} else if(paramType instanceof Type.Record){	
-				statement += optimizeCode(reg, code, f);
-				statement += CodeGeneratorHelper.passOwnershipToFunction(this.deallocatedAnalyzer, this.copyAnalyzer);
-			} else if(paramType instanceof Type.Nominal){
-				Type.Nominal nomial = ((Type.Nominal)paramType);
+			if(type instanceof Type.Int){
+				statement.add(var);
+			}else if (type instanceof Type.Array) {
+				statement.add(optimizeCode(register, code, f));
+			} else if(type instanceof Type.Record){	
+				statement.add(optimizeCode(register, code, f));
+			} else if(type instanceof Type.Nominal){
+				Type.Nominal nomial = ((Type.Nominal)type);
 				if(nomial.name().name().equals("Console")){
-					statement += "stdout";
+					statement.add("stdout");
 				}else{
-					statement += optimizeCode(reg, code, f);
-					statement += CodeGeneratorHelper.passOwnershipToFunction(this.deallocatedAnalyzer, this.copyAnalyzer);
+					statement.add(optimizeCode(register, code, f));
 				}
-			} else if(paramType instanceof Type.Union){
+			} else if(type instanceof Type.Union){
 				// Access the 'integer' member for union-typed variable
-				statement += param + ".integer";
+				statement.add(var + ".integer");
 			} else {
 				throw new RuntimeException("Not Implemented");
-			}	
+			}
+			// pass the ownership flag
+			statement.add(CodeGeneratorHelper.passOwnershipToFunction(type, stores,this.deallocatedAnalyzer, this.copyAnalyzer));
+			// pass the '*_size' parameter
+			statement.add(CodeGeneratorHelper.generateArraySizeVars(var, type));
 		}
-		return statement;
+		
+		return statement.stream()
+			   .filter(s -> !s.equals(""))
+			   .map(s -> s.toString())
+			   .collect(Collectors.joining(", "));
 	}
 
 	/**

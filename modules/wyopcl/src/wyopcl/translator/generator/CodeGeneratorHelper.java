@@ -351,17 +351,17 @@ public final class CodeGeneratorHelper {
 	 * @param copyAnalyzer
 	 * @return 
 	 */
-	protected static String passOwnershipToFunction(DeallocationAnalyzer deallocatedAnalyzer, CopyEliminationAnalyzer copyAnalyzer){
-		if(deallocatedAnalyzer == null){
+	protected static String passOwnershipToFunction(Type type, CodeStores stores, DeallocationAnalyzer deallocatedAnalyzer, CopyEliminationAnalyzer copyAnalyzer){
+		if(deallocatedAnalyzer == null || !isCompoundType(type, stores)){
 			return "";
 		}
 		
 		if(copyAnalyzer != null){
 			// For copy-reduced implementation, the calling function does not own the array. 
-			return ", false";
+			return "false";
 		}else{
 			// For naive implementation, the copy is always made and thus calling function owns the array
-			return ", true";
+			return "true";
 		}
 	}
 	
@@ -436,11 +436,15 @@ public final class CodeGeneratorHelper {
 	 * @return a string of array sizes variables in C. If type is not an array, return empty
 	 */
 	protected static String generateArraySizeVars(String var, Type type){
-		List<String> size_vars = getArraySizeVars(var, type);
+		if(type instanceof Type.Array){
+			List<String> size_vars = getArraySizeVars(var, type);
+			
+			return size_vars.stream()
+			.map(i -> i.toString())
+			.collect(Collectors.joining(", "));
+		}
 		
-		return size_vars.stream()
-		.map(i -> i.toString())
-		.collect(Collectors.joining(", "));
+		return "";
 	}
 	
 	
