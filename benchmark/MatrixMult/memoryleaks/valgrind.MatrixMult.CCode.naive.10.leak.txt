@@ -1,0 +1,21 @@
+==17135== Memcheck, a memory error detector
+==17135== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==17135== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==17135== Command: ./MatrixMult.out 10
+==17135== Parent PID: 16796
+==17135== 
+==17135== 
+==17135== HEAP SUMMARY:
+==17135==     in use at exit: 1,781,704 bytes in 22,270 blocks
+==17135==   total heap usage: 22,270 allocs, 0 frees, 1,781,704 bytes allocated
+==17135== 
+==17135== LEAK SUMMARY:
+==17135==    definitely lost: 162,000 bytes in 2,023 blocks
+==17135==    indirectly lost: 1,614,424 bytes in 20,181 blocks
+==17135==      possibly lost: 0 bytes in 0 blocks
+==17135==    still reachable: 5,280 bytes in 66 blocks
+==17135==         suppressed: 0 bytes in 0 blocks
+==17135== Rerun with --leak-check=full to see details of leaked memory
+==17135== 
+==17135== For counts of detected and suppressed errors, rerun with: -v
+==17135== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

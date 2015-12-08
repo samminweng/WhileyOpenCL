@@ -3,10 +3,10 @@ long long* sortV1(long long* items, long long items_size, long long start, long 
 	long long pivot = 0;
 	long long* lhs = NULL;
 	long long lhs_size = 0;
-	bool lhs_has_ownership = true;
+	
 	long long* rhs = NULL;
 	long long rhs_size = 0;
-	bool rhs_has_ownership = true;
+	
 	long long l = 0;
 	long long r = 0;
 	long long i = 0;
@@ -18,23 +18,23 @@ long long* sortV1(long long* items, long long items_size, long long start, long 
 	long long _14 = 0;
 	long long* _15 = NULL;
 	long long _15_size = 0;
-	bool _15_has_ownership = true;
+	
 	long long* _16 = NULL;
 	long long _16_size = 0;
-	bool _16_has_ownership = true;
+	
 	long long* _17 = NULL;
 	long long _17_size = 0;
-	bool _17_has_ownership = true;
+	
 	long long _18 = 0;
 	long long* _19 = NULL;
 	long long _19_size = 0;
-	bool _19_has_ownership = true;
+	
 	long long* _20 = NULL;
 	long long _20_size = 0;
-	bool _20_has_ownership = true;
+	
 	long long* _21 = NULL;
 	long long _21_size = 0;
-	bool _21_has_ownership = true;
+	
 	long long _22 = 0;
 	long long _23 = 0;
 	long long _24 = 0;
@@ -92,37 +92,35 @@ long long* sortV1(long long* items, long long items_size, long long start, long 
 	_16 = slice(items, items_size, start,pivot);
 	_16_size = pivot - start;
 	//assign %15 = %16  : int[]
-	_15_size = _16_size;
+	_15_size = _16_size; 
 	_15 = copy(_16, _16_size);
 	//assign %4 = %15  : int[]
-	lhs_size = _15_size;
+	lhs_size = _15_size; 
 	lhs = copy(_15, _15_size);
 	//const %18 = 0 : int
 	_18 = 0;
 	//invoke %17 = (%4, %18, %3) MergeSort:sortV1 : function(int[],int,int) -> int[]
-	_17_size = lhs_size;
-	_17 = sortV1(copy(lhs, lhs_size), lhs_size, _18, pivot);
+	_17_size = lhs_size; 	_17 = sortV1(copy(lhs, lhs_size), lhs_size, _18, pivot);
 	//assign %4 = %17  : int[]
-	lhs_size = _17_size;
+	lhs_size = _17_size; 
 	lhs = copy(_17, _17_size);
 	//invoke %20 = (%0, %3, %2) whiley/lang/Array:slice : function(int[],int,int) -> int[]
 	_20 = slice(items, items_size, pivot,end);
 	_20_size = end - pivot;
 	//assign %19 = %20  : int[]
-	_19_size = _20_size;
+	_19_size = _20_size; 
 	_19 = copy(_20, _20_size);
 	//assign %5 = %19  : int[]
-	rhs_size = _19_size;
+	rhs_size = _19_size; 
 	rhs = copy(_19, _19_size);
 	//const %22 = 0 : int
 	_22 = 0;
 	//sub %23 = %2, %3 : int
 	_23=end-pivot;
 	//invoke %21 = (%5, %22, %23) MergeSort:sortV1 : function(int[],int,int) -> int[]
-	_21_size = rhs_size;
-	_21 = sortV1(copy(rhs, rhs_size), rhs_size, _22, _23);
+	_21_size = rhs_size; 	_21 = sortV1(copy(rhs, rhs_size), rhs_size, _22, _23);
 	//assign %5 = %21  : int[]
-	rhs_size = _21_size;
+	rhs_size = _21_size; 
 	rhs = copy(_21, _21_size);
 	//const %25 = 0 : int
 	_25 = 0;
@@ -267,35 +265,35 @@ int main(int argc, char** args){
 	long long index = 0;
 	long long* arr = NULL;
 	long long arr_size = 0;
-	bool arr_has_ownership = true;
+	
 	union UNION _4;
 	union UNION _5;
 	long long** _6 = NULL;
 	long long _6_size = 0;
 	long long _6_size_size = 0;
-	bool _6_has_ownership = true;
+	
 	long long _7 = 0;
 	long long* _8 = NULL;
 	long long _8_size = 0;
-	bool _8_has_ownership = true;
+	
 	long long _9 = 0;
 	long long _10 = 0;
 	long long* _11 = NULL;
 	long long _11_size = 0;
-	bool _11_has_ownership = true;
+	
 	long long _12 = 0;
 	long long _13 = 0;
 	long long _14 = 0;
 	long long* _15 = NULL;
 	long long _15_size = 0;
-	bool _15_has_ownership = true;
+	
 	long long _16 = 0;
 	long long _17 = 0;
 	long long _18 = 0;
 	long long _19 = 0;
 	long long* _20 = NULL;
 	long long _20_size = 0;
-	bool _20_has_ownership = true;
+	
 	long long _21 = 0;
 	long long _22 = 0;
 	long long _23 = 0;
@@ -305,7 +303,7 @@ int main(int argc, char** args){
 	long long _27 = 0;
 	long long* _30 = NULL;
 	long long _30_size = 0;
-	bool _30_has_ownership = true;
+	
 	//fieldload %6 = %0 args : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 	_6 = convertArgsToIntArray(argc, args);
 	_6_size = argc - 1;
@@ -337,10 +335,10 @@ int main(int argc, char** args){
 	_15_size = _14;
 	_15 = gen1DArray(_12, _15_size);
 	//assign %11 = %15  : int[]
-	_11_size = _15_size;
+	_11_size = _15_size; 
 	_11 = copy(_15, _15_size);
 	//assign %3 = %11  : int[]
-	arr_size = _11_size;
+	arr_size = _11_size; 
 	arr = copy(_11, _11_size);
 	//loop (%2, %3, %16, %17, %18, %19)
 	while(true){
@@ -368,10 +366,9 @@ blklab7:;
 	//add %23 = %1, %22 : int
 	_23=max.integer+_22;
 	//invoke %20 = (%3, %21, %23) MergeSort:sortV1 : function(int[],int,int) -> int[]
-	_20_size = arr_size;
-	_20 = sortV1(copy(arr, arr_size), arr_size, _21, _23);
+	_20_size = arr_size; 	_20 = sortV1(copy(arr, arr_size), arr_size, _21, _23);
 	//assign %3 = %20  : int[]
-	arr_size = _20_size;
+	arr_size = _20_size; 
 	arr = copy(_20, _20_size);
 	//assert
 	{

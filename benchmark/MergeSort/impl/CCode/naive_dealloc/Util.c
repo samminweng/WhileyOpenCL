@@ -46,25 +46,25 @@ long long* gen1DArray(int value, int arr_size){
 /**
  * Generate an 2D array (N*M)
  */
-long long** gen2DArray(long long* arr,  long long size_N, long long size_M){
+long long** gen2DArray(long long* arr,  long long x, long long y){
 	long long** _2DArray = NULL;
 	long long i = 0;
-	long long size =0;
+	long long size = y*sizeof(long long);
 	// Allocate the array
-	_2DArray = (long long**)malloc(size_N*sizeof(long long*));
+	_2DArray = (long long**)malloc(x*sizeof(long long*));
 	if(_2DArray == NULL){
 		printf("fail to allocate the memory at gen2DArray function in Util.c\n");
 		exit(-2);
 	}
-	size = size_M*sizeof(long long);
-	for(i=0;i<size_N;i++){
+
+	for(i=0;i<x;i++){
 		// Copy the input array and assign it to matrix.
-		_2DArray[i] = (long long*)malloc(size_M*sizeof(long long));
+		_2DArray[i] = (long long*)malloc(size);
 		if(_2DArray[i] == NULL){
 			printf("fail to allocate the memory at gen2DArray function in Util.c\n");
 			exit(-2);
 		}
-		memcpy(_2DArray[i], arr, size_M);
+		memcpy(_2DArray[i], arr, size);
 	}
 	return _2DArray;
 }
@@ -225,18 +225,22 @@ long long* copy(long long *arr, long long size) {
 	return ptr;
 }
 // Clone 2D array with given array size.
-long long** copy2DArray(long long **arr, long long arr_size, long long size){
+long long** copy2DArray(long long **arr, long long x, long long y){
 	long long **newMatrix = NULL;
 	long long i = 0;
-	long long actual_size = arr_size*sizeof(long long);
-	newMatrix = (long long**) malloc(size*sizeof(long long*));
+	newMatrix = (long long**)malloc(x*sizeof(long long*));
 	if(newMatrix == NULL){
-		printf("fail to malloc at clone2DArray function in Util.c\n");
+		printf("fail to malloc newMatrix at clone2DArray function in Util.c\n");
 		exit(-2);
 	}
-	for(i=0;i<size;i++){
-		newMatrix[i] = (long long*)malloc(actual_size);
-		memcpy(newMatrix[i], arr[i], actual_size);
+	long long size = y*sizeof(long long);
+	for(i=0;i<x;i++){
+		newMatrix[i] = (long long*)malloc(size);
+		if(newMatrix[i] == NULL){
+			printf("fail to malloc newMatrix[i] at clone2DArray function in Util.c\n");
+			exit(-2);
+		}
+		memcpy(newMatrix[i], arr[i], size);
 	}
 	return newMatrix;
 }

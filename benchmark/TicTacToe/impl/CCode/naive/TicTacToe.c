@@ -9,8 +9,7 @@ void printf_Board(Board _board){
 }
 Board copy_Board(Board _board){
 	Board new_board;
-	new_board.pieces_size = _board.pieces_size;
-	new_board.pieces = copy(_board.pieces, _board.pieces_size);
+	new_board.pieces_size = _board.pieces_size;  new_board.pieces = copy(_board.pieces, _board.pieces_size);
 	new_board.move = _board.move;
 	return new_board;
 }
@@ -30,9 +29,9 @@ Board EmptyBoard(){
 	long long _9 = 0;
 	long long* _10 = NULL;
 	long long _10_size = 0;
-	bool _10_has_ownership = true;
+	
 	Board _11;
-	bool _11_has_ownership = true;
+	
 	//const %0 = 0 : int
 	_0 = 0;
 	//const %1 = 0 : int
@@ -56,10 +55,10 @@ Board EmptyBoard(){
 	//newlist %10 = (%1, %2, %3, %4, %5, %6, %7, %8, %9) : int[]
 	_10_size = 9;
 	_10 = malloc(9*sizeof(long long));
-	_10[0] = _1;	_10[1] = _2;	_10[2] = _3;	_10[3] = _4;	_10[4] = _5;	_10[5] = _6;	_10[6] = _7;	_10[7] = _8;	_10[8] = _9;	
+	_10[0] = _1; _10[1] = _2; _10[2] = _3; _10[3] = _4; _10[4] = _5; _10[5] = _6; _10[6] = _7; _10[7] = _8; _10[8] = _9; 
 	//newrecord %11 = (%0, %10) : {int move,int[] pieces}
 	_11.move = _0;
-	_11.pieces_size = _10_size;
+	_11.pieces_size = _10_size; 
 	_11.pieces = copy(_10, _10_size);
 	//return %11 : {int move,int[] pieces}
 	return _11;
@@ -189,6 +188,7 @@ int main(int argc, char** args){
 	union UNION max;
 	long long repeat = 0;
 	Board b;
+	
 	long long i = 0;
 	long long p = 0;
 	union UNION _6;
@@ -196,49 +196,49 @@ int main(int argc, char** args){
 	long long** _8 = NULL;
 	long long _8_size = 0;
 	long long _8_size_size = 0;
-	bool _8_has_ownership = true;
+	
 	long long _9 = 0;
 	long long* _10 = NULL;
 	long long _10_size = 0;
-	bool _10_has_ownership = true;
+	
 	long long _11 = 0;
 	long long _12 = 0;
 	Board _13;
-	bool _13_has_ownership = true;
+	
 	Board _14;
-	bool _14_has_ownership = true;
+	
 	long long _15 = 0;
 	long long _16 = 0;
 	long long* _17 = NULL;
 	long long _17_size = 0;
-	bool _17_has_ownership = true;
+	
 	long long _18 = 0;
 	long long _19 = 0;
 	long long* _20 = NULL;
 	long long _20_size = 0;
-	bool _20_has_ownership = true;
+	
 	long long _21 = 0;
 	long long _22 = 0;
 	long long _23 = 0;
 	long long* _24 = NULL;
 	long long _24_size = 0;
-	bool _24_has_ownership = true;
+	
 	long long _25 = 0;
 	long long _26 = 0;
 	long long _27 = 0;
 	long long _28 = 0;
 	long long* _31 = NULL;
 	long long _31_size = 0;
-	bool _31_has_ownership = true;
+	
 	Board _32;
-	bool _32_has_ownership = true;
+	
 	long long _33 = 0;
 	long long _34 = 0;
 	long long _35 = 0;
 	long long _36 = 0;
 	long long* _37 = NULL;
 	long long _37_size = 0;
-	bool _37_has_ownership = true;
+	
 	long long _38 = 0;
 	long long _39 = 0;
 	long long _40 = 0;
@@ -250,12 +250,12 @@ int main(int argc, char** args){
 	long long _46 = 0;
 	long long* _47 = NULL;
 	long long _47_size = 0;
-	bool _47_has_ownership = true;
+	
 	long long _48 = 0;
 	long long _49 = 0;
 	long long* _52 = NULL;
 	long long _52_size = 0;
-	bool _52_has_ownership = true;
+	
 	//fieldload %8 = %0 args : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 	_8 = convertArgsToIntArray(argc, args);
 	_8_size = argc - 1;
@@ -322,7 +322,7 @@ int main(int argc, char** args){
 			//ifgt %5, %23 goto blklab21 : int
 			if(p>_23){goto blklab21;}
 			//fieldload %24 = %3 pieces : {int move,int[] pieces}
-			_24_size = b.pieces_size;
+			_24_size = b.pieces_size; 
 			_24 = copy(b.pieces, b.pieces_size);
 			//indexof %25 = %24, %5 : int[]
 			_25=_24[p];
@@ -357,7 +357,7 @@ blklab20:;
 //.blklab18
 blklab18:;
 			//invoke %32 = (%3, %5) TicTacToe:play : function(TicTacToe:Board,TicTacToe:nat) -> TicTacToe:Board
-			_32 = play(b, p);
+			_32 = play(copy_Board(b), p);
 			//assign %3 = %32  : {int move,int[] pieces}
 			b = copy_Board(_32);
 //.blklab19
@@ -389,7 +389,7 @@ blklab23:;
 		//assert
 		{
 			//fieldload %37 = %3 pieces : {int move,int[] pieces}
-			_37_size = b.pieces_size;
+			_37_size = b.pieces_size; 
 			_37 = copy(b.pieces, b.pieces_size);
 			//const %38 = 1 : int
 			_38 = 1;
@@ -412,7 +412,7 @@ blklab23:;
 			//newlist %47 = (%38, %39, %40, %41, %42, %43, %44, %45, %46) : int[]
 			_47_size = 9;
 			_47 = malloc(9*sizeof(long long));
-			_47[0] = _38;	_47[1] = _39;	_47[2] = _40;	_47[3] = _41;	_47[4] = _42;	_47[5] = _43;	_47[6] = _44;	_47[7] = _45;	_47[8] = _46;	
+			_47[0] = _38; _47[1] = _39; _47[2] = _40; _47[3] = _41; _47[4] = _42; _47[5] = _43; _47[6] = _44; _47[7] = _45; _47[8] = _46; 
 			//ifeq %37, %47 goto blklab24 : int[]
 			if(isArrayEqual(_37, _37_size,_47, _47_size)==1){goto blklab24;}
 			//fail

@@ -14,6 +14,6 @@ void printf_Board(Board _board);
 Board copy_Board(Board _board);
 void free_Board(Board _board);
 Board EmptyBoard();
-Board play(Board b, nat pos);
-long long countOf(Square* pieces, long long pieces_size, Square s);
+Board play(Board b, bool b_has_ownership, nat pos);
+long long countOf(Square* pieces, bool pieces_has_ownership, long long pieces_size, Square s);
 int main(int argc, char** args);

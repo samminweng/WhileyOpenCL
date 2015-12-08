@@ -40,8 +40,8 @@ long long* gen1DArray(int value, int arr_size);
 void printf1Darray(long long* input, long long input_size);
 int isArrayEqual(long long* arr1, long long arr1_size, long long* arr2, long long arr2_size);
 // 2D Array Operator
-long long** copy2DArray(long long **arr, long long arr_size, long long size);
-long long** gen2DArray(long long* arr, long long arr_size, long long size);
+long long** copy2DArray(long long **arr, long long x, long long y);
+long long** gen2DArray(long long* arr,  long long x, long long y);
 void free2DArray(long long** ptr, long long size);
 void printf2DArray(long long** input, long long input_size, long long input_size_size);
 // List Operator.

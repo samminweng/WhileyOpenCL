@@ -1,12 +1,12 @@
 #include "MergeSort.h"
-long long* sortV1(long long* items, long long items_size, long long start, long long end){
+long long* sortV1(long long* items, bool items_has_ownership, long long items_size, long long start, long long end){
 	long long pivot = 0;
 	long long* lhs = NULL;
 	long long lhs_size = 0;
-	bool lhs_has_ownership = true;
+	bool lhs_has_ownership = false;
 	long long* rhs = NULL;
 	long long rhs_size = 0;
-	bool rhs_has_ownership = true;
+	bool rhs_has_ownership = false;
 	long long l = 0;
 	long long r = 0;
 	long long i = 0;
@@ -18,23 +18,23 @@ long long* sortV1(long long* items, long long items_size, long long start, long 
 	long long _14 = 0;
 	long long* _15 = NULL;
 	long long _15_size = 0;
-	bool _15_has_ownership = true;
+	bool _15_has_ownership = false;
 	long long* _16 = NULL;
 	long long _16_size = 0;
-	bool _16_has_ownership = true;
+	bool _16_has_ownership = false;
 	long long* _17 = NULL;
 	long long _17_size = 0;
-	bool _17_has_ownership = true;
+	bool _17_has_ownership = false;
 	long long _18 = 0;
 	long long* _19 = NULL;
 	long long _19_size = 0;
-	bool _19_has_ownership = true;
+	bool _19_has_ownership = false;
 	long long* _20 = NULL;
 	long long _20_size = 0;
-	bool _20_has_ownership = true;
+	bool _20_has_ownership = false;
 	long long* _21 = NULL;
 	long long _21_size = 0;
-	bool _21_has_ownership = true;
+	bool _21_has_ownership = false;
 	long long _22 = 0;
 	long long _23 = 0;
 	long long _24 = 0;
@@ -89,41 +89,59 @@ long long* sortV1(long long* items, long long items_size, long long start, long 
 	//assign %3 = %11  : int
 	pivot = _11;
 	//invoke %16 = (%0, %1, %3) whiley/lang/Array:slice : function(int[],int,int) -> int[]
+	if(_16_has_ownership){free(_16); _16_has_ownership = false;}
 	_16 = slice(items, items_size, start,pivot);
 	_16_size = pivot - start;
+	_16_has_ownership = true;
 	//assign %15 = %16  : int[]
-	_15_size = _16_size;
+	_15_size = _16_size; 
+	if(_15_has_ownership){free(_15); _15_has_ownership = false;}
 	_15 = copy(_16, _16_size);
+	_15_has_ownership = true;
 	//assign %4 = %15  : int[]
-	lhs_size = _15_size;
+	lhs_size = _15_size; 
+	if(lhs_has_ownership){free(lhs); lhs_has_ownership = false;}
 	lhs = copy(_15, _15_size);
+	lhs_has_ownership = true;
 	//const %18 = 0 : int
 	_18 = 0;
 	//invoke %17 = (%4, %18, %3) MergeSort:sortV1 : function(int[],int,int) -> int[]
-	_17_size = lhs_size;
-	_17 = sortV1(copy(lhs, lhs_size), lhs_size, _18, pivot);
+	if(_17_has_ownership){free(_17); _17_has_ownership = false;}
+	_17_size = lhs_size; 	_17 = sortV1(copy(lhs, lhs_size), true, lhs_size, _18, pivot);
+	_17_has_ownership = true;
 	//assign %4 = %17  : int[]
-	lhs_size = _17_size;
+	lhs_size = _17_size; 
+	if(lhs_has_ownership){free(lhs); lhs_has_ownership = false;}
 	lhs = copy(_17, _17_size);
+	lhs_has_ownership = true;
 	//invoke %20 = (%0, %3, %2) whiley/lang/Array:slice : function(int[],int,int) -> int[]
+	if(_20_has_ownership){free(_20); _20_has_ownership = false;}
 	_20 = slice(items, items_size, pivot,end);
 	_20_size = end - pivot;
+	_20_has_ownership = true;
 	//assign %19 = %20  : int[]
-	_19_size = _20_size;
+	_19_size = _20_size; 
+	if(_19_has_ownership){free(_19); _19_has_ownership = false;}
 	_19 = copy(_20, _20_size);
+	_19_has_ownership = true;
 	//assign %5 = %19  : int[]
-	rhs_size = _19_size;
+	rhs_size = _19_size; 
+	if(rhs_has_ownership){free(rhs); rhs_has_ownership = false;}
 	rhs = copy(_19, _19_size);
+	rhs_has_ownership = true;
 	//const %22 = 0 : int
 	_22 = 0;
 	//sub %23 = %2, %3 : int
 	_23=end-pivot;
 	//invoke %21 = (%5, %22, %23) MergeSort:sortV1 : function(int[],int,int) -> int[]
-	_21_size = rhs_size;
-	_21 = sortV1(copy(rhs, rhs_size), rhs_size, _22, _23);
+	if(_21_has_ownership){free(_21); _21_has_ownership = false;}
+	_21_size = rhs_size; 	_21 = sortV1(copy(rhs, rhs_size), true, rhs_size, _22, _23);
+	_21_has_ownership = true;
 	//assign %5 = %21  : int[]
-	rhs_size = _21_size;
+	rhs_size = _21_size; 
+	if(rhs_has_ownership){free(rhs); rhs_has_ownership = false;}
 	rhs = copy(_21, _21_size);
+	rhs_has_ownership = true;
 	//const %25 = 0 : int
 	_25 = 0;
 	//assign %24 = %25  : int
@@ -258,14 +276,14 @@ blklab5:;
 //.blklab0
 blklab0:;
 	//return %0 : int[]
-	if(_16_has_ownership){free(_16);}
-	if(_17_has_ownership){free(_17);}
-	if(_19_has_ownership){free(_19);}
-	if(lhs_has_ownership){free(lhs);}
-	if(_20_has_ownership){free(_20);}
-	if(rhs_has_ownership){free(rhs);}
-	if(_21_has_ownership){free(_21);}
-	if(_15_has_ownership){free(_15);}
+	if(_16_has_ownership){free(_16); _16_has_ownership = false;}
+	if(_17_has_ownership){free(_17); _17_has_ownership = false;}
+	if(_19_has_ownership){free(_19); _19_has_ownership = false;}
+	if(lhs_has_ownership){free(lhs); lhs_has_ownership = false;}
+	if(_20_has_ownership){free(_20); _20_has_ownership = false;}
+	if(rhs_has_ownership){free(rhs); rhs_has_ownership = false;}
+	if(_21_has_ownership){free(_21); _21_has_ownership = false;}
+	if(_15_has_ownership){free(_15); _15_has_ownership = false;}
 	return items;
 	//return
 }
@@ -275,35 +293,35 @@ int main(int argc, char** args){
 	long long index = 0;
 	long long* arr = NULL;
 	long long arr_size = 0;
-	bool arr_has_ownership = true;
+	bool arr_has_ownership = false;
 	union UNION _4;
 	union UNION _5;
 	long long** _6 = NULL;
 	long long _6_size = 0;
 	long long _6_size_size = 0;
-	bool _6_has_ownership = true;
+	bool _6_has_ownership = false;
 	long long _7 = 0;
 	long long* _8 = NULL;
 	long long _8_size = 0;
-	bool _8_has_ownership = true;
+	bool _8_has_ownership = false;
 	long long _9 = 0;
 	long long _10 = 0;
 	long long* _11 = NULL;
 	long long _11_size = 0;
-	bool _11_has_ownership = true;
+	bool _11_has_ownership = false;
 	long long _12 = 0;
 	long long _13 = 0;
 	long long _14 = 0;
 	long long* _15 = NULL;
 	long long _15_size = 0;
-	bool _15_has_ownership = true;
+	bool _15_has_ownership = false;
 	long long _16 = 0;
 	long long _17 = 0;
 	long long _18 = 0;
 	long long _19 = 0;
 	long long* _20 = NULL;
 	long long _20_size = 0;
-	bool _20_has_ownership = true;
+	bool _20_has_ownership = false;
 	long long _21 = 0;
 	long long _22 = 0;
 	long long _23 = 0;
@@ -313,7 +331,7 @@ int main(int argc, char** args){
 	long long _27 = 0;
 	long long* _30 = NULL;
 	long long _30_size = 0;
-	bool _30_has_ownership = true;
+	bool _30_has_ownership = false;
 	//fieldload %6 = %0 args : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 	_6 = convertArgsToIntArray(argc, args);
 	_6_size = argc - 1;
@@ -343,13 +361,19 @@ int main(int argc, char** args){
 	_14=max.integer+_13;
 	//listgen %15 = [12; 14] : int[]
 	_15_size = _14;
+	if(_15_has_ownership){free(_15); _15_has_ownership = false;}
 	_15 = gen1DArray(_12, _15_size);
+	_15_has_ownership = true;
 	//assign %11 = %15  : int[]
-	_11_size = _15_size;
+	_11_size = _15_size; 
+	if(_11_has_ownership){free(_11); _11_has_ownership = false;}
 	_11 = copy(_15, _15_size);
+	_11_has_ownership = true;
 	//assign %3 = %11  : int[]
-	arr_size = _11_size;
+	arr_size = _11_size; 
+	if(arr_has_ownership){free(arr); arr_has_ownership = false;}
 	arr = copy(_11, _11_size);
+	arr_has_ownership = true;
 	//loop (%2, %3, %16, %17, %18, %19)
 	while(true){
 		//ifgt %2, %1 goto blklab7 : int
@@ -376,11 +400,14 @@ blklab7:;
 	//add %23 = %1, %22 : int
 	_23=max.integer+_22;
 	//invoke %20 = (%3, %21, %23) MergeSort:sortV1 : function(int[],int,int) -> int[]
-	_20_size = arr_size;
-	_20 = sortV1(copy(arr, arr_size), arr_size, _21, _23);
+	if(_20_has_ownership){free(_20); _20_has_ownership = false;}
+	_20_size = arr_size; 	_20 = sortV1(copy(arr, arr_size), true, arr_size, _21, _23);
+	_20_has_ownership = true;
 	//assign %3 = %20  : int[]
-	arr_size = _20_size;
+	arr_size = _20_size; 
+	if(arr_has_ownership){free(arr); arr_has_ownership = false;}
 	arr = copy(_20, _20_size);
+	arr_has_ownership = true;
 	//assert
 	{
 		//const %24 = 0 : int
@@ -415,8 +442,10 @@ blklab9:;
 	//fieldload %29 = %28 print_s : {method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s}
 	//const %30 = [80,97,115,115,32,77,101,114,103,101,83,111,114,116,32,116,101,115,116,32,99,97,115,101,32,119,105,116,104,32,105,110,112,117,116,32,61,32] : int[]
 	_30_size = 38;
+	if(_30_has_ownership){free(_30); _30_has_ownership = false;}
 	_30=(long long*)malloc(38*sizeof(long long));
 	_30[0] = 80; _30[1] = 97; _30[2] = 115; _30[3] = 115; _30[4] = 32; _30[5] = 77; _30[6] = 101; _30[7] = 114; _30[8] = 103; _30[9] = 101; _30[10] = 83; _30[11] = 111; _30[12] = 114; _30[13] = 116; _30[14] = 32; _30[15] = 116; _30[16] = 101; _30[17] = 115; _30[18] = 116; _30[19] = 32; _30[20] = 99; _30[21] = 97; _30[22] = 115; _30[23] = 101; _30[24] = 32; _30[25] = 119; _30[26] = 105; _30[27] = 116; _30[28] = 104; _30[29] = 32; _30[30] = 105; _30[31] = 110; _30[32] = 112; _30[33] = 117; _30[34] = 116; _30[35] = 32; _30[36] = 61; _30[37] = 32; 
+	_30_has_ownership = true;
 	//indirectinvoke %29 (%30) : method(int[]) -> void
 	printf_s(_30, _30_size);
 	//fieldload %31 = %0 out : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
@@ -426,13 +455,12 @@ blklab9:;
 //.blklab6
 blklab6:;
 	//return
-	if(arr_has_ownership){free(arr);}
-	if(_20_has_ownership){free(_20);}
-	if(_6_has_ownership){free(_6);}
-	if(_8_has_ownership){free(_8);}
-	if(_11_has_ownership){free(_11);}
-	if(_30_has_ownership){free(_30);}
-	if(_15_has_ownership){free(_15);}
+	if(arr_has_ownership){free(arr); arr_has_ownership = false;}
+	if(_20_has_ownership){free(_20); _20_has_ownership = false;}
+	if(_6_has_ownership){free2DArray(_6, _6_size); _6_has_ownership = false;}
+	if(_11_has_ownership){free(_11); _11_has_ownership = false;}
+	if(_30_has_ownership){free(_30); _30_has_ownership = false;}
+	if(_15_has_ownership){free(_15); _15_has_ownership = false;}
 	exit(0);
 }
 

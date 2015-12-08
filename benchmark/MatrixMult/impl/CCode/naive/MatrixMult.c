@@ -11,25 +11,22 @@ void printf_Matrix(Matrix _matrix){
 }
 Matrix copy_Matrix(Matrix _matrix){
 	Matrix new_matrix;
-	new_matrix.data_size = _matrix.data_size;
-	new_matrix.data_size_size = _matrix.data_size_size;
-	new_matrix.data = copy2DArray(_matrix.data, _matrix.data_size, _matrix.data_size_size);
+	new_matrix.data_size = _matrix.data_size; new_matrix.data_size_size = _matrix.data_size_size;  new_matrix.data = copy2DArray(_matrix.data, _matrix.data_size, _matrix.data_size_size);
 	new_matrix.width = _matrix.width;
 	new_matrix.height = _matrix.height;
 	return new_matrix;
 }
 void free_Matrix(Matrix _Matrix){
-	free(_Matrix.data);
+	free2DArray(_Matrix.data, _Matrix.data_size);
 }
 Matrix matrix(nat width, nat height, long long** data, long long data_size, long long data_size_size){
 	Matrix _3;
-	bool _3_has_ownership = true;
+	
 	//newrecord %3 = (%2, %1, %0) : {int[][] data,int height,int width}
-	_3.data_size = data_size;
-	_3.data_size_size = data_size_size;
-	_3.data = copy2DArray(data, data_size, data_size_size);	_3.height = height;
+	_3.data_size = data_size; _3.data_size_size = data_size_size; 
+	_3.data = copy2DArray(data, data_size, data_size_size);
+	_3.height = height;
 	_3.width = width;
-
 	//return %3 : {int[][] data,int height,int width}
 	return _3;
 	//return
@@ -39,25 +36,28 @@ Matrix multiply(Matrix A, Matrix B){
 	long long** C_data = NULL;
 	long long C_data_size = 0;
 	long long C_data_size_size = 0;
-	bool C_data_has_ownership = true;
+	
 	nat i;
+	
 	nat j;
+	
 	long long r = 0;
 	nat k;
+	
 	long long** _7 = NULL;
 	long long _7_size = 0;
 	long long _7_size_size = 0;
-	bool _7_has_ownership = true;
+	
 	long long _8 = 0;
 	long long _9 = 0;
 	long long* _10 = NULL;
 	long long _10_size = 0;
-	bool _10_has_ownership = true;
+	
 	long long _11 = 0;
 	long long** _12 = NULL;
 	long long _12_size = 0;
 	long long _12_size_size = 0;
-	bool _12_has_ownership = true;
+	
 	long long _13 = 0;
 	long long _14 = 0;
 	long long _15 = 0;
@@ -72,18 +72,18 @@ Matrix multiply(Matrix A, Matrix B){
 	long long** _24 = NULL;
 	long long _24_size = 0;
 	long long _24_size_size = 0;
-	bool _24_has_ownership = true;
+	
 	long long* _25 = NULL;
 	long long _25_size = 0;
-	bool _25_has_ownership = true;
+	
 	long long _26 = 0;
 	long long** _27 = NULL;
 	long long _27_size = 0;
 	long long _27_size_size = 0;
-	bool _27_has_ownership = true;
+	
 	long long* _28 = NULL;
 	long long _28_size = 0;
-	bool _28_has_ownership = true;
+	
 	long long _29 = 0;
 	long long _30 = 0;
 	long long _31 = 0;
@@ -94,7 +94,7 @@ Matrix multiply(Matrix A, Matrix B){
 	long long _36 = 0;
 	long long _37 = 0;
 	Matrix _38;
-	bool _38_has_ownership = true;
+	
 	long long _39 = 0;
 	long long _40 = 0;
 	//const %8 = 0 : int
@@ -111,12 +111,10 @@ Matrix multiply(Matrix A, Matrix B){
 	_12_size_size = _10_size;
 	_12 = gen2DArray(_10, _12_size, _12_size_size);
 	//assign %7 = %12  : int[][]
-	_7_size = _12_size;
-	_7_size_size = _12_size_size;
+	_7_size = _12_size; _7_size_size = _12_size_size; 
 	_7 = copy2DArray(_12, _12_size, _12_size_size);
 	//assign %2 = %7  : int[][]
-	C_data_size = _7_size;
-	C_data_size_size = _7_size_size;
+	C_data_size = _7_size; C_data_size_size = _7_size_size; 
 	C_data = copy2DArray(_7, _7_size, _7_size_size);
 	//const %14 = 0 : int
 	_14 = 0;
@@ -161,16 +159,14 @@ Matrix multiply(Matrix A, Matrix B){
 				//ifge %6, %23 goto blklab15 : int
 				if(k>=_23){goto blklab15;}
 				//fieldload %24 = %0 data : {int[][] data,int height,int width}
-				_24_size = A.data_size;
-				_24_size_size = A.data_size_size;
+				_24_size = A.data_size; _24_size_size = A.data_size_size; 
 				_24 = copy2DArray(A.data, A.data_size, A.data_size_size);
 				//indexof %25 = %24, %3 : int[][]
 				_25=_24[i];
 				//indexof %26 = %25, %6 : int[]
 				_26=_25[k];
 				//fieldload %27 = %1 data : {int[][] data,int height,int width}
-				_27_size = B.data_size;
-				_27_size_size = B.data_size_size;
+				_27_size = B.data_size; _27_size_size = B.data_size_size; 
 				_27 = copy2DArray(B.data, B.data_size, B.data_size_size);
 				//indexof %28 = %27, %6 : int[][]
 				_28=_27[k];
@@ -234,21 +230,21 @@ void printMat(FILE* sys, Matrix A){
 	long long** _12 = NULL;
 	long long _12_size = 0;
 	long long _12_size_size = 0;
-	bool _12_has_ownership = true;
+	
 	long long* _13 = NULL;
 	long long _13_size = 0;
-	bool _13_has_ownership = true;
+	
 	long long _14 = 0;
 	long long* _17 = NULL;
 	long long _17_size = 0;
-	bool _17_has_ownership = true;
+	
 	long long _18 = 0;
 	long long _19 = 0;
 	long long _20 = 0;
 	long long _21 = 0;
 	void* _24 = NULL;
 	long long _24_size = 0;
-	bool _24_has_ownership = true;
+	
 	//const %5 = 0 : int
 	_5 = 0;
 	//assign %4 = %5  : int
@@ -276,8 +272,7 @@ void printMat(FILE* sys, Matrix A){
 			//fieldload %10 = %0 out : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 			//fieldload %11 = %10 print : {method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s}
 			//fieldload %12 = %1 data : {int[][] data,int height,int width}
-			_12_size = A.data_size;
-			_12_size_size = A.data_size_size;
+			_12_size = A.data_size; _12_size_size = A.data_size_size; 
 			_12 = copy2DArray(A.data, A.data_size, A.data_size_size);
 			//indexof %13 = %12, %2 : int[][]
 			_13=_12[i];
@@ -325,21 +320,21 @@ Matrix genMatrix(nat height, nat width){
 	long long** rows = NULL;
 	long long rows_size = 0;
 	long long rows_size_size = 0;
-	bool rows_has_ownership = true;
+	
 	long long i = 0;
 	long long j = 0;
 	long long** _5 = NULL;
 	long long _5_size = 0;
 	long long _5_size_size = 0;
-	bool _5_has_ownership = true;
+	
 	long long _6 = 0;
 	long long* _7 = NULL;
 	long long _7_size = 0;
-	bool _7_has_ownership = true;
+	
 	long long** _8 = NULL;
 	long long _8_size = 0;
 	long long _8_size_size = 0;
-	bool _8_has_ownership = true;
+	
 	long long _9 = 0;
 	long long _10 = 0;
 	long long _11 = 0;
@@ -351,7 +346,7 @@ Matrix genMatrix(nat height, nat width){
 	long long _17 = 0;
 	long long _18 = 0;
 	Matrix _19;
-	bool _19_has_ownership = true;
+	
 	//const %6 = 0 : int
 	_6 = 0;
 	//listgen %7 = [6; 1] : int[]
@@ -362,12 +357,10 @@ Matrix genMatrix(nat height, nat width){
 	_8_size_size = _7_size;
 	_8 = gen2DArray(_7, _8_size, _8_size_size);
 	//assign %5 = %8  : int[][]
-	_5_size = _8_size;
-	_5_size_size = _8_size_size;
+	_5_size = _8_size; _5_size_size = _8_size_size; 
 	_5 = copy2DArray(_8, _8_size, _8_size_size);
 	//assign %2 = %5  : int[][]
-	rows_size = _5_size;
-	rows_size_size = _5_size_size;
+	rows_size = _5_size; rows_size_size = _5_size_size; 
 	rows = copy2DArray(_5, _5_size, _5_size_size);
 	//const %10 = 0 : int
 	_10 = 0;
@@ -423,45 +416,48 @@ blklab18:;
 int main(int argc, char** args){
 	union UNION max;
 	Matrix A;
+	
 	Matrix B;
+	
 	Matrix C;
+	
 	union UNION _5;
 	union UNION _6;
 	long long** _7 = NULL;
 	long long _7_size = 0;
 	long long _7_size_size = 0;
-	bool _7_has_ownership = true;
+	
 	long long _8 = 0;
 	long long* _9 = NULL;
 	long long _9_size = 0;
-	bool _9_has_ownership = true;
+	
 	Matrix _10;
-	bool _10_has_ownership = true;
+	
 	Matrix _11;
-	bool _11_has_ownership = true;
+	
 	Matrix _12;
-	bool _12_has_ownership = true;
+	
 	Matrix _13;
-	bool _13_has_ownership = true;
+	
 	Matrix _14;
-	bool _14_has_ownership = true;
+	
 	Matrix _15;
-	bool _15_has_ownership = true;
+	
 	long long** _16 = NULL;
 	long long _16_size = 0;
 	long long _16_size_size = 0;
-	bool _16_has_ownership = true;
+	
 	long long _17 = 0;
 	long long* _18 = NULL;
 	long long _18_size = 0;
-	bool _18_has_ownership = true;
+	
 	long long _19 = 0;
 	long long _20 = 0;
 	long long _21 = 0;
 	long long _22 = 0;
 	long long* _25 = NULL;
 	long long _25_size = 0;
-	bool _25_has_ownership = true;
+	
 	//fieldload %7 = %0 args : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 	_7 = convertArgsToIntArray(argc, args);
 	_7_size = argc - 1;
@@ -490,7 +486,7 @@ int main(int argc, char** args){
 	//assign %3 = %12  : {int[][] data,int height,int width}
 	B = copy_Matrix(_12);
 	//invoke %15 = (%2, %3) MatrixMult:multiply : function(MatrixMult:Matrix,MatrixMult:Matrix) -> MatrixMult:Matrix
-	_15 = multiply(A, B);
+	_15 = multiply(copy_Matrix(A), copy_Matrix(B));
 	//assign %14 = %15  : {int[][] data,int height,int width}
 	_14 = copy_Matrix(_15);
 	//assign %4 = %14  : {int[][] data,int height,int width}
@@ -498,8 +494,7 @@ int main(int argc, char** args){
 	//assert
 	{
 		//fieldload %16 = %4 data : {int[][] data,int height,int width}
-		_16_size = C.data_size;
-		_16_size_size = C.data_size_size;
+		_16_size = C.data_size; _16_size_size = C.data_size_size; 
 		_16 = copy2DArray(C.data, C.data_size, C.data_size_size);
 		//const %17 = 0 : int
 		_17 = 0;

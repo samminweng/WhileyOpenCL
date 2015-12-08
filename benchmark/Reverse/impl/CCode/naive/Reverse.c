@@ -3,18 +3,18 @@ long long* reverse(long long* ls, long long ls_size){
 	long long i = 0;
 	long long* r = NULL;
 	long long r_size = 0;
-	bool r_has_ownership = true;
+	
 	long long item = 0;
 	long long _4 = 0;
 	long long _5 = 0;
 	long long* _6 = NULL;
 	long long _6_size = 0;
-	bool _6_has_ownership = true;
+	
 	long long _7 = 0;
 	long long _8 = 0;
 	long long* _9 = NULL;
 	long long _9_size = 0;
-	bool _9_has_ownership = true;
+	
 	long long _10 = 0;
 	long long _11 = 0;
 	long long _12 = 0;
@@ -39,10 +39,10 @@ long long* reverse(long long* ls, long long ls_size){
 	_9_size = _8;
 	_9 = gen1DArray(_7, _9_size);
 	//assign %6 = %9  : int[]
-	_6_size = _9_size;
+	_6_size = _9_size; 
 	_6 = copy(_9, _9_size);
 	//assign %2 = %6  : int[]
-	r_size = _6_size;
+	r_size = _6_size; 
 	r = copy(_6, _6_size);
 	//loop (%1, %2, %3, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19)
 	while(true){
@@ -103,42 +103,42 @@ int main(int argc, char** args){
 	long long index = 0;
 	long long* arr = NULL;
 	long long arr_size = 0;
-	bool arr_has_ownership = true;
+	
 	union UNION _4;
 	union UNION _5;
 	long long** _6 = NULL;
 	long long _6_size = 0;
 	long long _6_size_size = 0;
-	bool _6_has_ownership = true;
+	
 	long long _7 = 0;
 	long long* _8 = NULL;
 	long long _8_size = 0;
-	bool _8_has_ownership = true;
+	
 	long long _9 = 0;
 	long long _10 = 0;
 	long long* _11 = NULL;
 	long long _11_size = 0;
-	bool _11_has_ownership = true;
+	
 	long long _12 = 0;
 	long long _13 = 0;
 	long long _14 = 0;
 	long long* _15 = NULL;
 	long long _15_size = 0;
-	bool _15_has_ownership = true;
+	
 	long long _16 = 0;
 	long long _17 = 0;
 	long long _18 = 0;
 	long long _19 = 0;
 	long long* _20 = NULL;
 	long long _20_size = 0;
-	bool _20_has_ownership = true;
+	
 	long long _21 = 0;
 	long long _22 = 0;
 	long long _23 = 0;
 	long long _24 = 0;
 	long long* _27 = NULL;
 	long long _27_size = 0;
-	bool _27_has_ownership = true;
+	
 	//fieldload %6 = %0 args : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 	_6 = convertArgsToIntArray(argc, args);
 	_6_size = argc - 1;
@@ -170,10 +170,10 @@ int main(int argc, char** args){
 	_15_size = _14;
 	_15 = gen1DArray(_12, _15_size);
 	//assign %11 = %15  : int[]
-	_11_size = _15_size;
+	_11_size = _15_size; 
 	_11 = copy(_15, _15_size);
 	//assign %3 = %11  : int[]
-	arr_size = _11_size;
+	arr_size = _11_size; 
 	arr = copy(_11, _11_size);
 	//loop (%2, %3, %16, %17, %18, %19)
 	while(true){
@@ -195,10 +195,9 @@ int main(int argc, char** args){
 //.blklab4
 blklab4:;
 	//invoke %20 = (%3) Reverse:reverse : function(int[]) -> int[]
-	_20_size = arr_size;
-	_20 = reverse(copy(arr, arr_size), arr_size);
+	_20_size = arr_size; 	_20 = reverse(copy(arr, arr_size), arr_size);
 	//assign %3 = %20  : int[]
-	arr_size = _20_size;
+	arr_size = _20_size; 
 	arr = copy(_20, _20_size);
 	//assert
 	{

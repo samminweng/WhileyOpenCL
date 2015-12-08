@@ -11,7 +11,7 @@ BEGIN {
 	# Optimization
 	ops["naive"] = "naive";
 	ops["naive_dealloc"] = "naive_dealloc";
-	ops["copy_reduced"] = "copy_reduced";
+	# ops["copy_reduced"] = "copy_reduced";
 	#ops["copy_reduced_noleaks"] = "copy_reduced_noleaks";
 	# Parameter
 	arraysizes[""] = "";
