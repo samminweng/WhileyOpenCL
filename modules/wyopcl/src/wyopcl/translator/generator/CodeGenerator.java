@@ -1467,15 +1467,23 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 		// Iterate each user type and write out code to source and header files.
 		for (wyil.lang.WyilFile.Type userType : userTypes) {
-			String struct = userType.name();
+			String type_name = userType.name();
+			Type type = userType.type();
 			// Check if userType is a typedef structure.
-			if(userType.type() instanceof Type.Int){
-				structs.add("typedef " + CodeGeneratorHelper.translateType(userType.type(), stores) + " " + struct + ";");
-			}else if(userType.type() instanceof Type.Record){
-				structs.addAll(CodeGeneratorHelper.generateStruct(userType, stores));
-				statements.addAll(CodeGeneratorHelper.generateStructPrintf(userType, stores));
-				statements.addAll(CodeGeneratorHelper.generateStructCopy(userType, stores));
-				statements.addAll(CodeGeneratorHelper.generateStructFree(userType, stores));
+			if(type instanceof Type.Int){
+				structs.add("typedef " + CodeGeneratorHelper.translateType(type, stores) + " " + type_name + ";");
+			}else if(type instanceof Type.Record){
+				structs.addAll(CodeGeneratorHelper.generateStructTypedef(type_name, (Type.Record)type, stores));
+				statements.addAll(CodeGeneratorHelper.generateStructFunction(type_name, (Type.Record)type, stores));
+			}else if(type instanceof Type.Union){
+				Type.Union union = (Type.Union)userType.type();
+				// Extract record type from a given union type
+				union.bounds().stream()
+				.filter(t -> t instanceof Type.Record)
+				.forEach(t ->{
+					structs.addAll(CodeGeneratorHelper.generateStructTypedef(type_name, (Type.Record)t, stores));
+					statements.addAll(CodeGeneratorHelper.generateStructFunction(type_name, (Type.Record)t, stores));
+				});
 			}else{
 				throw new RuntimeException("Not Implemented!");
 			}

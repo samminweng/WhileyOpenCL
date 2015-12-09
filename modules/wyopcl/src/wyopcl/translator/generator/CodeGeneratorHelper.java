@@ -111,21 +111,17 @@ public final class CodeGeneratorHelper {
 	 * }
 	 * </code>
 	 * 
-	 * @param struct
+	 * @param type_name
 	 * @param fields
 	 * @return
 	 */
-	protected static List<String> generateStructPrintf(WyilFile.Type type, CodeStores stores){
-		
-		String struct = type.name();
-		HashMap<String, Type> fields = ((Type.Record)type.type()).fields();
-		
-		
-		String input = "_"+struct.toLowerCase();
+	private static List<String> generateStructPrintf(String type_name, Type.Record type, CodeStores stores){
+		HashMap<String, Type> fields = type.fields();
+		String input = "_"+type_name.toLowerCase();
 		String indent = "\t";
 		List<String> statement = new ArrayList<String>();
 		
-		statement.add("void printf_" + struct + "(" + struct + " "+input+"){");
+		statement.add("void printf_" + type_name + "(" + type_name + " "+input+"){");
 		// Add open bracket
 		statement.add(indent + "printf(\"{\");"); 
 		// Get all field names
@@ -166,22 +162,21 @@ public final class CodeGeneratorHelper {
 	 * 		new_b.move = b.move;
 	 *		return new_b; 
 	 * } 
-	 * @param struct
+	 * @param type_name
 	 * @param fields
 	 * @return
 	 */
-	protected static List<String> generateStructCopy(WyilFile.Type type, CodeStores stores){
-		String struct = type.name();
-		HashMap<String, Type> fields = ((Type.Record)type.type()).fields();
+	private static List<String> generateStructCopy(String type_name, Type.Record type, CodeStores stores){
+		HashMap<String, Type> fields = type.fields();
 		
-		String input = "_"+struct.toLowerCase();
-		String copy = "new_"+struct.toLowerCase();
+		String input = "_"+type_name.toLowerCase();
+		String copy = "new_"+type_name.toLowerCase();
 		List<String> statement = new ArrayList<String>();
 		
-		statement.add(struct+" copy_"+struct+ "(" + struct + " "+input+"){");;
+		statement.add(type_name+" copy_"+type_name+ "(" + type_name + " "+input+"){");;
 		// Declare local copy.
 		String indent = "\t";
-		statement.add(indent + struct + " "+copy+";");
+		statement.add(indent + type_name + " "+copy+";");
 		String[] names = fields.keySet().toArray(new String[fields.size()]);
 		for (int i = 0; i < names.length; i++) {
 			String member = names[i];			
@@ -203,18 +198,17 @@ public final class CodeGeneratorHelper {
 	}
 	/**
 	 * 
-	 * @param struct
+	 * @param type_name
 	 * @param fields
 	 * @return
 	 */
-	protected static List<String> generateStructFree(WyilFile.Type type, CodeStores stores){
-		String struct = type.name();
-		HashMap<String, Type> fields = ((Type.Record)type.type()).fields();
+	private static List<String> generateStructFree(String type_name, Type.Record type, CodeStores stores){
+		HashMap<String, Type> fields = type.fields();
 		
-		String input = "_"+struct;
+		String input = "_"+type_name;
 		String indent = "\t";
 		List<String> statement = new ArrayList<String>();
-		statement.add("void free_"+struct+"("+struct+ " "+input+"){");
+		statement.add("void free_"+type_name+"("+type_name+ " "+input+"){");
 		String[] names = fields.keySet().toArray(new String[fields.size()]);
 		for (int i = 0; i < names.length; i++) {
 			String member = names[i];
@@ -637,6 +631,20 @@ public final class CodeGeneratorHelper {
 		throw new RuntimeException("Not Implemented!");
 	}
 	
+	/**
+	 * Generate 'Copy', 'Free' and 'Print' functions for a given structure.
+	 * @param name
+	 * @param type
+	 * @param stores
+	 * @return
+	 */
+	protected static List<String> generateStructFunction(String name, Type.Record record, CodeStores stores){
+		List<String> statements = new ArrayList<String>();
+		statements.addAll(generateStructCopy(name, record, stores));
+		statements.addAll(generateStructFree(name, record, stores));
+		statements.addAll(generateStructPrintf(name, record, stores));
+		return statements;
+	}
 	
 	/**
 	 * Write the user-defined structure to *.h file, e.g. 
@@ -651,30 +659,29 @@ public final class CodeGeneratorHelper {
 	 * </pre>
 	 * @param userType
 	 */
-	protected static List<String> generateStruct(WyilFile.Type type, CodeStores stores) {
-		List<String> struct = new ArrayList<String>();
-		String typeName = type.name();
-		HashMap<String, Type> fields = ((Type.Record)type.type()).fields();
+	protected static List<String> generateStructTypedef(String type_name, Type.Record record, CodeStores stores) {
+		List<String> statements = new ArrayList<String>();
+		HashMap<String, Type> fields = record.fields();
 		// Get all field names
 		String[] names = fields.keySet().toArray(new String[fields.size()]);
 		// Define a structure
-		struct.add("typedef struct{");
+		statements.add("typedef struct{");
 		for (int i = 0; i < names.length; i++) {
 			String member = names[i];
 			Type memeber_type = fields.get(member);
-			struct.add("\t" + translateType(memeber_type, stores) + " " + member + ";");
+			statements.add("\t" + translateType(memeber_type, stores) + " " + member + ";");
 			if (memeber_type instanceof Type.Array) {
 				List<String> size_vars = getArraySizeVars(member, memeber_type);
 				size_vars.stream()
-				.forEach(size_var -> struct.add("\t" + "long long " + size_var + ";"));
+				.forEach(size_var -> statements.add("\t" + "long long " + size_var + ";"));
 			}
 		}
-		struct.add( "} " + typeName + ";");
+		statements.add( "} " + type_name + ";");
 		// Add built-in function signatures, e.g. 'void printf_Board(Board s);'
-		struct.add("void printf_" + typeName + "(" + typeName + " _"+typeName.toLowerCase()+");");
-		struct.add(typeName + " copy_"+typeName+ "("+typeName + " _"+typeName.toLowerCase()+");");
-		struct.add("void free_"+ typeName+"("+typeName+" _"+typeName.toLowerCase()+");"); 	
-		return struct;
+		statements.add("void printf_" + type_name + "(" + type_name + " _"+type_name.toLowerCase()+");");
+		statements.add(type_name + " copy_"+type_name+ "("+type_name + " _"+type_name.toLowerCase()+");");
+		statements.add("void free_"+ type_name+"("+type_name+" _"+type_name.toLowerCase()+");"); 	
+		return statements;
 	}
 	
 }
