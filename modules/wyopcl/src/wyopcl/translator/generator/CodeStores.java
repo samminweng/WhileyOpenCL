@@ -60,6 +60,28 @@ public class CodeStores {
 	}
 	
 	/**
+	 * Check if two record types are matched.
+	 * @param r1
+	 * @param r2
+	 * @return
+	 */
+	private static boolean isRecordTypeMatched(Type.Record r1, Type.Record r2){
+		// check if record and type have the same fields.
+		boolean isMatched = true;
+		for (Entry<String, Type> field : r2.fields().entrySet()) {
+			Type recordFieldType = r1.field(field.getKey());
+			if (recordFieldType != null) {
+				isMatched &= true;
+			} else {
+				isMatched &= false;
+			}
+		}
+		
+		return isMatched;
+	}
+	
+	
+	/**
 	 * Get the user defined type by checking if the user type has the same fields as the given record type.
 	 * 
 	 * @param type
@@ -68,20 +90,17 @@ public class CodeStores {
 	 */
 	public WyilFile.Type getRecordType(Type.Record type) {
 		for (wyil.lang.WyilFile.Type user_type : this.userTypes) {
-			if (user_type.type() instanceof Type.Record) {
-				Type.Record record = (Type.Record) user_type.type();
-				// check if record and type have the same fields.
-				boolean isTheSame = true;
-				for (Entry<String, Type> field : type.fields().entrySet()) {
-					Type recordFieldType = record.field(field.getKey());
-					if (recordFieldType != null) {
-						isTheSame &= true;
-					} else {
-						isTheSame &= false;
+			if(user_type.type() instanceof Type.Union){
+				Type.Union union = (Type.Union)user_type.type();
+				for(Type t: union.bounds()){
+					if(t instanceof Type.Record && isRecordTypeMatched(type, (Type.Record)t)){
+						return user_type;
 					}
 				}
-
-				if (isTheSame) {
+			}else if (user_type.type() instanceof Type.Record) {
+				Type.Record record = (Type.Record) user_type.type();
+				// check if 'type' and 'record' types are matched.
+				if (isRecordTypeMatched(type, record)) {
 					return user_type;
 				}
 			}

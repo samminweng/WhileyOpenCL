@@ -281,7 +281,10 @@ public final class CodeGeneratorHelper {
 				!(stores.getNominalType(nominal).type() instanceof Type.Int)){
 				return true;
 			}
-			
+		}else if(type instanceof Type.Union){
+			if(getRecordType((Type.Union)type)!=null){
+				return true;
+			}
 		}
 		
 		return false;
@@ -291,7 +294,7 @@ public final class CodeGeneratorHelper {
 	 * @param var
 	 * @return
 	 */
-	protected static String getOwnership(String var){
+	private static String getOwnership(String var){
 		return var+"_has_ownership";
 	}
 	
@@ -536,12 +539,51 @@ public final class CodeGeneratorHelper {
 			}
 		}else if(type instanceof Type.Int){
 			statement += ""+var;
+		}else if (type instanceof Type.Union){
+			if(getRecordType((Type.Union)type)==null){
+				statement += ""+var;
+			}else{
+				statement += "copy_"+type_name+"(" + var + ")";
+			}
 		} else{
 			throw new RuntimeException("Not implemented");
 		}
 		
-		
 		return statement;
+	}
+	
+	/**
+	 * Returns a list of record types in an union type.
+	 * @param type
+	 * @return
+	 */
+	protected static Type.Record getRecordType(Type.Union type){
+		List<Type> records = type.bounds().stream()
+		.filter(t -> t instanceof Type.Record)
+		.collect(Collectors.toList());
+	
+		if(records.isEmpty()){
+			return null;
+		}else{
+			return (Type.Record)records.get(0);
+		}
+	}
+	
+	/**
+	 * Returns a list of record types in an union type.
+	 * @param type
+	 * @return
+	 */
+	protected static Type.Int getIntType(Type.Union type){
+		List<Type> ints = type.bounds().stream()
+		.filter(t -> t instanceof Type.Int)
+		.collect(Collectors.toList());
+	
+		if(ints.isEmpty()){
+			return null;
+		}else{
+			return (Type.Int)ints.get(0);
+		}
 	}
 	
 	/**
@@ -607,13 +649,18 @@ public final class CodeGeneratorHelper {
 
 		if (type instanceof Type.Union) {
 			Type.Union union = (Type.Union) type;
-			// Check if type is an union type of integer.
-			// If so, return the integer type.
-			if (union.bounds().contains(Type.T_INT)) {
+			// Check if there is any record in 'union' type
+			if (getIntType((Type.Union)type)!=null) {
 				return "long long";
-			} else {
-				throw new RuntimeException("Un-implemented Type" + union);
 			}
+				
+			Type.Record record;
+			if((record = getRecordType((Type.Union)type)) != null){
+				return translateType(record, stores);
+			}
+			
+			throw new RuntimeException("Un-implemented Type" + union);
+			
 		}
 
 		// Translate reference type in Whiley to pointer type in C.
@@ -627,6 +674,9 @@ public final class CodeGeneratorHelper {
 			return "";
 		}
 		
+		if(type instanceof Type.Null){
+			return "";
+		}
 		
 		throw new RuntimeException("Not Implemented!");
 	}
@@ -659,7 +709,7 @@ public final class CodeGeneratorHelper {
 	 * </pre>
 	 * @param userType
 	 */
-	protected static List<String> generateStructTypedef(String type_name, Type.Record record, CodeStores stores) {
+	protected static List<String> generateStructDef(String type_name, Type.Record record, CodeStores stores) {
 		List<String> statements = new ArrayList<String>();
 		HashMap<String, Type> fields = record.fields();
 		// Get all field names
