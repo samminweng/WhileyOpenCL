@@ -8,11 +8,9 @@
 	<classpathentry kind="src" path="modules/wyjc/src"/>
 	<classpathentry excluding="wyopcl/translator/symbolic/pattern/transform/WhileLoopIncrPatternTransformer.java|wyopcl/util/" kind="src" path="modules/wyopcl/src"/>
 	<classpathentry excluding="wyopcl/testing/interpreter/" kind="src" path="modules/wyopcl/test"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.8.0_66"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/jasm-v0.1.7.jar"/>
-	<classpathentry kind="var" path="ECLIPSE_HOME"/>
-	<classpathentry kind="var" path="ECLIPSE_HOME/plugins/org.apache.ant_1.9.4.v201504302020/lib/ant.jar"/>
 	<classpathentry kind="lib" path="lib/wybs-v0.3.36.jar"/>
 	<classpathentry kind="lib" path="lib/wyc-v0.3.36.jar"/>
 	<classpathentry kind="lib" path="lib/wycs-v0.3.36.jar"/>
@@ -20,5 +18,6 @@
 	<classpathentry kind="lib" path="lib/wyjc-v0.3.36.jar"/>
 	<classpathentry kind="lib" path="lib/wyrl-v0.4.0.jar"/>
 	<classpathentry kind="lib" path="lib/wyrt-v0.3.36.jar"/>
+	<classpathentry kind="lib" path="lib/ant.jar"/>
 	<classpathentry kind="output" path="build"/>
 </classpath>
