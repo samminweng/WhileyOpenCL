@@ -242,12 +242,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String lhs = store.getVar(code.target());
 		String indent = store.getIndent();
 		if (code.assignedType() instanceof Type.Array) {
-			
 			// Convert it into a constant list
 			Constant.List list = (Constant.List) code.constant;
-			
-			
-			
 			// Initialize an array
 			if (list.values.isEmpty()) {
 				statements.add(indent + lhs + "_size = 0;");
@@ -267,6 +263,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}
 			// Assign ownership to lhs
 			statements.add(indent + CodeGeneratorHelper.assignOwnership(code.assignedType(), lhs, this.stores, this.deallocatedAnalyzer));
+		} else if (code.assignedType() instanceof Type.Null){
+			// Skip translation.
 		} else {
 			// Add a statement
 			statements.add(indent + lhs + " = " + code.constant + ";");
@@ -323,6 +321,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statement.add(indent + lhs + " = "+ optimizeCode(code.operand(0), code, function));
 				// Assigned the ownership to lhs
 				statement.add(indent + CodeGeneratorHelper.assignOwnership(lhs_type, lhs, this.stores, deallocatedAnalyzer));
+				// Assigned the lhs adrress to 'null' pointer
+				statement.add(indent + lhs + ".null = &" +lhs + ";" );
 			}
 		}else if(code.type() instanceof Type.Record){
 			// Deallocate the lhs array
@@ -343,7 +343,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		} else if (code.type() instanceof Type.Int) {
 			statement.add(indent + lhs + " = " + store.getVar(code.operand(0)) + ";");
 		} else if(code.type() instanceof Type.Null){
-			statement.add(indent + lhs + " = NULL;" );
+			// Check 'null' pointer to be NULL
+			statement.add(indent + lhs + ".null = NULL;" );
 		} else{
 			throw new RuntimeException("Not Implemented!");
 		}
@@ -1364,8 +1365,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String statement = "";
 		// The ifis code checks if the register is NULL or not.
 		if (code.rightOperand instanceof Type.Null) {
-			statement += store.getIndent() + "if(" + store.getVar(code.operand) + ".null == NULL) { goto " + code.target
-					+ ";}";
+			statement += store.getIndent() + "if(" + store.getVar(code.operand) + ".null == NULL) { goto " + code.target+ ";}";
 		} else {
 			throw new RuntimeException("Not implemented!" + code);
 		}
@@ -1507,18 +1507,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Check if userType is a typedef structure.
 			if(type instanceof Type.Int){
 				structs.add("typedef " + CodeGeneratorHelper.translateType(type, stores) + " " + type_name + ";");
-			}else if(type instanceof Type.Record){
-				structs.addAll(CodeGeneratorHelper.generateStructDef(type_name, (Type.Record)type, stores));
-				statements.addAll(CodeGeneratorHelper.generateStructFunction(type_name, (Type.Record)type, stores));
-			}else if(type instanceof Type.Union){
-				Type.Union union = (Type.Union)userType.type();
-				// Extract record type from a given union type
-				union.bounds().stream()
-				.filter(t -> t instanceof Type.Record)
-				.forEach(t ->{
-					structs.addAll(CodeGeneratorHelper.generateStructDef(type_name, (Type.Record)t, stores));
-					statements.addAll(CodeGeneratorHelper.generateStructFunction(type_name, (Type.Record)t, stores));
-				});
+			}else if(type instanceof Type.Record || type instanceof Type.Union){
+				structs.addAll(CodeGeneratorHelper.generateStructDef(type_name, type, stores));
+				statements.addAll(CodeGeneratorHelper.generateStructFunction(type_name, type, stores));
 			}else{
 				throw new RuntimeException("Not Implemented!");
 			}

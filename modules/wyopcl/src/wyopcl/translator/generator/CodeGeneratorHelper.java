@@ -24,6 +24,7 @@ import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.Type.Record.State;
+import wyil.lang.Type.Union;
 import wyil.lang.WyilFile.Constant;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.copy.CopyEliminationAnalyzer;
@@ -688,13 +689,67 @@ public final class CodeGeneratorHelper {
 	 * @param stores
 	 * @return
 	 */
-	protected static List<String> generateStructFunction(String name, Type.Record record, CodeStores stores){
+	protected static List<String> generateStructFunction(String name, Type type, CodeStores stores){
 		List<String> statements = new ArrayList<String>();
-		statements.addAll(generateStructCopy(name, record, stores));
-		statements.addAll(generateStructFree(name, record, stores));
-		statements.addAll(generateStructPrintf(name, record, stores));
+		Type.Record record = null;
+		if(type instanceof Type.Record){
+			record = (Type.Record)type;
+		}else if(type instanceof Type.Union){
+			record = getRecordType((Type.Union)type);
+		}else{
+			throw new RuntimeException("Not implemented");
+		}
+		
+		if(record!=null){
+			statements.addAll(generateStructCopy(name, record, stores));
+			statements.addAll(generateStructFree(name, record, stores));
+			statements.addAll(generateStructPrintf(name, record, stores));
+		}
+	
 		return statements;
 	}
+	/**
+	 * Generate structure members for a given members  
+	 * 
+	 * 
+	 * @param type
+	 * @param stores
+	 * @return
+	 */
+	private static List<String> generateStructMembers(Type type, CodeStores stores){
+		List<String> members = new ArrayList<String>();
+		Type.Record record = null;
+		if(type instanceof Type.Union){
+			Type.Union union = (Type.Union)type;
+			// Check if union type contains 'null' member 
+			if(union.bounds().stream().filter(t -> t instanceof Type.Null).count()>0){
+				// Add 'null' member
+				members.add("\tvoid* null;");
+			}
+			record = getRecordType(union);
+		}else if(type instanceof Type.Record){
+			record = (Type.Record)type;	
+		}
+		
+		HashMap<String, Type> fields = record.fields();
+		// Get all field names
+		String[] names = fields.keySet().toArray(new String[fields.size()]);
+		
+		for (int i = 0; i < names.length; i++) {
+			String member = names[i];
+			Type memeber_type = fields.get(member);
+			members.add("\t" + translateType(memeber_type, stores) + " " + member + ";");
+			if (memeber_type instanceof Type.Array) {
+				// Add array size member
+				List<String> size_vars = getArraySizeVars(member, memeber_type);
+				size_vars.stream()
+				.forEach(size_var -> members.add("\t" + "long long " + size_var + ";"));
+			}
+		}
+		return members;
+	}
+	
+	
 	
 	/**
 	 * Write the user-defined structure to *.h file, e.g. 
@@ -709,23 +764,11 @@ public final class CodeGeneratorHelper {
 	 * </pre>
 	 * @param userType
 	 */
-	protected static List<String> generateStructDef(String type_name, Type.Record record, CodeStores stores) {
-		List<String> statements = new ArrayList<String>();
-		HashMap<String, Type> fields = record.fields();
-		// Get all field names
-		String[] names = fields.keySet().toArray(new String[fields.size()]);
+	protected static List<String> generateStructDef(String type_name, Type type, CodeStores stores) {
+		List<String> statements = new ArrayList<String>();	
 		// Define a structure
 		statements.add("typedef struct{");
-		for (int i = 0; i < names.length; i++) {
-			String member = names[i];
-			Type memeber_type = fields.get(member);
-			statements.add("\t" + translateType(memeber_type, stores) + " " + member + ";");
-			if (memeber_type instanceof Type.Array) {
-				List<String> size_vars = getArraySizeVars(member, memeber_type);
-				size_vars.stream()
-				.forEach(size_var -> statements.add("\t" + "long long " + size_var + ";"));
-			}
-		}
+		statements.addAll(generateStructMembers(type, stores));
 		statements.add( "} " + type_name + ";");
 		// Add built-in function signatures, e.g. 'void printf_Board(Board s);'
 		statements.add("void printf_" + type_name + "(" + type_name + " _"+type_name.toLowerCase()+");");
@@ -733,5 +776,10 @@ public final class CodeGeneratorHelper {
 		statements.add("void free_"+ type_name+"("+type_name+" _"+type_name.toLowerCase()+");"); 	
 		return statements;
 	}
+	
+	
+
+	
+	
 	
 }
