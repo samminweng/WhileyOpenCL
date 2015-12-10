@@ -99,6 +99,11 @@ public class CodeGenerationTestCase {
 	}
 	
 	@Test
+	public void test_newTicTacToe_naive_dealloc() {
+		util.execCodeGeneration(codeDir, "newTicTacToe", "dealloc");
+	}
+	
+	@Test
 	public void test_MatrixMult_naive() {
 		util.execCodeGeneration(codeDir, "MatrixMult");
 	}
