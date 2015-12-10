@@ -1,37 +1,37 @@
-==16894== Memcheck, a memory error detector
-==16894== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==16894== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==16894== Command: ./Reverse.out 100000000
-==16894== Parent PID: 16796
-==16894== 
-==16894== Warning: set address range perms: large range [0x55fc040, 0x350ec848) (undefined)
-==16894== Warning: set address range perms: large range [0x3a048040, 0x69b38848) (undefined)
-==16894== Warning: set address range perms: large range [0x69b39040, 0x99629848) (undefined)
-==16894== Warning: set address range perms: large range [0x9962a040, 0xc911a848) (undefined)
-==16894== Warning: set address range perms: large range [0xc911b040, 0xf8c0b848) (undefined)
-==16894== Warning: set address range perms: large range [0xf8c0c040, 0x1286fc848) (undefined)
-==16894== Warning: set address range perms: large range [0x1286fd040, 0x1581ed848) (undefined)
-==16894== Warning: set address range perms: large range [0x9962a028, 0xc911a860) (noaccess)
-==16894== Warning: set address range perms: large range [0xf8c0c028, 0x1286fc860) (noaccess)
-==16894== Warning: set address range perms: large range [0xc911b028, 0xf8c0b860) (noaccess)
-==16894== Warning: set address range perms: large range [0x69b39028, 0x99629860) (noaccess)
-==16894== Warning: set address range perms: large range [0x1581ee040, 0x187cde848) (undefined)
-==16894== Warning: set address range perms: large range [0x1581ee028, 0x187cde860) (noaccess)
-==16894== Warning: set address range perms: large range [0x1286fd028, 0x1581ed860) (noaccess)
-==16894== Warning: set address range perms: large range [0x3a048028, 0x69b38860) (noaccess)
-==16894== Warning: set address range perms: large range [0x55fc028, 0x350ec860) (noaccess)
-==16894== 
-==16894== HEAP SUMMARY:
-==16894==     in use at exit: 88 bytes in 2 blocks
-==16894==   total heap usage: 11 allocs, 9 frees, 6,400,000,440 bytes allocated
-==16894== 
-==16894== LEAK SUMMARY:
-==16894==    definitely lost: 8 bytes in 1 blocks
-==16894==    indirectly lost: 80 bytes in 1 blocks
-==16894==      possibly lost: 0 bytes in 0 blocks
-==16894==    still reachable: 0 bytes in 0 blocks
-==16894==         suppressed: 0 bytes in 0 blocks
-==16894== Rerun with --leak-check=full to see details of leaked memory
-==16894== 
-==16894== For counts of detected and suppressed errors, rerun with: -v
-==16894== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==30906== Memcheck, a memory error detector
+==30906== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==30906== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==30906== Command: ./Reverse.out 100000000
+==30906== Parent PID: 30803
+==30906== 
+==30906== Warning: set address range perms: large range [0x55fc040, 0x350ec848) (undefined)
+==30906== Warning: set address range perms: large range [0x3a048040, 0x69b38848) (undefined)
+==30906== Warning: set address range perms: large range [0x69b39040, 0x99629848) (undefined)
+==30906== Warning: set address range perms: large range [0x9962a040, 0xc911a848) (undefined)
+==30906== Warning: set address range perms: large range [0xc911b040, 0xf8c0b848) (undefined)
+==30906== Warning: set address range perms: large range [0xf8c0c040, 0x1286fc848) (undefined)
+==30906== Warning: set address range perms: large range [0x1286fd040, 0x1581ed848) (undefined)
+==30906== Warning: set address range perms: large range [0x9962a028, 0xc911a860) (noaccess)
+==30906== Warning: set address range perms: large range [0xf8c0c028, 0x1286fc860) (noaccess)
+==30906== Warning: set address range perms: large range [0xc911b028, 0xf8c0b860) (noaccess)
+==30906== Warning: set address range perms: large range [0x69b39028, 0x99629860) (noaccess)
+==30906== Warning: set address range perms: large range [0x1581ee040, 0x187cde848) (undefined)
+==30906== Warning: set address range perms: large range [0x1581ee028, 0x187cde860) (noaccess)
+==30906== Warning: set address range perms: large range [0x1286fd028, 0x1581ed860) (noaccess)
+==30906== Warning: set address range perms: large range [0x3a048028, 0x69b38860) (noaccess)
+==30906== Warning: set address range perms: large range [0x55fc028, 0x350ec860) (noaccess)
+==30906== 
+==30906== HEAP SUMMARY:
+==30906==     in use at exit: 88 bytes in 2 blocks
+==30906==   total heap usage: 11 allocs, 9 frees, 6,400,000,440 bytes allocated
+==30906== 
+==30906== LEAK SUMMARY:
+==30906==    definitely lost: 8 bytes in 1 blocks
+==30906==    indirectly lost: 80 bytes in 1 blocks
+==30906==      possibly lost: 0 bytes in 0 blocks
+==30906==    still reachable: 0 bytes in 0 blocks
+==30906==         suppressed: 0 bytes in 0 blocks
+==30906== Rerun with --leak-check=full to see details of leaked memory
+==30906== 
+==30906== For counts of detected and suppressed errors, rerun with: -v
+==30906== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

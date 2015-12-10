@@ -11,8 +11,6 @@ function reverse(int[] ls) -> int[]:
 
 //public export method test() -> void:
 method main(System.Console sys):
-    //int[] rs = reverse([1, 2, 3, 4, 5])
-    //assume rs == [5,4,3,2,1]
     int|null max = Int.parse(sys.args[0])
     if max != null:
         //Merge sorting on a reverse array 'arr' ([max ... 0])

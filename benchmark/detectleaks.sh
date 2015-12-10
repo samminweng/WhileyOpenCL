@@ -113,16 +113,15 @@ mem_c (){
 	OP=$3
 	# Define parameters
 	define_parameters
-	cd $NAME
-	DIR=$PWD/memoryleaks
+	DIR=$BENCHMARKDIR/$NAME/memoryleaks
 	SRC="$NAME"
-	IMPLDIR="$PWD/impl/$CODE/$OP"
+	IMPLDIR="$BENCHMARKDIR/$NAME/impl/$CODE/$OP"
 	# make the folder
 	mkdir -p $DIR
+	rm -rf $IMPLDIR
 	mkdir -p $IMPLDIR
 	# Move Whiley files, Util.h and Util.c  to working directory.
-	cp "$SRC".whiley $UTILDIR/Util.c $UTILDIR/Util.h $IMPLDIR
-	# read -p "Press any key..."
+	cp "$BENCHMARKDIR/$NAME/$SRC.whiley" $UTILDIR/Util.c $UTILDIR/Util.h $IMPLDIR
 	# # Change to working directory
 	cd $IMPLDIR
 	# Generate C code
@@ -135,6 +134,7 @@ mem_c (){
 		#  Ref: http://valgrind.org/docs/manual/manual.html
 		# Run Valgrind memcheck tool to find memory leak on Megatron, and write out results to output file.   
 		valgrind --tool=memcheck --log-file="$MEMORYLEAKS" ./"$SRC".out $parameter
+		#read -p "Press Ok..$PWD"
 		# Run Valgrind full memcheck to see details of leaks memory
 		#valgrind --leak-check=full --log-file="$MEMORYLEAKS".leak.full.txt ./"$WHILEYSRC".out $parameter
 		# Find uninitialized memory
@@ -152,9 +152,11 @@ mem_c (){
 		#cat /proc/cpuinfo >> $MEMORY.massif.txt
     done
     # Return to the working directory
-    cd ../../../../
+    cd $WORKINGDIR
 }
 # Get the folder of Util.c and Util.h
+BENCHMARKDIR=$PWD
+WORKINGDIR="$(dirname "$BENCHMARKDIR")"
 UTILDIR=$PWD/../tests/code
 # Measure the memory usage of the generated C code
 mem_c Reverse CCode naive

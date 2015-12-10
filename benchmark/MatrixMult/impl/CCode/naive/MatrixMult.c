@@ -1,14 +1,4 @@
 #include "MatrixMult.h"
-void printf_Matrix(Matrix _matrix){
-	printf("{");
-	printf(" data:");
-	printf2DArray(_matrix.data, _matrix.data_size, _matrix.data_size_size);
-	printf(" width:");
-	printf("%d", _matrix.width);
-	printf(" height:");
-	printf("%d", _matrix.height);
-	printf("}");
-}
 Matrix copy_Matrix(Matrix _matrix){
 	Matrix new_matrix;
 	new_matrix.data_size = _matrix.data_size; new_matrix.data_size_size = _matrix.data_size_size;  new_matrix.data = copy2DArray(_matrix.data, _matrix.data_size, _matrix.data_size_size);
@@ -18,6 +8,16 @@ Matrix copy_Matrix(Matrix _matrix){
 }
 void free_Matrix(Matrix _Matrix){
 	free2DArray(_Matrix.data, _Matrix.data_size);
+}
+void printf_Matrix(Matrix _matrix){
+	printf("{");
+	printf(" data:");
+	printf2DArray(_matrix.data, _matrix.data_size, _matrix.data_size_size);
+	printf(" width:");
+	printf("%d", _matrix.width);
+	printf(" height:");
+	printf("%d", _matrix.height);
+	printf("}");
 }
 Matrix matrix(nat width, nat height, long long** data, long long data_size, long long data_size_size){
 	Matrix _3;

@@ -1,12 +1,4 @@
 #include "TicTacToe.h"
-void printf_Board(Board _board){
-	printf("{");
-	printf(" pieces:");
-	printf1DArray(_board.pieces, _board.pieces_size);
-	printf(" move:");
-	printf("%d", _board.move);
-	printf("}");
-}
 Board copy_Board(Board _board){
 	Board new_board;
 	new_board.pieces_size = _board.pieces_size;  new_board.pieces = copy(_board.pieces, _board.pieces_size);
@@ -15,6 +7,14 @@ Board copy_Board(Board _board){
 }
 void free_Board(Board _Board){
 	free(_Board.pieces);
+}
+void printf_Board(Board _board){
+	printf("{");
+	printf(" pieces:");
+	printf1DArray(_board.pieces, _board.pieces_size);
+	printf(" move:");
+	printf("%d", _board.move);
+	printf("}");
 }
 Board EmptyBoard(){
 	long long _0 = 0;

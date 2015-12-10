@@ -7,6 +7,7 @@ BEGIN {
 	testcases["Reverse"] = "Reverse";
 	testcases["MergeSort"] = "MergeSort";
 	testcases["TicTacToe"] = "TicTacToe";
+	testcases["newTicTacToe"] = "newTicTacToe";
 	testcases["MatrixMult"] = "MatrixMult";
 	# Optimization
 	ops["naive"] = "naive";

@@ -1,0 +1,21 @@
+==31212== Memcheck, a memory error detector
+==31212== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==31212== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==31212== Command: ./newTicTacToe.out 1000
+==31212== Parent PID: 30803
+==31212== 
+==31212== 
+==31212== HEAP SUMMARY:
+==31212==     in use at exit: 336 bytes in 6 blocks
+==31212==   total heap usage: 38,003 allocs, 37,997 frees, 2,736,376 bytes allocated
+==31212== 
+==31212== LEAK SUMMARY:
+==31212==    definitely lost: 8 bytes in 1 blocks
+==31212==    indirectly lost: 40 bytes in 1 blocks
+==31212==      possibly lost: 0 bytes in 0 blocks
+==31212==    still reachable: 288 bytes in 4 blocks
+==31212==         suppressed: 0 bytes in 0 blocks
+==31212== Rerun with --leak-check=full to see details of leaked memory
+==31212== 
+==31212== For counts of detected and suppressed errors, rerun with: -v
+==31212== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
