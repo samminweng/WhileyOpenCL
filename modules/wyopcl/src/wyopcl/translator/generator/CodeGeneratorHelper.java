@@ -391,11 +391,12 @@ public final class CodeGeneratorHelper {
 			}
 		}else if(type instanceof Type.Record){
 			s+= "_"+translateType(type, stores);
-		}else if(type instanceof Type.Nominal){
-			WyilFile.Type nominal = stores.getNominalType((Type.Nominal) type);
-			if(nominal != null && nominal.type() instanceof Type.Record){
-				s+= "_"+translateType(type, stores); 
-			}
+		}else if(type instanceof Type.Nominal){		
+			s+= "_"+translateType(type, stores);
+		}else if(type instanceof Type.Union){		
+			s+= "_"+translateType(type, stores);			
+		}else{
+			throw new RuntimeException("Not implemented");
 		}
 		s+="("+var;
 		if(dimension==2){

@@ -679,7 +679,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			String lhs = store.getVar(code.target());
 			Type lhs_type = store.getVarType(code.target());
 			// Free lhs 
-			statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, code.type().ret(), stores, this.deallocatedAnalyzer));
+			statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores, this.deallocatedAnalyzer));
 			// call the function/method, e.g. '_12=reverse(_xs , _xs_size);'
 			statement.add(translateLHSFunctionCall(code, function) + code.name.name() + "("+ translateRHSFunctionCall(code, function)+");");
 			// Assign ownership to lhs
