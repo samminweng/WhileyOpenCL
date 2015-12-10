@@ -34,8 +34,6 @@ ensures r != null && r.move == 0:
                  BLANK,BLANK,BLANK]
     }
 
-function NullBoard() -> (null):
-    return null
 // ===============================================================
 // Playing a piece requires an blank square, and returns the board
 // updated with the piece at that position and an incremented the move
@@ -88,17 +86,16 @@ method main(System.Console sys):
         if p <0 || p > 9:
             break
         else:
-            nat pos = p
             if b1 != null:
                 sys.out.println_s("play 1's turn (CIRCLE)")
-                b1.pieces[pos]=CIRCLE
+                b1.pieces[p]=CIRCLE
                 b1.move = b1.move + 1
                 b2 = b1
                 b1 = null
             else:
                 if b2 != null:
                     sys.out.println_s("Play 2's turn (CROSS)")
-                    b2.pieces[pos]=CROSS
+                    b2.pieces[p]=CROSS
                     b2.move = b2.move + 1
                     // Move board to next player
                     b1 = b2
@@ -107,5 +104,4 @@ method main(System.Console sys):
     assert b1 == null
     assert b2 != null && b2.move == 9
     assert b2 != null && b2.pieces == [1, 2, 1, 2, 1, 2, 1, 2, 1]
-    sys.out.println(b2)
     sys.out.print_s("Pass new TicTacToe test case")

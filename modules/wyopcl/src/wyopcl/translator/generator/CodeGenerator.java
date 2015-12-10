@@ -308,8 +308,16 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		Type lhs_type = store.getVarType(code.target());
 		String indent = store.getIndent();
 		List<String> statement = new ArrayList<String>();
-		
-		if (code.type() instanceof Type.Union) {
+		if(code.type() instanceof Type.Nominal){
+			// Deallocate the lhs array
+			statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores, this.deallocatedAnalyzer));
+			// copy the array and assign the cloned to the target.
+			statement.add(indent + lhs + " = "+ optimizeCode(code.operand(0), code, function));
+			// Assigned the ownership to lhs
+			statement.add(indent + CodeGeneratorHelper.assignOwnership(lhs_type, lhs, this.stores, deallocatedAnalyzer));
+			// Assigned the lhs adrress to 'null' pointer
+			statement.add(indent + lhs + ".null = &" +lhs + ";" );
+		}else if (code.type() instanceof Type.Union) {
 			Type.Record record = CodeGeneratorHelper.getRecordType((Type.Union)code.type());
 			if(record == null){
 				// Assign the values
@@ -331,6 +339,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement.add(indent + lhs + " = "+ optimizeCode(code.operand(0), code, function));
 			// Assigned the ownership to lhs
 			statement.add(indent + CodeGeneratorHelper.assignOwnership(lhs_type, lhs, this.stores, deallocatedAnalyzer));
+			// Check if lhs is an union type
+			if(lhs_type instanceof Type.Nominal){ 
+				Type nominal = stores.getNominalType((Type.Nominal)lhs_type).type();
+				if(nominal instanceof Type.Union){
+					// Assigned the lhs adrress to 'null' pointer
+					statement.add(indent + lhs + ".null = &" +lhs + ";" );
+				}
+			}
 		}else if (code.type() instanceof Type.Array) {
 			// Propagate array sizes
 			statement.add(indent + CodeGeneratorHelper.generateArraySizeAssign(code.type(), lhs, store.getVar(code.operand(0))));
