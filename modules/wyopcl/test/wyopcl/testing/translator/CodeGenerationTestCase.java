@@ -29,7 +29,7 @@ public class CodeGenerationTestCase {
 	}
 	
 	
-	//@Test
+	@Test
 	public void test_swap_naive_dealloc() {
 		//Generate the naive C code  
 		util.execCodeGeneration(codeDir, "swap", "dealloc");
@@ -91,6 +91,11 @@ public class CodeGenerationTestCase {
 	//@Test
 	public void test_TicTacToe_copy() {
 		util.execCodeGeneration(codeDir, "TicTacToe", "copy");
+	}
+	
+	@Test
+	public void test_newTicTacToe_naive() {
+		util.execCodeGeneration(codeDir, "newTicTacToe");
 	}
 	
 	@Test

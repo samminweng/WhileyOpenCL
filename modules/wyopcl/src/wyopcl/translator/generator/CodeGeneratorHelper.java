@@ -24,6 +24,7 @@ import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyil.lang.WyilFile;
 import wyil.lang.Type.Record.State;
+import wyil.lang.Type.Union;
 import wyil.lang.WyilFile.Constant;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.translator.copy.CopyEliminationAnalyzer;
@@ -111,21 +112,17 @@ public final class CodeGeneratorHelper {
 	 * }
 	 * </code>
 	 * 
-	 * @param struct
+	 * @param type_name
 	 * @param fields
 	 * @return
 	 */
-	protected static List<String> generateStructPrintf(WyilFile.Type type, CodeStores stores){
-		
-		String struct = type.name();
-		HashMap<String, Type> fields = ((Type.Record)type.type()).fields();
-		
-		
-		String input = "_"+struct.toLowerCase();
+	private static List<String> generateStructPrintf(String type_name, Type.Record type, CodeStores stores){
+		HashMap<String, Type> fields = type.fields();
+		String input = "_"+type_name.toLowerCase();
 		String indent = "\t";
 		List<String> statement = new ArrayList<String>();
 		
-		statement.add("void printf_" + struct + "(" + struct + " "+input+"){");
+		statement.add("void printf_" + type_name + "(" + type_name + " "+input+"){");
 		// Add open bracket
 		statement.add(indent + "printf(\"{\");"); 
 		// Get all field names
@@ -166,22 +163,21 @@ public final class CodeGeneratorHelper {
 	 * 		new_b.move = b.move;
 	 *		return new_b; 
 	 * } 
-	 * @param struct
+	 * @param type_name
 	 * @param fields
 	 * @return
 	 */
-	protected static List<String> generateStructCopy(WyilFile.Type type, CodeStores stores){
-		String struct = type.name();
-		HashMap<String, Type> fields = ((Type.Record)type.type()).fields();
+	private static List<String> generateStructCopy(String type_name, Type.Record type, CodeStores stores){
+		HashMap<String, Type> fields = type.fields();
 		
-		String input = "_"+struct.toLowerCase();
-		String copy = "new_"+struct.toLowerCase();
+		String input = "_"+type_name.toLowerCase();
+		String copy = "new_"+type_name.toLowerCase();
 		List<String> statement = new ArrayList<String>();
 		
-		statement.add(struct+" copy_"+struct+ "(" + struct + " "+input+"){");;
+		statement.add(type_name+" copy_"+type_name+ "(" + type_name + " "+input+"){");;
 		// Declare local copy.
 		String indent = "\t";
-		statement.add(indent + struct + " "+copy+";");
+		statement.add(indent + type_name + " "+copy+";");
 		String[] names = fields.keySet().toArray(new String[fields.size()]);
 		for (int i = 0; i < names.length; i++) {
 			String member = names[i];			
@@ -203,18 +199,17 @@ public final class CodeGeneratorHelper {
 	}
 	/**
 	 * 
-	 * @param struct
+	 * @param type_name
 	 * @param fields
 	 * @return
 	 */
-	protected static List<String> generateStructFree(WyilFile.Type type, CodeStores stores){
-		String struct = type.name();
-		HashMap<String, Type> fields = ((Type.Record)type.type()).fields();
+	private static List<String> generateStructFree(String type_name, Type.Record type, CodeStores stores){
+		HashMap<String, Type> fields = type.fields();
 		
-		String input = "_"+struct;
+		String input = "_"+type_name;
 		String indent = "\t";
 		List<String> statement = new ArrayList<String>();
-		statement.add("void free_"+struct+"("+struct+ " "+input+"){");
+		statement.add("void free_"+type_name+"("+type_name+ " "+input+"){");
 		String[] names = fields.keySet().toArray(new String[fields.size()]);
 		for (int i = 0; i < names.length; i++) {
 			String member = names[i];
@@ -287,7 +282,10 @@ public final class CodeGeneratorHelper {
 				!(stores.getNominalType(nominal).type() instanceof Type.Int)){
 				return true;
 			}
-			
+		}else if(type instanceof Type.Union){
+			if(getRecordType((Type.Union)type)!=null){
+				return true;
+			}
 		}
 		
 		return false;
@@ -297,7 +295,7 @@ public final class CodeGeneratorHelper {
 	 * @param var
 	 * @return
 	 */
-	protected static String getOwnership(String var){
+	private static String getOwnership(String var){
 		return var+"_has_ownership";
 	}
 	
@@ -542,12 +540,51 @@ public final class CodeGeneratorHelper {
 			}
 		}else if(type instanceof Type.Int){
 			statement += ""+var;
+		}else if (type instanceof Type.Union){
+			if(getRecordType((Type.Union)type)==null){
+				statement += ""+var;
+			}else{
+				statement += "copy_"+type_name+"(" + var + ")";
+			}
 		} else{
 			throw new RuntimeException("Not implemented");
 		}
 		
-		
 		return statement;
+	}
+	
+	/**
+	 * Returns a list of record types in an union type.
+	 * @param type
+	 * @return
+	 */
+	protected static Type.Record getRecordType(Type.Union type){
+		List<Type> records = type.bounds().stream()
+		.filter(t -> t instanceof Type.Record)
+		.collect(Collectors.toList());
+	
+		if(records.isEmpty()){
+			return null;
+		}else{
+			return (Type.Record)records.get(0);
+		}
+	}
+	
+	/**
+	 * Returns a list of record types in an union type.
+	 * @param type
+	 * @return
+	 */
+	protected static Type.Int getIntType(Type.Union type){
+		List<Type> ints = type.bounds().stream()
+		.filter(t -> t instanceof Type.Int)
+		.collect(Collectors.toList());
+	
+		if(ints.isEmpty()){
+			return null;
+		}else{
+			return (Type.Int)ints.get(0);
+		}
 	}
 	
 	/**
@@ -613,13 +650,18 @@ public final class CodeGeneratorHelper {
 
 		if (type instanceof Type.Union) {
 			Type.Union union = (Type.Union) type;
-			// Check if type is an union type of integer.
-			// If so, return the integer type.
-			if (union.bounds().contains(Type.T_INT)) {
+			// Check if there is any record in 'union' type
+			if (getIntType((Type.Union)type)!=null) {
 				return "long long";
-			} else {
-				throw new RuntimeException("Un-implemented Type" + union);
 			}
+				
+			Type.Record record;
+			if((record = getRecordType((Type.Union)type)) != null){
+				return translateType(record, stores);
+			}
+			
+			throw new RuntimeException("Un-implemented Type" + union);
+			
 		}
 
 		// Translate reference type in Whiley to pointer type in C.
@@ -633,9 +675,80 @@ public final class CodeGeneratorHelper {
 			return "";
 		}
 		
+		if(type instanceof Type.Null){
+			return "";
+		}
 		
 		throw new RuntimeException("Not Implemented!");
 	}
+	
+	/**
+	 * Generate 'Copy', 'Free' and 'Print' functions for a given structure.
+	 * @param name
+	 * @param type
+	 * @param stores
+	 * @return
+	 */
+	protected static List<String> generateStructFunction(String name, Type type, CodeStores stores){
+		List<String> statements = new ArrayList<String>();
+		Type.Record record = null;
+		if(type instanceof Type.Record){
+			record = (Type.Record)type;
+		}else if(type instanceof Type.Union){
+			record = getRecordType((Type.Union)type);
+		}else{
+			throw new RuntimeException("Not implemented");
+		}
+		
+		if(record!=null){
+			statements.addAll(generateStructCopy(name, record, stores));
+			statements.addAll(generateStructFree(name, record, stores));
+			statements.addAll(generateStructPrintf(name, record, stores));
+		}
+	
+		return statements;
+	}
+	/**
+	 * Generate structure members for a given members  
+	 * 
+	 * 
+	 * @param type
+	 * @param stores
+	 * @return
+	 */
+	private static List<String> generateStructMembers(Type type, CodeStores stores){
+		List<String> members = new ArrayList<String>();
+		Type.Record record = null;
+		if(type instanceof Type.Union){
+			Type.Union union = (Type.Union)type;
+			// Check if union type contains 'null' member 
+			if(union.bounds().stream().filter(t -> t instanceof Type.Null).count()>0){
+				// Add 'null' member
+				members.add("\tvoid* null;");
+			}
+			record = getRecordType(union);
+		}else if(type instanceof Type.Record){
+			record = (Type.Record)type;	
+		}
+		
+		HashMap<String, Type> fields = record.fields();
+		// Get all field names
+		String[] names = fields.keySet().toArray(new String[fields.size()]);
+		
+		for (int i = 0; i < names.length; i++) {
+			String member = names[i];
+			Type memeber_type = fields.get(member);
+			members.add("\t" + translateType(memeber_type, stores) + " " + member + ";");
+			if (memeber_type instanceof Type.Array) {
+				// Add array size member
+				List<String> size_vars = getArraySizeVars(member, memeber_type);
+				size_vars.stream()
+				.forEach(size_var -> members.add("\t" + "long long " + size_var + ";"));
+			}
+		}
+		return members;
+	}
+	
 	
 	
 	/**
@@ -651,30 +764,22 @@ public final class CodeGeneratorHelper {
 	 * </pre>
 	 * @param userType
 	 */
-	protected static List<String> generateStruct(WyilFile.Type type, CodeStores stores) {
-		List<String> struct = new ArrayList<String>();
-		String typeName = type.name();
-		HashMap<String, Type> fields = ((Type.Record)type.type()).fields();
-		// Get all field names
-		String[] names = fields.keySet().toArray(new String[fields.size()]);
+	protected static List<String> generateStructDef(String type_name, Type type, CodeStores stores) {
+		List<String> statements = new ArrayList<String>();	
 		// Define a structure
-		struct.add("typedef struct{");
-		for (int i = 0; i < names.length; i++) {
-			String member = names[i];
-			Type memeber_type = fields.get(member);
-			struct.add("\t" + translateType(memeber_type, stores) + " " + member + ";");
-			if (memeber_type instanceof Type.Array) {
-				List<String> size_vars = getArraySizeVars(member, memeber_type);
-				size_vars.stream()
-				.forEach(size_var -> struct.add("\t" + "long long " + size_var + ";"));
-			}
-		}
-		struct.add( "} " + typeName + ";");
+		statements.add("typedef struct{");
+		statements.addAll(generateStructMembers(type, stores));
+		statements.add( "} " + type_name + ";");
 		// Add built-in function signatures, e.g. 'void printf_Board(Board s);'
-		struct.add("void printf_" + typeName + "(" + typeName + " _"+typeName.toLowerCase()+");");
-		struct.add(typeName + " copy_"+typeName+ "("+typeName + " _"+typeName.toLowerCase()+");");
-		struct.add("void free_"+ typeName+"("+typeName+" _"+typeName.toLowerCase()+");"); 	
-		return struct;
+		statements.add("void printf_" + type_name + "(" + type_name + " _"+type_name.toLowerCase()+");");
+		statements.add(type_name + " copy_"+type_name+ "("+type_name + " _"+type_name.toLowerCase()+");");
+		statements.add("void free_"+ type_name+"("+type_name+" _"+type_name.toLowerCase()+");"); 	
+		return statements;
 	}
+	
+	
+
+	
+	
 	
 }
