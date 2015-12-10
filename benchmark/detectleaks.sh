@@ -15,6 +15,9 @@ define_parameters(){
 		"TicTacToe")
 			parameters="1000 10000 100000 1000000"
 			;;
+		"newTicTacToe")
+			parameters="1000 10000 100000 1000000"
+			;;
 		"MatrixMult")
 			parameters="10 20 30 40 50"
 			;;
@@ -163,6 +166,9 @@ mem_c MergeSort CCode naive_dealloc
 mem_c TicTacToe CCode naive
 mem_c TicTacToe CCode naive_dealloc
 # mem_c TicTacToe CCode copy_reduced
+mem_c newTicTacToe CCode naive
+mem_c newTicTacToe CCode naive_dealloc
+# mem_c newTicTacToe CCode copy_reduced
 mem_c MatrixMult CCode naive
 mem_c MatrixMult CCode naive_dealloc
 # mem_c MatrixMult CCode copy_reduced
