@@ -269,7 +269,7 @@ public final class CodeGeneratorHelper {
 	 * @param type
 	 * @return
 	 */
-	private static String accessMember(String var, String member, Type type){
+	protected static String accessMember(String var, String member, Type type){
 		if(type instanceof Type.Record){
 			return var +"."+member;
 		}else if(type instanceof Type.Union){
@@ -380,7 +380,7 @@ public final class CodeGeneratorHelper {
 			Type.Nominal nominal = (Type.Nominal)type;
 			if(!nominal.name().toString().contains("Console") &&
 				// Check if the nominal type is aliased Integer type
-				!(stores.getNominalType(nominal).type() instanceof Type.Int)){
+				!(stores.getNominalType(nominal) instanceof Type.Int)){
 				return true;
 			}
 		}else if(type instanceof Type.Union){
@@ -649,9 +649,9 @@ public final class CodeGeneratorHelper {
 		}else if (type instanceof Type.Record){
 			statement += "copy_"+type_name+"(" + var + ")";
 		}else if (type instanceof Type.Nominal){
-			WyilFile.Type nominal = stores.getNominalType(((Type.Nominal)type));
+			Type nominal = stores.getNominalType(((Type.Nominal)type));
 			// Skip copy for int typed nominal
-			if(nominal.type() instanceof Type.Int){
+			if(nominal instanceof Type.Int){
 				statement += ""+var;
 			}else{
 				statement += "copy_"+type_name.replace("*", "")+"(" + var + ")";
@@ -713,7 +713,7 @@ public final class CodeGeneratorHelper {
 	protected static String translateType(Type type, CodeStores stores) {	
 		if (type instanceof Type.Nominal) {
 			// The existential type, e.g. 'Board' is an nominal type in TicTacToe test case.
-			WyilFile.Type nominal = stores.getNominalType((Type.Nominal) type);
+			Type nominal = stores.getNominalType((Type.Nominal) type);
 			if(nominal == null){
 				// Check is type is a System.Console. 
 				if(((Type.Nominal) type).name().name().equals("Console")){
@@ -722,7 +722,7 @@ public final class CodeGeneratorHelper {
 				}
 				throw new RuntimeException("Not Implemented");
 			}
-			return translateType(nominal.type(), stores);
+			return translateType(nominal, stores);
 		}
 
 		if (type instanceof Type.Int || type instanceof Type.Bool) {

@@ -479,9 +479,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement += CodeGeneratorHelper.generateCopyUpdateCode(type, stores, var, isCopyEliminated); 
 		}else if (code instanceof Codes.FieldLoad){
 			Codes.FieldLoad fieldload = (Codes.FieldLoad)code;
+			if(type instanceof Type.Nominal){
+				type = stores.getNominalType((Type.Nominal)type);
+			}
 			// Access the member
-			statement += CodeGeneratorHelper.generateCopyUpdateCode(fieldload.fieldType(), stores, var+"."+fieldload.field,
-					isCopyEliminated);
+			String member = CodeGeneratorHelper.accessMember(var, fieldload.field, type);
+			statement += CodeGeneratorHelper.generateCopyUpdateCode(fieldload.fieldType(), stores, member, isCopyEliminated);
 		}else if(code instanceof Codes.NewRecord){
 			statement += CodeGeneratorHelper.generateCopyUpdateCode(type, stores, var, isCopyEliminated)+";"; 
 		} else{
@@ -899,30 +902,36 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		CodeStore store = stores.getCodeStore(function);
 		String indent = store.getIndent();
 		String s = "";
+		String lhs = store.getVar(code.target());
+		Type lhs_type = store.getVarType(code.target());
 		// For List type only
-		if (code.type() instanceof Type.Array) {
-			s += indent + store.getVar(code.target());
+		if (lhs_type instanceof Type.Array) {
+			s += indent + lhs;
 			// Iterates operands to increase the depths. 
 			for(int i=0;i<code.operands().length-1;i++){
 				s += "[" + store.getVar(code.operand(i)) + "]";
 			}
-			s += " = " + store.getVar(code.result()) + ";";
-		} else if (code.type() instanceof Type.Record) {
-			s += indent + store.getVar(code.target()) + "." + code.fields.get(0);
-			// check if there are two or more operands. If so, then add the
-			// index operand.
+		}else if (lhs_type instanceof Type.Nominal){
+			String member = code.fields.get(0);
+			Type nominal = stores.getNominalType((Type.Nominal)lhs_type);
+			s += indent + CodeGeneratorHelper.accessMember(lhs, member, nominal);
+			// check if there are two or more operands. If so, then add 'index' operand.
 			if (code.operands().length > 1) {
 				s += "[" + store.getVar(code.operand(0)) + "]";
 			}
-			s += " = " + store.getVar(code.result()) + ";";
-		} else if (code.type() instanceof Type.Reference
-				&& ((Type.Reference) code.type()).element() instanceof Type.Array) {
-			s += indent + "(*" + store.getVar(code.target()) + ")[" + store.getVar(code.operand(0)) + "]" + " = "
-					+ store.getVar(code.result()) + ";";
+			
+		} else if (lhs_type instanceof Type.Record) {
+			String member = code.fields.get(0);
+			s += indent + CodeGeneratorHelper.accessMember(lhs, member, lhs_type);
+			// check if there are two or more operands. If so, then add 'index' operand.
+			if (code.operands().length > 1) {
+				s += "[" + store.getVar(code.operand(0)) + "]";
+			}
 		} else {
 			throw new RuntimeException("Not implemented" + code);
 		}
 
+		s += " = " + store.getVar(code.result()) + ";";
 		store.addStatement(code, s);
 	}
 
@@ -1118,8 +1127,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement.add(indent + lhs + " = convertArgsToIntArray(argc, args);");
 			statement.add(indent + lhs + "_size = argc - 1;");
 		} else {
+			String rhs = store.getVar(code.operand(0));
+			Type rhs_type = store.getVarType(code.operand(0));
+			if(rhs_type instanceof Type.Nominal){
+				rhs_type = stores.getNominalType((Type.Nominal)rhs_type);
+			}
+			
+			String var = CodeGeneratorHelper.accessMember(rhs, code.field, rhs_type);
 			// Propagate rhs array sizes to lhs
-			statement.add(indent + CodeGeneratorHelper.generateArraySizeAssign(code.fieldType(), lhs, store.getVar(code.operand(0)) + "." + code.field));
+			statement.add(indent + CodeGeneratorHelper.generateArraySizeAssign(code.fieldType(), lhs, var));
 			// Free lhs
 			statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores, this.deallocatedAnalyzer));
 			// Assign member values
