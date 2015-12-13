@@ -179,8 +179,8 @@ public final class CodeGeneratorHelper {
 	 * 
 	 * For a union of NULL and structure, return a structure address.
 	 * Board* create_Board(){
-	 * 	Board _board; // Allocate '_board' in the stack.
-	 *	return &_board;
+	 * 	Board* _board = malloc(sizeof(Board)); // Allocate '_board' in the heap space.
+	 *	return _board;
 	 * }
 	 * 
 	 * @param type_name
@@ -191,10 +191,10 @@ public final class CodeGeneratorHelper {
 	private static List<String> generateStructCreate(String type_name, Type type){
 		List<String> statement = new ArrayList<String>();
 		String input = "_"+type_name.toLowerCase().replace("*", ""); // such as '_board'
-		String f_name = type_name.replace("*", "");
-		statement.add(type_name+" create_"+f_name+ "(){");
-		statement.add("\t"+type_name+" "+input+";");// Allocate the input in stack memory, which can be de-allocated automatically.
-		statement.add("\treturn &"+input+";");
+		String name = type_name.replace("*", "");
+		statement.add(type_name+" create_"+name+ "(){");
+		statement.add("\t"+type_name+" "+input+" = malloc(sizeof("+name+"));");// Allocate the input in stack memory, which can be de-allocated automatically.
+		statement.add("\treturn "+input+";");
 		statement.add("}");
 		return statement;
 		
@@ -233,10 +233,10 @@ public final class CodeGeneratorHelper {
 			HashMap<String, Type> fields = record.fields();			
 			String input = "_"+type_name.toLowerCase().replace("*", "");
 			String new_copy = "new_"+type_name.toLowerCase().replace("*", "");
-			String f_name = type_name.replace("*", "");
-			statement.add(type_name+" copy_"+f_name+ "(" + type_name + " "+input+"){");;
+			String name = type_name.replace("*", "");
+			statement.add(type_name+" copy_"+name+ "(" + type_name + " "+input+"){");;
 			// Declare local copy.
-			statement.add("\t" + type_name + " "+new_copy+" = create_"+f_name+"();");
+			statement.add("\t" + type_name + " "+new_copy+" = create_"+name+"();");
 			//String[] members = fields.keySet().toArray(new String[fields.size()]);
 			List<String> members = fields.keySet().stream().collect(Collectors.toList());
 			
@@ -662,7 +662,7 @@ public final class CodeGeneratorHelper {
 		}else if(type instanceof Type.Int){
 			statement += ""+var;
 		}else if (type instanceof Type.Union){
-			if(getRecordType((Type.Union)type)==null){
+			if(isIntType((Type.Union)type)){
 				statement += ""+var;
 			}else{
 				statement += "copy_"+type_name.replace("*", "")+"(" + var + ")";
@@ -754,28 +754,29 @@ public final class CodeGeneratorHelper {
 			if (fields.containsKey("args")) {
 				return "int argc, char** args";
 			}
-
-			// Check if the type is an instance of user defined type.
-			if(stores != null){
-				return stores.getRecordType((Type.Record) type).name();
-			}else{
-				throw new RuntimeException("Missing CodeStores");
+			// Get the user-defined type
+			WyilFile.Type userType = stores.getRecordType((Type.Record)type);
+			if(userType.type() instanceof Type.Union){
+				return userType.name()+"*";
+			}else if(userType.type() instanceof Type.Record){
+				return userType.name();
 			}
+			// Check if the type is an instance of user defined type.
+			throw new RuntimeException("Missing CodeStores");
 		}
 
 		if (type instanceof Type.Union) {
-			Type.Union union = (Type.Union) type;
 			// Check if there is any record in 'union' type
 			if (isIntType(type)) {
 				return "long long";
 			}
 				
-			Type.Record record;
-			if((record = getRecordType((Type.Union)type)) != null){
-				return translateType(record, stores)+"*";
+			WyilFile.Type userType;
+			if((userType= stores.getUnionType((Type.Union) type)) != null){
+				return userType.name()+"*";
 			}
-			
-			throw new RuntimeException("Un-implemented Type" + union);
+		
+			throw new RuntimeException("Un-implemented Type" + type);
 			
 		}
 

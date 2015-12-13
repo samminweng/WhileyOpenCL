@@ -127,13 +127,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			} else if (type instanceof Type.Int) {
 				declarations.add(indent + translateType + " " + var + " = 0;");
 			} else if (type instanceof Type.Record){
-				if(!translateType.equals("")){
-					declarations.add(indent+translateType+ " " + var + ";");
-					// Declare the extra 'has_ownership' boolean variables
-					declarations.add(indent+CodeGeneratorHelper.declareOwnership(type, var, this.stores, this.deallocatedAnalyzer, false));
-				}else{
-					// Skip translation
-				}
+				declarations.add(indent+translateType+ " " + var + ";");
+				// Declare the extra 'has_ownership' boolean variables
+				declarations.add(indent+CodeGeneratorHelper.declareOwnership(type, var, this.stores, this.deallocatedAnalyzer, false));
 			} else if (type instanceof Type.Nominal){
 				declarations.add(indent+translateType+ " "+var+";");
 				// Declare the extra 'has_ownership' boolean variables

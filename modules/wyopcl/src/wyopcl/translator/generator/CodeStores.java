@@ -5,12 +5,15 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import wyil.attributes.VariableDeclarations;
 import wyil.attributes.VariableDeclarations.Declaration;
 import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
+import wyil.lang.Type.Record;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
@@ -65,7 +68,7 @@ public class CodeStores {
 	 * @param r2
 	 * @return
 	 */
-	private static boolean isRecordTypeMatched(Type.Record r1, Type.Record r2){
+	private static boolean isTypeMatched(Type.Record r1, Type.Record r2){
 		// check if record and type have the same fields.
 		boolean isMatched = true;
 		for (Entry<String, Type> field : r2.fields().entrySet()) {
@@ -93,16 +96,42 @@ public class CodeStores {
 			if(user_type.type() instanceof Type.Union){
 				Type.Union union = (Type.Union)user_type.type();
 				for(Type t: union.bounds()){
-					if(t instanceof Type.Record && isRecordTypeMatched(type, (Type.Record)t)){
+					if(t instanceof Type.Record && isTypeMatched(type, (Type.Record)t)){
 						return user_type;
 					}
 				}
 			}else if (user_type.type() instanceof Type.Record) {
 				Type.Record record = (Type.Record) user_type.type();
 				// check if 'type' and 'record' types are matched.
-				if (isRecordTypeMatched(type, record)) {
+				if (isTypeMatched(type, record)) {
 					return user_type;
 				}
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Return the actual user-defined type 
+	 * @param type
+	 * @return
+	 */
+	public WyilFile.Type getUnionType(Type.Union type) {
+		for (wyil.lang.WyilFile.Type user_type : this.userTypes) {
+			if(user_type.type() instanceof Type.Union){
+				// Check if 'bounds' types are the same.  
+				Type.Record r1 = (Record) ((Type.Union)user_type.type()).bounds().stream()
+				.filter(t -> t instanceof Type.Record)
+				.collect(Collectors.toList()).get(0);
+				
+				Type.Record r2 = (Record)((Type.Union)type).bounds().stream()
+								 .filter(t-> t instanceof Type.Record)
+								 .collect(Collectors.toList()).get(0);
+				
+				if(isTypeMatched(r1, r2)){
+					return user_type;
+				}
+				
 			}
 		}
 		return null;
