@@ -179,8 +179,8 @@ public final class CodeGeneratorHelper {
 	 * 
 	 * For a union of NULL and structure, return a structure address.
 	 * Board* create_Board(){
-	 * 		Board _board;
-	 * 		return &_board;
+	 * 	Board* _board = malloc(sizeof(Board));
+	 *	return _board;
 	 * }
 	 * 
 	 * @param type_name
@@ -193,7 +193,7 @@ public final class CodeGeneratorHelper {
 		String input = "_"+type_name.toLowerCase().replace("*", ""); // such as '_board'
 		String f_name = type_name.replace("*", "");
 		statement.add(type_name+" create_"+f_name+ "(){");
-		statement.add("\t"+type_name+" "+input+";");// Create a board, e.g. ' 
+		statement.add("\t"+type_name+" "+input+" = malloc(sizeof("+type_name+"));");// Create a board, e.g. ' 
 		statement.add("\treturn "+input+";");
 		statement.add("}");
 		return statement;
@@ -216,7 +216,7 @@ public final class CodeGeneratorHelper {
 	 * For union type of NULL and record, the copy function is 
 	 * <pre><code>
 	 * Board* copy_Board(Board* _board){
-	 * 	Board* new_board;
+	 * 	Board* new_board = create_Board();
 	 * 	new_board.pieces_size = _board->pieces_size;  new_board.pieces = copy(_board->pieces, _board->pieces_size);
 	 *	new_board.move = _board->move;
 	 *	return &new_board;
@@ -236,7 +236,7 @@ public final class CodeGeneratorHelper {
 			String f_name = type_name.replace("*", "");
 			statement.add(type_name+" copy_"+f_name+ "(" + type_name + " "+input+"){");;
 			// Declare local copy.
-			statement.add("\t" + type_name + " "+new_copy+";");
+			statement.add("\t" + type_name + " "+new_copy+" = create_"+f_name+"();");
 			//String[] members = fields.keySet().toArray(new String[fields.size()]);
 			List<String> members = fields.keySet().stream().collect(Collectors.toList());
 			
@@ -281,6 +281,11 @@ public final class CodeGeneratorHelper {
 	
 	
 	/**
+	 * Release a board structure
+	 * if(_board!=NULL){
+	 *	free(_board->pieces);
+	 *	free(_board);
+	 * }
 	 * 
 	 * @param type_name
 	 * @param fields
@@ -293,9 +298,11 @@ public final class CodeGeneratorHelper {
 		if((record = getRecordType(type)) != null){
 			HashMap<String, Type> fields = record.fields();
 			
-			String input = "_"+type_name.replace("*", "");
+			String input = "_"+type_name.toLowerCase().replace("*", "");
 			String f_name = type_name.replace("*", "");
 			statement.add("void free_"+f_name+"("+type_name+ " "+input+"){");
+			// Checks if 'input' is not NULL
+			statement.add("\tif("+input+" != NULL){");
 			String[] names = fields.keySet().toArray(new String[fields.size()]);
 			for (int i = 0; i < names.length; i++) {
 				String member = names[i];
@@ -304,12 +311,15 @@ public final class CodeGeneratorHelper {
 				if(member_type instanceof Type.Array){
 					if(getArrayDimension(member_type)== 2){
 						// Release 2D array by using built-in 'free2DArray' function
-						statement.add("\tfree2DArray("+input_member+", "+input_member+"_size);");
+						statement.add("\t\tfree2DArray("+input_member+", "+input_member+"_size);");
 					}else{
-						statement.add("\tfree("+input_member+");");
+						statement.add("\t\tfree("+input_member+");");
 					}
 				}
 			}
+			//Free input
+			statement.add("\t\tfree("+input+");");
+			statement.add("\t}");
 			statement.add("}");// Add ending bracket.
 		}
 		
