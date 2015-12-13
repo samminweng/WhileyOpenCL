@@ -654,7 +654,7 @@ public final class CodeGeneratorHelper {
 			if(nominal.type() instanceof Type.Int){
 				statement += ""+var;
 			}else{
-				statement += "copy_"+type_name+"(" + var + ")";
+				statement += "copy_"+type_name.replace("*", "")+"(" + var + ")";
 			}
 		}else if(type instanceof Type.Int){
 			statement += ""+var;
@@ -662,7 +662,7 @@ public final class CodeGeneratorHelper {
 			if(getRecordType((Type.Union)type)==null){
 				statement += ""+var;
 			}else{
-				statement += "copy_"+type_name+"(" + var + ")";
+				statement += "copy_"+type_name.replace("*", "")+"(" + var + ")";
 			}
 		} else{
 			throw new RuntimeException("Not implemented");
