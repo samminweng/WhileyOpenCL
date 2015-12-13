@@ -145,13 +145,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					// Translate 'nat' type into 'union UNION' type 
 					declarations.add("\tunion UNION "+var+";");
 				}else{
-					if(CodeGeneratorHelper.getRecordType((Type.Union)type) != null){
-						declarations.add(indent+translateType+ " " + var + ";");
-						// Declare the extra 'has_ownership' boolean variables
-						declarations.add(indent+CodeGeneratorHelper.declareOwnership(type, var, this.stores, this.deallocatedAnalyzer, false));
-					}else{
-						throw new RuntimeException("Not Implemented");
-					}
+					declarations.add(indent+translateType+ " " + var + ";");
+					// Declare the extra 'has_ownership' boolean variables
+					declarations.add(indent+CodeGeneratorHelper.declareOwnership(type, var, this.stores, this.deallocatedAnalyzer, false));
 				}
 			}else if(type instanceof Type.Null){
 				// Skip translation for null-typed variables.

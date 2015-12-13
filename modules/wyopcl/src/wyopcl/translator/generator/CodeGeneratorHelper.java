@@ -722,7 +722,7 @@ public final class CodeGeneratorHelper {
 				}
 				throw new RuntimeException("Not Implemented");
 			}
-			return nominal.name();
+			return translateType(nominal.type(), stores);
 		}
 
 		if (type instanceof Type.Int || type instanceof Type.Bool) {
