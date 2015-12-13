@@ -143,7 +143,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			} else if (type instanceof Type.Method){
 				// Skip translation
 			} else if (type instanceof Type.Union){
-				if(CodeGeneratorHelper.getIntType((Type.Union)type)!=null){
+				if(CodeGeneratorHelper.isIntType(type)){
 					// Translate 'nat' type into 'union UNION' type 
 					declarations.add("\tunion UNION "+var+";");
 				}else{
@@ -318,11 +318,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Assigned the lhs adrress to 'null' pointer
 			statement.add(indent + lhs + ".null = &" +lhs + ";" );
 		}else if (code.type() instanceof Type.Union) {
-			Type.Record record = CodeGeneratorHelper.getRecordType((Type.Union)code.type());
-			if(record == null){
+			if(CodeGeneratorHelper.isIntType(code.type())){
 				// Assign the values
 				statement.add(indent + lhs + " = " + store.getVar(code.operand(0)) + ";");
 			}else{
+				Type.Record record = CodeGeneratorHelper.getRecordType(code.type());	
 				// Deallocate the lhs array
 				statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores, this.deallocatedAnalyzer));
 				// copy the array and assign the cloned to the target.
@@ -1524,8 +1524,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			if(type instanceof Type.Int){
 				structs.add("typedef " + CodeGeneratorHelper.translateType(type, stores) + " " + type_name + ";");
 			}else if(type instanceof Type.Record || type instanceof Type.Union){
-				structs.addAll(CodeGeneratorHelper.generateStructDef(type_name, type, stores));
-				statements.addAll(CodeGeneratorHelper.generateStructFunction(type_name, type, stores));
+				structs.addAll(CodeGeneratorHelper.generateStructDef(type, stores));
+				statements.addAll(CodeGeneratorHelper.generateStructFunction(type, stores));
 			}else{
 				throw new RuntimeException("Not Implemented!");
 			}

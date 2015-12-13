@@ -65,6 +65,14 @@ public final class CodeGeneratorHelper {
 			return isIntType(element);
 		}
 
+		
+		if(type instanceof Type.Union){
+			// Check if the union type contains INT type.
+			if(((Type.Union)type).bounds().contains(Type.Int.T_INT)){
+				return true;
+			}
+		}
+		
 		return false;
 	}
 	
@@ -116,115 +124,185 @@ public final class CodeGeneratorHelper {
 	 * @param fields
 	 * @return
 	 */
-	private static List<String> generateStructPrintf(String type_name, Type.Record type, CodeStores stores){
-		HashMap<String, Type> fields = type.fields();
-		String input = "_"+type_name.toLowerCase();
-		String indent = "\t";
+	private static List<String> generateStructPrintf(String type_name, Type type){
 		List<String> statement = new ArrayList<String>();
-		
-		statement.add("void printf_" + type_name + "(" + type_name + " "+input+"){");
-		// Add open bracket
-		statement.add(indent + "printf(\"{\");"); 
-		// Get all field names
-		String[] names = fields.keySet().toArray(new String[fields.size()]);
-		// Print out each field.
-		for (int i = 0; i < names.length; i++) {
-			String member = names[i];
-			String input_member = input + "." +member;
-			// Add field name
-			statement.add(indent + "printf(\" " + member + ":\");");
-			Type member_type = fields.get(member);
-			if (member_type instanceof Type.Nominal || member_type instanceof Type.Int) {
-				// Add field values.
-				statement.add(indent + "printf(\"%d\", " + input_member + ");");
-			} else if (member_type instanceof Type.Array) {
-				List<String> size_vars = getArraySizeVars(input_member, member_type);
-				String s = indent + "printf"+size_vars.size()+"DArray(" + input_member;				
-				s += ", " + generateArraySizeVars(input_member, member_type);
-				s += ");";
-				statement.add(s);
-			} else {
-				throw new RuntimeException("Not implemented!");
-			}
-		}
-		// Add ending "}"
-		statement.add(indent + "printf(\"}\");");
-		statement.add("}");
-
-		return statement;
-	}
-	/**
-	 * Given a structure, generate 'copy_*' function to make a copy of the structure, e.g. 
-	 * 
-	 * Board copy_Board(Board b){
-	 *		Board new_b;
-	 *		new_b.pieces = copy(b.pieces, b.pieces_size);
-	 *		new_b.pieces_size = b.pieces_size;
-	 * 		new_b.move = b.move;
-	 *		return new_b; 
-	 * } 
-	 * @param type_name
-	 * @param fields
-	 * @return
-	 */
-	private static List<String> generateStructCopy(String type_name, Type.Record type, CodeStores stores){
-		HashMap<String, Type> fields = type.fields();
-		
-		String input = "_"+type_name.toLowerCase();
-		String copy = "new_"+type_name.toLowerCase();
-		List<String> statement = new ArrayList<String>();
-		
-		statement.add(type_name+" copy_"+type_name+ "(" + type_name + " "+input+"){");;
-		// Declare local copy.
-		String indent = "\t";
-		statement.add(indent + type_name + " "+copy+";");
-		String[] names = fields.keySet().toArray(new String[fields.size()]);
-		for (int i = 0; i < names.length; i++) {
-			String member = names[i];			
-			String rhs = input + "." + member;
-			String lhs = copy + "." + member;
-			Type fieldtype = fields.get(member);
-			if (fieldtype instanceof Type.Nominal || fieldtype instanceof Type.Int) {
-				statement.add(indent + lhs + " = " + rhs+";"); 
-			} else if (fieldtype instanceof Type.Array) {
-				statement.add(indent + generateArraySizeAssign(fieldtype, lhs, rhs) + " " + lhs + " = " + generateCopyUpdateCode(fieldtype, stores, rhs, false)+";");
-			} else {
-				throw new RuntimeException("Not implemented!");
-			}
-		}
-		// Add return statement
-		statement.add(indent + "return "+copy+";");
-		statement.add("}");
-		return statement;
-	}
-	/**
-	 * 
-	 * @param type_name
-	 * @param fields
-	 * @return
-	 */
-	private static List<String> generateStructFree(String type_name, Type.Record type, CodeStores stores){
-		HashMap<String, Type> fields = type.fields();
-		
-		String input = "_"+type_name;
-		String indent = "\t";
-		List<String> statement = new ArrayList<String>();
-		statement.add("void free_"+type_name+"("+type_name+ " "+input+"){");
-		String[] names = fields.keySet().toArray(new String[fields.size()]);
-		for (int i = 0; i < names.length; i++) {
-			String member = names[i];
-			Type member_type = fields.get(member);
-			String input_member = input +"."+member;
-			if(member_type instanceof Type.Array){
-				if(getArraySizeVars(input_member, member_type).size()== 2){
-					// Release 2D array by using built-in 'free2DArray' function
-					statement.add(indent + "free2DArray("+input_member+", "+input_member+"_size);");
+		Type.Record record = null;
+		if((record = getRecordType(type))!= null ){
+			HashMap<String, Type> fields = record.fields();
+			String input = "_"+type_name.toLowerCase().replace("*", "");
+			String f_name = type_name.replace("*", "");
+			statement.add("void printf_" + f_name + "(" + type_name + " "+input+"){");
+			// Add open bracket
+			statement.add("\tprintf(\"{\");"); 
+			// Get all field names
+			String[] names = fields.keySet().toArray(new String[fields.size()]);
+			// Print out each field.
+			for (int i = 0; i < names.length; i++) {
+				String member = names[i];
+				String input_member;
+				if(type instanceof Type.Union){
+					input_member = input + "->" +member;
 				}else{
-					statement.add(indent+ "free("+input_member+");");
+					input_member = input + "." +member;
+				}
+				// Add field name
+				statement.add("\tprintf(\" " + member + ":\");");
+				Type member_type = fields.get(member);
+				if (member_type instanceof Type.Nominal || member_type instanceof Type.Int) {
+					// Add field values.
+					statement.add("\tprintf(\"%d\", " + input_member + ");");
+				} else if (member_type instanceof Type.Array) {
+					List<String> size_vars = getArraySizeVars(input_member, member_type);
+					String s = "\tprintf"+size_vars.size()+"DArray(" + input_member;				
+					s += ", " + generateArraySizeVars(input_member, member_type);
+					s += ");";
+					statement.add(s);
+				} else {
+					throw new RuntimeException("Not implemented!");
 				}
 			}
+			// Add ending "}"
+			statement.add("\tprintf(\"}\");");
+			statement.add("}");
 		}
-		statement.add("}");// Add ending bracket.
+		
+		return statement;
+	}
+	
+	/**
+	 * Generates the code to create a structure pointer.
+	 * 
+	 * For a structure (record type), return a structure
+	 * Board create_Board(){
+	 * 		Board _board;
+	 * 		return _board;
+	 * }
+	 * 
+	 * For a union of NULL and structure, return a structure address.
+	 * Board* create_Board(){
+	 * 		Board _board;
+	 * 		return &_board;
+	 * }
+	 * 
+	 * @param type_name
+	 * @param type
+	 * @param stores
+	 * @return
+	 */
+	private static List<String> generateStructCreate(String type_name, Type type){
+		List<String> statement = new ArrayList<String>();
+		String input = "_"+type_name.toLowerCase().replace("*", ""); // such as '_board'
+		String f_name = type_name.replace("*", "");
+		statement.add(type_name+" create_"+f_name+ "(){");
+		statement.add("\t"+type_name+" "+input+";");// Create a board, e.g. ' 
+		statement.add("\treturn "+input+";");
+		statement.add("}");
+		return statement;
+		
+	}
+	
+	
+	
+	/**
+	 * Given a structure, generate 'copy_*' function to make a copy of the structure, e.g. 
+	 * <pre><code>
+	 * Board copy_Board(Board b){
+	 *	Board new_b;
+	 *	new_b.pieces = copy(b.pieces, b.pieces_size);
+	 *	new_b.pieces_size = b.pieces_size;
+	 * 	new_b.move = b.move;
+	 *	return new_b; 
+	 * } 
+	 * </code></pre>
+	 * For union type of NULL and record, the copy function is 
+	 * <pre><code>
+	 * Board* copy_Board(Board* _board){
+	 * 	Board* new_board;
+	 * 	new_board.pieces_size = _board->pieces_size;  new_board.pieces = copy(_board->pieces, _board->pieces_size);
+	 *	new_board.move = _board->move;
+	 *	return &new_board;
+	 * }
+	 * </code></pre>
+	 * @param type_name
+	 * @param fields
+	 * @return
+	 */
+	private static List<String> generateStructCopy(String type_name, Type type){
+		List<String> statement = new ArrayList<String>();
+		Type.Record record = null;
+		if((record = getRecordType(type)) != null){
+			HashMap<String, Type> fields = record.fields();
+			
+			String input = "_"+type_name.toLowerCase().replace("*", "");
+			String new_copy = "new_"+type_name.toLowerCase().replace("*", "");
+			String f_name = type_name.replace("*", "");
+			statement.add(type_name+" copy_"+f_name+ "(" + type_name + " "+input+"){");;
+			// Declare local copy.
+			String indent = "\t";
+			statement.add(indent + type_name + " "+new_copy+";");
+			String[] names = fields.keySet().toArray(new String[fields.size()]);
+			for (int i = 0; i < names.length; i++) {
+				String member = names[i];		
+				String rhs;
+				String lhs;
+				if(type instanceof Type.Union){
+					rhs = input + "->" + member;
+					lhs = new_copy + "->" + member;
+				}else{
+					rhs = input + "." + member;
+					lhs = new_copy + "." + member;
+				}
+				
+				Type fieldtype = fields.get(member);
+				if (fieldtype instanceof Type.Nominal || fieldtype instanceof Type.Int) {
+					statement.add(indent + lhs + " = " + rhs+";"); 
+				} else if (fieldtype instanceof Type.Array) {
+					statement.add(indent + generateArraySizeAssign(fieldtype, lhs, rhs) + " " + lhs + " = " + generateCopyCode((Type.Array)fieldtype, rhs)+";");
+				} else {
+					throw new RuntimeException("Not implemented!");
+				}
+			}
+			// Add return statement
+			statement.add(indent + "return "+new_copy+";");
+			statement.add("}");
+		}
+		
+		return statement;
+	}
+	/**
+	 * 
+	 * @param type_name
+	 * @param fields
+	 * @return
+	 */
+	private static List<String> generateStructFree(String type_name, Type type){
+		List<String> statement = new ArrayList<String>();
+		
+		Type.Record record = null;
+		if((record = getRecordType(type)) != null){
+			HashMap<String, Type> fields = record.fields();
+			
+			String input = "_"+type_name.replace("*", "");
+			String f_name = type_name.replace("*", "");
+			statement.add("void free_"+f_name+"("+type_name+ " "+input+"){");
+			String[] names = fields.keySet().toArray(new String[fields.size()]);
+			for (int i = 0; i < names.length; i++) {
+				String member = names[i];
+				Type member_type = fields.get(member);
+				String input_member = input +"."+member;
+				if(member_type instanceof Type.Array){
+					if(getArraySizeVars(input_member, member_type).size()== 2){
+						// Release 2D array by using built-in 'free2DArray' function
+						statement.add("\tfree2DArray("+input_member+", "+input_member+"_size);");
+					}else{
+						statement.add("\tfree("+input_member+");");
+					}
+				}
+			}
+			statement.add("}");// Add ending bracket.
+		}
+		
+		
 		return statement;
 	}
 	/**
@@ -492,7 +570,32 @@ public final class CodeGeneratorHelper {
 		
 		return statement;
 	}
-
+	
+	
+	/**
+	 * Generate lhs code for copying array-typed variable, e.g.
+	 * <pre><code>
+	 *  copy(a, a_size);
+	 * </code></pre>
+	 * 
+	 * @param type
+	 * @param var
+	 * @return
+	 */
+	private static String generateCopyCode(Type.Array type, String var){
+		String statement = "";
+		// Add 'copy' function call w.r.t. Array dimension
+		int dimension = getArraySizeVars(var, type).size();
+		statement += "copy";
+		if(dimension>1){
+			statement += dimension+"DArray";
+		}
+		statement += "("+var+", ";
+		// Generate size variables according to dimensions.
+		statement += generateArraySizeVars(var, type) + ")";
+		return statement;			
+	}
+	
 	/**
 	 * Generates the array code, including the copy function call and the list of array size variables, e.g.
 	 * <code>
@@ -521,14 +624,7 @@ public final class CodeGeneratorHelper {
 		
 		if(type instanceof Type.Array){
 			// Add 'copy' function call w.r.t. Array dimension
-			List<String> size_vars = getArraySizeVars(var, type);
-			statement += "copy";
-			if(size_vars.size()>1){
-				statement += size_vars.size()+"DArray";
-			}
-			statement += "("+var+", ";
-			// Generate size variables according to dimensions.
-			statement += generateArraySizeVars(var, type) + ")";	
+			statement += generateCopyCode((Type.Array)type, var);
 		}else if (type instanceof Type.Record){
 			statement += "copy_"+type_name+"(" + var + ")";
 		}else if (type instanceof Type.Nominal){
@@ -554,39 +650,33 @@ public final class CodeGeneratorHelper {
 		return statement;
 	}
 	
+	
+	
 	/**
-	 * Returns a list of record types in an union type.
+	 * Returns the record types for an union/record type.
 	 * @param type
 	 * @return
 	 */
-	protected static Type.Record getRecordType(Type.Union type){
-		List<Type> records = type.bounds().stream()
-		.filter(t -> t instanceof Type.Record)
-		.collect(Collectors.toList());
-	
-		if(records.isEmpty()){
-			return null;
+	protected static Type.Record getRecordType(Type type){
+		
+		if(type instanceof Type.Record){
+			return (Type.Record)type;
+		}else if(type instanceof Type.Union){
+			List<Type> records = ((Type.Union)type).bounds().stream()
+					.filter(t -> t instanceof Type.Record)
+					.collect(Collectors.toList());
+
+			if(records.isEmpty()){
+				throw new RuntimeException("Not implemented");
+			}else{
+				return (Type.Record)records.get(0);
+			}
 		}else{
-			return (Type.Record)records.get(0);
+			throw new RuntimeException("Not implemented");
 		}
 	}
 	
-	/**
-	 * Returns a list of record types in an union type.
-	 * @param type
-	 * @return
-	 */
-	protected static Type.Int getIntType(Type.Union type){
-		List<Type> ints = type.bounds().stream()
-		.filter(t -> t instanceof Type.Int)
-		.collect(Collectors.toList());
 	
-		if(ints.isEmpty()){
-			return null;
-		}else{
-			return (Type.Int)ints.get(0);
-		}
-	}
 	
 	/**
 	 * Translate the WyIL type into the type in C.
@@ -652,13 +742,13 @@ public final class CodeGeneratorHelper {
 		if (type instanceof Type.Union) {
 			Type.Union union = (Type.Union) type;
 			// Check if there is any record in 'union' type
-			if (getIntType((Type.Union)type)!=null) {
+			if (isIntType(type)) {
 				return "long long";
 			}
 				
 			Type.Record record;
 			if((record = getRecordType((Type.Union)type)) != null){
-				return translateType(record, stores);
+				return translateType(record, stores)+"*";
 			}
 			
 			throw new RuntimeException("Un-implemented Type" + union);
@@ -690,23 +780,15 @@ public final class CodeGeneratorHelper {
 	 * @param stores
 	 * @return
 	 */
-	protected static List<String> generateStructFunction(String name, Type type, CodeStores stores){
+	protected static List<String> generateStructFunction(Type type, CodeStores stores){
 		List<String> statements = new ArrayList<String>();
-		Type.Record record = null;
-		if(type instanceof Type.Record){
-			record = (Type.Record)type;
-		}else if(type instanceof Type.Union){
-			record = getRecordType((Type.Union)type);
-		}else{
-			throw new RuntimeException("Not implemented");
-		}
+		String type_name = translateType(type, stores);
 		
-		if(record!=null){
-			statements.addAll(generateStructCopy(name, record, stores));
-			statements.addAll(generateStructFree(name, record, stores));
-			statements.addAll(generateStructPrintf(name, record, stores));
-		}
-	
+		statements.addAll(generateStructCreate(type_name, type));
+		statements.addAll(generateStructCopy(type_name, type));
+		statements.addAll(generateStructFree(type_name, type));
+		statements.addAll(generateStructPrintf(type_name, type));
+		
 		return statements;
 	}
 	/**
@@ -718,20 +800,8 @@ public final class CodeGeneratorHelper {
 	 * @return
 	 */
 	private static List<String> generateStructMembers(Type type, CodeStores stores){
+		Type.Record record = getRecordType(type);
 		List<String> members = new ArrayList<String>();
-		Type.Record record = null;
-		if(type instanceof Type.Union){
-			Type.Union union = (Type.Union)type;
-			// Check if union type contains 'null' member 
-			if(union.bounds().stream().filter(t -> t instanceof Type.Null).count()>0){
-				// Add 'null' member
-				members.add("\tvoid* null;");
-			}
-			record = getRecordType(union);
-		}else if(type instanceof Type.Record){
-			record = (Type.Record)type;	
-		}
-		
 		HashMap<String, Type> fields = record.fields();
 		// Get all field names
 		String[] names = fields.keySet().toArray(new String[fields.size()]);
@@ -765,16 +835,25 @@ public final class CodeGeneratorHelper {
 	 * </pre>
 	 * @param userType
 	 */
-	protected static List<String> generateStructDef(String type_name, Type type, CodeStores stores) {
+	protected static List<String> generateStructDef(Type type, CodeStores stores) {
 		List<String> statements = new ArrayList<String>();	
+		
+		// Extract record type from an union/record type
+		String type_name = translateType(type, stores);
+		
 		// Define a structure
+		String struct_name = type_name.replaceAll("\\*", "");
 		statements.add("typedef struct{");
 		statements.addAll(generateStructMembers(type, stores));
-		statements.add( "} " + type_name + ";");
-		// Add built-in function signatures, e.g. 'void printf_Board(Board s);'
-		statements.add("void printf_" + type_name + "(" + type_name + " _"+type_name.toLowerCase()+");");
-		statements.add(type_name + " copy_"+type_name+ "("+type_name + " _"+type_name.toLowerCase()+");");
-		statements.add("void free_"+ type_name+"("+type_name+" _"+type_name.toLowerCase()+");"); 	
+		statements.add( "} " + struct_name + ";");
+		String input = "_"+type_name.toLowerCase().replace("*", ""); // Input parameter
+		// Add built-in function declarations, 'create' and 'printf', 'copy' and 'free'  
+		statements.add(type_name + " create_" + struct_name + "();");
+		statements.add("void printf_" + struct_name + "(" + type_name + " "+input+");");
+		statements.add(type_name + " copy_"+struct_name+ "("+type_name + " "+input+");");
+		statements.add("void free_"+ struct_name+"("+type_name+" "+input+");");
+		
+			
 		return statements;
 	}
 	
