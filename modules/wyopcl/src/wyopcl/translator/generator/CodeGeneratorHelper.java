@@ -640,6 +640,10 @@ public final class CodeGeneratorHelper {
 			return var;
 		}
 		
+		if (type instanceof Type.Nominal){
+			type = stores.getNominalType(((Type.Nominal)type));
+		}
+		
 		String statement = "";
 		String type_name = translateType(type, stores);
 		
@@ -648,14 +652,6 @@ public final class CodeGeneratorHelper {
 			statement += generateCopyCode((Type.Array)type, var);
 		}else if (type instanceof Type.Record){
 			statement += "copy_"+type_name+"(" + var + ")";
-		}else if (type instanceof Type.Nominal){
-			Type nominal = stores.getNominalType(((Type.Nominal)type));
-			// Skip copy for int typed nominal
-			if(nominal instanceof Type.Int){
-				statement += ""+var;
-			}else{
-				statement += "copy_"+type_name.replace("*", "")+"(" + var + ")";
-			}
 		}else if(type instanceof Type.Int){
 			statement += ""+var;
 		}else if (type instanceof Type.Union){

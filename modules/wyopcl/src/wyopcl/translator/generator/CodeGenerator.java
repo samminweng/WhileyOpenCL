@@ -473,15 +473,16 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String statement = "";
 		String var = store.getVar(op);
 		Type type = store.getVarType(op);
+		if(type instanceof Type.Nominal){
+			type = stores.getNominalType((Type.Nominal)type);
+		}
+		
 		if(code instanceof Codes.Assign){
 			statement += CodeGeneratorHelper.generateCopyUpdateCode(type, stores, var, isCopyEliminated)+";"; 
 		}else if (code instanceof Codes.Invoke){
 			statement += CodeGeneratorHelper.generateCopyUpdateCode(type, stores, var, isCopyEliminated); 
 		}else if (code instanceof Codes.FieldLoad){
 			Codes.FieldLoad fieldload = (Codes.FieldLoad)code;
-			if(type instanceof Type.Nominal){
-				type = stores.getNominalType((Type.Nominal)type);
-			}
 			// Access the member
 			String member = CodeGeneratorHelper.accessMember(var, fieldload.field, type);
 			statement += CodeGeneratorHelper.generateCopyUpdateCode(fieldload.fieldType(), stores, member, isCopyEliminated);
@@ -904,6 +905,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String s = "";
 		String lhs = store.getVar(code.target());
 		Type lhs_type = store.getVarType(code.target());
+		if (lhs_type instanceof Type.Nominal){
+			lhs_type = stores.getNominalType((Type.Nominal)lhs_type);
+		}
+		
 		// For List type only
 		if (lhs_type instanceof Type.Array) {
 			s += indent + lhs;
@@ -911,16 +916,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			for(int i=0;i<code.operands().length-1;i++){
 				s += "[" + store.getVar(code.operand(i)) + "]";
 			}
-		}else if (lhs_type instanceof Type.Nominal){
-			String member = code.fields.get(0);
-			Type nominal = stores.getNominalType((Type.Nominal)lhs_type);
-			s += indent + CodeGeneratorHelper.accessMember(lhs, member, nominal);
-			// check if there are two or more operands. If so, then add 'index' operand.
-			if (code.operands().length > 1) {
-				s += "[" + store.getVar(code.operand(0)) + "]";
-			}
-			
-		} else if (lhs_type instanceof Type.Record) {
+		} else if (lhs_type instanceof Type.Record || lhs_type instanceof Type.Union) {
 			String member = code.fields.get(0);
 			s += indent + CodeGeneratorHelper.accessMember(lhs, member, lhs_type);
 			// check if there are two or more operands. If so, then add 'index' operand.
