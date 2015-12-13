@@ -119,10 +119,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				declarations.add(indent + translateType + " " + var + " = NULL;");
 				
 				// Generate size variables according to the dimensions, e.g. 2D array has two 'size' variables.
-				List<String> size_vars = CodeGeneratorHelper.getArraySizeVars(var, type);
-				
-				// Declare the extra 'size' variables.
-				size_vars.forEach(size_var -> declarations.add("\tlong long "+size_var+" = 0;"));
+				CodeGeneratorHelper.getArraySizeVars(var, type).stream()
+				.forEach(size_var -> declarations.add("\tlong long "+size_var+" = 0;"));
 				
 				// Declare the extra 'has_ownership' boolean variables
 				declarations.add(indent+ CodeGeneratorHelper.declareOwnership(type, var, this.stores, this.deallocatedAnalyzer, false));
@@ -322,15 +320,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// Assign the values
 				statement.add(indent + lhs + " = " + store.getVar(code.operand(0)) + ";");
 			}else{
-				Type.Record record = CodeGeneratorHelper.getRecordType(code.type());	
 				// Deallocate the lhs array
 				statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores, this.deallocatedAnalyzer));
 				// copy the array and assign the cloned to the target.
 				statement.add(indent + lhs + " = "+ optimizeCode(code.operand(0), code, function));
 				// Assigned the ownership to lhs
 				statement.add(indent + CodeGeneratorHelper.assignOwnership(lhs_type, lhs, this.stores, deallocatedAnalyzer));
-				// Assigned the lhs adrress to 'null' pointer
-				statement.add(indent + lhs + ".null = &" +lhs + ";" );
 			}
 		}else if(code.type() instanceof Type.Record){
 			// Deallocate the lhs array
@@ -339,14 +334,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement.add(indent + lhs + " = "+ optimizeCode(code.operand(0), code, function));
 			// Assigned the ownership to lhs
 			statement.add(indent + CodeGeneratorHelper.assignOwnership(lhs_type, lhs, this.stores, deallocatedAnalyzer));
-			// Check if lhs is an union type
-			if(lhs_type instanceof Type.Nominal){ 
-				Type nominal = stores.getNominalType((Type.Nominal)lhs_type).type();
-				if(nominal instanceof Type.Union){
-					// Assigned the lhs adrress to 'null' pointer
-					statement.add(indent + lhs + ".null = &" +lhs + ";" );
-				}
-			}
 		}else if (code.type() instanceof Type.Array) {
 			// Propagate array sizes
 			statement.add(indent + CodeGeneratorHelper.generateArraySizeAssign(code.type(), lhs, store.getVar(code.operand(0))));
@@ -360,7 +347,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement.add(indent + lhs + " = " + store.getVar(code.operand(0)) + ";");
 		} else if(code.type() instanceof Type.Null){
 			// Check 'null' pointer to be NULL
-			statement.add(indent + lhs + ".null = NULL;" );
+			statement.add(indent + lhs + " = NULL;" );
 		} else{
 			throw new RuntimeException("Not Implemented!");
 		}
@@ -1381,7 +1368,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String statement = "";
 		// The ifis code checks if the register is NULL or not.
 		if (code.rightOperand instanceof Type.Null) {
-			statement += store.getIndent() + "if(" + store.getVar(code.operand) + ".null == NULL) { goto " + code.target+ ";}";
+			statement += store.getIndent() + "if(" + store.getVar(code.operand) + " == NULL) { goto " + code.target+ ";}";
 		} else {
 			throw new RuntimeException("Not implemented!" + code);
 		}

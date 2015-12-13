@@ -152,8 +152,7 @@ public final class CodeGeneratorHelper {
 					// Add field values.
 					statement.add("\tprintf(\"%d\", " + input_member + ");");
 				} else if (member_type instanceof Type.Array) {
-					List<String> size_vars = getArraySizeVars(input_member, member_type);
-					String s = "\tprintf"+size_vars.size()+"DArray(" + input_member;				
+					String s = "\tprintf"+getArrayDimension(member_type)+"DArray(" + input_member;				
 					s += ", " + generateArraySizeVars(input_member, member_type);
 					s += ");";
 					statement.add(s);
@@ -231,44 +230,56 @@ public final class CodeGeneratorHelper {
 		List<String> statement = new ArrayList<String>();
 		Type.Record record = null;
 		if((record = getRecordType(type)) != null){
-			HashMap<String, Type> fields = record.fields();
-			
+			HashMap<String, Type> fields = record.fields();			
 			String input = "_"+type_name.toLowerCase().replace("*", "");
 			String new_copy = "new_"+type_name.toLowerCase().replace("*", "");
 			String f_name = type_name.replace("*", "");
 			statement.add(type_name+" copy_"+f_name+ "(" + type_name + " "+input+"){");;
 			// Declare local copy.
-			String indent = "\t";
-			statement.add(indent + type_name + " "+new_copy+";");
-			String[] names = fields.keySet().toArray(new String[fields.size()]);
-			for (int i = 0; i < names.length; i++) {
-				String member = names[i];		
-				String rhs;
-				String lhs;
-				if(type instanceof Type.Union){
-					rhs = input + "->" + member;
-					lhs = new_copy + "->" + member;
-				}else{
-					rhs = input + "." + member;
-					lhs = new_copy + "." + member;
-				}
-				
+			statement.add("\t" + type_name + " "+new_copy+";");
+			//String[] members = fields.keySet().toArray(new String[fields.size()]);
+			List<String> members = fields.keySet().stream().collect(Collectors.toList());
+			
+			for (String member: members) {		
+				String rhs = accessMember(input, member, type);
+				String lhs = accessMember(new_copy, member, type);
 				Type fieldtype = fields.get(member);
 				if (fieldtype instanceof Type.Nominal || fieldtype instanceof Type.Int) {
-					statement.add(indent + lhs + " = " + rhs+";"); 
+					statement.add("\t" + lhs + " = " + rhs+";"); 
 				} else if (fieldtype instanceof Type.Array) {
-					statement.add(indent + generateArraySizeAssign(fieldtype, lhs, rhs) + " " + lhs + " = " + generateCopyCode((Type.Array)fieldtype, rhs)+";");
+					statement.add("\t" + generateArraySizeAssign(fieldtype, lhs, rhs) + " " + lhs + " = " + generateCopyCode((Type.Array)fieldtype, rhs)+";");
 				} else {
 					throw new RuntimeException("Not implemented!");
 				}
 			}
 			// Add return statement
-			statement.add(indent + "return "+new_copy+";");
+			statement.add("\treturn "+new_copy+";");
 			statement.add("}");
 		}
 		
 		return statement;
 	}
+	
+	/**
+	 * Generate the code of accessing a member of a structure. 
+	 *  
+	 *  
+	 * @param var
+	 * @param member
+	 * @param type
+	 * @return
+	 */
+	private static String accessMember(String var, String member, Type type){
+		if(type instanceof Type.Record){
+			return var +"."+member;
+		}else if(type instanceof Type.Union){
+			return var +"->"+member;
+		}
+		throw new RuntimeException("Not implemented");
+	}
+	
+	
+	
 	/**
 	 * 
 	 * @param type_name
@@ -289,9 +300,9 @@ public final class CodeGeneratorHelper {
 			for (int i = 0; i < names.length; i++) {
 				String member = names[i];
 				Type member_type = fields.get(member);
-				String input_member = input +"."+member;
+				String input_member = accessMember(input, member, type);
 				if(member_type instanceof Type.Array){
-					if(getArraySizeVars(input_member, member_type).size()== 2){
+					if(getArrayDimension(member_type)== 2){
 						// Release 2D array by using built-in 'free2DArray' function
 						statement.add("\tfree2DArray("+input_member+", "+input_member+"_size);");
 					}else{
@@ -306,6 +317,23 @@ public final class CodeGeneratorHelper {
 		return statement;
 	}
 	/**
+	 * get the array dimension.
+	 * 
+	 * @param type
+	 * @return
+	 */
+	private static int getArrayDimension(Type type){
+		int dimension = 0;
+		// Compute array dimension.
+		while(type != null && type instanceof Type.Array){
+			type = ((Type.Array)type).element();
+			dimension++;
+		}
+		
+		return dimension;
+	}
+	
+	/**
 	 * Return a list of size variables w.r.t. array dimension.
 	 * @param var array variable
 	 * @param type array type
@@ -313,12 +341,7 @@ public final class CodeGeneratorHelper {
 	 */
 	protected static List<String> getArraySizeVars(String var, Type type){
 		List<String> size_vars = new ArrayList<String>();
-		int dimension = 0;
-		// Compute array dimension.
-		while(type != null && type instanceof Type.Array){
-			type = ((Type.Array)type).element();
-			dimension++;
-		}
+		int dimension = getArrayDimension(type);
 		
 		String size_var = var;
 		for(int d=dimension;d>0;d--){
@@ -463,7 +486,7 @@ public final class CodeGeneratorHelper {
 		int dimension = 0;
 		// Check if var_type is a structure
 		if(type instanceof Type.Array){
-			dimension = getArraySizeVars(var, type).size();
+			dimension = getArrayDimension(type);
 			if(dimension== 2){
 				s+=dimension+"DArray";
 			}
@@ -530,9 +553,7 @@ public final class CodeGeneratorHelper {
 	 */
 	protected static String generateArraySizeVars(String var, Type type){
 		if(type instanceof Type.Array){
-			List<String> size_vars = getArraySizeVars(var, type);
-			
-			return size_vars.stream()
+			return getArraySizeVars(var, type).stream()
 			.map(i -> i.toString())
 			.collect(Collectors.joining(", "));
 		}
@@ -585,7 +606,7 @@ public final class CodeGeneratorHelper {
 	private static String generateCopyCode(Type.Array type, String var){
 		String statement = "";
 		// Add 'copy' function call w.r.t. Array dimension
-		int dimension = getArraySizeVars(var, type).size();
+		int dimension = getArrayDimension(type);
 		statement += "copy";
 		if(dimension>1){
 			statement += dimension+"DArray";
@@ -812,8 +833,7 @@ public final class CodeGeneratorHelper {
 			members.add("\t" + translateType(memeber_type, stores) + " " + member + ";");
 			if (memeber_type instanceof Type.Array) {
 				// Add array size member
-				List<String> size_vars = getArraySizeVars(member, memeber_type);
-				size_vars.stream()
+				getArraySizeVars(member, memeber_type).stream()
 				.forEach(size_var -> members.add("\t" + "long long " + size_var + ";"));
 			}
 		}
