@@ -179,8 +179,8 @@ public final class CodeGeneratorHelper {
 	 * 
 	 * For a union of NULL and structure, return a structure address.
 	 * Board* create_Board(){
-	 * 	Board* _board = malloc(sizeof(Board));
-	 *	return _board;
+	 * 	Board _board; // Allocate '_board' in the stack.
+	 *	return &_board;
 	 * }
 	 * 
 	 * @param type_name
@@ -193,8 +193,8 @@ public final class CodeGeneratorHelper {
 		String input = "_"+type_name.toLowerCase().replace("*", ""); // such as '_board'
 		String f_name = type_name.replace("*", "");
 		statement.add(type_name+" create_"+f_name+ "(){");
-		statement.add("\t"+type_name+" "+input+" = malloc(sizeof("+type_name+"));");// Create a board, e.g. ' 
-		statement.add("\treturn "+input+";");
+		statement.add("\t"+type_name+" "+input+";");// Allocate the input in stack memory, which can be de-allocated automatically.
+		statement.add("\treturn &"+input+";");
 		statement.add("}");
 		return statement;
 		
@@ -284,7 +284,6 @@ public final class CodeGeneratorHelper {
 	 * Release a board structure
 	 * if(_board!=NULL){
 	 *	free(_board->pieces);
-	 *	free(_board);
 	 * }
 	 * 
 	 * @param type_name
@@ -317,8 +316,6 @@ public final class CodeGeneratorHelper {
 					}
 				}
 			}
-			//Free input
-			statement.add("\t\tfree("+input+");");
 			statement.add("\t}");
 			statement.add("}");// Add ending bracket.
 		}
