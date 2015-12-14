@@ -958,14 +958,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String indent = store.getIndent();
 		if (code.operand >= 0) {
 			statements.addAll(CodeGeneratorHelper.generateDeallocatedCode(this.deallocatedAnalyzer, function, stores));
-			// Check the type of return value. 
-			if(code.type instanceof Type.Union){
-				// Return the pointer
-				statements.add(indent + "return &" + store.getVar(code.operand) + ";");
-			}else{
-				// Return the structure.
-				statements.add(indent + "return " + store.getVar(code.operand) + ";");
-			}
+			// Return the structure.
+			statements.add(indent + "return " + store.getVar(code.operand) + ";");
 		} else {
 			// Negative register means this function/method does not have return value.
 			// So we do need to generate the code, except for main method.
