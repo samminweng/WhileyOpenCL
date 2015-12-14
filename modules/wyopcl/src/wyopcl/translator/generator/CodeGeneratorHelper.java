@@ -426,6 +426,13 @@ public final class CodeGeneratorHelper {
 		}
 		return "";
 	}
+	
+	protected static String transferOwnership(Type type, String var, CodeStores stores, DeallocationAnalyzer analyzer){
+		if(analyzer != null && isCompoundType(type, stores)){
+			return getOwnership(var)+" = false;";
+		}
+		return "";
+	}
 
 	/**
 	 * Declare ownership variable
@@ -480,8 +487,12 @@ public final class CodeGeneratorHelper {
 	}
 
 	/**
-	 * Generate the code to release the memory for a given variable.
-	 * @param indent
+	 * Generate the code to release the memory for a given variable, e.g. 
+	 * <pre><code>
+	 * if(a_has_ownership){free_Board(a); a_has_ownership = false;}
+	 * </code></pre>
+	 * where 'a' is a board and 'a_has_ownership' flag indicates whether 'a' owns an object.
+	 * 
 	 * @param var
 	 * @param type
 	 * @param stores
@@ -491,33 +502,31 @@ public final class CodeGeneratorHelper {
 		if(analyzer == null || !isCompoundType(type, stores)){
 			return "";
 		}
-		String s = "if(";
-		s += getOwnership(var)+"){free";
-		int dimension = 0;
+		
+		// Get ownership flag
+		String ownership = getOwnership(var);
+		// Get function name
+		String f_name = "";		
+		String size_var = "";
 		// Check if var_type is a structure
 		if(type instanceof Type.Array){
-			dimension = getArrayDimension(type);
+			int dimension = getArrayDimension(type);
 			if(dimension== 2){
-				s+=dimension+"DArray";
+				f_name = dimension+"DArray";
+				size_var = ", "+var+"_size"; 
 			}
 		}else if(type instanceof Type.Record){
-			s+= "_"+translateType(type, stores);
+			f_name = "_"+translateType(type, stores);
 		}else if(type instanceof Type.Nominal){		
-			s+= "_"+translateType(type, stores);
+			f_name = "_"+translateType(type, stores).replace("*", "");
 		}else if(type instanceof Type.Union){		
-			s+= "_"+translateType(type, stores);			
+			f_name = "_"+translateType(type, stores).replace("*", "");			
 		}else{
 			throw new RuntimeException("Not implemented");
 		}
-		s+="("+var;
-		if(dimension==2){
-			// Pass size variable of 2D array to release the memory
-			s += ", "+var+"_size";
-		}
-		s+= "); "+getOwnership(var)+" = false;";
-		s+="}";
-
-		return s;
+		
+		return  "if("+ownership+"){free"+f_name+"("+var + size_var+"); "
+				   +ownership+" = false;}";
 	}
 
 

@@ -295,54 +295,61 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(Codes.Assign code, FunctionOrMethod function) {
 		CodeStore store = stores.getCodeStore(function);
 		String lhs = store.getVar(code.target());
+		// Get the actual type for lhs variable.
 		Type lhs_type = store.getVarType(code.target());
 		String indent = store.getIndent();
 		List<String> statement = new ArrayList<String>();
-		if(code.type() instanceof Type.Nominal){
-			// Deallocate the lhs array
-			statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores, this.deallocatedAnalyzer));
-			// copy the array and assign the cloned to the target.
-			statement.add(indent + lhs + " = "+ optimizeCode(code.operand(0), code, function));
-			// Assigned the ownership to lhs
-			statement.add(indent + CodeGeneratorHelper.assignOwnership(lhs_type, lhs, this.stores, deallocatedAnalyzer));
-			// Assigned the lhs adrress to 'null' pointer
-			statement.add(indent + lhs + ".null = &" +lhs + ";" );
-		}else if (code.type() instanceof Type.Union) {
-			if(CodeGeneratorHelper.isIntType(code.type())){
-				// Assign the values
-				statement.add(indent + lhs + " = " + store.getVar(code.operand(0)) + ";");
-			}else{
+		
+		// Special cases for NULL type
+		if(code.type()instanceof Type.Null){
+			// Assign lhs to NULL values
+			// Check 'null' pointer to be NULL
+			statement.add(indent + lhs + " = NULL;" );
+			// Take out ownership from lhs as it is set to be NULL
+			statement.add(indent + CodeGeneratorHelper.transferOwnership(lhs_type, lhs, this.stores, deallocatedAnalyzer));
+		}else{
+			if(lhs_type instanceof Type.Nominal){
 				// Deallocate the lhs array
 				statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores, this.deallocatedAnalyzer));
 				// copy the array and assign the cloned to the target.
 				statement.add(indent + lhs + " = "+ optimizeCode(code.operand(0), code, function));
 				// Assigned the ownership to lhs
 				statement.add(indent + CodeGeneratorHelper.assignOwnership(lhs_type, lhs, this.stores, deallocatedAnalyzer));
+			}else if (lhs_type instanceof Type.Union) {
+				if(CodeGeneratorHelper.isIntType(lhs_type)){
+					// Assign the values
+					statement.add(indent + lhs + " = " + store.getVar(code.operand(0)) + ";");
+				}else{
+					// Deallocate the lhs array
+					statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores, this.deallocatedAnalyzer));
+					// copy the array and assign the cloned to the target.
+					statement.add(indent + lhs + " = "+ optimizeCode(code.operand(0), code, function));
+					// Assigned the ownership to lhs
+					statement.add(indent + CodeGeneratorHelper.assignOwnership(lhs_type, lhs, this.stores, deallocatedAnalyzer));
+				}
+			}else if(lhs_type instanceof Type.Record){
+				// Deallocate the lhs array
+				statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores, this.deallocatedAnalyzer));
+				// copy the array and assign the cloned to the target.
+				statement.add(indent + lhs + " = "+ optimizeCode(code.operand(0), code, function));
+				// Assigned the ownership to lhs
+				statement.add(indent + CodeGeneratorHelper.assignOwnership(lhs_type, lhs, this.stores, deallocatedAnalyzer));
+			}else if (lhs_type instanceof Type.Array) {
+				// Propagate array sizes
+				statement.add(indent + CodeGeneratorHelper.generateArraySizeAssign(lhs_type, lhs, store.getVar(code.operand(0))));
+				// Deallocate the lhs array
+				statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores, this.deallocatedAnalyzer));
+				// copy the array and assign the cloned to the target.
+				statement.add(indent + lhs + " = "+ optimizeCode(code.operand(0), code, function));
+				// Assigned the ownership to lhs
+				statement.add(indent + CodeGeneratorHelper.assignOwnership(lhs_type, lhs, this.stores, deallocatedAnalyzer));
+			} else if (lhs_type instanceof Type.Int) {
+				statement.add(indent + lhs + " = " + store.getVar(code.operand(0)) + ";");
+			} else{
+				throw new RuntimeException("Not Implemented!");
 			}
-		}else if(code.type() instanceof Type.Record){
-			// Deallocate the lhs array
-			statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores, this.deallocatedAnalyzer));
-			// copy the array and assign the cloned to the target.
-			statement.add(indent + lhs + " = "+ optimizeCode(code.operand(0), code, function));
-			// Assigned the ownership to lhs
-			statement.add(indent + CodeGeneratorHelper.assignOwnership(lhs_type, lhs, this.stores, deallocatedAnalyzer));
-		}else if (code.type() instanceof Type.Array) {
-			// Propagate array sizes
-			statement.add(indent + CodeGeneratorHelper.generateArraySizeAssign(code.type(), lhs, store.getVar(code.operand(0))));
-			// Deallocate the lhs array
-			statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores, this.deallocatedAnalyzer));
-			// copy the array and assign the cloned to the target.
-			statement.add(indent + lhs + " = "+ optimizeCode(code.operand(0), code, function));
-			// Assigned the ownership to lhs
-			statement.add(indent + CodeGeneratorHelper.assignOwnership(lhs_type, lhs, this.stores, deallocatedAnalyzer));
-		} else if (code.type() instanceof Type.Int) {
-			statement.add(indent + lhs + " = " + store.getVar(code.operand(0)) + ";");
-		} else if(code.type() instanceof Type.Null){
-			// Check 'null' pointer to be NULL
-			statement.add(indent + lhs + " = NULL;" );
-		} else{
-			throw new RuntimeException("Not Implemented!");
 		}
+		
 		// Add the statement to the list of statements.
 		store.addAllStatements(code, statement);
 	}
