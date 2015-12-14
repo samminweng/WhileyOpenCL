@@ -84,10 +84,12 @@ method main(System.Console sys):
     while i < |GAME|:
         int p = GAME[i]
         if p < 0 || p > 9 || b.pieces[p] != BLANK || b.move == 9:
-            //console.out.println_s("INVALID MOVE!")
+            //sys.out.println_s("INVALID MOVE!")
             break
         else:
             b = play(b,p)
+            sys.out.print_s("play turn ")
+            sys.out.print(i)
         i = i + 1
     assert b.move == 9
     assert b.pieces == [1, 2, 1, 2, 1, 2, 1, 2, 1]

@@ -41,7 +41,7 @@ public final class CodeGeneratorHelper {
 	private CodeGeneratorHelper() {
 
 	}
-	
+
 	/**
 	 * Check if the type is instance of Integer by inferring the type from
 	 * <code>wyil.Lang.Type</code> objects, including the effective collection
@@ -65,19 +65,19 @@ public final class CodeGeneratorHelper {
 			return isIntType(element);
 		}
 
-		
+
 		if(type instanceof Type.Union){
 			// Check if the union type contains INT type.
 			if(((Type.Union)type).bounds().contains(Type.Int.T_INT)){
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Get the fields from a record type. 
 	 * 
@@ -104,7 +104,7 @@ public final class CodeGeneratorHelper {
 		String[] members = fields.toArray(new String[fields.size()]);
 		return members;
 	}
-	
+
 	/***
 	 * 
 	 * Given a user-defined structure, generate 'printf_*' function to print out its value. For example,	 * 
@@ -164,10 +164,10 @@ public final class CodeGeneratorHelper {
 			statement.add("\tprintf(\"}\");");
 			statement.add("}");
 		}
-		
+
 		return statement;
 	}
-	
+
 	/**
 	 * Generates the code to create a structure pointer.
 	 * 
@@ -193,15 +193,21 @@ public final class CodeGeneratorHelper {
 		String input = "_"+type_name.toLowerCase().replace("*", ""); // such as '_board'
 		String name = type_name.replace("*", "");
 		statement.add(type_name+" create_"+name+ "(){");
-		statement.add("\t"+type_name+" "+input+" = malloc(sizeof("+name+"));");// Allocate the input in stack memory, which can be de-allocated automatically.
+
+		if(type instanceof Type.Union){
+			statement.add("\t"+type_name+" "+input+" = malloc(sizeof("+name+"));");// Allocate the input in heap memory, which require manual de-allocation.
+		}else{
+			statement.add("\t"+type_name+" "+input+";");// Allocate the input in stack memory, which can be de-allocated automatically.
+		}
+
 		statement.add("\treturn "+input+";");
 		statement.add("}");
 		return statement;
-		
+
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Given a structure, generate 'copy_*' function to make a copy of the structure, e.g. 
 	 * <pre><code>
@@ -228,38 +234,38 @@ public final class CodeGeneratorHelper {
 	 */
 	private static List<String> generateStructCopy(String type_name, Type type){
 		List<String> statement = new ArrayList<String>();
-		Type.Record record = null;
-		if((record = getRecordType(type)) != null){
-			HashMap<String, Type> fields = record.fields();			
-			String input = "_"+type_name.toLowerCase().replace("*", "");
-			String new_copy = "new_"+type_name.toLowerCase().replace("*", "");
-			String name = type_name.replace("*", "");
-			statement.add(type_name+" copy_"+name+ "(" + type_name + " "+input+"){");;
-			// Declare local copy.
-			statement.add("\t" + type_name + " "+new_copy+" = create_"+name+"();");
-			//String[] members = fields.keySet().toArray(new String[fields.size()]);
-			List<String> members = fields.keySet().stream().collect(Collectors.toList());
-			
-			for (String member: members) {		
-				String rhs = accessMember(input, member, type);
-				String lhs = accessMember(new_copy, member, type);
-				Type fieldtype = fields.get(member);
-				if (fieldtype instanceof Type.Nominal || fieldtype instanceof Type.Int) {
-					statement.add("\t" + lhs + " = " + rhs+";"); 
-				} else if (fieldtype instanceof Type.Array) {
-					statement.add("\t" + generateArraySizeAssign(fieldtype, lhs, rhs) + " " + lhs + " = " + generateCopyCode((Type.Array)fieldtype, rhs)+";");
-				} else {
-					throw new RuntimeException("Not implemented!");
-				}
-			}
-			// Add return statement
-			statement.add("\treturn "+new_copy+";");
-			statement.add("}");
-		}
+		Type.Record record = getRecordType(type);
+
+				
+		String input = "_"+type_name.toLowerCase().replace("*", "");
+		String new_copy = "new_"+type_name.toLowerCase().replace("*", "");
+		String name = type_name.replace("*", "");
+		statement.add(type_name+" copy_"+name+ "(" + type_name + " "+input+"){");;
+		// Declare local copy.
+		statement.add("\t" + type_name + " "+new_copy+" = create_"+name+"();");
 		
+		// Generate the code for each member.
+		record.fields().forEach((member, member_type) ->{
+			String rhs = accessMember(input, member, type);
+			String lhs = accessMember(new_copy, member, type);
+			if (member_type instanceof Type.Nominal || member_type instanceof Type.Int) {
+				statement.add("\t" + lhs + " = " + rhs+";"); 
+			} else if (member_type instanceof Type.Array) {
+				statement.add("\t" + generateArraySizeAssign(member_type, lhs, rhs) + " " + lhs + " = " + generateCopyCode((Type.Array)member_type, rhs)+";");
+			} else {
+				throw new RuntimeException("Not implemented!");
+			}
+				
+		});
+		
+		// Add return statement
+		statement.add("\treturn "+new_copy+";");
+		statement.add("}");
+
+
 		return statement;
 	}
-	
+
 	/**
 	 * Generate the code of accessing a member of a structure. 
 	 *  
@@ -277,9 +283,9 @@ public final class CodeGeneratorHelper {
 		}
 		throw new RuntimeException("Not implemented");
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Release a board structure
 	 * if(_board!=NULL){
@@ -292,35 +298,41 @@ public final class CodeGeneratorHelper {
 	 */
 	private static List<String> generateStructFree(String type_name, Type type){
 		List<String> statement = new ArrayList<String>();
-		
 		Type.Record record = null;
-		if((record = getRecordType(type)) != null){
-			HashMap<String, Type> fields = record.fields();
-			
-			String input = "_"+type_name.toLowerCase().replace("*", "");
-			String f_name = type_name.replace("*", "");
-			statement.add("void free_"+f_name+"("+type_name+ " "+input+"){");
-			// Checks if 'input' is not NULL
-			statement.add("\tif("+input+" != NULL){");
-			String[] names = fields.keySet().toArray(new String[fields.size()]);
-			for (int i = 0; i < names.length; i++) {
-				String member = names[i];
-				Type member_type = fields.get(member);
+		if(type instanceof Type.Union){
+			record = (Type.Record)((Type.Union)type).bounds().stream()
+					.filter(t -> t instanceof Type.Record)
+					.collect(Collectors.toList()).get(0);
+		}else{
+			record = (Type.Record)type;
+		}
+
+
+		String input = "_"+type_name.toLowerCase().replace("*", "");
+		String name = type_name.replace("*", "");
+		statement.add("void free_"+name+"("+type_name+ " "+input+"){");
+
+		// Get all array-typed members and free their memory spaces
+		record.fields().forEach((member, member_type) ->{
+			if(member_type instanceof Type.Array){
 				String input_member = accessMember(input, member, type);
-				if(member_type instanceof Type.Array){
-					if(getArrayDimension(member_type)== 2){
-						// Release 2D array by using built-in 'free2DArray' function
-						statement.add("\t\tfree2DArray("+input_member+", "+input_member+"_size);");
-					}else{
-						statement.add("\t\tfree("+input_member+");");
-					}
+				if(getArrayDimension(member_type)== 2){
+					// Release 2D array by using built-in 'free2DArray' function
+					statement.add("\tfree2DArray("+input_member+", "+input_member+"_size);");
+				}else{
+					statement.add("\tfree("+input_member+");");
 				}
 			}
-			statement.add("\t}");
-			statement.add("}");// Add ending bracket.
+		});
+
+
+		if(type instanceof Type.Union){
+			// Release top-level structure
+			statement.add("free("+input+");");
 		}
-		
-		
+
+		statement.add("}");// Add ending bracket.
+
 		return statement;
 	}
 	/**
@@ -336,10 +348,10 @@ public final class CodeGeneratorHelper {
 			type = ((Type.Array)type).element();
 			dimension++;
 		}
-		
+
 		return dimension;
 	}
-	
+
 	/**
 	 * Return a list of size variables w.r.t. array dimension.
 	 * @param var array variable
@@ -349,18 +361,18 @@ public final class CodeGeneratorHelper {
 	protected static List<String> getArraySizeVars(String var, Type type){
 		List<String> size_vars = new ArrayList<String>();
 		int dimension = getArrayDimension(type);
-		
+
 		String size_var = var;
 		for(int d=dimension;d>0;d--){
 			size_var += "_size";
 			size_vars.add(size_var);
 		}
-		
+
 		return size_vars;
-		
+
 	}
-	
-	
+
+
 	/**
 	 * Check if the type of given register is an array or record (excluding 'print' fields)
 	 * 
@@ -375,9 +387,9 @@ public final class CodeGeneratorHelper {
 			Type.Record record = (Type.Record)type;
 			// Check if the variable contains 'printf' field. 
 			long nonePrintFields = record.fields().keySet().stream()
-			.filter(f -> !f.contains("print") && !f.contains("println") && !f.contains("print_s") && !f.contains("println_s") )
-			.count();
-			
+					.filter(f -> !f.contains("print") && !f.contains("println") && !f.contains("print_s") && !f.contains("println_s") )
+					.count();
+
 			// If NOT a printf field, then add ownership.
 			if(nonePrintFields>0){
 				return true;
@@ -386,8 +398,8 @@ public final class CodeGeneratorHelper {
 			// Get nominal type
 			Type.Nominal nominal = (Type.Nominal)type;
 			if(!nominal.name().toString().contains("Console") &&
-				// Check if the nominal type is aliased Integer type
-				!(stores.getNominalType(nominal) instanceof Type.Int)){
+					// Check if the nominal type is aliased Integer type
+					!(stores.getNominalType(nominal) instanceof Type.Int)){
 				return true;
 			}
 		}else if(type instanceof Type.Union){
@@ -395,7 +407,7 @@ public final class CodeGeneratorHelper {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 	/**
@@ -406,8 +418,8 @@ public final class CodeGeneratorHelper {
 	private static String getOwnership(String var){
 		return var+"_has_ownership";
 	}
-	
-	
+
+
 	/**
 	 * Generate the declaration of ownership variable, e.g.
 	 * 
@@ -423,7 +435,7 @@ public final class CodeGeneratorHelper {
 		}
 		return "";
 	}
-	
+
 	/**
 	 * Declare ownership variable
 	 * @param type
@@ -466,7 +478,7 @@ public final class CodeGeneratorHelper {
 		if(deallocatedAnalyzer == null || !isCompoundType(type, stores)){
 			return "";
 		}
-		
+
 		if(copyAnalyzer != null){
 			// For copy-reduced implementation, the calling function does not own the array. 
 			return "false";
@@ -475,7 +487,7 @@ public final class CodeGeneratorHelper {
 			return "true";
 		}
 	}
-	
+
 	/**
 	 * Generate the code to release the memory for a given variable.
 	 * @param indent
@@ -513,11 +525,11 @@ public final class CodeGeneratorHelper {
 		}
 		s+= "); "+getOwnership(var)+" = false;";
 		s+="}";
-		
+
 		return s;
 	}
-	
-	
+
+
 	/**
 	 * Returns a list of free statements to release array memory spaces.
 	 * @param vars
@@ -537,11 +549,11 @@ public final class CodeGeneratorHelper {
 				statements.add(indent + addDeallocatedCode(var, var_type, stores, analyzer));
 			}
 		}
-		
+
 		return statements;
 	}
-	
-	
+
+
 	/***
 	 * Given a type, generates size variables according to array dimension, e.g.
 	 * 'data' is a 2D array and its size variables are
@@ -561,15 +573,15 @@ public final class CodeGeneratorHelper {
 	protected static String generateArraySizeVars(String var, Type type){
 		if(type instanceof Type.Array){
 			return getArraySizeVars(var, type).stream()
-			.map(i -> i.toString())
-			.collect(Collectors.joining(", "));
+					.map(i -> i.toString())
+					.collect(Collectors.joining(", "));
 		}
-		
+
 		return "";
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Generates assignment C code to specify the size variables of multi-dimensional array, e.g. 
 	 * 
@@ -589,17 +601,17 @@ public final class CodeGeneratorHelper {
 		if(type instanceof Type.Array){
 			List<String> lhs_sizes = getArraySizeVars(lhs, type);
 			List<String> rhs_sizes = getArraySizeVars(rhs, type);
-	
+
 			for(int i=0;i<lhs_sizes.size();i++){
 				statement += lhs_sizes.get(i) +" = "+ rhs_sizes.get(i) +"; "; 
 			}
-			
+
 		}
-		
+
 		return statement;
 	}
-	
-	
+
+
 	/**
 	 * Generate lhs code for copying array-typed variable, e.g.
 	 * <pre><code>
@@ -623,7 +635,7 @@ public final class CodeGeneratorHelper {
 		statement += generateArraySizeVars(var, type) + ")";
 		return statement;			
 	}
-	
+
 	/**
 	 * Generates the array code, including the copy function call and the list of array size variables, e.g.
 	 * <code>
@@ -646,14 +658,14 @@ public final class CodeGeneratorHelper {
 			// Do not need to make a copy of 'var' 
 			return var;
 		}
-		
+
 		if (type instanceof Type.Nominal){
 			type = stores.getNominalType(((Type.Nominal)type));
 		}
-		
+
 		String statement = "";
 		String type_name = translateType(type, stores);
-		
+
 		if(type instanceof Type.Array){
 			// Add 'copy' function call w.r.t. Array dimension
 			statement += generateCopyCode((Type.Array)type, var);
@@ -670,19 +682,19 @@ public final class CodeGeneratorHelper {
 		} else{
 			throw new RuntimeException("Not implemented");
 		}
-		
+
 		return statement;
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Returns the record types for an union/record type.
 	 * @param type
 	 * @return
 	 */
-	protected static Type.Record getRecordType(Type type){
-		
+	private static Type.Record getRecordType(Type type){
+
 		if(type instanceof Type.Record){
 			return (Type.Record)type;
 		}else if(type instanceof Type.Union){
@@ -699,9 +711,9 @@ public final class CodeGeneratorHelper {
 			throw new RuntimeException("Not implemented");
 		}
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Translate the WyIL type into the type in C.
 	 * 
@@ -770,14 +782,14 @@ public final class CodeGeneratorHelper {
 			if (isIntType(type)) {
 				return "long long";
 			}
-				
+
 			WyilFile.Type userType;
 			if((userType= stores.getUnionType((Type.Union) type)) != null){
 				return userType.name()+"*";
 			}
-		
+
 			throw new RuntimeException("Un-implemented Type" + type);
-			
+
 		}
 
 		// Translate reference type in Whiley to pointer type in C.
@@ -790,14 +802,14 @@ public final class CodeGeneratorHelper {
 		if(type instanceof Type.Method){
 			return "void*";
 		}
-		
+
 		if(type instanceof Type.Null){
 			return "void*";
 		}
-		
+
 		throw new RuntimeException("Not Implemented!");
 	}
-	
+
 	/**
 	 * Generate 'Copy', 'Free' and 'Print' functions for a given structure.
 	 * @param name
@@ -808,12 +820,12 @@ public final class CodeGeneratorHelper {
 	protected static List<String> generateStructFunction(Type type, CodeStores stores){
 		List<String> statements = new ArrayList<String>();
 		String type_name = translateType(type, stores);
-		
+
 		statements.addAll(generateStructCreate(type_name, type));
 		statements.addAll(generateStructCopy(type_name, type));
 		statements.addAll(generateStructFree(type_name, type));
 		statements.addAll(generateStructPrintf(type_name, type));
-		
+
 		return statements;
 	}
 	/**
@@ -830,7 +842,7 @@ public final class CodeGeneratorHelper {
 		HashMap<String, Type> fields = record.fields();
 		// Get all field names
 		String[] names = fields.keySet().toArray(new String[fields.size()]);
-		
+
 		for (int i = 0; i < names.length; i++) {
 			String member = names[i];
 			Type memeber_type = fields.get(member);
@@ -843,9 +855,9 @@ public final class CodeGeneratorHelper {
 		}
 		return members;
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Write the user-defined structure to *.h file, e.g. 
 	 * <pre>
@@ -861,10 +873,10 @@ public final class CodeGeneratorHelper {
 	 */
 	protected static List<String> generateStructDef(Type type, CodeStores stores) {
 		List<String> statements = new ArrayList<String>();	
-		
+
 		// Extract record type from an union/record type
 		String type_name = translateType(type, stores);
-		
+
 		// Define a structure
 		String struct_name = type_name.replaceAll("\\*", "");
 		statements.add("typedef struct{");
@@ -876,14 +888,14 @@ public final class CodeGeneratorHelper {
 		statements.add("void printf_" + struct_name + "(" + type_name + " "+input+");");
 		statements.add(type_name + " copy_"+struct_name+ "("+type_name + " "+input+");");
 		statements.add("void free_"+ struct_name+"("+type_name+" "+input+");");
-		
-			
+
+
 		return statements;
 	}
-	
-	
 
-	
-	
-	
+
+
+
+
+
 }
