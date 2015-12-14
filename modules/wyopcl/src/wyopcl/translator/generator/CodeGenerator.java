@@ -1384,7 +1384,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String statement = "";
 		// The ifis code checks if the register is NULL or not.
 		if (code.rightOperand instanceof Type.Null) {
-			statement += store.getIndent() + "if(" + store.getVar(code.operand) + " == NULL) { goto " + code.target+ ";}";
+			// Get lhs type
+			Type lhs_type = store.getVarType(code.operand);
+			String lhs = store.getVar(code.operand);
+			String indent = store.getIndent();
+			if(CodeGeneratorHelper.isIntType(lhs_type)){
+				statement = indent + "if(" + lhs + ".null == NULL) { goto " + code.target+ ";}";
+			}else{
+				statement = indent + "if(" + lhs + " == NULL) { goto " + code.target+ ";}";
+			}
 		} else {
 			throw new RuntimeException("Not implemented!" + code);
 		}
