@@ -126,44 +126,35 @@ public final class CodeGeneratorHelper {
 	 */
 	private static List<String> generateStructPrintf(String type_name, Type type){
 		List<String> statement = new ArrayList<String>();
-		Type.Record record = null;
-		if((record = getRecordType(type))!= null ){
-			HashMap<String, Type> fields = record.fields();
-			String input = "_"+type_name.toLowerCase().replace("*", "");
-			String f_name = type_name.replace("*", "");
-			statement.add("void printf_" + f_name + "(" + type_name + " "+input+"){");
-			// Add open bracket
-			statement.add("\tprintf(\"{\");"); 
-			// Get all field names
-			String[] names = fields.keySet().toArray(new String[fields.size()]);
-			// Print out each field.
-			for (int i = 0; i < names.length; i++) {
-				String member = names[i];
-				String input_member;
-				if(type instanceof Type.Union){
-					input_member = input + "->" +member;
-				}else{
-					input_member = input + "." +member;
-				}
-				// Add field name
-				statement.add("\tprintf(\" " + member + ":\");");
-				Type member_type = fields.get(member);
-				if (member_type instanceof Type.Nominal || member_type instanceof Type.Int) {
-					// Add field values.
-					statement.add("\tprintf(\"%d\", " + input_member + ");");
-				} else if (member_type instanceof Type.Array) {
-					String s = "\tprintf"+getArrayDimension(member_type)+"DArray(" + input_member;				
-					s += ", " + generateArraySizeVars(input_member, member_type);
-					s += ");";
-					statement.add(s);
-				} else {
-					throw new RuntimeException("Not implemented!");
-				}
+		Type.Record record = getRecordType(type);
+		
+		String input = "_"+type_name.toLowerCase().replace("*", "");
+		String f_name = type_name.replace("*", "");
+		statement.add("void printf_" + f_name + "(" + type_name + " "+input+"){");
+		// Add open bracket
+		statement.add("\tprintf(\"{\");"); 
+		
+		// Print out each member
+		record.fields().forEach((member, member_type) ->{
+			String input_member = accessMember(input, member, type);
+			// Print the member name
+			statement.add("\tprintf(\" " + member + ":\");");
+			// Print the member value
+			if (member_type instanceof Type.Nominal || member_type instanceof Type.Int) {
+				// Add field values.
+				statement.add("\tprintf(\"%d\", " + input_member + ");");
+			} else if (member_type instanceof Type.Array) {
+				statement.add("\tprintf"+getArrayDimension(member_type)+"DArray(" + input_member 				
+				+ ", " + generateArraySizeVars(input_member, member_type) + ");");
+			} else {
+				throw new RuntimeException("Not implemented!");
 			}
-			// Add ending "}"
-			statement.add("\tprintf(\"}\");");
-			statement.add("}");
-		}
+		});
+		
+		// Add ending "}"
+		statement.add("\tprintf(\"}\");");
+		statement.add("}");
+
 
 		return statement;
 	}
@@ -236,14 +227,14 @@ public final class CodeGeneratorHelper {
 		List<String> statement = new ArrayList<String>();
 		Type.Record record = getRecordType(type);
 
-				
+
 		String input = "_"+type_name.toLowerCase().replace("*", "");
 		String new_copy = "new_"+type_name.toLowerCase().replace("*", "");
 		String name = type_name.replace("*", "");
 		statement.add(type_name+" copy_"+name+ "(" + type_name + " "+input+"){");;
 		// Declare local copy.
 		statement.add("\t" + type_name + " "+new_copy+" = create_"+name+"();");
-		
+
 		// Generate the code for each member.
 		record.fields().forEach((member, member_type) ->{
 			String rhs = accessMember(input, member, type);
@@ -255,9 +246,9 @@ public final class CodeGeneratorHelper {
 			} else {
 				throw new RuntimeException("Not implemented!");
 			}
-				
+
 		});
-		
+
 		// Add return statement
 		statement.add("\treturn "+new_copy+";");
 		statement.add("}");
@@ -837,22 +828,19 @@ public final class CodeGeneratorHelper {
 	 * @return
 	 */
 	private static List<String> generateStructMembers(Type type, CodeStores stores){
-		Type.Record record = getRecordType(type);
+		
 		List<String> members = new ArrayList<String>();
-		HashMap<String, Type> fields = record.fields();
-		// Get all field names
-		String[] names = fields.keySet().toArray(new String[fields.size()]);
-
-		for (int i = 0; i < names.length; i++) {
-			String member = names[i];
-			Type memeber_type = fields.get(member);
+		
+		Type.Record record = getRecordType(type);
+		// Gather all members
+		record.fields().forEach((member, memeber_type) ->{
 			members.add("\t" + translateType(memeber_type, stores) + " " + member + ";");
 			if (memeber_type instanceof Type.Array) {
-				// Add array size member
-				getArraySizeVars(member, memeber_type).stream()
-				.forEach(size_var -> members.add("\t" + "long long " + size_var + ";"));
+				getArraySizeVars(member, memeber_type).forEach(s -> members.add("\t" + "long long " + s + ";"));
 			}
-		}
+		});
+		
+	
 		return members;
 	}
 
