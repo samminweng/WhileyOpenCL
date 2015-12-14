@@ -1304,7 +1304,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			Type type = code.type().field(member);
 			// Propagate '_size' variable.
 			if (type instanceof Type.Array) {
-				statement.add(indent + CodeGeneratorHelper.generateArraySizeAssign(type, lhs + "." + member, rhs));
+				statement.add(indent + CodeGeneratorHelper.generateArraySizeAssign(type, lhs_member, rhs));
 				statement.add(indent + lhs_member + " = " + optimizeCode(operands[i], code, function));
 			}else if(type instanceof Type.Int){
 				statement.add(indent + lhs_member + " = " + rhs + ";");
