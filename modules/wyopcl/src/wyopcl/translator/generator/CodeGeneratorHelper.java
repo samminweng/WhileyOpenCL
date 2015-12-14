@@ -738,7 +738,7 @@ public final class CodeGeneratorHelper {
 		}
 
 		if (type instanceof Type.Void) {
-			return "void";
+			return "void*";
 		}
 
 		if (type instanceof Type.Record) {
@@ -747,7 +747,7 @@ public final class CodeGeneratorHelper {
 			if (fields.containsKey("print") || fields.containsKey("println") || fields.containsKey("print_s")
 					|| fields.containsKey("println_s")) {
 				// No needs to do the translation.
-				return "";
+				return "void*";
 			}
 
 			// The input 'type' is input arguments of main method.
@@ -788,11 +788,11 @@ public final class CodeGeneratorHelper {
 		}
 
 		if(type instanceof Type.Method){
-			return "";
+			return "void*";
 		}
 		
 		if(type instanceof Type.Null){
-			return "";
+			return "void*";
 		}
 		
 		throw new RuntimeException("Not Implemented!");

@@ -1267,16 +1267,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * Translates the new record byte-code. For example,
 	 * 
 	 * <pre>
-	 * <code>newrecord %11 = (%10, %0) : {int move,[int] pieces}</code>
+	 * <code>newrecord a = (b, c) : {int move,[int] pieces}</code>
 	 * </pre>
 	 * 
 	 * can be translated into:
 	 * 
 	 * <pre>
 	 * <code>
-	 * _11.move = _0;
-	 * _11.pieces = _10;
-	 * _11.pieces_size = _10_size;
+	 * a = create_Board();
+	 * a.move = b;
+	 * a.pieces = c;
+	 * a.pieces_size = c_size;
 	 * </code>
 	 * </pre>
 	 * 
@@ -1290,10 +1291,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String indent = store.getIndent();
 		String lhs = store.getVar(code.target());
 		List<String> statement = new ArrayList<String>();
-		Type lhs_type = store.getVarType(code.target());
+		WyilFile.Type user_type = stores.getRecordType((Type.Record)store.getVarType(code.target()));
+		Type lhs_type = user_type.type();
 		// Add deallocation code to lhs structure
 		statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores, this.deallocatedAnalyzer));
 		
+		// Call 'create_Board()' to create a new structure
+		statement.add(indent + lhs + " = create_" + user_type.name()+"();");
 		// Assign lhs structure members with rhs member, e.g. 'a.pieces = copy(b, b_size);' 
 		String[] members = CodeGeneratorHelper.getMemebers(code.type());
 		int[] operands = code.operands();
@@ -1301,20 +1305,19 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Get operand 
 			String rhs = store.getVar(operands[i]);
 			String member = members[i];
+			String lhs_member = CodeGeneratorHelper.accessMember(lhs, member, lhs_type);
 			//Type type = store.getVarType(code.operand(i));
 			Type type = code.type().field(member);
 			// Propagate '_size' variable.
 			if (type instanceof Type.Array) {
 				statement.add(indent + CodeGeneratorHelper.generateArraySizeAssign(type, lhs + "." + member, rhs));
-				statement.add(indent + lhs + "." + member + " = " + optimizeCode(operands[i], code, function));
+				statement.add(indent + lhs_member + " = " + optimizeCode(operands[i], code, function));
 			}else if(type instanceof Type.Int){
-				statement.add(indent + lhs + "." + member + " = " + rhs + ";");
+				statement.add(indent + lhs_member + " = " + rhs + ";");
 			}else {
 				throw new RuntimeException("Not Implemented!");
 			}
 		}
-		
-		
 		
 		// Assign ownership to lhs 
 		statement.add(indent + CodeGeneratorHelper.assignOwnership(lhs_type, lhs, this.stores, this.deallocatedAnalyzer));
