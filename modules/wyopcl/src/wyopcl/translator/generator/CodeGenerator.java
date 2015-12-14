@@ -302,11 +302,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		
 		// Special cases for NULL type
 		if(code.type()instanceof Type.Null){
-			// Assign lhs to NULL values
-			// Check 'null' pointer to be NULL
-			statement.add(indent + lhs + " = NULL;" );
-			// Take out ownership from lhs as it is set to be NULL
-			statement.add(indent + CodeGeneratorHelper.transferOwnership(lhs_type, lhs, this.stores, deallocatedAnalyzer));
+			// Add de-allocation code
+			statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores, this.deallocatedAnalyzer));
+			// Assign lhs to NULL values by 
+			statement.add(indent + lhs + " = NULL;");
 		}else{
 			if(lhs_type instanceof Type.Nominal){
 				// Deallocate the lhs array
