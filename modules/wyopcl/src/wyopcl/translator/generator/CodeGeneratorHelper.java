@@ -98,10 +98,10 @@ public final class CodeGeneratorHelper {
 	 * @param record
 	 * @return
 	 */
-	protected static String[] getMemebers(Type.Record record){
+	protected static List<String> getMemebers(Type.Record record){
 		//System.out.println(record.keys());
 		State fields = (State) record.automaton.states[0].data;
-		String[] members = fields.toArray(new String[fields.size()]);
+		List<String> members = fields.stream().collect(Collectors.toList());
 		return members;
 	}
 

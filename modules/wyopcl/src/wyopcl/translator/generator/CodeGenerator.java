@@ -1292,13 +1292,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		
 		// Call 'create_Board()' to create a new structure
 		statement.add(indent + lhs + " = create_" + user_type.name()+"();");
+	
 		// Assign lhs structure members with rhs member, e.g. 'a.pieces = copy(b, b_size);' 
-		String[] members = CodeGeneratorHelper.getMemebers(code.type());
+		List<String> members = CodeGeneratorHelper.getMemebers(code.type());
+		
 		int[] operands = code.operands();
 		for(int i=0;i<operands.length; i++){
 			// Get operand 
 			String rhs = store.getVar(operands[i]);
-			String member = members[i];
+			String member = members.get(i);
 			String lhs_member = CodeGeneratorHelper.accessMember(lhs, member, lhs_type);
 			//Type type = store.getVarType(code.operand(i));
 			Type type = code.type().field(member);
