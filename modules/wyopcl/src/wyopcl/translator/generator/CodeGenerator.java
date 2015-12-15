@@ -421,8 +421,21 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		store.addStatement(code, stat);
 	}
 
-
-	
+	/**
+	 * Checks if the copy of given register is needed or not, based on liveness information.
+	 * @param register
+	 * @param code
+	 * @param function
+	 * @return
+	 */
+	private boolean isCopyEliminated(int register, Code code, FunctionOrMethod function){
+		boolean isCopyEliminated = false;
+		if(this.copyAnalyzer != null){
+			isCopyEliminated = this.copyAnalyzer.isCopyEliminated(register, code, function);
+		}
+		
+		return isCopyEliminated;
+	}
 	
 
 	/**
@@ -440,11 +453,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	private String optimizeCode(int op, Code code, FunctionOrMethod function) {
 		CodeStore store = stores.getCodeStore(function);
-		boolean isCopyEliminated = false;
-		if(this.copyAnalyzer != null){
-			isCopyEliminated = this.copyAnalyzer.isCopyEliminated(op, code, function);
-		}
-	
+		
 		String statement = "";
 		String var = store.getVar(op);
 		Type type = store.getVarType(op);
@@ -452,21 +461,32 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			type = stores.getNominalType((Type.Nominal)type);
 		}
 		
-		if(code instanceof Codes.Assign){
-			statement += CodeGeneratorHelper.generateCopyUpdateCode(type, stores, var, isCopyEliminated)+";"; 
-		}else if (code instanceof Codes.Invoke){
+		String indent = store.getIndent();
+		
+		boolean isCopyEliminated = isCopyEliminated(op, code, function);
+		if (code instanceof Codes.Invoke){
 			statement += CodeGeneratorHelper.generateCopyUpdateCode(type, stores, var, isCopyEliminated); 
-		}else if (code instanceof Codes.FieldLoad){
-			Codes.FieldLoad fieldload = (Codes.FieldLoad)code;
-			// Access the member
-			String member = CodeGeneratorHelper.accessMember(var, fieldload.field, type);
-			statement += CodeGeneratorHelper.generateCopyUpdateCode(fieldload.fieldType(), stores, member, isCopyEliminated);
-		}else if(code instanceof Codes.NewRecord){
-			statement += CodeGeneratorHelper.generateCopyUpdateCode(type, stores, var, isCopyEliminated)+";"; 
-		} else{
-			throw new RuntimeException("Not implemented");
+		}else{
+			if(code instanceof Codes.Assign){
+				statement += CodeGeneratorHelper.generateCopyUpdateCode(type, stores, var, isCopyEliminated)+";"; 
+			}else if (code instanceof Codes.FieldLoad){
+				Codes.FieldLoad fieldload = (Codes.FieldLoad)code;
+				// Access the member
+				String member = CodeGeneratorHelper.accessMember(var, fieldload.field, type);
+				statement += CodeGeneratorHelper.generateCopyUpdateCode(fieldload.fieldType(), stores, member, isCopyEliminated)+";";
+			}else if(code instanceof Codes.NewRecord){
+				statement += CodeGeneratorHelper.generateCopyUpdateCode(type, stores, var, isCopyEliminated)+";"; 
+			} else{
+				throw new RuntimeException("Not implemented");
+			}
+			// Transfer the ownership if the copy is not needed, i.e. the variable does not own this object.
+			if(isCopyEliminated){
+				statement += "\n"+indent+ CodeGeneratorHelper.transferOwnership(type, var, stores, this.deallocatedAnalyzer);
+			}else{
+				// Assign ownership to variable as the copy is made.
+				statement += "\n"+indent + CodeGeneratorHelper.assignOwnership(type, var, stores, this.deallocatedAnalyzer);
+			}
 		}
-
 		return statement;
 	}
 
@@ -1110,7 +1130,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Free lhs
 			statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores, this.deallocatedAnalyzer));
 			// Assign member values
-			statement.add(indent + lhs + " = "+ optimizeCode(code.operand(0), code, function)+";");
+			statement.add(indent + lhs + " = "+ optimizeCode(code.operand(0), code, function));
 			// Assign ownership to lhs variable of fieldload code
 			statement.add(indent + CodeGeneratorHelper.assignOwnership(lhs_type, lhs, this.stores, this.deallocatedAnalyzer));
 		}

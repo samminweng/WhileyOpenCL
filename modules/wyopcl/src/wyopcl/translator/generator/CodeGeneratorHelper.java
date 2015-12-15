@@ -396,7 +396,7 @@ public final class CodeGeneratorHelper {
 		}else if(type instanceof Type.Union){
 			// Check if the union type does not contain INT type
 			if(!isIntType(type) && getRecordType((Type.Union)type)!=null){
-				return false;
+				return true;
 			}
 		}
 
