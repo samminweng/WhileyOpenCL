@@ -244,6 +244,9 @@ public final class BaseTestUtil {
 					throw new RuntimeException("Not Implemented");
 				}
 				break;
+			case 2:
+				destDir = Paths.get(sourceDir + File.separator + testcase + File.separator + "copy_reduced_dealloc" + File.separator);
+				break;
 			default:
 				throw new RuntimeException("Not implemented");
 			}

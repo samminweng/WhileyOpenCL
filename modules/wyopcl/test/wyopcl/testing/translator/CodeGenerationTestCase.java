@@ -35,10 +35,16 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(codeDir, "swap", "dealloc");
 	}
 
-	//@Test
+	@Test
 	public void test_swap_copy() {
 		//Generate the naive C code  
 		util.execCodeGeneration(codeDir, "swap", "copy");
+	}
+	
+	@Test
+	public void test_swap_copy_dealloc() {
+		//Generate the naive C code  
+		util.execCodeGeneration(codeDir, "swap", "copy", "dealloc");
 	}
 	
 	@Test
