@@ -299,27 +299,35 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		Type lhs_type = store.getVarType(code.target());
 		String indent = store.getIndent();
 		List<String> statement = new ArrayList<String>();
-		// Add de-allocation code to deallocate lhs variable
-		statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores, this.deallocatedAnalyzer));
-		// Special cases for NULL type
-		if(code.type()instanceof Type.Null){
-			// Assign lhs to NULL values by 
-			statement.add(indent + lhs + " = NULL;");
-			// Transfer out the ownership of lhs variable
-			statement.add(indent + CodeGeneratorHelper.transferOwnership(lhs_type, lhs, this.stores, deallocatedAnalyzer));
-		}else if (code.type() instanceof Type.Int || 
+		
+		 if (code.type() instanceof Type.Int || 
 				code.type() instanceof Type.Union && CodeGeneratorHelper.isIntType(code.type())) {
 			statement.add(indent + lhs + " = " + store.getVar(code.operand(0)) + ";");
-		}else{
-			// Propagate sizes for array-typed variable
-			if (lhs_type instanceof Type.Array) {
-				statement.add(indent + CodeGeneratorHelper.generateArraySizeAssign(lhs_type, lhs, store.getVar(code.operand(0))));
+		}else{	
+			// Special cases for NULL type
+			if(code.type()instanceof Type.Null){
+				statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores, this.deallocatedAnalyzer));
+				// Assign lhs to NULL values by 
+				statement.add(indent + lhs + " = NULL;");
+				// Transfer out the ownership of lhs variable
+				statement.add(indent + CodeGeneratorHelper.transferOwnership(lhs_type, lhs, this.stores, deallocatedAnalyzer));
+			}else{
+				// Propagate sizes for array-typed variable
+				if (lhs_type instanceof Type.Array) {
+					statement.add(indent + CodeGeneratorHelper.generateArraySizeAssign(lhs_type, lhs, store.getVar(code.operand(0))));
+				}
+				
+				// If the rhs copy is not made, the de-allocation code is not needed. 
+				boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
+				if(!isCopyEliminated){
+					// Add de-allocation code to deallocate lhs variable
+					statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores, this.deallocatedAnalyzer));
+				}				
+				// copy the array and assign the cloned to the target.
+				statement.add(indent + lhs + " = "+ optimizeCode(code.operand(0), code, function));
+				// Assigned the ownership to lhs
+				statement.add(indent + CodeGeneratorHelper.assignOwnership(lhs_type, lhs, this.stores, deallocatedAnalyzer));	
 			}
-			
-			// copy the array and assign the cloned to the target.
-			statement.add(indent + lhs + " = "+ optimizeCode(code.operand(0), code, function));
-			// Assigned the ownership to lhs
-			statement.add(indent + CodeGeneratorHelper.assignOwnership(lhs_type, lhs, this.stores, deallocatedAnalyzer));
 		}
 		
 		// Add the statement to the list of statements.
@@ -637,6 +645,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			case "slice":
 				
 				Type lhs_type = store.getVarType(code.target());
+				
 				statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores, this.deallocatedAnalyzer));
 				
 				// Call the 'slice' function.
