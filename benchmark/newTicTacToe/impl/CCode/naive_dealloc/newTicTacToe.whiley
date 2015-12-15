@@ -16,7 +16,7 @@ type Square is (int x) where x == BLANK || x == CIRCLE || x == CROSS
 // A board consists of 9 squares, and a move counter
 // ==================================================================
 type Board is (null | {nat move, Square[] pieces} board)
-where (board != null) => (|board.pieces| == 9 && board.move <= 9 &&
+where (board != null && |board.pieces| == 9 && board.move <= 9 &&
     countOf(board.pieces, BLANK) == (9 - board.move) &&
     (countOf(board.pieces, CIRCLE) == countOf(board.pieces, CROSS) ||
     countOf(board.pieces, CIRCLE) == countOf(board.pieces, CROSS)+1))

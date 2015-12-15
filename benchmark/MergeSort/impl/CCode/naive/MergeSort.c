@@ -301,8 +301,12 @@ int main(int argc, char** args){
 	long long _25 = 0;
 	long long _26 = 0;
 	long long _27 = 0;
+	void* _28;
+	
 	long long* _30 = NULL;
 	long long _30_size = 0;
+	
+	void* _31;
 	
 	//fieldload %6 = %0 args : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 	_6 = convertArgsToIntArray(argc, args);

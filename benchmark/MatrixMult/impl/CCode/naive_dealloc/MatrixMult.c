@@ -1,13 +1,17 @@
 #include "MatrixMult.h"
+Matrix create_Matrix(){
+	Matrix _matrix;
+	return _matrix;
+}
 Matrix copy_Matrix(Matrix _matrix){
-	Matrix new_matrix;
+	Matrix new_matrix = create_Matrix();
 	new_matrix.data_size = _matrix.data_size; new_matrix.data_size_size = _matrix.data_size_size;  new_matrix.data = copy2DArray(_matrix.data, _matrix.data_size, _matrix.data_size_size);
 	new_matrix.width = _matrix.width;
 	new_matrix.height = _matrix.height;
 	return new_matrix;
 }
-void free_Matrix(Matrix _Matrix){
-	free2DArray(_Matrix.data, _Matrix.data_size);
+void free_Matrix(Matrix _matrix){
+	free2DArray(_matrix.data, _matrix.data_size);
 }
 void printf_Matrix(Matrix _matrix){
 	printf("{");
@@ -19,11 +23,12 @@ void printf_Matrix(Matrix _matrix){
 	printf("%d", _matrix.height);
 	printf("}");
 }
-Matrix matrix(nat width, nat height, long long** data, bool data_has_ownership, long long data_size, long long data_size_size){
+Matrix matrix(long long width, long long height, long long** data, bool data_has_ownership, long long data_size, long long data_size_size){
 	Matrix _3;
 	bool _3_has_ownership = false;
 	//newrecord %3 = (%2, %1, %0) : {int[][] data,int height,int width}
 	if(_3_has_ownership){free_Matrix(_3); _3_has_ownership = false;}
+	_3 = create_Matrix();
 	_3.data_size = data_size; _3.data_size_size = data_size_size; 
 	_3.data = copy2DArray(data, data_size, data_size_size);
 	_3.height = height;
@@ -40,12 +45,12 @@ Matrix multiply(Matrix A, bool A_has_ownership, Matrix B, bool B_has_ownership){
 	long long C_data_size = 0;
 	long long C_data_size_size = 0;
 	bool C_data_has_ownership = false;
-	nat i;
+	long long i;
 	
-	nat j;
+	long long j;
 	
 	long long r = 0;
-	nat k;
+	long long k;
 	
 	long long** _7 = NULL;
 	long long _7_size = 0;
@@ -243,7 +248,7 @@ blklab13:;
 	//return
 }
 
-void printMat(FILE* sys, Matrix A, bool A_has_ownership){
+void* printMat(FILE* sys, Matrix A, bool A_has_ownership){
 	long long i = 0;
 	long long j = 0;
 	long long _4 = 0;
@@ -252,6 +257,8 @@ void printMat(FILE* sys, Matrix A, bool A_has_ownership){
 	long long _7 = 0;
 	long long _8 = 0;
 	long long _9 = 0;
+	void* _10;
+	
 	long long** _12 = NULL;
 	long long _12_size = 0;
 	long long _12_size_size = 0;
@@ -260,6 +267,8 @@ void printMat(FILE* sys, Matrix A, bool A_has_ownership){
 	long long _13_size = 0;
 	bool _13_has_ownership = false;
 	long long _14 = 0;
+	void* _15;
+	
 	long long* _17 = NULL;
 	long long _17_size = 0;
 	bool _17_has_ownership = false;
@@ -267,7 +276,9 @@ void printMat(FILE* sys, Matrix A, bool A_has_ownership){
 	long long _19 = 0;
 	long long _20 = 0;
 	long long _21 = 0;
-	void* _24 = NULL;
+	void* _22;
+	
+	void** _24 = NULL;
 	long long _24_size = 0;
 	bool _24_has_ownership = false;
 	//const %5 = 0 : int
@@ -346,7 +357,7 @@ blklab16:;
 	//return
 }
 
-Matrix genMatrix(nat height, nat width){
+Matrix genMatrix(long long height, long long width){
 	long long** rows = NULL;
 	long long rows_size = 0;
 	long long rows_size_size = 0;
@@ -499,9 +510,13 @@ int main(int argc, char** args){
 	long long _20 = 0;
 	long long _21 = 0;
 	long long _22 = 0;
+	void* _23;
+	
 	long long* _25 = NULL;
 	long long _25_size = 0;
 	bool _25_has_ownership = false;
+	void* _26;
+	
 	//fieldload %7 = %0 args : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 	_7 = convertArgsToIntArray(argc, args);
 	_7_size = argc - 1;

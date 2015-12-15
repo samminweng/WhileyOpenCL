@@ -1,22 +1,27 @@
 #include "newTicTacToe.h"
-Board copy_Board(Board _board){
-	Board new_board;
-	new_board.pieces_size = _board.pieces_size;  new_board.pieces = copy(_board.pieces, _board.pieces_size);
-	new_board.move = _board.move;
+Board* create_Board(){
+	Board* _board = malloc(sizeof(Board));
+	return _board;
+}
+Board* copy_Board(Board* _board){
+	Board* new_board = create_Board();
+	new_board->pieces_size = _board->pieces_size;  new_board->pieces = copy(_board->pieces, _board->pieces_size);
+	new_board->move = _board->move;
 	return new_board;
 }
-void free_Board(Board _Board){
-	free(_Board.pieces);
+void free_Board(Board* _board){
+	free(_board->pieces);
+free(_board);
 }
-void printf_Board(Board _board){
+void printf_Board(Board* _board){
 	printf("{");
 	printf(" pieces:");
-	printf1DArray(_board.pieces, _board.pieces_size);
+	printf1DArray(_board->pieces, _board->pieces_size);
 	printf(" move:");
-	printf("%d", _board.move);
+	printf("%d", _board->move);
 	printf("}");
 }
-Board EmptyBoard(){
+Board* EmptyBoard(){
 	long long _0 = 0;
 	long long _1 = 0;
 	long long _2 = 0;
@@ -30,7 +35,7 @@ Board EmptyBoard(){
 	long long* _10 = NULL;
 	long long _10_size = 0;
 	bool _10_has_ownership = false;
-	Board _11;
+	Board* _11;
 	bool _11_has_ownership = false;
 	//const %0 = 0 : int
 	_0 = 0;
@@ -59,18 +64,17 @@ Board EmptyBoard(){
 	_10[0] = _1; _10[1] = _2; _10[2] = _3; _10[3] = _4; _10[4] = _5; _10[5] = _6; _10[6] = _7; _10[7] = _8; _10[8] = _9; 
 	_10_has_ownership = true;
 	//newrecord %11 = (%0, %10) : {int move,int[] pieces}
-	if(_11_has_ownership){free_Board(_11); _11_has_ownership = false;}
-	_11.move = _0;
-	_11.pieces_size = _10_size; 
-	_11.pieces = copy(_10, _10_size);
-	_11_has_ownership = true;
+	_11 = create_Board();
+	_11->move = _0;
+	_11->pieces_size = _10_size; 
+	_11->pieces = copy(_10, _10_size);
 	//return %11 : null|{int move,int[] pieces}
 	if(_10_has_ownership){free(_10); _10_has_ownership = false;}
 	return _11;
 	//return
 }
 
-long long countOf(Square* pieces, bool pieces_has_ownership, long long pieces_size, Square s){
+long long countOf(long long* pieces, bool pieces_has_ownership, long long pieces_size, long long s){
 	long long count = 0;
 	long long i = 0;
 	long long _4 = 0;
@@ -131,9 +135,9 @@ blklab9:;
 int main(int argc, char** args){
 	union UNION max;
 	long long repeat = 0;
-	Board b1;
+	Board* b1;
 	bool b1_has_ownership = false;
-	Board b2;
+	Board* b2;
 	bool b2_has_ownership = false;
 	long long i = 0;
 	long long p = 0;
@@ -149,14 +153,14 @@ int main(int argc, char** args){
 	bool _11_has_ownership = false;
 	long long _12 = 0;
 	long long _13 = 0;
-	Board _14;
-	bool _14_has_ownership = false;
-	Board _15;
-	bool _15_has_ownership = false;
-	Board _16;
-	bool _16_has_ownership = false;
-	Board _17;
-	bool _17_has_ownership = false;
+	Board* _14;
+	
+	Board* _15;
+	
+	Board* _16;
+	
+	Board* _17;
+	
 	long long _18 = 0;
 	long long _19 = 0;
 	long long* _20 = NULL;
@@ -207,9 +211,13 @@ int main(int argc, char** args){
 	bool _59_has_ownership = false;
 	long long _60 = 0;
 	long long _61 = 0;
+	void* _62;
+	
 	long long* _64 = NULL;
 	long long _64_size = 0;
 	bool _64_has_ownership = false;
+	void* _65;
+	
 	//fieldload %9 = %0 args : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 	_9 = convertArgsToIntArray(argc, args);
 	_9_size = argc - 1;
@@ -236,33 +244,21 @@ int main(int argc, char** args){
 		//ifge %2, %1 goto blklab12 : int
 		if(repeat>=max.integer){goto blklab12;}
 		//invoke %15 = () newTicTacToe:EmptyBoard : function() -> newTicTacToe:Board
-		if(_15_has_ownership){free_Board(_15); _15_has_ownership = false;}
 		_15 = EmptyBoard();
-		_15_has_ownership = true;
 		//assign %14 = %15  : null|{int move,int[] pieces}
-		if(_14_has_ownership){free_Board(_14); _14_has_ownership = false;}
 		_14 = copy_Board(_15);
-		_14_has_ownership = true;
-		_14.null = &_14;
 		//assign %3 = %14  : null|{int move,int[] pieces}
 		if(b1_has_ownership){free_Board(b1); b1_has_ownership = false;}
 		b1 = copy_Board(_14);
 		b1_has_ownership = true;
-		b1.null = &b1;
 		//invoke %17 = () newTicTacToe:EmptyBoard : function() -> newTicTacToe:Board
-		if(_17_has_ownership){free_Board(_17); _17_has_ownership = false;}
 		_17 = EmptyBoard();
-		_17_has_ownership = true;
 		//assign %16 = %17  : null|{int move,int[] pieces}
-		if(_16_has_ownership){free_Board(_16); _16_has_ownership = false;}
 		_16 = copy_Board(_17);
-		_16_has_ownership = true;
-		_16.null = &_16;
 		//assign %4 = %16  : null|{int move,int[] pieces}
 		if(b2_has_ownership){free_Board(b2); b2_has_ownership = false;}
 		b2 = copy_Board(_16);
 		b2_has_ownership = true;
-		b2.null = &b2;
 		//const %19 = 0 : int
 		_19 = 0;
 		//assign %18 = %19  : int
@@ -310,69 +306,69 @@ blklab16:;
 //.blklab14
 blklab14:;
 			//ifis %3, null goto blklab17 : null|{int move,int[] pieces}
-			if(b1.null == NULL) { goto blklab17;}
+			if(b1 == NULL) { goto blklab17;}
 			//const %27 = 1 : int
 			_27 = 1;
 			//const %28 = 1 : int
 			_28 = 1;
 			//update %3.pieces[%6] = %28 : {int move,int[] pieces} -> {int move,int[] pieces}
-			b1.pieces[p] = _28;
+			b1->pieces[p] = _28;
 			//fieldload %29 = %3 move : {int move,int[] pieces}
-			_29 = b1.move;
+			_29 = b1->move;
 			//const %30 = 1 : int
 			_30 = 1;
 			//add %31 = %29, %30 : int
 			_31=_29+_30;
 			//fieldload %32 = %3 move : {int move,int[] pieces}
-			_32 = b1.move;
+			_32 = b1->move;
 			//const %33 = 1 : int
 			_33 = 1;
 			//add %34 = %32, %33 : int
 			_34=_32+_33;
 			//update %3.move = %34 : {int move,int[] pieces} -> {int move,int[] pieces}
-			b1.move = _34;
+			b1->move = _34;
 			//assign %4 = %3  : {int move,int[] pieces}
 			if(b2_has_ownership){free_Board(b2); b2_has_ownership = false;}
 			b2 = copy_Board(b1);
 			b2_has_ownership = true;
-			b2.null = &b2;
 			//const %35 = null : null
 			//assign %3 = %35  : null
-			b1.null = NULL;
+			if(b1_has_ownership){free_Board(b1); b1_has_ownership = false;}
+			b1 = NULL;
 			//goto blklab18
 			goto blklab18;
 //.blklab17
 blklab17:;
 			//ifis %4, null goto blklab19 : null|{int move,int[] pieces}
-			if(b2.null == NULL) { goto blklab19;}
+			if(b2 == NULL) { goto blklab19;}
 			//const %36 = 2 : int
 			_36 = 2;
 			//const %37 = 2 : int
 			_37 = 2;
 			//update %4.pieces[%6] = %37 : {int move,int[] pieces} -> {int move,int[] pieces}
-			b2.pieces[p] = _37;
+			b2->pieces[p] = _37;
 			//fieldload %38 = %4 move : {int move,int[] pieces}
-			_38 = b2.move;
+			_38 = b2->move;
 			//const %39 = 1 : int
 			_39 = 1;
 			//add %40 = %38, %39 : int
 			_40=_38+_39;
 			//fieldload %41 = %4 move : {int move,int[] pieces}
-			_41 = b2.move;
+			_41 = b2->move;
 			//const %42 = 1 : int
 			_42 = 1;
 			//add %43 = %41, %42 : int
 			_43=_41+_42;
 			//update %4.move = %43 : {int move,int[] pieces} -> {int move,int[] pieces}
-			b2.move = _43;
+			b2->move = _43;
 			//assign %3 = %4  : {int move,int[] pieces}
 			if(b1_has_ownership){free_Board(b1); b1_has_ownership = false;}
 			b1 = copy_Board(b2);
 			b1_has_ownership = true;
-			b1.null = &b1;
 			//const %44 = null : null
 			//assign %4 = %44  : null
-			b2.null = NULL;
+			if(b2_has_ownership){free_Board(b2); b2_has_ownership = false;}
+			b2 = NULL;
 //.blklab19
 blklab19:;
 //.blklab18
@@ -391,7 +387,7 @@ blklab13:;
 		//assert
 		{
 			//ifis %3, null goto blklab20 : null|{int move,int[] pieces}
-			if(b1.null == NULL) { goto blklab20;}
+			if(b1 == NULL) { goto blklab20;}
 			//fail
 			fprintf(stderr,"fail");
 			exit(-1);
@@ -402,9 +398,9 @@ blklab20:;
 		//assert
 		{
 			//ifis %4, null goto blklab22 : null|{int move,int[] pieces}
-			if(b2.null == NULL) { goto blklab22;}
+			if(b2 == NULL) { goto blklab22;}
 			//fieldload %47 = %4 move : {int move,int[] pieces}
-			_47 = b2.move;
+			_47 = b2->move;
 			//const %48 = 9 : int
 			_48 = 9;
 			//ifeq %47, %48 goto blklab21 : int
@@ -421,11 +417,11 @@ blklab21:;
 		//assert
 		{
 			//ifis %4, null goto blklab24 : null|{int move,int[] pieces}
-			if(b2.null == NULL) { goto blklab24;}
+			if(b2 == NULL) { goto blklab24;}
 			//fieldload %49 = %4 pieces : {int move,int[] pieces}
-			_49_size = b2.pieces_size; 
+			_49_size = b2->pieces_size; 
 			if(_49_has_ownership){free(_49); _49_has_ownership = false;}
-			_49 = copy(b2.pieces, b2.pieces_size);
+			_49 = copy(b2->pieces, b2->pieces_size);
 			_49_has_ownership = true;
 			//const %50 = 1 : int
 			_50 = 1;

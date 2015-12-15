@@ -6,14 +6,15 @@
 typedef long long nat;
 typedef long long Square;
 typedef struct{
-	Square* pieces;
+	long long* pieces;
 	long long pieces_size;
-	nat move;
+	long long move;
 } Board;
+Board create_Board();
 void printf_Board(Board _board);
 Board copy_Board(Board _board);
 void free_Board(Board _board);
 Board EmptyBoard();
-Board play(Board b, nat pos);
-long long countOf(Square* pieces, long long pieces_size, Square s);
+Board play(Board b, long long pos);
+long long countOf(long long* pieces, long long pieces_size, long long s);
 int main(int argc, char** args);

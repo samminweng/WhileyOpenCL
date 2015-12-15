@@ -1,21 +1,21 @@
-==31267== Memcheck, a memory error detector
-==31267== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==31267== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==31267== Command: ./MatrixMult.out 20
-==31267== Parent PID: 30803
-==31267== 
-==31267== 
-==31267== HEAP SUMMARY:
-==31267==     in use at exit: 53,841,464 bytes in 336,510 blocks
-==31267==   total heap usage: 336,510 allocs, 0 frees, 53,841,464 bytes allocated
-==31267== 
-==31267== LEAK SUMMARY:
-==31267==    definitely lost: 2,563,680 bytes in 16,023 blocks
-==31267==    indirectly lost: 51,257,144 bytes in 320,358 blocks
-==31267==      possibly lost: 480 bytes in 3 blocks
-==31267==    still reachable: 20,160 bytes in 126 blocks
-==31267==         suppressed: 0 bytes in 0 blocks
-==31267== Rerun with --leak-check=full to see details of leaked memory
-==31267== 
-==31267== For counts of detected and suppressed errors, rerun with: -v
-==31267== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==24920== Memcheck, a memory error detector
+==24920== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==24920== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==24920== Command: ./MatrixMult.out 20
+==24920== Parent PID: 24465
+==24920== 
+==24920== 
+==24920== HEAP SUMMARY:
+==24920==     in use at exit: 53,841,464 bytes in 336,510 blocks
+==24920==   total heap usage: 336,510 allocs, 0 frees, 53,841,464 bytes allocated
+==24920== 
+==24920== LEAK SUMMARY:
+==24920==    definitely lost: 2,563,680 bytes in 16,023 blocks
+==24920==    indirectly lost: 51,257,144 bytes in 320,358 blocks
+==24920==      possibly lost: 480 bytes in 3 blocks
+==24920==    still reachable: 20,160 bytes in 126 blocks
+==24920==         suppressed: 0 bytes in 0 blocks
+==24920== Rerun with --leak-check=full to see details of leaked memory
+==24920== 
+==24920== For counts of detected and suppressed errors, rerun with: -v
+==24920== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

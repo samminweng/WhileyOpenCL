@@ -1,12 +1,16 @@
 #include "TicTacToe.h"
+Board create_Board(){
+	Board _board;
+	return _board;
+}
 Board copy_Board(Board _board){
-	Board new_board;
+	Board new_board = create_Board();
 	new_board.pieces_size = _board.pieces_size;  new_board.pieces = copy(_board.pieces, _board.pieces_size);
 	new_board.move = _board.move;
 	return new_board;
 }
-void free_Board(Board _Board){
-	free(_Board.pieces);
+void free_Board(Board _board){
+	free(_board.pieces);
 }
 void printf_Board(Board _board){
 	printf("{");
@@ -60,6 +64,7 @@ Board EmptyBoard(){
 	_10_has_ownership = true;
 	//newrecord %11 = (%0, %10) : {int move,int[] pieces}
 	if(_11_has_ownership){free_Board(_11); _11_has_ownership = false;}
+	_11 = create_Board();
 	_11.move = _0;
 	_11.pieces_size = _10_size; 
 	_11.pieces = copy(_10, _10_size);
@@ -70,7 +75,7 @@ Board EmptyBoard(){
 	//return
 }
 
-Board play(Board b, bool b_has_ownership, nat pos){
+Board play(Board b, bool b_has_ownership, long long pos){
 	long long _2 = 0;
 	long long _3 = 0;
 	long long _4 = 0;
@@ -132,7 +137,7 @@ blklab12:;
 	//return
 }
 
-long long countOf(Square* pieces, bool pieces_has_ownership, long long pieces_size, Square s){
+long long countOf(long long* pieces, bool pieces_has_ownership, long long pieces_size, long long s){
 	long long count = 0;
 	long long i = 0;
 	long long _4 = 0;
@@ -233,6 +238,8 @@ int main(int argc, char** args){
 	long long _26 = 0;
 	long long _27 = 0;
 	long long _28 = 0;
+	void* _29;
+	
 	long long* _31 = NULL;
 	long long _31_size = 0;
 	bool _31_has_ownership = false;
@@ -259,9 +266,13 @@ int main(int argc, char** args){
 	bool _47_has_ownership = false;
 	long long _48 = 0;
 	long long _49 = 0;
+	void* _50;
+	
 	long long* _52 = NULL;
 	long long _52_size = 0;
 	bool _52_has_ownership = false;
+	void* _53;
+	
 	//fieldload %8 = %0 args : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 	_8 = convertArgsToIntArray(argc, args);
 	_8_size = argc - 1;
