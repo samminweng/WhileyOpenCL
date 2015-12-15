@@ -59,10 +59,16 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(codeDir, "reverse", "dealloc");
 	}
 	
-	//@Test
+	@Test
 	public void test_reverse_copy() {
 		//Generate the naive C code  
 		util.execCodeGeneration(codeDir, "reverse", "copy");
+	}
+	
+	@Test
+	public void test_reverse_copy_dealloc() {
+		//Generate the naive C code  
+		util.execCodeGeneration(codeDir, "reverse", "copy", "dealloc");
 	}
 	
 	@Test
@@ -78,10 +84,17 @@ public class CodeGenerationTestCase {
 	}
 	
 	
-	//@Test
+	@Test
 	public void test_mergesort_copy() {
 		//Generate the naive C code  
 		util.execCodeGeneration(codeDir, "mergesort", "copy");
+	}
+	
+	
+	//@Test
+	public void test_mergesort_copy_dealloc() {
+		//Generate the naive C code  
+		util.execCodeGeneration(codeDir, "mergesort", "copy", "dealloc");
 	}
 	
 	@Test
@@ -94,10 +107,11 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(codeDir, "TicTacToe", "dealloc");
 	}
 	
-	//@Test
+	@Test
 	public void test_TicTacToe_copy() {
 		util.execCodeGeneration(codeDir, "TicTacToe", "copy");
 	}
+	
 	
 	@Test
 	public void test_newTicTacToe_naive() {
