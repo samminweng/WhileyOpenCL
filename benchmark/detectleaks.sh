@@ -96,6 +96,10 @@ generate_code(){
 				# Generate copy-eliminated C code
 			 	./../../../../../bin/wyopcl -code -copy "$SRC".whiley
 				;;
+			"copy_reduced_dealloc")
+				# Generate copy-eliminated C code
+			 	./../../../../../bin/wyopcl -code -copy -dealloc "$SRC".whiley
+				;;
 		esac
 		#compile the source C file with L2 optimization (-O2)
 		#see https://gcc.gnu.org/onlinedocs/gnat_ugn/Optimization-Levels.html#101
@@ -159,18 +163,28 @@ BENCHMARKDIR=$PWD
 WORKINGDIR="$(dirname "$BENCHMARKDIR")"
 UTILDIR=$PWD/../tests/code
 # Measure the memory usage of the generated C code
+### Reverse
 mem_c Reverse CCode naive
 mem_c Reverse CCode naive_dealloc
-# mem_c Reverse CCode copy_reduced
+mem_c Reverse CCode copy_reduced
+mem_c Reverse CCode copy_reduced_dealloc
+### MergeSort
 mem_c MergeSort CCode naive
 mem_c MergeSort CCode naive_dealloc
-# mem_c MergeSort CCode copy_reduced
+mem_c MergeSort CCode copy_reduced
+mem_c MergeSort CCode copy_reduced_dealloc
+### TicTacToe
 mem_c TicTacToe CCode naive
 mem_c TicTacToe CCode naive_dealloc
-# mem_c TicTacToe CCode copy_reduced
+mem_c TicTacToe CCode copy_reduced
+mem_c TicTacToe CCode copy_reduced_dealloc
+### newTicTacToe
 mem_c newTicTacToe CCode naive
 mem_c newTicTacToe CCode naive_dealloc
-# mem_c newTicTacToe CCode copy_reduced
+mem_c newTicTacToe CCode copy_reduced
+mem_c newTicTacToe CCode copy_reduced_dealloc
+### MatrixMult
 mem_c MatrixMult CCode naive
 mem_c MatrixMult CCode naive_dealloc
-# mem_c MatrixMult CCode copy_reduced
+mem_c MatrixMult CCode copy_reduced
+mem_c MatrixMult CCode copy_reduced_dealloc
