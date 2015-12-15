@@ -128,6 +128,16 @@ public class CodeGenerationTestCase {
 	}
 	
 	@Test
+	public void test_newTicTacToe_copy() {
+		util.execCodeGeneration(codeDir, "newTicTacToe", "copy");
+	}
+	
+	@Test
+	public void test_newTicTacToe_copy_dealloc() {
+		util.execCodeGeneration(codeDir, "newTicTacToe", "copy", "dealloc");
+	}
+	
+	@Test
 	public void test_MatrixMult_naive() {
 		util.execCodeGeneration(codeDir, "MatrixMult");
 	}
