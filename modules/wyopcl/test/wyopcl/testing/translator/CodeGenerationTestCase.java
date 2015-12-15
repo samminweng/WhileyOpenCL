@@ -148,9 +148,14 @@ public class CodeGenerationTestCase {
 	}
 	
 	
-	//@Test
+	@Test
 	public void test_MatrixMult_copy() {
 		util.execCodeGeneration(codeDir, "MatrixMult", "copy");
+	}
+	
+	@Test
+	public void test_MatrixMult_copy_dealloc() {
+		util.execCodeGeneration(codeDir, "MatrixMult", "copy", "dealloc");
 	}
 	
 }

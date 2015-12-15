@@ -567,27 +567,20 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			
 			if(type instanceof Type.Int){
 				statement.add(var);
-			}else if (type instanceof Type.Array) {
-				statement.add(optimizeCode(register, code, f));
-			} else if(type instanceof Type.Record){	
-				statement.add(optimizeCode(register, code, f));
-			} else if(type instanceof Type.Nominal){
-				Type.Nominal nomial = ((Type.Nominal)type);
-				if(nomial.name().name().equals("Console")){
-					statement.add("stdout");
-				}else{
-					statement.add(optimizeCode(register, code, f));
-				}
-			} else if(type instanceof Type.Union){
+			}else if(type instanceof Type.Union){
 				// Access the 'integer' member for union-typed variable
 				statement.add(var + ".integer");
-			} else {
+			}else if (type instanceof Type.Nominal && ((Type.Nominal)type).name().name().equals("Console")){
+				statement.add("stdout");
+			}else if(type instanceof Type.Array || type instanceof Type.Record || type instanceof Type.Nominal){
+				statement.add(optimizeCode(register, code, f));
+				// pass the ownership flag
+				statement.add(CodeGeneratorHelper.passOwnershipToFunction(type, stores,this.deallocatedAnalyzer, this.copyAnalyzer));
+				// pass the '*_size' parameter
+				statement.add(CodeGeneratorHelper.generateArraySizeVars(var, type));
+			}else {
 				throw new RuntimeException("Not Implemented");
 			}
-			// pass the ownership flag
-			statement.add(CodeGeneratorHelper.passOwnershipToFunction(type, stores,this.deallocatedAnalyzer, this.copyAnalyzer));
-			// pass the '*_size' parameter
-			statement.add(CodeGeneratorHelper.generateArraySizeVars(var, type));
 		}
 		
 		return statement.stream()
@@ -651,9 +644,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				break;
 				// Slice an array into a new sub-array at given starting and ending index.
 			case "slice":
-				
 				Type lhs_type = store.getVarType(code.target());
-				
 				statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores, this.deallocatedAnalyzer));
 				
 				// Call the 'slice' function.
@@ -681,6 +672,19 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores, this.deallocatedAnalyzer));
 			// call the function/method, e.g. '_12=reverse(_xs , _xs_size);'
 			statement.add(translateLHSFunctionCall(code, function) + code.name.name() + "("+ translateRHSFunctionCall(code, function)+");");
+			
+			// Transfer out the registers that does not have the copy
+			for(int op: code.operands()){
+				String member = store.getVar(op);
+				Type op_type = store.getVarType(op);
+				if(CodeGeneratorHelper.isCompoundType(op_type, stores)){
+					if(isCopyEliminated(op, code, function)){
+						statement.add(indent + CodeGeneratorHelper.transferOwnership(op_type, member, stores, this.deallocatedAnalyzer));
+					}
+				}			
+			}
+			
+			
 			// Assign ownership to lhs
 			statement.add(indent + CodeGeneratorHelper.assignOwnership(lhs_type, lhs, this.stores, this.deallocatedAnalyzer));
 		}
