@@ -476,7 +476,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement += CodeGeneratorHelper.generateCopyUpdateCode(type, stores, var, isCopyEliminated); 
 		}else{
 			if(code instanceof Codes.Assign){
-				statement += CodeGeneratorHelper.generateCopyUpdateCode(type, stores, var, isCopyEliminated)+";"; 
+				statement += CodeGeneratorHelper.generateCopyUpdateCode(type, stores, var, isCopyEliminated)+";";
+				// Transfer the ownership if the copy is not needed, i.e. the variable does not own this object.
+				if(isCopyEliminated){
+					statement += "\n"+indent+ CodeGeneratorHelper.transferOwnership(type, var, stores, this.deallocatedAnalyzer);
+				}else{
+					// Assign ownership to variable as the copy is made.
+					statement += "\n"+indent + CodeGeneratorHelper.assignOwnership(type, var, stores, this.deallocatedAnalyzer);
+				}
 			}else if (code instanceof Codes.FieldLoad){
 				Codes.FieldLoad fieldload = (Codes.FieldLoad)code;
 				// Access the member
@@ -484,16 +491,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statement += CodeGeneratorHelper.generateCopyUpdateCode(fieldload.fieldType(), stores, member, isCopyEliminated)+";";
 			}else if(code instanceof Codes.NewRecord){
 				statement += CodeGeneratorHelper.generateCopyUpdateCode(type, stores, var, isCopyEliminated)+";"; 
+				// Transfer the ownership if the copy is not needed, i.e. the variable does not own this object.
+				if(isCopyEliminated){
+					statement += "\n"+indent+ CodeGeneratorHelper.transferOwnership(type, var, stores, this.deallocatedAnalyzer);
+				}else{
+					// Assign ownership to variable as the copy is made.
+					statement += "\n"+indent + CodeGeneratorHelper.assignOwnership(type, var, stores, this.deallocatedAnalyzer);
+				}
 			} else{
 				throw new RuntimeException("Not implemented");
 			}
-			// Transfer the ownership if the copy is not needed, i.e. the variable does not own this object.
-			if(isCopyEliminated){
-				statement += "\n"+indent+ CodeGeneratorHelper.transferOwnership(type, var, stores, this.deallocatedAnalyzer);
-			}else{
-				// Assign ownership to variable as the copy is made.
-				statement += "\n"+indent + CodeGeneratorHelper.assignOwnership(type, var, stores, this.deallocatedAnalyzer);
-			}
+			
 		}
 		return statement;
 	}
@@ -1137,9 +1145,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Propagate rhs array sizes to lhs
 			statement.add(indent + CodeGeneratorHelper.generateArraySizeAssign(code.fieldType(), lhs, var));
 			// Free lhs
-			statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores, this.deallocatedAnalyzer));
+			if(!isCopyEliminated(code.operand(0), code, function)){
+				statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores, this.deallocatedAnalyzer));
+			}
 			// Assign member values
 			statement.add(indent + lhs + " = "+ optimizeCode(code.operand(0), code, function));
+			
 			// Assign ownership to lhs variable of fieldload code
 			statement.add(indent + CodeGeneratorHelper.assignOwnership(lhs_type, lhs, this.stores, this.deallocatedAnalyzer));
 		}

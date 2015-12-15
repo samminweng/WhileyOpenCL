@@ -112,6 +112,10 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(codeDir, "TicTacToe", "copy");
 	}
 	
+	@Test
+	public void test_TicTacToe_copy_dealloc() {
+		util.execCodeGeneration(codeDir, "TicTacToe", "copy", "dealloc");
+	}
 	
 	@Test
 	public void test_newTicTacToe_naive() {
