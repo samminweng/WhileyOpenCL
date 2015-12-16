@@ -304,10 +304,12 @@ int main(int argc, char** args){
 		_14 = EmptyBoard();
 		_14_has_ownership = true;
 		//assign %13 = %14  : {int move,int[] pieces}
+		if(_13_has_ownership){free_Board(_13); _13_has_ownership = false;}
 		_13 = _14;
 		_14_has_ownership = false;
 		_13_has_ownership = true;
 		//assign %3 = %13  : {int move,int[] pieces}
+		if(b_has_ownership){free_Board(b); b_has_ownership = false;}
 		b = _13;
 		_13_has_ownership = false;
 		b_has_ownership = true;
@@ -352,7 +354,6 @@ int main(int argc, char** args){
 			//fieldload %24 = %3 pieces : {int move,int[] pieces}
 			_24_size = b.pieces_size; 
 			_24 = b.pieces;
-			_24_has_ownership = true;
 			//indexof %25 = %24, %5 : int[]
 			_25=_24[p];
 			//const %26 = 0 : int
@@ -393,6 +394,7 @@ blklab18:;
 			b_has_ownership = false;
 			_32_has_ownership = true;
 			//assign %3 = %32  : {int move,int[] pieces}
+			if(b_has_ownership){free_Board(b); b_has_ownership = false;}
 			b = _32;
 			_32_has_ownership = false;
 			b_has_ownership = true;
@@ -427,7 +429,6 @@ blklab23:;
 			//fieldload %37 = %3 pieces : {int move,int[] pieces}
 			_37_size = b.pieces_size; 
 			_37 = b.pieces;
-			_37_has_ownership = true;
 			//const %38 = 1 : int
 			_38 = 1;
 			//const %39 = 2 : int

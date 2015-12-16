@@ -251,10 +251,12 @@ int main(int argc, char** args){
 		_15 = EmptyBoard();
 		_15_has_ownership = true;
 		//assign %14 = %15  : null|{int move,int[] pieces}
+		if(_14_has_ownership){free_Board(_14); _14_has_ownership = false;}
 		_14 = _15;
 		_15_has_ownership = false;
 		_14_has_ownership = true;
 		//assign %3 = %14  : null|{int move,int[] pieces}
+		if(b1_has_ownership){free_Board(b1); b1_has_ownership = false;}
 		b1 = _14;
 		_14_has_ownership = false;
 		b1_has_ownership = true;
@@ -263,10 +265,12 @@ int main(int argc, char** args){
 		_17 = EmptyBoard();
 		_17_has_ownership = true;
 		//assign %16 = %17  : null|{int move,int[] pieces}
+		if(_16_has_ownership){free_Board(_16); _16_has_ownership = false;}
 		_16 = _17;
 		_17_has_ownership = false;
 		_16_has_ownership = true;
 		//assign %4 = %16  : null|{int move,int[] pieces}
+		if(b2_has_ownership){free_Board(b2); b2_has_ownership = false;}
 		b2 = _16;
 		_16_has_ownership = false;
 		b2_has_ownership = true;
@@ -339,6 +343,7 @@ blklab14:;
 			//update %3.move = %34 : {int move,int[] pieces} -> {int move,int[] pieces}
 			b1->move = _34;
 			//assign %4 = %3  : {int move,int[] pieces}
+			if(b2_has_ownership){free_Board(b2); b2_has_ownership = false;}
 			b2 = b1;
 			b1_has_ownership = false;
 			b2_has_ownership = true;
@@ -374,6 +379,7 @@ blklab17:;
 			//update %4.move = %43 : {int move,int[] pieces} -> {int move,int[] pieces}
 			b2->move = _43;
 			//assign %3 = %4  : {int move,int[] pieces}
+			if(b1_has_ownership){free_Board(b1); b1_has_ownership = false;}
 			b1 = b2;
 			b2_has_ownership = false;
 			b1_has_ownership = true;
@@ -434,7 +440,6 @@ blklab21:;
 			//fieldload %49 = %4 pieces : {int move,int[] pieces}
 			_49_size = b2->pieces_size; 
 			_49 = b2->pieces;
-			_49_has_ownership = true;
 			//const %50 = 1 : int
 			_50 = 1;
 			//const %51 = 2 : int

@@ -1,21 +1,21 @@
-==6919== Memcheck, a memory error detector
-==6919== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==6919== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==6919== Command: ./Reverse.out 10000000
-==6919== Parent PID: 6768
-==6919== 
-==6919== 
-==6919== HEAP SUMMARY:
-==6919==     in use at exit: 160,000,384 bytes in 5 blocks
-==6919==   total heap usage: 5 allocs, 0 frees, 160,000,384 bytes allocated
-==6919== 
-==6919== LEAK SUMMARY:
-==6919==    definitely lost: 296 bytes in 2 blocks
-==6919==    indirectly lost: 72 bytes in 1 blocks
-==6919==      possibly lost: 160,000,016 bytes in 2 blocks
-==6919==    still reachable: 0 bytes in 0 blocks
-==6919==         suppressed: 0 bytes in 0 blocks
-==6919== Rerun with --leak-check=full to see details of leaked memory
-==6919== 
-==6919== For counts of detected and suppressed errors, rerun with: -v
-==6919== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==13334== Memcheck, a memory error detector
+==13334== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==13334== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==13334== Command: ./Reverse.out 10000000
+==13334== Parent PID: 13183
+==13334== 
+==13334== 
+==13334== HEAP SUMMARY:
+==13334==     in use at exit: 160,000,384 bytes in 5 blocks
+==13334==   total heap usage: 5 allocs, 0 frees, 160,000,384 bytes allocated
+==13334== 
+==13334== LEAK SUMMARY:
+==13334==    definitely lost: 296 bytes in 2 blocks
+==13334==    indirectly lost: 72 bytes in 1 blocks
+==13334==      possibly lost: 160,000,016 bytes in 2 blocks
+==13334==    still reachable: 0 bytes in 0 blocks
+==13334==         suppressed: 0 bytes in 0 blocks
+==13334== Rerun with --leak-check=full to see details of leaked memory
+==13334== 
+==13334== For counts of detected and suppressed errors, rerun with: -v
+==13334== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

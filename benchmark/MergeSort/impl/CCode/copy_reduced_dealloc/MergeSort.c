@@ -95,11 +95,13 @@ long long* sortV1(long long* items, bool items_has_ownership, long long items_si
 	_16_has_ownership = true;
 	//assign %15 = %16  : int[]
 	_15_size = _16_size; 
+	if(_15_has_ownership){free(_15); _15_has_ownership = false;}
 	_15 = _16;
 	_16_has_ownership = false;
 	_15_has_ownership = true;
 	//assign %4 = %15  : int[]
 	lhs_size = _15_size; 
+	if(lhs_has_ownership){free(lhs); lhs_has_ownership = false;}
 	lhs = _15;
 	_15_has_ownership = false;
 	lhs_has_ownership = true;
@@ -112,6 +114,7 @@ long long* sortV1(long long* items, bool items_has_ownership, long long items_si
 	_17_has_ownership = true;
 	//assign %4 = %17  : int[]
 	lhs_size = _17_size; 
+	if(lhs_has_ownership){free(lhs); lhs_has_ownership = false;}
 	lhs = _17;
 	_17_has_ownership = false;
 	lhs_has_ownership = true;
@@ -122,11 +125,13 @@ long long* sortV1(long long* items, bool items_has_ownership, long long items_si
 	_20_has_ownership = true;
 	//assign %19 = %20  : int[]
 	_19_size = _20_size; 
+	if(_19_has_ownership){free(_19); _19_has_ownership = false;}
 	_19 = _20;
 	_20_has_ownership = false;
 	_19_has_ownership = true;
 	//assign %5 = %19  : int[]
 	rhs_size = _19_size; 
+	if(rhs_has_ownership){free(rhs); rhs_has_ownership = false;}
 	rhs = _19;
 	_19_has_ownership = false;
 	rhs_has_ownership = true;
@@ -141,6 +146,7 @@ long long* sortV1(long long* items, bool items_has_ownership, long long items_si
 	_21_has_ownership = true;
 	//assign %5 = %21  : int[]
 	rhs_size = _21_size; 
+	if(rhs_has_ownership){free(rhs); rhs_has_ownership = false;}
 	rhs = _21;
 	_21_has_ownership = false;
 	rhs_has_ownership = true;
@@ -372,11 +378,13 @@ int main(int argc, char** args){
 	_15_has_ownership = true;
 	//assign %11 = %15  : int[]
 	_11_size = _15_size; 
+	if(_11_has_ownership){free(_11); _11_has_ownership = false;}
 	_11 = _15;
 	_15_has_ownership = false;
 	_11_has_ownership = true;
 	//assign %3 = %11  : int[]
 	arr_size = _11_size; 
+	if(arr_has_ownership){free(arr); arr_has_ownership = false;}
 	arr = _11;
 	_11_has_ownership = false;
 	arr_has_ownership = true;
@@ -412,6 +420,7 @@ blklab7:;
 	_20_has_ownership = true;
 	//assign %3 = %20  : int[]
 	arr_size = _20_size; 
+	if(arr_has_ownership){free(arr); arr_has_ownership = false;}
 	arr = _20;
 	_20_has_ownership = false;
 	arr_has_ownership = true;

@@ -125,11 +125,13 @@ Matrix multiply(Matrix A, bool A_has_ownership, Matrix B, bool B_has_ownership){
 	_12_has_ownership = true;
 	//assign %7 = %12  : int[][]
 	_7_size = _12_size; _7_size_size = _12_size_size; 
+	if(_7_has_ownership){free2DArray(_7, _7_size); _7_has_ownership = false;}
 	_7 = _12;
 	_12_has_ownership = false;
 	_7_has_ownership = true;
 	//assign %2 = %7  : int[][]
 	C_data_size = _7_size; C_data_size_size = _7_size_size; 
+	if(C_data_has_ownership){free2DArray(C_data, C_data_size); C_data_has_ownership = false;}
 	C_data = _7;
 	_7_has_ownership = false;
 	C_data_has_ownership = true;
@@ -178,7 +180,6 @@ Matrix multiply(Matrix A, bool A_has_ownership, Matrix B, bool B_has_ownership){
 				//fieldload %24 = %0 data : {int[][] data,int height,int width}
 				_24_size = A.data_size; _24_size_size = A.data_size_size; 
 				_24 = A.data;
-				_24_has_ownership = true;
 				//indexof %25 = %24, %3 : int[][]
 				_25=_24[i];
 				//indexof %26 = %25, %6 : int[]
@@ -186,7 +187,6 @@ Matrix multiply(Matrix A, bool A_has_ownership, Matrix B, bool B_has_ownership){
 				//fieldload %27 = %1 data : {int[][] data,int height,int width}
 				_27_size = B.data_size; _27_size_size = B.data_size_size; 
 				_27 = B.data;
-				_27_has_ownership = true;
 				//indexof %28 = %27, %6 : int[][]
 				_28=_27[k];
 				//indexof %29 = %28, %4 : int[]
@@ -310,7 +310,6 @@ void* printMat(FILE* sys, Matrix A, bool A_has_ownership){
 			//fieldload %12 = %1 data : {int[][] data,int height,int width}
 			_12_size = A.data_size; _12_size_size = A.data_size_size; 
 			_12 = A.data;
-			_12_has_ownership = true;
 			//indexof %13 = %12, %2 : int[][]
 			_13=_12[i];
 			//indexof %14 = %13, %3 : int[]
@@ -402,11 +401,13 @@ Matrix genMatrix(long long height, long long width){
 	_8_has_ownership = true;
 	//assign %5 = %8  : int[][]
 	_5_size = _8_size; _5_size_size = _8_size_size; 
+	if(_5_has_ownership){free2DArray(_5, _5_size); _5_has_ownership = false;}
 	_5 = _8;
 	_8_has_ownership = false;
 	_5_has_ownership = true;
 	//assign %2 = %5  : int[][]
 	rows_size = _5_size; rows_size_size = _5_size_size; 
+	if(rows_has_ownership){free2DArray(rows, rows_size); rows_has_ownership = false;}
 	rows = _5;
 	_5_has_ownership = false;
 	rows_has_ownership = true;
@@ -537,10 +538,12 @@ int main(int argc, char** args){
 	_11 = genMatrix(max.integer, max.integer);
 	_11_has_ownership = true;
 	//assign %10 = %11  : {int[][] data,int height,int width}
+	if(_10_has_ownership){free_Matrix(_10); _10_has_ownership = false;}
 	_10 = _11;
 	_11_has_ownership = false;
 	_10_has_ownership = true;
 	//assign %2 = %10  : {int[][] data,int height,int width}
+	if(A_has_ownership){free_Matrix(A); A_has_ownership = false;}
 	A = _10;
 	_10_has_ownership = false;
 	A_has_ownership = true;
@@ -549,10 +552,12 @@ int main(int argc, char** args){
 	_13 = genMatrix(max.integer, max.integer);
 	_13_has_ownership = true;
 	//assign %12 = %13  : {int[][] data,int height,int width}
+	if(_12_has_ownership){free_Matrix(_12); _12_has_ownership = false;}
 	_12 = _13;
 	_13_has_ownership = false;
 	_12_has_ownership = true;
 	//assign %3 = %12  : {int[][] data,int height,int width}
+	if(B_has_ownership){free_Matrix(B); B_has_ownership = false;}
 	B = _12;
 	_12_has_ownership = false;
 	B_has_ownership = true;
@@ -563,10 +568,12 @@ int main(int argc, char** args){
 	B_has_ownership = false;
 	_15_has_ownership = true;
 	//assign %14 = %15  : {int[][] data,int height,int width}
+	if(_14_has_ownership){free_Matrix(_14); _14_has_ownership = false;}
 	_14 = _15;
 	_15_has_ownership = false;
 	_14_has_ownership = true;
 	//assign %4 = %14  : {int[][] data,int height,int width}
+	if(C_has_ownership){free_Matrix(C); C_has_ownership = false;}
 	C = _14;
 	_14_has_ownership = false;
 	C_has_ownership = true;
@@ -575,7 +582,6 @@ int main(int argc, char** args){
 		//fieldload %16 = %4 data : {int[][] data,int height,int width}
 		_16_size = C.data_size; _16_size_size = C.data_size_size; 
 		_16 = C.data;
-		_16_has_ownership = true;
 		//const %17 = 0 : int
 		_17 = 0;
 		//indexof %18 = %16, %17 : int[][]

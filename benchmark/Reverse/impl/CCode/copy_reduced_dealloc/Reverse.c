@@ -42,11 +42,13 @@ long long* reverse(long long* ls, bool ls_has_ownership, long long ls_size){
 	_9_has_ownership = true;
 	//assign %6 = %9  : int[]
 	_6_size = _9_size; 
+	if(_6_has_ownership){free(_6); _6_has_ownership = false;}
 	_6 = _9;
 	_9_has_ownership = false;
 	_6_has_ownership = true;
 	//assign %2 = %6  : int[]
 	r_size = _6_size; 
+	if(r_has_ownership){free(r); r_has_ownership = false;}
 	r = _6;
 	_6_has_ownership = false;
 	r_has_ownership = true;
@@ -186,11 +188,13 @@ int main(int argc, char** args){
 	_15_has_ownership = true;
 	//assign %11 = %15  : int[]
 	_11_size = _15_size; 
+	if(_11_has_ownership){free(_11); _11_has_ownership = false;}
 	_11 = _15;
 	_15_has_ownership = false;
 	_11_has_ownership = true;
 	//assign %3 = %11  : int[]
 	arr_size = _11_size; 
+	if(arr_has_ownership){free(arr); arr_has_ownership = false;}
 	arr = _11;
 	_11_has_ownership = false;
 	arr_has_ownership = true;
@@ -220,6 +224,7 @@ blklab4:;
 	_20_has_ownership = true;
 	//assign %3 = %20  : int[]
 	arr_size = _20_size; 
+	if(arr_has_ownership){free(arr); arr_has_ownership = false;}
 	arr = _20;
 	_20_has_ownership = false;
 	arr_has_ownership = true;

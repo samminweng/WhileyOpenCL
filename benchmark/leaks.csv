@@ -1,10 +1,10 @@
 Memory Leak (bytes)
 TestCase	Optimization	Arraysize	definite loss	indirect loss	possible loss	reachable loss
-MatrixMult	copy_reduced_dealloc	10	8	24	0	0
-MatrixMult	copy_reduced_dealloc	20	8	24	0	0
-MatrixMult	copy_reduced_dealloc	30	8	24	0	0
-MatrixMult	copy_reduced_dealloc	40	8	24	0	0
-MatrixMult	copy_reduced_dealloc	50	8	24	0	0
+MatrixMult	copy_reduced_dealloc	10	8	24	0	1760
+MatrixMult	copy_reduced_dealloc	20	8	24	0	6720
+MatrixMult	copy_reduced_dealloc	30	8	24	0	14880
+MatrixMult	copy_reduced_dealloc	40	8	24	0	26240
+MatrixMult	copy_reduced_dealloc	50	8	24	0	40800
 MatrixMult	naive_dealloc	10	8	24	0	0
 MatrixMult	naive_dealloc	20	8	24	0	0
 MatrixMult	naive_dealloc	30	8	24	0	0
@@ -36,10 +36,10 @@ MergeSort	naive	1000	439832	40	0	0
 MergeSort	naive	10000	5745592	48	0	0
 MergeSort	naive	100000	69758128	56	1000064	0
 MergeSort	naive	1000000	829995624	64	8062528	0
-newTicTacToe	copy_reduced_dealloc	1000	47984	143968	0	0
-newTicTacToe	copy_reduced_dealloc	10000	479984	1439976	0	0
-newTicTacToe	copy_reduced_dealloc	100000	4799984	14399840	144	0
-newTicTacToe	copy_reduced_dealloc	1000000	47999984	143999776	216	0
+newTicTacToe	copy_reduced_dealloc	1000	8	40	0	0
+newTicTacToe	copy_reduced_dealloc	10000	8	48	0	0
+newTicTacToe	copy_reduced_dealloc	100000	8	56	0	0
+newTicTacToe	copy_reduced_dealloc	1000000	8	64	0	0
 newTicTacToe	naive_dealloc	1000	8	40	0	384
 newTicTacToe	naive_dealloc	10000	8	48	0	384
 newTicTacToe	naive_dealloc	100000	8	56	0	384
@@ -51,7 +51,7 @@ newTicTacToe	copy_reduced	1000000	1488000096	143999992	312	0
 newTicTacToe	naive	1000	2016240	1079968	0	168
 newTicTacToe	naive	10000	20160168	10799976	72	168
 newTicTacToe	naive	100000	201600168	107999912	144	168
-newTicTacToe	naive	1000000	2016000000	1079999848	384	168
+newTicTacToe	naive	1000000	2016000072	1079999848	312	168
 Reverse	copy_reduced_dealloc	1000	8016	40	0	0
 Reverse	copy_reduced_dealloc	10000	80016	48	0	0
 Reverse	copy_reduced_dealloc	100000	800016	56	0	0
@@ -76,10 +76,10 @@ Reverse	naive	100000	6400360	56	0	0
 Reverse	naive	1000000	56000352	64	8000008	0
 Reverse	naive	10000000	480000344	72	160000016	0
 Reverse	naive	100000000	4000000040	0	2400000400	0
-TicTacToe	copy_reduced_dealloc	1000	71936	40	0	0
-TicTacToe	copy_reduced_dealloc	10000	719936	48	0	0
-TicTacToe	copy_reduced_dealloc	100000	7199936	56	0	0
-TicTacToe	copy_reduced_dealloc	1000000	71999792	64	144	0
+TicTacToe	copy_reduced_dealloc	1000	8	40	0	0
+TicTacToe	copy_reduced_dealloc	10000	8	48	0	0
+TicTacToe	copy_reduced_dealloc	100000	8	56	0	0
+TicTacToe	copy_reduced_dealloc	1000000	8	64	0	0
 TicTacToe	naive_dealloc	1000	8	40	0	0
 TicTacToe	naive_dealloc	10000	8	48	0	0
 TicTacToe	naive_dealloc	100000	8	56	0	0
@@ -87,7 +87,7 @@ TicTacToe	naive_dealloc	1000000	8	64	0	0
 TicTacToe	copy_reduced	1000	1512240	40	0	72
 TicTacToe	copy_reduced	10000	15120168	48	72	72
 TicTacToe	copy_reduced	100000	151200024	56	216	72
-TicTacToe	copy_reduced	1000000	1511999952	64	288	72
+TicTacToe	copy_reduced	1000000	1511999880	64	360	72
 TicTacToe	naive	1000	3744096	40	0	216
 TicTacToe	naive	10000	37439952	48	144	216
 TicTacToe	naive	100000	374399808	56	288	216
