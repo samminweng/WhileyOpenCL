@@ -65,6 +65,7 @@ Board EmptyBoard(){
 	_11.move = _0;
 	_11.pieces_size = _10_size; 
 	_11.pieces = copy(_10, _10_size);
+	
 	//return %11 : {int move,int[] pieces}
 	return _11;
 	//return
@@ -296,8 +297,10 @@ int main(int argc, char** args){
 		_14 = EmptyBoard();
 		//assign %13 = %14  : {int move,int[] pieces}
 		_13 = copy_Board(_14);
+		
 		//assign %3 = %13  : {int move,int[] pieces}
 		b = copy_Board(_13);
+		
 		//const %16 = 0 : int
 		_16 = 0;
 		//assign %15 = %16  : int
@@ -371,6 +374,7 @@ blklab18:;
 			_32 = play(copy_Board(b), p);
 			//assign %3 = %32  : {int move,int[] pieces}
 			b = copy_Board(_32);
+			
 //.blklab19
 blklab19:;
 			//const %33 = 1 : int

@@ -1,0 +1,37 @@
+==7364== Memcheck, a memory error detector
+==7364== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==7364== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==7364== Command: ./TicTacToe.out 1000000
+==7364== Parent PID: 6768
+==7364== 
+==7364== Invalid free() / delete / delete[] / realloc()
+==7364==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7364==    by 0x401063: main (TicTacToe.c:495)
+==7364==  Address 0xff8f660 is 0 bytes inside a block of size 72 free'd
+==7364==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7364==    by 0x40103A: free_Board (TicTacToe.c:13)
+==7364==    by 0x40103A: main (TicTacToe.c:492)
+==7364== 
+==7364== Invalid free() / delete / delete[] / realloc()
+==7364==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7364==    by 0x401074: main (TicTacToe.c:497)
+==7364==  Address 0xff8f660 is 0 bytes inside a block of size 72 free'd
+==7364==    at 0x4C2BDEC: free (in /usr/lib/valgrind/vgpreload_memcheck-amd64-linux.so)
+==7364==    by 0x40103A: free_Board (TicTacToe.c:13)
+==7364==    by 0x40103A: main (TicTacToe.c:492)
+==7364== 
+==7364== 
+==7364== HEAP SUMMARY:
+==7364==     in use at exit: 72,000,000 bytes in 1,000,001 blocks
+==7364==   total heap usage: 21,000,003 allocs, 20,000,004 frees, 1,512,000,376 bytes allocated
+==7364== 
+==7364== LEAK SUMMARY:
+==7364==    definitely lost: 71,999,792 bytes in 999,998 blocks
+==7364==    indirectly lost: 64 bytes in 1 blocks
+==7364==      possibly lost: 144 bytes in 2 blocks
+==7364==    still reachable: 0 bytes in 0 blocks
+==7364==         suppressed: 0 bytes in 0 blocks
+==7364== Rerun with --leak-check=full to see details of leaked memory
+==7364== 
+==7364== For counts of detected and suppressed errors, rerun with: -v
+==7364== ERROR SUMMARY: 2 errors from 2 contexts (suppressed: 0 from 0)

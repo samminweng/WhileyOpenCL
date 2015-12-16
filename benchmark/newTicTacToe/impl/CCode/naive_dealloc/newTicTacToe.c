@@ -64,10 +64,13 @@ Board* EmptyBoard(){
 	_10[0] = _1; _10[1] = _2; _10[2] = _3; _10[3] = _4; _10[4] = _5; _10[5] = _6; _10[6] = _7; _10[7] = _8; _10[8] = _9; 
 	_10_has_ownership = true;
 	//newrecord %11 = (%0, %10) : {int move,int[] pieces}
+	if(_11_has_ownership){free_Board(_11); _11_has_ownership = false;}
 	_11 = create_Board();
 	_11->move = _0;
 	_11->pieces_size = _10_size; 
 	_11->pieces = copy(_10, _10_size);
+	_10_has_ownership = true;
+	_11_has_ownership = true;
 	//return %11 : null|{int move,int[] pieces}
 	if(_10_has_ownership){free(_10); _10_has_ownership = false;}
 	return _11;
@@ -154,13 +157,13 @@ int main(int argc, char** args){
 	long long _12 = 0;
 	long long _13 = 0;
 	Board* _14;
-	
+	bool _14_has_ownership = false;
 	Board* _15;
-	
+	bool _15_has_ownership = false;
 	Board* _16;
-	
+	bool _16_has_ownership = false;
 	Board* _17;
-	
+	bool _17_has_ownership = false;
 	long long _18 = 0;
 	long long _19 = 0;
 	long long* _20 = NULL;
@@ -244,20 +247,32 @@ int main(int argc, char** args){
 		//ifge %2, %1 goto blklab12 : int
 		if(repeat>=max.integer){goto blklab12;}
 		//invoke %15 = () newTicTacToe:EmptyBoard : function() -> newTicTacToe:Board
+		if(_15_has_ownership){free_Board(_15); _15_has_ownership = false;}
 		_15 = EmptyBoard();
+		_15_has_ownership = true;
 		//assign %14 = %15  : null|{int move,int[] pieces}
+		if(_14_has_ownership){free_Board(_14); _14_has_ownership = false;}
 		_14 = copy_Board(_15);
+		_15_has_ownership = true;
+		_14_has_ownership = true;
 		//assign %3 = %14  : null|{int move,int[] pieces}
 		if(b1_has_ownership){free_Board(b1); b1_has_ownership = false;}
 		b1 = copy_Board(_14);
+		_14_has_ownership = true;
 		b1_has_ownership = true;
 		//invoke %17 = () newTicTacToe:EmptyBoard : function() -> newTicTacToe:Board
+		if(_17_has_ownership){free_Board(_17); _17_has_ownership = false;}
 		_17 = EmptyBoard();
+		_17_has_ownership = true;
 		//assign %16 = %17  : null|{int move,int[] pieces}
+		if(_16_has_ownership){free_Board(_16); _16_has_ownership = false;}
 		_16 = copy_Board(_17);
+		_17_has_ownership = true;
+		_16_has_ownership = true;
 		//assign %4 = %16  : null|{int move,int[] pieces}
 		if(b2_has_ownership){free_Board(b2); b2_has_ownership = false;}
 		b2 = copy_Board(_16);
+		_16_has_ownership = true;
 		b2_has_ownership = true;
 		//const %19 = 0 : int
 		_19 = 0;
@@ -330,11 +345,13 @@ blklab14:;
 			//assign %4 = %3  : {int move,int[] pieces}
 			if(b2_has_ownership){free_Board(b2); b2_has_ownership = false;}
 			b2 = copy_Board(b1);
+			b1_has_ownership = true;
 			b2_has_ownership = true;
 			//const %35 = null : null
 			//assign %3 = %35  : null
 			if(b1_has_ownership){free_Board(b1); b1_has_ownership = false;}
 			b1 = NULL;
+			b1_has_ownership = false;
 			//goto blklab18
 			goto blklab18;
 //.blklab17
@@ -364,11 +381,13 @@ blklab17:;
 			//assign %3 = %4  : {int move,int[] pieces}
 			if(b1_has_ownership){free_Board(b1); b1_has_ownership = false;}
 			b1 = copy_Board(b2);
+			b2_has_ownership = true;
 			b1_has_ownership = true;
 			//const %44 = null : null
 			//assign %4 = %44  : null
 			if(b2_has_ownership){free_Board(b2); b2_has_ownership = false;}
 			b2 = NULL;
+			b2_has_ownership = false;
 //.blklab19
 blklab19:;
 //.blklab18

@@ -94,9 +94,11 @@ long long* sortV1(long long* items, long long items_size, long long start, long 
 	//assign %15 = %16  : int[]
 	_15_size = _16_size; 
 	_15 = copy(_16, _16_size);
+	
 	//assign %4 = %15  : int[]
 	lhs_size = _15_size; 
 	lhs = copy(_15, _15_size);
+	
 	//const %18 = 0 : int
 	_18 = 0;
 	//invoke %17 = (%4, %18, %3) MergeSort:sortV1 : function(int[],int,int) -> int[]
@@ -104,15 +106,18 @@ long long* sortV1(long long* items, long long items_size, long long start, long 
 	//assign %4 = %17  : int[]
 	lhs_size = _17_size; 
 	lhs = copy(_17, _17_size);
+	
 	//invoke %20 = (%0, %3, %2) whiley/lang/Array:slice : function(int[],int,int) -> int[]
 	_20 = slice(items, items_size, pivot,end);
 	_20_size = end - pivot;
 	//assign %19 = %20  : int[]
 	_19_size = _20_size; 
 	_19 = copy(_20, _20_size);
+	
 	//assign %5 = %19  : int[]
 	rhs_size = _19_size; 
 	rhs = copy(_19, _19_size);
+	
 	//const %22 = 0 : int
 	_22 = 0;
 	//sub %23 = %2, %3 : int
@@ -122,6 +127,7 @@ long long* sortV1(long long* items, long long items_size, long long start, long 
 	//assign %5 = %21  : int[]
 	rhs_size = _21_size; 
 	rhs = copy(_21, _21_size);
+	
 	//const %25 = 0 : int
 	_25 = 0;
 	//assign %24 = %25  : int
@@ -341,9 +347,11 @@ int main(int argc, char** args){
 	//assign %11 = %15  : int[]
 	_11_size = _15_size; 
 	_11 = copy(_15, _15_size);
+	
 	//assign %3 = %11  : int[]
 	arr_size = _11_size; 
 	arr = copy(_11, _11_size);
+	
 	//loop (%2, %3, %16, %17, %18, %19)
 	while(true){
 		//ifgt %2, %1 goto blklab7 : int
@@ -374,6 +382,7 @@ blklab7:;
 	//assign %3 = %20  : int[]
 	arr_size = _20_size; 
 	arr = copy(_20, _20_size);
+	
 	//assert
 	{
 		//const %24 = 0 : int

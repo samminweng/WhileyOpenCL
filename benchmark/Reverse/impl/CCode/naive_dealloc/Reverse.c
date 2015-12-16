@@ -44,11 +44,13 @@ long long* reverse(long long* ls, bool ls_has_ownership, long long ls_size){
 	_6_size = _9_size; 
 	if(_6_has_ownership){free(_6); _6_has_ownership = false;}
 	_6 = copy(_9, _9_size);
+	_9_has_ownership = true;
 	_6_has_ownership = true;
 	//assign %2 = %6  : int[]
 	r_size = _6_size; 
 	if(r_has_ownership){free(r); r_has_ownership = false;}
 	r = copy(_6, _6_size);
+	_6_has_ownership = true;
 	r_has_ownership = true;
 	//loop (%1, %2, %3, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19)
 	while(true){
@@ -188,11 +190,13 @@ int main(int argc, char** args){
 	_11_size = _15_size; 
 	if(_11_has_ownership){free(_11); _11_has_ownership = false;}
 	_11 = copy(_15, _15_size);
+	_15_has_ownership = true;
 	_11_has_ownership = true;
 	//assign %3 = %11  : int[]
 	arr_size = _11_size; 
 	if(arr_has_ownership){free(arr); arr_has_ownership = false;}
 	arr = copy(_11, _11_size);
+	_11_has_ownership = true;
 	arr_has_ownership = true;
 	//loop (%2, %3, %16, %17, %18, %19)
 	while(true){
@@ -221,6 +225,7 @@ blklab4:;
 	arr_size = _20_size; 
 	if(arr_has_ownership){free(arr); arr_has_ownership = false;}
 	arr = copy(_20, _20_size);
+	_20_has_ownership = true;
 	arr_has_ownership = true;
 	//assert
 	{

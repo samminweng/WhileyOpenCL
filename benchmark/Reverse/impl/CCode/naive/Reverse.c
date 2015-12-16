@@ -41,9 +41,11 @@ long long* reverse(long long* ls, long long ls_size){
 	//assign %6 = %9  : int[]
 	_6_size = _9_size; 
 	_6 = copy(_9, _9_size);
+	
 	//assign %2 = %6  : int[]
 	r_size = _6_size; 
 	r = copy(_6, _6_size);
+	
 	//loop (%1, %2, %3, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19)
 	while(true){
 		//invariant
@@ -176,9 +178,11 @@ int main(int argc, char** args){
 	//assign %11 = %15  : int[]
 	_11_size = _15_size; 
 	_11 = copy(_15, _15_size);
+	
 	//assign %3 = %11  : int[]
 	arr_size = _11_size; 
 	arr = copy(_11, _11_size);
+	
 	//loop (%2, %3, %16, %17, %18, %19)
 	while(true){
 		//ifgt %2, %1 goto blklab4 : int
@@ -203,6 +207,7 @@ blklab4:;
 	//assign %3 = %20  : int[]
 	arr_size = _20_size; 
 	arr = copy(_20, _20_size);
+	
 	//assert
 	{
 		//const %21 = 0 : int

@@ -68,6 +68,7 @@ Board EmptyBoard(){
 	_11.move = _0;
 	_11.pieces_size = _10_size; 
 	_11.pieces = copy(_10, _10_size);
+	_10_has_ownership = true;
 	_11_has_ownership = true;
 	//return %11 : {int move,int[] pieces}
 	if(_10_has_ownership){free(_10); _10_has_ownership = false;}
@@ -305,10 +306,12 @@ int main(int argc, char** args){
 		//assign %13 = %14  : {int move,int[] pieces}
 		if(_13_has_ownership){free_Board(_13); _13_has_ownership = false;}
 		_13 = copy_Board(_14);
+		_14_has_ownership = true;
 		_13_has_ownership = true;
 		//assign %3 = %13  : {int move,int[] pieces}
 		if(b_has_ownership){free_Board(b); b_has_ownership = false;}
 		b = copy_Board(_13);
+		_13_has_ownership = true;
 		b_has_ownership = true;
 		//const %16 = 0 : int
 		_16 = 0;
@@ -394,6 +397,7 @@ blklab18:;
 			//assign %3 = %32  : {int move,int[] pieces}
 			if(b_has_ownership){free_Board(b); b_has_ownership = false;}
 			b = copy_Board(_32);
+			_32_has_ownership = true;
 			b_has_ownership = true;
 //.blklab19
 blklab19:;

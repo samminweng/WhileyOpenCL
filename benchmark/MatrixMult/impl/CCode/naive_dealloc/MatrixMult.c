@@ -31,6 +31,7 @@ Matrix matrix(long long width, long long height, long long** data, bool data_has
 	_3 = create_Matrix();
 	_3.data_size = data_size; _3.data_size_size = data_size_size; 
 	_3.data = copy2DArray(data, data_size, data_size_size);
+	data_has_ownership = true;
 	_3.height = height;
 	_3.width = width;
 	_3_has_ownership = true;
@@ -126,11 +127,13 @@ Matrix multiply(Matrix A, bool A_has_ownership, Matrix B, bool B_has_ownership){
 	_7_size = _12_size; _7_size_size = _12_size_size; 
 	if(_7_has_ownership){free2DArray(_7, _7_size); _7_has_ownership = false;}
 	_7 = copy2DArray(_12, _12_size, _12_size_size);
+	_12_has_ownership = true;
 	_7_has_ownership = true;
 	//assign %2 = %7  : int[][]
 	C_data_size = _7_size; C_data_size_size = _7_size_size; 
 	if(C_data_has_ownership){free2DArray(C_data, C_data_size); C_data_has_ownership = false;}
 	C_data = copy2DArray(_7, _7_size, _7_size_size);
+	_7_has_ownership = true;
 	C_data_has_ownership = true;
 	//const %14 = 0 : int
 	_14 = 0;
@@ -405,11 +408,13 @@ Matrix genMatrix(long long height, long long width){
 	_5_size = _8_size; _5_size_size = _8_size_size; 
 	if(_5_has_ownership){free2DArray(_5, _5_size); _5_has_ownership = false;}
 	_5 = copy2DArray(_8, _8_size, _8_size_size);
+	_8_has_ownership = true;
 	_5_has_ownership = true;
 	//assign %2 = %5  : int[][]
 	rows_size = _5_size; rows_size_size = _5_size_size; 
 	if(rows_has_ownership){free2DArray(rows, rows_size); rows_has_ownership = false;}
 	rows = copy2DArray(_5, _5_size, _5_size_size);
+	_5_has_ownership = true;
 	rows_has_ownership = true;
 	//const %10 = 0 : int
 	_10 = 0;
@@ -539,10 +544,12 @@ int main(int argc, char** args){
 	//assign %10 = %11  : {int[][] data,int height,int width}
 	if(_10_has_ownership){free_Matrix(_10); _10_has_ownership = false;}
 	_10 = copy_Matrix(_11);
+	_11_has_ownership = true;
 	_10_has_ownership = true;
 	//assign %2 = %10  : {int[][] data,int height,int width}
 	if(A_has_ownership){free_Matrix(A); A_has_ownership = false;}
 	A = copy_Matrix(_10);
+	_10_has_ownership = true;
 	A_has_ownership = true;
 	//invoke %13 = (%1, %1) MatrixMult:genMatrix : function(MatrixMult:nat,MatrixMult:nat) -> MatrixMult:Matrix
 	if(_13_has_ownership){free_Matrix(_13); _13_has_ownership = false;}
@@ -551,10 +558,12 @@ int main(int argc, char** args){
 	//assign %12 = %13  : {int[][] data,int height,int width}
 	if(_12_has_ownership){free_Matrix(_12); _12_has_ownership = false;}
 	_12 = copy_Matrix(_13);
+	_13_has_ownership = true;
 	_12_has_ownership = true;
 	//assign %3 = %12  : {int[][] data,int height,int width}
 	if(B_has_ownership){free_Matrix(B); B_has_ownership = false;}
 	B = copy_Matrix(_12);
+	_12_has_ownership = true;
 	B_has_ownership = true;
 	//invoke %15 = (%2, %3) MatrixMult:multiply : function(MatrixMult:Matrix,MatrixMult:Matrix) -> MatrixMult:Matrix
 	if(_15_has_ownership){free_Matrix(_15); _15_has_ownership = false;}
@@ -563,10 +572,12 @@ int main(int argc, char** args){
 	//assign %14 = %15  : {int[][] data,int height,int width}
 	if(_14_has_ownership){free_Matrix(_14); _14_has_ownership = false;}
 	_14 = copy_Matrix(_15);
+	_15_has_ownership = true;
 	_14_has_ownership = true;
 	//assign %4 = %14  : {int[][] data,int height,int width}
 	if(C_has_ownership){free_Matrix(C); C_has_ownership = false;}
 	C = copy_Matrix(_14);
+	_14_has_ownership = true;
 	C_has_ownership = true;
 	//assert
 	{

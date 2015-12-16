@@ -66,6 +66,7 @@ Board* EmptyBoard(){
 	_11->move = _0;
 	_11->pieces_size = _10_size; 
 	_11->pieces = copy(_10, _10_size);
+	
 	//return %11 : null|{int move,int[] pieces}
 	return _11;
 	//return
@@ -243,14 +244,18 @@ int main(int argc, char** args){
 		_15 = EmptyBoard();
 		//assign %14 = %15  : null|{int move,int[] pieces}
 		_14 = copy_Board(_15);
+		
 		//assign %3 = %14  : null|{int move,int[] pieces}
 		b1 = copy_Board(_14);
+		
 		//invoke %17 = () newTicTacToe:EmptyBoard : function() -> newTicTacToe:Board
 		_17 = EmptyBoard();
 		//assign %16 = %17  : null|{int move,int[] pieces}
 		_16 = copy_Board(_17);
+		
 		//assign %4 = %16  : null|{int move,int[] pieces}
 		b2 = copy_Board(_16);
+		
 		//const %19 = 0 : int
 		_19 = 0;
 		//assign %18 = %19  : int
@@ -317,6 +322,7 @@ blklab14:;
 			b1->move = _34;
 			//assign %4 = %3  : {int move,int[] pieces}
 			b2 = copy_Board(b1);
+			
 			//const %35 = null : null
 			//assign %3 = %35  : null
 			b1 = NULL;
@@ -348,6 +354,7 @@ blklab17:;
 			b2->move = _43;
 			//assign %3 = %4  : {int move,int[] pieces}
 			b1 = copy_Board(b2);
+			
 			//const %44 = null : null
 			//assign %4 = %44  : null
 			b2 = NULL;

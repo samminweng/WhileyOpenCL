@@ -30,6 +30,7 @@ Matrix matrix(long long width, long long height, long long** data, long long dat
 	_3 = create_Matrix();
 	_3.data_size = data_size; _3.data_size_size = data_size_size; 
 	_3.data = copy2DArray(data, data_size, data_size_size);
+	
 	_3.height = height;
 	_3.width = width;
 	//return %3 : {int[][] data,int height,int width}
@@ -118,9 +119,11 @@ Matrix multiply(Matrix A, Matrix B){
 	//assign %7 = %12  : int[][]
 	_7_size = _12_size; _7_size_size = _12_size_size; 
 	_7 = copy2DArray(_12, _12_size, _12_size_size);
+	
 	//assign %2 = %7  : int[][]
 	C_data_size = _7_size; C_data_size_size = _7_size_size; 
 	C_data = copy2DArray(_7, _7_size, _7_size_size);
+	
 	//const %14 = 0 : int
 	_14 = 0;
 	//assign %13 = %14  : int
@@ -370,9 +373,11 @@ Matrix genMatrix(long long height, long long width){
 	//assign %5 = %8  : int[][]
 	_5_size = _8_size; _5_size_size = _8_size_size; 
 	_5 = copy2DArray(_8, _8_size, _8_size_size);
+	
 	//assign %2 = %5  : int[][]
 	rows_size = _5_size; rows_size_size = _5_size_size; 
 	rows = copy2DArray(_5, _5_size, _5_size_size);
+	
 	//const %10 = 0 : int
 	_10 = 0;
 	//assign %9 = %10  : int
@@ -492,20 +497,26 @@ int main(int argc, char** args){
 	_11 = genMatrix(max.integer, max.integer);
 	//assign %10 = %11  : {int[][] data,int height,int width}
 	_10 = copy_Matrix(_11);
+	
 	//assign %2 = %10  : {int[][] data,int height,int width}
 	A = copy_Matrix(_10);
+	
 	//invoke %13 = (%1, %1) MatrixMult:genMatrix : function(MatrixMult:nat,MatrixMult:nat) -> MatrixMult:Matrix
 	_13 = genMatrix(max.integer, max.integer);
 	//assign %12 = %13  : {int[][] data,int height,int width}
 	_12 = copy_Matrix(_13);
+	
 	//assign %3 = %12  : {int[][] data,int height,int width}
 	B = copy_Matrix(_12);
+	
 	//invoke %15 = (%2, %3) MatrixMult:multiply : function(MatrixMult:Matrix,MatrixMult:Matrix) -> MatrixMult:Matrix
 	_15 = multiply(copy_Matrix(A), copy_Matrix(B));
 	//assign %14 = %15  : {int[][] data,int height,int width}
 	_14 = copy_Matrix(_15);
+	
 	//assign %4 = %14  : {int[][] data,int height,int width}
 	C = copy_Matrix(_14);
+	
 	//assert
 	{
 		//fieldload %16 = %4 data : {int[][] data,int height,int width}
