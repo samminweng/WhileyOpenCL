@@ -318,11 +318,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				}
 				
 				// If the rhs copy is not made, the de-allocation code is not needed. 
-				boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
-				if(!isCopyEliminated){
+				//boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
+				//if(!isCopyEliminated){
 					// Add de-allocation code to deallocate lhs variable
 					statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores, this.deallocatedAnalyzer));
-				}				
+				//}				
 				// copy the array and assign the cloned to the target.
 				statement.add(indent + lhs + " = "+ optimizeCode(code.operand(0), code, function));
 				// Assigned the ownership to lhs
@@ -1149,14 +1149,18 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Propagate rhs array sizes to lhs
 			statement.add(indent + CodeGeneratorHelper.generateArraySizeAssign(code.fieldType(), lhs, var));
 			// Free lhs
-			if(!isCopyEliminated(code.operand(0), code, function)){
+			boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
+			
+			if(!isCopyEliminated){
 				statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores, this.deallocatedAnalyzer));
 			}
 			// Assign member values
 			statement.add(indent + lhs + " = "+ optimizeCode(code.operand(0), code, function));
 			
-			// Assign ownership to lhs variable of fieldload code
-			statement.add(indent + CodeGeneratorHelper.assignOwnership(lhs_type, lhs, this.stores, this.deallocatedAnalyzer));
+			if(!isCopyEliminated){
+				// Assign ownership to lhs variable of fieldload code
+				statement.add(indent + CodeGeneratorHelper.assignOwnership(lhs_type, lhs, this.stores, this.deallocatedAnalyzer));
+			}
 		}
 		store.addAllStatements(code, statement);
 	}
