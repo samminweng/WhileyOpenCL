@@ -18,7 +18,7 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 public final class BaseTestUtil {
-	private final String version = "v0.3.36";
+	private final String version = "v0.3.37";
 	// user.dir is the current directory.
 	private final String workspace_path = System.getProperty("user.dir") + File.separator;
 	private final String lib_path = workspace_path + "lib" + File.separator;

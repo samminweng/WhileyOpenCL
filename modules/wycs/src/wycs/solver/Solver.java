@@ -7,10 +7,10 @@ import wyautl.util.BigRational;
 import wyautl.io.*;
 import wyautl.core.*;
 import wyrw.core.*;
+import wyrw.util.AbstractRewriteRule;
 import wyrl.core.*;
 import wyrl.util.Runtime;
 import wyrl.util.Pair;
-import wyrl.util.AbstractRewriteRule;
 
 public final class Solver {
 	// term $4<NotT($2<^Type<$4|Atom<NotT($16<^Proton<TupleT(^[$16...])|ArrayT($16)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$16...])|ArrayT($16)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|OrT(^{$2...})|AndT(^{$2...})|ArrayT($2)|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>)>
@@ -19,20 +19,23 @@ public final class Solver {
 		return automaton.add(new Automaton.Term(K_NotT, r0));
 	}
 
-	// Not_1
 	private final static class Reduction_0 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_0(Pattern.Term pattern) { super(pattern); }
+		public Reduction_0(Pattern.Term pattern) {
+			super(pattern);
+			put("name","NotT(AnyT)");
+			put("rank",0);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_NotT) {
 				Automaton.Term t0 = (Automaton.Term) s0;
 				int r1 = t0.contents;
 				if(Runtime.accepts(type0,automaton,automaton.get(r1), SCHEMA)) {
 					int[] state = {r0, r1};
-					activations.add(new Activation(this,null,state));
+					activations.add(new Reduction.Activation(this,null,state));
 				}
 			}
 		}
@@ -48,26 +51,25 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Not_1"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 1; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Not_2
 	private final static class Reduction_1 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_1(Pattern.Term pattern) { super(pattern); }
+		public Reduction_1(Pattern.Term pattern) {
+			super(pattern);
+			put("name","NotT(VoidT)");
+			put("rank",0);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_NotT) {
 				Automaton.Term t0 = (Automaton.Term) s0;
 				int r1 = t0.contents;
 				if(Runtime.accepts(type1,automaton,automaton.get(r1), SCHEMA)) {
 					int[] state = {r0, r1};
-					activations.add(new Activation(this,null,state));
+					activations.add(new Reduction.Activation(this,null,state));
 				}
 			}
 		}
@@ -83,19 +85,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Not_2"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 1; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Not_3
 	private final static class Reduction_2 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_2(Pattern.Term pattern) { super(pattern); }
+		public Reduction_2(Pattern.Term pattern) {
+			super(pattern);
+			put("name","NotT(NotT)");
+			put("rank",0);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_NotT) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -105,7 +106,7 @@ public final class Solver {
 					Automaton.Term t1 = (Automaton.Term) s1;
 					int r2 = t1.contents;
 					int[] state = {r0, r1, r2};
-					activations.add(new Activation(this,null,state));
+					activations.add(new Reduction.Activation(this,null,state));
 				}
 			}
 		}
@@ -120,19 +121,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Not_3"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 1; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Not_4
 	private final static class Reduction_3 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_3(Pattern.Term pattern) { super(pattern); }
+		public Reduction_3(Pattern.Term pattern) {
+			super(pattern);
+			put("name","NotT(OrT)");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_NotT) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -144,7 +144,7 @@ public final class Solver {
 					Automaton.State s2 = automaton.get(r2);
 					Automaton.Collection c2 = (Automaton.Collection) s2;
 					int[] state = {r0, r1, r2, 0};
-					activations.add(new Activation(this,null,state));
+					activations.add(new Reduction.Activation(this,null,state));
 				}
 			}
 		}
@@ -152,12 +152,12 @@ public final class Solver {
 		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
-			Automaton.Collection s2 = (Automaton.Collection) automaton.get(state[2]);
-			int[] s2children = new int[s2.size() - 0];
-			for(int s2i=0, s2j=0; s2i != s2.size();++s2i) {
-				s2children[s2j++] = s2.get(s2i);
+			Automaton.Collection c2 = (Automaton.Collection) automaton.get(state[2]);
+			int[] c2children = new int[c2.size() - 0];
+			for(int s2i=0, s2j=0; s2i != c2.size();++s2i) {
+				c2children[s2j++] = c2.get(s2i);
 			}
-			Automaton.Set r3 = new Automaton.Set(s2children);
+			Automaton.Set r3 = new Automaton.Set(c2children);
 			Automaton.List t4 = new Automaton.List();
 			for(int i5=0;i5<r3.size();i5++) {
 				int r5 = (int) r3.get(i5);
@@ -175,19 +175,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Not_4"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 2; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Not_5
 	private final static class Reduction_4 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_4(Pattern.Term pattern) { super(pattern); }
+		public Reduction_4(Pattern.Term pattern) {
+			super(pattern);
+			put("name","NotT(AndT)");
+			put("rank",2);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_NotT) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -199,7 +198,7 @@ public final class Solver {
 					Automaton.State s2 = automaton.get(r2);
 					Automaton.Collection c2 = (Automaton.Collection) s2;
 					int[] state = {r0, r1, r2, 0};
-					activations.add(new Activation(this,null,state));
+					activations.add(new Reduction.Activation(this,null,state));
 				}
 			}
 		}
@@ -207,12 +206,12 @@ public final class Solver {
 		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
-			Automaton.Collection s2 = (Automaton.Collection) automaton.get(state[2]);
-			int[] s2children = new int[s2.size() - 0];
-			for(int s2i=0, s2j=0; s2i != s2.size();++s2i) {
-				s2children[s2j++] = s2.get(s2i);
+			Automaton.Collection c2 = (Automaton.Collection) automaton.get(state[2]);
+			int[] c2children = new int[c2.size() - 0];
+			for(int s2i=0, s2j=0; s2i != c2.size();++s2i) {
+				c2children[s2j++] = c2.get(s2i);
 			}
-			Automaton.Set r3 = new Automaton.Set(s2children);
+			Automaton.Set r3 = new Automaton.Set(c2children);
 			Automaton.List t4 = new Automaton.List();
 			for(int i5=0;i5<r3.size();i5++) {
 				int r5 = (int) r3.get(i5);
@@ -230,11 +229,7 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Not_5"; }
-		public final int rank() { return 2; }
 
-		public final int minimum() { return 2; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term $7<AndT($5<^{$2<^Type<$7|Atom<NotT($19<^Proton<TupleT(^[$19...])|ArrayT($19)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$19...])|ArrayT($19)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT($5)|ArrayT($2)|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>...}>)>
 	public final static int K_AndT = 1;
@@ -247,13 +242,16 @@ public final class Solver {
 		return automaton.add(new Automaton.Term(K_AndT, r1));
 	}
 
-	// AndType_1
 	private final static class Reduction_5 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_5(Pattern.Term pattern) { super(pattern); }
+		public Reduction_5(Pattern.Term pattern) {
+			super(pattern);
+			put("name","AndT{}");
+			put("rank",0);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_AndT) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -262,7 +260,7 @@ public final class Solver {
 				Automaton.Collection c1 = (Automaton.Collection) s1;
 				if(c1.size() == 0) {
 					int[] state = {r0, r1};
-					activations.add(new Activation(this,null,state));
+					activations.add(new Reduction.Activation(this,null,state));
 				}
 			}
 		}
@@ -278,19 +276,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "AndType_1"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 1; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// AndType_2
 	private final static class Reduction_6 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_6(Pattern.Term pattern) { super(pattern); }
+		public Reduction_6(Pattern.Term pattern) {
+			super(pattern);
+			put("name","AndT{Type}");
+			put("rank",0);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_AndT) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -301,7 +298,7 @@ public final class Solver {
 					for(int r3=0;r3!=c1.size();++r3) {
 						int r2 = c1.get(r3);
 						int[] state = {r0, r1, r2, r3};
-						activations.add(new Activation(this,null,state));
+						activations.add(new Reduction.Activation(this,null,state));
 					}
 				}
 			}
@@ -318,19 +315,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "AndType_2"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 2; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// AndType_3
 	private final static class Reduction_7 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_7(Pattern.Term pattern) { super(pattern); }
+		public Reduction_7(Pattern.Term pattern) {
+			super(pattern);
+			put("name","AndT{AndT,Type...}");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_AndT) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -347,7 +343,7 @@ public final class Solver {
 							Automaton.State s4 = automaton.get(r4);
 							Automaton.Collection c4 = (Automaton.Collection) s4;
 							int[] state = {r0, r1, r2, r3, r4, 0, 0};
-							activations.add(new Activation(this,null,state));
+							activations.add(new Reduction.Activation(this,null,state));
 						}
 					}
 				}
@@ -358,19 +354,19 @@ public final class Solver {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r3 = state[3];
-			Automaton.Collection s4 = (Automaton.Collection) automaton.get(state[4]);
-			int[] s4children = new int[s4.size() - 0];
-			for(int s4i=0, s4j=0; s4i != s4.size();++s4i) {
-				s4children[s4j++] = s4.get(s4i);
+			Automaton.Collection c4 = (Automaton.Collection) automaton.get(state[4]);
+			int[] c4children = new int[c4.size() - 0];
+			for(int s4i=0, s4j=0; s4i != c4.size();++s4i) {
+				c4children[s4j++] = c4.get(s4i);
 			}
-			Automaton.Set r5 = new Automaton.Set(s4children);
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 1];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Set r5 = new Automaton.Set(c4children);
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 1];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r6 = new Automaton.Set(s1children);
+			Automaton.Set r6 = new Automaton.Set(c1children);
 			Automaton.Set r7 = r5.append(r6); // xs append ys
 			int r8 = automaton.add(r7);
 			Automaton.Term r9 = new Automaton.Term(K_AndT, r8);
@@ -381,19 +377,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "AndType_3"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 3; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// AndType_4
 	private final static class Reduction_8 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_8(Pattern.Term pattern) { super(pattern); }
+		public Reduction_8(Pattern.Term pattern) {
+			super(pattern);
+			put("name","AndT{OrT,Type...}");
+			put("rank",3);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_AndT) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -410,7 +405,7 @@ public final class Solver {
 							Automaton.State s4 = automaton.get(r4);
 							Automaton.Collection c4 = (Automaton.Collection) s4;
 							int[] state = {r0, r1, r2, r3, r4, 0, 0};
-							activations.add(new Activation(this,null,state));
+							activations.add(new Reduction.Activation(this,null,state));
 						}
 					}
 				}
@@ -421,19 +416,19 @@ public final class Solver {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r3 = state[3];
-			Automaton.Collection s4 = (Automaton.Collection) automaton.get(state[4]);
-			int[] s4children = new int[s4.size() - 0];
-			for(int s4i=0, s4j=0; s4i != s4.size();++s4i) {
-				s4children[s4j++] = s4.get(s4i);
+			Automaton.Collection c4 = (Automaton.Collection) automaton.get(state[4]);
+			int[] c4children = new int[c4.size() - 0];
+			for(int s4i=0, s4j=0; s4i != c4.size();++s4i) {
+				c4children[s4j++] = c4.get(s4i);
 			}
-			Automaton.Set r5 = new Automaton.Set(s4children);
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 1];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Set r5 = new Automaton.Set(c4children);
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 1];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r6 = new Automaton.Set(s1children);
+			Automaton.Set r6 = new Automaton.Set(c1children);
 			Automaton.List t7 = new Automaton.List();
 			for(int i8=0;i8<r5.size();i8++) {
 				int r8 = (int) r5.get(i8);
@@ -453,11 +448,7 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "AndType_4"; }
-		public final int rank() { return 3; }
 
-		public final int minimum() { return 3; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term $7<OrT($5<^{$2<^Type<$7|Atom<NotT($19<^Proton<TupleT(^[$19...])|ArrayT($19)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$19...])|ArrayT($19)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|AndT($5)|ArrayT($2)|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>...}>)>
 	public final static int K_OrT = 2;
@@ -470,13 +461,16 @@ public final class Solver {
 		return automaton.add(new Automaton.Term(K_OrT, r1));
 	}
 
-	// OrType_1
 	private final static class Reduction_9 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_9(Pattern.Term pattern) { super(pattern); }
+		public Reduction_9(Pattern.Term pattern) {
+			super(pattern);
+			put("name","OrT{}");
+			put("rank",0);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_OrT) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -485,7 +479,7 @@ public final class Solver {
 				Automaton.Collection c1 = (Automaton.Collection) s1;
 				if(c1.size() == 0) {
 					int[] state = {r0, r1};
-					activations.add(new Activation(this,null,state));
+					activations.add(new Reduction.Activation(this,null,state));
 				}
 			}
 		}
@@ -501,19 +495,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "OrType_1"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 1; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// OrType_2
 	private final static class Reduction_10 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_10(Pattern.Term pattern) { super(pattern); }
+		public Reduction_10(Pattern.Term pattern) {
+			super(pattern);
+			put("name","OrT{Type}");
+			put("rank",0);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_OrT) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -524,7 +517,7 @@ public final class Solver {
 					for(int r3=0;r3!=c1.size();++r3) {
 						int r2 = c1.get(r3);
 						int[] state = {r0, r1, r2, r3};
-						activations.add(new Activation(this,null,state));
+						activations.add(new Reduction.Activation(this,null,state));
 					}
 				}
 			}
@@ -541,19 +534,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "OrType_2"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 2; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// OrType_3
 	private final static class Reduction_11 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_11(Pattern.Term pattern) { super(pattern); }
+		public Reduction_11(Pattern.Term pattern) {
+			super(pattern);
+			put("name","OrT{OrT,Type...}");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_OrT) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -570,7 +562,7 @@ public final class Solver {
 							Automaton.State s4 = automaton.get(r4);
 							Automaton.Collection c4 = (Automaton.Collection) s4;
 							int[] state = {r0, r1, r2, r3, r4, 0, 0};
-							activations.add(new Activation(this,null,state));
+							activations.add(new Reduction.Activation(this,null,state));
 						}
 					}
 				}
@@ -581,19 +573,19 @@ public final class Solver {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r3 = state[3];
-			Automaton.Collection s4 = (Automaton.Collection) automaton.get(state[4]);
-			int[] s4children = new int[s4.size() - 0];
-			for(int s4i=0, s4j=0; s4i != s4.size();++s4i) {
-				s4children[s4j++] = s4.get(s4i);
+			Automaton.Collection c4 = (Automaton.Collection) automaton.get(state[4]);
+			int[] c4children = new int[c4.size() - 0];
+			for(int s4i=0, s4j=0; s4i != c4.size();++s4i) {
+				c4children[s4j++] = c4.get(s4i);
 			}
-			Automaton.Set r5 = new Automaton.Set(s4children);
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 1];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Set r5 = new Automaton.Set(c4children);
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 1];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r6 = new Automaton.Set(s1children);
+			Automaton.Set r6 = new Automaton.Set(c1children);
 			Automaton.Set r7 = r5.append(r6); // xs append ys
 			int r8 = automaton.add(r7);
 			Automaton.Term r9 = new Automaton.Term(K_OrT, r8);
@@ -604,11 +596,7 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "OrType_3"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 3; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term $7<TupleT(^[$2<^Type<$7|Atom<NotT($19<^Proton<TupleT(^[$19...])|ArrayT($19)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$19...])|ArrayT($19)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT(^{$2...})|AndT(^{$2...})|ArrayT($2)|FunctionT(^[$2,$2,$2...])>>...])>
 	public final static int K_TupleT = 3;
@@ -621,21 +609,30 @@ public final class Solver {
 		return automaton.add(new Automaton.Term(K_TupleT, r1));
 	}
 
-	// TupleType_1
 	private final static class Reduction_12 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_12(Pattern.Term pattern) { super(pattern); }
+		public Reduction_12(Pattern.Term pattern) {
+			super(pattern);
+			put("name","TupleT[Type...]");
+			put("rank",0);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_TupleT) {
 				Automaton.Term t0 = (Automaton.Term) s0;
 				int r1 = t0.contents;
 				Automaton.State s1 = automaton.get(r1);
 				Automaton.List l1 = (Automaton.List) s1;
-				int[] state = {r0, r1, 0};
-				activations.add(new Activation(this,null,state));
+				Automaton.List r2 = l1;
+				Automaton.Term r3 = VoidT;
+				int r4 = automaton.add(r3);
+				boolean r5 = r2.contains(r4);  // VoidT in ts
+				if(r5) { // REQUIRES
+					int[] state = {r0, r1, 0};
+					activations.add(new Reduction.Activation(this,null,state));
+				}
 			}
 		}
 
@@ -645,38 +642,38 @@ public final class Solver {
 			Automaton.List r2 = ((Automaton.List) automaton.get(state[1])).sublist(0);
 			Automaton.Term r3 = VoidT;
 			int r4 = automaton.add(r3);
-			boolean r5 = r2.contains(r4);  // VoidT in ts
-			if(r5) {
-				Automaton.Term r6 = VoidT;
-				int r7 = automaton.add(r6);
-				if(r0 != r7) {
-					return automaton.rewrite(r0, r7);
-				}
+			if(r0 != r4) {
+				return automaton.rewrite(r0, r4);
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "TupleType_1"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// TupleType_1b
 	private final static class Reduction_13 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_13(Pattern.Term pattern) { super(pattern); }
+		public Reduction_13(Pattern.Term pattern) {
+			super(pattern);
+			put("name","TupleT[]");
+			put("rank",0);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_TupleT) {
 				Automaton.Term t0 = (Automaton.Term) s0;
 				int r1 = t0.contents;
 				Automaton.State s1 = automaton.get(r1);
 				Automaton.List l1 = (Automaton.List) s1;
-				int[] state = {r0, r1, 0};
-				activations.add(new Activation(this,null,state));
+				Automaton.List r2 = l1;
+				Automaton.Int r3 = r2.lengthOf(); // |ts|
+				Automaton.Int r4 = new Automaton.Int(0); // 0
+				boolean r5 = r3.equals(r4);    // |ts| eq 0
+				if(r5) { // REQUIRES
+					int[] state = {r0, r1, 0};
+					activations.add(new Reduction.Activation(this,null,state));
+				}
 			}
 		}
 
@@ -684,32 +681,26 @@ public final class Solver {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
 			Automaton.List r2 = ((Automaton.List) automaton.get(state[1])).sublist(0);
-			Automaton.Int r3 = r2.lengthOf(); // |ts|
-			Automaton.Int r4 = new Automaton.Int(0); // 0
-			boolean r5 = r3.equals(r4);    // |ts| eq 0
-			if(r5) {
-				Automaton.Term r6 = VoidT;
-				int r7 = automaton.add(r6);
-				if(r0 != r7) {
-					return automaton.rewrite(r0, r7);
-				}
+			Automaton.Term r3 = VoidT;
+			int r4 = automaton.add(r3);
+			if(r0 != r4) {
+				return automaton.rewrite(r0, r4);
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "TupleType_1b"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// TupleType_1c
 	private final static class Reduction_14 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_14(Pattern.Term pattern) { super(pattern); }
+		public Reduction_14(Pattern.Term pattern) {
+			super(pattern);
+			put("name","TupleT[Type]");
+			put("rank",0);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_TupleT) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -719,7 +710,7 @@ public final class Solver {
 				if(l1.size() == 1) {
 					int r2 = l1.get(0);
 					int[] state = {r0, r1, r2};
-					activations.add(new Activation(this,null,state));
+					activations.add(new Reduction.Activation(this,null,state));
 				}
 			}
 		}
@@ -734,19 +725,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "TupleType_1c"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 2; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// TupleType_2
 	private final static class Reduction_15 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_15(Pattern.Term pattern) { super(pattern); }
+		public Reduction_15(Pattern.Term pattern) {
+			super(pattern);
+			put("name","AndT{TupleT,TupleT,Type...}");
+			put("rank",2);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_AndT) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -772,7 +762,7 @@ public final class Solver {
 									Automaton.State s8 = automaton.get(r8);
 									Automaton.List l8 = (Automaton.List) s8;
 									int[] state = {r0, r1, r2, r3, r4, 0, r6, r7, r8, 0, 0};
-									activations.add(new Activation(this,null,state));
+									activations.add(new Reduction.Activation(this,null,state));
 								}
 							}
 						}
@@ -788,13 +778,13 @@ public final class Solver {
 			Automaton.List r5 = ((Automaton.List) automaton.get(state[4])).sublist(0);
 			int r7 = state[7];
 			Automaton.List r9 = ((Automaton.List) automaton.get(state[8])).sublist(0);
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 2];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 2];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3 || s1i == r7) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r10 = new Automaton.Set(s1children);
+			Automaton.Set r10 = new Automaton.Set(c1children);
 			Automaton.Int r11 = r5.lengthOf(); // |t1s|
 			Automaton.Int r12 = r9.lengthOf(); // |t2s|
 			boolean r13 = !r11.equals(r12); // |t1s| neq |t2s|
@@ -833,19 +823,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "TupleType_2"; }
-		public final int rank() { return 2; }
 
-		public final int minimum() { return 5; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// TupleType_3
 	private final static class Reduction_16 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_16(Pattern.Term pattern) { super(pattern); }
+		public Reduction_16(Pattern.Term pattern) {
+			super(pattern);
+			put("name","AndT{TupleT,NotT(TupleT,Type...}");
+			put("rank",2);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_AndT) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -875,7 +864,7 @@ public final class Solver {
 										Automaton.State s9 = automaton.get(r9);
 										Automaton.List l9 = (Automaton.List) s9;
 										int[] state = {r0, r1, r2, r3, r4, 0, r6, r7, r8, r9, 0, 0};
-										activations.add(new Activation(this,null,state));
+										activations.add(new Reduction.Activation(this,null,state));
 									}
 								}
 							}
@@ -893,13 +882,13 @@ public final class Solver {
 			Automaton.List r5 = ((Automaton.List) automaton.get(state[4])).sublist(0);
 			int r7 = state[7];
 			Automaton.List r10 = ((Automaton.List) automaton.get(state[9])).sublist(0);
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 2];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 2];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3 || s1i == r7) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r11 = new Automaton.Set(s1children);
+			Automaton.Set r11 = new Automaton.Set(c1children);
 			Automaton.Int r12 = r5.lengthOf(); // |t1s|
 			Automaton.Int r13 = r10.lengthOf(); // |t2s|
 			boolean r14 = !r12.equals(r13); // |t1s| neq |t2s|
@@ -952,19 +941,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "TupleType_3"; }
-		public final int rank() { return 2; }
 
-		public final int minimum() { return 6; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// TupleType_4
 	private final static class Reduction_17 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_17(Pattern.Term pattern) { super(pattern); }
+		public Reduction_17(Pattern.Term pattern) {
+			super(pattern);
+			put("name","AndT{TupleT,NotT(ArrayT),Type...}");
+			put("rank",2);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_AndT) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -992,7 +980,7 @@ public final class Solver {
 										Automaton.Term t8 = (Automaton.Term) s8;
 										int r9 = t8.contents;
 										int[] state = {r0, r1, r2, r3, r4, 0, r6, r7, r8, r9, 0};
-										activations.add(new Activation(this,null,state));
+										activations.add(new Reduction.Activation(this,null,state));
 									}
 								}
 							}
@@ -1008,13 +996,13 @@ public final class Solver {
 			int r2 = state[2]; // t1
 			int r3 = state[3];
 			int r7 = state[7];
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 2];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 2];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3 || s1i == r7) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r10 = new Automaton.Set(s1children);
+			Automaton.Set r10 = new Automaton.Set(c1children);
 			Automaton.Set r11 = new Automaton.Set(r2); // {t1}
 			Automaton.Set r12 = r11.append(r10); // {t1} append ts
 			int r13 = automaton.add(r12);
@@ -1026,11 +1014,7 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "TupleType_4"; }
-		public final int rank() { return 2; }
 
-		public final int minimum() { return 6; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term $4<ArrayT($2<^Type<$4|Atom<NotT($16<^Proton<TupleT(^[$16...])|ArrayT($16)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$16...])|ArrayT($16)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT(^{$2...})|AndT(^{$2...})|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>)>
 	public final static int K_ArrayT = 4;
@@ -1038,20 +1022,23 @@ public final class Solver {
 		return automaton.add(new Automaton.Term(K_ArrayT, r0));
 	}
 
-	// ArrayType_1
 	private final static class Reduction_18 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_18(Pattern.Term pattern) { super(pattern); }
+		public Reduction_18(Pattern.Term pattern) {
+			super(pattern);
+			put("name","ArrayT(VoidT)");
+			put("rank",0);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_ArrayT) {
 				Automaton.Term t0 = (Automaton.Term) s0;
 				int r1 = t0.contents;
 				if(Runtime.accepts(type1,automaton,automaton.get(r1), SCHEMA)) {
 					int[] state = {r0, r1};
-					activations.add(new Activation(this,null,state));
+					activations.add(new Reduction.Activation(this,null,state));
 				}
 			}
 		}
@@ -1067,19 +1054,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "ArrayType_1"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 1; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// ArrayType_2
 	private final static class Reduction_19 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_19(Pattern.Term pattern) { super(pattern); }
+		public Reduction_19(Pattern.Term pattern) {
+			super(pattern);
+			put("name","AndT{ArrayT,ArrayT,Type...}");
+			put("rank",2);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_AndT) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -1101,7 +1087,7 @@ public final class Solver {
 									Automaton.Term t5 = (Automaton.Term) s5;
 									int r7 = t5.contents;
 									int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, 0};
-									activations.add(new Activation(this,null,state));
+									activations.add(new Reduction.Activation(this,null,state));
 								}
 							}
 						}
@@ -1117,13 +1103,13 @@ public final class Solver {
 			int r4 = state[4]; // t1
 			int r6 = state[6];
 			int r7 = state[7]; // t2
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 2];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 2];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3 || s1i == r6) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r8 = new Automaton.Set(s1children);
+			Automaton.Set r8 = new Automaton.Set(c1children);
 			Automaton.Set r9 = new Automaton.Set(r4, r7); // {t1t2}
 			int r10 = automaton.add(r9);
 			Automaton.Term r11 = new Automaton.Term(K_AndT, r10);
@@ -1140,19 +1126,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "ArrayType_2"; }
-		public final int rank() { return 2; }
 
-		public final int minimum() { return 5; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// ArrayType_3
 	private final static class Reduction_20 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_20(Pattern.Term pattern) { super(pattern); }
+		public Reduction_20(Pattern.Term pattern) {
+			super(pattern);
+			put("name","AndT{ArrayT,NotT(ArrayT),Type...}");
+			put("rank",2);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_AndT) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -1178,7 +1163,7 @@ public final class Solver {
 										Automaton.Term t7 = (Automaton.Term) s7;
 										int r8 = t7.contents;
 										int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, 0};
-										activations.add(new Activation(this,null,state));
+										activations.add(new Reduction.Activation(this,null,state));
 									}
 								}
 							}
@@ -1195,13 +1180,13 @@ public final class Solver {
 			int r4 = state[4]; // t1
 			int r6 = state[6];
 			int r8 = state[8]; // t2
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 2];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 2];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3 || s1i == r6) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r9 = new Automaton.Set(s1children);
+			Automaton.Set r9 = new Automaton.Set(c1children);
 			Automaton.Term r10 = new Automaton.Term(K_NotT, r8);
 			int r11 = automaton.add(r10);
 			Automaton.Set r12 = new Automaton.Set(r4, r11); // {t1NotT(t2)}
@@ -1220,19 +1205,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "ArrayType_3"; }
-		public final int rank() { return 2; }
 
-		public final int minimum() { return 6; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// ArrayType_3b
 	private final static class Reduction_21 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_21(Pattern.Term pattern) { super(pattern); }
+		public Reduction_21(Pattern.Term pattern) {
+			super(pattern);
+			put("name","AndT{ArrayT,NotT(Tuple),Type...}");
+			put("rank",2);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_AndT) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -1260,7 +1244,7 @@ public final class Solver {
 										Automaton.State s8 = automaton.get(r8);
 										Automaton.List l8 = (Automaton.List) s8;
 										int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, 0, 0};
-										activations.add(new Activation(this,null,state));
+										activations.add(new Reduction.Activation(this,null,state));
 									}
 								}
 							}
@@ -1276,13 +1260,13 @@ public final class Solver {
 			int r2 = state[2]; // t1
 			int r3 = state[3];
 			int r6 = state[6];
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 2];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 2];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3 || s1i == r6) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r10 = new Automaton.Set(s1children);
+			Automaton.Set r10 = new Automaton.Set(c1children);
 			Automaton.Set r11 = new Automaton.Set(r2); // {t1}
 			Automaton.Set r12 = r11.append(r10); // {t1} append ts
 			int r13 = automaton.add(r12);
@@ -1294,19 +1278,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "ArrayType_3b"; }
-		public final int rank() { return 2; }
 
-		public final int minimum() { return 6; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// ArrayType_4
 	private final static class Reduction_22 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_22(Pattern.Term pattern) { super(pattern); }
+		public Reduction_22(Pattern.Term pattern) {
+			super(pattern);
+			put("name","AndT{ArrayT,Proton,Type...}");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_AndT) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -1324,8 +1307,18 @@ public final class Solver {
 								if(r6 == r3) { continue; }
 								int r5 = c1.get(r6);
 								if(Runtime.accepts(type3,automaton,automaton.get(r5), SCHEMA)) {
-									int[] state = {r0, r1, r2, r3, r4, r5, r6, 0};
-									activations.add(new Activation(this,null,state));
+									int[] c1children = new int[c1.size() - 2];
+									for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
+										if(s1i == r3 || s1i == r6) { continue; }
+										c1children[s1j++] = c1.get(s1i);
+									}
+									Automaton.Set r7 = new Automaton.Set(c1children);
+									boolean r8 = Runtime.accepts(type4, automaton, r5, SCHEMA); // p is ^AnyT
+									boolean r9 = !r8;              // !p is ^AnyT
+									if(r9) { // REQUIRES
+										int[] state = {r0, r1, r2, r3, r4, r5, r6, 0};
+										activations.add(new Reduction.Activation(this,null,state));
+									}
 								}
 							}
 						}
@@ -1341,38 +1334,33 @@ public final class Solver {
 			int r3 = state[3];
 			int r5 = state[5]; // p
 			int r6 = state[6];
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 2];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 2];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3 || s1i == r6) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r7 = new Automaton.Set(s1children);
-			boolean r8 = Runtime.accepts(type4, automaton, r5, SCHEMA); // p is ^AnyT
-			boolean r9 = !r8;              // !p is ^AnyT
-			if(r9) {
-				Automaton.Term r10 = VoidT;
-				int r11 = automaton.add(r10);
-				if(r0 != r11) {
-					return automaton.rewrite(r0, r11);
-				}
+			Automaton.Set r7 = new Automaton.Set(c1children);
+			Automaton.Term r8 = VoidT;
+			int r9 = automaton.add(r8);
+			if(r0 != r9) {
+				return automaton.rewrite(r0, r9);
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "ArrayType_4"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// ArrayType_5
 	private final static class Reduction_23 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_23(Pattern.Term pattern) { super(pattern); }
+		public Reduction_23(Pattern.Term pattern) {
+			super(pattern);
+			put("name","OrT{ArrayT,ArrayT,Type...}");
+			put("rank",2);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_OrT) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -1393,8 +1381,17 @@ public final class Solver {
 								if(s5.kind == K_ArrayT) {
 									Automaton.Term t5 = (Automaton.Term) s5;
 									int r7 = t5.contents;
-									int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, 0};
-									activations.add(new Activation(this,null,state));
+									int[] c1children = new int[c1.size() - 2];
+									for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
+										if(s1i == r3 || s1i == r6) { continue; }
+										c1children[s1j++] = c1.get(s1i);
+									}
+									Automaton.Set r8 = new Automaton.Set(c1children);
+									boolean r9 = r4 == r7;         // t1 eq t2
+									if(r9) { // REQUIRES
+										int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, 0};
+										activations.add(new Reduction.Activation(this,null,state));
+									}
 								}
 							}
 						}
@@ -1412,32 +1409,25 @@ public final class Solver {
 			int r5 = state[5]; // s2
 			int r6 = state[6];
 			int r7 = state[7]; // t2
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 2];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 2];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3 || s1i == r6) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r8 = new Automaton.Set(s1children);
-			boolean r9 = r4 == r7;         // t1 eq t2
-			if(r9) {
-				Automaton.Set r10 = new Automaton.Set(r2); // {s1}
-				Automaton.Set r11 = r10.append(r8); // {s1} append ts
-				int r12 = automaton.add(r11);
-				Automaton.Term r13 = new Automaton.Term(K_OrT, r12);
-				int r14 = automaton.add(r13);
-				if(r0 != r14) {
-					return automaton.rewrite(r0, r14);
-				}
+			Automaton.Set r8 = new Automaton.Set(c1children);
+			Automaton.Set r9 = new Automaton.Set(r2); // {s1}
+			Automaton.Set r10 = r9.append(r8); // {s1} append ts
+			int r11 = automaton.add(r10);
+			Automaton.Term r12 = new Automaton.Term(K_OrT, r11);
+			int r13 = automaton.add(r12);
+			if(r0 != r13) {
+				return automaton.rewrite(r0, r13);
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "ArrayType_5"; }
-		public final int rank() { return 2; }
 
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term AnyT
 	public final static int K_AnyT = 5;
@@ -1481,13 +1471,16 @@ public final class Solver {
 		return automaton.add(new Automaton.Term(K_NominalT, r1));
 	}
 
-	// AtomType_1
 	private final static class Reduction_24 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_24(Pattern.Term pattern) { super(pattern); }
+		public Reduction_24(Pattern.Term pattern) {
+			super(pattern);
+			put("name","AndT{VoidT,Type...}");
+			put("rank",0);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_AndT) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -1499,7 +1492,7 @@ public final class Solver {
 						int r2 = c1.get(r3);
 						if(Runtime.accepts(type1,automaton,automaton.get(r2), SCHEMA)) {
 							int[] state = {r0, r1, r2, r3, 0};
-							activations.add(new Activation(this,null,state));
+							activations.add(new Reduction.Activation(this,null,state));
 						}
 					}
 				}
@@ -1510,13 +1503,13 @@ public final class Solver {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r3 = state[3];
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 1];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 1];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r4 = new Automaton.Set(s1children);
+			Automaton.Set r4 = new Automaton.Set(c1children);
 			Automaton.Term r5 = VoidT;
 			int r6 = automaton.add(r5);
 			if(r0 != r6) {
@@ -1525,19 +1518,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "AtomType_1"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 2; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// AtomType_2
 	private final static class Reduction_25 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_25(Pattern.Term pattern) { super(pattern); }
+		public Reduction_25(Pattern.Term pattern) {
+			super(pattern);
+			put("name","AndT{AnyT, Type...}");
+			put("rank",0);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_AndT) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -1549,7 +1541,7 @@ public final class Solver {
 						int r2 = c1.get(r3);
 						if(Runtime.accepts(type0,automaton,automaton.get(r2), SCHEMA)) {
 							int[] state = {r0, r1, r2, r3, 0};
-							activations.add(new Activation(this,null,state));
+							activations.add(new Reduction.Activation(this,null,state));
 						}
 					}
 				}
@@ -1560,13 +1552,13 @@ public final class Solver {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r3 = state[3];
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 1];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 1];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r4 = new Automaton.Set(s1children);
+			Automaton.Set r4 = new Automaton.Set(c1children);
 			int r5 = automaton.add(r4);
 			Automaton.Term r6 = new Automaton.Term(K_AndT, r5);
 			int r7 = automaton.add(r6);
@@ -1576,19 +1568,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "AtomType_2"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 2; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// AtomType_3
 	private final static class Reduction_26 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_26(Pattern.Term pattern) { super(pattern); }
+		public Reduction_26(Pattern.Term pattern) {
+			super(pattern);
+			put("name","AndT{Quark,Proton,Type...}");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_AndT) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -1603,8 +1594,31 @@ public final class Solver {
 								if(r5 == r3) { continue; }
 								int r4 = c1.get(r5);
 								if(Runtime.accepts(type3,automaton,automaton.get(r4), SCHEMA)) {
-									int[] state = {r0, r1, r2, r3, r4, r5, 0};
-									activations.add(new Activation(this,null,state));
+									int[] c1children = new int[c1.size() - 2];
+									for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
+										if(s1i == r3 || s1i == r5) { continue; }
+										c1children[s1j++] = c1.get(s1i);
+									}
+									Automaton.Set r6 = new Automaton.Set(c1children);
+									boolean r7 = r2 != r4;         // a1 neq a2
+									boolean r8 = false;            // a1 neq a2 && a1 neq AnyT && a2 neq AnyT
+									if(r7) {
+										Automaton.Term r9 = AnyT;
+										Object r10 = (Object) automaton.get(r2);
+										boolean r11 = !r10.equals(r9); // a1 neq AnyT
+										boolean r12 = false;           // a1 neq AnyT && a2 neq AnyT
+										if(r11) {
+											Automaton.Term r13 = AnyT;
+											Object r14 = (Object) automaton.get(r4);
+											boolean r15 = !r14.equals(r13); // a2 neq AnyT
+											r12 = r15;
+										}
+										r8 = r12;
+									}
+									if(r8) { // REQUIRES
+										int[] state = {r0, r1, r2, r3, r4, r5, 0};
+										activations.add(new Reduction.Activation(this,null,state));
+									}
 								}
 							}
 						}
@@ -1620,51 +1634,33 @@ public final class Solver {
 			int r3 = state[3];
 			int r4 = state[4]; // a2
 			int r5 = state[5];
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 2];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 2];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3 || s1i == r5) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r6 = new Automaton.Set(s1children);
-			boolean r7 = r2 != r4;         // a1 neq a2
-			boolean r8 = false;            // a1 neq a2 && a1 neq AnyT && a2 neq AnyT
-			if(r7) {
-				Automaton.Term r9 = AnyT;
-				Object r10 = (Object) automaton.get(r2);
-				boolean r11 = !r10.equals(r9); // a1 neq AnyT
-				boolean r12 = false;           // a1 neq AnyT && a2 neq AnyT
-				if(r11) {
-					Automaton.Term r13 = AnyT;
-					Object r14 = (Object) automaton.get(r4);
-					boolean r15 = !r14.equals(r13); // a2 neq AnyT
-					r12 = r15;
-				}
-				r8 = r12;
-			}
-			if(r8) {
-				Automaton.Term r16 = VoidT;
-				int r17 = automaton.add(r16);
-				if(r0 != r17) {
-					return automaton.rewrite(r0, r17);
-				}
+			Automaton.Set r6 = new Automaton.Set(c1children);
+			Automaton.Term r7 = VoidT;
+			int r8 = automaton.add(r7);
+			if(r0 != r8) {
+				return automaton.rewrite(r0, r8);
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "AtomType_3"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// AtomType_4
 	private final static class Reduction_27 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_27(Pattern.Term pattern) { super(pattern); }
+		public Reduction_27(Pattern.Term pattern) {
+			super(pattern);
+			put("name","AndT{Quark,NotT(Proton),Type...}");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_AndT) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -1683,8 +1679,17 @@ public final class Solver {
 									Automaton.Term t4 = (Automaton.Term) s4;
 									int r6 = t4.contents;
 									if(Runtime.accepts(type3,automaton,automaton.get(r6), SCHEMA)) {
-										int[] state = {r0, r1, r2, r3, r4, r5, r6, 0};
-										activations.add(new Activation(this,null,state));
+										int[] c1children = new int[c1.size() - 2];
+										for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
+											if(s1i == r3 || s1i == r5) { continue; }
+											c1children[s1j++] = c1.get(s1i);
+										}
+										Automaton.Set r7 = new Automaton.Set(c1children);
+										boolean r8 = r2 == r6;         // a1 eq a2
+										if(r8) { // REQUIRES
+											int[] state = {r0, r1, r2, r3, r4, r5, r6, 0};
+											activations.add(new Reduction.Activation(this,null,state));
+										}
 									}
 								}
 							}
@@ -1701,49 +1706,114 @@ public final class Solver {
 			int r3 = state[3];
 			int r5 = state[5];
 			int r6 = state[6]; // a2
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 2];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 2];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3 || s1i == r5) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r7 = new Automaton.Set(s1children);
-			boolean r8 = r2 == r6;         // a1 eq a2
-			if(r8) {
-				Automaton.Term r9 = VoidT;
-				int r10 = automaton.add(r9);
-				if(r0 != r10) {
-					return automaton.rewrite(r0, r10);
-				}
-			}
-			Automaton.Term r11 = AnyT;
-			Object r12 = (Object) automaton.get(r6);
-			boolean r13 = !r12.equals(r11); // a2 neq AnyT
-			if(r13) {
-				Automaton.Set r14 = r7.appendFront(r2); // a1 append ts
-				int r15 = automaton.add(r14);
-				Automaton.Term r16 = new Automaton.Term(K_AndT, r15);
-				int r17 = automaton.add(r16);
-				if(r0 != r17) {
-					return automaton.rewrite(r0, r17);
-				}
+			Automaton.Set r7 = new Automaton.Set(c1children);
+			Automaton.Term r8 = VoidT;
+			int r9 = automaton.add(r8);
+			if(r0 != r9) {
+				return automaton.rewrite(r0, r9);
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "AtomType_4"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// AtomType_5
 	private final static class Reduction_28 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_28(Pattern.Term pattern) { super(pattern); }
+		public Reduction_28(Pattern.Term pattern) {
+			super(pattern);
+			put("name","AndT{Quark,NotT(Proton),Type...}");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
+			Automaton.State s0 = automaton.get(r0);
+			if(s0.kind == K_AndT) {
+				Automaton.Term t0 = (Automaton.Term) s0;
+				int r1 = t0.contents;
+				Automaton.State s1 = automaton.get(r1);
+				Automaton.Collection c1 = (Automaton.Collection) s1;
+				if(c1.size() >= 2) {
+					for(int r3=0;r3!=c1.size();++r3) {
+						int r2 = c1.get(r3);
+						if(Runtime.accepts(type5,automaton,automaton.get(r2), SCHEMA)) {
+							for(int r5=0;r5!=c1.size();++r5) {
+								if(r5 == r3) { continue; }
+								int r4 = c1.get(r5);
+								Automaton.State s4 = automaton.get(r4);
+								if(s4.kind == K_NotT) {
+									Automaton.Term t4 = (Automaton.Term) s4;
+									int r6 = t4.contents;
+									if(Runtime.accepts(type3,automaton,automaton.get(r6), SCHEMA)) {
+										int[] c1children = new int[c1.size() - 2];
+										for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
+											if(s1i == r3 || s1i == r5) { continue; }
+											c1children[s1j++] = c1.get(s1i);
+										}
+										Automaton.Set r7 = new Automaton.Set(c1children);
+										boolean r8 = r2 != r6;         // a1 neq a2
+										boolean r9 = false;            // a1 neq a2 && a2 neq AnyT
+										if(r8) {
+											Automaton.Term r10 = AnyT;
+											Object r11 = (Object) automaton.get(r6);
+											boolean r12 = !r11.equals(r10); // a2 neq AnyT
+											r9 = r12;
+										}
+										if(r9) { // REQUIRES
+											int[] state = {r0, r1, r2, r3, r4, r5, r6, 0};
+											activations.add(new Reduction.Activation(this,null,state));
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
+			int r0 = state[0];
+			int r2 = state[2]; // a1
+			int r3 = state[3];
+			int r5 = state[5];
+			int r6 = state[6]; // a2
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 2];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
+				if(s1i == r3 || s1i == r5) { continue; }
+				c1children[s1j++] = c1.get(s1i);
+			}
+			Automaton.Set r7 = new Automaton.Set(c1children);
+			Automaton.Set r8 = r7.appendFront(r2); // a1 append ts
+			int r9 = automaton.add(r8);
+			Automaton.Term r10 = new Automaton.Term(K_AndT, r9);
+			int r11 = automaton.add(r10);
+			if(r0 != r11) {
+				return automaton.rewrite(r0, r11);
+			}
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
+		}
+
+	}
+	private final static class Reduction_29 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_29(Pattern.Term pattern) {
+			super(pattern);
+			put("name","OrT{AnyT,Type...}");
+			put("rank",0);
+		}
+
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_OrT) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -1755,7 +1825,7 @@ public final class Solver {
 						int r2 = c1.get(r3);
 						if(Runtime.accepts(type0,automaton,automaton.get(r2), SCHEMA)) {
 							int[] state = {r0, r1, r2, r3, 0};
-							activations.add(new Activation(this,null,state));
+							activations.add(new Reduction.Activation(this,null,state));
 						}
 					}
 				}
@@ -1766,13 +1836,13 @@ public final class Solver {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r3 = state[3];
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 1];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 1];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r4 = new Automaton.Set(s1children);
+			Automaton.Set r4 = new Automaton.Set(c1children);
 			Automaton.Term r5 = AnyT;
 			int r6 = automaton.add(r5);
 			if(r0 != r6) {
@@ -1781,19 +1851,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "AtomType_5"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 2; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// AtomType_5
-	private final static class Reduction_29 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_30 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_29(Pattern.Term pattern) { super(pattern); }
+		public Reduction_30(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Or{VoidT,Type...}");
+			put("rank",0);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_OrT) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -1805,7 +1874,7 @@ public final class Solver {
 						int r2 = c1.get(r3);
 						if(Runtime.accepts(type1,automaton,automaton.get(r2), SCHEMA)) {
 							int[] state = {r0, r1, r2, r3, 0};
-							activations.add(new Activation(this,null,state));
+							activations.add(new Reduction.Activation(this,null,state));
 						}
 					}
 				}
@@ -1816,13 +1885,13 @@ public final class Solver {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r3 = state[3];
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 1];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 1];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r4 = new Automaton.Set(s1children);
+			Automaton.Set r4 = new Automaton.Set(c1children);
 			int r5 = automaton.add(r4);
 			Automaton.Term r6 = new Automaton.Term(K_OrT, r5);
 			int r7 = automaton.add(r6);
@@ -1832,11 +1901,7 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "AtomType_5"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 2; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term $8<FunctionT(^[$2<^Type<$8|Atom<NotT($20<^Proton<TupleT(^[$20...])|ArrayT($20)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$20...])|ArrayT($20)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT(^{$2...})|AndT(^{$2...})|ArrayT($2)|TupleT(^[$2...])>>,$2,$2...])>
 	public final static int K_FunctionT = 14;
@@ -1901,13 +1966,16 @@ public final class Solver {
 		return automaton.add(new Automaton.Term(K_Load, r1));
 	}
 
-	// Load_1
-	private final static class Reduction_30 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_31 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_30(Pattern.Term pattern) { super(pattern); }
+		public Reduction_31(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Load[Tuple[Expr...],int]");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Load) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -1922,8 +1990,21 @@ public final class Solver {
 					Automaton.State s3 = automaton.get(r3);
 					Automaton.List l3 = (Automaton.List) s3;
 					int r5 = l1.get(1);
-					int[] state = {r0, r1, r2, r3, 0, r5};
-					activations.add(new Activation(this,null,state));
+					Automaton.List r4 = l3;
+					Automaton.Int r6 = new Automaton.Int(0); // 0
+					Automaton.Int r7 = (Automaton.Int) automaton.get(r5);
+					boolean r8 = r7.compareTo(r6)>=0; // idx ge 0
+					boolean r9 = false;            // idx ge 0 && idx lt |ls|
+					if(r8) {
+						Automaton.Int r10 = r4.lengthOf(); // |ls|
+						Automaton.Int r11 = (Automaton.Int) automaton.get(r5);
+						boolean r12 = r11.compareTo(r10)<0; // idx lt |ls|
+						r9 = r12;
+					}
+					if(r9) { // REQUIRES
+						int[] state = {r0, r1, r2, r3, 0, r5};
+						activations.add(new Reduction.Activation(this,null,state));
+					}
 				}
 			}
 		}
@@ -1933,31 +2014,15 @@ public final class Solver {
 			int r0 = state[0];
 			Automaton.List r4 = ((Automaton.List) automaton.get(state[3])).sublist(0);
 			int r5 = state[5]; // idx
-			Automaton.Int r6 = new Automaton.Int(0); // 0
-			Automaton.Int r7 = (Automaton.Int) automaton.get(r5);
-			boolean r8 = r7.compareTo(r6)>=0; // idx ge 0
-			boolean r9 = false;            // idx ge 0 && idx lt |ls|
-			if(r8) {
-				Automaton.Int r10 = r4.lengthOf(); // |ls|
-				Automaton.Int r11 = (Automaton.Int) automaton.get(r5);
-				boolean r12 = r11.compareTo(r10)<0; // idx lt |ls|
-				r9 = r12;
-			}
-			if(r9) {
-				Automaton.Int r13 = (Automaton.Int) automaton.get(r5);
-				int r14 = r4.indexOf(r13);     // ls[idx]
-				if(r0 != r14) {
-					return automaton.rewrite(r0, r14);
-				}
+			Automaton.Int r6 = (Automaton.Int) automaton.get(r5);
+			int r7 = r4.indexOf(r6);       // ls[idx]
+			if(r0 != r7) {
+				return automaton.rewrite(r0, r7);
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Load_1"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term $4<LengthOf($2<^Expr<$38<Value<Null|Tuple(^[^$38...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$38...])>>|Tuple(^[$2...])|$80<BExpr<Bool<True|False>|VExpr<$4|Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|IndexOf(^[$2,$2])>|And(^{^$80...})|Or(^{^$80...})|Not(^$80)|Equals(^[$123<^Type<Atom<NotT($146<^Proton<TupleT(^[$146...])|ArrayT($146)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$146...])|ArrayT($146)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($123)|OrT(^{$123...})|AndT(^{$123...})|ArrayT($123)|TupleT(^[$123...])|FunctionT(^[$123,$123,$123...])>>,^{|$2,$2|}[$2,$2]])|Inequality(^[^AType<IntT|RealT>,$220<^AExpr<Num(^real)|VExpr<$4|Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|IndexOf(^[$2,$2])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>>])|Equation(^[^AType<IntT|RealT>,$220])|ForAll(^[^{^[^Var(^string),$123]...},^$80])|Exists(^[^{^[^Var(^string),$123]...},^$80])>>|AExpr<Num(^real)|VExpr<$4|Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|IndexOf(^[$2,$2])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>|SExpr<VExpr<$4|Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|IndexOf(^[$2,$2])>|Array(^[$2...])>>>)>
 	public final static int K_LengthOf = 22;
@@ -1965,13 +2030,16 @@ public final class Solver {
 		return automaton.add(new Automaton.Term(K_LengthOf, r0));
 	}
 
-	// LengthOf_1
-	private final static class Reduction_31 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_32 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_31(Pattern.Term pattern) { super(pattern); }
+		public Reduction_32(Pattern.Term pattern) {
+			super(pattern);
+			put("name","LengthOf(Tuple[Expr...])");
+			put("rank",0);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_LengthOf) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -1983,7 +2051,7 @@ public final class Solver {
 					Automaton.State s2 = automaton.get(r2);
 					Automaton.List l2 = (Automaton.List) s2;
 					int[] state = {r0, r1, r2, 0};
-					activations.add(new Activation(this,null,state));
+					activations.add(new Reduction.Activation(this,null,state));
 				}
 			}
 		}
@@ -2003,19 +2071,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "LengthOf_1"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 2; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// EqualsTuple_1
-	private final static class Reduction_32 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_33 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_32(Pattern.Term pattern) { super(pattern); }
+		public Reduction_33(Pattern.Term pattern) {
+			super(pattern);
+			put("name","EqualsTuple[Tuple,Tuple]");
+			put("rank",2);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Equals) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -2050,7 +2117,7 @@ public final class Solver {
 									Automaton.State s12 = automaton.get(r12);
 									Automaton.List l12 = (Automaton.List) s12;
 									int[] state = {r0, r1, r2, r3, 0, r5, r6, r7, r8, 0, r10, r11, r12, 0};
-									activations.add(new Activation(this,null,state));
+									activations.add(new Reduction.Activation(this,null,state));
 								}
 							}
 						}
@@ -2104,19 +2171,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "EqualsTuple_1"; }
-		public final int rank() { return 2; }
 
-		public final int minimum() { return 8; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// EqualsTuple_2
-	private final static class Reduction_33 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_34 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_33(Pattern.Term pattern) { super(pattern); }
+		public Reduction_34(Pattern.Term pattern) {
+			super(pattern);
+			put("name","And{Equals[VExpr,Tuple],BExpr...}");
+			put("rank",2);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_And) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -2144,7 +2210,7 @@ public final class Solver {
 										int r9 = c6.get(r10);
 										if(Runtime.accepts(type9,automaton,automaton.get(r9), SCHEMA)) {
 											int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, 0};
-											activations.add(new Activation(this,null,state));
+											activations.add(new Reduction.Activation(this,null,state));
 										}
 									}
 								}
@@ -2165,13 +2231,13 @@ public final class Solver {
 			int r8 = state[8];
 			int r9 = state[9]; // y
 			int r10 = state[10];
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 1];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 1];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r11 = new Automaton.Set(s1children);
+			Automaton.Set r11 = new Automaton.Set(c1children);
 			Automaton.List t12 = new Automaton.List();
 			for(int i13=0;i13<r11.size();i13++) {
 				int r13 = (int) r11.get(i13);
@@ -2189,11 +2255,7 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "EqualsTuple_2"; }
-		public final int rank() { return 2; }
 
-		public final int minimum() { return 8; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term $9<Fn(^[^string,$3<^Expr<$43<Value<Null|Tuple(^[^$43...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$43...])>>|Tuple(^[$3...])|$84<BExpr<Bool<True|False>|VExpr<$9|Var(^string)|Load(^[$3,^int])|LengthOf($3)|IndexOf(^[$3,$3])>|And(^{^$84...})|Or(^{^$84...})|Not(^$84)|Equals(^[$123<^Type<Atom<NotT($146<^Proton<TupleT(^[$146...])|ArrayT($146)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$146...])|ArrayT($146)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($123)|OrT(^{$123...})|AndT(^{$123...})|ArrayT($123)|TupleT(^[$123...])|FunctionT(^[$123,$123,$123...])>>,^{|$3,$3|}[$3,$3]])|Inequality(^[^AType<IntT|RealT>,$220<^AExpr<Num(^real)|VExpr<$9|Var(^string)|Load(^[$3,^int])|LengthOf($3)|IndexOf(^[$3,$3])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>>])|Equation(^[^AType<IntT|RealT>,$220])|ForAll(^[^{^[^Var(^string),$123]...},^$84])|Exists(^[^{^[^Var(^string),$123]...},^$84])>>|AExpr<Num(^real)|VExpr<$9|Var(^string)|Load(^[$3,^int])|LengthOf($3)|IndexOf(^[$3,$3])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>|SExpr<VExpr<$9|Var(^string)|Load(^[$3,^int])|LengthOf($3)|IndexOf(^[$3,$3])>|Array(^[$3...])>>>...])>
 	public final static int K_Fn = 23;
@@ -2219,20 +2281,23 @@ public final class Solver {
 		return automaton.add(new Automaton.Term(K_Not, r0));
 	}
 
-	// Not_1
-	private final static class Reduction_34 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_35 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_34(Pattern.Term pattern) { super(pattern); }
+		public Reduction_35(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Not(Bool)");
+			put("rank",0);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Not) {
 				Automaton.Term t0 = (Automaton.Term) s0;
 				int r1 = t0.contents;
 				if(Runtime.accepts(type11,automaton,automaton.get(r1), SCHEMA)) {
 					int[] state = {r0, r1};
-					activations.add(new Activation(this,null,state));
+					activations.add(new Reduction.Activation(this,null,state));
 				}
 			}
 		}
@@ -2259,19 +2324,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Not_1"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 1; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Not_2
-	private final static class Reduction_35 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_36 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_35(Pattern.Term pattern) { super(pattern); }
+		public Reduction_36(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Not(Not(BExpr))");
+			put("rank",0);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Not) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -2281,7 +2345,7 @@ public final class Solver {
 					Automaton.Term t1 = (Automaton.Term) s1;
 					int r2 = t1.contents;
 					int[] state = {r0, r1, r2};
-					activations.add(new Activation(this,null,state));
+					activations.add(new Reduction.Activation(this,null,state));
 				}
 			}
 		}
@@ -2296,19 +2360,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Not_2"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 1; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Not_3
-	private final static class Reduction_36 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_37 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_36(Pattern.Term pattern) { super(pattern); }
+		public Reduction_37(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Not(And{BExpr...})");
+			put("rank",2);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Not) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -2320,7 +2383,7 @@ public final class Solver {
 					Automaton.State s2 = automaton.get(r2);
 					Automaton.Collection c2 = (Automaton.Collection) s2;
 					int[] state = {r0, r1, r2, 0};
-					activations.add(new Activation(this,null,state));
+					activations.add(new Reduction.Activation(this,null,state));
 				}
 			}
 		}
@@ -2328,12 +2391,12 @@ public final class Solver {
 		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
-			Automaton.Collection s2 = (Automaton.Collection) automaton.get(state[2]);
-			int[] s2children = new int[s2.size() - 0];
-			for(int s2i=0, s2j=0; s2i != s2.size();++s2i) {
-				s2children[s2j++] = s2.get(s2i);
+			Automaton.Collection c2 = (Automaton.Collection) automaton.get(state[2]);
+			int[] c2children = new int[c2.size() - 0];
+			for(int s2i=0, s2j=0; s2i != c2.size();++s2i) {
+				c2children[s2j++] = c2.get(s2i);
 			}
-			Automaton.Set r3 = new Automaton.Set(s2children);
+			Automaton.Set r3 = new Automaton.Set(c2children);
 			Automaton.List t4 = new Automaton.List();
 			for(int i5=0;i5<r3.size();i5++) {
 				int r5 = (int) r3.get(i5);
@@ -2351,19 +2414,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Not_3"; }
-		public final int rank() { return 2; }
 
-		public final int minimum() { return 2; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Not_4
-	private final static class Reduction_37 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_38 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_37(Pattern.Term pattern) { super(pattern); }
+		public Reduction_38(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Not(Or{BExpr...})");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Not) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -2375,7 +2437,7 @@ public final class Solver {
 					Automaton.State s2 = automaton.get(r2);
 					Automaton.Collection c2 = (Automaton.Collection) s2;
 					int[] state = {r0, r1, r2, 0};
-					activations.add(new Activation(this,null,state));
+					activations.add(new Reduction.Activation(this,null,state));
 				}
 			}
 		}
@@ -2383,12 +2445,12 @@ public final class Solver {
 		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
-			Automaton.Collection s2 = (Automaton.Collection) automaton.get(state[2]);
-			int[] s2children = new int[s2.size() - 0];
-			for(int s2i=0, s2j=0; s2i != s2.size();++s2i) {
-				s2children[s2j++] = s2.get(s2i);
+			Automaton.Collection c2 = (Automaton.Collection) automaton.get(state[2]);
+			int[] c2children = new int[c2.size() - 0];
+			for(int s2i=0, s2j=0; s2i != c2.size();++s2i) {
+				c2children[s2j++] = c2.get(s2i);
 			}
-			Automaton.Set r3 = new Automaton.Set(s2children);
+			Automaton.Set r3 = new Automaton.Set(c2children);
 			Automaton.List t4 = new Automaton.List();
 			for(int i5=0;i5<r3.size();i5++) {
 				int r5 = (int) r3.get(i5);
@@ -2406,11 +2468,7 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Not_4"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 2; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term $7<And($5<^{$2<^$28<BExpr<$7|$39<VExpr<Var(^string)|Fn(^[^string,$44<^Expr<$28|$82<Value<Null|Tuple(^[^$82...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$82...])>>|Tuple(^[$44...])|$109<AExpr<$39|Num(^real)|Sum(^[^real,^{|^$109...|}[^$109...]])|Mul(^[^real,^{|^$109...|}[^$109...]])|Div(^[^$109,^$109])>>|SExpr<$39|Array(^[$44...])>>>...])|Load(^[$44,^int])|LengthOf($44)|IndexOf(^[$44,$44])>>|Bool<True|False>|Or($5)|Not($2)|Equals(^[$154<^Type<Atom<NotT($177<^Proton<TupleT(^[$177...])|ArrayT($177)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$177...])|ArrayT($177)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($154)|OrT(^{$154...})|AndT(^{$154...})|ArrayT($154)|TupleT(^[$154...])|FunctionT(^[$154,$154,$154...])>>,^{|$44,$44|}[$44,$44]])|Inequality(^[^AType<IntT|RealT>,^$109])|Equation(^[^AType<IntT|RealT>,^$109])|ForAll(^[^{^[^Var(^string),$154]...},$2])|Exists(^[^{^[^Var(^string),$154]...},$2])>>>...}>)>
 	public final static int K_And = 26;
@@ -2423,13 +2481,16 @@ public final class Solver {
 		return automaton.add(new Automaton.Term(K_And, r1));
 	}
 
-	// And_1
-	private final static class Reduction_38 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_39 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_38(Pattern.Term pattern) { super(pattern); }
+		public Reduction_39(Pattern.Term pattern) {
+			super(pattern);
+			put("name","And{BExpr}");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_And) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -2440,7 +2501,7 @@ public final class Solver {
 					for(int r3=0;r3!=c1.size();++r3) {
 						int r2 = c1.get(r3);
 						int[] state = {r0, r1, r2, r3};
-						activations.add(new Activation(this,null,state));
+						activations.add(new Reduction.Activation(this,null,state));
 					}
 				}
 			}
@@ -2457,19 +2518,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "And_1"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 2; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// And_2
-	private final static class Reduction_39 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_40 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_39(Pattern.Term pattern) { super(pattern); }
+		public Reduction_40(Pattern.Term pattern) {
+			super(pattern);
+			put("name","And{False,BExpr...}");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_And) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -2481,7 +2541,7 @@ public final class Solver {
 						int r2 = c1.get(r3);
 						if(Runtime.accepts(type13,automaton,automaton.get(r2), SCHEMA)) {
 							int[] state = {r0, r1, r2, r3, 0};
-							activations.add(new Activation(this,null,state));
+							activations.add(new Reduction.Activation(this,null,state));
 						}
 					}
 				}
@@ -2492,13 +2552,13 @@ public final class Solver {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r3 = state[3];
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 1];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 1];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r4 = new Automaton.Set(s1children);
+			Automaton.Set r4 = new Automaton.Set(c1children);
 			Automaton.Term r5 = False;
 			int r6 = automaton.add(r5);
 			if(r0 != r6) {
@@ -2507,19 +2567,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "And_2"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 2; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// And_3
-	private final static class Reduction_40 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_41 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_40(Pattern.Term pattern) { super(pattern); }
+		public Reduction_41(Pattern.Term pattern) {
+			super(pattern);
+			put("name","And{True,BExpr...}");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_And) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -2531,7 +2590,7 @@ public final class Solver {
 						int r2 = c1.get(r3);
 						if(Runtime.accepts(type14,automaton,automaton.get(r2), SCHEMA)) {
 							int[] state = {r0, r1, r2, r3, 0};
-							activations.add(new Activation(this,null,state));
+							activations.add(new Reduction.Activation(this,null,state));
 						}
 					}
 				}
@@ -2542,13 +2601,13 @@ public final class Solver {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r3 = state[3];
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 1];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 1];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r4 = new Automaton.Set(s1children);
+			Automaton.Set r4 = new Automaton.Set(c1children);
 			Automaton.Int r5 = r4.lengthOf(); // |xs|
 			Automaton.Int r6 = new Automaton.Int(0); // 0
 			boolean r7 = r5.compareTo(r6)>0; // |xs| gt 0
@@ -2568,19 +2627,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "And_3"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 2; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// And_4
-	private final static class Reduction_41 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_42 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_41(Pattern.Term pattern) { super(pattern); }
+		public Reduction_42(Pattern.Term pattern) {
+			super(pattern);
+			put("name","And{And{BExpr...},BExpr...}");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_And) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -2597,7 +2655,7 @@ public final class Solver {
 							Automaton.State s4 = automaton.get(r4);
 							Automaton.Collection c4 = (Automaton.Collection) s4;
 							int[] state = {r0, r1, r2, r3, r4, 0, 0};
-							activations.add(new Activation(this,null,state));
+							activations.add(new Reduction.Activation(this,null,state));
 						}
 					}
 				}
@@ -2608,19 +2666,19 @@ public final class Solver {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r3 = state[3];
-			Automaton.Collection s4 = (Automaton.Collection) automaton.get(state[4]);
-			int[] s4children = new int[s4.size() - 0];
-			for(int s4i=0, s4j=0; s4i != s4.size();++s4i) {
-				s4children[s4j++] = s4.get(s4i);
+			Automaton.Collection c4 = (Automaton.Collection) automaton.get(state[4]);
+			int[] c4children = new int[c4.size() - 0];
+			for(int s4i=0, s4j=0; s4i != c4.size();++s4i) {
+				c4children[s4j++] = c4.get(s4i);
 			}
-			Automaton.Set r5 = new Automaton.Set(s4children);
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 1];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Set r5 = new Automaton.Set(c4children);
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 1];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r6 = new Automaton.Set(s1children);
+			Automaton.Set r6 = new Automaton.Set(c1children);
 			Automaton.Set r7 = r5.append(r6); // xs append ys
 			int r8 = automaton.add(r7);
 			Automaton.Term r9 = new Automaton.Term(K_And, r8);
@@ -2631,19 +2689,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "And_4"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 3; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// And_5
-	private final static class Reduction_42 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_43 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_42(Pattern.Term pattern) { super(pattern); }
+		public Reduction_43(Pattern.Term pattern) {
+			super(pattern);
+			put("name","And{Not(BExpr x),BExpr x,BExpr...}");
+			put("rank",2);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_And) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -2660,8 +2717,17 @@ public final class Solver {
 							for(int r6=0;r6!=c1.size();++r6) {
 								if(r6 == r3) { continue; }
 								int r5 = c1.get(r6);
-								int[] state = {r0, r1, r2, r3, r4, r5, r6, 0};
-								activations.add(new Activation(this,null,state));
+								int[] c1children = new int[c1.size() - 2];
+								for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
+									if(s1i == r3 || s1i == r6) { continue; }
+									c1children[s1j++] = c1.get(s1i);
+								}
+								Automaton.Set r7 = new Automaton.Set(c1children);
+								boolean r8 = r4 == r5;         // x eq y
+								if(r8) { // REQUIRES
+									int[] state = {r0, r1, r2, r3, r4, r5, r6, 0};
+									activations.add(new Reduction.Activation(this,null,state));
+								}
 							}
 						}
 					}
@@ -2676,37 +2742,33 @@ public final class Solver {
 			int r4 = state[4]; // x
 			int r5 = state[5]; // y
 			int r6 = state[6];
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 2];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 2];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3 || s1i == r6) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r7 = new Automaton.Set(s1children);
-			boolean r8 = r4 == r5;         // x eq y
-			if(r8) {
-				Automaton.Term r9 = False;
-				int r10 = automaton.add(r9);
-				if(r0 != r10) {
-					return automaton.rewrite(r0, r10);
-				}
+			Automaton.Set r7 = new Automaton.Set(c1children);
+			Automaton.Term r8 = False;
+			int r9 = automaton.add(r8);
+			if(r0 != r9) {
+				return automaton.rewrite(r0, r9);
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "And_5"; }
-		public final int rank() { return 2; }
 
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// And_6
-	private final static class Reduction_43 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_44 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_43(Pattern.Term pattern) { super(pattern); }
+		public Reduction_44(Pattern.Term pattern) {
+			super(pattern);
+			put("name","And{Or{BExpr...},BExpr...}");
+			put("rank",3);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_And) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -2723,7 +2785,7 @@ public final class Solver {
 							Automaton.State s4 = automaton.get(r4);
 							Automaton.Collection c4 = (Automaton.Collection) s4;
 							int[] state = {r0, r1, r2, r3, r4, 0, 0};
-							activations.add(new Activation(this,null,state));
+							activations.add(new Reduction.Activation(this,null,state));
 						}
 					}
 				}
@@ -2734,19 +2796,19 @@ public final class Solver {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r3 = state[3];
-			Automaton.Collection s4 = (Automaton.Collection) automaton.get(state[4]);
-			int[] s4children = new int[s4.size() - 0];
-			for(int s4i=0, s4j=0; s4i != s4.size();++s4i) {
-				s4children[s4j++] = s4.get(s4i);
+			Automaton.Collection c4 = (Automaton.Collection) automaton.get(state[4]);
+			int[] c4children = new int[c4.size() - 0];
+			for(int s4i=0, s4j=0; s4i != c4.size();++s4i) {
+				c4children[s4j++] = c4.get(s4i);
 			}
-			Automaton.Set r5 = new Automaton.Set(s4children);
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 1];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Set r5 = new Automaton.Set(c4children);
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 1];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r6 = new Automaton.Set(s1children);
+			Automaton.Set r6 = new Automaton.Set(c1children);
 			Automaton.List t7 = new Automaton.List();
 			for(int i8=0;i8<r5.size();i8++) {
 				int r8 = (int) r5.get(i8);
@@ -2766,11 +2828,7 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "And_6"; }
-		public final int rank() { return 3; }
 
-		public final int minimum() { return 3; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term $7<Or($5<^{$2<^$28<BExpr<$7|$39<VExpr<Var(^string)|Fn(^[^string,$44<^Expr<$28|$82<Value<Null|Tuple(^[^$82...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$82...])>>|Tuple(^[$44...])|$109<AExpr<$39|Num(^real)|Sum(^[^real,^{|^$109...|}[^$109...]])|Mul(^[^real,^{|^$109...|}[^$109...]])|Div(^[^$109,^$109])>>|SExpr<$39|Array(^[$44...])>>>...])|Load(^[$44,^int])|LengthOf($44)|IndexOf(^[$44,$44])>>|Bool<True|False>|And($5)|Not($2)|Equals(^[$154<^Type<Atom<NotT($177<^Proton<TupleT(^[$177...])|ArrayT($177)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$177...])|ArrayT($177)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($154)|OrT(^{$154...})|AndT(^{$154...})|ArrayT($154)|TupleT(^[$154...])|FunctionT(^[$154,$154,$154...])>>,^{|$44,$44|}[$44,$44]])|Inequality(^[^AType<IntT|RealT>,^$109])|Equation(^[^AType<IntT|RealT>,^$109])|ForAll(^[^{^[^Var(^string),$154]...},$2])|Exists(^[^{^[^Var(^string),$154]...},$2])>>>...}>)>
 	public final static int K_Or = 27;
@@ -2783,13 +2841,16 @@ public final class Solver {
 		return automaton.add(new Automaton.Term(K_Or, r1));
 	}
 
-	// Or_1
-	private final static class Reduction_44 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_45 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_44(Pattern.Term pattern) { super(pattern); }
+		public Reduction_45(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Or{BExpr}");
+			put("rank",0);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Or) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -2800,7 +2861,7 @@ public final class Solver {
 					for(int r3=0;r3!=c1.size();++r3) {
 						int r2 = c1.get(r3);
 						int[] state = {r0, r1, r2, r3};
-						activations.add(new Activation(this,null,state));
+						activations.add(new Reduction.Activation(this,null,state));
 					}
 				}
 			}
@@ -2817,19 +2878,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Or_1"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 2; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Or_2
-	private final static class Reduction_45 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_46 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_45(Pattern.Term pattern) { super(pattern); }
+		public Reduction_46(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Or{True,BExpr...}");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Or) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -2841,7 +2901,7 @@ public final class Solver {
 						int r2 = c1.get(r3);
 						if(Runtime.accepts(type14,automaton,automaton.get(r2), SCHEMA)) {
 							int[] state = {r0, r1, r2, r3, 0};
-							activations.add(new Activation(this,null,state));
+							activations.add(new Reduction.Activation(this,null,state));
 						}
 					}
 				}
@@ -2852,13 +2912,13 @@ public final class Solver {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r3 = state[3];
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 1];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 1];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r4 = new Automaton.Set(s1children);
+			Automaton.Set r4 = new Automaton.Set(c1children);
 			Automaton.Term r5 = True;
 			int r6 = automaton.add(r5);
 			if(r0 != r6) {
@@ -2867,19 +2927,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Or_2"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 2; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Or_3
-	private final static class Reduction_46 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_47 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_46(Pattern.Term pattern) { super(pattern); }
+		public Reduction_47(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Or{False,BExpr...}");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Or) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -2891,7 +2950,7 @@ public final class Solver {
 						int r2 = c1.get(r3);
 						if(Runtime.accepts(type13,automaton,automaton.get(r2), SCHEMA)) {
 							int[] state = {r0, r1, r2, r3, 0};
-							activations.add(new Activation(this,null,state));
+							activations.add(new Reduction.Activation(this,null,state));
 						}
 					}
 				}
@@ -2902,13 +2961,13 @@ public final class Solver {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r3 = state[3];
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 1];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 1];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r4 = new Automaton.Set(s1children);
+			Automaton.Set r4 = new Automaton.Set(c1children);
 			Automaton.Int r5 = r4.lengthOf(); // |xs|
 			Automaton.Int r6 = new Automaton.Int(0); // 0
 			boolean r7 = r5.compareTo(r6)>0; // |xs| gt 0
@@ -2928,19 +2987,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Or_3"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 2; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Or_4
-	private final static class Reduction_47 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_48 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_47(Pattern.Term pattern) { super(pattern); }
+		public Reduction_48(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Or{Not(BExpr x),BExpr x,BExpr...}");
+			put("rank",2);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Or) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -2957,8 +3015,17 @@ public final class Solver {
 							for(int r6=0;r6!=c1.size();++r6) {
 								if(r6 == r3) { continue; }
 								int r5 = c1.get(r6);
-								int[] state = {r0, r1, r2, r3, r4, r5, r6, 0};
-								activations.add(new Activation(this,null,state));
+								int[] c1children = new int[c1.size() - 2];
+								for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
+									if(s1i == r3 || s1i == r6) { continue; }
+									c1children[s1j++] = c1.get(s1i);
+								}
+								Automaton.Set r7 = new Automaton.Set(c1children);
+								boolean r8 = r4 == r5;         // x eq y
+								if(r8) { // REQUIRES
+									int[] state = {r0, r1, r2, r3, r4, r5, r6, 0};
+									activations.add(new Reduction.Activation(this,null,state));
+								}
 							}
 						}
 					}
@@ -2973,37 +3040,33 @@ public final class Solver {
 			int r4 = state[4]; // x
 			int r5 = state[5]; // y
 			int r6 = state[6];
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 2];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 2];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3 || s1i == r6) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r7 = new Automaton.Set(s1children);
-			boolean r8 = r4 == r5;         // x eq y
-			if(r8) {
-				Automaton.Term r9 = True;
-				int r10 = automaton.add(r9);
-				if(r0 != r10) {
-					return automaton.rewrite(r0, r10);
-				}
+			Automaton.Set r7 = new Automaton.Set(c1children);
+			Automaton.Term r8 = True;
+			int r9 = automaton.add(r8);
+			if(r0 != r9) {
+				return automaton.rewrite(r0, r9);
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Or_4"; }
-		public final int rank() { return 2; }
 
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Or_5
-	private final static class Reduction_48 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_49 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_48(Pattern.Term pattern) { super(pattern); }
+		public Reduction_49(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Or{Or{BExpr...},BExpr...}");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Or) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -3020,7 +3083,7 @@ public final class Solver {
 							Automaton.State s4 = automaton.get(r4);
 							Automaton.Collection c4 = (Automaton.Collection) s4;
 							int[] state = {r0, r1, r2, r3, r4, 0, 0};
-							activations.add(new Activation(this,null,state));
+							activations.add(new Reduction.Activation(this,null,state));
 						}
 					}
 				}
@@ -3031,19 +3094,19 @@ public final class Solver {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r3 = state[3];
-			Automaton.Collection s4 = (Automaton.Collection) automaton.get(state[4]);
-			int[] s4children = new int[s4.size() - 0];
-			for(int s4i=0, s4j=0; s4i != s4.size();++s4i) {
-				s4children[s4j++] = s4.get(s4i);
+			Automaton.Collection c4 = (Automaton.Collection) automaton.get(state[4]);
+			int[] c4children = new int[c4.size() - 0];
+			for(int s4i=0, s4j=0; s4i != c4.size();++s4i) {
+				c4children[s4j++] = c4.get(s4i);
 			}
-			Automaton.Set r5 = new Automaton.Set(s4children);
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 1];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Set r5 = new Automaton.Set(c4children);
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 1];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r6 = new Automaton.Set(s1children);
+			Automaton.Set r6 = new Automaton.Set(c1children);
 			Automaton.Set r7 = r5.append(r6); // xs append ys
 			int r8 = automaton.add(r7);
 			Automaton.Term r9 = new Automaton.Term(K_Or, r8);
@@ -3054,11 +3117,7 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Or_5"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 3; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term $14<Equals(^[$2<^Type<Atom<NotT($27<^Proton<TupleT(^[$27...])|ArrayT($27)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$27...])|ArrayT($27)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT(^{$2...})|AndT(^{$2...})|ArrayT($2)|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>,^{|$4<^Expr<$133<Value<Null|Tuple(^[^$133...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$133...])>>|Tuple(^[$4...])|$173<BExpr<$14|Bool<True|False>|VExpr<Var(^string)|Fn(^[^string,$4...])|Load(^[$4,^int])|LengthOf($4)|IndexOf(^[$4,$4])>|And(^{^$173...})|Or(^{^$173...})|Not(^$173)|Inequality(^[^AType<IntT|RealT>,$220<^AExpr<Num(^real)|VExpr<Var(^string)|Fn(^[^string,$4...])|Load(^[$4,^int])|LengthOf($4)|IndexOf(^[$4,$4])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>>])|Equation(^[^AType<IntT|RealT>,$220])|ForAll(^[^{^[^Var(^string),$2]...},^$173])|Exists(^[^{^[^Var(^string),$2]...},^$173])>>|AExpr<Num(^real)|VExpr<Var(^string)|Fn(^[^string,$4...])|Load(^[$4,^int])|LengthOf($4)|IndexOf(^[$4,$4])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>|SExpr<VExpr<Var(^string)|Fn(^[^string,$4...])|Load(^[$4,^int])|LengthOf($4)|IndexOf(^[$4,$4])>|Array(^[$4...])>>>,$4|}[$4<^Expr<$133<Value<Null|Tuple(^[^$133...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$133...])>>|Tuple(^[$4...])|$173<BExpr<$14|Bool<True|False>|VExpr<Var(^string)|Fn(^[^string,$4...])|Load(^[$4,^int])|LengthOf($4)|IndexOf(^[$4,$4])>|And(^{^$173...})|Or(^{^$173...})|Not(^$173)|Inequality(^[^AType<IntT|RealT>,$220<^AExpr<Num(^real)|VExpr<Var(^string)|Fn(^[^string,$4...])|Load(^[$4,^int])|LengthOf($4)|IndexOf(^[$4,$4])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>>])|Equation(^[^AType<IntT|RealT>,$220])|ForAll(^[^{^[^Var(^string),$2]...},^$173])|Exists(^[^{^[^Var(^string),$2]...},^$173])>>|AExpr<Num(^real)|VExpr<Var(^string)|Fn(^[^string,$4...])|Load(^[$4,^int])|LengthOf($4)|IndexOf(^[$4,$4])>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>|SExpr<VExpr<Var(^string)|Fn(^[^string,$4...])|Load(^[$4,^int])|LengthOf($4)|IndexOf(^[$4,$4])>|Array(^[$4...])>>>,$4]])>
 	public final static int K_Equals = 28;
@@ -3071,13 +3130,16 @@ public final class Solver {
 		return automaton.add(new Automaton.Term(K_Equals, r1));
 	}
 
-	// Equals_1
-	private final static class Reduction_49 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_50 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_49(Pattern.Term pattern) { super(pattern); }
+		public Reduction_50(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Equals{|Expr,Expr|}");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Equals) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -3093,8 +3155,11 @@ public final class Solver {
 					for(int r7=0;r7!=c3.size();++r7) {
 						if(r7 == r5) { continue; }
 						int r6 = c3.get(r7);
-						int[] state = {r0, r1, r2, r3, r4, r5, r6, r7};
-						activations.add(new Activation(this,null,state));
+						boolean r8 = r4 == r6;         // x eq y
+						if(r8) { // REQUIRES
+							int[] state = {r0, r1, r2, r3, r4, r5, r6, r7};
+							activations.add(new Reduction.Activation(this,null,state));
+						}
 					}
 				}
 			}
@@ -3108,48 +3173,83 @@ public final class Solver {
 			int r5 = state[5];
 			int r6 = state[6]; // y
 			int r7 = state[7];
-			boolean r8 = r4 == r6;         // x eq y
-			if(r8) {
-				Automaton.Term r9 = True;
-				int r10 = automaton.add(r9);
-				if(r0 != r10) {
-					return automaton.rewrite(r0, r10);
-				}
-			}
-			boolean r11 = r4 != r6;        // x neq y
-			boolean r12 = false;           // x neq y && x is $1<^Value<Null|Tuple(^[$1...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[$1...])>> && y is $1<^Value<Null|Tuple(^[$1...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[$1...])>>
-			if(r11) {
-				boolean r13 = Runtime.accepts(type15, automaton, r4, SCHEMA); // x is $1<^Value<Null|Tuple(^[$1...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[$1...])>>
-				boolean r14 = false;           // x is $1<^Value<Null|Tuple(^[$1...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[$1...])>> && y is $1<^Value<Null|Tuple(^[$1...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[$1...])>>
-				if(r13) {
-					boolean r15 = Runtime.accepts(type15, automaton, r6, SCHEMA); // y is $1<^Value<Null|Tuple(^[$1...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[$1...])>>
-					r14 = r15;
-				}
-				r12 = r14;
-			}
-			if(r12) {
-				Automaton.Term r16 = False;
-				int r17 = automaton.add(r16);
-				if(r0 != r17) {
-					return automaton.rewrite(r0, r17);
-				}
+			Automaton.Term r8 = True;
+			int r9 = automaton.add(r8);
+			if(r0 != r9) {
+				return automaton.rewrite(r0, r9);
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Equals_1"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Equals_2
-	private final static class Reduction_50 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_51 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_50(Pattern.Term pattern) { super(pattern); }
+		public Reduction_51(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Equals{|Value,Value|}");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
+			Automaton.State s0 = automaton.get(r0);
+			if(s0.kind == K_Equals) {
+				Automaton.Term t0 = (Automaton.Term) s0;
+				int r1 = t0.contents;
+				Automaton.State s1 = automaton.get(r1);
+				Automaton.List l1 = (Automaton.List) s1;
+				int r2 = l1.get(0);
+				int r3 = l1.get(1);
+				Automaton.State s3 = automaton.get(r3);
+				Automaton.Collection c3 = (Automaton.Collection) s3;
+				for(int r5=0;r5!=c3.size();++r5) {
+					int r4 = c3.get(r5);
+					if(Runtime.accepts(type15,automaton,automaton.get(r4), SCHEMA)) {
+						for(int r7=0;r7!=c3.size();++r7) {
+							if(r7 == r5) { continue; }
+							int r6 = c3.get(r7);
+							if(Runtime.accepts(type15,automaton,automaton.get(r6), SCHEMA)) {
+								boolean r8 = r4 != r6;         // x neq y
+								if(r8) { // REQUIRES
+									int[] state = {r0, r1, r2, r3, r4, r5, r6, r7};
+									activations.add(new Reduction.Activation(this,null,state));
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
+			int r0 = state[0];
+			int r2 = state[2]; // t
+			int r4 = state[4]; // x
+			int r5 = state[5];
+			int r6 = state[6]; // y
+			int r7 = state[7];
+			Automaton.Term r8 = False;
+			int r9 = automaton.add(r8);
+			if(r0 != r9) {
+				return automaton.rewrite(r0, r9);
+			}
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
+		}
+
+	}
+	private final static class Reduction_52 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_52(Pattern.Term pattern) {
+			super(pattern);
+			put("name","And{Equals{|VExpr,Value|},BExpr...}");
+			put("rank",2);
+		}
+
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_And) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -3175,9 +3275,9 @@ public final class Solver {
 									for(int r10=0;r10!=c6.size();++r10) {
 										if(r10 == r8) { continue; }
 										int r9 = c6.get(r10);
-										if(Runtime.accepts(type16,automaton,automaton.get(r9), SCHEMA)) {
+										if(Runtime.accepts(type15,automaton,automaton.get(r9), SCHEMA)) {
 											int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, 0};
-											activations.add(new Activation(this,null,state));
+											activations.add(new Reduction.Activation(this,null,state));
 										}
 									}
 								}
@@ -3198,13 +3298,13 @@ public final class Solver {
 			int r8 = state[8];
 			int r9 = state[9]; // y
 			int r10 = state[10];
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 1];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 1];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r11 = new Automaton.Set(s1children);
+			Automaton.Set r11 = new Automaton.Set(c1children);
 			Automaton.List t12 = new Automaton.List();
 			for(int i13=0;i13<r11.size();i13++) {
 				int r13 = (int) r11.get(i13);
@@ -3222,19 +3322,17 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Equals_2"; }
-		public final int rank() { return 2; }
 
-		public final int minimum() { return 8; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Equals_3
 	private final static class Inference_0 extends AbstractRewriteRule implements InferenceRule {
 
-		public Inference_0(Pattern.Term pattern) { super(pattern); }
+		public Inference_0(Pattern.Term pattern) {
+			super(pattern);
+			put("name","And{Equals{|VExpr,VExpr|},BExpr...}");
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int root, int target, List<Inference.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_And) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -3262,7 +3360,7 @@ public final class Solver {
 										int r9 = c6.get(r10);
 										if(Runtime.accepts(type8,automaton,automaton.get(r9), SCHEMA)) {
 											int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, 0};
-											activations.add(new Activation(this,null,state));
+											activations.add(new Inference.Activation(this,root,null,state));
 										}
 									}
 								}
@@ -3273,7 +3371,7 @@ public final class Solver {
 			}
 		}
 
-		public final int apply(Automaton automaton, int[] state) {
+		public final int apply(Automaton automaton, int root, int[] state) {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r2 = state[2]; // eq
@@ -3282,13 +3380,13 @@ public final class Solver {
 			int r6 = state[6]; // vs
 			int r8 = state[8];
 			int r10 = state[10];
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 1];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 1];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r11 = new Automaton.Set(s1children);
+			Automaton.Set r11 = new Automaton.Set(c1children);
 			Automaton.Term r12 = Solver$native.max(automaton, r6);
 			Automaton.Term r13 = Solver$native.min(automaton, r6);
 			boolean r14 = !r12.equals(r13); // x neq y
@@ -3307,17 +3405,13 @@ public final class Solver {
 				Automaton.Term r22 = new Automaton.Term(K_And, r21);
 				int r23 = automaton.add(r22);
 				if(r0 != r23) {
-					return automaton.rewrite(r0, r23);
+					return automaton.substitute(root,r0, r23);
 				}
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Equals_3"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term $12<Mul($10<^[^real,^{|$3<^$20<AExpr<$12|Num(^real)|Sum($10)|Div(^[$3,$3])|$41<VExpr<Var(^string)|Fn(^[^string,$46<^Expr<$20|$84<Value<Num(^real)|Null|Tuple(^[^$84...])|Bool<True|False>|String(^string)|Array(^[^$84...])>>|Tuple(^[$46...])|$121<BExpr<$41|Bool<True|False>|And(^{^$121...})|Or(^{^$121...})|Not(^$121)|Equals(^[$133<^Type<Atom<NotT($156<^Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($133)|OrT(^{$133...})|AndT(^{$133...})|ArrayT($133)|TupleT(^[$133...])|FunctionT(^[$133,$133,$133...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$3])|Equation(^[^AType<IntT|RealT>,$3])|ForAll(^[^{^[^Var(^string),$133]...},^$121])|Exists(^[^{^[^Var(^string),$133]...},^$121])>>|SExpr<$41|Array(^[$46...])>>>...])|Load(^[$46,^int])|LengthOf($46)|IndexOf(^[$46,$46])>>>>>...|}[$3<^$20<AExpr<$12|Num(^real)|Sum($10)|Div(^[$3,$3])|$41<VExpr<Var(^string)|Fn(^[^string,$46<^Expr<$20|$84<Value<Num(^real)|Null|Tuple(^[^$84...])|Bool<True|False>|String(^string)|Array(^[^$84...])>>|Tuple(^[$46...])|$121<BExpr<$41|Bool<True|False>|And(^{^$121...})|Or(^{^$121...})|Not(^$121)|Equals(^[$133<^Type<Atom<NotT($156<^Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($133)|OrT(^{$133...})|AndT(^{$133...})|ArrayT($133)|TupleT(^[$133...])|FunctionT(^[$133,$133,$133...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$3])|Equation(^[^AType<IntT|RealT>,$3])|ForAll(^[^{^[^Var(^string),$133]...},^$121])|Exists(^[^{^[^Var(^string),$133]...},^$121])>>|SExpr<$41|Array(^[$46...])>>>...])|Load(^[$46,^int])|LengthOf($46)|IndexOf(^[$46,$46])>>>>>...]]>)>
 	public final static int K_Mul = 29;
@@ -3330,13 +3424,16 @@ public final class Solver {
 		return automaton.add(new Automaton.Term(K_Mul, r1));
 	}
 
-	// Multiplication_1
-	private final static class Reduction_51 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_53 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_51(Pattern.Term pattern) { super(pattern); }
+		public Reduction_53(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Mul[0.0,{||}]");
+			put("rank",0);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Mul) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -3347,8 +3444,22 @@ public final class Solver {
 				int r3 = l1.get(1);
 				Automaton.State s3 = automaton.get(r3);
 				Automaton.Collection c3 = (Automaton.Collection) s3;
-				int[] state = {r0, r1, r2, r3, 0};
-				activations.add(new Activation(this,null,state));
+				int[] c3children = new int[c3.size() - 0];
+				for(int s3i=0, s3j=0; s3i != c3.size();++s3i) {
+					c3children[s3j++] = c3.get(s3i);
+				}
+				Automaton.Bag r4 = new Automaton.Bag(c3children);
+				Automaton.Real r5 = new Automaton.Real(0); // 0.0
+				Automaton.Real r6 = (Automaton.Real) automaton.get(r2);
+				boolean r7 = r6.equals(r5);    // n eq 0.0
+				Automaton.Int r8 = r4.lengthOf(); // |rest|
+				Automaton.Int r9 = new Automaton.Int(0); // 0
+				boolean r10 = r8.equals(r9);   // |rest| eq 0
+				boolean r11 = r7 || r10;       // n eq 0.0 || |rest| eq 0
+				if(r11) { // REQUIRES
+					int[] state = {r0, r1, r2, r3, 0};
+					activations.add(new Reduction.Activation(this,null,state));
+				}
 			}
 		}
 
@@ -3356,42 +3467,32 @@ public final class Solver {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r2 = state[2]; // n
-			Automaton.Collection s3 = (Automaton.Collection) automaton.get(state[3]);
-			int[] s3children = new int[s3.size() - 0];
-			for(int s3i=0, s3j=0; s3i != s3.size();++s3i) {
-				s3children[s3j++] = s3.get(s3i);
+			Automaton.Collection c3 = (Automaton.Collection) automaton.get(state[3]);
+			int[] c3children = new int[c3.size() - 0];
+			for(int s3i=0, s3j=0; s3i != c3.size();++s3i) {
+				c3children[s3j++] = c3.get(s3i);
 			}
-			Automaton.Bag r4 = new Automaton.Bag(s3children);
-			Automaton.Real r5 = new Automaton.Real(0); // 0.0
-			Automaton.Real r6 = (Automaton.Real) automaton.get(r2);
-			boolean r7 = r6.equals(r5);    // n eq 0.0
-			Automaton.Int r8 = r4.lengthOf(); // |rest|
-			Automaton.Int r9 = new Automaton.Int(0); // 0
-			boolean r10 = r8.equals(r9);   // |rest| eq 0
-			boolean r11 = r7 || r10;       // n eq 0.0 || |rest| eq 0
-			if(r11) {
-				Automaton.Term r12 = new Automaton.Term(K_Num, r2);
-				int r13 = automaton.add(r12);
-				if(r0 != r13) {
-					return automaton.rewrite(r0, r13);
-				}
+			Automaton.Bag r4 = new Automaton.Bag(c3children);
+			Automaton.Term r5 = new Automaton.Term(K_Num, r2);
+			int r6 = automaton.add(r5);
+			if(r0 != r6) {
+				return automaton.rewrite(r0, r6);
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Multiplication_1"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Multiplication_2
-	private final static class Reduction_52 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_54 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_52(Pattern.Term pattern) { super(pattern); }
+		public Reduction_54(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Mul{|Num,AExpr|}");
+			put("rank",0);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Mul) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -3410,7 +3511,7 @@ public final class Solver {
 							Automaton.Term t4 = (Automaton.Term) s4;
 							int r6 = t4.contents;
 							int[] state = {r0, r1, r2, r3, r4, r5, r6, 0};
-							activations.add(new Activation(this,null,state));
+							activations.add(new Reduction.Activation(this,null,state));
 						}
 					}
 				}
@@ -3423,13 +3524,13 @@ public final class Solver {
 			int r2 = state[2]; // x
 			int r5 = state[5];
 			int r6 = state[6]; // y
-			Automaton.Collection s3 = (Automaton.Collection) automaton.get(state[3]);
-			int[] s3children = new int[s3.size() - 1];
-			for(int s3i=0, s3j=0; s3i != s3.size();++s3i) {
+			Automaton.Collection c3 = (Automaton.Collection) automaton.get(state[3]);
+			int[] c3children = new int[c3.size() - 1];
+			for(int s3i=0, s3j=0; s3i != c3.size();++s3i) {
 				if(s3i == r5) { continue; }
-				s3children[s3j++] = s3.get(s3i);
+				c3children[s3j++] = c3.get(s3i);
 			}
-			Automaton.Bag r7 = new Automaton.Bag(s3children);
+			Automaton.Bag r7 = new Automaton.Bag(c3children);
 			Automaton.Real r8 = (Automaton.Real) automaton.get(r2);
 			Automaton.Real r9 = (Automaton.Real) automaton.get(r6);
 			Automaton.Real r10 = r8.multiply(r9); // x mul y
@@ -3445,19 +3546,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Multiplication_2"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 5; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Multiplication_3
-	private final static class Reduction_53 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_55 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_53(Pattern.Term pattern) { super(pattern); }
+		public Reduction_55(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Mul{|Mul,AExpr...|}");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Mul) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -3482,7 +3582,7 @@ public final class Solver {
 							Automaton.State s8 = automaton.get(r8);
 							Automaton.Collection c8 = (Automaton.Collection) s8;
 							int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, 0, 0};
-							activations.add(new Activation(this,null,state));
+							activations.add(new Reduction.Activation(this,null,state));
 						}
 					}
 				}
@@ -3495,19 +3595,19 @@ public final class Solver {
 			int r2 = state[2]; // n1
 			int r5 = state[5];
 			int r7 = state[7]; // n2
-			Automaton.Collection s8 = (Automaton.Collection) automaton.get(state[8]);
-			int[] s8children = new int[s8.size() - 0];
-			for(int s8i=0, s8j=0; s8i != s8.size();++s8i) {
-				s8children[s8j++] = s8.get(s8i);
+			Automaton.Collection c8 = (Automaton.Collection) automaton.get(state[8]);
+			int[] c8children = new int[c8.size() - 0];
+			for(int s8i=0, s8j=0; s8i != c8.size();++s8i) {
+				c8children[s8j++] = c8.get(s8i);
 			}
-			Automaton.Bag r9 = new Automaton.Bag(s8children);
-			Automaton.Collection s3 = (Automaton.Collection) automaton.get(state[3]);
-			int[] s3children = new int[s3.size() - 1];
-			for(int s3i=0, s3j=0; s3i != s3.size();++s3i) {
+			Automaton.Bag r9 = new Automaton.Bag(c8children);
+			Automaton.Collection c3 = (Automaton.Collection) automaton.get(state[3]);
+			int[] c3children = new int[c3.size() - 1];
+			for(int s3i=0, s3j=0; s3i != c3.size();++s3i) {
 				if(s3i == r5) { continue; }
-				s3children[s3j++] = s3.get(s3i);
+				c3children[s3j++] = c3.get(s3i);
 			}
-			Automaton.Bag r10 = new Automaton.Bag(s3children);
+			Automaton.Bag r10 = new Automaton.Bag(c3children);
 			Automaton.Real r11 = (Automaton.Real) automaton.get(r2);
 			Automaton.Real r12 = (Automaton.Real) automaton.get(r7);
 			Automaton.Real r13 = r11.multiply(r12); // n1 mul n2
@@ -3524,19 +3624,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Multiplication_3"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 7; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Multiplication_4
-	private final static class Reduction_54 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_56 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_54(Pattern.Term pattern) { super(pattern); }
+		public Reduction_56(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Mul{|Sum,AExpr...|}");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Mul) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -3561,7 +3660,7 @@ public final class Solver {
 							Automaton.State s8 = automaton.get(r8);
 							Automaton.Collection c8 = (Automaton.Collection) s8;
 							int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, 0, 0};
-							activations.add(new Activation(this,null,state));
+							activations.add(new Reduction.Activation(this,null,state));
 						}
 					}
 				}
@@ -3574,19 +3673,19 @@ public final class Solver {
 			int r2 = state[2]; // n1
 			int r5 = state[5];
 			int r7 = state[7]; // n2
-			Automaton.Collection s8 = (Automaton.Collection) automaton.get(state[8]);
-			int[] s8children = new int[s8.size() - 0];
-			for(int s8i=0, s8j=0; s8i != s8.size();++s8i) {
-				s8children[s8j++] = s8.get(s8i);
+			Automaton.Collection c8 = (Automaton.Collection) automaton.get(state[8]);
+			int[] c8children = new int[c8.size() - 0];
+			for(int s8i=0, s8j=0; s8i != c8.size();++s8i) {
+				c8children[s8j++] = c8.get(s8i);
 			}
-			Automaton.Bag r9 = new Automaton.Bag(s8children);
-			Automaton.Collection s3 = (Automaton.Collection) automaton.get(state[3]);
-			int[] s3children = new int[s3.size() - 1];
-			for(int s3i=0, s3j=0; s3i != s3.size();++s3i) {
+			Automaton.Bag r9 = new Automaton.Bag(c8children);
+			Automaton.Collection c3 = (Automaton.Collection) automaton.get(state[3]);
+			int[] c3children = new int[c3.size() - 1];
+			for(int s3i=0, s3j=0; s3i != c3.size();++s3i) {
 				if(s3i == r5) { continue; }
-				s3children[s3j++] = s3.get(s3i);
+				c3children[s3j++] = c3.get(s3i);
 			}
-			Automaton.Bag r10 = new Automaton.Bag(s3children);
+			Automaton.Bag r10 = new Automaton.Bag(c3children);
 			Automaton.List t11 = new Automaton.List();
 			for(int i12=0;i12<r9.size();i12++) {
 				int r12 = (int) r9.get(i12);
@@ -3622,11 +3721,7 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Multiplication_4"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 7; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term $8<Div(^[$2<^$16<AExpr<$8|Num(^real)|Sum(^[^real,^{|$2...|}[$2...]])|Mul(^[^real,^{|$2...|}[$2...]])|$41<VExpr<Var(^string)|Fn(^[^string,$46<^Expr<$16|$84<Value<Num(^real)|Null|Tuple(^[^$84...])|Bool<True|False>|String(^string)|Array(^[^$84...])>>|Tuple(^[$46...])|$121<BExpr<$41|Bool<True|False>|And(^{^$121...})|Or(^{^$121...})|Not(^$121)|Equals(^[$133<^Type<Atom<NotT($156<^Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($133)|OrT(^{$133...})|AndT(^{$133...})|ArrayT($133)|TupleT(^[$133...])|FunctionT(^[$133,$133,$133...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$2])|Equation(^[^AType<IntT|RealT>,$2])|ForAll(^[^{^[^Var(^string),$133]...},^$121])|Exists(^[^{^[^Var(^string),$133]...},^$121])>>|SExpr<$41|Array(^[$46...])>>>...])|Load(^[$46,^int])|LengthOf($46)|IndexOf(^[$46,$46])>>>>>,$2])>
 	public final static int K_Div = 30;
@@ -3639,13 +3734,16 @@ public final class Solver {
 		return automaton.add(new Automaton.Term(K_Div, r1));
 	}
 
-	// Division_1
-	private final static class Reduction_55 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_57 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_55(Pattern.Term pattern) { super(pattern); }
+		public Reduction_57(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Div[Num,Num]");
+			put("rank",0);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Div) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -3663,7 +3761,7 @@ public final class Solver {
 						Automaton.Term t4 = (Automaton.Term) s4;
 						int r5 = t4.contents;
 						int[] state = {r0, r1, r2, r3, r4, r5};
-						activations.add(new Activation(this,null,state));
+						activations.add(new Reduction.Activation(this,null,state));
 					}
 				}
 			}
@@ -3686,19 +3784,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Division_1"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 5; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Division_2
-	private final static class Reduction_56 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_58 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_56(Pattern.Term pattern) { super(pattern); }
+		public Reduction_58(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Div[AExpr,Div]");
+			put("rank",0);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Div) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -3716,7 +3813,7 @@ public final class Solver {
 					int r5 = l4.get(0);
 					int r6 = l4.get(1);
 					int[] state = {r0, r1, r2, r3, r4, r5, r6};
-					activations.add(new Activation(this,null,state));
+					activations.add(new Reduction.Activation(this,null,state));
 				}
 			}
 		}
@@ -3745,19 +3842,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Division_2"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 9; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Division_3
-	private final static class Reduction_57 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_59 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_57(Pattern.Term pattern) { super(pattern); }
+		public Reduction_59(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Div[Div,AExpr]");
+			put("rank",0);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Div) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -3775,7 +3871,7 @@ public final class Solver {
 					int r5 = l3.get(1);
 					int r6 = l1.get(1);
 					int[] state = {r0, r1, r2, r3, r4, r5, r6};
-					activations.add(new Activation(this,null,state));
+					activations.add(new Reduction.Activation(this,null,state));
 				}
 			}
 		}
@@ -3804,19 +3900,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Division_3"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 9; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Division_4
-	private final static class Reduction_58 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_60 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_58(Pattern.Term pattern) { super(pattern); }
+		public Reduction_60(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Div[AExpr,Num]");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Div) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -3829,8 +3924,13 @@ public final class Solver {
 				if(s3.kind == K_Num) {
 					Automaton.Term t3 = (Automaton.Term) s3;
 					int r4 = t3.contents;
-					int[] state = {r0, r1, r2, r3, r4};
-					activations.add(new Activation(this,null,state));
+					Automaton.Real r5 = new Automaton.Real(0); // 0.0
+					Automaton.Real r6 = (Automaton.Real) automaton.get(r4);
+					boolean r7 = r6.compareTo(r5)<0; // n lt 0.0
+					if(r7) { // REQUIRES
+						int[] state = {r0, r1, r2, r3, r4};
+						activations.add(new Reduction.Activation(this,null,state));
+					}
 				}
 			}
 		}
@@ -3841,55 +3941,87 @@ public final class Solver {
 			int r2 = state[2]; // x
 			int r4 = state[4]; // n
 			Automaton.Real r5 = new Automaton.Real(1); // 1.0
-			Automaton.Real r6 = (Automaton.Real) automaton.get(r4);
-			boolean r7 = r6.equals(r5);    // n eq 1.0
-			if(r7) {
-				if(r0 != r2) {
-					return automaton.rewrite(r0, r2);
-				}
-			}
-			Automaton.Real r8 = new Automaton.Real(0); // 0.0
-			Automaton.Real r9 = (Automaton.Real) automaton.get(r4);
-			boolean r10 = r9.compareTo(r8)<0; // n lt 0.0
-			if(r10) {
-				Automaton.Real r11 = new Automaton.Real(1); // 1.0
-				Automaton.Real r12 = r11.negate(); // -1.0
-				int r13 = automaton.add(r12);
-				Automaton.Bag r14 = new Automaton.Bag(r2); // {|x|}
-				int r15 = automaton.add(r14);
-				Automaton.List r16 = new Automaton.List(r13, r15); // [-1.0{|x|}]
-				int r17 = automaton.add(r16);
-				Automaton.Term r18 = new Automaton.Term(K_Mul, r17);
-				int r19 = automaton.add(r18);
-				Automaton.Real r20 = (Automaton.Real) automaton.get(r4);
-				Automaton.Real r21 = r20.negate(); // -n
-				int r22 = automaton.add(r21);
-				Automaton.Term r23 = new Automaton.Term(K_Num, r22);
-				int r24 = automaton.add(r23);
-				Automaton.List r25 = new Automaton.List(r19, r24); // [Mul([-1.0{|x|}])Num(-n)]
-				int r26 = automaton.add(r25);
-				Automaton.Term r27 = new Automaton.Term(K_Div, r26);
-				int r28 = automaton.add(r27);
-				if(r0 != r28) {
-					return automaton.rewrite(r0, r28);
-				}
+			Automaton.Real r6 = r5.negate(); // -1.0
+			int r7 = automaton.add(r6);
+			Automaton.Bag r8 = new Automaton.Bag(r2); // {|x|}
+			int r9 = automaton.add(r8);
+			Automaton.List r10 = new Automaton.List(r7, r9); // [-1.0{|x|}]
+			int r11 = automaton.add(r10);
+			Automaton.Term r12 = new Automaton.Term(K_Mul, r11);
+			int r13 = automaton.add(r12);
+			Automaton.Real r14 = (Automaton.Real) automaton.get(r4);
+			Automaton.Real r15 = r14.negate(); // -n
+			int r16 = automaton.add(r15);
+			Automaton.Term r17 = new Automaton.Term(K_Num, r16);
+			int r18 = automaton.add(r17);
+			Automaton.List r19 = new Automaton.List(r13, r18); // [Mul([-1.0{|x|}])Num(-n)]
+			int r20 = automaton.add(r19);
+			Automaton.Term r21 = new Automaton.Term(K_Div, r20);
+			int r22 = automaton.add(r21);
+			if(r0 != r22) {
+				return automaton.rewrite(r0, r22);
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Division_4"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Division_5
-	private final static class Reduction_59 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_61 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_59(Pattern.Term pattern) { super(pattern); }
+		public Reduction_61(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Div[AExpr,Num]");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
+			Automaton.State s0 = automaton.get(r0);
+			if(s0.kind == K_Div) {
+				Automaton.Term t0 = (Automaton.Term) s0;
+				int r1 = t0.contents;
+				Automaton.State s1 = automaton.get(r1);
+				Automaton.List l1 = (Automaton.List) s1;
+				int r2 = l1.get(0);
+				int r3 = l1.get(1);
+				Automaton.State s3 = automaton.get(r3);
+				if(s3.kind == K_Num) {
+					Automaton.Term t3 = (Automaton.Term) s3;
+					int r4 = t3.contents;
+					Automaton.Real r5 = new Automaton.Real(1); // 1.0
+					Automaton.Real r6 = (Automaton.Real) automaton.get(r4);
+					boolean r7 = r6.equals(r5);    // n eq 1.0
+					if(r7) { // REQUIRES
+						int[] state = {r0, r1, r2, r3, r4};
+						activations.add(new Reduction.Activation(this,null,state));
+					}
+				}
+			}
+		}
+
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
+			int r0 = state[0];
+			int r2 = state[2]; // x
+			int r4 = state[4]; // n
+			if(r0 != r2) {
+				return automaton.rewrite(r0, r2);
+			}
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
+		}
+
+	}
+	private final static class Reduction_62 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_62(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Div[Mul,AExpr]");
+			put("rank",1);
+		}
+
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Div) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -3911,8 +4043,17 @@ public final class Solver {
 						for(int r7=0;r7!=c5.size();++r7) {
 							int r6 = c5.get(r7);
 							int r9 = l1.get(1);
-							int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, 0, r9};
-							activations.add(new Activation(this,null,state));
+							int[] c5children = new int[c5.size() - 1];
+							for(int s5i=0, s5j=0; s5i != c5.size();++s5i) {
+								if(s5i == r7) { continue; }
+								c5children[s5j++] = c5.get(s5i);
+							}
+							Automaton.Bag r8 = new Automaton.Bag(c5children);
+							boolean r10 = r6 == r9;        // x eq y
+							if(r10) { // REQUIRES
+								int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, 0, r9};
+								activations.add(new Reduction.Activation(this,null,state));
+							}
 						}
 					}
 				}
@@ -3925,58 +4066,103 @@ public final class Solver {
 			int r4 = state[4]; // n
 			int r6 = state[6]; // x
 			int r7 = state[7];
-			Automaton.Collection s5 = (Automaton.Collection) automaton.get(state[5]);
-			int[] s5children = new int[s5.size() - 1];
-			for(int s5i=0, s5j=0; s5i != s5.size();++s5i) {
+			Automaton.Collection c5 = (Automaton.Collection) automaton.get(state[5]);
+			int[] c5children = new int[c5.size() - 1];
+			for(int s5i=0, s5j=0; s5i != c5.size();++s5i) {
 				if(s5i == r7) { continue; }
-				s5children[s5j++] = s5.get(s5i);
+				c5children[s5j++] = c5.get(s5i);
 			}
-			Automaton.Bag r8 = new Automaton.Bag(s5children);
+			Automaton.Bag r8 = new Automaton.Bag(c5children);
 			int r9 = state[9]; // y
-			boolean r10 = r6 == r9;        // x eq y
-			if(r10) {
-				int r11 = automaton.add(r8);
-				Automaton.List r12 = new Automaton.List(r4, r11); // [nxs]
-				int r13 = automaton.add(r12);
-				Automaton.Term r14 = new Automaton.Term(K_Mul, r13);
-				int r15 = automaton.add(r14);
-				if(r0 != r15) {
-					return automaton.rewrite(r0, r15);
-				}
-			}
-			boolean r16 = Runtime.accepts(type19, automaton, r9, SCHEMA); // y is ^Num(^real)
-			if(r16) {
-				Automaton.Term r17 = (Automaton.Term) automaton.get(r9);
-				int r18 = r17.contents;
-				Automaton.Real r19 = (Automaton.Real) automaton.get(r4);
-				Automaton.Real r20 = (Automaton.Real) automaton.get(r18);
-				Automaton.Real r21 = r19.divide(r20); // n div *y
-				int r22 = automaton.add(r21);
-				int r23 = automaton.add(r8);
-				Automaton.List r24 = new Automaton.List(r22, r23); // [n div *yxs]
-				int r25 = automaton.add(r24);
-				Automaton.Term r26 = new Automaton.Term(K_Mul, r25);
-				int r27 = automaton.add(r26);
-				if(r0 != r27) {
-					return automaton.rewrite(r0, r27);
-				}
+			int r10 = automaton.add(r8);
+			Automaton.List r11 = new Automaton.List(r4, r10); // [nxs]
+			int r12 = automaton.add(r11);
+			Automaton.Term r13 = new Automaton.Term(K_Mul, r12);
+			int r14 = automaton.add(r13);
+			if(r0 != r14) {
+				return automaton.rewrite(r0, r14);
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Division_5"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Division_6
-	private final static class Reduction_60 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_63 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_60(Pattern.Term pattern) { super(pattern); }
+		public Reduction_63(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Div[Mul,AExpr]");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
+			Automaton.State s0 = automaton.get(r0);
+			if(s0.kind == K_Div) {
+				Automaton.Term t0 = (Automaton.Term) s0;
+				int r1 = t0.contents;
+				Automaton.State s1 = automaton.get(r1);
+				Automaton.List l1 = (Automaton.List) s1;
+				int r2 = l1.get(0);
+				Automaton.State s2 = automaton.get(r2);
+				if(s2.kind == K_Mul) {
+					Automaton.Term t2 = (Automaton.Term) s2;
+					int r3 = t2.contents;
+					Automaton.State s3 = automaton.get(r3);
+					Automaton.List l3 = (Automaton.List) s3;
+					int r4 = l3.get(0);
+					int r5 = l3.get(1);
+					Automaton.State s5 = automaton.get(r5);
+					Automaton.Collection c5 = (Automaton.Collection) s5;
+					int r7 = l1.get(1);
+					if(Runtime.accepts(type18,automaton,automaton.get(r7), SCHEMA)) {
+						int[] state = {r0, r1, r2, r3, r4, r5, 0, r7};
+						activations.add(new Reduction.Activation(this,null,state));
+					}
+				}
+			}
+		}
+
+		public final int apply(Automaton automaton, int[] state) {
+			int nStates = automaton.nStates();
+			int r0 = state[0];
+			int r4 = state[4]; // n
+			Automaton.Collection c5 = (Automaton.Collection) automaton.get(state[5]);
+			int[] c5children = new int[c5.size() - 0];
+			for(int s5i=0, s5j=0; s5i != c5.size();++s5i) {
+				c5children[s5j++] = c5.get(s5i);
+			}
+			Automaton.Bag r6 = new Automaton.Bag(c5children);
+			int r7 = state[7]; // y
+			Automaton.Term r8 = (Automaton.Term) automaton.get(r7);
+			int r9 = r8.contents;
+			Automaton.Real r10 = (Automaton.Real) automaton.get(r4);
+			Automaton.Real r11 = (Automaton.Real) automaton.get(r9);
+			Automaton.Real r12 = r10.divide(r11); // n div *y
+			int r13 = automaton.add(r12);
+			int r14 = automaton.add(r6);
+			Automaton.List r15 = new Automaton.List(r13, r14); // [n div *yxs]
+			int r16 = automaton.add(r15);
+			Automaton.Term r17 = new Automaton.Term(K_Mul, r16);
+			int r18 = automaton.add(r17);
+			if(r0 != r18) {
+				return automaton.rewrite(r0, r18);
+			}
+			automaton.resize(nStates);
+			return Automaton.K_VOID;
+		}
+
+	}
+	private final static class Reduction_64 extends AbstractRewriteRule implements ReductionRule {
+
+		public Reduction_64(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Div[Sum,AExpr]");
+			put("rank",1);
+		}
+
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Div) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -3996,7 +4182,7 @@ public final class Solver {
 					Automaton.Collection c5 = (Automaton.Collection) s5;
 					int r7 = l1.get(1);
 					int[] state = {r0, r1, r2, r3, r4, r5, 0, r7};
-					activations.add(new Activation(this,null,state));
+					activations.add(new Reduction.Activation(this,null,state));
 				}
 			}
 		}
@@ -4005,12 +4191,12 @@ public final class Solver {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r4 = state[4]; // n
-			Automaton.Collection s5 = (Automaton.Collection) automaton.get(state[5]);
-			int[] s5children = new int[s5.size() - 0];
-			for(int s5i=0, s5j=0; s5i != s5.size();++s5i) {
-				s5children[s5j++] = s5.get(s5i);
+			Automaton.Collection c5 = (Automaton.Collection) automaton.get(state[5]);
+			int[] c5children = new int[c5.size() - 0];
+			for(int s5i=0, s5j=0; s5i != c5.size();++s5i) {
+				c5children[s5j++] = c5.get(s5i);
 			}
-			Automaton.Bag r6 = new Automaton.Bag(s5children);
+			Automaton.Bag r6 = new Automaton.Bag(c5children);
 			int r7 = state[7]; // y
 			Automaton.List t8 = new Automaton.List();
 			for(int i9=0;i9<r6.size();i9++) {
@@ -4042,19 +4228,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Division_6"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 7; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Division_7
-	private final static class Reduction_61 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_65 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_61(Pattern.Term pattern) { super(pattern); }
+		public Reduction_65(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Div[Mul,AExpr]");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Div) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -4074,7 +4259,7 @@ public final class Solver {
 					Automaton.Collection c5 = (Automaton.Collection) s5;
 					int r7 = l1.get(1);
 					int[] state = {r0, r1, r2, r3, r4, r5, 0, r7};
-					activations.add(new Activation(this,null,state));
+					activations.add(new Reduction.Activation(this,null,state));
 				}
 			}
 		}
@@ -4083,12 +4268,12 @@ public final class Solver {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r4 = state[4]; // n
-			Automaton.Collection s5 = (Automaton.Collection) automaton.get(state[5]);
-			int[] s5children = new int[s5.size() - 0];
-			for(int s5i=0, s5j=0; s5i != s5.size();++s5i) {
-				s5children[s5j++] = s5.get(s5i);
+			Automaton.Collection c5 = (Automaton.Collection) automaton.get(state[5]);
+			int[] c5children = new int[c5.size() - 0];
+			for(int s5i=0, s5j=0; s5i != c5.size();++s5i) {
+				c5children[s5j++] = c5.get(s5i);
 			}
-			Automaton.Bag r6 = new Automaton.Bag(s5children);
+			Automaton.Bag r6 = new Automaton.Bag(c5children);
 			int r7 = state[7]; // y
 			Automaton.Real r8 = new Automaton.Real(1); // 1.0
 			int r9 = automaton.add(r8);
@@ -4110,11 +4295,7 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Division_7"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 7; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term $12<Sum($10<^[^real,^{|$3<^$20<AExpr<$12|Num(^real)|Mul($10)|Div(^[$3,$3])|$41<VExpr<Var(^string)|Fn(^[^string,$46<^Expr<$20|$84<Value<Num(^real)|Null|Tuple(^[^$84...])|Bool<True|False>|String(^string)|Array(^[^$84...])>>|Tuple(^[$46...])|$121<BExpr<$41|Bool<True|False>|And(^{^$121...})|Or(^{^$121...})|Not(^$121)|Equals(^[$133<^Type<Atom<NotT($156<^Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($133)|OrT(^{$133...})|AndT(^{$133...})|ArrayT($133)|TupleT(^[$133...])|FunctionT(^[$133,$133,$133...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$3])|Equation(^[^AType<IntT|RealT>,$3])|ForAll(^[^{^[^Var(^string),$133]...},^$121])|Exists(^[^{^[^Var(^string),$133]...},^$121])>>|SExpr<$41|Array(^[$46...])>>>...])|Load(^[$46,^int])|LengthOf($46)|IndexOf(^[$46,$46])>>>>>...|}[$3<^$20<AExpr<$12|Num(^real)|Mul($10)|Div(^[$3,$3])|$41<VExpr<Var(^string)|Fn(^[^string,$46<^Expr<$20|$84<Value<Num(^real)|Null|Tuple(^[^$84...])|Bool<True|False>|String(^string)|Array(^[^$84...])>>|Tuple(^[$46...])|$121<BExpr<$41|Bool<True|False>|And(^{^$121...})|Or(^{^$121...})|Not(^$121)|Equals(^[$133<^Type<Atom<NotT($156<^Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($133)|OrT(^{$133...})|AndT(^{$133...})|ArrayT($133)|TupleT(^[$133...])|FunctionT(^[$133,$133,$133...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,$3])|Equation(^[^AType<IntT|RealT>,$3])|ForAll(^[^{^[^Var(^string),$133]...},^$121])|Exists(^[^{^[^Var(^string),$133]...},^$121])>>|SExpr<$41|Array(^[$46...])>>>...])|Load(^[$46,^int])|LengthOf($46)|IndexOf(^[$46,$46])>>>>>...]]>)>
 	public final static int K_Sum = 31;
@@ -4127,13 +4308,16 @@ public final class Solver {
 		return automaton.add(new Automaton.Term(K_Sum, r1));
 	}
 
-	// Sum_1
-	private final static class Reduction_62 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_66 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_62(Pattern.Term pattern) { super(pattern); }
+		public Reduction_66(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Sum{||}");
+			put("rank",0);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Sum) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -4146,7 +4330,7 @@ public final class Solver {
 				Automaton.Collection c3 = (Automaton.Collection) s3;
 				if(c3.size() == 0) {
 					int[] state = {r0, r1, r2, r3};
-					activations.add(new Activation(this,null,state));
+					activations.add(new Reduction.Activation(this,null,state));
 				}
 			}
 		}
@@ -4163,19 +4347,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Sum_1"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 3; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Sum_2
-	private final static class Reduction_63 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_67 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_63(Pattern.Term pattern) { super(pattern); }
+		public Reduction_67(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Sum{|Mul{|VExpr|}|}");
+			put("rank",0);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Sum) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -4203,8 +4386,20 @@ public final class Solver {
 								for(int r10=0;r10!=c8.size();++r10) {
 									int r9 = c8.get(r10);
 									if(Runtime.accepts(type8,automaton,automaton.get(r9), SCHEMA)) {
-										int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10};
-										activations.add(new Activation(this,null,state));
+										Automaton.Real r11 = new Automaton.Real(0); // 0.0
+										Automaton.Real r12 = (Automaton.Real) automaton.get(r2);
+										boolean r13 = r12.equals(r11); // n eq 0.0
+										boolean r14 = false;           // n eq 0.0 && m eq 1.0
+										if(r13) {
+											Automaton.Real r15 = new Automaton.Real(1); // 1.0
+											Automaton.Real r16 = (Automaton.Real) automaton.get(r7);
+											boolean r17 = r16.equals(r15); // m eq 1.0
+											r14 = r17;
+										}
+										if(r14) { // REQUIRES
+											int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10};
+											activations.add(new Reduction.Activation(this,null,state));
+										}
 									}
 								}
 							}
@@ -4222,37 +4417,24 @@ public final class Solver {
 			int r7 = state[7]; // m
 			int r9 = state[9]; // x
 			int r10 = state[10];
-			Automaton.Real r11 = new Automaton.Real(0); // 0.0
-			Automaton.Real r12 = (Automaton.Real) automaton.get(r2);
-			boolean r13 = r12.equals(r11); // n eq 0.0
-			boolean r14 = false;           // n eq 0.0 && m eq 1.0
-			if(r13) {
-				Automaton.Real r15 = new Automaton.Real(1); // 1.0
-				Automaton.Real r16 = (Automaton.Real) automaton.get(r7);
-				boolean r17 = r16.equals(r15); // m eq 1.0
-				r14 = r17;
-			}
-			if(r14) {
-				if(r0 != r9) {
-					return automaton.rewrite(r0, r9);
-				}
+			if(r0 != r9) {
+				return automaton.rewrite(r0, r9);
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Sum_2"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Sum_3
-	private final static class Reduction_64 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_68 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_64(Pattern.Term pattern) { super(pattern); }
+		public Reduction_68(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Sum{|AExpr,AExpr...|}");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Sum) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -4266,8 +4448,22 @@ public final class Solver {
 				if(c3.size() >= 1) {
 					for(int r5=0;r5!=c3.size();++r5) {
 						int r4 = c3.get(r5);
-						int[] state = {r0, r1, r2, r3, r4, r5, 0};
-						activations.add(new Activation(this,null,state));
+						int[] c3children = new int[c3.size() - 1];
+						for(int s3i=0, s3j=0; s3i != c3.size();++s3i) {
+							if(s3i == r5) { continue; }
+							c3children[s3j++] = c3.get(s3i);
+						}
+						Automaton.Bag r6 = new Automaton.Bag(c3children);
+						boolean r7 = Runtime.accepts(type19, automaton, r4, SCHEMA); // x is ^Num(^real)
+						boolean r8 = Runtime.accepts(type20, automaton, r4, SCHEMA); // x is ^$13<Sum($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...]]>)>
+						boolean r9 = Runtime.accepts(type21, automaton, r4, SCHEMA); // x is ^$13<Mul($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...]]>)>
+						boolean r10 = r8 || r9;        // x is ^$13<Sum($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...]]>)> || x is ^$13<Mul($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...]]>)>
+						boolean r11 = r7 || r10;       // x is ^Num(^real) || x is ^$13<Sum($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...]]>)> || x is ^$13<Mul($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...]]>)>
+						boolean r12 = !r11;            // !x is ^Num(^real) || x is ^$13<Sum($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...]]>)> || x is ^$13<Mul($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...]]>)>
+						if(r12) { // REQUIRES
+							int[] state = {r0, r1, r2, r3, r4, r5, 0};
+							activations.add(new Reduction.Activation(this,null,state));
+						}
 					}
 				}
 			}
@@ -4279,54 +4475,45 @@ public final class Solver {
 			int r2 = state[2]; // n
 			int r4 = state[4]; // x
 			int r5 = state[5];
-			Automaton.Collection s3 = (Automaton.Collection) automaton.get(state[3]);
-			int[] s3children = new int[s3.size() - 1];
-			for(int s3i=0, s3j=0; s3i != s3.size();++s3i) {
+			Automaton.Collection c3 = (Automaton.Collection) automaton.get(state[3]);
+			int[] c3children = new int[c3.size() - 1];
+			for(int s3i=0, s3j=0; s3i != c3.size();++s3i) {
 				if(s3i == r5) { continue; }
-				s3children[s3j++] = s3.get(s3i);
+				c3children[s3j++] = c3.get(s3i);
 			}
-			Automaton.Bag r6 = new Automaton.Bag(s3children);
-			boolean r7 = Runtime.accepts(type19, automaton, r4, SCHEMA); // x is ^Num(^real)
-			boolean r8 = Runtime.accepts(type20, automaton, r4, SCHEMA); // x is ^$13<Sum($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...]]>)>
-			boolean r9 = Runtime.accepts(type21, automaton, r4, SCHEMA); // x is ^$13<Mul($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...]]>)>
-			boolean r10 = r8 || r9;        // x is ^$13<Sum($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...]]>)> || x is ^$13<Mul($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...]]>)>
-			boolean r11 = r7 || r10;       // x is ^Num(^real) || x is ^$13<Sum($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...]]>)> || x is ^$13<Mul($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...]]>)>
-			boolean r12 = !r11;            // !x is ^Num(^real) || x is ^$13<Sum($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...]]>)> || x is ^$13<Mul($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Sum($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...]]>)>
-			if(r12) {
-				Automaton.Real r13 = new Automaton.Real(1); // 1.0
-				int r14 = automaton.add(r13);
-				Automaton.Bag r15 = new Automaton.Bag(r4); // {|x|}
-				int r16 = automaton.add(r15);
-				Automaton.List r17 = new Automaton.List(r14, r16); // [1.0{|x|}]
-				int r18 = automaton.add(r17);
-				Automaton.Term r19 = new Automaton.Term(K_Mul, r18);
-				int r20 = automaton.add(r19);
-				Automaton.Bag r21 = r6.appendFront(r20); // Mul([1.0{|x|}]) append rest
-				int r22 = automaton.add(r21);
-				Automaton.List r23 = new Automaton.List(r2, r22); // [nMul([1.0{|x|}]) append rest]
-				int r24 = automaton.add(r23);
-				Automaton.Term r25 = new Automaton.Term(K_Sum, r24);
-				int r26 = automaton.add(r25);
-				if(r0 != r26) {
-					return automaton.rewrite(r0, r26);
-				}
+			Automaton.Bag r6 = new Automaton.Bag(c3children);
+			Automaton.Real r7 = new Automaton.Real(1); // 1.0
+			int r8 = automaton.add(r7);
+			Automaton.Bag r9 = new Automaton.Bag(r4); // {|x|}
+			int r10 = automaton.add(r9);
+			Automaton.List r11 = new Automaton.List(r8, r10); // [1.0{|x|}]
+			int r12 = automaton.add(r11);
+			Automaton.Term r13 = new Automaton.Term(K_Mul, r12);
+			int r14 = automaton.add(r13);
+			Automaton.Bag r15 = r6.appendFront(r14); // Mul([1.0{|x|}]) append rest
+			int r16 = automaton.add(r15);
+			Automaton.List r17 = new Automaton.List(r2, r16); // [nMul([1.0{|x|}]) append rest]
+			int r18 = automaton.add(r17);
+			Automaton.Term r19 = new Automaton.Term(K_Sum, r18);
+			int r20 = automaton.add(r19);
+			if(r0 != r20) {
+				return automaton.rewrite(r0, r20);
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Sum_3"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Sum_4
-	private final static class Reduction_65 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_69 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_65(Pattern.Term pattern) { super(pattern); }
+		public Reduction_69(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Sum{|Num,AExpr...|}");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Sum) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -4345,7 +4532,7 @@ public final class Solver {
 							Automaton.Term t4 = (Automaton.Term) s4;
 							int r6 = t4.contents;
 							int[] state = {r0, r1, r2, r3, r4, r5, r6, 0};
-							activations.add(new Activation(this,null,state));
+							activations.add(new Reduction.Activation(this,null,state));
 						}
 					}
 				}
@@ -4358,13 +4545,13 @@ public final class Solver {
 			int r2 = state[2]; // x
 			int r5 = state[5];
 			int r6 = state[6]; // y
-			Automaton.Collection s3 = (Automaton.Collection) automaton.get(state[3]);
-			int[] s3children = new int[s3.size() - 1];
-			for(int s3i=0, s3j=0; s3i != s3.size();++s3i) {
+			Automaton.Collection c3 = (Automaton.Collection) automaton.get(state[3]);
+			int[] c3children = new int[c3.size() - 1];
+			for(int s3i=0, s3j=0; s3i != c3.size();++s3i) {
 				if(s3i == r5) { continue; }
-				s3children[s3j++] = s3.get(s3i);
+				c3children[s3j++] = c3.get(s3i);
 			}
-			Automaton.Bag r7 = new Automaton.Bag(s3children);
+			Automaton.Bag r7 = new Automaton.Bag(c3children);
 			Automaton.Real r8 = (Automaton.Real) automaton.get(r2);
 			Automaton.Real r9 = (Automaton.Real) automaton.get(r6);
 			Automaton.Real r10 = r8.add(r9); // x add y
@@ -4380,19 +4567,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Sum_4"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 5; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Sum_5
-	private final static class Reduction_66 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_70 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_66(Pattern.Term pattern) { super(pattern); }
+		public Reduction_70(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Sum{|Mul,Mul,AExpr|}");
+			put("rank",2);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Sum) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -4429,8 +4615,17 @@ public final class Solver {
 									int r14 = l12.get(1);
 									Automaton.State s14 = automaton.get(r14);
 									Automaton.Collection c14 = (Automaton.Collection) s14;
-									int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, 0, r10, r11, r12, r13, r14, 0, 0};
-									activations.add(new Activation(this,null,state));
+									int[] c3children = new int[c3.size() - 2];
+									for(int s3i=0, s3j=0; s3i != c3.size();++s3i) {
+										if(s3i == r5 || s3i == r11) { continue; }
+										c3children[s3j++] = c3.get(s3i);
+									}
+									Automaton.Bag r16 = new Automaton.Bag(c3children);
+									boolean r17 = r8 == r14;       // xs eq ys
+									if(r17) { // REQUIRES
+										int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, 0, r10, r11, r12, r13, r14, 0, 0};
+										activations.add(new Reduction.Activation(this,null,state));
+									}
 								}
 							}
 						}
@@ -4449,49 +4644,45 @@ public final class Solver {
 			int r11 = state[11];
 			int r13 = state[13]; // y
 			int r14 = state[14]; // ys
-			Automaton.Collection s3 = (Automaton.Collection) automaton.get(state[3]);
-			int[] s3children = new int[s3.size() - 2];
-			for(int s3i=0, s3j=0; s3i != s3.size();++s3i) {
+			Automaton.Collection c3 = (Automaton.Collection) automaton.get(state[3]);
+			int[] c3children = new int[c3.size() - 2];
+			for(int s3i=0, s3j=0; s3i != c3.size();++s3i) {
 				if(s3i == r5 || s3i == r11) { continue; }
-				s3children[s3j++] = s3.get(s3i);
+				c3children[s3j++] = c3.get(s3i);
 			}
-			Automaton.Bag r16 = new Automaton.Bag(s3children);
-			boolean r17 = r8 == r14;       // xs eq ys
-			if(r17) {
-				Automaton.Real r18 = (Automaton.Real) automaton.get(r7);
-				Automaton.Real r19 = (Automaton.Real) automaton.get(r13);
-				Automaton.Real r20 = r18.add(r19); // x add y
-				int r21 = automaton.add(r20);
-				Automaton.List r22 = new Automaton.List(r21, r8); // [x add yxs]
-				int r23 = automaton.add(r22);
-				Automaton.Term r24 = new Automaton.Term(K_Mul, r23);
-				int r25 = automaton.add(r24);
-				Automaton.Bag r26 = r16.appendFront(r25); // Mul([x add yxs]) append zs
-				int r27 = automaton.add(r26);
-				Automaton.List r28 = new Automaton.List(r2, r27); // [nMul([x add yxs]) append zs]
-				int r29 = automaton.add(r28);
-				Automaton.Term r30 = new Automaton.Term(K_Sum, r29);
-				int r31 = automaton.add(r30);
-				if(r0 != r31) {
-					return automaton.rewrite(r0, r31);
-				}
+			Automaton.Bag r16 = new Automaton.Bag(c3children);
+			Automaton.Real r17 = (Automaton.Real) automaton.get(r7);
+			Automaton.Real r18 = (Automaton.Real) automaton.get(r13);
+			Automaton.Real r19 = r17.add(r18); // x add y
+			int r20 = automaton.add(r19);
+			Automaton.List r21 = new Automaton.List(r20, r8); // [x add yxs]
+			int r22 = automaton.add(r21);
+			Automaton.Term r23 = new Automaton.Term(K_Mul, r22);
+			int r24 = automaton.add(r23);
+			Automaton.Bag r25 = r16.appendFront(r24); // Mul([x add yxs]) append zs
+			int r26 = automaton.add(r25);
+			Automaton.List r27 = new Automaton.List(r2, r26); // [nMul([x add yxs]) append zs]
+			int r28 = automaton.add(r27);
+			Automaton.Term r29 = new Automaton.Term(K_Sum, r28);
+			int r30 = automaton.add(r29);
+			if(r0 != r30) {
+				return automaton.rewrite(r0, r30);
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Sum_5"; }
-		public final int rank() { return 2; }
 
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Sum_6
-	private final static class Reduction_67 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_71 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_67(Pattern.Term pattern) { super(pattern); }
+		public Reduction_71(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Sum{|Sum,AExpr|}");
+			put("rank",2);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Sum) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -4516,7 +4707,7 @@ public final class Solver {
 							Automaton.State s8 = automaton.get(r8);
 							Automaton.Collection c8 = (Automaton.Collection) s8;
 							int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, 0, 0};
-							activations.add(new Activation(this,null,state));
+							activations.add(new Reduction.Activation(this,null,state));
 						}
 					}
 				}
@@ -4529,19 +4720,19 @@ public final class Solver {
 			int r2 = state[2]; // x
 			int r5 = state[5];
 			int r7 = state[7]; // y
-			Automaton.Collection s8 = (Automaton.Collection) automaton.get(state[8]);
-			int[] s8children = new int[s8.size() - 0];
-			for(int s8i=0, s8j=0; s8i != s8.size();++s8i) {
-				s8children[s8j++] = s8.get(s8i);
+			Automaton.Collection c8 = (Automaton.Collection) automaton.get(state[8]);
+			int[] c8children = new int[c8.size() - 0];
+			for(int s8i=0, s8j=0; s8i != c8.size();++s8i) {
+				c8children[s8j++] = c8.get(s8i);
 			}
-			Automaton.Bag r9 = new Automaton.Bag(s8children);
-			Automaton.Collection s3 = (Automaton.Collection) automaton.get(state[3]);
-			int[] s3children = new int[s3.size() - 1];
-			for(int s3i=0, s3j=0; s3i != s3.size();++s3i) {
+			Automaton.Bag r9 = new Automaton.Bag(c8children);
+			Automaton.Collection c3 = (Automaton.Collection) automaton.get(state[3]);
+			int[] c3children = new int[c3.size() - 1];
+			for(int s3i=0, s3j=0; s3i != c3.size();++s3i) {
 				if(s3i == r5) { continue; }
-				s3children[s3j++] = s3.get(s3i);
+				c3children[s3j++] = c3.get(s3i);
 			}
-			Automaton.Bag r10 = new Automaton.Bag(s3children);
+			Automaton.Bag r10 = new Automaton.Bag(c3children);
 			Automaton.Real r11 = (Automaton.Real) automaton.get(r2);
 			Automaton.Real r12 = (Automaton.Real) automaton.get(r7);
 			Automaton.Real r13 = r11.add(r12); // x add y
@@ -4558,11 +4749,7 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Sum_6"; }
-		public final int rank() { return 2; }
 
-		public final int minimum() { return 7; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term $10<Equation($8<^[^AType<IntT|RealT>,$4<^$29<AExpr<Num(^real)|Sum(^[^real,^{|$4...|}[$4...]])|Mul(^[^real,^{|$4...|}[$4...]])|Div(^[$4,$4])|$60<VExpr<Var(^string)|Fn(^[^string,$65<^Expr<$29|$103<Value<Num(^real)|Null|Tuple(^[^$103...])|Bool<True|False>|String(^string)|Array(^[^$103...])>>|Tuple(^[$65...])|$139<BExpr<$60|Bool<True|False>|And(^{^$139...})|Or(^{^$139...})|Not(^$139)|Equals(^[$151<^Type<Atom<NotT($174<^Proton<TupleT(^[$174...])|ArrayT($174)|Quark<IntT|RealT|AnyT|NullT|VoidT|BoolT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$174...])|ArrayT($174)|Quark<IntT|RealT|AnyT|NullT|VoidT|BoolT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($151)|OrT(^{$151...})|AndT(^{$151...})|ArrayT($151)|TupleT(^[$151...])|FunctionT(^[$151,$151,$151...])>>,^{|$65,$65|}[$65,$65]])|$10|Inequality($8)|ForAll(^[^{^[^Var(^string),$151]...},^$139])|Exists(^[^{^[^Var(^string),$151]...},^$139])>>|SExpr<$60|Array(^[$65...])>>>...])|Load(^[$65,^int])|LengthOf($65)|IndexOf(^[$65,$65])>>>>>]>)>
 	public final static int K_Equation = 32;
@@ -4575,13 +4762,16 @@ public final class Solver {
 		return automaton.add(new Automaton.Term(K_Equation, r1));
 	}
 
-	// Equation_1
-	private final static class Reduction_68 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_72 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_68(Pattern.Term pattern) { super(pattern); }
+		public Reduction_72(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Equation[Num]");
+			put("rank",0);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Equation) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -4595,7 +4785,7 @@ public final class Solver {
 					Automaton.Term t3 = (Automaton.Term) s3;
 					int r4 = t3.contents;
 					int[] state = {r0, r1, r2, r3, r4};
-					activations.add(new Activation(this,null,state));
+					activations.add(new Reduction.Activation(this,null,state));
 				}
 			}
 		}
@@ -4622,19 +4812,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Equation_1"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 4; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Equation_1b
-	private final static class Reduction_69 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_73 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_69(Pattern.Term pattern) { super(pattern); }
+		public Reduction_73(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Equation[Sum{|Mul[-m,{|AExpr...|}]]");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Equation) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -4666,8 +4855,25 @@ public final class Solver {
 								int r11 = l9.get(1);
 								Automaton.State s11 = automaton.get(r11);
 								Automaton.Collection c11 = (Automaton.Collection) s11;
-								int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, 0};
-								activations.add(new Activation(this,null,state));
+								int[] c11children = new int[c11.size() - 0];
+								for(int s11i=0, s11j=0; s11i != c11.size();++s11i) {
+									c11children[s11j++] = c11.get(s11i);
+								}
+								Automaton.Bag r12 = new Automaton.Bag(c11children);
+								Automaton.Real r13 = new Automaton.Real(0); // 0.0
+								Automaton.Real r14 = (Automaton.Real) automaton.get(r5);
+								boolean r15 = r14.equals(r13); // n eq 0.0
+								boolean r16 = false;           // n eq 0.0 && m lt 0.0
+								if(r15) {
+									Automaton.Real r17 = new Automaton.Real(0); // 0.0
+									Automaton.Real r18 = (Automaton.Real) automaton.get(r10);
+									boolean r19 = r18.compareTo(r17)<0; // m lt 0.0
+									r16 = r19;
+								}
+								if(r16) { // REQUIRES
+									int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, 0};
+									activations.add(new Reduction.Activation(this,null,state));
+								}
 							}
 						}
 					}
@@ -4682,61 +4888,48 @@ public final class Solver {
 			int r5 = state[5]; // n
 			int r8 = state[8];
 			int r10 = state[10]; // m
-			Automaton.Collection s11 = (Automaton.Collection) automaton.get(state[11]);
-			int[] s11children = new int[s11.size() - 0];
-			for(int s11i=0, s11j=0; s11i != s11.size();++s11i) {
-				s11children[s11j++] = s11.get(s11i);
+			Automaton.Collection c11 = (Automaton.Collection) automaton.get(state[11]);
+			int[] c11children = new int[c11.size() - 0];
+			for(int s11i=0, s11j=0; s11i != c11.size();++s11i) {
+				c11children[s11j++] = c11.get(s11i);
 			}
-			Automaton.Bag r12 = new Automaton.Bag(s11children);
-			Automaton.Real r13 = new Automaton.Real(0); // 0.0
-			Automaton.Real r14 = (Automaton.Real) automaton.get(r5);
-			boolean r15 = r14.equals(r13); // n eq 0.0
-			boolean r16 = false;           // n eq 0.0 && m lt 0.0
-			if(r15) {
-				Automaton.Real r17 = new Automaton.Real(0); // 0.0
-				Automaton.Real r18 = (Automaton.Real) automaton.get(r10);
-				boolean r19 = r18.compareTo(r17)<0; // m lt 0.0
-				r16 = r19;
-			}
-			if(r16) {
-				Automaton.Real r20 = (Automaton.Real) automaton.get(r10);
-				Automaton.Real r21 = r20.negate(); // -m
-				int r22 = automaton.add(r21);
-				int r23 = automaton.add(r12);
-				Automaton.List r24 = new Automaton.List(r22, r23); // [-mxs]
-				int r25 = automaton.add(r24);
-				Automaton.Term r26 = new Automaton.Term(K_Mul, r25);
-				int r27 = automaton.add(r26);
-				Automaton.Bag r28 = new Automaton.Bag(r27); // {|Mul([-mxs])|}
-				int r29 = automaton.add(r28);
-				Automaton.List r30 = new Automaton.List(r5, r29); // [n{|Mul([-mxs])|}]
-				int r31 = automaton.add(r30);
-				Automaton.Term r32 = new Automaton.Term(K_Sum, r31);
-				int r33 = automaton.add(r32);
-				Automaton.List r34 = new Automaton.List(r2, r33); // [tSum([n{|Mul([-mxs])|}])]
-				int r35 = automaton.add(r34);
-				Automaton.Term r36 = new Automaton.Term(K_Equation, r35);
-				int r37 = automaton.add(r36);
-				if(r0 != r37) {
-					return automaton.rewrite(r0, r37);
-				}
+			Automaton.Bag r12 = new Automaton.Bag(c11children);
+			Automaton.Real r13 = (Automaton.Real) automaton.get(r10);
+			Automaton.Real r14 = r13.negate(); // -m
+			int r15 = automaton.add(r14);
+			int r16 = automaton.add(r12);
+			Automaton.List r17 = new Automaton.List(r15, r16); // [-mxs]
+			int r18 = automaton.add(r17);
+			Automaton.Term r19 = new Automaton.Term(K_Mul, r18);
+			int r20 = automaton.add(r19);
+			Automaton.Bag r21 = new Automaton.Bag(r20); // {|Mul([-mxs])|}
+			int r22 = automaton.add(r21);
+			Automaton.List r23 = new Automaton.List(r5, r22); // [n{|Mul([-mxs])|}]
+			int r24 = automaton.add(r23);
+			Automaton.Term r25 = new Automaton.Term(K_Sum, r24);
+			int r26 = automaton.add(r25);
+			Automaton.List r27 = new Automaton.List(r2, r26); // [tSum([n{|Mul([-mxs])|}])]
+			int r28 = automaton.add(r27);
+			Automaton.Term r29 = new Automaton.Term(K_Equation, r28);
+			int r30 = automaton.add(r29);
+			if(r0 != r30) {
+				return automaton.rewrite(r0, r30);
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Equation_1b"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Equation_Gcd_1
-	private final static class Reduction_70 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_74 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_70(Pattern.Term pattern) { super(pattern); }
+		public Reduction_74(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Equation[Sum{|Mul|}]");
+			put("rank",2);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Equation) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -4766,7 +4959,7 @@ public final class Solver {
 					}
 					if(m6_0) {
 						int[] state = {r0, r1, r2, r3, r4, r5, r6, 0};
-						activations.add(new Activation(this,null,state));
+						activations.add(new Reduction.Activation(this,null,state));
 					}
 				}
 			}
@@ -4778,12 +4971,12 @@ public final class Solver {
 			int r2 = state[2]; // t
 			int r5 = state[5]; // n
 			int r6 = state[6]; // ms
-			Automaton.Collection s6 = (Automaton.Collection) automaton.get(state[6]);
-			int[] s6children = new int[s6.size() - 0];
-			for(int s6i=0, s6j=0; s6i != s6.size();++s6i) {
-				s6children[s6j++] = s6.get(s6i);
+			Automaton.Collection c6 = (Automaton.Collection) automaton.get(state[6]);
+			int[] c6children = new int[c6.size() - 0];
+			for(int s6i=0, s6j=0; s6i != c6.size();++s6i) {
+				c6children[s6j++] = c6.get(s6i);
 			}
-			Automaton.Bag r7 = new Automaton.Bag(s6children);
+			Automaton.Bag r7 = new Automaton.Bag(c6children);
 			Automaton.List r8 = new Automaton.List(r5, r6); // [nms]
 			Automaton.Real r9 = Solver$native.gcd(automaton, r8);
 			Automaton.Int r10 = r7.lengthOf(); // |xs|
@@ -4838,19 +5031,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Equation_Gcd_1"; }
-		public final int rank() { return 2; }
 
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Equation_2
-	private final static class Inference_1 extends AbstractRewriteRule implements InferenceRule {
+	private final static class Reduction_75 extends AbstractRewriteRule implements ReductionRule {
 
-		public Inference_1(Pattern.Term pattern) { super(pattern); }
+		public Reduction_75(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Equation[Sum{|Mul,Mul|}]");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_And) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -4906,7 +5098,7 @@ public final class Solver {
 													}
 													if(m9_1) {
 														int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, 0, 0};
-														activations.add(new Activation(this,null,state));
+														activations.add(new Reduction.Activation(this,null,state));
 													}
 												}
 											}
@@ -4932,84 +5124,104 @@ public final class Solver {
 			int r13 = state[13]; // vc
 			int r15 = state[15]; // v
 			int r16 = state[16];
-			Automaton.Collection s9 = (Automaton.Collection) automaton.get(state[9]);
-			int[] s9children = new int[s9.size() - 1];
-			for(int s9i=0, s9j=0; s9i != s9.size();++s9i) {
+			Automaton.Collection c9 = (Automaton.Collection) automaton.get(state[9]);
+			int[] c9children = new int[c9.size() - 1];
+			for(int s9i=0, s9j=0; s9i != c9.size();++s9i) {
 				if(s9i == r11) { continue; }
-				s9children[s9j++] = s9.get(s9i);
+				c9children[s9j++] = c9.get(s9i);
 			}
-			Automaton.Bag r17 = new Automaton.Bag(s9children);
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 1];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Bag r17 = new Automaton.Bag(c9children);
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 1];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r18 = new Automaton.Set(s1children);
+			Automaton.Set r18 = new Automaton.Set(c1children);
 			Automaton.Term r19 = Solver$native.maxMultiplicand(automaton, r9);
 			Object r20 = (Object) automaton.get(r15);
 			boolean r21 = r20.equals(r19); // v eq var
+			boolean r22 = false;           // v eq var && wyrl.core.Expr$Comprehension@77be656f
 			if(r21) {
-				Automaton.Real r22 = new Automaton.Real(0); // 0.0
-				int r23 = automaton.add(r22);
-				Automaton.Real r24 = new Automaton.Real(1); // 1.0
-				Automaton.Real r25 = r24.negate(); // -1.0
-				int r26 = automaton.add(r25);
-				int r27 = automaton.add(r17);
-				Automaton.List r28 = new Automaton.List(r8, r27); // [cms]
-				int r29 = automaton.add(r28);
-				Automaton.Term r30 = new Automaton.Term(K_Sum, r29);
-				int r31 = automaton.add(r30);
-				Automaton.Bag r32 = new Automaton.Bag(r31); // {|Sum([cms])|}
-				int r33 = automaton.add(r32);
-				Automaton.List r34 = new Automaton.List(r26, r33); // [-1.0{|Sum([cms])|}]
-				int r35 = automaton.add(r34);
-				Automaton.Term r36 = new Automaton.Term(K_Mul, r35);
-				int r37 = automaton.add(r36);
-				Automaton.Term r38 = new Automaton.Term(K_Num, r13);
-				int r39 = automaton.add(r38);
-				Automaton.List r40 = new Automaton.List(r37, r39); // [Mul([-1.0{|Sum([cms])|}])Num(vc)]
-				int r41 = automaton.add(r40);
-				Automaton.Term r42 = new Automaton.Term(K_Div, r41);
-				int r43 = automaton.add(r42);
-				Automaton.Bag r44 = new Automaton.Bag(r43); // {|Div([Mul([-1.0{|Sum([cms])|}])Num(vc)])|}
-				int r45 = automaton.add(r44);
-				Automaton.List r46 = new Automaton.List(r23, r45); // [0.0{|Div([Mul([-1.0{|Sum([cms])|}])Num(vc)])|}]
-				int r47 = automaton.add(r46);
-				Automaton.Term r48 = new Automaton.Term(K_Sum, r47);
-				Automaton.List t49 = new Automaton.List();
-				for(int i50=0;i50<r18.size();i50++) {
-					int r50 = (int) r18.get(i50);
-					int r51 = automaton.add(r19);
-					int r52 = automaton.add(r48);
-					int r53 = automaton.substitute(r50, r51, r52);
-					t49.add(r53);
+				Automaton.List t23 = new Automaton.List();
+				boolean r23 = true;
+				outer:
+				for(int i24=0;i24<r17.size();i24++) {
+					int r24 = (int) r17.get(i24);
+					Automaton.Term r25 = (Automaton.Term) automaton.get(r24);
+					int r26 = r25.contents;
+					Automaton.Int r27 = new Automaton.Int(1); // 1
+					Automaton.List r28 = (Automaton.List) automaton.get(r26);
+					int r29 = r28.indexOf(r27);    // *m[1]
+					Automaton.Bag r30 = (Automaton.Bag) automaton.get(r29);
+					boolean r31 = r30.contains(r15); // v in *m[1]
+					if(r31) {
+						r23 = false;
+						break outer;
+					}
 				}
-				Automaton.Set r49 = new Automaton.Set(t49.toArray());
-				Automaton.Set r54 = r49.appendFront(r2); // eq append cs
+				r22 = r23;
+			}
+			if(r22) {
+				Automaton.Real r32 = new Automaton.Real(0); // 0.0
+				int r33 = automaton.add(r32);
+				Automaton.Real r34 = new Automaton.Real(1); // 1.0
+				Automaton.Real r35 = r34.negate(); // -1.0
+				int r36 = automaton.add(r35);
+				int r37 = automaton.add(r17);
+				Automaton.List r38 = new Automaton.List(r8, r37); // [cms]
+				int r39 = automaton.add(r38);
+				Automaton.Term r40 = new Automaton.Term(K_Sum, r39);
+				int r41 = automaton.add(r40);
+				Automaton.Bag r42 = new Automaton.Bag(r41); // {|Sum([cms])|}
+				int r43 = automaton.add(r42);
+				Automaton.List r44 = new Automaton.List(r36, r43); // [-1.0{|Sum([cms])|}]
+				int r45 = automaton.add(r44);
+				Automaton.Term r46 = new Automaton.Term(K_Mul, r45);
+				int r47 = automaton.add(r46);
+				Automaton.Term r48 = new Automaton.Term(K_Num, r13);
+				int r49 = automaton.add(r48);
+				Automaton.List r50 = new Automaton.List(r47, r49); // [Mul([-1.0{|Sum([cms])|}])Num(vc)]
+				int r51 = automaton.add(r50);
+				Automaton.Term r52 = new Automaton.Term(K_Div, r51);
+				int r53 = automaton.add(r52);
+				Automaton.Bag r54 = new Automaton.Bag(r53); // {|Div([Mul([-1.0{|Sum([cms])|}])Num(vc)])|}
 				int r55 = automaton.add(r54);
-				Automaton.Term r56 = new Automaton.Term(K_And, r55);
+				Automaton.List r56 = new Automaton.List(r33, r55); // [0.0{|Div([Mul([-1.0{|Sum([cms])|}])Num(vc)])|}]
 				int r57 = automaton.add(r56);
-				if(r0 != r57) {
-					return automaton.rewrite(r0, r57);
+				Automaton.Term r58 = new Automaton.Term(K_Sum, r57);
+				Automaton.List t59 = new Automaton.List();
+				for(int i60=0;i60<r18.size();i60++) {
+					int r60 = (int) r18.get(i60);
+					int r61 = automaton.add(r19);
+					int r62 = automaton.add(r58);
+					int r63 = automaton.substitute(r60, r61, r62);
+					t59.add(r63);
+				}
+				Automaton.Set r59 = new Automaton.Set(t59.toArray());
+				Automaton.Set r64 = r59.appendFront(r2); // eq append cs
+				int r65 = automaton.add(r64);
+				Automaton.Term r66 = new Automaton.Term(K_And, r65);
+				int r67 = automaton.add(r66);
+				if(r0 != r67) {
+					return automaton.rewrite(r0, r67);
 				}
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Equation_2"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Equation_3
-	private final static class Inference_2 extends AbstractRewriteRule implements InferenceRule {
+	private final static class Inference_1 extends AbstractRewriteRule implements InferenceRule {
 
-		public Inference_2(Pattern.Term pattern) { super(pattern); }
+		public Inference_1(Pattern.Term pattern) {
+			super(pattern);
+			put("name","And{Equation[VExpr],BExpr...}");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int root, int target, List<Inference.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_And) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -5029,7 +5241,7 @@ public final class Solver {
 							int r6 = l4.get(1);
 							if(Runtime.accepts(type8,automaton,automaton.get(r6), SCHEMA)) {
 								int[] state = {r0, r1, r2, r3, r4, r5, r6, 0};
-								activations.add(new Activation(this,null,state));
+								activations.add(new Inference.Activation(this,root,null,state));
 							}
 						}
 					}
@@ -5037,20 +5249,20 @@ public final class Solver {
 			}
 		}
 
-		public final int apply(Automaton automaton, int[] state) {
+		public final int apply(Automaton automaton, int root, int[] state) {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r2 = state[2]; // eq
 			int r3 = state[3];
 			int r5 = state[5]; // t
 			int r6 = state[6]; // v
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 1];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 1];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r7 = new Automaton.Set(s1children);
+			Automaton.Set r7 = new Automaton.Set(c1children);
 			Automaton.List t8 = new Automaton.List();
 			for(int i9=0;i9<r7.size();i9++) {
 				int r9 = (int) r7.get(i9);
@@ -5067,24 +5279,23 @@ public final class Solver {
 			Automaton.Term r17 = new Automaton.Term(K_And, r16);
 			int r18 = automaton.add(r17);
 			if(r0 != r18) {
-				return automaton.rewrite(r0, r18);
+				return automaton.substitute(root,r0, r18);
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Equation_3"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 6; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Equation_4
-	private final static class Reduction_71 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_76 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_71(Pattern.Term pattern) { super(pattern); }
+		public Reduction_76(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Not(Equation[IntT,AExpr])");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Not) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -5099,7 +5310,7 @@ public final class Solver {
 					if(Runtime.accepts(type24,automaton,automaton.get(r3), SCHEMA)) {
 						int r4 = l2.get(1);
 						int[] state = {r0, r1, r2, r3, r4};
-						activations.add(new Activation(this,null,state));
+						activations.add(new Reduction.Activation(this,null,state));
 					}
 				}
 			}
@@ -5155,19 +5366,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Equation_4"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 5; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Equation_5
-	private final static class Reduction_72 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_77 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_72(Pattern.Term pattern) { super(pattern); }
+		public Reduction_77(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Not(Equation[RealT,AExpr])");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Not) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -5182,7 +5392,7 @@ public final class Solver {
 					if(Runtime.accepts(type25,automaton,automaton.get(r3), SCHEMA)) {
 						int r4 = l2.get(1);
 						int[] state = {r0, r1, r2, r3, r4};
-						activations.add(new Activation(this,null,state));
+						activations.add(new Reduction.Activation(this,null,state));
 					}
 				}
 			}
@@ -5220,19 +5430,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Equation_5"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 5; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Equation_6
-	private final static class Reduction_73 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_78 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_73(Pattern.Term pattern) { super(pattern); }
+		public Reduction_78(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Equals{|AExpr,AExpr|}");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Equals) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -5246,13 +5455,13 @@ public final class Solver {
 					Automaton.Collection c3 = (Automaton.Collection) s3;
 					for(int r5=0;r5!=c3.size();++r5) {
 						int r4 = c3.get(r5);
-						if(Runtime.accepts(type18,automaton,automaton.get(r4), SCHEMA)) {
+						if(Runtime.accepts(type17,automaton,automaton.get(r4), SCHEMA)) {
 							for(int r7=0;r7!=c3.size();++r7) {
 								if(r7 == r5) { continue; }
 								int r6 = c3.get(r7);
-								if(Runtime.accepts(type18,automaton,automaton.get(r6), SCHEMA)) {
+								if(Runtime.accepts(type17,automaton,automaton.get(r6), SCHEMA)) {
 									int[] state = {r0, r1, r2, r3, r4, r5, r6, r7};
-									activations.add(new Activation(this,null,state));
+									activations.add(new Reduction.Activation(this,null,state));
 								}
 							}
 						}
@@ -5296,11 +5505,7 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Equation_6"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 7; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term $10<Inequality($8<^[^AType<IntT|RealT>,$4<^$29<AExpr<Num(^real)|Sum(^[^real,^{|$4...|}[$4...]])|Mul(^[^real,^{|$4...|}[$4...]])|Div(^[$4,$4])|$60<VExpr<Var(^string)|Fn(^[^string,$65<^Expr<$29|$103<Value<Num(^real)|Null|Tuple(^[^$103...])|Bool<True|False>|String(^string)|Array(^[^$103...])>>|Tuple(^[$65...])|$139<BExpr<$60|Bool<True|False>|And(^{^$139...})|Or(^{^$139...})|Not(^$139)|Equals(^[$151<^Type<Atom<NotT($174<^Proton<TupleT(^[$174...])|ArrayT($174)|Quark<IntT|RealT|AnyT|NullT|VoidT|BoolT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$174...])|ArrayT($174)|Quark<IntT|RealT|AnyT|NullT|VoidT|BoolT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($151)|OrT(^{$151...})|AndT(^{$151...})|ArrayT($151)|TupleT(^[$151...])|FunctionT(^[$151,$151,$151...])>>,^{|$65,$65|}[$65,$65]])|$10|Equation($8)|ForAll(^[^{^[^Var(^string),$151]...},^$139])|Exists(^[^{^[^Var(^string),$151]...},^$139])>>|SExpr<$60|Array(^[$65...])>>>...])|Load(^[$65,^int])|LengthOf($65)|IndexOf(^[$65,$65])>>>>>]>)>
 	public final static int K_Inequality = 33;
@@ -5313,13 +5518,16 @@ public final class Solver {
 		return automaton.add(new Automaton.Term(K_Inequality, r1));
 	}
 
-	// Inequality_1
-	private final static class Reduction_74 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_79 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_74(Pattern.Term pattern) { super(pattern); }
+		public Reduction_79(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Inequality[Num]");
+			put("rank",0);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Inequality) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -5333,7 +5541,7 @@ public final class Solver {
 					Automaton.Term t3 = (Automaton.Term) s3;
 					int r4 = t3.contents;
 					int[] state = {r0, r1, r2, r3, r4};
-					activations.add(new Activation(this,null,state));
+					activations.add(new Reduction.Activation(this,null,state));
 				}
 			}
 		}
@@ -5378,19 +5586,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Inequality_1"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 4; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Inequality_2
-	private final static class Reduction_75 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_80 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_75(Pattern.Term pattern) { super(pattern); }
+		public Reduction_80(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Not(Inequality)");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Not) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -5405,7 +5612,7 @@ public final class Solver {
 					if(Runtime.accepts(type24,automaton,automaton.get(r3), SCHEMA)) {
 						int r4 = l2.get(1);
 						int[] state = {r0, r1, r2, r3, r4};
-						activations.add(new Activation(this,null,state));
+						activations.add(new Reduction.Activation(this,null,state));
 					}
 				}
 			}
@@ -5444,19 +5651,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Inequality_2"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 5; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Inequality_Gcd_1
-	private final static class Reduction_76 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_81 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_76(Pattern.Term pattern) { super(pattern); }
+		public Reduction_81(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Inequality[Sum]");
+			put("rank",2);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Inequality) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -5486,7 +5692,7 @@ public final class Solver {
 					}
 					if(m6_0) {
 						int[] state = {r0, r1, r2, r3, r4, r5, r6, 0};
-						activations.add(new Activation(this,null,state));
+						activations.add(new Reduction.Activation(this,null,state));
 					}
 				}
 			}
@@ -5498,12 +5704,12 @@ public final class Solver {
 			int r2 = state[2]; // t
 			int r5 = state[5]; // n
 			int r6 = state[6]; // ms
-			Automaton.Collection s6 = (Automaton.Collection) automaton.get(state[6]);
-			int[] s6children = new int[s6.size() - 0];
-			for(int s6i=0, s6j=0; s6i != s6.size();++s6i) {
-				s6children[s6j++] = s6.get(s6i);
+			Automaton.Collection c6 = (Automaton.Collection) automaton.get(state[6]);
+			int[] c6children = new int[c6.size() - 0];
+			for(int s6i=0, s6j=0; s6i != c6.size();++s6i) {
+				c6children[s6j++] = c6.get(s6i);
 			}
-			Automaton.Bag r7 = new Automaton.Bag(s6children);
+			Automaton.Bag r7 = new Automaton.Bag(c6children);
 			Automaton.List r8 = new Automaton.List(r5, r6); // [nms]
 			Automaton.Real r9 = Solver$native.gcd(automaton, r8);
 			Automaton.Int r10 = r7.lengthOf(); // |xs|
@@ -5558,19 +5764,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Inequality_Gcd_1"; }
-		public final int rank() { return 2; }
 
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Inequality_2a
-	private final static class Reduction_77 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_82 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_77(Pattern.Term pattern) { super(pattern); }
+		public Reduction_82(Pattern.Term pattern) {
+			super(pattern);
+			put("name","And{Inequality,Intequality,BExpr...}");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_And) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -5685,8 +5890,46 @@ public final class Solver {
 																													if(c43.size() == 1) {
 																														for(int r45=0;r45!=c43.size();++r45) {
 																															int r44 = c43.get(r45);
-																															int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18, r19, r20, r21, r22, r23, r24, r25, r26, r27, r28, r29, r30, r31, r32, r33, r34, r35, r36, r37, r38, r39, r40, r41, r42, r43, r44, r45, 0};
-																															activations.add(new Activation(this,null,state));
+																															int[] c1children = new int[c1.size() - 2];
+																															for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
+																																if(s1i == r3 || s1i == r25) { continue; }
+																																c1children[s1j++] = c1.get(s1i);
+																															}
+																															Automaton.Set r46 = new Automaton.Set(c1children);
+																															Automaton.Real r47 = (Automaton.Real) automaton.get(r30);
+																															Automaton.Real r48 = r47.negate(); // -y1
+																															Automaton.Real r49 = (Automaton.Real) automaton.get(r8);
+																															boolean r50 = r49.equals(r48); // x1 eq -y1
+																															boolean r51 = false;           // x1 eq -y1 && x2 eq -y2 && x3 eq -y3 && vx1 eq vy1 && vx2 eq vy2
+																															if(r50) {
+																																Automaton.Real r52 = (Automaton.Real) automaton.get(r35);
+																																Automaton.Real r53 = r52.negate(); // -y2
+																																Automaton.Real r54 = (Automaton.Real) automaton.get(r13);
+																																boolean r55 = r54.equals(r53); // x2 eq -y2
+																																boolean r56 = false;           // x2 eq -y2 && x3 eq -y3 && vx1 eq vy1 && vx2 eq vy2
+																																if(r55) {
+																																	Automaton.Real r57 = (Automaton.Real) automaton.get(r42);
+																																	Automaton.Real r58 = r57.negate(); // -y3
+																																	Automaton.Real r59 = (Automaton.Real) automaton.get(r20);
+																																	boolean r60 = r59.equals(r58); // x3 eq -y3
+																																	boolean r61 = false;           // x3 eq -y3 && vx1 eq vy1 && vx2 eq vy2
+																																	if(r60) {
+																																		boolean r62 = r15 == r37;      // vx1 eq vy1
+																																		boolean r63 = false;           // vx1 eq vy1 && vx2 eq vy2
+																																		if(r62) {
+																																			boolean r64 = r22 == r44;      // vx2 eq vy2
+																																			r63 = r64;
+																																		}
+																																		r61 = r63;
+																																	}
+																																	r56 = r61;
+																																}
+																																r51 = r56;
+																															}
+																															if(r51) { // REQUIRES
+																																int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, r17, r18, r19, r20, r21, r22, r23, r24, r25, r26, r27, r28, r29, r30, r31, r32, r33, r34, r35, r36, r37, r38, r39, r40, r41, r42, r43, r44, r45, 0};
+																																activations.add(new Reduction.Activation(this,null,state));
+																															}
 																														}
 																													}
 																												}
@@ -5744,74 +5987,41 @@ public final class Solver {
 			int r42 = state[42]; // y3
 			int r44 = state[44]; // vy2
 			int r45 = state[45];
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 2];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 2];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3 || s1i == r25) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r46 = new Automaton.Set(s1children);
-			Automaton.Real r47 = (Automaton.Real) automaton.get(r30);
-			Automaton.Real r48 = r47.negate(); // -y1
-			Automaton.Real r49 = (Automaton.Real) automaton.get(r8);
-			boolean r50 = r49.equals(r48); // x1 eq -y1
-			boolean r51 = false;           // x1 eq -y1 && x2 eq -y2 && x3 eq -y3 && vx1 eq vy1 && vx2 eq vy2
-			if(r50) {
-				Automaton.Real r52 = (Automaton.Real) automaton.get(r35);
-				Automaton.Real r53 = r52.negate(); // -y2
-				Automaton.Real r54 = (Automaton.Real) automaton.get(r13);
-				boolean r55 = r54.equals(r53); // x2 eq -y2
-				boolean r56 = false;           // x2 eq -y2 && x3 eq -y3 && vx1 eq vy1 && vx2 eq vy2
-				if(r55) {
-					Automaton.Real r57 = (Automaton.Real) automaton.get(r42);
-					Automaton.Real r58 = r57.negate(); // -y3
-					Automaton.Real r59 = (Automaton.Real) automaton.get(r20);
-					boolean r60 = r59.equals(r58); // x3 eq -y3
-					boolean r61 = false;           // x3 eq -y3 && vx1 eq vy1 && vx2 eq vy2
-					if(r60) {
-						boolean r62 = r15 == r37;      // vx1 eq vy1
-						boolean r63 = false;           // vx1 eq vy1 && vx2 eq vy2
-						if(r62) {
-							boolean r64 = r22 == r44;      // vx2 eq vy2
-							r63 = r64;
-						}
-						r61 = r63;
-					}
-					r56 = r61;
-				}
-				r51 = r56;
-			}
-			if(r51) {
-				Automaton.Term r65 = IntT;
-				int r66 = automaton.add(r65);
-				Automaton.List r67 = new Automaton.List(r66, r6); // [IntTs1]
-				int r68 = automaton.add(r67);
-				Automaton.Term r69 = new Automaton.Term(K_Equation, r68);
-				int r70 = automaton.add(r69);
-				Automaton.Set r71 = r46.appendFront(r70); // Equation([IntTs1]) append rest
-				int r72 = automaton.add(r71);
-				Automaton.Term r73 = new Automaton.Term(K_And, r72);
-				int r74 = automaton.add(r73);
-				if(r0 != r74) {
-					return automaton.rewrite(r0, r74);
-				}
+			Automaton.Set r46 = new Automaton.Set(c1children);
+			Automaton.Term r47 = IntT;
+			int r48 = automaton.add(r47);
+			Automaton.List r49 = new Automaton.List(r48, r6); // [IntTs1]
+			int r50 = automaton.add(r49);
+			Automaton.Term r51 = new Automaton.Term(K_Equation, r50);
+			int r52 = automaton.add(r51);
+			Automaton.Set r53 = r46.appendFront(r52); // Equation([IntTs1]) append rest
+			int r54 = automaton.add(r53);
+			Automaton.Term r55 = new Automaton.Term(K_And, r54);
+			int r56 = automaton.add(r55);
+			if(r0 != r56) {
+				return automaton.rewrite(r0, r56);
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Inequality_2a"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Inequality_3
-	private final static class Inference_3 extends AbstractRewriteRule implements InferenceRule {
+	private final static class Inference_2 extends AbstractRewriteRule implements InferenceRule {
 
-		public Inference_3(Pattern.Term pattern) { super(pattern); }
+		public Inference_2(Pattern.Term pattern) {
+			super(pattern);
+			put("name","And{Inequality,Inequality,BExpr...}");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int root, int target, List<Inference.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_And) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -5914,8 +6124,48 @@ public final class Solver {
 																							break;
 																						}
 																						if(m25_1) {
-																							int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, 0, r18, r19, r20, r21, r22, r23, r24, r25, r26, r27, r28, r29, r30, r31, r32, 0, 0};
-																							activations.add(new Activation(this,null,state));
+																							int[] c9children = new int[c9.size() - 1];
+																							for(int s9i=0, s9j=0; s9i != c9.size();++s9i) {
+																								if(s9i == r11) { continue; }
+																								c9children[s9j++] = c9.get(s9i);
+																							}
+																							Automaton.Bag r17 = new Automaton.Bag(c9children);
+																							int[] c25children = new int[c25.size() - 1];
+																							for(int s25i=0, s25j=0; s25i != c25.size();++s25i) {
+																								if(s25i == r27) { continue; }
+																								c25children[s25j++] = c25.get(s25i);
+																							}
+																							Automaton.Bag r33 = new Automaton.Bag(c25children);
+																							int[] c1children = new int[c1.size() - 2];
+																							for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
+																								if(s1i == r3 || s1i == r19) { continue; }
+																								c1children[s1j++] = c1.get(s1i);
+																							}
+																							Automaton.Set r34 = new Automaton.Set(c1children);
+																							boolean r35 = r15 == r31;      // v1 eq v2
+																							boolean r36 = false;           // v1 eq v2 && t1 eq t2 && x2 lt 0.0 && y2 gt 0.0
+																							if(r35) {
+																								boolean r37 = r5 == r21;       // t1 eq t2
+																								boolean r38 = false;           // t1 eq t2 && x2 lt 0.0 && y2 gt 0.0
+																								if(r37) {
+																									Automaton.Real r39 = new Automaton.Real(0); // 0.0
+																									Automaton.Real r40 = (Automaton.Real) automaton.get(r13);
+																									boolean r41 = r40.compareTo(r39)<0; // x2 lt 0.0
+																									boolean r42 = false;           // x2 lt 0.0 && y2 gt 0.0
+																									if(r41) {
+																										Automaton.Real r43 = new Automaton.Real(0); // 0.0
+																										Automaton.Real r44 = (Automaton.Real) automaton.get(r29);
+																										boolean r45 = r44.compareTo(r43)>0; // y2 gt 0.0
+																										r42 = r45;
+																									}
+																									r38 = r42;
+																								}
+																								r36 = r38;
+																							}
+																							if(r36) { // REQUIRES
+																								int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, 0, r18, r19, r20, r21, r22, r23, r24, r25, r26, r27, r28, r29, r30, r31, r32, 0, 0};
+																								activations.add(new Inference.Activation(this,root,null,state));
+																							}
 																						}
 																					}
 																				}
@@ -5938,7 +6188,7 @@ public final class Solver {
 			}
 		}
 
-		public final int apply(Automaton automaton, int[] state) {
+		public final int apply(Automaton automaton, int root, int[] state) {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r2 = state[2]; // eq1
@@ -5951,13 +6201,13 @@ public final class Solver {
 			int r13 = state[13]; // x2
 			int r15 = state[15]; // v1
 			int r16 = state[16];
-			Automaton.Collection s9 = (Automaton.Collection) automaton.get(state[9]);
-			int[] s9children = new int[s9.size() - 1];
-			for(int s9i=0, s9j=0; s9i != s9.size();++s9i) {
+			Automaton.Collection c9 = (Automaton.Collection) automaton.get(state[9]);
+			int[] c9children = new int[c9.size() - 1];
+			for(int s9i=0, s9j=0; s9i != c9.size();++s9i) {
 				if(s9i == r11) { continue; }
-				s9children[s9j++] = s9.get(s9i);
+				c9children[s9j++] = c9.get(s9i);
 			}
-			Automaton.Bag r17 = new Automaton.Bag(s9children);
+			Automaton.Bag r17 = new Automaton.Bag(c9children);
 			int r18 = state[18]; // eq2
 			int r19 = state[19];
 			int r21 = state[21]; // t2
@@ -5968,117 +6218,92 @@ public final class Solver {
 			int r29 = state[29]; // y2
 			int r31 = state[31]; // v2
 			int r32 = state[32];
-			Automaton.Collection s25 = (Automaton.Collection) automaton.get(state[25]);
-			int[] s25children = new int[s25.size() - 1];
-			for(int s25i=0, s25j=0; s25i != s25.size();++s25i) {
+			Automaton.Collection c25 = (Automaton.Collection) automaton.get(state[25]);
+			int[] c25children = new int[c25.size() - 1];
+			for(int s25i=0, s25j=0; s25i != c25.size();++s25i) {
 				if(s25i == r27) { continue; }
-				s25children[s25j++] = s25.get(s25i);
+				c25children[s25j++] = c25.get(s25i);
 			}
-			Automaton.Bag r33 = new Automaton.Bag(s25children);
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 2];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Bag r33 = new Automaton.Bag(c25children);
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 2];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3 || s1i == r19) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r34 = new Automaton.Set(s1children);
+			Automaton.Set r34 = new Automaton.Set(c1children);
 			Automaton.Term r35 = Solver$native.maxMultiplicand(automaton, r9);
 			Automaton.Term r36 = Solver$native.maxMultiplicand(automaton, r25);
-			boolean r37 = r15 == r31;      // v1 eq v2
-			boolean r38 = false;           // v1 eq v2 && t1 eq t2 && x2 lt 0.0 && y2 gt 0.0 && vx eq v1 && vy eq v1
-			if(r37) {
-				boolean r39 = r5 == r21;       // t1 eq t2
-				boolean r40 = false;           // t1 eq t2 && x2 lt 0.0 && y2 gt 0.0 && vx eq v1 && vy eq v1
-				if(r39) {
-					Automaton.Real r41 = new Automaton.Real(0); // 0.0
-					Automaton.Real r42 = (Automaton.Real) automaton.get(r13);
-					boolean r43 = r42.compareTo(r41)<0; // x2 lt 0.0
-					boolean r44 = false;           // x2 lt 0.0 && y2 gt 0.0 && vx eq v1 && vy eq v1
-					if(r43) {
-						Automaton.Real r45 = new Automaton.Real(0); // 0.0
-						Automaton.Real r46 = (Automaton.Real) automaton.get(r29);
-						boolean r47 = r46.compareTo(r45)>0; // y2 gt 0.0
-						boolean r48 = false;           // y2 gt 0.0 && vx eq v1 && vy eq v1
-						if(r47) {
-							Object r49 = (Object) automaton.get(r15);
-							boolean r50 = r35.equals(r49); // vx eq v1
-							boolean r51 = false;           // vx eq v1 && vy eq v1
-							if(r50) {
-								Object r52 = (Object) automaton.get(r15);
-								boolean r53 = r36.equals(r52); // vy eq v1
-								r51 = r53;
-							}
-							r48 = r51;
-						}
-						r44 = r48;
-					}
-					r40 = r44;
-				}
-				r38 = r40;
-			}
+			Object r37 = (Object) automaton.get(r15);
+			boolean r38 = r35.equals(r37); // vx eq v1
+			boolean r39 = false;           // vx eq v1 && vy eq v1
 			if(r38) {
-				int r54 = automaton.add(r17);
-				Automaton.List r55 = new Automaton.List(r8, r54); // [x1xs]
-				int r56 = automaton.add(r55);
-				Automaton.Term r57 = new Automaton.Term(K_Sum, r56);
-				int r58 = automaton.add(r57);
-				Automaton.Bag r59 = new Automaton.Bag(r58); // {|Sum([x1xs])|}
-				int r60 = automaton.add(r59);
-				Automaton.List r61 = new Automaton.List(r29, r60); // [y2{|Sum([x1xs])|}]
-				int r62 = automaton.add(r61);
-				Automaton.Term r63 = new Automaton.Term(K_Mul, r62);
-				Automaton.Real r64 = (Automaton.Real) automaton.get(r13);
-				Automaton.Real r65 = r64.negate(); // -x2
+				Object r40 = (Object) automaton.get(r15);
+				boolean r41 = r36.equals(r40); // vy eq v1
+				r39 = r41;
+			}
+			if(r39) {
+				int r42 = automaton.add(r17);
+				Automaton.List r43 = new Automaton.List(r8, r42); // [x1xs]
+				int r44 = automaton.add(r43);
+				Automaton.Term r45 = new Automaton.Term(K_Sum, r44);
+				int r46 = automaton.add(r45);
+				Automaton.Bag r47 = new Automaton.Bag(r46); // {|Sum([x1xs])|}
+				int r48 = automaton.add(r47);
+				Automaton.List r49 = new Automaton.List(r29, r48); // [y2{|Sum([x1xs])|}]
+				int r50 = automaton.add(r49);
+				Automaton.Term r51 = new Automaton.Term(K_Mul, r50);
+				Automaton.Real r52 = (Automaton.Real) automaton.get(r13);
+				Automaton.Real r53 = r52.negate(); // -x2
+				int r54 = automaton.add(r53);
+				int r55 = automaton.add(r33);
+				Automaton.List r56 = new Automaton.List(r24, r55); // [y1ys]
+				int r57 = automaton.add(r56);
+				Automaton.Term r58 = new Automaton.Term(K_Sum, r57);
+				int r59 = automaton.add(r58);
+				Automaton.Bag r60 = new Automaton.Bag(r59); // {|Sum([y1ys])|}
+				int r61 = automaton.add(r60);
+				Automaton.List r62 = new Automaton.List(r54, r61); // [-x2{|Sum([y1ys])|}]
+				int r63 = automaton.add(r62);
+				Automaton.Term r64 = new Automaton.Term(K_Mul, r63);
+				Automaton.Real r65 = new Automaton.Real(0); // 0.0
 				int r66 = automaton.add(r65);
-				int r67 = automaton.add(r33);
-				Automaton.List r68 = new Automaton.List(r24, r67); // [y1ys]
-				int r69 = automaton.add(r68);
-				Automaton.Term r70 = new Automaton.Term(K_Sum, r69);
-				int r71 = automaton.add(r70);
-				Automaton.Bag r72 = new Automaton.Bag(r71); // {|Sum([y1ys])|}
-				int r73 = automaton.add(r72);
-				Automaton.List r74 = new Automaton.List(r66, r73); // [-x2{|Sum([y1ys])|}]
-				int r75 = automaton.add(r74);
-				Automaton.Term r76 = new Automaton.Term(K_Mul, r75);
-				Automaton.Real r77 = new Automaton.Real(0); // 0.0
+				int r67 = automaton.add(r51);
+				int r68 = automaton.add(r64);
+				Automaton.Bag r69 = new Automaton.Bag(r67, r68); // {|s3s4|}
+				int r70 = automaton.add(r69);
+				Automaton.List r71 = new Automaton.List(r66, r70); // [0.0{|s3s4|}]
+				int r72 = automaton.add(r71);
+				Automaton.Term r73 = new Automaton.Term(K_Sum, r72);
+				int r74 = automaton.add(r73);
+				Automaton.List r75 = new Automaton.List(r5, r74); // [t1Sum([0.0{|s3s4|}])]
+				int r76 = automaton.add(r75);
+				Automaton.Term r77 = new Automaton.Term(K_Inequality, r76);
 				int r78 = automaton.add(r77);
-				int r79 = automaton.add(r63);
-				int r80 = automaton.add(r76);
-				Automaton.Bag r81 = new Automaton.Bag(r79, r80); // {|s3s4|}
-				int r82 = automaton.add(r81);
-				Automaton.List r83 = new Automaton.List(r78, r82); // [0.0{|s3s4|}]
-				int r84 = automaton.add(r83);
-				Automaton.Term r85 = new Automaton.Term(K_Sum, r84);
-				int r86 = automaton.add(r85);
-				Automaton.List r87 = new Automaton.List(r5, r86); // [t1Sum([0.0{|s3s4|}])]
-				int r88 = automaton.add(r87);
-				Automaton.Term r89 = new Automaton.Term(K_Inequality, r88);
-				int r90 = automaton.add(r89);
-				Automaton.Set r91 = new Automaton.Set(r2, r18, r90); // {eq1eq2eq3}
-				Automaton.Set r92 = r91.append(r34); // {eq1eq2eq3} append rest
-				int r93 = automaton.add(r92);
-				Automaton.Term r94 = new Automaton.Term(K_And, r93);
-				int r95 = automaton.add(r94);
-				if(r0 != r95) {
-					return automaton.rewrite(r0, r95);
+				Automaton.Set r79 = new Automaton.Set(r2, r18, r78); // {eq1eq2eq3}
+				Automaton.Set r80 = r79.append(r34); // {eq1eq2eq3} append rest
+				int r81 = automaton.add(r80);
+				Automaton.Term r82 = new Automaton.Term(K_And, r81);
+				int r83 = automaton.add(r82);
+				if(r0 != r83) {
+					return automaton.substitute(root,r0, r83);
 				}
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Inequality_3"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Inequality_4
-	private final static class Inference_4 extends AbstractRewriteRule implements InferenceRule {
+	private final static class Inference_3 extends AbstractRewriteRule implements InferenceRule {
 
-		public Inference_4(Pattern.Term pattern) { super(pattern); }
+		public Inference_3(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Inequality{Inequality,Inequality,BExpr...}");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int root, int target, List<Inference.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_And) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -6145,8 +6370,35 @@ public final class Solver {
 																int r21 = l20.get(0);
 																int r22 = l20.get(1);
 																if(Runtime.accepts(type8,automaton,automaton.get(r22), SCHEMA)) {
-																	int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, 0, r18, r19, r20, r21, r22, 0};
-																	activations.add(new Activation(this,null,state));
+																	int[] c9children = new int[c9.size() - 1];
+																	for(int s9i=0, s9j=0; s9i != c9.size();++s9i) {
+																		if(s9i == r11) { continue; }
+																		c9children[s9j++] = c9.get(s9i);
+																	}
+																	Automaton.Bag r17 = new Automaton.Bag(c9children);
+																	int[] c1children = new int[c1.size() - 2];
+																	for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
+																		if(s1i == r3 || s1i == r19) { continue; }
+																		c1children[s1j++] = c1.get(s1i);
+																	}
+																	Automaton.Set r23 = new Automaton.Set(c1children);
+																	boolean r24 = r15 == r22;      // v1 eq v2
+																	boolean r25 = false;           // v1 eq v2 && t1 eq t2 && x2 lt 0.0
+																	if(r24) {
+																		boolean r26 = r5 == r21;       // t1 eq t2
+																		boolean r27 = false;           // t1 eq t2 && x2 lt 0.0
+																		if(r26) {
+																			Automaton.Real r28 = new Automaton.Real(0); // 0.0
+																			Automaton.Real r29 = (Automaton.Real) automaton.get(r13);
+																			boolean r30 = r29.compareTo(r28)<0; // x2 lt 0.0
+																			r27 = r30;
+																		}
+																		r25 = r27;
+																	}
+																	if(r25) { // REQUIRES
+																		int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, r12, r13, r14, r15, r16, 0, r18, r19, r20, r21, r22, 0};
+																		activations.add(new Inference.Activation(this,root,null,state));
+																	}
 																}
 															}
 														}
@@ -6163,7 +6415,7 @@ public final class Solver {
 			}
 		}
 
-		public final int apply(Automaton automaton, int[] state) {
+		public final int apply(Automaton automaton, int root, int[] state) {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r2 = state[2]; // eq1
@@ -6176,71 +6428,50 @@ public final class Solver {
 			int r13 = state[13]; // x2
 			int r15 = state[15]; // v1
 			int r16 = state[16];
-			Automaton.Collection s9 = (Automaton.Collection) automaton.get(state[9]);
-			int[] s9children = new int[s9.size() - 1];
-			for(int s9i=0, s9j=0; s9i != s9.size();++s9i) {
+			Automaton.Collection c9 = (Automaton.Collection) automaton.get(state[9]);
+			int[] c9children = new int[c9.size() - 1];
+			for(int s9i=0, s9j=0; s9i != c9.size();++s9i) {
 				if(s9i == r11) { continue; }
-				s9children[s9j++] = s9.get(s9i);
+				c9children[s9j++] = c9.get(s9i);
 			}
-			Automaton.Bag r17 = new Automaton.Bag(s9children);
+			Automaton.Bag r17 = new Automaton.Bag(c9children);
 			int r18 = state[18]; // eq2
 			int r19 = state[19];
 			int r21 = state[21]; // t2
 			int r22 = state[22]; // v2
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 2];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 2];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3 || s1i == r19) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r23 = new Automaton.Set(s1children);
+			Automaton.Set r23 = new Automaton.Set(c1children);
 			Automaton.Term r24 = Solver$native.maxMultiplicand(automaton, r9);
-			boolean r25 = r15 == r22;      // v1 eq v2
-			boolean r26 = false;           // v1 eq v2 && t1 eq t2 && x2 lt 0.0 && vx eq v1
-			if(r25) {
-				boolean r27 = r5 == r21;       // t1 eq t2
-				boolean r28 = false;           // t1 eq t2 && x2 lt 0.0 && vx eq v1
-				if(r27) {
-					Automaton.Real r29 = new Automaton.Real(0); // 0.0
-					Automaton.Real r30 = (Automaton.Real) automaton.get(r13);
-					boolean r31 = r30.compareTo(r29)<0; // x2 lt 0.0
-					boolean r32 = false;           // x2 lt 0.0 && vx eq v1
-					if(r31) {
-						Object r33 = (Object) automaton.get(r15);
-						boolean r34 = r24.equals(r33); // vx eq v1
-						r32 = r34;
-					}
-					r28 = r32;
-				}
-				r26 = r28;
-			}
+			Object r25 = (Object) automaton.get(r15);
+			boolean r26 = r24.equals(r25); // vx eq v1
 			if(r26) {
-				int r35 = automaton.add(r17);
-				Automaton.List r36 = new Automaton.List(r8, r35); // [x1xs]
-				int r37 = automaton.add(r36);
-				Automaton.Term r38 = new Automaton.Term(K_Sum, r37);
-				int r39 = automaton.add(r38);
-				Automaton.List r40 = new Automaton.List(r5, r39); // [t1Sum([x1xs])]
-				int r41 = automaton.add(r40);
-				Automaton.Term r42 = new Automaton.Term(K_Inequality, r41);
-				int r43 = automaton.add(r42);
-				Automaton.Set r44 = new Automaton.Set(r2, r18, r43); // {eq1eq2eq3}
-				Automaton.Set r45 = r44.append(r23); // {eq1eq2eq3} append rest
-				int r46 = automaton.add(r45);
-				Automaton.Term r47 = new Automaton.Term(K_And, r46);
-				int r48 = automaton.add(r47);
-				if(r0 != r48) {
-					return automaton.rewrite(r0, r48);
+				int r27 = automaton.add(r17);
+				Automaton.List r28 = new Automaton.List(r8, r27); // [x1xs]
+				int r29 = automaton.add(r28);
+				Automaton.Term r30 = new Automaton.Term(K_Sum, r29);
+				int r31 = automaton.add(r30);
+				Automaton.List r32 = new Automaton.List(r5, r31); // [t1Sum([x1xs])]
+				int r33 = automaton.add(r32);
+				Automaton.Term r34 = new Automaton.Term(K_Inequality, r33);
+				int r35 = automaton.add(r34);
+				Automaton.Set r36 = new Automaton.Set(r2, r18, r35); // {eq1eq2eq3}
+				Automaton.Set r37 = r36.append(r23); // {eq1eq2eq3} append rest
+				int r38 = automaton.add(r37);
+				Automaton.Term r39 = new Automaton.Term(K_And, r38);
+				int r40 = automaton.add(r39);
+				if(r0 != r40) {
+					return automaton.substitute(root,r0, r40);
 				}
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Inequality_4"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term $7<Array($5<^[$2<^Expr<$40<Value<Null|Tuple(^[^$40...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$40...])>>|Tuple($5)|$79<BExpr<Bool<True|False>|VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>|And(^{^$79...})|Or(^{^$79...})|Not(^$79)|Equals(^[$125<^Type<Atom<NotT($148<^Proton<TupleT(^[$148...])|ArrayT($148)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$148...])|ArrayT($148)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($125)|OrT(^{$125...})|AndT(^{$125...})|ArrayT($125)|TupleT(^[$125...])|FunctionT(^[$125,$125,$125...])>>,^{|$2,$2|}[$2,$2]])|Inequality(^[^AType<IntT|RealT>,$222<^AExpr<Num(^real)|VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>|Sum(^[^real,^{|$222...|}[$222...]])|Mul(^[^real,^{|$222...|}[$222...]])|Div(^[$222,$222])>>])|Equation(^[^AType<IntT|RealT>,$222])|ForAll(^[^{^[^Var(^string),$125]...},^$79])|Exists(^[^{^[^Var(^string),$125]...},^$79])>>|AExpr<Num(^real)|VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>|Sum(^[^real,^{|$222...|}[$222...]])|Mul(^[^real,^{|$222...|}[$222...]])|Div(^[$222,$222])>|SExpr<$7|VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>>>>...]>)>
 	public final static int K_Array = 34;
@@ -6253,13 +6484,16 @@ public final class Solver {
 		return automaton.add(new Automaton.Term(K_Array, r1));
 	}
 
-	// 
-	private final static class Reduction_78 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_83 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_78(Pattern.Term pattern) { super(pattern); }
+		public Reduction_83(Pattern.Term pattern) {
+			super(pattern);
+			put("name","LengthOf(Array)");
+			put("rank",0);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_LengthOf) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -6271,7 +6505,7 @@ public final class Solver {
 					Automaton.State s2 = automaton.get(r2);
 					Automaton.List l2 = (Automaton.List) s2;
 					int[] state = {r0, r1, r2, 0};
-					activations.add(new Activation(this,null,state));
+					activations.add(new Reduction.Activation(this,null,state));
 				}
 			}
 		}
@@ -6291,11 +6525,7 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return ""; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 2; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term $8<IndexOf(^[$2<^Expr<$42<Value<Null|Tuple(^[^$42...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$42...])>>|Tuple(^[$2...])|$84<BExpr<Bool<True|False>|VExpr<$8|Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)>|And(^{^$84...})|Or(^{^$84...})|Not(^$84)|Equals(^[$123<^Type<Atom<NotT($146<^Proton<TupleT(^[$146...])|ArrayT($146)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$146...])|ArrayT($146)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($123)|OrT(^{$123...})|AndT(^{$123...})|ArrayT($123)|TupleT(^[$123...])|FunctionT(^[$123,$123,$123...])>>,^{|$2,$2|}[$2,$2]])|Inequality(^[^AType<IntT|RealT>,$220<^AExpr<Num(^real)|VExpr<$8|Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>>])|Equation(^[^AType<IntT|RealT>,$220])|ForAll(^[^{^[^Var(^string),$123]...},^$84])|Exists(^[^{^[^Var(^string),$123]...},^$84])>>|AExpr<Num(^real)|VExpr<$8|Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)>|Sum(^[^real,^{|$220...|}[$220...]])|Mul(^[^real,^{|$220...|}[$220...]])|Div(^[$220,$220])>|SExpr<VExpr<$8|Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)>|Array(^[$2...])>>>,$2])>
 	public final static int K_IndexOf = 35;
@@ -6308,13 +6538,16 @@ public final class Solver {
 		return automaton.add(new Automaton.Term(K_IndexOf, r1));
 	}
 
-	// 
-	private final static class Reduction_79 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_84 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_79(Pattern.Term pattern) { super(pattern); }
+		public Reduction_84(Pattern.Term pattern) {
+			super(pattern);
+			put("name","IndexOf[Array]");
+			put("rank",0);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_IndexOf) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -6334,7 +6567,7 @@ public final class Solver {
 						Automaton.Term t5 = (Automaton.Term) s5;
 						int r6 = t5.contents;
 						int[] state = {r0, r1, r2, r3, 0, r5, r6};
-						activations.add(new Activation(this,null,state));
+						activations.add(new Reduction.Activation(this,null,state));
 					}
 				}
 			}
@@ -6364,11 +6597,7 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return ""; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term $19<ForAll($17<^[^{^[^Var(^string),$4<^Type<Atom<NotT($35<^Proton<TupleT(^[$35...])|ArrayT($35)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$35...])|ArrayT($35)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($4)|OrT(^{$4...})|AndT(^{$4...})|ArrayT($4)|TupleT(^[$4...])|FunctionT(^[$4,$4,$4...])>>]...},$13<^$127<BExpr<$137<VExpr<Var(^string)|Fn(^[^string,$139<^Expr<$127|$177<Value<Null|Tuple(^[^$177...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$177...])>>|Tuple(^[$139...])|$204<AExpr<$137|Num(^real)|Sum(^[^real,^{|^$204...|}[^$204...]])|Mul(^[^real,^{|^$204...|}[^$204...]])|Div(^[^$204,^$204])>>|SExpr<$137|Array(^[$139...])>>>...])|Load(^[$139,^int])|LengthOf($139)|IndexOf(^[$139,$139])>>|Bool<True|False>|And(^{$13...})|Or(^{$13...})|Not($13)|Equals(^[$4,^{|$139,$139|}[$139,$139]])|Inequality(^[^AType<IntT|RealT>,^$204])|Equation(^[^AType<IntT|RealT>,^$204])|$19|Exists($17)>>>]>)>
 	public final static int K_ForAll = 36;
@@ -6381,13 +6610,16 @@ public final class Solver {
 		return automaton.add(new Automaton.Term(K_ForAll, r1));
 	}
 
-	// ForAll_1
-	private final static class Reduction_80 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_85 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_80(Pattern.Term pattern) { super(pattern); }
+		public Reduction_85(Pattern.Term pattern) {
+			super(pattern);
+			put("name","ForAll({},Bool)");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_ForAll) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -6398,47 +6630,51 @@ public final class Solver {
 				Automaton.State s2 = automaton.get(r2);
 				Automaton.Collection c2 = (Automaton.Collection) s2;
 				int r4 = l1.get(1);
-				int[] state = {r0, r1, r2, 0, r4};
-				activations.add(new Activation(this,null,state));
+				int[] c2children = new int[c2.size() - 0];
+				for(int s2i=0, s2j=0; s2i != c2.size();++s2i) {
+					c2children[s2j++] = c2.get(s2i);
+				}
+				Automaton.Set r3 = new Automaton.Set(c2children);
+				boolean r5 = Runtime.accepts(type27, automaton, r4, SCHEMA); // be is ^Bool<True|False>
+				Automaton.Int r6 = r3.lengthOf(); // |qs|
+				Automaton.Int r7 = new Automaton.Int(0); // 0
+				boolean r8 = r6.equals(r7);    // |qs| eq 0
+				boolean r9 = r5 || r8;         // be is ^Bool<True|False> || |qs| eq 0
+				if(r9) { // REQUIRES
+					int[] state = {r0, r1, r2, 0, r4};
+					activations.add(new Reduction.Activation(this,null,state));
+				}
 			}
 		}
 
 		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
-			Automaton.Collection s2 = (Automaton.Collection) automaton.get(state[2]);
-			int[] s2children = new int[s2.size() - 0];
-			for(int s2i=0, s2j=0; s2i != s2.size();++s2i) {
-				s2children[s2j++] = s2.get(s2i);
+			Automaton.Collection c2 = (Automaton.Collection) automaton.get(state[2]);
+			int[] c2children = new int[c2.size() - 0];
+			for(int s2i=0, s2j=0; s2i != c2.size();++s2i) {
+				c2children[s2j++] = c2.get(s2i);
 			}
-			Automaton.Set r3 = new Automaton.Set(s2children);
+			Automaton.Set r3 = new Automaton.Set(c2children);
 			int r4 = state[4]; // be
-			boolean r5 = Runtime.accepts(type27, automaton, r4, SCHEMA); // be is ^Bool<True|False>
-			Automaton.Int r6 = r3.lengthOf(); // |qs|
-			Automaton.Int r7 = new Automaton.Int(0); // 0
-			boolean r8 = r6.equals(r7);    // |qs| eq 0
-			boolean r9 = r5 || r8;         // be is ^Bool<True|False> || |qs| eq 0
-			if(r9) {
-				if(r0 != r4) {
-					return automaton.rewrite(r0, r4);
-				}
+			if(r0 != r4) {
+				return automaton.rewrite(r0, r4);
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "ForAll_1"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// ForAll_2
-	private final static class Reduction_81 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_86 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_81(Pattern.Term pattern) { super(pattern); }
+		public Reduction_86(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Not(ForAll)");
+			put("rank",0);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Not) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -6454,7 +6690,7 @@ public final class Solver {
 					Automaton.Collection c3 = (Automaton.Collection) s3;
 					int r5 = l2.get(1);
 					int[] state = {r0, r1, r2, r3, 0, r5};
-					activations.add(new Activation(this,null,state));
+					activations.add(new Reduction.Activation(this,null,state));
 				}
 			}
 		}
@@ -6476,19 +6712,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "ForAll_2"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 4; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// ForAll_3
-	private final static class Reduction_82 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_87 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_82(Pattern.Term pattern) { super(pattern); }
+		public Reduction_87(Pattern.Term pattern) {
+			super(pattern);
+			put("name","ForAll[ForAll]");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_ForAll) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -6510,7 +6745,7 @@ public final class Solver {
 					Automaton.Collection c6 = (Automaton.Collection) s6;
 					int r8 = l5.get(1);
 					int[] state = {r0, r1, r2, 0, r4, r5, r6, 0, r8};
-					activations.add(new Activation(this,null,state));
+					activations.add(new Reduction.Activation(this,null,state));
 				}
 			}
 		}
@@ -6535,19 +6770,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "ForAll_3"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 6; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// ForAll_4
-	private final static class Reduction_83 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_88 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_83(Pattern.Term pattern) { super(pattern); }
+		public Reduction_88(Pattern.Term pattern) {
+			super(pattern);
+			put("name","ForAll[{Var,Var...},BExpr]");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_ForAll) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -6566,7 +6800,7 @@ public final class Solver {
 						int r6 = l3.get(1);
 						int r8 = l1.get(1);
 						int[] state = {r0, r1, r2, r3, r4, r5, r6, 0, r8};
-						activations.add(new Activation(this,null,state));
+						activations.add(new Reduction.Activation(this,null,state));
 					}
 				}
 			}
@@ -6577,13 +6811,13 @@ public final class Solver {
 			int r0 = state[0];
 			int r4 = state[4];
 			int r5 = state[5]; // v
-			Automaton.Collection s2 = (Automaton.Collection) automaton.get(state[2]);
-			int[] s2children = new int[s2.size() - 1];
-			for(int s2i=0, s2j=0; s2i != s2.size();++s2i) {
+			Automaton.Collection c2 = (Automaton.Collection) automaton.get(state[2]);
+			int[] c2children = new int[c2.size() - 1];
+			for(int s2i=0, s2j=0; s2i != c2.size();++s2i) {
 				if(s2i == r4) { continue; }
-				s2children[s2j++] = s2.get(s2i);
+				c2children[s2j++] = c2.get(s2i);
 			}
-			Automaton.Set r7 = new Automaton.Set(s2children);
+			Automaton.Set r7 = new Automaton.Set(c2children);
 			int r8 = state[8]; // e
 			Automaton.List r9 = new Automaton.List(r8, r5); // [ev]
 			boolean r10 = Solver$native.contains(automaton, r9);
@@ -6601,19 +6835,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "ForAll_4"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// ForAll_5
-	private final static class Inference_5 extends AbstractRewriteRule implements InferenceRule {
+	private final static class Inference_4 extends AbstractRewriteRule implements InferenceRule {
 
-		public Inference_5(Pattern.Term pattern) { super(pattern); }
+		public Inference_4(Pattern.Term pattern) {
+			super(pattern);
+			put("name","And{BExpr,ForAll,BExpr...}");
+			put("rank",3);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int root, int target, List<Inference.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_And) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -6643,8 +6876,18 @@ public final class Solver {
 										int r10 = l8.get(0);
 										int r11 = l8.get(1);
 										int r13 = l6.get(1);
-										int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, 0, r13, 0};
-										activations.add(new Activation(this,null,state));
+										int[] c1children = new int[c1.size() - 2];
+										for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
+											if(s1i == r3 || s1i == r5) { continue; }
+											c1children[s1j++] = c1.get(s1i);
+										}
+										Automaton.Set r14 = new Automaton.Set(c1children);
+										boolean r15 = Runtime.accepts(type28, automaton, r2, SCHEMA); // e1 is ^$20<ForAll($18<^[^{^[^Var(^string),$5<^Type<Atom<NotT($36<^Proton<TupleT(^[$36...])|ArrayT($36)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$36...])|ArrayT($36)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($5)|OrT(^{$5...})|AndT(^{$5...})|ArrayT($5)|TupleT(^[$5...])|FunctionT(^[$5,$5,$5...])>>]...},$14<^$128<BExpr<$138<VExpr<Var(^string)|Fn(^[^string,$140<^Expr<$128|$178<Value<Null|Tuple(^[^$178...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$178...])>>|Tuple(^[$140...])|$205<AExpr<$138|Num(^real)|Sum(^[^real,^{|^$205...|}[^$205...]])|Mul(^[^real,^{|^$205...|}[^$205...]])|Div(^[^$205,^$205])>>|SExpr<$138|Array(^[$140...])>>>...])|Load(^[$140,^int])|LengthOf($140)|IndexOf(^[$140,$140])>>|Bool<True|False>|And(^{$14...})|Or(^{$14...})|Not($14)|Equals(^[$5,^{|$140,$140|}[$140,$140]])|Inequality(^[^AType<IntT|RealT>,^$205])|Equation(^[^AType<IntT|RealT>,^$205])|$20|Exists($18)>>>]>)>
+										boolean r16 = !r15;            // !e1 is ^$20<ForAll($18<^[^{^[^Var(^string),$5<^Type<Atom<NotT($36<^Proton<TupleT(^[$36...])|ArrayT($36)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$36...])|ArrayT($36)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($5)|OrT(^{$5...})|AndT(^{$5...})|ArrayT($5)|TupleT(^[$5...])|FunctionT(^[$5,$5,$5...])>>]...},$14<^$128<BExpr<$138<VExpr<Var(^string)|Fn(^[^string,$140<^Expr<$128|$178<Value<Null|Tuple(^[^$178...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$178...])>>|Tuple(^[$140...])|$205<AExpr<$138|Num(^real)|Sum(^[^real,^{|^$205...|}[^$205...]])|Mul(^[^real,^{|^$205...|}[^$205...]])|Div(^[^$205,^$205])>>|SExpr<$138|Array(^[$140...])>>>...])|Load(^[$140,^int])|LengthOf($140)|IndexOf(^[$140,$140])>>|Bool<True|False>|And(^{$14...})|Or(^{$14...})|Not($14)|Equals(^[$5,^{|$140,$140|}[$140,$140]])|Inequality(^[^AType<IntT|RealT>,^$205])|Equation(^[^AType<IntT|RealT>,^$205])|$20|Exists($18)>>>]>)>
+										if(r16) { // REQUIRES
+											int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, 0, r13, 0};
+											activations.add(new Inference.Activation(this,root,null,state));
+										}
 									}
 								}
 							}
@@ -6654,7 +6897,7 @@ public final class Solver {
 			}
 		}
 
-		public final int apply(Automaton automaton, int[] state) {
+		public final int apply(Automaton automaton, int root, int[] state) {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
 			int r2 = state[2]; // e1
@@ -6664,43 +6907,33 @@ public final class Solver {
 			int r7 = state[7]; // vs
 			int r9 = state[9];
 			int r13 = state[13]; // e2
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 2];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 2];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3 || s1i == r5) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r14 = new Automaton.Set(s1children);
+			Automaton.Set r14 = new Automaton.Set(c1children);
 			Automaton.List r15 = new Automaton.List(r2, r7, r13); // [e1vse2]
 			Automaton.Set r16 = Solver$native.instantiate(automaton, r15);
-			boolean r17 = Runtime.accepts(type28, automaton, r2, SCHEMA); // e1 is ^$20<ForAll($18<^[^{^[^Var(^string),$5<^Type<Atom<NotT($36<^Proton<TupleT(^[$36...])|ArrayT($36)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$36...])|ArrayT($36)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($5)|OrT(^{$5...})|AndT(^{$5...})|ArrayT($5)|TupleT(^[$5...])|FunctionT(^[$5,$5,$5...])>>]...},$14<^$128<BExpr<$138<VExpr<Var(^string)|Fn(^[^string,$140<^Expr<$128|$178<Value<Null|Tuple(^[^$178...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$178...])>>|Tuple(^[$140...])|$205<AExpr<$138|Num(^real)|Sum(^[^real,^{|^$205...|}[^$205...]])|Mul(^[^real,^{|^$205...|}[^$205...]])|Div(^[^$205,^$205])>>|SExpr<$138|Array(^[$140...])>>>...])|Load(^[$140,^int])|LengthOf($140)|IndexOf(^[$140,$140])>>|Bool<True|False>|And(^{$14...})|Or(^{$14...})|Not($14)|Equals(^[$5,^{|$140,$140|}[$140,$140]])|Inequality(^[^AType<IntT|RealT>,^$205])|Equation(^[^AType<IntT|RealT>,^$205])|$20|Exists($18)>>>]>)>
-			boolean r18 = !r17;            // !e1 is ^$20<ForAll($18<^[^{^[^Var(^string),$5<^Type<Atom<NotT($36<^Proton<TupleT(^[$36...])|ArrayT($36)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$36...])|ArrayT($36)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($5)|OrT(^{$5...})|AndT(^{$5...})|ArrayT($5)|TupleT(^[$5...])|FunctionT(^[$5,$5,$5...])>>]...},$14<^$128<BExpr<$138<VExpr<Var(^string)|Fn(^[^string,$140<^Expr<$128|$178<Value<Null|Tuple(^[^$178...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$178...])>>|Tuple(^[$140...])|$205<AExpr<$138|Num(^real)|Sum(^[^real,^{|^$205...|}[^$205...]])|Mul(^[^real,^{|^$205...|}[^$205...]])|Div(^[^$205,^$205])>>|SExpr<$138|Array(^[$140...])>>>...])|Load(^[$140,^int])|LengthOf($140)|IndexOf(^[$140,$140])>>|Bool<True|False>|And(^{$14...})|Or(^{$14...})|Not($14)|Equals(^[$5,^{|$140,$140|}[$140,$140]])|Inequality(^[^AType<IntT|RealT>,^$205])|Equation(^[^AType<IntT|RealT>,^$205])|$20|Exists($18)>>>]>)>
-			boolean r19 = false;           // !e1 is ^$20<ForAll($18<^[^{^[^Var(^string),$5<^Type<Atom<NotT($36<^Proton<TupleT(^[$36...])|ArrayT($36)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$36...])|ArrayT($36)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($5)|OrT(^{$5...})|AndT(^{$5...})|ArrayT($5)|TupleT(^[$5...])|FunctionT(^[$5,$5,$5...])>>]...},$14<^$128<BExpr<$138<VExpr<Var(^string)|Fn(^[^string,$140<^Expr<$128|$178<Value<Null|Tuple(^[^$178...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$178...])>>|Tuple(^[$140...])|$205<AExpr<$138|Num(^real)|Sum(^[^real,^{|^$205...|}[^$205...]])|Mul(^[^real,^{|^$205...|}[^$205...]])|Div(^[^$205,^$205])>>|SExpr<$138|Array(^[$140...])>>>...])|Load(^[$140,^int])|LengthOf($140)|IndexOf(^[$140,$140])>>|Bool<True|False>|And(^{$14...})|Or(^{$14...})|Not($14)|Equals(^[$5,^{|$140,$140|}[$140,$140]])|Inequality(^[^AType<IntT|RealT>,^$205])|Equation(^[^AType<IntT|RealT>,^$205])|$20|Exists($18)>>>]>)> && |instantiations| gt 0
-			if(r18) {
-				Automaton.Int r20 = r16.lengthOf(); // |instantiations|
-				Automaton.Int r21 = new Automaton.Int(0); // 0
-				boolean r22 = r20.compareTo(r21)>0; // |instantiations| gt 0
-				r19 = r22;
-			}
+			Automaton.Int r17 = r16.lengthOf(); // |instantiations|
+			Automaton.Int r18 = new Automaton.Int(0); // 0
+			boolean r19 = r17.compareTo(r18)>0; // |instantiations| gt 0
 			if(r19) {
-				Automaton.Set r23 = new Automaton.Set(r2, r4); // {e1qf}
-				Automaton.Set r24 = r14.append(r16); // es append instantiations
-				Automaton.Set r25 = r23.append(r24); // {e1qf} append es append instantiations
-				int r26 = automaton.add(r25);
-				Automaton.Term r27 = new Automaton.Term(K_And, r26);
-				int r28 = automaton.add(r27);
-				if(r0 != r28) {
-					return automaton.rewrite(r0, r28);
+				Automaton.Set r20 = new Automaton.Set(r2, r4); // {e1qf}
+				Automaton.Set r21 = r14.append(r16); // es append instantiations
+				Automaton.Set r22 = r20.append(r21); // {e1qf} append es append instantiations
+				int r23 = automaton.add(r22);
+				Automaton.Term r24 = new Automaton.Term(K_And, r23);
+				int r25 = automaton.add(r24);
+				if(r0 != r25) {
+					return automaton.substitute(root,r0, r25);
 				}
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "ForAll_5"; }
-		public final int rank() { return 3; }
 
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term $19<Exists($17<^[^{^[^Var(^string),$4<^Type<Atom<NotT($35<^Proton<TupleT(^[$35...])|ArrayT($35)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$35...])|ArrayT($35)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($4)|OrT(^{$4...})|AndT(^{$4...})|ArrayT($4)|TupleT(^[$4...])|FunctionT(^[$4,$4,$4...])>>]...},$13<^$127<BExpr<$137<VExpr<Var(^string)|Fn(^[^string,$139<^Expr<$127|$177<Value<Null|Tuple(^[^$177...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$177...])>>|Tuple(^[$139...])|$204<AExpr<$137|Num(^real)|Sum(^[^real,^{|^$204...|}[^$204...]])|Mul(^[^real,^{|^$204...|}[^$204...]])|Div(^[^$204,^$204])>>|SExpr<$137|Array(^[$139...])>>>...])|Load(^[$139,^int])|LengthOf($139)|IndexOf(^[$139,$139])>>|Bool<True|False>|And(^{$13...})|Or(^{$13...})|Not($13)|Equals(^[$4,^{|$139,$139|}[$139,$139]])|Inequality(^[^AType<IntT|RealT>,^$204])|Equation(^[^AType<IntT|RealT>,^$204])|$19|ForAll($17)>>>]>)>
 	public final static int K_Exists = 37;
@@ -6713,13 +6946,16 @@ public final class Solver {
 		return automaton.add(new Automaton.Term(K_Exists, r1));
 	}
 
-	// Exists_1
-	private final static class Reduction_84 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_89 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_84(Pattern.Term pattern) { super(pattern); }
+		public Reduction_89(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Exists[{},Bool]");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Exists) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -6730,47 +6966,51 @@ public final class Solver {
 				Automaton.State s2 = automaton.get(r2);
 				Automaton.Collection c2 = (Automaton.Collection) s2;
 				int r4 = l1.get(1);
-				int[] state = {r0, r1, r2, 0, r4};
-				activations.add(new Activation(this,null,state));
+				int[] c2children = new int[c2.size() - 0];
+				for(int s2i=0, s2j=0; s2i != c2.size();++s2i) {
+					c2children[s2j++] = c2.get(s2i);
+				}
+				Automaton.Set r3 = new Automaton.Set(c2children);
+				boolean r5 = Runtime.accepts(type27, automaton, r4, SCHEMA); // be is ^Bool<True|False>
+				Automaton.Int r6 = r3.lengthOf(); // |qs|
+				Automaton.Int r7 = new Automaton.Int(0); // 0
+				boolean r8 = r6.equals(r7);    // |qs| eq 0
+				boolean r9 = r5 || r8;         // be is ^Bool<True|False> || |qs| eq 0
+				if(r9) { // REQUIRES
+					int[] state = {r0, r1, r2, 0, r4};
+					activations.add(new Reduction.Activation(this,null,state));
+				}
 			}
 		}
 
 		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
-			Automaton.Collection s2 = (Automaton.Collection) automaton.get(state[2]);
-			int[] s2children = new int[s2.size() - 0];
-			for(int s2i=0, s2j=0; s2i != s2.size();++s2i) {
-				s2children[s2j++] = s2.get(s2i);
+			Automaton.Collection c2 = (Automaton.Collection) automaton.get(state[2]);
+			int[] c2children = new int[c2.size() - 0];
+			for(int s2i=0, s2j=0; s2i != c2.size();++s2i) {
+				c2children[s2j++] = c2.get(s2i);
 			}
-			Automaton.Set r3 = new Automaton.Set(s2children);
+			Automaton.Set r3 = new Automaton.Set(c2children);
 			int r4 = state[4]; // be
-			boolean r5 = Runtime.accepts(type27, automaton, r4, SCHEMA); // be is ^Bool<True|False>
-			Automaton.Int r6 = r3.lengthOf(); // |qs|
-			Automaton.Int r7 = new Automaton.Int(0); // 0
-			boolean r8 = r6.equals(r7);    // |qs| eq 0
-			boolean r9 = r5 || r8;         // be is ^Bool<True|False> || |qs| eq 0
-			if(r9) {
-				if(r0 != r4) {
-					return automaton.rewrite(r0, r4);
-				}
+			if(r0 != r4) {
+				return automaton.rewrite(r0, r4);
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Exists_1"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Exists_2
-	private final static class Reduction_85 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_90 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_85(Pattern.Term pattern) { super(pattern); }
+		public Reduction_90(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Not(Exists)");
+			put("rank",2);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Not) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -6786,7 +7026,7 @@ public final class Solver {
 					Automaton.Collection c3 = (Automaton.Collection) s3;
 					int r5 = l2.get(1);
 					int[] state = {r0, r1, r2, r3, 0, r5};
-					activations.add(new Activation(this,null,state));
+					activations.add(new Reduction.Activation(this,null,state));
 				}
 			}
 		}
@@ -6808,19 +7048,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Exists_2"; }
-		public final int rank() { return 2; }
 
-		public final int minimum() { return 4; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Exists_3
-	private final static class Reduction_86 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_91 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_86(Pattern.Term pattern) { super(pattern); }
+		public Reduction_91(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Exists[Exists,BExpr]");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Exists) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -6842,7 +7081,7 @@ public final class Solver {
 					Automaton.Collection c6 = (Automaton.Collection) s6;
 					int r8 = l5.get(1);
 					int[] state = {r0, r1, r2, 0, r4, r5, r6, 0, r8};
-					activations.add(new Activation(this,null,state));
+					activations.add(new Reduction.Activation(this,null,state));
 				}
 			}
 		}
@@ -6867,19 +7106,18 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Exists_3"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 6; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Exists_4
-	private final static class Reduction_87 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_92 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_87(Pattern.Term pattern) { super(pattern); }
+		public Reduction_92(Pattern.Term pattern) {
+			super(pattern);
+			put("name","And{Exists,BExpr...}");
+			put("rank",1);
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_And) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -6900,7 +7138,7 @@ public final class Solver {
 							Automaton.Collection c5 = (Automaton.Collection) s5;
 							int r7 = l4.get(1);
 							int[] state = {r0, r1, r2, r3, r4, r5, 0, r7, 0};
-							activations.add(new Activation(this,null,state));
+							activations.add(new Reduction.Activation(this,null,state));
 						}
 					}
 				}
@@ -6913,13 +7151,13 @@ public final class Solver {
 			int r3 = state[3];
 			int r5 = state[5]; // vs
 			int r7 = state[7]; // e
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 1];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 1];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r8 = new Automaton.Set(s1children);
+			Automaton.Set r8 = new Automaton.Set(c1children);
 			Automaton.Set r9 = r8.appendFront(r7); // e append es
 			int r10 = automaton.add(r9);
 			Automaton.Term r11 = new Automaton.Term(K_And, r10);
@@ -6934,11 +7172,7 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Exists_4"; }
-		public final int rank() { return 1; }
 
-		public final int minimum() { return 5; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term Inhabited($2<^Type<Atom<NotT($17<^Proton<TupleT(^[$17...])|ArrayT($17)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$17...])|ArrayT($17)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($2)|OrT(^{$2...})|AndT(^{$2...})|ArrayT($2)|TupleT(^[$2...])|FunctionT(^[$2,$2,$2...])>>)
 	public final static int K_Inhabited = 38;
@@ -6946,20 +7180,22 @@ public final class Solver {
 		return automaton.add(new Automaton.Term(K_Inhabited, r0));
 	}
 
-	// Inhabited_1
-	private final static class Reduction_88 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_93 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_88(Pattern.Term pattern) { super(pattern); }
+		public Reduction_93(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Inhabited_1");
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Inhabited) {
 				Automaton.Term t0 = (Automaton.Term) s0;
 				int r1 = t0.contents;
 				if(Runtime.accepts(type29,automaton,automaton.get(r1), SCHEMA)) {
 					int[] state = {r0, r1};
-					activations.add(new Activation(this,null,state));
+					activations.add(new Reduction.Activation(this,null,state));
 				}
 			}
 		}
@@ -6992,19 +7228,17 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Inhabited_1"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 1; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Inhabited_2
-	private final static class Reduction_89 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_94 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_89(Pattern.Term pattern) { super(pattern); }
+		public Reduction_94(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Inhabited_2");
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Inhabited) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -7030,8 +7264,28 @@ public final class Solver {
 						break;
 					}
 					if(m2_0) {
-						int[] state = {r0, r1, r2, 0};
-						activations.add(new Activation(this,null,state));
+						int[] c2children = new int[c2.size() - 0];
+						for(int s2i=0, s2j=0; s2i != c2.size();++s2i) {
+							c2children[s2j++] = c2.get(s2i);
+						}
+						Automaton.Set r3 = new Automaton.Set(c2children);
+						Automaton.List t4 = new Automaton.List();
+						boolean r4 = true;
+						outer:
+						for(int i5=0;i5<r3.size();i5++) {
+							int r5 = (int) r3.get(i5);
+							Automaton.Term r6 = AnyT;
+							Automaton.Term r7 = (Automaton.Term) automaton.get(r5);
+							boolean r8 = r7.equals(r6);    // t eq AnyT
+							if(r8) {
+								r4 = false;
+								break outer;
+							}
+						}
+						if(r4) { // REQUIRES
+							int[] state = {r0, r1, r2, 0};
+							activations.add(new Reduction.Activation(this,null,state));
+						}
 					}
 				}
 			}
@@ -7040,48 +7294,31 @@ public final class Solver {
 		public final int apply(Automaton automaton, int[] state) {
 			int nStates = automaton.nStates();
 			int r0 = state[0];
-			Automaton.Collection s2 = (Automaton.Collection) automaton.get(state[2]);
-			int[] s2children = new int[s2.size() - 0];
-			for(int s2i=0, s2j=0; s2i != s2.size();++s2i) {
-				s2children[s2j++] = s2.get(s2i);
+			Automaton.Collection c2 = (Automaton.Collection) automaton.get(state[2]);
+			int[] c2children = new int[c2.size() - 0];
+			for(int s2i=0, s2j=0; s2i != c2.size();++s2i) {
+				c2children[s2j++] = c2.get(s2i);
 			}
-			Automaton.Set r3 = new Automaton.Set(s2children);
-			Automaton.List t4 = new Automaton.List();
-			boolean r4 = true;
-			outer:
-			for(int i5=0;i5<r3.size();i5++) {
-				int r5 = (int) r3.get(i5);
-				Automaton.Term r6 = AnyT;
-				Automaton.Term r7 = (Automaton.Term) automaton.get(r5);
-				boolean r8 = r7.equals(r6);    // t eq AnyT
-				if(r8) {
-					r4 = false;
-					break outer;
-				}
-			}
-			if(r4) {
-				Automaton.Term r9 = True;
-				int r10 = automaton.add(r9);
-				if(r0 != r10) {
-					return automaton.rewrite(r0, r10);
-				}
+			Automaton.Set r3 = new Automaton.Set(c2children);
+			Automaton.Term r4 = True;
+			int r5 = automaton.add(r4);
+			if(r0 != r5) {
+				return automaton.rewrite(r0, r5);
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Inhabited_2"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Inhabited_3
-	private final static class Reduction_90 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_95 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_90(Pattern.Term pattern) { super(pattern); }
+		public Reduction_95(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Inhabited_3");
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Inhabited) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -7091,7 +7328,7 @@ public final class Solver {
 					Automaton.Term t1 = (Automaton.Term) s1;
 					int r2 = t1.contents;
 					int[] state = {r0, r1, r2};
-					activations.add(new Activation(this,null,state));
+					activations.add(new Reduction.Activation(this,null,state));
 				}
 			}
 		}
@@ -7108,11 +7345,7 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Inhabited_3"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 2; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// term Is(^[$2<^Expr<$44<Value<Null|Tuple(^[^$44...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$44...])>>|Tuple(^[$2...])|$86<BExpr<Bool<True|False>|VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>|And(^{^$86...})|Or(^{^$86...})|Not(^$86)|Equals(^[$4<^Type<Atom<NotT($153<^Proton<TupleT(^[$153...])|ArrayT($153)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$153...])|ArrayT($153)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($4)|OrT(^{$4...})|AndT(^{$4...})|ArrayT($4)|TupleT(^[$4...])|FunctionT(^[$4,$4,$4...])>>,^{|$2,$2|}[$2,$2]])|Inequality(^[^AType<IntT|RealT>,$227<^AExpr<Num(^real)|VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>|Sum(^[^real,^{|$227...|}[$227...]])|Mul(^[^real,^{|$227...|}[$227...]])|Div(^[$227,$227])>>])|Equation(^[^AType<IntT|RealT>,$227])|ForAll(^[^{^[^Var(^string),$4]...},^$86])|Exists(^[^{^[^Var(^string),$4]...},^$86])>>|AExpr<Num(^real)|VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>|Sum(^[^real,^{|$227...|}[$227...]])|Mul(^[^real,^{|$227...|}[$227...]])|Div(^[$227,$227])>|SExpr<VExpr<Var(^string)|Fn(^[^string,$2...])|Load(^[$2,^int])|LengthOf($2)|IndexOf(^[$2,$2])>|Array(^[$2...])>>>,$4])
 	public final static int K_Is = 39;
@@ -7125,13 +7358,15 @@ public final class Solver {
 		return automaton.add(new Automaton.Term(K_Is, r1));
 	}
 
-	// Is_1
-	private final static class Reduction_91 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_96 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_91(Pattern.Term pattern) { super(pattern); }
+		public Reduction_96(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Is_1");
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Is) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -7142,7 +7377,7 @@ public final class Solver {
 				int r3 = l1.get(1);
 				if(Runtime.accepts(type1,automaton,automaton.get(r3), SCHEMA)) {
 					int[] state = {r0, r1, r2, r3};
-					activations.add(new Activation(this,null,state));
+					activations.add(new Reduction.Activation(this,null,state));
 				}
 			}
 		}
@@ -7159,19 +7394,17 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Is_1"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 3; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Is_2
-	private final static class Reduction_92 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_97 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_92(Pattern.Term pattern) { super(pattern); }
+		public Reduction_97(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Is_2");
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_Not) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -7185,7 +7418,7 @@ public final class Solver {
 					int r3 = l2.get(0);
 					int r4 = l2.get(1);
 					int[] state = {r0, r1, r2, r3, r4};
-					activations.add(new Activation(this,null,state));
+					activations.add(new Reduction.Activation(this,null,state));
 				}
 			}
 		}
@@ -7207,19 +7440,17 @@ public final class Solver {
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Is_2"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 4; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
-	// Is_3
-	private final static class Reduction_93 extends AbstractRewriteRule implements ReductionRule {
+	private final static class Reduction_98 extends AbstractRewriteRule implements ReductionRule {
 
-		public Reduction_93(Pattern.Term pattern) { super(pattern); }
+		public Reduction_98(Pattern.Term pattern) {
+			super(pattern);
+			put("name","Is_3");
+		}
 
-		public final void probe(Automaton automaton, int root, List<Activation> activations) {
-			int r0 = root;
+		public final void probe(Automaton automaton, int target, List<Reduction.Activation> activations) {
+			int r0 = target;
 			Automaton.State s0 = automaton.get(r0);
 			if(s0.kind == K_And) {
 				Automaton.Term t0 = (Automaton.Term) s0;
@@ -7248,8 +7479,17 @@ public final class Solver {
 									Automaton.List l9 = (Automaton.List) s9;
 									int r10 = l9.get(0);
 									int r11 = l9.get(1);
-									int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, 0};
-									activations.add(new Activation(this,null,state));
+									int[] c1children = new int[c1.size() - 2];
+									for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
+										if(s1i == r3 || s1i == r8) { continue; }
+										c1children[s1j++] = c1.get(s1i);
+									}
+									Automaton.Set r12 = new Automaton.Set(c1children);
+									boolean r13 = r5 == r10;       // e1 eq e2
+									if(r13) { // REQUIRES
+										int[] state = {r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, r11, 0};
+										activations.add(new Reduction.Activation(this,null,state));
+									}
 								}
 							}
 						}
@@ -7267,40 +7507,33 @@ public final class Solver {
 			int r8 = state[8];
 			int r10 = state[10]; // e2
 			int r11 = state[11]; // t2
-			Automaton.Collection s1 = (Automaton.Collection) automaton.get(state[1]);
-			int[] s1children = new int[s1.size() - 2];
-			for(int s1i=0, s1j=0; s1i != s1.size();++s1i) {
+			Automaton.Collection c1 = (Automaton.Collection) automaton.get(state[1]);
+			int[] c1children = new int[c1.size() - 2];
+			for(int s1i=0, s1j=0; s1i != c1.size();++s1i) {
 				if(s1i == r3 || s1i == r8) { continue; }
-				s1children[s1j++] = s1.get(s1i);
+				c1children[s1j++] = c1.get(s1i);
 			}
-			Automaton.Set r12 = new Automaton.Set(s1children);
-			boolean r13 = r5 == r10;       // e1 eq e2
-			if(r13) {
-				Automaton.Set r14 = new Automaton.Set(r6, r11); // {t1t2}
-				int r15 = automaton.add(r14);
-				Automaton.Term r16 = new Automaton.Term(K_AndT, r15);
-				int r17 = automaton.add(r16);
-				Automaton.List r18 = new Automaton.List(r5, r17); // [e1AndT({t1t2})]
-				int r19 = automaton.add(r18);
-				Automaton.Term r20 = new Automaton.Term(K_Is, r19);
-				int r21 = automaton.add(r20);
-				Automaton.Set r22 = new Automaton.Set(r21); // {Is([e1AndT({t1t2})])}
-				Automaton.Set r23 = r22.append(r12); // {Is([e1AndT({t1t2})])} append bs
-				int r24 = automaton.add(r23);
-				Automaton.Term r25 = new Automaton.Term(K_And, r24);
-				int r26 = automaton.add(r25);
-				if(r0 != r26) {
-					return automaton.rewrite(r0, r26);
-				}
+			Automaton.Set r12 = new Automaton.Set(c1children);
+			Automaton.Set r13 = new Automaton.Set(r6, r11); // {t1t2}
+			int r14 = automaton.add(r13);
+			Automaton.Term r15 = new Automaton.Term(K_AndT, r14);
+			int r16 = automaton.add(r15);
+			Automaton.List r17 = new Automaton.List(r5, r16); // [e1AndT({t1t2})]
+			int r18 = automaton.add(r17);
+			Automaton.Term r19 = new Automaton.Term(K_Is, r18);
+			int r20 = automaton.add(r19);
+			Automaton.Set r21 = new Automaton.Set(r20); // {Is([e1AndT({t1t2})])}
+			Automaton.Set r22 = r21.append(r12); // {Is([e1AndT({t1t2})])} append bs
+			int r23 = automaton.add(r22);
+			Automaton.Term r24 = new Automaton.Term(K_And, r23);
+			int r25 = automaton.add(r24);
+			if(r0 != r25) {
+				return automaton.rewrite(r0, r25);
 			}
 			automaton.resize(nStates);
 			return Automaton.K_VOID;
 		}
-		public final String name() { return "Is_3"; }
-		public final int rank() { return 0; }
 
-		public final int minimum() { return 0; }
-		public final int maximum() { return Integer.MAX_VALUE; }
 	}
 	// =========================================================================
 	// Schema
@@ -7423,14 +7656,14 @@ public final class Solver {
 	private static Type type13 = Runtime.Type("2K545QnKq3ukmD0E");
 	// True
 	private static Type type14 = Runtime.Type("2GJ8MS_CWDggIk2");
-	// $1<^Value<Null|Tuple(^[$1...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[$1...])>>
-	private static Type type15 = Runtime.Type("EG_KWlLS_d1P3tJSglq3wkHE38oQjl5CDKMQZC4Sm_aQbG4Kp06Q_CmDgZnHeko79p3AD4_EEdMU75QV4K08bRW_r7Pp3AQ4HLRhGMYcYMhw4GJ8MS_CGPgc5K545QnKq3glHQWgaQQwq7zVMAtdX5YVoTgkb9OBHHylmUlD");
 	// $22<Value<Null|Tuple(^[^$22...])|Bool<True|False>|Num(^real)|String(^string)|Array(^[^$22...])>>
-	private static Type type16 = Runtime.Type("EG_KWlLS_GZIpl5QIg2AwFZFjx5QosJShGqJo8MPiS5KJK6RgKa9cCXHgZnHeko78p3AD4KEEdMU75QV4K08bRW_r7Pp3AQ4HLRhGMYcYMhw4GJ8MS_CGPgc5K545QnKq3glHQWgaQQwq7yVMAtdX5YwnTgkb9OB1HylmU0P");
+	private static Type type15 = Runtime.Type("EG_KWlLS_GZIpl5QIg2AwFZFjx5QosJShGqJo8MPiS5KJK6RgKa9cCXHgZnHeko78p3AD4KEEdMU75QV4K08bRW_r7Pp3AQ4HLRhGMYcYMhw4GJ8MS_CGPgc5K545QnKq3glHQWgaQQwq7yVMAtdX5YwnTgkb9OB1HylmU0P");
 	// real
-	private static Type type17 = Runtime.Type("Fc0");
+	private static Type type16 = Runtime.Type("Fc0");
 	// $9<AExpr<Num(^real)|Sum(^[^real,^{|^$9...|}[^$9...]])|Mul(^[^real,^{|^$9...|}[^$9...]])|Div(^[^$9,^$9])|$41<VExpr<Var(^string)|Fn(^[^string,$46<^Expr<$9|$84<Value<Num(^real)|Null|Tuple(^[^$84...])|Bool<True|False>|String(^string)|Array(^[^$84...])>>|Tuple(^[$46...])|$121<BExpr<$41|Bool<True|False>|And(^{^$121...})|Or(^{^$121...})|Not(^$121)|Equals(^[$133<^Type<Atom<NotT($156<^Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$156...])|ArrayT($156)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($133)|OrT(^{$133...})|AndT(^{$133...})|ArrayT($133)|TupleT(^[$133...])|FunctionT(^[$133,$133,$133...])>>,^{|$46,$46|}[$46,$46]])|Inequality(^[^AType<IntT|RealT>,^$9])|Equation(^[^AType<IntT|RealT>,^$9])|ForAll(^[^{^[^Var(^string),$133]...},^$121])|Exists(^[^{^[^Var(^string),$133]...},^$121])>>|SExpr<$41|Array(^[$46...])>>>...])|Load(^[$46,^int])|LengthOf($46)|IndexOf(^[$46,$46])>>>>
-	private static Type type18 = Runtime.Type("jHJ4JGs0bRosJShGnJpp5CCK6QoFJPqG_K4W6Rm4_Icd5TA5QVo7uZJA9dX5Yg2IgoZ9ACmIfV2LeZp7Bdp7SgKDRdHMYkYMgwp7xs4AdCmIECH6f_2Qeoq7ys5AjGYKW8685t5GBxLNZGNkJOiS5ScxZO0tNsOVCdChGUo_ZQZK5TEOL7yWDh0Xl7zZNoXXW9OBHTB5goNFJGs0bRecQB0Yl7N5O5tcOcmal7ulOkHb0KL45QpK5KJK6RgK5K1K3Tk8MBT6z6f9QcP3mHf5QkPFpJ4W6Rm4Hfljo5j5YwNVQoHi0GDK6QgCli0Aw538oQjl5OIGbRdtqOesSB1m0AtZRcXml7c5A6gkR3_Ix5C6s6u6QsRFKFm8MNtC1qlm0AO6WwRcSglql7U5R6hoSF3KmKMOIwSk1u0K545QnKq3e6ggT3Hu0vl5h6YsQsTomvl7z5B5gZUB1a0AtgUc1zl7c5x6gsUFIFiG58E86CDx5SZKJRp45Qn4qX0yGimiHjHqm5B9Z58tLOlKMNg_5StGNJJRp45SdxaQWo7h8h0aH7C9O9QcdFaGj8MFgl5O4WMPnGrRWZAhAhWbH7Q9U9QVeBHeGeHAe9egeB1fm9joecXfm779j9gVfBHXmf1Au9Ycckek1j1GJ_6R_d1vX7N5N5Yo0m1D8AecgBmjmmm7SkgZInX9DAYgcwgk1q1G0GrQhGZIjG6KowZRJGJFiG5KZ4ZRm4LTJG5Kp06Q_G4_WGptqNo_qQiGKRwAOETEcEeEjExEQZiBXjXuHAfAZ0_RjGrQid1an7QAiAgwi31y1an5tAYchcjomy1KGKMNmhq7iAgZYzX9zAYwhVskHXn7TAiAggs3YX2Ynnn5CDYoissomY2G0tLTJCGa2APDJtJSgl5KIktkHb2KLxLPZGp3UDgVuF_Fjx5QJCWe2AfD3_ZQoGp3hDgsuF_J_45QJC0i2AtDoC4Sm_aQbGp3vDgkvFZKW86KYsvkNkmj2WWIjpLPi45QJCHm2Y0A9EG5QDTDdDgDjDuDxD7EAEQkwBHzHnIADEYghwfk1qn7z9fwXqY9QEYkhkxkHrn7SAREgwxBXrmj1AdEYwfkHDfEekyBmrHv2AiEYwfwfBmj1yIDtEeczB1umy2AwEJ43Kt0MOeZ8CmznIYo0XJD8Hec7CXYmX3ABHWwucvgWYo7yEEHhV8CmYmX3APHesNB1bojm7So8_YbZ9UHYV9hmAdHec9Cme3fm7Sk9_IfZ9iHYkdw9l1io7S9jHgcA4mXGmo5wHYsPoApXjo7N6x6gVBdm5YVOcBCH6AItkBdHno7vtBlmno7wWOkHqo7N5N5YolqJDRIeoCCmUTIgwC4A0");
+	private static Type type17 = Runtime.Type("jHJ4JGs0bRosJShGnJpp5CCK6QoFJPqG_K4W6Rm4_Icd5TA5QVo7uZJA9dX5Yg2IgoZ9ACmIfV2LeZp7Bdp7SgKDRdHMYkYMgwp7xs4AdCmIECH6f_2Qeoq7ys5AjGYKW8685t5GBxLNZGNkJOiS5ScxZO0tNsOVCdChGUo_ZQZK5TEOL7yWDh0Xl7zZNoXXW9OBHTB5goNFJGs0bRecQB0Yl7N5O5tcOcmal7ulOkHb0KL45QpK5KJK6RgK5K1K3Tk8MBT6z6f9QcP3mHf5QkPFpJ4W6Rm4Hfljo5j5YwNVQoHi0GDK6QgCli0Aw538oQjl5OIGbRdtqOesSB1m0AtZRcXml7c5A6gkR3_Ix5C6s6u6QsRFKFm8MNtC1qlm0AO6WwRcSglql7U5R6hoSF3KmKMOIwSk1u0K545QnKq3e6ggT3Hu0vl5h6YsQsTomvl7z5B5gZUB1a0AtgUc1zl7c5x6gsUFIFiG58E86CDx5SZKJRp45Qn4qX0yGimiHjHqm5B9Z58tLOlKMNg_5StGNJJRp45SdxaQWo7h8h0aH7C9O9QcdFaGj8MFgl5O4WMPnGrRWZAhAhWbH7Q9U9QVeBHeGeHAe9egeB1fm9joecXfm779j9gVfBHXmf1Au9Ycckek1j1GJ_6R_d1vX7N5N5Yo0m1D8AecgBmjmmm7SkgZInX9DAYgcwgk1q1G0GrQhGZIjG6KowZRJGJFiG5KZ4ZRm4LTJG5Kp06Q_G4_WGptqNo_qQiGKRwAOETEcEeEjExEQZiBXjXuHAfAZ0_RjGrQid1an7QAiAgwi31y1an5tAYchcjomy1KGKMNmhq7iAgZYzX9zAYwhVskHXn7TAiAggs3YX2Ynnn5CDYoissomY2G0tLTJCGa2APDJtJSgl5KIktkHb2KLxLPZGp3UDgVuF_Fjx5QJCWe2AfD3_ZQoGp3hDgsuF_J_45QJC0i2AtDoC4Sm_aQbGp3vDgkvFZKW86KYsvkNkmj2WWIjpLPi45QJCHm2Y0A9EG5QDTDdDgDjDuDxD7EAEQkwBHzHnIADEYghwfk1qn7z9fwXqY9QEYkhkxkHrn7SAREgwxBXrmj1AdEYwfkHDfEekyBmrHv2AiEYwfwfBmj1yIDtEeczB1umy2AwEJ43Kt0MOeZ8CmznIYo0XJD8Hec7CXYmX3ABHWwucvgWYo7yEEHhV8CmYmX3APHesNB1bojm7So8_YbZ9UHYV9hmAdHec9Cme3fm7Sk9_IfZ9iHYkdw9l1io7S9jHgcA4mXGmo5wHYsPoApXjo7N6x6gVBdm5YVOcBCH6AItkBdHno7vtBlmno7wWOkHqo7N5N5YolqJDRIeoCCmUTIgwC4A0");
+	// Num(^real)
+	private static Type type18 = Runtime.Type("3CDKMQecl7ug2Aw3x$");
 	// ^Num(^real)
 	private static Type type19 = Runtime.Type("4CDKMQesY9PBXDwkHElD");
 	// ^$13<Sum($11<^[^real,^{|$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...|}[$4<^$21<AExpr<$13|Num(^real)|Mul($11)|Div(^[$4,$4])|$42<VExpr<Var(^string)|Fn(^[^string,$47<^Expr<$21|$85<Value<Num(^real)|Null|Tuple(^[^$85...])|Bool<True|False>|String(^string)|Array(^[^$85...])>>|Tuple(^[$47...])|$122<BExpr<$42|Bool<True|False>|And(^{^$122...})|Or(^{^$122...})|Not(^$122)|Equals(^[$134<^Type<Atom<NotT($157<^Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>)|Proton<TupleT(^[$157...])|ArrayT($157)|Quark<AnyT|NullT|VoidT|BoolT|IntT|RealT|StringT|VarT(^string)|NominalT(^string)>>>|NotT($134)|OrT(^{$134...})|AndT(^{$134...})|ArrayT($134)|TupleT(^[$134...])|FunctionT(^[$134,$134,$134...])>>,^{|$47,$47|}[$47,$47]])|Inequality(^[^AType<IntT|RealT>,$4])|Equation(^[^AType<IntT|RealT>,$4])|ForAll(^[^{^[^Var(^string),$134]...},^$122])|Exists(^[^{^[^Var(^string),$134]...},^$122])>>|SExpr<$42|Array(^[$47...])>>>...])|Load(^[$47,^int])|LengthOf($47)|IndexOf(^[$47,$47])>>>>>...]]>)>
@@ -7650,17 +7883,25 @@ public final class Solver {
 				"a2"),null), 
 			new Pair(new Pattern.Leaf(type2), "ts")}),
 		null);
-	private final static Pattern.Term pattern28 = new Pattern.Term("OrT",
+	private final static Pattern.Term pattern28 = new Pattern.Term("AndT",
+		new Pattern.Set(true, new Pair[]{
+			new Pair(new Pattern.Leaf(type5), "a1"), 
+			new Pair(new Pattern.Term("NotT",
+				new Pattern.Leaf(type3),
+				"a2"),null), 
+			new Pair(new Pattern.Leaf(type2), "ts")}),
+		null);
+	private final static Pattern.Term pattern29 = new Pattern.Term("OrT",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Leaf(type0),null), 
 			new Pair(new Pattern.Leaf(type2), "xs")}),
 		null);
-	private final static Pattern.Term pattern29 = new Pattern.Term("OrT",
+	private final static Pattern.Term pattern30 = new Pattern.Term("OrT",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Leaf(type1),null), 
 			new Pair(new Pattern.Leaf(type2), "xs")}),
 		null);
-	private final static Pattern.Term pattern30 = new Pattern.Term("Load",
+	private final static Pattern.Term pattern31 = new Pattern.Term("Load",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Term("Tuple",
 				new Pattern.List(true, new Pair[]{
@@ -7668,13 +7909,13 @@ public final class Solver {
 				null),null), 
 			new Pair(new Pattern.Leaf(type7), "idx")}),
 		null);
-	private final static Pattern.Term pattern31 = new Pattern.Term("LengthOf",
+	private final static Pattern.Term pattern32 = new Pattern.Term("LengthOf",
 		new Pattern.Term("Tuple",
 			new Pattern.List(true, new Pair[]{
 				new Pair(new Pattern.Leaf(type6), "xs")}),
 			null),
 		null);
-	private final static Pattern.Term pattern32 = new Pattern.Term("Equals",
+	private final static Pattern.Term pattern33 = new Pattern.Term("Equals",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Term("TupleT",
 				new Pattern.List(true, new Pair[]{
@@ -7690,7 +7931,7 @@ public final class Solver {
 						new Pair(new Pattern.Leaf(type6), "ys")}),
 					null),null)}),null)}),
 		null);
-	private final static Pattern.Term pattern33 = new Pattern.Term("And",
+	private final static Pattern.Term pattern34 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Term("Equals",
 				new Pattern.List(false, new Pair[]{
@@ -7701,41 +7942,41 @@ public final class Solver {
 				null), "eq"), 
 			new Pair(new Pattern.Leaf(type10), "bs")}),
 		null);
-	private final static Pattern.Term pattern34 = new Pattern.Term("Not",
+	private final static Pattern.Term pattern35 = new Pattern.Term("Not",
 		new Pattern.Leaf(type11),
 		"b");
-	private final static Pattern.Term pattern35 = new Pattern.Term("Not",
+	private final static Pattern.Term pattern36 = new Pattern.Term("Not",
 		new Pattern.Term("Not",
 			new Pattern.Leaf(type12),
 			"x"),
 		null);
-	private final static Pattern.Term pattern36 = new Pattern.Term("Not",
+	private final static Pattern.Term pattern37 = new Pattern.Term("Not",
 		new Pattern.Term("And",
 			new Pattern.Set(true, new Pair[]{
 				new Pair(new Pattern.Leaf(type10), "xs")}),
 			null),
 		null);
-	private final static Pattern.Term pattern37 = new Pattern.Term("Not",
+	private final static Pattern.Term pattern38 = new Pattern.Term("Not",
 		new Pattern.Term("Or",
 			new Pattern.Set(true, new Pair[]{
 				new Pair(new Pattern.Leaf(type10), "xs")}),
 			null),
 		null);
-	private final static Pattern.Term pattern38 = new Pattern.Term("And",
+	private final static Pattern.Term pattern39 = new Pattern.Term("And",
 		new Pattern.Set(false, new Pair[]{
 			new Pair(new Pattern.Leaf(type10), "x")}),
 		null);
-	private final static Pattern.Term pattern39 = new Pattern.Term("And",
+	private final static Pattern.Term pattern40 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Leaf(type13),null), 
 			new Pair(new Pattern.Leaf(type10), "xs")}),
 		null);
-	private final static Pattern.Term pattern40 = new Pattern.Term("And",
+	private final static Pattern.Term pattern41 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Leaf(type14),null), 
 			new Pair(new Pattern.Leaf(type10), "xs")}),
 		null);
-	private final static Pattern.Term pattern41 = new Pattern.Term("And",
+	private final static Pattern.Term pattern42 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Term("And",
 				new Pattern.Set(true, new Pair[]{
@@ -7743,7 +7984,7 @@ public final class Solver {
 				null),null), 
 			new Pair(new Pattern.Leaf(type10), "ys")}),
 		null);
-	private final static Pattern.Term pattern42 = new Pattern.Term("And",
+	private final static Pattern.Term pattern43 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Term("Not",
 				new Pattern.Leaf(type10),
@@ -7751,7 +7992,7 @@ public final class Solver {
 			new Pair(new Pattern.Leaf(type10), "y"), 
 			new Pair(new Pattern.Leaf(type10), "ys")}),
 		null);
-	private final static Pattern.Term pattern43 = new Pattern.Term("And",
+	private final static Pattern.Term pattern44 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Term("Or",
 				new Pattern.Set(true, new Pair[]{
@@ -7759,21 +8000,21 @@ public final class Solver {
 				null),null), 
 			new Pair(new Pattern.Leaf(type10), "ys")}),
 		null);
-	private final static Pattern.Term pattern44 = new Pattern.Term("Or",
+	private final static Pattern.Term pattern45 = new Pattern.Term("Or",
 		new Pattern.Set(false, new Pair[]{
 			new Pair(new Pattern.Leaf(type10), "x")}),
 		null);
-	private final static Pattern.Term pattern45 = new Pattern.Term("Or",
+	private final static Pattern.Term pattern46 = new Pattern.Term("Or",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Leaf(type14),null), 
 			new Pair(new Pattern.Leaf(type10), "xs")}),
 		null);
-	private final static Pattern.Term pattern46 = new Pattern.Term("Or",
+	private final static Pattern.Term pattern47 = new Pattern.Term("Or",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Leaf(type13),null), 
 			new Pair(new Pattern.Leaf(type10), "xs")}),
 		null);
-	private final static Pattern.Term pattern47 = new Pattern.Term("Or",
+	private final static Pattern.Term pattern48 = new Pattern.Term("Or",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Term("Not",
 				new Pattern.Leaf(type10),
@@ -7781,7 +8022,7 @@ public final class Solver {
 			new Pair(new Pattern.Leaf(type10), "y"), 
 			new Pair(new Pattern.Leaf(type10), "ys")}),
 		null);
-	private final static Pattern.Term pattern48 = new Pattern.Term("Or",
+	private final static Pattern.Term pattern49 = new Pattern.Term("Or",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Term("Or",
 				new Pattern.Set(true, new Pair[]{
@@ -7789,25 +8030,32 @@ public final class Solver {
 				null),null), 
 			new Pair(new Pattern.Leaf(type10), "ys")}),
 		null);
-	private final static Pattern.Term pattern49 = new Pattern.Term("Equals",
+	private final static Pattern.Term pattern50 = new Pattern.Term("Equals",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Leaf(type2), "t"), 
 			new Pair(new Pattern.Bag(false, new Pair[]{
 				new Pair(new Pattern.Leaf(type6), "x"), 
 				new Pair(new Pattern.Leaf(type6), "y")}),null)}),
 		null);
-	private final static Pattern.Term pattern50 = new Pattern.Term("And",
+	private final static Pattern.Term pattern51 = new Pattern.Term("Equals",
+		new Pattern.List(false, new Pair[]{
+			new Pair(new Pattern.Leaf(type2), "t"), 
+			new Pair(new Pattern.Bag(false, new Pair[]{
+				new Pair(new Pattern.Leaf(type15), "x"), 
+				new Pair(new Pattern.Leaf(type15), "y")}),null)}),
+		null);
+	private final static Pattern.Term pattern52 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Term("Equals",
 				new Pattern.List(false, new Pair[]{
 					new Pair(new Pattern.Leaf(type2), "t"), 
 					new Pair(new Pattern.Bag(false, new Pair[]{
 						new Pair(new Pattern.Leaf(type8), "x"), 
-						new Pair(new Pattern.Leaf(type16), "y")}),null)}),
+						new Pair(new Pattern.Leaf(type15), "y")}),null)}),
 				null), "eq"), 
 			new Pair(new Pattern.Leaf(type10), "bs")}),
 		null);
-	private final static Pattern.Term pattern51 = new Pattern.Term("And",
+	private final static Pattern.Term pattern53 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Term("Equals",
 				new Pattern.List(false, new Pair[]{
@@ -7818,225 +8066,242 @@ public final class Solver {
 				null), "eq"), 
 			new Pair(new Pattern.Leaf(type10), "bs")}),
 		null);
-	private final static Pattern.Term pattern52 = new Pattern.Term("Mul",
-		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type17), "n"), 
-			new Pair(new Pattern.Bag(true, new Pair[]{
-				new Pair(new Pattern.Leaf(type18), "rest")}),null)}),
-		null);
-	private final static Pattern.Term pattern53 = new Pattern.Term("Mul",
-		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type17), "x"), 
-			new Pair(new Pattern.Bag(true, new Pair[]{
-				new Pair(new Pattern.Term("Num",
-					new Pattern.Leaf(type17),
-					"y"),null), 
-				new Pair(new Pattern.Leaf(type18), "rest")}),null)}),
-		null);
 	private final static Pattern.Term pattern54 = new Pattern.Term("Mul",
 		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type17), "n1"), 
+			new Pair(new Pattern.Leaf(type16), "n"), 
 			new Pair(new Pattern.Bag(true, new Pair[]{
-				new Pair(new Pattern.Term("Mul",
-					new Pattern.List(false, new Pair[]{
-						new Pair(new Pattern.Leaf(type17), "n2"), 
-						new Pair(new Pattern.Bag(true, new Pair[]{
-							new Pair(new Pattern.Leaf(type18), "xs")}),null)}),
-					null),null), 
-				new Pair(new Pattern.Leaf(type18), "ys")}),null)}),
+				new Pair(new Pattern.Leaf(type17), "rest")}),null)}),
 		null);
 	private final static Pattern.Term pattern55 = new Pattern.Term("Mul",
 		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type17), "n1"), 
+			new Pair(new Pattern.Leaf(type16), "x"), 
+			new Pair(new Pattern.Bag(true, new Pair[]{
+				new Pair(new Pattern.Term("Num",
+					new Pattern.Leaf(type16),
+					"y"),null), 
+				new Pair(new Pattern.Leaf(type17), "rest")}),null)}),
+		null);
+	private final static Pattern.Term pattern56 = new Pattern.Term("Mul",
+		new Pattern.List(false, new Pair[]{
+			new Pair(new Pattern.Leaf(type16), "n1"), 
+			new Pair(new Pattern.Bag(true, new Pair[]{
+				new Pair(new Pattern.Term("Mul",
+					new Pattern.List(false, new Pair[]{
+						new Pair(new Pattern.Leaf(type16), "n2"), 
+						new Pair(new Pattern.Bag(true, new Pair[]{
+							new Pair(new Pattern.Leaf(type17), "xs")}),null)}),
+					null),null), 
+				new Pair(new Pattern.Leaf(type17), "ys")}),null)}),
+		null);
+	private final static Pattern.Term pattern57 = new Pattern.Term("Mul",
+		new Pattern.List(false, new Pair[]{
+			new Pair(new Pattern.Leaf(type16), "n1"), 
 			new Pair(new Pattern.Bag(true, new Pair[]{
 				new Pair(new Pattern.Term("Sum",
 					new Pattern.List(false, new Pair[]{
-						new Pair(new Pattern.Leaf(type17), "n2"), 
+						new Pair(new Pattern.Leaf(type16), "n2"), 
 						new Pair(new Pattern.Bag(true, new Pair[]{
-							new Pair(new Pattern.Leaf(type18), "xs")}),null)}),
+							new Pair(new Pattern.Leaf(type17), "xs")}),null)}),
 					null),null), 
-				new Pair(new Pattern.Leaf(type18), "ys")}),null)}),
-		null);
-	private final static Pattern.Term pattern56 = new Pattern.Term("Div",
-		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Term("Num",
-				new Pattern.Leaf(type17),
-				"x"),null), 
-			new Pair(new Pattern.Term("Num",
-				new Pattern.Leaf(type17),
-				"y"),null)}),
-		null);
-	private final static Pattern.Term pattern57 = new Pattern.Term("Div",
-		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type18), "x"), 
-			new Pair(new Pattern.Term("Div",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type18), "y"), 
-					new Pair(new Pattern.Leaf(type18), "z")}),
-				null),null)}),
+				new Pair(new Pattern.Leaf(type17), "ys")}),null)}),
 		null);
 	private final static Pattern.Term pattern58 = new Pattern.Term("Div",
 		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Term("Div",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type18), "x"), 
-					new Pair(new Pattern.Leaf(type18), "y")}),
-				null),null), 
-			new Pair(new Pattern.Leaf(type18), "z")}),
+			new Pair(new Pattern.Term("Num",
+				new Pattern.Leaf(type16),
+				"x"),null), 
+			new Pair(new Pattern.Term("Num",
+				new Pattern.Leaf(type16),
+				"y"),null)}),
 		null);
 	private final static Pattern.Term pattern59 = new Pattern.Term("Div",
 		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type18), "x"), 
-			new Pair(new Pattern.Term("Num",
-				new Pattern.Leaf(type17),
-				"n"),null)}),
+			new Pair(new Pattern.Leaf(type17), "x"), 
+			new Pair(new Pattern.Term("Div",
+				new Pattern.List(false, new Pair[]{
+					new Pair(new Pattern.Leaf(type17), "y"), 
+					new Pair(new Pattern.Leaf(type17), "z")}),
+				null),null)}),
 		null);
 	private final static Pattern.Term pattern60 = new Pattern.Term("Div",
 		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Term("Mul",
+			new Pair(new Pattern.Term("Div",
 				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type17), "n"), 
-					new Pair(new Pattern.Bag(true, new Pair[]{
-						new Pair(new Pattern.Leaf(type18), "x"), 
-						new Pair(new Pattern.Leaf(type18), "xs")}),null)}),
+					new Pair(new Pattern.Leaf(type17), "x"), 
+					new Pair(new Pattern.Leaf(type17), "y")}),
 				null),null), 
-			new Pair(new Pattern.Leaf(type18), "y")}),
+			new Pair(new Pattern.Leaf(type17), "z")}),
 		null);
 	private final static Pattern.Term pattern61 = new Pattern.Term("Div",
 		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Term("Sum",
-				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type17), "n"), 
-					new Pair(new Pattern.Bag(true, new Pair[]{
-						new Pair(new Pattern.Leaf(type18), "xs")}),null)}),
-				null),null), 
-			new Pair(new Pattern.Leaf(type18), "y")}),
+			new Pair(new Pattern.Leaf(type17), "x"), 
+			new Pair(new Pattern.Term("Num",
+				new Pattern.Leaf(type16),
+				"n"),null)}),
 		null);
 	private final static Pattern.Term pattern62 = new Pattern.Term("Div",
 		new Pattern.List(false, new Pair[]{
+			new Pair(new Pattern.Leaf(type17), "x"), 
+			new Pair(new Pattern.Term("Num",
+				new Pattern.Leaf(type16),
+				"n"),null)}),
+		null);
+	private final static Pattern.Term pattern63 = new Pattern.Term("Div",
+		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Term("Mul",
 				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type17), "n"), 
+					new Pair(new Pattern.Leaf(type16), "n"), 
 					new Pair(new Pattern.Bag(true, new Pair[]{
-						new Pair(new Pattern.Leaf(type18), "xs")}),null)}),
+						new Pair(new Pattern.Leaf(type17), "x"), 
+						new Pair(new Pattern.Leaf(type17), "xs")}),null)}),
+				null),null), 
+			new Pair(new Pattern.Leaf(type17), "y")}),
+		null);
+	private final static Pattern.Term pattern64 = new Pattern.Term("Div",
+		new Pattern.List(false, new Pair[]{
+			new Pair(new Pattern.Term("Mul",
+				new Pattern.List(false, new Pair[]{
+					new Pair(new Pattern.Leaf(type16), "n"), 
+					new Pair(new Pattern.Bag(true, new Pair[]{
+						new Pair(new Pattern.Leaf(type17), "xs")}),null)}),
 				null),null), 
 			new Pair(new Pattern.Leaf(type18), "y")}),
 		null);
-	private final static Pattern.Term pattern63 = new Pattern.Term("Sum",
+	private final static Pattern.Term pattern65 = new Pattern.Term("Div",
 		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type17), "n"), 
+			new Pair(new Pattern.Term("Sum",
+				new Pattern.List(false, new Pair[]{
+					new Pair(new Pattern.Leaf(type16), "n"), 
+					new Pair(new Pattern.Bag(true, new Pair[]{
+						new Pair(new Pattern.Leaf(type17), "xs")}),null)}),
+				null),null), 
+			new Pair(new Pattern.Leaf(type17), "y")}),
+		null);
+	private final static Pattern.Term pattern66 = new Pattern.Term("Div",
+		new Pattern.List(false, new Pair[]{
+			new Pair(new Pattern.Term("Mul",
+				new Pattern.List(false, new Pair[]{
+					new Pair(new Pattern.Leaf(type16), "n"), 
+					new Pair(new Pattern.Bag(true, new Pair[]{
+						new Pair(new Pattern.Leaf(type17), "xs")}),null)}),
+				null),null), 
+			new Pair(new Pattern.Leaf(type17), "y")}),
+		null);
+	private final static Pattern.Term pattern67 = new Pattern.Term("Sum",
+		new Pattern.List(false, new Pair[]{
+			new Pair(new Pattern.Leaf(type16), "n"), 
 			new Pair(new Pattern.Bag(false, new Pair[]{}),null)}),
 		null);
-	private final static Pattern.Term pattern64 = new Pattern.Term("Sum",
+	private final static Pattern.Term pattern68 = new Pattern.Term("Sum",
 		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type17), "n"), 
+			new Pair(new Pattern.Leaf(type16), "n"), 
 			new Pair(new Pattern.Bag(false, new Pair[]{
 				new Pair(new Pattern.Term("Mul",
 					new Pattern.List(false, new Pair[]{
-						new Pair(new Pattern.Leaf(type17), "m"), 
+						new Pair(new Pattern.Leaf(type16), "m"), 
 						new Pair(new Pattern.Bag(false, new Pair[]{
 							new Pair(new Pattern.Leaf(type8), "x")}),null)}),
 					null),null)}),null)}),
 		null);
-	private final static Pattern.Term pattern65 = new Pattern.Term("Sum",
+	private final static Pattern.Term pattern69 = new Pattern.Term("Sum",
 		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type17), "n"), 
+			new Pair(new Pattern.Leaf(type16), "n"), 
 			new Pair(new Pattern.Bag(true, new Pair[]{
-				new Pair(new Pattern.Leaf(type18), "x"), 
-				new Pair(new Pattern.Leaf(type18), "rest")}),null)}),
+				new Pair(new Pattern.Leaf(type17), "x"), 
+				new Pair(new Pattern.Leaf(type17), "rest")}),null)}),
 		null);
-	private final static Pattern.Term pattern66 = new Pattern.Term("Sum",
+	private final static Pattern.Term pattern70 = new Pattern.Term("Sum",
 		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type17), "x"), 
+			new Pair(new Pattern.Leaf(type16), "x"), 
 			new Pair(new Pattern.Bag(true, new Pair[]{
 				new Pair(new Pattern.Term("Num",
-					new Pattern.Leaf(type17),
+					new Pattern.Leaf(type16),
 					"y"),null), 
-				new Pair(new Pattern.Leaf(type18), "rest")}),null)}),
+				new Pair(new Pattern.Leaf(type17), "rest")}),null)}),
 		null);
-	private final static Pattern.Term pattern67 = new Pattern.Term("Sum",
+	private final static Pattern.Term pattern71 = new Pattern.Term("Sum",
 		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type17), "n"), 
+			new Pair(new Pattern.Leaf(type16), "n"), 
 			new Pair(new Pattern.Bag(true, new Pair[]{
 				new Pair(new Pattern.Term("Mul",
 					new Pattern.List(false, new Pair[]{
-						new Pair(new Pattern.Leaf(type17), "x"), 
+						new Pair(new Pattern.Leaf(type16), "x"), 
 						new Pair(new Pattern.Bag(true, new Pair[]{
-							new Pair(new Pattern.Leaf(type18),null)}), "xs")}),
+							new Pair(new Pattern.Leaf(type17),null)}), "xs")}),
 					null),null), 
 				new Pair(new Pattern.Term("Mul",
 					new Pattern.List(false, new Pair[]{
-						new Pair(new Pattern.Leaf(type17), "y"), 
+						new Pair(new Pattern.Leaf(type16), "y"), 
 						new Pair(new Pattern.Bag(true, new Pair[]{
-							new Pair(new Pattern.Leaf(type18),null)}), "ys")}),
+							new Pair(new Pattern.Leaf(type17),null)}), "ys")}),
 					null),null), 
-				new Pair(new Pattern.Leaf(type18), "zs")}),null)}),
+				new Pair(new Pattern.Leaf(type17), "zs")}),null)}),
 		null);
-	private final static Pattern.Term pattern68 = new Pattern.Term("Sum",
+	private final static Pattern.Term pattern72 = new Pattern.Term("Sum",
 		new Pattern.List(false, new Pair[]{
-			new Pair(new Pattern.Leaf(type17), "x"), 
+			new Pair(new Pattern.Leaf(type16), "x"), 
 			new Pair(new Pattern.Bag(true, new Pair[]{
 				new Pair(new Pattern.Term("Sum",
 					new Pattern.List(false, new Pair[]{
-						new Pair(new Pattern.Leaf(type17), "y"), 
+						new Pair(new Pattern.Leaf(type16), "y"), 
 						new Pair(new Pattern.Bag(true, new Pair[]{
-							new Pair(new Pattern.Leaf(type18), "ys")}),null)}),
+							new Pair(new Pattern.Leaf(type17), "ys")}),null)}),
 					null),null), 
-				new Pair(new Pattern.Leaf(type18), "xs")}),null)}),
+				new Pair(new Pattern.Leaf(type17), "xs")}),null)}),
 		null);
-	private final static Pattern.Term pattern69 = new Pattern.Term("Equation",
+	private final static Pattern.Term pattern73 = new Pattern.Term("Equation",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Leaf(type22),null), 
 			new Pair(new Pattern.Term("Num",
-				new Pattern.Leaf(type17),
+				new Pattern.Leaf(type16),
 				"v"),null)}),
 		null);
-	private final static Pattern.Term pattern70 = new Pattern.Term("Equation",
+	private final static Pattern.Term pattern74 = new Pattern.Term("Equation",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Leaf(type22), "t"), 
 			new Pair(new Pattern.Term("Sum",
 				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type17), "n"), 
+					new Pair(new Pattern.Leaf(type16), "n"), 
 					new Pair(new Pattern.Bag(false, new Pair[]{
 						new Pair(new Pattern.Term("Mul",
 							new Pattern.List(false, new Pair[]{
-								new Pair(new Pattern.Leaf(type17), "m"), 
+								new Pair(new Pattern.Leaf(type16), "m"), 
 								new Pair(new Pattern.Bag(true, new Pair[]{
-									new Pair(new Pattern.Leaf(type18), "xs")}),null)}),
+									new Pair(new Pattern.Leaf(type17), "xs")}),null)}),
 							null),null)}),null)}),
 				null),null)}),
 		null);
-	private final static Pattern.Term pattern71 = new Pattern.Term("Equation",
+	private final static Pattern.Term pattern75 = new Pattern.Term("Equation",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Leaf(type22), "t"), 
 			new Pair(new Pattern.Term("Sum",
 				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type17), "n"), 
+					new Pair(new Pattern.Leaf(type16), "n"), 
 					new Pair(new Pattern.Bag(true, new Pair[]{
 						new Pair(new Pattern.Leaf(type23), "xs")}), "ms")}),
 				null),null)}),
 		null);
-	private final static Pattern.Term pattern72 = new Pattern.Term("And",
+	private final static Pattern.Term pattern76 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Term("Equation",
 				new Pattern.List(false, new Pair[]{
 					new Pair(new Pattern.Leaf(type22), "t"), 
 					new Pair(new Pattern.Term("Sum",
 						new Pattern.List(false, new Pair[]{
-							new Pair(new Pattern.Leaf(type17), "c"), 
+							new Pair(new Pattern.Leaf(type16), "c"), 
 							new Pair(new Pattern.Bag(true, new Pair[]{
 								new Pair(new Pattern.Term("Mul",
 									new Pattern.List(false, new Pair[]{
-										new Pair(new Pattern.Leaf(type17), "vc"), 
+										new Pair(new Pattern.Leaf(type16), "vc"), 
 										new Pair(new Pattern.Bag(false, new Pair[]{
-											new Pair(new Pattern.Leaf(type18), "v")}),null)}),
+											new Pair(new Pattern.Leaf(type17), "v")}),null)}),
 									null),null), 
 								new Pair(new Pattern.Leaf(type23), "ms")}), "xs")}),
 						null),null)}),
 				null), "eq"), 
 			new Pair(new Pattern.Leaf(type10), "bs")}),
 		null);
-	private final static Pattern.Term pattern73 = new Pattern.Term("And",
+	private final static Pattern.Term pattern77 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Term("Equation",
 				new Pattern.List(false, new Pair[]{
@@ -8045,71 +8310,71 @@ public final class Solver {
 				null), "eq"), 
 			new Pair(new Pattern.Leaf(type10), "bs")}),
 		null);
-	private final static Pattern.Term pattern74 = new Pattern.Term("Not",
+	private final static Pattern.Term pattern78 = new Pattern.Term("Not",
 		new Pattern.Term("Equation",
 			new Pattern.List(false, new Pair[]{
 				new Pair(new Pattern.Leaf(type24), "t"), 
-				new Pair(new Pattern.Leaf(type18), "e")}),
+				new Pair(new Pattern.Leaf(type17), "e")}),
 			null),
 		null);
-	private final static Pattern.Term pattern75 = new Pattern.Term("Not",
+	private final static Pattern.Term pattern79 = new Pattern.Term("Not",
 		new Pattern.Term("Equation",
 			new Pattern.List(false, new Pair[]{
 				new Pair(new Pattern.Leaf(type25), "t"), 
-				new Pair(new Pattern.Leaf(type18), "e")}),
+				new Pair(new Pattern.Leaf(type17), "e")}),
 			null),
 		null);
-	private final static Pattern.Term pattern76 = new Pattern.Term("Equals",
+	private final static Pattern.Term pattern80 = new Pattern.Term("Equals",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Leaf(type22), "t"), 
 			new Pair(new Pattern.Bag(false, new Pair[]{
-				new Pair(new Pattern.Leaf(type18), "e1"), 
-				new Pair(new Pattern.Leaf(type18), "e2")}),null)}),
+				new Pair(new Pattern.Leaf(type17), "e1"), 
+				new Pair(new Pattern.Leaf(type17), "e2")}),null)}),
 		null);
-	private final static Pattern.Term pattern77 = new Pattern.Term("Inequality",
+	private final static Pattern.Term pattern81 = new Pattern.Term("Inequality",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Leaf(type22), "t"), 
 			new Pair(new Pattern.Term("Num",
-				new Pattern.Leaf(type17),
+				new Pattern.Leaf(type16),
 				"v"),null)}),
 		null);
-	private final static Pattern.Term pattern78 = new Pattern.Term("Not",
+	private final static Pattern.Term pattern82 = new Pattern.Term("Not",
 		new Pattern.Term("Inequality",
 			new Pattern.List(false, new Pair[]{
 				new Pair(new Pattern.Leaf(type24), "t"), 
-				new Pair(new Pattern.Leaf(type18), "e")}),
+				new Pair(new Pattern.Leaf(type17), "e")}),
 			null),
 		null);
-	private final static Pattern.Term pattern79 = new Pattern.Term("Inequality",
+	private final static Pattern.Term pattern83 = new Pattern.Term("Inequality",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Leaf(type22), "t"), 
 			new Pair(new Pattern.Term("Sum",
 				new Pattern.List(false, new Pair[]{
-					new Pair(new Pattern.Leaf(type17), "n"), 
+					new Pair(new Pattern.Leaf(type16), "n"), 
 					new Pair(new Pattern.Bag(true, new Pair[]{
 						new Pair(new Pattern.Leaf(type23), "xs")}), "ms")}),
 				null),null)}),
 		null);
-	private final static Pattern.Term pattern80 = new Pattern.Term("And",
+	private final static Pattern.Term pattern84 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Term("Inequality",
 				new Pattern.List(false, new Pair[]{
 					new Pair(new Pattern.Leaf(type24),null), 
 					new Pair(new Pattern.Term("Sum",
 						new Pattern.List(false, new Pair[]{
-							new Pair(new Pattern.Leaf(type17), "x1"), 
+							new Pair(new Pattern.Leaf(type16), "x1"), 
 							new Pair(new Pattern.Bag(false, new Pair[]{
 								new Pair(new Pattern.Term("Mul",
 									new Pattern.List(false, new Pair[]{
-										new Pair(new Pattern.Leaf(type17), "x2"), 
+										new Pair(new Pattern.Leaf(type16), "x2"), 
 										new Pair(new Pattern.Bag(false, new Pair[]{
-											new Pair(new Pattern.Leaf(type18), "vx1")}),null)}),
+											new Pair(new Pattern.Leaf(type17), "vx1")}),null)}),
 									null),null), 
 								new Pair(new Pattern.Term("Mul",
 									new Pattern.List(false, new Pair[]{
-										new Pair(new Pattern.Leaf(type17), "x3"), 
+										new Pair(new Pattern.Leaf(type16), "x3"), 
 										new Pair(new Pattern.Bag(false, new Pair[]{
-											new Pair(new Pattern.Leaf(type18), "vx2")}),null)}),
+											new Pair(new Pattern.Leaf(type17), "vx2")}),null)}),
 									null),null)}),null)}),
 						null), "s1")}),
 				null), "ieq1"), 
@@ -8118,38 +8383,38 @@ public final class Solver {
 					new Pair(new Pattern.Leaf(type24),null), 
 					new Pair(new Pattern.Term("Sum",
 						new Pattern.List(false, new Pair[]{
-							new Pair(new Pattern.Leaf(type17), "y1"), 
+							new Pair(new Pattern.Leaf(type16), "y1"), 
 							new Pair(new Pattern.Bag(false, new Pair[]{
 								new Pair(new Pattern.Term("Mul",
 									new Pattern.List(false, new Pair[]{
-										new Pair(new Pattern.Leaf(type17), "y2"), 
+										new Pair(new Pattern.Leaf(type16), "y2"), 
 										new Pair(new Pattern.Bag(false, new Pair[]{
-											new Pair(new Pattern.Leaf(type18), "vy1")}),null)}),
+											new Pair(new Pattern.Leaf(type17), "vy1")}),null)}),
 									null),null), 
 								new Pair(new Pattern.Term("Mul",
 									new Pattern.List(false, new Pair[]{
-										new Pair(new Pattern.Leaf(type17), "y3"), 
+										new Pair(new Pattern.Leaf(type16), "y3"), 
 										new Pair(new Pattern.Bag(false, new Pair[]{
-											new Pair(new Pattern.Leaf(type18), "vy2")}),null)}),
+											new Pair(new Pattern.Leaf(type17), "vy2")}),null)}),
 									null),null)}),null)}),
 						null), "s2")}),
 				null), "ieq2"), 
 			new Pair(new Pattern.Leaf(type10), "rest")}),
 		null);
-	private final static Pattern.Term pattern81 = new Pattern.Term("And",
+	private final static Pattern.Term pattern85 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Term("Inequality",
 				new Pattern.List(false, new Pair[]{
 					new Pair(new Pattern.Leaf(type22), "t1"), 
 					new Pair(new Pattern.Term("Sum",
 						new Pattern.List(false, new Pair[]{
-							new Pair(new Pattern.Leaf(type17), "x1"), 
+							new Pair(new Pattern.Leaf(type16), "x1"), 
 							new Pair(new Pattern.Bag(true, new Pair[]{
 								new Pair(new Pattern.Term("Mul",
 									new Pattern.List(false, new Pair[]{
-										new Pair(new Pattern.Leaf(type17), "x2"), 
+										new Pair(new Pattern.Leaf(type16), "x2"), 
 										new Pair(new Pattern.Bag(false, new Pair[]{
-											new Pair(new Pattern.Leaf(type18), "v1")}),null)}),
+											new Pair(new Pattern.Leaf(type17), "v1")}),null)}),
 									null),null), 
 								new Pair(new Pattern.Leaf(type23), "xs")}), "xxs")}),
 						null), "s1")}),
@@ -8159,33 +8424,33 @@ public final class Solver {
 					new Pair(new Pattern.Leaf(type22), "t2"), 
 					new Pair(new Pattern.Term("Sum",
 						new Pattern.List(false, new Pair[]{
-							new Pair(new Pattern.Leaf(type17), "y1"), 
+							new Pair(new Pattern.Leaf(type16), "y1"), 
 							new Pair(new Pattern.Bag(true, new Pair[]{
 								new Pair(new Pattern.Term("Mul",
 									new Pattern.List(false, new Pair[]{
-										new Pair(new Pattern.Leaf(type17), "y2"), 
+										new Pair(new Pattern.Leaf(type16), "y2"), 
 										new Pair(new Pattern.Bag(false, new Pair[]{
-											new Pair(new Pattern.Leaf(type18), "v2")}),null)}),
+											new Pair(new Pattern.Leaf(type17), "v2")}),null)}),
 									null),null), 
 								new Pair(new Pattern.Leaf(type23), "ys")}), "yys")}),
 						null), "s2")}),
 				null), "eq2"), 
 			new Pair(new Pattern.Leaf(type10), "rest")}),
 		null);
-	private final static Pattern.Term pattern82 = new Pattern.Term("And",
+	private final static Pattern.Term pattern86 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Term("Inequality",
 				new Pattern.List(false, new Pair[]{
 					new Pair(new Pattern.Leaf(type22), "t1"), 
 					new Pair(new Pattern.Term("Sum",
 						new Pattern.List(false, new Pair[]{
-							new Pair(new Pattern.Leaf(type17), "x1"), 
+							new Pair(new Pattern.Leaf(type16), "x1"), 
 							new Pair(new Pattern.Bag(true, new Pair[]{
 								new Pair(new Pattern.Term("Mul",
 									new Pattern.List(false, new Pair[]{
-										new Pair(new Pattern.Leaf(type17), "x2"), 
+										new Pair(new Pattern.Leaf(type16), "x2"), 
 										new Pair(new Pattern.Bag(false, new Pair[]{
-											new Pair(new Pattern.Leaf(type18), "v1")}),null)}),
+											new Pair(new Pattern.Leaf(type17), "v1")}),null)}),
 									null),null), 
 								new Pair(new Pattern.Leaf(type23), "xs")}), "xxs")}),
 						null), "s1")}),
@@ -8197,23 +8462,23 @@ public final class Solver {
 				null), "eq2"), 
 			new Pair(new Pattern.Leaf(type10), "rest")}),
 		null);
-	private final static Pattern.Term pattern83 = new Pattern.Term("LengthOf",
+	private final static Pattern.Term pattern87 = new Pattern.Term("LengthOf",
 		new Pattern.Term("Array",
 			new Pattern.List(true, new Pair[]{
 				new Pair(new Pattern.Leaf(type6), "xs")}),
 			null),
 		null);
-	private final static Pattern.Term pattern84 = new Pattern.Term("IndexOf",
+	private final static Pattern.Term pattern88 = new Pattern.Term("IndexOf",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Term("Array",
 				new Pattern.List(true, new Pair[]{
 					new Pair(new Pattern.Leaf(type6), "xs")}),
 				null),null), 
 			new Pair(new Pattern.Term("Num",
-				new Pattern.Leaf(type17),
+				new Pattern.Leaf(type16),
 				"i"),null)}),
 		null);
-	private final static Pattern.Term pattern85 = new Pattern.Term("ForAll",
+	private final static Pattern.Term pattern89 = new Pattern.Term("ForAll",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Set(true, new Pair[]{
 				new Pair(new Pattern.List(false, new Pair[]{
@@ -8221,7 +8486,7 @@ public final class Solver {
 					new Pair(new Pattern.Leaf(type2),null)}), "qs")}),null), 
 			new Pair(new Pattern.Leaf(type10), "be")}),
 		null);
-	private final static Pattern.Term pattern86 = new Pattern.Term("Not",
+	private final static Pattern.Term pattern90 = new Pattern.Term("Not",
 		new Pattern.Term("ForAll",
 			new Pattern.List(false, new Pair[]{
 				new Pair(new Pattern.Set(true, new Pair[]{
@@ -8231,7 +8496,7 @@ public final class Solver {
 				new Pair(new Pattern.Leaf(type10), "be")}),
 			null),
 		null);
-	private final static Pattern.Term pattern87 = new Pattern.Term("ForAll",
+	private final static Pattern.Term pattern91 = new Pattern.Term("ForAll",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Set(true, new Pair[]{
 				new Pair(new Pattern.List(false, new Pair[]{
@@ -8246,7 +8511,7 @@ public final class Solver {
 					new Pair(new Pattern.Leaf(type10), "e")}),
 				null),null)}),
 		null);
-	private final static Pattern.Term pattern88 = new Pattern.Term("ForAll",
+	private final static Pattern.Term pattern92 = new Pattern.Term("ForAll",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Set(true, new Pair[]{
 				new Pair(new Pattern.List(false, new Pair[]{
@@ -8257,7 +8522,7 @@ public final class Solver {
 					new Pair(new Pattern.Leaf(type2),null)}), "xs")}),null), 
 			new Pair(new Pattern.Leaf(type10), "e")}),
 		null);
-	private final static Pattern.Term pattern89 = new Pattern.Term("And",
+	private final static Pattern.Term pattern93 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Leaf(type10), "e1"), 
 			new Pair(new Pattern.Term("ForAll",
@@ -8273,7 +8538,7 @@ public final class Solver {
 				null), "qf"), 
 			new Pair(new Pattern.Leaf(type10), "es")}),
 		null);
-	private final static Pattern.Term pattern90 = new Pattern.Term("Exists",
+	private final static Pattern.Term pattern94 = new Pattern.Term("Exists",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Set(true, new Pair[]{
 				new Pair(new Pattern.List(false, new Pair[]{
@@ -8281,7 +8546,7 @@ public final class Solver {
 					new Pair(new Pattern.Leaf(type2),null)}), "qs")}),null), 
 			new Pair(new Pattern.Leaf(type10), "be")}),
 		null);
-	private final static Pattern.Term pattern91 = new Pattern.Term("Not",
+	private final static Pattern.Term pattern95 = new Pattern.Term("Not",
 		new Pattern.Term("Exists",
 			new Pattern.List(false, new Pair[]{
 				new Pair(new Pattern.Set(true, new Pair[]{
@@ -8291,7 +8556,7 @@ public final class Solver {
 				new Pair(new Pattern.Leaf(type10), "be")}),
 			null),
 		null);
-	private final static Pattern.Term pattern92 = new Pattern.Term("Exists",
+	private final static Pattern.Term pattern96 = new Pattern.Term("Exists",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Set(true, new Pair[]{
 				new Pair(new Pattern.List(false, new Pair[]{
@@ -8306,7 +8571,7 @@ public final class Solver {
 					new Pair(new Pattern.Leaf(type10), "e")}),
 				null),null)}),
 		null);
-	private final static Pattern.Term pattern93 = new Pattern.Term("And",
+	private final static Pattern.Term pattern97 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Term("Exists",
 				new Pattern.List(false, new Pair[]{
@@ -8318,10 +8583,10 @@ public final class Solver {
 				null),null), 
 			new Pair(new Pattern.Leaf(type10), "es")}),
 		null);
-	private final static Pattern.Term pattern94 = new Pattern.Term("Inhabited",
+	private final static Pattern.Term pattern98 = new Pattern.Term("Inhabited",
 		new Pattern.Leaf(type29),
 		"t");
-	private final static Pattern.Term pattern95 = new Pattern.Term("Inhabited",
+	private final static Pattern.Term pattern99 = new Pattern.Term("Inhabited",
 		new Pattern.Term("AndT",
 			new Pattern.Set(true, new Pair[]{
 				new Pair(new Pattern.Term("NotT",
@@ -8329,24 +8594,24 @@ public final class Solver {
 					null), "ts")}),
 			null),
 		null);
-	private final static Pattern.Term pattern96 = new Pattern.Term("Inhabited",
+	private final static Pattern.Term pattern100 = new Pattern.Term("Inhabited",
 		new Pattern.Term("ArrayT",
 			new Pattern.Leaf(type2),
 			"t"),
 		null);
-	private final static Pattern.Term pattern97 = new Pattern.Term("Is",
+	private final static Pattern.Term pattern101 = new Pattern.Term("Is",
 		new Pattern.List(false, new Pair[]{
 			new Pair(new Pattern.Leaf(type6), "e"), 
 			new Pair(new Pattern.Leaf(type1),null)}),
 		null);
-	private final static Pattern.Term pattern98 = new Pattern.Term("Not",
+	private final static Pattern.Term pattern102 = new Pattern.Term("Not",
 		new Pattern.Term("Is",
 			new Pattern.List(false, new Pair[]{
 				new Pair(new Pattern.Leaf(type6), "e"), 
 				new Pair(new Pattern.Leaf(type2), "t")}),
 			null),
 		null);
-	private final static Pattern.Term pattern99 = new Pattern.Term("And",
+	private final static Pattern.Term pattern103 = new Pattern.Term("And",
 		new Pattern.Set(true, new Pair[]{
 			new Pair(new Pattern.Term("Is",
 				new Pattern.List(false, new Pair[]{
@@ -8365,12 +8630,11 @@ public final class Solver {
 	// =========================================================================
 
 	public static final InferenceRule[] inferences = new InferenceRule[]{
-		new Inference_0(pattern51),
-		new Inference_1(pattern72),
-		new Inference_2(pattern73),
-		new Inference_3(pattern81),
-		new Inference_4(pattern82),
-		new Inference_5(pattern89)
+		new Inference_0(pattern53),
+		new Inference_1(pattern77),
+		new Inference_2(pattern85),
+		new Inference_3(pattern86),
+		new Inference_4(pattern93)
 	};
 	public static final ReductionRule[] reductions = new ReductionRule[]{
 		new Reduction_0(pattern0),
@@ -8424,8 +8688,8 @@ public final class Solver {
 		new Reduction_48(pattern48),
 		new Reduction_49(pattern49),
 		new Reduction_50(pattern50),
-		new Reduction_51(pattern52),
-		new Reduction_52(pattern53),
+		new Reduction_51(pattern51),
+		new Reduction_52(pattern52),
 		new Reduction_53(pattern54),
 		new Reduction_54(pattern55),
 		new Reduction_55(pattern56),
@@ -8444,29 +8708,34 @@ public final class Solver {
 		new Reduction_68(pattern69),
 		new Reduction_69(pattern70),
 		new Reduction_70(pattern71),
-		new Reduction_71(pattern74),
-		new Reduction_72(pattern75),
-		new Reduction_73(pattern76),
-		new Reduction_74(pattern77),
-		new Reduction_75(pattern78),
-		new Reduction_76(pattern79),
-		new Reduction_77(pattern80),
-		new Reduction_78(pattern83),
-		new Reduction_79(pattern84),
-		new Reduction_80(pattern85),
-		new Reduction_81(pattern86),
-		new Reduction_82(pattern87),
-		new Reduction_83(pattern88),
-		new Reduction_84(pattern90),
-		new Reduction_85(pattern91),
-		new Reduction_86(pattern92),
-		new Reduction_87(pattern93),
-		new Reduction_88(pattern94),
-		new Reduction_89(pattern95),
-		new Reduction_90(pattern96),
-		new Reduction_91(pattern97),
-		new Reduction_92(pattern98),
-		new Reduction_93(pattern99)
+		new Reduction_71(pattern72),
+		new Reduction_72(pattern73),
+		new Reduction_73(pattern74),
+		new Reduction_74(pattern75),
+		new Reduction_75(pattern76),
+		new Reduction_76(pattern78),
+		new Reduction_77(pattern79),
+		new Reduction_78(pattern80),
+		new Reduction_79(pattern81),
+		new Reduction_80(pattern82),
+		new Reduction_81(pattern83),
+		new Reduction_82(pattern84),
+		new Reduction_83(pattern87),
+		new Reduction_84(pattern88),
+		new Reduction_85(pattern89),
+		new Reduction_86(pattern90),
+		new Reduction_87(pattern91),
+		new Reduction_88(pattern92),
+		new Reduction_89(pattern94),
+		new Reduction_90(pattern95),
+		new Reduction_91(pattern96),
+		new Reduction_92(pattern97),
+		new Reduction_93(pattern98),
+		new Reduction_94(pattern99),
+		new Reduction_95(pattern100),
+		new Reduction_96(pattern101),
+		new Reduction_97(pattern102),
+		new Reduction_98(pattern103)
 	};
 
 
