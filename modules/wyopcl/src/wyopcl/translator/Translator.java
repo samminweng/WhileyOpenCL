@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.Set;
 
@@ -65,10 +66,13 @@ public class Translator implements Builder {
 		this.config.setOption("module", module);
 
 		// Check if deallocation analysis is enabled or not
-		DeallocationAnalyzer deallocAnalyzer = null;
+		Optional<DeallocationAnalyzer> deallocAnalyzer = Optional.empty();;
 		if(config.isEnabled("dealloc")){
-			deallocAnalyzer = new DeallocationAnalyzer(config);
-			deallocAnalyzer.apply(module);
+			// Create an instance of DealloctionAnalyzer
+			DeallocationAnalyzer analyzer = new DeallocationAnalyzer(config);
+			analyzer.apply(module);
+			// Create a deallocatedAnalyzer that may hold a null analyzer.
+			deallocAnalyzer = Optional.of(analyzer);
 			message = "Deallocation analysis completed.\nFile: " + config.getFilename();
 		}
 		
