@@ -515,6 +515,9 @@ public final class CodeGeneratorHelper {
 			if(dimension== 2){
 				f_name = dimension+"DArray";
 				size_var = ", "+var+"_size"; 
+			}else{
+				// Use _NULLIFY macro to empty the array variable;
+				return "_NULLIFY("+var+");";
 			}
 		}else if(type instanceof Type.Record){
 			f_name = "_"+translateType(type, stores);

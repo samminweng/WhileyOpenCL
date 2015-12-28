@@ -6,14 +6,25 @@
 #include <ctype.h>
 #include <stdbool.h>
 
-// Define the NULL pointer
-// #define NULL ( (void *) 0)
-
 /**
  * Remove the security check about unsafe 'scanf' or 'sprintf' in VS tool
  * This definition allows the portability of C code across the platforms.
  */
 #define _CRT_SECURE_NO_WARNINGS
+//Nullify the array variable
+#define _NULLIFY(a){\
+		if(a##_has_ownership){free(a);a##_has_ownership=false;}\
+}
+
+// Assign and transfer an array variable to another
+#define _ASSIGN_TRANSFER(a, b){ \
+					  a##_size = b##_size; \
+					  _NULLIFY(a);\
+					  a = b;\
+					  b##_has_ownership = false;\
+					  a##_has_ownership = true;\
+					}
+
 
 // null|int
 // This code snippet aims to deal with union type in C
