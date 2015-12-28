@@ -421,15 +421,15 @@ public final class CodeGeneratorHelper {
 	 * @param var
 	 * @return
 	 */
-	protected static String assignOwnership(Type type, String var, CodeStores stores, DeallocationAnalyzer analyzer){
-		if(analyzer != null && isCompoundType(type, stores)){
+	protected static String assignOwnership(Type type, String var, CodeStores stores){
+		if(isCompoundType(type, stores)){
 			return getOwnership(var)+" = true;";
 		}
 		return "";
 	}
 	
-	protected static String transferOwnership(Type type, String var, CodeStores stores, DeallocationAnalyzer analyzer){
-		if(analyzer != null && isCompoundType(type, stores)){
+	protected static String transferOwnership(Type type, String var, CodeStores stores){
+		if(isCompoundType(type, stores)){
 			return getOwnership(var)+" = false;";
 		}
 		return "";
@@ -442,8 +442,8 @@ public final class CodeGeneratorHelper {
 	 * @param analyzer
 	 * @return
 	 */
-	protected static String declareOwnership(Type type, String var, CodeStores stores, DeallocationAnalyzer analyzer){
-		if(analyzer != null && isCompoundType(type, stores)){
+	protected static String declareOwnership(Type type, String var, CodeStores stores){
+		if(isCompoundType(type, stores)){
 			return "bool "+var + "_has_ownership";
 		}
 		return "";
@@ -456,8 +456,8 @@ public final class CodeGeneratorHelper {
 	 * @param ownership
 	 * @return
 	 */
-	protected static String declareOwnership(Type type, String var, CodeStores stores, DeallocationAnalyzer analyzer, boolean ownership){
-		String s = declareOwnership(type, var, stores, analyzer);
+	protected static String declareOwnership(Type type, String var, CodeStores stores, boolean ownership){
+		String s = declareOwnership(type, var, stores);
 		if(s.equals("")){
 			return "";
 		}
@@ -473,8 +473,8 @@ public final class CodeGeneratorHelper {
 	 * @param copyAnalyzer
 	 * @return 
 	 */
-	protected static String passOwnershipToFunction(Type type, CodeStores stores, DeallocationAnalyzer deallocatedAnalyzer, CopyEliminationAnalyzer copyAnalyzer){
-		if(deallocatedAnalyzer == null || !isCompoundType(type, stores)){
+	protected static String passOwnershipToFunction(Type type, CodeStores stores, CopyEliminationAnalyzer copyAnalyzer){
+		if(!isCompoundType(type, stores)){
 			return "";
 		}
 
@@ -499,8 +499,8 @@ public final class CodeGeneratorHelper {
 	 * @param stores
 	 * @return
 	 */
-	protected static String addDeallocatedCode(String var, Type type, CodeStores stores, DeallocationAnalyzer analyzer){
-		if(analyzer == null || !isCompoundType(type, stores)){
+	protected static String addDeallocatedCode(String var, Type type, CodeStores stores){
+		if(!isCompoundType(type, stores)){
 			return "";
 		}
 		
@@ -539,21 +539,18 @@ public final class CodeGeneratorHelper {
 	 * @param vars
 	 * @return
 	 */
-	protected static List<String> generateDeallocatedCode(DeallocationAnalyzer analyzer, FunctionOrMethod function, CodeStores stores){
+	protected static List<String> generateDeallocatedCode(List<Integer> registers, FunctionOrMethod function, CodeStores stores){
 		CodeStore store = stores.getCodeStore(function);
 		String indent = store.getIndent();
 		List<String> statements = new ArrayList<String>();
-		if(analyzer != null){
-			List<Integer> registers = analyzer.getOwnerships(function);
-			// Generate the code to release memory spaces of ownership variables.
-			for(int register : registers){
-				// Get variable type
-				Type var_type = store.getVarType(register);
-				String var = store.getVar(register);
-				statements.add(indent + addDeallocatedCode(var, var_type, stores, analyzer));
-			}
+		// Generate the code to release memory spaces of ownership variables.
+		for(int register : registers){
+			// Get variable type
+			Type var_type = store.getVarType(register);
+			String var = store.getVar(register);
+			statements.add(indent + addDeallocatedCode(var, var_type, stores));
 		}
-
+		
 		return statements;
 	}
 

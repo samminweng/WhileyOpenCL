@@ -264,7 +264,12 @@ public class CodeStores {
 		protected Type getVarType(int reg) {
 			VariableDeclarations vars = function.attribute(VariableDeclarations.class);
 			Declaration declaration = vars.get(reg);
-			return declaration.type();
+			Type type = declaration.type();
+			if(type instanceof Type.Nominal){
+				return getNominalType((Type.Nominal)type);
+			}
+			
+			return type;
 		}
 
 		/**
