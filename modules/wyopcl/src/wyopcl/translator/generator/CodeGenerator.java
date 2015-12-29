@@ -326,25 +326,26 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}else{
 				// Propagate sizes for array-typed variable
 				if (lhs_type instanceof Type.Array) {
-					// Release lhs array variable
-					this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
-					
-					// Get rhs array variable
 					String rhs = store.getVar(code.operand(0));
-					// Check if the lhs copy is needed or not 
-					if(isCopyEliminated(code.operand(0), code, function)){
-						// Use '_ARRAY_POINTER' macro to assign the array address to another
-						statement.add(indent + "_ARRAY_POINTER("+lhs+", "+rhs+");");
-						// Transfer ownership using '_TRANSFER_OWNERSHIP' macro
-						this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + "_TRANSFER_OWNERSHIP("+lhs+", "+rhs+");"));
+					
+					boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
+					if(this.deallocatedAnalyzer.isPresent()){
+						if(isCopyEliminated){
+							statement.add(indent + "_ASSIGN_ARRAY_POINTER("+lhs+", "+rhs+");");
+						}else{
+							statement.add(indent + "_ASSIGN_ARRAY_COPY("+lhs+", "+rhs+");");
+						}
 					}else{
-						// Use '_ARRAY_COPY' macro to copy the array and assign it to another
-						statement.add(indent + "_ARRAY_COPY("+lhs+", "+rhs+");");
-						// Add ownerships
-						this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + "_ADD_OWNERSHIP("+lhs+", "+rhs+");"));
+						// Check if the lhs copy is needed or not 
+						if(isCopyEliminated){
+							// Use '_ARRAY_POINTER' macro to assign the array address to another
+							statement.add(indent + "_ARRAY_POINTER("+lhs+", "+rhs+");");
+						}else{
+							// Use '_ARRAY_COPY' macro to copy the array and assign it to another
+							statement.add(indent + "_ARRAY_COPY("+lhs+", "+rhs+");");
+						}
 					}
 					
-				
 				}else{
 					// Add de-allocation code to deallocate lhs variable
 					this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));

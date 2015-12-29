@@ -15,43 +15,46 @@
 #define _NULLIFY(a){\
 		a = NULL;\
 }
-// Nullify the array variable and ownership
-#define _NULLIFY(a){\
-		a = NULL;\
-}
 // Free the array variable and ownership
 #define _FREE(a){\
-		free(a);\
-}
-
-// Free the array variable and ownership
-#define _FREE_OWNERSHIP(a){\
 		if(a##_has_ownership){free(a);a##_has_ownership=false;}\
 }
 
-// Assign and copy an array variable to another
+// Copy an array variable to another using copy
 #define _ARRAY_COPY(a, b){ \
 					  a##_size = b##_size; \
 					  a = copy(b, b##_size);\
 					}
-// Assign an array variable to another using the pointer
+// Assign an array variable to another using pointer
 #define _ARRAY_POINTER(a, b){ \
 					  a##_size = b##_size; \
 					  a = b;\
 					}
 
-// Assign and copy an array variable to another with ownership
+// Add ownership
 #define _ADD_OWNERSHIP(a, b){ \
 					  b##_has_ownership = true;\
 					  a##_has_ownership = true;\
 					}
 
-// Assign and transfer an array variable to another with ownership
+// Transfer an array variable's ownership to another
 #define _TRANSFER_OWNERSHIP(a, b){ \
 					  b##_has_ownership = false;\
 					  a##_has_ownership = true;\
 					}
 
+// Assign an array using copy
+#define _ASSIGN_ARRAY_COPY(a, b){\
+					_FREE(a);\
+					_ARRAY_COPY(a, b);\
+					_ADD_OWNERSHIP(a, b);\
+				}
+// Assign an array using pointer
+#define _ASSIGN_ARRAY_POINTER(a, b){\
+					_FREE(a);\
+					_ARRAY_POINTER(a, b);\
+					_TRANSFER_OWNERSHIP(a, b);\
+				}
 
 // null|int
 // This code snippet aims to deal with union type in C

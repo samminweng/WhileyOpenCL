@@ -518,8 +518,8 @@ public final class CodeGeneratorHelper {
 				f_name = dimension+"DArray";
 				size_var = ", "+var+"_size"; 
 			}else{
-				// Use _FREE_OWNERSHIP macro to release the array variable.
-				return "_FREE_OWNERSHIP("+var+");";
+				// Use _FREE macro to release the array variable.
+				return "_FREE("+var+");";
 			}
 		}else if(type instanceof Type.Record){
 			f_name = "_"+translateType(type, stores);
