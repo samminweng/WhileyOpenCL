@@ -71,7 +71,7 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(codeDir, "reverse", "copy", "dealloc");
 	}
 	
-	@Test
+	/*@Test
 	public void test_mergesort_naive() {
 		//Generate the naive C code  
 		util.execCodeGeneration(codeDir, "mergesort");
@@ -157,5 +157,5 @@ public class CodeGenerationTestCase {
 	public void test_MatrixMult_copy_dealloc() {
 		util.execCodeGeneration(codeDir, "MatrixMult", "copy", "dealloc");
 	}
-	
+	*/
 }

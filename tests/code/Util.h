@@ -30,29 +30,24 @@
 }
 
 // Assign and copy an array variable to another
-#define _ASSIGN_COPY(a, b){ \
+#define _ARRAY_COPY(a, b){ \
 					  a##_size = b##_size; \
 					  a = copy(b, b##_size);\
+					}
+// Assign an array variable to another using the pointer
+#define _ARRAY_POINTER(a, b){ \
+					  a##_size = b##_size; \
+					  a = b;\
 					}
 
 // Assign and copy an array variable to another with ownership
-#define _ASSIGN_COPY_OWNERSHIP(a, b){ \
-					  a##_size = b##_size; \
-					  _FREE_OWNERSHIP(a);\
-					  a = copy(b, b##_size);\
+#define _ADD_OWNERSHIP(a, b){ \
 					  b##_has_ownership = true;\
 					  a##_has_ownership = true;\
 					}
-// Assign and transfer an array variable to another
-#define _ASSIGN_TRANSFER(a, b){ \
-					  a##_size = b##_size; \
-					  a = b;\
-					}
+
 // Assign and transfer an array variable to another with ownership
-#define _ASSIGN_TRANSFER_OWNERSHIP(a, b){ \
-					  a##_size = b##_size; \
-					  _FREE_OWNERSHIP(a);\
-					  a = b;\
+#define _TRANSFER_OWNERSHIP(a, b){ \
 					  b##_has_ownership = false;\
 					  a##_has_ownership = true;\
 					}

@@ -626,16 +626,17 @@ public final class CodeGeneratorHelper {
 	 * @return
 	 */
 	private static String generateCopyCode(Type.Array type, String var){
-		String statement = "";
+		String statement = "copy";
 		// Add 'copy' function call w.r.t. Array dimension
 		int dimension = getArrayDimension(type);
-		statement += "copy";
 		if(dimension>1){
-			statement += dimension+"DArray";
+			statement +=dimension+"DArray";	
 		}
+		
 		statement += "("+var+", ";
 		// Generate size variables according to dimensions.
 		statement += generateArraySizeVars(var, type) + ")";
+		
 		return statement;			
 	}
 

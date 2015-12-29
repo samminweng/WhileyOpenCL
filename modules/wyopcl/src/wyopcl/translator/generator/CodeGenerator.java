@@ -326,18 +326,39 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}else{
 				// Propagate sizes for array-typed variable
 				if (lhs_type instanceof Type.Array) {
-					statement.add(indent + CodeGeneratorHelper.generateArraySizeAssign(lhs_type, lhs, store.getVar(code.operand(0))));
+					// Release lhs array variable
+					this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
+					
+					// Get rhs array variable
+					String rhs = store.getVar(code.operand(0));
+					// Check if the lhs copy is needed or not 
+					if(isCopyEliminated(code.operand(0), code, function)){
+						// Use '_ARRAY_POINTER' macro to assign the array address to another
+						statement.add(indent + "_ARRAY_POINTER("+lhs+", "+rhs+");");
+						// Transfer ownership using '_TRANSFER_OWNERSHIP' macro
+						this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + "_TRANSFER_OWNERSHIP("+lhs+", "+rhs+");"));
+					}else{
+						// Use '_ARRAY_COPY' macro to copy the array and assign it to another
+						statement.add(indent + "_ARRAY_COPY("+lhs+", "+rhs+");");
+						// Add ownerships
+						this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + "_ADD_OWNERSHIP("+lhs+", "+rhs+");"));
+					}
+					
+				
+				}else{
+					// Add de-allocation code to deallocate lhs variable
+					this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
+					//statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores, this.deallocatedAnalyzer));
+									
+					// copy the array and assign the cloned to the target.
+					statement.add(indent + lhs + " = "+ optimizeCode(code.operand(0), code, function));
+					// Assigned the ownership to lhs
+					this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.assignOwnership(lhs_type, lhs, this.stores)));
+					//statement.add(indent + CodeGeneratorHelper.assignOwnership(lhs_type, lhs, this.stores, deallocatedAnalyzer));	
+					
 				}
 				
-				// Add de-allocation code to deallocate lhs variable
-				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
-				//statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores, this.deallocatedAnalyzer));
-								
-				// copy the array and assign the cloned to the target.
-				statement.add(indent + lhs + " = "+ optimizeCode(code.operand(0), code, function));
-				// Assigned the ownership to lhs
-				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.assignOwnership(lhs_type, lhs, this.stores)));
-				//statement.add(indent + CodeGeneratorHelper.assignOwnership(lhs_type, lhs, this.stores, deallocatedAnalyzer));	
+				
 			}
 		}
 		
@@ -475,9 +496,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		List<String> statement = new ArrayList<String>();
 		String var = store.getVar(op);
 		Type type = store.getRawType(op);
-		/*if(type instanceof Type.Nominal){
-			type = stores.getNominalType((Type.Nominal)type);
-		}*/
 		
 		String indent = store.getIndent();
 		
@@ -485,8 +503,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		if (code instanceof Codes.Invoke){
 			statement.add(CodeGeneratorHelper.generateCopyUpdateCode(type, stores, var, isCopyEliminated)); 
 		}else{
-			if(code instanceof Codes.Assign){
-				statement.add(CodeGeneratorHelper.generateCopyUpdateCode(type, stores, var, isCopyEliminated)+";");
+			if(code instanceof Codes.Assign){		
+				//statement.add(CodeGeneratorHelper.generateCopyUpdateCode(type, stores, var, isCopyEliminated)+";");
 				// Transfer the ownership if the copy is not needed, i.e. the variable does not own this object.
 				if(isCopyEliminated){
 					this.deallocatedAnalyzer.ifPresent(a ->statement.add(indent+ CodeGeneratorHelper.transferOwnership(type, var, stores)));
