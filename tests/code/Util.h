@@ -34,11 +34,16 @@
 	a##_size = b##_size; \
 	a = b;\
 }
+// Create 
 #define _NEW_ARRAY(a, length){\
 	a##_size = length;\
 	a = malloc(length*sizeof(long long));\
 }
-
+#define _NEW_ARRAY_OWNERSHIP(a, length){\
+	_FREE(a);\
+	_NEW_ARRAY(a, length);\
+	a##_has_ownership = true;\
+}
 // Add ownership
 #define _ADD_OWNERSHIP(a, b){ \
 	b##_has_ownership = true;\

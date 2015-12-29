@@ -243,27 +243,19 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		if (code.assignedType() instanceof Type.Array) {
 			// Convert it into a constant list
 			Constant.List list = (Constant.List) code.constant;
-			// Initialize an array
-			if (list.values.isEmpty()) {
-				statements.add(indent + lhs + "_size = 0;");
-				statements.add(indent + lhs + "=(long long*)malloc(1*sizeof(long long));");
-			} else {
-				// E.g. 'const %8 = [0,1,2,3,4,5,6,7,8] : int[]' wyil code can be translated into
-				// long long _8_value[] = {0, 1, 2, 3, 4, 5, 6, 7, 8}; // Introduce 'value' variable.
-				statements.add(indent + lhs + "_size = " + list.values.size() + ";");
-				// Free lhs
-				this.deallocatedAnalyzer.ifPresent(a -> statements.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, code.assignedType(), stores)));
-				//statements.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, code.assignedType(), stores, this.deallocatedAnalyzer));
-				statements.add(indent + lhs + "=(long long*)malloc("+list.values.size()+"*sizeof(long long));");
+			if (!list.values.isEmpty()) {
+				if(this.deallocatedAnalyzer.isPresent()){
+					statements.add(indent+"_NEW_ARRAY_OWNERSHIP("+lhs+", "+list.values.size()+");");
+				}else{
+					statements.add(indent+"_NEW_ARRAY("+lhs+", "+list.values.size()+");");
+				}
+				
 				String s = indent;
 				for(int i=0;i<list.values.size();i++){
 					s += lhs + "["+i+"] = " + list.values.get(i)+"; ";
 				}
 				statements.add(s);
 			}
-			// Assign ownership to lhs
-			this.deallocatedAnalyzer.ifPresent(a -> statements.add(indent + CodeGeneratorHelper.assignOwnership(code.assignedType(), lhs, this.stores)));
-			//statements.add(indent + CodeGeneratorHelper.assignOwnership(code.assignedType(), lhs, this.stores, this.deallocatedAnalyzer));
 		} else if (code.assignedType() instanceof Type.Null){
 			// Skip translation.
 		} else {
@@ -1094,22 +1086,24 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		
 		// Get array names
 		String lhs = store.getVar(code.target());
-		Type lhs_type = store.getRawType(code.target());
+		//Type lhs_type = store.getRawType(code.target());
 		List<String> statement = new ArrayList<String>();
 		int length = code.operands().length;
 		if(length > 0 ){			
-			// Add deallocated code
-			this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
-			// Construct an array using '_NEW_ARRAY' macro
-			statement.add(indent+"_NEW_ARRAY("+lhs+", "+length+");");
+			if(this.deallocatedAnalyzer.isPresent()){
+				// Construct an array using '_NEW_ARRAY_OWNERSHIP' macro
+				statement.add(indent+"_NEW_ARRAY_OWNERSHIP("+lhs+", "+length+");");
+			}else{
+				// Construct an array using '_NEW_ARRAY' macro
+				statement.add(indent+"_NEW_ARRAY("+lhs+", "+length+");");
+			}
+			
 			String s = indent; 
 			// Initialize the array
 			for (int i=0; i<code.operands().length;i++) {
 				s += lhs+"["+i+"] = "+store.getVar(code.operand(i))+"; ";
 			}
 			statement.add(s);
-			// Assign ownership to lhs
-			this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.assignOwnership(lhs_type, lhs, this.stores)));
 		}
 		
 		store.addAllStatements(code, statement);
