@@ -13,48 +13,52 @@
 #define _CRT_SECURE_NO_WARNINGS
 //Nullify the array variable
 #define _NULLIFY(a){\
-		a = NULL;\
+	a = NULL;\
 }
 // Free the array variable and ownership
 #define _FREE(a){\
-		if(a##_has_ownership){free(a);a##_has_ownership=false;}\
+	if(a##_has_ownership){free(a);a##_has_ownership=false;}\
+}
+// Check if two arrays are the same
+#define _IFEQ_ARRAY(a, b, blklab){\
+	if(isArrayEqual(a, a##_size, b, b##_size)==1){goto blklab;}\
 }
 
 // Copy an array variable to another using copy
 #define _ARRAY_COPY(a, b){ \
-					  a##_size = b##_size; \
-					  a = copy(b, b##_size);\
-					}
+	a##_size = b##_size; \
+	a = copy(b, b##_size);\
+}
 // Assign an array variable to another using pointer
 #define _ARRAY_POINTER(a, b){ \
-					  a##_size = b##_size; \
-					  a = b;\
-					}
+	a##_size = b##_size; \
+	a = b;\
+}
 
 // Add ownership
 #define _ADD_OWNERSHIP(a, b){ \
-					  b##_has_ownership = true;\
-					  a##_has_ownership = true;\
-					}
+	b##_has_ownership = true;\
+	a##_has_ownership = true;\
+}
 
 // Transfer an array variable's ownership to another
 #define _TRANSFER_OWNERSHIP(a, b){ \
-					  b##_has_ownership = false;\
-					  a##_has_ownership = true;\
-					}
+	b##_has_ownership = false;\
+	a##_has_ownership = true;\
+}
 
 // Assign an array using copy
 #define _ASSIGN_ARRAY_COPY(a, b){\
-					_FREE(a);\
-					_ARRAY_COPY(a, b);\
-					_ADD_OWNERSHIP(a, b);\
-				}
+	_FREE(a);\
+	_ARRAY_COPY(a, b);\
+	_ADD_OWNERSHIP(a, b);\
+}
 // Assign an array using pointer
 #define _ASSIGN_ARRAY_POINTER(a, b){\
-					_FREE(a);\
-					_ARRAY_POINTER(a, b);\
-					_TRANSFER_OWNERSHIP(a, b);\
-				}
+	_FREE(a);\
+	_ARRAY_POINTER(a, b);\
+	_TRANSFER_OWNERSHIP(a, b);\
+}
 
 // null|int
 // This code snippet aims to deal with union type in C

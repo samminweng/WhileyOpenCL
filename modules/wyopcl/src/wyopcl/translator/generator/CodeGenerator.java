@@ -779,7 +779,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 	/**
 	 * Generates the code for <code>Codes.If</code> code. For example,
+	 *  For example, the byte-code: <code> ifeq %1, %38 goto blklab2 : [int]</code> can be translated into C code: 
+	 *  <code>_IFEQ_ARRAY(_1, _38, blklab2);</code>
 	 * 
+	 * Note that _IFEQ_ARRAY macro checks if both of arrays are the same (1: true, 0:false).
 	 * <pre>
 	 * <code>
 	 * ifge %0, %1 goto blklab0 : int
@@ -805,17 +808,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 		// Added a special case to compare two arrays.
 		if (code.type instanceof Type.Array) {
-			/**
-			 * 
-			 * For example, the byte-code: <code> ifeq %1, %38 goto blklab2 : [int]</code> can be translated into C
-			 * code: if(isArrayEqual(_xs,_xs_size,_38,_38_size)==1){goto blklab2;}
-			 * 
-			 * Note that isArrayEqual function checks if both of arrays are the same (1: true, 0:false).
-			 * 
-			 */
 			if (code.op.equals(Comparator.EQ)) {
+				// Use the '_IFEQ_ARRAY' macro to compare two arrays
+				statement += "_IFEQ_ARRAY("+lhs+", "+rhs+", "+code.target+");";
+				
 				// get the type of left/right
-				Type left_type = store.getRawType(code.leftOperand);
+				/*Type left_type = store.getRawType(code.leftOperand);
 				Type right_type = store.getRawType(code.rightOperand);
 				// Check the left type is an array of integers.
 				if (CodeGeneratorHelper.isIntType(left_type)) {
@@ -831,7 +829,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				} else {
 					// Cast the right to an array.
 					statement += ", (" + CodeGeneratorHelper.translateType(left_type, stores) + ")" + rhs + ", " + rhs + "_size)==1";
-				}
+				}*/
 			}
 		} else {
 			statement += "if(" + lhs;
@@ -844,17 +842,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}else{
 				statement += rhs;
 			}
-			
-			
-			
-			
-			
+			// The goto statement
+			statement += "){";
+			statement += "goto " + code.target + ";";
+			statement += "}";
+
 		}
 
-		// The goto statement
-		statement += "){";
-		statement += "goto " + code.target + ";";
-		statement += "}";
+		
 
 		store.addStatement(code, statement);
 	}
