@@ -1096,30 +1096,21 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String lhs = store.getVar(code.target());
 		Type lhs_type = store.getRawType(code.target());
 		List<String> statement = new ArrayList<String>();
-		// Add deallocated code
-		this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
-		
-		// Add the 'size' variable to store the array length
-		statement.add(indent + (lhs + "_size") + " = " + code.operands().length + ";");
-		// Construct array value
-		String elmType = CodeGeneratorHelper.translateType(code.type().element(), stores);
 		int length = code.operands().length;
-		if(length > 0 ){
-			// Assign the pointer to array values 
-			statement.add(indent + lhs + " = malloc("+length+"*sizeof(" +elmType+"));");
+		if(length > 0 ){			
+			// Add deallocated code
+			this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
+			// Construct an array using '_NEW_ARRAY' macro
+			statement.add(indent+"_NEW_ARRAY("+lhs+", "+length+");");
 			String s = indent; 
 			// Initialize the array
 			for (int i=0; i<code.operands().length;i++) {
 				s += lhs+"["+i+"] = "+store.getVar(code.operand(i))+"; ";
 			}
 			statement.add(s);
-		}else{
-			// For empty array, we initialize the array with one element. 
-			statement.add(indent + lhs + " = malloc(sizeof(" +elmType+"));");
+			// Assign ownership to lhs
+			this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.assignOwnership(lhs_type, lhs, this.stores)));
 		}
-		
-		// Assign ownership to lhs
-		this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.assignOwnership(lhs_type, lhs, this.stores)));
 		
 		store.addAllStatements(code, statement);
 	}

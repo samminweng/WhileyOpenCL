@@ -34,6 +34,10 @@
 	a##_size = b##_size; \
 	a = b;\
 }
+#define _NEW_ARRAY(a, length){\
+	a##_size = length;\
+	a = malloc(length*sizeof(long long));\
+}
 
 // Add ownership
 #define _ADD_OWNERSHIP(a, b){ \
