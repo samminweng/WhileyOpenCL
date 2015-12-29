@@ -256,12 +256,12 @@ public class CodeStores {
 		}
 
 		/**
-		 * Get the type of a variable.
+		 * Get the raw type for a variable.
 		 * 
 		 * @param reg
 		 * @return
 		 */
-		protected Type getVarType(int reg) {
+		protected Type getRawType(int reg) {
 			VariableDeclarations vars = function.attribute(VariableDeclarations.class);
 			Declaration declaration = vars.get(reg);
 			Type type = declaration.type();

@@ -13,13 +13,45 @@
 #define _CRT_SECURE_NO_WARNINGS
 //Nullify the array variable
 #define _NULLIFY(a){\
+		a = NULL;\
+}
+// Nullify the array variable and ownership
+#define _NULLIFY(a){\
+		a = NULL;\
+}
+// Free the array variable and ownership
+#define _FREE(a){\
+		free(a);\
+}
+
+// Free the array variable and ownership
+#define _FREE_OWNERSHIP(a){\
 		if(a##_has_ownership){free(a);a##_has_ownership=false;}\
 }
 
+// Assign and copy an array variable to another
+#define _ASSIGN_COPY(a, b){ \
+					  a##_size = b##_size; \
+					  a = copy(b, b##_size);\
+					}
+
+// Assign and copy an array variable to another with ownership
+#define _ASSIGN_COPY_OWNERSHIP(a, b){ \
+					  a##_size = b##_size; \
+					  _FREE_OWNERSHIP(a);\
+					  a = copy(b, b##_size);\
+					  b##_has_ownership = true;\
+					  a##_has_ownership = true;\
+					}
 // Assign and transfer an array variable to another
 #define _ASSIGN_TRANSFER(a, b){ \
 					  a##_size = b##_size; \
-					  _NULLIFY(a);\
+					  a = b;\
+					}
+// Assign and transfer an array variable to another with ownership
+#define _ASSIGN_TRANSFER_OWNERSHIP(a, b){ \
+					  a##_size = b##_size; \
+					  _FREE_OWNERSHIP(a);\
 					  a = b;\
 					  b##_has_ownership = false;\
 					  a##_has_ownership = true;\

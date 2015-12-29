@@ -398,6 +398,8 @@ public final class CodeGeneratorHelper {
 			if(!isIntType(type) && getRecordType((Type.Union)type)!=null){
 				return true;
 			}
+		}else if(type instanceof Type.Null){
+			throw new RuntimeException("Not Implemented");
 		}
 
 		return false;
@@ -516,8 +518,8 @@ public final class CodeGeneratorHelper {
 				f_name = dimension+"DArray";
 				size_var = ", "+var+"_size"; 
 			}else{
-				// Use _NULLIFY macro to empty the array variable;
-				return "_NULLIFY("+var+");";
+				// Use _FREE_OWNERSHIP macro to release the array variable.
+				return "_FREE_OWNERSHIP("+var+");";
 			}
 		}else if(type instanceof Type.Record){
 			f_name = "_"+translateType(type, stores);
@@ -546,7 +548,7 @@ public final class CodeGeneratorHelper {
 		// Generate the code to release memory spaces of ownership variables.
 		for(int register : registers){
 			// Get variable type
-			Type var_type = store.getVarType(register);
+			Type var_type = store.getRawType(register);
 			String var = store.getVar(register);
 			statements.add(indent + addDeallocatedCode(var, var_type, stores));
 		}
