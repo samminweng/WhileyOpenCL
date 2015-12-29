@@ -469,16 +469,16 @@ public final class CodeGeneratorHelper {
 	 * The ownership value is based on copy analysis results.  
 	 * 
 	 * 
-	 * @param deallocAnalyzer
+	 * @param type
 	 * @param copyAnalyzer
 	 * @return 
 	 */
-	protected static String passOwnershipToFunction(Type type, CodeStores stores, CopyEliminationAnalyzer copyAnalyzer){
+	protected static String passOwnershipToFunction(Type type, CodeStores stores, Optional<CopyEliminationAnalyzer> copyAnalyzer){
 		if(!isCompoundType(type, stores)){
 			return "";
 		}
-
-		if(copyAnalyzer != null){
+		
+		if(copyAnalyzer.isPresent()){
 			// For copy-reduced implementation, the calling function does not own the array. 
 			return "false";
 		}else{

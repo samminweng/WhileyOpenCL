@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -45,7 +46,7 @@ import wyopcl.translator.generator.CodeStores.CodeStore;
  *
  */
 public class CodeGenerator extends AbstractCodeGenerator {
-	private CopyEliminationAnalyzer copyAnalyzer = null;
+	private Optional<CopyEliminationAnalyzer> copyAnalyzer = Optional.empty();
 	private Optional<DeallocationAnalyzer> deallocatedAnalyzer = Optional.empty();
 
 	/**
@@ -58,7 +59,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		super(config);
 	}
 
-	public CodeGenerator(Configuration config, CopyEliminationAnalyzer copyAnalyzer, Optional<DeallocationAnalyzer> deallcAnalyzer) {
+	public CodeGenerator(Configuration config, Optional<CopyEliminationAnalyzer> copyAnalyzer, Optional<DeallocationAnalyzer> deallcAnalyzer) {
 		this(config);
 		this.copyAnalyzer = copyAnalyzer;
 		this.deallocatedAnalyzer = deallcAnalyzer;
@@ -448,12 +449,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @return
 	 */
 	private boolean isCopyEliminated(int register, Code code, FunctionOrMethod function){
-		boolean isCopyEliminated = false;
-		if(this.copyAnalyzer != null){
-			isCopyEliminated = this.copyAnalyzer.isCopyEliminated(register, code, function);
+		if(this.copyAnalyzer.isPresent()){
+			return this.copyAnalyzer.get().isCopyEliminated(register, code, function);
 		}
 		
-		return isCopyEliminated;
+		return false;
 	}
 	
 

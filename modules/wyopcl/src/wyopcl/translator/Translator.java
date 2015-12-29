@@ -66,7 +66,7 @@ public class Translator implements Builder {
 		this.config.setOption("module", module);
 
 		// Check if deallocation analysis is enabled or not
-		Optional<DeallocationAnalyzer> deallocAnalyzer = Optional.empty();;
+		Optional<DeallocationAnalyzer> deallocAnalyzer = Optional.empty();
 		if(config.isEnabled("dealloc")){
 			// Create an instance of DealloctionAnalyzer
 			DeallocationAnalyzer analyzer = new DeallocationAnalyzer(config);
@@ -77,10 +77,11 @@ public class Translator implements Builder {
 		}
 		
 		// Check if the copy elimination analysis is enabled.
-		CopyEliminationAnalyzer copyAnalyzer = null;
+		Optional<CopyEliminationAnalyzer> copyAnalyzer = Optional.empty();
 		if (config.isEnabled("copy")) {
-			copyAnalyzer = new CopyEliminationAnalyzer(this, config);
-			copyAnalyzer.apply(module);
+			CopyEliminationAnalyzer analyzer = new CopyEliminationAnalyzer(this, config);
+			analyzer.apply(module);
+			copyAnalyzer = Optional.of(analyzer);
 			message = "Copy elimination analysis completed.\nFile: " + config.getFilename();
 		}
 
