@@ -97,7 +97,7 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(codeDir, "mergesort", "copy", "dealloc");
 	}
 	
-	/*@Test
+	@Test
 	public void test_TicTacToe_naive() {
 		util.execCodeGeneration(codeDir, "TicTacToe");
 	}
@@ -117,7 +117,7 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(codeDir, "TicTacToe", "copy", "dealloc");
 	}
 	
-	@Test
+	/*@Test
 	public void test_newTicTacToe_naive() {
 		util.execCodeGeneration(codeDir, "newTicTacToe");
 	}

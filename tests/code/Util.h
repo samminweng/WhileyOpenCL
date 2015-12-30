@@ -19,6 +19,10 @@
 #define _FREE(a){\
 	if(a##_has_ownership){free(a);a##_has_ownership=false;}\
 }
+// Free the array variable and ownership
+#define _FREE_STRUCT(a, type){\
+	if(a##_has_ownership){free_type##(a);a##_has_ownership=false;}\
+}
 // Check if two arrays are the same
 #define _IFEQ_ARRAY(a, b, blklab){\
 	if(isArrayEqual(a, a##_size, b, b##_size)==1){goto blklab;}\
