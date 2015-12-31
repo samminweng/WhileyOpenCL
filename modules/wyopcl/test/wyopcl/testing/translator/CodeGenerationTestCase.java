@@ -117,7 +117,7 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(codeDir, "TicTacToe", "copy", "dealloc");
 	}
 	
-	/*@Test
+	@Test
 	public void test_newTicTacToe_naive() {
 		util.execCodeGeneration(codeDir, "newTicTacToe");
 	}
@@ -137,7 +137,7 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(codeDir, "newTicTacToe", "copy", "dealloc");
 	}
 	
-	@Test
+	/*@Test
 	public void test_MatrixMult_naive() {
 		util.execCodeGeneration(codeDir, "MatrixMult");
 	}

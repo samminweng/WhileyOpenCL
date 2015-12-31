@@ -338,7 +338,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						// Assigned the ownership
 						this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent+"_TRANSFER_OWNERSHIP("+rhs+", "+lhs+");"));
 					}else{
-						statement.add(indent + lhs + " = copy_" + type_name+"("+rhs+");");
+						statement.add(indent + lhs + " = copy_" + type_name.replace("*", "")+"("+rhs+");");
 						// Assigned the ownership
 						this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent+"_ASSIGN_OWNERSHIP("+rhs+", "+lhs+");"));
 					}
