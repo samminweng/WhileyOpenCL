@@ -20,9 +20,9 @@
 	if(a##_has_ownership){free(a);a##_has_ownership=false;}\
 }
 // Free the array variable and ownership
-#define _FREE_STRUCT(a, type){\
-	if(a##_has_ownership){free_type##(a);a##_has_ownership=false;}\
-}
+//#define _FREE_STRUCT(a, type){\
+//	if(a##_has_ownership){free_type##(a);a##_has_ownership=false;}\
+//}
 // Check if two arrays are the same
 #define _IFEQ_ARRAY(a, b, blklab){\
 	if(isArrayEqual(a, a##_size, b, b##_size)==1){goto blklab;}\
@@ -34,43 +34,38 @@
 	a = copy(b, b##_size);\
 }
 // Assign an array variable to another using pointer
-#define _ARRAY_POINTER(a, b){ \
+#define _ARRAY_UPDATE(a, b){ \
 	a##_size = b##_size; \
 	a = b;\
 }
-// Create 
+// Add ownership for a given variable
+#define _ADD_OWNERSHIP(a){\
+	a##_has_ownership = true;\
+}
+// Transfer an array variable's ownership to another
+#define _REMOVE_OWNERSHIP(a){ \
+	a##_has_ownership = false;\
+}
+// Create a new array
 #define _NEW_ARRAY(a, length){\
 	a##_size = length;\
 	a = malloc(length*sizeof(long long));\
 }
+// Create a new array and set its ownership
 #define _NEW_ARRAY_OWNERSHIP(a, length){\
 	_FREE(a);\
 	_NEW_ARRAY(a, length);\
-	a##_has_ownership = true;\
+	_ADD_OWNERSHIP(a);\
 }
-// Add ownership
-#define _ADD_OWNERSHIP(a, b){ \
-	b##_has_ownership = true;\
-	a##_has_ownership = true;\
+// Assign ownerships to both of array variables
+#define _ASSIGN_OWNERSHIP(a, b){ \
+	_ADD_OWNERSHIP(a);\
+	_ADD_OWNERSHIP(b);\
 }
-
 // Transfer an array variable's ownership to another
 #define _TRANSFER_OWNERSHIP(a, b){ \
-	b##_has_ownership = false;\
-	a##_has_ownership = true;\
-}
-
-// Assign an array using copy
-#define _ASSIGN_ARRAY_COPY(a, b){\
-	_FREE(a);\
-	_ARRAY_COPY(a, b);\
-	_ADD_OWNERSHIP(a, b);\
-}
-// Assign an array using pointer
-#define _ASSIGN_ARRAY_POINTER(a, b){\
-	_FREE(a);\
-	_ARRAY_POINTER(a, b);\
-	_TRANSFER_OWNERSHIP(a, b);\
+	_REMOVE_OWNERSHIP(a);\
+	_ADD_OWNERSHIP(b);\
 }
 
 // null|int

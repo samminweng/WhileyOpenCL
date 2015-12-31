@@ -317,21 +317,16 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}else{
 				// Propagate sizes for array-typed variable
 				if (lhs_type instanceof Type.Array) {					
-					if(this.deallocatedAnalyzer.isPresent()){
-						if(isCopyEliminated){
-							statement.add(indent + "_ASSIGN_ARRAY_POINTER("+lhs+", "+rhs+");");
-						}else{
-							statement.add(indent + "_ASSIGN_ARRAY_COPY("+lhs+", "+rhs+");");
-						}
+					this.deallocatedAnalyzer.ifPresent(a ->statement.add(indent + "_FREE("+lhs+");") );
+					
+					// Check if the lhs copy is needed or not 
+					if(isCopyEliminated){
+						statement.add(indent + "_ARRAY_UPDATE("+lhs+", "+rhs+");");
+						this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent+"_TRANSFER_OWNERSHIP("+rhs+", "+lhs+");"));
 					}else{
-						// Check if the lhs copy is needed or not 
-						if(isCopyEliminated){
-							// Use '_ARRAY_POINTER' macro to assign the array address to another
-							statement.add(indent + "_ARRAY_POINTER("+lhs+", "+rhs+");");
-						}else{
-							// Use '_ARRAY_COPY' macro to copy the array and assign it to another
-							statement.add(indent + "_ARRAY_COPY("+lhs+", "+rhs+");");
-						}
+						statement.add(indent + "_ARRAY_COPY("+lhs+", "+rhs+");");
+						// Assigned the ownership
+						this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent+"_ASSIGN_OWNERSHIP("+rhs+", "+lhs+");"));
 					}
 				}else{
 					// Translate the lhs type
@@ -341,11 +336,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					if(isCopyEliminated){
 						statement.add(indent + lhs + " = "+ rhs+";");
 						// Assigned the ownership
-						this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent+"_TRANSFER_OWNERSHIP("+lhs+", "+rhs+");"));
+						this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent+"_TRANSFER_OWNERSHIP("+rhs+", "+lhs+");"));
 					}else{
 						statement.add(indent + lhs + " = copy_" + type_name+"("+rhs+");");
 						// Assigned the ownership
-						this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent+"_ADD_OWNERSHIP("+lhs+", "+rhs+");"));
+						this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent+"_ASSIGN_OWNERSHIP("+rhs+", "+lhs+");"));
 					}
 				}
 			}
