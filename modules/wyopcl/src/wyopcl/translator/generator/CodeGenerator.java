@@ -318,13 +318,21 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// Propagate sizes for array-typed variable
 				if (lhs_type instanceof Type.Array) {					
 					this.deallocatedAnalyzer.ifPresent(a ->statement.add(indent + "_FREE("+lhs+");") );
-					
+					int dimension = CodeGeneratorHelper.getArrayDimension(lhs_type);
 					// Check if the lhs copy is needed or not 
 					if(isCopyEliminated){
-						statement.add(indent + "_ARRAY_UPDATE("+lhs+", "+rhs+");");
+						if(dimension>1){
+							statement.add(indent + "_2DARRAY_UPDATE("+lhs+", "+rhs+");");
+						}else{
+							statement.add(indent + "_ARRAY_UPDATE("+lhs+", "+rhs+");");
+						}						
 						this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent+"_TRANSFER_OWNERSHIP("+rhs+", "+lhs+");"));
 					}else{
-						statement.add(indent + "_ARRAY_COPY("+lhs+", "+rhs+");");
+						if(dimension>1){
+							statement.add(indent + "_2DARRAY_COPY("+lhs+", "+rhs+");");
+						}else{
+							statement.add(indent + "_ARRAY_COPY("+lhs+", "+rhs+");");
+						}						
 						// Assigned the ownership
 						this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent+"_ASSIGN_OWNERSHIP("+rhs+", "+lhs+");"));
 					}
@@ -1142,27 +1150,33 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement.add(indent + lhs + " = convertArgsToIntArray(argc, args);");
 			statement.add(indent + lhs + "_size = argc - 1;");
 		} else {
-			String rhs = store.getVar(code.operand(0));
 			Type rhs_type = store.getRawType(code.operand(0));
-			if(rhs_type instanceof Type.Nominal){
-				rhs_type = stores.getNominalType((Type.Nominal)rhs_type);
-			}
-			
-			String var = CodeGeneratorHelper.accessMember(rhs, code.field, rhs_type);
-			// Propagate rhs array sizes to lhs
-			statement.add(indent + CodeGeneratorHelper.generateArraySizeAssign(code.fieldType(), lhs, var));
+			String rhs = CodeGeneratorHelper.accessMember(store.getVar(code.operand(0)), code.field, rhs_type);
 			// Free lhs
 			boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
-			
-			if(!isCopyEliminated){
-				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
-			}
-			// Assign member values
-			statement.add(indent + lhs + " = "+ optimizeCode(code.operand(0), code, function));
-			
-			if(!isCopyEliminated){
-				// Assign ownership to lhs variable of fieldload code
-				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.assignOwnership(lhs_type, lhs, this.stores)));
+			if(lhs_type instanceof Type.Array){
+				int dimension = CodeGeneratorHelper.getArrayDimension(lhs_type);
+				// Check if the lhs copy is needed or not 
+				if(isCopyEliminated){
+					if(dimension>1){
+						statement.add(indent + "_2DARRAY_UPDATE("+lhs+", "+rhs+");");
+					}else{
+						statement.add(indent + "_ARRAY_UPDATE("+lhs+", "+rhs+");");
+					}						
+					this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent+"_REMOVE_OWNERSHIP("+lhs+");"));
+				}else{
+					if(dimension>1){
+						statement.add(indent + "_2DARRAY_COPY("+lhs+", "+rhs+");");
+					}else{
+						statement.add(indent + "_ARRAY_COPY("+lhs+", "+rhs+");");
+					}						
+					// Assigned the ownership
+					this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent+"_ADD_OWNERSHIP("+lhs+");"));
+				}
+			}else{
+				// Assign member values
+				statement.add(indent + lhs + " = "+ optimizeCode(code.operand(0), code, function));
+				//throw new RuntimeException("Not implemented");
 			}
 		}
 		store.addAllStatements(code, statement);

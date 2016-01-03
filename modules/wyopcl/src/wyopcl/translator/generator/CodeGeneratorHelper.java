@@ -332,7 +332,7 @@ public final class CodeGeneratorHelper {
 	 * @param type
 	 * @return
 	 */
-	private static int getArrayDimension(Type type){
+	protected static int getArrayDimension(Type type){
 		int dimension = 0;
 		// Compute array dimension.
 		while(type != null && type instanceof Type.Array){

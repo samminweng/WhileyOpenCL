@@ -38,6 +38,19 @@
 	a##_size = b##_size; \
 	a = b;\
 }
+
+// Copy an array variable to another using copy
+#define _2DARRAY_COPY(a, b){ \
+	a##_size = b##_size; \
+	a##_size_size = b##_size_size; \
+	a = copy2DArray(b, b##_size, b##_size_size);\
+}
+// Assign an array variable to another using pointer
+#define _2DARRAY_UPDATE(a, b){ \
+	a##_size = b##_size; \
+	a##_size_size = b##_size_size; \
+	a = b;\
+}
 // Add ownership for a given variable
 #define _ADD_OWNERSHIP(a){\
 	a##_has_ownership = true;\
