@@ -196,8 +196,48 @@ public final class CodeGeneratorHelper {
 		return statement;
 
 	}
-
-
+	/**
+	 * Generate the assignment code of an variable by using update or copy.
+	 * 
+	 * @param type
+	 * @param indent
+	 * @param lhs
+	 * @param rhs
+	 * @param isCopyEliminated
+	 * @return
+	 */
+	protected static List<String> generateArrayAssignment(Type type, String indent, String lhs, String rhs, boolean isCopyEliminated, CodeStores stores){
+		List<String> statement = new ArrayList<String>();
+		if(type instanceof Type.Int){
+			// Assign the value without copies
+			statement.add(indent + lhs + " = "+ rhs+";");
+		}else if(type instanceof Type.Array){
+			int dimension = getArrayDimension(type);
+			// Check if the lhs copy is needed or not 
+			if(isCopyEliminated){
+				if(dimension>1){
+					statement.add(indent + "_2DARRAY_UPDATE("+lhs+", "+rhs+");");
+				}else{
+					statement.add(indent + "_ARRAY_UPDATE("+lhs+", "+rhs+");");
+				}			
+			}else{
+				if(dimension>1){
+					statement.add(indent + "_2DARRAY_COPY("+lhs+", "+rhs+");");
+				}else{
+					statement.add(indent + "_ARRAY_COPY("+lhs+", "+rhs+");");
+				}		
+			}
+		}else{
+			String type_name = CodeGeneratorHelper.translateType(type, stores);
+			if(isCopyEliminated){
+				statement.add(indent + lhs + " = "+ rhs+";");
+			}else{
+				statement.add(indent + lhs + " = copy_" + type_name.replace("*", "")+"("+rhs+");");
+			}
+		}
+		
+		return statement;
+	}
 
 	/**
 	 * Given a structure, generate 'copy_*' function to make a copy of the structure, e.g. 
@@ -242,6 +282,7 @@ public final class CodeGeneratorHelper {
 			if (member_type instanceof Type.Nominal || member_type instanceof Type.Int) {
 				statement.add("\t" + lhs + " = " + rhs+";"); 
 			} else if (member_type instanceof Type.Array) {
+				// Use ARRAY_COPY macros to copy the array member
 				statement.add("\t" + generateArraySizeAssign(member_type, lhs, rhs) + " " + lhs + " = " + generateCopyCode((Type.Array)member_type, rhs)+";");
 			} else {
 				throw new RuntimeException("Not implemented!");
@@ -423,16 +464,16 @@ public final class CodeGeneratorHelper {
 	 * @param var
 	 * @return
 	 */
-	protected static String assignOwnership(Type type, String var, CodeStores stores){
+	protected static String addOwnership(Type type, String var, CodeStores stores){
 		if(isCompoundType(type, stores)){
-			return getOwnership(var)+" = true;";
+			return "_ADD_OWNERSHIP("+var+");";
 		}
 		return "";
 	}
 	
-	protected static String transferOwnership(Type type, String var, CodeStores stores){
+	protected static String removeOwnership(Type type, String var, CodeStores stores){
 		if(isCompoundType(type, stores)){
-			return getOwnership(var)+" = false;";
+			return "_REMOVE_OWNERSHIP("+var+");";
 		}
 		return "";
 	}
