@@ -142,7 +142,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			} else if (type instanceof Type.Method){
 				// Skip translation
 			} else if (type instanceof Type.Union){
-				if(CodeGeneratorHelper.isIntType(type)){
+				if(CodeGeneratorHelper.isIntType(type, stores)){
 					// Translate 'nat' type into 'union UNION' type 
 					declarations.add("\tunion UNION "+var+";");
 				}else{
@@ -1381,7 +1381,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			Type lhs_type = store.getRawType(code.operand);
 			String lhs = store.getVar(code.operand);
 			String indent = store.getIndent();
-			if(CodeGeneratorHelper.isIntType(lhs_type)){
+			if(CodeGeneratorHelper.isIntType(lhs_type, stores)){
 				statement = indent + "if(" + lhs + ".null == NULL) { goto " + code.target+ ";}";
 			}else{
 				statement = indent + "if(" + lhs + " == NULL) { goto " + code.target+ ";}";

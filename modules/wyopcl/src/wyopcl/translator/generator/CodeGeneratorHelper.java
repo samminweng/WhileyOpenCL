@@ -50,21 +50,20 @@ public final class CodeGeneratorHelper {
 	 * @param type
 	 * @return true if the type is or contains an integer type.
 	 */
-	protected static boolean isIntType(Type type) {
+	protected static boolean isIntType(Type type, CodeStores stores) {
 		if (type instanceof Type.Int) {
 			return true;
 		}
 
 		if (type instanceof Type.Array) {
-			return isIntType(((Type.Array) type).element());
+			return isIntType(((Type.Array) type).element(), stores);
 		}
 
 		if (type instanceof Type.Tuple) {
 			// Check the type of value field.
 			Type element = ((Type.Tuple) type).element(1);
-			return isIntType(element);
+			return isIntType(element, stores);
 		}
-
 
 		if(type instanceof Type.Union){
 			// Check if the union type contains INT type.
@@ -72,7 +71,15 @@ public final class CodeGeneratorHelper {
 				return true;
 			}
 		}
-
+		// Check if the raw nominal type is 'Int' type.
+		if(type instanceof Type.Nominal){
+			Type nominal = stores.getNominalType((Type.Nominal) type);
+			if(nominal instanceof Type.Int){
+				return true;
+			}
+		}
+		
+		
 		return false;
 	}
 
@@ -120,14 +127,14 @@ public final class CodeGeneratorHelper {
 	 * }
 	 * </code>
 	 * 
-	 * @param type_name
+	 * @param type
 	 * @param fields
 	 * @return
 	 */
-	private static List<String> generateStructPrintf(String type_name, Type type){
+	private static List<String> generateStructPrintf(Type type, CodeStores stores){
 		List<String> statement = new ArrayList<String>();
 		Type.Record record = getRecordType(type);
-		
+		String type_name = translateType(type, stores);
 		String input = "_"+type_name.toLowerCase().replace("*", "");
 		String f_name = type_name.replace("*", "");
 		statement.add("void printf_" + f_name + "(" + type_name + " "+input+"){");
@@ -179,8 +186,9 @@ public final class CodeGeneratorHelper {
 	 * @param stores
 	 * @return
 	 */
-	private static List<String> generateStructCreate(String type_name, Type type){
+	private static List<String> generateStructCreate(Type type, CodeStores stores){
 		List<String> statement = new ArrayList<String>();
+		String type_name = translateType(type, stores);
 		String input = "_"+type_name.toLowerCase().replace("*", ""); // such as '_board'
 		String name = type_name.replace("*", "");
 		statement.add(type_name+" create_"+name+ "(){");
@@ -228,10 +236,10 @@ public final class CodeGeneratorHelper {
 				}		
 			}
 		}else{
-			String type_name = CodeGeneratorHelper.translateType(type, stores);
-			if(isCopyEliminated){
+			if(isIntType(type, stores) || isCopyEliminated){
 				statement.add(indent + lhs + " = "+ rhs+";");
 			}else{
+				String type_name = CodeGeneratorHelper.translateType(type, stores);
 				statement.add(indent + lhs + " = copy_" + type_name.replace("*", "")+"("+rhs+");");
 			}
 		}
@@ -263,10 +271,10 @@ public final class CodeGeneratorHelper {
 	 * @param fields
 	 * @return
 	 */
-	private static List<String> generateStructCopy(String type_name, Type type){
+	private static List<String> generateStructCopy(Type type, CodeStores stores){
 		List<String> statement = new ArrayList<String>();
 		Type.Record record = getRecordType(type);
-
+		String type_name = translateType(type, stores);
 
 		String input = "_"+type_name.toLowerCase().replace("*", "");
 		String new_copy = "new_"+type_name.toLowerCase().replace("*", "");
@@ -279,21 +287,12 @@ public final class CodeGeneratorHelper {
 		record.fields().forEach((member, member_type) ->{
 			String rhs = accessMember(input, member, type);
 			String lhs = accessMember(new_copy, member, type);
-			if (member_type instanceof Type.Nominal || member_type instanceof Type.Int) {
-				statement.add("\t" + lhs + " = " + rhs+";"); 
-			} else if (member_type instanceof Type.Array) {
-				// Use ARRAY_COPY macros to copy the array member
-				statement.add("\t" + generateArraySizeAssign(member_type, lhs, rhs) + " " + lhs + " = " + generateCopyCode((Type.Array)member_type, rhs)+";");
-			} else {
-				throw new RuntimeException("Not implemented!");
-			}
-
+			statement.addAll(generateArrayAssignment(member_type, "\t", lhs, rhs, false, stores));
 		});
 
 		// Add return statement
 		statement.add("\treturn "+new_copy+";");
 		statement.add("}");
-
 
 		return statement;
 	}
@@ -328,7 +327,7 @@ public final class CodeGeneratorHelper {
 	 * @param fields
 	 * @return
 	 */
-	private static List<String> generateStructFree(String type_name, Type type){
+	private static List<String> generateStructFree(Type type, CodeStores stores){
 		List<String> statement = new ArrayList<String>();
 		Type.Record record = null;
 		if(type instanceof Type.Union){
@@ -339,7 +338,7 @@ public final class CodeGeneratorHelper {
 			record = (Type.Record)type;
 		}
 
-
+		String type_name = translateType(type, stores);
 		String input = "_"+type_name.toLowerCase().replace("*", "");
 		String name = type_name.replace("*", "");
 		statement.add("void free_"+name+"("+type_name+ " "+input+"){");
@@ -436,7 +435,7 @@ public final class CodeGeneratorHelper {
 			}
 		}else if(type instanceof Type.Union){
 			// Check if the union type does not contain INT type
-			if(!isIntType(type) && getRecordType((Type.Union)type)!=null){
+			if(!isIntType(type, stores) && getRecordType((Type.Union)type)!=null){
 				return true;
 			}
 		}else if(type instanceof Type.Null){
@@ -719,7 +718,7 @@ public final class CodeGeneratorHelper {
 		}else if(type instanceof Type.Int){
 			statement += ""+var;
 		}else if (type instanceof Type.Union){
-			if(isIntType((Type.Union)type)){
+			if(isIntType(type, stores)){
 				statement += ""+var;
 			}else{
 				statement += "copy_"+type_name.replace("*", "")+"(" + var + ")";
@@ -824,7 +823,7 @@ public final class CodeGeneratorHelper {
 
 		if (type instanceof Type.Union) {
 			// Check if there is any record in 'union' type
-			if (isIntType(type)) {
+			if (isIntType(type, stores)) {
 				return "long long";
 			}
 
@@ -834,7 +833,6 @@ public final class CodeGeneratorHelper {
 			}
 
 			throw new RuntimeException("Un-implemented Type" + type);
-
 		}
 
 		// Translate reference type in Whiley to pointer type in C.
@@ -866,10 +864,10 @@ public final class CodeGeneratorHelper {
 		List<String> statements = new ArrayList<String>();
 		String type_name = translateType(type, stores);
 
-		statements.addAll(generateStructCreate(type_name, type));
-		statements.addAll(generateStructCopy(type_name, type));
-		statements.addAll(generateStructFree(type_name, type));
-		statements.addAll(generateStructPrintf(type_name, type));
+		statements.addAll(generateStructCreate(type, stores));
+		statements.addAll(generateStructCopy(type, stores));
+		statements.addAll(generateStructFree(type, stores));
+		statements.addAll(generateStructPrintf(type, stores));
 
 		return statements;
 	}
