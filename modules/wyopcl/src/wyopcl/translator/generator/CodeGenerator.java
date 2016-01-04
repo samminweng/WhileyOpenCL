@@ -1304,14 +1304,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			String lhs_member = CodeGeneratorHelper.accessMember(lhs, member, lhs_type);
 			//Type type = store.getVarType(code.operand(i));
 			Type type = code.type().field(member);
-			// Propagate '_size' variable.
-			if (type instanceof Type.Array) {
-				statement.add(indent + CodeGeneratorHelper.generateArraySizeAssign(type, lhs_member, rhs));
-				statement.add(indent + lhs_member + " = " + optimizeCode(operands[i], code, function));
-			}else if(type instanceof Type.Int){
-				statement.add(indent + lhs_member + " = " + rhs + ";");
-			}else {
-				throw new RuntimeException("Not Implemented!");
+			
+			boolean isCopyEliminated = isCopyEliminated(operands[i], code, function);
+			statement.addAll(CodeGeneratorHelper.generateArrayAssignment(type, indent, lhs_member, rhs, isCopyEliminated, stores));
+			if(isCopyEliminated && this.deallocatedAnalyzer.isPresent()){
+				//Remove rhs ownership
+				statement.add(indent + CodeGeneratorHelper.removeOwnership(type, rhs, stores));
 			}
 		}
 		
