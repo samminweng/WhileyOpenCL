@@ -555,8 +555,7 @@ public final class CodeGeneratorHelper {
 		if(type instanceof Type.Array){
 			int dimension = getArrayDimension(type);
 			if(dimension== 2){
-				f_name = dimension+"DArray";
-				size_var = ", "+var+"_size"; 
+				return "_FREE2DArray("+var+");";
 			}else{
 				// Use _FREE macro to release the array variable.
 				return "_FREE("+var+");";

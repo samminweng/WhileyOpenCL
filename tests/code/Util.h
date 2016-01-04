@@ -19,6 +19,10 @@
 #define _FREE(a){\
 	if(a##_has_ownership){free(a);a##_has_ownership=false;}\
 }
+// Free the 2D array variable and ownership
+#define _FREE2DArray(a){\
+	if(a##_has_ownership){free2DArray(a, a##_size); a##_has_ownership = false;}\
+}
 // Free the array variable and ownership
 //#define _FREE_STRUCT(a, type){\
 //	if(a##_has_ownership){free_type##(a);a##_has_ownership=false;}\
