@@ -1119,8 +1119,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement.add(indent + lhs + "_size = argc - 1;");
 		} else {
 			String rhs = CodeGeneratorHelper.accessMember(store.getVar(code.operand(0)), code.field, rhs_type);
-			statement.addAll(CodeGeneratorHelper.generateArrayAssignment(lhs_type, indent, lhs, rhs, true, stores));
-			//statement.add(indent+lhs+" = "+rhs+";");
+			// Free lhs variable
+			this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
+			boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
+			// Load the values to lhs variable
+			statement.addAll(CodeGeneratorHelper.generateArrayAssignment(lhs_type, indent, lhs, rhs, isCopyEliminated, stores));
+			if(!isCopyEliminated){
+				// Assign ownership to lhs variable if the rhs variable is copied.
+				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addOwnership(lhs_type, lhs, stores)));
+			}
 		}
 		store.addAllStatements(code, statement);
 	}
