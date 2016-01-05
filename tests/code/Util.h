@@ -69,12 +69,12 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 }
 
 // Copy an array variable to another using copy
-#define _ARRAY_COPY(a, b){ \
+#define _1DARRAY_COPY(a, b){ \
 	a##_size = b##_size; \
 	a = copy(b, b##_size);\
 }
 // Assign an array variable to another using pointer
-#define _ARRAY_UPDATE(a, b){ \
+#define _1DARRAY_UPDATE(a, b){ \
 	a##_size = b##_size; \
 	a = b;\
 }

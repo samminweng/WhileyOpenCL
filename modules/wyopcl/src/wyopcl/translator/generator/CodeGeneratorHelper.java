@@ -215,32 +215,23 @@ public final class CodeGeneratorHelper {
 	 */
 	protected static List<String> generateArrayAssignment(Type type, String indent, String lhs, String rhs, boolean isCopyEliminated, CodeStores stores){
 		List<String> statement = new ArrayList<String>();
-		if(type instanceof Type.Int){
-			// Assign the value without copies
-			statement.add(indent + lhs + " = "+ rhs+";");
-		}else if(type instanceof Type.Array){
+		if(type instanceof Type.Array){
 			int dimension = getArrayDimension(type);
 			// Check if the lhs copy is needed or not 
 			if(isCopyEliminated){
-				if(dimension>1){
-					statement.add(indent + "_2DARRAY_UPDATE("+lhs+", "+rhs+");");
-				}else{
-					statement.add(indent + "_ARRAY_UPDATE("+lhs+", "+rhs+");");
-				}			
+				statement.add(indent + "_"+dimension+"DARRAY_UPDATE("+lhs+", "+rhs+");");			
 			}else{
-				if(dimension>1){
-					statement.add(indent + "_2DARRAY_COPY("+lhs+", "+rhs+");");
-				}else{
-					statement.add(indent + "_ARRAY_COPY("+lhs+", "+rhs+");");
-				}		
+				statement.add(indent + "_"+dimension+"DARRAY_COPY("+lhs+", "+rhs+");");		
 			}
 		}else{
-			if(isIntType(type, stores) || isCopyEliminated){
+			if(isCopyEliminated || !isCompoundType(type, stores)){
 				statement.add(indent + lhs + " = "+ rhs+";");
 			}else{
 				String type_name = CodeGeneratorHelper.translateType(type, stores);
 				statement.add(indent + lhs + " = copy_" + type_name.replace("*", "")+"("+rhs+");");
 			}
+			
+			
 		}
 		
 		return statement;
