@@ -107,5 +107,14 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 	a##_size = length;\
 	a = malloc(length*sizeof(long long));\
 }
-
-
+// Generate an 1D array with given array size and initial value
+#define _GEN_1DARRAY(a, size, value){\
+	a##_size = size;\
+	a = gen1DArray(value, a##_size);\
+}
+// Generate a 2D array with given array size and initialize it with an 1D array
+#define _GEN_2DARRAY(a, size, value){\
+	a##_size = size;\
+	a##_size_size = value##_size;\
+	a = gen2DArray(value, a##_size, a##_size_size);\
+}

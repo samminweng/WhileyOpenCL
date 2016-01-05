@@ -1473,27 +1473,20 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		CodeStore store = stores.getCodeStore(function);
 		String indent = store.getIndent();
 		String lhs = store.getVar(code.target());
+		Type lhs_type = store.getRawType(code.target());
 		String rhs = store.getVar(code.operand(0));
 		String size = store.getVar(code.operand(1));
-		List<String> statements = new ArrayList<String>();
-		List<String> lhs_sizes = CodeGeneratorHelper.getArraySizeVars(lhs, code.type());
-		List<String> rhs_sizes = CodeGeneratorHelper.getArraySizeVars(rhs, code.type());
+		List<String> statement = new ArrayList<String>();
+		int dimension = CodeGeneratorHelper.getArrayDimension(lhs_type);
 		
-		// Propagate array sizes 
-		statements.add(indent + lhs_sizes.get(0) + " = " + size+";");
-		// Deallocate lhs
-		this.deallocatedAnalyzer.ifPresent(a -> statements.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, code.type(), stores)));
-		// Propagate the remaining lhs sizes
-		IntStream.range(1, lhs_sizes.size())
-		.forEach(i-> statements.add(indent + lhs_sizes.get(i) + " = " + rhs_sizes.get(i-1) + ";"));
+		// Deallocate lhs variable
+		this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, code.type(), stores)));
+		// Generate the array with size and values.
+		statement.add(indent+"_GEN_"+dimension+"DARRAY("+lhs+", "+size+", "+rhs+");");
+		// Assign ownership to lhs variable.
+		this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addOwnership(code.type(), lhs, this.stores)));
 		
-		// Call 'genXArray' function to create an array with given sizes.
-		statements.add(indent + lhs + " = gen"+lhs_sizes.size()+"DArray("+rhs + ", " + CodeGeneratorHelper.generateArraySizeVars(lhs, code.type())+");");
-		
-		// Assign ownership
-		this.deallocatedAnalyzer.ifPresent(a -> statements.add(indent + CodeGeneratorHelper.addOwnership(code.type(), lhs, this.stores)));
-		
-		store.addAllStatements(code, statements);
+		store.addAllStatements(code, statement);
 	}
 
 
