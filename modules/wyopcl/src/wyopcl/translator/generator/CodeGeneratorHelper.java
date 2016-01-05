@@ -151,8 +151,7 @@ public final class CodeGeneratorHelper {
 				// Add field values.
 				statement.add("\tprintf(\"%d\", " + input_member + ");");
 			} else if (member_type instanceof Type.Array) {
-				statement.add("\tprintf"+getArrayDimension(member_type)+"DArray(" + input_member 				
-				+ ", " + generateArraySizeVars(input_member, member_type) + ");");
+				statement.add("\t_"+getArrayDimension(member_type)+"DARRAY_PRINT("+input_member+");");
 			} else {
 				throw new RuntimeException("Not implemented!");
 			}

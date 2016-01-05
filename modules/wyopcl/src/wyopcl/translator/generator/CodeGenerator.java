@@ -236,33 +236,33 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @see Codes.Const
 	 */
 	protected void translate(Codes.Const code, FunctionOrMethod function) {
-		List<String> statements = new ArrayList<String>();
+		List<String> statement = new ArrayList<String>();
 		CodeStore store = stores.getCodeStore(function);
 		String lhs = store.getVar(code.target());
+		Type lhs_type = store.getRawType(code.target());
 		String indent = store.getIndent();
 		if (code.assignedType() instanceof Type.Array) {
 			// Convert it into a constant list
 			Constant.List list = (Constant.List) code.constant;
 			if (!list.values.isEmpty()) {
-				if(this.deallocatedAnalyzer.isPresent()){
-					statements.add(indent+"_NEW_ARRAY_OWNERSHIP("+lhs+", "+list.values.size()+");");
-				}else{
-					statements.add(indent+"_NEW_ARRAY("+lhs+", "+list.values.size()+");");
-				}
+				// Free lhs variable
+				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
+				statement.add(indent+"_NEW_ARRAY("+lhs+", "+list.values.size()+");");
+				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent+ "_ADD_OWNERSHIP("+lhs+");"));
 				
 				String s = indent;
 				for(int i=0;i<list.values.size();i++){
 					s += lhs + "["+i+"] = " + list.values.get(i)+"; ";
 				}
-				statements.add(s);
+				statement.add(s);
 			}
 		} else if (code.assignedType() instanceof Type.Null){
 			// Skip translation.
 		} else {
 			// Add a statement
-			statements.add(indent + lhs + " = " + code.constant + ";");
+			statement.add(indent + lhs + " = " + code.constant + ";");
 		}
-		store.addAllStatements(code, statements);
+		store.addAllStatements(code, statement);
 	}
 
 	/**
@@ -1055,18 +1055,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		
 		// Get array names
 		String lhs = store.getVar(code.target());
+		Type lhs_type = store.getRawType(code.target());
 		//Type lhs_type = store.getRawType(code.target());
 		List<String> statement = new ArrayList<String>();
 		int length = code.operands().length;
-		if(length > 0 ){			
-			if(this.deallocatedAnalyzer.isPresent()){
-				// Construct an array using '_NEW_ARRAY_OWNERSHIP' macro
-				statement.add(indent+"_NEW_ARRAY_OWNERSHIP("+lhs+", "+length+");");
-			}else{
-				// Construct an array using '_NEW_ARRAY' macro
-				statement.add(indent+"_NEW_ARRAY("+lhs+", "+length+");");
-			}
-			
+		if(length > 0){
+			// Free lhs variable
+			this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
+			statement.add(indent+"_NEW_ARRAY("+lhs+", "+length+");");
+			this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent+ "_ADD_OWNERSHIP("+lhs+");"));
 			String s = indent; 
 			// Initialize the array
 			for (int i=0; i<code.operands().length;i++) {
