@@ -179,7 +179,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			for (int op=0;op<params.size();op++) {
 				Type type = params.get(op);
 				String var = store.getVar(op);
-				parameters.add(CodeGeneratorHelper.translateType(type, stores) + " " + var);
+				if(type instanceof Type.Array){
+					// Add extra 'size' variable for array variable
+					int dimension = CodeGeneratorHelper.getArrayDimension(type);
+					parameters.add("_DECL_"+dimension+"DARRAY_PARAM("+var+")");
+				}else{
+					parameters.add(CodeGeneratorHelper.translateType(type, stores) + " " + var);
+				}
 				// Add ownership flag ('_has_ownership') to input parameter
 				this.deallocatedAnalyzer.ifPresent(a ->{
 					String ownership_flag = CodeGeneratorHelper.declareOwnership(type, var, this.stores);
@@ -187,12 +193,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						parameters.add(ownership_flag);
 					}
 				});
-				
-				// Add the additional 'size' variable.
-				if(type instanceof Type.Array){
-					List<String> size_vars = CodeGeneratorHelper.getArraySizeVars(var, type);
-					size_vars.forEach(size_var -> parameters.add("long long " + size_var));
-				}
 			}
 			
 			declaration += parameters.stream()
@@ -559,11 +559,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}else if (type instanceof Type.Nominal && ((Type.Nominal)type).name().name().equals("Console")){
 				statement.add("stdout");
 			}else if(type instanceof Type.Array || type instanceof Type.Record || type instanceof Type.Nominal){
-				statement.add(optimizeCode(register, code, f));
-				// pass the ownership flag
-				this.deallocatedAnalyzer.ifPresent(a ->statement.add(CodeGeneratorHelper.passOwnershipToFunction(type, stores, this.copyAnalyzer)));
+				statement.add(optimizeCode(register, code, f));				
 				// pass the '*_size' parameter
 				statement.add(CodeGeneratorHelper.generateArraySizeVars(var, type));
+				// pass the ownership flag
+				this.deallocatedAnalyzer.ifPresent(a ->statement.add(CodeGeneratorHelper.passOwnershipToFunction(type, stores, this.copyAnalyzer)));
 			}else {
 				throw new RuntimeException("Not Implemented");
 			}
@@ -1167,37 +1167,37 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.IndirectInvoke code, FunctionOrMethod function) {
 		CodeStore store = stores.getCodeStore(function);
-		String statement = store.getIndent();
+		List<String> statement = new ArrayList<String>();
+		String indent = store.getIndent();
 		if (code.type() instanceof Type.FunctionOrMethod) {
 			// Get the function name, e.g. 'printf'.
 			String print_name = store.getField(code.operand(0));
 			// Get the input
 			String input = store.getVar(code.operand(1));
+			Type type = store.getRawType(code.operand(1));
+			int dimension = CodeGeneratorHelper.getArrayDimension(type);
 			switch (print_name) {
 			case "print":
-				statement += "printf(\"%d\\n\", " + input + ");";
+				statement.add(indent+"printf(\"%d\\n\", " + input + ");");
 				break;
 			case "print_s":
-				// E.g. 'println("%s", str);'
-				statement += "printf_s(" + input + ", " + input + "_size);";
+				statement.add(indent+"printf_s(_"+dimension+"DARRAY_PARAM(" + input + "));");
 				break;
 			case "println_s":
-				statement += "println_s(" + input + ", " + input + "_size);";
+				statement.add(indent+"println_s(_"+dimension+"DARRAY_PARAM(" + input + "));");
 				break;
 			case "println":
 				// Check input's type to call different println function.
-				Type type = store.getRawType(code.operand(1));
 				if (type instanceof Type.Int) {
-					statement += "printf(\"%d\\n\", " + input + ");";
+					statement.add(indent+"printf(\"%d\\n\", " + input + ");");
 				} else if (type instanceof Type.Array) {
-					// Print out an array with given array size.
-					statement += "printf_array(" + input + ", " + input + "_size);";
+					statement.add(indent+"printf_array(_"+dimension+"DARRAY_PARAM(" + input + "));");
 				} else if (type instanceof Type.Nominal) {
 					Type.Nominal nominal = (Type.Nominal) type;
 					// Print out a user-defined type structure
-					statement += "printf_" + nominal.name().name() + "(" + input + ");";
+					statement.add(indent+"printf_" + nominal.name().name() + "(" + input + ");");
 				} else if (type instanceof Type.Union){
-					statement += "printf(\"%d\\n\", " + input + ".integer);";
+					statement.add(indent+"printf(\"%d\\n\", " + input + ".integer);");
 				} else {
 					throw new RuntimeException("Not implemented." + code);
 				}
@@ -1207,7 +1207,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}
 
 		}
-		store.addStatement(code, statement);
+		store.addAllStatements(code, statement);
 	}
 
 	protected void translate(UnaryOperator code, FunctionOrMethod function) {

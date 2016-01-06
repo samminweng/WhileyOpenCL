@@ -51,6 +51,12 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 #define _DECL_2DARRAY(a) long long** a = NULL; long long a##_size = 0; long long a##_size_size = 0;
 // Define the ownership variable
 #define _DECL_OWNERSHIP(a) bool a##_has_ownership = false;
+// Concatenate array variable and array size variable
+#define _DECL_1DARRAY_PARAM(a) long long* a, long long a##_size
+#define _1DARRAY_PARAM(a) a, a##_size
+// Concatenate 2D array variable and array size variable
+#define _DECL_2DARRAY_PARAM(a) long long* a, long long a##_size, long long a##_size_size
+#define _2DARRAY_PARAM(a) a, a##_size, a##_size_size
 //Nullify the array variable
 #define _NULLIFY(a){\
 	a = NULL;\
