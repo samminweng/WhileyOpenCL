@@ -8,7 +8,6 @@
 // Remove the security check about unsafe 'scanf' or 'sprintf' in VS tool
 // This definition allows the portability of C code across the platforms.
 #define _CRT_SECURE_NO_WARNINGS
-
 // null|int
 // This code snippet aims to deal with union type in C
 union UNION {
@@ -17,10 +16,9 @@ union UNION {
 	float real;
 	void *null;
 };
-
-
-//Built-in functions
-
+/**
+ * Built-in functions
+*/
 void indirect_printf(long long input);
 //No overlapping is allowed: function name must be different.
 void printf_s(long long* input, long long input_size);
@@ -47,6 +45,12 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 /**
  * Macro Section
 **/
+// Define 1D array variable
+#define _DECL_1DARRAY(a) long long* a = NULL; long long a##_size = 0;
+// Define 2D array variable
+#define _DECL_2DARRAY(a) long long** a = NULL; long long a##_size = 0; long long a##_size_size = 0;
+// Define the ownership variable
+#define _DECL_OWNERSHIP(a) bool a##_has_ownership = false;
 //Nullify the array variable
 #define _NULLIFY(a){\
 	a = NULL;\
@@ -67,7 +71,6 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 #define _2DARRAY_PRINT(a){\
 	printf2DArray(a, a##_size, a##_size_size);\
 }
-
 // Copy an array variable to another using copy
 #define _1DARRAY_COPY(a, b){ \
 	a##_size = b##_size; \

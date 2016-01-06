@@ -267,6 +267,8 @@ public class CodeStores {
 			Type type = declaration.type();
 			if(type instanceof Type.Nominal){
 				return getNominalType((Type.Nominal)type);
+			}else if(type instanceof Type.Record){
+				return getRecordType((Type.Record)type).type();
 			}
 			
 			return type;

@@ -402,6 +402,10 @@ public final class CodeGeneratorHelper {
 	 * @return
 	 */
 	protected static boolean isCompoundType(Type type, CodeStores stores){
+		if(type instanceof Type.Int || type instanceof Type.FunctionOrMethod){
+			return false;
+		}
+		
 		if(type instanceof Type.Array){
 			return true;
 		}else if(type instanceof Type.Record){
@@ -429,6 +433,8 @@ public final class CodeGeneratorHelper {
 				return true;
 			}
 		}else if(type instanceof Type.Null){
+			return false;
+		}else{
 			throw new RuntimeException("Not Implemented");
 		}
 
@@ -807,6 +813,8 @@ public final class CodeGeneratorHelper {
 			}else if(userType.type() instanceof Type.Record){
 				return userType.name();
 			}
+			
+			
 			// Check if the type is an instance of user defined type.
 			throw new RuntimeException("Missing CodeStores");
 		}

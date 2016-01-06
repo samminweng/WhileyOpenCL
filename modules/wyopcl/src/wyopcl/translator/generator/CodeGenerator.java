@@ -117,28 +117,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			String translateType = CodeGeneratorHelper.translateType(type, stores);
 			if (type instanceof Type.Array || (type instanceof Type.Reference
 					&& ((Type.Reference) type).element() instanceof Type.Array)) {
-				// Type declaration and initial value assignment.
-				declarations.add(indent + translateType + " " + var + " = NULL;");
-				
-				// Generate size variables according to the dimensions, e.g. 2D array has two 'size' variables.
-				CodeGeneratorHelper.getArraySizeVars(var, type).stream()
-				.forEach(size_var -> declarations.add("\tlong long "+size_var+" = 0;"));
-				
-				// Declare the extra 'has_ownership' boolean variables
-				this.deallocatedAnalyzer.ifPresent(a -> declarations.add(indent+ CodeGeneratorHelper.declareOwnership(type, var, this.stores, false)));
-				//declarations.add(indent+ CodeGeneratorHelper.declareOwnership(type, var, this.stores, this.deallocatedAnalyzer, false));
+				// Declare array variable 
+				int dimension = CodeGeneratorHelper.getArrayDimension(type);
+				declarations.add(indent+"_DECL_"+dimension+"DARRAY("+var+");");
 			} else if (type instanceof Type.Int) {
 				declarations.add(indent + translateType + " " + var + " = 0;");
 			} else if (type instanceof Type.Record){
 				declarations.add(indent+translateType+ " " + var + ";");
-				// Declare the extra 'has_ownership' boolean variables
-				this.deallocatedAnalyzer.ifPresent(a -> declarations.add(indent+CodeGeneratorHelper.declareOwnership(type, var, this.stores, false)));
-				//declarations.add(indent+CodeGeneratorHelper.declareOwnership(type, var, this.stores, this.deallocatedAnalyzer, false));
 			} else if (type instanceof Type.Nominal){
 				declarations.add(indent+translateType+ " "+var+";");
-				// Declare the extra 'has_ownership' boolean variables
-				this.deallocatedAnalyzer.ifPresent(a -> declarations.add(indent+CodeGeneratorHelper.declareOwnership(type, var, this.stores, false)));
-				//declarations.add(indent+CodeGeneratorHelper.declareOwnership(type, var, this.stores, this.deallocatedAnalyzer, false));
 			} else if (type instanceof Type.Method){
 				// Skip translation
 			} else if (type instanceof Type.Union){
@@ -147,15 +134,19 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					declarations.add("\tunion UNION "+var+";");
 				}else{
 					declarations.add(indent+translateType+ " " + var + ";");
-					// Declare the extra 'has_ownership' boolean variables
-					this.deallocatedAnalyzer.ifPresent(a -> declarations.add(indent+CodeGeneratorHelper.declareOwnership(type, var, this.stores, false)));
-					//declarations.add(indent+CodeGeneratorHelper.declareOwnership(type, var, this.stores, this.deallocatedAnalyzer, false));
 				}
 			}else if(type instanceof Type.Null){
 				// Skip translation for null-typed variables.
 			} else{
 				throw new RuntimeException("Not implemented");
 			}
+			
+			// Declare ownership
+			if(CodeGeneratorHelper.isCompoundType(type, stores)){
+				// Declare the extra 'has_ownership' boolean variables
+				this.deallocatedAnalyzer.ifPresent(a -> declarations.add(indent+"_DECL_OWNERSHIP("+var+");"));
+			}
+			
 		}
 		
 		return declarations;
@@ -1104,29 +1095,31 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(Codes.FieldLoad code, FunctionOrMethod function) {
 		String field = code.field;
 		CodeStore store = stores.getCodeStore(function);
-		String lhs = store.getVar(code.target());
-		Type lhs_type = store.getRawType(code.target());
-		Type rhs_type = store.getRawType(code.operand(0));
-		String indent = store.getIndent();
 		List<String> statement = new ArrayList<String>();
 		// Skip printing statements, e.g. 'print_s'
 		if (field.equals("out") || field.equals("print") || field.equals("println") || field.equals("print_s") || field.equals("println_s")) {
 			// Load the field to the target register.
 			store.loadField(code.target(), field);
-		} else if (field.equals("args")) {
-			// Convert the arguments into an array of integer array (long long**).
-			statement.add(indent + lhs + " = convertArgsToIntArray(argc, args);");
-			statement.add(indent + lhs + "_size = argc - 1;");
 		} else {
-			String rhs = CodeGeneratorHelper.accessMember(store.getVar(code.operand(0)), code.field, rhs_type);
-			// Free lhs variable
-			this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
-			boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
-			// Load the values to lhs variable
-			statement.addAll(CodeGeneratorHelper.generateArrayAssignment(lhs_type, indent, lhs, rhs, isCopyEliminated, stores));
-			if(!isCopyEliminated){
-				// Assign ownership to lhs variable if the rhs variable is copied.
-				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addOwnership(lhs_type, lhs, stores)));
+			String lhs = store.getVar(code.target());
+			Type lhs_type = store.getRawType(code.target());
+			Type rhs_type = store.getRawType(code.operand(0));
+			String indent = store.getIndent();
+			if (field.equals("args")) {
+				// Convert the arguments into an array of integer array (long long**).
+				statement.add(indent + lhs + " = convertArgsToIntArray(argc, args);");
+				statement.add(indent + lhs + "_size = argc - 1;");
+			} else {
+				String rhs = CodeGeneratorHelper.accessMember(store.getVar(code.operand(0)), code.field, rhs_type);
+				// Free lhs variable
+				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
+				boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
+				// Load the values to lhs variable
+				statement.addAll(CodeGeneratorHelper.generateArrayAssignment(lhs_type, indent, lhs, rhs, isCopyEliminated, stores));
+				if(!isCopyEliminated){
+					// Assign ownership to lhs variable if the rhs variable is copied.
+					this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addOwnership(lhs_type, lhs, stores)));
+				}
 			}
 		}
 		store.addAllStatements(code, statement);
@@ -1279,13 +1272,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String indent = store.getIndent();
 		String lhs = store.getVar(code.target());
 		List<String> statement = new ArrayList<String>();
-		WyilFile.Type user_type = stores.getRecordType((Type.Record)store.getRawType(code.target()));
-		Type lhs_type = user_type.type();
+		Type lhs_type = store.getRawType(code.target());
+		String type_name = CodeGeneratorHelper.translateType(lhs_type, stores).replace("*", "");
 		// Add deallocation code to lhs structure
 		this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
 		
 		// Call 'create_Board()' to create a new structure
-		statement.add(indent + lhs + " = create_" + user_type.name()+"();");
+		statement.add(indent + lhs + " = create_" + type_name+"();");
 	
 		// Assign lhs structure members with rhs member, e.g. 'a.pieces = copy(b, b_size);' 
 		List<String> members = CodeGeneratorHelper.getMemebers(code.type());
