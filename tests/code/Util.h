@@ -118,3 +118,7 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 	a##_size_size = value##_size;\
 	a = gen2DArray(value, a##_size, a##_size_size);\
 }
+// Free a structure
+#define _FREE_STRUCT(a, name){\
+	if(a##_has_ownership){free_##name(a); a##_has_ownership = false;}\
+}

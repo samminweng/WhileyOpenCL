@@ -539,7 +539,7 @@ public final class CodeGeneratorHelper {
 		// Get ownership flag
 		String ownership = getOwnership(var);
 		// Get function name
-		String f_name = "";		
+		String name = "";		
 		String size_var = "";
 		// Check if var_type is a structure
 		if(type instanceof Type.Array){
@@ -551,16 +551,17 @@ public final class CodeGeneratorHelper {
 				return "_FREE("+var+");";
 			}
 		}else if(type instanceof Type.Record){
-			f_name = "_"+translateType(type, stores);
+			name = translateType(type, stores);
+			return "_FREE_STRUCT("+var+", "+name+");";
 		}else if(type instanceof Type.Nominal){		
-			f_name = "_"+translateType(type, stores).replace("*", "");
+			name = "_"+translateType(type, stores).replace("*", "");
 		}else if(type instanceof Type.Union){		
-			f_name = "_"+translateType(type, stores).replace("*", "");			
+			name = "_"+translateType(type, stores).replace("*", "");			
 		}else{
 			throw new RuntimeException("Not implemented");
 		}
 		
-		return  "if("+ownership+"){free"+f_name+"("+var + size_var+"); "
+		return  "if("+ownership+"){free"+name+"("+var + size_var+"); "
 				   +ownership+" = false;}";
 	}
 
