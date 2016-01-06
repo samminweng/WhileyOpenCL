@@ -511,22 +511,22 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Translate the return value of a function call.
 		// If no return value, no needs for translation.
 		if (code.target() >= 0) {
-			Type return_type = code.type().ret();
-			String ret = store.getVar(code.target());
-			// Assign both of lists to have the same array size, e.g. '_12_size=_xs_size;'
-			if (return_type instanceof Type.Array) {
+			Type lhs_type = code.type().ret();
+			String lhs = store.getVar(code.target());
+			if (lhs_type instanceof Type.Array) {
 				// Get input Array
 				for (int index = 0; index < code.operands().length; index++) {
 					Type type = code.type().params().get(index);
 					if (type instanceof Type.Array) {
-						String var = store.getVar(code.operand(index));
-						Type var_type = store.getRawType(code.operand(index));
-						statement += indent + CodeGeneratorHelper.generateArraySizeAssign(var_type, ret, var);
+						String param = store.getVar(code.operand(index));
+						int dimension = CodeGeneratorHelper.getArrayDimension(type);
+						// Propagate array sizes from input parameters.
+						statement += indent+"_"+dimension+"DARRAY_SIZE("+lhs+", "+param+");\n";
 					}
 				}
 			}
 			// Call the function and assign the return value to lhs register.
-			statement += indent + ret + " = ";
+			statement += indent + lhs + " = ";
 		}
 		return statement;
 	}
@@ -542,14 +542,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param f
 	 * @return
 	 */
-	private String translateRHSFunctionCall(Codes.Invoke code, FunctionOrMethod f) {
+	private String translateRHSFunctionCall(Codes.Invoke code, FunctionOrMethod function) {
 		// Get code store of f function
-		CodeStore store = stores.getCodeStore(f);
+		CodeStore store = stores.getCodeStore(function);
 		List<String> statement = new ArrayList<String>();
 		for (int index = 0; index < code.operands().length; index++) {
-			int register = code.operand(index);
-			String var = store.getVar(register);
-			Type type = store.getRawType(register);
+			String var = store.getVar(code.operand(index));
+			Type type = store.getRawType(code.operand(index));
 			
 			if(type instanceof Type.Int){
 				statement.add(var);
@@ -558,13 +557,27 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statement.add(var + ".integer");
 			}else if (type instanceof Type.Nominal && ((Type.Nominal)type).name().name().equals("Console")){
 				statement.add("stdout");
-			}else if(type instanceof Type.Array || type instanceof Type.Record || type instanceof Type.Nominal){
-				statement.add(optimizeCode(register, code, f));				
-				// pass the '*_size' parameter
-				statement.add(CodeGeneratorHelper.generateArraySizeVars(var, type));
+			}else if(type instanceof Type.Array){
+				boolean isCopyEliminated = isCopyEliminated(code.operand(index), code, function);
+				int dimension = CodeGeneratorHelper.getArrayDimension(type);
+				if(isCopyEliminated){
+					statement.add("_"+dimension+"DARRAY_PARAM("+var+")");
+				}else{
+					statement.add("_"+dimension+"DARRAY_COPY_PARAM("+var+")");
+				}
 				// pass the ownership flag
 				this.deallocatedAnalyzer.ifPresent(a ->statement.add(CodeGeneratorHelper.passOwnershipToFunction(type, stores, this.copyAnalyzer)));
-			}else {
+			}else if( type instanceof Type.Record || type instanceof Type.Nominal){
+				boolean isCopyEliminated = isCopyEliminated(code.operand(index), code, function);
+				if(isCopyEliminated){
+					statement.add(var);
+				}else{
+					String type_name = CodeGeneratorHelper.translateType(type, stores);
+					statement.add("copy_"+type_name+"("+var+")");
+				}
+				// pass the ownership flag
+				this.deallocatedAnalyzer.ifPresent(a ->statement.add(CodeGeneratorHelper.passOwnershipToFunction(type, stores, this.copyAnalyzer)));
+			} else {
 				throw new RuntimeException("Not Implemented");
 			}
 		}

@@ -54,9 +54,11 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 // Concatenate array variable and array size variable
 #define _DECL_1DARRAY_PARAM(a) long long* a, long long a##_size
 #define _1DARRAY_PARAM(a) a, a##_size
+#define _1DARRAY_COPY_PARAM(a) copy(a, a##_size), a##_size
 // Concatenate 2D array variable and array size variable
-#define _DECL_2DARRAY_PARAM(a) long long* a, long long a##_size, long long a##_size_size
+#define _DECL_2DARRAY_PARAM(a) long long** a, long long a##_size, long long a##_size_size
 #define _2DARRAY_PARAM(a) a, a##_size, a##_size_size
+#define _2DARRAY_COPY_PARAM(a) copy2DArray(a, a##_size, a##_size_size), a##_size, a##_size_size
 //Nullify the array variable
 #define _NULLIFY(a){\
 	a = NULL;\
@@ -77,6 +79,9 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 #define _2DARRAY_PRINT(a){\
 	printf2DArray(a, a##_size, a##_size_size);\
 }
+#define _1DARRAY_SIZE(a, b) {\
+	a##_size = b##_size;\
+}
 // Copy an array variable to another using copy
 #define _1DARRAY_COPY(a, b){ \
 	a##_size = b##_size; \
@@ -87,6 +92,10 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 	a##_size = b##_size; \
 	a = b;\
 }
+#define _2DARRAY_SIZE(a, b){\
+	a##_size = b##_size;\
+	a##_size_size = b##_size_size;\
+} 
 // Copy an array variable to another using copy
 #define _2DARRAY_COPY(a, b){ \
 	a##_size = b##_size; \
