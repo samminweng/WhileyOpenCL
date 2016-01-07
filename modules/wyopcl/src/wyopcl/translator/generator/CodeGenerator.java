@@ -434,67 +434,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	}
 	
 
-	/**
-	 * Given one line of code, get (copy) analysis results to produce optimized C code. 
-	 * If copy analysis is not enabled, return naive (copy) C code.
-	 *
-	 * 
-	 * @param reg
-	 *            the register of the variable
-	 * @param code
-	 *            the byte-code.
-	 * @param function
-	 *            the function
-	 * @return the generated C code with/without copying 
-	 */
-	private String optimizeCode(int op, Code code, FunctionOrMethod function) {
-		CodeStore store = stores.getCodeStore(function);
-		
-		List<String> statement = new ArrayList<String>();
-		String var = store.getVar(op);
-		Type type = store.getRawType(op);
-		
-		String indent = store.getIndent();
-		
-		boolean isCopyEliminated = isCopyEliminated(op, code, function);
-		if (code instanceof Codes.Invoke){
-			statement.add(CodeGeneratorHelper.generateCopyUpdateCode(type, stores, var, isCopyEliminated)); 
-		}else{
-			if(code instanceof Codes.Assign){
-				// Transfer the ownership if the copy is not needed, i.e. the variable does not own this object.
-				if(isCopyEliminated){
-					this.deallocatedAnalyzer.ifPresent(a ->statement.add(indent+ CodeGeneratorHelper.removeOwnership(type, var, stores)));
-				}else{
-					this.deallocatedAnalyzer.ifPresent(a ->statement.add(indent + CodeGeneratorHelper.addOwnership(type, var, stores)));
-				}
-			}else if (code instanceof Codes.FieldLoad){
-				Codes.FieldLoad fieldload = (Codes.FieldLoad)code;
-				// Access the member
-				String member = CodeGeneratorHelper.accessMember(var, fieldload.field, type);
-				statement.add(CodeGeneratorHelper.generateCopyUpdateCode(fieldload.fieldType(), stores, member, isCopyEliminated)+";");
-			}else if(code instanceof Codes.NewRecord){
-				statement.add(CodeGeneratorHelper.generateCopyUpdateCode(type, stores, var, isCopyEliminated)+";"); 
-				// Transfer the ownership if the copy is not needed, i.e. the variable does not own this object.
-				if(isCopyEliminated){
-					this.deallocatedAnalyzer.ifPresent(a ->{
-						statement.add(indent+ CodeGeneratorHelper.removeOwnership(type, var, stores));
-					});
-					
-				}else{
-					this.deallocatedAnalyzer.ifPresent(a ->{
-						// Assign ownership to variable as the copy is made.
-						statement.add(indent + CodeGeneratorHelper.addOwnership(type, var, stores));
-					});
-					
-					
-				}
-			} else{
-				throw new RuntimeException("Not implemented");
-			}
-			
-		}
-		return (String) statement.stream().collect(Collectors.joining());
-	}
+	
 
 	/**
 	 * Translate the lhs of a function call.
@@ -1440,16 +1380,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String statement = "";
 		// Check that the given value is an array.
 		if (code.type().element() instanceof Type.Array) {
-			String rhs = store.getVar(code.operand(0));
-			statement += optimizeCode(code.operand(0), code, function);
-			// Get the address of rhs and assign it to lhs with type casting.
-			String lhs = store.getVar(code.target());
-			Type lhs_type = store.getRawType(code.target());
-			// _4 =(void**)&(_3_value);
-			statement += store.getIndent() + lhs + " = (" + CodeGeneratorHelper.translateType(lhs_type, stores) + ")" + "&(" + rhs + "_value);\n";
-			// Propagate array size from rhs to lhs
-			statement += store.getIndent() + lhs + "_size = " + rhs + "_size;";
-		} else {
 			throw new RuntimeException("Not implemented! " + code);
 		}
 		store.addStatement(code, statement);

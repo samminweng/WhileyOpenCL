@@ -373,26 +373,6 @@ public final class CodeGeneratorHelper {
 		return dimension;
 	}
 
-	/**
-	 * Return a list of size variables w.r.t. array dimension.
-	 * @param var array variable
-	 * @param type array type
-	 * @return
-	 */
-	protected static List<String> getArraySizeVars(String var, Type type){
-		List<String> size_vars = new ArrayList<String>();
-		int dimension = getArrayDimension(type);
-
-		String size_var = var;
-		for(int d=dimension;d>0;d--){
-			size_var += "_size";
-			size_vars.add(size_var);
-		}
-
-		return size_vars;
-
-	}
-
 
 	/**
 	 * Check if the type of given register is an array or record (excluding 'print' fields)
@@ -593,140 +573,7 @@ public final class CodeGeneratorHelper {
 	}
 
 
-	/***
-	 * Given a type, generates size variables according to array dimension, e.g.
-	 * 'data' is a 2D array and its size variables are
-	 * 
-	 * <pre>
-	 * <code>
-	 * 	_data_size, _data_size_size
-	 * </code>
-	 * </pre>
-	 * where each variable is separated by comma (,).
-	 * 
-	 * @see https://docs.oracle.com/javase/8/docs/api/java/util/StringJoiner.html
-	 * @param var array variable
-	 * @param type type
-	 * @return a string of array sizes variables in C. If type is not an array, return empty
-	 */
-	protected static String generateArraySizeVars(String var, Type type){
-		if(type instanceof Type.Array){
-			return getArraySizeVars(var, type).stream()
-					.map(i -> i.toString())
-					.collect(Collectors.joining(", "));
-		}
-
-		return "";
-	}
-
-
-
-	/**
-	 * Generates assignment C code to specify the size variables of multi-dimensional array, e.g. 
-	 * 
-	 * <pre><code>
-	 * _7_size = _12_size;
-	 * _7_size_size = _12_size_size; 
-	 * </code></pre>
-	 * where '_7' and '_12' are two 2D arrays and variables with '_size' postfix are size variables. 
-	 * @param type
-	 * @param indent
-	 * @param lhs
-	 * @param rhs
-	 * @return
-	 */
-	protected static String generateArraySizeAssign(Type type, String lhs, String rhs){
-		String statement = "";
-		if(type instanceof Type.Array){
-			List<String> lhs_sizes = getArraySizeVars(lhs, type);
-			List<String> rhs_sizes = getArraySizeVars(rhs, type);
-
-			for(int i=0;i<lhs_sizes.size();i++){
-				statement += lhs_sizes.get(i) +" = "+ rhs_sizes.get(i) +"; "; 
-			}
-
-		}
-
-		return statement;
-	}
-
-
-	/**
-	 * Generate lhs code for copying array-typed variable, e.g.
-	 * <pre><code>
-	 *  copy(a, a_size);
-	 * </code></pre>
-	 * 
-	 * @param type
-	 * @param var
-	 * @return
-	 */
-	private static String generateCopyCode(Type.Array type, String var){
-		String statement = "copy";
-		// Add 'copy' function call w.r.t. Array dimension
-		int dimension = getArrayDimension(type);
-		if(dimension>1){
-			statement +=dimension+"DArray";	
-		}
-		
-		statement += "("+var+", ";
-		// Generate size variables according to dimensions.
-		statement += generateArraySizeVars(var, type) + ")";
-		
-		return statement;			
-	}
-
-	/**
-	 * Generates the array code, including the copy function call and the list of array size variables, e.g.
-	 * <code>
-	 * assign %2 = %7  : int[][]
-	 * </code>
-	 * can be translated into
-	 * <pre><code>
-	 *	 _C_data_size = _7_size;
-	 *	_C_data_size_size = _7_size_size;
-	 *	_C_data = copy2DArray(_7, _7_size, _7_size_size);
-	 * </code></pre>
-	 * @param indent
-	 * @param lhs
-	 * @param rhs
-	 * @param dimension
-	 * @return
-	 */
-	protected static String generateCopyUpdateCode(Type type, CodeStores stores, String var, boolean isCopyEliminated){
-		if(isCopyEliminated){
-			// Do not need to make a copy of 'var' 
-			return var;
-		}
-
-		if (type instanceof Type.Nominal){
-			type = stores.getNominalType(((Type.Nominal)type));
-		}
-
-		String statement = "";
-		String type_name = translateType(type, stores);
-
-		if(type instanceof Type.Array){
-			// Add 'copy' function call w.r.t. Array dimension
-			statement += generateCopyCode((Type.Array)type, var);
-		}else if (type instanceof Type.Record){
-			statement += "copy_"+type_name+"(" + var + ")";
-		}else if(type instanceof Type.Int){
-			statement += ""+var;
-		}else if (type instanceof Type.Union){
-			if(isIntType(type, stores)){
-				statement += ""+var;
-			}else{
-				statement += "copy_"+type_name.replace("*", "")+"(" + var + ")";
-			}
-		} else{
-			throw new RuntimeException("Not implemented");
-		}
-
-		return statement;
-	}
-
-
+	
 
 	/**
 	 * Returns the record types for an union/record type.
@@ -883,10 +730,13 @@ public final class CodeGeneratorHelper {
 		
 		Type.Record record = getRecordType(type);
 		// Gather all members
-		record.fields().forEach((member, memeber_type) ->{
-			members.add("\t" + translateType(memeber_type, stores) + " " + member + ";");
-			if (memeber_type instanceof Type.Array) {
-				getArraySizeVars(member, memeber_type).forEach(s -> members.add("\t" + "long long " + s + ";"));
+		record.fields().forEach((member, member_type) ->{
+			
+			if (member_type instanceof Type.Array) {
+				int dimension = getArrayDimension(member_type);
+				members.add("\t_DECL_"+dimension+"DARRAY_MEMBER(" + member + ");");
+			}else{
+				members.add("\t" + translateType(member_type, stores) + " " + member + ";");
 			}
 		});
 		
