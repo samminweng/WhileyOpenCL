@@ -51,6 +51,7 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 #define _DECL_2DARRAY(a) long long** a = NULL; long long a##_size = 0; long long a##_size_size = 0;
 // Define the ownership variable
 #define _DECL_OWNERSHIP(a) bool a##_has_ownership = false;
+#define _DECL_OWNERSHIP_PARAM(a) bool a##_has_ownership
 // Concatenate array variable and array size variable
 #define _DECL_1DARRAY_PARAM(a) long long* a, long long a##_size
 #define _DECL_1DARRAY_MEMBER(a) long long* a; long long a##_size;
@@ -61,18 +62,6 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 #define _DECL_2DARRAY_MEMBER(a) long long** a; long long a##_size; long long a##_size_size;
 #define _2DARRAY_PARAM(a) a, a##_size, a##_size_size
 #define _2DARRAY_COPY_PARAM(a) copy2DArray(a, a##_size, a##_size_size), a##_size, a##_size_size
-//Nullify the array variable
-#define _NULLIFY(a){\
-	a = NULL;\
-}
-// Free the array variable and ownership
-#define _FREE(a){\
-	if(a##_has_ownership){free(a);a##_has_ownership=false;}\
-}
-// Free the 2D array variable and ownership
-#define _FREE2DArray(a){\
-	if(a##_has_ownership){free2DArray(a, a##_size); a##_has_ownership = false;}\
-}
 // Print out array
 #define _1DARRAY_PRINT(a){\
 	printf1DArray(a, a##_size);\
@@ -137,6 +126,18 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 	a##_size = size;\
 	a##_size_size = value##_size;\
 	a = gen2DArray(value, a##_size, a##_size_size);\
+}
+//Nullify the array variable
+#define _NULLIFY(a){\
+	a = NULL;\
+}
+// Free the array variable and ownership
+#define _FREE(a){\
+	if(a##_has_ownership){free(a);a##_has_ownership=false;}\
+}
+// Free the 2D array variable and ownership
+#define _FREE2DArray(a){\
+	if(a##_has_ownership){free2DArray(a, a##_size); a##_has_ownership = false;}\
 }
 // Free a structure
 #define _FREE_STRUCT(a, name){\

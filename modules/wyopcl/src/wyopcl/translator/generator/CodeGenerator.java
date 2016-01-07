@@ -187,10 +187,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					parameters.add(CodeGeneratorHelper.translateType(type, stores) + " " + var);
 				}
 				// Add ownership flag ('_has_ownership') to input parameter
-				this.deallocatedAnalyzer.ifPresent(a ->{
-					String ownership_flag = CodeGeneratorHelper.declareOwnership(type, var, this.stores);
-					if(!ownership_flag.equals("")){
-						parameters.add(ownership_flag);
+				this.deallocatedAnalyzer.ifPresent(a -> {
+					if(CodeGeneratorHelper.isCompoundType(type, stores)){
+						parameters.add("_DECL_OWNERSHIP_PARAM("+var+")");
 					}
 				});
 			}

@@ -420,15 +420,6 @@ public final class CodeGeneratorHelper {
 
 		return false;
 	}
-	/**
-	 * Return ownership flag for a given variable
-	 * @param var
-	 * @return
-	 */
-	private static String getOwnership(String var){
-		return var+"_has_ownership";
-	}
-
 
 	/**
 	 * Generate the declaration of ownership variable, e.g.
@@ -452,36 +443,7 @@ public final class CodeGeneratorHelper {
 		}
 		return "";
 	}
-
-	/**
-	 * Declare ownership variable
-	 * @param type
-	 * @param var
-	 * @param analyzer
-	 * @return
-	 */
-	protected static String declareOwnership(Type type, String var, CodeStores stores){
-		if(isCompoundType(type, stores)){
-			return "bool "+var + "_has_ownership";
-		}
-		return "";
-	}
-	/**
-	 * Declare
-	 * @param type
-	 * @param var
-	 * @param analyzer
-	 * @param ownership
-	 * @return
-	 */
-	protected static String declareOwnership(Type type, String var, CodeStores stores, boolean ownership){
-		String s = declareOwnership(type, var, stores);
-		if(s.equals("")){
-			return "";
-		}
-		// Initialize ownership with value
-		return s + " = " +ownership + ";"; 
-	}
+	
 	/**
 	 * Return ownership to a function. If deallocation is enabled, then pass the ownership to a function. 
 	 * The ownership value is based on copy analysis results.  
@@ -522,11 +484,8 @@ public final class CodeGeneratorHelper {
 			return "";
 		}
 		
-		// Get ownership flag
-		String ownership = getOwnership(var);
 		// Get function name
-		String name = "";		
-		String size_var = "";
+		String name = "";
 		// Check if var_type is a structure
 		if(type instanceof Type.Array){
 			int dimension = getArrayDimension(type);
@@ -539,16 +498,12 @@ public final class CodeGeneratorHelper {
 		}else if(type instanceof Type.Record){
 			name = translateType(type, stores);
 			return "_FREE_STRUCT("+var+", "+name+");";
-		}else if(type instanceof Type.Nominal){		
-			name = "_"+translateType(type, stores).replace("*", "");
-		}else if(type instanceof Type.Union){		
-			name = "_"+translateType(type, stores).replace("*", "");			
+		}else if(type instanceof Type.Union){
+			name = translateType(type, stores).replace("*", "");
+			return "_FREE_STRUCT("+var+", "+name+");";
 		}else{
 			throw new RuntimeException("Not implemented");
 		}
-		
-		return  "if("+ownership+"){free"+name+"("+var + size_var+"); "
-				   +ownership+" = false;}";
 	}
 
 
@@ -707,8 +662,6 @@ public final class CodeGeneratorHelper {
 	 */
 	protected static List<String> generateStructFunction(Type type, CodeStores stores){
 		List<String> statements = new ArrayList<String>();
-		String type_name = translateType(type, stores);
-
 		statements.addAll(generateStructCreate(type, stores));
 		statements.addAll(generateStructCopy(type, stores));
 		statements.addAll(generateStructFree(type, stores));
@@ -716,36 +669,7 @@ public final class CodeGeneratorHelper {
 
 		return statements;
 	}
-	/**
-	 * Generate structure members for a given members  
-	 * 
-	 * 
-	 * @param type
-	 * @param stores
-	 * @return
-	 */
-	private static List<String> generateStructMembers(Type type, CodeStores stores){
-		
-		List<String> members = new ArrayList<String>();
-		
-		Type.Record record = getRecordType(type);
-		// Gather all members
-		record.fields().forEach((member, member_type) ->{
-			
-			if (member_type instanceof Type.Array) {
-				int dimension = getArrayDimension(member_type);
-				members.add("\t_DECL_"+dimension+"DARRAY_MEMBER(" + member + ");");
-			}else{
-				members.add("\t" + translateType(member_type, stores) + " " + member + ";");
-			}
-		});
-		
 	
-		return members;
-	}
-
-
-
 	/**
 	 * Write the user-defined structure to *.h file, e.g. 
 	 * <pre>
@@ -768,7 +692,21 @@ public final class CodeGeneratorHelper {
 		// Define a structure
 		String struct_name = type_name.replaceAll("\\*", "");
 		statements.add("typedef struct{");
-		statements.addAll(generateStructMembers(type, stores));
+		
+		//Generate structure members for a given members 
+		List<String> members = new ArrayList<String>();
+		Type.Record record = getRecordType(type);
+		// Gather all members
+		record.fields().forEach((member, member_type) ->{
+			if (member_type instanceof Type.Array) {
+				int dimension = getArrayDimension(member_type);
+				members.add("\t_DECL_"+dimension+"DARRAY_MEMBER(" + member + ");");
+			}else{
+				members.add("\t" + translateType(member_type, stores) + " " + member + ";");
+			}
+		});
+		
+		statements.addAll(members);
 		statements.add( "} " + struct_name + ";");
 		String input = "_"+type_name.toLowerCase().replace("*", ""); // Input parameter
 		// Add built-in function declarations, 'create' and 'printf', 'copy' and 'free'  
