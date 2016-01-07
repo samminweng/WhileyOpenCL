@@ -693,20 +693,18 @@ public final class CodeGeneratorHelper {
 		String struct_name = type_name.replaceAll("\\*", "");
 		statements.add("typedef struct{");
 		
-		//Generate structure members for a given members 
-		List<String> members = new ArrayList<String>();
+		//Generate structure members for a given members
 		Type.Record record = getRecordType(type);
 		// Gather all members
 		record.fields().forEach((member, member_type) ->{
 			if (member_type instanceof Type.Array) {
 				int dimension = getArrayDimension(member_type);
-				members.add("\t_DECL_"+dimension+"DARRAY_MEMBER(" + member + ");");
+				statements.add("\t_DECL_"+dimension+"DARRAY_MEMBER(" + member + ");");
 			}else{
-				members.add("\t" + translateType(member_type, stores) + " " + member + ";");
+				statements.add("\t" + translateType(member_type, stores) + " " + member + ";");
 			}
 		});
 		
-		statements.addAll(members);
 		statements.add( "} " + struct_name + ";");
 		String input = "_"+type_name.toLowerCase().replace("*", ""); // Input parameter
 		// Add built-in function declarations, 'create' and 'printf', 'copy' and 'free'  
