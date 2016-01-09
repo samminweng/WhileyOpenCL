@@ -152,3 +152,8 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 #define _STR_TO_INT(a, b){\
 	a = parseInteger(b);\
 }
+// Slice an array 'b' into a new array 'a' 
+#define _SLICE_ARRAY(a, b, start, end){\
+	a = slice(b, b##_size, start, end);\
+	a##_size = end - start;\
+}

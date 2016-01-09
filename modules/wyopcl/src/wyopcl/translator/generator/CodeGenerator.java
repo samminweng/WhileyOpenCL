@@ -571,14 +571,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		CodeStore store = stores.getCodeStore(function);
 		List<String> statement = new ArrayList<String>();
 		String indent = store.getIndent();
-		// Check if the called function is whiley/lang/Int
+		// Translate built-in Whiley functions using macros.
 		if (code.name.module().toString().contains("whiley/lang")) {
 			String lhs = store.getVar(code.target());
 			switch (code.name.name()) {
 			// Parse a string into an integer.
 			case "parse":
 				String rhs = store.getVar(code.operand(0));
-				//statement.add(indent + lhs + " = " + "parseInteger("+ store.getVar(code.operand(0)) + ");");
 				statement.add(indent+"_STR_TO_INT("+lhs+", "+rhs+");");
 				break;
 				// Slice an array into a new sub-array at given starting and ending index.
@@ -586,13 +585,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				Type lhs_type = store.getRawType(code.target());
 				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
 				// Call the 'slice' function.
-				String arr_name = store.getVar(code.operand(0));
+				String array = store.getVar(code.operand(0));
 				String start = store.getVar(code.operand(1));
 				String end = store.getVar(code.operand(2));
-				// Add 'slice' function call.
-				statement.add(indent + lhs + " = slice(" + arr_name + ", " + arr_name + "_size, " + start + "," + end + ");");
-				// Add array size.
-				statement.add(indent + lhs + "_size = " + end + " - " + start + ";");
+				statement.add("_SLICE_ARRAY("+lhs+", "+array+", "+start+", "+end+");");
 				// Assign ownership
 				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent +  CodeGeneratorHelper.addOwnership(lhs_type, lhs, this.stores)));
 				break;
