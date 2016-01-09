@@ -143,3 +143,12 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 #define _FREE_STRUCT(a, name){\
 	if(a##_has_ownership){free_##name(a); a##_has_ownership = false;}\
 }
+// Converts command line arguments into integer arrays
+#define _CONV_ARGS(a){\
+	a = convertArgsToIntArray(argc, args);\
+	a##_size = argc - 1;\
+}
+// Parse a string into an integer
+#define _STR_TO_INT(a, b){\
+	a = parseInteger(b);\
+}

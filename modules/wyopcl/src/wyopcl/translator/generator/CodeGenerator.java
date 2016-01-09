@@ -574,11 +574,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Check if the called function is whiley/lang/Int
 		if (code.name.module().toString().contains("whiley/lang")) {
 			String lhs = store.getVar(code.target());
-			
 			switch (code.name.name()) {
 			// Parse a string into an integer.
 			case "parse":
-				statement.add(indent + lhs + " = " + "parseInteger("+ store.getVar(code.operand(0)) + ");");
+				String rhs = store.getVar(code.operand(0));
+				//statement.add(indent + lhs + " = " + "parseInteger("+ store.getVar(code.operand(0)) + ");");
+				statement.add(indent+"_STR_TO_INT("+lhs+", "+rhs+");");
 				break;
 				// Slice an array into a new sub-array at given starting and ending index.
 			case "slice":
@@ -909,13 +910,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		List<String> statements = new ArrayList<String>();
 		String indent = store.getIndent();
 		
-		if (function.name().equals("main")) {
-			this.deallocatedAnalyzer.ifPresent(a -> statements.addAll(CodeGeneratorHelper.generateDeallocatedCode(a.getOwnerships(function), function, stores)));
+		// Add 'deallocation code' for all ownership variables.
+		if(function.name().equals("main") || code.operand >=0){
+			this.deallocatedAnalyzer.ifPresent(a -> statements.addAll(CodeGeneratorHelper.generateDeallocatedCode(a.getOwnerships(function), function, stores)));			
+		}
+		
+		// Add return statements 
+		if (function.name().equals("main")) {			
 			// If the method is "main", then add a simple exit code with value
 			statements.add(indent + "exit(0);");
 		}else{
 			if (code.operand >= 0) {
-				this.deallocatedAnalyzer.ifPresent(a -> statements.addAll(CodeGeneratorHelper.generateDeallocatedCode(a.getOwnerships(function), function, stores)));
 				// Return the structure.
 				statements.add(indent + "return " + store.getVar(code.operand) + ";");
 			}
@@ -1059,8 +1064,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			String indent = store.getIndent();
 			if (field.equals("args")) {
 				// Convert the arguments into an array of integer array (long long**).
-				statement.add(indent + lhs + " = convertArgsToIntArray(argc, args);");
-				statement.add(indent + lhs + "_size = argc - 1;");
+				statement.add(indent+"_CONV_ARGS("+lhs+");");
+				// Add ownership.
+				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addOwnership(lhs_type, lhs, stores)));
 			} else {
 				String rhs = CodeGeneratorHelper.accessMember(store.getVar(code.operand(0)), code.field, rhs_type);
 				// Free lhs variable
