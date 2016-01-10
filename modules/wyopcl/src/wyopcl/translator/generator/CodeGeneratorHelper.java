@@ -41,7 +41,7 @@ public final class CodeGeneratorHelper {
 	private CodeGeneratorHelper() {
 
 	}
-
+	
 	/**
 	 * Check if the type is instance of Integer by inferring the type from
 	 * <code>wyil.Lang.Type</code> objects, including the effective collection
@@ -136,7 +136,7 @@ public final class CodeGeneratorHelper {
 		Type.Record record = getRecordType(type);
 		String type_name = translateType(type, stores);
 		String input = "_"+type_name.toLowerCase().replace("*", "");
-		String f_name = type_name.replace("*", "");
+		String f_name = type_name.replace("*", "_PTR");
 		statement.add("void printf_" + f_name + "(" + type_name + " "+input+"){");
 		// Add open bracket
 		statement.add("\tprintf(\"{\");"); 
@@ -189,11 +189,10 @@ public final class CodeGeneratorHelper {
 		List<String> statement = new ArrayList<String>();
 		String type_name = translateType(type, stores);
 		String input = "_"+type_name.toLowerCase().replace("*", ""); // such as '_board'
-		String name = type_name.replace("*", "");
-		statement.add(type_name+" create_"+name+ "(){");
+		statement.add(type_name+" create_"+type_name.replace("*", "_PTR")+ "(){");
 
 		if(type instanceof Type.Union){
-			statement.add("\t"+type_name+" "+input+" = malloc(sizeof("+name+"));");// Allocate the input in heap memory, which require manual de-allocation.
+			statement.add("\t"+type_name+" "+input+" = malloc(sizeof("+type_name.replace("*", "")+"));");// Allocate the input in heap memory, which require manual de-allocation.
 		}else{
 			statement.add("\t"+type_name+" "+input+";");// Allocate the input in stack memory, which can be de-allocated automatically.
 		}
@@ -213,7 +212,7 @@ public final class CodeGeneratorHelper {
 	 * @param isCopyEliminated
 	 * @return
 	 */
-	protected static List<String> generateArrayAssignment(Type type, String indent, String lhs, String rhs, boolean isCopyEliminated, CodeStores stores){
+	protected static List<String> generateAssignmentCode(Type type, String indent, String lhs, String rhs, boolean isCopyEliminated, CodeStores stores){
 		List<String> statement = new ArrayList<String>();
 		if(type instanceof Type.Array){
 			int dimension = getArrayDimension(type);
@@ -228,7 +227,7 @@ public final class CodeGeneratorHelper {
 				statement.add(indent + lhs + " = "+ rhs+";");
 			}else{
 				String type_name = CodeGeneratorHelper.translateType(type, stores);
-				statement.add(indent + lhs + " = copy_" + type_name.replace("*", "")+"("+rhs+");");
+				statement.add(indent + lhs + " = copy_" + type_name.replace("*", "_PTR")+"("+rhs+");");
 			}
 			
 			
@@ -268,7 +267,7 @@ public final class CodeGeneratorHelper {
 
 		String input = "_"+type_name.toLowerCase().replace("*", "");
 		String new_copy = "new_"+type_name.toLowerCase().replace("*", "");
-		String name = type_name.replace("*", "");
+		String name = type_name.replace("*", "_PTR");
 		statement.add(type_name+" copy_"+name+ "(" + type_name + " "+input+"){");;
 		// Declare local copy.
 		statement.add("\t" + type_name + " "+new_copy+" = create_"+name+"();");
@@ -277,7 +276,7 @@ public final class CodeGeneratorHelper {
 		record.fields().forEach((member, member_type) ->{
 			String rhs = accessMember(input, member, type);
 			String lhs = accessMember(new_copy, member, type);
-			statement.addAll(generateArrayAssignment(member_type, "\t", lhs, rhs, false, stores));
+			statement.addAll(generateAssignmentCode(member_type, "\t", lhs, rhs, false, stores));
 		});
 
 		// Add return statement
@@ -330,8 +329,7 @@ public final class CodeGeneratorHelper {
 
 		String type_name = translateType(type, stores);
 		String input = "_"+type_name.toLowerCase().replace("*", "");
-		String name = type_name.replace("*", "");
-		statement.add("void free_"+name+"("+type_name+ " "+input+"){");
+		statement.add("void free_"+type_name.replace("*", "_PTR")+"("+type_name+ " "+input+"){");
 
 		// Get all array-typed members and free their memory spaces
 		record.fields().forEach((member, member_type) ->{
@@ -499,7 +497,7 @@ public final class CodeGeneratorHelper {
 			name = translateType(type, stores);
 			return "_FREE_STRUCT("+var+", "+name+");";
 		}else if(type instanceof Type.Union){
-			name = translateType(type, stores).replace("*", "");
+			name = translateType(type, stores).replace("*", "_PTR");
 			return "_FREE_STRUCT("+var+", "+name+");";
 		}else{
 			throw new RuntimeException("Not implemented");
@@ -610,15 +608,8 @@ public final class CodeGeneratorHelper {
 			}
 			// Get the user-defined type
 			WyilFile.Type userType = stores.getRecordType((Type.Record)type);
-			if(userType.type() instanceof Type.Union){
-				return userType.name()+"*";
-			}else if(userType.type() instanceof Type.Record){
-				return userType.name();
-			}
+			return userType.name();
 			
-			
-			// Check if the type is an instance of user defined type.
-			throw new RuntimeException("Missing CodeStores");
 		}
 
 		if (type instanceof Type.Union) {

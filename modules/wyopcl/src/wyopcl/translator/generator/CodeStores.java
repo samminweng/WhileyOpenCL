@@ -268,12 +268,19 @@ public class CodeStores {
 			if(type instanceof Type.Nominal){
 				return getNominalType((Type.Nominal)type);
 			}else if(type instanceof Type.Record){
-				return getRecordType((Type.Record)type).type();
+				WyilFile.Type record = getRecordType((Type.Record)type);
+				if( record != null)
+					return record.type();
+				else
+					return null;
 			}
 			
 			return type;
 		}
 
+		
+		
+		
 		/**
 		 * Get the variable name of the given register
 		 * 
@@ -283,17 +290,26 @@ public class CodeStores {
 		 */
 		public String getVar(int reg) {
 			VariableDeclarations vars = function.attribute(VariableDeclarations.class);
+			String name = prefix + reg;
 			// Check if the register has been kept in the declarations.
 			Declaration declaration = vars.get(reg);
-			if (declaration != null) {
-				String name = declaration.name();
-				if (name != null && !name.isEmpty()) {
-					return name;
-				}
-			}else{
-				return null;
+			if (declaration != null && declaration.name() != null && !declaration.name().isEmpty()) {
+				name = declaration.name();
 			}
-			return prefix + reg;
+			// Get variable type 
+			/*Type type = getRawType(reg);
+			
+			if(type != null && type instanceof Type.Union){
+				if(getUnionType((Type.Union)type) != null){
+				//  If the type is an union, use unary operator '*' to get variable value.  
+					name = "*"+name;
+				}
+			}*/
+			
+			return name;
 		}
+		
+		
+		
 	}
 }

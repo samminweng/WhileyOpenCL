@@ -129,12 +129,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			} else if (type instanceof Type.Method){
 				// Skip translation
 			} else if (type instanceof Type.Union){
-				if(CodeGeneratorHelper.isIntType(type, stores)){
-					// Translate 'nat' type into 'union UNION' type 
-					declarations.add("\tunion UNION "+var+";");
-				}else{
-					declarations.add(indent+translateType+ " " + var + ";");
-				}
+				declarations.add(indent+translateType+ " " + var + ";");
 			}else if(type instanceof Type.Null){
 				// Skip translation for null-typed variables.
 			} else{
@@ -306,7 +301,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// Transfer out the ownership of lhs variable
 				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.removeOwnership(lhs_type, lhs, this.stores)));
 			}else{
-				statement.addAll(CodeGeneratorHelper.generateArrayAssignment(lhs_type, indent, lhs, rhs, isCopyEliminated, stores));
+				statement.addAll(CodeGeneratorHelper.generateAssignmentCode(lhs_type, indent, lhs, rhs, isCopyEliminated, stores));
 				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addOwnership(lhs_type, lhs, stores)));
 				if(!isCopyEliminated){
 					// Assigned the ownership
@@ -372,15 +367,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String lhs = store.getVar(code.target());
 		String rhs0 = store.getVar(code.operand(0));
 		// Append 'integer' member for union type
-		if(store.getRawType(code.operand(0)) instanceof Type.Union){
-			rhs0 += ".integer";
-		}
 		String rhs1 = store.getVar(code.operand(1));
-		// Append 'integer' member
-		if(store.getRawType(code.operand(1)) instanceof Type.Union){
-			rhs1 += ".integer";
-		}
 		
+	
 		String stat = store.getIndent();
 		stat += lhs + "=" + rhs0;
 		switch (code.kind) {
@@ -711,42 +700,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			if (code.op.equals(Comparator.EQ)) {
 				// Use the '_IFEQ_ARRAY' macro to compare two arrays
 				statement += "_IFEQ_ARRAY("+lhs+", "+rhs+", "+code.target+");";
-				
-				// get the type of left/right
-				/*Type left_type = store.getRawType(code.leftOperand);
-				Type right_type = store.getRawType(code.rightOperand);
-				// Check the left type is an array of integers.
-				if (CodeGeneratorHelper.isIntType(left_type)) {
-					statement += "if(isArrayEqual(" + lhs + ", " + lhs + "_size";
-				} else {
-					// If not, use type casting.
-					statement += "if(isArrayEqual((" + CodeGeneratorHelper.translateType(right_type, stores) + ")" + lhs + ", " + lhs + "_size";
-				}
-
-				// Check the right type is an array
-				if (CodeGeneratorHelper.isIntType(right_type)) {
-					statement += "," + rhs + ", " + rhs + "_size)==1";
-				} else {
-					// Cast the right to an array.
-					statement += ", (" + CodeGeneratorHelper.translateType(left_type, stores) + ")" + rhs + ", " + rhs + "_size)==1";
-				}*/
 			}
 		} else {
 			statement += "if(" + lhs;
 			// The condition
 			statement += translate(code.op, false);
-			// Check type rhs operand
-			Type rhs_type = store.getRawType(code.rightOperand);
-			if(rhs_type instanceof Type.Union){
-				statement += rhs+".integer";
-			}else{
-				statement += rhs;
-			}
+			statement += rhs;
+			
 			// The goto statement
 			statement += "){";
 			statement += "goto " + code.target + ";";
 			statement += "}";
-
 		}
 
 		
@@ -946,14 +910,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.IndexOf code, FunctionOrMethod function) {
 		CodeStore store = stores.getCodeStore(function);
-		String stat = store.getIndent() + store.getVar(code.target()) + "=" + store.getVar(code.operand(0)) + "[";
-		// Get rhs type
-		Type rhs_type = store.getRawType(code.operand(1));
-		if(rhs_type instanceof Type.Union){
-			stat += store.getVar(code.operand(1)) + ".integer];";
-		}else{
-			stat += store.getVar(code.operand(1)) + "];";
-		}
+		String stat = store.getIndent() + store.getVar(code.target()) + "=" + store.getVar(code.operand(0)) 
+					  + "[" + store.getVar(code.operand(1)) + "];";
 		
 		store.addStatement(code, stat);
 	}
@@ -1069,7 +1027,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
 				boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
 				// Load the values to lhs variable
-				statement.addAll(CodeGeneratorHelper.generateArrayAssignment(lhs_type, indent, lhs, rhs, isCopyEliminated, stores));
+				statement.addAll(CodeGeneratorHelper.generateAssignmentCode(lhs_type, indent, lhs, rhs, isCopyEliminated, stores));
 				if(!isCopyEliminated){
 					// Assign ownership to lhs variable if the rhs variable is copied.
 					this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addOwnership(lhs_type, lhs, stores)));
@@ -1151,7 +1109,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					// Print out a user-defined type structure
 					statement.add(indent+"printf_" + nominal.name().name() + "(" + input + ");");
 				} else if (type instanceof Type.Union){
-					statement.add(indent+"printf(\"%d\\n\", " + input + ".integer);");
+					statement.add(indent+"printf(\"%d\\n\", " + input + ");");
 				} else {
 					throw new RuntimeException("Not implemented." + code);
 				}
@@ -1226,14 +1184,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String indent = store.getIndent();
 		String lhs = store.getVar(code.target());
 		List<String> statement = new ArrayList<String>();
-		Type lhs_type = store.getRawType(code.target());
-		String type_name = CodeGeneratorHelper.translateType(lhs_type, stores).replace("*", "");
-		// Add deallocation code to lhs structure
-		this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
+		//Type lhs_type = store.getRawType(code.target());
+		//String type_name = CodeGeneratorHelper.translateType(code.type(), stores);
+		//Add deallocation code to lhs structure
+		this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, code.type(), stores)));
 		
-		// Call 'create_Board()' to create a new structure
-		statement.add(indent + lhs + " = create_" + type_name+"();");
-	
 		// Assign lhs structure members with rhs member, e.g. 'a.pieces = copy(b, b_size);' 
 		List<String> members = CodeGeneratorHelper.getMemebers(code.type());
 		
@@ -1242,12 +1197,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Get operand 
 			String rhs = store.getVar(operands[i]);
 			String member = members.get(i);
-			String lhs_member = CodeGeneratorHelper.accessMember(lhs, member, lhs_type);
+			String lhs_member = CodeGeneratorHelper.accessMember(lhs, member, code.type());
 			//Type type = store.getVarType(code.operand(i));
 			Type type = code.type().field(member);
 			
 			boolean isCopyEliminated = isCopyEliminated(operands[i], code, function);
-			statement.addAll(CodeGeneratorHelper.generateArrayAssignment(type, indent, lhs_member, rhs, isCopyEliminated, stores));
+			statement.addAll(CodeGeneratorHelper.generateAssignmentCode(type, indent, lhs_member, rhs, isCopyEliminated, stores));
 			if(isCopyEliminated && this.deallocatedAnalyzer.isPresent()){
 				//Remove rhs ownership
 				statement.add(indent + CodeGeneratorHelper.removeOwnership(type, rhs, stores));
@@ -1255,7 +1210,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		}
 		
 		// Assign ownership to lhs 
-		this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addOwnership(lhs_type, lhs, this.stores)));
+		this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addOwnership(code.type(), lhs, this.stores)));
 		
 		// Get the set of field names and convert it to an array of string.
 		store.addAllStatements(code, statement);
@@ -1316,15 +1271,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String statement = "";
 		// The ifis code checks if the register is NULL or not.
 		if (code.rightOperand instanceof Type.Null) {
-			// Get lhs type
-			Type lhs_type = store.getRawType(code.operand);
 			String lhs = store.getVar(code.operand);
 			String indent = store.getIndent();
-			if(CodeGeneratorHelper.isIntType(lhs_type, stores)){
-				statement = indent + "if(" + lhs + ".null == NULL) { goto " + code.target+ ";}";
-			}else{
-				statement = indent + "if(" + lhs + " == NULL) { goto " + code.target+ ";}";
-			}
+			statement = indent + "if(" + lhs + " == NULL) { goto " + code.target+ ";}";
 		} else {
 			throw new RuntimeException("Not implemented!" + code);
 		}

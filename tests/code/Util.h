@@ -8,14 +8,6 @@
 // Remove the security check about unsafe 'scanf' or 'sprintf' in VS tool
 // This definition allows the portability of C code across the platforms.
 #define _CRT_SECURE_NO_WARNINGS
-// null|int
-// This code snippet aims to deal with union type in C
-union UNION {
-	int integer;
-	char *string;
-	float real;
-	void *null;
-};
 /**
  * Built-in functions
 */
@@ -24,7 +16,7 @@ void indirect_printf(long long input);
 void printf_s(long long* input, long long input_size);
 void println_s(long long* input, long long input_size);
 // Parser a string into an integer
-union UNION parseInteger(long long* arr);
+long long* parseInteger(long long* arr);
 // 1D Array Operator
 long long** convertArgsToIntArray(int argc, char** args);
 long long* copy(long long *arr, long long size);
