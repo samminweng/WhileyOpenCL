@@ -106,12 +106,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		CodeStore store = stores.getCodeStore(function);
 		// The string declaration.
 		List<String> declarations = new ArrayList<String>();
-		// Iterate over the list of registers.
+		// Skip the parameter registers and iterate over the remaining registers
 		int inputs = function.type().params().size();
 		String indent = "\t";
-		
 		for (int reg = inputs; reg < vars.size(); reg++) {
-			Type type = vars.get(reg).type();
+			Type type = store.getRawType(reg);
 			// Get the variable name.
 			String var = store.getVar(reg);
 			String translateType = CodeGeneratorHelper.translateType(type, stores);
@@ -881,8 +880,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statements.add(indent + "exit(0);");
 		}else{
 			if (code.operand >= 0) {
-				// Return the structure.
-				statements.add(indent + "return " + store.getVar(code.operand) + ";");
+				Type return_type = store.getRawType(code.operand);
+				// Check if the code returns a pointer but the return value is a structure. 
+				if(code.type instanceof Type.Union && return_type instanceof Type.Record){
+					// Use '&' operator to de-reference the return value
+					// Also, copy the return value and return the copied one
+					String type_name = CodeGeneratorHelper.translateType(code.type, stores).replace("*", "_PTR");
+					statements.add(indent + "return copy_"+type_name+"(&" + store.getVar(code.operand) + ");");
+				}else{
+					// Return the structure.
+					statements.add(indent + "return " + store.getVar(code.operand) + ";");
+				}
 			}
 		}
 		

@@ -327,14 +327,15 @@ public final class CodeGeneratorHelper {
 			record = (Type.Record)type;
 		}
 
-		String type_name = translateType(type, stores);
-		String input = "_"+type_name.toLowerCase().replace("*", "");
-		statement.add("void free_"+type_name.replace("*", "_PTR")+"("+type_name+ " "+input+"){");
+		String struct_type = translateType(record, stores);
+		String struct_name = "_"+struct_type.toLowerCase();
+		statement.add("void free_"+struct_type+"("+struct_type+ " "+struct_name+"){");
 
 		// Get all array-typed members and free their memory spaces
 		record.fields().forEach((member, member_type) ->{
 			if(member_type instanceof Type.Array){
-				String input_member = accessMember(input, member, type);
+				//String input_member = accessMember(struct, member, type);
+				String input_member = struct_name +"."+ member;
 				if(getArrayDimension(member_type)== 2){
 					// Release 2D array by using built-in 'free2DArray' function
 					statement.add("\tfree2DArray("+input_member+", "+input_member+"_size);");
@@ -344,13 +345,17 @@ public final class CodeGeneratorHelper {
 			}
 		});
 
-
+		statement.add("}");// Add ending bracket.
+		
 		if(type instanceof Type.Union){
 			// Release top-level structure
-			statement.add("free("+input+");");
+			String type_name = translateType(type, stores);
+			String parameter = type_name.toLowerCase().replace("*", "");
+			statement.add("void free_"+type_name.replace("*", "_PTR")+"("+type_name+ " "+parameter+"){");
+			statement.add("\tfree_"+struct_type+"(*"+parameter+");");
+			statement.add("\tfree("+parameter+");");
+			statement.add("}");// Add ending bracket.
 		}
-
-		statement.add("}");// Add ending bracket.
 
 		return statement;
 	}
@@ -697,6 +702,7 @@ public final class CodeGeneratorHelper {
 		});
 		
 		statements.add( "} " + struct_name + ";");
+		struct_name = type_name.replaceAll("\\*", "_PTR");
 		String input = "_"+type_name.toLowerCase().replace("*", ""); // Input parameter
 		// Add built-in function declarations, 'create' and 'printf', 'copy' and 'free'  
 		statements.add(type_name + " create_" + struct_name + "();");

@@ -267,13 +267,14 @@ public class CodeStores {
 			Type type = declaration.type();
 			if(type instanceof Type.Nominal){
 				return getNominalType((Type.Nominal)type);
-			}else if(type instanceof Type.Record){
+			}
+			/*else if(type instanceof Type.Record){
 				WyilFile.Type record = getRecordType((Type.Record)type);
 				if( record != null)
 					return record.type();
 				else
 					return null;
-			}
+			}*/
 			
 			return type;
 		}
