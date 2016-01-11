@@ -28,14 +28,12 @@ import wyopcl.Configuration;
  */
 public class CodeStores {
 	private String prefix = "_";
-	private Configuration config;
 	private boolean isVerbose;
 	private List<wyil.lang.WyilFile.Type> userTypes;// Store all the user-defined types at source level, e.g. Board.
 	protected HashMap<FunctionOrMethod, CodeStore> stores; // Store generated code for each function
 	
-	public CodeStores(Configuration config, List<wyil.lang.WyilFile.Type> userTypes){
-		this.config = config;
-		this.isVerbose = config.isVerbose();		
+	public CodeStores(boolean isVerbose, List<wyil.lang.WyilFile.Type> userTypes){
+		this.isVerbose = isVerbose;		
 		this.stores = new HashMap<FunctionOrMethod, CodeStore>();
 		this.userTypes = userTypes;
 	}
@@ -258,7 +256,7 @@ public class CodeStores {
 	 *            the record type.
 	 * @return the user type. Return null if no type is matched.
 	 */
-	public WyilFile.Type getUserDefinedType(Type type){
+	protected WyilFile.Type getUserDefinedType(Type type){
 		if(type instanceof Type.Record){
 			return getUserDefinedType((Type.Record)type);
 		}else if (type instanceof Type.Union){
@@ -365,7 +363,7 @@ public class CodeStores {
 		 * @param statement
 		 *            the C code
 		 */
-		public void addStatement(Code code, String statement) {
+		protected void addStatement(Code code, String statement) {
 			// Add the WyIL code as a comment
 			if (code != null) {
 				if (code instanceof Codes.Label) {
@@ -391,7 +389,7 @@ public class CodeStores {
 		 * @param code
 		 * @param statement
 		 */
-		public void addAllStatements(Code code, List<String> statement) {
+		protected void addAllStatements(Code code, List<String> statement) {
 			// Add the WyIL code as a comment
 			if (code != null) {
 				if (code instanceof Codes.Label) {
@@ -462,7 +460,7 @@ public class CodeStores {
 		 *            the register
 		 * @return the variable name (starting with "_")
 		 */
-		public String getVar(int reg) {
+		protected String getVar(int reg) {
 			VariableDeclarations vars = function.attribute(VariableDeclarations.class);
 			String name = prefix + reg;
 			// Check if the register has been kept in the declarations.
@@ -470,15 +468,6 @@ public class CodeStores {
 			if (declaration != null && declaration.name() != null && !declaration.name().isEmpty()) {
 				name = declaration.name();
 			}
-			// Get variable type 
-			/*Type type = getRawType(reg);
-			
-			if(type != null && type instanceof Type.Union){
-				if(getUnionType((Type.Union)type) != null){
-				//  If the type is an union, use unary operator '*' to get variable value.  
-					name = "*"+name;
-				}
-			}*/
 			
 			return name;
 		}

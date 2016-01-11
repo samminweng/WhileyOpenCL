@@ -74,7 +74,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	public void apply(WyilFile module) {
 		// Get and Set up user-defined types
-		this.stores = new CodeStores(config, (List<wyil.lang.WyilFile.Type>) module.types());
+		this.stores = new CodeStores(config.isVerbose(), (List<wyil.lang.WyilFile.Type>) module.types());
 		
 		this.writeIncludes();
 		// Defines constants
@@ -868,7 +868,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		
 		// Add 'deallocation code' for all ownership variables.
 		if(function.name().equals("main") || code.operand >=0){
-			this.deallocatedAnalyzer.ifPresent(a -> statements.addAll(CodeGeneratorHelper.generateDeallocatedCode(a.getOwnerships(function), function, stores)));			
+		
+			this.deallocatedAnalyzer.ifPresent( a -> {
+				// Get a list of ownership variables.
+				a.getOwnerships(function).stream()
+				.forEach(register ->{
+					// Get variable name and type to generate 'deallocated' code.
+					Type var_type = store.getRawType(register);
+					String var = store.getVar(register);
+					statements.add(indent + CodeGeneratorHelper.addDeallocatedCode(var, var_type, stores));
+				});
+			});
 		}
 		
 		// Add return statements 

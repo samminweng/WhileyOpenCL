@@ -373,26 +373,7 @@ public final class CodeGeneratorHelper {
 	}
 
 
-	/**
-	 * Returns a list of free statements to release array memory spaces.
-	 * @param vars
-	 * @return
-	 */
-	protected static List<String> generateDeallocatedCode(List<Integer> registers, FunctionOrMethod function, CodeStores stores){
-		CodeStore store = stores.getCodeStore(function);
-		String indent = store.getIndent();
-		List<String> statements = new ArrayList<String>();
-		// Generate the code to release memory spaces of ownership variables.
-		for(int register : registers){
-			// Get variable type
-			Type var_type = store.getRawType(register);
-			String var = store.getVar(register);
-			statements.add(indent + addDeallocatedCode(var, var_type, stores));
-		}
-		
-		return statements;
-	}
-
+	
 	/**
 	 * Translate the WyIL type into the type in C.
 	 * 
