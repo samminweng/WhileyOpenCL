@@ -53,10 +53,17 @@ public class CodeStores {
 		return stores.get(function);
 	}
 	
-	public Type getNominalType(Type.Nominal nominal){
+	
+	
+	/**
+	 * Get the existential nominal type, which has been defined in the program.
+	 * @param nominal
+	 * @return
+	 */
+	private WyilFile.Type getUserDefinedType(Type.Nominal nominal){
 		for (wyil.lang.WyilFile.Type user_type : this.userTypes) {
 			if(user_type.name().equals(nominal.name().name())){
-				return user_type.type();
+				return user_type;
 			}
 		}
 		return null;
@@ -91,7 +98,20 @@ public class CodeStores {
 	 *            the record type.
 	 * @return the user type. Return null if no type is matched.
 	 */
-	public WyilFile.Type getRecordType(Type.Record type) {
+	public WyilFile.Type getUserDefinedType(Type type){
+		if(type instanceof Type.Record){
+			return getUserDefinedType((Type.Record)type);
+		}else if (type instanceof Type.Union){
+			return getUserDefinedType((Type.Union)type);
+		}else if(type instanceof Type.Nominal){
+			return getUserDefinedType((Type.Nominal)type);
+		}else{
+			throw new RuntimeException("Not implemented");
+		}
+	}
+	
+	
+	private WyilFile.Type getUserDefinedType(Type.Record type) {
 		for (wyil.lang.WyilFile.Type user_type : this.userTypes) {
 			if(user_type.type() instanceof Type.Union){
 				Type.Union union = (Type.Union)user_type.type();
@@ -116,7 +136,7 @@ public class CodeStores {
 	 * @param type
 	 * @return
 	 */
-	public WyilFile.Type getUnionType(Type.Union type) {
+	private WyilFile.Type getUserDefinedType(Type.Union type) {
 		for (wyil.lang.WyilFile.Type user_type : this.userTypes) {
 			if(user_type.type() instanceof Type.Union){
 				// Check if 'bounds' types are the same.  
@@ -266,16 +286,9 @@ public class CodeStores {
 			Declaration declaration = vars.get(reg);
 			Type type = declaration.type();
 			if(type instanceof Type.Nominal){
-				return getNominalType((Type.Nominal)type);
+				return getUserDefinedType((Type.Nominal)type).type();
 			}
-			/*else if(type instanceof Type.Record){
-				WyilFile.Type record = getRecordType((Type.Record)type);
-				if( record != null)
-					return record.type();
-				else
-					return null;
-			}*/
-			
+					
 			return type;
 		}
 

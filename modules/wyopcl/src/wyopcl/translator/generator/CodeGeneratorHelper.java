@@ -73,8 +73,8 @@ public final class CodeGeneratorHelper {
 		}
 		// Check if the raw nominal type is 'Int' type.
 		if(type instanceof Type.Nominal){
-			Type nominal = stores.getNominalType((Type.Nominal) type);
-			if(nominal instanceof Type.Int){
+			Type nominal = Optional.of(stores.getUserDefinedType(type)).get().type();
+			if(nominal != null && nominal instanceof Type.Int){
 				return true;
 			}
 		}
@@ -143,7 +143,7 @@ public final class CodeGeneratorHelper {
 		
 		// Print out each member
 		record.fields().forEach((member, member_type) ->{
-			String input_member = accessMember(input, member, type);
+			String input_member = input + accessMember(type)+member;
 			// Print the member name
 			statement.add("\tprintf(\" " + member + ":\");");
 			// Print the member value
@@ -285,17 +285,9 @@ public final class CodeGeneratorHelper {
 		}
 		
 		// Generate the code for each member.
-		record.fields().forEach((member, member_type) ->{
-			String op = "";
-			if(type instanceof Type.Union){
-				op = "->";
-			}else if(type instanceof Type.Record){
-				op = ".";
-			}
-			
-			String lhs = new_copy + op + member;
-			String rhs = parameter + op + member;
-			
+		record.fields().forEach((member, member_type) ->{	
+			String lhs = new_copy + accessMember(type) + member;
+			String rhs = parameter + accessMember(type) + member;
 			statement.addAll(generateAssignmentCode(member_type, "\t", lhs, rhs, false, stores));
 		});
 
@@ -307,7 +299,7 @@ public final class CodeGeneratorHelper {
 	}
 
 	/**
-	 * Generate the code of accessing a member of a structure. 
+	 * Get the operator of accessing a structure member w.r.t. input type.  
 	 *  
 	 *  
 	 * @param var
@@ -315,11 +307,11 @@ public final class CodeGeneratorHelper {
 	 * @param type
 	 * @return
 	 */
-	protected static String accessMember(String var, String member, Type type){
+	protected static String accessMember(Type type){
 		if(type instanceof Type.Record){
-			return var +"."+member;
+			return ".";
 		}else if(type instanceof Type.Union){
-			return var +"->"+member;
+			return "->";
 		}
 		throw new RuntimeException("Not implemented");
 	}
@@ -338,14 +330,7 @@ public final class CodeGeneratorHelper {
 	 */
 	private static List<String> generateStructFree(Type type, CodeStores stores){
 		List<String> statement = new ArrayList<String>();
-		Type.Record record = null;
-		if(type instanceof Type.Union){
-			record = (Type.Record)((Type.Union)type).bounds().stream()
-					.filter(t -> t instanceof Type.Record)
-					.collect(Collectors.toList()).get(0);
-		}else{
-			record = (Type.Record)type;
-		}
+		Type.Record record = getRecordType(type);
 
 		String struct_type = translateType(record, stores);
 		String struct_name = "_"+struct_type.toLowerCase();
@@ -423,12 +408,14 @@ public final class CodeGeneratorHelper {
 				return true;
 			}
 		}else if(type instanceof Type.Nominal){
-			// Get nominal type
-			Type.Nominal nominal = (Type.Nominal)type;
-			if(!nominal.name().toString().contains("Console") &&
-					// Check if the nominal type is aliased Integer type
-					!(stores.getNominalType(nominal) instanceof Type.Int)){
-				return true;
+			if(!((Type.Nominal)type).name().toString().contains("Console")){
+				// Get nominal type
+				WyilFile.Type nominal = Optional.of(stores.getUserDefinedType(type)).get();
+				if(nominal!= null  &&
+						// Check if the nominal type is aliased Integer type
+						!isIntType(type, stores)){
+					return true;
+				}
 			}
 		}else if(type instanceof Type.Union){
 			// Check if the union type does not contain INT type
@@ -592,17 +579,15 @@ public final class CodeGeneratorHelper {
 	 */
 	protected static String translateType(Type type, CodeStores stores) {	
 		if (type instanceof Type.Nominal) {
-			// The existential type, e.g. 'Board' is an nominal type in TicTacToe test case.
-			Type nominal = stores.getNominalType((Type.Nominal) type);
-			if(nominal == null){
-				// Check is type is a System.Console. 
-				if(((Type.Nominal) type).name().name().equals("Console")){
-					// Use FILE type.
-					return "FILE*";
-				}
-				throw new RuntimeException("Not Implemented");
+			// Check is type is a System.Console. 
+			if(((Type.Nominal) type).name().name().equals("Console")){
+				// Use FILE type.
+				return "FILE*";
 			}
-			return translateType(nominal, stores);
+			
+			// The existential type, e.g. 'Board' is an nominal type in TicTacToe test case.
+			WyilFile.Type nominal = Optional.of(stores.getUserDefinedType(type)).get();
+			return translateType(nominal.type(), stores);
 		}
 
 		if (type instanceof Type.Int || type instanceof Type.Bool) {
@@ -632,7 +617,7 @@ public final class CodeGeneratorHelper {
 				return "int argc, char** args";
 			}
 			// Get the user-defined type
-			WyilFile.Type userType = stores.getRecordType((Type.Record)type);
+			WyilFile.Type userType = stores.getUserDefinedType((Type.Record)type);
 			return userType.name();
 			
 		}
@@ -644,7 +629,7 @@ public final class CodeGeneratorHelper {
 			}
 
 			WyilFile.Type userType;
-			if((userType= stores.getUnionType((Type.Union) type)) != null){
+			if((userType= stores.getUserDefinedType((Type.Union) type)) != null){
 				return userType.name()+"*";
 			}
 

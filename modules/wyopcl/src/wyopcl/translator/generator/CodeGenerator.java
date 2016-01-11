@@ -813,9 +813,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String s = "";
 		String lhs = store.getVar(code.target());
 		Type lhs_type = store.getRawType(code.target());
-		if (lhs_type instanceof Type.Nominal){
-			lhs_type = stores.getNominalType((Type.Nominal)lhs_type);
-		}
 		
 		// For List type only
 		if (lhs_type instanceof Type.Array) {
@@ -826,7 +823,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}
 		} else if (lhs_type instanceof Type.Record || lhs_type instanceof Type.Union) {
 			String member = code.fields.get(0);
-			s += indent + CodeGeneratorHelper.accessMember(lhs, member, lhs_type);
+			s += indent + lhs + CodeGeneratorHelper.accessMember(lhs_type) + member;
 			// check if there are two or more operands. If so, then add 'index' operand.
 			if (code.operands().length > 1) {
 				s += "[" + store.getVar(code.operand(0)) + "]";
@@ -1030,7 +1027,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// Add ownership.
 				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addOwnership(lhs_type, lhs, stores)));
 			} else {
-				String rhs = CodeGeneratorHelper.accessMember(store.getVar(code.operand(0)), code.field, rhs_type);
+				String rhs = store.getVar(code.operand(0)) + CodeGeneratorHelper.accessMember(rhs_type) + code.field;
 				// Free lhs variable
 				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
 				boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
@@ -1205,7 +1202,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Get operand 
 			String rhs = store.getVar(operands[i]);
 			String member = members.get(i);
-			String lhs_member = CodeGeneratorHelper.accessMember(lhs, member, code.type());
+			String lhs_member = lhs + CodeGeneratorHelper.accessMember(code.type()) + member;
 			//Type type = store.getVarType(code.operand(i));
 			Type type = code.type().field(member);
 			
