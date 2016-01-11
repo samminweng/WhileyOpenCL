@@ -117,7 +117,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			if (type instanceof Type.Array || (type instanceof Type.Reference
 					&& ((Type.Reference) type).element() instanceof Type.Array)) {
 				// Declare array variable 
-				int dimension = CodeGeneratorHelper.getArrayDimension(type);
+				int dimension = stores.getArrayDimension(type);
 				declarations.add(indent+"_DECL_"+dimension+"DARRAY("+var+");");
 			} else if (type instanceof Type.Int) {
 				declarations.add(indent + translateType + " " + var + " = 0;");
@@ -136,7 +136,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}
 			
 			// Declare ownership
-			if(CodeGeneratorHelper.isCompoundType(type, stores)){
+			if(stores.isCompoundType(type)){
 				// Declare the extra 'has_ownership' boolean variables
 				this.deallocatedAnalyzer.ifPresent(a -> declarations.add(indent+"_DECL_OWNERSHIP("+var+");"));
 			}
@@ -175,14 +175,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				String var = store.getVar(op);
 				if(type instanceof Type.Array){
 					// Add extra 'size' variable for array variable
-					int dimension = CodeGeneratorHelper.getArrayDimension(type);
+					int dimension = stores.getArrayDimension(type);
 					parameters.add("_DECL_"+dimension+"DARRAY_PARAM("+var+")");
 				}else{
 					parameters.add(CodeGeneratorHelper.translateType(type, stores) + " " + var);
 				}
 				// Add ownership flag ('_has_ownership') to input parameter
 				this.deallocatedAnalyzer.ifPresent(a -> {
-					if(CodeGeneratorHelper.isCompoundType(type, stores)){
+					if(stores.isCompoundType(type)){
 						parameters.add("_DECL_OWNERSHIP_PARAM("+var+")");
 					}
 				});
@@ -289,7 +289,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String rhs = store.getVar(code.operand(0));
 		Type rhs_type = store.getRawType(code.operand(0));
 		boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
-		if(!CodeGeneratorHelper.isCompoundType(lhs_type, stores)){
+		if(!stores.isCompoundType(lhs_type)){
 			statement.add(indent + lhs + " = " + rhs + ";");
 		}else{
 			this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
@@ -446,7 +446,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					Type type = code.type().params().get(index);
 					if (type instanceof Type.Array) {
 						String param = store.getVar(code.operand(index));
-						int dimension = CodeGeneratorHelper.getArrayDimension(type);
+						int dimension = stores.getArrayDimension(type);
 						// Propagate array sizes from input parameters.
 						statement += indent+"_"+dimension+"DARRAY_SIZE("+lhs+", "+param+");\n";
 					}
@@ -486,7 +486,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statement.add("stdout");
 			}else if(type instanceof Type.Array){
 				boolean isCopyEliminated = isCopyEliminated(code.operand(index), code, function);
-				int dimension = CodeGeneratorHelper.getArrayDimension(type);
+				int dimension = stores.getArrayDimension(type);
 				if(isCopyEliminated){
 					statement.add("_"+dimension+"DARRAY_PARAM("+var+")");
 				}else{
@@ -599,7 +599,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			for(int op: code.operands()){
 				String member = store.getVar(op);
 				Type op_type = store.getRawType(op);
-				if(CodeGeneratorHelper.isCompoundType(op_type, stores)){
+				if(stores.isCompoundType(op_type)){
 					if(isCopyEliminated(op, code, function)){
 						this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.removeOwnership(op_type, member, stores)));
 					}
@@ -1092,7 +1092,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Get the input
 			String input = store.getVar(code.operand(1));
 			Type type = store.getRawType(code.operand(1));
-			int dimension = CodeGeneratorHelper.getArrayDimension(type);
+			int dimension = stores.getArrayDimension(type);
 			switch (print_name) {
 			case "print":
 				statement.add(indent+"printf(\"%d\\n\", " + input + ");");
@@ -1368,7 +1368,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String rhs = store.getVar(code.operand(0));
 		String size = store.getVar(code.operand(1));
 		List<String> statement = new ArrayList<String>();
-		int dimension = CodeGeneratorHelper.getArrayDimension(lhs_type);
+		int dimension = stores.getArrayDimension(lhs_type);
 		
 		// Deallocate lhs variable
 		this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, code.type(), stores)));

@@ -42,49 +42,7 @@ public final class CodeGeneratorHelper {
 
 	}
 	
-	/**
-	 * Check if the type is instance of Integer by inferring the type from
-	 * <code>wyil.Lang.Type</code> objects, including the effective collection
-	 * types.
-	 * 
-	 * @param type
-	 * @return true if the type is or contains an integer type.
-	 */
-	protected static boolean isIntType(Type type, CodeStores stores) {
-		if (type instanceof Type.Int) {
-			return true;
-		}
-
-		if (type instanceof Type.Array) {
-			return isIntType(((Type.Array) type).element(), stores);
-		}
-
-		if (type instanceof Type.Tuple) {
-			// Check the type of value field.
-			Type element = ((Type.Tuple) type).element(1);
-			return isIntType(element, stores);
-		}
-
-		if(type instanceof Type.Union){
-			// Check if the union type contains INT type.
-			if(((Type.Union)type).bounds().contains(Type.Int.T_INT)){
-				return true;
-			}
-		}
-		// Check if the raw nominal type is 'Int' type.
-		if(type instanceof Type.Nominal){
-			Type nominal = Optional.of(stores.getUserDefinedType(type)).get().type();
-			if(nominal != null && nominal instanceof Type.Int){
-				return true;
-			}
-		}
-		
-		
-		return false;
-	}
-
-
-
+	
 	/**
 	 * Get the fields from a record type. 
 	 * 
@@ -133,7 +91,7 @@ public final class CodeGeneratorHelper {
 	 */
 	private static List<String> generateStructPrintf(Type type, CodeStores stores){
 		List<String> statement = new ArrayList<String>();
-		Type.Record record = getRecordType(type);
+		Type.Record record = stores.getRecordType(type);
 		String type_name = translateType(type, stores);
 		String input = "_"+type_name.toLowerCase().replace("*", "");
 		String f_name = type_name.replace("*", "_PTR");
@@ -151,7 +109,7 @@ public final class CodeGeneratorHelper {
 				// Add field values.
 				statement.add("\tprintf(\"%d\", " + input_member + ");");
 			} else if (member_type instanceof Type.Array) {
-				statement.add("\t_"+getArrayDimension(member_type)+"DARRAY_PRINT("+input_member+");");
+				statement.add("\t_"+stores.getArrayDimension(member_type)+"DARRAY_PRINT("+input_member+");");
 			} else {
 				throw new RuntimeException("Not implemented!");
 			}
@@ -165,43 +123,7 @@ public final class CodeGeneratorHelper {
 		return statement;
 	}
 
-	/**
-	 * Generates the code to create a structure pointer.
-	 * 
-	 * For a structure (record type), return a structure
-	 * Board create_Board(){
-	 * 		Board _board;
-	 * 		return _board;
-	 * }
-	 * 
-	 * For a union of NULL and structure, return a structure address.
-	 * Board* create_Board(){
-	 * 	Board* _board = malloc(sizeof(Board)); // Allocate '_board' in the heap space.
-	 *	return _board;
-	 * }
-	 * 
-	 * @param type_name
-	 * @param type
-	 * @param stores
-	 * @return
-	 */
-	/*private static List<String> generateStructCreate(Type type, CodeStores stores){
-		List<String> statement = new ArrayList<String>();
-		String type_name = translateType(type, stores);
-		String input = "_"+type_name.toLowerCase().replace("*", ""); // such as '_board'
-		statement.add(type_name+" create_"+type_name.replace("*", "_PTR")+ "(){");
-
-		if(type instanceof Type.Union){
-			statement.add("\t"+type_name+" "+input+" = malloc(sizeof("+type_name.replace("*", "")+"));");// Allocate the input in heap memory, which require manual de-allocation.
-		}else{
-			statement.add("\t"+type_name+" "+input+";");// Allocate the input in stack memory, which can be de-allocated automatically.
-		}
-
-		statement.add("\treturn "+input+";");
-		statement.add("}");
-		return statement;
-
-	}*/
+	
 	/**
 	 * Generate the assignment code of an variable by using update or copy.
 	 * 
@@ -215,7 +137,7 @@ public final class CodeGeneratorHelper {
 	protected static List<String> generateAssignmentCode(Type type, String indent, String lhs, String rhs, boolean isCopyEliminated, CodeStores stores){
 		List<String> statement = new ArrayList<String>();
 		if(type instanceof Type.Array){
-			int dimension = getArrayDimension(type);
+			int dimension = stores.getArrayDimension(type);
 			// Check if the lhs copy is needed or not 
 			if(isCopyEliminated){
 				statement.add(indent + "_"+dimension+"DARRAY_UPDATE("+lhs+", "+rhs+");");			
@@ -223,7 +145,7 @@ public final class CodeGeneratorHelper {
 				statement.add(indent + "_"+dimension+"DARRAY_COPY("+lhs+", "+rhs+");");		
 			}
 		}else{
-			if(isCopyEliminated || !isCompoundType(type, stores)){
+			if(isCopyEliminated || !stores.isCompoundType(type)){
 				statement.add(indent + lhs + " = "+ rhs+";");
 			}else{
 				String type_name = CodeGeneratorHelper.translateType(type, stores);
@@ -263,7 +185,7 @@ public final class CodeGeneratorHelper {
 	private static List<String> generateStructCopy(Type type, CodeStores stores){
 		List<String> statement = new ArrayList<String>();
 		// Get the raw record type 
-		Type.Record record = getRecordType(type);
+		Type.Record record = stores.getRecordType(type);
 		
 		String type_name = translateType(type, stores);
 		String struct_name = translateType(record, stores);
@@ -330,7 +252,7 @@ public final class CodeGeneratorHelper {
 	 */
 	private static List<String> generateStructFree(Type type, CodeStores stores){
 		List<String> statement = new ArrayList<String>();
-		Type.Record record = getRecordType(type);
+		Type.Record record = stores.getRecordType(type);
 
 		String struct_type = translateType(record, stores);
 		String struct_name = "_"+struct_type.toLowerCase();
@@ -341,7 +263,7 @@ public final class CodeGeneratorHelper {
 			if(member_type instanceof Type.Array){
 				//String input_member = accessMember(struct, member, type);
 				String input_member = struct_name +"."+ member;
-				if(getArrayDimension(member_type)== 2){
+				if(stores.getArrayDimension(member_type)== 2){
 					// Release 2D array by using built-in 'free2DArray' function
 					statement.add("\tfree2DArray("+input_member+", "+input_member+"_size);");
 				}else{
@@ -364,73 +286,7 @@ public final class CodeGeneratorHelper {
 
 		return statement;
 	}
-	/**
-	 * get the array dimension.
-	 * 
-	 * @param type
-	 * @return
-	 */
-	protected static int getArrayDimension(Type type){
-		int dimension = 0;
-		// Compute array dimension.
-		while(type != null && type instanceof Type.Array){
-			type = ((Type.Array)type).element();
-			dimension++;
-		}
-
-		return dimension;
-	}
-
-
-	/**
-	 * Check if the type of given register is an array or record (excluding 'print' fields)
-	 * 
-	 * @param register
-	 * @param function
-	 * @return
-	 */
-	protected static boolean isCompoundType(Type type, CodeStores stores){
-		if(type instanceof Type.Int || type instanceof Type.FunctionOrMethod){
-			return false;
-		}
-		
-		if(type instanceof Type.Array){
-			return true;
-		}else if(type instanceof Type.Record){
-			Type.Record record = (Type.Record)type;
-			// Check if the variable contains 'printf' field. 
-			long nonePrintFields = record.fields().keySet().stream()
-					.filter(f -> !f.contains("print") && !f.contains("println") && !f.contains("print_s") && !f.contains("println_s") )
-					.count();
-
-			// If NOT a printf field, then add ownership.
-			if(nonePrintFields>0){
-				return true;
-			}
-		}else if(type instanceof Type.Nominal){
-			if(!((Type.Nominal)type).name().toString().contains("Console")){
-				// Get nominal type
-				WyilFile.Type nominal = Optional.of(stores.getUserDefinedType(type)).get();
-				if(nominal!= null  &&
-						// Check if the nominal type is aliased Integer type
-						!isIntType(type, stores)){
-					return true;
-				}
-			}
-		}else if(type instanceof Type.Union){
-			// Check if the union type does not contain INT type
-			if(!isIntType(type, stores) && getRecordType((Type.Union)type)!=null){
-				return true;
-			}
-		}else if(type instanceof Type.Null){
-			return false;
-		}else{
-			throw new RuntimeException("Not Implemented");
-		}
-
-		return false;
-	}
-
+	
 	/**
 	 * Generate the declaration of ownership variable, e.g.
 	 * 
@@ -441,14 +297,14 @@ public final class CodeGeneratorHelper {
 	 * @return
 	 */
 	protected static String addOwnership(Type type, String var, CodeStores stores){
-		if(isCompoundType(type, stores)){
+		if(stores.isCompoundType(type)){
 			return "_ADD_OWNERSHIP("+var+");";
 		}
 		return "";
 	}
 	
 	protected static String removeOwnership(Type type, String var, CodeStores stores){
-		if(isCompoundType(type, stores)){
+		if(stores.isCompoundType(type)){
 			return "_REMOVE_OWNERSHIP("+var+");";
 		}
 		return "";
@@ -464,7 +320,7 @@ public final class CodeGeneratorHelper {
 	 * @return 
 	 */
 	protected static String passOwnershipToFunction(Type type, CodeStores stores, Optional<CopyEliminationAnalyzer> copyAnalyzer){
-		if(!isCompoundType(type, stores)){
+		if(!stores.isCompoundType(type)){
 			return "";
 		}
 		
@@ -490,7 +346,7 @@ public final class CodeGeneratorHelper {
 	 * @return
 	 */
 	protected static String addDeallocatedCode(String var, Type type, CodeStores stores){
-		if(!isCompoundType(type, stores)){
+		if(!stores.isCompoundType(type)){
 			return "";
 		}
 		
@@ -498,7 +354,7 @@ public final class CodeGeneratorHelper {
 		String name = "";
 		// Check if var_type is a structure
 		if(type instanceof Type.Array){
-			int dimension = getArrayDimension(type);
+			int dimension = stores.getArrayDimension(type);
 			if(dimension== 2){
 				return "_FREE2DArray("+var+");";
 			}else{
@@ -536,35 +392,6 @@ public final class CodeGeneratorHelper {
 		
 		return statements;
 	}
-
-
-	
-
-	/**
-	 * Returns the record types for an union/record type.
-	 * @param type
-	 * @return
-	 */
-	private static Type.Record getRecordType(Type type){
-
-		if(type instanceof Type.Record){
-			return (Type.Record)type;
-		}else if(type instanceof Type.Union){
-			List<Type> records = ((Type.Union)type).bounds().stream()
-					.filter(t -> t instanceof Type.Record)
-					.collect(Collectors.toList());
-
-			if(records.isEmpty()){
-				throw new RuntimeException("Not implemented");
-			}else{
-				return (Type.Record)records.get(0);
-			}
-		}else{
-			throw new RuntimeException("Not implemented");
-		}
-	}
-
-
 
 	/**
 	 * Translate the WyIL type into the type in C.
@@ -624,7 +451,7 @@ public final class CodeGeneratorHelper {
 
 		if (type instanceof Type.Union) {
 			// Check if there is any record in 'union' type
-			if (isIntType(type, stores)) {
+			if (stores.isIntType(type)) {
 				return "long long";
 			}
 
@@ -694,11 +521,11 @@ public final class CodeGeneratorHelper {
 		statements.add("typedef struct{");
 		
 		//Generate structure members for a given members
-		Type.Record record = getRecordType(type);
+		Type.Record record = stores.getRecordType(type);
 		// Gather all members
 		record.fields().forEach((member, member_type) ->{
 			if (member_type instanceof Type.Array) {
-				int dimension = getArrayDimension(member_type);
+				int dimension = stores.getArrayDimension(member_type);
 				statements.add("\t_DECL_"+dimension+"DARRAY_MEMBER(" + member + ");");
 			}else{
 				statements.add("\t" + translateType(member_type, stores) + " " + member + ";");

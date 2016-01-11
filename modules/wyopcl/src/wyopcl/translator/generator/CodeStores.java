@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Map.Entry;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -14,6 +15,7 @@ import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Type;
 import wyil.lang.Type.Record;
+import wyil.lang.Type.Record.State;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
@@ -53,7 +55,165 @@ public class CodeStores {
 		return stores.get(function);
 	}
 	
+	/**
+	 * Get the fields from a record type. 
+	 * 
+	 * Although record type provides 'keys()' function to get the fields set,
+	 * the fields are returned by a Hashset, and their orders are not preserved and inconsistent with operands. 
+	 * 
+	 * That makes trouble when generating newrecord bytecode. For example, the 'newrecord' code for creating a matrix
+	 * <pre>
+	 * <code> 
+	 * newrecord %3 = (%2, %1, %0) : {int[][] data,int height,int width}
+	 * </code>
+	 * </pre>
+	 * The 'data' fields is mapped to %0, 'height' to %1 and 'width' to %2.
+	 * But the return key set  
+	 * <code>
+	 * [data, width, height]
+	 * </code> has a different orders.
+	 * @param record
+	 * @return
+	 */
+	protected List<String> getMemebers(Type.Record record){
+		//System.out.println(record.keys());
+		State fields = (State) record.automaton.states[0].data;
+		List<String> members = fields.stream().collect(Collectors.toList());
+		return members;
+	}
 	
+	
+	/**
+	 * Given an array type, compute its array dimension.
+	 * 
+	 * @param type
+	 * @return the array dimension. Return 0 if the input is not an array type.
+	 */
+	protected int getArrayDimension(Type type){
+		int dimension = 0;
+		// Compute array dimension.
+		while(type != null && type instanceof Type.Array){
+			type = ((Type.Array)type).element();
+			dimension++;
+		}
+
+		return dimension;
+	}
+	
+	
+	/**
+	 * Check if the type is instance of Integer by inferring the type from
+	 * <code>wyil.Lang.Type</code> objects, including the effective collection
+	 * types.
+	 * 
+	 * @param type
+	 * @return true if the type is or contains an integer type.
+	 */
+	protected boolean isIntType(Type type) {
+		if (type instanceof Type.Int) {
+			return true;
+		}
+
+		if (type instanceof Type.Array) {
+			return isIntType(((Type.Array) type).element());
+		}
+
+		if (type instanceof Type.Tuple) {
+			// Check the type of value field.
+			Type element = ((Type.Tuple) type).element(1);
+			return isIntType(element);
+		}
+
+		if(type instanceof Type.Union){
+			// Check if the union type contains INT type.
+			if(((Type.Union)type).bounds().contains(Type.Int.T_INT)){
+				return true;
+			}
+		}
+		// Check if the raw nominal type is 'Int' type.
+		if(type instanceof Type.Nominal){
+			Type nominal = Optional.of(getUserDefinedType(type)).get().type();
+			if(nominal != null && nominal instanceof Type.Int){
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Returns the record types for an union/record type.
+	 * @param type
+	 * @return
+	 */
+	protected Type.Record getRecordType(Type type){
+
+		if(type instanceof Type.Record){
+			return (Type.Record)type;
+		}else if(type instanceof Type.Union){
+			List<Type> records = ((Type.Union)type).bounds().stream()
+					.filter(t -> t instanceof Type.Record)
+					.collect(Collectors.toList());
+
+			if(records.isEmpty()){
+				throw new RuntimeException("Not implemented");
+			}else{
+				return (Type.Record)records.get(0);
+			}
+		}else{
+			throw new RuntimeException("Not implemented");
+		}
+	}
+	
+	
+	/**
+	 * Check if the type of given register is an array or record (excluding 'print' fields)
+	 * 
+	 * @param register
+	 * @param function
+	 * @return
+	 */
+	protected boolean isCompoundType(Type type){
+		if(type instanceof Type.Int || type instanceof Type.FunctionOrMethod){
+			return false;
+		}
+		
+		if(type instanceof Type.Array){
+			return true;
+		}else if(type instanceof Type.Record){
+			Type.Record record = (Type.Record)type;
+			// Check if the variable contains 'printf' field. 
+			long nonePrintFields = record.fields().keySet().stream()
+					.filter(f -> !f.contains("print") && !f.contains("println") && !f.contains("print_s") && !f.contains("println_s") )
+					.count();
+
+			// If NOT a printf field, then add ownership.
+			if(nonePrintFields>0){
+				return true;
+			}
+		}else if(type instanceof Type.Nominal){
+			if(!((Type.Nominal)type).name().toString().contains("Console")){
+				// Get nominal type
+				WyilFile.Type nominal = Optional.of(getUserDefinedType(type)).get();
+				if(nominal!= null  &&
+						// Check if the nominal type is aliased Integer type
+						!isIntType(type)){
+					return true;
+				}
+			}
+		}else if(type instanceof Type.Union){
+			// Check if the union type does not contain INT type
+			if(!isIntType(type) && getRecordType((Type.Union)type)!=null){
+				return true;
+			}
+		}else if(type instanceof Type.Null){
+			return false;
+		}else{
+			throw new RuntimeException("Not Implemented");
+		}
+
+		return false;
+	}
 	
 	/**
 	 * Get the existential nominal type, which has been defined in the program.
