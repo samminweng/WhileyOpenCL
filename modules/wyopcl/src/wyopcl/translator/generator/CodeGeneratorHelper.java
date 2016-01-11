@@ -185,7 +185,7 @@ public final class CodeGeneratorHelper {
 	 * @param stores
 	 * @return
 	 */
-	private static List<String> generateStructCreate(Type type, CodeStores stores){
+	/*private static List<String> generateStructCreate(Type type, CodeStores stores){
 		List<String> statement = new ArrayList<String>();
 		String type_name = translateType(type, stores);
 		String input = "_"+type_name.toLowerCase().replace("*", ""); // such as '_board'
@@ -201,7 +201,7 @@ public final class CodeGeneratorHelper {
 		statement.add("}");
 		return statement;
 
-	}
+	}*/
 	/**
 	 * Generate the assignment code of an variable by using update or copy.
 	 * 
@@ -262,20 +262,40 @@ public final class CodeGeneratorHelper {
 	 */
 	private static List<String> generateStructCopy(Type type, CodeStores stores){
 		List<String> statement = new ArrayList<String>();
+		// Get the raw record type 
 		Type.Record record = getRecordType(type);
+		
 		String type_name = translateType(type, stores);
+		String struct_name = translateType(record, stores);
+		String function_name = "copy_"+ type_name.replace("*", "_PTR");
+		
 
-		String input = "_"+type_name.toLowerCase().replace("*", "");
-		String new_copy = "new_"+type_name.toLowerCase().replace("*", "");
-		String name = type_name.replace("*", "_PTR");
-		statement.add(type_name+" copy_"+name+ "(" + type_name + " "+input+"){");;
-		// Declare local copy.
-		statement.add("\t" + type_name + " "+new_copy+" = create_"+name+"();");
+		String parameter = "_"+struct_name;
+		String new_copy = "new_"+struct_name;
+		
+		statement.add(type_name+" "+function_name+ "(" + type_name + " "+parameter+"){");;
 
+		// Create a structure 
+		if(type instanceof Type.Union){
+			// Create a structure pointer
+			statement.add("\t"+type_name+" "+new_copy+" = malloc(sizeof("+struct_name+"));");// Allocate the input in heap memory, which require manual de-allocation.
+		}else{
+			// Create a structure
+			statement.add("\t"+type_name+" "+new_copy+";");// Allocate the input in stack memory, which can be de-allocated automatically.
+		}
+		
 		// Generate the code for each member.
 		record.fields().forEach((member, member_type) ->{
-			String rhs = accessMember(input, member, type);
-			String lhs = accessMember(new_copy, member, type);
+			String op = "";
+			if(type instanceof Type.Union){
+				op = "->";
+			}else if(type instanceof Type.Record){
+				op = ".";
+			}
+			
+			String lhs = new_copy + op + member;
+			String rhs = parameter + op + member;
+			
 			statement.addAll(generateAssignmentCode(member_type, "\t", lhs, rhs, false, stores));
 		});
 
@@ -658,7 +678,6 @@ public final class CodeGeneratorHelper {
 	 */
 	protected static List<String> generateStructFunction(Type type, CodeStores stores){
 		List<String> statements = new ArrayList<String>();
-		statements.addAll(generateStructCreate(type, stores));
 		statements.addAll(generateStructCopy(type, stores));
 		statements.addAll(generateStructFree(type, stores));
 		statements.addAll(generateStructPrintf(type, stores));
@@ -704,19 +723,12 @@ public final class CodeGeneratorHelper {
 		statements.add( "} " + struct_name + ";");
 		struct_name = type_name.replaceAll("\\*", "_PTR");
 		String input = "_"+type_name.toLowerCase().replace("*", ""); // Input parameter
-		// Add built-in function declarations, 'create' and 'printf', 'copy' and 'free'  
-		statements.add(type_name + " create_" + struct_name + "();");
+		// Add built-in function declarations, 'create' and 'printf', 'copy' and 'free'
 		statements.add("void printf_" + struct_name + "(" + type_name + " "+input+");");
 		statements.add(type_name + " copy_"+struct_name+ "("+type_name + " "+input+");");
 		statements.add("void free_"+ struct_name+"("+type_name+" "+input+");");
 
-
 		return statements;
 	}
-
-
-
-
-
 
 }
