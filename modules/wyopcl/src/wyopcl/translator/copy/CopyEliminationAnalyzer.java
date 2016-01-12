@@ -128,24 +128,51 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		
 		//
 	}
-
-
+	
+	/**
+	 * Check if a variable is returned by the function 'f'
+	 * @param r
+	 * @param f
+	 * @return
+	 */
+	public boolean isReturned(String var, FunctionOrMethod f){
+		// Iterate the list of wyil code
+		for (Code code : f.body().bytecodes()) {
+			if(code instanceof Codes.Return){
+				Codes.Return r = (Codes.Return)code;
+				if(r.operand>=0){
+					String ret = getActualVarName(r.operand, f);
+					if(ret.equals(var)){
+						return true;
+					}
+				}
+				
+				
+			}
+			
+		}
+		
+		return false;
+	}
+	
+	
+	
 	/**
 	 * Check if the array 'r' is updated inside the function.
 	 * 
-	 * @param r
+	 * @param reg
 	 *            the array
 	 * @param f
 	 *            the function
 	 * @return true if the array 'r' is updated.
 	 */
-	private boolean mutate(String r, FunctionOrMethod f) {
+	private boolean mutate(String var, FunctionOrMethod f) {
 		// Get the list of wyil code
 		for (Code code : f.body().bytecodes()) {
 			// Check the array is updated.
 			if (code instanceof Codes.Update) {
 				String target = getActualVarName(((Codes.Update) code).target(), f);
-				if (target.equals(r)) {
+				if (target.equals(var)) {
 					return true;// Modified Array.
 				}
 			}
@@ -157,7 +184,21 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	/**
 	 * Determines whether to make a copy of array by checking liveness information or read-only property.
 	 * 
-	 * If the array variable is live, then the copy is necessary. Otherwise, the register can be overwritten safely.
+	 * If the variable is live, then the copy is necessary. Otherwise, the register can be overwritten safely.
+	 * 
+	 * The rules of determining the copy of 
+	 * <table>
+	 * <thead>
+	 * <tr><th colspan="2"> f mutates b?</th><th>F</th><th>F</th><th>T</th><th>T</th></tr>
+	 * <tr><th colspan="2"> f returns b?</th><th>F</th><th>T</th><th>T</th><th>F</th></tr>
+	 * </thead>
+	 * <tbody>
+	 * <tr><td> b is live?</td><td>T</td><td>No copy </td><td>No copy </td><td>Copy</td><td>Copy</td></tr>
+	 * <tr><td> b is live?</td><td>F</td><td>No copy </td><td>No copy </td><td>No copy</td><td>No copy</td></tr>
+	 * </tbody>
+	 * </table>
+	 * 
+	 * 
 	 * 
 	 * @param reg
 	 *            the register of array variable
@@ -168,24 +209,6 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	 * @return ture if the copy is un-needed and can be avoid. Otherwise, return false.
 	 */
 	public boolean isCopyEliminated(int reg, Code code, FunctionOrMethod f) {
-		// Check the array is read-only. By default, the array is assumed not read-only but modified.
-		boolean isReadOnly = false;
-		if (code instanceof Codes.Invoke) {
-			Codes.Invoke invoked = (Codes.Invoke)code;
-			FunctionOrMethod invoked_function = this.getFunction(invoked.name.name(), invoked.type());
-			if (invoked_function != null) {
-				String r_name = getActualVarName(reg, f);
-				// Check if the array r is modified inside 'invoked_function'.
-				isReadOnly = !mutate(r_name, invoked_function);
-			}
-		}else if(code instanceof Codes.FieldLoad){
-			Codes.FieldLoad fieldload = (Codes.FieldLoad)code;
-			String lhs = getActualVarName(fieldload.target(), f);
-			
-			// Check if the lhs is modified in 'f' funciton
-			isReadOnly = !mutate(lhs, f);
-			//isReadOnly = true;
-		}
 		boolean isLive = true;
 
 		// Check the array is live.
@@ -195,6 +218,54 @@ public class CopyEliminationAnalyzer extends Analyzer {
 			isLive = outSet.contains(reg);
 		}		
 		
-		return (isReadOnly || !isLive);
+		// If the variable is not alive, then the copies are not needed.
+		if(!isLive){
+			return true;
+		}else{
+			// Check the array is read-only. By default, the array is assumed not read-only but modified.
+			boolean isReadOnly = false;
+			boolean isReturned = false;
+			if (code instanceof Codes.Invoke) {
+				Codes.Invoke invoked = (Codes.Invoke)code;
+				FunctionOrMethod invoked_function = this.getFunction(invoked.name.name(), invoked.type());
+				if (invoked_function != null) {
+					// Map the register to input parameter.
+					int parameter=0;
+					while(parameter<invoked.operands().length){
+						if(reg==invoked.operand(parameter)){
+							break;
+						}
+						parameter++;
+					}
+					String var = getActualVarName(parameter, invoked_function);
+					// Check if 'var' is modified inside 'invoked_function'.
+					isReadOnly = !mutate(var, invoked_function);
+					// Check if 'var' is returned by 'invoked_function'
+					isReturned = isReturned(var, invoked_function);
+					// The 'var' is mutated and returned
+					if(!isReadOnly){
+						if(isReturned){
+							return false;
+						}else{
+							return false;
+						}
+					}else{
+						// The 'var' is not mutated
+						if(isReturned){
+							return true;
+						}else{
+							return true;
+						}
+					}
+				}
+			}else if(code instanceof Codes.FieldLoad){
+				Codes.FieldLoad fieldload = (Codes.FieldLoad)code;
+				String lhs = getActualVarName(fieldload.target(), f);
+				// Check if the lhs is modified in 'f' funciton
+				isReadOnly = !mutate(lhs, f);
+				return isReadOnly;
+			}
+			throw new RuntimeException("Not implemeneted");
+		}
 	}
 }

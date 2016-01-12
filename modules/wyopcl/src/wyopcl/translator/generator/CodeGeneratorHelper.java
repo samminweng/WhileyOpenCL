@@ -42,33 +42,6 @@ public final class CodeGeneratorHelper {
 
 	}
 	
-	
-	/**
-	 * Get the fields from a record type. 
-	 * 
-	 * Although record type provides 'keys()' function to get the fields set,
-	 * the fields are returned by a Hashset, and their orders are not preserved and inconsistent with operands. 
-	 * 
-	 * That makes trouble when generating newrecord bytecode. For example, the 'newrecord' code for creating a matrix
-	 * <pre>
-	 * <code> 
-	 * newrecord %3 = (%2, %1, %0) : {int[][] data,int height,int width}
-	 * </code>
-	 * </pre>
-	 * The 'data' fields is mapped to %0, 'height' to %1 and 'width' to %2.
-	 * But the return key set  
-	 * <code>
-	 * [data, width, height]
-	 * </code> has a different orders.
-	 * @param record
-	 * @return
-	 */
-	protected static List<String> getMemebers(Type.Record record){
-		//System.out.println(record.keys());
-		State fields = (State) record.automaton.states[0].data;
-		List<String> members = fields.stream().collect(Collectors.toList());
-		return members;
-	}
 
 	/***
 	 * 
@@ -93,15 +66,17 @@ public final class CodeGeneratorHelper {
 		List<String> statement = new ArrayList<String>();
 		Type.Record record = stores.getRecordType(type);
 		String type_name = translateType(type, stores);
-		String input = "_"+type_name.toLowerCase().replace("*", "");
-		String f_name = type_name.replace("*", "_PTR");
-		statement.add("void printf_" + f_name + "(" + type_name + " "+input+"){");
+		String function_name = type_name.replace("*", "_PTR");
+		
+		String parameter = "_"+type_name.toLowerCase().replace("*", "");
+		
+		statement.add("void printf_" + function_name + "(" + type_name + " "+parameter+"){");
 		// Add open bracket
 		statement.add("\tprintf(\"{\");"); 
 		
 		// Print out each member
 		record.fields().forEach((member, member_type) ->{
-			String input_member = input + accessMember(type)+member;
+			String input_member = parameter + accessMember(type)+member;
 			// Print the member name
 			statement.add("\tprintf(\" " + member + ":\");");
 			// Print the member value
@@ -186,7 +161,6 @@ public final class CodeGeneratorHelper {
 		List<String> statement = new ArrayList<String>();
 		// Get the raw record type 
 		Type.Record record = stores.getRecordType(type);
-		
 		String type_name = translateType(type, stores);
 		String struct_name = translateType(record, stores);
 		String function_name = "copy_"+ type_name.replace("*", "_PTR");
@@ -310,6 +284,42 @@ public final class CodeGeneratorHelper {
 		return "";
 	}
 	
+	
+	/**
+	 * Assign ownership to rhs variable of a function call 'a=f(b)', based on the following rules
+	 * 
+	 * <table>
+	 * <thead>
+	 * <tr><th colspan="2"> f mutates b?</th><th>F</th><th>F</th><th>T</th><th>T</th></tr>
+	 * <tr><th colspan="2"> f returns b?</th><th>F</th><th>T</th><th>T</th><th>F</th></tr>
+	 * </thead>
+	 * <tbody>
+	 * <tr><td rowspan="2"> b is live?</td><td rowspan="2">T</td><td>No copy </td><td>No copy </td><td>Copy</td><td>Copy</td></tr>
+	 * <tr><td>b_own=T</td><td>b_own=T</td><td>b_own=F</td><td>b_own=T</td><td>b_own=T</td></tr>
+	 * <tr><td rowspan="2"> b is live?</td><td rowspan="2">F</td><td>No copy </td><td>No copy </td><td>No copy</td><td>No copy</td></tr>
+	 * <tr><td>b_own=T</td><td>b_own=T</td><td>b_own=F</td><td>b_own=F</td><td>b_own=F</td></tr>
+	 * </tbody>
+	 * </table>
+	 * @param register
+	 * @param function
+	 * @param stores
+	 * @return
+	 */
+	protected static List<String> assignFunctionCallOwnership(int lhs_r, int rhs_r, FunctionOrMethod function, CodeStores stores){
+		List<String> statements = new ArrayList<String>();
+		
+		
+		
+		
+		return statements;
+		
+		
+		
+		
+	}
+	
+	
+	
 	/**
 	 * Return ownership to a function. If deallocation is enabled, then pass the ownership to a function. 
 	 * The ownership value is based on copy analysis results.  
@@ -403,8 +413,7 @@ public final class CodeGeneratorHelper {
 		}
 
 		if (type instanceof Type.Array) {
-			Type.Array listType = (Type.Array) type;
-			return translateType(listType.element(), stores) + "*";
+			return translateType(((Type.Array) type).element(), stores) + "*";
 		}
 
 		if (type instanceof Type.Void) {
@@ -425,8 +434,7 @@ public final class CodeGeneratorHelper {
 				return "int argc, char** args";
 			}
 			// Get the user-defined type
-			WyilFile.Type userType = stores.getUserDefinedType((Type.Record)type);
-			return userType.name();
+			return Optional.of(stores.getUserDefinedType(type)).get().name();
 			
 		}
 
@@ -436,12 +444,7 @@ public final class CodeGeneratorHelper {
 				return "long long";
 			}
 
-			WyilFile.Type userType;
-			if((userType= stores.getUserDefinedType((Type.Union) type)) != null){
-				return userType.name()+"*";
-			}
-
-			throw new RuntimeException("Un-implemented Type" + type);
+			return Optional.of(stores.getUserDefinedType(type)).get().name()+"*";
 		}
 
 		// Translate reference type in Whiley to pointer type in C.

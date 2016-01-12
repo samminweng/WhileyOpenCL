@@ -606,9 +606,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				}			
 			}
 			
-			
 			// Assign ownership to lhs
 			this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addOwnership(lhs_type, lhs, this.stores)));
+			// Assign ownership to rhs
+			
+		
 		}
 		// add the statement
 		store.addAllStatements(code, statement);
@@ -1118,7 +1120,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				if (type instanceof Type.Int) {
 					statement.add(indent+"printf(\"%d\\n\", " + input + ");");
 				} else if (type instanceof Type.Array) {
-					statement.add(indent+"printf_array(_"+dimension+"DARRAY_PARAM(" + input + "));");
+					statement.add(indent+"_1DARRAY_PRINT("+ input + ");");
+					//statement.add(indent+"printf_array(_"+dimension+"DARRAY_PARAM(" + input + "));");
 				} else if (type instanceof Type.Nominal) {
 					Type.Nominal nominal = (Type.Nominal) type;
 					// Print out a user-defined type structure
@@ -1205,7 +1208,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, code.type(), stores)));
 		
 		// Assign lhs structure members with rhs member, e.g. 'a.pieces = copy(b, b_size);' 
-		List<String> members = CodeGeneratorHelper.getMemebers(code.type());
+		List<String> members = stores.getMemebers(code.type());
 		
 		int[] operands = code.operands();
 		for(int i=0;i<operands.length; i++){
