@@ -17,6 +17,10 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
+import wyc.WycMain;
+import wyc.util.WycBuildTask;
+import wyopcl.WyopclMain;
+
 public final class BaseTestUtil {
 	private final String version = "v0.3.37";
 	// user.dir is the current directory.
@@ -28,7 +32,7 @@ public final class BaseTestUtil {
 			+ lib_path + "wycs-" + version + ".jar" + File.pathSeparator + lib_path + "wybs-" + version + ".jar"
 			+ File.pathSeparator + lib_path + "wyil-" + version + ".jar" + File.pathSeparator + lib_path + "wyc-"
 			+ version + ".jar" + File.pathSeparator;
-	protected final String whiley_runtime_lib = lib_path + "wyrt-" + version + ".jar";
+	final String whiley_runtime_lib = lib_path + "wyrt-" + version + ".jar";
 	Process p;
 
 	public BaseTestUtil() {
@@ -207,6 +211,38 @@ public final class BaseTestUtil {
 		}
 	}
 
+	private void compileAndRunCCode(String testcase, Path destDir){
+		// Get Operation System.
+		// 4. Compile and run the C code.
+		if (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0) {
+			// This option requires the Cygwin and gcc, or MinGW
+			// Compile the *.c using GCC
+			String path = System.getenv("PATH");// Get PATH environment variable.
+			if (path.contains("MinGW")) {
+				// Check the exit value. If not 0, the compilation has errors.
+				assertEquals(runCmd("cmd /c gcc *.c  -o " + testcase + ".out", destDir), 0);
+			} else if (path.contains("cygwin")) {
+				// Gcc is a link (Windows command does not get it), so call its actual name (i.e. gcc-3 or gcc-4)
+				assertEquals(runCmd("cmd /c gcc-4 *.c  -o " + testcase + ".out", destDir), 0);
+				// Run the output file.
+				//assertEquals(runCmd("cmd /c " + testcase + ".out", destDir), 0);
+			} else {
+				throw new RuntimeException("Missing C compiler, such as gcc or MinGW.");
+			}
+
+			// Run the output file.
+			assertEquals(runCmd("cmd /c " + testcase + ".out", destDir), 0);
+		} else {
+			//runCmd("cd "+destDir, destDir);
+			// Compile the C program into *.out and place it in current working directory
+			assertEquals(runCmd("gcc Util.c " +testcase+".c -o " + testcase + ".out", destDir), 0);
+			// Run the generated out file
+			assertEquals(runCmd("./" + testcase + ".out", destDir), 0);
+		}
+
+	}
+
+
 	/**
 	 * Translate a Whiley program into the C code.
 	 * 
@@ -250,8 +286,8 @@ public final class BaseTestUtil {
 			default:
 				throw new RuntimeException("Not implemented");
 			}
-			
-			
+
+
 			// Create destDir
 			createDestDir(destDir);
 
@@ -283,31 +319,8 @@ public final class BaseTestUtil {
 
 			// Get Operation System.
 			// 4. Compile and run the C code.
-			if (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0) {
-				// This option requires the Cygwin and gcc, or MinGW
-				// Compile the *.c using GCC
-				String path = System.getenv("PATH");// Get PATH environment variable.
-				if (path.contains("MinGW")) {
-					// Check the exit value. If not 0, the compilation has errors.
-					assertEquals(runCmd("cmd /c gcc *.c  -o " + testcase + ".out", destDir), 0);
-				} else if (path.contains("cygwin")) {
-					// Gcc is a link (Windows command does not get it), so call its actual name (i.e. gcc-3 or gcc-4)
-					assertEquals(runCmd("cmd /c gcc-4 *.c  -o " + testcase + ".out", destDir), 0);
-					// Run the output file.
-					//assertEquals(runCmd("cmd /c " + testcase + ".out", destDir), 0);
-				} else {
-					throw new RuntimeException("Missing C compiler, such as gcc or MinGW.");
-				}
-				
-				// Run the output file.
-				assertEquals(runCmd("cmd /c " + testcase + ".out", destDir), 0);
-			} else {
-				//runCmd("cd "+destDir, destDir);
-				// Compile the C program into *.out and place it in current working directory
-				assertEquals(runCmd("gcc Util.c " +testcase+".c -o " + testcase + ".out", destDir), 0);
-				// Run the generated out file
-				assertEquals(runCmd("./" + testcase + ".out", destDir), 0);
-			}
+			compileAndRunCCode(testcase, destDir);
+			
 			// Delete the Wyil files inside folder
 			Files.deleteIfExists(FileSystems.getDefault().getPath(sourceDir + testcase + ".wyil"));
 		} catch (Exception e) {
@@ -321,6 +334,23 @@ public final class BaseTestUtil {
 		while (p != null) {
 			p.destroy();
 			p = null;
+		}
+	}
+
+	public void execCopyAnalysis(Path path, String testcase) {
+		// Run commmands
+		String cmd = "java -cp " + classpath + " wyopcl.WyopclMain -bp " + whiley_runtime_lib + " -code -copy"
+				+ " " + testcase + ".whiley";
+		Path destDir = Paths.get(path + File.separator + testcase + File.separator);
+		// Generate Copy-eliminated C code
+		runCmd(cmd, destDir);
+		// Compile and run the generated C code
+		compileAndRunCCode(testcase, destDir);
+		// Delete the Wyil files inside folder
+		try {
+			Files.deleteIfExists(FileSystems.getDefault().getPath(destDir + testcase + ".wyil"));
+		} catch (IOException e) {
+			throw new RuntimeException("Errors!!!");
 		}
 	}
 
