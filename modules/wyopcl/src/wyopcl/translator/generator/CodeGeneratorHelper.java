@@ -261,29 +261,6 @@ public final class CodeGeneratorHelper {
 		return statement;
 	}
 	
-	/**
-	 * Generate the declaration of ownership variable, e.g.
-	 * 
-	 * <pre><code>
-	 * bool a_has_ownership = true;
-	 * </code></pre>
-	 * @param var
-	 * @return
-	 */
-	protected static String addOwnership(Type type, String var, CodeStores stores){
-		if(stores.isCompoundType(type)){
-			return "_ADD_OWNERSHIP("+var+");";
-		}
-		return "";
-	}
-	
-	protected static String removeOwnership(Type type, String var, CodeStores stores){
-		if(stores.isCompoundType(type)){
-			return "_REMOVE_OWNERSHIP("+var+");";
-		}
-		return "";
-	}
-	
 	
 	/**
 	 * Assign ownership to rhs variable of a function call 'a=f(b)', based on the following rules

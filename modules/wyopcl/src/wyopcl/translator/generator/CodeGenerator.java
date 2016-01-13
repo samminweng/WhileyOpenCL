@@ -249,7 +249,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			
 			// Add lhs to ownership
 			this.deallocatedAnalyzer.ifPresent(a -> 
-			statement.addAll(a.computeOwnership(indent, true, code, function, stores)));
+				statement.add(indent + a.addOwnership(code.target(), function, stores)));
 			
 		}
 		
@@ -305,7 +305,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// Assign lhs to NULL values by 
 				statement.add(indent + lhs + " = NULL;");
 				// Transfer out the ownership of lhs variable
-				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.removeOwnership(lhs_type, lhs, this.stores)));
+				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + a.transferOwnership(code.target(), function, stores)));
 			}else{
 				statement.addAll(CodeGeneratorHelper.generateAssignmentCode(lhs_type, indent, lhs, rhs, isCopyEliminated, stores));
 				this.deallocatedAnalyzer.ifPresent(a -> statement.addAll(a.computeOwnership(indent, isCopyEliminated, code, function, stores)));
@@ -578,7 +578,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				String end = store.getVar(code.operand(2));
 				statement.add("_SLICE_ARRAY("+lhs+", "+array+", "+start+", "+end+");");
 				// Assign ownership
-				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent +  CodeGeneratorHelper.addOwnership(lhs_type, lhs, this.stores)));
+				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + a.addOwnership(code.target(), function, this.stores)));
 				break;
 			case "toString":
 				statement.add(indent + lhs + " = " + code.operand(0) + ";");
@@ -595,20 +595,16 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// call the function/method, e.g. '_12=reverse(_xs , _xs_size);'
 			statement.add(translateLHSFunctionCall(code, function) + code.name.name() + "("+ translateRHSFunctionCall(code, function)+");");
 			
-			// Transfer out the registers that does not have the copy
+			// Transfer out the rhs registers that does not have the copy
 			for(int op: code.operands()){
-				String member = store.getVar(op);
-				Type op_type = store.getRawType(op);
-				if(stores.isCompoundType(op_type)){
-					if(isCopyEliminated(op, code, function)){
-						this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.removeOwnership(op_type, member, stores)));
-					}
-				}			
+				if(isCopyEliminated(op, code, function)){
+					this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + a.transferOwnership(op, function, stores)));
+				}	
 			}
 			
 			// Assign ownership to lhs
-			this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addOwnership(lhs_type, lhs, this.stores)));
-			// Assign ownership to rhs
+			this.deallocatedAnalyzer.ifPresent(a -> statement.add(
+							indent + a.addOwnership(code.target(), function, this.stores)));
 			
 		
 		}
@@ -1028,7 +1024,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// Convert the arguments into an array of integer array (long long**).
 				statement.add(indent+"_CONV_ARGS("+lhs+");");
 				// Add ownership.
-				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addOwnership(lhs_type, lhs, stores)));
+				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + a.addOwnership(code.target(), function, stores)));
 			} else {
 				String rhs = store.getVar(code.operand(0)) + CodeGeneratorHelper.accessMember(rhs_type) + code.field;
 				// Free lhs variable
@@ -1038,7 +1034,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statement.addAll(CodeGeneratorHelper.generateAssignmentCode(lhs_type, indent, lhs, rhs, isCopyEliminated, stores));
 				if(!isCopyEliminated){
 					// Assign ownership to lhs variable if the rhs variable is copied.
-					this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addOwnership(lhs_type, lhs, stores)));
+					this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + a.addOwnership(code.target(), function, stores)));
 				}
 			}
 		}
@@ -1193,8 +1189,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String indent = store.getIndent();
 		String lhs = store.getVar(code.target());
 		List<String> statement = new ArrayList<String>();
-		//Type lhs_type = store.getRawType(code.target());
-		//String type_name = CodeGeneratorHelper.translateType(code.type(), stores);
 		//Add deallocation code to lhs structure
 		this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, code.type(), stores)));
 		
@@ -1204,22 +1198,24 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		int[] operands = code.operands();
 		for(int i=0;i<operands.length; i++){
 			// Get operand 
-			String rhs = store.getVar(operands[i]);
+			int operand = operands[i];
+			String rhs = store.getVar(operand);
 			String member = members.get(i);
 			String lhs_member = lhs + CodeGeneratorHelper.accessMember(code.type()) + member;
-			//Type type = store.getVarType(code.operand(i));
 			Type type = code.type().field(member);
 			
-			boolean isCopyEliminated = isCopyEliminated(operands[i], code, function);
+			boolean isCopyEliminated = isCopyEliminated(operand, code, function);
 			statement.addAll(CodeGeneratorHelper.generateAssignmentCode(type, indent, lhs_member, rhs, isCopyEliminated, stores));
-			if(isCopyEliminated && this.deallocatedAnalyzer.isPresent()){
+			if(isCopyEliminated){
 				//Remove rhs ownership
-				statement.add(indent + CodeGeneratorHelper.removeOwnership(type, rhs, stores));
+				this.deallocatedAnalyzer.ifPresent(a ->
+						statement.add(indent+a.transferOwnership(operand, function, stores)));
 			}
 		}
 		
-		// Assign ownership to lhs 
-		this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addOwnership(code.type(), lhs, this.stores)));
+		// Assign ownership to lhs
+		this.deallocatedAnalyzer.ifPresent(a ->
+				statement.add(indent + a.addOwnership(code.target(), function, stores)));
 		
 		// Get the set of field names and convert it to an array of string.
 		store.addAllStatements(code, statement);
@@ -1379,7 +1375,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Generate the array with size and values.
 		statement.add(indent+"_GEN_"+dimension+"DARRAY("+lhs+", "+size+", "+rhs+");");
 		// Assign ownership to lhs variable.
-		this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addOwnership(code.type(), lhs, this.stores)));
+		this.deallocatedAnalyzer.ifPresent(a -> statement.add(
+					indent + a.addOwnership(code.target(), function, stores)));
 		
 		store.addAllStatements(code, statement);
 	}

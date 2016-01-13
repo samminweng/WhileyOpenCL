@@ -99,11 +99,7 @@ public class DeallocationAnalyzer extends Analyzer {
 				this.ownerships.get(function).transferOwnership(r.operand);
 			}
 			statements.addAll(freeAllMemory(indent, function, stores));
-		}else if(code instanceof Codes.Const){
-			Codes.Const c = (Codes.Const)code;
-			// Add lhs to ownership set
-			statements.add(addOwnership(c.target(), function, stores));
-		} else{
+		}else{
 			throw new RuntimeException("Not implemented");
 		}
 		
@@ -120,7 +116,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param var
 	 * @return
 	 */
-	private String addOwnership(int register, FunctionOrMethod function, CodeStores stores){
+	public String addOwnership(int register, FunctionOrMethod function, CodeStores stores){
 		Type type = stores.getRawType(register, function);
 		if(stores.isCompoundType(type)){
 			String var = stores.getVar(register, function);
@@ -135,7 +131,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param reg
 	 * @param function
 	 */
-	private String transferOwnership(int register, FunctionOrMethod function, CodeStores stores){
+	public String transferOwnership(int register, FunctionOrMethod function, CodeStores stores){
 		Type type = stores.getRawType(register, function);
 		if(stores.isCompoundType(type)){
 			String var = stores.getVar(register, function);

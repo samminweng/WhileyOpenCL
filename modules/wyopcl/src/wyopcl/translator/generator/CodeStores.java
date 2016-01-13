@@ -94,7 +94,7 @@ public class CodeStores {
 	 * @param record
 	 * @return
 	 */
-	protected List<String> getMemebers(Type.Record record){
+	public List<String> getMemebers(Type.Record record){
 		//System.out.println(record.keys());
 		State fields = (State) record.automaton.states[0].data;
 		List<String> members = fields.stream().collect(Collectors.toList());
