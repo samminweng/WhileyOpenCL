@@ -53,8 +53,26 @@ public class CodeStores {
 		return stores.get(function);
 	}
 	
-	
-	
+	/**
+	 * Get the raw type of a given register, defined in 'f' function
+	 * @param register
+	 * @param function
+	 * @return
+	 */
+	public Type getRawType(int register, FunctionOrMethod function){
+		CodeStore store = getCodeStore(function);
+		return store.getRawType(register);
+	}
+	/**
+	 * Get the variable name of a given register defined in 'f' function
+	 * @param register
+	 * @param function
+	 * @return
+	 */
+	public String getVar(int register, FunctionOrMethod function){
+		CodeStore store = getCodeStore(function);
+		return store.getVar(register);
+	}
 	
 	/**
 	 * Get the fields from a record type. 
@@ -174,7 +192,7 @@ public class CodeStores {
 	 * @param function
 	 * @return
 	 */
-	protected boolean isCompoundType(Type type){
+	public boolean isCompoundType(Type type){
 		if(type instanceof Type.Int || type instanceof Type.FunctionOrMethod){
 			return false;
 		}

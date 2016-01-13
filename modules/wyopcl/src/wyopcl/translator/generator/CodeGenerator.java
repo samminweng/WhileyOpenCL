@@ -301,14 +301,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.removeOwnership(lhs_type, lhs, this.stores)));
 			}else{
 				statement.addAll(CodeGeneratorHelper.generateAssignmentCode(lhs_type, indent, lhs, rhs, isCopyEliminated, stores));
-				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addOwnership(lhs_type, lhs, stores)));
-				if(!isCopyEliminated){
-					// Assigned the ownership
-					this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addOwnership(rhs_type, rhs, stores)));
-				}else{					
-					// Transfer the ownership from rhs variable to lhs variable
-					this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.removeOwnership(rhs_type, rhs, stores)));
-				}
+				this.deallocatedAnalyzer.ifPresent(a -> statement.addAll(a.computeOwnership(indent, isCopyEliminated, code, function, stores)));
 			}
 		}
 		
@@ -870,17 +863,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		
 		// Add 'deallocation code' for all ownership variables.
 		if(function.name().equals("main") || code.operand >=0){
-		
-			this.deallocatedAnalyzer.ifPresent( a -> {
-				// Get a list of ownership variables.
-				a.getOwnerships(function).stream()
-				.forEach(register ->{
-					// Get variable name and type to generate 'deallocated' code.
-					Type var_type = store.getRawType(register);
-					String var = store.getVar(register);
-					statements.add(indent + CodeGeneratorHelper.addDeallocatedCode(var, var_type, stores));
-				});
-			});
+			this.deallocatedAnalyzer.ifPresent(a -> 
+				statements.addAll(a.computeOwnership(indent, false, code, function, stores)));
 		}
 		
 		// Add return statements 

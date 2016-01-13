@@ -355,7 +355,7 @@ public final class CodeGeneratorHelper {
 	 * @param stores
 	 * @return
 	 */
-	protected static String addDeallocatedCode(String var, Type type, CodeStores stores){
+	public static String addDeallocatedCode(String var, Type type, CodeStores stores){
 		if(!stores.isCompoundType(type)){
 			return "";
 		}

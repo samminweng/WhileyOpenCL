@@ -3,6 +3,7 @@ package wyopcl.translator.deallocate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -17,6 +18,8 @@ import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
 import wyopcl.translator.Analyzer;
+import wyopcl.translator.generator.CodeGeneratorHelper;
+import wyopcl.translator.generator.CodeStores;
 
 
 /**
@@ -33,21 +36,6 @@ public class DeallocationAnalyzer extends Analyzer {
 	
 	
 	
-	/**
-	 * Initialize the 'ownership' set for a given function
-	 * 
-	 * @param function
-	 */
-	private void initializeOwnership(FunctionOrMethod function){
-		// Initialize the ownership variables
-		if(this.ownerships.getOrDefault(function, null)== null){
-			this.ownerships.put(function,  new OwnershipVariables());
-		}
-
-		// Add function input parameters to ownership set.
-		IntStream.range(0, function.type().params().size())
-		.forEach(register -> this.addOwnership(register, function));
-	}
 	
 	
 	/**
@@ -55,7 +43,7 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param function
 	 * @return
 	 */
-	public List<Integer> getOwnerships(FunctionOrMethod function){
+	private List<Integer> getOwnerships(FunctionOrMethod function){
 		List<Integer> ownership = this.ownerships.get(function).getOwnership();
 		
 		if(config.isVerbose()){
@@ -68,66 +56,100 @@ public class DeallocationAnalyzer extends Analyzer {
 		return ownership;
 	}
 	
+	private List<String> freeAllMemory(String indent, FunctionOrMethod function, CodeStores stores){
+		List<String> statements = new ArrayList<String>();
+		// Get a list of ownership variables.
+		getOwnerships(function).stream()
+		.forEach(register ->{
+			// Get variable name and type to generate 'deallocated' code.
+			Type var_type = stores.getRawType(register, function);
+			String var = stores.getVar(register, function);
+			statements.add(indent + CodeGeneratorHelper.addDeallocatedCode(var, var_type, stores));
+		});
+
+		return statements;
+		
+	}
+	
+	
 	/**
-	 * Check if the type of given register is an array or record (excluding 'print' fields)
-	 * 
-	 * @param register
+	 * Given a code, compute the ownerships and return the generated C code. 
+	 * @param code
 	 * @param function
+	 * @param stores
 	 * @return
 	 */
-	private boolean isCompoundType(int register, FunctionOrMethod function){
-		VariableDeclarations declarations = function.attribute(VariableDeclarations.class);
-		Type type = declarations.get(register).type();
-		if(type instanceof Type.Array){
-			return true;
-		}else if(type instanceof Type.Record){
-			Type.Record record = (Type.Record)type;
-			// Check if the variable contains 'printf' field. 
-			long nonePrintFields = record.fields().keySet().stream()
-			.filter(f -> !f.contains("print") && !f.contains("println") && !f.contains("print_s") && !f.contains("println_s") )
-			.count();
-			
-			// If NOT a printf field, then add ownership.
-			if(nonePrintFields>0){
-				return true;
+	public List<String> computeOwnership(String indent, boolean isCopyEliminated, Code code, FunctionOrMethod function, CodeStores stores){
+		List<String> statements = new ArrayList<String>();
+		if(code instanceof Codes.Assign){			
+			Codes.Assign assign = (Codes.Assign)code;
+			// Add lhs to ownership set
+			statements.add(indent + addOwnership(assign.target(), function, stores));
+			if(isCopyEliminated){
+				//Transfer out rhs ownership set
+				statements.add(indent + transferOwnership(assign.operand(0), function, stores));
+			}else{
+				// Add rhs to ownership set
+				statements.add(indent + addOwnership(assign.operand(0), function, stores));
 			}
-		}else if(type instanceof Type.Nominal){
-			// Get nominal type
-			if(!((Type.Nominal)type).name().toString().contains("Console")){
-				return true;
+		}else if(code instanceof Codes.Return){
+			Codes.Return r = (Codes.Return)code;
+			if(r.operand>=0){
+				// Transfer out the return value's ownership
+				this.ownerships.get(function).transferOwnership(r.operand);
 			}
+			statements.addAll(freeAllMemory(indent, function, stores));
+		}else{
+			throw new RuntimeException("Not implemented");
 		}
 		
-		return false;
+		return statements;
 	}
 	
 	
 	/**
-	 * Adds 'reg' to 'ownership' set 
-	 * @param reg
-	 * @param f
+	 * Adds the register to ownership and generate the code
+	 * 
+	 * <pre><code>
+	 * bool a_has_ownership = true;
+	 * </code></pre>
+	 * @param var
+	 * @return
 	 */
-	private void addOwnership(int register, FunctionOrMethod function){
-		// Check if the type is an array
-		if(isCompoundType(register, function)){
+	private String addOwnership(int register, FunctionOrMethod function, CodeStores stores){
+		Type type = stores.getRawType(register, function);
+		if(stores.isCompoundType(type)){
+			String var = stores.getVar(register, function);
 			this.ownerships.get(function).addOwnership(register);
+			return "_ADD_OWNERSHIP("+var+");";
 		}
+		return "";
 	}
+
 	/**
-	 * Takes out 'reg' from 'ownership' set
+	 * Takes out 'register' from 'ownership' set
 	 * @param reg
 	 * @param function
 	 */
-	private void transferOwnership(int reg, FunctionOrMethod function){
-		this.ownerships.get(function).transferOwnership(reg);
+	private String transferOwnership(int register, FunctionOrMethod function, CodeStores stores){
+		Type type = stores.getRawType(register, function);
+		if(stores.isCompoundType(type)){
+			String var = stores.getVar(register, function);
+			this.ownerships.get(function).transferOwnership(register);
+			return "_REMOVE_OWNERSHIP("+var+");";
+		}
+		return "";
 	}
 
+	
+	
+	
 	/**
 	 * Iterate each code and compute the ownership set.
 	 * @param code
 	 * @param function
 	 */
-	private void iterateCode(Code code, FunctionOrMethod function){
+	/*private void iterateCode(Code code, FunctionOrMethod function){
 		if(code instanceof Codes.FieldLoad){
 			this.addOwnership(((Codes.FieldLoad)code).target(), function);
 		}else if(code instanceof Codes.Loop){
@@ -155,7 +177,7 @@ public class DeallocationAnalyzer extends Analyzer {
 			// Do nothing
 		}
 		
-	}
+	}*/
 
 	/**
 	 * Print out ownership
@@ -176,8 +198,14 @@ public class DeallocationAnalyzer extends Analyzer {
 	public void apply(WyilFile module) {
 		super.apply(module);
 		
-		// Compute ownership set for each function.
 		for(FunctionOrMethod function: module.functionOrMethods()){
+			if(!this.ownerships.containsKey(function)){
+				this.ownerships.put(function, new OwnershipVariables());
+			}
+		}
+		
+		// Compute ownership set for each function.
+		/*for(FunctionOrMethod function: module.functionOrMethods()){
 			// Initialize the 'ownership' set with each of true value.
 			this.initializeOwnership(function);
 			// Compute 'ownership' set
@@ -187,7 +215,7 @@ public class DeallocationAnalyzer extends Analyzer {
 			if(config.isVerbose()){
 				this.printOwnership(function);
 			}
-		}
+		}*/
 	}
 	
 	
