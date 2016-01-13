@@ -18,6 +18,7 @@ import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
 import wyopcl.translator.Analyzer;
+import wyopcl.translator.copy.CopyEliminationAnalyzer;
 import wyopcl.translator.generator.CodeGeneratorHelper;
 import wyopcl.translator.generator.CodeStores;
 
@@ -33,9 +34,6 @@ public class DeallocationAnalyzer extends Analyzer {
 		super(config);
 		this.ownerships = new HashMap<FunctionOrMethod, OwnershipVariables>();
 	}
-	
-	
-	
 	
 	
 	/**
@@ -86,7 +84,7 @@ public class DeallocationAnalyzer extends Analyzer {
 			// Add lhs to ownership set
 			statements.add(indent + addOwnership(assign.target(), function, stores));
 			if(isCopyEliminated){
-				//Transfer out rhs ownership set
+				// Transfer out rhs ownership set
 				statements.add(indent + transferOwnership(assign.operand(0), function, stores));
 			}else{
 				// Add rhs to ownership set
@@ -145,44 +143,69 @@ public class DeallocationAnalyzer extends Analyzer {
 	
 	
 	/**
-	 * Iterate each code and compute the ownership set.
-	 * @param code
-	 * @param function
+	 * Return ownership to a function. If deallocation is enabled, then pass the ownership to a function. 
+	 * The ownership value are based on based on the following rules, e.g. a function call 'a=f(b)', 
+	 * 
+	 * <table>
+	 * <thead>
+	 * <tr><th colspan="2"> f mutates b?</th><th>F</th><th>F</th><th>T</th><th>T</th></tr>
+	 * <tr><th colspan="2"> f returns b?</th><th>F</th><th>T</th><th>T</th><th>F</th></tr>
+	 * </thead>
+	 * <tbody>
+	 * <tr><td rowspan="2"> b is live?</td><td rowspan="2">T</td><td>No copy </td><td>No copy </td><td>Copy</td><td>Copy</td></tr>
+	 * <tr><td>b_own=T</td><td>b_own=F</td><td>b_own=T</td><td>b_own=T</td><td></td></tr>
+	 * <tr><td rowspan="2"> b is live?</td><td rowspan="2">F</td><td>No copy </td><td>No copy </td><td>No copy</td><td>No copy</td></tr>
+	 * <tr><td>b_own=T</td><td>b_own=F</td><td>b_own=F</td><td>b_own=F</td><td></td></tr>
+	 * </tbody>
+	 * </table>
+	 * @param type
+	 * @param copyAnalyzer
+	 * @return 
 	 */
-	/*private void iterateCode(Code code, FunctionOrMethod function){
-		if(code instanceof Codes.FieldLoad){
-			this.addOwnership(((Codes.FieldLoad)code).target(), function);
-		}else if(code instanceof Codes.Loop){
-			((Codes.Loop)code).bytecodes().stream()
-			.forEach(c -> iterateCode(c, function));
-		}else if(code instanceof Codes.Return){
-			// For Return code, transfer out the ownership of return value.
-			this.transferOwnership(((Codes.Return)code).operand, function);
-		}else if (code instanceof Codes.Assign){
-			this.addOwnership(((Codes.Assign)code).target(), function);
-		}else if (code instanceof Codes.Assert){
-			// Iterate the list of code inside an assertion.
-			((Codes.Assert)code).bytecodes().stream()
-			.forEach(c -> iterateCode(c, function));
-		}else if(code instanceof Codes.NewList){
-			// lhs of NewList code is assigned with ownership.
-			this.addOwnership(((Codes.NewList)code).target(), function);
-		}else if(code instanceof Codes.Invoke){
-			this.addOwnership(((Codes.Invoke)code).target(), function);
-		}else if (code instanceof Codes.Const){
-			this.addOwnership(((Codes.Const)code).target(), function);
-		}else if(code instanceof Codes.ListGenerator){
-			this.addOwnership(((Codes.ListGenerator)code).target(), function);
-		} else{
-			// Do nothing
+	public String passOwnershipToFunctionCall(int register, Codes.Invoke code, FunctionOrMethod function, CodeStores stores, Optional<CopyEliminationAnalyzer> copyAnalyzer){
+		Type type = stores.getRawType(register, function);
+		if(!stores.isCompoundType(type)){
+			return "";
 		}
 		
-	}*/
+		boolean isLive = true;
+		if(copyAnalyzer.isPresent()){
+			isLive = copyAnalyzer.get().isLive(register, code, function);
+		}
+		
+		String var = this.mapToFunctionParameters(register, code);
+		FunctionOrMethod f = this.getFunction(code.name.name(), code.type());
+		boolean isMutated = this.isMutated(var, f);
+		boolean isReturned = this.isReturned(var, f);
+		
+		if(!isMutated){
+			if(!isReturned){
+				return "true";
+			}else{
+				return "false";
+			}
+		}else{
+			if(isReturned){
+				// 'b' is alive
+				if(isLive){
+					return "true";
+				}else{
+					return "false";
+				}
+			}else{
+				if(isLive){
+					return "true";
+				}else{
+					return "false";
+				}
+			}
+		}
+	}
 
 	/**
 	 * Print out ownership
 	 */
-	private void printOwnership(FunctionOrMethod function){
+	/*private void printOwnership(FunctionOrMethod function){
 		List<Integer> ownership = this.getOwnerships(function);
 		// Print out ownership variables (comma-separated string).
 		System.out.println("Ownerships = {"+
@@ -192,7 +215,7 @@ public class DeallocationAnalyzer extends Analyzer {
 				);
 		
 	}
-	
+	*/
 	
 	@Override
 	public void apply(WyilFile module) {

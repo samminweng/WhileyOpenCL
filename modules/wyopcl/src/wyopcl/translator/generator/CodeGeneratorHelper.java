@@ -261,64 +261,6 @@ public final class CodeGeneratorHelper {
 		return statement;
 	}
 	
-	
-	/**
-	 * Assign ownership to rhs variable of a function call 'a=f(b)', based on the following rules
-	 * 
-	 * <table>
-	 * <thead>
-	 * <tr><th colspan="2"> f mutates b?</th><th>F</th><th>F</th><th>T</th><th>T</th></tr>
-	 * <tr><th colspan="2"> f returns b?</th><th>F</th><th>T</th><th>T</th><th>F</th></tr>
-	 * </thead>
-	 * <tbody>
-	 * <tr><td rowspan="2"> b is live?</td><td rowspan="2">T</td><td>No copy </td><td>No copy </td><td>Copy</td><td>Copy</td></tr>
-	 * <tr><td>b_own=T</td><td>b_own=T</td><td>b_own=F</td><td>b_own=T</td><td>b_own=T</td></tr>
-	 * <tr><td rowspan="2"> b is live?</td><td rowspan="2">F</td><td>No copy </td><td>No copy </td><td>No copy</td><td>No copy</td></tr>
-	 * <tr><td>b_own=T</td><td>b_own=T</td><td>b_own=F</td><td>b_own=F</td><td>b_own=F</td></tr>
-	 * </tbody>
-	 * </table>
-	 * @param register
-	 * @param function
-	 * @param stores
-	 * @return
-	 */
-	protected static List<String> assignFunctionCallOwnership(int lhs_r, int rhs_r, FunctionOrMethod function, CodeStores stores){
-		List<String> statements = new ArrayList<String>();
-		
-		
-		
-		
-		return statements;
-		
-		
-		
-		
-	}
-	
-	
-	
-	/**
-	 * Return ownership to a function. If deallocation is enabled, then pass the ownership to a function. 
-	 * The ownership value is based on copy analysis results.  
-	 * 
-	 * 
-	 * @param type
-	 * @param copyAnalyzer
-	 * @return 
-	 */
-	protected static String passOwnershipToFunction(Type type, CodeStores stores, Optional<CopyEliminationAnalyzer> copyAnalyzer){
-		if(!stores.isCompoundType(type)){
-			return "";
-		}
-		
-		if(copyAnalyzer.isPresent()){
-			// For copy-reduced implementation, the calling function does not own the array. 
-			return "false";
-		}else{
-			// For naive implementation, the copy is always made and thus calling function owns the array
-			return "true";
-		}
-	}
 
 	/**
 	 * Generate the code to release the memory for a given variable, e.g. 

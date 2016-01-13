@@ -74,7 +74,7 @@ public abstract class Analyzer {
 	 * @param type
 	 * @return
 	 */
-	public FunctionOrMethod getFunction(String name, Type.FunctionOrMethod type){
+	protected FunctionOrMethod getFunction(String name, Type.FunctionOrMethod type){
 		return this.module.functionOrMethod(name, type);
 	}
 	
@@ -98,7 +98,7 @@ public abstract class Analyzer {
 	 * @param function
 	 * @return
 	 */
-	public BasicBlock getBlockbyCode(FunctionOrMethod function, Code code) {
+	protected BasicBlock getBlockbyCode(FunctionOrMethod function, Code code) {
 		CFGraph graph = getCFGraph(function);
 		// Get the list of block for the function.
 		for (BasicBlock blk : graph.getBlockList()) {
@@ -494,7 +494,7 @@ public abstract class Analyzer {
 	 * @param function
 	 * @return
 	 */
-	public String getActualVarName(int register, FunctionOrMethod function){
+	protected String getActualVarName(int register, FunctionOrMethod function){
 		//Get the mapping table between variable name and register.
 		VariableDeclarations vars = function.attribute(VariableDeclarations.class);
 		String var_name = vars.get(register).name();
@@ -506,6 +506,72 @@ public abstract class Analyzer {
 		return var_name;
 	}
 	
-
+	/**
+	 * Check if a variable is returned by the function 'f'
+	 * @param r
+	 * @param f
+	 * @return
+	 */
+	protected boolean isReturned(String var, FunctionOrMethod f){
+		// Iterate the list of wyil code
+		for (Code code : f.body().bytecodes()) {
+			if(code instanceof Codes.Return){
+				Codes.Return r = (Codes.Return)code;
+				if(r.operand>=0){
+					String ret = getActualVarName(r.operand, f);
+					if(ret.equals(var)){
+						return true;
+					}
+				}
+			}
+		}
+		
+		return false;
+	}
 	
+	/**
+	 * Check if the array 'r' is updated inside the function.
+	 * 
+	 * @param reg
+	 *            the array
+	 * @param f
+	 *            the function
+	 * @return true if the array 'r' is updated.
+	 */
+	protected boolean isMutated(String var, FunctionOrMethod f) {
+		// Get the list of wyil code
+		for (Code code : f.body().bytecodes()) {
+			// Check the array is updated.
+			if (code instanceof Codes.Update) {
+				String target = getActualVarName(((Codes.Update) code).target(), f);
+				if (target.equals(var)) {
+					return true;// Modified Array.
+				}
+			}
+		}
+		// Read-only array.
+		return false;
+	}
+	
+	/**
+	 * Map an argument of a function call to the input parameters of a function. 
+	 * @param register
+	 * @param code
+	 * @return
+	 */
+	protected String mapToFunctionParameters(int register, Codes.Invoke code){
+		FunctionOrMethod invoked_function = this.getFunction(code.name.name(), code.type());
+		if (invoked_function != null) {
+			// Map the register to input parameter.
+			int parameter=0;
+			while(parameter<code.operands().length){
+				if(register==code.operand(parameter)){
+					break;
+				}
+				parameter++;
+			}
+			return getActualVarName(parameter, invoked_function);
+		}
+		throw new RuntimeException("Not implemented");
+	}
 }

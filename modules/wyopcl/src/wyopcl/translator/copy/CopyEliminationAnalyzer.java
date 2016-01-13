@@ -26,7 +26,6 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	private LiveVariablesAnalysis liveAnalyzer;
 	// Store the liveness analysis for each function (Key: function, Value:Liveness information).
 	private HashMap<FunctionOrMethod, LiveVariables> livenessStore;
-
 	/**
 	 * Basic Constructor
 	 */
@@ -125,62 +124,21 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		for (FunctionOrMethod function : module.functionOrMethods()) {
 			computeLiveness(function);
 		}
-		
-		//
 	}
 	
-	/**
-	 * Check if a variable is returned by the function 'f'
-	 * @param r
-	 * @param f
-	 * @return
-	 */
-	public boolean isReturned(String var, FunctionOrMethod f){
-		// Iterate the list of wyil code
-		for (Code code : f.body().bytecodes()) {
-			if(code instanceof Codes.Return){
-				Codes.Return r = (Codes.Return)code;
-				if(r.operand>=0){
-					String ret = getActualVarName(r.operand, f);
-					if(ret.equals(var)){
-						return true;
-					}
-				}
-				
-				
-			}
-			
-		}
-		
-		return false;
-	}
-	
-	
-	
-	/**
-	 * Check if the array 'r' is updated inside the function.
-	 * 
-	 * @param reg
-	 *            the array
-	 * @param f
-	 *            the function
-	 * @return true if the array 'r' is updated.
-	 */
-	private boolean mutate(String var, FunctionOrMethod f) {
-		// Get the list of wyil code
-		for (Code code : f.body().bytecodes()) {
-			// Check the array is updated.
-			if (code instanceof Codes.Update) {
-				String target = getActualVarName(((Codes.Update) code).target(), f);
-				if (target.equals(var)) {
-					return true;// Modified Array.
-				}
-			}
-		}
-		// Read-only array.
-		return false;
-	}
+	public boolean isLive(int reg, Code code, FunctionOrMethod f){
+		boolean isLive = true;
 
+		// Check the array is live.
+		BasicBlock blk = getBlockbyCode(f, code);// Get basic block that contains the given code.
+		if(blk != null){
+			Env outSet = getLiveness(f).getOUT(blk);
+			isLive = outSet.contains(reg);
+		}
+		return isLive;
+	}
+	
+	
 	/**
 	 * Determines whether to make a copy of array by checking liveness information or read-only property.
 	 * 
@@ -208,15 +166,8 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	 *            the caller function
 	 * @return ture if the copy is un-needed and can be avoid. Otherwise, return false.
 	 */
-	public boolean isCopyEliminated(int reg, Code code, FunctionOrMethod f) {
-		boolean isLive = true;
-
-		// Check the array is live.
-		BasicBlock blk = getBlockbyCode(f, code);// Get basic block that contains the given code.
-		if(blk != null){
-			Env outSet = getLiveness(f).getOUT(blk);
-			isLive = outSet.contains(reg);
-		}		
+	public boolean isCopyEliminated(int reg, Code code, FunctionOrMethod f) {	
+		boolean isLive = isLive(reg, code, f);
 		
 		// If the variable is not alive, then the copies are not needed.
 		if(!isLive){
@@ -239,7 +190,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 					}
 					String var = getActualVarName(parameter, invoked_function);
 					// Check if 'var' is modified inside 'invoked_function'.
-					isReadOnly = !mutate(var, invoked_function);
+					isReadOnly = !isMutated(var, invoked_function);
 					// Check if 'var' is returned by 'invoked_function'
 					isReturned = isReturned(var, invoked_function);
 					// The 'var' is mutated and returned
@@ -262,7 +213,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 				Codes.FieldLoad fieldload = (Codes.FieldLoad)code;
 				String lhs = getActualVarName(fieldload.target(), f);
 				// Check if the lhs is modified in 'f' funciton
-				isReadOnly = !mutate(lhs, f);
+				isReadOnly = !isMutated(lhs, f);
 				return isReadOnly;
 			}
 			throw new RuntimeException("Not implemeneted");

@@ -485,7 +485,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}else if (type instanceof Type.Nominal && ((Type.Nominal)type).name().name().equals("Console")){
 				statement.add("stdout");
 			}else if(type instanceof Type.Array){
-				boolean isCopyEliminated = isCopyEliminated(code.operand(index), code, function);
+				int register = code.operand(index);
+				boolean isCopyEliminated = isCopyEliminated(register, code, function);
 				int dimension = stores.getArrayDimension(type);
 				if(isCopyEliminated){
 					statement.add("_"+dimension+"DARRAY_PARAM("+var+")");
@@ -493,17 +494,23 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					statement.add("_"+dimension+"DARRAY_COPY_PARAM("+var+")");
 				}
 				// pass the ownership flag
-				this.deallocatedAnalyzer.ifPresent(a ->statement.add(CodeGeneratorHelper.passOwnershipToFunction(type, stores, this.copyAnalyzer)));
+				this.deallocatedAnalyzer.ifPresent(a ->
+						statement.add(a.passOwnershipToFunctionCall(register, code, function, stores, copyAnalyzer)));
+				//this.deallocatedAnalyzer.ifPresent(a ->statement.add(CodeGeneratorHelper.passOwnershipToFunction(type, stores, this.copyAnalyzer)));
 			}else if( type instanceof Type.Record || type instanceof Type.Nominal){
-				boolean isCopyEliminated = isCopyEliminated(code.operand(index), code, function);
+				int register = code.operand(index);
+				boolean isCopyEliminated = isCopyEliminated(register, code, function);
 				if(isCopyEliminated){
 					statement.add(var);
 				}else{
 					String type_name = CodeGeneratorHelper.translateType(type, stores);
 					statement.add("copy_"+type_name+"("+var+")");
 				}
+				
 				// pass the ownership flag
-				this.deallocatedAnalyzer.ifPresent(a ->statement.add(CodeGeneratorHelper.passOwnershipToFunction(type, stores, this.copyAnalyzer)));
+				this.deallocatedAnalyzer.ifPresent(a ->
+						statement.add(a.passOwnershipToFunctionCall(register, code, function, stores, copyAnalyzer)));
+				//this.deallocatedAnalyzer.ifPresent(a ->statement.add(CodeGeneratorHelper.passOwnershipToFunction(type, stores, this.copyAnalyzer)));
 			} else {
 				throw new RuntimeException("Not Implemented");
 			}

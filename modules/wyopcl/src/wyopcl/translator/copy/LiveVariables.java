@@ -51,7 +51,8 @@ public class LiveVariables {
 		}
 		this.isChanged = true;
 	}
-
+	
+	
 	/**
 	 * Given a control flow graph, compute 'IN' and 'OUT' set for each code block using live variable analysis
 	 * (Whiley compiler) and stores each in/out set with HashMap separately.
@@ -220,5 +221,4 @@ public class LiveVariables {
 		}
 		return getOUT(block);
 	}
-
 }
