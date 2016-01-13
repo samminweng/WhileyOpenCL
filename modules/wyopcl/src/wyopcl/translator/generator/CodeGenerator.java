@@ -225,27 +225,34 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String lhs = store.getVar(code.target());
 		Type lhs_type = store.getRawType(code.target());
 		String indent = store.getIndent();
-		if (code.assignedType() instanceof Type.Array) {
-			// Convert it into a constant list
-			Constant.List list = (Constant.List) code.constant;
-			if (!list.values.isEmpty()) {
+		if (code.assignedType() instanceof Type.Null){
+			// Skip translation.
+		}else{
+			if (code.assignedType() instanceof Type.Array) {
+				// Convert it into a constant list
+				Constant.List list = (Constant.List) code.constant;
 				// Free lhs variable
 				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
 				statement.add(indent+"_NEW_ARRAY("+lhs+", "+list.values.size()+");");
-				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent+ "_ADD_OWNERSHIP("+lhs+");"));
-				
-				String s = indent;
-				for(int i=0;i<list.values.size();i++){
-					s += lhs + "["+i+"] = " + list.values.get(i)+"; ";
+				if (!list.values.isEmpty()) {				
+					// Assign values to each element
+					String s = indent;
+					for(int i=0;i<list.values.size();i++){
+						s += lhs + "["+i+"] = " + list.values.get(i)+"; ";
+					}
+					statement.add(s);
 				}
-				statement.add(s);
+			} else {
+				// Add a statement
+				statement.add(indent + lhs + " = " + code.constant + ";");
 			}
-		} else if (code.assignedType() instanceof Type.Null){
-			// Skip translation.
-		} else {
-			// Add a statement
-			statement.add(indent + lhs + " = " + code.constant + ";");
+			
+			// Add lhs to ownership
+			this.deallocatedAnalyzer.ifPresent(a -> 
+			statement.addAll(a.computeOwnership(indent, true, code, function, stores)));
+			
 		}
+		
 		store.addAllStatements(code, statement);
 	}
 
@@ -287,7 +294,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String indent = store.getIndent();
 		List<String> statement = new ArrayList<String>();
 		String rhs = store.getVar(code.operand(0));
-		Type rhs_type = store.getRawType(code.operand(0));
+		//Type rhs_type = store.getRawType(code.operand(0));
 		boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
 		if(!stores.isCompoundType(lhs_type)){
 			statement.add(indent + lhs + " = " + rhs + ";");

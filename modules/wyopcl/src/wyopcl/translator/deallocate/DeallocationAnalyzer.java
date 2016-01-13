@@ -99,7 +99,11 @@ public class DeallocationAnalyzer extends Analyzer {
 				this.ownerships.get(function).transferOwnership(r.operand);
 			}
 			statements.addAll(freeAllMemory(indent, function, stores));
-		}else{
+		}else if(code instanceof Codes.Const){
+			Codes.Const c = (Codes.Const)code;
+			// Add lhs to ownership set
+			statements.add(addOwnership(c.target(), function, stores));
+		} else{
 			throw new RuntimeException("Not implemented");
 		}
 		
