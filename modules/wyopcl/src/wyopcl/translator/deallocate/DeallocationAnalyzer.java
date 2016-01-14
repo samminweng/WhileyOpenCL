@@ -162,10 +162,10 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * @param copyAnalyzer
 	 * @return 
 	 */
-	public String passOwnershipToFunctionCall(int register, Codes.Invoke code, FunctionOrMethod function, CodeStores stores, Optional<CopyEliminationAnalyzer> copyAnalyzer){
+	public Optional<Boolean> computeOwnershipFunctionCallParameter(int register, Codes.Invoke code, FunctionOrMethod function, CodeStores stores, Optional<CopyEliminationAnalyzer> copyAnalyzer){
 		Type type = stores.getRawType(register, function);
 		if(!stores.isCompoundType(type)){
-			return "";
+			return Optional.empty();
 		}
 		
 		boolean isLive = true;
@@ -177,29 +177,31 @@ public class DeallocationAnalyzer extends Analyzer {
 		FunctionOrMethod f = this.getFunction(code.name.name(), code.type());
 		boolean isMutated = this.isMutated(var, f);
 		boolean isReturned = this.isReturned(var, f);
-		
+		Optional<Boolean> ownership;
 		if(!isMutated){
-			if(!isReturned){
-				return "true";
+			if(!isReturned){				
+				ownership = Optional.of(true);
 			}else{
-				return "false";
+				ownership = Optional.of(false);
 			}
 		}else{
 			if(isReturned){
 				// 'b' is alive
 				if(isLive){
-					return "true";
+					ownership = Optional.of(true);
 				}else{
-					return "false";
+					ownership = Optional.of(false);
 				}
 			}else{
 				if(isLive){
-					return "true";
+					ownership = Optional.of(true);
 				}else{
-					return "false";
+					ownership = Optional.of(false);
 				}
 			}
 		}
+		
+		return ownership;
 	}
 
 	/**

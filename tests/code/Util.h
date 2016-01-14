@@ -44,37 +44,34 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 // Define the ownership variable
 #define _DECL_OWNERSHIP(a) bool a##_has_ownership = false;
 #define _DECL_OWNERSHIP_PARAM(a) bool a##_has_ownership
-// Concatenate array variable and array size variable
+// Concatenate struct and ownership
+#define _STRUCT_PARAM(a) a
+#define _STRUCT_PARAM_OWN(a) a, a##_has_ownership
+#define _STRUCT_COPY_PARAM(a, name) copy_##name(a)
+#define _STRUCT_COPY_PARAM_OWN(a, name) copy_##name(a), a##_has_ownership
+#define _FREE_STRUCT(a, name) if(a##_has_ownership){free_##name(a); a##_has_ownership = false;}
+// Concatenate 1D array variable, array size variable and ownership
 #define _DECL_1DARRAY_PARAM(a) long long* a, long long a##_size
 #define _DECL_1DARRAY_MEMBER(a) long long* a; long long a##_size;
 #define _1DARRAY_PARAM(a) a, a##_size
+#define _1DARRAY_PARAM_OWN(a) a, a##_size, a##_has_ownership
 #define _1DARRAY_COPY_PARAM(a) copy(a, a##_size), a##_size
+#define _1DARRAY_COPY_PARAM_OWN(a) copy(a, a##_size), a##_size, a##_has_ownership
+#define _1DARRAY_PRINT(a) printf1DArray(a, a##_size); 
+#define _1DARRAY_SIZE(a, b) a##_size = b##_size;
+#define _1DARRAY_COPY(a, b) a##_size = b##_size; a = copy(b, b##_size);
+#define _1DARRAY_UPDATE(a, b) a##_size = b##_size; a = b;
+#define _IFEQ_ARRAY(a, b, blklab) if(isArrayEqual(a, a##_size, b, b##_size)==1){goto blklab;}
+#define _GEN_1DARRAY(a, size, value) a##_size = size; a = gen1DArray(value, a##_size);
+#define _FREE(a) if(a##_has_ownership){free(a);a##_has_ownership=false;}
 // Concatenate 2D array variable and array size variable
 #define _DECL_2DARRAY_PARAM(a) long long** a, long long a##_size, long long a##_size_size
 #define _DECL_2DARRAY_MEMBER(a) long long** a; long long a##_size; long long a##_size_size;
 #define _2DARRAY_PARAM(a) a, a##_size, a##_size_size
+#define _2DARRAY_PARAM_OWN(a) a, a##_size, a##_size_size, a##_has_ownership 
 #define _2DARRAY_COPY_PARAM(a) copy2DArray(a, a##_size, a##_size_size), a##_size, a##_size_size
-// Print out array
-#define _1DARRAY_PRINT(a){\
-	printf1DArray(a, a##_size);\
-}
-// Print out array
-#define _2DARRAY_PRINT(a){\
-	printf2DArray(a, a##_size, a##_size_size);\
-}
-#define _1DARRAY_SIZE(a, b) {\
-	a##_size = b##_size;\
-}
-// Copy an array variable to another using copy
-#define _1DARRAY_COPY(a, b){ \
-	a##_size = b##_size; \
-	a = copy(b, b##_size);\
-}
-// Assign an array variable to another using pointer
-#define _1DARRAY_UPDATE(a, b){ \
-	a##_size = b##_size; \
-	a = b;\
-}
+#define _2DARRAY_COPY_PARAM_OWN(a) copy2DArray(a, a##_size, a##_size_size), a##_size, a##_size_size, a##_has_ownership
+#define _2DARRAY_PRINT(a) printf2DArray(a, a##_size, a##_size_size);
 #define _2DARRAY_SIZE(a, b){\
 	a##_size = b##_size;\
 	a##_size_size = b##_size_size;\
@@ -92,9 +89,7 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 	a = b;\
 }
 // Check if two arrays are the same
-#define _IFEQ_ARRAY(a, b, blklab){\
-	if(isArrayEqual(a, a##_size, b, b##_size)==1){goto blklab;}\
-}
+
 // Add ownership for a given variable
 #define _ADD_OWNERSHIP(a){\
 	a##_has_ownership = true;\
@@ -108,11 +103,7 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 	a##_size = length;\
 	a = malloc(length*sizeof(long long));\
 }
-// Generate an 1D array with given array size and initial value
-#define _GEN_1DARRAY(a, size, value){\
-	a##_size = size;\
-	a = gen1DArray(value, a##_size);\
-}
+
 // Generate a 2D array with given array size and initialize it with an 1D array
 #define _GEN_2DARRAY(a, size, value){\
 	a##_size = size;\
@@ -123,17 +114,9 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 #define _NULLIFY(a){\
 	a = NULL;\
 }
-// Free the array variable and ownership
-#define _FREE(a){\
-	if(a##_has_ownership){free(a);a##_has_ownership=false;}\
-}
 // Free the 2D array variable and ownership
 #define _FREE2DArray(a){\
 	if(a##_has_ownership){free2DArray(a, a##_size); a##_has_ownership = false;}\
-}
-// Free a structure
-#define _FREE_STRUCT(a, name){\
-	if(a##_has_ownership){free_##name(a); a##_has_ownership = false;}\
 }
 // Converts command line arguments into integer arrays
 #define _CONV_ARGS(a){\
