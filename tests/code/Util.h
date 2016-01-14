@@ -64,6 +64,7 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 #define _IFEQ_ARRAY(a, b, blklab) if(isArrayEqual(a, a##_size, b, b##_size)==1){goto blklab;}
 #define _GEN_1DARRAY(a, size, value) a##_size = size; a = gen1DArray(value, a##_size);
 #define _FREE(a) if(a##_has_ownership){free(a);a##_has_ownership=false;}
+#define _NEW_ARRAY(a, length) a##_size = length; a = malloc(length*sizeof(long long)); 
 // Concatenate 2D array variable and array size variable
 #define _DECL_2DARRAY_PARAM(a) long long** a, long long a##_size, long long a##_size_size
 #define _DECL_2DARRAY_MEMBER(a) long long** a; long long a##_size; long long a##_size_size;
@@ -72,63 +73,20 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 #define _2DARRAY_COPY_PARAM(a) copy2DArray(a, a##_size, a##_size_size), a##_size, a##_size_size
 #define _2DARRAY_COPY_PARAM_OWN(a) copy2DArray(a, a##_size, a##_size_size), a##_size, a##_size_size, a##_has_ownership
 #define _2DARRAY_PRINT(a) printf2DArray(a, a##_size, a##_size_size);
-#define _2DARRAY_SIZE(a, b){\
-	a##_size = b##_size;\
-	a##_size_size = b##_size_size;\
-} 
-// Copy an array variable to another using copy
-#define _2DARRAY_COPY(a, b){ \
-	a##_size = b##_size; \
-	a##_size_size = b##_size_size; \
-	a = copy2DArray(b, b##_size, b##_size_size);\
-}
-// Assign an array variable to another using pointer
-#define _2DARRAY_UPDATE(a, b){ \
-	a##_size = b##_size; \
-	a##_size_size = b##_size_size; \
-	a = b;\
-}
-// Check if two arrays are the same
-
+#define _2DARRAY_SIZE(a, b) a##_size = b##_size; a##_size_size = b##_size_size;
+#define _2DARRAY_COPY(a, b) a##_size = b##_size; a##_size_size = b##_size_size; a = copy2DArray(b, b##_size, b##_size_size);
+#define _2DARRAY_UPDATE(a, b) a##_size = b##_size; a##_size_size = b##_size_size; a = b;
+#define _GEN_2DARRAY(a, size, value) a##_size = size; a##_size_size = value##_size; a = gen2DArray(value, a##_size, a##_size_size);
+#define _FREE2DArray(a) if(a##_has_ownership){free2DArray(a, a##_size); a##_has_ownership = false;}
 // Add ownership for a given variable
-#define _ADD_OWNERSHIP(a){\
-	a##_has_ownership = true;\
-}
+#define _ADD_OWNERSHIP(a) a##_has_ownership = true;
 // Transfer an array variable's ownership to another
-#define _REMOVE_OWNERSHIP(a){ \
-	a##_has_ownership = false;\
-}
-// Create a new array
-#define _NEW_ARRAY(a, length){\
-	a##_size = length;\
-	a = malloc(length*sizeof(long long));\
-}
-
-// Generate a 2D array with given array size and initialize it with an 1D array
-#define _GEN_2DARRAY(a, size, value){\
-	a##_size = size;\
-	a##_size_size = value##_size;\
-	a = gen2DArray(value, a##_size, a##_size_size);\
-}
+#define _REMOVE_OWNERSHIP(a) a##_has_ownership = false;
 //Nullify the array variable
-#define _NULLIFY(a){\
-	a = NULL;\
-}
-// Free the 2D array variable and ownership
-#define _FREE2DArray(a){\
-	if(a##_has_ownership){free2DArray(a, a##_size); a##_has_ownership = false;}\
-}
+#define _NULLIFY(a) a = NULL;
 // Converts command line arguments into integer arrays
-#define _CONV_ARGS(a){\
-	a = convertArgsToIntArray(argc, args);\
-	a##_size = argc - 1;\
-}
+#define _CONV_ARGS(a) a = convertArgsToIntArray(argc, args); a##_size = argc - 1;
 // Parse a string into an integer
-#define _STR_TO_INT(a, b){\
-	a = parseInteger(b);\
-}
+#define _STR_TO_INT(a, b) a = parseInteger(b);
 // Slice an array 'b' into a new array 'a' 
-#define _SLICE_ARRAY(a, b, start, end){\
-	a = slice(b, b##_size, start, end);\
-	a##_size = end - start;\
-}
+#define _SLICE_ARRAY(a, b, start, end) a = slice(b, b##_size, start, end); a##_size = end - start;
