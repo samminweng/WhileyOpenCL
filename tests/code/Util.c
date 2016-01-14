@@ -74,16 +74,14 @@ long long** gen2DArray(long long* arr,  long long x, long long y){
  *  Combine an array of integers into an integer,
  *  e.g. arr = {1, 0} is converted into 10.\
  *  */
-long long* parseInteger(long long* arr){
-	long long* result;
+long long parseStringToInt(long long* arr){
 	long long value = 0;
 	long long i=0;
 	while(arr[i]>=0&&arr[i]<=9){
 		value = value*10+arr[i];
 		i++;
 	}
-	result = &value;
-	return result;
+	return value;
 }
 
 /**
@@ -142,31 +140,6 @@ long long** convertArgsToIntArray(int argc, char** args){
 	return arr;
 }
 
-
-
-
-/**
- * Split the array into a sub list from 'start' to 'end', and return the sublist.
- */
-/*long long* sublist(long long* arr, int start, int end) {
-	long long* sublist = NULL;
-	long long size = 0;
-	long long index = 0;
-	size = end - start;
-	//Create the sub list
-	sublist = (long long*) malloc(size * sizeof(long long));
-	if (sublist == NULL) {
-		fprintf(stderr,
-			"fail to allocate the memory at sublist function in Util.c");
-		exit(-2);
-	}
-	//Fill in the values using a while-loop
-	for (index = 0; index < size; index++) {
-		sublist[index] = arr[index + start];
-	}
-	return sublist;
-}*/
-
 //Check if both arrays are the same. 1: true, 0: false.
 int isArrayEqual(long long* arr1, long long arr1_size,
 		long long* arr2, long long arr2_size) {
@@ -184,31 +157,6 @@ int isArrayEqual(long long* arr1, long long arr1_size,
 	//Both of arrays are the same. Return true
 	return 1;
 }
-
-// Convert an array of long long integer into an array of string.  
-/*void toString(long long arr[], long long size, char** res) {
-long long i = 0;
-char buffer[1024];
-size_t buffer_size = 0;
-if (res == NULL) {
-fprintf(stderr,
-"fail to malloc res in toString(long long arr[], long long size, char** res)\n");
-exit(-2);
-}
-for (i = 0; i < size; i++) {
-//Write the array element (long long) to the buffer and get the length   
-buffer_size = sprintf(buffer, "%lld", arr[i]);
-//Allocate the memory size for the result array, based on the length.  
-//The string length is the original buffer_size plus 1, so that we can put '\\0' at the end of a string.  
-res[i] = (char*) malloc((buffer_size + 1) * sizeof(char));
-if (res[i] == NULL) {
-fprintf(stderr, "fail to malloc %lld", i);
-exit(-2);
-}
-strcpy(res[i], buffer);
-}
-}
- */
 
 //Copy an array
 long long* copy(long long *arr, long long size) {

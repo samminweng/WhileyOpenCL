@@ -16,7 +16,7 @@ void indirect_printf(long long input);
 void printf_s(long long* input, long long input_size);
 void println_s(long long* input, long long input_size);
 // Parser a string into an integer
-long long* parseInteger(long long* arr);
+long long parseStringToInt(long long* arr);
 // 1D Array Operator
 long long** convertArgsToIntArray(int argc, char** args);
 long long* copy(long long *arr, long long size);
@@ -87,6 +87,6 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 // Converts command line arguments into integer arrays
 #define _CONV_ARGS(a) a = convertArgsToIntArray(argc, args); a##_size = argc - 1;
 // Parse a string into an integer
-#define _STR_TO_INT(a, b) a = parseInteger(b);
+#define _STR_TO_INT(a, b) a = parseStringToInt(b);
 // Slice an array 'b' into a new array 'a' 
 #define _SLICE_ARRAY(a, b, start, end) a = slice(b, b##_size, start, end); a##_size = end - start;
