@@ -13,6 +13,7 @@ import wyil.attributes.VariableDeclarations;
 import wyil.attributes.VariableDeclarations.Declaration;
 import wyil.lang.Code;
 import wyil.lang.Codes;
+import wyil.lang.Codes.FieldLoad;
 import wyil.lang.Type;
 import wyil.lang.Type.Record;
 import wyil.lang.Type.Record.State;
@@ -51,6 +52,37 @@ public class CodeStores {
 			stores.put(function, new CodeStore(function));
 		}
 		return stores.get(function);
+	}
+	
+	/**
+	 * Adds the generated statements (e.g. C code) for given wyil code
+	 * @param code
+	 * @param statement
+	 * @param function
+	 */
+	public void addAllStatements(Code code, List<String> statement, FunctionOrMethod function) {
+		CodeStore store = getCodeStore(function);
+		store.addAllStatements(code, statement);
+	}
+	
+	/**
+	 * Get the current indentation used in the given function.
+	 * @param function
+	 * @return
+	 */
+	protected String getIndent(FunctionOrMethod function) {
+		CodeStore store = getCodeStore(function);
+		return store.indent;
+	}
+	
+	/**
+	 * Load fields to code store
+	 * @param target
+	 * @param field
+	 */
+	protected void loadField(int register, String field, FunctionOrMethod function) {
+		CodeStore store = getCodeStore(function);
+		store.loadField(register, field);
 	}
 	
 	/**
@@ -496,4 +528,13 @@ public class CodeStores {
 		
 		
 	}
+
+
+	
+
+
+	
+
+
+	
 }

@@ -1048,24 +1048,23 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.FieldLoad code, FunctionOrMethod function) {
 		String field = code.field;
-		CodeStore store = stores.getCodeStore(function);
 		List<String> statement = new ArrayList<String>();
-		// Skip printing statements, e.g. 'print_s'
+		// Skip translation.
 		if (field.equals("out") || field.equals("print") || field.equals("println") || field.equals("print_s") || field.equals("println_s")) {
 			// Load the field to the target register.
-			store.loadField(code.target(), field);
+			stores.loadField(code.target(), field, function);
 		} else {
-			String lhs = store.getVar(code.target());
-			Type lhs_type = store.getRawType(code.target());
-			Type rhs_type = store.getRawType(code.operand(0));
-			String indent = store.getIndent();
+			String lhs = stores.getVar(code.target(), function);
+			String indent = stores.getIndent(function);
 			if (field.equals("args")) {
 				// Convert the arguments into an array of integer array (long long**).
 				statement.add(indent+"_CONV_ARGS("+lhs+");");
 				// Add ownership.
 				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + a.addOwnership(code.target(), function, stores)));
 			} else {
-				String rhs = store.getVar(code.operand(0)) + CodeGeneratorHelper.accessMember(rhs_type) + code.field;
+				Type lhs_type = stores.getRawType(code.target(), function);
+				Type rhs_type = stores.getRawType(code.operand(0), function);
+				String rhs = stores.getVar(code.operand(0), function) + CodeGeneratorHelper.accessMember(rhs_type) + code.field;
 				// Free lhs variable
 				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
 				boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
@@ -1077,7 +1076,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				}
 			}
 		}
-		store.addAllStatements(code, statement);
+		stores.addAllStatements(code, statement, function);
 	}
 
 	/**
