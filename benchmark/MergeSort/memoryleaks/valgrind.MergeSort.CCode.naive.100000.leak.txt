@@ -1,21 +1,21 @@
-==12610== Memcheck, a memory error detector
-==12610== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==12610== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==12610== Command: ./MergeSort.out 100000
-==12610== Parent PID: 12358
-==12610== 
-==12610== 
-==12610== HEAP SUMMARY:
-==12610==     in use at exit: 70,758,248 bytes in 1,000,008 blocks
-==12610==   total heap usage: 1,000,008 allocs, 0 frees, 70,758,248 bytes allocated
-==12610== 
-==12610== LEAK SUMMARY:
-==12610==    definitely lost: 69,758,128 bytes in 1,000,003 blocks
-==12610==    indirectly lost: 56 bytes in 1 blocks
-==12610==      possibly lost: 1,000,064 bytes in 4 blocks
-==12610==    still reachable: 0 bytes in 0 blocks
-==12610==         suppressed: 0 bytes in 0 blocks
-==12610== Rerun with --leak-check=full to see details of leaked memory
-==12610== 
-==12610== For counts of detected and suppressed errors, rerun with: -v
-==12610== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==18622== Memcheck, a memory error detector
+==18622== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==18622== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==18622== Command: ./MergeSort.out 100000
+==18622== Parent PID: 18371
+==18622== 
+==18622== 
+==18622== HEAP SUMMARY:
+==18622==     in use at exit: 70,758,248 bytes in 1,000,008 blocks
+==18622==   total heap usage: 1,000,008 allocs, 0 frees, 70,758,248 bytes allocated
+==18622== 
+==18622== LEAK SUMMARY:
+==18622==    definitely lost: 69,758,128 bytes in 1,000,003 blocks
+==18622==    indirectly lost: 56 bytes in 1 blocks
+==18622==      possibly lost: 1,000,064 bytes in 4 blocks
+==18622==    still reachable: 0 bytes in 0 blocks
+==18622==         suppressed: 0 bytes in 0 blocks
+==18622== Rerun with --leak-check=full to see details of leaked memory
+==18622== 
+==18622== For counts of detected and suppressed errors, rerun with: -v
+==18622== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

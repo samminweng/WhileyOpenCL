@@ -1,21 +1,21 @@
-==12611== Memcheck, a memory error detector
-==12611== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==12611== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==12611== Command: ./MergeSort.out 1000000
-==12611== Parent PID: 12358
-==12611== 
-==12611== 
-==12611== HEAP SUMMARY:
-==12611==     in use at exit: 838,058,216 bytes in 10,000,008 blocks
-==12611==   total heap usage: 10,000,008 allocs, 0 frees, 838,058,216 bytes allocated
-==12611== 
-==12611== LEAK SUMMARY:
-==12611==    definitely lost: 829,995,624 bytes in 10,000,003 blocks
-==12611==    indirectly lost: 64 bytes in 1 blocks
-==12611==      possibly lost: 8,062,528 bytes in 4 blocks
-==12611==    still reachable: 0 bytes in 0 blocks
-==12611==         suppressed: 0 bytes in 0 blocks
-==12611== Rerun with --leak-check=full to see details of leaked memory
-==12611== 
-==12611== For counts of detected and suppressed errors, rerun with: -v
-==12611== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==18623== Memcheck, a memory error detector
+==18623== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==18623== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==18623== Command: ./MergeSort.out 1000000
+==18623== Parent PID: 18371
+==18623== 
+==18623== 
+==18623== HEAP SUMMARY:
+==18623==     in use at exit: 838,058,216 bytes in 10,000,008 blocks
+==18623==   total heap usage: 10,000,008 allocs, 0 frees, 838,058,216 bytes allocated
+==18623== 
+==18623== LEAK SUMMARY:
+==18623==    definitely lost: 829,995,624 bytes in 10,000,003 blocks
+==18623==    indirectly lost: 64 bytes in 1 blocks
+==18623==      possibly lost: 8,062,528 bytes in 4 blocks
+==18623==    still reachable: 0 bytes in 0 blocks
+==18623==         suppressed: 0 bytes in 0 blocks
+==18623== Rerun with --leak-check=full to see details of leaked memory
+==18623== 
+==18623== For counts of detected and suppressed errors, rerun with: -v
+==18623== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

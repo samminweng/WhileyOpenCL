@@ -58,14 +58,15 @@ Board* EmptyBoard(){
 	//newlist %10 = (%1, %2, %3, %4, %5, %6, %7, %8, %9) : int[]
 	_FREE(_10);
 	_NEW_ARRAY(_10, 9);
-	_ADD_OWNERSHIP(_10);
 	_10[0] = _1; _10[1] = _2; _10[2] = _3; _10[3] = _4; _10[4] = _5; _10[5] = _6; _10[6] = _7; _10[7] = _8; _10[8] = _9; 
+	_ADD_OWNERSHIP(_10);
 	//newrecord %11 = (%0, %10) : {int move,int[] pieces}
 	_FREE_STRUCT(_11, Board);
 	_11.move = _0;
 	_1DARRAY_COPY(_11.pieces, _10);
 	_ADD_OWNERSHIP(_11);
 	//return %11 : null|{int move,int[] pieces}
+	_FREE(_10);
 	return copy_Board_PTR(&_11);
 	//return
 }
@@ -442,8 +443,8 @@ blklab21:;
 			//newlist %59 = (%50, %51, %52, %53, %54, %55, %56, %57, %58) : int[]
 			_FREE(_59);
 			_NEW_ARRAY(_59, 9);
-			_ADD_OWNERSHIP(_59);
 			_59[0] = _50; _59[1] = _51; _59[2] = _52; _59[3] = _53; _59[4] = _54; _59[5] = _55; _59[6] = _56; _59[7] = _57; _59[8] = _58; 
+			_ADD_OWNERSHIP(_59);
 			//ifeq %49, %59 goto blklab23 : int[]
 			_IFEQ_ARRAY(_49, _59, blklab23);
 //.blklab24
@@ -488,6 +489,7 @@ blklab11:;
 	_FREE(_20);
 	_FREE(_23);
 	_FREE2DArray(_9);
+	_FREE(_59);
 	_FREE_STRUCT(_14, Board_PTR);
 	_FREE_STRUCT(_15, Board_PTR);
 	exit(0);

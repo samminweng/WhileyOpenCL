@@ -97,7 +97,8 @@ END {
 				if(count[testcase","arraysize]>0){
 					# Slow program
 					key = testcase","op","arraysize;
-					str = testcase"\t"op"\t"arraysize"\t"leaks[key",definiteloss"]"\t"leaks[key",indirectloss"]"\t"leaks[key",possibleloss"]"\t"leaks[key",reachableloss"];
+					# FIll in zero values
+					str = testcase"\t"op"\t"arraysize"\t"leaks[key",definiteloss"]+0"\t"leaks[key",indirectloss"]+0"\t"leaks[key",possibleloss"]+0"\t"leaks[key",reachableloss"]+0;
 					print str;
 				}
 				

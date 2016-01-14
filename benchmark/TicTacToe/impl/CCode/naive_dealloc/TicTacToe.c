@@ -54,14 +54,15 @@ Board EmptyBoard(){
 	//newlist %10 = (%1, %2, %3, %4, %5, %6, %7, %8, %9) : int[]
 	_FREE(_10);
 	_NEW_ARRAY(_10, 9);
-	_ADD_OWNERSHIP(_10);
 	_10[0] = _1; _10[1] = _2; _10[2] = _3; _10[3] = _4; _10[4] = _5; _10[5] = _6; _10[6] = _7; _10[7] = _8; _10[8] = _9; 
+	_ADD_OWNERSHIP(_10);
 	//newrecord %11 = (%0, %10) : {int move,int[] pieces}
 	_FREE_STRUCT(_11, Board);
 	_11.move = _0;
 	_1DARRAY_COPY(_11.pieces, _10);
 	_ADD_OWNERSHIP(_11);
 	//return %11 : {int move,int[] pieces}
+	_FREE(_10);
 	return _11;
 	//return
 }
@@ -425,8 +426,8 @@ blklab23:;
 			//newlist %47 = (%38, %39, %40, %41, %42, %43, %44, %45, %46) : int[]
 			_FREE(_47);
 			_NEW_ARRAY(_47, 9);
-			_ADD_OWNERSHIP(_47);
 			_47[0] = _38; _47[1] = _39; _47[2] = _40; _47[3] = _41; _47[4] = _42; _47[5] = _43; _47[6] = _44; _47[7] = _45; _47[8] = _46; 
+			_ADD_OWNERSHIP(_47);
 			//ifeq %37, %47 goto blklab24 : int[]
 			_IFEQ_ARRAY(_37, _47, blklab24);
 			//fail
@@ -472,6 +473,7 @@ blklab15:;
 	_FREE_STRUCT(_13, Board);
 	_FREE_STRUCT(_14, Board);
 	_FREE(_31);
+	_FREE(_47);
 	exit(0);
 }
 
