@@ -470,18 +470,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @return
 	 */
 	private String translateRHSFunctionCall(Codes.Invoke code, FunctionOrMethod function) {
-		// Get code store of f function
-		CodeStore store = stores.getCodeStore(function);
 		List<String> statement = new ArrayList<String>();
 		for (int index = 0; index < code.operands().length; index++) {
-			String var = store.getVar(code.operand(index));
-			Type type = store.getRawType(code.operand(index));
-			
+			String var = stores.getVar(code.operand(index), function);
+			Type type = stores.getRawType(code.operand(index), function);
 			if(type instanceof Type.Int){
 				statement.add(var);
-			}else if(type instanceof Type.Union){
-				// Access the 'integer' member for union-typed variable
-				statement.add(var + ".integer");
+			}else if(type instanceof Type.Union && stores.isIntType(type)){
+				// Directly access the member of union-typed variable
+				statement.add(var);
 			}else if (type instanceof Type.Nominal && ((Type.Nominal)type).name().name().equals("Console")){
 				statement.add("stdout");
 			}else if(type instanceof Type.Array){
@@ -502,11 +499,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						statement.add("_"+dimension+"DARRAY_COPY_PARAM("+var+")");
 					}
 				}
-				
-				// pass the ownership flag
-				/*this.deallocatedAnalyzer.ifPresent(a ->
-						statement.add(a.computeOwnershipFunctionCallParameter(register, code, function, stores, copyAnalyzer)));*/
-				//this.deallocatedAnalyzer.ifPresent(a ->statement.add(CodeGeneratorHelper.passOwnershipToFunction(type, stores, this.copyAnalyzer)));
 			}else if( type instanceof Type.Record || type instanceof Type.Nominal){
 				int register = code.operand(index);
 				boolean isCopyEliminated = isCopyEliminated(register, code, function);
@@ -524,12 +516,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						statement.add("_STRUCT_COPY_PARAM("+var+", "+type_name+")");
 					}
 				}
-				
-				
-				// pass the ownership flag
-				/*this.deallocatedAnalyzer.ifPresent(a ->
-						statement.add(a.computeOwnershipFunctionCallParameter(register, code, function, stores, copyAnalyzer)));*/
-				//this.deallocatedAnalyzer.ifPresent(a ->statement.add(CodeGeneratorHelper.passOwnershipToFunction(type, stores, this.copyAnalyzer)));
 			} else {
 				throw new RuntimeException("Not Implemented");
 			}
