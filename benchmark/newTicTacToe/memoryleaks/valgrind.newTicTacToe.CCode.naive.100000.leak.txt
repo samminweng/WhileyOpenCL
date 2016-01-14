@@ -1,21 +1,21 @@
-==13824== Memcheck, a memory error detector
-==13824== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==13824== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==13824== Command: ./newTicTacToe.out 100000
-==13824== Parent PID: 13183
-==13824== 
-==13824== 
-==13824== HEAP SUMMARY:
-==13824==     in use at exit: 309,600,392 bytes in 5,300,003 blocks
-==13824==   total heap usage: 5,300,003 allocs, 0 frees, 309,600,392 bytes allocated
-==13824== 
-==13824== LEAK SUMMARY:
-==13824==    definitely lost: 201,600,168 bytes in 3,799,999 blocks
-==13824==    indirectly lost: 107,999,912 bytes in 1,499,999 blocks
-==13824==      possibly lost: 144 bytes in 2 blocks
-==13824==    still reachable: 168 bytes in 3 blocks
-==13824==         suppressed: 0 bytes in 0 blocks
-==13824== Rerun with --leak-check=full to see details of leaked memory
-==13824== 
-==13824== For counts of detected and suppressed errors, rerun with: -v
-==13824== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==13019== Memcheck, a memory error detector
+==13019== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==13019== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==13019== Command: ./newTicTacToe.out 100000
+==13019== Parent PID: 12358
+==13019== 
+==13019== 
+==13019== HEAP SUMMARY:
+==13019==     in use at exit: 324,000,392 bytes in 5,500,003 blocks
+==13019==   total heap usage: 5,500,003 allocs, 0 frees, 324,000,392 bytes allocated
+==13019== 
+==13019== LEAK SUMMARY:
+==13019==    definitely lost: 216,000,216 bytes in 3,999,999 blocks
+==13019==    indirectly lost: 107,999,840 bytes in 1,499,998 blocks
+==13019==      possibly lost: 168 bytes in 3 blocks
+==13019==    still reachable: 168 bytes in 3 blocks
+==13019==         suppressed: 0 bytes in 0 blocks
+==13019== Rerun with --leak-check=full to see details of leaked memory
+==13019== 
+==13019== For counts of detected and suppressed errors, rerun with: -v
+==13019== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

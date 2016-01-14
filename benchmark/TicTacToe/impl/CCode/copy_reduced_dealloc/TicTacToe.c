@@ -1,13 +1,9 @@
 #include "TicTacToe.h"
-Board create_Board(){
-	Board _board;
-	return _board;
-}
-Board copy_Board(Board _board){
-	Board new_board = create_Board();
-	new_board.pieces_size = _board.pieces_size;  new_board.pieces = copy(_board.pieces, _board.pieces_size);
-	new_board.move = _board.move;
-	return new_board;
+Board copy_Board(Board _Board){
+	Board new_Board;
+	_1DARRAY_COPY(new_Board.pieces, _Board.pieces);
+	new_Board.move = _Board.move;
+	return new_Board;
 }
 void free_Board(Board _board){
 	free(_board.pieces);
@@ -15,7 +11,7 @@ void free_Board(Board _board){
 void printf_Board(Board _board){
 	printf("{");
 	printf(" pieces:");
-	printf1DArray(_board.pieces, _board.pieces_size);
+	_1DARRAY_PRINT(_board.pieces);
 	printf(" move:");
 	printf("%d", _board.move);
 	printf("}");
@@ -31,11 +27,10 @@ Board EmptyBoard(){
 	long long _7 = 0;
 	long long _8 = 0;
 	long long _9 = 0;
-	long long* _10 = NULL;
-	long long _10_size = 0;
-	bool _10_has_ownership = false;
+	_DECL_1DARRAY(_10);
+	_DECL_OWNERSHIP(_10);
 	Board _11;
-	bool _11_has_ownership = false;
+	_DECL_OWNERSHIP(_11);
 	//const %0 = 0 : int
 	_0 = 0;
 	//const %1 = 0 : int
@@ -57,26 +52,21 @@ Board EmptyBoard(){
 	//const %9 = 0 : int
 	_9 = 0;
 	//newlist %10 = (%1, %2, %3, %4, %5, %6, %7, %8, %9) : int[]
-	if(_10_has_ownership){free(_10); _10_has_ownership = false;}
-	_10_size = 9;
-	_10 = malloc(9*sizeof(long long));
+	_FREE(_10);
+	_NEW_ARRAY(_10, 9);
+	_ADD_OWNERSHIP(_10);
 	_10[0] = _1; _10[1] = _2; _10[2] = _3; _10[3] = _4; _10[4] = _5; _10[5] = _6; _10[6] = _7; _10[7] = _8; _10[8] = _9; 
-	_10_has_ownership = true;
 	//newrecord %11 = (%0, %10) : {int move,int[] pieces}
-	if(_11_has_ownership){free_Board(_11); _11_has_ownership = false;}
-	_11 = create_Board();
+	_FREE_STRUCT(_11, Board);
 	_11.move = _0;
-	_11.pieces_size = _10_size; 
-	_11.pieces = _10;
-	_10_has_ownership = false;
-	_11_has_ownership = true;
+	_1DARRAY_COPY(_11.pieces, _10);
+	_ADD_OWNERSHIP(_11);
 	//return %11 : {int move,int[] pieces}
-	if(_10_has_ownership){free(_10); _10_has_ownership = false;}
 	return _11;
 	//return
 }
 
-Board play(Board b, bool b_has_ownership, long long pos){
+Board play(Board b, _DECL_OWNERSHIP_PARAM(b), long long pos){
 	long long _2 = 0;
 	long long _3 = 0;
 	long long _4 = 0;
@@ -138,7 +128,7 @@ blklab12:;
 	//return
 }
 
-long long countOf(long long* pieces, bool pieces_has_ownership, long long pieces_size, long long s){
+long long countOf(_DECL_1DARRAY_PARAM(pieces), _DECL_OWNERSHIP_PARAM(pieces), long long s){
 	long long count = 0;
 	long long i = 0;
 	long long _4 = 0;
@@ -191,68 +181,58 @@ blklab14:;
 //.blklab13
 blklab13:;
 	//return %2 : int
-	if(pieces_has_ownership){free(pieces); pieces_has_ownership = false;}
 	return count;
 	//return
 }
 
 int main(int argc, char** args){
-	union UNION max;
+	long long max;
 	long long repeat = 0;
 	Board b;
-	bool b_has_ownership = false;
+	_DECL_OWNERSHIP(b);
 	long long i = 0;
 	long long p = 0;
-	union UNION _6;
-	union UNION _7;
-	long long** _8 = NULL;
-	long long _8_size = 0;
-	long long _8_size_size = 0;
-	bool _8_has_ownership = false;
+	long long _6;
+	long long _7;
+	_DECL_2DARRAY(_8);
+	_DECL_OWNERSHIP(_8);
 	long long _9 = 0;
-	long long* _10 = NULL;
-	long long _10_size = 0;
-	bool _10_has_ownership = false;
+	_DECL_1DARRAY(_10);
+	_DECL_OWNERSHIP(_10);
 	long long _11 = 0;
 	long long _12 = 0;
 	Board _13;
-	bool _13_has_ownership = false;
+	_DECL_OWNERSHIP(_13);
 	Board _14;
-	bool _14_has_ownership = false;
+	_DECL_OWNERSHIP(_14);
 	long long _15 = 0;
 	long long _16 = 0;
-	long long* _17 = NULL;
-	long long _17_size = 0;
-	bool _17_has_ownership = false;
+	_DECL_1DARRAY(_17);
+	_DECL_OWNERSHIP(_17);
 	long long _18 = 0;
 	long long _19 = 0;
-	long long* _20 = NULL;
-	long long _20_size = 0;
-	bool _20_has_ownership = false;
+	_DECL_1DARRAY(_20);
+	_DECL_OWNERSHIP(_20);
 	long long _21 = 0;
 	long long _22 = 0;
 	long long _23 = 0;
-	long long* _24 = NULL;
-	long long _24_size = 0;
-	bool _24_has_ownership = false;
+	_DECL_1DARRAY(_24);
+	_DECL_OWNERSHIP(_24);
 	long long _25 = 0;
 	long long _26 = 0;
 	long long _27 = 0;
 	long long _28 = 0;
 	void* _29;
-	
-	long long* _31 = NULL;
-	long long _31_size = 0;
-	bool _31_has_ownership = false;
+	_DECL_1DARRAY(_31);
+	_DECL_OWNERSHIP(_31);
 	Board _32;
-	bool _32_has_ownership = false;
+	_DECL_OWNERSHIP(_32);
 	long long _33 = 0;
 	long long _34 = 0;
 	long long _35 = 0;
 	long long _36 = 0;
-	long long* _37 = NULL;
-	long long _37_size = 0;
-	bool _37_has_ownership = false;
+	_DECL_1DARRAY(_37);
+	_DECL_OWNERSHIP(_37);
 	long long _38 = 0;
 	long long _39 = 0;
 	long long _40 = 0;
@@ -262,33 +242,29 @@ int main(int argc, char** args){
 	long long _44 = 0;
 	long long _45 = 0;
 	long long _46 = 0;
-	long long* _47 = NULL;
-	long long _47_size = 0;
-	bool _47_has_ownership = false;
+	_DECL_1DARRAY(_47);
+	_DECL_OWNERSHIP(_47);
 	long long _48 = 0;
 	long long _49 = 0;
 	void* _50;
-	
-	long long* _52 = NULL;
-	long long _52_size = 0;
-	bool _52_has_ownership = false;
+	_DECL_1DARRAY(_52);
+	_DECL_OWNERSHIP(_52);
 	void* _53;
-	
 	//fieldload %8 = %0 args : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
-	_8 = convertArgsToIntArray(argc, args);
-	_8_size = argc - 1;
+	_CONV_ARGS(_8);
+	_ADD_OWNERSHIP(_8);
 	//const %9 = 0 : int
 	_9 = 0;
 	//indexof %10 = %8, %9 : int[][]
 	_10=_8[_9];
 	//invoke %7 = (%10) whiley/lang/Int:parse : function(whiley/lang/ASCII:string) -> null|int
-	_7 = parseInteger(_10);
+	_STR_TO_INT(_7, _10);
 	//assign %6 = %7  : null|int
 	_6 = _7;
 	//assign %1 = %6  : null|int
 	max = _6;
 	//ifis %1, null goto blklab15 : null|int
-	if(max.null == NULL) { goto blklab15;}
+	if(max == NULL) { goto blklab15;}
 	//const %12 = 0 : int
 	_12 = 0;
 	//assign %11 = %12  : int
@@ -298,21 +274,21 @@ int main(int argc, char** args){
 	//loop (%2, %3, %4, %5, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42, %43, %44, %45, %46, %47, %48, %49)
 	while(true){
 		//ifge %2, %1 goto blklab16 : int
-		if(repeat>=max.integer){goto blklab16;}
+		if(repeat>=max){goto blklab16;}
 		//invoke %14 = () TicTacToe:EmptyBoard : function() -> TicTacToe:Board
-		if(_14_has_ownership){free_Board(_14); _14_has_ownership = false;}
+		_FREE_STRUCT(_14, Board);
 		_14 = EmptyBoard();
-		_14_has_ownership = true;
+		_ADD_OWNERSHIP(_14);
 		//assign %13 = %14  : {int move,int[] pieces}
-		if(_13_has_ownership){free_Board(_13); _13_has_ownership = false;}
+		_FREE_STRUCT(_13, Board);
 		_13 = _14;
-		_14_has_ownership = false;
-		_13_has_ownership = true;
+		_ADD_OWNERSHIP(_13);
+		_REMOVE_OWNERSHIP(_14);
 		//assign %3 = %13  : {int move,int[] pieces}
-		if(b_has_ownership){free_Board(b); b_has_ownership = false;}
+		_FREE_STRUCT(b, Board);
 		b = _13;
-		_13_has_ownership = false;
-		b_has_ownership = true;
+		_ADD_OWNERSHIP(b);
+		_REMOVE_OWNERSHIP(_13);
 		//const %16 = 0 : int
 		_16 = 0;
 		//assign %15 = %16  : int
@@ -322,21 +298,19 @@ int main(int argc, char** args){
 		//loop (%3, %4, %5, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34)
 		while(true){
 			//const %17 = [0,1,2,3,4,5,6,7,8] : int[]
-			_17_size = 9;
-			if(_17_has_ownership){free(_17); _17_has_ownership = false;}
-			_17=(long long*)malloc(9*sizeof(long long));
+			_FREE(_17);
+			_NEW_ARRAY(_17, 9);
 			_17[0] = 0; _17[1] = 1; _17[2] = 2; _17[3] = 3; _17[4] = 4; _17[5] = 5; _17[6] = 6; _17[7] = 7; _17[8] = 8; 
-			_17_has_ownership = true;
+			_ADD_OWNERSHIP(_17);
 			//lengthof %18 = %17 : int[]
 			_18 = _17_size;
 			//ifge %4, %18 goto blklab17 : int
 			if(i>=_18){goto blklab17;}
 			//const %20 = [0,1,2,3,4,5,6,7,8] : int[]
-			_20_size = 9;
-			if(_20_has_ownership){free(_20); _20_has_ownership = false;}
-			_20=(long long*)malloc(9*sizeof(long long));
+			_FREE(_20);
+			_NEW_ARRAY(_20, 9);
 			_20[0] = 0; _20[1] = 1; _20[2] = 2; _20[3] = 3; _20[4] = 4; _20[5] = 5; _20[6] = 6; _20[7] = 7; _20[8] = 8; 
-			_20_has_ownership = true;
+			_ADD_OWNERSHIP(_20);
 			//indexof %21 = %20, %4 : int[]
 			_21=_20[i];
 			//assign %19 = %21  : int
@@ -352,8 +326,8 @@ int main(int argc, char** args){
 			//ifgt %5, %23 goto blklab21 : int
 			if(p>_23){goto blklab21;}
 			//fieldload %24 = %3 pieces : {int move,int[] pieces}
-			_24_size = b.pieces_size; 
-			_24 = b.pieces;
+			_FREE(_24);
+			_1DARRAY_UPDATE(_24, b.pieces);
 			//indexof %25 = %24, %5 : int[]
 			_25=_24[p];
 			//const %26 = 0 : int
@@ -375,13 +349,12 @@ blklab20:;
 			//fieldload %29 = %0 out : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 			//fieldload %30 = %29 println_s : {method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s}
 			//const %31 = [73,78,86,65,76,73,68,32,77,79,86,69,33] : int[]
-			_31_size = 13;
-			if(_31_has_ownership){free(_31); _31_has_ownership = false;}
-			_31=(long long*)malloc(13*sizeof(long long));
+			_FREE(_31);
+			_NEW_ARRAY(_31, 13);
 			_31[0] = 73; _31[1] = 78; _31[2] = 86; _31[3] = 65; _31[4] = 76; _31[5] = 73; _31[6] = 68; _31[7] = 32; _31[8] = 77; _31[9] = 79; _31[10] = 86; _31[11] = 69; _31[12] = 33; 
-			_31_has_ownership = true;
+			_ADD_OWNERSHIP(_31);
 			//indirectinvoke %30 (%31) : method(int[]) -> void
-			println_s(_31, _31_size);
+			println_s(_1DARRAY_PARAM(_31));
 			//goto blklab17
 			goto blklab17;
 			//goto blklab19
@@ -389,15 +362,15 @@ blklab20:;
 //.blklab18
 blklab18:;
 			//invoke %32 = (%3, %5) TicTacToe:play : function(TicTacToe:Board,TicTacToe:nat) -> TicTacToe:Board
-			if(_32_has_ownership){free_Board(_32); _32_has_ownership = false;}
-			_32 = play(b, false, p);
-			b_has_ownership = false;
-			_32_has_ownership = true;
+			_FREE_STRUCT(_32, Board);
+			_REMOVE_OWNERSHIP(b);
+			_32 = play(_STRUCT_PARAM_OWN(b), p);
+			_ADD_OWNERSHIP(_32);
 			//assign %3 = %32  : {int move,int[] pieces}
-			if(b_has_ownership){free_Board(b); b_has_ownership = false;}
+			_FREE_STRUCT(b, Board);
 			b = _32;
-			_32_has_ownership = false;
-			b_has_ownership = true;
+			_ADD_OWNERSHIP(b);
+			_REMOVE_OWNERSHIP(_32);
 //.blklab19
 blklab19:;
 			//const %33 = 1 : int
@@ -427,8 +400,8 @@ blklab23:;
 		//assert
 		{
 			//fieldload %37 = %3 pieces : {int move,int[] pieces}
-			_37_size = b.pieces_size; 
-			_37 = b.pieces;
+			_FREE(_37);
+			_1DARRAY_UPDATE(_37, b.pieces);
 			//const %38 = 1 : int
 			_38 = 1;
 			//const %39 = 2 : int
@@ -448,13 +421,12 @@ blklab23:;
 			//const %46 = 1 : int
 			_46 = 1;
 			//newlist %47 = (%38, %39, %40, %41, %42, %43, %44, %45, %46) : int[]
-			if(_47_has_ownership){free(_47); _47_has_ownership = false;}
-			_47_size = 9;
-			_47 = malloc(9*sizeof(long long));
+			_FREE(_47);
+			_NEW_ARRAY(_47, 9);
+			_ADD_OWNERSHIP(_47);
 			_47[0] = _38; _47[1] = _39; _47[2] = _40; _47[3] = _41; _47[4] = _42; _47[5] = _43; _47[6] = _44; _47[7] = _45; _47[8] = _46; 
-			_47_has_ownership = true;
 			//ifeq %37, %47 goto blklab24 : int[]
-			if(isArrayEqual(_37, _37_size,_47, _47_size)==1){goto blklab24;}
+			_IFEQ_ARRAY(_37, _47, blklab24);
 			//fail
 			fprintf(stderr,"fail");
 			exit(-1);
@@ -474,32 +446,25 @@ blklab16:;
 	//fieldload %50 = %0 out : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 	//fieldload %51 = %50 print_s : {method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s}
 	//const %52 = [80,97,115,115,32,84,105,99,84,97,99,84,111,101,32,116,101,115,116,32,99,97,115,101,32,119,105,116,104,32,105,110,112,117,116,32,61,32] : int[]
-	_52_size = 38;
-	if(_52_has_ownership){free(_52); _52_has_ownership = false;}
-	_52=(long long*)malloc(38*sizeof(long long));
+	_FREE(_52);
+	_NEW_ARRAY(_52, 38);
 	_52[0] = 80; _52[1] = 97; _52[2] = 115; _52[3] = 115; _52[4] = 32; _52[5] = 84; _52[6] = 105; _52[7] = 99; _52[8] = 84; _52[9] = 97; _52[10] = 99; _52[11] = 84; _52[12] = 111; _52[13] = 101; _52[14] = 32; _52[15] = 116; _52[16] = 101; _52[17] = 115; _52[18] = 116; _52[19] = 32; _52[20] = 99; _52[21] = 97; _52[22] = 115; _52[23] = 101; _52[24] = 32; _52[25] = 119; _52[26] = 105; _52[27] = 116; _52[28] = 104; _52[29] = 32; _52[30] = 105; _52[31] = 110; _52[32] = 112; _52[33] = 117; _52[34] = 116; _52[35] = 32; _52[36] = 61; _52[37] = 32; 
-	_52_has_ownership = true;
+	_ADD_OWNERSHIP(_52);
 	//indirectinvoke %51 (%52) : method(int[]) -> void
-	printf_s(_52, _52_size);
+	printf_s(_1DARRAY_PARAM(_52));
 	//fieldload %53 = %0 out : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 	//fieldload %54 = %53 println : {method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s}
 	//indirectinvoke %54 (%1) : method(any) -> void
-	printf("%d\n", max.integer);
+	printf("%d\n", max);
 //.blklab15
 blklab15:;
 	//return
-	if(_32_has_ownership){free_Board(_32); _32_has_ownership = false;}
-	if(_17_has_ownership){free(_17); _17_has_ownership = false;}
-	if(b_has_ownership){free_Board(b); b_has_ownership = false;}
-	if(_20_has_ownership){free(_20); _20_has_ownership = false;}
-	if(_52_has_ownership){free(_52); _52_has_ownership = false;}
-	if(_37_has_ownership){free(_37); _37_has_ownership = false;}
-	if(_8_has_ownership){free2DArray(_8, _8_size); _8_has_ownership = false;}
-	if(_24_has_ownership){free(_24); _24_has_ownership = false;}
-	if(_13_has_ownership){free_Board(_13); _13_has_ownership = false;}
-	if(_14_has_ownership){free_Board(_14); _14_has_ownership = false;}
-	if(_31_has_ownership){free(_31); _31_has_ownership = false;}
-	if(_47_has_ownership){free(_47); _47_has_ownership = false;}
+	_FREE(_17);
+	_FREE_STRUCT(b, Board);
+	_FREE(_20);
+	_FREE(_52);
+	_FREE2DArray(_8);
+	_FREE(_31);
 	exit(0);
 }
 

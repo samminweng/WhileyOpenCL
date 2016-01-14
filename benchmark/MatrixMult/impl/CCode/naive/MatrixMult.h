@@ -1,17 +1,14 @@
 #include "Util.h"
 typedef long long nat;
 typedef struct{
-	long long** data;
-	long long data_size;
-	long long data_size_size;
+	_DECL_2DARRAY_MEMBER(data);
 	long long width;
 	long long height;
 } Matrix;
-Matrix create_Matrix();
 void printf_Matrix(Matrix _matrix);
 Matrix copy_Matrix(Matrix _matrix);
 void free_Matrix(Matrix _matrix);
-Matrix matrix(long long width, long long height, long long** data, long long data_size, long long data_size_size);
+Matrix matrix(long long width, long long height, _DECL_2DARRAY_PARAM(data));
 Matrix multiply(Matrix A, Matrix B);
 void* printMat(FILE* sys, Matrix A);
 Matrix genMatrix(long long height, long long width);

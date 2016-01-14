@@ -1,20 +1,17 @@
 #include "Reverse.h"
-long long* reverse(long long* ls, bool ls_has_ownership, long long ls_size){
+long long* reverse(_DECL_1DARRAY_PARAM(ls), _DECL_OWNERSHIP_PARAM(ls)){
 	long long i = 0;
-	long long* r = NULL;
-	long long r_size = 0;
-	bool r_has_ownership = false;
+	_DECL_1DARRAY(r);
+	_DECL_OWNERSHIP(r);
 	long long item = 0;
 	long long _4 = 0;
 	long long _5 = 0;
-	long long* _6 = NULL;
-	long long _6_size = 0;
-	bool _6_has_ownership = false;
+	_DECL_1DARRAY(_6);
+	_DECL_OWNERSHIP(_6);
 	long long _7 = 0;
 	long long _8 = 0;
-	long long* _9 = NULL;
-	long long _9_size = 0;
-	bool _9_has_ownership = false;
+	_DECL_1DARRAY(_9);
+	_DECL_OWNERSHIP(_9);
 	long long _10 = 0;
 	long long _11 = 0;
 	long long _12 = 0;
@@ -36,22 +33,19 @@ long long* reverse(long long* ls, bool ls_has_ownership, long long ls_size){
 	//lengthof %8 = %0 : int[]
 	_8 = ls_size;
 	//listgen %9 = [7; 8] : int[]
-	_9_size = _8;
-	if(_9_has_ownership){free(_9); _9_has_ownership = false;}
-	_9 = gen1DArray(_7, _9_size);
-	_9_has_ownership = true;
+	_FREE(_9);
+	_GEN_1DARRAY(_9, _8, _7);
+	_ADD_OWNERSHIP(_9);
 	//assign %6 = %9  : int[]
-	_6_size = _9_size; 
-	if(_6_has_ownership){free(_6); _6_has_ownership = false;}
-	_6 = copy(_9, _9_size);
-	_9_has_ownership = true;
-	_6_has_ownership = true;
+	_FREE(_6);
+	_1DARRAY_COPY(_6, _9);
+	_ADD_OWNERSHIP(_6);
+	_ADD_OWNERSHIP(_9);
 	//assign %2 = %6  : int[]
-	r_size = _6_size; 
-	if(r_has_ownership){free(r); r_has_ownership = false;}
-	r = copy(_6, _6_size);
-	_6_has_ownership = true;
-	r_has_ownership = true;
+	_FREE(r);
+	_1DARRAY_COPY(r, _6);
+	_ADD_OWNERSHIP(r);
+	_ADD_OWNERSHIP(_6);
 	//loop (%1, %2, %3, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19)
 	while(true){
 		//invariant
@@ -102,73 +96,62 @@ blklab1:;
 //.blklab0
 blklab0:;
 	//return %2 : int[]
-	if(ls_has_ownership){free(ls); ls_has_ownership = false;}
-	if(_6_has_ownership){free(_6); _6_has_ownership = false;}
-	if(_9_has_ownership){free(_9); _9_has_ownership = false;}
+	_FREE(_6);
+	_FREE(_9);
 	return r;
 	//return
 }
 
 int main(int argc, char** args){
-	union UNION max;
+	long long max;
 	long long index = 0;
-	long long* arr = NULL;
-	long long arr_size = 0;
-	bool arr_has_ownership = false;
-	union UNION _4;
-	union UNION _5;
-	long long** _6 = NULL;
-	long long _6_size = 0;
-	long long _6_size_size = 0;
-	bool _6_has_ownership = false;
+	_DECL_1DARRAY(arr);
+	_DECL_OWNERSHIP(arr);
+	long long _4;
+	long long _5;
+	_DECL_2DARRAY(_6);
+	_DECL_OWNERSHIP(_6);
 	long long _7 = 0;
-	long long* _8 = NULL;
-	long long _8_size = 0;
-	bool _8_has_ownership = false;
+	_DECL_1DARRAY(_8);
+	_DECL_OWNERSHIP(_8);
 	long long _9 = 0;
 	long long _10 = 0;
-	long long* _11 = NULL;
-	long long _11_size = 0;
-	bool _11_has_ownership = false;
+	_DECL_1DARRAY(_11);
+	_DECL_OWNERSHIP(_11);
 	long long _12 = 0;
 	long long _13 = 0;
 	long long _14 = 0;
-	long long* _15 = NULL;
-	long long _15_size = 0;
-	bool _15_has_ownership = false;
+	_DECL_1DARRAY(_15);
+	_DECL_OWNERSHIP(_15);
 	long long _16 = 0;
 	long long _17 = 0;
 	long long _18 = 0;
 	long long _19 = 0;
-	long long* _20 = NULL;
-	long long _20_size = 0;
-	bool _20_has_ownership = false;
+	_DECL_1DARRAY(_20);
+	_DECL_OWNERSHIP(_20);
 	long long _21 = 0;
 	long long _22 = 0;
 	long long _23 = 0;
 	long long _24 = 0;
 	void* _25;
-	
-	long long* _27 = NULL;
-	long long _27_size = 0;
-	bool _27_has_ownership = false;
+	_DECL_1DARRAY(_27);
+	_DECL_OWNERSHIP(_27);
 	void* _28;
-	
 	//fieldload %6 = %0 args : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
-	_6 = convertArgsToIntArray(argc, args);
-	_6_size = argc - 1;
+	_CONV_ARGS(_6);
+	_ADD_OWNERSHIP(_6);
 	//const %7 = 0 : int
 	_7 = 0;
 	//indexof %8 = %6, %7 : int[][]
 	_8=_6[_7];
 	//invoke %5 = (%8) whiley/lang/Int:parse : function(whiley/lang/ASCII:string) -> null|int
-	_5 = parseInteger(_8);
+	_STR_TO_INT(_5, _8);
 	//assign %4 = %5  : null|int
 	_4 = _5;
 	//assign %1 = %4  : null|int
 	max = _4;
 	//ifis %1, null goto blklab3 : null|int
-	if(max.null == NULL) { goto blklab3;}
+	if(max == NULL) { goto blklab3;}
 	//const %10 = 0 : int
 	_10 = 0;
 	//assign %9 = %10  : int
@@ -180,32 +163,29 @@ int main(int argc, char** args){
 	//const %13 = 1 : int
 	_13 = 1;
 	//add %14 = %1, %13 : int
-	_14=max.integer+_13;
+	_14=max+_13;
 	//listgen %15 = [12; 14] : int[]
-	_15_size = _14;
-	if(_15_has_ownership){free(_15); _15_has_ownership = false;}
-	_15 = gen1DArray(_12, _15_size);
-	_15_has_ownership = true;
+	_FREE(_15);
+	_GEN_1DARRAY(_15, _14, _12);
+	_ADD_OWNERSHIP(_15);
 	//assign %11 = %15  : int[]
-	_11_size = _15_size; 
-	if(_11_has_ownership){free(_11); _11_has_ownership = false;}
-	_11 = copy(_15, _15_size);
-	_15_has_ownership = true;
-	_11_has_ownership = true;
+	_FREE(_11);
+	_1DARRAY_COPY(_11, _15);
+	_ADD_OWNERSHIP(_11);
+	_ADD_OWNERSHIP(_15);
 	//assign %3 = %11  : int[]
-	arr_size = _11_size; 
-	if(arr_has_ownership){free(arr); arr_has_ownership = false;}
-	arr = copy(_11, _11_size);
-	_11_has_ownership = true;
-	arr_has_ownership = true;
+	_FREE(arr);
+	_1DARRAY_COPY(arr, _11);
+	_ADD_OWNERSHIP(arr);
+	_ADD_OWNERSHIP(_11);
 	//loop (%2, %3, %16, %17, %18, %19)
 	while(true){
 		//ifgt %2, %1 goto blklab4 : int
-		if(index>max.integer){goto blklab4;}
+		if(index>max){goto blklab4;}
 		//sub %16 = %1, %2 : int
-		_16=max.integer-index;
+		_16=max-index;
 		//sub %17 = %1, %2 : int
-		_17=max.integer-index;
+		_17=max-index;
 		//update %3[%2] = %17 : int[] -> int[]
 		arr[index] = _17;
 		//const %18 = 1 : int
@@ -218,15 +198,16 @@ int main(int argc, char** args){
 //.blklab4
 blklab4:;
 	//invoke %20 = (%3) Reverse:reverse : function(int[]) -> int[]
-	if(_20_has_ownership){free(_20); _20_has_ownership = false;}
-	_20_size = arr_size; 	_20 = reverse(copy(arr, arr_size), true, arr_size);
-	_20_has_ownership = true;
+	_FREE(_20);
+	_ADD_OWNERSHIP(arr);
+	_1DARRAY_SIZE(_20, arr);
+	_20 = reverse(_1DARRAY_COPY_PARAM_OWN(arr));
+	_ADD_OWNERSHIP(_20);
 	//assign %3 = %20  : int[]
-	arr_size = _20_size; 
-	if(arr_has_ownership){free(arr); arr_has_ownership = false;}
-	arr = copy(_20, _20_size);
-	_20_has_ownership = true;
-	arr_has_ownership = true;
+	_FREE(arr);
+	_1DARRAY_COPY(arr, _20);
+	_ADD_OWNERSHIP(arr);
+	_ADD_OWNERSHIP(_20);
 	//assert
 	{
 		//const %21 = 0 : int
@@ -247,9 +228,9 @@ blklab5:;
 	//assert
 	{
 		//indexof %24 = %3, %1 : int[]
-		_24=arr[max.integer];
+		_24=arr[max];
 		//ifeq %24, %1 goto blklab6 : int
-		if(_24==max.integer){goto blklab6;}
+		if(_24==max){goto blklab6;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -260,26 +241,25 @@ blklab6:;
 	//fieldload %25 = %0 out : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 	//fieldload %26 = %25 print_s : {method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s}
 	//const %27 = [80,97,115,115,32,82,101,118,101,114,115,101,32,116,101,115,116,32,99,97,115,101,32,119,105,116,104,32,105,110,112,117,116,32,61,32] : int[]
-	_27_size = 36;
-	if(_27_has_ownership){free(_27); _27_has_ownership = false;}
-	_27=(long long*)malloc(36*sizeof(long long));
+	_FREE(_27);
+	_NEW_ARRAY(_27, 36);
 	_27[0] = 80; _27[1] = 97; _27[2] = 115; _27[3] = 115; _27[4] = 32; _27[5] = 82; _27[6] = 101; _27[7] = 118; _27[8] = 101; _27[9] = 114; _27[10] = 115; _27[11] = 101; _27[12] = 32; _27[13] = 116; _27[14] = 101; _27[15] = 115; _27[16] = 116; _27[17] = 32; _27[18] = 99; _27[19] = 97; _27[20] = 115; _27[21] = 101; _27[22] = 32; _27[23] = 119; _27[24] = 105; _27[25] = 116; _27[26] = 104; _27[27] = 32; _27[28] = 105; _27[29] = 110; _27[30] = 112; _27[31] = 117; _27[32] = 116; _27[33] = 32; _27[34] = 61; _27[35] = 32; 
-	_27_has_ownership = true;
+	_ADD_OWNERSHIP(_27);
 	//indirectinvoke %26 (%27) : method(int[]) -> void
-	printf_s(_27, _27_size);
+	printf_s(_1DARRAY_PARAM(_27));
 	//fieldload %28 = %0 out : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 	//fieldload %29 = %28 println : {method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s}
 	//indirectinvoke %29 (%1) : method(any) -> void
-	printf("%d\n", max.integer);
+	printf("%d\n", max);
 //.blklab3
 blklab3:;
 	//return
-	if(arr_has_ownership){free(arr); arr_has_ownership = false;}
-	if(_20_has_ownership){free(_20); _20_has_ownership = false;}
-	if(_6_has_ownership){free2DArray(_6, _6_size); _6_has_ownership = false;}
-	if(_11_has_ownership){free(_11); _11_has_ownership = false;}
-	if(_27_has_ownership){free(_27); _27_has_ownership = false;}
-	if(_15_has_ownership){free(_15); _15_has_ownership = false;}
+	_FREE(arr);
+	_FREE(_20);
+	_FREE2DArray(_6);
+	_FREE(_11);
+	_FREE(_27);
+	_FREE(_15);
 	exit(0);
 }
 

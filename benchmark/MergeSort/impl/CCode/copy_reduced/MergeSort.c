@@ -1,12 +1,8 @@
 #include "MergeSort.h"
-long long* sortV1(long long* items, long long items_size, long long start, long long end){
+long long* sortV1(_DECL_1DARRAY_PARAM(items), long long start, long long end){
 	long long pivot = 0;
-	long long* lhs = NULL;
-	long long lhs_size = 0;
-	
-	long long* rhs = NULL;
-	long long rhs_size = 0;
-	
+	_DECL_1DARRAY(lhs);
+	_DECL_1DARRAY(rhs);
 	long long l = 0;
 	long long r = 0;
 	long long i = 0;
@@ -16,25 +12,13 @@ long long* sortV1(long long* items, long long items_size, long long start, long 
 	long long _12 = 0;
 	long long _13 = 0;
 	long long _14 = 0;
-	long long* _15 = NULL;
-	long long _15_size = 0;
-	
-	long long* _16 = NULL;
-	long long _16_size = 0;
-	
-	long long* _17 = NULL;
-	long long _17_size = 0;
-	
+	_DECL_1DARRAY(_15);
+	_DECL_1DARRAY(_16);
+	_DECL_1DARRAY(_17);
 	long long _18 = 0;
-	long long* _19 = NULL;
-	long long _19_size = 0;
-	
-	long long* _20 = NULL;
-	long long _20_size = 0;
-	
-	long long* _21 = NULL;
-	long long _21_size = 0;
-	
+	_DECL_1DARRAY(_19);
+	_DECL_1DARRAY(_20);
+	_DECL_1DARRAY(_21);
 	long long _22 = 0;
 	long long _23 = 0;
 	long long _24 = 0;
@@ -89,45 +73,33 @@ long long* sortV1(long long* items, long long items_size, long long start, long 
 	//assign %3 = %11  : int
 	pivot = _11;
 	//invoke %16 = (%0, %1, %3) whiley/lang/Array:slice : function(int[],int,int) -> int[]
-	_16 = slice(items, items_size, start,pivot);
-	_16_size = pivot - start;
+_SLICE_ARRAY(_16, items, start, pivot);
 	//assign %15 = %16  : int[]
-	_15_size = _16_size; 
-	_15 = _16;
-	
+	_1DARRAY_UPDATE(_15, _16);
 	//assign %4 = %15  : int[]
-	lhs_size = _15_size; 
-	lhs = _15;
-	
+	_1DARRAY_UPDATE(lhs, _15);
 	//const %18 = 0 : int
 	_18 = 0;
 	//invoke %17 = (%4, %18, %3) MergeSort:sortV1 : function(int[],int,int) -> int[]
-	_17_size = lhs_size; 	_17 = sortV1(lhs, lhs_size, _18, pivot);
+	_1DARRAY_SIZE(_17, lhs);
+	_17 = sortV1(_1DARRAY_PARAM(lhs), _18, pivot);
 	//assign %4 = %17  : int[]
-	lhs_size = _17_size; 
-	lhs = _17;
-	
+	_1DARRAY_UPDATE(lhs, _17);
 	//invoke %20 = (%0, %3, %2) whiley/lang/Array:slice : function(int[],int,int) -> int[]
-	_20 = slice(items, items_size, pivot,end);
-	_20_size = end - pivot;
+_SLICE_ARRAY(_20, items, pivot, end);
 	//assign %19 = %20  : int[]
-	_19_size = _20_size; 
-	_19 = _20;
-	
+	_1DARRAY_UPDATE(_19, _20);
 	//assign %5 = %19  : int[]
-	rhs_size = _19_size; 
-	rhs = _19;
-	
+	_1DARRAY_UPDATE(rhs, _19);
 	//const %22 = 0 : int
 	_22 = 0;
 	//sub %23 = %2, %3 : int
 	_23=end-pivot;
 	//invoke %21 = (%5, %22, %23) MergeSort:sortV1 : function(int[],int,int) -> int[]
-	_21_size = rhs_size; 	_21 = sortV1(rhs, rhs_size, _22, _23);
+	_1DARRAY_SIZE(_21, rhs);
+	_21 = sortV1(_1DARRAY_PARAM(rhs), _22, _23);
 	//assign %5 = %21  : int[]
-	rhs_size = _21_size; 
-	rhs = _21;
-	
+	_1DARRAY_UPDATE(rhs, _21);
 	//const %25 = 0 : int
 	_25 = 0;
 	//assign %24 = %25  : int
@@ -267,39 +239,26 @@ blklab0:;
 }
 
 int main(int argc, char** args){
-	union UNION max;
+	long long max;
 	long long index = 0;
-	long long* arr = NULL;
-	long long arr_size = 0;
-	
-	union UNION _4;
-	union UNION _5;
-	long long** _6 = NULL;
-	long long _6_size = 0;
-	long long _6_size_size = 0;
-	
+	_DECL_1DARRAY(arr);
+	long long _4;
+	long long _5;
+	_DECL_2DARRAY(_6);
 	long long _7 = 0;
-	long long* _8 = NULL;
-	long long _8_size = 0;
-	
+	_DECL_1DARRAY(_8);
 	long long _9 = 0;
 	long long _10 = 0;
-	long long* _11 = NULL;
-	long long _11_size = 0;
-	
+	_DECL_1DARRAY(_11);
 	long long _12 = 0;
 	long long _13 = 0;
 	long long _14 = 0;
-	long long* _15 = NULL;
-	long long _15_size = 0;
-	
+	_DECL_1DARRAY(_15);
 	long long _16 = 0;
 	long long _17 = 0;
 	long long _18 = 0;
 	long long _19 = 0;
-	long long* _20 = NULL;
-	long long _20_size = 0;
-	
+	_DECL_1DARRAY(_20);
 	long long _21 = 0;
 	long long _22 = 0;
 	long long _23 = 0;
@@ -308,27 +267,22 @@ int main(int argc, char** args){
 	long long _26 = 0;
 	long long _27 = 0;
 	void* _28;
-	
-	long long* _30 = NULL;
-	long long _30_size = 0;
-	
+	_DECL_1DARRAY(_30);
 	void* _31;
-	
 	//fieldload %6 = %0 args : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
-	_6 = convertArgsToIntArray(argc, args);
-	_6_size = argc - 1;
+	_CONV_ARGS(_6);
 	//const %7 = 0 : int
 	_7 = 0;
 	//indexof %8 = %6, %7 : int[][]
 	_8=_6[_7];
 	//invoke %5 = (%8) whiley/lang/Int:parse : function(whiley/lang/ASCII:string) -> null|int
-	_5 = parseInteger(_8);
+	_STR_TO_INT(_5, _8);
 	//assign %4 = %5  : null|int
 	_4 = _5;
 	//assign %1 = %4  : null|int
 	max = _4;
 	//ifis %1, null goto blklab6 : null|int
-	if(max.null == NULL) { goto blklab6;}
+	if(max == NULL) { goto blklab6;}
 	//const %10 = 0 : int
 	_10 = 0;
 	//assign %9 = %10  : int
@@ -340,26 +294,21 @@ int main(int argc, char** args){
 	//const %13 = 1 : int
 	_13 = 1;
 	//add %14 = %1, %13 : int
-	_14=max.integer+_13;
+	_14=max+_13;
 	//listgen %15 = [12; 14] : int[]
-	_15_size = _14;
-	_15 = gen1DArray(_12, _15_size);
+	_GEN_1DARRAY(_15, _14, _12);
 	//assign %11 = %15  : int[]
-	_11_size = _15_size; 
-	_11 = _15;
-	
+	_1DARRAY_UPDATE(_11, _15);
 	//assign %3 = %11  : int[]
-	arr_size = _11_size; 
-	arr = _11;
-	
+	_1DARRAY_UPDATE(arr, _11);
 	//loop (%2, %3, %16, %17, %18, %19)
 	while(true){
 		//ifgt %2, %1 goto blklab7 : int
-		if(index>max.integer){goto blklab7;}
+		if(index>max){goto blklab7;}
 		//sub %16 = %1, %2 : int
-		_16=max.integer-index;
+		_16=max-index;
 		//sub %17 = %1, %2 : int
-		_17=max.integer-index;
+		_17=max-index;
 		//update %3[%2] = %17 : int[] -> int[]
 		arr[index] = _17;
 		//const %18 = 1 : int
@@ -376,13 +325,12 @@ blklab7:;
 	//const %22 = 1 : int
 	_22 = 1;
 	//add %23 = %1, %22 : int
-	_23=max.integer+_22;
+	_23=max+_22;
 	//invoke %20 = (%3, %21, %23) MergeSort:sortV1 : function(int[],int,int) -> int[]
-	_20_size = arr_size; 	_20 = sortV1(arr, arr_size, _21, _23);
+	_1DARRAY_SIZE(_20, arr);
+	_20 = sortV1(_1DARRAY_PARAM(arr), _21, _23);
 	//assign %3 = %20  : int[]
-	arr_size = _20_size; 
-	arr = _20;
-	
+	_1DARRAY_UPDATE(arr, _20);
 	//assert
 	{
 		//const %24 = 0 : int
@@ -403,9 +351,9 @@ blklab8:;
 	//assert
 	{
 		//indexof %27 = %3, %1 : int[]
-		_27=arr[max.integer];
+		_27=arr[max];
 		//ifeq %27, %1 goto blklab9 : int
-		if(_27==max.integer){goto blklab9;}
+		if(_27==max){goto blklab9;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -416,15 +364,14 @@ blklab9:;
 	//fieldload %28 = %0 out : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 	//fieldload %29 = %28 print_s : {method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s}
 	//const %30 = [80,97,115,115,32,77,101,114,103,101,83,111,114,116,32,116,101,115,116,32,99,97,115,101,32,119,105,116,104,32,105,110,112,117,116,32,61,32] : int[]
-	_30_size = 38;
-	_30=(long long*)malloc(38*sizeof(long long));
+	_NEW_ARRAY(_30, 38);
 	_30[0] = 80; _30[1] = 97; _30[2] = 115; _30[3] = 115; _30[4] = 32; _30[5] = 77; _30[6] = 101; _30[7] = 114; _30[8] = 103; _30[9] = 101; _30[10] = 83; _30[11] = 111; _30[12] = 114; _30[13] = 116; _30[14] = 32; _30[15] = 116; _30[16] = 101; _30[17] = 115; _30[18] = 116; _30[19] = 32; _30[20] = 99; _30[21] = 97; _30[22] = 115; _30[23] = 101; _30[24] = 32; _30[25] = 119; _30[26] = 105; _30[27] = 116; _30[28] = 104; _30[29] = 32; _30[30] = 105; _30[31] = 110; _30[32] = 112; _30[33] = 117; _30[34] = 116; _30[35] = 32; _30[36] = 61; _30[37] = 32; 
 	//indirectinvoke %29 (%30) : method(int[]) -> void
-	printf_s(_30, _30_size);
+	printf_s(_1DARRAY_PARAM(_30));
 	//fieldload %31 = %0 out : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 	//fieldload %32 = %31 println : {method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s}
 	//indirectinvoke %32 (%1) : method(any) -> void
-	printf("%d\n", max.integer);
+	printf("%d\n", max);
 //.blklab6
 blklab6:;
 	//return

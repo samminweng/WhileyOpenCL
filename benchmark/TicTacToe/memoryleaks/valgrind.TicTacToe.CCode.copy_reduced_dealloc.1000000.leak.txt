@@ -1,21 +1,21 @@
-==13777== Memcheck, a memory error detector
-==13777== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==13777== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==13777== Command: ./TicTacToe.out 1000000
-==13777== Parent PID: 13183
-==13777== 
-==13777== 
-==13777== HEAP SUMMARY:
-==13777==     in use at exit: 72 bytes in 2 blocks
-==13777==   total heap usage: 21,000,003 allocs, 21,000,001 frees, 1,512,000,376 bytes allocated
-==13777== 
-==13777== LEAK SUMMARY:
-==13777==    definitely lost: 8 bytes in 1 blocks
-==13777==    indirectly lost: 64 bytes in 1 blocks
-==13777==      possibly lost: 0 bytes in 0 blocks
-==13777==    still reachable: 0 bytes in 0 blocks
-==13777==         suppressed: 0 bytes in 0 blocks
-==13777== Rerun with --leak-check=full to see details of leaked memory
-==13777== 
-==13777== For counts of detected and suppressed errors, rerun with: -v
-==13777== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==12972== Memcheck, a memory error detector
+==12972== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==12972== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==12972== Command: ./TicTacToe.out 1000000
+==12972== Parent PID: 12358
+==12972== 
+==12972== 
+==12972== HEAP SUMMARY:
+==12972==     in use at exit: 72,000,072 bytes in 1,000,001 blocks
+==12972==   total heap usage: 22,000,003 allocs, 21,000,002 frees, 1,584,000,376 bytes allocated
+==12972== 
+==12972== LEAK SUMMARY:
+==12972==    definitely lost: 71,999,856 bytes in 999,998 blocks
+==12972==    indirectly lost: 0 bytes in 0 blocks
+==12972==      possibly lost: 144 bytes in 2 blocks
+==12972==    still reachable: 72 bytes in 1 blocks
+==12972==         suppressed: 0 bytes in 0 blocks
+==12972== Rerun with --leak-check=full to see details of leaked memory
+==12972== 
+==12972== For counts of detected and suppressed errors, rerun with: -v
+==12972== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

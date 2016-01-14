@@ -1,14 +1,10 @@
 #include "MatrixMult.h"
-Matrix create_Matrix(){
-	Matrix _matrix;
-	return _matrix;
-}
-Matrix copy_Matrix(Matrix _matrix){
-	Matrix new_matrix = create_Matrix();
-	new_matrix.data_size = _matrix.data_size; new_matrix.data_size_size = _matrix.data_size_size;  new_matrix.data = copy2DArray(_matrix.data, _matrix.data_size, _matrix.data_size_size);
-	new_matrix.width = _matrix.width;
-	new_matrix.height = _matrix.height;
-	return new_matrix;
+Matrix copy_Matrix(Matrix _Matrix){
+	Matrix new_Matrix;
+	_2DARRAY_COPY(new_Matrix.data, _Matrix.data);
+	new_Matrix.width = _Matrix.width;
+	new_Matrix.height = _Matrix.height;
+	return new_Matrix;
 }
 void free_Matrix(Matrix _matrix){
 	free2DArray(_matrix.data, _matrix.data_size);
@@ -16,21 +12,17 @@ void free_Matrix(Matrix _matrix){
 void printf_Matrix(Matrix _matrix){
 	printf("{");
 	printf(" data:");
-	printf2DArray(_matrix.data, _matrix.data_size, _matrix.data_size_size);
+	_2DARRAY_PRINT(_matrix.data);
 	printf(" width:");
 	printf("%d", _matrix.width);
 	printf(" height:");
 	printf("%d", _matrix.height);
 	printf("}");
 }
-Matrix matrix(long long width, long long height, long long** data, long long data_size, long long data_size_size){
+Matrix matrix(long long width, long long height, _DECL_2DARRAY_PARAM(data)){
 	Matrix _3;
-	
 	//newrecord %3 = (%2, %1, %0) : {int[][] data,int height,int width}
-	_3 = create_Matrix();
-	_3.data_size = data_size; _3.data_size_size = data_size_size; 
-	_3.data = copy2DArray(data, data_size, data_size_size);
-	
+	_2DARRAY_COPY(_3.data, data);
 	_3.height = height;
 	_3.width = width;
 	//return %3 : {int[][] data,int height,int width}
@@ -39,31 +31,17 @@ Matrix matrix(long long width, long long height, long long** data, long long dat
 }
 
 Matrix multiply(Matrix A, Matrix B){
-	long long** C_data = NULL;
-	long long C_data_size = 0;
-	long long C_data_size_size = 0;
-	
-	long long i;
-	
-	long long j;
-	
+	_DECL_2DARRAY(C_data);
+	long long i = 0;
+	long long j = 0;
 	long long r = 0;
-	long long k;
-	
-	long long** _7 = NULL;
-	long long _7_size = 0;
-	long long _7_size_size = 0;
-	
+	long long k = 0;
+	_DECL_2DARRAY(_7);
 	long long _8 = 0;
 	long long _9 = 0;
-	long long* _10 = NULL;
-	long long _10_size = 0;
-	
+	_DECL_1DARRAY(_10);
 	long long _11 = 0;
-	long long** _12 = NULL;
-	long long _12_size = 0;
-	long long _12_size_size = 0;
-	
+	_DECL_2DARRAY(_12);
 	long long _13 = 0;
 	long long _14 = 0;
 	long long _15 = 0;
@@ -75,21 +53,11 @@ Matrix multiply(Matrix A, Matrix B){
 	long long _21 = 0;
 	long long _22 = 0;
 	long long _23 = 0;
-	long long** _24 = NULL;
-	long long _24_size = 0;
-	long long _24_size_size = 0;
-	
-	long long* _25 = NULL;
-	long long _25_size = 0;
-	
+	_DECL_2DARRAY(_24);
+	_DECL_1DARRAY(_25);
 	long long _26 = 0;
-	long long** _27 = NULL;
-	long long _27_size = 0;
-	long long _27_size_size = 0;
-	
-	long long* _28 = NULL;
-	long long _28_size = 0;
-	
+	_DECL_2DARRAY(_27);
+	_DECL_1DARRAY(_28);
 	long long _29 = 0;
 	long long _30 = 0;
 	long long _31 = 0;
@@ -100,7 +68,6 @@ Matrix multiply(Matrix A, Matrix B){
 	long long _36 = 0;
 	long long _37 = 0;
 	Matrix _38;
-	
 	long long _39 = 0;
 	long long _40 = 0;
 	//const %8 = 0 : int
@@ -108,22 +75,15 @@ Matrix multiply(Matrix A, Matrix B){
 	//fieldload %9 = %1 width : {int[][] data,int height,int width}
 	_9 = B.width;
 	//listgen %10 = [8; 9] : int[]
-	_10_size = _9;
-	_10 = gen1DArray(_8, _10_size);
+	_GEN_1DARRAY(_10, _9, _8);
 	//fieldload %11 = %0 height : {int[][] data,int height,int width}
 	_11 = A.height;
 	//listgen %12 = [10; 11] : int[][]
-	_12_size = _11;
-	_12_size_size = _10_size;
-	_12 = gen2DArray(_10, _12_size, _12_size_size);
+	_GEN_2DARRAY(_12, _11, _10);
 	//assign %7 = %12  : int[][]
-	_7_size = _12_size; _7_size_size = _12_size_size; 
-	_7 = copy2DArray(_12, _12_size, _12_size_size);
-	
+	_2DARRAY_COPY(_7, _12);
 	//assign %2 = %7  : int[][]
-	C_data_size = _7_size; C_data_size_size = _7_size_size; 
-	C_data = copy2DArray(_7, _7_size, _7_size_size);
-	
+	_2DARRAY_COPY(C_data, _7);
 	//const %14 = 0 : int
 	_14 = 0;
 	//assign %13 = %14  : int
@@ -167,15 +127,13 @@ Matrix multiply(Matrix A, Matrix B){
 				//ifge %6, %23 goto blklab15 : int
 				if(k>=_23){goto blklab15;}
 				//fieldload %24 = %0 data : {int[][] data,int height,int width}
-				_24_size = A.data_size; _24_size_size = A.data_size_size; 
-				_24 = copy2DArray(A.data, A.data_size, A.data_size_size);
+				_2DARRAY_COPY(_24, A.data);
 				//indexof %25 = %24, %3 : int[][]
 				_25=_24[i];
 				//indexof %26 = %25, %6 : int[]
 				_26=_25[k];
 				//fieldload %27 = %1 data : {int[][] data,int height,int width}
-				_27_size = B.data_size; _27_size_size = B.data_size_size; 
-				_27 = copy2DArray(B.data, B.data_size, B.data_size_size);
+				_2DARRAY_COPY(_27, B.data);
 				//indexof %28 = %27, %6 : int[][]
 				_28=_27[k];
 				//indexof %29 = %28, %4 : int[]
@@ -220,7 +178,7 @@ blklab13:;
 	//fieldload %40 = %0 height : {int[][] data,int height,int width}
 	_40 = A.height;
 	//invoke %38 = (%39, %40, %2) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[][]) -> MatrixMult:Matrix
-	_38 = matrix(_39, _40, copy2DArray(C_data, C_data_size, C_data_size_size), C_data_size, C_data_size_size);
+	_38 = matrix(_39, _40, _2DARRAY_COPY_PARAM(C_data));
 	//return %38 : {int[][] data,int height,int width}
 	return _38;
 	//return
@@ -236,29 +194,17 @@ void* printMat(FILE* sys, Matrix A){
 	long long _8 = 0;
 	long long _9 = 0;
 	void* _10;
-	
-	long long** _12 = NULL;
-	long long _12_size = 0;
-	long long _12_size_size = 0;
-	
-	long long* _13 = NULL;
-	long long _13_size = 0;
-	
+	_DECL_2DARRAY(_12);
+	_DECL_1DARRAY(_13);
 	long long _14 = 0;
 	void* _15;
-	
-	long long* _17 = NULL;
-	long long _17_size = 0;
-	
+	_DECL_1DARRAY(_17);
 	long long _18 = 0;
 	long long _19 = 0;
 	long long _20 = 0;
 	long long _21 = 0;
 	void* _22;
-	
-	void** _24 = NULL;
-	long long _24_size = 0;
-	
+	_DECL_1DARRAY(_24);
 	//const %5 = 0 : int
 	_5 = 0;
 	//assign %4 = %5  : int
@@ -286,8 +232,7 @@ void* printMat(FILE* sys, Matrix A){
 			//fieldload %10 = %0 out : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 			//fieldload %11 = %10 print : {method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s}
 			//fieldload %12 = %1 data : {int[][] data,int height,int width}
-			_12_size = A.data_size; _12_size_size = A.data_size_size; 
-			_12 = copy2DArray(A.data, A.data_size, A.data_size_size);
+			_2DARRAY_COPY(_12, A.data);
 			//indexof %13 = %12, %2 : int[][]
 			_13=_12[i];
 			//indexof %14 = %13, %3 : int[]
@@ -297,11 +242,10 @@ void* printMat(FILE* sys, Matrix A){
 			//fieldload %15 = %0 out : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 			//fieldload %16 = %15 print_s : {method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s}
 			//const %17 = [32] : int[]
-			_17_size = 1;
-			_17=(long long*)malloc(1*sizeof(long long));
+			_NEW_ARRAY(_17, 1);
 			_17[0] = 32; 
 			//indirectinvoke %16 (%17) : method(int[]) -> void
-			printf_s(_17, _17_size);
+			printf_s(_1DARRAY_PARAM(_17));
 			//const %18 = 1 : int
 			_18 = 1;
 			//add %19 = %3, %18 : int
@@ -320,10 +264,9 @@ blklab17:;
 		//fieldload %22 = %0 out : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 		//fieldload %23 = %22 println_s : {method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s}
 		//const %24 = [] : void[]
-		_24_size = 0;
-		_24=(long long*)malloc(1*sizeof(long long));
+		_NEW_ARRAY(_24, 0);
 		//indirectinvoke %23 (%24) : method(int[]) -> void
-		println_s(_24, _24_size);
+		println_s(_1DARRAY_PARAM(_24));
 	}
 //.blklab16
 blklab16:;
@@ -331,24 +274,13 @@ blklab16:;
 }
 
 Matrix genMatrix(long long height, long long width){
-	long long** rows = NULL;
-	long long rows_size = 0;
-	long long rows_size_size = 0;
-	
+	_DECL_2DARRAY(rows);
 	long long i = 0;
 	long long j = 0;
-	long long** _5 = NULL;
-	long long _5_size = 0;
-	long long _5_size_size = 0;
-	
+	_DECL_2DARRAY(_5);
 	long long _6 = 0;
-	long long* _7 = NULL;
-	long long _7_size = 0;
-	
-	long long** _8 = NULL;
-	long long _8_size = 0;
-	long long _8_size_size = 0;
-	
+	_DECL_1DARRAY(_7);
+	_DECL_2DARRAY(_8);
 	long long _9 = 0;
 	long long _10 = 0;
 	long long _11 = 0;
@@ -360,24 +292,16 @@ Matrix genMatrix(long long height, long long width){
 	long long _17 = 0;
 	long long _18 = 0;
 	Matrix _19;
-	
 	//const %6 = 0 : int
 	_6 = 0;
 	//listgen %7 = [6; 1] : int[]
-	_7_size = width;
-	_7 = gen1DArray(_6, _7_size);
+	_GEN_1DARRAY(_7, width, _6);
 	//listgen %8 = [7; 0] : int[][]
-	_8_size = height;
-	_8_size_size = _7_size;
-	_8 = gen2DArray(_7, _8_size, _8_size_size);
+	_GEN_2DARRAY(_8, height, _7);
 	//assign %5 = %8  : int[][]
-	_5_size = _8_size; _5_size_size = _8_size_size; 
-	_5 = copy2DArray(_8, _8_size, _8_size_size);
-	
+	_2DARRAY_COPY(_5, _8);
 	//assign %2 = %5  : int[][]
-	rows_size = _5_size; rows_size_size = _5_size_size; 
-	rows = copy2DArray(_5, _5_size, _5_size_size);
-	
+	_2DARRAY_COPY(rows, _5);
 	//const %10 = 0 : int
 	_10 = 0;
 	//assign %9 = %10  : int
@@ -423,105 +347,74 @@ blklab19:;
 //.blklab18
 blklab18:;
 	//invoke %19 = (%1, %0, %2) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[][]) -> MatrixMult:Matrix
-	_19 = matrix(width, height, copy2DArray(rows, rows_size, rows_size_size), rows_size, rows_size_size);
+	_19 = matrix(width, height, _2DARRAY_COPY_PARAM(rows));
 	//return %19 : {int[][] data,int height,int width}
 	return _19;
 	//return
 }
 
 int main(int argc, char** args){
-	union UNION max;
+	long long max;
 	Matrix A;
-	
 	Matrix B;
-	
 	Matrix C;
-	
-	union UNION _5;
-	union UNION _6;
-	long long** _7 = NULL;
-	long long _7_size = 0;
-	long long _7_size_size = 0;
-	
+	long long _5;
+	long long _6;
+	_DECL_2DARRAY(_7);
 	long long _8 = 0;
-	long long* _9 = NULL;
-	long long _9_size = 0;
-	
+	_DECL_1DARRAY(_9);
 	Matrix _10;
-	
 	Matrix _11;
-	
 	Matrix _12;
-	
 	Matrix _13;
-	
 	Matrix _14;
-	
 	Matrix _15;
-	
-	long long** _16 = NULL;
-	long long _16_size = 0;
-	long long _16_size_size = 0;
-	
+	_DECL_2DARRAY(_16);
 	long long _17 = 0;
-	long long* _18 = NULL;
-	long long _18_size = 0;
-	
+	_DECL_1DARRAY(_18);
 	long long _19 = 0;
 	long long _20 = 0;
 	long long _21 = 0;
 	long long _22 = 0;
 	void* _23;
-	
-	long long* _25 = NULL;
-	long long _25_size = 0;
-	
+	_DECL_1DARRAY(_25);
 	void* _26;
-	
 	//fieldload %7 = %0 args : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
-	_7 = convertArgsToIntArray(argc, args);
-	_7_size = argc - 1;
+	_CONV_ARGS(_7);
 	//const %8 = 0 : int
 	_8 = 0;
 	//indexof %9 = %7, %8 : int[][]
 	_9=_7[_8];
 	//invoke %6 = (%9) whiley/lang/Int:parse : function(whiley/lang/ASCII:string) -> null|int
-	_6 = parseInteger(_9);
+	_STR_TO_INT(_6, _9);
 	//assign %5 = %6  : null|int
 	_5 = _6;
 	//assign %1 = %5  : null|int
 	max = _5;
 	//ifis %1, null goto blklab20 : null|int
-	if(max.null == NULL) { goto blklab20;}
+	if(max == NULL) { goto blklab20;}
 	//invoke %11 = (%1, %1) MatrixMult:genMatrix : function(MatrixMult:nat,MatrixMult:nat) -> MatrixMult:Matrix
-	_11 = genMatrix(max.integer, max.integer);
+	_11 = genMatrix(max, max);
 	//assign %10 = %11  : {int[][] data,int height,int width}
 	_10 = copy_Matrix(_11);
-	
 	//assign %2 = %10  : {int[][] data,int height,int width}
 	A = copy_Matrix(_10);
-	
 	//invoke %13 = (%1, %1) MatrixMult:genMatrix : function(MatrixMult:nat,MatrixMult:nat) -> MatrixMult:Matrix
-	_13 = genMatrix(max.integer, max.integer);
+	_13 = genMatrix(max, max);
 	//assign %12 = %13  : {int[][] data,int height,int width}
 	_12 = copy_Matrix(_13);
-	
 	//assign %3 = %12  : {int[][] data,int height,int width}
 	B = copy_Matrix(_12);
-	
 	//invoke %15 = (%2, %3) MatrixMult:multiply : function(MatrixMult:Matrix,MatrixMult:Matrix) -> MatrixMult:Matrix
-	_15 = multiply(copy_Matrix(A), copy_Matrix(B));
+	_15 = multiply(_STRUCT_COPY_PARAM(A, Matrix), _STRUCT_COPY_PARAM(B, Matrix));
 	//assign %14 = %15  : {int[][] data,int height,int width}
 	_14 = copy_Matrix(_15);
-	
 	//assign %4 = %14  : {int[][] data,int height,int width}
 	C = copy_Matrix(_14);
-	
 	//assert
 	{
 		//fieldload %16 = %4 data : {int[][] data,int height,int width}
-		_16_size = C.data_size; _16_size_size = C.data_size_size; 
-		_16 = copy2DArray(C.data, C.data_size, C.data_size_size);
+		_2DARRAY_COPY(_16, C.data);
 		//const %17 = 0 : int
 		_17 = 0;
 		//indexof %18 = %16, %17 : int[][]
@@ -531,7 +424,7 @@ int main(int argc, char** args){
 		//indexof %20 = %18, %19 : int[]
 		_20=_18[_19];
 		//ifeq %20, %1 goto blklab21 : int
-		if(_20==max.integer){goto blklab21;}
+		if(_20==max){goto blklab21;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -544,7 +437,7 @@ blklab21:;
 		//fieldload %21 = %4 width : {int[][] data,int height,int width}
 		_21 = C.width;
 		//ifeq %21, %1 goto blklab22 : int
-		if(_21==max.integer){goto blklab22;}
+		if(_21==max){goto blklab22;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -557,7 +450,7 @@ blklab22:;
 		//fieldload %22 = %4 height : {int[][] data,int height,int width}
 		_22 = C.height;
 		//ifeq %22, %1 goto blklab23 : int
-		if(_22==max.integer){goto blklab23;}
+		if(_22==max){goto blklab23;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -568,15 +461,14 @@ blklab23:;
 	//fieldload %23 = %0 out : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 	//fieldload %24 = %23 print_s : {method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s}
 	//const %25 = [80,97,115,115,32,77,97,116,114,105,120,77,117,108,116,32,116,101,115,116,32,99,97,115,101,32,119,105,116,104,32,105,110,112,117,116,32,61,32] : int[]
-	_25_size = 39;
-	_25=(long long*)malloc(39*sizeof(long long));
+	_NEW_ARRAY(_25, 39);
 	_25[0] = 80; _25[1] = 97; _25[2] = 115; _25[3] = 115; _25[4] = 32; _25[5] = 77; _25[6] = 97; _25[7] = 116; _25[8] = 114; _25[9] = 105; _25[10] = 120; _25[11] = 77; _25[12] = 117; _25[13] = 108; _25[14] = 116; _25[15] = 32; _25[16] = 116; _25[17] = 101; _25[18] = 115; _25[19] = 116; _25[20] = 32; _25[21] = 99; _25[22] = 97; _25[23] = 115; _25[24] = 101; _25[25] = 32; _25[26] = 119; _25[27] = 105; _25[28] = 116; _25[29] = 104; _25[30] = 32; _25[31] = 105; _25[32] = 110; _25[33] = 112; _25[34] = 117; _25[35] = 116; _25[36] = 32; _25[37] = 61; _25[38] = 32; 
 	//indirectinvoke %24 (%25) : method(int[]) -> void
-	printf_s(_25, _25_size);
+	printf_s(_1DARRAY_PARAM(_25));
 	//fieldload %26 = %0 out : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 	//fieldload %27 = %26 println : {method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s}
 	//indirectinvoke %27 (%1) : method(any) -> void
-	printf("%d\n", max.integer);
+	printf("%d\n", max);
 //.blklab20
 blklab20:;
 	//return

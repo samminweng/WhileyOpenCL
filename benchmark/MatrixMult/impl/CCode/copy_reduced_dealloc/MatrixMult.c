@@ -1,14 +1,10 @@
 #include "MatrixMult.h"
-Matrix create_Matrix(){
-	Matrix _matrix;
-	return _matrix;
-}
-Matrix copy_Matrix(Matrix _matrix){
-	Matrix new_matrix = create_Matrix();
-	new_matrix.data_size = _matrix.data_size; new_matrix.data_size_size = _matrix.data_size_size;  new_matrix.data = copy2DArray(_matrix.data, _matrix.data_size, _matrix.data_size_size);
-	new_matrix.width = _matrix.width;
-	new_matrix.height = _matrix.height;
-	return new_matrix;
+Matrix copy_Matrix(Matrix _Matrix){
+	Matrix new_Matrix;
+	_2DARRAY_COPY(new_Matrix.data, _Matrix.data);
+	new_Matrix.width = _Matrix.width;
+	new_Matrix.height = _Matrix.height;
+	return new_Matrix;
 }
 void free_Matrix(Matrix _matrix){
 	free2DArray(_matrix.data, _matrix.data_size);
@@ -16,57 +12,43 @@ void free_Matrix(Matrix _matrix){
 void printf_Matrix(Matrix _matrix){
 	printf("{");
 	printf(" data:");
-	printf2DArray(_matrix.data, _matrix.data_size, _matrix.data_size_size);
+	_2DARRAY_PRINT(_matrix.data);
 	printf(" width:");
 	printf("%d", _matrix.width);
 	printf(" height:");
 	printf("%d", _matrix.height);
 	printf("}");
 }
-Matrix matrix(long long width, long long height, long long** data, bool data_has_ownership, long long data_size, long long data_size_size){
+Matrix matrix(long long width, long long height, _DECL_2DARRAY_PARAM(data), _DECL_OWNERSHIP_PARAM(data)){
 	Matrix _3;
-	bool _3_has_ownership = false;
+	_DECL_OWNERSHIP(_3);
 	//newrecord %3 = (%2, %1, %0) : {int[][] data,int height,int width}
-	if(_3_has_ownership){free_Matrix(_3); _3_has_ownership = false;}
-	_3 = create_Matrix();
-	_3.data_size = data_size; _3.data_size_size = data_size_size; 
-	_3.data = data;
-	data_has_ownership = false;
+	_FREE_STRUCT(_3, Matrix);
+	_2DARRAY_COPY(_3.data, data);
 	_3.height = height;
 	_3.width = width;
-	_3_has_ownership = true;
+	_ADD_OWNERSHIP(_3);
 	//return %3 : {int[][] data,int height,int width}
-	if(data_has_ownership){free2DArray(data, data_size); data_has_ownership = false;}
 	return _3;
 	//return
 }
 
-Matrix multiply(Matrix A, bool A_has_ownership, Matrix B, bool B_has_ownership){
-	long long** C_data = NULL;
-	long long C_data_size = 0;
-	long long C_data_size_size = 0;
-	bool C_data_has_ownership = false;
-	long long i;
-	
-	long long j;
-	
+Matrix multiply(Matrix A, _DECL_OWNERSHIP_PARAM(A), Matrix B, _DECL_OWNERSHIP_PARAM(B)){
+	_DECL_2DARRAY(C_data);
+	_DECL_OWNERSHIP(C_data);
+	long long i = 0;
+	long long j = 0;
 	long long r = 0;
-	long long k;
-	
-	long long** _7 = NULL;
-	long long _7_size = 0;
-	long long _7_size_size = 0;
-	bool _7_has_ownership = false;
+	long long k = 0;
+	_DECL_2DARRAY(_7);
+	_DECL_OWNERSHIP(_7);
 	long long _8 = 0;
 	long long _9 = 0;
-	long long* _10 = NULL;
-	long long _10_size = 0;
-	bool _10_has_ownership = false;
+	_DECL_1DARRAY(_10);
+	_DECL_OWNERSHIP(_10);
 	long long _11 = 0;
-	long long** _12 = NULL;
-	long long _12_size = 0;
-	long long _12_size_size = 0;
-	bool _12_has_ownership = false;
+	_DECL_2DARRAY(_12);
+	_DECL_OWNERSHIP(_12);
 	long long _13 = 0;
 	long long _14 = 0;
 	long long _15 = 0;
@@ -78,21 +60,15 @@ Matrix multiply(Matrix A, bool A_has_ownership, Matrix B, bool B_has_ownership){
 	long long _21 = 0;
 	long long _22 = 0;
 	long long _23 = 0;
-	long long** _24 = NULL;
-	long long _24_size = 0;
-	long long _24_size_size = 0;
-	bool _24_has_ownership = false;
-	long long* _25 = NULL;
-	long long _25_size = 0;
-	bool _25_has_ownership = false;
+	_DECL_2DARRAY(_24);
+	_DECL_OWNERSHIP(_24);
+	_DECL_1DARRAY(_25);
+	_DECL_OWNERSHIP(_25);
 	long long _26 = 0;
-	long long** _27 = NULL;
-	long long _27_size = 0;
-	long long _27_size_size = 0;
-	bool _27_has_ownership = false;
-	long long* _28 = NULL;
-	long long _28_size = 0;
-	bool _28_has_ownership = false;
+	_DECL_2DARRAY(_27);
+	_DECL_OWNERSHIP(_27);
+	_DECL_1DARRAY(_28);
+	_DECL_OWNERSHIP(_28);
 	long long _29 = 0;
 	long long _30 = 0;
 	long long _31 = 0;
@@ -103,7 +79,7 @@ Matrix multiply(Matrix A, bool A_has_ownership, Matrix B, bool B_has_ownership){
 	long long _36 = 0;
 	long long _37 = 0;
 	Matrix _38;
-	bool _38_has_ownership = false;
+	_DECL_OWNERSHIP(_38);
 	long long _39 = 0;
 	long long _40 = 0;
 	//const %8 = 0 : int
@@ -111,30 +87,25 @@ Matrix multiply(Matrix A, bool A_has_ownership, Matrix B, bool B_has_ownership){
 	//fieldload %9 = %1 width : {int[][] data,int height,int width}
 	_9 = B.width;
 	//listgen %10 = [8; 9] : int[]
-	_10_size = _9;
-	if(_10_has_ownership){free(_10); _10_has_ownership = false;}
-	_10 = gen1DArray(_8, _10_size);
-	_10_has_ownership = true;
+	_FREE(_10);
+	_GEN_1DARRAY(_10, _9, _8);
+	_ADD_OWNERSHIP(_10);
 	//fieldload %11 = %0 height : {int[][] data,int height,int width}
 	_11 = A.height;
 	//listgen %12 = [10; 11] : int[][]
-	_12_size = _11;
-	if(_12_has_ownership){free2DArray(_12, _12_size); _12_has_ownership = false;}
-	_12_size_size = _10_size;
-	_12 = gen2DArray(_10, _12_size, _12_size_size);
-	_12_has_ownership = true;
+	_FREE2DArray(_12);
+	_GEN_2DARRAY(_12, _11, _10);
+	_ADD_OWNERSHIP(_12);
 	//assign %7 = %12  : int[][]
-	_7_size = _12_size; _7_size_size = _12_size_size; 
-	if(_7_has_ownership){free2DArray(_7, _7_size); _7_has_ownership = false;}
-	_7 = _12;
-	_12_has_ownership = false;
-	_7_has_ownership = true;
+	_FREE2DArray(_7);
+	_2DARRAY_UPDATE(_7, _12);
+	_ADD_OWNERSHIP(_7);
+	_REMOVE_OWNERSHIP(_12);
 	//assign %2 = %7  : int[][]
-	C_data_size = _7_size; C_data_size_size = _7_size_size; 
-	if(C_data_has_ownership){free2DArray(C_data, C_data_size); C_data_has_ownership = false;}
-	C_data = _7;
-	_7_has_ownership = false;
-	C_data_has_ownership = true;
+	_FREE2DArray(C_data);
+	_2DARRAY_UPDATE(C_data, _7);
+	_ADD_OWNERSHIP(C_data);
+	_REMOVE_OWNERSHIP(_7);
 	//const %14 = 0 : int
 	_14 = 0;
 	//assign %13 = %14  : int
@@ -178,15 +149,15 @@ Matrix multiply(Matrix A, bool A_has_ownership, Matrix B, bool B_has_ownership){
 				//ifge %6, %23 goto blklab15 : int
 				if(k>=_23){goto blklab15;}
 				//fieldload %24 = %0 data : {int[][] data,int height,int width}
-				_24_size = A.data_size; _24_size_size = A.data_size_size; 
-				_24 = A.data;
+				_FREE2DArray(_24);
+				_2DARRAY_UPDATE(_24, A.data);
 				//indexof %25 = %24, %3 : int[][]
 				_25=_24[i];
 				//indexof %26 = %25, %6 : int[]
 				_26=_25[k];
 				//fieldload %27 = %1 data : {int[][] data,int height,int width}
-				_27_size = B.data_size; _27_size_size = B.data_size_size; 
-				_27 = B.data;
+				_FREE2DArray(_27);
+				_2DARRAY_UPDATE(_27, B.data);
 				//indexof %28 = %27, %6 : int[][]
 				_28=_27[k];
 				//indexof %29 = %28, %4 : int[]
@@ -231,24 +202,18 @@ blklab13:;
 	//fieldload %40 = %0 height : {int[][] data,int height,int width}
 	_40 = A.height;
 	//invoke %38 = (%39, %40, %2) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[][]) -> MatrixMult:Matrix
-	if(_38_has_ownership){free_Matrix(_38); _38_has_ownership = false;}
-	_38 = matrix(_39, _40, C_data, false, C_data_size, C_data_size_size);
-	C_data_has_ownership = false;
-	_38_has_ownership = true;
+	_FREE_STRUCT(_38, Matrix);
+	_ADD_OWNERSHIP(C_data);
+	_38 = matrix(_39, _40, _2DARRAY_PARAM_OWN(C_data));
+	_ADD_OWNERSHIP(_38);
 	//return %38 : {int[][] data,int height,int width}
-	if(A_has_ownership){free_Matrix(A); A_has_ownership = false;}
-	if(B_has_ownership){free_Matrix(B); B_has_ownership = false;}
-	if(C_data_has_ownership){free2DArray(C_data, C_data_size); C_data_has_ownership = false;}
-	if(_7_has_ownership){free2DArray(_7, _7_size); _7_has_ownership = false;}
-	if(_24_has_ownership){free2DArray(_24, _24_size); _24_has_ownership = false;}
-	if(_10_has_ownership){free(_10); _10_has_ownership = false;}
-	if(_27_has_ownership){free2DArray(_27, _27_size); _27_has_ownership = false;}
-	if(_12_has_ownership){free2DArray(_12, _12_size); _12_has_ownership = false;}
+	_FREE2DArray(C_data);
+	_FREE(_10);
 	return _38;
 	//return
 }
 
-void* printMat(FILE* sys, Matrix A, bool A_has_ownership){
+void* printMat(FILE* sys, Matrix A, _DECL_OWNERSHIP_PARAM(A)){
 	long long i = 0;
 	long long j = 0;
 	long long _4 = 0;
@@ -258,29 +223,21 @@ void* printMat(FILE* sys, Matrix A, bool A_has_ownership){
 	long long _8 = 0;
 	long long _9 = 0;
 	void* _10;
-	
-	long long** _12 = NULL;
-	long long _12_size = 0;
-	long long _12_size_size = 0;
-	bool _12_has_ownership = false;
-	long long* _13 = NULL;
-	long long _13_size = 0;
-	bool _13_has_ownership = false;
+	_DECL_2DARRAY(_12);
+	_DECL_OWNERSHIP(_12);
+	_DECL_1DARRAY(_13);
+	_DECL_OWNERSHIP(_13);
 	long long _14 = 0;
 	void* _15;
-	
-	long long* _17 = NULL;
-	long long _17_size = 0;
-	bool _17_has_ownership = false;
+	_DECL_1DARRAY(_17);
+	_DECL_OWNERSHIP(_17);
 	long long _18 = 0;
 	long long _19 = 0;
 	long long _20 = 0;
 	long long _21 = 0;
 	void* _22;
-	
-	void** _24 = NULL;
-	long long _24_size = 0;
-	bool _24_has_ownership = false;
+	_DECL_1DARRAY(_24);
+	_DECL_OWNERSHIP(_24);
 	//const %5 = 0 : int
 	_5 = 0;
 	//assign %4 = %5  : int
@@ -308,8 +265,8 @@ void* printMat(FILE* sys, Matrix A, bool A_has_ownership){
 			//fieldload %10 = %0 out : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 			//fieldload %11 = %10 print : {method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s}
 			//fieldload %12 = %1 data : {int[][] data,int height,int width}
-			_12_size = A.data_size; _12_size_size = A.data_size_size; 
-			_12 = A.data;
+			_FREE2DArray(_12);
+			_2DARRAY_UPDATE(_12, A.data);
 			//indexof %13 = %12, %2 : int[][]
 			_13=_12[i];
 			//indexof %14 = %13, %3 : int[]
@@ -319,13 +276,12 @@ void* printMat(FILE* sys, Matrix A, bool A_has_ownership){
 			//fieldload %15 = %0 out : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 			//fieldload %16 = %15 print_s : {method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s}
 			//const %17 = [32] : int[]
-			_17_size = 1;
-			if(_17_has_ownership){free(_17); _17_has_ownership = false;}
-			_17=(long long*)malloc(1*sizeof(long long));
+			_FREE(_17);
+			_NEW_ARRAY(_17, 1);
 			_17[0] = 32; 
-			_17_has_ownership = true;
+			_ADD_OWNERSHIP(_17);
 			//indirectinvoke %16 (%17) : method(int[]) -> void
-			printf_s(_17, _17_size);
+			printf_s(_1DARRAY_PARAM(_17));
 			//const %18 = 1 : int
 			_18 = 1;
 			//add %19 = %3, %18 : int
@@ -344,11 +300,11 @@ blklab17:;
 		//fieldload %22 = %0 out : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 		//fieldload %23 = %22 println_s : {method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s}
 		//const %24 = [] : void[]
-		_24_size = 0;
-		_24=(long long*)malloc(1*sizeof(long long));
-		_24_has_ownership = true;
+		_FREE(_24);
+		_NEW_ARRAY(_24, 0);
+		_ADD_OWNERSHIP(_24);
 		//indirectinvoke %23 (%24) : method(int[]) -> void
-		println_s(_24, _24_size);
+		println_s(_1DARRAY_PARAM(_24));
 	}
 //.blklab16
 blklab16:;
@@ -356,24 +312,17 @@ blklab16:;
 }
 
 Matrix genMatrix(long long height, long long width){
-	long long** rows = NULL;
-	long long rows_size = 0;
-	long long rows_size_size = 0;
-	bool rows_has_ownership = false;
+	_DECL_2DARRAY(rows);
+	_DECL_OWNERSHIP(rows);
 	long long i = 0;
 	long long j = 0;
-	long long** _5 = NULL;
-	long long _5_size = 0;
-	long long _5_size_size = 0;
-	bool _5_has_ownership = false;
+	_DECL_2DARRAY(_5);
+	_DECL_OWNERSHIP(_5);
 	long long _6 = 0;
-	long long* _7 = NULL;
-	long long _7_size = 0;
-	bool _7_has_ownership = false;
-	long long** _8 = NULL;
-	long long _8_size = 0;
-	long long _8_size_size = 0;
-	bool _8_has_ownership = false;
+	_DECL_1DARRAY(_7);
+	_DECL_OWNERSHIP(_7);
+	_DECL_2DARRAY(_8);
+	_DECL_OWNERSHIP(_8);
 	long long _9 = 0;
 	long long _10 = 0;
 	long long _11 = 0;
@@ -385,32 +334,27 @@ Matrix genMatrix(long long height, long long width){
 	long long _17 = 0;
 	long long _18 = 0;
 	Matrix _19;
-	bool _19_has_ownership = false;
+	_DECL_OWNERSHIP(_19);
 	//const %6 = 0 : int
 	_6 = 0;
 	//listgen %7 = [6; 1] : int[]
-	_7_size = width;
-	if(_7_has_ownership){free(_7); _7_has_ownership = false;}
-	_7 = gen1DArray(_6, _7_size);
-	_7_has_ownership = true;
+	_FREE(_7);
+	_GEN_1DARRAY(_7, width, _6);
+	_ADD_OWNERSHIP(_7);
 	//listgen %8 = [7; 0] : int[][]
-	_8_size = height;
-	if(_8_has_ownership){free2DArray(_8, _8_size); _8_has_ownership = false;}
-	_8_size_size = _7_size;
-	_8 = gen2DArray(_7, _8_size, _8_size_size);
-	_8_has_ownership = true;
+	_FREE2DArray(_8);
+	_GEN_2DARRAY(_8, height, _7);
+	_ADD_OWNERSHIP(_8);
 	//assign %5 = %8  : int[][]
-	_5_size = _8_size; _5_size_size = _8_size_size; 
-	if(_5_has_ownership){free2DArray(_5, _5_size); _5_has_ownership = false;}
-	_5 = _8;
-	_8_has_ownership = false;
-	_5_has_ownership = true;
+	_FREE2DArray(_5);
+	_2DARRAY_UPDATE(_5, _8);
+	_ADD_OWNERSHIP(_5);
+	_REMOVE_OWNERSHIP(_8);
 	//assign %2 = %5  : int[][]
-	rows_size = _5_size; rows_size_size = _5_size_size; 
-	if(rows_has_ownership){free2DArray(rows, rows_size); rows_has_ownership = false;}
-	rows = _5;
-	_5_has_ownership = false;
-	rows_has_ownership = true;
+	_FREE2DArray(rows);
+	_2DARRAY_UPDATE(rows, _5);
+	_ADD_OWNERSHIP(rows);
+	_REMOVE_OWNERSHIP(_5);
 	//const %10 = 0 : int
 	_10 = 0;
 	//assign %9 = %10  : int
@@ -456,132 +400,121 @@ blklab19:;
 //.blklab18
 blklab18:;
 	//invoke %19 = (%1, %0, %2) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[][]) -> MatrixMult:Matrix
-	if(_19_has_ownership){free_Matrix(_19); _19_has_ownership = false;}
-	_19 = matrix(width, height, rows, false, rows_size, rows_size_size);
-	rows_has_ownership = false;
-	_19_has_ownership = true;
+	_FREE_STRUCT(_19, Matrix);
+	_ADD_OWNERSHIP(rows);
+	_19 = matrix(width, height, _2DARRAY_PARAM_OWN(rows));
+	_ADD_OWNERSHIP(_19);
 	//return %19 : {int[][] data,int height,int width}
-	if(rows_has_ownership){free2DArray(rows, rows_size); rows_has_ownership = false;}
-	if(_5_has_ownership){free2DArray(_5, _5_size); _5_has_ownership = false;}
-	if(_7_has_ownership){free(_7); _7_has_ownership = false;}
-	if(_8_has_ownership){free2DArray(_8, _8_size); _8_has_ownership = false;}
+	_FREE2DArray(rows);
+	_FREE(_7);
 	return _19;
 	//return
 }
 
 int main(int argc, char** args){
-	union UNION max;
+	long long max;
 	Matrix A;
-	bool A_has_ownership = false;
+	_DECL_OWNERSHIP(A);
 	Matrix B;
-	bool B_has_ownership = false;
+	_DECL_OWNERSHIP(B);
 	Matrix C;
-	bool C_has_ownership = false;
-	union UNION _5;
-	union UNION _6;
-	long long** _7 = NULL;
-	long long _7_size = 0;
-	long long _7_size_size = 0;
-	bool _7_has_ownership = false;
+	_DECL_OWNERSHIP(C);
+	long long _5;
+	long long _6;
+	_DECL_2DARRAY(_7);
+	_DECL_OWNERSHIP(_7);
 	long long _8 = 0;
-	long long* _9 = NULL;
-	long long _9_size = 0;
-	bool _9_has_ownership = false;
+	_DECL_1DARRAY(_9);
+	_DECL_OWNERSHIP(_9);
 	Matrix _10;
-	bool _10_has_ownership = false;
+	_DECL_OWNERSHIP(_10);
 	Matrix _11;
-	bool _11_has_ownership = false;
+	_DECL_OWNERSHIP(_11);
 	Matrix _12;
-	bool _12_has_ownership = false;
+	_DECL_OWNERSHIP(_12);
 	Matrix _13;
-	bool _13_has_ownership = false;
+	_DECL_OWNERSHIP(_13);
 	Matrix _14;
-	bool _14_has_ownership = false;
+	_DECL_OWNERSHIP(_14);
 	Matrix _15;
-	bool _15_has_ownership = false;
-	long long** _16 = NULL;
-	long long _16_size = 0;
-	long long _16_size_size = 0;
-	bool _16_has_ownership = false;
+	_DECL_OWNERSHIP(_15);
+	_DECL_2DARRAY(_16);
+	_DECL_OWNERSHIP(_16);
 	long long _17 = 0;
-	long long* _18 = NULL;
-	long long _18_size = 0;
-	bool _18_has_ownership = false;
+	_DECL_1DARRAY(_18);
+	_DECL_OWNERSHIP(_18);
 	long long _19 = 0;
 	long long _20 = 0;
 	long long _21 = 0;
 	long long _22 = 0;
 	void* _23;
-	
-	long long* _25 = NULL;
-	long long _25_size = 0;
-	bool _25_has_ownership = false;
+	_DECL_1DARRAY(_25);
+	_DECL_OWNERSHIP(_25);
 	void* _26;
-	
 	//fieldload %7 = %0 args : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
-	_7 = convertArgsToIntArray(argc, args);
-	_7_size = argc - 1;
+	_CONV_ARGS(_7);
+	_ADD_OWNERSHIP(_7);
 	//const %8 = 0 : int
 	_8 = 0;
 	//indexof %9 = %7, %8 : int[][]
 	_9=_7[_8];
 	//invoke %6 = (%9) whiley/lang/Int:parse : function(whiley/lang/ASCII:string) -> null|int
-	_6 = parseInteger(_9);
+	_STR_TO_INT(_6, _9);
 	//assign %5 = %6  : null|int
 	_5 = _6;
 	//assign %1 = %5  : null|int
 	max = _5;
 	//ifis %1, null goto blklab20 : null|int
-	if(max.null == NULL) { goto blklab20;}
+	if(max == NULL) { goto blklab20;}
 	//invoke %11 = (%1, %1) MatrixMult:genMatrix : function(MatrixMult:nat,MatrixMult:nat) -> MatrixMult:Matrix
-	if(_11_has_ownership){free_Matrix(_11); _11_has_ownership = false;}
-	_11 = genMatrix(max.integer, max.integer);
-	_11_has_ownership = true;
+	_FREE_STRUCT(_11, Matrix);
+	_11 = genMatrix(max, max);
+	_ADD_OWNERSHIP(_11);
 	//assign %10 = %11  : {int[][] data,int height,int width}
-	if(_10_has_ownership){free_Matrix(_10); _10_has_ownership = false;}
+	_FREE_STRUCT(_10, Matrix);
 	_10 = _11;
-	_11_has_ownership = false;
-	_10_has_ownership = true;
+	_ADD_OWNERSHIP(_10);
+	_REMOVE_OWNERSHIP(_11);
 	//assign %2 = %10  : {int[][] data,int height,int width}
-	if(A_has_ownership){free_Matrix(A); A_has_ownership = false;}
+	_FREE_STRUCT(A, Matrix);
 	A = _10;
-	_10_has_ownership = false;
-	A_has_ownership = true;
+	_ADD_OWNERSHIP(A);
+	_REMOVE_OWNERSHIP(_10);
 	//invoke %13 = (%1, %1) MatrixMult:genMatrix : function(MatrixMult:nat,MatrixMult:nat) -> MatrixMult:Matrix
-	if(_13_has_ownership){free_Matrix(_13); _13_has_ownership = false;}
-	_13 = genMatrix(max.integer, max.integer);
-	_13_has_ownership = true;
+	_FREE_STRUCT(_13, Matrix);
+	_13 = genMatrix(max, max);
+	_ADD_OWNERSHIP(_13);
 	//assign %12 = %13  : {int[][] data,int height,int width}
-	if(_12_has_ownership){free_Matrix(_12); _12_has_ownership = false;}
+	_FREE_STRUCT(_12, Matrix);
 	_12 = _13;
-	_13_has_ownership = false;
-	_12_has_ownership = true;
+	_ADD_OWNERSHIP(_12);
+	_REMOVE_OWNERSHIP(_13);
 	//assign %3 = %12  : {int[][] data,int height,int width}
-	if(B_has_ownership){free_Matrix(B); B_has_ownership = false;}
+	_FREE_STRUCT(B, Matrix);
 	B = _12;
-	_12_has_ownership = false;
-	B_has_ownership = true;
+	_ADD_OWNERSHIP(B);
+	_REMOVE_OWNERSHIP(_12);
 	//invoke %15 = (%2, %3) MatrixMult:multiply : function(MatrixMult:Matrix,MatrixMult:Matrix) -> MatrixMult:Matrix
-	if(_15_has_ownership){free_Matrix(_15); _15_has_ownership = false;}
-	_15 = multiply(A, false, B, false);
-	A_has_ownership = false;
-	B_has_ownership = false;
-	_15_has_ownership = true;
+	_FREE_STRUCT(_15, Matrix);
+	_ADD_OWNERSHIP(A);
+	_ADD_OWNERSHIP(B);
+	_15 = multiply(_STRUCT_PARAM_OWN(A), _STRUCT_PARAM_OWN(B));
+	_ADD_OWNERSHIP(_15);
 	//assign %14 = %15  : {int[][] data,int height,int width}
-	if(_14_has_ownership){free_Matrix(_14); _14_has_ownership = false;}
+	_FREE_STRUCT(_14, Matrix);
 	_14 = _15;
-	_15_has_ownership = false;
-	_14_has_ownership = true;
+	_ADD_OWNERSHIP(_14);
+	_REMOVE_OWNERSHIP(_15);
 	//assign %4 = %14  : {int[][] data,int height,int width}
-	if(C_has_ownership){free_Matrix(C); C_has_ownership = false;}
+	_FREE_STRUCT(C, Matrix);
 	C = _14;
-	_14_has_ownership = false;
-	C_has_ownership = true;
+	_ADD_OWNERSHIP(C);
+	_REMOVE_OWNERSHIP(_14);
 	//assert
 	{
 		//fieldload %16 = %4 data : {int[][] data,int height,int width}
-		_16_size = C.data_size; _16_size_size = C.data_size_size; 
-		_16 = C.data;
+		_FREE2DArray(_16);
+		_2DARRAY_UPDATE(_16, C.data);
 		//const %17 = 0 : int
 		_17 = 0;
 		//indexof %18 = %16, %17 : int[][]
@@ -591,7 +524,7 @@ int main(int argc, char** args){
 		//indexof %20 = %18, %19 : int[]
 		_20=_18[_19];
 		//ifeq %20, %1 goto blklab21 : int
-		if(_20==max.integer){goto blklab21;}
+		if(_20==max){goto blklab21;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -604,7 +537,7 @@ blklab21:;
 		//fieldload %21 = %4 width : {int[][] data,int height,int width}
 		_21 = C.width;
 		//ifeq %21, %1 goto blklab22 : int
-		if(_21==max.integer){goto blklab22;}
+		if(_21==max){goto blklab22;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -617,7 +550,7 @@ blklab22:;
 		//fieldload %22 = %4 height : {int[][] data,int height,int width}
 		_22 = C.height;
 		//ifeq %22, %1 goto blklab23 : int
-		if(_22==max.integer){goto blklab23;}
+		if(_22==max){goto blklab23;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -628,32 +561,24 @@ blklab23:;
 	//fieldload %23 = %0 out : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 	//fieldload %24 = %23 print_s : {method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s}
 	//const %25 = [80,97,115,115,32,77,97,116,114,105,120,77,117,108,116,32,116,101,115,116,32,99,97,115,101,32,119,105,116,104,32,105,110,112,117,116,32,61,32] : int[]
-	_25_size = 39;
-	if(_25_has_ownership){free(_25); _25_has_ownership = false;}
-	_25=(long long*)malloc(39*sizeof(long long));
+	_FREE(_25);
+	_NEW_ARRAY(_25, 39);
 	_25[0] = 80; _25[1] = 97; _25[2] = 115; _25[3] = 115; _25[4] = 32; _25[5] = 77; _25[6] = 97; _25[7] = 116; _25[8] = 114; _25[9] = 105; _25[10] = 120; _25[11] = 77; _25[12] = 117; _25[13] = 108; _25[14] = 116; _25[15] = 32; _25[16] = 116; _25[17] = 101; _25[18] = 115; _25[19] = 116; _25[20] = 32; _25[21] = 99; _25[22] = 97; _25[23] = 115; _25[24] = 101; _25[25] = 32; _25[26] = 119; _25[27] = 105; _25[28] = 116; _25[29] = 104; _25[30] = 32; _25[31] = 105; _25[32] = 110; _25[33] = 112; _25[34] = 117; _25[35] = 116; _25[36] = 32; _25[37] = 61; _25[38] = 32; 
-	_25_has_ownership = true;
+	_ADD_OWNERSHIP(_25);
 	//indirectinvoke %24 (%25) : method(int[]) -> void
-	printf_s(_25, _25_size);
+	printf_s(_1DARRAY_PARAM(_25));
 	//fieldload %26 = %0 out : {int[][] args,{method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s} out}
 	//fieldload %27 = %26 println : {method(any) -> void print,method(int[]) -> void print_s,method(any) -> void println,method(int[]) -> void println_s}
 	//indirectinvoke %27 (%1) : method(any) -> void
-	printf("%d\n", max.integer);
+	printf("%d\n", max);
 //.blklab20
 blklab20:;
 	//return
-	if(_16_has_ownership){free2DArray(_16, _16_size); _16_has_ownership = false;}
-	if(A_has_ownership){free_Matrix(A); A_has_ownership = false;}
-	if(B_has_ownership){free_Matrix(B); B_has_ownership = false;}
-	if(C_has_ownership){free_Matrix(C); C_has_ownership = false;}
-	if(_7_has_ownership){free2DArray(_7, _7_size); _7_has_ownership = false;}
-	if(_25_has_ownership){free(_25); _25_has_ownership = false;}
-	if(_10_has_ownership){free_Matrix(_10); _10_has_ownership = false;}
-	if(_11_has_ownership){free_Matrix(_11); _11_has_ownership = false;}
-	if(_12_has_ownership){free_Matrix(_12); _12_has_ownership = false;}
-	if(_13_has_ownership){free_Matrix(_13); _13_has_ownership = false;}
-	if(_14_has_ownership){free_Matrix(_14); _14_has_ownership = false;}
-	if(_15_has_ownership){free_Matrix(_15); _15_has_ownership = false;}
+	_FREE_STRUCT(A, Matrix);
+	_FREE_STRUCT(B, Matrix);
+	_FREE_STRUCT(C, Matrix);
+	_FREE2DArray(_7);
+	_FREE(_25);
 	exit(0);
 }
 

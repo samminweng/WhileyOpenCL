@@ -6,14 +6,12 @@
 typedef long long nat;
 typedef long long Square;
 typedef struct{
-	long long* pieces;
-	long long pieces_size;
+	_DECL_1DARRAY_MEMBER(pieces);
 	long long move;
 } Board;
-Board* create_Board();
-void printf_Board(Board* _board);
-Board* copy_Board(Board* _board);
-void free_Board(Board* _board);
+void printf_Board_PTR(Board* _board);
+Board* copy_Board_PTR(Board* _board);
+void free_Board_PTR(Board* _board);
 Board* EmptyBoard();
-long long countOf(long long* pieces, long long pieces_size, long long s);
+long long countOf(_DECL_1DARRAY_PARAM(pieces), long long s);
 int main(int argc, char** args);
