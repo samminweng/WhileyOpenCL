@@ -980,29 +980,28 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 */
 	protected void translate(Codes.NewList code, FunctionOrMethod function) {
-		CodeStore store = stores.getCodeStore(function);
-		String indent = store.getIndent();
-		
+		String indent = stores.getIndent(function);
 		// Get array names
-		String lhs = store.getVar(code.target());
-		Type lhs_type = store.getRawType(code.target());
-		//Type lhs_type = store.getRawType(code.target());
+		String lhs = stores.getVar(code.target(), function);
+		Type lhs_type = stores.getRawType(code.target(), function);
 		List<String> statement = new ArrayList<String>();
 		int length = code.operands().length;
 		if(length > 0){
 			// Free lhs variable
 			this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
 			statement.add(indent+"_NEW_ARRAY("+lhs+", "+length+");");
-			this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent+ "_ADD_OWNERSHIP("+lhs+");"));
-			String s = indent; 
+			
+			String s = indent;
 			// Initialize the array
 			for (int i=0; i<code.operands().length;i++) {
-				s += lhs+"["+i+"] = "+store.getVar(code.operand(i))+"; ";
+				s += lhs+"["+i+"] = "+stores.getVar(code.operand(i), function)+"; ";
 			}
 			statement.add(s);
+			// Add lhs variable to ownership set.
+			this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent+ a.addOwnership(code.target(), function, stores)));
 		}
 		
-		store.addAllStatements(code, statement);
+		stores.addAllStatements(code, statement, function);
 	}
 
 	/**
@@ -1231,13 +1230,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			//boolean isCopyEliminated = isCopyEliminated(operand, code, function);
 			boolean isCopyEliminated = false;
 			statement.addAll(CodeGeneratorHelper.generateAssignmentCode(type, indent, lhs_member, rhs, isCopyEliminated, stores));
-			
-			// Compute the rhs ownership
-			/*if(isCopyEliminated){
-				//Remove rhs ownership
-				this.deallocatedAnalyzer.ifPresent(a ->
-						statement.add(indent+a.transferOwnership(operand, function, stores)));
-			}*/
 		}
 		
 		// Assign ownership to lhs
