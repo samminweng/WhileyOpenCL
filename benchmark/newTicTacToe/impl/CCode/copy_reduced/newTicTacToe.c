@@ -60,7 +60,8 @@ Board* EmptyBoard(){
 	_11.move = _0;
 	_1DARRAY_COPY(_11.pieces, _10);
 	//return %11 : null|{int move,int[] pieces}
-	return copy_Board_PTR(&_11);
+	Board* ret = copy_Board_PTR(&_11);
+	return ret;
 	//return
 }
 

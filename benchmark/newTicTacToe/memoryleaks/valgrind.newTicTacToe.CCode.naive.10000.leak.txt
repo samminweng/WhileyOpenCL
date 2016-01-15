@@ -1,21 +1,21 @@
-==19020== Memcheck, a memory error detector
-==19020== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==19020== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==19020== Command: ./newTicTacToe.out 10000
-==19020== Parent PID: 18371
-==19020== 
-==19020== 
-==19020== HEAP SUMMARY:
-==19020==     in use at exit: 32,400,384 bytes in 550,003 blocks
-==19020==   total heap usage: 550,003 allocs, 0 frees, 32,400,384 bytes allocated
-==19020== 
-==19020== LEAK SUMMARY:
-==19020==    definitely lost: 21,600,216 bytes in 399,999 blocks
-==19020==    indirectly lost: 10,799,904 bytes in 149,999 blocks
-==19020==      possibly lost: 96 bytes in 2 blocks
-==19020==    still reachable: 168 bytes in 3 blocks
-==19020==         suppressed: 0 bytes in 0 blocks
-==19020== Rerun with --leak-check=full to see details of leaked memory
-==19020== 
-==19020== For counts of detected and suppressed errors, rerun with: -v
-==19020== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==24421== Memcheck, a memory error detector
+==24421== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==24421== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==24421== Command: ./newTicTacToe.out 10000
+==24421== Parent PID: 23777
+==24421== 
+==24421== 
+==24421== HEAP SUMMARY:
+==24421==     in use at exit: 32,400,384 bytes in 550,003 blocks
+==24421==   total heap usage: 550,003 allocs, 0 frees, 32,400,384 bytes allocated
+==24421== 
+==24421== LEAK SUMMARY:
+==24421==    definitely lost: 21,600,216 bytes in 399,999 blocks
+==24421==    indirectly lost: 10,799,904 bytes in 149,999 blocks
+==24421==      possibly lost: 96 bytes in 2 blocks
+==24421==    still reachable: 168 bytes in 3 blocks
+==24421==         suppressed: 0 bytes in 0 blocks
+==24421== Rerun with --leak-check=full to see details of leaked memory
+==24421== 
+==24421== For counts of detected and suppressed errors, rerun with: -v
+==24421== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

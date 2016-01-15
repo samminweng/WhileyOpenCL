@@ -67,7 +67,9 @@ Board* EmptyBoard(){
 	_ADD_OWNERSHIP(_11);
 	//return %11 : null|{int move,int[] pieces}
 	_FREE(_10);
-	return copy_Board_PTR(&_11);
+	Board* ret = copy_Board_PTR(&_11);
+	_FREE_STRUCT(_11, Board);
+	return ret;
 	//return
 }
 
