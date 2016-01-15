@@ -885,9 +885,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 */
 	protected void translate(Codes.Return code, FunctionOrMethod function) {
-		CodeStore store = stores.getCodeStore(function);
 		List<String> statements = new ArrayList<String>();
-		String indent = store.getIndent();
+		String indent = stores.getIndent(function);
 		
 		// Add 'deallocation code' for all ownership variables.
 		if(function.name().equals("main") || code.operand >=0){
@@ -901,21 +900,32 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statements.add(indent + "exit(0);");
 		}else{
 			if (code.operand >= 0) {
-				Type return_type = store.getRawType(code.operand);
+				Type lhs_type = stores.getRawType(code.operand, function);
 				// Check if the code returns a pointer but the return value is a structure. 
-				if(code.type instanceof Type.Union && return_type instanceof Type.Record){
-					// Use '&' operator to de-reference the return value
-					// Also, copy the return value and return the copied one
-					String type_name = CodeGeneratorHelper.translateType(code.type, stores).replace("*", "_PTR");
-					statements.add(indent + "return copy_"+type_name+"(&" + store.getVar(code.operand) + ");");
+				if(code.type instanceof Type.Union && lhs_type instanceof Type.Record){
+					// This is a special case for 'return local variable' 
+					// We need to copy the local variable to stack memory, such as using 'copy_Board_PTR'
+					// Then return the copied variable, rather than the local one
+					// because variables that can be passed among functions are those defined in stack memory.
+					String struct = CodeGeneratorHelper.translateType(lhs_type, stores);
+					String pointer_struct = CodeGeneratorHelper.translateType(code.type, stores);
+					String var = stores.getVar(code.operand, function);
+					// Copy the local variable to stack variable
+					statements.add(indent+ pointer_struct + " ret = copy_"+pointer_struct.replace("*", "_PTR")+"(&"+var+");");
+					// Free the local variable
+					if(this.deallocatedAnalyzer.isPresent()){
+						statements.add(indent + "_FREE_STRUCT("+var+", "+struct+");");
+					}
+					// Return the stack variable
+					statements.add(indent + "return ret;");
 				}else{
 					// Return the structure.
-					statements.add(indent + "return " + store.getVar(code.operand) + ";");
+					statements.add(indent + "return " + stores.getVar(code.operand, function) + ";");
 				}
 			}
 		}
 		
-		store.addAllStatements(code, statements);
+		stores.addAllStatements(code, statements, function);
 	}
 
 	/**
