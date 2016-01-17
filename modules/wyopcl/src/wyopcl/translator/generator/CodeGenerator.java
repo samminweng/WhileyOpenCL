@@ -889,39 +889,42 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String indent = stores.getIndent(function);
 		
 		// Add 'deallocation code' for all ownership variables.
-		if(function.name().equals("main") || code.operand >=0){
-			this.deallocatedAnalyzer.ifPresent(a -> 
-				statements.addAll(a.computeOwnership(indent, false, code, function, stores)));
-		}
-		
-		// Add return statements 
-		if (function.name().equals("main")) {			
-			// If the method is "main", then add a simple exit code with value
-			statements.add(indent + "exit(0);");
+		if(code.operand <0){
+			// Add return statements 
+			if (function.name().equals("main")) {
+				this.deallocatedAnalyzer.ifPresent(a ->{
+					statements.addAll(a.freeAllMemory(code, function, stores));
+				});
+				// If the method is "main", then add a simple exit code with value
+				statements.add(indent + "exit(0);");
+			}else{
+				// Skip translation as this may be a ending assertion, etc...
+			}
 		}else{
-			if (code.operand >= 0) {
-				Type lhs_type = stores.getRawType(code.operand, function);
-				// Check if the code returns a pointer but the return value is a structure. 
-				if(code.type instanceof Type.Union && lhs_type instanceof Type.Record){
-					// This is a special case for 'return local variable' 
-					// We need to copy the local variable to stack memory, such as using 'copy_Board_PTR'
-					// Then return the copied variable, rather than the local one
-					// because variables that can be passed among functions are those defined in stack memory.
-					String struct = CodeGeneratorHelper.translateType(lhs_type, stores);
-					String pointer_struct = CodeGeneratorHelper.translateType(code.type, stores);
-					String var = stores.getVar(code.operand, function);
-					// Copy the local variable to stack variable
-					statements.add(indent+ pointer_struct + " ret = copy_"+pointer_struct.replace("*", "_PTR")+"(&"+var+");");
-					// Free the local variable
-					if(this.deallocatedAnalyzer.isPresent()){
-						statements.add(indent + "_FREE_STRUCT("+var+", "+struct+");");
-					}
-					// Return the stack variable
-					statements.add(indent + "return ret;");
-				}else{
-					// Return the structure.
-					statements.add(indent + "return " + stores.getVar(code.operand, function) + ";");
+			this.deallocatedAnalyzer.ifPresent(a ->{
+				statements.addAll(a.freeAllMemory(code, function, stores));
+			});
+			Type lhs_type = stores.getRawType(code.operand, function);
+			// Check if the code returns a pointer but the return value is a structure. 
+			if(code.type instanceof Type.Union && lhs_type instanceof Type.Record){
+				// This is a special case for 'return local variable' 
+				// We need to copy the local variable to stack memory, such as using 'copy_Board_PTR'
+				// Then return the copied variable, rather than the local one
+				// because variables that can be passed among functions are those defined in stack memory.
+				String struct = CodeGeneratorHelper.translateType(lhs_type, stores);
+				String pointer_struct = CodeGeneratorHelper.translateType(code.type, stores);
+				String var = stores.getVar(code.operand, function);
+				// Copy the local variable to stack variable
+				statements.add(indent+ pointer_struct + " ret = copy_"+pointer_struct.replace("*", "_PTR")+"(&"+var+");");
+				// Free the local variable
+				if(this.deallocatedAnalyzer.isPresent()){
+					statements.add(indent + "_FREE_STRUCT("+var+", "+struct+");");
 				}
+				// Return the stack variable
+				statements.add(indent + "return ret;");
+			}else{
+				// Return the structure.
+				statements.add(indent + "return " + stores.getVar(code.operand, function) + ";");
 			}
 		}
 		

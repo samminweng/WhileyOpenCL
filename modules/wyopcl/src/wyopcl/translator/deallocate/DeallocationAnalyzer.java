@@ -35,35 +35,34 @@ public class DeallocationAnalyzer extends Analyzer {
 		this.ownerships = new HashMap<FunctionOrMethod, OwnershipVariables>();
 	}
 	
-	
 	/**
-	 * Returns the ownership set
+	 * Get a list of ownership variables and generate the code to free all of them
+	 * @param code
 	 * @param function
+	 * @param stores
 	 * @return
 	 */
-	private List<Integer> getOwnerships(FunctionOrMethod function){
-		List<Integer> ownership = this.ownerships.get(function).getOwnership();
+	public List<String> freeAllMemory(Codes.Return code, FunctionOrMethod function, CodeStores stores){
+		List<String> statements = new ArrayList<String>();
 		
-		if(config.isVerbose()){
-			System.out.println("Ownership = " +
-			ownership.stream()
-			.map(i -> i.toString())
-			.collect(Collectors.joining(", ")));
+		// Get all registers
+		List<Integer> registers = stores.getAllVars(function);
+		
+		if(code.operand>=0){
+			// Transfer out the return value's register
+			registers.remove(registers.indexOf(code.operand));
 		}
 		
-		return ownership;
-	}
-	
-	private List<String> freeAllMemory(String indent, FunctionOrMethod function, CodeStores stores){
-		List<String> statements = new ArrayList<String>();
-		// Get a list of ownership variables.
-		getOwnerships(function).stream()
-		.forEach(register ->{
-			// Get variable name and type to generate 'deallocated' code.
+		
+		String indent = stores.getIndent(function);
+		
+		for(int register: registers){
 			Type var_type = stores.getRawType(register, function);
-			String var = stores.getVar(register, function);
-			statements.add(indent + CodeGeneratorHelper.addDeallocatedCode(var, var_type, stores));
-		});
+			if(var_type != null){
+				String var = stores.getVar(register, function);
+				statements.add(indent + CodeGeneratorHelper.addDeallocatedCode(var, var_type, stores));
+			}
+		}
 
 		return statements;
 		
@@ -90,13 +89,6 @@ public class DeallocationAnalyzer extends Analyzer {
 				// Add rhs to ownership set
 				statements.add(indent + addOwnership(assign.operand(0), function, stores));
 			}
-		}else if(code instanceof Codes.Return){
-			Codes.Return r = (Codes.Return)code;
-			if(r.operand>=0){
-				// Transfer out the return value's ownership
-				this.ownerships.get(function).transferOwnership(r.operand);
-			}
-			statements.addAll(freeAllMemory(indent, function, stores));
 		}else{
 			throw new RuntimeException("Not implemented");
 		}

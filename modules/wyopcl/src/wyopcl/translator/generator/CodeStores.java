@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import wyc.lang.Stmt.VariableDeclaration;
 import wyil.attributes.VariableDeclarations;
 import wyil.attributes.VariableDeclarations.Declaration;
 import wyil.lang.Code;
@@ -55,6 +56,20 @@ public class CodeStores {
 	}
 	
 	/**
+	 * 
+	 * @param function
+	 * @return
+	 */
+	public List<Integer> getAllVars(FunctionOrMethod function){
+		List<Integer> vars = new ArrayList<Integer>();
+		VariableDeclarations declarations = function.attribute(VariableDeclarations.class);
+		for(int register=0;register<declarations.size();register++){
+			vars.add(register);
+		}
+		return vars;
+	}
+	
+	/**
 	 * Adds the generated statements (e.g. C code) for given wyil code
 	 * @param code
 	 * @param statement
@@ -70,7 +85,7 @@ public class CodeStores {
 	 * @param function
 	 * @return
 	 */
-	protected String getIndent(FunctionOrMethod function) {
+	public String getIndent(FunctionOrMethod function) {
 		CodeStore store = getCodeStore(function);
 		return store.indent;
 	}
@@ -93,7 +108,11 @@ public class CodeStores {
 	 */
 	public Type getRawType(int register, FunctionOrMethod function){
 		CodeStore store = getCodeStore(function);
-		return store.getRawType(register);
+		if(store.getRawType(register) == null){
+			return null;
+		}else{
+			return store.getRawType(register);
+		}
 	}
 	/**
 	 * Get the variable name of a given register defined in 'f' function
@@ -497,7 +516,12 @@ public class CodeStores {
 			Declaration declaration = vars.get(reg);
 			Type type = declaration.type();
 			if(type instanceof Type.Nominal){
-				return getUserDefinedType((Type.Nominal)type).type();
+					WyilFile.Type user_type = getUserDefinedType((Type.Nominal)type);
+					if(user_type != null){
+						return user_type.type();
+					}else{
+						return null;
+					}
 			}
 					
 			return type;
