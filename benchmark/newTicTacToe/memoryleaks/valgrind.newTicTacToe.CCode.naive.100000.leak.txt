@@ -1,21 +1,21 @@
-==24422== Memcheck, a memory error detector
-==24422== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==24422== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==24422== Command: ./newTicTacToe.out 100000
-==24422== Parent PID: 23777
-==24422== 
-==24422== 
-==24422== HEAP SUMMARY:
-==24422==     in use at exit: 324,000,392 bytes in 5,500,003 blocks
-==24422==   total heap usage: 5,500,003 allocs, 0 frees, 324,000,392 bytes allocated
-==24422== 
-==24422== LEAK SUMMARY:
-==24422==    definitely lost: 216,000,216 bytes in 3,999,999 blocks
-==24422==    indirectly lost: 107,999,840 bytes in 1,499,998 blocks
-==24422==      possibly lost: 168 bytes in 3 blocks
-==24422==    still reachable: 168 bytes in 3 blocks
-==24422==         suppressed: 0 bytes in 0 blocks
-==24422== Rerun with --leak-check=full to see details of leaked memory
-==24422== 
-==24422== For counts of detected and suppressed errors, rerun with: -v
-==24422== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==5772== Memcheck, a memory error detector
+==5772== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==5772== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==5772== Command: ./newTicTacToe.out 100000
+==5772== Parent PID: 5124
+==5772== 
+==5772== 
+==5772== HEAP SUMMARY:
+==5772==     in use at exit: 324,000,392 bytes in 5,500,003 blocks
+==5772==   total heap usage: 5,500,003 allocs, 0 frees, 324,000,392 bytes allocated
+==5772== 
+==5772== LEAK SUMMARY:
+==5772==    definitely lost: 216,000,216 bytes in 3,999,999 blocks
+==5772==    indirectly lost: 107,999,840 bytes in 1,499,998 blocks
+==5772==      possibly lost: 168 bytes in 3 blocks
+==5772==    still reachable: 168 bytes in 3 blocks
+==5772==         suppressed: 0 bytes in 0 blocks
+==5772== Rerun with --leak-check=full to see details of leaked memory
+==5772== 
+==5772== For counts of detected and suppressed errors, rerun with: -v
+==5772== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

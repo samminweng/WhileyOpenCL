@@ -126,6 +126,7 @@ blklab10:;
 //.blklab9
 blklab9:;
 	//return %2 : int
+	_FREE(pieces);
 	return count;
 	//return
 }
@@ -483,17 +484,19 @@ blklab12:;
 //.blklab11
 blklab11:;
 	//return
-	_FREE_STRUCT(_16, Board_PTR);
-	_FREE(_64);
-	_FREE_STRUCT(_17, Board_PTR);
-	_FREE(_49);
 	_FREE_STRUCT(b1, Board_PTR);
-	_FREE(_20);
-	_FREE(_23);
+	_FREE_STRUCT(b2, Board_PTR);
 	_FREE2DArray(_9);
-	_FREE(_59);
+	_FREE(_11);
 	_FREE_STRUCT(_14, Board_PTR);
 	_FREE_STRUCT(_15, Board_PTR);
+	_FREE_STRUCT(_16, Board_PTR);
+	_FREE_STRUCT(_17, Board_PTR);
+	_FREE(_20);
+	_FREE(_23);
+	_FREE(_49);
+	_FREE(_59);
+	_FREE(_64);
 	exit(0);
 }
 

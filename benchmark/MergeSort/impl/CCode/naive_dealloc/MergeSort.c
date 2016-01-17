@@ -100,7 +100,7 @@ _SLICE_ARRAY(_16, items, start, pivot);
 	_FREE(_17);
 	_REMOVE_OWNERSHIP(lhs);
 	_1DARRAY_SIZE(_17, lhs);
-	_17 = sortV1(_1DARRAY_COPY_PARAM_OWN(lhs), _18, pivot);
+	_17 = sortV1(_1DARRAY_COPY_PARAM(lhs), true, _18, pivot);
 	_ADD_OWNERSHIP(_17);
 	//assign %4 = %17  : int[]
 	_FREE(lhs);
@@ -129,7 +129,7 @@ _SLICE_ARRAY(_20, items, pivot, end);
 	_FREE(_21);
 	_REMOVE_OWNERSHIP(rhs);
 	_1DARRAY_SIZE(_21, rhs);
-	_21 = sortV1(_1DARRAY_COPY_PARAM_OWN(rhs), _22, _23);
+	_21 = sortV1(_1DARRAY_COPY_PARAM(rhs), true, _22, _23);
 	_ADD_OWNERSHIP(_21);
 	//assign %5 = %21  : int[]
 	_FREE(rhs);
@@ -270,14 +270,14 @@ blklab5:;
 //.blklab0
 blklab0:;
 	//return %0 : int[]
+	_FREE(lhs);
+	_FREE(rhs);
+	_FREE(_15);
 	_FREE(_16);
 	_FREE(_17);
 	_FREE(_19);
-	_FREE(lhs);
 	_FREE(_20);
 	_FREE(_21);
-	_FREE(rhs);
-	_FREE(_15);
 	return items;
 	//return
 }
@@ -390,7 +390,7 @@ blklab7:;
 	_FREE(_20);
 	_REMOVE_OWNERSHIP(arr);
 	_1DARRAY_SIZE(_20, arr);
-	_20 = sortV1(_1DARRAY_COPY_PARAM_OWN(arr), _21, _23);
+	_20 = sortV1(_1DARRAY_COPY_PARAM(arr), true, _21, _23);
 	_ADD_OWNERSHIP(_20);
 	//assign %3 = %20  : int[]
 	_FREE(arr);
@@ -444,11 +444,12 @@ blklab9:;
 blklab6:;
 	//return
 	_FREE(arr);
-	_FREE(_20);
 	_FREE2DArray(_6);
+	_FREE(_8);
 	_FREE(_11);
-	_FREE(_30);
 	_FREE(_15);
+	_FREE(_20);
+	_FREE(_30);
 	exit(0);
 }
 

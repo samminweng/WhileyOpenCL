@@ -1,23 +1,23 @@
-==23930== Memcheck, a memory error detector
-==23930== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==23930== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==23930== Command: ./Reverse.out 100000000
-==23930== Parent PID: 23777
-==23930== 
-==23930== Warning: set address range perms: large range [0x55fc040, 0x350ec848) (undefined)
-==23930== Warning: set address range perms: large range [0x3a048040, 0x69b38848) (undefined)
-==23930== 
-==23930== HEAP SUMMARY:
-==23930==     in use at exit: 1,600,000,392 bytes in 5 blocks
-==23930==   total heap usage: 5 allocs, 0 frees, 1,600,000,392 bytes allocated
-==23930== 
-==23930== LEAK SUMMARY:
-==23930==    definitely lost: 800,000,008 bytes in 1 blocks
-==23930==    indirectly lost: 0 bytes in 0 blocks
-==23930==      possibly lost: 800,000,384 bytes in 4 blocks
-==23930==    still reachable: 0 bytes in 0 blocks
-==23930==         suppressed: 0 bytes in 0 blocks
-==23930== Rerun with --leak-check=full to see details of leaked memory
-==23930== 
-==23930== For counts of detected and suppressed errors, rerun with: -v
-==23930== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==5276== Memcheck, a memory error detector
+==5276== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==5276== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==5276== Command: ./Reverse.out 100000000
+==5276== Parent PID: 5124
+==5276== 
+==5276== Warning: set address range perms: large range [0x55fc040, 0x350ec848) (undefined)
+==5276== Warning: set address range perms: large range [0x3a048040, 0x69b38848) (undefined)
+==5276== 
+==5276== HEAP SUMMARY:
+==5276==     in use at exit: 1,600,000,392 bytes in 5 blocks
+==5276==   total heap usage: 5 allocs, 0 frees, 1,600,000,392 bytes allocated
+==5276== 
+==5276== LEAK SUMMARY:
+==5276==    definitely lost: 800,000,008 bytes in 1 blocks
+==5276==    indirectly lost: 0 bytes in 0 blocks
+==5276==      possibly lost: 800,000,384 bytes in 4 blocks
+==5276==    still reachable: 0 bytes in 0 blocks
+==5276==         suppressed: 0 bytes in 0 blocks
+==5276== Rerun with --leak-check=full to see details of leaked memory
+==5276== 
+==5276== For counts of detected and suppressed errors, rerun with: -v
+==5276== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

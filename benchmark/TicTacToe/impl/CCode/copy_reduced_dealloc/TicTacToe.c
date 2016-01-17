@@ -182,6 +182,7 @@ blklab14:;
 //.blklab13
 blklab13:;
 	//return %2 : int
+	_FREE(pieces);
 	return count;
 	//return
 }
@@ -365,7 +366,7 @@ blklab18:;
 			//invoke %32 = (%3, %5) TicTacToe:play : function(TicTacToe:Board,TicTacToe:nat) -> TicTacToe:Board
 			_FREE_STRUCT(_32, Board);
 			_REMOVE_OWNERSHIP(b);
-			_32 = play(_STRUCT_PARAM_OWN(b), p);
+			_32 = play(_STRUCT_PARAM(b), true, p);
 			_ADD_OWNERSHIP(_32);
 			//assign %3 = %32  : {int move,int[] pieces}
 			_FREE_STRUCT(b, Board);
@@ -460,13 +461,19 @@ blklab16:;
 //.blklab15
 blklab15:;
 	//return
-	_FREE(_17);
 	_FREE_STRUCT(b, Board);
-	_FREE(_20);
-	_FREE(_52);
 	_FREE2DArray(_8);
+	_FREE(_10);
+	_FREE_STRUCT(_13, Board);
+	_FREE_STRUCT(_14, Board);
+	_FREE(_17);
+	_FREE(_20);
+	_FREE(_24);
 	_FREE(_31);
+	_FREE_STRUCT(_32, Board);
+	_FREE(_37);
 	_FREE(_47);
+	_FREE(_52);
 	exit(0);
 }
 

@@ -1,36 +1,36 @@
-==23879== Memcheck, a memory error detector
-==23879== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==23879== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==23879== Command: ./Reverse.out 100000000
-==23879== Parent PID: 23777
-==23879== 
-==23879== Warning: set address range perms: large range [0x55fc040, 0x350ec848) (undefined)
-==23879== Warning: set address range perms: large range [0x3a048040, 0x69b38848) (undefined)
-==23879== Warning: set address range perms: large range [0x69b39040, 0x99629848) (undefined)
-==23879== Warning: set address range perms: large range [0x9962a040, 0xc911a848) (undefined)
-==23879== Warning: set address range perms: large range [0xc911b040, 0xf8c0b848) (undefined)
-==23879== Warning: set address range perms: large range [0xf8c0c040, 0x1286fc848) (undefined)
-==23879== Warning: set address range perms: large range [0x1286fd040, 0x1581ed848) (undefined)
-==23879== Warning: set address range perms: large range [0xf8c0c028, 0x1286fc860) (noaccess)
-==23879== Warning: set address range perms: large range [0xc911b028, 0xf8c0b860) (noaccess)
-==23879== Warning: set address range perms: large range [0x69b39028, 0x99629860) (noaccess)
-==23879== Warning: set address range perms: large range [0x1581ee040, 0x187cde848) (undefined)
-==23879== Warning: set address range perms: large range [0x1581ee028, 0x187cde860) (noaccess)
-==23879== Warning: set address range perms: large range [0x1286fd028, 0x1581ed860) (noaccess)
-==23879== Warning: set address range perms: large range [0x3a048028, 0x69b38860) (noaccess)
-==23879== Warning: set address range perms: large range [0x55fc028, 0x350ec860) (noaccess)
-==23879== 
-==23879== HEAP SUMMARY:
-==23879==     in use at exit: 800,000,008 bytes in 1 blocks
-==23879==   total heap usage: 11 allocs, 10 frees, 6,400,000,440 bytes allocated
-==23879== 
-==23879== LEAK SUMMARY:
-==23879==    definitely lost: 0 bytes in 0 blocks
-==23879==    indirectly lost: 0 bytes in 0 blocks
-==23879==      possibly lost: 800,000,008 bytes in 1 blocks
-==23879==    still reachable: 0 bytes in 0 blocks
-==23879==         suppressed: 0 bytes in 0 blocks
-==23879== Rerun with --leak-check=full to see details of leaked memory
-==23879== 
-==23879== For counts of detected and suppressed errors, rerun with: -v
-==23879== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==5226== Memcheck, a memory error detector
+==5226== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==5226== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==5226== Command: ./Reverse.out 100000000
+==5226== Parent PID: 5124
+==5226== 
+==5226== Warning: set address range perms: large range [0x55fc040, 0x350ec848) (undefined)
+==5226== Warning: set address range perms: large range [0x3a048040, 0x69b38848) (undefined)
+==5226== Warning: set address range perms: large range [0x69b39040, 0x99629848) (undefined)
+==5226== Warning: set address range perms: large range [0x9962a040, 0xc911a848) (undefined)
+==5226== Warning: set address range perms: large range [0xc911b040, 0xf8c0b848) (undefined)
+==5226== Warning: set address range perms: large range [0xf8c0c040, 0x1286fc848) (undefined)
+==5226== Warning: set address range perms: large range [0x1286fd040, 0x1581ed848) (undefined)
+==5226== Warning: set address range perms: large range [0xf8c0c028, 0x1286fc860) (noaccess)
+==5226== Warning: set address range perms: large range [0xc911b028, 0xf8c0b860) (noaccess)
+==5226== Warning: set address range perms: large range [0x69b39028, 0x99629860) (noaccess)
+==5226== Warning: set address range perms: large range [0x1581ee040, 0x187cde848) (undefined)
+==5226== Warning: set address range perms: large range [0x1581ee028, 0x187cde860) (noaccess)
+==5226== Warning: set address range perms: large range [0x3a048028, 0x69b38860) (noaccess)
+==5226== Warning: set address range perms: large range [0x55fc028, 0x350ec860) (noaccess)
+==5226== Warning: set address range perms: large range [0x1286fd028, 0x1581ed860) (noaccess)
+==5226== 
+==5226== HEAP SUMMARY:
+==5226==     in use at exit: 800,000,008 bytes in 1 blocks
+==5226==   total heap usage: 11 allocs, 10 frees, 6,400,000,440 bytes allocated
+==5226== 
+==5226== LEAK SUMMARY:
+==5226==    definitely lost: 0 bytes in 0 blocks
+==5226==    indirectly lost: 0 bytes in 0 blocks
+==5226==      possibly lost: 800,000,008 bytes in 1 blocks
+==5226==    still reachable: 0 bytes in 0 blocks
+==5226==         suppressed: 0 bytes in 0 blocks
+==5226== Rerun with --leak-check=full to see details of leaked memory
+==5226== 
+==5226== For counts of detected and suppressed errors, rerun with: -v
+==5226== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

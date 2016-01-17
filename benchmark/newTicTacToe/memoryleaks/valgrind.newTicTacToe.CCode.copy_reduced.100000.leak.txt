@@ -1,21 +1,21 @@
-==24525== Memcheck, a memory error detector
-==24525== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==24525== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==24525== Command: ./newTicTacToe.out 100000
-==24525== Parent PID: 23777
-==24525== 
-==24525== 
-==24525== HEAP SUMMARY:
-==24525==     in use at exit: 192,000,392 bytes in 2,800,003 blocks
-==24525==   total heap usage: 2,800,003 allocs, 0 frees, 192,000,392 bytes allocated
-==24525== 
-==24525== LEAK SUMMARY:
-==24525==    definitely lost: 177,600,120 bytes in 2,599,999 blocks
-==24525==    indirectly lost: 14,399,984 bytes in 200,000 blocks
-==24525==      possibly lost: 216 bytes in 3 blocks
-==24525==    still reachable: 72 bytes in 1 blocks
-==24525==         suppressed: 0 bytes in 0 blocks
-==24525== Rerun with --leak-check=full to see details of leaked memory
-==24525== 
-==24525== For counts of detected and suppressed errors, rerun with: -v
-==24525== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==5874== Memcheck, a memory error detector
+==5874== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==5874== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==5874== Command: ./newTicTacToe.out 100000
+==5874== Parent PID: 5124
+==5874== 
+==5874== 
+==5874== HEAP SUMMARY:
+==5874==     in use at exit: 192,000,392 bytes in 2,800,003 blocks
+==5874==   total heap usage: 2,800,003 allocs, 0 frees, 192,000,392 bytes allocated
+==5874== 
+==5874== LEAK SUMMARY:
+==5874==    definitely lost: 177,600,120 bytes in 2,599,999 blocks
+==5874==    indirectly lost: 14,399,984 bytes in 200,000 blocks
+==5874==      possibly lost: 216 bytes in 3 blocks
+==5874==    still reachable: 72 bytes in 1 blocks
+==5874==         suppressed: 0 bytes in 0 blocks
+==5874== Rerun with --leak-check=full to see details of leaked memory
+==5874== 
+==5874== For counts of detected and suppressed errors, rerun with: -v
+==5874== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

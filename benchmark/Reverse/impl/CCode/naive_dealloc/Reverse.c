@@ -96,6 +96,7 @@ blklab1:;
 //.blklab0
 blklab0:;
 	//return %2 : int[]
+	_FREE(ls);
 	_FREE(_6);
 	_FREE(_9);
 	return r;
@@ -201,7 +202,7 @@ blklab4:;
 	_FREE(_20);
 	_ADD_OWNERSHIP(arr);
 	_1DARRAY_SIZE(_20, arr);
-	_20 = reverse(_1DARRAY_COPY_PARAM_OWN(arr));
+	_20 = reverse(_1DARRAY_COPY_PARAM(arr), false);
 	_ADD_OWNERSHIP(_20);
 	//assign %3 = %20  : int[]
 	_FREE(arr);
@@ -255,11 +256,12 @@ blklab6:;
 blklab3:;
 	//return
 	_FREE(arr);
-	_FREE(_20);
 	_FREE2DArray(_6);
+	_FREE(_8);
 	_FREE(_11);
-	_FREE(_27);
 	_FREE(_15);
+	_FREE(_20);
+	_FREE(_27);
 	exit(0);
 }
 

@@ -29,6 +29,7 @@ Matrix matrix(long long width, long long height, _DECL_2DARRAY_PARAM(data), _DEC
 	_3.width = width;
 	_ADD_OWNERSHIP(_3);
 	//return %3 : {int[][] data,int height,int width}
+	_FREE2DArray(data);
 	return _3;
 	//return
 }
@@ -204,11 +205,19 @@ blklab13:;
 	//invoke %38 = (%39, %40, %2) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[][]) -> MatrixMult:Matrix
 	_FREE_STRUCT(_38, Matrix);
 	_ADD_OWNERSHIP(C_data);
-	_38 = matrix(_39, _40, _2DARRAY_PARAM_OWN(C_data));
+	_38 = matrix(_39, _40, _2DARRAY_PARAM(C_data), false);
 	_ADD_OWNERSHIP(_38);
 	//return %38 : {int[][] data,int height,int width}
+	_FREE_STRUCT(A, Matrix);
+	_FREE_STRUCT(B, Matrix);
 	_FREE2DArray(C_data);
+	_FREE2DArray(_7);
 	_FREE(_10);
+	_FREE2DArray(_12);
+	_FREE2DArray(_24);
+	_FREE(_25);
+	_FREE2DArray(_27);
+	_FREE(_28);
 	return _38;
 	//return
 }
@@ -402,11 +411,13 @@ blklab18:;
 	//invoke %19 = (%1, %0, %2) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[][]) -> MatrixMult:Matrix
 	_FREE_STRUCT(_19, Matrix);
 	_ADD_OWNERSHIP(rows);
-	_19 = matrix(width, height, _2DARRAY_PARAM_OWN(rows));
+	_19 = matrix(width, height, _2DARRAY_PARAM(rows), false);
 	_ADD_OWNERSHIP(_19);
 	//return %19 : {int[][] data,int height,int width}
 	_FREE2DArray(rows);
+	_FREE2DArray(_5);
 	_FREE(_7);
+	_FREE2DArray(_8);
 	return _19;
 	//return
 }
@@ -498,7 +509,7 @@ int main(int argc, char** args){
 	_FREE_STRUCT(_15, Matrix);
 	_ADD_OWNERSHIP(A);
 	_ADD_OWNERSHIP(B);
-	_15 = multiply(_STRUCT_PARAM_OWN(A), _STRUCT_PARAM_OWN(B));
+	_15 = multiply(_STRUCT_PARAM(A), false, _STRUCT_PARAM(B), false);
 	_ADD_OWNERSHIP(_15);
 	//assign %14 = %15  : {int[][] data,int height,int width}
 	_FREE_STRUCT(_14, Matrix);
@@ -578,6 +589,15 @@ blklab20:;
 	_FREE_STRUCT(B, Matrix);
 	_FREE_STRUCT(C, Matrix);
 	_FREE2DArray(_7);
+	_FREE(_9);
+	_FREE_STRUCT(_10, Matrix);
+	_FREE_STRUCT(_11, Matrix);
+	_FREE_STRUCT(_12, Matrix);
+	_FREE_STRUCT(_13, Matrix);
+	_FREE_STRUCT(_14, Matrix);
+	_FREE_STRUCT(_15, Matrix);
+	_FREE2DArray(_16);
+	_FREE(_18);
 	_FREE(_25);
 	exit(0);
 }
