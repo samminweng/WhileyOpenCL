@@ -485,37 +485,46 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				int register = code.operand(index);
 				boolean isCopyEliminated = isCopyEliminated(register, code, function);
 				int dimension = stores.getArrayDimension(type);
-				if(this.deallocatedAnalyzer.isPresent()){
-					// Pass ownerships along with other parameters
-					if(isCopyEliminated){
-						statement.add("_"+dimension+"DARRAY_PARAM_OWN("+var+")");
-					}else{
-						statement.add("_"+dimension+"DARRAY_COPY_PARAM_OWN("+var+")");
-					}
+				if(isCopyEliminated){
+					statement.add("_"+dimension+"DARRAY_PARAM("+var+")");
 				}else{
-					if(isCopyEliminated){
-						statement.add("_"+dimension+"DARRAY_PARAM("+var+")");
-					}else{
-						statement.add("_"+dimension+"DARRAY_COPY_PARAM("+var+")");
-					}
+					statement.add("_"+dimension+"DARRAY_COPY_PARAM("+var+")");
 				}
+				// Append ownership to the function call
+				this.deallocatedAnalyzer.ifPresent(a -> {
+					Optional<Boolean> ownership = a.computeOwnershipFunctionCallParameter(register, code, function, stores, copyAnalyzer);	
+					ownership.ifPresent(o ->{
+						// Borrow the parameter (negated ownership) and passed them to the function call
+						if(o.booleanValue()){
+							statement.add("false");
+						}else{
+							statement.add("true");
+						}
+					});
+				});
+				
 			}else if( type instanceof Type.Record || type instanceof Type.Nominal){
 				int register = code.operand(index);
 				boolean isCopyEliminated = isCopyEliminated(register, code, function);
 				String type_name = CodeGeneratorHelper.translateType(type, stores);
-				if(this.deallocatedAnalyzer.isPresent()){
-					if(isCopyEliminated){
-						statement.add("_STRUCT_PARAM_OWN("+var+")");
-					}else{
-						statement.add("_STRUCT_COPY_PARAM_OWN("+var+", "+type_name+")");
-					}
+				if(isCopyEliminated){
+					statement.add("_STRUCT_PARAM("+var+")");
 				}else{
-					if(isCopyEliminated){
-						statement.add("_STRUCT_PARAM("+var+")");
-					}else{
-						statement.add("_STRUCT_COPY_PARAM("+var+", "+type_name+")");
-					}
+					statement.add("_STRUCT_COPY_PARAM("+var+", "+type_name+")");
 				}
+				
+				// Append ownership to the function call
+				this.deallocatedAnalyzer.ifPresent(a -> {
+					Optional<Boolean> ownership = a.computeOwnershipFunctionCallParameter(register, code, function, stores, copyAnalyzer);	
+					ownership.ifPresent(o ->{
+						// Add ownership to rhs variable
+						if(o.booleanValue()){
+							statement.add("false");
+						}else{
+							statement.add("true");
+						}
+					});
+				});
 			} else {
 				throw new RuntimeException("Not Implemented");
 			}
@@ -618,14 +627,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						}
 					});
 				});
-				
-				//if(isCopyEliminated(op, code, function)){
-				//this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + a.transferOwnership(op, function, stores)));
-				//}	
 			}
 			
 			// call the function/method, e.g. '_12=reverse(_xs , _xs_size);'
-						statement.add(translateLHSFunctionCall(code, function) + code.name.name() + "("+ translateRHSFunctionCall(code, function)+");");
+			statement.add(translateLHSFunctionCall(code, function) + code.name.name() + "("+ translateRHSFunctionCall(code, function)+");");
 			
 			// Assign ownership to lhs
 			this.deallocatedAnalyzer.ifPresent(a -> statement.add(
