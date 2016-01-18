@@ -2,32 +2,38 @@
 #
 # The shell script of benchmarking the generated Java code of Whiley program
 #
+TIMEOUT="600s"
 # Large scaled parameters.
 parameters=""
-
 define_parameters(){
 	case "$NAME" in
 		"Reverse")
-			parameters="1000 10000 100000"
+			#parameters="1000"
+			parameters="1000 10000 100000 1000000 10000000 100000000"
+			;;
+		"MergeSort")
+			#parameters="1000"
+			parameters="1000 10000 100000 1000000"
+			;;
+		"TicTacToe")
+			#parameters="1000"
+			parameters="1000 10000 100000 1000000"
+			;;
+		"newTicTacToe")
+			#parameters="1000"
+			parameters="1000 10000 100000 1000000"
+			;;
+		"MatrixMult")
+			#parameters="10"
+			parameters="10 20 30 40 50"
 			;;
 	esac
 	
 }
 
-
-check_exit (){
-	EXITVALUE=$1
-	# Check if the program completes the task.
-	if [ "$EXITVALUE" = 0 ]
-	then
-		# Print out success messages.
-		echo "Success in running $NAME $OP program on array size = " $parameter
-	else
-		# Print out error messages.
-		echo "Errors in running $NAME $OP program on array size = " $parameter
-	fi
-}
-
+#
+# Generate the Java or C code
+#
 #
 # Generate the Java or C code
 #
@@ -35,37 +41,44 @@ generate_code(){
 	#echo "Current DIR" . $PWD
 	if [ "$CODE" = "JAVACode" ]
 	then
+		cp "$SRC".whiley $DIR
+		# Change to working directory 
+		cd $DIR
 		echo "Compile whiley into Java Code"
 		# Compile the sort whiley program
 		./../../../../../bin/wyjc "$SRC".whiley
 	else
+		# Get the folder of Util.c and Util.h
+		UTILDIR=$PWD/../../tests/code
+		# Move Whiley files, Util.h and Util.c  to working directory.
+		cp "$SRC".whiley $UTILDIR/Util.c $UTILDIR/Util.h $DIR
+		# Change to working directory 
+		cd $DIR
 		# Use wyopcl shell script to generate C code
 		# The 'case esac' example is http://www.tutorialspoint.com/unix/case-esac-statement.htm 
 		case "$OP" in
 			"naive")
 				# Generate naive C code
-			 	./../../../../../bin/wyopcl -code "$SRC".whiley >> $RESULT
+			 	./../../../../../bin/wyopcl -code "$SRC".whiley
+			 	;;
+			"naive_dealloc")
+				# Generate naive C code
+			 	./../../../../../bin/wyopcl -code -dealloc "$SRC".whiley
 			 	;;
 			"copy_reduced")
 				# Generate copy-eliminated C code
-			 	./../../../../../bin/wyopcl -code -copy "$SRC".whiley >> $RESULT
+			 	./../../../../../bin/wyopcl -code -copy "$SRC".whiley
+				;;
+			"copy_reduced_dealloc")
+				# Generate copy-eliminated C code
+			 	./../../../../../bin/wyopcl -code -copy -dealloc "$SRC".whiley
 				;;
 		esac
 		#compile the source C file with L2 optimization (-O2)
 		#see https://gcc.gnu.org/onlinedocs/gnat_ugn/Optimization-Levels.html#101
 		echo "Compile C Code"
-		gcc -m64 *.c -o "$SRC".out
+		gcc -m64 -O -g $NAME.c Util.c -o "$SRC".out
 	fi	
-}
-
-run_code (){
-	if [ "$CODE" = "JAVACode" ]
-	then
-		# Run Java code
-		./../../../../../bin/wyj $SRC $parameter >> $RESULT
-	else
-		./"$SRC".out $parameter >> $RESULT
-	fi
 }
 
 #
@@ -75,50 +88,85 @@ run_benchmark (){
 	NAME=$1
 	CODE=$2
 	OP=$3
+	if [ "$CODE" = "JAVACode" ]
+	then
+		OP="naive"
+	fi
+	#read -p "Press Ok..$PWD"
 	define_parameters
 	cd $NAME
-	# Removes all the files inside folder
-	rm result.*.txt
-	RESULT=$PWD/result.$NAME.$CODE.$OP.txt
+	# Set DIR folder
+	RESULTDIR="$PWD/speedups"
 	SRC="$NAME"
-	DIR="impl/$CODE/$OP"	
-	# Create the folder
+	DIR="impl/$CODE/$OP"
+	# Make the folder
 	mkdir -p $DIR
-	# Get the folder of Util.c and Util.h
-	UTILDIR=$PWD/../../tests/code
-	# Move Whiley files, Util.h and Util.c  to working directory.
-	cp "$SRC".whiley $UTILDIR/Util.c $UTILDIR/Util.h $DIR 
-	# Change to working directory 
-	cd $DIR
+	mkdir -p $RESULTDIR
 	generate_code
-	read -p "Press any key..."
 	#parameters
 	for parameter in $parameters
 	do
+		OUT="$RESULTDIR/$NAME.$CODE.$OP.$parameter.txt"
 	    #Repeat running the programs
 		for i in {1..10}
-		#for i in {1..1}
-		do
-			echo "Beginning the benchmarks of $OP $SRC $CODE program method on array size =" $parameter >> $RESULT
-			start=`date +%s%N`
-			echo $PWD
-			run_code $parameter
-			# Check if the program completes the task.
-			check_exit $?
-			if [ "$?" != 0 ]
+		do	
+			echo "Beginning the $MAME $OP $CODE program with array size =" $parameter >> $OUT
+			start=`date +%s%N`			
+			if [ "$CODE" = "JAVACode" ]
 			then
-				# Terminate the nested loop.
+				# Run Java code
+				timeout $TIMEOUT ./../../../../../bin/wyj $SRC $parameter >> $OUT
+			else
+				timeout $TIMEOUT ./"$SRC".out $parameter >> $OUT
+			fi
+			# Check if the program completes the task.
+			if [ "$?" = 0 ]
+			then
+				# Print out success messages.
+				echo "Success in running $NAME $OP $CODE program with array size = " $parameter
+			else
+				# Print out error messages.
+				echo "Errors in running $NAME $OP $CODE program with array size = " $parameter
 				break 2
 			fi
 			end=`date +%s%N`
 			runtime=$((end-start))
-			printf '\nParameter:%s\tExecutionTime:%s\tnanoseconds.\n' $parameter  $runtime >> $RESULT
+			printf '\nParameter:%s\tExecutionTime:%s\tnanoseconds.\n' $parameter  $runtime >> $OUT
 		done
+		 #Added the CPU info
+		cat /proc/cpuinfo >> $OUT
     done
-    #Added the CPU info
-	cat /proc/cpuinfo >> $RESULT
-    #Return to the working directory
-    cd ../../../
+    cd ../../../../
 }
 
-run_benchmark Reverse CCode naive
+# Measure the memory usage of the generated C code
+### Reverse
+# run_benchmark Reverse CCode naive
+# run_benchmark Reverse CCode naive_dealloc
+# run_benchmark Reverse CCode copy_reduced
+# run_benchmark Reverse CCode copy_reduced_dealloc
+run_benchmark Reverse JAVACode
+### MergeSort
+# run_benchmark MergeSort CCode naive
+# run_benchmark MergeSort CCode naive_dealloc
+# run_benchmark MergeSort CCode copy_reduced
+# run_benchmark MergeSort CCode copy_reduced_dealloc
+run_benchmark MergeSort JAVACode
+# ### TicTacToe
+# run_benchmark TicTacToe CCode naive
+# run_benchmark TicTacToe CCode naive_dealloc
+# run_benchmark TicTacToe CCode copy_reduced
+# run_benchmark TicTacToe CCode copy_reduced_dealloc
+run_benchmark TicTacToe JAVACode
+# ### newTicTacToe
+# run_benchmark newTicTacToe CCode naive
+# run_benchmark newTicTacToe CCode naive_dealloc
+# run_benchmark newTicTacToe CCode copy_reduced
+# run_benchmark newTicTacToe CCode copy_reduced_dealloc
+run_benchmark newTicTacToe JAVACode
+# ### MatrixMult
+# run_benchmark MatrixMult CCode naive
+# run_benchmark MatrixMult CCode naive_dealloc
+# run_benchmark MatrixMult CCode copy_reduced
+# run_benchmark MatrixMult CCode copy_reduced_dealloc
+run_benchmark MatrixMult JAVACode
