@@ -2,30 +2,29 @@
 #
 # The shell script of benchmarking the generated Java code of Whiley program
 #
-TIMEOUT="600s"
+TIMEOUT="1800s"
 # Large scaled parameters.
 parameters=""
 define_parameters(){
 	case "$NAME" in
 		"Reverse")
-			#parameters="1000"
+			# parameters="1000000 10000000 100000000"
 			parameters="1000 10000 100000 1000000 10000000 100000000"
 			;;
 		"MergeSort")
-			#parameters="1000"
-			parameters="1000 10000 100000 1000000"
+			parameters="1000000"
+			#parameters="1000 10000 100000 1000000"
 			;;
 		"TicTacToe")
-			#parameters="1000"
-			parameters="1000 10000 100000 1000000"
+			parameters="100000000 1000000000 10000000000"
+			#parameters="1000 10000 100000 1000000"
 			;;
 		"newTicTacToe")
-			#parameters="1000"
-			parameters="1000 10000 100000 1000000"
+			parameters="100000000 1000000000 10000000000"
+			#parameters="1000 10000 100000 1000000"
 			;;
 		"MatrixMult")
-			#parameters="10"
-			parameters="10 20 30 40 50"
+			parameters="10 100 1000 10000"
 			;;
 	esac
 	
@@ -110,7 +109,7 @@ run_benchmark (){
 	    #Repeat running the programs
 		for i in {1..10}
 		do	
-			echo "Beginning the $MAME $OP $CODE program with array size =" $parameter >> $OUT
+			echo "Beginning the $MAME $OP $CODE program with array size =" $parameter
 			start=`date +%s%N`			
 			if [ "$CODE" = "JAVACode" ]
 			then
@@ -145,28 +144,28 @@ run_benchmark (){
 # run_benchmark Reverse CCode naive_dealloc
 # run_benchmark Reverse CCode copy_reduced
 # run_benchmark Reverse CCode copy_reduced_dealloc
-run_benchmark Reverse JAVACode
+#run_benchmark Reverse JAVACode
 ### MergeSort
 # run_benchmark MergeSort CCode naive
 # run_benchmark MergeSort CCode naive_dealloc
 # run_benchmark MergeSort CCode copy_reduced
 # run_benchmark MergeSort CCode copy_reduced_dealloc
-run_benchmark MergeSort JAVACode
+#run_benchmark MergeSort JAVACode
 # ### TicTacToe
-# run_benchmark TicTacToe CCode naive
-# run_benchmark TicTacToe CCode naive_dealloc
-# run_benchmark TicTacToe CCode copy_reduced
-# run_benchmark TicTacToe CCode copy_reduced_dealloc
+run_benchmark TicTacToe CCode naive
+run_benchmark TicTacToe CCode naive_dealloc
+run_benchmark TicTacToe CCode copy_reduced
+run_benchmark TicTacToe CCode copy_reduced_dealloc
 run_benchmark TicTacToe JAVACode
 # ### newTicTacToe
-# run_benchmark newTicTacToe CCode naive
-# run_benchmark newTicTacToe CCode naive_dealloc
-# run_benchmark newTicTacToe CCode copy_reduced
-# run_benchmark newTicTacToe CCode copy_reduced_dealloc
+run_benchmark newTicTacToe CCode naive
+run_benchmark newTicTacToe CCode naive_dealloc
+run_benchmark newTicTacToe CCode copy_reduced
+run_benchmark newTicTacToe CCode copy_reduced_dealloc
 run_benchmark newTicTacToe JAVACode
 # ### MatrixMult
 # run_benchmark MatrixMult CCode naive
 # run_benchmark MatrixMult CCode naive_dealloc
 # run_benchmark MatrixMult CCode copy_reduced
 # run_benchmark MatrixMult CCode copy_reduced_dealloc
-run_benchmark MatrixMult JAVACode
+# run_benchmark MatrixMult JAVACode
