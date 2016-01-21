@@ -158,4 +158,24 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(codeDir, "MatrixMult", "copy", "dealloc");
 	}
 	
+	
+	@Test
+	public void test_factorial_naive(){
+		util.execCodeGeneration(codeDir, "factorial");
+	}
+	
+	@Test
+	public void test_factorial_naive_dealloc(){
+		util.execCodeGeneration(codeDir, "factorial", "dealloc");
+	}
+	
+	@Test
+	public void test_factorial_copy(){
+		util.execCodeGeneration(codeDir, "factorial", "copy");
+	}
+	
+	@Test
+	public void test_factorial_copy_dealloc(){
+		util.execCodeGeneration(codeDir, "factorial", "copy", "dealloc");
+	}
 }
