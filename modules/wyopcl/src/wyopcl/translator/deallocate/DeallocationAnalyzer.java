@@ -135,8 +135,8 @@ public class DeallocationAnalyzer extends Analyzer {
 	
 	
 	/**
-	 * Return ownership to a function. If deallocation is enabled, then pass the ownership to a function. 
-	 * The ownership value are based on based on the following rules, e.g. a function call 'a=f(b)', 
+	 * Return parameter ownership in the caller. If deallocation is enabled, then pass the ownership to a function. 
+	 * The ownership value are based on based on the following rules, e.g. a function call 'a = f(b, b_own_f)', 
 	 * 
 	 * <table>
 	 * <thead>
@@ -144,17 +144,19 @@ public class DeallocationAnalyzer extends Analyzer {
 	 * <tr><th colspan="2"> f returns b?</th><th>F</th><th>T</th><th>T</th><th>F</th></tr>
 	 * </thead>
 	 * <tbody>
-	 * <tr><td rowspan="2"> b is live?</td><td rowspan="2">T</td><td>No copy </td><td>No copy </td><td>Copy</td><td>Copy</td></tr>
+	 * <tr><td rowspan="3"> b is live?</td><td rowspan="3">T</td><td>No copy </td><td>No copy </td><td>Copy</td><td>Copy</td></tr>
 	 * <tr><td>b_own=T</td><td>b_own=F</td><td>b_own=T</td><td>b_own=T</td><td></td></tr>
-	 * <tr><td rowspan="2"> b is live?</td><td rowspan="2">F</td><td>No copy </td><td>No copy </td><td>No copy</td><td>No copy</td></tr>
+	 * <tr><td>b_own_f=F</td><td>b_own_f=T</td><td>b_own_f=T</td><td>b_own_f=T</td><td></td></tr>
+	 * <tr><td rowspan="3"> b is live?</td><td rowspan="3">F</td><td>No copy </td><td>No copy </td><td>No copy</td><td>No copy</td></tr>
 	 * <tr><td>b_own=T</td><td>b_own=F</td><td>b_own=F</td><td>b_own=F</td><td></td></tr>
+	 * <tr><td>b_own_f=F</td><td>b_own_f=T</td><td>b_own_f=T</td><td>b_own_f=T</td><td></td></tr>
 	 * </tbody>
 	 * </table>
 	 * @param type
 	 * @param copyAnalyzer
-	 * @return 
+	 * @return a hashmap that contains caller's ownership and callee's ownership for a parameter. 
 	 */
-	public Optional<Boolean> computeOwnershipFunctionCallParameter(int register, Codes.Invoke code, FunctionOrMethod function, CodeStores stores, Optional<CopyEliminationAnalyzer> copyAnalyzer){
+	public Optional<HashMap<String, Boolean>> computeCallParameterOwnership(int register, Codes.Invoke code, FunctionOrMethod function, CodeStores stores, Optional<CopyEliminationAnalyzer> copyAnalyzer){
 		Type type = stores.getRawType(register, function);
 		if(!stores.isCompoundType(type)){
 			return Optional.empty();
@@ -169,26 +171,34 @@ public class DeallocationAnalyzer extends Analyzer {
 		FunctionOrMethod f = this.getFunction(code.name.name(), code.type());
 		boolean isMutated = this.isMutated(var, f);
 		boolean isReturned = this.isReturned(var, f);
-		Optional<Boolean> ownership;
+		
+		Optional<HashMap<String, Boolean>> ownership = Optional.of(new HashMap<String, Boolean>());
 		if(!isMutated){
-			if(!isReturned){				
-				ownership = Optional.of(true);
+			if(!isReturned){
+				// Caller ownership
+				ownership.get().put("caller", true);
+				ownership.get().put("callee", false);
 			}else{
-				ownership = Optional.of(false);
+				ownership.get().put("caller", false);
+				ownership.get().put("callee", true);
 			}
 		}else{
 			if(isReturned){
 				// 'b' is alive
 				if(isLive){
-					ownership = Optional.of(true);
+					ownership.get().put("caller", true);
+					ownership.get().put("callee", true);
 				}else{
-					ownership = Optional.of(false);
+					ownership.get().put("caller", false);
+					ownership.get().put("callee", true);
 				}
 			}else{
 				if(isLive){
-					ownership = Optional.of(true);
+					ownership.get().put("caller", true);
+					ownership.get().put("callee", true);
 				}else{
-					ownership = Optional.of(false);
+					ownership.get().put("caller", false);
+					ownership.get().put("callee", true);
 				}
 			}
 		}
@@ -196,6 +206,9 @@ public class DeallocationAnalyzer extends Analyzer {
 		return ownership;
 	}
 
+	
+	
+	
 	/**
 	 * Print out ownership
 	 */

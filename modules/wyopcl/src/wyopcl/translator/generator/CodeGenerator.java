@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -492,13 +493,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				}
 				// Append ownership to the function call
 				this.deallocatedAnalyzer.ifPresent(a -> {
-					Optional<Boolean> ownership = a.computeOwnershipFunctionCallParameter(register, code, function, stores, copyAnalyzer);	
+					Optional<HashMap<String, Boolean>> ownership = a.computeCallParameterOwnership(register, code, function, stores, copyAnalyzer);
 					ownership.ifPresent(o ->{
-						// Borrow the parameter (negated ownership) and passed them to the function call
-						if(o.booleanValue()){
-							statement.add("false");
-						}else{
+						//Get and pass callee ownership 
+						boolean callee_own = ownership.get().get("callee");
+						if(callee_own){
 							statement.add("true");
+						}else{
+							statement.add("false");
 						}
 					});
 				});
@@ -515,13 +517,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				
 				// Append ownership to the function call
 				this.deallocatedAnalyzer.ifPresent(a -> {
-					Optional<Boolean> ownership = a.computeOwnershipFunctionCallParameter(register, code, function, stores, copyAnalyzer);	
+					Optional<HashMap<String, Boolean>> ownership = a.computeCallParameterOwnership(register, code, function, stores, copyAnalyzer);
 					ownership.ifPresent(o ->{
-						// Add ownership to rhs variable
-						if(o.booleanValue()){
-							statement.add("false");
-						}else{
+						//Get and pass callee ownership 
+						boolean callee_own = ownership.get().get("callee");
+						if(callee_own){
 							statement.add("true");
+						}else{
+							statement.add("false");
 						}
 					});
 				});
@@ -614,13 +617,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Free lhs 
 			this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
 			
-			// Transfer out the rhs registers that does not have the copy
+			// Add or transfer out the parameters that do not have the copy
 			for(int register: code.operands()){
 				this.deallocatedAnalyzer.ifPresent(a -> {
-					Optional<Boolean> ownership = a.computeOwnershipFunctionCallParameter(register, code, function, stores, copyAnalyzer);	
+					Optional<HashMap<String, Boolean>> ownership = a.computeCallParameterOwnership(register, code, function, stores, copyAnalyzer);	
 					ownership.ifPresent(o ->{
-						// Add ownership to rhs variable
-						if(o.booleanValue()){
+						// Get caller ownership
+						boolean caller_own = o.get("caller");
+						if(caller_own){
 							statement.add(indent+a.addOwnership(register, function, stores));
 						}else{
 							statement.add(indent+a.transferOwnership(register, function, stores));
