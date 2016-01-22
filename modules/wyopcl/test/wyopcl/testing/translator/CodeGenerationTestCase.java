@@ -178,4 +178,26 @@ public class CodeGenerationTestCase {
 	public void test_factorial_copy_dealloc(){
 		util.execCodeGeneration(codeDir, "factorial", "copy", "dealloc");
 	}
+	
+	
+	@Test
+	public void test_Fibonacci_naive(){
+		util.execCodeGeneration(codeDir, "Fibonacci");
+	}
+	
+	@Test
+	public void test_Fibonacci_naive_dealloc(){
+		util.execCodeGeneration(codeDir, "Fibonacci", "dealloc");
+	}
+	
+	@Test
+	public void test_Fibonacci_copy(){
+		util.execCodeGeneration(codeDir, "Fibonacci", "copy");
+	}
+	
+	@Test
+	public void test_Fibonacci_copy_dealloc(){
+		util.execCodeGeneration(codeDir, "Fibonacci", "copy", "dealloc");
+	}
+	
 }
