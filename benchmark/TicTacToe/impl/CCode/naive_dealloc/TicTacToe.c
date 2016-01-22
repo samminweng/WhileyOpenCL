@@ -367,7 +367,7 @@ blklab18:;
 			//invoke %32 = (%3, %5) TicTacToe:play : function(TicTacToe:Board,TicTacToe:nat) -> TicTacToe:Board
 			_FREE_STRUCT(_32, Board);
 			_ADD_OWNERSHIP(b);
-			_32 = play(_STRUCT_COPY_PARAM(b, Board), false, p);
+			_32 = play(_STRUCT_COPY_PARAM(b, Board), true, p);
 			_ADD_OWNERSHIP(_32);
 			//assign %3 = %32  : {int move,int[] pieces}
 			_FREE_STRUCT(b, Board);

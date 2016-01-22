@@ -21,54 +21,12 @@ define_parameters(){
 		"MatrixMult")
 			parameters="10 20 30 40 50"
 			;;
+		"Factorial")
+			parameters="10 20 30 40 50"
+			;;
 	esac
 	
 }
-
-#
-# Generate and compile Java code using Whiley compiler
-#
-# generate_Java_code(){
-# 	DIR="$CALL/JavaCode"	
-# 	# Make dir
-# 	mkdir -p $DIR
-# 	# move C and Header files to working directory.
-# 	cp "$WHILEYSRC".whiley $DIR
-# 	#Change the working directory
-#     cd $DIR
-# 	# Compile the sort whiley program
-# 	./../../../../bin/wyjc "$WHILEYSRC".whiley
-# }
-#
-# Profile generated Java programs.
-#
-# mem_java(){
-# 	NAME=$1
-# 	CALL=$2
-# 	ROOTDIR=$PWD/mem/GC	
-# 	WHILEYSRC="$NAME"_"$CALL"
-# 	generate_Java_code
-# 	#array size
-# 	for arraysize in $arraysizes
-#     do
-#     	DIR=$ROOTDIR/$arraysize
-#     	# Make a dir
-#     	mkdir -p $DIR
-#    		# Run Java program with profile enabled (-Xprof) 
-# 		./../../../../bin/wyj $WHILEYSRC $arraysize > $DIR/$NAME.$CALL.Java.txt
-# 		# Check if the program completes the task.
-# 		check_exit $? "JAVA"
-# 		if [ "$?" != 0 ]
-# 		then
-# 			# Terminate the nested loop.
-# 			break 2
-# 		fi
-# 		#Added the CPU info
-# 		cat /proc/cpuinfo >> $DIR/$NAME.$CALL.Java.txt
-#     done
-# 	#Return the original working directory
-# 	cd ../../
-# }
 
 #
 # Generate the Java or C code
@@ -188,3 +146,8 @@ mem_c MatrixMult CCode naive
 mem_c MatrixMult CCode naive_dealloc
 mem_c MatrixMult CCode copy_reduced
 mem_c MatrixMult CCode copy_reduced_dealloc
+### Factorial
+mem_c Factorial CCode naive
+mem_c Factorial CCode naive_dealloc
+mem_c Factorial CCode copy_reduced
+mem_c Factorial CCode copy_reduced_dealloc

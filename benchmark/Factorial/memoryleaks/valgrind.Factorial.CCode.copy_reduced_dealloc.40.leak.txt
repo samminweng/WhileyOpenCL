@@ -1,0 +1,15 @@
+==17600== Memcheck, a memory error detector
+==17600== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==17600== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==17600== Command: ./Factorial.out 40
+==17600== Parent PID: 16392
+==17600== 
+==17600== 
+==17600== HEAP SUMMARY:
+==17600==     in use at exit: 0 bytes in 0 blocks
+==17600==   total heap usage: 3 allocs, 3 frees, 224 bytes allocated
+==17600== 
+==17600== All heap blocks were freed -- no leaks are possible
+==17600== 
+==17600== For counts of detected and suppressed errors, rerun with: -v
+==17600== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
