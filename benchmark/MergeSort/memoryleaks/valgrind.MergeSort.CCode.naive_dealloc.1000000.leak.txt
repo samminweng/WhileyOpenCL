@@ -1,21 +1,21 @@
-==16693== Memcheck, a memory error detector
-==16693== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==16693== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==16693== Command: ./MergeSort.out 1000000
-==16693== Parent PID: 16392
-==16693== 
-==16693== 
-==16693== HEAP SUMMARY:
-==16693==     in use at exit: 167,611,568 bytes in 2,000,001 blocks
-==16693==   total heap usage: 10,000,008 allocs, 8,000,007 frees, 838,058,216 bytes allocated
-==16693== 
-==16693== LEAK SUMMARY:
-==16693==    definitely lost: 159,611,536 bytes in 1,999,998 blocks
-==16693==    indirectly lost: 0 bytes in 0 blocks
-==16693==      possibly lost: 8,000,032 bytes in 3 blocks
-==16693==    still reachable: 0 bytes in 0 blocks
-==16693==         suppressed: 0 bytes in 0 blocks
-==16693== Rerun with --leak-check=full to see details of leaked memory
-==16693== 
-==16693== For counts of detected and suppressed errors, rerun with: -v
-==16693== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==22261== Memcheck, a memory error detector
+==22261== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==22261== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==22261== Command: ./MergeSort.out 1000000
+==22261== Parent PID: 21959
+==22261== 
+==22261== 
+==22261== HEAP SUMMARY:
+==22261==     in use at exit: 167,611,568 bytes in 2,000,001 blocks
+==22261==   total heap usage: 10,000,008 allocs, 8,000,007 frees, 838,058,216 bytes allocated
+==22261== 
+==22261== LEAK SUMMARY:
+==22261==    definitely lost: 159,611,536 bytes in 1,999,998 blocks
+==22261==    indirectly lost: 0 bytes in 0 blocks
+==22261==      possibly lost: 8,000,032 bytes in 3 blocks
+==22261==    still reachable: 0 bytes in 0 blocks
+==22261==         suppressed: 0 bytes in 0 blocks
+==22261== Rerun with --leak-check=full to see details of leaked memory
+==22261== 
+==22261== For counts of detected and suppressed errors, rerun with: -v
+==22261== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

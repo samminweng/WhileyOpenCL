@@ -24,6 +24,9 @@ define_parameters(){
 		"Factorial")
 			parameters="10 20 30 40 50"
 			;;
+		"Fibonacci")
+			parameters="100 1000 10000"
+			;;
 	esac
 	
 }
@@ -151,3 +154,8 @@ mem_c Factorial CCode naive
 mem_c Factorial CCode naive_dealloc
 mem_c Factorial CCode copy_reduced
 mem_c Factorial CCode copy_reduced_dealloc
+### Fibonacci
+mem_c Fibonacci CCode naive
+mem_c Fibonacci CCode naive_dealloc
+mem_c Fibonacci CCode copy_reduced
+mem_c Fibonacci CCode copy_reduced_dealloc

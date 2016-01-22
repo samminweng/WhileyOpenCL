@@ -10,6 +10,7 @@ BEGIN {
 	testcases["newTicTacToe"] = "newTicTacToe";
 	testcases["MatrixMult"] = "MatrixMult";
 	testcases["Factorial"] = "Factorial";
+	testcases["Fibonacci"] = "Fibonacci";
 	# Optimization
 	ops["naive"] = "naive";
 	ops["naive_dealloc"] = "naive_dealloc";

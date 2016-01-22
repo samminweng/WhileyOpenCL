@@ -1,5 +1,17 @@
 Memory Leak (bytes)
 TestCase	Optimization	Arraysize	definite loss	indirect loss	possible loss	reachable loss
+Fibonacci	copy_reduced_dealloc	100	0	0	0	0
+Fibonacci	copy_reduced_dealloc	1000	0	0	0	0
+Fibonacci	copy_reduced_dealloc	10000	0	0	0	0
+Fibonacci	naive_dealloc	100	0	0	0	0
+Fibonacci	naive_dealloc	1000	0	0	0	0
+Fibonacci	naive_dealloc	10000	0	0	0	0
+Fibonacci	copy_reduced	100	1000	32	0	0
+Fibonacci	copy_reduced	1000	8200	40	0	0
+Fibonacci	copy_reduced	10000	80200	48	0	0
+Fibonacci	naive	100	161000	32	0	0
+Fibonacci	naive	1000	16008200	40	0	0
+Fibonacci	naive	10000	1599200200	480048	400000	0
 MatrixMult	copy_reduced_dealloc	10	0	0	0	0
 MatrixMult	copy_reduced_dealloc	20	0	0	0	0
 MatrixMult	copy_reduced_dealloc	30	0	0	0	0
