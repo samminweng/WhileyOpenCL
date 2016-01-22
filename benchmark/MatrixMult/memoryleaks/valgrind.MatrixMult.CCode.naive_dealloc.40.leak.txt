@@ -1,21 +1,21 @@
-==22862== Memcheck, a memory error detector
-==22862== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==22862== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==22862== Command: ./MatrixMult.out 40
-==22862== Parent PID: 21959
-==22862== 
-==22862== 
-==22862== HEAP SUMMARY:
-==22862==     in use at exit: 65,600 bytes in 205 blocks
-==22862==   total heap usage: 5,248,990 allocs, 5,248,785 frees, 1,679,676,184 bytes allocated
-==22862== 
-==22862== LEAK SUMMARY:
-==22862==    definitely lost: 960 bytes in 3 blocks
-==22862==    indirectly lost: 38,400 bytes in 120 blocks
-==22862==      possibly lost: 0 bytes in 0 blocks
-==22862==    still reachable: 26,240 bytes in 82 blocks
-==22862==         suppressed: 0 bytes in 0 blocks
-==22862== Rerun with --leak-check=full to see details of leaked memory
-==22862== 
-==22862== For counts of detected and suppressed errors, rerun with: -v
-==22862== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==26404== Memcheck, a memory error detector
+==26404== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==26404== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==26404== Command: ./MatrixMult.out 40
+==26404== Parent PID: 25652
+==26404== 
+==26404== 
+==26404== HEAP SUMMARY:
+==26404==     in use at exit: 65,600 bytes in 205 blocks
+==26404==   total heap usage: 5,248,990 allocs, 5,248,785 frees, 1,679,676,184 bytes allocated
+==26404== 
+==26404== LEAK SUMMARY:
+==26404==    definitely lost: 960 bytes in 3 blocks
+==26404==    indirectly lost: 38,400 bytes in 120 blocks
+==26404==      possibly lost: 0 bytes in 0 blocks
+==26404==    still reachable: 26,240 bytes in 82 blocks
+==26404==         suppressed: 0 bytes in 0 blocks
+==26404== Rerun with --leak-check=full to see details of leaked memory
+==26404== 
+==26404== For counts of detected and suppressed errors, rerun with: -v
+==26404== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

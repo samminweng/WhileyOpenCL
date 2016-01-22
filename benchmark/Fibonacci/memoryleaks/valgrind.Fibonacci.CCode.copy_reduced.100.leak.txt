@@ -1,0 +1,21 @@
+==26643== Memcheck, a memory error detector
+==26643== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==26643== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==26643== Command: ./Fibonacci.out 100
+==26643== Parent PID: 25652
+==26643== 
+==26643== 
+==26643== HEAP SUMMARY:
+==26643==     in use at exit: 1,032 bytes in 4 blocks
+==26643==   total heap usage: 4 allocs, 0 frees, 1,032 bytes allocated
+==26643== 
+==26643== LEAK SUMMARY:
+==26643==    definitely lost: 1,000 bytes in 3 blocks
+==26643==    indirectly lost: 32 bytes in 1 blocks
+==26643==      possibly lost: 0 bytes in 0 blocks
+==26643==    still reachable: 0 bytes in 0 blocks
+==26643==         suppressed: 0 bytes in 0 blocks
+==26643== Rerun with --leak-check=full to see details of leaked memory
+==26643== 
+==26643== For counts of detected and suppressed errors, rerun with: -v
+==26643== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

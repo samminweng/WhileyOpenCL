@@ -12,9 +12,6 @@ define_parameters(){
 		"MergeSort")
 			parameters="1000 10000 100000 1000000"
 			;;
-		"TicTacToe")
-			parameters="1000 10000 100000 1000000"
-			;;
 		"newTicTacToe")
 			parameters="1000 10000 100000 1000000"
 			;;
@@ -134,11 +131,6 @@ mem_c MergeSort CCode naive
 mem_c MergeSort CCode naive_dealloc
 mem_c MergeSort CCode copy_reduced
 mem_c MergeSort CCode copy_reduced_dealloc
-### TicTacToe
-mem_c TicTacToe CCode naive
-mem_c TicTacToe CCode naive_dealloc
-mem_c TicTacToe CCode copy_reduced
-mem_c TicTacToe CCode copy_reduced_dealloc
 ### newTicTacToe
 mem_c newTicTacToe CCode naive
 mem_c newTicTacToe CCode naive_dealloc
@@ -149,11 +141,6 @@ mem_c MatrixMult CCode naive
 mem_c MatrixMult CCode naive_dealloc
 mem_c MatrixMult CCode copy_reduced
 mem_c MatrixMult CCode copy_reduced_dealloc
-### Factorial
-mem_c Factorial CCode naive
-mem_c Factorial CCode naive_dealloc
-mem_c Factorial CCode copy_reduced
-mem_c Factorial CCode copy_reduced_dealloc
 ### Fibonacci
 mem_c Fibonacci CCode naive
 mem_c Fibonacci CCode naive_dealloc
