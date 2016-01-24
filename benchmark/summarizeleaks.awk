@@ -4,20 +4,15 @@ BEGIN {
 	filename = "";
 	FS = "\t";
 	# Test case name
-	testcases["Reverse"] = "Reverse";
-	testcases["MergeSort"] = "MergeSort";
-	testcases["TicTacToe"] = "TicTacToe";
-	testcases["newTicTacToe"] = "newTicTacToe";
-	testcases["MatrixMult"] = "MatrixMult";
-	testcases["Factorial"] = "Factorial";
-	testcases["Fibonacci"] = "Fibonacci";
+	testcases="Fibonacci Reverse MergeSort newTicTacToe MatrixMult";
 	# Optimization
-	ops["naive"] = "naive";
-	ops["naive_dealloc"] = "naive_dealloc";
-	ops["copy_reduced"] = "copy_reduced";
-	ops["copy_reduced_dealloc"] = "copy_reduced_dealloc";
+	opts = "naive naive_dealloc copy_reduced copy_reduced_dealloc";
 	# Parameter
-	arraysizes[""] = "";
+	parameters["Fibonacci"] = "100 1000 10000";
+	parameters["Reverse"] = "1000 10000 100000 1000000 10000000 100000000";
+	parameters["MergeSort"] = "1000 10000 100000 1000000";
+	parameters["newTicTacToe"] = "1000 10000 100000 1000000";
+	parameters["MatrixMult"] = "10 20 30 40 50";
 	count[""]=0;
 	# Leak
 	leaks[""]=0;
@@ -28,12 +23,11 @@ BEGIN {
 	# Get test case
 	testcase=arr[2];
 	# Get optimization
-	op=arr[4];
-	# Get array size
-	arraysize = arr[5];
-	arraysizes[arraysize]=arraysize;
-	count[testcase","arraysize]++;
-	key = testcase","op","arraysize;
+	opt=arr[4];
+	# Get parameter
+	parameter = arr[5];
+	count[testcase","parameter]++;
+	key = testcase","opt","parameter;
 	# Get definite loss.
 	if(match($1, "definitely lost:")){
 		# Get Parameter
@@ -88,22 +82,24 @@ END {
 
 	print "Memory Leak (bytes)";
 	print "TestCase\tOptimization\tArraysize\tdefinite loss\tindirect loss\tpossible loss\treachable loss";
-	for (testcase in testcases){
+	t_total=split(testcases, t_array, " ");
+	for(t=1;t<=t_total;t++){
+		testcase=t_array[t];
 		# Get Optimization Type
-		for(op in ops){
-			# Sort the arraysizes 
-			total = asort(arraysizes);
-			for(n=1;n<=total;n++){
-				arraysize = arraysizes[n];
+		opts_total=split(opts, opt_array, " ");
+		for(o=1;o<=opts_total;o++){
+			opt=opt_array[o];
+			s_total=split(parameters[testcase], s_array, " ");
+			for(s=1;s<=s_total;s++){
+				parameter = s_array[s];
 				# Check if there is the memory leak result.
-				if(count[testcase","arraysize]>0){
+				if(count[testcase","parameter]>0){
 					# Slow program
-					key = testcase","op","arraysize;
+					key = testcase","opt","parameter;
 					# FIll in zero values
-					str = testcase"\t"op"\t"arraysize"\t"leaks[key",definiteloss"]+0"\t"leaks[key",indirectloss"]+0"\t"leaks[key",possibleloss"]+0"\t"leaks[key",reachableloss"]+0;
+					str = testcase"\t"opt"\t"parameter"\t"leaks[key",definiteloss"]+0"\t"leaks[key",indirectloss"]+0"\t"leaks[key",possibleloss"]+0"\t"leaks[key",reachableloss"]+0;
 					print str;
 				}
-				
 			}
 		}
 	}

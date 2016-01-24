@@ -6,6 +6,9 @@ parameters=""
 
 define_parameters(){
 	case "$NAME" in
+		"Fibonacci")
+			parameters="100 1000 10000"
+			;;
 		"Reverse")
 			parameters="1000 10000 100000 1000000 10000000 100000000"
 			;;
@@ -17,12 +20,6 @@ define_parameters(){
 			;;
 		"MatrixMult")
 			parameters="10 20 30 40 50"
-			;;
-		"Factorial")
-			parameters="10 20 30 40 50"
-			;;
-		"Fibonacci")
-			parameters="100 1000 10000"
 			;;
 	esac
 	
