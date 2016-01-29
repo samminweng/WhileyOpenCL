@@ -9,7 +9,6 @@ import wyil.lang.Codes.UnaryOperatorKind;
 import wyil.lang.Constant;
 import wyil.lang.Type;
 import wyil.lang.WyilFile;
-import wyil.lang.Type.Tuple;
 import wyil.lang.WyilFile.FunctionOrMethod;
 import wyopcl.Configuration;
 import wyopcl.translator.bound.BasicBlock;
@@ -186,13 +185,9 @@ public class BoundAnalyzer {
 						analyze((Codes.LengthOf) code, name);
 					} else if (code instanceof Codes.Move) {
 						throw new RuntimeException("Not implemented!");
-					} else if (code instanceof Codes.NewList) {
-						analyze((Codes.NewList) code, name);
 					} else if (code instanceof Codes.NewRecord) {
 						// NewRecordInterpreter.getInstance().interpret((Codes.NewRecord)code,
 						// stackframe);
-					} else if (code instanceof Codes.NewTuple) {
-						analyze((Codes.NewTuple) code, name);
 					} else if (code instanceof Codes.Return) {
 						analyze((Codes.Return) code, name);
 					} else if (code instanceof Codes.NewObject) {
@@ -204,8 +199,6 @@ public class BoundAnalyzer {
 					} else if (code instanceof Codes.Switch) {
 						// SwitchInterpreter.getInstance().interpret((Codes.Switch)code,
 						// stackframe);
-					} else if (code instanceof Codes.TupleLoad) {
-						analyze((Codes.TupleLoad) code, name);
 					} else if (code instanceof Codes.UnaryOperator) {
 						analyze((Codes.UnaryOperator) code, name);
 					} else if (code instanceof Codes.Update) {
@@ -358,9 +351,9 @@ public class BoundAnalyzer {
 	
 
 	private void analyze(Codes.Assign code, String name) {
-		String target_reg = prefix + code.target();
+		String target_reg = prefix + code.target(0);
 		String op_reg = prefix + code.operand(0);
-		if (code.type() instanceof Type.Array) {
+		if (code.type(0) instanceof Type.Array) {
 			// Get the 'size' attribute 
 			BigInteger size = AnalyzerHelper.getSizeInfo(name, op_reg);
 			if (size != null) {
@@ -369,7 +362,7 @@ public class BoundAnalyzer {
 		}
 
 		// Check if the assigned value is an integer
-		if (TranslatorHelper.isIntType(code.type())) {
+		if (TranslatorHelper.isIntType(code.type(0))) {
 			// Add the constraint 'target = operand'
 			if (!AnalyzerHelper.isCached(name)) {
 				CFGraph graph = AnalyzerHelper.getCFGraph(name);
@@ -395,9 +388,9 @@ public class BoundAnalyzer {
 			graph.addConstraint(new Const(target_reg, value));
 		}
 
-		if (constant instanceof Constant.List) {
+		if (constant instanceof Constant.Array) {
 			// Get the list and extract the size info.
-			BigInteger size = BigInteger.valueOf((((Constant.List) constant).values).size());
+			BigInteger size = BigInteger.valueOf((((Constant.Array) constant).values).size());
 			AnalyzerHelper.addSizeInfo(name, target_reg, size);
 		}
 
@@ -411,8 +404,8 @@ public class BoundAnalyzer {
 	 * @param code
 	 */
 	private void analyze(Codes.IndexOf code, String name) {
-		if (TranslatorHelper.isIntType((Type) code.type()) && !AnalyzerHelper.isCached(name)) {
-			String target = prefix + code.target();
+		if (TranslatorHelper.isIntType((Type) code.type(0)) && !AnalyzerHelper.isCached(name)) {
+			String target = prefix + code.target(0);
 			String op = prefix + code.operand(0);
 			String index = prefix + code.operand(1);
 			// Get the CFGraph
@@ -428,14 +421,14 @@ public class BoundAnalyzer {
 	 * @throws CloneNotSupportedException
 	 */
 	private void analyze(Codes.If code, String name) {
-		String left = prefix + code.leftOperand;
-		String right = prefix + code.rightOperand;
+		String left = prefix + code.operand(0);
+		String right = prefix + code.operand(1);
 		if (!AnalyzerHelper.isCached(name)) {
 			// Get CF graph.
 			CFGraph graph = AnalyzerHelper.getCFGraph(name);
 			Constraint c = null;
 			Constraint neg_c = null;
-			if (TranslatorHelper.isIntType(code.type)) {
+			if (TranslatorHelper.isIntType(code.type(0))) {
 				switch (code.op) {
 				case EQ:
 					c = new Equals(left, right);
@@ -464,8 +457,6 @@ public class BoundAnalyzer {
 					// Add the constraint 'left< right' to current constraint
 					// list.
 					break;
-				/*case IN:
-					throw new RuntimeException("Un-implemented comparator (" + code + ")");*/
 				default:
 					throw new RuntimeException("Unknow operator (" + code + ")");
 
@@ -519,7 +510,7 @@ public class BoundAnalyzer {
 	 * @param code
 	 *            the new list byte-code
 	 */
-	private void analyze(Codes.NewList code, String name) {
+	/*private void analyze(Codes.NewList code, String name) {
 		String target = prefix + code.target();
 		if (TranslatorHelper.isIntType(code.type()) && !AnalyzerHelper.isCached(name)) {
 			// Get the CFGraph
@@ -530,7 +521,7 @@ public class BoundAnalyzer {
 		}
 		// Add the 'size' attribute
 		AnalyzerHelper.addSizeInfo(name, target, BigInteger.valueOf(code.operands().length));
-	}
+	}*/
 
 	/**
 	 * Parse the 'return' bytecode and add the constraint
@@ -539,8 +530,8 @@ public class BoundAnalyzer {
 	 */
 	private void analyze(Codes.Return code, String name) {
 		// Get the return operand
-		String retOp = prefix + code.operand;
-		Type type = code.type;
+		String retOp = prefix + code.operand(0);
+		Type type = code.type(0);
 
 		if (!AnalyzerHelper.isCached(name)) {
 			// Get the CFGraph
@@ -550,7 +541,7 @@ public class BoundAnalyzer {
 			// procedure.
 			if (c_blk != null) {
 				// Check if the return type is integer.
-				if (TranslatorHelper.isIntType(code.type)) {
+				if (TranslatorHelper.isIntType(code.type(0))) {
 					// Add the 'Equals' constraint to the return (ret) variable.
 					c_blk.addConstraint((new Assign("return", retOp)));
 				}
@@ -616,17 +607,13 @@ public class BoundAnalyzer {
 	private void analyze(Codes.UnaryOperator code, String name) {
 		UnaryOperatorKind kind = code.kind;
 		String x = prefix + code.operand(0);
-		String y = prefix + code.target();
+		String y = prefix + code.target(0);
 		// Get a graph
 		CFGraph graph = AnalyzerHelper.getCFGraph(name);
 		switch (kind) {
 		case NEG:
 			graph.addConstraint(new Negate(x, y));
 			break;
-		case NUMERATOR:
-			throw new RuntimeException("Unimplemeted unary operator encountered (" + code + ")");
-		case DENOMINATOR:
-			throw new RuntimeException("Unimplemeted unary operator encountered (" + code + ")");
 		default:
 			throw new RuntimeException("unknown unary operator encountered (" + code + ")");
 		}
@@ -642,18 +629,13 @@ public class BoundAnalyzer {
 		//SymbolFactory sym_factory = BoundAnalyzerHelper.getSymbolFactory(name);
 		// Get the size att
 		String op_reg = prefix + code.operand(0);
-		String target_reg = prefix + code.target();
-		Type type = code.assignedType();
+		String target_reg = prefix + code.target(0);
+		//Type type = code.type(0);
 		BigInteger size = (BigInteger) AnalyzerHelper.getSizeInfo(name, op_reg);
 		if(size != null){
 			// Add 'size' att
 			AnalyzerHelper.addSizeInfo(name, target_reg, size);
 		}
-		
-		
-		
-		
-		// graph.addConstraint(new Const(target, size));
 	}
 
 	/**
@@ -697,10 +679,9 @@ public class BoundAnalyzer {
 	 * @param code
 	 */
 	private void analyze(Codes.BinaryOperator code, String name) {
-		String target = prefix + code.target();
+		String target = prefix + code.target(0);
 		// Add the type att
-		Type type = code.assignedType();
-		if (TranslatorHelper.isIntType(code.type()) && !AnalyzerHelper.isCached(name)) {
+		if (TranslatorHelper.isIntType(code.type(0)) && !AnalyzerHelper.isCached(name)) {
 			// Get the values
 			CFGraph graph = AnalyzerHelper.getCFGraph(name);
 			switch (code.kind) {
@@ -746,12 +727,15 @@ public class BoundAnalyzer {
 	}
 
 	/**
+	 * Depreciated due to the Whiley compiler upgrade v0.3.38 
+	 * 
+	 * 
 	 * Load the tuple values at the given index and assign the bounds of the
 	 * operand to the target.
 	 * 
 	 * @param code
 	 */
-	private void analyze(Codes.TupleLoad code, String name) {
+	/*private void analyze(Codes.TupleLoad code, String name) {
 		// Check if the index is that of value field (1).
 		CFGraph graph = AnalyzerHelper.getCFGraph(name);
 		int index = code.index;
@@ -762,14 +746,16 @@ public class BoundAnalyzer {
 			}
 		}
 
-	}
+	}*/
 
 	/**
+	 * Depreciated due to the Whiley compiler upgrade (v0.3.38) 
+	 * 
 	 * Take the union of bounds from operands and target
 	 * 
 	 * @param code
 	 */
-	private void analyze(Codes.NewTuple code, String name) {
+	/*private void analyze(Codes.NewTuple code, String name) {
 		// Assing the bounds of value field to the target
 		Type.Tuple tuple = code.type();
 		if (!AnalyzerHelper.isCached(name)) {
@@ -783,7 +769,7 @@ public class BoundAnalyzer {
 				index += 2;
 			}
 		}
-	}
+	}*/
 
 	/**
 	 * Updates an element of a list. But how do we update the bounds???
@@ -820,12 +806,12 @@ public class BoundAnalyzer {
 	 * @param name
 	 */
 	private void analyze(Codes.FieldLoad code, String name) {
-		String target = prefix + code.target();
+		String target = prefix + code.target(0);
 		String record = prefix + code.operand(0);
 	}
 
 	private void analyze(Codes.Convert code, String name) {
-		String target = prefix + code.target();
+		String target = prefix + code.target(0);
 		// sym_ctrl.putAttribute(target, "type", code.result);
 
 		if (code.result instanceof Type.Array) {
@@ -845,7 +831,7 @@ public class BoundAnalyzer {
 	 */
 	private void analyze(Codes.Invoke code, String caller_name) {
 		//FunctionOrMethod callee = AnalyzerHelper.getFunctionOrMethod(this.config, code.name.name());
-		FunctionOrMethod callee = this.module.functionOrMethod(code.name.name(), code.type());
+		FunctionOrMethod callee = this.module.functionOrMethod(code.name.name(), code.type(0));
 		if (callee != null) {
 			int caller_line = line;
 			// Callee name
@@ -863,8 +849,8 @@ public class BoundAnalyzer {
 			Bounds ret_bnd = inferBounds(callee_name);
 			// Promote the status of callee's CF graph to be 'complete'
 			AnalyzerHelper.promoteCFGStatus(callee_name);
-			AnalyzerHelper.propagateBoundsFromFunctionCall(caller_name, callee_name, prefix + code.target(), code.type().ret(), ret_bnd);
-			AnalyzerHelper.propagateSizeFromFunctionCall(caller_name, callee_name, prefix + code.target(), code.type().ret());
+			AnalyzerHelper.propagateBoundsFromFunctionCall(caller_name, callee_name, prefix + code.target(0), code.type(0), ret_bnd);
+			AnalyzerHelper.propagateSizeFromFunctionCall(caller_name, callee_name, prefix + code.target(0), code.type(0));
 			//Reset the line number
 			this.line = caller_line;
 		}

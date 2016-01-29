@@ -98,7 +98,7 @@ public abstract class WhileLoopPattern extends LoopPattern {
 			if (!isInvariant(code)) {
 				// check if the loop variable is used in the assignment for
 				// while loop pattern
-				if (code instanceof Codes.Assign && var.equals(prefix + ((Codes.Assign) code).target())) {
+				if (code instanceof Codes.Assign && var.equals(prefix + ((Codes.Assign) code).target(0))) {
 					// Add the code to the 'init' part
 					AddCodeToPatternPart(code, "init");
 					break;
@@ -137,13 +137,13 @@ public abstract class WhileLoopPattern extends LoopPattern {
 	 */
 	private Codes.If standardizeLoopCondition(Codes.If before_code, String loop_var) {
 		// Check if the loop exist in left or right
-		if (!loop_var.equals(prefix + before_code.rightOperand) && !loop_var.equals(prefix + before_code.leftOperand)) {
+		if (!loop_var.equals(prefix + before_code.operand(1)) && !loop_var.equals(prefix + before_code.operand(0))) {
 			return null;
 		}
 		// Check if the loop var is on the right-hand side of the condition. If
 		// not, then
 		// This bytecode does not need any transformation.
-		if (loop_var.equals(prefix + before_code.rightOperand)) {
+		if (loop_var.equals(prefix + before_code.operand(1))) {
 			// Change the comparing operator
 			Comparator new_op = null;
 			switch (before_code.op) {
@@ -165,7 +165,7 @@ public abstract class WhileLoopPattern extends LoopPattern {
 
 			if (new_op != null) {
 				// The loop var is on the right.
-				return Codes.If(before_code.type, before_code.rightOperand, before_code.leftOperand, new_op, before_code.target);
+				return Codes.If(before_code.type(0), before_code.operand(1), before_code.operand(0), new_op, before_code.target);
 			}
 		}
 
@@ -197,7 +197,7 @@ public abstract class WhileLoopPattern extends LoopPattern {
 				if (if_code != null) {
 					// Add the code to loop header
 					AddCodeToPatternPart(if_code, "loop_header");
-					String cop = prefix + if_code.rightOperand;
+					String cop = prefix + if_code.operand(1);
 					switch (if_code.op) {
 					case LTEQ:
 						comparatorOp = ">";
@@ -293,7 +293,7 @@ public abstract class WhileLoopPattern extends LoopPattern {
 				// value of loop variable.
 				Codes.Assign assign = (Codes.Assign) code;
 				// Check if the target is the loop variable.
-				if ((prefix + assign.target()).equals(loop_var)) {
+				if ((prefix + assign.target(0)).equals(loop_var)) {
 					// Get the increment and decrement.
 					incr = factory.extractIncrement(assign, loop_var);
 					decr = factory.extractDecrement(assign, loop_var);

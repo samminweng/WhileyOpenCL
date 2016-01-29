@@ -80,7 +80,7 @@ public final class BuildListPattern extends WhileLoopPattern implements Transfor
 			if (!isInvariant(code)) {
 				// check if the loop variable is used in the assignment for
 				// while loop pattern
-				if (code instanceof Codes.Assign && var.equals(prefix + ((Codes.Assign) code).target())) {
+				if (code instanceof Codes.Assign && var.equals(prefix + ((Codes.Assign) code).target(0))) {
 					// Add the code to the 'init' part
 					AddCodeToPatternPart(code, "init");
 					break;
@@ -99,7 +99,7 @@ public final class BuildListPattern extends WhileLoopPattern implements Transfor
 			} else if(code instanceof Codes.Assign){
 				Codes.Assign assign = (Codes.Assign)code;
 				//Check if the right operand is list var.
-				if(this.list_var != null && this.list_var.equals(prefix+assign.target())){
+				if(this.list_var != null && this.list_var.equals(prefix+assign.target(0))){
 					//Reassign the list var
 					AddCodeToPatternPart(code, "list_init");
 				}else{
@@ -138,7 +138,7 @@ public final class BuildListPattern extends WhileLoopPattern implements Transfor
 				// value of loop variable.
 				Codes.Assign assign = (Codes.Assign) code;
 				// Check if the target is the loop variable.
-				if ((prefix + assign.target()).equals(loop_var)) {
+				if ((prefix + assign.target(0)).equals(loop_var)) {
 					AddCodeToPatternPart(code, "loopbody_update");
 					// Get the increment and decrement.
 					incr = factory.extractIncrement(assign, loop_var);
@@ -157,7 +157,7 @@ public final class BuildListPattern extends WhileLoopPattern implements Transfor
 			// Check if the code initializes the list.
 			if (code instanceof Codes.Assign) {
 				Codes.Assign assign = (Codes.Assign) code;
-				if (this.list_var != null && this.list_var.equals(prefix + assign.target())) {	
+				if (this.list_var != null && this.list_var.equals(prefix + assign.target(0))) {	
 					this.list_update = factory.getExpr(prefix + assign.operand(0));
 					++index;
 					break;

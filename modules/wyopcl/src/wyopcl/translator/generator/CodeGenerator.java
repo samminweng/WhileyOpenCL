@@ -20,10 +20,10 @@ import java.util.stream.IntStream;
 import wyil.attributes.VariableDeclarations;
 import wyil.lang.Code;
 import wyil.lang.Codes;
+import wyil.lang.Codes.ArrayGenerator;
 import wyil.lang.Codes.Comparator;
 import wyil.lang.Codes.Dereference;
 import wyil.lang.Codes.IfIs;
-import wyil.lang.Codes.ListGenerator;
 import wyil.lang.Codes.Loop;
 import wyil.lang.Codes.NewObject;
 import wyil.lang.Codes.NewRecord;
@@ -167,7 +167,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Translate function declaration in C
 			// Get the code storage
 			CodeStore store = stores.getCodeStore(function);
-			declaration += CodeGeneratorHelper.translateType(function.type().ret(), stores) + " " + function.name() + "(";
+			declaration += CodeGeneratorHelper.translateType(function.type(), stores) + " " + function.name() + "(";
 			List<Type> params = function.type().params();
 			// Generate input parameters separated by comma
 			List<String> parameters = new ArrayList<String>();
@@ -226,12 +226,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String lhs = store.getVar(code.target());
 		Type lhs_type = store.getRawType(code.target());
 		String indent = store.getIndent();
-		if (code.assignedType() instanceof Type.Null){
+		if (code.constant.type() instanceof Type.Null){
 			// Skip translation.
 		}else{
-			if (code.assignedType() instanceof Type.Array) {
-				// Convert it into a constant list
-				Constant.List list = (Constant.List) code.constant;
+			if (code.constant.type() instanceof Type.Array) {
+				// Cast the constant to an array
+				Constant.Array list = (Constant.Array) code.constant;
 				// Free lhs variable
 				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
 				statement.add(indent+"_NEW_ARRAY("+lhs+", "+list.values.size()+");");
@@ -289,9 +289,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.Assign code, FunctionOrMethod function) {
 		CodeStore store = stores.getCodeStore(function);
-		String lhs = store.getVar(code.target());
+		String lhs = store.getVar(code.target(0));
 		// Get the actual type for lhs variable.
-		Type lhs_type = store.getRawType(code.target());
+		Type lhs_type = store.getRawType(code.target(0));
 		String indent = store.getIndent();
 		List<String> statement = new ArrayList<String>();
 		String rhs = store.getVar(code.operand(0));
@@ -302,11 +302,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		}else{
 			this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
 			// Special cases for NULL type
-			if(code.type()instanceof Type.Null){
+			if(code.type(0)instanceof Type.Null){
 				// Assign lhs to NULL values by 
 				statement.add(indent + lhs + " = NULL;");
 				// Transfer out the ownership of lhs variable
-				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + a.transferOwnership(code.target(), function, stores)));
+				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + a.transferOwnership(code.target(0), function, stores)));
 			}else{
 				statement.addAll(CodeGeneratorHelper.generateAssignmentCode(lhs_type, indent, lhs, rhs, isCopyEliminated, stores));
 				this.deallocatedAnalyzer.ifPresent(a -> statement.addAll(a.computeOwnership(indent, isCopyEliminated, code, function, stores)));
@@ -338,8 +338,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.LengthOf code, FunctionOrMethod function) {
 		CodeStore store = stores.getCodeStore(function);
-		String stat = store.getIndent() + store.getVar(code.target()) + " = " + store.getVar(code.operand(0))
-		+ "_size;";
+		String stat = store.getIndent() + store.getVar(code.target(0)) + " = " + store.getVar(code.operand(0))+ "_size;";
 		store.addStatement(code, stat);
 	}
 
@@ -364,12 +363,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.BinaryOperator code, FunctionOrMethod function) {
 		CodeStore store = stores.getCodeStore(function);	
-		String lhs = store.getVar(code.target());
+		String lhs = store.getVar(code.target(0));
 		String rhs0 = store.getVar(code.operand(0));
 		// Append 'integer' member for union type
 		String rhs1 = store.getVar(code.operand(1));
 		
-	
 		String stat = store.getIndent();
 		stat += lhs + "=" + rhs0;
 		switch (code.kind) {
@@ -388,10 +386,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		case REM:
 			stat += "%" + rhs1 + ";";
 			break;
-			/*
-			 * case RANGE: // Assign the range with input code for the translation of 'forall' // byte-code. // this.range =
-			 * code; stat = null; break;
-			 */
 		case BITWISEOR:
 			break;
 		case BITWISEXOR:
@@ -438,13 +432,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String statement = "";
 		// Translate the return value of a function call.
 		// If no return value, no needs for translation.
-		if (code.target() >= 0) {
-			Type lhs_type = code.type().ret();
-			String lhs = store.getVar(code.target());
+		if (code.target(0) >= 0) {
+			Type lhs_type = code.type(0);
+			String lhs = store.getVar(code.target(0));
 			if (lhs_type instanceof Type.Array) {
 				// Get input Array
 				for (int index = 0; index < code.operands().length; index++) {
-					Type type = code.type().params().get(index);
+					Type type = code.type(0).params().get(index);
 					if (type instanceof Type.Array) {
 						String param = store.getVar(code.operand(index));
 						int dimension = stores.getArrayDimension(type);
@@ -458,10 +452,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		}
 		return statement;
 	}
-
-
-
-
 
 	/**
 	 * Translate the rhs of a function call
@@ -583,9 +573,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		CodeStore store = stores.getCodeStore(function);
 		List<String> statement = new ArrayList<String>();
 		String indent = store.getIndent();
+		
 		// Translate built-in Whiley functions using macros.
 		if (code.name.module().toString().contains("whiley/lang")) {
-			String lhs = store.getVar(code.target());
+			String lhs = store.getVar(code.target(0));
 			switch (code.name.name()) {
 			// Parse a string into an integer.
 			case "parse":
@@ -594,7 +585,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				break;
 				// Slice an array into a new sub-array at given starting and ending index.
 			case "slice":
-				Type lhs_type = store.getRawType(code.target());
+				Type lhs_type = store.getRawType(code.target(0));
 				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
 				// Call the 'slice' function.
 				String array = store.getVar(code.operand(0));
@@ -602,7 +593,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				String end = store.getVar(code.operand(2));
 				statement.add("_SLICE_ARRAY("+lhs+", "+array+", "+start+", "+end+");");
 				// Assign ownership
-				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + a.addOwnership(code.target(), function, this.stores)));
+				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + a.addOwnership(code.target(0), function, this.stores)));
 				break;
 			case "toString":
 				statement.add(indent + lhs + " = " + code.operand(0) + ";");
@@ -612,8 +603,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}
 		} else {
 			// Translate the function call, e.g.
-			String lhs = store.getVar(code.target());
-			Type lhs_type = store.getRawType(code.target());
+			String lhs = store.getVar(code.target(0));
+			Type lhs_type = store.getRawType(code.target(0));
 			// Free lhs 
 			this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
 			
@@ -638,7 +629,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			
 			// Assign ownership to lhs
 			this.deallocatedAnalyzer.ifPresent(a -> statement.add(
-							indent + a.addOwnership(code.target(), function, this.stores)));
+							indent + a.addOwnership(code.target(0), function, this.stores)));
 			
 		
 		}
@@ -723,11 +714,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(Codes.If code, FunctionOrMethod function) {
 		CodeStore store = stores.getCodeStore(function);
 		String statement = store.getIndent();
-		String lhs = store.getVar(code.leftOperand);
-		String rhs = store.getVar(code.rightOperand);
+		String lhs = store.getVar(code.operand(0));
+		String rhs = store.getVar(code.operand(1));
 
 		// Added a special case to compare two arrays.
-		if (code.type instanceof Type.Array) {
+		if (code.type(0) instanceof Type.Array) {
 			if (code.op.equals(Comparator.EQ)) {
 				// Use the '_IFEQ_ARRAY' macro to compare two arrays
 				statement += "_IFEQ_ARRAY("+lhs+", "+rhs+", "+code.target+");";
@@ -743,8 +734,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			statement += "goto " + code.target + ";";
 			statement += "}";
 		}
-
-		
 
 		store.addStatement(code, statement);
 	}
@@ -843,8 +832,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		CodeStore store = stores.getCodeStore(function);
 		String indent = store.getIndent();
 		String s = "";
-		String lhs = store.getVar(code.target());
-		Type lhs_type = store.getRawType(code.target());
+		String lhs = store.getVar(code.target(0));
+		Type lhs_type = store.getRawType(code.target(0));
 		
 		// For List type only
 		if (lhs_type instanceof Type.Array) {
@@ -898,7 +887,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String indent = stores.getIndent(function);
 		
 		// Add 'deallocation code' for all ownership variables.
-		if(code.operand <0){
+		if(code.operands().length<1){
 			// Add return statements 
 			if (function.name().equals("main")) {
 				this.deallocatedAnalyzer.ifPresent(a ->{
@@ -913,16 +902,16 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			this.deallocatedAnalyzer.ifPresent(a ->{
 				statements.addAll(a.freeAllMemory(code, function, stores));
 			});
-			Type lhs_type = stores.getRawType(code.operand, function);
+			Type lhs_type = stores.getRawType(code.operand(0), function);
 			// Check if the code returns a pointer but the return value is a structure. 
-			if(code.type instanceof Type.Union && lhs_type instanceof Type.Record){
+			if(code.type(0) instanceof Type.Union && lhs_type instanceof Type.Record){
 				// This is a special case for 'return local variable' 
 				// We need to copy the local variable to stack memory, such as using 'copy_Board_PTR'
 				// Then return the copied variable, rather than the local one
 				// because variables that can be passed among functions are those defined in stack memory.
 				String struct = CodeGeneratorHelper.translateType(lhs_type, stores);
-				String pointer_struct = CodeGeneratorHelper.translateType(code.type, stores);
-				String var = stores.getVar(code.operand, function);
+				String pointer_struct = CodeGeneratorHelper.translateType(code.type(0), stores);
+				String var = stores.getVar(code.operand(0), function);
 				// Copy the local variable to stack variable
 				statements.add(indent+ pointer_struct + " ret = copy_"+pointer_struct.replace("*", "_PTR")+"(&"+var+");");
 				// Free the local variable
@@ -933,7 +922,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statements.add(indent + "return ret;");
 			}else{
 				// Return the structure.
-				statements.add(indent + "return " + stores.getVar(code.operand, function) + ";");
+				statements.add(indent + "return " + stores.getVar(code.operand(0), function) + ";");
 			}
 		}
 		
@@ -961,7 +950,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	protected void translate(Codes.IndexOf code, FunctionOrMethod function) {
 		CodeStore store = stores.getCodeStore(function);
-		String stat = store.getIndent() + store.getVar(code.target()) + "=" + store.getVar(code.operand(0)) 
+		String stat = store.getIndent() + store.getVar(code.target(0)) + "=" + store.getVar(code.operand(0)) 
 					  + "[" + store.getVar(code.operand(1)) + "];";
 		
 		store.addStatement(code, stat);
@@ -1001,11 +990,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * @param code
 	 */
-	protected void translate(Codes.NewList code, FunctionOrMethod function) {
+	protected void translate(Codes.NewArray code, FunctionOrMethod function) {
 		String indent = stores.getIndent(function);
 		// Get array names
-		String lhs = stores.getVar(code.target(), function);
-		Type lhs_type = stores.getRawType(code.target(), function);
+		String lhs = stores.getVar(code.target(0), function);
+		Type lhs_type = stores.getRawType(code.target(0), function);
 		List<String> statement = new ArrayList<String>();
 		int length = code.operands().length;
 		if(length > 0){
@@ -1020,7 +1009,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}
 			statement.add(s);
 			// Add lhs variable to ownership set.
-			this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent+ a.addOwnership(code.target(), function, stores)));
+			this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent+ a.addOwnership(code.target(0), function, stores)));
 		}
 		
 		stores.addAllStatements(code, statement, function);
@@ -1059,17 +1048,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Skip translation.
 		if (field.equals("out") || field.equals("print") || field.equals("println") || field.equals("print_s") || field.equals("println_s")) {
 			// Load the field to the target register.
-			stores.loadField(code.target(), field, function);
+			stores.loadField(code.target(0), field, function);
 		} else {
-			String lhs = stores.getVar(code.target(), function);
+			String lhs = stores.getVar(code.target(0), function);
 			String indent = stores.getIndent(function);
 			if (field.equals("args")) {
 				// Convert the arguments into an array of integer array (long long**).
 				statement.add(indent+"_CONV_ARGS("+lhs+");");
 				// Add ownership.
-				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + a.addOwnership(code.target(), function, stores)));
+				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + a.addOwnership(code.target(0), function, stores)));
 			} else {
-				Type lhs_type = stores.getRawType(code.target(), function);
+				Type lhs_type = stores.getRawType(code.target(0), function);
 				Type rhs_type = stores.getRawType(code.operand(0), function);
 				String rhs = stores.getVar(code.operand(0), function) + CodeGeneratorHelper.accessMember(rhs_type) + code.field;
 				// Free lhs variable
@@ -1079,7 +1068,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statement.addAll(CodeGeneratorHelper.generateAssignmentCode(lhs_type, indent, lhs, rhs, isCopyEliminated, stores));
 				if(!isCopyEliminated){
 					// Assign ownership to lhs variable if the rhs variable is copied.
-					this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + a.addOwnership(code.target(), function, stores)));
+					this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + a.addOwnership(code.target(0), function, stores)));
 				}
 			}
 		}
@@ -1130,7 +1119,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		CodeStore store = stores.getCodeStore(function);
 		List<String> statement = new ArrayList<String>();
 		String indent = store.getIndent();
-		if (code.type() instanceof Type.FunctionOrMethod) {
+		if (code.type(0) instanceof Type.FunctionOrMethod) {
 			// Get the function name, e.g. 'printf'.
 			String print_name = store.getField(code.operand(0));
 			// Get the input
@@ -1174,8 +1163,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 	protected void translate(UnaryOperator code, FunctionOrMethod function) {
 		CodeStore store = stores.getCodeStore(function);
-		String target = prefix + code.target();
-		String stat = store.getIndent() + target + "= -" + prefix + code.operand(0) + ";";
+		String stat = store.getIndent() + (prefix + code.target(0)) + "= -" + prefix + code.operand(0) + ";";
 		store.addStatement(code, stat);
 	}
 
@@ -1232,13 +1220,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(NewRecord code, FunctionOrMethod function) {
 		CodeStore store = stores.getCodeStore(function);
 		String indent = store.getIndent();
-		String lhs = store.getVar(code.target());
+		String lhs = store.getVar(code.target(0));
 		List<String> statement = new ArrayList<String>();
 		//Add deallocation code to lhs structure
-		this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, code.type(), stores)));
+		this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, code.type(0), stores)));
 		
 		// Assign lhs structure members with rhs member, e.g. 'a.pieces = copy(b, b_size);' 
-		List<String> members = stores.getMemebers(code.type());
+		List<String> members = stores.getMemebers(code.type(0));
 		
 		int[] operands = code.operands();
 		for(int i=0;i<operands.length; i++){
@@ -1246,8 +1234,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			int operand = operands[i];
 			String rhs = store.getVar(operand);
 			String member = members.get(i);
-			String lhs_member = lhs + CodeGeneratorHelper.accessMember(code.type()) + member;
-			Type type = code.type().field(member);
+			String lhs_member = lhs + CodeGeneratorHelper.accessMember(code.type(0)) + member;
+			Type type = code.type(0).field(member);
 			
 			//boolean isCopyEliminated = isCopyEliminated(operand, code, function);
 			boolean isCopyEliminated = false;
@@ -1256,7 +1244,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		
 		// Assign ownership to lhs
 		this.deallocatedAnalyzer.ifPresent(a ->
-				statement.add(indent + a.addOwnership(code.target(), function, stores)));
+				statement.add(indent + a.addOwnership(code.target(0), function, stores)));
 		
 		// Get the set of field names and convert it to an array of string.
 		store.addAllStatements(code, statement);
@@ -1317,7 +1305,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String statement = "";
 		// The ifis code checks if the register is NULL or not.
 		if (code.rightOperand instanceof Type.Null) {
-			String lhs = store.getVar(code.operand);
+			String lhs = store.getVar(code.operand(0));
 			String indent = store.getIndent();
 			statement = indent + "if(" + lhs + " == NULL) { goto " + code.target+ ";}";
 		} else {
@@ -1345,12 +1333,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	@Override
 	protected void translate(Dereference code, FunctionOrMethod function) {
 		CodeStore store = stores.getCodeStore(function);
-		String statement = store.getIndent() + store.getVar(code.target()) + " = *(" + store.getVar(code.operand(0))
-		+ ");";
+		String statement = store.getIndent() + store.getVar(code.target(0)) + " = *(" + store.getVar(code.operand(0))+ ");";
 		// Check if the value in the rhs register is an array.
-		if (code.type().element() instanceof Type.Array) {
+		if (code.type(0).element() instanceof Type.Array) {
 			// Assign the array size to lhs register
-			statement += "\n" + store.getIndent() + store.getVar(code.target()) + "_size = "
+			statement += "\n" + store.getIndent() + store.getVar(code.target(0)) + "_size = "
 					+ store.getVar(code.operand(0)) + "_size;";
 		}
 		store.addStatement(code, statement);
@@ -1375,7 +1362,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		CodeStore store = stores.getCodeStore(function);
 		String statement = "";
 		// Check that the given value is an array.
-		if (code.type().element() instanceof Type.Array) {
+		if (code.type(0).element() instanceof Type.Array) {
 			throw new RuntimeException("Not implemented! " + code);
 		}
 		store.addStatement(code, statement);
@@ -1401,23 +1388,23 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 *  Creates a 2D array ( _11*_10_size) with initial '_10' value.
 	 */
 	@Override
-	protected void translate(ListGenerator code, FunctionOrMethod function) {
+	protected void translate(ArrayGenerator code, FunctionOrMethod function) {
 		CodeStore store = stores.getCodeStore(function);
 		String indent = store.getIndent();
-		String lhs = store.getVar(code.target());
-		Type lhs_type = store.getRawType(code.target());
+		String lhs = store.getVar(code.target(0));
+		Type lhs_type = store.getRawType(code.target(0));
 		String rhs = store.getVar(code.operand(0));
 		String size = store.getVar(code.operand(1));
 		List<String> statement = new ArrayList<String>();
 		int dimension = stores.getArrayDimension(lhs_type);
 		
 		// Deallocate lhs variable
-		this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, code.type(), stores)));
+		this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, code.type(0), stores)));
 		// Generate the array with size and values.
 		statement.add(indent+"_GEN_"+dimension+"DARRAY("+lhs+", "+size+", "+rhs+");");
 		// Assign ownership to lhs variable.
 		this.deallocatedAnalyzer.ifPresent(a -> statement.add(
-					indent + a.addOwnership(code.target(), function, stores)));
+					indent + a.addOwnership(code.target(0), function, stores)));
 		
 		store.addAllStatements(code, statement);
 	}

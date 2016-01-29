@@ -412,22 +412,22 @@ public abstract class Analyzer {
 		// Create an negated condition.
 		switch (code.op) {
 		case EQ:
-			neg_code = Codes.If(code.type, code.leftOperand, code.rightOperand, Comparator.NEQ, code.target);
+			neg_code = Codes.If(code.type(0), code.operand(0), code.operand(1), Comparator.NEQ, code.target);
 			break;
 		case NEQ:
-			neg_code = Codes.If(code.type, code.leftOperand, code.rightOperand, Comparator.EQ, code.target);
+			neg_code = Codes.If(code.type(0), code.operand(0), code.operand(1), Comparator.EQ, code.target);
 			break;
 		case LT:
-			neg_code = Codes.If(code.type, code.leftOperand, code.rightOperand, Comparator.GTEQ, code.target);
+			neg_code = Codes.If(code.type(0), code.operand(0), code.operand(1), Comparator.GTEQ, code.target);
 			break;
 		case LTEQ:
-			neg_code = Codes.If(code.type, code.leftOperand, code.rightOperand, Comparator.GT, code.target);
+			neg_code = Codes.If(code.type(0), code.operand(0), code.operand(1), Comparator.GT, code.target);
 			break;
 		case GT:
-			neg_code = Codes.If(code.type, code.leftOperand, code.rightOperand, Comparator.LTEQ, code.target);
+			neg_code = Codes.If(code.type(0), code.operand(0), code.operand(1), Comparator.LTEQ, code.target);
 			break;
 		case GTEQ:
-			neg_code = Codes.If(code.type, code.leftOperand, code.rightOperand, Comparator.LT, code.target);
+			neg_code = Codes.If(code.type(0), code.operand(0), code.operand(1), Comparator.LT, code.target);
 			break;
 		default:
 			throw new RuntimeException("Unknown comparator.");
@@ -465,9 +465,9 @@ public abstract class Analyzer {
 		CFGraph graph = getCFGraph(function);
 		BasicBlock blk = graph.getCurrentBlock();
 		// Check if there is any return value. If no, no needs of making a "Return" block.
-		if (code.operand >= 0) {
+		if (code.operands().length > 0) {
 			// Create the return block, using target as the label.
-			blk = graph.createBasicBlock(this.getActualVarName(code.operand, function), BlockType.RETURN, blk);
+			blk = graph.createBasicBlock(this.getActualVarName(code.operand(0), function), BlockType.RETURN, blk);
 			// Add the code to current block.
 			blk.addCode(code);
 			// Set current block.
@@ -517,8 +517,8 @@ public abstract class Analyzer {
 		for (Code code : f.body().bytecodes()) {
 			if(code instanceof Codes.Return){
 				Codes.Return r = (Codes.Return)code;
-				if(r.operand>=0){
-					String ret = getActualVarName(r.operand, f);
+				if(r.operands().length>0){
+					String ret = getActualVarName(r.operand(0), f);
 					if(ret.equals(var)){
 						return true;
 					}
@@ -543,7 +543,7 @@ public abstract class Analyzer {
 		for (Code code : f.body().bytecodes()) {
 			// Check the array is updated.
 			if (code instanceof Codes.Update) {
-				String target = getActualVarName(((Codes.Update) code).target(), f);
+				String target = getActualVarName(((Codes.Update) code).target(0), f);
 				if (target.equals(var)) {
 					return true;// Modified Array.
 				}
@@ -560,7 +560,7 @@ public abstract class Analyzer {
 	 * @return
 	 */
 	protected String mapToFunctionParameters(int register, Codes.Invoke code){
-		FunctionOrMethod invoked_function = this.getFunction(code.name.name(), code.type());
+		FunctionOrMethod invoked_function = this.getFunction(code.name.name(), code.type(0));
 		if (invoked_function != null) {
 			// Map the register to input parameter.
 			int parameter=0;

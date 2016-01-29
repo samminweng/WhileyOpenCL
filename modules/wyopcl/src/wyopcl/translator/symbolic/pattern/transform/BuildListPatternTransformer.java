@@ -150,7 +150,7 @@ public class BuildListPatternTransformer extends Transformer {
 	 */
 	private void init(List<Code> blk, BuildListPattern p) {
 		Codes.Assign assign = (Codes.Assign) (p.getPartByName("init")).get(0);
-		this.reg_loop_var = assign.target();
+		this.reg_loop_var = assign.target(0);
 		blk.add(assign);
 	}
 
@@ -291,7 +291,7 @@ public class BuildListPatternTransformer extends Transformer {
 				int[] indexOp = new int[1];
 				indexOp[0] = this.reg_list_size;
 				// Add the update byte-code
-				Codes.Update update = Codes.Update(Type.Array(Type.Int.T_INT, false), this.reg_list, indexOp, indexof.target(),
+				Codes.Update update = Codes.Update(Type.Array(Type.Int.T_INT, false), this.reg_list, indexOp, indexof.target(0),
 						Type.Array(Type.Int.T_INT, false), new ArrayList<String>());
 				loop_blk.add(update);
 				// Stop adding the code.

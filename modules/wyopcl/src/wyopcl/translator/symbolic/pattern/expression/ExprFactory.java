@@ -63,7 +63,7 @@ public class ExprFactory {
 	private Expr createExpr(Code code) {
 		Expr expr = null;
 		if (code instanceof Codes.Assign) {
-			expr = new LinearExpr(prefix + ((Codes.Assign) code).target());
+			expr = new LinearExpr(prefix + ((Codes.Assign) code).target(0));
 			Codes.Assign assign = (Codes.Assign) code;
 			// 1*v1
 			((LinearExpr) expr).addVar(BigInteger.ONE, prefix + assign.operand(0));
@@ -73,20 +73,20 @@ public class ExprFactory {
 				expr = new LinearExpr(prefix + ((Codes.Const) code).target());
 				// c0
 				((LinearExpr) expr).addConstant(((Constant.Integer) constant.constant).value);
-			} else if (constant.constant instanceof Constant.List) {
-				expr = new Expr(prefix + ((Codes.Const) code).target(), code);
+			} else {
+				throw new RuntimeException("Not implemented");
 			}
 		} else if (code instanceof Codes.BinaryOperator) {
 			Codes.BinaryOperator binOp = (Codes.BinaryOperator) code;
 			switch (binOp.kind) {
 			case ADD:
-				expr = new LinearExpr(prefix + ((Codes.BinaryOperator) code).target());
+				expr = new LinearExpr(prefix + ((Codes.BinaryOperator) code).target(0));
 				// v1+v2
 				((LinearExpr) expr).addVar(BigInteger.ONE, prefix + binOp.operand(0));
 				((LinearExpr) expr).addVar(BigInteger.ONE, prefix + binOp.operand(1));
 				break;
 			case SUB:
-				expr = new LinearExpr(prefix + ((Codes.BinaryOperator) code).target());
+				expr = new LinearExpr(prefix + ((Codes.BinaryOperator) code).target(0));
 				// v1-v2
 				((LinearExpr) expr).addVar(BigInteger.ONE, prefix + binOp.operand(0));
 				((LinearExpr) expr).addVar(BigInteger.ONE.negate(), prefix + binOp.operand(1));// -1*v2
@@ -100,18 +100,14 @@ public class ExprFactory {
 				throw new RuntimeException(binOp.kind + "Not implemented");
 			}
 		} else if (code instanceof Codes.LengthOf) {
-			expr = new LinearExpr(prefix + ((Codes.LengthOf) code).target());
+			expr = new LinearExpr(prefix + ((Codes.LengthOf) code).target(0));
 			Codes.LengthOf lengthOf = (Codes.LengthOf) code;
 			((LinearExpr) expr).addVar(BigInteger.ONE, "|" + prefix + lengthOf.operand(0) + "|");
 		} else if (code instanceof Codes.IndexOf) {
 			Codes.IndexOf indexof = (Codes.IndexOf) code;
-			expr = new Expr(prefix + indexof.target(), code);
-		} else if (code instanceof Codes.NewList) {
-			Codes.NewList newlist = (Codes.NewList) code;
-			// Create the empty list, i.e. ()
-			expr = new LinearExpr(prefix + newlist.target());
-			// Add the
-			((LinearExpr) expr).addVar(BigInteger.ONE, "()");
+			expr = new Expr(prefix + indexof.target(0), code);
+		} else  {
+			throw new RuntimeException("Not implemented");
 		}
 		return expr;
 	}

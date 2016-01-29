@@ -2,19 +2,27 @@
 	<import file="config.xml" />
 
 	<!-- ============================================== -->
-	<!-- Build Commands -->
+	<!-- Configuration -->
 	<!-- ============================================== -->
 
+	<!-- The set of build files in the order they should be built. -->
+	<filelist id="module.build.files" dir="modules">
+		<file name="wybs/build.xml"/>
+		<file name="wycs/build.xml"/>
+		<file name="wyil/build.xml"/>
+		<file name="wyc/build.xml"/>
+		<file name="wyrt/build.xml"/>
+		<file name="wyjc/build.xml"/>
+		<!--wyopcl-->
+		<file name="wyopcl/build.xml"/>
+	</filelist>
+
+	<!-- ============================================== -->
+	<!-- Build Commands -->
+	<!-- ============================================== -->
 	<target name="build-all">
 		<subant failonerror="true" target="build">
-			<fileset dir="modules" includes="wybs/build.xml"/>
-			<fileset dir="modules" includes="wycs/build.xml"/>
-			<fileset dir="modules" includes="wyil/build.xml"/>
-			<fileset dir="modules" includes="wyc/build.xml"/>
-			<fileset dir="modules" includes="wyrt/build.xml"/>
-			<fileset dir="modules" includes="wyjc/build.xml"/>
-			<!--wyopcl-->
-			<fileset dir="modules" includes="wyopcl/build.xml" />
+			<filelist refid="module.build.files"/>
 		</subant>
 	</target>
 
@@ -60,174 +68,174 @@
 				<include name="wycc/**"/>
 				<exclude name="wycc/testing/**"/>
       		</packageset>
-  			-->
-			<group title="Whiley Build System (WYBS)" packages="wybs:wyfs.*:wybs.*:wycc.*"/>
-			<group title="Whiley Compiler (WYC)" packages="wyc:wyc.*"/>
-			<group title="Whiley Intermediate Language (WYIL)" packages="wyil:wyil.*"/>
-			<group title="Whiley-2-Java Compiler (WYJC)" packages="wyjc:wyjc.*:wyjvm.*"/>
-			<!--<group title="Whiley-2-C Compiler (WYCC)" packages="wycc:wycc.*"/>-->
-			<group title="Whiley Constraint Solver (WYCS)" packages="wycs:wycs.*"/>
-			<!-- wyopcl -->
-			<group title="Whiley-2-OpenCL (WyOpCL)" packages="wyopcl:wyopcl.*" />
-		</javadoc>
-	</target>
+      	-->
+      	<group title="Whiley Build System (WYBS)" packages="wybs:wyfs.*:wybs.*:wycc.*"/>
+      	<group title="Whiley Compiler (WYC)" packages="wyc:wyc.*"/>
+      	<group title="Whiley Intermediate Language (WYIL)" packages="wyil:wyil.*"/>
+      	<group title="Whiley-2-Java Compiler (WYJC)" packages="wyjc:wyjc.*:wyjvm.*"/>
+      	<!--<group title="Whiley-2-C Compiler (WYCC)" packages="wycc:wycc.*"/>-->
+      	<group title="Whiley Constraint Solver (WYCS)" packages="wycs:wycs.*"/>
+      	<!-- wyopcl -->
+      	<group title="Whiley-2-OpenCL (WyOpCL)" packages="wyopcl:wyopcl.*" />
+      </javadoc>
+  </target>
 
- 	<!-- ============================================== -->
-  	<!-- Distribution -->
-  	<!-- ============================================== -->
+  <!-- ============================================== -->
+  <!-- Distribution -->
+  <!-- ============================================== -->
+  <target name="distjars" depends="build-all">
+  	<subant failonerror="false" target="dist">
+  		<filelist refid="module.build.files"/>
+  	</subant>
+  </target>
 
-  	<target name="distjars" depends="build-all">
-  		<subant failonerror="false" target="dist">
-	  		<fileset dir="modules" includes="wybs/build.xml"/>
-	  		<fileset dir="modules" includes="wycs/build.xml"/>
-	  		<fileset dir="modules" includes="wyil/build.xml"/>
-	  		<fileset dir="modules" includes="wyc/build.xml"/>
-	  		<fileset dir="modules" includes="wyrt/build.xml"/>
-	  		<fileset dir="modules" includes="wyjc/build.xml"/>
-	  		<!--wyopcl-->
-	  		<fileset dir="modules" includes="wyopcl/build.xml" />
-  		</subant>
-  	</target>
+  <target name="distsrc" depends="build-all">
+  	<mkdir dir="wdk-v${version}"/>
+  	<copy todir="wdk-v${version}">
+  		<fileset dir=".">
+  			<include name="LICENSE"/>
+  			<include name="README"/>
+  			<include name="CONTRIBUTORS"/>
+  			<include name="build.xml"/>
+  			<include name="config.xml"/>
+  			<include name="modules/**/*.java"/>
+  			<include name="modules/**/*.whiley"/>
+  			<include name="modules/**/*.wyrl"/>
+  			<include name="modules/**/*.wycs"/>
+  			<include name="modules/**/*.xml"/>
+  			<include name="examples/**/*.whiley"/>
+  			<include name="tests/**/*.whiley"/>
+  			<include name="tests/**/*.sysout"/>
+  			<include name="bin/wyilc"/>
+  			<include name="bin/wyc"/>
+  			<include name="bin/wyjc"/>
+  			<include name="bin/wyj"/>
+  			<include name="bin/wycc"/>
+  			<include name="bin/wycs"/>
+  			<include name="bin/wy_common.bash"/>
+  			<include name="lib/*-v${version}.jar"/>
+  			<include name="lib/wyrl-v*.jar"/>
+  			<include name="lib/jasm-v*.jar"/>
+  			<include name="lib/maven-ant-tasks*.jar"/>
+  			<!-- wyopcl -->
+  			<include name="bin/wyopcl" />      
+  		</fileset>
+  	</copy>
+  	<tar destfile="dist/wdk-src-v${version}.tar" longfile="gnu">
+  		<tarfileset dir="." includes="wdk-v${version}/**/*"/>
+  		<tarfileset dir="." filemode="755">
+  			<include name="wdk-v${version}/bin/*"/>
+  		</tarfileset>
+  	</tar>
+  	<gzip destfile="dist/wdk-src-v${version}.tgz" src="dist/wdk-src-v${version}.tar"/>
+  	<delete file="dist/wdk-src-v${version}.tar"/>
+  	<delete dir="wdk-v${version}"/>
+  	<echo message="============================================="/>
+  	<echo message="BUILT: dist/wdk-src-v${version}.tgz"/>
+  	<echo message="============================================="/>
+  </target>
 
-  	<target name="distsrc" depends="build-all">
-  		<mkdir dir="wdk-v${version}"/>
-  		<copy todir="wdk-v${version}">
-  			<fileset dir=".">
-  				<include name="LICENSE"/>
-  				<include name="README"/>
-  				<include name="CONTRIBUTORS"/>
-  				<include name="build.xml"/>
-  				<include name="config.xml"/>
-  				<include name="modules/**/*.java"/>
-  				<include name="modules/**/*.whiley"/>
-  				<include name="modules/**/*.wyrl"/>
-  				<include name="modules/**/*.wycs"/>
-  				<include name="modules/**/*.xml"/>
-  				<include name="examples/**/*.whiley"/>
-  				<include name="tests/**/*.whiley"/>
-  				<include name="tests/**/*.sysout"/>
-  				<include name="bin/wyilc"/>
-  				<include name="bin/wyc"/>
-  				<include name="bin/wyjc"/>
-  				<include name="bin/wyj"/>
-  				<include name="bin/wycc"/>
-  				<include name="bin/wycs"/>
-  				<include name="bin/wy_common.bash"/>
-  				<include name="lib/*-v${version}.jar"/>
-  				<include name="lib/wyrl-v*.jar"/>
-  				<include name="lib/jasm-v*.jar"/>
-  				<!-- wyopcl -->
-  				<include name="bin/wyopcl" />
+  <target name="dist" depends="distsrc,distjars">
+  </target>
+
+  <!-- ============================================== -->
+  <!-- Misc Commands -->
+  <!-- ============================================== -->
+
+  <target name="clean">
+  	<subant failonerror="false" target="clean">
+  		<fileset dir="modules" includes="*/build.xml"/>
+  	</subant>
+  	<delete includeEmptyDirs="true" failonerror="false">
+  		<fileset file="*~"/>
+  		<fileset dir="dist"/>
+  		<fileset dir="docs"/>
+  		<fileset dir="tests">
+  			<include name="**/*.class"/>
+  			<include name="**/*.wyil"/>
+  			<include name="**/*.o"/>
+  		</fileset>
+  		<!--wyopcl-->
+  		<fileset dir="build" />
+  		<fileset dir="report" />
+  	</delete>
+  </target>
+
+  <target name="test-all" depends="build-all">
+    <subant failonerror="true" target="test">
+      <filelist refid="module.build.files"/>
+    </subant>
+  </target>
+
+
+  <!-- ============================================== -->
+  <!-- Special Commands for Whiley2OpenCL project     -->
+  <!-- ============================================== -->
+  <!-- Class path for Junit -->
+  <path id="junit-classpath">
+  	<fileset dir="lib">
+  		<include name="*.jar" />
+  	</fileset>
+  	<pathelement path="build" />
+  </path>
+  <!-- Test the bound analyzer with test cases.-->
+  <target name="test-bound" depends="clean, build-all">
+  	<mkdir dir="report/bound" />
+  	<junit fork="yes" dir=".">
+  		<formatter type="plain" usefile="false" />
+  		<classpath refid="junit-classpath" />
+  		<formatter type="xml" />
+  		<batchtest todir="report/bound">
+  			<fileset dir="modules/wyopcl/test">
+  				<include name="**/BoundAnalysisTestCase*" />
   			</fileset>
-  		</copy>
-  		<tar destfile="dist/wdk-src-v${version}.tar" longfile="gnu">
-  			<tarfileset dir="." includes="wdk-v${version}/**/*"/>
-  			<tarfileset dir="." filemode="755">
-  				<include name="wdk-v${version}/bin/*"/>
-  			</tarfileset>
-  		</tar>
-  		<gzip destfile="dist/wdk-src-v${version}.tgz" src="dist/wdk-src-v${version}.tar"/>
-  		<delete file="dist/wdk-src-v${version}.tar"/>
-  		<delete dir="wdk-v${version}"/>
-  		<echo message="============================================="/>
-  		<echo message="BUILT: dist/wdk-src-v${version}.tgz"/>
-  		<echo message="============================================="/>
-  	</target>
-
-	<target name="dist" depends="distsrc,distjars">
-	</target>
-
-	<!-- ============================================== -->
-	<!-- Misc Commands -->
-	<!-- ============================================== -->
-
-	<target name="clean">
-		<subant failonerror="false" target="clean">
-			<fileset dir="modules" includes="*/build.xml"/>
-		</subant>
-		<delete includeEmptyDirs="true" failonerror="false">
-			<fileset file="*~"/>
-			<fileset dir="dist"/>
-			<fileset dir="docs"/>
-			<fileset dir="tests">
-				<include name="**/*.class"/>
-				<include name="**/*.wyil"/>
-				<include name="**/*.o"/>
-			</fileset>
-			<!--wyopcl-->
-			<fileset dir="build" />
-			<fileset dir="report" />
-		</delete>
-	</target>
-
-	<!-- ============================================== -->
-	<!-- Special Commands for Whiley2OpenCL project     -->
-	<!-- ============================================== -->
-	<!-- Class path for Junit -->
-	<path id="junit-classpath">
-		<fileset dir="lib">
-			<include name="*.jar" />
-		</fileset>
-		<pathelement path="build" />
-	</path>
-	<!-- Test the bound analyzer with test cases.-->
-	<target name="test-bound" depends="clean, build-all">
-		<mkdir dir="report/bound" />
-		<junit fork="yes" dir=".">
-			<formatter type="plain" usefile="false" />
-			<classpath refid="junit-classpath" />
-			<formatter type="xml" />
-			<batchtest todir="report/bound">
-				<fileset dir="modules/wyopcl/test">
-					<include name="**/BoundAnalysisTestCase*" />
-				</fileset>
-			</batchtest>
-		</junit>
-		<junitreport todir="report">
-			<fileset dir="report/bound">
-				<include name="TEST-*.xml" />
-			</fileset>
-			<report todir="report/bound" />
-		</junitreport>
-	</target>
-	<!-- Test the bound analyzer with test cases.-->
-	<target name="test-pattern" depends="clean, build-all">
-		<mkdir dir="report/pattern" />
-		<junit fork="yes" dir=".">
-			<formatter type="plain" usefile="false" />
-			<classpath refid="junit-classpath" />
-			<formatter type="xml" />
-			<batchtest todir="report/pattern">
-				<fileset dir="modules/wyopcl/test">
-					<include name="**/PatternMatchingTestCase*" />
-				</fileset>
-			</batchtest>
-		</junit>
-		<junitreport todir="report">
-			<fileset dir="report/pattern">
-				<include name="TEST-*.xml" />
-			</fileset>
-			<report todir="report/pattern" />
-		</junitreport>
-	</target>
-	<!--Test the code generator with test cases.-->
-	<target name="test-code" depends="clean, build-all">
-		<mkdir dir="report/code"/>
-		<junit fork="yes" dir=".">
-			<formatter type="plain" usefile="false" />
-			<classpath refid="junit-classpath"/>
-			<formatter type="xml" />
-			<batchtest todir="report/code">
-				<fileset dir="modules/wyopcl/test">
-					<include name="**/CodeGenerationTestCase*" />
-				</fileset>
-			</batchtest>
-		</junit>
-		<junitreport todir="report">
-			<fileset dir="report/code">
-				<include name="TEST-*.xml" />
-			</fileset>
-			<report todir="report/code" />
-		</junitreport>
-	</target>
+  		</batchtest>
+  	</junit>
+  	<junitreport todir="report">
+  		<fileset dir="report/bound">
+  			<include name="TEST-*.xml" />
+  		</fileset>
+  		<report todir="report/bound" />
+  	</junitreport>
+  </target>
+  <!-- Test the bound analyzer with test cases.-->
+  <target name="test-pattern" depends="clean, build-all">
+  	<mkdir dir="report/pattern" />
+  	<junit fork="yes" dir=".">
+  		<formatter type="plain" usefile="false" />
+  		<classpath refid="junit-classpath" />
+  		<formatter type="xml" />
+  		<batchtest todir="report/pattern">
+  			<fileset dir="modules/wyopcl/test">
+  				<include name="**/PatternMatchingTestCase*" />
+  			</fileset>
+  		</batchtest>
+  	</junit>
+  	<junitreport todir="report">
+  		<fileset dir="report/pattern">
+  			<include name="TEST-*.xml" />
+  		</fileset>
+  		<report todir="report/pattern" />
+  	</junitreport>
+  </target>
+  <!--Test the code generator with test cases.-->
+  <target name="test-code" depends="clean, build-all">
+  	<mkdir dir="report/code"/>
+  	<junit fork="yes" dir=".">
+  		<formatter type="plain" usefile="false" />
+  		<classpath refid="junit-classpath"/>
+  		<formatter type="xml" />
+  		<batchtest todir="report/code">
+  			<fileset dir="modules/wyopcl/test">
+  				<include name="**/CodeGenerationTestCase*" />
+  			</fileset>
+  		</batchtest>
+  	</junit>
+  	<junitreport todir="report">
+  		<fileset dir="report/code">
+  			<include name="TEST-*.xml" />
+  		</fileset>
+  		<report todir="report/code" />
+  	</junitreport>
+  </target>
 </project>

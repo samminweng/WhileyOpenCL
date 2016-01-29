@@ -48,9 +48,9 @@ public class DeallocationAnalyzer extends Analyzer {
 		// Get all registers
 		List<Integer> registers = stores.getAllVars(function);
 		
-		if(code.operand>=0){
+		if(code.operands().length >0){
 			// Transfer out the return value's register
-			registers.remove(registers.indexOf(code.operand));
+			registers.remove(registers.indexOf(code.operand(0)));
 		}
 		
 		
@@ -81,7 +81,7 @@ public class DeallocationAnalyzer extends Analyzer {
 		if(code instanceof Codes.Assign){			
 			Codes.Assign assign = (Codes.Assign)code;
 			// Add lhs to ownership set
-			statements.add(indent + addOwnership(assign.target(), function, stores));
+			statements.add(indent + addOwnership(assign.target(0), function, stores));
 			if(isCopyEliminated){
 				// Transfer out rhs ownership set
 				statements.add(indent + transferOwnership(assign.operand(0), function, stores));
@@ -168,7 +168,7 @@ public class DeallocationAnalyzer extends Analyzer {
 		}
 		
 		String var = this.mapToFunctionParameters(register, code);
-		FunctionOrMethod f = this.getFunction(code.name.name(), code.type());
+		FunctionOrMethod f = this.getFunction(code.name.name(), code.type(0));
 		boolean isMutated = this.isMutated(var, f);
 		boolean isReturned = this.isReturned(var, f);
 		

@@ -98,12 +98,6 @@ public final class TranslatorHelper {
 			return isIntType(((Type.Array) type).element());
 		}
 
-		if (type instanceof Type.Tuple) {
-			// Check the type of value field.
-			Type element = ((Type.Tuple) type).element(1);
-			return isIntType(element);
-		}
-
 		return false;
 	}
 	

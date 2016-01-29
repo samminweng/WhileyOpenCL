@@ -91,7 +91,7 @@ public final class BuildListFirstPattern extends WhileLoopPattern {
 			if (!isInvariant(code)) {
 				// check if the loop variable is used in the assignment for
 				// while loop pattern
-				if (code instanceof Codes.Assign && var.equals(prefix + ((Codes.Assign) code).target())) {
+				if (code instanceof Codes.Assign && var.equals(prefix + ((Codes.Assign) code).target(0))) {
 					// Add the code to the 'init' part
 					AddCodeToPatternPart(code, "init");
 					break;
@@ -112,10 +112,10 @@ public final class BuildListFirstPattern extends WhileLoopPattern {
 				// Search for the initial assignment for the array and array
 				// size.
 				// Check if the right operand is list var.
-				if (this.list_var != null && this.list_var.equals(prefix + assign.target())) {
+				if (this.list_var != null && this.list_var.equals(prefix + assign.target(0))) {
 					// Add the code to the 'list_init' part
 					AddCodeToPatternPart(code, "list_init");
-				} else if (this.list_size != null && this.list_size.equals(prefix + assign.target())) {
+				} else if (this.list_size != null && this.list_size.equals(prefix + assign.target(0))) {
 					// Add the code to the 'list_size_init' part
 					AddCodeToPatternPart(code, "list_size_init");
 				} else {
@@ -172,7 +172,7 @@ public final class BuildListFirstPattern extends WhileLoopPattern {
 				// value of loop variable.
 				Codes.Assign assign = (Codes.Assign) code;
 				// Check if the target is the loop variable.
-				if ((prefix + assign.target()).equals(loop_var)) {
+				if ((prefix + assign.target(0)).equals(loop_var)) {
 					// Get the increment and decrement.
 					incr = factory.extractIncrement(assign, loop_var);
 					decr = factory.extractDecrement(assign, loop_var);
@@ -192,7 +192,7 @@ public final class BuildListFirstPattern extends WhileLoopPattern {
 			AddCodeToPatternPart(code, "list_update");
 			if (code instanceof Codes.Update) {
 				Codes.Update update = (Codes.Update) code;
-				if (this.list_var != null && this.list_var.equals(prefix + update.target())) {
+				if (this.list_var != null && this.list_var.equals(prefix + update.target(0))) {
 					this.list_update = factory.getExpr(prefix + update.operand(0));
 					++index;
 					break;
@@ -208,7 +208,7 @@ public final class BuildListFirstPattern extends WhileLoopPattern {
 			// Check if the code initializes the list.
 			if (code instanceof Codes.Assign) {
 				Codes.Assign assign = (Codes.Assign) code;
-				if (this.list_size != null && this.list_size.equals(prefix + assign.target())) {		
+				if (this.list_size != null && this.list_size.equals(prefix + assign.target(0))) {		
 					this.list_size_update = factory.getExpr(prefix + assign.operand(0));
 					++index;
 					break;
@@ -249,10 +249,10 @@ public final class BuildListFirstPattern extends WhileLoopPattern {
 							//Check if the comparator operand is EQ
 							if(if_code.op.equals(Comparator.EQ)){
 								//Check if list_size is left or right operand.
-								if(this.list_size.equals(prefix+if_code.leftOperand)){
-									this.list_capacity = prefix+if_code.rightOperand;
-								}else if(this.list_size.equals(prefix+if_code.rightOperand)){
-									this.list_capacity = prefix+if_code.leftOperand;
+								if(this.list_size.equals(prefix+if_code.operand(0))){
+									this.list_capacity = prefix+if_code.operand(1);
+								}else if(this.list_size.equals(prefix+if_code.operand(1))){
+									this.list_capacity = prefix+if_code.operand(0);
 								}
 							}							
 						}

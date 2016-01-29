@@ -188,12 +188,6 @@ public class CodeStores {
 			return isIntType(((Type.Array) type).element());
 		}
 
-		if (type instanceof Type.Tuple) {
-			// Check the type of value field.
-			Type element = ((Type.Tuple) type).element(1);
-			return isIntType(element);
-		}
-
 		if(type instanceof Type.Union){
 			// Check if the union type contains INT type.
 			if(((Type.Union)type).bounds().contains(Type.Int.T_INT)){

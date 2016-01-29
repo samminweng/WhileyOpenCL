@@ -178,7 +178,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 			boolean isReturned = false;
 			if (code instanceof Codes.Invoke) {
 				Codes.Invoke invoked = (Codes.Invoke)code;
-				FunctionOrMethod invoked_function = this.getFunction(invoked.name.name(), invoked.type());
+				FunctionOrMethod invoked_function = this.getFunction(invoked.name.name(), invoked.type(0));
 				if (invoked_function != null) {
 					// Map the register to input parameter.
 					int parameter=0;
@@ -211,7 +211,7 @@ public class CopyEliminationAnalyzer extends Analyzer {
 				}
 			}else if(code instanceof Codes.FieldLoad){
 				Codes.FieldLoad fieldload = (Codes.FieldLoad)code;
-				String lhs = getActualVarName(fieldload.target(), f);
+				String lhs = getActualVarName(fieldload.target(0), f);
 				// Check if the lhs is modified in 'f' funciton
 				isReadOnly = !isMutated(lhs, f);
 				return isReadOnly;

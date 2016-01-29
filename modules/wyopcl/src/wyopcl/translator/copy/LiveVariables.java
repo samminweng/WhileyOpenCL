@@ -43,8 +43,8 @@ public class LiveVariables {
 			if (block.getType().equals(BlockType.RETURN)) {
 				Codes.Return code = (Return) block.getCodeBlock().get(0);
 				// Add the return register to both in/out set.
-				in.add(code.operand);
-				out.add(code.operand);
+				in.add(code.operand(0));
+				out.add(code.operand(0));
 			}
 			inSet.put(block, in);
 			outSet.put(block, out);

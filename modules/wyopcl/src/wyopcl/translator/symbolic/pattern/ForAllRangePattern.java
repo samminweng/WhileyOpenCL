@@ -162,7 +162,7 @@ public class ForAllRangePattern extends LoopPattern {
 			if (!isInvariant(code)) {
 				// check if the loop variable is used in the assignment for
 				// while loop pattern
-				if(code instanceof Codes.BinaryOperator && var.equals(prefix+((Codes.BinaryOperator)code).target())){
+				if(code instanceof Codes.BinaryOperator && var.equals(prefix+((Codes.BinaryOperator)code).target(0))){
 					// Add the code to the 'init' part
 					AddCodeToPatternPart(code, "init");
 					break;
