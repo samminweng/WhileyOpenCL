@@ -165,8 +165,16 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			declaration = "int main(int argc, char** args)";
 		} else {
 			// Translate function declaration in C
-			Type return_type = function.type().returns().get(0);
-			declaration += CodeGeneratorHelper.translateType(return_type, stores) + " " + function.name() + "(";
+			if(function.type().returns().size()>0){
+				// Translate return type
+				declaration += CodeGeneratorHelper.translateType(function.type().returns().get(0), stores);
+			}else{
+				// no return values
+				declaration += "void";
+			}
+			// Function names
+			declaration += " " + function.name() + "(";
+			
 			List<Type> params = function.type().params();
 			// Generate input parameters separated by comma
 			List<String> parameters = new ArrayList<String>();

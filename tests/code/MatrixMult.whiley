@@ -23,11 +23,11 @@ import whiley.io.File
 
 type nat is (int x) where x >= 0
 
-type Matrix is {
+type Matrix is ({
     int width,
     int height,
     int[][] data
-} where |data| == height && no { i in 0..height | |data[i]| != width }
+} this) where |this.data| == this.height && no { i in 0..this.height | |this.data[i]| != this.width }
 
 function matrix(nat width, nat height, int[][] data) -> (Matrix r)
 // Input array must match matrix height
