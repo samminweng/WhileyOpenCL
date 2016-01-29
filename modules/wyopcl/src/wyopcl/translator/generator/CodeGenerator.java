@@ -165,15 +165,14 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			declaration = "int main(int argc, char** args)";
 		} else {
 			// Translate function declaration in C
-			// Get the code storage
-			CodeStore store = stores.getCodeStore(function);
-			declaration += CodeGeneratorHelper.translateType(function.type(), stores) + " " + function.name() + "(";
+			Type return_type = function.type().returns().get(0);
+			declaration += CodeGeneratorHelper.translateType(return_type, stores) + " " + function.name() + "(";
 			List<Type> params = function.type().params();
 			// Generate input parameters separated by comma
 			List<String> parameters = new ArrayList<String>();
 			for (int op=0;op<params.size();op++) {
 				Type type = params.get(op);
-				String var = store.getVar(op);
+				String var = stores.getVar(op, function);
 				if(type instanceof Type.Array){
 					// Add extra 'size' variable for array variable
 					int dimension = stores.getArrayDimension(type);
