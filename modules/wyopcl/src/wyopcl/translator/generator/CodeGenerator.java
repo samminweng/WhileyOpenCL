@@ -421,28 +421,25 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * Translate the lhs of a function call.
 	 * 
 	 * @param code
-	 * @param f
+	 * @param function
 	 * @return
 	 */
-	private String translateLHSFunctionCall(Codes.Invoke code, FunctionOrMethod f) {
-		CodeStore store = stores.getCodeStore(f);
-		String indent = store.getIndent();
-		
+	private String translateLHSFunctionCall(Codes.Invoke code, FunctionOrMethod function) {
+		String indent = stores.getIndent(function);
 		String statement = "";
 		// Translate the return value of a function call.
 		// If no return value, no needs for translation.
 		if (code.target(0) >= 0) {
-			Type lhs_type = code.type(0);
-			String lhs = store.getVar(code.target(0));
+			Type lhs_type = stores.getRawType(code.target(0), function);
+			String lhs = stores.getVar(code.target(0), function);
 			if (lhs_type instanceof Type.Array) {
 				// Get input Array
-				for (int index = 0; index < code.operands().length; index++) {
-					Type type = code.type(0).params().get(index);
+				for (int operand: code.operands()) {
+					Type type = stores.getRawType(operand, function);
 					if (type instanceof Type.Array) {
-						String param = store.getVar(code.operand(index));
-						int dimension = stores.getArrayDimension(type);
+						String param = stores.getVar(operand, function);
 						// Propagate array sizes from input parameters.
-						statement += indent+"_"+dimension+"DARRAY_SIZE("+lhs+", "+param+");\n";
+						statement += indent+"_"+stores.getArrayDimension(type)+"DARRAY_SIZE("+lhs+", "+param+");\n";
 					}
 				}
 			}
