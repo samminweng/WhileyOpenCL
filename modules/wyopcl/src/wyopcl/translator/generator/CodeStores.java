@@ -3,6 +3,7 @@ package wyopcl.translator.generator;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Map.Entry;
@@ -183,11 +184,9 @@ public class CodeStores {
 		if (type instanceof Type.Int) {
 			return true;
 		}
-
-		if (type instanceof Type.Array) {
+		/*if (type instanceof Type.Array) {
 			return isIntType(((Type.Array) type).element());
-		}
-
+		}*/
 		if(type instanceof Type.Union){
 			// Check if the union type contains INT type.
 			if(((Type.Union)type).bounds().contains(Type.Int.T_INT)){
@@ -201,7 +200,6 @@ public class CodeStores {
 				return true;
 			}
 		}
-		
 		return false;
 	}
 	
@@ -215,15 +213,20 @@ public class CodeStores {
 		if(type instanceof Type.Record){
 			return (Type.Record)type;
 		}else if(type instanceof Type.Union){
-			List<Type> records = ((Type.Union)type).bounds().stream()
-					.filter(t -> t instanceof Type.Record)
-					.collect(Collectors.toList());
-
-			if(records.isEmpty()){
-				throw new RuntimeException("Not implemented");
-			}else{
-				return (Type.Record)records.get(0);
+			Type.Union union = (Type.Union)type;
+			Iterator<Type> iterator = union.bounds().iterator();
+			while(iterator.hasNext()){
+				Type t = iterator.next();
+				if(t instanceof Type.Record){
+					return (Type.Record)t;
+				}else if(t instanceof Type.Nominal){
+					wyil.lang.WyilFile.Type nominal = getUserDefinedType((Type.Nominal)t);
+					if(nominal!=null){
+						return (Type.Record)nominal.type();
+					}
+				}
 			}
+			throw new RuntimeException("Can not find the record type");
 		}else{
 			throw new RuntimeException("Not implemented");
 		}
@@ -300,6 +303,10 @@ public class CodeStores {
 	 * @return
 	 */
 	private static boolean isTypeMatched(Type.Record r1, Type.Record r2){
+		if(r1 == null || r2 == null){
+			return false;
+		}
+		
 		// check if record and type have the same fields.
 		boolean isMatched = true;
 		for (Entry<String, Type> field : r2.fields().entrySet()) {
@@ -361,21 +368,19 @@ public class CodeStores {
 	 * @return
 	 */
 	private WyilFile.Type getUserDefinedType(Type.Union type) {
-		for (wyil.lang.WyilFile.Type user_type : this.userTypes) {
-			if(user_type.type() instanceof Type.Union){
-				// Check if 'bounds' types are the same.  
-				Type.Record r1 = (Record) ((Type.Union)user_type.type()).bounds().stream()
-				.filter(t -> t instanceof Type.Record)
-				.collect(Collectors.toList()).get(0);
-				
-				Type.Record r2 = (Record)((Type.Union)type).bounds().stream()
-								 .filter(t-> t instanceof Type.Record)
-								 .collect(Collectors.toList()).get(0);
-				
-				if(isTypeMatched(r1, r2)){
+		// Get the record types from union type  
+		Type.Record original_record = getRecordType((Type.Union)type);
+		if(original_record!= null){
+			for (wyil.lang.WyilFile.Type user_type : this.userTypes) {
+				Type.Record record = null;
+				if(user_type.type() instanceof Type.Union){
+					record = getRecordType(user_type.type());
+				}else if(user_type.type() instanceof Type.Record){
+					record = (Type.Record)user_type.type();
+				}
+				if(isTypeMatched(record, original_record)){
 					return user_type;
 				}
-				
 			}
 		}
 		return null;

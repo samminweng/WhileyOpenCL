@@ -65,18 +65,16 @@ public final class CodeGeneratorHelper {
 	private static List<String> generateStructPrintf(Type type, CodeStores stores){
 		List<String> statement = new ArrayList<String>();
 		Type.Record record = stores.getRecordType(type);
-		String type_name = translateType(type, stores);
-		String function_name = type_name.replace("*", "_PTR");
+		String type_name = translateType(type, stores);		
+		String parameter = type_name.toLowerCase().replace("*", "");
 		
-		String parameter = "_"+type_name.toLowerCase().replace("*", "");
-		
-		statement.add("void printf_" + function_name + "(" + type_name + " "+parameter+"){");
+		statement.add("void printf_" + type_name.replace("*", "") + "(" + type_name + " "+parameter+"){");
 		// Add open bracket
 		statement.add("\tprintf(\"{\");"); 
 		
 		// Print out each member
 		record.fields().forEach((member, member_type) ->{
-			String input_member = parameter + accessMember(type)+member;
+			String input_member = parameter + "->" + member;
 			// Print the member name
 			statement.add("\tprintf(\" " + member + ":\");");
 			// Print the member value
@@ -123,11 +121,8 @@ public final class CodeGeneratorHelper {
 			if(isCopyEliminated || !stores.isCompoundType(type)){
 				statement.add(indent + lhs + " = "+ rhs+";");
 			}else{
-				String type_name = CodeGeneratorHelper.translateType(type, stores);
-				statement.add(indent + lhs + " = copy_" + type_name.replace("*", "_PTR")+"("+rhs+");");
+				statement.add(indent + lhs + " = copy_" + CodeGeneratorHelper.translateType(type, stores).replace("*", "")+"("+rhs+");");
 			}
-			
-			
 		}
 		
 		return statement;
@@ -162,28 +157,19 @@ public final class CodeGeneratorHelper {
 		// Get the raw record type 
 		Type.Record record = stores.getRecordType(type);
 		String type_name = translateType(type, stores);
-		String struct_name = translateType(record, stores);
-		String function_name = "copy_"+ type_name.replace("*", "_PTR");
-		
-
+		String struct_name = type_name.replace("*", "");
 		String parameter = "_"+struct_name;
 		String new_copy = "new_"+struct_name;
-		
-		statement.add(type_name+" "+function_name+ "(" + type_name + " "+parameter+"){");;
+		// Define the signature of 'copy_struct' function
+		statement.add(type_name+" "+("copy_"+ struct_name)+ "(" + type_name + " "+parameter+"){");;
 
-		// Create a structure 
-		if(type instanceof Type.Union){
-			// Create a structure pointer
-			statement.add("\t"+type_name+" "+new_copy+" = malloc(sizeof("+struct_name+"));");// Allocate the input in heap memory, which require manual de-allocation.
-		}else{
-			// Create a structure
-			statement.add("\t"+type_name+" "+new_copy+";");// Allocate the input in stack memory, which can be de-allocated automatically.
-		}
+		// Create a structure pointer
+		statement.add("\t"+type_name+" "+new_copy+" = malloc(sizeof("+struct_name+"));");// Allocate the input in heap memory, which require manual de-allocation.
 		
 		// Generate the code for each member.
 		record.fields().forEach((member, member_type) ->{	
-			String lhs = new_copy + accessMember(type) + member;
-			String rhs = parameter + accessMember(type) + member;
+			String lhs = new_copy + "->" + member;
+			String rhs = parameter + "->" + member;
 			statement.addAll(generateAssignmentCode(member_type, "\t", lhs, rhs, false, stores));
 		});
 
@@ -228,15 +214,15 @@ public final class CodeGeneratorHelper {
 		List<String> statement = new ArrayList<String>();
 		Type.Record record = stores.getRecordType(type);
 
-		String struct_type = translateType(record, stores);
-		String struct_name = "_"+struct_type.toLowerCase();
-		statement.add("void free_"+struct_type+"("+struct_type+ " "+struct_name+"){");
+		String type_name = translateType(record, stores);
+		String parameter = type_name.toLowerCase().replace("*", "");
+		statement.add("void free_"+type_name.replace("*", "")+"("+type_name+ " "+parameter+"){");
 
 		// Get all array-typed members and free their memory spaces
 		record.fields().forEach((member, member_type) ->{
 			if(member_type instanceof Type.Array){
 				//String input_member = accessMember(struct, member, type);
-				String input_member = struct_name +"."+ member;
+				String input_member = parameter +"->"+ member;
 				if(stores.getArrayDimension(member_type)== 2){
 					// Release 2D array by using built-in 'free2DArray' function
 					statement.add("\tfree2DArray("+input_member+", "+input_member+"_size);");
@@ -246,18 +232,9 @@ public final class CodeGeneratorHelper {
 			}
 		});
 
+		statement.add("\tfree("+parameter+");");
 		statement.add("}");// Add ending bracket.
 		
-		if(type instanceof Type.Union){
-			// Release top-level structure
-			String type_name = translateType(type, stores);
-			String parameter = type_name.toLowerCase().replace("*", "");
-			statement.add("void free_"+type_name.replace("*", "_PTR")+"("+type_name+ " "+parameter+"){");
-			statement.add("\tfree_"+struct_type+"(*"+parameter+");");
-			statement.add("\tfree("+parameter+");");
-			statement.add("}");// Add ending bracket.
-		}
-
 		return statement;
 	}
 	
@@ -353,7 +330,7 @@ public final class CodeGeneratorHelper {
 				return "int argc, char** args";
 			}
 			// Get the user-defined type
-			return Optional.of(stores.getUserDefinedType(type)).get().name();
+			return Optional.of(stores.getUserDefinedType(type)).get().name()+"*";
 			
 		}
 
@@ -436,7 +413,6 @@ public final class CodeGeneratorHelper {
 		});
 		
 		statements.add( "} " + struct_name + ";");
-		struct_name = type_name.replaceAll("\\*", "_PTR");
 		String input = "_"+type_name.toLowerCase().replace("*", ""); // Input parameter
 		// Add built-in function declarations, 'create' and 'printf', 'copy' and 'free'
 		statements.add("void printf_" + struct_name + "(" + type_name + " "+input+");");

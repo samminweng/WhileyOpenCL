@@ -6,7 +6,9 @@ import java.nio.file.Paths;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.Timeout;
 
 public class CodeGenerationTestCase {
 	private BaseTestUtil util;
@@ -97,25 +99,6 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(codeDir, "mergesort", "copy", "dealloc");
 	}
 	
-	@Test
-	public void test_TicTacToe_naive() {
-		util.execCodeGeneration(codeDir, "TicTacToe");
-	}
-	
-	@Test
-	public void test_TicTacToe_naive_dealloc() {
-		util.execCodeGeneration(codeDir, "TicTacToe", "dealloc");
-	}
-	
-	@Test
-	public void test_TicTacToe_copy() {
-		util.execCodeGeneration(codeDir, "TicTacToe", "copy");
-	}
-	
-	@Test
-	public void test_TicTacToe_copy_dealloc() {
-		util.execCodeGeneration(codeDir, "TicTacToe", "copy", "dealloc");
-	}
 	
 	@Test
 	public void test_newTicTacToe_naive() {
@@ -137,23 +120,23 @@ public class CodeGenerationTestCase {
 		util.execCodeGeneration(codeDir, "newTicTacToe", "copy", "dealloc");
 	}
 	
-	@Test
+	@Test(timeout=10000)
 	public void test_MatrixMult_naive() {
 		util.execCodeGeneration(codeDir, "MatrixMult");
 	}
 	
-	@Test
+	@Test(timeout=10000)
 	public void test_MatrixMult_naive_dealloc() {
 		util.execCodeGeneration(codeDir, "MatrixMult", "dealloc");
 	}
 	
 	
-	@Test
+	@Test(timeout=10000)
 	public void test_MatrixMult_copy() {
 		util.execCodeGeneration(codeDir, "MatrixMult", "copy");
 	}
 	
-	@Test
+	@Test(timeout=10000)
 	public void test_MatrixMult_copy_dealloc() {
 		util.execCodeGeneration(codeDir, "MatrixMult", "copy", "dealloc");
 	}

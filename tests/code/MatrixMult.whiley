@@ -27,7 +27,7 @@ type Matrix is ({
     int width,
     int height,
     int[][] data
-} this) where |this.data| == this.height && no { i in 0..this.height | |this.data[i]| != this.width }
+} this) where (|this.data| == this.height && no { i in 0..this.height | |this.data[i]| != this.width })
 
 function matrix(nat width, nat height, int[][] data) -> (Matrix r)
 // Input array must match matrix height
@@ -101,10 +101,10 @@ function genMatrix(nat height, nat width) -> (Matrix r):
 
 method main(System.Console sys):
     int max = 10
-    Matrix A = genMatrix(max, max)
-    Matrix B = genMatrix(max, max)
-    Matrix C = multiply(A,B)
-    assert C.data[0][0] ==  max
+    null|Matrix A = genMatrix(max, max)
+    null|Matrix B = genMatrix(max, max)
+    null|Matrix C = multiply(A,B)
+    assert C.data[0][0] == max
     assert C.width == max
     assert C.height == max
     sys.out.println(C.data[0][0])
