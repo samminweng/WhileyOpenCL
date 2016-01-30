@@ -267,11 +267,8 @@ public final class CodeGeneratorHelper {
 				// Use _FREE macro to release the array variable.
 				return "_FREE("+var+");";
 			}
-		}else if(type instanceof Type.Record){
-			name = translateType(type, stores);
-			return "_FREE_STRUCT("+var+", "+name+");";
-		}else if(type instanceof Type.Union){
-			name = translateType(type, stores).replace("*", "_PTR");
+		}else if(type instanceof Type.Record|| type instanceof Type.Union){
+			name = translateType(type, stores).replace("*", "");
 			return "_FREE_STRUCT("+var+", "+name+");";
 		}else{
 			throw new RuntimeException("Not implemented");

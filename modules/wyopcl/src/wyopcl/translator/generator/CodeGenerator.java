@@ -842,7 +842,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}
 		} else if (lhs_type instanceof Type.Record || lhs_type instanceof Type.Union) {
 			String member = code.fields.get(0);
-			s += indent + lhs + CodeGeneratorHelper.accessMember(lhs_type) + member;
+			s += indent + lhs + "->" + member;
 			// check if there are two or more operands. If so, then add 'index' operand.
 			if (code.operands().length > 1) {
 				s += "[" + store.getVar(code.operand(0)) + "]";
@@ -902,7 +902,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			});
 			Type lhs_type = stores.getRawType(code.operand(0), function);
 			// Check if the code returns a pointer but the return value is a structure. 
-			if(code.type(0) instanceof Type.Union && lhs_type instanceof Type.Record){
+			/*if(code.type(0) instanceof Type.Union && lhs_type instanceof Type.Record){
 				// This is a special case for 'return local variable' 
 				// We need to copy the local variable to stack memory, such as using 'copy_Board_PTR'
 				// Then return the copied variable, rather than the local one
@@ -918,10 +918,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				}
 				// Return the stack variable
 				statements.add(indent + "return ret;");
-			}else{
+			}else{*/
 				// Return the structure.
 				statements.add(indent + "return " + stores.getVar(code.operand(0), function) + ";");
-			}
+			//}
 		}
 		
 		stores.addAllStatements(code, statements, function);
