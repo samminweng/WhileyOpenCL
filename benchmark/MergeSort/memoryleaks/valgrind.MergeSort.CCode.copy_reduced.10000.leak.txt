@@ -1,21 +1,21 @@
-==26001== Memcheck, a memory error detector
-==26001== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==26001== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==26001== Command: ./MergeSort.out 10000
-==26001== Parent PID: 25652
-==26001== 
-==26001== 
-==26001== HEAP SUMMARY:
-==26001==     in use at exit: 1,149,416 bytes in 20,004 blocks
-==26001==   total heap usage: 20,004 allocs, 0 frees, 1,149,416 bytes allocated
-==26001== 
-==26001== LEAK SUMMARY:
-==26001==    definitely lost: 1,149,368 bytes in 20,003 blocks
-==26001==    indirectly lost: 48 bytes in 1 blocks
-==26001==      possibly lost: 0 bytes in 0 blocks
-==26001==    still reachable: 0 bytes in 0 blocks
-==26001==         suppressed: 0 bytes in 0 blocks
-==26001== Rerun with --leak-check=full to see details of leaked memory
-==26001== 
-==26001== For counts of detected and suppressed errors, rerun with: -v
-==26001== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==21103== Memcheck, a memory error detector
+==21103== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==21103== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==21103== Command: ./MergeSort.out 10000
+==21103== Parent PID: 20754
+==21103== 
+==21103== 
+==21103== HEAP SUMMARY:
+==21103==     in use at exit: 1,149,416 bytes in 20,004 blocks
+==21103==   total heap usage: 20,004 allocs, 0 frees, 1,149,416 bytes allocated
+==21103== 
+==21103== LEAK SUMMARY:
+==21103==    definitely lost: 1,149,368 bytes in 20,003 blocks
+==21103==    indirectly lost: 48 bytes in 1 blocks
+==21103==      possibly lost: 0 bytes in 0 blocks
+==21103==    still reachable: 0 bytes in 0 blocks
+==21103==         suppressed: 0 bytes in 0 blocks
+==21103== Rerun with --leak-check=full to see details of leaked memory
+==21103== 
+==21103== For counts of detected and suppressed errors, rerun with: -v
+==21103== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

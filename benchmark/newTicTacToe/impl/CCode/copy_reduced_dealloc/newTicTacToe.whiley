@@ -15,11 +15,13 @@ type Square is (int x) where x == BLANK || x == CIRCLE || x == CROSS
 // ==================================================================
 // A board consists of 9 squares, and a move counter
 // ==================================================================
-type Board is (null | {nat move, Square[] pieces} board)
-where (board != null && |board.pieces| == 9 && board.move <= 9 &&
-    countOf(board.pieces, BLANK) == (9 - board.move) &&
-    (countOf(board.pieces, CIRCLE) == countOf(board.pieces, CROSS) ||
-    countOf(board.pieces, CIRCLE) == countOf(board.pieces, CROSS)+1))
+type Board is (null |{
+    nat move,
+    Square[] pieces // 3 x 3
+} this)
+where this != null && |this.pieces| == 9 && this.move <= 9
+where this != null && countOf(this.pieces,BLANK) == (9 - this.move)
+where this != null && (countOf(this.pieces,CIRCLE) == countOf(this.pieces,CROSS) || countOf(this.pieces,CIRCLE) == countOf(this.pieces,CROSS)+1)
 // ==================================================================
 // An empty board is one where all pieces are blank
 // ==================================================================

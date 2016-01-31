@@ -78,8 +78,9 @@ print "TestCase,Program,Optimization,Parameter,1st,2nd,3rd,4th,5th,6th,7th,8th,9
 				 				str = str"\t"exec_times[key","iteration];
 				 			}
 				 		}else{
-				 			## Print out TIMEOUT messages.
-				 			for(iteration=0;iteration<10;iteration++){
+				 			if(program=="CCode"){
+				 				str = str"\tOutOfMemory";
+				 			}else{
 				 				str = str"\tTIMEOUT";
 				 			}
 				 		}

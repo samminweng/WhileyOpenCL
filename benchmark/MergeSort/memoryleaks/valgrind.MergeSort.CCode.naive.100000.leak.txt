@@ -1,21 +1,21 @@
-==25905== Memcheck, a memory error detector
-==25905== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==25905== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==25905== Command: ./MergeSort.out 100000
-==25905== Parent PID: 25652
-==25905== 
-==25905== 
-==25905== HEAP SUMMARY:
-==25905==     in use at exit: 70,758,248 bytes in 1,000,008 blocks
-==25905==   total heap usage: 1,000,008 allocs, 0 frees, 70,758,248 bytes allocated
-==25905== 
-==25905== LEAK SUMMARY:
-==25905==    definitely lost: 69,758,128 bytes in 1,000,003 blocks
-==25905==    indirectly lost: 56 bytes in 1 blocks
-==25905==      possibly lost: 1,000,064 bytes in 4 blocks
-==25905==    still reachable: 0 bytes in 0 blocks
-==25905==         suppressed: 0 bytes in 0 blocks
-==25905== Rerun with --leak-check=full to see details of leaked memory
-==25905== 
-==25905== For counts of detected and suppressed errors, rerun with: -v
-==25905== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==21008== Memcheck, a memory error detector
+==21008== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==21008== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==21008== Command: ./MergeSort.out 100000
+==21008== Parent PID: 20754
+==21008== 
+==21008== 
+==21008== HEAP SUMMARY:
+==21008==     in use at exit: 56,606,672 bytes in 800,007 blocks
+==21008==   total heap usage: 800,007 allocs, 0 frees, 56,606,672 bytes allocated
+==21008== 
+==21008== LEAK SUMMARY:
+==21008==    definitely lost: 56,456,616 bytes in 800,004 blocks
+==21008==    indirectly lost: 56 bytes in 1 blocks
+==21008==      possibly lost: 150,000 bytes in 2 blocks
+==21008==    still reachable: 0 bytes in 0 blocks
+==21008==         suppressed: 0 bytes in 0 blocks
+==21008== Rerun with --leak-check=full to see details of leaked memory
+==21008== 
+==21008== For counts of detected and suppressed errors, rerun with: -v
+==21008== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

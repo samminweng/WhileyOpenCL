@@ -1,21 +1,21 @@
-==26200== Memcheck, a memory error detector
-==26200== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
-==26200== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
-==26200== Command: ./newTicTacToe.out 100000
-==26200== Parent PID: 25652
-==26200== 
-==26200== 
-==26200== HEAP SUMMARY:
-==26200==     in use at exit: 192,000,392 bytes in 2,800,003 blocks
-==26200==   total heap usage: 2,800,003 allocs, 0 frees, 192,000,392 bytes allocated
-==26200== 
-==26200== LEAK SUMMARY:
-==26200==    definitely lost: 177,600,120 bytes in 2,599,999 blocks
-==26200==    indirectly lost: 14,399,984 bytes in 200,000 blocks
-==26200==      possibly lost: 216 bytes in 3 blocks
-==26200==    still reachable: 72 bytes in 1 blocks
-==26200==         suppressed: 0 bytes in 0 blocks
-==26200== Rerun with --leak-check=full to see details of leaked memory
-==26200== 
-==26200== For counts of detected and suppressed errors, rerun with: -v
-==26200== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==21304== Memcheck, a memory error detector
+==21304== Copyright (C) 2002-2013, and GNU GPL'd, by Julian Seward et al.
+==21304== Using Valgrind-3.10.1 and LibVEX; rerun with -h for copyright info
+==21304== Command: ./newTicTacToe.out 100000
+==21304== Parent PID: 20754
+==21304== 
+==21304== 
+==21304== HEAP SUMMARY:
+==21304==     in use at exit: 177,600,392 bytes in 2,600,003 blocks
+==21304==   total heap usage: 2,600,003 allocs, 0 frees, 177,600,392 bytes allocated
+==21304== 
+==21304== LEAK SUMMARY:
+==21304==    definitely lost: 163,200,192 bytes in 2,400,000 blocks
+==21304==    indirectly lost: 14,399,984 bytes in 200,000 blocks
+==21304==      possibly lost: 144 bytes in 2 blocks
+==21304==    still reachable: 72 bytes in 1 blocks
+==21304==         suppressed: 0 bytes in 0 blocks
+==21304== Rerun with --leak-check=full to see details of leaked memory
+==21304== 
+==21304== For counts of detected and suppressed errors, rerun with: -v
+==21304== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

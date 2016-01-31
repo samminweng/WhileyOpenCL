@@ -135,32 +135,32 @@ run_benchmark (){
 
 # Measure the memory usage of the generated C code
 ### Reverse
-# run_benchmark Reverse CCode naive
-# run_benchmark Reverse CCode naive_dealloc
-# run_benchmark Reverse CCode copy_reduced
-# run_benchmark Reverse CCode copy_reduced_dealloc
-# run_benchmark Reverse JAVACode
+run_benchmark Reverse CCode naive
+run_benchmark Reverse CCode naive_dealloc
+run_benchmark Reverse CCode copy_reduced
+run_benchmark Reverse CCode copy_reduced_dealloc
+run_benchmark Reverse JAVACode
 # ### MergeSort
 run_benchmark MergeSort CCode naive
 run_benchmark MergeSort CCode naive_dealloc
 run_benchmark MergeSort CCode copy_reduced
 run_benchmark MergeSort CCode copy_reduced_dealloc
-# run_benchmark MergeSort JAVACode
-# # ### newTicTacToe
-# run_benchmark newTicTacToe CCode naive
-# run_benchmark newTicTacToe CCode naive_dealloc
-# run_benchmark newTicTacToe CCode copy_reduced
-# run_benchmark newTicTacToe CCode copy_reduced_dealloc
-# run_benchmark newTicTacToe JAVACode
-# # ### MatrixMult
-# run_benchmark MatrixMult CCode naive
-# run_benchmark MatrixMult CCode naive_dealloc
-# run_benchmark MatrixMult CCode copy_reduced
-# run_benchmark MatrixMult CCode copy_reduced_dealloc
-# run_benchmark MatrixMult JAVACode
-# ### Fibonacci
-# run_benchmark Fibonacci CCode naive
-# run_benchmark Fibonacci CCode naive_dealloc
-# run_benchmark Fibonacci CCode copy_reduced
-# run_benchmark Fibonacci CCode copy_reduced_dealloc
-#run_benchmark Fibonacci JAVACode
+run_benchmark MergeSort JAVACode
+# ### newTicTacToe
+run_benchmark newTicTacToe CCode naive
+run_benchmark newTicTacToe CCode naive_dealloc
+run_benchmark newTicTacToe CCode copy_reduced
+run_benchmark newTicTacToe CCode copy_reduced_dealloc
+run_benchmark newTicTacToe JAVACode
+# ### MatrixMult
+run_benchmark MatrixMult CCode naive
+run_benchmark MatrixMult CCode naive_dealloc
+run_benchmark MatrixMult CCode copy_reduced
+run_benchmark MatrixMult CCode copy_reduced_dealloc
+run_benchmark MatrixMult JAVACode
+### Fibonacci
+run_benchmark Fibonacci CCode naive
+run_benchmark Fibonacci CCode naive_dealloc
+run_benchmark Fibonacci CCode copy_reduced
+run_benchmark Fibonacci CCode copy_reduced_dealloc
+run_benchmark Fibonacci JAVACode
