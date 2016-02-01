@@ -5,7 +5,7 @@ BEGIN {
 	FS = "\t";
 	# Test case name
 	#testcases="Fibonacci Reverse MergeSort newTicTacToe MatrixMult";
-	testcases="Reverse";
+	testcases="Reverse MergeSort newTicTacToe MatrixMult";
 	# Code Optimizations
 	opts="naive naive_dealloc copy_reduced copy_reduced_dealloc";
 	# Program
@@ -14,6 +14,9 @@ BEGIN {
 	polly_opts="gcc polly openmp vector"
 	# Parameters
 	parameters["Reverse"] = "1000 10000 100000 1000000 10000000 100000000";
+	parameters["MergeSort"] = "1000 10000 100000 1000000";
+	parameters["newTicTacToe"] = "1000 10000 100000 1000000";
+	parameters["MatrixMult"] = "10 20 30 40 50";
 	count[""]=0;	
 }
 {

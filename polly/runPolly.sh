@@ -14,16 +14,15 @@ define_parameters(){
 			;;
 		"Reverse")
 			parameters="1000 10000 100000 1000000 10000000 100000000"
-			#parameters="1000 10000 100000 1000000 10000000 100000000 1000000000 10000000000"
 			;;
 		"MergeSort")
-			parameters="1000 10000 100000 1000000 10000000 100000000 1000000000"
+			parameters="1000 10000 100000 1000000" 
 			;;
 		"newTicTacToe")
-			parameters="1000 10000 100000 1000000 10000000 100000000 1000000000 10000000000"
+			parameters="1000 10000 100000 1000000"
 			;;
 		"MatrixMult")
-			parameters="10 100 1000 10000"
+			parameters="10 20 30 40 50"
 			;;
 	esac
 }
@@ -99,19 +98,71 @@ loadPollyToClang(){
 	cd ../../../
 }
 ### Reverse Test case
-loadPollyToClang naive Reverse gcc
-loadPollyToClang naive Reverse polly
-loadPollyToClang naive Reverse openmp
-loadPollyToClang naive Reverse vector
-loadPollyToClang naive_dealloc Reverse gcc
-loadPollyToClang naive_dealloc Reverse polly
-loadPollyToClang naive_dealloc Reverse openmp
-loadPollyToClang naive_dealloc Reverse vector
-loadPollyToClang copy_reduced Reverse gcc
-loadPollyToClang copy_reduced Reverse polly
-loadPollyToClang copy_reduced Reverse openmp
-loadPollyToClang copy_reduced Reverse vector
-loadPollyToClang copy_reduced_dealloc Reverse gcc
-loadPollyToClang copy_reduced_dealloc Reverse polly
-loadPollyToClang copy_reduced_dealloc Reverse openmp
-loadPollyToClang copy_reduced_dealloc Reverse vector
+# loadPollyToClang naive Reverse gcc
+# loadPollyToClang naive Reverse polly
+# loadPollyToClang naive Reverse openmp
+# loadPollyToClang naive Reverse vector
+# loadPollyToClang naive_dealloc Reverse gcc
+# loadPollyToClang naive_dealloc Reverse polly
+# loadPollyToClang naive_dealloc Reverse openmp
+# loadPollyToClang naive_dealloc Reverse vector
+# loadPollyToClang copy_reduced Reverse gcc
+# loadPollyToClang copy_reduced Reverse polly
+# loadPollyToClang copy_reduced Reverse openmp
+# loadPollyToClang copy_reduced Reverse vector
+# loadPollyToClang copy_reduced_dealloc Reverse gcc
+# loadPollyToClang copy_reduced_dealloc Reverse polly
+# loadPollyToClang copy_reduced_dealloc Reverse openmp
+# loadPollyToClang copy_reduced_dealloc Reverse vector
+# ### MergeSort Test case
+# loadPollyToClang naive MergeSort gcc
+# loadPollyToClang naive MergeSort polly
+# loadPollyToClang naive MergeSort openmp
+# loadPollyToClang naive MergeSort vector
+# loadPollyToClang naive_dealloc MergeSort gcc
+# loadPollyToClang naive_dealloc MergeSort polly
+# loadPollyToClang naive_dealloc MergeSort openmp
+# loadPollyToClang naive_dealloc MergeSort vector
+# loadPollyToClang copy_reduced MergeSort gcc
+# loadPollyToClang copy_reduced MergeSort polly
+# loadPollyToClang copy_reduced MergeSort openmp
+# loadPollyToClang copy_reduced MergeSort vector
+# loadPollyToClang copy_reduced_dealloc MergeSort gcc
+# loadPollyToClang copy_reduced_dealloc MergeSort polly
+# loadPollyToClang copy_reduced_dealloc MergeSort openmp
+# loadPollyToClang copy_reduced_dealloc MergeSort vector
+# ### newTicTacToe Test case
+# loadPollyToClang naive newTicTacToe gcc
+# loadPollyToClang naive newTicTacToe polly
+# loadPollyToClang naive newTicTacToe openmp
+# loadPollyToClang naive newTicTacToe vector
+# loadPollyToClang naive_dealloc newTicTacToe gcc
+# loadPollyToClang naive_dealloc newTicTacToe polly
+# loadPollyToClang naive_dealloc newTicTacToe openmp
+# loadPollyToClang naive_dealloc newTicTacToe vector
+# loadPollyToClang copy_reduced newTicTacToe gcc
+# loadPollyToClang copy_reduced newTicTacToe polly
+# loadPollyToClang copy_reduced newTicTacToe openmp
+# loadPollyToClang copy_reduced newTicTacToe vector
+# loadPollyToClang copy_reduced_dealloc newTicTacToe gcc
+# loadPollyToClang copy_reduced_dealloc newTicTacToe polly
+# loadPollyToClang copy_reduced_dealloc newTicTacToe openmp
+# loadPollyToClang copy_reduced_dealloc newTicTacToe vector
+### MatrixMult Test case
+loadPollyToClang naive MatrixMult gcc
+loadPollyToClang naive MatrixMult polly
+loadPollyToClang naive MatrixMult openmp
+loadPollyToClang naive MatrixMult vector
+loadPollyToClang naive_dealloc MatrixMult gcc
+loadPollyToClang naive_dealloc MatrixMult polly
+loadPollyToClang naive_dealloc MatrixMult openmp
+loadPollyToClang naive_dealloc MatrixMult vector
+loadPollyToClang copy_reduced MatrixMult gcc
+loadPollyToClang copy_reduced MatrixMult polly
+loadPollyToClang copy_reduced MatrixMult openmp
+loadPollyToClang copy_reduced MatrixMult vector
+loadPollyToClang copy_reduced_dealloc MatrixMult gcc
+loadPollyToClang copy_reduced_dealloc MatrixMult polly
+loadPollyToClang copy_reduced_dealloc MatrixMult openmp
+loadPollyToClang copy_reduced_dealloc MatrixMult vector
+
