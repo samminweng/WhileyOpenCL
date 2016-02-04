@@ -1,0 +1,87 @@
+digraph "Scop Graph for 'printMat' function" {
+	label="Scop Graph for 'printMat' function";
+
+	Node0x9d67e70 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0x9d67e70 -> Node0x9dc3070;
+	Node0x9dc3070 [shape=record,label="{entry.split:                                      \l  %height = getelementptr inbounds %struct.Matrix, %struct.Matrix* %A, i64 0,\l... i32 4\l  %0 = load i64, i64* %height, align 8, !tbaa !1\l  %cmp59 = icmp sgt i64 %0, 0\l  br i1 %cmp59, label %while.body2.preheader.lr.ph, label %blklab19\l}"];
+	Node0x9dc3070 -> Node0x9d7de20;
+	Node0x9dc3070 -> Node0x9d9c4a0;
+	Node0x9d7de20 [shape=record,label="{while.body2.preheader.lr.ph:                      \l  br label %while.body2.preheader\l}"];
+	Node0x9d7de20 -> Node0x9dc4960;
+	Node0x9dc4960 [shape=record,label="{while.body2.preheader:                            \l  %_22_has_ownership.065 = phi i1 [ false, %while.body2.preheader.lr.ph ], [\l... true, %if.end17 ]\l  %_22.064 = phi i64* [ null, %while.body2.preheader.lr.ph ], [ %10, %if.end17\l... ]\l  %i.062 = phi i64 [ 0, %while.body2.preheader.lr.ph ], [ %add14, %if.end17 ]\l  %_15_has_ownership.061 = phi i8 [ 0, %while.body2.preheader.lr.ph ], [\l... %_15_has_ownership.1.lcssa, %if.end17 ]\l  %_15.060 = phi i64* [ null, %while.body2.preheader.lr.ph ], [ %_15.1.lcssa,\l... %if.end17 ]\l  %width = getelementptr inbounds %struct.Matrix, %struct.Matrix* %A, i64 0,\l... i32 3\l  %1 = load i64, i64* %width, align 8, !tbaa !7\l  %cmp354 = icmp sgt i64 %1, 0\l  br i1 %cmp354, label %if.end7.lr.ph, label %blklab21\l}"];
+	Node0x9dc4960 -> Node0x9d47f20;
+	Node0x9dc4960 -> Node0x9d4c160;
+	Node0x9d47f20 [shape=record,label="{if.end7.lr.ph:                                    \l  br label %if.end7\l}"];
+	Node0x9d47f20 -> Node0x9d864f0;
+	Node0x9d864f0 [shape=record,label="{if.end7:                                          \l  %_15_has_ownership.157 = phi i8 [ %_15_has_ownership.061, %if.end7.lr.ph ],\l... [ 1, %if.end11 ]\l  %_15.156 = phi i64* [ %_15.060, %if.end7.lr.ph ], [ %7, %if.end11 ]\l  %j.055 = phi i64 [ 0, %if.end7.lr.ph ], [ %add, %if.end11 ]\l  %data = getelementptr inbounds %struct.Matrix, %struct.Matrix* %A, i64 0,\l... i32 0\l  %2 = load i64**, i64*** %data, align 8, !tbaa !8\l  %arrayidx = getelementptr inbounds i64*, i64** %2, i64 %i.062\l  %3 = load i64*, i64** %arrayidx, align 8, !tbaa !9\l  %arrayidx8 = getelementptr inbounds i64, i64* %3, i64 %j.055\l  %4 = load i64, i64* %arrayidx8, align 8, !tbaa !10\l  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x\l... i8], [4 x i8]* @.str.26, i64 0, i64 0), i64 %4)\l  %5 = and i8 %_15_has_ownership.157, 1\l  %tobool9 = icmp eq i8 %5, 0\l  br i1 %tobool9, label %if.end11, label %if.then10\l}"];
+	Node0x9d864f0 -> Node0x9d6f750;
+	Node0x9d864f0 -> Node0x9d781f0;
+	Node0x9d6f750 [shape=record,label="{if.end11:                                         \l  %call12 = tail call noalias i8* @malloc(i64 8) #5\l  %7 = bitcast i8* %call12 to i64*\l  store i64 32, i64* %7, align 8, !tbaa !10\l  tail call void @printf_s(i64* %7, i64 1)\l  %add = add nuw nsw i64 %j.055, 1\l  %8 = load i64, i64* %width, align 8, !tbaa !7\l  %cmp3 = icmp slt i64 %add, %8\l  br i1 %cmp3, label %if.end7, label %while.body2.blklab21_crit_edge\l}"];
+	Node0x9d6f750 -> Node0x9d864f0[constraint=false];
+	Node0x9d6f750 -> Node0x9dd8770;
+	Node0x9dd8770 [shape=record,label="{while.body2.blklab21_crit_edge:                   \l  %.lcssa = phi i64* [ %7, %if.end11 ]\l  br label %blklab21\l}"];
+	Node0x9dd8770 -> Node0x9d4c160;
+	Node0x9d4c160 [shape=record,label="{blklab21:                                         \l  %_15_has_ownership.1.lcssa = phi i8 [ 1, %while.body2.blklab21_crit_edge ],\l... [ %_15_has_ownership.061, %while.body2.preheader ]\l  %_15.1.lcssa = phi i64* [ %.lcssa, %while.body2.blklab21_crit_edge ], [\l... %_15.060, %while.body2.preheader ]\l  %add14 = add nuw nsw i64 %i.062, 1\l  br i1 %_22_has_ownership.065, label %if.then16, label %if.end17\l}"];
+	Node0x9d4c160 -> Node0x9d47390;
+	Node0x9d4c160 -> Node0x9d7da70;
+	Node0x9d47390 [shape=record,label="{if.then16:                                        \l  %9 = bitcast i64* %_22.064 to i8*\l  tail call void @free(i8* %9) #5\l  br label %if.end17\l}"];
+	Node0x9d47390 -> Node0x9d7da70;
+	Node0x9d7da70 [shape=record,label="{if.end17:                                         \l  %call18 = tail call noalias i8* @malloc(i64 0) #5\l  %10 = bitcast i8* %call18 to i64*\l  tail call void @println_s(i64* %10, i64 0)\l  %11 = load i64, i64* %height, align 8, !tbaa !1\l  %cmp = icmp slt i64 %add14, %11\l  br i1 %cmp, label %while.body2.preheader, label\l... %while.body.blklab19_crit_edge\l}"];
+	Node0x9d7da70 -> Node0x9dc4960[constraint=false];
+	Node0x9d7da70 -> Node0x9e2c5f0;
+	Node0x9e2c5f0 [shape=record,label="{while.body.blklab19_crit_edge:                    \l  br label %blklab19\l}"];
+	Node0x9e2c5f0 -> Node0x9d9c4a0;
+	Node0x9d9c4a0 [shape=record,label="{blklab19:                                         \l  ret void\l}"];
+	Node0x9d781f0 [shape=record,label="{if.then10:                                        \l  %6 = bitcast i64* %_15.156 to i8*\l  tail call void @free(i8* %6) #5\l  br label %if.end11\l}"];
+	Node0x9d781f0 -> Node0x9d6f750;
+	colorscheme = "paired12"
+        subgraph cluster_0x9e1f5c0 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0x9d2ac90 {
+            label = "";
+            style = solid;
+            color = 6
+            subgraph cluster_0x9e1fb90 {
+              label = "Base address not invariant in current region:  %3 = load i64*, i64** %arrayidx, align 8, !tbaa !9";
+              style = solid;
+              color = 5
+              subgraph cluster_0x9dcccc0 {
+                label = "";
+                style = solid;
+                color = 7
+                subgraph cluster_0x9e1ed10 {
+                  label = "Call instruction:   %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.26, i64 0, i64 0), i64 %4)";
+                  style = solid;
+                  color = 9
+                  subgraph cluster_0x9da2ea0 {
+                    label = "Region can not profitably be optimized!";
+                    style = solid;
+                    color = 11
+                    Node0x9d864f0;
+                    Node0x9d781f0;
+                  }
+                  Node0x9d6f750;
+                }
+                Node0x9dc4960;
+                Node0x9d47f20;
+                Node0x9dd8770;
+              }
+              subgraph cluster_0x9da1790 {
+                label = "Region can not profitably be optimized!";
+                style = solid;
+                color = 7
+                Node0x9d4c160;
+                Node0x9d47390;
+              }
+              Node0x9d7da70;
+            }
+            Node0x9dc3070;
+            Node0x9d7de20;
+            Node0x9e2c5f0;
+          }
+          Node0x9d67e70;
+          Node0x9d9c4a0;
+        }
+}
