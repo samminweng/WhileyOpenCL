@@ -66,4 +66,4 @@ exec(){
 	cd ../../../
 }
 
-exec naive Reverse 
+exec naive MergeSort 

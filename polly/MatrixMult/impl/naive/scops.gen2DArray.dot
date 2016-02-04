@@ -1,0 +1,41 @@
+digraph "Scop Graph for 'gen2DArray' function" {
+	label="Scop Graph for 'gen2DArray' function";
+
+	Node0x9e870d0 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0x9e870d0 -> Node0x9ec2470;
+	Node0x9ec2470 [shape=record,label="{entry.split:                                      \l  %mul = shl i64 %y, 3\l  %mul1 = shl i64 %x, 3\l  %call = tail call noalias i8* @malloc(i64 %mul1) #5\l  %0 = bitcast i8* %call to i64**\l  %cmp = icmp eq i8* %call, null\l  br i1 %cmp, label %if.then, label %for.cond.preheader\l}"];
+	Node0x9ec2470 -> Node0x9eb2eb0;
+	Node0x9ec2470 -> Node0x9ec4030;
+	Node0x9eb2eb0 [shape=record,label="{if.then:                                          \l  %puts24 = tail call i32 @puts(i8* getelementptr inbounds ([61 x i8], [61 x\l... i8]* @str.30, i64 0, i64 0))\l  tail call void @exit(i32 -2) #6\l  unreachable\l}"];
+	Node0x9ec4030 [shape=record,label="{for.cond.preheader:                               \l  %cmp325 = icmp sgt i64 %x, 0\l  br i1 %cmp325, label %for.body.lr.ph, label %for.end\l}"];
+	Node0x9ec4030 -> Node0x9ebc650;
+	Node0x9ec4030 -> Node0x9e74e60;
+	Node0x9ebc650 [shape=record,label="{for.body.lr.ph:                                   \l  br label %for.body\l}"];
+	Node0x9ebc650 -> Node0x9ec6a20;
+	Node0x9ec6a20 [shape=record,label="{for.body:                                         \l  %i.026 = phi i64 [ 0, %for.body.lr.ph ], [ %inc, %if.end9 ]\l  %call4 = tail call noalias i8* @malloc(i64 %mul) #5\l  %arrayidx = getelementptr inbounds i64*, i64** %0, i64 %i.026\l  %1 = bitcast i64** %arrayidx to i8**\l  store i8* %call4, i8** %1, align 8, !tbaa !1\l  %cmp6 = icmp eq i8* %call4, null\l  br i1 %cmp6, label %if.then7, label %if.end9\l}"];
+	Node0x9ec6a20 -> Node0x9e69ed0;
+	Node0x9ec6a20 -> Node0x9ec6f40;
+	Node0x9e69ed0 [shape=record,label="{if.then7:                                         \l  %puts = tail call i32 @puts(i8* getelementptr inbounds ([61 x i8], [61 x\l... i8]* @str.29, i64 0, i64 0))\l  tail call void @exit(i32 -2) #6\l  unreachable\l}"];
+	Node0x9ec6f40 [shape=record,label="{if.end9:                                          \l  %2 = bitcast i64* %arr to i8*\l  tail call void @llvm.memcpy.p0i8.p0i8.i64(i8* nonnull %call4, i8* %2, i64\l... %mul, i32 8, i1 false)\l  %inc = add nuw nsw i64 %i.026, 1\l  %cmp3 = icmp slt i64 %inc, %x\l  br i1 %cmp3, label %for.body, label %for.cond.for.end_crit_edge\l}"];
+	Node0x9ec6f40 -> Node0x9ec6a20;
+	Node0x9ec6f40 -> Node0x9ec2690;
+	Node0x9ec2690 [shape=record,label="{for.cond.for.end_crit_edge:                       \l  br label %for.end\l}"];
+	Node0x9ec2690 -> Node0x9e74e60;
+	Node0x9e74e60 [shape=record,label="{for.end:                                          \l  ret i64** %0\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0x9ee65a0 {
+          label = "";
+          style = solid;
+          color = 1
+          Node0x9e870d0;
+          Node0x9ec2470;
+          Node0x9eb2eb0;
+          Node0x9ec4030;
+          Node0x9ebc650;
+          Node0x9ec6a20;
+          Node0x9e69ed0;
+          Node0x9ec6f40;
+          Node0x9ec2690;
+          Node0x9e74e60;
+        }
+}

@@ -1,0 +1,58 @@
+digraph "Scop Graph for 'isArrayEqual' function" {
+	label="Scop Graph for 'isArrayEqual' function";
+
+	Node0x9eb2eb0 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0x9eb2eb0 -> Node0x9e842d0;
+	Node0x9e842d0 [shape=record,label="{entry.split:                                      \l  %cmp = icmp eq i64 %arr1_size, %arr2_size\l  br i1 %cmp, label %for.cond.preheader, label %cleanup\l}"];
+	Node0x9e842d0 -> Node0x9eb1e00;
+	Node0x9e842d0 -> Node0x9e7e710;
+	Node0x9eb1e00 [shape=record,label="{for.cond.preheader:                               \l  %cmp111 = icmp sgt i64 %arr1_size, 0\l  br i1 %cmp111, label %for.body.lr.ph, label %cleanup.loopexit\l}"];
+	Node0x9eb1e00 -> Node0x9ec6f40;
+	Node0x9eb1e00 -> Node0x9ee74b0;
+	Node0x9ec6f40 [shape=record,label="{for.body.lr.ph:                                   \l  br label %for.body\l}"];
+	Node0x9ec6f40 -> Node0x9e90cd0;
+	Node0x9e90cd0 [shape=record,label="{for.body:                                         \l  %i.012 = phi i64 [ 0, %for.body.lr.ph ], [ %inc, %for.cond ]\l  %arrayidx = getelementptr inbounds i64, i64* %arr1, i64 %i.012\l  %0 = load i64, i64* %arrayidx, align 8, !tbaa !1\l  %arrayidx2 = getelementptr inbounds i64, i64* %arr2, i64 %i.012\l  %1 = load i64, i64* %arrayidx2, align 8, !tbaa !1\l  %cmp3 = icmp eq i64 %0, %1\l  %inc = add nuw nsw i64 %i.012, 1\l  br i1 %cmp3, label %for.cond, label %for.body.cleanup.loopexit_crit_edge\l}"];
+	Node0x9e90cd0 -> Node0x9e5b760;
+	Node0x9e90cd0 -> Node0x9ef2460;
+	Node0x9e5b760 [shape=record,label="{for.cond:                                         \l  %cmp1 = icmp slt i64 %inc, %arr1_size\l  br i1 %cmp1, label %for.body, label %for.cond.cleanup.loopexit_crit_edge\l}"];
+	Node0x9e5b760 -> Node0x9e90cd0[constraint=false];
+	Node0x9e5b760 -> Node0x9e80800;
+	Node0x9e80800 [shape=record,label="{for.cond.cleanup.loopexit_crit_edge:              \l  br label %cleanup.loopexit\l}"];
+	Node0x9e80800 -> Node0x9ee74b0;
+	Node0x9ee74b0 [shape=record,label="{cleanup.loopexit:                                 \l  %retval.0.ph = phi i32 [ 1, %for.cond.cleanup.loopexit_crit_edge ], [ 0,\l... %for.body.cleanup.loopexit_crit_edge ], [ 1, %for.cond.preheader ]\l  br label %cleanup\l}"];
+	Node0x9ee74b0 -> Node0x9e7e710;
+	Node0x9e7e710 [shape=record,label="{cleanup:                                          \l  %retval.0 = phi i32 [ 0, %entry.split ], [ %retval.0.ph, %cleanup.loopexit ]\l  ret i32 %retval.0\l}"];
+	Node0x9ef2460 [shape=record,label="{for.body.cleanup.loopexit_crit_edge:              \l  br label %cleanup.loopexit\l}"];
+	Node0x9ef2460 -> Node0x9ee74b0;
+	colorscheme = "paired12"
+        subgraph cluster_0x9ea0d50 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0x9d8f770 {
+            label = "Non affine loop bound '***COULDNOTCOMPUTE***' in loop: for.body";
+            style = solid;
+            color = 6
+            subgraph cluster_0x9e66df0 {
+              label = "Non affine loop bound '***COULDNOTCOMPUTE***' in loop: for.body";
+              style = solid;
+              color = 5
+              subgraph cluster_0x9e797c0 {
+                label = "Non affine loop bound '***COULDNOTCOMPUTE***' in loop: for.body";
+                style = solid;
+                color = 7
+                Node0x9e90cd0;
+                Node0x9e5b760;
+                Node0x9e80800;
+                Node0x9ef2460;
+              }
+              Node0x9eb1e00;
+              Node0x9ec6f40;
+            }
+            Node0x9e842d0;
+            Node0x9ee74b0;
+          }
+          Node0x9eb2eb0;
+          Node0x9e7e710;
+        }
+}

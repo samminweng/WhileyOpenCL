@@ -1,0 +1,39 @@
+digraph "Scop Graph for 'parseStringToInt' function" {
+	label="Scop Graph for 'parseStringToInt' function";
+
+	Node0x9ec2470 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0x9ec2470 -> Node0x9e87270;
+	Node0x9e87270 [shape=record,label="{entry.split:                                      \l  %0 = load i64, i64* %arr, align 8, !tbaa !1\l  %1 = icmp ult i64 %0, 10\l  br i1 %1, label %while.body.lr.ph, label %while.end\l}"];
+	Node0x9e87270 -> Node0x9ec6f40;
+	Node0x9e87270 -> Node0x9ea1a10;
+	Node0x9ec6f40 [shape=record,label="{while.body.lr.ph:                                 \l  br label %while.body\l}"];
+	Node0x9ec6f40 -> Node0x9eb4e80;
+	Node0x9eb4e80 [shape=record,label="{while.body:                                       \l  %arrayidx16 = phi i64* [ %arr, %while.body.lr.ph ], [ %arrayidx, %while.body\l... ]\l  %i.015 = phi i64 [ 0, %while.body.lr.ph ], [ %inc, %while.body ]\l  %value.014 = phi i64 [ 0, %while.body.lr.ph ], [ %add, %while.body ]\l  %mul = mul nsw i64 %value.014, 10\l  %2 = load i64, i64* %arrayidx16, align 8, !tbaa !1\l  %add = add nsw i64 %2, %mul\l  %inc = add nuw nsw i64 %i.015, 1\l  %arrayidx = getelementptr inbounds i64, i64* %arr, i64 %inc\l  %3 = load i64, i64* %arrayidx, align 8, !tbaa !1\l  %4 = icmp ult i64 %3, 10\l  br i1 %4, label %while.body, label %while.cond.while.end_crit_edge\l}"];
+	Node0x9eb4e80 -> Node0x9eb4e80[constraint=false];
+	Node0x9eb4e80 -> Node0x9ec1860;
+	Node0x9ec1860 [shape=record,label="{while.cond.while.end_crit_edge:                   \l  %add.lcssa = phi i64 [ %add, %while.body ]\l  br label %while.end\l}"];
+	Node0x9ec1860 -> Node0x9ea1a10;
+	Node0x9ea1a10 [shape=record,label="{while.end:                                        \l  %value.0.lcssa = phi i64 [ %add.lcssa, %while.cond.while.end_crit_edge ], [\l... 0, %entry.split ]\l  ret i64 %value.0.lcssa\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0x9e62f10 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0x9ea0d50 {
+            label = "Condition in BB 'while.body' performs a comparision on (not yet supported) unsigned integers.";
+            style = solid;
+            color = 6
+            subgraph cluster_0x9e66df0 {
+              label = "Condition in BB 'while.body' performs a comparision on (not yet supported) unsigned integers.";
+              style = solid;
+              color = 5
+              Node0x9eb4e80;
+            }
+            Node0x9e87270;
+            Node0x9ec6f40;
+            Node0x9ec1860;
+          }
+          Node0x9ec2470;
+          Node0x9ea1a10;
+        }
+}

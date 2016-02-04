@@ -1,0 +1,21 @@
+digraph "Scop Graph for 'slice' function" {
+	label="Scop Graph for 'slice' function";
+
+	Node0x9ec0990 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0x9ec0990 -> Node0x9ec6c40;
+	Node0x9ec6c40 [shape=record,label="{entry.split:                                      \l  %sub = sub nsw i64 %end, %start\l  %mul = shl i64 %sub, 3\l  %call = tail call noalias i8* @malloc(i64 %mul) #5\l  %cmp = icmp eq i8* %call, null\l  br i1 %cmp, label %if.then, label %if.end\l}"];
+	Node0x9ec6c40 -> Node0x9ec2690;
+	Node0x9ec6c40 -> Node0x9e91800;
+	Node0x9ec2690 [shape=record,label="{if.then:                                          \l  %puts = tail call i32 @puts(i8* getelementptr inbounds ([56 x i8], [56 x\l... i8]* @str, i64 0, i64 0))\l  tail call void @exit(i32 -2) #6\l  unreachable\l}"];
+	Node0x9e91800 [shape=record,label="{if.end:                                           \l  %0 = bitcast i8* %call to i64*\l  %arrayidx = getelementptr inbounds i64, i64* %arr, i64 %start\l  %1 = bitcast i64* %arrayidx to i8*\l  tail call void @llvm.memcpy.p0i8.p0i8.i64(i8* nonnull %call, i8* %1, i64\l... %mul, i32 8, i1 false)\l  ret i64* %0\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0x9e90f30 {
+          label = "";
+          style = solid;
+          color = 1
+          Node0x9ec0990;
+          Node0x9ec6c40;
+          Node0x9ec2690;
+          Node0x9e91800;
+        }
+}
