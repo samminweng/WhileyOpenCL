@@ -13,10 +13,10 @@ BEGIN {
 	# Polly optimiz
 	polly_opts="gcc polly openmp vector"
 	# Parameters
-	parameters["Reverse"] = "1000 10000 100000 1000000 10000000 100000000";
-	parameters["MergeSort"] = "1000 10000 100000 1000000";
-	parameters["newTicTacToe"] = "1000 10000 100000 1000000";
-	parameters["MatrixMult"] = "10 20 30 40 50";
+	parameters["Reverse"] = "1000 10000 100000 1000000 10000000 100000000 1000000000 10000000000";
+	parameters["MergeSort"] = "1000 10000 100000 1000000 10000000 100000000 1000000000";
+	parameters["newTicTacToe"] = "1000 10000 100000 1000000 10000000 100000000 1000000000 10000000000";
+	parameters["MatrixMult"] = "10 100 1000 10000";
 	count[""]=0;	
 }
 {
