@@ -1,0 +1,21 @@
+digraph "Scop Graph for 'gen1DArray' function" {
+	label="Scop Graph for 'gen1DArray' function";
+
+	Node0x8f885e0 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0x8f885e0 -> Node0x8f95900;
+	Node0x8f95900 [shape=record,label="{entry.split:                                      \l  %conv = sext i32 %arr_size to i64\l  %mul = shl nsw i64 %conv, 3\l  %call = tail call noalias i8* @malloc(i64 %mul) #5\l  %cmp = icmp eq i8* %call, null\l  br i1 %cmp, label %if.then, label %if.end\l}"];
+	Node0x8f95900 -> Node0x8ff3800;
+	Node0x8f95900 -> Node0x8f64a90;
+	Node0x8ff3800 [shape=record,label="{if.then:                                          \l  %puts = tail call i32 @puts(i8* getelementptr inbounds ([61 x i8], [61 x\l... i8]* @str.22, i64 0, i64 0))\l  tail call void @exit(i32 -2) #6\l  unreachable\l}"];
+	Node0x8f64a90 [shape=record,label="{if.end:                                           \l  %0 = bitcast i8* %call to i64*\l  %1 = trunc i32 %value to i8\l  tail call void @llvm.memset.p0i8.i64(i8* nonnull %call, i8 %1, i64 %mul, i32\l... 8, i1 false)\l  ret i64* %0\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0x8f82dd0 {
+          label = "";
+          style = solid;
+          color = 1
+          Node0x8f885e0;
+          Node0x8f95900;
+          Node0x8ff3800;
+          Node0x8f64a90;
+        }
+}

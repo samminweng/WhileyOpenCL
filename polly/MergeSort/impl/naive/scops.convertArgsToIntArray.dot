@@ -1,0 +1,92 @@
+digraph "Scop Graph for 'convertArgsToIntArray' function" {
+	label="Scop Graph for 'convertArgsToIntArray' function";
+
+	Node0x903a1f0 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0x903a1f0 -> Node0x8f794d0;
+	Node0x8f794d0 [shape=record,label="{entry.split:                                      \l  %cmp = icmp slt i32 %argc, 2\l  br i1 %cmp, label %if.then, label %if.end\l}"];
+	Node0x8f794d0 -> Node0x8fa9fd0;
+	Node0x8f794d0 -> Node0x8fa8b20;
+	Node0x8fa9fd0 [shape=record,label="{if.then:                                          \l  %puts84 = tail call i32 @puts(i8* getelementptr inbounds ([35 x i8], [35 x\l... i8]* @str.27, i64 0, i64 0))\l  tail call void @exit(i32 -2) #6\l  unreachable\l}"];
+	Node0x8fa8b20 [shape=record,label="{if.end:                                           \l  %sub = add nsw i32 %argc, -1\l  %conv = sext i32 %sub to i64\l  %mul = shl nsw i64 %conv, 3\l  %call1 = tail call noalias i8* @malloc(i64 %mul) #5\l  %0 = bitcast i8* %call1 to i64**\l  %cmp2 = icmp eq i8* %call1, null\l  br i1 %cmp2, label %if.then4, label %for.cond.preheader\l}"];
+	Node0x8fa8b20 -> Node0x8fa0450;
+	Node0x8fa8b20 -> Node0x8fa90a0;
+	Node0x8fa0450 [shape=record,label="{if.then4:                                         \l  %puts83 = tail call i32 @puts(i8* getelementptr inbounds ([67 x i8], [67 x\l... i8]* @str.26, i64 0, i64 0))\l  tail call void @exit(i32 -2) #6\l  unreachable\l}"];
+	Node0x8fa90a0 [shape=record,label="{for.cond.preheader:                               \l  %conv7 = sext i32 %argc to i64\l  %cmp892 = icmp sgt i32 %argc, 1\l  br i1 %cmp892, label %for.body.lr.ph, label %for.end54\l}"];
+	Node0x8fa90a0 -> Node0x8f95e30;
+	Node0x8fa90a0 -> Node0x8f6ca90;
+	Node0x8f95e30 [shape=record,label="{for.body.lr.ph:                                   \l  br label %for.body\l}"];
+	Node0x8f95e30 -> Node0x8f6cab0;
+	Node0x8f6cab0 [shape=record,label="{for.body:                                         \l  %i.094 = phi i64 [ 1, %for.body.lr.ph ], [ %inc53, %for.inc52 ]\l  %arr_size.093 = phi i64 [ 0, %for.body.lr.ph ], [ %arr_size.1, %for.inc52 ]\l  %arrayidx = getelementptr inbounds i8*, i8** %args, i64 %i.094\l  %1 = load i8*, i8** %arrayidx, align 8, !tbaa !1\l  %2 = load i8, i8* %1, align 1, !tbaa !5\l  %idxprom = sext i8 %2 to i64\l  %call12 = tail call i16** @__ctype_b_loc() #7\l  %3 = load i16*, i16** %call12, align 8, !tbaa !1\l  %arrayidx13 = getelementptr inbounds i16, i16* %3, i64 %idxprom\l  %4 = load i16, i16* %arrayidx13, align 2, !tbaa !6\l  %and = and i16 %4, 2048\l  %tobool = icmp eq i16 %and, 0\l  br i1 %tobool, label %for.inc52, label %while.cond.preheader\l}"];
+	Node0x8f6cab0 -> Node0x8fea450;
+	Node0x8f6cab0 -> Node0x8fea4b0;
+	Node0x8fea450 [shape=record,label="{for.inc52:                                        \l  %arr_size.1 = phi i64 [ %inc50, %for.end ], [ %arr_size.093, %for.body ]\l  %inc53 = add nuw nsw i64 %i.094, 1\l  %cmp8 = icmp slt i64 %inc53, %conv7\l  br i1 %cmp8, label %for.body, label %for.cond.for.end54_crit_edge\l}"];
+	Node0x8fea450 -> Node0x8f6cab0;
+	Node0x8fea450 -> Node0x8f69180;
+	Node0x8f69180 [shape=record,label="{for.cond.for.end54_crit_edge:                     \l  br label %for.end54\l}"];
+	Node0x8f69180 -> Node0x8f6ca90;
+	Node0x8f6ca90 [shape=record,label="{for.end54:                                        \l  ret i64** %0\l}"];
+	Node0x8fea4b0 [shape=record,label="{while.cond.preheader:                             \l  %5 = load i8*, i8** %arrayidx, align 8, !tbaa !1\l  %6 = load i8, i8* %5, align 1, !tbaa !5\l  %cmp1987 = icmp eq i8 %6, 0\l  br i1 %cmp1987, label %while.end, label %while.body.lr.ph\l}"];
+	Node0x8fea4b0 -> Node0x8fc6f40;
+	Node0x8fea4b0 -> Node0x8fc6fa0;
+	Node0x8fc6f40 [shape=record,label="{while.end:                                        \l  %max_j.0.lcssa = phi i64 [ %inc.lcssa, %while.cond.while.end_crit_edge ], [\l... 0, %while.cond.preheader ]\l  %add = shl i64 %max_j.0.lcssa, 3\l  %mul33 = add i64 %add, 8\l  %call34 = tail call noalias i8* @malloc(i64 %mul33) #5\l  %arrayidx35 = getelementptr inbounds i64*, i64** %0, i64 %arr_size.093\l  %12 = bitcast i64** %arrayidx35 to i8**\l  store i8* %call34, i8** %12, align 8, !tbaa !1\l  %cmp3789 = icmp sgt i64 %max_j.0.lcssa, 0\l  br i1 %cmp3789, label %for.body39.lr.ph, label %for.end\l}"];
+	Node0x8fc6f40 -> Node0x8fdf5f0;
+	Node0x8fc6f40 -> Node0x8fdf650;
+	Node0x8fdf5f0 [shape=record,label="{for.body39.lr.ph:                                 \l  br label %for.body39\l}"];
+	Node0x8fdf5f0 -> Node0x8f71700;
+	Node0x8f71700 [shape=record,label="{for.body39:                                       \l  %j.090 = phi i64 [ 0, %for.body39.lr.ph ], [ %inc47, %for.body39 ]\l  %13 = load i8*, i8** %arrayidx, align 8, !tbaa !1\l  %arrayidx41 = getelementptr inbounds i8, i8* %13, i64 %j.090\l  %14 = load i8, i8* %arrayidx41, align 1, !tbaa !5\l  %conv42 = sext i8 %14 to i64\l  %sub43 = add nsw i64 %conv42, -48\l  %15 = load i64*, i64** %arrayidx35, align 8, !tbaa !1\l  %arrayidx46 = getelementptr inbounds i64, i64* %15, i64 %j.090\l  store i64 %sub43, i64* %arrayidx46, align 8, !tbaa !8\l  %inc47 = add nuw nsw i64 %j.090, 1\l  %exitcond = icmp ne i64 %inc47, %max_j.0.lcssa\l  br i1 %exitcond, label %for.body39, label %for.cond36.for.end_crit_edge\l}"];
+	Node0x8f71700 -> Node0x8f71700[constraint=false];
+	Node0x8f71700 -> Node0x8f716d0;
+	Node0x8f716d0 [shape=record,label="{for.cond36.for.end_crit_edge:                     \l  br label %for.end\l}"];
+	Node0x8f716d0 -> Node0x8fdf650;
+	Node0x8fdf650 [shape=record,label="{for.end:                                          \l  %j.0.lcssa = phi i64 [ %max_j.0.lcssa, %for.cond36.for.end_crit_edge ], [ 0,\l... %while.end ]\l  %16 = load i64*, i64** %arrayidx35, align 8, !tbaa !1\l  %arrayidx49 = getelementptr inbounds i64, i64* %16, i64 %j.0.lcssa\l  store i64 -1, i64* %arrayidx49, align 8, !tbaa !8\l  %inc50 = add nsw i64 %arr_size.093, 1\l  br label %for.inc52\l}"];
+	Node0x8fdf650 -> Node0x8fea450;
+	Node0x8fc6fa0 [shape=record,label="{while.body.lr.ph:                                 \l  br label %while.body\l}"];
+	Node0x8fc6fa0 -> Node0x8f957b0;
+	Node0x8f957b0 [shape=record,label="{while.body:                                       \l  %7 = phi i8 [ %6, %while.body.lr.ph ], [ %11, %if.end32 ]\l  %max_j.088 = phi i64 [ 0, %while.body.lr.ph ], [ %inc, %if.end32 ]\l  %idxprom24 = sext i8 %7 to i64\l  %8 = load i16*, i16** %call12, align 8, !tbaa !1\l  %arrayidx26 = getelementptr inbounds i16, i16* %8, i64 %idxprom24\l  %9 = load i16, i16* %arrayidx26, align 2, !tbaa !6\l  %and28 = and i16 %9, 2048\l  %tobool29 = icmp eq i16 %and28, 0\l  br i1 %tobool29, label %if.then30, label %if.end32\l}"];
+	Node0x8f957b0 -> Node0x8f95740;
+	Node0x8f957b0 -> Node0x8fea930;
+	Node0x8f95740 [shape=record,label="{if.then30:                                        \l  %puts = tail call i32 @puts(i8* getelementptr inbounds ([50 x i8], [50 x\l... i8]* @str.25, i64 0, i64 0))\l  tail call void @exit(i32 -2) #6\l  unreachable\l}"];
+	Node0x8fea930 [shape=record,label="{if.end32:                                         \l  %inc = add nuw nsw i64 %max_j.088, 1\l  %10 = load i8*, i8** %arrayidx, align 8, !tbaa !1\l  %arrayidx17 = getelementptr inbounds i8, i8* %10, i64 %inc\l  %11 = load i8, i8* %arrayidx17, align 1, !tbaa !5\l  %cmp19 = icmp eq i8 %11, 0\l  br i1 %cmp19, label %while.cond.while.end_crit_edge, label %while.body\l}"];
+	Node0x8fea930 -> Node0x8fea990;
+	Node0x8fea930 -> Node0x8f957b0;
+	Node0x8fea990 [shape=record,label="{while.cond.while.end_crit_edge:                   \l  %inc.lcssa = phi i64 [ %inc, %if.end32 ]\l  br label %while.end\l}"];
+	Node0x8fea990 -> Node0x8fc6f40;
+	colorscheme = "paired12"
+        subgraph cluster_0x8f9fa60 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0x8fec900 {
+            label = "Non affine loop bound '(-1 + %max_j.0.lcssa)' in loop: for.body39";
+            style = solid;
+            color = 6
+            subgraph cluster_0x8f84640 {
+              label = "Region can not profitably be optimized!";
+              style = solid;
+              color = 5
+              Node0x8f71700;
+            }
+            Node0x8fc6f40;
+            Node0x8fdf5f0;
+            Node0x8f716d0;
+          }
+          Node0x903a1f0;
+          Node0x8f794d0;
+          Node0x8fa9fd0;
+          Node0x8fa8b20;
+          Node0x8fa0450;
+          Node0x8fa90a0;
+          Node0x8f95e30;
+          Node0x8f6cab0;
+          Node0x8fea450;
+          Node0x8f69180;
+          Node0x8f6ca90;
+          Node0x8fea4b0;
+          Node0x8fdf650;
+          Node0x8fc6fa0;
+          Node0x8f957b0;
+          Node0x8f95740;
+          Node0x8fea930;
+          Node0x8fea990;
+        }
+}

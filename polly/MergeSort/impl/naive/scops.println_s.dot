@@ -1,0 +1,15 @@
+digraph "Scop Graph for 'println_s' function" {
+	label="Scop Graph for 'println_s' function";
+
+	Node0x8e49040 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0x8e49040 -> Node0x8f864c0;
+	Node0x8f864c0 [shape=record,label="{entry.split:                                      \l  tail call void @printf_s(i64* %input, i64 %input_size)\l  %putchar = tail call i32 @putchar(i32 10) #5\l  ret void\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0x8fa1540 {
+          label = "";
+          style = solid;
+          color = 1
+          Node0x8e49040;
+          Node0x8f864c0;
+        }
+}
