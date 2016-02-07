@@ -2,18 +2,162 @@ Run GCC-compiled code on 2000 X 2000 Matrix...
 
  Performance counter stats for './MatrixMult.gcc.out 2000':
 
-      16744.285173 task-clock (msec)         #    0.983 CPUs utilized          
-            28,338 context-switches          #    0.002 M/sec                  
-                 2 cpu-migrations            #    0.000 K/sec                  
-             1,086 page-faults               #    0.065 K/sec                  
-    64,941,144,728 cycles                    #    3.878 GHz                    
+      16843.792219 task-clock (msec)         #    0.983 CPUs utilized          
+            28,093 context-switches          #    0.002 M/sec                  
+                 3 cpu-migrations            #    0.000 K/sec                  
+             1,086 page-faults               #    0.064 K/sec                  
+    65,171,975,153 cycles                    #    3.869 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    79,311,098,004 instructions              #    1.22  insns per cycle        
-     4,766,954,345 branches                  #  284.691 M/sec                  
-         2,424,048 branch-misses             #    0.05% of all branches        
+    79,310,396,110 instructions              #    1.22  insns per cycle        
+     4,766,819,121 branches                  #  283.002 M/sec                  
+         2,437,962 branch-misses             #    0.05% of all branches        
 
-      17.034362750 seconds time elapsed
+      17.135962821 seconds time elapsed
+
+
+ Performance counter stats for './MatrixMult.gcc.out 2000':
+
+      17214.751414 task-clock (msec)         #    0.980 CPUs utilized          
+            28,358 context-switches          #    0.002 M/sec                  
+                 1 cpu-migrations            #    0.000 K/sec                  
+             1,086 page-faults               #    0.063 K/sec                  
+    66,779,986,474 cycles                    #    3.879 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    79,310,865,913 instructions              #    1.19  insns per cycle        
+     4,766,908,231 branches                  #  276.908 M/sec                  
+         2,430,332 branch-misses             #    0.05% of all branches        
+
+      17.557873958 seconds time elapsed
+
+
+ Performance counter stats for './MatrixMult.gcc.out 2000':
+
+      17115.041003 task-clock (msec)         #    0.982 CPUs utilized          
+            28,283 context-switches          #    0.002 M/sec                  
+                 2 cpu-migrations            #    0.000 K/sec                  
+             1,086 page-faults               #    0.063 K/sec                  
+    66,410,477,380 cycles                    #    3.880 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    79,310,620,626 instructions              #    1.19  insns per cycle        
+     4,766,850,977 branches                  #  278.518 M/sec                  
+         2,443,035 branch-misses             #    0.05% of all branches        
+
+      17.433533794 seconds time elapsed
+
+
+ Performance counter stats for './MatrixMult.gcc.out 2000':
+
+      16880.041750 task-clock (msec)         #    0.983 CPUs utilized          
+            28,382 context-switches          #    0.002 M/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+             1,086 page-faults               #    0.064 K/sec                  
+    65,478,012,638 cycles                    #    3.879 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    79,310,734,142 instructions              #    1.21  insns per cycle        
+     4,766,877,196 branches                  #  282.397 M/sec                  
+         2,439,382 branch-misses             #    0.05% of all branches        
+
+      17.174241102 seconds time elapsed
+
+
+ Performance counter stats for './MatrixMult.gcc.out 2000':
+
+      16957.055312 task-clock (msec)         #    0.983 CPUs utilized          
+            28,367 context-switches          #    0.002 M/sec                  
+                 1 cpu-migrations            #    0.000 K/sec                  
+             1,086 page-faults               #    0.064 K/sec                  
+    65,827,391,098 cycles                    #    3.882 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    79,310,816,430 instructions              #    1.20  insns per cycle        
+     4,766,894,350 branches                  #  281.116 M/sec                  
+         2,437,357 branch-misses             #    0.05% of all branches        
+
+      17.253478234 seconds time elapsed
+
+
+ Performance counter stats for './MatrixMult.gcc.out 2000':
+
+      16938.673841 task-clock (msec)         #    0.983 CPUs utilized          
+            28,374 context-switches          #    0.002 M/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+             1,085 page-faults               #    0.064 K/sec                  
+    65,758,621,491 cycles                    #    3.882 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    79,310,825,098 instructions              #    1.21  insns per cycle        
+     4,766,902,193 branches                  #  281.421 M/sec                  
+         2,465,305 branch-misses             #    0.05% of all branches        
+
+      17.232346657 seconds time elapsed
+
+
+ Performance counter stats for './MatrixMult.gcc.out 2000':
+
+      16996.059066 task-clock (msec)         #    0.983 CPUs utilized          
+            28,365 context-switches          #    0.002 M/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+             1,086 page-faults               #    0.064 K/sec                  
+    66,008,089,796 cycles                    #    3.884 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    79,310,722,061 instructions              #    1.20  insns per cycle        
+     4,766,882,418 branches                  #  280.470 M/sec                  
+         2,457,420 branch-misses             #    0.05% of all branches        
+
+      17.288977783 seconds time elapsed
+
+
+ Performance counter stats for './MatrixMult.gcc.out 2000':
+
+      16900.029817 task-clock (msec)         #    0.983 CPUs utilized          
+            28,347 context-switches          #    0.002 M/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+             1,086 page-faults               #    0.064 K/sec                  
+    65,598,084,250 cycles                    #    3.882 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    79,310,564,882 instructions              #    1.21  insns per cycle        
+     4,766,854,559 branches                  #  282.062 M/sec                  
+         2,453,594 branch-misses             #    0.05% of all branches        
+
+      17.193030503 seconds time elapsed
+
+
+ Performance counter stats for './MatrixMult.gcc.out 2000':
+
+      16941.412641 task-clock (msec)         #    0.983 CPUs utilized          
+            28,396 context-switches          #    0.002 M/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+             1,086 page-faults               #    0.064 K/sec                  
+    65,782,010,760 cycles                    #    3.883 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    79,310,790,637 instructions              #    1.21  insns per cycle        
+     4,766,901,676 branches                  #  281.376 M/sec                  
+         2,463,061 branch-misses             #    0.05% of all branches        
+
+      17.234126457 seconds time elapsed
+
+
+ Performance counter stats for './MatrixMult.gcc.out 2000':
+
+      16894.385689 task-clock (msec)         #    0.983 CPUs utilized          
+            28,012 context-switches          #    0.002 M/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+             1,086 page-faults               #    0.064 K/sec                  
+    65,535,980,773 cycles                    #    3.879 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    79,309,176,443 instructions              #    1.21  insns per cycle        
+     4,766,591,199 branches                  #  282.141 M/sec                  
+         2,445,235 branch-misses             #    0.05% of all branches        
+
+      17.185681283 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -22,7 +166,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 800.000
+cpu MHz		: 2300.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -48,7 +192,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 1400.000
+cpu MHz		: 800.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -152,7 +296,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 2300.000
+cpu MHz		: 800.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -178,7 +322,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 2300.000
+cpu MHz		: 800.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -204,7 +348,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 800.000
+cpu MHz		: 2100.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

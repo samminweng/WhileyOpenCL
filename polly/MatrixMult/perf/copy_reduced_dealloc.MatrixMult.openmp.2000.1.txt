@@ -2,18 +2,162 @@ Run OpenMP code on 2000 X 2000 Matrix with 1 threads...
 
  Performance counter stats for './MatrixMult.openmp.out 2000':
 
-      47578.011027 task-clock (msec)         #    1.000 CPUs utilized          
-             4,179 context-switches          #    0.088 K/sec                  
-                 1 cpu-migrations            #    0.000 K/sec                  
-            31,510 page-faults               #    0.662 K/sec                  
-   184,883,438,992 cycles                    #    3.886 GHz                    
+      48809.998363 task-clock (msec)         #    1.000 CPUs utilized          
+             4,348 context-switches          #    0.089 K/sec                  
+                 4 cpu-migrations            #    0.000 K/sec                  
+            31,510 page-faults               #    0.646 K/sec                  
+   189,594,132,274 cycles                    #    3.884 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    38,256,803,464 instructions              #    0.21  insns per cycle        
-     2,043,781,773 branches                  #   42.956 M/sec                  
-         4,173,786 branch-misses             #    0.20% of all branches        
+    38,258,682,921 instructions              #    0.20  insns per cycle        
+     2,044,130,726 branches                  #   41.879 M/sec                  
+         4,187,360 branch-misses             #    0.20% of all branches        
 
-      47.592492326 seconds time elapsed
+      48.825764802 seconds time elapsed
+
+
+ Performance counter stats for './MatrixMult.openmp.out 2000':
+
+      49806.124627 task-clock (msec)         #    1.000 CPUs utilized          
+             4,452 context-switches          #    0.089 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+            31,510 page-faults               #    0.633 K/sec                  
+   193,568,285,314 cycles                    #    3.886 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    38,257,738,937 instructions              #    0.20  insns per cycle        
+     2,043,968,240 branches                  #   41.038 M/sec                  
+         4,188,111 branch-misses             #    0.20% of all branches        
+
+      49.820956134 seconds time elapsed
+
+
+ Performance counter stats for './MatrixMult.openmp.out 2000':
+
+      49881.882464 task-clock (msec)         #    1.000 CPUs utilized          
+             4,476 context-switches          #    0.090 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+            31,510 page-faults               #    0.632 K/sec                  
+   193,818,612,800 cycles                    #    3.886 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    38,257,811,666 instructions              #    0.20  insns per cycle        
+     2,043,983,561 branches                  #   40.976 M/sec                  
+         4,184,303 branch-misses             #    0.20% of all branches        
+
+      49.896887456 seconds time elapsed
+
+
+ Performance counter stats for './MatrixMult.openmp.out 2000':
+
+      49837.834751 task-clock (msec)         #    1.000 CPUs utilized          
+             4,437 context-switches          #    0.089 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+            31,510 page-faults               #    0.632 K/sec                  
+   193,693,400,050 cycles                    #    3.886 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    38,257,549,524 instructions              #    0.20  insns per cycle        
+     2,043,937,031 branches                  #   41.012 M/sec                  
+         4,183,512 branch-misses             #    0.20% of all branches        
+
+      49.853288235 seconds time elapsed
+
+
+ Performance counter stats for './MatrixMult.openmp.out 2000':
+
+      50314.151797 task-clock (msec)         #    1.000 CPUs utilized          
+             4,575 context-switches          #    0.091 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+            31,510 page-faults               #    0.626 K/sec                  
+   195,468,780,207 cycles                    #    3.885 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    38,258,885,439 instructions              #    0.20  insns per cycle        
+     2,044,161,312 branches                  #   40.628 M/sec                  
+         4,198,797 branch-misses             #    0.21% of all branches        
+
+      50.330416598 seconds time elapsed
+
+
+ Performance counter stats for './MatrixMult.openmp.out 2000':
+
+      49444.232500 task-clock (msec)         #    1.000 CPUs utilized          
+             4,402 context-switches          #    0.089 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+            31,510 page-faults               #    0.637 K/sec                  
+   192,159,463,940 cycles                    #    3.886 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    38,257,045,376 instructions              #    0.20  insns per cycle        
+     2,043,839,021 branches                  #   41.336 M/sec                  
+         4,177,586 branch-misses             #    0.20% of all branches        
+
+      49.459572824 seconds time elapsed
+
+
+ Performance counter stats for './MatrixMult.openmp.out 2000':
+
+      50105.949484 task-clock (msec)         #    1.000 CPUs utilized          
+             4,465 context-switches          #    0.089 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+            31,510 page-faults               #    0.629 K/sec                  
+   194,675,926,778 cycles                    #    3.885 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    38,257,807,310 instructions              #    0.20  insns per cycle        
+     2,043,983,705 branches                  #   40.793 M/sec                  
+         4,163,636 branch-misses             #    0.20% of all branches        
+
+      50.121111712 seconds time elapsed
+
+
+ Performance counter stats for './MatrixMult.openmp.out 2000':
+
+      49961.379856 task-clock (msec)         #    1.000 CPUs utilized          
+             4,434 context-switches          #    0.089 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+            31,510 page-faults               #    0.631 K/sec                  
+   194,137,638,169 cycles                    #    3.886 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    38,257,584,284 instructions              #    0.20  insns per cycle        
+     2,043,948,393 branches                  #   40.911 M/sec                  
+         4,176,999 branch-misses             #    0.20% of all branches        
+
+      49.975948872 seconds time elapsed
+
+
+ Performance counter stats for './MatrixMult.openmp.out 2000':
+
+      49985.452337 task-clock (msec)         #    1.000 CPUs utilized          
+             4,479 context-switches          #    0.090 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+            31,510 page-faults               #    0.630 K/sec                  
+   194,187,502,680 cycles                    #    3.885 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    38,257,791,610 instructions              #    0.20  insns per cycle        
+     2,043,981,753 branches                  #   40.892 M/sec                  
+         4,182,858 branch-misses             #    0.20% of all branches        
+
+      50.000869543 seconds time elapsed
+
+
+ Performance counter stats for './MatrixMult.openmp.out 2000':
+
+      50245.796218 task-clock (msec)         #    1.000 CPUs utilized          
+             4,482 context-switches          #    0.089 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+            31,510 page-faults               #    0.627 K/sec                  
+   195,255,110,568 cycles                    #    3.886 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    38,258,028,272 instructions              #    0.20  insns per cycle        
+     2,044,016,629 branches                  #   40.680 M/sec                  
+         4,176,238 branch-misses             #    0.20% of all branches        
+
+      50.260838087 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -74,7 +218,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 3401.000
+cpu MHz		: 800.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -204,7 +348,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 800.000
+cpu MHz		: 3401.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

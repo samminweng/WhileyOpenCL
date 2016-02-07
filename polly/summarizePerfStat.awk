@@ -23,7 +23,7 @@ function generateReport(results){
  					for(par=1;par<=par_total;par++){
  						parameter=par_array[par];
  						th_total=split(threads, th_array, " ");
- 						for(th=1;th<th_total;th++){
+ 						for(th=1;th<=th_total;th++){
  							thread=th_array[th];
  							key=testcase","c_type","polly_opt","parameter","thread;
  							# Check if there is any result.
