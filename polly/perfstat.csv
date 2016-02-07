@@ -1,0 +1,28 @@
+CPU Utilization
+TestCase,CodeType,CompilerOpt,Parameter,Threads,1st,2nd,3rd,4th,5th,6th,7th,8th,9th,10th,Average
+MatrixMult	handwritten	gcc	2000	1	   0.983 									
+MatrixMult	handwritten	openmp	2000	1	   0.950 									
+MatrixMult	handwritten	openmp	2000	2	   1.697 									
+MatrixMult	handwritten	openmp	2000	4	   2.805 									
+MatrixMult	handwritten2	gcc	2000	1	   0.995 									
+MatrixMult	handwritten2	openmp	2000	1	   0.995 									
+MatrixMult	handwritten2	openmp	2000	2	   0.994 									
+MatrixMult	handwritten2	openmp	2000	4	   0.992 									
+MatrixMult	copy_reduced_dealloc	gcc	2000	1	   1.000 									
+MatrixMult	copy_reduced_dealloc	openmp	2000	1	   1.000 									
+MatrixMult	copy_reduced_dealloc	openmp	2000	2	   1.000 									
+MatrixMult	copy_reduced_dealloc	openmp	2000	4	   1.000 									
+Execution Time
+TestCase,CodeType,CompilerOpt,Parameter,Threads,1st,2nd,3rd,4th,5th,6th,7th,8th,9th,10th,Average
+MatrixMult	handwritten	gcc	2000	1	      17.034362750 									
+MatrixMult	handwritten	openmp	2000	1	       5.331466750 									
+MatrixMult	handwritten	openmp	2000	2	       2.988569599 									
+MatrixMult	handwritten	openmp	2000	4	       1.894658769 									
+MatrixMult	handwritten2	gcc	2000	1	      58.775742662 									
+MatrixMult	handwritten2	openmp	2000	1	      59.322848881 									
+MatrixMult	handwritten2	openmp	2000	2	      49.980001414 									
+MatrixMult	handwritten2	openmp	2000	4	      35.074568383 									
+MatrixMult	copy_reduced_dealloc	gcc	2000	1	      44.996510704 									
+MatrixMult	copy_reduced_dealloc	openmp	2000	1	      47.592492326 									
+MatrixMult	copy_reduced_dealloc	openmp	2000	2	      48.551229765 									
+MatrixMult	copy_reduced_dealloc	openmp	2000	4	      47.814565814 									

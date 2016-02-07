@@ -1,0 +1,55 @@
+digraph "Scop Graph for 'main' function" {
+	label="Scop Graph for 'main' function";
+
+	Node0x9abd910 [shape=record,label="{entry}"];
+	Node0x9abd910 -> Node0x9a5d9a0;
+	Node0x9a5d9a0 [shape=record,label="{entry.split}"];
+	Node0x9a5d9a0 -> Node0x9a59c60;
+	Node0x9a5d9a0 -> Node0x9a5c020;
+	Node0x9a59c60 [shape=record,label="{blklab27}"];
+	Node0x9a59c60 -> Node0x9a10f80;
+	Node0x9a59c60 -> Node0x99f91d0;
+	Node0x9a10f80 [shape=record,label="{if.then88}"];
+	Node0x9a10f80 -> Node0x9a07f30;
+	Node0x9a07f30 [shape=record,label="{if.end119}"];
+	Node0x99f91d0 [shape=record,label="{if.end119.critedge201}"];
+	Node0x99f91d0 -> Node0x9a07f30;
+	Node0x9a5c020 [shape=record,label="{if.end4}"];
+	Node0x9a5c020 -> Node0x99db040;
+	Node0x9a5c020 -> Node0x9ad5510;
+	Node0x99db040 [shape=record,label="{blklab28}"];
+	Node0x99db040 -> Node0x9a04280;
+	Node0x99db040 -> Node0x9a5f2a0;
+	Node0x9a04280 [shape=record,label="{blklab29}"];
+	Node0x9a04280 -> Node0x9a5dd40;
+	Node0x9a04280 -> Node0x9a65380;
+	Node0x9a5dd40 [shape=record,label="{if.end45}"];
+	Node0x9a5dd40 -> Node0x9a59c60;
+	Node0x9a65380 [shape=record,label="{if.end41}"];
+	Node0x9a5f2a0 [shape=record,label="{if.end36}"];
+	Node0x9ad5510 [shape=record,label="{if.end31}"];
+	colorscheme = "paired12"
+        subgraph cluster_0x9a5cbd0 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0x99db640 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0x9a59c60;
+            Node0x9a10f80;
+            Node0x99f91d0;
+          }
+          Node0x9abd910;
+          Node0x9a5d9a0;
+          Node0x9a07f30;
+          Node0x9a5c020;
+          Node0x99db040;
+          Node0x9a04280;
+          Node0x9a5dd40;
+          Node0x9a65380;
+          Node0x9a5f2a0;
+          Node0x9ad5510;
+        }
+}

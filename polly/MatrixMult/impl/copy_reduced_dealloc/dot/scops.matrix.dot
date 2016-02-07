@@ -1,0 +1,27 @@
+digraph "Scop Graph for 'matrix' function" {
+	label="Scop Graph for 'matrix' function";
+
+	Node0xa4b87b0 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0xa4b87b0 -> Node0xa4c2630;
+	Node0xa4c2630 [shape=record,label="{entry.split:                                      \l  %call = tail call noalias i8* @malloc(i64 40) #5\l  %0 = bitcast i8* %call to %struct.Matrix*\l  %data_size1 = getelementptr inbounds i8, i8* %call, i64 8\l  %1 = bitcast i8* %data_size1 to i64*\l  store i64 %data_size, i64* %1, align 8, !tbaa !1\l  %data_size_size2 = getelementptr inbounds i8, i8* %call, i64 16\l  %2 = bitcast i8* %data_size_size2 to i64*\l  store i64 %data_size_size, i64* %2, align 8, !tbaa !7\l  %call3 = tail call i64** @copy2DArray(i64** %data, i64 %data_size, i64\l... %data_size_size) #5\l  %data4 = bitcast i8* %call to i64***\l  store i64** %call3, i64*** %data4, align 8, !tbaa !8\l  %height5 = getelementptr inbounds i8, i8* %call, i64 32\l  %3 = bitcast i8* %height5 to i64*\l  store i64 %height, i64* %3, align 8, !tbaa !9\l  %width6 = getelementptr inbounds i8, i8* %call, i64 24\l  %4 = bitcast i8* %width6 to i64*\l  store i64 %width, i64* %4, align 8, !tbaa !10\l  br i1 %data_has_ownership, label %if.then8, label %if.end12\l}"];
+	Node0xa4c2630 -> Node0xa48c770;
+	Node0xa4c2630 -> Node0xa4c1800;
+	Node0xa48c770 [shape=record,label="{if.then8:                                         \l  tail call void @free2DArray(i64** %data, i64 %data_size) #5\l  br label %if.end12\l}"];
+	Node0xa48c770 -> Node0xa4c1800;
+	Node0xa4c1800 [shape=record,label="{if.end12:                                         \l  ret %struct.Matrix* %0\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xa4b3df0 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xa491160 {
+            label = "";
+            style = solid;
+            color = 6
+            Node0xa4c2630;
+            Node0xa48c770;
+          }
+          Node0xa4b87b0;
+          Node0xa4c1800;
+        }
+}

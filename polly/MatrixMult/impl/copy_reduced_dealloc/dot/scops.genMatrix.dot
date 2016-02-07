@@ -1,0 +1,63 @@
+digraph "Scop Graph for 'genMatrix' function" {
+	label="Scop Graph for 'genMatrix' function";
+
+	Node0xa513ce0 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0xa513ce0 -> Node0xa4cfeb0;
+	Node0xa4cfeb0 [shape=record,label="{entry.split:                                      \l  %conv1 = trunc i64 %width to i32\l  %call = tail call i64* @gen1DArray(i32 0, i32 %conv1) #5\l  %call5 = tail call i64** @gen2DArray(i64* %call, i64 %height, i64 %width) #5\l  %cmp84 = icmp sgt i64 %height, 0\l  br i1 %cmp84, label %while.body13.preheader.lr.ph, label %if.end22\l}"];
+	Node0xa4cfeb0 -> Node0xa4c1950;
+	Node0xa4cfeb0 -> Node0xa4b6a00;
+	Node0xa4c1950 [shape=record,label="{while.body13.preheader.lr.ph:                     \l  br label %while.body13.preheader\l}"];
+	Node0xa4c1950 -> Node0xa4b9c60;
+	Node0xa4b9c60 [shape=record,label="{while.body13.preheader:                           \l  %i.085 = phi i64 [ 0, %while.body13.preheader.lr.ph ], [ %add19, %blklab25 ]\l  %cmp1482 = icmp sgt i64 %width, 0\l  br i1 %cmp1482, label %if.end17.lr.ph, label %blklab25\l}"];
+	Node0xa4b9c60 -> Node0xa50aca0;
+	Node0xa4b9c60 -> Node0xa48a240;
+	Node0xa50aca0 [shape=record,label="{if.end17.lr.ph:                                   \l  br label %if.end17\l}"];
+	Node0xa50aca0 -> Node0xa48e350;
+	Node0xa48e350 [shape=record,label="{if.end17:                                         \l  %j.083 = phi i64 [ 0, %if.end17.lr.ph ], [ %add, %if.end17 ]\l  %arrayidx = getelementptr inbounds i64*, i64** %call5, i64 %i.085\l  %0 = load i64*, i64** %arrayidx, align 8, !tbaa !1\l  %arrayidx18 = getelementptr inbounds i64, i64* %0, i64 %j.083\l  store i64 1, i64* %arrayidx18, align 8, !tbaa !5\l  %add = add nuw nsw i64 %j.083, 1\l  %exitcond = icmp ne i64 %add, %width\l  br i1 %exitcond, label %if.end17, label %while.body13.blklab25_crit_edge\l}"];
+	Node0xa48e350 -> Node0xa48e350[constraint=false];
+	Node0xa48e350 -> Node0xa50a690;
+	Node0xa50a690 [shape=record,label="{while.body13.blklab25_crit_edge:                  \l  br label %blklab25\l}"];
+	Node0xa50a690 -> Node0xa48a240;
+	Node0xa48a240 [shape=record,label="{blklab25:                                         \l  %add19 = add nuw nsw i64 %i.085, 1\l  %exitcond87 = icmp ne i64 %add19, %height\l  br i1 %exitcond87, label %while.body13.preheader, label\l... %while.body.if.end22_crit_edge\l}"];
+	Node0xa48a240 -> Node0xa4b9c60[constraint=false];
+	Node0xa48a240 -> Node0xa48a2d0;
+	Node0xa48a2d0 [shape=record,label="{while.body.if.end22_crit_edge:                    \l  br label %if.end22\l}"];
+	Node0xa48a2d0 -> Node0xa4b6a00;
+	Node0xa4b6a00 [shape=record,label="{if.end22:                                         \l  %call23 = tail call %struct.Matrix* @matrix(i64 %width, i64 %height, i64**\l... %call5, i64 %height, i64 %width, i1 zeroext false)\l  tail call void @free2DArray(i64** %call5, i64 %height) #5\l  %1 = bitcast i64* %call to i8*\l  tail call void @free(i8* %1) #5\l  ret %struct.Matrix* %call23\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xa49a3c0 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0xa50a5d0 {
+            label = "Call instruction:   %call = tail call i64* @gen1DArray(i32 0, i32 %conv1) #5";
+            style = solid;
+            color = 6
+            subgraph cluster_0xa50abe0 {
+              label = "Base address not invariant in current region:  %0 = load i64*, i64** %arrayidx, align 8, !tbaa !1";
+              style = solid;
+              color = 5
+              subgraph cluster_0xa4937a0 {
+                label = "Base address not invariant in current region:  %0 = load i64*, i64** %arrayidx, align 8, !tbaa !1";
+                style = solid;
+                color = 7
+                subgraph cluster_0xa4b48a0 {
+                  label = "Region can not profitably be optimized!";
+                  style = solid;
+                  color = 9
+                  Node0xa48e350;
+                }
+                Node0xa4b9c60;
+                Node0xa50aca0;
+                Node0xa50a690;
+              }
+              Node0xa48a240;
+            }
+            Node0xa4cfeb0;
+            Node0xa4c1950;
+            Node0xa48a2d0;
+          }
+          Node0xa513ce0;
+          Node0xa4b6a00;
+        }
+}

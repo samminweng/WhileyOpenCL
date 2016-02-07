@@ -1,0 +1,87 @@
+digraph "Scop Graph for 'printMat' function" {
+	label="Scop Graph for 'printMat' function";
+
+	Node0x9a5d820 [shape=record,label="{entry}"];
+	Node0x9a5d820 -> Node0x9a598d0;
+	Node0x9a598d0 [shape=record,label="{entry.split}"];
+	Node0x9a598d0 -> Node0x9a5d9a0;
+	Node0x9a598d0 -> Node0x9a0ee60;
+	Node0x9a5d9a0 [shape=record,label="{while.body2.preheader.lr.ph}"];
+	Node0x9a5d9a0 -> Node0x9a1c4b0;
+	Node0x9a1c4b0 [shape=record,label="{while.body2.preheader}"];
+	Node0x9a1c4b0 -> Node0x9a5e760;
+	Node0x9a1c4b0 -> Node0x9a5b690;
+	Node0x9a5e760 [shape=record,label="{if.end7.lr.ph}"];
+	Node0x9a5e760 -> Node0x9a5df70;
+	Node0x9a5df70 [shape=record,label="{if.end7}"];
+	Node0x9a5df70 -> Node0x99722b0;
+	Node0x9a5df70 -> Node0x9a5c310;
+	Node0x99722b0 [shape=record,label="{if.end11}"];
+	Node0x99722b0 -> Node0x9a5df70[constraint=false];
+	Node0x99722b0 -> Node0x9a5c370;
+	Node0x9a5c370 [shape=record,label="{while.body2.blklab21_crit_edge}"];
+	Node0x9a5c370 -> Node0x9a5b690;
+	Node0x9a5b690 [shape=record,label="{blklab21}"];
+	Node0x9a5b690 -> Node0x9a0ee30;
+	Node0x9a5b690 -> Node0x9a1c480;
+	Node0x9a0ee30 [shape=record,label="{if.then16}"];
+	Node0x9a0ee30 -> Node0x9a1c480;
+	Node0x9a1c480 [shape=record,label="{if.end17}"];
+	Node0x9a1c480 -> Node0x9a1c4b0[constraint=false];
+	Node0x9a1c480 -> Node0x9a217a0;
+	Node0x9a217a0 [shape=record,label="{while.body.blklab19_crit_edge}"];
+	Node0x9a217a0 -> Node0x9a0ee60;
+	Node0x9a0ee60 [shape=record,label="{blklab19}"];
+	Node0x9a5c310 [shape=record,label="{if.then10}"];
+	Node0x9a5c310 -> Node0x99722b0;
+	colorscheme = "paired12"
+        subgraph cluster_0x99de550 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0x9974ee0 {
+            label = "";
+            style = solid;
+            color = 6
+            subgraph cluster_0x9a5deb0 {
+              label = "Base address not invariant in current region:  %3 = load i64*, i64** %arrayidx, align 8, !tbaa !9";
+              style = solid;
+              color = 5
+              subgraph cluster_0x9a5bbe0 {
+                label = "";
+                style = solid;
+                color = 7
+                subgraph cluster_0x9a5b5d0 {
+                  label = "Call instruction:   %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.6, i64 0, i64 0), i64 %4)";
+                  style = solid;
+                  color = 9
+                  subgraph cluster_0x9a59c30 {
+                    label = "Region can not profitably be optimized!";
+                    style = solid;
+                    color = 11
+                    Node0x9a5df70;
+                    Node0x9a5c310;
+                  }
+                  Node0x99722b0;
+                }
+                Node0x9a1c4b0;
+                Node0x9a5e760;
+                Node0x9a5c370;
+              }
+              subgraph cluster_0x9a1c400 {
+                label = "Region can not profitably be optimized!";
+                style = solid;
+                color = 7
+                Node0x9a5b690;
+                Node0x9a0ee30;
+              }
+              Node0x9a1c480;
+            }
+            Node0x9a598d0;
+            Node0x9a5d9a0;
+            Node0x9a217a0;
+          }
+          Node0x9a5d820;
+          Node0x9a0ee60;
+        }
+}
