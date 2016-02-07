@@ -1,6 +1,7 @@
 package wyopcl.translator.generator;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -34,11 +35,13 @@ public class CodeStores {
 	private boolean isVerbose;
 	private List<wyil.lang.WyilFile.Type> userTypes;// Store all the user-defined types at source level, e.g. Board.
 	protected HashMap<FunctionOrMethod, CodeStore> stores; // Store generated code for each function
+	private HashMap<Integer, Codes.Lambda> lambdas;// Store the lambda expression
 	
 	public CodeStores(boolean isVerbose, List<wyil.lang.WyilFile.Type> userTypes){
 		this.isVerbose = isVerbose;		
 		this.stores = new HashMap<FunctionOrMethod, CodeStore>();
 		this.userTypes = userTypes;
+		this.lambdas = new HashMap<Integer, Codes.Lambda>();
 	}
 	
 	/**
@@ -47,7 +50,7 @@ public class CodeStores {
 	 * @param function
 	 * @return
 	 */
-	protected CodeStore getCodeStore(FunctionOrMethod function) {
+	private CodeStore getCodeStore(FunctionOrMethod function) {
 		// Lazy initailization.
 		if (!stores.containsKey(function)) {
 			// Put the code store into the stores
@@ -76,9 +79,19 @@ public class CodeStores {
 	 * @param statement
 	 * @param function
 	 */
-	public void addAllStatements(Code code, List<String> statement, FunctionOrMethod function) {
+	protected void addAllStatements(Code code, List<String> statement, FunctionOrMethod function) {
 		CodeStore store = getCodeStore(function);
 		store.addAllStatements(code, statement);
+	}
+	/**
+	 * Adds the generated C code for a given wyil code.
+	 * @param code
+	 * @param statement
+	 * @param function
+	 */
+	protected void addStatement(Code code, String statement, FunctionOrMethod function){
+		CodeStore store = getCodeStore(function);
+		store.addStatement(code, statement);
 	}
 	
 	/**
@@ -99,6 +112,27 @@ public class CodeStores {
 	protected void loadField(int register, String field, FunctionOrMethod function) {
 		CodeStore store = getCodeStore(function);
 		store.loadField(register, field);
+	}
+	
+	/**
+	 * Get the lambda expression to the register
+	 * @param register
+	 * @param lambda
+	 */
+	protected Codes.Lambda getLambda(int register){
+		Codes.Lambda lambda = this.lambdas.get(register);
+		if(lambda == null){
+			throw new RuntimeException("Missing lambda expression");
+		}
+		return lambda;
+	}
+	/**
+	 * Add lambda expression to the table for retrieval.
+	 * @param register
+	 * @param lambda
+	 */
+	protected void addLambda(int register, Codes.Lambda lambda){
+		this.lambdas.put(register, lambda);
 	}
 	
 	/**
@@ -552,6 +586,42 @@ public class CodeStores {
 		
 	}
 
+	/**
+	 * Increases the indentation of generated C code for a given function
+	 * @param function
+	 */
+	protected void increaseIndent(FunctionOrMethod function) {
+		CodeStore store = getCodeStore(function);
+		store.increaseIndent();
+	}
+	/***
+	 * Decreases the indentation of generated C code for a given function.
+	 * @param function
+	 */
+	protected void decreaseIndent(FunctionOrMethod function){
+		CodeStore store = getCodeStore(function);
+		store.decreaseIndent();
+	}
+
+	/**
+	 * Get the pre-loaded field of given register.
+	 * @param operand
+	 * @param function
+	 * @return
+	 */
+	protected String getField(int register, FunctionOrMethod function) {
+		CodeStore store = getCodeStore(function);
+		return store.getField(register);
+	}
+
+	/**
+	 * Get the generated C code for the given function
+	 * @return
+	 */
+	protected List<String> getStatements(FunctionOrMethod function) {
+		CodeStore store = getCodeStore(function);
+		return store.getStatements();
+	}
 
 	
 

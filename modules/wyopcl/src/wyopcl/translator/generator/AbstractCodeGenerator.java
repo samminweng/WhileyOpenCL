@@ -38,6 +38,7 @@ import wyil.lang.Codes.IndexOf;
 import wyil.lang.Codes.IndirectInvoke;
 import wyil.lang.Codes.Invoke;
 import wyil.lang.Codes.Label;
+import wyil.lang.Codes.Lambda;
 import wyil.lang.Codes.LengthOf;
 import wyil.lang.Codes.Loop;
 import wyil.lang.Codes.NewArray;
@@ -167,7 +168,7 @@ public abstract class AbstractCodeGenerator {
 				} else if (code instanceof Codes.Label) {
 					translate((Codes.Label) code, function);
 				} else if (code instanceof Codes.Lambda) {
-					throw new RuntimeException("Not implemented! "+ code.toString(), null);
+					translate((Codes.Lambda)code, function);
 				} else if (code instanceof Codes.LengthOf) {
 					translate((Codes.LengthOf) code, function);
 				} else if (code instanceof Codes.ArrayGenerator){
@@ -202,6 +203,8 @@ public abstract class AbstractCodeGenerator {
 	}
 
 	
+	protected abstract void translate(Lambda code, FunctionOrMethod function);
+
 	protected abstract void translate(NewArray code, FunctionOrMethod function);
 
 	protected abstract void translate(ArrayGenerator code, FunctionOrMethod function);
