@@ -152,22 +152,15 @@
 	  </target>-->
 	  <!--Test the code generator with test cases.-->
 	  <target name="test-code" depends="build">
-	  	<mkdir dir="../../report/code"/>
-	  	<junit fork="yes" dir="../../.">
+	  	<junit fork="true" dir="${basedir}/../../" failureProperty="tests.failed" printsummary="yes" outputtoformatters="true">
 	  		<formatter type="plain" usefile="false" />
 	  		<classpath refid="junit-classpath"/>
-	  		<formatter type="xml" />
-	  		<batchtest todir="../../report/code">
-	  			<fileset dir="../../modules/wyopcl/test">
+	  		<batchtest>
+	  			<fileset dir="${basedir}/test">
 	  				<include name="**/CodeGenerationTestCase*" />
 	  			</fileset>
 	  		</batchtest>
 	  	</junit>
-	  	<junitreport todir="../../report">
-	  		<fileset dir="../../report/code">
-	  			<include name="TEST-*.xml" />
-	  		</fileset>
-	  		<report todir="../../report/code" />
-	  	</junitreport>
+	  	<fail message="Test failure detected, stopping build." if="tests.failed"/>
 	  </target>
 </project>
