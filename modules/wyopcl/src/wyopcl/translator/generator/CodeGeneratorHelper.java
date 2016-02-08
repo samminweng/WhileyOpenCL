@@ -355,6 +355,27 @@ public final class CodeGeneratorHelper {
 			return "void*";
 		}
 		
+		if(type instanceof Type.Function){
+			// Function pointers, e.g. long long (*)(long long)
+			Type.Function func_type = (Type.Function)type;
+			// Return type (single return value)
+			String str = translateType(func_type.returns().get(0), stores);
+			// Function pointer
+			str += "(*)(";
+			// Parameter types
+			boolean isFirst = true;
+			for(Type param: func_type.params()){
+				if(!isFirst){
+					str += ", ";
+				}else{
+					isFirst = false;
+				}
+				str += translateType(param, stores);
+			}
+			str += ")";
+			return str;
+		}
+	
 		throw new RuntimeException("Not Implemented!");
 	}
 

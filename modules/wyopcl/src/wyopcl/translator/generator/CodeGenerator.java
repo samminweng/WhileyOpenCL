@@ -148,17 +148,30 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		
 		return declarations;
 	}
+
+	
 	/**
 	 * Declare the lambda function singature.
 	 * @param lhs
 	 * @param lambda
 	 * @return
 	 */
-	private String declareLambda(String lhs, FunctionOrMethod lambda){
-		Type.Function type = (Type.Function)lambda.type();
+	private String declareLambda(String lhs, Type.Function type){
+		String statement = "";
 		String ret_type = CodeGeneratorHelper.translateType(type.returns().get(0), stores);
-		String par_type = CodeGeneratorHelper.translateType(type.params().get(0), stores);
-		return ret_type + " (*" +lhs + ")("+ par_type+");";
+		statement += ret_type + " (*" +lhs + ")(";
+		boolean isFirst = true;
+		// Get parameter list
+		for(Type parameter_type: type.params()){
+			if(!isFirst){
+				statement+=",";
+			}else{
+				isFirst = false;
+			}
+			statement += CodeGeneratorHelper.translateType(parameter_type, stores);
+		}
+		statement +=")";
+		return statement;
 	}
 	
 	
@@ -193,18 +206,23 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Generate input parameters separated by comma
 			List<String> parameters = new ArrayList<String>();
 			for (int op=0;op<params.size();op++) {
-				Type type = params.get(op);
+				Type parameter_type = params.get(op);
 				String var = stores.getVar(op, function);
-				if(type instanceof Type.Array){
+				if(parameter_type instanceof Type.Array){
 					// Add extra 'size' variable for array variable
-					int dimension = stores.getArrayDimension(type);
+					int dimension = stores.getArrayDimension(parameter_type);
 					parameters.add("_DECL_"+dimension+"DARRAY_PARAM("+var+")");
 				}else{
-					parameters.add(CodeGeneratorHelper.translateType(type, stores) + " " + var);
+					if(parameter_type instanceof Type.Function){
+						// Add lambda function pointer
+						parameters.add(declareLambda(var, (Type.Function)parameter_type));
+					}else{
+						parameters.add(CodeGeneratorHelper.translateType(parameter_type, stores) + " " + var);
+					}
 				}
 				// Add ownership flag ('_has_ownership') to input parameter
 				this.deallocatedAnalyzer.ifPresent(a -> {
-					if(stores.isCompoundType(type)){
+					if(stores.isCompoundType(parameter_type)){
 						parameters.add("_DECL_OWNERSHIP_PARAM("+var+")");
 					}
 				});
@@ -247,7 +265,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		Type lhs_type = stores.getRawType(code.target(), function);
 		String indent = stores.getIndent(function);
 		if (code.constant.type() instanceof Type.Null){
-			// Skip translation.
+			statement.add(indent + "void* "+ lhs + " = NULL;");
 		}else{
 			if (code.constant.type() instanceof Type.Array) {
 				// Cast the constant to an array
@@ -315,8 +333,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String lhs = stores.getVar(code.target(0), function);
 		String rhs = stores.getVar(code.operand(0), function);
 		if(lhs_type instanceof Type.Function){
-			FunctionOrMethod lambda = stores.getLambda((Type.Function)lhs_type);
-			statement.add(indent+declareLambda(lhs, lambda));
+			statement.add(indent+declareLambda(lhs, (Type.Function)lhs_type) + ";");
 			// Point lhs to lambda function.
 			statement.add(indent+lhs+" = "+rhs+";");
 		}else{
@@ -1125,13 +1142,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String indent = stores.getIndent(function);
 		if (code.type(0) instanceof Type.Function) {
 			// Get the lambda expression
-			FunctionOrMethod lambda = stores.getLambda((Type.Function)code.type(0));
-			if(lambda!= null){
-				String lhs = stores.getVar(code.target(0), function);
-				String rhs = stores.getVar(code.operand(0), function);
-				String parameter = stores.getVar(code.operand(1), function);
-				statement.add(indent + lhs+" = "+rhs+"("+parameter+");");
-			}
+			String lhs = stores.getVar(code.target(0), function);
+			String rhs = stores.getVar(code.operand(0), function);
+			String parameter = stores.getVar(code.operand(1), function);
+			statement.add(indent + lhs+" = "+rhs+"("+parameter+");");
 		}else if (code.type(0) instanceof Type.Method){
 			// Get the function name, e.g. 'printf'.
 			String print_name = stores.getField(code.operand(0), function);
@@ -1509,7 +1523,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * Currently, we translate the lambda function into GCC anonymous function, e.g.
 	 * <code>lambda %3 = (_) lambda:$lambda88 : function(int)->(int)</code>
 	 * can be translated into:
-	 * <pre><code>long long (*twice)(long long);
+	 * <pre><code>
+	 *  $lambda88(NULL);
+	 *  long long (*twice)(long long);
 	 *	twice = $lambda88;
 	 * </code></pre>
 	 * 
@@ -1520,13 +1536,31 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		String indent = stores.getIndent(function);
 		// Get lhs var
 		String lhs = stores.getVar(code.target(0), function);
-		Type.Function lhs_type = (Type.Function)stores.getRawType(code.target(0), function);
-		// Get the lambda function 
-		FunctionOrMethod lambda = stores.getLambda(lhs_type);
-		// Translate the lambda
-		statement.add(indent + declareLambda(lhs, lambda));
+		String lambda = code.name.name();
+		// Initialize the lambda expression.
+		String init_lambda = lambda +"(";
+		// Add parameters
+		boolean isFirst = true;
+		for(int operand: code.operands()){
+			if(!isFirst){
+				init_lambda += ", ";
+			}else{
+				isFirst = false;
+			}
+			// Get the parameter
+			if(operand>0){
+				init_lambda += stores.getVar(operand, function);
+			}else{
+				init_lambda += "NULL";
+			}
+		}
+			
+		init_lambda	+= ");";
+		statement.add(indent+init_lambda);
+		// Adds the lambda declaration
+		statement.add(indent + declareLambda(lhs, (Type.Function)code.type(0)) + ";");
 		// Point the lhs to lambda function name
-		statement.add(indent+lhs + " = " +lambda.name()+";");
+		statement.add(indent+lhs + " = " +code.name.name()+";");
 		
 		stores.addAllStatements(code, statement, function);
 	}

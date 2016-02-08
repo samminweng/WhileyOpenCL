@@ -119,9 +119,9 @@ public class CodeStores {
 	 * @param register
 	 * @param lambda
 	 */
-	protected FunctionOrMethod getLambda(Type.Function type){
+	protected FunctionOrMethod getLambda(String name){
 		for (FunctionOrMethod funcOrMethod: functions){
-			if(funcOrMethod.type().equals(type)){
+			if(funcOrMethod.name().equals(name)){
 				return funcOrMethod;
 			}
 		}
