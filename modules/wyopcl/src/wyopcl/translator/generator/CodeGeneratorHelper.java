@@ -354,7 +354,7 @@ public final class CodeGeneratorHelper {
 		if(type instanceof Type.Null){
 			return "void*";
 		}
-
+		
 		throw new RuntimeException("Not Implemented!");
 	}
 

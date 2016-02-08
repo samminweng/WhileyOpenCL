@@ -76,7 +76,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 */
 	public void apply(WyilFile module) {
 		// Get and Set up user-defined types
-		this.stores = new CodeStores(config.isVerbose(), (List<wyil.lang.WyilFile.Type>) module.types());
+		this.stores = new CodeStores(config.isVerbose(), module);
 		
 		this.writeIncludes();
 		// Defines constants
@@ -87,12 +87,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		
 		// Translate each function
 		for (FunctionOrMethod function : module.functionOrMethods()) {
-			
 			// Iterate and translate each code into the target language.
 			this.iterateCodes(function.body().bytecodes(), function);
 			// Write the code
 			this.writeFunction(function);
-			
 		}
 	}
 	
@@ -112,26 +110,32 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			Type type = stores.getRawType(reg, function);
 			// Get the variable name.
 			String var = stores.getVar(reg, function);
-			String translateType = CodeGeneratorHelper.translateType(type, stores);
-			if (type instanceof Type.Array || (type instanceof Type.Reference
-					&& ((Type.Reference) type).element() instanceof Type.Array)) {
-				// Declare array variable 
-				int dimension = stores.getArrayDimension(type);
-				declarations.add(indent+"_DECL_"+dimension+"DARRAY("+var+");");
-			} else if (type instanceof Type.Int) {
-				declarations.add(indent + translateType + " " + var + " = 0;");
-			} else if (type instanceof Type.Record){
-				declarations.add(indent+translateType+ " " + var + ";");
-			} else if (type instanceof Type.Nominal){
-				declarations.add(indent+translateType+ " "+var+";");
-			} else if (type instanceof Type.Method){
+			
+			if (type instanceof Type.FunctionOrMethod){
 				// Skip translation
-			} else if (type instanceof Type.Union){
-				declarations.add(indent+translateType+ " " + var + ";");
-			}else if(type instanceof Type.Null){
-				// Skip translation for null-typed variables.
-			} else{
-				throw new RuntimeException("Not implemented");
+			}else{
+				if (type instanceof Type.Array || (type instanceof Type.Reference
+						&& ((Type.Reference) type).element() instanceof Type.Array)) {
+					// Declare array variable 
+					int dimension = stores.getArrayDimension(type);
+					declarations.add(indent+"_DECL_"+dimension+"DARRAY("+var+");");
+				} else if (type instanceof Type.Int) {
+					String translateType = CodeGeneratorHelper.translateType(type, stores);
+					declarations.add(indent + translateType + " " + var + " = 0;");
+				} else if (type instanceof Type.Record){
+					String translateType = CodeGeneratorHelper.translateType(type, stores);
+					declarations.add(indent+translateType+ " " + var + ";");
+				} else if (type instanceof Type.Nominal){
+					String translateType = CodeGeneratorHelper.translateType(type, stores);
+					declarations.add(indent+translateType+ " "+var+";");
+				} else if (type instanceof Type.Union){
+					String translateType = CodeGeneratorHelper.translateType(type, stores);
+					declarations.add(indent+translateType+ " " + var + ";");
+				}else if(type instanceof Type.Null){
+					// Skip translation for null-typed variables.
+				} else{
+					throw new RuntimeException("Not implemented");
+				}
 			}
 			
 			// Declare ownership
@@ -144,7 +148,19 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		
 		return declarations;
 	}
-
+	/**
+	 * Declare the lambda function singature.
+	 * @param lhs
+	 * @param lambda
+	 * @return
+	 */
+	private String declareLambda(String lhs, FunctionOrMethod lambda){
+		Type.Function type = (Type.Function)lambda.type();
+		String ret_type = CodeGeneratorHelper.translateType(type.returns().get(0), stores);
+		String par_type = CodeGeneratorHelper.translateType(type.params().get(0), stores);
+		return ret_type + " (*" +lhs + ")("+ par_type+");";
+	}
+	
 	
 	/**
 	 * Given a function, translates it into function declaration including function name and input parameters, e.g. 
@@ -292,28 +308,35 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 */
 	protected void translate(Codes.Assign code, FunctionOrMethod function) {
-		String lhs = stores.getVar(code.target(0), function);
-		// Get the actual type for lhs variable.
-		Type lhs_type = stores.getRawType(code.target(0), function);
-		String indent = stores.getIndent(function);
 		List<String> statement = new ArrayList<String>();
+		// Get the actual type for lhs variable.
+		String indent = stores.getIndent(function);
+		Type lhs_type = stores.getRawType(code.target(0), function);
+		String lhs = stores.getVar(code.target(0), function);
 		String rhs = stores.getVar(code.operand(0), function);
-		//Type rhs_type = store.getRawType(code.operand(0));
-		boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
-		if(!stores.isCompoundType(lhs_type)){
-			statement.add(indent + lhs + " = " + rhs + ";");
+		if(lhs_type instanceof Type.Function){
+			FunctionOrMethod lambda = stores.getLambda((Type.Function)lhs_type);
+			statement.add(indent+declareLambda(lhs, lambda));
+			// Point lhs to lambda function.
+			statement.add(indent+lhs+" = "+rhs+";");
 		}else{
-			this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
-			// Special cases for NULL type
-			if(code.type(0)instanceof Type.Null){
-				// Assign lhs to NULL values by 
-				statement.add(indent + lhs + " = NULL;");
-				// Transfer out the ownership of lhs variable
-				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + a.transferOwnership(code.target(0), function, stores)));
+			//Type rhs_type = store.getRawType(code.operand(0));
+			boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
+			if(!stores.isCompoundType(lhs_type)){
+				statement.add(indent + lhs + " = " + rhs + ";");
 			}else{
-				statement.addAll(CodeGeneratorHelper.generateAssignmentCode(lhs_type, indent, lhs, rhs, isCopyEliminated, stores));
-				this.deallocatedAnalyzer.ifPresent(a -> statement.addAll(a.computeOwnership(indent, isCopyEliminated, code, function, stores)));
-			}
+				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
+				// Special cases for NULL type
+				if(code.type(0)instanceof Type.Null){
+					// Assign lhs to NULL values by 
+					statement.add(indent + lhs + " = NULL;");
+					// Transfer out the ownership of lhs variable
+					this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + a.transferOwnership(code.target(0), function, stores)));
+				}else{
+					statement.addAll(CodeGeneratorHelper.generateAssignmentCode(lhs_type, indent, lhs, rhs, isCopyEliminated, stores));
+					this.deallocatedAnalyzer.ifPresent(a -> statement.addAll(a.computeOwnership(indent, isCopyEliminated, code, function, stores)));
+				}
+			}	
 		}
 		
 		// Add the statement to the list of statements.
@@ -1100,7 +1123,16 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(Codes.IndirectInvoke code, FunctionOrMethod function) {
 		List<String> statement = new ArrayList<String>();
 		String indent = stores.getIndent(function);
-		if (code.type(0) instanceof Type.FunctionOrMethod) {
+		if (code.type(0) instanceof Type.Function) {
+			// Get the lambda expression
+			FunctionOrMethod lambda = stores.getLambda((Type.Function)code.type(0));
+			if(lambda!= null){
+				String lhs = stores.getVar(code.target(0), function);
+				String rhs = stores.getVar(code.operand(0), function);
+				String parameter = stores.getVar(code.operand(1), function);
+				statement.add(indent + lhs+" = "+rhs+"("+parameter+");");
+			}
+		}else if (code.type(0) instanceof Type.Method){
 			// Get the function name, e.g. 'printf'.
 			String print_name = stores.getField(code.operand(0), function);
 			// Get the input
@@ -1137,7 +1169,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			default:
 				throw new RuntimeException("Not implemented." + code);
 			}
-
+		}else{
+			//throw new RuntimeException("Not implemented." + code);
 		}
 		stores.addAllStatements(code, statement, function);
 	}
@@ -1470,12 +1503,31 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		}
 	}
 
+	/**
+	 * Translates the lambda expression into anonymous function in C. 
+	 * <http://stackoverflow.com/questions/10405436/anonymous-functions-using-gcc-statement-expressions>
+	 * Currently, we translate the lambda function into GCC anonymous function, e.g.
+	 * <code>lambda %3 = (_) lambda:$lambda88 : function(int)->(int)</code>
+	 * can be translated into:
+	 * <pre><code>long long (*twice)(long long);
+	 *	twice = $lambda88;
+	 * </code></pre>
+	 * 
+	 */
 	@Override
 	protected void translate(Lambda code, FunctionOrMethod function) {
-		String indent = stores.getIndent(function);
 		List<String> statement = new ArrayList<String>();
+		String indent = stores.getIndent(function);
+		// Get lhs var
+		String lhs = stores.getVar(code.target(0), function);
+		Type.Function lhs_type = (Type.Function)stores.getRawType(code.target(0), function);
+		// Get the lambda function 
+		FunctionOrMethod lambda = stores.getLambda(lhs_type);
+		// Translate the lambda
+		statement.add(indent + declareLambda(lhs, lambda));
+		// Point the lhs to lambda function name
+		statement.add(indent+lhs + " = " +lambda.name()+";");
 		
 		stores.addAllStatements(code, statement, function);
-		//System.out.println(code);
 	}
 }

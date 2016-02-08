@@ -33,15 +33,15 @@ import wyopcl.Configuration;
 public class CodeStores {
 	private String prefix = "_";
 	private boolean isVerbose;
+	private List<FunctionOrMethod> functions;
 	private List<wyil.lang.WyilFile.Type> userTypes;// Store all the user-defined types at source level, e.g. Board.
 	protected HashMap<FunctionOrMethod, CodeStore> stores; // Store generated code for each function
-	private HashMap<Integer, Codes.Lambda> lambdas;// Store the lambda expression
 	
-	public CodeStores(boolean isVerbose, List<wyil.lang.WyilFile.Type> userTypes){
-		this.isVerbose = isVerbose;		
+	public CodeStores(boolean isVerbose, WyilFile module){
+		this.isVerbose = isVerbose;
+		this.userTypes = (List<wyil.lang.WyilFile.Type>) module.types();
+		this.functions = new ArrayList<FunctionOrMethod>(module.functionOrMethods());
 		this.stores = new HashMap<FunctionOrMethod, CodeStore>();
-		this.userTypes = userTypes;
-		this.lambdas = new HashMap<Integer, Codes.Lambda>();
 	}
 	
 	/**
@@ -119,21 +119,15 @@ public class CodeStores {
 	 * @param register
 	 * @param lambda
 	 */
-	protected Codes.Lambda getLambda(int register){
-		Codes.Lambda lambda = this.lambdas.get(register);
-		if(lambda == null){
-			throw new RuntimeException("Missing lambda expression");
+	protected FunctionOrMethod getLambda(Type.Function type){
+		for (FunctionOrMethod funcOrMethod: functions){
+			if(funcOrMethod.type().equals(type)){
+				return funcOrMethod;
+			}
 		}
-		return lambda;
+		return null;
 	}
-	/**
-	 * Add lambda expression to the table for retrieval.
-	 * @param register
-	 * @param lambda
-	 */
-	protected void addLambda(int register, Codes.Lambda lambda){
-		this.lambdas.put(register, lambda);
-	}
+	
 	
 	/**
 	 * Get the raw type of a given register, defined in 'f' function
@@ -435,8 +429,6 @@ public class CodeStores {
 			this.statements = new ArrayList<String>();
 			this.fields = new HashMap<Integer, String>();
 		}
-
-		
 		
 		/**
 		 * Load the field to the given register.
