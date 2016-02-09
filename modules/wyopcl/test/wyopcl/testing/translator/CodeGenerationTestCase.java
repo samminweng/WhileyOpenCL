@@ -30,6 +30,12 @@ public class CodeGenerationTestCase {
 		util = new BaseTestUtil();
 	}
 	
+	@After
+	public void tearDown() throws Exception {
+		util.terminate();
+		util = null;
+	}
+	
 	/**
 	 * Pass the test case parameters as the arguments to the method
 	 * @param testcase
