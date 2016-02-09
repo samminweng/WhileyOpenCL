@@ -3,184 +3,75 @@ package wyopcl.testing.translator;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Collection;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
+/**
+ * Use JUnit Parameterized Test to generate the C code for a variety of Whiley programs, and then compile and run the C code. 
+ * See <a href="http://www.tutorialspoint.com/junit/junit_parameterized_test.htm">junit_parameterized_test</a>
+ * @author Min-Hsien Weng
+ */
+@RunWith(Parameterized.class)
 public class CodeGenerationTestCase {
 	private BaseTestUtil util;
 	final Path codeDir = Paths.get(System.getProperty("user.dir")+ File.separator + "tests" + File.separator + "code");
+	private String testcase;
+	
 	@Before
-	public void setUp() throws Exception {
+	public void initialize() {
 		util = new BaseTestUtil();
 	}
-
-	@After
-	public void tearDown() throws Exception {
-		util.terminate();
-		util = null;
+	
+	/**
+	 * Pass the test case parameters as the arguments to the method
+	 * @param testcase
+	 */
+	public CodeGenerationTestCase(String testcase){
+		this.testcase = testcase;
+	}
+	
+	@Parameterized.Parameters
+	public static Collection testCases() {
+		return Arrays.asList(new String[] {
+				"swap",
+				"reverse",
+				"mergesort",
+				"newTicTacToe",
+				"MatrixMult",
+				"factorial",
+				"Fibonacci"
+		});
 	}
 	
 	@Test
-	public void test_swap_naive() {
-		//Generate the naive C code  
-		util.execCodeGeneration(codeDir, "swap");
+	public void testNaiveCCode(){
+		System.out.println("Generate the naive C code for " + testcase + ".whiley");   
+		util.execCodeGeneration(codeDir, testcase);
 	}
 	
-	
-	@Test
-	public void test_swap_naive_dealloc() {
-		//Generate the naive C code  
-		util.execCodeGeneration(codeDir, "swap", "dealloc");
-	}
-
-	@Test
-	public void test_swap_copy() {
-		//Generate the naive C code  
-		util.execCodeGeneration(codeDir, "swap", "copy");
+	@Test 
+	public void testNaiveDeallocatedCCode(){
+		System.out.println("Generate the naive and deallocated C code for " + testcase + ".whiley");   
+		util.execCodeGeneration(codeDir, testcase, "dealloc");
 	}
 	
-	@Test
-	public void test_swap_copy_dealloc() {
-		//Generate the naive C code  
-		util.execCodeGeneration(codeDir, "swap", "copy", "dealloc");
+	@Test 
+	public void testCopyCCode(){
+		System.out.println("Generate the copy eliminated C code for " + testcase + ".whiley");   
+		util.execCodeGeneration(codeDir, testcase, "copy");
 	}
 	
-	@Test
-	public void test_reverse_naive() {
-		//Generate the naive C code  
-		util.execCodeGeneration(codeDir, "reverse");
+	@Test 
+	public void testCopyDeallocatedCCode(){
+		System.out.println("Generate the copy eliminated and deallocated C code for " + testcase + ".whiley");   
+		util.execCodeGeneration(codeDir, testcase, "copy", "dealloc");
 	}
-	
-	@Test
-	public void test_reverse_naive_dealloc() {
-		//Generate the naive C code  
-		util.execCodeGeneration(codeDir, "reverse", "dealloc");
-	}
-	
-	@Test
-	public void test_reverse_copy() {
-		//Generate the naive C code  
-		util.execCodeGeneration(codeDir, "reverse", "copy");
-	}
-	
-	@Test
-	public void test_reverse_copy_dealloc() {
-		//Generate the naive C code  
-		util.execCodeGeneration(codeDir, "reverse", "copy", "dealloc");
-	}
-	
-	@Test
-	public void test_mergesort_naive() {
-		//Generate the naive C code  
-		util.execCodeGeneration(codeDir, "mergesort");
-	}
-	
-	@Test
-	public void test_mergesort_naive_dealloc() {
-		//Generate the naive C code  
-		util.execCodeGeneration(codeDir, "mergesort", "dealloc");
-	}
-	
-	
-	@Test
-	public void test_mergesort_copy() {
-		//Generate the naive C code  
-		util.execCodeGeneration(codeDir, "mergesort", "copy");
-	}
-	
-	
-	@Test
-	public void test_mergesort_copy_dealloc() {
-		//Generate the naive C code  
-		util.execCodeGeneration(codeDir, "mergesort", "copy", "dealloc");
-	}
-	
-	
-	@Test
-	public void test_newTicTacToe_naive() {
-		util.execCodeGeneration(codeDir, "newTicTacToe");
-	}
-	
-	@Test
-	public void test_newTicTacToe_naive_dealloc() {
-		util.execCodeGeneration(codeDir, "newTicTacToe", "dealloc");
-	}
-	
-	@Test
-	public void test_newTicTacToe_copy() {
-		util.execCodeGeneration(codeDir, "newTicTacToe", "copy");
-	}
-	
-	@Test
-	public void test_newTicTacToe_copy_dealloc() {
-		util.execCodeGeneration(codeDir, "newTicTacToe", "copy", "dealloc");
-	}
-	
-	@Test(timeout=10000)
-	public void test_MatrixMult_naive() {
-		util.execCodeGeneration(codeDir, "MatrixMult");
-	}
-	
-	@Test(timeout=10000)
-	public void test_MatrixMult_naive_dealloc() {
-		util.execCodeGeneration(codeDir, "MatrixMult", "dealloc");
-	}
-	
-	
-	@Test(timeout=10000)
-	public void test_MatrixMult_copy() {
-		util.execCodeGeneration(codeDir, "MatrixMult", "copy");
-	}
-	
-	@Test(timeout=10000)
-	public void test_MatrixMult_copy_dealloc() {
-		util.execCodeGeneration(codeDir, "MatrixMult", "copy", "dealloc");
-	}
-	
-	
-	@Test
-	public void test_factorial_naive(){
-		util.execCodeGeneration(codeDir, "factorial");
-	}
-	
-	@Test
-	public void test_factorial_naive_dealloc(){
-		util.execCodeGeneration(codeDir, "factorial", "dealloc");
-	}
-	
-	@Test
-	public void test_factorial_copy(){
-		util.execCodeGeneration(codeDir, "factorial", "copy");
-	}
-	
-	@Test
-	public void test_factorial_copy_dealloc(){
-		util.execCodeGeneration(codeDir, "factorial", "copy", "dealloc");
-	}
-	
-	
-	@Test
-	public void test_Fibonacci_naive(){
-		util.execCodeGeneration(codeDir, "Fibonacci");
-	}
-	
-	@Test
-	public void test_Fibonacci_naive_dealloc(){
-		util.execCodeGeneration(codeDir, "Fibonacci", "dealloc");
-	}
-	
-	@Test
-	public void test_Fibonacci_copy(){
-		util.execCodeGeneration(codeDir, "Fibonacci", "copy");
-	}
-	
-	@Test
-	public void test_Fibonacci_copy_dealloc(){
-		util.execCodeGeneration(codeDir, "Fibonacci", "copy", "dealloc");
-	}
-	
 }
