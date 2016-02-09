@@ -137,11 +137,7 @@ public class CodeStores {
 	 */
 	public Type getRawType(int register, FunctionOrMethod function){
 		CodeStore store = getCodeStore(function);
-		if(store.getRawType(register) == null){
-			return null;
-		}else{
-			return store.getRawType(register);
-		}
+		return store.getRawType(register);
 	}
 	/**
 	 * Get the variable name of a given register defined in 'f' function
@@ -540,15 +536,15 @@ public class CodeStores {
 			VariableDeclarations vars = function.attribute(VariableDeclarations.class);
 			Declaration declaration = vars.get(reg);
 			Type type = declaration.type();
-			if(type instanceof Type.Nominal){
-					WyilFile.Type user_type = getUserDefinedType((Type.Nominal)type);
-					if(user_type != null){
-						return user_type.type();
-					}else{
-						return null;
-					}
+			// Return the 'system console' Nominal type.
+			if(type instanceof Type.Nominal && !((Type.Nominal)type).name().name().equals("Console")){
+				WyilFile.Type user_type = getUserDefinedType((Type.Nominal) type);
+				if(user_type != null){
+					return user_type.type();
+				}else{
+					return null;
+				}
 			}
-					
 			return type;
 		}
 

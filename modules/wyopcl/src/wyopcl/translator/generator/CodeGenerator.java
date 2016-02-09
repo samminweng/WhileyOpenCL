@@ -467,11 +467,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @return
 	 */
 	private String translateLHSFunctionCall(Codes.Invoke code, FunctionOrMethod function) {
-		String indent = stores.getIndent(function);
 		String statement = "";
 		// Translate the return value of a function call.
 		// If no return value, no needs for translation.
-		if (code.target(0) >= 0) {
+		if (code.targets().length > 0) {
+			String indent = stores.getIndent(function);
 			Type lhs_type = stores.getRawType(code.target(0), function);
 			String lhs = stores.getVar(code.target(0), function);
 			if (lhs_type instanceof Type.Array) {
@@ -501,19 +501,19 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	private String translateRHSFunctionCall(Codes.Invoke code, FunctionOrMethod function) {
 		List<String> statement = new ArrayList<String>();
 		for (int operand: code.operands()) {
-			String var = stores.getVar(operand, function);
-			Type type = stores.getRawType(operand, function);
-			if(type instanceof Type.Int || stores.isIntType(type)){
-				statement.add(var);
-			}else if (type instanceof Type.Nominal && ((Type.Nominal)type).name().name().equals("Console")){
+			String parameter = stores.getVar(operand, function);
+			Type parameter_type = stores.getRawType(operand, function);
+			if (parameter_type instanceof Type.Nominal && ((Type.Nominal)parameter_type).name().name().equals("Console")){
 				statement.add("stdout");
-			}else if(type instanceof Type.Array){
+			}else if(parameter_type instanceof Type.Int || stores.isIntType(parameter_type)){
+				statement.add(parameter);
+			}else if(parameter_type instanceof Type.Array){
 				boolean isCopyEliminated = isCopyEliminated(operand, code, function);
-				int dimension = stores.getArrayDimension(type);
+				int dimension = stores.getArrayDimension(parameter_type);
 				if(isCopyEliminated){
-					statement.add("_"+dimension+"DARRAY_PARAM("+var+")");
+					statement.add("_"+dimension+"DARRAY_PARAM("+parameter+")");
 				}else{
-					statement.add("_"+dimension+"DARRAY_COPY_PARAM("+var+")");
+					statement.add("_"+dimension+"DARRAY_COPY_PARAM("+parameter+")");
 				}
 				// Append ownership to the function call
 				this.deallocatedAnalyzer.ifPresent(a -> {
@@ -528,16 +528,15 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						}
 					});
 				});
-				
-			}else if(type instanceof Type.Record || type instanceof Type.Nominal || type instanceof Type.Union){
+
+			}else if(parameter_type instanceof Type.Record || parameter_type instanceof Type.Nominal || parameter_type instanceof Type.Union){
 				boolean isCopyEliminated = isCopyEliminated(operand, code, function);
-				String type_name = CodeGeneratorHelper.translateType(type, stores).replace("*", "");
+				String type_name = CodeGeneratorHelper.translateType(parameter_type, stores).replace("*", "");
 				if(isCopyEliminated){
-					statement.add("_STRUCT_PARAM("+var+")");
+					statement.add("_STRUCT_PARAM("+parameter+")");
 				}else{
-					statement.add("_STRUCT_COPY_PARAM("+var+", "+type_name+")");
+					statement.add("_STRUCT_COPY_PARAM("+parameter+", "+type_name+")");
 				}
-				
 				// Append ownership to the function call
 				this.deallocatedAnalyzer.ifPresent(a -> {
 					Optional<HashMap<String, Boolean>> ownership = a.computeCallParameterOwnership(operand, code, function, stores, copyAnalyzer);
@@ -555,11 +554,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				throw new RuntimeException("Not Implemented");
 			}
 		}
-		
+
 		return statement.stream()
-			   .filter(s -> !s.equals(""))
-			   .map(s -> s.toString())
-			   .collect(Collectors.joining(", "));
+				.filter(s -> !s.equals(""))
+				.map(s -> s.toString())
+				.collect(Collectors.joining(", "));
 	}
 
 	/**
@@ -635,10 +634,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}
 		} else {
 			// Translate the function call, e.g.
-			String lhs = stores.getVar(code.target(0), function);
-			Type lhs_type = stores.getRawType(code.target(0), function);
-			// Free lhs 
-			this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
+			if(code.targets().length>0){
+				String lhs = stores.getVar(code.target(0), function);
+				Type lhs_type = stores.getRawType(code.target(0), function);
+				// Free lhs 
+				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
+			}
 			
 			// Add or transfer out the parameters that do not have the copy
 			for(int register: code.operands()){
@@ -662,8 +663,6 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Assign ownership to lhs
 			this.deallocatedAnalyzer.ifPresent(a -> statement.add(
 							indent + a.addOwnership(code.target(0), function, this.stores)));
-			
-		
 		}
 		// add the statement
 		stores.addAllStatements(code, statement, function);
@@ -1452,6 +1451,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			}else if(type instanceof Type.Union){
 				structs.addAll(CodeGeneratorHelper.generateStructDef(type, stores));
 				statements.addAll(CodeGeneratorHelper.generateStructFunction(type, stores));				
+			}else if(type instanceof Type.Function){
+				// Use 'typedef' to declare the lambda function
+				structs.add("typedef "+ declareLambda(type_name, (Type.Function)type));
 			}else{
 				throw new RuntimeException("Not Implemented!");
 			}
