@@ -22,6 +22,7 @@ import wyil.lang.Code;
 import wyil.lang.Codes;
 import wyil.lang.Codes.ArrayGenerator;
 import wyil.lang.Codes.Comparator;
+import wyil.lang.Codes.Debug;
 import wyil.lang.Codes.Dereference;
 import wyil.lang.Codes.IfIs;
 import wyil.lang.Codes.Lambda;
@@ -929,28 +930,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			this.deallocatedAnalyzer.ifPresent(a ->{
 				statements.addAll(a.freeAllMemory(code, function, stores));
 			});
-			Type lhs_type = stores.getRawType(code.operand(0), function);
-			// Check if the code returns a pointer but the return value is a structure. 
-			/*if(code.type(0) instanceof Type.Union && lhs_type instanceof Type.Record){
-				// This is a special case for 'return local variable' 
-				// We need to copy the local variable to stack memory, such as using 'copy_Board_PTR'
-				// Then return the copied variable, rather than the local one
-				// because variables that can be passed among functions are those defined in stack memory.
-				String struct = CodeGeneratorHelper.translateType(lhs_type, stores);
-				String pointer_struct = CodeGeneratorHelper.translateType(code.type(0), stores);
-				String var = stores.getVar(code.operand(0), function);
-				// Copy the local variable to stack variable
-				statements.add(indent+ pointer_struct + " ret = copy_"+pointer_struct.replace("*", "_PTR")+"(&"+var+");");
-				// Free the local variable
-				if(this.deallocatedAnalyzer.isPresent()){
-					statements.add(indent + "_FREE_STRUCT("+var+", "+struct+");");
-				}
-				// Return the stack variable
-				statements.add(indent + "return ret;");
-			}else{*/
-				// Return the structure.
-				statements.add(indent + "return " + stores.getVar(code.operand(0), function) + ";");
-			//}
+			statements.add(indent + "return " + stores.getVar(code.operand(0), function) + ";");
 		}
 		
 		stores.addAllStatements(code, statements, function);
@@ -1279,7 +1259,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * @param writer
 	 */
-	protected void writeFunction(FunctionOrMethod function) {
+	private void writeFunction(FunctionOrMethod function) {
 		// Write out the header file		
 		// Function header
 		List<String> function_header = new ArrayList<String>();
@@ -1292,15 +1272,12 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			throw new RuntimeException("Errors occur in writeIncludes()");
 		}
 		
-		
-		
 		// Function body
 		List<String> function_body = new ArrayList<String>();
 		function_body.add(this.declareFunction(function) + "{");
 		function_body.addAll(this.declareVariables(function));
 		function_body.addAll(stores.getStatements(function));
 		function_body.add("}\n");
-		
 		
 		try {
 			// Create a new one or over-write an existing one.
@@ -1434,7 +1411,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * } Board;<br>
 	 * </code> Also, add a 'print' function to print out the structure.
 	 */
-	protected void writeUserTypes(List<wyil.lang.WyilFile.Type> userTypes) {
+	private void writeUserTypes(List<wyil.lang.WyilFile.Type> userTypes) {
 		String filename = this.config.getFilename();
 		List<String> structs = new ArrayList<String>();
 		List<String> statements = new ArrayList<String>();
@@ -1453,7 +1430,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statements.addAll(CodeGeneratorHelper.generateStructFunction(type, stores));				
 			}else if(type instanceof Type.Function){
 				// Use 'typedef' to declare the lambda function
-				structs.add("typedef "+ declareLambda(type_name, (Type.Function)type));
+				structs.add("typedef "+ declareLambda(type_name, (Type.Function)type)+";");
 			}else{
 				throw new RuntimeException("Not Implemented!");
 			}
@@ -1481,7 +1458,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * 
 	 * 
 	 */
-	protected void writeConstants(Collection<WyilFile.Constant> constants) {
+	private void writeConstants(Collection<WyilFile.Constant> constants) {
 		// Generates declarations
 		List<String> declarations = new ArrayList<String>();
 		constants.forEach(c -> declarations.add("#define " + c.name() + " " + c.constant()));
@@ -1499,7 +1476,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	/**
 	 * Write out 'includes' both in 'test_case.c' and 'test_case.h'
 	 */
-	protected void writeIncludes() {
+	private void writeIncludes() {
 		String file_name = this.config.getFilename();
 		// Writes out #include "Util.h" to test_case.h 
 		String includes = "#include \"Util.h\"\n";
@@ -1565,5 +1542,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		statement.add(indent+lhs + " = " +code.name.name()+";");
 		
 		stores.addAllStatements(code, statement, function);
+	}
+
+	@Override
+	protected void translate(Debug code, FunctionOrMethod function) {
+		//code.toString()
+		throw new RuntimeException("Not Implemented");
+		// Print out error message
+		//stores.addStatement(code, "prinf(", function);
 	}
 }

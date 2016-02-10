@@ -28,6 +28,7 @@ import wyil.lang.Codes.Assign;
 import wyil.lang.Codes.BinaryOperator;
 import wyil.lang.Codes.Const;
 import wyil.lang.Codes.Convert;
+import wyil.lang.Codes.Debug;
 import wyil.lang.Codes.Dereference;
 import wyil.lang.Codes.Fail;
 import wyil.lang.Codes.FieldLoad;
@@ -68,10 +69,8 @@ public abstract class AbstractCodeGenerator {
 
 	public AbstractCodeGenerator(Configuration config) {
 		this.config = config;
-		
 	}	
 	
-
 	protected abstract void apply(WyilFile module);
 	
 	protected abstract void translate(Update code, FunctionOrMethod function);
@@ -118,6 +117,19 @@ public abstract class AbstractCodeGenerator {
 
 	protected abstract List<String> declareVariables(FunctionOrMethod function);
 	
+	protected abstract void translate(Debug code, FunctionOrMethod function);
+	
+	protected abstract void translate(Lambda code, FunctionOrMethod function);
+
+	protected abstract void translate(NewArray code, FunctionOrMethod function);
+
+	protected abstract void translate(ArrayGenerator code, FunctionOrMethod function);
+
+	protected abstract void translate(NewObject code, FunctionOrMethod function);
+
+	protected abstract void translate(Dereference code, FunctionOrMethod function);
+
+	protected abstract void translate(IfIs code, FunctionOrMethod function);
 
 	/**
 	 * Iterates over the list of byte-code to generate the corresponding C code.
@@ -142,7 +154,8 @@ public abstract class AbstractCodeGenerator {
 				} else if (code instanceof Codes.Const) {
 					translate((Codes.Const) code, function);
 				} else if (code instanceof Codes.Debug) {
-					throw new RuntimeException("Not implemented! "+ code.toString(), null);
+					translate((Codes.Debug)code, function);
+					//throw new RuntimeException("Not implemented! "+ code.toString(), null);
 				} else if (code instanceof Codes.Dereference) {
 					translate((Codes.Dereference)code, function);
 				} else if (code instanceof Codes.Fail) {
@@ -203,16 +216,5 @@ public abstract class AbstractCodeGenerator {
 	}
 
 	
-	protected abstract void translate(Lambda code, FunctionOrMethod function);
-
-	protected abstract void translate(NewArray code, FunctionOrMethod function);
-
-	protected abstract void translate(ArrayGenerator code, FunctionOrMethod function);
-
-	protected abstract void translate(NewObject code, FunctionOrMethod function);
-
-	protected abstract void translate(Dereference code, FunctionOrMethod function);
-
-	protected abstract void translate(IfIs code, FunctionOrMethod function);
 
 }

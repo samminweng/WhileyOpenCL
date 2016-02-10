@@ -208,9 +208,6 @@ public class CodeStores {
 		if (type instanceof Type.Int) {
 			return true;
 		}
-		/*if (type instanceof Type.Array) {
-			return isIntType(((Type.Array) type).element());
-		}*/
 		if(type instanceof Type.Union){
 			// Check if the union type contains INT type.
 			if(((Type.Union)type).bounds().contains(Type.Int.T_INT)){
@@ -219,8 +216,8 @@ public class CodeStores {
 		}
 		// Check if the raw nominal type is 'Int' type.
 		if(type instanceof Type.Nominal){
-			Type nominal = Optional.of(getUserDefinedType(type)).get().type();
-			if(nominal != null && nominal instanceof Type.Int){
+			Optional<wyil.lang.WyilFile.Type> nominal = Optional.ofNullable(getUserDefinedType(type));
+			if(nominal.isPresent() && nominal.get().type() instanceof Type.Int){
 				return true;
 			}
 		}
@@ -265,45 +262,43 @@ public class CodeStores {
 	 * @return
 	 */
 	public boolean isCompoundType(Type type){
-		if(type instanceof Type.Int || type instanceof Type.FunctionOrMethod){
-			return false;
-		}
-		
+		// Check if type aliased to INT type.
 		if(type instanceof Type.Array){
 			return true;
-		}else if(type instanceof Type.Record){
-			Type.Record record = (Type.Record)type;
-			// Check if the variable contains 'printf' field. 
-			long nonePrintFields = record.fields().keySet().stream()
-					.filter(f -> !f.contains("print") && !f.contains("println") && !f.contains("print_s") && !f.contains("println_s") )
-					.count();
+		}else{
+			if(isIntType(type) || type instanceof Type.Null || type instanceof Type.FunctionOrMethod){
+				return false;			
+			}else if(type instanceof Type.Record){
+				Type.Record record = (Type.Record)type;
+				// Check if the variable contains 'printf' field. 
+				long nonePrintFields = record.fields().keySet().stream()
+						.filter(f -> !f.contains("print") && !f.contains("println") && !f.contains("print_s") && !f.contains("println_s") )
+						.count();
 
-			// If NOT a printf field, then add ownership.
-			if(nonePrintFields>0){
-				return true;
-			}
-		}else if(type instanceof Type.Nominal){
-			if(!((Type.Nominal)type).name().toString().contains("Console")){
-				// Get nominal type
-				WyilFile.Type nominal = Optional.of(getUserDefinedType(type)).get();
-				if(nominal!= null  &&
-						// Check if the nominal type is aliased Integer type
-						!isIntType(type)){
+				// If NOT a printf field, then add ownership.
+				if(nonePrintFields>0){
 					return true;
+				}else{
+					return false;
+				}
+			}else if(type instanceof Type.Nominal){
+				// Get nominal type
+				Optional<wyil.lang.WyilFile.Type> nominal = Optional.ofNullable(getUserDefinedType(type));
+				if(nominal.isPresent()){
+					return isCompoundType(nominal.get().type());
+				}else{
+					return false;
+				}
+			}else if(type instanceof Type.Union){
+				Optional<Record> record = Optional.of(getRecordType((Type.Union)type));
+				if(record.isPresent()){
+					return isCompoundType(record.get());
+				}else{
+					return false;
 				}
 			}
-		}else if(type instanceof Type.Union){
-			// Check if the union type does not contain INT type
-			if(!isIntType(type) && getRecordType((Type.Union)type)!=null){
-				return true;
-			}
-		}else if(type instanceof Type.Null){
-			return false;
-		}else{
 			throw new RuntimeException("Not Implemented");
 		}
-
-		return false;
 	}
 	
 	/**
