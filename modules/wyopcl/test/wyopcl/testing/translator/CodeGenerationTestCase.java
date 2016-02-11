@@ -53,8 +53,8 @@ public class CodeGenerationTestCase {
 				"newTicTacToe",
 				"MatrixMult",
 				"factorial",
-				"Fibonacci", 
-				"lambda"
+				"Fibonacci" 
+				//"lambda"
 		});
 	}
 	
