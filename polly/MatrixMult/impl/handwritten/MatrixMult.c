@@ -45,8 +45,6 @@ int main()
         }
     }
 
-#ifdef TEST
-    print_array();
-#endif
+    printf("Pass %d X %d matrix test case (C[N][N] =%lld) \n ", N, N, C[N-1][N-1]);
     return 0;
 }

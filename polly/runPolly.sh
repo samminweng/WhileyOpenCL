@@ -36,8 +36,12 @@ load_polly_clang(){
 	# ### Generate png files from dot files
 	for i in `ls *.dot`; do dot -Tpng $i > $i.png; done
 	cd ../
-
-	read -p "Press [Enter] to "
+	read -p "Press [Enter] to export SCoPs detected by Polly"
+	clang $CPPFLAGS -O3 -mllvm -polly -mllvm -polly-export $program.c  
+	read -p "Press [Enter] to Run OpenMP code on $parameter X $parameter Matrix with 2 threads..."
+	export OMP_NUM_THREADS=2
+	clang $CPPFLAGS -O3 -mllvm -polly -mllvm -polly-parallel -lgomp $program.c -o $program.$compiler.out
+	./$program.$compiler.out
 }
 #
 # Generate the C code w.r.t. code optimization
@@ -123,7 +127,7 @@ opt_polly(){
 	# opt -basicaa -polly-import-jscop -polly-ast -analyze matmul.preopt.ll \
 	#     -polly-import-jscop-postfix=interchanged+tiled+vector
 
-	#read -p "Press [Enter] 10. Codegenerate the SCoPs"
+	read -p "Press [Enter] 10. Codegenerate the SCoPs"
 	#opt -basicaa -polly-import-jscop -polly-import-jscop-postfix=interchanged \
 	#     -polly-codegen \
 	#     matmul.preopt.ll | opt -O3 > matmul.polly.interchanged.ll
@@ -138,9 +142,10 @@ opt_polly(){
 	#     -polly-import-jscop-postfix=interchanged+tiled+vector -polly-codegen \
 	#     matmul.preopt.ll -polly-vectorizer=polly -polly-parallel\
 	#     | opt -O3 > matmul.polly.interchanged+tiled+vector+openmp.ll
-	# opt matmul.preopt.ll | opt -O3 > matmul.normalopt.ll
+	#opt $program.preopt.ll | opt -O3 > $program.normalopt.ll
+	opt -S -O3 -polly -polly-process-unprofitable $program.preopt.ll -o $program.polly.ll
 
-	#read -p "Press [Enter] 11. Create the executables"
+	read -p "Press [Enter] 11. Create the polly-optimized executables"
 	#llc $program.polly.interchanged.ll -o $program.polly.interchanged.s && gcc $program.polly.interchanged.s \
 	#     -o matmul.polly.interchanged.exe
 	# llc matmul.polly.interchanged+tiled.ll -o matmul.polly.interchanged+tiled.s && gcc matmul.polly.interchanged+tiled.s \
@@ -153,13 +158,21 @@ opt_polly(){
 	#     -o matmul.polly.interchanged+tiled+vector+openmp.s \
 	#     && gcc -lgomp matmul.polly.interchanged+tiled+vector+openmp.s \
 	#     -o matmul.polly.interchanged+tiled+vector+openmp.exe
-	# llc matmul.normalopt.ll -o matmul.normalopt.s && gcc matmul.normalopt.s \
-	#     -o matmul.normalopt.exe
+	#llc $program.normalopt.ll -o $program.normalopt.s && gcc $program.normalopt.s \
+    #    -o $program.normalopt.exe
+    llc $program.polly.ll -o $program.polly.s && gcc $program.polly.s -o $c_type.$program.polly.out
 
-	# read -p "Press [Enter] 12. Compare the runtime of the executables"
+    #read -p "Press [Enter] to Generate OpenMP code"
+    #opt -S -mem2reg -loop -simplify -indvars $program.c -o $program.preopt.ll
+    #opt -S -polly-codegen -polly-report -openmp $program.preopt.ll −o $program.ll
+    #llc $program.ll -o $program.s
+	#llvm-gcc $program.s -lgomp -o $program.openmp.out
+	#export OMP_NUM_THREADS=2
+	
+	read -p "Press [Enter] 12. Compare the runtime of the executables"
 
-	# read -p "Press [Enter] time ./matmul.normalopt.exe"
-	# time -f "%E real, %U user, %S sys" ./matmul.normalopt.exe
+	read -p "Press [Enter] time  ./$c_type.$program.polly.out"
+	time ./$c_type.$program.polly.out
 	# read -p "Press [Enter] time ./matmul.polly.interchanged.exe"
 	# time -f "%E real, %U user, %S sys" ./matmul.polly.interchanged.exe
 	# read -p "Press [Enter] time ./matmul.polly.interchanged+tiled.exe"
@@ -187,6 +200,6 @@ exec(){
 	opt_polly $c_type $program
 	cd ../../../
 }
-#exec handwritten MatrixMult
+exec handwritten MatrixMult
 exec handwritten2 MatrixMult
 #exec copy_reduced_dealloc MatrixMult

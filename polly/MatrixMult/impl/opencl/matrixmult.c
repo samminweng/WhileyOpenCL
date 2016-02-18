@@ -86,23 +86,26 @@ int main(int argc, char** argv)
    }
    // Load source kernel file
    /* Load the source code containing the kernel*/
-    FILE *fp = fopen("kernel.cl", "r");
+   //FILE *fp = fopen("kernel.cl", "r");
+   FILE *fp = fopen("kernel.nvptx.s", "r");
     if (!fp) {
       fprintf(stderr, "Failed to load kernel.\n");
       return EXIT_FAILURE;
     }
 
     fseek(fp, 0, SEEK_END);
-    long long source_size = ftell(fp);
+    size_t source_size = ftell(fp);
     rewind(fp);
     char *source_str = (char*)malloc(source_size*sizeof(char));
     fread(source_str, sizeof(char), source_size, fp);
     fclose(fp);
     printf("%s\n", source_str);
-
-    program = clCreateProgramWithSource(context, 1, (const char **) & source_str, NULL, &err);
-    if (!program){
-     printf("Error: Failed to create compute program!\n");
+    cl_int binary_status;
+    //program = clCreateProgramWithSource(context, 1, (const char **) & source_str, NULL, &err);
+    program = clCreateProgramWithBinary(context, 1, &device_id, (const size_t *)&source_size,
+                                        (const unsigned char **)&source_str, &binary_status, &err);
+    if (err != CL_SUCCESS){
+     printf("Error: Failed to create compute program!%d\n", binary_status);
      return EXIT_FAILURE;
     }else{
       printf("SUCCESS: Create compute program!\n");

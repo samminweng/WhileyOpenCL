@@ -5,12 +5,13 @@ target triple = "x86_64-unknown-linux-gnu"
 %struct._IO_FILE = type { i32, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, %struct._IO_marker*, %struct._IO_FILE*, i32, i32, i64, i16, i8, [1 x i8], i8*, i64, i8*, i8*, i8*, i8*, i64, i32, [20 x i8] }
 %struct._IO_marker = type { %struct._IO_marker*, %struct._IO_FILE*, i32 }
 
-@A = common global [2000 x [2000 x i64]] zeroinitializer, align 16
-@B = common global [2000 x [2000 x i64]] zeroinitializer, align 16
+@A = common global [1024 x [1024 x i64]] zeroinitializer, align 16
+@B = common global [1024 x [1024 x i64]] zeroinitializer, align 16
 @stdout = external global %struct._IO_FILE*, align 8
 @.str = private unnamed_addr constant [6 x i8] c"%lld \00", align 1
-@C = common global [2000 x [2000 x i64]] zeroinitializer, align 16
+@C = common global [1024 x [1024 x i64]] zeroinitializer, align 16
 @.str.1 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
+@.str.2 = private unnamed_addr constant [49 x i8] c"Pass %d X %d matrix test case (C[N][N] =%lld) \0A \00", align 1
 
 ; Function Attrs: nounwind uwtable
 define void @init_array() #0 {
@@ -22,7 +23,7 @@ entry:
 
 for.cond:                                         ; preds = %for.inc10, %entry
   %0 = load i32, i32* %i, align 4
-  %cmp = icmp slt i32 %0, 2000
+  %cmp = icmp slt i32 %0, 1024
   br i1 %cmp, label %for.body, label %for.end12
 
 for.body:                                         ; preds = %for.cond
@@ -31,7 +32,7 @@ for.body:                                         ; preds = %for.cond
 
 for.cond1:                                        ; preds = %for.inc, %for.body
   %1 = load i32, i32* %j, align 4
-  %cmp2 = icmp slt i32 %1, 2000
+  %cmp2 = icmp slt i32 %1, 1024
   br i1 %cmp2, label %for.body3, label %for.end
 
 for.body3:                                        ; preds = %for.cond1
@@ -39,15 +40,15 @@ for.body3:                                        ; preds = %for.cond1
   %idxprom = sext i32 %2 to i64
   %3 = load i32, i32* %i, align 4
   %idxprom4 = sext i32 %3 to i64
-  %arrayidx = getelementptr inbounds [2000 x [2000 x i64]], [2000 x [2000 x i64]]* @A, i64 0, i64 %idxprom4
-  %arrayidx5 = getelementptr inbounds [2000 x i64], [2000 x i64]* %arrayidx, i64 0, i64 %idxprom
+  %arrayidx = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %idxprom4
+  %arrayidx5 = getelementptr inbounds [1024 x i64], [1024 x i64]* %arrayidx, i64 0, i64 %idxprom
   store i64 1, i64* %arrayidx5, align 8
   %4 = load i32, i32* %j, align 4
   %idxprom6 = sext i32 %4 to i64
   %5 = load i32, i32* %i, align 4
   %idxprom7 = sext i32 %5 to i64
-  %arrayidx8 = getelementptr inbounds [2000 x [2000 x i64]], [2000 x [2000 x i64]]* @B, i64 0, i64 %idxprom7
-  %arrayidx9 = getelementptr inbounds [2000 x i64], [2000 x i64]* %arrayidx8, i64 0, i64 %idxprom6
+  %arrayidx8 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %idxprom7
+  %arrayidx9 = getelementptr inbounds [1024 x i64], [1024 x i64]* %arrayidx8, i64 0, i64 %idxprom6
   store i64 1, i64* %arrayidx9, align 8
   br label %for.inc
 
@@ -80,7 +81,7 @@ entry:
 
 for.cond:                                         ; preds = %for.inc9, %entry
   %0 = load i32, i32* %i, align 4
-  %cmp = icmp slt i32 %0, 2000
+  %cmp = icmp slt i32 %0, 1024
   br i1 %cmp, label %for.body, label %for.end11
 
 for.body:                                         ; preds = %for.cond
@@ -89,7 +90,7 @@ for.body:                                         ; preds = %for.cond
 
 for.cond1:                                        ; preds = %for.inc, %for.body
   %1 = load i32, i32* %j, align 4
-  %cmp2 = icmp slt i32 %1, 2000
+  %cmp2 = icmp slt i32 %1, 1024
   br i1 %cmp2, label %for.body3, label %for.end
 
 for.body3:                                        ; preds = %for.cond1
@@ -98,8 +99,8 @@ for.body3:                                        ; preds = %for.cond1
   %idxprom = sext i32 %3 to i64
   %4 = load i32, i32* %i, align 4
   %idxprom4 = sext i32 %4 to i64
-  %arrayidx = getelementptr inbounds [2000 x [2000 x i64]], [2000 x [2000 x i64]]* @C, i64 0, i64 %idxprom4
-  %arrayidx5 = getelementptr inbounds [2000 x i64], [2000 x i64]* %arrayidx, i64 0, i64 %idxprom
+  %arrayidx = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %idxprom4
+  %arrayidx5 = getelementptr inbounds [1024 x i64], [1024 x i64]* %arrayidx, i64 0, i64 %idxprom
   %5 = load i64, i64* %arrayidx5, align 8
   %call = call i32 (%struct._IO_FILE*, i8*, ...) @fprintf(%struct._IO_FILE* %2, i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str, i32 0, i32 0), i64 %5)
   %6 = load i32, i32* %j, align 4
@@ -154,7 +155,7 @@ entry:
 
 for.cond:                                         ; preds = %for.inc28, %entry
   %0 = load i32, i32* %i, align 4
-  %cmp = icmp slt i32 %0, 2000
+  %cmp = icmp slt i32 %0, 1024
   br i1 %cmp, label %for.body, label %for.end30
 
 for.body:                                         ; preds = %for.cond
@@ -163,7 +164,7 @@ for.body:                                         ; preds = %for.cond
 
 for.cond1:                                        ; preds = %for.inc25, %for.body
   %1 = load i32, i32* %j, align 4
-  %cmp2 = icmp slt i32 %1, 2000
+  %cmp2 = icmp slt i32 %1, 1024
   br i1 %cmp2, label %for.body3, label %for.end27
 
 for.body3:                                        ; preds = %for.cond1
@@ -171,15 +172,15 @@ for.body3:                                        ; preds = %for.cond1
   %idxprom = sext i32 %2 to i64
   %3 = load i32, i32* %i, align 4
   %idxprom4 = sext i32 %3 to i64
-  %arrayidx = getelementptr inbounds [2000 x [2000 x i64]], [2000 x [2000 x i64]]* @C, i64 0, i64 %idxprom4
-  %arrayidx5 = getelementptr inbounds [2000 x i64], [2000 x i64]* %arrayidx, i64 0, i64 %idxprom
+  %arrayidx = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %idxprom4
+  %arrayidx5 = getelementptr inbounds [1024 x i64], [1024 x i64]* %arrayidx, i64 0, i64 %idxprom
   store i64 0, i64* %arrayidx5, align 8
   store i32 0, i32* %k, align 4
   br label %for.cond6
 
 for.cond6:                                        ; preds = %for.inc, %for.body3
   %4 = load i32, i32* %k, align 4
-  %cmp7 = icmp slt i32 %4, 2000
+  %cmp7 = icmp slt i32 %4, 1024
   br i1 %cmp7, label %for.body8, label %for.end
 
 for.body8:                                        ; preds = %for.cond6
@@ -187,22 +188,22 @@ for.body8:                                        ; preds = %for.cond6
   %idxprom9 = sext i32 %5 to i64
   %6 = load i32, i32* %i, align 4
   %idxprom10 = sext i32 %6 to i64
-  %arrayidx11 = getelementptr inbounds [2000 x [2000 x i64]], [2000 x [2000 x i64]]* @C, i64 0, i64 %idxprom10
-  %arrayidx12 = getelementptr inbounds [2000 x i64], [2000 x i64]* %arrayidx11, i64 0, i64 %idxprom9
+  %arrayidx11 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %idxprom10
+  %arrayidx12 = getelementptr inbounds [1024 x i64], [1024 x i64]* %arrayidx11, i64 0, i64 %idxprom9
   %7 = load i64, i64* %arrayidx12, align 8
   %8 = load i32, i32* %k, align 4
   %idxprom13 = sext i32 %8 to i64
   %9 = load i32, i32* %i, align 4
   %idxprom14 = sext i32 %9 to i64
-  %arrayidx15 = getelementptr inbounds [2000 x [2000 x i64]], [2000 x [2000 x i64]]* @A, i64 0, i64 %idxprom14
-  %arrayidx16 = getelementptr inbounds [2000 x i64], [2000 x i64]* %arrayidx15, i64 0, i64 %idxprom13
+  %arrayidx15 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %idxprom14
+  %arrayidx16 = getelementptr inbounds [1024 x i64], [1024 x i64]* %arrayidx15, i64 0, i64 %idxprom13
   %10 = load i64, i64* %arrayidx16, align 8
   %11 = load i32, i32* %j, align 4
   %idxprom17 = sext i32 %11 to i64
   %12 = load i32, i32* %k, align 4
   %idxprom18 = sext i32 %12 to i64
-  %arrayidx19 = getelementptr inbounds [2000 x [2000 x i64]], [2000 x [2000 x i64]]* @B, i64 0, i64 %idxprom18
-  %arrayidx20 = getelementptr inbounds [2000 x i64], [2000 x i64]* %arrayidx19, i64 0, i64 %idxprom17
+  %arrayidx19 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %idxprom18
+  %arrayidx20 = getelementptr inbounds [1024 x i64], [1024 x i64]* %arrayidx19, i64 0, i64 %idxprom17
   %13 = load i64, i64* %arrayidx20, align 8
   %mul = mul nsw i64 %10, %13
   %add = add nsw i64 %7, %mul
@@ -210,8 +211,8 @@ for.body8:                                        ; preds = %for.cond6
   %idxprom21 = sext i32 %14 to i64
   %15 = load i32, i32* %i, align 4
   %idxprom22 = sext i32 %15 to i64
-  %arrayidx23 = getelementptr inbounds [2000 x [2000 x i64]], [2000 x [2000 x i64]]* @C, i64 0, i64 %idxprom22
-  %arrayidx24 = getelementptr inbounds [2000 x i64], [2000 x i64]* %arrayidx23, i64 0, i64 %idxprom21
+  %arrayidx23 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %idxprom22
+  %arrayidx24 = getelementptr inbounds [1024 x i64], [1024 x i64]* %arrayidx23, i64 0, i64 %idxprom21
   store i64 %add, i64* %arrayidx24, align 8
   br label %for.inc
 
@@ -240,8 +241,12 @@ for.inc28:                                        ; preds = %for.end27
   br label %for.cond
 
 for.end30:                                        ; preds = %for.cond
+  %19 = load i64, i64* getelementptr inbounds ([1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 1023, i64 1023), align 8
+  %call = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([49 x i8], [49 x i8]* @.str.2, i32 0, i32 0), i32 1024, i32 1024, i64 %19)
   ret i32 0
 }
+
+declare i32 @printf(i8*, ...) #1
 
 attributes #0 = { nounwind uwtable "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2" "unsafe-fp-math"="false" "use-soft-float"="false" }
 attributes #1 = { "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2" "unsafe-fp-math"="false" "use-soft-float"="false" }
