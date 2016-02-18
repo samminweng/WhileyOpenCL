@@ -1,24 +1,18 @@
 #include <stdio.h>
-#include "Util.h"
 
-#define N 2000
+#define N 1024
 long long A[N][N];
 long long B[N][N];
 long long C[N][N];
 
-void init_array(long long value)
+void init_array()
 {
     int i, j;
-    /*long long** A = (long long**)malloc(N*sizeof(long long*));
-    for(i=0;i<N;i++){
-        // Copy the input array and assign it to matrix.
-        A[i] = (long long*)malloc(N*sizeof(long long));
-    }*/
 
     for (i=0; i<N; i++) {
         for (j=0; j<N; j++) {
-            A[i][j] = value;
-            B[i][j] = value;
+            A[i][j] = 1;
+            B[i][j] = 1;
         }
     }
 }
@@ -30,21 +24,18 @@ void print_array()
     for (i=0; i<N; i++) {
         for (j=0; j<N; j++) {
             fprintf(stdout, "%lld ", C[i][j]);
-            //if (j%80 == 79) fprintf(stdout, "\n");
+            if (j%80 == 79) fprintf(stdout, "\n");
         }
         fprintf(stdout, "\n");
     }
 }
 
-int main(int argc, char** args)
+int main()
 {
     int i, j, k;
     double t_start, t_end;
-    /*long long** A;
-    long long** B;
-    long long** C;*/
 
-    init_array(1);
+    init_array();
 
     for(i=0; i<N; i++)  {
         for(j=0; j<N; j++)  {
@@ -54,8 +45,8 @@ int main(int argc, char** args)
         }
     }
 
-// #ifdef TEST
+#ifdef TEST
     print_array();
-// #endif
+#endif
     return 0;
 }

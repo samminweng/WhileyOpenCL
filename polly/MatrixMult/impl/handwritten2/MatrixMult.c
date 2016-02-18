@@ -1,66 +1,62 @@
 #include <stdio.h>
-#include "Util.h"
-#define N 2000
+#include <stdlib.h>
+#define N 1024
+//#define TEST 1
 
-/*
-long long A[N][N];
-long long B[N][N];
-long long C[N][N];*/
-
-long long** init_array(long long value)
+//long long** init_array(long long value)
+void init_array(long long* array, long long value)
 {
     int i, j;
-    long long** array = (long long**)malloc(N*sizeof(long long*));
     for(i=0;i<N;i++){
-        // Copy the input array and assign it to matrix.
-        array[i] = (long long*)malloc(N*sizeof(long long));
-    }
-
-    for (i=0; i<N; i++) {
-        for (j=0; j<N; j++) {
-            array[i][j] = value;
+        for(j=0;j<N;j++){
+            array[i*N+j] = value;
         }
     }
-
-    return array;
 }
 
-void print_array(long long** array)
+
+/*void print_array()
+//void print_array()
 {
     int i, j;
 
     for (i=0; i<N; i++) {
         for (j=0; j<N; j++) {
-            fprintf(stdout, "%lld ", array[i][j]);
+            printf("%lld ", C[i][j]);
             //if (j%80 == 79) fprintf(stdout, "\n");
         }
-        fprintf(stdout, "\n");
+        printf("\n");
     }
-}
+
+    printf("\n\n\n");
+}*/
 
 int main(int argc, char** args)
 {
-    int i, j, k;
+    int i, j, jj, k, kk;
     double t_start, t_end;
-    long long** A;
-    long long** B;
-    long long** C;
+    long long* A = (long long*)malloc(N*N*sizeof(long long));
+    long long* B = (long long*)malloc(N*N*sizeof(long long));
+    long long* C = (long long*)malloc(N*N*sizeof(long long));
 
-    A = init_array(1);
-    B = init_array(1);
-    C = init_array(0);
+    // 'A' array uses 'malloc' because local variables use stack.
+    // and stack space is not sufficient for larger array size.
+    
+    init_array(1);
+    B=init_array(1);
+    C=init_array(0);
 
-    for(i=0; i<N; i++)  {
-        for(j=0; j<N; j++)  {
-            C[i][j] = 0;
-            for(k=0; k<N; k++){
-                C[i][j] = C[i][j] + A[i][k] * B[k][j];
+   for(i=0; i<N; i++)  {
+        // Apply the loop transformation
+        for(j=0;j<N;j++){
+            long long tmp = 0;
+            for(k=0;k<N;k++){
+                tmp = tmp + A[i*N+k]*B[k*N+j];
             }
+            C[i*N+j] = tmp;
         }
     }
-
-// #ifdef TEST
-    print_array(C);
-// #endif
+//
+    printf("Pass %d X %d matrix test case (C[N][N] =%lld) \n ", N, N, C[(N-1)*N+(N-1)]);
     return 0;
 }

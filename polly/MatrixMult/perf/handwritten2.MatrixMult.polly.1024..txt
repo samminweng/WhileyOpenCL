@@ -1,0 +1,149 @@
+Run Polly-optimized code on 1024 X 1024 Matrix with  threads...
+Pass 1024 X 1024 matrix test case (C[N][N] =1024) 
+ 
+ Performance counter stats for './MatrixMult.polly.out 1024':
+
+      20270.665800      task-clock (msec)         #    1.000 CPUs utilized          
+             1,746      context-switches          #    0.086 K/sec                  
+                16      cpu-migrations            #    0.001 K/sec                  
+             1,600      page-faults               #    0.079 K/sec                  
+    49,107,870,788      cycles                    #    2.423 GHz                     [83.34%]
+       187,692,201      stalled-cycles-frontend   #    0.38% frontend cycles idle    [83.29%]
+    47,466,281,083      stalled-cycles-backend    #   96.66% backend  cycles idle    [33.37%]
+     4,611,716,329      instructions              #    0.09  insns per cycle        
+                                                  #   10.29  stalled cycles per insn [50.04%]
+       276,873,343      branches                  #   13.659 M/sec                   [66.77%]
+         1,447,666      branch-misses             #    0.52% of all branches         [83.39%]
+
+      20.279799788 seconds time elapsed
+
+Pass 1024 X 1024 matrix test case (C[N][N] =1024) 
+ 
+ Performance counter stats for './MatrixMult.polly.out 1024':
+
+      18896.170234      task-clock (msec)         #    1.000 CPUs utilized          
+             1,599      context-switches          #    0.085 K/sec                  
+                15      cpu-migrations            #    0.001 K/sec                  
+             1,599      page-faults               #    0.085 K/sec                  
+    46,238,415,753      cycles                    #    2.447 GHz                     [83.38%]
+       173,504,311      stalled-cycles-frontend   #    0.38% frontend cycles idle    [83.32%]
+    44,615,439,334      stalled-cycles-backend    #   96.49% backend  cycles idle    [33.30%]
+     4,607,499,316      instructions              #    0.10  insns per cycle        
+                                                  #    9.68  stalled cycles per insn [49.99%]
+       276,266,729      branches                  #   14.620 M/sec                   [66.68%]
+         1,348,017      branch-misses             #    0.49% of all branches         [83.33%]
+
+      18.901571070 seconds time elapsed
+
+processor	: 0
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 96
+model name	: AMD FX-8800P Radeon R7, 12 Compute Cores 4C+8G
+stepping	: 1
+microcode	: 0x600610b
+cpu MHz		: 1400.000
+cache size	: 1024 KB
+physical id	: 0
+siblings	: 4
+core id		: 0
+cpu cores	: 2
+apicid		: 16
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid aperfmperf eagerfpu pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 tce nodeid_msr tbm topoext perfctr_core perfctr_nb arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold vmmcall fsgsbase bmi1 avx2 smep bmi2 xsaveopt
+bugs		: fxsave_leak
+bogomips	: 4192.25
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate cpb eff_freq_ro [12] [13]
+
+processor	: 1
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 96
+model name	: AMD FX-8800P Radeon R7, 12 Compute Cores 4C+8G 
+stepping	: 1
+microcode	: 0x600610b
+cpu MHz		: 2100.000
+cache size	: 1024 KB
+physical id	: 0
+siblings	: 4
+core id		: 1
+cpu cores	: 2
+apicid		: 17
+initial apicid	: 1
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid aperfmperf eagerfpu pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 tce nodeid_msr tbm topoext perfctr_core perfctr_nb arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold vmmcall fsgsbase bmi1 avx2 smep bmi2 xsaveopt
+bugs		: fxsave_leak
+bogomips	: 4192.25
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate cpb eff_freq_ro [12] [13]
+
+processor	: 2
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 96
+model name	: AMD FX-8800P Radeon R7, 12 Compute Cores 4C+8G 
+stepping	: 1
+microcode	: 0x600610b
+cpu MHz		: 2100.000
+cache size	: 1024 KB
+physical id	: 0
+siblings	: 4
+core id		: 2
+cpu cores	: 2
+apicid		: 18
+initial apicid	: 2
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid aperfmperf eagerfpu pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 tce nodeid_msr tbm topoext perfctr_core perfctr_nb arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold vmmcall fsgsbase bmi1 avx2 smep bmi2 xsaveopt
+bugs		: fxsave_leak
+bogomips	: 4192.25
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate cpb eff_freq_ro [12] [13]
+
+processor	: 3
+vendor_id	: AuthenticAMD
+cpu family	: 21
+model		: 96
+model name	: AMD FX-8800P Radeon R7, 12 Compute Cores 4C+8G 
+stepping	: 1
+microcode	: 0x600610b
+cpu MHz		: 1400.000
+cache size	: 1024 KB
+physical id	: 0
+siblings	: 4
+core id		: 3
+cpu cores	: 2
+apicid		: 19
+initial apicid	: 3
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid aperfmperf eagerfpu pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 tce nodeid_msr tbm topoext perfctr_core perfctr_nb arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold vmmcall fsgsbase bmi1 avx2 smep bmi2 xsaveopt
+bugs		: fxsave_leak
+bogomips	: 4192.25
+TLB size	: 1536 4K pages
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 48 bits physical, 48 bits virtual
+power management: ts ttp tm 100mhzsteps hwpstate cpb eff_freq_ro [12] [13]
+
