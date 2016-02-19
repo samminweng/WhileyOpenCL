@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#define N 1024
+#define N 2048
 long long A[N][N];
 long long B[N][N];
 long long C[N][N];

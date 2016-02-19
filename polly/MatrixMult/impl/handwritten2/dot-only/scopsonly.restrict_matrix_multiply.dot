@@ -1,0 +1,50 @@
+digraph "Scop Graph for 'restrict_matrix_multiply' function" {
+	label="Scop Graph for 'restrict_matrix_multiply' function";
+
+	Node0x5a68ca0 [shape=record,label="{entry}"];
+	Node0x5a68ca0 -> Node0x5a61e70;
+	Node0x5a61e70 [shape=record,label="{entry.split}"];
+	Node0x5a61e70 -> Node0x5a66af0;
+	Node0x5a66af0 [shape=record,label="{for.cond1.preheader}"];
+	Node0x5a66af0 -> Node0x5a66aa0;
+	Node0x5a66aa0 [shape=record,label="{for.body3}"];
+	Node0x5a66aa0 -> Node0x5a68e30;
+	Node0x5a68e30 [shape=record,label="{for.body6}"];
+	Node0x5a68e30 -> Node0x5a68e30[constraint=false];
+	Node0x5a68e30 -> Node0x5a68ab0;
+	Node0x5a68ab0 [shape=record,label="{for.inc25}"];
+	Node0x5a68ab0 -> Node0x5a66aa0[constraint=false];
+	Node0x5a68ab0 -> Node0x5a68bc0;
+	Node0x5a68bc0 [shape=record,label="{for.inc28}"];
+	Node0x5a68bc0 -> Node0x5a66af0[constraint=false];
+	Node0x5a68bc0 -> Node0x5a68c20;
+	Node0x5a68c20 [shape=record,label="{for.end30}"];
+	colorscheme = "paired12"
+        subgraph cluster_0x5a41930 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0x5a66a20 {
+            label = "";
+            style = filled;
+            color = 3            subgraph cluster_0x5a669a0 {
+              label = "";
+              style = solid;
+              color = 5
+              subgraph cluster_0x5a3f980 {
+                label = "";
+                style = solid;
+                color = 7
+                Node0x5a68e30;
+              }
+              Node0x5a66aa0;
+              Node0x5a68ab0;
+            }
+            Node0x5a66af0;
+            Node0x5a68bc0;
+          }
+          Node0x5a68ca0;
+          Node0x5a61e70;
+          Node0x5a68c20;
+        }
+}

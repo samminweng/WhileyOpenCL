@@ -9,7 +9,7 @@
                "relation" : "{ Stmt_for_body3[i0, i1] -> MemRef_C[i0, i1] }"
             }
          ],
-         "domain" : "{ Stmt_for_body3[i0, i1] : 0 <= i0 <= 1999 and 0 <= i1 <= 1999 }",
+         "domain" : "{ Stmt_for_body3[i0, i1] : 0 <= i0 <= 1023 and 0 <= i1 <= 1023 }",
          "name" : "Stmt_for_body3",
          "schedule" : "{ Stmt_for_body3[i0, i1] -> [i0, i1, 0, 0] }"
       },
@@ -32,7 +32,7 @@
                "relation" : "{ Stmt_for_body8[i0, i1, i2] -> MemRef_C[i0, i1] }"
             }
          ],
-         "domain" : "{ Stmt_for_body8[i0, i1, i2] : 0 <= i0 <= 1999 and 0 <= i1 <= 1999 and 0 <= i2 <= 1999 }",
+         "domain" : "{ Stmt_for_body8[i0, i1, i2] : 0 <= i0 <= 1023 and 0 <= i1 <= 1023 and 0 <= i2 <= 1023 }",
          "name" : "Stmt_for_body8",
          "schedule" : "{ Stmt_for_body8[i0, i1, i2] -> [i0, i1, 1, i2] }"
       }

@@ -51,9 +51,11 @@ runGCC(){
 	c_type=$1
 	program=$2
 	parameter=$3
+	num_threads=$4
 	result="$PWD/../../perf/$c_type.$program.$compiler.$parameter.txt"
+	mkdir -p "out"
 	#read -p "Press [Enter] to run GCC compiler..."
-	gcc -O3 Util.c $program.c -o $program.gcc.out
+	gcc -O3 $program.c -o "out/$program.gcc.out"
 	echo "Run GCC-compiled code on $parameter X $parameter Matrix..." > $result
 }
 ##
@@ -66,17 +68,18 @@ runPolly(){
 	parameter=$4
 	num_threads=$5
 	result="$PWD/../../perf/$c_type.$program.$compiler.$parameter.$num_threads.txt"
+	mkdir -p "out" ## Create 'out' folder
 	#read -p "Press [Enter] to run Polly code optimization..."
 	case "$compiler" in
 		"openmp")
 			export OMP_NUM_THREADS=$num_threads
 			echo "Run OpenMP code on $parameter X $parameter Matrix with $OMP_NUM_THREADS threads..." > $result
-			clang $CPPFLAGS -O3 -mllvm -polly -mllvm -polly-parallel -lgomp $program.c -o $program.$compiler.out
+			clang $CPPFLAGS -O3 -mllvm -polly -mllvm -polly-parallel -lgomp $program.c -o "out/$program.$compiler.out"
 			#clang $CPPFLAGS -include Util.c -O3 -mllvm -polly -mllvm -polly-parallel -lgomp $program.c -o $program.$compiler.out
 			;;
 		"polly")
 			echo "Run Polly-optimized code on $parameter X $parameter Matrix with $OMP_NUM_THREADS threads..." > $result
-			clang $CPPFLAGS -O3 -mllvm -polly $program.c -o $program.$compiler.out
+			clang $CPPFLAGS -O3 -mllvm -polly $program.c -o "out/$program.$compiler.out"
 			#clang $CPPFLAGS -include Util.c -O3 -mllvm -polly $program.c -o $program.$compiler.out
 			;;
 	esac
@@ -94,15 +97,15 @@ exec(){
 	if [ "$compiler" = "gcc" ]
 	then
 		#read -p "Press [Enter] to Use GCC to optimize C code of $program..."
-		runGCC $c_type $program $parameter
+		runGCC $c_type $program $parameter 1
 	else
 		#read -p "Press [Enter] to Use Polly to optimize C code of $program..."
 		runPolly $compiler $c_type $program $parameter $num_threads
 	fi
 	### Repeat running the executables. 
-	for i in {1..2}
+	for i in {1..10}
 	do
-		timeout $TIMEOUT perf stat ./$program.$compiler.out $parameter >>$result 2>> $result
+		timeout $TIMEOUT perf stat "./out/$program.$compiler.out" $parameter >>$result 2>> $result
 	done
 	### Output the hardware info.
 	cat /proc/cpuinfo >> $result
@@ -111,19 +114,19 @@ exec(){
 
 init MatrixMult
 ##### handwritten C code
-# exec handwritten MatrixMult 2048 gcc
-exec handwritten MatrixMult 1024 polly
-#exec handwritten MatrixMult 2048 openmp 1
-#exec handwritten MatrixMult 2048 openmp 2
-#exec handwritten MatrixMult 2048 openmp 4
-#exec handwritten MatrixMult 2048 openmp 8
+exec handwritten MatrixMult 2048 gcc
+exec handwritten MatrixMult 2048 polly
+exec handwritten MatrixMult 2048 openmp 1
+exec handwritten MatrixMult 2048 openmp 2
+exec handwritten MatrixMult 2048 openmp 4
+exec handwritten MatrixMult 2048 openmp 8
 #### new handwritten C code 
-#exec handwritten2 MatrixMult 2048 gcc
-exec handwritten2 MatrixMult 1024 polly
-# exec handwritten2 MatrixMult 2048 openmp 1
-# exec handwritten2 MatrixMult 2048 openmp 2
-# exec handwritten2 MatrixMult 2048 openmp 4
-# exec handwritten2 MatrixMult 2048 openmp 8
+exec handwritten2 MatrixMult 2048 gcc
+exec handwritten2 MatrixMult 2048 polly
+exec handwritten2 MatrixMult 2048 openmp 1
+exec handwritten2 MatrixMult 2048 openmp 2
+exec handwritten2 MatrixMult 2048 openmp 4
+exec handwritten2 MatrixMult 2048 openmp 8
 #### Generated C code
 # exec copy_reduced_dealloc MatrixMult 2000 gcc
 # exec copy_reduced_dealloc MatrixMult 2000 polly

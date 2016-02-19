@@ -146,6 +146,7 @@ opt_polly(){
 	opt -S -O3 -polly -polly-process-unprofitable $program.preopt.ll -o $program.polly.ll
 
 	read -p "Press [Enter] 11. Create the polly-optimized executables"
+	mkdir -p "out" # Store the executables.
 	#llc $program.polly.interchanged.ll -o $program.polly.interchanged.s && gcc $program.polly.interchanged.s \
 	#     -o matmul.polly.interchanged.exe
 	# llc matmul.polly.interchanged+tiled.ll -o matmul.polly.interchanged+tiled.s && gcc matmul.polly.interchanged+tiled.s \
@@ -160,7 +161,7 @@ opt_polly(){
 	#     -o matmul.polly.interchanged+tiled+vector+openmp.exe
 	#llc $program.normalopt.ll -o $program.normalopt.s && gcc $program.normalopt.s \
     #    -o $program.normalopt.exe
-    llc $program.polly.ll -o $program.polly.s && gcc $program.polly.s -o $c_type.$program.polly.out
+    llc $program.polly.ll -o $program.polly.s && gcc $program.polly.s -o "out/$program.polly.out"
 
     #read -p "Press [Enter] to Generate OpenMP code"
     #opt -S -mem2reg -loop -simplify -indvars $program.c -o $program.preopt.ll
@@ -171,8 +172,8 @@ opt_polly(){
 	
 	read -p "Press [Enter] 12. Compare the runtime of the executables"
 
-	read -p "Press [Enter] time  ./$c_type.$program.polly.out"
-	time ./$c_type.$program.polly.out
+	read -p "Press [Enter] time  ./out/$program.polly.out"
+	time ./out/$program.polly.out
 	# read -p "Press [Enter] time ./matmul.polly.interchanged.exe"
 	# time -f "%E real, %U user, %S sys" ./matmul.polly.interchanged.exe
 	# read -p "Press [Enter] time ./matmul.polly.interchanged+tiled.exe"

@@ -1,50 +1,15 @@
 digraph "Scop Graph for 'main' function" {
 	label="Scop Graph for 'main' function";
 
-	Node0x69501b0 [shape=record,label="{entry:\l  br label %entry.split\l}"];
-	Node0x69501b0 -> Node0x6955580;
-	Node0x6955580 [shape=record,label="{entry.split:                                      \l  %call = tail call noalias i8* @malloc(i64 4194304) #3\l  %0 = bitcast i8* %call to i32*\l  %call1 = tail call noalias i8* @malloc(i64 4194304) #3\l  %1 = bitcast i8* %call1 to i32*\l  %call2 = tail call noalias i8* @malloc(i64 4194304) #3\l  %2 = bitcast i8* %call2 to i32*\l  tail call void @init_array(i32* %0, i32 1)\l  tail call void @init_array(i32* %1, i32 1)\l  tail call void @init_array(i32* %2, i32 0)\l  br label %for.cond3.preheader\l}"];
-	Node0x6955580 -> Node0x69533e0;
-	Node0x69533e0 [shape=record,label="{for.cond3.preheader:                              \l  %indvars.iv13 = phi i64 [ 0, %entry.split ], [ %indvars.iv.next14,\l... %for.inc30 ]\l  br label %for.body5\l}"];
-	Node0x69533e0 -> Node0x6955090;
-	Node0x6955090 [shape=record,label="{for.body5:                                        \l  %indvars.iv7 = phi i64 [ 0, %for.cond3.preheader ], [ %indvars.iv.next8,\l... %for.inc27 ]\l  %3 = shl i64 %indvars.iv13, 10\l  %4 = add nuw nsw i64 %indvars.iv7, %3\l  %arrayidx = getelementptr inbounds i32, i32* %2, i64 %4\l  store i32 0, i32* %arrayidx, align 4\l  br label %for.body8\l}"];
-	Node0x6955090 -> Node0x69537b0;
-	Node0x69537b0 [shape=record,label="{for.body8:                                        \l  %indvars.iv = phi i64 [ 0, %for.body5 ], [ %indvars.iv.next, %for.body8 ]\l  %5 = shl i64 %indvars.iv13, 10\l  %6 = add nuw nsw i64 %indvars.iv7, %5\l  %arrayidx12 = getelementptr inbounds i32, i32* %2, i64 %6\l  %7 = load i32, i32* %arrayidx12, align 4\l  %8 = shl i64 %indvars.iv13, 10\l  %9 = add nuw nsw i64 %indvars.iv, %8\l  %arrayidx16 = getelementptr inbounds i32, i32* %0, i64 %9\l  %10 = load i32, i32* %arrayidx16, align 4\l  %11 = shl i64 %indvars.iv, 10\l  %12 = add nuw nsw i64 %11, %indvars.iv7\l  %arrayidx20 = getelementptr inbounds i32, i32* %1, i64 %12\l  %13 = load i32, i32* %arrayidx20, align 4\l  %mul21 = mul nsw i32 %13, %10\l  %add22 = add nsw i32 %mul21, %7\l  %14 = shl i64 %indvars.iv13, 10\l  %15 = add nuw nsw i64 %indvars.iv7, %14\l  %arrayidx26 = getelementptr inbounds i32, i32* %2, i64 %15\l  store i32 %add22, i32* %arrayidx26, align 4\l  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1\l  %exitcond = icmp ne i64 %indvars.iv.next, 1024\l  br i1 %exitcond, label %for.body8, label %for.inc27\l}"];
-	Node0x69537b0 -> Node0x69537b0[constraint=false];
-	Node0x69537b0 -> Node0x6953810;
-	Node0x6953810 [shape=record,label="{for.inc27:                                        \l  %indvars.iv.next8 = add nuw nsw i64 %indvars.iv7, 1\l  %exitcond12 = icmp ne i64 %indvars.iv.next8, 1024\l  br i1 %exitcond12, label %for.body5, label %for.inc30\l}"];
-	Node0x6953810 -> Node0x6955090[constraint=false];
-	Node0x6953810 -> Node0x6955180;
-	Node0x6955180 [shape=record,label="{for.inc30:                                        \l  %indvars.iv.next14 = add nuw nsw i64 %indvars.iv13, 1\l  %exitcond19 = icmp ne i64 %indvars.iv.next14, 1024\l  br i1 %exitcond19, label %for.cond3.preheader, label %for.end32\l}"];
-	Node0x6955180 -> Node0x69533e0[constraint=false];
-	Node0x6955180 -> Node0x69551e0;
-	Node0x69551e0 [shape=record,label="{for.end32:                                        \l  %arrayidx33 = getelementptr inbounds i8, i8* %call2, i64 4194300\l  %16 = bitcast i8* %arrayidx33 to i32*\l  %17 = load i32, i32* %16, align 4\l  %call34 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([47 x\l... i8], [47 x i8]* @.str, i64 0, i64 0), i32 1024, i32 1024, i32 %17) #3\l  ret i32 0\l}"];
+	Node0x5f42650 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0x5f42650 -> Node0x5f23e60;
+	Node0x5f23e60 [shape=record,label="{entry.split:                                      \l  %call = tail call i32* @init_array(i32 1)\l  %call1 = tail call i32* @init_array(i32 1)\l  %call2 = tail call i32* @matrix_multiply(i32* %call, i32* %call1)\l  %arrayidx = getelementptr inbounds i32, i32* %call2, i64 1048575\l  %0 = load i32, i32* %arrayidx, align 4\l  %call3 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([46 x\l... i8], [46 x i8]* @.str, i64 0, i64 0), i32 1024, i32 1024, i32 1023, i32 1023,\l... i32 %0) #3\l  ret i32 0\l}"];
 	colorscheme = "paired12"
-        subgraph cluster_0x6950c50 {
+        subgraph cluster_0x5f475b0 {
           label = "";
           style = solid;
           color = 1
-          subgraph cluster_0x692c4a0 {
-            label = "";
-            style = filled;
-            color = 3            subgraph cluster_0x6950cd0 {
-              label = "";
-              style = solid;
-              color = 5
-              subgraph cluster_0x692c420 {
-                label = "";
-                style = solid;
-                color = 7
-                Node0x69537b0;
-              }
-              Node0x6955090;
-              Node0x6953810;
-            }
-            Node0x69533e0;
-            Node0x6955180;
-          }
-          Node0x69501b0;
-          Node0x6955580;
-          Node0x69551e0;
+          Node0x5f42650;
+          Node0x5f23e60;
         }
 }
