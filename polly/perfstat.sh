@@ -12,51 +12,23 @@ init(){
 	#read -p "Press [Enter] to continue..."
 }
 #
-# Generate the C code w.r.t. code optimization
-#
-# generate_code(){
-# 	c_type=$1
-# 	program=$2
-# 	utildir="$PWD/../tests/code"
-# 	workingdir="$program/impl/$c_type"
-# 	cp "$PWD/../$program/$program.whiley" $utildir/Util.c $utildir/Util.h $workingdir
-# 	## copy *.whiley and Util.c Util.h to working folder
-# 	cd $workingdir
-# 	# Use wyopcl shell script to generate C code
-# 	# The 'case esac' example is http://www.tutorialspoint.com/unix/case-esac-statement.htm 
-# 	case "$c_type" in
-# 		"naive")
-# 			# Generate naive C code
-# 		 	./../../../../bin/wyopcl -code "$program".whiley
-# 		 	;;
-# 		"naive_dealloc")
-# 			# Generate naive C code
-# 		 	./../../../../bin/wyopcl -code -dealloc "$program".whiley
-# 		 	;;
-# 		"copy_reduced")
-# 			# Generate copy-eliminated C code
-# 		 	./../../../../bin/wyopcl -code -copy "$program".whiley
-# 			;;
-# 		"copy_reduced_dealloc")
-# 			# Generate copy-eliminated C code
-# 		 	./../../../../bin/wyopcl -code -copy -dealloc "$program".whiley
-# 			;;
-# 	esac
-# 	cd ../../../
-# }
-#
-# Optimize C code using GCC 
+# Optimize C code using GCC vectorization Optimization '-ftree-vectorize', enabled by -O3
+# https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html
 #
 runGCC(){
 	c_type=$1
 	program=$2
 	parameter=$3
 	num_threads=$4
-	result="$PWD/../../perf/$c_type.$program.$compiler.$parameter.txt"
+	result="$PWD/../../perf/$c_type.$program.$compiler.$parameter.$num_threads.txt"
+	# Run GCC vectorization 
+	#read -p "Press [Enter] to run GCC Vectorization Optimization"
+	gcc -O3 -ftree-vectorizer-verbose=2 $program.c 2> $program.gcc.vectorize.txt
 	mkdir -p "out"
 	#read -p "Press [Enter] to run GCC compiler..."
-	gcc -O3 $program.c -o "out/$program.gcc.out"
+	gcc -O3 -ftree-vectorize $program.c -o "out/$program.gcc.out"
 	echo "Run GCC-compiled code on $parameter X $parameter Matrix..." > $result
+	
 }
 ##
 ## Run polly to optimize the C code
@@ -97,15 +69,16 @@ exec(){
 	if [ "$compiler" = "gcc" ]
 	then
 		#read -p "Press [Enter] to Use GCC to optimize C code of $program..."
-		runGCC $c_type $program $parameter 1
+		runGCC $c_type $program $parameter $num_threads
 	else
 		#read -p "Press [Enter] to Use Polly to optimize C code of $program..."
 		runPolly $compiler $c_type $program $parameter $num_threads
 	fi
 	### Repeat running the executables. 
+	#read -p "Press [Enter] to Run $program executables..."
 	for i in {1..10}
 	do
-		timeout $TIMEOUT perf stat "./out/$program.$compiler.out" $parameter >>$result 2>> $result
+	 	timeout $TIMEOUT perf stat "./out/$program.$compiler.out" $parameter >>$result 2>> $result
 	done
 	### Output the hardware info.
 	cat /proc/cpuinfo >> $result
@@ -114,15 +87,15 @@ exec(){
 
 init MatrixMult
 ##### handwritten C code
-exec handwritten MatrixMult 2048 gcc
-exec handwritten MatrixMult 2048 polly
+exec handwritten MatrixMult 2048 gcc 1
+exec handwritten MatrixMult 2048 polly 1
 exec handwritten MatrixMult 2048 openmp 1
 exec handwritten MatrixMult 2048 openmp 2
 exec handwritten MatrixMult 2048 openmp 4
 exec handwritten MatrixMult 2048 openmp 8
 #### new handwritten C code 
-exec handwritten2 MatrixMult 2048 gcc
-exec handwritten2 MatrixMult 2048 polly
+exec handwritten2 MatrixMult 2048 gcc 1
+exec handwritten2 MatrixMult 2048 polly 1
 exec handwritten2 MatrixMult 2048 openmp 1
 exec handwritten2 MatrixMult 2048 openmp 2
 exec handwritten2 MatrixMult 2048 openmp 4

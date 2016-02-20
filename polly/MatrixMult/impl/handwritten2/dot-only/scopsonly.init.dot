@@ -1,0 +1,39 @@
+digraph "Scop Graph for 'init' function" {
+	label="Scop Graph for 'init' function";
+
+	Node0x6a85eb0 [shape=record,label="{entry}"];
+	Node0x6a85eb0 -> Node0x6a84310;
+	Node0x6a84310 [shape=record,label="{entry.split}"];
+	Node0x6a84310 -> Node0x6a84200;
+	Node0x6a84200 [shape=record,label="{for.cond1.preheader}"];
+	Node0x6a84200 -> Node0x6a85e50;
+	Node0x6a85e50 [shape=record,label="{for.body3}"];
+	Node0x6a85e50 -> Node0x6a85e50[constraint=false];
+	Node0x6a85e50 -> Node0x6a857c0;
+	Node0x6a857c0 [shape=record,label="{for.inc4}"];
+	Node0x6a857c0 -> Node0x6a84200[constraint=false];
+	Node0x6a857c0 -> Node0x6a85930;
+	Node0x6a85930 [shape=record,label="{for.end6}"];
+	colorscheme = "paired12"
+        subgraph cluster_0x6a79010 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0x6a79190 {
+            label = "Region can not profitably be optimized!";
+            style = solid;
+            color = 6
+            subgraph cluster_0x6a79310 {
+              label = "Region can not profitably be optimized!";
+              style = solid;
+              color = 5
+              Node0x6a85e50;
+            }
+            Node0x6a84200;
+            Node0x6a857c0;
+          }
+          Node0x6a85eb0;
+          Node0x6a84310;
+          Node0x6a85930;
+        }
+}

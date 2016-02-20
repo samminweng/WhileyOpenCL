@@ -1,0 +1,39 @@
+digraph "Scop Graph for 'init' function" {
+	label="Scop Graph for 'init' function";
+
+	Node0x5bc0eb0 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0x5bc0eb0 -> Node0x5bc0e30;
+	Node0x5bc0e30 [shape=record,label="{entry.split:                                      \l  %call = tail call noalias i8* @malloc(i64 4194304) #3\l  %0 = bitcast i8* %call to i32*\l  br label %for.cond1.preheader\l}"];
+	Node0x5bc0e30 -> Node0x5bc0e50;
+	Node0x5bc0e50 [shape=record,label="{for.cond1.preheader:                              \l  %indvars.iv4 = phi i64 [ 0, %entry.split ], [ %indvars.iv.next5, %for.inc4 ]\l  br label %for.body3\l}"];
+	Node0x5bc0e50 -> Node0x5bc0600;
+	Node0x5bc0600 [shape=record,label="{for.body3:                                        \l  %indvars.iv = phi i64 [ 0, %for.cond1.preheader ], [ %indvars.iv.next,\l... %for.body3 ]\l  %1 = shl i64 %indvars.iv4, 10\l  %2 = add nuw nsw i64 %indvars.iv, %1\l  %arrayidx = getelementptr inbounds i32, i32* %0, i64 %2\l  store i32 %value, i32* %arrayidx, align 4\l  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1\l  %exitcond = icmp ne i64 %indvars.iv.next, 1024\l  br i1 %exitcond, label %for.body3, label %for.inc4\l}"];
+	Node0x5bc0600 -> Node0x5bc0600[constraint=false];
+	Node0x5bc0600 -> Node0x5bc0e00;
+	Node0x5bc0e00 [shape=record,label="{for.inc4:                                         \l  %indvars.iv.next5 = add nuw nsw i64 %indvars.iv4, 1\l  %exitcond7 = icmp ne i64 %indvars.iv.next5, 1024\l  br i1 %exitcond7, label %for.cond1.preheader, label %for.end6\l}"];
+	Node0x5bc0e00 -> Node0x5bc0e50[constraint=false];
+	Node0x5bc0e00 -> Node0x5bc06f0;
+	Node0x5bc06f0 [shape=record,label="{for.end6:                                         \l  %call7 = tail call noalias i8* @malloc(i64 16) #3\l  %3 = bitcast i8* %call7 to %struct.Matrix*\l  %4 = bitcast i8* %call7 to i8**\l  store i8* %call, i8** %4, align 8\l  ret %struct.Matrix* %3\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0x5bb4010 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0x5bb4190 {
+            label = "Region can not profitably be optimized!";
+            style = solid;
+            color = 6
+            subgraph cluster_0x5bb4310 {
+              label = "Region can not profitably be optimized!";
+              style = solid;
+              color = 5
+              Node0x5bc0600;
+            }
+            Node0x5bc0e50;
+            Node0x5bc0e00;
+          }
+          Node0x5bc0eb0;
+          Node0x5bc0e30;
+          Node0x5bc06f0;
+        }
+}
