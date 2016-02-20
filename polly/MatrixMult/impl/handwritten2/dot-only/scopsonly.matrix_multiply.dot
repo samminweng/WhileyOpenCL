@@ -1,50 +1,91 @@
 digraph "Scop Graph for 'matrix_multiply' function" {
 	label="Scop Graph for 'matrix_multiply' function";
 
-	Node0x6a81260 [shape=record,label="{entry}"];
-	Node0x6a81260 -> Node0x6a85b10;
-	Node0x6a85b10 [shape=record,label="{entry.split}"];
-	Node0x6a85b10 -> Node0x6a85280;
-	Node0x6a85280 [shape=record,label="{for.cond2.preheader}"];
-	Node0x6a85280 -> Node0x6a8cf30;
-	Node0x6a8cf30 [shape=record,label="{for.body4}"];
-	Node0x6a8cf30 -> Node0x6a8cf50;
-	Node0x6a8cf50 [shape=record,label="{for.body7}"];
-	Node0x6a8cf50 -> Node0x6a8cf50[constraint=false];
-	Node0x6a8cf50 -> Node0x6a8bbf0;
-	Node0x6a8bbf0 [shape=record,label="{for.inc26}"];
-	Node0x6a8bbf0 -> Node0x6a8cf30[constraint=false];
-	Node0x6a8bbf0 -> Node0x6a8bc10;
-	Node0x6a8bc10 [shape=record,label="{for.inc29}"];
-	Node0x6a8bc10 -> Node0x6a85280[constraint=false];
-	Node0x6a8bc10 -> Node0x6a8d100;
-	Node0x6a8d100 [shape=record,label="{for.end31}"];
+	Node0x5bb4db0 [shape=record,label="{entry}"];
+	Node0x5bb4db0 -> Node0x5bbb770;
+	Node0x5bbb770 [shape=record,label="{entry.split}"];
+	Node0x5bbb770 -> Node0x5bb2c80;
+	Node0x5bbb770 -> Node0x5bb2ca0;
+	Node0x5bb2c80 [shape=record,label="{for.cond7.preheader.lr.ph}"];
+	Node0x5bb2c80 -> Node0x5bb9440;
+	Node0x5bb9440 [shape=record,label="{for.cond7.preheader}"];
+	Node0x5bb9440 -> Node0x5bb3330;
+	Node0x5bb9440 -> Node0x5bbc060;
+	Node0x5bb3330 [shape=record,label="{for.body11.lr.ph}"];
+	Node0x5bb3330 -> Node0x5bb9360;
+	Node0x5bb9360 [shape=record,label="{for.body11}"];
+	Node0x5bb9360 -> Node0x5bb9380;
+	Node0x5bb9360 -> Node0x5bb93a0;
+	Node0x5bb9380 [shape=record,label="{for.body17.lr.ph}"];
+	Node0x5bb9380 -> Node0x5bb99a0;
+	Node0x5bb99a0 [shape=record,label="{for.body17}"];
+	Node0x5bb99a0 -> Node0x5bb99a0[constraint=false];
+	Node0x5bb99a0 -> Node0x5bb9a00;
+	Node0x5bb9a00 [shape=record,label="{for.cond13.for.inc36_crit_edge}"];
+	Node0x5bb9a00 -> Node0x5bb93a0;
+	Node0x5bb93a0 [shape=record,label="{for.inc36}"];
+	Node0x5bb93a0 -> Node0x5bb9360[constraint=false];
+	Node0x5bb93a0 -> Node0x5bb9a20;
+	Node0x5bb9a20 [shape=record,label="{for.cond7.for.inc39_crit_edge}"];
+	Node0x5bb9a20 -> Node0x5bbc060;
+	Node0x5bbc060 [shape=record,label="{for.inc39}"];
+	Node0x5bbc060 -> Node0x5bb9440[constraint=false];
+	Node0x5bbc060 -> Node0x5bc3770;
+	Node0x5bc3770 [shape=record,label="{for.cond.for.end41_crit_edge}"];
+	Node0x5bc3770 -> Node0x5bb2ca0;
+	Node0x5bb2ca0 [shape=record,label="{for.end41}"];
 	colorscheme = "paired12"
-        subgraph cluster_0x6a61160 {
+        subgraph cluster_0x5b915f0 {
           label = "";
           style = solid;
           color = 1
-          subgraph cluster_0x6a81350 {
-            label = "";
-            style = filled;
-            color = 3            subgraph cluster_0x6a611e0 {
+          subgraph cluster_0x5bb3490 {
+            label = "Access to one array through data types of different size";
+            style = solid;
+            color = 6
+            subgraph cluster_0x5bb4910 {
               label = "";
-              style = solid;
-              color = 5
-              subgraph cluster_0x6a80ec0 {
+              style = filled;
+              color = 3              subgraph cluster_0x5bb3410 {
                 label = "";
                 style = solid;
                 color = 7
-                Node0x6a8cf50;
+                subgraph cluster_0x5bb3390 {
+                  label = "";
+                  style = solid;
+                  color = 9
+                  subgraph cluster_0x5b91770 {
+                    label = "";
+                    style = solid;
+                    color = 11
+                    subgraph cluster_0x5b916f0 {
+                      label = "";
+                      style = solid;
+                      color = 1
+                      subgraph cluster_0x5b91670 {
+                        label = "";
+                        style = solid;
+                        color = 6
+                        Node0x5bb99a0;
+                      }
+                      Node0x5bb9360;
+                      Node0x5bb9380;
+                      Node0x5bb9a00;
+                    }
+                    Node0x5bb93a0;
+                  }
+                  Node0x5bb9440;
+                  Node0x5bb3330;
+                  Node0x5bb9a20;
+                }
+                Node0x5bbc060;
               }
-              Node0x6a8cf30;
-              Node0x6a8bbf0;
+              Node0x5bc3770;
             }
-            Node0x6a85280;
-            Node0x6a8bc10;
+            Node0x5bbb770;
+            Node0x5bb2c80;
           }
-          Node0x6a81260;
-          Node0x6a85b10;
-          Node0x6a8d100;
+          Node0x5bb4db0;
+          Node0x5bb2ca0;
         }
 }

@@ -170,6 +170,14 @@ opt_polly(){
 	#llvm-gcc $program.s -lgomp -o $program.openmp.out
 	#export OMP_NUM_THREADS=2
 	
+	## move files to folders respectively, e.g. 'jscop' 'llvm' and 'assembly' folder 
+	mkdir -p jscop
+	mv *.jscop "jscop/"
+	mkdir -p llvm
+	mv *.ll "llvm/"
+	mkdir -p assembly
+	mv *.s "assembly/"
+
 	read -p "Press [Enter] 12. Compare the runtime of the executables"
 
 	read -p "Press [Enter] time  ./out/$program.polly.out"
