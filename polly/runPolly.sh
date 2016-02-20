@@ -209,6 +209,6 @@ exec(){
 	opt_polly $c_type $program
 	cd ../../../
 }
-#exec handwritten MatrixMult
+exec handwritten MatrixMult
 exec handwritten2 MatrixMult
 #exec copy_reduced_dealloc MatrixMult

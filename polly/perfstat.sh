@@ -46,15 +46,15 @@ runPolly(){
 		"openmp")
 			export OMP_NUM_THREADS=$num_threads
 			echo "Run OpenMP code on $parameter X $parameter Matrix with $OMP_NUM_THREADS threads..." > $result
-			clang $CPPFLAGS -O3 -mllvm -polly -mllvm -polly-parallel -lgomp $program.c -o "out/$program.$compiler.out"
-			#clang $CPPFLAGS -include Util.c -O3 -mllvm -polly -mllvm -polly-parallel -lgomp $program.c -o $program.$compiler.out
+			clang $CPPFLAGS -include Util.c -O3 -mllvm -polly -mllvm -polly-parallel -lgomp $program.c -o "out/$program.$compiler.out"
 			;;
 		"polly")
 			echo "Run Polly-optimized code on $parameter X $parameter Matrix with $OMP_NUM_THREADS threads..." > $result
-			clang $CPPFLAGS -O3 -mllvm -polly $program.c -o "out/$program.$compiler.out"
-			#clang $CPPFLAGS -include Util.c -O3 -mllvm -polly $program.c -o $program.$compiler.out
+			clang $CPPFLAGS -include Util.c -O3 -mllvm -polly $program.c -o "out/$program.$compiler.out"
 			;;
 	esac
+
+	
 }
 #
 # Execute benchmarks
