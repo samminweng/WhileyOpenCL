@@ -277,34 +277,68 @@ entry:
   %C = alloca %struct.Matrix*, align 8
   %width = alloca i32, align 4
   %height = alloca i32, align 4
+  %array = alloca i32**, align 8
+  %max = alloca i32, align 4
   store i32 0, i32* %retval, align 4
   store i32 %argc, i32* %argc.addr, align 4
   store i8** %args, i8*** %args.addr, align 8
   store %struct.Matrix* null, %struct.Matrix** %A, align 8
   store %struct.Matrix* null, %struct.Matrix** %B, align 8
   store %struct.Matrix* null, %struct.Matrix** %C, align 8
-  store i32 2048, i32* %width, align 4
-  store i32 2048, i32* %height, align 4
-  %0 = load i32, i32* %width, align 4
-  %1 = load i32, i32* %height, align 4
-  %call = call %struct.Matrix* @init(i32 1, i32 %0, i32 %1)
-  store %struct.Matrix* %call, %struct.Matrix** %A, align 8
-  %2 = load i32, i32* %width, align 4
-  %3 = load i32, i32* %height, align 4
-  %call1 = call %struct.Matrix* @init(i32 1, i32 %2, i32 %3)
-  store %struct.Matrix* %call1, %struct.Matrix** %B, align 8
-  %4 = load %struct.Matrix*, %struct.Matrix** %A, align 8
-  %5 = load %struct.Matrix*, %struct.Matrix** %B, align 8
-  %call2 = call %struct.Matrix* @matrix_multiply(%struct.Matrix* %4, %struct.Matrix* %5)
-  store %struct.Matrix* %call2, %struct.Matrix** %C, align 8
-  %6 = load %struct.Matrix*, %struct.Matrix** %C, align 8
-  %data = getelementptr inbounds %struct.Matrix, %struct.Matrix* %6, i32 0, i32 0
-  %7 = load i32*, i32** %data, align 8
-  %arrayidx = getelementptr inbounds i32, i32* %7, i64 4194303
-  %8 = load i32, i32* %arrayidx, align 4
-  %call3 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([46 x i8], [46 x i8]* @.str, i32 0, i32 0), i32 2048, i32 2048, i32 2047, i32 2047, i32 %8)
+  %0 = load i32, i32* %argc.addr, align 4
+  %1 = load i8**, i8*** %args.addr, align 8
+  %call = call i64** @convertArgsToIntArray(i32 %0, i8** %1)
+  %2 = bitcast i64** %call to i32**
+  store i32** %2, i32*** %array, align 8
+  %3 = load i32**, i32*** %array, align 8
+  %arrayidx = getelementptr inbounds i32*, i32** %3, i64 0
+  %4 = load i32*, i32** %arrayidx, align 8
+  %5 = bitcast i32* %4 to i64*
+  %call1 = call i64 @parseStringToInt(i64* %5)
+  %conv = trunc i64 %call1 to i32
+  store i32 %conv, i32* %max, align 4
+  %6 = load i32, i32* %max, align 4
+  store i32 %6, i32* %width, align 4
+  %7 = load i32, i32* %max, align 4
+  store i32 %7, i32* %height, align 4
+  %8 = load i32, i32* %width, align 4
+  %9 = load i32, i32* %height, align 4
+  %call2 = call %struct.Matrix* @init(i32 1, i32 %8, i32 %9)
+  store %struct.Matrix* %call2, %struct.Matrix** %A, align 8
+  %10 = load i32, i32* %width, align 4
+  %11 = load i32, i32* %height, align 4
+  %call3 = call %struct.Matrix* @init(i32 1, i32 %10, i32 %11)
+  store %struct.Matrix* %call3, %struct.Matrix** %B, align 8
+  %12 = load %struct.Matrix*, %struct.Matrix** %A, align 8
+  %13 = load %struct.Matrix*, %struct.Matrix** %B, align 8
+  %call4 = call %struct.Matrix* @matrix_multiply(%struct.Matrix* %12, %struct.Matrix* %13)
+  store %struct.Matrix* %call4, %struct.Matrix** %C, align 8
+  %14 = load i32, i32* %max, align 4
+  %15 = load i32, i32* %max, align 4
+  %16 = load i32, i32* %max, align 4
+  %sub = sub nsw i32 %16, 1
+  %17 = load i32, i32* %max, align 4
+  %sub5 = sub nsw i32 %17, 1
+  %18 = load i32, i32* %max, align 4
+  %sub6 = sub nsw i32 %18, 1
+  %19 = load i32, i32* %max, align 4
+  %mul = mul nsw i32 %sub6, %19
+  %20 = load i32, i32* %max, align 4
+  %add = add nsw i32 %mul, %20
+  %sub7 = sub nsw i32 %add, 1
+  %idxprom = sext i32 %sub7 to i64
+  %21 = load %struct.Matrix*, %struct.Matrix** %C, align 8
+  %data = getelementptr inbounds %struct.Matrix, %struct.Matrix* %21, i32 0, i32 0
+  %22 = load i32*, i32** %data, align 8
+  %arrayidx8 = getelementptr inbounds i32, i32* %22, i64 %idxprom
+  %23 = load i32, i32* %arrayidx8, align 4
+  %call9 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([46 x i8], [46 x i8]* @.str, i32 0, i32 0), i32 %14, i32 %15, i32 %sub, i32 %sub5, i32 %23)
   ret i32 0
 }
+
+declare i64** @convertArgsToIntArray(i32, i8**) #2
+
+declare i64 @parseStringToInt(i64*) #2
 
 declare i32 @printf(i8*, ...) #2
 

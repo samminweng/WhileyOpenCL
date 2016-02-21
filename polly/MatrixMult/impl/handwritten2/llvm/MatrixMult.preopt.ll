@@ -197,16 +197,30 @@ entry:
   br label %entry.split
 
 entry.split:                                      ; preds = %entry
-  %call = tail call %struct.Matrix* @init(i32 1, i32 2048, i32 2048)
-  %call1 = tail call %struct.Matrix* @init(i32 1, i32 2048, i32 2048)
-  %call2 = tail call %struct.Matrix* @matrix_multiply(%struct.Matrix* %call, %struct.Matrix* %call1)
-  %data = getelementptr inbounds %struct.Matrix, %struct.Matrix* %call2, i64 0, i32 0
-  %0 = load i32*, i32** %data, align 8
-  %arrayidx = getelementptr inbounds i32, i32* %0, i64 4194303
-  %1 = load i32, i32* %arrayidx, align 4
-  %call3 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([46 x i8], [46 x i8]* @.str, i64 0, i64 0), i32 2048, i32 2048, i32 2047, i32 2047, i32 %1) #3
+  %call = tail call i64** @convertArgsToIntArray(i32 %argc, i8** %args) #3
+  %0 = load i64*, i64** %call, align 8
+  %call1 = tail call i64 @parseStringToInt(i64* %0) #3
+  %conv = trunc i64 %call1 to i32
+  %call2 = tail call %struct.Matrix* @init(i32 1, i32 %conv, i32 %conv)
+  %call3 = tail call %struct.Matrix* @init(i32 1, i32 %conv, i32 %conv)
+  %call4 = tail call %struct.Matrix* @matrix_multiply(%struct.Matrix* %call2, %struct.Matrix* %call3)
+  %sub = add nsw i32 %conv, -1
+  %sub5 = add nsw i32 %conv, -1
+  %add = shl i64 %call1, 32
+  %sub7 = mul i64 %add, %call1
+  %sext = add i64 %sub7, -4294967296
+  %idxprom = ashr exact i64 %sext, 32
+  %data = getelementptr inbounds %struct.Matrix, %struct.Matrix* %call4, i64 0, i32 0
+  %1 = load i32*, i32** %data, align 8
+  %arrayidx8 = getelementptr inbounds i32, i32* %1, i64 %idxprom
+  %2 = load i32, i32* %arrayidx8, align 4
+  %call9 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([46 x i8], [46 x i8]* @.str, i64 0, i64 0), i32 %conv, i32 %conv, i32 %sub, i32 %sub5, i32 %2) #3
   ret i32 0
 }
+
+declare i64** @convertArgsToIntArray(i32, i8**) #2
+
+declare i64 @parseStringToInt(i64*) #2
 
 declare i32 @printf(i8*, ...) #2
 

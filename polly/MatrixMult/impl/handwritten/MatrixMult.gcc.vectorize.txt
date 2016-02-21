@@ -1,0 +1,175 @@
+
+Analyzing loop at MatrixMult.c:12
+
+MatrixMult.c:12: note: inner step doesn't divide the vector-size.
+MatrixMult.c:12: note: Unknown alignment for access: A
+MatrixMult.c:12: note: inner step doesn't divide the vector-size.
+MatrixMult.c:12: note: Unknown alignment for access: B
+MatrixMult.c:12: note: not vectorized: complicated access pattern.
+MatrixMult.c:12: note: bad data access.
+Analyzing loop at MatrixMult.c:13
+
+MatrixMult.c:13: note: misalign = 0 bytes of ref A[i_16][j_17]
+MatrixMult.c:13: note: misalign = 0 bytes of ref B[i_16][j_17]
+MatrixMult.c:13: note: virtual phi. skip.
+
+Vectorizing loop at MatrixMult.c:13
+
+MatrixMult.c:8: note: vectorized 1 loops in function.
+
+MatrixMult.c:8: note: not vectorized: not enough data-refs in basic block.
+
+MatrixMult.c:8: note: not vectorized: not enough data-refs in basic block.
+
+MatrixMult.c:14: note: not vectorized: no vectype for stmt: MEM[(long long int[2048][2048] *)vect_pA.9_6] = vect_cst_.8_15;
+ scalar_type: vector(2) long long int
+MatrixMult.c:14: note: Failed to SLP the basic block.
+MatrixMult.c:14: note: not vectorized: failed to find SLP opportunities in basic block.
+
+MatrixMult.c:12: note: not vectorized: not enough data-refs in basic block.
+
+MatrixMult.c:8: note: not vectorized: not enough data-refs in basic block.
+
+MatrixMult.c:8: note: not vectorized: not enough data-refs in basic block.
+
+MatrixMult.c:18: note: not vectorized: not enough data-refs in basic block.
+
+Analyzing loop at MatrixMult.c:24
+
+MatrixMult.c:24: note: not vectorized: control flow in loop.
+MatrixMult.c:24: note: bad inner-loop form.
+MatrixMult.c:24: note: not vectorized: Bad inner loop.
+MatrixMult.c:24: note: bad loop form.
+Analyzing loop at MatrixMult.c:25
+
+MatrixMult.c:25: note: not vectorized: control flow in loop.
+MatrixMult.c:25: note: bad loop form.
+MatrixMult.c:20: note: vectorized 0 loops in function.
+
+MatrixMult.c:20: note: not vectorized: not enough data-refs in basic block.
+
+MatrixMult.c:26: note: SLP: step doesn't divide the vector-size.
+MatrixMult.c:26: note: Unknown alignment for access: C
+MatrixMult.c:26: note: not consecutive access stdout.0_9 = stdout;
+
+MatrixMult.c:26: note: Failed to SLP the basic block.
+MatrixMult.c:26: note: not vectorized: failed to find SLP opportunities in basic block.
+
+MatrixMult.c:27: note: not consecutive access stdout.0_12 = stdout;
+
+MatrixMult.c:27: note: Failed to SLP the basic block.
+MatrixMult.c:27: note: not vectorized: failed to find SLP opportunities in basic block.
+
+MatrixMult.c:20: note: not vectorized: not enough data-refs in basic block.
+
+MatrixMult.c:25: note: not vectorized: not enough data-refs in basic block.
+
+MatrixMult.c:29: note: not consecutive access stdout.0_15 = stdout;
+
+MatrixMult.c:29: note: Failed to SLP the basic block.
+MatrixMult.c:29: note: not vectorized: failed to find SLP opportunities in basic block.
+
+MatrixMult.c:20: note: not vectorized: not enough data-refs in basic block.
+
+MatrixMult.c:26: note: misalign = 0 bytes of ref C[i_26][0]
+MatrixMult.c:26: note: not consecutive access stdout.0_24 = stdout;
+
+MatrixMult.c:26: note: Failed to SLP the basic block.
+MatrixMult.c:26: note: not vectorized: failed to find SLP opportunities in basic block.
+
+MatrixMult.c:31: note: not vectorized: not enough data-refs in basic block.
+
+Analyzing loop at MatrixMult.c:40
+
+MatrixMult.c:40: note: not vectorized: multiple nested loops.
+MatrixMult.c:40: note: bad loop form.
+Analyzing loop at MatrixMult.c:41
+
+MatrixMult.c:41: note: step unknown.
+MatrixMult.c:41: note: misalign = 0 bytes of ref C[i_46][j_47]
+MatrixMult.c:41: note: inner step doesn't divide the vector-size.
+MatrixMult.c:41: note: Unknown alignment for access: A
+MatrixMult.c:41: note: misalign = 0 bytes of ref B[k_48][j_47]
+MatrixMult.c:41: note: misalign = 0 bytes of ref C[i_46][j_47]
+MatrixMult.c:41: note: Unknown misalignment, is_packed = 0
+MatrixMult.c:41: note: virtual phi. skip.
+MatrixMult.c:41: note: num. args = 4 (not unary/binary/ternary op).
+MatrixMult.c:41: note: not ssa-name.
+MatrixMult.c:41: note: use not simple.
+MatrixMult.c:41: note: num. args = 4 (not unary/binary/ternary op).
+MatrixMult.c:41: note: not ssa-name.
+MatrixMult.c:41: note: use not simple.
+MatrixMult.c:41: note: reduc op not supported by target.
+
+Vectorizing loop at MatrixMult.c:41
+
+MatrixMult.c:41: note: reduc op not supported by target.
+Analyzing loop at MatrixMult.c:43
+
+Analyzing loop at MatrixMult.c:12
+
+MatrixMult.c:12: note: inner step doesn't divide the vector-size.
+MatrixMult.c:12: note: Unknown alignment for access: A
+MatrixMult.c:12: note: inner step doesn't divide the vector-size.
+MatrixMult.c:12: note: Unknown alignment for access: B
+MatrixMult.c:12: note: not vectorized: complicated access pattern.
+MatrixMult.c:12: note: bad data access.
+Analyzing loop at MatrixMult.c:13
+
+MatrixMult.c:13: note: misalign = 0 bytes of ref A[i_51][j_52]
+MatrixMult.c:13: note: misalign = 0 bytes of ref B[i_51][j_52]
+MatrixMult.c:13: note: virtual phi. skip.
+
+Vectorizing loop at MatrixMult.c:13
+
+MatrixMult.c:33: note: vectorized 2 loops in function.
+
+MatrixMult.c:33: note: not vectorized: not enough data-refs in basic block.
+
+MatrixMult.c:33: note: not vectorized: not enough data-refs in basic block.
+
+MatrixMult.c:14: note: not vectorized: no vectype for stmt: MEM[(long long int[2048][2048] *)vect_pA.86_79] = vect_cst_.85_75;
+ scalar_type: vector(2) long long int
+MatrixMult.c:14: note: Failed to SLP the basic block.
+MatrixMult.c:14: note: not vectorized: failed to find SLP opportunities in basic block.
+
+MatrixMult.c:12: note: not vectorized: not enough data-refs in basic block.
+
+MatrixMult.c:33: note: not vectorized: not enough data-refs in basic block.
+
+MatrixMult.c:33: note: not vectorized: not enough data-refs in basic block.
+
+MatrixMult.c:33: note: not vectorized: not enough data-refs in basic block.
+
+MatrixMult.c:33: note: not vectorized: not enough data-refs in basic block.
+
+MatrixMult.c:42: note: not vectorized: no vectype for stmt: MEM[(long long int[2048][2048] *)vect_pC.61_11] = vect_cst_.60_28;
+ scalar_type: vector(2) long long int
+MatrixMult.c:42: note: Failed to SLP the basic block.
+MatrixMult.c:42: note: not vectorized: failed to find SLP opportunities in basic block.
+
+MatrixMult.c:44: note: not vectorized: no vectype for stmt: vect_var_.75_61 = MEM[(long long int[2048][2048] *)vect_pB.71_59];
+ scalar_type: vector(2) long long int
+MatrixMult.c:44: note: SLP: step doesn't divide the vector-size.
+MatrixMult.c:44: note: Unknown alignment for access: A
+MatrixMult.c:44: note: Failed to SLP the basic block.
+MatrixMult.c:44: note: not vectorized: failed to find SLP opportunities in basic block.
+
+MatrixMult.c:33: note: not vectorized: not enough data-refs in basic block.
+
+MatrixMult.c:33: note: not vectorized: no vectype for stmt: MEM[(long long int[2048][2048] *)vect_pC.81_71] = vect_var_.80_67;
+ scalar_type: vector(2) long long int
+MatrixMult.c:33: note: Failed to SLP the basic block.
+MatrixMult.c:33: note: not vectorized: failed to find SLP opportunities in basic block.
+
+MatrixMult.c:40: note: not vectorized: not enough data-refs in basic block.
+
+MatrixMult.c:33: note: not vectorized: not enough data-refs in basic block.
+
+MatrixMult.c:33: note: not vectorized: not enough data-refs in basic block.
+
+MatrixMult.c:48: note: misalign = 8 bytes of ref C[2047][2047]
+MatrixMult.c:48: note: not consecutive access _21 = C[2047][2047];
+
+MatrixMult.c:48: note: Failed to SLP the basic block.
+MatrixMult.c:48: note: not vectorized: failed to find SLP opportunities in basic block.

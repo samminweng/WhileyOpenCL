@@ -43,33 +43,7 @@ load_polly_clang(){
 	clang $CPPFLAGS -O3 -mllvm -polly -mllvm -polly-parallel -lgomp $program.c -o $program.$compiler.out
 	./$program.$compiler.out
 }
-#
-# Generate the C code w.r.t. code optimization
-#
-generate_code(){
-	c_type=$1
-	program=$2
-	# Use wyopcl shell script to generate C code
-	# The 'case esac' example is http://www.tutorialspoint.com/unix/case-esac-statement.htm 
-	case "$c_type" in
-		"naive")
-			# Generate naive C code
-		 	./../../../../bin/wyopcl -code "$program".whiley
-		 	;;
-		"naive_dealloc")
-			# Generate naive C code
-		 	./../../../../bin/wyopcl -code -dealloc "$program".whiley
-		 	;;
-		"copy_reduced")
-			# Generate copy-eliminated C code
-		 	./../../../../bin/wyopcl -code -copy "$program".whiley
-			;;
-		"copy_reduced_dealloc")
-			# Generate copy-eliminated C code
-		 	./../../../../bin/wyopcl -code -copy -dealloc "$program".whiley
-			;;
-	esac
-}
+
 ##
 ## Execute Polly Pass step by step
 ##
@@ -78,6 +52,8 @@ opt_polly(){
 	program=$2
 	
 	read -p "Press [Enter] 1. Create LLVM-IR from C"
+	### Compile source.c along with 'Util.c' to assembly code
+	###clang -include Util.c -S -emit-llvm $program.c -o $program.s
 	clang -S -emit-llvm $program.c -o $program.s
 	read -p "Press [Enter] 2. Prepare the LLVM-IR for Polly"
 	opt -S -polly-canonicalize $program.s > $program.preopt.ll
@@ -108,60 +84,22 @@ opt_polly(){
 	# ### Generate png files from dot files
 	for i in `ls *.dot`; do dot -Tpng $i > $i.png; done
 	cd ../
-	
-	# read -p "Press [Enter] 6. View the polyhedral representation of the SCoPs"
-	# opt -basicaa -polly-scops -analyze $program.preopt.ll
-
-	# read -p "Press [Enter] 7. Show the dependences for the SCoPs"
-	# opt -basicaa -polly-dependences -analyze $program.preopt.ll
 
 	read -p "Press [Enter] 5. Export jscop files"
 	opt -basicaa -polly-export-jscop $program.preopt.ll
 
-	# read -p "Press [Enter] 9. Import the updated jscop files and print the new SCoPs. (optional)"
-	# opt -basicaa -polly-import-jscop -polly-ast -analyze matmul.preopt.ll
-	# opt -basicaa -polly-import-jscop -polly-ast -analyze matmul.preopt.ll \
-	#     -polly-import-jscop-postfix=interchanged
-	# opt -basicaa -polly-import-jscop -polly-ast -analyze matmul.preopt.ll \
-	#     -polly-import-jscop-postfix=interchanged+tiled
-	# opt -basicaa -polly-import-jscop -polly-ast -analyze matmul.preopt.ll \
-	#     -polly-import-jscop-postfix=interchanged+tiled+vector
-
 	read -p "Press [Enter] 10. Codegenerate the SCoPs"
-	#opt -basicaa -polly-import-jscop -polly-import-jscop-postfix=interchanged \
-	#     -polly-codegen \
-	#     matmul.preopt.ll | opt -O3 > matmul.polly.interchanged.ll
-	# opt -basicaa -polly-import-jscop \
-	#     -polly-import-jscop-postfix=interchanged+tiled -polly-codegen \
-	#     matmul.preopt.ll | opt -O3 > matmul.polly.interchanged+tiled.ll
-	# opt -basicaa -polly-import-jscop \
-	#     -polly-import-jscop-postfix=interchanged+tiled+vector -polly-codegen \
-	#     matmul.preopt.ll -polly-vectorizer=polly\
-	#     | opt -O3 > matmul.polly.interchanged+tiled+vector.ll
-	# opt -basicaa -polly-import-jscop \
-	#     -polly-import-jscop-postfix=interchanged+tiled+vector -polly-codegen \
-	#     matmul.preopt.ll -polly-vectorizer=polly -polly-parallel\
-	#     | opt -O3 > matmul.polly.interchanged+tiled+vector+openmp.ll
-	#opt $program.preopt.ll | opt -O3 > $program.normalopt.ll
 	opt -S -O3 -polly -polly-process-unprofitable $program.preopt.ll -o $program.polly.ll
 
 	read -p "Press [Enter] 11. Create the polly-optimized executables"
 	mkdir -p "out" # Store the executables.
-	#llc $program.polly.interchanged.ll -o $program.polly.interchanged.s && gcc $program.polly.interchanged.s \
-	#     -o matmul.polly.interchanged.exe
-	# llc matmul.polly.interchanged+tiled.ll -o matmul.polly.interchanged+tiled.s && gcc matmul.polly.interchanged+tiled.s \
-	#     -o matmul.polly.interchanged+tiled.exe
-	# llc matmul.polly.interchanged+tiled+vector.ll \
-	#     -o matmul.polly.interchanged+tiled+vector.s \
-	#     && gcc matmul.polly.interchanged+tiled+vector.s \
-	#     -o matmul.polly.interchanged+tiled+vector.exe
-	# llc matmul.polly.interchanged+tiled+vector+openmp.ll \
-	#     -o matmul.polly.interchanged+tiled+vector+openmp.s \
-	#     && gcc -lgomp matmul.polly.interchanged+tiled+vector+openmp.s \
-	#     -o matmul.polly.interchanged+tiled+vector+openmp.exe
-	#llc $program.normalopt.ll -o $program.normalopt.s && gcc $program.normalopt.s \
-    #    -o $program.normalopt.exe
-    llc $program.polly.ll -o $program.polly.s && gcc $program.polly.s -o "out/$program.polly.out"
+    ### Creating a static library ('Util.o') with GCC (http://www.cs.dartmouth.edu/~campbell/cs50/buildlib.html)
+    gcc -c Util.c -o Util.o ### Compile Util.c to Util.o (object file)
+    ar -cvq libUtil.a Util.o
+    ### Use 'llc' to compile LLVM code into assembly code 
+    llc $program.polly.ll -o $program.polly.s
+    ### Use 'gcc' to compile .s file and link with 'libUtil.a'
+    gcc $program.polly.s libUtil.a -o "out/$program.polly.out"
 
     #read -p "Press [Enter] to Generate OpenMP code"
     #opt -S -mem2reg -loop -simplify -indvars $program.c -o $program.preopt.ll
@@ -181,16 +119,7 @@ opt_polly(){
 	read -p "Press [Enter] 12. Compare the runtime of the executables"
 
 	read -p "Press [Enter] time  ./out/$program.polly.out"
-	time ./out/$program.polly.out
-	# read -p "Press [Enter] time ./matmul.polly.interchanged.exe"
-	# time -f "%E real, %U user, %S sys" ./matmul.polly.interchanged.exe
-	# read -p "Press [Enter] time ./matmul.polly.interchanged+tiled.exe"
-	# time -f "%E real, %U user, %S sys" ./matmul.polly.interchanged+tiled.exe
-	# read -p "Press [Enter] time ./matmul.polly.interchanged+tiled+vector.exe"
-	# time -f "%E real, %U user, %S sys" ./matmul.polly.interchanged+tiled+vector.exe
-	# read -p "Press [Enter] time ./matmul.polly.interchanged+tiled+vector+openmp.exe"
-	# time -f "%E real, %U user, %S sys" ./matmul.polly.interchanged+tiled+vector+openmp.exe
-
+	time ./out/$program.polly.out 2048
 }
 
 exec(){
@@ -203,12 +132,10 @@ exec(){
 	## copy *.whiley and Util.c Util.h to working folder
 	cp "$program/$program.whiley" $utildir/Util.c $utildir/Util.h $workingdir
 	cd $workingdir
-	#read -p "Press [Enter] to generate C code for $program.whiley..."	
-	generate_code $c_type $program
 	#load_polly_clang $c_type $program
 	opt_polly $c_type $program
 	cd ../../../
 }
-exec handwritten MatrixMult
+#exec handwritten MatrixMult
 exec handwritten2 MatrixMult
 #exec copy_reduced_dealloc MatrixMult

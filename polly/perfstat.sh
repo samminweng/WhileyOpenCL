@@ -3,6 +3,7 @@ TIMEOUT="1800s"
 export POLLY_BUILD_DIR="$HOME/polly/llvm_build"
 export CPPFLAGS="-Xclang -load -Xclang ${POLLY_BUILD_DIR}/lib/LLVMPolly.so"
 
+
 init(){
 	program=$1
 	pref_dir="$PWD/$program/perf"
@@ -10,7 +11,9 @@ init(){
 	### remove all files inside the folder
 	rm -f "$pref_dir/"*.*
 	#read -p "Press [Enter] to continue..."
+
 }
+
 #
 # Optimize C code using GCC vectorization Optimization '-ftree-vectorize', enabled by -O3
 # https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html
@@ -21,12 +24,15 @@ runGCC(){
 	parameter=$3
 	num_threads=$4
 	result="$PWD/../../perf/$c_type.$program.$compiler.$parameter.$num_threads.txt"
+	 ### Creating a static library ('Util.o') with GCC (http://www.cs.dartmouth.edu/~campbell/cs50/buildlib.html)
+    gcc -c Util.c -o Util.o ### Compile Util.c to Util.o (object file)
+    ar -cvq libUtil.a Util.o
 	# Run GCC vectorization 
 	#read -p "Press [Enter] to run GCC Vectorization Optimization"
 	gcc -O3 -ftree-vectorizer-verbose=2 $program.c 2> $program.gcc.vectorize.txt
 	mkdir -p "out"
 	#read -p "Press [Enter] to run GCC compiler..."
-	gcc -O3 -ftree-vectorize $program.c -o "out/$program.gcc.out"
+	gcc -O3 -ftree-vectorize $program.c libUtil.a -o "out/$program.gcc.out"
 	echo "Run GCC-compiled code on $parameter X $parameter Matrix..." > $result
 	
 }

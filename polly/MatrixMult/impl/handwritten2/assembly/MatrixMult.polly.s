@@ -1201,14 +1201,6 @@ matrix_multiply:                        # @matrix_multiply
 	.size	matrix_multiply, .Lfunc_end1-matrix_multiply
 	.cfi_endproc
 
-	.section	.rodata.cst16,"aM",@progbits,16
-	.p2align	4
-.LCPI2_0:
-	.long	1                       # 0x1
-	.long	1                       # 0x1
-	.long	1                       # 0x1
-	.long	1                       # 0x1
-	.text
 	.globl	main
 	.p2align	4, 0x90
 	.type	main,@function
@@ -1223,159 +1215,46 @@ main:                                   # @main
 	movq	%rsp, %rbp
 .Ltmp18:
 	.cfi_def_cfa_register %rbp
-	pushq	%r15
 	pushq	%r14
-	pushq	%r12
 	pushq	%rbx
 .Ltmp19:
-	.cfi_offset %rbx, -48
+	.cfi_offset %rbx, -32
 .Ltmp20:
-	.cfi_offset %r12, -40
-.Ltmp21:
-	.cfi_offset %r14, -32
-.Ltmp22:
-	.cfi_offset %r15, -24
-	movl	$16777216, %edi         # imm = 0x1000000
-	callq	malloc
+	.cfi_offset %r14, -24
+	callq	convertArgsToIntArray
+	movq	(%rax), %rdi
+	callq	parseStringToInt
+	movq	%rax, %rbx
+	movl	$1, %edi
+	movl	%ebx, %esi
+	movl	%ebx, %edx
+	callq	init
 	movq	%rax, %r14
-	addq	$112, %rax
-	xorl	%ecx, %ecx
-	movaps	.LCPI2_0(%rip), %xmm0   # xmm0 = [1,1,1,1]
-	.p2align	4, 0x90
-.LBB2_1:                                # %polly.loop_header.i
-                                        # =>This Loop Header: Depth=1
-                                        #     Child Loop BB2_2 Depth 2
-                                        #       Child Loop BB2_11 Depth 3
-	movq	%rcx, %rdx
-	shlq	$5, %rdx
-	cmpq	$2047, %rdx             # imm = 0x7FF
-	movq	%rax, %rdx
-	movl	$0, %esi
-	jg	.LBB2_4
-	.p2align	4, 0x90
-.LBB2_2:                                # %polly.loop_header14.preheader.us.i
-                                        #   Parent Loop BB2_1 Depth=1
-                                        # =>  This Loop Header: Depth=2
-                                        #       Child Loop BB2_11 Depth 3
-	movq	%rsi, %rdi
-	shlq	$5, %rdi
-	cmpq	$2048, %rdi             # imm = 0x800
-	movq	%rdx, %rdi
-	movl	$32, %ebx
-	jge	.LBB2_3
-	.p2align	4, 0x90
-.LBB2_11:                               # %polly.stmt.for.body6.preheader.us.us.i
-                                        #   Parent Loop BB2_1 Depth=1
-                                        #     Parent Loop BB2_2 Depth=2
-                                        # =>    This Inner Loop Header: Depth=3
-	movups	%xmm0, -112(%rdi)
-	movups	%xmm0, -96(%rdi)
-	movups	%xmm0, -80(%rdi)
-	movups	%xmm0, -64(%rdi)
-	movups	%xmm0, -48(%rdi)
-	movups	%xmm0, -32(%rdi)
-	movups	%xmm0, -16(%rdi)
-	movups	%xmm0, (%rdi)
-	addq	$8192, %rdi             # imm = 0x2000
-	decq	%rbx
-	jne	.LBB2_11
-.LBB2_3:                                # %polly.loop_exit16.loopexit.us.i
-                                        #   in Loop: Header=BB2_2 Depth=2
-	subq	$-128, %rdx
-	cmpq	$63, %rsi
-	leaq	1(%rsi), %rsi
-	jne	.LBB2_2
-.LBB2_4:                                # %polly.loop_exit7.i
-                                        #   in Loop: Header=BB2_1 Depth=1
-	addq	$262144, %rax           # imm = 0x40000
-	cmpq	$63, %rcx
-	leaq	1(%rcx), %rcx
-	jne	.LBB2_1
-# BB#5:                                 # %init.exit
-	movl	$16, %edi
-	callq	malloc
-	movq	%rax, %r12
-	movq	%r14, (%r12)
-	movabsq	$8796093024256, %r15    # imm = 0x80000000800
-	movq	%r15, 8(%r12)
-	movl	$16777216, %edi         # imm = 0x1000000
-	callq	malloc
-	movq	%rax, %r14
-	addq	$112, %rax
-	xorl	%ecx, %ecx
-	movaps	.LCPI2_0(%rip), %xmm0   # xmm0 = [1,1,1,1]
-	.p2align	4, 0x90
-.LBB2_6:                                # %polly.loop_header.i6
-                                        # =>This Loop Header: Depth=1
-                                        #     Child Loop BB2_7 Depth 2
-                                        #       Child Loop BB2_12 Depth 3
-	movq	%rcx, %rdx
-	shlq	$5, %rdx
-	cmpq	$2047, %rdx             # imm = 0x7FF
-	movq	%rax, %rdx
-	movl	$0, %esi
-	jg	.LBB2_9
-	.p2align	4, 0x90
-.LBB2_7:                                # %polly.loop_header14.preheader.us.i12
-                                        #   Parent Loop BB2_6 Depth=1
-                                        # =>  This Loop Header: Depth=2
-                                        #       Child Loop BB2_12 Depth 3
-	movq	%rsi, %rdi
-	shlq	$5, %rdi
-	cmpq	$2048, %rdi             # imm = 0x800
-	movq	%rdx, %rdi
-	movl	$32, %ebx
-	jge	.LBB2_8
-	.p2align	4, 0x90
-.LBB2_12:                               # %polly.stmt.for.body6.preheader.us.us.i17
-                                        #   Parent Loop BB2_6 Depth=1
-                                        #     Parent Loop BB2_7 Depth=2
-                                        # =>    This Inner Loop Header: Depth=3
-	movups	%xmm0, -112(%rdi)
-	movups	%xmm0, -96(%rdi)
-	movups	%xmm0, -80(%rdi)
-	movups	%xmm0, -64(%rdi)
-	movups	%xmm0, -48(%rdi)
-	movups	%xmm0, -32(%rdi)
-	movups	%xmm0, -16(%rdi)
-	movups	%xmm0, (%rdi)
-	addq	$8192, %rdi             # imm = 0x2000
-	decq	%rbx
-	jne	.LBB2_12
-.LBB2_8:                                # %polly.loop_exit16.loopexit.us.i15
-                                        #   in Loop: Header=BB2_7 Depth=2
-	subq	$-128, %rdx
-	cmpq	$63, %rsi
-	leaq	1(%rsi), %rsi
-	jne	.LBB2_7
-.LBB2_9:                                # %polly.loop_exit7.i31
-                                        #   in Loop: Header=BB2_6 Depth=1
-	addq	$262144, %rax           # imm = 0x40000
-	cmpq	$63, %rcx
-	leaq	1(%rcx), %rcx
-	jne	.LBB2_6
-# BB#10:                                # %init.exit32
-	movl	$16, %edi
-	callq	malloc
-	movq	%r14, (%rax)
-	movq	%r15, 8(%rax)
-	movq	%r12, %rdi
+	movl	$1, %edi
+	movl	%ebx, %esi
+	movl	%ebx, %edx
+	callq	init
+	movq	%r14, %rdi
 	movq	%rax, %rsi
 	callq	matrix_multiply
+	leal	-1(%rbx), %ecx
+	movl	%ebx, %edx
+	imull	%edx, %edx
+	shlq	$32, %rdx
+	movabsq	$-4294967296, %rsi      # imm = 0xFFFFFFFF00000000
+	addq	%rdx, %rsi
 	movq	(%rax), %rax
-	movl	16777212(%rax), %r9d
+	sarq	$30, %rsi
+	movl	(%rax,%rsi), %r9d
 	movl	$.L.str, %edi
-	movl	$2048, %esi             # imm = 0x800
-	movl	$2048, %edx             # imm = 0x800
-	movl	$2047, %ecx             # imm = 0x7FF
-	movl	$2047, %r8d             # imm = 0x7FF
 	xorl	%eax, %eax
+	movl	%ebx, %esi
+	movl	%ebx, %edx
+	movl	%ecx, %r8d
 	callq	printf
 	xorl	%eax, %eax
 	popq	%rbx
-	popq	%r12
 	popq	%r14
-	popq	%r15
 	popq	%rbp
 	retq
 .Lfunc_end2:

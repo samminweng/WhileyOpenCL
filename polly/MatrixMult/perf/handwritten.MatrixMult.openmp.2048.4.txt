@@ -3,171 +3,171 @@ Pass 2048 X 2048 matrix test case (C[N][N] =2048)
  
  Performance counter stats for './out/MatrixMult.openmp.out 2048':
 
-      13043.202505 task-clock (msec)         #    3.986 CPUs utilized          
-             1,141 context-switches          #    0.087 K/sec                  
-                10 cpu-migrations            #    0.001 K/sec                  
-               806 page-faults               #    0.062 K/sec                  
-    48,090,276,782 cycles                    #    3.687 GHz                    
+      17389.896686 task-clock (msec)         #    3.902 CPUs utilized          
+             1,499 context-switches          #    0.086 K/sec                  
+                 6 cpu-migrations            #    0.000 K/sec                  
+               797 page-faults               #    0.046 K/sec                  
+    64,659,144,248 cycles                    #    3.718 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    46,815,352,596 instructions              #    0.97  insns per cycle        
-     4,578,835,028 branches                  #  351.051 M/sec                  
-         8,770,465 branch-misses             #    0.19% of all branches        
+    46,822,272,583 instructions              #    0.72  insns per cycle        
+     4,580,364,517 branches                  #  263.392 M/sec                  
+         8,779,974 branch-misses             #    0.19% of all branches        
 
-       3.272612165 seconds time elapsed
+       4.456246837 seconds time elapsed
 
 Pass 2048 X 2048 matrix test case (C[N][N] =2048) 
  
  Performance counter stats for './out/MatrixMult.openmp.out 2048':
 
-      13029.107476 task-clock (msec)         #    3.979 CPUs utilized          
-             1,108 context-switches          #    0.085 K/sec                  
+      13160.219010 task-clock (msec)         #    3.972 CPUs utilized          
+             1,133 context-switches          #    0.086 K/sec                  
                  5 cpu-migrations            #    0.000 K/sec                  
-               804 page-faults               #    0.062 K/sec                  
-    48,071,234,094 cycles                    #    3.690 GHz                    
+               805 page-faults               #    0.061 K/sec                  
+    48,554,117,822 cycles                    #    3.689 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    46,808,260,412 instructions              #    0.97  insns per cycle        
-     4,576,858,623 branches                  #  351.280 M/sec                  
-         8,767,486 branch-misses             #    0.19% of all branches        
+    46,815,857,303 instructions              #    0.96  insns per cycle        
+     4,578,995,945 branches                  #  347.942 M/sec                  
+         8,781,068 branch-misses             #    0.19% of all branches        
 
-       3.274111648 seconds time elapsed
+       3.313081070 seconds time elapsed
 
 Pass 2048 X 2048 matrix test case (C[N][N] =2048) 
  
  Performance counter stats for './out/MatrixMult.openmp.out 2048':
 
-      13035.939033 task-clock (msec)         #    3.963 CPUs utilized          
-             1,137 context-switches          #    0.087 K/sec                  
-                 9 cpu-migrations            #    0.001 K/sec                  
-               806 page-faults               #    0.062 K/sec                  
-    48,096,794,725 cycles                    #    3.690 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-    46,815,013,851 instructions              #    0.97  insns per cycle        
-     4,578,736,422 branches                  #  351.239 M/sec                  
-         8,750,384 branch-misses             #    0.19% of all branches        
-
-       3.289309613 seconds time elapsed
-
-Pass 2048 X 2048 matrix test case (C[N][N] =2048) 
- 
- Performance counter stats for './out/MatrixMult.openmp.out 2048':
-
-      13034.698579 task-clock (msec)         #    3.980 CPUs utilized          
-             1,146 context-switches          #    0.088 K/sec                  
+      13240.557406 task-clock (msec)         #    3.885 CPUs utilized          
+             1,141 context-switches          #    0.086 K/sec                  
                  5 cpu-migrations            #    0.000 K/sec                  
-               808 page-faults               #    0.062 K/sec                  
-    48,062,261,162 cycles                    #    3.687 GHz                    
+               808 page-faults               #    0.061 K/sec                  
+    48,835,471,501 cycles                    #    3.688 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    46,815,443,707 instructions              #    0.97  insns per cycle        
-     4,578,851,291 branches                  #  351.282 M/sec                  
-         8,775,054 branch-misses             #    0.19% of all branches        
+    46,815,422,253 instructions              #    0.96  insns per cycle        
+     4,578,836,182 branches                  #  345.819 M/sec                  
+         8,766,638 branch-misses             #    0.19% of all branches        
 
-       3.275000454 seconds time elapsed
+       3.408425062 seconds time elapsed
 
 Pass 2048 X 2048 matrix test case (C[N][N] =2048) 
  
  Performance counter stats for './out/MatrixMult.openmp.out 2048':
 
-      13035.465787 task-clock (msec)         #    3.985 CPUs utilized          
-             1,143 context-switches          #    0.088 K/sec                  
+      13177.686944 task-clock (msec)         #    3.969 CPUs utilized          
+             1,139 context-switches          #    0.086 K/sec                  
                  4 cpu-migrations            #    0.000 K/sec                  
-               805 page-faults               #    0.062 K/sec                  
-    48,093,888,668 cycles                    #    3.689 GHz                    
+               807 page-faults               #    0.061 K/sec                  
+    48,618,732,772 cycles                    #    3.689 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    46,808,669,490 instructions              #    0.97  insns per cycle        
-     4,576,946,091 branches                  #  351.115 M/sec                  
-         8,809,288 branch-misses             #    0.19% of all branches        
+    46,815,481,047 instructions              #    0.96  insns per cycle        
+     4,578,860,535 branches                  #  347.471 M/sec                  
+         8,750,503 branch-misses             #    0.19% of all branches        
 
-       3.271002709 seconds time elapsed
+       3.320104052 seconds time elapsed
 
 Pass 2048 X 2048 matrix test case (C[N][N] =2048) 
  
  Performance counter stats for './out/MatrixMult.openmp.out 2048':
 
-      13060.113344 task-clock (msec)         #    3.952 CPUs utilized          
-             1,130 context-switches          #    0.087 K/sec                  
+      16433.664631 task-clock (msec)         #    3.911 CPUs utilized          
+             1,407 context-switches          #    0.086 K/sec                  
                  9 cpu-migrations            #    0.001 K/sec                  
-               807 page-faults               #    0.062 K/sec                  
-    48,154,910,747 cycles                    #    3.687 GHz                    
+               798 page-faults               #    0.049 K/sec                  
+    62,250,945,108 cycles                    #    3.788 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    46,816,147,828 instructions              #    0.97  insns per cycle        
-     4,579,089,628 branches                  #  350.616 M/sec                  
-         8,761,840 branch-misses             #    0.19% of all branches        
+    46,818,498,579 instructions              #    0.75  insns per cycle        
+     4,579,423,242 branches                  #  278.661 M/sec                  
+         8,761,791 branch-misses             #    0.19% of all branches        
 
-       3.304479988 seconds time elapsed
+       4.202196398 seconds time elapsed
 
 Pass 2048 X 2048 matrix test case (C[N][N] =2048) 
  
  Performance counter stats for './out/MatrixMult.openmp.out 2048':
 
-      13039.017159 task-clock (msec)         #    3.986 CPUs utilized          
-             1,115 context-switches          #    0.086 K/sec                  
+      13171.858039 task-clock (msec)         #    3.946 CPUs utilized          
+             1,149 context-switches          #    0.087 K/sec                  
+                 7 cpu-migrations            #    0.001 K/sec                  
+               811 page-faults               #    0.062 K/sec                  
+    48,598,752,546 cycles                    #    3.690 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    46,809,464,282 instructions              #    0.96  insns per cycle        
+     4,577,116,861 branches                  #  347.492 M/sec                  
+         8,796,260 branch-misses             #    0.19% of all branches        
+
+       3.337974168 seconds time elapsed
+
+Pass 2048 X 2048 matrix test case (C[N][N] =2048) 
+ 
+ Performance counter stats for './out/MatrixMult.openmp.out 2048':
+
+      13181.634909 task-clock (msec)         #    3.970 CPUs utilized          
+             1,157 context-switches          #    0.088 K/sec                  
+                 7 cpu-migrations            #    0.001 K/sec                  
+               807 page-faults               #    0.061 K/sec                  
+    48,611,276,703 cycles                    #    3.688 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    46,808,695,551 instructions              #    0.96  insns per cycle        
+     4,576,956,650 branches                  #  347.222 M/sec                  
+         8,774,136 branch-misses             #    0.19% of all branches        
+
+       3.320339230 seconds time elapsed
+
+Pass 2048 X 2048 matrix test case (C[N][N] =2048) 
+ 
+ Performance counter stats for './out/MatrixMult.openmp.out 2048':
+
+      13157.079250 task-clock (msec)         #    3.946 CPUs utilized          
+             1,163 context-switches          #    0.088 K/sec                  
                  5 cpu-migrations            #    0.000 K/sec                  
-               809 page-faults               #    0.062 K/sec                  
-    48,063,242,439 cycles                    #    3.686 GHz                    
+               809 page-faults               #    0.061 K/sec                  
+    48,506,138,271 cycles                    #    3.687 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    46,810,054,002 instructions              #    0.97  insns per cycle        
-     4,577,339,895 branches                  #  351.049 M/sec                  
-         8,758,683 branch-misses             #    0.19% of all branches        
+    46,815,031,699 instructions              #    0.97  insns per cycle        
+     4,578,747,236 branches                  #  348.006 M/sec                  
+         8,795,558 branch-misses             #    0.19% of all branches        
 
-       3.270874239 seconds time elapsed
+       3.334076820 seconds time elapsed
 
 Pass 2048 X 2048 matrix test case (C[N][N] =2048) 
  
  Performance counter stats for './out/MatrixMult.openmp.out 2048':
 
-      13014.587941 task-clock (msec)         #    3.982 CPUs utilized          
-             1,131 context-switches          #    0.087 K/sec                  
+      13177.439872 task-clock (msec)         #    3.957 CPUs utilized          
+             1,165 context-switches          #    0.088 K/sec                  
                  4 cpu-migrations            #    0.000 K/sec                  
-               806 page-faults               #    0.062 K/sec                  
-    48,017,683,215 cycles                    #    3.690 GHz                    
+               805 page-faults               #    0.061 K/sec                  
+    48,619,328,058 cycles                    #    3.690 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    46,816,018,239 instructions              #    0.97  insns per cycle        
-     4,579,068,233 branches                  #  351.841 M/sec                  
-         8,814,977 branch-misses             #    0.19% of all branches        
+    46,810,235,191 instructions              #    0.96  insns per cycle        
+     4,577,403,216 branches                  #  347.367 M/sec                  
+         8,770,463 branch-misses             #    0.19% of all branches        
 
-       3.268739357 seconds time elapsed
+       3.330064734 seconds time elapsed
 
 Pass 2048 X 2048 matrix test case (C[N][N] =2048) 
  
  Performance counter stats for './out/MatrixMult.openmp.out 2048':
 
-      13036.608627 task-clock (msec)         #    3.985 CPUs utilized          
-             1,142 context-switches          #    0.088 K/sec                  
-                13 cpu-migrations            #    0.001 K/sec                  
-               804 page-faults               #    0.062 K/sec                  
-    48,098,673,954 cycles                    #    3.690 GHz                    
+      13201.152529 task-clock (msec)         #    3.949 CPUs utilized          
+             1,140 context-switches          #    0.086 K/sec                  
+                 3 cpu-migrations            #    0.000 K/sec                  
+               810 page-faults               #    0.061 K/sec                  
+    48,658,167,187 cycles                    #    3.686 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    46,813,279,337 instructions              #    0.97  insns per cycle        
-     4,578,226,756 branches                  #  351.182 M/sec                  
-         8,809,203 branch-misses             #    0.19% of all branches        
+    46,812,108,902 instructions              #    0.96  insns per cycle        
+     4,577,915,514 branches                  #  346.782 M/sec                  
+         8,756,014 branch-misses             #    0.19% of all branches        
 
-       3.271225259 seconds time elapsed
-
-Pass 2048 X 2048 matrix test case (C[N][N] =2048) 
- 
- Performance counter stats for './out/MatrixMult.openmp.out 2048':
-
-      13038.676935 task-clock (msec)         #    3.974 CPUs utilized          
-             1,166 context-switches          #    0.089 K/sec                  
-                 9 cpu-migrations            #    0.001 K/sec                  
-               807 page-faults               #    0.062 K/sec                  
-    48,106,789,316 cycles                    #    3.690 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-    46,813,725,423 instructions              #    0.97  insns per cycle        
-     4,578,326,134 branches                  #  351.134 M/sec                  
-         8,809,749 branch-misses             #    0.19% of all branches        
-
-       3.281129771 seconds time elapsed
+       3.343074373 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -189,7 +189,7 @@ fpu_exception	: yes
 cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
-bogomips	: 6784.28
+bogomips	: 6784.75
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -202,7 +202,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 3401.000
+cpu MHz		: 800.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -215,7 +215,7 @@ fpu_exception	: yes
 cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
-bogomips	: 6784.28
+bogomips	: 6784.75
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -228,7 +228,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 3401.000
+cpu MHz		: 800.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -241,7 +241,7 @@ fpu_exception	: yes
 cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
-bogomips	: 6784.28
+bogomips	: 6784.75
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -267,7 +267,7 @@ fpu_exception	: yes
 cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
-bogomips	: 6784.28
+bogomips	: 6784.75
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -280,7 +280,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 800.000
+cpu MHz		: 3401.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -293,7 +293,7 @@ fpu_exception	: yes
 cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
-bogomips	: 6784.28
+bogomips	: 6784.75
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -306,7 +306,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 800.000
+cpu MHz		: 3401.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -319,7 +319,7 @@ fpu_exception	: yes
 cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
-bogomips	: 6784.28
+bogomips	: 6784.75
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -332,7 +332,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 800.000
+cpu MHz		: 2700.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -345,7 +345,7 @@ fpu_exception	: yes
 cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
-bogomips	: 6784.28
+bogomips	: 6784.75
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
@@ -371,7 +371,7 @@ fpu_exception	: yes
 cpuid level	: 13
 wp		: yes
 flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
-bogomips	: 6784.28
+bogomips	: 6784.75
 clflush size	: 64
 cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual

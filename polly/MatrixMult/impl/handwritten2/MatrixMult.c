@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define N 2048
+#include "Util.h"
 //#define TEST 1
 typedef struct{
     int *__restrict__ data;
@@ -90,19 +90,23 @@ int main(int argc, char** args)
     int *__restrict__ B=NULL;
     int *__restrict__ C=NULL;
     */
+
     Matrix *__restrict__ A=NULL;
     Matrix *__restrict__ B=NULL;
     Matrix *__restrict__ C=NULL;
     int width, height;
-    width = N;
-    height = N;
+    // Get the matrix width/height from command line argument.
+    int** array = convertArgsToIntArray(argc, args);
+    int max = parseStringToInt(array[0]);
+    width = max;
+    height = max;
     // 'A' array uses 'malloc' because local variables use stack.
     // and stack space is not sufficient for larger array size.
     A=init(1, width, height);
     B=init(1, width, height);
 
     C=matrix_multiply(A, B);
-    printf("Pass %d X %d matrix test case (C[%d][%d]=%d)\n", N, N, N-1, N-1, (C->data)[(N-1)*N+N-1]);
+    printf("Pass %d X %d matrix test case (C[%d][%d]=%d)\n", max, max, max-1, max-1, (C->data)[(max-1)*max+max-1]);
 
     return 0;
 }

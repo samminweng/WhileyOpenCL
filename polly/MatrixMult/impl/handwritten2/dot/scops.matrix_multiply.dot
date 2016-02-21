@@ -1,91 +1,91 @@
 digraph "Scop Graph for 'matrix_multiply' function" {
 	label="Scop Graph for 'matrix_multiply' function";
 
-	Node0x69f1900 [shape=record,label="{entry:\l  br label %entry.split\l}"];
-	Node0x69f1900 -> Node0x69ef7f0;
-	Node0x69ef7f0 [shape=record,label="{entry.split:                                      \l  %data = getelementptr inbounds %struct.Matrix, %struct.Matrix* %A, i64 0,\l... i32 0\l  %0 = load i32*, i32** %data, align 8\l  %data1 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %B, i64 0,\l... i32 0\l  %1 = load i32*, i32** %data1, align 8\l  %width2 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %B, i64 0,\l... i32 1\l  %2 = load i32, i32* %width2, align 8\l  %height3 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %A, i64 0,\l... i32 2\l  %3 = load i32, i32* %height3, align 4\l  %mul = mul nsw i32 %3, %2\l  %conv = sext i32 %mul to i64\l  %mul4 = shl nsw i64 %conv, 2\l  %call = tail call noalias i8* @malloc(i64 %mul4) #3\l  %4 = bitcast i8* %call to i32*\l  %height5 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %A, i64 0,\l... i32 2\l  %5 = load i32, i32* %height5, align 4\l  %cmp6 = icmp sgt i32 %5, 0\l  br i1 %cmp6, label %for.cond7.preheader.lr.ph, label %for.end41\l}"];
-	Node0x69ef7f0 -> Node0x69c7930;
-	Node0x69ef7f0 -> Node0x6a008f0;
-	Node0x69c7930 [shape=record,label="{for.cond7.preheader.lr.ph:                        \l  %6 = sext i32 %2 to i64\l  %7 = sext i32 %2 to i64\l  %8 = sext i32 %2 to i64\l  %9 = sext i32 %2 to i64\l  %10 = sext i32 %2 to i64\l  br label %for.cond7.preheader\l}"];
-	Node0x69c7930 -> Node0x6a000d0;
-	Node0x6a000d0 [shape=record,label="{for.cond7.preheader:                              \l  %indvars.iv17 = phi i64 [ 0, %for.cond7.preheader.lr.ph ], [\l... %indvars.iv.next18, %for.inc39 ]\l  %width8 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %B, i64 0,\l... i32 1\l  %11 = load i32, i32* %width8, align 8\l  %cmp93 = icmp sgt i32 %11, 0\l  br i1 %cmp93, label %for.body11.lr.ph, label %for.inc39\l}"];
-	Node0x6a000d0 -> Node0x6a000f0;
-	Node0x6a000d0 -> Node0x69f1940;
-	Node0x6a000f0 [shape=record,label="{for.body11.lr.ph:                                 \l  br label %for.body11\l}"];
-	Node0x6a000f0 -> Node0x69fb1e0;
-	Node0x69fb1e0 [shape=record,label="{for.body11:                                       \l  %indvars.iv12 = phi i64 [ 0, %for.body11.lr.ph ], [ %indvars.iv.next13,\l... %for.inc36 ]\l  %12 = mul nsw i64 %indvars.iv17, %10\l  %13 = add nsw i64 %indvars.iv12, %12\l  %arrayidx = getelementptr inbounds i32, i32* %4, i64 %13\l  store i32 0, i32* %arrayidx, align 4\l  %width14 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %A, i64 0,\l... i32 1\l  %14 = load i32, i32* %width14, align 8\l  %cmp151 = icmp sgt i32 %14, 0\l  br i1 %cmp151, label %for.body17.lr.ph, label %for.inc36\l}"];
-	Node0x69fb1e0 -> Node0x69f1960;
-	Node0x69fb1e0 -> Node0x69f13e0;
-	Node0x69f1960 [shape=record,label="{for.body17.lr.ph:                                 \l  br label %for.body17\l}"];
-	Node0x69f1960 -> Node0x69f1440;
-	Node0x69f1440 [shape=record,label="{for.body17:                                       \l  %indvars.iv = phi i64 [ 0, %for.body17.lr.ph ], [ %indvars.iv.next,\l... %for.body17 ]\l  %15 = mul nsw i64 %indvars.iv17, %9\l  %16 = add nsw i64 %indvars.iv12, %15\l  %arrayidx21 = getelementptr inbounds i32, i32* %4, i64 %16\l  %17 = load i32, i32* %arrayidx21, align 4\l  %18 = mul nsw i64 %indvars.iv17, %8\l  %19 = add nsw i64 %indvars.iv, %18\l  %arrayidx25 = getelementptr inbounds i32, i32* %0, i64 %19\l  %20 = load i32, i32* %arrayidx25, align 4\l  %21 = mul nsw i64 %indvars.iv, %6\l  %22 = add nsw i64 %21, %indvars.iv12\l  %arrayidx29 = getelementptr inbounds i32, i32* %1, i64 %22\l  %23 = load i32, i32* %arrayidx29, align 4\l  %mul30 = mul nsw i32 %23, %20\l  %add31 = add nsw i32 %mul30, %17\l  %24 = mul nsw i64 %indvars.iv17, %7\l  %25 = add nsw i64 %indvars.iv12, %24\l  %arrayidx35 = getelementptr inbounds i32, i32* %4, i64 %25\l  store i32 %add31, i32* %arrayidx35, align 4\l  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1\l  %26 = load i32, i32* %width14, align 8\l  %27 = sext i32 %26 to i64\l  %cmp15 = icmp slt i64 %indvars.iv.next, %27\l  br i1 %cmp15, label %for.body17, label %for.cond13.for.inc36_crit_edge\l}"];
-	Node0x69f1440 -> Node0x69f1440[constraint=false];
-	Node0x69f1440 -> Node0x69f6cb0;
-	Node0x69f6cb0 [shape=record,label="{for.cond13.for.inc36_crit_edge:                   \l  br label %for.inc36\l}"];
-	Node0x69f6cb0 -> Node0x69f13e0;
-	Node0x69f13e0 [shape=record,label="{for.inc36:                                        \l  %indvars.iv.next13 = add nuw nsw i64 %indvars.iv12, 1\l  %28 = load i32, i32* %width8, align 8\l  %29 = sext i32 %28 to i64\l  %cmp9 = icmp slt i64 %indvars.iv.next13, %29\l  br i1 %cmp9, label %for.body11, label %for.cond7.for.inc39_crit_edge\l}"];
-	Node0x69f13e0 -> Node0x69fb1e0[constraint=false];
-	Node0x69f13e0 -> Node0x6a00080;
-	Node0x6a00080 [shape=record,label="{for.cond7.for.inc39_crit_edge:                    \l  br label %for.inc39\l}"];
-	Node0x6a00080 -> Node0x69f1940;
-	Node0x69f1940 [shape=record,label="{for.inc39:                                        \l  %indvars.iv.next18 = add nuw nsw i64 %indvars.iv17, 1\l  %30 = load i32, i32* %height5, align 4\l  %31 = sext i32 %30 to i64\l  %cmp = icmp slt i64 %indvars.iv.next18, %31\l  br i1 %cmp, label %for.cond7.preheader, label %for.cond.for.end41_crit_edge\l}"];
-	Node0x69f1940 -> Node0x6a000d0[constraint=false];
-	Node0x69f1940 -> Node0x69f6560;
-	Node0x69f6560 [shape=record,label="{for.cond.for.end41_crit_edge:                     \l  br label %for.end41\l}"];
-	Node0x69f6560 -> Node0x6a008f0;
-	Node0x6a008f0 [shape=record,label="{for.end41:                                        \l  %call42 = tail call noalias i8* @malloc(i64 16) #3\l  %32 = bitcast i8* %call42 to %struct.Matrix*\l  %33 = bitcast i8* %call42 to i8**\l  store i8* %call, i8** %33, align 8\l  %width44 = getelementptr inbounds i8, i8* %call42, i64 8\l  %34 = bitcast i8* %width44 to i32*\l  store i32 %2, i32* %34, align 8\l  %height45 = getelementptr inbounds i8, i8* %call42, i64 12\l  %35 = bitcast i8* %height45 to i32*\l  store i32 %3, i32* %35, align 4\l  ret %struct.Matrix* %32\l}"];
+	Node0x5f9ad70 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0x5f9ad70 -> Node0x5f9e1a0;
+	Node0x5f9e1a0 [shape=record,label="{entry.split:                                      \l  %data = getelementptr inbounds %struct.Matrix, %struct.Matrix* %A, i64 0,\l... i32 0\l  %0 = load i32*, i32** %data, align 8\l  %data1 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %B, i64 0,\l... i32 0\l  %1 = load i32*, i32** %data1, align 8\l  %width2 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %B, i64 0,\l... i32 1\l  %2 = load i32, i32* %width2, align 8\l  %height3 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %A, i64 0,\l... i32 2\l  %3 = load i32, i32* %height3, align 4\l  %mul = mul nsw i32 %3, %2\l  %conv = sext i32 %mul to i64\l  %mul4 = shl nsw i64 %conv, 2\l  %call = tail call noalias i8* @malloc(i64 %mul4) #3\l  %4 = bitcast i8* %call to i32*\l  %height5 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %A, i64 0,\l... i32 2\l  %5 = load i32, i32* %height5, align 4\l  %cmp6 = icmp sgt i32 %5, 0\l  br i1 %cmp6, label %for.cond7.preheader.lr.ph, label %for.end41\l}"];
+	Node0x5f9e1a0 -> Node0x5fa5360;
+	Node0x5f9e1a0 -> Node0x5fa5590;
+	Node0x5fa5360 [shape=record,label="{for.cond7.preheader.lr.ph:                        \l  %6 = sext i32 %2 to i64\l  %7 = sext i32 %2 to i64\l  %8 = sext i32 %2 to i64\l  %9 = sext i32 %2 to i64\l  %10 = sext i32 %2 to i64\l  br label %for.cond7.preheader\l}"];
+	Node0x5fa5360 -> Node0x5fa5130;
+	Node0x5fa5130 [shape=record,label="{for.cond7.preheader:                              \l  %indvars.iv17 = phi i64 [ 0, %for.cond7.preheader.lr.ph ], [\l... %indvars.iv.next18, %for.inc39 ]\l  %width8 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %B, i64 0,\l... i32 1\l  %11 = load i32, i32* %width8, align 8\l  %cmp93 = icmp sgt i32 %11, 0\l  br i1 %cmp93, label %for.body11.lr.ph, label %for.inc39\l}"];
+	Node0x5fa5130 -> Node0x5f9ade0;
+	Node0x5fa5130 -> Node0x5f9ae00;
+	Node0x5f9ade0 [shape=record,label="{for.body11.lr.ph:                                 \l  br label %for.body11\l}"];
+	Node0x5f9ade0 -> Node0x5f9b1e0;
+	Node0x5f9b1e0 [shape=record,label="{for.body11:                                       \l  %indvars.iv12 = phi i64 [ 0, %for.body11.lr.ph ], [ %indvars.iv.next13,\l... %for.inc36 ]\l  %12 = mul nsw i64 %indvars.iv17, %10\l  %13 = add nsw i64 %indvars.iv12, %12\l  %arrayidx = getelementptr inbounds i32, i32* %4, i64 %13\l  store i32 0, i32* %arrayidx, align 4\l  %width14 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %A, i64 0,\l... i32 1\l  %14 = load i32, i32* %width14, align 8\l  %cmp151 = icmp sgt i32 %14, 0\l  br i1 %cmp151, label %for.body17.lr.ph, label %for.inc36\l}"];
+	Node0x5f9b1e0 -> Node0x5f9b200;
+	Node0x5f9b1e0 -> Node0x5f9dc80;
+	Node0x5f9b200 [shape=record,label="{for.body17.lr.ph:                                 \l  br label %for.body17\l}"];
+	Node0x5f9b200 -> Node0x5f9dce0;
+	Node0x5f9dce0 [shape=record,label="{for.body17:                                       \l  %indvars.iv = phi i64 [ 0, %for.body17.lr.ph ], [ %indvars.iv.next,\l... %for.body17 ]\l  %15 = mul nsw i64 %indvars.iv17, %9\l  %16 = add nsw i64 %indvars.iv12, %15\l  %arrayidx21 = getelementptr inbounds i32, i32* %4, i64 %16\l  %17 = load i32, i32* %arrayidx21, align 4\l  %18 = mul nsw i64 %indvars.iv17, %8\l  %19 = add nsw i64 %indvars.iv, %18\l  %arrayidx25 = getelementptr inbounds i32, i32* %0, i64 %19\l  %20 = load i32, i32* %arrayidx25, align 4\l  %21 = mul nsw i64 %indvars.iv, %6\l  %22 = add nsw i64 %21, %indvars.iv12\l  %arrayidx29 = getelementptr inbounds i32, i32* %1, i64 %22\l  %23 = load i32, i32* %arrayidx29, align 4\l  %mul30 = mul nsw i32 %23, %20\l  %add31 = add nsw i32 %mul30, %17\l  %24 = mul nsw i64 %indvars.iv17, %7\l  %25 = add nsw i64 %indvars.iv12, %24\l  %arrayidx35 = getelementptr inbounds i32, i32* %4, i64 %25\l  store i32 %add31, i32* %arrayidx35, align 4\l  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1\l  %26 = load i32, i32* %width14, align 8\l  %27 = sext i32 %26 to i64\l  %cmp15 = icmp slt i64 %indvars.iv.next, %27\l  br i1 %cmp15, label %for.body17, label %for.cond13.for.inc36_crit_edge\l}"];
+	Node0x5f9dce0 -> Node0x5f9dce0[constraint=false];
+	Node0x5f9dce0 -> Node0x5fa2d80;
+	Node0x5fa2d80 [shape=record,label="{for.cond13.for.inc36_crit_edge:                   \l  br label %for.inc36\l}"];
+	Node0x5fa2d80 -> Node0x5f9dc80;
+	Node0x5f9dc80 [shape=record,label="{for.inc36:                                        \l  %indvars.iv.next13 = add nuw nsw i64 %indvars.iv12, 1\l  %28 = load i32, i32* %width8, align 8\l  %29 = sext i32 %28 to i64\l  %cmp9 = icmp slt i64 %indvars.iv.next13, %29\l  br i1 %cmp9, label %for.body11, label %for.cond7.for.inc39_crit_edge\l}"];
+	Node0x5f9dc80 -> Node0x5f9b1e0[constraint=false];
+	Node0x5f9dc80 -> Node0x5f915f0;
+	Node0x5f915f0 [shape=record,label="{for.cond7.for.inc39_crit_edge:                    \l  br label %for.inc39\l}"];
+	Node0x5f915f0 -> Node0x5f9ae00;
+	Node0x5f9ae00 [shape=record,label="{for.inc39:                                        \l  %indvars.iv.next18 = add nuw nsw i64 %indvars.iv17, 1\l  %30 = load i32, i32* %height5, align 4\l  %31 = sext i32 %30 to i64\l  %cmp = icmp slt i64 %indvars.iv.next18, %31\l  br i1 %cmp, label %for.cond7.preheader, label %for.cond.for.end41_crit_edge\l}"];
+	Node0x5f9ae00 -> Node0x5fa5130[constraint=false];
+	Node0x5f9ae00 -> Node0x5fa33c0;
+	Node0x5fa33c0 [shape=record,label="{for.cond.for.end41_crit_edge:                     \l  br label %for.end41\l}"];
+	Node0x5fa33c0 -> Node0x5fa5590;
+	Node0x5fa5590 [shape=record,label="{for.end41:                                        \l  %call42 = tail call noalias i8* @malloc(i64 16) #3\l  %32 = bitcast i8* %call42 to %struct.Matrix*\l  %33 = bitcast i8* %call42 to i8**\l  store i8* %call, i8** %33, align 8\l  %width44 = getelementptr inbounds i8, i8* %call42, i64 8\l  %34 = bitcast i8* %width44 to i32*\l  store i32 %2, i32* %34, align 8\l  %height45 = getelementptr inbounds i8, i8* %call42, i64 12\l  %35 = bitcast i8* %height45 to i32*\l  store i32 %3, i32* %35, align 4\l  ret %struct.Matrix* %32\l}"];
 	colorscheme = "paired12"
-        subgraph cluster_0x69ce5f0 {
+        subgraph cluster_0x5f90f00 {
           label = "";
           style = solid;
           color = 1
-          subgraph cluster_0x69effe0 {
+          subgraph cluster_0x5f9c880 {
             label = "Access to one array through data types of different size";
             style = solid;
             color = 6
-            subgraph cluster_0x69f1460 {
+            subgraph cluster_0x5f9dd00 {
               label = "";
               style = filled;
-              color = 3              subgraph cluster_0x69eff60 {
+              color = 3              subgraph cluster_0x5f91870 {
                 label = "";
                 style = solid;
                 color = 7
-                subgraph cluster_0x69efee0 {
+                subgraph cluster_0x5f917f0 {
                   label = "";
                   style = solid;
                   color = 9
-                  subgraph cluster_0x69ce770 {
+                  subgraph cluster_0x5f91770 {
                     label = "";
                     style = solid;
                     color = 11
-                    subgraph cluster_0x69ce6f0 {
+                    subgraph cluster_0x5f916f0 {
                       label = "";
                       style = solid;
                       color = 1
-                      subgraph cluster_0x69ce670 {
+                      subgraph cluster_0x5f91020 {
                         label = "";
                         style = solid;
                         color = 6
-                        Node0x69f1440;
+                        Node0x5f9dce0;
                       }
-                      Node0x69fb1e0;
-                      Node0x69f1960;
-                      Node0x69f6cb0;
+                      Node0x5f9b1e0;
+                      Node0x5f9b200;
+                      Node0x5fa2d80;
                     }
-                    Node0x69f13e0;
+                    Node0x5f9dc80;
                   }
-                  Node0x6a000d0;
-                  Node0x6a000f0;
-                  Node0x6a00080;
+                  Node0x5fa5130;
+                  Node0x5f9ade0;
+                  Node0x5f915f0;
                 }
-                Node0x69f1940;
+                Node0x5f9ae00;
               }
-              Node0x69f6560;
+              Node0x5fa33c0;
             }
-            Node0x69ef7f0;
-            Node0x69c7930;
+            Node0x5f9e1a0;
+            Node0x5fa5360;
           }
-          Node0x69f1900;
-          Node0x6a008f0;
+          Node0x5f9ad70;
+          Node0x5fa5590;
         }
 }
