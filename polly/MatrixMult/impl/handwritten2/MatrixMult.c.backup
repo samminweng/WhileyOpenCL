@@ -1,48 +1,62 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define N 2048
+#include "Util.h"
 //#define TEST 1
 typedef struct{
-    int *__restrict__ data;
+    // Restrict 'data' to be a no-aliasing 2d arrays, similar to int data[__restrict__ 10][10]
+    int *__restrict__ *__restrict__ data;
     int width;
     int height;
 } Matrix;
 
-Matrix *__restrict__ init(int value)
+Matrix *__restrict__ init(int value, int width, int height)
 {
     int i, j;
 
-    int *__restrict__ data = (int*)malloc(N*N*sizeof(int));
-    for(i=0;i<N;i++){
-        for(j=0;j<N;j++){
-            data[i*N+j] = value;
+    int *__restrict__ *__restrict__ data = (int *__restrict__ *__restrict__)malloc(height*sizeof(int*));
+    for(i=0;i<height;i++){
+        int *__restrict__ tmp = (int *__restrict__)malloc(width*sizeof(int));
+        for(j=0;j<width;j++){
+            tmp[j] = value;
         }
+        data[i] = tmp;
     }
     Matrix *__restrict__ matrix = (Matrix*)malloc(sizeof(Matrix));
     matrix->data = data;
+    matrix->width = width;
+    matrix->height = height;
     //printf("%d\n", matrix->data[(N-1)*N+N-1]);
     return matrix;
 }
 
 Matrix *__restrict__ matrix_multiply(Matrix *__restrict__ A, Matrix *__restrict__ B){
     int i,j,k;
-    int *__restrict__ C_data = (int*)malloc(N*N*sizeof(int));
-    int *__restrict__ A_data = A->data;
-    int *__restrict__ B_data = B->data;
-    for(i=0; i<N; i++)  {
+    // Extract the resulting matrix' width and height from input matrix A and B.
+    int width = B->width;
+    int height = A->height;
+    int *__restrict__ *__restrict__ A_data = A->data;
+    // Dereference the 2-d array
+    int *__restrict__ *__restrict__ B_data = B->data;
+    int *__restrict__ *__restrict__ C_data = (int *__restrict__ *__restrict__)malloc(height*sizeof(int*));
+    for(i=0; i<A->height; i++)  {
+        C_data[i] = (int *__restrict__)malloc(width*sizeof(int));
         // Apply the loop transformation
-        for(j=0;j<N;j++){
-            C_data[i*N+j] = 0;
-            for(k=0;k<N;k++){
-                C_data[i*N+j] = C_data[i*N+j] + A_data[i*N+k]*B_data[k*N+j];
+        for(j=0;j<B->width;j++){
+            C_data[i][j] = 0;
+            for(k=0;k<A->width;k++){
+                int a = *(*(A_data+i)+k);
+                int *__restrict b_array = (int *__restrict)B_data[k];
+                int b = b_array[j];
+                C_data[i][j] = C_data[i][j] + a*b;
             }
         }
     }
 
     Matrix *__restrict__ C = (Matrix*)malloc(sizeof(Matrix));
     C->data = C_data;
+    C->width = width;
+    C->height = height;
     //printf("%d\n", C->data[(N-1)*N+N-1]);
-
     return C;
 }
 
@@ -78,23 +92,29 @@ int *__restrict__ matrix_multiply(int *__restrict__ A, int *__restrict__ B){
 
 int main(int argc, char** args)
 {
-    Matrix *__restrict__ A=NULL;
-    Matrix *__restrict__ B=NULL;
-    Matrix *__restrict__ C=NULL;
-    // 2D array
+     // 2D array
     /*
     int *__restrict__ A=NULL;
     int *__restrict__ B=NULL;
     int *__restrict__ C=NULL;
     */
 
+    Matrix *__restrict__ A=NULL;
+    Matrix *__restrict__ B=NULL;
+    Matrix *__restrict__ C=NULL;
+    int width, height;
+    // Get the matrix width/height from command line argument.
+    int** array = convertArgsToIntArray(argc, args);
+    int max = parseStringToInt(array[0]);
+    width = max;
+    height = max;
     // 'A' array uses 'malloc' because local variables use stack.
     // and stack space is not sufficient for larger array size.
-    A=init(1);
-    B=init(1);
+    A=init(1, width, height);
+    B=init(1, width, height);
 
     C=matrix_multiply(A, B);
-    printf("Pass %d X %d matrix test case (C[%d][%d]=%d)\n", N, N, N-1, N-1, (C->data)[(N-1)*N+N-1]);
+    printf("Pass %d X %d matrix test case (C[%d][%d]=%d)\n", max, max, max-1, max-1, (C->data)[max-1][max-1]);
 
     return 0;
 }

@@ -50,10 +50,11 @@ load_polly_clang(){
 opt_polly(){
 	c_type=$1
 	program=$2
+	num_threads=$3
+	parameter=$4
 	
 	read -p "Press [Enter] 1. Create LLVM-IR from C"
 	### Compile source.c along with 'Util.c' to assembly code
-	###clang -include Util.c -S -emit-llvm $program.c -o $program.s
 	clang -S -emit-llvm $program.c -o $program.s
 	read -p "Press [Enter] 2. Prepare the LLVM-IR for Polly"
 	opt -S -polly-canonicalize $program.s > $program.preopt.ll
@@ -61,9 +62,6 @@ opt_polly(){
 	opt -basicaa -polly-ast -analyze -q $program.preopt.ll
 
 	read -p "Press [Enter] 4.1 Generate the detected SCoPs in DOT"
-	# We only create .dot files, as directly -view-scops directly calls graphviz
-	# which would require user interaction to continue the script.
-	# opt -basicaa -view-scops -disable-output $program.preopt.ll
 	opt -basicaa -dot-scops -disable-output $program.preopt.ll
 	### Move all the dot files to 'dot' folder
 	mkdir -p "dot"
@@ -74,9 +72,6 @@ opt_polly(){
 	cd ../
 	
 	read -p "Press [Enter] 4.2 Generate the detected SCoPs in DOT-only (no instructions)"
-	# We only create .dot files, as directly -view-scops-only directly calls
-	# graphviz which would require user interaction to continue the script.
-	# opt -basicaa -view-scops-only -disable-output $program.preopt.ll
 	opt -basicaa -dot-scops-only -disable-output $program.preopt.ll
 	mkdir -p "dot-only"
 	mv *.dot "dot-only/"
@@ -88,10 +83,10 @@ opt_polly(){
 	read -p "Press [Enter] 5. Export jscop files"
 	opt -basicaa -polly-export-jscop $program.preopt.ll
 
-	read -p "Press [Enter] 10. Codegenerate the SCoPs"
+	read -p "Press [Enter] 6. Codegenerate the SCoPs"
 	opt -S -O3 -polly -polly-process-unprofitable $program.preopt.ll -o $program.polly.ll
 
-	read -p "Press [Enter] 11. Create the polly-optimized executables"
+	read -p "Press [Enter] 7. Create the polly-optimized executables"
 	mkdir -p "out" # Store the executables.
     ### Creating a static library ('Util.o') with GCC (http://www.cs.dartmouth.edu/~campbell/cs50/buildlib.html)
     gcc -c Util.c -o Util.o ### Compile Util.c to Util.o (object file)
@@ -101,13 +96,17 @@ opt_polly(){
     ### Use 'gcc' to compile .s file and link with 'libUtil.a'
     gcc $program.polly.s libUtil.a -o "out/$program.polly.out"
 
-    #read -p "Press [Enter] to Generate OpenMP code"
-    #opt -S -mem2reg -loop -simplify -indvars $program.c -o $program.preopt.ll
-    #opt -S -polly-codegen -polly-report -openmp $program.preopt.ll −o $program.ll
-    #llc $program.ll -o $program.s
-	#llvm-gcc $program.s -lgomp -o $program.openmp.out
-	#export OMP_NUM_THREADS=2
-	
+	read -p "Press [Enter] 8. Compare the runtime of the executables"
+
+	read -p "Press [Enter] to run Polly-optimized executable with parameter=$parameter"
+	#clang -include Util.c $CPPFLAGS -O3 -mllvm -polly -mllvm -polly-ignore-aliasing $program.c -o "out/$program.polly.out"
+	time ./out/$program.polly.out $parameter
+
+	read -p "Press [Enter] to Run OpenMP executable with 2 threads and parameter=$parameter..."
+	export OMP_NUM_THREADS=$num_threads
+	clang -include Util.c $CPPFLAGS -O3 -mllvm -polly -mllvm -polly-parallel -lgomp $program.c -o "out/$program.openmp.out"
+	time ."/out/$program.openmp.out" $parameter
+
 	## move files to folders respectively, e.g. 'jscop' 'llvm' and 'assembly' folder 
 	mkdir -p jscop
 	mv *.jscop "jscop/"
@@ -115,11 +114,6 @@ opt_polly(){
 	mv *.ll "llvm/"
 	mkdir -p assembly
 	mv *.s "assembly/"
-
-	read -p "Press [Enter] 12. Compare the runtime of the executables"
-
-	read -p "Press [Enter] time  ./out/$program.polly.out"
-	time ./out/$program.polly.out 2048
 }
 
 exec(){
@@ -132,10 +126,9 @@ exec(){
 	## copy *.whiley and Util.c Util.h to working folder
 	cp "$program/$program.whiley" $utildir/Util.c $utildir/Util.h $workingdir
 	cd $workingdir
-	#load_polly_clang $c_type $program
-	opt_polly $c_type $program
+	opt_polly $c_type $program $num_threads $parameter
 	cd ../../../
 }
-#exec handwritten MatrixMult
-exec handwritten2 MatrixMult
-#exec copy_reduced_dealloc MatrixMult
+exec handwritten MatrixMult 2 2048
+exec handwritten2 MatrixMult 2 2048
+
