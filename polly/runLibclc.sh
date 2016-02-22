@@ -16,21 +16,42 @@ compileOpenCLHost(){
 }
 
 ### Compile Kernel code to PTX code
-compileOpenCLKernel(){
+compileKernelToPTX(){
 	program=$1
 	read -p "Press [Enter] to compile Kernel code to PTX code"
 	### Compile 'kernel.cl' to LLVM IR code
-	#clang -S -emit-llvm -o kernel.ll -x cl kernel.cl
 	clang -Dcl_clang_storage_class_specifiers \
           -I $LIBCLC/generic/include \
           -include clc/clc.h \
-          # target list is http://clang.llvm.org/docs/CrossCompilation.html
           -target nvptx64-nvidia-nvcl \
-          -x cl kernel.cl -emit-llvm -S -o kernel.ll
+          -x cl kernel.cl -emit-llvm -S -o kernel.nvptx.ll
 	### Link libclc bitcode and kernel code into 'kernel.linked.bc' bitcode
-	llvm-link $LIBCLC/built_libs/nvptx64--nvidiacl.bc kernel.ll -o kernel.linked.nvptx.bc
+	llvm-link $LIBCLC/built_libs/nvptx64--nvidiacl.bc kernel.nvptx.ll -o kernel.nvptx.bc
 	### Compile to Ptx
-	clang -target nvptx64-nvidia-nvcl kernel.linked.nvptx.bc -S -o kernel.nvptx.s
+	clang -target nvptx64-nvidia-nvcl kernel.nvptx.bc -S -o kernel.nvptx.s
+	### Clean up files
+	mkdir -p "llvm"
+	mv *.ll "llvm/"
+	mkdir -p "bitcode"
+	mv *.bc "bitcode/"
+}
+
+### Compile Kernel code to PTX code
+compileKernelToAMDGPU(){
+	program=$1
+	read -p "Press [Enter] to compile Kernel code to AMDGPU code"
+	### Compile 'kernel.cl' to LLVM IR code
+	clang -Dcl_clang_storage_class_specifiers \
+          -I $LIBCLC/generic/include \
+          -include clc/clc.h \
+          -target amdgcn-carrizo \
+          -x cl kernel.cl -emit-llvm -S -o kernel.amdgcn.ll
+	### Link libclc bitcode and kernel code into 'kernel.linked.bc' bitcode
+	read -p "Press [Enter] to link Kernel code to bitcode"
+	llvm-link "$LIBCLC/built_libs/hainan-amdgcn--.bc" kernel.amdgcn.ll -o kernel.amdgcn.bc
+	### Compile to AMDGCN
+	#read -p "Press [Enter] to Compile bitcode to assembly code"
+	#clang -target amdgcn-carrizo kernel.amdgcn.bc -S -o kernel.amdgcn.s
 	### Clean up files
 	mkdir -p "llvm"
 	mv *.ll "llvm/"
@@ -41,7 +62,8 @@ compileOpenCLKernel(){
 exec(){
 	program=$1 
 	cd "$program/impl/opencl"
-	compileOpenCLKernel $program
+	compileKernelToPTX $program
+	#compileKernelToAMDGPU $program
 	compileOpenCLHost $program
 	cd "../../.."
 }
