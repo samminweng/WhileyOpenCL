@@ -26,10 +26,6 @@ void init_array(int* array, int value)
 // Compute the number of chars in a file
 size_t getFileSize(FILE *fp){
 	size_t source_size;
-	//fseek(fp, 0, SEEK_END);
-	//source_size = ftell(fp);
-	//rewind(fp);
-	//fseek(fp, 0L, SEEK_SET); // Go back to the original.
 	source_size = 0;
 	while (getc(fp) != EOF){
 		source_size++;
@@ -38,17 +34,76 @@ size_t getFileSize(FILE *fp){
 	fseek(fp, 0L, SEEK_SET); // Go back to the original.
 	return source_size;
 }
-// Read the contents of a file and output a string
-char* readFileToString(FILE *fp, size_t source_size){
+
+size_t getBinaryFileSize(FILE *fp){
+	size_t source_size;
+	fseek(fp, 0, SEEK_END);
+	source_size = ftell(fp);
+	rewind(fp);
+	fseek(fp, 0L, SEEK_SET); // Go back to the original.
+	return source_size;
+}
+// Read the contents of the source kernel file and output a string
+cl_program createProgramWithSourceFile(cl_context context){
+	cl_int err;
+	// Load the source code containing the kernel
+	FILE *fp = fopen("kernel.cl", "r");
+	if (!fp) {
+		fprintf(stderr, "Failed to load kernel.\n");
+		exit(EXIT_FAILURE);
+	}
+	// Read the source kernel code
+	size_t source_size = getFileSize(fp);
+
 	char *source_str = (char*)malloc((source_size + 1)*sizeof(char));
 	fread(source_str, sizeof(char), source_size, fp);
 	fclose(fp);
 	source_str[source_size] = EOF;
 	printf("%s\n", source_str);
-	return source_str;
+
+	cl_program program = clCreateProgramWithSource(context, 1, (const char **)& source_str, &source_size, &err);
+	if (err != CL_SUCCESS){
+		printf("Error: Failed to create compute program!%d\n", err);
+		exit(EXIT_FAILURE);
+	}
+	else{
+		printf("SUCCESS: Create compute program!\n");
+	}
+
+	return program;
 }
+// Create a program from a binary file
+cl_program createProgramWithBinaryFile(cl_context context, cl_device_id device_id){
+	cl_int err;
+	FILE *fp = fopen("kernel.bc", "r");
+	if (!fp) {
+		fprintf(stderr, "Failed to load kernel.\n");
+		exit(EXIT_FAILURE);
+	}
+	// Read the binary file size
+	size_t binary_size = getBinaryFileSize(fp);
+	// Read the source kernel code
+	char *binary_str = (char*)malloc(binary_size*sizeof(char));
+	fread(binary_str, sizeof(char), binary_size, fp);
+	fclose(fp);
+	//binary_str[binary_size] = EOF;
+	printf("%s\n", binary_str);
+
+	cl_int binary_status;
+	cl_program program = clCreateProgramWithBinary(context, 1, &device_id, (const size_t *)&binary_size, (const unsigned char **)&binary_str, &binary_status, &err);
+	if (err != CL_SUCCESS){
+		printf("Error: Failed to create compute program!%d\n", err);
+		exit(EXIT_FAILURE);
+	}
+	else{
+		printf("SUCCESS: Create compute program!\n");
+	}
+
+	return program;
+}
+
 // Write bitcode to 'kernel.bc' file
-void writeBitCode(cl_program program){
+void writeBinaryFile(cl_program program){
 	cl_int err;
 	// Get kernel name
 	char kernel_name[100];
@@ -61,7 +116,7 @@ void writeBitCode(cl_program program){
 	unsigned char *bin = (unsigned char *)malloc(bin_sz);
 	err = clGetProgramInfo(program, CL_PROGRAM_BINARIES, sizeof(unsigned char *), &bin, NULL);
 	// Save compiled code to 'kernel.bc'
-	FILE *fp = fopen("kernel.bc", "wb");
+	FILE *fp = fopen("kernel.bc", "w");
 	fwrite(bin, sizeof(char), bin_sz, fp);
 	fclose(fp);
 	free(bin);
@@ -87,8 +142,8 @@ int* matrix_mult(int* A, size_t A_size, int* B, size_t B_size){
 	clGetPlatformIDs(32, platforms, &num_platforms);
 	printf("Number of platforms:%d\n", num_platforms);
 	// Get the device IDs
-	err = clGetDeviceIDs(platforms[0], CL_DEVICE_TYPE_GPU, 1, &device_id, NULL);
-	//err = clGetDeviceIDs(platforms[0], CL_DEVICE_TYPE_CPU, 1, &device_id, NULL);
+	//err = clGetDeviceIDs(platforms[0], CL_DEVICE_TYPE_GPU, 1, &device_id, NULL);
+	err = clGetDeviceIDs(platforms[0], CL_DEVICE_TYPE_CPU, 1, &device_id, NULL);
 	if (err != CL_SUCCESS){
 		printf("Error: Failed to create a device group!\n");
 		exit(EXIT_FAILURE);
@@ -125,44 +180,11 @@ int* matrix_mult(int* A, size_t A_size, int* B, size_t B_size){
 		printf("SUCCESS: Create commands\n");
 	}
 
-	// Load the source code containing the kernel
-	FILE *fp = fopen("kernel.cl", "r");
-	if (!fp) {
-		fprintf(stderr, "Failed to load kernel.\n");
-		exit(EXIT_FAILURE);
-	}
-	// Read the source kernel code
-	size_t source_size = getFileSize(fp); // Get file size and pass it to clCreateProgramWithSource, to avoid strange chars.
-	char* source_str = readFileToString(fp, source_size);
-	program = clCreateProgramWithSource(context, 1, (const char **)& source_str, &source_size, &err);
-	if (err != CL_SUCCESS){
-		printf("Error: Failed to create compute program!%d\n", err);
-		exit(EXIT_FAILURE);
-	}
-	else{
-		printf("SUCCESS: Create compute program!\n");
-	}
-
-	/*FILE *fp = fopen("kernel.il", "r");
-	if (!fp) {
-	fprintf(stderr, "Failed to load kernel.\n");
-	exit(EXIT_FAILURE);
-	}
-	size_t source_size = getFileSize(fp);
-	char* source_str = readFileToString(fp);
-	cl_int binary_status;
-	program = clCreateProgramWithBinary(context, 1, &device_id, (const size_t *)&source_size,
-	(const unsigned char **)&source_str, &binary_status, &err);
-	if (err != CL_SUCCESS){
-	printf("Error: Failed to create compute program!%d\n", err);
-	exit(EXIT_FAILURE);
-	}
-	else{
-	printf("SUCCESS: Create compute program!\n");
-	}*/
-
+	program = createProgramWithSourceFile(context, device_id);
+	//program = createProgramWithBinaryFile(context, device_id);
 	// C kernel source code is read in and compiled to the executable
 	err = clBuildProgram(program, 0, NULL, NULL, NULL, NULL);
+	//err = clBuildProgram(program, 1, &device_id, NULL, NULL, NULL);
 	if (err != CL_SUCCESS){
 		printf("Error: Failed to build program executable!\n");
 		// Determine the size of the log
@@ -179,23 +201,19 @@ int* matrix_mult(int* A, size_t A_size, int* B, size_t B_size){
 		printf("%s\n", log);
 
 		exit(EXIT_FAILURE);
-	}
-	else{
+	}else{
 		printf("Build the program executables\n");
+		writeBinaryFile(program);
 	}
-	writeBitCode(program);
 
 	// Create the compute kernel
 	kernel = clCreateKernel(program, "matrixMul", &err);
 	if (!kernel || err != CL_SUCCESS){
 		printf("Error: Failed to create compute kernel!\n");
 		exit(EXIT_FAILURE);
-	}
-	else{
+	}else{
 		printf("SUCCESS: Create compute kernel\n");
 	}
-
-
 
 	// Create the input and output arrays in device memory for our calculation
 	cl_mem cl_A = clCreateBuffer(context, CL_MEM_READ_WRITE | CL_MEM_USE_HOST_PTR, A_size*sizeof(int), A, &err);
