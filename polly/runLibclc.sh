@@ -1,6 +1,16 @@
 #!/bin/bash
 ### 
 export LIBCLC="$HOME/libclc"
+### Use 'SED' to escape special characters 
+stringifyKernel(){
+
+	read -p "Press [Enter] to remove escape special characters"
+	sed -e 's/\\/\\\\/g;s/"/\\"/g;s/^/"/;s/$/\\n"/' kernel.cl > tmp.cl
+ 	#sed -e 's/[;,()'\'']/ /g;s/  */ /g' kernel.cl > tmp.cl
+ 	mv tmp.cl kernel.cl
+	read -p "Press [Enter] to continue"
+}
+
 
 ###
 ### Compile Opencl host code into executables using 'Clang' compiler
@@ -36,35 +46,20 @@ compileKernelToPTX(){
 	mv *.bc "bitcode/"
 }
 
-### Compile Kernel code to PTX code
-compileKernelToAMDGPU(){
+### Compile Kernel code to AMD Intermediate Language code
+compileKernelToAMDIL(){
 	program=$1
-	read -p "Press [Enter] to compile Kernel code to AMDGPU code"
-	### Compile 'kernel.cl' to LLVM IR code
-	clang -Dcl_clang_storage_class_specifiers \
-          -I $LIBCLC/generic/include \
-          -include clc/clc.h \
-          -target amdgcn-carrizo \
-          -x cl kernel.cl -emit-llvm -S -o kernel.amdgcn.ll
-	### Link libclc bitcode and kernel code into 'kernel.linked.bc' bitcode
-	read -p "Press [Enter] to link Kernel code to bitcode"
-	llvm-link "$LIBCLC/built_libs/hainan-amdgcn--.bc" kernel.amdgcn.ll -o kernel.amdgcn.bc
-	### Compile to AMDGCN
-	#read -p "Press [Enter] to Compile bitcode to assembly code"
-	#clang -target amdgcn-carrizo kernel.amdgcn.bc -S -o kernel.amdgcn.s
-	### Clean up files
-	mkdir -p "llvm"
-	mv *.ll "llvm/"
-	mkdir -p "bitcode"
-	mv *.bc "bitcode/"
+	read -p "Press [Enter] to compile Kernel code to AMDIL code"
+	
 }
 
 exec(){
 	program=$1 
 	cd "$program/impl/opencl"
+	#stringifyKernel $program
 	compileKernelToPTX $program
 	#compileKernelToAMDGPU $program
-	compileOpenCLHost $program
+	#compileOpenCLHost $program
 	cd "../../.."
 }
 
