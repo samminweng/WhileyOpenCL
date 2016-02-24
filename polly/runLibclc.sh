@@ -46,11 +46,12 @@ compileKernelToPTX(){
 	mv *.bc "bitcode/"
 }
 
-### Compile Kernel code to AMD Intermediate Language code
-compileKernelToAMDIL(){
+### Compile Kernel code to AMDGCN
+### Reference: https://groups.google.com/forum/#!topic/llvm-dev/UH-T1CjbMEU
+compileKernelToAMDGCN(){
 	program=$1
-	read -p "Press [Enter] to compile Kernel code to AMDIL code"
-	
+	read -p "Press [Enter] to compile Kernel code to AMDGCN"
+	clang -include /path/to/libclc/headers/clc.h -I /path/to/libclc/headers  -Dcl_clang_storage_class_specifiers -target amdgcn--amdhsa -mcpu=carrizo  $INPUT_FILE -o $OUTPUT_FILE
 }
 
 exec(){

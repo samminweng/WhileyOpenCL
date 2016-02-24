@@ -93,12 +93,12 @@ exec(){
 
 init MatrixMult
 ##### handwritten C code
-exec handwritten MatrixMult 2048 gcc 1
-exec handwritten MatrixMult 2048 polly 1
-exec handwritten MatrixMult 2048 openmp 1
-exec handwritten MatrixMult 2048 openmp 2
-exec handwritten MatrixMult 2048 openmp 4
-exec handwritten MatrixMult 2048 openmp 8
+# exec handwritten MatrixMult 2048 gcc 1
+# exec handwritten MatrixMult 2048 polly 1
+# exec handwritten MatrixMult 2048 openmp 1
+# exec handwritten MatrixMult 2048 openmp 2
+# exec handwritten MatrixMult 2048 openmp 4
+# exec handwritten MatrixMult 2048 openmp 8
 #### new handwritten C code 
 exec handwritten2 MatrixMult 2048 gcc 1
 exec handwritten2 MatrixMult 2048 polly 1
