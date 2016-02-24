@@ -44,7 +44,7 @@ size_t getBinaryFileSize(FILE *fp){
 	return source_size;
 }
 // Read the contents of the source kernel file and output a string
-cl_program createProgramWithSourceFile(cl_context context){
+cl_program createProgramWithSourceFile(cl_context context, cl_device_id device_id){
 	cl_int err;
 	// Load the source code containing the kernel
 	FILE *fp = fopen("kernel.cl", "r");
