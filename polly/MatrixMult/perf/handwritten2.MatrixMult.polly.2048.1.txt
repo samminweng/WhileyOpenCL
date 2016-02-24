@@ -3,171 +3,171 @@ Pass 2048 X 2048 matrix test case (C[2047][2047]=2048)
 
  Performance counter stats for './out/MatrixMult.polly.out 2048':
 
-       9567.866779 task-clock (msec)         #    0.997 CPUs utilized          
-               841 context-switches          #    0.088 K/sec                  
+       9671.332906 task-clock (msec)         #    0.999 CPUs utilized          
+               921 context-switches          #    0.095 K/sec                  
                  2 cpu-migrations            #    0.000 K/sec                  
-             1,704 page-faults               #    0.178 K/sec                  
-    37,100,613,644 cycles                    #    3.878 GHz                    
+             1,704 page-faults               #    0.176 K/sec                  
+    37,527,188,555 cycles                    #    3.880 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    76,168,539,781 instructions              #    2.05  insns per cycle        
-     9,426,310,564 branches                  #  985.205 M/sec                  
-         8,931,750 branch-misses             #    0.09% of all branches        
+    76,169,273,799 instructions              #    2.03  insns per cycle        
+     9,426,444,810 branches                  #  974.679 M/sec                  
+         8,986,202 branch-misses             #    0.10% of all branches        
 
-       9.595176471 seconds time elapsed
+       9.677752503 seconds time elapsed
 
 Pass 2048 X 2048 matrix test case (C[2047][2047]=2048)
 
  Performance counter stats for './out/MatrixMult.polly.out 2048':
 
-       9569.169617 task-clock (msec)         #    0.999 CPUs utilized          
+       9615.488926 task-clock (msec)         #    1.000 CPUs utilized          
                865 context-switches          #    0.090 K/sec                  
-                 1 cpu-migrations            #    0.000 K/sec                  
-             1,704 page-faults               #    0.178 K/sec                  
-    36,912,612,683 cycles                    #    3.857 GHz                    
+                 0 cpu-migrations            #    0.000 K/sec                  
+             1,704 page-faults               #    0.177 K/sec                  
+    37,311,396,419 cycles                    #    3.880 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    76,168,156,200 instructions              #    2.06  insns per cycle        
-     9,426,247,673 branches                  #  985.064 M/sec                  
-         8,865,803 branch-misses             #    0.09% of all branches        
+    76,168,270,457 instructions              #    2.04  insns per cycle        
+     9,426,260,974 branches                  #  980.321 M/sec                  
+         8,886,519 branch-misses             #    0.09% of all branches        
 
-       9.574958887 seconds time elapsed
+       9.619821294 seconds time elapsed
 
 Pass 2048 X 2048 matrix test case (C[2047][2047]=2048)
 
  Performance counter stats for './out/MatrixMult.polly.out 2048':
 
-       9546.287141 task-clock (msec)         #    0.998 CPUs utilized          
-               851 context-switches          #    0.089 K/sec                  
+       9676.940080 task-clock (msec)         #    1.000 CPUs utilized          
+               876 context-switches          #    0.091 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+             1,704 page-faults               #    0.176 K/sec                  
+    37,458,474,250 cycles                    #    3.871 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    76,168,347,423 instructions              #    2.03  insns per cycle        
+     9,426,276,499 branches                  #  974.097 M/sec                  
+         8,986,154 branch-misses             #    0.10% of all branches        
+
+       9.680424631 seconds time elapsed
+
+Pass 2048 X 2048 matrix test case (C[2047][2047]=2048)
+
+ Performance counter stats for './out/MatrixMult.polly.out 2048':
+
+       9578.242264 task-clock (msec)         #    0.999 CPUs utilized          
+               883 context-switches          #    0.092 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
              1,704 page-faults               #    0.178 K/sec                  
-    37,073,964,636 cycles                    #    3.884 GHz                    
+    37,206,589,708 cycles                    #    3.884 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    76,168,183,339 instructions              #    2.05  insns per cycle        
-     9,426,252,558 branches                  #  987.426 M/sec                  
-         8,881,851 branch-misses             #    0.09% of all branches        
+    76,168,246,827 instructions              #    2.05  insns per cycle        
+     9,426,259,679 branches                  #  984.133 M/sec                  
+         8,900,437 branch-misses             #    0.09% of all branches        
 
-       9.568079402 seconds time elapsed
+       9.583107314 seconds time elapsed
 
 Pass 2048 X 2048 matrix test case (C[2047][2047]=2048)
 
  Performance counter stats for './out/MatrixMult.polly.out 2048':
 
-       9565.806830 task-clock (msec)         #    1.000 CPUs utilized          
-               862 context-switches          #    0.090 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-             1,704 page-faults               #    0.178 K/sec                  
-    37,150,948,865 cycles                    #    3.884 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-    76,168,203,706 instructions              #    2.05  insns per cycle        
-     9,426,258,006 branches                  #  985.412 M/sec                  
-         8,890,246 branch-misses             #    0.09% of all branches        
-
-       9.569685201 seconds time elapsed
-
-Pass 2048 X 2048 matrix test case (C[2047][2047]=2048)
-
- Performance counter stats for './out/MatrixMult.polly.out 2048':
-
-       9583.380031 task-clock (msec)         #    0.998 CPUs utilized          
-               855 context-switches          #    0.089 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-             1,703 page-faults               #    0.178 K/sec                  
-    37,198,476,425 cycles                    #    3.882 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-    76,168,213,861 instructions              #    2.05  insns per cycle        
-     9,426,253,007 branches                  #  983.604 M/sec                  
-         8,952,962 branch-misses             #    0.09% of all branches        
-
-       9.605218539 seconds time elapsed
-
-Pass 2048 X 2048 matrix test case (C[2047][2047]=2048)
-
- Performance counter stats for './out/MatrixMult.polly.out 2048':
-
-       9524.795862 task-clock (msec)         #    0.999 CPUs utilized          
-               825 context-switches          #    0.087 K/sec                  
+       9532.275233 task-clock (msec)         #    0.999 CPUs utilized          
+               874 context-switches          #    0.092 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
              1,704 page-faults               #    0.179 K/sec                  
-    36,991,708,132 cycles                    #    3.884 GHz                    
+    37,004,992,127 cycles                    #    3.882 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    76,168,012,659 instructions              #    2.06  insns per cycle        
-     9,426,214,919 branches                  #  989.650 M/sec                  
-         8,849,256 branch-misses             #    0.09% of all branches        
+    76,168,166,649 instructions              #    2.06  insns per cycle        
+     9,426,246,016 branches                  #  988.877 M/sec                  
+         8,844,275 branch-misses             #    0.09% of all branches        
 
-       9.538688700 seconds time elapsed
+       9.537082066 seconds time elapsed
 
 Pass 2048 X 2048 matrix test case (C[2047][2047]=2048)
 
  Performance counter stats for './out/MatrixMult.polly.out 2048':
 
-       9584.568879 task-clock (msec)         #    1.000 CPUs utilized          
-               851 context-switches          #    0.089 K/sec                  
+       9604.709163 task-clock (msec)         #    1.000 CPUs utilized          
+               882 context-switches          #    0.092 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+             1,704 page-faults               #    0.177 K/sec                  
+    37,305,351,343 cycles                    #    3.884 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    76,168,294,819 instructions              #    2.04  insns per cycle        
+     9,426,266,971 branches                  #  981.421 M/sec                  
+         8,946,089 branch-misses             #    0.09% of all branches        
+
+       9.609039549 seconds time elapsed
+
+Pass 2048 X 2048 matrix test case (C[2047][2047]=2048)
+
+ Performance counter stats for './out/MatrixMult.polly.out 2048':
+
+       9583.360385 task-clock (msec)         #    1.000 CPUs utilized          
+               911 context-switches          #    0.095 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
              1,704 page-faults               #    0.178 K/sec                  
-    37,180,494,778 cycles                    #    3.879 GHz                    
+    37,143,898,447 cycles                    #    3.876 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    76,168,151,602 instructions              #    2.05  insns per cycle        
-     9,426,241,179 branches                  #  983.481 M/sec                  
-         8,893,891 branch-misses             #    0.09% of all branches        
+    76,168,354,244 instructions              #    2.05  insns per cycle        
+     9,426,279,353 branches                  #  983.609 M/sec                  
+         8,943,403 branch-misses             #    0.09% of all branches        
 
-       9.587896776 seconds time elapsed
+       9.587884550 seconds time elapsed
 
 Pass 2048 X 2048 matrix test case (C[2047][2047]=2048)
 
  Performance counter stats for './out/MatrixMult.polly.out 2048':
 
-       9510.708737 task-clock (msec)         #    0.998 CPUs utilized          
-               875 context-switches          #    0.092 K/sec                  
+       9651.075114 task-clock (msec)         #    1.000 CPUs utilized          
+               880 context-switches          #    0.091 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+             1,704 page-faults               #    0.177 K/sec                  
+    37,475,189,310 cycles                    #    3.883 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    76,168,320,475 instructions              #    2.03  insns per cycle        
+     9,426,271,199 branches                  #  976.707 M/sec                  
+         8,960,221 branch-misses             #    0.10% of all branches        
+
+       9.655481712 seconds time elapsed
+
+Pass 2048 X 2048 matrix test case (C[2047][2047]=2048)
+
+ Performance counter stats for './out/MatrixMult.polly.out 2048':
+
+       9561.912085 task-clock (msec)         #    1.000 CPUs utilized          
+               889 context-switches          #    0.093 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+             1,704 page-faults               #    0.178 K/sec                  
+    37,126,111,541 cycles                    #    3.883 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    76,168,268,034 instructions              #    2.05  insns per cycle        
+     9,426,267,257 branches                  #  985.814 M/sec                  
+         8,907,456 branch-misses             #    0.09% of all branches        
+
+       9.565764589 seconds time elapsed
+
+Pass 2048 X 2048 matrix test case (C[2047][2047]=2048)
+
+ Performance counter stats for './out/MatrixMult.polly.out 2048':
+
+       9504.634781 task-clock (msec)         #    0.999 CPUs utilized          
+               869 context-switches          #    0.091 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
              1,704 page-faults               #    0.179 K/sec                  
-    36,804,172,944 cycles                    #    3.870 GHz                    
+    36,909,348,784 cycles                    #    3.883 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    76,168,150,896 instructions              #    2.07  insns per cycle        
-     9,426,241,525 branches                  #  991.119 M/sec                  
-         8,825,748 branch-misses             #    0.09% of all branches        
+    76,168,162,643 instructions              #    2.06  insns per cycle        
+     9,426,249,706 branches                  #  991.753 M/sec                  
+         8,902,610 branch-misses             #    0.09% of all branches        
 
-       9.530633782 seconds time elapsed
-
-Pass 2048 X 2048 matrix test case (C[2047][2047]=2048)
-
- Performance counter stats for './out/MatrixMult.polly.out 2048':
-
-       9553.153920 task-clock (msec)         #    0.997 CPUs utilized          
-               854 context-switches          #    0.089 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-             1,704 page-faults               #    0.178 K/sec                  
-    37,080,957,483 cycles                    #    3.882 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-    76,168,175,189 instructions              #    2.05  insns per cycle        
-     9,426,251,776 branches                  #  986.716 M/sec                  
-         8,870,605 branch-misses             #    0.09% of all branches        
-
-       9.578255138 seconds time elapsed
-
-Pass 2048 X 2048 matrix test case (C[2047][2047]=2048)
-
- Performance counter stats for './out/MatrixMult.polly.out 2048':
-
-       9584.876893 task-clock (msec)         #    0.997 CPUs utilized          
-               856 context-switches          #    0.089 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-             1,704 page-faults               #    0.178 K/sec                  
-    37,225,644,388 cycles                    #    3.884 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-    76,168,219,245 instructions              #    2.05  insns per cycle        
-     9,426,260,214 branches                  #  983.451 M/sec                  
-         8,908,582 branch-misses             #    0.09% of all branches        
-
-       9.614910371 seconds time elapsed
+       9.510175542 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -358,7 +358,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 800.000
+cpu MHz		: 1700.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
