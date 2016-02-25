@@ -49,14 +49,14 @@ compileKernelToAMDGCN(){
 	clang -Dcl_clang_storage_class_specifiers \
 	      -I $LIBCLC/generic/include\
 	      -include clc/clc.h\
-	      -target amdgcn -mcpu=carrizo\
+	      -target amdgcn--amdhsa -mcpu=carrizo\
 	      -x cl kernel.cl -emit-llvm -S -o kernel.amdgcn.ll
 	#clang -include /path/to/libclc/headers/clc.h -I /path/to/libclc/headers  -Dcl_clang_storage_class_specifiers -target amdgcn--amdhsa -mcpu=carrizo  $INPUT_FILE -o $OUTPUT_FILE
 	read -p "Press [Enter] to link LLVM IR Code with libclc bitcode"
 	### Link libclc bitcode and kernel code into 'kernel.linked.bc' bitcode
-	llvm-link $LIBCLC/built_libs/carrizo-amdgcn--.bc kernel.amdgcn.ll -o kernel.amdgcn.bc
+	llvm-link $LIBCLC/built_libs/tahiti-amdgcn--.bc kernel.amdgcn.ll -o kernel.amdgcn.bc
 	read -p "Press [Enter] to compile to AMDGCN"
-	clang -target amdgcn -mcpu=carrizo\
+	clang -target amdgcn--amdhsa -mcpu=carrizo\
 	      kernel.amdgcn.bc -S -o kernel.amdgcn.s
 }
 
@@ -64,8 +64,8 @@ exec(){
 	program=$1 
 	cd "$program/impl/opencl"
 	#stringifyKernel $program
-	#compileKernelToPTX $program
-	compileKernelToAMDGCN $program
+	compileKernelToPTX $program
+	#compileKernelToAMDGCN $program
 	#compileOpenCLHost $program
 
 	### Clean up files
