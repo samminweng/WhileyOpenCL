@@ -1,0 +1,61 @@
+digraph "Scop Graph for 'main' function" {
+	label="Scop Graph for 'main' function";
+
+	Node0x5f4ec50 [shape=record,label="{entry}"];
+	Node0x5f4ec50 -> Node0x5f4ef10;
+	Node0x5f4ef10 [shape=record,label="{entry.split}"];
+	Node0x5f4ef10 -> Node0x5f4ed70;
+	Node0x5f4ed70 [shape=record,label="{for.body}"];
+	Node0x5f4ed70 -> Node0x5f5ed90;
+	Node0x5f5ed90 [shape=record,label="{for.body3}"];
+	Node0x5f5ed90 -> Node0x5f5ed90[constraint=false];
+	Node0x5f5ed90 -> Node0x5f5edb0;
+	Node0x5f5edb0 [shape=record,label="{for.inc16}"];
+	Node0x5f5edb0 -> Node0x5f4ed70[constraint=false];
+	Node0x5f5edb0 -> Node0x5f5f260;
+	Node0x5f5f260 [shape=record,label="{for.cond19.preheader}"];
+	Node0x5f5f260 -> Node0x5f4fc30;
+	Node0x5f4fc30 [shape=record,label="{for.inc25}"];
+	Node0x5f4fc30 -> Node0x5f4fc30[constraint=false];
+	Node0x5f4fc30 -> Node0x5f5f100;
+	Node0x5f5f100 [shape=record,label="{for.end27}"];
+	Node0x5f5f100 -> Node0x5f60af0;
+	Node0x5f5f100 -> Node0x5f5f200;
+	Node0x5f60af0 [shape=record,label="{if.end}"];
+	Node0x5f5f200 [shape=record,label="{if.then}"];
+	colorscheme = "paired12"
+        subgraph cluster_0x5f4ebd0 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0x5f605c0 {
+            label = "";
+            style = filled;
+            color = 3            subgraph cluster_0x5f4ffb0 {
+              label = "";
+              style = solid;
+              color = 5
+              subgraph cluster_0x5f4ff30 {
+                label = "";
+                style = solid;
+                color = 7
+                Node0x5f5ed90;
+              }
+              Node0x5f4ed70;
+              Node0x5f5edb0;
+            }
+            subgraph cluster_0x5f4ecf0 {
+              label = "Region can not profitably be optimized!";
+              style = solid;
+              color = 5
+              Node0x5f4fc30;
+            }
+            Node0x5f5f260;
+          }
+          Node0x5f4ec50;
+          Node0x5f4ef10;
+          Node0x5f5f100;
+          Node0x5f60af0;
+          Node0x5f5f200;
+        }
+}

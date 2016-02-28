@@ -91,21 +91,24 @@ exec(){
 	cd ../../../
 }
 
-init MatrixMult
-##### handwritten C code
-# exec handwritten MatrixMult 2048 gcc 1
-# exec handwritten MatrixMult 2048 polly 1
-# exec handwritten MatrixMult 2048 openmp 1
-# exec handwritten MatrixMult 2048 openmp 2
-# exec handwritten MatrixMult 2048 openmp 4
-# exec handwritten MatrixMult 2048 openmp 8
-#### new handwritten C code 
-exec handwritten2 MatrixMult 2048 gcc 1
-exec handwritten2 MatrixMult 2048 polly 1
-exec handwritten2 MatrixMult 2048 openmp 1
-exec handwritten2 MatrixMult 2048 openmp 2
-exec handwritten2 MatrixMult 2048 openmp 4
-exec handwritten2 MatrixMult 2048 openmp 8
+init VectorMult
+exec handwritten VectorMult 2048 openmp 2
+
+# init MatrixMult
+# ##### handwritten C code
+# # exec handwritten MatrixMult 2048 gcc 1
+# # exec handwritten MatrixMult 2048 polly 1
+# # exec handwritten MatrixMult 2048 openmp 1
+# # exec handwritten MatrixMult 2048 openmp 2
+# # exec handwritten MatrixMult 2048 openmp 4
+# # exec handwritten MatrixMult 2048 openmp 8
+# #### new handwritten C code 
+# exec handwritten2 MatrixMult 2048 gcc 1
+# exec handwritten2 MatrixMult 2048 polly 1
+# exec handwritten2 MatrixMult 2048 openmp 1
+# exec handwritten2 MatrixMult 2048 openmp 2
+# exec handwritten2 MatrixMult 2048 openmp 4
+# exec handwritten2 MatrixMult 2048 openmp 8
 #### Generated C code
 # exec copy_reduced_dealloc MatrixMult 2000 gcc
 # exec copy_reduced_dealloc MatrixMult 2000 polly
