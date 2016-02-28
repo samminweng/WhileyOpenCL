@@ -1,16 +1,17 @@
 #include "Util.h"
 #include <locale.h>
-#define N 65536
+#define SIZE 1048576*1024// Vector Size
+#define N 4096// local vector size
 int u[N];
 int v[N];
-int p[N];
-
 int main(int argc, char** args) {
-	
-	int r;
+	long long repeats = SIZE/N;
+	int *__restrict__ p = (int*)malloc(repeats*sizeof(int));
+
+	long long r;
 	int i;
 	// Repeats N times of vector multiplication
-	for(r=0;r<N;r++){
+	for(r=0;r<repeats;r++){
 		p[r]=0;
 		// Vector Multiplication
 		for (i=0;i<N;i++) {
@@ -21,12 +22,11 @@ int main(int argc, char** args) {
 	}
 
 	long long sum =0;
-	for(r=0;r<N;r++){
+	for(r=0;r<repeats;r++){
 		sum = sum + p[r];
 	}
-	long long product = ((long long)N)*N;
 	// Verify the product (should be = N*N)
-	if(sum != product){
+	if(sum != SIZE){
 		printf("fail to multiply two unit vectors");
 		exit(-2);
 	}
@@ -34,7 +34,8 @@ int main(int argc, char** args) {
 	// Set the locale.
 	setlocale(LC_ALL,"");
 	
-	printf("Pass the %'d X %'d vector multiplication test case with dot Product = %'lld", N, N, sum);
+	printf("Pass the %'lld vector multiplication test case with local vectors = %d size.\n"
+	 "The Dot Product = %'lld\n", SIZE, N, sum);
 	return 0;
 }
 

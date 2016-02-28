@@ -1,13 +1,5 @@
 	.text
 	.file	"VectorMult.polly.ll"
-	.section	.rodata.cst16,"aM",@progbits,16
-	.p2align	4
-.LCPI0_0:
-	.long	1                       # 0x1
-	.long	1                       # 0x1
-	.long	1                       # 0x1
-	.long	1                       # 0x1
-	.text
 	.globl	main
 	.p2align	4, 0x90
 	.type	main,@function
@@ -22,96 +14,121 @@ main:                                   # @main
 	movq	%rsp, %rbp
 .Ltmp2:
 	.cfi_def_cfa_register %rbp
-	xorl	%eax, %eax
-	movdqa	.LCPI0_0(%rip), %xmm0   # xmm0 = [1,1,1,1]
-	xorl	%ecx, %ecx
+	pushq	%r15
+	pushq	%r14
+	pushq	%rbx
+	pushq	%rax
+.Ltmp3:
+	.cfi_offset %rbx, -40
+.Ltmp4:
+	.cfi_offset %r14, -32
+.Ltmp5:
+	.cfi_offset %r15, -24
+	movl	$1048576, %edi          # imm = 0x100000
+	callq	malloc
+	movq	%rax, %r14
+	xorl	%r15d, %r15d
+	xorl	%esi, %esi
+	movl	$1048576, %edx          # imm = 0x100000
+	movq	%r14, %rdi
+	callq	memset
+	movq	%r14, %r8
+	addq	$12, %r8
 	.p2align	4, 0x90
-.LBB0_1:                                # %for.body
+.LBB0_1:                                # %polly.loop_preheader9
                                         # =>This Loop Header: Depth=1
-                                        #     Child Loop BB0_2 Depth 2
-	movslq	%eax, %rdx
-	movl	$0, p(,%rcx,4)
-	movq	$-262144, %rsi          # imm = 0xFFFFFFFFFFFC0000
+                                        #     Child Loop BB0_10 Depth 2
+                                        #       Child Loop BB0_11 Depth 3
+                                        #         Child Loop BB0_12 Depth 4
+	movq	%r15, %rcx
+	shlq	$5, %rcx
+	movq	%r8, %rbx
+	xorl	%r9d, %r9d
 	.p2align	4, 0x90
-.LBB0_2:                                # %vector.body
+.LBB0_10:                               # %polly.loop_preheader15
                                         #   Parent Loop BB0_1 Depth=1
-                                        # =>  This Inner Loop Header: Depth=2
-	movdqu	%xmm0, u+262144(%rsi,%rdx,4)
-	movdqu	%xmm0, u+262160(%rsi,%rdx,4)
-	movdqu	%xmm0, v+262144(%rsi,%rdx,4)
-	movdqu	%xmm0, v+262160(%rsi,%rdx,4)
-	movdqu	%xmm0, u+262176(%rsi,%rdx,4)
-	movdqu	%xmm0, u+262192(%rsi,%rdx,4)
-	movdqu	%xmm0, v+262176(%rsi,%rdx,4)
-	movdqu	%xmm0, v+262192(%rsi,%rdx,4)
-	movdqu	%xmm0, u+262208(%rsi,%rdx,4)
-	movdqu	%xmm0, u+262224(%rsi,%rdx,4)
-	movdqu	%xmm0, v+262208(%rsi,%rdx,4)
-	movdqu	%xmm0, v+262224(%rsi,%rdx,4)
-	movdqu	%xmm0, u+262240(%rsi,%rdx,4)
-	movdqu	%xmm0, u+262256(%rsi,%rdx,4)
-	movdqu	%xmm0, v+262240(%rsi,%rdx,4)
-	movdqu	%xmm0, v+262256(%rsi,%rdx,4)
-	addq	$128, %rsi
-	jne	.LBB0_2
-# BB#3:                                 # %for.inc24
-                                        #   in Loop: Header=BB0_1 Depth=1
-	movl	$65536, p(,%rcx,4)      # imm = 0x10000
-	incq	%rcx
-	addl	$65536, %eax            # imm = 0x10000
-	cmpq	$65536, %rcx            # imm = 0x10000
-	jne	.LBB0_1
-# BB#4:
-	pxor	%xmm0, %xmm0
-	movq	$-262144, %rax          # imm = 0xFFFFFFFFFFFC0000
-	pxor	%xmm1, %xmm1
+                                        # =>  This Loop Header: Depth=2
+                                        #       Child Loop BB0_11 Depth 3
+                                        #         Child Loop BB0_12 Depth 4
+	xorl	%edi, %edi
 	.p2align	4, 0x90
-.LBB0_5:                                # %vector.body5
+.LBB0_11:                               # %polly.loop_preheader21
+                                        #   Parent Loop BB0_1 Depth=1
+                                        #     Parent Loop BB0_10 Depth=2
+                                        # =>    This Loop Header: Depth=3
+                                        #         Child Loop BB0_12 Depth 4
+	leaq	(%rdi,%rcx), %rax
+	movq	%rbx, %rdx
+	movl	$32, %esi
+	.p2align	4, 0x90
+.LBB0_12:                               # %polly.loop_header20
+                                        #   Parent Loop BB0_1 Depth=1
+                                        #     Parent Loop BB0_10 Depth=2
+                                        #       Parent Loop BB0_11 Depth=3
+                                        # =>      This Inner Loop Header: Depth=4
+	incl	-12(%rdx)
+	incl	-8(%rdx)
+	incl	-4(%rdx)
+	incl	(%rdx)
+	addq	$16, %rdx
+	addq	$-4, %rsi
+	jne	.LBB0_12
+# BB#8:                                 # %polly.loop_exit22
+                                        #   in Loop: Header=BB0_11 Depth=3
+	movl	$1, u(,%rax,4)
+	movl	$1, v(,%rax,4)
+	incq	%rdi
+	cmpq	$32, %rdi
+	jne	.LBB0_11
+# BB#9:                                 # %polly.loop_exit16
+                                        #   in Loop: Header=BB0_10 Depth=2
+	incq	%r9
+	subq	$-128, %rbx
+	cmpq	$8192, %r9              # imm = 0x2000
+	jne	.LBB0_10
+# BB#5:                                 # %polly.loop_exit10
+                                        #   in Loop: Header=BB0_1 Depth=1
+	incq	%r15
+	cmpq	$128, %r15
+	jne	.LBB0_1
+# BB#6:                                 # %polly.stmt.for.inc22.preheader
+	xorl	%ecx, %ecx
+	xorl	%eax, %eax
+	.p2align	4, 0x90
+.LBB0_7:                                # %polly.stmt.for.inc22
                                         # =>This Inner Loop Header: Depth=1
-	movq	p+262144(%rax), %xmm2   # xmm2 = mem[0],zero
-	movq	p+262152(%rax), %xmm3   # xmm3 = mem[0],zero
-	movdqa	%xmm2, %xmm4
-	psrad	$31, %xmm4
-	punpckldq	%xmm4, %xmm2    # xmm2 = xmm2[0],xmm4[0],xmm2[1],xmm4[1]
-	movdqa	%xmm3, %xmm4
-	psrad	$31, %xmm4
-	punpckldq	%xmm4, %xmm3    # xmm3 = xmm3[0],xmm4[0],xmm3[1],xmm4[1]
-	paddq	%xmm0, %xmm2
-	paddq	%xmm1, %xmm3
-	movq	p+262160(%rax), %xmm0   # xmm0 = mem[0],zero
-	movq	p+262168(%rax), %xmm1   # xmm1 = mem[0],zero
-	movdqa	%xmm0, %xmm4
-	psrad	$31, %xmm4
-	punpckldq	%xmm4, %xmm0    # xmm0 = xmm0[0],xmm4[0],xmm0[1],xmm4[1]
-	movdqa	%xmm1, %xmm4
-	psrad	$31, %xmm4
-	punpckldq	%xmm4, %xmm1    # xmm1 = xmm1[0],xmm4[0],xmm1[1],xmm4[1]
-	paddq	%xmm2, %xmm0
-	paddq	%xmm3, %xmm1
-	addq	$32, %rax
-	jne	.LBB0_5
-# BB#6:                                 # %middle.block6
-	paddq	%xmm0, %xmm1
-	pshufd	$78, %xmm1, %xmm0       # xmm0 = xmm1[2,3,0,1]
-	paddq	%xmm1, %xmm0
-	movd	%xmm0, %rax
-	movabsq	$4294967296, %rcx       # imm = 0x100000000
-	cmpq	%rcx, %rax
-	jne	.LBB0_8
-# BB#7:                                 # %if.end
+	movslq	(%r14,%rax,4), %rdx
+	addq	%rcx, %rdx
+	movslq	4(%r14,%rax,4), %rcx
+	addq	%rdx, %rcx
+	movslq	8(%r14,%rax,4), %rdx
+	addq	%rcx, %rdx
+	movslq	12(%r14,%rax,4), %rcx
+	addq	%rdx, %rcx
+	addq	$4, %rax
+	cmpq	$262144, %rax           # imm = 0x40000
+	jne	.LBB0_7
+# BB#3:                                 # %polly.exiting
+	cmpq	$1073741824, %rcx       # imm = 0x40000000
+	jne	.LBB0_4
+# BB#2:                                 # %if.end
 	movl	$6, %edi
 	movl	$.L.str.1, %esi
 	callq	setlocale
-	movabsq	$4294967296, %rcx       # imm = 0x100000000
 	movl	$.L.str.2, %edi
-	movl	$65536, %esi            # imm = 0x10000
-	movl	$65536, %edx            # imm = 0x10000
+	movl	$1073741824, %esi       # imm = 0x40000000
+	movl	$4096, %edx             # imm = 0x1000
+	movl	$1073741824, %ecx       # imm = 0x40000000
 	xorl	%eax, %eax
 	callq	printf
 	xorl	%eax, %eax
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%r14
+	popq	%r15
 	popq	%rbp
 	retq
-.LBB0_8:                                # %if.then
+.LBB0_4:                                # %if.then
 	movl	$.L.str, %edi
 	xorl	%eax, %eax
 	callq	printf
@@ -121,12 +138,10 @@ main:                                   # @main
 	.size	main, .Lfunc_end0-main
 	.cfi_endproc
 
-	.type	p,@object               # @p
-	.comm	p,1,4
 	.type	u,@object               # @u
-	.comm	u,1,4
+	.comm	u,16384,16
 	.type	v,@object               # @v
-	.comm	v,1,4
+	.comm	v,16384,16
 	.type	.L.str,@object          # @.str
 	.section	.rodata.str1.1,"aMS",@progbits,1
 .L.str:
@@ -140,8 +155,8 @@ main:                                   # @main
 
 	.type	.L.str.2,@object        # @.str.2
 .L.str.2:
-	.asciz	"Pass the %'d X %'d vector multiplication test case with dot Product = %'lld"
-	.size	.L.str.2, 76
+	.asciz	"Pass the %'lld vector multiplication test case with local vectors = %d size.\nThe Dot Product = %'lld\n"
+	.size	.L.str.2, 102
 
 
 	.ident	"clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)"

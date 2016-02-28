@@ -1,63 +1,63 @@
 digraph "Scop Graph for 'init' function" {
 	label="Scop Graph for 'init' function";
 
-	Node0x50a74e0 [shape=record,label="{entry:\l  br label %entry.split\l}"];
-	Node0x50a74e0 -> Node0x50a7580;
-	Node0x50a7580 [shape=record,label="{entry.split:                                      \l  %mul = mul nsw i32 %height, %width\l  %conv = sext i32 %mul to i64\l  %mul1 = shl nsw i64 %conv, 2\l  %call = tail call noalias i8* @malloc(i64 %mul1) #3\l  %0 = bitcast i8* %call to i32*\l  %cmp3 = icmp sgt i32 %height, 0\l  br i1 %cmp3, label %for.cond3.preheader.lr.ph, label %for.end10\l}"];
-	Node0x50a7580 -> Node0x50a75a0;
-	Node0x50a7580 -> Node0x50b4ea0;
-	Node0x50a75a0 [shape=record,label="{for.cond3.preheader.lr.ph:                        \l  %1 = sext i32 %width to i64\l  br label %for.cond3.preheader\l}"];
-	Node0x50a75a0 -> Node0x50b4ec0;
-	Node0x50b4ec0 [shape=record,label="{for.cond3.preheader:                              \l  %indvars.iv7 = phi i64 [ 0, %for.cond3.preheader.lr.ph ], [\l... %indvars.iv.next8, %for.inc8 ]\l  %cmp41 = icmp sgt i32 %width, 0\l  br i1 %cmp41, label %for.body6.lr.ph, label %for.inc8\l}"];
-	Node0x50b4ec0 -> Node0x50b48d0;
-	Node0x50b4ec0 -> Node0x50b4930;
-	Node0x50b48d0 [shape=record,label="{for.body6.lr.ph:                                  \l  br label %for.body6\l}"];
-	Node0x50b48d0 -> Node0x50b4760;
-	Node0x50b4760 [shape=record,label="{for.body6:                                        \l  %indvars.iv = phi i64 [ 0, %for.body6.lr.ph ], [ %indvars.iv.next,\l... %for.body6 ]\l  %2 = mul nsw i64 %indvars.iv7, %1\l  %3 = add nsw i64 %indvars.iv, %2\l  %arrayidx = getelementptr inbounds i32, i32* %0, i64 %3\l  store i32 %value, i32* %arrayidx, align 4\l  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1\l  %lftr.wideiv = trunc i64 %indvars.iv.next to i32\l  %exitcond = icmp ne i32 %lftr.wideiv, %width\l  br i1 %exitcond, label %for.body6, label %for.cond3.for.inc8_crit_edge\l}"];
-	Node0x50b4760 -> Node0x50b4760[constraint=false];
-	Node0x50b4760 -> Node0x50b65c0;
-	Node0x50b65c0 [shape=record,label="{for.cond3.for.inc8_crit_edge:                     \l  br label %for.inc8\l}"];
-	Node0x50b65c0 -> Node0x50b4930;
-	Node0x50b4930 [shape=record,label="{for.inc8:                                         \l  %indvars.iv.next8 = add nuw nsw i64 %indvars.iv7, 1\l  %lftr.wideiv10 = trunc i64 %indvars.iv.next8 to i32\l  %exitcond11 = icmp ne i32 %lftr.wideiv10, %height\l  br i1 %exitcond11, label %for.cond3.preheader, label\l... %for.cond.for.end10_crit_edge\l}"];
-	Node0x50b4930 -> Node0x50b4ec0[constraint=false];
-	Node0x50b4930 -> Node0x50b6620;
-	Node0x50b6620 [shape=record,label="{for.cond.for.end10_crit_edge:                     \l  br label %for.end10\l}"];
-	Node0x50b6620 -> Node0x50b4ea0;
-	Node0x50b4ea0 [shape=record,label="{for.end10:                                        \l  %call11 = tail call noalias i8* @malloc(i64 16) #3\l  %4 = bitcast i8* %call11 to %struct.Matrix*\l  %5 = bitcast i8* %call11 to i8**\l  store i8* %call, i8** %5, align 8\l  %width13 = getelementptr inbounds i8, i8* %call11, i64 8\l  %6 = bitcast i8* %width13 to i32*\l  store i32 %width, i32* %6, align 8\l  %height14 = getelementptr inbounds i8, i8* %call11, i64 12\l  %7 = bitcast i8* %height14 to i32*\l  store i32 %height, i32* %7, align 4\l  ret %struct.Matrix* %4\l}"];
+	Node0x67ebd10 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0x67ebd10 -> Node0x67eb8f0;
+	Node0x67eb8f0 [shape=record,label="{entry.split:                                      \l  %mul = mul nsw i32 %height, %width\l  %conv = sext i32 %mul to i64\l  %mul1 = shl nsw i64 %conv, 2\l  %call = tail call noalias i8* @malloc(i64 %mul1) #3\l  %0 = bitcast i8* %call to i32*\l  %cmp3 = icmp sgt i32 %height, 0\l  br i1 %cmp3, label %for.cond3.preheader.lr.ph, label %for.end10\l}"];
+	Node0x67eb8f0 -> Node0x67fa780;
+	Node0x67eb8f0 -> Node0x67ec560;
+	Node0x67fa780 [shape=record,label="{for.cond3.preheader.lr.ph:                        \l  %1 = sext i32 %width to i64\l  br label %for.cond3.preheader\l}"];
+	Node0x67fa780 -> Node0x67ebd90;
+	Node0x67ebd90 [shape=record,label="{for.cond3.preheader:                              \l  %indvars.iv7 = phi i64 [ 0, %for.cond3.preheader.lr.ph ], [\l... %indvars.iv.next8, %for.inc8 ]\l  %cmp41 = icmp sgt i32 %width, 0\l  br i1 %cmp41, label %for.body6.lr.ph, label %for.inc8\l}"];
+	Node0x67ebd90 -> Node0x67ec580;
+	Node0x67ebd90 -> Node0x67fa8c0;
+	Node0x67ec580 [shape=record,label="{for.body6.lr.ph:                                  \l  br label %for.body6\l}"];
+	Node0x67ec580 -> Node0x67fa7f0;
+	Node0x67fa7f0 [shape=record,label="{for.body6:                                        \l  %indvars.iv = phi i64 [ 0, %for.body6.lr.ph ], [ %indvars.iv.next,\l... %for.body6 ]\l  %2 = mul nsw i64 %indvars.iv7, %1\l  %3 = add nsw i64 %indvars.iv, %2\l  %arrayidx = getelementptr inbounds i32, i32* %0, i64 %3\l  store i32 %value, i32* %arrayidx, align 4\l  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1\l  %lftr.wideiv = trunc i64 %indvars.iv.next to i32\l  %exitcond = icmp ne i32 %lftr.wideiv, %width\l  br i1 %exitcond, label %for.body6, label %for.cond3.for.inc8_crit_edge\l}"];
+	Node0x67fa7f0 -> Node0x67fa7f0[constraint=false];
+	Node0x67fa7f0 -> Node0x67fa6a0;
+	Node0x67fa6a0 [shape=record,label="{for.cond3.for.inc8_crit_edge:                     \l  br label %for.inc8\l}"];
+	Node0x67fa6a0 -> Node0x67fa8c0;
+	Node0x67fa8c0 [shape=record,label="{for.inc8:                                         \l  %indvars.iv.next8 = add nuw nsw i64 %indvars.iv7, 1\l  %lftr.wideiv10 = trunc i64 %indvars.iv.next8 to i32\l  %exitcond11 = icmp ne i32 %lftr.wideiv10, %height\l  br i1 %exitcond11, label %for.cond3.preheader, label\l... %for.cond.for.end10_crit_edge\l}"];
+	Node0x67fa8c0 -> Node0x67ebd90[constraint=false];
+	Node0x67fa8c0 -> Node0x67fa700;
+	Node0x67fa700 [shape=record,label="{for.cond.for.end10_crit_edge:                     \l  br label %for.end10\l}"];
+	Node0x67fa700 -> Node0x67ec560;
+	Node0x67ec560 [shape=record,label="{for.end10:                                        \l  %call11 = tail call noalias i8* @malloc(i64 16) #3\l  %4 = bitcast i8* %call11 to %struct.Matrix*\l  %5 = bitcast i8* %call11 to i8**\l  store i8* %call, i8** %5, align 8\l  %width13 = getelementptr inbounds i8, i8* %call11, i64 8\l  %6 = bitcast i8* %width13 to i32*\l  store i32 %width, i32* %6, align 8\l  %height14 = getelementptr inbounds i8, i8* %call11, i64 12\l  %7 = bitcast i8* %height14 to i32*\l  store i32 %height, i32* %7, align 4\l  ret %struct.Matrix* %4\l}"];
 	colorscheme = "paired12"
-        subgraph cluster_0x50a6cc0 {
+        subgraph cluster_0x67eb490 {
           label = "";
           style = solid;
           color = 1
-          subgraph cluster_0x50a7fb0 {
+          subgraph cluster_0x67ec780 {
             label = "Call instruction:   %call = tail call noalias i8* @malloc(i64 %mul1) #3";
             style = solid;
             color = 6
-            subgraph cluster_0x50a7f30 {
+            subgraph cluster_0x67ec700 {
               label = "Region can not profitably be optimized!";
               style = solid;
               color = 5
-              subgraph cluster_0x50a7eb0 {
+              subgraph cluster_0x67ec680 {
                 label = "Region can not profitably be optimized!";
                 style = solid;
                 color = 7
-                subgraph cluster_0x50a7610 {
+                subgraph cluster_0x67ebde0 {
                   label = "Region can not profitably be optimized!";
                   style = solid;
                   color = 9
-                  Node0x50b4760;
+                  Node0x67fa7f0;
                 }
-                Node0x50b4ec0;
-                Node0x50b48d0;
-                Node0x50b65c0;
+                Node0x67ebd90;
+                Node0x67ec580;
+                Node0x67fa6a0;
               }
-              Node0x50b4930;
+              Node0x67fa8c0;
             }
-            Node0x50a7580;
-            Node0x50a75a0;
-            Node0x50b6620;
+            Node0x67eb8f0;
+            Node0x67fa780;
+            Node0x67fa700;
           }
-          Node0x50a74e0;
-          Node0x50b4ea0;
+          Node0x67ebd10;
+          Node0x67ec560;
         }
 }

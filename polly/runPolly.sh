@@ -6,43 +6,6 @@ export PATH_TO_POLLY_LIB="$HOME/polly/llvm_build/lib"
 export CPPFLAGS="-Xclang -load -Xclang ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
 alias opt="opt -load ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
 
-# load_polly_clang(){
-# 	c_type=$1
-# 	program=$2
-# 	### Extract LLVM-IR from C code and use include option to include standard library C file. 
-# 	read -p "Press [Enter] to extract pre-optimized LLVM-IR from C code"
-# 	#clang -include Util.c -S -emit-llvm $program.c -o $program.s
-# 	# ### opt, LLVM optimizer, takes LLVM as input and output optimized files or analysis results
-# 	# opt $OPTFLAGS -S -polly-canonicalize $program.s > $program.preopt.ll
-# 	clang $CPPFLAGS -O0 -mllvm -polly -S -emit-llvm $program.c -o $program.preopt.ll
-# 	### Create dots files that highlight SCoPs
-# 	read -p "Press [Enter] to show the dot blocks of SCoPs detected by Polly"
-# 	clang $CPPFLAGS -O3 $program.c -mllvm -polly-dot
-# 	# opt $OPTFLAGS -basicaa -dot-scops -disable-output $program.preopt.ll
-# 	### Move all the dot files to 'dot' folder
-# 	mkdir -p "dot"
-# 	mv *.dot "dot/"
-# 	cd "dot/"
-# 	# ### Generate png files from dot files
-# 	for i in `ls *.dot`; do dot -Tpng $i > $i.png; done
-# 	cd ../
-# 	read -p "Press [Enter] to show the dot-only blocks of SCoPs detected by Polly"
-# 	clang $CPPFLAGS -O3 $program.c -mllvm -polly-dot-only
-# 	# opt $OPTFLAGS -basicaa -dot-scops -disable-output $program.preopt.ll
-# 	### Move all the dot files to 'dot' folder
-# 	mkdir -p "dot-only"
-# 	mv *.dot "dot-only/"
-# 	cd "dot-only/"
-# 	# ### Generate png files from dot files
-# 	for i in `ls *.dot`; do dot -Tpng $i > $i.png; done
-# 	cd ../
-# 	read -p "Press [Enter] to export SCoPs detected by Polly"
-# 	clang $CPPFLAGS -O3 -mllvm -polly -mllvm -polly-export $program.c  
-# 	read -p "Press [Enter] to Run OpenMP code on $parameter X $parameter Matrix with 2 threads..."
-# 	export OMP_NUM_THREADS=2
-# 	clang $CPPFLAGS -O3 -mllvm -polly -mllvm -polly-parallel -lgomp $program.c -o $program.$compiler.out
-# 	./$program.$compiler.out
-# }
 ### Create or clean up folder, and move files to that folder
 folder_proc(){
 	folder=$1
@@ -106,14 +69,14 @@ opt_polly(){
     ### Use 'llc' to compile LLVM code into assembly code 
     llc $program.polly.ll -o $program.polly.s
     ### Use 'gcc' to compile .s file and link with 'libUtil.a'
-    clang $program.polly.s libUtil.a -o "out/$program.polly.out"
+    llvm-gcc $program.polly.s libUtil.a -o "out/$program.polly.out"
 
 	read -p "Press [Enter] 9. Compare the runtime of the executables"
 
 	read -p "Press [Enter] to run GCC -O3 optimized executables"
 	gcc -O3 $program.c Util.c -o $program.gcc.out
 	mv $program.gcc.out "out/"
-	time ./out/$program.gcc.out
+	time ./out/$program.gcc.out $parameter
 
 	read -p "Press [Enter] to run Polly-optimized executable"
 	#clang -include Util.c $CPPFLAGS -O3 -mllvm -polly -mllvm -polly-ignore-aliasing $program.c -o "out/$program.polly.out"
@@ -121,9 +84,18 @@ opt_polly(){
 
 	read -p "Press [Enter] to Run OpenMP executable with 2 threads..."
 	export OMP_NUM_THREADS=$num_threads
-	clang -include Util.c $CPPFLAGS -O3 -mllvm -polly -mllvm -polly-parallel -lgomp $program.c -o "out/$program.openmp.out"
+	opt -S -O3 -polly -polly-codegen -polly-parallel $program.preopt.ll -o $program.openmp.ll
+	llc $program.openmp.ll -o $program.openmp.s
+	llvm-gcc $program.openmp.s libUtil.a -o "out/$program.openmp.out" -lgomp
+	#clang -include Util.c $CPPFLAGS -O3 -mllvm -polly -mllvm -polly-parallel -lgomp $program.c -o "out/$program.openmp.out"
 	time ."/out/$program.openmp.out" $parameter
 
+	read -p "Press [Enter] to Run Vector code"
+	opt -S -O3 -polly -polly-codegen -polly-vectorizer=stripmine $program.preopt.ll -o $program.vector.ll
+	llc $program.vector.ll -o $program.vector.s
+	llvm-gcc $program.vector.s libUtil.a -o "out/$program.vector.out"
+	#clang -include Util.c $CPPFLAGS -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine $program.c -o "out/$program.vector.out"
+	time ."/out/$program.vector.out" $parameter
 	## move files to folders respectively, e.g. 'jscop' 'llvm' and 'assembly' folder 
 	### Move all the dot files to 'dot' folder
 	folder_proc "dot" "dot"
@@ -147,6 +119,6 @@ exec(){
 	opt_polly $c_type $program $num_threads $parameter
 	cd ../../../
 }
-#exec handwritten MatrixMult 2 2048
-#exec handwritten2 MatrixMult 2 2048
+exec handwritten MatrixMult 2 1024
+exec handwritten2 MatrixMult 2 1024
 exec handwritten VectorMult 2

@@ -11,30 +11,32 @@ import whiley.lang.*
 * calculates the dot products of 256-sized vectors.
 *  
 */
-constant N is 16
+constant N is 16 // Local vector size
+constant SIZE is 1024 // Vector size
 method main(System.Console sys):
-	int[] p = [0;N]
+	int numOfRepeats = SIZE/N
+	int[] p = [0;numOfRepeats]
 	int r = 0
-	while r < N:
+	while r < numOfRepeats:
 		int i = 0
 		while i < N:
 			// u and v are vecotrs 
-			int[] u = [1;N] //int[] u = [1, 1, 1, 1, 1] 
-			int[] v = [1;N] //int[] v = [1, 1, 1, 1, 1]
-			p[r] = p[r] + u[i]*v[i]
+			int[] u = [1;N] // e.g. u = [1, 1, ..., 1] 
+			int[] v = [1;N] // e.g. v = [1, 1, ..., 1]
+			p[r] = p[r] + u[i]*v[i] // e.g. p = [1, 1, ..., 1]
 			i = i + 1
 		r = r + 1
 	// Sum up product vector
 	//sys.out.print_s("Sum up the product vector")
 	int sum =0
 	r=0
-	while r<N:
+	while r<numOfRepeats:
 		sum = sum + p[r]
 		r = r + 1
-	assert sum == N*N
-	sys.out.print_s("Pass the ")
+	assert sum == SIZE // Dot product of two unit vectors == vector size 
+	sys.out.print_s("Pass the vector multiplication of ")
+	sys.out.print(SIZE)
+	sys.out.print_s(" size with local vector size = ")
 	sys.out.print(N)
-	sys.out.print_s(" X ")
-	sys.out.print(N)
-	sys.out.print_s(" multiplication test case with dot Product = ")
+	sys.out.print_s(" The Dot Product = ")
 	sys.out.println(sum)

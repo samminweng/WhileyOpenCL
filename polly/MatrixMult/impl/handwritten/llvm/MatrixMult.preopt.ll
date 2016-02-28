@@ -5,11 +5,11 @@ target triple = "x86_64-unknown-linux-gnu"
 %struct._IO_FILE = type { i32, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, %struct._IO_marker*, %struct._IO_FILE*, i32, i32, i64, i16, i8, [1 x i8], i8*, i64, i8*, i8*, i8*, i8*, i64, i32, [20 x i8] }
 %struct._IO_marker = type { %struct._IO_marker*, %struct._IO_FILE*, i32 }
 
-@A = common global [2048 x [2048 x i64]] zeroinitializer, align 16
-@B = common global [2048 x [2048 x i64]] zeroinitializer, align 16
+@A = common global [1024 x [1024 x i64]] zeroinitializer, align 16
+@B = common global [1024 x [1024 x i64]] zeroinitializer, align 16
 @stdout = external global %struct._IO_FILE*, align 8
 @.str = private unnamed_addr constant [6 x i8] c"%lld \00", align 1
-@C = common global [2048 x [2048 x i64]] zeroinitializer, align 16
+@C = common global [1024 x [1024 x i64]] zeroinitializer, align 16
 @.str.1 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
 @.str.2 = private unnamed_addr constant [49 x i8] c"Pass %d X %d matrix test case (C[N][N] =%lld) \0A \00", align 1
 
@@ -27,17 +27,17 @@ for.cond1.preheader:                              ; preds = %entry.split, %for.i
 
 for.body3:                                        ; preds = %for.cond1.preheader, %for.body3
   %indvars.iv = phi i64 [ 0, %for.cond1.preheader ], [ %indvars.iv.next, %for.body3 ]
-  %arrayidx5 = getelementptr inbounds [2048 x [2048 x i64]], [2048 x [2048 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 %indvars.iv
+  %arrayidx5 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 %indvars.iv
   store i64 1, i64* %arrayidx5, align 8
-  %arrayidx9 = getelementptr inbounds [2048 x [2048 x i64]], [2048 x [2048 x i64]]* @B, i64 0, i64 %indvars.iv3, i64 %indvars.iv
+  %arrayidx9 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %indvars.iv3, i64 %indvars.iv
   store i64 1, i64* %arrayidx9, align 8
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
-  %exitcond = icmp ne i64 %indvars.iv.next, 2048
+  %exitcond = icmp ne i64 %indvars.iv.next, 1024
   br i1 %exitcond, label %for.body3, label %for.inc10
 
 for.inc10:                                        ; preds = %for.body3
   %indvars.iv.next4 = add nuw nsw i64 %indvars.iv3, 1
-  %exitcond5 = icmp ne i64 %indvars.iv.next4, 2048
+  %exitcond5 = icmp ne i64 %indvars.iv.next4, 1024
   br i1 %exitcond5, label %for.cond1.preheader, label %for.end12
 
 for.end12:                                        ; preds = %for.inc10
@@ -60,7 +60,7 @@ for.cond1.preheader:                              ; preds = %entry.split, %for.e
 for.body3:                                        ; preds = %for.cond1.preheader, %for.inc
   %indvars.iv = phi i64 [ 0, %for.cond1.preheader ], [ %indvars.iv.next, %for.inc ]
   %1 = phi %struct._IO_FILE* [ %0, %for.cond1.preheader ], [ %5, %for.inc ]
-  %arrayidx5 = getelementptr inbounds [2048 x [2048 x i64]], [2048 x [2048 x i64]]* @C, i64 0, i64 %indvars.iv6, i64 %indvars.iv
+  %arrayidx5 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %indvars.iv6, i64 %indvars.iv
   %2 = load i64, i64* %arrayidx5, align 8
   %call = tail call i32 (%struct._IO_FILE*, i8*, ...) @fprintf(%struct._IO_FILE* %1, i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str, i64 0, i64 0), i64 %2) #2
   %3 = trunc i64 %indvars.iv to i32
@@ -76,14 +76,14 @@ if.then:                                          ; preds = %for.body3
 for.inc:                                          ; preds = %for.body3, %if.then
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
   %5 = load %struct._IO_FILE*, %struct._IO_FILE** @stdout, align 8
-  %exitcond = icmp ne i64 %indvars.iv.next, 2048
+  %exitcond = icmp ne i64 %indvars.iv.next, 1024
   br i1 %exitcond, label %for.body3, label %for.end
 
 for.end:                                          ; preds = %for.inc
   %.lcssa = phi %struct._IO_FILE* [ %5, %for.inc ]
   %fputc = tail call i32 @fputc(i32 10, %struct._IO_FILE* %.lcssa)
   %indvars.iv.next7 = add nuw nsw i64 %indvars.iv6, 1
-  %exitcond8 = icmp ne i64 %indvars.iv.next7, 2048
+  %exitcond8 = icmp ne i64 %indvars.iv.next7, 1024
   br i1 %exitcond8, label %for.cond1.preheader, label %for.end11
 
 for.end11:                                        ; preds = %for.end
@@ -107,39 +107,39 @@ for.cond1.preheader:                              ; preds = %entry.split, %for.i
 
 for.body3:                                        ; preds = %for.cond1.preheader, %for.inc25
   %indvars.iv4 = phi i64 [ 0, %for.cond1.preheader ], [ %indvars.iv.next5, %for.inc25 ]
-  %arrayidx5 = getelementptr inbounds [2048 x [2048 x i64]], [2048 x [2048 x i64]]* @C, i64 0, i64 %indvars.iv7, i64 %indvars.iv4
+  %arrayidx5 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %indvars.iv7, i64 %indvars.iv4
   store i64 0, i64* %arrayidx5, align 8
   br label %for.body8
 
 for.body8:                                        ; preds = %for.body3, %for.body8
   %indvars.iv = phi i64 [ 0, %for.body3 ], [ %indvars.iv.next, %for.body8 ]
-  %arrayidx12 = getelementptr inbounds [2048 x [2048 x i64]], [2048 x [2048 x i64]]* @C, i64 0, i64 %indvars.iv7, i64 %indvars.iv4
+  %arrayidx12 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %indvars.iv7, i64 %indvars.iv4
   %0 = load i64, i64* %arrayidx12, align 8
-  %arrayidx16 = getelementptr inbounds [2048 x [2048 x i64]], [2048 x [2048 x i64]]* @A, i64 0, i64 %indvars.iv7, i64 %indvars.iv
+  %arrayidx16 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %indvars.iv7, i64 %indvars.iv
   %1 = load i64, i64* %arrayidx16, align 8
-  %arrayidx20 = getelementptr inbounds [2048 x [2048 x i64]], [2048 x [2048 x i64]]* @B, i64 0, i64 %indvars.iv, i64 %indvars.iv4
+  %arrayidx20 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %indvars.iv, i64 %indvars.iv4
   %2 = load i64, i64* %arrayidx20, align 8
   %mul = mul nsw i64 %2, %1
   %add = add nsw i64 %mul, %0
-  %arrayidx24 = getelementptr inbounds [2048 x [2048 x i64]], [2048 x [2048 x i64]]* @C, i64 0, i64 %indvars.iv7, i64 %indvars.iv4
+  %arrayidx24 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %indvars.iv7, i64 %indvars.iv4
   store i64 %add, i64* %arrayidx24, align 8
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1
-  %exitcond = icmp ne i64 %indvars.iv.next, 2048
+  %exitcond = icmp ne i64 %indvars.iv.next, 1024
   br i1 %exitcond, label %for.body8, label %for.inc25
 
 for.inc25:                                        ; preds = %for.body8
   %indvars.iv.next5 = add nuw nsw i64 %indvars.iv4, 1
-  %exitcond6 = icmp ne i64 %indvars.iv.next5, 2048
+  %exitcond6 = icmp ne i64 %indvars.iv.next5, 1024
   br i1 %exitcond6, label %for.body3, label %for.inc28
 
 for.inc28:                                        ; preds = %for.inc25
   %indvars.iv.next8 = add nuw nsw i64 %indvars.iv7, 1
-  %exitcond9 = icmp ne i64 %indvars.iv.next8, 2048
+  %exitcond9 = icmp ne i64 %indvars.iv.next8, 1024
   br i1 %exitcond9, label %for.cond1.preheader, label %for.end30
 
 for.end30:                                        ; preds = %for.inc28
-  %3 = load i64, i64* getelementptr inbounds ([2048 x [2048 x i64]], [2048 x [2048 x i64]]* @C, i64 0, i64 2047, i64 2047), align 8
-  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([49 x i8], [49 x i8]* @.str.2, i64 0, i64 0), i32 2048, i32 2048, i64 %3) #2
+  %3 = load i64, i64* getelementptr inbounds ([1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 1023, i64 1023), align 8
+  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([49 x i8], [49 x i8]* @.str.2, i64 0, i64 0), i32 1024, i32 1024, i64 %3) #2
   ret i32 0
 }
 
@@ -157,4 +157,4 @@ attributes #2 = { nounwind }
 
 !llvm.ident = !{!0}
 
-!0 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git c43284c4913e075fc10ac6dea2961788a660f09d) (http://llvm.org/git/llvm.git 7f53bedefce9ad990a1906fed303e104ff621783)"}
+!0 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)"}
