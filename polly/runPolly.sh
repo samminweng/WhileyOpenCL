@@ -73,8 +73,7 @@ opt_polly(){
 	program=$2
 	num_threads=$3
 	parameter=$4
-	folder_proc "out" "out"
-
+	
 	read -p "Press [Enter] 1. Create LLVM-IR from C"
 	### Compile source.c along with 'Util.c' to assembly code
 	clang -S -emit-llvm $program.c -o $program.s
@@ -84,11 +83,11 @@ opt_polly(){
 	opt -basicaa -polly-ast -analyze -q $program.preopt.ll
 	#opt -basicaa -polly-ast -analyze -q $program.preopt.ll
 	
-	read -p "Press [Enter] 4.1 Generate the detected SCoPs in DOT"
+	read -p "Press [Enter] 4. Generate the detected SCoPs in DOT"
 	opt -basicaa -dot-scops -disable-output $program.preopt.ll
 	
-	read -p "Press [Enter] 4.2 Generate the detected SCoPs in DOT-only (no instructions)"
-	opt -basicaa -dot-scops-only -disable-output $program.preopt.ll
+	#read -p "Press [Enter] 4.2 Generate the detected SCoPs in DOT-only (no instructions)"
+	#opt -basicaa -dot-scops-only -disable-output $program.preopt.ll
 	
 	read -p "Press [Enter] 5. Show the dependences for the SCoPs"
 	opt -basicaa -polly-dependences -analyze $program.preopt.ll
@@ -129,8 +128,6 @@ opt_polly(){
 	### Move all the dot files to 'dot' folder
 	folder_proc "dot" "dot"
 	generate_png "dot"
-	folder_proc "dot-only" "dot"
-	generate_png "dot-only"
 
 	folder_proc "jscop" "jscop"
 	folder_proc "llvm" "ll"

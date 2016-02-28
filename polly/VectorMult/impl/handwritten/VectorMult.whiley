@@ -1,13 +1,6 @@
 import whiley.lang.*
-/**
-* The 'VectorMult' test case multiplies two unit vectors and gets the dot product. 
-* The program splits each large vector into N sub-vectors, and performs dot product on 
-* two sub vectors, and then sum up to the sub-total and put it to 'product' array. 
-* After iterating over all sub-vectors, the program aggregates all sub-totals to get 
-* the final dot product result. 
-*/
+constant N is 16
 method main(System.Console sys):
-	int N = 16
 	int[] p = [0;N]
 	int r = 0
 	while r < N:
