@@ -1,4 +1,14 @@
 import whiley.lang.*
+/**
+*
+* The 'VectorMult' test case multiplies two unit vectors (u, v) and gets the dot product.
+* This program splits a large vector into N sub-vectors, and takes each sub vecotors 
+* from 'u' and 'v' vectors and multiplies the  
+
+multiplies two sub vectors
+* to get the sproduct and update it to 'p' vector. After iterating all sub vectors, the 
+* program sums up all the product to get the final result.
+*/
 constant N is 16
 method main(System.Console sys):
 	int[] p = [0;N]

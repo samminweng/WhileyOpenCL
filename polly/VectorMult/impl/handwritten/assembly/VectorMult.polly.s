@@ -22,100 +22,51 @@ main:                                   # @main
 	movq	%rsp, %rbp
 .Ltmp2:
 	.cfi_def_cfa_register %rbp
-	pushq	%r15
-	pushq	%r14
-	pushq	%r12
-	pushq	%rbx
-.Ltmp3:
-	.cfi_offset %rbx, -48
-.Ltmp4:
-	.cfi_offset %r12, -40
-.Ltmp5:
-	.cfi_offset %r14, -32
-.Ltmp6:
-	.cfi_offset %r15, -24
-	xorl	%r14d, %r14d
-	movl	$p, %edi
-	xorl	%esi, %esi
-	movl	$262144, %edx           # imm = 0x40000
-	callq	memset
-	movdqa	.LCPI0_0(%rip), %xmm8   # xmm8 = [1,1,1,1]
-	xorl	%r8d, %r8d
-	.p2align	4, 0x90
-.LBB0_1:                                # %polly.loop_preheader8
-                                        # =>This Loop Header: Depth=1
-                                        #     Child Loop BB0_2 Depth 2
-                                        #       Child Loop BB0_3 Depth 3
+	xorl	%eax, %eax
+	movdqa	.LCPI0_0(%rip), %xmm0   # xmm0 = [1,1,1,1]
 	xorl	%ecx, %ecx
 	.p2align	4, 0x90
-.LBB0_2:                                # %polly.loop_preheader14
-                                        #   Parent Loop BB0_1 Depth=1
-                                        # =>  This Loop Header: Depth=2
-                                        #       Child Loop BB0_3 Depth 3
-	movq	%rcx, %rdx
-	shlq	$5, %rdx
-	movq	%rcx, %rax
-	shlq	$7, %rax
-	leaq	4(%rdx), %r12
-	leaq	8(%rdx), %rdi
-	leaq	12(%rdx), %r15
-	leaq	16(%rdx), %rbx
-	leaq	20(%rdx), %r9
-	leaq	24(%rdx), %r10
-	leaq	28(%rdx), %r11
-	movdqa	p(%rax), %xmm0
-	movdqa	p+16(,%rdx,4), %xmm7
-	movdqa	p+32(,%rdx,4), %xmm6
-	movdqa	p+48(,%rdx,4), %xmm5
-	movdqa	p+64(,%rdx,4), %xmm4
-	movdqa	p+80(,%rdx,4), %xmm3
-	movdqa	p+96(,%rdx,4), %xmm2
-	movdqa	p+112(,%rdx,4), %xmm1
-	movq	%r14, %rax
-	movl	$32, %esi
+.LBB0_1:                                # %for.body
+                                        # =>This Loop Header: Depth=1
+                                        #     Child Loop BB0_2 Depth 2
+	movslq	%eax, %rdx
+	movl	$0, p(,%rcx,4)
+	movq	$-262144, %rsi          # imm = 0xFFFFFFFFFFFC0000
 	.p2align	4, 0x90
-.LBB0_3:                                # %vector.body
+.LBB0_2:                                # %vector.body
                                         #   Parent Loop BB0_1 Depth=1
-                                        #     Parent Loop BB0_2 Depth=2
-                                        # =>    This Inner Loop Header: Depth=3
-	paddd	%xmm8, %xmm0
-	paddd	%xmm8, %xmm7
-	paddd	%xmm8, %xmm6
-	paddd	%xmm8, %xmm5
-	paddd	%xmm8, %xmm4
-	paddd	%xmm8, %xmm3
-	paddd	%xmm8, %xmm2
-	paddd	%xmm8, %xmm1
-	movl	$1, u(%rax)
-	movl	$1, v(%rax)
-	addq	$4, %rax
-	decq	%rsi
-	jne	.LBB0_3
-# BB#4:                                 # %polly.loop_exit15
-                                        #   in Loop: Header=BB0_2 Depth=2
-	movdqa	%xmm0, p(,%rdx,4)
-	movdqa	%xmm7, p(,%r12,4)
-	movdqa	%xmm6, p(,%rdi,4)
-	movdqa	%xmm5, p(,%r15,4)
-	movdqa	%xmm4, p(,%rbx,4)
-	movdqa	%xmm3, p(,%r9,4)
-	movdqa	%xmm2, p(,%r10,4)
-	movdqa	%xmm1, p(,%r11,4)
-	incq	%rcx
-	cmpq	$2048, %rcx             # imm = 0x800
+                                        # =>  This Inner Loop Header: Depth=2
+	movdqu	%xmm0, u+262144(%rsi,%rdx,4)
+	movdqu	%xmm0, u+262160(%rsi,%rdx,4)
+	movdqu	%xmm0, v+262144(%rsi,%rdx,4)
+	movdqu	%xmm0, v+262160(%rsi,%rdx,4)
+	movdqu	%xmm0, u+262176(%rsi,%rdx,4)
+	movdqu	%xmm0, u+262192(%rsi,%rdx,4)
+	movdqu	%xmm0, v+262176(%rsi,%rdx,4)
+	movdqu	%xmm0, v+262192(%rsi,%rdx,4)
+	movdqu	%xmm0, u+262208(%rsi,%rdx,4)
+	movdqu	%xmm0, u+262224(%rsi,%rdx,4)
+	movdqu	%xmm0, v+262208(%rsi,%rdx,4)
+	movdqu	%xmm0, v+262224(%rsi,%rdx,4)
+	movdqu	%xmm0, u+262240(%rsi,%rdx,4)
+	movdqu	%xmm0, u+262256(%rsi,%rdx,4)
+	movdqu	%xmm0, v+262240(%rsi,%rdx,4)
+	movdqu	%xmm0, v+262256(%rsi,%rdx,4)
+	addq	$128, %rsi
 	jne	.LBB0_2
-# BB#5:                                 # %polly.loop_exit9
+# BB#3:                                 # %for.inc24
                                         #   in Loop: Header=BB0_1 Depth=1
-	incq	%r8
-	subq	$-128, %r14
-	cmpq	$2048, %r8              # imm = 0x800
+	movl	$65536, p(,%rcx,4)      # imm = 0x10000
+	incq	%rcx
+	addl	$65536, %eax            # imm = 0x10000
+	cmpq	$65536, %rcx            # imm = 0x10000
 	jne	.LBB0_1
-# BB#6:
+# BB#4:
 	pxor	%xmm0, %xmm0
 	movq	$-262144, %rax          # imm = 0xFFFFFFFFFFFC0000
 	pxor	%xmm1, %xmm1
 	.p2align	4, 0x90
-.LBB0_7:                                # %vector.body43
+.LBB0_5:                                # %vector.body5
                                         # =>This Inner Loop Header: Depth=1
 	movq	p+262144(%rax), %xmm2   # xmm2 = mem[0],zero
 	movq	p+262152(%rax), %xmm3   # xmm3 = mem[0],zero
@@ -138,16 +89,16 @@ main:                                   # @main
 	paddq	%xmm2, %xmm0
 	paddq	%xmm3, %xmm1
 	addq	$32, %rax
-	jne	.LBB0_7
-# BB#8:                                 # %middle.block44
+	jne	.LBB0_5
+# BB#6:                                 # %middle.block6
 	paddq	%xmm0, %xmm1
 	pshufd	$78, %xmm1, %xmm0       # xmm0 = xmm1[2,3,0,1]
 	paddq	%xmm1, %xmm0
 	movd	%xmm0, %rax
 	movabsq	$4294967296, %rcx       # imm = 0x100000000
 	cmpq	%rcx, %rax
-	jne	.LBB0_10
-# BB#9:                                 # %if.end
+	jne	.LBB0_8
+# BB#7:                                 # %if.end
 	movl	$6, %edi
 	movl	$.L.str.1, %esi
 	callq	setlocale
@@ -158,13 +109,9 @@ main:                                   # @main
 	xorl	%eax, %eax
 	callq	printf
 	xorl	%eax, %eax
-	popq	%rbx
-	popq	%r12
-	popq	%r14
-	popq	%r15
 	popq	%rbp
 	retq
-.LBB0_10:                               # %if.then
+.LBB0_8:                                # %if.then
 	movl	$.L.str, %edi
 	xorl	%eax, %eax
 	callq	printf
@@ -175,11 +122,11 @@ main:                                   # @main
 	.cfi_endproc
 
 	.type	p,@object               # @p
-	.comm	p,262144,16
+	.comm	p,1,4
 	.type	u,@object               # @u
-	.comm	u,262144,16
+	.comm	u,1,4
 	.type	v,@object               # @v
-	.comm	v,262144,16
+	.comm	v,1,4
 	.type	.L.str,@object          # @.str
 	.section	.rodata.str1.1,"aMS",@progbits,1
 .L.str:
