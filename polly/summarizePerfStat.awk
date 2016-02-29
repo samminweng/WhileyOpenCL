@@ -44,24 +44,18 @@ function generateReport(results){
 }
 
 
-
-
 BEGIN {
 	#File name
 	filename = "";
 	FS = "\t";
 	# Test case name
-	#testcases="Fibonacci Reverse MergeSort newTicTacToe MatrixMult";
-	testcases="MatrixMult";
+	testcases="VectorMult";
 	# Code Optimizations
-	c_types="handwritten handwritten2 copy_reduced_dealloc";
+	c_types="handwritten";
 	# Polly optimiz
-	polly_opts="gcc polly openmp"
+	polly_opts="gcc polly openmp vector"
 	# Parameters
-	#parameters["Reverse"] = "1000 10000 100000 1000000 10000000 100000000 1000000000 10000000000";
-	#parameters["MergeSort"] = "1000 10000 100000 1000000 10000000 100000000 1000000000";
-	#parameters["newTicTacToe"] = "1000 10000 100000 1000000 10000000 100000000 1000000000 10000000000";
-	parameters["MatrixMult"] = "2000";
+	parameters["VectorMult"] = "1024*1024*1024*16";
 	threads="1 2 4 8";
 	cpu_utils[""] = "";
 	exec_times[""] = "";
@@ -80,6 +74,8 @@ BEGIN {
 	polly_opt=t_array[3];
 	# Get parameter
 	parameter = t_array[4];
+	#print parameter
+	#pause();
 	# Get threads
 	if(polly_opt == "openmp"){
 		# number of threads
