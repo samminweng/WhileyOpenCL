@@ -69,7 +69,7 @@ opt_polly(){
     ### Use 'llc' to compile LLVM code into assembly code 
     llc $program.polly.ll -o $program.polly.s
     ### Use 'gcc' to compile .s file and link with 'libUtil.a'
-    llvm-gcc $program.polly.s libUtil.a -o "out/$program.polly.out"
+    clang $program.polly.s libUtil.a -o "out/$program.polly.out"
 
 	read -p "Press [Enter] 9. Compare the runtime of the executables"
 
@@ -86,14 +86,14 @@ opt_polly(){
 	export OMP_NUM_THREADS=$num_threads
 	opt -S -O3 -polly -polly-codegen -polly-parallel $program.preopt.ll -o $program.openmp.ll
 	llc $program.openmp.ll -o $program.openmp.s
-	llvm-gcc $program.openmp.s libUtil.a -o "out/$program.openmp.out" -lgomp
+	clang $program.openmp.s libUtil.a -o "out/$program.openmp.out" -lgomp
 	#clang -include Util.c $CPPFLAGS -O3 -mllvm -polly -mllvm -polly-parallel -lgomp $program.c -o "out/$program.openmp.out"
 	time ."/out/$program.openmp.out" $parameter
 
 	read -p "Press [Enter] to Run Vector code"
 	opt -S -O3 -polly -polly-codegen -polly-vectorizer=stripmine $program.preopt.ll -o $program.vector.ll
 	llc $program.vector.ll -o $program.vector.s
-	llvm-gcc $program.vector.s libUtil.a -o "out/$program.vector.out"
+	clang $program.vector.s libUtil.a -o "out/$program.vector.out"
 	#clang -include Util.c $CPPFLAGS -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine $program.c -o "out/$program.vector.out"
 	time ."/out/$program.vector.out" $parameter
 	## move files to folders respectively, e.g. 'jscop' 'llvm' and 'assembly' folder 

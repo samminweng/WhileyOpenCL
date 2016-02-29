@@ -481,7 +481,7 @@ attributes #6 = { "polly.skip.fn" }
 
 !llvm.ident = !{!0}
 
-!0 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)"}
+!0 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git 3f10def1e46ea783186be08e2138d0f76a707712) (http://llvm.org/git/llvm.git 626ceb277f4fd20c1899e04490b0ea6c2b1a0da8)"}
 !1 = distinct !{!1, !2, !3}
 !2 = !{!"llvm.loop.vectorize.width", i32 1}
 !3 = !{!"llvm.loop.interleave.count", i32 1}
@@ -491,5 +491,5 @@ attributes #6 = { "polly.skip.fn" }
 !7 = !{!8, !9}
 !8 = distinct !{!8, !6, !"polly.alias.scope.B"}
 !9 = distinct !{!9, !6, !"polly.alias.scope.A"}
-!10 = !{!8, !5}
-!11 = !{!9, !5}
+!10 = !{!5, !8}
+!11 = !{!5, !9}

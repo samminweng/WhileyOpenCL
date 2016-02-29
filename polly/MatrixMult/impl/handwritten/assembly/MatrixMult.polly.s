@@ -294,7 +294,7 @@ main:                                   # @main
 	xorps	%xmm0, %xmm0
 	xorl	%eax, %eax
 	movl	$A+8, %ecx
-	movq	%rcx, -48(%rbp)         # 8-byte Spill
+	movq	%rcx, -88(%rbp)         # 8-byte Spill
 	.p2align	4, 0x90
 .LBB2_8:                                # %polly.loop_preheader2
                                         # =>This Loop Header: Depth=1
@@ -834,9 +834,9 @@ main:                                   # @main
                                         #         Child Loop BB2_18 Depth 4
                                         #           Child Loop BB2_19 Depth 5
                                         #             Child Loop BB2_20 Depth 6
-	movq	%rax, -56(%rbp)         # 8-byte Spill
-	shlq	$5, %rax
 	movq	%rax, -96(%rbp)         # 8-byte Spill
+	shlq	$5, %rax
+	movq	%rax, -48(%rbp)         # 8-byte Spill
 	movl	$B+8192, %ecx
 	xorl	%eax, %eax
 	.p2align	4, 0x90
@@ -847,11 +847,11 @@ main:                                   # @main
                                         #         Child Loop BB2_18 Depth 4
                                         #           Child Loop BB2_19 Depth 5
                                         #             Child Loop BB2_20 Depth 6
-	movq	%rax, -64(%rbp)         # 8-byte Spill
+	movq	%rax, -80(%rbp)         # 8-byte Spill
 	movq	%rcx, -72(%rbp)         # 8-byte Spill
 	movq	%rax, %rdi
 	shlq	$5, %rdi
-	movq	-48(%rbp), %r8          # 8-byte Reload
+	movq	-88(%rbp), %r8          # 8-byte Reload
 	movq	%rcx, %r13
 	xorl	%ecx, %ecx
 	.p2align	4, 0x90
@@ -862,8 +862,8 @@ main:                                   # @main
                                         #         Child Loop BB2_18 Depth 4
                                         #           Child Loop BB2_19 Depth 5
                                         #             Child Loop BB2_20 Depth 6
-	movq	%rcx, -80(%rbp)         # 8-byte Spill
-	movq	%r8, -88(%rbp)          # 8-byte Spill
+	movq	%rcx, -64(%rbp)         # 8-byte Spill
+	movq	%r8, -56(%rbp)          # 8-byte Spill
 	xorl	%ecx, %ecx
 	.p2align	4, 0x90
 .LBB2_18:                               # %polly.loop_preheader44
@@ -873,7 +873,7 @@ main:                                   # @main
                                         # =>      This Loop Header: Depth=4
                                         #           Child Loop BB2_19 Depth 5
                                         #             Child Loop BB2_20 Depth 6
-	movq	-96(%rbp), %rax         # 8-byte Reload
+	movq	-48(%rbp), %rax         # 8-byte Reload
 	leaq	(%rcx,%rax), %r12
 	movq	%r13, %r11
 	xorl	%esi, %esi
@@ -926,16 +926,16 @@ main:                                   # @main
 	jne	.LBB2_18
 # BB#12:                                # %polly.loop_exit39
                                         #   in Loop: Header=BB2_15 Depth=3
-	movq	-80(%rbp), %rcx         # 8-byte Reload
+	movq	-64(%rbp), %rcx         # 8-byte Reload
 	incq	%rcx
 	addq	$262144, %r13           # imm = 0x40000
-	movq	-88(%rbp), %r8          # 8-byte Reload
+	movq	-56(%rbp), %r8          # 8-byte Reload
 	addq	$256, %r8               # imm = 0x100
 	cmpq	$32, %rcx
 	jne	.LBB2_15
 # BB#13:                                # %polly.loop_exit33
                                         #   in Loop: Header=BB2_14 Depth=2
-	movq	-64(%rbp), %rax         # 8-byte Reload
+	movq	-80(%rbp), %rax         # 8-byte Reload
 	incq	%rax
 	movq	-72(%rbp), %rcx         # 8-byte Reload
 	addq	$256, %rcx              # imm = 0x100
@@ -943,9 +943,9 @@ main:                                   # @main
 	jne	.LBB2_14
 # BB#10:                                # %polly.loop_exit27
                                         #   in Loop: Header=BB2_11 Depth=1
-	movq	-56(%rbp), %rax         # 8-byte Reload
+	movq	-96(%rbp), %rax         # 8-byte Reload
 	incq	%rax
-	addq	$262144, -48(%rbp)      # 8-byte Folded Spill
+	addq	$262144, -88(%rbp)      # 8-byte Folded Spill
                                         # imm = 0x40000
 	cmpq	$32, %rax
 	jne	.LBB2_11
@@ -987,5 +987,5 @@ main:                                   # @main
 	.size	.L.str.2, 49
 
 
-	.ident	"clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)"
+	.ident	"clang version 3.9.0 (http://llvm.org/git/clang.git 3f10def1e46ea783186be08e2138d0f76a707712) (http://llvm.org/git/llvm.git 626ceb277f4fd20c1899e04490b0ea6c2b1a0da8)"
 	.section	".note.GNU-stack","",@progbits
