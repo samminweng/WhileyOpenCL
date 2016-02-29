@@ -29,11 +29,11 @@ runGCC(){
     ar -cvq libUtil.a Util.o
 	# Run GCC vectorization 
 	#read -p "Press [Enter] to run GCC Vectorization Optimization"
-	gcc -O3 -ftree-vectorizer-verbose=2 $program.c 2> $program.gcc.vectorize.txt
+	#gcc -O3 -ftree-vectorizer-verbose=2 $program.c 2> $program.gcc.vectorize.txt
 	mkdir -p "out"
 	#read -p "Press [Enter] to run GCC compiler..."
 	gcc -O3 -ftree-vectorize $program.c libUtil.a -o "out/$program.gcc.out"
-	echo "Run GCC-compiled code on $parameter X $parameter Matrix..." > $result
+	echo "Run GCC-compiled code on $parameter..." > $result
 	
 }
 ##
@@ -49,14 +49,18 @@ runPolly(){
 	mkdir -p "out" ## Create 'out' folder
 	#read -p "Press [Enter] to run Polly code optimization..."
 	case "$compiler" in
+		"polly")
+			echo "Run Polly-optimized code on $parameter with $num_threads threads..." > $result
+			clang $CPPFLAGS -include Util.c -O3 -mllvm -polly $program.c -o "out/$program.$compiler.out"
+			;;
 		"openmp")
 			export OMP_NUM_THREADS=$num_threads
-			echo "Run OpenMP code on $parameter X $parameter Matrix with $OMP_NUM_THREADS threads..." > $result
+			echo "Run OpenMP code on $parameter with $OMP_NUM_THREADS threads..." > $result
 			clang $CPPFLAGS -include Util.c -O3 -mllvm -polly -mllvm -polly-parallel -lgomp $program.c -o "out/$program.$compiler.out"
 			;;
-		"polly")
-			echo "Run Polly-optimized code on $parameter X $parameter Matrix with $OMP_NUM_THREADS threads..." > $result
-			clang $CPPFLAGS -include Util.c -O3 -mllvm -polly $program.c -o "out/$program.$compiler.out"
+		"vector")
+			echo "Run Polly-optimized code on $parameter with $num_threads threads..." > $result
+			clang $CPPFLAGS -include Util.c -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine $program.c -o "out/$program.$compiler.out"
 			;;
 	esac
 
@@ -92,8 +96,13 @@ exec(){
 }
 
 init VectorMult
-exec handwritten VectorMult 2048 openmp 2
-
+exec handwritten VectorMult 1024*1024*1024*16 gcc 1
+exec handwritten VectorMult 1024*1024*1024*16 polly 1
+exec handwritten VectorMult 1024*1024*1024*16 openmp 1
+exec handwritten VectorMult 1024*1024*1024*16 openmp 2
+exec handwritten VectorMult 1024*1024*1024*16 openmp 4
+exec handwritten VectorMult 1024*1024*1024*16 openmp 8
+exec handwritten VectorMult 1024*1024*1024*16 vector 1
 # init MatrixMult
 # ##### handwritten C code
 # # exec handwritten MatrixMult 2048 gcc 1
