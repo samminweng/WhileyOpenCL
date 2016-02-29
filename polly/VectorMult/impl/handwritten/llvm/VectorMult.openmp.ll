@@ -76,33 +76,33 @@ polly.loop_header20:                              ; preds = %polly.loop_header20
   %3 = shl i64 %2, 2
   %scevgep28 = getelementptr i8, i8* %call, i64 %3
   %scevgep2829 = bitcast i8* %scevgep28 to i32*
-  %_p_scalar_ = load i32, i32* %scevgep2829, align 4, !alias.scope !4, !noalias !9
+  %_p_scalar_ = load i32, i32* %scevgep2829, align 4, !alias.scope !7, !noalias !9
   %p_add = add nsw i32 %_p_scalar_, 1
-  store i32 %p_add, i32* %scevgep2829, align 4, !alias.scope !4, !noalias !9
+  store i32 %p_add, i32* %scevgep2829, align 4, !alias.scope !7, !noalias !9
   %polly.indvar_next24 = or i64 %polly.indvar23, 1
   %4 = add nuw nsw i64 %polly.indvar_next24, %1
   %5 = shl i64 %4, 2
   %scevgep28.1 = getelementptr i8, i8* %call, i64 %5
   %scevgep2829.1 = bitcast i8* %scevgep28.1 to i32*
-  %_p_scalar_.1 = load i32, i32* %scevgep2829.1, align 4, !alias.scope !4, !noalias !9
+  %_p_scalar_.1 = load i32, i32* %scevgep2829.1, align 4, !alias.scope !7, !noalias !9
   %p_add.1 = add nsw i32 %_p_scalar_.1, 1
-  store i32 %p_add.1, i32* %scevgep2829.1, align 4, !alias.scope !4, !noalias !9
+  store i32 %p_add.1, i32* %scevgep2829.1, align 4, !alias.scope !7, !noalias !9
   %polly.indvar_next24.1 = or i64 %polly.indvar23, 2
   %6 = add nuw nsw i64 %polly.indvar_next24.1, %1
   %7 = shl i64 %6, 2
   %scevgep28.2 = getelementptr i8, i8* %call, i64 %7
   %scevgep2829.2 = bitcast i8* %scevgep28.2 to i32*
-  %_p_scalar_.2 = load i32, i32* %scevgep2829.2, align 4, !alias.scope !4, !noalias !9
+  %_p_scalar_.2 = load i32, i32* %scevgep2829.2, align 4, !alias.scope !7, !noalias !9
   %p_add.2 = add nsw i32 %_p_scalar_.2, 1
-  store i32 %p_add.2, i32* %scevgep2829.2, align 4, !alias.scope !4, !noalias !9
+  store i32 %p_add.2, i32* %scevgep2829.2, align 4, !alias.scope !7, !noalias !9
   %polly.indvar_next24.2 = or i64 %polly.indvar23, 3
   %8 = add nuw nsw i64 %polly.indvar_next24.2, %1
   %9 = shl i64 %8, 2
   %scevgep28.3 = getelementptr i8, i8* %call, i64 %9
   %scevgep2829.3 = bitcast i8* %scevgep28.3 to i32*
-  %_p_scalar_.3 = load i32, i32* %scevgep2829.3, align 4, !alias.scope !4, !noalias !9
+  %_p_scalar_.3 = load i32, i32* %scevgep2829.3, align 4, !alias.scope !7, !noalias !9
   %p_add.3 = add nsw i32 %_p_scalar_.3, 1
-  store i32 %p_add.3, i32* %scevgep2829.3, align 4, !alias.scope !4, !noalias !9
+  store i32 %p_add.3, i32* %scevgep2829.3, align 4, !alias.scope !7, !noalias !9
   %polly.indvar_next24.3 = add nsw i64 %polly.indvar23, 4
   %exitcond41.3 = icmp eq i64 %polly.indvar_next24.3, 32
   br i1 %exitcond41.3, label %polly.loop_exit22, label %polly.loop_header20
@@ -119,28 +119,28 @@ polly.stmt.for.inc22:                             ; preds = %polly.stmt.for.inc2
   %11 = shl i64 %polly.indvar35, 2
   %scevgep38 = getelementptr i8, i8* %call, i64 %11
   %scevgep3839 = bitcast i8* %scevgep38 to i32*
-  %_p_scalar_40 = load i32, i32* %scevgep3839, align 4, !alias.scope !4, !noalias !9
+  %_p_scalar_40 = load i32, i32* %scevgep3839, align 4, !alias.scope !7, !noalias !9
   %p_conv = sext i32 %_p_scalar_40 to i64
   %p_add21 = add nsw i64 %p_conv, %sum.02.phiops.0
   %polly.indvar_next36 = shl i64 %polly.indvar35, 2
   %12 = or i64 %polly.indvar_next36, 4
   %scevgep38.1 = getelementptr i8, i8* %call, i64 %12
   %scevgep3839.1 = bitcast i8* %scevgep38.1 to i32*
-  %_p_scalar_40.1 = load i32, i32* %scevgep3839.1, align 4, !alias.scope !4, !noalias !9
+  %_p_scalar_40.1 = load i32, i32* %scevgep3839.1, align 4, !alias.scope !7, !noalias !9
   %p_conv.1 = sext i32 %_p_scalar_40.1 to i64
   %p_add21.1 = add nsw i64 %p_conv.1, %p_add21
   %polly.indvar_next36.1 = shl i64 %polly.indvar35, 2
   %13 = or i64 %polly.indvar_next36.1, 8
   %scevgep38.2 = getelementptr i8, i8* %call, i64 %13
   %scevgep3839.2 = bitcast i8* %scevgep38.2 to i32*
-  %_p_scalar_40.2 = load i32, i32* %scevgep3839.2, align 4, !alias.scope !4, !noalias !9
+  %_p_scalar_40.2 = load i32, i32* %scevgep3839.2, align 4, !alias.scope !7, !noalias !9
   %p_conv.2 = sext i32 %_p_scalar_40.2 to i64
   %p_add21.2 = add nsw i64 %p_conv.2, %p_add21.1
   %polly.indvar_next36.2 = shl i64 %polly.indvar35, 2
   %14 = or i64 %polly.indvar_next36.2, 12
   %scevgep38.3 = getelementptr i8, i8* %call, i64 %14
   %scevgep3839.3 = bitcast i8* %scevgep38.3 to i32*
-  %_p_scalar_40.3 = load i32, i32* %scevgep3839.3, align 4, !alias.scope !4, !noalias !9
+  %_p_scalar_40.3 = load i32, i32* %scevgep3839.3, align 4, !alias.scope !7, !noalias !9
   %p_conv.3 = sext i32 %_p_scalar_40.3 to i64
   %p_add21.3 = add nsw i64 %p_conv.3, %p_add21.2
   %polly.indvar_next36.3 = add nsw i64 %polly.indvar35, 4
@@ -205,7 +205,7 @@ polly.stmt.polly.loop_exit22:                     ; preds = %polly.loop_exit61
   %scevgep80 = getelementptr i32, i32* %scevgep79, i64 %polly.indvar56
   store i32 1, i32* %scevgep80, align 4, !alias.scope !10, !noalias !12
   %scevgep82 = getelementptr i32, i32* %scevgep81, i64 %polly.indvar56
-  store i32 1, i32* %scevgep82, align 4, !alias.scope !15, !noalias !17
+  store i32 1, i32* %scevgep82, align 4, !alias.scope !13, !noalias !17
   %16 = add i64 %polly.indvar56, 1
   %p_exitcond42 = icmp eq i64 %16, 32
   %polly.indvar_next57 = add nsw i64 %polly.indvar56, 1
@@ -325,23 +325,23 @@ attributes #5 = { noreturn nounwind }
 
 !llvm.ident = !{!0}
 
-!0 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)"}
+!0 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git 3f10def1e46ea783186be08e2138d0f76a707712) (http://llvm.org/git/llvm.git 626ceb277f4fd20c1899e04490b0ea6c2b1a0da8)"}
 !1 = distinct !{!1, !2, !"polly.alias.scope.u"}
 !2 = distinct !{!2, !"polly.alias.scope.domain"}
 !3 = !{!4, !5, !6, !7}
-!4 = distinct !{!4, !2, !"polly.alias.scope.call"}
+!4 = distinct !{!4, !2, !"polly.alias.scope.add21"}
 !5 = distinct !{!5, !2, !"polly.alias.scope.v"}
 !6 = distinct !{!6, !2, !"polly.alias.scope.sum.02"}
-!7 = distinct !{!7, !2, !"polly.alias.scope.add21"}
-!8 = !{!4, !6, !7, !1}
-!9 = !{!5, !6, !7, !1}
+!7 = distinct !{!7, !2, !"polly.alias.scope.call"}
+!8 = !{!4, !1, !6, !7}
+!9 = !{!4, !5, !1, !6}
 !10 = distinct !{!10, !11, !"polly.alias.scope.u"}
 !11 = distinct !{!11, !"polly.alias.scope.domain"}
 !12 = !{!13, !14, !15, !16}
-!13 = distinct !{!13, !11, !"polly.alias.scope.p_add21.3"}
+!13 = distinct !{!13, !11, !"polly.alias.scope.v"}
 !14 = distinct !{!14, !11, !"polly.alias.scope.call"}
-!15 = distinct !{!15, !11, !"polly.alias.scope.v"}
+!15 = distinct !{!15, !11, !"polly.alias.scope.p_add21.3"}
 !16 = distinct !{!16, !11, !"polly.alias.scope.sum.02.phiops.0"}
-!17 = !{!13, !14, !16, !10}
-!18 = !{!13, !15, !16, !10}
+!17 = !{!10, !14, !15, !16}
+!18 = !{!13, !10, !15, !16}
 !19 = distinct !{!19}

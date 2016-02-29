@@ -107,28 +107,28 @@ main:                                   # @main
 	leaq	1(%r15), %r15
 	jl	.LBB0_1
 # BB#8:                                 # %polly.stmt.polly.stmt.for.inc22.preheader
-	movq	$0, -32(%rbp)
+	movq	$0, -40(%rbp)
 	movq	$-1, %rax
 	movl	$3, %ecx
 	.p2align	4, 0x90
 .LBB0_9:                                # %polly.stmt.polly.stmt.for.inc22
                                         # =>This Inner Loop Header: Depth=1
 	movslq	-12(%r14,%rcx,4), %rdx
-	addq	-32(%rbp), %rdx
+	addq	-40(%rbp), %rdx
 	movslq	-8(%r14,%rcx,4), %rsi
 	addq	%rdx, %rsi
 	movslq	-4(%r14,%rcx,4), %rdx
 	addq	%rsi, %rdx
 	movslq	(%r14,%rcx,4), %rsi
 	addq	%rdx, %rsi
-	movq	%rsi, -32(%rbp)
 	movq	%rsi, -40(%rbp)
+	movq	%rsi, -32(%rbp)
 	incq	%rax
 	addq	$4, %rcx
 	cmpq	$4095, %rax             # imm = 0xFFF
 	jl	.LBB0_9
 # BB#10:                                # %polly.exiting54
-	movq	-40(%rbp), %rax
+	movq	-32(%rbp), %rax
 	movabsq	$17179869184, %rbx      # imm = 0x400000000
 	cmpq	%rbx, %rax
 	jne	.LBB0_12
@@ -180,5 +180,5 @@ main:                                   # @main
 	.size	.L.str.2, 102
 
 
-	.ident	"clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)"
+	.ident	"clang version 3.9.0 (http://llvm.org/git/clang.git 3f10def1e46ea783186be08e2138d0f76a707712) (http://llvm.org/git/llvm.git 626ceb277f4fd20c1899e04490b0ea6c2b1a0da8)"
 	.section	".note.GNU-stack","",@progbits

@@ -163,7 +163,7 @@ attributes #5 = { noreturn nounwind }
 
 !llvm.ident = !{!0}
 
-!0 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)"}
+!0 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git 3f10def1e46ea783186be08e2138d0f76a707712) (http://llvm.org/git/llvm.git 626ceb277f4fd20c1899e04490b0ea6c2b1a0da8)"}
 !1 = distinct !{!1, !2, !"polly.alias.scope.u"}
 !2 = distinct !{!2, !"polly.alias.scope.domain"}
 !3 = !{!4, !5, !6, !7}
@@ -171,5 +171,5 @@ attributes #5 = { noreturn nounwind }
 !5 = distinct !{!5, !2, !"polly.alias.scope.add21"}
 !6 = distinct !{!6, !2, !"polly.alias.scope.sum.02"}
 !7 = distinct !{!7, !2, !"polly.alias.scope.call"}
-!8 = !{!5, !1, !6, !7}
-!9 = !{!4, !5, !1, !6}
+!8 = !{!5, !6, !7, !1}
+!9 = !{!4, !5, !6, !1}
