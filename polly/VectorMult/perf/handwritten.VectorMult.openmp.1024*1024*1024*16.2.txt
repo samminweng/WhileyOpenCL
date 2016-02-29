@@ -1,0 +1,389 @@
+Run OpenMP code on 1024*1024*1024*16 with 2 threads...
+Pass the 17,179,869,184 vector multiplication test case with local vectors = 1048576 size.
+The Dot Product = 17,179,869,184
+
+ Performance counter stats for './out/VectorMult.openmp.out 1024*1024*1024*16':
+
+       4926.163134 task-clock (msec)         #    0.999 CPUs utilized          
+               446 context-switches          #    0.091 K/sec                  
+                 3 cpu-migrations            #    0.001 K/sec                  
+               747 page-faults               #    0.152 K/sec                  
+    19,107,490,302 cycles                    #    3.879 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    35,006,641,467 instructions              #    1.83  insns per cycle        
+     4,850,285,053 branches                  #  984.597 M/sec                  
+        16,869,628 branch-misses             #    0.35% of all branches        
+
+       4.929821585 seconds time elapsed
+
+Pass the 17,179,869,184 vector multiplication test case with local vectors = 1048576 size.
+The Dot Product = 17,179,869,184
+
+ Performance counter stats for './out/VectorMult.openmp.out 1024*1024*1024*16':
+
+       4925.938343 task-clock (msec)         #    0.999 CPUs utilized          
+               441 context-switches          #    0.090 K/sec                  
+                 1 cpu-migrations            #    0.000 K/sec                  
+               747 page-faults               #    0.152 K/sec                  
+    19,107,470,337 cycles                    #    3.879 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    35,005,871,357 instructions              #    1.83  insns per cycle        
+     4,850,145,492 branches                  #  984.614 M/sec                  
+        16,867,298 branch-misses             #    0.35% of all branches        
+
+       4.929630922 seconds time elapsed
+
+Pass the 17,179,869,184 vector multiplication test case with local vectors = 1048576 size.
+The Dot Product = 17,179,869,184
+
+ Performance counter stats for './out/VectorMult.openmp.out 1024*1024*1024*16':
+
+       4923.769080 task-clock (msec)         #    0.999 CPUs utilized          
+               443 context-switches          #    0.090 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               747 page-faults               #    0.152 K/sec                  
+    19,105,668,979 cycles                    #    3.880 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    35,005,872,002 instructions              #    1.83  insns per cycle        
+     4,850,145,864 branches                  #  985.047 M/sec                  
+        16,869,150 branch-misses             #    0.35% of all branches        
+
+       4.927201191 seconds time elapsed
+
+Pass the 17,179,869,184 vector multiplication test case with local vectors = 1048576 size.
+The Dot Product = 17,179,869,184
+
+ Performance counter stats for './out/VectorMult.openmp.out 1024*1024*1024*16':
+
+       4923.408621 task-clock (msec)         #    0.999 CPUs utilized          
+               445 context-switches          #    0.090 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               747 page-faults               #    0.152 K/sec                  
+    19,104,098,782 cycles                    #    3.880 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    35,005,863,005 instructions              #    1.83  insns per cycle        
+     4,850,144,121 branches                  #  985.119 M/sec                  
+        16,867,530 branch-misses             #    0.35% of all branches        
+
+       4.926695906 seconds time elapsed
+
+Pass the 17,179,869,184 vector multiplication test case with local vectors = 1048576 size.
+The Dot Product = 17,179,869,184
+
+ Performance counter stats for './out/VectorMult.openmp.out 1024*1024*1024*16':
+
+       4975.643901 task-clock (msec)         #    0.999 CPUs utilized          
+               466 context-switches          #    0.094 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               747 page-faults               #    0.150 K/sec                  
+    19,104,988,648 cycles                    #    3.840 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    35,006,037,313 instructions              #    1.83  insns per cycle        
+     4,850,178,537 branches                  #  974.784 M/sec                  
+        16,858,534 branch-misses             #    0.35% of all branches        
+
+       4.978982205 seconds time elapsed
+
+Pass the 17,179,869,184 vector multiplication test case with local vectors = 1048576 size.
+The Dot Product = 17,179,869,184
+
+ Performance counter stats for './out/VectorMult.openmp.out 1024*1024*1024*16':
+
+       4930.689272 task-clock (msec)         #    0.992 CPUs utilized          
+               447 context-switches          #    0.091 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               747 page-faults               #    0.152 K/sec                  
+    19,105,381,349 cycles                    #    3.875 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    35,005,863,392 instructions              #    1.83  insns per cycle        
+     4,850,145,241 branches                  #  983.665 M/sec                  
+        16,833,087 branch-misses             #    0.35% of all branches        
+
+       4.969890901 seconds time elapsed
+
+Pass the 17,179,869,184 vector multiplication test case with local vectors = 1048576 size.
+The Dot Product = 17,179,869,184
+
+ Performance counter stats for './out/VectorMult.openmp.out 1024*1024*1024*16':
+
+       4926.065768 task-clock (msec)         #    0.999 CPUs utilized          
+               448 context-switches          #    0.091 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               747 page-faults               #    0.152 K/sec                  
+    19,105,407,908 cycles                    #    3.878 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    35,005,907,570 instructions              #    1.83  insns per cycle        
+     4,850,151,006 branches                  #  984.589 M/sec                  
+        16,865,216 branch-misses             #    0.35% of all branches        
+
+       4.929394917 seconds time elapsed
+
+Pass the 17,179,869,184 vector multiplication test case with local vectors = 1048576 size.
+The Dot Product = 17,179,869,184
+
+ Performance counter stats for './out/VectorMult.openmp.out 1024*1024*1024*16':
+
+       4955.348302 task-clock (msec)         #    0.999 CPUs utilized          
+               443 context-switches          #    0.089 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               747 page-faults               #    0.151 K/sec                  
+    19,107,015,109 cycles                    #    3.856 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    35,005,895,565 instructions              #    1.83  insns per cycle        
+     4,850,154,186 branches                  #  978.772 M/sec                  
+        16,835,899 branch-misses             #    0.35% of all branches        
+
+       4.959256183 seconds time elapsed
+
+Pass the 17,179,869,184 vector multiplication test case with local vectors = 1048576 size.
+The Dot Product = 17,179,869,184
+
+ Performance counter stats for './out/VectorMult.openmp.out 1024*1024*1024*16':
+
+       4959.195715 task-clock (msec)         #    0.997 CPUs utilized          
+               454 context-switches          #    0.092 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               747 page-faults               #    0.151 K/sec                  
+    19,107,067,333 cycles                    #    3.853 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    35,005,925,782 instructions              #    1.83  insns per cycle        
+     4,850,156,028 branches                  #  978.013 M/sec                  
+        16,862,585 branch-misses             #    0.35% of all branches        
+
+       4.975541348 seconds time elapsed
+
+Pass the 17,179,869,184 vector multiplication test case with local vectors = 1048576 size.
+The Dot Product = 17,179,869,184
+
+ Performance counter stats for './out/VectorMult.openmp.out 1024*1024*1024*16':
+
+       4927.117066 task-clock (msec)         #    0.999 CPUs utilized          
+               480 context-switches          #    0.097 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               747 page-faults               #    0.152 K/sec                  
+    19,105,083,360 cycles                    #    3.878 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    35,005,991,483 instructions              #    1.83  insns per cycle        
+     4,850,169,543 branches                  #  984.383 M/sec                  
+        16,865,309 branch-misses             #    0.35% of all branches        
+
+       4.930495484 seconds time elapsed
+
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 0
+cpu cores	: 4
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.75
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 1
+cpu cores	: 4
+apicid		: 2
+initial apicid	: 2
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.75
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 2
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 2
+cpu cores	: 4
+apicid		: 4
+initial apicid	: 4
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.75
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 3
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 3
+cpu cores	: 4
+apicid		: 6
+initial apicid	: 6
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.75
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 4
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 0
+cpu cores	: 4
+apicid		: 1
+initial apicid	: 1
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.75
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 5
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 1
+cpu cores	: 4
+apicid		: 3
+initial apicid	: 3
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.75
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 6
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 2
+cpu cores	: 4
+apicid		: 5
+initial apicid	: 5
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.75
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 7
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 2100.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 3
+cpu cores	: 4
+apicid		: 7
+initial apicid	: 7
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.75
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
