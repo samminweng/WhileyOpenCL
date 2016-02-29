@@ -32,12 +32,12 @@ main:                                   # @main
 	.cfi_offset %r14, -32
 .Ltmp5:
 	.cfi_offset %r15, -24
-	movl	$1048576, %edi          # imm = 0x100000
+	movl	$65536, %edi            # imm = 0x10000
 	callq	malloc
 	movq	%rax, %r14
 	xorl	%r15d, %r15d
 	xorl	%esi, %esi
-	movl	$1048576, %edx          # imm = 0x100000
+	movl	$65536, %edx            # imm = 0x10000
 	movq	%r14, %rdi
 	callq	memset
 	movq	%r14, %r8
@@ -98,48 +98,49 @@ main:                                   # @main
 # BB#6:                                 # %polly.loop_exit63
                                         #   in Loop: Header=BB0_2 Depth=2
 	subq	$-128, %rdi
-	cmpq	$8191, %r9              # imm = 0x1FFF
+	cmpq	$511, %r9               # imm = 0x1FF
 	leaq	1(%r9), %r9
 	jl	.LBB0_2
 # BB#7:                                 # %polly.loop_exit57
                                         #   in Loop: Header=BB0_1 Depth=1
-	cmpq	$127, %r15
+	cmpq	$32767, %r15            # imm = 0x7FFF
 	leaq	1(%r15), %r15
 	jl	.LBB0_1
 # BB#8:                                 # %polly.stmt.polly.stmt.for.inc22.preheader
-	movq	$0, -40(%rbp)
+	movq	$0, -32(%rbp)
 	movq	$-1, %rax
 	movl	$3, %ecx
 	.p2align	4, 0x90
 .LBB0_9:                                # %polly.stmt.polly.stmt.for.inc22
                                         # =>This Inner Loop Header: Depth=1
 	movslq	-12(%r14,%rcx,4), %rdx
-	addq	-40(%rbp), %rdx
+	addq	-32(%rbp), %rdx
 	movslq	-8(%r14,%rcx,4), %rsi
 	addq	%rdx, %rsi
 	movslq	-4(%r14,%rcx,4), %rdx
 	addq	%rsi, %rdx
 	movslq	(%r14,%rcx,4), %rsi
 	addq	%rdx, %rsi
-	movq	%rsi, -40(%rbp)
 	movq	%rsi, -32(%rbp)
+	movq	%rsi, -40(%rbp)
 	incq	%rax
 	addq	$4, %rcx
-	cmpq	$65535, %rax            # imm = 0xFFFF
+	cmpq	$4095, %rax             # imm = 0xFFF
 	jl	.LBB0_9
 # BB#10:                                # %polly.exiting54
-	movq	-32(%rbp), %rax
-	cmpq	$1073741824, %rax       # imm = 0x40000000
+	movq	-40(%rbp), %rax
+	movabsq	$17179869184, %rbx      # imm = 0x400000000
+	cmpq	%rbx, %rax
 	jne	.LBB0_12
 # BB#11:                                # %if.end
 	movl	$6, %edi
 	movl	$.L.str.1, %esi
 	callq	setlocale
 	movl	$.L.str.2, %edi
-	movl	$1073741824, %esi       # imm = 0x40000000
-	movl	$4096, %edx             # imm = 0x1000
-	movl	$1073741824, %ecx       # imm = 0x40000000
+	movl	$1048576, %edx          # imm = 0x100000
 	xorl	%eax, %eax
+	movq	%rbx, %rsi
+	movq	%rbx, %rcx
 	callq	printf
 	xorl	%eax, %eax
 	addq	$24, %rsp
@@ -159,9 +160,9 @@ main:                                   # @main
 	.cfi_endproc
 
 	.type	u,@object               # @u
-	.comm	u,16384,16
+	.comm	u,4194304,16
 	.type	v,@object               # @v
-	.comm	v,16384,16
+	.comm	v,4194304,16
 	.type	.L.str,@object          # @.str
 	.section	.rodata.str1.1,"aMS",@progbits,1
 .L.str:
@@ -179,5 +180,5 @@ main:                                   # @main
 	.size	.L.str.2, 102
 
 
-	.ident	"clang version 3.9.0 (http://llvm.org/git/clang.git 3f10def1e46ea783186be08e2138d0f76a707712) (http://llvm.org/git/llvm.git 626ceb277f4fd20c1899e04490b0ea6c2b1a0da8)"
+	.ident	"clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)"
 	.section	".note.GNU-stack","",@progbits

@@ -865,14 +865,14 @@ main_polly_subfn_1:                     # @main_polly_subfn_1
 	.p2align	4, 0x90
 .LBB4_2:                                # %polly.par.loadIVBounds
                                         #   in Loop: Header=BB4_1 Depth=1
-	movq	56(%rsp), %rax
-	movq	64(%rsp), %rcx
+	movq	8(%rsp), %rax
+	movq	16(%rsp), %rcx
 	addq	$-2, %rax
-	movq	%rax, (%rsp)            # 8-byte Spill
+	movq	%rax, 24(%rsp)          # 8-byte Spill
 	movq	%rcx, %rax
 	shlq	$18, %rax
 	leaq	A(%rax), %rax
-	movq	%rax, 16(%rsp)          # 8-byte Spill
+	movq	%rax, (%rsp)            # 8-byte Spill
 	.p2align	4, 0x90
 .LBB4_5:                                # %polly.loop_preheader3
                                         #   Parent Loop BB4_1 Depth=1
@@ -882,7 +882,7 @@ main_polly_subfn_1:                     # @main_polly_subfn_1
                                         #           Child Loop BB4_10 Depth 5
                                         #             Child Loop BB4_13 Depth 6
                                         #               Child Loop BB4_11 Depth 7
-	movq	%rcx, 8(%rsp)           # 8-byte Spill
+	movq	%rcx, 32(%rsp)          # 8-byte Spill
 	movq	%rcx, %rsi
 	shlq	$5, %rsi
 	movl	$B, %eax
@@ -896,11 +896,11 @@ main_polly_subfn_1:                     # @main_polly_subfn_1
                                         #           Child Loop BB4_10 Depth 5
                                         #             Child Loop BB4_13 Depth 6
                                         #               Child Loop BB4_11 Depth 7
-	movq	%rcx, 24(%rsp)          # 8-byte Spill
-	movq	%rax, 32(%rsp)          # 8-byte Spill
+	movq	%rcx, 40(%rsp)          # 8-byte Spill
+	movq	%rax, 48(%rsp)          # 8-byte Spill
 	movq	%rcx, %rbx
 	shlq	$5, %rbx
-	movq	16(%rsp), %r10          # 8-byte Reload
+	movq	(%rsp), %r10            # 8-byte Reload
 	movq	%rax, %rdx
 	xorl	%eax, %eax
 	.p2align	4, 0x90
@@ -912,8 +912,8 @@ main_polly_subfn_1:                     # @main_polly_subfn_1
                                         #           Child Loop BB4_10 Depth 5
                                         #             Child Loop BB4_13 Depth 6
                                         #               Child Loop BB4_11 Depth 7
-	movq	%rax, 40(%rsp)          # 8-byte Spill
-	movq	%r10, 48(%rsp)          # 8-byte Spill
+	movq	%rax, 56(%rsp)          # 8-byte Spill
+	movq	%r10, 64(%rsp)          # 8-byte Spill
 	xorl	%ecx, %ecx
 	.p2align	4, 0x90
 .LBB4_10:                               # %polly.loop_preheader21
@@ -975,27 +975,27 @@ main_polly_subfn_1:                     # @main_polly_subfn_1
 	jne	.LBB4_10
 # BB#8:                                 # %polly.loop_exit16
                                         #   in Loop: Header=BB4_9 Depth=4
-	movq	40(%rsp), %rax          # 8-byte Reload
+	movq	56(%rsp), %rax          # 8-byte Reload
 	incq	%rax
 	addq	$262144, %rdx           # imm = 0x40000
-	movq	48(%rsp), %r10          # 8-byte Reload
+	movq	64(%rsp), %r10          # 8-byte Reload
 	addq	$256, %r10              # imm = 0x100
 	cmpq	$32, %rax
 	jne	.LBB4_9
 # BB#3:                                 # %polly.loop_exit10
                                         #   in Loop: Header=BB4_6 Depth=3
-	movq	24(%rsp), %rcx          # 8-byte Reload
+	movq	40(%rsp), %rcx          # 8-byte Reload
 	incq	%rcx
-	movq	32(%rsp), %rax          # 8-byte Reload
+	movq	48(%rsp), %rax          # 8-byte Reload
 	addq	$256, %rax              # imm = 0x100
 	cmpq	$32, %rcx
 	jne	.LBB4_6
 # BB#4:                                 # %polly.loop_exit4
                                         #   in Loop: Header=BB4_5 Depth=2
-	addq	$262144, 16(%rsp)       # 8-byte Folded Spill
+	addq	$262144, (%rsp)         # 8-byte Folded Spill
                                         # imm = 0x40000
-	movq	8(%rsp), %rcx           # 8-byte Reload
-	cmpq	(%rsp), %rcx            # 8-byte Folded Reload
+	movq	32(%rsp), %rcx          # 8-byte Reload
+	cmpq	24(%rsp), %rcx          # 8-byte Folded Reload
 	leaq	1(%rcx), %rcx
 	jle	.LBB4_5
 .LBB4_1:                                # %polly.par.setup
@@ -1006,8 +1006,8 @@ main_polly_subfn_1:                     # @main_polly_subfn_1
                                         #           Child Loop BB4_10 Depth 5
                                         #             Child Loop BB4_13 Depth 6
                                         #               Child Loop BB4_11 Depth 7
-	leaq	64(%rsp), %rdi
-	leaq	56(%rsp), %rsi
+	leaq	16(%rsp), %rdi
+	leaq	8(%rsp), %rsi
 	callq	GOMP_loop_runtime_next
 	testb	%al, %al
 	jne	.LBB4_2
@@ -1043,5 +1043,5 @@ main_polly_subfn_1:                     # @main_polly_subfn_1
 	.size	.L.str.2, 49
 
 
-	.ident	"clang version 3.9.0 (http://llvm.org/git/clang.git 3f10def1e46ea783186be08e2138d0f76a707712) (http://llvm.org/git/llvm.git 626ceb277f4fd20c1899e04490b0ea6c2b1a0da8)"
+	.ident	"clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)"
 	.section	".note.GNU-stack","",@progbits

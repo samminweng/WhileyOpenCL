@@ -224,33 +224,33 @@ for.inc39.preheader:                              ; preds = %for.cond7.preheader
   %20 = sext i32 %7 to i64
   %21 = icmp sgt i64 %20, 1
   %smax = select i1 %21, i64 %20, i64 1
-  %min.iters.check = icmp ult i64 %smax, 32
-  br i1 %min.iters.check, label %for.inc39.preheader72, label %min.iters.checked
+  %min.iters.check = icmp ult i64 %smax, 16
+  br i1 %min.iters.check, label %for.inc39.preheader71, label %min.iters.checked
 
-for.inc39.preheader72:                            ; preds = %middle.block, %min.iters.checked, %for.inc39.preheader
+for.inc39.preheader71:                            ; preds = %middle.block, %min.iters.checked, %for.inc39.preheader
   %indvars.iv17.ph = phi i64 [ 0, %min.iters.checked ], [ 0, %for.inc39.preheader ], [ %n.vec, %middle.block ]
   br label %for.inc39
 
 min.iters.checked:                                ; preds = %for.inc39.preheader
-  %n.vec = and i64 %smax, -32
+  %n.vec = and i64 %smax, -16
   %cmp.zero = icmp eq i64 %n.vec, 0
-  br i1 %cmp.zero, label %for.inc39.preheader72, label %vector.body.preheader
+  br i1 %cmp.zero, label %for.inc39.preheader71, label %vector.body.preheader
 
 vector.body.preheader:                            ; preds = %min.iters.checked
-  %22 = add nsw i64 %n.vec, -32
-  %23 = lshr exact i64 %22, 5
+  %22 = add nsw i64 %n.vec, -16
+  %23 = lshr exact i64 %22, 4
   %24 = add nuw nsw i64 %23, 1
-  %xtraiter74 = and i64 %24, 7
-  %lcmp.mod75 = icmp eq i64 %xtraiter74, 0
-  br i1 %lcmp.mod75, label %vector.body.preheader.split, label %vector.body.prol.preheader
+  %xtraiter73 = and i64 %24, 7
+  %lcmp.mod74 = icmp eq i64 %xtraiter73, 0
+  br i1 %lcmp.mod74, label %vector.body.preheader.split, label %vector.body.prol.preheader
 
 vector.body.prol.preheader:                       ; preds = %vector.body.preheader
   br label %vector.body.prol
 
 vector.body.prol:                                 ; preds = %vector.body.prol.preheader, %vector.body.prol
   %index.prol = phi i64 [ %index.next.prol, %vector.body.prol ], [ 0, %vector.body.prol.preheader ]
-  %prol.iter = phi i64 [ %prol.iter.sub, %vector.body.prol ], [ %xtraiter74, %vector.body.prol.preheader ]
-  %index.next.prol = add i64 %index.prol, 32
+  %prol.iter = phi i64 [ %prol.iter.sub, %vector.body.prol ], [ %xtraiter73, %vector.body.prol.preheader ]
+  %index.next.prol = add i64 %index.prol, 16
   %prol.iter.sub = add i64 %prol.iter, -1
   %prol.iter.cmp = icmp eq i64 %prol.iter.sub, 0
   br i1 %prol.iter.cmp, label %vector.body.preheader.split.loopexit, label %vector.body.prol, !llvm.loop !8
@@ -261,7 +261,7 @@ vector.body.preheader.split.loopexit:             ; preds = %vector.body.prol
 
 vector.body.preheader.split:                      ; preds = %vector.body.preheader.split.loopexit, %vector.body.preheader
   %index.unr = phi i64 [ 0, %vector.body.preheader ], [ %index.next.prol.lcssa, %vector.body.preheader.split.loopexit ]
-  %25 = icmp ult i64 %22, 224
+  %25 = icmp ult i64 %22, 112
   br i1 %25, label %middle.block, label %vector.body.preheader.split.split
 
 vector.body.preheader.split.split:                ; preds = %vector.body.preheader.split
@@ -269,7 +269,7 @@ vector.body.preheader.split.split:                ; preds = %vector.body.prehead
 
 vector.body:                                      ; preds = %vector.body, %vector.body.preheader.split.split
   %index = phi i64 [ %index.unr, %vector.body.preheader.split.split ], [ %index.next.7, %vector.body ]
-  %index.next.7 = add i64 %index, 256
+  %index.next.7 = add i64 %index, 128
   %26 = icmp eq i64 %index.next.7, %n.vec
   br i1 %26, label %middle.block.unr-lcssa, label %vector.body, !llvm.loop !9
 
@@ -278,7 +278,7 @@ middle.block.unr-lcssa:                           ; preds = %vector.body
 
 middle.block:                                     ; preds = %vector.body.preheader.split, %middle.block.unr-lcssa
   %cmp.n = icmp eq i64 %smax, %n.vec
-  br i1 %cmp.n, label %for.end41, label %for.inc39.preheader72
+  br i1 %cmp.n, label %for.end41, label %for.inc39.preheader71
 
 for.body11.preheader.us.preheader:                ; preds = %for.cond7.preheader.preheader
   %width14 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %A, i64 0, i32 1
@@ -370,19 +370,19 @@ for.inc39.loopexit.us:                            ; preds = %for.inc36.us
   %cmp.us = icmp slt i64 %indvars.iv.next18.us, %29
   br i1 %cmp.us, label %for.body11.preheader.us, label %for.end41.loopexit
 
-for.inc39:                                        ; preds = %for.inc39.preheader72, %for.inc39
-  %indvars.iv17 = phi i64 [ %indvars.iv.next18, %for.inc39 ], [ %indvars.iv17.ph, %for.inc39.preheader72 ]
+for.inc39:                                        ; preds = %for.inc39.preheader71, %for.inc39
+  %indvars.iv17 = phi i64 [ %indvars.iv.next18, %for.inc39 ], [ %indvars.iv17.ph, %for.inc39.preheader71 ]
   %indvars.iv.next18 = add nuw nsw i64 %indvars.iv17, 1
   %cmp = icmp slt i64 %indvars.iv.next18, %20
-  br i1 %cmp, label %for.inc39, label %for.end41.loopexit73, !llvm.loop !10
+  br i1 %cmp, label %for.inc39, label %for.end41.loopexit72, !llvm.loop !10
 
 for.end41.loopexit:                               ; preds = %for.inc39.loopexit.us
   br label %for.end41
 
-for.end41.loopexit73:                             ; preds = %for.inc39
+for.end41.loopexit72:                             ; preds = %for.inc39
   br label %for.end41
 
-for.end41:                                        ; preds = %for.end41.loopexit73, %for.end41.loopexit, %middle.block, %polly.parallel.for37, %entry
+for.end41:                                        ; preds = %for.end41.loopexit72, %for.end41.loopexit, %middle.block, %polly.parallel.for37, %entry
   %call42 = tail call noalias i8* @malloc(i64 16) #6
   %46 = bitcast i8* %call42 to %struct.Matrix*
   %47 = bitcast i8* %call42 to i8**
@@ -1029,7 +1029,7 @@ attributes #6 = { nounwind }
 
 !llvm.ident = !{!0}
 
-!0 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git 3f10def1e46ea783186be08e2138d0f76a707712) (http://llvm.org/git/llvm.git 626ceb277f4fd20c1899e04490b0ea6c2b1a0da8)"}
+!0 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)"}
 !1 = distinct !{!1, !2, !3, !4}
 !2 = !{!"llvm.loop.unroll.runtime.disable"}
 !3 = !{!"llvm.loop.vectorize.width", i32 1}
@@ -1049,7 +1049,7 @@ attributes #6 = { nounwind }
 !17 = !{!18, !19}
 !18 = distinct !{!18, !16, !"polly.alias.scope."}
 !19 = distinct !{!19, !16, !"polly.alias.scope."}
-!20 = !{!19, !15}
+!20 = !{!15, !19}
 !21 = !{!18, !15}
 !22 = distinct !{!22, !3, !4}
 !23 = distinct !{!23, !3, !4}

@@ -119,6 +119,6 @@ exec(){
 	opt_polly $c_type $program $num_threads $parameter
 	cd ../../../
 }
-exec handwritten MatrixMult 2 1024
-exec handwritten2 MatrixMult 2 1024
+#exec handwritten MatrixMult 2 1024
+#exec handwritten2 MatrixMult 2 1024
 exec handwritten VectorMult 2

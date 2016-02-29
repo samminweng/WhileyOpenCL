@@ -51,19 +51,19 @@ init:                                   # @init
 	movabsq	$8589934584, %r11       # imm = 0x1FFFFFFF8
 	andq	%r12, %r11
 	leaq	-8(%r11), %rcx
-	movq	%rcx, -48(%rbp)         # 8-byte Spill
+	movq	%rcx, -80(%rbp)         # 8-byte Spill
 	shrl	$3, %ecx
 	incl	%ecx
 	movd	%ebx, %xmm0
 	pshufd	$0, %xmm0, %xmm0        # xmm0 = xmm0[0,0,0,0]
 	andl	$3, %ecx
-	movq	%rcx, -56(%rbp)         # 8-byte Spill
+	movq	%rcx, -72(%rbp)         # 8-byte Spill
 	leaq	16(%rax), %r8
-	movq	%r8, -80(%rbp)          # 8-byte Spill
+	movq	%r8, -48(%rbp)          # 8-byte Spill
 	leaq	(,%r14,4), %r13
 	movq	%r13, -64(%rbp)         # 8-byte Spill
 	negq	%rcx
-	movq	%rcx, -72(%rbp)         # 8-byte Spill
+	movq	%rcx, -56(%rbp)         # 8-byte Spill
 	movl	$16, %edi
 	xorl	%esi, %esi
 	xorl	%r9d, %r9d
@@ -85,8 +85,8 @@ init:                                   # @init
                                         #   in Loop: Header=BB0_3 Depth=1
 	movl	%r15d, %r13d
 	movq	%r10, %r15
-	cmpq	$0, -56(%rbp)           # 8-byte Folded Reload
-	movq	-72(%rbp), %rdx         # 8-byte Reload
+	cmpq	$0, -72(%rbp)           # 8-byte Folded Reload
+	movq	-56(%rbp), %rdx         # 8-byte Reload
 	movq	%r8, %rcx
 	movl	$0, %r10d
 	je	.LBB0_9
@@ -102,14 +102,14 @@ init:                                   # @init
 	jne	.LBB0_8
 .LBB0_9:                                # %vector.ph.split
                                         #   in Loop: Header=BB0_3 Depth=1
-	cmpq	$24, -48(%rbp)          # 8-byte Folded Reload
+	cmpq	$24, -80(%rbp)          # 8-byte Folded Reload
 	jb	.LBB0_12
 # BB#10:                                # %vector.ph.split.split
                                         #   in Loop: Header=BB0_3 Depth=1
 	movq	%r11, %rdx
 	subq	%r10, %rdx
 	addq	%rdi, %r10
-	movq	-80(%rbp), %rcx         # 8-byte Reload
+	movq	-48(%rbp), %rcx         # 8-byte Reload
 	leaq	(%rcx,%r10,4), %rcx
 	.p2align	4, 0x90
 .LBB0_11:                               # %vector.body
@@ -207,14 +207,14 @@ matrix_multiply:                        # @matrix_multiply
 	.cfi_offset %r14, -32
 .Ltmp15:
 	.cfi_offset %r15, -24
-	movq	%rdi, -96(%rbp)         # 8-byte Spill
+	movq	%rdi, -48(%rbp)         # 8-byte Spill
 	movq	(%rdi), %rax
-	movq	%rax, -112(%rbp)        # 8-byte Spill
+	movq	%rax, -64(%rbp)         # 8-byte Spill
 	movq	(%rsi), %r13
 	movl	8(%rsi), %ecx
-	movl	%ecx, -156(%rbp)        # 4-byte Spill
+	movl	%ecx, -52(%rbp)         # 4-byte Spill
 	movslq	12(%rdi), %r14
-	movq	%r14, -168(%rbp)        # 8-byte Spill
+	movq	%r14, -80(%rbp)         # 8-byte Spill
 	movl	%r14d, %eax
 	imull	%ecx, %eax
 	movslq	%eax, %rdi
@@ -224,15 +224,15 @@ matrix_multiply:                        # @matrix_multiply
 	testq	%r14, %r14
 	jle	.LBB1_16
 # BB#1:                                 # %for.cond7.preheader.lr.ph
-	movl	-156(%rbp), %ebx        # 4-byte Reload
+	movl	-52(%rbp), %ebx         # 4-byte Reload
 	movslq	%ebx, %rax
 	xorl	%r11d, %r11d
 	testl	%eax, %eax
-	movq	-168(%rbp), %r12        # 8-byte Reload
+	movq	-80(%rbp), %r12         # 8-byte Reload
 	movl	%r12d, %r9d
 	jle	.LBB1_2
 # BB#28:                                # %polly.preload.exec
-	movq	-96(%rbp), %rcx         # 8-byte Reload
+	movq	-48(%rbp), %rcx         # 8-byte Reload
 	movq	8(%rcx), %r11
 	movq	%r11, %r9
 	shrq	$32, %r9
@@ -240,7 +240,7 @@ matrix_multiply:                        # @matrix_multiply
 	movslq	%r11d, %rsi
 	movq	%rsi, %rcx
 	imulq	%rax, %rcx
-	movq	%r13, -128(%rbp)        # 8-byte Spill
+	movq	%r13, -72(%rbp)         # 8-byte Spill
 	leaq	(%r13,%rcx,4), %rcx
 	cmpq	%r15, %rcx
 	setbe	%r8b
@@ -254,7 +254,7 @@ matrix_multiply:                        # @matrix_multiply
 	cmpq	%r13, %rcx
 	setbe	%dl
 	addq	%rsi, %rdi
-	movq	-112(%rbp), %r13        # 8-byte Reload
+	movq	-64(%rbp), %r13         # 8-byte Reload
 	leaq	(%r13,%rdi,4), %rsi
 	cmpq	%r15, %rsi
 	setbe	%al
@@ -272,15 +272,15 @@ matrix_multiply:                        # @matrix_multiply
 	je	.LBB1_5
 # BB#27:                                # %polly.parallel.for37
 	sarq	$5, %r14
-	movl	%r12d, -88(%rbp)
-	movl	%ebx, -84(%rbp)
-	movl	%r11d, -80(%rbp)
-	movl	%ebx, -76(%rbp)
-	movq	%r15, -72(%rbp)
-	movq	-96(%rbp), %rax         # 8-byte Reload
-	movq	%rax, -64(%rbp)
+	movl	%r12d, -136(%rbp)
+	movl	%ebx, -132(%rbp)
+	movl	%r11d, -128(%rbp)
+	movl	%ebx, -124(%rbp)
+	movq	%r15, -120(%rbp)
+	movq	-48(%rbp), %rax         # 8-byte Reload
+	movq	%rax, -112(%rbp)
 	incq	%r14
-	leaq	-88(%rbp), %rsi
+	leaq	-136(%rbp), %rsi
 	movl	$matrix_multiply_polly_subfn, %edi
 	xorl	%edx, %edx
 	xorl	%ecx, %ecx
@@ -288,21 +288,21 @@ matrix_multiply:                        # @matrix_multiply
 	movq	%r14, %r8
 	movq	%r11, %r13
 	callq	GOMP_parallel_loop_runtime_start
-	leaq	-88(%rbp), %rdi
+	leaq	-136(%rbp), %rdi
 	callq	matrix_multiply_polly_subfn
 	callq	GOMP_parallel_end
-	movl	%r12d, -88(%rbp)
-	movl	%ebx, -84(%rbp)
-	movl	%r13d, -80(%rbp)
-	movl	%ebx, -76(%rbp)
-	movq	%r15, -72(%rbp)
-	movq	-112(%rbp), %rax        # 8-byte Reload
-	movq	%rax, -64(%rbp)
-	movq	-128(%rbp), %rax        # 8-byte Reload
-	movq	%rax, -56(%rbp)
-	movq	-96(%rbp), %rax         # 8-byte Reload
-	movq	%rax, -48(%rbp)
-	leaq	-88(%rbp), %rbx
+	movl	%r12d, -136(%rbp)
+	movl	%ebx, -132(%rbp)
+	movl	%r13d, -128(%rbp)
+	movl	%ebx, -124(%rbp)
+	movq	%r15, -120(%rbp)
+	movq	-64(%rbp), %rax         # 8-byte Reload
+	movq	%rax, -112(%rbp)
+	movq	-72(%rbp), %rax         # 8-byte Reload
+	movq	%rax, -104(%rbp)
+	movq	-48(%rbp), %rax         # 8-byte Reload
+	movq	%rax, -96(%rbp)
+	leaq	-136(%rbp), %rbx
 	movl	$matrix_multiply_polly_subfn_2, %edi
 	xorl	%edx, %edx
 	xorl	%ecx, %ecx
@@ -318,54 +318,54 @@ matrix_multiply:                        # @matrix_multiply
 	testl	%ebx, %ebx
 	jle	.LBB1_6
 # BB#25:                                # %for.body11.preheader.us.preheader
-	movq	-96(%rbp), %rax         # 8-byte Reload
+	movq	-48(%rbp), %rax         # 8-byte Reload
 	movq	8(%rax), %rax
-	movq	%rax, -104(%rbp)        # 8-byte Spill
+	movq	%rax, -168(%rbp)        # 8-byte Spill
 	movslq	%eax, %rdx
 	movq	%rax, %rcx
 	sarq	$32, %rcx
-	movq	%rcx, -152(%rbp)        # 8-byte Spill
+	movq	%rcx, -144(%rbp)        # 8-byte Spill
 	andl	$1, %eax
-	movq	%rax, -120(%rbp)        # 8-byte Spill
+	movq	%rax, -160(%rbp)        # 8-byte Spill
 	movq	%r10, %rbx
 	leaq	(%rbx,%rbx), %rsi
 	xorl	%eax, %eax
-	movq	%rax, -136(%rbp)        # 8-byte Spill
+	movq	%rax, -88(%rbp)         # 8-byte Spill
 	xorl	%eax, %eax
 	.p2align	4, 0x90
 .LBB1_26:                               # %for.body11.preheader.us
                                         # =>This Loop Header: Depth=1
                                         #     Child Loop BB1_17 Depth 2
                                         #       Child Loop BB1_22 Depth 3
-	movq	%rax, -144(%rbp)        # 8-byte Spill
+	movq	%rax, -152(%rbp)        # 8-byte Spill
 	imulq	%rbx, %rax
-	movq	%rax, -96(%rbp)         # 8-byte Spill
-	movq	-128(%rbp), %rcx        # 8-byte Reload
+	movq	%rax, -48(%rbp)         # 8-byte Spill
+	movq	-72(%rbp), %rcx         # 8-byte Reload
 	xorl	%eax, %eax
 	.p2align	4, 0x90
 .LBB1_17:                               # %for.body11.us
                                         #   Parent Loop BB1_26 Depth=1
                                         # =>  This Loop Header: Depth=2
                                         #       Child Loop BB1_22 Depth 3
-	movq	-96(%rbp), %rdi         # 8-byte Reload
+	movq	-48(%rbp), %rdi         # 8-byte Reload
 	leaq	(%rax,%rdi), %r8
 	movl	$0, (%r15,%r8,4)
-	movq	-104(%rbp), %rdi        # 8-byte Reload
+	movq	-168(%rbp), %rdi        # 8-byte Reload
 	testl	%edi, %edi
 	jle	.LBB1_23
 # BB#18:                                # %for.body17.us.preheader
                                         #   in Loop: Header=BB1_17 Depth=2
 	xorl	%r12d, %r12d
-	cmpq	$0, -120(%rbp)          # 8-byte Folded Reload
+	cmpq	$0, -160(%rbp)          # 8-byte Folded Reload
 	movl	$0, %r10d
 	je	.LBB1_20
 # BB#19:                                # %for.body17.us.prol
                                         #   in Loop: Header=BB1_17 Depth=2
-	movq	-128(%rbp), %rdi        # 8-byte Reload
+	movq	-72(%rbp), %rdi         # 8-byte Reload
 	movl	(%rdi,%rax,4), %r12d
-	movq	-112(%rbp), %rdi        # 8-byte Reload
+	movq	-64(%rbp), %rdi         # 8-byte Reload
 	movq	%rbx, %r9
-	movq	-96(%rbp), %rbx         # 8-byte Reload
+	movq	-48(%rbp), %rbx         # 8-byte Reload
 	imull	(%rdi,%rbx,4), %r12d
 	movq	%r9, %rbx
 	movl	%r12d, (%r15,%r8,4)
@@ -379,10 +379,10 @@ matrix_multiply:                        # @matrix_multiply
 	leaq	1(%r10), %rdi
 	imulq	%rbx, %rdi
 	leaq	(%rcx,%rdi,4), %r13
-	movq	-136(%rbp), %rdi        # 8-byte Reload
+	movq	-88(%rbp), %rdi         # 8-byte Reload
 	leaq	(%rdi,%r10), %rdi
 	movq	%rbx, %r11
-	movq	-112(%rbp), %rbx        # 8-byte Reload
+	movq	-64(%rbp), %rbx         # 8-byte Reload
 	leaq	(%rbx,%rdi,4), %r9
 	movq	%r11, %rbx
 	movq	%rbx, %rdi
@@ -415,10 +415,10 @@ matrix_multiply:                        # @matrix_multiply
 	jl	.LBB1_17
 # BB#24:                                # %for.inc39.loopexit.us
                                         #   in Loop: Header=BB1_26 Depth=1
-	movq	-144(%rbp), %rax        # 8-byte Reload
+	movq	-152(%rbp), %rax        # 8-byte Reload
 	incq	%rax
-	addq	%rbx, -136(%rbp)        # 8-byte Folded Spill
-	cmpq	-152(%rbp), %rax        # 8-byte Folded Reload
+	addq	%rbx, -88(%rbp)         # 8-byte Folded Spill
+	cmpq	-144(%rbp), %rax        # 8-byte Folded Reload
 	jl	.LBB1_26
 	jmp	.LBB1_16
 .LBB1_6:                                # %for.inc39.preheader
@@ -427,17 +427,17 @@ matrix_multiply:                        # @matrix_multiply
 	movl	$1, %ecx
 	cmovgq	%rax, %rcx
 	xorl	%esi, %esi
-	cmpq	$32, %rcx
+	cmpq	$16, %rcx
 	jb	.LBB1_15
 # BB#7:                                 # %min.iters.checked
 	xorl	%esi, %esi
 	movq	%rcx, %rdx
-	andq	$-32, %rdx
+	andq	$-16, %rdx
 	je	.LBB1_15
 # BB#8:                                 # %vector.body.preheader
-	leaq	-32(%rdx), %r8
+	leaq	-16(%rdx), %r8
 	movl	%r8d, %edi
-	shrl	$5, %edi
+	shrl	$4, %edi
 	incl	%edi
 	xorl	%esi, %esi
 	andq	$7, %rdi
@@ -448,11 +448,11 @@ matrix_multiply:                        # @matrix_multiply
 	.p2align	4, 0x90
 .LBB1_10:                               # %vector.body.prol
                                         # =>This Inner Loop Header: Depth=1
-	addq	$32, %rsi
+	addq	$16, %rsi
 	incq	%rdi
 	jne	.LBB1_10
 .LBB1_11:                               # %vector.body.preheader.split
-	cmpq	$224, %r8
+	cmpq	$112, %r8
 	jb	.LBB1_14
 # BB#12:                                # %vector.body.preheader.split.split
 	movq	%rdx, %rdi
@@ -460,7 +460,7 @@ matrix_multiply:                        # @matrix_multiply
 	.p2align	4, 0x90
 .LBB1_13:                               # %vector.body
                                         # =>This Inner Loop Header: Depth=1
-	addq	$-256, %rdi
+	addq	$-128, %rdi
 	jne	.LBB1_13
 .LBB1_14:                               # %middle.block
 	cmpq	%rdx, %rcx
@@ -476,9 +476,9 @@ matrix_multiply:                        # @matrix_multiply
 	movl	$16, %edi
 	callq	malloc
 	movq	%r15, (%rax)
-	movl	-156(%rbp), %ecx        # 4-byte Reload
+	movl	-52(%rbp), %ecx         # 4-byte Reload
 	movl	%ecx, 8(%rax)
-	movq	-168(%rbp), %rcx        # 8-byte Reload
+	movq	-80(%rbp), %rcx         # 8-byte Reload
 	movl	%ecx, 12(%rax)
 	addq	$136, %rsp
 	popq	%rbx
@@ -539,7 +539,7 @@ main:                                   # @main
 	shlq	$2, %rax
 	movabsq	$17179869180, %rdi      # imm = 0x3FFFFFFFC
 	andq	%rax, %rdi
-	movq	%rdi, -56(%rbp)         # 8-byte Spill
+	movq	%rdi, -48(%rbp)         # 8-byte Spill
 	callq	malloc
 	movq	%rax, %r12
 	testl	%ebx, %ebx
@@ -610,11 +610,11 @@ main:                                   # @main
 .LBB2_9:                                # %init.exit
 	movl	$16, %edi
 	callq	malloc
-	movq	%rax, -48(%rbp)         # 8-byte Spill
+	movq	%rax, -56(%rbp)         # 8-byte Spill
 	movq	%r12, (%rax)
 	movl	%ebx, 8(%rax)
 	movl	%ebx, 12(%rax)
-	movq	-56(%rbp), %rdi         # 8-byte Reload
+	movq	-48(%rbp), %rdi         # 8-byte Reload
 	callq	malloc
 	movq	%rax, %r15
 	movq	%rbx, %r12
@@ -692,7 +692,7 @@ main:                                   # @main
 	movq	%r15, (%rax)
 	movl	%ebx, 8(%rax)
 	movl	%ebx, 12(%rax)
-	movq	-48(%rbp), %rdi         # 8-byte Reload
+	movq	-56(%rbp), %rdi         # 8-byte Reload
 	movq	%rax, %rsi
 	callq	matrix_multiply
 	leal	-1(%rbx), %ecx
@@ -760,53 +760,53 @@ matrix_multiply_polly_subfn:            # @matrix_multiply_polly_subfn
 .Ltmp36:
 	.cfi_offset %rbp, -16
 	movslq	(%rdi), %rax
-	movq	%rax, 8(%rsp)           # 8-byte Spill
+	movq	%rax, 72(%rsp)          # 8-byte Spill
 	movslq	4(%rdi), %rax
-	movq	%rax, 48(%rsp)          # 8-byte Spill
+	movq	%rax, 24(%rsp)          # 8-byte Spill
 	movslq	12(%rdi), %rbx
 	movq	16(%rdi), %rax
-	movq	%rax, (%rsp)            # 8-byte Spill
-	leaq	80(%rsp), %rdi
-	leaq	72(%rsp), %rsi
+	movq	%rax, 64(%rsp)          # 8-byte Spill
+	leaq	56(%rsp), %rdi
+	leaq	48(%rsp), %rsi
 	callq	GOMP_loop_runtime_next
 	testb	%al, %al
 	je	.LBB3_2
 # BB#1:                                 # %polly.par.loadIVBounds.preheader
-	movq	48(%rsp), %rax          # 8-byte Reload
+	movq	24(%rsp), %rax          # 8-byte Reload
 	decq	%rax
 	sarq	$5, %rax
-	movq	%rax, 56(%rsp)          # 8-byte Spill
+	movq	%rax, 32(%rsp)          # 8-byte Spill
 	leaq	(,%rbx,4), %r13
 	shlq	$7, %rbx
-	movq	%rbx, 24(%rsp)          # 8-byte Spill
+	movq	%rbx, 16(%rsp)          # 8-byte Spill
 	.p2align	4, 0x90
 .LBB3_4:                                # %polly.par.loadIVBounds
                                         # =>This Loop Header: Depth=1
                                         #     Child Loop BB3_5 Depth 2
                                         #       Child Loop BB3_8 Depth 3
                                         #         Child Loop BB3_10 Depth 4
-	movq	72(%rsp), %rax
-	movq	80(%rsp), %rcx
-	movq	%rcx, 40(%rsp)          # 8-byte Spill
+	movq	48(%rsp), %rax
+	movq	56(%rsp), %rcx
+	movq	%rcx, 8(%rsp)           # 8-byte Spill
 	addq	$-2, %rax
-	movq	%rax, 16(%rsp)          # 8-byte Spill
-	movq	24(%rsp), %rax          # 8-byte Reload
+	movq	%rax, 80(%rsp)          # 8-byte Spill
+	movq	16(%rsp), %rax          # 8-byte Reload
 	imulq	%rcx, %rax
-	addq	(%rsp), %rax            # 8-byte Folded Reload
-	movq	%rax, 32(%rsp)          # 8-byte Spill
+	addq	64(%rsp), %rax          # 8-byte Folded Reload
+	movq	%rax, (%rsp)            # 8-byte Spill
 	.p2align	4, 0x90
 .LBB3_5:                                # %polly.loop_header
                                         #   Parent Loop BB3_4 Depth=1
                                         # =>  This Loop Header: Depth=2
                                         #       Child Loop BB3_8 Depth 3
                                         #         Child Loop BB3_10 Depth 4
-	cmpq	$0, 56(%rsp)            # 8-byte Folded Reload
+	cmpq	$0, 32(%rsp)            # 8-byte Folded Reload
 	js	.LBB3_12
 # BB#6:                                 # %polly.loop_header2.preheader
                                         #   in Loop: Header=BB3_5 Depth=2
-	movq	40(%rsp), %rax          # 8-byte Reload
+	movq	8(%rsp), %rax           # 8-byte Reload
 	shlq	$5, %rax
-	movq	8(%rsp), %r14           # 8-byte Reload
+	movq	72(%rsp), %r14          # 8-byte Reload
 	subq	%rax, %r14
 	decq	%r14
 	cmpq	$31, %r14
@@ -816,8 +816,8 @@ matrix_multiply_polly_subfn:            # @matrix_multiply_polly_subfn
 	js	.LBB3_12
 # BB#7:                                 #   in Loop: Header=BB3_5 Depth=2
 	decq	%r14
-	movq	32(%rsp), %rax          # 8-byte Reload
-	movq	%rax, 64(%rsp)          # 8-byte Spill
+	movq	(%rsp), %rax            # 8-byte Reload
+	movq	%rax, 40(%rsp)          # 8-byte Spill
 	xorl	%ebp, %ebp
 	.p2align	4, 0x90
 .LBB3_8:                                # %polly.loop_header10.preheader.us
@@ -828,7 +828,7 @@ matrix_multiply_polly_subfn:            # @matrix_multiply_polly_subfn
 	movq	%rbp, %rcx
 	shlq	$5, %rcx
 	movq	%rcx, %rdx
-	movq	48(%rsp), %rsi          # 8-byte Reload
+	movq	24(%rsp), %rsi          # 8-byte Reload
 	subq	%rsi, %rdx
 	cmpq	$-33, %rdx
 	movq	$-32, %rax
@@ -842,7 +842,7 @@ matrix_multiply_polly_subfn:            # @matrix_multiply_polly_subfn
 	jge	.LBB3_11
 # BB#9:                                 #   in Loop: Header=BB3_8 Depth=3
 	leaq	8(,%rax,4), %r12
-	movq	64(%rsp), %rbx          # 8-byte Reload
+	movq	40(%rsp), %rbx          # 8-byte Reload
 	.p2align	4, 0x90
 .LBB3_10:                               # %polly.stmt.for.body11.preheader.us.us
                                         #   Parent Loop BB3_4 Depth=1
@@ -859,24 +859,24 @@ matrix_multiply_polly_subfn:            # @matrix_multiply_polly_subfn
 	jle	.LBB3_10
 .LBB3_11:                               # %polly.loop_exit12.loopexit.us
                                         #   in Loop: Header=BB3_8 Depth=3
-	subq	$-128, 64(%rsp)         # 8-byte Folded Spill
-	cmpq	56(%rsp), %rbp          # 8-byte Folded Reload
+	subq	$-128, 40(%rsp)         # 8-byte Folded Spill
+	cmpq	32(%rsp), %rbp          # 8-byte Folded Reload
 	leaq	1(%rbp), %rbp
 	jne	.LBB3_8
 .LBB3_12:                               # %polly.loop_exit4
                                         #   in Loop: Header=BB3_5 Depth=2
-	movq	32(%rsp), %rax          # 8-byte Reload
-	addq	24(%rsp), %rax          # 8-byte Folded Reload
-	movq	%rax, 32(%rsp)          # 8-byte Spill
-	movq	40(%rsp), %rax          # 8-byte Reload
-	cmpq	16(%rsp), %rax          # 8-byte Folded Reload
+	movq	(%rsp), %rax            # 8-byte Reload
+	addq	16(%rsp), %rax          # 8-byte Folded Reload
+	movq	%rax, (%rsp)            # 8-byte Spill
+	movq	8(%rsp), %rax           # 8-byte Reload
+	cmpq	80(%rsp), %rax          # 8-byte Folded Reload
 	leaq	1(%rax), %rax
-	movq	%rax, 40(%rsp)          # 8-byte Spill
+	movq	%rax, 8(%rsp)           # 8-byte Spill
 	jle	.LBB3_5
 # BB#3:                                 # %polly.par.checkNext.loopexit
                                         #   in Loop: Header=BB3_4 Depth=1
-	leaq	80(%rsp), %rdi
-	leaq	72(%rsp), %rsi
+	leaq	56(%rsp), %rdi
+	leaq	48(%rsp), %rsi
 	callq	GOMP_loop_runtime_next
 	testb	%al, %al
 	jne	.LBB3_4
@@ -933,31 +933,31 @@ matrix_multiply_polly_subfn_2:          # @matrix_multiply_polly_subfn_2
 .Ltmp49:
 	.cfi_offset %rbp, -16
 	movslq	(%rdi), %rax
-	movq	%rax, 8(%rsp)           # 8-byte Spill
+	movq	%rax, 152(%rsp)         # 8-byte Spill
 	movslq	4(%rdi), %rax
-	movq	%rax, 72(%rsp)          # 8-byte Spill
+	movq	%rax, 56(%rsp)          # 8-byte Spill
 	movslq	8(%rdi), %rbx
 	movslq	12(%rdi), %rbp
 	movq	16(%rdi), %r14
 	movq	%r14, 232(%rsp)         # 8-byte Spill
 	movq	24(%rdi), %r15
 	movq	32(%rdi), %r12
-	leaq	272(%rsp), %rdi
-	leaq	264(%rsp), %rsi
+	leaq	144(%rsp), %rdi
+	leaq	136(%rsp), %rsi
 	callq	GOMP_loop_runtime_next
 	testb	%al, %al
 	je	.LBB4_2
 # BB#1:                                 # %polly.par.loadIVBounds.preheader
-	movq	72(%rsp), %rax          # 8-byte Reload
+	movq	56(%rsp), %rax          # 8-byte Reload
 	decq	%rax
 	sarq	$5, %rax
-	movq	%rax, 88(%rsp)          # 8-byte Spill
-	movq	%rbx, 136(%rsp)         # 8-byte Spill
+	movq	%rax, 64(%rsp)          # 8-byte Spill
+	movq	%rbx, 88(%rsp)          # 8-byte Spill
 	leaq	-1(%rbx), %rax
 	sarq	$5, %rax
-	movq	%rax, 120(%rsp)         # 8-byte Spill
+	movq	%rax, 72(%rsp)          # 8-byte Spill
 	negq	%rbx
-	movq	%rbx, 64(%rsp)          # 8-byte Spill
+	movq	%rbx, 168(%rsp)         # 8-byte Spill
 	leaq	(,%rbp,4), %r13
 	movq	%rbp, %rax
 	movq	%rbp, %rbx
@@ -966,7 +966,7 @@ matrix_multiply_polly_subfn_2:          # @matrix_multiply_polly_subfn_2
 	movl	$1, %eax
 	movd	%rax, %xmm0
 	pslldq	$8, %xmm0               # xmm0 = zero,zero,zero,zero,zero,zero,zero,zero,xmm0[0,1,2,3,4,5,6,7]
-	movdqa	%xmm0, 16(%rsp)         # 16-byte Spill
+	movdqa	%xmm0, 256(%rsp)        # 16-byte Spill
 	.p2align	4, 0x90
 .LBB4_4:                                # %polly.par.loadIVBounds
                                         # =>This Loop Header: Depth=1
@@ -977,14 +977,14 @@ matrix_multiply_polly_subfn_2:          # @matrix_multiply_polly_subfn_2
                                         #             Child Loop BB4_14 Depth 6
                                         #               Child Loop BB4_22 Depth 7
                                         #               Child Loop BB4_17 Depth 7
-	movq	264(%rsp), %rax
-	movq	272(%rsp), %rcx
-	movq	%rcx, 56(%rsp)          # 8-byte Spill
+	movq	136(%rsp), %rax
+	movq	144(%rsp), %rcx
+	movq	%rcx, 16(%rsp)          # 8-byte Spill
 	addq	$-2, %rax
-	movq	%rax, 40(%rsp)          # 8-byte Spill
+	movq	%rax, 160(%rsp)         # 8-byte Spill
 	movq	48(%rsp), %rax          # 8-byte Reload
 	imulq	%rcx, %rax
-	movq	%rax, 80(%rsp)          # 8-byte Spill
+	movq	%rax, 24(%rsp)          # 8-byte Spill
 	.p2align	4, 0x90
 .LBB4_5:                                # %polly.loop_header
                                         #   Parent Loop BB4_4 Depth=1
@@ -995,27 +995,27 @@ matrix_multiply_polly_subfn_2:          # @matrix_multiply_polly_subfn_2
                                         #             Child Loop BB4_14 Depth 6
                                         #               Child Loop BB4_22 Depth 7
                                         #               Child Loop BB4_17 Depth 7
-	cmpq	$0, 88(%rsp)            # 8-byte Folded Reload
-	movdqa	16(%rsp), %xmm5         # 16-byte Reload
+	cmpq	$0, 64(%rsp)            # 8-byte Folded Reload
+	movdqa	256(%rsp), %xmm5        # 16-byte Reload
 	js	.LBB4_19
 # BB#6:                                 # %polly.loop_header4.preheader
                                         #   in Loop: Header=BB4_5 Depth=2
-	movq	56(%rsp), %rax          # 8-byte Reload
+	movq	16(%rsp), %rax          # 8-byte Reload
 	shlq	$5, %rax
-	movq	%rax, 160(%rsp)         # 8-byte Spill
-	movq	8(%rsp), %rcx           # 8-byte Reload
+	movq	%rax, 208(%rsp)         # 8-byte Spill
+	movq	152(%rsp), %rcx         # 8-byte Reload
 	subq	%rax, %rcx
 	decq	%rcx
 	cmpq	$31, %rcx
 	movl	$31, %eax
 	cmovgq	%rax, %rcx
-	movq	%rcx, 112(%rsp)         # 8-byte Spill
+	movq	%rcx, 184(%rsp)         # 8-byte Spill
 	leaq	-1(%rcx), %rax
-	movq	%rax, 176(%rsp)         # 8-byte Spill
-	xorl	%eax, %eax
-	movq	%rax, 168(%rsp)         # 8-byte Spill
+	movq	%rax, 216(%rsp)         # 8-byte Spill
 	xorl	%eax, %eax
 	movq	%rax, 96(%rsp)          # 8-byte Spill
+	xorl	%eax, %eax
+	movq	%rax, 32(%rsp)          # 8-byte Spill
 	.p2align	4, 0x90
 .LBB4_7:                                # %polly.loop_header4
                                         #   Parent Loop BB4_4 Depth=1
@@ -1026,27 +1026,27 @@ matrix_multiply_polly_subfn_2:          # @matrix_multiply_polly_subfn_2
                                         #             Child Loop BB4_14 Depth 6
                                         #               Child Loop BB4_22 Depth 7
                                         #               Child Loop BB4_17 Depth 7
-	cmpq	$0, 120(%rsp)           # 8-byte Folded Reload
+	cmpq	$0, 72(%rsp)            # 8-byte Folded Reload
 	js	.LBB4_18
 # BB#8:                                 # %polly.loop_header13.preheader
                                         #   in Loop: Header=BB4_7 Depth=3
-	movq	96(%rsp), %rcx          # 8-byte Reload
+	movq	32(%rsp), %rcx          # 8-byte Reload
 	shlq	$5, %rcx
 	movq	%rcx, 248(%rsp)         # 8-byte Spill
-	movq	72(%rsp), %rax          # 8-byte Reload
+	movq	56(%rsp), %rax          # 8-byte Reload
 	subq	%rcx, %rax
 	decq	%rax
 	cmpq	$31, %rax
 	movl	$31, %ecx
 	cmovleq	%rax, %rcx
-	movq	%rcx, 104(%rsp)         # 8-byte Spill
+	movq	%rcx, 176(%rsp)         # 8-byte Spill
 	leaq	-1(%rcx), %rax
 	movq	%rax, 240(%rsp)         # 8-byte Spill
-	movq	80(%rsp), %rax          # 8-byte Reload
-	movq	%rax, 128(%rsp)         # 8-byte Spill
+	movq	24(%rsp), %rax          # 8-byte Reload
+	movq	%rax, 80(%rsp)          # 8-byte Spill
 	xorl	%eax, %eax
-	movq	%rax, 216(%rsp)         # 8-byte Spill
-	movq	64(%rsp), %rcx          # 8-byte Reload
+	movq	%rax, 112(%rsp)         # 8-byte Spill
+	movq	168(%rsp), %rcx         # 8-byte Reload
 	xorl	%edx, %edx
 	.p2align	4, 0x90
 .LBB4_9:                                # %polly.loop_header13
@@ -1058,8 +1058,8 @@ matrix_multiply_polly_subfn_2:          # @matrix_multiply_polly_subfn_2
                                         #             Child Loop BB4_14 Depth 6
                                         #               Child Loop BB4_22 Depth 7
                                         #               Child Loop BB4_17 Depth 7
-	movq	%rdx, 144(%rsp)         # 8-byte Spill
-	movq	%rcx, 152(%rsp)         # 8-byte Spill
+	movq	%rdx, 192(%rsp)         # 8-byte Spill
+	movq	%rcx, 200(%rsp)         # 8-byte Spill
 	cmpq	$-33, %rcx
 	movq	$-32, %rax
 	cmovgq	%rcx, %rax
@@ -1071,7 +1071,7 @@ matrix_multiply_polly_subfn_2:          # @matrix_multiply_polly_subfn_2
 	movq	%rdx, %rax
 	shlq	$5, %rax
 	movq	%rax, %rcx
-	subq	136(%rsp), %rcx         # 8-byte Folded Reload
+	subq	88(%rsp), %rcx          # 8-byte Folded Reload
 	cmpq	$-33, %rcx
 	movq	$-32, %rdx
 	cmovleq	%rdx, %rcx
@@ -1079,18 +1079,18 @@ matrix_multiply_polly_subfn_2:          # @matrix_multiply_polly_subfn_2
 	subq	%rcx, %rdx
 	cmpq	$-2, %rdx
 	cmovleq	%rsi, %rdx
-	cmpq	$0, 112(%rsp)           # 8-byte Folded Reload
+	cmpq	$0, 184(%rsp)           # 8-byte Folded Reload
 	js	.LBB4_26
 # BB#10:                                # %polly.loop_header22.preheader
                                         #   in Loop: Header=BB4_9 Depth=4
-	movq	136(%rsp), %rcx         # 8-byte Reload
+	movq	88(%rsp), %rcx          # 8-byte Reload
 	subq	%rax, %rcx
 	decq	%rcx
 	cmpq	$31, %rcx
 	movl	$31, %esi
 	cmovleq	%rcx, %rsi
-	movq	%rsi, 184(%rsp)         # 8-byte Spill
-	cmpq	$0, 104(%rsp)           # 8-byte Folded Reload
+	movq	%rsi, 104(%rsp)         # 8-byte Spill
+	cmpq	$0, 176(%rsp)           # 8-byte Folded Reload
 	js	.LBB4_26
 # BB#11:                                # %polly.loop_header31.preheader.us.preheader
                                         #   in Loop: Header=BB4_9 Depth=4
@@ -1098,22 +1098,22 @@ matrix_multiply_polly_subfn_2:          # @matrix_multiply_polly_subfn_2
 	andq	$-4, %r9
 	movq	%rdx, %rsi
 	addq	$2, %rsi
-	movq	%rsi, 256(%rsp)         # 8-byte Spill
-	movq	184(%rsp), %rcx         # 8-byte Reload
+	movq	%rsi, 128(%rsp)         # 8-byte Spill
+	movq	104(%rsp), %rcx         # 8-byte Reload
 	decq	%rcx
 	cmpl	$1, %ebx
 	sete	%dil
 	andq	$-4, %rsi
-	movq	%rsi, 200(%rsp)         # 8-byte Spill
+	movq	%rsi, 224(%rsp)         # 8-byte Spill
 	setne	%dl
 	andb	%dil, %dl
-	movb	%dl, 215(%rsp)          # 1-byte Spill
+	movb	%dl, 15(%rsp)           # 1-byte Spill
 	movd	%rax, %xmm0
 	pshufd	$68, %xmm0, %xmm0       # xmm0 = xmm0[0,1,0,1]
-	movq	128(%rsp), %rax         # 8-byte Reload
-	movq	%rax, 224(%rsp)         # 8-byte Spill
+	movq	80(%rsp), %rax          # 8-byte Reload
+	movq	%rax, 120(%rsp)         # 8-byte Spill
 	xorl	%eax, %eax
-	movq	%rax, 192(%rsp)         # 8-byte Spill
+	movq	%rax, 40(%rsp)          # 8-byte Spill
 	.p2align	4, 0x90
 .LBB4_12:                               # %polly.loop_header31.preheader.us
                                         #   Parent Loop BB4_4 Depth=1
@@ -1124,14 +1124,14 @@ matrix_multiply_polly_subfn_2:          # @matrix_multiply_polly_subfn_2
                                         #             Child Loop BB4_14 Depth 6
                                         #               Child Loop BB4_22 Depth 7
                                         #               Child Loop BB4_17 Depth 7
-	cmpq	$0, 184(%rsp)           # 8-byte Folded Reload
+	cmpq	$0, 104(%rsp)           # 8-byte Folded Reload
 	js	.LBB4_25
 # BB#13:                                #   in Loop: Header=BB4_12 Depth=5
-	movq	160(%rsp), %rax         # 8-byte Reload
-	movq	192(%rsp), %rdx         # 8-byte Reload
+	movq	208(%rsp), %rax         # 8-byte Reload
+	movq	40(%rsp), %rdx          # 8-byte Reload
 	leaq	(%rdx,%rax), %rsi
 	imulq	%rbx, %rsi
-	movq	168(%rsp), %rbp         # 8-byte Reload
+	movq	96(%rsp), %rbp          # 8-byte Reload
 	xorl	%r8d, %r8d
 	.p2align	4, 0x90
 .LBB4_14:                               # %polly.loop_header40.preheader.us.us
@@ -1147,11 +1147,11 @@ matrix_multiply_polly_subfn_2:          # @matrix_multiply_polly_subfn_2
 	leaq	(%r8,%rax), %rdx
 	leaq	(%rdx,%rsi), %r10
 	movl	(%r14,%r10,4), %r11d
-	cmpq	$3, 256(%rsp)           # 8-byte Folded Reload
+	cmpq	$3, 128(%rsp)           # 8-byte Folded Reload
 	jbe	.LBB4_15
 # BB#20:                                # %min.iters.checked
                                         #   in Loop: Header=BB4_14 Depth=6
-	cmpb	$0, 215(%rsp)           # 1-byte Folded Reload
+	cmpb	$0, 15(%rsp)            # 1-byte Folded Reload
 	je	.LBB4_15
 # BB#21:                                # %vector.ph
                                         #   in Loop: Header=BB4_14 Depth=6
@@ -1194,8 +1194,8 @@ matrix_multiply_polly_subfn_2:          # @matrix_multiply_polly_subfn_2
 	pshufd	$229, %xmm2, %xmm1      # xmm1 = xmm2[1,1,2,3]
 	paddd	%xmm2, %xmm1
 	movd	%xmm1, %r11d
-	movq	200(%rsp), %rax         # 8-byte Reload
-	cmpq	%rax, 256(%rsp)         # 8-byte Folded Reload
+	movq	224(%rsp), %rax         # 8-byte Reload
+	cmpq	%rax, 128(%rsp)         # 8-byte Folded Reload
 	movq	%rax, %rdx
 	movq	%r14, %rbx
 	jne	.LBB4_16
@@ -1205,12 +1205,12 @@ matrix_multiply_polly_subfn_2:          # @matrix_multiply_polly_subfn_2
 	xorl	%edx, %edx
 .LBB4_16:                               # %polly.loop_header40.us.us.preheader
                                         #   in Loop: Header=BB4_14 Depth=6
-	movq	216(%rsp), %rax         # 8-byte Reload
+	movq	112(%rsp), %rax         # 8-byte Reload
 	leaq	(%rax,%rdx), %rax
 	imulq	%rbx, %rax
 	addq	%rbp, %rax
 	leaq	(%r12,%rax,4), %rax
-	movq	224(%rsp), %rdi         # 8-byte Reload
+	movq	120(%rsp), %rdi         # 8-byte Reload
 	leaq	(%rdi,%rdx), %rdi
 	decq	%rdx
 	leaq	(%r15,%rdi,4), %r14
@@ -1241,44 +1241,44 @@ matrix_multiply_polly_subfn_2:          # @matrix_multiply_polly_subfn_2
 	jle	.LBB4_14
 .LBB4_25:                               # %polly.loop_exit33.loopexit.us
                                         #   in Loop: Header=BB4_12 Depth=5
-	addq	%rbx, 224(%rsp)         # 8-byte Folded Spill
-	movq	192(%rsp), %rax         # 8-byte Reload
-	cmpq	176(%rsp), %rax         # 8-byte Folded Reload
+	addq	%rbx, 120(%rsp)         # 8-byte Folded Spill
+	movq	40(%rsp), %rax          # 8-byte Reload
+	cmpq	216(%rsp), %rax         # 8-byte Folded Reload
 	leaq	1(%rax), %rax
-	movq	%rax, 192(%rsp)         # 8-byte Spill
+	movq	%rax, 40(%rsp)          # 8-byte Spill
 	jle	.LBB4_12
 .LBB4_26:                               # %polly.loop_exit24
                                         #   in Loop: Header=BB4_9 Depth=4
-	movq	152(%rsp), %rcx         # 8-byte Reload
+	movq	200(%rsp), %rcx         # 8-byte Reload
 	addq	$32, %rcx
-	addq	$32, 216(%rsp)          # 8-byte Folded Spill
-	addq	$32, 128(%rsp)          # 8-byte Folded Spill
-	movq	144(%rsp), %rdx         # 8-byte Reload
-	cmpq	120(%rsp), %rdx         # 8-byte Folded Reload
+	addq	$32, 112(%rsp)          # 8-byte Folded Spill
+	addq	$32, 80(%rsp)           # 8-byte Folded Spill
+	movq	192(%rsp), %rdx         # 8-byte Reload
+	cmpq	72(%rsp), %rdx          # 8-byte Folded Reload
 	leaq	1(%rdx), %rdx
 	jne	.LBB4_9
 .LBB4_18:                               # %polly.loop_exit15
                                         #   in Loop: Header=BB4_7 Depth=3
-	addq	$32, 168(%rsp)          # 8-byte Folded Spill
-	movq	96(%rsp), %rax          # 8-byte Reload
-	cmpq	88(%rsp), %rax          # 8-byte Folded Reload
+	addq	$32, 96(%rsp)           # 8-byte Folded Spill
+	movq	32(%rsp), %rax          # 8-byte Reload
+	cmpq	64(%rsp), %rax          # 8-byte Folded Reload
 	leaq	1(%rax), %rax
-	movq	%rax, 96(%rsp)          # 8-byte Spill
+	movq	%rax, 32(%rsp)          # 8-byte Spill
 	jne	.LBB4_7
 .LBB4_19:                               # %polly.loop_exit6
                                         #   in Loop: Header=BB4_5 Depth=2
-	movq	80(%rsp), %rax          # 8-byte Reload
+	movq	24(%rsp), %rax          # 8-byte Reload
 	addq	48(%rsp), %rax          # 8-byte Folded Reload
-	movq	%rax, 80(%rsp)          # 8-byte Spill
-	movq	56(%rsp), %rax          # 8-byte Reload
-	cmpq	40(%rsp), %rax          # 8-byte Folded Reload
+	movq	%rax, 24(%rsp)          # 8-byte Spill
+	movq	16(%rsp), %rax          # 8-byte Reload
+	cmpq	160(%rsp), %rax         # 8-byte Folded Reload
 	leaq	1(%rax), %rax
-	movq	%rax, 56(%rsp)          # 8-byte Spill
+	movq	%rax, 16(%rsp)          # 8-byte Spill
 	jle	.LBB4_5
 # BB#3:                                 # %polly.par.checkNext.loopexit
                                         #   in Loop: Header=BB4_4 Depth=1
-	leaq	272(%rsp), %rdi
-	leaq	264(%rsp), %rsi
+	leaq	144(%rsp), %rdi
+	leaq	136(%rsp), %rsi
 	callq	GOMP_loop_runtime_next
 	testb	%al, %al
 	jne	.LBB4_4
@@ -1303,5 +1303,5 @@ matrix_multiply_polly_subfn_2:          # @matrix_multiply_polly_subfn_2
 	.size	.L.str, 46
 
 
-	.ident	"clang version 3.9.0 (http://llvm.org/git/clang.git 3f10def1e46ea783186be08e2138d0f76a707712) (http://llvm.org/git/llvm.git 626ceb277f4fd20c1899e04490b0ea6c2b1a0da8)"
+	.ident	"clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)"
 	.section	".note.GNU-stack","",@progbits
