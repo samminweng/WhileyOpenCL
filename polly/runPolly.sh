@@ -82,6 +82,13 @@ opt_polly(){
 	#clang -include Util.c $CPPFLAGS -O3 -mllvm -polly -mllvm -polly-ignore-aliasing $program.c -o "out/$program.polly.out"
 	time ./out/$program.polly.out $parameter
 
+	read -p "Press [Enter] to Run Vector code"
+	opt -S -O3 -polly -polly-codegen -polly-vectorizer=stripmine $program.preopt.ll -o $program.vector.ll
+	llc $program.vector.ll -o $program.vector.s
+	clang $program.vector.s libUtil.a -o "out/$program.vector.out"
+	### clang -include Util.c $CPPFLAGS -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine $program.c -o "out/$program.vector.out"
+	time ."/out/$program.vector.out" $parameter
+
 	read -p "Press [Enter] to Run OpenMP executable with 2 threads..."
 	export OMP_NUM_THREADS=$num_threads
 	opt -S -O3 -polly -polly-codegen -polly-parallel $program.preopt.ll -o $program.openmp.ll
@@ -90,12 +97,6 @@ opt_polly(){
 	#clang -include Util.c $CPPFLAGS -O3 -mllvm -polly -mllvm -polly-parallel -lgomp $program.c -o "out/$program.openmp.out"
 	time ."/out/$program.openmp.out" $parameter
 
-	read -p "Press [Enter] to Run Vector code"
-	opt -S -O3 -polly -polly-codegen -polly-vectorizer=stripmine $program.preopt.ll -o $program.vector.ll
-	llc $program.vector.ll -o $program.vector.s
-	clang $program.vector.s libUtil.a -o "out/$program.vector.out"
-	#clang -include Util.c $CPPFLAGS -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine $program.c -o "out/$program.vector.out"
-	time ."/out/$program.vector.out" $parameter
 	## move files to folders respectively, e.g. 'jscop' 'llvm' and 'assembly' folder 
 	### Move all the dot files to 'dot' folder
 	folder_proc "dot" "dot"

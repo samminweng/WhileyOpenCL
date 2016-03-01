@@ -1,61 +1,44 @@
 digraph "Scop Graph for 'main' function" {
 	label="Scop Graph for 'main' function";
 
-	Node0x66108b0 [shape=record,label="{entry:\l  br label %entry.split\l}"];
-	Node0x66108b0 -> Node0x6610b70;
-	Node0x6610b70 [shape=record,label="{entry.split:                                      \l  %call = tail call noalias i8* @malloc(i64 65536) #4\l  %0 = bitcast i8* %call to i32*\l  br label %for.body\l}"];
-	Node0x6610b70 -> Node0x66109d0;
-	Node0x66109d0 [shape=record,label="{for.body:                                         \l  %r.04 = phi i64 [ 0, %entry.split ], [ %inc15, %for.inc14 ]\l  %arrayidx = getelementptr inbounds i32, i32* %0, i64 %r.04\l  store i32 0, i32* %arrayidx, align 4\l  br label %for.body3\l}"];
-	Node0x66109d0 -> Node0x661d8d0;
-	Node0x661d8d0 [shape=record,label="{for.body3:                                        \l  %indvars.iv = phi i64 [ 0, %for.body ], [ %indvars.iv.next, %for.body3 ]\l  %arrayidx4 = getelementptr inbounds [1048576 x i32], [1048576 x i32]* @u,\l... i64 0, i64 %indvars.iv\l  store i32 1, i32* %arrayidx4, align 4\l  %arrayidx6 = getelementptr inbounds [1048576 x i32], [1048576 x i32]* @v,\l... i64 0, i64 %indvars.iv\l  store i32 1, i32* %arrayidx6, align 4\l  %arrayidx7 = getelementptr inbounds i32, i32* %0, i64 %r.04\l  %1 = load i32, i32* %arrayidx7, align 4\l  %arrayidx9 = getelementptr inbounds [1048576 x i32], [1048576 x i32]* @u,\l... i64 0, i64 %indvars.iv\l  %2 = load i32, i32* %arrayidx9, align 4\l  %arrayidx11 = getelementptr inbounds [1048576 x i32], [1048576 x i32]* @v,\l... i64 0, i64 %indvars.iv\l  %3 = load i32, i32* %arrayidx11, align 4\l  %mul12 = mul nsw i32 %3, %2\l  %add = add nsw i32 %mul12, %1\l  %arrayidx13 = getelementptr inbounds i32, i32* %0, i64 %r.04\l  store i32 %add, i32* %arrayidx13, align 4\l  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1\l  %exitcond5 = icmp ne i64 %indvars.iv.next, 1048576\l  br i1 %exitcond5, label %for.body3, label %for.inc14\l}"];
-	Node0x661d8d0 -> Node0x661d8d0[constraint=false];
-	Node0x661d8d0 -> Node0x6621f80;
-	Node0x6621f80 [shape=record,label="{for.inc14:                                        \l  %inc15 = add nuw nsw i64 %r.04, 1\l  %exitcond6 = icmp ne i64 %inc15, 16384\l  br i1 %exitcond6, label %for.body, label %for.cond17.preheader\l}"];
-	Node0x6621f80 -> Node0x66109d0[constraint=false];
-	Node0x6621f80 -> Node0x661f7c0;
-	Node0x661f7c0 [shape=record,label="{for.cond17.preheader:                             \l  br label %for.inc22\l}"];
-	Node0x661f7c0 -> Node0x6621f10;
-	Node0x6621f10 [shape=record,label="{for.inc22:                                        \l  %sum.02 = phi i64 [ 0, %for.cond17.preheader ], [ %add21, %for.inc22 ]\l  %r.11 = phi i64 [ 0, %for.cond17.preheader ], [ %inc23, %for.inc22 ]\l  %arrayidx20 = getelementptr inbounds i32, i32* %0, i64 %r.11\l  %4 = load i32, i32* %arrayidx20, align 4\l  %conv = sext i32 %4 to i64\l  %add21 = add nsw i64 %conv, %sum.02\l  %inc23 = add nuw nsw i64 %r.11, 1\l  %exitcond = icmp ne i64 %inc23, 16384\l  br i1 %exitcond, label %for.inc22, label %for.end24\l}"];
-	Node0x6621f10 -> Node0x6621f10[constraint=false];
-	Node0x6621f10 -> Node0x661f270;
-	Node0x661f270 [shape=record,label="{for.end24:                                        \l  %add21.lcssa = phi i64 [ %add21, %for.inc22 ]\l  %cmp25 = icmp eq i64 %add21.lcssa, 17179869184\l  br i1 %cmp25, label %if.end, label %if.then\l}"];
-	Node0x661f270 -> Node0x6621170;
-	Node0x661f270 -> Node0x6620060;
-	Node0x6621170 [shape=record,label="{if.end:                                           \l  %call28 = tail call i8* @setlocale(i32 6, i8* getelementptr inbounds ([1 x\l... i8], [1 x i8]* @.str.1, i64 0, i64 0)) #4\l  %call29 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([102\l... x i8], [102 x i8]* @.str.2, i64 0, i64 0), i64 17179869184, i32 1048576, i64\l... %add21.lcssa) #4\l  ret i32 0\l}"];
-	Node0x6620060 [shape=record,label="{if.then:                                          \l  %call27 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([34 x\l... i8], [34 x i8]* @.str, i64 0, i64 0)) #4\l  tail call void @exit(i32 -2) #5\l  unreachable\l}"];
+	Node0x4fd71d0 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0x4fd71d0 -> Node0x4fd76d0;
+	Node0x4fd76d0 [shape=record,label="{entry.split:                                      \l  br label %for.cond1.preheader\l}"];
+	Node0x4fd76d0 -> Node0x4fd8820;
+	Node0x4fd8820 [shape=record,label="{for.cond1.preheader:                              \l  %total.04 = phi i64 [ 0, %entry.split ], [ %add.lcssa, %for.inc10 ]\l  %r.03 = phi i64 [ 0, %entry.split ], [ %inc11, %for.inc10 ]\l  br label %for.body3\l}"];
+	Node0x4fd8820 -> Node0x4fd7650;
+	Node0x4fd7650 [shape=record,label="{for.body3:                                        \l  %indvars.iv = phi i64 [ 0, %for.cond1.preheader ], [ %indvars.iv.next,\l... %for.body3 ]\l  %total.12 = phi i64 [ %total.04, %for.cond1.preheader ], [ %add, %for.body3 ]\l  %arrayidx = getelementptr inbounds [64 x i32], [64 x i32]* @u, i64 0, i64\l... %indvars.iv\l  store i32 1, i32* %arrayidx, align 4\l  %arrayidx5 = getelementptr inbounds [64 x i32], [64 x i32]* @v, i64 0, i64\l... %indvars.iv\l  store i32 1, i32* %arrayidx5, align 4\l  %arrayidx7 = getelementptr inbounds [64 x i32], [64 x i32]* @u, i64 0, i64\l... %indvars.iv\l  %0 = load i32, i32* %arrayidx7, align 4\l  %arrayidx9 = getelementptr inbounds [64 x i32], [64 x i32]* @v, i64 0, i64\l... %indvars.iv\l  %1 = load i32, i32* %arrayidx9, align 4\l  %mul = mul nsw i32 %1, %0\l  %conv = sext i32 %mul to i64\l  %add = add nsw i64 %conv, %total.12\l  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1\l  %exitcond = icmp ne i64 %indvars.iv.next, 64\l  br i1 %exitcond, label %for.body3, label %for.inc10\l}"];
+	Node0x4fd7650 -> Node0x4fd7650[constraint=false];
+	Node0x4fd7650 -> Node0x4fd88d0;
+	Node0x4fd88d0 [shape=record,label="{for.inc10:                                        \l  %add.lcssa = phi i64 [ %add, %for.body3 ]\l  %inc11 = add nuw nsw i64 %r.03, 1\l  %exitcond5 = icmp ne i64 %inc11, 268435456\l  br i1 %exitcond5, label %for.cond1.preheader, label %for.end12\l}"];
+	Node0x4fd88d0 -> Node0x4fd8820[constraint=false];
+	Node0x4fd88d0 -> Node0x4fd9c50;
+	Node0x4fd9c50 [shape=record,label="{for.end12:                                        \l  %add.lcssa.lcssa = phi i64 [ %add.lcssa, %for.inc10 ]\l  %cmp13 = icmp eq i64 %add.lcssa.lcssa, 17179869184\l  br i1 %cmp13, label %if.end, label %if.then\l}"];
+	Node0x4fd9c50 -> Node0x4fd9c70;
+	Node0x4fd9c50 -> Node0x4fd9df0;
+	Node0x4fd9c70 [shape=record,label="{if.end:                                           \l  %call15 = tail call i8* @setlocale(i32 6, i8* getelementptr inbounds ([1 x\l... i8], [1 x i8]* @.str.1, i64 0, i64 0)) #4\l  %call16 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([100\l... x i8], [100 x i8]* @.str.2, i64 0, i64 0), i64 17179869184, i32 64, i64\l... %add.lcssa.lcssa) #4\l  ret i32 0\l}"];
+	Node0x4fd9df0 [shape=record,label="{if.then:                                          \l  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([34 x\l... i8], [34 x i8]* @.str, i64 0, i64 0)) #4\l  tail call void @exit(i32 -2) #5\l  unreachable\l}"];
 	colorscheme = "paired12"
-        subgraph cluster_0x6610830 {
+        subgraph cluster_0x4fc8b20 {
           label = "";
           style = solid;
           color = 1
-          subgraph cluster_0x661f890 {
+          subgraph cluster_0x4fc9720 {
             label = "";
             style = filled;
-            color = 3            subgraph cluster_0x6611c10 {
+            color = 3            subgraph cluster_0x4fc8e80 {
               label = "";
               style = solid;
               color = 5
-              subgraph cluster_0x6611b90 {
-                label = "";
-                style = solid;
-                color = 7
-                Node0x661d8d0;
-              }
-              Node0x66109d0;
-              Node0x6621f80;
+              Node0x4fd7650;
             }
-            subgraph cluster_0x6610950 {
-              label = "Region can not profitably be optimized!";
-              style = solid;
-              color = 5
-              Node0x6621f10;
-            }
-            Node0x661f7c0;
+            Node0x4fd8820;
+            Node0x4fd88d0;
           }
-          Node0x66108b0;
-          Node0x6610b70;
-          Node0x661f270;
-          Node0x6621170;
-          Node0x6620060;
+          Node0x4fd71d0;
+          Node0x4fd76d0;
+          Node0x4fd9c50;
+          Node0x4fd9c70;
+          Node0x4fd9df0;
         }
 }
