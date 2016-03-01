@@ -55,11 +55,11 @@ runPolly(){
 		"openmp")
 			export OMP_NUM_THREADS=$num_threads
 			echo "Run OpenMP code on $parameter with $OMP_NUM_THREADS threads..." > $result
-			clang $CPPFLAGS -include Util.c -O3 -mllvm -polly -mllvm -polly-parallel -lgomp $program.c -o "out/$program.$compiler.out"
+			clang $CPPFLAGS -include Util.c -O3 -mllvm -polly -mllvm -polly-parallel -mllvm -polly-process-unprofitable -lgomp $program.c -o "out/$program.$compiler.out"
 			;;
 		"vector")
 			echo "Run Polly-optimized code on $parameter with $num_threads threads..." > $result
-			clang $CPPFLAGS -include Util.c -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine $program.c -o "out/$program.$compiler.out"
+			clang $CPPFLAGS -include Util.c -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine -mllvm -polly-process-unprofitable $program.c -o "out/$program.$compiler.out"
 			;;
 	esac
 
