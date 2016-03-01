@@ -21,7 +21,7 @@ entry:
   store i32 0, i32* %retval, align 4
   store i32 %argc, i32* %argc.addr, align 4
   store i8** %args, i8*** %args.addr, align 8
-  store i64 268435456, i64* %R, align 8
+  store i64 1073741824, i64* %R, align 8
   store i64 0, i64* %total, align 8
   store i64 0, i64* %r, align 8
   br label %for.cond
@@ -82,7 +82,7 @@ for.inc10:                                        ; preds = %for.end
 
 for.end12:                                        ; preds = %for.cond
   %12 = load i64, i64* %total, align 8
-  %cmp13 = icmp ne i64 %12, 17179869184
+  %cmp13 = icmp ne i64 %12, 68719476736
   br i1 %cmp13, label %if.then, label %if.end
 
 if.then:                                          ; preds = %for.end12
@@ -93,7 +93,7 @@ if.then:                                          ; preds = %for.end12
 if.end:                                           ; preds = %for.end12
   %call15 = call i8* @setlocale(i32 6, i8* getelementptr inbounds ([1 x i8], [1 x i8]* @.str.1, i32 0, i32 0)) #5
   %13 = load i64, i64* %total, align 8
-  %call16 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([100 x i8], [100 x i8]* @.str.2, i32 0, i32 0), i64 17179869184, i32 64, i64 %13)
+  %call16 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([100 x i8], [100 x i8]* @.str.2, i32 0, i32 0), i64 68719476736, i32 64, i64 %13)
   ret i32 0
 }
 
@@ -114,4 +114,4 @@ attributes #5 = { nounwind }
 
 !llvm.ident = !{!0}
 
-!0 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)"}
+!0 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git 3f10def1e46ea783186be08e2138d0f76a707712) (http://llvm.org/git/llvm.git 626ceb277f4fd20c1899e04490b0ea6c2b1a0da8)"}

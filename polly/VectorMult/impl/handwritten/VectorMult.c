@@ -1,6 +1,6 @@
 #include "Util.h"
 #include <locale.h>
-#define SIZE 1024*1024*1024L*16//The vector takes up 137 GB (too big!!!)
+#define SIZE 1024*1024*1024L*64//The vector takes up 137 GB (too big!!!)
 #define N 64// The local vector
 // The local vector are declared in heap space, not using cache,
 // because we want to avoid the cache speedups and measure the actual time

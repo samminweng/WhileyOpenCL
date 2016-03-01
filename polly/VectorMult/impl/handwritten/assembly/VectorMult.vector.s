@@ -14,7 +14,7 @@
 main:                                   # @main
 	.cfi_startproc
 # BB#0:                                 # %entry
-	movl	$268435456, %eax        # imm = 0x10000000
+	movl	$1073741824, %eax       # imm = 0x40000000
 	.p2align	4, 0x90
 .LBB0_1:                                # %vector.body
                                         # =>This Inner Loop Header: Depth=1
@@ -65,7 +65,7 @@ main:                                   # @main
 	movl	$6, %edi
 	movl	$.L.str.1, %esi
 	callq	setlocale
-	movabsq	$17179869184, %rsi      # imm = 0x400000000
+	movabsq	$68719476736, %rsi      # imm = 0x1000000000
 	movl	$.L.str.2, %edi
 	movl	$64, %edx
 	xorl	%eax, %eax
@@ -94,5 +94,5 @@ main:                                   # @main
 	.size	.L.str.2, 100
 
 
-	.ident	"clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)"
+	.ident	"clang version 3.9.0 (http://llvm.org/git/clang.git 3f10def1e46ea783186be08e2138d0f76a707712) (http://llvm.org/git/llvm.git 626ceb277f4fd20c1899e04490b0ea6c2b1a0da8)"
 	.section	".note.GNU-stack","",@progbits

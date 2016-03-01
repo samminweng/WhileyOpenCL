@@ -11,7 +11,6 @@ init(){
 	### remove all files inside the folder
 	rm -f "$pref_dir/"*.*
 	#read -p "Press [Enter] to continue..."
-
 }
 
 #
