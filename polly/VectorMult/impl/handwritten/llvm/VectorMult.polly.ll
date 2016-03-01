@@ -18,10 +18,10 @@ vector.ph:                                        ; preds = %vector.body, %entry
 
 vector.body:                                      ; preds = %vector.ph
   %polly.indvar_next5 = add nuw nsw i64 %polly.indvar4, 1
-  %exitcond21 = icmp eq i64 %polly.indvar_next5, 33554432
-  br i1 %exitcond21, label %vector.ph27.preheader, label %vector.ph
+  %exitcond20 = icmp eq i64 %polly.indvar_next5, 33554432
+  br i1 %exitcond20, label %vector.ph26.preheader, label %vector.ph
 
-vector.ph27.preheader:                            ; preds = %vector.body
+vector.ph26.preheader:                            ; preds = %vector.body
   store <4 x i32> <i32 1, i32 1, i32 1, i32 1>, <4 x i32>* bitcast ([64 x i32]* @u to <4 x i32>*), align 16, !alias.scope !1, !noalias !3
   store <4 x i32> <i32 1, i32 1, i32 1, i32 1>, <4 x i32>* bitcast ([64 x i32]* @v to <4 x i32>*), align 16, !alias.scope !4, !noalias !5
   store <4 x i32> <i32 1, i32 1, i32 1, i32 1>, <4 x i32>* bitcast (i32* getelementptr inbounds ([64 x i32], [64 x i32]* @u, i64 0, i64 4) to <4 x i32>*), align 16, !alias.scope !1, !noalias !3
@@ -38,18 +38,18 @@ vector.ph27.preheader:                            ; preds = %vector.body
   store <4 x i32> <i32 1, i32 1, i32 1, i32 1>, <4 x i32>* bitcast (i32* getelementptr inbounds ([64 x i32], [64 x i32]* @v, i64 0, i64 24) to <4 x i32>*), align 16, !alias.scope !4, !noalias !5
   store <4 x i32> <i32 1, i32 1, i32 1, i32 1>, <4 x i32>* bitcast (i32* getelementptr inbounds ([64 x i32], [64 x i32]* @u, i64 0, i64 28) to <4 x i32>*), align 16, !alias.scope !1, !noalias !3
   store <4 x i32> <i32 1, i32 1, i32 1, i32 1>, <4 x i32>* bitcast (i32* getelementptr inbounds ([64 x i32], [64 x i32]* @v, i64 0, i64 28) to <4 x i32>*), align 16, !alias.scope !4, !noalias !5
-  br label %vector.ph27
+  br label %vector.ph26
 
-vector.ph27:                                      ; preds = %vector.ph27.preheader, %vector.body23
-  %polly.indvar4.1 = phi i64 [ %polly.indvar_next5.1, %vector.body23 ], [ 0, %vector.ph27.preheader ]
-  br label %vector.body23
+vector.ph26:                                      ; preds = %vector.ph26.preheader, %vector.body22
+  %polly.indvar4.1 = phi i64 [ %polly.indvar_next5.1, %vector.body22 ], [ 0, %vector.ph26.preheader ]
+  br label %vector.body22
 
-vector.body23:                                    ; preds = %vector.ph27
+vector.body22:                                    ; preds = %vector.ph26
   %polly.indvar_next5.1 = add nuw nsw i64 %polly.indvar4.1, 1
-  %exitcond21.1 = icmp eq i64 %polly.indvar_next5.1, 33554432
-  br i1 %exitcond21.1, label %polly.loop_exit3.1, label %vector.ph27
+  %exitcond20.1 = icmp eq i64 %polly.indvar_next5.1, 33554432
+  br i1 %exitcond20.1, label %polly.loop_exit3.1, label %vector.ph26
 
-polly.loop_exit3.1:                               ; preds = %vector.body23
+polly.loop_exit3.1:                               ; preds = %vector.body22
   store <4 x i32> <i32 1, i32 1, i32 1, i32 1>, <4 x i32>* bitcast (i32* getelementptr inbounds ([64 x i32], [64 x i32]* @u, i64 0, i64 32) to <4 x i32>*), align 16, !alias.scope !1, !noalias !3
   store <4 x i32> <i32 1, i32 1, i32 1, i32 1>, <4 x i32>* bitcast (i32* getelementptr inbounds ([64 x i32], [64 x i32]* @v, i64 0, i64 32) to <4 x i32>*), align 16, !alias.scope !4, !noalias !5
   store <4 x i32> <i32 1, i32 1, i32 1, i32 1>, <4 x i32>* bitcast (i32* getelementptr inbounds ([64 x i32], [64 x i32]* @u, i64 0, i64 36) to <4 x i32>*), align 16, !alias.scope !1, !noalias !3
@@ -83,7 +83,7 @@ attributes #2 = { nounwind }
 
 !llvm.ident = !{!0}
 
-!0 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git 3f10def1e46ea783186be08e2138d0f76a707712) (http://llvm.org/git/llvm.git 626ceb277f4fd20c1899e04490b0ea6c2b1a0da8)"}
+!0 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)"}
 !1 = distinct !{!1, !2, !"polly.alias.scope.u"}
 !2 = distinct !{!2, !"polly.alias.scope.domain"}
 !3 = !{!4}

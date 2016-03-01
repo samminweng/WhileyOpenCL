@@ -20,7 +20,7 @@ main:                                   # @main
                                         # =>This Inner Loop Header: Depth=1
 	decq	%rax
 	jne	.LBB0_1
-# BB#2:                                 # %vector.ph27.preheader
+# BB#2:                                 # %vector.ph26.preheader
 	movaps	.LCPI0_0(%rip), %xmm0   # xmm0 = [1,1,1,1]
 	movaps	%xmm0, u(%rip)
 	movaps	%xmm0, v(%rip)
@@ -40,7 +40,7 @@ main:                                   # @main
 	movaps	%xmm0, v+112(%rip)
 	movl	$33554432, %eax         # imm = 0x2000000
 	.p2align	4, 0x90
-.LBB0_3:                                # %vector.body23
+.LBB0_3:                                # %vector.body22
                                         # =>This Inner Loop Header: Depth=1
 	decq	%rax
 	jne	.LBB0_3
@@ -101,5 +101,5 @@ main:                                   # @main
 	.size	.L.str.2, 100
 
 
-	.ident	"clang version 3.9.0 (http://llvm.org/git/clang.git 3f10def1e46ea783186be08e2138d0f76a707712) (http://llvm.org/git/llvm.git 626ceb277f4fd20c1899e04490b0ea6c2b1a0da8)"
+	.ident	"clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)"
 	.section	".note.GNU-stack","",@progbits
