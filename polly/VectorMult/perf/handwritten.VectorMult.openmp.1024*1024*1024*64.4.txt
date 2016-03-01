@@ -1,183 +1,183 @@
-Run Polly-optimized code on 1024*1024*1024*16 with 1 threads...
-Pass the 68,719,476,736 vector multiplication test case with local vector size = 64
+Run OpenMP code on 1024*1024*1024*64 with 4 threads...
+Pass the 68,719,476,736 vector multiplication test case with local vector size = 1024
 The Dot Product = 68,719,476,736
 
- Performance counter stats for './out/VectorMult.polly.out 1024*1024*1024*16':
+ Performance counter stats for './out/VectorMult.openmp.out 1024*1024*1024*64':
 
-        335.815146 task-clock (msec)         #    0.989 CPUs utilized          
-                30 context-switches          #    0.089 K/sec                  
-                 1 cpu-migrations            #    0.003 K/sec                  
-               171 page-faults               #    0.509 K/sec                  
-     1,262,649,772 cycles                    #    3.760 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-     2,148,549,691 instructions              #    1.70  insns per cycle        
-     1,073,946,670 branches                  # 3198.029 M/sec                  
-             8,745 branch-misses             #    0.00% of all branches        
-
-       0.339715500 seconds time elapsed
-
-Pass the 68,719,476,736 vector multiplication test case with local vector size = 64
-The Dot Product = 68,719,476,736
-
- Performance counter stats for './out/VectorMult.polly.out 1024*1024*1024*16':
-
-        315.022442 task-clock (msec)         #    0.987 CPUs utilized          
-                31 context-switches          #    0.098 K/sec                  
+       8854.470517 task-clock (msec)         #    1.000 CPUs utilized          
+               802 context-switches          #    0.091 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               171 page-faults               #    0.543 K/sec                  
-     1,219,829,019 cycles                    #    3.872 GHz                    
+               218 page-faults               #    0.025 K/sec                  
+    34,376,298,508 cycles                    #    3.882 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     2,148,480,692 instructions              #    1.76  insns per cycle        
-     1,073,933,890 branches                  # 3409.071 M/sec                  
-             8,151 branch-misses             #    0.00% of all branches        
+    39,002,827,281 instructions              #    1.13  insns per cycle        
+     2,216,885,029 branches                  #  250.369 M/sec                  
+            43,609 branch-misses             #    0.00% of all branches        
 
-       0.319178653 seconds time elapsed
+       8.857229175 seconds time elapsed
 
-Pass the 68,719,476,736 vector multiplication test case with local vector size = 64
+Pass the 68,719,476,736 vector multiplication test case with local vector size = 1024
 The Dot Product = 68,719,476,736
 
- Performance counter stats for './out/VectorMult.polly.out 1024*1024*1024*16':
+ Performance counter stats for './out/VectorMult.openmp.out 1024*1024*1024*64':
 
-        330.439552 task-clock (msec)         #    0.989 CPUs utilized          
-                33 context-switches          #    0.100 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-               170 page-faults               #    0.514 K/sec                  
-     1,225,544,203 cycles                    #    3.709 GHz                    
+       8892.757975 task-clock (msec)         #    1.000 CPUs utilized          
+               792 context-switches          #    0.089 K/sec                  
+                 1 cpu-migrations            #    0.000 K/sec                  
+               218 page-faults               #    0.025 K/sec                  
+    34,373,160,775 cycles                    #    3.865 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     2,148,508,357 instructions              #    1.75  insns per cycle        
-     1,073,938,801 branches                  # 3250.031 M/sec                  
-             7,425 branch-misses             #    0.00% of all branches        
+    39,001,568,008 instructions              #    1.13  insns per cycle        
+     2,216,657,871 branches                  #  249.266 M/sec                  
+            37,491 branch-misses             #    0.00% of all branches        
 
-       0.334151377 seconds time elapsed
+       8.895912533 seconds time elapsed
 
-Pass the 68,719,476,736 vector multiplication test case with local vector size = 64
+Pass the 68,719,476,736 vector multiplication test case with local vector size = 1024
 The Dot Product = 68,719,476,736
 
- Performance counter stats for './out/VectorMult.polly.out 1024*1024*1024*16':
+ Performance counter stats for './out/VectorMult.openmp.out 1024*1024*1024*64':
 
-        338.377133 task-clock (msec)         #    0.990 CPUs utilized          
-                35 context-switches          #    0.103 K/sec                  
+       8877.224675 task-clock (msec)         #    1.000 CPUs utilized          
+               801 context-switches          #    0.090 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               171 page-faults               #    0.505 K/sec                  
-     1,310,918,667 cycles                    #    3.874 GHz                    
+               218 page-faults               #    0.025 K/sec                  
+    34,372,925,635 cycles                    #    3.872 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     2,148,521,484 instructions              #    1.64  insns per cycle        
-     1,073,941,472 branches                  # 3173.800 M/sec                  
-             7,625 branch-misses             #    0.00% of all branches        
+    39,001,610,080 instructions              #    1.13  insns per cycle        
+     2,216,665,442 branches                  #  249.703 M/sec                  
+            37,316 branch-misses             #    0.00% of all branches        
 
-       0.341952332 seconds time elapsed
+       8.880983980 seconds time elapsed
 
-Pass the 68,719,476,736 vector multiplication test case with local vector size = 64
+Pass the 68,719,476,736 vector multiplication test case with local vector size = 1024
 The Dot Product = 68,719,476,736
 
- Performance counter stats for './out/VectorMult.polly.out 1024*1024*1024*16':
+ Performance counter stats for './out/VectorMult.openmp.out 1024*1024*1024*64':
 
-        337.117514 task-clock (msec)         #    0.980 CPUs utilized          
-                34 context-switches          #    0.101 K/sec                  
+       8860.008540 task-clock (msec)         #    1.000 CPUs utilized          
+               778 context-switches          #    0.088 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               171 page-faults               #    0.507 K/sec                  
-     1,274,321,201 cycles                    #    3.780 GHz                    
+               218 page-faults               #    0.025 K/sec                  
+    34,372,375,507 cycles                    #    3.879 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     2,148,511,758 instructions              #    1.69  insns per cycle        
-     1,073,939,762 branches                  # 3185.654 M/sec                  
-             7,262 branch-misses             #    0.00% of all branches        
+    39,001,501,173 instructions              #    1.13  insns per cycle        
+     2,216,645,084 branches                  #  250.185 M/sec                  
+            35,436 branch-misses             #    0.00% of all branches        
 
-       0.343830163 seconds time elapsed
+       8.863043160 seconds time elapsed
 
-Pass the 68,719,476,736 vector multiplication test case with local vector size = 64
+Pass the 68,719,476,736 vector multiplication test case with local vector size = 1024
 The Dot Product = 68,719,476,736
 
- Performance counter stats for './out/VectorMult.polly.out 1024*1024*1024*16':
+ Performance counter stats for './out/VectorMult.openmp.out 1024*1024*1024*64':
 
-        318.175198 task-clock (msec)         #    0.990 CPUs utilized          
-                35 context-switches          #    0.110 K/sec                  
+       8880.277225 task-clock (msec)         #    1.000 CPUs utilized          
+               823 context-switches          #    0.093 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               171 page-faults               #    0.537 K/sec                  
-     1,205,570,603 cycles                    #    3.789 GHz                    
+               218 page-faults               #    0.025 K/sec                  
+    34,375,279,268 cycles                    #    3.871 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     2,148,504,868 instructions              #    1.78  insns per cycle        
-     1,073,938,279 branches                  # 3375.305 M/sec                  
-             8,204 branch-misses             #    0.00% of all branches        
+    39,001,680,290 instructions              #    1.13  insns per cycle        
+     2,216,678,456 branches                  #  249.618 M/sec                  
+            41,061 branch-misses             #    0.00% of all branches        
 
-       0.321519644 seconds time elapsed
+       8.883272977 seconds time elapsed
 
-Pass the 68,719,476,736 vector multiplication test case with local vector size = 64
+Pass the 68,719,476,736 vector multiplication test case with local vector size = 1024
 The Dot Product = 68,719,476,736
 
- Performance counter stats for './out/VectorMult.polly.out 1024*1024*1024*16':
+ Performance counter stats for './out/VectorMult.openmp.out 1024*1024*1024*64':
 
-        352.008002 task-clock (msec)         #    0.986 CPUs utilized          
-                37 context-switches          #    0.105 K/sec                  
+       8908.967437 task-clock (msec)         #    1.000 CPUs utilized          
+               791 context-switches          #    0.089 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               170 page-faults               #    0.483 K/sec                  
-     1,310,432,937 cycles                    #    3.723 GHz                    
+               218 page-faults               #    0.024 K/sec                  
+    34,372,459,053 cycles                    #    3.858 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     2,148,540,144 instructions              #    1.64  insns per cycle        
-     1,073,944,692 branches                  # 3050.910 M/sec                  
-             7,337 branch-misses             #    0.00% of all branches        
+    39,001,584,165 instructions              #    1.13  insns per cycle        
+     2,216,660,314 branches                  #  248.812 M/sec                  
+            36,304 branch-misses             #    0.00% of all branches        
 
-       0.357127449 seconds time elapsed
+       8.910976074 seconds time elapsed
 
-Pass the 68,719,476,736 vector multiplication test case with local vector size = 64
+Pass the 68,719,476,736 vector multiplication test case with local vector size = 1024
 The Dot Product = 68,719,476,736
 
- Performance counter stats for './out/VectorMult.polly.out 1024*1024*1024*16':
+ Performance counter stats for './out/VectorMult.openmp.out 1024*1024*1024*64':
 
-        328.474989 task-clock (msec)         #    0.984 CPUs utilized          
-                36 context-switches          #    0.110 K/sec                  
+       8872.114279 task-clock (msec)         #    1.000 CPUs utilized          
+               805 context-switches          #    0.091 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               171 page-faults               #    0.521 K/sec                  
-     1,206,192,151 cycles                    #    3.672 GHz                    
+               218 page-faults               #    0.025 K/sec                  
+    34,372,565,688 cycles                    #    3.874 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     2,148,514,886 instructions              #    1.78  insns per cycle        
-     1,073,939,971 branches                  # 3269.473 M/sec                  
-             8,193 branch-misses             #    0.00% of all branches        
+    39,001,620,092 instructions              #    1.13  insns per cycle        
+     2,216,667,805 branches                  #  249.847 M/sec                  
+            35,639 branch-misses             #    0.00% of all branches        
 
-       0.333951670 seconds time elapsed
+       8.874758676 seconds time elapsed
 
-Pass the 68,719,476,736 vector multiplication test case with local vector size = 64
+Pass the 68,719,476,736 vector multiplication test case with local vector size = 1024
 The Dot Product = 68,719,476,736
 
- Performance counter stats for './out/VectorMult.polly.out 1024*1024*1024*16':
+ Performance counter stats for './out/VectorMult.openmp.out 1024*1024*1024*64':
 
-        337.001728 task-clock (msec)         #    0.981 CPUs utilized          
-                37 context-switches          #    0.110 K/sec                  
+       8871.655691 task-clock (msec)         #    1.000 CPUs utilized          
+               781 context-switches          #    0.088 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               171 page-faults               #    0.507 K/sec                  
-     1,236,645,826 cycles                    #    3.670 GHz                    
+               218 page-faults               #    0.025 K/sec                  
+    34,372,298,886 cycles                    #    3.874 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     2,148,520,846 instructions              #    1.74  insns per cycle        
-     1,073,941,452 branches                  # 3186.754 M/sec                  
-             7,078 branch-misses             #    0.00% of all branches        
+    39,001,531,655 instructions              #    1.13  insns per cycle        
+     2,216,650,424 branches                  #  249.858 M/sec                  
+            37,789 branch-misses             #    0.00% of all branches        
 
-       0.343540857 seconds time elapsed
+       8.874738684 seconds time elapsed
 
-Pass the 68,719,476,736 vector multiplication test case with local vector size = 64
+Pass the 68,719,476,736 vector multiplication test case with local vector size = 1024
 The Dot Product = 68,719,476,736
 
- Performance counter stats for './out/VectorMult.polly.out 1024*1024*1024*16':
+ Performance counter stats for './out/VectorMult.openmp.out 1024*1024*1024*64':
 
-        328.140926 task-clock (msec)         #    0.850 CPUs utilized          
-                35 context-switches          #    0.107 K/sec                  
+       8850.183841 task-clock (msec)         #    1.000 CPUs utilized          
+               775 context-switches          #    0.088 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               171 page-faults               #    0.521 K/sec                  
-     1,207,962,578 cycles                    #    3.681 GHz                    
+               218 page-faults               #    0.025 K/sec                  
+    34,372,106,591 cycles                    #    3.884 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     2,148,519,812 instructions              #    1.78  insns per cycle        
-     1,073,940,594 branches                  # 3272.803 M/sec                  
-             8,006 branch-misses             #    0.00% of all branches        
+    39,001,443,600 instructions              #    1.13  insns per cycle        
+     2,216,635,609 branches                  #  250.462 M/sec                  
+            39,471 branch-misses             #    0.00% of all branches        
 
-       0.386001017 seconds time elapsed
+       8.853159718 seconds time elapsed
+
+Pass the 68,719,476,736 vector multiplication test case with local vector size = 1024
+The Dot Product = 68,719,476,736
+
+ Performance counter stats for './out/VectorMult.openmp.out 1024*1024*1024*64':
+
+       8875.597851 task-clock (msec)         #    1.000 CPUs utilized          
+               788 context-switches          #    0.089 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               218 page-faults               #    0.025 K/sec                  
+    34,373,581,542 cycles                    #    3.873 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    39,001,524,191 instructions              #    1.13  insns per cycle        
+     2,216,650,094 branches                  #  249.747 M/sec                  
+            39,959 branch-misses             #    0.00% of all branches        
+
+       8.877675904 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -368,7 +368,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 800.000
+cpu MHz		: 2300.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
