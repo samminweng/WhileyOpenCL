@@ -83,7 +83,7 @@ opt_polly(){
 	time ./out/$program.polly.out $parameter
 
 	read -p "Press [Enter] to Run Vector code"
-	opt -S -O3 -polly -polly-codegen -polly-vectorizer=stripmine $program.preopt.ll -o $program.vector.ll
+	opt -S -O3 -polly -polly-codegen -polly-vectorizer=stripmine -polly-process-unprofitable $program.preopt.ll -o $program.vector.ll
 	llc $program.vector.ll -o $program.vector.s
 	clang $program.vector.s libUtil.a -o "out/$program.vector.out"
 	### clang -include Util.c $CPPFLAGS -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine $program.c -o "out/$program.vector.out"
@@ -91,7 +91,7 @@ opt_polly(){
 
 	read -p "Press [Enter] to Run OpenMP executable with 2 threads..."
 	export OMP_NUM_THREADS=$num_threads
-	opt -S -O3 -polly -polly-codegen -polly-parallel $program.preopt.ll -o $program.openmp.ll
+	opt -S -O3 -polly -polly-codegen -polly-parallel -polly-process-unprofitable $program.preopt.ll -o $program.openmp.ll
 	llc $program.openmp.ll -o $program.openmp.s
 	clang $program.openmp.s libUtil.a -o "out/$program.openmp.out" -lgomp
 	#clang -include Util.c $CPPFLAGS -O3 -mllvm -polly -mllvm -polly-parallel -lgomp $program.c -o "out/$program.openmp.out"

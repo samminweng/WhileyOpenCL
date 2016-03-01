@@ -50,7 +50,7 @@ runPolly(){
 	case "$compiler" in
 		"polly")
 			echo "Run Polly-optimized code on $parameter with $num_threads threads..." > $result
-			clang $CPPFLAGS -include Util.c -O3 -mllvm -polly $program.c -o "out/$program.$compiler.out"
+			clang $CPPFLAGS -include Util.c -O3 -mllvm -polly -mllvm -polly-process-unprofitable $program.c -o "out/$program.$compiler.out"
 			;;
 		"openmp")
 			export OMP_NUM_THREADS=$num_threads

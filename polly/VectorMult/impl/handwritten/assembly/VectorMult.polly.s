@@ -14,37 +14,6 @@
 main:                                   # @main
 	.cfi_startproc
 # BB#0:                                 # %entry
-	movl	$33554432, %eax         # imm = 0x2000000
-	.p2align	4, 0x90
-.LBB0_1:                                # %vector.body
-                                        # =>This Inner Loop Header: Depth=1
-	decq	%rax
-	jne	.LBB0_1
-# BB#2:                                 # %vector.ph26.preheader
-	movaps	.LCPI0_0(%rip), %xmm0   # xmm0 = [1,1,1,1]
-	movaps	%xmm0, u(%rip)
-	movaps	%xmm0, v(%rip)
-	movaps	%xmm0, u+16(%rip)
-	movaps	%xmm0, v+16(%rip)
-	movaps	%xmm0, u+32(%rip)
-	movaps	%xmm0, v+32(%rip)
-	movaps	%xmm0, u+48(%rip)
-	movaps	%xmm0, v+48(%rip)
-	movaps	%xmm0, u+64(%rip)
-	movaps	%xmm0, v+64(%rip)
-	movaps	%xmm0, u+80(%rip)
-	movaps	%xmm0, v+80(%rip)
-	movaps	%xmm0, u+96(%rip)
-	movaps	%xmm0, v+96(%rip)
-	movaps	%xmm0, u+112(%rip)
-	movaps	%xmm0, v+112(%rip)
-	movl	$33554432, %eax         # imm = 0x2000000
-	.p2align	4, 0x90
-.LBB0_3:                                # %vector.body22
-                                        # =>This Inner Loop Header: Depth=1
-	decq	%rax
-	jne	.LBB0_3
-# BB#4:                                 # %polly.loop_exit3.1
 	pushq	%rbp
 .Ltmp0:
 	.cfi_def_cfa_offset 16
@@ -53,32 +22,66 @@ main:                                   # @main
 	movq	%rsp, %rbp
 .Ltmp2:
 	.cfi_def_cfa_register %rbp
-	movaps	%xmm0, u+128(%rip)
-	movaps	%xmm0, v+128(%rip)
-	movaps	%xmm0, u+144(%rip)
-	movaps	%xmm0, v+144(%rip)
-	movaps	%xmm0, u+160(%rip)
-	movaps	%xmm0, v+160(%rip)
-	movaps	%xmm0, u+176(%rip)
-	movaps	%xmm0, v+176(%rip)
-	movaps	%xmm0, u+192(%rip)
-	movaps	%xmm0, v+192(%rip)
-	movaps	%xmm0, u+208(%rip)
-	movaps	%xmm0, v+208(%rip)
-	movaps	%xmm0, u+224(%rip)
-	movaps	%xmm0, v+224(%rip)
-	movaps	%xmm0, u+240(%rip)
-	movaps	%xmm0, v+240(%rip)
+	pushq	%rbx
+	pushq	%rax
+.Ltmp3:
+	.cfi_offset %rbx, -24
+	xorl	%esi, %esi
+	movaps	.LCPI0_0(%rip), %xmm0   # xmm0 = [1,1,1,1]
+	.p2align	4, 0x90
+.LBB0_3:                                # %polly.loop_preheader2
+                                        # =>This Loop Header: Depth=1
+                                        #     Child Loop BB0_4 Depth 2
+	movq	%rsi, %rax
+	shlq	$5, %rax
+	leaq	4(%rax), %rdi
+	leaq	8(%rax), %rdx
+	leaq	12(%rax), %rcx
+	leaq	16(%rax), %r11
+	leaq	20(%rax), %r10
+	leaq	24(%rax), %r9
+	leaq	28(%rax), %r8
+	movl	$2097152, %ebx          # imm = 0x200000
+	.p2align	4, 0x90
+.LBB0_4:                                # %vector.body
+                                        #   Parent Loop BB0_3 Depth=1
+                                        # =>  This Inner Loop Header: Depth=2
+	decq	%rbx
+	jne	.LBB0_4
+# BB#2:                                 # %polly.loop_exit3
+                                        #   in Loop: Header=BB0_3 Depth=1
+	movaps	%xmm0, u(,%rax,4)
+	movaps	%xmm0, v(,%rax,4)
+	movaps	%xmm0, u(,%rdi,4)
+	movaps	%xmm0, v(,%rdi,4)
+	movaps	%xmm0, u(,%rdx,4)
+	movaps	%xmm0, v(,%rdx,4)
+	movaps	%xmm0, u(,%rcx,4)
+	movaps	%xmm0, v(,%rcx,4)
+	movaps	%xmm0, u(,%r11,4)
+	movaps	%xmm0, v(,%r11,4)
+	movaps	%xmm0, u(,%r10,4)
+	movaps	%xmm0, v(,%r10,4)
+	movaps	%xmm0, u(,%r9,4)
+	movaps	%xmm0, v(,%r9,4)
+	movaps	%xmm0, u(,%r8,4)
+	movaps	%xmm0, v(,%r8,4)
+	incq	%rsi
+	cmpq	$32, %rsi
+	jne	.LBB0_3
+# BB#1:                                 # %polly.exiting
 	movl	$6, %edi
 	movl	$.L.str.1, %esi
 	callq	setlocale
 	movabsq	$68719476736, %rsi      # imm = 0x1000000000
 	movl	$.L.str.2, %edi
-	movl	$64, %edx
+	movl	$1024, %edx             # imm = 0x400
 	xorl	%eax, %eax
 	movq	%rsi, %rcx
 	callq	printf
 	xorl	%eax, %eax
+	addq	$8, %rsp
+	popq	%rbx
 	popq	%rbp
 	retq
 .Lfunc_end0:
@@ -86,9 +89,9 @@ main:                                   # @main
 	.cfi_endproc
 
 	.type	u,@object               # @u
-	.comm	u,256,16
+	.comm	u,4096,16
 	.type	v,@object               # @v
-	.comm	v,256,16
+	.comm	v,4096,16
 	.type	.L.str.1,@object        # @.str.1
 	.section	.rodata.str1.1,"aMS",@progbits,1
 .L.str.1:

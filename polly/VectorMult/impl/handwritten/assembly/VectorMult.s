@@ -2,8 +2,8 @@
 target datalayout = "e-m:e-i64:64-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
 
-@u = common global [64 x i32] zeroinitializer, align 16
-@v = common global [64 x i32] zeroinitializer, align 16
+@u = common global [1024 x i32] zeroinitializer, align 16
+@v = common global [1024 x i32] zeroinitializer, align 16
 @.str = private unnamed_addr constant [34 x i8] c"fail to multiply two unit vectors\00", align 1
 @.str.1 = private unnamed_addr constant [1 x i8] zeroinitializer, align 1
 @.str.2 = private unnamed_addr constant [100 x i8] c"Pass the %'lld vector multiplication test case with local vector size = %d\0AThe Dot Product = %'lld\0A\00", align 1
@@ -21,7 +21,7 @@ entry:
   store i32 0, i32* %retval, align 4
   store i32 %argc, i32* %argc.addr, align 4
   store i8** %args, i8*** %args.addr, align 8
-  store i64 1073741824, i64* %R, align 8
+  store i64 67108864, i64* %R, align 8
   store i64 0, i64* %total, align 8
   store i64 0, i64* %r, align 8
   br label %for.cond
@@ -38,26 +38,26 @@ for.body:                                         ; preds = %for.cond
 
 for.cond1:                                        ; preds = %for.inc, %for.body
   %2 = load i32, i32* %i, align 4
-  %cmp2 = icmp slt i32 %2, 64
+  %cmp2 = icmp slt i32 %2, 1024
   br i1 %cmp2, label %for.body3, label %for.end
 
 for.body3:                                        ; preds = %for.cond1
   %3 = load i32, i32* %i, align 4
   %idxprom = sext i32 %3 to i64
-  %arrayidx = getelementptr inbounds [64 x i32], [64 x i32]* @u, i64 0, i64 %idxprom
+  %arrayidx = getelementptr inbounds [1024 x i32], [1024 x i32]* @u, i64 0, i64 %idxprom
   store i32 1, i32* %arrayidx, align 4
   %4 = load i32, i32* %i, align 4
   %idxprom4 = sext i32 %4 to i64
-  %arrayidx5 = getelementptr inbounds [64 x i32], [64 x i32]* @v, i64 0, i64 %idxprom4
+  %arrayidx5 = getelementptr inbounds [1024 x i32], [1024 x i32]* @v, i64 0, i64 %idxprom4
   store i32 1, i32* %arrayidx5, align 4
   %5 = load i64, i64* %total, align 8
   %6 = load i32, i32* %i, align 4
   %idxprom6 = sext i32 %6 to i64
-  %arrayidx7 = getelementptr inbounds [64 x i32], [64 x i32]* @u, i64 0, i64 %idxprom6
+  %arrayidx7 = getelementptr inbounds [1024 x i32], [1024 x i32]* @u, i64 0, i64 %idxprom6
   %7 = load i32, i32* %arrayidx7, align 4
   %8 = load i32, i32* %i, align 4
   %idxprom8 = sext i32 %8 to i64
-  %arrayidx9 = getelementptr inbounds [64 x i32], [64 x i32]* @v, i64 0, i64 %idxprom8
+  %arrayidx9 = getelementptr inbounds [1024 x i32], [1024 x i32]* @v, i64 0, i64 %idxprom8
   %9 = load i32, i32* %arrayidx9, align 4
   %mul = mul nsw i32 %7, %9
   %conv = sext i32 %mul to i64
@@ -93,7 +93,7 @@ if.then:                                          ; preds = %for.end12
 if.end:                                           ; preds = %for.end12
   %call15 = call i8* @setlocale(i32 6, i8* getelementptr inbounds ([1 x i8], [1 x i8]* @.str.1, i32 0, i32 0)) #5
   %13 = load i64, i64* %total, align 8
-  %call16 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([100 x i8], [100 x i8]* @.str.2, i32 0, i32 0), i64 68719476736, i32 64, i64 %13)
+  %call16 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([100 x i8], [100 x i8]* @.str.2, i32 0, i32 0), i64 68719476736, i32 1024, i64 %13)
   ret i32 0
 }
 

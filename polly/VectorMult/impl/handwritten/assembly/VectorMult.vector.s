@@ -13,14 +13,34 @@
 	.type	main,@function
 main:                                   # @main
 	.cfi_startproc
-# BB#0:                                 # %entry
-	movl	$1073741824, %eax       # imm = 0x40000000
+# BB#0:                                 # %polly.split_new_and_old
+	movq	$-1, %rax
+	xorl	%ecx, %ecx
+	movaps	.LCPI0_0(%rip), %xmm0   # xmm0 = [1,1,1,1]
 	.p2align	4, 0x90
-.LBB0_1:                                # %vector.body
+.LBB0_1:                                # %polly.stmt.polly.loop_exit3
                                         # =>This Inner Loop Header: Depth=1
-	decq	%rax
-	jne	.LBB0_1
-# BB#2:                                 # %if.end
+	movaps	%xmm0, u(%rcx)
+	movaps	%xmm0, v(%rcx)
+	movaps	%xmm0, u+16(%rcx)
+	movaps	%xmm0, v+16(%rcx)
+	movaps	%xmm0, u+32(%rcx)
+	movaps	%xmm0, v+32(%rcx)
+	movaps	%xmm0, u+48(%rcx)
+	movaps	%xmm0, v+48(%rcx)
+	movaps	%xmm0, u+64(%rcx)
+	movaps	%xmm0, v+64(%rcx)
+	movaps	%xmm0, u+80(%rcx)
+	movaps	%xmm0, v+80(%rcx)
+	movaps	%xmm0, u+96(%rcx)
+	movaps	%xmm0, v+96(%rcx)
+	movaps	%xmm0, u+112(%rcx)
+	movaps	%xmm0, v+112(%rcx)
+	incq	%rax
+	subq	$-128, %rcx
+	cmpq	$31, %rax
+	jl	.LBB0_1
+# BB#2:                                 # %polly.exiting
 	pushq	%rbp
 .Ltmp0:
 	.cfi_def_cfa_offset 16
@@ -29,45 +49,12 @@ main:                                   # @main
 	movq	%rsp, %rbp
 .Ltmp2:
 	.cfi_def_cfa_register %rbp
-	movaps	.LCPI0_0(%rip), %xmm0   # xmm0 = [1,1,1,1]
-	movaps	%xmm0, u(%rip)
-	movaps	%xmm0, v(%rip)
-	movaps	%xmm0, u+16(%rip)
-	movaps	%xmm0, v+16(%rip)
-	movaps	%xmm0, u+32(%rip)
-	movaps	%xmm0, v+32(%rip)
-	movaps	%xmm0, u+48(%rip)
-	movaps	%xmm0, v+48(%rip)
-	movaps	%xmm0, u+64(%rip)
-	movaps	%xmm0, v+64(%rip)
-	movaps	%xmm0, u+80(%rip)
-	movaps	%xmm0, v+80(%rip)
-	movaps	%xmm0, u+96(%rip)
-	movaps	%xmm0, v+96(%rip)
-	movaps	%xmm0, u+112(%rip)
-	movaps	%xmm0, v+112(%rip)
-	movaps	%xmm0, u+128(%rip)
-	movaps	%xmm0, v+128(%rip)
-	movaps	%xmm0, u+144(%rip)
-	movaps	%xmm0, v+144(%rip)
-	movaps	%xmm0, u+160(%rip)
-	movaps	%xmm0, v+160(%rip)
-	movaps	%xmm0, u+176(%rip)
-	movaps	%xmm0, v+176(%rip)
-	movaps	%xmm0, u+192(%rip)
-	movaps	%xmm0, v+192(%rip)
-	movaps	%xmm0, u+208(%rip)
-	movaps	%xmm0, v+208(%rip)
-	movaps	%xmm0, u+224(%rip)
-	movaps	%xmm0, v+224(%rip)
-	movaps	%xmm0, u+240(%rip)
-	movaps	%xmm0, v+240(%rip)
 	movl	$6, %edi
 	movl	$.L.str.1, %esi
 	callq	setlocale
 	movabsq	$68719476736, %rsi      # imm = 0x1000000000
 	movl	$.L.str.2, %edi
-	movl	$64, %edx
+	movl	$1024, %edx             # imm = 0x400
 	xorl	%eax, %eax
 	movq	%rsi, %rcx
 	callq	printf
@@ -79,9 +66,9 @@ main:                                   # @main
 	.cfi_endproc
 
 	.type	u,@object               # @u
-	.comm	u,256,16
+	.comm	u,4096,16
 	.type	v,@object               # @v
-	.comm	v,256,16
+	.comm	v,4096,16
 	.type	.L.str.1,@object        # @.str.1
 	.section	.rodata.str1.1,"aMS",@progbits,1
 .L.str.1:

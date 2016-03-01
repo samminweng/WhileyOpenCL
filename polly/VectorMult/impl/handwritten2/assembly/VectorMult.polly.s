@@ -3,10 +3,10 @@
 	.section	.rodata.cst16,"aM",@progbits,16
 	.p2align	4
 .LCPI0_0:
-	.long	256                     # 0x100
-	.long	256                     # 0x100
-	.long	256                     # 0x100
-	.long	256                     # 0x100
+	.long	1024                    # 0x400
+	.long	1024                    # 0x400
+	.long	1024                    # 0x400
+	.long	1024                    # 0x400
 .LCPI0_1:
 	.long	1                       # 0x1
 	.long	1                       # 0x1
@@ -27,289 +27,95 @@ main:                                   # @main
 	movq	%rsp, %rbp
 .Ltmp2:
 	.cfi_def_cfa_register %rbp
+	pushq	%r14
 	pushq	%rbx
-	pushq	%rax
 .Ltmp3:
-	.cfi_offset %rbx, -24
-	xorl	%ecx, %ecx
-	movaps	.LCPI0_0(%rip), %xmm0   # xmm0 = [256,256,256,256]
-	movl	$8388608, %eax          # imm = 0x800000
+	.cfi_offset %rbx, -32
+.Ltmp4:
+	.cfi_offset %r14, -24
+	xorl	%r11d, %r11d
+	movaps	.LCPI0_0(%rip), %xmm0   # xmm0 = [1024,1024,1024,1024]
+	xorl	%eax, %eax
 	.p2align	4, 0x90
 .LBB0_1:                                # %vector.body
                                         # =>This Inner Loop Header: Depth=1
-	movaps	%xmm0, sum(%rcx)
-	movaps	%xmm0, sum+16(%rcx)
-	movaps	%xmm0, sum+32(%rcx)
-	movaps	%xmm0, sum+48(%rcx)
-	movaps	%xmm0, sum+64(%rcx)
-	movaps	%xmm0, sum+80(%rcx)
-	movaps	%xmm0, sum+96(%rcx)
-	movaps	%xmm0, sum+112(%rcx)
-	movaps	%xmm0, sum+128(%rcx)
-	movaps	%xmm0, sum+144(%rcx)
-	movaps	%xmm0, sum+160(%rcx)
-	movaps	%xmm0, sum+176(%rcx)
-	movaps	%xmm0, sum+192(%rcx)
-	movaps	%xmm0, sum+208(%rcx)
-	movaps	%xmm0, sum+224(%rcx)
-	movaps	%xmm0, sum+240(%rcx)
-	addq	$256, %rcx              # imm = 0x100
-	cmpq	$1073741824, %rcx       # imm = 0x40000000
+	movaps	%xmm0, sum(%rax)
+	movaps	%xmm0, sum+16(%rax)
+	movaps	%xmm0, sum+32(%rax)
+	movaps	%xmm0, sum+48(%rax)
+	movaps	%xmm0, sum+64(%rax)
+	movaps	%xmm0, sum+80(%rax)
+	movaps	%xmm0, sum+96(%rax)
+	movaps	%xmm0, sum+112(%rax)
+	movaps	%xmm0, sum+128(%rax)
+	movaps	%xmm0, sum+144(%rax)
+	movaps	%xmm0, sum+160(%rax)
+	movaps	%xmm0, sum+176(%rax)
+	movaps	%xmm0, sum+192(%rax)
+	movaps	%xmm0, sum+208(%rax)
+	movaps	%xmm0, sum+224(%rax)
+	movaps	%xmm0, sum+240(%rax)
+	addq	$256, %rax              # imm = 0x100
+	cmpq	$268435456, %rax        # imm = 0x10000000
 	jne	.LBB0_1
-	.p2align	4, 0x90
-.LBB0_2:                                # %vector.body41
-                                        # =>This Inner Loop Header: Depth=1
-	decq	%rax
-	jne	.LBB0_2
-# BB#3:                                 # %vector.ph57.preheader
+# BB#2:
 	movdqa	.LCPI0_1(%rip), %xmm0   # xmm0 = [1,1,1,1]
-	movdqa	%xmm0, u(%rip)
-	movdqa	%xmm0, v(%rip)
-	movdqa	%xmm0, p(%rip)
-	movdqa	%xmm0, u+16(%rip)
-	movdqa	%xmm0, v+16(%rip)
-	movdqa	%xmm0, p+16(%rip)
-	movdqa	%xmm0, u+32(%rip)
-	movdqa	%xmm0, v+32(%rip)
-	movdqa	%xmm0, p+32(%rip)
-	movdqa	%xmm0, u+48(%rip)
-	movdqa	%xmm0, v+48(%rip)
-	movdqa	%xmm0, p+48(%rip)
-	movdqa	%xmm0, u+64(%rip)
-	movdqa	%xmm0, v+64(%rip)
-	movdqa	%xmm0, p+64(%rip)
-	movdqa	%xmm0, u+80(%rip)
-	movdqa	%xmm0, v+80(%rip)
-	movdqa	%xmm0, p+80(%rip)
-	movdqa	%xmm0, u+96(%rip)
-	movdqa	%xmm0, v+96(%rip)
-	movdqa	%xmm0, p+96(%rip)
-	movdqa	%xmm0, u+112(%rip)
-	movdqa	%xmm0, v+112(%rip)
-	movdqa	%xmm0, p+112(%rip)
-	movl	$8388608, %eax          # imm = 0x800000
-	.p2align	4, 0x90
-.LBB0_4:                                # %vector.body53
-                                        # =>This Inner Loop Header: Depth=1
-	decq	%rax
-	jne	.LBB0_4
-# BB#5:                                 # %vector.ph69.preheader
-	movdqa	%xmm0, u+128(%rip)
-	movdqa	%xmm0, v+128(%rip)
-	movdqa	%xmm0, p+128(%rip)
-	movdqa	%xmm0, u+144(%rip)
-	movdqa	%xmm0, v+144(%rip)
-	movdqa	%xmm0, p+144(%rip)
-	movdqa	%xmm0, u+160(%rip)
-	movdqa	%xmm0, v+160(%rip)
-	movdqa	%xmm0, p+160(%rip)
-	movdqa	%xmm0, u+176(%rip)
-	movdqa	%xmm0, v+176(%rip)
-	movdqa	%xmm0, p+176(%rip)
-	movdqa	%xmm0, u+192(%rip)
-	movdqa	%xmm0, v+192(%rip)
-	movdqa	%xmm0, p+192(%rip)
-	movdqa	%xmm0, u+208(%rip)
-	movdqa	%xmm0, v+208(%rip)
-	movdqa	%xmm0, p+208(%rip)
-	movdqa	%xmm0, u+224(%rip)
-	movdqa	%xmm0, v+224(%rip)
-	movdqa	%xmm0, p+224(%rip)
-	movdqa	%xmm0, u+240(%rip)
-	movdqa	%xmm0, v+240(%rip)
-	movdqa	%xmm0, p+240(%rip)
-	movl	$8388608, %eax          # imm = 0x800000
-	.p2align	4, 0x90
-.LBB0_6:                                # %vector.body65
-                                        # =>This Inner Loop Header: Depth=1
-	decq	%rax
-	jne	.LBB0_6
-# BB#7:                                 # %vector.ph81.preheader
-	movdqa	%xmm0, u+256(%rip)
-	movdqa	%xmm0, v+256(%rip)
-	movdqa	%xmm0, p+256(%rip)
-	movdqa	%xmm0, u+272(%rip)
-	movdqa	%xmm0, v+272(%rip)
-	movdqa	%xmm0, p+272(%rip)
-	movdqa	%xmm0, u+288(%rip)
-	movdqa	%xmm0, v+288(%rip)
-	movdqa	%xmm0, p+288(%rip)
-	movdqa	%xmm0, u+304(%rip)
-	movdqa	%xmm0, v+304(%rip)
-	movdqa	%xmm0, p+304(%rip)
-	movdqa	%xmm0, u+320(%rip)
-	movdqa	%xmm0, v+320(%rip)
-	movdqa	%xmm0, p+320(%rip)
-	movdqa	%xmm0, u+336(%rip)
-	movdqa	%xmm0, v+336(%rip)
-	movdqa	%xmm0, p+336(%rip)
-	movdqa	%xmm0, u+352(%rip)
-	movdqa	%xmm0, v+352(%rip)
-	movdqa	%xmm0, p+352(%rip)
-	movdqa	%xmm0, u+368(%rip)
-	movdqa	%xmm0, v+368(%rip)
-	movdqa	%xmm0, p+368(%rip)
-	movl	$8388608, %eax          # imm = 0x800000
-	.p2align	4, 0x90
-.LBB0_8:                                # %vector.body77
-                                        # =>This Inner Loop Header: Depth=1
-	decq	%rax
-	jne	.LBB0_8
-# BB#9:                                 # %vector.ph93.preheader
-	movdqa	%xmm0, u+384(%rip)
-	movdqa	%xmm0, v+384(%rip)
-	movdqa	%xmm0, p+384(%rip)
-	movdqa	%xmm0, u+400(%rip)
-	movdqa	%xmm0, v+400(%rip)
-	movdqa	%xmm0, p+400(%rip)
-	movdqa	%xmm0, u+416(%rip)
-	movdqa	%xmm0, v+416(%rip)
-	movdqa	%xmm0, p+416(%rip)
-	movdqa	%xmm0, u+432(%rip)
-	movdqa	%xmm0, v+432(%rip)
-	movdqa	%xmm0, p+432(%rip)
-	movdqa	%xmm0, u+448(%rip)
-	movdqa	%xmm0, v+448(%rip)
-	movdqa	%xmm0, p+448(%rip)
-	movdqa	%xmm0, u+464(%rip)
-	movdqa	%xmm0, v+464(%rip)
-	movdqa	%xmm0, p+464(%rip)
-	movdqa	%xmm0, u+480(%rip)
-	movdqa	%xmm0, v+480(%rip)
-	movdqa	%xmm0, p+480(%rip)
-	movdqa	%xmm0, u+496(%rip)
-	movdqa	%xmm0, v+496(%rip)
-	movdqa	%xmm0, p+496(%rip)
-	movl	$8388608, %eax          # imm = 0x800000
-	.p2align	4, 0x90
-.LBB0_10:                               # %vector.body89
-                                        # =>This Inner Loop Header: Depth=1
-	decq	%rax
-	jne	.LBB0_10
-# BB#11:                                # %vector.ph105.preheader
-	movdqa	%xmm0, u+512(%rip)
-	movdqa	%xmm0, v+512(%rip)
-	movdqa	%xmm0, p+512(%rip)
-	movdqa	%xmm0, u+528(%rip)
-	movdqa	%xmm0, v+528(%rip)
-	movdqa	%xmm0, p+528(%rip)
-	movdqa	%xmm0, u+544(%rip)
-	movdqa	%xmm0, v+544(%rip)
-	movdqa	%xmm0, p+544(%rip)
-	movdqa	%xmm0, u+560(%rip)
-	movdqa	%xmm0, v+560(%rip)
-	movdqa	%xmm0, p+560(%rip)
-	movdqa	%xmm0, u+576(%rip)
-	movdqa	%xmm0, v+576(%rip)
-	movdqa	%xmm0, p+576(%rip)
-	movdqa	%xmm0, u+592(%rip)
-	movdqa	%xmm0, v+592(%rip)
-	movdqa	%xmm0, p+592(%rip)
-	movdqa	%xmm0, u+608(%rip)
-	movdqa	%xmm0, v+608(%rip)
-	movdqa	%xmm0, p+608(%rip)
-	movdqa	%xmm0, u+624(%rip)
-	movdqa	%xmm0, v+624(%rip)
-	movdqa	%xmm0, p+624(%rip)
-	movl	$8388608, %eax          # imm = 0x800000
-	.p2align	4, 0x90
-.LBB0_12:                               # %vector.body101
-                                        # =>This Inner Loop Header: Depth=1
-	decq	%rax
-	jne	.LBB0_12
-# BB#13:                                # %vector.ph117.preheader
-	movdqa	%xmm0, u+640(%rip)
-	movdqa	%xmm0, v+640(%rip)
-	movdqa	%xmm0, p+640(%rip)
-	movdqa	%xmm0, u+656(%rip)
-	movdqa	%xmm0, v+656(%rip)
-	movdqa	%xmm0, p+656(%rip)
-	movdqa	%xmm0, u+672(%rip)
-	movdqa	%xmm0, v+672(%rip)
-	movdqa	%xmm0, p+672(%rip)
-	movdqa	%xmm0, u+688(%rip)
-	movdqa	%xmm0, v+688(%rip)
-	movdqa	%xmm0, p+688(%rip)
-	movdqa	%xmm0, u+704(%rip)
-	movdqa	%xmm0, v+704(%rip)
-	movdqa	%xmm0, p+704(%rip)
-	movdqa	%xmm0, u+720(%rip)
-	movdqa	%xmm0, v+720(%rip)
-	movdqa	%xmm0, p+720(%rip)
-	movdqa	%xmm0, u+736(%rip)
-	movdqa	%xmm0, v+736(%rip)
-	movdqa	%xmm0, p+736(%rip)
-	movdqa	%xmm0, u+752(%rip)
-	movdqa	%xmm0, v+752(%rip)
-	movdqa	%xmm0, p+752(%rip)
-	movl	$8388608, %eax          # imm = 0x800000
-	.p2align	4, 0x90
-.LBB0_14:                               # %vector.body113
-                                        # =>This Inner Loop Header: Depth=1
-	decq	%rax
-	jne	.LBB0_14
-# BB#15:                                # %vector.ph129.preheader
-	movdqa	%xmm0, u+768(%rip)
-	movdqa	%xmm0, v+768(%rip)
-	movdqa	%xmm0, p+768(%rip)
-	movdqa	%xmm0, u+784(%rip)
-	movdqa	%xmm0, v+784(%rip)
-	movdqa	%xmm0, p+784(%rip)
-	movdqa	%xmm0, u+800(%rip)
-	movdqa	%xmm0, v+800(%rip)
-	movdqa	%xmm0, p+800(%rip)
-	movdqa	%xmm0, u+816(%rip)
-	movdqa	%xmm0, v+816(%rip)
-	movdqa	%xmm0, p+816(%rip)
-	movdqa	%xmm0, u+832(%rip)
-	movdqa	%xmm0, v+832(%rip)
-	movdqa	%xmm0, p+832(%rip)
-	movdqa	%xmm0, u+848(%rip)
-	movdqa	%xmm0, v+848(%rip)
-	movdqa	%xmm0, p+848(%rip)
-	movdqa	%xmm0, u+864(%rip)
-	movdqa	%xmm0, v+864(%rip)
-	movdqa	%xmm0, p+864(%rip)
-	movdqa	%xmm0, u+880(%rip)
-	movdqa	%xmm0, v+880(%rip)
-	movdqa	%xmm0, p+880(%rip)
-	movl	$8388608, %eax          # imm = 0x800000
-	.p2align	4, 0x90
-.LBB0_16:                               # %vector.body125
-                                        # =>This Inner Loop Header: Depth=1
-	decq	%rax
-	jne	.LBB0_16
-# BB#17:                                # %vector.body137.preheader
-	movdqa	%xmm0, u+896(%rip)
-	movdqa	%xmm0, v+896(%rip)
-	movdqa	%xmm0, p+896(%rip)
-	movdqa	%xmm0, u+912(%rip)
-	movdqa	%xmm0, v+912(%rip)
-	movdqa	%xmm0, p+912(%rip)
-	movdqa	%xmm0, u+928(%rip)
-	movdqa	%xmm0, v+928(%rip)
-	movdqa	%xmm0, p+928(%rip)
-	movdqa	%xmm0, u+944(%rip)
-	movdqa	%xmm0, v+944(%rip)
-	movdqa	%xmm0, p+944(%rip)
-	movdqa	%xmm0, u+960(%rip)
-	movdqa	%xmm0, v+960(%rip)
-	movdqa	%xmm0, p+960(%rip)
-	movdqa	%xmm0, u+976(%rip)
-	movdqa	%xmm0, v+976(%rip)
-	movdqa	%xmm0, p+976(%rip)
-	movdqa	%xmm0, u+992(%rip)
-	movdqa	%xmm0, v+992(%rip)
-	movdqa	%xmm0, p+992(%rip)
-	movdqa	%xmm0, u+1008(%rip)
-	movdqa	%xmm0, v+1008(%rip)
-	movdqa	%xmm0, p+1008(%rip)
-	pxor	%xmm0, %xmm0
 	xorl	%eax, %eax
+	.p2align	4, 0x90
+.LBB0_3:                                # %polly.loop_preheader8
+                                        # =>This Loop Header: Depth=1
+                                        #     Child Loop BB0_4 Depth 2
+	movq	%r11, %rcx
+	shlq	$5, %rcx
+	leaq	4(%rcx), %rdi
+	leaq	8(%rcx), %rsi
+	leaq	12(%rcx), %rdx
+	leaq	16(%rcx), %r14
+	leaq	20(%rcx), %r10
+	leaq	24(%rcx), %r9
+	leaq	28(%rcx), %r8
+	movl	$2097152, %ebx          # imm = 0x200000
+	.p2align	4, 0x90
+.LBB0_4:                                # %vector.body41
+                                        #   Parent Loop BB0_3 Depth=1
+                                        # =>  This Inner Loop Header: Depth=2
+	decq	%rbx
+	jne	.LBB0_4
+# BB#5:                                 # %polly.loop_exit9
+                                        #   in Loop: Header=BB0_3 Depth=1
+	movdqa	%xmm0, u(,%rcx,4)
+	movdqa	%xmm0, v(,%rcx,4)
+	movdqa	%xmm0, p(,%rcx,4)
+	movdqa	%xmm0, u(,%rdi,4)
+	movdqa	%xmm0, v(,%rdi,4)
+	movdqa	%xmm0, p(,%rdi,4)
+	movdqa	%xmm0, u(,%rsi,4)
+	movdqa	%xmm0, v(,%rsi,4)
+	movdqa	%xmm0, p(,%rsi,4)
+	movdqa	%xmm0, u(,%rdx,4)
+	movdqa	%xmm0, v(,%rdx,4)
+	movdqa	%xmm0, p(,%rdx,4)
+	movdqa	%xmm0, u(,%r14,4)
+	movdqa	%xmm0, v(,%r14,4)
+	movdqa	%xmm0, p(,%r14,4)
+	movdqa	%xmm0, u(,%r10,4)
+	movdqa	%xmm0, v(,%r10,4)
+	movdqa	%xmm0, p(,%r10,4)
+	movdqa	%xmm0, u(,%r9,4)
+	movdqa	%xmm0, v(,%r9,4)
+	movdqa	%xmm0, p(,%r9,4)
+	movdqa	%xmm0, u(,%r8,4)
+	movdqa	%xmm0, v(,%r8,4)
+	movdqa	%xmm0, p(,%r8,4)
+	incq	%r11
+	cmpq	$32, %r11
+	jne	.LBB0_3
+# BB#6:
+	pxor	%xmm0, %xmm0
 	movabsq	$68719476736, %rbx      # imm = 0x1000000000
 	pxor	%xmm1, %xmm1
 	.p2align	4, 0x90
-.LBB0_18:                               # %vector.body137
+.LBB0_7:                                # %vector.body55
                                         # =>This Inner Loop Header: Depth=1
 	movq	sum(%rax), %xmm2        # xmm2 = mem[0],zero
 	movq	sum+8(%rax), %xmm3      # xmm3 = mem[0],zero
@@ -332,31 +138,31 @@ main:                                   # @main
 	paddq	%xmm2, %xmm0
 	paddq	%xmm3, %xmm1
 	addq	$32, %rax
-	cmpq	$1073741824, %rax       # imm = 0x40000000
-	jne	.LBB0_18
-# BB#19:                                # %middle.block138
+	cmpq	$268435456, %rax        # imm = 0x10000000
+	jne	.LBB0_7
+# BB#8:                                 # %middle.block56
 	paddq	%xmm0, %xmm1
 	pshufd	$78, %xmm1, %xmm0       # xmm0 = xmm1[2,3,0,1]
 	paddq	%xmm1, %xmm0
 	movd	%xmm0, %rax
 	cmpq	%rbx, %rax
-	jne	.LBB0_21
-# BB#20:                                # %if.end
+	jne	.LBB0_10
+# BB#9:                                 # %if.end
 	movl	$6, %edi
 	movl	$.L.str.1, %esi
 	callq	setlocale
 	movl	$.L.str.2, %edi
-	movl	$256, %edx              # imm = 0x100
+	movl	$1024, %edx             # imm = 0x400
 	xorl	%eax, %eax
 	movq	%rbx, %rsi
 	movq	%rbx, %rcx
 	callq	printf
 	xorl	%eax, %eax
-	addq	$8, %rsp
 	popq	%rbx
+	popq	%r14
 	popq	%rbp
 	retq
-.LBB0_21:                               # %if.then
+.LBB0_10:                               # %if.then
 	movl	$.L.str, %edi
 	xorl	%eax, %eax
 	callq	printf
@@ -367,13 +173,13 @@ main:                                   # @main
 	.cfi_endproc
 
 	.type	u,@object               # @u
-	.comm	u,1024,16
+	.comm	u,4096,16
 	.type	v,@object               # @v
-	.comm	v,1024,16
+	.comm	v,4096,16
 	.type	p,@object               # @p
-	.comm	p,1024,16
+	.comm	p,4096,16
 	.type	sum,@object             # @sum
-	.comm	sum,1073741824,16
+	.comm	sum,268435456,16
 	.type	.L.str,@object          # @.str
 	.section	.rodata.str1.1,"aMS",@progbits,1
 .L.str:

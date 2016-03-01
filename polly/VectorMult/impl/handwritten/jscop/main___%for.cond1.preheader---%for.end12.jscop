@@ -13,7 +13,7 @@
                "relation" : "{ Stmt_for_cond1_preheader[i0] -> MemRef_total_12__phi[] }"
             }
          ],
-         "domain" : "{ Stmt_for_cond1_preheader[i0] : 0 <= i0 <= 1073741823 }",
+         "domain" : "{ Stmt_for_cond1_preheader[i0] : 0 <= i0 <= 67108863 }",
          "name" : "Stmt_for_cond1_preheader",
          "schedule" : "{ Stmt_for_cond1_preheader[i0] -> [i0, 0, 0] }"
       },
@@ -48,7 +48,7 @@
                "relation" : "{ Stmt_for_body3[i0, i1] -> MemRef_add_lcssa__phi[] }"
             }
          ],
-         "domain" : "{ Stmt_for_body3[i0, i1] : 0 <= i0 <= 1073741823 and 0 <= i1 <= 63 }",
+         "domain" : "{ Stmt_for_body3[i0, i1] : 0 <= i0 <= 67108863 and 0 <= i1 <= 1023 }",
          "name" : "Stmt_for_body3",
          "schedule" : "{ Stmt_for_body3[i0, i1] -> [i0, 1, i1] }"
       },
@@ -67,7 +67,7 @@
                "relation" : "{ Stmt_for_inc10[i0] -> MemRef_add_lcssa[] }"
             }
          ],
-         "domain" : "{ Stmt_for_inc10[i0] : 0 <= i0 <= 1073741823 }",
+         "domain" : "{ Stmt_for_inc10[i0] : 0 <= i0 <= 67108863 }",
          "name" : "Stmt_for_inc10",
          "schedule" : "{ Stmt_for_inc10[i0] -> [i0, 2, 0] }"
       }

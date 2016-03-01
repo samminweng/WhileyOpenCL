@@ -9,7 +9,7 @@
                "relation" : "{ Stmt_for_cond1_preheader[i0] -> MemRef_tmp_04__phi[] }"
             }
          ],
-         "domain" : "{ Stmt_for_cond1_preheader[i0] : 0 <= i0 <= 268435455 }",
+         "domain" : "{ Stmt_for_cond1_preheader[i0] : 0 <= i0 <= 67108863 }",
          "name" : "Stmt_for_cond1_preheader",
          "schedule" : "{ Stmt_for_cond1_preheader[i0] -> [0, i0, 0, 0] }"
       },
@@ -52,7 +52,7 @@
                "relation" : "{ Stmt_for_body3[i0, i1] -> MemRef_add_lcssa__phi[] }"
             }
          ],
-         "domain" : "{ Stmt_for_body3[i0, i1] : 0 <= i0 <= 268435455 and 0 <= i1 <= 255 }",
+         "domain" : "{ Stmt_for_body3[i0, i1] : 0 <= i0 <= 67108863 and 0 <= i1 <= 1023 }",
          "name" : "Stmt_for_body3",
          "schedule" : "{ Stmt_for_body3[i0, i1] -> [0, i0, 1, i1] }"
       },
@@ -67,7 +67,7 @@
                "relation" : "{ Stmt_for_end[i0] -> MemRef_sum[i0] }"
             }
          ],
-         "domain" : "{ Stmt_for_end[i0] : 0 <= i0 <= 268435455 }",
+         "domain" : "{ Stmt_for_end[i0] : 0 <= i0 <= 67108863 }",
          "name" : "Stmt_for_end",
          "schedule" : "{ Stmt_for_end[i0] -> [0, i0, 2, 0] }"
       },
@@ -101,7 +101,7 @@
                "relation" : "{ Stmt_for_inc24[i0] -> MemRef_add23[] }"
             }
          ],
-         "domain" : "{ Stmt_for_inc24[i0] : 0 <= i0 <= 268435455 }",
+         "domain" : "{ Stmt_for_inc24[i0] : 0 <= i0 <= 67108863 }",
          "name" : "Stmt_for_inc24",
          "schedule" : "{ Stmt_for_inc24[i0] -> [2, i0, 0, 0] }"
       }
