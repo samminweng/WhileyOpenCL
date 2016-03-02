@@ -4,300 +4,386 @@ The Dot Product = 68,719,476,736
 
  Performance counter stats for './out/VectorMult.polly.out 1024*1024*1024*64':
 
-        236.285781      task-clock (msec)         #    0.997 CPUs utilized          
-                21      context-switches          #    0.089 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-               703      page-faults               #    0.003 M/sec                  
-       597,083,231      cycles                    #    2.527 GHz                     [83.15%]
-        42,858,460      stalled-cycles-frontend   #    7.18% frontend cycles idle    [83.05%]
-       426,582,926      stalled-cycles-backend    #   71.44% backend  cycles idle    [33.86%]
-       338,273,455      instructions              #    0.57  insns per cycle        
-                                                  #    1.26  stalled cycles per insn [51.71%]
-        70,725,215      branches                  #  299.321 M/sec                   [67.72%]
-            14,756      branch-misses             #    0.02% of all branches         [83.04%]
+         67.960090 task-clock (msec)         #    0.922 CPUs utilized          
+                12 context-switches          #    0.177 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               813 page-faults               #    0.012 M/sec                  
+       221,274,169 cycles                    #    3.256 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+       355,001,421 instructions              #    1.60  insns per cycle        
+        77,874,720 branches                  # 1145.889 M/sec                  
+            10,520 branch-misses             #    0.01% of all branches        
 
-       0.236999600 seconds time elapsed
-
-Pass the 68,719,476,736 vector multiplication test case with local vector size = 1024
-The Dot Product = 68,719,476,736
-
- Performance counter stats for './out/VectorMult.polly.out 1024*1024*1024*64':
-
-        217.389942      task-clock (msec)         #    0.997 CPUs utilized          
-                18      context-switches          #    0.083 K/sec                  
-                 1      cpu-migrations            #    0.005 K/sec                  
-               703      page-faults               #    0.003 M/sec                  
-       595,474,350      cycles                    #    2.739 GHz                     [83.49%]
-        25,189,442      stalled-cycles-frontend   #    4.23% frontend cycles idle    [83.41%]
-       412,593,776      stalled-cycles-backend    #   69.29% backend  cycles idle    [33.31%]
-       360,917,631      instructions              #    0.61  insns per cycle        
-                                                  #    1.14  stalled cycles per insn [51.93%]
-        78,203,350      branches                  #  359.738 M/sec                   [67.87%]
-            11,715      branch-misses             #    0.01% of all branches         [83.30%]
-
-       0.217937429 seconds time elapsed
+       0.073739544 seconds time elapsed
 
 Pass the 68,719,476,736 vector multiplication test case with local vector size = 1024
 The Dot Product = 68,719,476,736
 
  Performance counter stats for './out/VectorMult.polly.out 1024*1024*1024*64':
 
-        238.238843      task-clock (msec)         #    0.997 CPUs utilized          
-                22      context-switches          #    0.092 K/sec                  
-                 2      cpu-migrations            #    0.008 K/sec                  
-               703      page-faults               #    0.003 M/sec                  
-       596,148,712      cycles                    #    2.502 GHz                     [83.18%]
-        35,963,141      stalled-cycles-frontend   #    6.03% frontend cycles idle    [83.17%]
-       410,504,988      stalled-cycles-backend    #   68.86% backend  cycles idle    [33.98%]
-       346,754,933      instructions              #    0.58  insns per cycle        
-                                                  #    1.18  stalled cycles per insn [51.74%]
-        65,446,450      branches                  #  274.709 M/sec                   [67.85%]
-            12,249      branch-misses             #    0.02% of all branches         [83.28%]
+         67.806392 task-clock (msec)         #    0.937 CPUs utilized          
+                 7 context-switches          #    0.103 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               813 page-faults               #    0.012 M/sec                  
+       219,366,053 cycles                    #    3.235 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+       354,916,117 instructions              #    1.62  insns per cycle        
+        77,865,757 branches                  # 1148.354 M/sec                  
+             9,577 branch-misses             #    0.01% of all branches        
 
-       0.238878328 seconds time elapsed
-
-Pass the 68,719,476,736 vector multiplication test case with local vector size = 1024
-The Dot Product = 68,719,476,736
-
- Performance counter stats for './out/VectorMult.polly.out 1024*1024*1024*64':
-
-        221.217478      task-clock (msec)         #    0.997 CPUs utilized          
-                19      context-switches          #    0.086 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-               705      page-faults               #    0.003 M/sec                  
-       578,428,688      cycles                    #    2.615 GHz                     [83.60%]
-        30,051,046      stalled-cycles-frontend   #    5.20% frontend cycles idle    [83.69%]
-       383,321,919      stalled-cycles-backend    #   66.27% backend  cycles idle    [33.17%]
-       350,639,762      instructions              #    0.61  insns per cycle        
-                                                  #    1.09  stalled cycles per insn [49.37%]
-        87,129,660      branches                  #  393.864 M/sec                   [65.67%]
-             4,877      branch-misses             #    0.01% of all branches         [81.98%]
-
-       0.221869004 seconds time elapsed
+       0.072383456 seconds time elapsed
 
 Pass the 68,719,476,736 vector multiplication test case with local vector size = 1024
 The Dot Product = 68,719,476,736
 
  Performance counter stats for './out/VectorMult.polly.out 1024*1024*1024*64':
 
-        286.431067      task-clock (msec)         #    0.995 CPUs utilized          
-                26      context-switches          #    0.091 K/sec                  
-                 2      cpu-migrations            #    0.007 K/sec                  
-               705      page-faults               #    0.002 M/sec                  
-       674,931,953      cycles                    #    2.356 GHz                     [83.30%]
-        37,258,244      stalled-cycles-frontend   #    5.52% frontend cycles idle    [83.24%]
-       471,392,794      stalled-cycles-backend    #   69.84% backend  cycles idle    [33.86%]
-       349,969,937      instructions              #    0.52  insns per cycle        
-                                                  #    1.35  stalled cycles per insn [51.33%]
-        74,971,863      branches                  #  261.745 M/sec                   [67.46%]
-            21,015      branch-misses             #    0.03% of all branches         [83.21%]
+         60.691861 task-clock (msec)         #    0.944 CPUs utilized          
+                 9 context-switches          #    0.148 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               813 page-faults               #    0.013 M/sec                  
+       223,892,430 cycles                    #    3.689 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+       354,932,832 instructions              #    1.59  insns per cycle        
+        77,863,166 branches                  # 1282.926 M/sec                  
+             9,586 branch-misses             #    0.01% of all branches        
 
-       0.287916737 seconds time elapsed
-
-Pass the 68,719,476,736 vector multiplication test case with local vector size = 1024
-The Dot Product = 68,719,476,736
-
- Performance counter stats for './out/VectorMult.polly.out 1024*1024*1024*64':
-
-        259.172092      task-clock (msec)         #    0.997 CPUs utilized          
-                22      context-switches          #    0.085 K/sec                  
-                 2      cpu-migrations            #    0.008 K/sec                  
-               703      page-faults               #    0.003 M/sec                  
-       651,223,848      cycles                    #    2.513 GHz                     [83.12%]
-        40,044,391      stalled-cycles-frontend   #    6.15% frontend cycles idle    [83.01%]
-       483,113,364      stalled-cycles-backend    #   74.19% backend  cycles idle    [34.16%]
-       358,266,013      instructions              #    0.55  insns per cycle        
-                                                  #    1.35  stalled cycles per insn [51.53%]
-        82,708,650      branches                  #  319.126 M/sec                   [67.55%]
-            20,955      branch-misses             #    0.03% of all branches         [82.98%]
-
-       0.259960053 seconds time elapsed
+       0.064263814 seconds time elapsed
 
 Pass the 68,719,476,736 vector multiplication test case with local vector size = 1024
 The Dot Product = 68,719,476,736
 
  Performance counter stats for './out/VectorMult.polly.out 1024*1024*1024*64':
 
-        262.109446      task-clock (msec)         #    0.997 CPUs utilized          
-                24      context-switches          #    0.092 K/sec                  
-                 1      cpu-migrations            #    0.004 K/sec                  
-               703      page-faults               #    0.003 M/sec                  
-       664,155,949      cycles                    #    2.534 GHz                     [83.18%]
-        45,363,982      stalled-cycles-frontend   #    6.83% frontend cycles idle    [83.33%]
-       491,262,222      stalled-cycles-backend    #   73.97% backend  cycles idle    [33.49%]
-       334,782,387      instructions              #    0.50  insns per cycle        
-                                                  #    1.47  stalled cycles per insn [51.56%]
-        75,951,733      branches                  #  289.771 M/sec                   [67.74%]
-            19,820      branch-misses             #    0.03% of all branches         [83.21%]
+         66.427164 task-clock (msec)         #    0.929 CPUs utilized          
+                12 context-switches          #    0.181 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               813 page-faults               #    0.012 M/sec                  
+       221,025,460 cycles                    #    3.327 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+       354,951,744 instructions              #    1.61  insns per cycle        
+        77,866,710 branches                  # 1172.212 M/sec                  
+             8,627 branch-misses             #    0.01% of all branches        
 
-       0.262974750 seconds time elapsed
-
-Pass the 68,719,476,736 vector multiplication test case with local vector size = 1024
-The Dot Product = 68,719,476,736
-
- Performance counter stats for './out/VectorMult.polly.out 1024*1024*1024*64':
-
-        236.512403      task-clock (msec)         #    0.998 CPUs utilized          
-                19      context-switches          #    0.080 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-               705      page-faults               #    0.003 M/sec                  
-       602,727,899      cycles                    #    2.548 GHz                     [83.04%]
-        39,257,064      stalled-cycles-frontend   #    6.51% frontend cycles idle    [83.17%]
-       432,892,954      stalled-cycles-backend    #   71.82% backend  cycles idle    [33.86%]
-       345,958,651      instructions              #    0.57  insns per cycle        
-                                                  #    1.25  stalled cycles per insn [51.72%]
-        64,466,711      branches                  #  272.572 M/sec                   [67.80%]
-            13,793      branch-misses             #    0.02% of all branches         [83.05%]
-
-       0.237104127 seconds time elapsed
+       0.071480233 seconds time elapsed
 
 Pass the 68,719,476,736 vector multiplication test case with local vector size = 1024
 The Dot Product = 68,719,476,736
 
  Performance counter stats for './out/VectorMult.polly.out 1024*1024*1024*64':
 
-        231.263048      task-clock (msec)         #    0.997 CPUs utilized          
-                22      context-switches          #    0.095 K/sec                  
-                 3      cpu-migrations            #    0.013 K/sec                  
-               703      page-faults               #    0.003 M/sec                  
-       590,654,629      cycles                    #    2.554 GHz                     [82.68%]
-        38,137,553      stalled-cycles-frontend   #    6.46% frontend cycles idle    [82.77%]
-       413,429,268      stalled-cycles-backend    #   70.00% backend  cycles idle    [35.05%]
-       347,871,406      instructions              #    0.59  insns per cycle        
-                                                  #    1.19  stalled cycles per insn [51.58%]
-        76,935,134      branches                  #  332.674 M/sec                   [67.17%]
-            12,487      branch-misses             #    0.02% of all branches         [82.68%]
+         64.024006 task-clock (msec)         #    0.946 CPUs utilized          
+                12 context-switches          #    0.187 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               813 page-faults               #    0.013 M/sec                  
+       217,066,052 cycles                    #    3.390 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+       354,950,159 instructions              #    1.64  insns per cycle        
+        77,870,232 branches                  # 1216.266 M/sec                  
+             9,938 branch-misses             #    0.01% of all branches        
 
-       0.231997878 seconds time elapsed
+       0.067652122 seconds time elapsed
 
 Pass the 68,719,476,736 vector multiplication test case with local vector size = 1024
 The Dot Product = 68,719,476,736
 
  Performance counter stats for './out/VectorMult.polly.out 1024*1024*1024*64':
 
-        233.362139      task-clock (msec)         #    0.997 CPUs utilized          
-                20      context-switches          #    0.086 K/sec                  
-                 0      cpu-migrations            #    0.000 K/sec                  
-               705      page-faults               #    0.003 M/sec                  
-       613,690,477      cycles                    #    2.630 GHz                     [82.81%]
-        41,150,423      stalled-cycles-frontend   #    6.71% frontend cycles idle    [82.84%]
-       446,612,718      stalled-cycles-backend    #   72.77% backend  cycles idle    [34.55%]
-       354,447,837      instructions              #    0.58  insns per cycle        
-                                                  #    1.26  stalled cycles per insn [51.74%]
-        69,415,107      branches                  #  297.457 M/sec                   [67.47%]
-            13,417      branch-misses             #    0.02% of all branches         [82.93%]
+         66.218212 task-clock (msec)         #    0.944 CPUs utilized          
+                11 context-switches          #    0.166 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               813 page-faults               #    0.012 M/sec                  
+       218,370,669 cycles                    #    3.298 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+       354,953,204 instructions              #    1.63  insns per cycle        
+        77,866,719 branches                  # 1175.911 M/sec                  
+             8,513 branch-misses             #    0.01% of all branches        
 
-       0.234006219 seconds time elapsed
+       0.070126398 seconds time elapsed
+
+Pass the 68,719,476,736 vector multiplication test case with local vector size = 1024
+The Dot Product = 68,719,476,736
+
+ Performance counter stats for './out/VectorMult.polly.out 1024*1024*1024*64':
+
+         64.976964 task-clock (msec)         #    0.943 CPUs utilized          
+                11 context-switches          #    0.169 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               812 page-faults               #    0.012 M/sec                  
+       217,203,590 cycles                    #    3.343 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+       354,954,545 instructions              #    1.63  insns per cycle        
+        77,866,910 branches                  # 1198.377 M/sec                  
+             9,879 branch-misses             #    0.01% of all branches        
+
+       0.068913949 seconds time elapsed
+
+Pass the 68,719,476,736 vector multiplication test case with local vector size = 1024
+The Dot Product = 68,719,476,736
+
+ Performance counter stats for './out/VectorMult.polly.out 1024*1024*1024*64':
+
+         68.243620 task-clock (msec)         #    0.933 CPUs utilized          
+                11 context-switches          #    0.161 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               813 page-faults               #    0.012 M/sec                  
+       218,347,119 cycles                    #    3.200 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+       354,947,903 instructions              #    1.63  insns per cycle        
+        77,869,622 branches                  # 1141.054 M/sec                  
+             8,803 branch-misses             #    0.01% of all branches        
+
+       0.073151259 seconds time elapsed
+
+Pass the 68,719,476,736 vector multiplication test case with local vector size = 1024
+The Dot Product = 68,719,476,736
+
+ Performance counter stats for './out/VectorMult.polly.out 1024*1024*1024*64':
+
+         67.704943 task-clock (msec)         #    0.933 CPUs utilized          
+                12 context-switches          #    0.177 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               813 page-faults               #    0.012 M/sec                  
+       223,073,820 cycles                    #    3.295 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+       354,966,540 instructions              #    1.59  insns per cycle        
+        77,868,621 branches                  # 1150.117 M/sec                  
+             8,817 branch-misses             #    0.01% of all branches        
+
+       0.072551651 seconds time elapsed
+
+Pass the 68,719,476,736 vector multiplication test case with local vector size = 1024
+The Dot Product = 68,719,476,736
+
+ Performance counter stats for './out/VectorMult.polly.out 1024*1024*1024*64':
+
+         66.122785 task-clock (msec)         #    0.919 CPUs utilized          
+                13 context-switches          #    0.197 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               812 page-faults               #    0.012 M/sec                  
+       217,899,963 cycles                    #    3.295 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+       354,935,620 instructions              #    1.63  insns per cycle        
+        77,868,864 branches                  # 1177.640 M/sec                  
+             8,661 branch-misses             #    0.01% of all branches        
+
+       0.071931622 seconds time elapsed
 
 processor	: 0
-vendor_id	: AuthenticAMD
-cpu family	: 21
-model		: 96
-model name	: AMD FX-8800P Radeon R7, 12 Compute Cores 4C+8G
-stepping	: 1
-microcode	: 0x600610b
-cpu MHz		: 1400.000
-cache size	: 1024 KB
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
 physical id	: 0
-siblings	: 4
+siblings	: 8
 core id		: 0
-cpu cores	: 2
-apicid		: 16
+cpu cores	: 4
+apicid		: 0
 initial apicid	: 0
 fpu		: yes
 fpu_exception	: yes
 cpuid level	: 13
 wp		: yes
-flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid aperfmperf eagerfpu pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 tce nodeid_msr tbm topoext perfctr_core perfctr_nb arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold vmmcall fsgsbase bmi1 avx2 smep bmi2 xsaveopt
-bugs		: fxsave_leak
-bogomips	: 4192.13
-TLB size	: 1536 4K pages
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.75
 clflush size	: 64
 cache_alignment	: 64
-address sizes	: 48 bits physical, 48 bits virtual
-power management: ts ttp tm 100mhzsteps hwpstate cpb eff_freq_ro [12] [13]
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
 
 processor	: 1
-vendor_id	: AuthenticAMD
-cpu family	: 21
-model		: 96
-model name	: AMD FX-8800P Radeon R7, 12 Compute Cores 4C+8G 
-stepping	: 1
-microcode	: 0x600610b
-cpu MHz		: 1400.000
-cache size	: 1024 KB
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
 physical id	: 0
-siblings	: 4
+siblings	: 8
 core id		: 1
-cpu cores	: 2
-apicid		: 17
-initial apicid	: 1
-fpu		: yes
-fpu_exception	: yes
-cpuid level	: 13
-wp		: yes
-flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid aperfmperf eagerfpu pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 tce nodeid_msr tbm topoext perfctr_core perfctr_nb arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold vmmcall fsgsbase bmi1 avx2 smep bmi2 xsaveopt
-bugs		: fxsave_leak
-bogomips	: 4192.13
-TLB size	: 1536 4K pages
-clflush size	: 64
-cache_alignment	: 64
-address sizes	: 48 bits physical, 48 bits virtual
-power management: ts ttp tm 100mhzsteps hwpstate cpb eff_freq_ro [12] [13]
-
-processor	: 2
-vendor_id	: AuthenticAMD
-cpu family	: 21
-model		: 96
-model name	: AMD FX-8800P Radeon R7, 12 Compute Cores 4C+8G 
-stepping	: 1
-microcode	: 0x600610b
-cpu MHz		: 1400.000
-cache size	: 1024 KB
-physical id	: 0
-siblings	: 4
-core id		: 2
-cpu cores	: 2
-apicid		: 18
+cpu cores	: 4
+apicid		: 2
 initial apicid	: 2
 fpu		: yes
 fpu_exception	: yes
 cpuid level	: 13
 wp		: yes
-flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid aperfmperf eagerfpu pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 tce nodeid_msr tbm topoext perfctr_core perfctr_nb arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold vmmcall fsgsbase bmi1 avx2 smep bmi2 xsaveopt
-bugs		: fxsave_leak
-bogomips	: 4192.13
-TLB size	: 1536 4K pages
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.75
 clflush size	: 64
 cache_alignment	: 64
-address sizes	: 48 bits physical, 48 bits virtual
-power management: ts ttp tm 100mhzsteps hwpstate cpb eff_freq_ro [12] [13]
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 2
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 2
+cpu cores	: 4
+apicid		: 4
+initial apicid	: 4
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.75
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
 
 processor	: 3
-vendor_id	: AuthenticAMD
-cpu family	: 21
-model		: 96
-model name	: AMD FX-8800P Radeon R7, 12 Compute Cores 4C+8G 
-stepping	: 1
-microcode	: 0x600610b
-cpu MHz		: 2100.000
-cache size	: 1024 KB
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
 physical id	: 0
-siblings	: 4
+siblings	: 8
 core id		: 3
-cpu cores	: 2
-apicid		: 19
+cpu cores	: 4
+apicid		: 6
+initial apicid	: 6
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.75
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 4
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 0
+cpu cores	: 4
+apicid		: 1
+initial apicid	: 1
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.75
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 5
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 1
+cpu cores	: 4
+apicid		: 3
 initial apicid	: 3
 fpu		: yes
 fpu_exception	: yes
 cpuid level	: 13
 wp		: yes
-flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc extd_apicid aperfmperf eagerfpu pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw ibs xop skinit wdt lwp fma4 tce nodeid_msr tbm topoext perfctr_core perfctr_nb arat cpb hw_pstate npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold vmmcall fsgsbase bmi1 avx2 smep bmi2 xsaveopt
-bugs		: fxsave_leak
-bogomips	: 4192.13
-TLB size	: 1536 4K pages
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.75
 clflush size	: 64
 cache_alignment	: 64
-address sizes	: 48 bits physical, 48 bits virtual
-power management: ts ttp tm 100mhzsteps hwpstate cpb eff_freq_ro [12] [13]
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 6
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 2
+cpu cores	: 4
+apicid		: 5
+initial apicid	: 5
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.75
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 7
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 2700.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 3
+cpu cores	: 4
+apicid		: 7
+initial apicid	: 7
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.75
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
 
