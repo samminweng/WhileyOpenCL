@@ -96,21 +96,21 @@ exec(){
 
 init VectorMult
 #### Handwritten VectorMult 
-exec handwritten VectorMult 1024*1024*1024*64 gcc 1
-exec handwritten VectorMult 1024*1024*1024*64 polly 1
-exec handwritten VectorMult 1024*1024*1024*64 openmp 1
-exec handwritten VectorMult 1024*1024*1024*64 openmp 2
-exec handwritten VectorMult 1024*1024*1024*64 openmp 4
-exec handwritten VectorMult 1024*1024*1024*64 openmp 8
-exec handwritten VectorMult 1024*1024*1024*64 vector 1
+exec handwritten VectorMult 1024X1024X1024X64 gcc 1
+exec handwritten VectorMult 1024X1024X1024X64 polly 1
+exec handwritten VectorMult 1024X1024X1024X64 openmp 1
+exec handwritten VectorMult 1024X1024X1024X64 openmp 2
+exec handwritten VectorMult 1024X1024X1024X64 openmp 4
+exec handwritten VectorMult 1024X1024X1024X64 openmp 8
+exec handwritten VectorMult 1024X1024X1024X64 vector 1
 #### Handwritten 2 VectorMult 
-exec handwritten2 VectorMult 1024*1024*1024*64 gcc 1
-exec handwritten2 VectorMult 1024*1024*1024*64 polly 1
-exec handwritten2 VectorMult 1024*1024*1024*64 openmp 1
-exec handwritten2 VectorMult 1024*1024*1024*64 openmp 2
-exec handwritten2 VectorMult 1024*1024*1024*64 openmp 4
-exec handwritten2 VectorMult 1024*1024*1024*64 openmp 8
-exec handwritten2 VectorMult 1024*1024*1024*64 vector 1
+exec handwritten2 VectorMult 1024X1024X1024X64 gcc 1
+exec handwritten2 VectorMult 1024X1024X1024X64 polly 1
+exec handwritten2 VectorMult 1024X1024X1024X64 openmp 1
+exec handwritten2 VectorMult 1024X1024X1024X64 openmp 2
+exec handwritten2 VectorMult 1024X1024X1024X64 openmp 4
+exec handwritten2 VectorMult 1024X1024X1024X64 openmp 8
+exec handwritten2 VectorMult 1024X1024X1024X64 vector 1
 # init MatrixMult
 # ##### handwritten C code
 # # exec handwritten MatrixMult 2048 gcc 1

@@ -55,7 +55,7 @@ BEGIN {
 	# Polly optimiz
 	polly_opts="gcc polly openmp vector"
 	# Parameters
-	parameters["VectorMult"] = "1024*1024*1024*64";
+	parameters["VectorMult"] = "1024X1024X1024X64";
 	threads="1 2 4 8";
 	cpu_utils[""] = "";
 	exec_times[""] = "";
