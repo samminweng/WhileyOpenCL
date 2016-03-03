@@ -1,0 +1,21 @@
+{
+   "context" : "[index] -> {  : -2147483648 <= index <= 2147483647 }",
+   "name" : "for.cond1.preheader => for.end12",
+   "statements" : [
+      {
+         "accesses" : [
+            {
+               "kind" : "read",
+               "relation" : "[index] -> { Stmt_for_body3[i0, i1] -> MemRef_Y[64i0 + i1, index] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "[index] -> { Stmt_for_body3[i0, i1] -> MemRef_call[64i0 + i1] }"
+            }
+         ],
+         "domain" : "[index] -> { Stmt_for_body3[i0, i1] : 0 <= i0 <= 31 and 0 <= i1 <= 63 }",
+         "name" : "Stmt_for_body3",
+         "schedule" : "[index] -> { Stmt_for_body3[i0, i1] -> [i0, i1] }"
+      }
+   ]
+}

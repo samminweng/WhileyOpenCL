@@ -1,27 +1,38 @@
 digraph "Scop Graph for 'transpose' function" {
 	label="Scop Graph for 'transpose' function";
 
-	Node0x63d79a0 [shape=record,label="{entry:\l  br label %entry.split\l}"];
-	Node0x63d79a0 -> Node0x63d7820;
-	Node0x63d7820 [shape=record,label="{entry.split:                                      \l  %call = tail call noalias i8* @malloc(i64 4096) #3\l  %0 = bitcast i8* %call to i32*\l  br label %for.body\l}"];
-	Node0x63d7820 -> Node0x63d7970;
-	Node0x63d7970 [shape=record,label="{for.body:                                         \l  %indvars.iv = phi i64 [ 0, %entry.split ], [ %indvars.iv.next, %for.body ]\l  %idxprom = sext i32 %index to i64\l  %arrayidx2 = getelementptr inbounds [1024 x [1024 x i32]], [1024 x [1024 x\l... i32]]* @Y, i64 0, i64 %indvars.iv, i64 %idxprom\l  %1 = load i32, i32* %arrayidx2, align 4\l  %arrayidx4 = getelementptr inbounds i32, i32* %0, i64 %indvars.iv\l  store i32 %1, i32* %arrayidx4, align 4\l  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1\l  %exitcond = icmp ne i64 %indvars.iv.next, 1024\l  br i1 %exitcond, label %for.body, label %for.end\l}"];
-	Node0x63d7970 -> Node0x63d7970[constraint=false];
-	Node0x63d7970 -> Node0x63d7840;
-	Node0x63d7840 [shape=record,label="{for.end:                                          \l  ret i32* %0\l}"];
+	Node0x51f7030 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0x51f7030 -> Node0x520d890;
+	Node0x520d890 [shape=record,label="{entry.split:                                      \l  %call = tail call noalias i8* @malloc(i64 8192) #3\l  %0 = bitcast i8* %call to i32*\l  br label %for.cond1.preheader\l}"];
+	Node0x520d890 -> Node0x51f6fb0;
+	Node0x51f6fb0 [shape=record,label="{for.cond1.preheader:                              \l  %indvars.iv5 = phi i64 [ 0, %entry.split ], [ %indvars.iv.next6, %for.inc10 ]\l  br label %for.body3\l}"];
+	Node0x51f6fb0 -> Node0x520d9d0;
+	Node0x520d9d0 [shape=record,label="{for.body3:                                        \l  %indvars.iv = phi i64 [ 0, %for.cond1.preheader ], [ %indvars.iv.next,\l... %for.body3 ]\l  %idxprom = sext i32 %index to i64\l  %1 = shl i64 %indvars.iv5, 6\l  %2 = add nuw nsw i64 %indvars.iv, %1\l  %arrayidx5 = getelementptr inbounds [2048 x [2048 x i32]], [2048 x [2048 x\l... i32]]* @Y, i64 0, i64 %2, i64 %idxprom\l  %3 = load i32, i32* %arrayidx5, align 4\l  %4 = shl i64 %indvars.iv5, 6\l  %5 = add nuw nsw i64 %indvars.iv, %4\l  %arrayidx9 = getelementptr inbounds i32, i32* %0, i64 %5\l  store i32 %3, i32* %arrayidx9, align 4\l  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1\l  %exitcond = icmp ne i64 %indvars.iv.next, 64\l  br i1 %exitcond, label %for.body3, label %for.inc10\l}"];
+	Node0x520d9d0 -> Node0x520d9d0[constraint=false];
+	Node0x520d9d0 -> Node0x520d9f0;
+	Node0x520d9f0 [shape=record,label="{for.inc10:                                        \l  %indvars.iv.next6 = add nuw nsw i64 %indvars.iv5, 1\l  %exitcond9 = icmp ne i64 %indvars.iv.next6, 32\l  br i1 %exitcond9, label %for.cond1.preheader, label %for.end12\l}"];
+	Node0x520d9f0 -> Node0x51f6fb0[constraint=false];
+	Node0x520d9f0 -> Node0x520d8f0;
+	Node0x520d8f0 [shape=record,label="{for.end12:                                        \l  ret i32* %0\l}"];
 	colorscheme = "paired12"
-        subgraph cluster_0x63c95c0 {
+        subgraph cluster_0x521cda0 {
           label = "";
           style = solid;
           color = 1
-          subgraph cluster_0x63d7a00 {
-            label = "Region can not profitably be optimized!";
-            style = solid;
-            color = 6
-            Node0x63d7970;
+          subgraph cluster_0x521d020 {
+            label = "";
+            style = filled;
+            color = 3            subgraph cluster_0x521cfa0 {
+              label = "";
+              style = solid;
+              color = 5
+              Node0x520d9d0;
+            }
+            Node0x51f6fb0;
+            Node0x520d9f0;
           }
-          Node0x63d79a0;
-          Node0x63d7820;
-          Node0x63d7840;
+          Node0x51f7030;
+          Node0x520d890;
+          Node0x520d8f0;
         }
 }

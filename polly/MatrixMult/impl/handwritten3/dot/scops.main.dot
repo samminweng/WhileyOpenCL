@@ -1,51 +1,39 @@
 digraph "Scop Graph for 'main' function" {
 	label="Scop Graph for 'main' function";
 
-	Node0x63d6520 [shape=record,label="{entry:\l  %y_t = alloca [1024 x i32], align 16\l  br label %entry.split\l}"];
-	Node0x63d6520 -> Node0x63d73c0;
-	Node0x63d73c0 [shape=record,label="{entry.split:                                      \l  tail call void @init()\l  br label %for.cond1.preheader\l}"];
-	Node0x63d73c0 -> Node0x63d7680;
-	Node0x63d7680 [shape=record,label="{for.cond1.preheader:                              \l  %indvars.iv7 = phi i64 [ 0, %entry.split ], [ %indvars.iv.next8, %for.inc22 ]\l  br label %for.body3\l}"];
-	Node0x63d7680 -> Node0x63d76a0;
-	Node0x63d76a0 [shape=record,label="{for.body3:                                        \l  %indvars.iv = phi i64 [ 0, %for.cond1.preheader ], [ %indvars.iv.next,\l... %for.body3 ]\l  %arrayidx5 = getelementptr inbounds [1024 x [1024 x i32]], [1024 x [1024 x\l... i32]]* @Y, i64 0, i64 %indvars.iv, i64 %indvars.iv7\l  %0 = load i32, i32* %arrayidx5, align 4\l  %arrayidx7 = getelementptr inbounds [1024 x i32], [1024 x i32]* %y_t, i64 0,\l... i64 %indvars.iv\l  store i32 %0, i32* %arrayidx7, align 4\l  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1\l  %exitcond = icmp ne i64 %indvars.iv.next, 1024\l  br i1 %exitcond, label %for.body3, label %for.cond8.preheader\l}"];
-	Node0x63d76a0 -> Node0x63d76a0[constraint=false];
-	Node0x63d76a0 -> Node0x63d6d30;
-	Node0x63d6d30 [shape=record,label="{for.cond8.preheader:                              \l  br label %for.body10\l}"];
-	Node0x63d6d30 -> Node0x63d5f70;
-	Node0x63d5f70 [shape=record,label="{for.body10:                                       \l  %indvars.iv4 = phi i64 [ 0, %for.cond8.preheader ], [ %indvars.iv.next5,\l... %for.body10 ]\l  %arraydecay = getelementptr inbounds [1024 x [1024 x i32]], [1024 x [1024 x\l... i32]]* @X, i64 0, i64 %indvars.iv4, i64 0\l  %arraydecay16 = getelementptr inbounds [1024 x i32], [1024 x i32]* %y_t, i64\l... 0, i64 0\l  %call = call i32 @dot(i32* %arraydecay, i32* %arraydecay16)\l  %arrayidx18 = getelementptr inbounds [1024 x [1024 x i32]], [1024 x [1024 x\l... i32]]* @Z, i64 0, i64 %indvars.iv4, i64 %indvars.iv7\l  store i32 %call, i32* %arrayidx18, align 4\l  %indvars.iv.next5 = add nuw nsw i64 %indvars.iv4, 1\l  %exitcond6 = icmp ne i64 %indvars.iv.next5, 1024\l  br i1 %exitcond6, label %for.body10, label %for.inc22\l}"];
-	Node0x63d5f70 -> Node0x63d5f70[constraint=false];
-	Node0x63d5f70 -> Node0x63d5f40;
-	Node0x63d5f40 [shape=record,label="{for.inc22:                                        \l  %indvars.iv.next8 = add nuw nsw i64 %indvars.iv7, 1\l  %exitcond9 = icmp ne i64 %indvars.iv.next8, 1024\l  br i1 %exitcond9, label %for.cond1.preheader, label %for.end24\l}"];
-	Node0x63d5f40 -> Node0x63d7680[constraint=false];
-	Node0x63d5f40 -> Node0x63d6ee0;
-	Node0x63d6ee0 [shape=record,label="{for.end24:                                        \l  %1 = load i32, i32* getelementptr inbounds ([1024 x [1024 x i32]], [1024 x\l... [1024 x i32]]* @Z, i64 0, i64 1023, i64 1023), align 4\l  %call25 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([46 x i8],\l... [46 x i8]* @.str.2, i64 0, i64 0), i32 1024, i32 1024, i32 1023, i32 1023,\l... i32 %1) #3\l  ret i32 0\l}"];
+	Node0x520f650 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0x520f650 -> Node0x521b890;
+	Node0x521b890 [shape=record,label="{entry.split:                                      \l  tail call void @init()\l  br label %for.body\l}"];
+	Node0x521b890 -> Node0x520ef80;
+	Node0x520ef80 [shape=record,label="{for.body:                                         \l  %indvars.iv3 = phi i64 [ 0, %entry.split ], [ %indvars.iv.next4, %for.inc10 ]\l  %0 = trunc i64 %indvars.iv3 to i32\l  %call = tail call i32* @transpose(i32** bitcast ([2048 x [2048 x i32]]* @Y\l... to i32**), i32 %0)\l  br label %for.body3\l}"];
+	Node0x520ef80 -> Node0x521b6e0;
+	Node0x521b6e0 [shape=record,label="{for.body3:                                        \l  %indvars.iv = phi i64 [ 0, %for.body ], [ %indvars.iv.next, %for.body3 ]\l  %arraydecay = getelementptr inbounds [2048 x [2048 x i32]], [2048 x [2048 x\l... i32]]* @X, i64 0, i64 %indvars.iv, i64 0\l  %call7 = tail call i32 @dot(i32* %arraydecay, i32* %call)\l  %arrayidx9 = getelementptr inbounds [2048 x [2048 x i32]], [2048 x [2048 x\l... i32]]* @Z, i64 0, i64 %indvars.iv, i64 %indvars.iv3\l  store i32 %call7, i32* %arrayidx9, align 4\l  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1\l  %exitcond = icmp ne i64 %indvars.iv.next, 2048\l  br i1 %exitcond, label %for.body3, label %for.inc10\l}"];
+	Node0x521b6e0 -> Node0x521b6e0[constraint=false];
+	Node0x521b6e0 -> Node0x521f5c0;
+	Node0x521f5c0 [shape=record,label="{for.inc10:                                        \l  %indvars.iv.next4 = add nuw nsw i64 %indvars.iv3, 1\l  %exitcond5 = icmp ne i64 %indvars.iv.next4, 2048\l  br i1 %exitcond5, label %for.body, label %for.end12\l}"];
+	Node0x521f5c0 -> Node0x520ef80[constraint=false];
+	Node0x521f5c0 -> Node0x521f620;
+	Node0x521f620 [shape=record,label="{for.end12:                                        \l  %1 = load i32, i32* getelementptr inbounds ([2048 x [2048 x i32]], [2048 x\l... [2048 x i32]]* @Z, i64 0, i64 2047, i64 2047), align 4\l  %call13 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([46 x\l... i8], [46 x i8]* @.str.2, i64 0, i64 0), i32 2048, i32 2048, i32 2047, i32\l... 2047, i32 %1) #3\l  ret i32 0\l}"];
 	colorscheme = "paired12"
-        subgraph cluster_0x63b1850 {
+        subgraph cluster_0x521b640 {
           label = "";
           style = solid;
           color = 1
-          subgraph cluster_0x63d7560 {
-            label = "Call instruction:   %call = call i32 @dot(i32* %arraydecay, i32* %arraydecay16)";
+          subgraph cluster_0x520ee60 {
+            label = "Call instruction:   %call = tail call i32* @transpose(i32** bitcast ([2048 x [2048 x i32]]* @Y to i32**), i32 %0)";
             style = solid;
             color = 6
-            subgraph cluster_0x63b18d0 {
-              label = "Region can not profitably be optimized!";
+            subgraph cluster_0x520ede0 {
+              label = "Call instruction:   %call7 = tail call i32 @dot(i32* %arraydecay, i32* %call)";
               style = solid;
               color = 5
-              Node0x63d76a0;
+              Node0x521b6e0;
             }
-            subgraph cluster_0x63d74e0 {
-              label = "Call instruction:   %call = call i32 @dot(i32* %arraydecay, i32* %arraydecay16)";
-              style = solid;
-              color = 5
-              Node0x63d5f70;
-            }
-            Node0x63d7680;
-            Node0x63d6d30;
-            Node0x63d5f40;
+            Node0x520ef80;
+            Node0x521f5c0;
           }
-          Node0x63d6520;
-          Node0x63d73c0;
-          Node0x63d6ee0;
+          Node0x520f650;
+          Node0x521b890;
+          Node0x521f620;
         }
 }
