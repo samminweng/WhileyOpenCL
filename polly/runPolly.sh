@@ -121,5 +121,6 @@ exec(){
 	cd ../../../
 }
 
-exec handwritten VectorMult 2
-exec handwritten2 VectorMult 2
+#exec handwritten VectorMult 2
+#exec handwritten2 VectorMult 2
+exec handwritten3 MatrixMult 2

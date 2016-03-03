@@ -1,0 +1,39 @@
+digraph "Scop Graph for 'dot' function" {
+	label="Scop Graph for 'dot' function";
+
+	Node0x63d7820 [shape=record,label="{entry:\l  br label %entry.split\l}"];
+	Node0x63d7820 -> Node0x63b4340;
+	Node0x63b4340 [shape=record,label="{entry.split:                                      \l  br label %for.cond1.preheader\l}"];
+	Node0x63b4340 -> Node0x63dac90;
+	Node0x63dac90 [shape=record,label="{for.cond1.preheader:                              \l  %indvars.iv7 = phi i64 [ 0, %entry.split ], [ %indvars.iv.next8, %for.inc10 ]\l  %sum.03 = phi i32 [ 0, %entry.split ], [ %add9.lcssa, %for.inc10 ]\l  br label %for.inc\l}"];
+	Node0x63dac90 -> Node0x63d7840;
+	Node0x63d7840 [shape=record,label="{for.inc:                                          \l  %indvars.iv = phi i64 [ 0, %for.cond1.preheader ], [ %indvars.iv.next,\l... %for.inc ]\l  %sum.12 = phi i32 [ %sum.03, %for.cond1.preheader ], [ %add9, %for.inc ]\l  %0 = shl i64 %indvars.iv7, 6\l  %1 = add nuw nsw i64 %indvars.iv, %0\l  %arrayidx = getelementptr inbounds i32, i32* %a, i64 %1\l  %2 = load i32, i32* %arrayidx, align 4\l  %3 = shl i64 %indvars.iv7, 6\l  %4 = add nuw nsw i64 %indvars.iv, %3\l  %arrayidx7 = getelementptr inbounds i32, i32* %b, i64 %4\l  %5 = load i32, i32* %arrayidx7, align 4\l  %mul8 = mul nsw i32 %5, %2\l  %add9 = add nsw i32 %mul8, %sum.12\l  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1\l  %exitcond = icmp ne i64 %indvars.iv.next, 64\l  br i1 %exitcond, label %for.inc, label %for.inc10\l}"];
+	Node0x63d7840 -> Node0x63d7840[constraint=false];
+	Node0x63d7840 -> Node0x63d77d0;
+	Node0x63d77d0 [shape=record,label="{for.inc10:                                        \l  %add9.lcssa = phi i32 [ %add9, %for.inc ]\l  %indvars.iv.next8 = add nuw nsw i64 %indvars.iv7, 1\l  %exitcond11 = icmp ne i64 %indvars.iv.next8, 16\l  br i1 %exitcond11, label %for.cond1.preheader, label %for.end12\l}"];
+	Node0x63d77d0 -> Node0x63dac90[constraint=false];
+	Node0x63d77d0 -> Node0x63b4320;
+	Node0x63b4320 [shape=record,label="{for.end12:                                        \l  %add9.lcssa.lcssa = phi i32 [ %add9.lcssa, %for.inc10 ]\l  ret i32 %add9.lcssa.lcssa\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0x63b3ec0 {
+          label = "";
+          style = solid;
+          color = 1
+          subgraph cluster_0x63b3f40 {
+            label = "Region can not profitably be optimized!";
+            style = solid;
+            color = 6
+            subgraph cluster_0x63b4100 {
+              label = "Region can not profitably be optimized!";
+              style = solid;
+              color = 5
+              Node0x63d7840;
+            }
+            Node0x63dac90;
+            Node0x63d77d0;
+          }
+          Node0x63d7820;
+          Node0x63b4340;
+          Node0x63b4320;
+        }
+}
