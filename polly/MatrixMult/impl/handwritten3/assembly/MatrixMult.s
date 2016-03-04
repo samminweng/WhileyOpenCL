@@ -157,19 +157,20 @@ entry:
   %sum = alloca [64 x i32], align 16
   %splits = alloca i32, align 4
   %s = alloca i32, align 4
-  %tmp = alloca i32, align 4
   %total = alloca i32, align 4
+  %tmp = alloca i32, align 4
   store i32* %a, i32** %a.addr, align 8
   store i32* %b, i32** %b.addr, align 8
   store i32 32, i32* %splits, align 4
+  store i32 0, i32* %total, align 4
   store i32 0, i32* %s, align 4
   br label %for.cond
 
-for.cond:                                         ; preds = %for.inc12, %entry
+for.cond:                                         ; preds = %for.inc15, %entry
   %0 = load i32, i32* %s, align 4
   %1 = load i32, i32* %splits, align 4
   %cmp = icmp slt i32 %0, %1
-  br i1 %cmp, label %for.body, label %for.end14
+  br i1 %cmp, label %for.body, label %for.end17
 
 for.body:                                         ; preds = %for.cond
   store i32 0, i32* %tmp, align 4
@@ -216,44 +217,24 @@ for.end:                                          ; preds = %for.cond1
   %idxprom10 = sext i32 %14 to i64
   %arrayidx11 = getelementptr inbounds [64 x i32], [64 x i32]* %sum, i64 0, i64 %idxprom10
   store i32 %13, i32* %arrayidx11, align 4
-  br label %for.inc12
-
-for.inc12:                                        ; preds = %for.end
   %15 = load i32, i32* %s, align 4
-  %inc13 = add nsw i32 %15, 1
-  store i32 %inc13, i32* %s, align 4
+  %idxprom12 = sext i32 %15 to i64
+  %arrayidx13 = getelementptr inbounds [64 x i32], [64 x i32]* %sum, i64 0, i64 %idxprom12
+  %16 = load i32, i32* %arrayidx13, align 4
+  %17 = load i32, i32* %total, align 4
+  %add14 = add nsw i32 %17, %16
+  store i32 %add14, i32* %total, align 4
+  br label %for.inc15
+
+for.inc15:                                        ; preds = %for.end
+  %18 = load i32, i32* %s, align 4
+  %inc16 = add nsw i32 %18, 1
+  store i32 %inc16, i32* %s, align 4
   br label %for.cond
 
-for.end14:                                        ; preds = %for.cond
-  store i32 0, i32* %total, align 4
-  store i32 0, i32* %s, align 4
-  br label %for.cond16
-
-for.cond16:                                       ; preds = %for.inc22, %for.end14
-  %16 = load i32, i32* %s, align 4
-  %17 = load i32, i32* %splits, align 4
-  %cmp17 = icmp slt i32 %16, %17
-  br i1 %cmp17, label %for.body18, label %for.end24
-
-for.body18:                                       ; preds = %for.cond16
-  %18 = load i32, i32* %s, align 4
-  %idxprom19 = sext i32 %18 to i64
-  %arrayidx20 = getelementptr inbounds [64 x i32], [64 x i32]* %sum, i64 0, i64 %idxprom19
-  %19 = load i32, i32* %arrayidx20, align 4
-  %20 = load i32, i32* %total, align 4
-  %add21 = add nsw i32 %20, %19
-  store i32 %add21, i32* %total, align 4
-  br label %for.inc22
-
-for.inc22:                                        ; preds = %for.body18
-  %21 = load i32, i32* %s, align 4
-  %inc23 = add nsw i32 %21, 1
-  store i32 %inc23, i32* %s, align 4
-  br label %for.cond16
-
-for.end24:                                        ; preds = %for.cond16
-  %22 = load i32, i32* %total, align 4
-  ret i32 %22
+for.end17:                                        ; preds = %for.cond
+  %19 = load i32, i32* %total, align 4
+  ret i32 %19
 }
 
 ; Function Attrs: nounwind uwtable
@@ -332,16 +313,17 @@ entry:
   %j = alloca i32, align 4
   %y_t = alloca i32*, align 8
   %x = alloca i32*, align 8
-  %z = alloca i32*, align 8
+  %ii = alloca i32, align 4
+  %sum = alloca i32, align 4
   store i32 0, i32* %retval, align 4
   call void @init()
   store i32 0, i32* %j, align 4
   br label %for.cond
 
-for.cond:                                         ; preds = %for.inc10, %entry
+for.cond:                                         ; preds = %for.inc18, %entry
   %0 = load i32, i32* %j, align 4
   %cmp = icmp slt i32 %0, 2048
-  br i1 %cmp, label %for.body, label %for.end12
+  br i1 %cmp, label %for.body, label %for.end20
 
 for.body:                                         ; preds = %for.cond
   %1 = load i32, i32* %j, align 4
@@ -350,10 +332,10 @@ for.body:                                         ; preds = %for.cond
   store i32 0, i32* %i, align 4
   br label %for.cond1
 
-for.cond1:                                        ; preds = %for.inc, %for.body
+for.cond1:                                        ; preds = %for.inc15, %for.body
   %2 = load i32, i32* %i, align 4
   %cmp2 = icmp slt i32 %2, 2048
-  br i1 %cmp2, label %for.body3, label %for.end
+  br i1 %cmp2, label %for.body3, label %for.end17
 
 for.body3:                                        ; preds = %for.cond1
   %3 = load i32, i32* %i, align 4
@@ -361,41 +343,75 @@ for.body3:                                        ; preds = %for.cond1
   %arrayidx = getelementptr inbounds [2048 x [2048 x i32]], [2048 x [2048 x i32]]* @X, i64 0, i64 %idxprom
   %arraydecay = getelementptr inbounds [2048 x i32], [2048 x i32]* %arrayidx, i32 0, i32 0
   store i32* %arraydecay, i32** %x, align 8
-  %4 = load i32, i32* %i, align 4
-  %idxprom4 = sext i32 %4 to i64
-  %arrayidx5 = getelementptr inbounds [2048 x [2048 x i32]], [2048 x [2048 x i32]]* @Z, i64 0, i64 %idxprom4
-  %arraydecay6 = getelementptr inbounds [2048 x i32], [2048 x i32]* %arrayidx5, i32 0, i32 0
-  store i32* %arraydecay6, i32** %z, align 8
-  %5 = load i32*, i32** %x, align 8
-  %6 = load i32*, i32** %y_t, align 8
-  %call7 = call i32 @dot(i32* %5, i32* %6)
-  %7 = load i32, i32* %j, align 4
-  %idxprom8 = sext i32 %7 to i64
-  %8 = load i32*, i32** %z, align 8
-  %arrayidx9 = getelementptr inbounds i32, i32* %8, i64 %idxprom8
-  store i32 %call7, i32* %arrayidx9, align 4
+  store i32 0, i32* %sum, align 4
+  store i32 0, i32* %ii, align 4
+  br label %for.cond4
+
+for.cond4:                                        ; preds = %for.inc, %for.body3
+  %4 = load i32, i32* %ii, align 4
+  %cmp5 = icmp slt i32 %4, 2048
+  br i1 %cmp5, label %for.body6, label %for.end
+
+for.body6:                                        ; preds = %for.cond4
+  %5 = load i32, i32* %sum, align 4
+  %6 = load i32, i32* %ii, align 4
+  %idxprom7 = sext i32 %6 to i64
+  %7 = load i32*, i32** %x, align 8
+  %arrayidx8 = getelementptr inbounds i32, i32* %7, i64 %idxprom7
+  %8 = load i32, i32* %arrayidx8, align 4
+  %9 = load i32, i32* %ii, align 4
+  %idxprom9 = sext i32 %9 to i64
+  %10 = load i32*, i32** %y_t, align 8
+  %arrayidx10 = getelementptr inbounds i32, i32* %10, i64 %idxprom9
+  %11 = load i32, i32* %arrayidx10, align 4
+  %mul = mul nsw i32 %8, %11
+  %add = add nsw i32 %5, %mul
+  store i32 %add, i32* %sum, align 4
   br label %for.inc
 
-for.inc:                                          ; preds = %for.body3
-  %9 = load i32, i32* %i, align 4
-  %inc = add nsw i32 %9, 1
-  store i32 %inc, i32* %i, align 4
+for.inc:                                          ; preds = %for.body6
+  %12 = load i32, i32* %ii, align 4
+  %inc = add nsw i32 %12, 1
+  store i32 %inc, i32* %ii, align 4
+  br label %for.cond4
+
+for.end:                                          ; preds = %for.cond4
+  %13 = load i32, i32* %sum, align 4
+  %14 = load i32, i32* %j, align 4
+  %idxprom11 = sext i32 %14 to i64
+  %15 = load i32, i32* %i, align 4
+  %idxprom12 = sext i32 %15 to i64
+  %arrayidx13 = getelementptr inbounds [2048 x [2048 x i32]], [2048 x [2048 x i32]]* @Z, i64 0, i64 %idxprom12
+  %arrayidx14 = getelementptr inbounds [2048 x i32], [2048 x i32]* %arrayidx13, i64 0, i64 %idxprom11
+  store i32 %13, i32* %arrayidx14, align 4
+  br label %for.inc15
+
+for.inc15:                                        ; preds = %for.end
+  %16 = load i32, i32* %i, align 4
+  %inc16 = add nsw i32 %16, 1
+  store i32 %inc16, i32* %i, align 4
   br label %for.cond1
 
-for.end:                                          ; preds = %for.cond1
-  br label %for.inc10
+for.end17:                                        ; preds = %for.cond1
+  %17 = load i32*, i32** %y_t, align 8
+  %18 = bitcast i32* %17 to i8*
+  call void @free(i8* %18) #3
+  br label %for.inc18
 
-for.inc10:                                        ; preds = %for.end
-  %10 = load i32, i32* %j, align 4
-  %inc11 = add nsw i32 %10, 1
-  store i32 %inc11, i32* %j, align 4
+for.inc18:                                        ; preds = %for.end17
+  %19 = load i32, i32* %j, align 4
+  %inc19 = add nsw i32 %19, 1
+  store i32 %inc19, i32* %j, align 4
   br label %for.cond
 
-for.end12:                                        ; preds = %for.cond
-  %11 = load i32, i32* getelementptr inbounds ([2048 x [2048 x i32]], [2048 x [2048 x i32]]* @Z, i64 0, i64 2047, i64 2047), align 4
-  %call13 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([46 x i8], [46 x i8]* @.str.2, i32 0, i32 0), i32 2048, i32 2048, i32 2047, i32 2047, i32 %11)
+for.end20:                                        ; preds = %for.cond
+  %20 = load i32, i32* getelementptr inbounds ([2048 x [2048 x i32]], [2048 x [2048 x i32]]* @Z, i64 0, i64 2047, i64 2047), align 4
+  %call21 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([46 x i8], [46 x i8]* @.str.2, i32 0, i32 0), i32 2048, i32 2048, i32 2047, i32 2047, i32 %20)
   ret i32 0
 }
+
+; Function Attrs: nounwind
+declare void @free(i8*) #1
 
 declare i32 @printf(i8*, ...) #2
 

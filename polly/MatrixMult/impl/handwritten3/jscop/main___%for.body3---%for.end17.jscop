@@ -1,0 +1,59 @@
+{
+   "context" : "[p_0] -> {  : 0 <= p_0 <= 2047 }",
+   "name" : "for.body3 => for.end17",
+   "statements" : [
+      {
+         "accesses" : [
+            {
+               "kind" : "write",
+               "relation" : "[p_0] -> { Stmt_for_body3[i0] -> MemRef_sum_02__phi[] }"
+            }
+         ],
+         "domain" : "[p_0] -> { Stmt_for_body3[i0] : 0 <= i0 <= 2047 }",
+         "name" : "Stmt_for_body3",
+         "schedule" : "[p_0] -> { Stmt_for_body3[i0] -> [i0, 0, 0] }"
+      },
+      {
+         "accesses" : [
+            {
+               "kind" : "write",
+               "relation" : "[p_0] -> { Stmt_for_inc[i0, i1] -> MemRef_sum_02__phi[] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "[p_0] -> { Stmt_for_inc[i0, i1] -> MemRef_sum_02__phi[] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "[p_0] -> { Stmt_for_inc[i0, i1] -> MemRef_X[i0, i1] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "[p_0] -> { Stmt_for_inc[i0, i1] -> MemRef_call[i1] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "[p_0] -> { Stmt_for_inc[i0, i1] -> MemRef_add_lcssa__phi[] }"
+            }
+         ],
+         "domain" : "[p_0] -> { Stmt_for_inc[i0, i1] : 0 <= i0 <= 2047 and 0 <= i1 <= 2047 }",
+         "name" : "Stmt_for_inc",
+         "schedule" : "[p_0] -> { Stmt_for_inc[i0, i1] -> [i0, 1, i1] }"
+      },
+      {
+         "accesses" : [
+            {
+               "kind" : "read",
+               "relation" : "[p_0] -> { Stmt_for_end[i0] -> MemRef_add_lcssa__phi[] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "[p_0] -> { Stmt_for_end[i0] -> MemRef_Z[i0, p_0] }"
+            }
+         ],
+         "domain" : "[p_0] -> { Stmt_for_end[i0] : 0 <= i0 <= 2047 }",
+         "name" : "Stmt_for_end",
+         "schedule" : "[p_0] -> { Stmt_for_end[i0] -> [i0, 2, 0] }"
+      }
+   ]
+}

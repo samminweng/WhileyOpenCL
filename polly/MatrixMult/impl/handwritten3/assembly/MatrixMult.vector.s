@@ -282,13 +282,15 @@ dot:                                    # @dot
 	movq	%rsp, %rbp
 .Ltmp9:
 	.cfi_def_cfa_register %rbp
-	subq	$128, %rsp
+	movl	$0, -4(%rbp)
 	addq	$240, %rdi
 	addq	$240, %rsi
 	movq	$-1, %rax
 	.p2align	4, 0x90
 .LBB2_1:                                # %polly.stmt.vector.body
                                         # =>This Inner Loop Header: Depth=1
+	movl	-4(%rbp), %ecx
+	movl	%ecx, -12(%rbp)
 	movdqu	-240(%rdi), %xmm2
 	movdqu	-224(%rdi), %xmm3
 	movdqu	-208(%rdi), %xmm4
@@ -452,46 +454,17 @@ dot:                                    # @dot
 	paddd	%xmm1, %xmm0
 	pshufd	$229, %xmm0, %xmm1      # xmm1 = xmm0[1,1,2,3]
 	paddd	%xmm0, %xmm1
-	movd	%xmm1, -252(%rbp,%rax,4)
+	movd	%xmm1, %edx
+	addl	%ecx, %edx
+	movl	%edx, -4(%rbp)
+	movl	%edx, -8(%rbp)
 	incq	%rax
 	addq	$256, %rsi              # imm = 0x100
 	addq	$256, %rdi              # imm = 0x100
 	cmpq	$31, %rax
 	jl	.LBB2_1
-# BB#2:                                 # %polly.stmt.for.inc22.preheader
-	movl	-252(%rbp), %eax
-	addl	-256(%rbp), %eax
-	addl	-248(%rbp), %eax
-	addl	-244(%rbp), %eax
-	addl	-240(%rbp), %eax
-	addl	-236(%rbp), %eax
-	addl	-232(%rbp), %eax
-	addl	-228(%rbp), %eax
-	addl	-224(%rbp), %eax
-	addl	-220(%rbp), %eax
-	addl	-216(%rbp), %eax
-	addl	-212(%rbp), %eax
-	addl	-208(%rbp), %eax
-	addl	-204(%rbp), %eax
-	addl	-200(%rbp), %eax
-	addl	-196(%rbp), %eax
-	addl	-192(%rbp), %eax
-	addl	-188(%rbp), %eax
-	addl	-184(%rbp), %eax
-	addl	-180(%rbp), %eax
-	addl	-176(%rbp), %eax
-	addl	-172(%rbp), %eax
-	addl	-168(%rbp), %eax
-	addl	-164(%rbp), %eax
-	addl	-160(%rbp), %eax
-	addl	-156(%rbp), %eax
-	addl	-152(%rbp), %eax
-	addl	-148(%rbp), %eax
-	addl	-144(%rbp), %eax
-	addl	-140(%rbp), %eax
-	addl	-136(%rbp), %eax
-	addl	-132(%rbp), %eax
-	addq	$128, %rsp
+# BB#2:                                 # %polly.exiting15
+	movl	-8(%rbp), %eax
 	popq	%rbp
 	retq
 .Lfunc_end2:
@@ -609,24 +582,19 @@ main:                                   # @main
 	.cfi_def_cfa_register %rbp
 	pushq	%r15
 	pushq	%r14
-	pushq	%r13
 	pushq	%r12
 	pushq	%rbx
-	pushq	%rax
 .Ltmp20:
-	.cfi_offset %rbx, -56
+	.cfi_offset %rbx, -48
 .Ltmp21:
-	.cfi_offset %r12, -48
+	.cfi_offset %r12, -40
 .Ltmp22:
-	.cfi_offset %r13, -40
-.Ltmp23:
 	.cfi_offset %r14, -32
-.Ltmp24:
+.Ltmp23:
 	.cfi_offset %r15, -24
-	xorl	%r14d, %r14d
+	xorl	%r12d, %r12d
 	movl	$112, %eax
-	movaps	.LCPI4_0(%rip), %xmm0   # xmm0 = [1,1,1,1]
-	movl	$Z, %r15d
+	movdqa	.LCPI4_0(%rip), %xmm0   # xmm0 = [1,1,1,1]
 	xorl	%ecx, %ecx
 	.p2align	4, 0x90
 .LBB4_1:                                # %polly.loop_header
@@ -636,7 +604,7 @@ main:                                   # @main
 	movq	%rax, %rbx
 	xorl	%esi, %esi
 	.p2align	4, 0x90
-.LBB4_2:                                # %polly.loop_header1
+.LBB4_2:                                # %polly.loop_header67
                                         #   Parent Loop BB4_1 Depth=1
                                         # =>  This Loop Header: Depth=2
                                         #       Child Loop BB4_3 Depth 3
@@ -647,66 +615,232 @@ main:                                   # @main
                                         #   Parent Loop BB4_1 Depth=1
                                         #     Parent Loop BB4_2 Depth=2
                                         # =>    This Inner Loop Header: Depth=3
-	movaps	%xmm0, X-112(%rdx)
-	movaps	%xmm0, Y-112(%rdx)
-	movaps	%xmm0, X-96(%rdx)
-	movaps	%xmm0, Y-96(%rdx)
-	movaps	%xmm0, X-80(%rdx)
-	movaps	%xmm0, Y-80(%rdx)
-	movaps	%xmm0, X-64(%rdx)
-	movaps	%xmm0, Y-64(%rdx)
-	movaps	%xmm0, X-48(%rdx)
-	movaps	%xmm0, Y-48(%rdx)
-	movaps	%xmm0, X-32(%rdx)
-	movaps	%xmm0, Y-32(%rdx)
-	movaps	%xmm0, X-16(%rdx)
-	movaps	%xmm0, Y-16(%rdx)
-	movaps	%xmm0, X(%rdx)
-	movaps	%xmm0, Y(%rdx)
+	movdqa	%xmm0, X-112(%rdx)
+	movdqa	%xmm0, Y-112(%rdx)
+	movdqa	%xmm0, X-96(%rdx)
+	movdqa	%xmm0, Y-96(%rdx)
+	movdqa	%xmm0, X-80(%rdx)
+	movdqa	%xmm0, Y-80(%rdx)
+	movdqa	%xmm0, X-64(%rdx)
+	movdqa	%xmm0, Y-64(%rdx)
+	movdqa	%xmm0, X-48(%rdx)
+	movdqa	%xmm0, Y-48(%rdx)
+	movdqa	%xmm0, X-32(%rdx)
+	movdqa	%xmm0, Y-32(%rdx)
+	movdqa	%xmm0, X-16(%rdx)
+	movdqa	%xmm0, Y-16(%rdx)
+	movdqa	%xmm0, X(%rdx)
+	movdqa	%xmm0, Y(%rdx)
 	incq	%rdi
 	addq	$8192, %rdx             # imm = 0x2000
 	cmpq	$31, %rdi
 	jl	.LBB4_3
-# BB#4:                                 # %polly.loop_exit9
+# BB#4:                                 # %polly.loop_exit75
                                         #   in Loop: Header=BB4_2 Depth=2
 	subq	$-128, %rbx
 	cmpq	$63, %rsi
 	leaq	1(%rsi), %rsi
 	jl	.LBB4_2
-# BB#5:                                 # %polly.loop_exit3
+# BB#5:                                 # %polly.loop_exit69
                                         #   in Loop: Header=BB4_1 Depth=1
 	addq	$262144, %rax           # imm = 0x40000
 	cmpq	$63, %rcx
 	leaq	1(%rcx), %rcx
 	jl	.LBB4_1
+# BB#6:
+	movl	$16777216, %eax         # imm = 0x1000000
+	leaq	X(%rax), %r14
+	movl	$X, %r15d
 	.p2align	4, 0x90
-.LBB4_6:                                # %for.body
+.LBB4_7:                                # %for.body
                                         # =>This Loop Header: Depth=1
-                                        #     Child Loop BB4_7 Depth 2
-	movl	%r14d, %esi
+                                        #     Child Loop BB4_10 Depth 2
+                                        #       Child Loop BB4_11 Depth 3
+                                        #     Child Loop BB4_16 Depth 2
+                                        #       Child Loop BB4_17 Depth 3
+	movl	%r12d, %esi
 	callq	transpose
-	movq	%rax, %r12
-	movq	%r15, %r13
-	xorl	%ebx, %ebx
+	leaq	8192(%rax), %rdx
+	leaq	Z(,%r12,4), %rcx
+	cmpq	%rcx, %rdx
+	setbe	%dl
+	leaq	Z+16769028(,%r12,4), %rsi
+	cmpq	%rax, %rsi
+	setbe	%bl
+	orb	%dl, %bl
+	cmpq	%r14, %rcx
+	setae	%dl
+	cmpq	%r15, %rsi
+	setbe	%sil
+	movzbl	%bl, %edi
+	cmpl	$1, %edi
+	jne	.LBB4_9
+# BB#8:                                 # %for.body
+                                        #   in Loop: Header=BB4_7 Depth=1
+	orb	%sil, %dl
+	je	.LBB4_9
+# BB#15:                                # %vector.ph.preheader
+                                        #   in Loop: Header=BB4_7 Depth=1
+	movl	$X+48, %edx
+	xorl	%esi, %esi
 	.p2align	4, 0x90
-.LBB4_7:                                # %for.body3
-                                        #   Parent Loop BB4_6 Depth=1
-                                        # =>  This Inner Loop Header: Depth=2
-	leaq	X(%rbx), %rdi
-	movq	%r12, %rsi
-	callq	dot
-	movl	%eax, (%r13)
-	addq	$8192, %rbx             # imm = 0x2000
-	addq	$8192, %r13             # imm = 0x2000
-	cmpq	$16777216, %rbx         # imm = 0x1000000
+.LBB4_16:                               # %vector.ph
+                                        #   Parent Loop BB4_7 Depth=1
+                                        # =>  This Loop Header: Depth=2
+                                        #       Child Loop BB4_17 Depth 3
+	pxor	%xmm0, %xmm0
+	movq	%rdx, %rdi
+	xorl	%ebx, %ebx
+	pxor	%xmm1, %xmm1
+	.p2align	4, 0x90
+.LBB4_17:                               # %vector.body
+                                        #   Parent Loop BB4_7 Depth=1
+                                        #     Parent Loop BB4_16 Depth=2
+                                        # =>    This Inner Loop Header: Depth=3
+	movdqu	(%rax,%rbx,4), %xmm2
+	movdqu	16(%rax,%rbx,4), %xmm4
+	movdqa	-48(%rdi), %xmm5
+	movdqa	-32(%rdi), %xmm6
+	movdqa	-16(%rdi), %xmm7
+	movdqa	(%rdi), %xmm8
+	pshufd	$245, %xmm2, %xmm3      # xmm3 = xmm2[1,1,3,3]
+	pmuludq	%xmm5, %xmm2
+	pshufd	$232, %xmm2, %xmm2      # xmm2 = xmm2[0,2,2,3]
+	pshufd	$245, %xmm5, %xmm5      # xmm5 = xmm5[1,1,3,3]
+	pmuludq	%xmm3, %xmm5
+	pshufd	$232, %xmm5, %xmm3      # xmm3 = xmm5[0,2,2,3]
+	punpckldq	%xmm3, %xmm2    # xmm2 = xmm2[0],xmm3[0],xmm2[1],xmm3[1]
+	pshufd	$245, %xmm4, %xmm3      # xmm3 = xmm4[1,1,3,3]
+	pmuludq	%xmm6, %xmm4
+	pshufd	$232, %xmm4, %xmm4      # xmm4 = xmm4[0,2,2,3]
+	pshufd	$245, %xmm6, %xmm5      # xmm5 = xmm6[1,1,3,3]
+	pmuludq	%xmm3, %xmm5
+	pshufd	$232, %xmm5, %xmm3      # xmm3 = xmm5[0,2,2,3]
+	punpckldq	%xmm3, %xmm4    # xmm4 = xmm4[0],xmm3[0],xmm4[1],xmm3[1]
+	paddd	%xmm0, %xmm2
+	paddd	%xmm1, %xmm4
+	movdqu	32(%rax,%rbx,4), %xmm0
+	movdqu	48(%rax,%rbx,4), %xmm1
+	pshufd	$245, %xmm0, %xmm3      # xmm3 = xmm0[1,1,3,3]
+	pmuludq	%xmm7, %xmm0
+	pshufd	$232, %xmm0, %xmm0      # xmm0 = xmm0[0,2,2,3]
+	pshufd	$245, %xmm7, %xmm5      # xmm5 = xmm7[1,1,3,3]
+	pmuludq	%xmm3, %xmm5
+	pshufd	$232, %xmm5, %xmm3      # xmm3 = xmm5[0,2,2,3]
+	punpckldq	%xmm3, %xmm0    # xmm0 = xmm0[0],xmm3[0],xmm0[1],xmm3[1]
+	pshufd	$245, %xmm1, %xmm3      # xmm3 = xmm1[1,1,3,3]
+	pmuludq	%xmm8, %xmm1
+	pshufd	$232, %xmm1, %xmm1      # xmm1 = xmm1[0,2,2,3]
+	pshufd	$245, %xmm8, %xmm5      # xmm5 = xmm8[1,1,3,3]
+	pmuludq	%xmm3, %xmm5
+	pshufd	$232, %xmm5, %xmm3      # xmm3 = xmm5[0,2,2,3]
+	punpckldq	%xmm3, %xmm1    # xmm1 = xmm1[0],xmm3[0],xmm1[1],xmm3[1]
+	paddd	%xmm2, %xmm0
+	paddd	%xmm4, %xmm1
+	addq	$16, %rbx
+	addq	$64, %rdi
+	cmpq	$2048, %rbx             # imm = 0x800
+	jne	.LBB4_17
+# BB#18:                                # %middle.block
+                                        #   in Loop: Header=BB4_16 Depth=2
+	paddd	%xmm0, %xmm1
+	pshufd	$78, %xmm1, %xmm0       # xmm0 = xmm1[2,3,0,1]
+	paddd	%xmm1, %xmm0
+	pshufd	$229, %xmm0, %xmm1      # xmm1 = xmm0[1,1,2,3]
+	paddd	%xmm0, %xmm1
+	movq	%rsi, %rdi
+	shlq	$13, %rdi
+	movd	%xmm1, (%rcx,%rdi)
+	incq	%rsi
+	addq	$8192, %rdx             # imm = 0x2000
+	cmpq	$2048, %rsi             # imm = 0x800
+	jne	.LBB4_16
+	jmp	.LBB4_13
+	.p2align	4, 0x90
+.LBB4_9:                                # %vector.ph37.preheader
+                                        #   in Loop: Header=BB4_7 Depth=1
+	movl	$X+48, %ecx
+	xorl	%edx, %edx
+	.p2align	4, 0x90
+.LBB4_10:                               # %vector.ph37
+                                        #   Parent Loop BB4_7 Depth=1
+                                        # =>  This Loop Header: Depth=2
+                                        #       Child Loop BB4_11 Depth 3
+	pxor	%xmm0, %xmm0
+	movq	%rcx, %rsi
+	xorl	%edi, %edi
+	pxor	%xmm1, %xmm1
+	.p2align	4, 0x90
+.LBB4_11:                               # %vector.body33
+                                        #   Parent Loop BB4_7 Depth=1
+                                        #     Parent Loop BB4_10 Depth=2
+                                        # =>    This Inner Loop Header: Depth=3
+	movdqu	(%rax,%rdi,4), %xmm2
+	movdqu	16(%rax,%rdi,4), %xmm4
+	movdqa	-48(%rsi), %xmm5
+	movdqa	-32(%rsi), %xmm6
+	movdqa	-16(%rsi), %xmm7
+	movdqa	(%rsi), %xmm8
+	pshufd	$245, %xmm2, %xmm3      # xmm3 = xmm2[1,1,3,3]
+	pmuludq	%xmm5, %xmm2
+	pshufd	$232, %xmm2, %xmm2      # xmm2 = xmm2[0,2,2,3]
+	pshufd	$245, %xmm5, %xmm5      # xmm5 = xmm5[1,1,3,3]
+	pmuludq	%xmm3, %xmm5
+	pshufd	$232, %xmm5, %xmm3      # xmm3 = xmm5[0,2,2,3]
+	punpckldq	%xmm3, %xmm2    # xmm2 = xmm2[0],xmm3[0],xmm2[1],xmm3[1]
+	pshufd	$245, %xmm4, %xmm3      # xmm3 = xmm4[1,1,3,3]
+	pmuludq	%xmm6, %xmm4
+	pshufd	$232, %xmm4, %xmm4      # xmm4 = xmm4[0,2,2,3]
+	pshufd	$245, %xmm6, %xmm5      # xmm5 = xmm6[1,1,3,3]
+	pmuludq	%xmm3, %xmm5
+	pshufd	$232, %xmm5, %xmm3      # xmm3 = xmm5[0,2,2,3]
+	punpckldq	%xmm3, %xmm4    # xmm4 = xmm4[0],xmm3[0],xmm4[1],xmm3[1]
+	paddd	%xmm0, %xmm2
+	paddd	%xmm1, %xmm4
+	movdqu	32(%rax,%rdi,4), %xmm0
+	movdqu	48(%rax,%rdi,4), %xmm1
+	pshufd	$245, %xmm0, %xmm3      # xmm3 = xmm0[1,1,3,3]
+	pmuludq	%xmm7, %xmm0
+	pshufd	$232, %xmm0, %xmm0      # xmm0 = xmm0[0,2,2,3]
+	pshufd	$245, %xmm7, %xmm5      # xmm5 = xmm7[1,1,3,3]
+	pmuludq	%xmm3, %xmm5
+	pshufd	$232, %xmm5, %xmm3      # xmm3 = xmm5[0,2,2,3]
+	punpckldq	%xmm3, %xmm0    # xmm0 = xmm0[0],xmm3[0],xmm0[1],xmm3[1]
+	pshufd	$245, %xmm1, %xmm3      # xmm3 = xmm1[1,1,3,3]
+	pmuludq	%xmm8, %xmm1
+	pshufd	$232, %xmm1, %xmm1      # xmm1 = xmm1[0,2,2,3]
+	pshufd	$245, %xmm8, %xmm5      # xmm5 = xmm8[1,1,3,3]
+	pmuludq	%xmm3, %xmm5
+	pshufd	$232, %xmm5, %xmm3      # xmm3 = xmm5[0,2,2,3]
+	punpckldq	%xmm3, %xmm1    # xmm1 = xmm1[0],xmm3[0],xmm1[1],xmm3[1]
+	paddd	%xmm2, %xmm0
+	paddd	%xmm4, %xmm1
+	addq	$16, %rdi
+	addq	$64, %rsi
+	cmpq	$2048, %rdi             # imm = 0x800
+	jne	.LBB4_11
+# BB#12:                                # %middle.block34
+                                        #   in Loop: Header=BB4_10 Depth=2
+	paddd	%xmm0, %xmm1
+	pshufd	$78, %xmm1, %xmm0       # xmm0 = xmm1[2,3,0,1]
+	paddd	%xmm1, %xmm0
+	pshufd	$229, %xmm0, %xmm1      # xmm1 = xmm0[1,1,2,3]
+	paddd	%xmm0, %xmm1
+	movq	%rdx, %rsi
+	shlq	$13, %rsi
+	movd	%xmm1, Z(%rsi,%r12,4)
+	incq	%rdx
+	addq	$8192, %rcx             # imm = 0x2000
+	cmpq	$2048, %rdx             # imm = 0x800
+	jne	.LBB4_10
+.LBB4_13:                               # %for.end17
+                                        #   in Loop: Header=BB4_7 Depth=1
+	movq	%rax, %rdi
+	callq	free
+	incq	%r12
+	cmpq	$2048, %r12             # imm = 0x800
 	jne	.LBB4_7
-# BB#8:                                 # %for.inc10
-                                        #   in Loop: Header=BB4_6 Depth=1
-	incq	%r14
-	addq	$4, %r15
-	cmpq	$2048, %r14             # imm = 0x800
-	jne	.LBB4_6
-# BB#9:                                 # %for.end12
+# BB#14:                                # %for.end20
 	movl	Z+16777212(%rip), %r9d
 	movl	$.L.str.2, %edi
 	movl	$2048, %esi             # imm = 0x800
@@ -716,10 +850,8 @@ main:                                   # @main
 	xorl	%eax, %eax
 	callq	printf
 	xorl	%eax, %eax
-	addq	$8, %rsp
 	popq	%rbx
 	popq	%r12
-	popq	%r13
 	popq	%r14
 	popq	%r15
 	popq	%rbp

@@ -1,0 +1,83 @@
+{
+   "context" : "{  :  }",
+   "name" : "for.cond1.preheader => for.end17",
+   "statements" : [
+      {
+         "accesses" : [
+            {
+               "kind" : "read",
+               "relation" : "{ Stmt_for_cond1_preheader[i0] -> MemRef_total_04__phi[] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "{ Stmt_for_cond1_preheader[i0] -> MemRef_tmp_02__phi[] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "{ Stmt_for_cond1_preheader[i0] -> MemRef_total_04[] }"
+            }
+         ],
+         "domain" : "{ Stmt_for_cond1_preheader[i0] : 0 <= i0 <= 31 }",
+         "name" : "Stmt_for_cond1_preheader",
+         "schedule" : "{ Stmt_for_cond1_preheader[i0] -> [i0, 0, 0] }"
+      },
+      {
+         "accesses" : [
+            {
+               "kind" : "write",
+               "relation" : "{ Stmt_for_inc[i0, i1] -> MemRef_tmp_02__phi[] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "{ Stmt_for_inc[i0, i1] -> MemRef_tmp_02__phi[] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "{ Stmt_for_inc[i0, i1] -> MemRef_a[64i0 + i1] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "{ Stmt_for_inc[i0, i1] -> MemRef_b[64i0 + i1] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "{ Stmt_for_inc[i0, i1] -> MemRef_add9_lcssa__phi[] }"
+            }
+         ],
+         "domain" : "{ Stmt_for_inc[i0, i1] : 0 <= i0 <= 31 and 0 <= i1 <= 63 }",
+         "name" : "Stmt_for_inc",
+         "schedule" : "{ Stmt_for_inc[i0, i1] -> [i0, 1, i1] }"
+      },
+      {
+         "accesses" : [
+            {
+               "kind" : "write",
+               "relation" : "{ Stmt_for_end[i0] -> MemRef_total_04__phi[] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "{ Stmt_for_end[i0] -> MemRef_add9_lcssa__phi[] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "{ Stmt_for_end[i0] -> MemRef_sum[i0] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "{ Stmt_for_end[i0] -> MemRef_sum[i0] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "{ Stmt_for_end[i0] -> MemRef_total_04[] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "{ Stmt_for_end[i0] -> MemRef_add14[] }"
+            }
+         ],
+         "domain" : "{ Stmt_for_end[i0] : 0 <= i0 <= 31 }",
+         "name" : "Stmt_for_end",
+         "schedule" : "{ Stmt_for_end[i0] -> [i0, 2, 0] }"
+      }
+   ]
+}

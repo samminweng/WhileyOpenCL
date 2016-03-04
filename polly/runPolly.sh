@@ -43,7 +43,7 @@ opt_polly(){
 	read -p "Press [Enter] 2. Prepare the LLVM-IR for Polly"
 	opt -S -polly-canonicalize $program.s > $program.preopt.ll
 	read -p "Press [Enter] 3. Show the SCoPs detected by Polly"
-	opt -basicaa -polly-ast -analyze -q $program.preopt.ll
+	opt -basicaa -polly-ast -analyze -q -polly-dependences-computeout=0 $program.preopt.ll
 	#opt -basicaa -polly-ast -analyze -q $program.preopt.ll
 	
 	read -p "Press [Enter] 4. Generate the detected SCoPs in DOT"

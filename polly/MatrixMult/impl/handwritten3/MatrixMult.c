@@ -34,15 +34,14 @@ int dot(int *__restrict__ a, int *__restrict__ b){
 	int sum[64];
 	int splits = N/64;
 	int s;
+	int total=0;
 	for(s=0;s<splits;s++){
 		int tmp=0;
 		for (i = 0; i < 64; i++) {
+			//total += a[s*64+i] * b[s*64+i];
 			tmp = tmp + a[s*64+i] * b[s*64+i];
 		}
 		sum[s] = tmp;
-	}
-	int total=0;
-	for(s=0;s<splits;s++){
 		total += sum[s];
 	}
 	return total;
@@ -72,9 +71,16 @@ int main(){
 		// Multiply the X and y_t vectors.
 		for (i = 0; i < N; i++) {
 			int *__restrict__ x = X[i];
-			int *__restrict__ z = Z[i];
-			z[j] = dot(x, y_t);
+			//int *__restrict__ z = Z[i];
+			int ii;
+			int sum=0;
+			for(ii=0;ii<N;ii++){
+				sum = sum + x[ii]*y_t[ii];
+			}
+			Z[i][j] = sum;
+			//z[j] = dot(x, y_t);
 		}
+		free(y_t);
 	}
 	printf("Pass %d X %d matrix test case (C[%d][%d]=%d)\n", N, N, N-1, N-1, Z[N-1][N-1]);
 
