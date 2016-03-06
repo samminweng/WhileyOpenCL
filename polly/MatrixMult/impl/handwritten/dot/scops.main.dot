@@ -1,54 +1,29 @@
 digraph "Scop Graph for 'main' function" {
 	label="Scop Graph for 'main' function";
 
-	Node0x5de6b00 [shape=record,label="{entry:\l  br label %entry.split, !dbg !23\l}"];
-	Node0x5de6b00 -> Node0x5dd6910;
-	Node0x5dd6910 [shape=record,label="{entry.split:                                      \l  tail call void @init_array(), !dbg !23\l  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !24, metadata\l... !25), !dbg !26\l  br label %for.cond1.preheader, !dbg !27\l}"];
-	Node0x5dd6910 -> Node0x5dddd20;
-	Node0x5dddd20 [shape=record,label="{for.cond1.preheader:                              \l  %indvars.iv7 = phi i64 [ 0, %entry.split ], [ %indvars.iv.next8, %for.inc28 ]\l  br label %for.body3, !dbg !31\l}"];
-	Node0x5dddd20 -> Node0x5de04d0;
-	Node0x5de04d0 [shape=record,label="{for.body3:                                        \l  %indvars.iv4 = phi i64 [ 0, %for.cond1.preheader ], [ %indvars.iv.next5,\l... %for.inc25 ]\l  %arrayidx5 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x\l... i64]]* @C, i64 0, i64 %indvars.iv7, i64 %indvars.iv4, !dbg !36\l  store i64 0, i64* %arrayidx5, align 8, !dbg !38\l  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !39, metadata\l... !25), !dbg !40\l  br label %for.body8, !dbg !41\l}"];
-	Node0x5de04d0 -> Node0x5dde3d0;
-	Node0x5dde3d0 [shape=record,label="{for.body8:                                        \l  %indvars.iv = phi i64 [ 0, %for.body3 ], [ %indvars.iv.next, %for.body8 ]\l  %arrayidx12 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x\l... i64]]* @C, i64 0, i64 %indvars.iv7, i64 %indvars.iv4, !dbg !45\l  %0 = load i64, i64* %arrayidx12, align 8, !dbg !45\l  %arrayidx16 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x\l... i64]]* @A, i64 0, i64 %indvars.iv7, i64 %indvars.iv, !dbg !46\l  %1 = load i64, i64* %arrayidx16, align 8, !dbg !46\l  %arrayidx20 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x\l... i64]]* @B, i64 0, i64 %indvars.iv, i64 %indvars.iv4, !dbg !47\l  %2 = load i64, i64* %arrayidx20, align 8, !dbg !47\l  %mul = mul nsw i64 %2, %1, !dbg !48\l  %add = add nsw i64 %mul, %0, !dbg !49\l  %arrayidx24 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x\l... i64]]* @C, i64 0, i64 %indvars.iv7, i64 %indvars.iv4, !dbg !50\l  store i64 %add, i64* %arrayidx24, align 8, !dbg !51\l  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !41\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !39, metadata\l... !25), !dbg !40\l  %exitcond = icmp ne i64 %indvars.iv.next, 1024, !dbg !41\l  br i1 %exitcond, label %for.body8, label %for.inc25, !dbg !41\l}"];
-	Node0x5dde3d0 -> Node0x5dde3d0[constraint=false];
-	Node0x5dde3d0 -> Node0x5dd7580;
-	Node0x5dd7580 [shape=record,label="{for.inc25:                                        \l  %indvars.iv.next5 = add nuw nsw i64 %indvars.iv4, 1, !dbg !31\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !52, metadata\l... !25), !dbg !53\l  %exitcond6 = icmp ne i64 %indvars.iv.next5, 1024, !dbg !31\l  br i1 %exitcond6, label %for.body3, label %for.inc28, !dbg !31\l}"];
-	Node0x5dd7580 -> Node0x5de04d0[constraint=false];
-	Node0x5dd7580 -> Node0x5dde4d0;
-	Node0x5dde4d0 [shape=record,label="{for.inc28:                                        \l  %indvars.iv.next8 = add nuw nsw i64 %indvars.iv7, 1, !dbg !27\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !24, metadata\l... !25), !dbg !26\l  %exitcond9 = icmp ne i64 %indvars.iv.next8, 1024, !dbg !27\l  br i1 %exitcond9, label %for.cond1.preheader, label %for.end30, !dbg !27\l}"];
-	Node0x5dde4d0 -> Node0x5dddd20[constraint=false];
-	Node0x5dde4d0 -> Node0x5de6520;
-	Node0x5de6520 [shape=record,label="{for.end30:                                        \l  %3 = load i64, i64* getelementptr inbounds ([1024 x [1024 x i64]], [1024 x\l... [1024 x i64]]* @C, i64 0, i64 1023, i64 1023), align 8, !dbg !54\l  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([49 x\l... i8], [49 x i8]* @.str.2, i64 0, i64 0), i32 1024, i32 1024, i64 %3) #3, !dbg\l... !55\l  ret i32 0, !dbg !56\l}"];
+	Node0x6970240 [shape=record,label="{entry:\l  br label %entry.split, !dbg !24\l}"];
+	Node0x6970240 -> Node0x695f580;
+	Node0x695f580 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !25, metadata\l... !26), !dbg !24\l  br label %for.body, !dbg !27\l}"];
+	Node0x695f580 -> Node0x69695a0;
+	Node0x69695a0 [shape=record,label="{for.body:                                         \l  %r.01 = phi i32 [ 0, %entry.split ], [ %inc, %for.body ]\l  tail call void @init_array(), !dbg !31\l  tail call void @mat_mult(), !dbg !33\l  %inc = add nuw nsw i32 %r.01, 1, !dbg !34\l  tail call void @llvm.dbg.value(metadata i32 %inc, i64 0, metadata !25,\l... metadata !26), !dbg !24\l  %exitcond = icmp ne i32 %inc, 10000, !dbg !27\l  br i1 %exitcond, label %for.body, label %for.end, !dbg !27\l}"];
+	Node0x69695a0 -> Node0x69695a0[constraint=false];
+	Node0x69695a0 -> Node0x69703e0;
+	Node0x69703e0 [shape=record,label="{for.end:                                          \l  %0 = load i64, i64* getelementptr inbounds ([32 x [32 x i64]], [32 x [32 x\l... i64]]* @C, i64 0, i64 31, i64 31), align 8, !dbg !36\l  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([49 x\l... i8], [49 x i8]* @.str.2, i64 0, i64 0), i32 32, i32 32, i64 %0) #3, !dbg !37\l  ret i32 0, !dbg !38\l}"];
 	colorscheme = "paired12"
-        subgraph cluster_0x5dce560 {
-          label = "MatrixMult.c:34-48
+        subgraph cluster_0x6966c40 {
+          label = "MatrixMult.c:49-56
 ";
           style = solid;
           color = 1
-          subgraph cluster_0x5ddf750 {
-            label = "MatrixMult.c:34-43
-";
-            style = filled;
-            color = 3            subgraph cluster_0x5dce5e0 {
-              label = "MatrixMult.c:34-43
-";
-              style = solid;
-              color = 5
-              subgraph cluster_0x5dd7480 {
-                label = "MatrixMult.c:34-43
-";
-                style = solid;
-                color = 7
-                Node0x5dde3d0;
-              }
-              Node0x5de04d0;
-              Node0x5dd7580;
-            }
-            Node0x5dddd20;
-            Node0x5dde4d0;
+          subgraph cluster_0x696af70 {
+            label = "MatrixMult.c:49-52
+Call instruction:   tail call void @init_array(), !dbg !31";
+            style = solid;
+            color = 6
+            Node0x69695a0;
           }
-          Node0x5de6b00;
-          Node0x5dd6910;
-          Node0x5de6520;
+          Node0x6970240;
+          Node0x695f580;
+          Node0x69703e0;
         }
 }
