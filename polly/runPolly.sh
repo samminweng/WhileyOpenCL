@@ -90,69 +90,39 @@ opt_polly(){
     ar -cvq libUtil.a Util.o
 
 	echo -e -n "[1] Run ${BOLD}${GREEN} None Optimized ${RESET} executable. Press [Enter]" && read	
-    opt -basicaa -polly-prepare -polly-codegen -polly-report $program.preopt.ll\
-        -S -o $program.none.ll
+    opt -basicaa -polly-codegen -polly-report $program.preopt.ll\
+        | opt > $program.none.ll
  	runExecutables $program "none" $parameter
 
 	echo -e -n "[2] Run ${BOLD}${GREEN} -O3 Optimized ${RESET} executable. Press [Enter]" && read	
 	### Use 'llc' to compile LLVM code into assembly code
-    opt -O3 -basicaa -polly-prepare -polly-codegen -polly-report $program.preopt.ll\
-     	-S -o $program.O3.ll
+    opt -O3 -basicaa -polly-codegen -polly-report $program.none.ll\
+     	| opt -O3 > $program.O3.ll
     runExecutables $program "O3" $parameter
 
-	echo -e -n "[3] Test Loop Tiling Strategy.\n"
-	echo -e -n "[3.a] Run ${BOLD}${GREEN} Enable Loop Tiling ${RESET} executable. Press [Enter]" && read
-	opt -polly-vectorizer=none -polly-tiling\
-	    -O3 -basicaa -polly-prepare -polly-codegen -polly-report $program.preopt.ll\
-	    -S -o $program.tiling.ll
-	runExecutables $program "tiling" $parameter
-
-	echo -e -n "[3.b] Run ${BOLD}${GREEN} Enable 2n Level Loop Tiling ${RESET} executable. Press [Enter]" && read
-	opt -polly-vectorizer=none -polly-tiling -polly-2nd-level-tiling\
-	    -O3 -basicaa -polly-prepare -polly-codegen -polly-report $program.preopt.ll\
-	    -S -o $program.2ndtiling.ll
-	runExecutables $program "2ndtiling" $parameter
-	#pollycc -O3 -mllvm -polly-optimizer=none -mllvm -polly-vectorizer=none MatrixMult.c -o "out/$program.tiling.out" 
-	#time ./out/$program.tiling.out $parameter
-
-	echo -e -n "[4] Test Vectorization Strategy:None, Stripmining, Polly internal Vectorizer.\n"
-	echo -e -n "[4.a] Run ${BOLD}${GREEN} None Vectorization ${RESET} executable. Press [Enter]" && read
-	opt -polly-vectorizer=none\
-	    -O3 -basicaa -polly-prepare -polly-codegen -polly-report $program.preopt.ll\
-	    -S -o $program.nonevector.ll
-	runExecutables $program "nonevector" $parameter
-
-	echo -e -n "[4.b] Run ${BOLD}${GREEN} Strip mining ${RESET} executable. Press [Enter] " && read
+	echo -e -n "[3] Run ${BOLD}${GREEN} [2] + Strip mining ${RESET} executable. Press [Enter] " && read
 	opt -polly-vectorizer=stripmine\
-	    -O3 -basicaa -polly-prepare -polly-codegen -polly-report $program.preopt.ll\
-	    -S -o $program.stripmine.ll
+	    -basicaa -polly-codegen -polly-report $program.O3.ll\
+	    | opt -O3 > $program.stripmine.ll
 	runExecutables $program "stripmine" $parameter
 
-	echo -e -n "[4.c] Run ${BOLD}${GREEN} Polly Internal Vectorizer ${RESET} executable. Press [Enter] " && read	
+	# echo -e -n "[5] Run ${BOLD}${GREEN} Optimized Schedule of SCoPs ${RESET} executable. Press [Enter] " && read	
+	# opt -polly-opt-isl\
+	#     -O3 -basicaa -polly-prepare -polly-codegen -polly-report $program.preopt.ll\
+	#     -S -o $program.optisl.ll
+	# runExecutables $program "optisl" $parameter
+
+	echo -e -n "[4] Run ${BOLD}${GREEN} [3] + Polly loop Vectorization ${RESET} executable. Press [Enter] " && read
 	opt -polly-vectorizer=polly\
-	    -O3 -basicaa -polly-prepare -polly-codegen -polly-report $program.preopt.ll\
-	    -S -o $program.pollyvector.ll
-	runExecutables $program "pollyvector" $parameter
-	#pollycc -O3 -mllvm -polly-optimizer=none -mllvm -polly-vectorizer=polly -mllvm -polly-tiling=false MatrixMult.c -o "out/$program.pollyvector.out"
-	#time ./out/$program.pollyvector.out $parameter
-
-	echo -e -n "[5] Run ${BOLD}${GREEN} Optimized Schedule of SCoPs ${RESET} executable. Press [Enter] " && read	
-	opt -polly-opt-isl\
-	    -O3 -basicaa -polly-prepare -polly-codegen -polly-report $program.preopt.ll\
-	    -S -o $program.optisl.ll
-	runExecutables $program "optisl" $parameter
-
-	echo -e -n "[6.a] Run ${BOLD}${GREEN}  (1st+2nd) Loop Tiling + Polly Vectorizer + Optimized Schedule ${RESET} executable. Press [Enter] " && read
-	opt -polly-vectorizer=polly -polly-opt-isl -polly-tiling -polly-2nd-level-tiling\
-	    -O3 -basicaa -polly-prepare -polly-codegen -polly-report $program.preopt.ll\
-	    -S -o $program.aggregated.ll
-    runExecutables $program "aggregated" $parameter
+	    -basicaa -polly-codegen -polly-report $program.stripmine.ll\
+	    | opt -O3 > $program.vectorization.ll
+    runExecutables $program "vectorization" $parameter
 	
-	echo -e -n "[6.b] Run ${BOLD}${GREEN}Polly-optimized  ${RESET} executable. Press [Enter] " && read
-	opt -polly\
-	    -O3 -basicaa -polly-prepare -polly-codegen -polly-report $program.preopt.ll\
-	    -S -o $program.polly.ll
-    runExecutables $program "polly" $parameter
+	echo -e -n "[5] Run ${BOLD}${GREEN} [4] + (1st + 2nd) Loop tiling ${RESET} executable. Press [Enter] " && read
+	opt -polly-tiling -polly-2nd-level-tiling\
+	    -basicaa -polly-codegen -polly-report $program.vectorization.ll\
+	    | opt -O3 > $program.tiling.ll
+    runExecutables $program "tiling" $parameter
 
 	echo -e -n "Compare ${REVERSE}GCC vs. Polly${RESET}\n"
 	echo -e -n "[1] Run ${BOLD}${GREEN}GCC -O3 ${RESET} executables. Press [Enter] " && read
@@ -200,5 +170,5 @@ exec(){
 	cd ../../../
 }
 
-exec handwritten VectorMult 2 1024X1024X10
+#exec handwritten VectorMult 2 1024X1024X10
 exec handwritten MatrixMult 2 32
