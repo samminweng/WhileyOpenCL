@@ -15,11 +15,14 @@ target triple = "x86_64-unknown-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define void @init_array() #0 !dbg !4 {
 entry:
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !24, metadata !25), !dbg !26
+  br label %entry.split, !dbg !24
+
+entry.split:                                      ; preds = %entry
+  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !25, metadata !26), !dbg !24
   br label %vector.ph, !dbg !27
 
-vector.ph:                                        ; preds = %for.inc10, %entry
-  %indvars.iv3 = phi i64 [ 0, %entry ], [ %indvars.iv.next4, %for.inc10 ]
+vector.ph:                                        ; preds = %for.inc10, %entry.split
+  %indvars.iv3 = phi i64 [ 0, %entry.split ], [ %indvars.iv.next4, %for.inc10 ]
   br label %vector.body, !dbg !31
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -67,10 +70,13 @@ define void @mat_mult() #1 !dbg !7 {
 entry:
   %add.1.lcssa.phiops = alloca i64
   %add1.phiops = alloca i64
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !45, metadata !25), !dbg !46
+  br label %entry.split, !dbg !45
+
+entry.split:                                      ; preds = %entry
+  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !46, metadata !26), !dbg !45
   br label %polly.split_new_and_old, !dbg !47
 
-polly.split_new_and_old:                          ; preds = %entry
+polly.split_new_and_old:                          ; preds = %entry.split
   br i1 true, label %polly.start, label %for.cond1.preheader
 
 for.cond1.preheader:                              ; preds = %polly.split_new_and_old, %for.inc28
@@ -81,7 +87,7 @@ for.body3:                                        ; preds = %for.inc25, %for.con
   %indvars.iv4 = phi i64 [ 0, %for.cond1.preheader ], [ %indvars.iv.next5, %for.inc25 ]
   %arrayidx5 = getelementptr inbounds [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %indvars.iv7, i64 %indvars.iv4, !dbg !56
   store i64 0, i64* %arrayidx5, align 8, !dbg !58
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !59, metadata !25), !dbg !60
+  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !59, metadata !26), !dbg !60
   br label %for.body8, !dbg !61
 
 for.body8:                                        ; preds = %for.body8, %for.body3
@@ -182,18 +188,18 @@ polly.stmt.for.body8:                             ; preds = %polly.loop_header10
   %add1.phiops.reload = load i64, i64* %add1.phiops
   %6 = shl i64 %polly.indvar13, 1
   %scevgep17 = getelementptr i64, i64* %scevgep16, i64 %6
-  %_p_scalar_ = load i64, i64* %scevgep17, align 16, !alias.scope !78, !noalias !79
+  %_p_scalar_ = load i64, i64* %scevgep17, align 16, !alias.scope !75, !noalias !79
   %7 = shl i64 %polly.indvar13, 10
   %scevgep19 = getelementptr i64, i64* %scevgep18, i64 %7
-  %_p_scalar_20 = load i64, i64* %scevgep19, align 8, !alias.scope !75, !noalias !80
+  %_p_scalar_20 = load i64, i64* %scevgep19, align 8, !alias.scope !77, !noalias !80
   %p_mul = mul nsw i64 %_p_scalar_20, %_p_scalar_, !dbg !68
   %p_add = add nsw i64 %p_mul, %add1.phiops.reload, !dbg !69
   %8 = shl i64 %polly.indvar13, 1
   %scevgep22 = getelementptr i64, i64* %scevgep21, i64 %8
-  %_p_scalar_23 = load i64, i64* %scevgep22, align 8, !alias.scope !78, !noalias !79
+  %_p_scalar_23 = load i64, i64* %scevgep22, align 8, !alias.scope !75, !noalias !79
   %9 = shl i64 %polly.indvar13, 10
   %scevgep25 = getelementptr i64, i64* %scevgep24, i64 %9
-  %_p_scalar_26 = load i64, i64* %scevgep25, align 8, !alias.scope !75, !noalias !80
+  %_p_scalar_26 = load i64, i64* %scevgep25, align 8, !alias.scope !77, !noalias !80
   %p_mul.1 = mul nsw i64 %_p_scalar_26, %_p_scalar_23, !dbg !68
   %p_add.1 = add nsw i64 %p_mul.1, %p_add, !dbg !69
   %10 = shl i64 %polly.indvar13, 1
@@ -214,11 +220,14 @@ polly.loop_preheader11:                           ; preds = %polly.stmt.for.body
 ; Function Attrs: nounwind uwtable
 define void @print_array() #0 !dbg !8 {
 entry:
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !81, metadata !25), !dbg !82
+  br label %entry.split, !dbg !81
+
+entry.split:                                      ; preds = %entry
+  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !82, metadata !26), !dbg !81
   br label %for.cond1.preheader, !dbg !83
 
-for.cond1.preheader:                              ; preds = %for.end, %entry
-  %indvars.iv6 = phi i64 [ 0, %entry ], [ %indvars.iv.next7, %for.end ]
+for.cond1.preheader:                              ; preds = %for.end, %entry.split
+  %indvars.iv6 = phi i64 [ 0, %entry.split ], [ %indvars.iv.next7, %for.end ]
   %0 = load %struct._IO_FILE*, %struct._IO_FILE** @stdout, align 8, !dbg !87
   br label %for.body3, !dbg !92
 
@@ -263,11 +272,14 @@ define i32 @main() #1 !dbg !9 {
 entry:
   %add.i.1.lcssa.phiops = alloca i64
   %add1.i.phiops = alloca i64
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !24, metadata !25), !dbg !105
+  br label %entry.split, !dbg !105
+
+entry.split:                                      ; preds = %entry
+  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !25, metadata !26), !dbg !105
   br label %vector.ph, !dbg !107
 
-vector.ph:                                        ; preds = %for.inc10.i, %entry
-  %indvars.iv3.i = phi i64 [ 0, %entry ], [ %indvars.iv.next4.i, %for.inc10.i ], !dbg !108
+vector.ph:                                        ; preds = %for.inc10.i, %entry.split
+  %indvars.iv3.i = phi i64 [ 0, %entry.split ], [ %indvars.iv.next4.i, %for.inc10.i ], !dbg !108
   br label %vector.body, !dbg !109
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
@@ -320,7 +332,7 @@ for.body3.i3:                                     ; preds = %for.inc25.i, %for.c
   %indvars.iv4.i = phi i64 [ 0, %for.cond1.preheader.i1 ], [ %indvars.iv.next5.i, %for.inc25.i ], !dbg !117
   %arrayidx5.i2 = getelementptr inbounds [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %indvars.iv7.i, i64 %indvars.iv4.i, !dbg !118
   store i64 0, i64* %arrayidx5.i2, align 8, !dbg !119
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !59, metadata !25), !dbg !120
+  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !59, metadata !26), !dbg !120
   br label %for.body8.i, !dbg !121
 
 for.body8.i:                                      ; preds = %for.body8.i, %for.body3.i3
@@ -423,18 +435,18 @@ polly.stmt.for.body8.i:                           ; preds = %polly.loop_header16
   %add1.i.phiops.reload = load i64, i64* %add1.i.phiops
   %24 = shl i64 %polly.indvar19, 1
   %scevgep23 = getelementptr i64, i64* %scevgep22, i64 %24
-  %_p_scalar_ = load i64, i64* %scevgep23, align 16, !alias.scope !138, !noalias !139
+  %_p_scalar_ = load i64, i64* %scevgep23, align 16, !alias.scope !135, !noalias !139
   %25 = shl i64 %polly.indvar19, 10
   %scevgep25 = getelementptr i64, i64* %scevgep24, i64 %25
-  %_p_scalar_26 = load i64, i64* %scevgep25, align 8, !alias.scope !135, !noalias !140
+  %_p_scalar_26 = load i64, i64* %scevgep25, align 8, !alias.scope !137, !noalias !140
   %p_mul.i = mul nsw i64 %_p_scalar_26, %_p_scalar_, !dbg !125
   %p_add.i = add nsw i64 %p_mul.i, %add1.i.phiops.reload, !dbg !126
   %26 = shl i64 %polly.indvar19, 1
   %scevgep28 = getelementptr i64, i64* %scevgep27, i64 %26
-  %_p_scalar_29 = load i64, i64* %scevgep28, align 8, !alias.scope !138, !noalias !139
+  %_p_scalar_29 = load i64, i64* %scevgep28, align 8, !alias.scope !135, !noalias !139
   %27 = shl i64 %polly.indvar19, 10
   %scevgep31 = getelementptr i64, i64* %scevgep30, i64 %27
-  %_p_scalar_32 = load i64, i64* %scevgep31, align 8, !alias.scope !135, !noalias !140
+  %_p_scalar_32 = load i64, i64* %scevgep31, align 8, !alias.scope !137, !noalias !140
   %p_mul.i.1 = mul nsw i64 %_p_scalar_32, %_p_scalar_29, !dbg !125
   %p_add.i.1 = add nsw i64 %p_mul.i.1, %p_add.i, !dbg !126
   %28 = shl i64 %polly.indvar19, 1
@@ -495,9 +507,9 @@ attributes #4 = { nounwind }
 !21 = !{i32 2, !"Dwarf Version", i32 4}
 !22 = !{i32 2, !"Debug Info Version", i32 3}
 !23 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)"}
-!24 = !DILocalVariable(name: "i", scope: !4, file: !1, line: 9, type: !12)
-!25 = !DIExpression()
-!26 = !DILocation(line: 9, column: 9, scope: !4)
+!24 = !DILocation(line: 9, column: 9, scope: !4)
+!25 = !DILocalVariable(name: "i", scope: !4, file: !1, line: 9, type: !12)
+!26 = !DIExpression()
 !27 = !DILocation(line: 11, column: 5, scope: !28)
 !28 = !DILexicalBlockFile(scope: !29, file: !1, discriminator: 1)
 !29 = distinct !DILexicalBlock(scope: !30, file: !1, line: 11, column: 5)
@@ -516,8 +528,8 @@ attributes #4 = { nounwind }
 !42 = !{!"llvm.loop.vectorize.width", i32 1}
 !43 = !{!"llvm.loop.interleave.count", i32 1}
 !44 = !DILocation(line: 17, column: 1, scope: !4)
-!45 = !DILocalVariable(name: "i", scope: !7, file: !1, line: 20, type: !12)
-!46 = !DILocation(line: 20, column: 9, scope: !7)
+!45 = !DILocation(line: 20, column: 9, scope: !7)
+!46 = !DILocalVariable(name: "i", scope: !7, file: !1, line: 20, type: !12)
 !47 = !DILocation(line: 21, column: 5, scope: !48)
 !48 = !DILexicalBlockFile(scope: !49, file: !1, discriminator: 1)
 !49 = distinct !DILexicalBlock(scope: !50, file: !1, line: 21, column: 5)
@@ -546,14 +558,14 @@ attributes #4 = { nounwind }
 !72 = distinct !{!72, !73, !"polly.alias.scope.C"}
 !73 = distinct !{!73, !"polly.alias.scope.domain"}
 !74 = !{!75, !76, !77, !78}
-!75 = distinct !{!75, !73, !"polly.alias.scope.B"}
-!76 = distinct !{!76, !73, !"polly.alias.scope.add1"}
-!77 = distinct !{!77, !73, !"polly.alias.scope.add.1.lcssa"}
-!78 = distinct !{!78, !73, !"polly.alias.scope.A"}
-!79 = !{!75, !76, !77, !72}
-!80 = !{!76, !77, !78, !72}
-!81 = !DILocalVariable(name: "i", scope: !8, file: !1, line: 33, type: !12)
-!82 = !DILocation(line: 33, column: 9, scope: !8)
+!75 = distinct !{!75, !73, !"polly.alias.scope.A"}
+!76 = distinct !{!76, !73, !"polly.alias.scope.add.1.lcssa"}
+!77 = distinct !{!77, !73, !"polly.alias.scope.B"}
+!78 = distinct !{!78, !73, !"polly.alias.scope.add1"}
+!79 = !{!76, !77, !78, !72}
+!80 = !{!75, !76, !78, !72}
+!81 = !DILocation(line: 33, column: 9, scope: !8)
+!82 = !DILocalVariable(name: "i", scope: !8, file: !1, line: 33, type: !12)
 !83 = !DILocation(line: 35, column: 5, scope: !84)
 !84 = !DILexicalBlockFile(scope: !85, file: !1, discriminator: 1)
 !85 = distinct !DILexicalBlock(scope: !86, file: !1, line: 35, column: 5)
@@ -606,9 +618,9 @@ attributes #4 = { nounwind }
 !132 = distinct !{!132, !133, !"polly.alias.scope.C"}
 !133 = distinct !{!133, !"polly.alias.scope.domain"}
 !134 = !{!135, !136, !137, !138}
-!135 = distinct !{!135, !133, !"polly.alias.scope.B"}
-!136 = distinct !{!136, !133, !"polly.alias.scope.add.i.1.lcssa"}
-!137 = distinct !{!137, !133, !"polly.alias.scope.add1.i"}
-!138 = distinct !{!138, !133, !"polly.alias.scope.A"}
-!139 = !{!135, !136, !137, !132}
-!140 = !{!136, !137, !138, !132}
+!135 = distinct !{!135, !133, !"polly.alias.scope.A"}
+!136 = distinct !{!136, !133, !"polly.alias.scope.add1.i"}
+!137 = distinct !{!137, !133, !"polly.alias.scope.B"}
+!138 = distinct !{!138, !133, !"polly.alias.scope.add.i.1.lcssa"}
+!139 = !{!136, !137, !138, !132}
+!140 = !{!135, !136, !138, !132}

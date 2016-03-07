@@ -89,42 +89,43 @@ opt_polly(){
     clang -c Util.c -o Util.o ### Compile Util.c to Util.o (object file)
     ar -cvq libUtil.a Util.o
 
-	echo -e -n "[1] Run ${BOLD}${GREEN} None Optimized ${RESET} executable. Press [Enter]" && read	
-    opt -basicaa -polly-codegen -polly-report $program.preopt.ll\
-        | opt > $program.none.ll
- 	runExecutables $program "none" $parameter
+	# echo -e -n "[1] Run ${BOLD}${GREEN} None Optimized ${RESET} executable. Press [Enter]" && read	
+    # opt -basicaa -polly-codegen -polly-report $program.preopt.ll\
+    #     -S -o $program.none.ll
+    # runExecutables $program "none" $parameter
 
-	echo -e -n "[2] Run ${BOLD}${GREEN} -O3 Optimized ${RESET} executable. Press [Enter]" && read	
+	echo -e -n "[1] Run ${BOLD}${GREEN} -O3 Optimized ${RESET} executable. Press [Enter]" && read	
 	### Use 'llc' to compile LLVM code into assembly code
-    opt -O3 -basicaa -polly-codegen -polly-report $program.none.ll\
-     	| opt -O3 > $program.O3.ll
+    opt -O3 -basicaa -polly-codegen -polly-report $program.preopt.ll\
+     	-S -o $program.O3.ll
     runExecutables $program "O3" $parameter
 
-	echo -e -n "[3] Run ${BOLD}${GREEN} [2] + Strip mining ${RESET} executable. Press [Enter] " && read
+	echo -e -n "[2] Run ${BOLD}${GREEN} [1] + Strip mining ${RESET} executable. Press [Enter] " && read
 	opt -polly-vectorizer=stripmine\
-	    -basicaa -polly-codegen -polly-report $program.O3.ll\
-	    | opt -O3 > $program.stripmine.ll
+	    -O3 -basicaa -polly-codegen -polly-report $program.preopt.ll\
+	    -S -o $program.stripmine.ll
 	runExecutables $program "stripmine" $parameter
 
-	# echo -e -n "[5] Run ${BOLD}${GREEN} Optimized Schedule of SCoPs ${RESET} executable. Press [Enter] " && read	
-	# opt -polly-opt-isl\
-	#     -O3 -basicaa -polly-prepare -polly-codegen -polly-report $program.preopt.ll\
-	#     -S -o $program.optisl.ll
-	# runExecutables $program "optisl" $parameter
-
-	echo -e -n "[4] Run ${BOLD}${GREEN} [3] + Polly loop Vectorization ${RESET} executable. Press [Enter] " && read
+	echo -e -n "[3] Run ${BOLD}${GREEN} [1] + Polly loop Vectorization ${RESET} executable. Press [Enter] " && read
 	opt -polly-vectorizer=polly\
-	    -basicaa -polly-codegen -polly-report $program.stripmine.ll\
-	    | opt -O3 > $program.vectorization.ll
-    runExecutables $program "vectorization" $parameter
+	    -O3 -basicaa -polly-codegen -polly-report $program.preopt.ll\
+	    -S -o $program.pollyvector.ll
+    runExecutables $program "pollyvector" $parameter
 	
-	echo -e -n "[5] Run ${BOLD}${GREEN} [4] + (1st + 2nd) Loop tiling ${RESET} executable. Press [Enter] " && read
-	opt -polly-tiling -polly-2nd-level-tiling\
-	    -basicaa -polly-codegen -polly-report $program.vectorization.ll\
-	    | opt -O3 > $program.tiling.ll
+	echo -e -n "[4] Run ${BOLD}${GREEN} [3] + (1st + 2nd) Loop tiling ${RESET} executable. Press [Enter] " && read
+	opt -polly-vectorizer=polly -polly-tiling -polly-2nd-level-tiling\
+	    -O3 -basicaa -polly-codegen -polly-report $program.preopt.ll\
+	    -S -o $program.tiling.ll
     runExecutables $program "tiling" $parameter
 
-	echo -e -n "Compare ${REVERSE}GCC vs. Polly${RESET}\n"
+    echo -e -n "[5] Run ${BOLD}${GREEN} [4] + Optimized Schedule of SCoPs ${RESET} executable. Press [Enter] " && read	
+	opt -polly-opt-isl -polly-vectorizer=polly -polly-tiling -polly-2nd-level-tiling\
+ 	    -O3 -basicaa -polly-prepare -polly-codegen -polly-report $program.preopt.ll\
+        -S -o $program.optisl.ll
+	runExecutables $program "optisl" $parameter
+
+
+	echo -e -n "${REVERSE}Compare GCC vs. Polly${RESET}\n"
 	echo -e -n "[1] Run ${BOLD}${GREEN}GCC -O3 ${RESET} executables. Press [Enter] " && read
 	gcc -O3 $program.c Util.c -o $program.gcc.out
 	mv $program.gcc.out "out/"

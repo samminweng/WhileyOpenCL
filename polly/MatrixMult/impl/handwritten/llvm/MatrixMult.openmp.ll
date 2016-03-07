@@ -5,9 +5,9 @@ target triple = "x86_64-unknown-linux-gnu"
 %struct._IO_FILE = type { i32, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, %struct._IO_marker*, %struct._IO_FILE*, i32, i32, i64, i16, i8, [1 x i8], i8*, i64, i8*, i8*, i8*, i8*, i64, i32, [20 x i8] }
 %struct._IO_marker = type { %struct._IO_marker*, %struct._IO_FILE*, i32 }
 
-@A = common global [32 x [32 x i64]] zeroinitializer, align 16
-@B = common global [32 x [32 x i64]] zeroinitializer, align 16
-@C = common global [32 x [32 x i64]] zeroinitializer, align 16
+@A = common global [512 x [512 x i64]] zeroinitializer, align 16
+@B = common global [512 x [512 x i64]] zeroinitializer, align 16
+@C = common global [512 x [512 x i64]] zeroinitializer, align 16
 @stdout = external global %struct._IO_FILE*, align 8
 @.str = private unnamed_addr constant [6 x i8] c"%lld \00", align 1
 @.str.2 = private unnamed_addr constant [49 x i8] c"Pass %d X %d matrix test case (C[N][N] =%lld) \0A \00", align 1
@@ -21,171 +21,117 @@ entry.split:                                      ; preds = %entry
   tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !25, metadata !26), !dbg !24
   br label %vector.ph, !dbg !27
 
-vector.ph:                                        ; preds = %vector.body, %entry.split
-  %indvars.iv3 = phi i64 [ 0, %entry.split ], [ %indvars.iv.next4, %vector.body ]
+vector.ph:                                        ; preds = %for.inc10, %entry.split
+  %indvars.iv3 = phi i64 [ 0, %entry.split ], [ %indvars.iv.next4, %for.inc10 ]
   br label %vector.body, !dbg !31
 
-vector.body:                                      ; preds = %vector.ph
-  %0 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 0, !dbg !36
+vector.body:                                      ; preds = %vector.body, %vector.ph
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next.1, %vector.body ], !dbg !31
+  %0 = getelementptr inbounds [512 x [512 x i64]], [512 x [512 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 %index, !dbg !36
   %1 = bitcast i64* %0 to <2 x i64>*, !dbg !38
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %1, align 16, !dbg !38
-  %2 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 %indvars.iv3, i64 0, !dbg !39
-  %3 = bitcast i64* %2 to <2 x i64>*, !dbg !40
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %3, align 16, !dbg !40
-  %4 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 2, !dbg !36
-  %5 = bitcast i64* %4 to <2 x i64>*, !dbg !38
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %5, align 16, !dbg !38
-  %6 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 %indvars.iv3, i64 2, !dbg !39
+  %2 = getelementptr i64, i64* %0, i64 2, !dbg !38
+  %3 = bitcast i64* %2 to <2 x i64>*, !dbg !38
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %3, align 16, !dbg !38
+  %4 = getelementptr inbounds [512 x [512 x i64]], [512 x [512 x i64]]* @B, i64 0, i64 %indvars.iv3, i64 %index, !dbg !39
+  %5 = bitcast i64* %4 to <2 x i64>*, !dbg !40
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %5, align 16, !dbg !40
+  %6 = getelementptr i64, i64* %4, i64 2, !dbg !40
   %7 = bitcast i64* %6 to <2 x i64>*, !dbg !40
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %7, align 16, !dbg !40
-  %8 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 4, !dbg !36
+  %index.next = or i64 %index, 4, !dbg !31
+  %8 = getelementptr inbounds [512 x [512 x i64]], [512 x [512 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 %index.next, !dbg !36
   %9 = bitcast i64* %8 to <2 x i64>*, !dbg !38
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %9, align 16, !dbg !38
-  %10 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 %indvars.iv3, i64 4, !dbg !39
-  %11 = bitcast i64* %10 to <2 x i64>*, !dbg !40
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %11, align 16, !dbg !40
-  %12 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 6, !dbg !36
-  %13 = bitcast i64* %12 to <2 x i64>*, !dbg !38
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %13, align 16, !dbg !38
-  %14 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 %indvars.iv3, i64 6, !dbg !39
+  %10 = getelementptr i64, i64* %8, i64 2, !dbg !38
+  %11 = bitcast i64* %10 to <2 x i64>*, !dbg !38
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %11, align 16, !dbg !38
+  %12 = getelementptr inbounds [512 x [512 x i64]], [512 x [512 x i64]]* @B, i64 0, i64 %indvars.iv3, i64 %index.next, !dbg !39
+  %13 = bitcast i64* %12 to <2 x i64>*, !dbg !40
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %13, align 16, !dbg !40
+  %14 = getelementptr i64, i64* %12, i64 2, !dbg !40
   %15 = bitcast i64* %14 to <2 x i64>*, !dbg !40
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %15, align 16, !dbg !40
-  %16 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 8, !dbg !36
-  %17 = bitcast i64* %16 to <2 x i64>*, !dbg !38
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %17, align 16, !dbg !38
-  %18 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 %indvars.iv3, i64 8, !dbg !39
-  %19 = bitcast i64* %18 to <2 x i64>*, !dbg !40
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %19, align 16, !dbg !40
-  %20 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 10, !dbg !36
-  %21 = bitcast i64* %20 to <2 x i64>*, !dbg !38
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %21, align 16, !dbg !38
-  %22 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 %indvars.iv3, i64 10, !dbg !39
-  %23 = bitcast i64* %22 to <2 x i64>*, !dbg !40
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %23, align 16, !dbg !40
-  %24 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 12, !dbg !36
-  %25 = bitcast i64* %24 to <2 x i64>*, !dbg !38
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %25, align 16, !dbg !38
-  %26 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 %indvars.iv3, i64 12, !dbg !39
-  %27 = bitcast i64* %26 to <2 x i64>*, !dbg !40
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %27, align 16, !dbg !40
-  %28 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 14, !dbg !36
-  %29 = bitcast i64* %28 to <2 x i64>*, !dbg !38
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %29, align 16, !dbg !38
-  %30 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 %indvars.iv3, i64 14, !dbg !39
-  %31 = bitcast i64* %30 to <2 x i64>*, !dbg !40
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %31, align 16, !dbg !40
-  %32 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 16, !dbg !36
-  %33 = bitcast i64* %32 to <2 x i64>*, !dbg !38
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %33, align 16, !dbg !38
-  %34 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 %indvars.iv3, i64 16, !dbg !39
-  %35 = bitcast i64* %34 to <2 x i64>*, !dbg !40
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %35, align 16, !dbg !40
-  %36 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 18, !dbg !36
-  %37 = bitcast i64* %36 to <2 x i64>*, !dbg !38
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %37, align 16, !dbg !38
-  %38 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 %indvars.iv3, i64 18, !dbg !39
-  %39 = bitcast i64* %38 to <2 x i64>*, !dbg !40
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %39, align 16, !dbg !40
-  %40 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 20, !dbg !36
-  %41 = bitcast i64* %40 to <2 x i64>*, !dbg !38
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %41, align 16, !dbg !38
-  %42 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 %indvars.iv3, i64 20, !dbg !39
-  %43 = bitcast i64* %42 to <2 x i64>*, !dbg !40
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %43, align 16, !dbg !40
-  %44 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 22, !dbg !36
-  %45 = bitcast i64* %44 to <2 x i64>*, !dbg !38
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %45, align 16, !dbg !38
-  %46 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 %indvars.iv3, i64 22, !dbg !39
-  %47 = bitcast i64* %46 to <2 x i64>*, !dbg !40
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %47, align 16, !dbg !40
-  %48 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 24, !dbg !36
-  %49 = bitcast i64* %48 to <2 x i64>*, !dbg !38
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %49, align 16, !dbg !38
-  %50 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 %indvars.iv3, i64 24, !dbg !39
-  %51 = bitcast i64* %50 to <2 x i64>*, !dbg !40
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %51, align 16, !dbg !40
-  %52 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 26, !dbg !36
-  %53 = bitcast i64* %52 to <2 x i64>*, !dbg !38
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %53, align 16, !dbg !38
-  %54 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 %indvars.iv3, i64 26, !dbg !39
-  %55 = bitcast i64* %54 to <2 x i64>*, !dbg !40
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %55, align 16, !dbg !40
-  %56 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 28, !dbg !36
-  %57 = bitcast i64* %56 to <2 x i64>*, !dbg !38
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %57, align 16, !dbg !38
-  %58 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 %indvars.iv3, i64 28, !dbg !39
-  %59 = bitcast i64* %58 to <2 x i64>*, !dbg !40
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %59, align 16, !dbg !40
-  %60 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 30, !dbg !36
-  %61 = bitcast i64* %60 to <2 x i64>*, !dbg !38
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %61, align 16, !dbg !38
-  %62 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 %indvars.iv3, i64 30, !dbg !39
-  %63 = bitcast i64* %62 to <2 x i64>*, !dbg !40
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %63, align 16, !dbg !40
+  %index.next.1 = add nsw i64 %index, 8, !dbg !31
+  %16 = icmp eq i64 %index.next.1, 512, !dbg !31
+  br i1 %16, label %for.inc10, label %vector.body, !dbg !31, !llvm.loop !41
+
+for.inc10:                                        ; preds = %vector.body
   %indvars.iv.next4 = add nuw nsw i64 %indvars.iv3, 1, !dbg !27
-  %exitcond5 = icmp eq i64 %indvars.iv.next4, 32, !dbg !27
+  %exitcond5 = icmp eq i64 %indvars.iv.next4, 512, !dbg !27
   br i1 %exitcond5, label %for.end12, label %vector.ph, !dbg !27
 
-for.end12:                                        ; preds = %vector.body
-  ret void, !dbg !41
+for.end12:                                        ; preds = %for.inc10
+  ret void, !dbg !44
 }
 
 ; Function Attrs: nounwind uwtable
 define void @mat_mult() #1 !dbg !7 {
 entry:
   %polly.par.userContext3 = alloca {}, align 8
-  br label %entry.split, !dbg !42
+  br label %entry.split, !dbg !45
 
 entry.split:                                      ; preds = %entry
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !43, metadata !26), !dbg !42
+  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !46, metadata !26), !dbg !45
   %0 = bitcast {}* %polly.par.userContext3 to i8*
   call void @llvm.lifetime.start(i64 0, i8* %0)
-  call void @GOMP_parallel_loop_runtime_start(void (i8*)* nonnull @mat_mult_polly_subfn, i8* %0, i32 0, i64 0, i64 32, i64 1) #4
+  call void @GOMP_parallel_loop_runtime_start(void (i8*)* nonnull @mat_mult_polly_subfn, i8* %0, i32 0, i64 0, i64 16, i64 1) #4
   call void @mat_mult_polly_subfn(i8* %0) #4
   call void @GOMP_parallel_end() #4
   call void @llvm.lifetime.end(i64 8, i8* %0)
   call void @llvm.lifetime.start(i64 0, i8* %0)
-  call void @GOMP_parallel_loop_runtime_start(void (i8*)* nonnull @mat_mult_polly_subfn_1, i8* %0, i32 0, i64 0, i64 32, i64 1) #4
+  call void @GOMP_parallel_loop_runtime_start(void (i8*)* nonnull @mat_mult_polly_subfn_1, i8* %0, i32 0, i64 0, i64 16, i64 1) #4
   call void @mat_mult_polly_subfn_1(i8* %0) #4
   call void @GOMP_parallel_end() #4
   call void @llvm.lifetime.end(i64 8, i8* %0)
-  ret void, !dbg !44
+  ret void, !dbg !47
 }
 
 ; Function Attrs: nounwind uwtable
 define void @print_array() #0 !dbg !8 {
 entry:
-  br label %entry.split, !dbg !45
+  br label %entry.split, !dbg !48
 
 entry.split:                                      ; preds = %entry
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !46, metadata !26), !dbg !45
-  br label %for.cond1.preheader, !dbg !47
+  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !49, metadata !26), !dbg !48
+  br label %for.cond1.preheader, !dbg !50
 
 for.cond1.preheader:                              ; preds = %for.end, %entry.split
   %indvars.iv6 = phi i64 [ 0, %entry.split ], [ %indvars.iv.next7, %for.end ]
-  %0 = load %struct._IO_FILE*, %struct._IO_FILE** @stdout, align 8, !dbg !51
-  br label %for.body3, !dbg !56
+  %0 = load %struct._IO_FILE*, %struct._IO_FILE** @stdout, align 8, !dbg !54
+  br label %for.body3, !dbg !59
 
-for.body3:                                        ; preds = %for.body3, %for.cond1.preheader
-  %indvars.iv = phi i64 [ 0, %for.cond1.preheader ], [ %indvars.iv.next, %for.body3 ]
-  %1 = phi %struct._IO_FILE* [ %0, %for.cond1.preheader ], [ %3, %for.body3 ]
-  %arrayidx5 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @C, i64 0, i64 %indvars.iv6, i64 %indvars.iv, !dbg !58
-  %2 = load i64, i64* %arrayidx5, align 8, !dbg !58
-  %call = tail call i32 (%struct._IO_FILE*, i8*, ...) @fprintf(%struct._IO_FILE* %1, i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str, i64 0, i64 0), i64 %2) #4, !dbg !59
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !56
-  %3 = load %struct._IO_FILE*, %struct._IO_FILE** @stdout, align 8, !dbg !51
-  %exitcond = icmp eq i64 %indvars.iv.next, 32, !dbg !56
-  br i1 %exitcond, label %for.end, label %for.body3, !dbg !56
+for.body3:                                        ; preds = %for.inc, %for.cond1.preheader
+  %indvars.iv = phi i64 [ 0, %for.cond1.preheader ], [ %indvars.iv.next, %for.inc ]
+  %1 = phi %struct._IO_FILE* [ %0, %for.cond1.preheader ], [ %5, %for.inc ]
+  %arrayidx5 = getelementptr inbounds [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %indvars.iv6, i64 %indvars.iv, !dbg !61
+  %2 = load i64, i64* %arrayidx5, align 8, !dbg !61
+  %call = tail call i32 (%struct._IO_FILE*, i8*, ...) @fprintf(%struct._IO_FILE* %1, i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str, i64 0, i64 0), i64 %2) #4, !dbg !62
+  %3 = trunc i64 %indvars.iv to i32, !dbg !63
+  %rem = srem i32 %3, 80, !dbg !63
+  %cmp6 = icmp eq i32 %rem, 79, !dbg !65
+  br i1 %cmp6, label %if.then, label %for.inc, !dbg !66
 
-for.end:                                          ; preds = %for.body3
-  %.lcssa = phi %struct._IO_FILE* [ %3, %for.body3 ]
-  %fputc = tail call i32 @fputc(i32 10, %struct._IO_FILE* %.lcssa), !dbg !60
-  %indvars.iv.next7 = add nuw nsw i64 %indvars.iv6, 1, !dbg !47
-  %exitcond8 = icmp eq i64 %indvars.iv.next7, 32, !dbg !47
-  br i1 %exitcond8, label %for.end11, label %for.cond1.preheader, !dbg !47
+if.then:                                          ; preds = %for.body3
+  %4 = load %struct._IO_FILE*, %struct._IO_FILE** @stdout, align 8, !dbg !67
+  %fputc3 = tail call i32 @fputc(i32 10, %struct._IO_FILE* %4), !dbg !69
+  br label %for.inc, !dbg !69
+
+for.inc:                                          ; preds = %if.then, %for.body3
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !59
+  %5 = load %struct._IO_FILE*, %struct._IO_FILE** @stdout, align 8, !dbg !54
+  %exitcond = icmp eq i64 %indvars.iv.next, 512, !dbg !59
+  br i1 %exitcond, label %for.end, label %for.body3, !dbg !59
+
+for.end:                                          ; preds = %for.inc
+  %.lcssa = phi %struct._IO_FILE* [ %5, %for.inc ]
+  %fputc = tail call i32 @fputc(i32 10, %struct._IO_FILE* %.lcssa), !dbg !70
+  %indvars.iv.next7 = add nuw nsw i64 %indvars.iv6, 1, !dbg !50
+  %exitcond8 = icmp eq i64 %indvars.iv.next7, 512, !dbg !50
+  br i1 %exitcond8, label %for.end11, label %for.cond1.preheader, !dbg !50
 
 for.end11:                                        ; preds = %for.end
-  ret void, !dbg !61
+  ret void, !dbg !71
 }
 
 ; Function Attrs: nounwind
@@ -195,144 +141,68 @@ declare i32 @fprintf(%struct._IO_FILE* nocapture, i8* nocapture readonly, ...) #
 define i32 @main() #0 !dbg !9 {
 entry:
   %polly.par.userContext3.i = alloca {}, align 8
-  br label %entry.split, !dbg !62
+  br label %entry.split, !dbg !72
 
 entry.split:                                      ; preds = %entry
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !63, metadata !26), !dbg !62
-  %0 = bitcast {}* %polly.par.userContext3.i to i8*, !dbg !64
-  br label %for.body, !dbg !68
+  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !25, metadata !26), !dbg !72
+  br label %vector.ph, !dbg !74
 
-for.body:                                         ; preds = %init_array.exit, %entry.split
-  %r.01 = phi i32 [ 0, %entry.split ], [ %inc, %init_array.exit ]
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !25, metadata !26), !dbg !70
-  br label %vector.ph, !dbg !72
+vector.ph:                                        ; preds = %for.inc10.i, %entry.split
+  %indvars.iv3.i = phi i64 [ 0, %entry.split ], [ %indvars.iv.next4.i, %for.inc10.i ], !dbg !75
+  br label %vector.body, !dbg !76
 
-vector.ph:                                        ; preds = %vector.body, %for.body
-  %indvars.iv3.i = phi i64 [ 0, %for.body ], [ %indvars.iv.next4.i, %vector.body ], !dbg !73
-  br label %vector.body, !dbg !74
+vector.body:                                      ; preds = %vector.body, %vector.ph
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next.1, %vector.body ], !dbg !75
+  %0 = getelementptr inbounds [512 x [512 x i64]], [512 x [512 x i64]]* @A, i64 0, i64 %indvars.iv3.i, i64 %index, !dbg !77
+  %1 = bitcast i64* %0 to <2 x i64>*, !dbg !78
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %1, align 16, !dbg !78
+  %2 = getelementptr i64, i64* %0, i64 2, !dbg !78
+  %3 = bitcast i64* %2 to <2 x i64>*, !dbg !78
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %3, align 16, !dbg !78
+  %4 = getelementptr inbounds [512 x [512 x i64]], [512 x [512 x i64]]* @B, i64 0, i64 %indvars.iv3.i, i64 %index, !dbg !79
+  %5 = bitcast i64* %4 to <2 x i64>*, !dbg !80
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %5, align 16, !dbg !80
+  %6 = getelementptr i64, i64* %4, i64 2, !dbg !80
+  %7 = bitcast i64* %6 to <2 x i64>*, !dbg !80
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %7, align 16, !dbg !80
+  %index.next = or i64 %index, 4, !dbg !76
+  %8 = getelementptr inbounds [512 x [512 x i64]], [512 x [512 x i64]]* @A, i64 0, i64 %indvars.iv3.i, i64 %index.next, !dbg !77
+  %9 = bitcast i64* %8 to <2 x i64>*, !dbg !78
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %9, align 16, !dbg !78
+  %10 = getelementptr i64, i64* %8, i64 2, !dbg !78
+  %11 = bitcast i64* %10 to <2 x i64>*, !dbg !78
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %11, align 16, !dbg !78
+  %12 = getelementptr inbounds [512 x [512 x i64]], [512 x [512 x i64]]* @B, i64 0, i64 %indvars.iv3.i, i64 %index.next, !dbg !79
+  %13 = bitcast i64* %12 to <2 x i64>*, !dbg !80
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %13, align 16, !dbg !80
+  %14 = getelementptr i64, i64* %12, i64 2, !dbg !80
+  %15 = bitcast i64* %14 to <2 x i64>*, !dbg !80
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %15, align 16, !dbg !80
+  %index.next.1 = add nsw i64 %index, 8, !dbg !76
+  %16 = icmp eq i64 %index.next.1, 512, !dbg !76
+  br i1 %16, label %for.inc10.i, label %vector.body, !dbg !76, !llvm.loop !81
 
-vector.body:                                      ; preds = %vector.ph
-  %1 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %indvars.iv3.i, i64 0, !dbg !75
-  %2 = bitcast i64* %1 to <2 x i64>*, !dbg !76
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %2, align 16, !dbg !76
-  %3 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 %indvars.iv3.i, i64 0, !dbg !77
-  %4 = bitcast i64* %3 to <2 x i64>*, !dbg !78
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %4, align 16, !dbg !78
-  %5 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %indvars.iv3.i, i64 2, !dbg !75
-  %6 = bitcast i64* %5 to <2 x i64>*, !dbg !76
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %6, align 16, !dbg !76
-  %7 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 %indvars.iv3.i, i64 2, !dbg !77
-  %8 = bitcast i64* %7 to <2 x i64>*, !dbg !78
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %8, align 16, !dbg !78
-  %9 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %indvars.iv3.i, i64 4, !dbg !75
-  %10 = bitcast i64* %9 to <2 x i64>*, !dbg !76
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %10, align 16, !dbg !76
-  %11 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 %indvars.iv3.i, i64 4, !dbg !77
-  %12 = bitcast i64* %11 to <2 x i64>*, !dbg !78
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %12, align 16, !dbg !78
-  %13 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %indvars.iv3.i, i64 6, !dbg !75
-  %14 = bitcast i64* %13 to <2 x i64>*, !dbg !76
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %14, align 16, !dbg !76
-  %15 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 %indvars.iv3.i, i64 6, !dbg !77
-  %16 = bitcast i64* %15 to <2 x i64>*, !dbg !78
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %16, align 16, !dbg !78
-  %17 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %indvars.iv3.i, i64 8, !dbg !75
-  %18 = bitcast i64* %17 to <2 x i64>*, !dbg !76
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %18, align 16, !dbg !76
-  %19 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 %indvars.iv3.i, i64 8, !dbg !77
-  %20 = bitcast i64* %19 to <2 x i64>*, !dbg !78
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %20, align 16, !dbg !78
-  %21 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %indvars.iv3.i, i64 10, !dbg !75
-  %22 = bitcast i64* %21 to <2 x i64>*, !dbg !76
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %22, align 16, !dbg !76
-  %23 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 %indvars.iv3.i, i64 10, !dbg !77
-  %24 = bitcast i64* %23 to <2 x i64>*, !dbg !78
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %24, align 16, !dbg !78
-  %25 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %indvars.iv3.i, i64 12, !dbg !75
-  %26 = bitcast i64* %25 to <2 x i64>*, !dbg !76
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %26, align 16, !dbg !76
-  %27 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 %indvars.iv3.i, i64 12, !dbg !77
-  %28 = bitcast i64* %27 to <2 x i64>*, !dbg !78
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %28, align 16, !dbg !78
-  %29 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %indvars.iv3.i, i64 14, !dbg !75
-  %30 = bitcast i64* %29 to <2 x i64>*, !dbg !76
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %30, align 16, !dbg !76
-  %31 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 %indvars.iv3.i, i64 14, !dbg !77
-  %32 = bitcast i64* %31 to <2 x i64>*, !dbg !78
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %32, align 16, !dbg !78
-  %33 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %indvars.iv3.i, i64 16, !dbg !75
-  %34 = bitcast i64* %33 to <2 x i64>*, !dbg !76
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %34, align 16, !dbg !76
-  %35 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 %indvars.iv3.i, i64 16, !dbg !77
-  %36 = bitcast i64* %35 to <2 x i64>*, !dbg !78
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %36, align 16, !dbg !78
-  %37 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %indvars.iv3.i, i64 18, !dbg !75
-  %38 = bitcast i64* %37 to <2 x i64>*, !dbg !76
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %38, align 16, !dbg !76
-  %39 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 %indvars.iv3.i, i64 18, !dbg !77
-  %40 = bitcast i64* %39 to <2 x i64>*, !dbg !78
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %40, align 16, !dbg !78
-  %41 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %indvars.iv3.i, i64 20, !dbg !75
-  %42 = bitcast i64* %41 to <2 x i64>*, !dbg !76
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %42, align 16, !dbg !76
-  %43 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 %indvars.iv3.i, i64 20, !dbg !77
-  %44 = bitcast i64* %43 to <2 x i64>*, !dbg !78
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %44, align 16, !dbg !78
-  %45 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %indvars.iv3.i, i64 22, !dbg !75
-  %46 = bitcast i64* %45 to <2 x i64>*, !dbg !76
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %46, align 16, !dbg !76
-  %47 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 %indvars.iv3.i, i64 22, !dbg !77
-  %48 = bitcast i64* %47 to <2 x i64>*, !dbg !78
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %48, align 16, !dbg !78
-  %49 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %indvars.iv3.i, i64 24, !dbg !75
-  %50 = bitcast i64* %49 to <2 x i64>*, !dbg !76
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %50, align 16, !dbg !76
-  %51 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 %indvars.iv3.i, i64 24, !dbg !77
-  %52 = bitcast i64* %51 to <2 x i64>*, !dbg !78
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %52, align 16, !dbg !78
-  %53 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %indvars.iv3.i, i64 26, !dbg !75
-  %54 = bitcast i64* %53 to <2 x i64>*, !dbg !76
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %54, align 16, !dbg !76
-  %55 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 %indvars.iv3.i, i64 26, !dbg !77
-  %56 = bitcast i64* %55 to <2 x i64>*, !dbg !78
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %56, align 16, !dbg !78
-  %57 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %indvars.iv3.i, i64 28, !dbg !75
-  %58 = bitcast i64* %57 to <2 x i64>*, !dbg !76
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %58, align 16, !dbg !76
-  %59 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 %indvars.iv3.i, i64 28, !dbg !77
-  %60 = bitcast i64* %59 to <2 x i64>*, !dbg !78
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %60, align 16, !dbg !78
-  %61 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %indvars.iv3.i, i64 30, !dbg !75
-  %62 = bitcast i64* %61 to <2 x i64>*, !dbg !76
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %62, align 16, !dbg !76
-  %63 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 %indvars.iv3.i, i64 30, !dbg !77
-  %64 = bitcast i64* %63 to <2 x i64>*, !dbg !78
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %64, align 16, !dbg !78
-  %indvars.iv.next4.i = add nuw nsw i64 %indvars.iv3.i, 1, !dbg !72
-  %exitcond5.i = icmp eq i64 %indvars.iv.next4.i, 32, !dbg !72
-  br i1 %exitcond5.i, label %init_array.exit, label %vector.ph, !dbg !72
+for.inc10.i:                                      ; preds = %vector.body
+  %indvars.iv.next4.i = add nuw nsw i64 %indvars.iv3.i, 1, !dbg !74
+  %exitcond5.i = icmp eq i64 %indvars.iv.next4.i, 512, !dbg !74
+  br i1 %exitcond5.i, label %init_array.exit, label %vector.ph, !dbg !74
 
-init_array.exit:                                  ; preds = %vector.body
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !43, metadata !26) #4, !dbg !79
-  call void @llvm.lifetime.start(i64 0, i8* %0) #4, !dbg !64
-  call void @GOMP_parallel_loop_runtime_start(void (i8*)* nonnull @mat_mult_polly_subfn, i8* %0, i32 0, i64 0, i64 32, i64 1) #4, !dbg !64
-  call void @mat_mult_polly_subfn(i8* %0) #4, !dbg !64
-  call void @GOMP_parallel_end() #4, !dbg !64
-  call void @llvm.lifetime.end(i64 8, i8* %0) #4, !dbg !64
-  call void @llvm.lifetime.start(i64 0, i8* %0) #4, !dbg !64
-  call void @GOMP_parallel_loop_runtime_start(void (i8*)* nonnull @mat_mult_polly_subfn_1, i8* %0, i32 0, i64 0, i64 32, i64 1) #4, !dbg !64
-  call void @mat_mult_polly_subfn_1(i8* %0) #4, !dbg !64
-  call void @GOMP_parallel_end() #4, !dbg !64
-  call void @llvm.lifetime.end(i64 8, i8* %0) #4, !dbg !64
-  %inc = add nuw nsw i32 %r.01, 1, !dbg !81
-  tail call void @llvm.dbg.value(metadata i32 %inc, i64 0, metadata !63, metadata !26), !dbg !62
-  %exitcond = icmp eq i32 %inc, 10000, !dbg !68
-  br i1 %exitcond, label %for.end, label %for.body, !dbg !68
-
-for.end:                                          ; preds = %init_array.exit
-  %65 = load i64, i64* getelementptr inbounds ([32 x [32 x i64]], [32 x [32 x i64]]* @C, i64 0, i64 31, i64 31), align 8, !dbg !83
-  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([49 x i8], [49 x i8]* @.str.2, i64 0, i64 0), i32 32, i32 32, i64 %65) #4, !dbg !84
-  ret i32 0, !dbg !85
+init_array.exit:                                  ; preds = %for.inc10.i
+  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !46, metadata !26) #4, !dbg !82
+  %17 = bitcast {}* %polly.par.userContext3.i to i8*, !dbg !84
+  call void @llvm.lifetime.start(i64 0, i8* %17) #4, !dbg !84
+  call void @GOMP_parallel_loop_runtime_start(void (i8*)* nonnull @mat_mult_polly_subfn, i8* %17, i32 0, i64 0, i64 16, i64 1) #4, !dbg !84
+  call void @mat_mult_polly_subfn(i8* %17) #4, !dbg !84
+  call void @GOMP_parallel_end() #4, !dbg !84
+  call void @llvm.lifetime.end(i64 8, i8* %17) #4, !dbg !84
+  call void @llvm.lifetime.start(i64 0, i8* %17) #4, !dbg !84
+  call void @GOMP_parallel_loop_runtime_start(void (i8*)* nonnull @mat_mult_polly_subfn_1, i8* %17, i32 0, i64 0, i64 16, i64 1) #4, !dbg !84
+  call void @mat_mult_polly_subfn_1(i8* %17) #4, !dbg !84
+  call void @GOMP_parallel_end() #4, !dbg !84
+  call void @llvm.lifetime.end(i64 8, i8* %17) #4, !dbg !84
+  %18 = load i64, i64* getelementptr inbounds ([512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 511, i64 511), align 8, !dbg !85
+  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([49 x i8], [49 x i8]* @.str.2, i64 0, i64 0), i32 512, i32 512, i64 %18) #4, !dbg !86
+  ret i32 0, !dbg !87
 }
 
 ; Function Attrs: nounwind
@@ -368,7 +238,7 @@ polly.par.exit:                                   ; preds = %polly.par.exit.loop
   call void @GOMP_loop_end_nowait()
   ret void
 
-polly.par.checkNext.loopexit:                     ; preds = %polly.loop_preheader3
+polly.par.checkNext.loopexit:                     ; preds = %polly.loop_exit4
   %2 = call i8 @GOMP_loop_runtime_next(i64* nonnull %polly.par.LBPtr, i64* nonnull %polly.par.UBPtr)
   %3 = icmp eq i8 %2, 0
   br i1 %3, label %polly.par.exit.loopexit, label %polly.par.loadIVBounds
@@ -379,17 +249,155 @@ polly.par.loadIVBounds:                           ; preds = %polly.par.loadIVBou
   %polly.adjust_ub = add i64 %polly.par.UB, -2
   br label %polly.loop_preheader3
 
-polly.loop_preheader3:                            ; preds = %polly.par.loadIVBounds, %polly.loop_preheader3
-  %indvar = phi i64 [ 0, %polly.par.loadIVBounds ], [ %indvar.next, %polly.loop_preheader3 ]
-  %polly.indvar = phi i64 [ %polly.par.LB, %polly.par.loadIVBounds ], [ %polly.indvar_next, %polly.loop_preheader3 ]
-  %4 = add i64 %polly.par.LB, %indvar
-  %scevgep = getelementptr [32 x [32 x i64]], [32 x [32 x i64]]* @C, i64 0, i64 %4, i64 0
-  %scevgep9 = bitcast i64* %scevgep to i8*
-  call void @llvm.memset.p0i8.i64(i8* %scevgep9, i8 0, i64 256, i32 16, i1 false)
+polly.loop_exit4:                                 ; preds = %polly.loop_preheader15
   %polly.indvar_next = add nsw i64 %polly.indvar, 1
   %polly.loop_cond = icmp sgt i64 %polly.indvar, %polly.adjust_ub
   %indvar.next = add i64 %indvar, 1
   br i1 %polly.loop_cond, label %polly.par.checkNext.loopexit, label %polly.loop_preheader3
+
+polly.loop_preheader3:                            ; preds = %polly.par.loadIVBounds, %polly.loop_exit4
+  %indvar = phi i64 [ 0, %polly.par.loadIVBounds ], [ %indvar.next, %polly.loop_exit4 ]
+  %polly.indvar = phi i64 [ %polly.par.LB, %polly.par.loadIVBounds ], [ %polly.indvar_next, %polly.loop_exit4 ]
+  %4 = add i64 %polly.par.LB, %indvar
+  %5 = shl i64 %4, 5
+  %6 = or i64 %5, 1
+  %7 = or i64 %5, 2
+  %8 = or i64 %5, 3
+  %9 = or i64 %5, 4
+  %10 = or i64 %5, 5
+  %11 = or i64 %5, 6
+  %12 = or i64 %5, 7
+  %13 = or i64 %5, 8
+  %14 = or i64 %5, 9
+  %15 = or i64 %5, 10
+  %16 = or i64 %5, 11
+  %17 = or i64 %5, 12
+  %18 = or i64 %5, 13
+  %19 = or i64 %5, 14
+  %20 = or i64 %5, 15
+  %21 = or i64 %5, 16
+  %22 = or i64 %5, 17
+  %23 = or i64 %5, 18
+  %24 = or i64 %5, 19
+  %25 = or i64 %5, 20
+  %26 = or i64 %5, 21
+  %27 = or i64 %5, 22
+  %28 = or i64 %5, 23
+  %29 = or i64 %5, 24
+  %30 = or i64 %5, 25
+  %31 = or i64 %5, 26
+  %32 = or i64 %5, 27
+  %33 = or i64 %5, 28
+  %34 = or i64 %5, 29
+  %35 = or i64 %5, 30
+  %36 = or i64 %5, 31
+  br label %polly.loop_preheader9
+
+polly.loop_preheader9:                            ; preds = %polly.loop_preheader15, %polly.loop_preheader3
+  %polly.indvar5 = phi i64 [ 0, %polly.loop_preheader3 ], [ %polly.indvar_next6, %polly.loop_preheader15 ]
+  %37 = shl i64 %polly.indvar5, 5
+  br label %polly.loop_preheader15
+
+polly.loop_preheader15:                           ; preds = %polly.loop_preheader9
+  %scevgep22 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %5, i64 %37
+  %scevgep2223 = bitcast i64* %scevgep22 to i8*
+  call void @llvm.memset.p0i8.i64(i8* %scevgep2223, i8 0, i64 256, i32 16, i1 false)
+  %scevgep22.1 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %6, i64 %37
+  %scevgep2223.1 = bitcast i64* %scevgep22.1 to i8*
+  call void @llvm.memset.p0i8.i64(i8* %scevgep2223.1, i8 0, i64 256, i32 16, i1 false)
+  %scevgep22.2 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %7, i64 %37
+  %scevgep2223.2 = bitcast i64* %scevgep22.2 to i8*
+  call void @llvm.memset.p0i8.i64(i8* %scevgep2223.2, i8 0, i64 256, i32 16, i1 false)
+  %scevgep22.3 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %8, i64 %37
+  %scevgep2223.3 = bitcast i64* %scevgep22.3 to i8*
+  call void @llvm.memset.p0i8.i64(i8* %scevgep2223.3, i8 0, i64 256, i32 16, i1 false)
+  %scevgep22.4 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %9, i64 %37
+  %scevgep2223.4 = bitcast i64* %scevgep22.4 to i8*
+  call void @llvm.memset.p0i8.i64(i8* %scevgep2223.4, i8 0, i64 256, i32 16, i1 false)
+  %scevgep22.5 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %10, i64 %37
+  %scevgep2223.5 = bitcast i64* %scevgep22.5 to i8*
+  call void @llvm.memset.p0i8.i64(i8* %scevgep2223.5, i8 0, i64 256, i32 16, i1 false)
+  %scevgep22.6 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %11, i64 %37
+  %scevgep2223.6 = bitcast i64* %scevgep22.6 to i8*
+  call void @llvm.memset.p0i8.i64(i8* %scevgep2223.6, i8 0, i64 256, i32 16, i1 false)
+  %scevgep22.7 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %12, i64 %37
+  %scevgep2223.7 = bitcast i64* %scevgep22.7 to i8*
+  call void @llvm.memset.p0i8.i64(i8* %scevgep2223.7, i8 0, i64 256, i32 16, i1 false)
+  %scevgep22.8 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %13, i64 %37
+  %scevgep2223.8 = bitcast i64* %scevgep22.8 to i8*
+  call void @llvm.memset.p0i8.i64(i8* %scevgep2223.8, i8 0, i64 256, i32 16, i1 false)
+  %scevgep22.9 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %14, i64 %37
+  %scevgep2223.9 = bitcast i64* %scevgep22.9 to i8*
+  call void @llvm.memset.p0i8.i64(i8* %scevgep2223.9, i8 0, i64 256, i32 16, i1 false)
+  %scevgep22.10 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %15, i64 %37
+  %scevgep2223.10 = bitcast i64* %scevgep22.10 to i8*
+  call void @llvm.memset.p0i8.i64(i8* %scevgep2223.10, i8 0, i64 256, i32 16, i1 false)
+  %scevgep22.11 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %16, i64 %37
+  %scevgep2223.11 = bitcast i64* %scevgep22.11 to i8*
+  call void @llvm.memset.p0i8.i64(i8* %scevgep2223.11, i8 0, i64 256, i32 16, i1 false)
+  %scevgep22.12 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %17, i64 %37
+  %scevgep2223.12 = bitcast i64* %scevgep22.12 to i8*
+  call void @llvm.memset.p0i8.i64(i8* %scevgep2223.12, i8 0, i64 256, i32 16, i1 false)
+  %scevgep22.13 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %18, i64 %37
+  %scevgep2223.13 = bitcast i64* %scevgep22.13 to i8*
+  call void @llvm.memset.p0i8.i64(i8* %scevgep2223.13, i8 0, i64 256, i32 16, i1 false)
+  %scevgep22.14 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %19, i64 %37
+  %scevgep2223.14 = bitcast i64* %scevgep22.14 to i8*
+  call void @llvm.memset.p0i8.i64(i8* %scevgep2223.14, i8 0, i64 256, i32 16, i1 false)
+  %scevgep22.15 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %20, i64 %37
+  %scevgep2223.15 = bitcast i64* %scevgep22.15 to i8*
+  call void @llvm.memset.p0i8.i64(i8* %scevgep2223.15, i8 0, i64 256, i32 16, i1 false)
+  %scevgep22.16 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %21, i64 %37
+  %scevgep2223.16 = bitcast i64* %scevgep22.16 to i8*
+  call void @llvm.memset.p0i8.i64(i8* %scevgep2223.16, i8 0, i64 256, i32 16, i1 false)
+  %scevgep22.17 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %22, i64 %37
+  %scevgep2223.17 = bitcast i64* %scevgep22.17 to i8*
+  call void @llvm.memset.p0i8.i64(i8* %scevgep2223.17, i8 0, i64 256, i32 16, i1 false)
+  %scevgep22.18 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %23, i64 %37
+  %scevgep2223.18 = bitcast i64* %scevgep22.18 to i8*
+  call void @llvm.memset.p0i8.i64(i8* %scevgep2223.18, i8 0, i64 256, i32 16, i1 false)
+  %scevgep22.19 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %24, i64 %37
+  %scevgep2223.19 = bitcast i64* %scevgep22.19 to i8*
+  call void @llvm.memset.p0i8.i64(i8* %scevgep2223.19, i8 0, i64 256, i32 16, i1 false)
+  %scevgep22.20 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %25, i64 %37
+  %scevgep2223.20 = bitcast i64* %scevgep22.20 to i8*
+  call void @llvm.memset.p0i8.i64(i8* %scevgep2223.20, i8 0, i64 256, i32 16, i1 false)
+  %scevgep22.21 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %26, i64 %37
+  %scevgep2223.21 = bitcast i64* %scevgep22.21 to i8*
+  call void @llvm.memset.p0i8.i64(i8* %scevgep2223.21, i8 0, i64 256, i32 16, i1 false)
+  %scevgep22.22 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %27, i64 %37
+  %scevgep2223.22 = bitcast i64* %scevgep22.22 to i8*
+  call void @llvm.memset.p0i8.i64(i8* %scevgep2223.22, i8 0, i64 256, i32 16, i1 false)
+  %scevgep22.23 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %28, i64 %37
+  %scevgep2223.23 = bitcast i64* %scevgep22.23 to i8*
+  call void @llvm.memset.p0i8.i64(i8* %scevgep2223.23, i8 0, i64 256, i32 16, i1 false)
+  %scevgep22.24 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %29, i64 %37
+  %scevgep2223.24 = bitcast i64* %scevgep22.24 to i8*
+  call void @llvm.memset.p0i8.i64(i8* %scevgep2223.24, i8 0, i64 256, i32 16, i1 false)
+  %scevgep22.25 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %30, i64 %37
+  %scevgep2223.25 = bitcast i64* %scevgep22.25 to i8*
+  call void @llvm.memset.p0i8.i64(i8* %scevgep2223.25, i8 0, i64 256, i32 16, i1 false)
+  %scevgep22.26 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %31, i64 %37
+  %scevgep2223.26 = bitcast i64* %scevgep22.26 to i8*
+  call void @llvm.memset.p0i8.i64(i8* %scevgep2223.26, i8 0, i64 256, i32 16, i1 false)
+  %scevgep22.27 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %32, i64 %37
+  %scevgep2223.27 = bitcast i64* %scevgep22.27 to i8*
+  call void @llvm.memset.p0i8.i64(i8* %scevgep2223.27, i8 0, i64 256, i32 16, i1 false)
+  %scevgep22.28 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %33, i64 %37
+  %scevgep2223.28 = bitcast i64* %scevgep22.28 to i8*
+  call void @llvm.memset.p0i8.i64(i8* %scevgep2223.28, i8 0, i64 256, i32 16, i1 false)
+  %scevgep22.29 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %34, i64 %37
+  %scevgep2223.29 = bitcast i64* %scevgep22.29 to i8*
+  call void @llvm.memset.p0i8.i64(i8* %scevgep2223.29, i8 0, i64 256, i32 16, i1 false)
+  %scevgep22.30 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %35, i64 %37
+  %scevgep2223.30 = bitcast i64* %scevgep22.30 to i8*
+  call void @llvm.memset.p0i8.i64(i8* %scevgep2223.30, i8 0, i64 256, i32 16, i1 false)
+  %scevgep22.31 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %36, i64 %37
+  %scevgep2223.31 = bitcast i64* %scevgep22.31 to i8*
+  call void @llvm.memset.p0i8.i64(i8* %scevgep2223.31, i8 0, i64 256, i32 16, i1 false)
+  %polly.indvar_next6 = add nuw nsw i64 %polly.indvar5, 1
+  %exitcond21 = icmp eq i64 %polly.indvar_next6, 16
+  br i1 %exitcond21, label %polly.loop_exit4, label %polly.loop_preheader9
 }
 
 declare i8 @GOMP_loop_runtime_next(i64*, i64*)
@@ -440,37 +448,68 @@ polly.loop_exit4:                                 ; preds = %polly.loop_exit10
   %polly.loop_cond = icmp sgt i64 %polly.indvar, %polly.adjust_ub
   br i1 %polly.loop_cond, label %polly.par.checkNext.loopexit, label %polly.loop_preheader3
 
-polly.loop_exit10:                                ; preds = %polly.stmt.for.body8
-  %p_add.lcssa = phi i64 [ %p_add, %polly.stmt.for.body8 ]
-  store i64 %p_add.lcssa, i64* %scevgep14, align 8, !alias.scope !86, !noalias !88
+polly.loop_exit10:                                ; preds = %polly.loop_exit16
   %polly.indvar_next6 = add nuw nsw i64 %polly.indvar5, 1
-  %exitcond23 = icmp eq i64 %polly.indvar_next6, 32
-  br i1 %exitcond23, label %polly.loop_exit4, label %polly.loop_preheader9
+  %exitcond40 = icmp eq i64 %polly.indvar_next6, 16
+  br i1 %exitcond40, label %polly.loop_exit4, label %polly.loop_preheader9
 
 polly.loop_preheader3:                            ; preds = %polly.par.loadIVBounds, %polly.loop_exit4
   %polly.indvar = phi i64 [ %polly.par.LB, %polly.par.loadIVBounds ], [ %polly.indvar_next, %polly.loop_exit4 ]
+  %4 = shl nsw i64 %polly.indvar, 5
   br label %polly.loop_preheader9
 
-polly.stmt.for.body8:                             ; preds = %polly.stmt.for.body8, %polly.loop_preheader9
-  %p_add24 = phi i64 [ %scevgep14.promoted, %polly.loop_preheader9 ], [ %p_add, %polly.stmt.for.body8 ]
-  %polly.indvar11 = phi i64 [ 0, %polly.loop_preheader9 ], [ %polly.indvar_next12, %polly.stmt.for.body8 ]
-  %scevgep16 = getelementptr [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %polly.indvar, i64 %polly.indvar11
-  %_p_scalar_17 = load i64, i64* %scevgep16, align 8, !alias.scope !90, !noalias !91
-  %4 = shl i64 %polly.indvar11, 5
-  %scevgep19 = getelementptr i64, i64* %scevgep18, i64 %4
-  %_p_scalar_20 = load i64, i64* %scevgep19, align 8, !alias.scope !89, !noalias !92
-  %p_mul = mul nsw i64 %_p_scalar_20, %_p_scalar_17, !dbg !93
-  %p_add = add nsw i64 %p_mul, %p_add24, !dbg !102
+polly.loop_exit16:                                ; preds = %polly.loop_exit22
   %polly.indvar_next12 = add nuw nsw i64 %polly.indvar11, 1
-  %exitcond = icmp eq i64 %polly.indvar_next12, 32
-  br i1 %exitcond, label %polly.loop_exit10, label %polly.stmt.for.body8
+  %exitcond39 = icmp eq i64 %polly.indvar_next12, 16
+  br i1 %exitcond39, label %polly.loop_exit10, label %polly.loop_preheader15
 
 polly.loop_preheader9:                            ; preds = %polly.loop_exit10, %polly.loop_preheader3
   %polly.indvar5 = phi i64 [ 0, %polly.loop_preheader3 ], [ %polly.indvar_next6, %polly.loop_exit10 ]
-  %scevgep14 = getelementptr [32 x [32 x i64]], [32 x [32 x i64]]* @C, i64 0, i64 %polly.indvar, i64 %polly.indvar5
-  %scevgep18 = getelementptr [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 0, i64 %polly.indvar5
-  %scevgep14.promoted = load i64, i64* %scevgep14, align 8, !alias.scope !86, !noalias !88
-  br label %polly.stmt.for.body8
+  %5 = shl nsw i64 %polly.indvar5, 5
+  br label %polly.loop_preheader15
+
+polly.loop_exit22:                                ; preds = %polly.loop_exit28
+  %polly.indvar_next18 = add nuw nsw i64 %polly.indvar17, 1
+  %exitcond38 = icmp eq i64 %polly.indvar_next18, 32
+  br i1 %exitcond38, label %polly.loop_exit16, label %polly.loop_preheader21
+
+polly.loop_preheader15:                           ; preds = %polly.loop_exit16, %polly.loop_preheader9
+  %polly.indvar11 = phi i64 [ 0, %polly.loop_preheader9 ], [ %polly.indvar_next12, %polly.loop_exit16 ]
+  %6 = shl nsw i64 %polly.indvar11, 5
+  br label %polly.loop_preheader21
+
+polly.loop_exit28:                                ; preds = %polly.loop_header26
+  %p_add.lcssa = phi i64 [ %p_add, %polly.loop_header26 ]
+  store i64 %p_add.lcssa, i64* %scevgep, align 8, !alias.scope !88, !noalias !90
+  %polly.indvar_next24 = add nuw nsw i64 %polly.indvar23, 1
+  %exitcond37 = icmp eq i64 %polly.indvar_next24, 32
+  br i1 %exitcond37, label %polly.loop_exit22, label %polly.loop_preheader27
+
+polly.loop_preheader21:                           ; preds = %polly.loop_exit22, %polly.loop_preheader15
+  %polly.indvar17 = phi i64 [ 0, %polly.loop_preheader15 ], [ %polly.indvar_next18, %polly.loop_exit22 ]
+  %7 = add nsw i64 %polly.indvar17, %4
+  br label %polly.loop_preheader27
+
+polly.loop_header26:                              ; preds = %polly.loop_header26, %polly.loop_preheader27
+  %p_add41 = phi i64 [ %scevgep.promoted, %polly.loop_preheader27 ], [ %p_add, %polly.loop_header26 ]
+  %polly.indvar29 = phi i64 [ 0, %polly.loop_preheader27 ], [ %polly.indvar_next30, %polly.loop_header26 ]
+  %8 = add nuw nsw i64 %polly.indvar29, %6
+  %scevgep32 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @A, i64 0, i64 %7, i64 %8
+  %_p_scalar_33 = load i64, i64* %scevgep32, align 8, !alias.scope !91, !noalias !93
+  %scevgep34 = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @B, i64 0, i64 %8, i64 %9
+  %_p_scalar_35 = load i64, i64* %scevgep34, align 8, !alias.scope !92, !noalias !94
+  %p_mul = mul nsw i64 %_p_scalar_35, %_p_scalar_33, !dbg !95
+  %p_add = add nsw i64 %p_mul, %p_add41, !dbg !104
+  %polly.indvar_next30 = add nuw nsw i64 %polly.indvar29, 1
+  %exitcond = icmp eq i64 %polly.indvar_next30, 32
+  br i1 %exitcond, label %polly.loop_exit28, label %polly.loop_header26
+
+polly.loop_preheader27:                           ; preds = %polly.loop_exit28, %polly.loop_preheader21
+  %polly.indvar23 = phi i64 [ 0, %polly.loop_preheader21 ], [ %polly.indvar_next24, %polly.loop_exit28 ]
+  %9 = add nuw nsw i64 %polly.indvar23, %5
+  %scevgep = getelementptr [512 x [512 x i64]], [512 x [512 x i64]]* @C, i64 0, i64 %7, i64 %9
+  %scevgep.promoted = load i64, i64* %scevgep, align 8, !alias.scope !88, !noalias !90
+  br label %polly.loop_header26
 }
 
 ; Function Attrs: argmemonly nounwind
@@ -502,13 +541,13 @@ attributes #6 = { "polly.skip.fn" }
 !11 = !{!12}
 !12 = !DIBasicType(name: "int", size: 32, align: 32, encoding: DW_ATE_signed)
 !13 = !{!14, !19, !20}
-!14 = !DIGlobalVariable(name: "A", scope: !0, file: !1, line: 3, type: !15, isLocal: false, isDefinition: true, variable: [32 x [32 x i64]]* @A)
-!15 = !DICompositeType(tag: DW_TAG_array_type, baseType: !16, size: 65536, align: 64, elements: !17)
+!14 = !DIGlobalVariable(name: "A", scope: !0, file: !1, line: 3, type: !15, isLocal: false, isDefinition: true, variable: [512 x [512 x i64]]* @A)
+!15 = !DICompositeType(tag: DW_TAG_array_type, baseType: !16, size: 16777216, align: 64, elements: !17)
 !16 = !DIBasicType(name: "long long int", size: 64, align: 64, encoding: DW_ATE_signed)
 !17 = !{!18, !18}
-!18 = !DISubrange(count: 32)
-!19 = !DIGlobalVariable(name: "B", scope: !0, file: !1, line: 4, type: !15, isLocal: false, isDefinition: true, variable: [32 x [32 x i64]]* @B)
-!20 = !DIGlobalVariable(name: "C", scope: !0, file: !1, line: 5, type: !15, isLocal: false, isDefinition: true, variable: [32 x [32 x i64]]* @C)
+!18 = !DISubrange(count: 512)
+!19 = !DIGlobalVariable(name: "B", scope: !0, file: !1, line: 4, type: !15, isLocal: false, isDefinition: true, variable: [512 x [512 x i64]]* @B)
+!20 = !DIGlobalVariable(name: "C", scope: !0, file: !1, line: 5, type: !15, isLocal: false, isDefinition: true, variable: [512 x [512 x i64]]* @C)
 !21 = !{i32 2, !"Dwarf Version", i32 4}
 !22 = !{i32 2, !"Debug Info Version", i32 3}
 !23 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)"}
@@ -529,65 +568,67 @@ attributes #6 = { "polly.skip.fn" }
 !38 = !DILocation(line: 13, column: 21, scope: !37)
 !39 = !DILocation(line: 14, column: 13, scope: !37)
 !40 = !DILocation(line: 14, column: 21, scope: !37)
-!41 = !DILocation(line: 17, column: 1, scope: !4)
-!42 = !DILocation(line: 20, column: 9, scope: !7)
-!43 = !DILocalVariable(name: "i", scope: !7, file: !1, line: 20, type: !12)
-!44 = !DILocation(line: 29, column: 1, scope: !7)
-!45 = !DILocation(line: 33, column: 9, scope: !8)
-!46 = !DILocalVariable(name: "i", scope: !8, file: !1, line: 33, type: !12)
-!47 = !DILocation(line: 35, column: 5, scope: !48)
-!48 = !DILexicalBlockFile(scope: !49, file: !1, discriminator: 1)
-!49 = distinct !DILexicalBlock(scope: !50, file: !1, line: 35, column: 5)
-!50 = distinct !DILexicalBlock(scope: !8, file: !1, line: 35, column: 5)
-!51 = !DILocation(line: 37, column: 21, scope: !52)
-!52 = distinct !DILexicalBlock(scope: !53, file: !1, line: 36, column: 29)
-!53 = distinct !DILexicalBlock(scope: !54, file: !1, line: 36, column: 9)
-!54 = distinct !DILexicalBlock(scope: !55, file: !1, line: 36, column: 9)
-!55 = distinct !DILexicalBlock(scope: !49, file: !1, line: 35, column: 25)
-!56 = !DILocation(line: 36, column: 9, scope: !57)
-!57 = !DILexicalBlockFile(scope: !53, file: !1, discriminator: 1)
-!58 = !DILocation(line: 37, column: 38, scope: !52)
-!59 = !DILocation(line: 37, column: 13, scope: !52)
-!60 = !DILocation(line: 40, column: 9, scope: !55)
-!61 = !DILocation(line: 42, column: 1, scope: !8)
-!62 = !DILocation(line: 49, column: 9, scope: !9)
-!63 = !DILocalVariable(name: "r", scope: !9, file: !1, line: 49, type: !12)
-!64 = !DILocation(line: 52, column: 9, scope: !65)
-!65 = distinct !DILexicalBlock(scope: !66, file: !1, line: 50, column: 25)
-!66 = distinct !DILexicalBlock(scope: !67, file: !1, line: 50, column: 5)
-!67 = distinct !DILexicalBlock(scope: !9, file: !1, line: 50, column: 5)
-!68 = !DILocation(line: 50, column: 5, scope: !69)
-!69 = !DILexicalBlockFile(scope: !66, file: !1, discriminator: 1)
-!70 = !DILocation(line: 9, column: 9, scope: !4, inlinedAt: !71)
-!71 = distinct !DILocation(line: 51, column: 9, scope: !65)
-!72 = !DILocation(line: 11, column: 5, scope: !28, inlinedAt: !71)
-!73 = !DILocation(line: 51, column: 9, scope: !65)
-!74 = !DILocation(line: 12, column: 9, scope: !32, inlinedAt: !71)
-!75 = !DILocation(line: 13, column: 13, scope: !37, inlinedAt: !71)
-!76 = !DILocation(line: 13, column: 21, scope: !37, inlinedAt: !71)
-!77 = !DILocation(line: 14, column: 13, scope: !37, inlinedAt: !71)
-!78 = !DILocation(line: 14, column: 21, scope: !37, inlinedAt: !71)
-!79 = !DILocation(line: 20, column: 9, scope: !7, inlinedAt: !80)
-!80 = distinct !DILocation(line: 52, column: 9, scope: !65)
-!81 = !DILocation(line: 50, column: 22, scope: !82)
-!82 = !DILexicalBlockFile(scope: !66, file: !1, discriminator: 2)
-!83 = !DILocation(line: 55, column: 71, scope: !9)
-!84 = !DILocation(line: 55, column: 5, scope: !9)
-!85 = !DILocation(line: 56, column: 5, scope: !9)
-!86 = distinct !{!86, !87, !"polly.alias.scope.C"}
-!87 = distinct !{!87, !"polly.alias.scope.domain"}
-!88 = !{!89, !90}
-!89 = distinct !{!89, !87, !"polly.alias.scope.B"}
-!90 = distinct !{!90, !87, !"polly.alias.scope.A"}
-!91 = !{!89, !86}
-!92 = !{!86, !90}
-!93 = !DILocation(line: 25, column: 45, scope: !94)
-!94 = distinct !DILexicalBlock(scope: !95, file: !1, line: 24, column: 13)
-!95 = distinct !DILexicalBlock(scope: !96, file: !1, line: 24, column: 13)
-!96 = distinct !DILexicalBlock(scope: !97, file: !1, line: 22, column: 29)
-!97 = distinct !DILexicalBlock(scope: !98, file: !1, line: 22, column: 9)
-!98 = distinct !DILexicalBlock(scope: !99, file: !1, line: 22, column: 9)
-!99 = distinct !DILexicalBlock(scope: !100, file: !1, line: 21, column: 25)
-!100 = distinct !DILexicalBlock(scope: !101, file: !1, line: 21, column: 5)
-!101 = distinct !DILexicalBlock(scope: !7, file: !1, line: 21, column: 5)
-!102 = !DILocation(line: 25, column: 35, scope: !94)
+!41 = distinct !{!41, !42, !43}
+!42 = !{!"llvm.loop.vectorize.width", i32 1}
+!43 = !{!"llvm.loop.interleave.count", i32 1}
+!44 = !DILocation(line: 17, column: 1, scope: !4)
+!45 = !DILocation(line: 20, column: 9, scope: !7)
+!46 = !DILocalVariable(name: "i", scope: !7, file: !1, line: 20, type: !12)
+!47 = !DILocation(line: 29, column: 1, scope: !7)
+!48 = !DILocation(line: 33, column: 9, scope: !8)
+!49 = !DILocalVariable(name: "i", scope: !8, file: !1, line: 33, type: !12)
+!50 = !DILocation(line: 35, column: 5, scope: !51)
+!51 = !DILexicalBlockFile(scope: !52, file: !1, discriminator: 1)
+!52 = distinct !DILexicalBlock(scope: !53, file: !1, line: 35, column: 5)
+!53 = distinct !DILexicalBlock(scope: !8, file: !1, line: 35, column: 5)
+!54 = !DILocation(line: 37, column: 21, scope: !55)
+!55 = distinct !DILexicalBlock(scope: !56, file: !1, line: 36, column: 29)
+!56 = distinct !DILexicalBlock(scope: !57, file: !1, line: 36, column: 9)
+!57 = distinct !DILexicalBlock(scope: !58, file: !1, line: 36, column: 9)
+!58 = distinct !DILexicalBlock(scope: !52, file: !1, line: 35, column: 25)
+!59 = !DILocation(line: 36, column: 9, scope: !60)
+!60 = !DILexicalBlockFile(scope: !56, file: !1, discriminator: 1)
+!61 = !DILocation(line: 37, column: 38, scope: !55)
+!62 = !DILocation(line: 37, column: 13, scope: !55)
+!63 = !DILocation(line: 38, column: 18, scope: !64)
+!64 = distinct !DILexicalBlock(scope: !55, file: !1, line: 38, column: 17)
+!65 = !DILocation(line: 38, column: 22, scope: !64)
+!66 = !DILocation(line: 38, column: 17, scope: !55)
+!67 = !DILocation(line: 38, column: 37, scope: !68)
+!68 = !DILexicalBlockFile(scope: !64, file: !1, discriminator: 1)
+!69 = !DILocation(line: 38, column: 29, scope: !68)
+!70 = !DILocation(line: 40, column: 9, scope: !58)
+!71 = !DILocation(line: 42, column: 1, scope: !8)
+!72 = !DILocation(line: 9, column: 9, scope: !4, inlinedAt: !73)
+!73 = distinct !DILocation(line: 51, column: 5, scope: !9)
+!74 = !DILocation(line: 11, column: 5, scope: !28, inlinedAt: !73)
+!75 = !DILocation(line: 51, column: 5, scope: !9)
+!76 = !DILocation(line: 12, column: 9, scope: !32, inlinedAt: !73)
+!77 = !DILocation(line: 13, column: 13, scope: !37, inlinedAt: !73)
+!78 = !DILocation(line: 13, column: 21, scope: !37, inlinedAt: !73)
+!79 = !DILocation(line: 14, column: 13, scope: !37, inlinedAt: !73)
+!80 = !DILocation(line: 14, column: 21, scope: !37, inlinedAt: !73)
+!81 = distinct !{!81, !42, !43}
+!82 = !DILocation(line: 20, column: 9, scope: !7, inlinedAt: !83)
+!83 = distinct !DILocation(line: 52, column: 5, scope: !9)
+!84 = !DILocation(line: 52, column: 5, scope: !9)
+!85 = !DILocation(line: 55, column: 71, scope: !9)
+!86 = !DILocation(line: 55, column: 5, scope: !9)
+!87 = !DILocation(line: 56, column: 5, scope: !9)
+!88 = distinct !{!88, !89, !"polly.alias.scope.C"}
+!89 = distinct !{!89, !"polly.alias.scope.domain"}
+!90 = !{!91, !92}
+!91 = distinct !{!91, !89, !"polly.alias.scope.A"}
+!92 = distinct !{!92, !89, !"polly.alias.scope.B"}
+!93 = !{!88, !92}
+!94 = !{!91, !88}
+!95 = !DILocation(line: 25, column: 45, scope: !96)
+!96 = distinct !DILexicalBlock(scope: !97, file: !1, line: 24, column: 13)
+!97 = distinct !DILexicalBlock(scope: !98, file: !1, line: 24, column: 13)
+!98 = distinct !DILexicalBlock(scope: !99, file: !1, line: 22, column: 29)
+!99 = distinct !DILexicalBlock(scope: !100, file: !1, line: 22, column: 9)
+!100 = distinct !DILexicalBlock(scope: !101, file: !1, line: 22, column: 9)
+!101 = distinct !DILexicalBlock(scope: !102, file: !1, line: 21, column: 25)
+!102 = distinct !DILexicalBlock(scope: !103, file: !1, line: 21, column: 5)
+!103 = distinct !DILexicalBlock(scope: !7, file: !1, line: 21, column: 5)
+!104 = !DILocation(line: 25, column: 35, scope: !96)

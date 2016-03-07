@@ -1,5 +1,5 @@
 #include <stdio.h>
-#define N 32
+#define N 512
 long long A[N][N];
 long long B[N][N];
 long long C[N][N];
@@ -47,10 +47,10 @@ int main()
     double t_start, t_end;
 
     int r;
-    for(r=0;r<10000;r++){
-        init_array();
-        mat_mult();
-    }
+    //for(r=0;r<10000;r++){
+    init_array();
+    mat_mult();
+    //}
    
     printf("Pass %d X %d matrix test case (C[N][N] =%lld) \n ", N, N, C[N-1][N-1]);
     return 0;
