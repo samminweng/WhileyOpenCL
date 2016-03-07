@@ -1,5 +1,5 @@
 	.text
-	.file	"VectorMult.polly.ll"
+	.file	"VectorMult.aggregated.ll"
 	.section	.rodata.cst16,"aM",@progbits,16
 	.p2align	4
 .LCPI0_0:
@@ -30,7 +30,7 @@ main:                                   # @main
 	pushq	%r15
 	pushq	%r14
 	pushq	%rbx
-	pushq	%rax
+	subq	$104, %rsp
 .Ltmp4:
 	.cfi_offset %rbx, -40
 .Ltmp5:
@@ -116,155 +116,150 @@ main:                                   # @main
 	cmpq	$10240, %rsi            # imm = 0x2800
 	jne	.LBB0_1
 .Ltmp15:
-# BB#4:                                 # %for.cond13.preheader
+# BB#4:                                 # %polly.loop_preheader
 	#DEBUG_VALUE: main:r <- %RSI
-	.loc	1 25 2 is_stmt 1 discriminator 1 # VectorMult.c:25:2
-	addq	$48, %r15
 	addq	$48, %r14
-	xorl	%edx, %edx
-	movl	$6, %ecx
+	addq	$48, %r15
+	xorl	%ecx, %ecx
+	xorps	%xmm8, %xmm8
 .Ltmp16:
 	.p2align	4, 0x90
-.LBB0_5:                                # %for.cond17.preheader
+.LBB0_5:                                # %polly.stmt.for.cond17.preheader
                                         # =>This Loop Header: Depth=1
                                         #     Child Loop BB0_6 Depth 2
-	pxor	%xmm0, %xmm0
-.Ltmp17:
-	.loc	1 27 3 discriminator 1  # VectorMult.c:27:3
+	movaps	%xmm8, -48(%rbp)
+	movq	$-1, %rdx
 	movq	%r14, %rsi
 	movq	%r15, %rdi
-	movl	$1024, %ebx             # imm = 0x400
+	movl	$1008, %ebx             # imm = 0x3F0
 	.p2align	4, 0x90
-.LBB0_6:                                # %vector.body4
+.LBB0_6:                                # %polly.stmt.vector.body4
                                         #   Parent Loop BB0_5 Depth=1
                                         # =>  This Inner Loop Header: Depth=2
-.Ltmp18:
-	.loc	1 29 15                 # VectorMult.c:29:15
 	movdqu	-48(%rsi), %xmm4
 	movdqu	-32(%rsi), %xmm5
-	movdqu	-16(%rsi), %xmm9
-	movdqu	(%rsi), %xmm8
-	.loc	1 29 24 is_stmt 0       # VectorMult.c:29:24
+	movdqu	-16(%rsi), %xmm3
+	movdqu	(%rsi), %xmm9
 	movdqu	-48(%rdi), %xmm6
 	movdqu	-32(%rdi), %xmm7
-	movdqu	-16(%rdi), %xmm1
+	movdqu	-16(%rdi), %xmm0
 	movdqu	(%rdi), %xmm2
-	.loc	1 29 23                 # VectorMult.c:29:23
-	pshufd	$245, %xmm6, %xmm3      # xmm3 = xmm6[1,1,3,3]
+.Ltmp17:
+	.loc	1 29 23 is_stmt 1       # VectorMult.c:29:23
+	pshufd	$245, %xmm6, %xmm1      # xmm1 = xmm6[1,1,3,3]
 	pmuludq	%xmm4, %xmm6
 	pshufd	$232, %xmm6, %xmm6      # xmm6 = xmm6[0,2,2,3]
 	pshufd	$245, %xmm4, %xmm4      # xmm4 = xmm4[1,1,3,3]
-	pmuludq	%xmm3, %xmm4
-	pshufd	$232, %xmm4, %xmm3      # xmm3 = xmm4[0,2,2,3]
-	punpckldq	%xmm3, %xmm6    # xmm6 = xmm6[0],xmm3[0],xmm6[1],xmm3[1]
-	.loc	1 29 13                 # VectorMult.c:29:13
-	paddd	%xmm0, %xmm6
+	pmuludq	%xmm1, %xmm4
+	pshufd	$232, %xmm4, %xmm1      # xmm1 = xmm4[0,2,2,3]
+	punpckldq	%xmm1, %xmm6    # xmm6 = xmm6[0],xmm1[0],xmm6[1],xmm1[1]
+	.loc	1 29 13 is_stmt 0       # VectorMult.c:29:13
+	paddd	-48(%rbp), %xmm6
 	.loc	1 29 23                 # VectorMult.c:29:23
-	pshufd	$245, %xmm7, %xmm0      # xmm0 = xmm7[1,1,3,3]
+	pshufd	$245, %xmm7, %xmm1      # xmm1 = xmm7[1,1,3,3]
 	pmuludq	%xmm5, %xmm7
-	pshufd	$232, %xmm7, %xmm3      # xmm3 = xmm7[0,2,2,3]
-	pshufd	$245, %xmm5, %xmm4      # xmm4 = xmm5[1,1,3,3]
-	pmuludq	%xmm0, %xmm4
-	pshufd	$232, %xmm4, %xmm0      # xmm0 = xmm4[0,2,2,3]
-	punpckldq	%xmm0, %xmm3    # xmm3 = xmm3[0],xmm0[0],xmm3[1],xmm0[1]
+	pshufd	$232, %xmm7, %xmm4      # xmm4 = xmm7[0,2,2,3]
+	pshufd	$245, %xmm5, %xmm5      # xmm5 = xmm5[1,1,3,3]
+	pmuludq	%xmm1, %xmm5
+	pshufd	$232, %xmm5, %xmm1      # xmm1 = xmm5[0,2,2,3]
+	punpckldq	%xmm1, %xmm4    # xmm4 = xmm4[0],xmm1[0],xmm4[1],xmm1[1]
 	.loc	1 29 13                 # VectorMult.c:29:13
-	paddd	%xmm6, %xmm3
+	paddd	%xmm6, %xmm4
 	.loc	1 29 23                 # VectorMult.c:29:23
-	pshufd	$245, %xmm1, %xmm0      # xmm0 = xmm1[1,1,3,3]
-	pmuludq	%xmm9, %xmm1
-	pshufd	$232, %xmm1, %xmm1      # xmm1 = xmm1[0,2,2,3]
-	pshufd	$245, %xmm9, %xmm4      # xmm4 = xmm9[1,1,3,3]
-	pmuludq	%xmm0, %xmm4
-	pshufd	$232, %xmm4, %xmm0      # xmm0 = xmm4[0,2,2,3]
-	punpckldq	%xmm0, %xmm1    # xmm1 = xmm1[0],xmm0[0],xmm1[1],xmm0[1]
+	pshufd	$245, %xmm0, %xmm1      # xmm1 = xmm0[1,1,3,3]
+	pmuludq	%xmm3, %xmm0
+	pshufd	$232, %xmm0, %xmm0      # xmm0 = xmm0[0,2,2,3]
+	pshufd	$245, %xmm3, %xmm3      # xmm3 = xmm3[1,1,3,3]
+	pmuludq	%xmm1, %xmm3
+	pshufd	$232, %xmm3, %xmm1      # xmm1 = xmm3[0,2,2,3]
+	punpckldq	%xmm1, %xmm0    # xmm0 = xmm0[0],xmm1[0],xmm0[1],xmm1[1]
 	.loc	1 29 13                 # VectorMult.c:29:13
-	paddd	%xmm3, %xmm1
+	paddd	%xmm4, %xmm0
 	.loc	1 29 23                 # VectorMult.c:29:23
-	pshufd	$245, %xmm2, %xmm3      # xmm3 = xmm2[1,1,3,3]
-	pmuludq	%xmm8, %xmm2
-	pshufd	$232, %xmm2, %xmm0      # xmm0 = xmm2[0,2,2,3]
-	pshufd	$245, %xmm8, %xmm2      # xmm2 = xmm8[1,1,3,3]
-	pmuludq	%xmm3, %xmm2
+	pshufd	$245, %xmm2, %xmm1      # xmm1 = xmm2[1,1,3,3]
+	pmuludq	%xmm9, %xmm2
 	pshufd	$232, %xmm2, %xmm2      # xmm2 = xmm2[0,2,2,3]
-	punpckldq	%xmm2, %xmm0    # xmm0 = xmm0[0],xmm2[0],xmm0[1],xmm2[1]
+	pshufd	$245, %xmm9, %xmm3      # xmm3 = xmm9[1,1,3,3]
+	pmuludq	%xmm1, %xmm3
+	pshufd	$232, %xmm3, %xmm1      # xmm1 = xmm3[0,2,2,3]
+	punpckldq	%xmm1, %xmm2    # xmm2 = xmm2[0],xmm1[0],xmm2[1],xmm1[1]
 	.loc	1 29 13                 # VectorMult.c:29:13
-	paddd	%xmm1, %xmm0
-.Ltmp19:
-	.loc	1 27 3 is_stmt 1 discriminator 1 # VectorMult.c:27:3
+	paddd	%xmm0, %xmm2
+	movdqa	%xmm2, -48(%rbp)
+	movdqa	%xmm2, -96(%rbp)
+	incq	%rdx
+	addq	$-16, %rbx
 	addq	$64, %rdi
 	addq	$64, %rsi
-	addq	$-16, %rbx
-	jne	.LBB0_6
-# BB#7:                                 # %middle.block5
+	cmpq	$63, %rdx
+	jl	.LBB0_6
+# BB#7:                                 # %polly.stmt.middle.block5
                                         #   in Loop: Header=BB0_5 Depth=1
-.Ltmp20:
-	.loc	1 29 13                 # VectorMult.c:29:13
-	pshufd	$78, %xmm0, %xmm1       # xmm1 = xmm0[2,3,0,1]
-	paddd	%xmm0, %xmm1
-	pshufd	$229, %xmm1, %xmm0      # xmm0 = xmm1[1,1,2,3]
-	paddd	%xmm1, %xmm0
-.Ltmp21:
-	.loc	1 31 10                 # VectorMult.c:31:10
-	movd	%xmm0, (%rax,%rdx,4)
-.Ltmp22:
-	.loc	1 25 15 discriminator 2 # VectorMult.c:25:15
-	incq	%rdx
-.Ltmp23:
-	#DEBUG_VALUE: main:r <- %RDX
-	.loc	1 25 2 is_stmt 0 discriminator 1 # VectorMult.c:25:2
+	movdqa	-96(%rbp), %xmm1
+	pshufd	$78, %xmm1, %xmm2       # xmm2 = xmm1[2,3,0,1]
+	paddd	%xmm1, %xmm2
+	pshufd	$229, %xmm2, %xmm1      # xmm1 = xmm2[1,1,2,3]
+	paddd	%xmm2, %xmm1
+	movd	%xmm1, (%rax,%rcx,4)
 	addq	$4096, %r15             # imm = 0x1000
 	addq	$4096, %r14             # imm = 0x1000
-	cmpq	$10240, %rdx            # imm = 0x2800
-	jne	.LBB0_5
-.Ltmp24:
-# BB#8:
-	#DEBUG_VALUE: main:r <- %RDX
-	pxor	%xmm1, %xmm1
+	cmpq	$10239, %rcx            # imm = 0x27FF
+	leaq	1(%rcx), %rcx
+	jl	.LBB0_5
+.Ltmp18:
+# BB#8:                                 # %polly.stmt.vector.body21.preheader
 	pxor	%xmm0, %xmm0
-.Ltmp25:
+	movdqa	%xmm0, -64(%rbp)
+	movdqa	%xmm0, -80(%rbp)
+	movq	$-1, %rcx
+	movl	$6, %edx
 	.p2align	4, 0x90
-.LBB0_9:                                # %vector.body21
+.LBB0_9:                                # %polly.stmt.vector.body21
                                         # =>This Inner Loop Header: Depth=1
+	movq	-24(%rax,%rdx,4), %xmm0 # xmm0 = mem[0],zero
+	movq	-16(%rax,%rdx,4), %xmm1 # xmm1 = mem[0],zero
+.Ltmp19:
 	.loc	1 36 19 is_stmt 1       # VectorMult.c:36:19
-	movq	-24(%rax,%rcx,4), %xmm2 # xmm2 = mem[0],zero
-	movq	-16(%rax,%rcx,4), %xmm3 # xmm3 = mem[0],zero
+	movdqa	%xmm0, %xmm2
+	psrad	$31, %xmm2
+	punpckldq	%xmm2, %xmm0    # xmm0 = xmm0[0],xmm2[0],xmm0[1],xmm2[1]
+	movdqa	%xmm1, %xmm2
+	psrad	$31, %xmm2
+	punpckldq	%xmm2, %xmm1    # xmm1 = xmm1[0],xmm2[0],xmm1[1],xmm2[1]
+	.loc	1 36 17 is_stmt 0       # VectorMult.c:36:17
+	paddq	-64(%rbp), %xmm0
+	paddq	-80(%rbp), %xmm1
+	movq	-8(%rax,%rdx,4), %xmm2  # xmm2 = mem[0],zero
+	movq	(%rax,%rdx,4), %xmm3    # xmm3 = mem[0],zero
+	.loc	1 36 19                 # VectorMult.c:36:19
 	movdqa	%xmm2, %xmm4
 	psrad	$31, %xmm4
 	punpckldq	%xmm4, %xmm2    # xmm2 = xmm2[0],xmm4[0],xmm2[1],xmm4[1]
 	movdqa	%xmm3, %xmm4
 	psrad	$31, %xmm4
 	punpckldq	%xmm4, %xmm3    # xmm3 = xmm3[0],xmm4[0],xmm3[1],xmm4[1]
-	.loc	1 36 17 is_stmt 0       # VectorMult.c:36:17
-	paddq	%xmm1, %xmm2
-	paddq	%xmm0, %xmm3
-	.loc	1 36 19                 # VectorMult.c:36:19
-	movq	-8(%rax,%rcx,4), %xmm1  # xmm1 = mem[0],zero
-	movq	(%rax,%rcx,4), %xmm0    # xmm0 = mem[0],zero
-	movdqa	%xmm1, %xmm4
-	psrad	$31, %xmm4
-	punpckldq	%xmm4, %xmm1    # xmm1 = xmm1[0],xmm4[0],xmm1[1],xmm4[1]
-	movdqa	%xmm0, %xmm4
-	psrad	$31, %xmm4
-	punpckldq	%xmm4, %xmm0    # xmm0 = xmm0[0],xmm4[0],xmm0[1],xmm4[1]
 	.loc	1 36 17                 # VectorMult.c:36:17
-	paddq	%xmm2, %xmm1
-	paddq	%xmm3, %xmm0
-.Ltmp26:
-	.loc	1 34 12 is_stmt 1       # VectorMult.c:34:12
-	addq	$8, %rcx
-	cmpq	$10246, %rcx            # imm = 0x2806
-	jne	.LBB0_9
-# BB#10:                                # %middle.block22
-.Ltmp27:
-	.loc	1 36 17                 # VectorMult.c:36:17
+	paddq	%xmm0, %xmm2
+	paddq	%xmm1, %xmm3
+	movdqa	%xmm2, -64(%rbp)
+	movdqa	%xmm3, -80(%rbp)
+	movdqa	%xmm2, -112(%rbp)
+	movdqa	%xmm3, -128(%rbp)
+	incq	%rcx
+	addq	$8, %rdx
+	cmpq	$1279, %rcx             # imm = 0x4FF
+	jl	.LBB0_9
+# BB#10:                                # %polly.exiting
+	movdqa	-128(%rbp), %xmm0
+	movdqa	-112(%rbp), %xmm1
 	paddq	%xmm1, %xmm0
 	pshufd	$78, %xmm0, %xmm1       # xmm1 = xmm0[2,3,0,1]
 	paddq	%xmm0, %xmm1
 	movd	%xmm1, %rax
-.Ltmp28:
-	.loc	1 40 11                 # VectorMult.c:40:11
+.Ltmp20:
+	.loc	1 40 11 is_stmt 1       # VectorMult.c:40:11
 	cmpq	$10485760, %rax         # imm = 0xA00000
-.Ltmp29:
+.Ltmp21:
 	.loc	1 40 5 is_stmt 0        # VectorMult.c:40:5
 	jne	.LBB0_12
 # BB#11:                                # %if.end
@@ -281,14 +276,14 @@ main:                                   # @main
 	callq	printf
 	.loc	1 49 2                  # VectorMult.c:49:2
 	xorl	%eax, %eax
-	addq	$8, %rsp
+	addq	$104, %rsp
 	popq	%rbx
 	popq	%r14
 	popq	%r15
 	popq	%rbp
 	retq
 .LBB0_12:                               # %if.then
-.Ltmp30:
+.Ltmp22:
 	.loc	1 41 3                  # VectorMult.c:41:3
 	movl	$.L.str, %edi
 	xorl	%eax, %eax
@@ -296,7 +291,7 @@ main:                                   # @main
 	.loc	1 42 3                  # VectorMult.c:42:3
 	movl	$-2, %edi
 	callq	exit
-.Ltmp31:
+.Ltmp23:
 .Lfunc_end0:
 	.size	main, .Lfunc_end0-main
 	.cfi_endproc
@@ -366,10 +361,6 @@ main:                                   # @main
 	.quad	.Ltmp16-.Lfunc_begin0
 	.short	1                       # Loc expr size
 	.byte	84                      # DW_OP_reg4
-	.quad	.Ltmp23-.Lfunc_begin0
-	.quad	.Ltmp25-.Lfunc_begin0
-	.short	1                       # Loc expr size
-	.byte	81                      # DW_OP_reg1
 	.quad	0
 	.quad	0
 	.section	.debug_abbrev,"",@progbits

@@ -20,7 +20,7 @@ folder_proc(){
 	#if [ -f "$folder/*.$ext" ];
 	#then
 	#	read -p "Press [Enter] to remove .$ext files in $folder"
-	rm "$folder"/*
+	rm -rf "$folder"/*
 	#fi
 	## move to the specific folder
 	mv -f *.$ext "$folder"/
@@ -34,6 +34,21 @@ generate_png(){
 	cd ../
 }
 
+
+### Compile LLVM-IR to executables
+runExecutables(){
+	program=$1
+	opt=$2
+	parameter=$3
+	### Use 'llc' to compile LLVM code into assembly code
+    llc $program.$opt.ll -o $program.$opt.s
+    ### Use 'gcc' to compile .s file and link with 'libUtil.a'
+    clang $program.$opt.s libUtil.a -o "out/$program.$opt.out"
+    ### Run the generated executables.
+	time ./out/$program.$opt.out $parameter
+}
+
+
 ##
 ## Execute Polly Pass step by step
 ##
@@ -44,105 +59,106 @@ opt_polly(){
 	parameter=$4
 	echo -e "------------------Start optimizing ${BOLD}${GREEN}$c_type $program C ${RESET} program with POlly--------------------"
 	
-	echo -e -n "Press [Enter] ${REVERSE}1. Create LLVM-IR from C${RESET}"
+	echo -e -n "${REVERSE}1. Create LLVM-IR from C${RESET}"
 	### Compile source.c along with 'Util.c' to assembly code
 	clang -g -S -emit-llvm $program.c -o $program.s
 	
-	echo -e -n "Press [Enter] ${REVERSE}2. Prepare LLVM-IR for Polly${RESET}"
+	echo -e -n "${REVERSE}2. Prepare LLVM-IR for Polly${RESET}"
 	opt -S -polly-canonicalize -polly-report $program.s > $program.preopt.ll
 	
-	echo -e -n "Press [Enter] ${REVERSE}3. Detect SCoPs using Polly${RESET}"
-	opt -basicaa -polly-ast -analyze -q -polly-report -polly-show $program.preopt.ll
+	echo -e -n "${REVERSE}3. Detect SCoPs using Polly${RESET}"
+	opt -basicaa -polly-ast -analyze -q -polly-report -polly-show $program.preopt.ll -polly-detect-track-failures
 	#opt -basicaa -polly-ast -analyze -q -polly-dependences-computeout=0 -polly-report -polly-show $program.preopt.ll
 	
-	echo -e -n "Press [Enter] ${REVERSE}4. Generate detected SCoPs in DOT${RESET}" 
+	echo -e -n "${REVERSE}4. Generate detected SCoPs in DOT${RESET}" 
 	opt -basicaa -dot-scops -disable-output -polly-report -polly-show $program.preopt.ll
 	
-	echo -e -n "Press [Enter] ${REVERSE}5. Show the dependences of the SCoPs${RESET}"
+	echo -e -n "${REVERSE}5. Show the dependences of the SCoPs${RESET}"
 	opt -basicaa -polly-dependences -analyze -polly-report -polly-show $program.preopt.ll
 
-	echo -e -n "Press [Enter] ${REVERSE}6. Export jscop files${RESET}"
+	echo -e -n "${REVERSE}6. Export jscop files${RESET}"
 	opt -basicaa -polly-export-jscop -polly-report -polly-show $program.preopt.ll
 
-	echo -e -n "Press [Enter] ${REVERSE}7. Generate polly-optimized LLVM using Polly${RESET}"
+	echo -e -n "${REVERSE}7. Generate polly-optimized LLVM using Polly${RESET}"
 	opt -S -O3 -polly -polly-codegen -polly-process-unprofitable -polly-report $program.preopt.ll -o $program.polly.ll
 
-	##echo -e -n "Press [Enter] 8. Make the polly-optimized executables" && read
-	
-	echo -e -n "Press [Enter] ${REVERSE}9. Compare the runtime of the executables${RESET}" && read 
+	echo -e -n "${REVERSE}9. Compare the runtime of the executables${RESET}" && read 
 	mkdir -p "out" # Store the executables.
+	rm -rf "out"/*
 	### Creating a static library ('Util.o') with GCC (http://www.cs.dartmouth.edu/~campbell/cs50/buildlib.html)
     clang -c Util.c -o Util.o ### Compile Util.c to Util.o (object file)
     ar -cvq libUtil.a Util.o
 
-	echo -e -n "Press [Enter] 9.1 Run ${BOLD}${GREEN}GCC ${RESET} -O3 optimized executables" && read
-	gcc -O3 $program.c Util.c -o $program.gcc.out
-	mv $program.gcc.out "out/"
-	time ./out/$program.gcc.out $parameter
+	# echo -e -n "Press [Enter] 9.1 Run ${BOLD}${GREEN}GCC ${RESET} -O3 optimized executables" && read
+	# gcc -O3 $program.c Util.c -o $program.gcc.out
+	# mv $program.gcc.out "out/"
+	# time ./out/$program.gcc.out $parameter
 
-	echo -e -n "Press [Enter] 9.2 Run ${BOLD}${GREEN} None Optimization ${RESET} executable" && read	
+	echo -e -n "Press [Enter] 9.1 Run ${BOLD}${GREEN} None Optimized ${RESET} executable" && read	
+    opt -basicaa -polly-prepare -polly-codegen -polly-report $program.preopt.ll\
+        -S -o $program.none.ll
+ 	runExecutables $program "none" $parameter
+
+	echo -e -n "Press [Enter] 9.2 Run ${BOLD}${GREEN} -O3 Optimized ${RESET} executable" && read	
 	### Use 'llc' to compile LLVM code into assembly code
-    opt -S -O3 -polly-report $program.preopt.ll -o $program.none.ll
-    llc $program.none.ll -o $program.none.s
-    ### Use 'gcc' to compile .s file and link with 'libUtil.a'
-    clang $program.none.s libUtil.a -o "out/$program.none.out"
-	time ./out/$program.none.out $parameter
-	#pollycc -O3 -mllvm -polly-optimizer=none -mllvm -polly-vectorizer=none -mllvm -polly-tiling=false MatrixMult.c -o "out/$program.none.out"
-	#time ./out/$program.none.out $parameter
+    opt -O3 -basicaa -polly-prepare -polly-codegen -polly-report $program.preopt.ll\
+     	-S -o $program.O3.ll
+    runExecutables $program "O3" $parameter
 
 	echo -e -n "Press [Enter] 9.3 Test Loop Tiling Strategy" && read
 	echo -e -n "Press [Enter] 9.3 (a) Run ${BOLD}${GREEN} Enable Loop Tiling ${RESET} executable" && read
-	opt -O3 -S -polly-vectorizer=none -polly-tiling -polly-codegen -polly-report $program.preopt.ll -o $program.tiling.ll
-	llc $program.tiling.ll -o $program.tiling.s
-	clang $program.tiling.s libUtil.a -o "out/$program.tiling.out"
-	time ./out/$program.tiling.out $parameter
+	opt -polly-vectorizer=none -polly-tiling\
+	    -O3 -basicaa -polly-prepare -polly-codegen -polly-report $program.preopt.ll\
+	    -S -o $program.tiling.ll
+	runExecutables $program "tiling" $parameter
 
 	echo -e -n "Press [Enter] 9.3 (b) Run ${BOLD}${GREEN} Enable 2n Level Loop Tiling ${RESET} executable" && read
-	opt -O3 -S -polly-vectorizer=none -polly-tiling -polly-2nd-level-tiling -polly-codegen -polly-report $program.preopt.ll -o $program.tiling.ll
-	llc $program.tiling.ll -o $program.tiling.s
-	clang $program.tiling.s libUtil.a -o "out/$program.tiling.out"
-	time ./out/$program.tiling.out $parameter
+	opt -polly-vectorizer=none -polly-tiling -polly-2nd-level-tiling\
+	    -O3 -basicaa -polly-prepare -polly-codegen -polly-report $program.preopt.ll\
+	    -S -o $program.2ndtiling.ll
+	runExecutables $program "2ndtiling" $parameter
 	#pollycc -O3 -mllvm -polly-optimizer=none -mllvm -polly-vectorizer=none MatrixMult.c -o "out/$program.tiling.out" 
 	#time ./out/$program.tiling.out $parameter
 
 	echo -e -n "Press [Enter] 9.4 Test Vectorization Strategy:${REVERSE}${GREEN} None, Stripmining, Polly internal Vectorizer${RESET}" && read
 	echo -e -n "Press [Enter] 9.4 (a) Run ${BOLD}${GREEN} None Vectorization ${RESET} executable" && read
-	opt -O3 -S -polly-vectorizer=none -polly-codegen -polly-report $program.preopt.ll -o $program.nonevector.ll
-	llc $program.nonevector.ll -o $program.nonevector.s
-	clang $program.nonevector.s libUtil.a -o "out/$program.nonevector.out"
-	time ./out/$program.nonevector.out $parameter
+	opt -polly-vectorizer=none\
+	    -O3 -basicaa -polly-prepare -polly-codegen -polly-report $program.preopt.ll\
+	    -S -o $program.nonevector.ll
+	runExecutables $program "nonevector" $parameter
 
 	echo -e -n "Press [Enter] 9.4 (b) Run ${BOLD}${GREEN} Strip mining ${RESET} executable" && read
-	opt -O3 -S -polly-vectorizer=stripmine -polly-codegen -polly-report $program.preopt.ll -o $program.stripmine.ll
-	llc $program.stripmine.ll -o $program.stripmine.s
-	clang $program.stripmine.s libUtil.a -o "out/$program.stripmine.out"
-	time ./out/$program.stripmine.out $parameter
-	#pollycc -O3 -mllvm -polly-optimizer=none -mllvm -polly-vectorizer=stripmine MatrixMult.c -o "out/$program.stripmine.out"
-	#time ./out/$program.stripmine.out $parameter
+	opt -polly-vectorizer=stripmine\
+	    -O3 -basicaa -polly-prepare -polly-codegen -polly-report $program.preopt.ll\
+	    -S -o $program.stripmine.ll
+	runExecutables $program "stripmine" $parameter
 
 	echo -e -n "Press [Enter] 9.4 (c) Run ${BOLD}${GREEN} Polly Internal Vectorizer ${RESET} executable" && read	
-	opt -O3 -S -polly-vectorizer=polly -polly-codegen -polly-report $program.preopt.ll -o $program.pollyvector.ll
-	llc $program.pollyvector.ll -o $program.pollyvector.s
-	clang $program.pollyvector.s libUtil.a -o "out/$program.pollyvector.out"
-	time ./out/$program.pollyvector.out $parameter
+	opt -polly-vectorizer=polly\
+	    -O3 -basicaa -polly-prepare -polly-codegen -polly-report $program.preopt.ll\
+	    -S -o $program.pollyvector.ll
+	runExecutables $program "pollyvector" $parameter
 	#pollycc -O3 -mllvm -polly-optimizer=none -mllvm -polly-vectorizer=polly -mllvm -polly-tiling=false MatrixMult.c -o "out/$program.pollyvector.out"
 	#time ./out/$program.pollyvector.out $parameter
 
-
 	echo -e -n "Press [Enter] 9.5 Run ${BOLD}${GREEN} Optimized Schedule of SCoPs ${RESET} executable" && read	
-	opt -O3 -S -polly-vectorizer=none -polly-opt-isl -polly-codegen -polly-report $program.preopt.ll -o $program.optisl.ll
-	llc $program.optisl.ll -o $program.optisl.s
-	clang $program.optisl.s libUtil.a -o "out/$program.optisl.out"
-	time ./out/$program.optisl.out $parameter
-	
-	echo -e -n "Press [Enter] 9.6 Run ${BOLD}${GREEN}Polly-optimized ${RESET} executable" && read
-	opt -O3 -S -polly -polly-codegen -polly-report $program.preopt.ll -o $program.polly.ll
-    llc $program.polly.ll -o $program.polly.s
-    clang $program.polly.s libUtil.a -o "out/$program.polly.out"
-	time ./out/$program.polly.out $parameter
-	#pollycc -O3 -mllvm -polly MatrixMult.c -o "out/$program.polly.out"
-	#time ./out/$program.polly.out $parameter
+	opt -polly-opt-isl\
+	    -O3 -basicaa -polly-prepare -polly-codegen -polly-report $program.preopt.ll\
+	    -S -o $program.optisl.ll
+	runExecutables $program "optisl" $parameter
 
+	echo -e -n "Press [Enter] 9.6 (a) Run ${BOLD}${GREEN}  (1st+2nd) Loop Tiling + Polly Vectorizer + Optimized Schedule ${RESET} executable" && read
+	opt -polly-vectorizer=polly -polly-opt-isl -polly-tiling -polly-2nd-level-tiling\
+	    -O3 -basicaa -polly-prepare -polly-codegen -polly-report $program.preopt.ll\
+	    -S -o $program.aggregated.ll
+    runExecutables $program "aggregated" $parameter
+	
+
+	echo -e -n "Press [Enter] 9.6 (b) Run ${BOLD}${GREEN}Polly-optimized  ${RESET} executable" && read
+	opt -polly\
+	    -O3 -basicaa -polly-prepare -polly-codegen -polly-report $program.preopt.ll\
+	    -S -o $program.polly.ll
+    runExecutables $program "polly" $parameter
 
 	# echo -e -n "Press [Enter] 9.4 Run ${BOLD}${GREEN}Polly Vectorized ${RESET} executables" && read
 	# clang -g -S -emit-llvm $program.c -o $program.s
@@ -187,5 +203,5 @@ exec(){
 	cd ../../../
 }
 
-exec handwritten VectorMult 2
+exec handwritten VectorMult 2 1024X1024X10
 exec handwritten MatrixMult 2 32

@@ -208,13 +208,13 @@ vector.body21:                                    ; preds = %vector.body21, %vec
   br i1 %86, label %polly.merge_new_and_old, label %vector.body21, !dbg !83, !llvm.loop !84
 
 polly.merge_new_and_old:                          ; preds = %polly.exiting, %vector.body21
-  %.merge = phi <2 x i64> [ %.final_reload, %polly.exiting ], [ %84, %vector.body21 ]
-  %.merge120 = phi <2 x i64> [ %.final_reload119, %polly.exiting ], [ %85, %vector.body21 ]
+  %.merge = phi <2 x i64> [ %.final_reload, %polly.exiting ], [ %85, %vector.body21 ]
+  %.merge120 = phi <2 x i64> [ %.final_reload119, %polly.exiting ], [ %84, %vector.body21 ]
   br label %middle.block22, !dbg !82
 
 middle.block22:                                   ; preds = %polly.merge_new_and_old
-  %.lcssa44 = phi <2 x i64> [ %.merge120, %polly.merge_new_and_old ]
-  %.lcssa = phi <2 x i64> [ %.merge, %polly.merge_new_and_old ]
+  %.lcssa44 = phi <2 x i64> [ %.merge, %polly.merge_new_and_old ]
+  %.lcssa = phi <2 x i64> [ %.merge120, %polly.merge_new_and_old ]
   %bin.rdx38 = add <2 x i64> %.lcssa44, %.lcssa, !dbg !82
   %rdx.shuf39 = shufflevector <2 x i64> %bin.rdx38, <2 x i64> undef, <2 x i32> <i32 1, i32 undef>, !dbg !82
   %bin.rdx40 = add <2 x i64> %bin.rdx38, %rdx.shuf39, !dbg !82
@@ -247,8 +247,8 @@ polly.loop_exit94:                                ; preds = %polly.stmt.vector.b
   br label %polly.exiting
 
 polly.exiting:                                    ; preds = %polly.loop_exit94
-  %.final_reload = load <2 x i64>, <2 x i64>* %.s2a
-  %.final_reload119 = load <2 x i64>, <2 x i64>* %.s2a118
+  %.final_reload = load <2 x i64>, <2 x i64>* %.s2a118
+  %.final_reload119 = load <2 x i64>, <2 x i64>* %.s2a
   br label %polly.merge_new_and_old
 
 polly.loop_header:                                ; preds = %polly.stmt.middle.block5, %polly.loop_preheader
@@ -300,7 +300,7 @@ polly.stmt.vector.body4:                          ; preds = %polly.loop_header46
   %wide.load_p_scalar_ = load <4 x i32>, <4 x i32>* %scevgep5253, align 4, !alias.scope !101, !noalias !105
   %scevgep55 = getelementptr i8, i8* %scevgep54, i64 %90
   %scevgep5556 = bitcast i8* %scevgep55 to <4 x i32>*
-  %wide.load18_p_scalar_ = load <4 x i32>, <4 x i32>* %scevgep5556, align 4, !alias.scope !104, !noalias !106
+  %wide.load18_p_scalar_ = load <4 x i32>, <4 x i32>* %scevgep5556, align 4, !alias.scope !99, !noalias !106
   %p_ = mul nsw <4 x i32> %wide.load18_p_scalar_, %wide.load_p_scalar_, !dbg !69
   %p_57 = add nsw <4 x i32> %p_, %vec.phi.phiops.reload, !dbg !70
   %91 = shl i64 %polly.indvar49, 6
@@ -309,7 +309,7 @@ polly.stmt.vector.body4:                          ; preds = %polly.loop_header46
   %wide.load.1_p_scalar_ = load <4 x i32>, <4 x i32>* %scevgep6061, align 4, !alias.scope !101, !noalias !105
   %scevgep64 = getelementptr i8, i8* %scevgep63, i64 %91
   %scevgep6465 = bitcast i8* %scevgep64 to <4 x i32>*
-  %wide.load18.1_p_scalar_ = load <4 x i32>, <4 x i32>* %scevgep6465, align 4, !alias.scope !104, !noalias !106
+  %wide.load18.1_p_scalar_ = load <4 x i32>, <4 x i32>* %scevgep6465, align 4, !alias.scope !99, !noalias !106
   %p_66 = mul nsw <4 x i32> %wide.load18.1_p_scalar_, %wide.load.1_p_scalar_, !dbg !69
   %p_67 = add nsw <4 x i32> %p_66, %p_57, !dbg !70
   %92 = shl i64 %polly.indvar49, 6
@@ -318,7 +318,7 @@ polly.stmt.vector.body4:                          ; preds = %polly.loop_header46
   %wide.load.2_p_scalar_ = load <4 x i32>, <4 x i32>* %scevgep7071, align 4, !alias.scope !101, !noalias !105
   %scevgep74 = getelementptr i8, i8* %scevgep73, i64 %92
   %scevgep7475 = bitcast i8* %scevgep74 to <4 x i32>*
-  %wide.load18.2_p_scalar_ = load <4 x i32>, <4 x i32>* %scevgep7475, align 4, !alias.scope !104, !noalias !106
+  %wide.load18.2_p_scalar_ = load <4 x i32>, <4 x i32>* %scevgep7475, align 4, !alias.scope !99, !noalias !106
   %p_76 = mul nsw <4 x i32> %wide.load18.2_p_scalar_, %wide.load.2_p_scalar_, !dbg !69
   %p_77 = add nsw <4 x i32> %p_76, %p_67, !dbg !70
   %93 = shl i64 %polly.indvar49, 6
@@ -327,7 +327,7 @@ polly.stmt.vector.body4:                          ; preds = %polly.loop_header46
   %wide.load.3_p_scalar_ = load <4 x i32>, <4 x i32>* %scevgep8081, align 4, !alias.scope !101, !noalias !105
   %scevgep84 = getelementptr i8, i8* %scevgep83, i64 %93
   %scevgep8485 = bitcast i8* %scevgep84 to <4 x i32>*
-  %wide.load18.3_p_scalar_ = load <4 x i32>, <4 x i32>* %scevgep8485, align 4, !alias.scope !104, !noalias !106
+  %wide.load18.3_p_scalar_ = load <4 x i32>, <4 x i32>* %scevgep8485, align 4, !alias.scope !99, !noalias !106
   %p_86 = mul nsw <4 x i32> %wide.load18.3_p_scalar_, %wide.load.3_p_scalar_, !dbg !69
   %p_87 = add nsw <4 x i32> %p_86, %p_77, !dbg !70
   %94 = shl i64 %polly.indvar49, 4
@@ -522,13 +522,13 @@ attributes #5 = { noreturn nounwind }
 !94 = distinct !{!94, !95, !"polly.alias.scope.call2"}
 !95 = distinct !{!95, !"polly.alias.scope.domain"}
 !96 = !{!97, !98, !99, !100, !101, !102, !103, !104}
-!97 = distinct !{!97, !95, !"polly.alias.scope."}
-!98 = distinct !{!98, !95, !"polly.alias.scope.vec.phi31"}
-!99 = distinct !{!99, !95, !"polly.alias.scope.vec.phi30"}
-!100 = distinct !{!100, !95, !"polly.alias.scope.vec.phi"}
+!97 = distinct !{!97, !95, !"polly.alias.scope.vec.phi30"}
+!98 = distinct !{!98, !95, !"polly.alias.scope."}
+!99 = distinct !{!99, !95, !"polly.alias.scope.call1"}
+!100 = distinct !{!100, !95, !"polly.alias.scope..lcssa45"}
 !101 = distinct !{!101, !95, !"polly.alias.scope.call"}
-!102 = distinct !{!102, !95, !"polly.alias.scope..lcssa45"}
-!103 = distinct !{!103, !95, !"polly.alias.scope."}
-!104 = distinct !{!104, !95, !"polly.alias.scope.call1"}
-!105 = !{!97, !98, !99, !100, !102, !94, !103, !104}
-!106 = !{!97, !98, !99, !100, !101, !102, !94, !103}
+!102 = distinct !{!102, !95, !"polly.alias.scope.vec.phi31"}
+!103 = distinct !{!103, !95, !"polly.alias.scope.vec.phi"}
+!104 = distinct !{!104, !95, !"polly.alias.scope."}
+!105 = !{!97, !98, !99, !100, !102, !103, !104, !94}
+!106 = !{!97, !98, !100, !101, !102, !103, !104, !94}

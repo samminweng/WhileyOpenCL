@@ -1,5 +1,5 @@
 	.text
-	.file	"MatrixMult.stripmine.ll"
+	.file	"MatrixMult.aggregated.ll"
 	.file	1 "MatrixMult.c"
 	.section	.rodata.cst16,"aM",@progbits,16
 	.p2align	4

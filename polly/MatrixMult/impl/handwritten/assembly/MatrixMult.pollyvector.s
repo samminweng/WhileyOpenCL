@@ -25,7 +25,6 @@ init_array:                             # @init_array
 	.cfi_def_cfa_register %rbp
 	movq	$-8192, %rax            # imm = 0xFFFFFFFFFFFFE000
 .Ltmp3:
-	#DEBUG_VALUE: init_array:i <- 0
 	.loc	1 13 21 prologue_end    # MatrixMult.c:13:21
 	movaps	.LCPI0_0(%rip), %xmm0   # xmm0 = [1,1]
 	.p2align	4, 0x90
@@ -222,14 +221,12 @@ print_array:                            # @print_array
 .Ltmp20:
 	.cfi_offset %r15, -24
 	movl	$C, %r14d
-.Ltmp21:
-	#DEBUG_VALUE: print_array:i <- 0
 	xorl	%r15d, %r15d
 	.p2align	4, 0x90
 .LBB2_1:                                # %for.cond1.preheader
                                         # =>This Loop Header: Depth=1
                                         #     Child Loop BB2_2 Depth 2
-.Ltmp22:
+.Ltmp21:
 	.loc	1 37 21 prologue_end    # MatrixMult.c:37:21
 	movq	stdout(%rip), %rcx
 	movq	%r14, %rbx
@@ -247,25 +244,25 @@ print_array:                            # @print_array
 	callq	fprintf
 	.loc	1 37 21                 # MatrixMult.c:37:21
 	movq	stdout(%rip), %rcx
-.Ltmp23:
+.Ltmp22:
 	.loc	1 36 9 is_stmt 1 discriminator 1 # MatrixMult.c:36:9
 	addq	$8, %rbx
 	decq	%r12
 	jne	.LBB2_2
-.Ltmp24:
+.Ltmp23:
 # BB#3:                                 # %for.end
                                         #   in Loop: Header=BB2_1 Depth=1
 	.loc	1 40 9                  # MatrixMult.c:40:9
 	movl	$10, %edi
 	movq	%rcx, %rsi
 	callq	fputc
-.Ltmp25:
+.Ltmp24:
 	.loc	1 35 5 discriminator 1  # MatrixMult.c:35:5
 	incq	%r15
 	addq	$256, %r14              # imm = 0x100
 	cmpq	$32, %r15
 	jne	.LBB2_1
-.Ltmp26:
+.Ltmp25:
 # BB#4:                                 # %for.end11
 	.loc	1 42 1                  # MatrixMult.c:42:1
 	popq	%rbx
@@ -274,7 +271,7 @@ print_array:                            # @print_array
 	popq	%r15
 	popq	%rbp
 	retq
-.Ltmp27:
+.Ltmp26:
 .Lfunc_end2:
 	.size	print_array, .Lfunc_end2-print_array
 	.cfi_endproc
@@ -294,19 +291,19 @@ main:                                   # @main
 	.cfi_startproc
 # BB#0:                                 # %polly.split_new_and_old
 	pushq	%rbp
-.Ltmp28:
+.Ltmp27:
 	.cfi_def_cfa_offset 16
-.Ltmp29:
+.Ltmp28:
 	.cfi_offset %rbp, -16
 	movq	%rsp, %rbp
-.Ltmp30:
+.Ltmp29:
 	.cfi_def_cfa_register %rbp
 	pushq	%rbx
 	subq	$24, %rsp
-.Ltmp31:
+.Ltmp30:
 	.cfi_offset %rbx, -24
 	xorl	%r8d, %r8d
-.Ltmp32:
+.Ltmp31:
 	#DEBUG_VALUE: main:r <- 0
 	movaps	.LCPI3_0(%rip), %xmm0   # xmm0 = [1,1]
 	.p2align	4, 0x90
@@ -388,7 +385,7 @@ main:                                   # @main
                                         #       Parent Loop BB3_8 Depth=3
                                         # =>      This Inner Loop Header: Depth=4
 	movq	B+7680(%rdx,%rdi,8), %rsi
-.Ltmp33:
+.Ltmp32:
 	.loc	1 25 45 prologue_end    # MatrixMult.c:25:45
 	imulq	-8(%rcx), %rsi
 	.loc	1 25 35 is_stmt 0       # MatrixMult.c:25:35
@@ -405,7 +402,7 @@ main:                                   # @main
 	addq	$16, %rcx
 	cmpq	$15, %rax
 	jl	.LBB3_9
-.Ltmp34:
+.Ltmp33:
 # BB#5:                                 # %polly.stmt.for.inc25.i
                                         #   in Loop: Header=BB3_8 Depth=3
 	movq	-24(%rbp), %rax
@@ -439,7 +436,7 @@ main:                                   # @main
 	popq	%rbx
 	popq	%rbp
 	retq
-.Ltmp35:
+.Ltmp34:
 .Lfunc_end3:
 	.size	main, .Lfunc_end3-main
 	.cfi_endproc
@@ -571,7 +568,7 @@ main:                                   # @main
 	.byte	0                       # EOM(2)
 	.byte	7                       # Abbreviation Code
 	.byte	46                      # DW_TAG_subprogram
-	.byte	1                       # DW_CHILDREN_yes
+	.byte	0                       # DW_CHILDREN_no
 	.byte	17                      # DW_AT_low_pc
 	.byte	1                       # DW_FORM_addr
 	.byte	18                      # DW_AT_high_pc
@@ -589,6 +586,19 @@ main:                                   # @main
 	.byte	0                       # EOM(1)
 	.byte	0                       # EOM(2)
 	.byte	8                       # Abbreviation Code
+	.byte	46                      # DW_TAG_subprogram
+	.byte	1                       # DW_CHILDREN_yes
+	.byte	17                      # DW_AT_low_pc
+	.byte	1                       # DW_FORM_addr
+	.byte	18                      # DW_AT_high_pc
+	.byte	6                       # DW_FORM_data4
+	.byte	64                      # DW_AT_frame_base
+	.byte	24                      # DW_FORM_exprloc
+	.byte	49                      # DW_AT_abstract_origin
+	.byte	19                      # DW_FORM_ref4
+	.byte	0                       # EOM(1)
+	.byte	0                       # EOM(2)
+	.byte	9                       # Abbreviation Code
 	.byte	52                      # DW_TAG_variable
 	.byte	0                       # DW_CHILDREN_no
 	.byte	28                      # DW_AT_const_value
@@ -600,19 +610,6 @@ main:                                   # @main
 	.byte	59                      # DW_AT_decl_line
 	.byte	11                      # DW_FORM_data1
 	.byte	73                      # DW_AT_type
-	.byte	19                      # DW_FORM_ref4
-	.byte	0                       # EOM(1)
-	.byte	0                       # EOM(2)
-	.byte	9                       # Abbreviation Code
-	.byte	46                      # DW_TAG_subprogram
-	.byte	1                       # DW_CHILDREN_yes
-	.byte	17                      # DW_AT_low_pc
-	.byte	1                       # DW_FORM_addr
-	.byte	18                      # DW_AT_high_pc
-	.byte	6                       # DW_FORM_data4
-	.byte	64                      # DW_AT_frame_base
-	.byte	24                      # DW_FORM_exprloc
-	.byte	49                      # DW_AT_abstract_origin
 	.byte	19                      # DW_FORM_ref4
 	.byte	0                       # EOM(1)
 	.byte	0                       # EOM(2)
@@ -671,11 +668,11 @@ main:                                   # @main
 	.section	.debug_info,"",@progbits
 .Lsection_info:
 .Lcu_begin0:
-	.long	306                     # Length of Unit
+	.long	280                     # Length of Unit
 	.short	4                       # DWARF version number
 	.long	.Lsection_abbrev        # Offset Into Abbrev. Section
 	.byte	8                       # Address Size (in bytes)
-	.byte	1                       # Abbrev [1] 0xb:0x12b DW_TAG_compile_unit
+	.byte	1                       # Abbrev [1] 0xb:0x111 DW_TAG_compile_unit
 	.long	.Linfo_string0          # DW_AT_producer
 	.short	12                      # DW_AT_language
 	.long	.Linfo_string1          # DW_AT_name
@@ -727,7 +724,7 @@ main:                                   # @main
 	.byte	9                       # DW_AT_location
 	.byte	3
 	.quad	C
-	.byte	7                       # Abbrev [7] 0x89:0x22 DW_TAG_subprogram
+	.byte	7                       # Abbrev [7] 0x89:0x15 DW_TAG_subprogram
 	.quad	.Lfunc_begin0           # DW_AT_low_pc
 	.long	.Lfunc_end0-.Lfunc_begin0 # DW_AT_high_pc
 	.byte	1                       # DW_AT_frame_base
@@ -736,27 +733,20 @@ main:                                   # @main
 	.byte	1                       # DW_AT_decl_file
 	.byte	7                       # DW_AT_decl_line
                                         # DW_AT_external
-	.byte	8                       # Abbrev [8] 0x9e:0xc DW_TAG_variable
-	.byte	0                       # DW_AT_const_value
-	.long	.Linfo_string13         # DW_AT_name
-	.byte	1                       # DW_AT_decl_file
-	.byte	9                       # DW_AT_decl_line
-	.long	302                     # DW_AT_type
-	.byte	0                       # End Of Children Mark
-	.byte	9                       # Abbrev [9] 0xab:0x20 DW_TAG_subprogram
+	.byte	8                       # Abbrev [8] 0x9e:0x20 DW_TAG_subprogram
 	.quad	.Lfunc_begin1           # DW_AT_low_pc
 	.long	.Lfunc_end1-.Lfunc_begin1 # DW_AT_high_pc
 	.byte	1                       # DW_AT_frame_base
 	.byte	86
-	.long	237                     # DW_AT_abstract_origin
-	.byte	8                       # Abbrev [8] 0xbe:0xc DW_TAG_variable
+	.long	211                     # DW_AT_abstract_origin
+	.byte	9                       # Abbrev [9] 0xb1:0xc DW_TAG_variable
 	.byte	0                       # DW_AT_const_value
 	.long	.Linfo_string13         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
 	.byte	20                      # DW_AT_decl_line
-	.long	302                     # DW_AT_type
+	.long	276                     # DW_AT_type
 	.byte	0                       # End Of Children Mark
-	.byte	7                       # Abbrev [7] 0xcb:0x22 DW_TAG_subprogram
+	.byte	7                       # Abbrev [7] 0xbe:0x15 DW_TAG_subprogram
 	.quad	.Lfunc_begin2           # DW_AT_low_pc
 	.long	.Lfunc_end2-.Lfunc_begin2 # DW_AT_high_pc
 	.byte	1                       # DW_AT_frame_base
@@ -765,20 +755,13 @@ main:                                   # @main
 	.byte	1                       # DW_AT_decl_file
 	.byte	31                      # DW_AT_decl_line
                                         # DW_AT_external
-	.byte	8                       # Abbrev [8] 0xe0:0xc DW_TAG_variable
-	.byte	0                       # DW_AT_const_value
-	.long	.Linfo_string13         # DW_AT_name
-	.byte	1                       # DW_AT_decl_file
-	.byte	33                      # DW_AT_decl_line
-	.long	302                     # DW_AT_type
-	.byte	0                       # End Of Children Mark
-	.byte	10                      # Abbrev [10] 0xed:0x8 DW_TAG_subprogram
+	.byte	10                      # Abbrev [10] 0xd3:0x8 DW_TAG_subprogram
 	.long	.Linfo_string8          # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
 	.byte	19                      # DW_AT_decl_line
                                         # DW_AT_external
 	.byte	1                       # DW_AT_inline
-	.byte	11                      # Abbrev [11] 0xf5:0x39 DW_TAG_subprogram
+	.byte	11                      # Abbrev [11] 0xdb:0x39 DW_TAG_subprogram
 	.quad	.Lfunc_begin3           # DW_AT_low_pc
 	.long	.Lfunc_end3-.Lfunc_begin3 # DW_AT_high_pc
 	.byte	1                       # DW_AT_frame_base
@@ -786,22 +769,22 @@ main:                                   # @main
 	.long	.Linfo_string11         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
 	.byte	44                      # DW_AT_decl_line
-	.long	302                     # DW_AT_type
+	.long	276                     # DW_AT_type
                                         # DW_AT_external
-	.byte	8                       # Abbrev [8] 0x10e:0xc DW_TAG_variable
+	.byte	9                       # Abbrev [9] 0xf4:0xc DW_TAG_variable
 	.byte	0                       # DW_AT_const_value
 	.long	.Linfo_string14         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
 	.byte	49                      # DW_AT_decl_line
-	.long	302                     # DW_AT_type
-	.byte	12                      # Abbrev [12] 0x11a:0x13 DW_TAG_inlined_subroutine
-	.long	237                     # DW_AT_abstract_origin
-	.quad	.Ltmp33                 # DW_AT_low_pc
-	.long	.Ltmp34-.Ltmp33         # DW_AT_high_pc
+	.long	276                     # DW_AT_type
+	.byte	12                      # Abbrev [12] 0x100:0x13 DW_TAG_inlined_subroutine
+	.long	211                     # DW_AT_abstract_origin
+	.quad	.Ltmp32                 # DW_AT_low_pc
+	.long	.Ltmp33-.Ltmp32         # DW_AT_high_pc
 	.byte	1                       # DW_AT_call_file
 	.byte	52                      # DW_AT_call_line
 	.byte	0                       # End Of Children Mark
-	.byte	5                       # Abbrev [5] 0x12e:0x7 DW_TAG_base_type
+	.byte	5                       # Abbrev [5] 0x114:0x7 DW_TAG_base_type
 	.long	.Linfo_string12         # DW_AT_name
 	.byte	5                       # DW_AT_encoding
 	.byte	4                       # DW_AT_byte_size
@@ -817,20 +800,20 @@ main:                                   # @main
 .LpubNames_begin0:
 	.short	2                       # DWARF Version
 	.long	.Lcu_begin0             # Offset of Compilation Unit Info
-	.long	310                     # Compilation Unit Length
+	.long	284                     # Compilation Unit Length
 	.long	42                      # DIE offset
 	.asciz	"A"                     # External Name
 	.long	95                      # DIE offset
 	.asciz	"B"                     # External Name
 	.long	116                     # DIE offset
 	.asciz	"C"                     # External Name
-	.long	237                     # DIE offset
+	.long	211                     # DIE offset
 	.asciz	"mat_mult"              # External Name
 	.long	137                     # DIE offset
 	.asciz	"init_array"            # External Name
-	.long	245                     # DIE offset
+	.long	219                     # DIE offset
 	.asciz	"main"                  # External Name
-	.long	203                     # DIE offset
+	.long	190                     # DIE offset
 	.asciz	"print_array"           # External Name
 	.long	0                       # End Mark
 .LpubNames_end0:
@@ -839,10 +822,10 @@ main:                                   # @main
 .LpubTypes_begin0:
 	.short	2                       # DWARF Version
 	.long	.Lcu_begin0             # Offset of Compilation Unit Info
-	.long	310                     # Compilation Unit Length
+	.long	284                     # Compilation Unit Length
 	.long	81                      # DIE offset
 	.asciz	"long long int"         # External Name
-	.long	302                     # DIE offset
+	.long	276                     # DIE offset
 	.asciz	"int"                   # External Name
 	.long	0                       # End Mark
 .LpubTypes_end0:

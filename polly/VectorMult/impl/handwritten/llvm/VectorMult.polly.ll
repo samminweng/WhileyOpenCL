@@ -9,21 +9,24 @@ target triple = "x86_64-unknown-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define i32 @main(i32 %argc, i8** nocapture readnone %args) #0 !dbg !8 {
 entry:
-  tail call void @llvm.dbg.value(metadata i32 %argc, i64 0, metadata !17, metadata !18), !dbg !19
-  tail call void @llvm.dbg.value(metadata i8** %args, i64 0, metadata !20, metadata !18), !dbg !21
+  br label %entry.split, !dbg !17
+
+entry.split:                                      ; preds = %entry
+  tail call void @llvm.dbg.value(metadata i32 %argc, i64 0, metadata !18, metadata !19), !dbg !17
+  tail call void @llvm.dbg.value(metadata i8** %args, i64 0, metadata !20, metadata !19), !dbg !21
   %call = tail call noalias i8* @malloc(i64 41943040) #4, !dbg !22
   %0 = bitcast i8* %call to i32*, !dbg !23
-  tail call void @llvm.dbg.value(metadata i32* %0, i64 0, metadata !24, metadata !18), !dbg !25
+  tail call void @llvm.dbg.value(metadata i32* %0, i64 0, metadata !24, metadata !19), !dbg !25
   %call1 = tail call noalias i8* @malloc(i64 41943040) #4, !dbg !26
   %1 = bitcast i8* %call1 to i32*, !dbg !27
-  tail call void @llvm.dbg.value(metadata i32* %1, i64 0, metadata !28, metadata !18), !dbg !29
+  tail call void @llvm.dbg.value(metadata i32* %1, i64 0, metadata !28, metadata !19), !dbg !29
   %call2 = tail call noalias i8* @malloc(i64 40960) #4, !dbg !30
-  tail call void @llvm.dbg.value(metadata i32* %39, i64 0, metadata !31, metadata !18), !dbg !32
-  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !33, metadata !18), !dbg !34
+  tail call void @llvm.dbg.value(metadata i32* %39, i64 0, metadata !31, metadata !19), !dbg !32
+  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !33, metadata !19), !dbg !34
   br label %for.cond3.preheader, !dbg !35
 
-for.cond3.preheader:                              ; preds = %for.inc10, %entry
-  %r.07 = phi i64 [ 0, %entry ], [ %inc11, %for.inc10 ]
+for.cond3.preheader:                              ; preds = %for.inc10, %entry.split
+  %r.07 = phi i64 [ 0, %entry.split ], [ %inc11, %for.inc10 ]
   %mul = shl i64 %r.07, 10, !dbg !39
   br label %vector.body, !dbg !44
 
@@ -94,7 +97,7 @@ for.cond13.preheader:                             ; preds = %for.inc10
 
 for.inc10:                                        ; preds = %vector.body
   %inc11 = add nuw nsw i64 %r.07, 1, !dbg !58
-  tail call void @llvm.dbg.value(metadata i64 %inc11, i64 0, metadata !33, metadata !18), !dbg !34
+  tail call void @llvm.dbg.value(metadata i64 %inc11, i64 0, metadata !33, metadata !19), !dbg !34
   %exitcond13 = icmp eq i64 %inc11, 10240, !dbg !35
   br i1 %exitcond13, label %for.cond13.preheader, label %for.cond3.preheader, !dbg !35
 
@@ -159,7 +162,7 @@ middle.block5:                                    ; preds = %vector.body4
   %arrayidx34 = getelementptr inbounds i32, i32* %39, i64 %r.15, !dbg !72
   store i32 %69, i32* %arrayidx34, align 4, !dbg !73
   %inc36 = add nuw nsw i64 %r.15, 1, !dbg !74
-  tail call void @llvm.dbg.value(metadata i64 %inc36, i64 0, metadata !33, metadata !18), !dbg !34
+  tail call void @llvm.dbg.value(metadata i64 %inc36, i64 0, metadata !33, metadata !19), !dbg !34
   %exitcond9 = icmp eq i64 %inc36, 10240, !dbg !54
   br i1 %exitcond9, label %vector.body21.preheader, label %for.cond17.preheader, !dbg !54
 
@@ -259,9 +262,9 @@ attributes #5 = { noreturn nounwind }
 !14 = !{i32 2, !"Dwarf Version", i32 4}
 !15 = !{i32 2, !"Debug Info Version", i32 3}
 !16 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)"}
-!17 = !DILocalVariable(name: "argc", arg: 1, scope: !8, file: !1, line: 8, type: !5)
-!18 = !DIExpression()
-!19 = !DILocation(line: 8, column: 14, scope: !8)
+!17 = !DILocation(line: 8, column: 14, scope: !8)
+!18 = !DILocalVariable(name: "argc", arg: 1, scope: !8, file: !1, line: 8, type: !5)
+!19 = !DIExpression()
 !20 = !DILocalVariable(name: "args", arg: 2, scope: !8, file: !1, line: 8, type: !11)
 !21 = !DILocation(line: 8, column: 27, scope: !8)
 !22 = !DILocation(line: 12, column: 18, scope: !8)

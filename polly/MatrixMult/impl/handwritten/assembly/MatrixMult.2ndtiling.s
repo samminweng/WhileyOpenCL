@@ -1,5 +1,5 @@
 	.text
-	.file	"MatrixMult.stripmine.ll"
+	.file	"MatrixMult.2ndtiling.ll"
 	.file	1 "MatrixMult.c"
 	.section	.rodata.cst16,"aM",@progbits,16
 	.p2align	4
@@ -114,7 +114,7 @@ mat_mult:                               # @mat_mult
 .Lfunc_begin1:
 	.loc	1 19 0                  # MatrixMult.c:19:0
 	.cfi_startproc
-# BB#0:                                 # %polly.split_new_and_old
+# BB#0:                                 # %entry
 	pushq	%rbp
 .Ltmp7:
 	.cfi_def_cfa_offset 16
@@ -123,71 +123,76 @@ mat_mult:                               # @mat_mult
 	movq	%rsp, %rbp
 .Ltmp9:
 	.cfi_def_cfa_register %rbp
-	xorl	%r8d, %r8d
-	movl	$A+8, %r9d
-.Ltmp10:
-	#DEBUG_VALUE: mat_mult:i <- 0
+	xorl	%r9d, %r9d
+	movl	$A+8, %r8d
 	.p2align	4, 0x90
-.LBB1_1:                                # %polly.loop_preheader4
+.LBB1_1:                                # %for.cond1.preheader
                                         # =>This Loop Header: Depth=1
                                         #     Child Loop BB1_2 Depth 2
                                         #       Child Loop BB1_3 Depth 3
-	movq	%r8, %rax
-	shlq	$8, %rax
-	leaq	C(%rax), %r10
-	xorl	%r11d, %r11d
+	xorl	%edx, %edx
 	.p2align	4, 0x90
-.LBB1_2:                                # %polly.stmt.for.body3
+.LBB1_2:                                # %for.body3
                                         #   Parent Loop BB1_1 Depth=1
                                         # =>  This Loop Header: Depth=2
                                         #       Child Loop BB1_3 Depth 3
-	movq	$0, (%r10,%r11,8)
-	movq	$0, -8(%rbp)
-	movq	$-1, %rdi
-	movq	$-7680, %rax            # imm = 0xFFFFFFFFFFFFE200
-	movq	%r9, %rcx
+.Ltmp10:
+	.loc	1 23 13 prologue_end    # MatrixMult.c:23:13
+	movq	%r9, %rax
+	shlq	$8, %rax
+	leaq	C(%rax,%rdx,8), %r10
+	.loc	1 23 21 is_stmt 0       # MatrixMult.c:23:21
+	movq	$0, C(%rax,%rdx,8)
+	movq	$-8192, %rdi            # imm = 0xFFFFFFFFFFFFE000
+.Ltmp11:
+	#DEBUG_VALUE: mat_mult:k <- 0
+	.loc	1 25 27 is_stmt 1       # MatrixMult.c:25:27
+	movq	%r8, %rcx
+	xorl	%eax, %eax
 	.p2align	4, 0x90
-.LBB1_3:                                # %polly.stmt.for.body8
+.LBB1_3:                                # %for.body8
                                         #   Parent Loop BB1_1 Depth=1
                                         #     Parent Loop BB1_2 Depth=2
                                         # =>    This Inner Loop Header: Depth=3
-	movq	B+7680(%rax,%r11,8), %rdx
-.Ltmp11:
-	.loc	1 25 45 prologue_end    # MatrixMult.c:25:45
-	imulq	-8(%rcx), %rdx
-	.loc	1 25 35 is_stmt 0       # MatrixMult.c:25:35
-	addq	-8(%rbp), %rdx
-	movq	B+7936(%rax,%r11,8), %rsi
+	.loc	1 25 47 is_stmt 0       # MatrixMult.c:25:47
+	movq	B+8192(%rdi,%rdx,8), %rsi
 	.loc	1 25 45                 # MatrixMult.c:25:45
-	imulq	(%rcx), %rsi
+	imulq	-8(%rcx), %rsi
 	.loc	1 25 35                 # MatrixMult.c:25:35
-	addq	%rdx, %rsi
-	movq	%rsi, -8(%rbp)
-	movq	%rsi, -16(%rbp)
-	incq	%rdi
-	addq	$512, %rax              # imm = 0x200
+	addq	%rax, %rsi
+	.loc	1 25 47                 # MatrixMult.c:25:47
+	movq	B+8448(%rdi,%rdx,8), %rax
+	.loc	1 25 45                 # MatrixMult.c:25:45
+	imulq	(%rcx), %rax
+	.loc	1 25 35                 # MatrixMult.c:25:35
+	addq	%rsi, %rax
+	.loc	1 24 13 is_stmt 1 discriminator 1 # MatrixMult.c:24:13
 	addq	$16, %rcx
-	cmpq	$15, %rdi
-	jl	.LBB1_3
-.Ltmp12:
-# BB#4:                                 # %polly.stmt.for.inc25
+	addq	$512, %rdi              # imm = 0x200
+	jne	.LBB1_3
+# BB#4:                                 # %for.inc25
                                         #   in Loop: Header=BB1_2 Depth=2
-	movq	-16(%rbp), %rax
-	movq	%rax, (%r10,%r11,8)
-	cmpq	$31, %r11
-	leaq	1(%r11), %r11
-	jl	.LBB1_2
-# BB#5:                                 # %polly.loop_exit5
+	.loc	1 25 25                 # MatrixMult.c:25:25
+	movq	%rax, (%r10)
+.Ltmp12:
+	.loc	1 22 9 discriminator 1  # MatrixMult.c:22:9
+	incq	%rdx
+	cmpq	$32, %rdx
+	jne	.LBB1_2
+.Ltmp13:
+# BB#5:                                 # %for.inc28
                                         #   in Loop: Header=BB1_1 Depth=1
-	addq	$256, %r9               # imm = 0x100
-	cmpq	$31, %r8
-	leaq	1(%r8), %r8
-	jl	.LBB1_1
+	.loc	1 21 5 discriminator 1  # MatrixMult.c:21:5
+	incq	%r9
+	addq	$256, %r8               # imm = 0x100
+	cmpq	$32, %r9
+	jne	.LBB1_1
+.Ltmp14:
 # BB#6:                                 # %for.end30
-	.loc	1 29 1 is_stmt 1        # MatrixMult.c:29:1
+	.loc	1 29 1                  # MatrixMult.c:29:1
 	popq	%rbp
 	retq
-.Ltmp13:
+.Ltmp15:
 .Lfunc_end1:
 	.size	mat_mult, .Lfunc_end1-mat_mult
 	.cfi_endproc
@@ -201,24 +206,24 @@ print_array:                            # @print_array
 	.cfi_startproc
 # BB#0:                                 # %entry
 	pushq	%rbp
-.Ltmp14:
+.Ltmp16:
 	.cfi_def_cfa_offset 16
-.Ltmp15:
+.Ltmp17:
 	.cfi_offset %rbp, -16
 	movq	%rsp, %rbp
-.Ltmp16:
+.Ltmp18:
 	.cfi_def_cfa_register %rbp
 	pushq	%r15
 	pushq	%r14
 	pushq	%r12
 	pushq	%rbx
-.Ltmp17:
-	.cfi_offset %rbx, -48
-.Ltmp18:
-	.cfi_offset %r12, -40
 .Ltmp19:
-	.cfi_offset %r14, -32
+	.cfi_offset %rbx, -48
 .Ltmp20:
+	.cfi_offset %r12, -40
+.Ltmp21:
+	.cfi_offset %r14, -32
+.Ltmp22:
 	.cfi_offset %r15, -24
 	movl	$C, %r14d
 	xorl	%r15d, %r15d
@@ -226,7 +231,7 @@ print_array:                            # @print_array
 .LBB2_1:                                # %for.cond1.preheader
                                         # =>This Loop Header: Depth=1
                                         #     Child Loop BB2_2 Depth 2
-.Ltmp21:
+.Ltmp23:
 	.loc	1 37 21 prologue_end    # MatrixMult.c:37:21
 	movq	stdout(%rip), %rcx
 	movq	%r14, %rbx
@@ -244,25 +249,25 @@ print_array:                            # @print_array
 	callq	fprintf
 	.loc	1 37 21                 # MatrixMult.c:37:21
 	movq	stdout(%rip), %rcx
-.Ltmp22:
+.Ltmp24:
 	.loc	1 36 9 is_stmt 1 discriminator 1 # MatrixMult.c:36:9
 	addq	$8, %rbx
 	decq	%r12
 	jne	.LBB2_2
-.Ltmp23:
+.Ltmp25:
 # BB#3:                                 # %for.end
                                         #   in Loop: Header=BB2_1 Depth=1
 	.loc	1 40 9                  # MatrixMult.c:40:9
 	movl	$10, %edi
 	movq	%rcx, %rsi
 	callq	fputc
-.Ltmp24:
+.Ltmp26:
 	.loc	1 35 5 discriminator 1  # MatrixMult.c:35:5
 	incq	%r15
 	addq	$256, %r14              # imm = 0x100
 	cmpq	$32, %r15
 	jne	.LBB2_1
-.Ltmp25:
+.Ltmp27:
 # BB#4:                                 # %for.end11
 	.loc	1 42 1                  # MatrixMult.c:42:1
 	popq	%rbx
@@ -271,7 +276,7 @@ print_array:                            # @print_array
 	popq	%r15
 	popq	%rbp
 	retq
-.Ltmp26:
+.Ltmp28:
 .Lfunc_end2:
 	.size	print_array, .Lfunc_end2-print_array
 	.cfi_endproc
@@ -289,139 +294,188 @@ main:                                   # @main
 .Lfunc_begin3:
 	.loc	1 45 0                  # MatrixMult.c:45:0
 	.cfi_startproc
-# BB#0:                                 # %polly.split_new_and_old
-	pushq	%rbp
-.Ltmp27:
-	.cfi_def_cfa_offset 16
-.Ltmp28:
-	.cfi_offset %rbp, -16
-	movq	%rsp, %rbp
-.Ltmp29:
-	.cfi_def_cfa_register %rbp
-	pushq	%rbx
-	subq	$24, %rsp
-.Ltmp30:
-	.cfi_offset %rbx, -24
+# BB#0:                                 # %entry
 	xorl	%r8d, %r8d
-.Ltmp31:
-	#DEBUG_VALUE: main:r <- 0
+.Ltmp29:
+	.loc	1 13 21 prologue_end    # MatrixMult.c:13:21
 	movaps	.LCPI3_0(%rip), %xmm0   # xmm0 = [1,1]
 	.p2align	4, 0x90
-.LBB3_1:                                # %polly.loop_header
+.LBB3_1:                                # %for.body
                                         # =>This Loop Header: Depth=1
                                         #     Child Loop BB3_2 Depth 2
-                                        #     Child Loop BB3_7 Depth 2
-                                        #       Child Loop BB3_8 Depth 3
-                                        #         Child Loop BB3_9 Depth 4
-	movq	$-1, %rsi
-	xorl	%edi, %edi
+                                        #     Child Loop BB3_3 Depth 2
+                                        #       Child Loop BB3_4 Depth 3
+                                        #         Child Loop BB3_5 Depth 4
+	movq	$-8192, %rsi            # imm = 0xFFFFFFFFFFFFE000
+.Ltmp30:
+	#DEBUG_VALUE: init_array:i <- 0
 	.p2align	4, 0x90
-.LBB3_2:                                # %polly.stmt.vector.body
+.LBB3_2:                                # %vector.body
                                         #   Parent Loop BB3_1 Depth=1
                                         # =>  This Inner Loop Header: Depth=2
-	movaps	%xmm0, A(%rdi)
-	movaps	%xmm0, B(%rdi)
-	movaps	%xmm0, A+16(%rdi)
-	movaps	%xmm0, B+16(%rdi)
-	movaps	%xmm0, A+32(%rdi)
-	movaps	%xmm0, B+32(%rdi)
-	movaps	%xmm0, A+48(%rdi)
-	movaps	%xmm0, B+48(%rdi)
-	movaps	%xmm0, A+64(%rdi)
-	movaps	%xmm0, B+64(%rdi)
-	movaps	%xmm0, A+80(%rdi)
-	movaps	%xmm0, B+80(%rdi)
-	movaps	%xmm0, A+96(%rdi)
-	movaps	%xmm0, B+96(%rdi)
-	movaps	%xmm0, A+112(%rdi)
-	movaps	%xmm0, B+112(%rdi)
-	movaps	%xmm0, A+128(%rdi)
-	movaps	%xmm0, B+128(%rdi)
-	movaps	%xmm0, A+144(%rdi)
-	movaps	%xmm0, B+144(%rdi)
-	movaps	%xmm0, A+160(%rdi)
-	movaps	%xmm0, B+160(%rdi)
-	movaps	%xmm0, A+176(%rdi)
-	movaps	%xmm0, B+176(%rdi)
-	movaps	%xmm0, A+192(%rdi)
-	movaps	%xmm0, B+192(%rdi)
-	movaps	%xmm0, A+208(%rdi)
-	movaps	%xmm0, B+208(%rdi)
-	movaps	%xmm0, A+224(%rdi)
-	movaps	%xmm0, B+224(%rdi)
-	movaps	%xmm0, A+240(%rdi)
-	movaps	%xmm0, B+240(%rdi)
-	incq	%rsi
-	addq	$256, %rdi              # imm = 0x100
-	cmpq	$31, %rsi
-	movl	$A+8, %r10d
-	movl	$0, %r9d
-	jl	.LBB3_2
+	movaps	%xmm0, A+8192(%rsi)
+	.loc	1 14 21                 # MatrixMult.c:14:21
+	movaps	%xmm0, B+8192(%rsi)
+	.loc	1 13 21                 # MatrixMult.c:13:21
+	movaps	%xmm0, A+8208(%rsi)
+	.loc	1 14 21                 # MatrixMult.c:14:21
+	movaps	%xmm0, B+8208(%rsi)
+	.loc	1 13 21                 # MatrixMult.c:13:21
+	movaps	%xmm0, A+8224(%rsi)
+	.loc	1 14 21                 # MatrixMult.c:14:21
+	movaps	%xmm0, B+8224(%rsi)
+	.loc	1 13 21                 # MatrixMult.c:13:21
+	movaps	%xmm0, A+8240(%rsi)
+	.loc	1 14 21                 # MatrixMult.c:14:21
+	movaps	%xmm0, B+8240(%rsi)
+	.loc	1 13 21                 # MatrixMult.c:13:21
+	movaps	%xmm0, A+8256(%rsi)
+	.loc	1 14 21                 # MatrixMult.c:14:21
+	movaps	%xmm0, B+8256(%rsi)
+	.loc	1 13 21                 # MatrixMult.c:13:21
+	movaps	%xmm0, A+8272(%rsi)
+	.loc	1 14 21                 # MatrixMult.c:14:21
+	movaps	%xmm0, B+8272(%rsi)
+	.loc	1 13 21                 # MatrixMult.c:13:21
+	movaps	%xmm0, A+8288(%rsi)
+	.loc	1 14 21                 # MatrixMult.c:14:21
+	movaps	%xmm0, B+8288(%rsi)
+	.loc	1 13 21                 # MatrixMult.c:13:21
+	movaps	%xmm0, A+8304(%rsi)
+	.loc	1 14 21                 # MatrixMult.c:14:21
+	movaps	%xmm0, B+8304(%rsi)
+	.loc	1 13 21                 # MatrixMult.c:13:21
+	movaps	%xmm0, A+8320(%rsi)
+	.loc	1 14 21                 # MatrixMult.c:14:21
+	movaps	%xmm0, B+8320(%rsi)
+	.loc	1 13 21                 # MatrixMult.c:13:21
+	movaps	%xmm0, A+8336(%rsi)
+	.loc	1 14 21                 # MatrixMult.c:14:21
+	movaps	%xmm0, B+8336(%rsi)
+	.loc	1 13 21                 # MatrixMult.c:13:21
+	movaps	%xmm0, A+8352(%rsi)
+	.loc	1 14 21                 # MatrixMult.c:14:21
+	movaps	%xmm0, B+8352(%rsi)
+	.loc	1 13 21                 # MatrixMult.c:13:21
+	movaps	%xmm0, A+8368(%rsi)
+	.loc	1 14 21                 # MatrixMult.c:14:21
+	movaps	%xmm0, B+8368(%rsi)
+	.loc	1 13 21                 # MatrixMult.c:13:21
+	movaps	%xmm0, A+8384(%rsi)
+	.loc	1 14 21                 # MatrixMult.c:14:21
+	movaps	%xmm0, B+8384(%rsi)
+	.loc	1 13 21                 # MatrixMult.c:13:21
+	movaps	%xmm0, A+8400(%rsi)
+	.loc	1 14 21                 # MatrixMult.c:14:21
+	movaps	%xmm0, B+8400(%rsi)
+	.loc	1 13 21                 # MatrixMult.c:13:21
+	movaps	%xmm0, A+8416(%rsi)
+	.loc	1 14 21                 # MatrixMult.c:14:21
+	movaps	%xmm0, B+8416(%rsi)
+	.loc	1 13 21                 # MatrixMult.c:13:21
+	movaps	%xmm0, A+8432(%rsi)
+	.loc	1 14 21                 # MatrixMult.c:14:21
+	movaps	%xmm0, B+8432(%rsi)
+.Ltmp31:
+	.loc	1 11 5 discriminator 1  # MatrixMult.c:11:5
+	addq	$256, %rsi              # imm = 0x100
+.Ltmp32:
+	.loc	1 52 9                  # MatrixMult.c:52:9
+	movl	$A+8, %r9d
+	movl	$0, %r10d
+.Ltmp33:
+	.loc	1 11 5 discriminator 1  # MatrixMult.c:11:5
+	jne	.LBB3_2
+.Ltmp34:
 	.p2align	4, 0x90
-.LBB3_7:                                # %polly.loop_preheader84
+.LBB3_3:                                # %for.cond1.preheader.i1
                                         #   Parent Loop BB3_1 Depth=1
                                         # =>  This Loop Header: Depth=2
-                                        #       Child Loop BB3_8 Depth 3
-                                        #         Child Loop BB3_9 Depth 4
-	movq	%r9, %rax
-	shlq	$8, %rax
-	leaq	C(%rax), %r11
-	xorl	%edi, %edi
+                                        #       Child Loop BB3_4 Depth 3
+                                        #         Child Loop BB3_5 Depth 4
+	.loc	1 52 9                  # MatrixMult.c:52:9
+	xorl	%esi, %esi
 	.p2align	4, 0x90
-.LBB3_8:                                # %polly.stmt.for.body3.i3
+.LBB3_4:                                # %for.body3.i3
                                         #   Parent Loop BB3_1 Depth=1
-                                        #     Parent Loop BB3_7 Depth=2
+                                        #     Parent Loop BB3_3 Depth=2
                                         # =>    This Loop Header: Depth=3
-                                        #         Child Loop BB3_9 Depth 4
-	movq	$0, (%r11,%rdi,8)
-	movq	$0, -16(%rbp)
-	movq	$-1, %rax
-	movq	$-7680, %rdx            # imm = 0xFFFFFFFFFFFFE200
-	movq	%r10, %rcx
+                                        #         Child Loop BB3_5 Depth 4
+.Ltmp35:
+	.loc	1 23 13                 # MatrixMult.c:23:13
+	movq	%r10, %rax
+	shlq	$8, %rax
+	leaq	C(%rax,%rsi,8), %r11
+	.loc	1 23 21 is_stmt 0       # MatrixMult.c:23:21
+	movq	$0, C(%rax,%rsi,8)
+	movq	$-8192, %rax            # imm = 0xFFFFFFFFFFFFE000
+.Ltmp36:
+	#DEBUG_VALUE: mat_mult:k <- 0
+	.loc	1 25 27 is_stmt 1       # MatrixMult.c:25:27
+	movq	%r9, %rcx
+	xorl	%edx, %edx
 	.p2align	4, 0x90
-.LBB3_9:                                # %polly.stmt.for.body8.i
+.LBB3_5:                                # %for.body8.i
                                         #   Parent Loop BB3_1 Depth=1
-                                        #     Parent Loop BB3_7 Depth=2
-                                        #       Parent Loop BB3_8 Depth=3
+                                        #     Parent Loop BB3_3 Depth=2
+                                        #       Parent Loop BB3_4 Depth=3
                                         # =>      This Inner Loop Header: Depth=4
-	movq	B+7680(%rdx,%rdi,8), %rsi
-.Ltmp32:
-	.loc	1 25 45 prologue_end    # MatrixMult.c:25:45
-	imulq	-8(%rcx), %rsi
-	.loc	1 25 35 is_stmt 0       # MatrixMult.c:25:35
-	addq	-16(%rbp), %rsi
-	movq	B+7936(%rdx,%rdi,8), %rbx
+	.loc	1 25 47 is_stmt 0       # MatrixMult.c:25:47
+	movq	B+8192(%rax,%rsi,8), %rdi
 	.loc	1 25 45                 # MatrixMult.c:25:45
-	imulq	(%rcx), %rbx
+	imulq	-8(%rcx), %rdi
 	.loc	1 25 35                 # MatrixMult.c:25:35
-	addq	%rsi, %rbx
-	movq	%rbx, -16(%rbp)
-	movq	%rbx, -24(%rbp)
-	incq	%rax
-	addq	$512, %rdx              # imm = 0x200
+	addq	%rdx, %rdi
+	.loc	1 25 47                 # MatrixMult.c:25:47
+	movq	B+8448(%rax,%rsi,8), %rdx
+	.loc	1 25 45                 # MatrixMult.c:25:45
+	imulq	(%rcx), %rdx
+	.loc	1 25 35                 # MatrixMult.c:25:35
+	addq	%rdi, %rdx
+.Ltmp37:
+	.loc	1 24 13 is_stmt 1 discriminator 1 # MatrixMult.c:24:13
 	addq	$16, %rcx
-	cmpq	$15, %rax
-	jl	.LBB3_9
-.Ltmp33:
-# BB#5:                                 # %polly.stmt.for.inc25.i
-                                        #   in Loop: Header=BB3_8 Depth=3
-	movq	-24(%rbp), %rax
-	movq	%rax, (%r11,%rdi,8)
-	cmpq	$31, %rdi
-	leaq	1(%rdi), %rdi
-	jl	.LBB3_8
-# BB#6:                                 # %polly.loop_exit85
-                                        #   in Loop: Header=BB3_7 Depth=2
-	addq	$256, %r10              # imm = 0x100
-	cmpq	$31, %r9
-	leaq	1(%r9), %r9
-	jl	.LBB3_7
-# BB#3:                                 # %polly.loop_exit79
+	addq	$512, %rax              # imm = 0x200
+	jne	.LBB3_5
+.Ltmp38:
+# BB#6:                                 # %for.inc25.i
+                                        #   in Loop: Header=BB3_4 Depth=3
+	.loc	1 25 25                 # MatrixMult.c:25:25
+	movq	%rdx, (%r11)
+.Ltmp39:
+	.loc	1 22 9 discriminator 1  # MatrixMult.c:22:9
+	incq	%rsi
+	cmpq	$32, %rsi
+	jne	.LBB3_4
+.Ltmp40:
+# BB#7:                                 # %for.inc28.i
+                                        #   in Loop: Header=BB3_3 Depth=2
+	.loc	1 21 5 discriminator 1  # MatrixMult.c:21:5
+	incq	%r10
+	addq	$256, %r9               # imm = 0x100
+	cmpq	$32, %r10
+	jne	.LBB3_3
+.Ltmp41:
+# BB#8:                                 # %mat_mult.exit
                                         #   in Loop: Header=BB3_1 Depth=1
-	cmpq	$9999, %r8              # imm = 0x270F
-	leaq	1(%r8), %r8
-	jl	.LBB3_1
-# BB#4:                                 # %for.end
+	.loc	1 50 22 discriminator 2 # MatrixMult.c:50:22
+	incl	%r8d
+.Ltmp42:
+	#DEBUG_VALUE: main:r <- %R8D
+	.loc	1 50 5 is_stmt 0 discriminator 1 # MatrixMult.c:50:5
+	cmpl	$10000, %r8d            # imm = 0x2710
+	jne	.LBB3_1
+.Ltmp43:
+# BB#9:                                 # %for.end
+	#DEBUG_VALUE: main:r <- %R8D
+	pushq	%rbp
+.Ltmp44:
+	.cfi_def_cfa_offset 16
+.Ltmp45:
+	.cfi_offset %rbp, -16
+	movq	%rsp, %rbp
+.Ltmp46:
+	.cfi_def_cfa_register %rbp
 	.loc	1 55 71 is_stmt 1       # MatrixMult.c:55:71
 	movq	C+8184(%rip), %rcx
 	.loc	1 55 5 is_stmt 0        # MatrixMult.c:55:5
@@ -432,11 +486,9 @@ main:                                   # @main
 	callq	printf
 	.loc	1 56 5 is_stmt 1        # MatrixMult.c:56:5
 	xorl	%eax, %eax
-	addq	$24, %rsp
-	popq	%rbx
 	popq	%rbp
 	retq
-.Ltmp34:
+.Ltmp47:
 .Lfunc_end3:
 	.size	main, .Lfunc_end3-main
 	.cfi_endproc
@@ -476,20 +528,31 @@ main:                                   # @main
 .Linfo_string7:
 	.asciz	"C"                     # string offset=272
 .Linfo_string8:
-	.asciz	"mat_mult"              # string offset=274
+	.asciz	"init_array"            # string offset=274
 .Linfo_string9:
-	.asciz	"init_array"            # string offset=283
+	.asciz	"i"                     # string offset=285
 .Linfo_string10:
-	.asciz	"print_array"           # string offset=294
+	.asciz	"int"                   # string offset=287
 .Linfo_string11:
-	.asciz	"main"                  # string offset=306
+	.asciz	"mat_mult"              # string offset=291
 .Linfo_string12:
-	.asciz	"int"                   # string offset=311
+	.asciz	"k"                     # string offset=300
 .Linfo_string13:
-	.asciz	"i"                     # string offset=315
+	.asciz	"print_array"           # string offset=302
 .Linfo_string14:
-	.asciz	"r"                     # string offset=317
+	.asciz	"main"                  # string offset=314
+.Linfo_string15:
+	.asciz	"r"                     # string offset=319
 	.section	.debug_loc,"",@progbits
+.Ldebug_loc0:
+	.quad	.Ltmp42-.Lfunc_begin0
+	.quad	.Lfunc_end3-.Lfunc_begin0
+	.short	3                       # Loc expr size
+	.byte	88                      # super-register DW_OP_reg8
+	.byte	147                     # DW_OP_piece
+	.byte	4                       # 4
+	.quad	0
+	.quad	0
 	.section	.debug_abbrev,"",@progbits
 .Lsection_abbrev:
 	.byte	1                       # Abbreviation Code
@@ -575,14 +638,8 @@ main:                                   # @main
 	.byte	6                       # DW_FORM_data4
 	.byte	64                      # DW_AT_frame_base
 	.byte	24                      # DW_FORM_exprloc
-	.byte	3                       # DW_AT_name
-	.byte	14                      # DW_FORM_strp
-	.byte	58                      # DW_AT_decl_file
-	.byte	11                      # DW_FORM_data1
-	.byte	59                      # DW_AT_decl_line
-	.byte	11                      # DW_FORM_data1
-	.byte	63                      # DW_AT_external
-	.byte	25                      # DW_FORM_flag_present
+	.byte	49                      # DW_AT_abstract_origin
+	.byte	19                      # DW_FORM_ref4
 	.byte	0                       # EOM(1)
 	.byte	0                       # EOM(2)
 	.byte	8                       # Abbreviation Code
@@ -603,19 +660,32 @@ main:                                   # @main
 	.byte	0                       # DW_CHILDREN_no
 	.byte	28                      # DW_AT_const_value
 	.byte	13                      # DW_FORM_sdata
-	.byte	3                       # DW_AT_name
-	.byte	14                      # DW_FORM_strp
-	.byte	58                      # DW_AT_decl_file
-	.byte	11                      # DW_FORM_data1
-	.byte	59                      # DW_AT_decl_line
-	.byte	11                      # DW_FORM_data1
-	.byte	73                      # DW_AT_type
+	.byte	49                      # DW_AT_abstract_origin
 	.byte	19                      # DW_FORM_ref4
 	.byte	0                       # EOM(1)
 	.byte	0                       # EOM(2)
 	.byte	10                      # Abbreviation Code
 	.byte	46                      # DW_TAG_subprogram
 	.byte	0                       # DW_CHILDREN_no
+	.byte	17                      # DW_AT_low_pc
+	.byte	1                       # DW_FORM_addr
+	.byte	18                      # DW_AT_high_pc
+	.byte	6                       # DW_FORM_data4
+	.byte	64                      # DW_AT_frame_base
+	.byte	24                      # DW_FORM_exprloc
+	.byte	3                       # DW_AT_name
+	.byte	14                      # DW_FORM_strp
+	.byte	58                      # DW_AT_decl_file
+	.byte	11                      # DW_FORM_data1
+	.byte	59                      # DW_AT_decl_line
+	.byte	11                      # DW_FORM_data1
+	.byte	63                      # DW_AT_external
+	.byte	25                      # DW_FORM_flag_present
+	.byte	0                       # EOM(1)
+	.byte	0                       # EOM(2)
+	.byte	11                      # Abbreviation Code
+	.byte	46                      # DW_TAG_subprogram
+	.byte	1                       # DW_CHILDREN_yes
 	.byte	3                       # DW_AT_name
 	.byte	14                      # DW_FORM_strp
 	.byte	58                      # DW_AT_decl_file
@@ -628,7 +698,20 @@ main:                                   # @main
 	.byte	11                      # DW_FORM_data1
 	.byte	0                       # EOM(1)
 	.byte	0                       # EOM(2)
-	.byte	11                      # Abbreviation Code
+	.byte	12                      # Abbreviation Code
+	.byte	52                      # DW_TAG_variable
+	.byte	0                       # DW_CHILDREN_no
+	.byte	3                       # DW_AT_name
+	.byte	14                      # DW_FORM_strp
+	.byte	58                      # DW_AT_decl_file
+	.byte	11                      # DW_FORM_data1
+	.byte	59                      # DW_AT_decl_line
+	.byte	11                      # DW_FORM_data1
+	.byte	73                      # DW_AT_type
+	.byte	19                      # DW_FORM_ref4
+	.byte	0                       # EOM(1)
+	.byte	0                       # EOM(2)
+	.byte	13                      # Abbreviation Code
 	.byte	46                      # DW_TAG_subprogram
 	.byte	1                       # DW_CHILDREN_yes
 	.byte	17                      # DW_AT_low_pc
@@ -649,9 +732,37 @@ main:                                   # @main
 	.byte	25                      # DW_FORM_flag_present
 	.byte	0                       # EOM(1)
 	.byte	0                       # EOM(2)
-	.byte	12                      # Abbreviation Code
-	.byte	29                      # DW_TAG_inlined_subroutine
+	.byte	14                      # Abbreviation Code
+	.byte	52                      # DW_TAG_variable
 	.byte	0                       # DW_CHILDREN_no
+	.byte	2                       # DW_AT_location
+	.byte	23                      # DW_FORM_sec_offset
+	.byte	3                       # DW_AT_name
+	.byte	14                      # DW_FORM_strp
+	.byte	58                      # DW_AT_decl_file
+	.byte	11                      # DW_FORM_data1
+	.byte	59                      # DW_AT_decl_line
+	.byte	11                      # DW_FORM_data1
+	.byte	73                      # DW_AT_type
+	.byte	19                      # DW_FORM_ref4
+	.byte	0                       # EOM(1)
+	.byte	0                       # EOM(2)
+	.byte	15                      # Abbreviation Code
+	.byte	29                      # DW_TAG_inlined_subroutine
+	.byte	1                       # DW_CHILDREN_yes
+	.byte	49                      # DW_AT_abstract_origin
+	.byte	19                      # DW_FORM_ref4
+	.byte	85                      # DW_AT_ranges
+	.byte	23                      # DW_FORM_sec_offset
+	.byte	88                      # DW_AT_call_file
+	.byte	11                      # DW_FORM_data1
+	.byte	89                      # DW_AT_call_line
+	.byte	11                      # DW_FORM_data1
+	.byte	0                       # EOM(1)
+	.byte	0                       # EOM(2)
+	.byte	16                      # Abbreviation Code
+	.byte	29                      # DW_TAG_inlined_subroutine
+	.byte	1                       # DW_CHILDREN_yes
 	.byte	49                      # DW_AT_abstract_origin
 	.byte	19                      # DW_FORM_ref4
 	.byte	17                      # DW_AT_low_pc
@@ -668,11 +779,11 @@ main:                                   # @main
 	.section	.debug_info,"",@progbits
 .Lsection_info:
 .Lcu_begin0:
-	.long	280                     # Length of Unit
+	.long	332                     # Length of Unit
 	.short	4                       # DWARF version number
 	.long	.Lsection_abbrev        # Offset Into Abbrev. Section
 	.byte	8                       # Address Size (in bytes)
-	.byte	1                       # Abbrev [1] 0xb:0x111 DW_TAG_compile_unit
+	.byte	1                       # Abbrev [1] 0xb:0x145 DW_TAG_compile_unit
 	.long	.Linfo_string0          # DW_AT_producer
 	.short	12                      # DW_AT_language
 	.long	.Linfo_string1          # DW_AT_name
@@ -724,73 +835,105 @@ main:                                   # @main
 	.byte	9                       # DW_AT_location
 	.byte	3
 	.quad	C
-	.byte	7                       # Abbrev [7] 0x89:0x15 DW_TAG_subprogram
+	.byte	7                       # Abbrev [7] 0x89:0x13 DW_TAG_subprogram
 	.quad	.Lfunc_begin0           # DW_AT_low_pc
 	.long	.Lfunc_end0-.Lfunc_begin0 # DW_AT_high_pc
 	.byte	1                       # DW_AT_frame_base
 	.byte	86
-	.long	.Linfo_string9          # DW_AT_name
-	.byte	1                       # DW_AT_decl_file
-	.byte	7                       # DW_AT_decl_line
-                                        # DW_AT_external
-	.byte	8                       # Abbrev [8] 0x9e:0x20 DW_TAG_subprogram
+	.long	203                     # DW_AT_abstract_origin
+	.byte	8                       # Abbrev [8] 0x9c:0x1a DW_TAG_subprogram
 	.quad	.Lfunc_begin1           # DW_AT_low_pc
 	.long	.Lfunc_end1-.Lfunc_begin1 # DW_AT_high_pc
 	.byte	1                       # DW_AT_frame_base
 	.byte	86
-	.long	211                     # DW_AT_abstract_origin
-	.byte	9                       # Abbrev [9] 0xb1:0xc DW_TAG_variable
+	.long	230                     # DW_AT_abstract_origin
+	.byte	9                       # Abbrev [9] 0xaf:0x6 DW_TAG_variable
 	.byte	0                       # DW_AT_const_value
-	.long	.Linfo_string13         # DW_AT_name
-	.byte	1                       # DW_AT_decl_file
-	.byte	20                      # DW_AT_decl_line
-	.long	276                     # DW_AT_type
+	.long	238                     # DW_AT_abstract_origin
 	.byte	0                       # End Of Children Mark
-	.byte	7                       # Abbrev [7] 0xbe:0x15 DW_TAG_subprogram
+	.byte	10                      # Abbrev [10] 0xb6:0x15 DW_TAG_subprogram
 	.quad	.Lfunc_begin2           # DW_AT_low_pc
 	.long	.Lfunc_end2-.Lfunc_begin2 # DW_AT_high_pc
 	.byte	1                       # DW_AT_frame_base
 	.byte	86
-	.long	.Linfo_string10         # DW_AT_name
+	.long	.Linfo_string13         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
 	.byte	31                      # DW_AT_decl_line
                                         # DW_AT_external
-	.byte	10                      # Abbrev [10] 0xd3:0x8 DW_TAG_subprogram
+	.byte	11                      # Abbrev [11] 0xcb:0x14 DW_TAG_subprogram
 	.long	.Linfo_string8          # DW_AT_name
+	.byte	1                       # DW_AT_decl_file
+	.byte	7                       # DW_AT_decl_line
+                                        # DW_AT_external
+	.byte	1                       # DW_AT_inline
+	.byte	12                      # Abbrev [12] 0xd3:0xb DW_TAG_variable
+	.long	.Linfo_string9          # DW_AT_name
+	.byte	1                       # DW_AT_decl_file
+	.byte	9                       # DW_AT_decl_line
+	.long	223                     # DW_AT_type
+	.byte	0                       # End Of Children Mark
+	.byte	5                       # Abbrev [5] 0xdf:0x7 DW_TAG_base_type
+	.long	.Linfo_string10         # DW_AT_name
+	.byte	5                       # DW_AT_encoding
+	.byte	4                       # DW_AT_byte_size
+	.byte	11                      # Abbrev [11] 0xe6:0x14 DW_TAG_subprogram
+	.long	.Linfo_string11         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
 	.byte	19                      # DW_AT_decl_line
                                         # DW_AT_external
 	.byte	1                       # DW_AT_inline
-	.byte	11                      # Abbrev [11] 0xdb:0x39 DW_TAG_subprogram
+	.byte	12                      # Abbrev [12] 0xee:0xb DW_TAG_variable
+	.long	.Linfo_string12         # DW_AT_name
+	.byte	1                       # DW_AT_decl_file
+	.byte	20                      # DW_AT_decl_line
+	.long	223                     # DW_AT_type
+	.byte	0                       # End Of Children Mark
+	.byte	13                      # Abbrev [13] 0xfa:0x55 DW_TAG_subprogram
 	.quad	.Lfunc_begin3           # DW_AT_low_pc
 	.long	.Lfunc_end3-.Lfunc_begin3 # DW_AT_high_pc
 	.byte	1                       # DW_AT_frame_base
 	.byte	86
-	.long	.Linfo_string11         # DW_AT_name
-	.byte	1                       # DW_AT_decl_file
-	.byte	44                      # DW_AT_decl_line
-	.long	276                     # DW_AT_type
-                                        # DW_AT_external
-	.byte	9                       # Abbrev [9] 0xf4:0xc DW_TAG_variable
-	.byte	0                       # DW_AT_const_value
 	.long	.Linfo_string14         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
+	.byte	44                      # DW_AT_decl_line
+	.long	223                     # DW_AT_type
+                                        # DW_AT_external
+	.byte	14                      # Abbrev [14] 0x113:0xf DW_TAG_variable
+	.long	.Ldebug_loc0            # DW_AT_location
+	.long	.Linfo_string15         # DW_AT_name
+	.byte	1                       # DW_AT_decl_file
 	.byte	49                      # DW_AT_decl_line
-	.long	276                     # DW_AT_type
-	.byte	12                      # Abbrev [12] 0x100:0x13 DW_TAG_inlined_subroutine
+	.long	223                     # DW_AT_type
+	.byte	15                      # Abbrev [15] 0x122:0x12 DW_TAG_inlined_subroutine
+	.long	203                     # DW_AT_abstract_origin
+	.long	.Ldebug_ranges0         # DW_AT_ranges
+	.byte	1                       # DW_AT_call_file
+	.byte	51                      # DW_AT_call_line
+	.byte	9                       # Abbrev [9] 0x12d:0x6 DW_TAG_variable
+	.byte	0                       # DW_AT_const_value
 	.long	211                     # DW_AT_abstract_origin
-	.quad	.Ltmp32                 # DW_AT_low_pc
-	.long	.Ltmp33-.Ltmp32         # DW_AT_high_pc
+	.byte	0                       # End Of Children Mark
+	.byte	16                      # Abbrev [16] 0x134:0x1a DW_TAG_inlined_subroutine
+	.long	230                     # DW_AT_abstract_origin
+	.quad	.Ltmp35                 # DW_AT_low_pc
+	.long	.Ltmp41-.Ltmp35         # DW_AT_high_pc
 	.byte	1                       # DW_AT_call_file
 	.byte	52                      # DW_AT_call_line
+	.byte	9                       # Abbrev [9] 0x147:0x6 DW_TAG_variable
+	.byte	0                       # DW_AT_const_value
+	.long	238                     # DW_AT_abstract_origin
 	.byte	0                       # End Of Children Mark
-	.byte	5                       # Abbrev [5] 0x114:0x7 DW_TAG_base_type
-	.long	.Linfo_string12         # DW_AT_name
-	.byte	5                       # DW_AT_encoding
-	.byte	4                       # DW_AT_byte_size
+	.byte	0                       # End Of Children Mark
 	.byte	0                       # End Of Children Mark
 	.section	.debug_ranges,"",@progbits
 .Ldebug_range:
+.Ldebug_ranges0:
+	.quad	.Ltmp29-.Lfunc_begin0
+	.quad	.Ltmp32-.Lfunc_begin0
+	.quad	.Ltmp33-.Lfunc_begin0
+	.quad	.Ltmp34-.Lfunc_begin0
+	.quad	0
+	.quad	0
 	.section	.debug_macinfo,"",@progbits
 .Ldebug_macinfo:
 .Lcu_macro_begin0:
@@ -800,20 +943,20 @@ main:                                   # @main
 .LpubNames_begin0:
 	.short	2                       # DWARF Version
 	.long	.Lcu_begin0             # Offset of Compilation Unit Info
-	.long	284                     # Compilation Unit Length
+	.long	336                     # Compilation Unit Length
 	.long	42                      # DIE offset
 	.asciz	"A"                     # External Name
 	.long	95                      # DIE offset
 	.asciz	"B"                     # External Name
 	.long	116                     # DIE offset
 	.asciz	"C"                     # External Name
-	.long	211                     # DIE offset
+	.long	230                     # DIE offset
 	.asciz	"mat_mult"              # External Name
-	.long	137                     # DIE offset
+	.long	203                     # DIE offset
 	.asciz	"init_array"            # External Name
-	.long	219                     # DIE offset
+	.long	250                     # DIE offset
 	.asciz	"main"                  # External Name
-	.long	190                     # DIE offset
+	.long	182                     # DIE offset
 	.asciz	"print_array"           # External Name
 	.long	0                       # End Mark
 .LpubNames_end0:
@@ -822,10 +965,10 @@ main:                                   # @main
 .LpubTypes_begin0:
 	.short	2                       # DWARF Version
 	.long	.Lcu_begin0             # Offset of Compilation Unit Info
-	.long	284                     # Compilation Unit Length
+	.long	336                     # Compilation Unit Length
 	.long	81                      # DIE offset
 	.asciz	"long long int"         # External Name
-	.long	276                     # DIE offset
+	.long	223                     # DIE offset
 	.asciz	"int"                   # External Name
 	.long	0                       # End Mark
 .LpubTypes_end0:

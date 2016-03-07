@@ -15,11 +15,14 @@ target triple = "x86_64-unknown-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define void @init_array() #0 !dbg !4 {
 entry:
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !24, metadata !25), !dbg !26
+  br label %entry.split, !dbg !24
+
+entry.split:                                      ; preds = %entry
+  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !25, metadata !26), !dbg !24
   br label %vector.ph, !dbg !27
 
-vector.ph:                                        ; preds = %vector.body, %entry
-  %indvars.iv3 = phi i64 [ 0, %entry ], [ %indvars.iv.next4, %vector.body ]
+vector.ph:                                        ; preds = %vector.body, %entry.split
+  %indvars.iv3 = phi i64 [ 0, %entry.split ], [ %indvars.iv.next4, %vector.body ]
   br label %vector.body, !dbg !31
 
 vector.body:                                      ; preds = %vector.ph
@@ -130,18 +133,21 @@ for.end12:                                        ; preds = %vector.body
 ; Function Attrs: nounwind uwtable
 define void @mat_mult() #0 !dbg !7 {
 entry:
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !42, metadata !25), !dbg !43
+  br label %entry.split, !dbg !42
+
+entry.split:                                      ; preds = %entry
+  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !43, metadata !26), !dbg !42
   br label %for.cond1.preheader, !dbg !44
 
-for.cond1.preheader:                              ; preds = %for.inc28, %entry
-  %indvars.iv7 = phi i64 [ 0, %entry ], [ %indvars.iv.next8, %for.inc28 ]
+for.cond1.preheader:                              ; preds = %for.inc28, %entry.split
+  %indvars.iv7 = phi i64 [ 0, %entry.split ], [ %indvars.iv.next8, %for.inc28 ]
   br label %for.body3, !dbg !48
 
 for.body3:                                        ; preds = %for.inc25, %for.cond1.preheader
   %indvars.iv4 = phi i64 [ 0, %for.cond1.preheader ], [ %indvars.iv.next5, %for.inc25 ]
   %arrayidx5 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @C, i64 0, i64 %indvars.iv7, i64 %indvars.iv4, !dbg !53
   store i64 0, i64* %arrayidx5, align 8, !dbg !55
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !56, metadata !25), !dbg !57
+  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !56, metadata !26), !dbg !57
   br label %for.body8, !dbg !58
 
 for.body8:                                        ; preds = %for.body8, %for.body3
@@ -183,11 +189,14 @@ for.end30:                                        ; preds = %for.inc28
 ; Function Attrs: nounwind uwtable
 define void @print_array() #0 !dbg !8 {
 entry:
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !69, metadata !25), !dbg !70
+  br label %entry.split, !dbg !69
+
+entry.split:                                      ; preds = %entry
+  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !70, metadata !26), !dbg !69
   br label %for.cond1.preheader, !dbg !71
 
-for.cond1.preheader:                              ; preds = %for.end, %entry
-  %indvars.iv6 = phi i64 [ 0, %entry ], [ %indvars.iv.next7, %for.end ]
+for.cond1.preheader:                              ; preds = %for.end, %entry.split
+  %indvars.iv6 = phi i64 [ 0, %entry.split ], [ %indvars.iv.next7, %for.end ]
   %0 = load %struct._IO_FILE*, %struct._IO_FILE** @stdout, align 8, !dbg !75
   br label %for.body3, !dbg !80
 
@@ -219,12 +228,15 @@ declare i32 @fprintf(%struct._IO_FILE* nocapture, i8* nocapture readonly, ...) #
 ; Function Attrs: nounwind uwtable
 define i32 @main() #0 !dbg !9 {
 entry:
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !86, metadata !25), !dbg !87
+  br label %entry.split, !dbg !86
+
+entry.split:                                      ; preds = %entry
+  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !87, metadata !26), !dbg !86
   br label %for.body, !dbg !88
 
-for.body:                                         ; preds = %mat_mult.exit, %entry
-  %r.01 = phi i32 [ 0, %entry ], [ %inc, %mat_mult.exit ]
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !24, metadata !25), !dbg !92
+for.body:                                         ; preds = %mat_mult.exit, %entry.split
+  %r.01 = phi i32 [ 0, %entry.split ], [ %inc, %mat_mult.exit ]
+  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !25, metadata !26), !dbg !92
   br label %vector.ph, !dbg !95
 
 vector.ph:                                        ; preds = %vector.body, %for.body
@@ -343,7 +355,7 @@ for.body3.i3:                                     ; preds = %for.inc25.i, %for.c
   %indvars.iv4.i = phi i64 [ 0, %for.cond1.preheader.i1 ], [ %indvars.iv.next5.i, %for.inc25.i ], !dbg !104
   %arrayidx5.i2 = getelementptr inbounds [32 x [32 x i64]], [32 x [32 x i64]]* @C, i64 0, i64 %indvars.iv7.i, i64 %indvars.iv4.i, !dbg !105
   store i64 0, i64* %arrayidx5.i2, align 8, !dbg !106
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !56, metadata !25), !dbg !107
+  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !56, metadata !26), !dbg !107
   br label %for.body8.i, !dbg !108
 
 for.body8.i:                                      ; preds = %for.body8.i, %for.body3.i3
@@ -380,7 +392,7 @@ for.inc28.i:                                      ; preds = %for.inc25.i
 
 mat_mult.exit:                                    ; preds = %for.inc28.i
   %inc = add nuw nsw i32 %r.01, 1, !dbg !116
-  tail call void @llvm.dbg.value(metadata i32 %inc, i64 0, metadata !86, metadata !25), !dbg !87
+  tail call void @llvm.dbg.value(metadata i32 %inc, i64 0, metadata !87, metadata !26), !dbg !86
   %exitcond = icmp eq i32 %inc, 10000, !dbg !88
   br i1 %exitcond, label %for.end, label %for.body, !dbg !88
 
@@ -432,9 +444,9 @@ attributes #3 = { nounwind }
 !21 = !{i32 2, !"Dwarf Version", i32 4}
 !22 = !{i32 2, !"Debug Info Version", i32 3}
 !23 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)"}
-!24 = !DILocalVariable(name: "i", scope: !4, file: !1, line: 9, type: !12)
-!25 = !DIExpression()
-!26 = !DILocation(line: 9, column: 9, scope: !4)
+!24 = !DILocation(line: 9, column: 9, scope: !4)
+!25 = !DILocalVariable(name: "i", scope: !4, file: !1, line: 9, type: !12)
+!26 = !DIExpression()
 !27 = !DILocation(line: 11, column: 5, scope: !28)
 !28 = !DILexicalBlockFile(scope: !29, file: !1, discriminator: 1)
 !29 = distinct !DILexicalBlock(scope: !30, file: !1, line: 11, column: 5)
@@ -450,8 +462,8 @@ attributes #3 = { nounwind }
 !39 = !DILocation(line: 14, column: 13, scope: !37)
 !40 = !DILocation(line: 14, column: 21, scope: !37)
 !41 = !DILocation(line: 17, column: 1, scope: !4)
-!42 = !DILocalVariable(name: "i", scope: !7, file: !1, line: 20, type: !12)
-!43 = !DILocation(line: 20, column: 9, scope: !7)
+!42 = !DILocation(line: 20, column: 9, scope: !7)
+!43 = !DILocalVariable(name: "i", scope: !7, file: !1, line: 20, type: !12)
 !44 = !DILocation(line: 21, column: 5, scope: !45)
 !45 = !DILexicalBlockFile(scope: !46, file: !1, discriminator: 1)
 !46 = distinct !DILexicalBlock(scope: !47, file: !1, line: 21, column: 5)
@@ -477,8 +489,8 @@ attributes #3 = { nounwind }
 !66 = !DILocation(line: 25, column: 35, scope: !60)
 !67 = !DILocation(line: 25, column: 25, scope: !60)
 !68 = !DILocation(line: 29, column: 1, scope: !7)
-!69 = !DILocalVariable(name: "i", scope: !8, file: !1, line: 33, type: !12)
-!70 = !DILocation(line: 33, column: 9, scope: !8)
+!69 = !DILocation(line: 33, column: 9, scope: !8)
+!70 = !DILocalVariable(name: "i", scope: !8, file: !1, line: 33, type: !12)
 !71 = !DILocation(line: 35, column: 5, scope: !72)
 !72 = !DILexicalBlockFile(scope: !73, file: !1, discriminator: 1)
 !73 = distinct !DILexicalBlock(scope: !74, file: !1, line: 35, column: 5)
@@ -494,8 +506,8 @@ attributes #3 = { nounwind }
 !83 = !DILocation(line: 37, column: 13, scope: !76)
 !84 = !DILocation(line: 40, column: 9, scope: !79)
 !85 = !DILocation(line: 42, column: 1, scope: !8)
-!86 = !DILocalVariable(name: "r", scope: !9, file: !1, line: 49, type: !12)
-!87 = !DILocation(line: 49, column: 9, scope: !9)
+!86 = !DILocation(line: 49, column: 9, scope: !9)
+!87 = !DILocalVariable(name: "r", scope: !9, file: !1, line: 49, type: !12)
 !88 = !DILocation(line: 50, column: 5, scope: !89)
 !89 = !DILexicalBlockFile(scope: !90, file: !1, discriminator: 1)
 !90 = distinct !DILexicalBlock(scope: !91, file: !1, line: 50, column: 5)

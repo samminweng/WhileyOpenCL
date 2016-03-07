@@ -15,11 +15,14 @@ target triple = "x86_64-unknown-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define void @init_array() #0 !dbg !4 {
 entry:
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !24, metadata !25), !dbg !26
+  br label %entry.split, !dbg !24
+
+entry.split:                                      ; preds = %entry
+  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !25, metadata !26), !dbg !24
   br label %vector.ph, !dbg !27
 
-vector.ph:                                        ; preds = %vector.body, %entry
-  %indvars.iv3 = phi i64 [ 0, %entry ], [ %indvars.iv.next4, %vector.body ]
+vector.ph:                                        ; preds = %vector.body, %entry.split
+  %indvars.iv3 = phi i64 [ 0, %entry.split ], [ %indvars.iv.next4, %vector.body ]
   br label %vector.body, !dbg !31
 
 vector.body:                                      ; preds = %vector.ph
@@ -130,7 +133,10 @@ for.end12:                                        ; preds = %vector.body
 ; Function Attrs: nounwind uwtable
 define void @mat_mult() #1 !dbg !7 {
 entry:
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !42, metadata !25), !dbg !43
+  br label %entry.split, !dbg !42
+
+entry.split:                                      ; preds = %entry
+  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !43, metadata !26), !dbg !42
   call void @llvm.memset.p0i8.i64(i8* bitcast ([32 x [32 x i64]]* @C to i8*), i8 0, i64 8192, i32 16, i1 false)
   br label %polly.loop_preheader15
 
@@ -149,26 +155,26 @@ polly.loop_exit22:                                ; preds = %polly.stmt.for.body
   %exitcond37 = icmp eq i64 %polly.indvar_next18, 32
   br i1 %exitcond37, label %polly.loop_exit16, label %polly.loop_preheader21
 
-polly.loop_preheader15:                           ; preds = %polly.loop_exit16, %entry
-  %polly.indvar11 = phi i64 [ %polly.indvar_next12, %polly.loop_exit16 ], [ 0, %entry ]
+polly.loop_preheader15:                           ; preds = %polly.loop_exit16, %entry.split
+  %polly.indvar11 = phi i64 [ %polly.indvar_next12, %polly.loop_exit16 ], [ 0, %entry.split ]
   br label %polly.loop_preheader21
 
 polly.stmt.for.body8:                             ; preds = %polly.stmt.for.body8, %polly.loop_preheader21
   %p_add36 = phi i64 [ %scevgep27.promoted, %polly.loop_preheader21 ], [ %p_add.1, %polly.stmt.for.body8 ]
   %polly.indvar23 = phi i64 [ 0, %polly.loop_preheader21 ], [ %polly.indvar_next24.1, %polly.stmt.for.body8 ]
   %scevgep29 = getelementptr [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %polly.indvar11, i64 %polly.indvar23
-  %_p_scalar_30 = load i64, i64* %scevgep29, align 16, !alias.scope !49, !noalias !50
+  %_p_scalar_30 = load i64, i64* %scevgep29, align 16, !alias.scope !48, !noalias !50
   %0 = shl i64 %polly.indvar23, 5
   %scevgep32 = getelementptr i64, i64* %scevgep31, i64 %0
-  %_p_scalar_33 = load i64, i64* %scevgep32, align 8, !alias.scope !48, !noalias !51
+  %_p_scalar_33 = load i64, i64* %scevgep32, align 8, !alias.scope !49, !noalias !51
   %p_mul = mul nsw i64 %_p_scalar_33, %_p_scalar_30, !dbg !52
   %p_add = add nsw i64 %p_mul, %p_add36, !dbg !61
   %polly.indvar_next24 = or i64 %polly.indvar23, 1
   %scevgep29.1 = getelementptr [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %polly.indvar11, i64 %polly.indvar_next24
-  %_p_scalar_30.1 = load i64, i64* %scevgep29.1, align 8, !alias.scope !49, !noalias !50
+  %_p_scalar_30.1 = load i64, i64* %scevgep29.1, align 8, !alias.scope !48, !noalias !50
   %1 = shl i64 %polly.indvar_next24, 5
   %scevgep32.1 = getelementptr i64, i64* %scevgep31, i64 %1
-  %_p_scalar_33.1 = load i64, i64* %scevgep32.1, align 8, !alias.scope !48, !noalias !51
+  %_p_scalar_33.1 = load i64, i64* %scevgep32.1, align 8, !alias.scope !49, !noalias !51
   %p_mul.1 = mul nsw i64 %_p_scalar_33.1, %_p_scalar_30.1, !dbg !52
   %p_add.1 = add nsw i64 %p_mul.1, %p_add, !dbg !61
   %polly.indvar_next24.1 = add nsw i64 %polly.indvar23, 2
@@ -186,11 +192,14 @@ polly.loop_preheader21:                           ; preds = %polly.loop_exit22, 
 ; Function Attrs: nounwind uwtable
 define void @print_array() #0 !dbg !8 {
 entry:
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !62, metadata !25), !dbg !63
+  br label %entry.split, !dbg !62
+
+entry.split:                                      ; preds = %entry
+  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !63, metadata !26), !dbg !62
   br label %for.cond1.preheader, !dbg !64
 
-for.cond1.preheader:                              ; preds = %for.end, %entry
-  %indvars.iv6 = phi i64 [ 0, %entry ], [ %indvars.iv.next7, %for.end ]
+for.cond1.preheader:                              ; preds = %for.end, %entry.split
+  %indvars.iv6 = phi i64 [ 0, %entry.split ], [ %indvars.iv.next7, %for.end ]
   %0 = load %struct._IO_FILE*, %struct._IO_FILE** @stdout, align 8, !dbg !68
   br label %for.body3, !dbg !73
 
@@ -222,12 +231,15 @@ declare i32 @fprintf(%struct._IO_FILE* nocapture, i8* nocapture readonly, ...) #
 ; Function Attrs: nounwind uwtable
 define i32 @main() #0 !dbg !9 {
 entry:
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !79, metadata !25), !dbg !80
+  br label %entry.split, !dbg !79
+
+entry.split:                                      ; preds = %entry
+  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !80, metadata !26), !dbg !79
   br label %for.body, !dbg !81
 
-for.body:                                         ; preds = %mat_mult.exit, %entry
-  %r.01 = phi i32 [ 0, %entry ], [ %inc, %mat_mult.exit ]
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !24, metadata !25), !dbg !85
+for.body:                                         ; preds = %mat_mult.exit, %entry.split
+  %r.01 = phi i32 [ 0, %entry.split ], [ %inc, %mat_mult.exit ]
+  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !25, metadata !26), !dbg !85
   br label %vector.ph, !dbg !88
 
 vector.ph:                                        ; preds = %vector.body, %for.body
@@ -336,7 +348,7 @@ vector.body:                                      ; preds = %vector.ph
   br i1 %exitcond5.i, label %init_array.exit, label %vector.ph, !dbg !88
 
 init_array.exit:                                  ; preds = %vector.body
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !42, metadata !25) #4, !dbg !95
+  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !43, metadata !26) #4, !dbg !95
   tail call void @llvm.memset.p0i8.i64(i8* bitcast ([32 x [32 x i64]]* @C to i8*), i8 0, i64 8192, i32 16, i1 false) #4, !dbg !97
   br label %polly.loop_preheader15.i, !dbg !97
 
@@ -360,18 +372,18 @@ polly.stmt.for.body8.i:                           ; preds = %polly.stmt.for.body
   %p_add36.i = phi i64 [ %scevgep27.promoted.i, %polly.loop_preheader21.i ], [ %p_add.i.1, %polly.stmt.for.body8.i ], !dbg !97
   %polly.indvar23.i = phi i64 [ 0, %polly.loop_preheader21.i ], [ %polly.indvar_next24.i.1, %polly.stmt.for.body8.i ], !dbg !97
   %scevgep29.i = getelementptr [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %polly.indvar11.i, i64 %polly.indvar23.i, !dbg !97
-  %_p_scalar_30.i = load i64, i64* %scevgep29.i, align 16, !dbg !97, !alias.scope !102, !noalias !103
+  %_p_scalar_30.i = load i64, i64* %scevgep29.i, align 16, !dbg !97, !alias.scope !101, !noalias !103
   %64 = shl i64 %polly.indvar23.i, 5, !dbg !97
   %scevgep32.i = getelementptr i64, i64* %scevgep31.i, i64 %64, !dbg !97
-  %_p_scalar_33.i = load i64, i64* %scevgep32.i, align 8, !dbg !97, !alias.scope !101, !noalias !104
+  %_p_scalar_33.i = load i64, i64* %scevgep32.i, align 8, !dbg !97, !alias.scope !102, !noalias !104
   %p_mul.i = mul nsw i64 %_p_scalar_33.i, %_p_scalar_30.i, !dbg !105
   %p_add.i = add nsw i64 %p_mul.i, %p_add36.i, !dbg !106
   %polly.indvar_next24.i = or i64 %polly.indvar23.i, 1, !dbg !97
   %scevgep29.i.1 = getelementptr [32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 %polly.indvar11.i, i64 %polly.indvar_next24.i, !dbg !97
-  %_p_scalar_30.i.1 = load i64, i64* %scevgep29.i.1, align 8, !dbg !97, !alias.scope !102, !noalias !103
+  %_p_scalar_30.i.1 = load i64, i64* %scevgep29.i.1, align 8, !dbg !97, !alias.scope !101, !noalias !103
   %65 = shl i64 %polly.indvar_next24.i, 5, !dbg !97
   %scevgep32.i.1 = getelementptr i64, i64* %scevgep31.i, i64 %65, !dbg !97
-  %_p_scalar_33.i.1 = load i64, i64* %scevgep32.i.1, align 8, !dbg !97, !alias.scope !101, !noalias !104
+  %_p_scalar_33.i.1 = load i64, i64* %scevgep32.i.1, align 8, !dbg !97, !alias.scope !102, !noalias !104
   %p_mul.i.1 = mul nsw i64 %_p_scalar_33.i.1, %_p_scalar_30.i.1, !dbg !105
   %p_add.i.1 = add nsw i64 %p_mul.i.1, %p_add.i, !dbg !106
   %polly.indvar_next24.i.1 = add nsw i64 %polly.indvar23.i, 2, !dbg !97
@@ -387,7 +399,7 @@ polly.loop_preheader21.i:                         ; preds = %polly.loop_preheade
 
 mat_mult.exit:                                    ; preds = %polly.loop_exit16.i
   %inc = add nuw nsw i32 %r.01, 1, !dbg !107
-  tail call void @llvm.dbg.value(metadata i32 %inc, i64 0, metadata !79, metadata !25), !dbg !80
+  tail call void @llvm.dbg.value(metadata i32 %inc, i64 0, metadata !80, metadata !26), !dbg !79
   %exitcond = icmp eq i32 %inc, 10000, !dbg !81
   br i1 %exitcond, label %for.end, label %for.body, !dbg !81
 
@@ -444,9 +456,9 @@ attributes #5 = { argmemonly nounwind }
 !21 = !{i32 2, !"Dwarf Version", i32 4}
 !22 = !{i32 2, !"Debug Info Version", i32 3}
 !23 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)"}
-!24 = !DILocalVariable(name: "i", scope: !4, file: !1, line: 9, type: !12)
-!25 = !DIExpression()
-!26 = !DILocation(line: 9, column: 9, scope: !4)
+!24 = !DILocation(line: 9, column: 9, scope: !4)
+!25 = !DILocalVariable(name: "i", scope: !4, file: !1, line: 9, type: !12)
+!26 = !DIExpression()
 !27 = !DILocation(line: 11, column: 5, scope: !28)
 !28 = !DILexicalBlockFile(scope: !29, file: !1, discriminator: 1)
 !29 = distinct !DILexicalBlock(scope: !30, file: !1, line: 11, column: 5)
@@ -462,16 +474,16 @@ attributes #5 = { argmemonly nounwind }
 !39 = !DILocation(line: 14, column: 13, scope: !37)
 !40 = !DILocation(line: 14, column: 21, scope: !37)
 !41 = !DILocation(line: 17, column: 1, scope: !4)
-!42 = !DILocalVariable(name: "i", scope: !7, file: !1, line: 20, type: !12)
-!43 = !DILocation(line: 20, column: 9, scope: !7)
+!42 = !DILocation(line: 20, column: 9, scope: !7)
+!43 = !DILocalVariable(name: "i", scope: !7, file: !1, line: 20, type: !12)
 !44 = !DILocation(line: 29, column: 1, scope: !7)
 !45 = distinct !{!45, !46, !"polly.alias.scope.C"}
 !46 = distinct !{!46, !"polly.alias.scope.domain"}
 !47 = !{!48, !49}
-!48 = distinct !{!48, !46, !"polly.alias.scope.B"}
-!49 = distinct !{!49, !46, !"polly.alias.scope.A"}
-!50 = !{!48, !45}
-!51 = !{!49, !45}
+!48 = distinct !{!48, !46, !"polly.alias.scope.A"}
+!49 = distinct !{!49, !46, !"polly.alias.scope.B"}
+!50 = !{!49, !45}
+!51 = !{!48, !45}
 !52 = !DILocation(line: 25, column: 45, scope: !53)
 !53 = distinct !DILexicalBlock(scope: !54, file: !1, line: 24, column: 13)
 !54 = distinct !DILexicalBlock(scope: !55, file: !1, line: 24, column: 13)
@@ -482,8 +494,8 @@ attributes #5 = { argmemonly nounwind }
 !59 = distinct !DILexicalBlock(scope: !60, file: !1, line: 21, column: 5)
 !60 = distinct !DILexicalBlock(scope: !7, file: !1, line: 21, column: 5)
 !61 = !DILocation(line: 25, column: 35, scope: !53)
-!62 = !DILocalVariable(name: "i", scope: !8, file: !1, line: 33, type: !12)
-!63 = !DILocation(line: 33, column: 9, scope: !8)
+!62 = !DILocation(line: 33, column: 9, scope: !8)
+!63 = !DILocalVariable(name: "i", scope: !8, file: !1, line: 33, type: !12)
 !64 = !DILocation(line: 35, column: 5, scope: !65)
 !65 = !DILexicalBlockFile(scope: !66, file: !1, discriminator: 1)
 !66 = distinct !DILexicalBlock(scope: !67, file: !1, line: 35, column: 5)
@@ -499,8 +511,8 @@ attributes #5 = { argmemonly nounwind }
 !76 = !DILocation(line: 37, column: 13, scope: !69)
 !77 = !DILocation(line: 40, column: 9, scope: !72)
 !78 = !DILocation(line: 42, column: 1, scope: !8)
-!79 = !DILocalVariable(name: "r", scope: !9, file: !1, line: 49, type: !12)
-!80 = !DILocation(line: 49, column: 9, scope: !9)
+!79 = !DILocation(line: 49, column: 9, scope: !9)
+!80 = !DILocalVariable(name: "r", scope: !9, file: !1, line: 49, type: !12)
 !81 = !DILocation(line: 50, column: 5, scope: !82)
 !82 = !DILexicalBlockFile(scope: !83, file: !1, discriminator: 1)
 !83 = distinct !DILexicalBlock(scope: !84, file: !1, line: 50, column: 5)
@@ -521,10 +533,10 @@ attributes #5 = { argmemonly nounwind }
 !98 = distinct !{!98, !99, !"polly.alias.scope.C"}
 !99 = distinct !{!99, !"polly.alias.scope.domain"}
 !100 = !{!101, !102}
-!101 = distinct !{!101, !99, !"polly.alias.scope.B"}
-!102 = distinct !{!102, !99, !"polly.alias.scope.A"}
-!103 = !{!101, !98}
-!104 = !{!102, !98}
+!101 = distinct !{!101, !99, !"polly.alias.scope.A"}
+!102 = distinct !{!102, !99, !"polly.alias.scope.B"}
+!103 = !{!102, !98}
+!104 = !{!101, !98}
 !105 = !DILocation(line: 25, column: 45, scope: !53, inlinedAt: !96)
 !106 = !DILocation(line: 25, column: 35, scope: !53, inlinedAt: !96)
 !107 = !DILocation(line: 50, column: 22, scope: !108)
