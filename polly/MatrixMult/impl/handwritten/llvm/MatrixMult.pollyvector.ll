@@ -253,18 +253,18 @@ polly.stmt.for.body8:                             ; preds = %polly.loop_header10
   %add1.phiops.reload = load i64, i64* %add1.phiops
   %6 = shl i64 %polly.indvar13, 1
   %scevgep17 = getelementptr i64, i64* %scevgep16, i64 %6
-  %_p_scalar_ = load i64, i64* %scevgep17, align 16, !alias.scope !75, !noalias !76
+  %_p_scalar_ = load i64, i64* %scevgep17, align 16, !alias.scope !72, !noalias !76
   %7 = shl i64 %polly.indvar13, 6
   %scevgep19 = getelementptr i64, i64* %scevgep18, i64 %7
-  %_p_scalar_20 = load i64, i64* %scevgep19, align 8, !alias.scope !72, !noalias !77
+  %_p_scalar_20 = load i64, i64* %scevgep19, align 8, !alias.scope !74, !noalias !77
   %p_mul = mul nsw i64 %_p_scalar_20, %_p_scalar_, !dbg !65
   %p_add = add nsw i64 %p_mul, %add1.phiops.reload, !dbg !66
   %8 = shl i64 %polly.indvar13, 1
   %scevgep22 = getelementptr i64, i64* %scevgep21, i64 %8
-  %_p_scalar_23 = load i64, i64* %scevgep22, align 8, !alias.scope !75, !noalias !76
+  %_p_scalar_23 = load i64, i64* %scevgep22, align 8, !alias.scope !72, !noalias !76
   %9 = shl i64 %polly.indvar13, 6
   %scevgep25 = getelementptr i64, i64* %scevgep24, i64 %9
-  %_p_scalar_26 = load i64, i64* %scevgep25, align 8, !alias.scope !72, !noalias !77
+  %_p_scalar_26 = load i64, i64* %scevgep25, align 8, !alias.scope !74, !noalias !77
   %p_mul.1 = mul nsw i64 %_p_scalar_26, %_p_scalar_23, !dbg !65
   %p_add.1 = add nsw i64 %p_mul.1, %p_add, !dbg !66
   %10 = shl i64 %polly.indvar13, 1
@@ -539,112 +539,112 @@ polly.stmt.vector.body:                           ; preds = %polly.loop_header8
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep14, align 16, !alias.scope !130, !noalias !132, !llvm.mem.parallel_loop_access !137
   %scevgep15 = getelementptr [32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 %polly.indvar11, i64 0
   %scevgep1516 = bitcast i64* %scevgep15 to <2 x i64>*
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep1516, align 16, !alias.scope !133, !noalias !138, !llvm.mem.parallel_loop_access !137
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep1516, align 16, !alias.scope !134, !noalias !138, !llvm.mem.parallel_loop_access !137
   %69 = shl i64 %polly.indvar11, 5
   %scevgep17 = getelementptr i64, i64* getelementptr inbounds ([32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 0, i64 2), i64 %69
   %scevgep1718 = bitcast i64* %scevgep17 to <2 x i64>*
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep1718, align 16, !alias.scope !130, !noalias !132, !llvm.mem.parallel_loop_access !137
   %scevgep19 = getelementptr i64, i64* getelementptr inbounds ([32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 0, i64 2), i64 %69
   %scevgep1920 = bitcast i64* %scevgep19 to <2 x i64>*
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep1920, align 16, !alias.scope !133, !noalias !138, !llvm.mem.parallel_loop_access !137
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep1920, align 16, !alias.scope !134, !noalias !138, !llvm.mem.parallel_loop_access !137
   %70 = shl i64 %polly.indvar11, 5
   %scevgep21 = getelementptr i64, i64* getelementptr inbounds ([32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 0, i64 4), i64 %70
   %scevgep2122 = bitcast i64* %scevgep21 to <2 x i64>*
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep2122, align 16, !alias.scope !130, !noalias !132, !llvm.mem.parallel_loop_access !137
   %scevgep23 = getelementptr i64, i64* getelementptr inbounds ([32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 0, i64 4), i64 %70
   %scevgep2324 = bitcast i64* %scevgep23 to <2 x i64>*
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep2324, align 16, !alias.scope !133, !noalias !138, !llvm.mem.parallel_loop_access !137
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep2324, align 16, !alias.scope !134, !noalias !138, !llvm.mem.parallel_loop_access !137
   %71 = shl i64 %polly.indvar11, 5
   %scevgep25 = getelementptr i64, i64* getelementptr inbounds ([32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 0, i64 6), i64 %71
   %scevgep2526 = bitcast i64* %scevgep25 to <2 x i64>*
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep2526, align 16, !alias.scope !130, !noalias !132, !llvm.mem.parallel_loop_access !137
   %scevgep27 = getelementptr i64, i64* getelementptr inbounds ([32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 0, i64 6), i64 %71
   %scevgep2728 = bitcast i64* %scevgep27 to <2 x i64>*
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep2728, align 16, !alias.scope !133, !noalias !138, !llvm.mem.parallel_loop_access !137
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep2728, align 16, !alias.scope !134, !noalias !138, !llvm.mem.parallel_loop_access !137
   %72 = shl i64 %polly.indvar11, 5
   %scevgep29 = getelementptr i64, i64* getelementptr inbounds ([32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 0, i64 8), i64 %72
   %scevgep2930 = bitcast i64* %scevgep29 to <2 x i64>*
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep2930, align 16, !alias.scope !130, !noalias !132, !llvm.mem.parallel_loop_access !137
   %scevgep31 = getelementptr i64, i64* getelementptr inbounds ([32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 0, i64 8), i64 %72
   %scevgep3132 = bitcast i64* %scevgep31 to <2 x i64>*
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep3132, align 16, !alias.scope !133, !noalias !138, !llvm.mem.parallel_loop_access !137
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep3132, align 16, !alias.scope !134, !noalias !138, !llvm.mem.parallel_loop_access !137
   %73 = shl i64 %polly.indvar11, 5
   %scevgep33 = getelementptr i64, i64* getelementptr inbounds ([32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 0, i64 10), i64 %73
   %scevgep3334 = bitcast i64* %scevgep33 to <2 x i64>*
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep3334, align 16, !alias.scope !130, !noalias !132, !llvm.mem.parallel_loop_access !137
   %scevgep35 = getelementptr i64, i64* getelementptr inbounds ([32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 0, i64 10), i64 %73
   %scevgep3536 = bitcast i64* %scevgep35 to <2 x i64>*
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep3536, align 16, !alias.scope !133, !noalias !138, !llvm.mem.parallel_loop_access !137
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep3536, align 16, !alias.scope !134, !noalias !138, !llvm.mem.parallel_loop_access !137
   %74 = shl i64 %polly.indvar11, 5
   %scevgep37 = getelementptr i64, i64* getelementptr inbounds ([32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 0, i64 12), i64 %74
   %scevgep3738 = bitcast i64* %scevgep37 to <2 x i64>*
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep3738, align 16, !alias.scope !130, !noalias !132, !llvm.mem.parallel_loop_access !137
   %scevgep39 = getelementptr i64, i64* getelementptr inbounds ([32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 0, i64 12), i64 %74
   %scevgep3940 = bitcast i64* %scevgep39 to <2 x i64>*
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep3940, align 16, !alias.scope !133, !noalias !138, !llvm.mem.parallel_loop_access !137
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep3940, align 16, !alias.scope !134, !noalias !138, !llvm.mem.parallel_loop_access !137
   %75 = shl i64 %polly.indvar11, 5
   %scevgep41 = getelementptr i64, i64* getelementptr inbounds ([32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 0, i64 14), i64 %75
   %scevgep4142 = bitcast i64* %scevgep41 to <2 x i64>*
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep4142, align 16, !alias.scope !130, !noalias !132, !llvm.mem.parallel_loop_access !137
   %scevgep43 = getelementptr i64, i64* getelementptr inbounds ([32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 0, i64 14), i64 %75
   %scevgep4344 = bitcast i64* %scevgep43 to <2 x i64>*
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep4344, align 16, !alias.scope !133, !noalias !138, !llvm.mem.parallel_loop_access !137
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep4344, align 16, !alias.scope !134, !noalias !138, !llvm.mem.parallel_loop_access !137
   %76 = shl i64 %polly.indvar11, 5
   %scevgep45 = getelementptr i64, i64* getelementptr inbounds ([32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 0, i64 16), i64 %76
   %scevgep4546 = bitcast i64* %scevgep45 to <2 x i64>*
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep4546, align 16, !alias.scope !130, !noalias !132, !llvm.mem.parallel_loop_access !137
   %scevgep47 = getelementptr i64, i64* getelementptr inbounds ([32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 0, i64 16), i64 %76
   %scevgep4748 = bitcast i64* %scevgep47 to <2 x i64>*
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep4748, align 16, !alias.scope !133, !noalias !138, !llvm.mem.parallel_loop_access !137
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep4748, align 16, !alias.scope !134, !noalias !138, !llvm.mem.parallel_loop_access !137
   %77 = shl i64 %polly.indvar11, 5
   %scevgep49 = getelementptr i64, i64* getelementptr inbounds ([32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 0, i64 18), i64 %77
   %scevgep4950 = bitcast i64* %scevgep49 to <2 x i64>*
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep4950, align 16, !alias.scope !130, !noalias !132, !llvm.mem.parallel_loop_access !137
   %scevgep51 = getelementptr i64, i64* getelementptr inbounds ([32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 0, i64 18), i64 %77
   %scevgep5152 = bitcast i64* %scevgep51 to <2 x i64>*
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep5152, align 16, !alias.scope !133, !noalias !138, !llvm.mem.parallel_loop_access !137
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep5152, align 16, !alias.scope !134, !noalias !138, !llvm.mem.parallel_loop_access !137
   %78 = shl i64 %polly.indvar11, 5
   %scevgep53 = getelementptr i64, i64* getelementptr inbounds ([32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 0, i64 20), i64 %78
   %scevgep5354 = bitcast i64* %scevgep53 to <2 x i64>*
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep5354, align 16, !alias.scope !130, !noalias !132, !llvm.mem.parallel_loop_access !137
   %scevgep55 = getelementptr i64, i64* getelementptr inbounds ([32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 0, i64 20), i64 %78
   %scevgep5556 = bitcast i64* %scevgep55 to <2 x i64>*
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep5556, align 16, !alias.scope !133, !noalias !138, !llvm.mem.parallel_loop_access !137
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep5556, align 16, !alias.scope !134, !noalias !138, !llvm.mem.parallel_loop_access !137
   %79 = shl i64 %polly.indvar11, 5
   %scevgep57 = getelementptr i64, i64* getelementptr inbounds ([32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 0, i64 22), i64 %79
   %scevgep5758 = bitcast i64* %scevgep57 to <2 x i64>*
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep5758, align 16, !alias.scope !130, !noalias !132, !llvm.mem.parallel_loop_access !137
   %scevgep59 = getelementptr i64, i64* getelementptr inbounds ([32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 0, i64 22), i64 %79
   %scevgep5960 = bitcast i64* %scevgep59 to <2 x i64>*
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep5960, align 16, !alias.scope !133, !noalias !138, !llvm.mem.parallel_loop_access !137
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep5960, align 16, !alias.scope !134, !noalias !138, !llvm.mem.parallel_loop_access !137
   %80 = shl i64 %polly.indvar11, 5
   %scevgep61 = getelementptr i64, i64* getelementptr inbounds ([32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 0, i64 24), i64 %80
   %scevgep6162 = bitcast i64* %scevgep61 to <2 x i64>*
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep6162, align 16, !alias.scope !130, !noalias !132, !llvm.mem.parallel_loop_access !137
   %scevgep63 = getelementptr i64, i64* getelementptr inbounds ([32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 0, i64 24), i64 %80
   %scevgep6364 = bitcast i64* %scevgep63 to <2 x i64>*
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep6364, align 16, !alias.scope !133, !noalias !138, !llvm.mem.parallel_loop_access !137
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep6364, align 16, !alias.scope !134, !noalias !138, !llvm.mem.parallel_loop_access !137
   %81 = shl i64 %polly.indvar11, 5
   %scevgep65 = getelementptr i64, i64* getelementptr inbounds ([32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 0, i64 26), i64 %81
   %scevgep6566 = bitcast i64* %scevgep65 to <2 x i64>*
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep6566, align 16, !alias.scope !130, !noalias !132, !llvm.mem.parallel_loop_access !137
   %scevgep67 = getelementptr i64, i64* getelementptr inbounds ([32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 0, i64 26), i64 %81
   %scevgep6768 = bitcast i64* %scevgep67 to <2 x i64>*
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep6768, align 16, !alias.scope !133, !noalias !138, !llvm.mem.parallel_loop_access !137
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep6768, align 16, !alias.scope !134, !noalias !138, !llvm.mem.parallel_loop_access !137
   %82 = shl i64 %polly.indvar11, 5
   %scevgep69 = getelementptr i64, i64* getelementptr inbounds ([32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 0, i64 28), i64 %82
   %scevgep6970 = bitcast i64* %scevgep69 to <2 x i64>*
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep6970, align 16, !alias.scope !130, !noalias !132, !llvm.mem.parallel_loop_access !137
   %scevgep71 = getelementptr i64, i64* getelementptr inbounds ([32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 0, i64 28), i64 %82
   %scevgep7172 = bitcast i64* %scevgep71 to <2 x i64>*
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep7172, align 16, !alias.scope !133, !noalias !138, !llvm.mem.parallel_loop_access !137
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep7172, align 16, !alias.scope !134, !noalias !138, !llvm.mem.parallel_loop_access !137
   %83 = shl i64 %polly.indvar11, 5
   %scevgep73 = getelementptr i64, i64* getelementptr inbounds ([32 x [32 x i64]], [32 x [32 x i64]]* @A, i64 0, i64 0, i64 30), i64 %83
   %scevgep7374 = bitcast i64* %scevgep73 to <2 x i64>*
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep7374, align 16, !alias.scope !130, !noalias !132, !llvm.mem.parallel_loop_access !137
   %scevgep75 = getelementptr i64, i64* getelementptr inbounds ([32 x [32 x i64]], [32 x [32 x i64]]* @B, i64 0, i64 0, i64 30), i64 %83
   %scevgep7576 = bitcast i64* %scevgep75 to <2 x i64>*
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep7576, align 16, !alias.scope !133, !noalias !138, !llvm.mem.parallel_loop_access !137
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %scevgep7576, align 16, !alias.scope !134, !noalias !138, !llvm.mem.parallel_loop_access !137
   %84 = add i64 %polly.indvar11, 1
   %p_exitcond5.i = icmp eq i64 %84, 32, !dbg !104
   %polly.indvar_next12 = add nsw i64 %polly.indvar11, 1
@@ -672,7 +672,7 @@ polly.loop_header83:                              ; preds = %polly.stmt.for.inc2
 
 polly.stmt.for.body3.i3:                          ; preds = %polly.loop_header83
   %scevgep90 = getelementptr i64, i64* %scevgep89, i64 %polly.indvar86
-  store i64 0, i64* %scevgep90, align 8, !alias.scope !134, !noalias !139
+  store i64 0, i64* %scevgep90, align 8, !alias.scope !135, !noalias !139
   store i64 0, i64* %add1.i.phiops
   br label %polly.loop_preheader92
 
@@ -682,7 +682,7 @@ polly.loop_exit93:                                ; preds = %polly.stmt.for.body
 polly.stmt.for.inc25.i:                           ; preds = %polly.loop_exit93
   %add.i.1.lcssa.phiops.reload = load i64, i64* %add.i.1.lcssa.phiops
   %scevgep109 = getelementptr i64, i64* %scevgep108, i64 %polly.indvar86
-  store i64 %add.i.1.lcssa.phiops.reload, i64* %scevgep109, align 8, !alias.scope !134, !noalias !139
+  store i64 %add.i.1.lcssa.phiops.reload, i64* %scevgep109, align 8, !alias.scope !135, !noalias !139
   %85 = add i64 %polly.indvar86, 1
   %p_exitcond6.i = icmp eq i64 %85, 32, !dbg !111
   %polly.indvar_next87 = add nsw i64 %polly.indvar86, 1
@@ -708,7 +708,7 @@ polly.stmt.for.body8.i:                           ; preds = %polly.loop_header91
   %_p_scalar_ = load i64, i64* %scevgep98, align 16, !alias.scope !130, !noalias !132
   %88 = shl i64 %polly.indvar94, 6
   %scevgep100 = getelementptr i64, i64* %scevgep99, i64 %88
-  %_p_scalar_101 = load i64, i64* %scevgep100, align 8, !alias.scope !133, !noalias !138
+  %_p_scalar_101 = load i64, i64* %scevgep100, align 8, !alias.scope !134, !noalias !138
   %p_mul.i = mul nsw i64 %_p_scalar_101, %_p_scalar_, !dbg !121
   %p_add.i = add nsw i64 %p_mul.i, %add1.i.phiops.reload, !dbg !122
   %89 = shl i64 %polly.indvar94, 1
@@ -716,7 +716,7 @@ polly.stmt.for.body8.i:                           ; preds = %polly.loop_header91
   %_p_scalar_104 = load i64, i64* %scevgep103, align 8, !alias.scope !130, !noalias !132
   %90 = shl i64 %polly.indvar94, 6
   %scevgep106 = getelementptr i64, i64* %scevgep105, i64 %90
-  %_p_scalar_107 = load i64, i64* %scevgep106, align 8, !alias.scope !133, !noalias !138
+  %_p_scalar_107 = load i64, i64* %scevgep106, align 8, !alias.scope !134, !noalias !138
   %p_mul.i.1 = mul nsw i64 %_p_scalar_107, %_p_scalar_104, !dbg !121
   %p_add.i.1 = add nsw i64 %p_mul.i.1, %p_add.i, !dbg !122
   %91 = shl i64 %polly.indvar94, 1
@@ -825,12 +825,12 @@ attributes #4 = { nounwind }
 !69 = distinct !{!69, !70, !"polly.alias.scope.C"}
 !70 = distinct !{!70, !"polly.alias.scope.domain"}
 !71 = !{!72, !73, !74, !75}
-!72 = distinct !{!72, !70, !"polly.alias.scope.B"}
-!73 = distinct !{!73, !70, !"polly.alias.scope.add.1.lcssa"}
-!74 = distinct !{!74, !70, !"polly.alias.scope.add1"}
-!75 = distinct !{!75, !70, !"polly.alias.scope.A"}
-!76 = !{!72, !69, !73, !74}
-!77 = !{!69, !73, !74, !75}
+!72 = distinct !{!72, !70, !"polly.alias.scope.A"}
+!73 = distinct !{!73, !70, !"polly.alias.scope.add1"}
+!74 = distinct !{!74, !70, !"polly.alias.scope.B"}
+!75 = distinct !{!75, !70, !"polly.alias.scope.add.1.lcssa"}
+!76 = !{!73, !74, !69, !75}
+!77 = !{!72, !73, !69, !75}
 !78 = !DILocation(line: 33, column: 9, scope: !8)
 !79 = !DILocalVariable(name: "i", scope: !8, file: !1, line: 33, type: !12)
 !80 = !DILocation(line: 35, column: 5, scope: !81)
@@ -886,10 +886,10 @@ attributes #4 = { nounwind }
 !130 = distinct !{!130, !131, !"polly.alias.scope.A"}
 !131 = distinct !{!131, !"polly.alias.scope.domain"}
 !132 = !{!133, !134, !135, !136}
-!133 = distinct !{!133, !131, !"polly.alias.scope.B"}
-!134 = distinct !{!134, !131, !"polly.alias.scope.C"}
-!135 = distinct !{!135, !131, !"polly.alias.scope.add1.i"}
-!136 = distinct !{!136, !131, !"polly.alias.scope.add.i.1.lcssa"}
+!133 = distinct !{!133, !131, !"polly.alias.scope.add.i.1.lcssa"}
+!134 = distinct !{!134, !131, !"polly.alias.scope.B"}
+!135 = distinct !{!135, !131, !"polly.alias.scope.C"}
+!136 = distinct !{!136, !131, !"polly.alias.scope.add1.i"}
 !137 = distinct !{!137}
-!138 = !{!134, !135, !136, !130}
-!139 = !{!133, !135, !136, !130}
+!138 = !{!130, !133, !135, !136}
+!139 = !{!130, !133, !134, !136}
