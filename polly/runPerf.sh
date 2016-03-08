@@ -58,7 +58,7 @@ runPolly(){
 			clang $CPPFLAGS -include Util.c -O3 -mllvm -polly -mllvm -polly-parallel -mllvm -polly-process-unprofitable -lgomp $program.c -o "out/$program.$compiler.out"
 			;;
 		"vector")
-			echo "Run Polly-optimized code on $parameter with $num_threads threads..." > $result
+			echo "Run Strip mining Vectorized code on $parameter with $num_threads threads..." > $result
 			clang $CPPFLAGS -include Util.c -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine -mllvm -polly-process-unprofitable $program.c -o "out/$program.$compiler.out"
 			;;
 	esac
@@ -94,42 +94,20 @@ exec(){
 	cd ../../../
 }
 
-init VectorMult
-#### Handwritten VectorMult 
-exec handwritten VectorMult 1024X1024X1024X64 gcc 1
-exec handwritten VectorMult 1024X1024X1024X64 polly 1
-exec handwritten VectorMult 1024X1024X1024X64 openmp 1
-exec handwritten VectorMult 1024X1024X1024X64 openmp 2
-exec handwritten VectorMult 1024X1024X1024X64 openmp 4
-exec handwritten VectorMult 1024X1024X1024X64 openmp 8
-exec handwritten VectorMult 1024X1024X1024X64 vector 1
-#### Handwritten 2 VectorMult 
-exec handwritten2 VectorMult 1024X1024X1024X64 gcc 1
-exec handwritten2 VectorMult 1024X1024X1024X64 polly 1
-exec handwritten2 VectorMult 1024X1024X1024X64 openmp 1
-exec handwritten2 VectorMult 1024X1024X1024X64 openmp 2
-exec handwritten2 VectorMult 1024X1024X1024X64 openmp 4
-exec handwritten2 VectorMult 1024X1024X1024X64 openmp 8
-exec handwritten2 VectorMult 1024X1024X1024X64 vector 1
-# init MatrixMult
-# ##### handwritten C code
-# # exec handwritten MatrixMult 2048 gcc 1
-# # exec handwritten MatrixMult 2048 polly 1
-# # exec handwritten MatrixMult 2048 openmp 1
-# # exec handwritten MatrixMult 2048 openmp 2
-# # exec handwritten MatrixMult 2048 openmp 4
-# # exec handwritten MatrixMult 2048 openmp 8
-# #### new handwritten C code 
-# exec handwritten2 MatrixMult 2048 gcc 1
-# exec handwritten2 MatrixMult 2048 polly 1
-# exec handwritten2 MatrixMult 2048 openmp 1
-# exec handwritten2 MatrixMult 2048 openmp 2
-# exec handwritten2 MatrixMult 2048 openmp 4
-# exec handwritten2 MatrixMult 2048 openmp 8
-#### Generated C code
-# exec copy_reduced_dealloc MatrixMult 2000 gcc
-# exec copy_reduced_dealloc MatrixMult 2000 polly
-# exec copy_reduced_dealloc MatrixMult 2000 openmp 1
-# exec copy_reduced_dealloc MatrixMult 2000 openmp 2
-# exec copy_reduced_dealloc MatrixMult 2000 openmp 4
-# exec copy_reduced_dealloc MatrixMult 2000 openmp 8
+#init VectorMult
+# #### Handwritten VectorMult 
+# exec handwritten VectorMult 1024X1024X1024X64 gcc 1
+# exec handwritten VectorMult 1024X1024X1024X64 polly 1
+# exec handwritten VectorMult 1024X1024X1024X64 openmp 1
+# exec handwritten VectorMult 1024X1024X1024X64 openmp 2
+# exec handwritten VectorMult 1024X1024X1024X64 openmp 4
+# exec handwritten VectorMult 1024X1024X1024X64 openmp 8
+# exec handwritten VectorMult 1024X1024X1024X64 vector 1
+# #### Handwritten 2 VectorMult 
+# exec handwritten2 VectorMult 1024X1024X1024X64 gcc 1
+# exec handwritten2 VectorMult 1024X1024X1024X64 polly 1
+# exec handwritten2 VectorMult 1024X1024X1024X64 openmp 1
+# exec handwritten2 VectorMult 1024X1024X1024X64 openmp 2
+# exec handwritten2 VectorMult 1024X1024X1024X64 openmp 4
+# exec handwritten2 VectorMult 1024X1024X1024X64 openmp 8
+# exec handwritten2 VectorMult 1024X1024X1024X64 vector 1

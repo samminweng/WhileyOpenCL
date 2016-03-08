@@ -16,7 +16,7 @@ main:                                   # @main
 	.file	1 "VectorMult.c"
 	.loc	1 8 0                   # VectorMult.c:8:0
 	.cfi_startproc
-# BB#0:                                 # %entry.split
+# BB#0:                                 # %entry
 	pushq	%rbp
 .Ltmp0:
 	.cfi_def_cfa_offset 16

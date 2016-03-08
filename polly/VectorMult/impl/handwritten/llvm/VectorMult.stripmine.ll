@@ -1,4 +1,4 @@
-; ModuleID = 'VectorMult.preopt.ll'
+; ModuleID = 'VectorMult.none.ll'
 target datalayout = "e-m:e-i64:64-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
 
@@ -9,30 +9,27 @@ target triple = "x86_64-unknown-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define i32 @main(i32 %argc, i8** nocapture readnone %args) #0 !dbg !8 {
 entry:
-  %.s2a118 = alloca <2 x i64>
+  %.s2a73 = alloca <2 x i64>
   %.s2a = alloca <2 x i64>
   %vec.phi31.phiops = alloca <2 x i64>
   %vec.phi30.phiops = alloca <2 x i64>
   %.lcssa45.phiops = alloca <4 x i32>
   %vec.phi.phiops = alloca <4 x i32>
-  br label %entry.split, !dbg !17
-
-entry.split:                                      ; preds = %entry
-  tail call void @llvm.dbg.value(metadata i32 %argc, i64 0, metadata !18, metadata !19), !dbg !17
-  tail call void @llvm.dbg.value(metadata i8** %args, i64 0, metadata !20, metadata !19), !dbg !21
+  tail call void @llvm.dbg.value(metadata i32 %argc, i64 0, metadata !17, metadata !18), !dbg !19
+  tail call void @llvm.dbg.value(metadata i8** %args, i64 0, metadata !20, metadata !18), !dbg !21
   %call = tail call noalias i8* @malloc(i64 41943040) #4, !dbg !22
   %0 = bitcast i8* %call to i32*, !dbg !23
-  tail call void @llvm.dbg.value(metadata i32* %0, i64 0, metadata !24, metadata !19), !dbg !25
+  tail call void @llvm.dbg.value(metadata i32* %0, i64 0, metadata !24, metadata !18), !dbg !25
   %call1 = tail call noalias i8* @malloc(i64 41943040) #4, !dbg !26
   %1 = bitcast i8* %call1 to i32*, !dbg !27
-  tail call void @llvm.dbg.value(metadata i32* %1, i64 0, metadata !28, metadata !19), !dbg !29
+  tail call void @llvm.dbg.value(metadata i32* %1, i64 0, metadata !28, metadata !18), !dbg !29
   %call2 = tail call noalias i8* @malloc(i64 40960) #4, !dbg !30
-  tail call void @llvm.dbg.value(metadata i32* %39, i64 0, metadata !31, metadata !19), !dbg !32
-  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !33, metadata !19), !dbg !34
+  tail call void @llvm.dbg.value(metadata i32* %39, i64 0, metadata !31, metadata !18), !dbg !32
+  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !33, metadata !18), !dbg !34
   br label %for.cond3.preheader, !dbg !35
 
-for.cond3.preheader:                              ; preds = %for.inc10, %entry.split
-  %r.07 = phi i64 [ 0, %entry.split ], [ %inc11, %for.inc10 ]
+for.cond3.preheader:                              ; preds = %for.inc10, %entry
+  %r.07 = phi i64 [ 0, %entry ], [ %inc11, %for.inc10 ]
   %mul = shl i64 %r.07, 10, !dbg !39
   br label %vector.body, !dbg !44
 
@@ -103,7 +100,7 @@ for.cond13.preheader:                             ; preds = %for.inc10
 
 for.inc10:                                        ; preds = %vector.body
   %inc11 = add nuw nsw i64 %r.07, 1, !dbg !58
-  tail call void @llvm.dbg.value(metadata i64 %inc11, i64 0, metadata !33, metadata !19), !dbg !34
+  tail call void @llvm.dbg.value(metadata i64 %inc11, i64 0, metadata !33, metadata !18), !dbg !34
   %exitcond13 = icmp eq i64 %inc11, 10240, !dbg !35
   br i1 %exitcond13, label %for.cond13.preheader, label %for.cond3.preheader, !dbg !35
 
@@ -171,7 +168,7 @@ middle.block5:                                    ; preds = %vector.body4
   %arrayidx34 = getelementptr inbounds i32, i32* %39, i64 %r.15, !dbg !72
   store i32 %69, i32* %arrayidx34, align 4, !dbg !73
   %inc36 = add nuw nsw i64 %r.15, 1, !dbg !74
-  tail call void @llvm.dbg.value(metadata i64 %inc36, i64 0, metadata !33, metadata !19), !dbg !34
+  tail call void @llvm.dbg.value(metadata i64 %inc36, i64 0, metadata !33, metadata !18), !dbg !34
   %exitcond9 = icmp eq i64 %inc36, 10240, !dbg !54
   br i1 %exitcond9, label %vector.body21.preheader, label %for.cond17.preheader, !dbg !54
 
@@ -209,12 +206,12 @@ vector.body21:                                    ; preds = %vector.body21, %vec
 
 polly.merge_new_and_old:                          ; preds = %polly.exiting, %vector.body21
   %.merge = phi <2 x i64> [ %.final_reload, %polly.exiting ], [ %85, %vector.body21 ]
-  %.merge120 = phi <2 x i64> [ %.final_reload119, %polly.exiting ], [ %84, %vector.body21 ]
+  %.merge75 = phi <2 x i64> [ %.final_reload74, %polly.exiting ], [ %84, %vector.body21 ]
   br label %middle.block22, !dbg !82
 
 middle.block22:                                   ; preds = %polly.merge_new_and_old
   %.lcssa44 = phi <2 x i64> [ %.merge, %polly.merge_new_and_old ]
-  %.lcssa = phi <2 x i64> [ %.merge120, %polly.merge_new_and_old ]
+  %.lcssa = phi <2 x i64> [ %.merge75, %polly.merge_new_and_old ]
   %bin.rdx38 = add <2 x i64> %.lcssa44, %.lcssa, !dbg !82
   %rdx.shuf39 = shufflevector <2 x i64> %bin.rdx38, <2 x i64> undef, <2 x i32> <i32 1, i32 undef>, !dbg !82
   %bin.rdx40 = add <2 x i64> %bin.rdx38, %rdx.shuf39, !dbg !82
@@ -241,14 +238,14 @@ polly.loop_exit:                                  ; preds = %polly.stmt.middle.b
 polly.stmt.vector.body21.preheader:               ; preds = %polly.loop_exit
   store <2 x i64> zeroinitializer, <2 x i64>* %vec.phi30.phiops
   store <2 x i64> zeroinitializer, <2 x i64>* %vec.phi31.phiops
-  br label %polly.loop_preheader93
+  br label %polly.loop_preheader48
 
-polly.loop_exit94:                                ; preds = %polly.stmt.vector.body21
+polly.loop_exit49:                                ; preds = %polly.stmt.vector.body21
   br label %polly.exiting
 
-polly.exiting:                                    ; preds = %polly.loop_exit94
-  %.final_reload = load <2 x i64>, <2 x i64>* %.s2a118
-  %.final_reload119 = load <2 x i64>, <2 x i64>* %.s2a
+polly.exiting:                                    ; preds = %polly.loop_exit49
+  %.final_reload = load <2 x i64>, <2 x i64>* %.s2a73
+  %.final_reload74 = load <2 x i64>, <2 x i64>* %.s2a
   br label %polly.merge_new_and_old
 
 polly.loop_header:                                ; preds = %polly.stmt.middle.block5, %polly.loop_preheader
@@ -257,22 +254,22 @@ polly.loop_header:                                ; preds = %polly.stmt.middle.b
 
 polly.stmt.for.cond17.preheader:                  ; preds = %polly.loop_header
   store <4 x i32> zeroinitializer, <4 x i32>* %vec.phi.phiops
-  br label %polly.loop_preheader47
+  br label %polly.loop_preheader2
 
-polly.loop_exit48:                                ; preds = %polly.stmt.vector.body4
+polly.loop_exit3:                                 ; preds = %polly.stmt.vector.body4
   br label %polly.stmt.middle.block5
 
-polly.stmt.middle.block5:                         ; preds = %polly.loop_exit48
+polly.stmt.middle.block5:                         ; preds = %polly.loop_exit3
   %.lcssa45.phiops.reload = load <4 x i32>, <4 x i32>* %.lcssa45.phiops
   %p_rdx.shuf = shufflevector <4 x i32> %.lcssa45.phiops.reload, <4 x i32> undef, <4 x i32> <i32 2, i32 3, i32 undef, i32 undef>, !dbg !70
   %p_bin.rdx = add <4 x i32> %.lcssa45.phiops.reload, %p_rdx.shuf, !dbg !70
   %p_rdx.shuf19 = shufflevector <4 x i32> %p_bin.rdx, <4 x i32> undef, <4 x i32> <i32 1, i32 undef, i32 undef, i32 undef>, !dbg !70
   %p_bin.rdx20 = add <4 x i32> %p_bin.rdx, %p_rdx.shuf19, !dbg !70
-  %p_89 = extractelement <4 x i32> %p_bin.rdx20, i32 0, !dbg !70
+  %p_44 = extractelement <4 x i32> %p_bin.rdx20, i32 0, !dbg !70
   %88 = shl i64 %polly.indvar, 2
-  %scevgep90 = getelementptr i8, i8* %call2, i64 %88
-  %scevgep9091 = bitcast i8* %scevgep90 to i32*
-  store i32 %p_89, i32* %scevgep9091, align 4, !alias.scope !94, !noalias !96
+  %scevgep45 = getelementptr i8, i8* %call2, i64 %88
+  %scevgep4546 = bitcast i8* %scevgep45 to i32*
+  store i32 %p_44, i32* %scevgep4546, align 4, !alias.scope !94, !noalias !96
   %89 = add i64 %polly.indvar, 1
   %p_exitcond9 = icmp eq i64 %89, 10240, !dbg !54
   %polly.indvar_next = add nsw i64 %polly.indvar, 1
@@ -280,123 +277,123 @@ polly.stmt.middle.block5:                         ; preds = %polly.loop_exit48
   br i1 %polly.loop_cond, label %polly.loop_header, label %polly.loop_exit
 
 polly.loop_preheader:                             ; preds = %polly.start
-  %scevgep58 = getelementptr i8, i8* %call, i64 16
-  %scevgep62 = getelementptr i8, i8* %call1, i64 16
-  %scevgep68 = getelementptr i8, i8* %call, i64 32
-  %scevgep72 = getelementptr i8, i8* %call1, i64 32
-  %scevgep78 = getelementptr i8, i8* %call, i64 48
-  %scevgep82 = getelementptr i8, i8* %call1, i64 48
+  %scevgep13 = getelementptr i8, i8* %call, i64 16
+  %scevgep17 = getelementptr i8, i8* %call1, i64 16
+  %scevgep23 = getelementptr i8, i8* %call, i64 32
+  %scevgep27 = getelementptr i8, i8* %call1, i64 32
+  %scevgep33 = getelementptr i8, i8* %call, i64 48
+  %scevgep37 = getelementptr i8, i8* %call1, i64 48
   br label %polly.loop_header
 
-polly.loop_header46:                              ; preds = %polly.stmt.vector.body4, %polly.loop_preheader47
-  %polly.indvar49 = phi i64 [ 0, %polly.loop_preheader47 ], [ %polly.indvar_next50, %polly.stmt.vector.body4 ]
+polly.loop_header1:                               ; preds = %polly.stmt.vector.body4, %polly.loop_preheader2
+  %polly.indvar4 = phi i64 [ 0, %polly.loop_preheader2 ], [ %polly.indvar_next5, %polly.stmt.vector.body4 ]
   br label %polly.stmt.vector.body4
 
-polly.stmt.vector.body4:                          ; preds = %polly.loop_header46
+polly.stmt.vector.body4:                          ; preds = %polly.loop_header1
   %vec.phi.phiops.reload = load <4 x i32>, <4 x i32>* %vec.phi.phiops
-  %90 = shl i64 %polly.indvar49, 6
-  %scevgep52 = getelementptr i8, i8* %scevgep, i64 %90
-  %scevgep5253 = bitcast i8* %scevgep52 to <4 x i32>*
-  %wide.load_p_scalar_ = load <4 x i32>, <4 x i32>* %scevgep5253, align 4, !alias.scope !103, !noalias !105
-  %scevgep55 = getelementptr i8, i8* %scevgep54, i64 %90
-  %scevgep5556 = bitcast i8* %scevgep55 to <4 x i32>*
-  %wide.load18_p_scalar_ = load <4 x i32>, <4 x i32>* %scevgep5556, align 4, !alias.scope !102, !noalias !106
+  %90 = shl i64 %polly.indvar4, 6
+  %scevgep7 = getelementptr i8, i8* %scevgep, i64 %90
+  %scevgep78 = bitcast i8* %scevgep7 to <4 x i32>*
+  %wide.load_p_scalar_ = load <4 x i32>, <4 x i32>* %scevgep78, align 4, !alias.scope !99, !noalias !105
+  %scevgep10 = getelementptr i8, i8* %scevgep9, i64 %90
+  %scevgep1011 = bitcast i8* %scevgep10 to <4 x i32>*
+  %wide.load18_p_scalar_ = load <4 x i32>, <4 x i32>* %scevgep1011, align 4, !alias.scope !102, !noalias !106
   %p_ = mul nsw <4 x i32> %wide.load18_p_scalar_, %wide.load_p_scalar_, !dbg !69
-  %p_57 = add nsw <4 x i32> %p_, %vec.phi.phiops.reload, !dbg !70
-  %91 = shl i64 %polly.indvar49, 6
-  %scevgep60 = getelementptr i8, i8* %scevgep59, i64 %91
-  %scevgep6061 = bitcast i8* %scevgep60 to <4 x i32>*
-  %wide.load.1_p_scalar_ = load <4 x i32>, <4 x i32>* %scevgep6061, align 4, !alias.scope !103, !noalias !105
-  %scevgep64 = getelementptr i8, i8* %scevgep63, i64 %91
-  %scevgep6465 = bitcast i8* %scevgep64 to <4 x i32>*
-  %wide.load18.1_p_scalar_ = load <4 x i32>, <4 x i32>* %scevgep6465, align 4, !alias.scope !102, !noalias !106
-  %p_66 = mul nsw <4 x i32> %wide.load18.1_p_scalar_, %wide.load.1_p_scalar_, !dbg !69
-  %p_67 = add nsw <4 x i32> %p_66, %p_57, !dbg !70
-  %92 = shl i64 %polly.indvar49, 6
-  %scevgep70 = getelementptr i8, i8* %scevgep69, i64 %92
-  %scevgep7071 = bitcast i8* %scevgep70 to <4 x i32>*
-  %wide.load.2_p_scalar_ = load <4 x i32>, <4 x i32>* %scevgep7071, align 4, !alias.scope !103, !noalias !105
-  %scevgep74 = getelementptr i8, i8* %scevgep73, i64 %92
-  %scevgep7475 = bitcast i8* %scevgep74 to <4 x i32>*
-  %wide.load18.2_p_scalar_ = load <4 x i32>, <4 x i32>* %scevgep7475, align 4, !alias.scope !102, !noalias !106
-  %p_76 = mul nsw <4 x i32> %wide.load18.2_p_scalar_, %wide.load.2_p_scalar_, !dbg !69
-  %p_77 = add nsw <4 x i32> %p_76, %p_67, !dbg !70
-  %93 = shl i64 %polly.indvar49, 6
-  %scevgep80 = getelementptr i8, i8* %scevgep79, i64 %93
-  %scevgep8081 = bitcast i8* %scevgep80 to <4 x i32>*
-  %wide.load.3_p_scalar_ = load <4 x i32>, <4 x i32>* %scevgep8081, align 4, !alias.scope !103, !noalias !105
-  %scevgep84 = getelementptr i8, i8* %scevgep83, i64 %93
-  %scevgep8485 = bitcast i8* %scevgep84 to <4 x i32>*
-  %wide.load18.3_p_scalar_ = load <4 x i32>, <4 x i32>* %scevgep8485, align 4, !alias.scope !102, !noalias !106
-  %p_86 = mul nsw <4 x i32> %wide.load18.3_p_scalar_, %wide.load.3_p_scalar_, !dbg !69
-  %p_87 = add nsw <4 x i32> %p_86, %p_77, !dbg !70
-  %94 = shl i64 %polly.indvar49, 4
+  %p_12 = add nsw <4 x i32> %p_, %vec.phi.phiops.reload, !dbg !70
+  %91 = shl i64 %polly.indvar4, 6
+  %scevgep15 = getelementptr i8, i8* %scevgep14, i64 %91
+  %scevgep1516 = bitcast i8* %scevgep15 to <4 x i32>*
+  %wide.load.1_p_scalar_ = load <4 x i32>, <4 x i32>* %scevgep1516, align 4, !alias.scope !99, !noalias !105
+  %scevgep19 = getelementptr i8, i8* %scevgep18, i64 %91
+  %scevgep1920 = bitcast i8* %scevgep19 to <4 x i32>*
+  %wide.load18.1_p_scalar_ = load <4 x i32>, <4 x i32>* %scevgep1920, align 4, !alias.scope !102, !noalias !106
+  %p_21 = mul nsw <4 x i32> %wide.load18.1_p_scalar_, %wide.load.1_p_scalar_, !dbg !69
+  %p_22 = add nsw <4 x i32> %p_21, %p_12, !dbg !70
+  %92 = shl i64 %polly.indvar4, 6
+  %scevgep25 = getelementptr i8, i8* %scevgep24, i64 %92
+  %scevgep2526 = bitcast i8* %scevgep25 to <4 x i32>*
+  %wide.load.2_p_scalar_ = load <4 x i32>, <4 x i32>* %scevgep2526, align 4, !alias.scope !99, !noalias !105
+  %scevgep29 = getelementptr i8, i8* %scevgep28, i64 %92
+  %scevgep2930 = bitcast i8* %scevgep29 to <4 x i32>*
+  %wide.load18.2_p_scalar_ = load <4 x i32>, <4 x i32>* %scevgep2930, align 4, !alias.scope !102, !noalias !106
+  %p_31 = mul nsw <4 x i32> %wide.load18.2_p_scalar_, %wide.load.2_p_scalar_, !dbg !69
+  %p_32 = add nsw <4 x i32> %p_31, %p_22, !dbg !70
+  %93 = shl i64 %polly.indvar4, 6
+  %scevgep35 = getelementptr i8, i8* %scevgep34, i64 %93
+  %scevgep3536 = bitcast i8* %scevgep35 to <4 x i32>*
+  %wide.load.3_p_scalar_ = load <4 x i32>, <4 x i32>* %scevgep3536, align 4, !alias.scope !99, !noalias !105
+  %scevgep39 = getelementptr i8, i8* %scevgep38, i64 %93
+  %scevgep3940 = bitcast i8* %scevgep39 to <4 x i32>*
+  %wide.load18.3_p_scalar_ = load <4 x i32>, <4 x i32>* %scevgep3940, align 4, !alias.scope !102, !noalias !106
+  %p_41 = mul nsw <4 x i32> %wide.load18.3_p_scalar_, %wide.load.3_p_scalar_, !dbg !69
+  %p_42 = add nsw <4 x i32> %p_41, %p_32, !dbg !70
+  %94 = shl i64 %polly.indvar4, 4
   %95 = add i64 %94, 16
-  %p_88 = icmp eq i64 %95, 1024, !dbg !65
-  store <4 x i32> %p_87, <4 x i32>* %vec.phi.phiops
-  store <4 x i32> %p_87, <4 x i32>* %.lcssa45.phiops
-  %polly.indvar_next50 = add nsw i64 %polly.indvar49, 1
-  %polly.loop_cond51 = icmp sle i64 %polly.indvar49, 62
-  br i1 %polly.loop_cond51, label %polly.loop_header46, label %polly.loop_exit48
+  %p_43 = icmp eq i64 %95, 1024, !dbg !65
+  store <4 x i32> %p_42, <4 x i32>* %vec.phi.phiops
+  store <4 x i32> %p_42, <4 x i32>* %.lcssa45.phiops
+  %polly.indvar_next5 = add nsw i64 %polly.indvar4, 1
+  %polly.loop_cond6 = icmp sle i64 %polly.indvar4, 62
+  br i1 %polly.loop_cond6, label %polly.loop_header1, label %polly.loop_exit3
 
-polly.loop_preheader47:                           ; preds = %polly.stmt.for.cond17.preheader
+polly.loop_preheader2:                            ; preds = %polly.stmt.for.cond17.preheader
   %96 = shl i64 %polly.indvar, 12
   %scevgep = getelementptr i8, i8* %call, i64 %96
-  %scevgep54 = getelementptr i8, i8* %call1, i64 %96
-  %scevgep59 = getelementptr i8, i8* %scevgep58, i64 %96
-  %scevgep63 = getelementptr i8, i8* %scevgep62, i64 %96
-  %scevgep69 = getelementptr i8, i8* %scevgep68, i64 %96
-  %scevgep73 = getelementptr i8, i8* %scevgep72, i64 %96
+  %scevgep9 = getelementptr i8, i8* %call1, i64 %96
+  %scevgep14 = getelementptr i8, i8* %scevgep13, i64 %96
+  %scevgep18 = getelementptr i8, i8* %scevgep17, i64 %96
+  %scevgep24 = getelementptr i8, i8* %scevgep23, i64 %96
+  %scevgep28 = getelementptr i8, i8* %scevgep27, i64 %96
   %97 = shl i64 %polly.indvar, 12
-  %scevgep79 = getelementptr i8, i8* %scevgep78, i64 %97
-  %scevgep83 = getelementptr i8, i8* %scevgep82, i64 %97
-  br label %polly.loop_header46
+  %scevgep34 = getelementptr i8, i8* %scevgep33, i64 %97
+  %scevgep38 = getelementptr i8, i8* %scevgep37, i64 %97
+  br label %polly.loop_header1
 
-polly.loop_header92:                              ; preds = %polly.stmt.vector.body21, %polly.loop_preheader93
-  %polly.indvar95 = phi i64 [ 0, %polly.loop_preheader93 ], [ %polly.indvar_next96, %polly.stmt.vector.body21 ]
+polly.loop_header47:                              ; preds = %polly.stmt.vector.body21, %polly.loop_preheader48
+  %polly.indvar50 = phi i64 [ 0, %polly.loop_preheader48 ], [ %polly.indvar_next51, %polly.stmt.vector.body21 ]
   br label %polly.stmt.vector.body21
 
-polly.stmt.vector.body21:                         ; preds = %polly.loop_header92
+polly.stmt.vector.body21:                         ; preds = %polly.loop_header47
   %vec.phi30.phiops.reload = load <2 x i64>, <2 x i64>* %vec.phi30.phiops
   %vec.phi31.phiops.reload = load <2 x i64>, <2 x i64>* %vec.phi31.phiops
-  %98 = shl i64 %polly.indvar95, 5
-  %scevgep98 = getelementptr i8, i8* %call2, i64 %98
-  %scevgep9899 = bitcast i8* %scevgep98 to <2 x i32>*
-  %wide.load36_p_scalar_ = load <2 x i32>, <2 x i32>* %scevgep9899, align 4, !alias.scope !94, !noalias !96
-  %scevgep101 = getelementptr i8, i8* %scevgep100, i64 %98
-  %scevgep101102 = bitcast i8* %scevgep101 to <2 x i32>*
-  %wide.load37_p_scalar_ = load <2 x i32>, <2 x i32>* %scevgep101102, align 4, !alias.scope !94, !noalias !96
-  %p_103 = sext <2 x i32> %wide.load36_p_scalar_ to <2 x i64>, !dbg !76
-  %p_104 = sext <2 x i32> %wide.load37_p_scalar_ to <2 x i64>, !dbg !76
-  %p_105 = add nsw <2 x i64> %p_103, %vec.phi30.phiops.reload, !dbg !82
-  %p_106 = add nsw <2 x i64> %p_104, %vec.phi31.phiops.reload, !dbg !82
-  %99 = shl i64 %polly.indvar95, 5
-  %scevgep108 = getelementptr i8, i8* %scevgep107, i64 %99
-  %scevgep108109 = bitcast i8* %scevgep108 to <2 x i32>*
-  %wide.load36.1_p_scalar_ = load <2 x i32>, <2 x i32>* %scevgep108109, align 4, !alias.scope !94, !noalias !96
-  %scevgep111 = getelementptr i8, i8* %scevgep110, i64 %99
-  %scevgep111112 = bitcast i8* %scevgep111 to <2 x i32>*
-  %wide.load37.1_p_scalar_ = load <2 x i32>, <2 x i32>* %scevgep111112, align 4, !alias.scope !94, !noalias !96
-  %p_113 = sext <2 x i32> %wide.load36.1_p_scalar_ to <2 x i64>, !dbg !76
-  %p_114 = sext <2 x i32> %wide.load37.1_p_scalar_ to <2 x i64>, !dbg !76
-  %p_115 = add nsw <2 x i64> %p_113, %p_105, !dbg !82
-  %p_116 = add nsw <2 x i64> %p_114, %p_106, !dbg !82
-  %100 = shl i64 %polly.indvar95, 3
+  %98 = shl i64 %polly.indvar50, 5
+  %scevgep53 = getelementptr i8, i8* %call2, i64 %98
+  %scevgep5354 = bitcast i8* %scevgep53 to <2 x i32>*
+  %wide.load36_p_scalar_ = load <2 x i32>, <2 x i32>* %scevgep5354, align 4, !alias.scope !94, !noalias !96
+  %scevgep56 = getelementptr i8, i8* %scevgep55, i64 %98
+  %scevgep5657 = bitcast i8* %scevgep56 to <2 x i32>*
+  %wide.load37_p_scalar_ = load <2 x i32>, <2 x i32>* %scevgep5657, align 4, !alias.scope !94, !noalias !96
+  %p_58 = sext <2 x i32> %wide.load36_p_scalar_ to <2 x i64>, !dbg !76
+  %p_59 = sext <2 x i32> %wide.load37_p_scalar_ to <2 x i64>, !dbg !76
+  %p_60 = add nsw <2 x i64> %p_58, %vec.phi30.phiops.reload, !dbg !82
+  %p_61 = add nsw <2 x i64> %p_59, %vec.phi31.phiops.reload, !dbg !82
+  %99 = shl i64 %polly.indvar50, 5
+  %scevgep63 = getelementptr i8, i8* %scevgep62, i64 %99
+  %scevgep6364 = bitcast i8* %scevgep63 to <2 x i32>*
+  %wide.load36.1_p_scalar_ = load <2 x i32>, <2 x i32>* %scevgep6364, align 4, !alias.scope !94, !noalias !96
+  %scevgep66 = getelementptr i8, i8* %scevgep65, i64 %99
+  %scevgep6667 = bitcast i8* %scevgep66 to <2 x i32>*
+  %wide.load37.1_p_scalar_ = load <2 x i32>, <2 x i32>* %scevgep6667, align 4, !alias.scope !94, !noalias !96
+  %p_68 = sext <2 x i32> %wide.load36.1_p_scalar_ to <2 x i64>, !dbg !76
+  %p_69 = sext <2 x i32> %wide.load37.1_p_scalar_ to <2 x i64>, !dbg !76
+  %p_70 = add nsw <2 x i64> %p_68, %p_60, !dbg !82
+  %p_71 = add nsw <2 x i64> %p_69, %p_61, !dbg !82
+  %100 = shl i64 %polly.indvar50, 3
   %101 = add i64 %100, 8
-  %p_117 = icmp eq i64 %101, 10240, !dbg !83
-  store <2 x i64> %p_115, <2 x i64>* %vec.phi30.phiops
-  store <2 x i64> %p_116, <2 x i64>* %vec.phi31.phiops
-  store <2 x i64> %p_115, <2 x i64>* %.s2a
-  store <2 x i64> %p_116, <2 x i64>* %.s2a118
-  %polly.indvar_next96 = add nsw i64 %polly.indvar95, 1
-  %polly.loop_cond97 = icmp sle i64 %polly.indvar95, 1278
-  br i1 %polly.loop_cond97, label %polly.loop_header92, label %polly.loop_exit94
+  %p_72 = icmp eq i64 %101, 10240, !dbg !83
+  store <2 x i64> %p_70, <2 x i64>* %vec.phi30.phiops
+  store <2 x i64> %p_71, <2 x i64>* %vec.phi31.phiops
+  store <2 x i64> %p_70, <2 x i64>* %.s2a
+  store <2 x i64> %p_71, <2 x i64>* %.s2a73
+  %polly.indvar_next51 = add nsw i64 %polly.indvar50, 1
+  %polly.loop_cond52 = icmp sle i64 %polly.indvar50, 1278
+  br i1 %polly.loop_cond52, label %polly.loop_header47, label %polly.loop_exit49
 
-polly.loop_preheader93:                           ; preds = %polly.stmt.vector.body21.preheader
-  %scevgep100 = getelementptr i8, i8* %call2, i64 8
-  %scevgep107 = getelementptr i8, i8* %call2, i64 16
-  %scevgep110 = getelementptr i8, i8* %call2, i64 24
-  br label %polly.loop_header92
+polly.loop_preheader48:                           ; preds = %polly.stmt.vector.body21.preheader
+  %scevgep55 = getelementptr i8, i8* %call2, i64 8
+  %scevgep62 = getelementptr i8, i8* %call2, i64 16
+  %scevgep65 = getelementptr i8, i8* %call2, i64 24
+  br label %polly.loop_header47
 }
 
 ; Function Attrs: nounwind
@@ -442,9 +439,9 @@ attributes #5 = { noreturn nounwind }
 !14 = !{i32 2, !"Dwarf Version", i32 4}
 !15 = !{i32 2, !"Debug Info Version", i32 3}
 !16 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)"}
-!17 = !DILocation(line: 8, column: 14, scope: !8)
-!18 = !DILocalVariable(name: "argc", arg: 1, scope: !8, file: !1, line: 8, type: !5)
-!19 = !DIExpression()
+!17 = !DILocalVariable(name: "argc", arg: 1, scope: !8, file: !1, line: 8, type: !5)
+!18 = !DIExpression()
+!19 = !DILocation(line: 8, column: 14, scope: !8)
 !20 = !DILocalVariable(name: "args", arg: 2, scope: !8, file: !1, line: 8, type: !11)
 !21 = !DILocation(line: 8, column: 27, scope: !8)
 !22 = !DILocation(line: 12, column: 18, scope: !8)
@@ -523,12 +520,12 @@ attributes #5 = { noreturn nounwind }
 !95 = distinct !{!95, !"polly.alias.scope.domain"}
 !96 = !{!97, !98, !99, !100, !101, !102, !103, !104}
 !97 = distinct !{!97, !95, !"polly.alias.scope..lcssa45"}
-!98 = distinct !{!98, !95, !"polly.alias.scope."}
-!99 = distinct !{!99, !95, !"polly.alias.scope.vec.phi31"}
-!100 = distinct !{!100, !95, !"polly.alias.scope."}
-!101 = distinct !{!101, !95, !"polly.alias.scope.vec.phi"}
+!98 = distinct !{!98, !95, !"polly.alias.scope.vec.phi31"}
+!99 = distinct !{!99, !95, !"polly.alias.scope.call"}
+!100 = distinct !{!100, !95, !"polly.alias.scope.vec.phi"}
+!101 = distinct !{!101, !95, !"polly.alias.scope.vec.phi30"}
 !102 = distinct !{!102, !95, !"polly.alias.scope.call1"}
-!103 = distinct !{!103, !95, !"polly.alias.scope.call"}
-!104 = distinct !{!104, !95, !"polly.alias.scope.vec.phi30"}
-!105 = !{!97, !98, !94, !99, !100, !101, !102, !104}
-!106 = !{!97, !98, !94, !99, !100, !101, !103, !104}
+!103 = distinct !{!103, !95, !"polly.alias.scope."}
+!104 = distinct !{!104, !95, !"polly.alias.scope."}
+!105 = !{!97, !98, !100, !101, !102, !103, !104, !94}
+!106 = !{!97, !98, !99, !100, !101, !103, !104, !94}

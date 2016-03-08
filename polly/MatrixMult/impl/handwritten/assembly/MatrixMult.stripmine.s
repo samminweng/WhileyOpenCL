@@ -98,7 +98,7 @@ mat_mult:                               # @mat_mult
 .Ltmp13:
 	#DEBUG_VALUE: mat_mult:i <- 0
 	.p2align	4, 0x90
-.LBB1_1:                                # %polly.loop_preheader4
+.LBB1_1:                                # %polly.loop_preheader2
                                         # =>This Loop Header: Depth=1
                                         #     Child Loop BB1_2 Depth 2
                                         #       Child Loop BB1_3 Depth 3
@@ -147,7 +147,7 @@ mat_mult:                               # @mat_mult
 	cmpq	$511, %r11              # imm = 0x1FF
 	leaq	1(%r11), %r11
 	jl	.LBB1_2
-# BB#5:                                 # %polly.loop_exit5
+# BB#5:                                 # %polly.loop_exit3
                                         #   in Loop: Header=BB1_1 Depth=1
 	addq	$4096, %r9              # imm = 0x1000
 	cmpq	$511, %r8               # imm = 0x1FF
@@ -349,7 +349,7 @@ main:                                   # @main
 	xorl	%r8d, %r8d
 	movl	$A+8, %r9d
 	.p2align	4, 0x90
-.LBB3_5:                                # %polly.loop_preheader10
+.LBB3_5:                                # %polly.loop_preheader2
                                         # =>This Loop Header: Depth=1
                                         #     Child Loop BB3_6 Depth 2
                                         #       Child Loop BB3_7 Depth 3
@@ -398,7 +398,7 @@ main:                                   # @main
 	cmpq	$511, %r11              # imm = 0x1FF
 	leaq	1(%r11), %r11
 	jl	.LBB3_6
-# BB#9:                                 # %polly.loop_exit11
+# BB#9:                                 # %polly.loop_exit3
                                         #   in Loop: Header=BB3_5 Depth=1
 	addq	$4096, %r9              # imm = 0x1000
 	cmpq	$511, %r8               # imm = 0x1FF

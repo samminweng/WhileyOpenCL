@@ -57,11 +57,17 @@ opt_polly(){
 	program=$2
 	num_threads=$3
 	parameter=$4
+	mkdir -p "out" # Store the executables.
+	rm -rf "out"/*
+	### Creating a static library ('Util.o') with GCC (http://www.cs.dartmouth.edu/~campbell/cs50/buildlib.html)
+    clang -c Util.c -o Util.o ### Compile Util.c to Util.o (object file)
+    ar -cvq libUtil.a Util.o
+
 	echo -e "------------------Start optimizing ${BOLD}${GREEN}$c_type $program C ${RESET} program with POlly--------------------"
 	
 	echo -e -n "1. Create LLVM-IR from C"
 	### Compile source.c along with 'Util.c' to assembly code
-	clang -g -S -emit-llvm $program.c -o $program.s
+	clang -fno-vectorize -g -S -emit-llvm $program.c -o $program.s
 	
 	echo -e -n "2. Prepare LLVM-IR for Polly"
 	opt -S -polly-canonicalize -polly-report $program.s > $program.preopt.ll
@@ -82,69 +88,66 @@ opt_polly(){
 	echo -e -n "7. Generate polly-optimized LLVM using Polly"
 	opt -S -O3 -polly -polly-codegen -polly-process-unprofitable -polly-report $program.preopt.ll -o $program.polly.ll
 
-	echo -e -n "${REVERSE}Compare Polly Optimizations${RESET}"
-	mkdir -p "out" # Store the executables.
-	rm -rf "out"/*
-	### Creating a static library ('Util.o') with GCC (http://www.cs.dartmouth.edu/~campbell/cs50/buildlib.html)
-    clang -c Util.c -o Util.o ### Compile Util.c to Util.o (object file)
-    ar -cvq libUtil.a Util.o
+	echo -e -n "${REVERSE}Manual${RESET} Polly Optimizations\n"
 
-	# echo -e -n "[1] Run ${BOLD}${GREEN} None Optimized ${RESET} executable. Press [Enter]" && read	
-    # opt -basicaa -polly-codegen -polly-report $program.preopt.ll\
-    #     -S -o $program.none.ll
-    # runExecutables $program "none" $parameter
-
-	echo -e -n "[1] Run ${BOLD}${GREEN} -O3 Optimized ${RESET} executable. Press [Enter]" && read	
+	echo -e -n "${BOLD}${GREEN}[1]${RESET} Run ${GREEN} None Optimization ${RESET} executable. Press [Enter]" && read	
 	### Use 'llc' to compile LLVM code into assembly code
-    opt -O3 -basicaa -polly-codegen -polly-report $program.preopt.ll\
-     	-S -o $program.O3.ll
-    runExecutables $program "O3" $parameter
+    opt -basicaa -polly-codegen -polly-report $program.preopt.ll\
+     	-S -o $program.before.none.ll\
+     	&& opt -O3 $program.before.none.ll -S -o $program.none.ll
+    runExecutables $program "none" $parameter
 
-	echo -e -n "[2] Run ${BOLD}${GREEN} [1] + Strip mining ${RESET} executable. Press [Enter] " && read
+	echo -e -n "${BOLD}${GREEN}[2]${RESET} Run ${GREEN} [1] + Polly loop Vectorization ${RESET} executable. Press [Enter] " && read
+	opt -polly-vectorizer=polly\
+	    -basicaa -polly-codegen -polly-report $program.none.ll\
+	    -S -o $program.before.pollyvector.ll\
+	    &&opt -O3 $program.before.pollyvector.ll -S -o $program.pollyvector.ll
+    runExecutables $program "pollyvector" $parameter
+
+    echo -e -n "${BOLD}${GREEN}[3]${RESET} Run ${GREEN} [1] + Strip mining ${RESET} executable. Press [Enter] " && read
 	opt -polly-vectorizer=stripmine\
-	    -O3 -basicaa -polly-codegen -polly-report $program.preopt.ll\
+	    -basicaa -polly-codegen -polly-report $program.none.ll\
 	    -S -o $program.stripmine.ll
 	runExecutables $program "stripmine" $parameter
-
-	echo -e -n "[3] Run ${BOLD}${GREEN} [1] + Polly loop Vectorization ${RESET} executable. Press [Enter] " && read
-	opt -polly-vectorizer=polly\
-	    -O3 -basicaa -polly-codegen -polly-report $program.preopt.ll\
-	    -S -o $program.pollyvector.ll
-    runExecutables $program "pollyvector" $parameter
 	
-	echo -e -n "[4] Run ${BOLD}${GREEN} [3] + (1st + 2nd) Loop tiling ${RESET} executable. Press [Enter] " && read
-	opt -polly-vectorizer=polly -polly-tiling -polly-2nd-level-tiling\
-	    -O3 -basicaa -polly-codegen -polly-report $program.preopt.ll\
+	echo -e -n "${BOLD}${GREEN}[4]${RESET}  Run ${GREEN} [3] + (1st + 2nd) Loop tiling ${RESET} executable. Press [Enter] " && read
+	opt -polly-vectorizer=stripmine -polly-tiling -polly-2nd-level-tiling\
+	    -basicaa -polly-codegen -polly-report $program.none.ll\
 	    -S -o $program.tiling.ll
     runExecutables $program "tiling" $parameter
 
-    echo -e -n "[5] Run ${BOLD}${GREEN} [4] + Optimized Schedule of SCoPs ${RESET} executable. Press [Enter] " && read	
-	opt -polly-opt-isl -polly-vectorizer=polly -polly-tiling -polly-2nd-level-tiling\
- 	    -O3 -basicaa -polly-prepare -polly-codegen -polly-report $program.preopt.ll\
+    echo -e -n "${BOLD}${GREEN}[5]${RESET} Run ${GREEN} [4] + Optimized Schedule of SCoPs ${RESET} executable. Press [Enter] " && read	
+	opt -polly-opt-isl -polly-vectorizer=stripmine -polly-tiling -polly-2nd-level-tiling\
+ 	    -basicaa -polly-prepare -polly-codegen -polly-report $program.none.ll\
         -S -o $program.optisl.ll
 	runExecutables $program "optisl" $parameter
 
-
-	echo -e -n "${REVERSE}Compare GCC vs. Polly${RESET}\n"
+	echo -e -n "${REVERSE}Automatic ${RESET} Polly Optimization vs. GCC\n"
 	echo -e -n "[1] Run ${BOLD}${GREEN}GCC -O3 ${RESET} executables. Press [Enter] " && read
 	gcc -O3 $program.c Util.c -o $program.gcc.out
 	mv $program.gcc.out "out/"
 	time ./out/$program.gcc.out $parameter
 
-	echo -e -n "[2] Run ${BOLD}${GREEN}Polly-optimized Seq ${RESET} executable. Press [Enter]" && read
-	opt -polly\
-	    -O3 -basicaa -polly-prepare -polly-codegen -polly-report $program.preopt.ll\
+	echo -e -n "[2] Run ${BOLD}${GREEN}Polly Sequential ${RESET} executable. Press [Enter]" && read
+	opt -O3 -polly\
+	    -basicaa -polly-prepare -polly-codegen -polly-report $program.preopt.ll\
 	    -S -o $program.polly.ll
     runExecutables $program "polly" $parameter
 
 	echo -e -n "[3] Run ${BOLD}${GREEN}Polly OpenMP ${RESET} executable with 2 threads. Press [Enter]" && read
 	export OMP_NUM_THREADS=$num_threads
-	opt -polly -polly-parallel\
-		-O3 -basicaa -polly-prepare -polly-codegen -polly-report $program.preopt.ll\
+	opt -O3 -polly -polly-parallel\
+		-basicaa -polly-prepare -polly-codegen -polly-report $program.preopt.ll\
 	    -S -o $program.openmp.ll
 	llc $program.openmp.ll -o $program.openmp.s
 	clang $program.openmp.s libUtil.a -o "out/$program.openmp.out" -lgomp
 	time ."/out/$program.openmp.out" $parameter
+
+	echo -e -n "[4] Run ${BOLD}${GREEN}Polly Vector ${RESET} executable. Press [Enter]" && read
+	opt -O3 -polly -polly-vectorizer=polly\
+		-basicaa -polly-prepare -polly-codegen -polly-report $program.preopt.ll\
+	    -S -o $program.vector.ll
+	runExecutables $program "vector" $parameter
 
 	## move files to folders respectively, e.g. 'jscop' 'llvm' and 'assembly' folder 
 	### Move all the dot files to 'dot' folder
@@ -166,10 +169,12 @@ exec(){
 	workingdir="$program/impl/$c_type"
 	## copy *.whiley and Util.c Util.h to working folder
 	### cp "$program/$program.whiley" $utildir/Util.c $utildir/Util.h $workingdir
+	cp $utildir/Util.c $utildir/Util.h $workingdir
 	cd $workingdir
 	opt_polly $c_type $program $num_threads $parameter
 	cd ../../../
 }
 
-#exec handwritten VectorMult 2 1024X1024X10
-exec handwritten MatrixMult 2 32
+exec handwritten VectorMult 2 1024X1024X10
+exec handwritten MatrixAdd 2 1024
+exec handwritten MatrixMult 2 512

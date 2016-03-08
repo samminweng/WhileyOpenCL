@@ -84,7 +84,7 @@ mat_mult:                               # @mat_mult
 .Lfunc_begin1:
 	.loc	1 19 0                  # MatrixMult.c:19:0
 	.cfi_startproc
-# BB#0:                                 # %polly.split_new_and_old
+# BB#0:                                 # %entry
 	pushq	%rbp
 .Ltmp10:
 	.cfi_def_cfa_offset 16
@@ -93,71 +93,83 @@ mat_mult:                               # @mat_mult
 	movq	%rsp, %rbp
 .Ltmp12:
 	.cfi_def_cfa_register %rbp
-	xorl	%r8d, %r8d
-	movl	$A+8, %r9d
+	pushq	%rbx
 .Ltmp13:
+	.cfi_offset %rbx, -24
+	xorl	%r9d, %r9d
+	movl	$A+24, %r8d
+.Ltmp14:
 	#DEBUG_VALUE: mat_mult:i <- 0
 	.p2align	4, 0x90
-.LBB1_1:                                # %polly.loop_preheader4
+.LBB1_1:                                # %polly.loop_preheader2
                                         # =>This Loop Header: Depth=1
                                         #     Child Loop BB1_2 Depth 2
                                         #       Child Loop BB1_3 Depth 3
-	movq	%r8, %rax
-	shlq	$12, %rax
-	leaq	C(%rax), %r10
-	xorl	%r11d, %r11d
+	movl	$B+12288, %r11d
+	xorl	%esi, %esi
 	.p2align	4, 0x90
 .LBB1_2:                                # %polly.stmt.for.body3
                                         #   Parent Loop BB1_1 Depth=1
                                         # =>  This Loop Header: Depth=2
                                         #       Child Loop BB1_3 Depth 3
-	movq	$0, (%r10,%r11,8)
-	movq	$0, -8(%rbp)
-	movq	$-1, %rdi
-	movq	$-2088960, %rax         # imm = 0xFFFFFFFFFFE02000
-	movq	%r9, %rcx
+	movq	%r9, %rax
+	shlq	$12, %rax
+	leaq	C(%rax,%rsi,8), %r10
+	movq	$0, C(%rax,%rsi,8)
+	movq	%r8, %rcx
+	movq	%r11, %rdx
+	movl	$256, %edi              # imm = 0x100
+	xorl	%eax, %eax
 	.p2align	4, 0x90
 .LBB1_3:                                # %polly.stmt.for.body8
                                         #   Parent Loop BB1_1 Depth=1
                                         #     Parent Loop BB1_2 Depth=2
                                         # =>    This Inner Loop Header: Depth=3
-	movq	B+2088960(%rax,%r11,8), %rdx
-.Ltmp14:
-	.loc	1 25 45 prologue_end    # MatrixMult.c:25:45
-	imulq	-8(%rcx), %rdx
-	.loc	1 25 35 is_stmt 0       # MatrixMult.c:25:35
-	addq	-8(%rbp), %rdx
-	movq	B+2093056(%rax,%r11,8), %rsi
-	.loc	1 25 45                 # MatrixMult.c:25:45
-	imulq	(%rcx), %rsi
-	.loc	1 25 35                 # MatrixMult.c:25:35
-	addq	%rdx, %rsi
-	movq	%rsi, -8(%rbp)
-	movq	%rsi, -16(%rbp)
-	incq	%rdi
-	addq	$8192, %rax             # imm = 0x2000
-	addq	$16, %rcx
-	cmpq	$255, %rdi
-	jl	.LBB1_3
+	movq	-12288(%rdx), %rbx
 .Ltmp15:
+	.loc	1 25 45 prologue_end    # MatrixMult.c:25:45
+	imulq	-24(%rcx), %rbx
+	.loc	1 25 35 is_stmt 0       # MatrixMult.c:25:35
+	addq	%rax, %rbx
+	movq	-8192(%rdx), %rax
+	.loc	1 25 45                 # MatrixMult.c:25:45
+	imulq	-16(%rcx), %rax
+	.loc	1 25 35                 # MatrixMult.c:25:35
+	addq	%rbx, %rax
+	movq	-4096(%rdx), %rbx
+	.loc	1 25 45                 # MatrixMult.c:25:45
+	imulq	-8(%rcx), %rbx
+	.loc	1 25 35                 # MatrixMult.c:25:35
+	addq	%rax, %rbx
+	movq	(%rdx), %rax
+	.loc	1 25 45                 # MatrixMult.c:25:45
+	imulq	(%rcx), %rax
+	.loc	1 25 35                 # MatrixMult.c:25:35
+	addq	%rbx, %rax
+	addq	$16384, %rdx            # imm = 0x4000
+	addq	$32, %rcx
+	addq	$-2, %rdi
+	jne	.LBB1_3
+.Ltmp16:
 # BB#4:                                 # %polly.stmt.for.inc25
                                         #   in Loop: Header=BB1_2 Depth=2
-	movq	-16(%rbp), %rax
-	movq	%rax, (%r10,%r11,8)
-	cmpq	$511, %r11              # imm = 0x1FF
-	leaq	1(%r11), %r11
-	jl	.LBB1_2
-# BB#5:                                 # %polly.loop_exit5
+	movq	%rax, (%r10)
+	incq	%rsi
+	addq	$8, %r11
+	cmpq	$512, %rsi              # imm = 0x200
+	jne	.LBB1_2
+# BB#5:                                 # %polly.loop_exit3
                                         #   in Loop: Header=BB1_1 Depth=1
-	addq	$4096, %r9              # imm = 0x1000
-	cmpq	$511, %r8               # imm = 0x1FF
-	leaq	1(%r8), %r8
-	jl	.LBB1_1
-# BB#6:                                 # %for.end30
+	incq	%r9
+	addq	$4096, %r8              # imm = 0x1000
+	cmpq	$512, %r9               # imm = 0x200
+	jne	.LBB1_1
+# BB#6:                                 # %polly.exiting
 	.loc	1 29 1 is_stmt 1        # MatrixMult.c:29:1
+	popq	%rbx
 	popq	%rbp
 	retq
-.Ltmp16:
+.Ltmp17:
 .Lfunc_end1:
 	.size	mat_mult, .Lfunc_end1-mat_mult
 	.cfi_endproc
@@ -171,34 +183,34 @@ print_array:                            # @print_array
 	.cfi_startproc
 # BB#0:                                 # %entry
 	pushq	%rbp
-.Ltmp17:
-	.cfi_def_cfa_offset 16
 .Ltmp18:
+	.cfi_def_cfa_offset 16
+.Ltmp19:
 	.cfi_offset %rbp, -16
 	movq	%rsp, %rbp
-.Ltmp19:
+.Ltmp20:
 	.cfi_def_cfa_register %rbp
 	pushq	%r15
 	pushq	%r14
 	pushq	%r12
 	pushq	%rbx
-.Ltmp20:
-	.cfi_offset %rbx, -48
 .Ltmp21:
-	.cfi_offset %r12, -40
+	.cfi_offset %rbx, -48
 .Ltmp22:
-	.cfi_offset %r14, -32
+	.cfi_offset %r12, -40
 .Ltmp23:
+	.cfi_offset %r14, -32
+.Ltmp24:
 	.cfi_offset %r15, -24
 	movl	$C, %r14d
-.Ltmp24:
+.Ltmp25:
 	#DEBUG_VALUE: print_array:i <- 0
 	xorl	%r15d, %r15d
 	.p2align	4, 0x90
 .LBB2_1:                                # %for.cond1.preheader
                                         # =>This Loop Header: Depth=1
                                         #     Child Loop BB2_2 Depth 2
-.Ltmp25:
+.Ltmp26:
 	.loc	1 37 21 prologue_end    # MatrixMult.c:37:21
 	movq	stdout(%rip), %rcx
 	movq	%r14, %r12
@@ -214,7 +226,7 @@ print_array:                            # @print_array
 	xorl	%eax, %eax
 	movq	%rcx, %rdi
 	callq	fprintf
-.Ltmp26:
+.Ltmp27:
 	.loc	1 38 18 is_stmt 1       # MatrixMult.c:38:18
 	movslq	%ebx, %rax
 	imulq	$1717986919, %rax, %rcx # imm = 0x66666667
@@ -225,45 +237,45 @@ print_array:                            # @print_array
 	shll	$4, %ecx
 	leal	(%rcx,%rcx,4), %ecx
 	subl	%ecx, %eax
-.Ltmp27:
+.Ltmp28:
 	.loc	1 38 17 is_stmt 0       # MatrixMult.c:38:17
 	cmpl	$79, %eax
 	jne	.LBB2_4
 # BB#3:                                 # %if.then
                                         #   in Loop: Header=BB2_2 Depth=2
-.Ltmp28:
+.Ltmp29:
 	.loc	1 38 37 discriminator 1 # MatrixMult.c:38:37
 	movq	stdout(%rip), %rsi
 	.loc	1 38 29 discriminator 1 # MatrixMult.c:38:29
 	movl	$10, %edi
 	callq	fputc
-.Ltmp29:
+.Ltmp30:
 .LBB2_4:                                # %for.inc
                                         #   in Loop: Header=BB2_2 Depth=2
 	.loc	1 36 9 is_stmt 1 discriminator 1 # MatrixMult.c:36:9
 	incq	%rbx
-.Ltmp30:
+.Ltmp31:
 	.loc	1 37 21                 # MatrixMult.c:37:21
 	movq	stdout(%rip), %rcx
-.Ltmp31:
+.Ltmp32:
 	.loc	1 36 9 discriminator 1  # MatrixMult.c:36:9
 	addq	$8, %r12
 	cmpq	$512, %rbx              # imm = 0x200
 	jne	.LBB2_2
-.Ltmp32:
+.Ltmp33:
 # BB#5:                                 # %for.end
                                         #   in Loop: Header=BB2_1 Depth=1
 	.loc	1 40 9                  # MatrixMult.c:40:9
 	movl	$10, %edi
 	movq	%rcx, %rsi
 	callq	fputc
-.Ltmp33:
+.Ltmp34:
 	.loc	1 35 5 discriminator 1  # MatrixMult.c:35:5
 	incq	%r15
 	addq	$4096, %r14             # imm = 0x1000
 	cmpq	$512, %r15              # imm = 0x200
 	jne	.LBB2_1
-.Ltmp34:
+.Ltmp35:
 # BB#6:                                 # %for.end11
 	.loc	1 42 1                  # MatrixMult.c:42:1
 	popq	%rbx
@@ -272,7 +284,7 @@ print_array:                            # @print_array
 	popq	%r15
 	popq	%rbp
 	retq
-.Ltmp35:
+.Ltmp36:
 .Lfunc_end2:
 	.size	print_array, .Lfunc_end2-print_array
 	.cfi_endproc
@@ -291,13 +303,15 @@ main:                                   # @main
 	.loc	1 45 0                  # MatrixMult.c:45:0
 	.cfi_startproc
 # BB#0:                                 # %entry
-	xorl	%eax, %eax
-.Ltmp36:
+	xorl	%r8d, %r8d
+.Ltmp37:
 	#DEBUG_VALUE: init_array:i <- 0
 	.loc	1 13 21 prologue_end    # MatrixMult.c:13:21
 	movaps	.LCPI3_0(%rip), %xmm0   # xmm0 = [1,1]
-.Ltmp37:
+	movl	$A+24, %r9d
+.Ltmp38:
 	.loc	1 51 5                  # MatrixMult.c:51:5
+	xorl	%eax, %eax
 	xorl	%ecx, %ecx
 	.p2align	4, 0x90
 .LBB3_1:                                # %vector.ph
@@ -309,7 +323,7 @@ main:                                   # @main
 .LBB3_2:                                # %vector.body
                                         #   Parent Loop BB3_1 Depth=1
                                         # =>  This Inner Loop Header: Depth=2
-.Ltmp38:
+.Ltmp39:
 	.loc	1 13 21                 # MatrixMult.c:13:21
 	movaps	%xmm0, A(%rdx)
 	movaps	%xmm0, A+16(%rdx)
@@ -322,12 +336,12 @@ main:                                   # @main
 	.loc	1 14 21                 # MatrixMult.c:14:21
 	movaps	%xmm0, B+32(%rdx)
 	movaps	%xmm0, B+48(%rdx)
-.Ltmp39:
+.Ltmp40:
 	.loc	1 12 9 discriminator 1  # MatrixMult.c:12:9
 	addq	$64, %rdx
 	addq	$-8, %rsi
 	jne	.LBB3_2
-.Ltmp40:
+.Ltmp41:
 # BB#3:                                 # %for.inc10.i
                                         #   in Loop: Header=BB3_1 Depth=1
 	.loc	1 11 5 discriminator 1  # MatrixMult.c:11:5
@@ -335,76 +349,85 @@ main:                                   # @main
 	addq	$4096, %rax             # imm = 0x1000
 	cmpq	$512, %rcx              # imm = 0x200
 	jne	.LBB3_1
-.Ltmp41:
-# BB#4:                                 # %polly.split_new_and_old
-	pushq	%rbp
 .Ltmp42:
-	.cfi_def_cfa_offset 16
+# BB#4:
+	pushq	%rbp
 .Ltmp43:
+	.cfi_def_cfa_offset 16
+.Ltmp44:
 	.cfi_offset %rbp, -16
 	movq	%rsp, %rbp
-.Ltmp44:
+.Ltmp45:
 	.cfi_def_cfa_register %rbp
-	subq	$16, %rsp
-	xorl	%r8d, %r8d
-	movl	$A+8, %r9d
+	pushq	%rbx
+	pushq	%rax
+.Ltmp46:
+	.cfi_offset %rbx, -24
 	.p2align	4, 0x90
-.LBB3_5:                                # %polly.loop_preheader10
+.LBB3_5:                                # %polly.loop_preheader2
                                         # =>This Loop Header: Depth=1
                                         #     Child Loop BB3_6 Depth 2
                                         #       Child Loop BB3_7 Depth 3
-	movq	%r8, %rax
-	shlq	$12, %rax
-	leaq	C(%rax), %r10
-	xorl	%r11d, %r11d
+	movl	$B+12288, %r11d
+	xorl	%esi, %esi
 	.p2align	4, 0x90
 .LBB3_6:                                # %polly.stmt.for.body3.i3
                                         #   Parent Loop BB3_5 Depth=1
                                         # =>  This Loop Header: Depth=2
                                         #       Child Loop BB3_7 Depth 3
-	movq	$0, (%r10,%r11,8)
-	movq	$0, -8(%rbp)
-	movq	$-1, %rdi
-	movq	$-2088960, %rax         # imm = 0xFFFFFFFFFFE02000
+	movq	%r8, %rax
+	shlq	$12, %rax
+	leaq	C(%rax,%rsi,8), %r10
+	movq	$0, C(%rax,%rsi,8)
 	movq	%r9, %rcx
+	movq	%r11, %rdx
+	movl	$256, %edi              # imm = 0x100
+	xorl	%eax, %eax
 	.p2align	4, 0x90
 .LBB3_7:                                # %polly.stmt.for.body8.i
                                         #   Parent Loop BB3_5 Depth=1
                                         #     Parent Loop BB3_6 Depth=2
                                         # =>    This Inner Loop Header: Depth=3
-	movq	B+2088960(%rax,%r11,8), %rdx
-.Ltmp45:
+	movq	-12288(%rdx), %rbx
+.Ltmp47:
 	.loc	1 25 45                 # MatrixMult.c:25:45
-	imulq	-8(%rcx), %rdx
+	imulq	-24(%rcx), %rbx
 	.loc	1 25 35 is_stmt 0       # MatrixMult.c:25:35
-	addq	-8(%rbp), %rdx
-	movq	B+2093056(%rax,%r11,8), %rsi
+	addq	%rax, %rbx
+	movq	-8192(%rdx), %rax
 	.loc	1 25 45                 # MatrixMult.c:25:45
-	imulq	(%rcx), %rsi
+	imulq	-16(%rcx), %rax
 	.loc	1 25 35                 # MatrixMult.c:25:35
-	addq	%rdx, %rsi
-	movq	%rsi, -8(%rbp)
-	movq	%rsi, -16(%rbp)
-	incq	%rdi
-	addq	$8192, %rax             # imm = 0x2000
-	addq	$16, %rcx
-	cmpq	$255, %rdi
-	jl	.LBB3_7
-.Ltmp46:
+	addq	%rbx, %rax
+	movq	-4096(%rdx), %rbx
+	.loc	1 25 45                 # MatrixMult.c:25:45
+	imulq	-8(%rcx), %rbx
+	.loc	1 25 35                 # MatrixMult.c:25:35
+	addq	%rax, %rbx
+	movq	(%rdx), %rax
+	.loc	1 25 45                 # MatrixMult.c:25:45
+	imulq	(%rcx), %rax
+	.loc	1 25 35                 # MatrixMult.c:25:35
+	addq	%rbx, %rax
+	addq	$16384, %rdx            # imm = 0x4000
+	addq	$32, %rcx
+	addq	$-2, %rdi
+	jne	.LBB3_7
+.Ltmp48:
 # BB#8:                                 # %polly.stmt.for.inc25.i
                                         #   in Loop: Header=BB3_6 Depth=2
-	movq	-16(%rbp), %rax
-	movq	%rax, (%r10,%r11,8)
-	cmpq	$511, %r11              # imm = 0x1FF
-	leaq	1(%r11), %r11
-	jl	.LBB3_6
-# BB#9:                                 # %polly.loop_exit11
+	movq	%rax, (%r10)
+	incq	%rsi
+	addq	$8, %r11
+	cmpq	$512, %rsi              # imm = 0x200
+	jne	.LBB3_6
+# BB#9:                                 # %polly.loop_exit3
                                         #   in Loop: Header=BB3_5 Depth=1
+	incq	%r8
 	addq	$4096, %r9              # imm = 0x1000
-	cmpq	$511, %r8               # imm = 0x1FF
-	leaq	1(%r8), %r8
-	jl	.LBB3_5
-# BB#10:                                # %mat_mult.exit
+	cmpq	$512, %r8               # imm = 0x200
+	jne	.LBB3_5
+# BB#10:                                # %polly.exiting
 	.loc	1 55 71 is_stmt 1       # MatrixMult.c:55:71
 	movq	C+2097144(%rip), %rcx
 	.loc	1 55 5 is_stmt 0        # MatrixMult.c:55:5
@@ -415,10 +438,11 @@ main:                                   # @main
 	callq	printf
 	.loc	1 56 5 is_stmt 1        # MatrixMult.c:56:5
 	xorl	%eax, %eax
-	addq	$16, %rsp
+	addq	$8, %rsp
+	popq	%rbx
 	popq	%rbp
 	retq
-.Ltmp47:
+.Ltmp49:
 .Lfunc_end3:
 	.size	main, .Lfunc_end3-main
 	.cfi_endproc
@@ -836,8 +860,8 @@ main:                                   # @main
 	.byte	0                       # End Of Children Mark
 	.byte	16                      # Abbrev [16] 0x135:0x13 DW_TAG_inlined_subroutine
 	.long	258                     # DW_AT_abstract_origin
-	.quad	.Ltmp45                 # DW_AT_low_pc
-	.long	.Ltmp46-.Ltmp45         # DW_AT_high_pc
+	.quad	.Ltmp47                 # DW_AT_low_pc
+	.long	.Ltmp48-.Ltmp47         # DW_AT_high_pc
 	.byte	1                       # DW_AT_call_file
 	.byte	52                      # DW_AT_call_line
 	.byte	0                       # End Of Children Mark
@@ -845,10 +869,10 @@ main:                                   # @main
 	.section	.debug_ranges,"",@progbits
 .Ldebug_range:
 .Ldebug_ranges0:
-	.quad	.Ltmp36-.Lfunc_begin0
 	.quad	.Ltmp37-.Lfunc_begin0
 	.quad	.Ltmp38-.Lfunc_begin0
-	.quad	.Ltmp41-.Lfunc_begin0
+	.quad	.Ltmp39-.Lfunc_begin0
+	.quad	.Ltmp42-.Lfunc_begin0
 	.quad	0
 	.quad	0
 	.section	.debug_macinfo,"",@progbits
