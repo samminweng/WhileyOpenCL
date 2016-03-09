@@ -53,9 +53,9 @@ BEGIN {
 	# Code Optimizations
 	c_types="handwritten";
 	# Polly optimiz
-	polly_opts="gcc polly vector openmp"
+	polly_opts="gcc polly vector optisl openmp"
 	# Parameters
-	parameters["MatrixAdd"] = "1024X1024";
+	parameters["MatrixAdd"] = "1024X1024X100";
 	threads="1 2 4 8";
 	cpu_utils[""] = "";
 	exec_times[""] = "";
