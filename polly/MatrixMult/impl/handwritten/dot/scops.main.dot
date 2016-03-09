@@ -1,16 +1,16 @@
 digraph "Scop Graph for 'main' function" {
 	label="Scop Graph for 'main' function";
 
-	Node0x4f67110 [shape=record,label="{entry:\l  br label %entry.split, !dbg !24\l}"];
-	Node0x4f67110 -> Node0x4f61150;
-	Node0x4f61150 [shape=record,label="{entry.split:                                      \l  tail call void @init_array(), !dbg !24\l  tail call void @mat_mult(), !dbg !25\l  %0 = load i64, i64* getelementptr inbounds ([512 x [512 x i64]], [512 x [512\l... x i64]]* @C, i64 0, i64 511, i64 511), align 8, !dbg !26\l  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([49 x\l... i8], [49 x i8]* @.str.2, i64 0, i64 0), i32 512, i32 512, i64 %0) #3, !dbg !27\l  ret i32 0, !dbg !28\l}"];
+	Node0x50d4040 [shape=record,label="{entry:\l  br label %entry.split, !dbg !24\l}"];
+	Node0x50d4040 -> Node0x50e3560;
+	Node0x50e3560 [shape=record,label="{entry.split:                                      \l  tail call void @init_array(), !dbg !24\l  tail call void @mat_mult(), !dbg !25\l  %0 = load i64, i64* getelementptr inbounds ([512 x [512 x i64]], [512 x [512\l... x i64]]* @C, i64 0, i64 511, i64 511), align 8, !dbg !26\l  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([49 x\l... i8], [49 x i8]* @.str.2, i64 0, i64 0), i32 512, i32 512, i64 %0) #3, !dbg !27\l  ret i32 0, !dbg !28\l}"];
 	colorscheme = "paired12"
-        subgraph cluster_0x4f61e40 {
+        subgraph cluster_0x50e5540 {
           label = "MatrixMult.c:51-56
 ";
           style = solid;
           color = 1
-          Node0x4f67110;
-          Node0x4f61150;
+          Node0x50d4040;
+          Node0x50e3560;
         }
 }

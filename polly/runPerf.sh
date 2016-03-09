@@ -1,8 +1,9 @@
 #!/bin/bash
 TIMEOUT="1800s"
-export POLLY_BUILD_DIR="$HOME/polly/llvm_build"
-export CPPFLAGS="-Xclang -load -Xclang ${POLLY_BUILD_DIR}/lib/LLVMPolly.so"
-
+export PATH_TO_POLLY_LIB="$HOME/polly/llvm_build/lib"
+export CPPFLAGS="-Xclang -load -Xclang ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
+alias opt="opt -load ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
+alias pollycc="clang -Xclang -load -Xclang ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
 
 init(){
 	program=$1
@@ -50,16 +51,30 @@ runPolly(){
 	case "$compiler" in
 		"polly")
 			echo "Run Polly-optimized code on $parameter with $num_threads threads..." > $result
-			clang $CPPFLAGS -include Util.c -O3 -mllvm -polly -mllvm -polly-process-unprofitable $program.c -o "out/$program.$compiler.out"
+			pollycc -include Util.c -O3 -mllvm -polly -mllvm -polly-process-unprofitable $program.c -o "out/$program.$compiler.out"
 			;;
 		"vector")
 			echo "Run Strip mining Vectorized code on $parameter with $num_threads threads..." > $result
-			clang $CPPFLAGS -include Util.c -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine -mllvm -polly-process-unprofitable $program.c -o "out/$program.$compiler.out"
+			pollycc -include Util.c -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine -mllvm -polly-process-unprofitable $program.c -o "out/$program.$compiler.out"
 			;;
 		"openmp")
 			export OMP_NUM_THREADS=$num_threads
 			echo "Run OpenMP code on $parameter with $OMP_NUM_THREADS threads..." > $result
-			clang $CPPFLAGS -include Util.c -O3 -mllvm -polly -mllvm -polly-parallel -mllvm -polly-process-unprofitable -lgomp $program.c -o "out/$program.$compiler.out"
+			pollycc -include Util.c -O3 -mllvm -polly -mllvm -polly-parallel -mllvm -polly-process-unprofitable -lgomp $program.c -o "out/$program.$compiler.out"
+			;;
+		"optisl")
+			echo "Run Optimized Schedule + Strip mining + (1st + 2nd) loop tilting code on $parameter with $num_threads threads..." > $result
+			clang -fno-vectorize -g -S -emit-llvm $program.c -o $program.s
+			opt -S -polly-canonicalize -polly-report $program.s > $program.preopt.ll
+			opt -polly-ast -polly-opt-isl -polly-vectorizer=stripmine -polly-tiling -polly-2nd-level-tiling\
+ 	    		-basicaa -polly-prepare -polly-codegen -polly-report $program.preopt.ll\
+ 	    		-S -o $program.optisl.before.ll\
+        		&&opt -O3 $program.optisl.before.ll -S -o $program.optisl.ll
+				### Use 'llc' to compile LLVM code into assembly code
+   				llc $program.optisl.ll -o $program.optisl.s
+    			### Use 'gcc' to compile .s file and link with 'libUtil.a'
+    			clang $program.optisl.s -o "out/$program.optisl.out"
+    		rm -rf $program.s $program.optisl.s $program.preopt.ll $program.optisl.ll
 			;;	
 	esac
 
@@ -96,10 +111,11 @@ exec(){
 
 init MatrixAdd
 #### Handwritten MatrixAdd 
-exec handwritten MatrixAdd 1024X1024 gcc 1
-exec handwritten MatrixAdd 1024X1024 polly 1
-exec handwritten MatrixAdd 1024X1024 vector 1
-exec handwritten MatrixAdd 1024X1024 openmp 1
-exec handwritten MatrixAdd 1024X1024 openmp 2
-exec handwritten MatrixAdd 1024X1024 openmp 4
-exec handwritten MatrixAdd 1024X1024 openmp 8
+exec handwritten MatrixAdd 1024X1024X100 gcc 1
+exec handwritten MatrixAdd 1024X1024X100 polly 1
+exec handwritten MatrixAdd 1024X1024X100 vector 1
+exec handwritten MatrixAdd 1024X1024X100 optisl 1
+exec handwritten MatrixAdd 1024X1024X100 openmp 1
+exec handwritten MatrixAdd 1024X1024X100 openmp 2
+exec handwritten MatrixAdd 1024X1024X100 openmp 4
+#exec handwritten MatrixAdd 1024X1024X100 openmp 8

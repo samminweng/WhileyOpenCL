@@ -1,4 +1,4 @@
-; ModuleID = 'MatrixAdd.s'
+; ModuleID = 'MatrixAdd.preopt.ll'
 target datalayout = "e-m:e-i64:64-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
 
@@ -16,17 +16,20 @@ target triple = "x86_64-unknown-linux-gnu"
 ; Function Attrs: nounwind uwtable
 define void @init_array() #0 !dbg !4 {
 entry:
+  br label %entry.split1, !dbg !24
+
+entry.split1:                                     ; preds = %entry
   br label %entry.split, !dbg !24
 
-entry.split:                                      ; preds = %entry
+entry.split:                                      ; preds = %entry.split1
   tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !25, metadata !26), !dbg !24
   br label %for.cond1.preheader, !dbg !27
 
-for.cond1.preheader:                              ; preds = %entry.split, %for.inc10
+for.cond1.preheader:                              ; preds = %for.inc10, %entry.split
   %indvars.iv3 = phi i64 [ 0, %entry.split ], [ %indvars.iv.next4, %for.inc10 ]
   br label %for.body3, !dbg !31
 
-for.body3:                                        ; preds = %for.cond1.preheader, %for.body3
+for.body3:                                        ; preds = %for.body3, %for.cond1.preheader
   %indvars.iv = phi i64 [ 0, %for.cond1.preheader ], [ %indvars.iv.next, %for.body3 ]
   %arrayidx5 = getelementptr inbounds [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 %indvars.iv, !dbg !36
   store i64 1, i64* %arrayidx5, align 8, !dbg !38
@@ -51,19 +54,25 @@ for.end12:                                        ; preds = %for.inc10
 declare void @llvm.dbg.declare(metadata, metadata, metadata) #1
 
 ; Function Attrs: nounwind uwtable
-define void @mat_add() #0 !dbg !7 {
+define void @mat_add() #2 !dbg !7 {
 entry:
+  br label %entry.split1, !dbg !44
+
+entry.split1:                                     ; preds = %entry
   br label %entry.split, !dbg !44
 
-entry.split:                                      ; preds = %entry
+entry.split:                                      ; preds = %entry.split1
   tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !45, metadata !26), !dbg !44
-  br label %for.cond1.preheader, !dbg !46
+  br label %polly.split_new_and_old, !dbg !46
 
-for.cond1.preheader:                              ; preds = %entry.split, %for.inc14
-  %indvars.iv3 = phi i64 [ 0, %entry.split ], [ %indvars.iv.next4, %for.inc14 ]
+polly.split_new_and_old:                          ; preds = %entry.split
+  br i1 true, label %polly.start, label %for.cond1.preheader
+
+for.cond1.preheader:                              ; preds = %polly.split_new_and_old, %for.inc14
+  %indvars.iv3 = phi i64 [ %indvars.iv.next4, %for.inc14 ], [ 0, %polly.split_new_and_old ]
   br label %for.body3, !dbg !50
 
-for.body3:                                        ; preds = %for.cond1.preheader, %for.body3
+for.body3:                                        ; preds = %for.body3, %for.cond1.preheader
   %indvars.iv = phi i64 [ 0, %for.cond1.preheader ], [ %indvars.iv.next, %for.body3 ]
   %arrayidx5 = getelementptr inbounds [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 %indvars.iv, !dbg !55
   %0 = load i64, i64* %arrayidx5, align 8, !dbg !55
@@ -81,91 +90,146 @@ for.inc14:                                        ; preds = %for.body3
   %indvars.iv.next4 = add nuw nsw i64 %indvars.iv3, 1, !dbg !46
   tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !45, metadata !26), !dbg !44
   %exitcond5 = icmp ne i64 %indvars.iv.next4, 10240, !dbg !46
-  br i1 %exitcond5, label %for.cond1.preheader, label %for.end16, !dbg !46
+  br i1 %exitcond5, label %for.cond1.preheader, label %polly.merge_new_and_old, !dbg !46
 
-for.end16:                                        ; preds = %for.inc14
+polly.merge_new_and_old:                          ; preds = %polly.exiting, %for.inc14
+  br label %for.end16, !dbg !63
+
+for.end16:                                        ; preds = %polly.merge_new_and_old
   ret void, !dbg !63
+
+polly.start:                                      ; preds = %polly.split_new_and_old
+  br label %polly.loop_preheader
+
+polly.loop_exit:                                  ; preds = %polly.loop_exit4
+  br label %polly.exiting
+
+polly.exiting:                                    ; preds = %polly.loop_exit
+  br label %polly.merge_new_and_old
+
+polly.loop_header:                                ; preds = %polly.loop_exit4, %polly.loop_preheader
+  %polly.indvar = phi i64 [ 0, %polly.loop_preheader ], [ %polly.indvar_next, %polly.loop_exit4 ]
+  br label %polly.loop_preheader3
+
+polly.loop_exit4:                                 ; preds = %polly.stmt.for.body3
+  %polly.indvar_next = add nsw i64 %polly.indvar, 1
+  %polly.loop_cond = icmp sle i64 %polly.indvar, 10238
+  br i1 %polly.loop_cond, label %polly.loop_header, label %polly.loop_exit, !llvm.loop !64
+
+polly.loop_preheader:                             ; preds = %polly.start
+  br label %polly.loop_header
+
+polly.loop_header2:                               ; preds = %polly.stmt.for.body3, %polly.loop_preheader3
+  %polly.indvar5 = phi i64 [ 0, %polly.loop_preheader3 ], [ %polly.indvar_next6, %polly.stmt.for.body3 ]
+  br label %polly.stmt.for.body3
+
+polly.stmt.for.body3:                             ; preds = %polly.loop_header2
+  %scevgep8 = getelementptr i64, i64* %scevgep, i64 %polly.indvar5
+  %_p_scalar_ = load i64, i64* %scevgep8, align 8, !alias.scope !65, !noalias !67, !llvm.mem.parallel_loop_access !64
+  %scevgep10 = getelementptr i64, i64* %scevgep9, i64 %polly.indvar5
+  %_p_scalar_11 = load i64, i64* %scevgep10, align 8, !alias.scope !68, !noalias !70, !llvm.mem.parallel_loop_access !64
+  %p_add = add nsw i64 %_p_scalar_11, %_p_scalar_, !dbg !58
+  %scevgep13 = getelementptr i64, i64* %scevgep12, i64 %polly.indvar5
+  store i64 %p_add, i64* %scevgep13, align 8, !alias.scope !69, !noalias !71, !llvm.mem.parallel_loop_access !64
+  %2 = add i64 %polly.indvar5, 1
+  %p_exitcond = icmp ne i64 %2, 10240, !dbg !50
+  %polly.indvar_next6 = add nsw i64 %polly.indvar5, 1
+  %polly.loop_cond7 = icmp sle i64 %polly.indvar5, 10238
+  br i1 %polly.loop_cond7, label %polly.loop_header2, label %polly.loop_exit4
+
+polly.loop_preheader3:                            ; preds = %polly.loop_header
+  %scevgep = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %polly.indvar, i64 0
+  %scevgep9 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %polly.indvar, i64 0
+  %scevgep12 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %polly.indvar, i64 0
+  br label %polly.loop_header2
 }
 
 ; Function Attrs: nounwind uwtable
 define void @print_array() #0 !dbg !8 {
 entry:
-  br label %entry.split, !dbg !64
+  br label %entry.split1, !dbg !72
 
-entry.split:                                      ; preds = %entry
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !65, metadata !26), !dbg !64
-  br label %for.cond1.preheader, !dbg !66
+entry.split1:                                     ; preds = %entry
+  br label %entry.split, !dbg !72
 
-for.cond1.preheader:                              ; preds = %entry.split, %for.end
+entry.split:                                      ; preds = %entry.split1
+  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !73, metadata !26), !dbg !72
+  br label %for.cond1.preheader, !dbg !74
+
+for.cond1.preheader:                              ; preds = %for.end, %entry.split
   %indvars.iv6 = phi i64 [ 0, %entry.split ], [ %indvars.iv.next7, %for.end ]
-  %0 = load %struct._IO_FILE*, %struct._IO_FILE** @stdout, align 8, !dbg !70
-  br label %for.body3, !dbg !75
+  %0 = load %struct._IO_FILE*, %struct._IO_FILE** @stdout, align 8, !dbg !78
+  br label %for.body3, !dbg !83
 
-for.body3:                                        ; preds = %for.cond1.preheader, %for.inc
+for.body3:                                        ; preds = %for.inc, %for.cond1.preheader
   %indvars.iv = phi i64 [ 0, %for.cond1.preheader ], [ %indvars.iv.next, %for.inc ]
   %1 = phi %struct._IO_FILE* [ %0, %for.cond1.preheader ], [ %5, %for.inc ]
-  %arrayidx5 = getelementptr inbounds [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %indvars.iv6, i64 %indvars.iv, !dbg !77
-  %2 = load i64, i64* %arrayidx5, align 8, !dbg !77
-  %call = tail call i32 (%struct._IO_FILE*, i8*, ...) @fprintf(%struct._IO_FILE* %1, i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str, i64 0, i64 0), i64 %2) #3, !dbg !78
-  %3 = trunc i64 %indvars.iv to i32, !dbg !79
-  %rem = srem i32 %3, 80, !dbg !79
-  %cmp6 = icmp eq i32 %rem, 79, !dbg !81
-  br i1 %cmp6, label %if.then, label %for.inc, !dbg !82
+  %arrayidx5 = getelementptr inbounds [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %indvars.iv6, i64 %indvars.iv, !dbg !85
+  %2 = load i64, i64* %arrayidx5, align 8, !dbg !85
+  %call = tail call i32 (%struct._IO_FILE*, i8*, ...) @fprintf(%struct._IO_FILE* %1, i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str, i64 0, i64 0), i64 %2) #4, !dbg !86
+  %3 = trunc i64 %indvars.iv to i32, !dbg !87
+  %rem = srem i32 %3, 80, !dbg !87
+  %cmp6 = icmp eq i32 %rem, 79, !dbg !89
+  br i1 %cmp6, label %if.then, label %for.inc, !dbg !90
 
 if.then:                                          ; preds = %for.body3
-  %4 = load %struct._IO_FILE*, %struct._IO_FILE** @stdout, align 8, !dbg !83
-  %fputc3 = tail call i32 @fputc(i32 10, %struct._IO_FILE* %4), !dbg !85
-  br label %for.inc, !dbg !85
+  %4 = load %struct._IO_FILE*, %struct._IO_FILE** @stdout, align 8, !dbg !91
+  %fputc3 = tail call i32 @fputc(i32 10, %struct._IO_FILE* %4), !dbg !93
+  br label %for.inc, !dbg !93
 
-for.inc:                                          ; preds = %for.body3, %if.then
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !75
-  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !86, metadata !26), !dbg !87
-  %5 = load %struct._IO_FILE*, %struct._IO_FILE** @stdout, align 8, !dbg !70
-  %exitcond = icmp ne i64 %indvars.iv.next, 10240, !dbg !75
-  br i1 %exitcond, label %for.body3, label %for.end, !dbg !75
+for.inc:                                          ; preds = %if.then, %for.body3
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !83
+  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !94, metadata !26), !dbg !95
+  %5 = load %struct._IO_FILE*, %struct._IO_FILE** @stdout, align 8, !dbg !78
+  %exitcond = icmp ne i64 %indvars.iv.next, 10240, !dbg !83
+  br i1 %exitcond, label %for.body3, label %for.end, !dbg !83
 
 for.end:                                          ; preds = %for.inc
   %.lcssa = phi %struct._IO_FILE* [ %5, %for.inc ]
-  %fputc = tail call i32 @fputc(i32 10, %struct._IO_FILE* %.lcssa), !dbg !88
-  %indvars.iv.next7 = add nuw nsw i64 %indvars.iv6, 1, !dbg !66
-  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !65, metadata !26), !dbg !64
-  %exitcond8 = icmp ne i64 %indvars.iv.next7, 10240, !dbg !66
-  br i1 %exitcond8, label %for.cond1.preheader, label %for.end11, !dbg !66
+  %fputc = tail call i32 @fputc(i32 10, %struct._IO_FILE* %.lcssa), !dbg !96
+  %indvars.iv.next7 = add nuw nsw i64 %indvars.iv6, 1, !dbg !74
+  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !73, metadata !26), !dbg !72
+  %exitcond8 = icmp ne i64 %indvars.iv.next7, 10240, !dbg !74
+  br i1 %exitcond8, label %for.cond1.preheader, label %for.end11, !dbg !74
 
 for.end11:                                        ; preds = %for.end
-  ret void, !dbg !89
+  ret void, !dbg !97
 }
 
-declare i32 @fprintf(%struct._IO_FILE*, i8*, ...) #2
+declare i32 @fprintf(%struct._IO_FILE*, i8*, ...) #3
 
 ; Function Attrs: nounwind uwtable
 define i32 @main() #0 !dbg !9 {
 entry:
-  br label %entry.split, !dbg !90
+  br label %entry.split1, !dbg !98
 
-entry.split:                                      ; preds = %entry
-  tail call void @init_array(), !dbg !90
-  tail call void @mat_add(), !dbg !91
-  %0 = load i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 10239, i64 10239), align 8, !dbg !92
-  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([51 x i8], [51 x i8]* @.str.2, i64 0, i64 0), i32 10240, i32 10240, i32 10239, i32 10239, i64 %0) #3, !dbg !93
-  ret i32 0, !dbg !94
+entry.split1:                                     ; preds = %entry
+  br label %entry.split, !dbg !98
+
+entry.split:                                      ; preds = %entry.split1
+  tail call void @init_array(), !dbg !98
+  tail call void @mat_add(), !dbg !99
+  %0 = load i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 10239, i64 10239), align 8, !dbg !100
+  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([51 x i8], [51 x i8]* @.str.2, i64 0, i64 0), i32 10240, i32 10240, i32 10239, i32 10239, i64 %0) #4, !dbg !101
+  ret i32 0, !dbg !102
 }
 
-declare i32 @printf(i8*, ...) #2
+declare i32 @printf(i8*, ...) #3
 
 ; Function Attrs: nounwind readnone
 declare void @llvm.dbg.value(metadata, i64, metadata, metadata) #1
 
 ; Function Attrs: nounwind
-declare i64 @fwrite(i8* nocapture, i64, i64, %struct._IO_FILE* nocapture) #3
+declare i64 @fwrite(i8* nocapture, i64, i64, %struct._IO_FILE* nocapture) #4
 
 ; Function Attrs: nounwind
-declare i32 @fputc(i32, %struct._IO_FILE* nocapture) #3
+declare i32 @fputc(i32, %struct._IO_FILE* nocapture) #4
 
 attributes #0 = { nounwind uwtable "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2" "unsafe-fp-math"="false" "use-soft-float"="false" }
 attributes #1 = { nounwind readnone }
-attributes #2 = { "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2" "unsafe-fp-math"="false" "use-soft-float"="false" }
-attributes #3 = { nounwind }
+attributes #2 = { nounwind uwtable "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "polly-optimized" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #3 = { "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #4 = { nounwind }
 
 !llvm.dbg.cu = !{!0}
 !llvm.module.flags = !{!21, !22}
@@ -235,34 +299,42 @@ attributes #3 = { nounwind }
 !61 = !DILocalVariable(name: "j", scope: !7, file: !1, line: 20, type: !12)
 !62 = !DILocation(line: 20, column: 12, scope: !7)
 !63 = !DILocation(line: 27, column: 1, scope: !7)
-!64 = !DILocation(line: 31, column: 9, scope: !8)
-!65 = !DILocalVariable(name: "i", scope: !8, file: !1, line: 31, type: !12)
-!66 = !DILocation(line: 33, column: 5, scope: !67)
-!67 = !DILexicalBlockFile(scope: !68, file: !1, discriminator: 1)
-!68 = distinct !DILexicalBlock(scope: !69, file: !1, line: 33, column: 5)
-!69 = distinct !DILexicalBlock(scope: !8, file: !1, line: 33, column: 5)
-!70 = !DILocation(line: 35, column: 21, scope: !71)
-!71 = distinct !DILexicalBlock(scope: !72, file: !1, line: 34, column: 29)
-!72 = distinct !DILexicalBlock(scope: !73, file: !1, line: 34, column: 9)
-!73 = distinct !DILexicalBlock(scope: !74, file: !1, line: 34, column: 9)
-!74 = distinct !DILexicalBlock(scope: !68, file: !1, line: 33, column: 25)
-!75 = !DILocation(line: 34, column: 9, scope: !76)
-!76 = !DILexicalBlockFile(scope: !72, file: !1, discriminator: 1)
-!77 = !DILocation(line: 35, column: 38, scope: !71)
-!78 = !DILocation(line: 35, column: 13, scope: !71)
-!79 = !DILocation(line: 36, column: 18, scope: !80)
-!80 = distinct !DILexicalBlock(scope: !71, file: !1, line: 36, column: 17)
-!81 = !DILocation(line: 36, column: 22, scope: !80)
-!82 = !DILocation(line: 36, column: 17, scope: !71)
-!83 = !DILocation(line: 36, column: 37, scope: !84)
+!64 = distinct !{!64}
+!65 = distinct !{!65, !66, !"polly.alias.scope.A"}
+!66 = distinct !{!66, !"polly.alias.scope.domain"}
+!67 = !{!68, !69}
+!68 = distinct !{!68, !66, !"polly.alias.scope.B"}
+!69 = distinct !{!69, !66, !"polly.alias.scope.C"}
+!70 = !{!69, !65}
+!71 = !{!68, !65}
+!72 = !DILocation(line: 31, column: 9, scope: !8)
+!73 = !DILocalVariable(name: "i", scope: !8, file: !1, line: 31, type: !12)
+!74 = !DILocation(line: 33, column: 5, scope: !75)
+!75 = !DILexicalBlockFile(scope: !76, file: !1, discriminator: 1)
+!76 = distinct !DILexicalBlock(scope: !77, file: !1, line: 33, column: 5)
+!77 = distinct !DILexicalBlock(scope: !8, file: !1, line: 33, column: 5)
+!78 = !DILocation(line: 35, column: 21, scope: !79)
+!79 = distinct !DILexicalBlock(scope: !80, file: !1, line: 34, column: 29)
+!80 = distinct !DILexicalBlock(scope: !81, file: !1, line: 34, column: 9)
+!81 = distinct !DILexicalBlock(scope: !82, file: !1, line: 34, column: 9)
+!82 = distinct !DILexicalBlock(scope: !76, file: !1, line: 33, column: 25)
+!83 = !DILocation(line: 34, column: 9, scope: !84)
 !84 = !DILexicalBlockFile(scope: !80, file: !1, discriminator: 1)
-!85 = !DILocation(line: 36, column: 29, scope: !84)
-!86 = !DILocalVariable(name: "j", scope: !8, file: !1, line: 31, type: !12)
-!87 = !DILocation(line: 31, column: 12, scope: !8)
-!88 = !DILocation(line: 38, column: 9, scope: !74)
-!89 = !DILocation(line: 40, column: 1, scope: !8)
-!90 = !DILocation(line: 49, column: 5, scope: !9)
-!91 = !DILocation(line: 50, column: 5, scope: !9)
-!92 = !DILocation(line: 53, column: 83, scope: !9)
-!93 = !DILocation(line: 53, column: 5, scope: !9)
-!94 = !DILocation(line: 54, column: 5, scope: !9)
+!85 = !DILocation(line: 35, column: 38, scope: !79)
+!86 = !DILocation(line: 35, column: 13, scope: !79)
+!87 = !DILocation(line: 36, column: 18, scope: !88)
+!88 = distinct !DILexicalBlock(scope: !79, file: !1, line: 36, column: 17)
+!89 = !DILocation(line: 36, column: 22, scope: !88)
+!90 = !DILocation(line: 36, column: 17, scope: !79)
+!91 = !DILocation(line: 36, column: 37, scope: !92)
+!92 = !DILexicalBlockFile(scope: !88, file: !1, discriminator: 1)
+!93 = !DILocation(line: 36, column: 29, scope: !92)
+!94 = !DILocalVariable(name: "j", scope: !8, file: !1, line: 31, type: !12)
+!95 = !DILocation(line: 31, column: 12, scope: !8)
+!96 = !DILocation(line: 38, column: 9, scope: !82)
+!97 = !DILocation(line: 40, column: 1, scope: !8)
+!98 = !DILocation(line: 49, column: 5, scope: !9)
+!99 = !DILocation(line: 50, column: 5, scope: !9)
+!100 = !DILocation(line: 53, column: 83, scope: !9)
+!101 = !DILocation(line: 53, column: 5, scope: !9)
+!102 = !DILocation(line: 54, column: 5, scope: !9)

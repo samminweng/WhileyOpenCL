@@ -5,9 +5,9 @@ target triple = "x86_64-unknown-linux-gnu"
 %struct._IO_FILE = type { i32, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, %struct._IO_marker*, %struct._IO_FILE*, i32, i32, i64, i16, i8, [1 x i8], i8*, i64, i8*, i8*, i8*, i8*, i64, i32, [20 x i8] }
 %struct._IO_marker = type { %struct._IO_marker*, %struct._IO_FILE*, i32 }
 
-@A = common global [1024 x [1024 x i64]] zeroinitializer, align 16
-@B = common global [1024 x [1024 x i64]] zeroinitializer, align 16
-@C = common global [1024 x [1024 x i64]] zeroinitializer, align 16
+@A = common global [10240 x [10240 x i64]] zeroinitializer, align 16
+@B = common global [10240 x [10240 x i64]] zeroinitializer, align 16
+@C = common global [10240 x [10240 x i64]] zeroinitializer, align 16
 @stdout = external global %struct._IO_FILE*, align 8
 @.str = private unnamed_addr constant [6 x i8] c"%lld \00", align 1
 @.str.2 = private unnamed_addr constant [51 x i8] c"Pass %d X %d matrix test case (C[%d][%d] =%lld) \0A \00", align 1
@@ -27,38 +27,38 @@ vector.ph:                                        ; preds = %for.inc10, %entry.s
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next.1, %vector.body ], !dbg !31
-  %0 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 %index, !dbg !36
+  %0 = getelementptr inbounds [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 %index, !dbg !36
   %1 = bitcast i64* %0 to <2 x i64>*, !dbg !38
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %1, align 16, !dbg !38
   %2 = getelementptr i64, i64* %0, i64 2, !dbg !38
   %3 = bitcast i64* %2 to <2 x i64>*, !dbg !38
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %3, align 16, !dbg !38
-  %4 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %indvars.iv3, i64 %index, !dbg !39
+  %4 = getelementptr inbounds [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %indvars.iv3, i64 %index, !dbg !39
   %5 = bitcast i64* %4 to <2 x i64>*, !dbg !40
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %5, align 16, !dbg !40
   %6 = getelementptr i64, i64* %4, i64 2, !dbg !40
   %7 = bitcast i64* %6 to <2 x i64>*, !dbg !40
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %7, align 16, !dbg !40
   %index.next = or i64 %index, 4, !dbg !31
-  %8 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 %index.next, !dbg !36
+  %8 = getelementptr inbounds [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 %index.next, !dbg !36
   %9 = bitcast i64* %8 to <2 x i64>*, !dbg !38
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %9, align 16, !dbg !38
   %10 = getelementptr i64, i64* %8, i64 2, !dbg !38
   %11 = bitcast i64* %10 to <2 x i64>*, !dbg !38
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %11, align 16, !dbg !38
-  %12 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %indvars.iv3, i64 %index.next, !dbg !39
+  %12 = getelementptr inbounds [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %indvars.iv3, i64 %index.next, !dbg !39
   %13 = bitcast i64* %12 to <2 x i64>*, !dbg !40
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %13, align 16, !dbg !40
   %14 = getelementptr i64, i64* %12, i64 2, !dbg !40
   %15 = bitcast i64* %14 to <2 x i64>*, !dbg !40
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %15, align 16, !dbg !40
   %index.next.1 = add nsw i64 %index, 8, !dbg !31
-  %16 = icmp eq i64 %index.next.1, 1024, !dbg !31
+  %16 = icmp eq i64 %index.next.1, 10240, !dbg !31
   br i1 %16, label %for.inc10, label %vector.body, !dbg !31, !llvm.loop !41
 
 for.inc10:                                        ; preds = %vector.body
   %indvars.iv.next4 = add nuw nsw i64 %indvars.iv3, 1, !dbg !27
-  %exitcond5 = icmp eq i64 %indvars.iv.next4, 1024, !dbg !27
+  %exitcond5 = icmp eq i64 %indvars.iv.next4, 10240, !dbg !27
   br i1 %exitcond5, label %for.end12, label %vector.ph, !dbg !27
 
 for.end12:                                        ; preds = %for.inc10
@@ -82,12 +82,12 @@ polly.exiting:                                    ; preds = %polly.merge_new_and
 
 polly.loop_exit3:                                 ; preds = %polly.loop_exit9
   %polly.indvar_next = add nuw nsw i64 %polly.indvar, 1
-  %exitcond28 = icmp eq i64 %polly.indvar_next, 32
+  %exitcond28 = icmp eq i64 %polly.indvar_next, 320
   br i1 %exitcond28, label %polly.merge_new_and_old, label %polly.loop_preheader2, !llvm.loop !48
 
 polly.loop_exit9:                                 ; preds = %polly.loop_preheader14
   %polly.indvar_next5 = add nuw nsw i64 %polly.indvar4, 1
-  %exitcond27 = icmp eq i64 %polly.indvar_next5, 32
+  %exitcond27 = icmp eq i64 %polly.indvar_next5, 320
   br i1 %exitcond27, label %polly.loop_exit3, label %polly.loop_preheader8
 
 polly.split_new_and_old:                          ; preds = %entry.split
@@ -113,84 +113,84 @@ polly.loop_preheader8:                            ; preds = %polly.loop_exit9, %
 polly.loop_preheader14:                           ; preds = %polly.loop_preheader14, %polly.loop_preheader8
   %polly.indvar10 = phi i64 [ 0, %polly.loop_preheader8 ], [ %polly.indvar_next11, %polly.loop_preheader14 ]
   %9 = add nuw nsw i64 %polly.indvar10, %0
-  %scevgep = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %9, i64 %1
+  %scevgep = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %9, i64 %1
   %vector_ptr = bitcast i64* %scevgep to <4 x i64>*
   %_p_vec_full = load <4 x i64>, <4 x i64>* %vector_ptr, align 16, !alias.scope !49, !noalias !51, !llvm.mem.parallel_loop_access !48
-  %scevgep19 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %9, i64 %1
+  %scevgep19 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %9, i64 %1
   %vector_ptr20 = bitcast i64* %scevgep19 to <4 x i64>*
   %_p_vec_full21 = load <4 x i64>, <4 x i64>* %vector_ptr20, align 16, !alias.scope !53, !noalias !54, !llvm.mem.parallel_loop_access !48
   %addp_vec = add <4 x i64> %_p_vec_full21, %_p_vec_full
-  %scevgep22 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %9, i64 %1
+  %scevgep22 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %9, i64 %1
   %vector_ptr23 = bitcast i64* %scevgep22 to <4 x i64>*
   store <4 x i64> %addp_vec, <4 x i64>* %vector_ptr23, align 16, !alias.scope !52, !noalias !55, !llvm.mem.parallel_loop_access !48
-  %scevgep.1 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %9, i64 %2
+  %scevgep.1 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %9, i64 %2
   %vector_ptr.1 = bitcast i64* %scevgep.1 to <4 x i64>*
   %_p_vec_full.1 = load <4 x i64>, <4 x i64>* %vector_ptr.1, align 16, !alias.scope !49, !noalias !51, !llvm.mem.parallel_loop_access !48
-  %scevgep19.1 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %9, i64 %2
+  %scevgep19.1 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %9, i64 %2
   %vector_ptr20.1 = bitcast i64* %scevgep19.1 to <4 x i64>*
   %_p_vec_full21.1 = load <4 x i64>, <4 x i64>* %vector_ptr20.1, align 16, !alias.scope !53, !noalias !54, !llvm.mem.parallel_loop_access !48
   %addp_vec.1 = add <4 x i64> %_p_vec_full21.1, %_p_vec_full.1
-  %scevgep22.1 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %9, i64 %2
+  %scevgep22.1 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %9, i64 %2
   %vector_ptr23.1 = bitcast i64* %scevgep22.1 to <4 x i64>*
   store <4 x i64> %addp_vec.1, <4 x i64>* %vector_ptr23.1, align 16, !alias.scope !52, !noalias !55, !llvm.mem.parallel_loop_access !48
-  %scevgep.2 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %9, i64 %3
+  %scevgep.2 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %9, i64 %3
   %vector_ptr.2 = bitcast i64* %scevgep.2 to <4 x i64>*
   %_p_vec_full.2 = load <4 x i64>, <4 x i64>* %vector_ptr.2, align 16, !alias.scope !49, !noalias !51, !llvm.mem.parallel_loop_access !48
-  %scevgep19.2 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %9, i64 %3
+  %scevgep19.2 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %9, i64 %3
   %vector_ptr20.2 = bitcast i64* %scevgep19.2 to <4 x i64>*
   %_p_vec_full21.2 = load <4 x i64>, <4 x i64>* %vector_ptr20.2, align 16, !alias.scope !53, !noalias !54, !llvm.mem.parallel_loop_access !48
   %addp_vec.2 = add <4 x i64> %_p_vec_full21.2, %_p_vec_full.2
-  %scevgep22.2 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %9, i64 %3
+  %scevgep22.2 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %9, i64 %3
   %vector_ptr23.2 = bitcast i64* %scevgep22.2 to <4 x i64>*
   store <4 x i64> %addp_vec.2, <4 x i64>* %vector_ptr23.2, align 16, !alias.scope !52, !noalias !55, !llvm.mem.parallel_loop_access !48
-  %scevgep.3 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %9, i64 %4
+  %scevgep.3 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %9, i64 %4
   %vector_ptr.3 = bitcast i64* %scevgep.3 to <4 x i64>*
   %_p_vec_full.3 = load <4 x i64>, <4 x i64>* %vector_ptr.3, align 16, !alias.scope !49, !noalias !51, !llvm.mem.parallel_loop_access !48
-  %scevgep19.3 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %9, i64 %4
+  %scevgep19.3 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %9, i64 %4
   %vector_ptr20.3 = bitcast i64* %scevgep19.3 to <4 x i64>*
   %_p_vec_full21.3 = load <4 x i64>, <4 x i64>* %vector_ptr20.3, align 16, !alias.scope !53, !noalias !54, !llvm.mem.parallel_loop_access !48
   %addp_vec.3 = add <4 x i64> %_p_vec_full21.3, %_p_vec_full.3
-  %scevgep22.3 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %9, i64 %4
+  %scevgep22.3 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %9, i64 %4
   %vector_ptr23.3 = bitcast i64* %scevgep22.3 to <4 x i64>*
   store <4 x i64> %addp_vec.3, <4 x i64>* %vector_ptr23.3, align 16, !alias.scope !52, !noalias !55, !llvm.mem.parallel_loop_access !48
-  %scevgep.4 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %9, i64 %5
+  %scevgep.4 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %9, i64 %5
   %vector_ptr.4 = bitcast i64* %scevgep.4 to <4 x i64>*
   %_p_vec_full.4 = load <4 x i64>, <4 x i64>* %vector_ptr.4, align 16, !alias.scope !49, !noalias !51, !llvm.mem.parallel_loop_access !48
-  %scevgep19.4 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %9, i64 %5
+  %scevgep19.4 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %9, i64 %5
   %vector_ptr20.4 = bitcast i64* %scevgep19.4 to <4 x i64>*
   %_p_vec_full21.4 = load <4 x i64>, <4 x i64>* %vector_ptr20.4, align 16, !alias.scope !53, !noalias !54, !llvm.mem.parallel_loop_access !48
   %addp_vec.4 = add <4 x i64> %_p_vec_full21.4, %_p_vec_full.4
-  %scevgep22.4 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %9, i64 %5
+  %scevgep22.4 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %9, i64 %5
   %vector_ptr23.4 = bitcast i64* %scevgep22.4 to <4 x i64>*
   store <4 x i64> %addp_vec.4, <4 x i64>* %vector_ptr23.4, align 16, !alias.scope !52, !noalias !55, !llvm.mem.parallel_loop_access !48
-  %scevgep.5 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %9, i64 %6
+  %scevgep.5 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %9, i64 %6
   %vector_ptr.5 = bitcast i64* %scevgep.5 to <4 x i64>*
   %_p_vec_full.5 = load <4 x i64>, <4 x i64>* %vector_ptr.5, align 16, !alias.scope !49, !noalias !51, !llvm.mem.parallel_loop_access !48
-  %scevgep19.5 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %9, i64 %6
+  %scevgep19.5 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %9, i64 %6
   %vector_ptr20.5 = bitcast i64* %scevgep19.5 to <4 x i64>*
   %_p_vec_full21.5 = load <4 x i64>, <4 x i64>* %vector_ptr20.5, align 16, !alias.scope !53, !noalias !54, !llvm.mem.parallel_loop_access !48
   %addp_vec.5 = add <4 x i64> %_p_vec_full21.5, %_p_vec_full.5
-  %scevgep22.5 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %9, i64 %6
+  %scevgep22.5 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %9, i64 %6
   %vector_ptr23.5 = bitcast i64* %scevgep22.5 to <4 x i64>*
   store <4 x i64> %addp_vec.5, <4 x i64>* %vector_ptr23.5, align 16, !alias.scope !52, !noalias !55, !llvm.mem.parallel_loop_access !48
-  %scevgep.6 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %9, i64 %7
+  %scevgep.6 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %9, i64 %7
   %vector_ptr.6 = bitcast i64* %scevgep.6 to <4 x i64>*
   %_p_vec_full.6 = load <4 x i64>, <4 x i64>* %vector_ptr.6, align 16, !alias.scope !49, !noalias !51, !llvm.mem.parallel_loop_access !48
-  %scevgep19.6 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %9, i64 %7
+  %scevgep19.6 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %9, i64 %7
   %vector_ptr20.6 = bitcast i64* %scevgep19.6 to <4 x i64>*
   %_p_vec_full21.6 = load <4 x i64>, <4 x i64>* %vector_ptr20.6, align 16, !alias.scope !53, !noalias !54, !llvm.mem.parallel_loop_access !48
   %addp_vec.6 = add <4 x i64> %_p_vec_full21.6, %_p_vec_full.6
-  %scevgep22.6 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %9, i64 %7
+  %scevgep22.6 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %9, i64 %7
   %vector_ptr23.6 = bitcast i64* %scevgep22.6 to <4 x i64>*
   store <4 x i64> %addp_vec.6, <4 x i64>* %vector_ptr23.6, align 16, !alias.scope !52, !noalias !55, !llvm.mem.parallel_loop_access !48
-  %scevgep.7 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %9, i64 %8
+  %scevgep.7 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %9, i64 %8
   %vector_ptr.7 = bitcast i64* %scevgep.7 to <4 x i64>*
   %_p_vec_full.7 = load <4 x i64>, <4 x i64>* %vector_ptr.7, align 16, !alias.scope !49, !noalias !51, !llvm.mem.parallel_loop_access !48
-  %scevgep19.7 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %9, i64 %8
+  %scevgep19.7 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %9, i64 %8
   %vector_ptr20.7 = bitcast i64* %scevgep19.7 to <4 x i64>*
   %_p_vec_full21.7 = load <4 x i64>, <4 x i64>* %vector_ptr20.7, align 16, !alias.scope !53, !noalias !54, !llvm.mem.parallel_loop_access !48
   %addp_vec.7 = add <4 x i64> %_p_vec_full21.7, %_p_vec_full.7
-  %scevgep22.7 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %9, i64 %8
+  %scevgep22.7 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %9, i64 %8
   %vector_ptr23.7 = bitcast i64* %scevgep22.7 to <4 x i64>*
   store <4 x i64> %addp_vec.7, <4 x i64>* %vector_ptr23.7, align 16, !alias.scope !52, !noalias !55, !llvm.mem.parallel_loop_access !48
   %polly.indvar_next11 = add nuw nsw i64 %polly.indvar10, 1
@@ -212,7 +212,7 @@ polly.loop_header:                                ; preds = %polly.loop_exit34, 
 
 polly.loop_exit34:                                ; preds = %polly.loop_exit40
   %polly.indvar_next31 = add nsw i64 %polly.indvar30, 1
-  %polly.loop_cond = icmp sle i64 %polly.indvar30, 30
+  %polly.loop_cond = icmp sle i64 %polly.indvar30, 318
   br i1 %polly.loop_cond, label %polly.loop_header, label %polly.loop_exit, !llvm.loop !56
 
 polly.loop_preheader:                             ; preds = %polly.start
@@ -224,39 +224,39 @@ polly.loop_header32:                              ; preds = %polly.loop_exit40, 
 
 polly.loop_exit40:                                ; preds = %polly.stmt.polly.loop_preheader14
   %polly.indvar_next36 = add nsw i64 %polly.indvar35, 1
-  %polly.loop_cond37 = icmp sle i64 %polly.indvar35, 30
+  %polly.loop_cond37 = icmp sle i64 %polly.indvar35, 318
   br i1 %polly.loop_cond37, label %polly.loop_header32, label %polly.loop_exit34
 
 polly.loop_preheader33:                           ; preds = %polly.loop_header
   %10 = shl i64 %polly.indvar30, 5
-  %scevgep44 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %10, i64 0
-  %scevgep48 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %10, i64 0
-  %scevgep52 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %10, i64 0
-  %11 = shl i64 %polly.indvar30, 15
-  %scevgep56 = getelementptr i64, i64* getelementptr inbounds ([1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 0, i64 4), i64 %11
-  %scevgep60 = getelementptr i64, i64* getelementptr inbounds ([1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 0, i64 4), i64 %11
-  %scevgep64 = getelementptr i64, i64* getelementptr inbounds ([1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 0, i64 4), i64 %11
-  %scevgep68 = getelementptr i64, i64* getelementptr inbounds ([1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 0, i64 8), i64 %11
-  %scevgep72 = getelementptr i64, i64* getelementptr inbounds ([1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 0, i64 8), i64 %11
-  %scevgep76 = getelementptr i64, i64* getelementptr inbounds ([1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 0, i64 8), i64 %11
-  %12 = shl i64 %polly.indvar30, 15
-  %scevgep80 = getelementptr i64, i64* getelementptr inbounds ([1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 0, i64 12), i64 %12
-  %scevgep84 = getelementptr i64, i64* getelementptr inbounds ([1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 0, i64 12), i64 %12
-  %scevgep88 = getelementptr i64, i64* getelementptr inbounds ([1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 0, i64 12), i64 %12
-  %scevgep92 = getelementptr i64, i64* getelementptr inbounds ([1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 0, i64 16), i64 %12
-  %scevgep96 = getelementptr i64, i64* getelementptr inbounds ([1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 0, i64 16), i64 %12
-  %scevgep100 = getelementptr i64, i64* getelementptr inbounds ([1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 0, i64 16), i64 %12
-  %13 = shl i64 %polly.indvar30, 15
-  %scevgep104 = getelementptr i64, i64* getelementptr inbounds ([1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 0, i64 20), i64 %13
-  %scevgep108 = getelementptr i64, i64* getelementptr inbounds ([1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 0, i64 20), i64 %13
-  %scevgep112 = getelementptr i64, i64* getelementptr inbounds ([1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 0, i64 20), i64 %13
-  %scevgep116 = getelementptr i64, i64* getelementptr inbounds ([1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 0, i64 24), i64 %13
-  %scevgep120 = getelementptr i64, i64* getelementptr inbounds ([1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 0, i64 24), i64 %13
-  %scevgep124 = getelementptr i64, i64* getelementptr inbounds ([1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 0, i64 24), i64 %13
-  %14 = shl i64 %polly.indvar30, 15
-  %scevgep128 = getelementptr i64, i64* getelementptr inbounds ([1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 0, i64 28), i64 %14
-  %scevgep132 = getelementptr i64, i64* getelementptr inbounds ([1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 0, i64 28), i64 %14
-  %scevgep136 = getelementptr i64, i64* getelementptr inbounds ([1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 0, i64 28), i64 %14
+  %scevgep44 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %10, i64 0
+  %scevgep48 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %10, i64 0
+  %scevgep52 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %10, i64 0
+  %11 = mul i64 %polly.indvar30, 327680
+  %scevgep56 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 0, i64 4), i64 %11
+  %scevgep60 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 0, i64 4), i64 %11
+  %scevgep64 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 0, i64 4), i64 %11
+  %scevgep68 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 0, i64 8), i64 %11
+  %scevgep72 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 0, i64 8), i64 %11
+  %scevgep76 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 0, i64 8), i64 %11
+  %12 = mul i64 %polly.indvar30, 327680
+  %scevgep80 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 0, i64 12), i64 %12
+  %scevgep84 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 0, i64 12), i64 %12
+  %scevgep88 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 0, i64 12), i64 %12
+  %scevgep92 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 0, i64 16), i64 %12
+  %scevgep96 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 0, i64 16), i64 %12
+  %scevgep100 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 0, i64 16), i64 %12
+  %13 = mul i64 %polly.indvar30, 327680
+  %scevgep104 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 0, i64 20), i64 %13
+  %scevgep108 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 0, i64 20), i64 %13
+  %scevgep112 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 0, i64 20), i64 %13
+  %scevgep116 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 0, i64 24), i64 %13
+  %scevgep120 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 0, i64 24), i64 %13
+  %scevgep124 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 0, i64 24), i64 %13
+  %14 = mul i64 %polly.indvar30, 327680
+  %scevgep128 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 0, i64 28), i64 %14
+  %scevgep132 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 0, i64 28), i64 %14
+  %scevgep136 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 0, i64 28), i64 %14
   br label %polly.loop_header32
 
 polly.loop_header38:                              ; preds = %polly.stmt.polly.loop_preheader14, %polly.loop_preheader39
@@ -264,7 +264,7 @@ polly.loop_header38:                              ; preds = %polly.stmt.polly.lo
   br label %polly.stmt.polly.loop_preheader14
 
 polly.stmt.polly.loop_preheader14:                ; preds = %polly.loop_header38
-  %15 = shl i64 %polly.indvar41, 10
+  %15 = mul i64 %polly.indvar41, 10240
   %scevgep46 = getelementptr i64, i64* %scevgep45, i64 %15
   %scevgep4647 = bitcast i64* %scevgep46 to <4 x i64>*
   %_p_vec_full_p_scalar_ = load <4 x i64>, <4 x i64>* %scevgep4647, align 16, !alias.scope !57, !noalias !59, !llvm.mem.parallel_loop_access !56
@@ -272,14 +272,14 @@ polly.stmt.polly.loop_preheader14:                ; preds = %polly.loop_header38
   %scevgep5051 = bitcast i64* %scevgep50 to <4 x i64>*
   %_p_vec_full21_p_scalar_ = load <4 x i64>, <4 x i64>* %scevgep5051, align 16, !alias.scope !61, !noalias !62, !llvm.mem.parallel_loop_access !56
   %p_addp_vec = add <4 x i64> %_p_vec_full21_p_scalar_, %_p_vec_full_p_scalar_
-  %16 = shl i64 %polly.indvar41, 10
+  %16 = mul i64 %polly.indvar41, 10240
   %scevgep54 = getelementptr i64, i64* %scevgep53, i64 %16
   %scevgep5455 = bitcast i64* %scevgep54 to <4 x i64>*
   store <4 x i64> %p_addp_vec, <4 x i64>* %scevgep5455, align 16, !alias.scope !60, !noalias !63, !llvm.mem.parallel_loop_access !56
   %scevgep58 = getelementptr i64, i64* %scevgep57, i64 %16
   %scevgep5859 = bitcast i64* %scevgep58 to <4 x i64>*
   %_p_vec_full.1_p_scalar_ = load <4 x i64>, <4 x i64>* %scevgep5859, align 16, !alias.scope !57, !noalias !59, !llvm.mem.parallel_loop_access !56
-  %17 = shl i64 %polly.indvar41, 10
+  %17 = mul i64 %polly.indvar41, 10240
   %scevgep62 = getelementptr i64, i64* %scevgep61, i64 %17
   %scevgep6263 = bitcast i64* %scevgep62 to <4 x i64>*
   %_p_vec_full21.1_p_scalar_ = load <4 x i64>, <4 x i64>* %scevgep6263, align 16, !alias.scope !61, !noalias !62, !llvm.mem.parallel_loop_access !56
@@ -287,7 +287,7 @@ polly.stmt.polly.loop_preheader14:                ; preds = %polly.loop_header38
   %scevgep66 = getelementptr i64, i64* %scevgep65, i64 %17
   %scevgep6667 = bitcast i64* %scevgep66 to <4 x i64>*
   store <4 x i64> %p_addp_vec.1, <4 x i64>* %scevgep6667, align 16, !alias.scope !60, !noalias !63, !llvm.mem.parallel_loop_access !56
-  %18 = shl i64 %polly.indvar41, 10
+  %18 = mul i64 %polly.indvar41, 10240
   %scevgep70 = getelementptr i64, i64* %scevgep69, i64 %18
   %scevgep7071 = bitcast i64* %scevgep70 to <4 x i64>*
   %_p_vec_full.2_p_scalar_ = load <4 x i64>, <4 x i64>* %scevgep7071, align 16, !alias.scope !57, !noalias !59, !llvm.mem.parallel_loop_access !56
@@ -295,14 +295,14 @@ polly.stmt.polly.loop_preheader14:                ; preds = %polly.loop_header38
   %scevgep7475 = bitcast i64* %scevgep74 to <4 x i64>*
   %_p_vec_full21.2_p_scalar_ = load <4 x i64>, <4 x i64>* %scevgep7475, align 16, !alias.scope !61, !noalias !62, !llvm.mem.parallel_loop_access !56
   %p_addp_vec.2 = add <4 x i64> %_p_vec_full21.2_p_scalar_, %_p_vec_full.2_p_scalar_
-  %19 = shl i64 %polly.indvar41, 10
+  %19 = mul i64 %polly.indvar41, 10240
   %scevgep78 = getelementptr i64, i64* %scevgep77, i64 %19
   %scevgep7879 = bitcast i64* %scevgep78 to <4 x i64>*
   store <4 x i64> %p_addp_vec.2, <4 x i64>* %scevgep7879, align 16, !alias.scope !60, !noalias !63, !llvm.mem.parallel_loop_access !56
   %scevgep82 = getelementptr i64, i64* %scevgep81, i64 %19
   %scevgep8283 = bitcast i64* %scevgep82 to <4 x i64>*
   %_p_vec_full.3_p_scalar_ = load <4 x i64>, <4 x i64>* %scevgep8283, align 16, !alias.scope !57, !noalias !59, !llvm.mem.parallel_loop_access !56
-  %20 = shl i64 %polly.indvar41, 10
+  %20 = mul i64 %polly.indvar41, 10240
   %scevgep86 = getelementptr i64, i64* %scevgep85, i64 %20
   %scevgep8687 = bitcast i64* %scevgep86 to <4 x i64>*
   %_p_vec_full21.3_p_scalar_ = load <4 x i64>, <4 x i64>* %scevgep8687, align 16, !alias.scope !61, !noalias !62, !llvm.mem.parallel_loop_access !56
@@ -310,7 +310,7 @@ polly.stmt.polly.loop_preheader14:                ; preds = %polly.loop_header38
   %scevgep90 = getelementptr i64, i64* %scevgep89, i64 %20
   %scevgep9091 = bitcast i64* %scevgep90 to <4 x i64>*
   store <4 x i64> %p_addp_vec.3, <4 x i64>* %scevgep9091, align 16, !alias.scope !60, !noalias !63, !llvm.mem.parallel_loop_access !56
-  %21 = shl i64 %polly.indvar41, 10
+  %21 = mul i64 %polly.indvar41, 10240
   %scevgep94 = getelementptr i64, i64* %scevgep93, i64 %21
   %scevgep9495 = bitcast i64* %scevgep94 to <4 x i64>*
   %_p_vec_full.4_p_scalar_ = load <4 x i64>, <4 x i64>* %scevgep9495, align 16, !alias.scope !57, !noalias !59, !llvm.mem.parallel_loop_access !56
@@ -318,14 +318,14 @@ polly.stmt.polly.loop_preheader14:                ; preds = %polly.loop_header38
   %scevgep9899 = bitcast i64* %scevgep98 to <4 x i64>*
   %_p_vec_full21.4_p_scalar_ = load <4 x i64>, <4 x i64>* %scevgep9899, align 16, !alias.scope !61, !noalias !62, !llvm.mem.parallel_loop_access !56
   %p_addp_vec.4 = add <4 x i64> %_p_vec_full21.4_p_scalar_, %_p_vec_full.4_p_scalar_
-  %22 = shl i64 %polly.indvar41, 10
+  %22 = mul i64 %polly.indvar41, 10240
   %scevgep102 = getelementptr i64, i64* %scevgep101, i64 %22
   %scevgep102103 = bitcast i64* %scevgep102 to <4 x i64>*
   store <4 x i64> %p_addp_vec.4, <4 x i64>* %scevgep102103, align 16, !alias.scope !60, !noalias !63, !llvm.mem.parallel_loop_access !56
   %scevgep106 = getelementptr i64, i64* %scevgep105, i64 %22
   %scevgep106107 = bitcast i64* %scevgep106 to <4 x i64>*
   %_p_vec_full.5_p_scalar_ = load <4 x i64>, <4 x i64>* %scevgep106107, align 16, !alias.scope !57, !noalias !59, !llvm.mem.parallel_loop_access !56
-  %23 = shl i64 %polly.indvar41, 10
+  %23 = mul i64 %polly.indvar41, 10240
   %scevgep110 = getelementptr i64, i64* %scevgep109, i64 %23
   %scevgep110111 = bitcast i64* %scevgep110 to <4 x i64>*
   %_p_vec_full21.5_p_scalar_ = load <4 x i64>, <4 x i64>* %scevgep110111, align 16, !alias.scope !61, !noalias !62, !llvm.mem.parallel_loop_access !56
@@ -333,7 +333,7 @@ polly.stmt.polly.loop_preheader14:                ; preds = %polly.loop_header38
   %scevgep114 = getelementptr i64, i64* %scevgep113, i64 %23
   %scevgep114115 = bitcast i64* %scevgep114 to <4 x i64>*
   store <4 x i64> %p_addp_vec.5, <4 x i64>* %scevgep114115, align 16, !alias.scope !60, !noalias !63, !llvm.mem.parallel_loop_access !56
-  %24 = shl i64 %polly.indvar41, 10
+  %24 = mul i64 %polly.indvar41, 10240
   %scevgep118 = getelementptr i64, i64* %scevgep117, i64 %24
   %scevgep118119 = bitcast i64* %scevgep118 to <4 x i64>*
   %_p_vec_full.6_p_scalar_ = load <4 x i64>, <4 x i64>* %scevgep118119, align 16, !alias.scope !57, !noalias !59, !llvm.mem.parallel_loop_access !56
@@ -341,14 +341,14 @@ polly.stmt.polly.loop_preheader14:                ; preds = %polly.loop_header38
   %scevgep122123 = bitcast i64* %scevgep122 to <4 x i64>*
   %_p_vec_full21.6_p_scalar_ = load <4 x i64>, <4 x i64>* %scevgep122123, align 16, !alias.scope !61, !noalias !62, !llvm.mem.parallel_loop_access !56
   %p_addp_vec.6 = add <4 x i64> %_p_vec_full21.6_p_scalar_, %_p_vec_full.6_p_scalar_
-  %25 = shl i64 %polly.indvar41, 10
+  %25 = mul i64 %polly.indvar41, 10240
   %scevgep126 = getelementptr i64, i64* %scevgep125, i64 %25
   %scevgep126127 = bitcast i64* %scevgep126 to <4 x i64>*
   store <4 x i64> %p_addp_vec.6, <4 x i64>* %scevgep126127, align 16, !alias.scope !60, !noalias !63, !llvm.mem.parallel_loop_access !56
   %scevgep130 = getelementptr i64, i64* %scevgep129, i64 %25
   %scevgep130131 = bitcast i64* %scevgep130 to <4 x i64>*
   %_p_vec_full.7_p_scalar_ = load <4 x i64>, <4 x i64>* %scevgep130131, align 16, !alias.scope !57, !noalias !59, !llvm.mem.parallel_loop_access !56
-  %26 = shl i64 %polly.indvar41, 10
+  %26 = mul i64 %polly.indvar41, 10240
   %scevgep134 = getelementptr i64, i64* %scevgep133, i64 %26
   %scevgep134135 = bitcast i64* %scevgep134 to <4 x i64>*
   %_p_vec_full21.7_p_scalar_ = load <4 x i64>, <4 x i64>* %scevgep134135, align 16, !alias.scope !61, !noalias !62, !llvm.mem.parallel_loop_access !56
@@ -411,7 +411,7 @@ for.cond1.preheader:                              ; preds = %for.end, %entry.spl
 for.body3:                                        ; preds = %for.inc, %for.cond1.preheader
   %indvars.iv = phi i64 [ 0, %for.cond1.preheader ], [ %indvars.iv.next, %for.inc ]
   %1 = phi %struct._IO_FILE* [ %0, %for.cond1.preheader ], [ %5, %for.inc ]
-  %arrayidx5 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %indvars.iv6, i64 %indvars.iv, !dbg !77
+  %arrayidx5 = getelementptr inbounds [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %indvars.iv6, i64 %indvars.iv, !dbg !77
   %2 = load i64, i64* %arrayidx5, align 8, !dbg !77
   %call = tail call i32 (%struct._IO_FILE*, i8*, ...) @fprintf(%struct._IO_FILE* %1, i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str, i64 0, i64 0), i64 %2) #4, !dbg !78
   %3 = trunc i64 %indvars.iv to i32, !dbg !79
@@ -427,14 +427,14 @@ if.then:                                          ; preds = %for.body3
 for.inc:                                          ; preds = %if.then, %for.body3
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !75
   %5 = load %struct._IO_FILE*, %struct._IO_FILE** @stdout, align 8, !dbg !70
-  %exitcond = icmp eq i64 %indvars.iv.next, 1024, !dbg !75
+  %exitcond = icmp eq i64 %indvars.iv.next, 10240, !dbg !75
   br i1 %exitcond, label %for.end, label %for.body3, !dbg !75
 
 for.end:                                          ; preds = %for.inc
   %.lcssa = phi %struct._IO_FILE* [ %5, %for.inc ]
   %fputc = tail call i32 @fputc(i32 10, %struct._IO_FILE* %.lcssa), !dbg !86
   %indvars.iv.next7 = add nuw nsw i64 %indvars.iv6, 1, !dbg !66
-  %exitcond8 = icmp eq i64 %indvars.iv.next7, 1024, !dbg !66
+  %exitcond8 = icmp eq i64 %indvars.iv.next7, 10240, !dbg !66
   br i1 %exitcond8, label %for.end11, label %for.cond1.preheader, !dbg !66
 
 for.end11:                                        ; preds = %for.end
@@ -445,186 +445,377 @@ for.end11:                                        ; preds = %for.end
 declare i32 @fprintf(%struct._IO_FILE* nocapture, i8* nocapture readonly, ...) #2
 
 ; Function Attrs: nounwind uwtable
-define i32 @main() #0 !dbg !9 {
+define i32 @main() #1 !dbg !9 {
 entry:
   br label %entry.split, !dbg !88
 
 entry.split:                                      ; preds = %entry
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !89, metadata !26), !dbg !88
-  br label %for.body, !dbg !90
+  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !25, metadata !26), !dbg !88
+  br label %vector.ph, !dbg !90
 
-for.body:                                         ; preds = %mat_add.exit, %entry.split
-  %r.01 = phi i32 [ 0, %entry.split ], [ %inc, %mat_add.exit ]
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !25, metadata !26), !dbg !94
-  br label %vector.ph, !dbg !97
-
-vector.ph:                                        ; preds = %for.inc10.i, %for.body
-  %indvars.iv3.i = phi i64 [ 0, %for.body ], [ %indvars.iv.next4.i, %for.inc10.i ], !dbg !98
-  br label %vector.body, !dbg !99
+vector.ph:                                        ; preds = %for.inc10.i, %entry.split
+  %indvars.iv3.i = phi i64 [ 0, %entry.split ], [ %indvars.iv.next4.i, %for.inc10.i ], !dbg !91
+  br label %vector.body, !dbg !92
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next.1, %vector.body ], !dbg !98
-  %0 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %indvars.iv3.i, i64 %index, !dbg !100
-  %1 = bitcast i64* %0 to <2 x i64>*, !dbg !101
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %1, align 16, !dbg !101
-  %2 = getelementptr i64, i64* %0, i64 2, !dbg !101
-  %3 = bitcast i64* %2 to <2 x i64>*, !dbg !101
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %3, align 16, !dbg !101
-  %4 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %indvars.iv3.i, i64 %index, !dbg !102
-  %5 = bitcast i64* %4 to <2 x i64>*, !dbg !103
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %5, align 16, !dbg !103
-  %6 = getelementptr i64, i64* %4, i64 2, !dbg !103
-  %7 = bitcast i64* %6 to <2 x i64>*, !dbg !103
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %7, align 16, !dbg !103
-  %index.next = or i64 %index, 4, !dbg !99
-  %8 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %indvars.iv3.i, i64 %index.next, !dbg !100
-  %9 = bitcast i64* %8 to <2 x i64>*, !dbg !101
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %9, align 16, !dbg !101
-  %10 = getelementptr i64, i64* %8, i64 2, !dbg !101
-  %11 = bitcast i64* %10 to <2 x i64>*, !dbg !101
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %11, align 16, !dbg !101
-  %12 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %indvars.iv3.i, i64 %index.next, !dbg !102
-  %13 = bitcast i64* %12 to <2 x i64>*, !dbg !103
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %13, align 16, !dbg !103
-  %14 = getelementptr i64, i64* %12, i64 2, !dbg !103
-  %15 = bitcast i64* %14 to <2 x i64>*, !dbg !103
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %15, align 16, !dbg !103
-  %index.next.1 = add nsw i64 %index, 8, !dbg !99
-  %16 = icmp eq i64 %index.next.1, 1024, !dbg !99
-  br i1 %16, label %for.inc10.i, label %vector.body, !dbg !99, !llvm.loop !104
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next.1, %vector.body ], !dbg !91
+  %0 = getelementptr inbounds [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %indvars.iv3.i, i64 %index, !dbg !93
+  %1 = bitcast i64* %0 to <2 x i64>*, !dbg !94
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %1, align 16, !dbg !94
+  %2 = getelementptr i64, i64* %0, i64 2, !dbg !94
+  %3 = bitcast i64* %2 to <2 x i64>*, !dbg !94
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %3, align 16, !dbg !94
+  %4 = getelementptr inbounds [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %indvars.iv3.i, i64 %index, !dbg !95
+  %5 = bitcast i64* %4 to <2 x i64>*, !dbg !96
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %5, align 16, !dbg !96
+  %6 = getelementptr i64, i64* %4, i64 2, !dbg !96
+  %7 = bitcast i64* %6 to <2 x i64>*, !dbg !96
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %7, align 16, !dbg !96
+  %index.next = or i64 %index, 4, !dbg !92
+  %8 = getelementptr inbounds [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %indvars.iv3.i, i64 %index.next, !dbg !93
+  %9 = bitcast i64* %8 to <2 x i64>*, !dbg !94
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %9, align 16, !dbg !94
+  %10 = getelementptr i64, i64* %8, i64 2, !dbg !94
+  %11 = bitcast i64* %10 to <2 x i64>*, !dbg !94
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %11, align 16, !dbg !94
+  %12 = getelementptr inbounds [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %indvars.iv3.i, i64 %index.next, !dbg !95
+  %13 = bitcast i64* %12 to <2 x i64>*, !dbg !96
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %13, align 16, !dbg !96
+  %14 = getelementptr i64, i64* %12, i64 2, !dbg !96
+  %15 = bitcast i64* %14 to <2 x i64>*, !dbg !96
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %15, align 16, !dbg !96
+  %index.next.1 = add nsw i64 %index, 8, !dbg !92
+  %16 = icmp eq i64 %index.next.1, 10240, !dbg !92
+  br i1 %16, label %for.inc10.i, label %vector.body, !dbg !92, !llvm.loop !97
 
 for.inc10.i:                                      ; preds = %vector.body
-  %indvars.iv.next4.i = add nuw nsw i64 %indvars.iv3.i, 1, !dbg !97
-  %exitcond5.i = icmp eq i64 %indvars.iv.next4.i, 1024, !dbg !97
-  br i1 %exitcond5.i, label %polly.loop_preheader2.i.preheader, label %vector.ph, !dbg !97
+  %indvars.iv.next4.i = add nuw nsw i64 %indvars.iv3.i, 1, !dbg !90
+  %exitcond5.i = icmp eq i64 %indvars.iv.next4.i, 10240, !dbg !90
+  br i1 %exitcond5.i, label %polly.loop_preheader2.i.preheader, label %vector.ph, !dbg !90
 
 polly.loop_preheader2.i.preheader:                ; preds = %for.inc10.i
-  br label %polly.loop_preheader2.i, !dbg !105
+  br label %polly.split_new_and_old, !dbg !98
 
 polly.loop_exit3.i:                               ; preds = %polly.loop_exit9.i
-  %polly.indvar_next.i = add nuw nsw i64 %polly.indvar.i, 1, !dbg !105
-  %exitcond28.i = icmp eq i64 %polly.indvar_next.i, 32, !dbg !105
-  br i1 %exitcond28.i, label %mat_add.exit, label %polly.loop_preheader2.i, !dbg !105, !llvm.loop !48
+  %polly.indvar_next.i = add nuw nsw i64 %polly.indvar.i, 1, !dbg !98
+  %exitcond28.i = icmp eq i64 %polly.indvar_next.i, 320, !dbg !98
+  br i1 %exitcond28.i, label %polly.merge_new_and_old, label %polly.loop_preheader2.i, !dbg !98, !llvm.loop !48
 
 polly.loop_exit9.i:                               ; preds = %polly.loop_preheader14.i
-  %polly.indvar_next5.i = add nuw nsw i64 %polly.indvar4.i, 1, !dbg !105
-  %exitcond27.i = icmp eq i64 %polly.indvar_next5.i, 32, !dbg !105
-  br i1 %exitcond27.i, label %polly.loop_exit3.i, label %polly.loop_preheader8.i, !dbg !105
+  %polly.indvar_next5.i = add nuw nsw i64 %polly.indvar4.i, 1, !dbg !98
+  %exitcond27.i = icmp eq i64 %polly.indvar_next5.i, 320, !dbg !98
+  br i1 %exitcond27.i, label %polly.loop_exit3.i, label %polly.loop_preheader8.i, !dbg !98
 
-polly.loop_preheader2.i:                          ; preds = %polly.loop_preheader2.i.preheader, %polly.loop_exit3.i
-  %polly.indvar.i = phi i64 [ %polly.indvar_next.i, %polly.loop_exit3.i ], [ 0, %polly.loop_preheader2.i.preheader ], !dbg !105
-  %17 = shl nsw i64 %polly.indvar.i, 5, !dbg !105
-  br label %polly.loop_preheader8.i, !dbg !105
+polly.split_new_and_old:                          ; preds = %polly.loop_preheader2.i.preheader
+  br i1 true, label %polly.start, label %polly.loop_preheader2.i
+
+polly.loop_preheader2.i:                          ; preds = %polly.split_new_and_old, %polly.loop_exit3.i
+  %polly.indvar.i = phi i64 [ %polly.indvar_next.i, %polly.loop_exit3.i ], [ 0, %polly.split_new_and_old ], !dbg !98
+  %17 = shl nsw i64 %polly.indvar.i, 5, !dbg !98
+  br label %polly.loop_preheader8.i, !dbg !98
 
 polly.loop_preheader8.i:                          ; preds = %polly.loop_preheader2.i, %polly.loop_exit9.i
-  %polly.indvar4.i = phi i64 [ 0, %polly.loop_preheader2.i ], [ %polly.indvar_next5.i, %polly.loop_exit9.i ], !dbg !105
-  %18 = shl nsw i64 %polly.indvar4.i, 5, !dbg !105
-  %19 = or i64 %18, 4, !dbg !105
-  %20 = or i64 %18, 8, !dbg !105
-  %21 = or i64 %18, 12, !dbg !105
-  %22 = or i64 %18, 16, !dbg !105
-  %23 = or i64 %18, 20, !dbg !105
-  %24 = or i64 %18, 24, !dbg !105
-  %25 = or i64 %18, 28, !dbg !105
-  br label %polly.loop_preheader14.i, !dbg !105
+  %polly.indvar4.i = phi i64 [ 0, %polly.loop_preheader2.i ], [ %polly.indvar_next5.i, %polly.loop_exit9.i ], !dbg !98
+  %18 = shl nsw i64 %polly.indvar4.i, 5, !dbg !98
+  %19 = or i64 %18, 4, !dbg !98
+  %20 = or i64 %18, 8, !dbg !98
+  %21 = or i64 %18, 12, !dbg !98
+  %22 = or i64 %18, 16, !dbg !98
+  %23 = or i64 %18, 20, !dbg !98
+  %24 = or i64 %18, 24, !dbg !98
+  %25 = or i64 %18, 28, !dbg !98
+  br label %polly.loop_preheader14.i, !dbg !98
 
 polly.loop_preheader14.i:                         ; preds = %polly.loop_preheader14.i, %polly.loop_preheader8.i
-  %polly.indvar10.i = phi i64 [ 0, %polly.loop_preheader8.i ], [ %polly.indvar_next11.i, %polly.loop_preheader14.i ], !dbg !105
-  %26 = add nuw nsw i64 %polly.indvar10.i, %17, !dbg !105
-  %scevgep.i = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %26, i64 %18, !dbg !105
-  %vector_ptr.i = bitcast i64* %scevgep.i to <4 x i64>*, !dbg !105
-  %_p_vec_full.i = load <4 x i64>, <4 x i64>* %vector_ptr.i, align 16, !dbg !105, !alias.scope !106, !noalias !108, !llvm.mem.parallel_loop_access !48
-  %scevgep19.i = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %26, i64 %18, !dbg !105
-  %vector_ptr20.i = bitcast i64* %scevgep19.i to <4 x i64>*, !dbg !105
-  %_p_vec_full21.i = load <4 x i64>, <4 x i64>* %vector_ptr20.i, align 16, !dbg !105, !alias.scope !110, !noalias !111, !llvm.mem.parallel_loop_access !48
-  %addp_vec.i = add <4 x i64> %_p_vec_full21.i, %_p_vec_full.i, !dbg !105
-  %scevgep22.i = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %26, i64 %18, !dbg !105
-  %vector_ptr23.i = bitcast i64* %scevgep22.i to <4 x i64>*, !dbg !105
-  store <4 x i64> %addp_vec.i, <4 x i64>* %vector_ptr23.i, align 16, !dbg !105, !alias.scope !109, !noalias !112, !llvm.mem.parallel_loop_access !48
-  %scevgep.1.i = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %26, i64 %19, !dbg !105
-  %vector_ptr.1.i = bitcast i64* %scevgep.1.i to <4 x i64>*, !dbg !105
-  %_p_vec_full.1.i = load <4 x i64>, <4 x i64>* %vector_ptr.1.i, align 16, !dbg !105, !alias.scope !106, !noalias !108, !llvm.mem.parallel_loop_access !48
-  %scevgep19.1.i = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %26, i64 %19, !dbg !105
-  %vector_ptr20.1.i = bitcast i64* %scevgep19.1.i to <4 x i64>*, !dbg !105
-  %_p_vec_full21.1.i = load <4 x i64>, <4 x i64>* %vector_ptr20.1.i, align 16, !dbg !105, !alias.scope !110, !noalias !111, !llvm.mem.parallel_loop_access !48
-  %addp_vec.1.i = add <4 x i64> %_p_vec_full21.1.i, %_p_vec_full.1.i, !dbg !105
-  %scevgep22.1.i = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %26, i64 %19, !dbg !105
-  %vector_ptr23.1.i = bitcast i64* %scevgep22.1.i to <4 x i64>*, !dbg !105
-  store <4 x i64> %addp_vec.1.i, <4 x i64>* %vector_ptr23.1.i, align 16, !dbg !105, !alias.scope !109, !noalias !112, !llvm.mem.parallel_loop_access !48
-  %scevgep.2.i = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %26, i64 %20, !dbg !105
-  %vector_ptr.2.i = bitcast i64* %scevgep.2.i to <4 x i64>*, !dbg !105
-  %_p_vec_full.2.i = load <4 x i64>, <4 x i64>* %vector_ptr.2.i, align 16, !dbg !105, !alias.scope !106, !noalias !108, !llvm.mem.parallel_loop_access !48
-  %scevgep19.2.i = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %26, i64 %20, !dbg !105
-  %vector_ptr20.2.i = bitcast i64* %scevgep19.2.i to <4 x i64>*, !dbg !105
-  %_p_vec_full21.2.i = load <4 x i64>, <4 x i64>* %vector_ptr20.2.i, align 16, !dbg !105, !alias.scope !110, !noalias !111, !llvm.mem.parallel_loop_access !48
-  %addp_vec.2.i = add <4 x i64> %_p_vec_full21.2.i, %_p_vec_full.2.i, !dbg !105
-  %scevgep22.2.i = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %26, i64 %20, !dbg !105
-  %vector_ptr23.2.i = bitcast i64* %scevgep22.2.i to <4 x i64>*, !dbg !105
-  store <4 x i64> %addp_vec.2.i, <4 x i64>* %vector_ptr23.2.i, align 16, !dbg !105, !alias.scope !109, !noalias !112, !llvm.mem.parallel_loop_access !48
-  %scevgep.3.i = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %26, i64 %21, !dbg !105
-  %vector_ptr.3.i = bitcast i64* %scevgep.3.i to <4 x i64>*, !dbg !105
-  %_p_vec_full.3.i = load <4 x i64>, <4 x i64>* %vector_ptr.3.i, align 16, !dbg !105, !alias.scope !106, !noalias !108, !llvm.mem.parallel_loop_access !48
-  %scevgep19.3.i = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %26, i64 %21, !dbg !105
-  %vector_ptr20.3.i = bitcast i64* %scevgep19.3.i to <4 x i64>*, !dbg !105
-  %_p_vec_full21.3.i = load <4 x i64>, <4 x i64>* %vector_ptr20.3.i, align 16, !dbg !105, !alias.scope !110, !noalias !111, !llvm.mem.parallel_loop_access !48
-  %addp_vec.3.i = add <4 x i64> %_p_vec_full21.3.i, %_p_vec_full.3.i, !dbg !105
-  %scevgep22.3.i = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %26, i64 %21, !dbg !105
-  %vector_ptr23.3.i = bitcast i64* %scevgep22.3.i to <4 x i64>*, !dbg !105
-  store <4 x i64> %addp_vec.3.i, <4 x i64>* %vector_ptr23.3.i, align 16, !dbg !105, !alias.scope !109, !noalias !112, !llvm.mem.parallel_loop_access !48
-  %scevgep.4.i = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %26, i64 %22, !dbg !105
-  %vector_ptr.4.i = bitcast i64* %scevgep.4.i to <4 x i64>*, !dbg !105
-  %_p_vec_full.4.i = load <4 x i64>, <4 x i64>* %vector_ptr.4.i, align 16, !dbg !105, !alias.scope !106, !noalias !108, !llvm.mem.parallel_loop_access !48
-  %scevgep19.4.i = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %26, i64 %22, !dbg !105
-  %vector_ptr20.4.i = bitcast i64* %scevgep19.4.i to <4 x i64>*, !dbg !105
-  %_p_vec_full21.4.i = load <4 x i64>, <4 x i64>* %vector_ptr20.4.i, align 16, !dbg !105, !alias.scope !110, !noalias !111, !llvm.mem.parallel_loop_access !48
-  %addp_vec.4.i = add <4 x i64> %_p_vec_full21.4.i, %_p_vec_full.4.i, !dbg !105
-  %scevgep22.4.i = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %26, i64 %22, !dbg !105
-  %vector_ptr23.4.i = bitcast i64* %scevgep22.4.i to <4 x i64>*, !dbg !105
-  store <4 x i64> %addp_vec.4.i, <4 x i64>* %vector_ptr23.4.i, align 16, !dbg !105, !alias.scope !109, !noalias !112, !llvm.mem.parallel_loop_access !48
-  %scevgep.5.i = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %26, i64 %23, !dbg !105
-  %vector_ptr.5.i = bitcast i64* %scevgep.5.i to <4 x i64>*, !dbg !105
-  %_p_vec_full.5.i = load <4 x i64>, <4 x i64>* %vector_ptr.5.i, align 16, !dbg !105, !alias.scope !106, !noalias !108, !llvm.mem.parallel_loop_access !48
-  %scevgep19.5.i = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %26, i64 %23, !dbg !105
-  %vector_ptr20.5.i = bitcast i64* %scevgep19.5.i to <4 x i64>*, !dbg !105
-  %_p_vec_full21.5.i = load <4 x i64>, <4 x i64>* %vector_ptr20.5.i, align 16, !dbg !105, !alias.scope !110, !noalias !111, !llvm.mem.parallel_loop_access !48
-  %addp_vec.5.i = add <4 x i64> %_p_vec_full21.5.i, %_p_vec_full.5.i, !dbg !105
-  %scevgep22.5.i = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %26, i64 %23, !dbg !105
-  %vector_ptr23.5.i = bitcast i64* %scevgep22.5.i to <4 x i64>*, !dbg !105
-  store <4 x i64> %addp_vec.5.i, <4 x i64>* %vector_ptr23.5.i, align 16, !dbg !105, !alias.scope !109, !noalias !112, !llvm.mem.parallel_loop_access !48
-  %scevgep.6.i = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %26, i64 %24, !dbg !105
-  %vector_ptr.6.i = bitcast i64* %scevgep.6.i to <4 x i64>*, !dbg !105
-  %_p_vec_full.6.i = load <4 x i64>, <4 x i64>* %vector_ptr.6.i, align 16, !dbg !105, !alias.scope !106, !noalias !108, !llvm.mem.parallel_loop_access !48
-  %scevgep19.6.i = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %26, i64 %24, !dbg !105
-  %vector_ptr20.6.i = bitcast i64* %scevgep19.6.i to <4 x i64>*, !dbg !105
-  %_p_vec_full21.6.i = load <4 x i64>, <4 x i64>* %vector_ptr20.6.i, align 16, !dbg !105, !alias.scope !110, !noalias !111, !llvm.mem.parallel_loop_access !48
-  %addp_vec.6.i = add <4 x i64> %_p_vec_full21.6.i, %_p_vec_full.6.i, !dbg !105
-  %scevgep22.6.i = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %26, i64 %24, !dbg !105
-  %vector_ptr23.6.i = bitcast i64* %scevgep22.6.i to <4 x i64>*, !dbg !105
-  store <4 x i64> %addp_vec.6.i, <4 x i64>* %vector_ptr23.6.i, align 16, !dbg !105, !alias.scope !109, !noalias !112, !llvm.mem.parallel_loop_access !48
-  %scevgep.7.i = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %26, i64 %25, !dbg !105
-  %vector_ptr.7.i = bitcast i64* %scevgep.7.i to <4 x i64>*, !dbg !105
-  %_p_vec_full.7.i = load <4 x i64>, <4 x i64>* %vector_ptr.7.i, align 16, !dbg !105, !alias.scope !106, !noalias !108, !llvm.mem.parallel_loop_access !48
-  %scevgep19.7.i = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %26, i64 %25, !dbg !105
-  %vector_ptr20.7.i = bitcast i64* %scevgep19.7.i to <4 x i64>*, !dbg !105
-  %_p_vec_full21.7.i = load <4 x i64>, <4 x i64>* %vector_ptr20.7.i, align 16, !dbg !105, !alias.scope !110, !noalias !111, !llvm.mem.parallel_loop_access !48
-  %addp_vec.7.i = add <4 x i64> %_p_vec_full21.7.i, %_p_vec_full.7.i, !dbg !105
-  %scevgep22.7.i = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %26, i64 %25, !dbg !105
-  %vector_ptr23.7.i = bitcast i64* %scevgep22.7.i to <4 x i64>*, !dbg !105
-  store <4 x i64> %addp_vec.7.i, <4 x i64>* %vector_ptr23.7.i, align 16, !dbg !105, !alias.scope !109, !noalias !112, !llvm.mem.parallel_loop_access !48
-  %polly.indvar_next11.i = add nuw nsw i64 %polly.indvar10.i, 1, !dbg !105
-  %exitcond.i1 = icmp eq i64 %polly.indvar_next11.i, 32, !dbg !105
-  br i1 %exitcond.i1, label %polly.loop_exit9.i, label %polly.loop_preheader14.i, !dbg !105
+  %polly.indvar10.i = phi i64 [ 0, %polly.loop_preheader8.i ], [ %polly.indvar_next11.i, %polly.loop_preheader14.i ], !dbg !98
+  %26 = add nuw nsw i64 %polly.indvar10.i, %17, !dbg !98
+  %scevgep.i = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %26, i64 %18, !dbg !98
+  %vector_ptr.i = bitcast i64* %scevgep.i to <4 x i64>*, !dbg !98
+  %_p_vec_full.i = load <4 x i64>, <4 x i64>* %vector_ptr.i, align 16, !dbg !98, !alias.scope !99, !noalias !101, !llvm.mem.parallel_loop_access !48
+  %scevgep19.i = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %26, i64 %18, !dbg !98
+  %vector_ptr20.i = bitcast i64* %scevgep19.i to <4 x i64>*, !dbg !98
+  %_p_vec_full21.i = load <4 x i64>, <4 x i64>* %vector_ptr20.i, align 16, !dbg !98, !alias.scope !103, !noalias !104, !llvm.mem.parallel_loop_access !48
+  %addp_vec.i = add <4 x i64> %_p_vec_full21.i, %_p_vec_full.i, !dbg !98
+  %scevgep22.i = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %26, i64 %18, !dbg !98
+  %vector_ptr23.i = bitcast i64* %scevgep22.i to <4 x i64>*, !dbg !98
+  store <4 x i64> %addp_vec.i, <4 x i64>* %vector_ptr23.i, align 16, !dbg !98, !alias.scope !102, !noalias !105, !llvm.mem.parallel_loop_access !48
+  %scevgep.1.i = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %26, i64 %19, !dbg !98
+  %vector_ptr.1.i = bitcast i64* %scevgep.1.i to <4 x i64>*, !dbg !98
+  %_p_vec_full.1.i = load <4 x i64>, <4 x i64>* %vector_ptr.1.i, align 16, !dbg !98, !alias.scope !99, !noalias !101, !llvm.mem.parallel_loop_access !48
+  %scevgep19.1.i = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %26, i64 %19, !dbg !98
+  %vector_ptr20.1.i = bitcast i64* %scevgep19.1.i to <4 x i64>*, !dbg !98
+  %_p_vec_full21.1.i = load <4 x i64>, <4 x i64>* %vector_ptr20.1.i, align 16, !dbg !98, !alias.scope !103, !noalias !104, !llvm.mem.parallel_loop_access !48
+  %addp_vec.1.i = add <4 x i64> %_p_vec_full21.1.i, %_p_vec_full.1.i, !dbg !98
+  %scevgep22.1.i = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %26, i64 %19, !dbg !98
+  %vector_ptr23.1.i = bitcast i64* %scevgep22.1.i to <4 x i64>*, !dbg !98
+  store <4 x i64> %addp_vec.1.i, <4 x i64>* %vector_ptr23.1.i, align 16, !dbg !98, !alias.scope !102, !noalias !105, !llvm.mem.parallel_loop_access !48
+  %scevgep.2.i = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %26, i64 %20, !dbg !98
+  %vector_ptr.2.i = bitcast i64* %scevgep.2.i to <4 x i64>*, !dbg !98
+  %_p_vec_full.2.i = load <4 x i64>, <4 x i64>* %vector_ptr.2.i, align 16, !dbg !98, !alias.scope !99, !noalias !101, !llvm.mem.parallel_loop_access !48
+  %scevgep19.2.i = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %26, i64 %20, !dbg !98
+  %vector_ptr20.2.i = bitcast i64* %scevgep19.2.i to <4 x i64>*, !dbg !98
+  %_p_vec_full21.2.i = load <4 x i64>, <4 x i64>* %vector_ptr20.2.i, align 16, !dbg !98, !alias.scope !103, !noalias !104, !llvm.mem.parallel_loop_access !48
+  %addp_vec.2.i = add <4 x i64> %_p_vec_full21.2.i, %_p_vec_full.2.i, !dbg !98
+  %scevgep22.2.i = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %26, i64 %20, !dbg !98
+  %vector_ptr23.2.i = bitcast i64* %scevgep22.2.i to <4 x i64>*, !dbg !98
+  store <4 x i64> %addp_vec.2.i, <4 x i64>* %vector_ptr23.2.i, align 16, !dbg !98, !alias.scope !102, !noalias !105, !llvm.mem.parallel_loop_access !48
+  %scevgep.3.i = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %26, i64 %21, !dbg !98
+  %vector_ptr.3.i = bitcast i64* %scevgep.3.i to <4 x i64>*, !dbg !98
+  %_p_vec_full.3.i = load <4 x i64>, <4 x i64>* %vector_ptr.3.i, align 16, !dbg !98, !alias.scope !99, !noalias !101, !llvm.mem.parallel_loop_access !48
+  %scevgep19.3.i = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %26, i64 %21, !dbg !98
+  %vector_ptr20.3.i = bitcast i64* %scevgep19.3.i to <4 x i64>*, !dbg !98
+  %_p_vec_full21.3.i = load <4 x i64>, <4 x i64>* %vector_ptr20.3.i, align 16, !dbg !98, !alias.scope !103, !noalias !104, !llvm.mem.parallel_loop_access !48
+  %addp_vec.3.i = add <4 x i64> %_p_vec_full21.3.i, %_p_vec_full.3.i, !dbg !98
+  %scevgep22.3.i = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %26, i64 %21, !dbg !98
+  %vector_ptr23.3.i = bitcast i64* %scevgep22.3.i to <4 x i64>*, !dbg !98
+  store <4 x i64> %addp_vec.3.i, <4 x i64>* %vector_ptr23.3.i, align 16, !dbg !98, !alias.scope !102, !noalias !105, !llvm.mem.parallel_loop_access !48
+  %scevgep.4.i = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %26, i64 %22, !dbg !98
+  %vector_ptr.4.i = bitcast i64* %scevgep.4.i to <4 x i64>*, !dbg !98
+  %_p_vec_full.4.i = load <4 x i64>, <4 x i64>* %vector_ptr.4.i, align 16, !dbg !98, !alias.scope !99, !noalias !101, !llvm.mem.parallel_loop_access !48
+  %scevgep19.4.i = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %26, i64 %22, !dbg !98
+  %vector_ptr20.4.i = bitcast i64* %scevgep19.4.i to <4 x i64>*, !dbg !98
+  %_p_vec_full21.4.i = load <4 x i64>, <4 x i64>* %vector_ptr20.4.i, align 16, !dbg !98, !alias.scope !103, !noalias !104, !llvm.mem.parallel_loop_access !48
+  %addp_vec.4.i = add <4 x i64> %_p_vec_full21.4.i, %_p_vec_full.4.i, !dbg !98
+  %scevgep22.4.i = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %26, i64 %22, !dbg !98
+  %vector_ptr23.4.i = bitcast i64* %scevgep22.4.i to <4 x i64>*, !dbg !98
+  store <4 x i64> %addp_vec.4.i, <4 x i64>* %vector_ptr23.4.i, align 16, !dbg !98, !alias.scope !102, !noalias !105, !llvm.mem.parallel_loop_access !48
+  %scevgep.5.i = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %26, i64 %23, !dbg !98
+  %vector_ptr.5.i = bitcast i64* %scevgep.5.i to <4 x i64>*, !dbg !98
+  %_p_vec_full.5.i = load <4 x i64>, <4 x i64>* %vector_ptr.5.i, align 16, !dbg !98, !alias.scope !99, !noalias !101, !llvm.mem.parallel_loop_access !48
+  %scevgep19.5.i = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %26, i64 %23, !dbg !98
+  %vector_ptr20.5.i = bitcast i64* %scevgep19.5.i to <4 x i64>*, !dbg !98
+  %_p_vec_full21.5.i = load <4 x i64>, <4 x i64>* %vector_ptr20.5.i, align 16, !dbg !98, !alias.scope !103, !noalias !104, !llvm.mem.parallel_loop_access !48
+  %addp_vec.5.i = add <4 x i64> %_p_vec_full21.5.i, %_p_vec_full.5.i, !dbg !98
+  %scevgep22.5.i = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %26, i64 %23, !dbg !98
+  %vector_ptr23.5.i = bitcast i64* %scevgep22.5.i to <4 x i64>*, !dbg !98
+  store <4 x i64> %addp_vec.5.i, <4 x i64>* %vector_ptr23.5.i, align 16, !dbg !98, !alias.scope !102, !noalias !105, !llvm.mem.parallel_loop_access !48
+  %scevgep.6.i = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %26, i64 %24, !dbg !98
+  %vector_ptr.6.i = bitcast i64* %scevgep.6.i to <4 x i64>*, !dbg !98
+  %_p_vec_full.6.i = load <4 x i64>, <4 x i64>* %vector_ptr.6.i, align 16, !dbg !98, !alias.scope !99, !noalias !101, !llvm.mem.parallel_loop_access !48
+  %scevgep19.6.i = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %26, i64 %24, !dbg !98
+  %vector_ptr20.6.i = bitcast i64* %scevgep19.6.i to <4 x i64>*, !dbg !98
+  %_p_vec_full21.6.i = load <4 x i64>, <4 x i64>* %vector_ptr20.6.i, align 16, !dbg !98, !alias.scope !103, !noalias !104, !llvm.mem.parallel_loop_access !48
+  %addp_vec.6.i = add <4 x i64> %_p_vec_full21.6.i, %_p_vec_full.6.i, !dbg !98
+  %scevgep22.6.i = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %26, i64 %24, !dbg !98
+  %vector_ptr23.6.i = bitcast i64* %scevgep22.6.i to <4 x i64>*, !dbg !98
+  store <4 x i64> %addp_vec.6.i, <4 x i64>* %vector_ptr23.6.i, align 16, !dbg !98, !alias.scope !102, !noalias !105, !llvm.mem.parallel_loop_access !48
+  %scevgep.7.i = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %26, i64 %25, !dbg !98
+  %vector_ptr.7.i = bitcast i64* %scevgep.7.i to <4 x i64>*, !dbg !98
+  %_p_vec_full.7.i = load <4 x i64>, <4 x i64>* %vector_ptr.7.i, align 16, !dbg !98, !alias.scope !99, !noalias !101, !llvm.mem.parallel_loop_access !48
+  %scevgep19.7.i = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %26, i64 %25, !dbg !98
+  %vector_ptr20.7.i = bitcast i64* %scevgep19.7.i to <4 x i64>*, !dbg !98
+  %_p_vec_full21.7.i = load <4 x i64>, <4 x i64>* %vector_ptr20.7.i, align 16, !dbg !98, !alias.scope !103, !noalias !104, !llvm.mem.parallel_loop_access !48
+  %addp_vec.7.i = add <4 x i64> %_p_vec_full21.7.i, %_p_vec_full.7.i, !dbg !98
+  %scevgep22.7.i = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %26, i64 %25, !dbg !98
+  %vector_ptr23.7.i = bitcast i64* %scevgep22.7.i to <4 x i64>*, !dbg !98
+  store <4 x i64> %addp_vec.7.i, <4 x i64>* %vector_ptr23.7.i, align 16, !dbg !98, !alias.scope !102, !noalias !105, !llvm.mem.parallel_loop_access !48
+  %polly.indvar_next11.i = add nuw nsw i64 %polly.indvar10.i, 1, !dbg !98
+  %exitcond.i1 = icmp eq i64 %polly.indvar_next11.i, 32, !dbg !98
+  br i1 %exitcond.i1, label %polly.loop_exit9.i, label %polly.loop_preheader14.i, !dbg !98
 
-mat_add.exit:                                     ; preds = %polly.loop_exit3.i
-  %inc = add nuw nsw i32 %r.01, 1, !dbg !113
-  tail call void @llvm.dbg.value(metadata i32 %inc, i64 0, metadata !89, metadata !26), !dbg !88
-  %exitcond = icmp eq i32 %inc, 100, !dbg !90
-  br i1 %exitcond, label %for.end, label %for.body, !dbg !90
+polly.merge_new_and_old:                          ; preds = %polly.exiting, %polly.loop_exit3.i
+  br label %mat_add.exit, !dbg !106
 
-for.end:                                          ; preds = %mat_add.exit
-  %27 = load i64, i64* getelementptr inbounds ([1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 1023, i64 1023), align 8, !dbg !115
-  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([51 x i8], [51 x i8]* @.str.2, i64 0, i64 0), i32 1024, i32 1024, i32 1023, i32 1023, i64 %27) #4, !dbg !116
-  ret i32 0, !dbg !117
+mat_add.exit:                                     ; preds = %polly.merge_new_and_old
+  %27 = load i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 10239, i64 10239), align 8, !dbg !106
+  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([51 x i8], [51 x i8]* @.str.2, i64 0, i64 0), i32 10240, i32 10240, i32 10239, i32 10239, i64 %27) #4, !dbg !107
+  ret i32 0, !dbg !108
+
+polly.start:                                      ; preds = %polly.split_new_and_old
+  br label %polly.loop_preheader
+
+polly.loop_exit:                                  ; preds = %polly.loop_exit5
+  br label %polly.exiting
+
+polly.exiting:                                    ; preds = %polly.loop_exit
+  br label %polly.merge_new_and_old
+
+polly.loop_header:                                ; preds = %polly.loop_exit5, %polly.loop_preheader
+  %polly.indvar = phi i64 [ 0, %polly.loop_preheader ], [ %polly.indvar_next, %polly.loop_exit5 ]
+  br label %polly.loop_preheader4
+
+polly.loop_exit5:                                 ; preds = %polly.loop_exit11
+  %polly.indvar_next = add nsw i64 %polly.indvar, 1
+  %polly.loop_cond = icmp sle i64 %polly.indvar, 318
+  br i1 %polly.loop_cond, label %polly.loop_header, label %polly.loop_exit, !llvm.loop !109
+
+polly.loop_preheader:                             ; preds = %polly.start
+  br label %polly.loop_header
+
+polly.loop_header3:                               ; preds = %polly.loop_exit11, %polly.loop_preheader4
+  %polly.indvar6 = phi i64 [ 0, %polly.loop_preheader4 ], [ %polly.indvar_next7, %polly.loop_exit11 ]
+  br label %polly.loop_preheader10
+
+polly.loop_exit11:                                ; preds = %polly.stmt.polly.loop_preheader14.i
+  %polly.indvar_next7 = add nsw i64 %polly.indvar6, 1
+  %polly.loop_cond8 = icmp sle i64 %polly.indvar6, 318
+  br i1 %polly.loop_cond8, label %polly.loop_header3, label %polly.loop_exit5
+
+polly.loop_preheader4:                            ; preds = %polly.loop_header
+  %28 = shl i64 %polly.indvar, 5
+  %scevgep = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %28, i64 0
+  %scevgep18 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %28, i64 0
+  %scevgep22 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %28, i64 0
+  %29 = mul i64 %polly.indvar, 327680
+  %scevgep26 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 0, i64 4), i64 %29
+  %scevgep30 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 0, i64 4), i64 %29
+  %scevgep34 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 0, i64 4), i64 %29
+  %scevgep38 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 0, i64 8), i64 %29
+  %scevgep42 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 0, i64 8), i64 %29
+  %scevgep46 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 0, i64 8), i64 %29
+  %30 = mul i64 %polly.indvar, 327680
+  %scevgep50 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 0, i64 12), i64 %30
+  %scevgep54 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 0, i64 12), i64 %30
+  %scevgep58 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 0, i64 12), i64 %30
+  %scevgep62 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 0, i64 16), i64 %30
+  %scevgep66 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 0, i64 16), i64 %30
+  %scevgep70 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 0, i64 16), i64 %30
+  %31 = mul i64 %polly.indvar, 327680
+  %scevgep74 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 0, i64 20), i64 %31
+  %scevgep78 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 0, i64 20), i64 %31
+  %scevgep82 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 0, i64 20), i64 %31
+  %scevgep86 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 0, i64 24), i64 %31
+  %scevgep90 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 0, i64 24), i64 %31
+  %scevgep94 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 0, i64 24), i64 %31
+  %32 = mul i64 %polly.indvar, 327680
+  %scevgep98 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 0, i64 28), i64 %32
+  %scevgep102 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 0, i64 28), i64 %32
+  %scevgep106 = getelementptr i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 0, i64 28), i64 %32
+  br label %polly.loop_header3
+
+polly.loop_header9:                               ; preds = %polly.stmt.polly.loop_preheader14.i, %polly.loop_preheader10
+  %polly.indvar12 = phi i64 [ 0, %polly.loop_preheader10 ], [ %polly.indvar_next13, %polly.stmt.polly.loop_preheader14.i ]
+  br label %polly.stmt.polly.loop_preheader14.i
+
+polly.stmt.polly.loop_preheader14.i:              ; preds = %polly.loop_header9
+  %33 = mul i64 %polly.indvar12, 10240
+  %scevgep16 = getelementptr i64, i64* %scevgep15, i64 %33
+  %scevgep1617 = bitcast i64* %scevgep16 to <4 x i64>*
+  %_p_vec_full.i_p_scalar_ = load <4 x i64>, <4 x i64>* %scevgep1617, align 16, !alias.scope !110, !noalias !112, !llvm.mem.parallel_loop_access !109
+  %scevgep20 = getelementptr i64, i64* %scevgep19, i64 %33
+  %scevgep2021 = bitcast i64* %scevgep20 to <4 x i64>*
+  %_p_vec_full21.i_p_scalar_ = load <4 x i64>, <4 x i64>* %scevgep2021, align 16, !alias.scope !114, !noalias !115, !llvm.mem.parallel_loop_access !109
+  %p_addp_vec.i = add <4 x i64> %_p_vec_full21.i_p_scalar_, %_p_vec_full.i_p_scalar_, !dbg !98
+  %34 = mul i64 %polly.indvar12, 10240
+  %scevgep24 = getelementptr i64, i64* %scevgep23, i64 %34
+  %scevgep2425 = bitcast i64* %scevgep24 to <4 x i64>*
+  store <4 x i64> %p_addp_vec.i, <4 x i64>* %scevgep2425, align 16, !alias.scope !113, !noalias !116, !llvm.mem.parallel_loop_access !109
+  %scevgep28 = getelementptr i64, i64* %scevgep27, i64 %34
+  %scevgep2829 = bitcast i64* %scevgep28 to <4 x i64>*
+  %_p_vec_full.1.i_p_scalar_ = load <4 x i64>, <4 x i64>* %scevgep2829, align 16, !alias.scope !110, !noalias !112, !llvm.mem.parallel_loop_access !109
+  %35 = mul i64 %polly.indvar12, 10240
+  %scevgep32 = getelementptr i64, i64* %scevgep31, i64 %35
+  %scevgep3233 = bitcast i64* %scevgep32 to <4 x i64>*
+  %_p_vec_full21.1.i_p_scalar_ = load <4 x i64>, <4 x i64>* %scevgep3233, align 16, !alias.scope !114, !noalias !115, !llvm.mem.parallel_loop_access !109
+  %p_addp_vec.1.i = add <4 x i64> %_p_vec_full21.1.i_p_scalar_, %_p_vec_full.1.i_p_scalar_, !dbg !98
+  %scevgep36 = getelementptr i64, i64* %scevgep35, i64 %35
+  %scevgep3637 = bitcast i64* %scevgep36 to <4 x i64>*
+  store <4 x i64> %p_addp_vec.1.i, <4 x i64>* %scevgep3637, align 16, !alias.scope !113, !noalias !116, !llvm.mem.parallel_loop_access !109
+  %36 = mul i64 %polly.indvar12, 10240
+  %scevgep40 = getelementptr i64, i64* %scevgep39, i64 %36
+  %scevgep4041 = bitcast i64* %scevgep40 to <4 x i64>*
+  %_p_vec_full.2.i_p_scalar_ = load <4 x i64>, <4 x i64>* %scevgep4041, align 16, !alias.scope !110, !noalias !112, !llvm.mem.parallel_loop_access !109
+  %scevgep44 = getelementptr i64, i64* %scevgep43, i64 %36
+  %scevgep4445 = bitcast i64* %scevgep44 to <4 x i64>*
+  %_p_vec_full21.2.i_p_scalar_ = load <4 x i64>, <4 x i64>* %scevgep4445, align 16, !alias.scope !114, !noalias !115, !llvm.mem.parallel_loop_access !109
+  %p_addp_vec.2.i = add <4 x i64> %_p_vec_full21.2.i_p_scalar_, %_p_vec_full.2.i_p_scalar_, !dbg !98
+  %37 = mul i64 %polly.indvar12, 10240
+  %scevgep48 = getelementptr i64, i64* %scevgep47, i64 %37
+  %scevgep4849 = bitcast i64* %scevgep48 to <4 x i64>*
+  store <4 x i64> %p_addp_vec.2.i, <4 x i64>* %scevgep4849, align 16, !alias.scope !113, !noalias !116, !llvm.mem.parallel_loop_access !109
+  %scevgep52 = getelementptr i64, i64* %scevgep51, i64 %37
+  %scevgep5253 = bitcast i64* %scevgep52 to <4 x i64>*
+  %_p_vec_full.3.i_p_scalar_ = load <4 x i64>, <4 x i64>* %scevgep5253, align 16, !alias.scope !110, !noalias !112, !llvm.mem.parallel_loop_access !109
+  %38 = mul i64 %polly.indvar12, 10240
+  %scevgep56 = getelementptr i64, i64* %scevgep55, i64 %38
+  %scevgep5657 = bitcast i64* %scevgep56 to <4 x i64>*
+  %_p_vec_full21.3.i_p_scalar_ = load <4 x i64>, <4 x i64>* %scevgep5657, align 16, !alias.scope !114, !noalias !115, !llvm.mem.parallel_loop_access !109
+  %p_addp_vec.3.i = add <4 x i64> %_p_vec_full21.3.i_p_scalar_, %_p_vec_full.3.i_p_scalar_, !dbg !98
+  %scevgep60 = getelementptr i64, i64* %scevgep59, i64 %38
+  %scevgep6061 = bitcast i64* %scevgep60 to <4 x i64>*
+  store <4 x i64> %p_addp_vec.3.i, <4 x i64>* %scevgep6061, align 16, !alias.scope !113, !noalias !116, !llvm.mem.parallel_loop_access !109
+  %39 = mul i64 %polly.indvar12, 10240
+  %scevgep64 = getelementptr i64, i64* %scevgep63, i64 %39
+  %scevgep6465 = bitcast i64* %scevgep64 to <4 x i64>*
+  %_p_vec_full.4.i_p_scalar_ = load <4 x i64>, <4 x i64>* %scevgep6465, align 16, !alias.scope !110, !noalias !112, !llvm.mem.parallel_loop_access !109
+  %scevgep68 = getelementptr i64, i64* %scevgep67, i64 %39
+  %scevgep6869 = bitcast i64* %scevgep68 to <4 x i64>*
+  %_p_vec_full21.4.i_p_scalar_ = load <4 x i64>, <4 x i64>* %scevgep6869, align 16, !alias.scope !114, !noalias !115, !llvm.mem.parallel_loop_access !109
+  %p_addp_vec.4.i = add <4 x i64> %_p_vec_full21.4.i_p_scalar_, %_p_vec_full.4.i_p_scalar_, !dbg !98
+  %40 = mul i64 %polly.indvar12, 10240
+  %scevgep72 = getelementptr i64, i64* %scevgep71, i64 %40
+  %scevgep7273 = bitcast i64* %scevgep72 to <4 x i64>*
+  store <4 x i64> %p_addp_vec.4.i, <4 x i64>* %scevgep7273, align 16, !alias.scope !113, !noalias !116, !llvm.mem.parallel_loop_access !109
+  %scevgep76 = getelementptr i64, i64* %scevgep75, i64 %40
+  %scevgep7677 = bitcast i64* %scevgep76 to <4 x i64>*
+  %_p_vec_full.5.i_p_scalar_ = load <4 x i64>, <4 x i64>* %scevgep7677, align 16, !alias.scope !110, !noalias !112, !llvm.mem.parallel_loop_access !109
+  %41 = mul i64 %polly.indvar12, 10240
+  %scevgep80 = getelementptr i64, i64* %scevgep79, i64 %41
+  %scevgep8081 = bitcast i64* %scevgep80 to <4 x i64>*
+  %_p_vec_full21.5.i_p_scalar_ = load <4 x i64>, <4 x i64>* %scevgep8081, align 16, !alias.scope !114, !noalias !115, !llvm.mem.parallel_loop_access !109
+  %p_addp_vec.5.i = add <4 x i64> %_p_vec_full21.5.i_p_scalar_, %_p_vec_full.5.i_p_scalar_, !dbg !98
+  %scevgep84 = getelementptr i64, i64* %scevgep83, i64 %41
+  %scevgep8485 = bitcast i64* %scevgep84 to <4 x i64>*
+  store <4 x i64> %p_addp_vec.5.i, <4 x i64>* %scevgep8485, align 16, !alias.scope !113, !noalias !116, !llvm.mem.parallel_loop_access !109
+  %42 = mul i64 %polly.indvar12, 10240
+  %scevgep88 = getelementptr i64, i64* %scevgep87, i64 %42
+  %scevgep8889 = bitcast i64* %scevgep88 to <4 x i64>*
+  %_p_vec_full.6.i_p_scalar_ = load <4 x i64>, <4 x i64>* %scevgep8889, align 16, !alias.scope !110, !noalias !112, !llvm.mem.parallel_loop_access !109
+  %scevgep92 = getelementptr i64, i64* %scevgep91, i64 %42
+  %scevgep9293 = bitcast i64* %scevgep92 to <4 x i64>*
+  %_p_vec_full21.6.i_p_scalar_ = load <4 x i64>, <4 x i64>* %scevgep9293, align 16, !alias.scope !114, !noalias !115, !llvm.mem.parallel_loop_access !109
+  %p_addp_vec.6.i = add <4 x i64> %_p_vec_full21.6.i_p_scalar_, %_p_vec_full.6.i_p_scalar_, !dbg !98
+  %43 = mul i64 %polly.indvar12, 10240
+  %scevgep96 = getelementptr i64, i64* %scevgep95, i64 %43
+  %scevgep9697 = bitcast i64* %scevgep96 to <4 x i64>*
+  store <4 x i64> %p_addp_vec.6.i, <4 x i64>* %scevgep9697, align 16, !alias.scope !113, !noalias !116, !llvm.mem.parallel_loop_access !109
+  %scevgep100 = getelementptr i64, i64* %scevgep99, i64 %43
+  %scevgep100101 = bitcast i64* %scevgep100 to <4 x i64>*
+  %_p_vec_full.7.i_p_scalar_ = load <4 x i64>, <4 x i64>* %scevgep100101, align 16, !alias.scope !110, !noalias !112, !llvm.mem.parallel_loop_access !109
+  %44 = mul i64 %polly.indvar12, 10240
+  %scevgep104 = getelementptr i64, i64* %scevgep103, i64 %44
+  %scevgep104105 = bitcast i64* %scevgep104 to <4 x i64>*
+  %_p_vec_full21.7.i_p_scalar_ = load <4 x i64>, <4 x i64>* %scevgep104105, align 16, !alias.scope !114, !noalias !115, !llvm.mem.parallel_loop_access !109
+  %p_addp_vec.7.i = add <4 x i64> %_p_vec_full21.7.i_p_scalar_, %_p_vec_full.7.i_p_scalar_, !dbg !98
+  %scevgep108 = getelementptr i64, i64* %scevgep107, i64 %44
+  %scevgep108109 = bitcast i64* %scevgep108 to <4 x i64>*
+  store <4 x i64> %p_addp_vec.7.i, <4 x i64>* %scevgep108109, align 16, !alias.scope !113, !noalias !116, !llvm.mem.parallel_loop_access !109
+  %45 = add i64 %polly.indvar12, 1
+  %p_exitcond.i1 = icmp eq i64 %45, 32, !dbg !98
+  %polly.indvar_next13 = add nsw i64 %polly.indvar12, 1
+  %polly.loop_cond14 = icmp sle i64 %polly.indvar12, 30
+  br i1 %polly.loop_cond14, label %polly.loop_header9, label %polly.loop_exit11
+
+polly.loop_preheader10:                           ; preds = %polly.loop_header3
+  %46 = shl i64 %polly.indvar6, 5
+  %scevgep15 = getelementptr i64, i64* %scevgep, i64 %46
+  %scevgep19 = getelementptr i64, i64* %scevgep18, i64 %46
+  %scevgep23 = getelementptr i64, i64* %scevgep22, i64 %46
+  %scevgep27 = getelementptr i64, i64* %scevgep26, i64 %46
+  %scevgep31 = getelementptr i64, i64* %scevgep30, i64 %46
+  %scevgep35 = getelementptr i64, i64* %scevgep34, i64 %46
+  %47 = shl i64 %polly.indvar6, 5
+  %scevgep39 = getelementptr i64, i64* %scevgep38, i64 %47
+  %scevgep43 = getelementptr i64, i64* %scevgep42, i64 %47
+  %scevgep47 = getelementptr i64, i64* %scevgep46, i64 %47
+  %scevgep51 = getelementptr i64, i64* %scevgep50, i64 %47
+  %scevgep55 = getelementptr i64, i64* %scevgep54, i64 %47
+  %scevgep59 = getelementptr i64, i64* %scevgep58, i64 %47
+  %48 = shl i64 %polly.indvar6, 5
+  %scevgep63 = getelementptr i64, i64* %scevgep62, i64 %48
+  %scevgep67 = getelementptr i64, i64* %scevgep66, i64 %48
+  %scevgep71 = getelementptr i64, i64* %scevgep70, i64 %48
+  %scevgep75 = getelementptr i64, i64* %scevgep74, i64 %48
+  %scevgep79 = getelementptr i64, i64* %scevgep78, i64 %48
+  %scevgep83 = getelementptr i64, i64* %scevgep82, i64 %48
+  %49 = shl i64 %polly.indvar6, 5
+  %scevgep87 = getelementptr i64, i64* %scevgep86, i64 %49
+  %scevgep91 = getelementptr i64, i64* %scevgep90, i64 %49
+  %scevgep95 = getelementptr i64, i64* %scevgep94, i64 %49
+  %scevgep99 = getelementptr i64, i64* %scevgep98, i64 %49
+  %scevgep103 = getelementptr i64, i64* %scevgep102, i64 %49
+  %scevgep107 = getelementptr i64, i64* %scevgep106, i64 %49
+  br label %polly.loop_header9
 }
 
 ; Function Attrs: nounwind
@@ -660,13 +851,13 @@ attributes #4 = { nounwind }
 !11 = !{!12}
 !12 = !DIBasicType(name: "int", size: 32, align: 32, encoding: DW_ATE_signed)
 !13 = !{!14, !19, !20}
-!14 = !DIGlobalVariable(name: "A", scope: !0, file: !1, line: 3, type: !15, isLocal: false, isDefinition: true, variable: [1024 x [1024 x i64]]* @A)
-!15 = !DICompositeType(tag: DW_TAG_array_type, baseType: !16, size: 67108864, align: 64, elements: !17)
+!14 = !DIGlobalVariable(name: "A", scope: !0, file: !1, line: 3, type: !15, isLocal: false, isDefinition: true, variable: [10240 x [10240 x i64]]* @A)
+!15 = !DICompositeType(tag: DW_TAG_array_type, baseType: !16, size: 6710886400, align: 64, elements: !17)
 !16 = !DIBasicType(name: "long long int", size: 64, align: 64, encoding: DW_ATE_signed)
 !17 = !{!18, !18}
-!18 = !DISubrange(count: 1024)
-!19 = !DIGlobalVariable(name: "B", scope: !0, file: !1, line: 4, type: !15, isLocal: false, isDefinition: true, variable: [1024 x [1024 x i64]]* @B)
-!20 = !DIGlobalVariable(name: "C", scope: !0, file: !1, line: 5, type: !15, isLocal: false, isDefinition: true, variable: [1024 x [1024 x i64]]* @C)
+!18 = !DISubrange(count: 10240)
+!19 = !DIGlobalVariable(name: "B", scope: !0, file: !1, line: 4, type: !15, isLocal: false, isDefinition: true, variable: [10240 x [10240 x i64]]* @B)
+!20 = !DIGlobalVariable(name: "C", scope: !0, file: !1, line: 5, type: !15, isLocal: false, isDefinition: true, variable: [10240 x [10240 x i64]]* @C)
 !21 = !{i32 2, !"Dwarf Version", i32 4}
 !22 = !{i32 2, !"Debug Info Version", i32 3}
 !23 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)"}
@@ -700,7 +891,7 @@ attributes #4 = { nounwind }
 !51 = !{!52, !53}
 !52 = distinct !{!52, !50, !"polly.alias.scope.C"}
 !53 = distinct !{!53, !50, !"polly.alias.scope.B"}
-!54 = !{!49, !52}
+!54 = !{!52, !49}
 !55 = !{!49, !53}
 !56 = distinct !{!56}
 !57 = distinct !{!57, !58, !"polly.alias.scope.A"}
@@ -708,7 +899,7 @@ attributes #4 = { nounwind }
 !59 = !{!60, !61}
 !60 = distinct !{!60, !58, !"polly.alias.scope.C"}
 !61 = distinct !{!61, !58, !"polly.alias.scope.B"}
-!62 = !{!57, !60}
+!62 = !{!60, !57}
 !63 = !{!57, !61}
 !64 = !DILocation(line: 31, column: 9, scope: !8)
 !65 = !DILocalVariable(name: "i", scope: !8, file: !1, line: 31, type: !12)
@@ -734,33 +925,32 @@ attributes #4 = { nounwind }
 !85 = !DILocation(line: 36, column: 29, scope: !84)
 !86 = !DILocation(line: 38, column: 9, scope: !74)
 !87 = !DILocation(line: 40, column: 1, scope: !8)
-!88 = !DILocation(line: 47, column: 9, scope: !9)
-!89 = !DILocalVariable(name: "r", scope: !9, file: !1, line: 47, type: !12)
-!90 = !DILocation(line: 48, column: 5, scope: !91)
-!91 = !DILexicalBlockFile(scope: !92, file: !1, discriminator: 1)
-!92 = distinct !DILexicalBlock(scope: !93, file: !1, line: 48, column: 5)
-!93 = distinct !DILexicalBlock(scope: !9, file: !1, line: 48, column: 5)
-!94 = !DILocation(line: 9, column: 9, scope: !4, inlinedAt: !95)
-!95 = distinct !DILocation(line: 49, column: 9, scope: !96)
-!96 = distinct !DILexicalBlock(scope: !92, file: !1, line: 48, column: 23)
-!97 = !DILocation(line: 11, column: 5, scope: !28, inlinedAt: !95)
-!98 = !DILocation(line: 49, column: 9, scope: !96)
-!99 = !DILocation(line: 12, column: 9, scope: !32, inlinedAt: !95)
-!100 = !DILocation(line: 13, column: 13, scope: !37, inlinedAt: !95)
-!101 = !DILocation(line: 13, column: 21, scope: !37, inlinedAt: !95)
-!102 = !DILocation(line: 14, column: 13, scope: !37, inlinedAt: !95)
-!103 = !DILocation(line: 14, column: 21, scope: !37, inlinedAt: !95)
-!104 = distinct !{!104, !42, !43}
-!105 = !DILocation(line: 50, column: 9, scope: !96)
-!106 = distinct !{!106, !107, !"polly.alias.scope.A"}
-!107 = distinct !{!107, !"polly.alias.scope.domain"}
-!108 = !{!109, !110}
-!109 = distinct !{!109, !107, !"polly.alias.scope.C"}
-!110 = distinct !{!110, !107, !"polly.alias.scope.B"}
-!111 = !{!106, !109}
-!112 = !{!106, !110}
-!113 = !DILocation(line: 48, column: 20, scope: !114)
-!114 = !DILexicalBlockFile(scope: !92, file: !1, discriminator: 2)
-!115 = !DILocation(line: 53, column: 83, scope: !9)
-!116 = !DILocation(line: 53, column: 5, scope: !9)
-!117 = !DILocation(line: 54, column: 5, scope: !9)
+!88 = !DILocation(line: 9, column: 9, scope: !4, inlinedAt: !89)
+!89 = distinct !DILocation(line: 49, column: 5, scope: !9)
+!90 = !DILocation(line: 11, column: 5, scope: !28, inlinedAt: !89)
+!91 = !DILocation(line: 49, column: 5, scope: !9)
+!92 = !DILocation(line: 12, column: 9, scope: !32, inlinedAt: !89)
+!93 = !DILocation(line: 13, column: 13, scope: !37, inlinedAt: !89)
+!94 = !DILocation(line: 13, column: 21, scope: !37, inlinedAt: !89)
+!95 = !DILocation(line: 14, column: 13, scope: !37, inlinedAt: !89)
+!96 = !DILocation(line: 14, column: 21, scope: !37, inlinedAt: !89)
+!97 = distinct !{!97, !42, !43}
+!98 = !DILocation(line: 50, column: 5, scope: !9)
+!99 = distinct !{!99, !100, !"polly.alias.scope.A"}
+!100 = distinct !{!100, !"polly.alias.scope.domain"}
+!101 = !{!102, !103}
+!102 = distinct !{!102, !100, !"polly.alias.scope.C"}
+!103 = distinct !{!103, !100, !"polly.alias.scope.B"}
+!104 = !{!102, !99}
+!105 = !{!99, !103}
+!106 = !DILocation(line: 53, column: 83, scope: !9)
+!107 = !DILocation(line: 53, column: 5, scope: !9)
+!108 = !DILocation(line: 54, column: 5, scope: !9)
+!109 = distinct !{!109}
+!110 = distinct !{!110, !111, !"polly.alias.scope.A"}
+!111 = distinct !{!111, !"polly.alias.scope.domain"}
+!112 = !{!113, !114}
+!113 = distinct !{!113, !111, !"polly.alias.scope.C"}
+!114 = distinct !{!114, !111, !"polly.alias.scope.B"}
+!115 = !{!113, !110}
+!116 = !{!110, !114}

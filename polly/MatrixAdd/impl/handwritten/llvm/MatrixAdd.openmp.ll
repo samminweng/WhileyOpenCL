@@ -5,9 +5,9 @@ target triple = "x86_64-unknown-linux-gnu"
 %struct._IO_FILE = type { i32, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, %struct._IO_marker*, %struct._IO_FILE*, i32, i32, i64, i16, i8, [1 x i8], i8*, i64, i8*, i8*, i8*, i8*, i64, i32, [20 x i8] }
 %struct._IO_marker = type { %struct._IO_marker*, %struct._IO_FILE*, i32 }
 
-@A = common global [1024 x [1024 x i64]] zeroinitializer, align 16
-@B = common global [1024 x [1024 x i64]] zeroinitializer, align 16
-@C = common global [1024 x [1024 x i64]] zeroinitializer, align 16
+@A = common global [10240 x [10240 x i64]] zeroinitializer, align 16
+@B = common global [10240 x [10240 x i64]] zeroinitializer, align 16
+@C = common global [10240 x [10240 x i64]] zeroinitializer, align 16
 @stdout = external global %struct._IO_FILE*, align 8
 @.str = private unnamed_addr constant [6 x i8] c"%lld \00", align 1
 @.str.2 = private unnamed_addr constant [51 x i8] c"Pass %d X %d matrix test case (C[%d][%d] =%lld) \0A \00", align 1
@@ -27,38 +27,38 @@ vector.ph:                                        ; preds = %for.inc10, %entry.s
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
   %index = phi i64 [ 0, %vector.ph ], [ %index.next.1, %vector.body ], !dbg !31
-  %0 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 %index, !dbg !36
+  %0 = getelementptr inbounds [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 %index, !dbg !36
   %1 = bitcast i64* %0 to <2 x i64>*, !dbg !38
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %1, align 16, !dbg !38
   %2 = getelementptr i64, i64* %0, i64 2, !dbg !38
   %3 = bitcast i64* %2 to <2 x i64>*, !dbg !38
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %3, align 16, !dbg !38
-  %4 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %indvars.iv3, i64 %index, !dbg !39
+  %4 = getelementptr inbounds [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %indvars.iv3, i64 %index, !dbg !39
   %5 = bitcast i64* %4 to <2 x i64>*, !dbg !40
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %5, align 16, !dbg !40
   %6 = getelementptr i64, i64* %4, i64 2, !dbg !40
   %7 = bitcast i64* %6 to <2 x i64>*, !dbg !40
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %7, align 16, !dbg !40
   %index.next = or i64 %index, 4, !dbg !31
-  %8 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 %index.next, !dbg !36
+  %8 = getelementptr inbounds [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 %index.next, !dbg !36
   %9 = bitcast i64* %8 to <2 x i64>*, !dbg !38
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %9, align 16, !dbg !38
   %10 = getelementptr i64, i64* %8, i64 2, !dbg !38
   %11 = bitcast i64* %10 to <2 x i64>*, !dbg !38
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %11, align 16, !dbg !38
-  %12 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %indvars.iv3, i64 %index.next, !dbg !39
+  %12 = getelementptr inbounds [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %indvars.iv3, i64 %index.next, !dbg !39
   %13 = bitcast i64* %12 to <2 x i64>*, !dbg !40
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %13, align 16, !dbg !40
   %14 = getelementptr i64, i64* %12, i64 2, !dbg !40
   %15 = bitcast i64* %14 to <2 x i64>*, !dbg !40
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %15, align 16, !dbg !40
   %index.next.1 = add nsw i64 %index, 8, !dbg !31
-  %16 = icmp eq i64 %index.next.1, 1024, !dbg !31
+  %16 = icmp eq i64 %index.next.1, 10240, !dbg !31
   br i1 %16, label %for.inc10, label %vector.body, !dbg !31, !llvm.loop !41
 
 for.inc10:                                        ; preds = %vector.body
   %indvars.iv.next4 = add nuw nsw i64 %indvars.iv3, 1, !dbg !27
-  %exitcond5 = icmp eq i64 %indvars.iv.next4, 1024, !dbg !27
+  %exitcond5 = icmp eq i64 %indvars.iv.next4, 10240, !dbg !27
   br i1 %exitcond5, label %for.end12, label %vector.ph, !dbg !27
 
 for.end12:                                        ; preds = %for.inc10
@@ -75,7 +75,7 @@ entry.split:                                      ; preds = %entry
   tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !46, metadata !26), !dbg !45
   %0 = bitcast {}* %polly.par.userContext to i8*
   call void @llvm.lifetime.start(i64 0, i8* %0)
-  call void @GOMP_parallel_loop_runtime_start(void (i8*)* nonnull @mat_add_polly_subfn, i8* %0, i32 0, i64 0, i64 32, i64 1) #4
+  call void @GOMP_parallel_loop_runtime_start(void (i8*)* nonnull @mat_add_polly_subfn, i8* %0, i32 0, i64 0, i64 320, i64 1) #4
   call void @mat_add_polly_subfn(i8* %0) #4
   call void @GOMP_parallel_end() #4
   call void @llvm.lifetime.end(i64 8, i8* %0)
@@ -99,7 +99,7 @@ for.cond1.preheader:                              ; preds = %for.end, %entry.spl
 for.body3:                                        ; preds = %for.inc, %for.cond1.preheader
   %indvars.iv = phi i64 [ 0, %for.cond1.preheader ], [ %indvars.iv.next, %for.inc ]
   %1 = phi %struct._IO_FILE* [ %0, %for.cond1.preheader ], [ %5, %for.inc ]
-  %arrayidx5 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %indvars.iv6, i64 %indvars.iv, !dbg !61
+  %arrayidx5 = getelementptr inbounds [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %indvars.iv6, i64 %indvars.iv, !dbg !61
   %2 = load i64, i64* %arrayidx5, align 8, !dbg !61
   %call = tail call i32 (%struct._IO_FILE*, i8*, ...) @fprintf(%struct._IO_FILE* %1, i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str, i64 0, i64 0), i64 %2) #4, !dbg !62
   %3 = trunc i64 %indvars.iv to i32, !dbg !63
@@ -115,14 +115,14 @@ if.then:                                          ; preds = %for.body3
 for.inc:                                          ; preds = %if.then, %for.body3
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !59
   %5 = load %struct._IO_FILE*, %struct._IO_FILE** @stdout, align 8, !dbg !54
-  %exitcond = icmp eq i64 %indvars.iv.next, 1024, !dbg !59
+  %exitcond = icmp eq i64 %indvars.iv.next, 10240, !dbg !59
   br i1 %exitcond, label %for.end, label %for.body3, !dbg !59
 
 for.end:                                          ; preds = %for.inc
   %.lcssa = phi %struct._IO_FILE* [ %5, %for.inc ]
   %fputc = tail call i32 @fputc(i32 10, %struct._IO_FILE* %.lcssa), !dbg !70
   %indvars.iv.next7 = add nuw nsw i64 %indvars.iv6, 1, !dbg !50
-  %exitcond8 = icmp eq i64 %indvars.iv.next7, 1024, !dbg !50
+  %exitcond8 = icmp eq i64 %indvars.iv.next7, 10240, !dbg !50
   br i1 %exitcond8, label %for.end11, label %for.cond1.preheader, !dbg !50
 
 for.end11:                                        ; preds = %for.end
@@ -139,71 +139,60 @@ entry:
   br label %entry.split, !dbg !72
 
 entry.split:                                      ; preds = %entry
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !73, metadata !26), !dbg !72
-  %0 = bitcast {}* %polly.par.userContext.i to i8*, !dbg !74
-  br label %for.body, !dbg !78
+  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !25, metadata !26), !dbg !72
+  br label %vector.ph, !dbg !74
 
-for.body:                                         ; preds = %init_array.exit, %entry.split
-  %r.01 = phi i32 [ 0, %entry.split ], [ %inc, %init_array.exit ]
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !25, metadata !26), !dbg !80
-  br label %vector.ph, !dbg !82
-
-vector.ph:                                        ; preds = %for.inc10.i, %for.body
-  %indvars.iv3.i = phi i64 [ 0, %for.body ], [ %indvars.iv.next4.i, %for.inc10.i ], !dbg !83
-  br label %vector.body, !dbg !84
+vector.ph:                                        ; preds = %for.inc10.i, %entry.split
+  %indvars.iv3.i = phi i64 [ 0, %entry.split ], [ %indvars.iv.next4.i, %for.inc10.i ], !dbg !75
+  br label %vector.body, !dbg !76
 
 vector.body:                                      ; preds = %vector.body, %vector.ph
-  %index = phi i64 [ 0, %vector.ph ], [ %index.next.1, %vector.body ], !dbg !83
-  %1 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %indvars.iv3.i, i64 %index, !dbg !85
-  %2 = bitcast i64* %1 to <2 x i64>*, !dbg !86
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %2, align 16, !dbg !86
-  %3 = getelementptr i64, i64* %1, i64 2, !dbg !86
-  %4 = bitcast i64* %3 to <2 x i64>*, !dbg !86
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %4, align 16, !dbg !86
-  %5 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %indvars.iv3.i, i64 %index, !dbg !87
-  %6 = bitcast i64* %5 to <2 x i64>*, !dbg !88
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %6, align 16, !dbg !88
-  %7 = getelementptr i64, i64* %5, i64 2, !dbg !88
-  %8 = bitcast i64* %7 to <2 x i64>*, !dbg !88
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %8, align 16, !dbg !88
-  %index.next = or i64 %index, 4, !dbg !84
-  %9 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %indvars.iv3.i, i64 %index.next, !dbg !85
-  %10 = bitcast i64* %9 to <2 x i64>*, !dbg !86
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %10, align 16, !dbg !86
-  %11 = getelementptr i64, i64* %9, i64 2, !dbg !86
-  %12 = bitcast i64* %11 to <2 x i64>*, !dbg !86
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %12, align 16, !dbg !86
-  %13 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %indvars.iv3.i, i64 %index.next, !dbg !87
-  %14 = bitcast i64* %13 to <2 x i64>*, !dbg !88
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %14, align 16, !dbg !88
-  %15 = getelementptr i64, i64* %13, i64 2, !dbg !88
-  %16 = bitcast i64* %15 to <2 x i64>*, !dbg !88
-  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %16, align 16, !dbg !88
-  %index.next.1 = add nsw i64 %index, 8, !dbg !84
-  %17 = icmp eq i64 %index.next.1, 1024, !dbg !84
-  br i1 %17, label %for.inc10.i, label %vector.body, !dbg !84, !llvm.loop !89
+  %index = phi i64 [ 0, %vector.ph ], [ %index.next.1, %vector.body ], !dbg !75
+  %0 = getelementptr inbounds [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %indvars.iv3.i, i64 %index, !dbg !77
+  %1 = bitcast i64* %0 to <2 x i64>*, !dbg !78
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %1, align 16, !dbg !78
+  %2 = getelementptr i64, i64* %0, i64 2, !dbg !78
+  %3 = bitcast i64* %2 to <2 x i64>*, !dbg !78
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %3, align 16, !dbg !78
+  %4 = getelementptr inbounds [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %indvars.iv3.i, i64 %index, !dbg !79
+  %5 = bitcast i64* %4 to <2 x i64>*, !dbg !80
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %5, align 16, !dbg !80
+  %6 = getelementptr i64, i64* %4, i64 2, !dbg !80
+  %7 = bitcast i64* %6 to <2 x i64>*, !dbg !80
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %7, align 16, !dbg !80
+  %index.next = or i64 %index, 4, !dbg !76
+  %8 = getelementptr inbounds [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %indvars.iv3.i, i64 %index.next, !dbg !77
+  %9 = bitcast i64* %8 to <2 x i64>*, !dbg !78
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %9, align 16, !dbg !78
+  %10 = getelementptr i64, i64* %8, i64 2, !dbg !78
+  %11 = bitcast i64* %10 to <2 x i64>*, !dbg !78
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %11, align 16, !dbg !78
+  %12 = getelementptr inbounds [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %indvars.iv3.i, i64 %index.next, !dbg !79
+  %13 = bitcast i64* %12 to <2 x i64>*, !dbg !80
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %13, align 16, !dbg !80
+  %14 = getelementptr i64, i64* %12, i64 2, !dbg !80
+  %15 = bitcast i64* %14 to <2 x i64>*, !dbg !80
+  store <2 x i64> <i64 1, i64 1>, <2 x i64>* %15, align 16, !dbg !80
+  %index.next.1 = add nsw i64 %index, 8, !dbg !76
+  %16 = icmp eq i64 %index.next.1, 10240, !dbg !76
+  br i1 %16, label %for.inc10.i, label %vector.body, !dbg !76, !llvm.loop !81
 
 for.inc10.i:                                      ; preds = %vector.body
-  %indvars.iv.next4.i = add nuw nsw i64 %indvars.iv3.i, 1, !dbg !82
-  %exitcond5.i = icmp eq i64 %indvars.iv.next4.i, 1024, !dbg !82
-  br i1 %exitcond5.i, label %init_array.exit, label %vector.ph, !dbg !82
+  %indvars.iv.next4.i = add nuw nsw i64 %indvars.iv3.i, 1, !dbg !74
+  %exitcond5.i = icmp eq i64 %indvars.iv.next4.i, 10240, !dbg !74
+  br i1 %exitcond5.i, label %init_array.exit, label %vector.ph, !dbg !74
 
 init_array.exit:                                  ; preds = %for.inc10.i
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !46, metadata !26) #4, !dbg !90
-  call void @llvm.lifetime.start(i64 0, i8* %0) #4, !dbg !74
-  call void @GOMP_parallel_loop_runtime_start(void (i8*)* nonnull @mat_add_polly_subfn, i8* %0, i32 0, i64 0, i64 32, i64 1) #4, !dbg !74
-  call void @mat_add_polly_subfn(i8* %0) #4, !dbg !74
-  call void @GOMP_parallel_end() #4, !dbg !74
-  call void @llvm.lifetime.end(i64 8, i8* %0) #4, !dbg !74
-  %inc = add nuw nsw i32 %r.01, 1, !dbg !92
-  tail call void @llvm.dbg.value(metadata i32 %inc, i64 0, metadata !73, metadata !26), !dbg !72
-  %exitcond = icmp eq i32 %inc, 100, !dbg !78
-  br i1 %exitcond, label %for.end, label %for.body, !dbg !78
-
-for.end:                                          ; preds = %init_array.exit
-  %18 = load i64, i64* getelementptr inbounds ([1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 1023, i64 1023), align 8, !dbg !94
-  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([51 x i8], [51 x i8]* @.str.2, i64 0, i64 0), i32 1024, i32 1024, i32 1023, i32 1023, i64 %18) #4, !dbg !95
-  ret i32 0, !dbg !96
+  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !46, metadata !26) #4, !dbg !82
+  %17 = bitcast {}* %polly.par.userContext.i to i8*, !dbg !84
+  call void @llvm.lifetime.start(i64 0, i8* %17) #4, !dbg !84
+  call void @GOMP_parallel_loop_runtime_start(void (i8*)* nonnull @mat_add_polly_subfn, i8* %17, i32 0, i64 0, i64 320, i64 1) #4, !dbg !84
+  call void @mat_add_polly_subfn(i8* %17) #4, !dbg !84
+  call void @GOMP_parallel_end() #4, !dbg !84
+  call void @llvm.lifetime.end(i64 8, i8* %17) #4, !dbg !84
+  %18 = load i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 10239, i64 10239), align 8, !dbg !85
+  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([51 x i8], [51 x i8]* @.str.2, i64 0, i64 0), i32 10240, i32 10240, i32 10239, i32 10239, i64 %18) #4, !dbg !86
+  ret i32 0, !dbg !87
 }
 
 ; Function Attrs: nounwind
@@ -257,7 +246,7 @@ polly.loop_exit4:                                 ; preds = %polly.loop_exit10
 
 polly.loop_exit10:                                ; preds = %vector.body
   %polly.indvar_next6 = add nuw nsw i64 %polly.indvar5, 1
-  %exitcond24 = icmp eq i64 %polly.indvar_next6, 32
+  %exitcond24 = icmp eq i64 %polly.indvar_next6, 320
   br i1 %exitcond24, label %polly.loop_exit4, label %polly.loop_preheader9
 
 polly.loop_preheader3:                            ; preds = %polly.par.loadIVBounds, %polly.loop_exit4
@@ -291,166 +280,166 @@ polly.loop_preheader15:                           ; preds = %vector.body, %polly
   br label %vector.body
 
 vector.body:                                      ; preds = %polly.loop_preheader15
-  %22 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %21, i64 %5
+  %22 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %21, i64 %5
   %23 = bitcast i64* %22 to <2 x i64>*
-  %wide.load = load <2 x i64>, <2 x i64>* %23, align 16, !alias.scope !97, !noalias !99
-  %24 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %21, i64 %5
+  %wide.load = load <2 x i64>, <2 x i64>* %23, align 16, !alias.scope !88, !noalias !90
+  %24 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %21, i64 %5
   %25 = bitcast i64* %24 to <2 x i64>*
-  %wide.load27 = load <2 x i64>, <2 x i64>* %25, align 16, !alias.scope !100, !noalias !102
-  %26 = add nsw <2 x i64> %wide.load27, %wide.load, !dbg !103
-  %27 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %21, i64 %5
+  %wide.load27 = load <2 x i64>, <2 x i64>* %25, align 16, !alias.scope !91, !noalias !93
+  %26 = add nsw <2 x i64> %wide.load27, %wide.load, !dbg !94
+  %27 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %21, i64 %5
   %28 = bitcast i64* %27 to <2 x i64>*
-  store <2 x i64> %26, <2 x i64>* %28, align 16, !alias.scope !101, !noalias !110
-  %29 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %21, i64 %6
+  store <2 x i64> %26, <2 x i64>* %28, align 16, !alias.scope !92, !noalias !101
+  %29 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %21, i64 %6
   %30 = bitcast i64* %29 to <2 x i64>*
-  %wide.load.1 = load <2 x i64>, <2 x i64>* %30, align 16, !alias.scope !97, !noalias !99
-  %31 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %21, i64 %6
+  %wide.load.1 = load <2 x i64>, <2 x i64>* %30, align 16, !alias.scope !88, !noalias !90
+  %31 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %21, i64 %6
   %32 = bitcast i64* %31 to <2 x i64>*
-  %wide.load27.1 = load <2 x i64>, <2 x i64>* %32, align 16, !alias.scope !100, !noalias !102
-  %33 = add nsw <2 x i64> %wide.load27.1, %wide.load.1, !dbg !103
-  %34 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %21, i64 %6
+  %wide.load27.1 = load <2 x i64>, <2 x i64>* %32, align 16, !alias.scope !91, !noalias !93
+  %33 = add nsw <2 x i64> %wide.load27.1, %wide.load.1, !dbg !94
+  %34 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %21, i64 %6
   %35 = bitcast i64* %34 to <2 x i64>*
-  store <2 x i64> %33, <2 x i64>* %35, align 16, !alias.scope !101, !noalias !110
-  %36 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %21, i64 %7
+  store <2 x i64> %33, <2 x i64>* %35, align 16, !alias.scope !92, !noalias !101
+  %36 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %21, i64 %7
   %37 = bitcast i64* %36 to <2 x i64>*
-  %wide.load.2 = load <2 x i64>, <2 x i64>* %37, align 16, !alias.scope !97, !noalias !99
-  %38 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %21, i64 %7
+  %wide.load.2 = load <2 x i64>, <2 x i64>* %37, align 16, !alias.scope !88, !noalias !90
+  %38 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %21, i64 %7
   %39 = bitcast i64* %38 to <2 x i64>*
-  %wide.load27.2 = load <2 x i64>, <2 x i64>* %39, align 16, !alias.scope !100, !noalias !102
-  %40 = add nsw <2 x i64> %wide.load27.2, %wide.load.2, !dbg !103
-  %41 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %21, i64 %7
+  %wide.load27.2 = load <2 x i64>, <2 x i64>* %39, align 16, !alias.scope !91, !noalias !93
+  %40 = add nsw <2 x i64> %wide.load27.2, %wide.load.2, !dbg !94
+  %41 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %21, i64 %7
   %42 = bitcast i64* %41 to <2 x i64>*
-  store <2 x i64> %40, <2 x i64>* %42, align 16, !alias.scope !101, !noalias !110
-  %43 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %21, i64 %8
+  store <2 x i64> %40, <2 x i64>* %42, align 16, !alias.scope !92, !noalias !101
+  %43 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %21, i64 %8
   %44 = bitcast i64* %43 to <2 x i64>*
-  %wide.load.3 = load <2 x i64>, <2 x i64>* %44, align 16, !alias.scope !97, !noalias !99
-  %45 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %21, i64 %8
+  %wide.load.3 = load <2 x i64>, <2 x i64>* %44, align 16, !alias.scope !88, !noalias !90
+  %45 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %21, i64 %8
   %46 = bitcast i64* %45 to <2 x i64>*
-  %wide.load27.3 = load <2 x i64>, <2 x i64>* %46, align 16, !alias.scope !100, !noalias !102
-  %47 = add nsw <2 x i64> %wide.load27.3, %wide.load.3, !dbg !103
-  %48 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %21, i64 %8
+  %wide.load27.3 = load <2 x i64>, <2 x i64>* %46, align 16, !alias.scope !91, !noalias !93
+  %47 = add nsw <2 x i64> %wide.load27.3, %wide.load.3, !dbg !94
+  %48 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %21, i64 %8
   %49 = bitcast i64* %48 to <2 x i64>*
-  store <2 x i64> %47, <2 x i64>* %49, align 16, !alias.scope !101, !noalias !110
-  %50 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %21, i64 %9
+  store <2 x i64> %47, <2 x i64>* %49, align 16, !alias.scope !92, !noalias !101
+  %50 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %21, i64 %9
   %51 = bitcast i64* %50 to <2 x i64>*
-  %wide.load.4 = load <2 x i64>, <2 x i64>* %51, align 16, !alias.scope !97, !noalias !99
-  %52 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %21, i64 %9
+  %wide.load.4 = load <2 x i64>, <2 x i64>* %51, align 16, !alias.scope !88, !noalias !90
+  %52 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %21, i64 %9
   %53 = bitcast i64* %52 to <2 x i64>*
-  %wide.load27.4 = load <2 x i64>, <2 x i64>* %53, align 16, !alias.scope !100, !noalias !102
-  %54 = add nsw <2 x i64> %wide.load27.4, %wide.load.4, !dbg !103
-  %55 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %21, i64 %9
+  %wide.load27.4 = load <2 x i64>, <2 x i64>* %53, align 16, !alias.scope !91, !noalias !93
+  %54 = add nsw <2 x i64> %wide.load27.4, %wide.load.4, !dbg !94
+  %55 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %21, i64 %9
   %56 = bitcast i64* %55 to <2 x i64>*
-  store <2 x i64> %54, <2 x i64>* %56, align 16, !alias.scope !101, !noalias !110
-  %57 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %21, i64 %10
+  store <2 x i64> %54, <2 x i64>* %56, align 16, !alias.scope !92, !noalias !101
+  %57 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %21, i64 %10
   %58 = bitcast i64* %57 to <2 x i64>*
-  %wide.load.5 = load <2 x i64>, <2 x i64>* %58, align 16, !alias.scope !97, !noalias !99
-  %59 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %21, i64 %10
+  %wide.load.5 = load <2 x i64>, <2 x i64>* %58, align 16, !alias.scope !88, !noalias !90
+  %59 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %21, i64 %10
   %60 = bitcast i64* %59 to <2 x i64>*
-  %wide.load27.5 = load <2 x i64>, <2 x i64>* %60, align 16, !alias.scope !100, !noalias !102
-  %61 = add nsw <2 x i64> %wide.load27.5, %wide.load.5, !dbg !103
-  %62 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %21, i64 %10
+  %wide.load27.5 = load <2 x i64>, <2 x i64>* %60, align 16, !alias.scope !91, !noalias !93
+  %61 = add nsw <2 x i64> %wide.load27.5, %wide.load.5, !dbg !94
+  %62 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %21, i64 %10
   %63 = bitcast i64* %62 to <2 x i64>*
-  store <2 x i64> %61, <2 x i64>* %63, align 16, !alias.scope !101, !noalias !110
-  %64 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %21, i64 %11
+  store <2 x i64> %61, <2 x i64>* %63, align 16, !alias.scope !92, !noalias !101
+  %64 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %21, i64 %11
   %65 = bitcast i64* %64 to <2 x i64>*
-  %wide.load.6 = load <2 x i64>, <2 x i64>* %65, align 16, !alias.scope !97, !noalias !99
-  %66 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %21, i64 %11
+  %wide.load.6 = load <2 x i64>, <2 x i64>* %65, align 16, !alias.scope !88, !noalias !90
+  %66 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %21, i64 %11
   %67 = bitcast i64* %66 to <2 x i64>*
-  %wide.load27.6 = load <2 x i64>, <2 x i64>* %67, align 16, !alias.scope !100, !noalias !102
-  %68 = add nsw <2 x i64> %wide.load27.6, %wide.load.6, !dbg !103
-  %69 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %21, i64 %11
+  %wide.load27.6 = load <2 x i64>, <2 x i64>* %67, align 16, !alias.scope !91, !noalias !93
+  %68 = add nsw <2 x i64> %wide.load27.6, %wide.load.6, !dbg !94
+  %69 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %21, i64 %11
   %70 = bitcast i64* %69 to <2 x i64>*
-  store <2 x i64> %68, <2 x i64>* %70, align 16, !alias.scope !101, !noalias !110
-  %71 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %21, i64 %12
+  store <2 x i64> %68, <2 x i64>* %70, align 16, !alias.scope !92, !noalias !101
+  %71 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %21, i64 %12
   %72 = bitcast i64* %71 to <2 x i64>*
-  %wide.load.7 = load <2 x i64>, <2 x i64>* %72, align 16, !alias.scope !97, !noalias !99
-  %73 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %21, i64 %12
+  %wide.load.7 = load <2 x i64>, <2 x i64>* %72, align 16, !alias.scope !88, !noalias !90
+  %73 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %21, i64 %12
   %74 = bitcast i64* %73 to <2 x i64>*
-  %wide.load27.7 = load <2 x i64>, <2 x i64>* %74, align 16, !alias.scope !100, !noalias !102
-  %75 = add nsw <2 x i64> %wide.load27.7, %wide.load.7, !dbg !103
-  %76 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %21, i64 %12
+  %wide.load27.7 = load <2 x i64>, <2 x i64>* %74, align 16, !alias.scope !91, !noalias !93
+  %75 = add nsw <2 x i64> %wide.load27.7, %wide.load.7, !dbg !94
+  %76 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %21, i64 %12
   %77 = bitcast i64* %76 to <2 x i64>*
-  store <2 x i64> %75, <2 x i64>* %77, align 16, !alias.scope !101, !noalias !110
-  %78 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %21, i64 %13
+  store <2 x i64> %75, <2 x i64>* %77, align 16, !alias.scope !92, !noalias !101
+  %78 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %21, i64 %13
   %79 = bitcast i64* %78 to <2 x i64>*
-  %wide.load.8 = load <2 x i64>, <2 x i64>* %79, align 16, !alias.scope !97, !noalias !99
-  %80 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %21, i64 %13
+  %wide.load.8 = load <2 x i64>, <2 x i64>* %79, align 16, !alias.scope !88, !noalias !90
+  %80 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %21, i64 %13
   %81 = bitcast i64* %80 to <2 x i64>*
-  %wide.load27.8 = load <2 x i64>, <2 x i64>* %81, align 16, !alias.scope !100, !noalias !102
-  %82 = add nsw <2 x i64> %wide.load27.8, %wide.load.8, !dbg !103
-  %83 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %21, i64 %13
+  %wide.load27.8 = load <2 x i64>, <2 x i64>* %81, align 16, !alias.scope !91, !noalias !93
+  %82 = add nsw <2 x i64> %wide.load27.8, %wide.load.8, !dbg !94
+  %83 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %21, i64 %13
   %84 = bitcast i64* %83 to <2 x i64>*
-  store <2 x i64> %82, <2 x i64>* %84, align 16, !alias.scope !101, !noalias !110
-  %85 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %21, i64 %14
+  store <2 x i64> %82, <2 x i64>* %84, align 16, !alias.scope !92, !noalias !101
+  %85 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %21, i64 %14
   %86 = bitcast i64* %85 to <2 x i64>*
-  %wide.load.9 = load <2 x i64>, <2 x i64>* %86, align 16, !alias.scope !97, !noalias !99
-  %87 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %21, i64 %14
+  %wide.load.9 = load <2 x i64>, <2 x i64>* %86, align 16, !alias.scope !88, !noalias !90
+  %87 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %21, i64 %14
   %88 = bitcast i64* %87 to <2 x i64>*
-  %wide.load27.9 = load <2 x i64>, <2 x i64>* %88, align 16, !alias.scope !100, !noalias !102
-  %89 = add nsw <2 x i64> %wide.load27.9, %wide.load.9, !dbg !103
-  %90 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %21, i64 %14
+  %wide.load27.9 = load <2 x i64>, <2 x i64>* %88, align 16, !alias.scope !91, !noalias !93
+  %89 = add nsw <2 x i64> %wide.load27.9, %wide.load.9, !dbg !94
+  %90 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %21, i64 %14
   %91 = bitcast i64* %90 to <2 x i64>*
-  store <2 x i64> %89, <2 x i64>* %91, align 16, !alias.scope !101, !noalias !110
-  %92 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %21, i64 %15
+  store <2 x i64> %89, <2 x i64>* %91, align 16, !alias.scope !92, !noalias !101
+  %92 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %21, i64 %15
   %93 = bitcast i64* %92 to <2 x i64>*
-  %wide.load.10 = load <2 x i64>, <2 x i64>* %93, align 16, !alias.scope !97, !noalias !99
-  %94 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %21, i64 %15
+  %wide.load.10 = load <2 x i64>, <2 x i64>* %93, align 16, !alias.scope !88, !noalias !90
+  %94 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %21, i64 %15
   %95 = bitcast i64* %94 to <2 x i64>*
-  %wide.load27.10 = load <2 x i64>, <2 x i64>* %95, align 16, !alias.scope !100, !noalias !102
-  %96 = add nsw <2 x i64> %wide.load27.10, %wide.load.10, !dbg !103
-  %97 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %21, i64 %15
+  %wide.load27.10 = load <2 x i64>, <2 x i64>* %95, align 16, !alias.scope !91, !noalias !93
+  %96 = add nsw <2 x i64> %wide.load27.10, %wide.load.10, !dbg !94
+  %97 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %21, i64 %15
   %98 = bitcast i64* %97 to <2 x i64>*
-  store <2 x i64> %96, <2 x i64>* %98, align 16, !alias.scope !101, !noalias !110
-  %99 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %21, i64 %16
+  store <2 x i64> %96, <2 x i64>* %98, align 16, !alias.scope !92, !noalias !101
+  %99 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %21, i64 %16
   %100 = bitcast i64* %99 to <2 x i64>*
-  %wide.load.11 = load <2 x i64>, <2 x i64>* %100, align 16, !alias.scope !97, !noalias !99
-  %101 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %21, i64 %16
+  %wide.load.11 = load <2 x i64>, <2 x i64>* %100, align 16, !alias.scope !88, !noalias !90
+  %101 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %21, i64 %16
   %102 = bitcast i64* %101 to <2 x i64>*
-  %wide.load27.11 = load <2 x i64>, <2 x i64>* %102, align 16, !alias.scope !100, !noalias !102
-  %103 = add nsw <2 x i64> %wide.load27.11, %wide.load.11, !dbg !103
-  %104 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %21, i64 %16
+  %wide.load27.11 = load <2 x i64>, <2 x i64>* %102, align 16, !alias.scope !91, !noalias !93
+  %103 = add nsw <2 x i64> %wide.load27.11, %wide.load.11, !dbg !94
+  %104 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %21, i64 %16
   %105 = bitcast i64* %104 to <2 x i64>*
-  store <2 x i64> %103, <2 x i64>* %105, align 16, !alias.scope !101, !noalias !110
-  %106 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %21, i64 %17
+  store <2 x i64> %103, <2 x i64>* %105, align 16, !alias.scope !92, !noalias !101
+  %106 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %21, i64 %17
   %107 = bitcast i64* %106 to <2 x i64>*
-  %wide.load.12 = load <2 x i64>, <2 x i64>* %107, align 16, !alias.scope !97, !noalias !99
-  %108 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %21, i64 %17
+  %wide.load.12 = load <2 x i64>, <2 x i64>* %107, align 16, !alias.scope !88, !noalias !90
+  %108 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %21, i64 %17
   %109 = bitcast i64* %108 to <2 x i64>*
-  %wide.load27.12 = load <2 x i64>, <2 x i64>* %109, align 16, !alias.scope !100, !noalias !102
-  %110 = add nsw <2 x i64> %wide.load27.12, %wide.load.12, !dbg !103
-  %111 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %21, i64 %17
+  %wide.load27.12 = load <2 x i64>, <2 x i64>* %109, align 16, !alias.scope !91, !noalias !93
+  %110 = add nsw <2 x i64> %wide.load27.12, %wide.load.12, !dbg !94
+  %111 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %21, i64 %17
   %112 = bitcast i64* %111 to <2 x i64>*
-  store <2 x i64> %110, <2 x i64>* %112, align 16, !alias.scope !101, !noalias !110
-  %113 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %21, i64 %18
+  store <2 x i64> %110, <2 x i64>* %112, align 16, !alias.scope !92, !noalias !101
+  %113 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %21, i64 %18
   %114 = bitcast i64* %113 to <2 x i64>*
-  %wide.load.13 = load <2 x i64>, <2 x i64>* %114, align 16, !alias.scope !97, !noalias !99
-  %115 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %21, i64 %18
+  %wide.load.13 = load <2 x i64>, <2 x i64>* %114, align 16, !alias.scope !88, !noalias !90
+  %115 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %21, i64 %18
   %116 = bitcast i64* %115 to <2 x i64>*
-  %wide.load27.13 = load <2 x i64>, <2 x i64>* %116, align 16, !alias.scope !100, !noalias !102
-  %117 = add nsw <2 x i64> %wide.load27.13, %wide.load.13, !dbg !103
-  %118 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %21, i64 %18
+  %wide.load27.13 = load <2 x i64>, <2 x i64>* %116, align 16, !alias.scope !91, !noalias !93
+  %117 = add nsw <2 x i64> %wide.load27.13, %wide.load.13, !dbg !94
+  %118 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %21, i64 %18
   %119 = bitcast i64* %118 to <2 x i64>*
-  store <2 x i64> %117, <2 x i64>* %119, align 16, !alias.scope !101, !noalias !110
-  %120 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %21, i64 %19
+  store <2 x i64> %117, <2 x i64>* %119, align 16, !alias.scope !92, !noalias !101
+  %120 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %21, i64 %19
   %121 = bitcast i64* %120 to <2 x i64>*
-  %wide.load.14 = load <2 x i64>, <2 x i64>* %121, align 16, !alias.scope !97, !noalias !99
-  %122 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %21, i64 %19
+  %wide.load.14 = load <2 x i64>, <2 x i64>* %121, align 16, !alias.scope !88, !noalias !90
+  %122 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %21, i64 %19
   %123 = bitcast i64* %122 to <2 x i64>*
-  %wide.load27.14 = load <2 x i64>, <2 x i64>* %123, align 16, !alias.scope !100, !noalias !102
-  %124 = add nsw <2 x i64> %wide.load27.14, %wide.load.14, !dbg !103
-  %125 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %21, i64 %19
+  %wide.load27.14 = load <2 x i64>, <2 x i64>* %123, align 16, !alias.scope !91, !noalias !93
+  %124 = add nsw <2 x i64> %wide.load27.14, %wide.load.14, !dbg !94
+  %125 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %21, i64 %19
   %126 = bitcast i64* %125 to <2 x i64>*
-  store <2 x i64> %124, <2 x i64>* %126, align 16, !alias.scope !101, !noalias !110
-  %127 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %21, i64 %20
+  store <2 x i64> %124, <2 x i64>* %126, align 16, !alias.scope !92, !noalias !101
+  %127 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %21, i64 %20
   %128 = bitcast i64* %127 to <2 x i64>*
-  %wide.load.15 = load <2 x i64>, <2 x i64>* %128, align 16, !alias.scope !97, !noalias !99
-  %129 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %21, i64 %20
+  %wide.load.15 = load <2 x i64>, <2 x i64>* %128, align 16, !alias.scope !88, !noalias !90
+  %129 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %21, i64 %20
   %130 = bitcast i64* %129 to <2 x i64>*
-  %wide.load27.15 = load <2 x i64>, <2 x i64>* %130, align 16, !alias.scope !100, !noalias !102
-  %131 = add nsw <2 x i64> %wide.load27.15, %wide.load.15, !dbg !103
-  %132 = getelementptr [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %21, i64 %20
+  %wide.load27.15 = load <2 x i64>, <2 x i64>* %130, align 16, !alias.scope !91, !noalias !93
+  %131 = add nsw <2 x i64> %wide.load27.15, %wide.load.15, !dbg !94
+  %132 = getelementptr [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %21, i64 %20
   %133 = bitcast i64* %132 to <2 x i64>*
-  store <2 x i64> %131, <2 x i64>* %133, align 16, !alias.scope !101, !noalias !110
+  store <2 x i64> %131, <2 x i64>* %133, align 16, !alias.scope !92, !noalias !101
   %polly.indvar_next12 = add nuw nsw i64 %polly.indvar11, 1
   %exitcond23 = icmp eq i64 %polly.indvar_next12, 32
   br i1 %exitcond23, label %polly.loop_exit10, label %polly.loop_preheader15
@@ -493,13 +482,13 @@ attributes #6 = { "polly.skip.fn" }
 !11 = !{!12}
 !12 = !DIBasicType(name: "int", size: 32, align: 32, encoding: DW_ATE_signed)
 !13 = !{!14, !19, !20}
-!14 = !DIGlobalVariable(name: "A", scope: !0, file: !1, line: 3, type: !15, isLocal: false, isDefinition: true, variable: [1024 x [1024 x i64]]* @A)
-!15 = !DICompositeType(tag: DW_TAG_array_type, baseType: !16, size: 67108864, align: 64, elements: !17)
+!14 = !DIGlobalVariable(name: "A", scope: !0, file: !1, line: 3, type: !15, isLocal: false, isDefinition: true, variable: [10240 x [10240 x i64]]* @A)
+!15 = !DICompositeType(tag: DW_TAG_array_type, baseType: !16, size: 6710886400, align: 64, elements: !17)
 !16 = !DIBasicType(name: "long long int", size: 64, align: 64, encoding: DW_ATE_signed)
 !17 = !{!18, !18}
-!18 = !DISubrange(count: 1024)
-!19 = !DIGlobalVariable(name: "B", scope: !0, file: !1, line: 4, type: !15, isLocal: false, isDefinition: true, variable: [1024 x [1024 x i64]]* @B)
-!20 = !DIGlobalVariable(name: "C", scope: !0, file: !1, line: 5, type: !15, isLocal: false, isDefinition: true, variable: [1024 x [1024 x i64]]* @C)
+!18 = !DISubrange(count: 10240)
+!19 = !DIGlobalVariable(name: "B", scope: !0, file: !1, line: 4, type: !15, isLocal: false, isDefinition: true, variable: [10240 x [10240 x i64]]* @B)
+!20 = !DIGlobalVariable(name: "C", scope: !0, file: !1, line: 5, type: !15, isLocal: false, isDefinition: true, variable: [10240 x [10240 x i64]]* @C)
 !21 = !{i32 2, !"Dwarf Version", i32 4}
 !22 = !{i32 2, !"Debug Info Version", i32 3}
 !23 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)"}
@@ -551,42 +540,33 @@ attributes #6 = { "polly.skip.fn" }
 !69 = !DILocation(line: 36, column: 29, scope: !68)
 !70 = !DILocation(line: 38, column: 9, scope: !58)
 !71 = !DILocation(line: 40, column: 1, scope: !8)
-!72 = !DILocation(line: 47, column: 9, scope: !9)
-!73 = !DILocalVariable(name: "r", scope: !9, file: !1, line: 47, type: !12)
-!74 = !DILocation(line: 50, column: 9, scope: !75)
-!75 = distinct !DILexicalBlock(scope: !76, file: !1, line: 48, column: 23)
-!76 = distinct !DILexicalBlock(scope: !77, file: !1, line: 48, column: 5)
-!77 = distinct !DILexicalBlock(scope: !9, file: !1, line: 48, column: 5)
-!78 = !DILocation(line: 48, column: 5, scope: !79)
-!79 = !DILexicalBlockFile(scope: !76, file: !1, discriminator: 1)
-!80 = !DILocation(line: 9, column: 9, scope: !4, inlinedAt: !81)
-!81 = distinct !DILocation(line: 49, column: 9, scope: !75)
-!82 = !DILocation(line: 11, column: 5, scope: !28, inlinedAt: !81)
-!83 = !DILocation(line: 49, column: 9, scope: !75)
-!84 = !DILocation(line: 12, column: 9, scope: !32, inlinedAt: !81)
-!85 = !DILocation(line: 13, column: 13, scope: !37, inlinedAt: !81)
-!86 = !DILocation(line: 13, column: 21, scope: !37, inlinedAt: !81)
-!87 = !DILocation(line: 14, column: 13, scope: !37, inlinedAt: !81)
-!88 = !DILocation(line: 14, column: 21, scope: !37, inlinedAt: !81)
-!89 = distinct !{!89, !42, !43}
-!90 = !DILocation(line: 20, column: 9, scope: !7, inlinedAt: !91)
-!91 = distinct !DILocation(line: 50, column: 9, scope: !75)
-!92 = !DILocation(line: 48, column: 20, scope: !93)
-!93 = !DILexicalBlockFile(scope: !76, file: !1, discriminator: 2)
-!94 = !DILocation(line: 53, column: 83, scope: !9)
-!95 = !DILocation(line: 53, column: 5, scope: !9)
-!96 = !DILocation(line: 54, column: 5, scope: !9)
-!97 = distinct !{!97, !98, !"polly.alias.scope.A"}
-!98 = distinct !{!98, !"polly.alias.scope.domain"}
-!99 = !{!100, !101}
-!100 = distinct !{!100, !98, !"polly.alias.scope.B"}
-!101 = distinct !{!101, !98, !"polly.alias.scope.C"}
-!102 = !{!97, !101}
-!103 = !DILocation(line: 23, column: 31, scope: !104)
-!104 = distinct !DILexicalBlock(scope: !105, file: !1, line: 22, column: 29)
-!105 = distinct !DILexicalBlock(scope: !106, file: !1, line: 22, column: 9)
-!106 = distinct !DILexicalBlock(scope: !107, file: !1, line: 22, column: 9)
-!107 = distinct !DILexicalBlock(scope: !108, file: !1, line: 21, column: 25)
-!108 = distinct !DILexicalBlock(scope: !109, file: !1, line: 21, column: 5)
-!109 = distinct !DILexicalBlock(scope: !7, file: !1, line: 21, column: 5)
-!110 = !{!97, !100}
+!72 = !DILocation(line: 9, column: 9, scope: !4, inlinedAt: !73)
+!73 = distinct !DILocation(line: 49, column: 5, scope: !9)
+!74 = !DILocation(line: 11, column: 5, scope: !28, inlinedAt: !73)
+!75 = !DILocation(line: 49, column: 5, scope: !9)
+!76 = !DILocation(line: 12, column: 9, scope: !32, inlinedAt: !73)
+!77 = !DILocation(line: 13, column: 13, scope: !37, inlinedAt: !73)
+!78 = !DILocation(line: 13, column: 21, scope: !37, inlinedAt: !73)
+!79 = !DILocation(line: 14, column: 13, scope: !37, inlinedAt: !73)
+!80 = !DILocation(line: 14, column: 21, scope: !37, inlinedAt: !73)
+!81 = distinct !{!81, !42, !43}
+!82 = !DILocation(line: 20, column: 9, scope: !7, inlinedAt: !83)
+!83 = distinct !DILocation(line: 50, column: 5, scope: !9)
+!84 = !DILocation(line: 50, column: 5, scope: !9)
+!85 = !DILocation(line: 53, column: 83, scope: !9)
+!86 = !DILocation(line: 53, column: 5, scope: !9)
+!87 = !DILocation(line: 54, column: 5, scope: !9)
+!88 = distinct !{!88, !89, !"polly.alias.scope.A"}
+!89 = distinct !{!89, !"polly.alias.scope.domain"}
+!90 = !{!91, !92}
+!91 = distinct !{!91, !89, !"polly.alias.scope.B"}
+!92 = distinct !{!92, !89, !"polly.alias.scope.C"}
+!93 = !{!92, !88}
+!94 = !DILocation(line: 23, column: 31, scope: !95)
+!95 = distinct !DILexicalBlock(scope: !96, file: !1, line: 22, column: 29)
+!96 = distinct !DILexicalBlock(scope: !97, file: !1, line: 22, column: 9)
+!97 = distinct !DILexicalBlock(scope: !98, file: !1, line: 22, column: 9)
+!98 = distinct !DILexicalBlock(scope: !99, file: !1, line: 21, column: 25)
+!99 = distinct !DILexicalBlock(scope: !100, file: !1, line: 21, column: 5)
+!100 = distinct !DILexicalBlock(scope: !7, file: !1, line: 21, column: 5)
+!101 = !{!91, !88}

@@ -250,8 +250,8 @@ main:                                   # @main
 	cmpq	$1279, %rcx             # imm = 0x4FF
 	jl	.LBB0_9
 # BB#10:                                # %polly.exiting
-	movdqa	-128(%rbp), %xmm0
 	movdqa	-112(%rbp), %xmm1
+	movdqa	-128(%rbp), %xmm0
 	paddq	%xmm1, %xmm0
 	pshufd	$78, %xmm0, %xmm1       # xmm1 = xmm0[2,3,0,1]
 	paddq	%xmm0, %xmm1

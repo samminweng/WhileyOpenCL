@@ -49,13 +49,13 @@ BEGIN {
 	filename = "";
 	FS = "\t";
 	# Test case name
-	testcases="VectorMult";
+	testcases="MatrixAdd";
 	# Code Optimizations
-	c_types="handwritten handwritten2";
+	c_types="handwritten";
 	# Polly optimiz
-	polly_opts="gcc polly openmp vector"
+	polly_opts="gcc polly vector openmp"
 	# Parameters
-	parameters["VectorMult"] = "1024X1024X1024X64";
+	parameters["MatrixAdd"] = "1024X1024";
 	threads="1 2 4 8";
 	cpu_utils[""] = "";
 	exec_times[""] = "";

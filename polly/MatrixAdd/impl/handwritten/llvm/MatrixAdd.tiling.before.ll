@@ -1,4 +1,4 @@
-; ModuleID = 'MatrixAdd.stripmine.before.ll'
+; ModuleID = 'MatrixAdd.none.ll'
 target datalayout = "e-m:e-i64:64-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
 
@@ -49,7 +49,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %14 = getelementptr i64, i64* %12, i64 2, !dbg !40
   %15 = bitcast i64* %14 to <2 x i64>*, !dbg !40
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %15, align 16, !dbg !40
-  %index.next.1 = add nuw nsw i64 %index, 8, !dbg !31
+  %index.next.1 = add nsw i64 %index, 8, !dbg !31
   %16 = icmp eq i64 %index.next.1, 10240, !dbg !31
   br i1 %16, label %for.inc10, label %vector.body, !dbg !31, !llvm.loop !41
 
@@ -115,7 +115,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %26 = getelementptr i64, i64* %24, i64 2, !dbg !61
   %27 = bitcast i64* %26 to <2 x i64>*, !dbg !61
   store <2 x i64> %23, <2 x i64>* %27, align 16, !dbg !61
-  %index.next.1 = add nuw nsw i64 %index, 8, !dbg !51
+  %index.next.1 = add nsw i64 %index, 8, !dbg !51
   %28 = icmp eq i64 %index.next.1, 10240, !dbg !51
   br i1 %28, label %for.inc14, label %vector.body, !dbg !51, !llvm.loop !62
 
@@ -212,7 +212,7 @@ vector.body:                                      ; preds = %vector.body, %vecto
   %14 = getelementptr i64, i64* %12, i64 2, !dbg !96
   %15 = bitcast i64* %14 to <2 x i64>*, !dbg !96
   store <2 x i64> <i64 1, i64 1>, <2 x i64>* %15, align 16, !dbg !96
-  %index.next.1 = add nuw nsw i64 %index, 8, !dbg !92
+  %index.next.1 = add nsw i64 %index, 8, !dbg !92
   %16 = icmp eq i64 %index.next.1, 10240, !dbg !92
   br i1 %16, label %for.inc10.i, label %vector.body, !dbg !92, !llvm.loop !97
 
@@ -224,7 +224,7 @@ for.inc10.i:                                      ; preds = %vector.body
 vector.ph16.preheader:                            ; preds = %for.inc10.i
   br label %vector.ph16, !dbg !98
 
-vector.ph16:                                      ; preds = %vector.ph16.preheader, %for.inc14.i
+vector.ph16:                                      ; preds = %for.inc14.i, %vector.ph16.preheader
   %indvars.iv3.i1 = phi i64 [ %indvars.iv.next4.i9, %for.inc14.i ], [ 0, %vector.ph16.preheader ], !dbg !100
   br label %vector.body12, !dbg !98
 
@@ -271,7 +271,7 @@ vector.body12:                                    ; preds = %vector.body12, %vec
   %43 = getelementptr i64, i64* %41, i64 2, !dbg !105
   %44 = bitcast i64* %43 to <2 x i64>*, !dbg !105
   store <2 x i64> %40, <2 x i64>* %44, align 16, !dbg !105
-  %index.next18.1 = add nuw nsw i64 %index17, 8, !dbg !98
+  %index.next18.1 = add nsw i64 %index17, 8, !dbg !98
   %45 = icmp eq i64 %index.next18.1, 10240, !dbg !98
   br i1 %45, label %for.inc14.i, label %vector.body12, !dbg !98, !llvm.loop !106
 

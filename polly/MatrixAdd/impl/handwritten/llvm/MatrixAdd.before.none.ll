@@ -5,9 +5,9 @@ target triple = "x86_64-unknown-linux-gnu"
 %struct._IO_FILE = type { i32, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, i8*, %struct._IO_marker*, %struct._IO_FILE*, i32, i32, i64, i16, i8, [1 x i8], i8*, i64, i8*, i8*, i8*, i8*, i64, i32, [20 x i8] }
 %struct._IO_marker = type { %struct._IO_marker*, %struct._IO_FILE*, i32 }
 
-@A = common global [1024 x [1024 x i64]] zeroinitializer, align 16
-@B = common global [1024 x [1024 x i64]] zeroinitializer, align 16
-@C = common global [1024 x [1024 x i64]] zeroinitializer, align 16
+@A = common global [10240 x [10240 x i64]] zeroinitializer, align 16
+@B = common global [10240 x [10240 x i64]] zeroinitializer, align 16
+@C = common global [10240 x [10240 x i64]] zeroinitializer, align 16
 @stdout = external global %struct._IO_FILE*, align 8
 @.str = private unnamed_addr constant [6 x i8] c"%lld \00", align 1
 @.str.1 = private unnamed_addr constant [2 x i8] c"\0A\00", align 1
@@ -28,19 +28,19 @@ for.cond1.preheader:                              ; preds = %for.inc10, %entry.s
 
 for.body3:                                        ; preds = %for.body3, %for.cond1.preheader
   %indvars.iv = phi i64 [ 0, %for.cond1.preheader ], [ %indvars.iv.next, %for.body3 ]
-  %arrayidx5 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 %indvars.iv, !dbg !36
+  %arrayidx5 = getelementptr inbounds [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 %indvars.iv, !dbg !36
   store i64 1, i64* %arrayidx5, align 8, !dbg !38
-  %arrayidx9 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %indvars.iv3, i64 %indvars.iv, !dbg !39
+  %arrayidx9 = getelementptr inbounds [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %indvars.iv3, i64 %indvars.iv, !dbg !39
   store i64 1, i64* %arrayidx9, align 8, !dbg !40
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !31
   tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !41, metadata !26), !dbg !42
-  %exitcond = icmp ne i64 %indvars.iv.next, 1024, !dbg !31
+  %exitcond = icmp ne i64 %indvars.iv.next, 10240, !dbg !31
   br i1 %exitcond, label %for.body3, label %for.inc10, !dbg !31
 
 for.inc10:                                        ; preds = %for.body3
   %indvars.iv.next4 = add nuw nsw i64 %indvars.iv3, 1, !dbg !27
   tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !25, metadata !26), !dbg !24
-  %exitcond5 = icmp ne i64 %indvars.iv.next4, 1024, !dbg !27
+  %exitcond5 = icmp ne i64 %indvars.iv.next4, 10240, !dbg !27
   br i1 %exitcond5, label %for.cond1.preheader, label %for.end12, !dbg !27
 
 for.end12:                                        ; preds = %for.inc10
@@ -65,22 +65,22 @@ for.cond1.preheader:                              ; preds = %for.inc14, %entry.s
 
 for.body3:                                        ; preds = %for.body3, %for.cond1.preheader
   %indvars.iv = phi i64 [ 0, %for.cond1.preheader ], [ %indvars.iv.next, %for.body3 ]
-  %arrayidx5 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 %indvars.iv, !dbg !55
+  %arrayidx5 = getelementptr inbounds [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @A, i64 0, i64 %indvars.iv3, i64 %indvars.iv, !dbg !55
   %0 = load i64, i64* %arrayidx5, align 8, !dbg !55
-  %arrayidx9 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @B, i64 0, i64 %indvars.iv3, i64 %indvars.iv, !dbg !57
+  %arrayidx9 = getelementptr inbounds [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @B, i64 0, i64 %indvars.iv3, i64 %indvars.iv, !dbg !57
   %1 = load i64, i64* %arrayidx9, align 8, !dbg !57
   %add = add nsw i64 %1, %0, !dbg !58
-  %arrayidx13 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %indvars.iv3, i64 %indvars.iv, !dbg !59
+  %arrayidx13 = getelementptr inbounds [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %indvars.iv3, i64 %indvars.iv, !dbg !59
   store i64 %add, i64* %arrayidx13, align 8, !dbg !60
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !50
   tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !61, metadata !26), !dbg !62
-  %exitcond = icmp ne i64 %indvars.iv.next, 1024, !dbg !50
+  %exitcond = icmp ne i64 %indvars.iv.next, 10240, !dbg !50
   br i1 %exitcond, label %for.body3, label %for.inc14, !dbg !50
 
 for.inc14:                                        ; preds = %for.body3
   %indvars.iv.next4 = add nuw nsw i64 %indvars.iv3, 1, !dbg !46
   tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !45, metadata !26), !dbg !44
-  %exitcond5 = icmp ne i64 %indvars.iv.next4, 1024, !dbg !46
+  %exitcond5 = icmp ne i64 %indvars.iv.next4, 10240, !dbg !46
   br i1 %exitcond5, label %for.cond1.preheader, label %for.end16, !dbg !46
 
 for.end16:                                        ; preds = %for.inc14
@@ -104,7 +104,7 @@ for.cond1.preheader:                              ; preds = %for.end, %entry.spl
 for.body3:                                        ; preds = %for.inc, %for.cond1.preheader
   %indvars.iv = phi i64 [ 0, %for.cond1.preheader ], [ %indvars.iv.next, %for.inc ]
   %1 = phi %struct._IO_FILE* [ %0, %for.cond1.preheader ], [ %5, %for.inc ]
-  %arrayidx5 = getelementptr inbounds [1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 %indvars.iv6, i64 %indvars.iv, !dbg !77
+  %arrayidx5 = getelementptr inbounds [10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 %indvars.iv6, i64 %indvars.iv, !dbg !77
   %2 = load i64, i64* %arrayidx5, align 8, !dbg !77
   %call = tail call i32 (%struct._IO_FILE*, i8*, ...) @fprintf(%struct._IO_FILE* %1, i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str, i64 0, i64 0), i64 %2) #3, !dbg !78
   %3 = trunc i64 %indvars.iv to i32, !dbg !79
@@ -121,7 +121,7 @@ for.inc:                                          ; preds = %if.then, %for.body3
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !75
   tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !86, metadata !26), !dbg !87
   %5 = load %struct._IO_FILE*, %struct._IO_FILE** @stdout, align 8, !dbg !70
-  %exitcond = icmp ne i64 %indvars.iv.next, 1024, !dbg !75
+  %exitcond = icmp ne i64 %indvars.iv.next, 10240, !dbg !75
   br i1 %exitcond, label %for.body3, label %for.end, !dbg !75
 
 for.end:                                          ; preds = %for.inc
@@ -129,7 +129,7 @@ for.end:                                          ; preds = %for.inc
   %fputc = tail call i32 @fputc(i32 10, %struct._IO_FILE* %.lcssa), !dbg !88
   %indvars.iv.next7 = add nuw nsw i64 %indvars.iv6, 1, !dbg !66
   tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !65, metadata !26), !dbg !64
-  %exitcond8 = icmp ne i64 %indvars.iv.next7, 1024, !dbg !66
+  %exitcond8 = icmp ne i64 %indvars.iv.next7, 10240, !dbg !66
   br i1 %exitcond8, label %for.cond1.preheader, label %for.end11, !dbg !66
 
 for.end11:                                        ; preds = %for.end
@@ -144,22 +144,11 @@ entry:
   br label %entry.split, !dbg !90
 
 entry.split:                                      ; preds = %entry
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !91, metadata !26), !dbg !90
-  br label %for.body, !dbg !92
-
-for.body:                                         ; preds = %for.body, %entry.split
-  %r.01 = phi i32 [ 0, %entry.split ], [ %inc, %for.body ]
-  tail call void @init_array(), !dbg !96
-  tail call void @mat_add(), !dbg !98
-  %inc = add nuw nsw i32 %r.01, 1, !dbg !99
-  tail call void @llvm.dbg.value(metadata i32 %inc, i64 0, metadata !91, metadata !26), !dbg !90
-  %exitcond = icmp ne i32 %inc, 100, !dbg !92
-  br i1 %exitcond, label %for.body, label %for.end, !dbg !92
-
-for.end:                                          ; preds = %for.body
-  %0 = load i64, i64* getelementptr inbounds ([1024 x [1024 x i64]], [1024 x [1024 x i64]]* @C, i64 0, i64 1023, i64 1023), align 8, !dbg !101
-  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([51 x i8], [51 x i8]* @.str.2, i64 0, i64 0), i32 1024, i32 1024, i32 1023, i32 1023, i64 %0) #3, !dbg !102
-  ret i32 0, !dbg !103
+  tail call void @init_array(), !dbg !90
+  tail call void @mat_add(), !dbg !91
+  %0 = load i64, i64* getelementptr inbounds ([10240 x [10240 x i64]], [10240 x [10240 x i64]]* @C, i64 0, i64 10239, i64 10239), align 8, !dbg !92
+  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([51 x i8], [51 x i8]* @.str.2, i64 0, i64 0), i32 10240, i32 10240, i32 10239, i32 10239, i64 %0) #3, !dbg !93
+  ret i32 0, !dbg !94
 }
 
 declare i32 @printf(i8*, ...) #2
@@ -196,13 +185,13 @@ attributes #3 = { nounwind }
 !11 = !{!12}
 !12 = !DIBasicType(name: "int", size: 32, align: 32, encoding: DW_ATE_signed)
 !13 = !{!14, !19, !20}
-!14 = !DIGlobalVariable(name: "A", scope: !0, file: !1, line: 3, type: !15, isLocal: false, isDefinition: true, variable: [1024 x [1024 x i64]]* @A)
-!15 = !DICompositeType(tag: DW_TAG_array_type, baseType: !16, size: 67108864, align: 64, elements: !17)
+!14 = !DIGlobalVariable(name: "A", scope: !0, file: !1, line: 3, type: !15, isLocal: false, isDefinition: true, variable: [10240 x [10240 x i64]]* @A)
+!15 = !DICompositeType(tag: DW_TAG_array_type, baseType: !16, size: 6710886400, align: 64, elements: !17)
 !16 = !DIBasicType(name: "long long int", size: 64, align: 64, encoding: DW_ATE_signed)
 !17 = !{!18, !18}
-!18 = !DISubrange(count: 1024)
-!19 = !DIGlobalVariable(name: "B", scope: !0, file: !1, line: 4, type: !15, isLocal: false, isDefinition: true, variable: [1024 x [1024 x i64]]* @B)
-!20 = !DIGlobalVariable(name: "C", scope: !0, file: !1, line: 5, type: !15, isLocal: false, isDefinition: true, variable: [1024 x [1024 x i64]]* @C)
+!18 = !DISubrange(count: 10240)
+!19 = !DIGlobalVariable(name: "B", scope: !0, file: !1, line: 4, type: !15, isLocal: false, isDefinition: true, variable: [10240 x [10240 x i64]]* @B)
+!20 = !DIGlobalVariable(name: "C", scope: !0, file: !1, line: 5, type: !15, isLocal: false, isDefinition: true, variable: [10240 x [10240 x i64]]* @C)
 !21 = !{i32 2, !"Dwarf Version", i32 4}
 !22 = !{i32 2, !"Debug Info Version", i32 3}
 !23 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)"}
@@ -272,17 +261,8 @@ attributes #3 = { nounwind }
 !87 = !DILocation(line: 31, column: 12, scope: !8)
 !88 = !DILocation(line: 38, column: 9, scope: !74)
 !89 = !DILocation(line: 40, column: 1, scope: !8)
-!90 = !DILocation(line: 47, column: 9, scope: !9)
-!91 = !DILocalVariable(name: "r", scope: !9, file: !1, line: 47, type: !12)
-!92 = !DILocation(line: 48, column: 5, scope: !93)
-!93 = !DILexicalBlockFile(scope: !94, file: !1, discriminator: 1)
-!94 = distinct !DILexicalBlock(scope: !95, file: !1, line: 48, column: 5)
-!95 = distinct !DILexicalBlock(scope: !9, file: !1, line: 48, column: 5)
-!96 = !DILocation(line: 49, column: 9, scope: !97)
-!97 = distinct !DILexicalBlock(scope: !94, file: !1, line: 48, column: 23)
-!98 = !DILocation(line: 50, column: 9, scope: !97)
-!99 = !DILocation(line: 48, column: 20, scope: !100)
-!100 = !DILexicalBlockFile(scope: !94, file: !1, discriminator: 2)
-!101 = !DILocation(line: 53, column: 83, scope: !9)
-!102 = !DILocation(line: 53, column: 5, scope: !9)
-!103 = !DILocation(line: 54, column: 5, scope: !9)
+!90 = !DILocation(line: 49, column: 5, scope: !9)
+!91 = !DILocation(line: 50, column: 5, scope: !9)
+!92 = !DILocation(line: 53, column: 83, scope: !9)
+!93 = !DILocation(line: 53, column: 5, scope: !9)
+!94 = !DILocation(line: 54, column: 5, scope: !9)

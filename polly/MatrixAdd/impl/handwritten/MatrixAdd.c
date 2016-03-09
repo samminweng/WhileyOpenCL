@@ -1,5 +1,5 @@
 #include <stdio.h>
-#define N 1024
+#define N 1024*10
 long long A[N][N];
 long long B[N][N];
 long long C[N][N];
@@ -45,10 +45,10 @@ int main()
     double t_start, t_end;
 
     int r;
-    for(r=0;r<100;r++){
-        init_array();
-        mat_add();
-    }
+    //for(r=0;r<100;r++){
+    init_array();
+    mat_add();
+    //}
    
     printf("Pass %d X %d matrix test case (C[%d][%d] =%lld) \n ", N, N, N-1, N-1, C[N-1][N-1]);
     return 0;

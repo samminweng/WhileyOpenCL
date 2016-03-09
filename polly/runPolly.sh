@@ -100,26 +100,29 @@ opt_polly(){
 	echo -e -n "${BOLD}${GREEN}[2]${RESET} Run ${GREEN} [1] + Polly loop Vectorization ${RESET} executable. Press [Enter] " && read
 	opt -polly-vectorizer=polly\
 	    -basicaa -polly-codegen -polly-report $program.none.ll\
-	    -S -o $program.before.pollyvector.ll\
-	    &&opt -O3 $program.before.pollyvector.ll -S -o $program.pollyvector.ll
+	    -S -o $program.pollyvector.before.ll\
+	    &&opt -O3 $program.pollyvector.before.ll -S -o $program.pollyvector.ll
     runExecutables $program "pollyvector" $parameter
 
     echo -e -n "${BOLD}${GREEN}[3]${RESET} Run ${GREEN} [1] + Strip mining ${RESET} executable. Press [Enter] " && read
 	opt -polly-vectorizer=stripmine\
 	    -basicaa -polly-codegen -polly-report $program.none.ll\
-	    -S -o $program.stripmine.ll
+	    -S -o $program.stripmine.before.ll\
+	    &&opt -O3 $program.stripmine.before.ll -S -o $program.stripmine.ll
 	runExecutables $program "stripmine" $parameter
 	
 	echo -e -n "${BOLD}${GREEN}[4]${RESET}  Run ${GREEN} [3] + (1st + 2nd) Loop tiling ${RESET} executable. Press [Enter] " && read
 	opt -polly-vectorizer=stripmine -polly-tiling -polly-2nd-level-tiling\
 	    -basicaa -polly-codegen -polly-report $program.none.ll\
-	    -S -o $program.tiling.ll
+	    -S -o $program.tiling.before.ll\
+	    &&opt -O3 $program.tiling.before.ll -S -o $program.tiling.ll
     runExecutables $program "tiling" $parameter
 
     echo -e -n "${BOLD}${GREEN}[5]${RESET} Run ${GREEN} [4] + Optimized Schedule of SCoPs ${RESET} executable. Press [Enter] " && read	
 	opt -polly-opt-isl -polly-vectorizer=stripmine -polly-tiling -polly-2nd-level-tiling\
  	    -basicaa -polly-prepare -polly-codegen -polly-report $program.none.ll\
-        -S -o $program.optisl.ll
+ 	    -S -o $program.optisl.before.ll\
+        &&opt -O3 $program.optisl.before.ll -S -o $program.optisl.ll
 	runExecutables $program "optisl" $parameter
 
 	echo -e -n "${REVERSE}Automatic ${RESET} Polly Optimization vs. GCC\n"
@@ -175,6 +178,6 @@ exec(){
 	cd ../../../
 }
 
-exec handwritten VectorMult 2 1024X1024X10
+#exec handwritten VectorMult 2 1024X1024X10
 exec handwritten MatrixAdd 2 1024
-exec handwritten MatrixMult 2 512
+#exec handwritten MatrixMult 2 512
