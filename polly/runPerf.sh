@@ -52,15 +52,15 @@ runPolly(){
 			echo "Run Polly-optimized code on $parameter with $num_threads threads..." > $result
 			clang $CPPFLAGS -include Util.c -O3 -mllvm -polly -mllvm -polly-process-unprofitable $program.c -o "out/$program.$compiler.out"
 			;;
-		"openmp")
-			export OMP_NUM_THREADS=$num_threads
-			echo "Run OpenMP code on $parameter with $OMP_NUM_THREADS threads..." > $result
-			clang $CPPFLAGS -include Util.c -O3 -mllvm -polly -mllvm -polly-parallel -mllvm -polly-process-unprofitable -lgomp $program.c -o "out/$program.$compiler.out"
-			;;
 		"vector")
 			echo "Run Strip mining Vectorized code on $parameter with $num_threads threads..." > $result
 			clang $CPPFLAGS -include Util.c -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine -mllvm -polly-process-unprofitable $program.c -o "out/$program.$compiler.out"
 			;;
+		"openmp")
+			export OMP_NUM_THREADS=$num_threads
+			echo "Run OpenMP code on $parameter with $OMP_NUM_THREADS threads..." > $result
+			clang $CPPFLAGS -include Util.c -O3 -mllvm -polly -mllvm -polly-parallel -mllvm -polly-process-unprofitable -lgomp $program.c -o "out/$program.$compiler.out"
+			;;	
 	esac
 
 	
@@ -94,20 +94,12 @@ exec(){
 	cd ../../../
 }
 
-#init VectorMult
-# #### Handwritten VectorMult 
-# exec handwritten VectorMult 1024X1024X1024X64 gcc 1
-# exec handwritten VectorMult 1024X1024X1024X64 polly 1
-# exec handwritten VectorMult 1024X1024X1024X64 openmp 1
-# exec handwritten VectorMult 1024X1024X1024X64 openmp 2
-# exec handwritten VectorMult 1024X1024X1024X64 openmp 4
-# exec handwritten VectorMult 1024X1024X1024X64 openmp 8
-# exec handwritten VectorMult 1024X1024X1024X64 vector 1
-# #### Handwritten 2 VectorMult 
-# exec handwritten2 VectorMult 1024X1024X1024X64 gcc 1
-# exec handwritten2 VectorMult 1024X1024X1024X64 polly 1
-# exec handwritten2 VectorMult 1024X1024X1024X64 openmp 1
-# exec handwritten2 VectorMult 1024X1024X1024X64 openmp 2
-# exec handwritten2 VectorMult 1024X1024X1024X64 openmp 4
-# exec handwritten2 VectorMult 1024X1024X1024X64 openmp 8
-# exec handwritten2 VectorMult 1024X1024X1024X64 vector 1
+init MatrixAdd
+#### Handwritten MatrixAdd 
+exec handwritten MatrixAdd 1024X1024 gcc 1
+exec handwritten MatrixAdd 1024X1024 polly 1
+exec handwritten MatrixAdd 1024X1024 vector 1
+exec handwritten MatrixAdd 1024X1024 openmp 1
+exec handwritten MatrixAdd 1024X1024 openmp 2
+exec handwritten MatrixAdd 1024X1024 openmp 4
+exec handwritten MatrixAdd 1024X1024 openmp 8
