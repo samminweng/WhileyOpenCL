@@ -1,6 +1,6 @@
 #!/bin/bash
 ### ANSI escape color code used for the highlighted texts 
-GREEN="\e[32m" # Green color
+GREEN="\033[1m\e[32m" # Green color
 BOLD="\033[1m" # Bold text
 REVERSE="\e[7m" #invert the foreground and background colors
 RESET="\e[0m"    # Text Reset
@@ -11,6 +11,7 @@ export PATH_TO_POLLY_LIB="$HOME/polly/llvm_build/lib"
 export CPPFLAGS="-Xclang -load -Xclang ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
 alias opt="opt -load ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
 alias pollycc="clang -Xclang -load -Xclang ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
+alias cls='printf "\033c"' ## Clear the screen
 
 ### Create or clean up folder, and move files to that folder
 folder_proc(){
@@ -40,6 +41,9 @@ runExecutables(){
 	program=$1
 	opt=$2
 	parameter=$3
+	### Creating a static library ('Util.o') with GCC (http://www.cs.dartmouth.edu/~campbell/cs50/buildlib.html)
+    clang -c Util.c -o Util.o ### Compile Util.c to Util.o (object file)
+    ar -cvq libUtil.a Util.o
 	### Use 'llc' to compile LLVM code into assembly code
     llc $program.$opt.ll -o $program.$opt.s
     ### Use 'gcc' to compile .s file and link with 'libUtil.a'
@@ -48,6 +52,18 @@ runExecutables(){
 	time ./out/$program.$opt.out $parameter
 }
 
+### Clean up files ###
+cleanup(){
+	## move files to folders respectively, e.g. 'jscop' 'llvm' and 'assembly' folder 
+	### Move all the dot files to 'dot' folder
+	folder_proc "dot" "dot"
+	generate_png "dot"
+
+	folder_proc "jscop" "jscop"
+	folder_proc "llvm" "ll"
+	folder_proc "assembly" "s"
+
+}
 
 ##
 ## Execute Polly Pass step by step
@@ -59,10 +75,7 @@ opt_polly(){
 	parameter=$4
 	mkdir -p "out" # Store the executables.
 	rm -rf "out"/*
-	### Creating a static library ('Util.o') with GCC (http://www.cs.dartmouth.edu/~campbell/cs50/buildlib.html)
-    clang -c Util.c -o Util.o ### Compile Util.c to Util.o (object file)
-    ar -cvq libUtil.a Util.o
-
+	
 	echo -e "------------------Start optimizing ${BOLD}${GREEN}$c_type $program C ${RESET} program with POlly--------------------"
 	
 	echo -e -n "1. Create LLVM-IR from C"
@@ -76,7 +89,7 @@ opt_polly(){
 	opt -basicaa -polly-ast -analyze -q -polly-report -polly-show $program.preopt.ll -polly-detect-track-failures
 	#opt -basicaa -polly-ast -analyze -q -polly-dependences-computeout=0 -polly-report -polly-show $program.preopt.ll
 	
-	echo -e -n "4. Generate detected SCoPs in DOT" 
+	echo -e -n "4. Generate detected SCoPs in DOT"
 	opt -basicaa -dot-scops -disable-output -polly-report -polly-show $program.preopt.ll
 	
 	echo -e -n "5. Show the dependences of the SCoPs"
@@ -90,35 +103,7 @@ opt_polly(){
 
 	echo -e -n "${REVERSE}Manual${RESET} Polly Optimizations\n"
 
-	echo -e -n "${BOLD}${GREEN}[1]${RESET} Run ${GREEN} None Optimization ${RESET} executable. Press [Enter]" && read	
-	### Use 'llc' to compile LLVM code into assembly code
-    opt -basicaa -polly-codegen -polly-report $program.preopt.ll\
-     	-S -o $program.before.none.ll\
-     	&& opt -O3 $program.before.none.ll -S -o $program.none.ll
-    runExecutables $program "none" $parameter
-
-	echo -e -n "${BOLD}${GREEN}[2]${RESET} Run ${GREEN} [1] + Polly loop Vectorization ${RESET} executable. Press [Enter] " && read
-	opt -polly-vectorizer=polly\
-	    -basicaa -polly-codegen -polly-report $program.none.ll\
-	    -S -o $program.pollyvector.before.ll\
-	    &&opt -O3 $program.pollyvector.before.ll -S -o $program.pollyvector.ll
-    runExecutables $program "pollyvector" $parameter
-
-    echo -e -n "${BOLD}${GREEN}[3]${RESET} Run ${GREEN} [1] + Strip mining ${RESET} executable. Press [Enter] " && read
-	opt -polly-vectorizer=stripmine\
-	    -basicaa -polly-codegen -polly-report $program.none.ll\
-	    -S -o $program.stripmine.before.ll\
-	    &&opt -O3 $program.stripmine.before.ll -S -o $program.stripmine.ll
-	runExecutables $program "stripmine" $parameter
-	
-	echo -e -n "${BOLD}${GREEN}[4]${RESET}  Run ${GREEN} [3] + (1st + 2nd) Loop tiling ${RESET} executable. Press [Enter] " && read
-	opt -polly-vectorizer=stripmine -polly-tiling -polly-2nd-level-tiling\
-	    -basicaa -polly-codegen -polly-report $program.none.ll\
-	    -S -o $program.tiling.before.ll\
-	    &&opt -O3 $program.tiling.before.ll -S -o $program.tiling.ll
-    runExecutables $program "tiling" $parameter
-
-    echo -e -n "${BOLD}${GREEN}[5]${RESET} Run ${GREEN} [4] + Optimized Schedule of SCoPs ${RESET} executable. Press [Enter] " && read	
+    echo -e -n "${BOLD}${GREEN}[5]${RESET} Run ${GREEN}  Strip mining + (1st + 2nd) Loop tiling + Optimized Schedule of SCoPs ${RESET} executable. Press [Enter] " && read	
 	opt -polly-opt-isl -polly-vectorizer=stripmine -polly-tiling -polly-2nd-level-tiling\
  	    -basicaa -polly-prepare -polly-codegen -polly-report $program.none.ll\
  	    -S -o $program.optisl.before.ll\
@@ -152,17 +137,64 @@ opt_polly(){
 	    -S -o $program.vector.ll
 	runExecutables $program "vector" $parameter
 
-	## move files to folders respectively, e.g. 'jscop' 'llvm' and 'assembly' folder 
-	### Move all the dot files to 'dot' folder
-	folder_proc "dot" "dot"
-	generate_png "dot"
-
-	folder_proc "jscop" "jscop"
-	folder_proc "llvm" "ll"
-	folder_proc "assembly" "s"
 	echo -e "-----------------Press [Enter] to finish up--------------------"&& read
+	cleanup
+}
+###
+### Use Polly with Clang
+###
+clang_polly(){
+	c_type=$1
+	program=$2
+	num_threads=$3
+	parameter=$4
+	mkdir -p "out" # Store the executables.
+	rm -rf "out"/*
+
+	echo -e -n "${GREEN}[*] Export SCoP in DOTs and JSCoP${RESET}" && read
+	pollycc -g -O3 -mllvm -polly -o "out"/$program.polly.out\
+	        -mllvm -polly-dot -mllvm -polly-show $program.c
+	### Export JSCoP ###
+	pollycc -g -O0 -mllvm -polly -S -emit-llvm $program.c -o $program.preopt.s && 
+	opt -S -polly-canonicalize -polly-report $program.preopt.s > $program.preopt.ll &&
+	opt -basicaa -polly-export-jscop $program.preopt.ll
+
+	echo -e -n "${GREEN}[*]Show the region Polly can NOT analyze and reasons${RESET}" && read
+	pollycc -g -O3 -mllvm -polly -o "out"/$program.polly.out\
+	        -Rpass-missed=polly $program.c
+
+	echo -e -n "${GREEN}[*]Show the regions Polly can analyze and assumption/restrictions${RESET}" && read
+	pollycc -fcolor-diagnostics -g -O3 -mllvm -polly -o "out"/$program.polly.out\
+	        -Rpass-analysis=polly $program.c 
+
+	echo -e -n "${GREEN}[*]Show the information of valid SCoP${RESET}" && read 
+	pollycc -g -O3 -mllvm -polly -o "out"/$program.polly.out\
+		    -mllvm -debug-only=polly-detect $program.c
+
+	echo -e -n "${GREEN}[*]Show the representation of valid SCoP${RESET}" && read 
+	pollycc -g -O3 -mllvm -polly -o "out"/$program.polly.out\
+	        -mllvm -debug-only=polly-scops $program.c
+
+	echo -e -n "${GREEN}[*]Show the optimized AST${RESET}" && read 
+	pollycc -g -O3 -mllvm -polly -o "out"/$program.polly.out\
+	        -mllvm -debug-only=polly-ast $program.c
+
+	### Generate executables
+	echo -e -n "${GREEN}[*]Loop Vectorizer is diabled${RESET}" && read
+	echo -e -n "[1] Run ${BOLD}${GREEN} Clang -O3 ${RESET} executables" && read
+	pollycc -g -O3 -fno-vectorize $program.c -o "out"/$program.clang.out
+	time ./out/$program.clang.out $parameter
+
+	echo -e -n "[2] Run ${BOLD}${GREEN} Polly-Optimized ${RESET} executables" && read
+	pollycc -g -O3 -fno-vectorize -mllvm -polly -S -emit-llvm $program.c -o $program.opt.ll
+	runExecutables $program "opt" $parameter
+
+	echo -e "-----------------Press [Enter] to finish up--------------------"&& read
+	cleanup
 }
 
+
+#### Execute the polly using Clang
 exec(){
 	c_type=$1
 	program=$2
@@ -174,10 +206,11 @@ exec(){
 	### cp "$program/$program.whiley" $utildir/Util.c $utildir/Util.h $workingdir
 	cp $utildir/Util.c $utildir/Util.h $workingdir
 	cd $workingdir
-	opt_polly $c_type $program $num_threads $parameter
+	clang_polly $c_type $program $num_threads $parameter
+	#opt_polly $c_type $program $num_threads $parameter
 	cd ../../../
 }
 
 #exec handwritten VectorMult 2 1024X1024X10
-exec handwritten MatrixAdd 2 1024
+exec handwritten MatrixAdd 2 10240X10240
 #exec handwritten MatrixMult 2 512
