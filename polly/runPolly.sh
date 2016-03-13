@@ -41,13 +41,21 @@ runExecutables(){
 	program=$1
 	opt=$2
 	parameter=$3
+	num_threads=$4
 	### Creating a static library ('Util.o') with GCC (http://www.cs.dartmouth.edu/~campbell/cs50/buildlib.html)
     clang -c Util.c -o Util.o ### Compile Util.c to Util.o (object file)
     ar -cvq libUtil.a Util.o
 	### Use 'llc' to compile LLVM code into assembly code
     llc $program.$opt.ll -o $program.$opt.s
-    ### Use 'gcc' to compile .s file and link with 'libUtil.a'
-    clang $program.$opt.s libUtil.a -o "out/$program.$opt.out"
+    if [ $opt = "openmp" ]
+    then
+    	export OMP_NUM_THREADS=$num_threads
+    	### Use 'gcc' to compile .s file and link with 'libUtil.a'
+    	clang $program.$opt.s libUtil.a -lgomp -o "out/$program.$opt.out" 
+	else
+    	### Use 'gcc' to compile .s file and link with 'libUtil.a'
+    	clang $program.$opt.s libUtil.a -o "out/$program.$opt.out"
+    fi
     ### Run the generated executables.
 	time ./out/$program.$opt.out $parameter
 }
@@ -186,8 +194,17 @@ clang_polly(){
 	time ./out/$program.clang.out $parameter
 
 	echo -e -n "[2] Run ${BOLD}${GREEN} Polly-Optimized ${RESET} executables" && read
-	pollycc -g -O3 -fno-vectorize -mllvm -polly -S -emit-llvm $program.c -o $program.opt.ll
-	runExecutables $program "opt" $parameter
+	#pollycc -g -O3 -fno-vectorize -mllvm -polly $program.c -o "out"/$program.polly.out
+	#time ./out/$program.polly.out $parameter
+	pollycc -g -O3 -fno-vectorize -mllvm -polly -S -emit-llvm $program.c -o $program.polly.ll
+	runExecutables $program "polly" $parameter
+
+	echo -e -n "[2] Run ${BOLD}${GREEN} Polly-Optimized OpenMP ${RESET} executables with $num_threads threads" && read
+	#pollycc -g -O3 -fno-vectorize -mllvm -polly -mllvm -polly-parallel -lgomp $program.c -o "out"/$program.openmp.out
+	#time ./out/$program.openmp.out $parameter
+	pollycc -g -O3 -fno-vectorize -mllvm -polly -S -emit-llvm\
+	        -mllvm -polly-parallel -lgomp $program.c -o $program.openmp.ll
+	runExecutables $program "openmp" $parameter 2
 
 	echo -e "-----------------Press [Enter] to finish up--------------------"&& read
 	cleanup

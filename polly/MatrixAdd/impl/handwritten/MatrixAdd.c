@@ -1,17 +1,21 @@
-#include <stdio.h>
+#include "Util.h"
 #define N 1024*10
-long long A[N][N];
-long long B[N][N];
-long long C[N][N];
+int A[N][N];
+int B[N][N];
+int C[N][N];
 
-void init_array()
+void init()
 {
-    int i, j;
-
+    int i;
+    int j;
+    time_t t;
+    /* Intializes random number generator */
+    srand((unsigned) time(&t));
     for (i=0; i<N; i++) {
         for (j=0; j<N; j++) {
-            A[i][j] = 1;
-            B[i][j] = 1;
+            int r = rand() % 100;// Generate 0 ~ 100
+            A[i][j] = A[i][j] + r; 
+            B[i][j] = B[i][j] + 100 - r;
         }
     }
 }
@@ -23,7 +27,6 @@ void mat_add(){
             C[i][j] = A[i][j] + B[i][j];
         }
     }
-
 }
 
 void print_array()
@@ -32,24 +35,20 @@ void print_array()
 
     for (i=0; i<N; i++) {
         for (j=0; j<N; j++) {
-            fprintf(stdout, "%lld ", C[i][j]);
-            if (j%80 == 79) fprintf(stdout, "\n");
+            printf("%d ", C[i][j]);
+            if (j%80 == 79) printf("\n");
         }
-        fprintf(stdout, "\n");
+        printf("\n");
     }
 }
 
 int main()
 {
     int i, j, k;
-    double t_start, t_end;
 
-    int r;
-    //for(r=0;r<100;r++){
-    init_array();
+    init();
     mat_add();
-    //}
    
-    printf("Pass %d X %d matrix test case (C[%d][%d] =%lld) \n ", N, N, N-1, N-1, C[N-1][N-1]);
+    printf("Pass %d X %d matrix test case (C[%d][%d] =%d) \n ", N, N, N-1, N-1, C[N-1][N-1]);
     return 0;
 }

@@ -1,0 +1,42 @@
+digraph "Scop Graph for 'init' function" {
+	label="Scop Graph for 'init' function";
+
+	Node0x9c989e0 [shape=record,label="{entry:\l  %t = alloca i64, align 8\l  br label %entry.split, !dbg !52\l}"];
+	Node0x9c989e0 -> Node0x9ea4b20;
+	Node0x9ea4b20 [shape=record,label="{entry.split:                                      \l  %0 = bitcast i64* %t to i8*, !dbg !52\l  call void @llvm.lifetime.start(i64 8, i8* %0) #4, !dbg !52\l  tail call void @llvm.dbg.value(metadata i64* %t, i64 0, metadata !13,\l... metadata !53), !dbg !54\l  %call = call i64 @time(i64* nonnull %t) #4, !dbg !55\l  %conv = trunc i64 %call to i32, !dbg !56\l  call void @srand(i32 %conv) #4, !dbg !57\l  call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !10, metadata\l... !59), !dbg !60\l  br label %for.cond2.preheader, !dbg !61\l}"];
+	Node0x9ea4b20 -> Node0x9e1a190;
+	Node0x9e1a190 [shape=record,label="{for.cond2.preheader:                              \l  %indvars.iv41 = phi i64 [ 0, %entry.split ], [ %indvars.iv.next42,\l... %for.inc22 ]\l  br label %for.body5, !dbg !63\l}"];
+	Node0x9e1a190 -> Node0x9e8fdf0;
+	Node0x9e8fdf0 [shape=record,label="{for.body5:                                        \l  %indvars.iv = phi i64 [ 0, %for.cond2.preheader ], [ %indvars.iv.next,\l... %for.body5 ]\l  %call6 = call i32 @rand() #4, !dbg !65\l  %rem = srem i32 %call6, 100, !dbg !67\l  call void @llvm.dbg.value(metadata i32 %rem, i64 0, metadata !19, metadata\l... !59), !dbg !68\l  %arrayidx8 = getelementptr inbounds [10240 x [10240 x i32]], [10240 x [10240\l... x i32]]* @A, i64 0, i64 %indvars.iv41, i64 %indvars.iv, !dbg !69\l  %1 = load i32, i32* %arrayidx8, align 4, !dbg !69, !tbaa !70\l  %add = add nsw i32 %1, %rem, !dbg !74\l  store i32 %add, i32* %arrayidx8, align 4, !dbg !75, !tbaa !70\l  %arrayidx16 = getelementptr inbounds [10240 x [10240 x i32]], [10240 x\l... [10240 x i32]]* @B, i64 0, i64 %indvars.iv41, i64 %indvars.iv, !dbg !76\l  %2 = load i32, i32* %arrayidx16, align 4, !dbg !76, !tbaa !70\l  %add17 = sub nsw i32 100, %rem, !dbg !77\l  %sub = add i32 %add17, %2, !dbg !78\l  store i32 %sub, i32* %arrayidx16, align 4, !dbg !79, !tbaa !70\l  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !63\l  call void @llvm.dbg.value(metadata !2, i64 0, metadata !12, metadata !59),\l... !dbg !80\l  %exitcond = icmp ne i64 %indvars.iv.next, 10240, !dbg !63\l  br i1 %exitcond, label %for.body5, label %for.inc22, !dbg !63\l}"];
+	Node0x9e8fdf0 -> Node0x9e8fdf0[constraint=false];
+	Node0x9e8fdf0 -> Node0x9e233f0;
+	Node0x9e233f0 [shape=record,label="{for.inc22:                                        \l  %indvars.iv.next42 = add nuw nsw i64 %indvars.iv41, 1, !dbg !61\l  call void @llvm.dbg.value(metadata !2, i64 0, metadata !10, metadata !59),\l... !dbg !60\l  %exitcond43 = icmp ne i64 %indvars.iv.next42, 10240, !dbg !61\l  br i1 %exitcond43, label %for.cond2.preheader, label %for.end24, !dbg !61\l}"];
+	Node0x9e233f0 -> Node0x9e1a190[constraint=false];
+	Node0x9e233f0 -> Node0x9e1aa60;
+	Node0x9e1aa60 [shape=record,label="{for.end24:                                        \l  call void @llvm.lifetime.end(i64 8, i8* %0) #4, !dbg !81\l  ret void, !dbg !81\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0x9e1afc0 {
+          label = "MatrixAdd.c:9-21
+";
+          style = solid;
+          color = 1
+          subgraph cluster_0x9e1baa0 {
+            label = "MatrixAdd.c:9-18
+Call instruction:   %call6 = call i32 @rand() #4, !dbg !65";
+            style = solid;
+            color = 6
+            subgraph cluster_0x9e21ed0 {
+              label = "MatrixAdd.c:10-18
+Call instruction:   %call6 = call i32 @rand() #4, !dbg !65";
+              style = solid;
+              color = 5
+              Node0x9e8fdf0;
+            }
+            Node0x9e1a190;
+            Node0x9e233f0;
+          }
+          Node0x9c989e0;
+          Node0x9ea4b20;
+          Node0x9e1aa60;
+        }
+}
