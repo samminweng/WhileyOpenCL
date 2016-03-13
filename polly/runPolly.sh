@@ -190,7 +190,7 @@ clang_polly(){
 	### Generate executables
 	echo -e -n "${GREEN}[*]Loop Vectorizer is diabled${RESET}" && read
 	echo -e -n "[1] Run ${BOLD}${GREEN} Clang -O3 ${RESET} executables" && read
-	pollycc -g -O3 -fno-vectorize $program.c -o "out"/$program.clang.out
+	clang -g -O3 -fno-vectorize $program.c -o "out"/$program.clang.out
 	time ./out/$program.clang.out $parameter
 
 	echo -e -n "[2] Run ${BOLD}${GREEN} Polly-Optimized ${RESET} executables" && read
