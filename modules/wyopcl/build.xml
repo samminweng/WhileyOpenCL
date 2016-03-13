@@ -101,17 +101,32 @@
 	</target>
 
 	<!-- ============================================== -->
-	  <!-- Special Commands for Whiley2OpenCL project     -->
-	  <!-- ============================================== -->
-	  <!-- Class path for Junit -->
-	  <path id="junit-classpath">
-	  	<fileset dir="../../lib">
-	  		<include name="*.jar" />
-	  	</fileset>
-	  	<pathelement path="build" />
-	  </path>
-	  <!-- Test the bound analyzer with test cases.-->
-	 <!-- <target name="test-bound" depends="clean, build">
+	<!-- Special Commands for Whiley2OpenCL project     -->
+	<!-- ============================================== -->
+	<!-- Class path for Junit -->
+	<path id="junit-classpath">
+		<fileset dir="../../lib">
+			<include name="*.jar" />
+		</fileset>
+		<pathelement path="build" />
+	</path>
+	<target name="test-code" depends="build">
+		<junit fork="true" dir="${basedir}/../../" failureProperty="tests.failed" printsummary="yes" outputtoformatters="true">
+			<formatter type="plain" usefile="false" />
+			<classpath refid="junit-classpath"/>
+			<batchtest>
+				<fileset dir="${basedir}/test">
+					<include name="**/CodeGenerationTestCase*" />
+				</fileset>
+			</batchtest>
+		</junit>
+		<fail message="Test failure detected, stopping build." if="tests.failed"/>
+	</target>
+	<target name="test" depends="test-code">
+    </target>
+
+	<!-- Test the bound analyzer with test cases.-->
+	<!-- <target name="test-bound" depends="clean, build">
 	  	<mkdir dir="../report/bound" />
 	  	<junit fork="yes" dir=".">
 	  		<formatter type="plain" usefile="false" />
@@ -130,8 +145,8 @@
 	  		<report todir="report/bound" />
 	  	</junitreport>
 	  </target>-->
-	  <!-- Test the bound analyzer with test cases.-->
-	  <!--<target name="test-pattern" depends="clean, build">
+	<!-- Test the bound analyzer with test cases.-->
+	<!--<target name="test-pattern" depends="clean, build">
 	  	<mkdir dir="report/pattern" />
 	  	<junit fork="yes" dir=".">
 	  		<formatter type="plain" usefile="false" />
@@ -150,17 +165,6 @@
 	  		<report todir="report/pattern" />
 	  	</junitreport>
 	  </target>-->
-	  <!--Test the code generator with test cases.-->
-	  <target name="test-code" depends="build">
-	  	<junit fork="true" dir="${basedir}/../../" failureProperty="tests.failed" printsummary="yes" outputtoformatters="true">
-	  		<formatter type="plain" usefile="false" />
-	  		<classpath refid="junit-classpath"/>
-	  		<batchtest>
-	  			<fileset dir="${basedir}/test">
-	  				<include name="**/CodeGenerationTestCase*" />
-	  			</fileset>
-	  		</batchtest>
-	  	</junit>
-	  	<fail message="Test failure detected, stopping build." if="tests.failed"/>
-	  </target>
+	<!--Test the code generator with test cases.-->
+
 </project>
