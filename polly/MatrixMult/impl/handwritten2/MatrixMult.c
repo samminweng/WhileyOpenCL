@@ -1,10 +1,13 @@
 #include "Util.h"
-#define N 512
+#define N 2000
+
+void init() __attribute__((noinline));
+void mat_mult() __attribute__((noinline));
+
 int A[N][N];
 int B[N][N];
 int C[N][N];
 int R[N][N];
-void init() __attribute__((noinline));
 
 void init(){
     int i;
@@ -14,18 +17,42 @@ void init(){
     srand((unsigned) time(NULL));
     for (i=0; i<N; i++) {
         for (j=0; j<N; j++) {
-            // Each rows starts with a random number
-            R[i][j] = rand()%100;
+            // Each rows starts with a random number from 0 to 10
+            R[i][j] = rand()%10;
         }
     }
 
     for (i=0; i<N; i++) {
         for (j=0; j<N; j++) {
+            //A[i][j] = 1; 
+            //B[i][j] = 1;
             A[i][j] = R[i][j]; 
-            B[i][j] = 100 - R[i][j];
+            B[i][j] = R[i][j];
         }
     }
 }
+
+void mat_mult(){
+	int i,j,k;
+	int b_t[N];
+
+	for (j = 0; j < N; j++) {
+		// Extract the column at 'j' index
+		for (i = 0; i < N; i++) {
+			b_t[i] = B[i][j];
+		}
+		// Multiply the X and y_t vectors.
+		for (i = 0; i < N; i++) {
+			int sum=0;
+			for(k=0;k<N;k++){
+				sum = sum + A[i][k]*b_t[k];
+			}
+			C[i][j] = sum;
+		}
+	}
+}
+
+
 /*int *__restrict__ transpose(int index) {
 	int i;
 	int *__restrict__ y_t=(int *__restrict__)malloc(N*sizeof(int));
@@ -69,26 +96,8 @@ void init(){
 
 
 int main(){
-	int i,j,k;
 	init();
-	int b_t[N];
-
-
-
-	for (j = 0; j < N; j++) {
-		// Extract the column at 'j' index
-		for (i = 0; i < N; i++) {
-			b_t[i] = B[i][j];
-		}
-		// Multiply the X and y_t vectors.
-		for (i = 0; i < N; i++) {
-			int sum=0;
-			for(k=0;k<N;k++){
-				sum = sum + A[i][k]*b_t[k];
-			}
-			C[i][j] = sum;
-		}
-	}
+	mat_mult();
 	
 	printf("Pass %d X %d matrix test case \n", N, N);
     printf("A[%d][%d] = %d, B[%d][%d] =%d, C[%d][%d] =%d \n", 
@@ -97,5 +106,4 @@ int main(){
         N-1, N-1, C[N-1][N-1]);
 
     return 0;
-	//print_array();
 }

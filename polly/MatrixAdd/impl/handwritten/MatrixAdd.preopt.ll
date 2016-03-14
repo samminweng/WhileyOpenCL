@@ -57,8 +57,9 @@ for.body19:                                       ; preds = %for.cond16.preheade
   store i32 %0, i32* %arrayidx27, align 4, !dbg !60
   %arrayidx31 = getelementptr inbounds [2000 x [2000 x i32]], [2000 x [2000 x i32]]* @R, i64 0, i64 %indvars.iv5, i64 %indvars.iv, !dbg !61
   %1 = load i32, i32* %arrayidx31, align 4, !dbg !61
-  %arrayidx35 = getelementptr inbounds [2000 x [2000 x i32]], [2000 x [2000 x i32]]* @B, i64 0, i64 %indvars.iv5, i64 %indvars.iv, !dbg !62
-  store i32 %1, i32* %arrayidx35, align 4, !dbg !63
+  %sub = sub nsw i32 100, %1, !dbg !62
+  %arrayidx35 = getelementptr inbounds [2000 x [2000 x i32]], [2000 x [2000 x i32]]* @B, i64 0, i64 %indvars.iv5, i64 %indvars.iv, !dbg !63
+  store i32 %sub, i32* %arrayidx35, align 4, !dbg !64
   %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !52
   tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !50, metadata !30), !dbg !51
   %exitcond = icmp ne i64 %indvars.iv.next, 2000, !dbg !52
@@ -71,7 +72,7 @@ for.inc39:                                        ; preds = %for.body19
   br i1 %exitcond7, label %for.cond16.preheader, label %for.end41, !dbg !41
 
 for.end41:                                        ; preds = %for.inc39
-  ret void, !dbg !64
+  ret void, !dbg !65
 }
 
 ; Function Attrs: nounwind readnone
@@ -89,54 +90,54 @@ declare i32 @rand() #2
 ; Function Attrs: noinline nounwind uwtable
 define void @mat_add() #0 !dbg !9 {
 entry:
-  br label %entry.split, !dbg !65
+  br label %entry.split, !dbg !66
 
 entry.split:                                      ; preds = %entry
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !66, metadata !30), !dbg !65
-  br label %for.cond1.preheader, !dbg !67
+  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !67, metadata !30), !dbg !66
+  br label %for.cond1.preheader, !dbg !68
 
 for.cond1.preheader:                              ; preds = %entry.split, %for.inc14
   %indvars.iv3 = phi i64 [ 0, %entry.split ], [ %indvars.iv.next4, %for.inc14 ]
-  br label %for.body3, !dbg !71
+  br label %for.body3, !dbg !72
 
 for.body3:                                        ; preds = %for.cond1.preheader, %for.body3
   %indvars.iv = phi i64 [ 0, %for.cond1.preheader ], [ %indvars.iv.next, %for.body3 ]
-  %arrayidx5 = getelementptr inbounds [2000 x [2000 x i32]], [2000 x [2000 x i32]]* @A, i64 0, i64 %indvars.iv3, i64 %indvars.iv, !dbg !76
-  %0 = load i32, i32* %arrayidx5, align 4, !dbg !76
-  %arrayidx9 = getelementptr inbounds [2000 x [2000 x i32]], [2000 x [2000 x i32]]* @B, i64 0, i64 %indvars.iv3, i64 %indvars.iv, !dbg !78
-  %1 = load i32, i32* %arrayidx9, align 4, !dbg !78
-  %add = add nsw i32 %1, %0, !dbg !79
-  %arrayidx13 = getelementptr inbounds [2000 x [2000 x i32]], [2000 x [2000 x i32]]* @C, i64 0, i64 %indvars.iv3, i64 %indvars.iv, !dbg !80
-  store i32 %add, i32* %arrayidx13, align 4, !dbg !81
-  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !71
-  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !82, metadata !30), !dbg !83
-  %exitcond = icmp ne i64 %indvars.iv.next, 2000, !dbg !71
-  br i1 %exitcond, label %for.body3, label %for.inc14, !dbg !71
+  %arrayidx5 = getelementptr inbounds [2000 x [2000 x i32]], [2000 x [2000 x i32]]* @A, i64 0, i64 %indvars.iv3, i64 %indvars.iv, !dbg !77
+  %0 = load i32, i32* %arrayidx5, align 4, !dbg !77
+  %arrayidx9 = getelementptr inbounds [2000 x [2000 x i32]], [2000 x [2000 x i32]]* @B, i64 0, i64 %indvars.iv3, i64 %indvars.iv, !dbg !79
+  %1 = load i32, i32* %arrayidx9, align 4, !dbg !79
+  %add = add nsw i32 %1, %0, !dbg !80
+  %arrayidx13 = getelementptr inbounds [2000 x [2000 x i32]], [2000 x [2000 x i32]]* @C, i64 0, i64 %indvars.iv3, i64 %indvars.iv, !dbg !81
+  store i32 %add, i32* %arrayidx13, align 4, !dbg !82
+  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !72
+  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !83, metadata !30), !dbg !84
+  %exitcond = icmp ne i64 %indvars.iv.next, 2000, !dbg !72
+  br i1 %exitcond, label %for.body3, label %for.inc14, !dbg !72
 
 for.inc14:                                        ; preds = %for.body3
-  %indvars.iv.next4 = add nuw nsw i64 %indvars.iv3, 1, !dbg !67
-  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !66, metadata !30), !dbg !65
-  %exitcond5 = icmp ne i64 %indvars.iv.next4, 2000, !dbg !67
-  br i1 %exitcond5, label %for.cond1.preheader, label %for.end16, !dbg !67
+  %indvars.iv.next4 = add nuw nsw i64 %indvars.iv3, 1, !dbg !68
+  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !67, metadata !30), !dbg !66
+  %exitcond5 = icmp ne i64 %indvars.iv.next4, 2000, !dbg !68
+  br i1 %exitcond5, label %for.cond1.preheader, label %for.end16, !dbg !68
 
 for.end16:                                        ; preds = %for.inc14
-  ret void, !dbg !84
+  ret void, !dbg !85
 }
 
 ; Function Attrs: nounwind uwtable
 define i32 @main() #3 !dbg !10 {
 entry:
-  br label %entry.split, !dbg !85
+  br label %entry.split, !dbg !86
 
 entry.split:                                      ; preds = %entry
-  tail call void @init(), !dbg !85
-  tail call void @mat_add(), !dbg !86
-  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([32 x i8], [32 x i8]* @.str, i64 0, i64 0), i32 2000, i32 2000) #5, !dbg !87
-  %0 = load i32, i32* getelementptr inbounds ([2000 x [2000 x i32]], [2000 x [2000 x i32]]* @A, i64 0, i64 1999, i64 1999), align 4, !dbg !88
-  %1 = load i32, i32* getelementptr inbounds ([2000 x [2000 x i32]], [2000 x [2000 x i32]]* @B, i64 0, i64 1999, i64 1999), align 4, !dbg !89
-  %2 = load i32, i32* getelementptr inbounds ([2000 x [2000 x i32]], [2000 x [2000 x i32]]* @C, i64 0, i64 1999, i64 1999), align 4, !dbg !90
-  %call1 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([47 x i8], [47 x i8]* @.str.1, i64 0, i64 0), i32 1999, i32 1999, i32 %0, i32 1999, i32 1999, i32 %1, i32 1999, i32 1999, i32 %2) #5, !dbg !91
-  ret i32 0, !dbg !92
+  tail call void @init(), !dbg !86
+  tail call void @mat_add(), !dbg !87
+  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([32 x i8], [32 x i8]* @.str, i64 0, i64 0), i32 2000, i32 2000) #5, !dbg !88
+  %0 = load i32, i32* getelementptr inbounds ([2000 x [2000 x i32]], [2000 x [2000 x i32]]* @A, i64 0, i64 1999, i64 1999), align 4, !dbg !89
+  %1 = load i32, i32* getelementptr inbounds ([2000 x [2000 x i32]], [2000 x [2000 x i32]]* @B, i64 0, i64 1999, i64 1999), align 4, !dbg !90
+  %2 = load i32, i32* getelementptr inbounds ([2000 x [2000 x i32]], [2000 x [2000 x i32]]* @C, i64 0, i64 1999, i64 1999), align 4, !dbg !91
+  %call1 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([47 x i8], [47 x i8]* @.str.1, i64 0, i64 0), i32 1999, i32 1999, i32 %0, i32 1999, i32 1999, i32 %1, i32 1999, i32 1999, i32 %2) #5, !dbg !92
+  ret i32 0, !dbg !93
 }
 
 declare i32 @printf(i8*, ...) #4
@@ -216,35 +217,36 @@ attributes #5 = { nounwind }
 !58 = distinct !DILexicalBlock(scope: !54, file: !1, line: 25, column: 29)
 !59 = !DILocation(line: 26, column: 13, scope: !58)
 !60 = !DILocation(line: 26, column: 21, scope: !58)
-!61 = !DILocation(line: 27, column: 23, scope: !58)
-!62 = !DILocation(line: 27, column: 13, scope: !58)
-!63 = !DILocation(line: 27, column: 21, scope: !58)
-!64 = !DILocation(line: 30, column: 1, scope: !6)
-!65 = !DILocation(line: 34, column: 9, scope: !9)
-!66 = !DILocalVariable(name: "i", scope: !9, file: !1, line: 34, type: !13)
-!67 = !DILocation(line: 35, column: 5, scope: !68)
-!68 = !DILexicalBlockFile(scope: !69, file: !1, discriminator: 1)
-!69 = distinct !DILexicalBlock(scope: !70, file: !1, line: 35, column: 5)
-!70 = distinct !DILexicalBlock(scope: !9, file: !1, line: 35, column: 5)
-!71 = !DILocation(line: 36, column: 9, scope: !72)
-!72 = !DILexicalBlockFile(scope: !73, file: !1, discriminator: 1)
-!73 = distinct !DILexicalBlock(scope: !74, file: !1, line: 36, column: 9)
+!61 = !DILocation(line: 27, column: 29, scope: !58)
+!62 = !DILocation(line: 27, column: 27, scope: !58)
+!63 = !DILocation(line: 27, column: 13, scope: !58)
+!64 = !DILocation(line: 27, column: 21, scope: !58)
+!65 = !DILocation(line: 30, column: 1, scope: !6)
+!66 = !DILocation(line: 34, column: 9, scope: !9)
+!67 = !DILocalVariable(name: "i", scope: !9, file: !1, line: 34, type: !13)
+!68 = !DILocation(line: 35, column: 5, scope: !69)
+!69 = !DILexicalBlockFile(scope: !70, file: !1, discriminator: 1)
+!70 = distinct !DILexicalBlock(scope: !71, file: !1, line: 35, column: 5)
+!71 = distinct !DILexicalBlock(scope: !9, file: !1, line: 35, column: 5)
+!72 = !DILocation(line: 36, column: 9, scope: !73)
+!73 = !DILexicalBlockFile(scope: !74, file: !1, discriminator: 1)
 !74 = distinct !DILexicalBlock(scope: !75, file: !1, line: 36, column: 9)
-!75 = distinct !DILexicalBlock(scope: !69, file: !1, line: 35, column: 25)
-!76 = !DILocation(line: 37, column: 23, scope: !77)
-!77 = distinct !DILexicalBlock(scope: !73, file: !1, line: 36, column: 29)
-!78 = !DILocation(line: 37, column: 33, scope: !77)
-!79 = !DILocation(line: 37, column: 31, scope: !77)
-!80 = !DILocation(line: 37, column: 13, scope: !77)
-!81 = !DILocation(line: 37, column: 21, scope: !77)
-!82 = !DILocalVariable(name: "j", scope: !9, file: !1, line: 34, type: !13)
-!83 = !DILocation(line: 34, column: 12, scope: !9)
-!84 = !DILocation(line: 40, column: 1, scope: !9)
-!85 = !DILocation(line: 59, column: 5, scope: !10)
-!86 = !DILocation(line: 60, column: 5, scope: !10)
-!87 = !DILocation(line: 62, column: 5, scope: !10)
-!88 = !DILocation(line: 64, column: 19, scope: !10)
-!89 = !DILocation(line: 65, column: 19, scope: !10)
-!90 = !DILocation(line: 66, column: 19, scope: !10)
-!91 = !DILocation(line: 63, column: 5, scope: !10)
-!92 = !DILocation(line: 67, column: 5, scope: !10)
+!75 = distinct !DILexicalBlock(scope: !76, file: !1, line: 36, column: 9)
+!76 = distinct !DILexicalBlock(scope: !70, file: !1, line: 35, column: 25)
+!77 = !DILocation(line: 37, column: 23, scope: !78)
+!78 = distinct !DILexicalBlock(scope: !74, file: !1, line: 36, column: 29)
+!79 = !DILocation(line: 37, column: 33, scope: !78)
+!80 = !DILocation(line: 37, column: 31, scope: !78)
+!81 = !DILocation(line: 37, column: 13, scope: !78)
+!82 = !DILocation(line: 37, column: 21, scope: !78)
+!83 = !DILocalVariable(name: "j", scope: !9, file: !1, line: 34, type: !13)
+!84 = !DILocation(line: 34, column: 12, scope: !9)
+!85 = !DILocation(line: 40, column: 1, scope: !9)
+!86 = !DILocation(line: 59, column: 5, scope: !10)
+!87 = !DILocation(line: 60, column: 5, scope: !10)
+!88 = !DILocation(line: 62, column: 5, scope: !10)
+!89 = !DILocation(line: 64, column: 19, scope: !10)
+!90 = !DILocation(line: 65, column: 19, scope: !10)
+!91 = !DILocation(line: 66, column: 19, scope: !10)
+!92 = !DILocation(line: 63, column: 5, scope: !10)
+!93 = !DILocation(line: 67, column: 5, scope: !10)

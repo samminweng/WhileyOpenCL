@@ -1,67 +1,16 @@
 digraph "Scop Graph for 'main' function" {
 	label="Scop Graph for 'main' function";
 
-	Node0x992aca0 [shape=record,label="{entry:\l  %y_t = alloca [512 x i32], align 16\l  br label %entry.split, !dbg !38\l}"];
-	Node0x992aca0 -> Node0x9865bb0;
-	Node0x9865bb0 [shape=record,label="{entry.split:                                      \l  tail call void @init(), !dbg !38\l  %0 = bitcast [512 x i32]* %y_t to i8*, !dbg !39\l  call void @llvm.lifetime.start(i64 2048, i8* %0) #5, !dbg !39\l  tail call void @llvm.dbg.declare(metadata [512 x i32]* %y_t, metadata !18,\l... metadata !40), !dbg !41\l  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !16, metadata\l... !40), !dbg !42\l  br label %for.cond1.preheader, !dbg !43\l}"];
-	Node0x9865bb0 -> Node0x9865b80;
-	Node0x9865b80 [shape=record,label="{for.cond1.preheader:                              \l  %indvars.iv61 = phi i64 [ 0, %entry.split ], [ %indvars.iv.next62,\l... %for.inc30 ]\l  br label %for.body3, !dbg !45\l}"];
-	Node0x9865b80 -> Node0x985e030;
-	Node0x985e030 [shape=record,label="{for.body3:                                        \l  %indvars.iv = phi i64 [ 0, %for.cond1.preheader ], [ %indvars.iv.next,\l... %for.body3 ]\l  %arrayidx5 = getelementptr inbounds [512 x [512 x i32]], [512 x [512 x\l... i32]]* @Y, i64 0, i64 %indvars.iv, i64 %indvars.iv61, !dbg !51\l  %1 = load i32, i32* %arrayidx5, align 4, !dbg !51, !tbaa !53\l  %arrayidx7 = getelementptr inbounds [512 x i32], [512 x i32]* %y_t, i64 0,\l... i64 %indvars.iv, !dbg !57\l  store i32 %1, i32* %arrayidx7, align 4, !dbg !58, !tbaa !53\l  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !45\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !15, metadata\l... !40), !dbg !59\l  %exitcond = icmp ne i64 %indvars.iv.next, 512, !dbg !45\l  br i1 %exitcond, label %for.body3, label %for.cond8.preheader, !dbg !45\l}"];
-	Node0x985e030 -> Node0x985e030[constraint=false];
-	Node0x985e030 -> Node0x985e050;
-	Node0x985e050 [shape=record,label="{for.cond8.preheader:                              \l  br label %for.cond11.preheader, !dbg !49\l}"];
-	Node0x985e050 -> Node0x9861960;
-	Node0x9861960 [shape=record,label="{for.cond11.preheader:                             \l  %indvars.iv58 = phi i64 [ 0, %for.cond8.preheader ], [ %indvars.iv.next59,\l... %for.end22 ]\l  br label %for.body13, !dbg !60\l}"];
-	Node0x9861960 -> Node0x9861980;
-	Node0x9861980 [shape=record,label="{for.body13:                                       \l  %indvars.iv55 = phi i64 [ 0, %for.cond11.preheader ], [ %indvars.iv.next56,\l... %for.body13 ]\l  %sum.052 = phi i32 [ 0, %for.cond11.preheader ], [ %add, %for.body13 ]\l  %arrayidx17 = getelementptr inbounds [512 x [512 x i32]], [512 x [512 x\l... i32]]* @X, i64 0, i64 %indvars.iv58, i64 %indvars.iv55, !dbg !64\l  %2 = load i32, i32* %arrayidx17, align 4, !dbg !64, !tbaa !53\l  %arrayidx19 = getelementptr inbounds [512 x i32], [512 x i32]* %y_t, i64 0,\l... i64 %indvars.iv55, !dbg !66\l  %3 = load i32, i32* %arrayidx19, align 4, !dbg !66, !tbaa !53\l  %mul = mul nsw i32 %3, %2, !dbg !67\l  %add = add nsw i32 %mul, %sum.052, !dbg !68\l  tail call void @llvm.dbg.value(metadata i32 %add, i64 0, metadata !22,\l... metadata !40), !dbg !69\l  %indvars.iv.next56 = add nuw nsw i64 %indvars.iv55, 1, !dbg !60\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !17, metadata\l... !40), !dbg !70\l  %exitcond57 = icmp ne i64 %indvars.iv.next56, 512, !dbg !60\l  br i1 %exitcond57, label %for.body13, label %for.end22, !dbg !60\l}"];
-	Node0x9861980 -> Node0x9861980[constraint=false];
-	Node0x9861980 -> Node0x9864d70;
-	Node0x9864d70 [shape=record,label="{for.end22:                                        \l  %add.lcssa = phi i32 [ %add, %for.body13 ]\l  %arrayidx26 = getelementptr inbounds [512 x [512 x i32]], [512 x [512 x\l... i32]]* @Z, i64 0, i64 %indvars.iv58, i64 %indvars.iv61, !dbg !71\l  store i32 %add.lcssa, i32* %arrayidx26, align 4, !dbg !72, !tbaa !53\l  %indvars.iv.next59 = add nuw nsw i64 %indvars.iv58, 1, !dbg !49\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !15, metadata\l... !40), !dbg !59\l  %exitcond60 = icmp ne i64 %indvars.iv.next59, 512, !dbg !49\l  br i1 %exitcond60, label %for.cond11.preheader, label %for.inc30, !dbg !49\l}"];
-	Node0x9864d70 -> Node0x9861960[constraint=false];
-	Node0x9864d70 -> Node0x9864dd0;
-	Node0x9864dd0 [shape=record,label="{for.inc30:                                        \l  %indvars.iv.next62 = add nuw nsw i64 %indvars.iv61, 1, !dbg !43\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !16, metadata\l... !40), !dbg !42\l  %exitcond63 = icmp ne i64 %indvars.iv.next62, 512, !dbg !43\l  br i1 %exitcond63, label %for.cond1.preheader, label %for.end32, !dbg !43\l}"];
-	Node0x9864dd0 -> Node0x9865b80[constraint=false];
-	Node0x9864dd0 -> Node0x9864df0;
-	Node0x9864df0 [shape=record,label="{for.end32:                                        \l  %4 = load i32, i32* getelementptr inbounds ([512 x [512 x i32]], [512 x [512\l... x i32]]* @Z, i64 0, i64 511, i64 511), align 4, !dbg !73, !tbaa !53\l  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([46 x\l... i8], [46 x i8]* @.str, i64 0, i64 0), i32 512, i32 512, i32 511, i32 511, i32\l... %4), !dbg !74\l  call void @llvm.lifetime.end(i64 2048, i8* %0) #5, !dbg !75\l  ret i32 0, !dbg !76\l}"];
+	Node0x90f5a30 [shape=record,label="{entry:\l  br label %entry.split, !dbg !42\l}"];
+	Node0x90f5a30 -> Node0x90c6550;
+	Node0x90c6550 [shape=record,label="{entry.split:                                      \l  tail call void @init(), !dbg !42\l  tail call void @mat_mult(), !dbg !43\l  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([32 x\l... i8], [32 x i8]* @.str, i64 0, i64 0), i32 2000, i32 2000), !dbg !44\l  %0 = load i32, i32* getelementptr inbounds ([2000 x [2000 x i32]], [2000 x\l... [2000 x i32]]* @A, i64 0, i64 1999, i64 1999), align 4, !dbg !45, !tbaa !46\l  %1 = load i32, i32* getelementptr inbounds ([2000 x [2000 x i32]], [2000 x\l... [2000 x i32]]* @B, i64 0, i64 1999, i64 1999), align 4, !dbg !50, !tbaa !46\l  %2 = load i32, i32* getelementptr inbounds ([2000 x [2000 x i32]], [2000 x\l... [2000 x i32]]* @C, i64 0, i64 1999, i64 1999), align 4, !dbg !51, !tbaa !46\l  %call1 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([47 x\l... i8], [47 x i8]* @.str.1, i64 0, i64 0), i32 1999, i32 1999, i32 %0, i32 1999,\l... i32 1999, i32 %1, i32 1999, i32 1999, i32 %2), !dbg !52\l  ret i32 0, !dbg !53\l}"];
 	colorscheme = "paired12"
-        subgraph cluster_0x9856a80 {
-          label = "MatrixMult.c:62-86
+        subgraph cluster_0x905e060 {
+          label = "MatrixMult.c:99-108
 ";
           style = solid;
           color = 1
-          subgraph cluster_0x9861650 {
-            label = "MatrixMult.c:62-79
-";
-            style = filled;
-            color = 3            subgraph cluster_0x9865590 {
-              label = "MatrixMult.c:62-71
-";
-              style = solid;
-              color = 5
-              Node0x985e030;
-            }
-            subgraph cluster_0x9862f10 {
-              label = "MatrixMult.c:62-79
-";
-              style = solid;
-              color = 5
-              subgraph cluster_0x98617b0 {
-                label = "MatrixMult.c:62-77
-";
-                style = solid;
-                color = 7
-                Node0x9861980;
-              }
-              Node0x9861960;
-              Node0x9864d70;
-            }
-            Node0x9865b80;
-            Node0x985e050;
-            Node0x9864dd0;
-          }
-          Node0x992aca0;
-          Node0x9865bb0;
-          Node0x9864df0;
+          Node0x90f5a30;
+          Node0x90c6550;
         }
 }

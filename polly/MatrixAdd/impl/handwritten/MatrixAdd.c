@@ -1,5 +1,5 @@
 #include "Util.h"
-#define N 8000
+#define N 2000
 int A[N][N]; // Each matrix takes up 512 mb
 int B[N][N];
 int C[N][N];

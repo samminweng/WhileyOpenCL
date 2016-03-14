@@ -1,10 +1,13 @@
 #include "Util.h"
-#define N 512
+#define N 2000
+
+void init() __attribute__((noinline));
+void mat_mult() __attribute__((noinline));
+
 int A[N][N];
 int B[N][N];
 int C[N][N];
 int R[N][N];
-void init() __attribute__((noinline));
 
 void init(){
     int i;
@@ -14,15 +17,17 @@ void init(){
     srand((unsigned) time(NULL));
     for (i=0; i<N; i++) {
         for (j=0; j<N; j++) {
-            // Each rows starts with a random number
-            R[i][j] = rand()%100;
+            // Each rows starts with a random number from 0 to 10
+            R[i][j] = rand()%10;
         }
     }
 
     for (i=0; i<N; i++) {
         for (j=0; j<N; j++) {
+            //A[i][j] = 1; 
+            //B[i][j] = 1;
             A[i][j] = R[i][j]; 
-            B[i][j] = 100 - R[i][j];
+            B[i][j] = R[i][j];
         }
     }
 }
@@ -36,7 +41,6 @@ void mat_mult(){
                 C[i][j] = C[i][j] + A[i][k] * B[k][j];
         }
     }
-
 }
 
 /*void print_array()

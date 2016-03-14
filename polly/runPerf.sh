@@ -78,9 +78,9 @@ exec(){
 
 #### Handwritten MatrixAdd
 init MatrixAdd handwritten
-exec MatrixAdd handwritten 8000X8000 gcc 1
-exec MatrixAdd handwritten 8000X8000 clang 1
-exec MatrixAdd handwritten 8000X8000 polly 1
-exec MatrixAdd handwritten 8000X8000 openmp 1
-exec MatrixAdd handwritten 8000X8000 openmp 2
-exec MatrixAdd handwritten 8000X8000 openmp 4
+exec MatrixAdd handwritten 2000X2000 gcc 1
+exec MatrixAdd handwritten 2000X2000 clang 1
+exec MatrixAdd handwritten 2000X2000 polly 1
+exec MatrixAdd handwritten 2000X2000 openmp 1
+exec MatrixAdd handwritten 2000X2000 openmp 2
+exec MatrixAdd handwritten 2000X2000 openmp 4
