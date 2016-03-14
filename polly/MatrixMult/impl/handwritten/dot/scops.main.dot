@@ -1,16 +1,16 @@
 digraph "Scop Graph for 'main' function" {
 	label="Scop Graph for 'main' function";
 
-	Node0x50d4040 [shape=record,label="{entry:\l  br label %entry.split, !dbg !24\l}"];
-	Node0x50d4040 -> Node0x50e3560;
-	Node0x50e3560 [shape=record,label="{entry.split:                                      \l  tail call void @init_array(), !dbg !24\l  tail call void @mat_mult(), !dbg !25\l  %0 = load i64, i64* getelementptr inbounds ([512 x [512 x i64]], [512 x [512\l... x i64]]* @C, i64 0, i64 511, i64 511), align 8, !dbg !26\l  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([49 x\l... i8], [49 x i8]* @.str.2, i64 0, i64 0), i32 512, i32 512, i64 %0) #3, !dbg !27\l  ret i32 0, !dbg !28\l}"];
+	Node0xa6fc9a0 [shape=record,label="{entry:\l  br label %entry.split, !dbg !32\l}"];
+	Node0xa6fc9a0 -> Node0xa71a7e0;
+	Node0xa71a7e0 [shape=record,label="{entry.split:                                      \l  tail call void @init(), !dbg !32\l  tail call void @mat_mult(), !dbg !33\l  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([32 x\l... i8], [32 x i8]* @.str, i64 0, i64 0), i32 512, i32 512), !dbg !34\l  %0 = load i32, i32* getelementptr inbounds ([512 x [512 x i32]], [512 x [512\l... x i32]]* @A, i64 0, i64 511, i64 511), align 4, !dbg !35, !tbaa !36\l  %1 = load i32, i32* getelementptr inbounds ([512 x [512 x i32]], [512 x [512\l... x i32]]* @B, i64 0, i64 511, i64 511), align 4, !dbg !40, !tbaa !36\l  %2 = load i32, i32* getelementptr inbounds ([512 x [512 x i32]], [512 x [512\l... x i32]]* @C, i64 0, i64 511, i64 511), align 4, !dbg !41, !tbaa !36\l  %call1 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([47 x\l... i8], [47 x i8]* @.str.1, i64 0, i64 0), i32 511, i32 511, i32 %0, i32 511,\l... i32 511, i32 %1, i32 511, i32 511, i32 %2), !dbg !42\l  ret i32 0, !dbg !43\l}"];
 	colorscheme = "paired12"
-        subgraph cluster_0x50e5540 {
-          label = "MatrixMult.c:51-56
+        subgraph cluster_0xa75ef80 {
+          label = "MatrixMult.c:57-65
 ";
           style = solid;
           color = 1
-          Node0x50d4040;
-          Node0x50e3560;
+          Node0xa6fc9a0;
+          Node0xa71a7e0;
         }
 }

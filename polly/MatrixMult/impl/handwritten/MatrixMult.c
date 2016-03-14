@@ -1,17 +1,28 @@
-#include <stdio.h>
+#include "Util.h"
 #define N 512
-long long A[N][N];
-long long B[N][N];
-long long C[N][N];
+int A[N][N];
+int B[N][N];
+int C[N][N];
+int R[N][N];
+void init() __attribute__((noinline));
 
-void init_array()
-{
-    int i, j;
+void init(){
+    int i;
+    int j;
+    
+    /* Intializes random number generator */
+    srand((unsigned) time(NULL));
+    for (i=0; i<N; i++) {
+        for (j=0; j<N; j++) {
+            // Each rows starts with a random number
+            R[i][j] = rand()%100;
+        }
+    }
 
     for (i=0; i<N; i++) {
         for (j=0; j<N; j++) {
-            A[i][j] = 1;
-            B[i][j] = 1;
+            A[i][j] = R[i][j]; 
+            B[i][j] = 100 - R[i][j];
         }
     }
 }
@@ -28,7 +39,7 @@ void mat_mult(){
 
 }
 
-void print_array()
+/*void print_array()
 {
     int i, j;
 
@@ -39,19 +50,17 @@ void print_array()
         }
         fprintf(stdout, "\n");
     }
-}
+}*/
 
 int main()
 {
-    int i, j, k;
-    double t_start, t_end;
-
-    int r;
-    //for(r=0;r<10000;r++){
-    init_array();
+    init();
     mat_mult();
-    //}
    
-    printf("Pass %d X %d matrix test case (C[N][N] =%lld) \n ", N, N, C[N-1][N-1]);
+    printf("Pass %d X %d matrix test case \n", N, N);
+    printf("A[%d][%d] = %d, B[%d][%d] =%d, C[%d][%d] =%d \n", 
+        N-1, N-1, A[N-1][N-1],
+        N-1, N-1, B[N-1][N-1],  
+        N-1, N-1, C[N-1][N-1]);
     return 0;
 }

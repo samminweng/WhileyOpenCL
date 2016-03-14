@@ -1,0 +1,68 @@
+digraph "Scop Graph for 'init' function" {
+	label="Scop Graph for 'init' function";
+
+	Node0x6a0b800 [shape=record,label="{entry:\l  br label %entry.split, !dbg !31\l}"];
+	Node0x6a0b800 -> Node0x6a112c0;
+	Node0x6a112c0 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata i32 %value, i64 0, metadata !32,\l... metadata !33), !dbg !31\l  tail call void @llvm.dbg.value(metadata i32 %width, i64 0, metadata !34,\l... metadata !33), !dbg !35\l  tail call void @llvm.dbg.value(metadata i32 %height, i64 0, metadata !36,\l... metadata !33), !dbg !37\l  %mul = mul nsw i32 %height, %width, !dbg !38\l  %conv = sext i32 %mul to i64, !dbg !39\l  %mul1 = shl nsw i64 %conv, 2, !dbg !40\l  %call = tail call noalias i8* @malloc(i64 %mul1) #4, !dbg !41\l  %0 = bitcast i8* %call to i32*, !dbg !42\l  tail call void @llvm.dbg.value(metadata i32* %0, i64 0, metadata !43,\l... metadata !33), !dbg !44\l  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !45, metadata\l... !33), !dbg !46\l  %cmp3 = icmp sgt i32 %height, 0, !dbg !47\l  br i1 %cmp3, label %for.cond3.preheader.lr.ph, label %for.end10, !dbg !51\l}"];
+	Node0x6a112c0 -> Node0x6a19ac0;
+	Node0x6a112c0 -> Node0x6a18050;
+	Node0x6a19ac0 [shape=record,label="{for.cond3.preheader.lr.ph:                        \l  %1 = sext i32 %width to i64, !dbg !51\l  br label %for.cond3.preheader, !dbg !51\l}"];
+	Node0x6a19ac0 -> Node0x69ffed0;
+	Node0x69ffed0 [shape=record,label="{for.cond3.preheader:                              \l  %indvars.iv7 = phi i64 [ 0, %for.cond3.preheader.lr.ph ], [\l... %indvars.iv.next8, %for.inc8 ]\l  %cmp41 = icmp sgt i32 %width, 0, !dbg !52\l  br i1 %cmp41, label %for.body6.lr.ph, label %for.inc8, !dbg !57\l}"];
+	Node0x69ffed0 -> Node0x6a22a40;
+	Node0x69ffed0 -> Node0x69fdf10;
+	Node0x6a22a40 [shape=record,label="{for.body6.lr.ph:                                  \l  br label %for.body6, !dbg !57\l}"];
+	Node0x6a22a40 -> Node0x69fdf70;
+	Node0x69fdf70 [shape=record,label="{for.body6:                                        \l  %indvars.iv = phi i64 [ 0, %for.body6.lr.ph ], [ %indvars.iv.next,\l... %for.body6 ]\l  %2 = mul nsw i64 %indvars.iv7, %1, !dbg !58\l  %3 = add nsw i64 %indvars.iv, %2, !dbg !60\l  %arrayidx = getelementptr inbounds i32, i32* %0, i64 %3, !dbg !61\l  store i32 %value, i32* %arrayidx, align 4, !dbg !62\l  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !57\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !63, metadata\l... !33), !dbg !64\l  %lftr.wideiv = trunc i64 %indvars.iv.next to i32, !dbg !57\l  %exitcond = icmp ne i32 %lftr.wideiv, %width, !dbg !57\l  br i1 %exitcond, label %for.body6, label %for.cond3.for.inc8_crit_edge, !dbg\l... !57\l}"];
+	Node0x69fdf70 -> Node0x69fdf70[constraint=false];
+	Node0x69fdf70 -> Node0x69fce70;
+	Node0x69fce70 [shape=record,label="{for.cond3.for.inc8_crit_edge:                     \l  br label %for.inc8, !dbg !57\l}"];
+	Node0x69fce70 -> Node0x69fdf10;
+	Node0x69fdf10 [shape=record,label="{for.inc8:                                         \l  %indvars.iv.next8 = add nuw nsw i64 %indvars.iv7, 1, !dbg !51\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !45, metadata\l... !33), !dbg !46\l  %lftr.wideiv10 = trunc i64 %indvars.iv.next8 to i32, !dbg !51\l  %exitcond11 = icmp ne i32 %lftr.wideiv10, %height, !dbg !51\l  br i1 %exitcond11, label %for.cond3.preheader, label\l... %for.cond.for.end10_crit_edge, !dbg !51\l}"];
+	Node0x69fdf10 -> Node0x69ffed0[constraint=false];
+	Node0x69fdf10 -> Node0x6a10a30;
+	Node0x6a10a30 [shape=record,label="{for.cond.for.end10_crit_edge:                     \l  br label %for.end10, !dbg !51\l}"];
+	Node0x6a10a30 -> Node0x6a18050;
+	Node0x6a18050 [shape=record,label="{for.end10:                                        \l  %call11 = tail call noalias i8* @malloc(i64 16) #4, !dbg !65\l  %4 = bitcast i8* %call11 to %struct.Matrix*, !dbg !66\l  tail call void @llvm.dbg.value(metadata %struct.Matrix* %4, i64 0, metadata\l... !67, metadata !33), !dbg !68\l  %5 = bitcast i8* %call11 to i8**, !dbg !69\l  store i8* %call, i8** %5, align 8, !dbg !69\l  %width13 = getelementptr inbounds i8, i8* %call11, i64 8, !dbg !70\l  %6 = bitcast i8* %width13 to i32*, !dbg !70\l  store i32 %width, i32* %6, align 8, !dbg !71\l  %height14 = getelementptr inbounds i8, i8* %call11, i64 12, !dbg !72\l  %7 = bitcast i8* %height14 to i32*, !dbg !72\l  store i32 %height, i32* %7, align 4, !dbg !73\l  ret %struct.Matrix* %4, !dbg !74\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0x6a10020 {
+          label = "MatrixMult.c:11-26
+";
+          style = solid;
+          color = 1
+          subgraph cluster_0x6a0e4a0 {
+            label = "MatrixMult.c:11-18
+Call instruction:   %call = tail call noalias i8* @malloc(i64 %mul1) #4, !dbg !41";
+            style = solid;
+            color = 6
+            subgraph cluster_0x69fe9b0 {
+              label = "MatrixMult.c:13-18
+Region can not profitably be optimized!";
+              style = solid;
+              color = 5
+              subgraph cluster_0x69fe4f0 {
+                label = "MatrixMult.c:13-18
+Region can not profitably be optimized!";
+                style = solid;
+                color = 7
+                subgraph cluster_0x69fb9d0 {
+                  label = "MatrixMult.c:13-18
+Region can not profitably be optimized!";
+                  style = solid;
+                  color = 9
+                  Node0x69fdf70;
+                }
+                Node0x69ffed0;
+                Node0x6a22a40;
+                Node0x69fce70;
+              }
+              Node0x69fdf10;
+            }
+            Node0x6a112c0;
+            Node0x6a19ac0;
+            Node0x6a10a30;
+          }
+          Node0x6a0b800;
+          Node0x6a18050;
+        }
+}

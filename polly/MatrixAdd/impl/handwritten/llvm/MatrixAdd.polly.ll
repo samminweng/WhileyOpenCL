@@ -147,19 +147,19 @@ polly.loop_header45:                              ; preds = %polly.loop_header45
   %scevgep = getelementptr [8000 x [8000 x i32]], [8000 x [8000 x i32]]* @A, i64 0, i64 %4, i64 %2
   %_p_scalar_ = load i32, i32* %scevgep, align 8, !alias.scope !76, !noalias !78
   %scevgep51 = getelementptr [8000 x [8000 x i32]], [8000 x [8000 x i32]]* @B, i64 0, i64 %4, i64 %2
-  %_p_scalar_52 = load i32, i32* %scevgep51, align 8, !alias.scope !80, !noalias !81
+  %_p_scalar_52 = load i32, i32* %scevgep51, align 8, !alias.scope !79, !noalias !81
   %p_add = add nsw i32 %_p_scalar_52, %_p_scalar_, !dbg !82
   %scevgep53 = getelementptr [8000 x [8000 x i32]], [8000 x [8000 x i32]]* @C, i64 0, i64 %4, i64 %2
-  store i32 %p_add, i32* %scevgep53, align 8, !alias.scope !79, !noalias !89
+  store i32 %p_add, i32* %scevgep53, align 8, !alias.scope !80, !noalias !89
   %polly.indvar_next49 = or i64 %polly.indvar48, 1
   %3 = add nuw nsw i64 %polly.indvar_next49, %1
   %scevgep.1 = getelementptr [8000 x [8000 x i32]], [8000 x [8000 x i32]]* @A, i64 0, i64 %4, i64 %3
   %_p_scalar_.1 = load i32, i32* %scevgep.1, align 4, !alias.scope !76, !noalias !78
   %scevgep51.1 = getelementptr [8000 x [8000 x i32]], [8000 x [8000 x i32]]* @B, i64 0, i64 %4, i64 %3
-  %_p_scalar_52.1 = load i32, i32* %scevgep51.1, align 4, !alias.scope !80, !noalias !81
+  %_p_scalar_52.1 = load i32, i32* %scevgep51.1, align 4, !alias.scope !79, !noalias !81
   %p_add.1 = add nsw i32 %_p_scalar_52.1, %_p_scalar_.1, !dbg !82
   %scevgep53.1 = getelementptr [8000 x [8000 x i32]], [8000 x [8000 x i32]]* @C, i64 0, i64 %4, i64 %3
-  store i32 %p_add.1, i32* %scevgep53.1, align 4, !alias.scope !79, !noalias !89
+  store i32 %p_add.1, i32* %scevgep53.1, align 4, !alias.scope !80, !noalias !89
   %polly.indvar_next49.1 = add nsw i64 %polly.indvar48, 2
   %exitcond.1 = icmp eq i64 %polly.indvar_next49.1, 32
   br i1 %exitcond.1, label %polly.loop_exit47, label %polly.loop_header45
@@ -282,9 +282,9 @@ attributes #5 = { nounwind }
 !76 = distinct !{!76, !77, !"polly.alias.scope.A"}
 !77 = distinct !{!77, !"polly.alias.scope.domain"}
 !78 = !{!79, !80}
-!79 = distinct !{!79, !77, !"polly.alias.scope.C"}
-!80 = distinct !{!80, !77, !"polly.alias.scope.B"}
-!81 = !{!79, !76}
+!79 = distinct !{!79, !77, !"polly.alias.scope.B"}
+!80 = distinct !{!80, !77, !"polly.alias.scope.C"}
+!81 = !{!80, !76}
 !82 = !DILocation(line: 37, column: 31, scope: !83)
 !83 = distinct !DILexicalBlock(scope: !84, file: !1, line: 36, column: 29)
 !84 = distinct !DILexicalBlock(scope: !85, file: !1, line: 36, column: 9)
@@ -292,7 +292,7 @@ attributes #5 = { nounwind }
 !86 = distinct !DILexicalBlock(scope: !87, file: !1, line: 35, column: 25)
 !87 = distinct !DILexicalBlock(scope: !88, file: !1, line: 35, column: 5)
 !88 = distinct !DILexicalBlock(scope: !13, file: !1, line: 35, column: 5)
-!89 = !{!80, !76}
+!89 = !{!79, !76}
 !90 = !DILocation(line: 59, column: 5, scope: !18)
 !91 = !DILocation(line: 60, column: 5, scope: !18)
 !92 = !DILocation(line: 62, column: 5, scope: !18)
