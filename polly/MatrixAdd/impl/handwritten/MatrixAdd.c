@@ -4,15 +4,16 @@ int A[N][N]; // Each matrix takes up 512 mb
 int B[N][N];
 int C[N][N];
 int R[N][N];
+// Prevent GCC/Clang to inline 'init' function
+void init() __attribute__((noinline));
+void mat_add() __attribute__((noinline));
 
-void init()
-{
+void init(){
     int i;
     int j;
     
-    time_t t;
     /* Intializes random number generator */
-    srand((unsigned) time(&t));
+    srand((unsigned) time(NULL));
     for (i=0; i<N; i++) {
         for (j=0; j<N; j++) {
             // Each rows starts with a random number
@@ -29,6 +30,7 @@ void init()
 }
 
 void mat_add(){
+    
     int i, j, k;
     for(i=0; i<N; i++)  {
         for(j=0; j<N; j++)  {

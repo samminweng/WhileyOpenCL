@@ -190,16 +190,19 @@ clang_polly(){
 	time ./out/$program.gcc.out $parameter
 
 	echo -e -n "[1] Run ${BOLD}${GREEN} Clang -O3 ${RESET} executables" && read
-	clang -g -O3 -fno-vectorize $program.c -o "out"/$program.clang.out
+	clang -g -O3 -fno-vectorize\
+	      $program.c -o "out"/$program.clang.out
 	time ./out/$program.clang.out $parameter
 
 	##-fno-vectorize
 	echo -e -n "[2] Run ${BOLD}${GREEN} Polly-Optimized ${RESET} executables" && read
-	pollycc -g -O3 -fno-vectorize -mllvm -polly -S -emit-llvm $program.c -o $program.polly.ll
+	pollycc -g -O3 -fno-vectorize\
+	        -mllvm -polly -S -emit-llvm $program.c -o $program.polly.ll
 	runExecutables $program "polly" $parameter
 
 	echo -e -n "[2] Run ${BOLD}${GREEN} Polly-Optimized OpenMP ${RESET} executables with $num_threads threads" && read
-	pollycc -g -O3 -fno-vectorize -mllvm -polly -S -emit-llvm\
+	pollycc -g -O3 -fno-vectorize\
+	        -mllvm -polly -S -emit-llvm\
 	        -mllvm -polly-parallel -lgomp $program.c -o $program.openmp.ll
 	runExecutables $program "openmp" $parameter 2
 

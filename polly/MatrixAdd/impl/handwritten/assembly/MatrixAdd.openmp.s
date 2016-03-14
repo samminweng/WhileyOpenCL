@@ -6,7 +6,7 @@
 	.type	init,@function
 init:                                   # @init
 .Lfunc_begin0:
-	.loc	1 9 0                   # MatrixAdd.c:9:0
+	.loc	1 11 0                  # MatrixAdd.c:11:0
 	.cfi_startproc
 # BB#0:                                 # %entry
 	pushq	%r15
@@ -21,9 +21,9 @@ init:                                   # @init
 	pushq	%rbx
 .Ltmp3:
 	.cfi_def_cfa_offset 40
-	subq	$24, %rsp
+	pushq	%rax
 .Ltmp4:
-	.cfi_def_cfa_offset 64
+	.cfi_def_cfa_offset 48
 .Ltmp5:
 	.cfi_offset %rbx, -40
 .Ltmp6:
@@ -32,33 +32,31 @@ init:                                   # @init
 	.cfi_offset %r14, -24
 .Ltmp8:
 	.cfi_offset %r15, -16
-	leaq	16(%rsp), %rdi
+	xorl	%r14d, %r14d
 .Ltmp9:
-	#DEBUG_VALUE: init:t <- [%RDI+0]
-	.loc	1 15 22 prologue_end    # MatrixAdd.c:15:22
+	.loc	1 16 22 prologue_end    # MatrixAdd.c:16:22
+	xorl	%edi, %edi
 	callq	time
-	.loc	1 15 5 is_stmt 0 discriminator 1 # MatrixAdd.c:15:5
+	.loc	1 16 5 is_stmt 0 discriminator 1 # MatrixAdd.c:16:5
 	movl	%eax, %edi
-.Ltmp10:
 	callq	srand
-	movl	$R, %r14d
-	xorl	%r15d, %r15d
-.Ltmp11:
+	movl	$R, %r15d
+.Ltmp10:
 	#DEBUG_VALUE: init:i <- 0
 	.p2align	4, 0x90
 .LBB0_1:                                # %for.cond2.preheader
                                         # =>This Loop Header: Depth=1
                                         #     Child Loop BB0_2 Depth 2
-	movq	%r14, %rbx
+	movq	%r15, %rbx
 	movl	$8000, %r12d            # imm = 0x1F40
 	.p2align	4, 0x90
 .LBB0_2:                                # %for.body5
                                         #   Parent Loop BB0_1 Depth=1
                                         # =>  This Inner Loop Header: Depth=2
-.Ltmp12:
-	.loc	1 19 23 is_stmt 1       # MatrixAdd.c:19:23
+.Ltmp11:
+	.loc	1 20 23 is_stmt 1       # MatrixAdd.c:20:23
 	callq	rand
-	.loc	1 19 29 is_stmt 0       # MatrixAdd.c:19:29
+	.loc	1 20 29 is_stmt 0       # MatrixAdd.c:20:29
 	cltq
 	imulq	$1374389535, %rax, %rcx # imm = 0x51EB851F
 	movq	%rcx, %rdx
@@ -67,24 +65,24 @@ init:                                   # @init
 	addl	%edx, %ecx
 	imull	$100, %ecx, %ecx
 	subl	%ecx, %eax
-	.loc	1 19 21                 # MatrixAdd.c:19:21
+	.loc	1 20 21                 # MatrixAdd.c:20:21
 	movl	%eax, (%rbx)
-.Ltmp13:
-	.loc	1 17 9 is_stmt 1 discriminator 1 # MatrixAdd.c:17:9
+.Ltmp12:
+	.loc	1 18 9 is_stmt 1 discriminator 1 # MatrixAdd.c:18:9
 	addq	$4, %rbx
 	decq	%r12
 	jne	.LBB0_2
-.Ltmp14:
+.Ltmp13:
 # BB#3:                                 # %for.inc9
                                         #   in Loop: Header=BB0_1 Depth=1
-	.loc	1 16 5 discriminator 1  # MatrixAdd.c:16:5
-	incq	%r15
-	addq	$32000, %r14            # imm = 0x7D00
-	cmpq	$8000, %r15             # imm = 0x1F40
+	.loc	1 17 5 discriminator 1  # MatrixAdd.c:17:5
+	incq	%r14
+	addq	$32000, %r15            # imm = 0x7D00
+	cmpq	$8000, %r14             # imm = 0x1F40
 	jne	.LBB0_1
-.Ltmp15:
+.Ltmp14:
 # BB#4:                                 # %polly.parallel.for
-	leaq	8(%rsp), %rbx
+	leaq	(%rsp), %rbx
 	movl	$init_polly_subfn, %edi
 	xorl	%edx, %edx
 	xorl	%ecx, %ecx
@@ -95,14 +93,14 @@ init:                                   # @init
 	movq	%rbx, %rdi
 	callq	init_polly_subfn
 	callq	GOMP_parallel_end
-	.loc	1 29 1                  # MatrixAdd.c:29:1
-	addq	$24, %rsp
+	.loc	1 30 1                  # MatrixAdd.c:30:1
+	addq	$8, %rsp
 	popq	%rbx
 	popq	%r12
 	popq	%r14
 	popq	%r15
 	retq
-.Ltmp16:
+.Ltmp15:
 .Lfunc_end0:
 	.size	init, .Lfunc_end0-init
 	.cfi_endproc
@@ -112,28 +110,28 @@ init:                                   # @init
 	.type	mat_add,@function
 mat_add:                                # @mat_add
 .Lfunc_begin1:
-	.loc	1 31 0                  # MatrixAdd.c:31:0
+	.loc	1 32 0                  # MatrixAdd.c:32:0
 	.cfi_startproc
 # BB#0:                                 # %entry
 	pushq	%r15
-.Ltmp17:
+.Ltmp16:
 	.cfi_def_cfa_offset 16
 	pushq	%r14
-.Ltmp18:
+.Ltmp17:
 	.cfi_def_cfa_offset 24
 	pushq	%rbx
-.Ltmp19:
+.Ltmp18:
 	.cfi_def_cfa_offset 32
 	subq	$32, %rsp
-.Ltmp20:
+.Ltmp19:
 	.cfi_def_cfa_offset 64
-.Ltmp21:
+.Ltmp20:
 	.cfi_offset %rbx, -32
-.Ltmp22:
+.Ltmp21:
 	.cfi_offset %r14, -24
-.Ltmp23:
+.Ltmp22:
 	.cfi_offset %r15, -16
-.Ltmp24:
+.Ltmp23:
 	#DEBUG_VALUE: mat_add:i <- 0
 	leaq	8(%rsp), %rsi
 	movl	$mat_add_polly_subfn, %edi
@@ -196,8 +194,8 @@ mat_add:                                # @mat_add
                                         #         Parent Loop BB1_10 Depth=4
                                         # =>        This Inner Loop Header: Depth=5
 	movl	B(%rbx), %esi
-.Ltmp25:
-	.loc	1 35 31 prologue_end    # MatrixAdd.c:35:31
+.Ltmp24:
+	.loc	1 37 31 prologue_end    # MatrixAdd.c:37:31
 	addl	A(%rbx), %esi
 	movl	%esi, C(%rbx)
 	movl	B+4(%rbx), %esi
@@ -206,7 +204,7 @@ mat_add:                                # @mat_add
 	addq	$8, %rbx
 	addq	$-2, %rdx
 	jne	.LBB1_8
-.Ltmp26:
+.Ltmp25:
 # BB#9:                                 # %polly.loop_exit16.i
                                         #   in Loop: Header=BB1_10 Depth=4
 	incq	%rax
@@ -235,13 +233,13 @@ mat_add:                                # @mat_add
 .LBB1_11:                               # %mat_add_polly_subfn.exit
 	callq	GOMP_loop_end_nowait
 	callq	GOMP_parallel_end
-	.loc	1 38 1                  # MatrixAdd.c:38:1
+	.loc	1 40 1                  # MatrixAdd.c:40:1
 	addq	$32, %rsp
 	popq	%rbx
 	popq	%r14
 	popq	%r15
 	retq
-.Ltmp27:
+.Ltmp26:
 .Lfunc_end1:
 	.size	mat_add, .Lfunc_end1-mat_add
 	.cfi_endproc
@@ -251,30 +249,30 @@ mat_add:                                # @mat_add
 	.type	main,@function
 main:                                   # @main
 .Lfunc_begin2:
-	.loc	1 54 0                  # MatrixAdd.c:54:0
+	.loc	1 56 0                  # MatrixAdd.c:56:0
 	.cfi_startproc
 # BB#0:                                 # %entry
-	.loc	1 57 5 prologue_end     # MatrixAdd.c:57:5
+	.loc	1 59 5 prologue_end     # MatrixAdd.c:59:5
 	subq	$40, %rsp
-.Ltmp28:
+.Ltmp27:
 	.cfi_def_cfa_offset 48
 	callq	init
-	.loc	1 58 5                  # MatrixAdd.c:58:5
-	callq	mat_add
 	.loc	1 60 5                  # MatrixAdd.c:60:5
+	callq	mat_add
+	.loc	1 62 5                  # MatrixAdd.c:62:5
 	movl	$.L.str, %edi
 	movl	$8000, %esi             # imm = 0x1F40
 	movl	$8000, %edx             # imm = 0x1F40
 	xorl	%eax, %eax
 	callq	printf
 	movl	$255999996, %eax        # imm = 0xF423FFC
-	.loc	1 62 19                 # MatrixAdd.c:62:19
-	movl	A(%rax), %ecx
-	.loc	1 63 19                 # MatrixAdd.c:63:19
-	movl	B(%rax), %edx
 	.loc	1 64 19                 # MatrixAdd.c:64:19
+	movl	A(%rax), %ecx
+	.loc	1 65 19                 # MatrixAdd.c:65:19
+	movl	B(%rax), %edx
+	.loc	1 66 19                 # MatrixAdd.c:66:19
 	movl	C(%rax), %eax
-	.loc	1 61 5                  # MatrixAdd.c:61:5
+	.loc	1 63 5                  # MatrixAdd.c:63:5
 	movl	%eax, 24(%rsp)
 	movl	%edx, (%rsp)
 	movl	$7999, 16(%rsp)         # imm = 0x1F3F
@@ -286,11 +284,11 @@ main:                                   # @main
 	movl	$7999, %r9d             # imm = 0x1F3F
 	xorl	%eax, %eax
 	callq	printf
-	.loc	1 65 5                  # MatrixAdd.c:65:5
+	.loc	1 67 5                  # MatrixAdd.c:67:5
 	xorl	%eax, %eax
 	addq	$40, %rsp
 	retq
-.Ltmp29:
+.Ltmp28:
 .Lfunc_end2:
 	.size	main, .Lfunc_end2-main
 	.cfi_endproc
@@ -302,37 +300,37 @@ init_polly_subfn:                       # @init_polly_subfn
 	.cfi_startproc
 # BB#0:                                 # %polly.par.setup
 	pushq	%rbp
-.Ltmp30:
+.Ltmp29:
 	.cfi_def_cfa_offset 16
 	pushq	%r15
-.Ltmp31:
+.Ltmp30:
 	.cfi_def_cfa_offset 24
 	pushq	%r14
-.Ltmp32:
+.Ltmp31:
 	.cfi_def_cfa_offset 32
 	pushq	%r13
-.Ltmp33:
+.Ltmp32:
 	.cfi_def_cfa_offset 40
 	pushq	%r12
-.Ltmp34:
+.Ltmp33:
 	.cfi_def_cfa_offset 48
 	pushq	%rbx
-.Ltmp35:
+.Ltmp34:
 	.cfi_def_cfa_offset 56
 	subq	$24, %rsp
-.Ltmp36:
+.Ltmp35:
 	.cfi_def_cfa_offset 80
-.Ltmp37:
+.Ltmp36:
 	.cfi_offset %rbx, -56
-.Ltmp38:
+.Ltmp37:
 	.cfi_offset %r12, -48
-.Ltmp39:
+.Ltmp38:
 	.cfi_offset %r13, -40
-.Ltmp40:
+.Ltmp39:
 	.cfi_offset %r14, -32
-.Ltmp41:
+.Ltmp40:
 	.cfi_offset %r15, -24
-.Ltmp42:
+.Ltmp41:
 	.cfi_offset %rbp, -16
 	jmp	.LBB3_1
 	.p2align	4, 0x90
@@ -400,7 +398,7 @@ init_polly_subfn:                       # @init_polly_subfn
                                         #       Parent Loop BB3_6 Depth=3
                                         #         Parent Loop BB3_9 Depth=4
                                         # =>        This Inner Loop Header: Depth=5
-	.loc	1 26 27                 # MatrixAdd.c:26:27
+	.loc	1 27 27                 # MatrixAdd.c:27:27
 	movl	$100, %r14d
 	subl	R(%rsi), %r14d
 	movl	%r14d, B(%rsi)
@@ -461,22 +459,22 @@ mat_add_polly_subfn:                    # @mat_add_polly_subfn
 	.cfi_startproc
 # BB#0:                                 # %polly.par.setup
 	pushq	%r15
-.Ltmp43:
+.Ltmp42:
 	.cfi_def_cfa_offset 16
 	pushq	%r14
-.Ltmp44:
+.Ltmp43:
 	.cfi_def_cfa_offset 24
 	pushq	%rbx
-.Ltmp45:
+.Ltmp44:
 	.cfi_def_cfa_offset 32
 	subq	$16, %rsp
-.Ltmp46:
+.Ltmp45:
 	.cfi_def_cfa_offset 48
-.Ltmp47:
+.Ltmp46:
 	.cfi_offset %rbx, -32
-.Ltmp48:
+.Ltmp47:
 	.cfi_offset %r14, -24
-.Ltmp49:
+.Ltmp48:
 	.cfi_offset %r15, -16
 	leaq	8(%rsp), %rdi
 	leaq	(%rsp), %rsi
@@ -532,7 +530,7 @@ mat_add_polly_subfn:                    # @mat_add_polly_subfn
                                         #         Parent Loop BB4_11 Depth=4
                                         # =>        This Inner Loop Header: Depth=5
 	movl	B(%rbx), %esi
-	.loc	1 35 31                 # MatrixAdd.c:35:31
+	.loc	1 37 31                 # MatrixAdd.c:37:31
 	addl	A(%rbx), %esi
 	movl	%esi, C(%rbx)
 	movl	B+4(%rbx), %esi
@@ -596,8 +594,6 @@ mat_add_polly_subfn:                    # @mat_add_polly_subfn
 	.asciz	"A[%d][%d] = %d, B[%d][%d] =%d, C[%d][%d] =%d \n"
 	.size	.L.str.1, 47
 
-	.file	2 "/usr/include/x86_64-linux-gnu/bits/types.h"
-	.file	3 "/usr/include/time.h"
 	.section	.debug_str,"MS",@progbits,1
 .Linfo_string0:
 	.asciz	"clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)" # string offset=0
@@ -626,28 +622,12 @@ mat_add_polly_subfn:                    # @mat_add_polly_subfn
 .Linfo_string12:
 	.asciz	"main"                  # string offset=290
 .Linfo_string13:
-	.asciz	"t"                     # string offset=295
+	.asciz	"i"                     # string offset=295
 .Linfo_string14:
-	.asciz	"long int"              # string offset=297
+	.asciz	"j"                     # string offset=297
 .Linfo_string15:
-	.asciz	"__time_t"              # string offset=306
-.Linfo_string16:
-	.asciz	"time_t"                # string offset=315
-.Linfo_string17:
-	.asciz	"i"                     # string offset=322
-.Linfo_string18:
-	.asciz	"j"                     # string offset=324
-.Linfo_string19:
-	.asciz	"k"                     # string offset=326
+	.asciz	"k"                     # string offset=299
 	.section	.debug_loc,"",@progbits
-.Ldebug_loc0:
-	.quad	.Ltmp9-.Lfunc_begin0
-	.quad	.Ltmp10-.Lfunc_begin0
-	.short	2                       # Loc expr size
-	.byte	117                     # DW_OP_breg5
-	.byte	0                       # 0
-	.quad	0
-	.quad	0
 	.section	.debug_abbrev,"",@progbits
 .Lsection_abbrev:
 	.byte	1                       # Abbreviation Code
@@ -752,8 +732,8 @@ mat_add_polly_subfn:                    # @mat_add_polly_subfn
 	.byte	8                       # Abbreviation Code
 	.byte	52                      # DW_TAG_variable
 	.byte	0                       # DW_CHILDREN_no
-	.byte	2                       # DW_AT_location
-	.byte	23                      # DW_FORM_sec_offset
+	.byte	28                      # DW_AT_const_value
+	.byte	13                      # DW_FORM_sdata
 	.byte	3                       # DW_AT_name
 	.byte	14                      # DW_FORM_strp
 	.byte	58                      # DW_AT_decl_file
@@ -767,8 +747,6 @@ mat_add_polly_subfn:                    # @mat_add_polly_subfn
 	.byte	9                       # Abbreviation Code
 	.byte	52                      # DW_TAG_variable
 	.byte	0                       # DW_CHILDREN_no
-	.byte	28                      # DW_AT_const_value
-	.byte	13                      # DW_FORM_sdata
 	.byte	3                       # DW_AT_name
 	.byte	14                      # DW_FORM_strp
 	.byte	58                      # DW_AT_decl_file
@@ -780,19 +758,6 @@ mat_add_polly_subfn:                    # @mat_add_polly_subfn
 	.byte	0                       # EOM(1)
 	.byte	0                       # EOM(2)
 	.byte	10                      # Abbreviation Code
-	.byte	52                      # DW_TAG_variable
-	.byte	0                       # DW_CHILDREN_no
-	.byte	3                       # DW_AT_name
-	.byte	14                      # DW_FORM_strp
-	.byte	58                      # DW_AT_decl_file
-	.byte	11                      # DW_FORM_data1
-	.byte	59                      # DW_AT_decl_line
-	.byte	11                      # DW_FORM_data1
-	.byte	73                      # DW_AT_type
-	.byte	19                      # DW_FORM_ref4
-	.byte	0                       # EOM(1)
-	.byte	0                       # EOM(2)
-	.byte	11                      # Abbreviation Code
 	.byte	46                      # DW_TAG_subprogram
 	.byte	1                       # DW_CHILDREN_yes
 	.byte	17                      # DW_AT_low_pc
@@ -817,28 +782,15 @@ mat_add_polly_subfn:                    # @mat_add_polly_subfn
 	.byte	25                      # DW_FORM_flag_present
 	.byte	0                       # EOM(1)
 	.byte	0                       # EOM(2)
-	.byte	12                      # Abbreviation Code
-	.byte	22                      # DW_TAG_typedef
-	.byte	0                       # DW_CHILDREN_no
-	.byte	73                      # DW_AT_type
-	.byte	19                      # DW_FORM_ref4
-	.byte	3                       # DW_AT_name
-	.byte	14                      # DW_FORM_strp
-	.byte	58                      # DW_AT_decl_file
-	.byte	11                      # DW_FORM_data1
-	.byte	59                      # DW_AT_decl_line
-	.byte	11                      # DW_FORM_data1
-	.byte	0                       # EOM(1)
-	.byte	0                       # EOM(2)
 	.byte	0                       # EOM(3)
 	.section	.debug_info,"",@progbits
 .Lsection_info:
 .Lcu_begin0:
-	.long	368                     # Length of Unit
+	.long	324                     # Length of Unit
 	.short	4                       # DWARF version number
 	.long	.Lsection_abbrev        # Offset Into Abbrev. Section
 	.byte	8                       # Address Size (in bytes)
-	.byte	1                       # Abbrev [1] 0xb:0x169 DW_TAG_compile_unit
+	.byte	1                       # Abbrev [1] 0xb:0x13d DW_TAG_compile_unit
 	.long	.Linfo_string0          # DW_AT_producer
 	.short	12                      # DW_AT_language
 	.long	.Linfo_string1          # DW_AT_name
@@ -904,7 +856,7 @@ mat_add_polly_subfn:                    # @mat_add_polly_subfn
 	.long	.Linfo_string9          # DW_AT_name
 	.byte	7                       # DW_AT_encoding
 	.byte	4                       # DW_AT_byte_size
-	.byte	7                       # Abbrev [7] 0xa7:0x3c DW_TAG_subprogram
+	.byte	7                       # Abbrev [7] 0xa7:0x2d DW_TAG_subprogram
 	.quad	.Lfunc_begin0           # DW_AT_low_pc
 	.long	.Lfunc_end0-.Lfunc_begin0 # DW_AT_high_pc
                                         # DW_AT_APPLE_omit_frame_ptr
@@ -912,28 +864,22 @@ mat_add_polly_subfn:                    # @mat_add_polly_subfn
 	.byte	87
 	.long	.Linfo_string10         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	8                       # DW_AT_decl_line
+	.byte	11                      # DW_AT_decl_line
                                         # DW_AT_external
                                         # DW_AT_APPLE_optimized
-	.byte	8                       # Abbrev [8] 0xbc:0xf DW_TAG_variable
-	.long	.Ldebug_loc0            # DW_AT_location
+	.byte	8                       # Abbrev [8] 0xbc:0xc DW_TAG_variable
+	.byte	0                       # DW_AT_const_value
 	.long	.Linfo_string13         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	13                      # DW_AT_decl_line
-	.long	342                     # DW_AT_type
-	.byte	9                       # Abbrev [9] 0xcb:0xc DW_TAG_variable
-	.byte	0                       # DW_AT_const_value
-	.long	.Linfo_string17         # DW_AT_name
-	.byte	1                       # DW_AT_decl_file
-	.byte	10                      # DW_AT_decl_line
+	.byte	12                      # DW_AT_decl_line
 	.long	83                      # DW_AT_type
-	.byte	10                      # Abbrev [10] 0xd7:0xb DW_TAG_variable
-	.long	.Linfo_string18         # DW_AT_name
+	.byte	9                       # Abbrev [9] 0xc8:0xb DW_TAG_variable
+	.long	.Linfo_string14         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	11                      # DW_AT_decl_line
+	.byte	13                      # DW_AT_decl_line
 	.long	83                      # DW_AT_type
 	.byte	0                       # End Of Children Mark
-	.byte	7                       # Abbrev [7] 0xe3:0x38 DW_TAG_subprogram
+	.byte	7                       # Abbrev [7] 0xd4:0x38 DW_TAG_subprogram
 	.quad	.Lfunc_begin1           # DW_AT_low_pc
 	.long	.Lfunc_end1-.Lfunc_begin1 # DW_AT_high_pc
                                         # DW_AT_APPLE_omit_frame_ptr
@@ -941,27 +887,27 @@ mat_add_polly_subfn:                    # @mat_add_polly_subfn
 	.byte	87
 	.long	.Linfo_string11         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	31                      # DW_AT_decl_line
+	.byte	32                      # DW_AT_decl_line
                                         # DW_AT_external
                                         # DW_AT_APPLE_optimized
-	.byte	9                       # Abbrev [9] 0xf8:0xc DW_TAG_variable
+	.byte	8                       # Abbrev [8] 0xe9:0xc DW_TAG_variable
 	.byte	0                       # DW_AT_const_value
-	.long	.Linfo_string17         # DW_AT_name
+	.long	.Linfo_string13         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	32                      # DW_AT_decl_line
+	.byte	34                      # DW_AT_decl_line
 	.long	83                      # DW_AT_type
-	.byte	10                      # Abbrev [10] 0x104:0xb DW_TAG_variable
-	.long	.Linfo_string18         # DW_AT_name
+	.byte	9                       # Abbrev [9] 0xf5:0xb DW_TAG_variable
+	.long	.Linfo_string14         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	32                      # DW_AT_decl_line
+	.byte	34                      # DW_AT_decl_line
 	.long	83                      # DW_AT_type
-	.byte	10                      # Abbrev [10] 0x10f:0xb DW_TAG_variable
-	.long	.Linfo_string19         # DW_AT_name
+	.byte	9                       # Abbrev [9] 0x100:0xb DW_TAG_variable
+	.long	.Linfo_string15         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	32                      # DW_AT_decl_line
+	.byte	34                      # DW_AT_decl_line
 	.long	83                      # DW_AT_type
 	.byte	0                       # End Of Children Mark
-	.byte	11                      # Abbrev [11] 0x11b:0x3b DW_TAG_subprogram
+	.byte	10                      # Abbrev [10] 0x10c:0x3b DW_TAG_subprogram
 	.quad	.Lfunc_begin2           # DW_AT_low_pc
 	.long	.Lfunc_end2-.Lfunc_begin2 # DW_AT_high_pc
                                         # DW_AT_APPLE_omit_frame_ptr
@@ -969,40 +915,26 @@ mat_add_polly_subfn:                    # @mat_add_polly_subfn
 	.byte	87
 	.long	.Linfo_string12         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	53                      # DW_AT_decl_line
+	.byte	55                      # DW_AT_decl_line
 	.long	83                      # DW_AT_type
                                         # DW_AT_external
                                         # DW_AT_APPLE_optimized
-	.byte	10                      # Abbrev [10] 0x134:0xb DW_TAG_variable
-	.long	.Linfo_string17         # DW_AT_name
+	.byte	9                       # Abbrev [9] 0x125:0xb DW_TAG_variable
+	.long	.Linfo_string13         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	55                      # DW_AT_decl_line
+	.byte	57                      # DW_AT_decl_line
 	.long	83                      # DW_AT_type
-	.byte	10                      # Abbrev [10] 0x13f:0xb DW_TAG_variable
-	.long	.Linfo_string18         # DW_AT_name
+	.byte	9                       # Abbrev [9] 0x130:0xb DW_TAG_variable
+	.long	.Linfo_string14         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	55                      # DW_AT_decl_line
+	.byte	57                      # DW_AT_decl_line
 	.long	83                      # DW_AT_type
-	.byte	10                      # Abbrev [10] 0x14a:0xb DW_TAG_variable
-	.long	.Linfo_string19         # DW_AT_name
+	.byte	9                       # Abbrev [9] 0x13b:0xb DW_TAG_variable
+	.long	.Linfo_string15         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	55                      # DW_AT_decl_line
+	.byte	57                      # DW_AT_decl_line
 	.long	83                      # DW_AT_type
 	.byte	0                       # End Of Children Mark
-	.byte	12                      # Abbrev [12] 0x156:0xb DW_TAG_typedef
-	.long	353                     # DW_AT_type
-	.long	.Linfo_string16         # DW_AT_name
-	.byte	3                       # DW_AT_decl_file
-	.byte	75                      # DW_AT_decl_line
-	.byte	12                      # Abbrev [12] 0x161:0xb DW_TAG_typedef
-	.long	364                     # DW_AT_type
-	.long	.Linfo_string15         # DW_AT_name
-	.byte	2                       # DW_AT_decl_file
-	.byte	139                     # DW_AT_decl_line
-	.byte	5                       # Abbrev [5] 0x16c:0x7 DW_TAG_base_type
-	.long	.Linfo_string14         # DW_AT_name
-	.byte	5                       # DW_AT_encoding
-	.byte	8                       # DW_AT_byte_size
 	.byte	0                       # End Of Children Mark
 	.section	.debug_ranges,"",@progbits
 .Ldebug_range:
@@ -1015,7 +947,7 @@ mat_add_polly_subfn:                    # @mat_add_polly_subfn
 .LpubNames_begin0:
 	.short	2                       # DWARF Version
 	.long	.Lcu_begin0             # Offset of Compilation Unit Info
-	.long	372                     # Compilation Unit Length
+	.long	328                     # Compilation Unit Length
 	.long	42                      # DIE offset
 	.asciz	"A"                     # External Name
 	.long	97                      # DIE offset
@@ -1026,9 +958,9 @@ mat_add_polly_subfn:                    # @mat_add_polly_subfn
 	.asciz	"init"                  # External Name
 	.long	139                     # DIE offset
 	.asciz	"R"                     # External Name
-	.long	283                     # DIE offset
+	.long	268                     # DIE offset
 	.asciz	"main"                  # External Name
-	.long	227                     # DIE offset
+	.long	212                     # DIE offset
 	.asciz	"mat_add"               # External Name
 	.long	0                       # End Mark
 .LpubNames_end0:
@@ -1037,17 +969,11 @@ mat_add_polly_subfn:                    # @mat_add_polly_subfn
 .LpubTypes_begin0:
 	.short	2                       # DWARF Version
 	.long	.Lcu_begin0             # Offset of Compilation Unit Info
-	.long	372                     # Compilation Unit Length
-	.long	353                     # DIE offset
-	.asciz	"__time_t"              # External Name
-	.long	342                     # DIE offset
-	.asciz	"time_t"                # External Name
+	.long	328                     # Compilation Unit Length
 	.long	160                     # DIE offset
 	.asciz	"unsigned int"          # External Name
 	.long	83                      # DIE offset
 	.asciz	"int"                   # External Name
-	.long	364                     # DIE offset
-	.asciz	"long int"              # External Name
 	.long	0                       # End Mark
 .LpubTypes_end0:
 
