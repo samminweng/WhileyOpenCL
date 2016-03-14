@@ -1,16 +1,16 @@
 digraph "Scop Graph for 'main' function" {
 	label="Scop Graph for 'main' function";
 
-	Node0xa0b46a0 [shape=record,label="{entry:\l  br label %entry.split, !dbg !47\l}"];
-	Node0xa0b46a0 -> Node0xa145d50;
-	Node0xa145d50 [shape=record,label="{entry.split:                                      \l  tail call void @init(), !dbg !47\l  tail call void @mat_add(), !dbg !48\l  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([32 x\l... i8], [32 x i8]* @.str.2, i64 0, i64 0), i32 10240, i32 10240), !dbg !49\l  %0 = load i32, i32* getelementptr inbounds ([10240 x [10240 x i32]], [10240\l... x [10240 x i32]]* @A, i64 0, i64 10239, i64 10239), align 4, !dbg !50, !tbaa\l... !51\l  %1 = load i32, i32* getelementptr inbounds ([10240 x [10240 x i32]], [10240\l... x [10240 x i32]]* @B, i64 0, i64 10239, i64 10239), align 4, !dbg !55, !tbaa\l... !51\l  %2 = load i32, i32* getelementptr inbounds ([10240 x [10240 x i32]], [10240\l... x [10240 x i32]]* @C, i64 0, i64 10239, i64 10239), align 4, !dbg !56, !tbaa\l... !51\l  %call1 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([47 x\l... i8], [47 x i8]* @.str.3, i64 0, i64 0), i32 10239, i32 10239, i32 %0, i32\l... 10239, i32 10239, i32 %1, i32 10239, i32 10239, i32 %2), !dbg !57\l  ret i32 0, !dbg !58\l}"];
+	Node0xaf35740 [shape=record,label="{entry:\l  br label %entry.split, !dbg !42\l}"];
+	Node0xaf35740 -> Node0xae95740;
+	Node0xae95740 [shape=record,label="{entry.split:                                      \l  tail call void @init(), !dbg !42\l  tail call void @mat_add(), !dbg !43\l  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([32 x\l... i8], [32 x i8]* @.str, i64 0, i64 0), i32 8000, i32 8000), !dbg !44\l  %0 = load i32, i32* getelementptr inbounds ([8000 x [8000 x i32]], [8000 x\l... [8000 x i32]]* @A, i64 0, i64 7999, i64 7999), align 4, !dbg !45, !tbaa !46\l  %1 = load i32, i32* getelementptr inbounds ([8000 x [8000 x i32]], [8000 x\l... [8000 x i32]]* @B, i64 0, i64 7999, i64 7999), align 4, !dbg !50, !tbaa !46\l  %2 = load i32, i32* getelementptr inbounds ([8000 x [8000 x i32]], [8000 x\l... [8000 x i32]]* @C, i64 0, i64 7999, i64 7999), align 4, !dbg !51, !tbaa !46\l  %call1 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([47 x\l... i8], [47 x i8]* @.str.1, i64 0, i64 0), i32 7999, i32 7999, i32 %0, i32 7999,\l... i32 7999, i32 %1, i32 7999, i32 7999, i32 %2), !dbg !52\l  ret i32 0, !dbg !53\l}"];
 	colorscheme = "paired12"
-        subgraph cluster_0xa0aed40 {
-          label = "MatrixAdd.c:61-69
+        subgraph cluster_0xaf6d1f0 {
+          label = "MatrixAdd.c:57-65
 ";
           style = solid;
           color = 1
-          Node0xa0b46a0;
-          Node0xa145d50;
+          Node0xaf35740;
+          Node0xae95740;
         }
 }

@@ -12,7 +12,7 @@ init(){
 	mkdir -p "$pref_dir"
 	### remove all files inside the folder
 	rm -f "$pref_dir/"*.*
-	mkdir -p "$PWD/impl/$program/$c_type/out" ## Create 'out' folder
+	mkdir -p "$PWD/$program/impl/$c_type/out" ## Create 'out' folder
 	rm -rf "$PWD/$program/impl/$c_type/out/"*.*
 	read -p "Press [Enter] to continue..."
 }
@@ -78,9 +78,9 @@ exec(){
 
 #### Handwritten MatrixAdd
 init MatrixAdd handwritten
-exec MatrixAdd handwritten 1024X1024X100 gcc 1
-exec MatrixAdd handwritten 1024X1024X100 clang 1
-exec MatrixAdd handwritten 1024X1024X100 polly 1
-exec MatrixAdd handwritten 1024X1024X100 openmp 1
-exec MatrixAdd handwritten 1024X1024X100 openmp 2
-exec MatrixAdd handwritten 1024X1024X100 openmp 4
+exec MatrixAdd handwritten 8000X8000 gcc 1
+exec MatrixAdd handwritten 8000X8000 clang 1
+exec MatrixAdd handwritten 8000X8000 polly 1
+exec MatrixAdd handwritten 8000X8000 openmp 1
+exec MatrixAdd handwritten 8000X8000 openmp 2
+exec MatrixAdd handwritten 8000X8000 openmp 4

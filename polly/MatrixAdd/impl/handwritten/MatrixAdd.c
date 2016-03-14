@@ -1,13 +1,9 @@
 #include "Util.h"
-#define N 1024*10
-int A[N][N];
+#define N 8000
+int A[N][N]; // Each matrix takes up 512 mb
 int B[N][N];
 int C[N][N];
-
-
-int getRand(){
-    return rand() % 100;// Generate 0 ~ 100
-}
+int R[N][N];
 
 void init()
 {
@@ -15,12 +11,12 @@ void init()
     int j;
     
     time_t t;
-    int R[N][N];
     /* Intializes random number generator */
     srand((unsigned) time(&t));
     for (i=0; i<N; i++) {
         for (j=0; j<N; j++) {
-            R[i][j] = rand() % 100;;
+            // Each rows starts with a random number
+            R[i][j] = rand()%100;
         }
     }
 
@@ -41,7 +37,7 @@ void mat_add(){
     }
 }
 
-void print_array()
+/*void print_array()
 {
     int i, j;
 
@@ -52,7 +48,7 @@ void print_array()
         }
         printf("\n");
     }
-}
+}*/
 
 int main()
 {

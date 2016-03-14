@@ -17,12 +17,8 @@ alias cls='printf "\033c"' ## Clear the screen
 folder_proc(){
 	folder=$1
 	ext=$2
-	mkdir -p "$folder"
-	#if [ -f "$folder/*.$ext" ];
-	#then
-	#	read -p "Press [Enter] to remove .$ext files in $folder"
-	rm -rf "$folder"/*
-	#fi
+	mkdir -p "$folder"	
+	rm -rf "$folder"/*	
 	## move to the specific folder
 	mv -f *.$ext "$folder"/
 	
@@ -189,19 +185,20 @@ clang_polly(){
 
 	### Generate executables
 	echo -e -n "${GREEN}[*]Loop Vectorizer is diabled${RESET}" && read
+	echo -e -n "[1] Run ${BOLD}${GREEN} GCC -O3 ${RESET} executables" && read
+	gcc -O3 -fno-tree-vectorize $program.c -o "out/$program.gcc.out"
+	time ./out/$program.gcc.out $parameter
+
 	echo -e -n "[1] Run ${BOLD}${GREEN} Clang -O3 ${RESET} executables" && read
 	clang -g -O3 -fno-vectorize $program.c -o "out"/$program.clang.out
 	time ./out/$program.clang.out $parameter
 
+	##-fno-vectorize
 	echo -e -n "[2] Run ${BOLD}${GREEN} Polly-Optimized ${RESET} executables" && read
-	#pollycc -g -O3 -fno-vectorize -mllvm -polly $program.c -o "out"/$program.polly.out
-	#time ./out/$program.polly.out $parameter
 	pollycc -g -O3 -fno-vectorize -mllvm -polly -S -emit-llvm $program.c -o $program.polly.ll
 	runExecutables $program "polly" $parameter
 
 	echo -e -n "[2] Run ${BOLD}${GREEN} Polly-Optimized OpenMP ${RESET} executables with $num_threads threads" && read
-	#pollycc -g -O3 -fno-vectorize -mllvm -polly -mllvm -polly-parallel -lgomp $program.c -o "out"/$program.openmp.out
-	#time ./out/$program.openmp.out $parameter
 	pollycc -g -O3 -fno-vectorize -mllvm -polly -S -emit-llvm\
 	        -mllvm -polly-parallel -lgomp $program.c -o $program.openmp.ll
 	runExecutables $program "openmp" $parameter 2
