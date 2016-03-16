@@ -230,5 +230,5 @@ exec(){
 
 #exec handwritten VectorMult 2 1024X1024X10
 #exec handwritten MatrixAdd 2 2000X2000
-#exec handwritten MatrixMult 2 2000X2000
-exec handwritten2 MatrixMult 2 2000X2000
+exec handwritten MatrixMult 2 2000X2000
+#exec handwritten2 MatrixMult 2 2000X2000

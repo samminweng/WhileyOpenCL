@@ -94,10 +94,9 @@ exec MatrixMult handwritten 2000X2000 openmp 1
 exec MatrixMult handwritten 2000X2000 openmp 2
 exec MatrixMult handwritten 2000X2000 openmp 4
 #### Handwritten MatrixMult 2
-init MatrixMult handwritten2
-exec MatrixMult handwritten2 2000X2000 gcc 1
-exec MatrixMult handwritten2 2000X2000 clang 1
-exec MatrixMult handwritten2 2000X2000 polly 1
-exec MatrixMult handwritten2 2000X2000 openmp 1
-exec MatrixMult handwritten2 2000X2000 openmp 2
-exec MatrixMult handwritten2 2000X2000 openmp 4
+# exec MatrixMult handwritten2 2000X2000 gcc 1
+# exec MatrixMult handwritten2 2000X2000 clang 1
+# exec MatrixMult handwritten2 2000X2000 polly 1
+# exec MatrixMult handwritten2 2000X2000 openmp 1
+# exec MatrixMult handwritten2 2000X2000 openmp 2
+# exec MatrixMult handwritten2 2000X2000 openmp 4

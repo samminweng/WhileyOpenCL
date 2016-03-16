@@ -12,36 +12,36 @@ target triple = "x86_64-unknown-linux-gnu"
 ; Function Attrs: noinline nounwind uwtable
 define void @init() #0 !dbg !6 {
 entry:
-  %call = tail call i64 @time(i64* null) #5, !dbg !35
-  %conv = trunc i64 %call to i32, !dbg !36
-  tail call void @srand(i32 %conv) #5, !dbg !37
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !10, metadata !39), !dbg !40
-  br label %for.cond2.preheader, !dbg !41
+  %call = tail call i64 @time(i64* null) #5, !dbg !32
+  %conv = trunc i64 %call to i32, !dbg !33
+  tail call void @srand(i32 %conv) #5, !dbg !34
+  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !10, metadata !36), !dbg !37
+  br label %for.cond2.preheader, !dbg !38
 
 for.cond2.preheader:                              ; preds = %for.inc9, %entry
   %indvars.iv70 = phi i64 [ 0, %entry ], [ %indvars.iv.next71, %for.inc9 ]
-  br label %for.body5, !dbg !45
+  br label %for.body5, !dbg !42
 
 for.body5:                                        ; preds = %for.body5, %for.cond2.preheader
   %indvars.iv67 = phi i64 [ 0, %for.cond2.preheader ], [ %indvars.iv.next68, %for.body5 ]
-  %call6 = tail call i32 @rand() #5, !dbg !50
-  %rem = srem i32 %call6, 10, !dbg !52
-  %arrayidx8 = getelementptr inbounds [2000 x [2000 x i32]], [2000 x [2000 x i32]]* @R, i64 0, i64 %indvars.iv70, i64 %indvars.iv67, !dbg !53
-  store i32 %rem, i32* %arrayidx8, align 4, !dbg !54, !tbaa !55
-  %indvars.iv.next68 = add nuw nsw i64 %indvars.iv67, 1, !dbg !45
-  %exitcond69 = icmp eq i64 %indvars.iv.next68, 2000, !dbg !45
-  br i1 %exitcond69, label %for.inc9, label %for.body5, !dbg !45
+  %call6 = tail call i32 @rand() #5, !dbg !47
+  %rem = srem i32 %call6, 10, !dbg !49
+  %arrayidx8 = getelementptr inbounds [2000 x [2000 x i32]], [2000 x [2000 x i32]]* @R, i64 0, i64 %indvars.iv70, i64 %indvars.iv67, !dbg !50
+  store i32 %rem, i32* %arrayidx8, align 4, !dbg !51, !tbaa !52
+  %indvars.iv.next68 = add nuw nsw i64 %indvars.iv67, 1, !dbg !42
+  %exitcond69 = icmp eq i64 %indvars.iv.next68, 2000, !dbg !42
+  br i1 %exitcond69, label %for.inc9, label %for.body5, !dbg !42
 
 for.inc9:                                         ; preds = %for.body5
-  %indvars.iv.next71 = add nuw nsw i64 %indvars.iv70, 1, !dbg !41
-  %exitcond72 = icmp eq i64 %indvars.iv.next71, 2000, !dbg !41
-  br i1 %exitcond72, label %polly.loop_preheader74.preheader, label %for.cond2.preheader, !dbg !41
+  %indvars.iv.next71 = add nuw nsw i64 %indvars.iv70, 1, !dbg !38
+  %exitcond72 = icmp eq i64 %indvars.iv.next71, 2000, !dbg !38
+  br i1 %exitcond72, label %polly.loop_preheader74.preheader, label %for.cond2.preheader, !dbg !38
 
 polly.loop_preheader74.preheader:                 ; preds = %for.inc9
   br label %polly.loop_preheader74
 
 polly.exiting:                                    ; preds = %polly.loop_exit75
-  ret void, !dbg !59
+  ret void, !dbg !56
 
 polly.loop_exit75:                                ; preds = %polly.loop_exit81
   %polly.indvar_next = add nuw nsw i64 %polly.indvar, 1
@@ -100,11 +100,11 @@ declare i32 @rand() #1
 ; Function Attrs: noinline nounwind uwtable
 define void @mat_mult() #0 !dbg !13 {
 entry:
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !15, metadata !39), !dbg !60
+  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !15, metadata !36), !dbg !57
   br label %polly.loop_preheader56
 
 polly.exiting:                                    ; preds = %polly.loop_exit82
-  ret void, !dbg !61
+  ret void, !dbg !58
 
 polly.loop_exit57:                                ; preds = %polly.loop_exit63
   %polly.indvar_next = add nuw nsw i64 %polly.indvar, 1
@@ -207,12 +207,12 @@ polly.loop_header99:                              ; preds = %polly.loop_exit108,
   %polly.indvar102 = phi i64 [ 0, %polly.loop_header92 ], [ %polly.indvar_next103, %polly.loop_exit108 ]
   %26 = add nuw nsw i64 %polly.indvar102, %24
   %scevgep113 = getelementptr [2000 x [2000 x i32]], [2000 x [2000 x i32]]* @C, i64 0, i64 %25, i64 %26
-  %scevgep113.promoted = load i32, i32* %scevgep113, align 4, !alias.scope !62, !noalias !64
+  %scevgep113.promoted = load i32, i32* %scevgep113, align 4, !alias.scope !59, !noalias !61
   br label %polly.loop_header106
 
 polly.loop_exit108:                               ; preds = %polly.loop_header106
   %p_add.lcssa = phi i32 [ %p_add, %polly.loop_header106 ]
-  store i32 %p_add.lcssa, i32* %scevgep113, align 4, !alias.scope !62, !noalias !64
+  store i32 %p_add.lcssa, i32* %scevgep113, align 4, !alias.scope !59, !noalias !61
   %polly.indvar_next103 = add nuw nsw i64 %polly.indvar102, 1
   %polly.loop_cond105 = icmp sgt i64 %polly.indvar102, %polly.adjust_ub104
   br i1 %polly.loop_cond105, label %polly.loop_exit101, label %polly.loop_header99
@@ -222,11 +222,11 @@ polly.loop_header106:                             ; preds = %polly.loop_header10
   %polly.indvar109 = phi i64 [ 0, %polly.loop_header99 ], [ %polly.indvar_next110, %polly.loop_header106 ]
   %27 = add nuw nsw i64 %polly.indvar109, %19
   %scevgep114 = getelementptr [2000 x [2000 x i32]], [2000 x [2000 x i32]]* @A, i64 0, i64 %25, i64 %27
-  %_p_scalar_115 = load i32, i32* %scevgep114, align 4, !alias.scope !66, !noalias !67
+  %_p_scalar_115 = load i32, i32* %scevgep114, align 4, !alias.scope !63, !noalias !64
   %scevgep116 = getelementptr [2000 x [2000 x i32]], [2000 x [2000 x i32]]* @B, i64 0, i64 %27, i64 %26
-  %_p_scalar_117 = load i32, i32* %scevgep116, align 4, !alias.scope !65, !noalias !68
-  %p_mul = mul nsw i32 %_p_scalar_117, %_p_scalar_115, !dbg !69
-  %p_add = add nsw i32 %p_mul, %p_add118, !dbg !78
+  %_p_scalar_117 = load i32, i32* %scevgep116, align 4, !alias.scope !62, !noalias !65
+  %p_mul = mul nsw i32 %_p_scalar_117, %_p_scalar_115, !dbg !66
+  %p_add = add nsw i32 %p_mul, %p_add118, !dbg !75
   %polly.indvar_next110 = add nuw nsw i64 %polly.indvar109, 1
   %polly.loop_cond112 = icmp sgt i64 %polly.indvar109, %polly.adjust_ub111
   br i1 %polly.loop_cond112, label %polly.loop_exit108, label %polly.loop_header106
@@ -235,14 +235,14 @@ polly.loop_header106:                             ; preds = %polly.loop_header10
 ; Function Attrs: nounwind uwtable
 define i32 @main() #2 !dbg !18 {
 entry:
-  tail call void @init(), !dbg !79
-  tail call void @mat_mult(), !dbg !80
-  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([32 x i8], [32 x i8]* @.str, i64 0, i64 0), i32 2000, i32 2000), !dbg !81
-  %0 = load i32, i32* getelementptr inbounds ([2000 x [2000 x i32]], [2000 x [2000 x i32]]* @A, i64 0, i64 1999, i64 1999), align 4, !dbg !82, !tbaa !55
-  %1 = load i32, i32* getelementptr inbounds ([2000 x [2000 x i32]], [2000 x [2000 x i32]]* @B, i64 0, i64 1999, i64 1999), align 4, !dbg !83, !tbaa !55
-  %2 = load i32, i32* getelementptr inbounds ([2000 x [2000 x i32]], [2000 x [2000 x i32]]* @C, i64 0, i64 1999, i64 1999), align 4, !dbg !84, !tbaa !55
-  %call1 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([47 x i8], [47 x i8]* @.str.1, i64 0, i64 0), i32 1999, i32 1999, i32 %0, i32 1999, i32 1999, i32 %1, i32 1999, i32 1999, i32 %2), !dbg !85
-  ret i32 0, !dbg !86
+  tail call void @init(), !dbg !76
+  tail call void @mat_mult(), !dbg !77
+  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([32 x i8], [32 x i8]* @.str, i64 0, i64 0), i32 2000, i32 2000), !dbg !78
+  %0 = load i32, i32* getelementptr inbounds ([2000 x [2000 x i32]], [2000 x [2000 x i32]]* @A, i64 0, i64 1999, i64 1999), align 4, !dbg !79, !tbaa !52
+  %1 = load i32, i32* getelementptr inbounds ([2000 x [2000 x i32]], [2000 x [2000 x i32]]* @B, i64 0, i64 1999, i64 1999), align 4, !dbg !80, !tbaa !52
+  %2 = load i32, i32* getelementptr inbounds ([2000 x [2000 x i32]], [2000 x [2000 x i32]]* @C, i64 0, i64 1999, i64 1999), align 4, !dbg !81, !tbaa !52
+  %call1 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([47 x i8], [47 x i8]* @.str.1, i64 0, i64 0), i32 1999, i32 1999, i32 %0, i32 1999, i32 1999, i32 %1, i32 1999, i32 1999, i32 %2), !dbg !82
+  ret i32 0, !dbg !83
 }
 
 ; Function Attrs: nounwind
@@ -265,10 +265,10 @@ attributes #4 = { argmemonly nounwind }
 attributes #5 = { nounwind }
 
 !llvm.dbg.cu = !{!0}
-!llvm.module.flags = !{!32, !33}
-!llvm.ident = !{!34}
+!llvm.module.flags = !{!29, !30}
+!llvm.ident = !{!31}
 
-!0 = distinct !DICompileUnit(language: DW_LANG_C99, file: !1, producer: "clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)", isOptimized: true, runtimeVersion: 0, emissionKind: 1, enums: !2, retainedTypes: !3, subprograms: !5, globals: !24)
+!0 = distinct !DICompileUnit(language: DW_LANG_C99, file: !1, producer: "clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)", isOptimized: true, runtimeVersion: 0, emissionKind: 1, enums: !2, retainedTypes: !3, subprograms: !5, globals: !21)
 !1 = !DIFile(filename: "MatrixMult.c", directory: "/home/sam/workspace/WhileyOpenCL/polly/MatrixMult/impl/handwritten")
 !2 = !{}
 !3 = !{!4}
@@ -281,77 +281,74 @@ attributes #5 = { nounwind }
 !10 = !DILocalVariable(name: "i", scope: !6, file: !1, line: 13, type: !11)
 !11 = !DIBasicType(name: "int", size: 32, align: 32, encoding: DW_ATE_signed)
 !12 = !DILocalVariable(name: "j", scope: !6, file: !1, line: 14, type: !11)
-!13 = distinct !DISubprogram(name: "mat_mult", scope: !1, file: !1, line: 33, type: !7, isLocal: false, isDefinition: true, scopeLine: 33, isOptimized: true, variables: !14)
+!13 = distinct !DISubprogram(name: "mat_mult", scope: !1, file: !1, line: 35, type: !7, isLocal: false, isDefinition: true, scopeLine: 35, isOptimized: true, variables: !14)
 !14 = !{!15, !16, !17}
-!15 = !DILocalVariable(name: "i", scope: !13, file: !1, line: 34, type: !11)
-!16 = !DILocalVariable(name: "j", scope: !13, file: !1, line: 34, type: !11)
-!17 = !DILocalVariable(name: "k", scope: !13, file: !1, line: 34, type: !11)
-!18 = distinct !DISubprogram(name: "main", scope: !1, file: !1, line: 57, type: !19, isLocal: false, isDefinition: true, scopeLine: 58, isOptimized: true, variables: !21)
+!15 = !DILocalVariable(name: "i", scope: !13, file: !1, line: 36, type: !11)
+!16 = !DILocalVariable(name: "j", scope: !13, file: !1, line: 36, type: !11)
+!17 = !DILocalVariable(name: "k", scope: !13, file: !1, line: 36, type: !11)
+!18 = distinct !DISubprogram(name: "main", scope: !1, file: !1, line: 59, type: !19, isLocal: false, isDefinition: true, scopeLine: 60, isOptimized: true, variables: !2)
 !19 = !DISubroutineType(types: !20)
 !20 = !{!11}
-!21 = !{!22, !23}
-!22 = !DILocalVariable(name: "i", scope: !18, file: !1, line: 59, type: !11)
-!23 = !DILocalVariable(name: "j", scope: !18, file: !1, line: 59, type: !11)
-!24 = !{!25, !29, !30, !31}
-!25 = !DIGlobalVariable(name: "A", scope: !0, file: !1, line: 7, type: !26, isLocal: false, isDefinition: true, variable: [2000 x [2000 x i32]]* @A)
-!26 = !DICompositeType(tag: DW_TAG_array_type, baseType: !11, size: 128000000, align: 32, elements: !27)
-!27 = !{!28, !28}
-!28 = !DISubrange(count: 2000)
-!29 = !DIGlobalVariable(name: "B", scope: !0, file: !1, line: 8, type: !26, isLocal: false, isDefinition: true, variable: [2000 x [2000 x i32]]* @B)
-!30 = !DIGlobalVariable(name: "C", scope: !0, file: !1, line: 9, type: !26, isLocal: false, isDefinition: true, variable: [2000 x [2000 x i32]]* @C)
-!31 = !DIGlobalVariable(name: "R", scope: !0, file: !1, line: 10, type: !26, isLocal: false, isDefinition: true, variable: [2000 x [2000 x i32]]* @R)
-!32 = !{i32 2, !"Dwarf Version", i32 4}
-!33 = !{i32 2, !"Debug Info Version", i32 3}
-!34 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)"}
-!35 = !DILocation(line: 17, column: 22, scope: !6)
-!36 = !DILocation(line: 17, column: 11, scope: !6)
-!37 = !DILocation(line: 17, column: 5, scope: !38)
-!38 = !DILexicalBlockFile(scope: !6, file: !1, discriminator: 1)
-!39 = !DIExpression()
-!40 = !DILocation(line: 13, column: 9, scope: !6)
-!41 = !DILocation(line: 18, column: 5, scope: !42)
-!42 = !DILexicalBlockFile(scope: !43, file: !1, discriminator: 1)
-!43 = distinct !DILexicalBlock(scope: !44, file: !1, line: 18, column: 5)
-!44 = distinct !DILexicalBlock(scope: !6, file: !1, line: 18, column: 5)
-!45 = !DILocation(line: 19, column: 9, scope: !46)
-!46 = !DILexicalBlockFile(scope: !47, file: !1, discriminator: 1)
-!47 = distinct !DILexicalBlock(scope: !48, file: !1, line: 19, column: 9)
-!48 = distinct !DILexicalBlock(scope: !49, file: !1, line: 19, column: 9)
-!49 = distinct !DILexicalBlock(scope: !43, file: !1, line: 18, column: 25)
-!50 = !DILocation(line: 21, column: 23, scope: !51)
-!51 = distinct !DILexicalBlock(scope: !47, file: !1, line: 19, column: 29)
-!52 = !DILocation(line: 21, column: 29, scope: !51)
-!53 = !DILocation(line: 21, column: 13, scope: !51)
-!54 = !DILocation(line: 21, column: 21, scope: !51)
-!55 = !{!56, !56, i64 0}
-!56 = !{!"int", !57, i64 0}
-!57 = !{!"omnipotent char", !58, i64 0}
-!58 = !{!"Simple C/C++ TBAA"}
-!59 = !DILocation(line: 31, column: 1, scope: !6)
-!60 = !DILocation(line: 34, column: 9, scope: !13)
-!61 = !DILocation(line: 42, column: 1, scope: !13)
-!62 = distinct !{!62, !63, !"polly.alias.scope.C"}
-!63 = distinct !{!63, !"polly.alias.scope.domain"}
-!64 = !{!65, !66}
-!65 = distinct !{!65, !63, !"polly.alias.scope.B"}
-!66 = distinct !{!66, !63, !"polly.alias.scope.A"}
-!67 = !{!65, !62}
-!68 = !{!66, !62}
-!69 = !DILocation(line: 39, column: 45, scope: !70)
-!70 = distinct !DILexicalBlock(scope: !71, file: !1, line: 38, column: 13)
-!71 = distinct !DILexicalBlock(scope: !72, file: !1, line: 38, column: 13)
-!72 = distinct !DILexicalBlock(scope: !73, file: !1, line: 36, column: 29)
-!73 = distinct !DILexicalBlock(scope: !74, file: !1, line: 36, column: 9)
-!74 = distinct !DILexicalBlock(scope: !75, file: !1, line: 36, column: 9)
-!75 = distinct !DILexicalBlock(scope: !76, file: !1, line: 35, column: 25)
-!76 = distinct !DILexicalBlock(scope: !77, file: !1, line: 35, column: 5)
-!77 = distinct !DILexicalBlock(scope: !13, file: !1, line: 35, column: 5)
-!78 = !DILocation(line: 39, column: 35, scope: !70)
-!79 = !DILocation(line: 60, column: 5, scope: !18)
-!80 = !DILocation(line: 61, column: 5, scope: !18)
-!81 = !DILocation(line: 63, column: 5, scope: !18)
-!82 = !DILocation(line: 65, column: 19, scope: !18)
-!83 = !DILocation(line: 66, column: 19, scope: !18)
-!84 = !DILocation(line: 67, column: 19, scope: !18)
-!85 = !DILocation(line: 64, column: 5, scope: !18)
-!86 = !DILocation(line: 68, column: 5, scope: !18)
+!21 = !{!22, !26, !27, !28}
+!22 = !DIGlobalVariable(name: "A", scope: !0, file: !1, line: 7, type: !23, isLocal: false, isDefinition: true, variable: [2000 x [2000 x i32]]* @A)
+!23 = !DICompositeType(tag: DW_TAG_array_type, baseType: !11, size: 128000000, align: 32, elements: !24)
+!24 = !{!25, !25}
+!25 = !DISubrange(count: 2000)
+!26 = !DIGlobalVariable(name: "B", scope: !0, file: !1, line: 8, type: !23, isLocal: false, isDefinition: true, variable: [2000 x [2000 x i32]]* @B)
+!27 = !DIGlobalVariable(name: "C", scope: !0, file: !1, line: 9, type: !23, isLocal: false, isDefinition: true, variable: [2000 x [2000 x i32]]* @C)
+!28 = !DIGlobalVariable(name: "R", scope: !0, file: !1, line: 10, type: !23, isLocal: false, isDefinition: true, variable: [2000 x [2000 x i32]]* @R)
+!29 = !{i32 2, !"Dwarf Version", i32 4}
+!30 = !{i32 2, !"Debug Info Version", i32 3}
+!31 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)"}
+!32 = !DILocation(line: 17, column: 22, scope: !6)
+!33 = !DILocation(line: 17, column: 11, scope: !6)
+!34 = !DILocation(line: 17, column: 5, scope: !35)
+!35 = !DILexicalBlockFile(scope: !6, file: !1, discriminator: 1)
+!36 = !DIExpression()
+!37 = !DILocation(line: 13, column: 9, scope: !6)
+!38 = !DILocation(line: 18, column: 5, scope: !39)
+!39 = !DILexicalBlockFile(scope: !40, file: !1, discriminator: 1)
+!40 = distinct !DILexicalBlock(scope: !41, file: !1, line: 18, column: 5)
+!41 = distinct !DILexicalBlock(scope: !6, file: !1, line: 18, column: 5)
+!42 = !DILocation(line: 19, column: 9, scope: !43)
+!43 = !DILexicalBlockFile(scope: !44, file: !1, discriminator: 1)
+!44 = distinct !DILexicalBlock(scope: !45, file: !1, line: 19, column: 9)
+!45 = distinct !DILexicalBlock(scope: !46, file: !1, line: 19, column: 9)
+!46 = distinct !DILexicalBlock(scope: !40, file: !1, line: 18, column: 25)
+!47 = !DILocation(line: 21, column: 23, scope: !48)
+!48 = distinct !DILexicalBlock(scope: !44, file: !1, line: 19, column: 29)
+!49 = !DILocation(line: 21, column: 29, scope: !48)
+!50 = !DILocation(line: 21, column: 13, scope: !48)
+!51 = !DILocation(line: 21, column: 21, scope: !48)
+!52 = !{!53, !53, i64 0}
+!53 = !{!"int", !54, i64 0}
+!54 = !{!"omnipotent char", !55, i64 0}
+!55 = !{!"Simple C/C++ TBAA"}
+!56 = !DILocation(line: 33, column: 1, scope: !6)
+!57 = !DILocation(line: 36, column: 9, scope: !13)
+!58 = !DILocation(line: 44, column: 1, scope: !13)
+!59 = distinct !{!59, !60, !"polly.alias.scope.C"}
+!60 = distinct !{!60, !"polly.alias.scope.domain"}
+!61 = !{!62, !63}
+!62 = distinct !{!62, !60, !"polly.alias.scope.B"}
+!63 = distinct !{!63, !60, !"polly.alias.scope.A"}
+!64 = !{!59, !62}
+!65 = !{!59, !63}
+!66 = !DILocation(line: 41, column: 45, scope: !67)
+!67 = distinct !DILexicalBlock(scope: !68, file: !1, line: 40, column: 13)
+!68 = distinct !DILexicalBlock(scope: !69, file: !1, line: 40, column: 13)
+!69 = distinct !DILexicalBlock(scope: !70, file: !1, line: 38, column: 29)
+!70 = distinct !DILexicalBlock(scope: !71, file: !1, line: 38, column: 9)
+!71 = distinct !DILexicalBlock(scope: !72, file: !1, line: 38, column: 9)
+!72 = distinct !DILexicalBlock(scope: !73, file: !1, line: 37, column: 25)
+!73 = distinct !DILexicalBlock(scope: !74, file: !1, line: 37, column: 5)
+!74 = distinct !DILexicalBlock(scope: !13, file: !1, line: 37, column: 5)
+!75 = !DILocation(line: 41, column: 35, scope: !67)
+!76 = !DILocation(line: 61, column: 5, scope: !18)
+!77 = !DILocation(line: 62, column: 5, scope: !18)
+!78 = !DILocation(line: 64, column: 5, scope: !18)
+!79 = !DILocation(line: 66, column: 19, scope: !18)
+!80 = !DILocation(line: 67, column: 19, scope: !18)
+!81 = !DILocation(line: 68, column: 19, scope: !18)
+!82 = !DILocation(line: 65, column: 5, scope: !18)
+!83 = !DILocation(line: 69, column: 5, scope: !18)
