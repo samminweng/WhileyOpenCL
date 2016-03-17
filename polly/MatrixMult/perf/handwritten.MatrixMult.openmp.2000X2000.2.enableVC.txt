@@ -1,0 +1,389 @@
+Enable loop vectorization...Optimize C code using OpenMP code with 2 threads...
+Pass 2000 X 2000 matrix test case 
+A[1999][1999] = 5, B[1999][1999] =5, C[1999][1999] =39840 
+
+ Performance counter stats for './out/MatrixMult.openmp.vector.out 2000X2000':
+
+       4603.652976 task-clock (msec)         #    1.965 CPUs utilized          
+               406 context-switches          #    0.088 K/sec                  
+                 2 cpu-migrations            #    0.000 K/sec                  
+             1,024 page-faults               #    0.222 K/sec                  
+    17,868,987,498 cycles                    #    3.881 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    67,627,739,522 instructions              #    3.78  insns per cycle        
+     8,329,685,214 branches                  # 1809.364 M/sec                  
+         8,625,939 branch-misses             #    0.10% of all branches        
+
+       2.342660677 seconds time elapsed
+
+Pass 2000 X 2000 matrix test case 
+A[1999][1999] = 0, B[1999][1999] =0, C[1999][1999] =40024 
+
+ Performance counter stats for './out/MatrixMult.openmp.vector.out 2000X2000':
+
+       4640.967918 task-clock (msec)         #    1.966 CPUs utilized          
+               407 context-switches          #    0.088 K/sec                  
+                 1 cpu-migrations            #    0.000 K/sec                  
+             1,024 page-faults               #    0.221 K/sec                  
+    17,865,907,844 cycles                    #    3.850 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    67,627,799,585 instructions              #    3.79  insns per cycle        
+     8,329,702,312 branches                  # 1794.820 M/sec                  
+         8,594,407 branch-misses             #    0.10% of all branches        
+
+       2.360608418 seconds time elapsed
+
+Pass 2000 X 2000 matrix test case 
+A[1999][1999] = 8, B[1999][1999] =8, C[1999][1999] =40067 
+
+ Performance counter stats for './out/MatrixMult.openmp.vector.out 2000X2000':
+
+       4752.290847 task-clock (msec)         #    1.967 CPUs utilized          
+               424 context-switches          #    0.089 K/sec                  
+                 1 cpu-migrations            #    0.000 K/sec                  
+             1,024 page-faults               #    0.215 K/sec                  
+    17,851,228,024 cycles                    #    3.756 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    67,627,871,458 instructions              #    3.79  insns per cycle        
+     8,329,702,767 branches                  # 1752.776 M/sec                  
+         8,638,519 branch-misses             #    0.10% of all branches        
+
+       2.415971907 seconds time elapsed
+
+Pass 2000 X 2000 matrix test case 
+A[1999][1999] = 9, B[1999][1999] =9, C[1999][1999] =40606 
+
+ Performance counter stats for './out/MatrixMult.openmp.vector.out 2000X2000':
+
+       4711.858684 task-clock (msec)         #    1.968 CPUs utilized          
+               409 context-switches          #    0.087 K/sec                  
+                 1 cpu-migrations            #    0.000 K/sec                  
+             1,023 page-faults               #    0.217 K/sec                  
+    17,851,911,236 cycles                    #    3.789 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    67,627,807,795 instructions              #    3.79  insns per cycle        
+     8,329,697,884 branches                  # 1767.816 M/sec                  
+         8,609,566 branch-misses             #    0.10% of all branches        
+
+       2.394460315 seconds time elapsed
+
+Pass 2000 X 2000 matrix test case 
+A[1999][1999] = 1, B[1999][1999] =1, C[1999][1999] =38971 
+
+ Performance counter stats for './out/MatrixMult.openmp.vector.out 2000X2000':
+
+       4632.547219 task-clock (msec)         #    1.964 CPUs utilized          
+               412 context-switches          #    0.089 K/sec                  
+                 1 cpu-migrations            #    0.000 K/sec                  
+             1,023 page-faults               #    0.221 K/sec                  
+    17,868,837,798 cycles                    #    3.857 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    67,627,782,946 instructions              #    3.78  insns per cycle        
+     8,329,708,041 branches                  # 1798.084 M/sec                  
+         8,620,710 branch-misses             #    0.10% of all branches        
+
+       2.358780880 seconds time elapsed
+
+Pass 2000 X 2000 matrix test case 
+A[1999][1999] = 5, B[1999][1999] =5, C[1999][1999] =41195 
+
+ Performance counter stats for './out/MatrixMult.openmp.vector.out 2000X2000':
+
+       4659.524252 task-clock (msec)         #    1.961 CPUs utilized          
+               407 context-switches          #    0.087 K/sec                  
+                 1 cpu-migrations            #    0.000 K/sec                  
+             1,023 page-faults               #    0.220 K/sec                  
+    17,855,280,379 cycles                    #    3.832 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    67,627,859,816 instructions              #    3.79  insns per cycle        
+     8,329,718,333 branches                  # 1787.676 M/sec                  
+         8,560,151 branch-misses             #    0.10% of all branches        
+
+       2.376412514 seconds time elapsed
+
+Pass 2000 X 2000 matrix test case 
+A[1999][1999] = 6, B[1999][1999] =6, C[1999][1999] =40786 
+
+ Performance counter stats for './out/MatrixMult.openmp.vector.out 2000X2000':
+
+       4620.024917 task-clock (msec)         #    1.967 CPUs utilized          
+               414 context-switches          #    0.090 K/sec                  
+                 1 cpu-migrations            #    0.000 K/sec                  
+             1,022 page-faults               #    0.221 K/sec                  
+    17,863,031,027 cycles                    #    3.866 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    67,627,719,920 instructions              #    3.79  insns per cycle        
+     8,329,690,392 branches                  # 1802.954 M/sec                  
+         8,618,802 branch-misses             #    0.10% of all branches        
+
+       2.348579449 seconds time elapsed
+
+Pass 2000 X 2000 matrix test case 
+A[1999][1999] = 0, B[1999][1999] =0, C[1999][1999] =41526 
+
+ Performance counter stats for './out/MatrixMult.openmp.vector.out 2000X2000':
+
+       4665.507591 task-clock (msec)         #    1.968 CPUs utilized          
+               415 context-switches          #    0.089 K/sec                  
+                 1 cpu-migrations            #    0.000 K/sec                  
+             1,022 page-faults               #    0.219 K/sec                  
+    17,858,911,150 cycles                    #    3.828 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    67,627,720,911 instructions              #    3.79  insns per cycle        
+     8,329,676,029 branches                  # 1785.374 M/sec                  
+         8,608,443 branch-misses             #    0.10% of all branches        
+
+       2.370347208 seconds time elapsed
+
+Pass 2000 X 2000 matrix test case 
+A[1999][1999] = 4, B[1999][1999] =4, C[1999][1999] =40079 
+
+ Performance counter stats for './out/MatrixMult.openmp.vector.out 2000X2000':
+
+       4724.283024 task-clock (msec)         #    1.966 CPUs utilized          
+               419 context-switches          #    0.089 K/sec                  
+                 1 cpu-migrations            #    0.000 K/sec                  
+             1,024 page-faults               #    0.217 K/sec                  
+    17,865,144,480 cycles                    #    3.782 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    67,627,982,346 instructions              #    3.79  insns per cycle        
+     8,329,733,279 branches                  # 1763.174 M/sec                  
+         8,618,280 branch-misses             #    0.10% of all branches        
+
+       2.403588818 seconds time elapsed
+
+Pass 2000 X 2000 matrix test case 
+A[1999][1999] = 8, B[1999][1999] =8, C[1999][1999] =40507 
+
+ Performance counter stats for './out/MatrixMult.openmp.vector.out 2000X2000':
+
+       4639.314965 task-clock (msec)         #    1.965 CPUs utilized          
+               410 context-switches          #    0.088 K/sec                  
+                 1 cpu-migrations            #    0.000 K/sec                  
+             1,024 page-faults               #    0.221 K/sec                  
+    17,870,020,336 cycles                    #    3.852 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    67,627,760,623 instructions              #    3.78  insns per cycle        
+     8,329,687,573 branches                  # 1795.456 M/sec                  
+         8,628,725 branch-misses             #    0.10% of all branches        
+
+       2.360411116 seconds time elapsed
+
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 0
+cpu cores	: 4
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 1
+cpu cores	: 4
+apicid		: 2
+initial apicid	: 2
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 2
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 2
+cpu cores	: 4
+apicid		: 4
+initial apicid	: 4
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 3
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 3
+cpu cores	: 4
+apicid		: 6
+initial apicid	: 6
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 4
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 3401.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 0
+cpu cores	: 4
+apicid		: 1
+initial apicid	: 1
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 5
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 1
+cpu cores	: 4
+apicid		: 3
+initial apicid	: 3
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 6
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 2
+cpu cores	: 4
+apicid		: 5
+initial apicid	: 5
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 7
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 3
+cpu cores	: 4
+apicid		: 7
+initial apicid	: 7
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
