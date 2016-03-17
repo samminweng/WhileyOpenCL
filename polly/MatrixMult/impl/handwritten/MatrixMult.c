@@ -1,5 +1,5 @@
 #include "Util.h"
-#define N 2000
+#define N 2955
 
 void init() __attribute__((noinline));
 void mat_mult() __attribute__((noinline));

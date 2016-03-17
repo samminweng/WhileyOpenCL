@@ -43,7 +43,7 @@ runExecutables(){
     ar -cvq libUtil.a Util.o
 	### Use 'llc' to compile LLVM code into assembly code
     llc $program.$opt.ll -o $program.$opt.s
-    if [ $opt = "openmp" ]
+    if [[ $opt == *"openmp"* ]]
     then
     	export OMP_NUM_THREADS=$num_threads
     	### Use 'gcc' to compile .s file and link with 'libUtil.a'
@@ -184,25 +184,45 @@ clang_polly(){
 	        -mllvm -debug-only=polly-ast $program.c
 
 	### Generate executables with disabled vectorizer
-	echo -e -n "${GREEN}[*]Loop Vectorizer is diabled${RESET}" && read
+	echo -e -n "${GREEN}[*]Vectorizer is diabled${RESET}" && read
 	echo -e -n "[1] Run ${BOLD}${GREEN} GCC -O3 ${RESET} executables" && read
 	gcc -O3 -fno-tree-vectorize $program.c -o "out/$program.gcc.disablevc.out"
 	time ./out/$program.gcc.disablevc.out $parameter
 
-	echo -e -n "[1] Run ${BOLD}${GREEN} Clang -O3 ${RESET} executables" && read
+	echo -e -n "[2] Run ${BOLD}${GREEN} Clang -O3 ${RESET} executables" && read
 	clang -g -O3 -fno-vectorize $program.c -o "out"/$program.clang.disablevc.out
 	time ./out/$program.clang.disablevc.out $parameter
 
 	##-fno-vectorize
-	echo -e -n "[2] Run ${BOLD}${GREEN} Polly-Optimized ${RESET} executables" && read
+	echo -e -n "[3] Run ${BOLD}${GREEN} Polly-Optimized ${RESET} executables" && read
 	pollycc -g -O3 -fno-vectorize -mllvm -polly -S -emit-llvm $program.c -o $program.polly.disablevc.ll
 	runExecutables $program "polly.disablevc" $parameter
 
-	echo -e -n "[2] Run ${BOLD}${GREEN} Polly-Optimized OpenMP ${RESET} executables with $num_threads threads" && read
+	echo -e -n "[4] Run ${BOLD}${GREEN} Polly-Optimized OpenMP ${RESET} executables with $num_threads threads" && read
 	pollycc -g -O3 -fno-vectorize\
 	        -mllvm -polly -S -emit-llvm\
 	        -mllvm -polly-parallel -lgomp $program.c -o $program.openmp.disablevc.ll
 	runExecutables $program "openmp.disablevc" $parameter 2
+
+	### Generate executables with disabled vectorizer
+	echo -e -n "${GREEN}[*]Vectorizer is enabled${RESET}" && read
+	echo -e -n "[1] Run ${BOLD}${GREEN} GCC -O3 ${RESET} executables" && read
+	gcc -O3 $program.c -o "out/$program.gcc.enablevc.out"
+	time ./out/$program.gcc.enablevc.out $parameter
+
+	echo -e -n "[2] Run ${BOLD}${GREEN} Clang -O3 ${RESET} executables" && read
+	clang -g -O3 $program.c -o "out"/$program.clang.enablevc.out
+	time ./out/$program.clang.enablevc.out $parameter
+
+	##-fno-vectorize
+	echo -e -n "[3] Run ${BOLD}${GREEN} Polly-Optimized ${RESET} executables" && read
+	pollycc -g -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine -S -emit-llvm $program.c -o $program.polly.enablevc.ll
+	runExecutables $program "polly.enablevc" $parameter
+
+	echo -e -n "[4] Run ${BOLD}${GREEN} Polly-Optimized OpenMP ${RESET} executables with $num_threads threads" && read
+	pollycc -g -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine -S -emit-llvm\
+	        -mllvm -polly-parallel -lgomp $program.c -o $program.openmp.enablevc.ll
+	runExecutables $program "openmp.enablevc" $parameter 2
 
 	echo -e "-----------------Press [Enter] to finish up--------------------"&& read
 	cleanup
