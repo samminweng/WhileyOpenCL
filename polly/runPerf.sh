@@ -17,6 +17,17 @@ init(){
 	read -p "Press [Enter] to continue..."
 }
 
+run(){
+	executables=$1
+	results=$2
+	### Repeat running the executables.
+	for i in {1..10}
+	do
+	 	timeout $TIMEOUT perf stat $executables $parameter >>$result 2>> $result
+	done
+	### Output the hardware info.
+	cat /proc/cpuinfo >> $result
+}
 ##
 ## Run Polly on the C code
 ##
@@ -25,12 +36,11 @@ compileProgram(){
 	c_type=$2
 	program=$3
 	parameter=$4
-	num_threads=$5
-	result="$PWD/../../perf/$c_type.$program.$opt.$parameter.$num_threads.txt"
-	
+	num_threads=$5	
 	### Creating a static library ('Util.o') with GCC (http://www.cs.dartmouth.edu/~campbell/cs50/buildlib.html)
     clang -c Util.c -o Util.o ### Compile Util.c to Util.o (object file)
     ar -cvq libUtil.a Util.o
+    result="$PWD/../../perf/$c_type.$program.$opt.$parameter.$num_threads.disableVC.txt"
 	echo -e -n "Disable loop vectorization..." > $result
 	case "$opt" in
 		"gcc")
@@ -53,6 +63,30 @@ compileProgram(){
 			        -mllvm -polly -mllvm -polly-parallel -lgomp $program.c -o "out/$program.$opt.out"
 			;;
 	esac
+	run "./out/$program.$opt.out" $result
+	
+	result="$PWD/../../perf/$c_type.$program.$opt.$parameter.$num_threads.enableVC.txt"
+	echo -e -n "Enable loop vectorization..." > $result
+	case "$opt" in
+		"gcc")
+			echo -e -n "Compile C code using GCC -O3..." >> $result
+			gcc -O3 $program.c -o "out/$program.$opt.vector.out"
+			;;
+		"clang")
+			echo -e -n "Compile C code using Clang -O3..." >> $result
+			clang -O3 $program.c -o "out/$program.$opt.vector.out"
+			;;
+		"polly")
+			echo "Optimize C code using Polly..." >> $result
+			pollycc -O3 -mllvm -polly $program.c -o "out/$program.$opt.vector.out"
+			;;
+		"openmp")
+			export OMP_NUM_THREADS=$num_threads
+			echo "Optimize C code using OpenMP code with $OMP_NUM_THREADS threads..." >> $result
+			pollycc -O3 -mllvm -polly -mllvm -polly-parallel -lgomp $program.c -o "out/$program.$opt.vector.out"
+			;;
+	esac
+	run "./out/$program.$opt.vector.out" $result
 }
 #
 # Execute benchmarks
@@ -65,13 +99,7 @@ exec(){
 	num_threads=$5
 	cd "$program/impl/$c_type"
 	compileProgram $opt $c_type $program $parameter $num_threads
-	### Repeat running the executables.
-	for i in {1..10}
-	do
-	 	timeout $TIMEOUT perf stat "./out/$program.$opt.out" $parameter >>$result 2>> $result
-	done
-	### Output the hardware info.
-	cat /proc/cpuinfo >> $result
+	
 	cd ../../../
 }
 
