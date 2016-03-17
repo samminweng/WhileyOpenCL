@@ -1,183 +1,183 @@
 Enable loop vectorization...Optimize C code using OpenMP code with 4 threads...
 Pass 2000 X 2000 matrix test case 
-A[1999][1999] = 7, B[1999][1999] =7, C[1999][1999] =41149 
+A[1999][1999] = 0, B[1999][1999] =0, C[1999][1999] =39880 
 
  Performance counter stats for './out/MatrixMult.openmp.vector.out 2000X2000':
 
-       4842.863031 task-clock (msec)         #    3.792 CPUs utilized          
-               428 context-switches          #    0.088 K/sec                  
-                 6 cpu-migrations            #    0.001 K/sec                  
-             1,053 page-faults               #    0.217 K/sec                  
-    17,872,977,366 cycles                    #    3.691 GHz                    
+       2769.993833 task-clock (msec)         #    3.766 CPUs utilized          
+               250 context-switches          #    0.090 K/sec                  
+                 4 cpu-migrations            #    0.001 K/sec                  
+             1,047 page-faults               #    0.378 K/sec                  
+    10,230,837,098 cycles                    #    3.693 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    67,633,450,754 instructions              #    3.78  insns per cycle        
-     8,331,183,105 branches                  # 1720.301 M/sec                  
-         8,635,929 branch-misses             #    0.10% of all branches        
+    37,636,878,551 instructions              #    3.68  insns per cycle        
+     2,331,102,782 branches                  #  841.555 M/sec                  
+         8,557,075 branch-misses             #    0.37% of all branches        
 
-       1.277222422 seconds time elapsed
+       0.735525875 seconds time elapsed
 
 Pass 2000 X 2000 matrix test case 
-A[1999][1999] = 2, B[1999][1999] =2, C[1999][1999] =41326 
+A[1999][1999] = 0, B[1999][1999] =0, C[1999][1999] =39880 
 
  Performance counter stats for './out/MatrixMult.openmp.vector.out 2000X2000':
 
-       4841.099568 task-clock (msec)         #    3.823 CPUs utilized          
-               421 context-switches          #    0.087 K/sec                  
-                 7 cpu-migrations            #    0.001 K/sec                  
-             1,055 page-faults               #    0.218 K/sec                  
-    17,878,807,079 cycles                    #    3.693 GHz                    
+       2767.792487 task-clock (msec)         #    3.725 CPUs utilized          
+               254 context-switches          #    0.092 K/sec                  
+                 5 cpu-migrations            #    0.002 K/sec                  
+             1,046 page-faults               #    0.378 K/sec                  
+    10,215,480,318 cycles                    #    3.691 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    67,631,880,492 instructions              #    3.78  insns per cycle        
-     8,330,725,703 branches                  # 1720.833 M/sec                  
-         8,625,170 branch-misses             #    0.10% of all branches        
+    37,636,769,505 instructions              #    3.68  insns per cycle        
+     2,331,071,441 branches                  #  842.213 M/sec                  
+         8,532,452 branch-misses             #    0.37% of all branches        
 
-       1.266291356 seconds time elapsed
+       0.743105344 seconds time elapsed
 
 Pass 2000 X 2000 matrix test case 
-A[1999][1999] = 0, B[1999][1999] =0, C[1999][1999] =41073 
+A[1999][1999] = 7, B[1999][1999] =7, C[1999][1999] =40713 
 
  Performance counter stats for './out/MatrixMult.openmp.vector.out 2000X2000':
 
-       4843.316927 task-clock (msec)         #    3.819 CPUs utilized          
-               429 context-switches          #    0.089 K/sec                  
-                10 cpu-migrations            #    0.002 K/sec                  
-             1,053 page-faults               #    0.217 K/sec                  
-    17,894,448,641 cycles                    #    3.695 GHz                    
+       2767.376129 task-clock (msec)         #    3.746 CPUs utilized          
+               262 context-switches          #    0.095 K/sec                  
+                 4 cpu-migrations            #    0.001 K/sec                  
+             1,049 page-faults               #    0.379 K/sec                  
+    10,220,290,460 cycles                    #    3.693 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    67,637,729,064 instructions              #    3.78  insns per cycle        
-     8,332,398,641 branches                  # 1720.391 M/sec                  
-         8,620,519 branch-misses             #    0.10% of all branches        
+    37,630,615,521 instructions              #    3.68  insns per cycle        
+     2,329,304,654 branches                  #  841.702 M/sec                  
+         8,554,937 branch-misses             #    0.37% of all branches        
 
-       1.268351650 seconds time elapsed
+       0.738697254 seconds time elapsed
 
 Pass 2000 X 2000 matrix test case 
-A[1999][1999] = 6, B[1999][1999] =6, C[1999][1999] =41634 
+A[1999][1999] = 2, B[1999][1999] =2, C[1999][1999] =40993 
 
  Performance counter stats for './out/MatrixMult.openmp.vector.out 2000X2000':
 
-       4842.622448 task-clock (msec)         #    3.810 CPUs utilized          
-               433 context-switches          #    0.089 K/sec                  
-                10 cpu-migrations            #    0.002 K/sec                  
-             1,052 page-faults               #    0.217 K/sec                  
-    17,888,105,647 cycles                    #    3.694 GHz                    
+       2765.635897 task-clock (msec)         #    3.770 CPUs utilized          
+               259 context-switches          #    0.094 K/sec                  
+                 5 cpu-migrations            #    0.002 K/sec                  
+             1,048 page-faults               #    0.379 K/sec                  
+    10,216,140,091 cycles                    #    3.694 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    67,636,499,672 instructions              #    3.78  insns per cycle        
-     8,332,017,675 branches                  # 1720.559 M/sec                  
-         8,612,308 branch-misses             #    0.10% of all branches        
+    37,630,611,687 instructions              #    3.68  insns per cycle        
+     2,329,307,346 branches                  #  842.232 M/sec                  
+         8,552,133 branch-misses             #    0.37% of all branches        
 
-       1.270997362 seconds time elapsed
+       0.733598337 seconds time elapsed
 
 Pass 2000 X 2000 matrix test case 
-A[1999][1999] = 3, B[1999][1999] =3, C[1999][1999] =40825 
+A[1999][1999] = 3, B[1999][1999] =3, C[1999][1999] =40407 
 
  Performance counter stats for './out/MatrixMult.openmp.vector.out 2000X2000':
 
-       6290.753893 task-clock (msec)         #    3.810 CPUs utilized          
-               551 context-switches          #    0.088 K/sec                  
-                 6 cpu-migrations            #    0.001 K/sec                  
-             1,050 page-faults               #    0.167 K/sec                  
-    23,853,476,744 cycles                    #    3.792 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-    67,636,313,981 instructions              #    2.84  insns per cycle        
-     8,331,842,362 branches                  # 1324.458 M/sec                  
-         8,609,809 branch-misses             #    0.10% of all branches        
-
-       1.651242549 seconds time elapsed
-
-Pass 2000 X 2000 matrix test case 
-A[1999][1999] = 5, B[1999][1999] =5, C[1999][1999] =40791 
-
- Performance counter stats for './out/MatrixMult.openmp.vector.out 2000X2000':
-
-       6300.765243 task-clock (msec)         #    3.777 CPUs utilized          
-               569 context-switches          #    0.090 K/sec                  
-                 6 cpu-migrations            #    0.001 K/sec                  
-             1,048 page-faults               #    0.166 K/sec                  
-    23,889,012,464 cycles                    #    3.791 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-    67,641,687,451 instructions              #    2.83  insns per cycle        
-     8,333,373,505 branches                  # 1322.597 M/sec                  
-         8,632,268 branch-misses             #    0.10% of all branches        
-
-       1.668168950 seconds time elapsed
-
-Pass 2000 X 2000 matrix test case 
-A[1999][1999] = 8, B[1999][1999] =8, C[1999][1999] =40263 
-
- Performance counter stats for './out/MatrixMult.openmp.vector.out 2000X2000':
-
-       4851.644883 task-clock (msec)         #    3.819 CPUs utilized          
-               446 context-switches          #    0.092 K/sec                  
-                 7 cpu-migrations            #    0.001 K/sec                  
-             1,056 page-faults               #    0.218 K/sec                  
-    17,899,419,632 cycles                    #    3.689 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-    67,638,515,498 instructions              #    3.78  insns per cycle        
-     8,332,561,885 branches                  # 1717.472 M/sec                  
-         8,625,380 branch-misses             #    0.10% of all branches        
-
-       1.270267049 seconds time elapsed
-
-Pass 2000 X 2000 matrix test case 
-A[1999][1999] = 9, B[1999][1999] =9, C[1999][1999] =39543 
-
- Performance counter stats for './out/MatrixMult.openmp.vector.out 2000X2000':
-
-       4842.936065 task-clock (msec)         #    3.813 CPUs utilized          
-               437 context-switches          #    0.090 K/sec                  
-                 8 cpu-migrations            #    0.002 K/sec                  
-             1,053 page-faults               #    0.217 K/sec                  
-    17,891,352,161 cycles                    #    3.694 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-    67,636,503,581 instructions              #    3.78  insns per cycle        
-     8,332,029,476 branches                  # 1720.450 M/sec                  
-         8,631,468 branch-misses             #    0.10% of all branches        
-
-       1.270237123 seconds time elapsed
-
-Pass 2000 X 2000 matrix test case 
-A[1999][1999] = 2, B[1999][1999] =2, C[1999][1999] =41858 
-
- Performance counter stats for './out/MatrixMult.openmp.vector.out 2000X2000':
-
-       4841.457215 task-clock (msec)         #    3.824 CPUs utilized          
-               445 context-switches          #    0.092 K/sec                  
-                 7 cpu-migrations            #    0.001 K/sec                  
-             1,054 page-faults               #    0.218 K/sec                  
-    17,883,703,865 cycles                    #    3.694 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-    67,636,587,134 instructions              #    3.78  insns per cycle        
-     8,332,031,493 branches                  # 1720.976 M/sec                  
-         8,638,622 branch-misses             #    0.10% of all branches        
-
-       1.266188426 seconds time elapsed
-
-Pass 2000 X 2000 matrix test case 
-A[1999][1999] = 2, B[1999][1999] =2, C[1999][1999] =40745 
-
- Performance counter stats for './out/MatrixMult.openmp.vector.out 2000X2000':
-
-       4845.698210 task-clock (msec)         #    3.824 CPUs utilized          
-               439 context-switches          #    0.091 K/sec                  
+       3609.411047 task-clock (msec)         #    3.738 CPUs utilized          
+               314 context-switches          #    0.087 K/sec                  
                  5 cpu-migrations            #    0.001 K/sec                  
-             1,051 page-faults               #    0.217 K/sec                  
-    17,898,686,586 cycles                    #    3.694 GHz                    
+             1,038 page-faults               #    0.288 K/sec                  
+    13,688,557,841 cycles                    #    3.792 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    67,638,114,162 instructions              #    3.78  insns per cycle        
-     8,332,495,095 branches                  # 1719.565 M/sec                  
-         8,647,597 branch-misses             #    0.10% of all branches        
+    37,635,872,052 instructions              #    2.75  insns per cycle        
+     2,330,765,188 branches                  #  645.747 M/sec                  
+         8,556,967 branch-misses             #    0.37% of all branches        
 
-       1.267273108 seconds time elapsed
+       0.965652963 seconds time elapsed
+
+Pass 2000 X 2000 matrix test case 
+A[1999][1999] = 3, B[1999][1999] =3, C[1999][1999] =40407 
+
+ Performance counter stats for './out/MatrixMult.openmp.vector.out 2000X2000':
+
+       2767.898039 task-clock (msec)         #    3.775 CPUs utilized          
+               263 context-switches          #    0.095 K/sec                  
+                 7 cpu-migrations            #    0.003 K/sec                  
+             1,048 page-faults               #    0.379 K/sec                  
+    10,224,886,588 cycles                    #    3.694 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    37,636,779,236 instructions              #    3.68  insns per cycle        
+     2,331,058,287 branches                  #  842.176 M/sec                  
+         8,564,810 branch-misses             #    0.37% of all branches        
+
+       0.733179290 seconds time elapsed
+
+Pass 2000 X 2000 matrix test case 
+A[1999][1999] = 1, B[1999][1999] =1, C[1999][1999] =39023 
+
+ Performance counter stats for './out/MatrixMult.openmp.vector.out 2000X2000':
+
+       2769.950133 task-clock (msec)         #    3.768 CPUs utilized          
+               254 context-switches          #    0.092 K/sec                  
+                 4 cpu-migrations            #    0.001 K/sec                  
+             1,049 page-faults               #    0.379 K/sec                  
+    10,223,595,631 cycles                    #    3.691 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    37,636,697,047 instructions              #    3.68  insns per cycle        
+     2,331,041,162 branches                  #  841.546 M/sec                  
+         8,547,721 branch-misses             #    0.37% of all branches        
+
+       0.735069915 seconds time elapsed
+
+Pass 2000 X 2000 matrix test case 
+A[1999][1999] = 5, B[1999][1999] =5, C[1999][1999] =41073 
+
+ Performance counter stats for './out/MatrixMult.openmp.vector.out 2000X2000':
+
+       2766.062892 task-clock (msec)         #    3.689 CPUs utilized          
+               257 context-switches          #    0.093 K/sec                  
+                 6 cpu-migrations            #    0.002 K/sec                  
+             1,048 page-faults               #    0.379 K/sec                  
+    10,214,882,109 cycles                    #    3.693 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    37,634,992,466 instructions              #    3.68  insns per cycle        
+     2,330,546,529 branches                  #  842.550 M/sec                  
+         8,554,397 branch-misses             #    0.37% of all branches        
+
+       0.749859465 seconds time elapsed
+
+Pass 2000 X 2000 matrix test case 
+A[1999][1999] = 1, B[1999][1999] =1, C[1999][1999] =40592 
+
+ Performance counter stats for './out/MatrixMult.openmp.vector.out 2000X2000':
+
+       2767.967168 task-clock (msec)         #    3.773 CPUs utilized          
+               256 context-switches          #    0.092 K/sec                  
+                 9 cpu-migrations            #    0.003 K/sec                  
+             1,048 page-faults               #    0.379 K/sec                  
+    10,222,832,645 cycles                    #    3.693 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    37,634,976,365 instructions              #    3.68  insns per cycle        
+     2,330,546,986 branches                  #  841.971 M/sec                  
+         8,552,391 branch-misses             #    0.37% of all branches        
+
+       0.733564569 seconds time elapsed
+
+Pass 2000 X 2000 matrix test case 
+A[1999][1999] = 5, B[1999][1999] =5, C[1999][1999] =39232 
+
+ Performance counter stats for './out/MatrixMult.openmp.vector.out 2000X2000':
+
+       2770.511337 task-clock (msec)         #    3.770 CPUs utilized          
+               258 context-switches          #    0.093 K/sec                  
+                 8 cpu-migrations            #    0.003 K/sec                  
+             1,049 page-faults               #    0.379 K/sec                  
+    10,225,033,373 cycles                    #    3.691 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    37,634,997,347 instructions              #    3.68  insns per cycle        
+     2,330,560,419 branches                  #  841.202 M/sec                  
+         8,543,610 branch-misses             #    0.37% of all branches        
+
+       0.734891793 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -212,7 +212,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 800.000
+cpu MHz		: 3401.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -316,7 +316,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 3401.000
+cpu MHz		: 800.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -368,7 +368,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 3401.000
+cpu MHz		: 800.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
