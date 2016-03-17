@@ -183,28 +183,26 @@ clang_polly(){
 	pollycc -g -O3 -mllvm -polly -o "out"/$program.polly.out\
 	        -mllvm -debug-only=polly-ast $program.c
 
-	### Generate executables
+	### Generate executables with disabled vectorizer
 	echo -e -n "${GREEN}[*]Loop Vectorizer is diabled${RESET}" && read
 	echo -e -n "[1] Run ${BOLD}${GREEN} GCC -O3 ${RESET} executables" && read
-	gcc -O3 -fno-tree-vectorize $program.c -o "out/$program.gcc.out"
-	time ./out/$program.gcc.out $parameter
+	gcc -O3 -fno-tree-vectorize $program.c -o "out/$program.gcc.disablevc.out"
+	time ./out/$program.gcc.disablevc.out $parameter
 
 	echo -e -n "[1] Run ${BOLD}${GREEN} Clang -O3 ${RESET} executables" && read
-	clang -g -O3 -fno-vectorize\
-	      $program.c -o "out"/$program.clang.out
-	time ./out/$program.clang.out $parameter
+	clang -g -O3 -fno-vectorize $program.c -o "out"/$program.clang.disablevc.out
+	time ./out/$program.clang.disablevc.out $parameter
 
 	##-fno-vectorize
 	echo -e -n "[2] Run ${BOLD}${GREEN} Polly-Optimized ${RESET} executables" && read
-	pollycc -g -O3 -fno-vectorize\
-	        -mllvm -polly -S -emit-llvm $program.c -o $program.polly.ll
-	runExecutables $program "polly" $parameter
+	pollycc -g -O3 -fno-vectorize -mllvm -polly -S -emit-llvm $program.c -o $program.polly.disablevc.ll
+	runExecutables $program "polly.disablevc" $parameter
 
 	echo -e -n "[2] Run ${BOLD}${GREEN} Polly-Optimized OpenMP ${RESET} executables with $num_threads threads" && read
 	pollycc -g -O3 -fno-vectorize\
 	        -mllvm -polly -S -emit-llvm\
-	        -mllvm -polly-parallel -lgomp $program.c -o $program.openmp.ll
-	runExecutables $program "openmp" $parameter 2
+	        -mllvm -polly-parallel -lgomp $program.c -o $program.openmp.disablevc.ll
+	runExecutables $program "openmp.disablevc" $parameter 2
 
 	echo -e "-----------------Press [Enter] to finish up--------------------"&& read
 	cleanup
