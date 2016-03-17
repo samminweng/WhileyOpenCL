@@ -36,8 +36,7 @@ generate_png(){
 runExecutables(){
 	program=$1
 	opt=$2
-	parameter=$3
-	num_threads=$4
+	parameter=$3	
 	### Creating a static library ('Util.o') with GCC (http://www.cs.dartmouth.edu/~campbell/cs50/buildlib.html)
     clang -c Util.c -o Util.o ### Compile Util.c to Util.o (object file)
     ar -cvq libUtil.a Util.o
@@ -45,6 +44,7 @@ runExecutables(){
     llc $program.$opt.ll -o $program.$opt.s
     if [[ $opt == *"openmp"* ]]
     then
+    	num_threads=$4
     	export OMP_NUM_THREADS=$num_threads
     	### Use 'gcc' to compile .s file and link with 'libUtil.a'
     	clang $program.$opt.s libUtil.a -lgomp -o "out/$program.$opt.out" 
