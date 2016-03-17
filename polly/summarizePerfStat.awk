@@ -7,33 +7,37 @@ function pause(){
 }
 
 function generateReport(results){
-	print "TestCase,CodeType,CompilerOpt,Parameter,Threads,1st,2nd,3rd,4th,5th,6th,7th,8th,9th,10th,Average";
+	print "TestCase,CodeType,Vectorization,CompilerOpt,Parameter,Threads,1st,2nd,3rd,4th,5th,6th,7th,8th,9th,10th,Average";
  	t_total=split(testcases, t_array, " ");
  	for(t=1;t<=t_total;t++){
  		testcase=t_array[t];
  		c_total=split(c_types, c_array, " ");
  		for(c=1;c<=c_total;c++){
  			c_type=c_array[c];
- 			p_total=split(polly_opts, p_array, " ");
- 			for(p=1;p<=p_total;p++){
- 				polly_opt=p_array[p];
- 				# Get the parameter
- 				if(parameters[testcase]!=""){
- 					par_total=split(parameters[testcase], par_array, " ");
- 					for(par=1;par<=par_total;par++){
- 						parameter=par_array[par];
- 						th_total=split(threads, th_array, " ");
- 						for(th=1;th<=th_total;th++){
- 							thread=th_array[th];
- 							key=testcase","c_type","polly_opt","parameter","thread;
- 							# Check if there is any result.
- 							if(counts[key]>0){
- 								str = testcase"\t"c_type"\t"polly_opt"\t"parameter"\t"thread;
- 								## Print out CPU utilization
- 				 				for(iteration=1;iteration<=10;iteration++){
- 				 					str = str"\t"results[key","iteration];
- 				 				}
-								print str;
+ 			vc_total=split(vcs, vc_array, " ");
+ 			for(vc_t=1;vc_t<=vc_total;vc_t++){
+ 				vector=vc_array[vc_t];
+ 				p_total=split(polly_opts, p_array, " ");
+ 				for(p=1;p<=p_total;p++){
+ 					polly_opt=p_array[p];
+ 					# Get the parameter
+ 					if(parameters[testcase]!=""){
+ 						par_total=split(parameters[testcase], par_array, " ");
+ 						for(par=1;par<=par_total;par++){
+ 							parameter=par_array[par];
+ 							th_total=split(threads, th_array, " ");
+ 							for(th=1;th<=th_total;th++){
+ 								thread=th_array[th]; 							
+ 								key=testcase","c_type","vector","polly_opt","parameter","thread;
+ 								# Check if there is any result.
+ 								if(counts[key]>0){
+ 									str = testcase"\t"c_type"\t"vector"\t"polly_opt"\t"parameter"\t"thread;
+ 									## Print out CPU utilization
+ 				 					for(iteration=1;iteration<=10;iteration++){
+ 				 						str = str"\t"results[key","iteration];
+ 				 					}
+									print str;
+ 								} 							
  							}
  						}
  					}
@@ -57,6 +61,7 @@ BEGIN {
 	# Parameters
 	parameters["MatrixMult"] = "2000X2000";
 	threads="1 2 4";
+	vcs="disableVC enableVC";
 	cpu_utils[""] = "";
 	exec_times[""] = "";
 	counts[""]=0;
@@ -83,7 +88,10 @@ BEGIN {
 	}else{
 		thread = 1;
 	}
-	key=testcase","c_type","polly_opt","parameter","thread;
+	# Get vectorization (enable/disable)
+	vc = t_array[6];
+	##pause();
+	key=testcase","c_type","vc","polly_opt","parameter","thread;
 	if(match($1, /Performance counter stats/)){
 		## Increment the iteration
 		counts[key]++;

@@ -78,12 +78,12 @@ compileProgram(){
 			;;
 		"polly")
 			echo "Optimize C code using Polly..." >> $result
-			pollycc -O3 -mllvm -polly $program.c -o "out/$program.$opt.vector.out"
+			pollycc -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine $program.c -o "out/$program.$opt.vector.out"
 			;;
 		"openmp")
 			export OMP_NUM_THREADS=$num_threads
 			echo "Optimize C code using OpenMP code with $OMP_NUM_THREADS threads..." >> $result
-			pollycc -O3 -mllvm -polly -mllvm -polly-parallel -lgomp $program.c -o "out/$program.$opt.vector.out"
+			pollycc -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine -mllvm -polly-parallel -lgomp $program.c -o "out/$program.$opt.vector.out"
 			;;
 	esac
 	run "./out/$program.$opt.vector.out" $result
