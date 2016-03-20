@@ -7,27 +7,28 @@ void mat_mult() __attribute__((noinline));
 int A[N][N];
 int B[N][N];
 int C[N][N];
-int R[N][N];
+
 
 void init(){
-    int i;
-    int j;
-    
+    //int i;
+    //int j;
+    //int* R = malloc(N*N*sizeof(int));
     /* Intializes random number generator */
-    srand((unsigned) time(NULL));
-    for (i=0; i<N; i++) {
-        for (j=0; j<N; j++) {
+    /*srand((unsigned) time(NULL));
+    for (int i=0; i<N; i++) {
+        for (int j=0; j<N; j++) {
+            R[i][j] = 0;
             // Each rows starts with a random number from 0 to 10
-            R[i][j] = rand()%10;
+            R[i][j] = R[i][j]+i;
         }
-    }
+    }*/
 
-    for (i=0; i<N; i++) {
-        for (j=0; j<N; j++) {
+    for (int i=0; i<N; i++) {
+        for (int j=0; j<N; j++) {
             //A[i][j] = 1; 
             //B[i][j] = 1;
-            A[i][j] = R[i][j]; 
-            B[i][j] = R[i][j];
+            A[i][j] = A[i][j] + i; 
+            B[i][j] = B[i][j] + i;
         }
     }
 }

@@ -8,7 +8,6 @@ RESET="\e[0m"    # Text Reset
 # Load polly to clang to optimize the LLVM-IR code
 #
 export PATH_TO_POLLY_LIB="$HOME/polly/llvm_build/lib"
-export CPPFLAGS="-Xclang -load -Xclang ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
 alias opt="opt -load ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
 alias pollycc="clang -Xclang -load -Xclang ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
 alias cls='printf "\033c"' ## Clear the screen
