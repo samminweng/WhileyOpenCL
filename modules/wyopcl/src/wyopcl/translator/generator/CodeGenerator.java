@@ -1134,7 +1134,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			int dimension = stores.getArrayDimension(type);
 			switch (print_name) {
 			case "print":
-				statement.add(indent+"printf(\"%d\\n\", " + input + ");");
+				statement.add(indent+"printf(\"%d\", " + input + ");");
 				break;
 			case "print_s":
 				statement.add(indent+"printf_s(_"+dimension+"DARRAY_PARAM(" + input + "));");
