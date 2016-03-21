@@ -15,17 +15,19 @@ import wyopcl.translator.Analyzer;
 import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.bound.BasicBlock.BlockType;
 
-
 /**
- * Analyze the alias in the WyIL code to find all the necessary array copies and eliminate un-necessary copies.
+ * Analyze the alias in the WyIL code to find all the necessary array copies and
+ * eliminate un-necessary copies.
  * 
  * @author Min-Hsien Weng
  *
  */
 public class CopyEliminationAnalyzer extends Analyzer {
 	private LiveVariablesAnalysis liveAnalyzer;
-	// Store the liveness analysis for each function (Key: function, Value:Liveness information).
+	// Store the liveness analysis for each function (Key: function,
+	// Value:Liveness information).
 	private HashMap<FunctionOrMethod, LiveVariables> livenessStore;
+
 	/**
 	 * Basic Constructor
 	 */
@@ -79,8 +81,8 @@ public class CopyEliminationAnalyzer extends Analyzer {
 		// Get the list of blocks for the function.
 		for (BasicBlock block : this.getBlocks(function)) {
 			// Print out the in/out set for the block.
-			System.out.println("In" + ":{" + getLiveVariables(liveness.getIN(block), function) + "}\n" + block
-					+ "\nOut" + ":{" + getLiveVariables(liveness.getOUT(block), function) + "}\n");
+			System.out.println("In" + ":{" + getLiveVariables(liveness.getIN(block), function) + "}\n" + block + "\nOut"
+					+ ":{" + getLiveVariables(liveness.getOUT(block), function) + "}\n");
 		}
 	}
 
@@ -96,18 +98,19 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	}
 
 	/**
-	 * Applies live variable analysis on the function, in order to get in/out set of each block.
+	 * Applies live variable analysis on the function, in order to get in/out
+	 * set of each block.
 	 * 
 	 * @param function
 	 *            code block of function
 	 */
 	private void computeLiveness(FunctionOrMethod function) {
 		LiveVariables liveness = new LiveVariables();
-		liveness.computeLiveness(function.name(), config.isVerbose(),  this.getCFGraph(function), liveAnalyzer);
+		liveness.computeLiveness(function.name(), config.isVerbose(), this.getCFGraph(function), liveAnalyzer);
 		// Store the liveness analysis for the function.
 		livenessStore.put(function, liveness);
 		// Print out analysis result
-		if(config.isVerbose()){
+		if (config.isVerbose()) {
 			printLivenss(function);
 		}
 	}
@@ -125,34 +128,61 @@ public class CopyEliminationAnalyzer extends Analyzer {
 			computeLiveness(function);
 		}
 	}
-	
-	public boolean isLive(int reg, Code code, FunctionOrMethod f){
+
+	public boolean isLive(int reg, Code code, FunctionOrMethod f) {
 		boolean isLive = true;
 
 		// Check the array is live.
-		BasicBlock blk = getBlockbyCode(f, code);// Get basic block that contains the given code.
-		if(blk != null){
+		BasicBlock blk = getBlockbyCode(f, code);// Get basic block that
+													// contains the given code.
+		if (blk != null) {
 			Env outSet = getLiveness(f).getOUT(blk);
 			isLive = outSet.contains(reg);
 		}
 		return isLive;
 	}
-	
-	
+
 	/**
-	 * Determines whether to make a copy of array by checking liveness information or read-only property.
+	 * Determines whether to make a copy of array by checking liveness
+	 * information or read-only property.
 	 * 
-	 * If the variable is live, then the copy is necessary. Otherwise, the register can be overwritten safely.
+	 * If the variable is live, then the copy is necessary. Otherwise, the
+	 * register can be overwritten safely.
 	 * 
-	 * The rules of determining the copy of 
+	 * The rules of determining the copy of
 	 * <table>
 	 * <thead>
-	 * <tr><th colspan="2"> f mutates b?</th><th>F</th><th>F</th><th>T</th><th>T</th></tr>
-	 * <tr><th colspan="2"> f returns b?</th><th>F</th><th>T</th><th>T</th><th>F</th></tr>
-	 * </thead>
-	 * <tbody>
-	 * <tr><td> b is live?</td><td>T</td><td>No copy </td><td>No copy </td><td>Copy</td><td>Copy</td></tr>
-	 * <tr><td> b is live?</td><td>F</td><td>No copy </td><td>No copy </td><td>No copy</td><td>No copy</td></tr>
+	 * <tr>
+	 * <th colspan="2">f mutates b?</th>
+	 * <th>F</th>
+	 * <th>F</th>
+	 * <th>T</th>
+	 * <th>T</th>
+	 * </tr>
+	 * <tr>
+	 * <th colspan="2">f returns b?</th>
+	 * <th>F</th>
+	 * <th>T</th>
+	 * <th>T</th>
+	 * <th>F</th>
+	 * </tr>
+	 * </thead> <tbody>
+	 * <tr>
+	 * <td>b is live?</td>
+	 * <td>T</td>
+	 * <td>No copy</td>
+	 * <td>No copy</td>
+	 * <td>Copy</td>
+	 * <td>Copy</td>
+	 * </tr>
+	 * <tr>
+	 * <td>b is live?</td>
+	 * <td>F</td>
+	 * <td>No copy</td>
+	 * <td>No copy</td>
+	 * <td>No copy</td>
+	 * <td>No copy</td>
+	 * </tr>
 	 * </tbody>
 	 * </table>
 	 * 
@@ -164,26 +194,37 @@ public class CopyEliminationAnalyzer extends Analyzer {
 	 *            the byte-code of function call.
 	 * @param f
 	 *            the caller function
-	 * @return ture if the copy is un-needed and can be avoid. Otherwise, return false.
+	 * @return ture if the copy is un-needed and can be avoid. Otherwise, return
+	 *         false.
+	 * 
 	 */
-	public boolean isCopyEliminated(int reg, Code code, FunctionOrMethod f) {	
+	public boolean isCopyEliminated(int reg, Code code, FunctionOrMethod f) {
+		// TODO: For fieldload code, the copy is always made
+		/*if (code instanceof Codes.FieldLoad) {
+			 Codes.FieldLoad fieldload = (Codes.FieldLoad)code; String lhs =
+			 getActualVarName(fieldload.target(0), f); // Check if the lhs is
+			 modified in 'f' funciton isReadOnly = !isMutated(lhs, f); return
+			 isReadOnly;			 
+		}*/
+
 		boolean isLive = isLive(reg, code, f);
-		
+
 		// If the variable is not alive, then the copies are not needed.
-		if(!isLive){
+		if (!isLive) {
 			return true;
-		}else{
-			// Check the array is read-only. By default, the array is assumed not read-only but modified.
+		} else {
+			// Check the array is read-only. By default, the array is assumed
+			// not read-only but modified.
 			boolean isReadOnly = false;
 			boolean isReturned = false;
 			if (code instanceof Codes.Invoke) {
-				Codes.Invoke invoked = (Codes.Invoke)code;
+				Codes.Invoke invoked = (Codes.Invoke) code;
 				FunctionOrMethod invoked_function = this.getFunction(invoked.name.name(), invoked.type(0));
 				if (invoked_function != null) {
 					// Map the register to input parameter.
-					int parameter=0;
-					while(parameter<invoked.operands().length){
-						if(reg==invoked.operand(parameter)){
+					int parameter = 0;
+					while (parameter < invoked.operands().length) {
+						if (reg == invoked.operand(parameter)) {
 							break;
 						}
 						parameter++;
@@ -194,27 +235,21 @@ public class CopyEliminationAnalyzer extends Analyzer {
 					// Check if 'var' is returned by 'invoked_function'
 					isReturned = isReturned(var, invoked_function);
 					// The 'var' is mutated and returned
-					if(!isReadOnly){
-						if(isReturned){
+					if (!isReadOnly) {
+						if (isReturned) {
 							return false;
-						}else{
+						} else {
 							return false;
 						}
-					}else{
+					} else {
 						// The 'var' is not mutated
-						if(isReturned){
+						if (isReturned) {
 							return true;
-						}else{
+						} else {
 							return true;
 						}
 					}
 				}
-			}else if(code instanceof Codes.FieldLoad){
-				Codes.FieldLoad fieldload = (Codes.FieldLoad)code;
-				String lhs = getActualVarName(fieldload.target(0), f);
-				// Check if the lhs is modified in 'f' funciton
-				isReadOnly = !isMutated(lhs, f);
-				return isReadOnly;
 			}
 			throw new RuntimeException("Not implemeneted");
 		}

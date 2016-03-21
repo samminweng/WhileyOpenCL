@@ -661,9 +661,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// call the function/method, e.g. '_12=reverse(_xs , _xs_size);'
 			statement.add(translateLHSFunctionCall(code, function) + code.name.name() + "("+ translateRHSFunctionCall(code, function)+");");
 			
-			// Assign ownership to lhs
-			this.deallocatedAnalyzer.ifPresent(a -> statement.add(
-							indent + a.addOwnership(code.target(0), function, this.stores)));
+			if(code.targets().length>0){
+				// Assign ownership to lhs
+				this.deallocatedAnalyzer.ifPresent(a -> statement.add(
+								indent + a.addOwnership(code.target(0), function, this.stores)));
+			}
 		}
 		// add the statement
 		stores.addAllStatements(code, statement, function);
@@ -1067,13 +1069,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				String rhs = stores.getVar(code.operand(0), function) + "->" + code.field;
 				// Free lhs variable
 				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
-				boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
-				// Load the values to lhs variable
+				boolean isCopyEliminated = false; // The copy is always made
+				// Copy the field data and assign it to the lhs
 				statement.addAll(CodeGeneratorHelper.generateAssignmentCode(lhs_type, indent, lhs, rhs, isCopyEliminated, stores));
-				if(!isCopyEliminated){
-					// Assign ownership to lhs variable if the rhs variable is copied.
-					this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + a.addOwnership(code.target(0), function, stores)));
-				}
+				// Assign ownership to lhs variable if the rhs variable is copied.
+				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + a.addOwnership(code.target(0), function, stores)));
 			}
 		}
 		stores.addAllStatements(code, statement, function);
