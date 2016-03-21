@@ -1,0 +1,16 @@
+digraph "Scop Graph for 'free_Matrix' function" {
+	label="Scop Graph for 'free_Matrix' function";
+
+	Node0xa7e3ae0 [shape=record,label="{entry:\l  br label %entry.split, !dbg !223\l}"];
+	Node0xa7e3ae0 -> Node0xa8361c0;
+	Node0xa8361c0 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata %struct.Matrix* %matrix, i64 0,\l... metadata !25, metadata !224), !dbg !223\l  %0 = bitcast %struct.Matrix* %matrix to i8**, !dbg !225\l  %1 = load i8*, i8** %0, align 8, !dbg !225, !tbaa !226\l  tail call void @free(i8* %1) #6, !dbg !232\l  %2 = bitcast %struct.Matrix* %matrix to i8*, !dbg !233\l  tail call void @free(i8* %2) #6, !dbg !234\l  ret void, !dbg !235\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xa88bb50 {
+          label = "MatrixMult.c:9-12
+";
+          style = solid;
+          color = 1
+          Node0xa7e3ae0;
+          Node0xa8361c0;
+        }
+}

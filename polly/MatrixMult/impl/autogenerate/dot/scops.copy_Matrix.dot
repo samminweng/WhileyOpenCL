@@ -1,0 +1,16 @@
+digraph "Scop Graph for 'copy_Matrix' function" {
+	label="Scop Graph for 'copy_Matrix' function";
+
+	Node0xa840400 [shape=record,label="{entry:\l  br label %entry.split, !dbg !223\l}"];
+	Node0xa840400 -> Node0xa808190;
+	Node0xa808190 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata %struct.Matrix* %_Matrix, i64 0,\l... metadata !19, metadata !224), !dbg !223\l  %call = tail call noalias i8* @malloc(i64 32) #6, !dbg !225\l  %0 = bitcast i8* %call to %struct.Matrix*, !dbg !227\l  tail call void @llvm.dbg.value(metadata %struct.Matrix* %0, i64 0, metadata\l... !20, metadata !224), !dbg !228\l  %data_size = getelementptr inbounds %struct.Matrix, %struct.Matrix*\l... %_Matrix, i64 0, i32 1, !dbg !229\l  %1 = load i64, i64* %data_size, align 8, !dbg !229, !tbaa !230\l  %data_size1 = getelementptr inbounds i8, i8* %call, i64 8, !dbg !229\l  %2 = bitcast i8* %data_size1 to i64*, !dbg !229\l  store i64 %1, i64* %2, align 8, !dbg !229, !tbaa !230\l  %data = getelementptr inbounds %struct.Matrix, %struct.Matrix* %_Matrix, i64\l... 0, i32 0, !dbg !229\l  %3 = load i64*, i64** %data, align 8, !dbg !229, !tbaa !236\l  %call3 = tail call i64* @copy(i64* %3, i64 %1) #6, !dbg !229\l  %data4 = bitcast i8* %call to i64**, !dbg !229\l  store i64* %call3, i64** %data4, align 8, !dbg !229, !tbaa !236\l  %width = getelementptr inbounds %struct.Matrix, %struct.Matrix* %_Matrix,\l... i64 0, i32 2, !dbg !237\l  %4 = load i64, i64* %width, align 8, !dbg !237, !tbaa !238\l  %width5 = getelementptr inbounds i8, i8* %call, i64 16, !dbg !239\l  %5 = bitcast i8* %width5 to i64*, !dbg !239\l  store i64 %4, i64* %5, align 8, !dbg !240, !tbaa !238\l  %height = getelementptr inbounds %struct.Matrix, %struct.Matrix* %_Matrix,\l... i64 0, i32 3, !dbg !241\l  %6 = load i64, i64* %height, align 8, !dbg !241, !tbaa !242\l  %height6 = getelementptr inbounds i8, i8* %call, i64 24, !dbg !243\l  %7 = bitcast i8* %height6 to i64*, !dbg !243\l  store i64 %6, i64* %7, align 8, !dbg !244, !tbaa !242\l  ret %struct.Matrix* %0, !dbg !245\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xa841ea0 {
+          label = "MatrixMult.c:2-7
+";
+          style = solid;
+          color = 1
+          Node0xa840400;
+          Node0xa808190;
+        }
+}
