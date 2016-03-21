@@ -74,10 +74,10 @@ Matrix* init(){
 	long long _27 = 0;
 	//const %4 = 0 : int
 	_4 = 0;
-	//const %5 = 10 : int
-	_5 = 10;
-	//const %6 = 10 : int
-	_6 = 10;
+	//const %5 = 2000 : int
+	_5 = 2000;
+	//const %6 = 2000 : int
+	_6 = 2000;
 	//mul %7 = %5, %6 : int
 	_7=_5*_6;
 	//arraygen %8 = [4; 7] : int[]
@@ -95,8 +95,8 @@ Matrix* init(){
 	i = _9;
 	//loop (%1, %2, %3, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24)
 	while(true){
-		//const %10 = 10 : int
-		_10 = 10;
+		//const %10 = 2000 : int
+		_10 = 2000;
 		//ifge %2, %10 goto blklab1 : int
 		if(i>=_10){goto blklab1;}
 		//const %11 = 0 : int
@@ -105,12 +105,12 @@ Matrix* init(){
 		j = _11;
 		//loop (%1, %3, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22)
 		while(true){
-			//const %12 = 10 : int
-			_12 = 10;
+			//const %12 = 2000 : int
+			_12 = 2000;
 			//ifge %3, %12 goto blklab3 : int
 			if(j>=_12){goto blklab3;}
-			//const %13 = 10 : int
-			_13 = 10;
+			//const %13 = 2000 : int
+			_13 = 2000;
 			//mul %14 = %2, %13 : int
 			_14=i*_13;
 			//add %15 = %14, %3 : int
@@ -119,8 +119,8 @@ Matrix* init(){
 			_16=data[_15];
 			//add %17 = %16, %2 : int
 			_17=_16+i;
-			//const %18 = 10 : int
-			_18 = 10;
+			//const %18 = 2000 : int
+			_18 = 2000;
 			//mul %19 = %2, %18 : int
 			_19=i*_18;
 			//add %20 = %19, %3 : int
@@ -149,10 +149,10 @@ blklab2:;
 	}
 //.blklab1
 blklab1:;
-	//const %26 = 10 : int
-	_26 = 10;
-	//const %27 = 10 : int
-	_27 = 10;
+	//const %26 = 2000 : int
+	_26 = 2000;
+	//const %27 = 2000 : int
+	_27 = 2000;
 	//invoke (%25) = (%26, %27, %1) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[])->(MatrixMult:Matrix)
 	_FREE_STRUCT(_25, Matrix);
 	_ADD_OWNERSHIP(data);
@@ -223,10 +223,10 @@ Matrix* mat_mult(Matrix* a, _DECL_OWNERSHIP_PARAM(a), Matrix* b, _DECL_OWNERSHIP
 	long long _47 = 0;
 	//const %9 = 0 : int
 	_9 = 0;
-	//const %10 = 10 : int
-	_10 = 10;
-	//const %11 = 10 : int
-	_11 = 10;
+	//const %10 = 2000 : int
+	_10 = 2000;
+	//const %11 = 2000 : int
+	_11 = 2000;
 	//mul %12 = %10, %11 : int
 	_12=_10*_11;
 	//arraygen %13 = [9; 12] : int[]
@@ -262,8 +262,8 @@ Matrix* mat_mult(Matrix* a, _DECL_OWNERSHIP_PARAM(a), Matrix* b, _DECL_OWNERSHIP
 	i = _16;
 	//loop (%3, %6, %7, %8, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42, %43, %44)
 	while(true){
-		//const %17 = 10 : int
-		_17 = 10;
+		//const %17 = 2000 : int
+		_17 = 2000;
 		//ifge %6, %17 goto blklab5 : int
 		if(i>=_17){goto blklab5;}
 		//const %18 = 0 : int
@@ -272,8 +272,8 @@ Matrix* mat_mult(Matrix* a, _DECL_OWNERSHIP_PARAM(a), Matrix* b, _DECL_OWNERSHIP
 		j = _18;
 		//loop (%3, %7, %8, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42)
 		while(true){
-			//const %19 = 10 : int
-			_19 = 10;
+			//const %19 = 2000 : int
+			_19 = 2000;
 			//ifge %7, %19 goto blklab7 : int
 			if(j>=_19){goto blklab7;}
 			//const %20 = 0 : int
@@ -282,28 +282,28 @@ Matrix* mat_mult(Matrix* a, _DECL_OWNERSHIP_PARAM(a), Matrix* b, _DECL_OWNERSHIP
 			k = _20;
 			//loop (%3, %8, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40)
 			while(true){
-				//const %21 = 10 : int
-				_21 = 10;
+				//const %21 = 2000 : int
+				_21 = 2000;
 				//ifge %8, %21 goto blklab9 : int
 				if(k>=_21){goto blklab9;}
-				//const %22 = 10 : int
-				_22 = 10;
+				//const %22 = 2000 : int
+				_22 = 2000;
 				//mul %23 = %6, %22 : int
 				_23=i*_22;
 				//add %24 = %23, %7 : int
 				_24=_23+j;
 				//indexof %25 = %3, %24 : int[]
 				_25=data[_24];
-				//const %26 = 10 : int
-				_26 = 10;
+				//const %26 = 2000 : int
+				_26 = 2000;
 				//mul %27 = %6, %26 : int
 				_27=i*_26;
 				//add %28 = %27, %8 : int
 				_28=_27+k;
 				//indexof %29 = %4, %28 : int[]
 				_29=a_data[_28];
-				//const %30 = 10 : int
-				_30 = 10;
+				//const %30 = 2000 : int
+				_30 = 2000;
 				//mul %31 = %8, %30 : int
 				_31=k*_30;
 				//add %32 = %31, %7 : int
@@ -314,8 +314,8 @@ Matrix* mat_mult(Matrix* a, _DECL_OWNERSHIP_PARAM(a), Matrix* b, _DECL_OWNERSHIP
 				_34=_29*_33;
 				//add %35 = %25, %34 : int
 				_35=_25+_34;
-				//const %36 = 10 : int
-				_36 = 10;
+				//const %36 = 2000 : int
+				_36 = 2000;
 				//mul %37 = %6, %36 : int
 				_37=i*_36;
 				//add %38 = %37, %7 : int
@@ -355,10 +355,10 @@ blklab6:;
 	}
 //.blklab5
 blklab5:;
-	//const %46 = 10 : int
-	_46 = 10;
-	//const %47 = 10 : int
-	_47 = 10;
+	//const %46 = 2000 : int
+	_46 = 2000;
+	//const %47 = 2000 : int
+	_47 = 2000;
 	//invoke (%45) = (%46, %47, %3) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[])->(MatrixMult:Matrix)
 	_FREE_STRUCT(_45, Matrix);
 	_ADD_OWNERSHIP(data);
@@ -417,20 +417,9 @@ int main(int argc, char** args){
 	void* _28;
 	long long _30 = 0;
 	long long _31 = 0;
-	long long _32 = 0;
-	long long _33 = 0;
-	long long _34 = 0;
-	long long _35 = 0;
-	long long _36 = 0;
-	long long _37 = 0;
-	long long _38 = 0;
-	long long _39 = 0;
-	long long _40 = 0;
-	long long _41 = 0;
-	long long _42 = 0;
-	void* _43;
-	_DECL_1DARRAY(_45);
-	_DECL_OWNERSHIP(_45);
+	void* _32;
+	_DECL_1DARRAY(_34);
+	_DECL_OWNERSHIP(_34);
 	//invoke (%5) = () MatrixMult:init : function()->(MatrixMult:Matrix)
 	_FREE_STRUCT(_5, Matrix);
 	_5 = init();
@@ -455,8 +444,8 @@ int main(int argc, char** args){
 	_FREE(_11);
 	_1DARRAY_COPY(_11, A->data);
 	_ADD_OWNERSHIP(_11);
-	//const %12 = 10 : int
-	_12 = 10;
+	//const %12 = 2000 : int
+	_12 = 2000;
 	//indexof %13 = %11, %12 : int[]
 	_13=_11[_12];
 	//indirectinvoke () = %10 (%13) : method(any)->()
@@ -485,8 +474,8 @@ int main(int argc, char** args){
 	_FREE(_20);
 	_1DARRAY_COPY(_20, B->data);
 	_ADD_OWNERSHIP(_20);
-	//const %21 = 10 : int
-	_21 = 10;
+	//const %21 = 2000 : int
+	_21 = 2000;
 	//indexof %22 = %20, %21 : int[]
 	_22=_20[_21];
 	//indirectinvoke () = %19 (%22) : method(any)->()
@@ -522,76 +511,21 @@ int main(int argc, char** args){
 	printf_s(_1DARRAY_PARAM(_27));
 	//fieldload %28 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %29 = %28 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %30 = 10 : int
-	_30 = 10;
+	//const %30 = 2000 : int
+	_30 = 2000;
 	//indexof %31 = %4, %30 : int[]
 	_31=data[_30];
 	//indirectinvoke () = %29 (%31) : method(any)->()
 	printf("%d\n", _31);
-	//assert
-	{
-		//const %32 = 0 : int
-		_32 = 0;
-		//indexof %33 = %4, %32 : int[]
-		_33=data[_32];
-		//const %34 = 0 : int
-		_34 = 0;
-		//ifeq %33, %34 goto blklab11 : int
-		if(_33==_34){goto blklab11;}
-		//fail
-		fprintf(stderr,"fail");
-		exit(-1);
-//.blklab11
-blklab11:;
-	//assert
-	}
-	//assert
-	{
-		//const %35 = 10 : int
-		_35 = 10;
-		//indexof %36 = %4, %35 : int[]
-		_36=data[_35];
-		//const %37 = 45 : int
-		_37 = 45;
-		//ifeq %36, %37 goto blklab12 : int
-		if(_36==_37){goto blklab12;}
-		//fail
-		fprintf(stderr,"fail");
-		exit(-1);
-//.blklab12
-blklab12:;
-	//assert
-	}
-	//assert
-	{
-		//const %38 = 2 : int
-		_38 = 2;
-		//const %39 = 10 : int
-		_39 = 10;
-		//mul %40 = %38, %39 : int
-		_40=_38*_39;
-		//indexof %41 = %4, %40 : int[]
-		_41=data[_40];
-		//const %42 = 90 : int
-		_42 = 90;
-		//ifeq %41, %42 goto blklab13 : int
-		if(_41==_42){goto blklab13;}
-		//fail
-		fprintf(stderr,"fail");
-		exit(-1);
-//.blklab13
-blklab13:;
-	//assert
-	}
-	//fieldload %43 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %44 = %43 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %45 = [80,97,115,115,32,77,97,116,114,105,120,77,117,108,116,32,116,101,115,116,32,99,97,115,101] : int[]
-	_FREE(_45);
-	_NEW_ARRAY(_45, 25);
-	_45[0] = 80; _45[1] = 97; _45[2] = 115; _45[3] = 115; _45[4] = 32; _45[5] = 77; _45[6] = 97; _45[7] = 116; _45[8] = 114; _45[9] = 105; _45[10] = 120; _45[11] = 77; _45[12] = 117; _45[13] = 108; _45[14] = 116; _45[15] = 32; _45[16] = 116; _45[17] = 101; _45[18] = 115; _45[19] = 116; _45[20] = 32; _45[21] = 99; _45[22] = 97; _45[23] = 115; _45[24] = 101; 
-	_ADD_OWNERSHIP(_45);
-	//indirectinvoke () = %44 (%45) : method(int[])->()
-	println_s(_1DARRAY_PARAM(_45));
+	//fieldload %32 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %33 = %32 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %34 = [80,97,115,115,32,77,97,116,114,105,120,77,117,108,116,32,116,101,115,116,32,99,97,115,101] : int[]
+	_FREE(_34);
+	_NEW_ARRAY(_34, 25);
+	_34[0] = 80; _34[1] = 97; _34[2] = 115; _34[3] = 115; _34[4] = 32; _34[5] = 77; _34[6] = 97; _34[7] = 116; _34[8] = 114; _34[9] = 105; _34[10] = 120; _34[11] = 77; _34[12] = 117; _34[13] = 108; _34[14] = 116; _34[15] = 32; _34[16] = 116; _34[17] = 101; _34[18] = 115; _34[19] = 116; _34[20] = 32; _34[21] = 99; _34[22] = 97; _34[23] = 115; _34[24] = 101; 
+	_ADD_OWNERSHIP(_34);
+	//indirectinvoke () = %33 (%34) : method(int[])->()
+	println_s(_1DARRAY_PARAM(_34));
 	//return
 	_FREE_STRUCT(A, Matrix);
 	_FREE_STRUCT(B, Matrix);
@@ -606,7 +540,7 @@ blklab13:;
 	_FREE_STRUCT(_23, Matrix);
 	_FREE(_24);
 	_FREE(_27);
-	_FREE(_45);
+	_FREE(_34);
 	exit(0);
 }
 
