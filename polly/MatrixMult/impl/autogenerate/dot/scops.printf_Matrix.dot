@@ -1,16 +1,16 @@
 digraph "Scop Graph for 'printf_Matrix' function" {
 	label="Scop Graph for 'printf_Matrix' function";
 
-	Node0xa4e6c70 [shape=record,label="{entry:\l  br label %entry.split, !dbg !212\l}"];
-	Node0xa4e6c70 -> Node0xa3e4e90;
-	Node0xa3e4e90 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata %struct.Matrix* %matrix, i64 0,\l... metadata !28, metadata !213), !dbg !212\l  %putchar = tail call i32 @putchar(i32 123) #6, !dbg !214\l  %call1 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([7 x\l... i8], [7 x i8]* @.str.1, i64 0, i64 0)), !dbg !215\l  %data = getelementptr inbounds %struct.Matrix, %struct.Matrix* %matrix, i64\l... 0, i32 0, !dbg !216\l  %0 = load i64*, i64** %data, align 8, !dbg !216, !tbaa !217\l  %data_size = getelementptr inbounds %struct.Matrix, %struct.Matrix* %matrix,\l... i64 0, i32 1, !dbg !216\l  %1 = load i64, i64* %data_size, align 8, !dbg !216, !tbaa !223\l  %call2 = tail call i32 (i64*, i64, ...) bitcast (i32 (...)* @printf1DArray\l... to i32 (i64*, i64, ...)*)(i64* %0, i64 %1) #6, !dbg !216\l  %call3 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([8 x\l... i8], [8 x i8]* @.str.2, i64 0, i64 0)), !dbg !224\l  %width = getelementptr inbounds %struct.Matrix, %struct.Matrix* %matrix, i64\l... 0, i32 2, !dbg !225\l  %2 = load i64, i64* %width, align 8, !dbg !225, !tbaa !226\l  %call4 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([3 x\l... i8], [3 x i8]* @.str.3, i64 0, i64 0), i64 %2), !dbg !227\l  %call5 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([9 x\l... i8], [9 x i8]* @.str.4, i64 0, i64 0)), !dbg !228\l  %height = getelementptr inbounds %struct.Matrix, %struct.Matrix* %matrix,\l... i64 0, i32 3, !dbg !229\l  %3 = load i64, i64* %height, align 8, !dbg !229, !tbaa !230\l  %call6 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([3 x\l... i8], [3 x i8]* @.str.3, i64 0, i64 0), i64 %3), !dbg !231\l  %putchar11 = tail call i32 @putchar(i32 125) #6, !dbg !232\l  ret void, !dbg !233\l}"];
+	Node0xa6b9ca0 [shape=record,label="{entry:\l  br label %entry.split, !dbg !212\l}"];
+	Node0xa6b9ca0 -> Node0xa6d0240;
+	Node0xa6d0240 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata %struct.Matrix* %matrix, i64 0,\l... metadata !28, metadata !213), !dbg !212\l  %putchar = tail call i32 @putchar(i32 123) #6, !dbg !214\l  %call1 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([7 x\l... i8], [7 x i8]* @.str.1, i64 0, i64 0)), !dbg !215\l  %data = getelementptr inbounds %struct.Matrix, %struct.Matrix* %matrix, i64\l... 0, i32 0, !dbg !216\l  %0 = load i64*, i64** %data, align 8, !dbg !216, !tbaa !217\l  %data_size = getelementptr inbounds %struct.Matrix, %struct.Matrix* %matrix,\l... i64 0, i32 1, !dbg !216\l  %1 = load i64, i64* %data_size, align 8, !dbg !216, !tbaa !223\l  tail call void @printf1DArray(i64* %0, i64 %1) #6, !dbg !216\l  %call2 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([8 x\l... i8], [8 x i8]* @.str.2, i64 0, i64 0)), !dbg !224\l  %width = getelementptr inbounds %struct.Matrix, %struct.Matrix* %matrix, i64\l... 0, i32 2, !dbg !225\l  %2 = load i64, i64* %width, align 8, !dbg !225, !tbaa !226\l  %call3 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x\l... i8], [5 x i8]* @.str.3, i64 0, i64 0), i64 %2), !dbg !227\l  %call4 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([9 x\l... i8], [9 x i8]* @.str.4, i64 0, i64 0)), !dbg !228\l  %height = getelementptr inbounds %struct.Matrix, %struct.Matrix* %matrix,\l... i64 0, i32 3, !dbg !229\l  %3 = load i64, i64* %height, align 8, !dbg !229, !tbaa !230\l  %call5 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x\l... i8], [5 x i8]* @.str.3, i64 0, i64 0), i64 %3), !dbg !231\l  %putchar10 = tail call i32 @putchar(i32 125) #6, !dbg !232\l  ret void, !dbg !233\l}"];
 	colorscheme = "paired12"
-        subgraph cluster_0xa411b70 {
+        subgraph cluster_0xa715bd0 {
           label = "MatrixMult.c:13-22
 ";
           style = solid;
           color = 1
-          Node0xa4e6c70;
-          Node0xa3e4e90;
+          Node0xa6b9ca0;
+          Node0xa6d0240;
         }
 }

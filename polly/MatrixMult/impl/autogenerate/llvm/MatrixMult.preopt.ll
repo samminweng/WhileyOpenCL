@@ -7,10 +7,10 @@ target triple = "x86_64-unknown-linux-gnu"
 @.str = private unnamed_addr constant [2 x i8] c"{\00", align 1
 @.str.1 = private unnamed_addr constant [7 x i8] c" data:\00", align 1
 @.str.2 = private unnamed_addr constant [8 x i8] c" width:\00", align 1
-@.str.3 = private unnamed_addr constant [3 x i8] c"%d\00", align 1
+@.str.3 = private unnamed_addr constant [5 x i8] c"%lld\00", align 1
 @.str.4 = private unnamed_addr constant [9 x i8] c" height:\00", align 1
 @.str.5 = private unnamed_addr constant [2 x i8] c"}\00", align 1
-@.str.6 = private unnamed_addr constant [4 x i8] c"%d\0A\00", align 1
+@.str.6 = private unnamed_addr constant [6 x i8] c"%lld\0A\00", align 1
 
 ; Function Attrs: nounwind uwtable
 define %struct.Matrix* @copy_Matrix(%struct.Matrix* %_Matrix) #0 !dbg !4 {
@@ -86,22 +86,22 @@ entry.split:                                      ; preds = %entry
   %0 = load i64*, i64** %data, align 8, !dbg !67
   %data_size = getelementptr inbounds %struct.Matrix, %struct.Matrix* %matrix, i64 0, i32 1, !dbg !67
   %1 = load i64, i64* %data_size, align 8, !dbg !67
-  %call2 = tail call i32 (i64*, i64, ...) bitcast (i32 (...)* @printf1DArray to i32 (i64*, i64, ...)*)(i64* %0, i64 %1) #5, !dbg !67
-  %call3 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.str.2, i64 0, i64 0)) #5, !dbg !68
+  tail call void @printf1DArray(i64* %0, i64 %1) #5, !dbg !67
+  %call2 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.str.2, i64 0, i64 0)) #5, !dbg !68
   %width = getelementptr inbounds %struct.Matrix, %struct.Matrix* %matrix, i64 0, i32 2, !dbg !69
   %2 = load i64, i64* %width, align 8, !dbg !69
-  %call4 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.str.3, i64 0, i64 0), i64 %2) #5, !dbg !70
-  %call5 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.4, i64 0, i64 0)) #5, !dbg !71
+  %call3 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.3, i64 0, i64 0), i64 %2) #5, !dbg !70
+  %call4 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.4, i64 0, i64 0)) #5, !dbg !71
   %height = getelementptr inbounds %struct.Matrix, %struct.Matrix* %matrix, i64 0, i32 3, !dbg !72
   %3 = load i64, i64* %height, align 8, !dbg !72
-  %call6 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.str.3, i64 0, i64 0), i64 %3) #5, !dbg !73
+  %call5 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.3, i64 0, i64 0), i64 %3) #5, !dbg !73
   %putchar1 = tail call i32 @putchar(i32 125) #5, !dbg !74
   ret void, !dbg !75
 }
 
 declare i32 @printf(i8*, ...) #3
 
-declare i32 @printf1DArray(...) #3
+declare void @printf1DArray(i64*, i64) #3
 
 ; Function Attrs: nounwind uwtable
 define %struct.Matrix* @matrix(i64 %width, i64 %height, i64* %data, i64 %data_size, i1 zeroext %data_has_ownership) #0 !dbg !22 {
@@ -575,7 +575,7 @@ entry.split:                                      ; preds = %entry
   %arrayidx28 = getelementptr inbounds i64, i64* %call27, i64 2000, !dbg !463
   %16 = load i64, i64* %arrayidx28, align 8, !dbg !463
   tail call void @llvm.dbg.value(metadata i64 %16, i64 0, metadata !389, metadata !44), !dbg !390
-  %call29 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.6, i64 0, i64 0), i64 %16) #5, !dbg !464
+  %call29 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.6, i64 0, i64 0), i64 %16) #5, !dbg !464
   %call33 = tail call %struct.Matrix* @init(), !dbg !465
   tail call void @llvm.dbg.value(metadata %struct.Matrix* %call33, i64 0, metadata !466, metadata !44), !dbg !467
   tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !391, metadata !44), !dbg !392
@@ -639,7 +639,7 @@ entry.split:                                      ; preds = %entry
   %arrayidx62 = getelementptr inbounds i64, i64* %call61, i64 2000, !dbg !500
   %33 = load i64, i64* %arrayidx62, align 8, !dbg !500
   tail call void @llvm.dbg.value(metadata i64 %33, i64 0, metadata !405, metadata !44), !dbg !406
-  %call63 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.6, i64 0, i64 0), i64 %33) #5, !dbg !501
+  %call63 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.6, i64 0, i64 0), i64 %33) #5, !dbg !501
   tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !364, metadata !44), !dbg !365
   tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !366, metadata !44), !dbg !367
   %call67 = tail call %struct.Matrix* @mat_mult(%struct.Matrix* %call, i1 zeroext false, %struct.Matrix* %call33, i1 zeroext false), !dbg !502
@@ -708,7 +708,7 @@ entry.split:                                      ; preds = %entry
   %arrayidx99 = getelementptr inbounds i64, i64* %call77, i64 2000, !dbg !537
   %50 = load i64, i64* %arrayidx99, align 8, !dbg !537
   tail call void @llvm.dbg.value(metadata i64 %50, i64 0, metadata !421, metadata !44), !dbg !422
-  %call100 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.6, i64 0, i64 0), i64 %50) #5, !dbg !538
+  %call100 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.6, i64 0, i64 0), i64 %50) #5, !dbg !538
   tail call void @llvm.dbg.value(metadata i64 25, i64 0, metadata !425, metadata !44), !dbg !424
   %call104 = tail call noalias i8* @malloc(i64 200) #5, !dbg !539
   %51 = bitcast i8* %call104 to i64*, !dbg !539
@@ -908,10 +908,10 @@ attributes #6 = { noreturn nounwind }
 !66 = !DILocation(line: 15, column: 2, scope: !21)
 !67 = !DILocation(line: 16, column: 2, scope: !21)
 !68 = !DILocation(line: 17, column: 2, scope: !21)
-!69 = !DILocation(line: 18, column: 23, scope: !21)
+!69 = !DILocation(line: 18, column: 25, scope: !21)
 !70 = !DILocation(line: 18, column: 2, scope: !21)
 !71 = !DILocation(line: 19, column: 2, scope: !21)
-!72 = !DILocation(line: 20, column: 23, scope: !21)
+!72 = !DILocation(line: 20, column: 25, scope: !21)
 !73 = !DILocation(line: 20, column: 2, scope: !21)
 !74 = !DILocation(line: 21, column: 2, scope: !21)
 !75 = !DILocation(line: 22, column: 1, scope: !21)

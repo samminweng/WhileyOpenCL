@@ -7,10 +7,10 @@ target triple = "x86_64-unknown-linux-gnu"
 @.str = private unnamed_addr constant [2 x i8] c"{\00", align 1
 @.str.1 = private unnamed_addr constant [7 x i8] c" data:\00", align 1
 @.str.2 = private unnamed_addr constant [8 x i8] c" width:\00", align 1
-@.str.3 = private unnamed_addr constant [3 x i8] c"%d\00", align 1
+@.str.3 = private unnamed_addr constant [5 x i8] c"%lld\00", align 1
 @.str.4 = private unnamed_addr constant [9 x i8] c" height:\00", align 1
 @.str.5 = private unnamed_addr constant [2 x i8] c"}\00", align 1
-@.str.6 = private unnamed_addr constant [4 x i8] c"%d\0A\00", align 1
+@.str.6 = private unnamed_addr constant [6 x i8] c"%lld\0A\00", align 1
 
 ; Function Attrs: nounwind uwtable
 define %struct.Matrix* @copy_Matrix(%struct.Matrix* %_Matrix) #0 !dbg !4 {
@@ -97,24 +97,24 @@ entry:
   %2 = load %struct.Matrix*, %struct.Matrix** %matrix.addr, align 8, !dbg !73
   %data_size = getelementptr inbounds %struct.Matrix, %struct.Matrix* %2, i32 0, i32 1, !dbg !73
   %3 = load i64, i64* %data_size, align 8, !dbg !73
-  %call2 = call i32 (i64*, i64, ...) bitcast (i32 (...)* @printf1DArray to i32 (i64*, i64, ...)*)(i64* %1, i64 %3), !dbg !73
-  %call3 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.str.2, i32 0, i32 0)), !dbg !74
+  call void @printf1DArray(i64* %1, i64 %3), !dbg !73
+  %call2 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.str.2, i32 0, i32 0)), !dbg !74
   %4 = load %struct.Matrix*, %struct.Matrix** %matrix.addr, align 8, !dbg !75
   %width = getelementptr inbounds %struct.Matrix, %struct.Matrix* %4, i32 0, i32 2, !dbg !76
   %5 = load i64, i64* %width, align 8, !dbg !76
-  %call4 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.str.3, i32 0, i32 0), i64 %5), !dbg !77
-  %call5 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.4, i32 0, i32 0)), !dbg !78
+  %call3 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.3, i32 0, i32 0), i64 %5), !dbg !77
+  %call4 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.4, i32 0, i32 0)), !dbg !78
   %6 = load %struct.Matrix*, %struct.Matrix** %matrix.addr, align 8, !dbg !79
   %height = getelementptr inbounds %struct.Matrix, %struct.Matrix* %6, i32 0, i32 3, !dbg !80
   %7 = load i64, i64* %height, align 8, !dbg !80
-  %call6 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.str.3, i32 0, i32 0), i64 %7), !dbg !81
-  %call7 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.5, i32 0, i32 0)), !dbg !82
+  %call5 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.3, i32 0, i32 0), i64 %7), !dbg !81
+  %call6 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([2 x i8], [2 x i8]* @.str.5, i32 0, i32 0)), !dbg !82
   ret void, !dbg !83
 }
 
 declare i32 @printf(i8*, ...) #3
 
-declare i32 @printf1DArray(...) #3
+declare void @printf1DArray(i64*, i64) #3
 
 ; Function Attrs: nounwind uwtable
 define %struct.Matrix* @matrix(i64 %width, i64 %height, i64* %data, i64 %data_size, i1 zeroext %data_has_ownership) #0 !dbg !22 {
@@ -1382,7 +1382,7 @@ if.end23:                                         ; preds = %if.then22, %if.end6
   %36 = load i64, i64* %arrayidx28, align 8, !dbg !877
   store i64 %36, i64* %_13, align 8, !dbg !878
   %37 = load i64, i64* %_13, align 8, !dbg !879
-  %call29 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.6, i32 0, i32 0), i64 %37), !dbg !880
+  %call29 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.6, i32 0, i32 0), i64 %37), !dbg !880
   %38 = load i8, i8* %_14_has_ownership, align 1, !dbg !881
   %tobool30 = trunc i8 %38 to i1, !dbg !881
   br i1 %tobool30, label %if.then31, label %if.end32, !dbg !883
@@ -1506,7 +1506,7 @@ if.end57:                                         ; preds = %if.then56, %if.end3
   %74 = load i64, i64* %arrayidx62, align 8, !dbg !948
   store i64 %74, i64* %_22, align 8, !dbg !949
   %75 = load i64, i64* %_22, align 8, !dbg !950
-  %call63 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.6, i32 0, i32 0), i64 %75), !dbg !951
+  %call63 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.6, i32 0, i32 0), i64 %75), !dbg !951
   %76 = load i8, i8* %_23_has_ownership, align 1, !dbg !952
   %tobool64 = trunc i8 %76 to i1, !dbg !952
   br i1 %tobool64, label %if.then65, label %if.end66, !dbg !954
@@ -1652,7 +1652,7 @@ if.end83:                                         ; preds = %if.then82, %if.end8
   %119 = load i64, i64* %arrayidx99, align 8, !dbg !1032
   store i64 %119, i64* %_31, align 8, !dbg !1033
   %120 = load i64, i64* %_31, align 8, !dbg !1034
-  %call100 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.6, i32 0, i32 0), i64 %120), !dbg !1035
+  %call100 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.6, i32 0, i32 0), i64 %120), !dbg !1035
   %121 = load i8, i8* %_34_has_ownership, align 1, !dbg !1036
   %tobool101 = trunc i8 %121 to i1, !dbg !1036
   br i1 %tobool101, label %if.then102, label %if.end103, !dbg !1038
@@ -2012,12 +2012,12 @@ attributes #6 = { noreturn nounwind }
 !72 = !DILocation(line: 15, column: 2, scope: !21)
 !73 = !DILocation(line: 16, column: 2, scope: !21)
 !74 = !DILocation(line: 17, column: 2, scope: !21)
-!75 = !DILocation(line: 18, column: 15, scope: !21)
-!76 = !DILocation(line: 18, column: 23, scope: !21)
+!75 = !DILocation(line: 18, column: 17, scope: !21)
+!76 = !DILocation(line: 18, column: 25, scope: !21)
 !77 = !DILocation(line: 18, column: 2, scope: !21)
 !78 = !DILocation(line: 19, column: 2, scope: !21)
-!79 = !DILocation(line: 20, column: 15, scope: !21)
-!80 = !DILocation(line: 20, column: 23, scope: !21)
+!79 = !DILocation(line: 20, column: 17, scope: !21)
+!80 = !DILocation(line: 20, column: 25, scope: !21)
 !81 = !DILocation(line: 20, column: 2, scope: !21)
 !82 = !DILocation(line: 21, column: 2, scope: !21)
 !83 = !DILocation(line: 22, column: 1, scope: !21)
@@ -2816,7 +2816,7 @@ attributes #6 = { noreturn nounwind }
 !876 = !DILocation(line: 450, column: 10, scope: !32)
 !877 = !DILocation(line: 450, column: 6, scope: !32)
 !878 = !DILocation(line: 450, column: 5, scope: !32)
-!879 = !DILocation(line: 452, column: 17, scope: !32)
+!879 = !DILocation(line: 452, column: 19, scope: !32)
 !880 = !DILocation(line: 452, column: 2, scope: !32)
 !881 = !DILocation(line: 454, column: 2, scope: !882)
 !882 = distinct !DILexicalBlock(scope: !32, file: !1, line: 454, column: 2)
@@ -2887,7 +2887,7 @@ attributes #6 = { noreturn nounwind }
 !947 = !DILocation(line: 480, column: 10, scope: !32)
 !948 = !DILocation(line: 480, column: 6, scope: !32)
 !949 = !DILocation(line: 480, column: 5, scope: !32)
-!950 = !DILocation(line: 482, column: 17, scope: !32)
+!950 = !DILocation(line: 482, column: 19, scope: !32)
 !951 = !DILocation(line: 482, column: 2, scope: !32)
 !952 = !DILocation(line: 484, column: 2, scope: !953)
 !953 = distinct !DILexicalBlock(scope: !32, file: !1, line: 484, column: 2)
@@ -2971,7 +2971,7 @@ attributes #6 = { noreturn nounwind }
 !1031 = !DILocation(line: 517, column: 11, scope: !32)
 !1032 = !DILocation(line: 517, column: 6, scope: !32)
 !1033 = !DILocation(line: 517, column: 5, scope: !32)
-!1034 = !DILocation(line: 519, column: 17, scope: !32)
+!1034 = !DILocation(line: 519, column: 19, scope: !32)
 !1035 = !DILocation(line: 519, column: 2, scope: !32)
 !1036 = !DILocation(line: 523, column: 2, scope: !1037)
 !1037 = distinct !DILexicalBlock(scope: !32, file: !1, line: 523, column: 2)

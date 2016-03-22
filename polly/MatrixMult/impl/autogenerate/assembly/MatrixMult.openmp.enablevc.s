@@ -113,13 +113,12 @@ printf_Matrix:                          # @printf_Matrix
 	.loc	1 16 2                  # MatrixMult.c:16:2
 	movq	(%rbx), %rdi
 	movq	8(%rbx), %rsi
-	xorl	%eax, %eax
 	callq	printf1DArray
 	.loc	1 17 2                  # MatrixMult.c:17:2
 	movl	$.L.str.2, %edi
 	xorl	%eax, %eax
 	callq	printf
-	.loc	1 18 23                 # MatrixMult.c:18:23
+	.loc	1 18 25                 # MatrixMult.c:18:25
 	movq	16(%rbx), %rsi
 	.loc	1 18 2 is_stmt 0        # MatrixMult.c:18:2
 	movl	$.L.str.3, %edi
@@ -129,7 +128,7 @@ printf_Matrix:                          # @printf_Matrix
 	movl	$.L.str.4, %edi
 	xorl	%eax, %eax
 	callq	printf
-	.loc	1 20 23                 # MatrixMult.c:20:23
+	.loc	1 20 25                 # MatrixMult.c:20:25
 	movq	24(%rbx), %rsi
 	.loc	1 20 2 is_stmt 0        # MatrixMult.c:20:2
 	movl	$.L.str.3, %edi
@@ -1727,8 +1726,8 @@ mat_mult_polly_subfn:                   # @mat_mult_polly_subfn
 
 	.type	.L.str.3,@object        # @.str.3
 .L.str.3:
-	.asciz	"%d"
-	.size	.L.str.3, 3
+	.asciz	"%lld"
+	.size	.L.str.3, 5
 
 	.type	.L.str.4,@object        # @.str.4
 .L.str.4:
@@ -1737,8 +1736,8 @@ mat_mult_polly_subfn:                   # @mat_mult_polly_subfn
 
 	.type	.L.str.6,@object        # @.str.6
 .L.str.6:
-	.asciz	"%d\n"
-	.size	.L.str.6, 4
+	.asciz	"%lld\n"
+	.size	.L.str.6, 6
 
 	.section	.debug_str,"MS",@progbits,1
 .Linfo_string0:

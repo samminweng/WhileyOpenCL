@@ -15,9 +15,9 @@ void printf_Matrix(Matrix* matrix){
 	printf(" data:");
 	_1DARRAY_PRINT(matrix->data);
 	printf(" width:");
-	printf("%d", matrix->width);
+	printf("%lld", matrix->width);
 	printf(" height:");
-	printf("%d", matrix->height);
+	printf("%lld", matrix->height);
 	printf("}");
 }
 Matrix* matrix(long long width, long long height, _DECL_1DARRAY_PARAM(data), _DECL_OWNERSHIP_PARAM(data)){
@@ -449,7 +449,7 @@ int main(int argc, char** args){
 	//indexof %13 = %11, %12 : int[]
 	_13=_11[_12];
 	//indirectinvoke () = %10 (%13) : method(any)->()
-	printf("%d\n", _13);
+	printf("%lld\n", _13);
 	//invoke (%14) = () MatrixMult:init : function()->(MatrixMult:Matrix)
 	_FREE_STRUCT(_14, Matrix);
 	_14 = init();
@@ -479,7 +479,7 @@ int main(int argc, char** args){
 	//indexof %22 = %20, %21 : int[]
 	_22=_20[_21];
 	//indirectinvoke () = %19 (%22) : method(any)->()
-	printf("%d\n", _22);
+	printf("%lld\n", _22);
 	//invoke (%23) = (%1, %2) MatrixMult:mat_mult : function(MatrixMult:Matrix,MatrixMult:Matrix)->(MatrixMult:Matrix)
 	_FREE_STRUCT(_23, Matrix);
 	_ADD_OWNERSHIP(A);
@@ -516,7 +516,7 @@ int main(int argc, char** args){
 	//indexof %31 = %4, %30 : int[]
 	_31=data[_30];
 	//indirectinvoke () = %29 (%31) : method(any)->()
-	printf("%d\n", _31);
+	printf("%lld\n", _31);
 	//fieldload %32 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %33 = %32 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %34 = [80,97,115,115,32,77,97,116,114,105,120,77,117,108,116,32,116,101,115,116,32,99,97,115,101] : int[]

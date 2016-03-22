@@ -6,9 +6,9 @@ target triple = "x86_64-unknown-linux-gnu"
 
 @.str.1 = private unnamed_addr constant [7 x i8] c" data:\00", align 1
 @.str.2 = private unnamed_addr constant [8 x i8] c" width:\00", align 1
-@.str.3 = private unnamed_addr constant [3 x i8] c"%d\00", align 1
+@.str.3 = private unnamed_addr constant [5 x i8] c"%lld\00", align 1
 @.str.4 = private unnamed_addr constant [9 x i8] c" height:\00", align 1
-@.str.6 = private unnamed_addr constant [4 x i8] c"%d\0A\00", align 1
+@.str.6 = private unnamed_addr constant [6 x i8] c"%lld\0A\00", align 1
 
 ; Function Attrs: nounwind uwtable
 define noalias %struct.Matrix* @copy_Matrix(%struct.Matrix* nocapture readonly %_Matrix) #0 !dbg !4 {
@@ -66,23 +66,23 @@ entry:
   %0 = load i64*, i64** %data, align 8, !dbg !240, !tbaa !225
   %data_size = getelementptr inbounds %struct.Matrix, %struct.Matrix* %matrix, i64 0, i32 1, !dbg !240
   %1 = load i64, i64* %data_size, align 8, !dbg !240, !tbaa !219
-  %call2 = tail call i32 (i64*, i64, ...) bitcast (i32 (...)* @printf1DArray to i32 (i64*, i64, ...)*)(i64* %0, i64 %1) #7, !dbg !240
-  %call3 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.str.2, i64 0, i64 0)), !dbg !241
+  tail call void @printf1DArray(i64* %0, i64 %1) #7, !dbg !240
+  %call2 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([8 x i8], [8 x i8]* @.str.2, i64 0, i64 0)), !dbg !241
   %width = getelementptr inbounds %struct.Matrix, %struct.Matrix* %matrix, i64 0, i32 2, !dbg !242
   %2 = load i64, i64* %width, align 8, !dbg !242, !tbaa !243
-  %call4 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.str.3, i64 0, i64 0), i64 %2), !dbg !244
-  %call5 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.4, i64 0, i64 0)), !dbg !245
+  %call3 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.3, i64 0, i64 0), i64 %2), !dbg !244
+  %call4 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([9 x i8], [9 x i8]* @.str.4, i64 0, i64 0)), !dbg !245
   %height = getelementptr inbounds %struct.Matrix, %struct.Matrix* %matrix, i64 0, i32 3, !dbg !246
   %3 = load i64, i64* %height, align 8, !dbg !246, !tbaa !247
-  %call6 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @.str.3, i64 0, i64 0), i64 %3), !dbg !248
-  %putchar11 = tail call i32 @putchar(i32 125) #7, !dbg !249
+  %call5 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.3, i64 0, i64 0), i64 %3), !dbg !248
+  %putchar10 = tail call i32 @putchar(i32 125) #7, !dbg !249
   ret void, !dbg !250
 }
 
 ; Function Attrs: nounwind
 declare i32 @printf(i8* nocapture readonly, ...) #1
 
-declare i32 @printf1DArray(...) #2
+declare void @printf1DArray(i64*, i64) #2
 
 ; Function Attrs: nounwind uwtable
 define noalias %struct.Matrix* @matrix(i64 %width, i64 %height, i64* %data, i64 %data_size, i1 zeroext %data_has_ownership) #0 !dbg !29 {
@@ -627,11 +627,11 @@ polly.loop_header213:                             ; preds = %polly.loop_header21
   %47 = add nuw nsw i64 %polly.indvar216, %37
   %48 = add nuw nsw i64 %47, %44
   %scevgep220 = getelementptr i64, i64* %call12, i64 %48
-  %_p_scalar_221 = load i64, i64* %scevgep220, align 8, !alias.scope !455, !noalias !457
+  %_p_scalar_221 = load i64, i64* %scevgep220, align 8, !alias.scope !456, !noalias !457
   %49 = mul nuw nsw i64 %47, 2000
   %50 = add nuw nsw i64 %49, %45
   %scevgep222 = getelementptr i64, i64* %call22, i64 %50
-  %_p_scalar_223 = load i64, i64* %scevgep222, align 8, !alias.scope !456, !noalias !458
+  %_p_scalar_223 = load i64, i64* %scevgep222, align 8, !alias.scope !455, !noalias !458
   %p_mul48 = mul nsw i64 %_p_scalar_223, %_p_scalar_221, !dbg !397
   %p_add49 = add nsw i64 %p_mul48, %p_add49225, !dbg !398
   %polly.indvar_next217 = add nuw nsw i64 %polly.indvar216, 1
@@ -723,7 +723,7 @@ entry:
   %arrayidx28 = getelementptr inbounds i64, i64* %call27, i64 2000, !dbg !508
   %10 = load i64, i64* %arrayidx28, align 8, !dbg !508, !tbaa !228
   tail call void @llvm.dbg.value(metadata i64 %10, i64 0, metadata !180, metadata !212), !dbg !472
-  %call29 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.6, i64 0, i64 0), i64 %10), !dbg !509
+  %call29 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.6, i64 0, i64 0), i64 %10), !dbg !509
   %call33 = tail call %struct.Matrix* @init(), !dbg !510
   tail call void @llvm.dbg.value(metadata %struct.Matrix* %call33, i64 0, metadata !181, metadata !212), !dbg !511
   tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !182, metadata !212), !dbg !473
@@ -767,7 +767,7 @@ entry:
   %arrayidx62 = getelementptr inbounds i64, i64* %call61, i64 2000, !dbg !529
   %21 = load i64, i64* %arrayidx62, align 8, !dbg !529, !tbaa !228
   tail call void @llvm.dbg.value(metadata i64 %21, i64 0, metadata !192, metadata !212), !dbg !479
-  %call63 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.6, i64 0, i64 0), i64 %21), !dbg !530
+  %call63 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.6, i64 0, i64 0), i64 %21), !dbg !530
   tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !160, metadata !212), !dbg !461
   tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !162, metadata !212), !dbg !462
   %call67 = tail call %struct.Matrix* @mat_mult(%struct.Matrix* %call, i1 zeroext false, %struct.Matrix* %call33, i1 zeroext false), !dbg !531
@@ -816,7 +816,7 @@ entry:
   %arrayidx99 = getelementptr inbounds i64, i64* %call77, i64 2000, !dbg !550
   %32 = load i64, i64* %arrayidx99, align 8, !dbg !550, !tbaa !228
   tail call void @llvm.dbg.value(metadata i64 %32, i64 0, metadata !204, metadata !212), !dbg !486
-  %call100 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @.str.6, i64 0, i64 0), i64 %32), !dbg !551
+  %call100 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.6, i64 0, i64 0), i64 %32), !dbg !551
   tail call void @llvm.dbg.value(metadata i64 25, i64 0, metadata !207, metadata !212), !dbg !487
   %call104 = tail call noalias i8* @malloc(i64 200) #7, !dbg !552
   %33 = bitcast i8* %call104 to i64*, !dbg !552
@@ -1156,11 +1156,11 @@ attributes #8 = { noreturn nounwind }
 !239 = !DILocation(line: 15, column: 2, scope: !26)
 !240 = !DILocation(line: 16, column: 2, scope: !26)
 !241 = !DILocation(line: 17, column: 2, scope: !26)
-!242 = !DILocation(line: 18, column: 23, scope: !26)
+!242 = !DILocation(line: 18, column: 25, scope: !26)
 !243 = !{!220, !224, i64 16}
 !244 = !DILocation(line: 18, column: 2, scope: !26)
 !245 = !DILocation(line: 19, column: 2, scope: !26)
-!246 = !DILocation(line: 20, column: 23, scope: !26)
+!246 = !DILocation(line: 20, column: 25, scope: !26)
 !247 = !{!220, !224, i64 24}
 !248 = !DILocation(line: 20, column: 2, scope: !26)
 !249 = !DILocation(line: 21, column: 2, scope: !26)
@@ -1369,10 +1369,10 @@ attributes #8 = { noreturn nounwind }
 !452 = distinct !{!452, !453, !"polly.alias.scope.call"}
 !453 = distinct !{!453, !"polly.alias.scope.domain"}
 !454 = !{!455, !456}
-!455 = distinct !{!455, !453, !"polly.alias.scope.call12"}
-!456 = distinct !{!456, !453, !"polly.alias.scope.call22"}
-!457 = !{!452, !456}
-!458 = !{!452, !455}
+!455 = distinct !{!455, !453, !"polly.alias.scope.call22"}
+!456 = distinct !{!456, !453, !"polly.alias.scope.call12"}
+!457 = !{!455, !452}
+!458 = !{!452, !456}
 !459 = !DILocation(line: 381, column: 14, scope: !149)
 !460 = !DILocation(line: 381, column: 27, scope: !149)
 !461 = !DILocation(line: 383, column: 2, scope: !149)

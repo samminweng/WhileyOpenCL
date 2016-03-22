@@ -80,7 +80,7 @@ public final class CodeGeneratorHelper {
 			// Print the member value
 			if (member_type instanceof Type.Nominal || member_type instanceof Type.Int) {
 				// Add field values.
-				statement.add("\tprintf(\"%d\", " + input_member + ");");
+				statement.add("\tprintf(\"%lld\", " + input_member + ");");
 			} else if (member_type instanceof Type.Array) {
 				statement.add("\t_"+stores.getArrayDimension(member_type)+"DARRAY_PRINT("+input_member+");");
 			} else {

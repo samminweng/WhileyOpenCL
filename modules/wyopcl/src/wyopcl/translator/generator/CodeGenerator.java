@@ -1145,7 +1145,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			case "println":
 				// Check input's type to call different println function.
 				if (type instanceof Type.Int) {
-					statement.add(indent+"printf(\"%d\\n\", " + input + ");");
+					statement.add(indent+"printf(\"%lld\\n\", " + input + ");");
 				} else if (type instanceof Type.Array) {
 					statement.add(indent+"_1DARRAY_PRINT("+ input + ");");
 					//statement.add(indent+"printf_array(_"+dimension+"DARRAY_PARAM(" + input + "));");

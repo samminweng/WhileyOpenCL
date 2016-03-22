@@ -35,13 +35,12 @@ generate_png(){
 runExecutables(){
 	program=$1
 	opt=$2
-	parameter=$3	
-	
+	parameter=$3
+	num_threads=$4
 	### Use 'llc' to compile LLVM code into assembly code
     llc $program.$opt.ll -o $program.$opt.s
     if [[ $opt == *"openmp"* ]]
     then
-    	num_threads=$4
     	export OMP_NUM_THREADS=$num_threads
     	### Use 'gcc' to compile .s file and link with 'libUtil.a'
     	clang $program.$opt.s libUtil.a -lgomp -o "out/$program.$opt.out" 
@@ -119,13 +118,13 @@ clang_polly(){
 	##-fno-vectorize
 	echo -e -n "[3] Run ${BOLD}${GREEN} Polly-Optimized ${RESET} executables" && read
 	pollycc -g -O3 -fno-vectorize -mllvm -polly\
-	        -S -emit-llvm $program.c libUtil.a -o $program.polly.disablevc.ll
+	        -S -emit-llvm $program.c -o $program.polly.disablevc.ll
 	runExecutables $program "polly.disablevc" $parameter
 
 	echo -e -n "[4] Run ${BOLD}${GREEN} Polly-Optimized OpenMP ${RESET} executables with $num_threads threads" && read
 	pollycc -g -O3 -fno-vectorize\
 	        -mllvm -polly -S -emit-llvm\
-	        -mllvm -polly-parallel -lgomp $program.c libUtil.a -o $program.openmp.disablevc.ll
+	        -mllvm -polly-parallel -lgomp $program.c -o $program.openmp.disablevc.ll
 	runExecutables $program "openmp.disablevc" $parameter 2
 
 	### Generate executables with disabled vectorizer
@@ -141,12 +140,12 @@ clang_polly(){
 	##-fno-vectorize
 	echo -e -n "[3] Run ${BOLD}${GREEN} Polly-Optimized ${RESET} executables" && read
 	pollycc -g -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine\
-	        -S -emit-llvm $program.c libUtil.a -o $program.polly.enablevc.ll
+	        -S -emit-llvm $program.c -o $program.polly.enablevc.ll
 	runExecutables $program "polly.enablevc" $parameter
 
 	echo -e -n "[4] Run ${BOLD}${GREEN} Polly-Optimized OpenMP ${RESET} executables with $num_threads threads" && read
 	pollycc -g -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine -S -emit-llvm\
-	        -mllvm -polly-parallel -lgomp $program.c libUtil.a -o $program.openmp.enablevc.ll
+	        -mllvm -polly-parallel -lgomp $program.c -o $program.openmp.enablevc.ll
 	runExecutables $program "openmp.enablevc" $parameter 2
 
 	echo -e "-----------------Press [Enter] to finish up--------------------"&& read
