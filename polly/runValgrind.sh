@@ -14,7 +14,7 @@ init(){
 	rm -f "$dir/"*.*
 	mkdir -p "$PWD/$program/impl/$c_type/out" ## Create 'out' folder
 	rm -rf "$PWD/$program/impl/$c_type/out/"*.*
-	read -p "Press [Enter] to continue..."
+	#read -p "Press [Enter] to continue..."
 }
 ##
 ## Run Polly on the C code and collects the memory usage of the generated C code
@@ -25,8 +25,8 @@ detectleaks(){
 	parameter=$3
 	opt=$4
 	num_threads=$5
-    result="$PWD/../../leaks/$c_type.$program.$opt.$parameter.$num_threads.disableVC.txt"
-	read -p "Press [Enter] to continue..."
+        result="$PWD/../../leaks/$c_type.$program.$opt.$parameter.$num_threads.disableVC.txt"
+	#read -p "Press [Enter] to continue..."
 	echo -e -n "Disable loop vectorization..." > $result
 	case "$opt" in
 		"gcc")
@@ -55,7 +55,7 @@ detectleaks(){
 	valgrind --tool=memcheck "--log-file=$result" ./out/"$program.$opt.disableVC.out" $parameter
 	# Added the CPU info
 	cat /proc/cpuinfo >> $result
-	read -p "Press [Enter] to continue..."	
+	#read -p "Press [Enter] to continue..."	
 	result="$PWD/../../leaks/$c_type.$program.$opt.$parameter.$num_threads.enableVC.txt"
 	echo -e -n "Enable loop vectorization..." > $result
 	case "$opt" in
@@ -99,11 +99,11 @@ exec(){
 
 	cd "$program/impl/$c_type"
 	### Creating a static library ('Util.o') with GCC (http://www.cs.dartmouth.edu/~campbell/cs50/buildlib.html)
-    clang -c Util.c -o Util.o ### Compile Util.c to Util.o (object file)
-    ar -cvq libUtil.a Util.o
+        clang -c Util.c -o Util.o ### Compile Util.c to Util.o (object file)
+        ar -cvq libUtil.a Util.o
 	# Translate Whiley into C code
 	./../../../../bin/wyopcl -code -copy -dealloc "$program.whiley"
-	read -p "Press [Enter] to continue..."	
+	#read -p "Press [Enter] to continue..."	
 	# Generate C code
 	detectleaks $program $c_type $parameter $opt $num_threads
     # Return to the working directory
