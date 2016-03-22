@@ -59,7 +59,7 @@ generate_code(){
 		#compile the source C file with L2 optimization (-O2)
 		#see https://gcc.gnu.org/onlinedocs/gnat_ugn/Optimization-Levels.html#101
 		echo "Compile C Code"
-		gcc -m64 -O -g $NAME.c Util.c -o "$SRC".out
+		gcc -m64 -O2 -g $NAME.c Util.c -o "$SRC".out
 	fi	
 }
 
