@@ -1,0 +1,55 @@
+digraph "Scop Graph for 'print_matrix' function" {
+	label="Scop Graph for 'print_matrix' function";
+
+	Node0x8f23db0 [shape=record,label="{entry:\l  br label %entry.split, !dbg !38\l}"];
+	Node0x8f23db0 -> Node0x8f10150;
+	Node0x8f10150 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !21, metadata\l... !39), !dbg !38\l  br label %for.cond1.preheader, !dbg !40\l}"];
+	Node0x8f10150 -> Node0x8feac90;
+	Node0x8feac90 [shape=record,label="{for.cond1.preheader:                              \l  %indvars.iv24 = phi i64 [ 0, %entry.split ], [ %indvars.iv.next25, %for.end ]\l  %0 = load %struct._IO_FILE*, %struct._IO_FILE** @stdout, align 8, !dbg !44,\l... !tbaa !49\l  br label %for.body3, !dbg !53\l}"];
+	Node0x8feac90 -> Node0x8f2edd0;
+	Node0x8f2edd0 [shape=record,label="{for.body3:                                        \l  %indvars.iv = phi i64 [ 0, %for.cond1.preheader ], [ %indvars.iv.next,\l... %for.inc ]\l  %1 = phi %struct._IO_FILE* [ %0, %for.cond1.preheader ], [ %5, %for.inc ]\l  %arrayidx5 = getelementptr inbounds [2000 x [2000 x i64]], [2000 x [2000 x\l... i64]]* @C, i64 0, i64 %indvars.iv24, i64 %indvars.iv, !dbg !55\l  %2 = load i64, i64* %arrayidx5, align 8, !dbg !55, !tbaa !56\l  %call = tail call i32 (%struct._IO_FILE*, i8*, ...)\l... @fprintf(%struct._IO_FILE* %1, i8* getelementptr inbounds ([6 x i8], [6 x\l... i8]* @.str, i64 0, i64 0), i64 %2), !dbg !58\l  %3 = trunc i64 %indvars.iv to i32, !dbg !59\l  %rem = srem i32 %3, 80, !dbg !59\l  %cmp6 = icmp eq i32 %rem, 79, !dbg !61\l  br i1 %cmp6, label %if.then, label %for.inc, !dbg !62\l}"];
+	Node0x8f2edd0 -> Node0x8f2a8f0;
+	Node0x8f2edd0 -> Node0x8f27510;
+	Node0x8f2a8f0 [shape=record,label="{if.then:                                          \l  %4 = load %struct._IO_FILE*, %struct._IO_FILE** @stdout, align 8, !dbg !63,\l... !tbaa !49\l  %fputc21 = tail call i32 @fputc(i32 10, %struct._IO_FILE* %4), !dbg !65\l  br label %for.inc, !dbg !65\l}"];
+	Node0x8f2a8f0 -> Node0x8f27510;
+	Node0x8f27510 [shape=record,label="{for.inc:                                          \l  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !53\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !22, metadata\l... !39), !dbg !66\l  %5 = load %struct._IO_FILE*, %struct._IO_FILE** @stdout, align 8, !dbg !44,\l... !tbaa !49\l  %exitcond = icmp ne i64 %indvars.iv.next, 2000, !dbg !53\l  br i1 %exitcond, label %for.body3, label %for.end, !dbg !53\l}"];
+	Node0x8f27510 -> Node0x8f2edd0[constraint=false];
+	Node0x8f27510 -> Node0x8f2b6c0;
+	Node0x8f2b6c0 [shape=record,label="{for.end:                                          \l  %.lcssa = phi %struct._IO_FILE* [ %5, %for.inc ]\l  %fputc = tail call i32 @fputc(i32 10, %struct._IO_FILE* %.lcssa), !dbg !67\l  %indvars.iv.next25 = add nuw nsw i64 %indvars.iv24, 1, !dbg !40\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !21, metadata\l... !39), !dbg !38\l  %exitcond26 = icmp ne i64 %indvars.iv.next25, 2000, !dbg !40\l  br i1 %exitcond26, label %for.cond1.preheader, label %for.end11, !dbg !40\l}"];
+	Node0x8f2b6c0 -> Node0x8feac90[constraint=false];
+	Node0x8f2b6c0 -> Node0x8f99220;
+	Node0x8f99220 [shape=record,label="{for.end11:                                        \l  ret void, !dbg !68\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0x8f2f330 {
+          label = "MatrixMult.c:51-60
+";
+          style = solid;
+          color = 1
+          subgraph cluster_0x8f1ea00 {
+            label = "MatrixMult.c:51-58
+Call instruction:   %call = tail call i32 (%struct._IO_FILE*, i8*, ...) @fprintf(%struct._IO_FILE* %1, i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str, i64 0, i64 0), i64 %2), !dbg !58";
+            style = solid;
+            color = 6
+            subgraph cluster_0x8f23d30 {
+              label = "MatrixMult.c:51-56
+Call instruction:   %call = tail call i32 (%struct._IO_FILE*, i8*, ...) @fprintf(%struct._IO_FILE* %1, i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str, i64 0, i64 0), i64 %2), !dbg !58";
+              style = solid;
+              color = 5
+              subgraph cluster_0x8f2ac40 {
+                label = "MatrixMult.c:55-56
+Region can not profitably be optimized!";
+                style = solid;
+                color = 7
+                Node0x8f2edd0;
+                Node0x8f2a8f0;
+              }
+              Node0x8f27510;
+            }
+            Node0x8feac90;
+            Node0x8f2b6c0;
+          }
+          Node0x8f23db0;
+          Node0x8f10150;
+          Node0x8f99220;
+        }
+}

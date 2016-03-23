@@ -1,0 +1,55 @@
+digraph "Scop Graph for 'mat_mult' function" {
+	label="Scop Graph for 'mat_mult' function";
+
+	Node0xa163e50 [shape=record,label="{entry:\l  br label %entry.split, !dbg !34\l}"];
+	Node0xa163e50 -> Node0xa1634b0;
+	Node0xa1634b0 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !16, metadata\l... !35), !dbg !34\l  br label %for.cond1.preheader, !dbg !36\l}"];
+	Node0xa1634b0 -> Node0x9fe19b0;
+	Node0x9fe19b0 [shape=record,label="{for.cond1.preheader:                              \l  %indvars.iv52 = phi i64 [ 0, %entry.split ], [ %indvars.iv.next53,\l... %for.inc28 ]\l  br label %for.body3, !dbg !40\l}"];
+	Node0x9fe19b0 -> Node0xa158560;
+	Node0xa158560 [shape=record,label="{for.body3:                                        \l  %indvars.iv49 = phi i64 [ 0, %for.cond1.preheader ], [ %indvars.iv.next50,\l... %for.inc25 ]\l  %arrayidx5 = getelementptr inbounds [2000 x [2000 x i64]], [2000 x [2000 x\l... i64]]* @C, i64 0, i64 %indvars.iv52, i64 %indvars.iv49, !dbg !45\l  store i64 0, i64* %arrayidx5, align 8, !dbg !47, !tbaa !48\l  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !18, metadata\l... !35), !dbg !52\l  br label %for.body8, !dbg !53\l}"];
+	Node0xa158560 -> Node0xa162790;
+	Node0xa162790 [shape=record,label="{for.body8:                                        \l  %indvars.iv = phi i64 [ 0, %for.body3 ], [ %indvars.iv.next, %for.body8 ]\l  %0 = load i64, i64* %arrayidx5, align 8, !dbg !57, !tbaa !48\l  %1 = load i32**, i32*** @A, align 8, !dbg !58, !tbaa !59\l  %arrayidx15 = getelementptr inbounds i32*, i32** %1, i64 %indvars.iv52, !dbg\l... !58\l  %2 = load i32*, i32** %arrayidx15, align 8, !dbg !58, !tbaa !59\l  %arrayidx16 = getelementptr inbounds i32, i32* %2, i64 %indvars.iv, !dbg !58\l  %3 = load i32, i32* %arrayidx16, align 4, !dbg !58, !tbaa !61\l  %arrayidx20 = getelementptr inbounds [2000 x [2000 x i32]], [2000 x [2000 x\l... i32]]* @B, i64 0, i64 %indvars.iv, i64 %indvars.iv49, !dbg !63\l  %4 = load i32, i32* %arrayidx20, align 4, !dbg !63, !tbaa !61\l  %mul = mul nsw i32 %4, %3, !dbg !64\l  %conv = sext i32 %mul to i64, !dbg !58\l  %add = add nsw i64 %conv, %0, !dbg !65\l  store i64 %add, i64* %arrayidx5, align 8, !dbg !66, !tbaa !48\l  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !53\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !18, metadata\l... !35), !dbg !52\l  %exitcond = icmp ne i64 %indvars.iv.next, 2000, !dbg !53\l  br i1 %exitcond, label %for.body8, label %for.inc25, !dbg !53\l}"];
+	Node0xa162790 -> Node0xa162790[constraint=false];
+	Node0xa162790 -> Node0xa163df0;
+	Node0xa163df0 [shape=record,label="{for.inc25:                                        \l  %indvars.iv.next50 = add nuw nsw i64 %indvars.iv49, 1, !dbg !40\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !17, metadata\l... !35), !dbg !67\l  %exitcond51 = icmp ne i64 %indvars.iv.next50, 2000, !dbg !40\l  br i1 %exitcond51, label %for.body3, label %for.inc28, !dbg !40\l}"];
+	Node0xa163df0 -> Node0xa158560[constraint=false];
+	Node0xa163df0 -> Node0xa154420;
+	Node0xa154420 [shape=record,label="{for.inc28:                                        \l  %indvars.iv.next53 = add nuw nsw i64 %indvars.iv52, 1, !dbg !36\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !16, metadata\l... !35), !dbg !34\l  %exitcond54 = icmp ne i64 %indvars.iv.next53, 2000, !dbg !36\l  br i1 %exitcond54, label %for.cond1.preheader, label %for.end30, !dbg !36\l}"];
+	Node0xa154420 -> Node0x9fe19b0[constraint=false];
+	Node0xa154420 -> Node0xa169ea0;
+	Node0xa169ea0 [shape=record,label="{for.end30:                                        \l  ret void, !dbg !68\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xa169870 {
+          label = "MatrixMult.c:39-47
+";
+          style = solid;
+          color = 1
+          subgraph cluster_0xa163430 {
+            label = "MatrixMult.c:39-44
+Base address not invariant in current region:  %2 = load i32*, i32** %arrayidx15, align 8, !dbg !58, !tbaa !59";
+            style = solid;
+            color = 6
+            subgraph cluster_0xa15f3d0 {
+              label = "MatrixMult.c:39-44
+Possible aliasing: \"  %2 = load i32*, i32** %arrayidx15, align 8, !dbg !58, !tbaa !59\", \"B\"";
+              style = solid;
+              color = 5
+              subgraph cluster_0xa163670 {
+                label = "MatrixMult.c:39-44
+Possible aliasing: \"  %2 = load i32*, i32** %arrayidx15, align 8, !dbg !58, !tbaa !59\", \"B\"";
+                style = solid;
+                color = 7
+                Node0xa162790;
+              }
+              Node0xa158560;
+              Node0xa163df0;
+            }
+            Node0x9fe19b0;
+            Node0xa154420;
+          }
+          Node0xa163e50;
+          Node0xa1634b0;
+          Node0xa169ea0;
+        }
+}

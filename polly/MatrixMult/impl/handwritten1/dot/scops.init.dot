@@ -1,0 +1,81 @@
+digraph "Scop Graph for 'init' function" {
+	label="Scop Graph for 'init' function";
+
+	Node0xa15f860 [shape=record,label="{entry:\l  br label %entry.split, !dbg !34\l}"];
+	Node0xa15f860 -> Node0xa2233a0;
+	Node0xa2233a0 [shape=record,label="{entry.split:                                      \l  %call = tail call noalias i8* @malloc(i64 16000) #5, !dbg !34\l  store i8* %call, i8** bitcast (i32*** @A to i8**), align 8, !dbg !35, !tbaa\l... !36\l  %call1 = tail call noalias i8* @malloc(i64 16000000) #5, !dbg !40\l  %0 = load i8**, i8*** bitcast (i32*** @A to i8***), align 8, !dbg !41, !tbaa\l... !36\l  store i8* %call1, i8** %0, align 8, !dbg !42, !tbaa !36\l  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !12, metadata\l... !43), !dbg !44\l  br label %for.body, !dbg !45\l}"];
+	Node0xa2233a0 -> Node0xa160580;
+	Node0xa160580 [shape=record,label="{for.body:                                         \l  %indvars.iv92 = phi i64 [ 0, %entry.split ], [ %indvars.iv.next93, %for.body\l... ]\l  %1 = load i32**, i32*** @A, align 8, !dbg !53, !tbaa !36\l  %2 = load i32*, i32** %1, align 8, !dbg !55, !tbaa !36\l  %3 = mul nuw nsw i64 %indvars.iv92, 2000, !dbg !56\l  %add.ptr = getelementptr inbounds i32, i32* %2, i64 %3, !dbg !57\l  %arrayidx2 = getelementptr inbounds i32*, i32** %1, i64 %indvars.iv92, !dbg\l... !58\l  store i32* %add.ptr, i32** %arrayidx2, align 8, !dbg !59, !tbaa !36\l  %indvars.iv.next93 = add nuw nsw i64 %indvars.iv92, 1, !dbg !45\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !12, metadata\l... !43), !dbg !44\l  %exitcond95 = icmp ne i64 %indvars.iv.next93, 2000, !dbg !45\l  br i1 %exitcond95, label %for.body, label %for.cond3.preheader, !dbg !45\l}"];
+	Node0xa160580 -> Node0xa160580[constraint=false];
+	Node0xa160580 -> Node0xa158560;
+	Node0xa158560 [shape=record,label="{for.cond3.preheader:                              \l  br label %for.cond6.preheader, !dbg !49\l}"];
+	Node0xa158560 -> Node0xa16cab0;
+	Node0xa16cab0 [shape=record,label="{for.cond6.preheader:                              \l  %indvars.iv89 = phi i64 [ 0, %for.cond3.preheader ], [ %indvars.iv.next90,\l... %for.inc20 ]\l  br label %for.body8, !dbg !60\l}"];
+	Node0xa16cab0 -> Node0xa15ffa0;
+	Node0xa15ffa0 [shape=record,label="{for.body8:                                        \l  %indvars.iv86 = phi i64 [ 0, %for.cond6.preheader ], [ %indvars.iv.next87,\l... %for.body8 ]\l  %4 = load i32**, i32*** @A, align 8, !dbg !69, !tbaa !36\l  %arrayidx11 = getelementptr inbounds i32*, i32** %4, i64 %indvars.iv89, !dbg\l... !69\l  %5 = load i32*, i32** %arrayidx11, align 8, !dbg !69, !tbaa !36\l  %arrayidx12 = getelementptr inbounds i32, i32* %5, i64 %indvars.iv86, !dbg\l... !69\l  store i32 0, i32* %arrayidx12, align 4, !dbg !71, !tbaa !72\l  %arrayidx16 = getelementptr inbounds [2000 x [2000 x i32]], [2000 x [2000 x\l... i32]]* @B, i64 0, i64 %indvars.iv89, i64 %indvars.iv86, !dbg !74\l  store i32 0, i32* %arrayidx16, align 4, !dbg !75, !tbaa !72\l  %indvars.iv.next87 = add nuw nsw i64 %indvars.iv86, 1, !dbg !60\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !13, metadata\l... !43), !dbg !76\l  %exitcond88 = icmp ne i64 %indvars.iv.next87, 2000, !dbg !60\l  br i1 %exitcond88, label %for.body8, label %for.inc20, !dbg !60\l}"];
+	Node0xa15ffa0 -> Node0xa15ffa0[constraint=false];
+	Node0xa15ffa0 -> Node0xa118aa0;
+	Node0xa118aa0 [shape=record,label="{for.inc20:                                        \l  %indvars.iv.next90 = add nuw nsw i64 %indvars.iv89, 1, !dbg !49\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !12, metadata\l... !43), !dbg !44\l  %exitcond91 = icmp ne i64 %indvars.iv.next90, 2000, !dbg !49\l  br i1 %exitcond91, label %for.cond6.preheader, label %for.cond23.preheader,\l... !dbg !49\l}"];
+	Node0xa118aa0 -> Node0xa16cab0[constraint=false];
+	Node0xa118aa0 -> Node0xa155160;
+	Node0xa155160 [shape=record,label="{for.cond23.preheader:                             \l  br label %for.cond26.preheader, !dbg !65\l}"];
+	Node0xa155160 -> Node0xa15e4f0;
+	Node0xa15e4f0 [shape=record,label="{for.cond26.preheader:                             \l  %indvars.iv83 = phi i64 [ 0, %for.cond23.preheader ], [ %indvars.iv.next84,\l... %for.inc49 ]\l  br label %for.body28, !dbg !77\l}"];
+	Node0xa15e4f0 -> Node0xa169990;
+	Node0xa169990 [shape=record,label="{for.body28:                                       \l  %indvars.iv = phi i64 [ 0, %for.cond26.preheader ], [ %indvars.iv.next,\l... %for.body28 ]\l  %6 = load i32**, i32*** @A, align 8, !dbg !82, !tbaa !36\l  %arrayidx31 = getelementptr inbounds i32*, i32** %6, i64 %indvars.iv83, !dbg\l... !82\l  %7 = load i32*, i32** %arrayidx31, align 8, !dbg !82, !tbaa !36\l  %arrayidx32 = getelementptr inbounds i32, i32* %7, i64 %indvars.iv, !dbg !82\l  %8 = load i32, i32* %arrayidx32, align 4, !dbg !82, !tbaa !72\l  %9 = trunc i64 %indvars.iv83 to i32, !dbg !84\l  %add = add nsw i32 %8, %9, !dbg !84\l  store i32 %add, i32* %arrayidx32, align 4, !dbg !85, !tbaa !72\l  %arrayidx40 = getelementptr inbounds [2000 x [2000 x i32]], [2000 x [2000 x\l... i32]]* @B, i64 0, i64 %indvars.iv83, i64 %indvars.iv, !dbg !86\l  %10 = load i32, i32* %arrayidx40, align 4, !dbg !86, !tbaa !72\l  %11 = trunc i64 %indvars.iv83 to i32, !dbg !87\l  %add41 = add nsw i32 %10, %11, !dbg !87\l  store i32 %add41, i32* %arrayidx40, align 4, !dbg !88, !tbaa !72\l  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !77\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !13, metadata\l... !43), !dbg !76\l  %exitcond = icmp ne i64 %indvars.iv.next, 2000, !dbg !77\l  br i1 %exitcond, label %for.body28, label %for.inc49, !dbg !77\l}"];
+	Node0xa169990 -> Node0xa169990[constraint=false];
+	Node0xa169990 -> Node0xa154640;
+	Node0xa154640 [shape=record,label="{for.inc49:                                        \l  %indvars.iv.next84 = add nuw nsw i64 %indvars.iv83, 1, !dbg !65\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !12, metadata\l... !43), !dbg !44\l  %exitcond85 = icmp ne i64 %indvars.iv.next84, 2000, !dbg !65\l  br i1 %exitcond85, label %for.cond26.preheader, label %for.end51, !dbg !65\l}"];
+	Node0xa154640 -> Node0xa15e4f0[constraint=false];
+	Node0xa154640 -> Node0xa155080;
+	Node0xa155080 [shape=record,label="{for.end51:                                        \l  ret void, !dbg !89\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xa1593b0 {
+          label = "MatrixMult.c:15-36
+";
+          style = solid;
+          color = 1
+          subgraph cluster_0xa162bb0 {
+            label = "MatrixMult.c:15-20
+Region can not profitably be optimized!";
+            style = solid;
+            color = 6
+            Node0xa160580;
+          }
+          subgraph cluster_0xa158490 {
+            label = "MatrixMult.c:15-26
+Base address not invariant in current region:  %5 = load i32*, i32** %arrayidx11, align 8, !dbg !69, !tbaa !36";
+            style = solid;
+            color = 6
+            subgraph cluster_0xa15f3d0 {
+              label = "MatrixMult.c:15-26
+Possible aliasing: \"  %5 = load i32*, i32** %arrayidx11, align 8, !dbg !69, !tbaa !36\", \"B\"";
+              style = solid;
+              color = 5
+              Node0xa15ffa0;
+            }
+            Node0xa16cab0;
+            Node0xa118aa0;
+          }
+          subgraph cluster_0xa15fea0 {
+            label = "MatrixMult.c:15-33
+Base address not invariant in current region:  %7 = load i32*, i32** %arrayidx31, align 8, !dbg !82, !tbaa !36";
+            style = solid;
+            color = 6
+            subgraph cluster_0xa162450 {
+              label = "MatrixMult.c:15-33
+Possible aliasing: \"  %7 = load i32*, i32** %arrayidx31, align 8, !dbg !82, !tbaa !36\", \"B\"";
+              style = solid;
+              color = 5
+              Node0xa169990;
+            }
+            Node0xa15e4f0;
+            Node0xa154640;
+          }
+          Node0xa15f860;
+          Node0xa2233a0;
+          Node0xa158560;
+          Node0xa155160;
+          Node0xa155080;
+        }
+}

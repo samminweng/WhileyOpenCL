@@ -181,9 +181,10 @@ exec(){
 
 #exec handwritten VectorMult 2 1024X1024X10
 #exec handwritten MatrixAdd 2 2000X2000
-#exec handwritten MatrixMult 2 2000X2000
+exec handwritten1 MatrixMult 2 200X200
 #exec handwritten2 MatrixMult 2 2000X2000
-exec autogenerate MatrixMult 2 10X0
+#exec autogenerate MatrixMult 2 2000X2000
+#exec autogenerate2 MatrixMult 2 200X200
 
 
 
