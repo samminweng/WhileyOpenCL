@@ -108,7 +108,8 @@ clang_polly(){
 	### Generate executables with disabled vectorizer
 	echo -e -n "${GREEN}[*]Vectorizer is diabled${RESET}" && read
 	echo -e -n "[1] Run ${BOLD}${GREEN} GCC -O3 ${RESET} executables" && read
-	gcc -O3 -fno-tree-vectorize $program.c libUtil.a -o "out/$program.gcc.disablevc.out"
+	### Use C99 mode to compile C program
+	gcc -std=c99 -O3 -fno-tree-vectorize $program.c libUtil.a -o "out/$program.gcc.disablevc.out"
 	time ./out/$program.gcc.disablevc.out $parameter
 
 	echo -e -n "[2] Run ${BOLD}${GREEN} Clang -O3 ${RESET} executables" && read
@@ -130,7 +131,7 @@ clang_polly(){
 	### Generate executables with disabled vectorizer
 	echo -e -n "${GREEN}[*]Vectorizer is enabled${RESET}" && read
 	echo -e -n "[1] Run ${BOLD}${GREEN} GCC -O3 ${RESET} executables" && read
-	gcc -O3 $program.c libUtil.a -o "out/$program.gcc.enablevc.out"
+	gcc -std=c99 -O3 $program.c libUtil.a -o "out/$program.gcc.enablevc.out"
 	time ./out/$program.gcc.enablevc.out $parameter
 
 	echo -e -n "[2] Run ${BOLD}${GREEN} Clang -O3 ${RESET} executables" && read
@@ -181,10 +182,11 @@ exec(){
 
 #exec handwritten VectorMult 2 1024X1024X10
 #exec handwritten MatrixAdd 2 2000X2000
-exec handwritten1 MatrixMult 2 200X200
+exec handwritten MatrixMult 2 200X200 ### Use constant 2D array
+#exec handwritten1 MatrixMult 2 2000X2000 ## Use double pointers
 #exec handwritten2 MatrixMult 2 2000X2000
-#exec autogenerate MatrixMult 2 2000X2000
-#exec autogenerate2 MatrixMult 2 200X200
+exec autogenerate MatrixMult 2 200X200  ### Matrix is stored with 1D array
+
 
 
 

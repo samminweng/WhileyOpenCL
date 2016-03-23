@@ -1,67 +1,41 @@
 digraph "Scop Graph for 'init' function" {
 	label="Scop Graph for 'init' function";
 
-	Node0x9c42190 [shape=record,label="{entry:\l  br label %entry.split, !dbg !32\l}"];
-	Node0x9c42190 -> Node0x9aad880;
-	Node0x9aad880 [shape=record,label="{entry.split:                                      \l  %call = tail call i64 @time(i64* null) #5, !dbg !32\l  %conv = trunc i64 %call to i32, !dbg !33\l  tail call void @srand(i32 %conv) #5, !dbg !34\l  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !10, metadata\l... !36), !dbg !37\l  br label %for.cond2.preheader, !dbg !38\l}"];
-	Node0x9aad880 -> Node0x9c42320;
-	Node0x9c42320 [shape=record,label="{for.cond2.preheader:                              \l  %indvars.iv70 = phi i64 [ 0, %entry.split ], [ %indvars.iv.next71, %for.inc9\l... ]\l  br label %for.body5, !dbg !42\l}"];
-	Node0x9c42320 -> Node0x9c41cf0;
-	Node0x9c41cf0 [shape=record,label="{for.body5:                                        \l  %indvars.iv67 = phi i64 [ 0, %for.cond2.preheader ], [ %indvars.iv.next68,\l... %for.body5 ]\l  %call6 = tail call i32 @rand() #5, !dbg !51\l  %rem = srem i32 %call6, 10, !dbg !53\l  %arrayidx8 = getelementptr inbounds [2000 x [2000 x i32]], [2000 x [2000 x\l... i32]]* @R, i64 0, i64 %indvars.iv70, i64 %indvars.iv67, !dbg !54\l  store i32 %rem, i32* %arrayidx8, align 4, !dbg !55, !tbaa !56\l  %indvars.iv.next68 = add nuw nsw i64 %indvars.iv67, 1, !dbg !42\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !12, metadata\l... !36), !dbg !60\l  %exitcond69 = icmp ne i64 %indvars.iv.next68, 2000, !dbg !42\l  br i1 %exitcond69, label %for.body5, label %for.inc9, !dbg !42\l}"];
-	Node0x9c41cf0 -> Node0x9c41cf0[constraint=false];
-	Node0x9c41cf0 -> Node0x9c423a0;
-	Node0x9c423a0 [shape=record,label="{for.inc9:                                         \l  %indvars.iv.next71 = add nuw nsw i64 %indvars.iv70, 1, !dbg !38\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !10, metadata\l... !36), !dbg !37\l  %exitcond72 = icmp ne i64 %indvars.iv.next71, 2000, !dbg !38\l  br i1 %exitcond72, label %for.cond2.preheader, label %for.cond12.preheader,\l... !dbg !38\l}"];
-	Node0x9c423a0 -> Node0x9c42320[constraint=false];
-	Node0x9c423a0 -> Node0x9c394f0;
-	Node0x9c394f0 [shape=record,label="{for.cond12.preheader:                             \l  br label %for.cond16.preheader, !dbg !47\l}"];
-	Node0x9c394f0 -> Node0x9ccb7d0;
-	Node0x9ccb7d0 [shape=record,label="{for.cond16.preheader:                             \l  %indvars.iv64 = phi i64 [ 0, %for.cond12.preheader ], [ %indvars.iv.next65,\l... %for.inc39 ]\l  br label %for.body19, !dbg !61\l}"];
-	Node0x9ccb7d0 -> Node0x9ccb7f0;
-	Node0x9ccb7f0 [shape=record,label="{for.body19:                                       \l  %indvars.iv = phi i64 [ 0, %for.cond16.preheader ], [ %indvars.iv.next,\l... %for.body19 ]\l  %arrayidx23 = getelementptr inbounds [2000 x [2000 x i32]], [2000 x [2000 x\l... i32]]* @R, i64 0, i64 %indvars.iv64, i64 %indvars.iv, !dbg !66\l  %0 = load i32, i32* %arrayidx23, align 4, !dbg !66, !tbaa !56\l  %arrayidx27 = getelementptr inbounds [2000 x [2000 x i32]], [2000 x [2000 x\l... i32]]* @A, i64 0, i64 %indvars.iv64, i64 %indvars.iv, !dbg !68\l  store i32 %0, i32* %arrayidx27, align 4, !dbg !69, !tbaa !56\l  %arrayidx35 = getelementptr inbounds [2000 x [2000 x i32]], [2000 x [2000 x\l... i32]]* @B, i64 0, i64 %indvars.iv64, i64 %indvars.iv, !dbg !70\l  store i32 %0, i32* %arrayidx35, align 4, !dbg !71, !tbaa !56\l  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !61\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !12, metadata\l... !36), !dbg !60\l  %exitcond = icmp ne i64 %indvars.iv.next, 2000, !dbg !61\l  br i1 %exitcond, label %for.body19, label %for.inc39, !dbg !61\l}"];
-	Node0x9ccb7f0 -> Node0x9ccb7f0[constraint=false];
-	Node0x9ccb7f0 -> Node0x9ce4860;
-	Node0x9ce4860 [shape=record,label="{for.inc39:                                        \l  %indvars.iv.next65 = add nuw nsw i64 %indvars.iv64, 1, !dbg !47\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !10, metadata\l... !36), !dbg !37\l  %exitcond66 = icmp ne i64 %indvars.iv.next65, 2000, !dbg !47\l  br i1 %exitcond66, label %for.cond16.preheader, label %for.end41, !dbg !47\l}"];
-	Node0x9ce4860 -> Node0x9ccb7d0[constraint=false];
-	Node0x9ce4860 -> Node0x9ce48c0;
-	Node0x9ce48c0 [shape=record,label="{for.end41:                                        \l  ret void, !dbg !72\l}"];
+	Node0xa8b6a50 [shape=record,label="{entry:\l  br label %entry.split, !dbg !39\l}"];
+	Node0xa8b6a50 -> Node0xa8a4970;
+	Node0xa8a4970 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !8, metadata\l... !40), !dbg !39\l  br label %for.cond1.preheader, !dbg !41\l}"];
+	Node0xa8a4970 -> Node0xa8a6c30;
+	Node0xa8a6c30 [shape=record,label="{for.cond1.preheader:                              \l  %indvars.iv39 = phi i64 [ 0, %entry.split ], [ %indvars.iv.next40,\l... %for.cond.cleanup3 ]\l  br label %for.body4, !dbg !43\l}"];
+	Node0xa8a6c30 -> Node0xa8ad200;
+	Node0xa8ad200 [shape=record,label="{for.body4:                                        \l  %indvars.iv = phi i64 [ 0, %for.cond1.preheader ], [ %indvars.iv.next,\l... %for.body4 ]\l  %arrayidx6 = getelementptr inbounds [2000 x [2000 x i32]], [2000 x [2000 x\l... i32]]* @A, i64 0, i64 %indvars.iv39, i64 %indvars.iv, !dbg !47\l  %0 = load i32, i32* %arrayidx6, align 4, !dbg !47, !tbaa !49\l  %1 = trunc i64 %indvars.iv39 to i32, !dbg !53\l  %add = add nsw i32 %0, %1, !dbg !53\l  store i32 %add, i32* %arrayidx6, align 4, !dbg !54, !tbaa !49\l  %arrayidx14 = getelementptr inbounds [2000 x [2000 x i32]], [2000 x [2000 x\l... i32]]* @B, i64 0, i64 %indvars.iv39, i64 %indvars.iv, !dbg !55\l  %2 = load i32, i32* %arrayidx14, align 4, !dbg !55, !tbaa !49\l  %3 = trunc i64 %indvars.iv39 to i32, !dbg !56\l  %add15 = add nsw i32 %2, %3, !dbg !56\l  store i32 %add15, i32* %arrayidx14, align 4, !dbg !57, !tbaa !49\l  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !43\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !11, metadata\l... !40), !dbg !58\l  %exitcond = icmp ne i64 %indvars.iv.next, 2000, !dbg !43\l  br i1 %exitcond, label %for.body4, label %for.cond.cleanup3, !dbg !43\l}"];
+	Node0xa8ad200 -> Node0xa8ad200[constraint=false];
+	Node0xa8ad200 -> Node0xa949da0;
+	Node0xa949da0 [shape=record,label="{for.cond.cleanup3:                                \l  %indvars.iv.next40 = add nuw nsw i64 %indvars.iv39, 1, !dbg !41\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !8, metadata\l... !40), !dbg !39\l  %exitcond41 = icmp ne i64 %indvars.iv.next40, 2000, !dbg !41\l  br i1 %exitcond41, label %for.cond1.preheader, label %for.cond.cleanup, !dbg\l... !41\l}"];
+	Node0xa949da0 -> Node0xa8a6c30[constraint=false];
+	Node0xa949da0 -> Node0xa8ad170;
+	Node0xa8ad170 [shape=record,label="{for.cond.cleanup:                                 \l  ret void, !dbg !46\l}"];
 	colorscheme = "paired12"
-        subgraph cluster_0x9c3ee80 {
-          label = "MatrixMult.c:13-33
+        subgraph cluster_0xa949bc0 {
+          label = "MatrixMult.c:25-33
 ";
           style = solid;
           color = 1
-          subgraph cluster_0x9c3daf0 {
-            label = "MatrixMult.c:13-21
-Call instruction:   %call6 = tail call i32 @rand() #5, !dbg !51";
-            style = solid;
-            color = 6
-            subgraph cluster_0x9c433e0 {
-              label = "MatrixMult.c:14-21
-Call instruction:   %call6 = tail call i32 @rand() #5, !dbg !51";
-              style = solid;
-              color = 5
-              Node0x9c41cf0;
-            }
-            Node0x9c42320;
-            Node0x9c423a0;
-          }
-          subgraph cluster_0x9c42020 {
-            label = "MatrixMult.c:13-30
+          subgraph cluster_0xa8a7ee0 {
+            label = "MatrixMult.c:25-30
 ";
             style = filled;
-            color = 3            subgraph cluster_0x9c41f00 {
-              label = "MatrixMult.c:14-30
+            color = 3            subgraph cluster_0xa8a5430 {
+              label = "MatrixMult.c:26-30
 ";
               style = solid;
               color = 5
-              Node0x9ccb7f0;
+              Node0xa8ad200;
             }
-            Node0x9ccb7d0;
-            Node0x9ce4860;
+            Node0xa8a6c30;
+            Node0xa949da0;
           }
-          Node0x9c42190;
-          Node0x9aad880;
-          Node0x9c394f0;
-          Node0x9ce48c0;
+          Node0xa8b6a50;
+          Node0xa8a4970;
+          Node0xa8ad170;
         }
 }

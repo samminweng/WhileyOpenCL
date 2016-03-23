@@ -5,7 +5,7 @@ import whiley.io.File
 // Description
 // ========================================================
 // This matrix multiplication converts 2D array into 1D array
-// by using 'row-major', i.e. 
+// 
 //
 constant N is 2000
 type nat is (int x) where x >= 0
@@ -74,19 +74,28 @@ function mat_mult(Matrix a, Matrix b) -> (Matrix r):
         
 
 method main(System.Console sys):
+    sys.out.print_s("N = ")
+    sys.out.println(N)
     // Initialize matrix A
     Matrix A = init()
-    sys.out.print_s("Matrix A[N] = ")
-    sys.out.println(A.data[N])
+    sys.out.print_s("Matrix A[N-1][N-1] = ")
+    sys.out.println(A.data[(N-1)*N+N-1])
     //print_mat(sys, A)
     // Initialize matrix B
     Matrix B = init()
-    sys.out.print_s("Matrix B[N] = ")
-    sys.out.println(B.data[N])
+    sys.out.print_s("Matrix B[N-1][N-1] = ")
+    sys.out.println(B.data[(N-1)*N+N-1])
     //print_mat(sys, B)
     // Multiply A and B 
     Matrix C = mat_mult(A, B)
-    int[] data = C.data
-    sys.out.print_s("Matrix C[N] = ")
-    sys.out.println(data[N])
-    sys.out.println_s("Pass MatrixMult test case")
+    // N=200, C[199][199] = 3960100
+    // N=2000, C[1999][1999] = 3996001000
+    assert C.data[(N-1)*N+N-1] == 3996001000
+    sys.out.print_s("Matrix C[N-1][N-1] = ")
+    sys.out.println(C.data[(N-1)*N+N-1])
+    //print_mat(sys, C)
+    sys.out.println_s("Pass ")
+    sys.out.print(N)
+    sys.out.print_s(" X ")
+    sys.out.print(N)
+    sys.out.println_s(" MatrixMult test case")

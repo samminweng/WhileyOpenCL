@@ -48,7 +48,7 @@ void mat_mult(){
     }
 }
 
-/*void print_matrix()
+void print_matrix()
 {
     int i, j;
 
@@ -59,13 +59,13 @@ void mat_mult(){
         }
         fprintf(stdout, "\n");
     }
-}*/
+}
 
 int main()
 {
     init();
     mat_mult();
-    //print_matrix();
+    print_matrix();
 
     printf("Pass %d X %d matrix test case \n", N, N);
     printf("A[%d][%d] = %d, B[%d][%d] =%d, C[%d][%d] =%lld \n", 

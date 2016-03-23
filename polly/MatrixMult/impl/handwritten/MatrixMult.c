@@ -6,7 +6,7 @@ void mat_mult() __attribute__((noinline));
 
 int A[N][N];
 int B[N][N];
-int C[N][N];
+long long C[N][N];
 
 
 void init(){
@@ -22,7 +22,6 @@ void init(){
             R[i][j] = R[i][j]+i;
         }
     }*/
-
     for (int i=0; i<N; i++) {
         for (int j=0; j<N; j++) {
             //A[i][j] = 1; 
@@ -44,7 +43,7 @@ void mat_mult(){
     }
 }
 
-/*void print_array()
+void print_array()
 {
     int i, j;
 
@@ -55,7 +54,7 @@ void mat_mult(){
         }
         fprintf(stdout, "\n");
     }
-}*/
+}
 
 int main()
 {
@@ -63,7 +62,7 @@ int main()
     mat_mult();
    
     printf("Pass %d X %d matrix test case \n", N, N);
-    printf("A[%d][%d] = %d, B[%d][%d] =%d, C[%d][%d] =%d \n", 
+    printf("A[%d][%d] = %d, B[%d][%d] =%d, C[%d][%d] =%lld \n", 
         N-1, N-1, A[N-1][N-1],
         N-1, N-1, B[N-1][N-1],  
         N-1, N-1, C[N-1][N-1]);

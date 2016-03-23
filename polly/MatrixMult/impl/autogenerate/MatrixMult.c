@@ -385,162 +385,340 @@ int main(int argc, char** args){
 	_DECL_OWNERSHIP(B);
 	Matrix* C;
 	_DECL_OWNERSHIP(C);
-	_DECL_1DARRAY(data);
-	_DECL_OWNERSHIP(data);
-	Matrix* _5;
-	_DECL_OWNERSHIP(_5);
-	void* _6;
-	_DECL_1DARRAY(_8);
-	_DECL_OWNERSHIP(_8);
-	void* _9;
-	_DECL_1DARRAY(_11);
-	_DECL_OWNERSHIP(_11);
-	long long _12 = 0;
-	long long _13 = 0;
-	Matrix* _14;
-	_DECL_OWNERSHIP(_14);
-	void* _15;
-	_DECL_1DARRAY(_17);
-	_DECL_OWNERSHIP(_17);
-	void* _18;
-	_DECL_1DARRAY(_20);
-	_DECL_OWNERSHIP(_20);
+	void* _4;
+	_DECL_1DARRAY(_6);
+	_DECL_OWNERSHIP(_6);
+	void* _7;
+	long long _9 = 0;
+	Matrix* _10;
+	_DECL_OWNERSHIP(_10);
+	void* _11;
+	_DECL_1DARRAY(_13);
+	_DECL_OWNERSHIP(_13);
+	void* _14;
+	_DECL_1DARRAY(_16);
+	_DECL_OWNERSHIP(_16);
+	long long _17 = 0;
+	long long _18 = 0;
+	long long _19 = 0;
+	long long _20 = 0;
 	long long _21 = 0;
 	long long _22 = 0;
-	Matrix* _23;
-	_DECL_OWNERSHIP(_23);
-	_DECL_1DARRAY(_24);
-	_DECL_OWNERSHIP(_24);
-	void* _25;
-	_DECL_1DARRAY(_27);
+	long long _23 = 0;
+	long long _24 = 0;
+	long long _25 = 0;
+	long long _26 = 0;
+	Matrix* _27;
 	_DECL_OWNERSHIP(_27);
 	void* _28;
-	long long _30 = 0;
-	long long _31 = 0;
-	void* _32;
-	_DECL_1DARRAY(_34);
-	_DECL_OWNERSHIP(_34);
-	//invoke (%5) = () MatrixMult:init : function()->(MatrixMult:Matrix)
-	_FREE_STRUCT(_5, Matrix);
-	_5 = init();
-	_ADD_OWNERSHIP(_5);
-	//assign %1 = %5  : {int[] data,int height,int width}
+	_DECL_1DARRAY(_30);
+	_DECL_OWNERSHIP(_30);
+	void* _31;
+	_DECL_1DARRAY(_33);
+	_DECL_OWNERSHIP(_33);
+	long long _34 = 0;
+	long long _35 = 0;
+	long long _36 = 0;
+	long long _37 = 0;
+	long long _38 = 0;
+	long long _39 = 0;
+	long long _40 = 0;
+	long long _41 = 0;
+	long long _42 = 0;
+	long long _43 = 0;
+	Matrix* _44;
+	_DECL_OWNERSHIP(_44);
+	_DECL_1DARRAY(_45);
+	_DECL_OWNERSHIP(_45);
+	long long _46 = 0;
+	long long _47 = 0;
+	long long _48 = 0;
+	long long _49 = 0;
+	long long _50 = 0;
+	long long _51 = 0;
+	long long _52 = 0;
+	long long _53 = 0;
+	long long _54 = 0;
+	long long _55 = 0;
+	long long _56 = 0;
+	void* _57;
+	_DECL_1DARRAY(_59);
+	_DECL_OWNERSHIP(_59);
+	void* _60;
+	_DECL_1DARRAY(_62);
+	_DECL_OWNERSHIP(_62);
+	long long _63 = 0;
+	long long _64 = 0;
+	long long _65 = 0;
+	long long _66 = 0;
+	long long _67 = 0;
+	long long _68 = 0;
+	long long _69 = 0;
+	long long _70 = 0;
+	long long _71 = 0;
+	long long _72 = 0;
+	void* _73;
+	_DECL_1DARRAY(_75);
+	_DECL_OWNERSHIP(_75);
+	void* _76;
+	long long _78 = 0;
+	void* _79;
+	_DECL_1DARRAY(_81);
+	_DECL_OWNERSHIP(_81);
+	void* _82;
+	long long _84 = 0;
+	void* _85;
+	_DECL_1DARRAY(_87);
+	_DECL_OWNERSHIP(_87);
+	//fieldload %4 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %5 = %4 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %6 = [78,32,61,32] : int[]
+	_FREE(_6);
+	_NEW_ARRAY(_6, 4);
+	_6[0] = 78; _6[1] = 32; _6[2] = 61; _6[3] = 32; 
+	_ADD_OWNERSHIP(_6);
+	//indirectinvoke () = %5 (%6) : method(int[])->()
+	printf_s(_1DARRAY_PARAM(_6));
+	//fieldload %7 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %8 = %7 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %9 = 2000 : int
+	_9 = 2000;
+	//indirectinvoke () = %8 (%9) : method(any)->()
+	printf("%lld\n", _9);
+	//invoke (%10) = () MatrixMult:init : function()->(MatrixMult:Matrix)
+	_FREE_STRUCT(_10, Matrix);
+	_10 = init();
+	_ADD_OWNERSHIP(_10);
+	//assign %1 = %10  : {int[] data,int height,int width}
 	_FREE_STRUCT(A, Matrix);
-	A = _5;
+	A = _10;
 	_ADD_OWNERSHIP(A);
-	_REMOVE_OWNERSHIP(_5);
-	//fieldload %6 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %7 = %6 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %8 = [77,97,116,114,105,120,32,65,91,78,93,32,61,32] : int[]
-	_FREE(_8);
-	_NEW_ARRAY(_8, 14);
-	_8[0] = 77; _8[1] = 97; _8[2] = 116; _8[3] = 114; _8[4] = 105; _8[5] = 120; _8[6] = 32; _8[7] = 65; _8[8] = 91; _8[9] = 78; _8[10] = 93; _8[11] = 32; _8[12] = 61; _8[13] = 32; 
-	_ADD_OWNERSHIP(_8);
-	//indirectinvoke () = %7 (%8) : method(int[])->()
-	printf_s(_1DARRAY_PARAM(_8));
-	//fieldload %9 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %10 = %9 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//fieldload %11 = %1 data : {int[] data,int height,int width}
-	_FREE(_11);
-	_1DARRAY_COPY(_11, A->data);
-	_ADD_OWNERSHIP(_11);
-	//const %12 = 2000 : int
-	_12 = 2000;
-	//indexof %13 = %11, %12 : int[]
-	_13=_11[_12];
-	//indirectinvoke () = %10 (%13) : method(any)->()
-	printf("%lld\n", _13);
-	//invoke (%14) = () MatrixMult:init : function()->(MatrixMult:Matrix)
-	_FREE_STRUCT(_14, Matrix);
-	_14 = init();
-	_ADD_OWNERSHIP(_14);
-	//assign %2 = %14  : {int[] data,int height,int width}
-	_FREE_STRUCT(B, Matrix);
-	B = _14;
-	_ADD_OWNERSHIP(B);
-	_REMOVE_OWNERSHIP(_14);
-	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %16 = %15 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %17 = [77,97,116,114,105,120,32,66,91,78,93,32,61,32] : int[]
-	_FREE(_17);
-	_NEW_ARRAY(_17, 14);
-	_17[0] = 77; _17[1] = 97; _17[2] = 116; _17[3] = 114; _17[4] = 105; _17[5] = 120; _17[6] = 32; _17[7] = 66; _17[8] = 91; _17[9] = 78; _17[10] = 93; _17[11] = 32; _17[12] = 61; _17[13] = 32; 
-	_ADD_OWNERSHIP(_17);
-	//indirectinvoke () = %16 (%17) : method(int[])->()
-	printf_s(_1DARRAY_PARAM(_17));
-	//fieldload %18 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %19 = %18 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//fieldload %20 = %2 data : {int[] data,int height,int width}
-	_FREE(_20);
-	_1DARRAY_COPY(_20, B->data);
-	_ADD_OWNERSHIP(_20);
-	//const %21 = 2000 : int
-	_21 = 2000;
-	//indexof %22 = %20, %21 : int[]
-	_22=_20[_21];
-	//indirectinvoke () = %19 (%22) : method(any)->()
-	printf("%lld\n", _22);
-	//invoke (%23) = (%1, %2) MatrixMult:mat_mult : function(MatrixMult:Matrix,MatrixMult:Matrix)->(MatrixMult:Matrix)
-	_FREE_STRUCT(_23, Matrix);
-	_ADD_OWNERSHIP(A);
-	_ADD_OWNERSHIP(B);
-	_23 = mat_mult(_STRUCT_PARAM(A), false, _STRUCT_PARAM(B), false);
-	_ADD_OWNERSHIP(_23);
-	//assign %3 = %23  : {int[] data,int height,int width}
-	_FREE_STRUCT(C, Matrix);
-	C = _23;
-	_ADD_OWNERSHIP(C);
-	_REMOVE_OWNERSHIP(_23);
-	//fieldload %24 = %3 data : {int[] data,int height,int width}
-	_FREE(_24);
-	_1DARRAY_COPY(_24, C->data);
-	_ADD_OWNERSHIP(_24);
-	//assign %4 = %24  : int[]
-	_FREE(data);
-	_1DARRAY_UPDATE(data, _24);
-	_ADD_OWNERSHIP(data);
-	_REMOVE_OWNERSHIP(_24);
-	//fieldload %25 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %26 = %25 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %27 = [77,97,116,114,105,120,32,67,91,78,93,32,61,32] : int[]
-	_FREE(_27);
-	_NEW_ARRAY(_27, 14);
-	_27[0] = 77; _27[1] = 97; _27[2] = 116; _27[3] = 114; _27[4] = 105; _27[5] = 120; _27[6] = 32; _27[7] = 67; _27[8] = 91; _27[9] = 78; _27[10] = 93; _27[11] = 32; _27[12] = 61; _27[13] = 32; 
+	_REMOVE_OWNERSHIP(_10);
+	//fieldload %11 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %12 = %11 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %13 = [77,97,116,114,105,120,32,65,91,78,45,49,93,91,78,45,49,93,32,61,32] : int[]
+	_FREE(_13);
+	_NEW_ARRAY(_13, 21);
+	_13[0] = 77; _13[1] = 97; _13[2] = 116; _13[3] = 114; _13[4] = 105; _13[5] = 120; _13[6] = 32; _13[7] = 65; _13[8] = 91; _13[9] = 78; _13[10] = 45; _13[11] = 49; _13[12] = 93; _13[13] = 91; _13[14] = 78; _13[15] = 45; _13[16] = 49; _13[17] = 93; _13[18] = 32; _13[19] = 61; _13[20] = 32; 
+	_ADD_OWNERSHIP(_13);
+	//indirectinvoke () = %12 (%13) : method(int[])->()
+	printf_s(_1DARRAY_PARAM(_13));
+	//fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %15 = %14 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//fieldload %16 = %1 data : {int[] data,int height,int width}
+	_FREE(_16);
+	_1DARRAY_COPY(_16, A->data);
+	_ADD_OWNERSHIP(_16);
+	//const %17 = 2000 : int
+	_17 = 2000;
+	//const %18 = 1 : int
+	_18 = 1;
+	//sub %19 = %17, %18 : int
+	_19=_17-_18;
+	//const %20 = 2000 : int
+	_20 = 2000;
+	//mul %21 = %19, %20 : int
+	_21=_19*_20;
+	//const %22 = 2000 : int
+	_22 = 2000;
+	//add %23 = %21, %22 : int
+	_23=_21+_22;
+	//const %24 = 1 : int
+	_24 = 1;
+	//sub %25 = %23, %24 : int
+	_25=_23-_24;
+	//indexof %26 = %16, %25 : int[]
+	_26=_16[_25];
+	//indirectinvoke () = %15 (%26) : method(any)->()
+	printf("%lld\n", _26);
+	//invoke (%27) = () MatrixMult:init : function()->(MatrixMult:Matrix)
+	_FREE_STRUCT(_27, Matrix);
+	_27 = init();
 	_ADD_OWNERSHIP(_27);
-	//indirectinvoke () = %26 (%27) : method(int[])->()
-	printf_s(_1DARRAY_PARAM(_27));
+	//assign %2 = %27  : {int[] data,int height,int width}
+	_FREE_STRUCT(B, Matrix);
+	B = _27;
+	_ADD_OWNERSHIP(B);
+	_REMOVE_OWNERSHIP(_27);
 	//fieldload %28 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %29 = %28 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %30 = 2000 : int
-	_30 = 2000;
-	//indexof %31 = %4, %30 : int[]
-	_31=data[_30];
-	//indirectinvoke () = %29 (%31) : method(any)->()
-	printf("%lld\n", _31);
-	//fieldload %32 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %33 = %32 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %34 = [80,97,115,115,32,77,97,116,114,105,120,77,117,108,116,32,116,101,115,116,32,99,97,115,101] : int[]
-	_FREE(_34);
-	_NEW_ARRAY(_34, 25);
-	_34[0] = 80; _34[1] = 97; _34[2] = 115; _34[3] = 115; _34[4] = 32; _34[5] = 77; _34[6] = 97; _34[7] = 116; _34[8] = 114; _34[9] = 105; _34[10] = 120; _34[11] = 77; _34[12] = 117; _34[13] = 108; _34[14] = 116; _34[15] = 32; _34[16] = 116; _34[17] = 101; _34[18] = 115; _34[19] = 116; _34[20] = 32; _34[21] = 99; _34[22] = 97; _34[23] = 115; _34[24] = 101; 
-	_ADD_OWNERSHIP(_34);
-	//indirectinvoke () = %33 (%34) : method(int[])->()
-	println_s(_1DARRAY_PARAM(_34));
+	//fieldload %29 = %28 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %30 = [77,97,116,114,105,120,32,66,91,78,45,49,93,91,78,45,49,93,32,61,32] : int[]
+	_FREE(_30);
+	_NEW_ARRAY(_30, 21);
+	_30[0] = 77; _30[1] = 97; _30[2] = 116; _30[3] = 114; _30[4] = 105; _30[5] = 120; _30[6] = 32; _30[7] = 66; _30[8] = 91; _30[9] = 78; _30[10] = 45; _30[11] = 49; _30[12] = 93; _30[13] = 91; _30[14] = 78; _30[15] = 45; _30[16] = 49; _30[17] = 93; _30[18] = 32; _30[19] = 61; _30[20] = 32; 
+	_ADD_OWNERSHIP(_30);
+	//indirectinvoke () = %29 (%30) : method(int[])->()
+	printf_s(_1DARRAY_PARAM(_30));
+	//fieldload %31 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %32 = %31 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//fieldload %33 = %2 data : {int[] data,int height,int width}
+	_FREE(_33);
+	_1DARRAY_COPY(_33, B->data);
+	_ADD_OWNERSHIP(_33);
+	//const %34 = 2000 : int
+	_34 = 2000;
+	//const %35 = 1 : int
+	_35 = 1;
+	//sub %36 = %34, %35 : int
+	_36=_34-_35;
+	//const %37 = 2000 : int
+	_37 = 2000;
+	//mul %38 = %36, %37 : int
+	_38=_36*_37;
+	//const %39 = 2000 : int
+	_39 = 2000;
+	//add %40 = %38, %39 : int
+	_40=_38+_39;
+	//const %41 = 1 : int
+	_41 = 1;
+	//sub %42 = %40, %41 : int
+	_42=_40-_41;
+	//indexof %43 = %33, %42 : int[]
+	_43=_33[_42];
+	//indirectinvoke () = %32 (%43) : method(any)->()
+	printf("%lld\n", _43);
+	//invoke (%44) = (%1, %2) MatrixMult:mat_mult : function(MatrixMult:Matrix,MatrixMult:Matrix)->(MatrixMult:Matrix)
+	_FREE_STRUCT(_44, Matrix);
+	_ADD_OWNERSHIP(A);
+	_ADD_OWNERSHIP(B);
+	_44 = mat_mult(_STRUCT_PARAM(A), false, _STRUCT_PARAM(B), false);
+	_ADD_OWNERSHIP(_44);
+	//assign %3 = %44  : {int[] data,int height,int width}
+	_FREE_STRUCT(C, Matrix);
+	C = _44;
+	_ADD_OWNERSHIP(C);
+	_REMOVE_OWNERSHIP(_44);
+	//assert
+	{
+		//fieldload %45 = %3 data : {int[] data,int height,int width}
+		_FREE(_45);
+		_1DARRAY_COPY(_45, C->data);
+		_ADD_OWNERSHIP(_45);
+		//const %46 = 2000 : int
+		_46 = 2000;
+		//const %47 = 1 : int
+		_47 = 1;
+		//sub %48 = %46, %47 : int
+		_48=_46-_47;
+		//const %49 = 2000 : int
+		_49 = 2000;
+		//mul %50 = %48, %49 : int
+		_50=_48*_49;
+		//const %51 = 2000 : int
+		_51 = 2000;
+		//add %52 = %50, %51 : int
+		_52=_50+_51;
+		//const %53 = 1 : int
+		_53 = 1;
+		//sub %54 = %52, %53 : int
+		_54=_52-_53;
+		//indexof %55 = %45, %54 : int[]
+		_55=_45[_54];
+		//const %56 = 3996001000 : int
+		_56 = 3996001000;
+		//ifeq %55, %56 goto blklab11 : int
+		if(_55==_56){goto blklab11;}
+		//fail
+		fprintf(stderr,"fail");
+		exit(-1);
+//.blklab11
+blklab11:;
+	//assert
+	}
+	//fieldload %57 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %58 = %57 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %59 = [77,97,116,114,105,120,32,67,91,78,45,49,93,91,78,45,49,93,32,61,32] : int[]
+	_FREE(_59);
+	_NEW_ARRAY(_59, 21);
+	_59[0] = 77; _59[1] = 97; _59[2] = 116; _59[3] = 114; _59[4] = 105; _59[5] = 120; _59[6] = 32; _59[7] = 67; _59[8] = 91; _59[9] = 78; _59[10] = 45; _59[11] = 49; _59[12] = 93; _59[13] = 91; _59[14] = 78; _59[15] = 45; _59[16] = 49; _59[17] = 93; _59[18] = 32; _59[19] = 61; _59[20] = 32; 
+	_ADD_OWNERSHIP(_59);
+	//indirectinvoke () = %58 (%59) : method(int[])->()
+	printf_s(_1DARRAY_PARAM(_59));
+	//fieldload %60 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %61 = %60 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//fieldload %62 = %3 data : {int[] data,int height,int width}
+	_FREE(_62);
+	_1DARRAY_COPY(_62, C->data);
+	_ADD_OWNERSHIP(_62);
+	//const %63 = 2000 : int
+	_63 = 2000;
+	//const %64 = 1 : int
+	_64 = 1;
+	//sub %65 = %63, %64 : int
+	_65=_63-_64;
+	//const %66 = 2000 : int
+	_66 = 2000;
+	//mul %67 = %65, %66 : int
+	_67=_65*_66;
+	//const %68 = 2000 : int
+	_68 = 2000;
+	//add %69 = %67, %68 : int
+	_69=_67+_68;
+	//const %70 = 1 : int
+	_70 = 1;
+	//sub %71 = %69, %70 : int
+	_71=_69-_70;
+	//indexof %72 = %62, %71 : int[]
+	_72=_62[_71];
+	//indirectinvoke () = %61 (%72) : method(any)->()
+	printf("%lld\n", _72);
+	//fieldload %73 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %74 = %73 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %75 = [80,97,115,115,32] : int[]
+	_FREE(_75);
+	_NEW_ARRAY(_75, 5);
+	_75[0] = 80; _75[1] = 97; _75[2] = 115; _75[3] = 115; _75[4] = 32; 
+	_ADD_OWNERSHIP(_75);
+	//indirectinvoke () = %74 (%75) : method(int[])->()
+	println_s(_1DARRAY_PARAM(_75));
+	//fieldload %76 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %77 = %76 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %78 = 2000 : int
+	_78 = 2000;
+	//indirectinvoke () = %77 (%78) : method(any)->()
+	printf("%lld", _78);
+	//fieldload %79 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %80 = %79 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %81 = [32,88,32] : int[]
+	_FREE(_81);
+	_NEW_ARRAY(_81, 3);
+	_81[0] = 32; _81[1] = 88; _81[2] = 32; 
+	_ADD_OWNERSHIP(_81);
+	//indirectinvoke () = %80 (%81) : method(int[])->()
+	printf_s(_1DARRAY_PARAM(_81));
+	//fieldload %82 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %83 = %82 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %84 = 2000 : int
+	_84 = 2000;
+	//indirectinvoke () = %83 (%84) : method(any)->()
+	printf("%lld", _84);
+	//fieldload %85 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %86 = %85 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %87 = [32,77,97,116,114,105,120,77,117,108,116,32,116,101,115,116,32,99,97,115,101] : int[]
+	_FREE(_87);
+	_NEW_ARRAY(_87, 21);
+	_87[0] = 32; _87[1] = 77; _87[2] = 97; _87[3] = 116; _87[4] = 114; _87[5] = 105; _87[6] = 120; _87[7] = 77; _87[8] = 117; _87[9] = 108; _87[10] = 116; _87[11] = 32; _87[12] = 116; _87[13] = 101; _87[14] = 115; _87[15] = 116; _87[16] = 32; _87[17] = 99; _87[18] = 97; _87[19] = 115; _87[20] = 101; 
+	_ADD_OWNERSHIP(_87);
+	//indirectinvoke () = %86 (%87) : method(int[])->()
+	println_s(_1DARRAY_PARAM(_87));
 	//return
 	_FREE_STRUCT(A, Matrix);
 	_FREE_STRUCT(B, Matrix);
 	_FREE_STRUCT(C, Matrix);
-	_FREE(data);
-	_FREE_STRUCT(_5, Matrix);
-	_FREE(_8);
-	_FREE(_11);
-	_FREE_STRUCT(_14, Matrix);
-	_FREE(_17);
-	_FREE(_20);
-	_FREE_STRUCT(_23, Matrix);
-	_FREE(_24);
-	_FREE(_27);
-	_FREE(_34);
+	_FREE(_6);
+	_FREE_STRUCT(_10, Matrix);
+	_FREE(_13);
+	_FREE(_16);
+	_FREE_STRUCT(_27, Matrix);
+	_FREE(_30);
+	_FREE(_33);
+	_FREE_STRUCT(_44, Matrix);
+	_FREE(_45);
+	_FREE(_59);
+	_FREE(_62);
+	_FREE(_75);
+	_FREE(_81);
+	_FREE(_87);
 	exit(0);
 }
 
