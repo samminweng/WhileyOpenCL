@@ -55,11 +55,11 @@ BEGIN {
 	# Test case name
 	testcases="MatrixMult";
 	# Code Optimizations
-	c_types="handwritten";
+	c_types="autogenerate1";
 	# Polly optimiz
 	polly_opts="gcc clang polly openmp"
 	# Parameters
-	parameters["MatrixMult"] = "2000X2000";
+	parameters["MatrixMult"] = "2000";
 	threads="1 2 4";
 	vcs="disableVC enableVC";
 	cpu_utils[""] = "";

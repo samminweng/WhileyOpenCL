@@ -1,28 +1,16 @@
 CPU Utilization
 TestCase,CodeType,Vectorization,CompilerOpt,Parameter,Threads,1st,2nd,3rd,4th,5th,6th,7th,8th,9th,10th,Average
-MatrixMult	handwritten	disableVC	gcc	2000X2000	1	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 
-MatrixMult	handwritten	disableVC	clang	2000X2000	1	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 
-MatrixMult	handwritten	disableVC	polly	2000X2000	1	   0.999 	   0.999 	   0.998 	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 
-MatrixMult	handwritten	disableVC	openmp	2000X2000	1	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 
-MatrixMult	handwritten	disableVC	openmp	2000X2000	2	   1.964 	   1.944 	   1.968 	   1.968 	   1.966 	   1.969 	   1.969 	   1.968 	   1.968 	   1.969 
-MatrixMult	handwritten	disableVC	openmp	2000X2000	4	   3.819 	   3.830 	   3.827 	   3.828 	   3.821 	   3.831 	   3.831 	   3.830 	   3.829 	   3.814 
-MatrixMult	handwritten	enableVC	gcc	2000X2000	1	   0.999 	   0.992 	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 	   0.998 	   0.999 	   0.999 
-MatrixMult	handwritten	enableVC	clang	2000X2000	1	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 
-MatrixMult	handwritten	enableVC	polly	2000X2000	1	   0.998 	   0.999 	   0.999 	   0.998 	   0.996 	   0.999 	   0.998 	   0.999 	   0.999 	   0.999 
-MatrixMult	handwritten	enableVC	openmp	2000X2000	1	   0.998 	   0.999 	   0.998 	   0.998 	   0.998 	   0.998 	   0.998 	   0.998 	   0.998 	   0.999 
-MatrixMult	handwritten	enableVC	openmp	2000X2000	2	   1.950 	   1.956 	   1.944 	   1.955 	   1.955 	   1.956 	   1.955 	   1.957 	   1.956 	   1.949 
-MatrixMult	handwritten	enableVC	openmp	2000X2000	4	   3.766 	   3.725 	   3.746 	   3.770 	   3.738 	   3.775 	   3.768 	   3.689 	   3.773 	   3.770 
+MatrixMult	autogenerate1	disableVC	gcc	2000	1	   1.000 	   1.000 	   0.999 	   0.999 	   1.000 	   1.000 	   1.000 	   1.000 	   1.000 	   1.000 
+MatrixMult	autogenerate1	disableVC	clang	2000	1	   1.000 	   1.000 	   1.000 	   1.000 	   0.999 	   1.000 	   1.000 	   1.000 	   0.999 	   1.000 
+MatrixMult	autogenerate1	disableVC	polly	2000	1	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 
+MatrixMult	autogenerate1	enableVC	gcc	2000	1	   1.000 	   1.000 	   1.000 	   1.000 	   1.000 	   1.000 	   1.000 	   1.000 	   1.000 	   1.000 
+MatrixMult	autogenerate1	enableVC	clang	2000	1	   0.999 	   1.000 	   0.999 	   1.000 	   1.000 	   1.000 	   0.999 	   1.000 	   0.999 	   1.000 
+MatrixMult	autogenerate1	enableVC	polly	2000	1	   0.999 	   0.999 	   0.999 	   0.998 	   0.998 	   0.999 	   0.999 	   0.999 	   0.999 	   0.999 
 Execution Time
 TestCase,CodeType,Vectorization,CompilerOpt,Parameter,Threads,1st,2nd,3rd,4th,5th,6th,7th,8th,9th,10th,Average
-MatrixMult	handwritten	disableVC	gcc	2000X2000	1	       8.321199499 	       8.323107684 	       8.426942437 	       8.366060230 	       8.353294622 	       8.514009646 	       8.362368776 	       8.373348318 	       8.386239292 	       8.439340102 
-MatrixMult	handwritten	disableVC	clang	2000X2000	1	       8.447317514 	       8.466649259 	       8.546724681 	       8.398081801 	       8.464615502 	       8.386106343 	       8.423885034 	       8.444932892 	       8.438779315 	       8.415894484 
-MatrixMult	handwritten	disableVC	polly	2000X2000	1	       4.590910950 	       4.614476974 	       4.623898907 	       4.601036144 	       4.598540573 	       4.599818833 	       4.608018172 	       4.640118311 	       4.597062899 	       4.598222557 
-MatrixMult	handwritten	disableVC	openmp	2000X2000	1	       4.608853585 	       4.616841156 	       4.620245433 	       4.619061316 	       4.618304673 	       4.619341708 	       4.638965533 	       4.616321094 	       4.635839999 	       4.617068598 
-MatrixMult	handwritten	disableVC	openmp	2000X2000	2	       2.382866160 	       2.428818700 	       2.363352008 	       2.394770847 	       2.401194736 	       2.383382323 	       2.419591498 	       2.364182089 	       2.395568004 	       2.394689165 
-MatrixMult	handwritten	disableVC	openmp	2000X2000	4	       1.270282160 	       1.263562173 	       1.268328634 	       1.267653192 	       1.670001946 	       1.264618369 	       1.263409675 	       1.263014792 	       1.263211439 	       1.272162166 
-MatrixMult	handwritten	enableVC	gcc	2000X2000	1	       8.047217440 	       7.716442004 	       7.991729936 	       7.812147254 	       7.919673169 	       8.066185272 	       7.852656360 	       7.748906584 	       6.439558888 	       6.500777135 
-MatrixMult	handwritten	enableVC	clang	2000X2000	1	       8.376879006 	       8.370401874 	      12.876867244 	       8.359694800 	       8.403254831 	       8.464575027 	       8.393037016 	       8.448446638 	       8.392814335 	       8.358166293 
-MatrixMult	handwritten	enableVC	polly	2000X2000	1	       3.020262472 	       3.014390121 	       3.042913225 	       3.047132215 	       3.047728304 	       3.014552148 	       3.015355202 	       3.015265876 	       3.015792259 	       3.012694873 
-MatrixMult	handwritten	enableVC	openmp	2000X2000	1	       2.640626380 	       2.637674993 	       2.643786619 	       2.645252163 	       2.640414420 	       2.642682251 	       2.641437273 	       2.643502199 	       2.642064195 	       2.658834815 
-MatrixMult	handwritten	enableVC	openmp	2000X2000	2	       1.386594316 	       1.340188891 	       1.351510762 	       1.340252371 	       1.349107947 	       1.339563513 	       1.340848028 	       1.339177243 	       1.363612563 	       1.346936323 
-MatrixMult	handwritten	enableVC	openmp	2000X2000	4	       0.735525875 	       0.743105344 	       0.738697254 	       0.733598337 	       0.965652963 	       0.733179290 	       0.735069915 	       0.749859465 	       0.733564569 	       0.734891793 
+MatrixMult	autogenerate1	disableVC	gcc	2000	1	      15.420563178 	      15.743936829 	      15.784788283 	      15.632614191 	      15.890091420 	      15.632869640 	      15.699025390 	      15.605579481 	      15.699805710 	      15.458948647 
+MatrixMult	autogenerate1	disableVC	clang	2000	1	      15.648521231 	      15.773173180 	      15.898763911 	      15.637331364 	      15.908859336 	      15.852500772 	      15.868791235 	      16.012554189 	      15.756420422 	      15.755983626 
+MatrixMult	autogenerate1	disableVC	polly	2000	1	       4.848715517 	       4.822812437 	       4.824718844 	       4.824113978 	       4.833570962 	       4.845256102 	       4.825200561 	       4.825016999 	       4.839788188 	       4.852683425 
+MatrixMult	autogenerate1	enableVC	gcc	2000	1	      19.741706505 	      19.551456962 	      19.749083532 	      19.722248522 	      19.533133398 	      19.519211595 	      19.800130213 	      19.669250079 	      19.516291437 	      19.830119907 
+MatrixMult	autogenerate1	enableVC	clang	2000	1	      15.700043529 	      15.811236677 	      15.794342721 	      16.067134603 	      15.845255956 	      15.893970273 	      15.868553298 	      15.816974363 	      15.893683213 	      15.902285415 
+MatrixMult	autogenerate1	enableVC	polly	2000	1	       3.703982911 	       3.715015667 	       3.683040524 	       3.687484357 	       3.695793566 	       3.668887286 	       3.687194344 	       3.817966133 	       3.690277942 	       3.688899732 
