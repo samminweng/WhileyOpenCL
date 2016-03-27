@@ -179,13 +179,8 @@ exec(){
 	#opt_polly $c_type $program $num_threads $parameter
 	cd ../../../
 }
-
-#exec handwritten VectorMult 2 1024X1024X10
-#exec handwritten MatrixAdd 2 2000X2000
-exec handwritten MatrixMult 2 200X200 ### Use constant 2D array
-#exec handwritten1 MatrixMult 2 2000X2000 ## Use double pointers
-#exec handwritten2 MatrixMult 2 2000X2000
-exec autogenerate MatrixMult 2 200X200  ### Matrix is stored with 1D array
+##exec autogenerate MatrixMult 2 2000 ### Determine matrix size using constant N 
+exec autogenerate1 MatrixMult 2 2000  ### Determine matrix size from cmd line argument
 
 
 
