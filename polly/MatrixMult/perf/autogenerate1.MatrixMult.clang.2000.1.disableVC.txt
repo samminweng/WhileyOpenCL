@@ -1,182 +1,192 @@
-Enable loop vectorization...Compile C code using GCC -O3...Pass 2000 X 2000 matrix test case 
-A[1999][1999] = 9, B[1999][1999] =9, C[1999][1999] =39919 
+Disable loop vectorization...Compile C code using Clang -O3...max = 2000
+Matrix C[max-1][max-1] = 3996001000
+Pass MatrixMult2 test case
 
- Performance counter stats for './out/MatrixMult.gcc.vector.out 2000X2000':
+ Performance counter stats for './out/MatrixMult.clang.out 2000':
 
-       8040.815410 task-clock (msec)         #    0.999 CPUs utilized          
-               738 context-switches          #    0.092 K/sec                  
+      15641.805001 task-clock (msec)         #    1.000 CPUs utilized          
+             1,439 context-switches          #    0.092 K/sec                  
+                 9 cpu-migrations            #    0.001 K/sec                  
+             4,396 page-faults               #    0.281 K/sec                  
+    60,241,101,469 cycles                    #    3.851 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    48,232,231,963 instructions              #    0.80  insns per cycle        
+     4,033,495,285 branches                  #  257.866 M/sec                  
+         4,068,675 branch-misses             #    0.10% of all branches        
+
+      15.648521231 seconds time elapsed
+
+max = 2000
+Matrix C[max-1][max-1] = 3996001000
+Pass MatrixMult2 test case
+
+ Performance counter stats for './out/MatrixMult.clang.out 2000':
+
+      15765.611907 task-clock (msec)         #    1.000 CPUs utilized          
+             1,450 context-switches          #    0.092 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+             3,374 page-faults               #    0.214 K/sec                  
+    60,729,472,729 cycles                    #    3.852 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    48,228,595,767 instructions              #    0.79  insns per cycle        
+     4,032,873,483 branches                  #  255.802 M/sec                  
+         4,064,729 branch-misses             #    0.10% of all branches        
+
+      15.773173180 seconds time elapsed
+
+max = 2000
+Matrix C[max-1][max-1] = 3996001000
+Pass MatrixMult2 test case
+
+ Performance counter stats for './out/MatrixMult.clang.out 2000':
+
+      15890.897048 task-clock (msec)         #    1.000 CPUs utilized          
+             1,434 context-switches          #    0.090 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+             4,396 page-faults               #    0.277 K/sec                  
+    61,149,584,909 cycles                    #    3.848 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    48,231,029,344 instructions              #    0.79  insns per cycle        
+     4,033,290,105 branches                  #  253.811 M/sec                  
+         4,058,873 branch-misses             #    0.10% of all branches        
+
+      15.898763911 seconds time elapsed
+
+max = 2000
+Matrix C[max-1][max-1] = 3996001000
+Pass MatrixMult2 test case
+
+ Performance counter stats for './out/MatrixMult.clang.out 2000':
+
+      15630.264347 task-clock (msec)         #    1.000 CPUs utilized          
+             1,429 context-switches          #    0.091 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+             3,885 page-faults               #    0.249 K/sec                  
+    60,114,301,062 cycles                    #    3.846 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    48,229,441,487 instructions              #    0.80  insns per cycle        
+     4,033,021,096 branches                  #  258.026 M/sec                  
+         4,060,141 branch-misses             #    0.10% of all branches        
+
+      15.637331364 seconds time elapsed
+
+max = 2000
+Matrix C[max-1][max-1] = 3996001000
+Pass MatrixMult2 test case
+
+ Performance counter stats for './out/MatrixMult.clang.out 2000':
+
+      15899.275721 task-clock (msec)         #    0.999 CPUs utilized          
+             1,480 context-switches          #    0.093 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+             3,885 page-faults               #    0.244 K/sec                  
+    61,156,266,370 cycles                    #    3.846 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    48,230,208,384 instructions              #    0.79  insns per cycle        
+     4,033,148,745 branches                  #  253.669 M/sec                  
+         4,061,336 branch-misses             #    0.10% of all branches        
+
+      15.908859336 seconds time elapsed
+
+max = 2000
+Matrix C[max-1][max-1] = 3996001000
+Pass MatrixMult2 test case
+
+ Performance counter stats for './out/MatrixMult.clang.out 2000':
+
+      15845.007616 task-clock (msec)         #    1.000 CPUs utilized          
+             1,466 context-switches          #    0.093 K/sec                  
                  1 cpu-migrations            #    0.000 K/sec                  
-               938 page-faults               #    0.117 K/sec                  
-    31,171,610,017 cycles                    #    3.877 GHz                    
+             4,396 page-faults               #    0.277 K/sec                  
+    61,131,065,632 cycles                    #    3.858 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    32,272,147,940 instructions              #    1.04  insns per cycle        
-     2,067,548,732 branches                  #  257.132 M/sec                  
-         1,160,243 branch-misses             #    0.06% of all branches        
+    48,231,078,921 instructions              #    0.79  insns per cycle        
+     4,033,287,446 branches                  #  254.546 M/sec                  
+         4,060,733 branch-misses             #    0.10% of all branches        
 
-       8.047217440 seconds time elapsed
+      15.852500772 seconds time elapsed
 
-Pass 2000 X 2000 matrix test case 
-A[1999][1999] = 6, B[1999][1999] =6, C[1999][1999] =40747 
+max = 2000
+Matrix C[max-1][max-1] = 3996001000
+Pass MatrixMult2 test case
 
- Performance counter stats for './out/MatrixMult.gcc.vector.out 2000X2000':
+ Performance counter stats for './out/MatrixMult.clang.out 2000':
 
-       7658.394068 task-clock (msec)         #    0.992 CPUs utilized          
-               678 context-switches          #    0.089 K/sec                  
+      15861.889316 task-clock (msec)         #    1.000 CPUs utilized          
+             1,429 context-switches          #    0.090 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               938 page-faults               #    0.122 K/sec                  
-    29,719,467,677 cycles                    #    3.881 GHz                    
+             4,907 page-faults               #    0.309 K/sec                  
+    60,918,858,589 cycles                    #    3.841 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    32,271,082,440 instructions              #    1.09  insns per cycle        
-     2,067,359,328 branches                  #  269.947 M/sec                  
-         1,159,511 branch-misses             #    0.06% of all branches        
+    48,232,762,669 instructions              #    0.79  insns per cycle        
+     4,033,560,380 branches                  #  254.293 M/sec                  
+         4,056,160 branch-misses             #    0.10% of all branches        
 
-       7.716442004 seconds time elapsed
+      15.868791235 seconds time elapsed
 
-Pass 2000 X 2000 matrix test case 
-A[1999][1999] = 5, B[1999][1999] =5, C[1999][1999] =37638 
+max = 2000
+Matrix C[max-1][max-1] = 3996001000
+Pass MatrixMult2 test case
 
- Performance counter stats for './out/MatrixMult.gcc.vector.out 2000X2000':
+ Performance counter stats for './out/MatrixMult.clang.out 2000':
 
-       7986.923073 task-clock (msec)         #    0.999 CPUs utilized          
-               697 context-switches          #    0.087 K/sec                  
+      16005.689023 task-clock (msec)         #    1.000 CPUs utilized          
+             1,485 context-switches          #    0.093 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               938 page-faults               #    0.117 K/sec                  
-    31,015,514,637 cycles                    #    3.883 GHz                    
+             4,396 page-faults               #    0.275 K/sec                  
+    61,353,949,784 cycles                    #    3.833 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    32,271,401,636 instructions              #    1.04  insns per cycle        
-     2,067,416,947 branches                  #  258.850 M/sec                  
-         1,163,111 branch-misses             #    0.06% of all branches        
+    48,231,383,454 instructions              #    0.79  insns per cycle        
+     4,033,356,968 branches                  #  251.995 M/sec                  
+         4,063,581 branch-misses             #    0.10% of all branches        
 
-       7.991729936 seconds time elapsed
+      16.012554189 seconds time elapsed
 
-Pass 2000 X 2000 matrix test case 
-A[1999][1999] = 0, B[1999][1999] =0, C[1999][1999] =41408 
+max = 2000
+Matrix C[max-1][max-1] = 3996001000
+Pass MatrixMult2 test case
 
- Performance counter stats for './out/MatrixMult.gcc.vector.out 2000X2000':
+ Performance counter stats for './out/MatrixMult.clang.out 2000':
 
-       7806.358436 task-clock (msec)         #    0.999 CPUs utilized          
-               696 context-switches          #    0.089 K/sec                  
+      15748.423462 task-clock (msec)         #    0.999 CPUs utilized          
+             1,413 context-switches          #    0.090 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               938 page-faults               #    0.120 K/sec                  
-    30,301,349,004 cycles                    #    3.882 GHz                    
+             4,397 page-faults               #    0.279 K/sec                  
+    60,627,403,215 cycles                    #    3.850 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    32,271,261,834 instructions              #    1.07  insns per cycle        
-     2,067,393,782 branches                  #  264.835 M/sec                  
-         1,159,681 branch-misses             #    0.06% of all branches        
+    48,230,832,548 instructions              #    0.80  insns per cycle        
+     4,033,257,991 branches                  #  256.106 M/sec                  
+         4,057,324 branch-misses             #    0.10% of all branches        
 
-       7.812147254 seconds time elapsed
+      15.756420422 seconds time elapsed
 
-Pass 2000 X 2000 matrix test case 
-A[1999][1999] = 3, B[1999][1999] =3, C[1999][1999] =39695 
+max = 2000
+Matrix C[max-1][max-1] = 3996001000
+Pass MatrixMult2 test case
 
- Performance counter stats for './out/MatrixMult.gcc.vector.out 2000X2000':
+ Performance counter stats for './out/MatrixMult.clang.out 2000':
 
-       7909.028123 task-clock (msec)         #    0.999 CPUs utilized          
-               699 context-switches          #    0.088 K/sec                  
+      15749.004345 task-clock (msec)         #    1.000 CPUs utilized          
+             1,453 context-switches          #    0.092 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               938 page-faults               #    0.119 K/sec                  
-    30,690,466,234 cycles                    #    3.880 GHz                    
+             4,396 page-faults               #    0.279 K/sec                  
+    60,340,378,282 cycles                    #    3.831 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    32,271,351,031 instructions              #    1.05  insns per cycle        
-     2,067,409,333 branches                  #  261.399 M/sec                  
-         1,156,787 branch-misses             #    0.06% of all branches        
+    48,231,322,888 instructions              #    0.80  insns per cycle        
+     4,033,321,648 branches                  #  256.100 M/sec                  
+         4,063,235 branch-misses             #    0.10% of all branches        
 
-       7.919673169 seconds time elapsed
-
-Pass 2000 X 2000 matrix test case 
-A[1999][1999] = 6, B[1999][1999] =6, C[1999][1999] =40641 
-
- Performance counter stats for './out/MatrixMult.gcc.vector.out 2000X2000':
-
-       8055.050098 task-clock (msec)         #    0.999 CPUs utilized          
-               709 context-switches          #    0.088 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-               938 page-faults               #    0.116 K/sec                  
-    31,257,575,044 cycles                    #    3.880 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-    32,271,523,918 instructions              #    1.03  insns per cycle        
-     2,067,441,149 branches                  #  256.664 M/sec                  
-         1,161,097 branch-misses             #    0.06% of all branches        
-
-       8.066185272 seconds time elapsed
-
-Pass 2000 X 2000 matrix test case 
-A[1999][1999] = 1, B[1999][1999] =1, C[1999][1999] =40366 
-
- Performance counter stats for './out/MatrixMult.gcc.vector.out 2000X2000':
-
-       7847.835630 task-clock (msec)         #    0.999 CPUs utilized          
-               682 context-switches          #    0.087 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-               938 page-faults               #    0.120 K/sec                  
-    30,462,632,557 cycles                    #    3.882 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-    32,271,238,835 instructions              #    1.06  insns per cycle        
-     2,067,387,574 branches                  #  263.434 M/sec                  
-         1,161,435 branch-misses             #    0.06% of all branches        
-
-       7.852656360 seconds time elapsed
-
-Pass 2000 X 2000 matrix test case 
-A[1999][1999] = 0, B[1999][1999] =0, C[1999][1999] =40793 
-
- Performance counter stats for './out/MatrixMult.gcc.vector.out 2000X2000':
-
-       7733.061202 task-clock (msec)         #    0.998 CPUs utilized          
-               679 context-switches          #    0.088 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-               937 page-faults               #    0.121 K/sec                  
-    29,994,304,444 cycles                    #    3.879 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-    32,271,114,167 instructions              #    1.08  insns per cycle        
-     2,067,367,059 branches                  #  267.341 M/sec                  
-         1,159,596 branch-misses             #    0.06% of all branches        
-
-       7.748906584 seconds time elapsed
-
-Pass 2000 X 2000 matrix test case 
-A[1999][1999] = 3, B[1999][1999] =3, C[1999][1999] =40199 
-
- Performance counter stats for './out/MatrixMult.gcc.vector.out 2000X2000':
-
-       6431.266808 task-clock (msec)         #    0.999 CPUs utilized          
-               566 context-switches          #    0.088 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-               938 page-faults               #    0.146 K/sec                  
-    24,977,158,861 cycles                    #    3.884 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-    32,269,584,008 instructions              #    1.29  insns per cycle        
-     2,067,088,891 branches                  #  321.412 M/sec                  
-         1,157,701 branch-misses             #    0.06% of all branches        
-
-       6.439558888 seconds time elapsed
-
-Pass 2000 X 2000 matrix test case 
-A[1999][1999] = 8, B[1999][1999] =8, C[1999][1999] =40719 
-
- Performance counter stats for './out/MatrixMult.gcc.vector.out 2000X2000':
-
-       6494.341969 task-clock (msec)         #    0.999 CPUs utilized          
-               600 context-switches          #    0.092 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-               938 page-faults               #    0.144 K/sec                  
-    25,196,949,235 cycles                    #    3.880 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-    32,269,777,540 instructions              #    1.28  insns per cycle        
-     2,067,126,078 branches                  #  318.296 M/sec                  
-         1,157,237 branch-misses             #    0.06% of all branches        
-
-       6.500777135 seconds time elapsed
+      15.755983626 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -367,7 +377,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 3401.000
+cpu MHz		: 1400.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

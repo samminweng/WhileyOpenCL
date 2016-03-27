@@ -6,8 +6,8 @@ alias opt="opt -load ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
 alias pollycc="clang -Xclang -load -Xclang ${PATH_TO_POLLY_LIB}/LLVMPolly.so"
 ### Create the folder and/or clean up the files
 init(){
-	c_type=$1
-	program=$2
+	program=$1
+	c_type=$2
 	pref_dir="$PWD/$program/perf"
 	mkdir -p "$pref_dir"
 	### remove all files inside the folder
@@ -23,7 +23,7 @@ run(){
 	### Repeat running the executables.
 	for i in {1..10}
 	do
-		timeout $TIMEOUT perf stat $executables $parameter >>$result 2>> $result
+	 	timeout $TIMEOUT perf stat $executables $parameter >>$result 2>> $result
 	done
 	### Output the hardware info.
 	cat /proc/cpuinfo >> $result
@@ -32,57 +32,58 @@ run(){
 ## Run Polly on the C code
 ##
 compileProgram(){
-	c_type=$1
-	program=$2
-	opt=$3
+	opt=$1
+	c_type=$2
+	program=$3
 	parameter=$4
-	num_threads=$5
+	num_threads=$5	
 	### Creating a static library ('Util.o') with GCC (http://www.cs.dartmouth.edu/~campbell/cs50/buildlib.html)
-    	clang -c Util.c -o Util.o ### Compile Util.c to Util.o (object file)
-    	ar -cvq libUtil.a Util.o
-    	result="$PWD/../../perf/$c_type.$program.$opt.$parameter.$num_threads.disableVC.txt"
+    clang -c Util.c -o Util.o ### Compile Util.c to Util.o (object file)
+    ar -cvq libUtil.a Util.o
+    result="$PWD/../../perf/$c_type.$program.$opt.$parameter.$num_threads.disableVC.txt"
 	echo -e -n "Disable loop vectorization..." > $result
 	case "$opt" in
 		"gcc")
 			echo -e -n "Compile C code using GCC -O3..." >> $result
-			gcc -O3 -fno-tree-vectorize $program.c libUtil.a -o "out/$program.$opt.out"
+			gcc -O3 -fno-tree-vectorize $program.c -o "out/$program.$opt.out"
 			;;
 		"clang")
 			echo -e -n "Compile C code using Clang -O3..." >> $result
-			clang -O3 -fno-vectorize $program.c libUtil.a -o "out/$program.$opt.out"
+			clang -O3 -fno-vectorize $program.c -o "out/$program.$opt.out"
 			;;
 		"polly")
 			echo "Optimize C code using Polly..." >> $result
 			pollycc -O3 -fno-vectorize\
-			        -mllvm -polly $program.c libUtil.a -o "out/$program.$opt.out"
+			        -mllvm -polly $program.c -o "out/$program.$opt.out"
 			;;
 		"openmp")
 			export OMP_NUM_THREADS=$num_threads
 			echo "Optimize C code using OpenMP code with $OMP_NUM_THREADS threads..." >> $result
 			pollycc -O3 -fno-vectorize\
-			        -mllvm -polly -mllvm -polly-parallel -lgomp $program.c libUtil.a -o "out/$program.$opt.out"
+			        -mllvm -polly -mllvm -polly-parallel -lgomp $program.c -o "out/$program.$opt.out"
 			;;
 	esac
 	run "./out/$program.$opt.out" $result
+	
 	result="$PWD/../../perf/$c_type.$program.$opt.$parameter.$num_threads.enableVC.txt"
 	echo -e -n "Enable loop vectorization..." > $result
 	case "$opt" in
 		"gcc")
 			echo -e -n "Compile C code using GCC -O3..." >> $result
-			gcc -O3 $program.c libUtil.a -o "out/$program.$opt.vector.out"
+			gcc -O3 $program.c -o "out/$program.$opt.vector.out"
 			;;
 		"clang")
 			echo -e -n "Compile C code using Clang -O3..." >> $result
-			clang -O3 $program.c libUtil.a -o "out/$program.$opt.vector.out"
+			clang -O3 $program.c -o "out/$program.$opt.vector.out"
 			;;
 		"polly")
 			echo "Optimize C code using Polly..." >> $result
-			pollycc -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine $program.c libUtil.a -o "out/$program.$opt.vector.out"
+			pollycc -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine $program.c -o "out/$program.$opt.vector.out"
 			;;
 		"openmp")
 			export OMP_NUM_THREADS=$num_threads
 			echo "Optimize C code using OpenMP code with $OMP_NUM_THREADS threads..." >> $result
-			pollycc -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine -mllvm -polly-parallel -lgomp $program.c libUtil.a -o "out/$program.$opt.vector.out"
+			pollycc -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine -mllvm -polly-parallel -lgomp $program.c -o "out/$program.$opt.vector.out"
 			;;
 	esac
 	run "./out/$program.$opt.vector.out" $result
@@ -91,13 +92,14 @@ compileProgram(){
 # Execute benchmarks
 #
 exec(){
-	c_type=$1
-	program=$2
-	opt=$3
-	parameter=$4
+	program=$1
+	c_type=$2
+	parameter=$3
+	opt=$4
 	num_threads=$5
 	cd "$program/impl/$c_type"
-	compileProgram $c_type $program $opt $parameter $num_threads
+	compileProgram $opt $c_type $program $parameter $num_threads
+	
 	cd ../../../
 }
 
@@ -113,10 +115,9 @@ exec(){
 ###exec MatrixMult handwritten 2000X2000 openmp 2
 ###exec MatrixMult handwritten 2000X2000 openmp 4
 ### Autogenerate1 MatrixMult
-init autogenerate1 MatrixMult
-exec autogenerate1 MatrixMult gcc 2000 1
-exec autogenerate1 MatrixMult clang 2000 1
-exec autogenerate1 MatrixMult polly 2000 1
-exec autogenerate1 MatrixMult openmp 1
-exec autogenerate1 MatrixMult openmp 2
-exec autogenerate1 MatrixMult openmp 4
+exec MatrixMult autoger 2000X2000 gcc 1
+# exec MatrixMult handwritten2 2000X2000 clang 1
+# exec MatrixMult handwritten2 2000X2000 polly 1
+# exec MatrixMult handwritten2 2000X2000 openmp 1
+# exec MatrixMult handwritten2 2000X2000 openmp 2
+# exec MatrixMult handwritten2 2000X2000 openmp 4
