@@ -4,10 +4,11 @@ import whiley.io.File
 // ========================================================
 // Description
 // ========================================================
-// This matrix multiplication converts 2D array into 1D array
-// by using 'row-major', i.e. 
-//
-constant N is 10
+// This matrix multiplication maps 2D array into 1D array,
+// and then multiplies two matrices to produce final matrix
+// using 1D array
+// 
+constant N is 20
 type nat is (int x) where x >= 0
 type Matrix is ({
     int width,
@@ -17,7 +18,9 @@ type Matrix is ({
 // ========================================================
 // Create and return a Matrix
 // ========================================================
-function matrix(nat width, nat height, int[] data) -> (Matrix r):
+function matrix(nat width, nat height, int[] data) -> (Matrix r)
+// Input array must match matrix height
+requires |data| == width * height:
     return {
         width: width,
         height: height,
@@ -26,27 +29,29 @@ function matrix(nat width, nat height, int[] data) -> (Matrix r):
 // ========================================================
 // Initialize a Matrix and assign each element with its row 
 // ========================================================   
-function init() -> (Matrix r):
-    int[] data = [0;N*N]
+function init(nat width, nat height) -> (Matrix r):
+    int[] data = [0;width*height]
     // Fill in Matrix
     int i = 0    
-    while i < N:
+    while i < height:
         int j = 0
-        while j < N:
-            data[i*N+j] = data[i*N+j] + i
+        while j < width:
+            data[i*width+j] = data[i*width+j] + i
             j = j + 1
         i = i + 1
-    return matrix(N, N, data)
+    return matrix(width, height, data)
 
 //========================================================
 // Print out a Matrix 
 // ========================================================   
 method print_mat(System.Console sys, Matrix a):
     int i = 0
-    while i < N:
+    nat width = a.width
+    nat height = a.height
+    while i < height:
         int j = 0
-        while j < N:
-            sys.out.print(a.data[i*N+j])
+        while j < width:
+            sys.out.print(a.data[i*width+j])
             sys.out.print_s(" ")
             j = j + 1
         i = i + 1
@@ -55,35 +60,44 @@ method print_mat(System.Console sys, Matrix a):
 // ========================================================
 // Initialize a Matrix and assign each element with its row 
 // ========================================================   
-function mat_mult(Matrix a, Matrix b) -> (Matrix r):
-    int[] data = [0;N*N]
+function mat_mult(Matrix a, Matrix b) -> (Matrix c)
+requires a.width == b.height
+ensures c.width == b.width && c.height == a.height:
+    nat width = b.width
+    nat height = a.height
+    int[] data = [0;width*height]
     int[] a_data = a.data
     int[] b_data = b.data
     int i = 0
-    while i < N:
+    while i < height:
         int j = 0
-        while j < N:
+        while j < width:
             int k = 0
-            while k < N:
+            while k < width:
                 // c[i][j] = c[i][j] + a[i][k] * b[k][j]
-                data[i*N+j] = data[i*N+j] + a_data[i*N+k] * b_data[k*N+j]
+                data[i*width+j] = data[i*width+j] + a_data[i*width+k] * b_data[k*width+j]
                 k = k + 1
             j = j + 1
         i = i + 1
-    return matrix(N, N, data)
+    return matrix(width, height, data)
         
 
 method main(System.Console sys):
+    sys.out.print_s("N = ")
+    sys.out.println(N)
     // Initialize matrix A
-    Matrix A = init()
-    sys.out.println_s("Matrix A ")
-    print_mat(sys, A)
+    Matrix A = init(N, N)
     // Initialize matrix B
-    Matrix B = init()
-    sys.out.println_s("Matrix B ")
-    print_mat(sys, B)
+    Matrix B = init(N, N)
     // Multiply A and B 
     Matrix C = mat_mult(A, B)
-    sys.out.println_s("Matrix C ")
+    assert A.data[(N-1)*N+N-1] == N-1
+    assert B.data[(N-1)*N+N-1] == N-1
+    // N=20, C[19][19] = 3610
+    // N=200, C[199][199] = 3960100
+    // N=2000, C[1999][1999] = 3996001000
+    assert C.data[(N-1)*N+N-1] == 3610
     print_mat(sys, C)
-    sys.out.println_s("Pass MatrixMult test case")
+    sys.out.print_s("Matrix C[N-1][N-1] = ")
+    sys.out.println(C.data[(N-1)*N+N-1])
+    sys.out.println_s("Pass MatrixMult2 test case")

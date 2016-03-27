@@ -87,25 +87,25 @@ method printMat(System.Console sys, Matrix A):
 // ========================================================
 // Generate a Matrix with given row and cols
 // ========================================================   
-function genMatrix(nat height, nat width) -> (Matrix r):
+function init(nat height, nat width) -> (Matrix r):
     int[][] rows = [[0;width];height]
     // Fill in Matrix
     int i = 0    
     while i < height:
         int j = 0
         while j < width:
-            rows[i][j] = 1
+            rows[i][j] = i
             j = j + 1
         i = i + 1
     return matrix(width,height,rows)
 
 method main(System.Console sys):
-    int max = 10
-    null|Matrix A = genMatrix(max, max)
-    null|Matrix B = genMatrix(max, max)
+    int max = 20
+    null|Matrix A = init(max, max)
+    null|Matrix B = init(max, max)
     null|Matrix C = multiply(A,B)
-    assert C.data[0][0] == max
-    assert C.width == max
-    assert C.height == max
-    sys.out.println(C.data[0][0])
-    sys.out.print_s("Pass MatrixMult test case")
+    assert A.data[max-1][max-1] == max-1
+    assert B.data[max-1][max-1] == max-1
+    assert C.data[max-1][max-1] == 3610
+    printMat(sys, C)
+    sys.out.println_s("Pass MatrixMult test case")
