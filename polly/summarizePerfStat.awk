@@ -59,7 +59,7 @@ BEGIN {
 	# Polly optimiz
 	polly_opts="gcc clang polly openmp"
 	# Parameters
-	parameters["MatrixMult"] = "1000 2000";
+	parameters["MatrixMult"] = "200 400 600 800 1000 1200 1400 1600 1800 2000 2200 2400 2600 2800 3000";
 	threads="1 2 4";
 	vcs="enableVC";
 	cpu_utils[""] = "";
