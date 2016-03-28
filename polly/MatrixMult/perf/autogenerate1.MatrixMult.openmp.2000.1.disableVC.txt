@@ -4,18 +4,18 @@ Pass MatrixMult2 test case
 
  Performance counter stats for './out/MatrixMult.openmp.disableVC.out 2000':
 
-       4817.386047 task-clock (msec)         #    0.999 CPUs utilized          
-               445 context-switches          #    0.092 K/sec                  
-                 2 cpu-migrations            #    0.000 K/sec                  
+       4820.619290 task-clock (msec)         #    0.999 CPUs utilized          
+               466 context-switches          #    0.097 K/sec                  
+                 1 cpu-migrations            #    0.000 K/sec                  
              3,937 page-faults               #    0.817 K/sec                  
-    18,645,040,586 cycles                    #    3.870 GHz                    
+    18,634,424,455 cycles                    #    3.866 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    67,287,746,852 instructions              #    3.61  insns per cycle        
-     8,289,735,305 branches                  # 1720.795 M/sec                  
-         8,500,382 branch-misses             #    0.10% of all branches        
+    67,288,344,911 instructions              #    3.61  insns per cycle        
+     8,289,844,267 branches                  # 1719.664 M/sec                  
+         8,392,909 branch-misses             #    0.10% of all branches        
 
-       4.823053283 seconds time elapsed
+       4.825693284 seconds time elapsed
 
 max = 2000
 Matrix C[max-1][max-1] = 3996001000
@@ -23,18 +23,18 @@ Pass MatrixMult2 test case
 
  Performance counter stats for './out/MatrixMult.openmp.disableVC.out 2000':
 
-       4859.626287 task-clock (msec)         #    0.999 CPUs utilized          
-               456 context-switches          #    0.094 K/sec                  
+       4850.170072 task-clock (msec)         #    0.999 CPUs utilized          
+               489 context-switches          #    0.101 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             4,474 page-faults               #    0.921 K/sec                  
-    18,705,609,411 cycles                    #    3.849 GHz                    
+             3,937 page-faults               #    0.812 K/sec                  
+    18,729,157,479 cycles                    #    3.862 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    67,288,854,139 instructions              #    3.60  insns per cycle        
-     8,289,913,533 branches                  # 1705.875 M/sec                  
-         8,489,679 branch-misses             #    0.10% of all branches        
+    67,287,466,366 instructions              #    3.59  insns per cycle        
+     8,289,688,337 branches                  # 1709.154 M/sec                  
+         8,485,310 branch-misses             #    0.10% of all branches        
 
-       4.864521608 seconds time elapsed
+       4.854038038 seconds time elapsed
 
 max = 2000
 Matrix C[max-1][max-1] = 3996001000
@@ -42,18 +42,18 @@ Pass MatrixMult2 test case
 
  Performance counter stats for './out/MatrixMult.openmp.disableVC.out 2000':
 
-       4836.953209 task-clock (msec)         #    0.999 CPUs utilized          
-               465 context-switches          #    0.096 K/sec                  
+       4828.236844 task-clock (msec)         #    0.999 CPUs utilized          
+               453 context-switches          #    0.094 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             4,448 page-faults               #    0.920 K/sec                  
-    18,688,789,761 cycles                    #    3.864 GHz                    
+             4,448 page-faults               #    0.921 K/sec                  
+    18,661,461,395 cycles                    #    3.865 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    67,289,287,143 instructions              #    3.60  insns per cycle        
-     8,289,987,425 branches                  # 1713.886 M/sec                  
-         8,483,219 branch-misses             #    0.10% of all branches        
+    67,288,741,154 instructions              #    3.61  insns per cycle        
+     8,289,893,349 branches                  # 1716.961 M/sec                  
+         8,479,192 branch-misses             #    0.10% of all branches        
 
-       4.841055621 seconds time elapsed
+       4.832807559 seconds time elapsed
 
 max = 2000
 Matrix C[max-1][max-1] = 3996001000
@@ -61,18 +61,18 @@ Pass MatrixMult2 test case
 
  Performance counter stats for './out/MatrixMult.openmp.disableVC.out 2000':
 
-       4831.803932 task-clock (msec)         #    0.999 CPUs utilized          
-               437 context-switches          #    0.090 K/sec                  
+       4858.165822 task-clock (msec)         #    0.999 CPUs utilized          
+               476 context-switches          #    0.098 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             3,937 page-faults               #    0.815 K/sec                  
-    18,685,268,934 cycles                    #    3.867 GHz                    
+             4,448 page-faults               #    0.916 K/sec                  
+    18,671,891,631 cycles                    #    3.843 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    67,287,236,099 instructions              #    3.60  insns per cycle        
-     8,289,648,272 branches                  # 1715.643 M/sec                  
-         8,507,465 branch-misses             #    0.10% of all branches        
+    67,288,857,950 instructions              #    3.60  insns per cycle        
+     8,289,914,940 branches                  # 1706.388 M/sec                  
+         8,475,314 branch-misses             #    0.10% of all branches        
 
-       4.835459950 seconds time elapsed
+       4.862385094 seconds time elapsed
 
 max = 2000
 Matrix C[max-1][max-1] = 3996001000
@@ -80,18 +80,18 @@ Pass MatrixMult2 test case
 
  Performance counter stats for './out/MatrixMult.openmp.disableVC.out 2000':
 
-       4823.096473 task-clock (msec)         #    0.999 CPUs utilized          
-               438 context-switches          #    0.091 K/sec                  
+       4881.966477 task-clock (msec)         #    0.999 CPUs utilized          
+               473 context-switches          #    0.097 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             3,937 page-faults               #    0.816 K/sec                  
-    18,662,903,659 cycles                    #    3.869 GHz                    
+             4,448 page-faults               #    0.911 K/sec                  
+    18,656,897,599 cycles                    #    3.822 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    67,287,258,953 instructions              #    3.61  insns per cycle        
-     8,289,648,188 branches                  # 1718.740 M/sec                  
-         8,501,508 branch-misses             #    0.10% of all branches        
+    67,289,390,474 instructions              #    3.61  insns per cycle        
+     8,289,997,618 branches                  # 1698.086 M/sec                  
+         8,466,332 branch-misses             #    0.10% of all branches        
 
-       4.828723629 seconds time elapsed
+       4.886862688 seconds time elapsed
 
 max = 2000
 Matrix C[max-1][max-1] = 3996001000
@@ -99,18 +99,18 @@ Pass MatrixMult2 test case
 
  Performance counter stats for './out/MatrixMult.openmp.disableVC.out 2000':
 
-       4823.937118 task-clock (msec)         #    0.999 CPUs utilized          
-               436 context-switches          #    0.090 K/sec                  
+       4831.348892 task-clock (msec)         #    0.999 CPUs utilized          
+               445 context-switches          #    0.092 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             4,448 page-faults               #    0.922 K/sec                  
-    18,670,496,042 cycles                    #    3.870 GHz                    
+             4,477 page-faults               #    0.927 K/sec                  
+    18,659,586,483 cycles                    #    3.862 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    67,288,626,686 instructions              #    3.60  insns per cycle        
-     8,289,876,207 branches                  # 1718.488 M/sec                  
-         8,474,643 branch-misses             #    0.10% of all branches        
+    67,288,837,533 instructions              #    3.61  insns per cycle        
+     8,289,903,998 branches                  # 1715.857 M/sec                  
+         8,508,815 branch-misses             #    0.10% of all branches        
 
-       4.828551653 seconds time elapsed
+       4.835807204 seconds time elapsed
 
 max = 2000
 Matrix C[max-1][max-1] = 3996001000
@@ -118,56 +118,18 @@ Pass MatrixMult2 test case
 
  Performance counter stats for './out/MatrixMult.openmp.disableVC.out 2000':
 
-       4823.941451 task-clock (msec)         #    0.999 CPUs utilized          
-               452 context-switches          #    0.094 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-             3,937 page-faults               #    0.816 K/sec                  
-    18,675,539,769 cycles                    #    3.871 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-    67,287,251,433 instructions              #    3.60  insns per cycle        
-     8,289,649,615 branches                  # 1718.439 M/sec                  
-         8,478,902 branch-misses             #    0.10% of all branches        
-
-       4.828011856 seconds time elapsed
-
-max = 2000
-Matrix C[max-1][max-1] = 3996001000
-Pass MatrixMult2 test case
-
- Performance counter stats for './out/MatrixMult.openmp.disableVC.out 2000':
-
-       4824.271187 task-clock (msec)         #    0.999 CPUs utilized          
-               439 context-switches          #    0.091 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-             3,426 page-faults               #    0.710 K/sec                  
-    18,663,796,088 cycles                    #    3.869 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-    67,285,847,517 instructions              #    3.61  insns per cycle        
-     8,289,419,386 branches                  # 1718.274 M/sec                  
-         8,472,690 branch-misses             #    0.10% of all branches        
-
-       4.828512184 seconds time elapsed
-
-max = 2000
-Matrix C[max-1][max-1] = 3996001000
-Pass MatrixMult2 test case
-
- Performance counter stats for './out/MatrixMult.openmp.disableVC.out 2000':
-
-       4839.753780 task-clock (msec)         #    0.999 CPUs utilized          
-               473 context-switches          #    0.098 K/sec                  
+       4840.515454 task-clock (msec)         #    0.999 CPUs utilized          
+               443 context-switches          #    0.092 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
              4,959 page-faults               #    0.001 M/sec                  
-    18,674,338,910 cycles                    #    3.859 GHz                    
+    18,673,686,012 cycles                    #    3.858 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    67,290,215,753 instructions              #    3.60  insns per cycle        
-     8,290,137,775 branches                  # 1712.926 M/sec                  
-         8,478,426 branch-misses             #    0.10% of all branches        
+    67,290,149,779 instructions              #    3.60  insns per cycle        
+     8,290,128,020 branches                  # 1712.654 M/sec                  
+         8,484,950 branch-misses             #    0.10% of all branches        
 
-       4.844125146 seconds time elapsed
+       4.845642768 seconds time elapsed
 
 max = 2000
 Matrix C[max-1][max-1] = 3996001000
@@ -175,18 +137,56 @@ Pass MatrixMult2 test case
 
  Performance counter stats for './out/MatrixMult.openmp.disableVC.out 2000':
 
-       4824.945756 task-clock (msec)         #    0.999 CPUs utilized          
-               471 context-switches          #    0.098 K/sec                  
+       4831.880316 task-clock (msec)         #    0.999 CPUs utilized          
+               463 context-switches          #    0.096 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             4,448 page-faults               #    0.922 K/sec                  
-    18,644,777,643 cycles                    #    3.864 GHz                    
+             3,937 page-faults               #    0.815 K/sec                  
+    18,684,700,422 cycles                    #    3.867 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    67,288,735,057 instructions              #    3.61  insns per cycle        
-     8,289,895,581 branches                  # 1718.132 M/sec                  
-         8,379,479 branch-misses             #    0.10% of all branches        
+    67,287,387,887 instructions              #    3.60  insns per cycle        
+     8,289,670,071 branches                  # 1715.620 M/sec                  
+         8,481,081 branch-misses             #    0.10% of all branches        
 
-       4.830572546 seconds time elapsed
+       4.837358084 seconds time elapsed
+
+max = 2000
+Matrix C[max-1][max-1] = 3996001000
+Pass MatrixMult2 test case
+
+ Performance counter stats for './out/MatrixMult.openmp.disableVC.out 2000':
+
+       4836.966393 task-clock (msec)         #    0.999 CPUs utilized          
+               451 context-switches          #    0.093 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+             4,448 page-faults               #    0.920 K/sec                  
+    18,675,446,245 cycles                    #    3.861 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    67,288,719,128 instructions              #    3.60  insns per cycle        
+     8,289,892,942 branches                  # 1713.862 M/sec                  
+         8,491,316 branch-misses             #    0.10% of all branches        
+
+       4.841387586 seconds time elapsed
+
+max = 2000
+Matrix C[max-1][max-1] = 3996001000
+Pass MatrixMult2 test case
+
+ Performance counter stats for './out/MatrixMult.openmp.disableVC.out 2000':
+
+       4835.570901 task-clock (msec)         #    0.999 CPUs utilized          
+               444 context-switches          #    0.092 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+             4,959 page-faults               #    0.001 M/sec                  
+    18,671,681,862 cycles                    #    3.861 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    67,290,078,970 instructions              #    3.60  insns per cycle        
+     8,290,117,577 branches                  # 1714.403 M/sec                  
+         8,405,775 branch-misses             #    0.10% of all branches        
+
+       4.839510959 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -299,7 +299,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 3401.000
+cpu MHz		: 800.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -377,7 +377,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 800.000
+cpu MHz		: 3401.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

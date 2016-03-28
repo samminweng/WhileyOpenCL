@@ -4,18 +4,18 @@ Pass MatrixMult2 test case
 
  Performance counter stats for './out/MatrixMult.gcc.enableVC.out 1000':
 
-       1887.328319 task-clock (msec)         #    0.998 CPUs utilized          
-               173 context-switches          #    0.092 K/sec                  
-                 6 cpu-migrations            #    0.003 K/sec                  
+       1915.789133 task-clock (msec)         #    0.998 CPUs utilized          
+               182 context-switches          #    0.095 K/sec                  
+                 3 cpu-migrations            #    0.002 K/sec                  
              3,513 page-faults               #    0.002 M/sec                  
-     7,284,454,016 cycles                    #    3.860 GHz                    
+     7,341,638,847 cycles                    #    3.832 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     7,041,968,129 instructions              #    0.97  insns per cycle        
-     1,006,090,040 branches                  #  533.076 M/sec                  
-         1,021,182 branch-misses             #    0.10% of all branches        
+     7,041,820,107 instructions              #    0.96  insns per cycle        
+     1,006,062,337 branches                  #  525.143 M/sec                  
+         1,022,462 branch-misses             #    0.10% of all branches        
 
-       1.891619333 seconds time elapsed
+       1.919991062 seconds time elapsed
 
 max = 1000
 Matrix C[max-1][max-1] = 499000500
@@ -23,18 +23,18 @@ Pass MatrixMult2 test case
 
  Performance counter stats for './out/MatrixMult.gcc.enableVC.out 1000':
 
-       2003.105708 task-clock (msec)         #    0.996 CPUs utilized          
-               179 context-switches          #    0.089 K/sec                  
+       2023.831552 task-clock (msec)         #    0.997 CPUs utilized          
+               191 context-switches          #    0.094 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             4,535 page-faults               #    0.002 M/sec                  
-     7,734,321,439 cycles                    #    3.861 GHz                    
+             4,023 page-faults               #    0.002 M/sec                  
+     7,747,612,495 cycles                    #    3.828 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     7,044,532,421 instructions              #    0.91  insns per cycle        
-     1,006,506,880 branches                  #  502.473 M/sec                  
-         1,021,429 branch-misses             #    0.10% of all branches        
+     7,043,702,916 instructions              #    0.91  insns per cycle        
+     1,006,370,097 branches                  #  497.260 M/sec                  
+         1,023,025 branch-misses             #    0.10% of all branches        
 
-       2.010752232 seconds time elapsed
+       2.029232396 seconds time elapsed
 
 max = 1000
 Matrix C[max-1][max-1] = 499000500
@@ -42,37 +42,18 @@ Pass MatrixMult2 test case
 
  Performance counter stats for './out/MatrixMult.gcc.enableVC.out 1000':
 
-       1895.370712 task-clock (msec)         #    0.997 CPUs utilized          
-               174 context-switches          #    0.092 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-             3,513 page-faults               #    0.002 M/sec                  
-     7,309,695,308 cycles                    #    3.857 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-     7,041,602,234 instructions              #    0.96  insns per cycle        
-     1,006,017,599 branches                  #  530.776 M/sec                  
-         1,019,939 branch-misses             #    0.10% of all branches        
-
-       1.901553993 seconds time elapsed
-
-max = 1000
-Matrix C[max-1][max-1] = 499000500
-Pass MatrixMult2 test case
-
- Performance counter stats for './out/MatrixMult.gcc.enableVC.out 1000':
-
-       2244.023123 task-clock (msec)         #    0.998 CPUs utilized          
-               208 context-switches          #    0.093 K/sec                  
+       1909.758156 task-clock (msec)         #    0.997 CPUs utilized          
+               187 context-switches          #    0.098 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
              4,024 page-faults               #    0.002 M/sec                  
-     8,652,244,155 cycles                    #    3.856 GHz                    
+     7,298,755,059 cycles                    #    3.822 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     7,043,480,269 instructions              #    0.81  insns per cycle        
-     1,006,340,872 branches                  #  448.454 M/sec                  
-         1,022,687 branch-misses             #    0.10% of all branches        
+     7,043,104,574 instructions              #    0.96  insns per cycle        
+     1,006,272,998 branches                  #  526.911 M/sec                  
+         1,020,649 branch-misses             #    0.10% of all branches        
 
-       2.249064585 seconds time elapsed
+       1.915025230 seconds time elapsed
 
 max = 1000
 Matrix C[max-1][max-1] = 499000500
@@ -80,18 +61,56 @@ Pass MatrixMult2 test case
 
  Performance counter stats for './out/MatrixMult.gcc.enableVC.out 1000':
 
-       2178.856995 task-clock (msec)         #    0.998 CPUs utilized          
-               201 context-switches          #    0.092 K/sec                  
+       1895.063824 task-clock (msec)         #    0.997 CPUs utilized          
+               177 context-switches          #    0.093 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+             4,024 page-faults               #    0.002 M/sec                  
+     7,239,954,750 cycles                    #    3.820 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+     7,043,006,611 instructions              #    0.97  insns per cycle        
+     1,006,258,719 branches                  #  530.989 M/sec                  
+         1,019,511 branch-misses             #    0.10% of all branches        
+
+       1.899870951 seconds time elapsed
+
+max = 1000
+Matrix C[max-1][max-1] = 499000500
+Pass MatrixMult2 test case
+
+ Performance counter stats for './out/MatrixMult.gcc.enableVC.out 1000':
+
+       1906.473686 task-clock (msec)         #    0.998 CPUs utilized          
+               175 context-switches          #    0.092 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+             4,036 page-faults               #    0.002 M/sec                  
+     7,290,672,151 cycles                    #    3.824 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+     7,043,056,083 instructions              #    0.97  insns per cycle        
+     1,006,260,519 branches                  #  527.812 M/sec                  
+         1,020,683 branch-misses             #    0.10% of all branches        
+
+       1.911031040 seconds time elapsed
+
+max = 1000
+Matrix C[max-1][max-1] = 499000500
+Pass MatrixMult2 test case
+
+ Performance counter stats for './out/MatrixMult.gcc.enableVC.out 1000':
+
+       1892.485583 task-clock (msec)         #    0.997 CPUs utilized          
+               182 context-switches          #    0.096 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
              4,535 page-faults               #    0.002 M/sec                  
-     8,372,051,875 cycles                    #    3.842 GHz                    
+     7,233,206,441 cycles                    #    3.822 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     7,044,711,734 instructions              #    0.84  insns per cycle        
-     1,006,543,042 branches                  #  461.959 M/sec                  
-         1,021,814 branch-misses             #    0.10% of all branches        
+     7,044,457,064 instructions              #    0.97  insns per cycle        
+     1,006,499,624 branches                  #  531.840 M/sec                  
+         1,020,864 branch-misses             #    0.10% of all branches        
 
-       2.183570072 seconds time elapsed
+       1.898176922 seconds time elapsed
 
 max = 1000
 Matrix C[max-1][max-1] = 499000500
@@ -99,18 +118,18 @@ Pass MatrixMult2 test case
 
  Performance counter stats for './out/MatrixMult.gcc.enableVC.out 1000':
 
-       1984.276009 task-clock (msec)         #    0.998 CPUs utilized          
-               188 context-switches          #    0.095 K/sec                  
+       1899.222588 task-clock (msec)         #    0.998 CPUs utilized          
+               171 context-switches          #    0.090 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             3,513 page-faults               #    0.002 M/sec                  
-     7,614,714,806 cycles                    #    3.838 GHz                    
+             4,023 page-faults               #    0.002 M/sec                  
+     7,256,433,546 cycles                    #    3.821 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     7,041,716,160 instructions              #    0.92  insns per cycle        
-     1,006,049,319 branches                  #  507.011 M/sec                  
-         1,020,384 branch-misses             #    0.10% of all branches        
+     7,042,993,511 instructions              #    0.97  insns per cycle        
+     1,006,258,435 branches                  #  529.826 M/sec                  
+         1,020,336 branch-misses             #    0.10% of all branches        
 
-       1.988670437 seconds time elapsed
+       1.903639392 seconds time elapsed
 
 max = 1000
 Matrix C[max-1][max-1] = 499000500
@@ -118,18 +137,18 @@ Pass MatrixMult2 test case
 
  Performance counter stats for './out/MatrixMult.gcc.enableVC.out 1000':
 
-       1915.297969 task-clock (msec)         #    0.998 CPUs utilized          
-               172 context-switches          #    0.090 K/sec                  
+       1883.173153 task-clock (msec)         #    0.996 CPUs utilized          
+               181 context-switches          #    0.096 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             4,535 page-faults               #    0.002 M/sec                  
-     7,293,314,155 cycles                    #    3.808 GHz                    
+             4,024 page-faults               #    0.002 M/sec                  
+     7,251,754,032 cycles                    #    3.851 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     7,044,443,770 instructions              #    0.97  insns per cycle        
-     1,006,490,822 branches                  #  525.501 M/sec                  
-         1,021,100 branch-misses             #    0.10% of all branches        
+     7,043,028,409 instructions              #    0.97  insns per cycle        
+     1,006,259,043 branches                  #  534.342 M/sec                  
+         1,019,354 branch-misses             #    0.10% of all branches        
 
-       1.919738367 seconds time elapsed
+       1.890051166 seconds time elapsed
 
 max = 1000
 Matrix C[max-1][max-1] = 499000500
@@ -137,18 +156,18 @@ Pass MatrixMult2 test case
 
  Performance counter stats for './out/MatrixMult.gcc.enableVC.out 1000':
 
-       1979.476277 task-clock (msec)         #    0.997 CPUs utilized          
-               189 context-switches          #    0.095 K/sec                  
+       1902.051398 task-clock (msec)         #    0.997 CPUs utilized          
+               177 context-switches          #    0.093 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             4,535 page-faults               #    0.002 M/sec                  
-     7,568,822,945 cycles                    #    3.824 GHz                    
+             4,024 page-faults               #    0.002 M/sec                  
+     7,303,980,828 cycles                    #    3.840 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     7,044,526,762 instructions              #    0.93  insns per cycle        
-     1,006,509,380 branches                  #  508.473 M/sec                  
-         1,020,796 branch-misses             #    0.10% of all branches        
+     7,043,027,613 instructions              #    0.96  insns per cycle        
+     1,006,264,257 branches                  #  529.042 M/sec                  
+         1,018,961 branch-misses             #    0.10% of all branches        
 
-       1.984509763 seconds time elapsed
+       1.908376763 seconds time elapsed
 
 max = 1000
 Matrix C[max-1][max-1] = 499000500
@@ -156,37 +175,18 @@ Pass MatrixMult2 test case
 
  Performance counter stats for './out/MatrixMult.gcc.enableVC.out 1000':
 
-       2079.752307 task-clock (msec)         #    0.997 CPUs utilized          
-               194 context-switches          #    0.093 K/sec                  
+       1913.819099 task-clock (msec)         #    0.997 CPUs utilized          
+               174 context-switches          #    0.091 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             4,558 page-faults               #    0.002 M/sec                  
-     8,004,758,474 cycles                    #    3.849 GHz                    
+             4,024 page-faults               #    0.002 M/sec                  
+     7,288,254,005 cycles                    #    3.808 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     7,044,680,928 instructions              #    0.88  insns per cycle        
-     1,006,535,464 branches                  #  483.969 M/sec                  
-         1,021,306 branch-misses             #    0.10% of all branches        
+     7,043,021,876 instructions              #    0.97  insns per cycle        
+     1,006,256,499 branches                  #  525.785 M/sec                  
+         1,019,452 branch-misses             #    0.10% of all branches        
 
-       2.085095133 seconds time elapsed
-
-max = 1000
-Matrix C[max-1][max-1] = 499000500
-Pass MatrixMult2 test case
-
- Performance counter stats for './out/MatrixMult.gcc.enableVC.out 1000':
-
-       1894.398690 task-clock (msec)         #    0.998 CPUs utilized          
-               174 context-switches          #    0.092 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-             4,535 page-faults               #    0.002 M/sec                  
-     7,301,100,553 cycles                    #    3.854 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-     7,044,408,074 instructions              #    0.96  insns per cycle        
-     1,006,485,465 branches                  #  531.295 M/sec                  
-         1,020,328 branch-misses             #    0.10% of all branches        
-
-       1.898501992 seconds time elapsed
+       1.918628743 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -377,7 +377,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 2800.000
+cpu MHz		: 3401.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
