@@ -36,20 +36,20 @@ compileProgram(){
 	opt=$4
 	num_threads=$5
 	### Creating a static library ('Util.o') with GCC (http://www.cs.dartmouth.edu/~campbell/cs50/buildlib.html)
-    utildir="$PWD/../../../../tests/code"
+    	utildir="$PWD/../../../../tests/code"
 	### cp "$program/$program.whiley" $utildir/Util.c $utildir/Util.h $workingdir
 	cp $utildir/Util.c $utildir/Util.h $PWD
-    clang -c Util.c -o Util.o ### Compile Util.c to Util.o (object file)
-    ar -cvq libUtil.a Util.o
-    if [[ $c_type == *"autogenerate"* ]]
+    	clang -c Util.c -o Util.o ### Compile Util.c to Util.o (object file)
+    	ar -cvq libUtil.a Util.o
+    	if [[ $c_type == *"autogenerate"* ]]
 	then
 		### Translate Whiley program into C code 
 		./../../../../bin/wyopcl -code -copy -dealloc "$program.whiley"
 	fi
-   	read -p "Press [Enter] to continue..."
-    ### Compile C code into executables
+   	###read -p "Press [Enter] to continue..."
+    	### Compile C code into executables
 	case "$opt" in
-		"gcc")			
+		"gcc")
 			gcc -O3 -fno-tree-vectorize $program.c libUtil.a -o "out/$program.$opt.disableVC.out"
 			gcc -O3 $program.c libUtil.a -o "out/$program.$opt.enableVC.out"
 			;;
