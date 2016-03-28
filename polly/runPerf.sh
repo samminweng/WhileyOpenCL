@@ -106,5 +106,18 @@ init(){
 
 ### Autogenerate1 MatrixMult
 init autogenerate1 MatrixMult
+exec autogenerate1 MatrixMult 200
+exec autogenerate1 MatrixMult 400
+exec autogenerate1 MatrixMult 600
+exec autogenerate1 MatrixMult 800
 exec autogenerate1 MatrixMult 1000
+exec autogenerate1 MatrixMult 1200
+exec autogenerate1 MatrixMult 1400
+exec autogenerate1 MatrixMult 1600
+exec autogenerate1 MatrixMult 1800
 exec autogenerate1 MatrixMult 2000
+exec autogenerate1 MatrixMult 2200
+exec autogenerate1 MatrixMult 2400
+exec autogenerate1 MatrixMult 2600
+exec autogenerate1 MatrixMult 2800
+exec autogenerate1 MatrixMult 3000
