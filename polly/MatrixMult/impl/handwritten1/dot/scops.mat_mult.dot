@@ -1,99 +1,99 @@
 digraph "Scop Graph for 'mat_mult' function" {
 	label="Scop Graph for 'mat_mult' function";
 
-	Node0x9bc54c0 [shape=record,label="{entry:\l  br label %entry.split, !dbg !57\l}"];
-	Node0x9bc54c0 -> Node0x9badba0;
-	Node0x9badba0 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata %struct.Matrix* %a, i64 0, metadata\l... !29, metadata !58), !dbg !57\l  tail call void @llvm.dbg.value(metadata %struct.Matrix* %b, i64 0, metadata\l... !30, metadata !58), !dbg !59\l  %width1 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %b, i64 0,\l... i32 1, !dbg !60\l  %0 = load i32, i32* %width1, align 8, !dbg !60, !tbaa !61\l  tail call void @llvm.dbg.value(metadata i32 %0, i64 0, metadata !34,\l... metadata !58), !dbg !67\l  %height2 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0,\l... i32 2, !dbg !68\l  %1 = load i32, i32* %height2, align 4, !dbg !68, !tbaa !69\l  tail call void @llvm.dbg.value(metadata i32 %1, i64 0, metadata !35,\l... metadata !58), !dbg !70\l  %data3 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0,\l... i32 0, !dbg !71\l  %2 = load i64*, i64** %data3, align 8, !dbg !71, !tbaa !72\l  tail call void @llvm.dbg.value(metadata i64* %2, i64 0, metadata !36,\l... metadata !58), !dbg !73\l  %data4 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %b, i64 0,\l... i32 0, !dbg !74\l  %3 = load i64*, i64** %data4, align 8, !dbg !74, !tbaa !72\l  tail call void @llvm.dbg.value(metadata i64* %3, i64 0, metadata !38,\l... metadata !58), !dbg !75\l  %conv = sext i32 %0 to i64, !dbg !76\l  %mul = shl nsw i64 %conv, 3, !dbg !77\l  %conv5 = sext i32 %1 to i64, !dbg !78\l  %mul6 = mul i64 %mul, %conv5, !dbg !79\l  %call = tail call noalias i8* @malloc(i64 %mul6) #6, !dbg !80\l  %4 = bitcast i8* %call to i64*, !dbg !81\l  tail call void @llvm.dbg.value(metadata i64* %4, i64 0, metadata !39,\l... metadata !58), !dbg !82\l  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !31, metadata\l... !58), !dbg !83\l  %cmp89 = icmp sgt i32 %0, 0, !dbg !84\l  br i1 %cmp89, label %for.cond8.preheader.lr.ph, label %for.end40, !dbg !88\l}"];
-	Node0x9badba0 -> Node0x9bbb570;
-	Node0x9badba0 -> Node0x9bb9d00;
-	Node0x9bbb570 [shape=record,label="{for.cond8.preheader.lr.ph:                        \l  %5 = sext i32 %0 to i64, !dbg !88\l  %6 = sext i32 %0 to i64, !dbg !88\l  br label %for.cond8.preheader, !dbg !88\l}"];
-	Node0x9bbb570 -> Node0x9bac9e0;
-	Node0x9bac9e0 [shape=record,label="{for.cond8.preheader:                              \l  %indvars.iv100 = phi i64 [ 0, %for.cond8.preheader.lr.ph ], [\l... %indvars.iv.next101, %for.inc38 ]\l  %cmp986 = icmp sgt i32 %1, 0, !dbg !89\l  br i1 %cmp986, label %for.body11.lr.ph, label %for.inc38, !dbg !94\l}"];
-	Node0x9bac9e0 -> Node0x9bb4020;
-	Node0x9bac9e0 -> Node0x9c404a0;
-	Node0x9bb4020 [shape=record,label="{for.body11.lr.ph:                                 \l  br label %for.body11, !dbg !94\l}"];
-	Node0x9bb4020 -> Node0x9c40e20;
-	Node0x9c40e20 [shape=record,label="{for.body11:                                       \l  %indvars.iv95 = phi i64 [ 0, %for.body11.lr.ph ], [ %indvars.iv.next96,\l... %for.inc35 ]\l  %7 = mul nsw i64 %indvars.iv100, %6, !dbg !95\l  %8 = add nsw i64 %indvars.iv95, %7, !dbg !97\l  %arrayidx = getelementptr inbounds i64, i64* %4, i64 %8, !dbg !98\l  store i64 0, i64* %arrayidx, align 8, !dbg !99, !tbaa !100\l  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !33, metadata\l... !58), !dbg !102\l  %cmp1484 = icmp sgt i32 %0, 0, !dbg !103\l  br i1 %cmp1484, label %for.body16.lr.ph, label %for.inc35, !dbg !107\l}"];
-	Node0x9c40e20 -> Node0x9bbb330;
-	Node0x9c40e20 -> Node0x9c2c310;
-	Node0x9bbb330 [shape=record,label="{for.body16.lr.ph:                                 \l  br label %for.body16, !dbg !107\l}"];
-	Node0x9bbb330 -> Node0x9aabf30;
-	Node0x9aabf30 [shape=record,label="{for.body16:                                       \l  %indvars.iv = phi i64 [ 0, %for.body16.lr.ph ], [ %indvars.iv.next,\l... %for.body16 ]\l  %9 = load i64, i64* %arrayidx, align 8, !dbg !108, !tbaa !100\l  %10 = add nsw i64 %indvars.iv, %7, !dbg !109\l  %arrayidx24 = getelementptr inbounds i64, i64* %2, i64 %10, !dbg !110\l  %11 = load i64, i64* %arrayidx24, align 8, !dbg !110, !tbaa !100\l  %12 = mul nsw i64 %indvars.iv, %5, !dbg !111\l  %13 = add nsw i64 %12, %indvars.iv95, !dbg !112\l  %arrayidx28 = getelementptr inbounds i64, i64* %3, i64 %13, !dbg !113\l  %14 = load i64, i64* %arrayidx28, align 8, !dbg !113, !tbaa !100\l  %mul29 = mul nsw i64 %14, %11, !dbg !114\l  %add30 = add nsw i64 %mul29, %9, !dbg !115\l  store i64 %add30, i64* %arrayidx, align 8, !dbg !116, !tbaa !100\l  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !107\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !33, metadata\l... !58), !dbg !102\l  %lftr.wideiv = trunc i64 %indvars.iv.next to i32, !dbg !107\l  %exitcond = icmp ne i32 %lftr.wideiv, %0, !dbg !107\l  br i1 %exitcond, label %for.body16, label %for.cond13.for.inc35_crit_edge,\l... !dbg !107\l}"];
-	Node0x9aabf30 -> Node0x9aabf30[constraint=false];
-	Node0x9aabf30 -> Node0x9ca13d0;
-	Node0x9ca13d0 [shape=record,label="{for.cond13.for.inc35_crit_edge:                   \l  br label %for.inc35, !dbg !107\l}"];
-	Node0x9ca13d0 -> Node0x9c2c310;
-	Node0x9c2c310 [shape=record,label="{for.inc35:                                        \l  %indvars.iv.next96 = add nuw nsw i64 %indvars.iv95, 1, !dbg !94\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !32, metadata\l... !58), !dbg !117\l  %lftr.wideiv98 = trunc i64 %indvars.iv.next96 to i32, !dbg !94\l  %exitcond99 = icmp ne i32 %lftr.wideiv98, %1, !dbg !94\l  br i1 %exitcond99, label %for.body11, label %for.cond8.for.inc38_crit_edge,\l... !dbg !94\l}"];
-	Node0x9c2c310 -> Node0x9c40e20[constraint=false];
-	Node0x9c2c310 -> Node0x9bafcd0;
-	Node0x9bafcd0 [shape=record,label="{for.cond8.for.inc38_crit_edge:                    \l  br label %for.inc38, !dbg !94\l}"];
-	Node0x9bafcd0 -> Node0x9c404a0;
-	Node0x9c404a0 [shape=record,label="{for.inc38:                                        \l  %indvars.iv.next101 = add nuw nsw i64 %indvars.iv100, 1, !dbg !88\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !31, metadata\l... !58), !dbg !83\l  %lftr.wideiv103 = trunc i64 %indvars.iv.next101 to i32, !dbg !88\l  %exitcond104 = icmp ne i32 %lftr.wideiv103, %0, !dbg !88\l  br i1 %exitcond104, label %for.cond8.preheader, label\l... %for.cond.for.end40_crit_edge, !dbg !88\l}"];
-	Node0x9c404a0 -> Node0x9bac9e0[constraint=false];
-	Node0x9c404a0 -> Node0x9c9ab20;
-	Node0x9c9ab20 [shape=record,label="{for.cond.for.end40_crit_edge:                     \l  br label %for.end40, !dbg !88\l}"];
-	Node0x9c9ab20 -> Node0x9bb9d00;
-	Node0x9bb9d00 [shape=record,label="{for.end40:                                        \l  %call41 = tail call noalias i8* @malloc(i64 16) #6, !dbg !118\l  %15 = bitcast i8* %call41 to %struct.Matrix*, !dbg !120\l  tail call void @llvm.dbg.value(metadata %struct.Matrix* %15, i64 0, metadata\l... !40, metadata !58), !dbg !121\l  %width42 = getelementptr inbounds i8, i8* %call41, i64 8, !dbg !122\l  %16 = bitcast i8* %width42 to i32*, !dbg !122\l  store i32 %0, i32* %16, align 8, !dbg !123, !tbaa !61\l  %height43 = getelementptr inbounds i8, i8* %call41, i64 12, !dbg !124\l  %17 = bitcast i8* %height43 to i32*, !dbg !124\l  store i32 %1, i32* %17, align 4, !dbg !125, !tbaa !69\l  %18 = bitcast i8* %call41 to i8**, !dbg !126\l  store i8* %call, i8** %18, align 8, !dbg !126, !tbaa !72\l  ret %struct.Matrix* %15, !dbg !127\l}"];
+	Node0x9455570 [shape=record,label="{entry:\l  br label %entry.split, !dbg !57\l}"];
+	Node0x9455570 -> Node0x94f4980;
+	Node0x94f4980 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata %struct.Matrix* %a, i64 0, metadata\l... !29, metadata !58), !dbg !57\l  tail call void @llvm.dbg.value(metadata %struct.Matrix* %b, i64 0, metadata\l... !30, metadata !58), !dbg !59\l  %width1 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %b, i64 0,\l... i32 1, !dbg !60\l  %0 = load i32, i32* %width1, align 8, !dbg !60, !tbaa !61\l  tail call void @llvm.dbg.value(metadata i32 %0, i64 0, metadata !34,\l... metadata !58), !dbg !67\l  %height2 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0,\l... i32 2, !dbg !68\l  %1 = load i32, i32* %height2, align 4, !dbg !68, !tbaa !69\l  tail call void @llvm.dbg.value(metadata i32 %1, i64 0, metadata !35,\l... metadata !58), !dbg !70\l  %data3 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0,\l... i32 0, !dbg !71\l  %2 = load i64*, i64** %data3, align 8, !dbg !71, !tbaa !72\l  tail call void @llvm.dbg.value(metadata i64* %2, i64 0, metadata !36,\l... metadata !58), !dbg !73\l  %data4 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %b, i64 0,\l... i32 0, !dbg !74\l  %3 = load i64*, i64** %data4, align 8, !dbg !74, !tbaa !72\l  tail call void @llvm.dbg.value(metadata i64* %3, i64 0, metadata !38,\l... metadata !58), !dbg !75\l  %conv = sext i32 %0 to i64, !dbg !76\l  %mul = shl nsw i64 %conv, 3, !dbg !77\l  %conv5 = sext i32 %1 to i64, !dbg !78\l  %mul6 = mul i64 %mul, %conv5, !dbg !79\l  %call = tail call noalias i8* @malloc(i64 %mul6) #6, !dbg !80\l  %4 = bitcast i8* %call to i64*, !dbg !81\l  tail call void @llvm.dbg.value(metadata i64* %4, i64 0, metadata !39,\l... metadata !58), !dbg !82\l  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !31, metadata\l... !58), !dbg !83\l  %cmp89 = icmp sgt i32 %0, 0, !dbg !84\l  br i1 %cmp89, label %for.cond8.preheader.lr.ph, label %for.end40, !dbg !88\l}"];
+	Node0x94f4980 -> Node0x9464c40;
+	Node0x94f4980 -> Node0x9444240;
+	Node0x9464c40 [shape=record,label="{for.cond8.preheader.lr.ph:                        \l  %5 = sext i32 %0 to i64, !dbg !88\l  %6 = sext i32 %0 to i64, !dbg !88\l  br label %for.cond8.preheader, !dbg !88\l}"];
+	Node0x9464c40 -> Node0x94463a0;
+	Node0x94463a0 [shape=record,label="{for.cond8.preheader:                              \l  %indvars.iv100 = phi i64 [ 0, %for.cond8.preheader.lr.ph ], [\l... %indvars.iv.next101, %for.inc38 ]\l  %cmp986 = icmp sgt i32 %1, 0, !dbg !89\l  br i1 %cmp986, label %for.body11.lr.ph, label %for.inc38, !dbg !94\l}"];
+	Node0x94463a0 -> Node0x9467c90;
+	Node0x94463a0 -> Node0x944a370;
+	Node0x9467c90 [shape=record,label="{for.body11.lr.ph:                                 \l  br label %for.body11, !dbg !94\l}"];
+	Node0x9467c90 -> Node0x9447780;
+	Node0x9447780 [shape=record,label="{for.body11:                                       \l  %indvars.iv95 = phi i64 [ 0, %for.body11.lr.ph ], [ %indvars.iv.next96,\l... %for.inc35 ]\l  %7 = mul nsw i64 %indvars.iv100, %6, !dbg !95\l  %8 = add nsw i64 %indvars.iv95, %7, !dbg !97\l  %arrayidx = getelementptr inbounds i64, i64* %4, i64 %8, !dbg !98\l  store i64 0, i64* %arrayidx, align 8, !dbg !99, !tbaa !100\l  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !33, metadata\l... !58), !dbg !102\l  %cmp1484 = icmp sgt i32 %0, 0, !dbg !103\l  br i1 %cmp1484, label %for.body16.lr.ph, label %for.inc35, !dbg !107\l}"];
+	Node0x9447780 -> Node0x94477a0;
+	Node0x9447780 -> Node0x9444580;
+	Node0x94477a0 [shape=record,label="{for.body16.lr.ph:                                 \l  br label %for.body16, !dbg !107\l}"];
+	Node0x94477a0 -> Node0x9448fb0;
+	Node0x9448fb0 [shape=record,label="{for.body16:                                       \l  %indvars.iv = phi i64 [ 0, %for.body16.lr.ph ], [ %indvars.iv.next,\l... %for.body16 ]\l  %9 = load i64, i64* %arrayidx, align 8, !dbg !108, !tbaa !100\l  %10 = add nsw i64 %indvars.iv, %7, !dbg !109\l  %arrayidx24 = getelementptr inbounds i64, i64* %2, i64 %10, !dbg !110\l  %11 = load i64, i64* %arrayidx24, align 8, !dbg !110, !tbaa !100\l  %12 = mul nsw i64 %indvars.iv, %5, !dbg !111\l  %13 = add nsw i64 %12, %indvars.iv95, !dbg !112\l  %arrayidx28 = getelementptr inbounds i64, i64* %3, i64 %13, !dbg !113\l  %14 = load i64, i64* %arrayidx28, align 8, !dbg !113, !tbaa !100\l  %mul29 = mul nsw i64 %14, %11, !dbg !114\l  %add30 = add nsw i64 %mul29, %9, !dbg !115\l  store i64 %add30, i64* %arrayidx, align 8, !dbg !116, !tbaa !100\l  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !107\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !33, metadata\l... !58), !dbg !102\l  %lftr.wideiv = trunc i64 %indvars.iv.next to i32, !dbg !107\l  %exitcond = icmp ne i32 %lftr.wideiv, %0, !dbg !107\l  br i1 %exitcond, label %for.body16, label %for.cond13.for.inc35_crit_edge,\l... !dbg !107\l}"];
+	Node0x9448fb0 -> Node0x9448fb0[constraint=false];
+	Node0x9448fb0 -> Node0x94569c0;
+	Node0x94569c0 [shape=record,label="{for.cond13.for.inc35_crit_edge:                   \l  br label %for.inc35, !dbg !107\l}"];
+	Node0x94569c0 -> Node0x9444580;
+	Node0x9444580 [shape=record,label="{for.inc35:                                        \l  %indvars.iv.next96 = add nuw nsw i64 %indvars.iv95, 1, !dbg !94\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !32, metadata\l... !58), !dbg !117\l  %lftr.wideiv98 = trunc i64 %indvars.iv.next96 to i32, !dbg !94\l  %exitcond99 = icmp ne i32 %lftr.wideiv98, %1, !dbg !94\l  br i1 %exitcond99, label %for.body11, label %for.cond8.for.inc38_crit_edge,\l... !dbg !94\l}"];
+	Node0x9444580 -> Node0x9447780[constraint=false];
+	Node0x9444580 -> Node0x9548a00;
+	Node0x9548a00 [shape=record,label="{for.cond8.for.inc38_crit_edge:                    \l  br label %for.inc38, !dbg !94\l}"];
+	Node0x9548a00 -> Node0x944a370;
+	Node0x944a370 [shape=record,label="{for.inc38:                                        \l  %indvars.iv.next101 = add nuw nsw i64 %indvars.iv100, 1, !dbg !88\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !31, metadata\l... !58), !dbg !83\l  %lftr.wideiv103 = trunc i64 %indvars.iv.next101 to i32, !dbg !88\l  %exitcond104 = icmp ne i32 %lftr.wideiv103, %0, !dbg !88\l  br i1 %exitcond104, label %for.cond8.preheader, label\l... %for.cond.for.end40_crit_edge, !dbg !88\l}"];
+	Node0x944a370 -> Node0x94463a0[constraint=false];
+	Node0x944a370 -> Node0x9548a60;
+	Node0x9548a60 [shape=record,label="{for.cond.for.end40_crit_edge:                     \l  br label %for.end40, !dbg !88\l}"];
+	Node0x9548a60 -> Node0x9444240;
+	Node0x9444240 [shape=record,label="{for.end40:                                        \l  %call41 = tail call noalias i8* @malloc(i64 16) #6, !dbg !118\l  %15 = bitcast i8* %call41 to %struct.Matrix*, !dbg !120\l  tail call void @llvm.dbg.value(metadata %struct.Matrix* %15, i64 0, metadata\l... !40, metadata !58), !dbg !121\l  %width42 = getelementptr inbounds i8, i8* %call41, i64 8, !dbg !122\l  %16 = bitcast i8* %width42 to i32*, !dbg !122\l  store i32 %0, i32* %16, align 8, !dbg !123, !tbaa !61\l  %height43 = getelementptr inbounds i8, i8* %call41, i64 12, !dbg !124\l  %17 = bitcast i8* %height43 to i32*, !dbg !124\l  store i32 %1, i32* %17, align 4, !dbg !125, !tbaa !69\l  %18 = bitcast i8* %call41 to i8**, !dbg !126\l  store i8* %call, i8** %18, align 8, !dbg !126, !tbaa !72\l  ret %struct.Matrix* %15, !dbg !127\l}"];
 	colorscheme = "paired12"
-        subgraph cluster_0x9c9c4c0 {
+        subgraph cluster_0x944dfa0 {
           label = "MatrixMult.c:47-68
 ";
           style = solid;
           color = 1
-          subgraph cluster_0x9bb9bb0 {
+          subgraph cluster_0x953efa0 {
             label = "MatrixMult.c:47-60
 Call instruction:   %call = tail call noalias i8* @malloc(i64 %mul6) #6, !dbg !80";
             style = solid;
             color = 6
-            subgraph cluster_0x9bc9570 {
+            subgraph cluster_0x944db90 {
               label = "MatrixMult.c:48-60
 ";
               style = filled;
-              color = 3              subgraph cluster_0x9bbccd0 {
+              color = 3              subgraph cluster_0x953bca0 {
                 label = "MatrixMult.c:48-60
 ";
                 style = solid;
                 color = 7
-                subgraph cluster_0x9bbe390 {
+                subgraph cluster_0x9453120 {
                   label = "MatrixMult.c:48-60
 ";
                   style = solid;
                   color = 9
-                  subgraph cluster_0x9bad920 {
+                  subgraph cluster_0x9537050 {
                     label = "MatrixMult.c:48-60
 ";
                     style = solid;
                     color = 11
-                    subgraph cluster_0x9c4b400 {
+                    subgraph cluster_0x9544e20 {
                       label = "MatrixMult.c:48-60
 ";
                       style = solid;
                       color = 1
-                      subgraph cluster_0x9ca1350 {
+                      subgraph cluster_0x943ec00 {
                         label = "MatrixMult.c:48-60
 ";
                         style = solid;
                         color = 6
-                        Node0x9aabf30;
+                        Node0x9448fb0;
                       }
-                      Node0x9c40e20;
-                      Node0x9bbb330;
-                      Node0x9ca13d0;
+                      Node0x9447780;
+                      Node0x94477a0;
+                      Node0x94569c0;
                     }
-                    Node0x9c2c310;
+                    Node0x9444580;
                   }
-                  Node0x9bac9e0;
-                  Node0x9bb4020;
-                  Node0x9bafcd0;
+                  Node0x94463a0;
+                  Node0x9467c90;
+                  Node0x9548a00;
                 }
-                Node0x9c404a0;
+                Node0x944a370;
               }
-              Node0x9c9ab20;
+              Node0x9548a60;
             }
-            Node0x9badba0;
-            Node0x9bbb570;
+            Node0x94f4980;
+            Node0x9464c40;
           }
-          Node0x9bc54c0;
-          Node0x9bb9d00;
+          Node0x9455570;
+          Node0x9444240;
         }
 }
