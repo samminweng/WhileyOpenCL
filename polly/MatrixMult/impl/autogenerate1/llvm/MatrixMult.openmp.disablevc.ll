@@ -2330,5 +2330,5 @@ attributes #11 = { noreturn nounwind }
 !874 = !{!875, !876}
 !875 = distinct !{!875, !873, !"polly.alias.scope.call24"}
 !876 = distinct !{!876, !873, !"polly.alias.scope.call14"}
-!877 = !{!872, !875}
+!877 = !{!875, !872}
 !878 = !{!872, !876}

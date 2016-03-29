@@ -1,0 +1,22 @@
+{
+   "context" : "[height, width] -> {  : -2147483648 <= height <= 2147483647 and -2147483648 <= width <= 2147483647 }",
+   "location" : "MatrixMult.c:14-35",
+   "name" : "for.cond12.preheader => for.end35",
+   "statements" : [
+      {
+         "accesses" : [
+            {
+               "kind" : "read",
+               "relation" : "[height, width] -> { Stmt_for_body19[i0, i1] -> MemRef_call[i0, i1] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "[height, width] -> { Stmt_for_body19[i0, i1] -> MemRef_call[i0, i1] }"
+            }
+         ],
+         "domain" : "[height, width] -> { Stmt_for_body19[i0, i1] : 0 <= i0 < height and 0 <= i1 < width }",
+         "name" : "Stmt_for_body19",
+         "schedule" : "[height, width] -> { Stmt_for_body19[i0, i1] -> [i0, i1] }"
+      }
+   ]
+}

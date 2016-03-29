@@ -54,15 +54,23 @@ runExecutables(){
 
 ### Clean up files ###
 cleanup(){
-	## move files to folders respectively, e.g. 'jscop' 'llvm' and 'assembly' folder 
-	### Move all the dot files to 'dot' folder
-	folder_proc "dot" "dot"
-	generate_png "dot"
 
 	folder_proc "jscop" "jscop"
 	folder_proc "llvm" "ll"
 	folder_proc "assembly" "s"
 
+	## move files to folders respectively, e.g. 'jscop' 'llvm' and 'assembly' folder 
+	### Move all the dot files to 'dot' folder
+	folder_proc "dot" "dot"
+	generate_png "dot"
+
+	#### Generate polly-optimized control flow graph
+	#read -p "Press [Enter] to continue"
+	mkdir -p "dot/polly-opt"
+	opt --dot-cfg "llvm/$program.polly.disablevc.ll"
+	mv -f *.dot "dot/polly-opt"/
+	generate_png "dot/polly-opt"
+	#read -p "Press [Enter] to continue"
 }
 
 
@@ -179,8 +187,8 @@ exec(){
 	#opt_polly $c_type $program $num_threads $parameter
 	cd ../../../
 }
-##exec autogenerate MatrixMult 2 2000 ### Determine matrix size using constant N 
-exec autogenerate1 MatrixMult 2 2000  ### Determine matrix size from cmd line argument
+exec handwritten1 MatrixMult 2 200 ### Determine matrix size from cmd line argument
+##exec autogenerate1 MatrixMult 2 2000  ### Determine matrix size from cmd line argument
 
 
 

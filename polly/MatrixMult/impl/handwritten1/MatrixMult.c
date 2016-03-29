@@ -48,14 +48,16 @@ Matrix* mat_mult(Matrix* a, Matrix* b){
     int i, j, k;
     int width = b->width;
     int height = a->height;
-   
-    long long* data = (long long*)malloc(sizeof(int)*width*height);
+    long long *__restrict__ a_data, *__restrict__ b_data, *__restrict__ data;
+    a_data = a->data; // Derference the data from matrix structure
+    b_data = b->data;
+    data = (long long*)malloc(sizeof(long long)*width*height);
 
     for(i=0; i<width; i++)  {
         for(j=0; j<height; j++)  {
             data[i*width+j] = 0;
             for(k=0; k<width; k++)
-                data[i*width+j] = data[i*width+j] + a->data[i*width+k] * b->data[k*width+j];
+                data[i*width+j] = data[i*width+j] + a_data[i*width+k] * b_data[k*width+j];
         }
     }
 
