@@ -1,76 +1,88 @@
 #include "Util.h"
-#define N 2000
 
-void init() __attribute__((noinline));
-void mat_mult() __attribute__((noinline));
+typedef struct{
+    long long* data;
+    int width;
+    int height;
+} Matrix;
 
-//int A[N][N];
-int** A; // Use linked 2D array (pointer to pointer)
-int B[N][N];
-long long C[N][N];
+Matrix* init(int width, int height) __attribute__((noinline));
+Matrix* mat_mult(Matrix* a, Matrix* b) __attribute__((noinline));
 
-
-void init(){
+Matrix* init(int width, int height){
 
     int i, j;
 
     // Using double pointer and one malloc to create all rows
-    A = (int**)malloc(sizeof(int*)*N);
+    /*A = (int**)malloc(sizeof(int*)*N);
     A[0] = (int*)malloc(sizeof(int)*N*N); // Malloc total number of memory (rows*cols)
     // Initialize each row pointer
     for(i=0;i<N;i++){
         A[i] = (*A + N*i);
-    }
-    
-    for (i=0; i<N; i++) {
-        for (j=0; j<N; j++) {
-            A[i][j] = 0;
-            B[i][j] = 0;
+    }*/
+
+   
+    long long* data = (long long*)malloc(sizeof(long long)*width*height);
+    // Initialize 
+    for (i=0; i<height; i++) {
+        for (j=0; j<width; j++) {
+            data[i*width+j] = 0;
         }
     }
 
-    for (i=0; i<N; i++) {
-        for (j=0; j<N; j++) {
-            A[i][j] = A[i][j] + i;
-            B[i][j] = B[i][j] + i;
+    for (i=0; i<height; i++) {
+        for (j=0; j<width; j++) {
+            data[i*width+j] = data[i*width+j] + i;
         }
     }
+
+    Matrix* m = malloc(sizeof(Matrix));
+    m->data = data;
+    m->width = width;
+    m->height = height;
+
+    return m;
 }
 
-void mat_mult(){
+Matrix* mat_mult(Matrix* a, Matrix* b){
     int i, j, k;
-    for(i=0; i<N; i++)  {
-        for(j=0; j<N; j++)  {
-            C[i][j] = 0;
-            for(k=0; k<N; k++)
-                C[i][j] = C[i][j] + A[i][k] * B[k][j];
+    int width = b->width;
+    int height = a->height;
+   
+    long long* data = (long long*)malloc(sizeof(int)*width*height);
+
+    for(i=0; i<width; i++)  {
+        for(j=0; j<height; j++)  {
+            data[i*width+j] = 0;
+            for(k=0; k<width; k++)
+                data[i*width+j] = data[i*width+j] + a->data[i*width+k] * b->data[k*width+j];
         }
     }
+
+    Matrix* m = malloc(sizeof(Matrix));
+    m->width = width;
+    m->height = height;
+    m->data = data;
+    return m;
 }
 
-void print_matrix()
+
+int main(int argc, char** args)
 {
-    int i, j;
+    //Get matrix size from command line argument
+    int max;
+    sscanf(args[1], "%d", &max);
+    printf("N = %d\n", max);
+    // Intialize matrix
+    Matrix* a = init(max, max);
+    Matrix* b = init(max, max);
+    // Multiply matrix A and B
+    Matrix* c = mat_mult(a, b);
 
-    for (i=0; i<N; i++) {
-        for (j=0; j<N; j++) {
-            fprintf(stdout, "%lld ", C[i][j]);
-            if (j%80 == 79) fprintf(stdout, "\n");
-        }
-        fprintf(stdout, "\n");
-    }
-}
-
-int main()
-{
-    init();
-    mat_mult();
-    print_matrix();
-
-    printf("Pass %d X %d matrix test case \n", N, N);
-    printf("A[%d][%d] = %d, B[%d][%d] =%d, C[%d][%d] =%lld \n", 
-        N-1, N-1, A[N-1][N-1],
-        N-1, N-1, B[N-1][N-1],  
-        N-1, N-1, C[N-1][N-1]);
+    printf("Pass %d X %d matrix test case \n", max, max);
+    printf("A[%dX%d+%d] = %lld, B[%dX%d+%d] =%lld, C[%dX%d+%d] =%lld \n", 
+        max-1, max, max-1, a->data[(max-1)*max+max-1],
+        max-1, max, max-1, b->data[(max-1)*max+max-1],  
+        max-1, max, max-1, c->data[(max-1)*max+max-1]);
     return 0;
 }

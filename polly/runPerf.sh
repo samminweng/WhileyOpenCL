@@ -97,7 +97,7 @@ init(){
 	pref_dir="$PWD/$program/perf"
 	mkdir -p "$pref_dir"
 	### remove all files inside the folder
-	rm -f "$pref_dir/"*.*
+	##rm -f "$pref_dir/"*.*
 	mkdir -p "$PWD/$program/impl/$c_type/out" ## Create 'out' folder
 	rm -rf "$PWD/$program/impl/$c_type/out/"*.*
 	read -p "Press [Enter] to continue..."
