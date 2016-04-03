@@ -193,8 +193,8 @@ exec(){
 	#opt_polly $c_type $program $num_threads $parameter
 	cd ../../../
 }
-exec handwritten2 MatrixMult 2 200 ### Determine matrix size from cmd line argument
-##exec autogenerate1 MatrixMult 2 200  ### Determine matrix size from cmd line argument
+###exec handwritten2 MatrixMult 2 200 ### Determine matrix size from cmd line argument
+exec autogenerate2 MatrixMult 2 200  ### Determine matrix size from cmd line argument
 
 
 
