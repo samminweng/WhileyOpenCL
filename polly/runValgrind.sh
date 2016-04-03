@@ -110,10 +110,10 @@ exec(){
     cd ../../../
 }
 
-init MatrixMult autogenerate
-exec MatrixMult autogenerate 2000X2000 gcc 1
-exec MatrixMult autogenerate 2000X2000 clang 1
-exec MatrixMult autogenerate 2000X2000 polly 1
-exec MatrixMult autogenerate 2000X2000 openmp 1
-exec MatrixMult autogenerate 2000X2000 openmp 2
-exec MatrixMult autogenerate 2000X2000 openmp 4
+init MatrixMult autogenerate2
+exec MatrixMult autogenerate2 200 gcc 1
+exec MatrixMult autogenerate2 200 clang 1
+exec MatrixMult autogenerate2 200 polly 1
+exec MatrixMult autogenerate2 200 openmp 1
+exec MatrixMult autogenerate2 200 openmp 2
+exec MatrixMult autogenerate2 200 openmp 4
