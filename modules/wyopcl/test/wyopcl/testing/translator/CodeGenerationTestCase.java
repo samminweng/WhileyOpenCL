@@ -8,9 +8,7 @@ import java.util.Collection;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
@@ -54,7 +52,8 @@ public class CodeGenerationTestCase {
 				"MatrixMult",
 				"factorial",
 				"Fibonacci",
-				"MatrixMult2"
+				"MatrixMult2",
+				"MatrixMult3"
 				//"lambda"
 		});
 	}

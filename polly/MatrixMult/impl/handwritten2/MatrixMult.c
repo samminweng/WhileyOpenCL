@@ -49,7 +49,7 @@ Matrix* matmult(Matrix* a, Matrix* b){
 	for (j = 0; j < height; j++) {
 		// Extract the column at 'j' index
 		for (i = 0; i < width; i++) {
-			b_t[j*height+i] = b_data[i*width+j];
+			b_t[j*width+i] = b_data[i*width+j];
 		}
 	}
 	for (j = 0; j < height; j++) {

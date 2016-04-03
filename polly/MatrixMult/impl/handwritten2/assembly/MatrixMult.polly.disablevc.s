@@ -351,21 +351,19 @@ matmult:                                # @matmult
 	#DEBUG_VALUE: matmult:a <- %RDI
 	#DEBUG_VALUE: matmult:b <- %RSI
 	movl	8(%rsi), %ebx
-.Ltmp43:
-	.loc	1 51 2 discriminator 1  # MatrixMult.c:51:2
-	movq	%rbx, 40(%rsp)          # 8-byte Spill
+	movq	%rbx, 32(%rsp)          # 8-byte Spill
 	movslq	12(%rdi), %rbp
-.Ltmp44:
+.Ltmp43:
 	#DEBUG_VALUE: matmult:width <- %EBX
 	.loc	1 42 28                 # MatrixMult.c:42:28
-	movq	%rbp, (%rsp)            # 8-byte Spill
+	movq	%rbp, 8(%rsp)           # 8-byte Spill
 	movq	(%rdi), %rax
-.Ltmp45:
-	#DEBUG_VALUE: matmult:a_data <- [%RSP+80]
+.Ltmp44:
+	#DEBUG_VALUE: matmult:a_data <- [%RSP+48]
 	.loc	1 43 28                 # MatrixMult.c:43:28
-	movq	%rax, 80(%rsp)          # 8-byte Spill
+	movq	%rax, 48(%rsp)          # 8-byte Spill
 	movq	(%rsi), %rax
-.Ltmp46:
+.Ltmp45:
 	#DEBUG_VALUE: matmult:b_data <- [%RSP+16]
 	.loc	1 46 45                 # MatrixMult.c:46:45
 	movq	%rax, 16(%rsp)          # 8-byte Spill
@@ -377,281 +375,266 @@ matmult:                                # @matmult
 	shlq	$3, %r14
 	.loc	1 46 32 discriminator 1 # MatrixMult.c:46:32
 	movq	%r14, %rdi
-.Ltmp47:
+.Ltmp46:
 	callq	malloc
-.Ltmp48:
-	movq	%rax, 112(%rsp)         # 8-byte Spill
-	.loc	1 48 22 is_stmt 1 discriminator 1 # MatrixMult.c:48:22
+.Ltmp47:
+	movq	%rax, 56(%rsp)          # 8-byte Spill
+	.loc	1 47 22 is_stmt 1 discriminator 1 # MatrixMult.c:47:22
 	movq	%r14, %rdi
 	callq	malloc
-	movq	%rax, 64(%rsp)          # 8-byte Spill
+	movq	%rax, 40(%rsp)          # 8-byte Spill
 	.loc	1 41 21                 # MatrixMult.c:41:21
 	testq	%rbp, %rbp
-.Ltmp49:
+.Ltmp48:
 	#DEBUG_VALUE: matmult:j <- 0
-	.loc	1 51 2 discriminator 1  # MatrixMult.c:51:2
+	.loc	1 49 2 discriminator 1  # MatrixMult.c:49:2
 	movslq	%ebx, %rax
 	movq	%rax, 24(%rsp)          # 8-byte Spill
 	jle	.LBB1_10
-.Ltmp50:
+.Ltmp49:
 # BB#1:                                 # %for.cond11.preheader.lr.ph
 	#DEBUG_VALUE: matmult:width <- %EBX
-	movq	(%rsp), %rax            # 8-byte Reload
-	cmpl	%ebx, %eax
-	jne	.LBB1_2
+	movq	8(%rsp), %rax           # 8-byte Reload
+	cmpl	%eax, %ebx
+	jge	.LBB1_62
+.Ltmp50:
+# BB#2:                                 # %for.cond11.preheader.preheader
+	#DEBUG_VALUE: matmult:width <- %EBX
+	.loc	1 51 3 discriminator 1  # MatrixMult.c:51:3
+	testl	%ebx, %ebx
+	jle	.LBB1_10
 .Ltmp51:
-# BB#62:                                # %polly.start259
+# BB#3:                                 # %for.cond11.preheader.us.preheader
+	#DEBUG_VALUE: matmult:width <- %EBX
+	.loc	1 52 9                  # MatrixMult.c:52:9
+	leal	-1(%rbx), %eax
+	.loc	1 52 29 is_stmt 0       # MatrixMult.c:52:29
+	movl	%eax, (%rsp)            # 4-byte Spill
+	movl	%ebx, %r15d
+	andl	$3, %r15d
+	movq	24(%rsp), %rax          # 8-byte Reload
+	.loc	1 52 9                  # MatrixMult.c:52:9
+	leaq	(,%rax,8), %r13
+	movq	%rax, %r14
+	shlq	$5, %r14
+	xorl	%r8d, %r8d
+	movq	16(%rsp), %r10          # 8-byte Reload
+	movq	40(%rsp), %rax          # 8-byte Reload
+	xorl	%r11d, %r11d
+.Ltmp52:
+	.p2align	4, 0x90
+.LBB1_4:                                # %for.cond11.preheader.us
+                                        # =>This Loop Header: Depth=1
+                                        #     Child Loop BB1_5 Depth 2
+                                        #     Child Loop BB1_8 Depth 2
+	testl	%r15d, %r15d
+	movq	%r10, %rcx
+	movq	%rax, %rdx
+	movl	$0, %ebp
+	je	.LBB1_6
+	.p2align	4, 0x90
+.LBB1_5:                                # %for.body14.us.prol
+                                        #   Parent Loop BB1_4 Depth=1
+                                        # =>  This Inner Loop Header: Depth=2
+	.loc	1 52 21                 # MatrixMult.c:52:21
+	movq	(%rcx), %rsi
+	.loc	1 52 19                 # MatrixMult.c:52:19
+	movq	%rsi, (%rdx)
+.Ltmp53:
+	.loc	1 51 3 is_stmt 1 discriminator 1 # MatrixMult.c:51:3
+	incq	%rbp
+	addq	$8, %rdx
+	addq	%r13, %rcx
+	cmpl	%ebp, %r15d
+	jne	.LBB1_5
+.LBB1_6:                                # %for.cond11.preheader.us.split
+                                        #   in Loop: Header=BB1_4 Depth=1
+	cmpl	$3, (%rsp)              # 4-byte Folded Reload
+	jb	.LBB1_9
+# BB#7:                                 # %for.cond11.preheader.us.split.split
+                                        #   in Loop: Header=BB1_4 Depth=1
+.Ltmp54:
+	.loc	1 52 29                 # MatrixMult.c:52:29
+	leaq	3(%rbp), %rcx
+	movq	24(%rsp), %rdx          # 8-byte Reload
+	imulq	%rdx, %rcx
+	movq	16(%rsp), %rdi          # 8-byte Reload
+	leaq	(%rdi,%rcx,8), %r12
+	leaq	2(%rbp), %rcx
+	imulq	%rdx, %rcx
+	leaq	(%rdi,%rcx,8), %rsi
+	leaq	1(%rbp), %rcx
+	imulq	%rdx, %rcx
+	leaq	(%rdi,%rcx,8), %rcx
+	imulq	%rbp, %rdx
+	leaq	(%rdi,%rdx,8), %rdx
+	movq	%r8, %r9
+	.p2align	4, 0x90
+.LBB1_8:                                # %for.body14.us
+                                        #   Parent Loop BB1_4 Depth=1
+                                        # =>  This Inner Loop Header: Depth=2
+	.loc	1 52 21 is_stmt 0       # MatrixMult.c:52:21
+	movq	(%rdx,%r9), %rdi
+	.loc	1 52 19                 # MatrixMult.c:52:19
+	movq	%rdi, (%rax,%rbp,8)
+	.loc	1 52 21                 # MatrixMult.c:52:21
+	movq	(%rcx,%r9), %rdi
+	.loc	1 52 19                 # MatrixMult.c:52:19
+	movq	%rdi, 8(%rax,%rbp,8)
+	.loc	1 52 21                 # MatrixMult.c:52:21
+	movq	(%rsi,%r9), %rdi
+	.loc	1 52 19                 # MatrixMult.c:52:19
+	movq	%rdi, 16(%rax,%rbp,8)
+	.loc	1 52 21                 # MatrixMult.c:52:21
+	movq	(%r12,%r9), %rdi
+	.loc	1 52 19                 # MatrixMult.c:52:19
+	movq	%rdi, 24(%rax,%rbp,8)
+.Ltmp55:
+	.loc	1 51 3 is_stmt 1 discriminator 1 # MatrixMult.c:51:3
+	addq	$4, %rbp
+	addq	%r14, %r9
+	cmpl	%ebp, %ebx
+	jne	.LBB1_8
+.Ltmp56:
+.LBB1_9:                                # %for.inc20.loopexit.us
+                                        #   in Loop: Header=BB1_4 Depth=1
+	.loc	1 49 2 discriminator 1  # MatrixMult.c:49:2
+	incq	%r11
+	addq	%r13, %rax
+	addq	$8, %r10
+	addq	$8, %r8
+	movq	8(%rsp), %rcx           # 8-byte Reload
+	cmpl	%ecx, %r11d
+	jne	.LBB1_4
+	jmp	.LBB1_10
+.Ltmp57:
+.LBB1_62:                               # %polly.start259
 	#DEBUG_VALUE: matmult:width <- %EBX
 	decq	%rax
 	sarq	$5, %rax
-	movq	%rax, 120(%rsp)         # 8-byte Spill
+	movq	%rax, 64(%rsp)          # 8-byte Spill
 	js	.LBB1_10
-.Ltmp52:
+.Ltmp58:
 # BB#63:                                # %polly.loop_preheader264
 	#DEBUG_VALUE: matmult:width <- %EBX
-	movq	24(%rsp), %rcx          # 8-byte Reload
-	leaq	-1(%rcx), %rax
-	sarq	$5, %rax
-	movq	%rax, 8(%rsp)           # 8-byte Spill
-	movq	(%rsp), %rax            # 8-byte Reload
-	movq	%rax, %rdx
-	shlq	$8, %rdx
-	movq	%rdx, 72(%rsp)          # 8-byte Spill
-	leaq	(,%rax,8), %rdx
-	movq	%rcx, %rax
-	shlq	$8, %rax
-	movq	%rax, 56(%rsp)          # 8-byte Spill
-	leaq	(,%rcx,8), %rax
+	movq	24(%rsp), %rax          # 8-byte Reload
+	leaq	-1(%rax), %r14
+	sarq	$5, %r14
+	movq	%rax, %r15
+	shlq	$8, %r15
+	leaq	(,%rax,8), %rax
 	xorl	%ecx, %ecx
-	movq	%rcx, 32(%rsp)          # 8-byte Spill
-	movq	64(%rsp), %rcx          # 8-byte Reload
-	movq	%rcx, 48(%rsp)          # 8-byte Spill
-.Ltmp53:
+	movq	%rcx, (%rsp)            # 8-byte Spill
+	movq	40(%rsp), %rcx          # 8-byte Reload
+	movq	%rcx, 72(%rsp)          # 8-byte Spill
+.Ltmp59:
 	.p2align	4, 0x90
 .LBB1_52:                               # %polly.loop_header263
                                         # =>This Loop Header: Depth=1
                                         #     Child Loop BB1_55 Depth 2
                                         #       Child Loop BB1_57 Depth 3
                                         #         Child Loop BB1_58 Depth 4
-	cmpq	$0, 8(%rsp)             # 8-byte Folded Reload
+	testq	%r14, %r14
 	js	.LBB1_61
 # BB#53:                                # %polly.loop_header273.preheader
                                         #   in Loop: Header=BB1_52 Depth=1
-	movq	32(%rsp), %rsi          # 8-byte Reload
-	shlq	$5, %rsi
-	movq	(%rsp), %rcx            # 8-byte Reload
-	subq	%rsi, %rcx
+	movq	(%rsp), %rdx            # 8-byte Reload
+	shlq	$5, %rdx
+	movq	8(%rsp), %rcx           # 8-byte Reload
+	subq	%rdx, %rcx
 	decq	%rcx
 	cmpq	$31, %rcx
-	movl	$31, %esi
-	cmovgq	%rsi, %rcx
+	movl	$31, %edx
+	cmovgq	%rdx, %rcx
 	testq	%rcx, %rcx
 	js	.LBB1_61
 # BB#54:                                #   in Loop: Header=BB1_52 Depth=1
 	decq	%rcx
 	movq	16(%rsp), %r13          # 8-byte Reload
-	movq	48(%rsp), %rdi          # 8-byte Reload
-	xorl	%ebx, %ebx
+	movq	72(%rsp), %rdx          # 8-byte Reload
+	xorl	%esi, %esi
 	.p2align	4, 0x90
 .LBB1_55:                               # %polly.loop_header273.us
                                         #   Parent Loop BB1_52 Depth=1
                                         # =>  This Loop Header: Depth=2
                                         #       Child Loop BB1_57 Depth 3
                                         #         Child Loop BB1_58 Depth 4
-	movq	%rbx, %rsi
-	shlq	$5, %rsi
+	movq	%rsi, %rdi
+	shlq	$5, %rdi
 	movq	24(%rsp), %rbp          # 8-byte Reload
-	subq	%rsi, %rbp
+	subq	%rdi, %rbp
 	decq	%rbp
 	cmpq	$31, %rbp
-	movl	$31, %r10d
-	cmovleq	%rbp, %r10
-	testq	%r10, %r10
+	movl	$31, %edi
+	cmovleq	%rbp, %rdi
+	testq	%rdi, %rdi
 	js	.LBB1_60
 # BB#56:                                #   in Loop: Header=BB1_55 Depth=2
-	decq	%r10
-	movq	%r13, %r14
-	movq	%rdi, %r15
-	xorl	%r12d, %r12d
+	decq	%rdi
+	movq	%r13, %r10
+	movq	%rdx, %r11
+	xorl	%r8d, %r8d
 	.p2align	4, 0x90
 .LBB1_57:                               # %polly.loop_header282.us.us
                                         #   Parent Loop BB1_52 Depth=1
                                         #     Parent Loop BB1_55 Depth=2
                                         # =>    This Loop Header: Depth=3
                                         #         Child Loop BB1_58 Depth 4
-	movq	$-1, %r11
-	movq	%r14, %r8
-	movq	%r15, %r9
+	movq	$-1, %r12
+	movq	%r10, %rbp
+	movq	%r11, %r9
 	.p2align	4, 0x90
 .LBB1_58:                               # %polly.loop_header291.us.us
                                         #   Parent Loop BB1_52 Depth=1
                                         #     Parent Loop BB1_55 Depth=2
                                         #       Parent Loop BB1_57 Depth=3
                                         # =>      This Inner Loop Header: Depth=4
-	movq	(%r8), %rsi
-	movq	%rsi, (%r9)
-	incq	%r11
+	movq	(%rbp), %rbx
+	movq	%rbx, (%r9)
+	incq	%r12
 	addq	$8, %r9
-	addq	%rax, %r8
-	cmpq	%r10, %r11
+	addq	%rax, %rbp
+	cmpq	%rdi, %r12
 	jle	.LBB1_58
 # BB#59:                                # %polly.loop_exit293.loopexit.us.us
                                         #   in Loop: Header=BB1_57 Depth=3
-	addq	%rdx, %r15
-	addq	$8, %r14
-	cmpq	%rcx, %r12
-	leaq	1(%r12), %r12
+	addq	%rax, %r11
+	addq	$8, %r10
+	cmpq	%rcx, %r8
+	leaq	1(%r8), %r8
 	jle	.LBB1_57
 .LBB1_60:                               # %polly.loop_exit284.loopexit.us
                                         #   in Loop: Header=BB1_55 Depth=2
-	addq	$256, %rdi              # imm = 0x100
-	addq	56(%rsp), %r13          # 8-byte Folded Reload
-	cmpq	8(%rsp), %rbx           # 8-byte Folded Reload
-	leaq	1(%rbx), %rbx
+	addq	$256, %rdx              # imm = 0x100
+	addq	%r15, %r13
+	cmpq	%r14, %rsi
+	leaq	1(%rsi), %rsi
 	jne	.LBB1_55
 .LBB1_61:                               # %polly.loop_exit275
                                         #   in Loop: Header=BB1_52 Depth=1
-	movq	48(%rsp), %rcx          # 8-byte Reload
-	addq	72(%rsp), %rcx          # 8-byte Folded Reload
-	movq	%rcx, 48(%rsp)          # 8-byte Spill
+	addq	%r15, 72(%rsp)          # 8-byte Folded Spill
 	addq	$256, 16(%rsp)          # 8-byte Folded Spill
                                         # imm = 0x100
-	movq	32(%rsp), %rcx          # 8-byte Reload
-	cmpq	120(%rsp), %rcx         # 8-byte Folded Reload
+	movq	(%rsp), %rcx            # 8-byte Reload
+	cmpq	64(%rsp), %rcx          # 8-byte Folded Reload
 	leaq	1(%rcx), %rcx
-	movq	%rcx, 32(%rsp)          # 8-byte Spill
-	movq	40(%rsp), %rbx          # 8-byte Reload
+	movq	%rcx, (%rsp)            # 8-byte Spill
+	movq	32(%rsp), %rbx          # 8-byte Reload
 	jne	.LBB1_52
-	jmp	.LBB1_10
-.LBB1_2:                                # %for.cond11.preheader.preheader
-.Ltmp54:
-	#DEBUG_VALUE: matmult:width <- %EBX
-	.loc	1 53 3 discriminator 1  # MatrixMult.c:53:3
-	testl	%ebx, %ebx
-	jle	.LBB1_10
-.Ltmp55:
-# BB#3:                                 # %for.cond11.preheader.us.preheader
-	#DEBUG_VALUE: matmult:width <- %EBX
-	.loc	1 54 9                  # MatrixMult.c:54:9
-	leal	-1(%rbx), %eax
-	.loc	1 54 30 is_stmt 0       # MatrixMult.c:54:30
-	movl	%eax, 56(%rsp)          # 4-byte Spill
-	movl	%ebx, %r13d
-	andl	$3, %r13d
-	.loc	1 54 9                  # MatrixMult.c:54:9
-	movq	(%rsp), %rax            # 8-byte Reload
-	leaq	(,%rax,8), %rax
-	movq	%rax, 32(%rsp)          # 8-byte Spill
-	movq	24(%rsp), %rax          # 8-byte Reload
-	leaq	(,%rax,8), %r12
-	movq	%rax, %r15
-	shlq	$5, %r15
-	xorl	%eax, %eax
-	movq	%rax, 8(%rsp)           # 8-byte Spill
-	movq	16(%rsp), %r11          # 8-byte Reload
-	movq	64(%rsp), %rdx          # 8-byte Reload
-	xorl	%r14d, %r14d
-.Ltmp56:
-	.p2align	4, 0x90
-.LBB1_4:                                # %for.cond11.preheader.us
-                                        # =>This Loop Header: Depth=1
-                                        #     Child Loop BB1_5 Depth 2
-                                        #     Child Loop BB1_8 Depth 2
-	testl	%r13d, %r13d
-	movq	%r11, %rcx
-	movq	%rdx, %rsi
-	movl	$0, %eax
-	je	.LBB1_6
-	.p2align	4, 0x90
-.LBB1_5:                                # %for.body14.us.prol
-                                        #   Parent Loop BB1_4 Depth=1
-                                        # =>  This Inner Loop Header: Depth=2
-	.loc	1 54 22                 # MatrixMult.c:54:22
-	movq	(%rcx), %rdi
-	.loc	1 54 20                 # MatrixMult.c:54:20
-	movq	%rdi, (%rsi)
-.Ltmp57:
-	.loc	1 53 3 is_stmt 1 discriminator 1 # MatrixMult.c:53:3
-	incq	%rax
-	addq	$8, %rsi
-	addq	%r12, %rcx
-	cmpl	%eax, %r13d
-	jne	.LBB1_5
-.LBB1_6:                                # %for.cond11.preheader.us.split
-                                        #   in Loop: Header=BB1_4 Depth=1
-	cmpl	$3, 56(%rsp)            # 4-byte Folded Reload
-	jb	.LBB1_9
-# BB#7:                                 # %for.cond11.preheader.us.split.split
-                                        #   in Loop: Header=BB1_4 Depth=1
-.Ltmp58:
-	.loc	1 54 30                 # MatrixMult.c:54:30
-	leaq	3(%rax), %rcx
-	movq	24(%rsp), %rbp          # 8-byte Reload
-	imulq	%rbp, %rcx
-	movq	16(%rsp), %r9           # 8-byte Reload
-	leaq	(%r9,%rcx,8), %r8
-	leaq	2(%rax), %rcx
-	imulq	%rbp, %rcx
-	leaq	(%r9,%rcx,8), %rdi
-	leaq	1(%rax), %rcx
-	imulq	%rbp, %rcx
-	leaq	(%r9,%rcx,8), %rsi
-	movq	%rbp, %rcx
-	imulq	%rax, %rcx
-	leaq	(%r9,%rcx,8), %rcx
-	movq	8(%rsp), %r10           # 8-byte Reload
-	.p2align	4, 0x90
-.LBB1_8:                                # %for.body14.us
-                                        #   Parent Loop BB1_4 Depth=1
-                                        # =>  This Inner Loop Header: Depth=2
-	.loc	1 54 22 is_stmt 0       # MatrixMult.c:54:22
-	movq	(%rcx,%r10), %r9
-	.loc	1 54 20                 # MatrixMult.c:54:20
-	movq	%r9, (%rdx,%rax,8)
-	.loc	1 54 22                 # MatrixMult.c:54:22
-	movq	(%rsi,%r10), %rbp
-	.loc	1 54 20                 # MatrixMult.c:54:20
-	movq	%rbp, 8(%rdx,%rax,8)
-	.loc	1 54 22                 # MatrixMult.c:54:22
-	movq	(%rdi,%r10), %rbp
-	.loc	1 54 20                 # MatrixMult.c:54:20
-	movq	%rbp, 16(%rdx,%rax,8)
-	.loc	1 54 22                 # MatrixMult.c:54:22
-	movq	(%r8,%r10), %rbp
-	.loc	1 54 20                 # MatrixMult.c:54:20
-	movq	%rbp, 24(%rdx,%rax,8)
-.Ltmp59:
-	.loc	1 53 3 is_stmt 1 discriminator 1 # MatrixMult.c:53:3
-	addq	$4, %rax
-	addq	%r15, %r10
-	cmpl	%eax, %ebx
-	jne	.LBB1_8
-.Ltmp60:
-.LBB1_9:                                # %for.inc20.loopexit.us
-                                        #   in Loop: Header=BB1_4 Depth=1
-	.loc	1 51 2 discriminator 1  # MatrixMult.c:51:2
-	incq	%r14
-	addq	32(%rsp), %rdx          # 8-byte Folded Reload
-	addq	$8, %r11
-	addq	$8, 8(%rsp)             # 8-byte Folded Spill
-	movq	(%rsp), %rax            # 8-byte Reload
-	cmpl	%eax, %r14d
-	jne	.LBB1_4
-.Ltmp61:
 .LBB1_10:                               # %polly.split_new_and_old
-	movq	%rbx, 40(%rsp)          # 8-byte Spill
+	movq	%rbx, 32(%rsp)          # 8-byte Spill
 	movq	24(%rsp), %r15          # 8-byte Reload
 	leaq	-1(%r15), %rcx
-	movq	%rcx, 104(%rsp)         # 8-byte Spill
+	movq	%rcx, 96(%rsp)          # 8-byte Spill
 	imulq	%r15, %rcx
 	movq	%r15, %rax
 	imulq	%rax, %rax
-	movq	80(%rsp), %rsi          # 8-byte Reload
+	movq	48(%rsp), %rsi          # 8-byte Reload
 	leaq	(%rsi,%rax,8), %rax
-	movq	112(%rsp), %r12         # 8-byte Reload
+	movq	56(%rsp), %r12          # 8-byte Reload
 	cmpq	%r12, %rax
 	setbe	%al
-	movq	(%rsp), %rdx            # 8-byte Reload
+	movq	8(%rsp), %rdx           # 8-byte Reload
 	addq	%rdx, %rcx
 	leaq	(%r12,%rcx,8), %rcx
 	cmpq	%rsi, %rcx
@@ -664,31 +647,31 @@ matmult:                                # @matmult
 # BB#50:                                # %polly.start
 	leaq	-1(%rdx), %rax
 	sarq	$5, %rax
-	movq	%rax, 88(%rsp)          # 8-byte Spill
+	movq	%rax, 80(%rsp)          # 8-byte Spill
 	js	.LBB1_23
 # BB#51:                                # %polly.loop_preheader
-	movq	104(%rsp), %rcx         # 8-byte Reload
+	movq	96(%rsp), %rcx          # 8-byte Reload
 	sarq	$5, %rcx
-	movq	%rcx, 128(%rsp)         # 8-byte Spill
+	movq	%rcx, 112(%rsp)         # 8-byte Spill
 	incq	%rcx
-	movq	%rcx, 144(%rsp)         # 8-byte Spill
-	incq	88(%rsp)                # 8-byte Folded Spill
+	movq	%rcx, 128(%rsp)         # 8-byte Spill
+	incq	80(%rsp)                # 8-byte Folded Spill
 	movq	%r15, %rcx
 	shlq	$8, %rcx
-	movq	%rcx, 136(%rsp)         # 8-byte Spill
+	movq	%rcx, 120(%rsp)         # 8-byte Spill
 	leaq	(,%r15,8), %rdi
 	movq	%r15, %r13
 	xorl	%r10d, %r10d
 	movl	$31, %r8d
 	movq	%r12, %r9
-	movq	(%rsp), %rbx            # 8-byte Reload
+	movq	8(%rsp), %rbx           # 8-byte Reload
 	.p2align	4, 0x90
 .LBB1_24:                               # %polly.loop_header
                                         # =>This Loop Header: Depth=1
                                         #     Child Loop BB1_27 Depth 2
                                         #       Child Loop BB1_29 Depth 3
                                         #         Child Loop BB1_30 Depth 4
-	cmpq	$0, 128(%rsp)           # 8-byte Folded Reload
+	cmpq	$0, 112(%rsp)           # 8-byte Folded Reload
 	js	.LBB1_33
 # BB#25:                                # %polly.loop_header169.preheader
                                         #   in Loop: Header=BB1_24 Depth=1
@@ -753,19 +736,19 @@ matmult:                                # @matmult
 .LBB1_32:                               # %polly.loop_exit180.loopexit.us
                                         #   in Loop: Header=BB1_27 Depth=2
 	incq	%r14
-	addq	136(%rsp), %r11         # 8-byte Folded Reload
-	cmpq	144(%rsp), %r14         # 8-byte Folded Reload
+	addq	120(%rsp), %r11         # 8-byte Folded Reload
+	cmpq	128(%rsp), %r14         # 8-byte Folded Reload
 	jne	.LBB1_27
 .LBB1_33:                               # %polly.loop_exit171
                                         #   in Loop: Header=BB1_24 Depth=1
 	incq	%r10
 	addq	$256, %r9               # imm = 0x100
-	cmpq	88(%rsp), %r10          # 8-byte Folded Reload
+	cmpq	80(%rsp), %r10          # 8-byte Folded Reload
 	jne	.LBB1_24
 # BB#34:                                # %polly.loop_preheader199
-	shrq	$5, 104(%rsp)           # 8-byte Folded Spill
+	shrq	$5, 96(%rsp)            # 8-byte Folded Spill
 	xorl	%eax, %eax
-	movq	%rax, 96(%rsp)          # 8-byte Spill
+	movq	%rax, 88(%rsp)          # 8-byte Spill
 	movq	%r13, %rax
 	.p2align	4, 0x90
 .LBB1_35:                               # %polly.loop_header198
@@ -775,24 +758,24 @@ matmult:                                # @matmult
                                         #         Child Loop BB1_41 Depth 4
                                         #           Child Loop BB1_43 Depth 5
                                         #             Child Loop BB1_44 Depth 6
-	cmpq	$0, 128(%rsp)           # 8-byte Folded Reload
+	cmpq	$0, 112(%rsp)           # 8-byte Folded Reload
 	js	.LBB1_49
 # BB#36:                                # %polly.loop_header208.preheader
                                         #   in Loop: Header=BB1_35 Depth=1
-	movq	96(%rsp), %rcx          # 8-byte Reload
+	movq	88(%rsp), %rcx          # 8-byte Reload
 	shlq	$5, %rcx
-	movq	%rcx, 120(%rsp)         # 8-byte Spill
-	movq	(%rsp), %rdx            # 8-byte Reload
+	movq	%rcx, 176(%rsp)         # 8-byte Spill
+	movq	8(%rsp), %rdx           # 8-byte Reload
 	subq	%rcx, %rdx
 	decq	%rdx
 	cmpq	$31, %rdx
 	movl	$31, %ecx
 	cmovgq	%rcx, %rdx
-	movq	%rdx, 112(%rsp)         # 8-byte Spill
+	movq	%rdx, 168(%rsp)         # 8-byte Spill
 	leaq	-1(%rdx), %rcx
-	movq	%rcx, 32(%rsp)          # 8-byte Spill
-	movq	80(%rsp), %rcx          # 8-byte Reload
-	movq	64(%rsp), %rdx          # 8-byte Reload
+	movq	%rcx, 72(%rsp)          # 8-byte Spill
+	movq	48(%rsp), %rcx          # 8-byte Reload
+	movq	40(%rsp), %rdx          # 8-byte Reload
 	xorl	%r13d, %r13d
 	.p2align	4, 0x90
 .LBB1_37:                               # %polly.loop_header208
@@ -802,21 +785,21 @@ matmult:                                # @matmult
                                         #         Child Loop BB1_41 Depth 4
                                         #           Child Loop BB1_43 Depth 5
                                         #             Child Loop BB1_44 Depth 6
-	movq	%r13, 152(%rsp)         # 8-byte Spill
-	movq	%rdx, 160(%rsp)         # 8-byte Spill
-	movq	%rcx, 168(%rsp)         # 8-byte Spill
+	movq	%r13, 136(%rsp)         # 8-byte Spill
+	movq	%rdx, 144(%rsp)         # 8-byte Spill
+	movq	%rcx, 152(%rsp)         # 8-byte Spill
 	shlq	$5, %r13
 	subq	%r13, %rax
 	decq	%rax
 	cmpq	$31, %rax
 	movl	$31, %esi
 	cmovleq	%rax, %rsi
-	movq	%rsi, 176(%rsp)         # 8-byte Spill
+	movq	%rsi, 160(%rsp)         # 8-byte Spill
 	leaq	-1(%rsi), %r15
-	movq	%rcx, 48(%rsp)          # 8-byte Spill
-	movq	%rdx, 16(%rsp)          # 8-byte Spill
+	movq	%rcx, 64(%rsp)          # 8-byte Spill
+	movq	%rdx, 56(%rsp)          # 8-byte Spill
 	xorl	%eax, %eax
-	movq	%rax, 72(%rsp)          # 8-byte Spill
+	movq	%rax, 104(%rsp)         # 8-byte Spill
 	.p2align	4, 0x90
 .LBB1_38:                               # %polly.loop_header216
                                         #   Parent Loop BB1_35 Depth=1
@@ -825,11 +808,11 @@ matmult:                                # @matmult
                                         #         Child Loop BB1_41 Depth 4
                                         #           Child Loop BB1_43 Depth 5
                                         #             Child Loop BB1_44 Depth 6
-	cmpq	$0, 112(%rsp)           # 8-byte Folded Reload
+	cmpq	$0, 168(%rsp)           # 8-byte Folded Reload
 	js	.LBB1_47
 # BB#39:                                # %polly.loop_header224.preheader
                                         #   in Loop: Header=BB1_38 Depth=3
-	movq	72(%rsp), %rax          # 8-byte Reload
+	movq	104(%rsp), %rax         # 8-byte Reload
 	shlq	$5, %rax
 	movq	24(%rsp), %rcx          # 8-byte Reload
 	subq	%rax, %rcx
@@ -837,14 +820,14 @@ matmult:                                # @matmult
 	cmpq	$31, %rcx
 	movl	$31, %eax
 	cmovleq	%rcx, %rax
-	movq	%rax, 56(%rsp)          # 8-byte Spill
-	cmpq	$0, 176(%rsp)           # 8-byte Folded Reload
+	movq	%rax, 16(%rsp)          # 8-byte Spill
+	cmpq	$0, 160(%rsp)           # 8-byte Folded Reload
 	js	.LBB1_47
 # BB#40:                                #   in Loop: Header=BB1_38 Depth=3
-	movq	56(%rsp), %rax          # 8-byte Reload
+	movq	16(%rsp), %rax          # 8-byte Reload
 	leaq	-1(%rax), %r9
 	xorl	%eax, %eax
-	movq	%rax, 8(%rsp)           # 8-byte Spill
+	movq	%rax, (%rsp)            # 8-byte Spill
 	.p2align	4, 0x90
 .LBB1_41:                               # %polly.loop_header224.us
                                         #   Parent Loop BB1_35 Depth=1
@@ -853,15 +836,15 @@ matmult:                                # @matmult
                                         # =>      This Loop Header: Depth=4
                                         #           Child Loop BB1_43 Depth 5
                                         #             Child Loop BB1_44 Depth 6
-	cmpq	$0, 56(%rsp)            # 8-byte Folded Reload
+	cmpq	$0, 16(%rsp)            # 8-byte Folded Reload
 	js	.LBB1_46
 # BB#42:                                #   in Loop: Header=BB1_41 Depth=4
-	movq	120(%rsp), %rax         # 8-byte Reload
-	movq	8(%rsp), %rcx           # 8-byte Reload
+	movq	176(%rsp), %rax         # 8-byte Reload
+	movq	(%rsp), %rcx            # 8-byte Reload
 	leaq	(%rcx,%rax), %rdx
 	shlq	$3, %rdx
-	movq	48(%rsp), %rsi          # 8-byte Reload
-	movq	16(%rsp), %r8           # 8-byte Reload
+	movq	64(%rsp), %rsi          # 8-byte Reload
+	movq	56(%rsp), %r8           # 8-byte Reload
 	xorl	%ebp, %ebp
 	.p2align	4, 0x90
 .LBB1_43:                               # %polly.loop_header233.us.us
@@ -888,17 +871,17 @@ matmult:                                # @matmult
                                         #           Parent Loop BB1_43 Depth=5
                                         # =>          This Inner Loop Header: Depth=6
 	movq	(%r12), %rbx
-.Ltmp62:
-	.loc	1 62 58                 # MatrixMult.c:62:58
+.Ltmp60:
+	.loc	1 60 58                 # MatrixMult.c:60:58
 	imulq	(%rax), %rbx
-	.loc	1 62 39 is_stmt 0       # MatrixMult.c:62:39
+	.loc	1 60 39 is_stmt 0       # MatrixMult.c:60:39
 	addq	%rbx, %r11
 	incq	%r10
 	addq	$8, %r12
 	addq	$8, %rax
 	cmpq	%r9, %r10
 	jle	.LBB1_44
-.Ltmp63:
+.Ltmp61:
 # BB#45:                                # %polly.loop_exit244.loopexit.us.us
                                         #   in Loop: Header=BB1_43 Depth=5
 	movq	%r14, %r12
@@ -910,59 +893,59 @@ matmult:                                # @matmult
 	jle	.LBB1_43
 .LBB1_46:                               # %polly.loop_exit235.loopexit.us
                                         #   in Loop: Header=BB1_41 Depth=4
-	movq	8(%rsp), %rax           # 8-byte Reload
-	cmpq	32(%rsp), %rax          # 8-byte Folded Reload
+	movq	(%rsp), %rax            # 8-byte Reload
+	cmpq	72(%rsp), %rax          # 8-byte Folded Reload
 	leaq	1(%rax), %rax
-	movq	%rax, 8(%rsp)           # 8-byte Spill
+	movq	%rax, (%rsp)            # 8-byte Spill
 	jle	.LBB1_41
 .LBB1_47:                               # %polly.loop_exit226
                                         #   in Loop: Header=BB1_38 Depth=3
-	addq	$256, 16(%rsp)          # 8-byte Folded Spill
+	addq	$256, 56(%rsp)          # 8-byte Folded Spill
                                         # imm = 0x100
-	addq	$256, 48(%rsp)          # 8-byte Folded Spill
+	addq	$256, 64(%rsp)          # 8-byte Folded Spill
                                         # imm = 0x100
-	movq	72(%rsp), %rax          # 8-byte Reload
-	cmpq	104(%rsp), %rax         # 8-byte Folded Reload
+	movq	104(%rsp), %rax         # 8-byte Reload
+	cmpq	96(%rsp), %rax          # 8-byte Folded Reload
 	leaq	1(%rax), %rax
-	movq	%rax, 72(%rsp)          # 8-byte Spill
+	movq	%rax, 104(%rsp)         # 8-byte Spill
 	jne	.LBB1_38
 # BB#48:                                # %polly.loop_exit218
                                         #   in Loop: Header=BB1_37 Depth=2
-	movq	152(%rsp), %r13         # 8-byte Reload
+	movq	136(%rsp), %r13         # 8-byte Reload
 	incq	%r13
-	movq	136(%rsp), %rax         # 8-byte Reload
-	movq	160(%rsp), %rdx         # 8-byte Reload
+	movq	120(%rsp), %rax         # 8-byte Reload
+	movq	144(%rsp), %rdx         # 8-byte Reload
 	addq	%rax, %rdx
-	movq	168(%rsp), %rcx         # 8-byte Reload
+	movq	152(%rsp), %rcx         # 8-byte Reload
 	addq	%rax, %rcx
-	cmpq	144(%rsp), %r13         # 8-byte Folded Reload
+	cmpq	128(%rsp), %r13         # 8-byte Folded Reload
 	movq	24(%rsp), %rax          # 8-byte Reload
 	jne	.LBB1_37
 .LBB1_49:                               # %polly.loop_exit210
                                         #   in Loop: Header=BB1_35 Depth=1
-	movq	96(%rsp), %rcx          # 8-byte Reload
+	movq	88(%rsp), %rcx          # 8-byte Reload
 	incq	%rcx
-	movq	%rcx, 96(%rsp)          # 8-byte Spill
-	cmpq	88(%rsp), %rcx          # 8-byte Folded Reload
+	movq	%rcx, 88(%rsp)          # 8-byte Spill
+	cmpq	80(%rsp), %rcx          # 8-byte Folded Reload
 	jne	.LBB1_35
 	jmp	.LBB1_23
 .LBB1_12:                               # %for.cond23.preheader
-	.loc	1 57 2 is_stmt 1 discriminator 1 # MatrixMult.c:57:2
+	.loc	1 55 2 is_stmt 1 discriminator 1 # MatrixMult.c:55:2
 	testl	%edx, %edx
 	jle	.LBB1_23
 # BB#13:                                # %for.cond23.preheader
-	movq	40(%rsp), %rax          # 8-byte Reload
+	movq	32(%rsp), %rax          # 8-byte Reload
 	testl	%eax, %eax
 	jle	.LBB1_23
 # BB#14:                                # %for.cond27.preheader.us.preheader
-.Ltmp64:
-	.loc	1 62 23                 # MatrixMult.c:62:23
-	movq	40(%rsp), %rax          # 8-byte Reload
+.Ltmp62:
+	.loc	1 60 23                 # MatrixMult.c:60:23
+	movq	32(%rsp), %rax          # 8-byte Reload
 	movl	%eax, %r8d
 	andl	$1, %r8d
 	xorl	%r9d, %r9d
-	movq	40(%rsp), %r13          # 8-byte Reload
-.Ltmp65:
+	movq	32(%rsp), %r13          # 8-byte Reload
+.Ltmp63:
 	.p2align	4, 0x90
 .LBB1_15:                               # %for.cond27.preheader.us
                                         # =>This Loop Header: Depth=1
@@ -972,34 +955,34 @@ matmult:                                # @matmult
 	movl	$1, %r10d
 	xorl	%r11d, %r11d
 	xorl	%r14d, %r14d
-	movq	80(%rsp), %r12          # 8-byte Reload
+	movq	48(%rsp), %r12          # 8-byte Reload
 	.p2align	4, 0x90
 .LBB1_16:                               # %for.body30.us.us
                                         #   Parent Loop BB1_15 Depth=1
                                         # =>  This Loop Header: Depth=2
                                         #       Child Loop BB1_20 Depth 3
-	.loc	1 60 10                 # MatrixMult.c:60:10
+	.loc	1 58 10                 # MatrixMult.c:58:10
 	movq	%r14, %rcx
 	imulq	%r15, %rcx
-	.loc	1 60 16 is_stmt 0       # MatrixMult.c:60:16
+	.loc	1 58 16 is_stmt 0       # MatrixMult.c:58:16
 	leaq	(%rcx,%r9), %rbp
 	testl	%r8d, %r8d
-	.loc	1 60 20                 # MatrixMult.c:60:20
+	.loc	1 58 20                 # MatrixMult.c:58:20
 	movq	$0, (%rdx,%rbp,8)
-.Ltmp66:
+.Ltmp64:
 	#DEBUG_VALUE: matmult:k <- 0
 	movl	$0, %eax
 	movl	$0, %esi
 	je	.LBB1_18
 # BB#17:                                # %for.body38.us.us.prol
                                         #   in Loop: Header=BB1_16 Depth=2
-.Ltmp67:
-	.loc	1 62 59 is_stmt 1       # MatrixMult.c:62:59
-	movq	64(%rsp), %rax          # 8-byte Reload
+.Ltmp65:
+	.loc	1 60 59 is_stmt 1       # MatrixMult.c:60:59
+	movq	40(%rsp), %rax          # 8-byte Reload
 	movq	(%rax,%rcx,8), %rax
-	.loc	1 62 58 is_stmt 0       # MatrixMult.c:62:58
+	.loc	1 60 58 is_stmt 0       # MatrixMult.c:60:58
 	imulq	(%r12,%rcx,8), %rax
-	.loc	1 62 21                 # MatrixMult.c:62:21
+	.loc	1 60 21                 # MatrixMult.c:60:21
 	movq	%rax, (%rdx,%rbp,8)
 	movl	$1, %esi
 .LBB1_18:                               # %for.body30.us.us.split
@@ -1009,11 +992,11 @@ matmult:                                # @matmult
 	je	.LBB1_21
 # BB#19:                                # %for.body30.us.us.split.split
                                         #   in Loop: Header=BB1_16 Depth=2
-	.loc	1 62 23                 # MatrixMult.c:62:23
+	.loc	1 60 23                 # MatrixMult.c:60:23
 	movl	%r13d, %ecx
 	subl	%esi, %ecx
 	leaq	(%rsi,%r11), %rdx
-	movq	64(%rsp), %rdi          # 8-byte Reload
+	movq	40(%rsp), %rdi          # 8-byte Reload
 	leaq	(%rdi,%rdx,8), %rdx
 	addq	%r10, %rsi
 	leaq	(%r12,%rsi,8), %rsi
@@ -1022,63 +1005,63 @@ matmult:                                # @matmult
                                         #   Parent Loop BB1_15 Depth=1
                                         #     Parent Loop BB1_16 Depth=2
                                         # =>    This Inner Loop Header: Depth=3
-	.loc	1 62 59                 # MatrixMult.c:62:59
+	.loc	1 60 59                 # MatrixMult.c:60:59
 	movq	(%rdx), %rdi
-	.loc	1 62 58                 # MatrixMult.c:62:58
+	.loc	1 60 58                 # MatrixMult.c:60:58
 	imulq	-8(%rsi), %rdi
-	.loc	1 62 39                 # MatrixMult.c:62:39
+	.loc	1 60 39                 # MatrixMult.c:60:39
 	addq	%rax, %rdi
-	.loc	1 62 21                 # MatrixMult.c:62:21
+	.loc	1 60 21                 # MatrixMult.c:60:21
 	movq	%rdi, (%rbx,%rbp,8)
-	.loc	1 62 59                 # MatrixMult.c:62:59
+	.loc	1 60 59                 # MatrixMult.c:60:59
 	movq	8(%rdx), %rax
-	.loc	1 62 58                 # MatrixMult.c:62:58
+	.loc	1 60 58                 # MatrixMult.c:60:58
 	imulq	(%rsi), %rax
-	.loc	1 62 39                 # MatrixMult.c:62:39
+	.loc	1 60 39                 # MatrixMult.c:60:39
 	addq	%rdi, %rax
-	.loc	1 62 21                 # MatrixMult.c:62:21
+	.loc	1 60 21                 # MatrixMult.c:60:21
 	movq	%rax, (%rbx,%rbp,8)
-.Ltmp68:
-	.loc	1 61 4 is_stmt 1 discriminator 1 # MatrixMult.c:61:4
+.Ltmp66:
+	.loc	1 59 4 is_stmt 1 discriminator 1 # MatrixMult.c:59:4
 	addq	$16, %rdx
 	addq	$16, %rsi
 	addl	$-2, %ecx
 	jne	.LBB1_20
-.Ltmp69:
+.Ltmp67:
 .LBB1_21:                               # %for.inc60.loopexit.us.us
                                         #   in Loop: Header=BB1_16 Depth=2
 	movq	%rbx, %rdx
-	.loc	1 59 3 discriminator 1  # MatrixMult.c:59:3
+	.loc	1 57 3 discriminator 1  # MatrixMult.c:57:3
 	incq	%r14
 	addq	%r15, %r11
 	addq	%r15, %r10
 	cmpl	%r13d, %r14d
 	jne	.LBB1_16
-.Ltmp70:
+.Ltmp68:
 # BB#22:                                # %for.inc63.loopexit.us-lcssa.us.us
                                         #   in Loop: Header=BB1_15 Depth=1
-	.loc	1 57 2 discriminator 1  # MatrixMult.c:57:2
+	.loc	1 55 2 discriminator 1  # MatrixMult.c:55:2
 	incq	%r9
-	movq	(%rsp), %rax            # 8-byte Reload
+	movq	8(%rsp), %rax           # 8-byte Reload
 	cmpl	%eax, %r9d
 	movq	%rdx, %r12
 	jne	.LBB1_15
-.Ltmp71:
+.Ltmp69:
 .LBB1_23:                               # %for.end65
-	.loc	1 68 17 discriminator 1 # MatrixMult.c:68:17
+	.loc	1 66 17 discriminator 1 # MatrixMult.c:66:17
 	movl	$16, %edi
 	callq	malloc
-.Ltmp72:
+.Ltmp70:
 	#DEBUG_VALUE: matmult:m <- %RAX
-	.loc	1 69 14                 # MatrixMult.c:69:14
-	movq	40(%rsp), %rcx          # 8-byte Reload
+	.loc	1 67 14                 # MatrixMult.c:67:14
+	movq	32(%rsp), %rcx          # 8-byte Reload
 	movl	%ecx, 8(%rax)
-	.loc	1 70 15                 # MatrixMult.c:70:15
-	movq	(%rsp), %rcx            # 8-byte Reload
+	.loc	1 68 15                 # MatrixMult.c:68:15
+	movq	8(%rsp), %rcx           # 8-byte Reload
 	movl	%ecx, 12(%rax)
-	.loc	1 71 13                 # MatrixMult.c:71:13
+	.loc	1 69 13                 # MatrixMult.c:69:13
 	movq	%r12, (%rax)
-	.loc	1 72 5                  # MatrixMult.c:72:5
+	.loc	1 70 5                  # MatrixMult.c:70:5
 	addq	$184, %rsp
 	popq	%rbx
 	popq	%r12
@@ -1087,7 +1070,7 @@ matmult:                                # @matmult
 	popq	%r15
 	popq	%rbp
 	retq
-.Ltmp73:
+.Ltmp71:
 .Lfunc_end1:
 	.size	matmult, .Lfunc_end1-matmult
 	.cfi_endproc
@@ -1097,113 +1080,113 @@ matmult:                                # @matmult
 	.type	main,@function
 main:                                   # @main
 .Lfunc_begin2:
-	.loc	1 75 0                  # MatrixMult.c:75:0
+	.loc	1 73 0                  # MatrixMult.c:73:0
 	.cfi_startproc
 # BB#0:                                 # %entry
-	.loc	1 78 12 prologue_end    # MatrixMult.c:78:12
+	.loc	1 76 12 prologue_end    # MatrixMult.c:76:12
 	pushq	%r15
-.Ltmp74:
+.Ltmp72:
 	.cfi_def_cfa_offset 16
 	pushq	%r14
-.Ltmp75:
+.Ltmp73:
 	.cfi_def_cfa_offset 24
 	pushq	%rbx
-.Ltmp76:
+.Ltmp74:
 	.cfi_def_cfa_offset 32
 	subq	$64, %rsp
-.Ltmp77:
+.Ltmp75:
 	.cfi_def_cfa_offset 96
-.Ltmp78:
+.Ltmp76:
 	.cfi_offset %rbx, -32
-.Ltmp79:
+.Ltmp77:
 	.cfi_offset %r14, -24
-.Ltmp80:
+.Ltmp78:
 	.cfi_offset %r15, -16
 	#DEBUG_VALUE: main:argc <- %EDI
 	#DEBUG_VALUE: main:args <- %RSI
 	movq	8(%rsi), %rdi
-.Ltmp81:
+.Ltmp79:
 	leaq	60(%rsp), %rdx
-.Ltmp82:
+.Ltmp80:
 	#DEBUG_VALUE: main:max <- [%RDX+0]
-	.loc	1 78 5 is_stmt 0        # MatrixMult.c:78:5
+	.loc	1 76 5 is_stmt 0        # MatrixMult.c:76:5
 	movl	$.L.str, %esi
-.Ltmp83:
+.Ltmp81:
 	xorl	%eax, %eax
 	callq	__isoc99_sscanf
-.Ltmp84:
-	.loc	1 79 24 is_stmt 1       # MatrixMult.c:79:24
+.Ltmp82:
+	.loc	1 77 24 is_stmt 1       # MatrixMult.c:77:24
 	movl	60(%rsp), %esi
-.Ltmp85:
+.Ltmp83:
 	#DEBUG_VALUE: main:max <- %ESI
-	.loc	1 79 5 is_stmt 0        # MatrixMult.c:79:5
+	.loc	1 77 5 is_stmt 0        # MatrixMult.c:77:5
 	movl	$.L.str.1, %edi
 	xorl	%eax, %eax
 	callq	printf
+.Ltmp84:
+	.loc	1 79 22 is_stmt 1       # MatrixMult.c:79:22
+	movl	60(%rsp), %edi
+.Ltmp85:
+	#DEBUG_VALUE: main:max <- %EDI
+	.loc	1 79 17 is_stmt 0 discriminator 1 # MatrixMult.c:79:17
+	movl	%edi, %esi
+	callq	init
 .Ltmp86:
-	.loc	1 81 22 is_stmt 1       # MatrixMult.c:81:22
-	movl	60(%rsp), %edi
-.Ltmp87:
-	#DEBUG_VALUE: main:max <- %EDI
-	.loc	1 81 17 is_stmt 0 discriminator 1 # MatrixMult.c:81:17
-	movl	%edi, %esi
-	callq	init
-.Ltmp88:
 	movq	%rax, %r14
-.Ltmp89:
+.Ltmp87:
 	#DEBUG_VALUE: main:a <- %R14
-	.loc	1 82 22 is_stmt 1       # MatrixMult.c:82:22
+	.loc	1 80 22 is_stmt 1       # MatrixMult.c:80:22
 	movl	60(%rsp), %edi
-.Ltmp90:
+.Ltmp88:
 	#DEBUG_VALUE: main:max <- %EDI
-	.loc	1 82 17 is_stmt 0 discriminator 1 # MatrixMult.c:82:17
+	.loc	1 80 17 is_stmt 0 discriminator 1 # MatrixMult.c:80:17
 	movl	%edi, %esi
 	callq	init
-.Ltmp91:
+.Ltmp89:
 	movq	%rax, %rbx
-.Ltmp92:
+.Ltmp90:
 	#DEBUG_VALUE: main:b <- %RBX
-	.loc	1 84 17 is_stmt 1 discriminator 1 # MatrixMult.c:84:17
+	.loc	1 82 17 is_stmt 1 discriminator 1 # MatrixMult.c:82:17
 	movq	%r14, %rdi
 	movq	%rbx, %rsi
 	callq	matmult
 	movq	%rax, %r15
-.Ltmp93:
+.Ltmp91:
 	#DEBUG_VALUE: main:c <- %R15
-	.loc	1 89 48                 # MatrixMult.c:89:48
+	.loc	1 87 48                 # MatrixMult.c:87:48
 	movl	60(%rsp), %esi
-.Ltmp94:
+.Ltmp92:
 	#DEBUG_VALUE: main:max <- %ESI
-	.loc	1 89 5 is_stmt 0        # MatrixMult.c:89:5
+	.loc	1 87 5 is_stmt 0        # MatrixMult.c:87:5
 	movl	$.L.str.2, %edi
 	xorl	%eax, %eax
 	movl	%esi, %edx
 	callq	printf
-.Ltmp95:
-	.loc	1 91 9 is_stmt 1        # MatrixMult.c:91:9
+.Ltmp93:
+	.loc	1 89 9 is_stmt 1        # MatrixMult.c:89:9
 	movl	60(%rsp), %edx
-.Ltmp96:
+.Ltmp94:
 	#DEBUG_VALUE: main:max <- %EDX
-	.loc	1 91 12 is_stmt 0       # MatrixMult.c:91:12
+	.loc	1 89 12 is_stmt 0       # MatrixMult.c:89:12
 	leal	-1(%rdx), %esi
-	.loc	1 91 47                 # MatrixMult.c:91:47
+	.loc	1 89 47                 # MatrixMult.c:89:47
 	movl	%edx, %eax
 	imull	%eax, %eax
-	.loc	1 91 28                 # MatrixMult.c:91:28
+	.loc	1 89 28                 # MatrixMult.c:89:28
 	cltq
-	.loc	1 91 31                 # MatrixMult.c:91:31
+	.loc	1 89 31                 # MatrixMult.c:89:31
 	movq	(%r14), %rcx
-	.loc	1 91 28                 # MatrixMult.c:91:28
+	.loc	1 89 28                 # MatrixMult.c:89:28
 	movq	-8(%rcx,%rax,8), %r8
-	.loc	1 92 31 is_stmt 1       # MatrixMult.c:92:31
+	.loc	1 90 31 is_stmt 1       # MatrixMult.c:90:31
 	movq	(%rbx), %rcx
-	.loc	1 92 28 is_stmt 0       # MatrixMult.c:92:28
+	.loc	1 90 28 is_stmt 0       # MatrixMult.c:90:28
 	movq	-8(%rcx,%rax,8), %rcx
-	.loc	1 93 31 is_stmt 1       # MatrixMult.c:93:31
+	.loc	1 91 31 is_stmt 1       # MatrixMult.c:91:31
 	movq	(%r15), %rdi
-	.loc	1 93 28 is_stmt 0       # MatrixMult.c:93:28
+	.loc	1 91 28 is_stmt 0       # MatrixMult.c:91:28
 	movq	-8(%rdi,%rax,8), %rax
-	.loc	1 90 5 is_stmt 1        # MatrixMult.c:90:5
+	.loc	1 88 5 is_stmt 1        # MatrixMult.c:88:5
 	movq	%rax, 48(%rsp)
 	movl	%esi, 40(%rsp)
 	movl	%edx, 32(%rsp)
@@ -1216,18 +1199,18 @@ main:                                   # @main
 	movl	%esi, %ecx
 	movl	%esi, %r9d
 	callq	printf
-.Ltmp97:
-	.loc	1 95 5                  # MatrixMult.c:95:5
+.Ltmp95:
+	.loc	1 93 5                  # MatrixMult.c:93:5
 	xorl	%eax, %eax
 	addq	$64, %rsp
 	popq	%rbx
-.Ltmp98:
+.Ltmp96:
 	popq	%r14
-.Ltmp99:
+.Ltmp97:
 	popq	%r15
-.Ltmp100:
+.Ltmp98:
 	retq
-.Ltmp101:
+.Ltmp99:
 .Lfunc_end2:
 	.size	main, .Lfunc_end2-main
 	.cfi_endproc
@@ -1350,27 +1333,27 @@ main:                                   # @main
 	.quad	0
 .Ldebug_loc3:
 	.quad	.Lfunc_begin1-.Lfunc_begin0
-	.quad	.Ltmp47-.Lfunc_begin0
+	.quad	.Ltmp46-.Lfunc_begin0
 	.short	1                       # Loc expr size
 	.byte	85                      # DW_OP_reg5
 	.quad	0
 	.quad	0
 .Ldebug_loc4:
 	.quad	.Lfunc_begin1-.Lfunc_begin0
-	.quad	.Ltmp48-.Lfunc_begin0
+	.quad	.Ltmp47-.Lfunc_begin0
 	.short	1                       # Loc expr size
 	.byte	84                      # DW_OP_reg4
 	.quad	0
 	.quad	0
 .Ldebug_loc5:
-	.quad	.Ltmp44-.Lfunc_begin0
-	.quad	.Ltmp53-.Lfunc_begin0
+	.quad	.Ltmp43-.Lfunc_begin0
+	.quad	.Ltmp52-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	83                      # super-register DW_OP_reg3
 	.byte	147                     # DW_OP_piece
 	.byte	4                       # 4
-	.quad	.Ltmp54-.Lfunc_begin0
-	.quad	.Ltmp56-.Lfunc_begin0
+	.quad	.Ltmp57-.Lfunc_begin0
+	.quad	.Ltmp59-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	83                      # super-register DW_OP_reg3
 	.byte	147                     # DW_OP_piece
@@ -1378,24 +1361,23 @@ main:                                   # @main
 	.quad	0
 	.quad	0
 .Ldebug_loc6:
-	.quad	.Ltmp45-.Lfunc_begin0
-	.quad	.Ltmp48-.Lfunc_begin0
-	.short	3                       # Loc expr size
+	.quad	.Ltmp44-.Lfunc_begin0
+	.quad	.Ltmp47-.Lfunc_begin0
+	.short	2                       # Loc expr size
 	.byte	119                     # DW_OP_breg7
-	.byte	208                     # 80
-	.byte	0                       # 
+	.byte	48                      # 48
 	.quad	0
 	.quad	0
 .Ldebug_loc7:
-	.quad	.Ltmp46-.Lfunc_begin0
-	.quad	.Ltmp48-.Lfunc_begin0
+	.quad	.Ltmp45-.Lfunc_begin0
+	.quad	.Ltmp47-.Lfunc_begin0
 	.short	2                       # Loc expr size
 	.byte	119                     # DW_OP_breg7
 	.byte	16                      # 16
 	.quad	0
 	.quad	0
 .Ldebug_loc8:
-	.quad	.Ltmp72-.Lfunc_begin0
+	.quad	.Ltmp70-.Lfunc_begin0
 	.quad	.Lfunc_end1-.Lfunc_begin0
 	.short	1                       # Loc expr size
 	.byte	80                      # DW_OP_reg0
@@ -1403,7 +1385,7 @@ main:                                   # @main
 	.quad	0
 .Ldebug_loc9:
 	.quad	.Lfunc_begin2-.Lfunc_begin0
-	.quad	.Ltmp81-.Lfunc_begin0
+	.quad	.Ltmp79-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	85                      # super-register DW_OP_reg5
 	.byte	147                     # DW_OP_piece
@@ -1412,43 +1394,43 @@ main:                                   # @main
 	.quad	0
 .Ldebug_loc10:
 	.quad	.Lfunc_begin2-.Lfunc_begin0
-	.quad	.Ltmp83-.Lfunc_begin0
+	.quad	.Ltmp81-.Lfunc_begin0
 	.short	1                       # Loc expr size
 	.byte	84                      # DW_OP_reg4
 	.quad	0
 	.quad	0
 .Ldebug_loc11:
+	.quad	.Ltmp80-.Lfunc_begin0
 	.quad	.Ltmp82-.Lfunc_begin0
-	.quad	.Ltmp84-.Lfunc_begin0
 	.short	2                       # Loc expr size
 	.byte	113                     # DW_OP_breg1
 	.byte	0                       # 0
-	.quad	.Ltmp85-.Lfunc_begin0
-	.quad	.Ltmp86-.Lfunc_begin0
+	.quad	.Ltmp83-.Lfunc_begin0
+	.quad	.Ltmp84-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	84                      # super-register DW_OP_reg4
 	.byte	147                     # DW_OP_piece
 	.byte	4                       # 4
-	.quad	.Ltmp87-.Lfunc_begin0
-	.quad	.Ltmp88-.Lfunc_begin0
+	.quad	.Ltmp85-.Lfunc_begin0
+	.quad	.Ltmp86-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	85                      # super-register DW_OP_reg5
 	.byte	147                     # DW_OP_piece
 	.byte	4                       # 4
-	.quad	.Ltmp90-.Lfunc_begin0
-	.quad	.Ltmp91-.Lfunc_begin0
+	.quad	.Ltmp88-.Lfunc_begin0
+	.quad	.Ltmp89-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	85                      # super-register DW_OP_reg5
+	.byte	147                     # DW_OP_piece
+	.byte	4                       # 4
+	.quad	.Ltmp92-.Lfunc_begin0
+	.quad	.Ltmp93-.Lfunc_begin0
+	.short	3                       # Loc expr size
+	.byte	84                      # super-register DW_OP_reg4
 	.byte	147                     # DW_OP_piece
 	.byte	4                       # 4
 	.quad	.Ltmp94-.Lfunc_begin0
 	.quad	.Ltmp95-.Lfunc_begin0
-	.short	3                       # Loc expr size
-	.byte	84                      # super-register DW_OP_reg4
-	.byte	147                     # DW_OP_piece
-	.byte	4                       # 4
-	.quad	.Ltmp96-.Lfunc_begin0
-	.quad	.Ltmp97-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	81                      # super-register DW_OP_reg1
 	.byte	147                     # DW_OP_piece
@@ -1456,22 +1438,22 @@ main:                                   # @main
 	.quad	0
 	.quad	0
 .Ldebug_loc12:
-	.quad	.Ltmp89-.Lfunc_begin0
-	.quad	.Ltmp99-.Lfunc_begin0
+	.quad	.Ltmp87-.Lfunc_begin0
+	.quad	.Ltmp97-.Lfunc_begin0
 	.short	1                       # Loc expr size
 	.byte	94                      # DW_OP_reg14
 	.quad	0
 	.quad	0
 .Ldebug_loc13:
-	.quad	.Ltmp92-.Lfunc_begin0
-	.quad	.Ltmp98-.Lfunc_begin0
+	.quad	.Ltmp90-.Lfunc_begin0
+	.quad	.Ltmp96-.Lfunc_begin0
 	.short	1                       # Loc expr size
 	.byte	83                      # DW_OP_reg3
 	.quad	0
 	.quad	0
 .Ldebug_loc14:
-	.quad	.Ltmp93-.Lfunc_begin0
-	.quad	.Ltmp100-.Lfunc_begin0
+	.quad	.Ltmp91-.Lfunc_begin0
+	.quad	.Ltmp98-.Lfunc_begin0
 	.short	1                       # Loc expr size
 	.byte	95                      # DW_OP_reg15
 	.quad	0
@@ -1771,7 +1753,7 @@ main:                                   # @main
 	.long	.Ldebug_loc8            # DW_AT_location
 	.long	.Linfo_string13         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	68                      # DW_AT_decl_line
+	.byte	66                      # DW_AT_decl_line
 	.long	459                     # DW_AT_type
 	.byte	8                       # Abbrev [8] 0x12a:0xb DW_TAG_variable
 	.long	.Linfo_string12         # DW_AT_name
@@ -1791,7 +1773,7 @@ main:                                   # @main
 	.byte	8                       # Abbrev [8] 0x14b:0xb DW_TAG_variable
 	.long	.Linfo_string20         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	48                      # DW_AT_decl_line
+	.byte	47                      # DW_AT_decl_line
 	.long	42                      # DW_AT_type
 	.byte	0                       # End Of Children Mark
 	.byte	4                       # Abbrev [4] 0x157:0x74 DW_TAG_subprogram
@@ -1802,7 +1784,7 @@ main:                                   # @main
 	.byte	87
 	.long	.Linfo_string11         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	75                      # DW_AT_decl_line
+	.byte	73                      # DW_AT_decl_line
                                         # DW_AT_prototyped
 	.long	516                     # DW_AT_type
                                         # DW_AT_external
@@ -1811,37 +1793,37 @@ main:                                   # @main
 	.long	.Ldebug_loc9            # DW_AT_location
 	.long	.Linfo_string21         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	75                      # DW_AT_decl_line
+	.byte	73                      # DW_AT_decl_line
 	.long	516                     # DW_AT_type
 	.byte	5                       # Abbrev [5] 0x17f:0xf DW_TAG_formal_parameter
 	.long	.Ldebug_loc10           # DW_AT_location
 	.long	.Linfo_string22         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	75                      # DW_AT_decl_line
+	.byte	73                      # DW_AT_decl_line
 	.long	523                     # DW_AT_type
 	.byte	7                       # Abbrev [7] 0x18e:0xf DW_TAG_variable
 	.long	.Ldebug_loc11           # DW_AT_location
 	.long	.Linfo_string24         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	77                      # DW_AT_decl_line
+	.byte	75                      # DW_AT_decl_line
 	.long	516                     # DW_AT_type
 	.byte	7                       # Abbrev [7] 0x19d:0xf DW_TAG_variable
 	.long	.Ldebug_loc12           # DW_AT_location
 	.long	.Linfo_string15         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	81                      # DW_AT_decl_line
+	.byte	79                      # DW_AT_decl_line
 	.long	459                     # DW_AT_type
 	.byte	7                       # Abbrev [7] 0x1ac:0xf DW_TAG_variable
 	.long	.Ldebug_loc13           # DW_AT_location
 	.long	.Linfo_string16         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	82                      # DW_AT_decl_line
+	.byte	80                      # DW_AT_decl_line
 	.long	459                     # DW_AT_type
 	.byte	7                       # Abbrev [7] 0x1bb:0xf DW_TAG_variable
 	.long	.Ldebug_loc14           # DW_AT_location
 	.long	.Linfo_string25         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	84                      # DW_AT_decl_line
+	.byte	82                      # DW_AT_decl_line
 	.long	459                     # DW_AT_type
 	.byte	0                       # End Of Children Mark
 	.byte	2                       # Abbrev [2] 0x1cb:0x5 DW_TAG_pointer_type

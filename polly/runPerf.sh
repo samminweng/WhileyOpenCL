@@ -103,22 +103,22 @@ init(){
 	read -p "Press [Enter] to continue..."
 }
 ### Benchmark handwritten1 MatrixMult
-init handwritten1 MatrixMult
-exec handwritten1 MatrixMult 200
-exec handwritten1 MatrixMult 400
-exec handwritten1 MatrixMult 600
-exec handwritten1 MatrixMult 800
-exec handwritten1 MatrixMult 1000
-exec handwritten1 MatrixMult 1200
-exec handwritten1 MatrixMult 1400
-exec handwritten1 MatrixMult 1600
-exec handwritten1 MatrixMult 1800
-exec handwritten1 MatrixMult 2000
-exec handwritten1 MatrixMult 2200
-exec handwritten1 MatrixMult 2400
-exec handwritten1 MatrixMult 2600
-exec handwritten1 MatrixMult 2800
-exec handwritten1 MatrixMult 3000
+init handwritten2 MatrixMult
+exec handwritten2 MatrixMult 200
+exec handwritten2 MatrixMult 400
+exec handwritten2 MatrixMult 600
+exec handwritten2 MatrixMult 800
+exec handwritten2 MatrixMult 1000
+exec handwritten2 MatrixMult 1200
+exec handwritten2 MatrixMult 1400
+exec handwritten2 MatrixMult 1600
+exec handwritten2 MatrixMult 1800
+exec handwritten2 MatrixMult 2000
+exec handwritten2 MatrixMult 2200
+exec handwritten2 MatrixMult 2400
+exec handwritten2 MatrixMult 2600
+exec handwritten2 MatrixMult 2800
+exec handwritten2 MatrixMult 3000
 
 ### Autogenerate1 MatrixMult
 # init autogenerate1 MatrixMult

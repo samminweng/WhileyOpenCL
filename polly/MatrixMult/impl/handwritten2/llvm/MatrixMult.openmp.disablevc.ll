@@ -190,36 +190,34 @@ entry.polly.split_new_and_old_crit_edge:          ; preds = %entry
   br label %polly.split_new_and_old, !dbg !123
 
 for.cond11.preheader.lr.ph:                       ; preds = %entry
-  %7 = sext i32 %1 to i64, !dbg !123
-  %8 = icmp eq i32 %1, %0
-  %9 = add nsw i64 %6, -1
-  %polly.access.mul.181 = mul i64 %9, %6
-  %polly.access.add.182 = add i64 %polly.access.mul.181, %7
+  %7 = icmp sge i32 %0, %1
+  %8 = add nsw i64 %6, -1
+  %polly.access.mul.181 = mul i64 %8, %6
+  %9 = sext i32 %1 to i64
+  %polly.access.add.182 = add i64 %polly.access.mul.181, %9
   %polly.access.183 = getelementptr i64, i64* %3, i64 %polly.access.add.182
   %10 = icmp ule i64* %polly.access.183, %5
-  %11 = add nsw i64 %7, -1
-  %polly.access.mul.call9185 = mul i64 %11, %7
-  %polly.access.add.call9186 = add i64 %polly.access.mul.call9185, %6
+  %polly.access.add.call9186 = mul nsw i64 %9, %6
   %polly.access.call9187 = getelementptr i64, i64* %5, i64 %polly.access.add.call9186
-  %12 = icmp ule i64* %polly.access.call9187, %3
-  %13 = or i1 %10, %12
-  %14 = and i1 %8, %13
-  br i1 %14, label %polly.parallel.for191, label %for.cond11.preheader.preheader
+  %11 = icmp ule i64* %polly.access.call9187, %3
+  %12 = or i1 %10, %11
+  %13 = and i1 %7, %12
+  br i1 %13, label %polly.parallel.for191, label %for.cond11.preheader.preheader
 
 for.cond11.preheader.preheader:                   ; preds = %for.cond11.preheader.lr.ph
   %cmp12132 = icmp sgt i32 %0, 0, !dbg !124
   br i1 %cmp12132, label %for.cond11.preheader.us.preheader, label %polly.split_new_and_old, !dbg !129
 
 for.cond11.preheader.us.preheader:                ; preds = %for.cond11.preheader.preheader
-  %15 = add i32 %0, -1, !dbg !130
+  %14 = add i32 %0, -1, !dbg !130
   %xtraiter241 = and i32 %0, 3, !dbg !132
   %lcmp.mod242 = icmp eq i32 %xtraiter241, 0, !dbg !132
-  %16 = icmp ult i32 %15, 3, !dbg !132
+  %15 = icmp ult i32 %14, 3, !dbg !132
   br label %for.cond11.preheader.us, !dbg !130
 
 for.cond11.preheader.us:                          ; preds = %for.cond11.preheader.us.preheader, %for.inc20.loopexit.us
   %indvars.iv155.us = phi i64 [ %indvars.iv.next156.us, %for.inc20.loopexit.us ], [ 0, %for.cond11.preheader.us.preheader ]
-  %17 = mul nsw i64 %indvars.iv155.us, %7, !dbg !130
+  %16 = mul nsw i64 %indvars.iv155.us, %6, !dbg !130
   br i1 %lcmp.mod242, label %for.cond11.preheader.us.split, label %for.body14.us.prol.preheader, !dbg !132
 
 for.body14.us.prol.preheader:                     ; preds = %for.cond11.preheader.us
@@ -228,13 +226,13 @@ for.body14.us.prol.preheader:                     ; preds = %for.cond11.preheade
 for.body14.us.prol:                               ; preds = %for.body14.us.prol, %for.body14.us.prol.preheader
   %indvars.iv148.us.prol = phi i64 [ %indvars.iv.next149.us.prol, %for.body14.us.prol ], [ 0, %for.body14.us.prol.preheader ]
   %prol.iter = phi i32 [ %prol.iter.sub, %for.body14.us.prol ], [ %xtraiter241, %for.body14.us.prol.preheader ]
-  %18 = mul nsw i64 %indvars.iv148.us.prol, %6, !dbg !132
-  %19 = add nsw i64 %18, %indvars.iv155.us, !dbg !133
-  %arrayidx.us.prol = getelementptr inbounds i64, i64* %3, i64 %19, !dbg !134
-  %20 = load i64, i64* %arrayidx.us.prol, align 8, !dbg !134, !tbaa !135
-  %21 = add nsw i64 %indvars.iv148.us.prol, %17, !dbg !137
-  %arrayidx19.us.prol = getelementptr inbounds i64, i64* %5, i64 %21, !dbg !138
-  store i64 %20, i64* %arrayidx19.us.prol, align 8, !dbg !139, !tbaa !135
+  %17 = mul nsw i64 %indvars.iv148.us.prol, %6, !dbg !132
+  %18 = add nsw i64 %17, %indvars.iv155.us, !dbg !133
+  %arrayidx.us.prol = getelementptr inbounds i64, i64* %3, i64 %18, !dbg !134
+  %19 = load i64, i64* %arrayidx.us.prol, align 8, !dbg !134, !tbaa !135
+  %20 = add nsw i64 %indvars.iv148.us.prol, %16, !dbg !137
+  %arrayidx19.us.prol = getelementptr inbounds i64, i64* %5, i64 %20, !dbg !138
+  store i64 %19, i64* %arrayidx19.us.prol, align 8, !dbg !139, !tbaa !135
   %indvars.iv.next149.us.prol = add nuw nsw i64 %indvars.iv148.us.prol, 1, !dbg !129
   %prol.iter.sub = add i32 %prol.iter, -1, !dbg !129
   %prol.iter.cmp = icmp eq i32 %prol.iter.sub, 0, !dbg !129
@@ -246,44 +244,44 @@ for.cond11.preheader.us.split.loopexit:           ; preds = %for.body14.us.prol
 
 for.cond11.preheader.us.split:                    ; preds = %for.cond11.preheader.us, %for.cond11.preheader.us.split.loopexit
   %indvars.iv148.us.unr = phi i64 [ 0, %for.cond11.preheader.us ], [ %indvars.iv.next149.us.prol.lcssa, %for.cond11.preheader.us.split.loopexit ]
-  br i1 %16, label %for.inc20.loopexit.us, label %for.cond11.preheader.us.split.split, !dbg !132
+  br i1 %15, label %for.inc20.loopexit.us, label %for.cond11.preheader.us.split.split, !dbg !132
 
 for.cond11.preheader.us.split.split:              ; preds = %for.cond11.preheader.us.split
   br label %for.body14.us, !dbg !132
 
 for.body14.us:                                    ; preds = %for.body14.us, %for.cond11.preheader.us.split.split
   %indvars.iv148.us = phi i64 [ %indvars.iv148.us.unr, %for.cond11.preheader.us.split.split ], [ %indvars.iv.next149.us.3, %for.body14.us ]
-  %22 = mul nsw i64 %indvars.iv148.us, %6, !dbg !132
-  %23 = add nsw i64 %22, %indvars.iv155.us, !dbg !133
-  %arrayidx.us = getelementptr inbounds i64, i64* %3, i64 %23, !dbg !134
-  %24 = load i64, i64* %arrayidx.us, align 8, !dbg !134, !tbaa !135
-  %25 = add nsw i64 %indvars.iv148.us, %17, !dbg !137
-  %arrayidx19.us = getelementptr inbounds i64, i64* %5, i64 %25, !dbg !138
-  store i64 %24, i64* %arrayidx19.us, align 8, !dbg !139, !tbaa !135
+  %21 = mul nsw i64 %indvars.iv148.us, %6, !dbg !132
+  %22 = add nsw i64 %21, %indvars.iv155.us, !dbg !133
+  %arrayidx.us = getelementptr inbounds i64, i64* %3, i64 %22, !dbg !134
+  %23 = load i64, i64* %arrayidx.us, align 8, !dbg !134, !tbaa !135
+  %24 = add nsw i64 %indvars.iv148.us, %16, !dbg !137
+  %arrayidx19.us = getelementptr inbounds i64, i64* %5, i64 %24, !dbg !138
+  store i64 %23, i64* %arrayidx19.us, align 8, !dbg !139, !tbaa !135
   %indvars.iv.next149.us = add nuw nsw i64 %indvars.iv148.us, 1, !dbg !129
-  %26 = mul nsw i64 %indvars.iv.next149.us, %6, !dbg !132
-  %27 = add nsw i64 %26, %indvars.iv155.us, !dbg !133
-  %arrayidx.us.1 = getelementptr inbounds i64, i64* %3, i64 %27, !dbg !134
-  %28 = load i64, i64* %arrayidx.us.1, align 8, !dbg !134, !tbaa !135
-  %29 = add nsw i64 %indvars.iv.next149.us, %17, !dbg !137
-  %arrayidx19.us.1 = getelementptr inbounds i64, i64* %5, i64 %29, !dbg !138
-  store i64 %28, i64* %arrayidx19.us.1, align 8, !dbg !139, !tbaa !135
+  %25 = mul nsw i64 %indvars.iv.next149.us, %6, !dbg !132
+  %26 = add nsw i64 %25, %indvars.iv155.us, !dbg !133
+  %arrayidx.us.1 = getelementptr inbounds i64, i64* %3, i64 %26, !dbg !134
+  %27 = load i64, i64* %arrayidx.us.1, align 8, !dbg !134, !tbaa !135
+  %28 = add nsw i64 %indvars.iv.next149.us, %16, !dbg !137
+  %arrayidx19.us.1 = getelementptr inbounds i64, i64* %5, i64 %28, !dbg !138
+  store i64 %27, i64* %arrayidx19.us.1, align 8, !dbg !139, !tbaa !135
   %indvars.iv.next149.us.1 = add nsw i64 %indvars.iv148.us, 2, !dbg !129
-  %30 = mul nsw i64 %indvars.iv.next149.us.1, %6, !dbg !132
-  %31 = add nsw i64 %30, %indvars.iv155.us, !dbg !133
-  %arrayidx.us.2 = getelementptr inbounds i64, i64* %3, i64 %31, !dbg !134
-  %32 = load i64, i64* %arrayidx.us.2, align 8, !dbg !134, !tbaa !135
-  %33 = add nsw i64 %indvars.iv.next149.us.1, %17, !dbg !137
-  %arrayidx19.us.2 = getelementptr inbounds i64, i64* %5, i64 %33, !dbg !138
-  store i64 %32, i64* %arrayidx19.us.2, align 8, !dbg !139, !tbaa !135
+  %29 = mul nsw i64 %indvars.iv.next149.us.1, %6, !dbg !132
+  %30 = add nsw i64 %29, %indvars.iv155.us, !dbg !133
+  %arrayidx.us.2 = getelementptr inbounds i64, i64* %3, i64 %30, !dbg !134
+  %31 = load i64, i64* %arrayidx.us.2, align 8, !dbg !134, !tbaa !135
+  %32 = add nsw i64 %indvars.iv.next149.us.1, %16, !dbg !137
+  %arrayidx19.us.2 = getelementptr inbounds i64, i64* %5, i64 %32, !dbg !138
+  store i64 %31, i64* %arrayidx19.us.2, align 8, !dbg !139, !tbaa !135
   %indvars.iv.next149.us.2 = add nsw i64 %indvars.iv148.us, 3, !dbg !129
-  %34 = mul nsw i64 %indvars.iv.next149.us.2, %6, !dbg !132
-  %35 = add nsw i64 %34, %indvars.iv155.us, !dbg !133
-  %arrayidx.us.3 = getelementptr inbounds i64, i64* %3, i64 %35, !dbg !134
-  %36 = load i64, i64* %arrayidx.us.3, align 8, !dbg !134, !tbaa !135
-  %37 = add nsw i64 %indvars.iv.next149.us.2, %17, !dbg !137
-  %arrayidx19.us.3 = getelementptr inbounds i64, i64* %5, i64 %37, !dbg !138
-  store i64 %36, i64* %arrayidx19.us.3, align 8, !dbg !139, !tbaa !135
+  %33 = mul nsw i64 %indvars.iv.next149.us.2, %6, !dbg !132
+  %34 = add nsw i64 %33, %indvars.iv155.us, !dbg !133
+  %arrayidx.us.3 = getelementptr inbounds i64, i64* %3, i64 %34, !dbg !134
+  %35 = load i64, i64* %arrayidx.us.3, align 8, !dbg !134, !tbaa !135
+  %36 = add nsw i64 %indvars.iv.next149.us.2, %16, !dbg !137
+  %arrayidx19.us.3 = getelementptr inbounds i64, i64* %5, i64 %36, !dbg !138
+  store i64 %35, i64* %arrayidx19.us.3, align 8, !dbg !139, !tbaa !135
   %indvars.iv.next149.us.3 = add nsw i64 %indvars.iv148.us, 4, !dbg !129
   %lftr.wideiv229.3 = trunc i64 %indvars.iv.next149.us.3 to i32, !dbg !129
   %exitcond230.3 = icmp eq i32 %lftr.wideiv229.3, %0, !dbg !129
@@ -303,16 +301,16 @@ polly.split_new_and_old.loopexit:                 ; preds = %for.inc20.loopexit.
 
 polly.split_new_and_old:                          ; preds = %polly.split_new_and_old.loopexit, %for.cond11.preheader.preheader, %entry.polly.split_new_and_old_crit_edge, %polly.parallel.for191
   %polly.access.add.call162.pre-phi = phi i64 [ %.pre240, %entry.polly.split_new_and_old_crit_edge ], [ %polly.access.add.182, %polly.parallel.for191 ], [ %polly.access.add.182, %for.cond11.preheader.preheader ], [ %polly.access.add.182, %polly.split_new_and_old.loopexit ]
-  %.pre-phi239 = phi i64 [ %.pre238, %entry.polly.split_new_and_old_crit_edge ], [ %7, %polly.parallel.for191 ], [ %7, %for.cond11.preheader.preheader ], [ %7, %polly.split_new_and_old.loopexit ]
-  %38 = icmp sge i32 %0, %1
+  %.pre-phi239 = phi i64 [ %.pre238, %entry.polly.split_new_and_old_crit_edge ], [ %9, %polly.parallel.for191 ], [ %9, %for.cond11.preheader.preheader ], [ %9, %polly.split_new_and_old.loopexit ]
+  %37 = icmp sge i32 %0, %1
   %polly.access.add. = mul nsw i64 %6, %6
   %polly.access. = getelementptr i64, i64* %2, i64 %polly.access.add.
-  %39 = icmp ule i64* %polly.access., %4
+  %38 = icmp ule i64* %polly.access., %4
   %polly.access.call163 = getelementptr i64, i64* %4, i64 %polly.access.add.call162.pre-phi
-  %40 = icmp ule i64* %polly.access.call163, %2
-  %41 = or i1 %39, %40
-  %42 = and i1 %38, %41
-  br i1 %42, label %polly.parallel.for, label %for.cond23.preheader
+  %39 = icmp ule i64* %polly.access.call163, %2
+  %40 = or i1 %38, %39
+  %41 = and i1 %37, %40
+  br i1 %41, label %polly.parallel.for, label %for.cond23.preheader
 
 for.cond23.preheader:                             ; preds = %polly.split_new_and_old
   %cmp28127 = icmp sgt i32 %0, 0, !dbg !141
@@ -322,7 +320,7 @@ for.cond23.preheader:                             ; preds = %polly.split_new_and
 for.cond27.preheader.us.preheader:                ; preds = %for.cond23.preheader
   %xtraiter = and i32 %0, 1, !dbg !150
   %lcmp.mod = icmp eq i32 %xtraiter, 0, !dbg !150
-  %43 = icmp eq i32 %0, 1, !dbg !150
+  %42 = icmp eq i32 %0, 1, !dbg !150
   br label %for.cond27.preheader.us, !dbg !155
 
 for.cond27.preheader.us:                          ; preds = %for.cond27.preheader.us.preheader, %for.inc63.loopexit.us-lcssa.us.us
@@ -331,26 +329,26 @@ for.cond27.preheader.us:                          ; preds = %for.cond27.preheade
 
 for.body30.us.us:                                 ; preds = %for.cond27.preheader.us, %for.inc60.loopexit.us.us
   %indvars.iv138.us.us = phi i64 [ %indvars.iv.next139.us.us, %for.inc60.loopexit.us.us ], [ 0, %for.cond27.preheader.us ]
-  %44 = mul nsw i64 %indvars.iv138.us.us, %6, !dbg !155
-  %45 = add nsw i64 %44, %indvars.iv144.us, !dbg !156
-  %arrayidx34.us.us = getelementptr inbounds i64, i64* %4, i64 %45, !dbg !157
+  %43 = mul nsw i64 %indvars.iv138.us.us, %6, !dbg !155
+  %44 = add nsw i64 %43, %indvars.iv144.us, !dbg !156
+  %arrayidx34.us.us = getelementptr inbounds i64, i64* %4, i64 %44, !dbg !157
   store i64 0, i64* %arrayidx34.us.us, align 8, !dbg !158, !tbaa !135
   tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !33, metadata !57), !dbg !159
   br i1 %lcmp.mod, label %for.body30.us.us.split, label %for.body38.us.us.prol, !dbg !150
 
 for.body38.us.us.prol:                            ; preds = %for.body30.us.us
-  %arrayidx46.us.us.prol = getelementptr inbounds i64, i64* %2, i64 %44, !dbg !160
-  %46 = load i64, i64* %arrayidx46.us.us.prol, align 8, !dbg !160, !tbaa !135
-  %arrayidx50.us.us.prol = getelementptr inbounds i64, i64* %5, i64 %44, !dbg !161
-  %47 = load i64, i64* %arrayidx50.us.us.prol, align 8, !dbg !161, !tbaa !135
-  %mul51.us.us.prol = mul nsw i64 %47, %46, !dbg !162
+  %arrayidx46.us.us.prol = getelementptr inbounds i64, i64* %2, i64 %43, !dbg !160
+  %45 = load i64, i64* %arrayidx46.us.us.prol, align 8, !dbg !160, !tbaa !135
+  %arrayidx50.us.us.prol = getelementptr inbounds i64, i64* %5, i64 %43, !dbg !161
+  %46 = load i64, i64* %arrayidx50.us.us.prol, align 8, !dbg !161, !tbaa !135
+  %mul51.us.us.prol = mul nsw i64 %46, %45, !dbg !162
   store i64 %mul51.us.us.prol, i64* %arrayidx34.us.us, align 8, !dbg !163, !tbaa !135
   br label %for.body30.us.us.split, !dbg !164
 
 for.body30.us.us.split:                           ; preds = %for.body30.us.us, %for.body38.us.us.prol
   %.unr = phi i64 [ 0, %for.body30.us.us ], [ %mul51.us.us.prol, %for.body38.us.us.prol ]
   %indvars.iv.us.us.unr = phi i64 [ 0, %for.body30.us.us ], [ 1, %for.body38.us.us.prol ]
-  br i1 %43, label %for.inc60.loopexit.us.us, label %for.body30.us.us.split.split, !dbg !150
+  br i1 %42, label %for.inc60.loopexit.us.us, label %for.body30.us.us.split.split, !dbg !150
 
 for.body30.us.us.split.split:                     ; preds = %for.body30.us.us.split
   br label %for.body38.us.us, !dbg !150
@@ -365,23 +363,23 @@ for.inc60.loopexit.us.us:                         ; preds = %for.body30.us.us.sp
   br i1 %exitcond224, label %for.inc63.loopexit.us-lcssa.us.us, label %for.body30.us.us, !dbg !166
 
 for.body38.us.us:                                 ; preds = %for.body38.us.us, %for.body30.us.us.split.split
-  %48 = phi i64 [ %.unr, %for.body30.us.us.split.split ], [ %add52.us.us.1, %for.body38.us.us ], !dbg !150
+  %47 = phi i64 [ %.unr, %for.body30.us.us.split.split ], [ %add52.us.us.1, %for.body38.us.us ], !dbg !150
   %indvars.iv.us.us = phi i64 [ %indvars.iv.us.us.unr, %for.body30.us.us.split.split ], [ %indvars.iv.next.us.us.1, %for.body38.us.us ]
-  %49 = add nsw i64 %indvars.iv.us.us, %44, !dbg !167
-  %arrayidx46.us.us = getelementptr inbounds i64, i64* %2, i64 %49, !dbg !160
-  %50 = load i64, i64* %arrayidx46.us.us, align 8, !dbg !160, !tbaa !135
-  %arrayidx50.us.us = getelementptr inbounds i64, i64* %5, i64 %49, !dbg !161
-  %51 = load i64, i64* %arrayidx50.us.us, align 8, !dbg !161, !tbaa !135
-  %mul51.us.us = mul nsw i64 %51, %50, !dbg !162
-  %add52.us.us = add nsw i64 %mul51.us.us, %48, !dbg !168
+  %48 = add nsw i64 %indvars.iv.us.us, %43, !dbg !167
+  %arrayidx46.us.us = getelementptr inbounds i64, i64* %2, i64 %48, !dbg !160
+  %49 = load i64, i64* %arrayidx46.us.us, align 8, !dbg !160, !tbaa !135
+  %arrayidx50.us.us = getelementptr inbounds i64, i64* %5, i64 %48, !dbg !161
+  %50 = load i64, i64* %arrayidx50.us.us, align 8, !dbg !161, !tbaa !135
+  %mul51.us.us = mul nsw i64 %50, %49, !dbg !162
+  %add52.us.us = add nsw i64 %mul51.us.us, %47, !dbg !168
   store i64 %add52.us.us, i64* %arrayidx34.us.us, align 8, !dbg !163, !tbaa !135
   %indvars.iv.next.us.us = add nuw nsw i64 %indvars.iv.us.us, 1, !dbg !164
-  %52 = add nsw i64 %indvars.iv.next.us.us, %44, !dbg !167
-  %arrayidx46.us.us.1 = getelementptr inbounds i64, i64* %2, i64 %52, !dbg !160
-  %53 = load i64, i64* %arrayidx46.us.us.1, align 8, !dbg !160, !tbaa !135
-  %arrayidx50.us.us.1 = getelementptr inbounds i64, i64* %5, i64 %52, !dbg !161
-  %54 = load i64, i64* %arrayidx50.us.us.1, align 8, !dbg !161, !tbaa !135
-  %mul51.us.us.1 = mul nsw i64 %54, %53, !dbg !162
+  %51 = add nsw i64 %indvars.iv.next.us.us, %43, !dbg !167
+  %arrayidx46.us.us.1 = getelementptr inbounds i64, i64* %2, i64 %51, !dbg !160
+  %52 = load i64, i64* %arrayidx46.us.us.1, align 8, !dbg !160, !tbaa !135
+  %arrayidx50.us.us.1 = getelementptr inbounds i64, i64* %5, i64 %51, !dbg !161
+  %53 = load i64, i64* %arrayidx50.us.us.1, align 8, !dbg !161, !tbaa !135
+  %mul51.us.us.1 = mul nsw i64 %53, %52, !dbg !162
   %add52.us.us.1 = add nsw i64 %mul51.us.us.1, %add52.us.us, !dbg !168
   store i64 %add52.us.us.1, i64* %arrayidx34.us.us, align 8, !dbg !163, !tbaa !135
   %indvars.iv.next.us.us.1 = add nsw i64 %indvars.iv.us.us, 2, !dbg !164
@@ -400,36 +398,36 @@ for.end65.loopexit:                               ; preds = %for.inc63.loopexit.
 
 for.end65:                                        ; preds = %for.end65.loopexit, %polly.parallel.for, %for.cond23.preheader
   %call66 = tail call noalias i8* @malloc(i64 16) #6, !dbg !169
-  %55 = bitcast i8* %call66 to %struct.Matrix*, !dbg !170
-  tail call void @llvm.dbg.value(metadata %struct.Matrix* %55, i64 0, metadata !40, metadata !57), !dbg !171
+  %54 = bitcast i8* %call66 to %struct.Matrix*, !dbg !170
+  tail call void @llvm.dbg.value(metadata %struct.Matrix* %54, i64 0, metadata !40, metadata !57), !dbg !171
   %width67 = getelementptr inbounds i8, i8* %call66, i64 8, !dbg !172
-  %56 = bitcast i8* %width67 to i32*, !dbg !172
-  store i32 %0, i32* %56, align 8, !dbg !173, !tbaa !93
+  %55 = bitcast i8* %width67 to i32*, !dbg !172
+  store i32 %0, i32* %55, align 8, !dbg !173, !tbaa !93
   %height68 = getelementptr inbounds i8, i8* %call66, i64 12, !dbg !174
-  %57 = bitcast i8* %height68 to i32*, !dbg !174
-  store i32 %1, i32* %57, align 4, !dbg !175, !tbaa !96
-  %58 = bitcast i8* %call66 to i8**, !dbg !176
-  store i8* %call, i8** %58, align 8, !dbg !176, !tbaa !85
-  ret %struct.Matrix* %55, !dbg !177
+  %56 = bitcast i8* %height68 to i32*, !dbg !174
+  store i32 %1, i32* %56, align 4, !dbg !175, !tbaa !96
+  %57 = bitcast i8* %call66 to i8**, !dbg !176
+  store i8* %call, i8** %57, align 8, !dbg !176, !tbaa !85
+  ret %struct.Matrix* %54, !dbg !177
 
 polly.parallel.for:                               ; preds = %polly.split_new_and_old
-  %59 = add nsw i64 %.pre-phi239, -1
-  %polly.fdiv_q.shr = ashr i64 %59, 5
-  %60 = bitcast { i32, i32, i8* }* %polly.par.userContext to i8*
-  call void @llvm.lifetime.start(i64 16, i8* %60)
+  %58 = add nsw i64 %.pre-phi239, -1
+  %polly.fdiv_q.shr = ashr i64 %58, 5
+  %59 = bitcast { i32, i32, i8* }* %polly.par.userContext to i8*
+  call void @llvm.lifetime.start(i64 16, i8* %59)
   %polly.subfn.storeaddr. = getelementptr inbounds { i32, i32, i8* }, { i32, i32, i8* }* %polly.par.userContext, i64 0, i32 0
   store i32 %1, i32* %polly.subfn.storeaddr., align 8
   %polly.subfn.storeaddr.167 = getelementptr inbounds { i32, i32, i8* }, { i32, i32, i8* }* %polly.par.userContext, i64 0, i32 1
   store i32 %0, i32* %polly.subfn.storeaddr.167, align 4
   %polly.subfn.storeaddr.call = getelementptr inbounds { i32, i32, i8* }, { i32, i32, i8* }* %polly.par.userContext, i64 0, i32 2
   store i8* %call, i8** %polly.subfn.storeaddr.call, align 8
-  %61 = add nsw i64 %polly.fdiv_q.shr, 1
-  call void @GOMP_parallel_loop_runtime_start(void (i8*)* nonnull @matmult_polly_subfn, i8* %60, i32 0, i64 0, i64 %61, i64 1) #6
-  call void @matmult_polly_subfn(i8* %60) #6
+  %60 = add nsw i64 %polly.fdiv_q.shr, 1
+  call void @GOMP_parallel_loop_runtime_start(void (i8*)* nonnull @matmult_polly_subfn, i8* %59, i32 0, i64 0, i64 %60, i64 1) #6
+  call void @matmult_polly_subfn(i8* %59) #6
   call void @GOMP_parallel_end() #6
-  call void @llvm.lifetime.end(i64 8, i8* %60)
-  %62 = bitcast { i32, i32, i8*, i64*, i8* }* %polly.par.userContext171 to i8*
-  call void @llvm.lifetime.start(i64 32, i8* %62)
+  call void @llvm.lifetime.end(i64 8, i8* %59)
+  %61 = bitcast { i32, i32, i8*, i64*, i8* }* %polly.par.userContext171 to i8*
+  call void @llvm.lifetime.start(i64 32, i8* %61)
   %polly.subfn.storeaddr.172 = getelementptr inbounds { i32, i32, i8*, i64*, i8* }, { i32, i32, i8*, i64*, i8* }* %polly.par.userContext171, i64 0, i32 0
   store i32 %1, i32* %polly.subfn.storeaddr.172, align 8
   %polly.subfn.storeaddr.173 = getelementptr inbounds { i32, i32, i8*, i64*, i8* }, { i32, i32, i8*, i64*, i8* }* %polly.par.userContext171, i64 0, i32 1
@@ -440,20 +438,21 @@ polly.parallel.for:                               ; preds = %polly.split_new_and
   store i64* %2, i64** %polly.subfn.storeaddr.175, align 8
   %polly.subfn.storeaddr.call9 = getelementptr inbounds { i32, i32, i8*, i64*, i8* }, { i32, i32, i8*, i64*, i8* }* %polly.par.userContext171, i64 0, i32 4
   store i8* %call9, i8** %polly.subfn.storeaddr.call9, align 8
-  call void @GOMP_parallel_loop_runtime_start(void (i8*)* nonnull @matmult_polly_subfn_4, i8* %62, i32 0, i64 0, i64 %61, i64 1) #6
-  call void @matmult_polly_subfn_4(i8* %62) #6
+  call void @GOMP_parallel_loop_runtime_start(void (i8*)* nonnull @matmult_polly_subfn_4, i8* %61, i32 0, i64 0, i64 %60, i64 1) #6
+  call void @matmult_polly_subfn_4(i8* %61) #6
   call void @GOMP_parallel_end() #6
-  call void @llvm.lifetime.end(i64 8, i8* %62)
+  call void @llvm.lifetime.end(i64 8, i8* %61)
   br label %for.end65
 
 polly.parallel.for191:                            ; preds = %for.cond11.preheader.lr.ph
-  %polly.fdiv_q.shr192 = ashr i64 %11, 5
+  %62 = add nsw i64 %9, -1
+  %polly.fdiv_q.shr192 = ashr i64 %62, 5
   %63 = bitcast { i32, i32, i64*, i8* }* %polly.par.userContext193 to i8*
   call void @llvm.lifetime.start(i64 24, i8* %63)
   %polly.subfn.storeaddr.194 = getelementptr inbounds { i32, i32, i64*, i8* }, { i32, i32, i64*, i8* }* %polly.par.userContext193, i64 0, i32 0
   store i32 %0, i32* %polly.subfn.storeaddr.194, align 8
   %polly.subfn.storeaddr.195 = getelementptr inbounds { i32, i32, i64*, i8* }, { i32, i32, i64*, i8* }* %polly.par.userContext193, i64 0, i32 1
-  store i32 %0, i32* %polly.subfn.storeaddr.195, align 4
+  store i32 %1, i32* %polly.subfn.storeaddr.195, align 4
   %polly.subfn.storeaddr.196 = getelementptr inbounds { i32, i32, i64*, i8* }, { i32, i32, i64*, i8* }* %polly.par.userContext193, i64 0, i32 2
   store i64* %3, i64** %polly.subfn.storeaddr.196, align 8
   %polly.subfn.storeaddr.call9197 = getelementptr inbounds { i32, i32, i64*, i8* }, { i32, i32, i64*, i8* }* %polly.par.userContext193, i64 0, i32 3
@@ -947,10 +946,10 @@ polly.par.setup:
 
 polly.par.loadIVBounds.preheader:                 ; preds = %polly.par.setup
   %9 = sext i32 %polly.subfunc.arg. to i64
-  %10 = sext i32 %polly.subfunc.arg.2 to i64
-  %11 = add nsw i64 %9, -1
-  %polly.fdiv_q.shr = ashr i64 %11, 5
+  %10 = add nsw i64 %9, -1
+  %polly.fdiv_q.shr = ashr i64 %10, 5
   %polly.loop_guard = icmp sgt i64 %polly.fdiv_q.shr, -1
+  %11 = sext i32 %polly.subfunc.arg.2 to i64
   br label %polly.par.loadIVBounds
 
 polly.par.exit.loopexit:                          ; preds = %polly.par.checkNext.loopexit
@@ -977,7 +976,7 @@ polly.loop_header:                                ; preds = %polly.loop_exit6, %
 
 polly.loop_header4.preheader:                     ; preds = %polly.loop_header
   %14 = shl nsw i64 %polly.indvar, 5
-  %15 = sub nsw i64 %10, %14
+  %15 = sub nsw i64 %11, %14
   %16 = add nsw i64 %15, -1
   %17 = icmp sgt i64 %16, 31
   %18 = select i1 %17, i64 31, i64 %16
@@ -1013,7 +1012,7 @@ polly.loop_exit14.loopexit.us:                    ; preds = %polly.loop_exit14.l
 polly.loop_header12.us.us:                        ; preds = %polly.loop_header12.us.us.preheader, %polly.loop_exit23.loopexit.us.us
   %polly.indvar16.us.us = phi i64 [ %polly.indvar_next17.us.us, %polly.loop_exit23.loopexit.us.us ], [ 0, %polly.loop_header12.us.us.preheader ]
   %24 = add nsw i64 %polly.indvar16.us.us, %14
-  %25 = mul i64 %24, %10
+  %25 = mul i64 %24, %9
   br label %polly.loop_header21.us.us
 
 polly.loop_exit23.loopexit.us.us:                 ; preds = %polly.loop_header21.us.us
@@ -1100,21 +1099,21 @@ attributes #6 = { nounwind }
 !36 = !DILocalVariable(name: "a_data", scope: !25, file: !1, line: 42, type: !4)
 !37 = !DILocalVariable(name: "b_data", scope: !25, file: !1, line: 43, type: !4)
 !38 = !DILocalVariable(name: "data", scope: !25, file: !1, line: 46, type: !4)
-!39 = !DILocalVariable(name: "b_t", scope: !25, file: !1, line: 48, type: !4)
-!40 = !DILocalVariable(name: "m", scope: !25, file: !1, line: 68, type: !10)
-!41 = distinct !DISubprogram(name: "main", scope: !1, file: !1, line: 75, type: !42, isLocal: false, isDefinition: true, scopeLine: 75, flags: DIFlagPrototyped, isOptimized: true, variables: !47)
+!39 = !DILocalVariable(name: "b_t", scope: !25, file: !1, line: 47, type: !4)
+!40 = !DILocalVariable(name: "m", scope: !25, file: !1, line: 66, type: !10)
+!41 = distinct !DISubprogram(name: "main", scope: !1, file: !1, line: 73, type: !42, isLocal: false, isDefinition: true, scopeLine: 73, flags: DIFlagPrototyped, isOptimized: true, variables: !47)
 !42 = !DISubroutineType(types: !43)
 !43 = !{!16, !16, !44}
 !44 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !45, size: 64, align: 64)
 !45 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !46, size: 64, align: 64)
 !46 = !DIBasicType(name: "char", size: 8, align: 8, encoding: DW_ATE_signed_char)
 !47 = !{!48, !49, !50, !51, !52, !53}
-!48 = !DILocalVariable(name: "argc", arg: 1, scope: !41, file: !1, line: 75, type: !16)
-!49 = !DILocalVariable(name: "args", arg: 2, scope: !41, file: !1, line: 75, type: !44)
-!50 = !DILocalVariable(name: "max", scope: !41, file: !1, line: 77, type: !16)
-!51 = !DILocalVariable(name: "a", scope: !41, file: !1, line: 81, type: !10)
-!52 = !DILocalVariable(name: "b", scope: !41, file: !1, line: 82, type: !10)
-!53 = !DILocalVariable(name: "c", scope: !41, file: !1, line: 84, type: !10)
+!48 = !DILocalVariable(name: "argc", arg: 1, scope: !41, file: !1, line: 73, type: !16)
+!49 = !DILocalVariable(name: "args", arg: 2, scope: !41, file: !1, line: 73, type: !44)
+!50 = !DILocalVariable(name: "max", scope: !41, file: !1, line: 75, type: !16)
+!51 = !DILocalVariable(name: "a", scope: !41, file: !1, line: 79, type: !10)
+!52 = !DILocalVariable(name: "b", scope: !41, file: !1, line: 80, type: !10)
+!53 = !DILocalVariable(name: "c", scope: !41, file: !1, line: 82, type: !10)
 !54 = !{i32 2, !"Dwarf Version", i32 4}
 !55 = !{i32 2, !"Debug Info Version", i32 3}
 !56 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git cf7bc8edf8cccb1b5de656c403cb55ad44132e98) (http://llvm.org/git/llvm.git 22706dc4c03305692f494d0e42a6de1050d0ec62)"}
@@ -1176,105 +1175,105 @@ attributes #6 = { nounwind }
 !112 = !DILexicalBlockFile(scope: !25, file: !1, discriminator: 1)
 !113 = !DILocation(line: 46, column: 20, scope: !25)
 !114 = !DILocation(line: 46, column: 13, scope: !25)
-!115 = !DILocation(line: 48, column: 22, scope: !112)
-!116 = !DILocation(line: 48, column: 22, scope: !25)
-!117 = !DILocation(line: 48, column: 16, scope: !25)
+!115 = !DILocation(line: 47, column: 22, scope: !112)
+!116 = !DILocation(line: 47, column: 22, scope: !25)
+!117 = !DILocation(line: 47, column: 16, scope: !25)
 !118 = !DILocation(line: 39, column: 9, scope: !25)
-!119 = !DILocation(line: 51, column: 16, scope: !120)
+!119 = !DILocation(line: 49, column: 16, scope: !120)
 !120 = !DILexicalBlockFile(scope: !121, file: !1, discriminator: 1)
-!121 = distinct !DILexicalBlock(scope: !122, file: !1, line: 51, column: 2)
-!122 = distinct !DILexicalBlock(scope: !25, file: !1, line: 51, column: 2)
-!123 = !DILocation(line: 51, column: 2, scope: !120)
-!124 = !DILocation(line: 53, column: 17, scope: !125)
+!121 = distinct !DILexicalBlock(scope: !122, file: !1, line: 49, column: 2)
+!122 = distinct !DILexicalBlock(scope: !25, file: !1, line: 49, column: 2)
+!123 = !DILocation(line: 49, column: 2, scope: !120)
+!124 = !DILocation(line: 51, column: 17, scope: !125)
 !125 = !DILexicalBlockFile(scope: !126, file: !1, discriminator: 1)
-!126 = distinct !DILexicalBlock(scope: !127, file: !1, line: 53, column: 3)
-!127 = distinct !DILexicalBlock(scope: !128, file: !1, line: 53, column: 3)
-!128 = distinct !DILexicalBlock(scope: !121, file: !1, line: 51, column: 31)
-!129 = !DILocation(line: 53, column: 3, scope: !125)
-!130 = !DILocation(line: 54, column: 9, scope: !131)
-!131 = distinct !DILexicalBlock(scope: !126, file: !1, line: 53, column: 31)
-!132 = !DILocation(line: 54, column: 30, scope: !131)
-!133 = !DILocation(line: 54, column: 36, scope: !131)
-!134 = !DILocation(line: 54, column: 22, scope: !131)
+!126 = distinct !DILexicalBlock(scope: !127, file: !1, line: 51, column: 3)
+!127 = distinct !DILexicalBlock(scope: !128, file: !1, line: 51, column: 3)
+!128 = distinct !DILexicalBlock(scope: !121, file: !1, line: 49, column: 31)
+!129 = !DILocation(line: 51, column: 3, scope: !125)
+!130 = !DILocation(line: 52, column: 9, scope: !131)
+!131 = distinct !DILexicalBlock(scope: !126, file: !1, line: 51, column: 31)
+!132 = !DILocation(line: 52, column: 29, scope: !131)
+!133 = !DILocation(line: 52, column: 35, scope: !131)
+!134 = !DILocation(line: 52, column: 21, scope: !131)
 !135 = !{!136, !136, i64 0}
 !136 = !{!"long long", !88, i64 0}
-!137 = !DILocation(line: 54, column: 16, scope: !131)
-!138 = !DILocation(line: 54, column: 4, scope: !131)
-!139 = !DILocation(line: 54, column: 20, scope: !131)
+!137 = !DILocation(line: 52, column: 15, scope: !131)
+!138 = !DILocation(line: 52, column: 4, scope: !131)
+!139 = !DILocation(line: 52, column: 19, scope: !131)
 !140 = distinct !{!140, !80}
-!141 = !DILocation(line: 59, column: 17, scope: !142)
+!141 = !DILocation(line: 57, column: 17, scope: !142)
 !142 = !DILexicalBlockFile(scope: !143, file: !1, discriminator: 1)
-!143 = distinct !DILexicalBlock(scope: !144, file: !1, line: 59, column: 3)
-!144 = distinct !DILexicalBlock(scope: !145, file: !1, line: 59, column: 3)
-!145 = distinct !DILexicalBlock(scope: !146, file: !1, line: 57, column: 31)
-!146 = distinct !DILexicalBlock(scope: !147, file: !1, line: 57, column: 2)
-!147 = distinct !DILexicalBlock(scope: !25, file: !1, line: 57, column: 2)
-!148 = !DILocation(line: 57, column: 2, scope: !149)
+!143 = distinct !DILexicalBlock(scope: !144, file: !1, line: 57, column: 3)
+!144 = distinct !DILexicalBlock(scope: !145, file: !1, line: 57, column: 3)
+!145 = distinct !DILexicalBlock(scope: !146, file: !1, line: 55, column: 31)
+!146 = distinct !DILexicalBlock(scope: !147, file: !1, line: 55, column: 2)
+!147 = distinct !DILexicalBlock(scope: !25, file: !1, line: 55, column: 2)
+!148 = !DILocation(line: 55, column: 2, scope: !149)
 !149 = !DILexicalBlockFile(scope: !146, file: !1, discriminator: 1)
-!150 = !DILocation(line: 62, column: 23, scope: !151)
-!151 = distinct !DILexicalBlock(scope: !152, file: !1, line: 61, column: 24)
-!152 = distinct !DILexicalBlock(scope: !153, file: !1, line: 61, column: 4)
-!153 = distinct !DILexicalBlock(scope: !154, file: !1, line: 61, column: 4)
-!154 = distinct !DILexicalBlock(scope: !143, file: !1, line: 59, column: 31)
-!155 = !DILocation(line: 60, column: 10, scope: !154)
-!156 = !DILocation(line: 60, column: 16, scope: !154)
-!157 = !DILocation(line: 60, column: 4, scope: !154)
-!158 = !DILocation(line: 60, column: 20, scope: !154)
+!150 = !DILocation(line: 60, column: 23, scope: !151)
+!151 = distinct !DILexicalBlock(scope: !152, file: !1, line: 59, column: 24)
+!152 = distinct !DILexicalBlock(scope: !153, file: !1, line: 59, column: 4)
+!153 = distinct !DILexicalBlock(scope: !154, file: !1, line: 59, column: 4)
+!154 = distinct !DILexicalBlock(scope: !143, file: !1, line: 57, column: 31)
+!155 = !DILocation(line: 58, column: 10, scope: !154)
+!156 = !DILocation(line: 58, column: 16, scope: !154)
+!157 = !DILocation(line: 58, column: 4, scope: !154)
+!158 = !DILocation(line: 58, column: 20, scope: !154)
 !159 = !DILocation(line: 39, column: 12, scope: !25)
-!160 = !DILocation(line: 62, column: 41, scope: !151)
-!161 = !DILocation(line: 62, column: 59, scope: !151)
-!162 = !DILocation(line: 62, column: 58, scope: !151)
-!163 = !DILocation(line: 62, column: 21, scope: !151)
-!164 = !DILocation(line: 61, column: 4, scope: !165)
+!160 = !DILocation(line: 60, column: 41, scope: !151)
+!161 = !DILocation(line: 60, column: 59, scope: !151)
+!162 = !DILocation(line: 60, column: 58, scope: !151)
+!163 = !DILocation(line: 60, column: 21, scope: !151)
+!164 = !DILocation(line: 59, column: 4, scope: !165)
 !165 = !DILexicalBlockFile(scope: !152, file: !1, discriminator: 1)
-!166 = !DILocation(line: 59, column: 3, scope: !142)
-!167 = !DILocation(line: 62, column: 55, scope: !151)
-!168 = !DILocation(line: 62, column: 39, scope: !151)
-!169 = !DILocation(line: 68, column: 17, scope: !112)
-!170 = !DILocation(line: 68, column: 17, scope: !25)
-!171 = !DILocation(line: 68, column: 13, scope: !25)
-!172 = !DILocation(line: 69, column: 8, scope: !25)
-!173 = !DILocation(line: 69, column: 14, scope: !25)
-!174 = !DILocation(line: 70, column: 8, scope: !25)
-!175 = !DILocation(line: 70, column: 15, scope: !25)
-!176 = !DILocation(line: 71, column: 13, scope: !25)
-!177 = !DILocation(line: 72, column: 5, scope: !25)
-!178 = !DILocation(line: 75, column: 14, scope: !41)
-!179 = !DILocation(line: 75, column: 27, scope: !41)
-!180 = !DILocation(line: 77, column: 5, scope: !41)
-!181 = !DILocation(line: 78, column: 12, scope: !41)
+!166 = !DILocation(line: 57, column: 3, scope: !142)
+!167 = !DILocation(line: 60, column: 55, scope: !151)
+!168 = !DILocation(line: 60, column: 39, scope: !151)
+!169 = !DILocation(line: 66, column: 17, scope: !112)
+!170 = !DILocation(line: 66, column: 17, scope: !25)
+!171 = !DILocation(line: 66, column: 13, scope: !25)
+!172 = !DILocation(line: 67, column: 8, scope: !25)
+!173 = !DILocation(line: 67, column: 14, scope: !25)
+!174 = !DILocation(line: 68, column: 8, scope: !25)
+!175 = !DILocation(line: 68, column: 15, scope: !25)
+!176 = !DILocation(line: 69, column: 13, scope: !25)
+!177 = !DILocation(line: 70, column: 5, scope: !25)
+!178 = !DILocation(line: 73, column: 14, scope: !41)
+!179 = !DILocation(line: 73, column: 27, scope: !41)
+!180 = !DILocation(line: 75, column: 5, scope: !41)
+!181 = !DILocation(line: 76, column: 12, scope: !41)
 !182 = !{!87, !87, i64 0}
 !183 = !DIExpression(DW_OP_deref)
-!184 = !DILocation(line: 77, column: 9, scope: !41)
-!185 = !DILocation(line: 78, column: 5, scope: !41)
-!186 = !DILocation(line: 79, column: 24, scope: !41)
+!184 = !DILocation(line: 75, column: 9, scope: !41)
+!185 = !DILocation(line: 76, column: 5, scope: !41)
+!186 = !DILocation(line: 77, column: 24, scope: !41)
 !187 = !{!90, !90, i64 0}
-!188 = !DILocation(line: 79, column: 5, scope: !41)
-!189 = !DILocation(line: 81, column: 22, scope: !41)
-!190 = !DILocation(line: 81, column: 17, scope: !191)
+!188 = !DILocation(line: 77, column: 5, scope: !41)
+!189 = !DILocation(line: 79, column: 22, scope: !41)
+!190 = !DILocation(line: 79, column: 17, scope: !191)
 !191 = !DILexicalBlockFile(scope: !41, file: !1, discriminator: 1)
-!192 = !DILocation(line: 81, column: 13, scope: !41)
-!193 = !DILocation(line: 82, column: 22, scope: !41)
-!194 = !DILocation(line: 82, column: 17, scope: !191)
-!195 = !DILocation(line: 82, column: 13, scope: !41)
-!196 = !DILocation(line: 84, column: 17, scope: !191)
-!197 = !DILocation(line: 84, column: 13, scope: !41)
-!198 = !DILocation(line: 89, column: 48, scope: !41)
-!199 = !DILocation(line: 89, column: 5, scope: !41)
-!200 = !DILocation(line: 91, column: 9, scope: !41)
-!201 = !DILocation(line: 91, column: 12, scope: !41)
-!202 = !DILocation(line: 91, column: 47, scope: !41)
-!203 = !DILocation(line: 91, column: 51, scope: !41)
-!204 = !DILocation(line: 91, column: 28, scope: !41)
-!205 = !DILocation(line: 91, column: 31, scope: !41)
-!206 = !DILocation(line: 92, column: 31, scope: !41)
-!207 = !DILocation(line: 92, column: 28, scope: !41)
-!208 = !DILocation(line: 93, column: 31, scope: !41)
-!209 = !DILocation(line: 93, column: 28, scope: !41)
-!210 = !DILocation(line: 90, column: 5, scope: !41)
-!211 = !DILocation(line: 96, column: 1, scope: !212)
+!192 = !DILocation(line: 79, column: 13, scope: !41)
+!193 = !DILocation(line: 80, column: 22, scope: !41)
+!194 = !DILocation(line: 80, column: 17, scope: !191)
+!195 = !DILocation(line: 80, column: 13, scope: !41)
+!196 = !DILocation(line: 82, column: 17, scope: !191)
+!197 = !DILocation(line: 82, column: 13, scope: !41)
+!198 = !DILocation(line: 87, column: 48, scope: !41)
+!199 = !DILocation(line: 87, column: 5, scope: !41)
+!200 = !DILocation(line: 89, column: 9, scope: !41)
+!201 = !DILocation(line: 89, column: 12, scope: !41)
+!202 = !DILocation(line: 89, column: 47, scope: !41)
+!203 = !DILocation(line: 89, column: 51, scope: !41)
+!204 = !DILocation(line: 89, column: 28, scope: !41)
+!205 = !DILocation(line: 89, column: 31, scope: !41)
+!206 = !DILocation(line: 90, column: 31, scope: !41)
+!207 = !DILocation(line: 90, column: 28, scope: !41)
+!208 = !DILocation(line: 91, column: 31, scope: !41)
+!209 = !DILocation(line: 91, column: 28, scope: !41)
+!210 = !DILocation(line: 88, column: 5, scope: !41)
+!211 = !DILocation(line: 94, column: 1, scope: !212)
 !212 = !DILexicalBlockFile(scope: !41, file: !1, discriminator: 3)
-!213 = !DILocation(line: 95, column: 5, scope: !41)
+!213 = !DILocation(line: 93, column: 5, scope: !41)
 !214 = distinct !{!214, !215, !"polly.alias.scope.call"}
 !215 = distinct !{!215, !"polly.alias.scope.domain"}
 !216 = distinct !{!216}
