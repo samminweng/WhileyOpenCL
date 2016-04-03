@@ -1,109 +1,94 @@
 #include "Util.h"
-#define N 2000
 
-void init() __attribute__((noinline));
-void mat_mult() __attribute__((noinline));
+typedef struct{
+    long long* data;
+    int width;
+    int height;
+} Matrix;
 
-int A[N][N];
-int B[N][N];
-int C[N][N];
-int R[N][N];
+Matrix* init(int width, int height) __attribute__((noinline));
+Matrix* matmult(Matrix* a, Matrix* b) __attribute__((noinline));
 
-void init(){
-    int i;
-    int j;
-    
-    /* Intializes random number generator */
-    srand((unsigned) time(NULL));
-    for (i=0; i<N; i++) {
-        for (j=0; j<N; j++) {
-            // Each rows starts with a random number from 0 to 10
-            R[i][j] = rand()%10;
+Matrix* init(int width, int height){
+
+    int i, j;
+
+    long long* data = (long long*)malloc(height*width*sizeof(long long));
+    // Initialize 
+    for (i=0; i<height; i++) {
+        for (j=0; j<width; j++) {
+            data[i*width+j] = 0;
         }
     }
 
-    for (i=0; i<N; i++) {
-        for (j=0; j<N; j++) {
-            //A[i][j] = 1; 
-            //B[i][j] = 1;
-            A[i][j] = R[i][j]; 
-            B[i][j] = R[i][j];
+    for (i=0; i<height; i++) {
+        for (j=0; j<width; j++) {
+            data[i*width+j] = data[i*width+j] + i;
         }
     }
+
+    Matrix* m = malloc(sizeof(Matrix));
+    m->data = data;
+    m->width = width;
+    m->height = height;
+
+    return m;
 }
 
-void mat_mult(){
-	int i,j,k;
-	int b_t[N];
-
-	for (j = 0; j < N; j++) {
-		// Extract the column at 'j' index
-		for (i = 0; i < N; i++) {
-			b_t[i] = B[i][j];
-		}
-		// Multiply the X and y_t vectors.
-		for (i = 0; i < N; i++) {
-			int sum=0;
-			for(k=0;k<N;k++){
-				sum = sum + A[i][k]*b_t[k];
-			}
-			C[i][j] = sum;
-		}
-	}
-}
-
-
-/*int *__restrict__ transpose(int index) {
-	int i;
-	int *__restrict__ y_t=(int *__restrict__)malloc(N*sizeof(int));
-	for (i = 0; i < N; i++) {
-		y_t[i] = Y[i][index];
-	}
-	return y_t;
-}*/
-
-
-/*int dot(int *__restrict__ a, int *__restrict__ b){
-	int i;
-	int sum[64];
-	int splits = N/64;
-	int s;
-	int total=0;
-	for(s=0;s<splits;s++){
-		int tmp=0;
-		for (i = 0; i < 64; i++) {
-			//total += a[s*64+i] * b[s*64+i];
-			tmp = tmp + a[s*64+i] * b[s*64+i];
-		}
-		sum[s] = tmp;
-		total += sum[s];
-	}
-	return total;
-}*/
-
-/*void print_array()
-{
-	int i, j;
-
-	for (i=0; i<N; i++) {
-		for (j=0; j<N; j++) {
-			fprintf(stdout, "%d ", Z[i][j]);
-			if (j%80 == 79) fprintf(stdout, "\n");
-		}
-		fprintf(stdout, "\n");
-	}
-}*/
-
-
-int main(){
-	init();
-	mat_mult();
+Matrix* matmult(Matrix* a, Matrix* b){
+	int i, j, k;
+    int width = b->width;
+    int height = a->height;
+    long long* a_data = a->data;
+    long long* b_data = b->data;
 	
-	printf("Pass %d X %d matrix test case \n", N, N);
-    printf("A[%d][%d] = %d, B[%d][%d] =%d, C[%d][%d] =%d \n", 
-        N-1, N-1, A[N-1][N-1],
-        N-1, N-1, B[N-1][N-1],  
-        N-1, N-1, C[N-1][N-1]);
 
+	long long* data = (long long*)malloc(height*width*sizeof(long long));
+    long long* b_t = malloc(width*height*sizeof(long long));
+    // Transpose b matrix to 'b_t' matrix
+	for (j = 0; j < height; j++) {
+		// Extract the column at 'j' index
+		for (i = 0; i < width; i++) {
+			b_t[j*height+i] = b_data[i*width+j];
+		}
+	}
+	for (j = 0; j < height; j++) {
+		// Multiply the a and b_v vectors.
+		for (i = 0; i < width; i++) {
+			data[i*width+j] =0;
+			for(k=0;k<width;k++){
+				data[i*width+j] = data[i*width+j] + a_data[i*width+k]*b_t[i*width+k];
+			}
+		}
+	}
+
+
+    Matrix* m = malloc(sizeof(Matrix));
+    m->width = width;
+    m->height = height;
+    m->data = data;
+    return m;
+}
+
+int main(int argc, char** args){
+	//Get matrix size from command line argument
+    int max;
+    sscanf(args[1], "%d", &max);
+    printf("N = %d\n", max);
+    // Intialize matrix
+    Matrix* a = init(max, max);
+    Matrix* b = init(max, max);
+    // Multiply matrix A and B
+    Matrix* c = matmult(a, b);
+
+    // Print out matrix c
+    //print_mat(c);
+
+    printf("Pass %d X %d matrix test case \n", max, max);
+    printf("A[%dX%d+%d] = %lld, B[%dX%d+%d] =%lld, C[%dX%d+%d] =%lld \n", 
+        max-1, max, max-1, a->data[(max-1)*max+max-1],
+        max-1, max, max-1, b->data[(max-1)*max+max-1],  
+        max-1, max, max-1, c->data[(max-1)*max+max-1]);
+    
     return 0;
 }

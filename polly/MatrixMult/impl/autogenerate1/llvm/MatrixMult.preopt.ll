@@ -1,4 +1,5 @@
 ; ModuleID = 'MatrixMult.preopt.s'
+source_filename = "MatrixMult.c"
 target datalayout = "e-m:e-i64:64-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
 
@@ -303,20 +304,20 @@ entry.split:                                      ; preds = %entry
   %1 = load i64, i64* %height2, align 8, !dbg !298
   tail call void @llvm.dbg.value(metadata i64 %1, i64 0, metadata !264, metadata !108), !dbg !265
   tail call void @llvm.dbg.value(metadata i64 %1, i64 0, metadata !256, metadata !108), !dbg !257
-  %cmp10 = icmp sgt i64 %1, 0, !dbg !299
-  br i1 %cmp10, label %while.body4.preheader.lr.ph, label %blklab6, !dbg !302
+  %cmp9 = icmp sgt i64 %1, 0, !dbg !299
+  br i1 %cmp9, label %while.body4.preheader.lr.ph, label %blklab6, !dbg !302
 
 while.body4.preheader.lr.ph:                      ; preds = %entry.split
   br label %while.body4.preheader, !dbg !302
 
 while.body4.preheader:                            ; preds = %while.body4.preheader.lr.ph, %if.end21
-  %_25_has_ownership.018 = phi i1 [ false, %while.body4.preheader.lr.ph ], [ true, %if.end21 ]
-  %_25.017 = phi i64* [ null, %while.body4.preheader.lr.ph ], [ %11, %if.end21 ]
-  %i.015 = phi i64 [ 0, %while.body4.preheader.lr.ph ], [ %add18, %if.end21 ]
-  %_12.014 = phi i64* [ null, %while.body4.preheader.lr.ph ], [ %_12.1.lcssa, %if.end21 ]
-  %_12_has_ownership.013 = phi i8 [ 0, %while.body4.preheader.lr.ph ], [ %_12_has_ownership.1.lcssa, %if.end21 ]
-  %_18_has_ownership.012 = phi i8 [ 0, %while.body4.preheader.lr.ph ], [ %_18_has_ownership.1.lcssa, %if.end21 ]
-  %_18.011 = phi i64* [ null, %while.body4.preheader.lr.ph ], [ %_18.1.lcssa, %if.end21 ]
+  %_25_has_ownership.015 = phi i1 [ false, %while.body4.preheader.lr.ph ], [ true, %if.end21 ]
+  %2 = phi i8* [ null, %while.body4.preheader.lr.ph ], [ %call22, %if.end21 ]
+  %i.013 = phi i64 [ 0, %while.body4.preheader.lr.ph ], [ %add18, %if.end21 ]
+  %_12.012 = phi i64* [ null, %while.body4.preheader.lr.ph ], [ %_12.1.lcssa, %if.end21 ]
+  %_12_has_ownership.011 = phi i8 [ 0, %while.body4.preheader.lr.ph ], [ %_12_has_ownership.1.lcssa, %if.end21 ]
+  %_18_has_ownership.010 = phi i8 [ 0, %while.body4.preheader.lr.ph ], [ %_18_has_ownership.1.lcssa, %if.end21 ]
+  %3 = phi i8* [ null, %while.body4.preheader.lr.ph ], [ %.lcssa, %if.end21 ]
   %cmp51 = icmp sgt i64 %0, 0, !dbg !303
   br i1 %cmp51, label %if.end7.lr.ph, label %blklab8, !dbg !306
 
@@ -324,93 +325,91 @@ if.end7.lr.ph:                                    ; preds = %while.body4.prehead
   br label %if.end7, !dbg !306
 
 if.end7:                                          ; preds = %if.end7.lr.ph, %if.end14
-  %j.06 = phi i64 [ 0, %if.end7.lr.ph ], [ %add17, %if.end14 ]
-  %_12.15 = phi i64* [ %_12.014, %if.end7.lr.ph ], [ %call, %if.end14 ]
-  %_12_has_ownership.14 = phi i8 [ %_12_has_ownership.013, %if.end7.lr.ph ], [ 1, %if.end14 ]
-  %_18_has_ownership.13 = phi i8 [ %_18_has_ownership.012, %if.end7.lr.ph ], [ 1, %if.end14 ]
-  %_18.12 = phi i64* [ %_18.011, %if.end7.lr.ph ], [ %9, %if.end14 ]
-  %2 = and i8 %_12_has_ownership.14, 1, !dbg !307
-  %tobool = icmp eq i8 %2, 0, !dbg !307
+  %j.05 = phi i64 [ 0, %if.end7.lr.ph ], [ %add17, %if.end14 ]
+  %_12.14 = phi i64* [ %_12.012, %if.end7.lr.ph ], [ %call, %if.end14 ]
+  %_12_has_ownership.13 = phi i8 [ %_12_has_ownership.011, %if.end7.lr.ph ], [ 1, %if.end14 ]
+  %_18_has_ownership.12 = phi i8 [ %_18_has_ownership.010, %if.end7.lr.ph ], [ 1, %if.end14 ]
+  %4 = phi i8* [ %3, %if.end7.lr.ph ], [ %call15, %if.end14 ]
+  %5 = and i8 %_12_has_ownership.13, 1, !dbg !307
+  %tobool = icmp eq i8 %5, 0, !dbg !307
   br i1 %tobool, label %if.end9, label %if.then8, !dbg !309
 
 if.then8:                                         ; preds = %if.end7
-  %3 = bitcast i64* %_12.15 to i8*, !dbg !310
-  tail call void @free(i8* %3) #5, !dbg !310
+  %6 = bitcast i64* %_12.14 to i8*, !dbg !310
+  tail call void @free(i8* %6) #5, !dbg !310
   tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !271, metadata !108), !dbg !272
   br label %if.end9, !dbg !310
 
 if.end9:                                          ; preds = %if.end7, %if.then8
   %data = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0, i32 0, !dbg !313
-  %4 = load i64*, i64** %data, align 8, !dbg !313
+  %7 = load i64*, i64** %data, align 8, !dbg !313
   %data_size10 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0, i32 1, !dbg !313
-  %5 = load i64, i64* %data_size10, align 8, !dbg !313
-  %call = tail call i64* @copy(i64* %4, i64 %5) #5, !dbg !313
+  %8 = load i64, i64* %data_size10, align 8, !dbg !313
+  %call = tail call i64* @copy(i64* %7, i64 %8) #5, !dbg !313
   tail call void @llvm.dbg.value(metadata i64* %call, i64 0, metadata !268, metadata !108), !dbg !269
   tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !271, metadata !108), !dbg !272
-  %mul = mul nsw i64 %i.015, %0, !dbg !314
+  %mul = mul nsw i64 %i.013, %0, !dbg !314
   tail call void @llvm.dbg.value(metadata i64 %mul, i64 0, metadata !273, metadata !108), !dbg !274
-  %add = add nsw i64 %j.06, %mul, !dbg !315
+  %add = add nsw i64 %j.05, %mul, !dbg !315
   tail call void @llvm.dbg.value(metadata i64 %add, i64 0, metadata !275, metadata !108), !dbg !276
   %arrayidx = getelementptr inbounds i64, i64* %call, i64 %add, !dbg !316
-  %6 = load i64, i64* %arrayidx, align 8, !dbg !316
-  tail call void @llvm.dbg.value(metadata i64 %6, i64 0, metadata !277, metadata !108), !dbg !278
-  %call11 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.3, i64 0, i64 0), i64 %6) #5, !dbg !317
-  %7 = and i8 %_18_has_ownership.13, 1, !dbg !318
-  %tobool12 = icmp eq i8 %7, 0, !dbg !318
+  %9 = load i64, i64* %arrayidx, align 8, !dbg !316
+  tail call void @llvm.dbg.value(metadata i64 %9, i64 0, metadata !277, metadata !108), !dbg !278
+  %call11 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.3, i64 0, i64 0), i64 %9) #5, !dbg !317
+  %10 = and i8 %_18_has_ownership.12, 1, !dbg !318
+  %tobool12 = icmp eq i8 %10, 0, !dbg !318
   br i1 %tobool12, label %if.end14, label %if.then13, !dbg !320
 
 if.then13:                                        ; preds = %if.end9
-  %8 = bitcast i64* %_18.12 to i8*, !dbg !321
-  tail call void @free(i8* %8) #5, !dbg !321
+  tail call void @free(i8* %4) #5, !dbg !321
   tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !282, metadata !108), !dbg !283
   br label %if.end14, !dbg !321
 
 if.end14:                                         ; preds = %if.end9, %if.then13
   tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !281, metadata !108), !dbg !280
   %call15 = tail call noalias i8* @malloc(i64 8) #5, !dbg !324
-  %9 = bitcast i8* %call15 to i64*, !dbg !324
-  tail call void @llvm.dbg.value(metadata i64* %9, i64 0, metadata !279, metadata !108), !dbg !280
-  store i64 32, i64* %9, align 8, !dbg !325
+  %11 = bitcast i8* %call15 to i64*, !dbg !324
+  tail call void @llvm.dbg.value(metadata i64* %11, i64 0, metadata !279, metadata !108), !dbg !280
+  store i64 32, i64* %11, align 8, !dbg !325
   tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !282, metadata !108), !dbg !283
-  tail call void @printf_s(i64* %9, i64 1) #5, !dbg !326
+  tail call void @printf_s(i64* %11, i64 1) #5, !dbg !326
   tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !284, metadata !108), !dbg !285
   tail call void @llvm.dbg.value(metadata i64 %add17, i64 0, metadata !286, metadata !108), !dbg !287
   tail call void @llvm.dbg.value(metadata i64 %add17, i64 0, metadata !258, metadata !108), !dbg !259
-  %add17 = add nuw nsw i64 %j.06, 1, !dbg !327
+  %add17 = add nuw nsw i64 %j.05, 1, !dbg !327
   %exitcond = icmp ne i64 %add17, %0, !dbg !306
   br i1 %exitcond, label %if.end7, label %while.body4.blklab8_crit_edge, !dbg !306
 
 while.body4.blklab8_crit_edge:                    ; preds = %if.end14
-  %.lcssa = phi i64* [ %9, %if.end14 ]
+  %call15.lcssa = phi i8* [ %call15, %if.end14 ]
   %call.lcssa = phi i64* [ %call, %if.end14 ]
   br label %blklab8, !dbg !306
 
 blklab8:                                          ; preds = %while.body4.blklab8_crit_edge, %while.body4.preheader
-  %_12.1.lcssa = phi i64* [ %call.lcssa, %while.body4.blklab8_crit_edge ], [ %_12.014, %while.body4.preheader ]
-  %_12_has_ownership.1.lcssa = phi i8 [ 1, %while.body4.blklab8_crit_edge ], [ %_12_has_ownership.013, %while.body4.preheader ]
-  %_18_has_ownership.1.lcssa = phi i8 [ 1, %while.body4.blklab8_crit_edge ], [ %_18_has_ownership.012, %while.body4.preheader ]
-  %_18.1.lcssa = phi i64* [ %.lcssa, %while.body4.blklab8_crit_edge ], [ %_18.011, %while.body4.preheader ]
+  %_12.1.lcssa = phi i64* [ %call.lcssa, %while.body4.blklab8_crit_edge ], [ %_12.012, %while.body4.preheader ]
+  %_12_has_ownership.1.lcssa = phi i8 [ 1, %while.body4.blklab8_crit_edge ], [ %_12_has_ownership.011, %while.body4.preheader ]
+  %_18_has_ownership.1.lcssa = phi i8 [ 1, %while.body4.blklab8_crit_edge ], [ %_18_has_ownership.010, %while.body4.preheader ]
+  %.lcssa = phi i8* [ %call15.lcssa, %while.body4.blklab8_crit_edge ], [ %3, %while.body4.preheader ]
   tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !288, metadata !108), !dbg !289
-  %add18 = add nuw nsw i64 %i.015, 1, !dbg !328
+  %add18 = add nuw nsw i64 %i.013, 1, !dbg !328
   tail call void @llvm.dbg.value(metadata i64 %add18, i64 0, metadata !290, metadata !108), !dbg !291
   tail call void @llvm.dbg.value(metadata i64 %add18, i64 0, metadata !252, metadata !108), !dbg !253
-  br i1 %_25_has_ownership.018, label %if.then20, label %if.end21, !dbg !329
+  br i1 %_25_has_ownership.015, label %if.then20, label %if.end21, !dbg !329
 
 if.then20:                                        ; preds = %blklab8
-  %10 = bitcast i64* %_25.017 to i8*, !dbg !330
-  tail call void @free(i8* %10) #5, !dbg !330
+  tail call void @free(i8* %2) #5, !dbg !330
   tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !295, metadata !108), !dbg !296
   br label %if.end21, !dbg !330
 
 if.end21:                                         ; preds = %if.then20, %blklab8
   tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !294, metadata !108), !dbg !293
   %call22 = tail call noalias i8* @malloc(i64 0) #5, !dbg !334
-  %11 = bitcast i8* %call22 to i64*, !dbg !334
-  tail call void @llvm.dbg.value(metadata i64* %11, i64 0, metadata !292, metadata !108), !dbg !293
+  %12 = bitcast i8* %call22 to i64*, !dbg !334
+  tail call void @llvm.dbg.value(metadata i64* %12, i64 0, metadata !292, metadata !108), !dbg !293
   tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !295, metadata !108), !dbg !296
-  tail call void @println_s(i64* %11, i64 0) #5, !dbg !335
-  %exitcond19 = icmp ne i64 %add18, %1, !dbg !302
-  br i1 %exitcond19, label %while.body4.preheader, label %while.body.blklab6_crit_edge, !dbg !302
+  tail call void @println_s(i64* %12, i64 0) #5, !dbg !335
+  %exitcond16 = icmp ne i64 %add18, %1, !dbg !302
+  br i1 %exitcond16, label %while.body4.preheader, label %while.body.blklab6_crit_edge, !dbg !302
 
 while.body.blklab6_crit_edge:                     ; preds = %if.end21
   br label %blklab6, !dbg !302
@@ -1053,24 +1052,24 @@ if.end89:                                         ; preds = %blklab21, %if.end72
   tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !634, metadata !108), !dbg !635
   tail call void @println_s(i64* %50, i64 26) #5, !dbg !821
   %phitmp = bitcast i64* %call122 to i8*, !dbg !821
-  %phitmp2 = bitcast i64* %call54 to i8*, !dbg !821
-  %phitmp3 = bitcast i64* %call38 to i8*, !dbg !821
+  %phitmp1 = bitcast i64* %call54 to i8*, !dbg !821
+  %phitmp2 = bitcast i64* %call38 to i8*, !dbg !821
   br label %blklab19, !dbg !821
 
 blklab19:                                         ; preds = %entry.split, %if.end89
   %_52.0 = phi i8* [ %phitmp, %if.end89 ], [ null, %entry.split ]
   %_49_has_ownership.0 = phi i1 [ true, %if.end89 ], [ false, %entry.split ]
-  %_49.0 = phi i8* [ %call90, %if.end89 ], [ null, %entry.split ]
+  %76 = phi i8* [ %call90, %if.end89 ], [ null, %entry.split ]
   %_38_has_ownership.1 = phi i8 [ %_38_has_ownership.0, %if.end89 ], [ 0, %entry.split ]
   %_38.1 = phi i64* [ %_38.0, %if.end89 ], [ null, %entry.split ]
-  %_27.0 = phi i8* [ %phitmp2, %if.end89 ], [ null, %entry.split ]
-  %_17.0 = phi i8* [ %phitmp3, %if.end89 ], [ null, %entry.split ]
-  %_11.0 = phi i8* [ %call5, %if.end89 ], [ null, %entry.split ]
+  %_27.0 = phi i8* [ %phitmp1, %if.end89 ], [ null, %entry.split ]
+  %_17.0 = phi i8* [ %phitmp2, %if.end89 ], [ null, %entry.split ]
+  %77 = phi i8* [ %call5, %if.end89 ], [ null, %entry.split ]
   %C.0 = phi %struct.Matrix* [ %call30, %if.end89 ], [ undef, %entry.split ]
   %B.0 = phi %struct.Matrix* [ %call23, %if.end89 ], [ undef, %entry.split ]
   %A.0 = phi %struct.Matrix* [ %call16, %if.end89 ], [ undef, %entry.split ]
-  %_62.0 = phi i8* [ %call132, %if.end89 ], [ null, %entry.split ]
-  br i1 %_49_has_ownership.0, label %if.then160, label %if.end191.critedge8, !dbg !822
+  %78 = phi i8* [ %call132, %if.end89 ], [ null, %entry.split ]
+  br i1 %_49_has_ownership.0, label %if.then160, label %if.end191.critedge6, !dbg !822
 
 if.then160:                                       ; preds = %blklab19
   tail call void @free_Matrix(%struct.Matrix* %A.0), !dbg !823
@@ -1081,7 +1080,7 @@ if.then160:                                       ; preds = %blklab19
   tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !511, metadata !108), !dbg !512
   tail call void @free2DArray(i64** %call, i64 %conv) #5, !dbg !835
   tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !518, metadata !108), !dbg !519
-  tail call void @free(i8* %_11.0) #5, !dbg !839
+  tail call void @free(i8* %77) #5, !dbg !839
   tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !530, metadata !108), !dbg !531
   tail call void @free(i8* %_17.0) #5, !dbg !843
   tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !541, metadata !108), !dbg !542
@@ -1089,19 +1088,19 @@ if.then160:                                       ; preds = %blklab19
   tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !564, metadata !108), !dbg !565
   br label %if.end191, !dbg !847
 
-if.end191.critedge8:                              ; preds = %blklab19
+if.end191.critedge6:                              ; preds = %blklab19
   tail call void @free2DArray(i64** %call, i64 %conv) #5, !dbg !835
   tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !518, metadata !108), !dbg !519
   br label %if.end191
 
-if.end191:                                        ; preds = %if.end191.critedge8, %if.then160
-  %76 = and i8 %_38_has_ownership.1, 1, !dbg !851
-  %tobool192 = icmp eq i8 %76, 0, !dbg !851
+if.end191:                                        ; preds = %if.end191.critedge6, %if.then160
+  %79 = and i8 %_38_has_ownership.1, 1, !dbg !851
+  %tobool192 = icmp eq i8 %79, 0, !dbg !851
   br i1 %tobool192, label %if.end194, label %if.then193, !dbg !853
 
 if.then193:                                       ; preds = %if.end191
-  %77 = bitcast i64* %_38.1 to i8*, !dbg !854
-  tail call void @free(i8* %77) #5, !dbg !854
+  %80 = bitcast i64* %_38.1 to i8*, !dbg !854
+  tail call void @free(i8* %80) #5, !dbg !854
   tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !589, metadata !108), !dbg !590
   br label %if.end194, !dbg !854
 
@@ -1109,11 +1108,11 @@ if.end194:                                        ; preds = %if.end191, %if.then
   br i1 %_49_has_ownership.0, label %if.then196, label %if.end203, !dbg !857
 
 if.then196:                                       ; preds = %if.end194
-  tail call void @free(i8* %_49.0) #5, !dbg !858
+  tail call void @free(i8* %76) #5, !dbg !858
   tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !610, metadata !108), !dbg !611
   tail call void @free(i8* %_52.0) #5, !dbg !862
   tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !615, metadata !108), !dbg !616
-  tail call void @free(i8* %_62.0) #5, !dbg !866
+  tail call void @free(i8* %78) #5, !dbg !866
   tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !634, metadata !108), !dbg !635
   br label %if.end203, !dbg !866
 
@@ -1141,11 +1140,11 @@ declare i32 @putchar(i32)
 ; Function Attrs: nounwind
 declare i64 @fwrite(i8* nocapture, i64, i64, %struct._IO_FILE* nocapture) #5
 
-attributes #0 = { nounwind uwtable "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #0 = { nounwind uwtable "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
 attributes #1 = { nounwind readnone }
-attributes #2 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2" "unsafe-fp-math"="false" "use-soft-float"="false" }
-attributes #3 = { "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2" "unsafe-fp-math"="false" "use-soft-float"="false" }
-attributes #4 = { noreturn nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #2 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #3 = { "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #4 = { noreturn nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
 attributes #5 = { nounwind }
 attributes #6 = { cold }
 attributes #7 = { noreturn nounwind }
@@ -1154,7 +1153,7 @@ attributes #7 = { noreturn nounwind }
 !llvm.module.flags = !{!103, !104}
 !llvm.ident = !{!105}
 
-!0 = distinct !DICompileUnit(language: DW_LANG_C99, file: !1, producer: "clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)", isOptimized: false, runtimeVersion: 0, emissionKind: 1, enums: !2, retainedTypes: !3, subprograms: !5)
+!0 = distinct !DICompileUnit(language: DW_LANG_C99, file: !1, producer: "clang version 3.9.0 (http://llvm.org/git/clang.git cf7bc8edf8cccb1b5de656c403cb55ad44132e98) (http://llvm.org/git/llvm.git 22706dc4c03305692f494d0e42a6de1050d0ec62)", isOptimized: false, runtimeVersion: 0, emissionKind: FullDebug, enums: !2, retainedTypes: !3, subprograms: !5)
 !1 = !DIFile(filename: "MatrixMult.c", directory: "/home/sam/workspace/WhileyOpenCL/polly/MatrixMult/impl/autogenerate1")
 !2 = !{}
 !3 = !{!4}
@@ -1259,7 +1258,7 @@ attributes #7 = { noreturn nounwind }
 !102 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !43, size: 64, align: 64)
 !103 = !{i32 2, !"Dwarf Version", i32 4}
 !104 = !{i32 2, !"Debug Info Version", i32 3}
-!105 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)"}
+!105 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git cf7bc8edf8cccb1b5de656c403cb55ad44132e98) (http://llvm.org/git/llvm.git 22706dc4c03305692f494d0e42a6de1050d0ec62)"}
 !106 = !DILocation(line: 2, column: 29, scope: !6)
 !107 = !DILocalVariable(name: "_Matrix", arg: 1, scope: !6, file: !1, line: 2, type: !9)
 !108 = !DIExpression()

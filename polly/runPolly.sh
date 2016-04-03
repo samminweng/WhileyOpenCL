@@ -25,8 +25,11 @@ folder_proc(){
 # ### Generate png files from dot files
 generate_png(){
 	folder=$1
-	cd "$folder/"
-	for i in `ls *.dot`; do dot -Tpng $i > $i.png; done
+	cd "$folder"
+	for i in * 
+	do 
+		dot -Tpng $i > $i.png
+	done
 	cd ../
 }
 
@@ -61,15 +64,18 @@ cleanup(){
 
 	## move files to folders respectively, e.g. 'jscop' 'llvm' and 'assembly' folder 
 	### Move all the dot files to 'dot' folder
+	#read -p "Press [Enter] to continue"
 	folder_proc "dot" "dot"
+	#read -p "Press [Enter] to continue"
 	generate_png "dot"
+	#read -p "Press [Enter] to continue"
 
 	#### Generate polly-optimized control flow graph
 	#read -p "Press [Enter] to continue"
-	mkdir -p "dot/polly-opt"
-	opt --dot-cfg "llvm/$program.polly.disablevc.ll"
-	mv -f *.dot "dot/polly-opt"/
-	generate_png "dot/polly-opt"
+	#mkdir -p "dot/polly-opt"
+	#opt --dot-cfg "llvm/$program.polly.disablevc.ll"
+	#mv -f *.dot "dot/polly-opt"/
+	#generate_png "dot/polly-opt"
 	#read -p "Press [Enter] to continue"
 }
 
@@ -187,8 +193,8 @@ exec(){
 	#opt_polly $c_type $program $num_threads $parameter
 	cd ../../../
 }
-exec handwritten1 MatrixMult 2 200 ### Determine matrix size from cmd line argument
-##exec autogenerate1 MatrixMult 2 2000  ### Determine matrix size from cmd line argument
+exec handwritten2 MatrixMult 2 200 ### Determine matrix size from cmd line argument
+##exec autogenerate1 MatrixMult 2 200  ### Determine matrix size from cmd line argument
 
 
 

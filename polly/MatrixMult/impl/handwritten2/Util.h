@@ -11,6 +11,7 @@
 /**
  * Built-in functions
 */
+void printf1DArray(long long* input, long long input_size);
 void indirect_printf(long long input);
 //No overlapping is allowed: function name must be different.
 void printf_s(long long* input, long long input_size);
@@ -21,7 +22,6 @@ long long parseStringToInt(long long* arr);
 long long** convertArgsToIntArray(int argc, char** args);
 long long* copy(long long *arr, long long size);
 long long* gen1DArray(int value, int arr_size);
-void printf1Darray(long long* input, long long input_size);
 int isArrayEqual(long long* arr1, long long arr1_size, long long* arr2, long long arr2_size);
 // 2D Array Operator
 long long** copy2DArray(long long **arr, long long x, long long y);
@@ -57,7 +57,7 @@ long long* optimized_append(long long* op_1, long long* op_1_size, long long* op
 #define _1DARRAY_PARAM_OWN(a) a, a##_size, a##_has_ownership
 #define _1DARRAY_COPY_PARAM(a) copy(a, a##_size), a##_size
 #define _1DARRAY_COPY_PARAM_OWN(a) copy(a, a##_size), a##_size, a##_has_ownership
-#define _1DARRAY_PRINT(a) printf1DArray(a, a##_size); 
+#define _1DARRAY_PRINT(a) printf1DArray(a, a##_size);
 #define _1DARRAY_SIZE(a, b) a##_size = b##_size;
 #define _1DARRAY_COPY(a, b) a##_size = b##_size; a = copy(b, b##_size);
 #define _1DARRAY_UPDATE(a, b) a##_size = b##_size; a = b;

@@ -48,10 +48,9 @@ Matrix* mat_mult(Matrix* a, Matrix* b){
     int i, j, k;
     int width = b->width;
     int height = a->height;
-    long long *__restrict__ a_data, *__restrict__ b_data, *__restrict__ data;
-    a_data = a->data; // Derference the data from matrix structure
-    b_data = b->data;
-    data = (long long*)malloc(sizeof(long long)*width*height);
+    long long* a_data = a->data; // Derference the data from matrix structure
+    long long* b_data = b->data;
+    long long* data = (long long*)malloc(sizeof(long long)*width*height);
 
     for(i=0; i<width; i++)  {
         for(j=0; j<height; j++)  {

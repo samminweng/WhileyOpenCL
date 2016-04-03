@@ -1,29 +1,29 @@
 digraph "Scop Graph for 'matrix' function" {
 	label="Scop Graph for 'matrix' function";
 
-	Node0x8f8dea0 [shape=record,label="{entry:\l  br label %entry.split, !dbg !327\l}"];
-	Node0x8f8dea0 -> Node0x90bfaa0;
-	Node0x90bfaa0 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata i64 %width, i64 0, metadata !36,\l... metadata !328), !dbg !327\l  tail call void @llvm.dbg.value(metadata i64 %height, i64 0, metadata !37,\l... metadata !328), !dbg !329\l  tail call void @llvm.dbg.value(metadata i64* %data, i64 0, metadata !38,\l... metadata !328), !dbg !330\l  tail call void @llvm.dbg.value(metadata i64 %data_size, i64 0, metadata !39,\l... metadata !328), !dbg !330\l  tail call void @llvm.dbg.value(metadata i1 %data_has_ownership, i64 0,\l... metadata !40, metadata !331), !dbg !332\l  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !42, metadata\l... !328), !dbg !333\l  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !44, metadata\l... !328), !dbg !334\l  %call = tail call noalias i8* @malloc(i64 32) #6, !dbg !335\l  %0 = bitcast i8* %call to %struct.Matrix*, !dbg !335\l  tail call void @llvm.dbg.value(metadata %struct.Matrix* %0, i64 0, metadata\l... !43, metadata !328), !dbg !336\l  %data_size1 = getelementptr inbounds i8, i8* %call, i64 8, !dbg !337\l  %1 = bitcast i8* %data_size1 to i64*, !dbg !337\l  store i64 %data_size, i64* %1, align 8, !dbg !337, !tbaa !338\l  %call2 = tail call i64* @copy(i64* %data, i64 %data_size) #6, !dbg !337\l  %data3 = bitcast i8* %call to i64**, !dbg !337\l  store i64* %call2, i64** %data3, align 8, !dbg !337, !tbaa !344\l  %height4 = getelementptr inbounds i8, i8* %call, i64 24, !dbg !345\l  %2 = bitcast i8* %height4 to i64*, !dbg !345\l  store i64 %height, i64* %2, align 8, !dbg !346, !tbaa !347\l  %width5 = getelementptr inbounds i8, i8* %call, i64 16, !dbg !348\l  %3 = bitcast i8* %width5 to i64*, !dbg !348\l  store i64 %width, i64* %3, align 8, !dbg !349, !tbaa !350\l  tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !44, metadata\l... !328), !dbg !334\l  br i1 %data_has_ownership, label %if.then7, label %if.end11, !dbg !351\l}"];
-	Node0x90bfaa0 -> Node0x8fa23c0;
-	Node0x90bfaa0 -> Node0x8fa2550;
-	Node0x8fa23c0 [shape=record,label="{if.then7:                                         \l  %4 = bitcast i64* %data to i8*, !dbg !352\l  tail call void @free(i8* %4) #6, !dbg !352\l  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !40, metadata\l... !328), !dbg !332\l  br label %if.end11, !dbg !352\l}"];
-	Node0x8fa23c0 -> Node0x8fa2550;
-	Node0x8fa2550 [shape=record,label="{if.end11:                                         \l  ret %struct.Matrix* %0, !dbg !356\l}"];
+	Node0x9da7400 [shape=record,label="{entry:\l  br label %entry.split, !dbg !327\l}"];
+	Node0x9da7400 -> Node0x9d84780;
+	Node0x9d84780 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata i64 %width, i64 0, metadata !36,\l... metadata !328), !dbg !327\l  tail call void @llvm.dbg.value(metadata i64 %height, i64 0, metadata !37,\l... metadata !328), !dbg !329\l  tail call void @llvm.dbg.value(metadata i64* %data, i64 0, metadata !38,\l... metadata !328), !dbg !330\l  tail call void @llvm.dbg.value(metadata i64 %data_size, i64 0, metadata !39,\l... metadata !328), !dbg !330\l  tail call void @llvm.dbg.value(metadata i1 %data_has_ownership, i64 0,\l... metadata !40, metadata !331), !dbg !332\l  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !42, metadata\l... !328), !dbg !333\l  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !44, metadata\l... !328), !dbg !334\l  %call = tail call noalias i8* @malloc(i64 32) #6, !dbg !335\l  %0 = bitcast i8* %call to %struct.Matrix*, !dbg !335\l  tail call void @llvm.dbg.value(metadata %struct.Matrix* %0, i64 0, metadata\l... !43, metadata !328), !dbg !336\l  %data_size1 = getelementptr inbounds i8, i8* %call, i64 8, !dbg !337\l  %1 = bitcast i8* %data_size1 to i64*, !dbg !337\l  store i64 %data_size, i64* %1, align 8, !dbg !337, !tbaa !338\l  %call2 = tail call i64* @copy(i64* %data, i64 %data_size) #6, !dbg !337\l  %data3 = bitcast i8* %call to i64**, !dbg !337\l  store i64* %call2, i64** %data3, align 8, !dbg !337, !tbaa !344\l  %height4 = getelementptr inbounds i8, i8* %call, i64 24, !dbg !345\l  %2 = bitcast i8* %height4 to i64*, !dbg !345\l  store i64 %height, i64* %2, align 8, !dbg !346, !tbaa !347\l  %width5 = getelementptr inbounds i8, i8* %call, i64 16, !dbg !348\l  %3 = bitcast i8* %width5 to i64*, !dbg !348\l  store i64 %width, i64* %3, align 8, !dbg !349, !tbaa !350\l  tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !44, metadata\l... !328), !dbg !334\l  br i1 %data_has_ownership, label %if.then7, label %if.end11, !dbg !351\l}"];
+	Node0x9d84780 -> Node0x9d84530;
+	Node0x9d84780 -> Node0x9ee44b0;
+	Node0x9d84530 [shape=record,label="{if.then7:                                         \l  %4 = bitcast i64* %data to i8*, !dbg !352\l  tail call void @free(i8* %4) #6, !dbg !352\l  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !40, metadata\l... !328), !dbg !332\l  br label %if.end11, !dbg !352\l}"];
+	Node0x9d84530 -> Node0x9ee44b0;
+	Node0x9ee44b0 [shape=record,label="{if.end11:                                         \l  ret %struct.Matrix* %0, !dbg !356\l}"];
 	colorscheme = "paired12"
-        subgraph cluster_0x8fef090 {
+        subgraph cluster_0x9dbfc60 {
           label = "MatrixMult.c:23-38
 ";
           style = solid;
           color = 1
-          subgraph cluster_0x8fdcf80 {
+          subgraph cluster_0x9e200e0 {
             label = "MatrixMult.c:23-36
 ";
             style = solid;
             color = 6
-            Node0x90bfaa0;
-            Node0x8fa23c0;
+            Node0x9d84780;
+            Node0x9d84530;
           }
-          Node0x8f8dea0;
-          Node0x8fa2550;
+          Node0x9da7400;
+          Node0x9ee44b0;
         }
 }

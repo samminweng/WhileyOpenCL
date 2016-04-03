@@ -1,16 +1,16 @@
 digraph "Scop Graph for 'printf_Matrix' function" {
 	label="Scop Graph for 'printf_Matrix' function";
 
-	Node0x90bc500 [shape=record,label="{entry:\l  br label %entry.split, !dbg !327\l}"];
-	Node0x90bc500 -> Node0x8fa1b40;
-	Node0x8fa1b40 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata %struct.Matrix* %matrix, i64 0,\l... metadata !30, metadata !328), !dbg !327\l  %putchar = tail call i32 @putchar(i32 123) #6, !dbg !329\l  %call1 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([7 x\l... i8], [7 x i8]* @.str.1, i64 0, i64 0)), !dbg !330\l  %data = getelementptr inbounds %struct.Matrix, %struct.Matrix* %matrix, i64\l... 0, i32 0, !dbg !331\l  %0 = load i64*, i64** %data, align 8, !dbg !331, !tbaa !332\l  %data_size = getelementptr inbounds %struct.Matrix, %struct.Matrix* %matrix,\l... i64 0, i32 1, !dbg !331\l  %1 = load i64, i64* %data_size, align 8, !dbg !331, !tbaa !338\l  tail call void @printf1DArray(i64* %0, i64 %1) #6, !dbg !331\l  %call2 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([8 x\l... i8], [8 x i8]* @.str.2, i64 0, i64 0)), !dbg !339\l  %width = getelementptr inbounds %struct.Matrix, %struct.Matrix* %matrix, i64\l... 0, i32 2, !dbg !340\l  %2 = load i64, i64* %width, align 8, !dbg !340, !tbaa !341\l  %call3 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x\l... i8], [5 x i8]* @.str.3, i64 0, i64 0), i64 %2), !dbg !342\l  %call4 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([9 x\l... i8], [9 x i8]* @.str.4, i64 0, i64 0)), !dbg !343\l  %height = getelementptr inbounds %struct.Matrix, %struct.Matrix* %matrix,\l... i64 0, i32 3, !dbg !344\l  %3 = load i64, i64* %height, align 8, !dbg !344, !tbaa !345\l  %call5 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x\l... i8], [5 x i8]* @.str.3, i64 0, i64 0), i64 %3), !dbg !346\l  %putchar10 = tail call i32 @putchar(i32 125) #6, !dbg !347\l  ret void, !dbg !348\l}"];
+	Node0x9d9eb90 [shape=record,label="{entry:\l  br label %entry.split, !dbg !327\l}"];
+	Node0x9d9eb90 -> Node0x9d9eb00;
+	Node0x9d9eb00 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata %struct.Matrix* %matrix, i64 0,\l... metadata !30, metadata !328), !dbg !327\l  %putchar = tail call i32 @putchar(i32 123) #6, !dbg !329\l  %call1 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([7 x\l... i8], [7 x i8]* @.str.1, i64 0, i64 0)), !dbg !330\l  %data = getelementptr inbounds %struct.Matrix, %struct.Matrix* %matrix, i64\l... 0, i32 0, !dbg !331\l  %0 = load i64*, i64** %data, align 8, !dbg !331, !tbaa !332\l  %data_size = getelementptr inbounds %struct.Matrix, %struct.Matrix* %matrix,\l... i64 0, i32 1, !dbg !331\l  %1 = load i64, i64* %data_size, align 8, !dbg !331, !tbaa !338\l  tail call void @printf1DArray(i64* %0, i64 %1) #6, !dbg !331\l  %call2 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([8 x\l... i8], [8 x i8]* @.str.2, i64 0, i64 0)), !dbg !339\l  %width = getelementptr inbounds %struct.Matrix, %struct.Matrix* %matrix, i64\l... 0, i32 2, !dbg !340\l  %2 = load i64, i64* %width, align 8, !dbg !340, !tbaa !341\l  %call3 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x\l... i8], [5 x i8]* @.str.3, i64 0, i64 0), i64 %2), !dbg !342\l  %call4 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([9 x\l... i8], [9 x i8]* @.str.4, i64 0, i64 0)), !dbg !343\l  %height = getelementptr inbounds %struct.Matrix, %struct.Matrix* %matrix,\l... i64 0, i32 3, !dbg !344\l  %3 = load i64, i64* %height, align 8, !dbg !344, !tbaa !345\l  %call5 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x\l... i8], [5 x i8]* @.str.3, i64 0, i64 0), i64 %3), !dbg !346\l  %putchar10 = tail call i32 @putchar(i32 125) #6, !dbg !347\l  ret void, !dbg !348\l}"];
 	colorscheme = "paired12"
-        subgraph cluster_0x9042820 {
+        subgraph cluster_0x9dd2470 {
           label = "MatrixMult.c:13-22
 ";
           style = solid;
           color = 1
-          Node0x90bc500;
-          Node0x8fa1b40;
+          Node0x9d9eb90;
+          Node0x9d9eb00;
         }
 }

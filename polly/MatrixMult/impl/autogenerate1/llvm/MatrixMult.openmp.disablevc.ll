@@ -1,4 +1,5 @@
 ; ModuleID = 'MatrixMult.c'
+source_filename = "MatrixMult.c"
 target datalayout = "e-m:e-i64:64-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
 
@@ -273,65 +274,74 @@ entry:
   %1 = load i64, i64* %height2, align 8, !dbg !461, !tbaa !362
   tail call void @llvm.dbg.value(metadata i64 %1, i64 0, metadata !152, metadata !327), !dbg !445
   tail call void @llvm.dbg.value(metadata i64 %1, i64 0, metadata !148, metadata !327), !dbg !441
-  %cmp69 = icmp sgt i64 %1, 0, !dbg !462
-  br i1 %cmp69, label %while.body4.preheader.preheader, label %blklab6, !dbg !465
+  %cmp68 = icmp sgt i64 %1, 0, !dbg !462
+  br i1 %cmp68, label %while.cond3.preheader.preheader, label %blklab6, !dbg !465
 
-while.body4.preheader.preheader:                  ; preds = %entry
+while.cond3.preheader.preheader:                  ; preds = %entry
   %cmp560 = icmp sgt i64 %0, 0, !dbg !466
   %data_size = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0, i32 1, !dbg !469
   %data = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0, i32 0, !dbg !469
-  br i1 %cmp560, label %if.end7.preheader.us.preheader, label %blklab8.preheader, !dbg !470
+  br i1 %cmp560, label %while.cond3.preheader.us.preheader, label %while.cond3.preheader.preheader82, !dbg !470
 
-blklab8.preheader:                                ; preds = %while.body4.preheader.preheader
-  br label %blklab8, !dbg !456
+while.cond3.preheader.preheader82:                ; preds = %while.cond3.preheader.preheader
+  br label %while.cond3.preheader, !dbg !456
 
-if.end7.preheader.us.preheader:                   ; preds = %while.body4.preheader.preheader
-  br label %if.end7.preheader.us, !dbg !471
+while.cond3.preheader.us.preheader:               ; preds = %while.cond3.preheader.preheader
+  br label %while.cond3.preheader.us, !dbg !471
 
-if.end7.us:                                       ; preds = %if.end7.preheader.us, %if.end14.us
-  %_18_has_ownership.165.us = phi i8 [ 1, %if.end14.us ], [ %_18_has_ownership.073.us, %if.end7.preheader.us ]
-  %_18.164.us = phi i64* [ %8, %if.end14.us ], [ %_18.072.us, %if.end7.preheader.us ]
-  %_12.162.us = phi i64* [ %call.us, %if.end14.us ], [ %_12.070.us, %if.end7.preheader.us ]
-  %j.061.us = phi i64 [ %add17.us, %if.end14.us ], [ 0, %if.end7.preheader.us ]
-  %2 = and i8 %_18_has_ownership.165.us, 1, !dbg !472
-  %tobool.us = icmp eq i8 %2, 0, !dbg !472
+while.cond3.preheader.us:                         ; preds = %while.cond3.preheader.us.preheader, %if.end21.us
+  %_25_has_ownership.074.us = phi i1 [ true, %if.end21.us ], [ false, %while.cond3.preheader.us.preheader ]
+  %2 = phi i8* [ %call22.us, %if.end21.us ], [ null, %while.cond3.preheader.us.preheader ]
+  %i.072.us = phi i64 [ %add18.us, %if.end21.us ], [ 0, %while.cond3.preheader.us.preheader ]
+  %_18_has_ownership.071.us = phi i8 [ 1, %if.end21.us ], [ 0, %while.cond3.preheader.us.preheader ]
+  %3 = phi i8* [ %call15.us.lcssa, %if.end21.us ], [ null, %while.cond3.preheader.us.preheader ]
+  %_12.069.us = phi i64* [ %call.us.lcssa, %if.end21.us ], [ null, %while.cond3.preheader.us.preheader ]
+  %mul.us = mul nsw i64 %i.072.us, %0, !dbg !471
+  br label %if.end7.us, !dbg !472
+
+if.end7.us:                                       ; preds = %while.cond3.preheader.us, %if.end14.us
+  %_18_has_ownership.164.us = phi i8 [ 1, %if.end14.us ], [ %_18_has_ownership.071.us, %while.cond3.preheader.us ]
+  %4 = phi i8* [ %call15.us, %if.end14.us ], [ %3, %while.cond3.preheader.us ]
+  %_12.162.us = phi i64* [ %call.us, %if.end14.us ], [ %_12.069.us, %while.cond3.preheader.us ]
+  %j.061.us = phi i64 [ %add17.us, %if.end14.us ], [ 0, %while.cond3.preheader.us ]
+  %5 = and i8 %_18_has_ownership.164.us, 1, !dbg !472
+  %tobool.us = icmp eq i8 %5, 0, !dbg !472
   br i1 %tobool.us, label %if.end9.us, label %if.then8.us, !dbg !474
 
 if.then8.us:                                      ; preds = %if.end7.us
-  %3 = bitcast i64* %_12.162.us to i8*, !dbg !475
-  tail call void @free(i8* %3) #9, !dbg !475
+  %6 = bitcast i64* %_12.162.us to i8*, !dbg !475
+  tail call void @free(i8* %6) #9, !dbg !475
   tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !157, metadata !327), !dbg !448
   br label %if.end9.us, !dbg !475
 
 if.end9.us:                                       ; preds = %if.then8.us, %if.end7.us
-  %4 = load i64*, i64** %data, align 8, !dbg !469, !tbaa !340
-  %5 = load i64, i64* %data_size, align 8, !dbg !469, !tbaa !334
-  %call.us = tail call i64* @copy(i64* %4, i64 %5) #9, !dbg !469
+  %7 = load i64*, i64** %data, align 8, !dbg !469, !tbaa !340
+  %8 = load i64, i64* %data_size, align 8, !dbg !469, !tbaa !334
+  %call.us = tail call i64* @copy(i64* %7, i64 %8) #9, !dbg !469
   tail call void @llvm.dbg.value(metadata i64* %call.us, i64 0, metadata !155, metadata !327), !dbg !447
   tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !157, metadata !327), !dbg !448
   tail call void @llvm.dbg.value(metadata i64 %mul.us, i64 0, metadata !158, metadata !327), !dbg !449
   %add.us = add nsw i64 %j.061.us, %mul.us, !dbg !478
   tail call void @llvm.dbg.value(metadata i64 %add.us, i64 0, metadata !159, metadata !327), !dbg !450
   %arrayidx.us = getelementptr inbounds i64, i64* %call.us, i64 %add.us, !dbg !479
-  %6 = load i64, i64* %arrayidx.us, align 8, !dbg !479, !tbaa !343
-  tail call void @llvm.dbg.value(metadata i64 %6, i64 0, metadata !160, metadata !327), !dbg !451
-  %call11.us = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.3, i64 0, i64 0), i64 %6), !dbg !480
+  %9 = load i64, i64* %arrayidx.us, align 8, !dbg !479, !tbaa !343
+  tail call void @llvm.dbg.value(metadata i64 %9, i64 0, metadata !160, metadata !327), !dbg !451
+  %call11.us = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.3, i64 0, i64 0), i64 %9), !dbg !480
   br i1 %tobool.us, label %if.end14.us, label %if.then13.us, !dbg !481
 
 if.then13.us:                                     ; preds = %if.end9.us
-  %7 = bitcast i64* %_18.164.us to i8*, !dbg !482
-  tail call void @free(i8* %7) #9, !dbg !482
+  tail call void @free(i8* %4) #9, !dbg !482
   tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !164, metadata !327), !dbg !453
   br label %if.end14.us, !dbg !482
 
 if.end14.us:                                      ; preds = %if.then13.us, %if.end9.us
   tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !163, metadata !327), !dbg !452
   %call15.us = tail call noalias i8* @malloc(i64 8) #9, !dbg !486
-  %8 = bitcast i8* %call15.us to i64*, !dbg !486
-  tail call void @llvm.dbg.value(metadata i64* %8, i64 0, metadata !162, metadata !327), !dbg !452
-  store i64 32, i64* %8, align 8, !dbg !487, !tbaa !343
+  %10 = bitcast i8* %call15.us to i64*, !dbg !486
+  tail call void @llvm.dbg.value(metadata i64* %10, i64 0, metadata !162, metadata !327), !dbg !452
+  store i64 32, i64* %10, align 8, !dbg !487, !tbaa !343
   tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !164, metadata !327), !dbg !453
-  tail call void @printf_s(i64* %8, i64 1) #9, !dbg !488
+  tail call void @printf_s(i64* %10, i64 1) #9, !dbg !488
   tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !165, metadata !327), !dbg !454
   %add17.us = add nuw nsw i64 %j.061.us, 1, !dbg !489
   tail call void @llvm.dbg.value(metadata i64 %add17.us, i64 0, metadata !166, metadata !327), !dbg !455
@@ -340,73 +350,61 @@ if.end14.us:                                      ; preds = %if.then13.us, %if.e
   br i1 %exitcond.us, label %blklab8.loopexit.us, label %if.end7.us, !dbg !470
 
 if.then20.us:                                     ; preds = %blklab8.loopexit.us
-  %9 = bitcast i64* %_25.076.us to i8*, !dbg !490
-  tail call void @free(i8* %9) #9, !dbg !490
+  tail call void @free(i8* %2) #9, !dbg !490
   tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !172, metadata !327), !dbg !459
   br label %if.end21.us, !dbg !490
 
 if.end21.us:                                      ; preds = %if.then20.us, %blklab8.loopexit.us
   tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !171, metadata !327), !dbg !458
   %call22.us = tail call noalias i8* @malloc(i64 0) #9, !dbg !494
-  %10 = bitcast i8* %call22.us to i64*, !dbg !494
-  tail call void @llvm.dbg.value(metadata i64* %10, i64 0, metadata !170, metadata !327), !dbg !458
+  %11 = bitcast i8* %call22.us to i64*, !dbg !494
+  tail call void @llvm.dbg.value(metadata i64* %11, i64 0, metadata !170, metadata !327), !dbg !458
   tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !172, metadata !327), !dbg !459
-  tail call void @println_s(i64* %10, i64 0) #9, !dbg !495
-  %exitcond78.us = icmp eq i64 %add18.us, %1, !dbg !465
-  br i1 %exitcond78.us, label %blklab6.loopexit, label %if.end7.preheader.us, !dbg !465
-
-if.end7.preheader.us:                             ; preds = %if.end7.preheader.us.preheader, %if.end21.us
-  %_25_has_ownership.077.us = phi i1 [ true, %if.end21.us ], [ false, %if.end7.preheader.us.preheader ]
-  %_25.076.us = phi i64* [ %10, %if.end21.us ], [ null, %if.end7.preheader.us.preheader ]
-  %i.074.us = phi i64 [ %add18.us, %if.end21.us ], [ 0, %if.end7.preheader.us.preheader ]
-  %_18_has_ownership.073.us = phi i8 [ 1, %if.end21.us ], [ 0, %if.end7.preheader.us.preheader ]
-  %_18.072.us = phi i64* [ %.lcssa, %if.end21.us ], [ null, %if.end7.preheader.us.preheader ]
-  %_12.070.us = phi i64* [ %call.us.lcssa, %if.end21.us ], [ null, %if.end7.preheader.us.preheader ]
-  %mul.us = mul nsw i64 %i.074.us, %0, !dbg !471
-  br label %if.end7.us, !dbg !472
+  tail call void @println_s(i64* %11, i64 0) #9, !dbg !495
+  %exitcond75.us = icmp eq i64 %add18.us, %1, !dbg !465
+  br i1 %exitcond75.us, label %blklab6.loopexit, label %while.cond3.preheader.us, !dbg !465
 
 blklab8.loopexit.us:                              ; preds = %if.end14.us
-  %.lcssa = phi i64* [ %8, %if.end14.us ]
+  %call15.us.lcssa = phi i8* [ %call15.us, %if.end14.us ]
   %call.us.lcssa = phi i64* [ %call.us, %if.end14.us ]
   tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !167, metadata !327), !dbg !456
-  %add18.us = add nuw nsw i64 %i.074.us, 1, !dbg !496
+  %add18.us = add nuw nsw i64 %i.072.us, 1, !dbg !496
   tail call void @llvm.dbg.value(metadata i64 %add18.us, i64 0, metadata !168, metadata !327), !dbg !457
   tail call void @llvm.dbg.value(metadata i64 %add18.us, i64 0, metadata !146, metadata !327), !dbg !439
-  br i1 %_25_has_ownership.077.us, label %if.then20.us, label %if.end21.us, !dbg !497
+  br i1 %_25_has_ownership.074.us, label %if.then20.us, label %if.end21.us, !dbg !497
 
-blklab8:                                          ; preds = %blklab8.preheader, %if.end21
-  %_25_has_ownership.077 = phi i1 [ true, %if.end21 ], [ false, %blklab8.preheader ]
-  %_25.076 = phi i64* [ %12, %if.end21 ], [ null, %blklab8.preheader ]
-  %i.074 = phi i64 [ %add18, %if.end21 ], [ 0, %blklab8.preheader ]
+while.cond3.preheader:                            ; preds = %while.cond3.preheader.preheader82, %if.end21
+  %_25_has_ownership.074 = phi i1 [ true, %if.end21 ], [ false, %while.cond3.preheader.preheader82 ]
+  %12 = phi i8* [ %call22, %if.end21 ], [ null, %while.cond3.preheader.preheader82 ]
+  %i.072 = phi i64 [ %add18, %if.end21 ], [ 0, %while.cond3.preheader.preheader82 ]
   tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !167, metadata !327), !dbg !456
-  %add18 = add nuw nsw i64 %i.074, 1, !dbg !496
+  %add18 = add nuw nsw i64 %i.072, 1, !dbg !496
   tail call void @llvm.dbg.value(metadata i64 %add18, i64 0, metadata !168, metadata !327), !dbg !457
   tail call void @llvm.dbg.value(metadata i64 %add18, i64 0, metadata !146, metadata !327), !dbg !439
-  br i1 %_25_has_ownership.077, label %if.then20, label %if.end21, !dbg !497
+  br i1 %_25_has_ownership.074, label %if.then20, label %if.end21, !dbg !497
 
-if.then20:                                        ; preds = %blklab8
-  %11 = bitcast i64* %_25.076 to i8*, !dbg !490
-  tail call void @free(i8* %11) #9, !dbg !490
+if.then20:                                        ; preds = %while.cond3.preheader
+  tail call void @free(i8* %12) #9, !dbg !490
   tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !172, metadata !327), !dbg !459
   br label %if.end21, !dbg !490
 
-if.end21:                                         ; preds = %if.then20, %blklab8
+if.end21:                                         ; preds = %if.then20, %while.cond3.preheader
   tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !171, metadata !327), !dbg !458
   %call22 = tail call noalias i8* @malloc(i64 0) #9, !dbg !494
-  %12 = bitcast i8* %call22 to i64*, !dbg !494
-  tail call void @llvm.dbg.value(metadata i64* %12, i64 0, metadata !170, metadata !327), !dbg !458
+  %13 = bitcast i8* %call22 to i64*, !dbg !494
+  tail call void @llvm.dbg.value(metadata i64* %13, i64 0, metadata !170, metadata !327), !dbg !458
   tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !172, metadata !327), !dbg !459
-  tail call void @println_s(i64* %12, i64 0) #9, !dbg !495
-  %exitcond78 = icmp eq i64 %add18, %1, !dbg !465
-  br i1 %exitcond78, label %blklab6.loopexit82, label %blklab8, !dbg !465
+  tail call void @println_s(i64* %13, i64 0) #9, !dbg !495
+  %exitcond75 = icmp eq i64 %add18, %1, !dbg !465
+  br i1 %exitcond75, label %blklab6.loopexit83, label %while.cond3.preheader, !dbg !465
 
 blklab6.loopexit:                                 ; preds = %if.end21.us
   br label %blklab6, !dbg !498
 
-blklab6.loopexit82:                               ; preds = %if.end21
+blklab6.loopexit83:                               ; preds = %if.end21
   br label %blklab6, !dbg !498
 
-blklab6:                                          ; preds = %blklab6.loopexit82, %blklab6.loopexit, %entry
+blklab6:                                          ; preds = %blklab6.loopexit83, %blklab6.loopexit, %entry
   ret void, !dbg !498
 }
 
@@ -530,32 +528,32 @@ polly.split_new_and_old:                          ; preds = %entry
   %10 = icmp ule i64* %polly.access.call196, %call14
   %11 = or i1 %10, %9
   %12 = and i1 %11, %8
-  br i1 %12, label %polly.parallel.for, label %while.body32.preheader.preheader
+  br i1 %12, label %polly.parallel.for, label %while.cond31.preheader.preheader
 
-while.body32.preheader.preheader:                 ; preds = %polly.split_new_and_old
+while.cond31.preheader.preheader:                 ; preds = %polly.split_new_and_old
   %cmp33186 = icmp sgt i64 %0, 0, !dbg !558
-  br i1 %cmp33186, label %while.body38.preheader.preheader.us.preheader, label %if.end60, !dbg !561
+  br i1 %cmp33186, label %while.cond31.preheader.us.preheader, label %if.end60, !dbg !561
 
-while.body38.preheader.preheader.us.preheader:    ; preds = %while.body32.preheader.preheader
+while.cond31.preheader.us.preheader:              ; preds = %while.cond31.preheader.preheader
   %xtraiter = and i64 %0, 1, !dbg !562
   %lcmp.mod = icmp eq i64 %xtraiter, 0, !dbg !562
   %13 = icmp eq i64 %0, 1, !dbg !562
-  br label %while.body38.preheader.preheader.us, !dbg !562
+  br label %while.cond31.preheader.us, !dbg !562
 
-while.body38.preheader.preheader.us:              ; preds = %while.body38.preheader.preheader.us.preheader, %blklab15.loopexit.us-lcssa.us.us
-  %i.0190.us = phi i64 [ %add57.us, %blklab15.loopexit.us-lcssa.us.us ], [ 0, %while.body38.preheader.preheader.us.preheader ]
+while.cond31.preheader.us:                        ; preds = %while.cond31.preheader.us.preheader, %blklab15.loopexit.us-lcssa.us.us
+  %i.0190.us = phi i64 [ %add57.us, %blklab15.loopexit.us-lcssa.us.us ], [ 0, %while.cond31.preheader.us.preheader ]
   %mul43.us = mul nsw i64 %i.0190.us, %0, !dbg !562
   %arrayidx46.us.us.prol = getelementptr inbounds i64, i64* %call14, i64 %mul43.us, !dbg !564
-  br label %if.end42.preheader.us.us, !dbg !565
+  br label %while.cond37.preheader.us.us, !dbg !565
 
-if.end42.preheader.us.us:                         ; preds = %blklab17.loopexit.us.us, %while.body38.preheader.preheader.us
-  %j.0187.us.us = phi i64 [ %add56.us.us, %blklab17.loopexit.us.us ], [ 0, %while.body38.preheader.preheader.us ]
+while.cond37.preheader.us.us:                     ; preds = %while.cond31.preheader.us, %blklab17.loopexit.us.us
+  %j.0187.us.us = phi i64 [ %add56.us.us, %blklab17.loopexit.us.us ], [ 0, %while.cond31.preheader.us ]
   %add.us.us = add nsw i64 %j.0187.us.us, %mul43.us, !dbg !566
   %arrayidx.us.us = getelementptr inbounds i64, i64* %call, i64 %add.us.us, !dbg !567
   %.pre = load i64, i64* %arrayidx.us.us, align 8, !dbg !567, !tbaa !343
-  br i1 %lcmp.mod, label %if.end42.preheader.us.us.split, label %if.end42.us.us.prol, !dbg !562
+  br i1 %lcmp.mod, label %while.cond37.preheader.us.us.split, label %if.end42.us.us.prol, !dbg !562
 
-if.end42.us.us.prol:                              ; preds = %if.end42.preheader.us.us
+if.end42.us.us.prol:                              ; preds = %while.cond37.preheader.us.us
   tail call void @llvm.dbg.value(metadata i64 %mul43.us, i64 0, metadata !213, metadata !327), !dbg !528
   tail call void @llvm.dbg.value(metadata i64 %add.us.us, i64 0, metadata !214, metadata !327), !dbg !529
   tail call void @llvm.dbg.value(metadata i64 %.pre, i64 0, metadata !215, metadata !327), !dbg !530
@@ -578,30 +576,30 @@ if.end42.us.us.prol:                              ; preds = %if.end42.preheader.
   tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !226, metadata !327), !dbg !541
   tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !227, metadata !327), !dbg !542
   tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !196, metadata !327), !dbg !514
-  br label %if.end42.preheader.us.us.split, !dbg !565
+  br label %while.cond37.preheader.us.us.split, !dbg !565
 
-if.end42.preheader.us.us.split:                   ; preds = %if.end42.preheader.us.us, %if.end42.us.us.prol
-  %.unr = phi i64 [ %.pre, %if.end42.preheader.us.us ], [ %add51.us.us.prol, %if.end42.us.us.prol ]
-  %k.0185.us.us.unr = phi i64 [ 0, %if.end42.preheader.us.us ], [ 1, %if.end42.us.us.prol ]
-  br i1 %13, label %blklab17.loopexit.us.us, label %if.end42.preheader.us.us.split.split, !dbg !562
+while.cond37.preheader.us.us.split:               ; preds = %while.cond37.preheader.us.us, %if.end42.us.us.prol
+  %.unr = phi i64 [ %.pre, %while.cond37.preheader.us.us ], [ %add51.us.us.prol, %if.end42.us.us.prol ]
+  %k.0185.us.us.unr = phi i64 [ 0, %while.cond37.preheader.us.us ], [ 1, %if.end42.us.us.prol ]
+  br i1 %13, label %blklab17.loopexit.us.us, label %while.cond37.preheader.us.us.split.split, !dbg !562
 
-if.end42.preheader.us.us.split.split:             ; preds = %if.end42.preheader.us.us.split
+while.cond37.preheader.us.us.split.split:         ; preds = %while.cond37.preheader.us.us.split
   br label %if.end42.us.us, !dbg !562
 
 blklab17.loopexit.us.us.unr-lcssa:                ; preds = %if.end42.us.us
   br label %blklab17.loopexit.us.us, !dbg !543
 
-blklab17.loopexit.us.us:                          ; preds = %if.end42.preheader.us.us.split, %blklab17.loopexit.us.us.unr-lcssa
+blklab17.loopexit.us.us:                          ; preds = %while.cond37.preheader.us.us.split, %blklab17.loopexit.us.us.unr-lcssa
   tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !228, metadata !327), !dbg !543
   %add56.us.us = add nuw nsw i64 %j.0187.us.us, 1, !dbg !572
   tail call void @llvm.dbg.value(metadata i64 %add56.us.us, i64 0, metadata !229, metadata !327), !dbg !544
   tail call void @llvm.dbg.value(metadata i64 %add56.us.us, i64 0, metadata !195, metadata !327), !dbg !513
   %exitcond192.us.us = icmp eq i64 %add56.us.us, %0, !dbg !561
-  br i1 %exitcond192.us.us, label %blklab15.loopexit.us-lcssa.us.us, label %if.end42.preheader.us.us, !dbg !561
+  br i1 %exitcond192.us.us, label %blklab15.loopexit.us-lcssa.us.us, label %while.cond37.preheader.us.us, !dbg !561
 
-if.end42.us.us:                                   ; preds = %if.end42.us.us, %if.end42.preheader.us.us.split.split
-  %16 = phi i64 [ %.unr, %if.end42.preheader.us.us.split.split ], [ %add51.us.us.1, %if.end42.us.us ], !dbg !567
-  %k.0185.us.us = phi i64 [ %k.0185.us.us.unr, %if.end42.preheader.us.us.split.split ], [ %add55.us.us.1, %if.end42.us.us ]
+if.end42.us.us:                                   ; preds = %if.end42.us.us, %while.cond37.preheader.us.us.split.split
+  %16 = phi i64 [ %.unr, %while.cond37.preheader.us.us.split.split ], [ %add51.us.us.1, %if.end42.us.us ], !dbg !567
+  %k.0185.us.us = phi i64 [ %k.0185.us.us.unr, %while.cond37.preheader.us.us.split.split ], [ %add55.us.us.1, %if.end42.us.us ]
   tail call void @llvm.dbg.value(metadata i64 %mul43.us, i64 0, metadata !213, metadata !327), !dbg !528
   tail call void @llvm.dbg.value(metadata i64 %add.us.us, i64 0, metadata !214, metadata !327), !dbg !529
   tail call void @llvm.dbg.value(metadata i64 %16, i64 0, metadata !215, metadata !327), !dbg !530
@@ -665,12 +663,12 @@ blklab15.loopexit.us-lcssa.us.us:                 ; preds = %blklab17.loopexit.u
   tail call void @llvm.dbg.value(metadata i64 %add57.us, i64 0, metadata !231, metadata !327), !dbg !546
   tail call void @llvm.dbg.value(metadata i64 %add57.us, i64 0, metadata !194, metadata !327), !dbg !512
   %exitcond193.us = icmp eq i64 %add57.us, %1, !dbg !557
-  br i1 %exitcond193.us, label %if.end60.loopexit, label %while.body38.preheader.preheader.us, !dbg !557
+  br i1 %exitcond193.us, label %if.end60.loopexit, label %while.cond31.preheader.us, !dbg !557
 
 if.end60.loopexit:                                ; preds = %blklab15.loopexit.us-lcssa.us.us
   br label %if.end60, !dbg !507
 
-if.end60:                                         ; preds = %if.end60.loopexit, %while.body32.preheader.preheader, %polly.parallel.for, %entry
+if.end60:                                         ; preds = %if.end60.loopexit, %while.cond31.preheader.preheader, %polly.parallel.for, %entry
   tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !187, metadata !327), !dbg !507
   tail call void @llvm.dbg.value(metadata i64 %0, i64 0, metadata !36, metadata !327) #9, !dbg !578
   tail call void @llvm.dbg.value(metadata i64 %1, i64 0, metadata !37, metadata !327) #9, !dbg !580
@@ -947,7 +945,7 @@ blklab21.if.end191_crit_edge:                     ; preds = %blklab21
   %data120.phi.trans.insert = getelementptr inbounds %struct.Matrix, %struct.Matrix* %call30, i64 0, i32 0, !dbg !739
   %.pre = load i64*, i64** %data120.phi.trans.insert, align 8, !dbg !739, !tbaa !340
   %data_size119.phi.trans.insert = getelementptr inbounds %struct.Matrix, %struct.Matrix* %call30, i64 0, i32 1, !dbg !739
-  %.pre368 = load i64, i64* %data_size119.phi.trans.insert, align 8, !dbg !739, !tbaa !334
+  %.pre357 = load i64, i64* %data_size119.phi.trans.insert, align 8, !dbg !739, !tbaa !334
   br label %if.end191, !dbg !738
 
 if.end72:                                         ; preds = %blklab21
@@ -977,7 +975,7 @@ if.end85:                                         ; preds = %if.end72
   unreachable, !dbg !748
 
 if.end191:                                        ; preds = %blklab21.if.end191_crit_edge, %if.end72
-  %20 = phi i64 [ %.pre368, %blklab21.if.end191_crit_edge ], [ %16, %if.end72 ], !dbg !739
+  %20 = phi i64 [ %.pre357, %blklab21.if.end191_crit_edge ], [ %16, %if.end72 ], !dbg !739
   %21 = phi i64* [ %.pre, %blklab21.if.end191_crit_edge ], [ %15, %if.end72 ], !dbg !739
   %_38.0 = phi i64* [ null, %blklab21.if.end191_crit_edge ], [ %call76, %if.end72 ]
   %_38_has_ownership.0 = phi i1 [ true, %blklab21.if.end191_crit_edge ], [ false, %if.end72 ]
@@ -1082,8 +1080,8 @@ if.end191:                                        ; preds = %blklab21.if.end191_
   tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !323, metadata !327), !dbg !688
   tail call void @println_s(i64* %37, i64 26) #9, !dbg !804
   %phitmp = bitcast i64* %call122 to i8*, !dbg !804
-  %phitmp335 = bitcast i64* %call54 to i8*, !dbg !804
-  %phitmp336 = bitcast i64* %call38 to i8*, !dbg !804
+  %phitmp334 = bitcast i64* %call54 to i8*, !dbg !804
+  %phitmp335 = bitcast i64* %call38 to i8*, !dbg !804
   tail call void @llvm.dbg.value(metadata %struct.Matrix* undef, i64 0, metadata !27, metadata !327) #9, !dbg !805
   %51 = bitcast %struct.Matrix* %call16 to i8**, !dbg !810
   %52 = load i8*, i8** %51, align 8, !dbg !810, !tbaa !340
@@ -1109,9 +1107,9 @@ if.end191:                                        ; preds = %blklab21.if.end191_
   tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !253, metadata !327), !dbg !634
   tail call void @free(i8* %call5) #9, !dbg !836
   tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !261, metadata !327), !dbg !639
-  tail call void @free(i8* %phitmp336) #9, !dbg !840
+  tail call void @free(i8* %phitmp335) #9, !dbg !840
   tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !271, metadata !327), !dbg !644
-  tail call void @free(i8* %phitmp335) #9, !dbg !844
+  tail call void @free(i8* %phitmp334) #9, !dbg !844
   tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !283, metadata !327), !dbg !655
   br i1 %_38_has_ownership.0, label %if.then196, label %if.then193, !dbg !848
 
@@ -1206,13 +1204,13 @@ polly.loop_header2.preheader:                     ; preds = %polly.loop_header
   %14 = select i1 %13, i64 31, i64 %12
   %polly.loop_guard13 = icmp sgt i64 %14, -1
   %polly.adjust_ub16 = add i64 %14, -1
-  br i1 %polly.loop_guard13, label %polly.loop_header10.preheader.us.preheader, label %polly.loop_exit4
+  br i1 %polly.loop_guard13, label %polly.loop_header2.us.preheader, label %polly.loop_exit4
 
-polly.loop_header10.preheader.us.preheader:       ; preds = %polly.loop_header2.preheader
-  br label %polly.loop_header10.preheader.us
+polly.loop_header2.us.preheader:                  ; preds = %polly.loop_header2.preheader
+  br label %polly.loop_header2.us
 
-polly.loop_header10.preheader.us:                 ; preds = %polly.loop_header10.preheader.us.preheader, %polly.loop_exit12.loopexit.us
-  %polly.indvar5.us = phi i64 [ %polly.indvar_next6.us, %polly.loop_exit12.loopexit.us ], [ 0, %polly.loop_header10.preheader.us.preheader ]
+polly.loop_header2.us:                            ; preds = %polly.loop_header2.us.preheader, %polly.loop_exit12.loopexit.us
+  %polly.indvar5.us = phi i64 [ %polly.indvar_next6.us, %polly.loop_exit12.loopexit.us ], [ 0, %polly.loop_header2.us.preheader ]
   %15 = shl i64 %polly.indvar5.us, 5
   %16 = sub nsw i64 %polly.subfunc.arg.width, %15
   %17 = add nsw i64 %16, -1
@@ -1220,21 +1218,21 @@ polly.loop_header10.preheader.us:                 ; preds = %polly.loop_header10
   %19 = select i1 %18, i64 31, i64 %17
   %polly.loop_guard22.us = icmp sgt i64 %19, -1
   %polly.adjust_ub25.us = add i64 %19, -1
-  br i1 %polly.loop_guard22.us, label %polly.loop_header19.preheader.us.us.preheader, label %polly.loop_exit12.loopexit.us
+  br i1 %polly.loop_guard22.us, label %polly.loop_header10.us.us.preheader, label %polly.loop_exit12.loopexit.us
 
-polly.loop_header19.preheader.us.us.preheader:    ; preds = %polly.loop_header10.preheader.us
-  br label %polly.loop_header19.preheader.us.us
+polly.loop_header10.us.us.preheader:              ; preds = %polly.loop_header2.us
+  br label %polly.loop_header10.us.us
 
 polly.loop_exit12.loopexit.us.loopexit:           ; preds = %polly.loop_exit21.loopexit.us.us
   br label %polly.loop_exit12.loopexit.us
 
-polly.loop_exit12.loopexit.us:                    ; preds = %polly.loop_exit12.loopexit.us.loopexit, %polly.loop_header10.preheader.us
+polly.loop_exit12.loopexit.us:                    ; preds = %polly.loop_exit12.loopexit.us.loopexit, %polly.loop_header2.us
   %polly.indvar_next6.us = add nuw nsw i64 %polly.indvar5.us, 1
   %exitcond.us = icmp eq i64 %polly.indvar5.us, %polly.fdiv_q.shr
-  br i1 %exitcond.us, label %polly.loop_exit4.loopexit, label %polly.loop_header10.preheader.us
+  br i1 %exitcond.us, label %polly.loop_exit4.loopexit, label %polly.loop_header2.us
 
-polly.loop_header19.preheader.us.us:              ; preds = %polly.loop_header19.preheader.us.us.preheader, %polly.loop_exit21.loopexit.us.us
-  %polly.indvar14.us.us = phi i64 [ %polly.indvar_next15.us.us, %polly.loop_exit21.loopexit.us.us ], [ 0, %polly.loop_header19.preheader.us.us.preheader ]
+polly.loop_header10.us.us:                        ; preds = %polly.loop_header10.us.us.preheader, %polly.loop_exit21.loopexit.us.us
+  %polly.indvar14.us.us = phi i64 [ %polly.indvar_next15.us.us, %polly.loop_exit21.loopexit.us.us ], [ 0, %polly.loop_header10.us.us.preheader ]
   %20 = add nsw i64 %polly.indvar14.us.us, %10
   %21 = mul i64 %20, %polly.subfunc.arg.width
   %22 = add i64 %21, %15
@@ -1243,10 +1241,10 @@ polly.loop_header19.preheader.us.us:              ; preds = %polly.loop_header19
 polly.loop_exit21.loopexit.us.us:                 ; preds = %polly.loop_header19.us.us
   %polly.indvar_next15.us.us = add nuw nsw i64 %polly.indvar14.us.us, 1
   %polly.loop_cond17.us.us = icmp sgt i64 %polly.indvar14.us.us, %polly.adjust_ub16
-  br i1 %polly.loop_cond17.us.us, label %polly.loop_exit12.loopexit.us.loopexit, label %polly.loop_header19.preheader.us.us
+  br i1 %polly.loop_cond17.us.us, label %polly.loop_exit12.loopexit.us.loopexit, label %polly.loop_header10.us.us
 
-polly.loop_header19.us.us:                        ; preds = %polly.loop_header19.us.us, %polly.loop_header19.preheader.us.us
-  %polly.indvar23.us.us = phi i64 [ %polly.indvar_next24.us.us, %polly.loop_header19.us.us ], [ 0, %polly.loop_header19.preheader.us.us ]
+polly.loop_header19.us.us:                        ; preds = %polly.loop_header19.us.us, %polly.loop_header10.us.us
+  %polly.indvar23.us.us = phi i64 [ %polly.indvar_next24.us.us, %polly.loop_header19.us.us ], [ 0, %polly.loop_header10.us.us ]
   %23 = add i64 %22, %polly.indvar23.us.us
   %scevgep.us.us = getelementptr i64, i64* %polly.subfunc.arg.call, i64 %23
   %_p_scalar_.us.us = load i64, i64* %scevgep.us.us, align 8, !alias.scope !867, !noalias !2, !llvm.mem.parallel_loop_access !869
@@ -1370,30 +1368,30 @@ polly.loop_header18.preheader:                    ; preds = %polly.loop_header10
   %29 = select i1 %28, i64 31, i64 %27
   %polly.loop_guard39 = icmp sgt i64 %29, -1
   %polly.adjust_ub42 = add i64 %29, -1
-  br i1 %polly.loop_guard30, label %polly.loop_header27.preheader.us.preheader, label %polly.loop_exit20
+  br i1 %polly.loop_guard30, label %polly.loop_header18.us.preheader, label %polly.loop_exit20
 
-polly.loop_header27.preheader.us.preheader:       ; preds = %polly.loop_header18.preheader
-  br label %polly.loop_header27.preheader.us
+polly.loop_header18.us.preheader:                 ; preds = %polly.loop_header18.preheader
+  br label %polly.loop_header18.us
 
-polly.loop_header27.preheader.us:                 ; preds = %polly.loop_header27.preheader.us.preheader, %polly.loop_exit29.loopexit.us
-  %polly.indvar22.us = phi i64 [ %polly.indvar_next23.us, %polly.loop_exit29.loopexit.us ], [ 0, %polly.loop_header27.preheader.us.preheader ]
+polly.loop_header18.us:                           ; preds = %polly.loop_header18.us.preheader, %polly.loop_exit29.loopexit.us
+  %polly.indvar22.us = phi i64 [ %polly.indvar_next23.us, %polly.loop_exit29.loopexit.us ], [ 0, %polly.loop_header18.us.preheader ]
   %30 = add nsw i64 %polly.indvar22.us, %15
   %31 = mul i64 %30, %polly.subfunc.arg.
-  br i1 %polly.loop_guard39, label %polly.loop_header36.preheader.us.us.preheader, label %polly.loop_exit29.loopexit.us
+  br i1 %polly.loop_guard39, label %polly.loop_header27.us.us.preheader, label %polly.loop_exit29.loopexit.us
 
-polly.loop_header36.preheader.us.us.preheader:    ; preds = %polly.loop_header27.preheader.us
-  br label %polly.loop_header36.preheader.us.us
+polly.loop_header27.us.us.preheader:              ; preds = %polly.loop_header18.us
+  br label %polly.loop_header27.us.us
 
 polly.loop_exit29.loopexit.us.loopexit:           ; preds = %polly.loop_exit38.loopexit.us.us
   br label %polly.loop_exit29.loopexit.us
 
-polly.loop_exit29.loopexit.us:                    ; preds = %polly.loop_exit29.loopexit.us.loopexit, %polly.loop_header27.preheader.us
+polly.loop_exit29.loopexit.us:                    ; preds = %polly.loop_exit29.loopexit.us.loopexit, %polly.loop_header18.us
   %polly.indvar_next23.us = add nuw nsw i64 %polly.indvar22.us, 1
   %polly.loop_cond25.us = icmp sgt i64 %polly.indvar22.us, %polly.adjust_ub24
-  br i1 %polly.loop_cond25.us, label %polly.loop_exit20.loopexit, label %polly.loop_header27.preheader.us
+  br i1 %polly.loop_cond25.us, label %polly.loop_exit20.loopexit, label %polly.loop_header18.us
 
-polly.loop_header36.preheader.us.us:              ; preds = %polly.loop_header36.preheader.us.us.preheader, %polly.loop_exit38.loopexit.us.us
-  %polly.indvar31.us.us = phi i64 [ %polly.indvar_next32.us.us, %polly.loop_exit38.loopexit.us.us ], [ 0, %polly.loop_header36.preheader.us.us.preheader ]
+polly.loop_header27.us.us:                        ; preds = %polly.loop_header27.us.us.preheader, %polly.loop_exit38.loopexit.us.us
+  %polly.indvar31.us.us = phi i64 [ %polly.indvar_next32.us.us, %polly.loop_exit38.loopexit.us.us ], [ 0, %polly.loop_header27.us.us.preheader ]
   %32 = add nuw nsw i64 %polly.indvar31.us.us, %20
   %33 = add i64 %32, %31
   %scevgep.us.us = getelementptr i64, i64* %polly.subfunc.arg.call, i64 %33
@@ -1405,11 +1403,11 @@ polly.loop_exit38.loopexit.us.us:                 ; preds = %polly.loop_header36
   store i64 %p_add51.us.us.lcssa, i64* %scevgep.us.us, align 8, !alias.scope !872, !noalias !874
   %polly.indvar_next32.us.us = add nuw nsw i64 %polly.indvar31.us.us, 1
   %polly.loop_cond34.us.us = icmp sgt i64 %polly.indvar31.us.us, %polly.adjust_ub33
-  br i1 %polly.loop_cond34.us.us, label %polly.loop_exit29.loopexit.us.loopexit, label %polly.loop_header36.preheader.us.us
+  br i1 %polly.loop_cond34.us.us, label %polly.loop_exit29.loopexit.us.loopexit, label %polly.loop_header27.us.us
 
-polly.loop_header36.us.us:                        ; preds = %polly.loop_header36.us.us, %polly.loop_header36.preheader.us.us
-  %p_add5149.us.us = phi i64 [ %p_add51.us.us, %polly.loop_header36.us.us ], [ %scevgep.promoted.us.us, %polly.loop_header36.preheader.us.us ]
-  %polly.indvar40.us.us = phi i64 [ %polly.indvar_next41.us.us, %polly.loop_header36.us.us ], [ 0, %polly.loop_header36.preheader.us.us ]
+polly.loop_header36.us.us:                        ; preds = %polly.loop_header36.us.us, %polly.loop_header27.us.us
+  %p_add5149.us.us = phi i64 [ %p_add51.us.us, %polly.loop_header36.us.us ], [ %scevgep.promoted.us.us, %polly.loop_header27.us.us ]
+  %polly.indvar40.us.us = phi i64 [ %polly.indvar_next41.us.us, %polly.loop_header36.us.us ], [ 0, %polly.loop_header27.us.us ]
   %34 = add nsw i64 %polly.indvar40.us.us, %25
   %35 = add i64 %34, %31
   %scevgep44.us.us = getelementptr i64, i64* %polly.subfunc.arg.call14, i64 %35
@@ -1436,13 +1434,13 @@ polly.loop_exit20:                                ; preds = %polly.loop_exit20.l
 ; Function Attrs: nounwind
 declare i64 @fwrite(i8* nocapture, i64, i64, %struct._IO_FILE* nocapture) #9
 
-attributes #0 = { nounwind uwtable "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #0 = { nounwind uwtable "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
 attributes #1 = { argmemonly nounwind }
-attributes #2 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2" "unsafe-fp-math"="false" "use-soft-float"="false" }
-attributes #3 = { "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2" "unsafe-fp-math"="false" "use-soft-float"="false" }
-attributes #4 = { nounwind uwtable "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "polly-optimized" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2" "unsafe-fp-math"="false" "use-soft-float"="false" }
-attributes #5 = { noreturn nounwind uwtable "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2" "unsafe-fp-math"="false" "use-soft-float"="false" }
-attributes #6 = { noreturn nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #2 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #3 = { "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #4 = { nounwind uwtable "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "polly-optimized" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #5 = { noreturn nounwind uwtable "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #6 = { noreturn nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
 attributes #7 = { nounwind readnone }
 attributes #8 = { "polly.skip.fn" }
 attributes #9 = { nounwind }
@@ -1453,7 +1451,7 @@ attributes #11 = { noreturn nounwind }
 !llvm.module.flags = !{!324, !325}
 !llvm.ident = !{!326}
 
-!0 = distinct !DICompileUnit(language: DW_LANG_C99, file: !1, producer: "clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)", isOptimized: true, runtimeVersion: 0, emissionKind: 1, enums: !2, retainedTypes: !3, subprograms: !5)
+!0 = distinct !DICompileUnit(language: DW_LANG_C99, file: !1, producer: "clang version 3.9.0 (http://llvm.org/git/clang.git cf7bc8edf8cccb1b5de656c403cb55ad44132e98) (http://llvm.org/git/llvm.git 22706dc4c03305692f494d0e42a6de1050d0ec62)", isOptimized: true, runtimeVersion: 0, emissionKind: FullDebug, enums: !2, retainedTypes: !3, subprograms: !5)
 !1 = !DIFile(filename: "MatrixMult.c", directory: "/home/sam/workspace/WhileyOpenCL/polly/MatrixMult/impl/autogenerate1")
 !2 = !{}
 !3 = !{!4}
@@ -1779,7 +1777,7 @@ attributes #11 = { noreturn nounwind }
 !323 = !DILocalVariable(name: "_62_has_ownership", scope: !234, file: !1, line: 513, type: !34)
 !324 = !{i32 2, !"Dwarf Version", i32 4}
 !325 = !{i32 2, !"Debug Info Version", i32 3}
-!326 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)"}
+!326 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git cf7bc8edf8cccb1b5de656c403cb55ad44132e98) (http://llvm.org/git/llvm.git 22706dc4c03305692f494d0e42a6de1050d0ec62)"}
 !327 = !DIExpression()
 !328 = !DILocation(line: 2, column: 29, scope: !6)
 !329 = !DILocation(line: 3, column: 23, scope: !330)
@@ -2330,5 +2328,5 @@ attributes #11 = { noreturn nounwind }
 !874 = !{!875, !876}
 !875 = distinct !{!875, !873, !"polly.alias.scope.call24"}
 !876 = distinct !{!876, !873, !"polly.alias.scope.call14"}
-!877 = !{!875, !872}
+!877 = !{!872, !875}
 !878 = !{!872, !876}
