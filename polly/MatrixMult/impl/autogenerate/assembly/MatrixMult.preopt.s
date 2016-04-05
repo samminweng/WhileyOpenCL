@@ -1,4 +1,5 @@
 ; ModuleID = 'MatrixMult.c'
+source_filename = "MatrixMult.c"
 target datalayout = "e-m:e-i64:64-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
 
@@ -313,8 +314,8 @@ entry:
   call void @llvm.dbg.declare(metadata i64* %_27, metadata !197, metadata !43), !dbg !198
   store i64 0, i64* %_27, align 8, !dbg !198
   store i64 0, i64* %_4, align 8, !dbg !199
-  store i64 2000, i64* %_5, align 8, !dbg !200
-  store i64 2000, i64* %_6, align 8, !dbg !201
+  store i64 200, i64* %_5, align 8, !dbg !200
+  store i64 200, i64* %_6, align 8, !dbg !201
   %0 = load i64, i64* %_5, align 8, !dbg !202
   %1 = load i64, i64* %_6, align 8, !dbg !203
   %mul = mul nsw i64 %0, %1, !dbg !204
@@ -364,7 +365,7 @@ if.end4:                                          ; preds = %if.then3, %if.end
   br label %while.body, !dbg !226
 
 while.body:                                       ; preds = %if.end4, %blklab2
-  store i64 2000, i64* %_10, align 8, !dbg !227
+  store i64 200, i64* %_10, align 8, !dbg !227
   %14 = load i64, i64* %i, align 8, !dbg !229
   %15 = load i64, i64* %_10, align 8, !dbg !231
   %cmp = icmp sge i64 %14, %15, !dbg !232
@@ -380,7 +381,7 @@ if.end7:                                          ; preds = %while.body
   br label %while.body9, !dbg !240
 
 while.body9:                                      ; preds = %if.end7, %blklab4
-  store i64 2000, i64* %_12, align 8, !dbg !241
+  store i64 200, i64* %_12, align 8, !dbg !241
   %17 = load i64, i64* %j, align 8, !dbg !243
   %18 = load i64, i64* %_12, align 8, !dbg !245
   %cmp10 = icmp sge i64 %17, %18, !dbg !246
@@ -390,7 +391,7 @@ if.then12:                                        ; preds = %while.body9
   br label %blklab3, !dbg !248
 
 if.end13:                                         ; preds = %while.body9
-  store i64 2000, i64* %_13, align 8, !dbg !251
+  store i64 200, i64* %_13, align 8, !dbg !251
   %19 = load i64, i64* %i, align 8, !dbg !252
   %20 = load i64, i64* %_13, align 8, !dbg !253
   %mul14 = mul nsw i64 %19, %20, !dbg !254
@@ -408,7 +409,7 @@ if.end13:                                         ; preds = %while.body9
   %27 = load i64, i64* %i, align 8, !dbg !264
   %add15 = add nsw i64 %26, %27, !dbg !265
   store i64 %add15, i64* %_17, align 8, !dbg !266
-  store i64 2000, i64* %_18, align 8, !dbg !267
+  store i64 200, i64* %_18, align 8, !dbg !267
   %28 = load i64, i64* %i, align 8, !dbg !268
   %29 = load i64, i64* %_18, align 8, !dbg !269
   %mul16 = mul nsw i64 %28, %29, !dbg !270
@@ -448,8 +449,8 @@ blklab2:                                          ; preds = %blklab3
   br label %while.body, !dbg !298
 
 blklab1:                                          ; preds = %if.then6
-  store i64 2000, i64* %_26, align 8, !dbg !300
-  store i64 2000, i64* %_27, align 8, !dbg !301
+  store i64 200, i64* %_26, align 8, !dbg !300
+  store i64 200, i64* %_27, align 8, !dbg !301
   %41 = load i8, i8* %_25_has_ownership, align 1, !dbg !302
   %tobool21 = trunc i8 %41 to i1, !dbg !302
   br i1 %tobool21, label %if.then22, label %if.end23, !dbg !304
@@ -706,8 +707,8 @@ entry:
   call void @llvm.dbg.declare(metadata i64* %_47, metadata !455, metadata !43), !dbg !456
   store i64 0, i64* %_47, align 8, !dbg !456
   store i64 0, i64* %_9, align 8, !dbg !457
-  store i64 2000, i64* %_10, align 8, !dbg !458
-  store i64 2000, i64* %_11, align 8, !dbg !459
+  store i64 200, i64* %_10, align 8, !dbg !458
+  store i64 200, i64* %_11, align 8, !dbg !459
   %0 = load i64, i64* %_10, align 8, !dbg !460
   %1 = load i64, i64* %_11, align 8, !dbg !461
   %mul = mul nsw i64 %0, %1, !dbg !462
@@ -843,7 +844,7 @@ if.end25:                                         ; preds = %if.then24, %if.end1
   br label %while.body, !dbg !518
 
 while.body:                                       ; preds = %if.end25, %blklab6
-  store i64 2000, i64* %_17, align 8, !dbg !519
+  store i64 200, i64* %_17, align 8, !dbg !519
   %42 = load i64, i64* %i, align 8, !dbg !521
   %43 = load i64, i64* %_17, align 8, !dbg !523
   %cmp = icmp sge i64 %42, %43, !dbg !524
@@ -859,7 +860,7 @@ if.end28:                                         ; preds = %while.body
   br label %while.body30, !dbg !532
 
 while.body30:                                     ; preds = %if.end28, %blklab8
-  store i64 2000, i64* %_19, align 8, !dbg !533
+  store i64 200, i64* %_19, align 8, !dbg !533
   %45 = load i64, i64* %j, align 8, !dbg !535
   %46 = load i64, i64* %_19, align 8, !dbg !537
   %cmp31 = icmp sge i64 %45, %46, !dbg !538
@@ -875,7 +876,7 @@ if.end34:                                         ; preds = %while.body30
   br label %while.body36, !dbg !546
 
 while.body36:                                     ; preds = %if.end34, %blklab10
-  store i64 2000, i64* %_21, align 8, !dbg !547
+  store i64 200, i64* %_21, align 8, !dbg !547
   %48 = load i64, i64* %k, align 8, !dbg !549
   %49 = load i64, i64* %_21, align 8, !dbg !551
   %cmp37 = icmp sge i64 %48, %49, !dbg !552
@@ -885,7 +886,7 @@ if.then39:                                        ; preds = %while.body36
   br label %blklab9, !dbg !554
 
 if.end40:                                         ; preds = %while.body36
-  store i64 2000, i64* %_22, align 8, !dbg !557
+  store i64 200, i64* %_22, align 8, !dbg !557
   %50 = load i64, i64* %i, align 8, !dbg !558
   %51 = load i64, i64* %_22, align 8, !dbg !559
   %mul41 = mul nsw i64 %50, %51, !dbg !560
@@ -899,7 +900,7 @@ if.end40:                                         ; preds = %while.body36
   %arrayidx = getelementptr inbounds i64, i64* %55, i64 %54, !dbg !567
   %56 = load i64, i64* %arrayidx, align 8, !dbg !567
   store i64 %56, i64* %_25, align 8, !dbg !568
-  store i64 2000, i64* %_26, align 8, !dbg !569
+  store i64 200, i64* %_26, align 8, !dbg !569
   %57 = load i64, i64* %i, align 8, !dbg !570
   %58 = load i64, i64* %_26, align 8, !dbg !571
   %mul42 = mul nsw i64 %57, %58, !dbg !572
@@ -913,7 +914,7 @@ if.end40:                                         ; preds = %while.body36
   %arrayidx44 = getelementptr inbounds i64, i64* %62, i64 %61, !dbg !579
   %63 = load i64, i64* %arrayidx44, align 8, !dbg !579
   store i64 %63, i64* %_29, align 8, !dbg !580
-  store i64 2000, i64* %_30, align 8, !dbg !581
+  store i64 200, i64* %_30, align 8, !dbg !581
   %64 = load i64, i64* %k, align 8, !dbg !582
   %65 = load i64, i64* %_30, align 8, !dbg !583
   %mul45 = mul nsw i64 %64, %65, !dbg !584
@@ -935,7 +936,7 @@ if.end40:                                         ; preds = %while.body36
   %74 = load i64, i64* %_34, align 8, !dbg !598
   %add49 = add nsw i64 %73, %74, !dbg !599
   store i64 %add49, i64* %_35, align 8, !dbg !600
-  store i64 2000, i64* %_36, align 8, !dbg !601
+  store i64 200, i64* %_36, align 8, !dbg !601
   %75 = load i64, i64* %i, align 8, !dbg !602
   %76 = load i64, i64* %_36, align 8, !dbg !603
   %mul50 = mul nsw i64 %75, %76, !dbg !604
@@ -988,8 +989,8 @@ blklab6:                                          ; preds = %blklab7
   br label %while.body, !dbg !642
 
 blklab5:                                          ; preds = %if.then27
-  store i64 2000, i64* %_46, align 8, !dbg !644
-  store i64 2000, i64* %_47, align 8, !dbg !645
+  store i64 200, i64* %_46, align 8, !dbg !644
+  store i64 200, i64* %_47, align 8, !dbg !645
   %91 = load i8, i8* %_45_has_ownership, align 1, !dbg !646
   %tobool56 = trunc i8 %91 to i1, !dbg !646
   br i1 %tobool56, label %if.then57, label %if.end58, !dbg !648
@@ -1448,7 +1449,7 @@ if.end:                                           ; preds = %if.then, %entry
   %8 = load i64*, i64** %_6, align 8, !dbg !929
   %9 = load i64, i64* %_6_size, align 8, !dbg !929
   call void @printf_s(i64* %8, i64 %9), !dbg !930
-  store i64 2000, i64* %_9, align 8, !dbg !931
+  store i64 200, i64* %_9, align 8, !dbg !931
   %10 = load i64, i64* %_9, align 8, !dbg !932
   %call4 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.6, i32 0, i32 0), i64 %10), !dbg !933
   %11 = load i8, i8* %_10_has_ownership, align 1, !dbg !934
@@ -1588,18 +1589,18 @@ if.end39:                                         ; preds = %if.then38, %if.end1
   %call41 = call i64* @copy(i64* %49, i64 %51), !dbg !1011
   store i64* %call41, i64** %_16, align 8, !dbg !1011
   store i8 1, i8* %_16_has_ownership, align 1, !dbg !1012
-  store i64 2000, i64* %_17, align 8, !dbg !1013
+  store i64 200, i64* %_17, align 8, !dbg !1013
   store i64 1, i64* %_18, align 8, !dbg !1014
   %52 = load i64, i64* %_17, align 8, !dbg !1015
   %53 = load i64, i64* %_18, align 8, !dbg !1016
   %sub = sub nsw i64 %52, %53, !dbg !1017
   store i64 %sub, i64* %_19, align 8, !dbg !1018
-  store i64 2000, i64* %_20, align 8, !dbg !1019
+  store i64 200, i64* %_20, align 8, !dbg !1019
   %54 = load i64, i64* %_19, align 8, !dbg !1020
   %55 = load i64, i64* %_20, align 8, !dbg !1021
   %mul = mul nsw i64 %54, %55, !dbg !1022
   store i64 %mul, i64* %_21, align 8, !dbg !1023
-  store i64 2000, i64* %_22, align 8, !dbg !1024
+  store i64 200, i64* %_22, align 8, !dbg !1024
   %56 = load i64, i64* %_21, align 8, !dbg !1025
   %57 = load i64, i64* %_22, align 8, !dbg !1026
   %add = add nsw i64 %56, %57, !dbg !1027
@@ -1753,18 +1754,18 @@ if.end79:                                         ; preds = %if.then78, %if.end5
   %call83 = call i64* @copy(i64* %102, i64 %104), !dbg !1116
   store i64* %call83, i64** %_33, align 8, !dbg !1116
   store i8 1, i8* %_33_has_ownership, align 1, !dbg !1117
-  store i64 2000, i64* %_34, align 8, !dbg !1118
+  store i64 200, i64* %_34, align 8, !dbg !1118
   store i64 1, i64* %_35, align 8, !dbg !1119
   %105 = load i64, i64* %_34, align 8, !dbg !1120
   %106 = load i64, i64* %_35, align 8, !dbg !1121
   %sub84 = sub nsw i64 %105, %106, !dbg !1122
   store i64 %sub84, i64* %_36, align 8, !dbg !1123
-  store i64 2000, i64* %_37, align 8, !dbg !1124
+  store i64 200, i64* %_37, align 8, !dbg !1124
   %107 = load i64, i64* %_36, align 8, !dbg !1125
   %108 = load i64, i64* %_37, align 8, !dbg !1126
   %mul85 = mul nsw i64 %107, %108, !dbg !1127
   store i64 %mul85, i64* %_38, align 8, !dbg !1128
-  store i64 2000, i64* %_39, align 8, !dbg !1129
+  store i64 200, i64* %_39, align 8, !dbg !1129
   %109 = load i64, i64* %_38, align 8, !dbg !1130
   %110 = load i64, i64* %_39, align 8, !dbg !1131
   %add86 = add nsw i64 %109, %110, !dbg !1132
@@ -1839,18 +1840,18 @@ if.end99:                                         ; preds = %if.then98, %if.end9
   %call103 = call i64* @copy(i64* %130, i64 %132), !dbg !1174
   store i64* %call103, i64** %_45, align 8, !dbg !1174
   store i8 1, i8* %_45_has_ownership, align 1, !dbg !1175
-  store i64 2000, i64* %_46, align 8, !dbg !1176
+  store i64 200, i64* %_46, align 8, !dbg !1176
   store i64 1, i64* %_47, align 8, !dbg !1177
   %133 = load i64, i64* %_46, align 8, !dbg !1178
   %134 = load i64, i64* %_47, align 8, !dbg !1179
   %sub104 = sub nsw i64 %133, %134, !dbg !1180
   store i64 %sub104, i64* %_48, align 8, !dbg !1181
-  store i64 2000, i64* %_49, align 8, !dbg !1182
+  store i64 200, i64* %_49, align 8, !dbg !1182
   %135 = load i64, i64* %_48, align 8, !dbg !1183
   %136 = load i64, i64* %_49, align 8, !dbg !1184
   %mul105 = mul nsw i64 %135, %136, !dbg !1185
   store i64 %mul105, i64* %_50, align 8, !dbg !1186
-  store i64 2000, i64* %_51, align 8, !dbg !1187
+  store i64 200, i64* %_51, align 8, !dbg !1187
   %137 = load i64, i64* %_50, align 8, !dbg !1188
   %138 = load i64, i64* %_51, align 8, !dbg !1189
   %add106 = add nsw i64 %137, %138, !dbg !1190
@@ -1989,18 +1990,18 @@ if.end139:                                        ; preds = %if.then138, %if.end
   %call143 = call i64* @copy(i64* %180, i64 %182), !dbg !1270
   store i64* %call143, i64** %_62, align 8, !dbg !1270
   store i8 1, i8* %_62_has_ownership, align 1, !dbg !1271
-  store i64 2000, i64* %_63, align 8, !dbg !1272
+  store i64 200, i64* %_63, align 8, !dbg !1272
   store i64 1, i64* %_64, align 8, !dbg !1273
   %183 = load i64, i64* %_63, align 8, !dbg !1274
   %184 = load i64, i64* %_64, align 8, !dbg !1275
   %sub144 = sub nsw i64 %183, %184, !dbg !1276
   store i64 %sub144, i64* %_65, align 8, !dbg !1277
-  store i64 2000, i64* %_66, align 8, !dbg !1278
+  store i64 200, i64* %_66, align 8, !dbg !1278
   %185 = load i64, i64* %_65, align 8, !dbg !1279
   %186 = load i64, i64* %_66, align 8, !dbg !1280
   %mul145 = mul nsw i64 %185, %186, !dbg !1281
   store i64 %mul145, i64* %_67, align 8, !dbg !1282
-  store i64 2000, i64* %_68, align 8, !dbg !1283
+  store i64 200, i64* %_68, align 8, !dbg !1283
   %187 = load i64, i64* %_67, align 8, !dbg !1284
   %188 = load i64, i64* %_68, align 8, !dbg !1285
   %add146 = add nsw i64 %187, %188, !dbg !1286
@@ -2052,7 +2053,7 @@ if.end152:                                        ; preds = %if.then151, %if.end
   %204 = load i64*, i64** %_75, align 8, !dbg !1316
   %205 = load i64, i64* %_75_size, align 8, !dbg !1316
   call void @println_s(i64* %204, i64 %205), !dbg !1317
-  store i64 2000, i64* %_78, align 8, !dbg !1318
+  store i64 200, i64* %_78, align 8, !dbg !1318
   %206 = load i64, i64* %_78, align 8, !dbg !1319
   %call159 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.3, i32 0, i32 0), i64 %206), !dbg !1320
   %207 = load i8, i8* %_81_has_ownership, align 1, !dbg !1321
@@ -2084,7 +2085,7 @@ if.end162:                                        ; preds = %if.then161, %if.end
   %214 = load i64*, i64** %_81, align 8, !dbg !1335
   %215 = load i64, i64* %_81_size, align 8, !dbg !1335
   call void @printf_s(i64* %214, i64 %215), !dbg !1336
-  store i64 2000, i64* %_84, align 8, !dbg !1337
+  store i64 200, i64* %_84, align 8, !dbg !1337
   %216 = load i64, i64* %_84, align 8, !dbg !1338
   %call167 = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.3, i32 0, i32 0), i64 %216), !dbg !1339
   %217 = load i8, i8* %_87_has_ownership, align 1, !dbg !1340
@@ -2385,11 +2386,11 @@ declare void @exit(i32) #4
 
 declare void @println_s(i64*, i64) #3
 
-attributes #0 = { nounwind uwtable "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #0 = { nounwind uwtable "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
 attributes #1 = { nounwind readnone }
-attributes #2 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2" "unsafe-fp-math"="false" "use-soft-float"="false" }
-attributes #3 = { "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2" "unsafe-fp-math"="false" "use-soft-float"="false" }
-attributes #4 = { noreturn nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #2 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #3 = { "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #4 = { noreturn nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
 attributes #5 = { nounwind }
 attributes #6 = { noreturn nounwind }
 
@@ -2397,7 +2398,7 @@ attributes #6 = { noreturn nounwind }
 !llvm.module.flags = !{!39, !40}
 !llvm.ident = !{!41}
 
-!0 = distinct !DICompileUnit(language: DW_LANG_C99, file: !1, producer: "clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)", isOptimized: false, runtimeVersion: 0, emissionKind: 1, enums: !2, subprograms: !3)
+!0 = distinct !DICompileUnit(language: DW_LANG_C99, file: !1, producer: "clang version 3.9.0 (http://llvm.org/git/clang.git cf7bc8edf8cccb1b5de656c403cb55ad44132e98) (http://llvm.org/git/llvm.git 22706dc4c03305692f494d0e42a6de1050d0ec62)", isOptimized: false, runtimeVersion: 0, emissionKind: FullDebug, enums: !2, subprograms: !3)
 !1 = !DIFile(filename: "MatrixMult.c", directory: "/home/sam/workspace/WhileyOpenCL/polly/MatrixMult/impl/autogenerate")
 !2 = !{}
 !3 = !{!4, !18, !21, !22, !26, !29, !32}
@@ -2438,7 +2439,7 @@ attributes #6 = { noreturn nounwind }
 !38 = !DIBasicType(name: "char", size: 8, align: 8, encoding: DW_ATE_signed_char)
 !39 = !{i32 2, !"Dwarf Version", i32 4}
 !40 = !{i32 2, !"Debug Info Version", i32 3}
-!41 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)"}
+!41 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git cf7bc8edf8cccb1b5de656c403cb55ad44132e98) (http://llvm.org/git/llvm.git 22706dc4c03305692f494d0e42a6de1050d0ec62)"}
 !42 = !DILocalVariable(name: "_Matrix", arg: 1, scope: !4, file: !1, line: 2, type: !7)
 !43 = !DIExpression()
 !44 = !DILocation(line: 2, column: 29, scope: !4)

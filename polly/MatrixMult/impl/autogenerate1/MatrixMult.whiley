@@ -85,22 +85,23 @@ ensures c.width == b.width && c.height == a.height:
 method main(System.Console sys):
     int|null max = Int.parse(sys.args[0])
     if max != null:
-        sys.out.print_s("max = ")
-        sys.out.println(max)
+        int size = max
+        sys.out.print_s("size = ")
+        sys.out.println(size)
         // Initialize matrix A
-        Matrix A = init(max, max)
+        Matrix A = init(size, size)
         // Initialize matrix B
-        Matrix B = init(max, max)
+        Matrix B = init(size, size)
         // Multiply A and B 
         Matrix C = mat_mult(A, B)
-        assert A.data[(max-1)*max+max-1] == max-1
-        assert B.data[(max-1)*max+max-1] == max-1
+        assert A.data[(size-1)*size+size-1] == size-1
+        assert B.data[(size-1)*size+size-1] == size-1
         // N=20, C[19][19] = 3610
         // N=200, C[199][199] = 3960100
         // N=2000, C[1999][1999] = 3996001000
-        if max == 2000:
-            assert C.data[(max-1)*max+max-1] == 3996001000
+        if size == 2000:
+            assert C.data[(size-1)*size+size-1] == 3996001000
         //print_mat(sys, C)
-        sys.out.print_s("Matrix C[max-1][max-1] = ")
-        sys.out.println(C.data[(max-1)*max+max-1])
-        sys.out.println_s("Pass MatrixMult2 test case")
+        sys.out.print_s("Matrix C[size-1][size-1] = ")
+        sys.out.println(C.data[(size-1)*size+size-1])
+        sys.out.println_s("Pass MatrixMult test case")

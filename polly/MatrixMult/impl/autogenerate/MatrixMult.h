@@ -1,5 +1,5 @@
 #include "Util.h"
-#define N 2000
+#define N 200
 typedef long long nat;
 typedef struct{
 	_DECL_1DARRAY_MEMBER(data);

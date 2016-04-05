@@ -1,5 +1,5 @@
 	.text
-	.file	"MatrixMult.openmp.disablevc.ll"
+	.file	"llvm/MatrixMult.openmp.disablevc.ll"
 	.globl	init
 	.p2align	4, 0x90
 	.type	init,@function

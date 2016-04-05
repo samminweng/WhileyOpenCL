@@ -1,5 +1,5 @@
 	.text
-	.file	"MatrixMult.polly.enablevc.ll"
+	.file	"llvm/MatrixMult.polly.enablevc.ll"
 	.globl	init
 	.p2align	4, 0x90
 	.type	init,@function

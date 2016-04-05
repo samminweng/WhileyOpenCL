@@ -7,7 +7,7 @@ import whiley.io.File
 // This matrix multiplication converts 2D array into 1D array
 // 
 //
-constant N is 2000
+constant N is 200
 type nat is (int x) where x >= 0
 type Matrix is ({
     int width,

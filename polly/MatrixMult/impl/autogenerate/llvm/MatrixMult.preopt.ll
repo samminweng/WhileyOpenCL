@@ -1,4 +1,5 @@
 ; ModuleID = 'MatrixMult.preopt.s'
+source_filename = "MatrixMult.c"
 target datalayout = "e-m:e-i64:64-f80:128-n8:16:32:64-S128"
 target triple = "x86_64-unknown-linux-gnu"
 
@@ -187,31 +188,31 @@ entry.split:                                      ; preds = %entry
   tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !162, metadata !44), !dbg !163
   tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !164, metadata !44), !dbg !165
   tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !115, metadata !44), !dbg !116
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !117, metadata !44), !dbg !118
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !119, metadata !44), !dbg !120
-  tail call void @llvm.dbg.value(metadata i64 4000000, i64 0, metadata !121, metadata !44), !dbg !122
-  tail call void @llvm.dbg.value(metadata i64 4000000, i64 0, metadata !125, metadata !44), !dbg !124
-  %call = tail call i64* @gen1DArray(i32 0, i32 4000000) #5, !dbg !166
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !117, metadata !44), !dbg !118
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !119, metadata !44), !dbg !120
+  tail call void @llvm.dbg.value(metadata i64 40000, i64 0, metadata !121, metadata !44), !dbg !122
+  tail call void @llvm.dbg.value(metadata i64 40000, i64 0, metadata !125, metadata !44), !dbg !124
+  %call = tail call i64* @gen1DArray(i32 0, i32 40000) #5, !dbg !166
   tail call void @llvm.dbg.value(metadata i64* %call, i64 0, metadata !123, metadata !44), !dbg !124
   tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !126, metadata !44), !dbg !127
-  tail call void @llvm.dbg.value(metadata i64 4000000, i64 0, metadata !108, metadata !44), !dbg !107
+  tail call void @llvm.dbg.value(metadata i64 40000, i64 0, metadata !108, metadata !44), !dbg !107
   tail call void @llvm.dbg.value(metadata i64* %call, i64 0, metadata !106, metadata !44), !dbg !107
   tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !109, metadata !44), !dbg !110
   tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !126, metadata !44), !dbg !127
   tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !128, metadata !44), !dbg !129
   tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !111, metadata !44), !dbg !112
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !130, metadata !44), !dbg !131
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !130, metadata !44), !dbg !131
   br label %while.body9.preheader, !dbg !167
 
 while.body9.preheader:                            ; preds = %entry.split, %blklab2
   %i.02 = phi i64 [ 0, %entry.split ], [ %add20, %blklab2 ]
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !134, metadata !44), !dbg !135
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !134, metadata !44), !dbg !135
   br label %if.end13, !dbg !169
 
 if.end13:                                         ; preds = %while.body9.preheader, %if.end13
   %j.01 = phi i64 [ 0, %while.body9.preheader ], [ %add19, %if.end13 ]
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !136, metadata !44), !dbg !137
-  %mul14 = mul nuw nsw i64 %i.02, 2000, !dbg !171
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !136, metadata !44), !dbg !137
+  %mul14 = mul nuw nsw i64 %i.02, 200, !dbg !171
   tail call void @llvm.dbg.value(metadata i64 %mul14, i64 0, metadata !138, metadata !44), !dbg !139
   %add = add nuw nsw i64 %j.01, %mul14, !dbg !172
   tail call void @llvm.dbg.value(metadata i64 %add, i64 0, metadata !140, metadata !44), !dbg !141
@@ -220,8 +221,8 @@ if.end13:                                         ; preds = %while.body9.prehead
   tail call void @llvm.dbg.value(metadata i64 %0, i64 0, metadata !142, metadata !44), !dbg !143
   %add15 = add nsw i64 %0, %i.02, !dbg !174
   tail call void @llvm.dbg.value(metadata i64 %add15, i64 0, metadata !144, metadata !44), !dbg !145
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !146, metadata !44), !dbg !147
-  %mul16 = mul nuw nsw i64 %i.02, 2000, !dbg !175
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !146, metadata !44), !dbg !147
+  %mul16 = mul nuw nsw i64 %i.02, 200, !dbg !175
   tail call void @llvm.dbg.value(metadata i64 %mul16, i64 0, metadata !148, metadata !44), !dbg !149
   %add17 = add nuw nsw i64 %j.01, %mul16, !dbg !176
   tail call void @llvm.dbg.value(metadata i64 %add17, i64 0, metadata !150, metadata !44), !dbg !151
@@ -231,8 +232,8 @@ if.end13:                                         ; preds = %while.body9.prehead
   tail call void @llvm.dbg.value(metadata i64 %add19, i64 0, metadata !154, metadata !44), !dbg !155
   tail call void @llvm.dbg.value(metadata i64 %add19, i64 0, metadata !113, metadata !44), !dbg !114
   %add19 = add nuw nsw i64 %j.01, 1, !dbg !179
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !134, metadata !44), !dbg !135
-  %exitcond = icmp eq i64 %add19, 2000, !dbg !169
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !134, metadata !44), !dbg !135
+  %exitcond = icmp eq i64 %add19, 200, !dbg !169
   br i1 %exitcond, label %blklab2, label %if.end13, !dbg !169
 
 blklab2:                                          ; preds = %if.end13
@@ -240,15 +241,15 @@ blklab2:                                          ; preds = %if.end13
   tail call void @llvm.dbg.value(metadata i64 %add20, i64 0, metadata !158, metadata !44), !dbg !159
   tail call void @llvm.dbg.value(metadata i64 %add20, i64 0, metadata !111, metadata !44), !dbg !112
   %add20 = add nuw nsw i64 %i.02, 1, !dbg !180
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !130, metadata !44), !dbg !131
-  %exitcond3 = icmp eq i64 %add20, 2000, !dbg !167
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !130, metadata !44), !dbg !131
+  %exitcond3 = icmp eq i64 %add20, 200, !dbg !167
   br i1 %exitcond3, label %if.end23, label %while.body9.preheader, !dbg !167
 
 if.end23:                                         ; preds = %blklab2
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !162, metadata !44), !dbg !163
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !164, metadata !44), !dbg !165
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !162, metadata !44), !dbg !163
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !164, metadata !44), !dbg !165
   tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !109, metadata !44), !dbg !110
-  %call24 = tail call %struct.Matrix* @matrix(i64 2000, i64 2000, i64* %call, i64 4000000, i1 zeroext false), !dbg !181
+  %call24 = tail call %struct.Matrix* @matrix(i64 200, i64 200, i64* %call, i64 40000, i1 zeroext false), !dbg !181
   tail call void @llvm.dbg.value(metadata %struct.Matrix* %call24, i64 0, metadata !182, metadata !44), !dbg !183
   tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !160, metadata !44), !dbg !161
   %1 = bitcast i64* %call to i8*, !dbg !184
@@ -328,14 +329,14 @@ entry.split:                                      ; preds = %entry
   tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !303, metadata !44), !dbg !304
   tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !305, metadata !44), !dbg !306
   tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !220, metadata !44), !dbg !221
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !222, metadata !44), !dbg !223
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !224, metadata !44), !dbg !225
-  tail call void @llvm.dbg.value(metadata i64 4000000, i64 0, metadata !226, metadata !44), !dbg !227
-  tail call void @llvm.dbg.value(metadata i64 4000000, i64 0, metadata !230, metadata !44), !dbg !229
-  %call = tail call i64* @gen1DArray(i32 0, i32 4000000) #5, !dbg !307
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !222, metadata !44), !dbg !223
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !224, metadata !44), !dbg !225
+  tail call void @llvm.dbg.value(metadata i64 40000, i64 0, metadata !226, metadata !44), !dbg !227
+  tail call void @llvm.dbg.value(metadata i64 40000, i64 0, metadata !230, metadata !44), !dbg !229
+  %call = tail call i64* @gen1DArray(i32 0, i32 40000) #5, !dbg !307
   tail call void @llvm.dbg.value(metadata i64* %call, i64 0, metadata !228, metadata !44), !dbg !229
   tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !231, metadata !44), !dbg !232
-  tail call void @llvm.dbg.value(metadata i64 4000000, i64 0, metadata !201, metadata !44), !dbg !200
+  tail call void @llvm.dbg.value(metadata i64 40000, i64 0, metadata !201, metadata !44), !dbg !200
   tail call void @llvm.dbg.value(metadata i64* %call, i64 0, metadata !199, metadata !44), !dbg !200
   tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !202, metadata !44), !dbg !203
   tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !231, metadata !44), !dbg !232
@@ -361,39 +362,39 @@ entry.split:                                      ; preds = %entry
   tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !241, metadata !44), !dbg !242
   tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !243, metadata !44), !dbg !244
   tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !214, metadata !44), !dbg !215
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !245, metadata !44), !dbg !246
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !245, metadata !44), !dbg !246
   br label %while.body30.preheader, !dbg !310
 
 while.body30.preheader:                           ; preds = %entry.split, %blklab6
   %i.03 = phi i64 [ 0, %entry.split ], [ %add55, %blklab6 ]
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !249, metadata !44), !dbg !250
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !249, metadata !44), !dbg !250
   br label %while.body36.preheader, !dbg !312
 
 while.body36.preheader:                           ; preds = %while.body30.preheader, %blklab8
   %j.02 = phi i64 [ 0, %while.body30.preheader ], [ %add54, %blklab8 ]
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !253, metadata !44), !dbg !254
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !253, metadata !44), !dbg !254
   br label %if.end40, !dbg !314
 
 if.end40:                                         ; preds = %while.body36.preheader, %if.end40
   %k.01 = phi i64 [ 0, %while.body36.preheader ], [ %add53, %if.end40 ]
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !255, metadata !44), !dbg !256
-  %mul41 = mul nuw nsw i64 %i.03, 2000, !dbg !316
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !255, metadata !44), !dbg !256
+  %mul41 = mul nuw nsw i64 %i.03, 200, !dbg !316
   tail call void @llvm.dbg.value(metadata i64 %mul41, i64 0, metadata !257, metadata !44), !dbg !258
   %add = add nuw nsw i64 %j.02, %mul41, !dbg !317
   tail call void @llvm.dbg.value(metadata i64 %add, i64 0, metadata !259, metadata !44), !dbg !260
   %arrayidx = getelementptr inbounds i64, i64* %call, i64 %add, !dbg !318
   %4 = load i64, i64* %arrayidx, align 8, !dbg !318
   tail call void @llvm.dbg.value(metadata i64 %4, i64 0, metadata !261, metadata !44), !dbg !262
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !263, metadata !44), !dbg !264
-  %mul42 = mul nuw nsw i64 %i.03, 2000, !dbg !319
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !263, metadata !44), !dbg !264
+  %mul42 = mul nuw nsw i64 %i.03, 200, !dbg !319
   tail call void @llvm.dbg.value(metadata i64 %mul42, i64 0, metadata !265, metadata !44), !dbg !266
   %add43 = add nuw nsw i64 %k.01, %mul42, !dbg !320
   tail call void @llvm.dbg.value(metadata i64 %add43, i64 0, metadata !267, metadata !44), !dbg !268
   %arrayidx44 = getelementptr inbounds i64, i64* %call12, i64 %add43, !dbg !321
   %5 = load i64, i64* %arrayidx44, align 8, !dbg !321
   tail call void @llvm.dbg.value(metadata i64 %5, i64 0, metadata !269, metadata !44), !dbg !270
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !271, metadata !44), !dbg !272
-  %mul45 = mul nuw nsw i64 %k.01, 2000, !dbg !322
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !271, metadata !44), !dbg !272
+  %mul45 = mul nuw nsw i64 %k.01, 200, !dbg !322
   tail call void @llvm.dbg.value(metadata i64 %mul45, i64 0, metadata !273, metadata !44), !dbg !274
   %add46 = add nuw nsw i64 %mul45, %j.02, !dbg !323
   tail call void @llvm.dbg.value(metadata i64 %add46, i64 0, metadata !275, metadata !44), !dbg !276
@@ -404,8 +405,8 @@ if.end40:                                         ; preds = %while.body36.prehea
   tail call void @llvm.dbg.value(metadata i64 %mul48, i64 0, metadata !279, metadata !44), !dbg !280
   %add49 = add nsw i64 %mul48, %4, !dbg !326
   tail call void @llvm.dbg.value(metadata i64 %add49, i64 0, metadata !281, metadata !44), !dbg !282
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !283, metadata !44), !dbg !284
-  %mul50 = mul nuw nsw i64 %i.03, 2000, !dbg !327
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !283, metadata !44), !dbg !284
+  %mul50 = mul nuw nsw i64 %i.03, 200, !dbg !327
   tail call void @llvm.dbg.value(metadata i64 %mul50, i64 0, metadata !285, metadata !44), !dbg !286
   %add51 = add nuw nsw i64 %j.02, %mul50, !dbg !328
   tail call void @llvm.dbg.value(metadata i64 %add51, i64 0, metadata !287, metadata !44), !dbg !288
@@ -415,8 +416,8 @@ if.end40:                                         ; preds = %while.body36.prehea
   tail call void @llvm.dbg.value(metadata i64 %add53, i64 0, metadata !291, metadata !44), !dbg !292
   tail call void @llvm.dbg.value(metadata i64 %add53, i64 0, metadata !218, metadata !44), !dbg !219
   %add53 = add nuw nsw i64 %k.01, 1, !dbg !331
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !253, metadata !44), !dbg !254
-  %exitcond = icmp eq i64 %add53, 2000, !dbg !314
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !253, metadata !44), !dbg !254
+  %exitcond = icmp eq i64 %add53, 200, !dbg !314
   br i1 %exitcond, label %blklab8, label %if.end40, !dbg !314
 
 blklab8:                                          ; preds = %if.end40
@@ -424,8 +425,8 @@ blklab8:                                          ; preds = %if.end40
   tail call void @llvm.dbg.value(metadata i64 %add54, i64 0, metadata !295, metadata !44), !dbg !296
   tail call void @llvm.dbg.value(metadata i64 %add54, i64 0, metadata !216, metadata !44), !dbg !217
   %add54 = add nuw nsw i64 %j.02, 1, !dbg !332
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !249, metadata !44), !dbg !250
-  %exitcond4 = icmp eq i64 %add54, 2000, !dbg !312
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !249, metadata !44), !dbg !250
+  %exitcond4 = icmp eq i64 %add54, 200, !dbg !312
   br i1 %exitcond4, label %blklab6, label %while.body36.preheader, !dbg !312
 
 blklab6:                                          ; preds = %blklab8
@@ -433,15 +434,15 @@ blklab6:                                          ; preds = %blklab8
   tail call void @llvm.dbg.value(metadata i64 %add55, i64 0, metadata !299, metadata !44), !dbg !300
   tail call void @llvm.dbg.value(metadata i64 %add55, i64 0, metadata !214, metadata !44), !dbg !215
   %add55 = add nuw nsw i64 %i.03, 1, !dbg !333
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !245, metadata !44), !dbg !246
-  %exitcond5 = icmp eq i64 %add55, 2000, !dbg !310
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !245, metadata !44), !dbg !246
+  %exitcond5 = icmp eq i64 %add55, 200, !dbg !310
   br i1 %exitcond5, label %if.end58, label %while.body30.preheader, !dbg !310
 
 if.end58:                                         ; preds = %blklab6
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !303, metadata !44), !dbg !304
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !305, metadata !44), !dbg !306
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !303, metadata !44), !dbg !304
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !305, metadata !44), !dbg !306
   tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !202, metadata !44), !dbg !203
-  %call59 = tail call %struct.Matrix* @matrix(i64 2000, i64 2000, i64* %call, i64 4000000, i1 zeroext false), !dbg !334
+  %call59 = tail call %struct.Matrix* @matrix(i64 200, i64 200, i64* %call, i64 40000, i1 zeroext false), !dbg !334
   tail call void @llvm.dbg.value(metadata %struct.Matrix* %call59, i64 0, metadata !335, metadata !44), !dbg !336
   tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !301, metadata !44), !dbg !302
   br i1 %a_has_ownership, label %if.then61, label %if.end62, !dbg !337
@@ -579,8 +580,8 @@ entry.split:                                      ; preds = %entry
   store i64 32, i64* %3, align 8, !dbg !526
   tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !373, metadata !44), !dbg !374
   tail call void @printf_s(i64* %0, i64 4) #5, !dbg !527
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !375, metadata !44), !dbg !376
-  %call4 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.6, i64 0, i64 0), i64 2000) #5, !dbg !528
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !375, metadata !44), !dbg !376
+  %call4 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.6, i64 0, i64 0), i64 200) #5, !dbg !528
   %call8 = tail call %struct.Matrix* @init(), !dbg !529
   tail call void @llvm.dbg.value(metadata %struct.Matrix* %call8, i64 0, metadata !530, metadata !44), !dbg !531
   tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !377, metadata !44), !dbg !378
@@ -661,16 +662,16 @@ entry.split:                                      ; preds = %entry
   %call41 = tail call i64* @copy(i64* %25, i64 %26) #5, !dbg !577
   tail call void @llvm.dbg.value(metadata i64* %call41, i64 0, metadata !384, metadata !44), !dbg !385
   tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !387, metadata !44), !dbg !388
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !389, metadata !44), !dbg !390
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !389, metadata !44), !dbg !390
   tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !391, metadata !44), !dbg !392
-  tail call void @llvm.dbg.value(metadata i64 1999, i64 0, metadata !393, metadata !44), !dbg !394
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !395, metadata !44), !dbg !396
-  tail call void @llvm.dbg.value(metadata i64 3998000, i64 0, metadata !397, metadata !44), !dbg !398
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !399, metadata !44), !dbg !400
-  tail call void @llvm.dbg.value(metadata i64 4000000, i64 0, metadata !401, metadata !44), !dbg !402
+  tail call void @llvm.dbg.value(metadata i64 199, i64 0, metadata !393, metadata !44), !dbg !394
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !395, metadata !44), !dbg !396
+  tail call void @llvm.dbg.value(metadata i64 39800, i64 0, metadata !397, metadata !44), !dbg !398
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !399, metadata !44), !dbg !400
+  tail call void @llvm.dbg.value(metadata i64 40000, i64 0, metadata !401, metadata !44), !dbg !402
   tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !403, metadata !44), !dbg !404
-  tail call void @llvm.dbg.value(metadata i64 3999999, i64 0, metadata !405, metadata !44), !dbg !406
-  %arrayidx43 = getelementptr inbounds i64, i64* %call41, i64 3999999, !dbg !578
+  tail call void @llvm.dbg.value(metadata i64 39999, i64 0, metadata !405, metadata !44), !dbg !406
+  %arrayidx43 = getelementptr inbounds i64, i64* %call41, i64 39999, !dbg !578
   %27 = load i64, i64* %arrayidx43, align 8, !dbg !578
   tail call void @llvm.dbg.value(metadata i64 %27, i64 0, metadata !407, metadata !44), !dbg !408
   %call44 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.6, i64 0, i64 0), i64 %27) #5, !dbg !579
@@ -754,16 +755,16 @@ entry.split:                                      ; preds = %entry
   %call83 = tail call i64* @copy(i64* %49, i64 %50) #5, !dbg !628
   tail call void @llvm.dbg.value(metadata i64* %call83, i64 0, metadata !416, metadata !44), !dbg !417
   tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !419, metadata !44), !dbg !420
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !421, metadata !44), !dbg !422
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !421, metadata !44), !dbg !422
   tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !423, metadata !44), !dbg !424
-  tail call void @llvm.dbg.value(metadata i64 1999, i64 0, metadata !425, metadata !44), !dbg !426
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !427, metadata !44), !dbg !428
-  tail call void @llvm.dbg.value(metadata i64 3998000, i64 0, metadata !429, metadata !44), !dbg !430
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !431, metadata !44), !dbg !432
-  tail call void @llvm.dbg.value(metadata i64 4000000, i64 0, metadata !433, metadata !44), !dbg !434
+  tail call void @llvm.dbg.value(metadata i64 199, i64 0, metadata !425, metadata !44), !dbg !426
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !427, metadata !44), !dbg !428
+  tail call void @llvm.dbg.value(metadata i64 39800, i64 0, metadata !429, metadata !44), !dbg !430
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !431, metadata !44), !dbg !432
+  tail call void @llvm.dbg.value(metadata i64 40000, i64 0, metadata !433, metadata !44), !dbg !434
   tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !435, metadata !44), !dbg !436
-  tail call void @llvm.dbg.value(metadata i64 3999999, i64 0, metadata !437, metadata !44), !dbg !438
-  %arrayidx88 = getelementptr inbounds i64, i64* %call83, i64 3999999, !dbg !629
+  tail call void @llvm.dbg.value(metadata i64 39999, i64 0, metadata !437, metadata !44), !dbg !438
+  %arrayidx88 = getelementptr inbounds i64, i64* %call83, i64 39999, !dbg !629
   %51 = load i64, i64* %arrayidx88, align 8, !dbg !629
   tail call void @llvm.dbg.value(metadata i64 %51, i64 0, metadata !439, metadata !44), !dbg !440
   %call89 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.6, i64 0, i64 0), i64 %51) #5, !dbg !630
@@ -782,16 +783,16 @@ entry.split:                                      ; preds = %entry
   %call103 = tail call i64* @copy(i64* %52, i64 %53) #5, !dbg !636
   tail call void @llvm.dbg.value(metadata i64* %call103, i64 0, metadata !443, metadata !44), !dbg !444
   tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !446, metadata !44), !dbg !447
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !448, metadata !44), !dbg !449
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !448, metadata !44), !dbg !449
   tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !450, metadata !44), !dbg !451
-  tail call void @llvm.dbg.value(metadata i64 1999, i64 0, metadata !452, metadata !44), !dbg !453
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !454, metadata !44), !dbg !455
-  tail call void @llvm.dbg.value(metadata i64 3998000, i64 0, metadata !456, metadata !44), !dbg !457
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !458, metadata !44), !dbg !459
-  tail call void @llvm.dbg.value(metadata i64 4000000, i64 0, metadata !460, metadata !44), !dbg !461
+  tail call void @llvm.dbg.value(metadata i64 199, i64 0, metadata !452, metadata !44), !dbg !453
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !454, metadata !44), !dbg !455
+  tail call void @llvm.dbg.value(metadata i64 39800, i64 0, metadata !456, metadata !44), !dbg !457
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !458, metadata !44), !dbg !459
+  tail call void @llvm.dbg.value(metadata i64 40000, i64 0, metadata !460, metadata !44), !dbg !461
   tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !462, metadata !44), !dbg !463
-  tail call void @llvm.dbg.value(metadata i64 3999999, i64 0, metadata !464, metadata !44), !dbg !465
-  %arrayidx108 = getelementptr inbounds i64, i64* %call103, i64 3999999, !dbg !638
+  tail call void @llvm.dbg.value(metadata i64 39999, i64 0, metadata !464, metadata !44), !dbg !465
+  %arrayidx108 = getelementptr inbounds i64, i64* %call103, i64 39999, !dbg !638
   %54 = load i64, i64* %arrayidx108, align 8, !dbg !638
   tail call void @llvm.dbg.value(metadata i64 %54, i64 0, metadata !466, metadata !44), !dbg !467
   tail call void @llvm.dbg.value(metadata i64 3996001000, i64 0, metadata !468, metadata !44), !dbg !469
@@ -879,16 +880,16 @@ if.end114:                                        ; preds = %entry.split
   %call143 = tail call i64* @copy(i64* %78, i64 %79) #5, !dbg !688
   tail call void @llvm.dbg.value(metadata i64* %call143, i64 0, metadata !475, metadata !44), !dbg !476
   tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !478, metadata !44), !dbg !479
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !480, metadata !44), !dbg !481
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !480, metadata !44), !dbg !481
   tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !482, metadata !44), !dbg !483
-  tail call void @llvm.dbg.value(metadata i64 1999, i64 0, metadata !484, metadata !44), !dbg !485
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !486, metadata !44), !dbg !487
-  tail call void @llvm.dbg.value(metadata i64 3998000, i64 0, metadata !488, metadata !44), !dbg !489
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !490, metadata !44), !dbg !491
-  tail call void @llvm.dbg.value(metadata i64 4000000, i64 0, metadata !492, metadata !44), !dbg !493
+  tail call void @llvm.dbg.value(metadata i64 199, i64 0, metadata !484, metadata !44), !dbg !485
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !486, metadata !44), !dbg !487
+  tail call void @llvm.dbg.value(metadata i64 39800, i64 0, metadata !488, metadata !44), !dbg !489
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !490, metadata !44), !dbg !491
+  tail call void @llvm.dbg.value(metadata i64 40000, i64 0, metadata !492, metadata !44), !dbg !493
   tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !494, metadata !44), !dbg !495
-  tail call void @llvm.dbg.value(metadata i64 3999999, i64 0, metadata !496, metadata !44), !dbg !497
-  %arrayidx148 = getelementptr inbounds i64, i64* %call143, i64 3999999, !dbg !689
+  tail call void @llvm.dbg.value(metadata i64 39999, i64 0, metadata !496, metadata !44), !dbg !497
+  %arrayidx148 = getelementptr inbounds i64, i64* %call143, i64 39999, !dbg !689
   %80 = load i64, i64* %arrayidx148, align 8, !dbg !689
   tail call void @llvm.dbg.value(metadata i64 %80, i64 0, metadata !498, metadata !44), !dbg !499
   %call149 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([6 x i8], [6 x i8]* @.str.6, i64 0, i64 0), i64 %80) #5, !dbg !690
@@ -911,8 +912,8 @@ if.end114:                                        ; preds = %entry.split
   store i64 32, i64* %85, align 8, !dbg !700
   tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !503, metadata !44), !dbg !504
   tail call void @println_s(i64* %81, i64 5) #5, !dbg !701
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !505, metadata !44), !dbg !506
-  %call159 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.3, i64 0, i64 0), i64 2000) #5, !dbg !702
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !505, metadata !44), !dbg !506
+  %call159 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.3, i64 0, i64 0), i64 200) #5, !dbg !702
   tail call void @llvm.dbg.value(metadata i64 3, i64 0, metadata !509, metadata !44), !dbg !508
   %call163 = tail call noalias i8* @malloc(i64 24) #5, !dbg !703
   %86 = bitcast i8* %call163 to i64*, !dbg !703
@@ -926,8 +927,8 @@ if.end114:                                        ; preds = %entry.split
   store i64 32, i64* %88, align 8, !dbg !708
   tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !510, metadata !44), !dbg !511
   tail call void @printf_s(i64* %86, i64 3) #5, !dbg !709
-  tail call void @llvm.dbg.value(metadata i64 2000, i64 0, metadata !512, metadata !44), !dbg !513
-  %call167 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.3, i64 0, i64 0), i64 2000) #5, !dbg !710
+  tail call void @llvm.dbg.value(metadata i64 200, i64 0, metadata !512, metadata !44), !dbg !513
+  %call167 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.3, i64 0, i64 0), i64 200) #5, !dbg !710
   tail call void @llvm.dbg.value(metadata i64 21, i64 0, metadata !516, metadata !44), !dbg !515
   %call171 = tail call noalias i8* @malloc(i64 168) #5, !dbg !711
   %89 = bitcast i8* %call171 to i64*, !dbg !711
@@ -1048,11 +1049,11 @@ declare i32 @putchar(i32)
 ; Function Attrs: nounwind
 declare i64 @fwrite(i8* nocapture, i64, i64, %struct._IO_FILE* nocapture) #5
 
-attributes #0 = { nounwind uwtable "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #0 = { nounwind uwtable "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
 attributes #1 = { nounwind readnone }
-attributes #2 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2" "unsafe-fp-math"="false" "use-soft-float"="false" }
-attributes #3 = { "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2" "unsafe-fp-math"="false" "use-soft-float"="false" }
-attributes #4 = { noreturn nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #2 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #3 = { "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #4 = { noreturn nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="true" "no-frame-pointer-elim-non-leaf" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
 attributes #5 = { nounwind }
 attributes #6 = { cold }
 attributes #7 = { noreturn nounwind }
@@ -1061,7 +1062,7 @@ attributes #7 = { noreturn nounwind }
 !llvm.module.flags = !{!39, !40}
 !llvm.ident = !{!41}
 
-!0 = distinct !DICompileUnit(language: DW_LANG_C99, file: !1, producer: "clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)", isOptimized: false, runtimeVersion: 0, emissionKind: 1, enums: !2, subprograms: !3)
+!0 = distinct !DICompileUnit(language: DW_LANG_C99, file: !1, producer: "clang version 3.9.0 (http://llvm.org/git/clang.git cf7bc8edf8cccb1b5de656c403cb55ad44132e98) (http://llvm.org/git/llvm.git 22706dc4c03305692f494d0e42a6de1050d0ec62)", isOptimized: false, runtimeVersion: 0, emissionKind: FullDebug, enums: !2, subprograms: !3)
 !1 = !DIFile(filename: "MatrixMult.c", directory: "/home/sam/workspace/WhileyOpenCL/polly/MatrixMult/impl/autogenerate")
 !2 = !{}
 !3 = !{!4, !18, !21, !22, !26, !29, !32}
@@ -1102,7 +1103,7 @@ attributes #7 = { noreturn nounwind }
 !38 = !DIBasicType(name: "char", size: 8, align: 8, encoding: DW_ATE_signed_char)
 !39 = !{i32 2, !"Dwarf Version", i32 4}
 !40 = !{i32 2, !"Debug Info Version", i32 3}
-!41 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git e177b4a63ca92c5fec010986944530688e104074) (http://llvm.org/git/llvm.git fcd97ccb03712372fe95f1732638de5ed3fcabe8)"}
+!41 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git cf7bc8edf8cccb1b5de656c403cb55ad44132e98) (http://llvm.org/git/llvm.git 22706dc4c03305692f494d0e42a6de1050d0ec62)"}
 !42 = !DILocation(line: 2, column: 29, scope: !4)
 !43 = !DILocalVariable(name: "_Matrix", arg: 1, scope: !4, file: !1, line: 2, type: !7)
 !44 = !DIExpression()

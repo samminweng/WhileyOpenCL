@@ -41,15 +41,15 @@ runExecutables(){
 	parameter=$3
 	num_threads=$4
 	### Use 'llc' to compile LLVM code into assembly code
-    llc $program.$opt.ll -o $program.$opt.s
+    llc "llvm/$program.$opt.ll" -o "assembly/$program.$opt.s"
     if [[ $opt == *"openmp"* ]]
     then
     	export OMP_NUM_THREADS=$num_threads
     	### Use 'gcc' to compile .s file and link with 'libUtil.a'
-    	clang $program.$opt.s libUtil.a -lgomp -o "out/$program.$opt.out" 
+    	clang "assembly/$program.$opt.s" Util.c -lgomp -o "out/$program.$opt.out" 
 	else
     	### Use 'gcc' to compile .s file and link with 'libUtil.a'
-    	clang $program.$opt.s libUtil.a -o "out/$program.$opt.out"
+    	clang "assembly/$program.$opt.s" Util.c -o "out/$program.$opt.out"
     fi
     ### Run the generated executables.
 	time ./out/$program.$opt.out $parameter
@@ -66,17 +66,7 @@ cleanup(){
 	### Move all the dot files to 'dot' folder
 	#read -p "Press [Enter] to continue"
 	folder_proc "dot" "dot"
-	#read -p "Press [Enter] to continue"
 	generate_png "dot"
-	#read -p "Press [Enter] to continue"
-
-	#### Generate polly-optimized control flow graph
-	#read -p "Press [Enter] to continue"
-	#mkdir -p "dot/polly-opt"
-	#opt --dot-cfg "llvm/$program.polly.disablevc.ll"
-	#mv -f *.dot "dot/polly-opt"/
-	#generate_png "dot/polly-opt"
-	#read -p "Press [Enter] to continue"
 }
 
 
@@ -91,6 +81,9 @@ clang_polly(){
 	mkdir -p "out" # Store the executables.
 	rm -rf "out"/*
 
+	### Compile Util.c to Util.o (object file)
+	clang -c Util.c -o Util.o 
+    ar -cvq libUtil.a Util.o
 	echo -e -n "${GREEN}[*] Export SCoP in DOTs and JSCoP${RESET}" && read
 	pollycc -g -O3 -mllvm -polly -o "out"/$program.polly.out\
 	        -mllvm -polly-dot -mllvm -polly-show $program.c libUtil.a
@@ -118,53 +111,54 @@ clang_polly(){
 	echo -e -n "${GREEN}[*]Show the optimized AST${RESET}" && read 
 	pollycc -g -O3 -mllvm -polly -o "out"/$program.polly.out\
 	        -mllvm -debug-only=polly-ast $program.c libUtil.a
+	cleanup
 
 	### Generate executables with disabled vectorizer
-	echo -e -n "${GREEN}[*]Vectorizer is diabled${RESET}" && read
+	echo -e -n "${GREEN}[*] Run Benchmark with diabled Vectorizer${RESET}" && read
 	echo -e -n "[1] Run ${BOLD}${GREEN} GCC -O3 ${RESET} executables" && read
 	### Use C99 mode to compile C program
-	gcc -std=c99 -O3 -fno-tree-vectorize $program.c libUtil.a -o "out/$program.gcc.disablevc.out"
+	gcc -std=c99 -O3 -fno-tree-vectorize $program.c Util.c -o "out/$program.gcc.disablevc.out"
 	time ./out/$program.gcc.disablevc.out $parameter
 
 	echo -e -n "[2] Run ${BOLD}${GREEN} Clang -O3 ${RESET} executables" && read
-	clang -g -O3 -fno-vectorize $program.c libUtil.a -o "out"/$program.clang.disablevc.out
+	clang -g -O3 -fno-vectorize $program.c Util.c -o "out"/$program.clang.disablevc.out
 	time ./out/$program.clang.disablevc.out $parameter
 
 	##-fno-vectorize
 	echo -e -n "[3] Run ${BOLD}${GREEN} Polly-Optimized ${RESET} executables" && read
 	pollycc -g -O3 -fno-vectorize -mllvm -polly\
-	        -S -emit-llvm $program.c -o $program.polly.disablevc.ll
+	        -S -emit-llvm $program.c -o "llvm/$program.polly.disablevc.ll"
 	runExecutables $program "polly.disablevc" $parameter
 
 	echo -e -n "[4] Run ${BOLD}${GREEN} Polly-Optimized OpenMP ${RESET} executables with $num_threads threads" && read
 	pollycc -g -O3 -fno-vectorize\
 	        -mllvm -polly -S -emit-llvm\
-	        -mllvm -polly-parallel -lgomp $program.c -o $program.openmp.disablevc.ll
+	        -mllvm -polly-parallel -lgomp $program.c -o "llvm/$program.openmp.disablevc.ll"
 	runExecutables $program "openmp.disablevc" $parameter 2
 
 	### Generate executables with disabled vectorizer
-	echo -e -n "${GREEN}[*]Vectorizer is enabled${RESET}" && read
+	echo -e -n "${GREEN}[*]Run Benchmark with enabled Vectorizer${RESET}" && read
 	echo -e -n "[1] Run ${BOLD}${GREEN} GCC -O3 ${RESET} executables" && read
-	gcc -std=c99 -O3 $program.c libUtil.a -o "out/$program.gcc.enablevc.out"
+	gcc -std=c99 -O3 $program.c Util.c -o "out/$program.gcc.enablevc.out"
 	time ./out/$program.gcc.enablevc.out $parameter
 
 	echo -e -n "[2] Run ${BOLD}${GREEN} Clang -O3 ${RESET} executables" && read
-	clang -g -O3 $program.c libUtil.a -o "out"/$program.clang.enablevc.out
+	clang -g -O3 $program.c Util.c -o "out"/$program.clang.enablevc.out
 	time ./out/$program.clang.enablevc.out $parameter
 
 	##-fno-vectorize
 	echo -e -n "[3] Run ${BOLD}${GREEN} Polly-Optimized ${RESET} executables" && read
 	pollycc -g -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine\
-	        -S -emit-llvm $program.c -o $program.polly.enablevc.ll
+	        -S -emit-llvm $program.c -o "llvm/$program.polly.enablevc.ll"
 	runExecutables $program "polly.enablevc" $parameter
 
 	echo -e -n "[4] Run ${BOLD}${GREEN} Polly-Optimized OpenMP ${RESET} executables with $num_threads threads" && read
 	pollycc -g -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine -S -emit-llvm\
-	        -mllvm -polly-parallel -lgomp $program.c -o $program.openmp.enablevc.ll
+	        -mllvm -polly-parallel -lgomp $program.c -o "llvm/$program.openmp.enablevc.ll"
 	runExecutables $program "openmp.enablevc" $parameter 2
 
 	echo -e "-----------------Press [Enter] to finish up--------------------"&& read
-	cleanup
+	
 }
 
 
@@ -180,9 +174,7 @@ exec(){
 	cp $utildir/Util.c $utildir/Util.h $workingdir
 	### Creating a static library ('Util.o') with GCC (http://www.cs.dartmouth.edu/~campbell/cs50/buildlib.html)
 	cd $workingdir
-	### Compile Util.c to Util.o (object file)
-	clang -c Util.c -o Util.o 
-    ar -cvq libUtil.a Util.o
+	
 	if [[ $c_type == *"autogenerate"* ]]
 	then
 		### Translate Whiley program into C code 
@@ -190,112 +182,11 @@ exec(){
 	fi
 
 	clang_polly $c_type $program $num_threads $parameter
-	#opt_polly $c_type $program $num_threads $parameter
 	cd ../../../
 }
-###exec handwritten2 MatrixMult 2 200 ### Determine matrix size from cmd line argument
-exec autogenerate2 MatrixMult 2 200  ### Determine matrix size from cmd line argument
+exec handwritten MatrixMult 2 200 ### Determine matrix size from cmd line argument
+###exec autogenerate MatrixMult 2 200  ### Determine matrix size from cmd line argument
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# ##
-# ## Execute Polly Pass step by step
-# ##
-# opt_polly(){
-# 	c_type=$1
-# 	program=$2
-# 	num_threads=$3
-# 	parameter=$4
-# 	mkdir -p "out" # Store the executables.
-# 	rm -rf "out"/*
-	
-# 	echo -e "------------------Start optimizing ${BOLD}${GREEN}$c_type $program C ${RESET} program with POlly--------------------"
-	
-# 	echo -e -n "1. Create LLVM-IR from C"
-# 	### Compile source.c along with 'Util.c' to assembly code
-# 	clang -fno-vectorize -g -S -emit-llvm $program.c -o $program.s
-	
-# 	echo -e -n "2. Prepare LLVM-IR for Polly"
-# 	opt -S -polly-canonicalize -polly-report $program.s > $program.preopt.ll
-	
-# 	echo -e -n "3. Detect SCoPs using Polly"
-# 	opt -basicaa -polly-ast -analyze -q -polly-report -polly-show $program.preopt.ll -polly-detect-track-failures
-# 	#opt -basicaa -polly-ast -analyze -q -polly-dependences-computeout=0 -polly-report -polly-show $program.preopt.ll
-	
-# 	echo -e -n "4. Generate detected SCoPs in DOT"
-# 	opt -basicaa -dot-scops -disable-output -polly-report -polly-show $program.preopt.ll
-	
-# 	echo -e -n "5. Show the dependences of the SCoPs"
-# 	opt -basicaa -polly-dependences -analyze -polly-report -polly-show $program.preopt.ll
-
-# 	echo -e -n "6. Export jscop files"
-# 	opt -basicaa -polly-export-jscop -polly-report -polly-show $program.preopt.ll
-
-# 	echo -e -n "7. Generate polly-optimized LLVM using Polly"
-# 	opt -S -O3 -polly -polly-codegen -polly-process-unprofitable -polly-report $program.preopt.ll -o $program.polly.ll
-
-# 	echo -e -n "${REVERSE}Manual${RESET} Polly Optimizations\n"
-
-#     echo -e -n "${BOLD}${GREEN}[5]${RESET} Run ${GREEN}  Strip mining + (1st + 2nd) Loop tiling + Optimized Schedule of SCoPs ${RESET} executable. Press [Enter] " && read	
-# 	opt -polly-opt-isl -polly-vectorizer=stripmine -polly-tiling -polly-2nd-level-tiling\
-#  	    -basicaa -polly-prepare -polly-codegen -polly-report $program.none.ll\
-#  	    -S -o $program.optisl.before.ll\
-#         &&opt -O3 $program.optisl.before.ll -S -o $program.optisl.ll
-# 	runExecutables $program "optisl" $parameter
-
-# 	echo -e -n "${REVERSE}Automatic ${RESET} Polly Optimization vs. GCC\n"
-# 	echo -e -n "[1] Run ${BOLD}${GREEN}GCC -O3 ${RESET} executables. Press [Enter] " && read
-# 	gcc -O3 $program.c Util.c -o $program.gcc.out
-# 	mv $program.gcc.out "out/"
-# 	time ./out/$program.gcc.out $parameter
-
-# 	echo -e -n "[2] Run ${BOLD}${GREEN}Polly Sequential ${RESET} executable. Press [Enter]" && read
-# 	opt -O3 -polly\
-# 	    -basicaa -polly-prepare -polly-codegen -polly-report $program.preopt.ll\
-# 	    -S -o $program.polly.ll
-#     runExecutables $program "polly" $parameter
-
-# 	echo -e -n "[3] Run ${BOLD}${GREEN}Polly OpenMP ${RESET} executable with 2 threads. Press [Enter]" && read
-# 	export OMP_NUM_THREADS=$num_threads
-# 	opt -O3 -polly -polly-parallel\
-# 		-basicaa -polly-prepare -polly-codegen -polly-report $program.preopt.ll\
-# 	    -S -o $program.openmp.ll
-# 	llc $program.openmp.ll -o $program.openmp.s
-# 	clang $program.openmp.s libUtil.a -o "out/$program.openmp.out" -lgomp
-# 	time ."/out/$program.openmp.out" $parameter
-
-# 	echo -e -n "[4] Run ${BOLD}${GREEN}Polly Vector ${RESET} executable. Press [Enter]" && read
-# 	opt -O3 -polly -polly-vectorizer=polly\
-# 		-basicaa -polly-prepare -polly-codegen -polly-report $program.preopt.ll\
-# 	    -S -o $program.vector.ll
-# 	runExecutables $program "vector" $parameter
-
-# 	echo -e "-----------------Press [Enter] to finish up--------------------"&& read
-# 	cleanup
-# }

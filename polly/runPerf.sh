@@ -36,12 +36,12 @@ compileProgram(){
 	opt=$4
 	num_threads=$5
 	### Creating a static library ('Util.o') with GCC (http://www.cs.dartmouth.edu/~campbell/cs50/buildlib.html)
-    	utildir="$PWD/../../../../tests/code"
+    utildir="$PWD/../../../../tests/code"
 	### cp "$program/$program.whiley" $utildir/Util.c $utildir/Util.h $workingdir
 	cp $utildir/Util.c $utildir/Util.h $PWD
-    	clang -c Util.c -o Util.o ### Compile Util.c to Util.o (object file)
-    	ar -cvq libUtil.a Util.o
-    	if [[ $c_type == *"autogenerate"* ]]
+    #clang -c Util.c -o Util.o ### Compile Util.c to Util.o (object file)
+    #ar -cvq libUtil.a Util.o
+    if [[ $c_type == *"autogenerate"* ]]
 	then
 		### Translate Whiley program into C code 
 		./../../../../bin/wyopcl -code -copy -dealloc "$program.whiley"
@@ -50,21 +50,21 @@ compileProgram(){
     	### Compile C code into executables
 	case "$opt" in
 		"gcc")
-			gcc -O3 -fno-tree-vectorize $program.c libUtil.a -o "out/$program.$opt.disableVC.out"
-			gcc -O3 $program.c libUtil.a -o "out/$program.$opt.enableVC.out"
+			gcc -O3 -fno-tree-vectorize $program.c Util.c -o "out/$program.$opt.disableVC.out"
+			gcc -O3 $program.c Util.c -o "out/$program.$opt.enableVC.out"
 			;;
 		"clang")
-			clang -O3 -fno-vectorize $program.c libUtil.a -o "out/$program.$opt.disableVC.out"
-			clang -O3 $program.c libUtil.a -o "out/$program.$opt.enableVC.out"
+			clang -O3 -fno-vectorize $program.c Util.c -o "out/$program.$opt.disableVC.out"
+			clang -O3 $program.c Util.c -o "out/$program.$opt.enableVC.out"
 			;;
 		"polly")
-			pollycc -O3 -fno-vectorize -mllvm -polly $program.c libUtil.a -o "out/$program.$opt.disableVC.out"
-			pollycc -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine $program.c libUtil.a -o "out/$program.$opt.enableVC.out"
+			pollycc -O3 -fno-vectorize -mllvm -polly $program.c Util.c -o "out/$program.$opt.disableVC.out"
+			pollycc -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine $program.c Util.c -o "out/$program.$opt.enableVC.out"
 			;;
 		"openmp")
 			echo "Optimize C code using OpenMP code with $OMP_NUM_THREADS threads..." >> $result
-			pollycc -O3 -fno-vectorize -mllvm -polly -mllvm -polly-parallel -lgomp $program.c libUtil.a -o "out/$program.$opt.disableVC.out"
-			pollycc -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine -mllvm -polly-parallel -lgomp $program.c libUtil.a -o "out/$program.$opt.enableVC.out"
+			pollycc -O3 -fno-vectorize -mllvm -polly -mllvm -polly-parallel -lgomp $program.c Util.c -o "out/$program.$opt.disableVC.out"
+			pollycc -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine -mllvm -polly-parallel -lgomp $program.c Util.c -o "out/$program.$opt.enableVC.out"
 			;;
 	esac
 	###read -p "Press [Enter] to continue..."
@@ -96,44 +96,42 @@ init(){
 	program=$2
 	pref_dir="$PWD/$program/perf"
 	mkdir -p "$pref_dir"
-	### remove all files inside the folder
-	##rm -f "$pref_dir/"*.*
 	mkdir -p "$PWD/$program/impl/$c_type/out" ## Create 'out' folder
 	rm -rf "$PWD/$program/impl/$c_type/out/"*.*
 	read -p "Press [Enter] to continue..."
 }
-### Benchmark handwritten1 MatrixMult
-init handwritten2 MatrixMult
-exec handwritten2 MatrixMult 200
-exec handwritten2 MatrixMult 400
-exec handwritten2 MatrixMult 600
-exec handwritten2 MatrixMult 800
-exec handwritten2 MatrixMult 1000
-exec handwritten2 MatrixMult 1200
-exec handwritten2 MatrixMult 1400
-exec handwritten2 MatrixMult 1600
-exec handwritten2 MatrixMult 1800
-exec handwritten2 MatrixMult 2000
-exec handwritten2 MatrixMult 2200
-exec handwritten2 MatrixMult 2400
-exec handwritten2 MatrixMult 2600
-exec handwritten2 MatrixMult 2800
-exec handwritten2 MatrixMult 3000
-
+### Benchmark Autogenerate1 and autogenerate2 MatrixMult
 ### Autogenerate1 MatrixMult
-# init autogenerate1 MatrixMult
-# exec autogenerate1 MatrixMult 200
-# exec autogenerate1 MatrixMult 400
-# exec autogenerate1 MatrixMult 600
-# exec autogenerate1 MatrixMult 800
-# exec autogenerate1 MatrixMult 1000
-# exec autogenerate1 MatrixMult 1200
-# exec autogenerate1 MatrixMult 1400
-# exec autogenerate1 MatrixMult 1600
-# exec autogenerate1 MatrixMult 1800
-# exec autogenerate1 MatrixMult 2000
-# exec autogenerate1 MatrixMult 2200
-# exec autogenerate1 MatrixMult 2400
-# exec autogenerate1 MatrixMult 2600
-# exec autogenerate1 MatrixMult 2800
-# exec autogenerate1 MatrixMult 3000
+init autogenerate1 MatrixMult
+exec autogenerate1 MatrixMult 200
+exec autogenerate1 MatrixMult 400
+exec autogenerate1 MatrixMult 600
+exec autogenerate1 MatrixMult 800
+exec autogenerate1 MatrixMult 1000
+exec autogenerate1 MatrixMult 1200
+exec autogenerate1 MatrixMult 1400
+exec autogenerate1 MatrixMult 1600
+exec autogenerate1 MatrixMult 1800
+exec autogenerate1 MatrixMult 2000
+exec autogenerate1 MatrixMult 2200
+exec autogenerate1 MatrixMult 2400
+exec autogenerate1 MatrixMult 2600
+exec autogenerate1 MatrixMult 2800
+exec autogenerate1 MatrixMult 3000
+### Autogenerate2 MatrixMult
+init autogenerate2 MatrixMult
+exec autogenerate2 MatrixMult 200
+exec autogenerate2 MatrixMult 400
+exec autogenerate2 MatrixMult 600
+exec autogenerate2 MatrixMult 800
+exec autogenerate2 MatrixMult 1000
+exec autogenerate2 MatrixMult 1200
+exec autogenerate2 MatrixMult 1400
+exec autogenerate2 MatrixMult 1600
+exec autogenerate2 MatrixMult 1800
+exec autogenerate2 MatrixMult 2000
+exec autogenerate2 MatrixMult 2200
+exec autogenerate2 MatrixMult 2400
+exec autogenerate2 MatrixMult 2600
+exec autogenerate2 MatrixMult 2800
+exec autogenerate2 MatrixMult 3000

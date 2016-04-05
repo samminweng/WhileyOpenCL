@@ -1,16 +1,16 @@
 digraph "Scop Graph for 'free_Matrix' function" {
 	label="Scop Graph for 'free_Matrix' function";
 
-	Node0x9da1a30 [shape=record,label="{entry:\l  br label %entry.split, !dbg !327\l}"];
-	Node0x9da1a30 -> Node0x9da3f60;
-	Node0x9da3f60 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata %struct.Matrix* %matrix, i64 0,\l... metadata !27, metadata !328), !dbg !327\l  %0 = bitcast %struct.Matrix* %matrix to i8**, !dbg !329\l  %1 = load i8*, i8** %0, align 8, !dbg !329, !tbaa !330\l  tail call void @free(i8* %1) #6, !dbg !336\l  %2 = bitcast %struct.Matrix* %matrix to i8*, !dbg !337\l  tail call void @free(i8* %2) #6, !dbg !338\l  ret void, !dbg !339\l}"];
+	Node0x9aede20 [shape=record,label="{entry:\l  br label %entry.split, !dbg !328\l}"];
+	Node0x9aede20 -> Node0x9af1f00;
+	Node0x9af1f00 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata %struct.Matrix* %matrix, i64 0,\l... metadata !27, metadata !329), !dbg !328\l  %0 = bitcast %struct.Matrix* %matrix to i8**, !dbg !330\l  %1 = load i8*, i8** %0, align 8, !dbg !330, !tbaa !331\l  tail call void @free(i8* %1) #6, !dbg !337\l  %2 = bitcast %struct.Matrix* %matrix to i8*, !dbg !338\l  tail call void @free(i8* %2) #6, !dbg !339\l  ret void, !dbg !340\l}"];
 	colorscheme = "paired12"
-        subgraph cluster_0x9e27960 {
+        subgraph cluster_0x9b723d0 {
           label = "MatrixMult.c:9-12
 ";
           style = solid;
           color = 1
-          Node0x9da1a30;
-          Node0x9da3f60;
+          Node0x9aede20;
+          Node0x9af1f00;
         }
 }

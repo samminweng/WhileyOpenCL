@@ -72,16 +72,20 @@ long long** gen2DArray(long long* arr,  long long x, long long y){
 
 /**
  *  Combine an array of integers into an integer,
- *  e.g. arr = {1, 0} is converted into 10.\
- *  */
-long long parseStringToInt(long long* arr){
-	long long value = 0;
+ *  e.g. arr = {1, 0} is converted into 10
+ *	And return a integer pointer
+ * 
+ */
+long long* parseStringToInt(long long* arr){
 	long long i=0;
+	long long value=0;
 	while(arr[i]>=0&&arr[i]<=9){
 		value = value*10+arr[i];
 		i++;
 	}
-	return value;
+	long long* p = malloc(sizeof(long long));
+	*p = value;
+	return p;
 }
 
 /**

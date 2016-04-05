@@ -439,32 +439,32 @@ blklab13:;
 }
 
 int main(int argc, char** args){
-	long long max;
+	long long* max;
+	long long size = 0;
 	Matrix* A;
 	_DECL_OWNERSHIP(A);
 	Matrix* B;
 	_DECL_OWNERSHIP(B);
 	Matrix* C;
 	_DECL_OWNERSHIP(C);
-	long long _5;
-	_DECL_2DARRAY(_6);
-	_DECL_OWNERSHIP(_6);
-	long long _7 = 0;
-	_DECL_1DARRAY(_8);
-	_DECL_OWNERSHIP(_8);
-	void* _9;
-	_DECL_1DARRAY(_11);
-	_DECL_OWNERSHIP(_11);
-	void* _12;
-	Matrix* _14;
-	_DECL_OWNERSHIP(_14);
+	long long* _6;
+	_DECL_2DARRAY(_7);
+	_DECL_OWNERSHIP(_7);
+	long long _8 = 0;
+	_DECL_1DARRAY(_9);
+	_DECL_OWNERSHIP(_9);
+	void* _10;
+	_DECL_1DARRAY(_12);
+	_DECL_OWNERSHIP(_12);
+	void* _13;
 	Matrix* _15;
 	_DECL_OWNERSHIP(_15);
 	Matrix* _16;
 	_DECL_OWNERSHIP(_16);
-	_DECL_1DARRAY(_17);
+	Matrix* _17;
 	_DECL_OWNERSHIP(_17);
-	long long _18 = 0;
+	_DECL_1DARRAY(_18);
+	_DECL_OWNERSHIP(_18);
 	long long _19 = 0;
 	long long _20 = 0;
 	long long _21 = 0;
@@ -473,9 +473,9 @@ int main(int argc, char** args){
 	long long _24 = 0;
 	long long _25 = 0;
 	long long _26 = 0;
-	_DECL_1DARRAY(_27);
-	_DECL_OWNERSHIP(_27);
-	long long _28 = 0;
+	long long _27 = 0;
+	_DECL_1DARRAY(_28);
+	_DECL_OWNERSHIP(_28);
 	long long _29 = 0;
 	long long _30 = 0;
 	long long _31 = 0;
@@ -485,9 +485,9 @@ int main(int argc, char** args){
 	long long _35 = 0;
 	long long _36 = 0;
 	long long _37 = 0;
-	_DECL_1DARRAY(_38);
-	_DECL_OWNERSHIP(_38);
-	long long _39 = 0;
+	long long _38 = 0;
+	_DECL_1DARRAY(_39);
+	_DECL_OWNERSHIP(_39);
 	long long _40 = 0;
 	long long _41 = 0;
 	long long _42 = 0;
@@ -495,103 +495,106 @@ int main(int argc, char** args){
 	long long _44 = 0;
 	long long _45 = 0;
 	long long _46 = 0;
-	void* _47;
-	_DECL_1DARRAY(_49);
-	_DECL_OWNERSHIP(_49);
-	void* _50;
-	_DECL_1DARRAY(_52);
-	_DECL_OWNERSHIP(_52);
-	long long _53 = 0;
+	long long _47 = 0;
+	void* _48;
+	_DECL_1DARRAY(_50);
+	_DECL_OWNERSHIP(_50);
+	void* _51;
+	_DECL_1DARRAY(_53);
+	_DECL_OWNERSHIP(_53);
 	long long _54 = 0;
 	long long _55 = 0;
 	long long _56 = 0;
 	long long _57 = 0;
 	long long _58 = 0;
 	long long _59 = 0;
-	void* _60;
-	_DECL_1DARRAY(_62);
-	_DECL_OWNERSHIP(_62);
-	//fieldload %6 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	_CONV_ARGS(_6);
-	_ADD_OWNERSHIP(_6);
-	//const %7 = 0 : int
-	_7 = 0;
-	//indexof %8 = %6, %7 : int[][]
-	_8=_6[_7];
-	//invoke (%5) = (%8) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
-	_STR_TO_INT(_5, _8);
-	//assign %1 = %5  : null|int
-	max = _5;
+	long long _60 = 0;
+	void* _61;
+	_DECL_1DARRAY(_63);
+	_DECL_OWNERSHIP(_63);
+	//fieldload %7 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	_CONV_ARGS(_7);
+	_ADD_OWNERSHIP(_7);
+	//const %8 = 0 : int
+	_8 = 0;
+	//indexof %9 = %7, %8 : int[][]
+	_9=_7[_8];
+	//invoke (%6) = (%9) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
+	_STR_TO_INT(_6, _9);
+	//assign %1 = %6  : null|int
+	max = _6;
 	//ifis %1, null goto blklab19 : null|int
 	if(max == NULL) { goto blklab19;}
-	//fieldload %9 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %10 = %9 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %11 = [109,97,120,32,61,32] : int[]
-	_FREE(_11);
-	_NEW_ARRAY(_11, 6);
-	_11[0] = 109; _11[1] = 97; _11[2] = 120; _11[3] = 32; _11[4] = 61; _11[5] = 32; 
-	_ADD_OWNERSHIP(_11);
-	//indirectinvoke () = %10 (%11) : method(int[])->()
-	printf_s(_1DARRAY_PARAM(_11));
-	//fieldload %12 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %13 = %12 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//indirectinvoke () = %13 (%1) : method(any)->()
-	printf("%d\n", max);
-	//invoke (%14) = (%1, %1) MatrixMult:init : function(MatrixMult:nat,MatrixMult:nat)->(MatrixMult:Matrix)
-	_FREE_STRUCT(_14, Matrix);
-	_14 = init(max, max);
-	_ADD_OWNERSHIP(_14);
-	//assign %2 = %14  : {int[] data,int height,int width}
-	_FREE_STRUCT(A, Matrix);
-	A = _14;
-	_ADD_OWNERSHIP(A);
-	_REMOVE_OWNERSHIP(_14);
-	//invoke (%15) = (%1, %1) MatrixMult:init : function(MatrixMult:nat,MatrixMult:nat)->(MatrixMult:Matrix)
+	//assign %2 = %1  : int
+	size = *max;
+	//fieldload %10 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %11 = %10 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %12 = [115,105,122,101,32,61,32] : int[]
+	_FREE(_12);
+	_NEW_ARRAY(_12, 7);
+	_12[0] = 115; _12[1] = 105; _12[2] = 122; _12[3] = 101; _12[4] = 32; _12[5] = 61; _12[6] = 32; 
+	_ADD_OWNERSHIP(_12);
+	//indirectinvoke () = %11 (%12) : method(int[])->()
+	printf_s(_1DARRAY_PARAM(_12));
+	//fieldload %13 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %14 = %13 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//indirectinvoke () = %14 (%2) : method(any)->()
+	printf("%lld\n", size);
+	//invoke (%15) = (%2, %2) MatrixMult:init : function(MatrixMult:nat,MatrixMult:nat)->(MatrixMult:Matrix)
 	_FREE_STRUCT(_15, Matrix);
-	_15 = init(max, max);
+	_15 = init(size, size);
 	_ADD_OWNERSHIP(_15);
 	//assign %3 = %15  : {int[] data,int height,int width}
-	_FREE_STRUCT(B, Matrix);
-	B = _15;
-	_ADD_OWNERSHIP(B);
-	_REMOVE_OWNERSHIP(_15);
-	//invoke (%16) = (%2, %3) MatrixMult:mat_mult : function(MatrixMult:Matrix,MatrixMult:Matrix)->(MatrixMult:Matrix)
-	_FREE_STRUCT(_16, Matrix);
+	_FREE_STRUCT(A, Matrix);
+	A = _15;
 	_ADD_OWNERSHIP(A);
-	_ADD_OWNERSHIP(B);
-	_16 = mat_mult(_STRUCT_PARAM(A), false, _STRUCT_PARAM(B), false);
+	_REMOVE_OWNERSHIP(_15);
+	//invoke (%16) = (%2, %2) MatrixMult:init : function(MatrixMult:nat,MatrixMult:nat)->(MatrixMult:Matrix)
+	_FREE_STRUCT(_16, Matrix);
+	_16 = init(size, size);
 	_ADD_OWNERSHIP(_16);
 	//assign %4 = %16  : {int[] data,int height,int width}
-	_FREE_STRUCT(C, Matrix);
-	C = _16;
-	_ADD_OWNERSHIP(C);
+	_FREE_STRUCT(B, Matrix);
+	B = _16;
+	_ADD_OWNERSHIP(B);
 	_REMOVE_OWNERSHIP(_16);
+	//invoke (%17) = (%3, %4) MatrixMult:mat_mult : function(MatrixMult:Matrix,MatrixMult:Matrix)->(MatrixMult:Matrix)
+	_FREE_STRUCT(_17, Matrix);
+	_ADD_OWNERSHIP(A);
+	_ADD_OWNERSHIP(B);
+	_17 = mat_mult(_STRUCT_PARAM(A), false, _STRUCT_PARAM(B), false);
+	_ADD_OWNERSHIP(_17);
+	//assign %5 = %17  : {int[] data,int height,int width}
+	_FREE_STRUCT(C, Matrix);
+	C = _17;
+	_ADD_OWNERSHIP(C);
+	_REMOVE_OWNERSHIP(_17);
 	//assert
 	{
-		//fieldload %17 = %2 data : {int[] data,int height,int width}
-		_FREE(_17);
-		_1DARRAY_COPY(_17, A->data);
-		_ADD_OWNERSHIP(_17);
-		//const %18 = 1 : int
-		_18 = 1;
-		//sub %19 = %1, %18 : int
-		_19=max-_18;
-		//mul %20 = %19, %1 : int
-		_20=_19*max;
-		//add %21 = %20, %1 : int
-		_21=_20+max;
-		//const %22 = 1 : int
-		_22 = 1;
-		//sub %23 = %21, %22 : int
-		_23=_21-_22;
-		//indexof %24 = %17, %23 : int[]
-		_24=_17[_23];
-		//const %25 = 1 : int
-		_25 = 1;
-		//sub %26 = %1, %25 : int
-		_26=max-_25;
-		//ifeq %24, %26 goto blklab20 : int
-		if(_24==_26){goto blklab20;}
+		//fieldload %18 = %3 data : {int[] data,int height,int width}
+		_FREE(_18);
+		_1DARRAY_COPY(_18, A->data);
+		_ADD_OWNERSHIP(_18);
+		//const %19 = 1 : int
+		_19 = 1;
+		//sub %20 = %2, %19 : int
+		_20=size-_19;
+		//mul %21 = %20, %2 : int
+		_21=_20*size;
+		//add %22 = %21, %2 : int
+		_22=_21+size;
+		//const %23 = 1 : int
+		_23 = 1;
+		//sub %24 = %22, %23 : int
+		_24=_22-_23;
+		//indexof %25 = %18, %24 : int[]
+		_25=_18[_24];
+		//const %26 = 1 : int
+		_26 = 1;
+		//sub %27 = %2, %26 : int
+		_27=size-_26;
+		//ifeq %25, %27 goto blklab20 : int
+		if(_25==_27){goto blklab20;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -601,30 +604,30 @@ blklab20:;
 	}
 	//assert
 	{
-		//fieldload %27 = %3 data : {int[] data,int height,int width}
-		_FREE(_27);
-		_1DARRAY_COPY(_27, B->data);
-		_ADD_OWNERSHIP(_27);
-		//const %28 = 1 : int
-		_28 = 1;
-		//sub %29 = %1, %28 : int
-		_29=max-_28;
-		//mul %30 = %29, %1 : int
-		_30=_29*max;
-		//add %31 = %30, %1 : int
-		_31=_30+max;
-		//const %32 = 1 : int
-		_32 = 1;
-		//sub %33 = %31, %32 : int
-		_33=_31-_32;
-		//indexof %34 = %27, %33 : int[]
-		_34=_27[_33];
-		//const %35 = 1 : int
-		_35 = 1;
-		//sub %36 = %1, %35 : int
-		_36=max-_35;
-		//ifeq %34, %36 goto blklab21 : int
-		if(_34==_36){goto blklab21;}
+		//fieldload %28 = %4 data : {int[] data,int height,int width}
+		_FREE(_28);
+		_1DARRAY_COPY(_28, B->data);
+		_ADD_OWNERSHIP(_28);
+		//const %29 = 1 : int
+		_29 = 1;
+		//sub %30 = %2, %29 : int
+		_30=size-_29;
+		//mul %31 = %30, %2 : int
+		_31=_30*size;
+		//add %32 = %31, %2 : int
+		_32=_31+size;
+		//const %33 = 1 : int
+		_33 = 1;
+		//sub %34 = %32, %33 : int
+		_34=_32-_33;
+		//indexof %35 = %28, %34 : int[]
+		_35=_28[_34];
+		//const %36 = 1 : int
+		_36 = 1;
+		//sub %37 = %2, %36 : int
+		_37=size-_36;
+		//ifeq %35, %37 goto blklab21 : int
+		if(_35==_37){goto blklab21;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -632,34 +635,34 @@ blklab20:;
 blklab21:;
 	//assert
 	}
-	//const %37 = 2000 : int
-	_37 = 2000;
-	//ifne %1, %37 goto blklab22 : int
-	if(max!=_37){goto blklab22;}
+	//const %38 = 2000 : int
+	_38 = 2000;
+	//ifne %2, %38 goto blklab22 : int
+	if(size!=_38){goto blklab22;}
 	//assert
 	{
-		//fieldload %38 = %4 data : {int[] data,int height,int width}
-		_FREE(_38);
-		_1DARRAY_COPY(_38, C->data);
-		_ADD_OWNERSHIP(_38);
-		//const %39 = 1 : int
-		_39 = 1;
-		//sub %40 = %1, %39 : int
-		_40=max-_39;
-		//mul %41 = %40, %1 : int
-		_41=_40*max;
-		//add %42 = %41, %1 : int
-		_42=_41+max;
-		//const %43 = 1 : int
-		_43 = 1;
-		//sub %44 = %42, %43 : int
-		_44=_42-_43;
-		//indexof %45 = %38, %44 : int[]
-		_45=_38[_44];
-		//const %46 = 3996001000 : int
-		_46 = 3996001000;
-		//ifeq %45, %46 goto blklab23 : int
-		if(_45==_46){goto blklab23;}
+		//fieldload %39 = %5 data : {int[] data,int height,int width}
+		_FREE(_39);
+		_1DARRAY_COPY(_39, C->data);
+		_ADD_OWNERSHIP(_39);
+		//const %40 = 1 : int
+		_40 = 1;
+		//sub %41 = %2, %40 : int
+		_41=size-_40;
+		//mul %42 = %41, %2 : int
+		_42=_41*size;
+		//add %43 = %42, %2 : int
+		_43=_42+size;
+		//const %44 = 1 : int
+		_44 = 1;
+		//sub %45 = %43, %44 : int
+		_45=_43-_44;
+		//indexof %46 = %39, %45 : int[]
+		_46=_39[_45];
+		//const %47 = 3996001000 : int
+		_47 = 3996001000;
+		//ifeq %46, %47 goto blklab23 : int
+		if(_46==_47){goto blklab23;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
@@ -669,64 +672,64 @@ blklab23:;
 	}
 //.blklab22
 blklab22:;
-	//fieldload %47 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %48 = %47 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %49 = [77,97,116,114,105,120,32,67,91,109,97,120,45,49,93,91,109,97,120,45,49,93,32,61,32] : int[]
-	_FREE(_49);
-	_NEW_ARRAY(_49, 25);
-	_49[0] = 77; _49[1] = 97; _49[2] = 116; _49[3] = 114; _49[4] = 105; _49[5] = 120; _49[6] = 32; _49[7] = 67; _49[8] = 91; _49[9] = 109; _49[10] = 97; _49[11] = 120; _49[12] = 45; _49[13] = 49; _49[14] = 93; _49[15] = 91; _49[16] = 109; _49[17] = 97; _49[18] = 120; _49[19] = 45; _49[20] = 49; _49[21] = 93; _49[22] = 32; _49[23] = 61; _49[24] = 32; 
-	_ADD_OWNERSHIP(_49);
-	//indirectinvoke () = %48 (%49) : method(int[])->()
-	printf_s(_1DARRAY_PARAM(_49));
-	//fieldload %50 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %51 = %50 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//fieldload %52 = %4 data : {int[] data,int height,int width}
-	_FREE(_52);
-	_1DARRAY_COPY(_52, C->data);
-	_ADD_OWNERSHIP(_52);
-	//const %53 = 1 : int
-	_53 = 1;
-	//sub %54 = %1, %53 : int
-	_54=max-_53;
-	//mul %55 = %54, %1 : int
-	_55=_54*max;
-	//add %56 = %55, %1 : int
-	_56=_55+max;
-	//const %57 = 1 : int
-	_57 = 1;
-	//sub %58 = %56, %57 : int
-	_58=_56-_57;
-	//indexof %59 = %52, %58 : int[]
-	_59=_52[_58];
-	//indirectinvoke () = %51 (%59) : method(any)->()
-	printf("%lld\n", _59);
-	//fieldload %60 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %61 = %60 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %62 = [80,97,115,115,32,77,97,116,114,105,120,77,117,108,116,50,32,116,101,115,116,32,99,97,115,101] : int[]
-	_FREE(_62);
-	_NEW_ARRAY(_62, 26);
-	_62[0] = 80; _62[1] = 97; _62[2] = 115; _62[3] = 115; _62[4] = 32; _62[5] = 77; _62[6] = 97; _62[7] = 116; _62[8] = 114; _62[9] = 105; _62[10] = 120; _62[11] = 77; _62[12] = 117; _62[13] = 108; _62[14] = 116; _62[15] = 50; _62[16] = 32; _62[17] = 116; _62[18] = 101; _62[19] = 115; _62[20] = 116; _62[21] = 32; _62[22] = 99; _62[23] = 97; _62[24] = 115; _62[25] = 101; 
-	_ADD_OWNERSHIP(_62);
-	//indirectinvoke () = %61 (%62) : method(int[])->()
-	println_s(_1DARRAY_PARAM(_62));
+	//fieldload %48 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %49 = %48 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %50 = [77,97,116,114,105,120,32,67,91,115,105,122,101,45,49,93,91,115,105,122,101,45,49,93,32,61,32] : int[]
+	_FREE(_50);
+	_NEW_ARRAY(_50, 27);
+	_50[0] = 77; _50[1] = 97; _50[2] = 116; _50[3] = 114; _50[4] = 105; _50[5] = 120; _50[6] = 32; _50[7] = 67; _50[8] = 91; _50[9] = 115; _50[10] = 105; _50[11] = 122; _50[12] = 101; _50[13] = 45; _50[14] = 49; _50[15] = 93; _50[16] = 91; _50[17] = 115; _50[18] = 105; _50[19] = 122; _50[20] = 101; _50[21] = 45; _50[22] = 49; _50[23] = 93; _50[24] = 32; _50[25] = 61; _50[26] = 32; 
+	_ADD_OWNERSHIP(_50);
+	//indirectinvoke () = %49 (%50) : method(int[])->()
+	printf_s(_1DARRAY_PARAM(_50));
+	//fieldload %51 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %52 = %51 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//fieldload %53 = %5 data : {int[] data,int height,int width}
+	_FREE(_53);
+	_1DARRAY_COPY(_53, C->data);
+	_ADD_OWNERSHIP(_53);
+	//const %54 = 1 : int
+	_54 = 1;
+	//sub %55 = %2, %54 : int
+	_55=size-_54;
+	//mul %56 = %55, %2 : int
+	_56=_55*size;
+	//add %57 = %56, %2 : int
+	_57=_56+size;
+	//const %58 = 1 : int
+	_58 = 1;
+	//sub %59 = %57, %58 : int
+	_59=_57-_58;
+	//indexof %60 = %53, %59 : int[]
+	_60=_53[_59];
+	//indirectinvoke () = %52 (%60) : method(any)->()
+	printf("%lld\n", _60);
+	//fieldload %61 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %62 = %61 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %63 = [80,97,115,115,32,77,97,116,114,105,120,77,117,108,116,32,116,101,115,116,32,99,97,115,101] : int[]
+	_FREE(_63);
+	_NEW_ARRAY(_63, 25);
+	_63[0] = 80; _63[1] = 97; _63[2] = 115; _63[3] = 115; _63[4] = 32; _63[5] = 77; _63[6] = 97; _63[7] = 116; _63[8] = 114; _63[9] = 105; _63[10] = 120; _63[11] = 77; _63[12] = 117; _63[13] = 108; _63[14] = 116; _63[15] = 32; _63[16] = 116; _63[17] = 101; _63[18] = 115; _63[19] = 116; _63[20] = 32; _63[21] = 99; _63[22] = 97; _63[23] = 115; _63[24] = 101; 
+	_ADD_OWNERSHIP(_63);
+	//indirectinvoke () = %62 (%63) : method(int[])->()
+	println_s(_1DARRAY_PARAM(_63));
 //.blklab19
 blklab19:;
 	//return
 	_FREE_STRUCT(A, Matrix);
 	_FREE_STRUCT(B, Matrix);
 	_FREE_STRUCT(C, Matrix);
-	_FREE2DArray(_6);
-	_FREE(_8);
-	_FREE(_11);
-	_FREE_STRUCT(_14, Matrix);
+	_FREE2DArray(_7);
+	_FREE(_9);
+	_FREE(_12);
 	_FREE_STRUCT(_15, Matrix);
 	_FREE_STRUCT(_16, Matrix);
-	_FREE(_17);
-	_FREE(_27);
-	_FREE(_38);
-	_FREE(_49);
-	_FREE(_52);
-	_FREE(_62);
+	_FREE_STRUCT(_17, Matrix);
+	_FREE(_18);
+	_FREE(_28);
+	_FREE(_39);
+	_FREE(_50);
+	_FREE(_53);
+	_FREE(_63);
 	exit(0);
 }
 

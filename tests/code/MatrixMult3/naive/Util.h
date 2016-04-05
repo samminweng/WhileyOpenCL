@@ -17,7 +17,7 @@ void indirect_printf(long long input);
 void printf_s(long long* input, long long input_size);
 void println_s(long long* input, long long input_size);
 // Parser a string into an integer
-long long parseStringToInt(long long* arr);
+long long* parseStringToInt(long long* arr);
 // 1D Array Operator
 long long** convertArgsToIntArray(int argc, char** args);
 long long* copy(long long *arr, long long size);
