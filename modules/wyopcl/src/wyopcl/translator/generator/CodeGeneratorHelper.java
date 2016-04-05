@@ -334,7 +334,7 @@ public final class CodeGeneratorHelper {
 		if (type instanceof Type.Union) {
 			// Check if there is any record in 'union' type
 			if (stores.isIntType(type)) {
-				return "long long";
+				return "long long*";
 			}
 
 			return Optional.of(stores.getUserDefinedType(type)).get().name()+"*";

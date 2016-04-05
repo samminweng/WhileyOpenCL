@@ -338,10 +338,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Point lhs to lambda function.
 			statement.add(indent+lhs+" = "+rhs+";");
 		}else{
-			//Type rhs_type = store.getRawType(code.operand(0));
+			//
 			boolean isCopyEliminated = isCopyEliminated(code.operand(0), code, function);
 			if(!stores.isCompoundType(lhs_type)){
-				statement.add(indent + lhs + " = " + rhs + ";");
+				Type rhs_type = stores.getRawType(code.operand(0), function);
+				if(lhs_type instanceof Type.Int && rhs_type instanceof Type.Union){
+					// Cast an integer pointer to integer, e.g. 'size = *i'
+					statement.add(indent + lhs + " = *" + rhs + ";");
+				}else{
+					statement.add(indent + lhs + " = " + rhs + ";");
+				}
+				
 			}else{
 				this.deallocatedAnalyzer.ifPresent(a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
 				// Special cases for NULL type
