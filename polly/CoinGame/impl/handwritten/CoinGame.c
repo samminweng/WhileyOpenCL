@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <time.h>
 #include <stdlib.h>
 #ifndef max
 #define max( a, b ) ( ((a) > (b)) ? (a) : (b) )
@@ -15,32 +16,74 @@
  *  The player with the most gold at the end wins.
  *  The below code is referred to http://articles.leetcode.com/coins-in-line/
  */
-#define N 6 // Max line leight
-int V[N] = { 6, 5, 2, 7, 3, 5 }; // Coins
-int M[N][N]; // Movements 
+#define N 6 // Vector size
+int V[N] = { 6, 5, 2, 7, 3, 5 }; // Example: Alice gets 18 and Bob gets 10.
+//#define N 200 // Vector size
+//int V[N];
+int M[N][N]; // Movements
 // M(i, j) = max { V[i] + min { M(i+2, j),   M(i+1, j-1) },
 //                 V[j] + min { M(i+1, j-1), M(i,   j-2) } }
 int X[N][N]; // X(i, j) = M[i+2][j]
 int Y[N][N]; // Y(i, j) = M[i+1][j-1]
 int Z[N][N]; // Z(i, j) = M[i][j-2]
+int sum_alice =0, sum_bob = 0; // Sums
+// Randomize the V[N]
+void init(){
+	int i;
+	//srand(time(NULL));
+	printf("Number of coins = %d\n", N);
+	for(i=0;i<N;i++){
+		V[i] = i;
+	}
+}
 
-void printMoves() {
-	int m = 0, n = N - 1;
-	bool alice = true;
-	while (m <= n) {
-		int P1 = M[m + 1][n]; // If take A[m], opponent can get...
-		int P2 = M[m][n - 1]; // If take A[n]
-		if (alice) {
-			printf("Alice take coin no. ");
-		} else {
-			printf("Bob take coin no. ");
-		}
+void sumMoves(){
+	int i = 0, j = N - 1;
+	int alice = 1;
+	while (i <= j) {
+		int P1 = M[i + 1][j];
+		int P2 = M[i][j - 1];
+		int coin;
 		if (P1 <= P2) {
-			printf("(%d, $%d)", m + 1, V[m]);
-			m++;
+			// Pick V[i]
+			coin = V[i];
+			i++;
 		} else {
-			printf("(%d, $%d)", n + 1, V[n]);
-			n--;
+			// Pick V[j]
+			coin = V[j];
+			j--;
+		}
+		if (alice) {
+			sum_alice += coin;
+			alice =0;
+		} else {
+			sum_bob += coin;
+			alice=1;
+		}
+	}
+
+}
+
+
+// Print out movements
+void printMoves() {
+	int i = 0, j = N - 1;
+	bool alice = true;
+	while (i <= j) {
+		int P1 = M[i + 1][j]; // If take V[i], opponent can get...
+		int P2 = M[i][j - 1]; // If take V[n]
+		if (alice) {
+			printf("Alice take coin ");
+		} else {
+			printf("Bob take coin ");
+		}
+
+		if (P1 <= P2) {
+			printf("(%d, $%d)", i + 1, V[i]);
+			i++;
+		} else {
+			printf("(%d, $%d)", j + 1, V[j]);
+			j--;
 		}
 		if (alice) {
 			printf(", ");
@@ -49,51 +92,65 @@ void printMoves() {
 		}
 		alice = !alice;
 	}
-	printf("\nThe total amount of money (maximum) Alice get is %d.\n",
-			M[0][N - 1]);
-}
 
+}
+// Find the optimal strategy
 int maxMoney() {
-	int i, m, n;
-	for (i = 0; i < N; i++) {
+	int s, i, j;
+	for (s = 0; s < N; s++) {
 		//calculate x, y, z
-		for (n = i, m = 0; m < N && n < N; m++, n++) {
-			X[m][n] = 0;
-			if (m + 2 < N) {
-				X[m][n] = X[m][n] + M[m + 2][n];
-			}
-			Y[m][n] = 0;
-			if (m + 1 < N && n - 1 >= 0) {
-				Y[m][n] = Y[m][n] + M[m + 1][n - 1];
-			}
-			Z[m][n] = 0;
-			if (n - 1 > 0) {
-				Z[m][n] = Z[m][n]+ M[m][n - 2];
+		i = 0;
+		for (j = s; j < N;j++) {
+			if(i<N){
+				X[i][j] = 0;
+				if (i + 2 < N) {
+					X[i][j] = X[i][j] + M[i + 2][j];
+				}
+				Y[i][j] = 0;
+				if (i + 1 < N && j - 1 >= 0) {
+					Y[i][j] = Y[i][j] + M[i + 1][j - 1];
+				}
+				Z[i][j] = 0;
+				if (j - 1 > 0) {
+					Z[i][j] = Z[i][j]+ M[i][j - 2];
+				}
+				i++;
 			}
 		}
 		// Split the loop into two separate loop
-		for (n = i, m = 0; m < N && n < N; m++, n++) {
-			// Find the coins.
-			M[m][n] = max(V[m] + min(X[m][n],Y[m][n]),
-					V[n] + min(Y[m][n],Z[m][n]));
+		i = 0;
+		for (j = s; i < N && j < N;j++) {
+			if(i<N){
+				// Find the coins.
+				M[i][j] = max(V[i] + min(X[i][j],Y[i][j]),
+						V[j] + min(Y[i][j],Z[i][j]));
+				 i++;
+			}
 			//For Debugging
-			//printf("x=%d, y=%d, z=%d\n", x, y, z);
-			//printf("m=%d, n=%d, M[m][n]=%d\n", m, n, M[m][n]);
+			//printf("x=%d, y=%d, z=%d\n", X[i][j], Y[i][j], Z[i][j]);
+			//printf("i=%d, n=%d, M[i][n]=%d\n", i, j, M[i][j]);
 		}
 
-	}
-
-	// Print out matrix
-	for (m = 0; m < N; m++) {
-		for (n = 0; n < N; n++) {
-			printf(" %d ", M[m][n]);
-		}
-		printf("\n");
 	}
 
 	return M[0][N - 1];
 }
 int main() {
+	//init();
 	maxMoney();
+	sumMoves();
 	printMoves();
+	// Check if Alice's sum is correct
+	if (sum_alice != M[0][N - 1]){
+		printf("Alice's sum is Wrong!!!");
+		exit(-1);
+	}
+	// Alice always gets more coins than Bob
+	if(sum_alice<sum_bob){
+		printf("Alice's sum <= Bob's sum!!!");
+		exit(-1);
+	}
+
+	printf("\nThe total amount of money (maximum) Alice get is %d.",sum_alice);
+	printf("\nThe total amount of money (maximum) Bob get is %d.",sum_bob);
 }

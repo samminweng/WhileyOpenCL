@@ -1,16 +1,28 @@
 digraph "Scop Graph for 'main' function" {
 	label="Scop Graph for 'main' function";
 
-	Node0xb01efe0 [shape=record,label="{entry:\l  br label %entry.split, !dbg !38\l}"];
-	Node0xb01efe0 -> Node0xb00feb0;
-	Node0xb00feb0 [shape=record,label="{entry.split:                                      \l  %call = tail call i32 @maxMoney(), !dbg !38\l  tail call void @printMoves(), !dbg !39\l  ret i32 0, !dbg !40\l}"];
+	Node0x93c2540 [shape=record,label="{entry:\l  br label %entry.split, !dbg !52\l}"];
+	Node0x93c2540 -> Node0x93dbc80;
+	Node0x93dbc80 [shape=record,label="{entry.split:                                      \l  %call = tail call i32 @maxMoney(), !dbg !52\l  tail call void @sumMoves(), !dbg !53\l  tail call void @printMoves(), !dbg !54\l  %0 = load i32, i32* @sum_alice, align 4, !dbg !55, !tbaa !57\l  %1 = load i32, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x\l... i32]]* @M, i64 0, i64 0, i64 5), align 4, !dbg !61, !tbaa !57\l  %cmp = icmp eq i32 %0, %1, !dbg !62\l  br i1 %cmp, label %if.end, label %if.then, !dbg !63\l}"];
+	Node0x93dbc80 -> Node0x93b2770;
+	Node0x93dbc80 -> Node0x93e9dc0;
+	Node0x93b2770 [shape=record,label="{if.end:                                           \l  %2 = load i32, i32* @sum_bob, align 4, !dbg !67, !tbaa !57\l  %cmp2 = icmp slt i32 %0, %2, !dbg !69\l  br i1 %cmp2, label %if.then3, label %if.end5, !dbg !70\l}"];
+	Node0x93b2770 -> Node0x93ebc40;
+	Node0x93b2770 -> Node0x93e6910;
+	Node0x93ebc40 [shape=record,label="{if.then3:                                         \l  %call4 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([28 x\l... i8], [28 x i8]* @.str.7, i64 0, i64 0)), !dbg !71\l  tail call void @exit(i32 -1) #6, !dbg !73\l  unreachable, !dbg !73\l}"];
+	Node0x93e6910 [shape=record,label="{if.end5:                                          \l  %call6 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([54 x\l... i8], [54 x i8]* @.str.8, i64 0, i64 0), i32 %0), !dbg !74\l  %3 = load i32, i32* @sum_bob, align 4, !dbg !75, !tbaa !57\l  %call7 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([52 x\l... i8], [52 x i8]* @.str.9, i64 0, i64 0), i32 %3), !dbg !76\l  ret i32 0, !dbg !77\l}"];
+	Node0x93e9dc0 [shape=record,label="{if.then:                                          \l  %call1 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([24 x\l... i8], [24 x i8]* @.str.6, i64 0, i64 0)), !dbg !64\l  tail call void @exit(i32 -1) #6, !dbg !66\l  unreachable, !dbg !66\l}"];
 	colorscheme = "paired12"
-        subgraph cluster_0xb14ff10 {
-          label = "CoinGame.c:97-99
+        subgraph cluster_0x94bfbb0 {
+          label = "CoinGame.c:140-156
 ";
           style = solid;
           color = 1
-          Node0xb01efe0;
-          Node0xb00feb0;
+          Node0x93c2540;
+          Node0x93dbc80;
+          Node0x93b2770;
+          Node0x93ebc40;
+          Node0x93e6910;
+          Node0x93e9dc0;
         }
 }
