@@ -55,7 +55,7 @@ BEGIN {
 	# Test case name
 	testcases="MatrixMult";
 	# Code Optimizations
-	c_types="autogenerate1 handwritten1";
+	c_types="autogenerate1 autogenerate2";
 	# Polly optimiz
 	polly_opts="gcc clang polly openmp"
 	# Parameters
