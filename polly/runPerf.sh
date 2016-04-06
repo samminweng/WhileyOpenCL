@@ -94,15 +94,17 @@ exec(){
 init(){
 	c_type=$1
 	program=$2
-	pref_dir="$PWD/$program/perf"
-	mkdir -p "$pref_dir"
+	perf_dir="$PWD/$program/perf"
+	mkdir -p "$perf_dir"
+	rm -rf "$perf_dir/"*.*
 	mkdir -p "$PWD/$program/impl/$c_type/out" ## Create 'out' folder
 	rm -rf "$PWD/$program/impl/$c_type/out/"*.*
-	read -p "Press [Enter] to continue..."
+	#read -p "Press [Enter] to continue..."
 }
 ### Benchmark Autogenerate1 and autogenerate2 MatrixMult
 ### Autogenerate1 MatrixMult
 init autogenerate1 MatrixMult
+init autogenerate2 MatrixMult
 exec autogenerate1 MatrixMult 200
 exec autogenerate1 MatrixMult 400
 exec autogenerate1 MatrixMult 600
@@ -119,7 +121,6 @@ exec autogenerate1 MatrixMult 2600
 exec autogenerate1 MatrixMult 2800
 exec autogenerate1 MatrixMult 3000
 ### Autogenerate2 MatrixMult
-init autogenerate2 MatrixMult
 exec autogenerate2 MatrixMult 200
 exec autogenerate2 MatrixMult 400
 exec autogenerate2 MatrixMult 600
