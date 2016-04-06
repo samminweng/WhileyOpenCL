@@ -1,0 +1,45 @@
+digraph "Scop Graph for 'sumMoves' function" {
+	label="Scop Graph for 'sumMoves' function";
+
+	Node0x93ca370 [shape=record,label="{entry:\l  br label %entry.split, !dbg !52\l}"];
+	Node0x93ca370 -> Node0x94715f0;
+	Node0x94715f0 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !12, metadata\l... !53), !dbg !52\l  tail call void @llvm.dbg.value(metadata i32 5, i64 0, metadata !13, metadata\l... !53), !dbg !54\l  tail call void @llvm.dbg.value(metadata i32 1, i64 0, metadata !14, metadata\l... !53), !dbg !55\l  br label %while.body, !dbg !56\l}"];
+	Node0x94715f0 -> Node0x94777e0;
+	Node0x94777e0 [shape=record,label="{while.body:                                       \l  %i.033 = phi i32 [ 0, %entry.split ], [ %i.1, %while.cond.backedge ]\l  %j.032 = phi i32 [ 5, %entry.split ], [ %j.1, %while.cond.backedge ]\l  %alice.031 = phi i32 [ 1, %entry.split ], [ %alice.0.be,\l... %while.cond.backedge ]\l  %idxprom = sext i32 %j.032 to i64, !dbg !58\l  %add = add nsw i32 %i.033, 1, !dbg !59\l  %idxprom1 = sext i32 %add to i64, !dbg !58\l  %arrayidx2 = getelementptr inbounds [6 x [6 x i32]], [6 x [6 x i32]]* @M,\l... i64 0, i64 %idxprom1, i64 %idxprom, !dbg !58\l  %0 = load i32, i32* %arrayidx2, align 4, !dbg !58, !tbaa !60\l  tail call void @llvm.dbg.value(metadata i32 %0, i64 0, metadata !15,\l... metadata !53), !dbg !64\l  %sub = add nsw i32 %j.032, -1, !dbg !65\l  %idxprom3 = sext i32 %sub to i64, !dbg !66\l  %idxprom4 = sext i32 %i.033 to i64, !dbg !66\l  %arrayidx6 = getelementptr inbounds [6 x [6 x i32]], [6 x [6 x i32]]* @M,\l... i64 0, i64 %idxprom4, i64 %idxprom3, !dbg !66\l  %1 = load i32, i32* %arrayidx6, align 4, !dbg !66, !tbaa !60\l  tail call void @llvm.dbg.value(metadata i32 %1, i64 0, metadata !17,\l... metadata !53), !dbg !67\l  %cmp7 = icmp sgt i32 %0, %1, !dbg !68\l  tail call void @llvm.dbg.value(metadata i32 %sub, i64 0, metadata !13,\l... metadata !53), !dbg !54\l  %j.1 = select i1 %cmp7, i32 %sub, i32 %j.032, !dbg !70\l  %i.1 = select i1 %cmp7, i32 %i.033, i32 %add, !dbg !70\l  %idxprom4.pn = select i1 %cmp7, i64 %idxprom, i64 %idxprom4, !dbg !70\l  %coin.0.in = getelementptr inbounds [6 x i32], [6 x i32]* @V, i64 0, i64\l... %idxprom4.pn, !dbg !71\l  %coin.0 = load i32, i32* %coin.0.in, align 4, !dbg !71, !tbaa !60\l  %tobool = icmp eq i32 %alice.031, 0, !dbg !73\l  br i1 %tobool, label %if.else14, label %if.then12, !dbg !75\l}"];
+	Node0x94777e0 -> Node0x93c2710;
+	Node0x94777e0 -> Node0x93ebe20;
+	Node0x93c2710 [shape=record,label="{if.else14:                                        \l  %3 = load i32, i32* @sum_bob, align 4, !dbg !79, !tbaa !60\l  %add15 = add nsw i32 %3, %coin.0, !dbg !79\l  store i32 %add15, i32* @sum_bob, align 4, !dbg !79, !tbaa !60\l  tail call void @llvm.dbg.value(metadata i32 1, i64 0, metadata !14, metadata\l... !53), !dbg !55\l  br label %while.cond.backedge\l}"];
+	Node0x93c2710 -> Node0x93c5ec0;
+	Node0x93c5ec0 [shape=record,label="{while.cond.backedge:                              \l  %alice.0.be = phi i32 [ 0, %if.then12 ], [ 1, %if.else14 ]\l  %cmp = icmp sgt i32 %i.1, %j.1, !dbg !81\l  br i1 %cmp, label %while.end, label %while.body, !dbg !56\l}"];
+	Node0x93c5ec0 -> Node0x93c7150;
+	Node0x93c5ec0 -> Node0x94777e0[constraint=false];
+	Node0x93c7150 [shape=record,label="{while.end:                                        \l  ret void, !dbg !82\l}"];
+	Node0x93ebe20 [shape=record,label="{if.then12:                                        \l  %2 = load i32, i32* @sum_alice, align 4, !dbg !76, !tbaa !60\l  %add13 = add nsw i32 %2, %coin.0, !dbg !76\l  store i32 %add13, i32* @sum_alice, align 4, !dbg !76, !tbaa !60\l  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !14, metadata\l... !53), !dbg !55\l  br label %while.cond.backedge, !dbg !78\l}"];
+	Node0x93ebe20 -> Node0x93c5ec0;
+	colorscheme = "paired12"
+        subgraph cluster_0x93caef0 {
+          label = "CoinGame.c:41-65
+";
+          style = solid;
+          color = 1
+          subgraph cluster_0x93c1dd0 {
+            label = "CoinGame.c:41-60
+Non affine loop bound '***COULDNOTCOMPUTE***' in loop: while.body";
+            style = solid;
+            color = 6
+            subgraph cluster_0x93dafd0 {
+              label = "CoinGame.c:41-60
+Region can not profitably be optimized!";
+              style = solid;
+              color = 5
+              Node0x94777e0;
+              Node0x93c2710;
+              Node0x93ebe20;
+            }
+            Node0x93c5ec0;
+          }
+          Node0x93ca370;
+          Node0x94715f0;
+          Node0x93c7150;
+        }
+}

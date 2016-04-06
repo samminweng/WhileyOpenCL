@@ -1,0 +1,159 @@
+digraph "Scop Graph for 'maxMoney' function" {
+	label="Scop Graph for 'maxMoney' function";
+
+	Node0x948f7f0 [shape=record,label="{entry:\l  br label %entry.split, !dbg !52\l}"];
+	Node0x948f7f0 -> Node0x93e3300;
+	Node0x93e3300 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !32, metadata\l... !53), !dbg !52\l  br label %for.cond1.preheader, !dbg !54\l}"];
+	Node0x93e3300 -> Node0x93e93d0;
+	Node0x93e93d0 [shape=record,label="{for.cond1.preheader:                              \l  %indvars.iv272 = phi i64 [ 0, %entry.split ], [ %indvars.iv.next273,\l... %for.inc183 ]\l  br i1 true, label %for.body3.lr.ph, label %for.cond71.preheader, !dbg !58\l}"];
+	Node0x93e93d0 -> Node0x93c1a60;
+	Node0x93e93d0 -> Node0x93c52a0;
+	Node0x93c1a60 [shape=record,label="{for.body3.lr.ph:                                  \l  br label %for.body3, !dbg !58\l}"];
+	Node0x93c1a60 -> Node0x94bfb30;
+	Node0x94bfb30 [shape=record,label="{for.body3:                                        \l  %indvars.iv268 = phi i64 [ %indvars.iv272, %for.body3.lr.ph ], [\l... %indvars.iv.next269, %for.inc ]\l  %i.0260 = phi i32 [ 0, %for.body3.lr.ph ], [ %i.1, %for.inc ]\l  %cmp4 = icmp slt i32 %i.0260, 6, !dbg !66\l  br i1 %cmp4, label %if.then, label %for.inc, !dbg !69\l}"];
+	Node0x94bfb30 -> Node0x93bfac0;
+	Node0x94bfb30 -> Node0x93dc310;
+	Node0x93bfac0 [shape=record,label="{if.then:                                          \l  %idxprom5 = sext i32 %i.0260 to i64, !dbg !70\l  %arrayidx6 = getelementptr inbounds [6 x [6 x i32]], [6 x [6 x i32]]* @X,\l... i64 0, i64 %idxprom5, i64 %indvars.iv268, !dbg !70\l  store i32 0, i32* %arrayidx6, align 4, !dbg !72, !tbaa !73\l  %add = add nsw i32 %i.0260, 2, !dbg !77\l  %cmp7 = icmp slt i32 %add, 6, !dbg !79\l  br i1 %cmp7, label %if.then8, label %if.end, !dbg !80\l}"];
+	Node0x93bfac0 -> Node0x93cbe30;
+	Node0x93bfac0 -> Node0x94b14e0;
+	Node0x93cbe30 [shape=record,label="{if.then8:                                         \l  %idxprom15 = sext i32 %add to i64, !dbg !81\l  %arrayidx17 = getelementptr inbounds [6 x [6 x i32]], [6 x [6 x i32]]* @M,\l... i64 0, i64 %idxprom15, i64 %indvars.iv268, !dbg !81\l  %0 = load i32, i32* %arrayidx17, align 4, !dbg !81, !tbaa !73\l  store i32 %0, i32* %arrayidx6, align 4, !dbg !83, !tbaa !73\l  br label %if.end, !dbg !84\l}"];
+	Node0x93cbe30 -> Node0x94b14e0;
+	Node0x94b14e0 [shape=record,label="{if.end:                                           \l  %arrayidx26 = getelementptr inbounds [6 x [6 x i32]], [6 x [6 x i32]]* @Y,\l... i64 0, i64 %idxprom5, i64 %indvars.iv268, !dbg !85\l  store i32 0, i32* %arrayidx26, align 4, !dbg !86, !tbaa !73\l  %add27 = add nsw i32 %i.0260, 1, !dbg !87\l  %cmp28 = icmp slt i32 %add27, 6, !dbg !89\l  %cmp29 = icmp sgt i64 %indvars.iv268, 0, !dbg !90\l  %or.cond = and i1 %cmp28, %cmp29, !dbg !92\l  br i1 %or.cond, label %if.then30, label %if.end46, !dbg !92\l}"];
+	Node0x94b14e0 -> Node0x93e6910;
+	Node0x94b14e0 -> Node0x93ebc40;
+	Node0x93e6910 [shape=record,label="{if.then30:                                        \l  %1 = add nsw i64 %indvars.iv268, -1, !dbg !93\l  %idxprom38 = sext i32 %add27 to i64, !dbg !94\l  %arrayidx40 = getelementptr inbounds [6 x [6 x i32]], [6 x [6 x i32]]* @M,\l... i64 0, i64 %idxprom38, i64 %1, !dbg !94\l  %2 = load i32, i32* %arrayidx40, align 4, !dbg !94, !tbaa !73\l  store i32 %2, i32* %arrayidx26, align 4, !dbg !96, !tbaa !73\l  br label %if.end46, !dbg !97\l}"];
+	Node0x93e6910 -> Node0x93ebc40;
+	Node0x93ebc40 [shape=record,label="{if.end46:                                         \l  %arrayidx50 = getelementptr inbounds [6 x [6 x i32]], [6 x [6 x i32]]* @Z,\l... i64 0, i64 %idxprom5, i64 %indvars.iv268, !dbg !98\l  store i32 0, i32* %arrayidx50, align 4, !dbg !99, !tbaa !73\l  %cmp52 = icmp sgt i64 %indvars.iv268, 1, !dbg !100\l  br i1 %cmp52, label %if.then53, label %for.inc, !dbg !102\l}"];
+	Node0x93ebc40 -> Node0x93e52b0;
+	Node0x93ebc40 -> Node0x93dc310;
+	Node0x93e52b0 [shape=record,label="{if.then53:                                        \l  %3 = add nsw i64 %indvars.iv268, -2, !dbg !103\l  %arrayidx62 = getelementptr inbounds [6 x [6 x i32]], [6 x [6 x i32]]* @M,\l... i64 0, i64 %idxprom5, i64 %3, !dbg !105\l  %4 = load i32, i32* %arrayidx62, align 4, !dbg !105, !tbaa !73\l  store i32 %4, i32* %arrayidx50, align 4, !dbg !106, !tbaa !73\l  br label %for.inc, !dbg !107\l}"];
+	Node0x93e52b0 -> Node0x93dc310;
+	Node0x93dc310 [shape=record,label="{for.inc:                                          \l  %i.1 = phi i32 [ %i.0260, %for.body3 ], [ %add27, %if.then53 ], [ %add27,\l... %if.end46 ]\l  %indvars.iv.next269 = add nuw nsw i64 %indvars.iv268, 1, !dbg !58\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !34, metadata\l... !53), !dbg !108\l  %lftr.wideiv = trunc i64 %indvars.iv.next269 to i32, !dbg !58\l  %exitcond = icmp ne i32 %lftr.wideiv, 6, !dbg !58\l  br i1 %exitcond, label %for.body3, label\l... %for.cond1.for.cond71.preheader_crit_edge, !dbg !58\l}"];
+	Node0x93dc310 -> Node0x94bfb30[constraint=false];
+	Node0x93dc310 -> Node0x93c2700;
+	Node0x93c2700 [shape=record,label="{for.cond1.for.cond71.preheader_crit_edge:         \l  br label %for.cond71.preheader, !dbg !58\l}"];
+	Node0x93c2700 -> Node0x93c52a0;
+	Node0x93c52a0 [shape=record,label="{for.cond71.preheader:                             \l  br i1 true, label %for.body74.lr.ph, label %for.inc183, !dbg !63\l}"];
+	Node0x93c52a0 -> Node0x93c6900;
+	Node0x93c52a0 -> Node0x93e3ef0;
+	Node0x93c6900 [shape=record,label="{for.body74.lr.ph:                                 \l  br label %for.body74, !dbg !63\l}"];
+	Node0x93c6900 -> Node0x93b9800;
+	Node0x93b9800 [shape=record,label="{for.body74:                                       \l  %indvars.iv274 = phi i64 [ %indvars.iv272, %for.body74.lr.ph ], [\l... %indvars.iv.next275, %for.inc180 ]\l  %cmp72266 = phi i1 [ true, %for.body74.lr.ph ], [ %cmp72, %for.inc180 ]\l  %i.2264 = phi i32 [ 0, %for.body74.lr.ph ], [ %i.3, %for.inc180 ]\l  br i1 %cmp72266, label %if.then76, label %for.inc180, !dbg !109\l}"];
+	Node0x93b9800 -> Node0x93c78d0;
+	Node0x93b9800 -> Node0x93c2090;
+	Node0x93c78d0 [shape=record,label="{if.then76:                                        \l  %idxprom77 = sext i32 %i.2264 to i64, !dbg !112\l  %arrayidx78 = getelementptr inbounds [6 x i32], [6 x i32]* @V, i64 0, i64\l... %idxprom77, !dbg !112\l  %5 = load i32, i32* %arrayidx78, align 4, !dbg !112, !tbaa !73\l  %arrayidx82 = getelementptr inbounds [6 x [6 x i32]], [6 x [6 x i32]]* @X,\l... i64 0, i64 %idxprom77, i64 %indvars.iv274, !dbg !112\l  %6 = load i32, i32* %arrayidx82, align 4, !dbg !112, !tbaa !73\l  %arrayidx86 = getelementptr inbounds [6 x [6 x i32]], [6 x [6 x i32]]* @Y,\l... i64 0, i64 %idxprom77, i64 %indvars.iv274, !dbg !112\l  %7 = load i32, i32* %arrayidx86, align 4, !dbg !112, !tbaa !73\l  %cmp87 = icmp slt i32 %6, %7, !dbg !112\l  %. = select i1 %cmp87, i32 %6, i32 %7, !dbg !115\l  %add96 = add nsw i32 %., %5, !dbg !117\l  %arrayidx98 = getelementptr inbounds [6 x i32], [6 x i32]* @V, i64 0, i64\l... %indvars.iv274, !dbg !117\l  %8 = load i32, i32* %arrayidx98, align 4, !dbg !117, !tbaa !73\l  %arrayidx106 = getelementptr inbounds [6 x [6 x i32]], [6 x [6 x i32]]* @Z,\l... i64 0, i64 %idxprom77, i64 %indvars.iv274, !dbg !117\l  %9 = load i32, i32* %arrayidx106, align 4, !dbg !117, !tbaa !73\l  %cmp107 = icmp slt i32 %7, %9, !dbg !117\l  %cond119 = select i1 %cmp107, i32 %7, i32 %9, !dbg !117\l  %add120 = add nsw i32 %cond119, %8, !dbg !119\l  %cmp121 = icmp sgt i32 %add96, %add120, !dbg !119\l  br i1 %cmp121, label %cond.true122, label %cond.false147, !dbg !119\l}"];
+	Node0x93c78d0 -> Node0x93b9620;
+	Node0x93c78d0 -> Node0x93cac50;
+	Node0x93b9620 [shape=record,label="{cond.true122:                                     \l  %10 = load i32, i32* %arrayidx78, align 4, !dbg !121, !tbaa !73\l  %11 = load i32, i32* %arrayidx82, align 4, !dbg !121, !tbaa !73\l  %12 = load i32, i32* %arrayidx86, align 4, !dbg !121, !tbaa !73\l  %cmp133 = icmp slt i32 %11, %12, !dbg !121\l  %.257 = select i1 %cmp133, i32 %11, i32 %12, !dbg !123\l  %add146 = add nsw i32 %.257, %10, !dbg !125\l  br label %cond.end172, !dbg !125\l}"];
+	Node0x93b9620 -> Node0x93cac70;
+	Node0x93cac70 [shape=record,label="{cond.end172:                                      \l  %cond173 = phi i32 [ %add146, %cond.true122 ], [ %add171, %cond.false147 ],\l... !dbg !133\l  %arrayidx177 = getelementptr inbounds [6 x [6 x i32]], [6 x [6 x i32]]* @M,\l... i64 0, i64 %idxprom77, i64 %indvars.iv274, !dbg !135\l  store i32 %cond173, i32* %arrayidx177, align 4, !dbg !136, !tbaa !73\l  %inc178 = add nsw i32 %i.2264, 1, !dbg !137\l  tail call void @llvm.dbg.value(metadata i32 %inc178, i64 0, metadata !33,\l... metadata !53), !dbg !138\l  br label %for.inc180, !dbg !139\l}"];
+	Node0x93cac70 -> Node0x93c2090;
+	Node0x93c2090 [shape=record,label="{for.inc180:                                       \l  %i.3 = phi i32 [ %inc178, %cond.end172 ], [ %i.2264, %for.body74 ]\l  %indvars.iv.next275 = add nuw nsw i64 %indvars.iv274, 1, !dbg !63\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !34, metadata\l... !53), !dbg !108\l  %cmp72 = icmp slt i32 %i.3, 6, !dbg !140\l  %cmp73 = icmp slt i64 %indvars.iv.next275, 6, !dbg !142\l  %16 = and i1 %cmp72, %cmp73, !dbg !144\l  br i1 %16, label %for.body74, label %for.cond71.for.inc183_crit_edge, !dbg\l... !63\l}"];
+	Node0x93c2090 -> Node0x93b9800[constraint=false];
+	Node0x93c2090 -> Node0x93dc750;
+	Node0x93dc750 [shape=record,label="{for.cond71.for.inc183_crit_edge:                  \l  br label %for.inc183, !dbg !63\l}"];
+	Node0x93dc750 -> Node0x93e3ef0;
+	Node0x93e3ef0 [shape=record,label="{for.inc183:                                       \l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !32, metadata\l... !53), !dbg !52\l  %indvars.iv.next273 = add nuw nsw i64 %indvars.iv272, 1, !dbg !54\l  %exitcond276 = icmp ne i64 %indvars.iv.next273, 6, !dbg !54\l  br i1 %exitcond276, label %for.cond1.preheader, label %for.end185, !dbg !54\l}"];
+	Node0x93e3ef0 -> Node0x93e93d0[constraint=false];
+	Node0x93e3ef0 -> Node0x93e2d20;
+	Node0x93e2d20 [shape=record,label="{for.end185:                                       \l  %17 = load i32, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x\l... i32]]* @M, i64 0, i64 0, i64 5), align 4, !dbg !145, !tbaa !73\l  ret i32 %17, !dbg !146\l}"];
+	Node0x93cac50 [shape=record,label="{cond.false147:                                    \l  %13 = load i32, i32* %arrayidx98, align 4, !dbg !127, !tbaa !73\l  %14 = load i32, i32* %arrayidx86, align 4, !dbg !127, !tbaa !73\l  %15 = load i32, i32* %arrayidx106, align 4, !dbg !127, !tbaa !73\l  %cmp158 = icmp slt i32 %14, %15, !dbg !127\l  %.258 = select i1 %cmp158, i32 %14, i32 %15, !dbg !129\l  %add171 = add nsw i32 %.258, %13, !dbg !131\l  br label %cond.end172, !dbg !131\l}"];
+	Node0x93cac50 -> Node0x93cac70;
+	colorscheme = "paired12"
+        subgraph cluster_0x93cecf0 {
+          label = "CoinGame.c:99-136
+";
+          style = solid;
+          color = 1
+          subgraph cluster_0x93d0510 {
+            label = "CoinGame.c:99-128
+Non affine loop bound '***COULDNOTCOMPUTE***' in loop: for.body74";
+            style = solid;
+            color = 6
+            subgraph cluster_0x93e4020 {
+              label = "CoinGame.c:99-116
+Non affine access function: ((24 * (sext i32 %i.0260 to i64))<nsw> + {{0,+,4}<%for.cond1.preheader>,+,4}<nuw><nsw><%for.body3>)";
+              style = solid;
+              color = 5
+              subgraph cluster_0x93e3fa0 {
+                label = "CoinGame.c:99-116
+Non affine access function: ((24 * (sext i32 %i.0260 to i64))<nsw> + {{0,+,4}<%for.cond1.preheader>,+,4}<nuw><nsw><%for.body3>)";
+                style = solid;
+                color = 7
+                subgraph cluster_0x93e8b60 {
+                  label = "CoinGame.c:104-116
+Region can not profitably be optimized!";
+                  style = solid;
+                  color = 9
+                  subgraph cluster_0x93e8ae0 {
+                    label = "CoinGame.c:105-108
+Region can not profitably be optimized!";
+                    style = solid;
+                    color = 11
+                    Node0x93bfac0;
+                    Node0x93cbe30;
+                  }
+                  subgraph cluster_0x93b2940 {
+                    label = "CoinGame.c:109-112
+Region can not profitably be optimized!";
+                    style = solid;
+                    color = 11
+                    Node0x94b14e0;
+                    Node0x93e6910;
+                  }
+                  subgraph cluster_0x93b28c0 {
+                    label = "CoinGame.c:113-116
+Region can not profitably be optimized!";
+                    style = solid;
+                    color = 11
+                    Node0x93ebc40;
+                    Node0x93e52b0;
+                  }
+                  Node0x94bfb30;
+                }
+                Node0x93dc310;
+              }
+              Node0x93e93d0;
+              Node0x93c1a60;
+              Node0x93c2700;
+            }
+            subgraph cluster_0x93c3410 {
+              label = "CoinGame.c:99-128
+Non affine loop bound '***COULDNOTCOMPUTE***' in loop: for.body74";
+              style = solid;
+              color = 5
+              subgraph cluster_0x93c3390 {
+                label = "CoinGame.c:99-128
+Non affine loop bound '***COULDNOTCOMPUTE***' in loop: for.body74";
+                style = solid;
+                color = 7
+                subgraph cluster_0x93bf360 {
+                  label = "CoinGame.c:99-128
+Region can not profitably be optimized!";
+                  style = solid;
+                  color = 9
+                  subgraph cluster_0x93bf2e0 {
+                    label = "CoinGame.c:125-125
+Region can not profitably be optimized!";
+                    style = solid;
+                    color = 11
+                    Node0x93c78d0;
+                    Node0x93b9620;
+                    Node0x93cac50;
+                  }
+                  Node0x93b9800;
+                  Node0x93cac70;
+                }
+                Node0x93c2090;
+              }
+              Node0x93c52a0;
+              Node0x93c6900;
+              Node0x93dc750;
+            }
+            Node0x93e3ef0;
+          }
+          Node0x948f7f0;
+          Node0x93e3300;
+          Node0x93e2d20;
+        }
+}

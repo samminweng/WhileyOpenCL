@@ -184,7 +184,7 @@ exec(){
 	clang_polly $c_type $program $num_threads $parameter
 	cd ../../../
 }
-exec handwritten MatrixMult 2 200 ### Determine matrix size from cmd line argument
+exec handwritten CoinGame 2 200 ### Determine matrix size from cmd line argument
 ###exec autogenerate MatrixMult 2 200  ### Determine matrix size from cmd line argument
 
 
