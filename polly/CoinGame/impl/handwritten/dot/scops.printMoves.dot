@@ -1,0 +1,77 @@
+digraph "Scop Graph for 'printMoves' function" {
+	label="Scop Graph for 'printMoves' function";
+
+	Node0xb013980 [shape=record,label="{entry:\l  br label %entry.split, !dbg !38\l}"];
+	Node0xb013980 -> Node0xb014180;
+	Node0xb014180 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !8, metadata\l... !39), !dbg !38\l  tail call void @llvm.dbg.value(metadata i32 5, i64 0, metadata !10, metadata\l... !39), !dbg !40\l  tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !11, metadata\l... !39), !dbg !41\l  br label %while.body, !dbg !42\l}"];
+	Node0xb014180 -> Node0xb023320;
+	Node0xb023320 [shape=record,label="{while.body:                                       \l  %m.046 = phi i32 [ 0, %entry.split ], [ %m.1, %if.end25 ]\l  %n.045 = phi i32 [ 5, %entry.split ], [ %n.1, %if.end25 ]\l  %alice.044 = phi i8 [ 1, %entry.split ], [ %frombool, %if.end25 ]\l  %idxprom = sext i32 %n.045 to i64, !dbg !44\l  %add = add nsw i32 %m.046, 1, !dbg !45\l  %idxprom1 = sext i32 %add to i64, !dbg !44\l  %arrayidx2 = getelementptr inbounds [6 x [6 x i32]], [6 x [6 x i32]]* @M,\l... i64 0, i64 %idxprom1, i64 %idxprom, !dbg !44\l  %0 = load i32, i32* %arrayidx2, align 4, !dbg !44, !tbaa !46\l  tail call void @llvm.dbg.value(metadata i32 %0, i64 0, metadata !13,\l... metadata !39), !dbg !50\l  %sub = add nsw i32 %n.045, -1, !dbg !51\l  %idxprom3 = sext i32 %sub to i64, !dbg !52\l  %idxprom4 = sext i32 %m.046 to i64, !dbg !52\l  %arrayidx6 = getelementptr inbounds [6 x [6 x i32]], [6 x [6 x i32]]* @M,\l... i64 0, i64 %idxprom4, i64 %idxprom3, !dbg !52\l  %1 = load i32, i32* %arrayidx6, align 4, !dbg !52, !tbaa !46\l  tail call void @llvm.dbg.value(metadata i32 %1, i64 0, metadata !15,\l... metadata !39), !dbg !53\l  %tobool = icmp ne i8 %alice.044, 0, !dbg !54\l  br i1 %tobool, label %if.then, label %if.else, !dbg !56\l}"];
+	Node0xb023320 -> Node0xb031490;
+	Node0xb023320 -> Node0xb0306e0;
+	Node0xb031490 [shape=record,label="{if.then:                                          \l  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([21 x\l... i8], [21 x i8]* @.str, i64 0, i64 0)), !dbg !57\l  br label %if.end, !dbg !59\l}"];
+	Node0xb031490 -> Node0xb0b59d0;
+	Node0xb0b59d0 [shape=record,label="{if.end:                                           \l  %cmp8 = icmp sgt i32 %0, %1, !dbg !62\l  br i1 %cmp8, label %if.else14, label %if.then9, !dbg !64\l}"];
+	Node0xb0b59d0 -> Node0xb022f40;
+	Node0xb0b59d0 -> Node0xb0ca610;
+	Node0xb022f40 [shape=record,label="{if.else14:                                        \l  %add15 = add nsw i32 %n.045, 1, !dbg !69\l  %arrayidx17 = getelementptr inbounds [6 x i32], [6 x i32]* @V, i64 0, i64\l... %idxprom, !dbg !71\l  %3 = load i32, i32* %arrayidx17, align 4, !dbg !71, !tbaa !46\l  %call18 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([10 x\l... i8], [10 x i8]* @.str.2, i64 0, i64 0), i32 %add15, i32 %3), !dbg !72\l  %dec = add nsw i32 %n.045, -1, !dbg !73\l  tail call void @llvm.dbg.value(metadata i32 %dec, i64 0, metadata !10,\l... metadata !39), !dbg !40\l  br label %if.end19\l}"];
+	Node0xb022f40 -> Node0xb012360;
+	Node0xb012360 [shape=record,label="{if.end19:                                         \l  %n.1 = phi i32 [ %n.045, %if.then9 ], [ %dec, %if.else14 ]\l  %m.1 = phi i32 [ %add, %if.then9 ], [ %m.046, %if.else14 ]\l  br i1 %tobool, label %if.then21, label %if.else23, !dbg !74\l}"];
+	Node0xb012360 -> Node0xb013350;
+	Node0xb012360 -> Node0xb0b5dc0;
+	Node0xb013350 [shape=record,label="{if.then21:                                        \l  %call22 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([3 x\l... i8], [3 x i8]* @.str.3, i64 0, i64 0)), !dbg !75\l  br label %if.end25, !dbg !78\l}"];
+	Node0xb013350 -> Node0xb027950;
+	Node0xb027950 [shape=record,label="{if.end25:                                         \l  %4 = zext i1 %tobool to i8, !dbg !81\l  %frombool = xor i8 %4, 1, !dbg !81\l  tail call void @llvm.dbg.value(metadata i8 %frombool, i64 0, metadata !11,\l... metadata !39), !dbg !41\l  %cmp = icmp sgt i32 %m.1, %n.1, !dbg !82\l  br i1 %cmp, label %while.end, label %while.body, !dbg !42\l}"];
+	Node0xb027950 -> Node0xb01f150;
+	Node0xb027950 -> Node0xb023320[constraint=false];
+	Node0xb01f150 [shape=record,label="{while.end:                                        \l  %5 = load i32, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x\l... i32]]* @M, i64 0, i64 0, i64 5), align 4, !dbg !83, !tbaa !46\l  %call27 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([55 x\l... i8], [55 x i8]* @.str.5, i64 0, i64 0), i32 %5), !dbg !84\l  ret void, !dbg !85\l}"];
+	Node0xb0b5dc0 [shape=record,label="{if.else23:                                        \l  %puts = tail call i32 @puts(i8* getelementptr inbounds ([2 x i8], [2 x i8]*\l... @str, i64 0, i64 0)), !dbg !79\l  br label %if.end25\l}"];
+	Node0xb0b5dc0 -> Node0xb027950;
+	Node0xb0ca610 [shape=record,label="{if.then9:                                         \l  %arrayidx12 = getelementptr inbounds [6 x i32], [6 x i32]* @V, i64 0, i64\l... %idxprom4, !dbg !65\l  %2 = load i32, i32* %arrayidx12, align 4, !dbg !65, !tbaa !46\l  %call13 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([10 x\l... i8], [10 x i8]* @.str.2, i64 0, i64 0), i32 %add, i32 %2), !dbg !67\l  tail call void @llvm.dbg.value(metadata i32 %add, i64 0, metadata !8,\l... metadata !39), !dbg !38\l  br label %if.end19, !dbg !68\l}"];
+	Node0xb0ca610 -> Node0xb012360;
+	Node0xb0306e0 [shape=record,label="{if.else:                                          \l  %call7 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([19 x\l... i8], [19 x i8]* @.str.1, i64 0, i64 0)), !dbg !60\l  br label %if.end\l}"];
+	Node0xb0306e0 -> Node0xb0b59d0;
+	colorscheme = "paired12"
+        subgraph cluster_0xaf9b1b0 {
+          label = "CoinGame.c:27-53
+";
+          style = solid;
+          color = 1
+          subgraph cluster_0xb0261b0 {
+            label = "CoinGame.c:27-49
+Non affine loop bound '***COULDNOTCOMPUTE***' in loop: while.body";
+            style = solid;
+            color = 6
+            subgraph cluster_0xb021710 {
+              label = "CoinGame.c:30-35
+Region can not profitably be optimized!";
+              style = solid;
+              color = 5
+              Node0xb023320;
+              Node0xb031490;
+              Node0xb0306e0;
+            }
+            subgraph cluster_0xb028a30 {
+              label = "CoinGame.c:27-42
+Region can not profitably be optimized!";
+              style = solid;
+              color = 5
+              Node0xb0b59d0;
+              Node0xb022f40;
+              Node0xb0ca610;
+            }
+            subgraph cluster_0xb030cf0 {
+              label = "CoinGame.c:44-47
+Region can not profitably be optimized!";
+              style = solid;
+              color = 5
+              Node0xb012360;
+              Node0xb013350;
+              Node0xb0b5dc0;
+            }
+            Node0xb027950;
+          }
+          Node0xb013980;
+          Node0xb014180;
+          Node0xb01f150;
+        }
+}

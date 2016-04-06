@@ -1,0 +1,16 @@
+digraph "Scop Graph for 'main' function" {
+	label="Scop Graph for 'main' function";
+
+	Node0xb01efe0 [shape=record,label="{entry:\l  br label %entry.split, !dbg !38\l}"];
+	Node0xb01efe0 -> Node0xb00feb0;
+	Node0xb00feb0 [shape=record,label="{entry.split:                                      \l  %call = tail call i32 @maxMoney(), !dbg !38\l  tail call void @printMoves(), !dbg !39\l  ret i32 0, !dbg !40\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xb14ff10 {
+          label = "CoinGame.c:97-99
+";
+          style = solid;
+          color = 1
+          Node0xb01efe0;
+          Node0xb00feb0;
+        }
+}
