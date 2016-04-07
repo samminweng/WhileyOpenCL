@@ -1,29 +1,29 @@
 digraph "Scop Graph for 'init' function" {
 	label="Scop Graph for 'init' function";
 
-	Node0x93e97d0 [shape=record,label="{entry:\l  br label %entry.split, !dbg !52\l}"];
-	Node0x93e97d0 -> Node0x93c67d0;
-	Node0x93c67d0 [shape=record,label="{entry.split:                                      \l  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([22 x\l... i8], [22 x i8]* @.str, i64 0, i64 0), i32 6), !dbg !52\l  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !8, metadata\l... !53), !dbg !54\l  br label %for.body, !dbg !55\l}"];
-	Node0x93c67d0 -> Node0x93bcfc0;
-	Node0x93bcfc0 [shape=record,label="{for.body:                                         \l  %indvars.iv = phi i64 [ 0, %entry.split ], [ %indvars.iv.next, %for.body ]\l  %arrayidx = getelementptr inbounds [6 x i32], [6 x i32]* @V, i64 0, i64\l... %indvars.iv, !dbg !59\l  %0 = trunc i64 %indvars.iv to i32, !dbg !61\l  store i32 %0, i32* %arrayidx, align 4, !dbg !61, !tbaa !62\l  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !55\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !8, metadata\l... !53), !dbg !54\l  %exitcond = icmp ne i64 %indvars.iv.next, 6, !dbg !55\l  br i1 %exitcond, label %for.body, label %for.end, !dbg !55\l}"];
-	Node0x93bcfc0 -> Node0x93bcfc0[constraint=false];
-	Node0x93bcfc0 -> Node0x93c6190;
-	Node0x93c6190 [shape=record,label="{for.end:                                          \l  ret void, !dbg !66\l}"];
+	Node0x9186a50 [shape=record,label="{entry:\l  br label %entry.split, !dbg !52\l}"];
+	Node0x9186a50 -> Node0x9174950;
+	Node0x9174950 [shape=record,label="{entry.split:                                      \l  %call = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([22 x\l... i8], [22 x i8]* @.str, i64 0, i64 0), i32 6), !dbg !52\l  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !8, metadata\l... !53), !dbg !54\l  br label %for.body, !dbg !55\l}"];
+	Node0x9174950 -> Node0x9192480;
+	Node0x9192480 [shape=record,label="{for.body:                                         \l  %indvars.iv = phi i64 [ 0, %entry.split ], [ %indvars.iv.next, %for.body ]\l  %arrayidx = getelementptr inbounds [6 x i32], [6 x i32]* @V, i64 0, i64\l... %indvars.iv, !dbg !59\l  %0 = trunc i64 %indvars.iv to i32, !dbg !61\l  store i32 %0, i32* %arrayidx, align 4, !dbg !61, !tbaa !62\l  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !55\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !8, metadata\l... !53), !dbg !54\l  %exitcond = icmp ne i64 %indvars.iv.next, 6, !dbg !55\l  br i1 %exitcond, label %for.body, label %for.end, !dbg !55\l}"];
+	Node0x9192480 -> Node0x9192480[constraint=false];
+	Node0x9192480 -> Node0x918de30;
+	Node0x918de30 [shape=record,label="{for.end:                                          \l  ret void, !dbg !66\l}"];
 	colorscheme = "paired12"
-        subgraph cluster_0x93c6ca0 {
-          label = "CoinGame.c:32-38
+        subgraph cluster_0x9199810 {
+          label = "CoinGame.c:26-32
 ";
           style = solid;
           color = 1
-          subgraph cluster_0x93da790 {
-            label = "CoinGame.c:32-36
+          subgraph cluster_0x9176760 {
+            label = "CoinGame.c:26-30
 Region can not profitably be optimized!";
             style = solid;
             color = 6
-            Node0x93bcfc0;
+            Node0x9192480;
           }
-          Node0x93e97d0;
-          Node0x93c67d0;
-          Node0x93c6190;
+          Node0x9186a50;
+          Node0x9174950;
+          Node0x918de30;
         }
 }

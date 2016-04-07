@@ -14,10 +14,10 @@
 	.type	init,@function
 init:                                   # @init
 .Lfunc_begin0:
-	.loc	1 31 0                  # CoinGame.c:31:0
+	.loc	1 25 0                  # CoinGame.c:25:0
 	.cfi_startproc
 # BB#0:                                 # %entry
-	.loc	1 34 2 prologue_end     # CoinGame.c:34:2
+	.loc	1 28 2 prologue_end     # CoinGame.c:28:2
 	pushq	%rax
 .Ltmp0:
 	.cfi_def_cfa_offset 16
@@ -27,13 +27,13 @@ init:                                   # @init
 	callq	printf
 .Ltmp1:
 	#DEBUG_VALUE: init:i <- 0
-	.loc	1 36 8                  # CoinGame.c:36:8
+	.loc	1 30 8                  # CoinGame.c:30:8
 	movaps	.LCPI0_0(%rip), %xmm0   # xmm0 = [0,1,2,3]
 	movaps	%xmm0, V(%rip)
 	movabsq	$21474836484, %rax      # imm = 0x500000004
 	movq	%rax, V+16(%rip)
 .Ltmp2:
-	.loc	1 38 1                  # CoinGame.c:38:1
+	.loc	1 32 1                  # CoinGame.c:32:1
 	popq	%rax
 	retq
 .Ltmp3:
@@ -46,7 +46,7 @@ init:                                   # @init
 	.type	sumMoves,@function
 sumMoves:                               # @sumMoves
 .Lfunc_begin1:
-	.loc	1 40 0                  # CoinGame.c:40:0
+	.loc	1 34 0                  # CoinGame.c:34:0
 	.cfi_startproc
 # BB#0:                                 # %entry
 	#DEBUG_VALUE: sumMoves:i <- 0
@@ -60,45 +60,45 @@ sumMoves:                               # @sumMoves
 .LBB1_1:                                # %while.body
                                         # =>This Inner Loop Header: Depth=1
 .Ltmp5:
-	.loc	1 44 12 prologue_end    # CoinGame.c:44:12
+	.loc	1 38 12 prologue_end    # CoinGame.c:38:12
 	movslq	%edx, %rsi
-	.loc	1 44 16 is_stmt 0       # CoinGame.c:44:16
+	.loc	1 38 16 is_stmt 0       # CoinGame.c:38:16
 	leal	1(%rdi), %edx
-	.loc	1 44 12                 # CoinGame.c:44:12
+	.loc	1 38 12                 # CoinGame.c:38:12
 	movslq	%edx, %r10
 	leaq	(,%rsi,4), %rax
 	leaq	(%r10,%r10,2), %rdx
 	movl	M(%rax,%rdx,8), %r9d
 .Ltmp6:
 	#DEBUG_VALUE: P1 <- %R9D
-	.loc	1 45 19 is_stmt 1       # CoinGame.c:45:19
+	.loc	1 39 19 is_stmt 1       # CoinGame.c:39:19
 	leal	-1(%rsi), %edx
-	.loc	1 45 12 is_stmt 0       # CoinGame.c:45:12
+	.loc	1 39 12 is_stmt 0       # CoinGame.c:39:12
 	movslq	%edi, %rcx
 	leaq	(%rcx,%rcx,2), %rdi
 .Ltmp7:
-	.loc	1 47 10 is_stmt 1       # CoinGame.c:47:10
+	.loc	1 41 10 is_stmt 1       # CoinGame.c:41:10
 	cmpl	M-4(%rax,%rdi,8), %r9d
 .Ltmp8:
-	.loc	1 47 7 is_stmt 0        # CoinGame.c:47:7
+	.loc	1 41 7 is_stmt 0        # CoinGame.c:41:7
 	cmovlel	%esi, %edx
 	movl	%ecx, %edi
 	cmovlel	%r10d, %edi
 	cmovgq	%rsi, %rcx
 .Ltmp9:
-	.loc	1 49 11 is_stmt 1       # CoinGame.c:49:11
+	.loc	1 43 11 is_stmt 1       # CoinGame.c:43:11
 	movl	V(,%rcx,4), %esi
 .Ltmp10:
-	.loc	1 56 7                  # CoinGame.c:56:7
+	.loc	1 50 7                  # CoinGame.c:50:7
 	testl	%r8d, %r8d
 .Ltmp11:
-	.loc	1 56 7 is_stmt 0        # CoinGame.c:56:7
+	.loc	1 50 7 is_stmt 0        # CoinGame.c:50:7
 	je	.LBB1_3
 .Ltmp12:
 # BB#2:                                 # %if.then12
                                         #   in Loop: Header=BB1_1 Depth=1
 	#DEBUG_VALUE: P1 <- %R9D
-	.loc	1 57 14 is_stmt 1       # CoinGame.c:57:14
+	.loc	1 51 14 is_stmt 1       # CoinGame.c:51:14
 	addl	%esi, sum_alice(%rip)
 .Ltmp13:
 	#DEBUG_VALUE: sumMoves:alice <- 0
@@ -109,7 +109,7 @@ sumMoves:                               # @sumMoves
 .LBB1_3:                                # %if.else14
                                         #   in Loop: Header=BB1_1 Depth=1
 	#DEBUG_VALUE: P1 <- %R9D
-	.loc	1 60 12                 # CoinGame.c:60:12
+	.loc	1 54 12                 # CoinGame.c:54:12
 	addl	%esi, sum_bob(%rip)
 .Ltmp15:
 	#DEBUG_VALUE: sumMoves:alice <- 1
@@ -118,13 +118,13 @@ sumMoves:                               # @sumMoves
 .LBB1_4:                                # %while.cond.backedge
                                         #   in Loop: Header=BB1_1 Depth=1
 	#DEBUG_VALUE: P1 <- %R9D
-	.loc	1 43 2 discriminator 1  # CoinGame.c:43:2
+	.loc	1 37 2 discriminator 1  # CoinGame.c:37:2
 	cmpl	%edx, %edi
 	jle	.LBB1_1
 .Ltmp17:
 # BB#5:                                 # %while.end
 	#DEBUG_VALUE: P1 <- %R9D
-	.loc	1 65 1                  # CoinGame.c:65:1
+	.loc	1 59 1                  # CoinGame.c:59:1
 	retq
 .Ltmp18:
 .Lfunc_end1:
@@ -136,7 +136,7 @@ sumMoves:                               # @sumMoves
 	.type	printMoves,@function
 printMoves:                             # @printMoves
 .Lfunc_begin2:
-	.loc	1 69 0                  # CoinGame.c:69:0
+	.loc	1 62 0                  # CoinGame.c:62:0
 	.cfi_startproc
 # BB#0:                                 # %entry
 	pushq	%rbp
@@ -184,26 +184,26 @@ printMoves:                             # @printMoves
 .LBB2_1:                                # %while.body
                                         # =>This Inner Loop Header: Depth=1
 .Ltmp34:
-	.loc	1 73 12 prologue_end    # CoinGame.c:73:12
+	.loc	1 66 12 prologue_end    # CoinGame.c:66:12
 	movq	%rbx, 16(%rsp)          # 8-byte Spill
 	movl	%r14d, 12(%rsp)         # 4-byte Spill
 	movslq	%r14d, %rbp
-	.loc	1 73 16 is_stmt 0       # CoinGame.c:73:16
+	.loc	1 66 16 is_stmt 0       # CoinGame.c:66:16
 	leal	1(%rbx), %r13d
-	.loc	1 73 12                 # CoinGame.c:73:12
+	.loc	1 66 12                 # CoinGame.c:66:12
 	movslq	%r13d, %rax
 	leaq	(,%rbp,4), %rcx
 	leaq	(%rax,%rax,2), %rax
 	movl	M(%rcx,%rax,8), %r15d
 .Ltmp35:
 	#DEBUG_VALUE: P1 <- %R15D
-	.loc	1 74 12 is_stmt 1       # CoinGame.c:74:12
+	.loc	1 67 12 is_stmt 1       # CoinGame.c:67:12
 	movslq	%ebx, %r14
 	leaq	(%r14,%r14,2), %rax
 	movl	M-4(%rcx,%rax,8), %ebx
 .Ltmp36:
 	#DEBUG_VALUE: P2 <- %EBX
-	.loc	1 75 7                  # CoinGame.c:75:7
+	.loc	1 68 7                  # CoinGame.c:68:7
 	testb	%r12b, %r12b
 	je	.LBB2_3
 .Ltmp37:
@@ -211,7 +211,7 @@ printMoves:                             # @printMoves
                                         #   in Loop: Header=BB2_1 Depth=1
 	#DEBUG_VALUE: P2 <- %EBX
 	#DEBUG_VALUE: P1 <- %R15D
-	.loc	1 76 4                  # CoinGame.c:76:4
+	.loc	1 69 4                  # CoinGame.c:69:4
 	movl	$.L.str.1, %edi
 	jmp	.LBB2_4
 .Ltmp38:
@@ -220,7 +220,7 @@ printMoves:                             # @printMoves
                                         #   in Loop: Header=BB2_1 Depth=1
 	#DEBUG_VALUE: P2 <- %EBX
 	#DEBUG_VALUE: P1 <- %R15D
-	.loc	1 78 4                  # CoinGame.c:78:4
+	.loc	1 71 4                  # CoinGame.c:71:4
 	movl	$.L.str.2, %edi
 .Ltmp39:
 .LBB2_4:                                # %if.end
@@ -230,7 +230,7 @@ printMoves:                             # @printMoves
 	xorl	%eax, %eax
 	callq	printf
 .Ltmp40:
-	.loc	1 81 10                 # CoinGame.c:81:10
+	.loc	1 74 10                 # CoinGame.c:74:10
 	cmpl	%ebx, %r15d
 	jle	.LBB2_5
 .Ltmp41:
@@ -238,14 +238,14 @@ printMoves:                             # @printMoves
                                         #   in Loop: Header=BB2_1 Depth=1
 	#DEBUG_VALUE: P2 <- %EBX
 	#DEBUG_VALUE: P1 <- %R15D
-	.loc	1 74 19                 # CoinGame.c:74:19
+	.loc	1 67 19                 # CoinGame.c:67:19
 	leal	-1(%rbp), %r14d
 .Ltmp42:
-	.loc	1 85 26                 # CoinGame.c:85:26
+	.loc	1 78 26                 # CoinGame.c:78:26
 	leal	1(%rbp), %esi
-	.loc	1 85 31 is_stmt 0       # CoinGame.c:85:31
+	.loc	1 78 31 is_stmt 0       # CoinGame.c:78:31
 	movl	V(,%rbp,4), %edx
-	.loc	1 85 4                  # CoinGame.c:85:4
+	.loc	1 78 4                  # CoinGame.c:78:4
 	movl	$.L.str.3, %edi
 	xorl	%eax, %eax
 	callq	printf
@@ -258,9 +258,9 @@ printMoves:                             # @printMoves
                                         #   in Loop: Header=BB2_1 Depth=1
 	#DEBUG_VALUE: P2 <- %EBX
 	#DEBUG_VALUE: P1 <- %R15D
-	.loc	1 82 31 is_stmt 1       # CoinGame.c:82:31
+	.loc	1 75 31 is_stmt 1       # CoinGame.c:75:31
 	movl	V(,%r14,4), %edx
-	.loc	1 82 4 is_stmt 0        # CoinGame.c:82:4
+	.loc	1 75 4 is_stmt 0        # CoinGame.c:75:4
 	movl	$.L.str.3, %edi
 	xorl	%eax, %eax
 	movl	%r13d, %esi
@@ -272,14 +272,14 @@ printMoves:                             # @printMoves
 .LBB2_7:                                # %if.end19
                                         #   in Loop: Header=BB2_1 Depth=1
 	#DEBUG_VALUE: P1 <- %R15D
-	.loc	1 88 7 is_stmt 1        # CoinGame.c:88:7
+	.loc	1 81 7 is_stmt 1        # CoinGame.c:81:7
 	testb	%r12b, %r12b
 	je	.LBB2_9
 .Ltmp47:
 # BB#8:                                 # %if.then21
                                         #   in Loop: Header=BB2_1 Depth=1
 	#DEBUG_VALUE: P1 <- %R15D
-	.loc	1 89 4                  # CoinGame.c:89:4
+	.loc	1 82 4                  # CoinGame.c:82:4
 	movl	$.L.str.4, %edi
 	xorl	%eax, %eax
 	callq	printf
@@ -289,24 +289,24 @@ printMoves:                             # @printMoves
 .LBB2_9:                                # %if.else23
                                         #   in Loop: Header=BB2_1 Depth=1
 	#DEBUG_VALUE: P1 <- %R15D
-	.loc	1 91 4                  # CoinGame.c:91:4
+	.loc	1 84 4                  # CoinGame.c:84:4
 	movl	$.Lstr, %edi
 	callq	puts
 .Ltmp49:
 .LBB2_10:                               # %if.end25
                                         #   in Loop: Header=BB2_1 Depth=1
 	#DEBUG_VALUE: P1 <- %R15D
-	.loc	1 93 9                  # CoinGame.c:93:9
+	.loc	1 86 9                  # CoinGame.c:86:9
 	testb	%r12b, %r12b
 	sete	%r12b
 .Ltmp50:
-	.loc	1 72 2 discriminator 1  # CoinGame.c:72:2
+	.loc	1 65 2 discriminator 1  # CoinGame.c:65:2
 	cmpl	%r14d, %ebx
 	jle	.LBB2_1
 .Ltmp51:
 # BB#11:                                # %while.end
 	#DEBUG_VALUE: P1 <- %R15D
-	.loc	1 96 1                  # CoinGame.c:96:1
+	.loc	1 89 1                  # CoinGame.c:89:1
 	addq	$24, %rsp
 	popq	%rbx
 	popq	%r12
@@ -326,157 +326,285 @@ printMoves:                             # @printMoves
 	.type	maxMoney,@function
 maxMoney:                               # @maxMoney
 .Lfunc_begin3:
-	.loc	1 98 0                  # CoinGame.c:98:0
+	.loc	1 91 0                  # CoinGame.c:91:0
 	.cfi_startproc
 # BB#0:                                 # %entry
-	xorl	%r10d, %r10d
+	pushq	%rbp
 .Ltmp54:
-	#DEBUG_VALUE: maxMoney:s <- 0
-	.p2align	4, 0x90
-.LBB3_1:                                # %for.cond1.preheader
-                                        # =>This Loop Header: Depth=1
-                                        #     Child Loop BB3_2 Depth 2
-                                        #     Child Loop BB3_11 Depth 2
-	movq	%r10, %rcx
-	xorl	%r8d, %r8d
-	.p2align	4, 0x90
-.LBB3_2:                                # %for.body3
-                                        #   Parent Loop BB3_1 Depth=1
-                                        # =>  This Inner Loop Header: Depth=2
+	.cfi_def_cfa_offset 16
+	pushq	%r15
 .Ltmp55:
-	.loc	1 104 7 prologue_end    # CoinGame.c:104:7
-	cmpl	$5, %r8d
-	jg	.LBB3_10
-# BB#3:                                 # %if.then
-                                        #   in Loop: Header=BB3_2 Depth=2
+	.cfi_def_cfa_offset 24
+	pushq	%r14
 .Ltmp56:
-	.loc	1 105 5                 # CoinGame.c:105:5
-	movslq	%r8d, %rsi
-	.loc	1 105 13 is_stmt 0      # CoinGame.c:105:13
-	leaq	(,%rsi,8), %rdx
-	leaq	(%rdx,%rdx,2), %rdx
-	movl	$0, X(%rdx,%rcx,4)
+	.cfi_def_cfa_offset 32
+	pushq	%r13
 .Ltmp57:
-	.loc	1 106 11 is_stmt 1      # CoinGame.c:106:11
-	leal	2(%r8), %edi
+	.cfi_def_cfa_offset 40
+	pushq	%r12
 .Ltmp58:
-	.loc	1 106 9 is_stmt 0       # CoinGame.c:106:9
-	cmpl	$5, %edi
-	jg	.LBB3_5
-# BB#4:                                 # %if.then8
-                                        #   in Loop: Header=BB3_2 Depth=2
+	.cfi_def_cfa_offset 48
+	pushq	%rbx
 .Ltmp59:
-	.loc	1 107 26 is_stmt 1      # CoinGame.c:107:26
-	movslq	%edi, %rdi
-	leaq	(%rdi,%rdi,2), %r9
-	leaq	(,%rcx,4), %rdi
-	movl	M(%rdi,%r9,8), %edi
-	.loc	1 107 14 is_stmt 0      # CoinGame.c:107:14
-	movl	%edi, X(%rdx,%rcx,4)
+	.cfi_def_cfa_offset 56
+	subq	$24, %rsp
 .Ltmp60:
-.LBB3_5:                                # %if.end
-                                        #   in Loop: Header=BB3_2 Depth=2
-	.loc	1 109 13 is_stmt 1      # CoinGame.c:109:13
-	movl	$0, Y(%rdx,%rcx,4)
+	.cfi_def_cfa_offset 80
 .Ltmp61:
-	.loc	1 110 11                # CoinGame.c:110:11
-	incl	%r8d
-	.loc	1 110 19 is_stmt 0      # CoinGame.c:110:19
-	testq	%rcx, %rcx
-	jle	.LBB3_8
-# BB#6:                                 # %if.end
-                                        #   in Loop: Header=BB3_2 Depth=2
-	cmpl	$5, %r8d
-	jg	.LBB3_8
-# BB#7:                                 # %if.then30
-                                        #   in Loop: Header=BB3_2 Depth=2
+	.cfi_offset %rbx, -56
 .Ltmp62:
-	.loc	1 111 26 is_stmt 1      # CoinGame.c:111:26
-	movslq	%r8d, %rdi
-	leaq	(%rdi,%rdi,2), %r9
-	leaq	(,%rcx,4), %rdi
-	movl	M-4(%rdi,%r9,8), %edi
-	.loc	1 111 14 is_stmt 0      # CoinGame.c:111:14
-	movl	%edi, Y(%rdx,%rcx,4)
+	.cfi_offset %r12, -48
 .Ltmp63:
-.LBB3_8:                                # %if.end46
-                                        #   in Loop: Header=BB3_2 Depth=2
-	.loc	1 113 13 is_stmt 1      # CoinGame.c:113:13
-	movl	$0, Z(%rdx,%rcx,4)
-	.loc	1 114 9                 # CoinGame.c:114:9
-	cmpq	$2, %rcx
-	jl	.LBB3_10
-# BB#9:                                 # %if.then53
-                                        #   in Loop: Header=BB3_2 Depth=2
+	.cfi_offset %r13, -40
 .Ltmp64:
-	.loc	1 115 25                # CoinGame.c:115:25
-	leaq	(%rsi,%rsi,2), %rsi
-	leaq	(,%rcx,4), %rdi
-	movl	M-8(%rdi,%rsi,8), %esi
-	.loc	1 115 14 is_stmt 0      # CoinGame.c:115:14
-	movl	%esi, Z(%rdx,%rcx,4)
+	.cfi_offset %r14, -32
 .Ltmp65:
-.LBB3_10:                               # %for.inc
-                                        #   in Loop: Header=BB3_2 Depth=2
-	.loc	1 103 3 is_stmt 1 discriminator 1 # CoinGame.c:103:3
-	incq	%rcx
-	cmpl	$6, %ecx
-	movl	$V, %esi
-	movl	$0, %edi
-	movl	$1, %r9d
-	jne	.LBB3_2
+	.cfi_offset %r15, -24
 .Ltmp66:
+	.cfi_offset %rbp, -16
+.Ltmp67:
+	#DEBUG_VALUE: maxMoney:s <- 0
+	xorl	%r12d, %r12d
+	movl	$1, %ebx
+	leaq	(%rsp), %r14
+	movl	$maxMoney_polly_subfn, %edi
+	xorl	%edx, %edx
+	xorl	%ecx, %ecx
+	movl	$6, %r8d
+	movl	$1, %r9d
+	movq	%r14, %rsi
+	callq	GOMP_parallel_loop_runtime_start
+	movq	%r14, %rdi
+	callq	maxMoney_polly_subfn
+	callq	GOMP_parallel_end
+	movl	$maxMoney_polly_subfn_10, %edi
+	xorl	%edx, %edx
+	xorl	%ecx, %ecx
+	movl	$6, %r8d
+	movl	$1, %r9d
+	movq	%r14, %rsi
+	callq	GOMP_parallel_loop_runtime_start
+	movq	%r14, %rdi
+	callq	maxMoney_polly_subfn_10
+	callq	GOMP_parallel_end
+	movl	$maxMoney_polly_subfn_11, %edi
+	xorl	%edx, %edx
+	xorl	%ecx, %ecx
+	movl	$6, %r8d
+	movl	$1, %r9d
+	movq	%r14, %rsi
+	callq	GOMP_parallel_loop_runtime_start
+	movq	%r14, %rdi
+	callq	maxMoney_polly_subfn_11
+	callq	GOMP_parallel_end
+	movl	$2, %eax
+	movl	V(%rip), %ecx
+	movl	%ecx, 4(%rsp)           # 4-byte Spill
+	xorl	%r13d, %r13d
 	.p2align	4, 0x90
-.LBB3_11:                               # %for.inc180
+.LBB3_1:                                # %polly.loop_header
+                                        # =>This Loop Header: Depth=1
+                                        #     Child Loop BB3_13 Depth 2
+                                        #     Child Loop BB3_15 Depth 2
+                                        #     Child Loop BB3_17 Depth 2
+                                        #     Child Loop BB3_6 Depth 2
+	movq	%rax, 8(%rsp)           # 8-byte Spill
+	movq	%rbx, 16(%rsp)          # 8-byte Spill
+	testq	%rax, %rax
+	movl	$0, %r11d
+	cmovnsq	%rax, %r11
+	testq	%rbx, %rbx
+	movl	$0, %edx
+	cmovnsq	%rbx, %rdx
+	testq	%r13, %r13
+	jle	.LBB3_2
+# BB#9:                                 # %polly.then
+                                        #   in Loop: Header=BB3_1 Depth=1
+	movl	$7, %eax
+	subl	%r13d, %eax
+	testb	$1, %al
+	movl	$0, %edi
+	je	.LBB3_11
+# BB#10:                                # %polly.loop_header239.prol
+                                        #   in Loop: Header=BB3_1 Depth=1
+	movl	X-4(,%r13,4), %eax
+.Ltmp68:
+	.loc	1 127 13 prologue_end   # CoinGame.c:127:13
+	addl	4(%rsp), %eax           # 4-byte Folded Reload
+	movl	Z-4(,%r13,4), %esi
+	.loc	1 127 30 is_stmt 0      # CoinGame.c:127:30
+	addl	V-4(,%r13,4), %esi
+	.loc	1 127 23                # CoinGame.c:127:23
+	cmpl	%esi, %eax
+.Ltmp69:
+	.loc	1 127 8                 # CoinGame.c:127:8
+	cmovgel	%eax, %esi
+	movl	%esi, M-4(,%r13,4)
+	movl	$1, %edi
+.LBB3_11:                               # %polly.then.split
+                                        #   in Loop: Header=BB3_1 Depth=1
+	cmpq	$6, %r13
+	je	.LBB3_2
+# BB#12:                                # %polly.then.split.split
+                                        #   in Loop: Header=BB3_1 Depth=1
+	movl	$7, %esi
+	subq	%rdi, %rsi
+	leaq	V(,%rdi,4), %r15
+	imulq	$28, %rdi, %r14
+	xorl	%ebx, %ebx
+	xorl	%edi, %edi
+	.p2align	4, 0x90
+.LBB3_13:                               # %polly.loop_header239
                                         #   Parent Loop BB3_1 Depth=1
                                         # =>  This Inner Loop Header: Depth=2
-	.loc	1 125 15                # CoinGame.c:125:15
-	movl	X(%rdi,%r10,4), %ecx
-	movl	Y(%rdi,%r10,4), %eax
-	cmpl	%eax, %ecx
-	.loc	1 125 15 is_stmt 0 discriminator 1 # CoinGame.c:125:15
-	cmovgl	%eax, %ecx
-	.loc	1 125 15 discriminator 3 # CoinGame.c:125:15
-	addl	(%rsi), %ecx
-	movl	Z(%rdi,%r10,4), %edx
-	cmpl	%edx, %eax
-	cmovlel	%eax, %edx
-	.loc	1 125 15 discriminator 6 # CoinGame.c:125:15
-	addl	(%rsi,%r10,4), %edx
-	cmpl	%edx, %ecx
-	cmovgel	%ecx, %edx
-	.loc	1 125 13 discriminator 15 # CoinGame.c:125:13
-	movl	%edx, M(%rdi,%r10,4)
-.Ltmp67:
-	.loc	1 122 26 is_stmt 1 discriminator 2 # CoinGame.c:122:26
-	leaq	(%r10,%r9), %rax
-.Ltmp68:
-	.loc	1 122 3 is_stmt 0 discriminator 3 # CoinGame.c:122:3
-	cmpq	$5, %rax
-	jg	.LBB3_13
-# BB#12:                                # %for.inc180
-                                        #   in Loop: Header=BB3_11 Depth=2
-	movq	%r9, %rax
-	incq	%rax
-	addq	$28, %rdi
-	addq	$4, %rsi
-	cmpl	$6, %r9d
-	movq	%rax, %r9
-	jl	.LBB3_11
-.Ltmp69:
-.LBB3_13:                               # %for.inc183
-                                        #   in Loop: Header=BB3_1 Depth=1
-	.loc	1 100 2 is_stmt 1 discriminator 1 # CoinGame.c:100:2
-	incq	%r10
-	cmpq	$6, %r10
-	jne	.LBB3_1
+	leaq	(%r15,%rdi), %rbp
+	leaq	(%r14,%rbx), %r8
+	movl	X-4(%r8,%r13,4), %r9d
 .Ltmp70:
-# BB#14:                                # %for.end185
-	.loc	1 136 9                 # CoinGame.c:136:9
-	movl	M+20(%rip), %eax
-	.loc	1 136 2 is_stmt 0       # CoinGame.c:136:2
-	retq
+	.loc	1 127 13                # CoinGame.c:127:13
+	addl	(%r15,%rdi), %r9d
+	movl	Z-4(%r8,%r13,4), %r10d
+	.loc	1 127 30                # CoinGame.c:127:30
+	addl	-4(%rbp,%r13,4), %r10d
+	.loc	1 127 23                # CoinGame.c:127:23
+	cmpl	%r10d, %r9d
 .Ltmp71:
+	.loc	1 127 8                 # CoinGame.c:127:8
+	cmovgel	%r9d, %r10d
+	movl	%r10d, M-4(%r8,%r13,4)
+	movl	X+24(%r8,%r13,4), %eax
+.Ltmp72:
+	.loc	1 127 13                # CoinGame.c:127:13
+	addl	4(%r15,%rdi), %eax
+	movl	Z+24(%r8,%r13,4), %ecx
+	.loc	1 127 30                # CoinGame.c:127:30
+	addl	(%rbp,%r13,4), %ecx
+	.loc	1 127 23                # CoinGame.c:127:23
+	cmpl	%ecx, %eax
+.Ltmp73:
+	.loc	1 127 8                 # CoinGame.c:127:8
+	cmovgel	%eax, %ecx
+	movl	%ecx, M+24(%r8,%r13,4)
+	addq	$-2, %rsi
+	addq	$8, %rdi
+	addq	$56, %rbx
+	cmpq	%r13, %rsi
+	jne	.LBB3_13
+.Ltmp74:
+.LBB3_2:                                # %polly.merge
+                                        #   in Loop: Header=BB3_1 Depth=1
+	movl	$1, %eax
+	subq	%r13, %rax
+	movl	$0, %edi
+	cmovnsq	%rax, %rdi
+	movl	$5, %esi
+	subq	%r13, %rsi
+	cmpq	$4, %rsi
+	movq	%rsi, %rax
+	movl	$4, %ecx
+	cmovgq	%rcx, %rax
+	cmpq	%rax, %rdi
+	jg	.LBB3_3
+# BB#14:                                # %polly.loop_preheader253
+                                        #   in Loop: Header=BB3_1 Depth=1
+	imulq	$28, %rdx, %rdi
+	decq	%rdx
+	addq	%r12, %rdi
+	decq	%rax
+	xorl	%ebx, %ebx
+	.p2align	4, 0x90
+.LBB3_15:                               # %polly.loop_header252
+                                        #   Parent Loop BB3_1 Depth=1
+                                        # =>  This Inner Loop Header: Depth=2
+	movl	M+20(%rdi,%rbx), %ecx
+	movl	%ecx, Y(%rdi,%rbx)
+	incq	%rdx
+	addq	$28, %rbx
+	cmpq	%rax, %rdx
+	jle	.LBB3_15
+.LBB3_3:                                # %polly.loop_exit254
+                                        #   in Loop: Header=BB3_1 Depth=1
+	cmpq	$3, %rsi
+	movq	%rsi, %rax
+	movl	$3, %ecx
+	cmovgq	%rcx, %rax
+	testq	%rax, %rax
+	js	.LBB3_4
+# BB#16:                                # %polly.loop_preheader266
+                                        #   in Loop: Header=BB3_1 Depth=1
+	decq	%rax
+	movq	$-1, %rdx
+	movq	%r12, %rdi
+	.p2align	4, 0x90
+.LBB3_17:                               # %polly.loop_header265
+                                        #   Parent Loop BB3_1 Depth=1
+                                        # =>  This Inner Loop Header: Depth=2
+	movl	M+48(%rdi), %ecx
+	movl	Y(%rdi), %ebp
+.Ltmp75:
+	.loc	1 107 17 is_stmt 1      # CoinGame.c:107:17
+	cmpl	%ebp, %ecx
+.Ltmp76:
+	.loc	1 107 9 is_stmt 0       # CoinGame.c:107:9
+	cmovgl	%ebp, %ecx
+	movl	%ecx, X(%rdi)
+	incq	%rdx
+	addq	$28, %rdi
+	cmpq	%rax, %rdx
+	jle	.LBB3_17
+.Ltmp77:
+.LBB3_4:                                # %polly.loop_exit267
+                                        #   in Loop: Header=BB3_1 Depth=1
+	movl	$2, %eax
+	subq	%r13, %rax
+	movl	$0, %edx
+	cmovnsq	%rax, %rdx
+	cmpq	%rsi, %rdx
+	movq	16(%rsp), %rbx          # 8-byte Reload
+	jg	.LBB3_7
+# BB#5:                                 #   in Loop: Header=BB3_1 Depth=1
+	imulq	$28, %r11, %rax
+	decq	%r11
+	.p2align	4, 0x90
+.LBB3_6:                                # %polly.loop_header282
+                                        #   Parent Loop BB3_1 Depth=1
+                                        # =>  This Inner Loop Header: Depth=2
+	movl	M-8(%rax,%r12), %ecx
+	movl	Y(%rax,%r12), %edx
+.Ltmp78:
+	.loc	1 115 17 is_stmt 1      # CoinGame.c:115:17
+	cmpl	%edx, %ecx
+.Ltmp79:
+	.loc	1 115 9 is_stmt 0       # CoinGame.c:115:9
+	cmovgl	%edx, %ecx
+	movl	%ecx, Z(%rax,%r12)
+	incq	%r11
+	addq	$28, %rax
+	cmpq	%rsi, %r11
+	jl	.LBB3_6
+.Ltmp80:
+.LBB3_7:                                # %polly.loop_exit284
+                                        #   in Loop: Header=BB3_1 Depth=1
+	incq	%r13
+	decq	%rbx
+	addq	$4, %r12
+	movq	8(%rsp), %rax           # 8-byte Reload
+	decq	%rax
+	cmpq	$7, %r13
+	jne	.LBB3_1
+# BB#8:                                 # %polly.exiting
+	.loc	1 140 9 is_stmt 1       # CoinGame.c:140:9
+	movl	M+20(%rip), %eax
+	.loc	1 140 2 is_stmt 0       # CoinGame.c:140:2
+	addq	$24, %rsp
+	popq	%rbx
+	popq	%r12
+	popq	%r13
+	popq	%r14
+	popq	%r15
+	popq	%rbp
+	retq
+.Ltmp81:
 .Lfunc_end3:
 	.size	maxMoney, .Lfunc_end3-maxMoney
 	.cfi_endproc
@@ -486,138 +614,1199 @@ maxMoney:                               # @maxMoney
 	.type	main,@function
 main:                                   # @main
 .Lfunc_begin4:
-	.loc	1 138 0 is_stmt 1       # CoinGame.c:138:0
+	.loc	1 142 0 is_stmt 1       # CoinGame.c:142:0
 	.cfi_startproc
 # BB#0:                                 # %entry
-	.loc	1 140 2 prologue_end    # CoinGame.c:140:2
+	.loc	1 144 2 prologue_end    # CoinGame.c:144:2
 	pushq	%rax
-.Ltmp72:
+.Ltmp82:
 	.cfi_def_cfa_offset 16
 	callq	maxMoney
-.Ltmp73:
+.Ltmp83:
 	#DEBUG_VALUE: sumMoves:j <- 5
 	#DEBUG_VALUE: sumMoves:i <- 0
 	movl	$1, %r8d
 	movl	$5, %edx
-.Ltmp74:
+.Ltmp84:
 	#DEBUG_VALUE: sumMoves:alice <- 1
 	xorl	%edi, %edi
 	.p2align	4, 0x90
 .LBB4_1:                                # %while.body.i
                                         # =>This Inner Loop Header: Depth=1
-.Ltmp75:
-	.loc	1 44 12                 # CoinGame.c:44:12
+.Ltmp85:
+	.loc	1 38 12                 # CoinGame.c:38:12
 	movslq	%edx, %rsi
-	.loc	1 44 16 is_stmt 0       # CoinGame.c:44:16
+	.loc	1 38 16 is_stmt 0       # CoinGame.c:38:16
 	leal	1(%rdi), %edx
-	.loc	1 44 12                 # CoinGame.c:44:12
+	.loc	1 38 12                 # CoinGame.c:38:12
 	movslq	%edx, %r10
 	leaq	(,%rsi,4), %rax
 	leaq	(%r10,%r10,2), %rdx
 	movl	M(%rax,%rdx,8), %r9d
-.Ltmp76:
+.Ltmp86:
 	#DEBUG_VALUE: P1 <- %R9D
-	.loc	1 45 19 is_stmt 1       # CoinGame.c:45:19
+	.loc	1 39 19 is_stmt 1       # CoinGame.c:39:19
 	leal	-1(%rsi), %edx
-	.loc	1 45 12 is_stmt 0       # CoinGame.c:45:12
+	.loc	1 39 12 is_stmt 0       # CoinGame.c:39:12
 	movslq	%edi, %rcx
 	leaq	(%rcx,%rcx,2), %rdi
-.Ltmp77:
-	.loc	1 47 10 is_stmt 1       # CoinGame.c:47:10
+.Ltmp87:
+	.loc	1 41 10 is_stmt 1       # CoinGame.c:41:10
 	cmpl	M-4(%rax,%rdi,8), %r9d
-.Ltmp78:
-	.loc	1 47 7 is_stmt 0        # CoinGame.c:47:7
+.Ltmp88:
+	.loc	1 41 7 is_stmt 0        # CoinGame.c:41:7
 	cmovlel	%esi, %edx
 	movl	%ecx, %edi
 	cmovlel	%r10d, %edi
 	cmovgq	%rsi, %rcx
-.Ltmp79:
-	.loc	1 49 11 is_stmt 1       # CoinGame.c:49:11
+.Ltmp89:
+	.loc	1 43 11 is_stmt 1       # CoinGame.c:43:11
 	movl	V(,%rcx,4), %esi
-.Ltmp80:
-	.loc	1 56 7                  # CoinGame.c:56:7
+.Ltmp90:
+	.loc	1 50 7                  # CoinGame.c:50:7
 	testl	%r8d, %r8d
-.Ltmp81:
-	.loc	1 56 7 is_stmt 0        # CoinGame.c:56:7
+.Ltmp91:
+	.loc	1 50 7 is_stmt 0        # CoinGame.c:50:7
 	je	.LBB4_3
-.Ltmp82:
+.Ltmp92:
 # BB#2:                                 # %if.then12.i
                                         #   in Loop: Header=BB4_1 Depth=1
 	#DEBUG_VALUE: P1 <- %R9D
-	.loc	1 57 14 is_stmt 1       # CoinGame.c:57:14
+	.loc	1 51 14 is_stmt 1       # CoinGame.c:51:14
 	addl	%esi, sum_alice(%rip)
-.Ltmp83:
+.Ltmp93:
 	#DEBUG_VALUE: sumMoves:alice <- 0
 	xorl	%r8d, %r8d
 	jmp	.LBB4_4
-.Ltmp84:
+.Ltmp94:
 	.p2align	4, 0x90
 .LBB4_3:                                # %if.else14.i
                                         #   in Loop: Header=BB4_1 Depth=1
 	#DEBUG_VALUE: P1 <- %R9D
-	.loc	1 60 12                 # CoinGame.c:60:12
+	.loc	1 54 12                 # CoinGame.c:54:12
 	addl	%esi, sum_bob(%rip)
-.Ltmp85:
+.Ltmp95:
 	#DEBUG_VALUE: sumMoves:alice <- 1
 	movl	$1, %r8d
-.Ltmp86:
+.Ltmp96:
 .LBB4_4:                                # %while.cond.backedge.i
                                         #   in Loop: Header=BB4_1 Depth=1
 	#DEBUG_VALUE: P1 <- %R9D
-	.loc	1 43 2 discriminator 1  # CoinGame.c:43:2
+	.loc	1 37 2 discriminator 1  # CoinGame.c:37:2
 	cmpl	%edx, %edi
 	jle	.LBB4_1
-.Ltmp87:
+.Ltmp97:
 # BB#5:                                 # %sumMoves.exit
 	#DEBUG_VALUE: P1 <- %R9D
-	.loc	1 142 2                 # CoinGame.c:142:2
-	callq	printMoves
-.Ltmp88:
-	.loc	1 144 6                 # CoinGame.c:144:6
+	.loc	1 148 6                 # CoinGame.c:148:6
 	movl	sum_alice(%rip), %esi
-	.loc	1 144 16 is_stmt 0      # CoinGame.c:144:16
+	.loc	1 148 16 is_stmt 0      # CoinGame.c:148:16
 	cmpl	M+20(%rip), %esi
 	jne	.LBB4_6
-.Ltmp89:
+.Ltmp98:
 # BB#8:                                 # %if.end
-	.loc	1 149 5 is_stmt 1       # CoinGame.c:149:5
+	#DEBUG_VALUE: P1 <- %R9D
+	.loc	1 153 6 is_stmt 1       # CoinGame.c:153:6
 	cmpl	sum_bob(%rip), %esi
 	jl	.LBB4_9
+.Ltmp99:
 # BB#10:                                # %if.end5
-	.loc	1 154 2                 # CoinGame.c:154:2
+	#DEBUG_VALUE: P1 <- %R9D
+	.loc	1 158 2                 # CoinGame.c:158:2
 	movl	$.L.str.8, %edi
 	xorl	%eax, %eax
 	callq	printf
-	.loc	1 155 64                # CoinGame.c:155:64
+.Ltmp100:
+	.loc	1 159 65                # CoinGame.c:159:65
 	movl	sum_bob(%rip), %esi
-	.loc	1 155 2 is_stmt 0       # CoinGame.c:155:2
+	.loc	1 159 2 is_stmt 0       # CoinGame.c:159:2
 	movl	$.L.str.9, %edi
 	xorl	%eax, %eax
 	callq	printf
-	.loc	1 156 1 is_stmt 1       # CoinGame.c:156:1
+	.loc	1 160 1 is_stmt 1       # CoinGame.c:160:1
 	xorl	%eax, %eax
 	popq	%rcx
 	retq
 .LBB4_6:                                # %if.then
-.Ltmp90:
-	.loc	1 145 3                 # CoinGame.c:145:3
+.Ltmp101:
+	#DEBUG_VALUE: P1 <- %R9D
+	.loc	1 149 3                 # CoinGame.c:149:3
 	movl	$.L.str.6, %edi
 	jmp	.LBB4_7
-.Ltmp91:
+.Ltmp102:
 .LBB4_9:                                # %if.then3
-	.loc	1 150 3                 # CoinGame.c:150:3
+	#DEBUG_VALUE: P1 <- %R9D
+	.loc	1 154 3                 # CoinGame.c:154:3
 	movl	$.L.str.7, %edi
-.Ltmp92:
+.Ltmp103:
 .LBB4_7:                                # %if.then
-	.loc	1 145 3                 # CoinGame.c:145:3
+	#DEBUG_VALUE: P1 <- %R9D
+	.loc	1 149 3                 # CoinGame.c:149:3
 	xorl	%eax, %eax
 	callq	printf
-	.loc	1 146 3                 # CoinGame.c:146:3
+.Ltmp104:
+	.loc	1 150 3                 # CoinGame.c:150:3
 	movl	$-1, %edi
 	callq	exit
-.Ltmp93:
+.Ltmp105:
 .Lfunc_end4:
 	.size	main, .Lfunc_end4-main
+	.cfi_endproc
+
+	.p2align	4, 0x90
+	.type	maxMoney_polly_subfn,@function
+maxMoney_polly_subfn:                   # @maxMoney_polly_subfn
+.Lfunc_begin5:
+	.cfi_startproc
+# BB#0:                                 # %polly.par.setup
+	pushq	%r15
+.Ltmp106:
+	.cfi_def_cfa_offset 16
+	pushq	%r14
+.Ltmp107:
+	.cfi_def_cfa_offset 24
+	pushq	%r13
+.Ltmp108:
+	.cfi_def_cfa_offset 32
+	pushq	%r12
+.Ltmp109:
+	.cfi_def_cfa_offset 40
+	pushq	%rbx
+.Ltmp110:
+	.cfi_def_cfa_offset 48
+	subq	$32, %rsp
+.Ltmp111:
+	.cfi_def_cfa_offset 80
+.Ltmp112:
+	.cfi_offset %rbx, -48
+.Ltmp113:
+	.cfi_offset %r12, -40
+.Ltmp114:
+	.cfi_offset %r13, -32
+.Ltmp115:
+	.cfi_offset %r14, -24
+.Ltmp116:
+	.cfi_offset %r15, -16
+	leaq	16(%rsp), %rdi
+	leaq	8(%rsp), %rsi
+	callq	GOMP_loop_runtime_next
+	testb	%al, %al
+	je	.LBB5_2
+# BB#1:
+	leaq	16(%rsp), %r14
+	leaq	8(%rsp), %r15
+	leaq	24(%rsp), %r12
+	.p2align	4, 0x90
+.LBB5_4:                                # %polly.par.loadIVBounds
+                                        # =>This Loop Header: Depth=1
+                                        #     Child Loop BB5_5 Depth 2
+	movq	8(%rsp), %r13
+	movq	16(%rsp), %rbx
+	addq	$-2, %r13
+	.p2align	4, 0x90
+.LBB5_5:                                # %polly.loop_header
+                                        #   Parent Loop BB5_4 Depth=1
+                                        # =>  This Inner Loop Header: Depth=2
+	cmpq	$3, %rbx
+	jge	.LBB5_7
+# BB#6:                                 # %polly.loop_preheader3
+                                        #   in Loop: Header=BB5_5 Depth=2
+	movl	$0, X(,%rbx,4)
+	movl	$0, X+28(,%rbx,4)
+	movl	$0, X+56(,%rbx,4)
+	movl	$0, X+84(,%rbx,4)
+	cmpq	$2, %rbx
+	je	.LBB5_8
+.LBB5_7:                                # %polly.parallel.for
+                                        #   in Loop: Header=BB5_5 Depth=2
+	movq	%rbx, 24(%rsp)
+	movl	$maxMoney_polly_subfn_polly_subfn, %edi
+	xorl	%edx, %edx
+	xorl	%ecx, %ecx
+	movl	$2, %r8d
+	movl	$1, %r9d
+	movq	%r12, %rsi
+	callq	GOMP_parallel_loop_runtime_start
+	movq	%r12, %rdi
+	callq	maxMoney_polly_subfn_polly_subfn
+	callq	GOMP_parallel_end
+.LBB5_8:                                # %polly.merge10
+                                        #   in Loop: Header=BB5_5 Depth=2
+	cmpq	%r13, %rbx
+	leaq	1(%rbx), %rbx
+	jle	.LBB5_5
+# BB#3:                                 # %polly.par.checkNext.loopexit
+                                        #   in Loop: Header=BB5_4 Depth=1
+	movq	%r14, %rdi
+	movq	%r15, %rsi
+	callq	GOMP_loop_runtime_next
+	testb	%al, %al
+	jne	.LBB5_4
+.LBB5_2:                                # %polly.par.exit
+	callq	GOMP_loop_end_nowait
+	addq	$32, %rsp
+	popq	%rbx
+	popq	%r12
+	popq	%r13
+	popq	%r14
+	popq	%r15
+	retq
+.Lfunc_end5:
+	.size	maxMoney_polly_subfn, .Lfunc_end5-maxMoney_polly_subfn
+	.cfi_endproc
+
+	.p2align	4, 0x90
+	.type	maxMoney_polly_subfn_polly_subfn,@function
+maxMoney_polly_subfn_polly_subfn:       # @maxMoney_polly_subfn_polly_subfn
+.Lfunc_begin6:
+	.cfi_startproc
+# BB#0:                                 # %polly.par.setup
+	pushq	%rbp
+.Ltmp117:
+	.cfi_def_cfa_offset 16
+	pushq	%r15
+.Ltmp118:
+	.cfi_def_cfa_offset 24
+	pushq	%r14
+.Ltmp119:
+	.cfi_def_cfa_offset 32
+	pushq	%r13
+.Ltmp120:
+	.cfi_def_cfa_offset 40
+	pushq	%r12
+.Ltmp121:
+	.cfi_def_cfa_offset 48
+	pushq	%rbx
+.Ltmp122:
+	.cfi_def_cfa_offset 56
+	subq	$40, %rsp
+.Ltmp123:
+	.cfi_def_cfa_offset 96
+.Ltmp124:
+	.cfi_offset %rbx, -56
+.Ltmp125:
+	.cfi_offset %r12, -48
+.Ltmp126:
+	.cfi_offset %r13, -40
+.Ltmp127:
+	.cfi_offset %r14, -32
+.Ltmp128:
+	.cfi_offset %r15, -24
+.Ltmp129:
+	.cfi_offset %rbp, -16
+	movq	(%rdi), %rbx
+	leaq	24(%rsp), %rdi
+	leaq	16(%rsp), %rsi
+	callq	GOMP_loop_runtime_next
+	testb	%al, %al
+	je	.LBB6_2
+# BB#1:                                 # %polly.par.loadIVBounds.preheader
+	movl	$1, %r13d
+	movq	%rbx, %rax
+	movq	%rax, 32(%rsp)          # 8-byte Spill
+	subq	%rax, %r13
+	movq	%r13, %rbx
+	shrq	$63, %rbx
+	movq	%rax, %rbp
+	negq	%rbp
+	movl	$5, %ecx
+	subq	%rax, %rcx
+	movq	%rcx, 8(%rsp)           # 8-byte Spill
+	movl	$4, %r15d
+	subq	%rax, %r15
+	leaq	X+112(,%rax,4), %r14
+	leaq	X(,%rax,4), %r12
+	.p2align	4, 0x90
+.LBB6_4:                                # %polly.par.loadIVBounds
+                                        # =>This Loop Header: Depth=1
+                                        #     Child Loop BB6_23 Depth 2
+                                        #     Child Loop BB6_24 Depth 2
+                                        #       Child Loop BB6_26 Depth 3
+                                        #     Child Loop BB6_17 Depth 2
+                                        #       Child Loop BB6_19 Depth 3
+                                        #     Child Loop BB6_12 Depth 2
+                                        #       Child Loop BB6_14 Depth 3
+                                        #     Child Loop BB6_6 Depth 2
+                                        #       Child Loop BB6_10 Depth 3
+                                        #       Child Loop BB6_9 Depth 3
+	movq	16(%rsp), %rax
+	movq	24(%rsp), %rcx
+	addq	$-2, %rax
+	cmpq	$3, 32(%rsp)            # 8-byte Folded Reload
+	jl	.LBB6_16
+# BB#5:                                 # %polly.par.loadIVBounds.split.us
+                                        #   in Loop: Header=BB6_4 Depth=1
+	cmpq	$0, 8(%rsp)             # 8-byte Folded Reload
+	js	.LBB6_12
+	.p2align	4, 0x90
+.LBB6_6:                                # %polly.loop_header.us.us
+                                        #   Parent Loop BB6_4 Depth=1
+                                        # =>  This Loop Header: Depth=2
+                                        #       Child Loop BB6_10 Depth 3
+                                        #       Child Loop BB6_9 Depth 3
+	movq	$-1, %rdx
+	cmpq	$1, %rcx
+	movq	%r12, %rsi
+	jne	.LBB6_10
+# BB#7:                                 # %polly.then.us.us
+                                        #   in Loop: Header=BB6_6 Depth=2
+	testq	%r13, %r13
+	js	.LBB6_11
+# BB#8:                                 #   in Loop: Header=BB6_6 Depth=2
+	movq	$-1, %rdx
+	movq	%r14, %rsi
+	.p2align	4, 0x90
+.LBB6_9:                                # %polly.loop_header2.us.us
+                                        #   Parent Loop BB6_4 Depth=1
+                                        #     Parent Loop BB6_6 Depth=2
+                                        # =>    This Inner Loop Header: Depth=3
+	movl	$0, (%rsi)
+	incq	%rdx
+	addq	$28, %rsi
+	cmpq	%rbp, %rdx
+	jle	.LBB6_9
+	jmp	.LBB6_11
+	.p2align	4, 0x90
+.LBB6_10:                               # %polly.loop_header15.us.us
+                                        #   Parent Loop BB6_4 Depth=1
+                                        #     Parent Loop BB6_6 Depth=2
+                                        # =>    This Inner Loop Header: Depth=3
+	movl	$0, (%rsi)
+	incq	%rdx
+	addq	$28, %rsi
+	cmpq	%r15, %rdx
+	jle	.LBB6_10
+.LBB6_11:                               # %polly.merge.us.us
+                                        #   in Loop: Header=BB6_6 Depth=2
+	cmpq	%rax, %rcx
+	leaq	1(%rcx), %rcx
+	jle	.LBB6_6
+	jmp	.LBB6_3
+	.p2align	4, 0x90
+.LBB6_12:                               # %polly.loop_header.us
+                                        #   Parent Loop BB6_4 Depth=1
+                                        # =>  This Loop Header: Depth=2
+                                        #       Child Loop BB6_14 Depth 3
+	cmpq	$1, %rcx
+	setne	%dl
+	orb	%bl, %dl
+	jne	.LBB6_15
+# BB#13:                                #   in Loop: Header=BB6_12 Depth=2
+	movq	$-1, %rdx
+	movq	%r14, %rsi
+	.p2align	4, 0x90
+.LBB6_14:                               # %polly.loop_header2.us
+                                        #   Parent Loop BB6_4 Depth=1
+                                        #     Parent Loop BB6_12 Depth=2
+                                        # =>    This Inner Loop Header: Depth=3
+	movl	$0, (%rsi)
+	incq	%rdx
+	addq	$28, %rsi
+	cmpq	%rbp, %rdx
+	jle	.LBB6_14
+.LBB6_15:                               # %polly.merge.us
+                                        #   in Loop: Header=BB6_12 Depth=2
+	cmpq	%rax, %rcx
+	leaq	1(%rcx), %rcx
+	jle	.LBB6_12
+	jmp	.LBB6_3
+	.p2align	4, 0x90
+.LBB6_16:                               # %polly.par.loadIVBounds.split
+                                        #   in Loop: Header=BB6_4 Depth=1
+	cmpq	$0, 8(%rsp)             # 8-byte Folded Reload
+	js	.LBB6_21
+	.p2align	4, 0x90
+.LBB6_17:                               # %polly.loop_header.us29
+                                        #   Parent Loop BB6_4 Depth=1
+                                        # =>  This Loop Header: Depth=2
+                                        #       Child Loop BB6_19 Depth 3
+	cmpq	$1, %rcx
+	setne	%dl
+	orb	%bl, %dl
+	jne	.LBB6_20
+# BB#18:                                #   in Loop: Header=BB6_17 Depth=2
+	movq	$-1, %rdx
+	movq	%r14, %rsi
+	.p2align	4, 0x90
+.LBB6_19:                               # %polly.loop_header2.us39
+                                        #   Parent Loop BB6_4 Depth=1
+                                        #     Parent Loop BB6_17 Depth=2
+                                        # =>    This Inner Loop Header: Depth=3
+	movl	$0, (%rsi)
+	incq	%rdx
+	addq	$28, %rsi
+	cmpq	%rbp, %rdx
+	jle	.LBB6_19
+.LBB6_20:                               # %polly.merge.us44
+                                        #   in Loop: Header=BB6_17 Depth=2
+	cmpq	%rax, %rcx
+	leaq	1(%rcx), %rcx
+	jle	.LBB6_17
+	jmp	.LBB6_3
+.LBB6_21:                               # %polly.par.loadIVBounds.split.split
+                                        #   in Loop: Header=BB6_4 Depth=1
+	testq	%r13, %r13
+	js	.LBB6_22
+	.p2align	4, 0x90
+.LBB6_24:                               # %polly.loop_header.us51
+                                        #   Parent Loop BB6_4 Depth=1
+                                        # =>  This Loop Header: Depth=2
+                                        #       Child Loop BB6_26 Depth 3
+	cmpq	$1, %rcx
+	jne	.LBB6_27
+# BB#25:                                #   in Loop: Header=BB6_24 Depth=2
+	movq	$-1, %rdx
+	movq	%r14, %rsi
+	.p2align	4, 0x90
+.LBB6_26:                               # %polly.loop_header2.us61
+                                        #   Parent Loop BB6_4 Depth=1
+                                        #     Parent Loop BB6_24 Depth=2
+                                        # =>    This Inner Loop Header: Depth=3
+	movl	$0, (%rsi)
+	incq	%rdx
+	addq	$28, %rsi
+	cmpq	%rbp, %rdx
+	jle	.LBB6_26
+.LBB6_27:                               # %polly.merge.us66
+                                        #   in Loop: Header=BB6_24 Depth=2
+	cmpq	%rax, %rcx
+	leaq	1(%rcx), %rcx
+	jle	.LBB6_24
+	jmp	.LBB6_3
+.LBB6_22:                               # %polly.loop_header.preheader
+                                        #   in Loop: Header=BB6_4 Depth=1
+	decq	%rcx
+	.p2align	4, 0x90
+.LBB6_23:                               # %polly.loop_header
+                                        #   Parent Loop BB6_4 Depth=1
+                                        # =>  This Inner Loop Header: Depth=2
+	incq	%rcx
+	cmpq	%rax, %rcx
+	jle	.LBB6_23
+	.p2align	4, 0x90
+.LBB6_3:                                # %polly.par.checkNext.loopexit
+                                        #   in Loop: Header=BB6_4 Depth=1
+	leaq	24(%rsp), %rdi
+	leaq	16(%rsp), %rsi
+	callq	GOMP_loop_runtime_next
+	testb	%al, %al
+	jne	.LBB6_4
+.LBB6_2:                                # %polly.par.exit
+	callq	GOMP_loop_end_nowait
+	addq	$40, %rsp
+	popq	%rbx
+	popq	%r12
+	popq	%r13
+	popq	%r14
+	popq	%r15
+	popq	%rbp
+	retq
+.Lfunc_end6:
+	.size	maxMoney_polly_subfn_polly_subfn, .Lfunc_end6-maxMoney_polly_subfn_polly_subfn
+	.cfi_endproc
+
+	.p2align	4, 0x90
+	.type	maxMoney_polly_subfn_10,@function
+maxMoney_polly_subfn_10:                # @maxMoney_polly_subfn_10
+.Lfunc_begin7:
+	.cfi_startproc
+# BB#0:                                 # %polly.par.setup
+	pushq	%r15
+.Ltmp130:
+	.cfi_def_cfa_offset 16
+	pushq	%r14
+.Ltmp131:
+	.cfi_def_cfa_offset 24
+	pushq	%r13
+.Ltmp132:
+	.cfi_def_cfa_offset 32
+	pushq	%r12
+.Ltmp133:
+	.cfi_def_cfa_offset 40
+	pushq	%rbx
+.Ltmp134:
+	.cfi_def_cfa_offset 48
+	subq	$32, %rsp
+.Ltmp135:
+	.cfi_def_cfa_offset 80
+.Ltmp136:
+	.cfi_offset %rbx, -48
+.Ltmp137:
+	.cfi_offset %r12, -40
+.Ltmp138:
+	.cfi_offset %r13, -32
+.Ltmp139:
+	.cfi_offset %r14, -24
+.Ltmp140:
+	.cfi_offset %r15, -16
+	leaq	16(%rsp), %rdi
+	leaq	8(%rsp), %rsi
+	callq	GOMP_loop_runtime_next
+	testb	%al, %al
+	je	.LBB7_2
+# BB#1:
+	leaq	16(%rsp), %r14
+	leaq	8(%rsp), %r15
+	leaq	24(%rsp), %r12
+	.p2align	4, 0x90
+.LBB7_4:                                # %polly.par.loadIVBounds
+                                        # =>This Loop Header: Depth=1
+                                        #     Child Loop BB7_5 Depth 2
+	movq	8(%rsp), %r13
+	movq	16(%rsp), %rbx
+	addq	$-2, %r13
+	.p2align	4, 0x90
+.LBB7_5:                                # %polly.loop_header
+                                        #   Parent Loop BB7_4 Depth=1
+                                        # =>  This Inner Loop Header: Depth=2
+	cmpq	$3, %rbx
+	jge	.LBB7_7
+# BB#6:                                 # %polly.loop_preheader3
+                                        #   in Loop: Header=BB7_5 Depth=2
+	movl	$0, Y(,%rbx,4)
+	movl	$0, Y+28(,%rbx,4)
+	movl	$0, Y+56(,%rbx,4)
+	movl	$0, Y+84(,%rbx,4)
+	cmpq	$2, %rbx
+	je	.LBB7_8
+.LBB7_7:                                # %polly.parallel.for
+                                        #   in Loop: Header=BB7_5 Depth=2
+	movq	%rbx, 24(%rsp)
+	movl	$maxMoney_polly_subfn_10_polly_subfn, %edi
+	xorl	%edx, %edx
+	xorl	%ecx, %ecx
+	movl	$2, %r8d
+	movl	$1, %r9d
+	movq	%r12, %rsi
+	callq	GOMP_parallel_loop_runtime_start
+	movq	%r12, %rdi
+	callq	maxMoney_polly_subfn_10_polly_subfn
+	callq	GOMP_parallel_end
+.LBB7_8:                                # %polly.merge10
+                                        #   in Loop: Header=BB7_5 Depth=2
+	cmpq	%r13, %rbx
+	leaq	1(%rbx), %rbx
+	jle	.LBB7_5
+# BB#3:                                 # %polly.par.checkNext.loopexit
+                                        #   in Loop: Header=BB7_4 Depth=1
+	movq	%r14, %rdi
+	movq	%r15, %rsi
+	callq	GOMP_loop_runtime_next
+	testb	%al, %al
+	jne	.LBB7_4
+.LBB7_2:                                # %polly.par.exit
+	callq	GOMP_loop_end_nowait
+	addq	$32, %rsp
+	popq	%rbx
+	popq	%r12
+	popq	%r13
+	popq	%r14
+	popq	%r15
+	retq
+.Lfunc_end7:
+	.size	maxMoney_polly_subfn_10, .Lfunc_end7-maxMoney_polly_subfn_10
+	.cfi_endproc
+
+	.p2align	4, 0x90
+	.type	maxMoney_polly_subfn_10_polly_subfn,@function
+maxMoney_polly_subfn_10_polly_subfn:    # @maxMoney_polly_subfn_10_polly_subfn
+.Lfunc_begin8:
+	.cfi_startproc
+# BB#0:                                 # %polly.par.setup
+	pushq	%rbp
+.Ltmp141:
+	.cfi_def_cfa_offset 16
+	pushq	%r15
+.Ltmp142:
+	.cfi_def_cfa_offset 24
+	pushq	%r14
+.Ltmp143:
+	.cfi_def_cfa_offset 32
+	pushq	%r13
+.Ltmp144:
+	.cfi_def_cfa_offset 40
+	pushq	%r12
+.Ltmp145:
+	.cfi_def_cfa_offset 48
+	pushq	%rbx
+.Ltmp146:
+	.cfi_def_cfa_offset 56
+	subq	$40, %rsp
+.Ltmp147:
+	.cfi_def_cfa_offset 96
+.Ltmp148:
+	.cfi_offset %rbx, -56
+.Ltmp149:
+	.cfi_offset %r12, -48
+.Ltmp150:
+	.cfi_offset %r13, -40
+.Ltmp151:
+	.cfi_offset %r14, -32
+.Ltmp152:
+	.cfi_offset %r15, -24
+.Ltmp153:
+	.cfi_offset %rbp, -16
+	movq	(%rdi), %rbx
+	leaq	24(%rsp), %rdi
+	leaq	16(%rsp), %rsi
+	callq	GOMP_loop_runtime_next
+	testb	%al, %al
+	je	.LBB8_2
+# BB#1:                                 # %polly.par.loadIVBounds.preheader
+	movl	$1, %r13d
+	movq	%rbx, %rax
+	movq	%rax, 32(%rsp)          # 8-byte Spill
+	subq	%rax, %r13
+	movq	%r13, %rbx
+	shrq	$63, %rbx
+	movq	%rax, %rbp
+	negq	%rbp
+	movl	$5, %ecx
+	subq	%rax, %rcx
+	movq	%rcx, 8(%rsp)           # 8-byte Spill
+	movl	$4, %r15d
+	subq	%rax, %r15
+	leaq	Y+112(,%rax,4), %r14
+	leaq	Y(,%rax,4), %r12
+	.p2align	4, 0x90
+.LBB8_4:                                # %polly.par.loadIVBounds
+                                        # =>This Loop Header: Depth=1
+                                        #     Child Loop BB8_23 Depth 2
+                                        #     Child Loop BB8_24 Depth 2
+                                        #       Child Loop BB8_26 Depth 3
+                                        #     Child Loop BB8_17 Depth 2
+                                        #       Child Loop BB8_19 Depth 3
+                                        #     Child Loop BB8_12 Depth 2
+                                        #       Child Loop BB8_14 Depth 3
+                                        #     Child Loop BB8_6 Depth 2
+                                        #       Child Loop BB8_10 Depth 3
+                                        #       Child Loop BB8_9 Depth 3
+	movq	16(%rsp), %rax
+	movq	24(%rsp), %rcx
+	addq	$-2, %rax
+	cmpq	$3, 32(%rsp)            # 8-byte Folded Reload
+	jl	.LBB8_16
+# BB#5:                                 # %polly.par.loadIVBounds.split.us
+                                        #   in Loop: Header=BB8_4 Depth=1
+	cmpq	$0, 8(%rsp)             # 8-byte Folded Reload
+	js	.LBB8_12
+	.p2align	4, 0x90
+.LBB8_6:                                # %polly.loop_header.us.us
+                                        #   Parent Loop BB8_4 Depth=1
+                                        # =>  This Loop Header: Depth=2
+                                        #       Child Loop BB8_10 Depth 3
+                                        #       Child Loop BB8_9 Depth 3
+	movq	$-1, %rdx
+	cmpq	$1, %rcx
+	movq	%r12, %rsi
+	jne	.LBB8_10
+# BB#7:                                 # %polly.then.us.us
+                                        #   in Loop: Header=BB8_6 Depth=2
+	testq	%r13, %r13
+	js	.LBB8_11
+# BB#8:                                 #   in Loop: Header=BB8_6 Depth=2
+	movq	$-1, %rdx
+	movq	%r14, %rsi
+	.p2align	4, 0x90
+.LBB8_9:                                # %polly.loop_header2.us.us
+                                        #   Parent Loop BB8_4 Depth=1
+                                        #     Parent Loop BB8_6 Depth=2
+                                        # =>    This Inner Loop Header: Depth=3
+	movl	$0, (%rsi)
+	incq	%rdx
+	addq	$28, %rsi
+	cmpq	%rbp, %rdx
+	jle	.LBB8_9
+	jmp	.LBB8_11
+	.p2align	4, 0x90
+.LBB8_10:                               # %polly.loop_header15.us.us
+                                        #   Parent Loop BB8_4 Depth=1
+                                        #     Parent Loop BB8_6 Depth=2
+                                        # =>    This Inner Loop Header: Depth=3
+	movl	$0, (%rsi)
+	incq	%rdx
+	addq	$28, %rsi
+	cmpq	%r15, %rdx
+	jle	.LBB8_10
+.LBB8_11:                               # %polly.merge.us.us
+                                        #   in Loop: Header=BB8_6 Depth=2
+	cmpq	%rax, %rcx
+	leaq	1(%rcx), %rcx
+	jle	.LBB8_6
+	jmp	.LBB8_3
+	.p2align	4, 0x90
+.LBB8_12:                               # %polly.loop_header.us
+                                        #   Parent Loop BB8_4 Depth=1
+                                        # =>  This Loop Header: Depth=2
+                                        #       Child Loop BB8_14 Depth 3
+	cmpq	$1, %rcx
+	setne	%dl
+	orb	%bl, %dl
+	jne	.LBB8_15
+# BB#13:                                #   in Loop: Header=BB8_12 Depth=2
+	movq	$-1, %rdx
+	movq	%r14, %rsi
+	.p2align	4, 0x90
+.LBB8_14:                               # %polly.loop_header2.us
+                                        #   Parent Loop BB8_4 Depth=1
+                                        #     Parent Loop BB8_12 Depth=2
+                                        # =>    This Inner Loop Header: Depth=3
+	movl	$0, (%rsi)
+	incq	%rdx
+	addq	$28, %rsi
+	cmpq	%rbp, %rdx
+	jle	.LBB8_14
+.LBB8_15:                               # %polly.merge.us
+                                        #   in Loop: Header=BB8_12 Depth=2
+	cmpq	%rax, %rcx
+	leaq	1(%rcx), %rcx
+	jle	.LBB8_12
+	jmp	.LBB8_3
+	.p2align	4, 0x90
+.LBB8_16:                               # %polly.par.loadIVBounds.split
+                                        #   in Loop: Header=BB8_4 Depth=1
+	cmpq	$0, 8(%rsp)             # 8-byte Folded Reload
+	js	.LBB8_21
+	.p2align	4, 0x90
+.LBB8_17:                               # %polly.loop_header.us31
+                                        #   Parent Loop BB8_4 Depth=1
+                                        # =>  This Loop Header: Depth=2
+                                        #       Child Loop BB8_19 Depth 3
+	cmpq	$1, %rcx
+	setne	%dl
+	orb	%bl, %dl
+	jne	.LBB8_20
+# BB#18:                                #   in Loop: Header=BB8_17 Depth=2
+	movq	$-1, %rdx
+	movq	%r14, %rsi
+	.p2align	4, 0x90
+.LBB8_19:                               # %polly.loop_header2.us41
+                                        #   Parent Loop BB8_4 Depth=1
+                                        #     Parent Loop BB8_17 Depth=2
+                                        # =>    This Inner Loop Header: Depth=3
+	movl	$0, (%rsi)
+	incq	%rdx
+	addq	$28, %rsi
+	cmpq	%rbp, %rdx
+	jle	.LBB8_19
+.LBB8_20:                               # %polly.merge.us46
+                                        #   in Loop: Header=BB8_17 Depth=2
+	cmpq	%rax, %rcx
+	leaq	1(%rcx), %rcx
+	jle	.LBB8_17
+	jmp	.LBB8_3
+.LBB8_21:                               # %polly.par.loadIVBounds.split.split
+                                        #   in Loop: Header=BB8_4 Depth=1
+	testq	%r13, %r13
+	js	.LBB8_22
+	.p2align	4, 0x90
+.LBB8_24:                               # %polly.loop_header.us53
+                                        #   Parent Loop BB8_4 Depth=1
+                                        # =>  This Loop Header: Depth=2
+                                        #       Child Loop BB8_26 Depth 3
+	cmpq	$1, %rcx
+	jne	.LBB8_27
+# BB#25:                                #   in Loop: Header=BB8_24 Depth=2
+	movq	$-1, %rdx
+	movq	%r14, %rsi
+	.p2align	4, 0x90
+.LBB8_26:                               # %polly.loop_header2.us63
+                                        #   Parent Loop BB8_4 Depth=1
+                                        #     Parent Loop BB8_24 Depth=2
+                                        # =>    This Inner Loop Header: Depth=3
+	movl	$0, (%rsi)
+	incq	%rdx
+	addq	$28, %rsi
+	cmpq	%rbp, %rdx
+	jle	.LBB8_26
+.LBB8_27:                               # %polly.merge.us68
+                                        #   in Loop: Header=BB8_24 Depth=2
+	cmpq	%rax, %rcx
+	leaq	1(%rcx), %rcx
+	jle	.LBB8_24
+	jmp	.LBB8_3
+.LBB8_22:                               # %polly.loop_header.preheader
+                                        #   in Loop: Header=BB8_4 Depth=1
+	decq	%rcx
+	.p2align	4, 0x90
+.LBB8_23:                               # %polly.loop_header
+                                        #   Parent Loop BB8_4 Depth=1
+                                        # =>  This Inner Loop Header: Depth=2
+	incq	%rcx
+	cmpq	%rax, %rcx
+	jle	.LBB8_23
+	.p2align	4, 0x90
+.LBB8_3:                                # %polly.par.checkNext.loopexit
+                                        #   in Loop: Header=BB8_4 Depth=1
+	leaq	24(%rsp), %rdi
+	leaq	16(%rsp), %rsi
+	callq	GOMP_loop_runtime_next
+	testb	%al, %al
+	jne	.LBB8_4
+.LBB8_2:                                # %polly.par.exit
+	callq	GOMP_loop_end_nowait
+	addq	$40, %rsp
+	popq	%rbx
+	popq	%r12
+	popq	%r13
+	popq	%r14
+	popq	%r15
+	popq	%rbp
+	retq
+.Lfunc_end8:
+	.size	maxMoney_polly_subfn_10_polly_subfn, .Lfunc_end8-maxMoney_polly_subfn_10_polly_subfn
+	.cfi_endproc
+
+	.p2align	4, 0x90
+	.type	maxMoney_polly_subfn_11,@function
+maxMoney_polly_subfn_11:                # @maxMoney_polly_subfn_11
+.Lfunc_begin9:
+	.cfi_startproc
+# BB#0:                                 # %polly.par.setup
+	pushq	%r15
+.Ltmp154:
+	.cfi_def_cfa_offset 16
+	pushq	%r14
+.Ltmp155:
+	.cfi_def_cfa_offset 24
+	pushq	%r13
+.Ltmp156:
+	.cfi_def_cfa_offset 32
+	pushq	%r12
+.Ltmp157:
+	.cfi_def_cfa_offset 40
+	pushq	%rbx
+.Ltmp158:
+	.cfi_def_cfa_offset 48
+	subq	$32, %rsp
+.Ltmp159:
+	.cfi_def_cfa_offset 80
+.Ltmp160:
+	.cfi_offset %rbx, -48
+.Ltmp161:
+	.cfi_offset %r12, -40
+.Ltmp162:
+	.cfi_offset %r13, -32
+.Ltmp163:
+	.cfi_offset %r14, -24
+.Ltmp164:
+	.cfi_offset %r15, -16
+	leaq	16(%rsp), %rdi
+	leaq	8(%rsp), %rsi
+	callq	GOMP_loop_runtime_next
+	testb	%al, %al
+	je	.LBB9_2
+# BB#1:
+	leaq	16(%rsp), %r14
+	leaq	8(%rsp), %r15
+	leaq	24(%rsp), %r12
+	.p2align	4, 0x90
+.LBB9_4:                                # %polly.par.loadIVBounds
+                                        # =>This Loop Header: Depth=1
+                                        #     Child Loop BB9_5 Depth 2
+	movq	8(%rsp), %r13
+	movq	16(%rsp), %rbx
+	addq	$-2, %r13
+	.p2align	4, 0x90
+.LBB9_5:                                # %polly.loop_header
+                                        #   Parent Loop BB9_4 Depth=1
+                                        # =>  This Inner Loop Header: Depth=2
+	cmpq	$3, %rbx
+	jge	.LBB9_7
+# BB#6:                                 # %polly.loop_preheader3
+                                        #   in Loop: Header=BB9_5 Depth=2
+	movl	$0, Z(,%rbx,4)
+	movl	$0, Z+28(,%rbx,4)
+	movl	$0, Z+56(,%rbx,4)
+	movl	$0, Z+84(,%rbx,4)
+	cmpq	$2, %rbx
+	je	.LBB9_8
+.LBB9_7:                                # %polly.parallel.for
+                                        #   in Loop: Header=BB9_5 Depth=2
+	movq	%rbx, 24(%rsp)
+	movl	$maxMoney_polly_subfn_11_polly_subfn, %edi
+	xorl	%edx, %edx
+	xorl	%ecx, %ecx
+	movl	$2, %r8d
+	movl	$1, %r9d
+	movq	%r12, %rsi
+	callq	GOMP_parallel_loop_runtime_start
+	movq	%r12, %rdi
+	callq	maxMoney_polly_subfn_11_polly_subfn
+	callq	GOMP_parallel_end
+.LBB9_8:                                # %polly.merge10
+                                        #   in Loop: Header=BB9_5 Depth=2
+	cmpq	%r13, %rbx
+	leaq	1(%rbx), %rbx
+	jle	.LBB9_5
+# BB#3:                                 # %polly.par.checkNext.loopexit
+                                        #   in Loop: Header=BB9_4 Depth=1
+	movq	%r14, %rdi
+	movq	%r15, %rsi
+	callq	GOMP_loop_runtime_next
+	testb	%al, %al
+	jne	.LBB9_4
+.LBB9_2:                                # %polly.par.exit
+	callq	GOMP_loop_end_nowait
+	addq	$32, %rsp
+	popq	%rbx
+	popq	%r12
+	popq	%r13
+	popq	%r14
+	popq	%r15
+	retq
+.Lfunc_end9:
+	.size	maxMoney_polly_subfn_11, .Lfunc_end9-maxMoney_polly_subfn_11
+	.cfi_endproc
+
+	.p2align	4, 0x90
+	.type	maxMoney_polly_subfn_11_polly_subfn,@function
+maxMoney_polly_subfn_11_polly_subfn:    # @maxMoney_polly_subfn_11_polly_subfn
+.Lfunc_begin10:
+	.cfi_startproc
+# BB#0:                                 # %polly.par.setup
+	pushq	%rbp
+.Ltmp165:
+	.cfi_def_cfa_offset 16
+	pushq	%r15
+.Ltmp166:
+	.cfi_def_cfa_offset 24
+	pushq	%r14
+.Ltmp167:
+	.cfi_def_cfa_offset 32
+	pushq	%r13
+.Ltmp168:
+	.cfi_def_cfa_offset 40
+	pushq	%r12
+.Ltmp169:
+	.cfi_def_cfa_offset 48
+	pushq	%rbx
+.Ltmp170:
+	.cfi_def_cfa_offset 56
+	subq	$40, %rsp
+.Ltmp171:
+	.cfi_def_cfa_offset 96
+.Ltmp172:
+	.cfi_offset %rbx, -56
+.Ltmp173:
+	.cfi_offset %r12, -48
+.Ltmp174:
+	.cfi_offset %r13, -40
+.Ltmp175:
+	.cfi_offset %r14, -32
+.Ltmp176:
+	.cfi_offset %r15, -24
+.Ltmp177:
+	.cfi_offset %rbp, -16
+	movq	(%rdi), %rbx
+	leaq	24(%rsp), %rdi
+	leaq	16(%rsp), %rsi
+	callq	GOMP_loop_runtime_next
+	testb	%al, %al
+	je	.LBB10_2
+# BB#1:                                 # %polly.par.loadIVBounds.preheader
+	movl	$1, %r13d
+	movq	%rbx, %rax
+	movq	%rax, 32(%rsp)          # 8-byte Spill
+	subq	%rax, %r13
+	movq	%r13, %rbx
+	shrq	$63, %rbx
+	movq	%rax, %rbp
+	negq	%rbp
+	movl	$5, %ecx
+	subq	%rax, %rcx
+	movq	%rcx, 8(%rsp)           # 8-byte Spill
+	movl	$4, %r15d
+	subq	%rax, %r15
+	leaq	Z+112(,%rax,4), %r14
+	leaq	Z(,%rax,4), %r12
+	.p2align	4, 0x90
+.LBB10_4:                               # %polly.par.loadIVBounds
+                                        # =>This Loop Header: Depth=1
+                                        #     Child Loop BB10_23 Depth 2
+                                        #     Child Loop BB10_24 Depth 2
+                                        #       Child Loop BB10_26 Depth 3
+                                        #     Child Loop BB10_17 Depth 2
+                                        #       Child Loop BB10_19 Depth 3
+                                        #     Child Loop BB10_12 Depth 2
+                                        #       Child Loop BB10_14 Depth 3
+                                        #     Child Loop BB10_6 Depth 2
+                                        #       Child Loop BB10_10 Depth 3
+                                        #       Child Loop BB10_9 Depth 3
+	movq	16(%rsp), %rax
+	movq	24(%rsp), %rcx
+	addq	$-2, %rax
+	cmpq	$3, 32(%rsp)            # 8-byte Folded Reload
+	jl	.LBB10_16
+# BB#5:                                 # %polly.par.loadIVBounds.split.us
+                                        #   in Loop: Header=BB10_4 Depth=1
+	cmpq	$0, 8(%rsp)             # 8-byte Folded Reload
+	js	.LBB10_12
+	.p2align	4, 0x90
+.LBB10_6:                               # %polly.loop_header.us.us
+                                        #   Parent Loop BB10_4 Depth=1
+                                        # =>  This Loop Header: Depth=2
+                                        #       Child Loop BB10_10 Depth 3
+                                        #       Child Loop BB10_9 Depth 3
+	movq	$-1, %rdx
+	cmpq	$1, %rcx
+	movq	%r12, %rsi
+	jne	.LBB10_10
+# BB#7:                                 # %polly.then.us.us
+                                        #   in Loop: Header=BB10_6 Depth=2
+	testq	%r13, %r13
+	js	.LBB10_11
+# BB#8:                                 #   in Loop: Header=BB10_6 Depth=2
+	movq	$-1, %rdx
+	movq	%r14, %rsi
+	.p2align	4, 0x90
+.LBB10_9:                               # %polly.loop_header2.us.us
+                                        #   Parent Loop BB10_4 Depth=1
+                                        #     Parent Loop BB10_6 Depth=2
+                                        # =>    This Inner Loop Header: Depth=3
+	movl	$0, (%rsi)
+	incq	%rdx
+	addq	$28, %rsi
+	cmpq	%rbp, %rdx
+	jle	.LBB10_9
+	jmp	.LBB10_11
+	.p2align	4, 0x90
+.LBB10_10:                              # %polly.loop_header15.us.us
+                                        #   Parent Loop BB10_4 Depth=1
+                                        #     Parent Loop BB10_6 Depth=2
+                                        # =>    This Inner Loop Header: Depth=3
+	movl	$0, (%rsi)
+	incq	%rdx
+	addq	$28, %rsi
+	cmpq	%r15, %rdx
+	jle	.LBB10_10
+.LBB10_11:                              # %polly.merge.us.us
+                                        #   in Loop: Header=BB10_6 Depth=2
+	cmpq	%rax, %rcx
+	leaq	1(%rcx), %rcx
+	jle	.LBB10_6
+	jmp	.LBB10_3
+	.p2align	4, 0x90
+.LBB10_12:                              # %polly.loop_header.us
+                                        #   Parent Loop BB10_4 Depth=1
+                                        # =>  This Loop Header: Depth=2
+                                        #       Child Loop BB10_14 Depth 3
+	cmpq	$1, %rcx
+	setne	%dl
+	orb	%bl, %dl
+	jne	.LBB10_15
+# BB#13:                                #   in Loop: Header=BB10_12 Depth=2
+	movq	$-1, %rdx
+	movq	%r14, %rsi
+	.p2align	4, 0x90
+.LBB10_14:                              # %polly.loop_header2.us
+                                        #   Parent Loop BB10_4 Depth=1
+                                        #     Parent Loop BB10_12 Depth=2
+                                        # =>    This Inner Loop Header: Depth=3
+	movl	$0, (%rsi)
+	incq	%rdx
+	addq	$28, %rsi
+	cmpq	%rbp, %rdx
+	jle	.LBB10_14
+.LBB10_15:                              # %polly.merge.us
+                                        #   in Loop: Header=BB10_12 Depth=2
+	cmpq	%rax, %rcx
+	leaq	1(%rcx), %rcx
+	jle	.LBB10_12
+	jmp	.LBB10_3
+	.p2align	4, 0x90
+.LBB10_16:                              # %polly.par.loadIVBounds.split
+                                        #   in Loop: Header=BB10_4 Depth=1
+	cmpq	$0, 8(%rsp)             # 8-byte Folded Reload
+	js	.LBB10_21
+	.p2align	4, 0x90
+.LBB10_17:                              # %polly.loop_header.us29
+                                        #   Parent Loop BB10_4 Depth=1
+                                        # =>  This Loop Header: Depth=2
+                                        #       Child Loop BB10_19 Depth 3
+	cmpq	$1, %rcx
+	setne	%dl
+	orb	%bl, %dl
+	jne	.LBB10_20
+# BB#18:                                #   in Loop: Header=BB10_17 Depth=2
+	movq	$-1, %rdx
+	movq	%r14, %rsi
+	.p2align	4, 0x90
+.LBB10_19:                              # %polly.loop_header2.us39
+                                        #   Parent Loop BB10_4 Depth=1
+                                        #     Parent Loop BB10_17 Depth=2
+                                        # =>    This Inner Loop Header: Depth=3
+	movl	$0, (%rsi)
+	incq	%rdx
+	addq	$28, %rsi
+	cmpq	%rbp, %rdx
+	jle	.LBB10_19
+.LBB10_20:                              # %polly.merge.us44
+                                        #   in Loop: Header=BB10_17 Depth=2
+	cmpq	%rax, %rcx
+	leaq	1(%rcx), %rcx
+	jle	.LBB10_17
+	jmp	.LBB10_3
+.LBB10_21:                              # %polly.par.loadIVBounds.split.split
+                                        #   in Loop: Header=BB10_4 Depth=1
+	testq	%r13, %r13
+	js	.LBB10_22
+	.p2align	4, 0x90
+.LBB10_24:                              # %polly.loop_header.us51
+                                        #   Parent Loop BB10_4 Depth=1
+                                        # =>  This Loop Header: Depth=2
+                                        #       Child Loop BB10_26 Depth 3
+	cmpq	$1, %rcx
+	jne	.LBB10_27
+# BB#25:                                #   in Loop: Header=BB10_24 Depth=2
+	movq	$-1, %rdx
+	movq	%r14, %rsi
+	.p2align	4, 0x90
+.LBB10_26:                              # %polly.loop_header2.us61
+                                        #   Parent Loop BB10_4 Depth=1
+                                        #     Parent Loop BB10_24 Depth=2
+                                        # =>    This Inner Loop Header: Depth=3
+	movl	$0, (%rsi)
+	incq	%rdx
+	addq	$28, %rsi
+	cmpq	%rbp, %rdx
+	jle	.LBB10_26
+.LBB10_27:                              # %polly.merge.us66
+                                        #   in Loop: Header=BB10_24 Depth=2
+	cmpq	%rax, %rcx
+	leaq	1(%rcx), %rcx
+	jle	.LBB10_24
+	jmp	.LBB10_3
+.LBB10_22:                              # %polly.loop_header.preheader
+                                        #   in Loop: Header=BB10_4 Depth=1
+	decq	%rcx
+	.p2align	4, 0x90
+.LBB10_23:                              # %polly.loop_header
+                                        #   Parent Loop BB10_4 Depth=1
+                                        # =>  This Inner Loop Header: Depth=2
+	incq	%rcx
+	cmpq	%rax, %rcx
+	jle	.LBB10_23
+	.p2align	4, 0x90
+.LBB10_3:                               # %polly.par.checkNext.loopexit
+                                        #   in Loop: Header=BB10_4 Depth=1
+	leaq	24(%rsp), %rdi
+	leaq	16(%rsp), %rsi
+	callq	GOMP_loop_runtime_next
+	testb	%al, %al
+	jne	.LBB10_4
+.LBB10_2:                               # %polly.par.exit
+	callq	GOMP_loop_end_nowait
+	addq	$40, %rsp
+	popq	%rbx
+	popq	%r12
+	popq	%r13
+	popq	%r14
+	popq	%r15
+	popq	%rbp
+	retq
+.Lfunc_end10:
+	.size	maxMoney_polly_subfn_11_polly_subfn, .Lfunc_end10-maxMoney_polly_subfn_11_polly_subfn
 	.cfi_endproc
 
 	.type	V,@object               # @V
@@ -676,10 +1865,10 @@ sum_bob:
 	.asciz	", "
 	.size	.L.str.4, 3
 
-	.type	X,@object               # @X
-	.comm	X,144,16
 	.type	Y,@object               # @Y
 	.comm	Y,144,16
+	.type	X,@object               # @X
+	.comm	X,144,16
 	.type	Z,@object               # @Z
 	.comm	Z,144,16
 	.type	.L.str.6,@object        # @.str.6
@@ -814,19 +2003,19 @@ sum_bob:
 	.quad	0
 	.quad	0
 .Ldebug_loc4:
-	.quad	.Ltmp74-.Lfunc_begin0
-	.quad	.Ltmp83-.Lfunc_begin0
+	.quad	.Ltmp84-.Lfunc_begin0
+	.quad	.Ltmp93-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
 	.byte	1                       # 1
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp83-.Lfunc_begin0
-	.quad	.Ltmp85-.Lfunc_begin0
+	.quad	.Ltmp93-.Lfunc_begin0
+	.quad	.Ltmp95-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
 	.byte	0                       # 0
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp85-.Lfunc_begin0
+	.quad	.Ltmp95-.Lfunc_begin0
 	.quad	.Lfunc_end4-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
@@ -835,8 +2024,14 @@ sum_bob:
 	.quad	0
 	.quad	0
 .Ldebug_loc5:
-	.quad	.Ltmp76-.Lfunc_begin0
-	.quad	.Ltmp88-.Lfunc_begin0
+	.quad	.Ltmp86-.Lfunc_begin0
+	.quad	.Ltmp100-.Lfunc_begin0
+	.short	3                       # Loc expr size
+	.byte	89                      # super-register DW_OP_reg9
+	.byte	147                     # DW_OP_piece
+	.byte	4                       # 4
+	.quad	.Ltmp101-.Lfunc_begin0
+	.quad	.Ltmp104-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	89                      # super-register DW_OP_reg9
 	.byte	147                     # DW_OP_piece
@@ -1135,7 +2330,7 @@ sum_bob:
 	.long	63                      # DW_AT_type
                                         # DW_AT_external
 	.byte	1                       # DW_AT_decl_file
-	.byte	20                      # DW_AT_decl_line
+	.byte	14                      # DW_AT_decl_line
 	.byte	9                       # DW_AT_location
 	.byte	3
 	.quad	V
@@ -1158,7 +2353,7 @@ sum_bob:
 	.long	75                      # DW_AT_type
                                         # DW_AT_external
 	.byte	1                       # DW_AT_decl_file
-	.byte	29                      # DW_AT_decl_line
+	.byte	23                      # DW_AT_decl_line
 	.byte	9                       # DW_AT_location
 	.byte	3
 	.quad	sum_alice
@@ -1167,7 +2362,7 @@ sum_bob:
 	.long	75                      # DW_AT_type
                                         # DW_AT_external
 	.byte	1                       # DW_AT_decl_file
-	.byte	29                      # DW_AT_decl_line
+	.byte	23                      # DW_AT_decl_line
 	.byte	9                       # DW_AT_location
 	.byte	3
 	.quad	sum_bob
@@ -1176,7 +2371,7 @@ sum_bob:
 	.long	152                     # DW_AT_type
                                         # DW_AT_external
 	.byte	1                       # DW_AT_decl_file
-	.byte	23                      # DW_AT_decl_line
+	.byte	17                      # DW_AT_decl_line
 	.byte	9                       # DW_AT_location
 	.byte	3
 	.quad	M
@@ -1194,7 +2389,7 @@ sum_bob:
 	.long	152                     # DW_AT_type
                                         # DW_AT_external
 	.byte	1                       # DW_AT_decl_file
-	.byte	26                      # DW_AT_decl_line
+	.byte	20                      # DW_AT_decl_line
 	.byte	9                       # DW_AT_location
 	.byte	3
 	.quad	X
@@ -1203,7 +2398,7 @@ sum_bob:
 	.long	152                     # DW_AT_type
                                         # DW_AT_external
 	.byte	1                       # DW_AT_decl_file
-	.byte	27                      # DW_AT_decl_line
+	.byte	21                      # DW_AT_decl_line
 	.byte	9                       # DW_AT_location
 	.byte	3
 	.quad	Y
@@ -1212,7 +2407,7 @@ sum_bob:
 	.long	152                     # DW_AT_type
                                         # DW_AT_external
 	.byte	1                       # DW_AT_decl_file
-	.byte	28                      # DW_AT_decl_line
+	.byte	22                      # DW_AT_decl_line
 	.byte	9                       # DW_AT_location
 	.byte	3
 	.quad	Z
@@ -1224,14 +2419,14 @@ sum_bob:
 	.byte	87
 	.long	.Linfo_string19         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	31                      # DW_AT_decl_line
+	.byte	25                      # DW_AT_decl_line
                                         # DW_AT_external
                                         # DW_AT_APPLE_optimized
 	.byte	8                       # Abbrev [8] 0xfe:0xc DW_TAG_variable
 	.byte	0                       # DW_AT_const_value
 	.long	.Linfo_string14         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	32                      # DW_AT_decl_line
+	.byte	26                      # DW_AT_decl_line
 	.long	75                      # DW_AT_type
 	.byte	0                       # End Of Children Mark
 	.byte	9                       # Abbrev [9] 0x10b:0x4a DW_TAG_subprogram
@@ -1270,26 +2465,26 @@ sum_bob:
 	.byte	87
 	.long	.Linfo_string20         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	69                      # DW_AT_decl_line
+	.byte	62                      # DW_AT_decl_line
                                         # DW_AT_external
                                         # DW_AT_APPLE_optimized
 	.byte	8                       # Abbrev [8] 0x16a:0xc DW_TAG_variable
 	.byte	0                       # DW_AT_const_value
 	.long	.Linfo_string14         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	70                      # DW_AT_decl_line
+	.byte	63                      # DW_AT_decl_line
 	.long	75                      # DW_AT_type
 	.byte	8                       # Abbrev [8] 0x176:0xc DW_TAG_variable
 	.byte	5                       # DW_AT_const_value
 	.long	.Linfo_string13         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	70                      # DW_AT_decl_line
+	.byte	63                      # DW_AT_decl_line
 	.long	75                      # DW_AT_type
 	.byte	14                      # Abbrev [14] 0x182:0xc DW_TAG_variable
 	.byte	1                       # DW_AT_const_value
 	.long	.Linfo_string15         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	71                      # DW_AT_decl_line
+	.byte	64                      # DW_AT_decl_line
 	.long	670                     # DW_AT_type
 	.byte	12                      # Abbrev [12] 0x18e:0x2c DW_TAG_lexical_block
 	.quad	.Ltmp34                 # DW_AT_low_pc
@@ -1298,13 +2493,13 @@ sum_bob:
 	.long	.Ldebug_loc2            # DW_AT_location
 	.long	.Linfo_string16         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	73                      # DW_AT_decl_line
+	.byte	66                      # DW_AT_decl_line
 	.long	75                      # DW_AT_type
 	.byte	15                      # Abbrev [15] 0x1aa:0xf DW_TAG_variable
 	.long	.Ldebug_loc3            # DW_AT_location
 	.long	.Linfo_string17         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	74                      # DW_AT_decl_line
+	.byte	67                      # DW_AT_decl_line
 	.long	75                      # DW_AT_type
 	.byte	0                       # End Of Children Mark
 	.byte	0                       # End Of Children Mark
@@ -1316,7 +2511,7 @@ sum_bob:
 	.byte	87
 	.long	.Linfo_string21         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	98                      # DW_AT_decl_line
+	.byte	91                      # DW_AT_decl_line
 	.long	75                      # DW_AT_type
                                         # DW_AT_external
                                         # DW_AT_APPLE_optimized
@@ -1324,56 +2519,56 @@ sum_bob:
 	.byte	0                       # DW_AT_const_value
 	.long	.Linfo_string24         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	99                      # DW_AT_decl_line
+	.byte	92                      # DW_AT_decl_line
 	.long	75                      # DW_AT_type
 	.byte	17                      # Abbrev [17] 0x1e0:0xb DW_TAG_variable
 	.long	.Linfo_string14         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	99                      # DW_AT_decl_line
+	.byte	92                      # DW_AT_decl_line
 	.long	75                      # DW_AT_type
 	.byte	17                      # Abbrev [17] 0x1eb:0xb DW_TAG_variable
 	.long	.Linfo_string13         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	99                      # DW_AT_decl_line
+	.byte	92                      # DW_AT_decl_line
 	.long	75                      # DW_AT_type
 	.byte	0                       # End Of Children Mark
 	.byte	18                      # Abbrev [18] 0x1f7:0x4d DW_TAG_subprogram
 	.long	.Linfo_string12         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	40                      # DW_AT_decl_line
+	.byte	34                      # DW_AT_decl_line
                                         # DW_AT_external
                                         # DW_AT_APPLE_optimized
 	.byte	1                       # DW_AT_inline
 	.byte	17                      # Abbrev [17] 0x1ff:0xb DW_TAG_variable
 	.long	.Linfo_string13         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	41                      # DW_AT_decl_line
+	.byte	35                      # DW_AT_decl_line
 	.long	75                      # DW_AT_type
 	.byte	17                      # Abbrev [17] 0x20a:0xb DW_TAG_variable
 	.long	.Linfo_string14         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	41                      # DW_AT_decl_line
+	.byte	35                      # DW_AT_decl_line
 	.long	75                      # DW_AT_type
 	.byte	17                      # Abbrev [17] 0x215:0xb DW_TAG_variable
 	.long	.Linfo_string15         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	42                      # DW_AT_decl_line
+	.byte	36                      # DW_AT_decl_line
 	.long	75                      # DW_AT_type
 	.byte	19                      # Abbrev [19] 0x220:0x23 DW_TAG_lexical_block
 	.byte	17                      # Abbrev [17] 0x221:0xb DW_TAG_variable
 	.long	.Linfo_string16         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	44                      # DW_AT_decl_line
+	.byte	38                      # DW_AT_decl_line
 	.long	75                      # DW_AT_type
 	.byte	17                      # Abbrev [17] 0x22c:0xb DW_TAG_variable
 	.long	.Linfo_string17         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	45                      # DW_AT_decl_line
+	.byte	39                      # DW_AT_decl_line
 	.long	75                      # DW_AT_type
 	.byte	17                      # Abbrev [17] 0x237:0xb DW_TAG_variable
 	.long	.Linfo_string18         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	46                      # DW_AT_decl_line
+	.byte	40                      # DW_AT_decl_line
 	.long	75                      # DW_AT_type
 	.byte	0                       # End Of Children Mark
 	.byte	0                       # End Of Children Mark
@@ -1385,16 +2580,16 @@ sum_bob:
 	.byte	87
 	.long	.Linfo_string22         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	138                     # DW_AT_decl_line
+	.byte	142                     # DW_AT_decl_line
 	.long	75                      # DW_AT_type
                                         # DW_AT_external
                                         # DW_AT_APPLE_optimized
 	.byte	20                      # Abbrev [20] 0x25d:0x40 DW_TAG_inlined_subroutine
 	.long	503                     # DW_AT_abstract_origin
-	.quad	.Ltmp75                 # DW_AT_low_pc
-	.long	.Ltmp87-.Ltmp75         # DW_AT_high_pc
+	.quad	.Ltmp85                 # DW_AT_low_pc
+	.long	.Ltmp97-.Ltmp85         # DW_AT_high_pc
 	.byte	1                       # DW_AT_call_file
-	.byte	141                     # DW_AT_call_line
+	.byte	145                     # DW_AT_call_line
 	.byte	10                      # Abbrev [10] 0x270:0x6 DW_TAG_variable
 	.byte	5                       # DW_AT_const_value
 	.long	511                     # DW_AT_abstract_origin
@@ -1405,8 +2600,8 @@ sum_bob:
 	.long	.Ldebug_loc4            # DW_AT_location
 	.long	533                     # DW_AT_abstract_origin
 	.byte	12                      # Abbrev [12] 0x285:0x17 DW_TAG_lexical_block
-	.quad	.Ltmp75                 # DW_AT_low_pc
-	.long	.Ltmp86-.Ltmp75         # DW_AT_high_pc
+	.quad	.Ltmp85                 # DW_AT_low_pc
+	.long	.Ltmp96-.Ltmp85         # DW_AT_high_pc
 	.byte	11                      # Abbrev [11] 0x292:0x9 DW_TAG_variable
 	.long	.Ldebug_loc5            # DW_AT_location
 	.long	545                     # DW_AT_abstract_origin

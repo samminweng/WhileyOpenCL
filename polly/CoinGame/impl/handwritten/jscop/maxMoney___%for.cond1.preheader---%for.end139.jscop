@@ -1,0 +1,164 @@
+{
+   "context" : "{  :  }",
+   "location" : "CoinGame.c:92-130",
+   "name" : "for.cond1.preheader => for.end139",
+   "statements" : [
+      {
+         "accesses" : [
+            {
+               "kind" : "write",
+               "relation" : "{ Stmt_for_body3[i0, i1] -> MemRef_Y[i1, i0 + i1] }"
+            }
+         ],
+         "domain" : "{ Stmt_for_body3[i0, i1] : i0 >= 0 and 0 <= i1 <= 5 - i0 }",
+         "name" : "Stmt_for_body3",
+         "schedule" : "{ Stmt_for_body3[i0, i1] -> [i0, 0, i1, 0] }"
+      },
+      {
+         "accesses" : [
+            {
+               "kind" : "read",
+               "relation" : "{ Stmt_if_then[i0, i1] -> MemRef_M[1 + i1, -1 + i0 + i1] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "{ Stmt_if_then[i0, i1] -> MemRef_Y[i1, i0 + i1] }"
+            }
+         ],
+         "domain" : "{ Stmt_if_then[i0, i1] : i0 >= 0 and i1 >= 0 and -i0 < i1 <= 5 - i0 and i1 <= 4 }",
+         "name" : "Stmt_if_then",
+         "schedule" : "{ Stmt_if_then[i0, i1] -> [i0, 0, i1, 1] }"
+      },
+      {
+         "accesses" : [
+            {
+               "kind" : "write",
+               "relation" : "{ Stmt_if_end[i0, i1] -> MemRef_X[i1, i0 + i1] }"
+            }
+         ],
+         "domain" : "{ Stmt_if_end[i0, i1] : i0 >= 0 and 0 <= i1 <= 5 - i0 }",
+         "name" : "Stmt_if_end",
+         "schedule" : "{ Stmt_if_end[i0, i1] -> [i0, 0, i1, 2] }"
+      },
+      {
+         "accesses" : [
+            {
+               "kind" : "read",
+               "relation" : "{ Stmt_if_then24__TO__if_end53[i0, i1] -> MemRef_M[2 + i1, i0 + i1] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "{ Stmt_if_then24__TO__if_end53[i0, i1] -> MemRef_X[i1, i0 + i1] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "{ Stmt_if_then24__TO__if_end53[i0, i1] -> MemRef_X[i1, i0 + i1] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "{ Stmt_if_then24__TO__if_end53[i0, i1] -> MemRef_Y[i1, i0 + i1] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "{ Stmt_if_then24__TO__if_end53[i0, i1] -> MemRef_Y[i1, i0 + i1] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "{ Stmt_if_then24__TO__if_end53[i0, i1] -> MemRef_X[i1, i0 + i1] }"
+            }
+         ],
+         "domain" : "{ Stmt_if_then24__TO__if_end53[i0, i1] : i0 >= 0 and 0 <= i1 <= 5 - i0 and i1 <= 3 }",
+         "name" : "Stmt_if_then24__TO__if_end53",
+         "schedule" : "{ Stmt_if_then24__TO__if_end53[i0, i1] -> [i0, 0, i1, 3] }"
+      },
+      {
+         "accesses" : [
+            {
+               "kind" : "write",
+               "relation" : "{ Stmt_if_end53[i0, i1] -> MemRef_Z[i1, i0 + i1] }"
+            }
+         ],
+         "domain" : "{ Stmt_if_end53[i0, i1] : i0 >= 0 and 0 <= i1 <= 5 - i0 }",
+         "name" : "Stmt_if_end53",
+         "schedule" : "{ Stmt_if_end53[i0, i1] -> [i0, 0, i1, 4] }"
+      },
+      {
+         "accesses" : [
+            {
+               "kind" : "read",
+               "relation" : "{ Stmt_if_then60__TO__for_inc[i0, i1] -> MemRef_M[i1, -2 + i0 + i1] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "{ Stmt_if_then60__TO__for_inc[i0, i1] -> MemRef_Z[i1, i0 + i1] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "{ Stmt_if_then60__TO__for_inc[i0, i1] -> MemRef_Z[i1, i0 + i1] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "{ Stmt_if_then60__TO__for_inc[i0, i1] -> MemRef_Y[i1, i0 + i1] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "{ Stmt_if_then60__TO__for_inc[i0, i1] -> MemRef_Y[i1, i0 + i1] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "{ Stmt_if_then60__TO__for_inc[i0, i1] -> MemRef_Z[i1, i0 + i1] }"
+            }
+         ],
+         "domain" : "{ Stmt_if_then60__TO__for_inc[i0, i1] : i0 >= 0 and i1 >= 0 and 2 - i0 <= i1 <= 5 - i0 }",
+         "name" : "Stmt_if_then60__TO__for_inc",
+         "schedule" : "{ Stmt_if_then60__TO__for_inc[i0, i1] -> [i0, 0, i1, 5] }"
+      },
+      {
+         "accesses" : [
+            {
+               "kind" : "read",
+               "relation" : "{ Stmt_for_body93__TO__for_inc133[i0, i1] -> MemRef_V[i1] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "{ Stmt_for_body93__TO__for_inc133[i0, i1] -> MemRef_X[i1, i0 + i1] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "{ Stmt_for_body93__TO__for_inc133[i0, i1] -> MemRef_V[i0 + i1] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "{ Stmt_for_body93__TO__for_inc133[i0, i1] -> MemRef_Z[i1, i0 + i1] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "{ Stmt_for_body93__TO__for_inc133[i0, i1] -> MemRef_V[i1] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "{ Stmt_for_body93__TO__for_inc133[i0, i1] -> MemRef_X[i1, i0 + i1] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "{ Stmt_for_body93__TO__for_inc133[i0, i1] -> MemRef_M[i1, i0 + i1] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "{ Stmt_for_body93__TO__for_inc133[i0, i1] -> MemRef_V[i0 + i1] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "{ Stmt_for_body93__TO__for_inc133[i0, i1] -> MemRef_Z[i1, i0 + i1] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "{ Stmt_for_body93__TO__for_inc133[i0, i1] -> MemRef_M[i1, i0 + i1] }"
+            }
+         ],
+         "domain" : "{ Stmt_for_body93__TO__for_inc133[i0, i1] : i0 >= 0 and 0 <= i1 <= 5 - i0 }",
+         "name" : "Stmt_for_body93__TO__for_inc133",
+         "schedule" : "{ Stmt_for_body93__TO__for_inc133[i0, i1] -> [i0, 1, i1, 0] }"
+      }
+   ]
+}

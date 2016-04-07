@@ -2,12 +2,6 @@
 #include <stdbool.h>
 #include <time.h>
 #include <stdlib.h>
-#ifndef max
-#define max( a, b ) ( ((a) > (b)) ? (a) : (b) )
-#endif
-#ifndef min
-#define min( a, b ) ( ((a) < (b)) ? (a) : (b) )
-#endif
 /**
  *  Coin-in-A-line Game
  *  Coins are arranged in a line.
@@ -98,34 +92,44 @@ int maxMoney() {
 	int s, i, j;
 	for (s = 0; s < N; s++) {
 		//calculate x, y, z
-		for (i = 0, j = s; j<N; i++, j++) {
-			__builtin_assume(i<N); __builtin_assume(j<N);
-			X[i][j] = 0;
-			if (i + 2 < N) {
-				X[i][j] = M[i + 2][j];
-			}
+		for (i = 0, j = s; j < N; i++, j++) {
+			//__builtin_assume(i < N);
+			//__builtin_assume(j < N);
+
 			Y[i][j] = 0;
 			if (i + 1 < N && j - 1 >= 0) {
 				Y[i][j] = M[i + 1][j - 1];
 			}
+
+			X[i][j] = 0;
+			if (i + 2 < N) {
+				X[i][j] = M[i + 2][j];
+				if (X[i][j] > Y[i][j]) {
+					X[i][j] = Y[i][j];
+				}
+			}
+
 			Z[i][j] = 0;
 			if (j - 1 > 0) {
 				Z[i][j] = M[i][j - 2];
+				if (Z[i][j] > Y[i][j]) {
+					Z[i][j] = Y[i][j];
+				}
 			}
+
 		}
 		// Split the loop into two separate loop
 
-		for (i = 0, j = s; i < N && j < N; i++, j++) {
-			__builtin_assume(i<N); __builtin_assume(j<N);
-			// Find the coins.
-			if(V[i] + min(X[i][j],Y[i][j]) > V[j] + min(Y[i][j],Z[i][j])){
-				M[i][j] = V[i] + min(X[i][j],Y[i][j]);
-			}else{
-				M[i][j] = V[j] + min(Y[i][j],Z[i][j]);
+		for (i = 0, j = s; j < N; i++, j++) {
+			//__builtin_assume(i < N);
+			//__builtin_assume(j < N);
+			// Pick the coins.
+			if (V[i] + X[i][j] > V[j] + Z[i][j]) {
+				M[i][j] = V[i] + X[i][j]; // Pick V[i]
+			} else {
+				M[i][j] = V[j] + Z[i][j]; // Pick V[j]
 			}
-			//M[i][j] = max(V[i] + min(X[i][j],Y[i][j]),
-			//		V[j] + min(Y[i][j],Z[i][j]));
-
+			
 			//For Debugging
 			//printf("x=%d, y=%d, z=%d\n", X[i][j], Y[i][j], Z[i][j]);
 			//printf("i=%d, n=%d, M[i][n]=%d\n", i, j, M[i][j]);

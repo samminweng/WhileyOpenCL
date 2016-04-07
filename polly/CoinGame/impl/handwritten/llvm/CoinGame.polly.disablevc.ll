@@ -12,8 +12,8 @@ target triple = "x86_64-unknown-linux-gnu"
 @.str.2 = private unnamed_addr constant [15 x i8] c"Bob take coin \00", align 1
 @.str.3 = private unnamed_addr constant [10 x i8] c"(%d, $%d)\00", align 1
 @.str.4 = private unnamed_addr constant [3 x i8] c", \00", align 1
-@X = common global [6 x [6 x i32]] zeroinitializer, align 16
 @Y = common global [6 x [6 x i32]] zeroinitializer, align 16
+@X = common global [6 x [6 x i32]] zeroinitializer, align 16
 @Z = common global [6 x [6 x i32]] zeroinitializer, align 16
 @.str.6 = private unnamed_addr constant [24 x i8] c"Alice's sum is Wrong!!!\00", align 1
 @.str.7 = private unnamed_addr constant [28 x i8] c"Alice's sum <= Bob's sum!!!\00", align 1
@@ -171,216 +171,406 @@ while.end:                                        ; preds = %if.end25
 }
 
 ; Function Attrs: nounwind uwtable
-define i32 @maxMoney() #0 !dbg !28 {
+define i32 @maxMoney() #2 !dbg !28 {
 entry:
   tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !32, metadata !53), !dbg !130
-  br label %for.cond1.preheader, !dbg !131
+  br label %polly.loop_header232
 
-for.cond1.preheader:                              ; preds = %for.inc183, %entry
-  %indvars.iv272 = phi i64 [ 0, %entry ], [ %indvars.iv.next273, %for.inc183 ]
-  br label %for.body3, !dbg !135
+polly.exiting:                                    ; preds = %polly.loop_exit322
+  %0 = load i32, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @M, i64 0, i64 0, i64 5), align 4, !dbg !131, !tbaa !59
+  ret i32 %0, !dbg !132
 
-for.body3:                                        ; preds = %for.inc, %for.cond1.preheader
-  %indvars.iv268 = phi i64 [ %indvars.iv272, %for.cond1.preheader ], [ %indvars.iv.next269, %for.inc ]
-  %i.0260 = phi i32 [ 0, %for.cond1.preheader ], [ %i.1, %for.inc ]
-  %cmp4 = icmp slt i32 %i.0260, 6, !dbg !140
-  br i1 %cmp4, label %if.then, label %for.inc, !dbg !143
+polly.loop_header232:                             ; preds = %entry
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @X, i64 0, i64 0, i64 0), align 16, !alias.scope !133, !noalias !135
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @X, i64 0, i64 1, i64 1), align 4, !alias.scope !133, !noalias !135
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @X, i64 0, i64 2, i64 2), align 8, !alias.scope !133, !noalias !135
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @X, i64 0, i64 3, i64 3), align 4, !alias.scope !133, !noalias !135
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @X, i64 0, i64 4, i64 4), align 16, !alias.scope !133, !noalias !135
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @X, i64 0, i64 5, i64 5), align 4, !alias.scope !133, !noalias !135
+  br label %polly.loop_header232.1
 
-if.then:                                          ; preds = %for.body3
-  %idxprom5 = sext i32 %i.0260 to i64, !dbg !144
-  %arrayidx6 = getelementptr inbounds [6 x [6 x i32]], [6 x [6 x i32]]* @X, i64 0, i64 %idxprom5, i64 %indvars.iv268, !dbg !144
-  store i32 0, i32* %arrayidx6, align 4, !dbg !146, !tbaa !59
-  %add = add nsw i32 %i.0260, 2, !dbg !147
-  %cmp7 = icmp slt i32 %add, 6, !dbg !149
-  br i1 %cmp7, label %if.then8, label %if.end, !dbg !150
+polly.loop_header245:                             ; preds = %polly.loop_header232.4
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Y, i64 0, i64 0, i64 0), align 16, !alias.scope !136, !noalias !141
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Y, i64 0, i64 1, i64 1), align 4, !alias.scope !136, !noalias !141
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Y, i64 0, i64 2, i64 2), align 8, !alias.scope !136, !noalias !141
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Y, i64 0, i64 3, i64 3), align 4, !alias.scope !136, !noalias !141
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Y, i64 0, i64 4, i64 4), align 16, !alias.scope !136, !noalias !141
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Y, i64 0, i64 5, i64 5), align 4, !alias.scope !136, !noalias !141
+  br label %polly.loop_header245.1
 
-if.then8:                                         ; preds = %if.then
-  %idxprom15 = sext i32 %add to i64, !dbg !151
-  %arrayidx17 = getelementptr inbounds [6 x [6 x i32]], [6 x [6 x i32]]* @M, i64 0, i64 %idxprom15, i64 %indvars.iv268, !dbg !151
-  %0 = load i32, i32* %arrayidx17, align 4, !dbg !151, !tbaa !59
-  store i32 %0, i32* %arrayidx6, align 4, !dbg !153, !tbaa !59
-  br label %if.end, !dbg !154
+polly.loop_header260:                             ; preds = %polly.loop_header245.4
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Z, i64 0, i64 0, i64 0), align 16, !alias.scope !138, !noalias !142
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Z, i64 0, i64 1, i64 1), align 4, !alias.scope !138, !noalias !142
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Z, i64 0, i64 2, i64 2), align 8, !alias.scope !138, !noalias !142
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Z, i64 0, i64 3, i64 3), align 4, !alias.scope !138, !noalias !142
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Z, i64 0, i64 4, i64 4), align 16, !alias.scope !138, !noalias !142
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Z, i64 0, i64 5, i64 5), align 4, !alias.scope !138, !noalias !142
+  br label %polly.loop_header260.1
 
-if.end:                                           ; preds = %if.then8, %if.then
-  %arrayidx26 = getelementptr inbounds [6 x [6 x i32]], [6 x [6 x i32]]* @Y, i64 0, i64 %idxprom5, i64 %indvars.iv268, !dbg !155
-  store i32 0, i32* %arrayidx26, align 4, !dbg !156, !tbaa !59
-  %add27 = add nsw i32 %i.0260, 1, !dbg !157
-  %cmp28 = icmp slt i32 %add27, 6, !dbg !159
-  %cmp29 = icmp sgt i64 %indvars.iv268, 0, !dbg !160
-  %or.cond = and i1 %cmp29, %cmp28, !dbg !162
-  br i1 %or.cond, label %if.then30, label %if.end46, !dbg !162
+polly.loop_header269:                             ; preds = %polly.loop_exit322, %polly.loop_header260.4
+  %indvars.iv = phi i64 [ 7, %polly.loop_header260.4 ], [ %indvars.iv.next, %polly.loop_exit322 ]
+  %polly.indvar272 = phi i64 [ 0, %polly.loop_header260.4 ], [ %polly.indvar_next273, %polly.loop_exit322 ]
+  %1 = icmp sgt i64 %polly.indvar272, 0
+  br i1 %1, label %polly.then, label %polly.merge
 
-if.then30:                                        ; preds = %if.end
-  %1 = add nsw i64 %indvars.iv268, -1, !dbg !163
-  %idxprom38 = sext i32 %add27 to i64, !dbg !164
-  %arrayidx40 = getelementptr inbounds [6 x [6 x i32]], [6 x [6 x i32]]* @M, i64 0, i64 %idxprom38, i64 %1, !dbg !164
-  %2 = load i32, i32* %arrayidx40, align 4, !dbg !164, !tbaa !59
-  store i32 %2, i32* %arrayidx26, align 4, !dbg !166, !tbaa !59
-  br label %if.end46, !dbg !167
+polly.merge.loopexit.unr-lcssa:                   ; preds = %polly.loop_header275
+  br label %polly.merge.loopexit
 
-if.end46:                                         ; preds = %if.then30, %if.end
-  %arrayidx50 = getelementptr inbounds [6 x [6 x i32]], [6 x [6 x i32]]* @Z, i64 0, i64 %idxprom5, i64 %indvars.iv268, !dbg !168
-  store i32 0, i32* %arrayidx50, align 4, !dbg !169, !tbaa !59
-  %cmp52 = icmp sgt i64 %indvars.iv268, 1, !dbg !170
-  br i1 %cmp52, label %if.then53, label %for.inc, !dbg !172
+polly.merge.loopexit:                             ; preds = %polly.then.split, %polly.merge.loopexit.unr-lcssa
+  br label %polly.merge
 
-if.then53:                                        ; preds = %if.end46
-  %3 = add nsw i64 %indvars.iv268, -2, !dbg !173
-  %arrayidx62 = getelementptr inbounds [6 x [6 x i32]], [6 x [6 x i32]]* @M, i64 0, i64 %idxprom5, i64 %3, !dbg !175
-  %4 = load i32, i32* %arrayidx62, align 4, !dbg !175, !tbaa !59
-  store i32 %4, i32* %arrayidx50, align 4, !dbg !176, !tbaa !59
-  br label %for.inc, !dbg !177
+polly.merge:                                      ; preds = %polly.merge.loopexit, %polly.loop_header269
+  %2 = sub nsw i64 1, %polly.indvar272
+  %3 = icmp slt i64 %2, 0
+  %4 = select i1 %3, i64 0, i64 %2
+  %5 = sub nsw i64 5, %polly.indvar272
+  %6 = icmp sgt i64 %5, 4
+  %7 = select i1 %6, i64 4, i64 %5
+  %polly.loop_guard = icmp sgt i64 %4, %7
+  br i1 %polly.loop_guard, label %polly.loop_exit292, label %polly.loop_preheader291
 
-for.inc:                                          ; preds = %if.end46, %if.then53, %for.body3
-  %i.1 = phi i32 [ %i.0260, %for.body3 ], [ %add27, %if.then53 ], [ %add27, %if.end46 ]
-  %indvars.iv.next269 = add nuw nsw i64 %indvars.iv268, 1, !dbg !135
-  %lftr.wideiv277 = trunc i64 %indvars.iv.next269 to i32, !dbg !135
-  %exitcond278 = icmp eq i32 %lftr.wideiv277, 6, !dbg !135
-  br i1 %exitcond278, label %for.inc180.preheader, label %for.body3, !dbg !135
+polly.loop_exit292.loopexit:                      ; preds = %polly.loop_header290
+  br label %polly.loop_exit292
 
-for.inc180.preheader:                             ; preds = %for.inc
-  br label %for.inc180, !dbg !178
+polly.loop_exit292:                               ; preds = %polly.loop_exit292.loopexit, %polly.merge
+  %8 = icmp sgt i64 %5, 3
+  %9 = select i1 %8, i64 3, i64 %5
+  %polly.loop_guard306 = icmp sgt i64 %9, -1
+  br i1 %polly.loop_guard306, label %polly.loop_preheader304, label %polly.loop_exit305
 
-for.inc180:                                       ; preds = %for.inc180.preheader, %for.inc180
-  %indvars.iv274 = phi i64 [ %indvars.iv.next275, %for.inc180 ], [ %indvars.iv272, %for.inc180.preheader ]
-  %i.2264 = phi i32 [ %inc178, %for.inc180 ], [ 0, %for.inc180.preheader ]
-  %idxprom77 = sext i32 %i.2264 to i64, !dbg !178
-  %arrayidx78 = getelementptr inbounds [6 x i32], [6 x i32]* @V, i64 0, i64 %idxprom77, !dbg !178
-  %5 = load i32, i32* %arrayidx78, align 4, !dbg !178, !tbaa !59
-  %arrayidx82 = getelementptr inbounds [6 x [6 x i32]], [6 x [6 x i32]]* @X, i64 0, i64 %idxprom77, i64 %indvars.iv274, !dbg !178
-  %6 = load i32, i32* %arrayidx82, align 4, !dbg !178, !tbaa !59
-  %arrayidx86 = getelementptr inbounds [6 x [6 x i32]], [6 x [6 x i32]]* @Y, i64 0, i64 %idxprom77, i64 %indvars.iv274, !dbg !178
-  %7 = load i32, i32* %arrayidx86, align 4, !dbg !178, !tbaa !59
-  %cmp87 = icmp slt i32 %6, %7, !dbg !178
-  %. = select i1 %cmp87, i32 %6, i32 %7, !dbg !184
-  %add96 = add nsw i32 %., %5, !dbg !186
-  %arrayidx98 = getelementptr inbounds [6 x i32], [6 x i32]* @V, i64 0, i64 %indvars.iv274, !dbg !186
-  %8 = load i32, i32* %arrayidx98, align 4, !dbg !186, !tbaa !59
-  %arrayidx106 = getelementptr inbounds [6 x [6 x i32]], [6 x [6 x i32]]* @Z, i64 0, i64 %idxprom77, i64 %indvars.iv274, !dbg !186
-  %9 = load i32, i32* %arrayidx106, align 4, !dbg !186, !tbaa !59
-  %cmp107 = icmp slt i32 %7, %9, !dbg !186
-  %cond119 = select i1 %cmp107, i32 %7, i32 %9, !dbg !186
-  %add120 = add nsw i32 %cond119, %8, !dbg !188
-  %cmp121 = icmp sgt i32 %add96, %add120, !dbg !188
-  %add96.add120 = select i1 %cmp121, i32 %add96, i32 %add120, !dbg !188
-  %arrayidx177 = getelementptr inbounds [6 x [6 x i32]], [6 x [6 x i32]]* @M, i64 0, i64 %idxprom77, i64 %indvars.iv274, !dbg !190
-  store i32 %add96.add120, i32* %arrayidx177, align 4, !dbg !192, !tbaa !59
-  %inc178 = add nsw i32 %i.2264, 1, !dbg !193
-  tail call void @llvm.dbg.value(metadata i32 %inc178, i64 0, metadata !33, metadata !53), !dbg !194
-  %indvars.iv.next275 = add nuw nsw i64 %indvars.iv274, 1, !dbg !195
-  %cmp72 = icmp slt i32 %inc178, 6, !dbg !197
-  %cmp73 = icmp slt i64 %indvars.iv.next275, 6, !dbg !199
-  %10 = and i1 %cmp73, %cmp72, !dbg !201
-  br i1 %10, label %for.inc180, label %for.inc183, !dbg !195
+polly.loop_exit305.loopexit:                      ; preds = %polly.loop_header303
+  br label %polly.loop_exit305
 
-for.inc183:                                       ; preds = %for.inc180
-  %indvars.iv.next273 = add nuw nsw i64 %indvars.iv272, 1, !dbg !131
-  %exitcond276 = icmp eq i64 %indvars.iv.next273, 6, !dbg !131
-  br i1 %exitcond276, label %for.end185, label %for.cond1.preheader, !dbg !131
+polly.loop_exit305:                               ; preds = %polly.loop_exit305.loopexit, %polly.loop_exit292
+  %10 = sub nsw i64 2, %polly.indvar272
+  %11 = icmp slt i64 %10, 0
+  %12 = select i1 %11, i64 0, i64 %10
+  %polly.loop_guard323 = icmp sgt i64 %12, %5
+  br i1 %polly.loop_guard323, label %polly.loop_exit322, label %polly.loop_preheader321
 
-for.end185:                                       ; preds = %for.inc183
-  %11 = load i32, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @M, i64 0, i64 0, i64 5), align 4, !dbg !202, !tbaa !59
-  ret i32 %11, !dbg !203
+polly.loop_exit322.loopexit:                      ; preds = %polly.loop_header320
+  br label %polly.loop_exit322
+
+polly.loop_exit322:                               ; preds = %polly.loop_exit322.loopexit, %polly.loop_exit305
+  %polly.indvar_next273 = add nuw nsw i64 %polly.indvar272, 1
+  %indvars.iv.next = add nsw i64 %indvars.iv, -1
+  %exitcond336 = icmp eq i64 %polly.indvar_next273, 7
+  br i1 %exitcond336, label %polly.exiting, label %polly.loop_header269
+
+polly.then:                                       ; preds = %polly.loop_header269
+  %13 = sub i64 7, %polly.indvar272
+  %14 = add nsw i64 %polly.indvar272, -1
+  %xtraiter = and i64 %13, 1
+  %lcmp.mod = icmp eq i64 %xtraiter, 0
+  br i1 %lcmp.mod, label %polly.then.split, label %polly.loop_header275.prol
+
+polly.loop_header275.prol:                        ; preds = %polly.then
+  %15 = add nsw i64 %polly.indvar272, -1
+  %scevgep283.prol = getelementptr [6 x [6 x i32]], [6 x [6 x i32]]* @X, i64 0, i64 0, i64 %15
+  %_p_scalar_284.prol = load i32, i32* %scevgep283.prol, align 4, !alias.scope !133, !noalias !135
+  %p_add100.prol = add nsw i32 %_p_scalar_284.prol, %_p_scalar_.prol, !dbg !143
+  %16 = add nsw i64 %polly.indvar272, -1
+  %scevgep285.prol = getelementptr [6 x i32], [6 x i32]* @V, i64 0, i64 %16
+  %_p_scalar_286.prol = load i32, i32* %scevgep285.prol, align 4, !alias.scope !140, !noalias !151
+  %scevgep287.prol = getelementptr [6 x [6 x i32]], [6 x [6 x i32]]* @Z, i64 0, i64 0, i64 %15
+  %_p_scalar_288.prol = load i32, i32* %scevgep287.prol, align 4, !alias.scope !138, !noalias !142
+  %p_add107.prol = add nsw i32 %_p_scalar_288.prol, %_p_scalar_286.prol, !dbg !152
+  %p_cmp108.prol = icmp sgt i32 %p_add100.prol, %p_add107.prol, !dbg !153
+  %polly.storemerge.prol = select i1 %p_cmp108.prol, i32 %p_add100.prol, i32 %p_add107.prol, !dbg !154
+  %scevgep289.prol = getelementptr [6 x [6 x i32]], [6 x [6 x i32]]* @M, i64 0, i64 0, i64 %15
+  store i32 %polly.storemerge.prol, i32* %scevgep289.prol, align 4, !alias.scope !139, !noalias !155
+  br label %polly.then.split
+
+polly.then.split:                                 ; preds = %polly.then, %polly.loop_header275.prol
+  %polly.indvar278.unr = phi i64 [ 0, %polly.then ], [ 1, %polly.loop_header275.prol ]
+  %17 = icmp eq i64 %polly.indvar272, 6
+  br i1 %17, label %polly.merge.loopexit, label %polly.then.split.split
+
+polly.then.split.split:                           ; preds = %polly.then.split
+  br label %polly.loop_header275
+
+polly.loop_header275:                             ; preds = %polly.loop_header275, %polly.then.split.split
+  %polly.indvar278 = phi i64 [ %polly.indvar278.unr, %polly.then.split.split ], [ %polly.indvar_next279.1, %polly.loop_header275 ]
+  %scevgep282 = getelementptr [6 x i32], [6 x i32]* @V, i64 0, i64 %polly.indvar278
+  %_p_scalar_ = load i32, i32* %scevgep282, align 4, !alias.scope !140, !noalias !151
+  %18 = mul nuw nsw i64 %polly.indvar278, 7
+  %19 = add nsw i64 %18, %14
+  %scevgep283 = getelementptr [6 x [6 x i32]], [6 x [6 x i32]]* @X, i64 0, i64 0, i64 %19
+  %_p_scalar_284 = load i32, i32* %scevgep283, align 4, !alias.scope !133, !noalias !135
+  %p_add100 = add nsw i32 %_p_scalar_284, %_p_scalar_, !dbg !143
+  %20 = add nsw i64 %polly.indvar278, %14
+  %scevgep285 = getelementptr [6 x i32], [6 x i32]* @V, i64 0, i64 %20
+  %_p_scalar_286 = load i32, i32* %scevgep285, align 4, !alias.scope !140, !noalias !151
+  %scevgep287 = getelementptr [6 x [6 x i32]], [6 x [6 x i32]]* @Z, i64 0, i64 0, i64 %19
+  %_p_scalar_288 = load i32, i32* %scevgep287, align 4, !alias.scope !138, !noalias !142
+  %p_add107 = add nsw i32 %_p_scalar_288, %_p_scalar_286, !dbg !152
+  %p_cmp108 = icmp sgt i32 %p_add100, %p_add107, !dbg !153
+  %polly.storemerge = select i1 %p_cmp108, i32 %p_add100, i32 %p_add107, !dbg !154
+  %scevgep289 = getelementptr [6 x [6 x i32]], [6 x [6 x i32]]* @M, i64 0, i64 0, i64 %19
+  store i32 %polly.storemerge, i32* %scevgep289, align 4, !alias.scope !139, !noalias !155
+  %polly.indvar_next279 = add nuw nsw i64 %polly.indvar278, 1
+  %scevgep282.1 = getelementptr [6 x i32], [6 x i32]* @V, i64 0, i64 %polly.indvar_next279
+  %_p_scalar_.1 = load i32, i32* %scevgep282.1, align 4, !alias.scope !140, !noalias !151
+  %21 = mul nuw nsw i64 %polly.indvar_next279, 7
+  %22 = add nsw i64 %21, %14
+  %scevgep283.1 = getelementptr [6 x [6 x i32]], [6 x [6 x i32]]* @X, i64 0, i64 0, i64 %22
+  %_p_scalar_284.1 = load i32, i32* %scevgep283.1, align 4, !alias.scope !133, !noalias !135
+  %p_add100.1 = add nsw i32 %_p_scalar_284.1, %_p_scalar_.1, !dbg !143
+  %23 = add i64 %polly.indvar278, %polly.indvar272
+  %scevgep285.1 = getelementptr [6 x i32], [6 x i32]* @V, i64 0, i64 %23
+  %_p_scalar_286.1 = load i32, i32* %scevgep285.1, align 4, !alias.scope !140, !noalias !151
+  %scevgep287.1 = getelementptr [6 x [6 x i32]], [6 x [6 x i32]]* @Z, i64 0, i64 0, i64 %22
+  %_p_scalar_288.1 = load i32, i32* %scevgep287.1, align 4, !alias.scope !138, !noalias !142
+  %p_add107.1 = add nsw i32 %_p_scalar_288.1, %_p_scalar_286.1, !dbg !152
+  %p_cmp108.1 = icmp sgt i32 %p_add100.1, %p_add107.1, !dbg !153
+  %polly.storemerge.1 = select i1 %p_cmp108.1, i32 %p_add100.1, i32 %p_add107.1, !dbg !154
+  %scevgep289.1 = getelementptr [6 x [6 x i32]], [6 x [6 x i32]]* @M, i64 0, i64 0, i64 %22
+  store i32 %polly.storemerge.1, i32* %scevgep289.1, align 4, !alias.scope !139, !noalias !155
+  %polly.indvar_next279.1 = add nsw i64 %polly.indvar278, 2
+  %exitcond.1 = icmp eq i64 %polly.indvar_next279.1, %indvars.iv
+  br i1 %exitcond.1, label %polly.merge.loopexit.unr-lcssa, label %polly.loop_header275
+
+polly.loop_header290:                             ; preds = %polly.loop_header290, %polly.loop_preheader291
+  %polly.indvar293 = phi i64 [ %4, %polly.loop_preheader291 ], [ %polly.indvar_next294, %polly.loop_header290 ]
+  %24 = mul i64 %polly.indvar293, 7
+  %scevgep298 = getelementptr i32, i32* %scevgep297, i64 %24
+  %_p_scalar_299 = load i32, i32* %scevgep298, align 4, !alias.scope !139, !noalias !155
+  %scevgep301 = getelementptr i32, i32* %scevgep300, i64 %24
+  store i32 %_p_scalar_299, i32* %scevgep301, align 4, !alias.scope !136, !noalias !141
+  %polly.indvar_next294 = add nuw nsw i64 %polly.indvar293, 1
+  %polly.loop_cond296 = icmp sgt i64 %polly.indvar293, %polly.adjust_ub295
+  br i1 %polly.loop_cond296, label %polly.loop_exit292.loopexit, label %polly.loop_header290
+
+polly.loop_preheader291:                          ; preds = %polly.merge
+  %scevgep297 = getelementptr i32, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @M, i64 0, i64 0, i64 5), i64 %polly.indvar272
+  %scevgep300 = getelementptr [6 x [6 x i32]], [6 x [6 x i32]]* @Y, i64 0, i64 0, i64 %polly.indvar272
+  %polly.adjust_ub295 = add i64 %7, -1
+  br label %polly.loop_header290
+
+polly.loop_header303:                             ; preds = %polly.loop_header303, %polly.loop_preheader304
+  %polly.indvar307 = phi i64 [ 0, %polly.loop_preheader304 ], [ %polly.indvar_next308, %polly.loop_header303 ]
+  %25 = mul nuw nsw i64 %polly.indvar307, 7
+  %scevgep312 = getelementptr i32, i32* %scevgep311, i64 %25
+  %_p_scalar_313 = load i32, i32* %scevgep312, align 4, !alias.scope !139, !noalias !155
+  %scevgep315 = getelementptr i32, i32* %scevgep314, i64 %25
+  %scevgep317 = getelementptr i32, i32* %scevgep316, i64 %25
+  %_p_scalar_318 = load i32, i32* %scevgep317, align 4, !alias.scope !136, !noalias !141
+  %p_cmp42 = icmp sgt i32 %_p_scalar_313, %_p_scalar_318, !dbg !156
+  %p_. = select i1 %p_cmp42, i32 %_p_scalar_318, i32 %_p_scalar_313, !dbg !163
+  store i32 %p_., i32* %scevgep315, align 4, !alias.scope !133, !noalias !135
+  %polly.indvar_next308 = add nuw nsw i64 %polly.indvar307, 1
+  %polly.loop_cond310 = icmp sgt i64 %polly.indvar307, %polly.adjust_ub309
+  br i1 %polly.loop_cond310, label %polly.loop_exit305.loopexit, label %polly.loop_header303
+
+polly.loop_preheader304:                          ; preds = %polly.loop_exit292
+  %scevgep311 = getelementptr [6 x [6 x i32]], [6 x [6 x i32]]* @M, i64 0, i64 2, i64 %polly.indvar272
+  %scevgep314 = getelementptr [6 x [6 x i32]], [6 x [6 x i32]]* @X, i64 0, i64 0, i64 %polly.indvar272
+  %scevgep316 = getelementptr [6 x [6 x i32]], [6 x [6 x i32]]* @Y, i64 0, i64 0, i64 %polly.indvar272
+  %polly.adjust_ub309 = add i64 %9, -1
+  br label %polly.loop_header303
+
+polly.loop_header320:                             ; preds = %polly.loop_header320, %polly.loop_preheader321
+  %polly.indvar324 = phi i64 [ %12, %polly.loop_preheader321 ], [ %polly.indvar_next325, %polly.loop_header320 ]
+  %26 = mul i64 %polly.indvar324, 7
+  %scevgep329 = getelementptr i32, i32* %scevgep328, i64 %26
+  %_p_scalar_330 = load i32, i32* %scevgep329, align 4, !alias.scope !139, !noalias !155
+  %scevgep332 = getelementptr i32, i32* %scevgep331, i64 %26
+  %scevgep334 = getelementptr i32, i32* %scevgep333, i64 %26
+  %_p_scalar_335 = load i32, i32* %scevgep334, align 4, !alias.scope !136, !noalias !141
+  %p_cmp78 = icmp sgt i32 %_p_scalar_330, %_p_scalar_335, !dbg !164
+  %p_.204 = select i1 %p_cmp78, i32 %_p_scalar_335, i32 %_p_scalar_330, !dbg !168
+  store i32 %p_.204, i32* %scevgep332, align 4, !alias.scope !138, !noalias !142
+  %polly.indvar_next325 = add nuw nsw i64 %polly.indvar324, 1
+  %polly.loop_cond327 = icmp slt i64 %polly.indvar324, %5
+  br i1 %polly.loop_cond327, label %polly.loop_header320, label %polly.loop_exit322.loopexit
+
+polly.loop_preheader321:                          ; preds = %polly.loop_exit305
+  %scevgep328 = getelementptr i32, i32* getelementptr ([6 x [6 x i32]], [6 x [6 x i32]]* @M, i64 128102389400760775, i64 0, i64 2), i64 %polly.indvar272
+  %scevgep331 = getelementptr [6 x [6 x i32]], [6 x [6 x i32]]* @Z, i64 0, i64 0, i64 %polly.indvar272
+  %scevgep333 = getelementptr [6 x [6 x i32]], [6 x [6 x i32]]* @Y, i64 0, i64 0, i64 %polly.indvar272
+  br label %polly.loop_header320
+
+polly.loop_header260.1:                           ; preds = %polly.loop_header260
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Z, i64 0, i64 0, i64 1), align 4, !alias.scope !138, !noalias !142
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Z, i64 0, i64 1, i64 2), align 8, !alias.scope !138, !noalias !142
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Z, i64 0, i64 2, i64 3), align 4, !alias.scope !138, !noalias !142
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Z, i64 0, i64 3, i64 4), align 8, !alias.scope !138, !noalias !142
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Z, i64 0, i64 4, i64 5), align 4, !alias.scope !138, !noalias !142
+  br label %polly.loop_header260.2
+
+polly.loop_header260.2:                           ; preds = %polly.loop_header260.1
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Z, i64 0, i64 0, i64 2), align 8, !alias.scope !138, !noalias !142
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Z, i64 0, i64 1, i64 3), align 4, !alias.scope !138, !noalias !142
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Z, i64 0, i64 2, i64 4), align 16, !alias.scope !138, !noalias !142
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Z, i64 0, i64 3, i64 5), align 4, !alias.scope !138, !noalias !142
+  br label %polly.loop_header260.3
+
+polly.loop_header260.3:                           ; preds = %polly.loop_header260.2
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Z, i64 0, i64 0, i64 3), align 4, !alias.scope !138, !noalias !142
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Z, i64 0, i64 1, i64 4), align 8, !alias.scope !138, !noalias !142
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Z, i64 0, i64 2, i64 5), align 4, !alias.scope !138, !noalias !142
+  br label %polly.loop_header260.4
+
+polly.loop_header260.4:                           ; preds = %polly.loop_header260.3
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Z, i64 0, i64 0, i64 4), align 16, !alias.scope !138, !noalias !142
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Z, i64 0, i64 1, i64 5), align 4, !alias.scope !138, !noalias !142
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Z, i64 0, i64 0, i64 5), align 4, !alias.scope !138, !noalias !142
+  %_p_scalar_.prol = load i32, i32* getelementptr inbounds ([6 x i32], [6 x i32]* @V, i64 0, i64 0), align 16
+  br label %polly.loop_header269
+
+polly.loop_header245.1:                           ; preds = %polly.loop_header245
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Y, i64 0, i64 0, i64 1), align 4, !alias.scope !136, !noalias !141
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Y, i64 0, i64 1, i64 2), align 8, !alias.scope !136, !noalias !141
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Y, i64 0, i64 2, i64 3), align 4, !alias.scope !136, !noalias !141
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Y, i64 0, i64 3, i64 4), align 8, !alias.scope !136, !noalias !141
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Y, i64 0, i64 4, i64 5), align 4, !alias.scope !136, !noalias !141
+  br label %polly.loop_header245.2
+
+polly.loop_header245.2:                           ; preds = %polly.loop_header245.1
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Y, i64 0, i64 0, i64 2), align 8, !alias.scope !136, !noalias !141
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Y, i64 0, i64 1, i64 3), align 4, !alias.scope !136, !noalias !141
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Y, i64 0, i64 2, i64 4), align 16, !alias.scope !136, !noalias !141
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Y, i64 0, i64 3, i64 5), align 4, !alias.scope !136, !noalias !141
+  br label %polly.loop_header245.3
+
+polly.loop_header245.3:                           ; preds = %polly.loop_header245.2
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Y, i64 0, i64 0, i64 3), align 4, !alias.scope !136, !noalias !141
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Y, i64 0, i64 1, i64 4), align 8, !alias.scope !136, !noalias !141
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Y, i64 0, i64 2, i64 5), align 4, !alias.scope !136, !noalias !141
+  br label %polly.loop_header245.4
+
+polly.loop_header245.4:                           ; preds = %polly.loop_header245.3
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Y, i64 0, i64 0, i64 4), align 16, !alias.scope !136, !noalias !141
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Y, i64 0, i64 1, i64 5), align 4, !alias.scope !136, !noalias !141
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @Y, i64 0, i64 0, i64 5), align 4, !alias.scope !136, !noalias !141
+  br label %polly.loop_header260
+
+polly.loop_header232.1:                           ; preds = %polly.loop_header232
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @X, i64 0, i64 0, i64 1), align 4, !alias.scope !133, !noalias !135
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @X, i64 0, i64 1, i64 2), align 8, !alias.scope !133, !noalias !135
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @X, i64 0, i64 2, i64 3), align 4, !alias.scope !133, !noalias !135
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @X, i64 0, i64 3, i64 4), align 8, !alias.scope !133, !noalias !135
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @X, i64 0, i64 4, i64 5), align 4, !alias.scope !133, !noalias !135
+  br label %polly.loop_header232.2
+
+polly.loop_header232.2:                           ; preds = %polly.loop_header232.1
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @X, i64 0, i64 0, i64 2), align 8, !alias.scope !133, !noalias !135
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @X, i64 0, i64 1, i64 3), align 4, !alias.scope !133, !noalias !135
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @X, i64 0, i64 2, i64 4), align 16, !alias.scope !133, !noalias !135
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @X, i64 0, i64 3, i64 5), align 4, !alias.scope !133, !noalias !135
+  br label %polly.loop_header232.3
+
+polly.loop_header232.3:                           ; preds = %polly.loop_header232.2
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @X, i64 0, i64 0, i64 3), align 4, !alias.scope !133, !noalias !135
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @X, i64 0, i64 1, i64 4), align 8, !alias.scope !133, !noalias !135
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @X, i64 0, i64 2, i64 5), align 4, !alias.scope !133, !noalias !135
+  br label %polly.loop_header232.4
+
+polly.loop_header232.4:                           ; preds = %polly.loop_header232.3
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @X, i64 0, i64 0, i64 4), align 16, !alias.scope !133, !noalias !135
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @X, i64 0, i64 1, i64 5), align 4, !alias.scope !133, !noalias !135
+  store i32 0, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @X, i64 0, i64 0, i64 5), align 4, !alias.scope !133, !noalias !135
+  br label %polly.loop_header245
 }
 
 ; Function Attrs: nounwind uwtable
 define i32 @main() #0 !dbg !35 {
 entry:
-  %call = tail call i32 @maxMoney(), !dbg !204
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !12, metadata !53), !dbg !205
-  tail call void @llvm.dbg.value(metadata i32 5, i64 0, metadata !13, metadata !53), !dbg !207
-  tail call void @llvm.dbg.value(metadata i32 1, i64 0, metadata !14, metadata !53), !dbg !208
-  br label %while.body.i, !dbg !209
+  %call = tail call i32 @maxMoney(), !dbg !169
+  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !12, metadata !53), !dbg !170
+  tail call void @llvm.dbg.value(metadata i32 5, i64 0, metadata !13, metadata !53), !dbg !172
+  tail call void @llvm.dbg.value(metadata i32 1, i64 0, metadata !14, metadata !53), !dbg !173
+  br label %while.body.i, !dbg !174
 
 while.body.i:                                     ; preds = %while.cond.backedge.i, %entry
-  %i.033.i = phi i32 [ 0, %entry ], [ %i.1.i, %while.cond.backedge.i ], !dbg !210
-  %j.032.i = phi i32 [ 5, %entry ], [ %j.1.i, %while.cond.backedge.i ], !dbg !210
-  %alice.031.i = phi i32 [ 1, %entry ], [ %alice.0.be.i, %while.cond.backedge.i ], !dbg !210
-  %idxprom.i = sext i32 %j.032.i to i64, !dbg !211
-  %add.i = add nsw i32 %i.033.i, 1, !dbg !212
-  %idxprom1.i = sext i32 %add.i to i64, !dbg !211
-  %arrayidx2.i = getelementptr inbounds [6 x [6 x i32]], [6 x [6 x i32]]* @M, i64 0, i64 %idxprom1.i, i64 %idxprom.i, !dbg !211
-  %0 = load i32, i32* %arrayidx2.i, align 4, !dbg !211, !tbaa !59
-  tail call void @llvm.dbg.value(metadata i32 %0, i64 0, metadata !15, metadata !53), !dbg !213
-  %sub.i = add nsw i32 %j.032.i, -1, !dbg !214
-  %idxprom3.i = sext i32 %sub.i to i64, !dbg !215
-  %idxprom4.i = sext i32 %i.033.i to i64, !dbg !215
-  %arrayidx6.i = getelementptr inbounds [6 x [6 x i32]], [6 x [6 x i32]]* @M, i64 0, i64 %idxprom4.i, i64 %idxprom3.i, !dbg !215
-  %1 = load i32, i32* %arrayidx6.i, align 4, !dbg !215, !tbaa !59
-  tail call void @llvm.dbg.value(metadata i32 %1, i64 0, metadata !17, metadata !53), !dbg !216
-  %cmp7.i = icmp sgt i32 %0, %1, !dbg !217
-  tail call void @llvm.dbg.value(metadata i32 %sub.i, i64 0, metadata !13, metadata !53), !dbg !207
-  %j.1.i = select i1 %cmp7.i, i32 %sub.i, i32 %j.032.i, !dbg !218
-  %i.1.i = select i1 %cmp7.i, i32 %i.033.i, i32 %add.i, !dbg !218
-  %idxprom4.pn.i = select i1 %cmp7.i, i64 %idxprom.i, i64 %idxprom4.i, !dbg !218
-  %coin.0.in.i = getelementptr inbounds [6 x i32], [6 x i32]* @V, i64 0, i64 %idxprom4.pn.i, !dbg !219
-  %coin.0.i = load i32, i32* %coin.0.in.i, align 4, !dbg !219, !tbaa !59
-  %tobool.i = icmp eq i32 %alice.031.i, 0, !dbg !220
-  br i1 %tobool.i, label %if.else14.i, label %if.then12.i, !dbg !221
+  %i.033.i = phi i32 [ 0, %entry ], [ %i.1.i, %while.cond.backedge.i ], !dbg !175
+  %j.032.i = phi i32 [ 5, %entry ], [ %j.1.i, %while.cond.backedge.i ], !dbg !175
+  %alice.031.i = phi i32 [ 1, %entry ], [ %alice.0.be.i, %while.cond.backedge.i ], !dbg !175
+  %idxprom.i = sext i32 %j.032.i to i64, !dbg !176
+  %add.i = add nsw i32 %i.033.i, 1, !dbg !177
+  %idxprom1.i = sext i32 %add.i to i64, !dbg !176
+  %arrayidx2.i = getelementptr inbounds [6 x [6 x i32]], [6 x [6 x i32]]* @M, i64 0, i64 %idxprom1.i, i64 %idxprom.i, !dbg !176
+  %0 = load i32, i32* %arrayidx2.i, align 4, !dbg !176, !tbaa !59
+  tail call void @llvm.dbg.value(metadata i32 %0, i64 0, metadata !15, metadata !53), !dbg !178
+  %sub.i = add nsw i32 %j.032.i, -1, !dbg !179
+  %idxprom3.i = sext i32 %sub.i to i64, !dbg !180
+  %idxprom4.i = sext i32 %i.033.i to i64, !dbg !180
+  %arrayidx6.i = getelementptr inbounds [6 x [6 x i32]], [6 x [6 x i32]]* @M, i64 0, i64 %idxprom4.i, i64 %idxprom3.i, !dbg !180
+  %1 = load i32, i32* %arrayidx6.i, align 4, !dbg !180, !tbaa !59
+  tail call void @llvm.dbg.value(metadata i32 %1, i64 0, metadata !17, metadata !53), !dbg !181
+  %cmp7.i = icmp sgt i32 %0, %1, !dbg !182
+  tail call void @llvm.dbg.value(metadata i32 %sub.i, i64 0, metadata !13, metadata !53), !dbg !172
+  %j.1.i = select i1 %cmp7.i, i32 %sub.i, i32 %j.032.i, !dbg !183
+  %i.1.i = select i1 %cmp7.i, i32 %i.033.i, i32 %add.i, !dbg !183
+  %idxprom4.pn.i = select i1 %cmp7.i, i64 %idxprom.i, i64 %idxprom4.i, !dbg !183
+  %coin.0.in.i = getelementptr inbounds [6 x i32], [6 x i32]* @V, i64 0, i64 %idxprom4.pn.i, !dbg !184
+  %coin.0.i = load i32, i32* %coin.0.in.i, align 4, !dbg !184, !tbaa !59
+  %tobool.i = icmp eq i32 %alice.031.i, 0, !dbg !185
+  br i1 %tobool.i, label %if.else14.i, label %if.then12.i, !dbg !186
 
 if.then12.i:                                      ; preds = %while.body.i
-  %2 = load i32, i32* @sum_alice, align 4, !dbg !222, !tbaa !59
-  %add13.i = add nsw i32 %2, %coin.0.i, !dbg !222
-  store i32 %add13.i, i32* @sum_alice, align 4, !dbg !222, !tbaa !59
-  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !14, metadata !53), !dbg !208
-  br label %while.cond.backedge.i, !dbg !223
+  %2 = load i32, i32* @sum_alice, align 4, !dbg !187, !tbaa !59
+  %add13.i = add nsw i32 %2, %coin.0.i, !dbg !187
+  store i32 %add13.i, i32* @sum_alice, align 4, !dbg !187, !tbaa !59
+  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !14, metadata !53), !dbg !173
+  br label %while.cond.backedge.i, !dbg !188
 
 if.else14.i:                                      ; preds = %while.body.i
-  %3 = load i32, i32* @sum_bob, align 4, !dbg !224, !tbaa !59
-  %add15.i = add nsw i32 %3, %coin.0.i, !dbg !224
-  store i32 %add15.i, i32* @sum_bob, align 4, !dbg !224, !tbaa !59
-  tail call void @llvm.dbg.value(metadata i32 1, i64 0, metadata !14, metadata !53), !dbg !208
-  br label %while.cond.backedge.i, !dbg !210
+  %3 = load i32, i32* @sum_bob, align 4, !dbg !189, !tbaa !59
+  %add15.i = add nsw i32 %3, %coin.0.i, !dbg !189
+  store i32 %add15.i, i32* @sum_bob, align 4, !dbg !189, !tbaa !59
+  tail call void @llvm.dbg.value(metadata i32 1, i64 0, metadata !14, metadata !53), !dbg !173
+  br label %while.cond.backedge.i, !dbg !175
 
 while.cond.backedge.i:                            ; preds = %if.else14.i, %if.then12.i
-  %alice.0.be.i = phi i32 [ 0, %if.then12.i ], [ 1, %if.else14.i ], !dbg !210
-  %cmp.i = icmp sgt i32 %i.1.i, %j.1.i, !dbg !225
-  br i1 %cmp.i, label %sumMoves.exit, label %while.body.i, !dbg !209
+  %alice.0.be.i = phi i32 [ 0, %if.then12.i ], [ 1, %if.else14.i ], !dbg !175
+  %cmp.i = icmp sgt i32 %i.1.i, %j.1.i, !dbg !190
+  br i1 %cmp.i, label %sumMoves.exit, label %while.body.i, !dbg !174
 
 sumMoves.exit:                                    ; preds = %while.cond.backedge.i
-  tail call void @printMoves(), !dbg !226
-  %4 = load i32, i32* @sum_alice, align 4, !dbg !227, !tbaa !59
-  %5 = load i32, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @M, i64 0, i64 0, i64 5), align 4, !dbg !229, !tbaa !59
-  %cmp = icmp eq i32 %4, %5, !dbg !230
-  br i1 %cmp, label %if.end, label %if.then, !dbg !231
+  %4 = load i32, i32* @sum_alice, align 4, !dbg !191, !tbaa !59
+  %5 = load i32, i32* getelementptr inbounds ([6 x [6 x i32]], [6 x [6 x i32]]* @M, i64 0, i64 0, i64 5), align 4, !dbg !193, !tbaa !59
+  %cmp = icmp eq i32 %4, %5, !dbg !194
+  br i1 %cmp, label %if.end, label %if.then, !dbg !195
 
 if.then:                                          ; preds = %sumMoves.exit
-  %call1 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([24 x i8], [24 x i8]* @.str.6, i64 0, i64 0)), !dbg !232
-  tail call void @exit(i32 -1) #5, !dbg !234
-  unreachable, !dbg !234
+  %call1 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([24 x i8], [24 x i8]* @.str.6, i64 0, i64 0)), !dbg !196
+  tail call void @exit(i32 -1) #6, !dbg !198
+  unreachable, !dbg !198
 
 if.end:                                           ; preds = %sumMoves.exit
-  %6 = load i32, i32* @sum_bob, align 4, !dbg !235, !tbaa !59
-  %cmp2 = icmp slt i32 %4, %6, !dbg !237
-  br i1 %cmp2, label %if.then3, label %if.end5, !dbg !238
+  %6 = load i32, i32* @sum_bob, align 4, !dbg !199, !tbaa !59
+  %cmp2 = icmp slt i32 %4, %6, !dbg !201
+  br i1 %cmp2, label %if.then3, label %if.end5, !dbg !202
 
 if.then3:                                         ; preds = %if.end
-  %call4 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([28 x i8], [28 x i8]* @.str.7, i64 0, i64 0)), !dbg !239
-  tail call void @exit(i32 -1) #5, !dbg !241
-  unreachable, !dbg !241
+  %call4 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([28 x i8], [28 x i8]* @.str.7, i64 0, i64 0)), !dbg !203
+  tail call void @exit(i32 -1) #6, !dbg !205
+  unreachable, !dbg !205
 
 if.end5:                                          ; preds = %if.end
-  %call6 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([54 x i8], [54 x i8]* @.str.8, i64 0, i64 0), i32 %4), !dbg !242
-  %7 = load i32, i32* @sum_bob, align 4, !dbg !243, !tbaa !59
-  %call7 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([52 x i8], [52 x i8]* @.str.9, i64 0, i64 0), i32 %7), !dbg !244
-  ret i32 0, !dbg !245
+  %call6 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([54 x i8], [54 x i8]* @.str.8, i64 0, i64 0), i32 %4), !dbg !206
+  %7 = load i32, i32* @sum_bob, align 4, !dbg !207, !tbaa !59
+  %call7 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([52 x i8], [52 x i8]* @.str.9, i64 0, i64 0), i32 %7), !dbg !208
+  ret i32 0, !dbg !209
 }
 
 ; Function Attrs: noreturn nounwind
-declare void @exit(i32) #2
+declare void @exit(i32) #3
 
 ; Function Attrs: nounwind readnone
-declare void @llvm.dbg.value(metadata, i64, metadata, metadata) #3
+declare void @llvm.dbg.value(metadata, i64, metadata, metadata) #4
 
 ; Function Attrs: nounwind
-declare i32 @puts(i8* nocapture) #4
+declare i32 @puts(i8* nocapture) #5
 
 attributes #0 = { nounwind uwtable "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
 attributes #1 = { nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
-attributes #2 = { noreturn nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
-attributes #3 = { nounwind readnone }
-attributes #4 = { nounwind }
-attributes #5 = { noreturn nounwind }
+attributes #2 = { nounwind uwtable "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "polly-optimized" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #3 = { noreturn nounwind "disable-tail-calls"="false" "less-precise-fpmad"="false" "no-frame-pointer-elim"="false" "no-infs-fp-math"="false" "no-nans-fp-math"="false" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+fxsr,+mmx,+sse,+sse2,+x87" "unsafe-fp-math"="false" "use-soft-float"="false" }
+attributes #4 = { nounwind readnone }
+attributes #5 = { nounwind }
+attributes #6 = { noreturn nounwind }
 
 !llvm.dbg.cu = !{!0}
 !llvm.module.flags = !{!49, !50}
@@ -390,245 +580,209 @@ attributes #5 = { noreturn nounwind }
 !1 = !DIFile(filename: "CoinGame.c", directory: "/home/sam/workspace/WhileyOpenCL/polly/CoinGame/impl/handwritten")
 !2 = !{}
 !3 = !{!4, !10, !19, !28, !35}
-!4 = distinct !DISubprogram(name: "init", scope: !1, file: !1, line: 31, type: !5, isLocal: false, isDefinition: true, scopeLine: 31, isOptimized: true, variables: !7)
+!4 = distinct !DISubprogram(name: "init", scope: !1, file: !1, line: 25, type: !5, isLocal: false, isDefinition: true, scopeLine: 25, isOptimized: true, variables: !7)
 !5 = !DISubroutineType(types: !6)
 !6 = !{null}
 !7 = !{!8}
-!8 = !DILocalVariable(name: "i", scope: !4, file: !1, line: 32, type: !9)
+!8 = !DILocalVariable(name: "i", scope: !4, file: !1, line: 26, type: !9)
 !9 = !DIBasicType(name: "int", size: 32, align: 32, encoding: DW_ATE_signed)
-!10 = distinct !DISubprogram(name: "sumMoves", scope: !1, file: !1, line: 40, type: !5, isLocal: false, isDefinition: true, scopeLine: 40, isOptimized: true, variables: !11)
+!10 = distinct !DISubprogram(name: "sumMoves", scope: !1, file: !1, line: 34, type: !5, isLocal: false, isDefinition: true, scopeLine: 34, isOptimized: true, variables: !11)
 !11 = !{!12, !13, !14, !15, !17, !18}
-!12 = !DILocalVariable(name: "i", scope: !10, file: !1, line: 41, type: !9)
-!13 = !DILocalVariable(name: "j", scope: !10, file: !1, line: 41, type: !9)
-!14 = !DILocalVariable(name: "alice", scope: !10, file: !1, line: 42, type: !9)
-!15 = !DILocalVariable(name: "P1", scope: !16, file: !1, line: 44, type: !9)
-!16 = distinct !DILexicalBlock(scope: !10, file: !1, line: 43, column: 17)
-!17 = !DILocalVariable(name: "P2", scope: !16, file: !1, line: 45, type: !9)
-!18 = !DILocalVariable(name: "coin", scope: !16, file: !1, line: 46, type: !9)
-!19 = distinct !DISubprogram(name: "printMoves", scope: !1, file: !1, line: 69, type: !5, isLocal: false, isDefinition: true, scopeLine: 69, isOptimized: true, variables: !20)
+!12 = !DILocalVariable(name: "i", scope: !10, file: !1, line: 35, type: !9)
+!13 = !DILocalVariable(name: "j", scope: !10, file: !1, line: 35, type: !9)
+!14 = !DILocalVariable(name: "alice", scope: !10, file: !1, line: 36, type: !9)
+!15 = !DILocalVariable(name: "P1", scope: !16, file: !1, line: 38, type: !9)
+!16 = distinct !DILexicalBlock(scope: !10, file: !1, line: 37, column: 17)
+!17 = !DILocalVariable(name: "P2", scope: !16, file: !1, line: 39, type: !9)
+!18 = !DILocalVariable(name: "coin", scope: !16, file: !1, line: 40, type: !9)
+!19 = distinct !DISubprogram(name: "printMoves", scope: !1, file: !1, line: 62, type: !5, isLocal: false, isDefinition: true, scopeLine: 62, isOptimized: true, variables: !20)
 !20 = !{!21, !22, !23, !25, !27}
-!21 = !DILocalVariable(name: "i", scope: !19, file: !1, line: 70, type: !9)
-!22 = !DILocalVariable(name: "j", scope: !19, file: !1, line: 70, type: !9)
-!23 = !DILocalVariable(name: "alice", scope: !19, file: !1, line: 71, type: !24)
+!21 = !DILocalVariable(name: "i", scope: !19, file: !1, line: 63, type: !9)
+!22 = !DILocalVariable(name: "j", scope: !19, file: !1, line: 63, type: !9)
+!23 = !DILocalVariable(name: "alice", scope: !19, file: !1, line: 64, type: !24)
 !24 = !DIBasicType(name: "_Bool", size: 8, align: 8, encoding: DW_ATE_boolean)
-!25 = !DILocalVariable(name: "P1", scope: !26, file: !1, line: 73, type: !9)
-!26 = distinct !DILexicalBlock(scope: !19, file: !1, line: 72, column: 17)
-!27 = !DILocalVariable(name: "P2", scope: !26, file: !1, line: 74, type: !9)
-!28 = distinct !DISubprogram(name: "maxMoney", scope: !1, file: !1, line: 98, type: !29, isLocal: false, isDefinition: true, scopeLine: 98, isOptimized: true, variables: !31)
+!25 = !DILocalVariable(name: "P1", scope: !26, file: !1, line: 66, type: !9)
+!26 = distinct !DILexicalBlock(scope: !19, file: !1, line: 65, column: 17)
+!27 = !DILocalVariable(name: "P2", scope: !26, file: !1, line: 67, type: !9)
+!28 = distinct !DISubprogram(name: "maxMoney", scope: !1, file: !1, line: 91, type: !29, isLocal: false, isDefinition: true, scopeLine: 91, isOptimized: true, variables: !31)
 !29 = !DISubroutineType(types: !30)
 !30 = !{!9}
 !31 = !{!32, !33, !34}
-!32 = !DILocalVariable(name: "s", scope: !28, file: !1, line: 99, type: !9)
-!33 = !DILocalVariable(name: "i", scope: !28, file: !1, line: 99, type: !9)
-!34 = !DILocalVariable(name: "j", scope: !28, file: !1, line: 99, type: !9)
-!35 = distinct !DISubprogram(name: "main", scope: !1, file: !1, line: 138, type: !29, isLocal: false, isDefinition: true, scopeLine: 138, isOptimized: true, variables: !2)
+!32 = !DILocalVariable(name: "s", scope: !28, file: !1, line: 92, type: !9)
+!33 = !DILocalVariable(name: "i", scope: !28, file: !1, line: 92, type: !9)
+!34 = !DILocalVariable(name: "j", scope: !28, file: !1, line: 92, type: !9)
+!35 = distinct !DISubprogram(name: "main", scope: !1, file: !1, line: 142, type: !29, isLocal: false, isDefinition: true, scopeLine: 142, isOptimized: true, variables: !2)
 !36 = !{!37, !41, !42, !43, !46, !47, !48}
-!37 = !DIGlobalVariable(name: "V", scope: !0, file: !1, line: 20, type: !38, isLocal: false, isDefinition: true, variable: [6 x i32]* @V)
+!37 = !DIGlobalVariable(name: "V", scope: !0, file: !1, line: 14, type: !38, isLocal: false, isDefinition: true, variable: [6 x i32]* @V)
 !38 = !DICompositeType(tag: DW_TAG_array_type, baseType: !9, size: 192, align: 32, elements: !39)
 !39 = !{!40}
 !40 = !DISubrange(count: 6)
-!41 = !DIGlobalVariable(name: "sum_alice", scope: !0, file: !1, line: 29, type: !9, isLocal: false, isDefinition: true, variable: i32* @sum_alice)
-!42 = !DIGlobalVariable(name: "sum_bob", scope: !0, file: !1, line: 29, type: !9, isLocal: false, isDefinition: true, variable: i32* @sum_bob)
-!43 = !DIGlobalVariable(name: "M", scope: !0, file: !1, line: 23, type: !44, isLocal: false, isDefinition: true, variable: [6 x [6 x i32]]* @M)
+!41 = !DIGlobalVariable(name: "sum_alice", scope: !0, file: !1, line: 23, type: !9, isLocal: false, isDefinition: true, variable: i32* @sum_alice)
+!42 = !DIGlobalVariable(name: "sum_bob", scope: !0, file: !1, line: 23, type: !9, isLocal: false, isDefinition: true, variable: i32* @sum_bob)
+!43 = !DIGlobalVariable(name: "M", scope: !0, file: !1, line: 17, type: !44, isLocal: false, isDefinition: true, variable: [6 x [6 x i32]]* @M)
 !44 = !DICompositeType(tag: DW_TAG_array_type, baseType: !9, size: 1152, align: 32, elements: !45)
 !45 = !{!40, !40}
-!46 = !DIGlobalVariable(name: "X", scope: !0, file: !1, line: 26, type: !44, isLocal: false, isDefinition: true, variable: [6 x [6 x i32]]* @X)
-!47 = !DIGlobalVariable(name: "Y", scope: !0, file: !1, line: 27, type: !44, isLocal: false, isDefinition: true, variable: [6 x [6 x i32]]* @Y)
-!48 = !DIGlobalVariable(name: "Z", scope: !0, file: !1, line: 28, type: !44, isLocal: false, isDefinition: true, variable: [6 x [6 x i32]]* @Z)
+!46 = !DIGlobalVariable(name: "X", scope: !0, file: !1, line: 20, type: !44, isLocal: false, isDefinition: true, variable: [6 x [6 x i32]]* @X)
+!47 = !DIGlobalVariable(name: "Y", scope: !0, file: !1, line: 21, type: !44, isLocal: false, isDefinition: true, variable: [6 x [6 x i32]]* @Y)
+!48 = !DIGlobalVariable(name: "Z", scope: !0, file: !1, line: 22, type: !44, isLocal: false, isDefinition: true, variable: [6 x [6 x i32]]* @Z)
 !49 = !{i32 2, !"Dwarf Version", i32 4}
 !50 = !{i32 2, !"Debug Info Version", i32 3}
 !51 = !{!"clang version 3.9.0 (http://llvm.org/git/clang.git cf7bc8edf8cccb1b5de656c403cb55ad44132e98) (http://llvm.org/git/llvm.git 22706dc4c03305692f494d0e42a6de1050d0ec62)"}
-!52 = !DILocation(line: 34, column: 2, scope: !4)
+!52 = !DILocation(line: 28, column: 2, scope: !4)
 !53 = !DIExpression()
-!54 = !DILocation(line: 32, column: 6, scope: !4)
-!55 = !DILocation(line: 36, column: 8, scope: !56)
-!56 = distinct !DILexicalBlock(scope: !57, file: !1, line: 35, column: 18)
-!57 = distinct !DILexicalBlock(scope: !58, file: !1, line: 35, column: 2)
-!58 = distinct !DILexicalBlock(scope: !4, file: !1, line: 35, column: 2)
+!54 = !DILocation(line: 26, column: 6, scope: !4)
+!55 = !DILocation(line: 30, column: 8, scope: !56)
+!56 = distinct !DILexicalBlock(scope: !57, file: !1, line: 29, column: 26)
+!57 = distinct !DILexicalBlock(scope: !58, file: !1, line: 29, column: 2)
+!58 = distinct !DILexicalBlock(scope: !4, file: !1, line: 29, column: 2)
 !59 = !{!60, !60, i64 0}
 !60 = !{!"int", !61, i64 0}
 !61 = !{!"omnipotent char", !62, i64 0}
 !62 = !{!"Simple C/C++ TBAA"}
-!63 = !DILocation(line: 38, column: 1, scope: !4)
-!64 = !DILocation(line: 41, column: 6, scope: !10)
-!65 = !DILocation(line: 41, column: 13, scope: !10)
-!66 = !DILocation(line: 42, column: 6, scope: !10)
-!67 = !DILocation(line: 43, column: 2, scope: !68)
+!63 = !DILocation(line: 32, column: 1, scope: !4)
+!64 = !DILocation(line: 35, column: 6, scope: !10)
+!65 = !DILocation(line: 35, column: 13, scope: !10)
+!66 = !DILocation(line: 36, column: 6, scope: !10)
+!67 = !DILocation(line: 37, column: 2, scope: !68)
 !68 = !DILexicalBlockFile(scope: !10, file: !1, discriminator: 1)
-!69 = !DILocation(line: 44, column: 12, scope: !16)
-!70 = !DILocation(line: 44, column: 16, scope: !16)
-!71 = !DILocation(line: 44, column: 7, scope: !16)
-!72 = !DILocation(line: 45, column: 19, scope: !16)
-!73 = !DILocation(line: 45, column: 12, scope: !16)
-!74 = !DILocation(line: 45, column: 7, scope: !16)
-!75 = !DILocation(line: 47, column: 10, scope: !76)
-!76 = distinct !DILexicalBlock(scope: !16, file: !1, line: 47, column: 7)
-!77 = !DILocation(line: 47, column: 7, scope: !16)
-!78 = !DILocation(line: 49, column: 11, scope: !79)
-!79 = distinct !DILexicalBlock(scope: !76, file: !1, line: 47, column: 17)
-!80 = !DILocation(line: 56, column: 7, scope: !81)
-!81 = distinct !DILexicalBlock(scope: !16, file: !1, line: 56, column: 7)
-!82 = !DILocation(line: 56, column: 7, scope: !16)
-!83 = !DILocation(line: 57, column: 14, scope: !84)
-!84 = distinct !DILexicalBlock(scope: !81, file: !1, line: 56, column: 14)
-!85 = !DILocation(line: 59, column: 3, scope: !84)
-!86 = !DILocation(line: 60, column: 12, scope: !87)
-!87 = distinct !DILexicalBlock(scope: !81, file: !1, line: 59, column: 10)
-!88 = !DILocation(line: 43, column: 11, scope: !68)
-!89 = !DILocation(line: 65, column: 1, scope: !10)
-!90 = !DILocation(line: 70, column: 6, scope: !19)
-!91 = !DILocation(line: 70, column: 13, scope: !19)
-!92 = !DILocation(line: 71, column: 7, scope: !19)
-!93 = !DILocation(line: 72, column: 2, scope: !94)
+!69 = !DILocation(line: 38, column: 12, scope: !16)
+!70 = !DILocation(line: 38, column: 16, scope: !16)
+!71 = !DILocation(line: 38, column: 7, scope: !16)
+!72 = !DILocation(line: 39, column: 19, scope: !16)
+!73 = !DILocation(line: 39, column: 12, scope: !16)
+!74 = !DILocation(line: 39, column: 7, scope: !16)
+!75 = !DILocation(line: 41, column: 10, scope: !76)
+!76 = distinct !DILexicalBlock(scope: !16, file: !1, line: 41, column: 7)
+!77 = !DILocation(line: 41, column: 7, scope: !16)
+!78 = !DILocation(line: 43, column: 11, scope: !79)
+!79 = distinct !DILexicalBlock(scope: !76, file: !1, line: 41, column: 17)
+!80 = !DILocation(line: 50, column: 7, scope: !81)
+!81 = distinct !DILexicalBlock(scope: !16, file: !1, line: 50, column: 7)
+!82 = !DILocation(line: 50, column: 7, scope: !16)
+!83 = !DILocation(line: 51, column: 14, scope: !84)
+!84 = distinct !DILexicalBlock(scope: !81, file: !1, line: 50, column: 14)
+!85 = !DILocation(line: 53, column: 3, scope: !84)
+!86 = !DILocation(line: 54, column: 12, scope: !87)
+!87 = distinct !DILexicalBlock(scope: !81, file: !1, line: 53, column: 10)
+!88 = !DILocation(line: 37, column: 11, scope: !68)
+!89 = !DILocation(line: 59, column: 1, scope: !10)
+!90 = !DILocation(line: 63, column: 6, scope: !19)
+!91 = !DILocation(line: 63, column: 13, scope: !19)
+!92 = !DILocation(line: 64, column: 7, scope: !19)
+!93 = !DILocation(line: 65, column: 2, scope: !94)
 !94 = !DILexicalBlockFile(scope: !19, file: !1, discriminator: 1)
-!95 = !DILocation(line: 73, column: 12, scope: !26)
-!96 = !DILocation(line: 73, column: 16, scope: !26)
-!97 = !DILocation(line: 73, column: 7, scope: !26)
-!98 = !DILocation(line: 74, column: 19, scope: !26)
-!99 = !DILocation(line: 74, column: 12, scope: !26)
-!100 = !DILocation(line: 74, column: 7, scope: !26)
-!101 = !DILocation(line: 75, column: 7, scope: !102)
-!102 = distinct !DILexicalBlock(scope: !26, file: !1, line: 75, column: 7)
-!103 = !DILocation(line: 75, column: 7, scope: !26)
-!104 = !DILocation(line: 76, column: 4, scope: !105)
-!105 = distinct !DILexicalBlock(scope: !102, file: !1, line: 75, column: 14)
-!106 = !DILocation(line: 77, column: 3, scope: !105)
-!107 = !DILocation(line: 78, column: 4, scope: !108)
-!108 = distinct !DILexicalBlock(scope: !102, file: !1, line: 77, column: 10)
-!109 = !DILocation(line: 81, column: 10, scope: !110)
-!110 = distinct !DILexicalBlock(scope: !26, file: !1, line: 81, column: 7)
-!111 = !DILocation(line: 81, column: 7, scope: !26)
-!112 = !DILocation(line: 82, column: 31, scope: !113)
-!113 = distinct !DILexicalBlock(scope: !110, file: !1, line: 81, column: 17)
-!114 = !DILocation(line: 82, column: 4, scope: !113)
-!115 = !DILocation(line: 84, column: 3, scope: !113)
-!116 = !DILocation(line: 85, column: 26, scope: !117)
-!117 = distinct !DILexicalBlock(scope: !110, file: !1, line: 84, column: 10)
-!118 = !DILocation(line: 85, column: 31, scope: !117)
-!119 = !DILocation(line: 85, column: 4, scope: !117)
-!120 = !DILocation(line: 88, column: 7, scope: !26)
-!121 = !DILocation(line: 89, column: 4, scope: !122)
-!122 = distinct !DILexicalBlock(scope: !123, file: !1, line: 88, column: 14)
-!123 = distinct !DILexicalBlock(scope: !26, file: !1, line: 88, column: 7)
-!124 = !DILocation(line: 90, column: 3, scope: !122)
-!125 = !DILocation(line: 91, column: 4, scope: !126)
-!126 = distinct !DILexicalBlock(scope: !123, file: !1, line: 90, column: 10)
-!127 = !DILocation(line: 93, column: 9, scope: !26)
-!128 = !DILocation(line: 72, column: 11, scope: !94)
-!129 = !DILocation(line: 96, column: 1, scope: !19)
-!130 = !DILocation(line: 99, column: 6, scope: !28)
-!131 = !DILocation(line: 100, column: 2, scope: !132)
-!132 = !DILexicalBlockFile(scope: !133, file: !1, discriminator: 1)
-!133 = distinct !DILexicalBlock(scope: !134, file: !1, line: 100, column: 2)
-!134 = distinct !DILexicalBlock(scope: !28, file: !1, line: 100, column: 2)
-!135 = !DILocation(line: 103, column: 3, scope: !136)
-!136 = !DILexicalBlockFile(scope: !137, file: !1, discriminator: 1)
-!137 = distinct !DILexicalBlock(scope: !138, file: !1, line: 103, column: 3)
-!138 = distinct !DILexicalBlock(scope: !139, file: !1, line: 103, column: 3)
-!139 = distinct !DILexicalBlock(scope: !133, file: !1, line: 100, column: 26)
-!140 = !DILocation(line: 104, column: 8, scope: !141)
-!141 = distinct !DILexicalBlock(scope: !142, file: !1, line: 104, column: 7)
-!142 = distinct !DILexicalBlock(scope: !137, file: !1, line: 103, column: 26)
-!143 = !DILocation(line: 104, column: 7, scope: !142)
-!144 = !DILocation(line: 105, column: 5, scope: !145)
-!145 = distinct !DILexicalBlock(scope: !141, file: !1, line: 104, column: 11)
-!146 = !DILocation(line: 105, column: 13, scope: !145)
-!147 = !DILocation(line: 106, column: 11, scope: !148)
-!148 = distinct !DILexicalBlock(scope: !145, file: !1, line: 106, column: 9)
-!149 = !DILocation(line: 106, column: 15, scope: !148)
-!150 = !DILocation(line: 106, column: 9, scope: !145)
-!151 = !DILocation(line: 107, column: 26, scope: !152)
-!152 = distinct !DILexicalBlock(scope: !148, file: !1, line: 106, column: 20)
-!153 = !DILocation(line: 107, column: 14, scope: !152)
-!154 = !DILocation(line: 108, column: 5, scope: !152)
-!155 = !DILocation(line: 109, column: 5, scope: !145)
-!156 = !DILocation(line: 109, column: 13, scope: !145)
-!157 = !DILocation(line: 110, column: 11, scope: !158)
-!158 = distinct !DILexicalBlock(scope: !145, file: !1, line: 110, column: 9)
-!159 = !DILocation(line: 110, column: 15, scope: !158)
-!160 = !DILocation(line: 110, column: 28, scope: !161)
-!161 = !DILexicalBlockFile(scope: !158, file: !1, discriminator: 1)
-!162 = !DILocation(line: 110, column: 19, scope: !158)
-!163 = !DILocation(line: 110, column: 24, scope: !161)
-!164 = !DILocation(line: 111, column: 26, scope: !165)
-!165 = distinct !DILexicalBlock(scope: !158, file: !1, line: 110, column: 34)
-!166 = !DILocation(line: 111, column: 14, scope: !165)
-!167 = !DILocation(line: 112, column: 5, scope: !165)
-!168 = !DILocation(line: 113, column: 5, scope: !145)
-!169 = !DILocation(line: 113, column: 13, scope: !145)
-!170 = !DILocation(line: 114, column: 15, scope: !171)
-!171 = distinct !DILexicalBlock(scope: !145, file: !1, line: 114, column: 9)
-!172 = !DILocation(line: 114, column: 9, scope: !145)
-!173 = !DILocation(line: 115, column: 32, scope: !174)
-!174 = distinct !DILexicalBlock(scope: !171, file: !1, line: 114, column: 20)
-!175 = !DILocation(line: 115, column: 25, scope: !174)
-!176 = !DILocation(line: 115, column: 14, scope: !174)
-!177 = !DILocation(line: 116, column: 5, scope: !174)
-!178 = !DILocation(line: 125, column: 15, scope: !179)
-!179 = distinct !DILexicalBlock(scope: !180, file: !1, line: 123, column: 11)
-!180 = distinct !DILexicalBlock(scope: !181, file: !1, line: 123, column: 7)
-!181 = distinct !DILexicalBlock(scope: !182, file: !1, line: 122, column: 35)
-!182 = distinct !DILexicalBlock(scope: !183, file: !1, line: 122, column: 3)
-!183 = distinct !DILexicalBlock(scope: !139, file: !1, line: 122, column: 3)
-!184 = !DILocation(line: 125, column: 15, scope: !185)
-!185 = !DILexicalBlockFile(scope: !179, file: !1, discriminator: 1)
-!186 = !DILocation(line: 125, column: 15, scope: !187)
-!187 = !DILexicalBlockFile(scope: !179, file: !1, discriminator: 3)
-!188 = !DILocation(line: 125, column: 15, scope: !189)
-!189 = !DILexicalBlockFile(scope: !179, file: !1, discriminator: 6)
-!190 = !DILocation(line: 125, column: 5, scope: !191)
-!191 = !DILexicalBlockFile(scope: !179, file: !1, discriminator: 15)
-!192 = !DILocation(line: 125, column: 13, scope: !191)
-!193 = !DILocation(line: 127, column: 7, scope: !179)
-!194 = !DILocation(line: 99, column: 9, scope: !28)
-!195 = !DILocation(line: 122, column: 3, scope: !196)
-!196 = !DILexicalBlockFile(scope: !183, file: !1, discriminator: 3)
-!197 = !DILocation(line: 122, column: 17, scope: !198)
-!198 = !DILexicalBlockFile(scope: !182, file: !1, discriminator: 1)
-!199 = !DILocation(line: 122, column: 26, scope: !200)
-!200 = !DILexicalBlockFile(scope: !182, file: !1, discriminator: 2)
-!201 = !DILocation(line: 122, column: 21, scope: !198)
-!202 = !DILocation(line: 136, column: 9, scope: !28)
-!203 = !DILocation(line: 136, column: 2, scope: !28)
-!204 = !DILocation(line: 140, column: 2, scope: !35)
-!205 = !DILocation(line: 41, column: 6, scope: !10, inlinedAt: !206)
-!206 = distinct !DILocation(line: 141, column: 2, scope: !35)
-!207 = !DILocation(line: 41, column: 13, scope: !10, inlinedAt: !206)
-!208 = !DILocation(line: 42, column: 6, scope: !10, inlinedAt: !206)
-!209 = !DILocation(line: 43, column: 2, scope: !68, inlinedAt: !206)
-!210 = !DILocation(line: 141, column: 2, scope: !35)
-!211 = !DILocation(line: 44, column: 12, scope: !16, inlinedAt: !206)
-!212 = !DILocation(line: 44, column: 16, scope: !16, inlinedAt: !206)
-!213 = !DILocation(line: 44, column: 7, scope: !16, inlinedAt: !206)
-!214 = !DILocation(line: 45, column: 19, scope: !16, inlinedAt: !206)
-!215 = !DILocation(line: 45, column: 12, scope: !16, inlinedAt: !206)
-!216 = !DILocation(line: 45, column: 7, scope: !16, inlinedAt: !206)
-!217 = !DILocation(line: 47, column: 10, scope: !76, inlinedAt: !206)
-!218 = !DILocation(line: 47, column: 7, scope: !16, inlinedAt: !206)
-!219 = !DILocation(line: 49, column: 11, scope: !79, inlinedAt: !206)
-!220 = !DILocation(line: 56, column: 7, scope: !81, inlinedAt: !206)
-!221 = !DILocation(line: 56, column: 7, scope: !16, inlinedAt: !206)
-!222 = !DILocation(line: 57, column: 14, scope: !84, inlinedAt: !206)
-!223 = !DILocation(line: 59, column: 3, scope: !84, inlinedAt: !206)
-!224 = !DILocation(line: 60, column: 12, scope: !87, inlinedAt: !206)
-!225 = !DILocation(line: 43, column: 11, scope: !68, inlinedAt: !206)
-!226 = !DILocation(line: 142, column: 2, scope: !35)
-!227 = !DILocation(line: 144, column: 6, scope: !228)
-!228 = distinct !DILexicalBlock(scope: !35, file: !1, line: 144, column: 6)
-!229 = !DILocation(line: 144, column: 19, scope: !228)
-!230 = !DILocation(line: 144, column: 16, scope: !228)
-!231 = !DILocation(line: 144, column: 6, scope: !35)
-!232 = !DILocation(line: 145, column: 3, scope: !233)
-!233 = distinct !DILexicalBlock(scope: !228, file: !1, line: 144, column: 31)
-!234 = !DILocation(line: 146, column: 3, scope: !233)
-!235 = !DILocation(line: 149, column: 15, scope: !236)
-!236 = distinct !DILexicalBlock(scope: !35, file: !1, line: 149, column: 5)
-!237 = !DILocation(line: 149, column: 14, scope: !236)
-!238 = !DILocation(line: 149, column: 5, scope: !35)
-!239 = !DILocation(line: 150, column: 3, scope: !240)
-!240 = distinct !DILexicalBlock(scope: !236, file: !1, line: 149, column: 23)
-!241 = !DILocation(line: 151, column: 3, scope: !240)
-!242 = !DILocation(line: 154, column: 2, scope: !35)
-!243 = !DILocation(line: 155, column: 64, scope: !35)
-!244 = !DILocation(line: 155, column: 2, scope: !35)
-!245 = !DILocation(line: 156, column: 1, scope: !35)
+!95 = !DILocation(line: 66, column: 12, scope: !26)
+!96 = !DILocation(line: 66, column: 16, scope: !26)
+!97 = !DILocation(line: 66, column: 7, scope: !26)
+!98 = !DILocation(line: 67, column: 19, scope: !26)
+!99 = !DILocation(line: 67, column: 12, scope: !26)
+!100 = !DILocation(line: 67, column: 7, scope: !26)
+!101 = !DILocation(line: 68, column: 7, scope: !102)
+!102 = distinct !DILexicalBlock(scope: !26, file: !1, line: 68, column: 7)
+!103 = !DILocation(line: 68, column: 7, scope: !26)
+!104 = !DILocation(line: 69, column: 4, scope: !105)
+!105 = distinct !DILexicalBlock(scope: !102, file: !1, line: 68, column: 14)
+!106 = !DILocation(line: 70, column: 3, scope: !105)
+!107 = !DILocation(line: 71, column: 4, scope: !108)
+!108 = distinct !DILexicalBlock(scope: !102, file: !1, line: 70, column: 10)
+!109 = !DILocation(line: 74, column: 10, scope: !110)
+!110 = distinct !DILexicalBlock(scope: !26, file: !1, line: 74, column: 7)
+!111 = !DILocation(line: 74, column: 7, scope: !26)
+!112 = !DILocation(line: 75, column: 31, scope: !113)
+!113 = distinct !DILexicalBlock(scope: !110, file: !1, line: 74, column: 17)
+!114 = !DILocation(line: 75, column: 4, scope: !113)
+!115 = !DILocation(line: 77, column: 3, scope: !113)
+!116 = !DILocation(line: 78, column: 26, scope: !117)
+!117 = distinct !DILexicalBlock(scope: !110, file: !1, line: 77, column: 10)
+!118 = !DILocation(line: 78, column: 31, scope: !117)
+!119 = !DILocation(line: 78, column: 4, scope: !117)
+!120 = !DILocation(line: 81, column: 7, scope: !26)
+!121 = !DILocation(line: 82, column: 4, scope: !122)
+!122 = distinct !DILexicalBlock(scope: !123, file: !1, line: 81, column: 14)
+!123 = distinct !DILexicalBlock(scope: !26, file: !1, line: 81, column: 7)
+!124 = !DILocation(line: 83, column: 3, scope: !122)
+!125 = !DILocation(line: 84, column: 4, scope: !126)
+!126 = distinct !DILexicalBlock(scope: !123, file: !1, line: 83, column: 10)
+!127 = !DILocation(line: 86, column: 9, scope: !26)
+!128 = !DILocation(line: 65, column: 11, scope: !94)
+!129 = !DILocation(line: 89, column: 1, scope: !19)
+!130 = !DILocation(line: 92, column: 6, scope: !28)
+!131 = !DILocation(line: 140, column: 9, scope: !28)
+!132 = !DILocation(line: 140, column: 2, scope: !28)
+!133 = distinct !{!133, !134, !"polly.alias.scope.X"}
+!134 = distinct !{!134, !"polly.alias.scope.domain"}
+!135 = !{!136, !137, !138, !139, !140}
+!136 = distinct !{!136, !134, !"polly.alias.scope.Y"}
+!137 = distinct !{!137, !134, !"polly.alias.scope.storemerge"}
+!138 = distinct !{!138, !134, !"polly.alias.scope.Z"}
+!139 = distinct !{!139, !134, !"polly.alias.scope.M"}
+!140 = distinct !{!140, !134, !"polly.alias.scope.V"}
+!141 = !{!133, !137, !138, !139, !140}
+!142 = !{!136, !133, !137, !139, !140}
+!143 = !DILocation(line: 127, column: 13, scope: !144)
+!144 = distinct !DILexicalBlock(scope: !145, file: !1, line: 127, column: 8)
+!145 = distinct !DILexicalBlock(scope: !146, file: !1, line: 123, column: 39)
+!146 = distinct !DILexicalBlock(scope: !147, file: !1, line: 123, column: 3)
+!147 = distinct !DILexicalBlock(scope: !148, file: !1, line: 123, column: 3)
+!148 = distinct !DILexicalBlock(scope: !149, file: !1, line: 93, column: 26)
+!149 = distinct !DILexicalBlock(scope: !150, file: !1, line: 93, column: 2)
+!150 = distinct !DILexicalBlock(scope: !28, file: !1, line: 93, column: 2)
+!151 = !{!136, !133, !137, !138, !139}
+!152 = !DILocation(line: 127, column: 30, scope: !144)
+!153 = !DILocation(line: 127, column: 23, scope: !144)
+!154 = !DILocation(line: 127, column: 8, scope: !145)
+!155 = !{!136, !133, !137, !138, !140}
+!156 = !DILocation(line: 107, column: 17, scope: !157)
+!157 = distinct !DILexicalBlock(scope: !158, file: !1, line: 107, column: 9)
+!158 = distinct !DILexicalBlock(scope: !159, file: !1, line: 105, column: 19)
+!159 = distinct !DILexicalBlock(scope: !160, file: !1, line: 105, column: 8)
+!160 = distinct !DILexicalBlock(scope: !161, file: !1, line: 95, column: 39)
+!161 = distinct !DILexicalBlock(scope: !162, file: !1, line: 95, column: 3)
+!162 = distinct !DILexicalBlock(scope: !148, file: !1, line: 95, column: 3)
+!163 = !DILocation(line: 107, column: 9, scope: !158)
+!164 = !DILocation(line: 115, column: 17, scope: !165)
+!165 = distinct !DILexicalBlock(scope: !166, file: !1, line: 115, column: 9)
+!166 = distinct !DILexicalBlock(scope: !167, file: !1, line: 113, column: 19)
+!167 = distinct !DILexicalBlock(scope: !160, file: !1, line: 113, column: 8)
+!168 = !DILocation(line: 115, column: 9, scope: !166)
+!169 = !DILocation(line: 144, column: 2, scope: !35)
+!170 = !DILocation(line: 35, column: 6, scope: !10, inlinedAt: !171)
+!171 = distinct !DILocation(line: 145, column: 2, scope: !35)
+!172 = !DILocation(line: 35, column: 13, scope: !10, inlinedAt: !171)
+!173 = !DILocation(line: 36, column: 6, scope: !10, inlinedAt: !171)
+!174 = !DILocation(line: 37, column: 2, scope: !68, inlinedAt: !171)
+!175 = !DILocation(line: 145, column: 2, scope: !35)
+!176 = !DILocation(line: 38, column: 12, scope: !16, inlinedAt: !171)
+!177 = !DILocation(line: 38, column: 16, scope: !16, inlinedAt: !171)
+!178 = !DILocation(line: 38, column: 7, scope: !16, inlinedAt: !171)
+!179 = !DILocation(line: 39, column: 19, scope: !16, inlinedAt: !171)
+!180 = !DILocation(line: 39, column: 12, scope: !16, inlinedAt: !171)
+!181 = !DILocation(line: 39, column: 7, scope: !16, inlinedAt: !171)
+!182 = !DILocation(line: 41, column: 10, scope: !76, inlinedAt: !171)
+!183 = !DILocation(line: 41, column: 7, scope: !16, inlinedAt: !171)
+!184 = !DILocation(line: 43, column: 11, scope: !79, inlinedAt: !171)
+!185 = !DILocation(line: 50, column: 7, scope: !81, inlinedAt: !171)
+!186 = !DILocation(line: 50, column: 7, scope: !16, inlinedAt: !171)
+!187 = !DILocation(line: 51, column: 14, scope: !84, inlinedAt: !171)
+!188 = !DILocation(line: 53, column: 3, scope: !84, inlinedAt: !171)
+!189 = !DILocation(line: 54, column: 12, scope: !87, inlinedAt: !171)
+!190 = !DILocation(line: 37, column: 11, scope: !68, inlinedAt: !171)
+!191 = !DILocation(line: 148, column: 6, scope: !192)
+!192 = distinct !DILexicalBlock(scope: !35, file: !1, line: 148, column: 6)
+!193 = !DILocation(line: 148, column: 19, scope: !192)
+!194 = !DILocation(line: 148, column: 16, scope: !192)
+!195 = !DILocation(line: 148, column: 6, scope: !35)
+!196 = !DILocation(line: 149, column: 3, scope: !197)
+!197 = distinct !DILexicalBlock(scope: !192, file: !1, line: 148, column: 32)
+!198 = !DILocation(line: 150, column: 3, scope: !197)
+!199 = !DILocation(line: 153, column: 18, scope: !200)
+!200 = distinct !DILexicalBlock(scope: !35, file: !1, line: 153, column: 6)
+!201 = !DILocation(line: 153, column: 16, scope: !200)
+!202 = !DILocation(line: 153, column: 6, scope: !35)
+!203 = !DILocation(line: 154, column: 3, scope: !204)
+!204 = distinct !DILexicalBlock(scope: !200, file: !1, line: 153, column: 27)
+!205 = !DILocation(line: 155, column: 3, scope: !204)
+!206 = !DILocation(line: 158, column: 2, scope: !35)
+!207 = !DILocation(line: 159, column: 65, scope: !35)
+!208 = !DILocation(line: 159, column: 2, scope: !35)
+!209 = !DILocation(line: 160, column: 1, scope: !35)
