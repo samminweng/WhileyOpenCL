@@ -14,10 +14,10 @@
 	.type	init,@function
 init:                                   # @init
 .Lfunc_begin0:
-	.loc	1 25 0                  # CoinGame.c:25:0
+	.loc	1 26 0                  # CoinGame.c:26:0
 	.cfi_startproc
 # BB#0:                                 # %entry
-	.loc	1 28 2 prologue_end     # CoinGame.c:28:2
+	.loc	1 29 2 prologue_end     # CoinGame.c:29:2
 	pushq	%rax
 .Ltmp0:
 	.cfi_def_cfa_offset 16
@@ -27,13 +27,13 @@ init:                                   # @init
 	callq	printf
 .Ltmp1:
 	#DEBUG_VALUE: init:i <- 0
-	.loc	1 30 8                  # CoinGame.c:30:8
+	.loc	1 31 8                  # CoinGame.c:31:8
 	movaps	.LCPI0_0(%rip), %xmm0   # xmm0 = [0,1,2,3]
 	movaps	%xmm0, V(%rip)
 	movabsq	$21474836484, %rax      # imm = 0x500000004
 	movq	%rax, V+16(%rip)
 .Ltmp2:
-	.loc	1 32 1                  # CoinGame.c:32:1
+	.loc	1 33 1                  # CoinGame.c:33:1
 	popq	%rax
 	retq
 .Ltmp3:
@@ -41,326 +41,309 @@ init:                                   # @init
 	.size	init, .Lfunc_end0-init
 	.cfi_endproc
 
-	.globl	sumMoves
+	.globl	play
 	.p2align	4, 0x90
-	.type	sumMoves,@function
-sumMoves:                               # @sumMoves
+	.type	play,@function
+play:                                   # @play
 .Lfunc_begin1:
-	.loc	1 34 0                  # CoinGame.c:34:0
+	.loc	1 35 0                  # CoinGame.c:35:0
 	.cfi_startproc
 # BB#0:                                 # %entry
-	#DEBUG_VALUE: sumMoves:i <- 0
-	#DEBUG_VALUE: sumMoves:j <- 5
-	movl	$1, %r8d
-	movl	$5, %edx
-.Ltmp4:
-	#DEBUG_VALUE: sumMoves:alice <- 1
-	xorl	%edi, %edi
-	.p2align	4, 0x90
-.LBB1_1:                                # %while.body
-                                        # =>This Inner Loop Header: Depth=1
-.Ltmp5:
-	.loc	1 38 12 prologue_end    # CoinGame.c:38:12
-	movslq	%edx, %rsi
-	.loc	1 38 16 is_stmt 0       # CoinGame.c:38:16
-	leal	1(%rdi), %edx
-	.loc	1 38 12                 # CoinGame.c:38:12
-	movslq	%edx, %r10
-	leaq	(,%rsi,4), %rax
-	leaq	(%r10,%r10,2), %rdx
-	movl	M(%rax,%rdx,8), %r9d
-.Ltmp6:
-	#DEBUG_VALUE: P1 <- %R9D
-	.loc	1 39 19 is_stmt 1       # CoinGame.c:39:19
-	leal	-1(%rsi), %edx
-	.loc	1 39 12 is_stmt 0       # CoinGame.c:39:12
-	movslq	%edi, %rcx
-	leaq	(%rcx,%rcx,2), %rdi
-.Ltmp7:
-	.loc	1 41 10 is_stmt 1       # CoinGame.c:41:10
-	cmpl	M-4(%rax,%rdi,8), %r9d
-.Ltmp8:
-	.loc	1 41 7 is_stmt 0        # CoinGame.c:41:7
-	cmovlel	%esi, %edx
-	movl	%ecx, %edi
-	cmovlel	%r10d, %edi
-	cmovgq	%rsi, %rcx
-.Ltmp9:
-	.loc	1 43 11 is_stmt 1       # CoinGame.c:43:11
-	movl	V(,%rcx,4), %esi
-.Ltmp10:
-	.loc	1 50 7                  # CoinGame.c:50:7
-	testl	%r8d, %r8d
-.Ltmp11:
-	.loc	1 50 7 is_stmt 0        # CoinGame.c:50:7
-	je	.LBB1_3
-.Ltmp12:
-# BB#2:                                 # %if.then12
-                                        #   in Loop: Header=BB1_1 Depth=1
-	#DEBUG_VALUE: P1 <- %R9D
-	.loc	1 51 14 is_stmt 1       # CoinGame.c:51:14
-	addl	%esi, sum_alice(%rip)
-.Ltmp13:
-	#DEBUG_VALUE: sumMoves:alice <- 0
-	xorl	%r8d, %r8d
-	jmp	.LBB1_4
-.Ltmp14:
-	.p2align	4, 0x90
-.LBB1_3:                                # %if.else14
-                                        #   in Loop: Header=BB1_1 Depth=1
-	#DEBUG_VALUE: P1 <- %R9D
-	.loc	1 54 12                 # CoinGame.c:54:12
-	addl	%esi, sum_bob(%rip)
-.Ltmp15:
-	#DEBUG_VALUE: sumMoves:alice <- 1
-	movl	$1, %r8d
-.Ltmp16:
-.LBB1_4:                                # %while.cond.backedge
-                                        #   in Loop: Header=BB1_1 Depth=1
-	#DEBUG_VALUE: P1 <- %R9D
-	.loc	1 37 2 discriminator 1  # CoinGame.c:37:2
-	cmpl	%edx, %edi
-	jle	.LBB1_1
-.Ltmp17:
-# BB#5:                                 # %while.end
-	#DEBUG_VALUE: P1 <- %R9D
-	.loc	1 59 1                  # CoinGame.c:59:1
-	retq
-.Ltmp18:
-.Lfunc_end1:
-	.size	sumMoves, .Lfunc_end1-sumMoves
-	.cfi_endproc
-
-	.globl	printMoves
-	.p2align	4, 0x90
-	.type	printMoves,@function
-printMoves:                             # @printMoves
-.Lfunc_begin2:
-	.loc	1 62 0                  # CoinGame.c:62:0
-	.cfi_startproc
-# BB#0:                                 # %entry
-	pushq	%rbp
-.Ltmp19:
-	.cfi_def_cfa_offset 16
+	.loc	1 40 7 prologue_end     # CoinGame.c:40:7
 	pushq	%r15
-.Ltmp20:
-	.cfi_def_cfa_offset 24
+.Ltmp4:
+	.cfi_def_cfa_offset 16
 	pushq	%r14
-.Ltmp21:
-	.cfi_def_cfa_offset 32
-	pushq	%r13
-.Ltmp22:
-	.cfi_def_cfa_offset 40
-	pushq	%r12
-.Ltmp23:
-	.cfi_def_cfa_offset 48
+.Ltmp5:
+	.cfi_def_cfa_offset 24
 	pushq	%rbx
+.Ltmp6:
+	.cfi_def_cfa_offset 32
+.Ltmp7:
+	.cfi_offset %rbx, -32
+.Ltmp8:
+	.cfi_offset %r14, -24
+.Ltmp9:
+	.cfi_offset %r15, -16
+.Ltmp10:
+	#DEBUG_VALUE: play:i <- 0
+	#DEBUG_VALUE: play:j <- 5
+	#DEBUG_VALUE: play:index <- 0
+	movl	M+44(%rip), %eax
+.Ltmp11:
+	#DEBUG_VALUE: play:j <- 4
+	.loc	1 40 19 is_stmt 0       # CoinGame.c:40:19
+	cmpl	M+16(%rip), %eax
+.Ltmp12:
+	.loc	1 40 7                  # CoinGame.c:40:7
+	setle	%al
+	movzbl	%al, %edx
+.Ltmp13:
+	.loc	1 46 19 is_stmt 1       # CoinGame.c:46:19
+	movl	$V, %eax
+	movl	$V+20, %esi
+	cmovleq	%rax, %rsi
+.Ltmp14:
+	.loc	1 40 7                  # CoinGame.c:40:7
+	leal	4(%rdx), %ecx
+.Ltmp15:
+	.loc	1 46 19                 # CoinGame.c:46:19
+	movl	(%rsi), %eax
+.Ltmp16:
+	.loc	1 42 17                 # CoinGame.c:42:17
+	movl	%eax, coins(%rip)
+.Ltmp17:
+	.loc	1 40 11                 # CoinGame.c:40:11
+	leal	1(%rdx), %eax
+	.loc	1 40 7 is_stmt 0        # CoinGame.c:40:7
+	leaq	(%rax,%rax,2), %rsi
+	leaq	(,%rcx,4), %rdi
+	movl	M(%rdi,%rsi,8), %r8d
+	.loc	1 40 29                 # CoinGame.c:40:29
+	leal	3(%rdx), %edi
+	.loc	1 40 22                 # CoinGame.c:40:22
+	leaq	(%rdx,%rdx,2), %rbx
+	leaq	(,%rdi,4), %rsi
+	.loc	1 40 19                 # CoinGame.c:40:19
+	cmpl	M(%rsi,%rbx,8), %r8d
+.Ltmp18:
+	.loc	1 40 7                  # CoinGame.c:40:7
+	cmovgl	%edx, %eax
+	cmovgq	%rcx, %rdx
+	cmovgl	%edi, %ecx
+.Ltmp19:
+	.loc	1 42 19 is_stmt 1       # CoinGame.c:42:19
+	movl	V(,%rdx,4), %edx
+.Ltmp20:
+	.loc	1 46 17                 # CoinGame.c:46:17
+	movl	%edx, coins+4(%rip)
+.Ltmp21:
+	.loc	1 40 7                  # CoinGame.c:40:7
+	movl	%ecx, %r9d
+	.loc	1 40 11 is_stmt 0       # CoinGame.c:40:11
+	leal	1(%rax), %r10d
+	.loc	1 40 7                  # CoinGame.c:40:7
+	leaq	(%r10,%r10,2), %rdi
+	leaq	(,%r9,4), %rbx
+	movl	M(%rbx,%rdi,8), %r8d
+	.loc	1 40 29                 # CoinGame.c:40:29
+	leal	-1(%rcx), %edi
+	.loc	1 40 22                 # CoinGame.c:40:22
+	movl	%eax, %edx
+	leaq	(%rdx,%rdx,2), %rsi
+	.loc	1 40 19                 # CoinGame.c:40:19
+	cmpl	M-4(%rbx,%rsi,8), %r8d
+.Ltmp22:
+	.loc	1 40 7                  # CoinGame.c:40:7
+	cmovgq	%r9, %rdx
+	cmovlel	%r10d, %eax
+	cmovlel	%ecx, %edi
+.Ltmp23:
+	.loc	1 46 19 is_stmt 1       # CoinGame.c:46:19
+	movl	V(,%rdx,4), %ecx
 .Ltmp24:
-	.cfi_def_cfa_offset 56
-	subq	$24, %rsp
+	.loc	1 42 17                 # CoinGame.c:42:17
+	movl	%ecx, coins+8(%rip)
 .Ltmp25:
-	.cfi_def_cfa_offset 80
+	.loc	1 40 7                  # CoinGame.c:40:7
+	movslq	%edi, %rcx
+	.loc	1 40 11 is_stmt 0       # CoinGame.c:40:11
+	leal	1(%rax), %r9d
+	.loc	1 40 7                  # CoinGame.c:40:7
+	leaq	(,%rcx,4), %rsi
+	leaq	(%r9,%r9,2), %rdi
+	movl	M(%rsi,%rdi,8), %r8d
+	.loc	1 40 29                 # CoinGame.c:40:29
+	leal	-1(%rcx), %ebx
+	.loc	1 40 22                 # CoinGame.c:40:22
+	movl	%eax, %edi
+	leaq	(%rdi,%rdi,2), %rdx
+	.loc	1 40 19                 # CoinGame.c:40:19
+	cmpl	M-4(%rsi,%rdx,8), %r8d
 .Ltmp26:
-	.cfi_offset %rbx, -56
+	.loc	1 40 7                  # CoinGame.c:40:7
+	cmovgq	%rcx, %rdi
+	cmovlel	%r9d, %eax
+	cmovlel	%ecx, %ebx
 .Ltmp27:
-	.cfi_offset %r12, -48
+	.loc	1 42 19 is_stmt 1       # CoinGame.c:42:19
+	movl	V(,%rdi,4), %ecx
 .Ltmp28:
-	.cfi_offset %r13, -40
+	.loc	1 46 17                 # CoinGame.c:46:17
+	movl	%ecx, coins+12(%rip)
 .Ltmp29:
-	.cfi_offset %r14, -32
+	.loc	1 40 7                  # CoinGame.c:40:7
+	movslq	%ebx, %rcx
+	.loc	1 40 11 is_stmt 0       # CoinGame.c:40:11
+	leal	1(%rax), %edx
+	.loc	1 40 7                  # CoinGame.c:40:7
+	movslq	%edx, %rdx
+	leaq	(,%rcx,4), %rsi
+	leaq	(%rdx,%rdx,2), %rdi
+	movl	M(%rsi,%rdi,8), %r8d
+	.loc	1 40 29                 # CoinGame.c:40:29
+	leal	-1(%rcx), %ebx
+	.loc	1 40 22                 # CoinGame.c:40:22
+	cltq
+	leaq	(%rax,%rax,2), %rdi
+	.loc	1 40 19                 # CoinGame.c:40:19
+	cmpl	M-4(%rsi,%rdi,8), %r8d
 .Ltmp30:
-	.cfi_offset %r15, -24
+	.loc	1 40 7                  # CoinGame.c:40:7
+	cmovlel	%ecx, %ebx
+	cmovleq	%rax, %rcx
+	cmovlel	%edx, %eax
 .Ltmp31:
-	.cfi_offset %rbp, -16
+	.loc	1 46 19 is_stmt 1       # CoinGame.c:46:19
+	movl	V(,%rcx,4), %ecx
 .Ltmp32:
-	#DEBUG_VALUE: printMoves:i <- 0
-	#DEBUG_VALUE: printMoves:j <- 5
-	movb	$1, %r12b
-	movl	$5, %r14d
+	.loc	1 42 17                 # CoinGame.c:42:17
+	movl	%ecx, coins+16(%rip)
 .Ltmp33:
-	#DEBUG_VALUE: printMoves:alice <- 1
-	xorl	%ebx, %ebx
-	.p2align	4, 0x90
-.LBB2_1:                                # %while.body
-                                        # =>This Inner Loop Header: Depth=1
+	.loc	1 40 7                  # CoinGame.c:40:7
+	movslq	%ebx, %rcx
+	.loc	1 40 11 is_stmt 0       # CoinGame.c:40:11
+	leal	1(%rax), %edx
+	.loc	1 40 7                  # CoinGame.c:40:7
+	movslq	%edx, %rdx
+	leaq	(,%rcx,4), %rsi
+	leaq	(%rdx,%rdx,2), %rdx
+	movl	M(%rsi,%rdx,8), %edx
+	.loc	1 40 22                 # CoinGame.c:40:22
+	cltq
+	leaq	(%rax,%rax,2), %rdi
+	.loc	1 40 19                 # CoinGame.c:40:19
+	cmpl	M-4(%rsi,%rdi,8), %edx
 .Ltmp34:
-	.loc	1 66 12 prologue_end    # CoinGame.c:66:12
-	movq	%rbx, 16(%rsp)          # 8-byte Spill
-	movl	%r14d, 12(%rsp)         # 4-byte Spill
-	movslq	%r14d, %rbp
-	.loc	1 66 16 is_stmt 0       # CoinGame.c:66:16
-	leal	1(%rbx), %r13d
-	.loc	1 66 12                 # CoinGame.c:66:12
-	movslq	%r13d, %rax
-	leaq	(,%rbp,4), %rcx
-	leaq	(%rax,%rax,2), %rax
-	movl	M(%rcx,%rax,8), %r15d
+	.loc	1 40 7                  # CoinGame.c:40:7
+	cmovgq	%rcx, %rax
 .Ltmp35:
-	#DEBUG_VALUE: P1 <- %R15D
-	.loc	1 67 12 is_stmt 1       # CoinGame.c:67:12
-	movslq	%ebx, %r14
-	leaq	(%r14,%r14,2), %rax
-	movl	M-4(%rcx,%rax,8), %ebx
+	.loc	1 42 19 is_stmt 1       # CoinGame.c:42:19
+	movl	V(,%rax,4), %eax
 .Ltmp36:
-	#DEBUG_VALUE: P2 <- %EBX
-	.loc	1 68 7                  # CoinGame.c:68:7
-	testb	%r12b, %r12b
-	je	.LBB2_3
+	.loc	1 46 17                 # CoinGame.c:46:17
+	movl	%eax, coins+20(%rip)
+	xorl	%ebx, %ebx
 .Ltmp37:
-# BB#2:                                 # %if.then
-                                        #   in Loop: Header=BB2_1 Depth=1
-	#DEBUG_VALUE: P2 <- %EBX
-	#DEBUG_VALUE: P1 <- %R15D
-	.loc	1 69 4                  # CoinGame.c:69:4
-	movl	$.L.str.1, %edi
-	jmp	.LBB2_4
-.Ltmp38:
 	.p2align	4, 0x90
-.LBB2_3:                                # %if.else
-                                        #   in Loop: Header=BB2_1 Depth=1
-	#DEBUG_VALUE: P2 <- %EBX
-	#DEBUG_VALUE: P1 <- %R15D
-	.loc	1 71 4                  # CoinGame.c:71:4
-	movl	$.L.str.2, %edi
+.LBB1_1:                                # %for.body19
+                                        # =>This Inner Loop Header: Depth=1
+	.loc	1 52 6                  # CoinGame.c:52:6
+	movq	%rbx, %r15
+	andq	$1, %r15
+	jne	.LBB1_3
+# BB#2:                                 # %if.then21
+                                        #   in Loop: Header=BB1_1 Depth=1
+.Ltmp38:
+	.loc	1 53 4                  # CoinGame.c:53:4
+	movl	$.L.str.1, %edi
+	jmp	.LBB1_4
 .Ltmp39:
-.LBB2_4:                                # %if.end
-                                        #   in Loop: Header=BB2_1 Depth=1
-	#DEBUG_VALUE: P1 <- %R15D
-	#DEBUG_VALUE: P2 <- %EBX
+	.p2align	4, 0x90
+.LBB1_3:                                # %if.else22
+                                        #   in Loop: Header=BB1_1 Depth=1
+	.loc	1 55 4                  # CoinGame.c:55:4
+	movl	$.L.str.2, %edi
+.LBB1_4:                                # %if.end24
+                                        #   in Loop: Header=BB1_1 Depth=1
 	xorl	%eax, %eax
 	callq	printf
 .Ltmp40:
-	.loc	1 74 10                 # CoinGame.c:74:10
-	cmpl	%ebx, %r15d
-	jle	.LBB2_5
+	.loc	1 51 2 discriminator 1  # CoinGame.c:51:2
+	leaq	1(%rbx), %r14
 .Ltmp41:
-# BB#6:                                 # %if.else14
-                                        #   in Loop: Header=BB2_1 Depth=1
-	#DEBUG_VALUE: P2 <- %EBX
-	#DEBUG_VALUE: P1 <- %R15D
-	.loc	1 67 19                 # CoinGame.c:67:19
-	leal	-1(%rbp), %r14d
+	.loc	1 57 29                 # CoinGame.c:57:29
+	movl	coins(,%rbx,4), %edx
+	.loc	1 57 3 is_stmt 0        # CoinGame.c:57:3
+	movl	$.L.str.3, %edi
+	xorl	%eax, %eax
+	movl	%r14d, %esi
+	callq	printf
 .Ltmp42:
-	.loc	1 78 26                 # CoinGame.c:78:26
-	leal	1(%rbp), %esi
-	.loc	1 78 31 is_stmt 0       # CoinGame.c:78:31
-	movl	V(,%rbp,4), %edx
-	.loc	1 78 4                  # CoinGame.c:78:4
-	movl	$.L.str.3, %edi
-	xorl	%eax, %eax
-	callq	printf
-	movq	16(%rsp), %rbx          # 8-byte Reload
+	.loc	1 60 17 is_stmt 1       # CoinGame.c:60:17
+	movl	coins(,%rbx,4), %eax
 .Ltmp43:
-	jmp	.LBB2_7
+	.loc	1 59 6                  # CoinGame.c:59:6
+	testq	%r15, %r15
+	jne	.LBB1_8
+# BB#5:                                 # %if.then31
+                                        #   in Loop: Header=BB1_1 Depth=1
 .Ltmp44:
-	.p2align	4, 0x90
-.LBB2_5:                                # %if.then9
-                                        #   in Loop: Header=BB2_1 Depth=1
-	#DEBUG_VALUE: P2 <- %EBX
-	#DEBUG_VALUE: P1 <- %R15D
-	.loc	1 75 31 is_stmt 1       # CoinGame.c:75:31
-	movl	V(,%r14,4), %edx
-	.loc	1 75 4 is_stmt 0        # CoinGame.c:75:4
-	movl	$.L.str.3, %edi
-	xorl	%eax, %eax
-	movl	%r13d, %esi
-	callq	printf
-	movl	%r13d, %ebx
-.Ltmp45:
-	movl	12(%rsp), %r14d         # 4-byte Reload
-.Ltmp46:
-.LBB2_7:                                # %if.end19
-                                        #   in Loop: Header=BB2_1 Depth=1
-	#DEBUG_VALUE: P1 <- %R15D
-	.loc	1 81 7 is_stmt 1        # CoinGame.c:81:7
-	testb	%r12b, %r12b
-	je	.LBB2_9
-.Ltmp47:
-# BB#8:                                 # %if.then21
-                                        #   in Loop: Header=BB2_1 Depth=1
-	#DEBUG_VALUE: P1 <- %R15D
-	.loc	1 82 4                  # CoinGame.c:82:4
+	.loc	1 60 14                 # CoinGame.c:60:14
+	addl	%eax, sum_alice(%rip)
+	.loc	1 61 4                  # CoinGame.c:61:4
 	movl	$.L.str.4, %edi
 	xorl	%eax, %eax
 	callq	printf
-	jmp	.LBB2_10
-.Ltmp48:
+	jmp	.LBB1_6
+.Ltmp45:
 	.p2align	4, 0x90
-.LBB2_9:                                # %if.else23
-                                        #   in Loop: Header=BB2_1 Depth=1
-	#DEBUG_VALUE: P1 <- %R15D
-	.loc	1 84 4                  # CoinGame.c:84:4
+.LBB1_8:                                # %if.else36
+                                        #   in Loop: Header=BB1_1 Depth=1
+	.loc	1 63 12                 # CoinGame.c:63:12
+	addl	%eax, sum_bob(%rip)
+	.loc	1 64 4                  # CoinGame.c:64:4
 	movl	$.Lstr, %edi
 	callq	puts
-.Ltmp49:
-.LBB2_10:                               # %if.end25
-                                        #   in Loop: Header=BB2_1 Depth=1
-	#DEBUG_VALUE: P1 <- %R15D
-	.loc	1 86 9                  # CoinGame.c:86:9
-	testb	%r12b, %r12b
-	sete	%r12b
-.Ltmp50:
-	.loc	1 65 2 discriminator 1  # CoinGame.c:65:2
-	cmpl	%r14d, %ebx
-	jle	.LBB2_1
-.Ltmp51:
-# BB#11:                                # %while.end
-	#DEBUG_VALUE: P1 <- %R15D
-	.loc	1 89 1                  # CoinGame.c:89:1
-	addq	$24, %rsp
+.Ltmp46:
+.LBB1_6:                                # %for.cond17.backedge
+                                        #   in Loop: Header=BB1_1 Depth=1
+	.loc	1 51 2 discriminator 1  # CoinGame.c:51:2
+	cmpq	$6, %r14
+	movq	%r14, %rbx
+	jne	.LBB1_1
+.Ltmp47:
+# BB#7:                                 # %for.end44
+	.loc	1 68 1                  # CoinGame.c:68:1
 	popq	%rbx
-	popq	%r12
-	popq	%r13
 	popq	%r14
 	popq	%r15
-.Ltmp52:
-	popq	%rbp
 	retq
-.Ltmp53:
-.Lfunc_end2:
-	.size	printMoves, .Lfunc_end2-printMoves
+.Ltmp48:
+.Lfunc_end1:
+	.size	play, .Lfunc_end1-play
 	.cfi_endproc
 
-	.globl	maxMoney
+	.globl	findMoves
 	.p2align	4, 0x90
-	.type	maxMoney,@function
-maxMoney:                               # @maxMoney
-.Lfunc_begin3:
-	.loc	1 91 0                  # CoinGame.c:91:0
+	.type	findMoves,@function
+findMoves:                              # @findMoves
+.Lfunc_begin2:
+	.loc	1 103 0                 # CoinGame.c:103:0
 	.cfi_startproc
 # BB#0:                                 # %polly.loop_header260.4
 	pushq	%rbp
-.Ltmp54:
+.Ltmp49:
 	.cfi_def_cfa_offset 16
 	pushq	%r15
-.Ltmp55:
+.Ltmp50:
 	.cfi_def_cfa_offset 24
 	pushq	%r14
-.Ltmp56:
+.Ltmp51:
 	.cfi_def_cfa_offset 32
 	pushq	%r13
-.Ltmp57:
+.Ltmp52:
 	.cfi_def_cfa_offset 40
 	pushq	%r12
-.Ltmp58:
+.Ltmp53:
 	.cfi_def_cfa_offset 48
 	pushq	%rbx
-.Ltmp59:
+.Ltmp54:
 	.cfi_def_cfa_offset 56
-.Ltmp60:
+.Ltmp55:
 	.cfi_offset %rbx, -56
-.Ltmp61:
+.Ltmp56:
 	.cfi_offset %r12, -48
-.Ltmp62:
+.Ltmp57:
 	.cfi_offset %r13, -40
-.Ltmp63:
+.Ltmp58:
 	.cfi_offset %r14, -32
-.Ltmp64:
+.Ltmp59:
 	.cfi_offset %r15, -24
-.Ltmp65:
+.Ltmp60:
 	.cfi_offset %rbp, -16
-.Ltmp66:
-	#DEBUG_VALUE: maxMoney:s <- 0
+.Ltmp61:
+	#DEBUG_VALUE: findMoves:s <- 0
 	movl	$0, X+28(%rip)
 	movl	$0, X+56(%rip)
 	movl	$0, X+84(%rip)
@@ -420,12 +403,12 @@ maxMoney:                               # @maxMoney
 	movl	%edx, -20(%rsp)         # 4-byte Spill
 	xorl	%r13d, %r13d
 	.p2align	4, 0x90
-.LBB3_1:                                # %polly.loop_header269
+.LBB2_1:                                # %polly.loop_header269
                                         # =>This Loop Header: Depth=1
-                                        #     Child Loop BB3_13 Depth 2
-                                        #     Child Loop BB3_15 Depth 2
-                                        #     Child Loop BB3_17 Depth 2
-                                        #     Child Loop BB3_6 Depth 2
+                                        #     Child Loop BB2_13 Depth 2
+                                        #     Child Loop BB2_15 Depth 2
+                                        #     Child Loop BB2_17 Depth 2
+                                        #     Child Loop BB2_6 Depth 2
 	movq	%rax, -16(%rsp)         # 8-byte Spill
 	movq	%rcx, -8(%rsp)          # 8-byte Spill
 	testq	%rax, %rax
@@ -435,36 +418,36 @@ maxMoney:                               # @maxMoney
 	movl	$0, %eax
 	cmovnsq	%rcx, %rax
 	testq	%r13, %r13
-	jle	.LBB3_2
+	jle	.LBB2_2
 # BB#9:                                 # %polly.then
-                                        #   in Loop: Header=BB3_1 Depth=1
+                                        #   in Loop: Header=BB2_1 Depth=1
 	movl	$7, %ecx
 	subl	%r13d, %ecx
 	testb	$1, %cl
 	movl	$0, %ecx
-	je	.LBB3_11
+	je	.LBB2_11
 # BB#10:                                # %polly.loop_header275.prol
-                                        #   in Loop: Header=BB3_1 Depth=1
+                                        #   in Loop: Header=BB2_1 Depth=1
 	movl	X-4(,%r13,4), %ecx
-.Ltmp67:
-	.loc	1 127 13 prologue_end   # CoinGame.c:127:13
+.Ltmp62:
+	.loc	1 139 13 prologue_end   # CoinGame.c:139:13
 	addl	-20(%rsp), %ecx         # 4-byte Folded Reload
 	movl	Z-4(,%r13,4), %edx
-	.loc	1 127 30 is_stmt 0      # CoinGame.c:127:30
+	.loc	1 139 30 is_stmt 0      # CoinGame.c:139:30
 	addl	V-4(,%r13,4), %edx
-	.loc	1 127 23                # CoinGame.c:127:23
+	.loc	1 139 23                # CoinGame.c:139:23
 	cmpl	%edx, %ecx
-.Ltmp68:
-	.loc	1 127 8                 # CoinGame.c:127:8
+.Ltmp63:
+	.loc	1 139 8                 # CoinGame.c:139:8
 	cmovgel	%ecx, %edx
 	movl	%edx, M-4(,%r13,4)
 	movl	$1, %ecx
-.LBB3_11:                               # %polly.then.split
-                                        #   in Loop: Header=BB3_1 Depth=1
+.LBB2_11:                               # %polly.then.split
+                                        #   in Loop: Header=BB2_1 Depth=1
 	cmpq	$6, %r13
-	je	.LBB3_2
+	je	.LBB2_2
 # BB#12:                                # %polly.then.split.split
-                                        #   in Loop: Header=BB3_1 Depth=1
+                                        #   in Loop: Header=BB2_1 Depth=1
 	movl	$7, %ebx
 	subq	%rcx, %rbx
 	leaq	V(,%rcx,4), %r11
@@ -472,45 +455,45 @@ maxMoney:                               # @maxMoney
 	xorl	%ecx, %ecx
 	xorl	%edi, %edi
 	.p2align	4, 0x90
-.LBB3_13:                               # %polly.loop_header275
-                                        #   Parent Loop BB3_1 Depth=1
+.LBB2_13:                               # %polly.loop_header275
+                                        #   Parent Loop BB2_1 Depth=1
                                         # =>  This Inner Loop Header: Depth=2
 	leaq	(%r11,%rdi), %rbp
 	leaq	(%r15,%rcx), %r8
 	movl	X-4(%r8,%r13,4), %r9d
-.Ltmp69:
-	.loc	1 127 13                # CoinGame.c:127:13
+.Ltmp64:
+	.loc	1 139 13                # CoinGame.c:139:13
 	addl	(%r11,%rdi), %r9d
 	movl	Z-4(%r8,%r13,4), %r10d
-	.loc	1 127 30                # CoinGame.c:127:30
+	.loc	1 139 30                # CoinGame.c:139:30
 	addl	-4(%rbp,%r13,4), %r10d
-	.loc	1 127 23                # CoinGame.c:127:23
+	.loc	1 139 23                # CoinGame.c:139:23
 	cmpl	%r10d, %r9d
-.Ltmp70:
-	.loc	1 127 8                 # CoinGame.c:127:8
+.Ltmp65:
+	.loc	1 139 8                 # CoinGame.c:139:8
 	cmovgel	%r9d, %r10d
 	movl	%r10d, M-4(%r8,%r13,4)
 	movl	X+24(%r8,%r13,4), %edx
-.Ltmp71:
-	.loc	1 127 13                # CoinGame.c:127:13
+.Ltmp66:
+	.loc	1 139 13                # CoinGame.c:139:13
 	addl	4(%r11,%rdi), %edx
 	movl	Z+24(%r8,%r13,4), %esi
-	.loc	1 127 30                # CoinGame.c:127:30
+	.loc	1 139 30                # CoinGame.c:139:30
 	addl	(%rbp,%r13,4), %esi
-	.loc	1 127 23                # CoinGame.c:127:23
+	.loc	1 139 23                # CoinGame.c:139:23
 	cmpl	%esi, %edx
-.Ltmp72:
-	.loc	1 127 8                 # CoinGame.c:127:8
+.Ltmp67:
+	.loc	1 139 8                 # CoinGame.c:139:8
 	cmovgel	%edx, %esi
 	movl	%esi, M+24(%r8,%r13,4)
 	addq	$-2, %rbx
 	addq	$8, %rdi
 	addq	$56, %rcx
 	cmpq	%r13, %rbx
-	jne	.LBB3_13
-.Ltmp73:
-.LBB3_2:                                # %polly.merge
-                                        #   in Loop: Header=BB3_1 Depth=1
+	jne	.LBB2_13
+.Ltmp68:
+.LBB2_2:                                # %polly.merge
+                                        #   in Loop: Header=BB2_1 Depth=1
 	movl	$1, %ecx
 	subq	%r13, %rcx
 	movl	$0, %edx
@@ -522,86 +505,86 @@ maxMoney:                               # @maxMoney
 	movl	$4, %esi
 	cmovgq	%rsi, %rcx
 	cmpq	%rcx, %rdx
-	jg	.LBB3_3
+	jg	.LBB2_3
 # BB#14:                                # %polly.loop_preheader291
-                                        #   in Loop: Header=BB3_1 Depth=1
+                                        #   in Loop: Header=BB2_1 Depth=1
 	imulq	$28, %rax, %rdx
 	decq	%rax
 	addq	%r12, %rdx
 	decq	%rcx
 	xorl	%edi, %edi
 	.p2align	4, 0x90
-.LBB3_15:                               # %polly.loop_header290
-                                        #   Parent Loop BB3_1 Depth=1
+.LBB2_15:                               # %polly.loop_header290
+                                        #   Parent Loop BB2_1 Depth=1
                                         # =>  This Inner Loop Header: Depth=2
 	movl	M+20(%rdx,%rdi), %esi
 	movl	%esi, Y(%rdx,%rdi)
 	incq	%rax
 	addq	$28, %rdi
 	cmpq	%rcx, %rax
-	jle	.LBB3_15
-.LBB3_3:                                # %polly.loop_exit292
-                                        #   in Loop: Header=BB3_1 Depth=1
+	jle	.LBB2_15
+.LBB2_3:                                # %polly.loop_exit292
+                                        #   in Loop: Header=BB2_1 Depth=1
 	cmpq	$3, %rbx
 	movq	%rbx, %rax
 	movl	$3, %ecx
 	cmovgq	%rcx, %rax
 	testq	%rax, %rax
-	js	.LBB3_4
+	js	.LBB2_4
 # BB#16:                                # %polly.loop_preheader304
-                                        #   in Loop: Header=BB3_1 Depth=1
+                                        #   in Loop: Header=BB2_1 Depth=1
 	decq	%rax
 	movq	$-1, %rcx
 	movq	%r12, %rdx
 	.p2align	4, 0x90
-.LBB3_17:                               # %polly.loop_header303
-                                        #   Parent Loop BB3_1 Depth=1
+.LBB2_17:                               # %polly.loop_header303
+                                        #   Parent Loop BB2_1 Depth=1
                                         # =>  This Inner Loop Header: Depth=2
 	movl	M+48(%rdx), %esi
 	movl	Y(%rdx), %edi
-.Ltmp74:
-	.loc	1 107 17 is_stmt 1      # CoinGame.c:107:17
+.Ltmp69:
+	.loc	1 119 17 is_stmt 1      # CoinGame.c:119:17
 	cmpl	%edi, %esi
-.Ltmp75:
-	.loc	1 107 9 is_stmt 0       # CoinGame.c:107:9
+.Ltmp70:
+	.loc	1 119 9 is_stmt 0       # CoinGame.c:119:9
 	cmovgl	%edi, %esi
 	movl	%esi, X(%rdx)
 	incq	%rcx
 	addq	$28, %rdx
 	cmpq	%rax, %rcx
-	jle	.LBB3_17
-.Ltmp76:
-.LBB3_4:                                # %polly.loop_exit305
-                                        #   in Loop: Header=BB3_1 Depth=1
+	jle	.LBB2_17
+.Ltmp71:
+.LBB2_4:                                # %polly.loop_exit305
+                                        #   in Loop: Header=BB2_1 Depth=1
 	movl	$2, %eax
 	subq	%r13, %rax
 	movl	$0, %ecx
 	cmovnsq	%rax, %rcx
 	cmpq	%rbx, %rcx
-	jg	.LBB3_7
-# BB#5:                                 #   in Loop: Header=BB3_1 Depth=1
+	jg	.LBB2_7
+# BB#5:                                 #   in Loop: Header=BB2_1 Depth=1
 	imulq	$28, %r14, %rax
 	decq	%r14
 	.p2align	4, 0x90
-.LBB3_6:                                # %polly.loop_header320
-                                        #   Parent Loop BB3_1 Depth=1
+.LBB2_6:                                # %polly.loop_header320
+                                        #   Parent Loop BB2_1 Depth=1
                                         # =>  This Inner Loop Header: Depth=2
 	movl	M-8(%rax,%r12), %ecx
 	movl	Y(%rax,%r12), %edx
-.Ltmp77:
-	.loc	1 115 17 is_stmt 1      # CoinGame.c:115:17
+.Ltmp72:
+	.loc	1 127 17 is_stmt 1      # CoinGame.c:127:17
 	cmpl	%edx, %ecx
-.Ltmp78:
-	.loc	1 115 9 is_stmt 0       # CoinGame.c:115:9
+.Ltmp73:
+	.loc	1 127 9 is_stmt 0       # CoinGame.c:127:9
 	cmovgl	%edx, %ecx
 	movl	%ecx, Z(%rax,%r12)
 	incq	%r14
 	addq	$28, %rax
 	cmpq	%rbx, %r14
-	jl	.LBB3_6
-.Ltmp79:
-.LBB3_7:                                # %polly.loop_exit322
-                                        #   in Loop: Header=BB3_1 Depth=1
+	jl	.LBB2_6
+.Ltmp74:
+.LBB2_7:                                # %polly.loop_exit322
+                                        #   in Loop: Header=BB2_1 Depth=1
 	incq	%r13
 	movq	-8(%rsp), %rcx          # 8-byte Reload
 	decq	%rcx
@@ -609,11 +592,11 @@ maxMoney:                               # @maxMoney
 	movq	-16(%rsp), %rax         # 8-byte Reload
 	decq	%rax
 	cmpq	$7, %r13
-	jne	.LBB3_1
+	jne	.LBB2_1
 # BB#8:                                 # %polly.exiting
-	.loc	1 140 9 is_stmt 1       # CoinGame.c:140:9
+	.loc	1 152 9 is_stmt 1       # CoinGame.c:152:9
 	movl	M+20(%rip), %eax
-	.loc	1 140 2 is_stmt 0       # CoinGame.c:140:2
+	.loc	1 152 2 is_stmt 0       # CoinGame.c:152:2
 	popq	%rbx
 	popq	%r12
 	popq	%r13
@@ -621,153 +604,72 @@ maxMoney:                               # @maxMoney
 	popq	%r15
 	popq	%rbp
 	retq
-.Ltmp80:
-.Lfunc_end3:
-	.size	maxMoney, .Lfunc_end3-maxMoney
+.Ltmp75:
+.Lfunc_end2:
+	.size	findMoves, .Lfunc_end2-findMoves
 	.cfi_endproc
 
 	.globl	main
 	.p2align	4, 0x90
 	.type	main,@function
 main:                                   # @main
-.Lfunc_begin4:
-	.loc	1 142 0 is_stmt 1       # CoinGame.c:142:0
+.Lfunc_begin3:
+	.loc	1 154 0 is_stmt 1       # CoinGame.c:154:0
 	.cfi_startproc
 # BB#0:                                 # %entry
-	.loc	1 144 2 prologue_end    # CoinGame.c:144:2
+	.loc	1 156 2 prologue_end    # CoinGame.c:156:2
 	pushq	%rax
-.Ltmp81:
+.Ltmp76:
 	.cfi_def_cfa_offset 16
-	callq	maxMoney
-.Ltmp82:
-	#DEBUG_VALUE: sumMoves:j <- 5
-	#DEBUG_VALUE: sumMoves:i <- 0
-	movl	$1, %r8d
-	movl	$5, %edx
-.Ltmp83:
-	#DEBUG_VALUE: sumMoves:alice <- 1
-	xorl	%edi, %edi
-	.p2align	4, 0x90
-.LBB4_1:                                # %while.body.i
-                                        # =>This Inner Loop Header: Depth=1
-.Ltmp84:
-	.loc	1 38 12                 # CoinGame.c:38:12
-	movslq	%edx, %rsi
-	.loc	1 38 16 is_stmt 0       # CoinGame.c:38:16
-	leal	1(%rdi), %edx
-	.loc	1 38 12                 # CoinGame.c:38:12
-	movslq	%edx, %r10
-	leaq	(,%rsi,4), %rax
-	leaq	(%r10,%r10,2), %rdx
-	movl	M(%rax,%rdx,8), %r9d
-.Ltmp85:
-	#DEBUG_VALUE: P1 <- %R9D
-	.loc	1 39 19 is_stmt 1       # CoinGame.c:39:19
-	leal	-1(%rsi), %edx
-	.loc	1 39 12 is_stmt 0       # CoinGame.c:39:12
-	movslq	%edi, %rcx
-	leaq	(%rcx,%rcx,2), %rdi
-.Ltmp86:
-	.loc	1 41 10 is_stmt 1       # CoinGame.c:41:10
-	cmpl	M-4(%rax,%rdi,8), %r9d
-.Ltmp87:
-	.loc	1 41 7 is_stmt 0        # CoinGame.c:41:7
-	cmovlel	%esi, %edx
-	movl	%ecx, %edi
-	cmovlel	%r10d, %edi
-	cmovgq	%rsi, %rcx
-.Ltmp88:
-	.loc	1 43 11 is_stmt 1       # CoinGame.c:43:11
-	movl	V(,%rcx,4), %esi
-.Ltmp89:
-	.loc	1 50 7                  # CoinGame.c:50:7
-	testl	%r8d, %r8d
-.Ltmp90:
-	.loc	1 50 7 is_stmt 0        # CoinGame.c:50:7
-	je	.LBB4_3
-.Ltmp91:
-# BB#2:                                 # %if.then12.i
-                                        #   in Loop: Header=BB4_1 Depth=1
-	#DEBUG_VALUE: P1 <- %R9D
-	.loc	1 51 14 is_stmt 1       # CoinGame.c:51:14
-	addl	%esi, sum_alice(%rip)
-.Ltmp92:
-	#DEBUG_VALUE: sumMoves:alice <- 0
-	xorl	%r8d, %r8d
-	jmp	.LBB4_4
-.Ltmp93:
-	.p2align	4, 0x90
-.LBB4_3:                                # %if.else14.i
-                                        #   in Loop: Header=BB4_1 Depth=1
-	#DEBUG_VALUE: P1 <- %R9D
-	.loc	1 54 12                 # CoinGame.c:54:12
-	addl	%esi, sum_bob(%rip)
-.Ltmp94:
-	#DEBUG_VALUE: sumMoves:alice <- 1
-	movl	$1, %r8d
-.Ltmp95:
-.LBB4_4:                                # %while.cond.backedge.i
-                                        #   in Loop: Header=BB4_1 Depth=1
-	#DEBUG_VALUE: P1 <- %R9D
-	.loc	1 37 2 discriminator 1  # CoinGame.c:37:2
-	cmpl	%edx, %edi
-	jle	.LBB4_1
-.Ltmp96:
-# BB#5:                                 # %sumMoves.exit
-	#DEBUG_VALUE: P1 <- %R9D
-	.loc	1 148 6                 # CoinGame.c:148:6
+	callq	findMoves
+	.loc	1 157 2                 # CoinGame.c:157:2
+	callq	play
+.Ltmp77:
+	.loc	1 160 6                 # CoinGame.c:160:6
 	movl	sum_alice(%rip), %esi
-	.loc	1 148 16 is_stmt 0      # CoinGame.c:148:16
+	.loc	1 160 16 is_stmt 0      # CoinGame.c:160:16
 	cmpl	M+20(%rip), %esi
-	jne	.LBB4_6
-.Ltmp97:
-# BB#8:                                 # %if.end
-	#DEBUG_VALUE: P1 <- %R9D
-	.loc	1 153 6 is_stmt 1       # CoinGame.c:153:6
+	jne	.LBB3_1
+.Ltmp78:
+# BB#3:                                 # %if.end
+	.loc	1 165 6 is_stmt 1       # CoinGame.c:165:6
 	cmpl	sum_bob(%rip), %esi
-	jl	.LBB4_9
-.Ltmp98:
-# BB#10:                                # %if.end5
-	#DEBUG_VALUE: P1 <- %R9D
-	.loc	1 158 2                 # CoinGame.c:158:2
+	jl	.LBB3_4
+# BB#5:                                 # %if.end5
+	.loc	1 170 2                 # CoinGame.c:170:2
 	movl	$.L.str.8, %edi
 	xorl	%eax, %eax
 	callq	printf
-.Ltmp99:
-	.loc	1 159 65                # CoinGame.c:159:65
+	.loc	1 171 65                # CoinGame.c:171:65
 	movl	sum_bob(%rip), %esi
-	.loc	1 159 2 is_stmt 0       # CoinGame.c:159:2
+	.loc	1 171 2 is_stmt 0       # CoinGame.c:171:2
 	movl	$.L.str.9, %edi
 	xorl	%eax, %eax
 	callq	printf
-	.loc	1 160 1 is_stmt 1       # CoinGame.c:160:1
+	.loc	1 172 1 is_stmt 1       # CoinGame.c:172:1
 	xorl	%eax, %eax
 	popq	%rcx
 	retq
-.LBB4_6:                                # %if.then
-.Ltmp100:
-	#DEBUG_VALUE: P1 <- %R9D
-	.loc	1 149 3                 # CoinGame.c:149:3
+.LBB3_1:                                # %if.then
+.Ltmp79:
+	.loc	1 161 3                 # CoinGame.c:161:3
 	movl	$.L.str.6, %edi
-	jmp	.LBB4_7
-.Ltmp101:
-.LBB4_9:                                # %if.then3
-	#DEBUG_VALUE: P1 <- %R9D
-	.loc	1 154 3                 # CoinGame.c:154:3
+	jmp	.LBB3_2
+.Ltmp80:
+.LBB3_4:                                # %if.then3
+	.loc	1 166 3                 # CoinGame.c:166:3
 	movl	$.L.str.7, %edi
-.Ltmp102:
-.LBB4_7:                                # %if.then
-	#DEBUG_VALUE: P1 <- %R9D
-	.loc	1 149 3                 # CoinGame.c:149:3
+.Ltmp81:
+.LBB3_2:                                # %if.then
+	.loc	1 161 3                 # CoinGame.c:161:3
 	xorl	%eax, %eax
 	callq	printf
-.Ltmp103:
-	.loc	1 150 3                 # CoinGame.c:150:3
+	.loc	1 162 3                 # CoinGame.c:162:3
 	movl	$-1, %edi
 	callq	exit
-.Ltmp104:
-.Lfunc_end4:
-	.size	main, .Lfunc_end4-main
+.Ltmp82:
+.Lfunc_end3:
+	.size	main, .Lfunc_end3-main
 	.cfi_endproc
 
 	.type	V,@object               # @V
@@ -806,6 +708,8 @@ sum_bob:
 
 	.type	M,@object               # @M
 	.comm	M,144,16
+	.type	coins,@object           # @coins
+	.comm	coins,24,16
 	.type	.L.str.1,@object        # @.str.1
 .L.str.1:
 	.asciz	"Alice take coin "
@@ -883,120 +787,37 @@ sum_bob:
 .Linfo_string11:
 	.asciz	"Z"                     # string offset=280
 .Linfo_string12:
-	.asciz	"sumMoves"              # string offset=282
+	.asciz	"coins"                 # string offset=282
 .Linfo_string13:
-	.asciz	"j"                     # string offset=291
+	.asciz	"init"                  # string offset=288
 .Linfo_string14:
-	.asciz	"i"                     # string offset=293
+	.asciz	"play"                  # string offset=293
 .Linfo_string15:
-	.asciz	"alice"                 # string offset=295
+	.asciz	"findMoves"             # string offset=298
 .Linfo_string16:
-	.asciz	"P1"                    # string offset=301
+	.asciz	"main"                  # string offset=308
 .Linfo_string17:
-	.asciz	"P2"                    # string offset=304
+	.asciz	"i"                     # string offset=313
 .Linfo_string18:
-	.asciz	"coin"                  # string offset=307
+	.asciz	"j"                     # string offset=315
 .Linfo_string19:
-	.asciz	"init"                  # string offset=312
+	.asciz	"index"                 # string offset=317
 .Linfo_string20:
-	.asciz	"printMoves"            # string offset=317
-.Linfo_string21:
-	.asciz	"maxMoney"              # string offset=328
-.Linfo_string22:
-	.asciz	"main"                  # string offset=337
-.Linfo_string23:
-	.asciz	"_Bool"                 # string offset=342
-.Linfo_string24:
-	.asciz	"s"                     # string offset=348
+	.asciz	"s"                     # string offset=323
 	.section	.debug_loc,"",@progbits
 .Ldebug_loc0:
-	.quad	.Ltmp4-.Lfunc_begin0
-	.quad	.Ltmp13-.Lfunc_begin0
+	.quad	.Ltmp10-.Lfunc_begin0
+	.quad	.Ltmp11-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
-	.byte	1                       # 1
+	.byte	5                       # 5
 	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp13-.Lfunc_begin0
-	.quad	.Ltmp15-.Lfunc_begin0
-	.short	3                       # Loc expr size
-	.byte	17                      # DW_OP_consts
-	.byte	0                       # 0
-	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp15-.Lfunc_begin0
+	.quad	.Ltmp11-.Lfunc_begin0
 	.quad	.Lfunc_end1-.Lfunc_begin0
 	.short	3                       # Loc expr size
 	.byte	17                      # DW_OP_consts
-	.byte	1                       # 1
+	.byte	4                       # 4
 	.byte	159                     # DW_OP_stack_value
-	.quad	0
-	.quad	0
-.Ldebug_loc1:
-	.quad	.Ltmp6-.Lfunc_begin0
-	.quad	.Lfunc_end1-.Lfunc_begin0
-	.short	3                       # Loc expr size
-	.byte	89                      # super-register DW_OP_reg9
-	.byte	147                     # DW_OP_piece
-	.byte	4                       # 4
-	.quad	0
-	.quad	0
-.Ldebug_loc2:
-	.quad	.Ltmp35-.Lfunc_begin0
-	.quad	.Ltmp52-.Lfunc_begin0
-	.short	3                       # Loc expr size
-	.byte	95                      # super-register DW_OP_reg15
-	.byte	147                     # DW_OP_piece
-	.byte	4                       # 4
-	.quad	0
-	.quad	0
-.Ldebug_loc3:
-	.quad	.Ltmp36-.Lfunc_begin0
-	.quad	.Ltmp43-.Lfunc_begin0
-	.short	3                       # Loc expr size
-	.byte	83                      # super-register DW_OP_reg3
-	.byte	147                     # DW_OP_piece
-	.byte	4                       # 4
-	.quad	.Ltmp44-.Lfunc_begin0
-	.quad	.Ltmp45-.Lfunc_begin0
-	.short	3                       # Loc expr size
-	.byte	83                      # super-register DW_OP_reg3
-	.byte	147                     # DW_OP_piece
-	.byte	4                       # 4
-	.quad	0
-	.quad	0
-.Ldebug_loc4:
-	.quad	.Ltmp83-.Lfunc_begin0
-	.quad	.Ltmp92-.Lfunc_begin0
-	.short	3                       # Loc expr size
-	.byte	17                      # DW_OP_consts
-	.byte	1                       # 1
-	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp92-.Lfunc_begin0
-	.quad	.Ltmp94-.Lfunc_begin0
-	.short	3                       # Loc expr size
-	.byte	17                      # DW_OP_consts
-	.byte	0                       # 0
-	.byte	159                     # DW_OP_stack_value
-	.quad	.Ltmp94-.Lfunc_begin0
-	.quad	.Lfunc_end4-.Lfunc_begin0
-	.short	3                       # Loc expr size
-	.byte	17                      # DW_OP_consts
-	.byte	1                       # 1
-	.byte	159                     # DW_OP_stack_value
-	.quad	0
-	.quad	0
-.Ldebug_loc5:
-	.quad	.Ltmp85-.Lfunc_begin0
-	.quad	.Ltmp99-.Lfunc_begin0
-	.short	3                       # Loc expr size
-	.byte	89                      # super-register DW_OP_reg9
-	.byte	147                     # DW_OP_piece
-	.byte	4                       # 4
-	.quad	.Ltmp100-.Lfunc_begin0
-	.quad	.Ltmp103-.Lfunc_begin0
-	.short	3                       # Loc expr size
-	.byte	89                      # super-register DW_OP_reg9
-	.byte	147                     # DW_OP_piece
-	.byte	4                       # 4
 	.quad	0
 	.quad	0
 	.section	.debug_abbrev,"",@progbits
@@ -1116,6 +937,21 @@ sum_bob:
 	.byte	0                       # EOM(1)
 	.byte	0                       # EOM(2)
 	.byte	9                       # Abbreviation Code
+	.byte	52                      # DW_TAG_variable
+	.byte	0                       # DW_CHILDREN_no
+	.byte	2                       # DW_AT_location
+	.byte	23                      # DW_FORM_sec_offset
+	.byte	3                       # DW_AT_name
+	.byte	14                      # DW_FORM_strp
+	.byte	58                      # DW_AT_decl_file
+	.byte	11                      # DW_FORM_data1
+	.byte	59                      # DW_AT_decl_line
+	.byte	11                      # DW_FORM_data1
+	.byte	73                      # DW_AT_type
+	.byte	19                      # DW_FORM_ref4
+	.byte	0                       # EOM(1)
+	.byte	0                       # EOM(2)
+	.byte	10                      # Abbreviation Code
 	.byte	46                      # DW_TAG_subprogram
 	.byte	1                       # DW_CHILDREN_yes
 	.byte	17                      # DW_AT_low_pc
@@ -1126,77 +962,36 @@ sum_bob:
 	.byte	25                      # DW_FORM_flag_present
 	.byte	64                      # DW_AT_frame_base
 	.byte	24                      # DW_FORM_exprloc
-	.byte	49                      # DW_AT_abstract_origin
+	.byte	3                       # DW_AT_name
+	.byte	14                      # DW_FORM_strp
+	.byte	58                      # DW_AT_decl_file
+	.byte	11                      # DW_FORM_data1
+	.byte	59                      # DW_AT_decl_line
+	.byte	11                      # DW_FORM_data1
+	.byte	73                      # DW_AT_type
 	.byte	19                      # DW_FORM_ref4
-	.byte	0                       # EOM(1)
-	.byte	0                       # EOM(2)
-	.byte	10                      # Abbreviation Code
-	.byte	52                      # DW_TAG_variable
-	.byte	0                       # DW_CHILDREN_no
-	.byte	28                      # DW_AT_const_value
-	.byte	13                      # DW_FORM_sdata
-	.byte	49                      # DW_AT_abstract_origin
-	.byte	19                      # DW_FORM_ref4
+	.byte	63                      # DW_AT_external
+	.byte	25                      # DW_FORM_flag_present
+	.ascii	"\341\177"              # DW_AT_APPLE_optimized
+	.byte	25                      # DW_FORM_flag_present
 	.byte	0                       # EOM(1)
 	.byte	0                       # EOM(2)
 	.byte	11                      # Abbreviation Code
 	.byte	52                      # DW_TAG_variable
 	.byte	0                       # DW_CHILDREN_no
-	.byte	2                       # DW_AT_location
-	.byte	23                      # DW_FORM_sec_offset
-	.byte	49                      # DW_AT_abstract_origin
+	.byte	3                       # DW_AT_name
+	.byte	14                      # DW_FORM_strp
+	.byte	58                      # DW_AT_decl_file
+	.byte	11                      # DW_FORM_data1
+	.byte	59                      # DW_AT_decl_line
+	.byte	11                      # DW_FORM_data1
+	.byte	73                      # DW_AT_type
 	.byte	19                      # DW_FORM_ref4
 	.byte	0                       # EOM(1)
 	.byte	0                       # EOM(2)
 	.byte	12                      # Abbreviation Code
-	.byte	11                      # DW_TAG_lexical_block
-	.byte	1                       # DW_CHILDREN_yes
-	.byte	17                      # DW_AT_low_pc
-	.byte	1                       # DW_FORM_addr
-	.byte	18                      # DW_AT_high_pc
-	.byte	6                       # DW_FORM_data4
-	.byte	0                       # EOM(1)
-	.byte	0                       # EOM(2)
-	.byte	13                      # Abbreviation Code
-	.byte	52                      # DW_TAG_variable
-	.byte	0                       # DW_CHILDREN_no
-	.byte	49                      # DW_AT_abstract_origin
-	.byte	19                      # DW_FORM_ref4
-	.byte	0                       # EOM(1)
-	.byte	0                       # EOM(2)
-	.byte	14                      # Abbreviation Code
-	.byte	52                      # DW_TAG_variable
-	.byte	0                       # DW_CHILDREN_no
-	.byte	28                      # DW_AT_const_value
-	.byte	15                      # DW_FORM_udata
-	.byte	3                       # DW_AT_name
-	.byte	14                      # DW_FORM_strp
-	.byte	58                      # DW_AT_decl_file
-	.byte	11                      # DW_FORM_data1
-	.byte	59                      # DW_AT_decl_line
-	.byte	11                      # DW_FORM_data1
-	.byte	73                      # DW_AT_type
-	.byte	19                      # DW_FORM_ref4
-	.byte	0                       # EOM(1)
-	.byte	0                       # EOM(2)
-	.byte	15                      # Abbreviation Code
-	.byte	52                      # DW_TAG_variable
-	.byte	0                       # DW_CHILDREN_no
-	.byte	2                       # DW_AT_location
-	.byte	23                      # DW_FORM_sec_offset
-	.byte	3                       # DW_AT_name
-	.byte	14                      # DW_FORM_strp
-	.byte	58                      # DW_AT_decl_file
-	.byte	11                      # DW_FORM_data1
-	.byte	59                      # DW_AT_decl_line
-	.byte	11                      # DW_FORM_data1
-	.byte	73                      # DW_AT_type
-	.byte	19                      # DW_FORM_ref4
-	.byte	0                       # EOM(1)
-	.byte	0                       # EOM(2)
-	.byte	16                      # Abbreviation Code
 	.byte	46                      # DW_TAG_subprogram
-	.byte	1                       # DW_CHILDREN_yes
+	.byte	0                       # DW_CHILDREN_no
 	.byte	17                      # DW_AT_low_pc
 	.byte	1                       # DW_FORM_addr
 	.byte	18                      # DW_AT_high_pc
@@ -1217,67 +1012,17 @@ sum_bob:
 	.byte	25                      # DW_FORM_flag_present
 	.ascii	"\341\177"              # DW_AT_APPLE_optimized
 	.byte	25                      # DW_FORM_flag_present
-	.byte	0                       # EOM(1)
-	.byte	0                       # EOM(2)
-	.byte	17                      # Abbreviation Code
-	.byte	52                      # DW_TAG_variable
-	.byte	0                       # DW_CHILDREN_no
-	.byte	3                       # DW_AT_name
-	.byte	14                      # DW_FORM_strp
-	.byte	58                      # DW_AT_decl_file
-	.byte	11                      # DW_FORM_data1
-	.byte	59                      # DW_AT_decl_line
-	.byte	11                      # DW_FORM_data1
-	.byte	73                      # DW_AT_type
-	.byte	19                      # DW_FORM_ref4
-	.byte	0                       # EOM(1)
-	.byte	0                       # EOM(2)
-	.byte	18                      # Abbreviation Code
-	.byte	46                      # DW_TAG_subprogram
-	.byte	1                       # DW_CHILDREN_yes
-	.byte	3                       # DW_AT_name
-	.byte	14                      # DW_FORM_strp
-	.byte	58                      # DW_AT_decl_file
-	.byte	11                      # DW_FORM_data1
-	.byte	59                      # DW_AT_decl_line
-	.byte	11                      # DW_FORM_data1
-	.byte	63                      # DW_AT_external
-	.byte	25                      # DW_FORM_flag_present
-	.ascii	"\341\177"              # DW_AT_APPLE_optimized
-	.byte	25                      # DW_FORM_flag_present
-	.byte	32                      # DW_AT_inline
-	.byte	11                      # DW_FORM_data1
-	.byte	0                       # EOM(1)
-	.byte	0                       # EOM(2)
-	.byte	19                      # Abbreviation Code
-	.byte	11                      # DW_TAG_lexical_block
-	.byte	1                       # DW_CHILDREN_yes
-	.byte	0                       # EOM(1)
-	.byte	0                       # EOM(2)
-	.byte	20                      # Abbreviation Code
-	.byte	29                      # DW_TAG_inlined_subroutine
-	.byte	1                       # DW_CHILDREN_yes
-	.byte	49                      # DW_AT_abstract_origin
-	.byte	19                      # DW_FORM_ref4
-	.byte	17                      # DW_AT_low_pc
-	.byte	1                       # DW_FORM_addr
-	.byte	18                      # DW_AT_high_pc
-	.byte	6                       # DW_FORM_data4
-	.byte	88                      # DW_AT_call_file
-	.byte	11                      # DW_FORM_data1
-	.byte	89                      # DW_AT_call_line
-	.byte	11                      # DW_FORM_data1
 	.byte	0                       # EOM(1)
 	.byte	0                       # EOM(2)
 	.byte	0                       # EOM(3)
 	.section	.debug_info,"",@progbits
 .Lsection_info:
 .Lcu_begin0:
-	.long	674                     # Length of Unit
+	.long	431                     # Length of Unit
 	.short	4                       # DWARF version number
 	.long	.Lsection_abbrev        # Offset Into Abbrev. Section
 	.byte	8                       # Address Size (in bytes)
-	.byte	1                       # Abbrev [1] 0xb:0x29b DW_TAG_compile_unit
+	.byte	1                       # Abbrev [1] 0xb:0x1a8 DW_TAG_compile_unit
 	.long	.Linfo_string0          # DW_AT_producer
 	.short	12                      # DW_AT_language
 	.long	.Linfo_string1          # DW_AT_name
@@ -1285,7 +1030,7 @@ sum_bob:
 	.long	.Linfo_string2          # DW_AT_comp_dir
                                         # DW_AT_APPLE_optimized
 	.quad	.Lfunc_begin0           # DW_AT_low_pc
-	.long	.Lfunc_end4-.Lfunc_begin0 # DW_AT_high_pc
+	.long	.Lfunc_end3-.Lfunc_begin0 # DW_AT_high_pc
 	.byte	2                       # Abbrev [2] 0x2a:0x15 DW_TAG_variable
 	.long	.Linfo_string3          # DW_AT_name
 	.long	63                      # DW_AT_type
@@ -1314,7 +1059,7 @@ sum_bob:
 	.long	75                      # DW_AT_type
                                         # DW_AT_external
 	.byte	1                       # DW_AT_decl_file
-	.byte	23                      # DW_AT_decl_line
+	.byte	24                      # DW_AT_decl_line
 	.byte	9                       # DW_AT_location
 	.byte	3
 	.quad	sum_alice
@@ -1323,7 +1068,7 @@ sum_bob:
 	.long	75                      # DW_AT_type
                                         # DW_AT_external
 	.byte	1                       # DW_AT_decl_file
-	.byte	23                      # DW_AT_decl_line
+	.byte	24                      # DW_AT_decl_line
 	.byte	9                       # DW_AT_location
 	.byte	3
 	.quad	sum_bob
@@ -1372,207 +1117,104 @@ sum_bob:
 	.byte	9                       # DW_AT_location
 	.byte	3
 	.quad	Z
-	.byte	7                       # Abbrev [7] 0xe9:0x22 DW_TAG_subprogram
+	.byte	2                       # Abbrev [2] 0xe9:0x15 DW_TAG_variable
+	.long	.Linfo_string12         # DW_AT_name
+	.long	63                      # DW_AT_type
+                                        # DW_AT_external
+	.byte	1                       # DW_AT_decl_file
+	.byte	23                      # DW_AT_decl_line
+	.byte	9                       # DW_AT_location
+	.byte	3
+	.quad	coins
+	.byte	7                       # Abbrev [7] 0xfe:0x22 DW_TAG_subprogram
 	.quad	.Lfunc_begin0           # DW_AT_low_pc
 	.long	.Lfunc_end0-.Lfunc_begin0 # DW_AT_high_pc
                                         # DW_AT_APPLE_omit_frame_ptr
 	.byte	1                       # DW_AT_frame_base
 	.byte	87
-	.long	.Linfo_string19         # DW_AT_name
-	.byte	1                       # DW_AT_decl_file
-	.byte	25                      # DW_AT_decl_line
-                                        # DW_AT_external
-                                        # DW_AT_APPLE_optimized
-	.byte	8                       # Abbrev [8] 0xfe:0xc DW_TAG_variable
-	.byte	0                       # DW_AT_const_value
-	.long	.Linfo_string14         # DW_AT_name
+	.long	.Linfo_string13         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
 	.byte	26                      # DW_AT_decl_line
+                                        # DW_AT_external
+                                        # DW_AT_APPLE_optimized
+	.byte	8                       # Abbrev [8] 0x113:0xc DW_TAG_variable
+	.byte	0                       # DW_AT_const_value
+	.long	.Linfo_string17         # DW_AT_name
+	.byte	1                       # DW_AT_decl_file
+	.byte	27                      # DW_AT_decl_line
 	.long	75                      # DW_AT_type
 	.byte	0                       # End Of Children Mark
-	.byte	9                       # Abbrev [9] 0x10b:0x4a DW_TAG_subprogram
+	.byte	7                       # Abbrev [7] 0x120:0x3d DW_TAG_subprogram
 	.quad	.Lfunc_begin1           # DW_AT_low_pc
 	.long	.Lfunc_end1-.Lfunc_begin1 # DW_AT_high_pc
                                         # DW_AT_APPLE_omit_frame_ptr
 	.byte	1                       # DW_AT_frame_base
 	.byte	87
-	.long	503                     # DW_AT_abstract_origin
-	.byte	10                      # Abbrev [10] 0x11e:0x6 DW_TAG_variable
+	.long	.Linfo_string14         # DW_AT_name
+	.byte	1                       # DW_AT_decl_file
+	.byte	35                      # DW_AT_decl_line
+                                        # DW_AT_external
+                                        # DW_AT_APPLE_optimized
+	.byte	8                       # Abbrev [8] 0x135:0xc DW_TAG_variable
 	.byte	0                       # DW_AT_const_value
-	.long	522                     # DW_AT_abstract_origin
-	.byte	10                      # Abbrev [10] 0x124:0x6 DW_TAG_variable
-	.byte	5                       # DW_AT_const_value
-	.long	511                     # DW_AT_abstract_origin
-	.byte	11                      # Abbrev [11] 0x12a:0x9 DW_TAG_variable
+	.long	.Linfo_string17         # DW_AT_name
+	.byte	1                       # DW_AT_decl_file
+	.byte	36                      # DW_AT_decl_line
+	.long	75                      # DW_AT_type
+	.byte	9                       # Abbrev [9] 0x141:0xf DW_TAG_variable
 	.long	.Ldebug_loc0            # DW_AT_location
-	.long	533                     # DW_AT_abstract_origin
-	.byte	12                      # Abbrev [12] 0x133:0x21 DW_TAG_lexical_block
-	.quad	.Ltmp5                  # DW_AT_low_pc
-	.long	.Ltmp16-.Ltmp5          # DW_AT_high_pc
-	.byte	11                      # Abbrev [11] 0x140:0x9 DW_TAG_variable
-	.long	.Ldebug_loc1            # DW_AT_location
-	.long	545                     # DW_AT_abstract_origin
-	.byte	13                      # Abbrev [13] 0x149:0x5 DW_TAG_variable
-	.long	556                     # DW_AT_abstract_origin
-	.byte	13                      # Abbrev [13] 0x14e:0x5 DW_TAG_variable
-	.long	567                     # DW_AT_abstract_origin
+	.long	.Linfo_string18         # DW_AT_name
+	.byte	1                       # DW_AT_decl_file
+	.byte	36                      # DW_AT_decl_line
+	.long	75                      # DW_AT_type
+	.byte	8                       # Abbrev [8] 0x150:0xc DW_TAG_variable
+	.byte	0                       # DW_AT_const_value
+	.long	.Linfo_string19         # DW_AT_name
+	.byte	1                       # DW_AT_decl_file
+	.byte	38                      # DW_AT_decl_line
+	.long	75                      # DW_AT_type
 	.byte	0                       # End Of Children Mark
-	.byte	0                       # End Of Children Mark
-	.byte	7                       # Abbrev [7] 0x155:0x66 DW_TAG_subprogram
+	.byte	10                      # Abbrev [10] 0x15d:0x3c DW_TAG_subprogram
 	.quad	.Lfunc_begin2           # DW_AT_low_pc
 	.long	.Lfunc_end2-.Lfunc_begin2 # DW_AT_high_pc
                                         # DW_AT_APPLE_omit_frame_ptr
 	.byte	1                       # DW_AT_frame_base
 	.byte	87
-	.long	.Linfo_string20         # DW_AT_name
-	.byte	1                       # DW_AT_decl_file
-	.byte	62                      # DW_AT_decl_line
-                                        # DW_AT_external
-                                        # DW_AT_APPLE_optimized
-	.byte	8                       # Abbrev [8] 0x16a:0xc DW_TAG_variable
-	.byte	0                       # DW_AT_const_value
-	.long	.Linfo_string14         # DW_AT_name
-	.byte	1                       # DW_AT_decl_file
-	.byte	63                      # DW_AT_decl_line
-	.long	75                      # DW_AT_type
-	.byte	8                       # Abbrev [8] 0x176:0xc DW_TAG_variable
-	.byte	5                       # DW_AT_const_value
-	.long	.Linfo_string13         # DW_AT_name
-	.byte	1                       # DW_AT_decl_file
-	.byte	63                      # DW_AT_decl_line
-	.long	75                      # DW_AT_type
-	.byte	14                      # Abbrev [14] 0x182:0xc DW_TAG_variable
-	.byte	1                       # DW_AT_const_value
 	.long	.Linfo_string15         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	64                      # DW_AT_decl_line
-	.long	670                     # DW_AT_type
-	.byte	12                      # Abbrev [12] 0x18e:0x2c DW_TAG_lexical_block
-	.quad	.Ltmp34                 # DW_AT_low_pc
-	.long	.Ltmp50-.Ltmp34         # DW_AT_high_pc
-	.byte	15                      # Abbrev [15] 0x19b:0xf DW_TAG_variable
-	.long	.Ldebug_loc2            # DW_AT_location
-	.long	.Linfo_string16         # DW_AT_name
-	.byte	1                       # DW_AT_decl_file
-	.byte	66                      # DW_AT_decl_line
+	.byte	103                     # DW_AT_decl_line
 	.long	75                      # DW_AT_type
-	.byte	15                      # Abbrev [15] 0x1aa:0xf DW_TAG_variable
-	.long	.Ldebug_loc3            # DW_AT_location
+                                        # DW_AT_external
+                                        # DW_AT_APPLE_optimized
+	.byte	8                       # Abbrev [8] 0x176:0xc DW_TAG_variable
+	.byte	0                       # DW_AT_const_value
+	.long	.Linfo_string20         # DW_AT_name
+	.byte	1                       # DW_AT_decl_file
+	.byte	104                     # DW_AT_decl_line
+	.long	75                      # DW_AT_type
+	.byte	11                      # Abbrev [11] 0x182:0xb DW_TAG_variable
 	.long	.Linfo_string17         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	67                      # DW_AT_decl_line
+	.byte	104                     # DW_AT_decl_line
+	.long	75                      # DW_AT_type
+	.byte	11                      # Abbrev [11] 0x18d:0xb DW_TAG_variable
+	.long	.Linfo_string18         # DW_AT_name
+	.byte	1                       # DW_AT_decl_file
+	.byte	104                     # DW_AT_decl_line
 	.long	75                      # DW_AT_type
 	.byte	0                       # End Of Children Mark
-	.byte	0                       # End Of Children Mark
-	.byte	16                      # Abbrev [16] 0x1bb:0x3c DW_TAG_subprogram
+	.byte	12                      # Abbrev [12] 0x199:0x19 DW_TAG_subprogram
 	.quad	.Lfunc_begin3           # DW_AT_low_pc
 	.long	.Lfunc_end3-.Lfunc_begin3 # DW_AT_high_pc
                                         # DW_AT_APPLE_omit_frame_ptr
 	.byte	1                       # DW_AT_frame_base
 	.byte	87
-	.long	.Linfo_string21         # DW_AT_name
-	.byte	1                       # DW_AT_decl_file
-	.byte	91                      # DW_AT_decl_line
-	.long	75                      # DW_AT_type
-                                        # DW_AT_external
-                                        # DW_AT_APPLE_optimized
-	.byte	8                       # Abbrev [8] 0x1d4:0xc DW_TAG_variable
-	.byte	0                       # DW_AT_const_value
-	.long	.Linfo_string24         # DW_AT_name
-	.byte	1                       # DW_AT_decl_file
-	.byte	92                      # DW_AT_decl_line
-	.long	75                      # DW_AT_type
-	.byte	17                      # Abbrev [17] 0x1e0:0xb DW_TAG_variable
-	.long	.Linfo_string14         # DW_AT_name
-	.byte	1                       # DW_AT_decl_file
-	.byte	92                      # DW_AT_decl_line
-	.long	75                      # DW_AT_type
-	.byte	17                      # Abbrev [17] 0x1eb:0xb DW_TAG_variable
-	.long	.Linfo_string13         # DW_AT_name
-	.byte	1                       # DW_AT_decl_file
-	.byte	92                      # DW_AT_decl_line
-	.long	75                      # DW_AT_type
-	.byte	0                       # End Of Children Mark
-	.byte	18                      # Abbrev [18] 0x1f7:0x4d DW_TAG_subprogram
-	.long	.Linfo_string12         # DW_AT_name
-	.byte	1                       # DW_AT_decl_file
-	.byte	34                      # DW_AT_decl_line
-                                        # DW_AT_external
-                                        # DW_AT_APPLE_optimized
-	.byte	1                       # DW_AT_inline
-	.byte	17                      # Abbrev [17] 0x1ff:0xb DW_TAG_variable
-	.long	.Linfo_string13         # DW_AT_name
-	.byte	1                       # DW_AT_decl_file
-	.byte	35                      # DW_AT_decl_line
-	.long	75                      # DW_AT_type
-	.byte	17                      # Abbrev [17] 0x20a:0xb DW_TAG_variable
-	.long	.Linfo_string14         # DW_AT_name
-	.byte	1                       # DW_AT_decl_file
-	.byte	35                      # DW_AT_decl_line
-	.long	75                      # DW_AT_type
-	.byte	17                      # Abbrev [17] 0x215:0xb DW_TAG_variable
-	.long	.Linfo_string15         # DW_AT_name
-	.byte	1                       # DW_AT_decl_file
-	.byte	36                      # DW_AT_decl_line
-	.long	75                      # DW_AT_type
-	.byte	19                      # Abbrev [19] 0x220:0x23 DW_TAG_lexical_block
-	.byte	17                      # Abbrev [17] 0x221:0xb DW_TAG_variable
 	.long	.Linfo_string16         # DW_AT_name
 	.byte	1                       # DW_AT_decl_file
-	.byte	38                      # DW_AT_decl_line
-	.long	75                      # DW_AT_type
-	.byte	17                      # Abbrev [17] 0x22c:0xb DW_TAG_variable
-	.long	.Linfo_string17         # DW_AT_name
-	.byte	1                       # DW_AT_decl_file
-	.byte	39                      # DW_AT_decl_line
-	.long	75                      # DW_AT_type
-	.byte	17                      # Abbrev [17] 0x237:0xb DW_TAG_variable
-	.long	.Linfo_string18         # DW_AT_name
-	.byte	1                       # DW_AT_decl_file
-	.byte	40                      # DW_AT_decl_line
-	.long	75                      # DW_AT_type
-	.byte	0                       # End Of Children Mark
-	.byte	0                       # End Of Children Mark
-	.byte	16                      # Abbrev [16] 0x244:0x5a DW_TAG_subprogram
-	.quad	.Lfunc_begin4           # DW_AT_low_pc
-	.long	.Lfunc_end4-.Lfunc_begin4 # DW_AT_high_pc
-                                        # DW_AT_APPLE_omit_frame_ptr
-	.byte	1                       # DW_AT_frame_base
-	.byte	87
-	.long	.Linfo_string22         # DW_AT_name
-	.byte	1                       # DW_AT_decl_file
-	.byte	142                     # DW_AT_decl_line
+	.byte	154                     # DW_AT_decl_line
 	.long	75                      # DW_AT_type
                                         # DW_AT_external
                                         # DW_AT_APPLE_optimized
-	.byte	20                      # Abbrev [20] 0x25d:0x40 DW_TAG_inlined_subroutine
-	.long	503                     # DW_AT_abstract_origin
-	.quad	.Ltmp84                 # DW_AT_low_pc
-	.long	.Ltmp96-.Ltmp84         # DW_AT_high_pc
-	.byte	1                       # DW_AT_call_file
-	.byte	145                     # DW_AT_call_line
-	.byte	10                      # Abbrev [10] 0x270:0x6 DW_TAG_variable
-	.byte	5                       # DW_AT_const_value
-	.long	511                     # DW_AT_abstract_origin
-	.byte	10                      # Abbrev [10] 0x276:0x6 DW_TAG_variable
-	.byte	0                       # DW_AT_const_value
-	.long	522                     # DW_AT_abstract_origin
-	.byte	11                      # Abbrev [11] 0x27c:0x9 DW_TAG_variable
-	.long	.Ldebug_loc4            # DW_AT_location
-	.long	533                     # DW_AT_abstract_origin
-	.byte	12                      # Abbrev [12] 0x285:0x17 DW_TAG_lexical_block
-	.quad	.Ltmp84                 # DW_AT_low_pc
-	.long	.Ltmp95-.Ltmp84         # DW_AT_high_pc
-	.byte	11                      # Abbrev [11] 0x292:0x9 DW_TAG_variable
-	.long	.Ldebug_loc5            # DW_AT_location
-	.long	545                     # DW_AT_abstract_origin
-	.byte	0                       # End Of Children Mark
-	.byte	0                       # End Of Children Mark
-	.byte	0                       # End Of Children Mark
-	.byte	5                       # Abbrev [5] 0x29e:0x7 DW_TAG_base_type
-	.long	.Linfo_string23         # DW_AT_name
-	.byte	2                       # DW_AT_encoding
-	.byte	1                       # DW_AT_byte_size
 	.byte	0                       # End Of Children Mark
 	.section	.debug_ranges,"",@progbits
 .Ldebug_range:
@@ -1585,14 +1227,14 @@ sum_bob:
 .LpubNames_begin0:
 	.short	2                       # DWARF Version
 	.long	.Lcu_begin0             # Offset of Compilation Unit Info
-	.long	678                     # Compilation Unit Length
-	.long	341                     # DIE offset
-	.asciz	"printMoves"            # External Name
+	.long	435                     # Compilation Unit Length
+	.long	288                     # DIE offset
+	.asciz	"play"                  # External Name
 	.long	89                      # DIE offset
 	.asciz	"sum_alice"             # External Name
-	.long	233                     # DIE offset
+	.long	254                     # DIE offset
 	.asciz	"init"                  # External Name
-	.long	580                     # DIE offset
+	.long	409                     # DIE offset
 	.asciz	"main"                  # External Name
 	.long	42                      # DIE offset
 	.asciz	"V"                     # External Name
@@ -1604,12 +1246,12 @@ sum_bob:
 	.asciz	"Y"                     # External Name
 	.long	212                     # DIE offset
 	.asciz	"Z"                     # External Name
+	.long	349                     # DIE offset
+	.asciz	"findMoves"             # External Name
+	.long	233                     # DIE offset
+	.asciz	"coins"                 # External Name
 	.long	131                     # DIE offset
 	.asciz	"M"                     # External Name
-	.long	443                     # DIE offset
-	.asciz	"maxMoney"              # External Name
-	.long	503                     # DIE offset
-	.asciz	"sumMoves"              # External Name
 	.long	0                       # End Mark
 .LpubNames_end0:
 	.section	.debug_pubtypes,"",@progbits
@@ -1617,11 +1259,9 @@ sum_bob:
 .LpubTypes_begin0:
 	.short	2                       # DWARF Version
 	.long	.Lcu_begin0             # Offset of Compilation Unit Info
-	.long	678                     # Compilation Unit Length
+	.long	435                     # Compilation Unit Length
 	.long	75                      # DIE offset
 	.asciz	"int"                   # External Name
-	.long	670                     # DIE offset
-	.asciz	"_Bool"                 # External Name
 	.long	0                       # End Mark
 .LpubTypes_end0:
 

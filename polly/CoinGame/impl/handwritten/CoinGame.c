@@ -15,12 +15,12 @@ int V[N] = { 6, 5, 2, 7, 3, 5 }; // Example: Alice gets 18 and Bob gets 10.
 //#define N 200 // Vector size
 //int V[N];
 int M[N][N]; // Movements
-// M(i, j) = max { V[i] + min { M(i+2, j),   M(i+1, j-1) },
-//                 V[j] + min { M(i+1, j-1), M(i,   j-2) } }
-int X[N][N]; // X(i, j) = M[i+2][j]
-int Y[N][N]; // Y(i, j) = M[i+1][j-1]
-int Z[N][N]; // Z(i, j) = M[i][j-2]
-int sum_alice = 0, sum_bob = 0; // Sums
+
+int X[N][N]; // 
+int Y[N][N]; // 
+int Z[N][N]; //
+int coins[N]; // Coins
+int sum_alice =0, sum_bob =0;
 // Randomize the V[N]
 void init() {
 	int i;
@@ -30,48 +30,57 @@ void init() {
 		V[i] = i;
 	}
 }
-
-void sumMoves() {
+// Simulate how the game is played. Alice goes first and Bob second.
+void play() {
 	int i = 0, j = N - 1;
-	int alice = 1;
-	while (i <= j) {
-		int P1 = M[i + 1][j];
-		int P2 = M[i][j - 1];
-		int coin;
-		if (P1 <= P2) {
+	// Take turns to play
+	int index;
+	for (index = 0; index<N; index++) {
+		if (M[i + 1][j] <= M[i][j - 1]) {
 			// Pick V[i]
-			coin = V[i];
-			i++;
+			coins[index] = V[i];
+			i++;// Take the coin from the left
 		} else {
 			// Pick V[j]
-			coin = V[j];
-			j--;
+			coins[index] = V[j];
+			j--;// Take the coin from the right
 		}
-		if (alice) {
-			sum_alice += coin;
-			alice = 0;
-		} else {
-			sum_bob += coin;
-			alice = 1;
+	}
+
+	for(i=0; i<N;i++){
+		if(i%2==0){//Alice's turn
+			printf("Alice take coin ");
+		}else{
+			printf("Bob take coin ");
+		}
+		printf("(%d, $%d)", i+1 , coins[i]);
+
+		if(i%2==0){// Alice's turn
+			sum_alice += coins[i];
+			printf(", ");
+		}else{
+			sum_bob += coins[i];
+			printf(".\n");
 		}
 	}
 
 }
 
 // Print out movements
-void printMoves() {
+/*void printMoves() {
 	int i = 0, j = N - 1;
 	bool alice = true;
-	while (i <= j) {
-		int P1 = M[i + 1][j]; // If take V[i], opponent can get...
-		int P2 = M[i][j - 1]; // If take V[n]
+	int num_coins = N;
+	while (num_coins >0) {
+		//int P1 = M[i + 1][j]; // If take V[i], opponent can get...
+		//int P2 = M[i][j - 1]; // If take V[n]
 		if (alice) {
 			printf("Alice take coin ");
 		} else {
 			printf("Bob take coin ");
 		}
 
-		if (P1 <= P2) {
+		if ( M[i + 1][j] <=  M[i][j - 1]) {
 			printf("(%d, $%d)", i + 1, V[i]);
 			i++;
 		} else {
@@ -84,11 +93,19 @@ void printMoves() {
 			printf(".\n");
 		}
 		alice = !alice;
+		// take out one coin from the line
+		num_coins = num_coins - 1;
 	}
 
-}
-// Find the optimal strategy
-int maxMoney() {
+}*/
+/* Find the optimal strategy
+ * X(i, j) = M[i+2][j]
+ * Y(i, j) = M[i+1][j-1]
+ * Z(i, j) = M[i][j-2]
+ * M(i, j) = max { V[i] + min { M(i+2, j),   M(i+1, j-1) },
+                 V[j] + min { M(i+1, j-1), M(i,   j-2) } }
+*/
+int findMoves() {
 	int s, i, j;
 	for (s = 0; s < N; s++) {
 		//calculate x, y, z
@@ -129,7 +146,7 @@ int maxMoney() {
 			} else {
 				M[i][j] = V[j] + Z[i][j]; // Pick V[j]
 			}
-			
+
 			//For Debugging
 			//printf("x=%d, y=%d, z=%d\n", X[i][j], Y[i][j], Z[i][j]);
 			//printf("i=%d, n=%d, M[i][n]=%d\n", i, j, M[i][j]);
@@ -141,8 +158,8 @@ int maxMoney() {
 }
 int main() {
 	//init();
-	maxMoney();
-	sumMoves();
+	findMoves();
+	play();
 	//printMoves();
 	// Check if Alice's sum is correct
 	if (sum_alice != M[0][N - 1]) {
