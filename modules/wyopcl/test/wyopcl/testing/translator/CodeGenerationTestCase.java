@@ -53,7 +53,8 @@ public class CodeGenerationTestCase {
 				"factorial",
 				"Fibonacci",
 				"MatrixMult2",
-				"MatrixMult3"
+				"MatrixMult3",
+				"gcd"
 				//"lambda"
 		});
 	}
