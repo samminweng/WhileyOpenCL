@@ -813,8 +813,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Increase the indent
 		stores.increaseIndent(function);
 		for (Code assert_code : code.bytecodes()) {
-			// Skip the translation of return statement insides assert or assume code
-			if (!(assert_code instanceof Codes.Return)) { 
+			// Skip the translation of return statement insides assert or assume
+			// code
+			if (!(assert_code instanceof Codes.Return)) {
 				// Iterate and translate each code into the target language.
 				this.iterateCode(assert_code, function);
 			}
@@ -957,12 +958,24 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		this.deallocatedAnalyzer.ifPresent(a -> {
 			statements.addAll(a.freeAllMemory(code, function, stores));
 		});
+
 		// Add return statements
-		if (code.operands().length < 1) {
-			// If the method is "main", then add a simple exit code with value
-			statements.add(indent + "exit(0);");
+		if (function.isFunction()) {
+			if (code.operands().length > 0) {
+				statements.add(indent + "return " + stores.getVar(code.operand(0), function) + ";");
+			} 
+			// Skip the translation of return statement for a function
 		} else {
-			statements.add(indent + "return " + stores.getVar(code.operand(0), function) + ";");
+			if (function.name().equals("main")) {
+				// Add 'exit(0);'
+				statements.add(indent + "exit(0);");
+			} else {
+				if(code.operands().length ==0){
+					statements.add(indent + "return;");
+				}else{
+					throw new RuntimeException("Not implemented for return statement in a method");
+				}
+			}
 		}
 
 		stores.addAllStatements(code, statements, function);
