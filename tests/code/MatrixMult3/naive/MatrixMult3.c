@@ -31,7 +31,6 @@ Matrix* matrix(long long width, long long height, _DECL_1DARRAY_PARAM(data)){
 	//return %4
 	return _4;
 	//return
-	exit(0);
 }
 
 Matrix* init(long long width, long long height){
@@ -120,7 +119,6 @@ blklab2:;
 	//return %21
 	return _21;
 	//return
-	exit(0);
 }
 
 void print_mat(FILE* sys, Matrix* a){
@@ -217,7 +215,7 @@ blklab7:;
 //.blklab6
 blklab6:;
 	//return
-	exit(0);
+	return;
 }
 
 Matrix* mat_mult(Matrix* a, Matrix* b){
@@ -462,7 +460,6 @@ blklab17:;
 	//return %58
 	return _58;
 	//return
-	exit(0);
 }
 
 int main(int argc, char** args){

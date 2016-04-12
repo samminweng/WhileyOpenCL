@@ -40,7 +40,6 @@ Matrix* matrix(long long width, long long height, _DECL_1DARRAY_PARAM(data), _DE
 	_FREE(data);
 	_FREE_STRUCT(r, Matrix);
 	_FREE_STRUCT(_4, Matrix);
-	exit(0);
 }
 
 Matrix* init(long long width, long long height){
@@ -148,7 +147,6 @@ blklab2:;
 	_FREE(data);
 	_FREE(_8);
 	_FREE_STRUCT(_21, Matrix);
-	exit(0);
 }
 
 void print_mat(FILE* sys, Matrix* a, _DECL_OWNERSHIP_PARAM(a)){
@@ -258,7 +256,7 @@ blklab6:;
 	_FREE(_12);
 	_FREE(_18);
 	_FREE(_25);
-	exit(0);
+	return;
 }
 
 Matrix* mat_mult(Matrix* a, _DECL_OWNERSHIP_PARAM(a), Matrix* b, _DECL_OWNERSHIP_PARAM(b)){
@@ -559,7 +557,6 @@ blklab17:;
 	_FREE(_18);
 	_FREE(_21);
 	_FREE_STRUCT(_58, Matrix);
-	exit(0);
 }
 
 int main(int argc, char** args){
