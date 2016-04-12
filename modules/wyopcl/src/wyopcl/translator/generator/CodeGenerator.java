@@ -961,11 +961,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 		// Add return statements
 		if (function.isFunction()) {
+			// Generate a statement that returns a value to a calling function
 			if (code.operands().length > 0) {
 				statements.add(indent + "return " + stores.getVar(code.operand(0), function) + ";");
 			} 
 			// Skip the translation of return statement for a function
 		} else {
+			// Generate system exit statement
 			if (function.name().equals("main")) {
 				// Add 'exit(0);'
 				statements.add(indent + "exit(0);");
