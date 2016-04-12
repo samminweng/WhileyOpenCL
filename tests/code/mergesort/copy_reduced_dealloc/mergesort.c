@@ -249,14 +249,6 @@ blklab0:;
 	_FREE(_19);
 	return items;
 	//return
-	_FREE(items);
-	_FREE(_3);
-	_FREE(lhs);
-	_FREE(rhs);
-	_FREE(_15);
-	_FREE(_16);
-	_FREE(_18);
-	_FREE(_19);
 }
 
 int main(int argc, char** args){

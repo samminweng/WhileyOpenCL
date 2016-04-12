@@ -76,9 +76,6 @@ blklab1:;
 	_FREE(_8);
 	return ls;
 	//return
-	_FREE(ls);
-	_FREE(_2);
-	_FREE(_8);
 }
 
 int main(int argc, char** args){

@@ -91,10 +91,6 @@ blklab0:;
 	_FREE(_8);
 	return r;
 	//return
-	_FREE(ls);
-	_FREE(_1);
-	_FREE(r);
-	_FREE(_8);
 }
 
 int main(int argc, char** args){

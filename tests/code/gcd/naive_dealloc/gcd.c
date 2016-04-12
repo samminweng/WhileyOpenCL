@@ -150,10 +150,6 @@ blklab7:;
 	_FREE(_8);
 	return gcds;
 	//return
-	_FREE(data);
-	_FREE(_2);
-	_FREE(gcds);
-	_FREE(_8);
 }
 
 long long* init(long long n){
@@ -211,9 +207,6 @@ blklab11:;
 	_FREE(_5);
 	return data;
 	//return
-	_FREE(_1);
-	_FREE(data);
-	_FREE(_5);
 }
 
 int main(int argc, char** args){

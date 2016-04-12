@@ -178,7 +178,7 @@ exec(){
 	if [[ $c_type == *"autogenerate"* ]]
 	then
 		### Translate Whiley program into C code 
-		./../../../../bin/wyopcl -code -copy "$program.whiley"
+		./../../../../bin/wyopcl -code -copy -dealloc "$program.whiley"
 		###./../../../../bin/wyopcl -code -copy -dealloc "$program.whiley"
 	fi
 

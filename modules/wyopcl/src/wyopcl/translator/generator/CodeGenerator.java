@@ -954,25 +954,33 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(Codes.Return code, FunctionOrMethod function) {
 		List<String> statements = new ArrayList<String>();
 		String indent = stores.getIndent(function);
-		// Add the code to deallocate all ownership variables.
-		this.deallocatedAnalyzer.ifPresent(a -> {
-			statements.addAll(a.freeAllMemory(code, function, stores));
-		});
-
+		
 		// Add return statements
 		if (function.isFunction()) {
 			// Generate a statement that returns a value to a calling function
 			if (code.operands().length > 0) {
+				// Add the code to deallocate all ownership variables.
+				this.deallocatedAnalyzer.ifPresent(a -> {
+					statements.addAll(a.freeAllMemory(code, function, stores));
+				});
 				statements.add(indent + "return " + stores.getVar(code.operand(0), function) + ";");
 			} 
 			// Skip the translation of return statement for a function
 		} else {
 			// Generate system exit statement
 			if (function.name().equals("main")) {
+				// Add the code to deallocate all ownership variables.
+				this.deallocatedAnalyzer.ifPresent(a -> {
+					statements.addAll(a.freeAllMemory(code, function, stores));
+				});
 				// Add 'exit(0);'
 				statements.add(indent + "exit(0);");
 			} else {
 				if(code.operands().length ==0){
+					// Add the code to deallocate all ownership variables.
+					this.deallocatedAnalyzer.ifPresent(a -> {
+						statements.addAll(a.freeAllMemory(code, function, stores));
+					});
 					statements.add(indent + "return;");
 				}else{
 					throw new RuntimeException("Not implemented for return statement in a method");

@@ -37,9 +37,6 @@ Matrix* matrix(long long width, long long height, _DECL_2DARRAY_PARAM(data), _DE
 	_FREE_STRUCT(r, Matrix);
 	return _4;
 	//return
-	_FREE2DArray(data);
-	_FREE_STRUCT(r, Matrix);
-	_FREE_STRUCT(_4, Matrix);
 }
 
 Matrix* multiply(Matrix* A, _DECL_OWNERSHIP_PARAM(A), Matrix* B, _DECL_OWNERSHIP_PARAM(B)){
@@ -219,17 +216,6 @@ blklab13:;
 	_FREE(_24);
 	return _34;
 	//return
-	_FREE_STRUCT(A, Matrix);
-	_FREE_STRUCT(B, Matrix);
-	_FREE_STRUCT(C, Matrix);
-	_FREE2DArray(C_data);
-	_FREE(_10);
-	_FREE2DArray(_12);
-	_FREE2DArray(_20);
-	_FREE(_21);
-	_FREE2DArray(_23);
-	_FREE(_24);
-	_FREE_STRUCT(_34, Matrix);
 }
 
 void printMat(FILE* sys, Matrix* A, _DECL_OWNERSHIP_PARAM(A)){
@@ -422,11 +408,6 @@ blklab23:;
 	_FREE2DArray(_8);
 	return _15;
 	//return
-	_FREE_STRUCT(r, Matrix);
-	_FREE2DArray(rows);
-	_FREE(_7);
-	_FREE2DArray(_8);
-	_FREE_STRUCT(_15, Matrix);
 }
 
 int main(int argc, char** args){

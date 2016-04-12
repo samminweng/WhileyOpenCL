@@ -70,9 +70,6 @@ Board* EmptyBoard(){
 	_FREE(_11);
 	return _12;
 	//return
-	_FREE_STRUCT(r, Board);
-	_FREE(_11);
-	_FREE_STRUCT(_12, Board);
 }
 
 long long countOf(_DECL_1DARRAY_PARAM(pieces), _DECL_OWNERSHIP_PARAM(pieces), long long s){
@@ -128,7 +125,6 @@ blklab11:;
 	_FREE(pieces);
 	return count;
 	//return
-	_FREE(pieces);
 }
 
 int main(int argc, char** args){
