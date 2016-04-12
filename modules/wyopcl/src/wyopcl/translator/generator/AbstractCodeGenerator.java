@@ -69,10 +69,10 @@ public abstract class AbstractCodeGenerator {
 
 	public AbstractCodeGenerator(Configuration config) {
 		this.config = config;
-	}	
-	
+	}
+
 	protected abstract void apply(WyilFile module);
-	
+
 	protected abstract void translate(Update code, FunctionOrMethod function);
 
 	protected abstract void translate(UnaryOperator code, FunctionOrMethod function);
@@ -116,9 +116,9 @@ public abstract class AbstractCodeGenerator {
 	protected abstract String declareFunction(FunctionOrMethod function);
 
 	protected abstract List<String> declareVariables(FunctionOrMethod function);
-	
+
 	protected abstract void translate(Debug code, FunctionOrMethod function);
-	
+
 	protected abstract void translate(Lambda code, FunctionOrMethod function);
 
 	protected abstract void translate(NewArray code, FunctionOrMethod function);
@@ -136,85 +136,84 @@ public abstract class AbstractCodeGenerator {
 	 * Checks the type of the wyil code and dispatches the code to the analyzer
 	 * for being executed by the <code>analyze(code)</code>
 	 * 
-	 * @param code_blk
+	 * @param code
 	 * @param func_name
 	 */
-	protected void iterateCodes(List<Code> code_blk, FunctionOrMethod function) {
-		for (Code code : code_blk) {
-			try {
-				// enable the assertion
-				if (code instanceof Codes.AssertOrAssume) {
-					translate((Codes.AssertOrAssume) code, function);
-				} else if (code instanceof Codes.Assign) {
-					translate((Codes.Assign) code, function);
-				} else if (code instanceof Codes.BinaryOperator) {
-					translate((Codes.BinaryOperator) code, function);
-				} else if (code instanceof Codes.Convert) {
-					translate((Codes.Convert) code, function);
-				} else if (code instanceof Codes.Const) {
-					translate((Codes.Const) code, function);
-				} else if (code instanceof Codes.Debug) {
-					translate((Codes.Debug)code, function);
-					//throw new RuntimeException("Not implemented! "+ code.toString(), null);
-				} else if (code instanceof Codes.Dereference) {
-					translate((Codes.Dereference)code, function);
-				} else if (code instanceof Codes.Fail) {
-					translate((Codes.Fail) code, function);
-				} else if (code instanceof Codes.FieldLoad) {
-					translate((Codes.FieldLoad) code, function);
-				} else if (code instanceof Codes.Goto) {
-					translate((Codes.Goto) code, function);
-				} else if (code instanceof Codes.If) {
-					translate((Codes.If) code, function);
-				} else if (code instanceof Codes.IfIs) {
-					translate((Codes.IfIs)code, function);
-				} else if (code instanceof Codes.IndexOf) {
-					translate((Codes.IndexOf) code, function);
-				} else if (code instanceof Codes.IndirectInvoke) {
-					translate((Codes.IndirectInvoke) code, function);
-				} else if (code instanceof Codes.Invoke) {
-					translate((Codes.Invoke) code, function);
-				} else if (code instanceof Codes.Invert) {
-					throw new RuntimeException("Not implemented! "+ code.toString(), null);
-				} else if (code instanceof Codes.Loop) {
-					translate((Codes.Loop) code, function);
-				} else if (code instanceof Codes.Label) {
-					translate((Codes.Label) code, function);
-				} else if (code instanceof Codes.Lambda) {
-					translate((Codes.Lambda)code, function);
-				} else if (code instanceof Codes.LengthOf) {
-					translate((Codes.LengthOf) code, function);
-				} else if (code instanceof Codes.ArrayGenerator){
-					translate((Codes.ArrayGenerator)code, function);
-				} else if (code instanceof Codes.Move) {
-					throw new RuntimeException("Not implemented! "+ code.toString(), null);
-				} else if (code instanceof Codes.NewArray) {
-					translate((Codes.NewArray) code, function);
-				} else if (code instanceof Codes.NewRecord) {
-					translate((Codes.NewRecord) code, function);
-				} else if (code instanceof Codes.Return) {
-					translate((Codes.Return) code, function);
-				} else if (code instanceof Codes.NewObject) {
-					translate((Codes.NewObject)code, function);
-				} else if (code instanceof Codes.Nop) {
-					translate((Codes.Nop) code, function);
-				} else if (code instanceof Codes.Switch) {
-					throw new RuntimeException("Not implemented! "+ code.toString(), null);
-				} else if (code instanceof Codes.UnaryOperator) {
-					translate((Codes.UnaryOperator) code, function);
-				} else if (code instanceof Codes.Update) {
-					translate((Codes.Update) code, function);
-				} else {
-					throw new RuntimeException("Not implemented! "+ code.toString(), null);
-				}
+	protected void iterateCode(Code code, FunctionOrMethod function) {
 
-			} catch (Exception ex) {
-				// Print out the error message along with code.
-				throw new RuntimeException(ex.getMessage() + " at " + code, null);
+		try {
+			// enable the assertion
+			if (code instanceof Codes.AssertOrAssume) {
+				translate((Codes.AssertOrAssume) code, function);
+			} else if (code instanceof Codes.Assign) {
+				translate((Codes.Assign) code, function);
+			} else if (code instanceof Codes.BinaryOperator) {
+				translate((Codes.BinaryOperator) code, function);
+			} else if (code instanceof Codes.Convert) {
+				translate((Codes.Convert) code, function);
+			} else if (code instanceof Codes.Const) {
+				translate((Codes.Const) code, function);
+			} else if (code instanceof Codes.Debug) {
+				translate((Codes.Debug) code, function);
+				// throw new RuntimeException("Not implemented! "+
+				// code.toString(), null);
+			} else if (code instanceof Codes.Dereference) {
+				translate((Codes.Dereference) code, function);
+			} else if (code instanceof Codes.Fail) {
+				translate((Codes.Fail) code, function);
+			} else if (code instanceof Codes.FieldLoad) {
+				translate((Codes.FieldLoad) code, function);
+			} else if (code instanceof Codes.Goto) {
+				translate((Codes.Goto) code, function);
+			} else if (code instanceof Codes.If) {
+				translate((Codes.If) code, function);
+			} else if (code instanceof Codes.IfIs) {
+				translate((Codes.IfIs) code, function);
+			} else if (code instanceof Codes.IndexOf) {
+				translate((Codes.IndexOf) code, function);
+			} else if (code instanceof Codes.IndirectInvoke) {
+				translate((Codes.IndirectInvoke) code, function);
+			} else if (code instanceof Codes.Invoke) {
+				translate((Codes.Invoke) code, function);
+			} else if (code instanceof Codes.Invert) {
+				throw new RuntimeException("Not implemented! " + code.toString(), null);
+			} else if (code instanceof Codes.Loop) {
+				translate((Codes.Loop) code, function);
+			} else if (code instanceof Codes.Label) {
+				translate((Codes.Label) code, function);
+			} else if (code instanceof Codes.Lambda) {
+				translate((Codes.Lambda) code, function);
+			} else if (code instanceof Codes.LengthOf) {
+				translate((Codes.LengthOf) code, function);
+			} else if (code instanceof Codes.ArrayGenerator) {
+				translate((Codes.ArrayGenerator) code, function);
+			} else if (code instanceof Codes.Move) {
+				throw new RuntimeException("Not implemented! " + code.toString(), null);
+			} else if (code instanceof Codes.NewArray) {
+				translate((Codes.NewArray) code, function);
+			} else if (code instanceof Codes.NewRecord) {
+				translate((Codes.NewRecord) code, function);
+			} else if (code instanceof Codes.Return) {
+				translate((Codes.Return) code, function);
+			} else if (code instanceof Codes.NewObject) {
+				translate((Codes.NewObject) code, function);
+			} else if (code instanceof Codes.Nop) {
+				translate((Codes.Nop) code, function);
+			} else if (code instanceof Codes.Switch) {
+				throw new RuntimeException("Not implemented! " + code.toString(), null);
+			} else if (code instanceof Codes.UnaryOperator) {
+				translate((Codes.UnaryOperator) code, function);
+			} else if (code instanceof Codes.Update) {
+				translate((Codes.Update) code, function);
+			} else {
+				throw new RuntimeException("Not implemented! " + code.toString(), null);
 			}
-		}
-	}
 
-	
+		} catch (Exception ex) {
+			// Print out the error message along with code.
+			throw new RuntimeException(ex.getMessage() + " at " + code, null);
+		}
+
+	}
 
 }
