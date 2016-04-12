@@ -24,18 +24,16 @@ function gcd_array(int[] data, int n) -> int[]:
         while j < n:
             int a = data[i]
             int b = data[j]
-            int g = 0
             //gcds[i*n+j] = gcd(data[i], data[j])
             if(a == 0):
-                g = b
+                gcds[i*n+j] = gcds[i*n+j] + b
             else:
                 while(b != 0) where a>=0:
                     if(a > b):
                         a = a - b
                     else:
                         b = b - a
-                g = a
-            gcds[i*n+j] = gcds[i*n+j] + g
+                gcds[i*n+j] = gcds[i*n+j] + a
             j = j + 1
         i = i + 1
     return gcds
