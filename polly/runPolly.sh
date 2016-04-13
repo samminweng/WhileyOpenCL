@@ -177,16 +177,25 @@ exec(){
 	
 	if [[ $c_type == *"autogenerate"* ]]
 	then
-		### Translate Whiley program into C code 
-		./../../../../bin/wyopcl -code -copy "$program.whiley"
-		###./../../../../bin/wyopcl -code -copy -dealloc "$program.whiley"
+		case "$program" in 
+			"GCD")
+				### Translate Whiley program into copy-eliminated C code 
+				./../../../../bin/wyopcl -code -copy "$program.whiley"
+				;;
+			*)
+				### Translate Whiley program into copy-eliminated and memory deallocated C code 
+				./../../../../bin/wyopcl -code -copy -dealloc "$program.whiley"
+				;;
+		esac
 	fi
 
 	clang_polly $c_type $program $num_threads $parameter
 	cd ../../../
 }
 ###exec handwritten CoinGame 2 200 ### Determine matrix size from cmd line argument
-exec autogenerate GCD 2 200  ### Determine matrix size from cmd line argument
+exec autogenerate1 MatrixMult 2 1000  ### Determine matrix size from cmd line argument
+exec autogenerate2 MatrixMult 2 1000  ### Determine matrix size from cmd line argument
+exec autogenerate GCD 2 1000  ### Determine matrix size from cmd line argument
 
 
 

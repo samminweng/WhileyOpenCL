@@ -245,6 +245,11 @@ blklab7:;
 //.blklab6
 blklab6:;
 	//return
+	_FREE_STRUCT(a, Matrix);
+	_FREE(_12);
+	_FREE(_18);
+	_FREE(_25);
+	return;
 }
 
 Matrix* mat_mult(Matrix* a, _DECL_OWNERSHIP_PARAM(a), Matrix* b, _DECL_OWNERSHIP_PARAM(b)){

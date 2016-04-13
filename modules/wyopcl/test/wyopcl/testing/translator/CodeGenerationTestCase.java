@@ -54,7 +54,8 @@ public class CodeGenerationTestCase {
 				"Fibonacci",
 				"MatrixMult2",
 				"MatrixMult3",
-				"gcd"
+				"gcd",
+				"CoinGame"
 				//"lambda"
 		});
 	}

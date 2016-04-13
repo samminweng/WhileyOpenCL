@@ -62,14 +62,14 @@ blklab2:;
 long long* gcd_array(_DECL_1DARRAY_PARAM(data), long long n){
 	_DECL_1DARRAY(_2);
 	_DECL_1DARRAY(gcds);
-	long long sum = 0;
 	long long i = 0;
 	long long j = 0;
 	long long a = 0;
 	long long b = 0;
+	long long _8 = 0;
 	long long _9 = 0;
-	long long _10 = 0;
-	_DECL_1DARRAY(_11);
+	_DECL_1DARRAY(_10);
+	long long _11 = 0;
 	long long _12 = 0;
 	long long _13 = 0;
 	long long _14 = 0;
@@ -94,74 +94,68 @@ long long* gcd_array(_DECL_1DARRAY_PARAM(data), long long n){
 	long long _33 = 0;
 	long long _34 = 0;
 	long long _35 = 0;
-	long long _36 = 0;
-	long long _37 = 0;
-	//const %9 = 0 : int
-	_9 = 0;
-	//mul %10 = %1, %1 : int
-	_10=n*n;
-	//arraygen %11 = [9; 10] : int[]
-	_GEN_1DARRAY(_11, _10, _9);
-	//assign %3 = %11  : int[]
-	_1DARRAY_UPDATE(gcds, _11);
-	//const %12 = 0 : int
-	_12 = 0;
-	//assign %4 = %12  : int
-	sum = _12;
-	//const %13 = 0 : int
-	_13 = 0;
-	//assign %5 = %13  : int
-	i = _13;
-	//loop (%3, %5, %6, %7, %8, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37)
+	//const %8 = 0 : int
+	_8 = 0;
+	//mul %9 = %1, %1 : int
+	_9=n*n;
+	//arraygen %10 = [8; 9] : int[]
+	_GEN_1DARRAY(_10, _9, _8);
+	//assign %3 = %10  : int[]
+	_1DARRAY_UPDATE(gcds, _10);
+	//const %11 = 0 : int
+	_11 = 0;
+	//assign %4 = %11  : int
+	i = _11;
+	//loop (%3, %4, %5, %6, %7, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35)
 	while(true){
-		//ifge %5, %1 goto blklab7 : int
+		//ifge %4, %1 goto blklab7 : int
 		if(i>=n){goto blklab7;}
-		//const %14 = 0 : int
-		_14 = 0;
-		//assign %6 = %14  : int
-		j = _14;
-		//loop (%3, %6, %7, %8, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35)
+		//const %12 = 0 : int
+		_12 = 0;
+		//assign %5 = %12  : int
+		j = _12;
+		//loop (%3, %5, %6, %7, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33)
 		while(true){
-			//ifge %6, %1 goto blklab9 : int
+			//ifge %5, %1 goto blklab9 : int
 			if(j>=n){goto blklab9;}
-			//indexof %15 = %0, %5 : int[]
-			_15=data[i];
-			//assign %7 = %15  : int
-			a = _15;
-			//indexof %16 = %0, %6 : int[]
-			_16=data[j];
-			//assign %8 = %16  : int
-			b = _16;
-			//const %17 = 0 : int
-			_17 = 0;
-			//ifne %7, %17 goto blklab11 : int
-			if(a!=_17){goto blklab11;}
-			//mul %18 = %5, %1 : int
-			_18=i*n;
-			//add %19 = %18, %6 : int
-			_19=_18+j;
-			//indexof %20 = %3, %19 : int[]
-			_20=gcds[_19];
-			//add %21 = %20, %8 : int
-			_21=_20+b;
-			//mul %22 = %5, %1 : int
-			_22=i*n;
-			//add %23 = %22, %6 : int
-			_23=_22+j;
-			//update %3[%23] = %21 : int[] -> int[]
-			gcds[_23] = _21;
+			//indexof %13 = %0, %4 : int[]
+			_13=data[i];
+			//assign %6 = %13  : int
+			a = _13;
+			//indexof %14 = %0, %5 : int[]
+			_14=data[j];
+			//assign %7 = %14  : int
+			b = _14;
+			//const %15 = 0 : int
+			_15 = 0;
+			//ifne %6, %15 goto blklab11 : int
+			if(a!=_15){goto blklab11;}
+			//mul %16 = %4, %1 : int
+			_16=i*n;
+			//add %17 = %16, %5 : int
+			_17=_16+j;
+			//indexof %18 = %3, %17 : int[]
+			_18=gcds[_17];
+			//add %19 = %18, %7 : int
+			_19=_18+b;
+			//mul %20 = %4, %1 : int
+			_20=i*n;
+			//add %21 = %20, %5 : int
+			_21=_20+j;
+			//update %3[%21] = %19 : int[] -> int[]
+			gcds[_21] = _19;
 			//goto blklab12
 			goto blklab12;
 //.blklab11
 blklab11:;
-			//loop (%7, %8, %24, %25, %26, %27)
+			//loop (%6, %7, %22, %23, %24, %25)
 			while(true){
 				//invariant
 				{
-					//const %24 = 0 : int
-					_24 = 0;
-					//ifge %7, %24 goto blklab15 : int
-					if(a>=_24){goto blklab15;}
+					//const %22 = 0 : int
+					_22 = 0;
+					//ifge %6, %22 goto blklab15 : int
+					if(a>=_22){goto blklab15;}
 					//fail
 					fprintf(stderr,"fail");
 					exit(-1);
@@ -169,24 +163,24 @@ blklab11:;
 blklab15:;
 				//invariant
 				}
-				//const %25 = 0 : int
-				_25 = 0;
-				//ifeq %8, %25 goto blklab13 : int
-				if(b==_25){goto blklab13;}
-				//ifle %7, %8 goto blklab16 : int
+				//const %23 = 0 : int
+				_23 = 0;
+				//ifeq %7, %23 goto blklab13 : int
+				if(b==_23){goto blklab13;}
+				//ifle %6, %7 goto blklab16 : int
 				if(a<=b){goto blklab16;}
-				//sub %26 = %7, %8 : int
-				_26=a-b;
-				//assign %7 = %26  : int
-				a = _26;
+				//sub %24 = %6, %7 : int
+				_24=a-b;
+				//assign %6 = %24  : int
+				a = _24;
 				//goto blklab17
 				goto blklab17;
 //.blklab16
 blklab16:;
-				//sub %27 = %8, %7 : int
-				_27=b-a;
-				//assign %8 = %27  : int
-				b = _27;
+				//sub %25 = %7, %6 : int
+				_25=b-a;
+				//assign %7 = %25  : int
+				b = _25;
 //.blklab17
 blklab17:;
 //.blklab14
@@ -194,39 +188,39 @@ blklab14:;
 			}
 //.blklab13
 blklab13:;
-			//mul %28 = %5, %1 : int
-			_28=i*n;
+			//mul %26 = %4, %1 : int
+			_26=i*n;
+			//add %27 = %26, %5 : int
+			_27=_26+j;
+			//indexof %28 = %3, %27 : int[]
+			_28=gcds[_27];
 			//add %29 = %28, %6 : int
-			_29=_28+j;
-			//indexof %30 = %3, %29 : int[]
-			_30=gcds[_29];
-			//add %31 = %30, %7 : int
-			_31=_30+a;
-			//mul %32 = %5, %1 : int
-			_32=i*n;
-			//add %33 = %32, %6 : int
-			_33=_32+j;
-			//update %3[%33] = %31 : int[] -> int[]
-			gcds[_33] = _31;
+			_29=_28+a;
+			//mul %30 = %4, %1 : int
+			_30=i*n;
+			//add %31 = %30, %5 : int
+			_31=_30+j;
+			//update %3[%31] = %29 : int[] -> int[]
+			gcds[_31] = _29;
 //.blklab12
 blklab12:;
-			//const %34 = 1 : int
-			_34 = 1;
-			//add %35 = %6, %34 : int
-			_35=j+_34;
-			//assign %6 = %35  : int
-			j = _35;
+			//const %32 = 1 : int
+			_32 = 1;
+			//add %33 = %5, %32 : int
+			_33=j+_32;
+			//assign %5 = %33  : int
+			j = _33;
 //.blklab10
 blklab10:;
 		}
 //.blklab9
 blklab9:;
-		//const %36 = 1 : int
-		_36 = 1;
-		//add %37 = %5, %36 : int
-		_37=i+_36;
-		//assign %5 = %37  : int
-		i = _37;
+		//const %34 = 1 : int
+		_34 = 1;
+		//add %35 = %4, %34 : int
+		_35=i+_34;
+		//assign %4 = %35  : int
+		i = _35;
 //.blklab8
 blklab8:;
 	}
@@ -285,19 +279,19 @@ blklab18:;
 }
 
 int main(int argc, char** args){
+	long long* max;
 	long long n = 0;
 	_DECL_1DARRAY(data);
 	_DECL_1DARRAY(gcds);
 	long long sum = 0;
 	long long i = 0;
 	long long j = 0;
-	long long _7 = 0;
-	_DECL_1DARRAY(_8);
-	_DECL_1DARRAY(_9);
+	long long* _8;
+	_DECL_2DARRAY(_9);
 	long long _10 = 0;
-	long long _11 = 0;
-	long long _12 = 0;
-	long long _13 = 0;
+	_DECL_1DARRAY(_11);
+	_DECL_1DARRAY(_12);
+	_DECL_1DARRAY(_13);
 	long long _14 = 0;
 	long long _15 = 0;
 	long long _16 = 0;
@@ -305,85 +299,101 @@ int main(int argc, char** args){
 	long long _18 = 0;
 	long long _19 = 0;
 	long long _20 = 0;
-	void* _21;
-	_DECL_1DARRAY(_23);
-	void* _24;
-	//const %7 = 1000 : int
-	_7 = 1000;
-	//assign %1 = %7  : int
-	n = _7;
-	//invoke (%8) = (%1) GCD:init : function(int)->(int[])
-	_8 = init(n);
-	//assign %2 = %8  : int[]
-	_1DARRAY_UPDATE(data, _8);
-	//invoke (%9) = (%2, %1) GCD:gcd_array : function(int[],int)->(int[])
-	_1DARRAY_SIZE(_9, data);
-	_9 = gcd_array(_1DARRAY_PARAM(data), n);
-	//assign %3 = %9  : int[]
-	_1DARRAY_UPDATE(gcds, _9);
+	long long _21 = 0;
+	long long _22 = 0;
+	long long _23 = 0;
+	long long _24 = 0;
+	void* _25;
+	_DECL_1DARRAY(_27);
+	void* _28;
+	//fieldload %9 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	_CONV_ARGS(_9);
 	//const %10 = 0 : int
 	_10 = 0;
-	//assign %4 = %10  : int
-	sum = _10;
-	//const %11 = 0 : int
-	_11 = 0;
-	//assign %5 = %11  : int
-	i = _11;
-	//loop (%4, %5, %6, %12, %13, %14, %15, %16, %17, %18, %19, %20)
+	//indexof %11 = %9, %10 : int[][]
+	_11=_9[_10];
+	//invoke (%8) = (%11) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
+	_STR_TO_INT(_8, _11);
+	//assign %1 = %8  : null|int
+	max = _8;
+	//ifis %1, null goto blklab20 : null|int
+	if(max == NULL) { goto blklab20;}
+	//assign %2 = %1  : int
+	n = *max;
+	//invoke (%12) = (%2) GCD:init : function(int)->(int[])
+	_12 = init(n);
+	//assign %3 = %12  : int[]
+	_1DARRAY_UPDATE(data, _12);
+	//invoke (%13) = (%3, %2) GCD:gcd_array : function(int[],int)->(int[])
+	_1DARRAY_SIZE(_13, data);
+	_13 = gcd_array(_1DARRAY_PARAM(data), n);
+	//assign %4 = %13  : int[]
+	_1DARRAY_UPDATE(gcds, _13);
+	//const %14 = 0 : int
+	_14 = 0;
+	//assign %5 = %14  : int
+	sum = _14;
+	//const %15 = 0 : int
+	_15 = 0;
+	//assign %6 = %15  : int
+	i = _15;
+	//loop (%5, %6, %7, %16, %17, %18, %19, %20, %21, %22, %23, %24)
 	while(true){
-		//ifge %5, %1 goto blklab20 : int
-		if(i>=n){goto blklab20;}
-		//const %12 = 0 : int
-		_12 = 0;
-		//assign %6 = %12  : int
-		j = _12;
-		//loop (%4, %6, %13, %14, %15, %16, %17, %18)
+		//ifge %6, %2 goto blklab21 : int
+		if(i>=n){goto blklab21;}
+		//const %16 = 0 : int
+		_16 = 0;
+		//assign %7 = %16  : int
+		j = _16;
+		//loop (%5, %7, %17, %18, %19, %20, %21, %22)
 		while(true){
-			//ifge %6, %1 goto blklab22 : int
-			if(j>=n){goto blklab22;}
-			//mul %13 = %5, %1 : int
-			_13=i*n;
-			//add %14 = %13, %6 : int
-			_14=_13+j;
-			//indexof %15 = %3, %14 : int[]
-			_15=gcds[_14];
-			//add %16 = %4, %15 : int
-			_16=sum+_15;
-			//assign %4 = %16  : int
-			sum = _16;
-			//const %17 = 1 : int
-			_17 = 1;
-			//add %18 = %6, %17 : int
-			_18=j+_17;
-			//assign %6 = %18  : int
-			j = _18;
+			//ifge %7, %2 goto blklab23 : int
+			if(j>=n){goto blklab23;}
+			//mul %17 = %6, %2 : int
+			_17=i*n;
+			//add %18 = %17, %7 : int
+			_18=_17+j;
+			//indexof %19 = %4, %18 : int[]
+			_19=gcds[_18];
+			//add %20 = %5, %19 : int
+			_20=sum+_19;
+			//assign %5 = %20  : int
+			sum = _20;
+			//const %21 = 1 : int
+			_21 = 1;
+			//add %22 = %7, %21 : int
+			_22=j+_21;
+			//assign %7 = %22  : int
+			j = _22;
+//.blklab24
+blklab24:;
+		}
 //.blklab23
 blklab23:;
-		}
+		//const %23 = 1 : int
+		_23 = 1;
+		//add %24 = %6, %23 : int
+		_24=i+_23;
+		//assign %6 = %24  : int
+		i = _24;
 //.blklab22
 blklab22:;
-		//const %19 = 1 : int
-		_19 = 1;
-		//add %20 = %5, %19 : int
-		_20=i+_19;
-		//assign %5 = %20  : int
-		i = _20;
+	}
 //.blklab21
 blklab21:;
-	}
+	//fieldload %25 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %26 = %25 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %27 = [83,85,77,58] : int[]
+	_NEW_ARRAY(_27, 4);
+	_27[0] = 83; _27[1] = 85; _27[2] = 77; _27[3] = 58; 
+	//indirectinvoke () = %26 (%27) : method(int[])->()
+	printf_s(_1DARRAY_PARAM(_27));
+	//fieldload %28 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %29 = %28 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//indirectinvoke () = %29 (%5) : method(any)->()
+	printf("%lld\n", sum);
 //.blklab20
 blklab20:;
-	//fieldload %21 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %22 = %21 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %23 = [83,85,77,58] : int[]
-	_NEW_ARRAY(_23, 4);
-	_23[0] = 83; _23[1] = 85; _23[2] = 77; _23[3] = 58; 
-	//indirectinvoke () = %22 (%23) : method(int[])->()
-	printf_s(_1DARRAY_PARAM(_23));
-	//fieldload %24 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %25 = %24 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//indirectinvoke () = %25 (%4) : method(any)->()
-	printf("%lld\n", sum);
 	//return
 	exit(0);
 }

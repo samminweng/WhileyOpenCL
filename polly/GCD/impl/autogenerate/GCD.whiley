@@ -1,4 +1,5 @@
-import whiley.lang.System
+import whiley.lang.*
+import whiley.io.File
 
 /*
  * Implements Euclid's algorithm for finding the greatest common divisor of two numbers
@@ -17,7 +18,6 @@ function gcd(nat a, nat b) -> nat:
 
 function gcd_array(int[] data, int n) -> int[]:
     int[] gcds = [0;n*n]
-    int sum = 0
     int i = 0
     while i < n:
         int j = 0
@@ -47,24 +47,26 @@ function init(int n) -> int[]:
     return data
 
 method main(System.Console sys):
-    int n = 1000
-    int[] data = init(n)
-    // int size = |data|, not sure how to translate it into C at the current stage 
-    int[] gcds = gcd_array(data, n)
-    int sum = 0
-    int i = 0
-    while i < n:
-        int j = 0
-        while j < n:
-            //sys.out.print_s("Number: ")
-            //sys.out.print(data[i])
-            //sys.out.print_s(" Number: ")
-            //sys.out.print(data[j])
-            //sys.out.print_s(" GCD:")
-            //sys.out.println(gcds[i*n+j])
-            sum = sum + gcds[i*n+j]
-            j = j + 1
-        i = i + 1
-    //assert sum == 235 // Sum of all divisors is 235 
-    sys.out.print_s("SUM:")
-    sys.out.println(sum)
+    int|null max = Int.parse(sys.args[0])
+    if max != null:
+        int n = max
+        int[] data = init(n)
+        // int size = |data|, not sure how to translate it into C at the current stage 
+        int[] gcds = gcd_array(data, n)
+        int sum = 0
+        int i = 0
+        while i < n:
+            int j = 0
+            while j < n:
+                //sys.out.print_s("Number: ")
+                //sys.out.print(data[i])
+                //sys.out.print_s(" Number: ")
+                //sys.out.print(data[j])
+                //sys.out.print_s(" GCD:")
+                //sys.out.println(gcds[i*n+j])
+                sum = sum + gcds[i*n+j]
+                j = j + 1
+            i = i + 1
+        //assert sum == 235 // Sum of all divisors is 235 
+        sys.out.print_s("SUM:")
+        sys.out.println(sum)
