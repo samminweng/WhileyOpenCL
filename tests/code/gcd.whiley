@@ -35,10 +35,11 @@ function init(int n) -> int[]:
     return data
 
 method main(System.Console sys):
-    int n = 5
+    int n = 10
     int[] data = init(n)
     // int size = |data|, not sure how to translate it into C at the current stage 
     int[] gcds = gcd_array(data, n)
+    int sum = 0
     int i = 0
     while i < n:
         int j = 0
@@ -49,5 +50,9 @@ method main(System.Console sys):
             sys.out.print(data[j])
             sys.out.print_s(" GCD:")
             sys.out.println(gcds[i*n+j])
+            sum = sum + gcds[i*n+j]
             j = j + 1
         i = i + 1
+    sys.out.print_s("Sum: ")
+    sys.out.print(sum)
+    assert sum == 235 

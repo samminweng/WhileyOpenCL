@@ -1,13 +1,21 @@
 package wyopcl.testing.translator;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.junit.After;
+import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -21,7 +29,8 @@ import org.junit.runners.Parameterized;
 public class CodeGenerationTestCase {
 	private BaseTestUtil util;
 	final Path codeDir = Paths.get(System.getProperty("user.dir")+ File.separator + "tests" + File.separator + "code");
-	private String testcase;
+	private String testcase;// Store test case
+	
 	
 	@Before
 	public void initialize() {
@@ -42,8 +51,17 @@ public class CodeGenerationTestCase {
 		this.testcase = testcase;
 	}
 	
-	@Parameterized.Parameters
-	public static Collection testCases() {
+	
+	public static Collection<String> ignores(){
+		return Arrays.asList(new String[]{
+				"gcd",
+				"CoinGame"
+		});
+	}
+	
+	
+	@Parameterized.Parameters(name = "{index}:{0}")
+	public static Collection<String> testCases() {
 		return Arrays.asList(new String[] {
 				"swap",
 				"reverse",
@@ -60,13 +78,16 @@ public class CodeGenerationTestCase {
 		});
 	}
 	
+	
+	
+	
 	@Test
 	public void testNaiveCCode(){
-		System.out.println("Generate the naive C code for " + testcase + ".whiley");   
+		System.out.println("Generate the naive C code for " + testcase + ".whiley");
 		util.execCodeGeneration(codeDir, testcase);
 	}
 	
-	@Test 
+	@Test
 	public void testNaiveDeallocatedCCode(){
 		System.out.println("Generate the naive and deallocated C code for " + testcase + ".whiley");   
 		util.execCodeGeneration(codeDir, testcase, "dealloc");

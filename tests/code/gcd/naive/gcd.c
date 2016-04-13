@@ -192,125 +192,173 @@ int main(int argc, char** args){
 	long long n = 0;
 	_DECL_1DARRAY(data);
 	_DECL_1DARRAY(gcds);
+	long long sum = 0;
 	long long i = 0;
 	long long j = 0;
-	long long _6 = 0;
-	_DECL_1DARRAY(_7);
+	long long _7 = 0;
 	_DECL_1DARRAY(_8);
-	long long _9 = 0;
+	_DECL_1DARRAY(_9);
 	long long _10 = 0;
-	void* _11;
-	_DECL_1DARRAY(_13);
-	void* _14;
-	long long _16 = 0;
-	void* _17;
-	_DECL_1DARRAY(_19);
-	void* _20;
-	long long _22 = 0;
-	void* _23;
-	_DECL_1DARRAY(_25);
-	void* _26;
-	long long _28 = 0;
-	long long _29 = 0;
+	long long _11 = 0;
+	long long _12 = 0;
+	void* _13;
+	_DECL_1DARRAY(_15);
+	void* _16;
+	long long _18 = 0;
+	void* _19;
+	_DECL_1DARRAY(_21);
+	void* _22;
+	long long _24 = 0;
+	void* _25;
+	_DECL_1DARRAY(_27);
+	void* _28;
 	long long _30 = 0;
 	long long _31 = 0;
 	long long _32 = 0;
 	long long _33 = 0;
 	long long _34 = 0;
-	//const %6 = 5 : int
-	_6 = 5;
-	//assign %1 = %6  : int
-	n = _6;
-	//invoke (%7) = (%1) gcd:init : function(int)->(int[])
-	_7 = init(n);
-	//assign %2 = %7  : int[]
-	_1DARRAY_COPY(data, _7);
-	//invoke (%8) = (%2, %1) gcd:gcd_array : function(int[],int)->(int[])
-	_1DARRAY_SIZE(_8, data);
-	_8 = gcd_array(_1DARRAY_COPY_PARAM(data), n);
-	//assign %3 = %8  : int[]
-	_1DARRAY_COPY(gcds, _8);
-	//const %9 = 0 : int
-	_9 = 0;
-	//assign %4 = %9  : int
-	i = _9;
-	//loop (%4, %5, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34)
+	long long _35 = 0;
+	long long _36 = 0;
+	long long _37 = 0;
+	long long _38 = 0;
+	long long _39 = 0;
+	long long _40 = 0;
+	void* _41;
+	_DECL_1DARRAY(_43);
+	void* _44;
+	long long _46 = 0;
+	//const %7 = 10 : int
+	_7 = 10;
+	//assign %1 = %7  : int
+	n = _7;
+	//invoke (%8) = (%1) gcd:init : function(int)->(int[])
+	_8 = init(n);
+	//assign %2 = %8  : int[]
+	_1DARRAY_COPY(data, _8);
+	//invoke (%9) = (%2, %1) gcd:gcd_array : function(int[],int)->(int[])
+	_1DARRAY_SIZE(_9, data);
+	_9 = gcd_array(_1DARRAY_COPY_PARAM(data), n);
+	//assign %3 = %9  : int[]
+	_1DARRAY_COPY(gcds, _9);
+	//const %10 = 0 : int
+	_10 = 0;
+	//assign %4 = %10  : int
+	sum = _10;
+	//const %11 = 0 : int
+	_11 = 0;
+	//assign %5 = %11  : int
+	i = _11;
+	//loop (%4, %5, %6, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40)
 	while(true){
-		//ifge %4, %1 goto blklab13 : int
+		//ifge %5, %1 goto blklab13 : int
 		if(i>=n){goto blklab13;}
-		//const %10 = 0 : int
-		_10 = 0;
-		//assign %5 = %10  : int
-		j = _10;
-		//loop (%5, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32)
+		//const %12 = 0 : int
+		_12 = 0;
+		//assign %6 = %12  : int
+		j = _12;
+		//loop (%4, %6, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38)
 		while(true){
-			//ifge %5, %1 goto blklab15 : int
+			//ifge %6, %1 goto blklab15 : int
 			if(j>=n){goto blklab15;}
-			//fieldload %11 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-			//fieldload %12 = %11 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-			//const %13 = [78,117,109,98,101,114,58,32] : int[]
-			_NEW_ARRAY(_13, 8);
-			_13[0] = 78; _13[1] = 117; _13[2] = 109; _13[3] = 98; _13[4] = 101; _13[5] = 114; _13[6] = 58; _13[7] = 32; 
-			//indirectinvoke () = %12 (%13) : method(int[])->()
-			printf_s(_1DARRAY_PARAM(_13));
-			//fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-			//fieldload %15 = %14 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-			//indexof %16 = %2, %4 : int[]
-			_16=data[i];
-			//indirectinvoke () = %15 (%16) : method(any)->()
-			printf("%lld", _16);
-			//fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-			//fieldload %18 = %17 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-			//const %19 = [32,78,117,109,98,101,114,58,32] : int[]
-			_NEW_ARRAY(_19, 9);
-			_19[0] = 32; _19[1] = 78; _19[2] = 117; _19[3] = 109; _19[4] = 98; _19[5] = 101; _19[6] = 114; _19[7] = 58; _19[8] = 32; 
-			//indirectinvoke () = %18 (%19) : method(int[])->()
-			printf_s(_1DARRAY_PARAM(_19));
-			//fieldload %20 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-			//fieldload %21 = %20 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-			//indexof %22 = %2, %5 : int[]
-			_22=data[j];
-			//indirectinvoke () = %21 (%22) : method(any)->()
-			printf("%lld", _22);
-			//fieldload %23 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-			//fieldload %24 = %23 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-			//const %25 = [32,71,67,68,58] : int[]
-			_NEW_ARRAY(_25, 5);
-			_25[0] = 32; _25[1] = 71; _25[2] = 67; _25[3] = 68; _25[4] = 58; 
-			//indirectinvoke () = %24 (%25) : method(int[])->()
-			printf_s(_1DARRAY_PARAM(_25));
-			//fieldload %26 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-			//fieldload %27 = %26 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-			//mul %28 = %4, %1 : int
-			_28=i*n;
-			//add %29 = %28, %5 : int
-			_29=_28+j;
-			//indexof %30 = %3, %29 : int[]
-			_30=gcds[_29];
-			//indirectinvoke () = %27 (%30) : method(any)->()
-			printf("%lld\n", _30);
-			//const %31 = 1 : int
-			_31 = 1;
-			//add %32 = %5, %31 : int
-			_32=j+_31;
-			//assign %5 = %32  : int
-			j = _32;
+			//fieldload %13 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+			//fieldload %14 = %13 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+			//const %15 = [78,117,109,98,101,114,58,32] : int[]
+			_NEW_ARRAY(_15, 8);
+			_15[0] = 78; _15[1] = 117; _15[2] = 109; _15[3] = 98; _15[4] = 101; _15[5] = 114; _15[6] = 58; _15[7] = 32; 
+			//indirectinvoke () = %14 (%15) : method(int[])->()
+			printf_s(_1DARRAY_PARAM(_15));
+			//fieldload %16 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+			//fieldload %17 = %16 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+			//indexof %18 = %2, %5 : int[]
+			_18=data[i];
+			//indirectinvoke () = %17 (%18) : method(any)->()
+			printf("%lld", _18);
+			//fieldload %19 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+			//fieldload %20 = %19 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+			//const %21 = [32,78,117,109,98,101,114,58,32] : int[]
+			_NEW_ARRAY(_21, 9);
+			_21[0] = 32; _21[1] = 78; _21[2] = 117; _21[3] = 109; _21[4] = 98; _21[5] = 101; _21[6] = 114; _21[7] = 58; _21[8] = 32; 
+			//indirectinvoke () = %20 (%21) : method(int[])->()
+			printf_s(_1DARRAY_PARAM(_21));
+			//fieldload %22 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+			//fieldload %23 = %22 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+			//indexof %24 = %2, %6 : int[]
+			_24=data[j];
+			//indirectinvoke () = %23 (%24) : method(any)->()
+			printf("%lld", _24);
+			//fieldload %25 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+			//fieldload %26 = %25 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+			//const %27 = [32,71,67,68,58] : int[]
+			_NEW_ARRAY(_27, 5);
+			_27[0] = 32; _27[1] = 71; _27[2] = 67; _27[3] = 68; _27[4] = 58; 
+			//indirectinvoke () = %26 (%27) : method(int[])->()
+			printf_s(_1DARRAY_PARAM(_27));
+			//fieldload %28 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+			//fieldload %29 = %28 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+			//mul %30 = %5, %1 : int
+			_30=i*n;
+			//add %31 = %30, %6 : int
+			_31=_30+j;
+			//indexof %32 = %3, %31 : int[]
+			_32=gcds[_31];
+			//indirectinvoke () = %29 (%32) : method(any)->()
+			printf("%lld\n", _32);
+			//mul %33 = %5, %1 : int
+			_33=i*n;
+			//add %34 = %33, %6 : int
+			_34=_33+j;
+			//indexof %35 = %3, %34 : int[]
+			_35=gcds[_34];
+			//add %36 = %4, %35 : int
+			_36=sum+_35;
+			//assign %4 = %36  : int
+			sum = _36;
+			//const %37 = 1 : int
+			_37 = 1;
+			//add %38 = %6, %37 : int
+			_38=j+_37;
+			//assign %6 = %38  : int
+			j = _38;
 //.blklab16
 blklab16:;
 		}
 //.blklab15
 blklab15:;
-		//const %33 = 1 : int
-		_33 = 1;
-		//add %34 = %4, %33 : int
-		_34=i+_33;
-		//assign %4 = %34  : int
-		i = _34;
+		//const %39 = 1 : int
+		_39 = 1;
+		//add %40 = %5, %39 : int
+		_40=i+_39;
+		//assign %5 = %40  : int
+		i = _40;
 //.blklab14
 blklab14:;
 	}
 //.blklab13
 blklab13:;
+	//fieldload %41 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %42 = %41 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %43 = [83,117,109,58,32] : int[]
+	_NEW_ARRAY(_43, 5);
+	_43[0] = 83; _43[1] = 117; _43[2] = 109; _43[3] = 58; _43[4] = 32; 
+	//indirectinvoke () = %42 (%43) : method(int[])->()
+	printf_s(_1DARRAY_PARAM(_43));
+	//fieldload %44 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %45 = %44 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//indirectinvoke () = %45 (%4) : method(any)->()
+	printf("%lld", sum);
+	//assert
+	{
+		//const %46 = 235 : int
+		_46 = 235;
+		//ifeq %4, %46 goto blklab17 : int
+		if(sum==_46){goto blklab17;}
+		//fail
+		fprintf(stderr,"fail");
+		exit(-1);
+//.blklab17
+blklab17:;
+	//assert
+	}
 	//return
 	exit(0);
 }

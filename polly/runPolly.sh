@@ -193,10 +193,10 @@ exec(){
 	cd ../../../
 }
 ###exec handwritten CoinGame 2 200 ### Determine matrix size from cmd line argument
-exec autogenerate1 MatrixMult 2 1000  ### Determine matrix size from cmd line argument
-exec autogenerate2 MatrixMult 2 1000  ### Determine matrix size from cmd line argument
-exec autogenerate GCD 2 1000  ### Determine matrix size from cmd line argument
-
+###exec autogenerate1 MatrixMult 2 1000  ### Determine matrix size from cmd line argument
+###exec autogenerate2 MatrixMult 2 1000  ### Determine matrix size from cmd line argument
+###exec autogenerate GCD 2 1000  ### Determine matrix size from cmd line argument
+exec autogenerate CoinGame 2 10
 
 
 
