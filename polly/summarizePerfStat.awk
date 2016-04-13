@@ -53,13 +53,14 @@ BEGIN {
 	filename = "";
 	FS = "\t";
 	# Test case name
-	testcases="MatrixMult";
+	testcases="CoinGame GCD";
 	# Code Optimizations
-	c_types="autogenerate1 autogenerate2";
+	c_types="autogenerate";
 	# Polly optimiz
 	polly_opts="gcc clang polly openmp"
 	# Parameters
-	parameters["MatrixMult"] = "200 400 600 800 1000 1200 1400 1600 1800 2000 2200 2400 2600 2800 3000";
+	parameters["CoinGame"] = "1000 10000 100000 1000000";
+	parameters["GCD"] = "1000 10000 100000 1000000";
 	threads="1 2 4";
 	vcs="enableVC";
 	cpu_utils[""] = "";
