@@ -101,38 +101,51 @@ init(){
 	rm -rf "$PWD/$program/impl/$c_type/out/"*.*
 	#read -p "Press [Enter] to continue..."
 }
+### Benchmark Autogenerate GCD
+init autogenerate GCD
+exec autogenerate GCD 1000
+exec autogenerate GCD 10000
+exec autogenerate GCD 100000
+exec autogenerate GCD 1000000
+### Benchmark Autogenerate CoinGame
+init autogenerate CoinGame
+exec autogenerate CoinGame 1000
+exec autogenerate CoinGame 10000
+exec autogenerate CoinGame 100000
+exec autogenerate CoinGame 1000000
+
 ### Benchmark Autogenerate1 and autogenerate2 MatrixMult
-### Autogenerate1 MatrixMult
-init autogenerate1 MatrixMult
-init autogenerate2 MatrixMult
-exec autogenerate1 MatrixMult 200
-exec autogenerate1 MatrixMult 400
-exec autogenerate1 MatrixMult 600
-exec autogenerate1 MatrixMult 800
-exec autogenerate1 MatrixMult 1000
-exec autogenerate1 MatrixMult 1200
-exec autogenerate1 MatrixMult 1400
-exec autogenerate1 MatrixMult 1600
-exec autogenerate1 MatrixMult 1800
-exec autogenerate1 MatrixMult 2000
-exec autogenerate1 MatrixMult 2200
-exec autogenerate1 MatrixMult 2400
-exec autogenerate1 MatrixMult 2600
-exec autogenerate1 MatrixMult 2800
-exec autogenerate1 MatrixMult 3000
-### Autogenerate2 MatrixMult
-exec autogenerate2 MatrixMult 200
-exec autogenerate2 MatrixMult 400
-exec autogenerate2 MatrixMult 600
-exec autogenerate2 MatrixMult 800
-exec autogenerate2 MatrixMult 1000
-exec autogenerate2 MatrixMult 1200
-exec autogenerate2 MatrixMult 1400
-exec autogenerate2 MatrixMult 1600
-exec autogenerate2 MatrixMult 1800
-exec autogenerate2 MatrixMult 2000
-exec autogenerate2 MatrixMult 2200
-exec autogenerate2 MatrixMult 2400
-exec autogenerate2 MatrixMult 2600
-exec autogenerate2 MatrixMult 2800
-exec autogenerate2 MatrixMult 3000
+# ### Autogenerate1 MatrixMult
+# init autogenerate1 MatrixMult
+# init autogenerate2 MatrixMult
+# exec autogenerate1 MatrixMult 200
+# exec autogenerate1 MatrixMult 400
+# exec autogenerate1 MatrixMult 600
+# exec autogenerate1 MatrixMult 800
+# exec autogenerate1 MatrixMult 1000
+# exec autogenerate1 MatrixMult 1200
+# exec autogenerate1 MatrixMult 1400
+# exec autogenerate1 MatrixMult 1600
+# exec autogenerate1 MatrixMult 1800
+# exec autogenerate1 MatrixMult 2000
+# exec autogenerate1 MatrixMult 2200
+# exec autogenerate1 MatrixMult 2400
+# exec autogenerate1 MatrixMult 2600
+# exec autogenerate1 MatrixMult 2800
+# exec autogenerate1 MatrixMult 3000
+# ### Autogenerate2 MatrixMult
+# exec autogenerate2 MatrixMult 200
+# exec autogenerate2 MatrixMult 400
+# exec autogenerate2 MatrixMult 600
+# exec autogenerate2 MatrixMult 800
+# exec autogenerate2 MatrixMult 1000
+# exec autogenerate2 MatrixMult 1200
+# exec autogenerate2 MatrixMult 1400
+# exec autogenerate2 MatrixMult 1600
+# exec autogenerate2 MatrixMult 1800
+# exec autogenerate2 MatrixMult 2000
+# exec autogenerate2 MatrixMult 2200
+# exec autogenerate2 MatrixMult 2400
+# exec autogenerate2 MatrixMult 2600
+# exec autogenerate2 MatrixMult 2800
+# exec autogenerate2 MatrixMult 3000
