@@ -1,0 +1,55 @@
+digraph "Scop Graph for 'getBobSum' function" {
+	label="Scop Graph for 'getBobSum' function";
+
+	Node0x94529e0 [shape=record,label="{entry:\l  br label %entry.split, !dbg !177\l}"];
+	Node0x94529e0 -> Node0x94d3410;
+	Node0x94d3410 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata i64 %sum_alice, i64 0, metadata !34,\l... metadata !178), !dbg !177\l  tail call void @llvm.dbg.value(metadata i64* %coins, i64 0, metadata !35,\l... metadata !178), !dbg !179\l  tail call void @llvm.dbg.value(metadata i64 %coins_size, i64 0, metadata\l... !36, metadata !178), !dbg !179\l  tail call void @llvm.dbg.value(metadata i1 %coins_has_ownership, i64 0,\l... metadata !37, metadata !180), !dbg !181\l  tail call void @llvm.dbg.value(metadata i64 %n, i64 0, metadata !38,\l... metadata !178), !dbg !182\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !39, metadata\l... !178), !dbg !183\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !40, metadata\l... !178), !dbg !184\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !41, metadata\l... !178), !dbg !185\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !42, metadata\l... !178), !dbg !186\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !43, metadata\l... !178), !dbg !187\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !44, metadata\l... !178), !dbg !188\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !45, metadata\l... !178), !dbg !189\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !46, metadata\l... !178), !dbg !190\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !47, metadata\l... !178), !dbg !191\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !48, metadata\l... !178), !dbg !192\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !42, metadata\l... !178), !dbg !186\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !40, metadata\l... !178), !dbg !184\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !43, metadata\l... !178), !dbg !187\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !41, metadata\l... !178), !dbg !185\l  %cmp18 = icmp sgt i64 %n, 0, !dbg !193\l  br i1 %cmp18, label %if.end.lr.ph, label %blklab2, !dbg !196\l}"];
+	Node0x94d3410 -> Node0x949e140;
+	Node0x94d3410 -> Node0x944c4c0;
+	Node0x949e140 [shape=record,label="{if.end.lr.ph:                                     \l  br label %if.end, !dbg !196\l}"];
+	Node0x949e140 -> Node0x94e5d40;
+	Node0x94e5d40 [shape=record,label="{if.end:                                           \l  %i.020 = phi i64 [ 0, %if.end.lr.ph ], [ %add1, %if.end ]\l  %sum.019 = phi i64 [ 0, %if.end.lr.ph ], [ %add, %if.end ]\l  %arrayidx = getelementptr inbounds i64, i64* %coins, i64 %i.020, !dbg !197\l  %0 = load i64, i64* %arrayidx, align 8, !dbg !197, !tbaa !198\l  tail call void @llvm.dbg.value(metadata i64 %0, i64 0, metadata !44,\l... metadata !178), !dbg !188\l  %add = add nsw i64 %0, %sum.019, !dbg !202\l  tail call void @llvm.dbg.value(metadata i64 %add, i64 0, metadata !45,\l... metadata !178), !dbg !189\l  tail call void @llvm.dbg.value(metadata i64 %add, i64 0, metadata !41,\l... metadata !178), !dbg !185\l  tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !46, metadata\l... !178), !dbg !190\l  %add1 = add nuw nsw i64 %i.020, 1, !dbg !203\l  tail call void @llvm.dbg.value(metadata i64 %add1, i64 0, metadata !47,\l... metadata !178), !dbg !191\l  tail call void @llvm.dbg.value(metadata i64 %add1, i64 0, metadata !40,\l... metadata !178), !dbg !184\l  %exitcond = icmp ne i64 %add1, %n, !dbg !196\l  br i1 %exitcond, label %if.end, label %while.cond.blklab2_crit_edge, !dbg\l... !196\l}"];
+	Node0x94e5d40 -> Node0x94e5d40[constraint=false];
+	Node0x94e5d40 -> Node0x949fd50;
+	Node0x949fd50 [shape=record,label="{while.cond.blklab2_crit_edge:                     \l  %add.lcssa = phi i64 [ %add, %if.end ]\l  br label %blklab2, !dbg !196\l}"];
+	Node0x949fd50 -> Node0x944c4c0;
+	Node0x944c4c0 [shape=record,label="{blklab2:                                          \l  %sum.0.lcssa = phi i64 [ %add.lcssa, %while.cond.blklab2_crit_edge ], [ 0,\l... %entry.split ]\l  %sub = sub nsw i64 %sum.0.lcssa, %sum_alice, !dbg !204\l  tail call void @llvm.dbg.value(metadata i64 %sub, i64 0, metadata !48,\l... metadata !178), !dbg !192\l  br i1 %coins_has_ownership, label %if.then2, label %if.end3, !dbg !205\l}"];
+	Node0x944c4c0 -> Node0x94570b0;
+	Node0x944c4c0 -> Node0x944e290;
+	Node0x94570b0 [shape=record,label="{if.then2:                                         \l  %1 = bitcast i64* %coins to i8*, !dbg !206\l  tail call void @free(i8* %1) #6, !dbg !206\l  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !37, metadata\l... !178), !dbg !181\l  br label %if.end3, !dbg !206\l}"];
+	Node0x94570b0 -> Node0x944e290;
+	Node0x944e290 [shape=record,label="{if.end3:                                          \l  ret i64 %sub, !dbg !210\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0x94665b0 {
+          label = "CoinGame.c:59-103
+";
+          style = solid;
+          color = 1
+          subgraph cluster_0x9465f20 {
+            label = "CoinGame.c:59-91
+Region can not profitably be optimized!";
+            style = solid;
+            color = 6
+            subgraph cluster_0x94661d0 {
+              label = "CoinGame.c:61-91
+Region can not profitably be optimized!";
+              style = solid;
+              color = 5
+              Node0x94e5d40;
+            }
+            Node0x94d3410;
+            Node0x949e140;
+            Node0x949fd50;
+          }
+          subgraph cluster_0x94662e0 {
+            label = "CoinGame.c:59-102
+Region can not profitably be optimized!";
+            style = solid;
+            color = 6
+            Node0x944c4c0;
+            Node0x94570b0;
+          }
+          Node0x94529e0;
+          Node0x944e290;
+        }
+}

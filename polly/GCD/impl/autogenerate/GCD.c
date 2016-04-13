@@ -59,9 +59,11 @@ blklab2:;
 	//return
 }
 
-long long* gcd_array(_DECL_1DARRAY_PARAM(data), long long n){
+long long* gcd_array(_DECL_1DARRAY_PARAM(data), _DECL_OWNERSHIP_PARAM(data), long long n){
 	_DECL_1DARRAY(_2);
+	_DECL_OWNERSHIP(_2);
 	_DECL_1DARRAY(gcds);
+	_DECL_OWNERSHIP(gcds);
 	long long i = 0;
 	long long j = 0;
 	long long a = 0;
@@ -69,6 +71,7 @@ long long* gcd_array(_DECL_1DARRAY_PARAM(data), long long n){
 	long long _8 = 0;
 	long long _9 = 0;
 	_DECL_1DARRAY(_10);
+	_DECL_OWNERSHIP(_10);
 	long long _11 = 0;
 	long long _12 = 0;
 	long long _13 = 0;
@@ -99,9 +102,14 @@ long long* gcd_array(_DECL_1DARRAY_PARAM(data), long long n){
 	//mul %9 = %1, %1 : int
 	_9=n*n;
 	//arraygen %10 = [8; 9] : int[]
+	_FREE(_10);
 	_GEN_1DARRAY(_10, _9, _8);
+	_ADD_OWNERSHIP(_10);
 	//assign %3 = %10  : int[]
+	_FREE(gcds);
 	_1DARRAY_UPDATE(gcds, _10);
+	_ADD_OWNERSHIP(gcds);
+	_REMOVE_OWNERSHIP(_10);
 	//const %11 = 0 : int
 	_11 = 0;
 	//assign %4 = %11  : int
@@ -227,16 +235,22 @@ blklab8:;
 //.blklab7
 blklab7:;
 	//return %3
+	_FREE(data);
+	_FREE(_2);
+	_FREE(_10);
 	return gcds;
 	//return
 }
 
 long long* init(long long n){
 	_DECL_1DARRAY(_1);
+	_DECL_OWNERSHIP(_1);
 	_DECL_1DARRAY(data);
+	_DECL_OWNERSHIP(data);
 	long long i = 0;
 	long long _4 = 0;
 	_DECL_1DARRAY(_5);
+	_DECL_OWNERSHIP(_5);
 	long long _6 = 0;
 	long long _7 = 0;
 	long long _8 = 0;
@@ -245,9 +259,14 @@ long long* init(long long n){
 	//const %4 = 0 : int
 	_4 = 0;
 	//arraygen %5 = [4; 0] : int[]
+	_FREE(_5);
 	_GEN_1DARRAY(_5, n, _4);
+	_ADD_OWNERSHIP(_5);
 	//assign %2 = %5  : int[]
+	_FREE(data);
 	_1DARRAY_UPDATE(data, _5);
+	_ADD_OWNERSHIP(data);
+	_REMOVE_OWNERSHIP(_5);
 	//const %6 = 0 : int
 	_6 = 0;
 	//assign %3 = %6  : int
@@ -274,6 +293,8 @@ blklab19:;
 //.blklab18
 blklab18:;
 	//return %2
+	_FREE(_1);
+	_FREE(_5);
 	return data;
 	//return
 }
@@ -282,16 +303,22 @@ int main(int argc, char** args){
 	long long* max;
 	long long n = 0;
 	_DECL_1DARRAY(data);
+	_DECL_OWNERSHIP(data);
 	_DECL_1DARRAY(gcds);
+	_DECL_OWNERSHIP(gcds);
 	long long sum = 0;
 	long long i = 0;
 	long long j = 0;
 	long long* _8;
 	_DECL_2DARRAY(_9);
+	_DECL_OWNERSHIP(_9);
 	long long _10 = 0;
 	_DECL_1DARRAY(_11);
+	_DECL_OWNERSHIP(_11);
 	_DECL_1DARRAY(_12);
+	_DECL_OWNERSHIP(_12);
 	_DECL_1DARRAY(_13);
+	_DECL_OWNERSHIP(_13);
 	long long _14 = 0;
 	long long _15 = 0;
 	long long _16 = 0;
@@ -305,9 +332,11 @@ int main(int argc, char** args){
 	long long _24 = 0;
 	void* _25;
 	_DECL_1DARRAY(_27);
+	_DECL_OWNERSHIP(_27);
 	void* _28;
 	//fieldload %9 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	_CONV_ARGS(_9);
+	_ADD_OWNERSHIP(_9);
 	//const %10 = 0 : int
 	_10 = 0;
 	//indexof %11 = %9, %10 : int[][]
@@ -321,14 +350,25 @@ int main(int argc, char** args){
 	//assign %2 = %1  : int
 	n = *max;
 	//invoke (%12) = (%2) GCD:init : function(int)->(int[])
+	_FREE(_12);
 	_12 = init(n);
+	_ADD_OWNERSHIP(_12);
 	//assign %3 = %12  : int[]
+	_FREE(data);
 	_1DARRAY_UPDATE(data, _12);
+	_ADD_OWNERSHIP(data);
+	_REMOVE_OWNERSHIP(_12);
 	//invoke (%13) = (%3, %2) GCD:gcd_array : function(int[],int)->(int[])
+	_FREE(_13);
+	_ADD_OWNERSHIP(data);
 	_1DARRAY_SIZE(_13, data);
-	_13 = gcd_array(_1DARRAY_PARAM(data), n);
+	_13 = gcd_array(_1DARRAY_PARAM(data), false, n);
+	_ADD_OWNERSHIP(_13);
 	//assign %4 = %13  : int[]
+	_FREE(gcds);
 	_1DARRAY_UPDATE(gcds, _13);
+	_ADD_OWNERSHIP(gcds);
+	_REMOVE_OWNERSHIP(_13);
 	//const %14 = 0 : int
 	_14 = 0;
 	//assign %5 = %14  : int
@@ -384,8 +424,10 @@ blklab21:;
 	//fieldload %25 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %26 = %25 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %27 = [83,85,77,58] : int[]
+	_FREE(_27);
 	_NEW_ARRAY(_27, 4);
 	_27[0] = 83; _27[1] = 85; _27[2] = 77; _27[3] = 58; 
+	_ADD_OWNERSHIP(_27);
 	//indirectinvoke () = %26 (%27) : method(int[])->()
 	printf_s(_1DARRAY_PARAM(_27));
 	//fieldload %28 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
@@ -395,6 +437,13 @@ blklab21:;
 //.blklab20
 blklab20:;
 	//return
+	_FREE(data);
+	_FREE(gcds);
+	_FREE2DArray(_9);
+	_FREE(_11);
+	_FREE(_12);
+	_FREE(_13);
+	_FREE(_27);
 	exit(0);
 }
 

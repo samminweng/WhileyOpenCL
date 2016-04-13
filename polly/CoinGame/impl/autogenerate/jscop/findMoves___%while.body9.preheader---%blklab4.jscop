@@ -1,0 +1,144 @@
+{
+   "context" : "[n] -> {  : -9223372036854775808 <= n <= 9223372036854775807 }",
+   "location" : "CoinGame.c:112-357",
+   "name" : "while.body9.preheader => blklab4",
+   "statements" : [
+      {
+         "accesses" : [
+            {
+               "kind" : "write",
+               "relation" : "[n] -> { Stmt_if_end13[i0, i1] -> MemRef_y_0__phi[] }"
+            }
+         ],
+         "domain" : "[n] -> { Stmt_if_end13[i0, i1] : i0 >= 0 and 0 <= i1 < n - i0 }",
+         "name" : "Stmt_if_end13",
+         "schedule" : "[n] -> { Stmt_if_end13[i0, i1] -> [i0, i1, 0] }"
+      },
+      {
+         "accesses" : [
+            {
+               "kind" : "read",
+               "relation" : "[n] -> { Stmt_if_end21[i0, i1] -> MemRef_call[1 + i1, -1 + i0 + i1] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "[n] -> { Stmt_if_end21[i0, i1] -> MemRef_y_0__phi[] }"
+            }
+         ],
+         "domain" : "[n] -> { Stmt_if_end21[i0, i1] : i0 >= 0 and i1 >= 0 and -i0 < i1 < n - i0 and i1 <= -2 + n }",
+         "name" : "Stmt_if_end21",
+         "schedule" : "[n] -> { Stmt_if_end21[i0, i1] -> [i0, i1, 1] }"
+      },
+      {
+         "accesses" : [
+            {
+               "kind" : "read",
+               "relation" : "[n] -> { Stmt_blklab8[i0, i1] -> MemRef_y_0__phi[] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "[n] -> { Stmt_blklab8[i0, i1] -> MemRef_x_0__phi[] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "[n] -> { Stmt_blklab8[i0, i1] -> MemRef_y_0[] }"
+            }
+         ],
+         "domain" : "[n] -> { Stmt_blklab8[i0, i1] : i0 >= 0 and i1 >= 0 and -i0 < i1 < n - i0 and i1 <= -2 + n; Stmt_blklab8[0, 0] : n > 0; Stmt_blklab8[0, -1 + n] : n > 0 }",
+         "name" : "Stmt_blklab8",
+         "schedule" : "[n] -> { Stmt_blklab8[i0, i1] -> [i0, i1, 2] : -i0 < i1 <= -2 + n; Stmt_blklab8[0, 0] -> [0, 0, 2]; Stmt_blklab8[0, -1 + n] -> [0, -1 + n, 2] }"
+      },
+      {
+         "accesses" : [
+            {
+               "kind" : "read",
+               "relation" : "[n] -> { Stmt_if_end30[i0, i1] -> MemRef_call[2 + i1, i0 + i1] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "[n] -> { Stmt_if_end30[i0, i1] -> MemRef_x_0__phi[] }"
+            }
+         ],
+         "domain" : "[n] -> { Stmt_if_end30[i0, i1] : i0 >= 0 and i1 >= 0 and -i0 < i1 < n - i0 and i1 <= -3 + n; Stmt_if_end30[0, 0] : n >= 3 }",
+         "name" : "Stmt_if_end30",
+         "schedule" : "[n] -> { Stmt_if_end30[i0, i1] -> [i0, i1, 3] : i1 > -i0; Stmt_if_end30[0, 0] -> [0, 0, 3] }"
+      },
+      {
+         "accesses" : [
+            {
+               "kind" : "read",
+               "relation" : "[n] -> { Stmt_blklab9[i0, i1] -> MemRef_x_0__phi[] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "[n] -> { Stmt_blklab9[i0, i1] -> MemRef_z_0__phi[] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "[n] -> { Stmt_blklab9[i0, i1] -> MemRef_x_0[] }"
+            }
+         ],
+         "domain" : "[n] -> { Stmt_blklab9[i0, i1] : i0 >= 0 and i1 >= 0 and -i0 < i1 < n - i0 and i1 <= -2 + n; Stmt_blklab9[0, 0] : n > 0; Stmt_blklab9[0, -1 + n] : n > 0 }",
+         "name" : "Stmt_blklab9",
+         "schedule" : "[n] -> { Stmt_blklab9[i0, i1] -> [i0, i1, 4] : -i0 < i1 <= -2 + n; Stmt_blklab9[0, 0] -> [0, 0, 4]; Stmt_blklab9[0, -1 + n] -> [0, -1 + n, 4] }"
+      },
+      {
+         "accesses" : [
+            {
+               "kind" : "read",
+               "relation" : "[n] -> { Stmt_if_end39[i0, i1] -> MemRef_call[i1, -2 + i0 + i1] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "[n] -> { Stmt_if_end39[i0, i1] -> MemRef_z_0__phi[] }"
+            }
+         ],
+         "domain" : "[n] -> { Stmt_if_end39[i0, i1] : i0 >= 0 and i1 >= 0 and 2 - i0 <= i1 < n - i0 and i1 < n }",
+         "name" : "Stmt_if_end39",
+         "schedule" : "[n] -> { Stmt_if_end39[i0, i1] -> [i0, i1, 5] }"
+      },
+      {
+         "accesses" : [
+            {
+               "kind" : "read",
+               "relation" : "[n] -> { Stmt_blklab10__TO__blklab7[i0, i1] -> MemRef_z_0__phi[] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "[n] -> { Stmt_blklab10__TO__blklab7[i0, i1] -> MemRef_x_0[] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "[n] -> { Stmt_blklab10__TO__blklab7[i0, i1] -> MemRef_y_0[] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "[n] -> { Stmt_blklab10__TO__blklab7[i0, i1] -> MemRef_coins[i1] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "[n] -> { Stmt_blklab10__TO__blklab7[i0, i1] -> MemRef_coins[i0 + i1] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "[n] -> { Stmt_blklab10__TO__blklab7[i0, i1] -> MemRef_coins[i1] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "[n] -> { Stmt_blklab10__TO__blklab7[i0, i1] -> MemRef_call[i1, i0 + i1] }"
+            },
+            {
+               "kind" : "read",
+               "relation" : "[n] -> { Stmt_blklab10__TO__blklab7[i0, i1] -> MemRef_coins[i0 + i1] }"
+            },
+            {
+               "kind" : "write",
+               "relation" : "[n] -> { Stmt_blklab10__TO__blklab7[i0, i1] -> MemRef_call[i1, i0 + i1] }"
+            }
+         ],
+         "domain" : "[n] -> { Stmt_blklab10__TO__blklab7[i0, i1] : i0 >= 0 and i0 >= 3 - n and i1 >= 0 and -i0 < i1 < n - i0; Stmt_blklab10__TO__blklab7[0, 0] : n > 0; Stmt_blklab10__TO__blklab7[0, -1 + n] : n > 0 }",
+         "name" : "Stmt_blklab10__TO__blklab7",
+         "schedule" : "[n] -> { Stmt_blklab10__TO__blklab7[i0, i1] -> [i0, i1, 6] : i0 >= 3 - n and i1 > -i0; Stmt_blklab10__TO__blklab7[0, 0] -> [0, 0, 6]; Stmt_blklab10__TO__blklab7[0, -1 + n] -> [0, -1 + n, 6] }"
+      }
+   ]
+}
