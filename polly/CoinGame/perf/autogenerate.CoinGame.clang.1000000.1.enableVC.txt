@@ -1,0 +1,378 @@
+Enable loop vectorization...Compile C code using clang with 1 threads...fail to allocate the memory at gen1DArray function in Util.c
+
+ Performance counter stats for './out/CoinGame.clang.enableVC.out 1000000':
+
+          2.734370 task-clock (msec)         #    0.380 CPUs utilized          
+                 3 context-switches          #    0.001 M/sec                  
+                 1 cpu-migrations            #    0.366 K/sec                  
+               563 page-faults               #    0.206 M/sec                  
+         5,708,927 cycles                    #    2.088 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+         5,725,236 instructions              #    1.00  insns per cycle        
+           578,940 branches                  #  211.727 M/sec                  
+             8,546 branch-misses             #    1.48% of all branches        
+
+       0.007191688 seconds time elapsed
+
+fail to allocate the memory at gen1DArray function in Util.c
+
+ Performance counter stats for './out/CoinGame.clang.enableVC.out 1000000':
+
+          3.909170 task-clock (msec)         #    0.531 CPUs utilized          
+                 1 context-switches          #    0.256 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               563 page-faults               #    0.144 M/sec                  
+         5,447,310 cycles                    #    1.393 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+         5,692,261 instructions              #    1.04  insns per cycle        
+           571,909 branches                  #  146.299 M/sec                  
+             7,169 branch-misses             #    1.25% of all branches        
+
+       0.007368051 seconds time elapsed
+
+fail to allocate the memory at gen1DArray function in Util.c
+
+ Performance counter stats for './out/CoinGame.clang.enableVC.out 1000000':
+
+          3.046396 task-clock (msec)         #    0.474 CPUs utilized          
+                 2 context-switches          #    0.657 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               563 page-faults               #    0.185 M/sec                  
+         5,559,066 cycles                    #    1.825 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+         5,726,599 instructions              #    1.03  insns per cycle        
+           574,823 branches                  #  188.690 M/sec                  
+             7,342 branch-misses             #    1.28% of all branches        
+
+       0.006428639 seconds time elapsed
+
+fail to allocate the memory at gen1DArray function in Util.c
+
+ Performance counter stats for './out/CoinGame.clang.enableVC.out 1000000':
+
+          3.624017 task-clock (msec)         #    0.504 CPUs utilized          
+                 2 context-switches          #    0.552 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               563 page-faults               #    0.155 M/sec                  
+         5,542,122 cycles                    #    1.529 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+         5,723,518 instructions              #    1.03  insns per cycle        
+           574,329 branches                  #  158.479 M/sec                  
+             7,289 branch-misses             #    1.27% of all branches        
+
+       0.007186167 seconds time elapsed
+
+fail to allocate the memory at gen1DArray function in Util.c
+
+ Performance counter stats for './out/CoinGame.clang.enableVC.out 1000000':
+
+          3.458591 task-clock (msec)         #    0.491 CPUs utilized          
+                 2 context-switches          #    0.578 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               563 page-faults               #    0.163 M/sec                  
+         5,939,032 cycles                    #    1.717 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+         5,729,438 instructions              #    0.96  insns per cycle        
+           575,276 branches                  #  166.332 M/sec                  
+             7,370 branch-misses             #    1.28% of all branches        
+
+       0.007046727 seconds time elapsed
+
+fail to allocate the memory at gen1DArray function in Util.c
+
+ Performance counter stats for './out/CoinGame.clang.enableVC.out 1000000':
+
+          2.925787 task-clock (msec)         #    0.485 CPUs utilized          
+                 1 context-switches          #    0.342 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               563 page-faults               #    0.192 M/sec                  
+         5,531,641 cycles                    #    1.891 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+         5,682,389 instructions              #    1.03  insns per cycle        
+           572,286 branches                  #  195.601 M/sec                  
+             7,205 branch-misses             #    1.26% of all branches        
+
+       0.006032763 seconds time elapsed
+
+fail to allocate the memory at gen1DArray function in Util.c
+
+ Performance counter stats for './out/CoinGame.clang.enableVC.out 1000000':
+
+          3.236965 task-clock (msec)         #    0.497 CPUs utilized          
+                 1 context-switches          #    0.309 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               563 page-faults               #    0.174 M/sec                  
+         5,476,745 cycles                    #    1.692 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+         5,702,302 instructions              #    1.04  insns per cycle        
+           575,682 branches                  #  177.846 M/sec                  
+             7,073 branch-misses             #    1.23% of all branches        
+
+       0.006516936 seconds time elapsed
+
+fail to allocate the memory at gen1DArray function in Util.c
+
+ Performance counter stats for './out/CoinGame.clang.enableVC.out 1000000':
+
+          3.899832 task-clock (msec)         #    0.543 CPUs utilized          
+                 2 context-switches          #    0.513 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+             1,074 page-faults               #    0.275 M/sec                  
+         6,945,507 cycles                    #    1.781 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+         7,120,619 instructions              #    1.03  insns per cycle        
+           805,119 branches                  #  206.450 M/sec                  
+             7,737 branch-misses             #    0.96% of all branches        
+
+       0.007184416 seconds time elapsed
+
+fail to allocate the memory at gen1DArray function in Util.c
+
+ Performance counter stats for './out/CoinGame.clang.enableVC.out 1000000':
+
+          3.134300 task-clock (msec)         #    0.485 CPUs utilized          
+                 2 context-switches          #    0.638 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               563 page-faults               #    0.180 M/sec                  
+         5,471,786 cycles                    #    1.746 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+         5,713,899 instructions              #    1.04  insns per cycle        
+           572,391 branches                  #  182.622 M/sec                  
+             7,362 branch-misses             #    1.29% of all branches        
+
+       0.006466719 seconds time elapsed
+
+fail to allocate the memory at gen1DArray function in Util.c
+
+ Performance counter stats for './out/CoinGame.clang.enableVC.out 1000000':
+
+          3.238045 task-clock (msec)         #    0.503 CPUs utilized          
+                 2 context-switches          #    0.618 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               563 page-faults               #    0.174 M/sec                  
+         5,541,941 cycles                    #    1.712 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+         5,718,515 instructions              #    1.03  insns per cycle        
+           573,565 branches                  #  177.133 M/sec                  
+             7,248 branch-misses             #    1.26% of all branches        
+
+       0.006431103 seconds time elapsed
+
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 0
+cpu cores	: 4
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 1
+cpu cores	: 4
+apicid		: 2
+initial apicid	: 2
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 2
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 2
+cpu cores	: 4
+apicid		: 4
+initial apicid	: 4
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 3
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 3
+cpu cores	: 4
+apicid		: 6
+initial apicid	: 6
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 4
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 0
+cpu cores	: 4
+apicid		: 1
+initial apicid	: 1
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 5
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 1
+cpu cores	: 4
+apicid		: 3
+initial apicid	: 3
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 6
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 1400.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 2
+cpu cores	: 4
+apicid		: 5
+initial apicid	: 5
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 7
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 1900.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 3
+cpu cores	: 4
+apicid		: 7
+initial apicid	: 7
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+

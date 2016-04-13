@@ -1,0 +1,379 @@
+Enable loop vectorization...Compile C code using polly with 1 threads...fail to allocate the memory at gen1DArray function in Util.c
+
+ Performance counter stats for './out/GCD.polly.enableVC.out 1000000':
+
+          4.742340 task-clock (msec)         #    0.567 CPUs utilized          
+                 3 context-switches          #    0.633 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               562 page-faults               #    0.119 M/sec                  
+         5,673,221 cycles                    #    1.196 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+         5,746,111 instructions              #    1.01  insns per cycle        
+           578,962 branches                  #  122.084 M/sec                  
+             7,979 branch-misses             #    1.38% of all branches        
+
+       0.008356897 seconds time elapsed
+
+fail to allocate the memory at gen1DArray function in Util.c
+
+ Performance counter stats for './out/GCD.polly.enableVC.out 1000000':
+
+          2.467999 task-clock (msec)         #    0.443 CPUs utilized          
+                 1 context-switches          #    0.405 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               562 page-faults               #    0.228 M/sec                  
+         5,622,331 cycles                    #    2.278 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+         5,709,239 instructions              #    1.02  insns per cycle        
+           571,793 branches                  #  231.683 M/sec                  
+             7,071 branch-misses             #    1.24% of all branches        
+
+       0.005571902 seconds time elapsed
+
+fail to allocate the memory at gen1DArray function in Util.c
+
+ Performance counter stats for './out/GCD.polly.enableVC.out 1000000':
+
+          4.037353 task-clock (msec)         #    0.546 CPUs utilized          
+                 2 context-switches          #    0.495 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               562 page-faults               #    0.139 M/sec                  
+         5,502,010 cycles                    #    1.363 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+         5,732,262 instructions              #    1.04  insns per cycle        
+           575,303 branches                  #  142.495 M/sec                  
+             7,292 branch-misses             #    1.27% of all branches        
+
+       0.007393582 seconds time elapsed
+
+fail to allocate the memory at gen1DArray function in Util.c
+
+ Performance counter stats for './out/GCD.polly.enableVC.out 1000000':
+
+          3.520998 task-clock (msec)         #    0.501 CPUs utilized          
+                 2 context-switches          #    0.568 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               562 page-faults               #    0.160 M/sec                  
+         5,572,990 cycles                    #    1.583 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+         5,706,231 instructions              #    1.02  insns per cycle        
+           573,713 branches                  #  162.940 M/sec                  
+             7,414 branch-misses             #    1.29% of all branches        
+
+       0.007025054 seconds time elapsed
+
+fail to allocate the memory at gen1DArray function in Util.c
+
+ Performance counter stats for './out/GCD.polly.enableVC.out 1000000':
+
+          4.003009 task-clock (msec)         #    0.540 CPUs utilized          
+                 1 context-switches          #    0.250 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+             1,072 page-faults               #    0.268 M/sec                  
+         6,775,676 cycles                    #    1.693 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+         7,073,338 instructions              #    1.04  insns per cycle        
+           800,134 branches                  #  199.883 M/sec                  
+             7,536 branch-misses             #    0.94% of all branches        
+
+       0.007419469 seconds time elapsed
+
+fail to allocate the memory at gen1DArray function in Util.c
+
+ Performance counter stats for './out/GCD.polly.enableVC.out 1000000':
+
+          3.292631 task-clock (msec)         #    0.514 CPUs utilized          
+                 2 context-switches          #    0.607 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               561 page-faults               #    0.170 M/sec                  
+         5,568,157 cycles                    #    1.691 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+         5,712,878 instructions              #    1.03  insns per cycle        
+           575,129 branches                  #  174.672 M/sec                  
+             7,300 branch-misses             #    1.27% of all branches        
+
+       0.006402326 seconds time elapsed
+
+fail to allocate the memory at gen1DArray function in Util.c
+
+ Performance counter stats for './out/GCD.polly.enableVC.out 1000000':
+
+          4.066279 task-clock (msec)         #    0.556 CPUs utilized          
+                 2 context-switches          #    0.492 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+             1,073 page-faults               #    0.264 M/sec                  
+         6,877,910 cycles                    #    1.691 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+         7,132,469 instructions              #    1.04  insns per cycle        
+           812,390 branches                  #  199.787 M/sec                  
+             7,708 branch-misses             #    0.95% of all branches        
+
+       0.007313034 seconds time elapsed
+
+fail to allocate the memory at gen1DArray function in Util.c
+
+ Performance counter stats for './out/GCD.polly.enableVC.out 1000000':
+
+          3.234074 task-clock (msec)         #    0.491 CPUs utilized          
+                 1 context-switches          #    0.309 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               562 page-faults               #    0.174 M/sec                  
+         5,472,009 cycles                    #    1.692 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+         5,713,001 instructions              #    1.04  insns per cycle        
+           572,556 branches                  #  177.039 M/sec                  
+             7,052 branch-misses             #    1.23% of all branches        
+
+       0.006585471 seconds time elapsed
+
+fail to allocate the memory at gen1DArray function in Util.c
+
+ Performance counter stats for './out/GCD.polly.enableVC.out 1000000':
+
+          3.644181 task-clock (msec)         #    0.511 CPUs utilized          
+                 1 context-switches          #    0.274 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+             1,073 page-faults               #    0.294 M/sec                  
+         6,893,945 cycles                    #    1.892 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+         7,107,738 instructions              #    1.03  insns per cycle        
+           807,372 branches                  #  221.551 M/sec                  
+             7,557 branch-misses             #    0.94% of all branches        
+
+       0.007137262 seconds time elapsed
+
+fail to allocate the memory at gen1DArray function in Util.c
+
+ Performance counter stats for './out/GCD.polly.enableVC.out 1000000':
+
+          4.474630 task-clock (msec)         #    0.593 CPUs utilized          
+                 2 context-switches          #    0.447 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               562 page-faults               #    0.126 M/sec                  
+         5,455,495 cycles                    #    1.219 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+         5,722,353 instructions              #    1.05  insns per cycle        
+           574,209 branches                  #  128.325 M/sec                  
+             7,320 branch-misses             #    1.27% of all branches        
+
+       0.007541886 seconds time elapsed
+
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 0
+cpu cores	: 4
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 1
+cpu cores	: 4
+apicid		: 2
+initial apicid	: 2
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 2
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 2
+cpu cores	: 4
+apicid		: 4
+initial apicid	: 4
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 3
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 3
+cpu cores	: 4
+apicid		: 6
+initial apicid	: 6
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 4
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 0
+cpu cores	: 4
+apicid		: 1
+initial apicid	: 1
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 5
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 1
+cpu cores	: 4
+apicid		: 3
+initial apicid	: 3
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 6
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 2
+cpu cores	: 4
+apicid		: 5
+initial apicid	: 5
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 7
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 1200.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 3
+cpu cores	: 4
+apicid		: 7
+initial apicid	: 7
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+Optimize C code using OpenMP code with 1 threads...

@@ -1,0 +1,388 @@
+Enable loop vectorization...Compile C code using clang with 1 threads...The total amount of money (maximum) Alice gets is 250000
+The total amount of money (maximum) Bob gets is 249500
+
+ Performance counter stats for './out/CoinGame.clang.disableVC.out 1000':
+
+         12.006364 task-clock (msec)         #    0.756 CPUs utilized          
+                 7 context-switches          #    0.583 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               567 page-faults               #    0.047 M/sec                  
+         9,760,551 cycles                    #    0.813 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+        20,292,424 instructions              #    2.08  insns per cycle        
+         3,460,433 branches                  #  288.217 M/sec                  
+             9,067 branch-misses             #    0.26% of all branches        
+
+       0.015888775 seconds time elapsed
+
+The total amount of money (maximum) Alice gets is 250000
+The total amount of money (maximum) Bob gets is 249500
+
+ Performance counter stats for './out/CoinGame.clang.disableVC.out 1000':
+
+          3.612946 task-clock (msec)         #    0.528 CPUs utilized          
+                 2 context-switches          #    0.554 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               568 page-faults               #    0.157 M/sec                  
+         9,888,021 cycles                    #    2.737 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+        20,266,775 instructions              #    2.05  insns per cycle        
+         3,454,024 branches                  #  956.013 M/sec                  
+             8,232 branch-misses             #    0.24% of all branches        
+
+       0.006845025 seconds time elapsed
+
+The total amount of money (maximum) Alice gets is 250000
+The total amount of money (maximum) Bob gets is 249500
+
+ Performance counter stats for './out/CoinGame.clang.disableVC.out 1000':
+
+          5.691551 task-clock (msec)         #    0.626 CPUs utilized          
+                 2 context-switches          #    0.351 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               568 page-faults               #    0.100 M/sec                  
+        10,005,574 cycles                    #    1.758 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+        20,242,866 instructions              #    2.02  insns per cycle        
+         3,451,985 branches                  #  606.510 M/sec                  
+             8,289 branch-misses             #    0.24% of all branches        
+
+       0.009096114 seconds time elapsed
+
+The total amount of money (maximum) Alice gets is 250000
+The total amount of money (maximum) Bob gets is 249500
+
+ Performance counter stats for './out/CoinGame.clang.disableVC.out 1000':
+
+          4.974793 task-clock (msec)         #    0.589 CPUs utilized          
+                 2 context-switches          #    0.402 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               568 page-faults               #    0.114 M/sec                  
+         9,688,343 cycles                    #    1.947 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+        20,249,775 instructions              #    2.09  insns per cycle        
+         3,455,161 branches                  #  694.534 M/sec                  
+             8,339 branch-misses             #    0.24% of all branches        
+
+       0.008441181 seconds time elapsed
+
+The total amount of money (maximum) Alice gets is 250000
+The total amount of money (maximum) Bob gets is 249500
+
+ Performance counter stats for './out/CoinGame.clang.disableVC.out 1000':
+
+          5.158445 task-clock (msec)         #    0.574 CPUs utilized          
+                 2 context-switches          #    0.388 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               568 page-faults               #    0.110 M/sec                  
+         9,760,121 cycles                    #    1.892 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+        20,213,956 instructions              #    2.07  insns per cycle        
+         3,448,339 branches                  #  668.484 M/sec                  
+             8,262 branch-misses             #    0.24% of all branches        
+
+       0.008992757 seconds time elapsed
+
+The total amount of money (maximum) Alice gets is 250000
+The total amount of money (maximum) Bob gets is 249500
+
+ Performance counter stats for './out/CoinGame.clang.disableVC.out 1000':
+
+          5.174532 task-clock (msec)         #    0.614 CPUs utilized          
+                 2 context-switches          #    0.387 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               568 page-faults               #    0.110 M/sec                  
+         9,791,510 cycles                    #    1.892 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+        20,229,583 instructions              #    2.07  insns per cycle        
+         3,449,189 branches                  #  666.570 M/sec                  
+             8,265 branch-misses             #    0.24% of all branches        
+
+       0.008429865 seconds time elapsed
+
+The total amount of money (maximum) Alice gets is 250000
+The total amount of money (maximum) Bob gets is 249500
+
+ Performance counter stats for './out/CoinGame.clang.disableVC.out 1000':
+
+          5.901630 task-clock (msec)         #    0.641 CPUs utilized          
+                 1 context-switches          #    0.169 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+             1,079 page-faults               #    0.183 M/sec                  
+        11,172,272 cycles                    #    1.893 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+        21,647,017 instructions              #    1.94  insns per cycle        
+         3,682,620 branches                  #  624.000 M/sec                  
+             8,522 branch-misses             #    0.23% of all branches        
+
+       0.009209593 seconds time elapsed
+
+The total amount of money (maximum) Alice gets is 250000
+The total amount of money (maximum) Bob gets is 249500
+
+ Performance counter stats for './out/CoinGame.clang.disableVC.out 1000':
+
+          5.682518 task-clock (msec)         #    0.619 CPUs utilized          
+                 2 context-switches          #    0.352 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               567 page-faults               #    0.100 M/sec                  
+         9,872,800 cycles                    #    1.737 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+        20,228,331 instructions              #    2.05  insns per cycle        
+         3,452,028 branches                  #  607.482 M/sec                  
+             8,321 branch-misses             #    0.24% of all branches        
+
+       0.009182513 seconds time elapsed
+
+The total amount of money (maximum) Alice gets is 250000
+The total amount of money (maximum) Bob gets is 249500
+
+ Performance counter stats for './out/CoinGame.clang.disableVC.out 1000':
+
+          5.419434 task-clock (msec)         #    0.591 CPUs utilized          
+                 2 context-switches          #    0.369 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               568 page-faults               #    0.105 M/sec                  
+         9,792,114 cycles                    #    1.807 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+        20,240,617 instructions              #    2.07  insns per cycle        
+         3,450,515 branches                  #  636.693 M/sec                  
+             8,248 branch-misses             #    0.24% of all branches        
+
+       0.009164630 seconds time elapsed
+
+The total amount of money (maximum) Alice gets is 250000
+The total amount of money (maximum) Bob gets is 249500
+
+ Performance counter stats for './out/CoinGame.clang.disableVC.out 1000':
+
+          5.077238 task-clock (msec)         #    0.613 CPUs utilized          
+                 1 context-switches          #    0.197 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               568 page-faults               #    0.112 M/sec                  
+         9,609,981 cycles                    #    1.893 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+        20,229,234 instructions              #    2.11  insns per cycle        
+         3,450,592 branches                  #  679.620 M/sec                  
+             8,171 branch-misses             #    0.24% of all branches        
+
+       0.008280036 seconds time elapsed
+
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 0
+cpu cores	: 4
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 1
+cpu cores	: 4
+apicid		: 2
+initial apicid	: 2
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 2
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 2
+cpu cores	: 4
+apicid		: 4
+initial apicid	: 4
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 3
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 3
+cpu cores	: 4
+apicid		: 6
+initial apicid	: 6
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 4
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 0
+cpu cores	: 4
+apicid		: 1
+initial apicid	: 1
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 5
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 1
+cpu cores	: 4
+apicid		: 3
+initial apicid	: 3
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 6
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 1200.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 2
+cpu cores	: 4
+apicid		: 5
+initial apicid	: 5
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 7
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 1900.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 3
+cpu cores	: 4
+apicid		: 7
+initial apicid	: 7
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
