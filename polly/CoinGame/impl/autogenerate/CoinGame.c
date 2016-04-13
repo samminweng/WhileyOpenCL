@@ -378,125 +378,89 @@ int main(int argc, char** args){
 	_DECL_1DARRAY(moves);
 	_DECL_OWNERSHIP(moves);
 	long long sum_alice = 0;
-	long long sum_bob = 0;
-	long long* _7;
-	_DECL_2DARRAY(_8);
-	_DECL_OWNERSHIP(_8);
-	long long _9 = 0;
+	long long* _6;
+	_DECL_2DARRAY(_7);
+	_DECL_OWNERSHIP(_7);
+	long long _8 = 0;
+	_DECL_1DARRAY(_9);
+	_DECL_OWNERSHIP(_9);
 	_DECL_1DARRAY(_10);
 	_DECL_OWNERSHIP(_10);
 	_DECL_1DARRAY(_11);
 	_DECL_OWNERSHIP(_11);
-	_DECL_1DARRAY(_12);
-	_DECL_OWNERSHIP(_12);
+	long long _12 = 0;
 	long long _13 = 0;
 	long long _14 = 0;
-	long long _15 = 0;
-	long long _16 = 0;
-	void* _17;
-	_DECL_1DARRAY(_19);
-	_DECL_OWNERSHIP(_19);
-	void* _20;
-	void* _22;
-	_DECL_1DARRAY(_24);
-	_DECL_OWNERSHIP(_24);
-	void* _25;
-	//fieldload %8 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	_CONV_ARGS(_8);
-	_ADD_OWNERSHIP(_8);
-	//const %9 = 0 : int
-	_9 = 0;
-	//indexof %10 = %8, %9 : int[][]
-	_10=_8[_9];
-	//invoke (%7) = (%10) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
-	_STR_TO_INT(_7, _10);
-	//assign %1 = %7  : null|int
-	max = _7;
+	void* _15;
+	_DECL_1DARRAY(_17);
+	_DECL_OWNERSHIP(_17);
+	void* _18;
+	//fieldload %7 = %0 args : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	_CONV_ARGS(_7);
+	_ADD_OWNERSHIP(_7);
+	//const %8 = 0 : int
+	_8 = 0;
+	//indexof %9 = %7, %8 : int[][]
+	_9=_7[_8];
+	//invoke (%6) = (%9) whiley/lang/Int:parse : function(whiley/lang/ASCII:string)->(null|int)
+	_STR_TO_INT(_6, _9);
+	//assign %1 = %6  : null|int
+	max = _6;
 	//ifis %1, null goto blklab15 : null|int
 	if(max == NULL) { goto blklab15;}
 	//assign %2 = %1  : int
 	n = *max;
-	//invoke (%11) = (%2) CoinGame:init : function(int)->(int[])
-	_FREE(_11);
-	_11 = init(n);
-	_ADD_OWNERSHIP(_11);
-	//assign %3 = %11  : int[]
+	//invoke (%10) = (%2) CoinGame:init : function(int)->(int[])
+	_FREE(_10);
+	_10 = init(n);
+	_ADD_OWNERSHIP(_10);
+	//assign %3 = %10  : int[]
 	_FREE(coins);
-	_1DARRAY_UPDATE(coins, _11);
+	_1DARRAY_UPDATE(coins, _10);
 	_ADD_OWNERSHIP(coins);
-	_REMOVE_OWNERSHIP(_11);
-	//invoke (%12) = (%3, %2) CoinGame:findMoves : function(int[],int)->(int[])
-	_FREE(_12);
+	_REMOVE_OWNERSHIP(_10);
+	//invoke (%11) = (%3, %2) CoinGame:findMoves : function(int[],int)->(int[])
+	_FREE(_11);
 	_ADD_OWNERSHIP(coins);
-	_1DARRAY_SIZE(_12, coins);
-	_12 = findMoves(_1DARRAY_PARAM(coins), false, n);
-	_ADD_OWNERSHIP(_12);
-	//assign %4 = %12  : int[]
+	_1DARRAY_SIZE(_11, coins);
+	_11 = findMoves(_1DARRAY_PARAM(coins), false, n);
+	_ADD_OWNERSHIP(_11);
+	//assign %4 = %11  : int[]
 	_FREE(moves);
-	_1DARRAY_UPDATE(moves, _12);
+	_1DARRAY_UPDATE(moves, _11);
 	_ADD_OWNERSHIP(moves);
-	_REMOVE_OWNERSHIP(_12);
-	//const %13 = 1 : int
-	_13 = 1;
-	//sub %14 = %2, %13 : int
-	_14=n-_13;
-	//indexof %15 = %4, %14 : int[]
-	_15=moves[_14];
-	//assign %5 = %15  : int
-	sum_alice = _15;
-	//invoke (%16) = (%5, %3, %2) CoinGame:getBobSum : function(int,int[],int)->(int)
-	_ADD_OWNERSHIP(coins);
-	_16 = getBobSum(sum_alice, _1DARRAY_PARAM(coins), false, n);
-	//assign %6 = %16  : int
-	sum_bob = _16;
-	//assert
-	{
-		//ifge %5, %6 goto blklab16 : int
-		if(sum_alice>=sum_bob){goto blklab16;}
-		//fail
-		fprintf(stderr,"fail");
-		exit(-1);
-//.blklab16
-blklab16:;
-	//assert
-	}
-	//fieldload %17 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %18 = %17 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %19 = [84,104,101,32,116,111,116,97,108,32,97,109,111,117,110,116,32,111,102,32,109,111,110,101,121,32,40,109,97,120,105,109,117,109,41,32,65,108,105,99,101,32,103,101,116,115,32,105,115,32] : int[]
-	_FREE(_19);
-	_NEW_ARRAY(_19, 50);
-	_19[0] = 84; _19[1] = 104; _19[2] = 101; _19[3] = 32; _19[4] = 116; _19[5] = 111; _19[6] = 116; _19[7] = 97; _19[8] = 108; _19[9] = 32; _19[10] = 97; _19[11] = 109; _19[12] = 111; _19[13] = 117; _19[14] = 110; _19[15] = 116; _19[16] = 32; _19[17] = 111; _19[18] = 102; _19[19] = 32; _19[20] = 109; _19[21] = 111; _19[22] = 110; _19[23] = 101; _19[24] = 121; _19[25] = 32; _19[26] = 40; _19[27] = 109; _19[28] = 97; _19[29] = 120; _19[30] = 105; _19[31] = 109; _19[32] = 117; _19[33] = 109; _19[34] = 41; _19[35] = 32; _19[36] = 65; _19[37] = 108; _19[38] = 105; _19[39] = 99; _19[40] = 101; _19[41] = 32; _19[42] = 103; _19[43] = 101; _19[44] = 116; _19[45] = 115; _19[46] = 32; _19[47] = 105; _19[48] = 115; _19[49] = 32; 
-	_ADD_OWNERSHIP(_19);
-	//indirectinvoke () = %18 (%19) : method(int[])->()
-	printf_s(_1DARRAY_PARAM(_19));
-	//fieldload %20 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %21 = %20 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//indirectinvoke () = %21 (%5) : method(any)->()
+	_REMOVE_OWNERSHIP(_11);
+	//const %12 = 1 : int
+	_12 = 1;
+	//sub %13 = %2, %12 : int
+	_13=n-_12;
+	//indexof %14 = %4, %13 : int[]
+	_14=moves[_13];
+	//assign %5 = %14  : int
+	sum_alice = _14;
+	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %16 = %15 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %17 = [84,104,101,32,116,111,116,97,108,32,97,109,111,117,110,116,32,111,102,32,109,111,110,101,121,32,40,109,97,120,105,109,117,109,41,32,65,108,105,99,101,32,103,101,116,115,32,105,115,32] : int[]
+	_FREE(_17);
+	_NEW_ARRAY(_17, 50);
+	_17[0] = 84; _17[1] = 104; _17[2] = 101; _17[3] = 32; _17[4] = 116; _17[5] = 111; _17[6] = 116; _17[7] = 97; _17[8] = 108; _17[9] = 32; _17[10] = 97; _17[11] = 109; _17[12] = 111; _17[13] = 117; _17[14] = 110; _17[15] = 116; _17[16] = 32; _17[17] = 111; _17[18] = 102; _17[19] = 32; _17[20] = 109; _17[21] = 111; _17[22] = 110; _17[23] = 101; _17[24] = 121; _17[25] = 32; _17[26] = 40; _17[27] = 109; _17[28] = 97; _17[29] = 120; _17[30] = 105; _17[31] = 109; _17[32] = 117; _17[33] = 109; _17[34] = 41; _17[35] = 32; _17[36] = 65; _17[37] = 108; _17[38] = 105; _17[39] = 99; _17[40] = 101; _17[41] = 32; _17[42] = 103; _17[43] = 101; _17[44] = 116; _17[45] = 115; _17[46] = 32; _17[47] = 105; _17[48] = 115; _17[49] = 32; 
+	_ADD_OWNERSHIP(_17);
+	//indirectinvoke () = %16 (%17) : method(int[])->()
+	printf_s(_1DARRAY_PARAM(_17));
+	//fieldload %18 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %19 = %18 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//indirectinvoke () = %19 (%5) : method(any)->()
 	printf("%lld\n", sum_alice);
-	//fieldload %22 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %23 = %22 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %24 = [84,104,101,32,116,111,116,97,108,32,97,109,111,117,110,116,32,111,102,32,109,111,110,101,121,32,40,109,97,120,105,109,117,109,41,32,66,111,98,32,103,101,116,115,32,105,115,32] : int[]
-	_FREE(_24);
-	_NEW_ARRAY(_24, 48);
-	_24[0] = 84; _24[1] = 104; _24[2] = 101; _24[3] = 32; _24[4] = 116; _24[5] = 111; _24[6] = 116; _24[7] = 97; _24[8] = 108; _24[9] = 32; _24[10] = 97; _24[11] = 109; _24[12] = 111; _24[13] = 117; _24[14] = 110; _24[15] = 116; _24[16] = 32; _24[17] = 111; _24[18] = 102; _24[19] = 32; _24[20] = 109; _24[21] = 111; _24[22] = 110; _24[23] = 101; _24[24] = 121; _24[25] = 32; _24[26] = 40; _24[27] = 109; _24[28] = 97; _24[29] = 120; _24[30] = 105; _24[31] = 109; _24[32] = 117; _24[33] = 109; _24[34] = 41; _24[35] = 32; _24[36] = 66; _24[37] = 111; _24[38] = 98; _24[39] = 32; _24[40] = 103; _24[41] = 101; _24[42] = 116; _24[43] = 115; _24[44] = 32; _24[45] = 105; _24[46] = 115; _24[47] = 32; 
-	_ADD_OWNERSHIP(_24);
-	//indirectinvoke () = %23 (%24) : method(int[])->()
-	printf_s(_1DARRAY_PARAM(_24));
-	//fieldload %25 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %26 = %25 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//indirectinvoke () = %26 (%6) : method(any)->()
-	printf("%lld\n", sum_bob);
 //.blklab15
 blklab15:;
 	//return
 	_FREE(coins);
 	_FREE(moves);
-	_FREE2DArray(_8);
+	_FREE2DArray(_7);
+	_FREE(_9);
 	_FREE(_10);
 	_FREE(_11);
-	_FREE(_12);
-	_FREE(_19);
-	_FREE(_24);
+	_FREE(_17);
 	exit(0);
 }
 

@@ -105,9 +105,9 @@ method main(System.Console sys):
     	int[] coins = init(n)
     	int[] moves = findMoves(coins, n)
     	int sum_alice = moves[n-1]
-    	int sum_bob = getBobSum(sum_alice, coins, n)
-    	assert sum_alice >= sum_bob//play(sys, moves, coins, n)
+    	//int sum_bob = getBobSum(sum_alice, coins, n)
+    	//assert sum_alice >= sum_bob//play(sys, moves, coins, n)
     	sys.out.print_s("The total amount of money (maximum) Alice gets is ")
     	sys.out.println(sum_alice)
-    	sys.out.print_s("The total amount of money (maximum) Bob gets is ")
-    	sys.out.println(sum_bob)
+    	//sys.out.print_s("The total amount of money (maximum) Bob gets is ")
+    	//sys.out.println(sum_bob)
