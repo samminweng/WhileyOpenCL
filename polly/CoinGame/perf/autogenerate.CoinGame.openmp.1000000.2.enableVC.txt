@@ -2,171 +2,171 @@ Enable loop vectorization...Compile C code using openmp with 2 threads...fail to
 
  Performance counter stats for './out/CoinGame.openmp.enableVC.out 1000000':
 
-          3.443668 task-clock (msec)         #    0.490 CPUs utilized          
-                 3 context-switches          #    0.871 K/sec                  
+          5.317630 task-clock (msec)         #    0.534 CPUs utilized          
+                 4 context-switches          #    0.752 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               607 page-faults               #    0.176 M/sec                  
-         6,510,359 cycles                    #    1.891 GHz                    
+               606 page-faults               #    0.114 M/sec                  
+         6,195,871 cycles                    #    1.165 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         5,926,578 instructions              #    0.91  insns per cycle        
-           619,314 branches                  #  179.841 M/sec                  
-             9,510 branch-misses             #    1.54% of all branches        
+         5,940,618 instructions              #    0.96  insns per cycle        
+           621,888 branches                  #  116.948 M/sec                  
+             9,585 branch-misses             #    1.54% of all branches        
 
-       0.007032734 seconds time elapsed
+       0.009957151 seconds time elapsed
 
 fail to allocate the memory at gen1DArray function in Util.c
 
  Performance counter stats for './out/CoinGame.openmp.enableVC.out 1000000':
 
-          3.088440 task-clock (msec)         #    0.488 CPUs utilized          
-                 2 context-switches          #    0.648 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-               607 page-faults               #    0.197 M/sec                  
-         5,838,476 cycles                    #    1.890 GHz                    
+          2.816184 task-clock (msec)         #    0.402 CPUs utilized          
+                 2 context-switches          #    0.710 K/sec                  
+                 1 cpu-migrations            #    0.355 K/sec                  
+               606 page-faults               #    0.215 M/sec                  
+         6,304,612 cycles                    #    2.239 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         5,930,708 instructions              #    1.02  insns per cycle        
-           618,919 branches                  #  200.399 M/sec                  
-             8,976 branch-misses             #    1.45% of all branches        
+         5,927,319 instructions              #    0.94  insns per cycle        
+           617,684 branches                  #  219.334 M/sec                  
+             8,884 branch-misses             #    1.44% of all branches        
 
-       0.006331023 seconds time elapsed
+       0.007009133 seconds time elapsed
 
 fail to allocate the memory at gen1DArray function in Util.c
 
  Performance counter stats for './out/CoinGame.openmp.enableVC.out 1000000':
 
-          4.738852 task-clock (msec)         #    0.574 CPUs utilized          
-                 2 context-switches          #    0.422 K/sec                  
+          1.796208 task-clock (msec)         #    0.355 CPUs utilized          
+                 1 context-switches          #    0.557 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               607 page-faults               #    0.128 M/sec                  
-         5,678,364 cycles                    #    1.198 GHz                    
+               606 page-faults               #    0.337 M/sec                  
+         6,291,543 cycles                    #    3.503 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         5,916,812 instructions              #    1.04  insns per cycle        
-           617,043 branches                  #  130.209 M/sec                  
-             8,955 branch-misses             #    1.45% of all branches        
+         5,909,771 instructions              #    0.94  insns per cycle        
+           612,779 branches                  #  341.151 M/sec                  
+             8,572 branch-misses             #    1.40% of all branches        
 
-       0.008252028 seconds time elapsed
+       0.005065494 seconds time elapsed
 
 fail to allocate the memory at gen1DArray function in Util.c
 
  Performance counter stats for './out/CoinGame.openmp.enableVC.out 1000000':
 
-          3.496171 task-clock (msec)         #    0.495 CPUs utilized          
-                 2 context-switches          #    0.572 K/sec                  
+          4.100126 task-clock (msec)         #    0.501 CPUs utilized          
+                 2 context-switches          #    0.488 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               607 page-faults               #    0.174 M/sec                  
-         5,791,106 cycles                    #    1.656 GHz                    
+               606 page-faults               #    0.148 M/sec                  
+         5,754,777 cycles                    #    1.404 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         5,918,623 instructions              #    1.02  insns per cycle        
-           616,737 branches                  #  176.404 M/sec                  
-             8,994 branch-misses             #    1.46% of all branches        
+         5,950,053 instructions              #    1.03  insns per cycle        
+           619,609 branches                  #  151.120 M/sec                  
+             8,991 branch-misses             #    1.45% of all branches        
 
-       0.007068075 seconds time elapsed
+       0.008176344 seconds time elapsed
 
 fail to allocate the memory at gen1DArray function in Util.c
 
  Performance counter stats for './out/CoinGame.openmp.enableVC.out 1000000':
 
-          3.292137 task-clock (msec)         #    0.481 CPUs utilized          
-                 2 context-switches          #    0.608 K/sec                  
+          3.054286 task-clock (msec)         #    0.461 CPUs utilized          
+                 1 context-switches          #    0.327 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               607 page-faults               #    0.184 M/sec                  
-         5,736,447 cycles                    #    1.742 GHz                    
+               606 page-faults               #    0.198 M/sec                  
+         5,776,006 cycles                    #    1.891 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         5,961,744 instructions              #    1.04  insns per cycle        
-           625,368 branches                  #  189.958 M/sec                  
-             9,012 branch-misses             #    1.44% of all branches        
+         5,941,040 instructions              #    1.03  insns per cycle        
+           617,395 branches                  #  202.141 M/sec                  
+             8,612 branch-misses             #    1.39% of all branches        
 
-       0.006847545 seconds time elapsed
+       0.006629845 seconds time elapsed
 
 fail to allocate the memory at gen1DArray function in Util.c
 
  Performance counter stats for './out/CoinGame.openmp.enableVC.out 1000000':
 
-          3.342237 task-clock (msec)         #    0.494 CPUs utilized          
-                 2 context-switches          #    0.598 K/sec                  
+          3.896677 task-clock (msec)         #    0.532 CPUs utilized          
+                 2 context-switches          #    0.513 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               607 page-faults               #    0.182 M/sec                  
-         5,828,266 cycles                    #    1.744 GHz                    
+             1,117 page-faults               #    0.287 M/sec                  
+         7,143,340 cycles                    #    1.833 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         5,917,421 instructions              #    1.02  insns per cycle        
-           614,286 branches                  #  183.795 M/sec                  
-             8,917 branch-misses             #    1.45% of all branches        
+         7,353,397 instructions              #    1.03  insns per cycle        
+           856,180 branches                  #  219.721 M/sec                  
+             9,450 branch-misses             #    1.10% of all branches        
 
-       0.006768580 seconds time elapsed
+       0.007324552 seconds time elapsed
 
 fail to allocate the memory at gen1DArray function in Util.c
 
  Performance counter stats for './out/CoinGame.openmp.enableVC.out 1000000':
 
-          3.217786 task-clock (msec)         #    0.494 CPUs utilized          
-                 2 context-switches          #    0.622 K/sec                  
+          3.817587 task-clock (msec)         #    0.517 CPUs utilized          
+                 1 context-switches          #    0.262 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               607 page-faults               #    0.189 M/sec                  
-         5,749,032 cycles                    #    1.787 GHz                    
+               606 page-faults               #    0.159 M/sec                  
+         5,699,768 cycles                    #    1.493 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         5,893,426 instructions              #    1.03  insns per cycle        
-           614,102 branches                  #  190.846 M/sec                  
-             8,909 branch-misses             #    1.45% of all branches        
+         5,925,227 instructions              #    1.04  insns per cycle        
+           618,636 branches                  #  162.049 M/sec                  
+             8,724 branch-misses             #    1.41% of all branches        
 
-       0.006513904 seconds time elapsed
+       0.007383428 seconds time elapsed
 
 fail to allocate the memory at gen1DArray function in Util.c
 
  Performance counter stats for './out/CoinGame.openmp.enableVC.out 1000000':
 
-          2.775900 task-clock (msec)         #    0.453 CPUs utilized          
-                 1 context-switches          #    0.360 K/sec                  
+          3.377550 task-clock (msec)         #    0.461 CPUs utilized          
+                 1 context-switches          #    0.296 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               607 page-faults               #    0.219 M/sec                  
-         5,802,253 cycles                    #    2.090 GHz                    
+               606 page-faults               #    0.179 M/sec                  
+         5,714,987 cycles                    #    1.692 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         5,916,574 instructions              #    1.02  insns per cycle        
-           614,063 branches                  #  221.212 M/sec                  
-             8,694 branch-misses             #    1.42% of all branches        
+         5,907,980 instructions              #    1.03  insns per cycle        
+           614,647 branches                  #  181.980 M/sec                  
+             8,529 branch-misses             #    1.39% of all branches        
 
-       0.006132110 seconds time elapsed
+       0.007330256 seconds time elapsed
 
 fail to allocate the memory at gen1DArray function in Util.c
 
  Performance counter stats for './out/CoinGame.openmp.enableVC.out 1000000':
 
-          4.589744 task-clock (msec)         #    0.559 CPUs utilized          
-                 2 context-switches          #    0.436 K/sec                  
+          3.619560 task-clock (msec)         #    0.498 CPUs utilized          
+                 2 context-switches          #    0.553 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               607 page-faults               #    0.132 M/sec                  
-         5,690,657 cycles                    #    1.240 GHz                    
+               606 page-faults               #    0.167 M/sec                  
+         5,707,570 cycles                    #    1.577 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         5,913,180 instructions              #    1.04  insns per cycle        
-           618,703 branches                  #  134.801 M/sec                  
-             8,914 branch-misses             #    1.44% of all branches        
+         5,926,644 instructions              #    1.04  insns per cycle        
+           616,131 branches                  #  170.223 M/sec                  
+             8,924 branch-misses             #    1.45% of all branches        
 
-       0.008216456 seconds time elapsed
+       0.007263427 seconds time elapsed
 
 fail to allocate the memory at gen1DArray function in Util.c
 
  Performance counter stats for './out/CoinGame.openmp.enableVC.out 1000000':
 
-          4.524150 task-clock (msec)         #    0.581 CPUs utilized          
-                 2 context-switches          #    0.442 K/sec                  
+          3.412242 task-clock (msec)         #    0.508 CPUs utilized          
+                 2 context-switches          #    0.586 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             1,118 page-faults               #    0.247 M/sec                  
-         7,080,609 cycles                    #    1.565 GHz                    
+               606 page-faults               #    0.178 M/sec                  
+         5,770,655 cycles                    #    1.691 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         7,328,253 instructions              #    1.03  insns per cycle        
-           852,625 branches                  #  188.461 M/sec                  
-             9,329 branch-misses             #    1.09% of all branches        
+         5,950,749 instructions              #    1.03  insns per cycle        
+           619,611 branches                  #  181.585 M/sec                  
+             8,824 branch-misses             #    1.42% of all branches        
 
-       0.007792198 seconds time elapsed
+       0.006722480 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -227,7 +227,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 800.000
+cpu MHz		: 1000.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

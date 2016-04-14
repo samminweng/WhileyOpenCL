@@ -2,171 +2,171 @@ Enable loop vectorization...Compile C code using gcc with 1 threads...fail to al
 
  Performance counter stats for './out/CoinGame.gcc.enableVC.out 1000000':
 
-          3.540558 task-clock (msec)         #    0.478 CPUs utilized          
-                 2 context-switches          #    0.565 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-             1,073 page-faults               #    0.303 M/sec                  
-         7,399,411 cycles                    #    2.090 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-         9,122,689 instructions              #    1.23  insns per cycle        
-         1,681,288 branches                  #  474.865 M/sec                  
-             8,081 branch-misses             #    0.48% of all branches        
-
-       0.007404896 seconds time elapsed
-
-fail to allocate the memory at gen1DArray function in Util.c
-
- Performance counter stats for './out/CoinGame.gcc.enableVC.out 1000000':
-
-          3.441906 task-clock (msec)         #    0.502 CPUs utilized          
-                 2 context-switches          #    0.581 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-             1,073 page-faults               #    0.312 M/sec                  
-         7,194,795 cycles                    #    2.090 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-         9,111,788 instructions              #    1.27  insns per cycle        
-         1,684,716 branches                  #  489.472 M/sec                  
-             7,758 branch-misses             #    0.46% of all branches        
-
-       0.006855711 seconds time elapsed
-
-fail to allocate the memory at gen1DArray function in Util.c
-
- Performance counter stats for './out/CoinGame.gcc.enableVC.out 1000000':
-
-          2.765101 task-clock (msec)         #    0.452 CPUs utilized          
-                 2 context-switches          #    0.723 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-               562 page-faults               #    0.203 M/sec                  
-         5,777,177 cycles                    #    2.089 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-         7,682,479 instructions              #    1.33  insns per cycle        
-         1,444,593 branches                  #  522.438 M/sec                  
-             7,233 branch-misses             #    0.50% of all branches        
-
-       0.006115427 seconds time elapsed
-
-fail to allocate the memory at gen1DArray function in Util.c
-
- Performance counter stats for './out/CoinGame.gcc.enableVC.out 1000000':
-
-          3.393698 task-clock (msec)         #    0.495 CPUs utilized          
-                 2 context-switches          #    0.589 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-             1,073 page-faults               #    0.316 M/sec                  
-         7,092,118 cycles                    #    2.090 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-         9,082,924 instructions              #    1.28  insns per cycle        
-         1,677,147 branches                  #  494.195 M/sec                  
-             7,524 branch-misses             #    0.45% of all branches        
-
-       0.006855292 seconds time elapsed
-
-fail to allocate the memory at gen1DArray function in Util.c
-
- Performance counter stats for './out/CoinGame.gcc.enableVC.out 1000000':
-
-          3.466217 task-clock (msec)         #    0.482 CPUs utilized          
-                 2 context-switches          #    0.577 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-             1,073 page-faults               #    0.310 M/sec                  
-         7,245,156 cycles                    #    2.090 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-         9,107,019 instructions              #    1.26  insns per cycle        
-         1,682,911 branches                  #  485.518 M/sec                  
-             7,654 branch-misses             #    0.45% of all branches        
-
-       0.007195635 seconds time elapsed
-
-fail to allocate the memory at gen1DArray function in Util.c
-
- Performance counter stats for './out/CoinGame.gcc.enableVC.out 1000000':
-
-          2.754173 task-clock (msec)         #    0.459 CPUs utilized          
-                 2 context-switches          #    0.726 K/sec                  
+          2.759321 task-clock (msec)         #    0.300 CPUs utilized          
+                 3 context-switches          #    0.001 M/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
                562 page-faults               #    0.204 M/sec                  
-         5,753,185 cycles                    #    2.089 GHz                    
+         6,313,226 cycles                    #    2.288 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         7,720,651 instructions              #    1.34  insns per cycle        
-         1,448,895 branches                  #  526.073 M/sec                  
-             7,255 branch-misses             #    0.50% of all branches        
+         7,721,207 instructions              #    1.22  insns per cycle        
+         1,452,917 branches                  #  526.549 M/sec                  
+             7,996 branch-misses             #    0.55% of all branches        
 
-       0.006002719 seconds time elapsed
+       0.009186601 seconds time elapsed
 
 fail to allocate the memory at gen1DArray function in Util.c
 
  Performance counter stats for './out/CoinGame.gcc.enableVC.out 1000000':
 
-          2.757823 task-clock (msec)         #    0.450 CPUs utilized          
-                 2 context-switches          #    0.725 K/sec                  
+          3.153109 task-clock (msec)         #    0.483 CPUs utilized          
+                 1 context-switches          #    0.317 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               561 page-faults               #    0.203 M/sec                  
-         5,760,724 cycles                    #    2.089 GHz                    
+             1,073 page-faults               #    0.340 M/sec                  
+         7,218,822 cycles                    #    2.289 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         7,696,093 instructions              #    1.34  insns per cycle        
-         1,448,410 branches                  #  525.200 M/sec                  
-             7,240 branch-misses             #    0.50% of all branches        
+         9,099,165 instructions              #    1.26  insns per cycle        
+         1,680,410 branches                  #  532.937 M/sec                  
+             7,541 branch-misses             #    0.45% of all branches        
 
-       0.006124113 seconds time elapsed
+       0.006527939 seconds time elapsed
 
 fail to allocate the memory at gen1DArray function in Util.c
 
  Performance counter stats for './out/CoinGame.gcc.enableVC.out 1000000':
 
-          3.419462 task-clock (msec)         #    0.499 CPUs utilized          
-                 2 context-switches          #    0.585 K/sec                  
+          4.703306 task-clock (msec)         #    0.568 CPUs utilized          
+                 2 context-switches          #    0.425 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             1,072 page-faults               #    0.313 M/sec                  
-         7,146,596 cycles                    #    2.090 GHz                    
+             1,072 page-faults               #    0.228 M/sec                  
+         7,515,361 cycles                    #    1.598 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         9,110,567 instructions              #    1.27  insns per cycle        
-         1,678,833 branches                  #  490.964 M/sec                  
-             7,611 branch-misses             #    0.45% of all branches        
+         9,113,271 instructions              #    1.21  insns per cycle        
+         1,678,700 branches                  #  356.919 M/sec                  
+             7,527 branch-misses             #    0.45% of all branches        
 
-       0.006849965 seconds time elapsed
+       0.008287365 seconds time elapsed
 
 fail to allocate the memory at gen1DArray function in Util.c
 
  Performance counter stats for './out/CoinGame.gcc.enableVC.out 1000000':
 
-          2.757040 task-clock (msec)         #    0.439 CPUs utilized          
-                 2 context-switches          #    0.725 K/sec                  
+          3.879068 task-clock (msec)         #    0.522 CPUs utilized          
+                 1 context-switches          #    0.258 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               562 page-faults               #    0.204 M/sec                  
-         5,758,634 cycles                    #    2.089 GHz                    
+               562 page-faults               #    0.145 M/sec                  
+         5,791,951 cycles                    #    1.493 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         7,694,001 instructions              #    1.34  insns per cycle        
-         1,448,502 branches                  #  525.383 M/sec                  
-             6,637 branch-misses             #    0.46% of all branches        
+         7,711,267 instructions              #    1.33  insns per cycle        
+         1,447,963 branches                  #  373.276 M/sec                  
+             7,167 branch-misses             #    0.49% of all branches        
 
-       0.006276682 seconds time elapsed
+       0.007435244 seconds time elapsed
 
 fail to allocate the memory at gen1DArray function in Util.c
 
  Performance counter stats for './out/CoinGame.gcc.enableVC.out 1000000':
 
-          2.734348 task-clock (msec)         #    0.468 CPUs utilized          
-                 2 context-switches          #    0.731 K/sec                  
+          2.987097 task-clock (msec)         #    0.454 CPUs utilized          
+                 1 context-switches          #    0.335 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               561 page-faults               #    0.205 M/sec                  
-         5,711,207 cycles                    #    2.089 GHz                    
+               562 page-faults               #    0.188 M/sec                  
+         5,648,687 cycles                    #    1.891 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         7,701,503 instructions              #    1.35  insns per cycle        
-         1,450,069 branches                  #  530.316 M/sec                  
-             7,338 branch-misses             #    0.51% of all branches        
+         7,692,383 instructions              #    1.36  insns per cycle        
+         1,446,290 branches                  #  484.179 M/sec                  
+             7,129 branch-misses             #    0.49% of all branches        
 
-       0.005848495 seconds time elapsed
+       0.006572518 seconds time elapsed
+
+fail to allocate the memory at gen1DArray function in Util.c
+
+ Performance counter stats for './out/CoinGame.gcc.enableVC.out 1000000':
+
+          3.817886 task-clock (msec)         #    0.519 CPUs utilized          
+                 2 context-switches          #    0.524 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+             1,073 page-faults               #    0.281 M/sec                  
+         6,985,310 cycles                    #    1.830 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+         9,078,594 instructions              #    1.30  insns per cycle        
+         1,676,260 branches                  #  439.054 M/sec                  
+             7,547 branch-misses             #    0.45% of all branches        
+
+       0.007350895 seconds time elapsed
+
+fail to allocate the memory at gen1DArray function in Util.c
+
+ Performance counter stats for './out/CoinGame.gcc.enableVC.out 1000000':
+
+          4.098098 task-clock (msec)         #    0.538 CPUs utilized          
+                 2 context-switches          #    0.488 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               562 page-faults               #    0.137 M/sec                  
+         6,115,441 cycles                    #    1.492 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+         7,729,442 instructions              #    1.26  insns per cycle        
+         1,450,047 branches                  #  353.834 M/sec                  
+             7,392 branch-misses             #    0.51% of all branches        
+
+       0.007612109 seconds time elapsed
+
+fail to allocate the memory at gen1DArray function in Util.c
+
+ Performance counter stats for './out/CoinGame.gcc.enableVC.out 1000000':
+
+          4.036755 task-clock (msec)         #    0.535 CPUs utilized          
+                 1 context-switches          #    0.248 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               562 page-faults               #    0.139 M/sec                  
+         6,028,958 cycles                    #    1.494 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+         7,722,381 instructions              #    1.28  insns per cycle        
+         1,449,129 branches                  #  358.984 M/sec                  
+             7,215 branch-misses             #    0.50% of all branches        
+
+       0.007550210 seconds time elapsed
+
+fail to allocate the memory at gen1DArray function in Util.c
+
+ Performance counter stats for './out/CoinGame.gcc.enableVC.out 1000000':
+
+          4.160330 task-clock (msec)         #    0.521 CPUs utilized          
+                 2 context-switches          #    0.481 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               562 page-faults               #    0.135 M/sec                  
+         5,795,591 cycles                    #    1.393 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+         7,713,724 instructions              #    1.33  insns per cycle        
+         1,449,352 branches                  #  348.374 M/sec                  
+             7,406 branch-misses             #    0.51% of all branches        
+
+       0.007986808 seconds time elapsed
+
+fail to allocate the memory at gen1DArray function in Util.c
+
+ Performance counter stats for './out/CoinGame.gcc.enableVC.out 1000000':
+
+          4.031478 task-clock (msec)         #    0.553 CPUs utilized          
+                 2 context-switches          #    0.496 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               562 page-faults               #    0.139 M/sec                  
+         5,615,151 cycles                    #    1.393 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+         7,714,232 instructions              #    1.37  insns per cycle        
+         1,448,489 branches                  #  359.295 M/sec                  
+             7,375 branch-misses             #    0.51% of all branches        
+
+       0.007292857 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -201,7 +201,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 2100.000
+cpu MHz		: 800.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -279,7 +279,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 800.000
+cpu MHz		: 1200.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -331,7 +331,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 1200.000
+cpu MHz		: 1400.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -357,7 +357,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 1500.000
+cpu MHz		: 800.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

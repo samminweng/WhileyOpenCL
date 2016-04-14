@@ -2,171 +2,171 @@ Enable loop vectorization...Compile C code using polly with 1 threads..../out/GC
 
  Performance counter stats for './out/GCD.polly.disableVC.out 100000':
 
-     108809.888039 task-clock (msec)         #    1.000 CPUs utilized          
-             9,777 context-switches          #    0.090 K/sec                  
-                 7 cpu-migrations            #    0.000 K/sec                  
-            34,817 page-faults               #    0.320 K/sec                  
-   420,154,602,743 cycles                    #    3.861 GHz                    
+     108227.360692 task-clock (msec)         #    1.000 CPUs utilized          
+             9,823 context-switches          #    0.091 K/sec                  
+                 5 cpu-migrations            #    0.000 K/sec                  
+            22,553 page-faults               #    0.208 K/sec                  
+   420,030,433,673 cycles                    #    3.881 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-   759,677,931,503 instructions              #    1.81  insns per cycle        
-   295,897,317,145 branches                  # 2719.397 M/sec                  
-     9,909,051,086 branch-misses             #    3.35% of all branches        
+   759,657,804,988 instructions              #    1.81  insns per cycle        
+   295,894,341,673 branches                  # 2734.007 M/sec                  
+     9,909,385,956 branch-misses             #    3.35% of all branches        
 
-     108.794569249 seconds time elapsed
+     108.212159099 seconds time elapsed
 
 ./out/GCD.polly.disableVC.out: Segmentation fault
 
  Performance counter stats for './out/GCD.polly.disableVC.out 100000':
 
-     108767.481351 task-clock (msec)         #    1.000 CPUs utilized          
-             9,715 context-switches          #    0.089 K/sec                  
+     108667.490722 task-clock (msec)         #    1.000 CPUs utilized          
+             9,892 context-switches          #    0.091 K/sec                  
                  2 cpu-migrations            #    0.000 K/sec                  
-            34,817 page-faults               #    0.320 K/sec                  
-   420,225,307,179 cycles                    #    3.864 GHz                    
+            22,553 page-faults               #    0.208 K/sec                  
+   420,087,977,037 cycles                    #    3.866 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-   759,671,251,197 instructions              #    1.81  insns per cycle        
-   295,896,136,875 branches                  # 2720.447 M/sec                  
-     9,910,589,882 branch-misses             #    3.35% of all branches        
+   759,642,001,421 instructions              #    1.81  insns per cycle        
+   295,891,439,117 branches                  # 2722.907 M/sec                  
+     9,909,852,824 branch-misses             #    3.35% of all branches        
 
-     108.753719565 seconds time elapsed
+     108.653372583 seconds time elapsed
 
 ./out/GCD.polly.disableVC.out: Segmentation fault
 
  Performance counter stats for './out/GCD.polly.disableVC.out 100000':
 
-     108791.021498 task-clock (msec)         #    1.000 CPUs utilized          
-             9,744 context-switches          #    0.090 K/sec                  
+     108495.852167 task-clock (msec)         #    1.000 CPUs utilized          
+             9,883 context-switches          #    0.091 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-            34,306 page-faults               #    0.315 K/sec                  
-   420,256,666,850 cycles                    #    3.863 GHz                    
+            22,041 page-faults               #    0.203 K/sec                  
+   420,028,373,605 cycles                    #    3.871 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-   759,669,741,778 instructions              #    1.81  insns per cycle        
-   295,895,878,815 branches                  # 2719.856 M/sec                  
-     9,908,750,775 branch-misses             #    3.35% of all branches        
+   759,630,529,183 instructions              #    1.81  insns per cycle        
+   295,889,389,163 branches                  # 2727.195 M/sec                  
+     9,910,949,893 branch-misses             #    3.35% of all branches        
 
-     108.775952106 seconds time elapsed
+     108.482010869 seconds time elapsed
 
 ./out/GCD.polly.disableVC.out: Segmentation fault
 
  Performance counter stats for './out/GCD.polly.disableVC.out 100000':
 
-     108496.124776 task-clock (msec)         #    1.000 CPUs utilized          
-             9,722 context-switches          #    0.090 K/sec                  
+     108422.231374 task-clock (msec)         #    1.000 CPUs utilized          
+             9,873 context-switches          #    0.091 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-            34,817 page-faults               #    0.321 K/sec                  
-   420,098,957,849 cycles                    #    3.872 GHz                    
+            22,553 page-faults               #    0.208 K/sec                  
+   420,244,160,483 cycles                    #    3.876 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-   759,673,616,629 instructions              #    1.81  insns per cycle        
-   295,896,562,925 branches                  # 2727.255 M/sec                  
-     9,912,687,605 branch-misses             #    3.35% of all branches        
+   759,641,862,334 instructions              #    1.81  insns per cycle        
+   295,891,407,915 branches                  # 2729.066 M/sec                  
+     9,910,119,216 branch-misses             #    3.35% of all branches        
 
-     108.481861191 seconds time elapsed
+     108.408001592 seconds time elapsed
 
 ./out/GCD.polly.disableVC.out: Segmentation fault
 
  Performance counter stats for './out/GCD.polly.disableVC.out 100000':
 
-     108262.473643 task-clock (msec)         #    1.000 CPUs utilized          
-             9,689 context-switches          #    0.089 K/sec                  
+     108286.543318 task-clock (msec)         #    1.000 CPUs utilized          
+             9,866 context-switches          #    0.091 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-            34,306 page-faults               #    0.317 K/sec                  
-   420,246,572,971 cycles                    #    3.882 GHz                    
+            22,553 page-faults               #    0.208 K/sec                  
+   420,185,782,382 cycles                    #    3.880 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-   759,671,314,772 instructions              #    1.81  insns per cycle        
-   295,896,149,428 branches                  # 2733.137 M/sec                  
-     9,915,273,200 branch-misses             #    3.35% of all branches        
+   759,631,764,505 instructions              #    1.81  insns per cycle        
+   295,889,595,019 branches                  # 2732.469 M/sec                  
+     9,911,341,290 branch-misses             #    3.35% of all branches        
 
-     108.247257496 seconds time elapsed
+     108.272192709 seconds time elapsed
 
 ./out/GCD.polly.disableVC.out: Segmentation fault
 
  Performance counter stats for './out/GCD.polly.disableVC.out 100000':
 
-     108362.362085 task-clock (msec)         #    1.000 CPUs utilized          
-             9,718 context-switches          #    0.090 K/sec                  
+     108242.285380 task-clock (msec)         #    1.000 CPUs utilized          
+             9,878 context-switches          #    0.091 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-            34,817 page-faults               #    0.321 K/sec                  
-   420,131,034,120 cycles                    #    3.877 GHz                    
+            22,553 page-faults               #    0.208 K/sec                  
+   420,148,603,105 cycles                    #    3.882 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-   759,666,238,562 instructions              #    1.81  insns per cycle        
-   295,895,242,036 branches                  # 2730.609 M/sec                  
-     9,908,635,100 branch-misses             #    3.35% of all branches        
+   759,639,691,783 instructions              #    1.81  insns per cycle        
+   295,890,979,308 branches                  # 2733.599 M/sec                  
+     9,910,263,655 branch-misses             #    3.35% of all branches        
 
-     108.347404685 seconds time elapsed
+     108.227843493 seconds time elapsed
 
 ./out/GCD.polly.disableVC.out: Segmentation fault
 
  Performance counter stats for './out/GCD.polly.disableVC.out 100000':
 
-     108234.680612 task-clock (msec)         #    1.000 CPUs utilized          
-             9,717 context-switches          #    0.090 K/sec                  
+     108210.694922 task-clock (msec)         #    1.000 CPUs utilized          
+             9,804 context-switches          #    0.091 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-            34,817 page-faults               #    0.322 K/sec                  
-   420,015,365,225 cycles                    #    3.881 GHz                    
+            22,042 page-faults               #    0.204 K/sec                  
+   420,141,838,507 cycles                    #    3.883 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-   759,670,674,451 instructions              #    1.81  insns per cycle        
-   295,896,032,731 branches                  # 2733.838 M/sec                  
-     9,909,477,560 branch-misses             #    3.35% of all branches        
+   759,630,061,135 instructions              #    1.81  insns per cycle        
+   295,889,324,768 branches                  # 2734.382 M/sec                  
+     9,911,050,096 branch-misses             #    3.35% of all branches        
 
-     108.223922565 seconds time elapsed
+     108.195261483 seconds time elapsed
 
 ./out/GCD.polly.disableVC.out: Segmentation fault
 
  Performance counter stats for './out/GCD.polly.disableVC.out 100000':
 
-     108397.416210 task-clock (msec)         #    1.000 CPUs utilized          
-             9,651 context-switches          #    0.089 K/sec                  
+     108211.365173 task-clock (msec)         #    1.000 CPUs utilized          
+             9,809 context-switches          #    0.091 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-            34,306 page-faults               #    0.316 K/sec                  
-   420,462,602,910 cycles                    #    3.879 GHz                    
+            11,311 page-faults               #    0.105 K/sec                  
+   420,314,048,249 cycles                    #    3.884 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-   759,669,121,262 instructions              #    1.81  insns per cycle        
-   295,895,755,588 branches                  # 2729.731 M/sec                  
-     9,927,983,442 branch-misses             #    3.36% of all branches        
+   759,757,584,762 instructions              #    1.81  insns per cycle        
+   295,912,027,424 branches                  # 2734.574 M/sec                  
+     9,910,670,903 branch-misses             #    3.35% of all branches        
 
-     108.382037307 seconds time elapsed
+     108.198644466 seconds time elapsed
 
 ./out/GCD.polly.disableVC.out: Segmentation fault
 
  Performance counter stats for './out/GCD.polly.disableVC.out 100000':
 
-     108327.259694 task-clock (msec)         #    1.000 CPUs utilized          
-             9,678 context-switches          #    0.089 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-            34,817 page-faults               #    0.321 K/sec                  
-   420,507,671,642 cycles                    #    3.882 GHz                    
+     108289.796674 task-clock (msec)         #    1.000 CPUs utilized          
+             9,842 context-switches          #    0.091 K/sec                  
+                 1 cpu-migrations            #    0.000 K/sec                  
+            10,800 page-faults               #    0.100 K/sec                  
+   420,284,817,097 cycles                    #    3.881 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-   759,670,541,998 instructions              #    1.81  insns per cycle        
-   295,896,011,180 branches                  # 2731.501 M/sec                  
-     9,928,076,849 branch-misses             #    3.36% of all branches        
+   759,614,378,020 instructions              #    1.81  insns per cycle        
+   295,887,036,075 branches                  # 2732.363 M/sec                  
+     9,920,491,013 branch-misses             #    3.35% of all branches        
 
-     108.311348011 seconds time elapsed
+     108.279060160 seconds time elapsed
 
 ./out/GCD.polly.disableVC.out: Segmentation fault
 
  Performance counter stats for './out/GCD.polly.disableVC.out 100000':
 
-     108244.840593 task-clock (msec)         #    1.000 CPUs utilized          
-             9,595 context-switches          #    0.089 K/sec                  
+     108177.884963 task-clock (msec)         #    1.000 CPUs utilized          
+             9,818 context-switches          #    0.091 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-            34,306 page-faults               #    0.317 K/sec                  
-   420,216,325,379 cycles                    #    3.882 GHz                    
+            11,311 page-faults               #    0.105 K/sec                  
+   420,046,349,516 cycles                    #    3.883 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-   759,668,793,577 instructions              #    1.81  insns per cycle        
-   295,895,693,976 branches                  # 2733.578 M/sec                  
-     9,915,935,909 branch-misses             #    3.35% of all branches        
+   759,607,737,858 instructions              #    1.81  insns per cycle        
+   295,885,773,311 branches                  # 2735.178 M/sec                  
+     9,911,763,670 branch-misses             #    3.35% of all branches        
 
-     108.229440227 seconds time elapsed
+     108.163227557 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -227,7 +227,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 800.000
+cpu MHz		: 1000.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -253,7 +253,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 2300.000
+cpu MHz		: 800.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -357,7 +357,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 3401.000
+cpu MHz		: 800.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

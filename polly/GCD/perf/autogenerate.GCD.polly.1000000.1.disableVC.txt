@@ -2,171 +2,171 @@ Enable loop vectorization...Compile C code using polly with 1 threads...fail to 
 
  Performance counter stats for './out/GCD.polly.disableVC.out 1000000':
 
-          7.254080 task-clock (msec)         #    0.478 CPUs utilized          
-                 4 context-switches          #    0.551 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-               562 page-faults               #    0.077 M/sec                  
-         5,795,662 cycles                    #    0.799 GHz                    
+          2.902696 task-clock (msec)         #    0.428 CPUs utilized          
+                 3 context-switches          #    0.001 M/sec                  
+                 1 cpu-migrations            #    0.345 K/sec                  
+               562 page-faults               #    0.194 M/sec                  
+         6,042,395 cycles                    #    2.082 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         5,987,830 instructions              #    1.03  insns per cycle        
-           702,235 branches                  #   96.806 M/sec                  
-             7,947 branch-misses             #    1.13% of all branches        
+         6,004,105 instructions              #    0.99  insns per cycle        
+           703,743 branches                  #  242.445 M/sec                  
+             7,964 branch-misses             #    1.13% of all branches        
 
-       0.015161240 seconds time elapsed
+       0.006782688 seconds time elapsed
 
 fail to allocate the memory at gen1DArray function in Util.c
 
  Performance counter stats for './out/GCD.polly.disableVC.out 1000000':
 
-          4.121697 task-clock (msec)         #    0.440 CPUs utilized          
-                 2 context-switches          #    0.485 K/sec                  
+          7.083335 task-clock (msec)         #    0.655 CPUs utilized          
+                 2 context-switches          #    0.282 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               562 page-faults               #    0.136 M/sec                  
-         5,741,831 cycles                    #    1.393 GHz                    
+               562 page-faults               #    0.079 M/sec                  
+         5,637,400 cycles                    #    0.796 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         5,967,046 instructions              #    1.04  insns per cycle        
-           702,226 branches                  #  170.373 M/sec                  
-             7,487 branch-misses             #    1.07% of all branches        
+         5,971,471 instructions              #    1.06  insns per cycle        
+           701,970 branches                  #   99.102 M/sec                  
+             7,428 branch-misses             #    1.06% of all branches        
 
-       0.009371281 seconds time elapsed
+       0.010820877 seconds time elapsed
 
 fail to allocate the memory at gen1DArray function in Util.c
 
  Performance counter stats for './out/GCD.polly.disableVC.out 1000000':
 
-          4.160685 task-clock (msec)         #    0.546 CPUs utilized          
-                 1 context-switches          #    0.240 K/sec                  
+          2.558115 task-clock (msec)         #    0.407 CPUs utilized          
+                 1 context-switches          #    0.391 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             1,073 page-faults               #    0.258 M/sec                  
-         7,042,485 cycles                    #    1.693 GHz                    
+               562 page-faults               #    0.220 M/sec                  
+         5,855,437 cycles                    #    2.289 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         7,348,482 instructions              #    1.04  insns per cycle        
-           930,988 branches                  #  223.758 M/sec                  
-             7,456 branch-misses             #    0.80% of all branches        
+         5,942,627 instructions              #    1.01  insns per cycle        
+           697,602 branches                  #  272.702 M/sec                  
+             7,043 branch-misses             #    1.01% of all branches        
 
-       0.007626440 seconds time elapsed
+       0.006286999 seconds time elapsed
 
 fail to allocate the memory at gen1DArray function in Util.c
 
  Performance counter stats for './out/GCD.polly.disableVC.out 1000000':
 
-          3.326349 task-clock (msec)         #    0.495 CPUs utilized          
-                 2 context-switches          #    0.601 K/sec                  
+          3.745637 task-clock (msec)         #    0.496 CPUs utilized          
+                 1 context-switches          #    0.267 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               562 page-faults               #    0.169 M/sec                  
-         5,768,247 cycles                    #    1.734 GHz                    
+             1,073 page-faults               #    0.286 M/sec                  
+         7,086,506 cycles                    #    1.892 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         5,969,798 instructions              #    1.03  insns per cycle        
-           698,761 branches                  #  210.068 M/sec                  
-             7,301 branch-misses             #    1.04% of all branches        
+         7,330,965 instructions              #    1.03  insns per cycle        
+           926,682 branches                  #  247.403 M/sec                  
+             7,485 branch-misses             #    0.81% of all branches        
 
-       0.006726588 seconds time elapsed
+       0.007555520 seconds time elapsed
 
 fail to allocate the memory at gen1DArray function in Util.c
 
  Performance counter stats for './out/GCD.polly.disableVC.out 1000000':
 
-          3.176136 task-clock (msec)         #    0.485 CPUs utilized          
-                 2 context-switches          #    0.630 K/sec                  
+          3.256966 task-clock (msec)         #    0.452 CPUs utilized          
+                 2 context-switches          #    0.614 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               562 page-faults               #    0.177 M/sec                  
-         5,732,649 cycles                    #    1.805 GHz                    
+               561 page-faults               #    0.172 M/sec                  
+         5,706,366 cycles                    #    1.752 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         5,960,315 instructions              #    1.04  insns per cycle        
-           696,586 branches                  #  219.319 M/sec                  
-             7,316 branch-misses             #    1.05% of all branches        
+         5,970,266 instructions              #    1.05  insns per cycle        
+           698,455 branches                  #  214.450 M/sec                  
+             7,373 branch-misses             #    1.06% of all branches        
 
-       0.006544278 seconds time elapsed
+       0.007211679 seconds time elapsed
 
 fail to allocate the memory at gen1DArray function in Util.c
 
  Performance counter stats for './out/GCD.polly.disableVC.out 1000000':
 
-          3.403273 task-clock (msec)         #    0.520 CPUs utilized          
-                 1 context-switches          #    0.294 K/sec                  
+          3.389357 task-clock (msec)         #    0.474 CPUs utilized          
+                 2 context-switches          #    0.590 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               561 page-faults               #    0.165 M/sec                  
-         5,758,847 cycles                    #    1.692 GHz                    
+               562 page-faults               #    0.166 M/sec                  
+         5,732,591 cycles                    #    1.691 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         5,965,981 instructions              #    1.04  insns per cycle        
-           697,548 branches                  #  204.964 M/sec                  
-             7,055 branch-misses             #    1.01% of all branches        
+         5,967,177 instructions              #    1.04  insns per cycle        
+           698,261 branches                  #  206.016 M/sec                  
+             7,277 branch-misses             #    1.04% of all branches        
 
-       0.006540731 seconds time elapsed
+       0.007144676 seconds time elapsed
 
 fail to allocate the memory at gen1DArray function in Util.c
 
  Performance counter stats for './out/GCD.polly.disableVC.out 1000000':
 
-          3.412918 task-clock (msec)         #    0.508 CPUs utilized          
-                 2 context-switches          #    0.586 K/sec                  
+          4.312769 task-clock (msec)         #    0.558 CPUs utilized          
+                 2 context-switches          #    0.464 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               562 page-faults               #    0.165 M/sec                  
-         5,771,494 cycles                    #    1.691 GHz                    
+             1,073 page-faults               #    0.249 M/sec                  
+         6,991,749 cycles                    #    1.621 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         5,949,206 instructions              #    1.03  insns per cycle        
-           698,537 branches                  #  204.674 M/sec                  
-             7,310 branch-misses             #    1.05% of all branches        
+         7,365,680 instructions              #    1.05  insns per cycle        
+           933,300 branches                  #  216.404 M/sec                  
+             7,733 branch-misses             #    0.83% of all branches        
 
-       0.006724855 seconds time elapsed
+       0.007728209 seconds time elapsed
 
 fail to allocate the memory at gen1DArray function in Util.c
 
  Performance counter stats for './out/GCD.polly.disableVC.out 1000000':
 
-          3.370481 task-clock (msec)         #    0.462 CPUs utilized          
-                 1 context-switches          #    0.297 K/sec                  
+          3.617740 task-clock (msec)         #    0.494 CPUs utilized          
+                 2 context-switches          #    0.553 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               562 page-faults               #    0.167 M/sec                  
-         5,703,114 cycles                    #    1.692 GHz                    
+               562 page-faults               #    0.155 M/sec                  
+         5,752,574 cycles                    #    1.590 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         5,966,772 instructions              #    1.05  insns per cycle        
-           698,121 branches                  #  207.128 M/sec                  
-             7,172 branch-misses             #    1.03% of all branches        
+         5,976,223 instructions              #    1.04  insns per cycle        
+           699,836 branches                  #  193.446 M/sec                  
+             7,390 branch-misses             #    1.06% of all branches        
 
-       0.007299973 seconds time elapsed
+       0.007316505 seconds time elapsed
 
 fail to allocate the memory at gen1DArray function in Util.c
 
  Performance counter stats for './out/GCD.polly.disableVC.out 1000000':
 
-          3.309621 task-clock (msec)         #    0.495 CPUs utilized          
-                 2 context-switches          #    0.604 K/sec                  
+          4.052182 task-clock (msec)         #    0.535 CPUs utilized          
+                 2 context-switches          #    0.494 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               562 page-faults               #    0.170 M/sec                  
-         5,785,472 cycles                    #    1.748 GHz                    
+             1,073 page-faults               #    0.265 M/sec                  
+         7,080,619 cycles                    #    1.747 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         5,949,819 instructions              #    1.03  insns per cycle        
-           697,595 branches                  #  210.778 M/sec                  
-             7,159 branch-misses             #    1.03% of all branches        
+         7,368,413 instructions              #    1.04  insns per cycle        
+           934,653 branches                  #  230.654 M/sec                  
+             7,782 branch-misses             #    0.83% of all branches        
 
-       0.006679806 seconds time elapsed
+       0.007575354 seconds time elapsed
 
 fail to allocate the memory at gen1DArray function in Util.c
 
  Performance counter stats for './out/GCD.polly.disableVC.out 1000000':
 
-          3.530577 task-clock (msec)         #    0.503 CPUs utilized          
-                 2 context-switches          #    0.566 K/sec                  
+          3.630997 task-clock (msec)         #    0.511 CPUs utilized          
+                 2 context-switches          #    0.551 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               562 page-faults               #    0.159 M/sec                  
-         5,649,460 cycles                    #    1.600 GHz                    
+               562 page-faults               #    0.155 M/sec                  
+         5,659,159 cycles                    #    1.559 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         5,952,216 instructions              #    1.05  insns per cycle        
-           698,867 branches                  #  197.947 M/sec                  
-             7,311 branch-misses             #    1.05% of all branches        
+         5,945,189 instructions              #    1.05  insns per cycle        
+           699,189 branches                  #  192.561 M/sec                  
+             7,368 branch-misses             #    1.05% of all branches        
 
-       0.007025038 seconds time elapsed
+       0.007100729 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -331,7 +331,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 1200.000
+cpu MHz		: 1400.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

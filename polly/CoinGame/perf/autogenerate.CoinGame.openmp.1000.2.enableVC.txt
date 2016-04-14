@@ -1,182 +1,172 @@
 Enable loop vectorization...Compile C code using openmp with 2 threads...The total amount of money (maximum) Alice gets is 250000
-The total amount of money (maximum) Bob gets is 249500
 
  Performance counter stats for './out/CoinGame.openmp.enableVC.out 1000':
 
-          5.433590 task-clock (msec)         #    0.453 CPUs utilized          
-                 3 context-switches          #    0.552 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-               615 page-faults               #    0.113 M/sec                  
-        12,443,666 cycles                    #    2.290 GHz                    
+          9.127378 task-clock (msec)         #    0.662 CPUs utilized          
+                 4 context-switches          #    0.438 K/sec                  
+                 1 cpu-migrations            #    0.110 K/sec                  
+             1,125 page-faults               #    0.123 M/sec                  
+        13,635,431 cycles                    #    1.494 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-        31,549,382 instructions              #    2.54  insns per cycle        
-         4,513,468 branches                  #  830.660 M/sec                  
-            10,637 branch-misses             #    0.24% of all branches        
+        32,932,874 instructions              #    2.42  insns per cycle        
+         4,737,403 branches                  #  519.032 M/sec                  
+            11,180 branch-misses             #    0.24% of all branches        
 
-       0.012005304 seconds time elapsed
+       0.013790771 seconds time elapsed
 
 The total amount of money (maximum) Alice gets is 250000
-The total amount of money (maximum) Bob gets is 249500
 
  Performance counter stats for './out/CoinGame.openmp.enableVC.out 1000':
 
-          6.393766 task-clock (msec)         #    0.614 CPUs utilized          
-                 2 context-switches          #    0.313 K/sec                  
+          4.856988 task-clock (msec)         #    0.338 CPUs utilized          
+                 2 context-switches          #    0.412 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               615 page-faults               #    0.096 M/sec                  
-        12,101,645 cycles                    #    1.893 GHz                    
+               614 page-faults               #    0.126 M/sec                  
+        12,078,639 cycles                    #    2.487 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-        31,509,292 instructions              #    2.60  insns per cycle        
-         4,504,718 branches                  #  704.548 M/sec                  
-             9,950 branch-misses             #    0.22% of all branches        
+        31,491,885 instructions              #    2.61  insns per cycle        
+         4,500,607 branches                  #  926.625 M/sec                  
+             9,770 branch-misses             #    0.22% of all branches        
 
-       0.010414468 seconds time elapsed
+       0.014353153 seconds time elapsed
 
 The total amount of money (maximum) Alice gets is 250000
-The total amount of money (maximum) Bob gets is 249500
 
  Performance counter stats for './out/CoinGame.openmp.enableVC.out 1000':
 
-          5.833514 task-clock (msec)         #    0.241 CPUs utilized          
-                 2 context-switches          #    0.343 K/sec                  
+          5.431625 task-clock (msec)         #    0.533 CPUs utilized          
+                 2 context-switches          #    0.368 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               615 page-faults               #    0.105 M/sec                  
-        12,215,582 cycles                    #    2.094 GHz                    
+               614 page-faults               #    0.113 M/sec                  
+        12,042,040 cycles                    #    2.217 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-        31,468,005 instructions              #    2.58  insns per cycle        
-         4,496,497 branches                  #  770.804 M/sec                  
-             9,907 branch-misses             #    0.22% of all branches        
+        31,450,386 instructions              #    2.61  insns per cycle        
+         4,493,877 branches                  #  827.354 M/sec                  
+             9,714 branch-misses             #    0.22% of all branches        
 
-       0.024212110 seconds time elapsed
+       0.010187992 seconds time elapsed
 
 The total amount of money (maximum) Alice gets is 250000
-The total amount of money (maximum) Bob gets is 249500
 
  Performance counter stats for './out/CoinGame.openmp.enableVC.out 1000':
 
-          7.139192 task-clock (msec)         #    0.654 CPUs utilized          
-                 3 context-switches          #    0.420 K/sec                  
+          6.070608 task-clock (msec)         #    0.607 CPUs utilized          
+                 2 context-switches          #    0.329 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             1,126 page-faults               #    0.158 M/sec                  
-        13,518,697 cycles                    #    1.894 GHz                    
+               614 page-faults               #    0.101 M/sec                  
+        11,890,091 cycles                    #    1.959 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-        32,911,008 instructions              #    2.43  insns per cycle        
-         4,738,218 branches                  #  663.691 M/sec                  
-            10,282 branch-misses             #    0.22% of all branches        
+        31,482,115 instructions              #    2.65  insns per cycle        
+         4,499,007 branches                  #  741.113 M/sec                  
+             9,784 branch-misses             #    0.22% of all branches        
 
-       0.010913584 seconds time elapsed
+       0.009999563 seconds time elapsed
 
 The total amount of money (maximum) Alice gets is 250000
-The total amount of money (maximum) Bob gets is 249500
 
  Performance counter stats for './out/CoinGame.openmp.enableVC.out 1000':
 
-          6.747657 task-clock (msec)         #    0.606 CPUs utilized          
-                 3 context-switches          #    0.445 K/sec                  
+          6.093945 task-clock (msec)         #    0.598 CPUs utilized          
+                 2 context-switches          #    0.328 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             1,126 page-faults               #    0.167 M/sec                  
-        13,552,414 cycles                    #    2.008 GHz                    
+               614 page-faults               #    0.101 M/sec                  
+        11,838,746 cycles                    #    1.943 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-        32,913,296 instructions              #    2.43  insns per cycle        
-         4,733,671 branches                  #  701.528 M/sec                  
-            10,282 branch-misses             #    0.22% of all branches        
+        31,533,920 instructions              #    2.66  insns per cycle        
+         4,508,543 branches                  #  739.840 M/sec                  
+            10,000 branch-misses             #    0.22% of all branches        
 
-       0.011138447 seconds time elapsed
+       0.010193541 seconds time elapsed
 
 The total amount of money (maximum) Alice gets is 250000
-The total amount of money (maximum) Bob gets is 249500
 
  Performance counter stats for './out/CoinGame.openmp.enableVC.out 1000':
 
-          4.467971 task-clock (msec)         #    0.544 CPUs utilized          
-                 3 context-switches          #    0.671 K/sec                  
+          6.128909 task-clock (msec)         #    0.597 CPUs utilized          
+                 2 context-switches          #    0.326 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               615 page-faults               #    0.138 M/sec                  
-        12,349,206 cycles                    #    2.764 GHz                    
+               614 page-faults               #    0.100 M/sec                  
+        12,065,823 cycles                    #    1.969 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-        31,472,289 instructions              #    2.55  insns per cycle        
-         4,499,283 branches                  # 1007.008 M/sec                  
-            10,063 branch-misses             #    0.22% of all branches        
+        31,471,491 instructions              #    2.61  insns per cycle        
+         4,495,607 branches                  #  733.509 M/sec                  
+             9,752 branch-misses             #    0.22% of all branches        
 
-       0.008211813 seconds time elapsed
+       0.010259946 seconds time elapsed
 
 The total amount of money (maximum) Alice gets is 250000
-The total amount of money (maximum) Bob gets is 249500
 
  Performance counter stats for './out/CoinGame.openmp.enableVC.out 1000':
 
-          7.166849 task-clock (msec)         #    0.650 CPUs utilized          
-                 3 context-switches          #    0.419 K/sec                  
+          6.877760 task-clock (msec)         #    0.640 CPUs utilized          
+                 2 context-switches          #    0.291 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             1,126 page-faults               #    0.157 M/sec                  
-        13,573,734 cycles                    #    1.894 GHz                    
+             1,125 page-faults               #    0.164 M/sec                  
+        13,684,947 cycles                    #    1.990 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-        32,914,162 instructions              #    2.42  insns per cycle        
-         4,733,750 branches                  #  660.506 M/sec                  
-            10,431 branch-misses             #    0.22% of all branches        
+        32,885,555 instructions              #    2.40  insns per cycle        
+         4,733,216 branches                  #  688.192 M/sec                  
+            10,167 branch-misses             #    0.21% of all branches        
 
-       0.011018585 seconds time elapsed
+       0.010747291 seconds time elapsed
 
 The total amount of money (maximum) Alice gets is 250000
-The total amount of money (maximum) Bob gets is 249500
 
  Performance counter stats for './out/CoinGame.openmp.enableVC.out 1000':
 
-          6.399942 task-clock (msec)         #    0.502 CPUs utilized          
-                 3 context-switches          #    0.469 K/sec                  
+          6.299275 task-clock (msec)         #    0.581 CPUs utilized          
+                 2 context-switches          #    0.317 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               615 page-faults               #    0.096 M/sec                  
-        12,138,577 cycles                    #    1.897 GHz                    
+               614 page-faults               #    0.097 M/sec                  
+        11,922,415 cycles                    #    1.893 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-        31,499,269 instructions              #    2.59  insns per cycle        
-         4,502,316 branches                  #  703.493 M/sec                  
-            10,146 branch-misses             #    0.23% of all branches        
+        31,499,605 instructions              #    2.64  insns per cycle        
+         4,500,193 branches                  #  714.399 M/sec                  
+             9,788 branch-misses             #    0.22% of all branches        
 
-       0.012760053 seconds time elapsed
+       0.010845171 seconds time elapsed
 
 The total amount of money (maximum) Alice gets is 250000
-The total amount of money (maximum) Bob gets is 249500
 
  Performance counter stats for './out/CoinGame.openmp.enableVC.out 1000':
 
-          4.519836 task-clock (msec)         #    0.550 CPUs utilized          
-                 2 context-switches          #    0.442 K/sec                  
+          6.327606 task-clock (msec)         #    0.608 CPUs utilized          
+                 2 context-switches          #    0.316 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             1,125 page-faults               #    0.249 M/sec                  
-        13,799,977 cycles                    #    3.053 GHz                    
+               614 page-faults               #    0.097 M/sec                  
+        12,003,038 cycles                    #    1.897 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-        32,897,944 instructions              #    2.38  insns per cycle        
-         4,735,750 branches                  # 1047.770 M/sec                  
-             9,678 branch-misses             #    0.20% of all branches        
+        31,500,737 instructions              #    2.62  insns per cycle        
+         4,501,718 branches                  #  711.441 M/sec                  
+            10,002 branch-misses             #    0.22% of all branches        
 
-       0.008220349 seconds time elapsed
+       0.010405842 seconds time elapsed
 
 The total amount of money (maximum) Alice gets is 250000
-The total amount of money (maximum) Bob gets is 249500
 
  Performance counter stats for './out/CoinGame.openmp.enableVC.out 1000':
 
-          6.428732 task-clock (msec)         #    0.647 CPUs utilized          
-                 2 context-switches          #    0.311 K/sec                  
+          5.945605 task-clock (msec)         #    0.626 CPUs utilized          
+                 2 context-switches          #    0.336 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               615 page-faults               #    0.096 M/sec                  
-        12,175,906 cycles                    #    1.894 GHz                    
+               614 page-faults               #    0.103 M/sec                  
+        11,858,639 cycles                    #    1.995 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-        31,500,545 instructions              #    2.59  insns per cycle        
-         4,500,940 branches                  #  700.129 M/sec                  
-             9,742 branch-misses             #    0.22% of all branches        
+        31,482,339 instructions              #    2.65  insns per cycle        
+         4,499,153 branches                  #  756.719 M/sec                  
+             9,751 branch-misses             #    0.22% of all branches        
 
-       0.009934637 seconds time elapsed
+       0.009492600 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -237,7 +227,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 1900.000
+cpu MHz		: 800.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -367,7 +357,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 2700.000
+cpu MHz		: 2100.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

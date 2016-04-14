@@ -2,171 +2,171 @@ Enable loop vectorization...Compile C code using openmp with 2 threads..../out/C
 
  Performance counter stats for './out/CoinGame.openmp.disableVC.out 100000':
 
-        970.819305 task-clock (msec)         #    0.999 CPUs utilized          
-                94 context-switches          #    0.097 K/sec                  
+        956.869752 task-clock (msec)         #    0.998 CPUs utilized          
+                91 context-switches          #    0.095 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+            11,867 page-faults               #    0.012 M/sec                  
+     3,672,644,497 cycles                    #    3.838 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+     1,497,326,690 instructions              #    0.41  insns per cycle        
+       219,642,526 branches                  #  229.543 M/sec                  
+            63,225 branch-misses             #    0.03% of all branches        
+
+       0.958535880 seconds time elapsed
+
+./out/CoinGame.openmp.disableVC.out: Segmentation fault
+
+ Performance counter stats for './out/CoinGame.openmp.disableVC.out 100000':
+
+        964.234252 task-clock (msec)         #    0.999 CPUs utilized          
+                92 context-switches          #    0.095 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+            11,867 page-faults               #    0.012 M/sec                  
+     3,667,106,235 cycles                    #    3.803 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+     1,520,613,118 instructions              #    0.41  insns per cycle        
+       223,683,940 branches                  #  231.981 M/sec                  
+            79,380 branch-misses             #    0.04% of all branches        
+
+       0.965077605 seconds time elapsed
+
+./out/CoinGame.openmp.disableVC.out: Segmentation fault
+
+ Performance counter stats for './out/CoinGame.openmp.disableVC.out 100000':
+
+        944.187564 task-clock (msec)         #    0.999 CPUs utilized          
+                91 context-switches          #    0.096 K/sec                  
                  1 cpu-migrations            #    0.001 K/sec                  
-            35,373 page-faults               #    0.036 M/sec                  
-     3,734,396,653 cycles                    #    3.847 GHz                    
+            11,356 page-faults               #    0.012 M/sec                  
+     3,571,890,317 cycles                    #    3.783 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     1,562,692,191 instructions              #    0.42  insns per cycle        
-       230,424,369 branches                  #  237.350 M/sec                  
-            83,261 branch-misses             #    0.04% of all branches        
+     1,495,735,172 instructions              #    0.42  insns per cycle        
+       219,382,292 branches                  #  232.350 M/sec                  
+            62,762 branch-misses             #    0.03% of all branches        
 
-       0.972250028 seconds time elapsed
+       0.945221249 seconds time elapsed
 
 ./out/CoinGame.openmp.disableVC.out: Segmentation fault
 
  Performance counter stats for './out/CoinGame.openmp.disableVC.out 100000':
 
-        972.573641 task-clock (msec)         #    0.999 CPUs utilized          
-                94 context-switches          #    0.097 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-            35,884 page-faults               #    0.037 M/sec                  
-     3,750,881,348 cycles                    #    3.857 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-     1,568,797,553 instructions              #    0.42  insns per cycle        
-       231,492,513 branches                  #  238.021 M/sec                  
-            89,755 branch-misses             #    0.04% of all branches        
-
-       0.973444835 seconds time elapsed
-
-./out/CoinGame.openmp.disableVC.out: Segmentation fault
-
- Performance counter stats for './out/CoinGame.openmp.disableVC.out 100000':
-
-        988.048825 task-clock (msec)         #    0.999 CPUs utilized          
-                94 context-switches          #    0.095 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-            35,884 page-faults               #    0.036 M/sec                  
-     3,741,648,224 cycles                    #    3.787 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-     1,568,746,221 instructions              #    0.42  insns per cycle        
-       231,480,065 branches                  #  234.280 M/sec                  
-           124,117 branch-misses             #    0.05% of all branches        
-
-       0.989043832 seconds time elapsed
-
-./out/CoinGame.openmp.disableVC.out: Segmentation fault
-
- Performance counter stats for './out/CoinGame.openmp.disableVC.out 100000':
-
-        974.074593 task-clock (msec)         #    0.999 CPUs utilized          
-                98 context-switches          #    0.101 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-            35,884 page-faults               #    0.037 M/sec                  
-     3,748,568,515 cycles                    #    3.848 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-     1,568,705,849 instructions              #    0.42  insns per cycle        
-       231,475,090 branches                  #  237.636 M/sec                  
-            85,245 branch-misses             #    0.04% of all branches        
-
-       0.974997163 seconds time elapsed
-
-./out/CoinGame.openmp.disableVC.out: Segmentation fault
-
- Performance counter stats for './out/CoinGame.openmp.disableVC.out 100000':
-
-        966.842708 task-clock (msec)         #    0.999 CPUs utilized          
+        963.854724 task-clock (msec)         #    0.999 CPUs utilized          
                 93 context-switches          #    0.096 K/sec                  
-                 2 cpu-migrations            #    0.002 K/sec                  
-            35,373 page-faults               #    0.037 M/sec                  
-     3,749,352,513 cycles                    #    3.878 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-     1,567,280,334 instructions              #    0.42  insns per cycle        
-       231,238,787 branches                  #  239.169 M/sec                  
-            88,116 branch-misses             #    0.04% of all branches        
-
-       0.967945263 seconds time elapsed
-
-./out/CoinGame.openmp.disableVC.out: Segmentation fault
-
- Performance counter stats for './out/CoinGame.openmp.disableVC.out 100000':
-
-        980.310903 task-clock (msec)         #    0.999 CPUs utilized          
-                99 context-switches          #    0.101 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-            35,373 page-faults               #    0.036 M/sec                  
-     3,737,959,931 cycles                    #    3.813 GHz                    
+            11,356 page-faults               #    0.012 M/sec                  
+     3,654,173,606 cycles                    #    3.791 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     1,567,297,237 instructions              #    0.42  insns per cycle        
-       231,242,819 branches                  #  235.887 M/sec                  
-            88,095 branch-misses             #    0.04% of all branches        
+     1,495,740,089 instructions              #    0.41  insns per cycle        
+       219,384,536 branches                  #  227.612 M/sec                  
+            57,850 branch-misses             #    0.03% of all branches        
 
-       0.981711304 seconds time elapsed
+       0.964734689 seconds time elapsed
 
 ./out/CoinGame.openmp.disableVC.out: Segmentation fault
 
  Performance counter stats for './out/CoinGame.openmp.disableVC.out 100000':
 
-        974.783462 task-clock (msec)         #    0.999 CPUs utilized          
-                86 context-switches          #    0.088 K/sec                  
-                 1 cpu-migrations            #    0.001 K/sec                  
-            35,373 page-faults               #    0.036 M/sec                  
-     3,740,250,071 cycles                    #    3.837 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-     1,567,247,576 instructions              #    0.42  insns per cycle        
-       231,232,650 branches                  #  237.214 M/sec                  
-            85,991 branch-misses             #    0.04% of all branches        
-
-       0.975897737 seconds time elapsed
-
-./out/CoinGame.openmp.disableVC.out: Segmentation fault
-
- Performance counter stats for './out/CoinGame.openmp.disableVC.out 100000':
-
-        966.475685 task-clock (msec)         #    0.998 CPUs utilized          
-               100 context-switches          #    0.103 K/sec                  
+        948.488371 task-clock (msec)         #    0.999 CPUs utilized          
+                87 context-switches          #    0.092 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-            35,884 page-faults               #    0.037 M/sec                  
-     3,644,553,913 cycles                    #    3.771 GHz                    
+            11,867 page-faults               #    0.013 M/sec                  
+     3,630,188,549 cycles                    #    3.827 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     1,568,725,584 instructions              #    0.43  insns per cycle        
-       231,478,889 branches                  #  239.508 M/sec                  
-            89,264 branch-misses             #    0.04% of all branches        
+     1,497,137,628 instructions              #    0.41  insns per cycle        
+       219,614,686 branches                  #  231.542 M/sec                  
+            62,190 branch-misses             #    0.03% of all branches        
 
-       0.968054010 seconds time elapsed
+       0.949472498 seconds time elapsed
 
 ./out/CoinGame.openmp.disableVC.out: Segmentation fault
 
  Performance counter stats for './out/CoinGame.openmp.disableVC.out 100000':
 
-        992.035391 task-clock (msec)         #    0.999 CPUs utilized          
-                95 context-switches          #    0.096 K/sec                  
+        959.547574 task-clock (msec)         #    0.999 CPUs utilized          
+               102 context-switches          #    0.106 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-            35,373 page-faults               #    0.036 M/sec                  
-     3,709,486,446 cycles                    #    3.739 GHz                    
+            11,356 page-faults               #    0.012 M/sec                  
+     3,651,661,396 cycles                    #    3.806 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     1,567,311,089 instructions              #    0.42  insns per cycle        
-       231,242,660 branches                  #  233.099 M/sec                  
-            86,578 branch-misses             #    0.04% of all branches        
+     1,495,783,271 instructions              #    0.41  insns per cycle        
+       219,391,928 branches                  #  228.641 M/sec                  
+            60,496 branch-misses             #    0.03% of all branches        
 
-       0.993310797 seconds time elapsed
+       0.960903312 seconds time elapsed
 
 ./out/CoinGame.openmp.disableVC.out: Segmentation fault
 
  Performance counter stats for './out/CoinGame.openmp.disableVC.out 100000':
 
-        996.828070 task-clock (msec)         #    0.999 CPUs utilized          
-                89 context-switches          #    0.089 K/sec                  
+        955.850288 task-clock (msec)         #    0.999 CPUs utilized          
+                96 context-switches          #    0.100 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-            35,373 page-faults               #    0.035 M/sec                  
-     3,705,200,933 cycles                    #    3.717 GHz                    
+            11,356 page-faults               #    0.012 M/sec                  
+     3,668,775,837 cycles                    #    3.838 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     1,562,557,480 instructions              #    0.42  insns per cycle        
-       230,401,121 branches                  #  231.134 M/sec                  
-            82,507 branch-misses             #    0.04% of all branches        
+     1,495,721,830 instructions              #    0.41  insns per cycle        
+       219,382,294 branches                  #  229.515 M/sec                  
+            61,029 branch-misses             #    0.03% of all branches        
 
-       0.997968207 seconds time elapsed
+       0.956993074 seconds time elapsed
+
+./out/CoinGame.openmp.disableVC.out: Segmentation fault
+
+ Performance counter stats for './out/CoinGame.openmp.disableVC.out 100000':
+
+        966.852757 task-clock (msec)         #    0.998 CPUs utilized          
+                93 context-switches          #    0.096 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+            11,356 page-faults               #    0.012 M/sec                  
+     3,663,521,850 cycles                    #    3.789 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+     1,495,757,031 instructions              #    0.41  insns per cycle        
+       219,387,150 branches                  #  226.909 M/sec                  
+            61,222 branch-misses             #    0.03% of all branches        
+
+       0.968513973 seconds time elapsed
+
+./out/CoinGame.openmp.disableVC.out: Segmentation fault
+
+ Performance counter stats for './out/CoinGame.openmp.disableVC.out 100000':
+
+        954.182300 task-clock (msec)         #    0.999 CPUs utilized          
+                89 context-switches          #    0.093 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+            11,356 page-faults               #    0.012 M/sec                  
+     3,664,263,831 cycles                    #    3.840 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+     1,511,695,383 instructions              #    0.41  insns per cycle        
+       222,242,950 branches                  #  232.915 M/sec                  
+            71,128 branch-misses             #    0.03% of all branches        
+
+       0.955028541 seconds time elapsed
+
+./out/CoinGame.openmp.disableVC.out: Segmentation fault
+
+ Performance counter stats for './out/CoinGame.openmp.disableVC.out 100000':
+
+        965.302769 task-clock (msec)         #    0.999 CPUs utilized          
+                96 context-switches          #    0.099 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+            11,356 page-faults               #    0.012 M/sec                  
+     3,662,197,047 cycles                    #    3.794 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+     1,495,750,409 instructions              #    0.41  insns per cycle        
+       219,386,673 branches                  #  227.272 M/sec                  
+            61,845 branch-misses             #    0.03% of all branches        
+
+       0.966584564 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -357,7 +357,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 800.000
+cpu MHz		: 3401.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

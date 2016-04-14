@@ -2,171 +2,171 @@ Enable loop vectorization...Compile C code using clang with 1 threads..../out/GC
 
  Performance counter stats for './out/GCD.clang.enableVC.out 100000':
 
-     109508.035279 task-clock (msec)         #    1.000 CPUs utilized          
-             9,839 context-switches          #    0.090 K/sec                  
-                23 cpu-migrations            #    0.000 K/sec                  
-            34,817 page-faults               #    0.318 K/sec                  
-   420,119,571,557 cycles                    #    3.836 GHz                    
+     108367.756244 task-clock (msec)         #    1.000 CPUs utilized          
+             9,773 context-switches          #    0.090 K/sec                  
+                14 cpu-migrations            #    0.000 K/sec                  
+            22,553 page-faults               #    0.208 K/sec                  
+   420,051,370,192 cycles                    #    3.876 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-   759,673,542,457 instructions              #    1.81  insns per cycle        
-   295,896,510,438 branches                  # 2702.053 M/sec                  
-     9,910,131,011 branch-misses             #    3.35% of all branches        
+   759,650,181,252 instructions              #    1.81  insns per cycle        
+   295,893,015,897 branches                  # 2730.453 M/sec                  
+     9,910,363,842 branch-misses             #    3.35% of all branches        
 
-     109.493402572 seconds time elapsed
+     108.353066866 seconds time elapsed
 
 ./out/GCD.clang.enableVC.out: Segmentation fault
 
  Performance counter stats for './out/GCD.clang.enableVC.out 100000':
 
-     109430.652834 task-clock (msec)         #    1.000 CPUs utilized          
-             9,817 context-switches          #    0.090 K/sec                  
+     108613.532496 task-clock (msec)         #    1.000 CPUs utilized          
+             9,872 context-switches          #    0.091 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-            34,306 page-faults               #    0.313 K/sec                  
-   420,160,299,842 cycles                    #    3.840 GHz                    
+            22,042 page-faults               #    0.203 K/sec                  
+   420,066,146,678 cycles                    #    3.868 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-   759,670,725,362 instructions              #    1.81  insns per cycle        
-   295,896,061,040 branches                  # 2703.960 M/sec                  
-     9,911,254,695 branch-misses             #    3.35% of all branches        
+   759,630,664,067 instructions              #    1.81  insns per cycle        
+   295,889,417,878 branches                  # 2724.241 M/sec                  
+     9,915,028,433 branch-misses             #    3.35% of all branches        
 
-     109.416478343 seconds time elapsed
+     108.599640181 seconds time elapsed
 
 ./out/GCD.clang.enableVC.out: Segmentation fault
 
  Performance counter stats for './out/GCD.clang.enableVC.out 100000':
 
-     109524.306549 task-clock (msec)         #    1.000 CPUs utilized          
-             9,846 context-switches          #    0.090 K/sec                  
+     108636.487449 task-clock (msec)         #    1.000 CPUs utilized          
+             9,838 context-switches          #    0.091 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-            34,306 page-faults               #    0.313 K/sec                  
-   420,106,070,622 cycles                    #    3.836 GHz                    
+            21,531 page-faults               #    0.198 K/sec                  
+   420,134,046,771 cycles                    #    3.867 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-   759,670,953,159 instructions              #    1.81  insns per cycle        
-   295,896,074,541 branches                  # 2701.648 M/sec                  
-     9,913,165,745 branch-misses             #    3.35% of all branches        
+   759,645,567,744 instructions              #    1.81  insns per cycle        
+   295,892,233,888 branches                  # 2723.691 M/sec                  
+     9,910,850,383 branch-misses             #    3.35% of all branches        
 
-     109.510365840 seconds time elapsed
+     108.621855170 seconds time elapsed
 
 ./out/GCD.clang.enableVC.out: Segmentation fault
 
  Performance counter stats for './out/GCD.clang.enableVC.out 100000':
 
-     109582.230296 task-clock (msec)         #    1.000 CPUs utilized          
-             9,864 context-switches          #    0.090 K/sec                  
+     108296.272686 task-clock (msec)         #    1.000 CPUs utilized          
+             9,923 context-switches          #    0.092 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+            22,042 page-faults               #    0.204 K/sec                  
+   420,083,840,071 cycles                    #    3.879 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+   759,630,492,055 instructions              #    1.81  insns per cycle        
+   295,889,390,648 branches                  # 2732.221 M/sec                  
+     9,910,508,035 branch-misses             #    3.35% of all branches        
+
+     108.281637946 seconds time elapsed
+
+./out/GCD.clang.enableVC.out: Segmentation fault
+
+ Performance counter stats for './out/GCD.clang.enableVC.out 100000':
+
+     108135.763866 task-clock (msec)         #    1.000 CPUs utilized          
+             9,914 context-switches          #    0.092 K/sec                  
                  1 cpu-migrations            #    0.000 K/sec                  
-            34,306 page-faults               #    0.313 K/sec                  
-   420,151,691,886 cycles                    #    3.834 GHz                    
+            22,042 page-faults               #    0.204 K/sec                  
+   420,002,311,136 cycles                    #    3.884 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-   759,671,243,622 instructions              #    1.81  insns per cycle        
-   295,896,139,991 branches                  # 2700.220 M/sec                  
-     9,911,611,721 branch-misses             #    3.35% of all branches        
+   759,643,846,298 instructions              #    1.81  insns per cycle        
+   295,891,813,096 branches                  # 2736.299 M/sec                  
+     9,908,921,858 branch-misses             #    3.35% of all branches        
 
-     109.567835164 seconds time elapsed
+     108.121488610 seconds time elapsed
 
 ./out/GCD.clang.enableVC.out: Segmentation fault
 
  Performance counter stats for './out/GCD.clang.enableVC.out 100000':
 
-     109695.224565 task-clock (msec)         #    1.000 CPUs utilized          
-             9,819 context-switches          #    0.090 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-            34,817 page-faults               #    0.317 K/sec                  
-   420,079,132,832 cycles                    #    3.830 GHz                    
+     108282.335637 task-clock (msec)         #    1.000 CPUs utilized          
+             9,827 context-switches          #    0.091 K/sec                  
+                 1 cpu-migrations            #    0.000 K/sec                  
+            22,042 page-faults               #    0.204 K/sec                  
+   420,022,616,591 cycles                    #    3.879 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-   759,672,650,396 instructions              #    1.81  insns per cycle        
-   295,896,372,019 branches                  # 2697.441 M/sec                  
-     9,911,260,732 branch-misses             #    3.35% of all branches        
+   759,630,035,336 instructions              #    1.81  insns per cycle        
+   295,889,298,996 branches                  # 2732.572 M/sec                  
+     9,918,302,908 branch-misses             #    3.35% of all branches        
 
-     109.680408104 seconds time elapsed
+     108.267382536 seconds time elapsed
 
 ./out/GCD.clang.enableVC.out: Segmentation fault
 
  Performance counter stats for './out/GCD.clang.enableVC.out 100000':
 
-     109616.919858 task-clock (msec)         #    1.000 CPUs utilized          
-             9,788 context-switches          #    0.089 K/sec                  
+     108355.469461 task-clock (msec)         #    1.000 CPUs utilized          
+             9,834 context-switches          #    0.091 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-            34,306 page-faults               #    0.313 K/sec                  
-   420,103,822,196 cycles                    #    3.832 GHz                    
+            21,531 page-faults               #    0.199 K/sec                  
+   420,360,456,724 cycles                    #    3.879 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-   759,670,457,908 instructions              #    1.81  insns per cycle        
-   295,896,010,595 branches                  # 2699.364 M/sec                  
-     9,910,196,346 branch-misses             #    3.35% of all branches        
+   759,652,197,922 instructions              #    1.81  insns per cycle        
+   295,893,280,054 branches                  # 2730.765 M/sec                  
+     9,929,283,959 branch-misses             #    3.36% of all branches        
 
-     109.601416101 seconds time elapsed
+     108.340754436 seconds time elapsed
 
 ./out/GCD.clang.enableVC.out: Segmentation fault
 
  Performance counter stats for './out/GCD.clang.enableVC.out 100000':
 
-     109185.634135 task-clock (msec)         #    1.000 CPUs utilized          
-             9,792 context-switches          #    0.090 K/sec                  
+     108450.806237 task-clock (msec)         #    1.000 CPUs utilized          
+             9,839 context-switches          #    0.091 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-            34,306 page-faults               #    0.314 K/sec                  
-   420,088,426,111 cycles                    #    3.847 GHz                    
+            22,042 page-faults               #    0.203 K/sec                  
+   420,240,242,524 cycles                    #    3.875 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-   759,671,945,541 instructions              #    1.81  insns per cycle        
-   295,896,275,068 branches                  # 2710.029 M/sec                  
-     9,911,657,559 branch-misses             #    3.35% of all branches        
+   759,630,395,273 instructions              #    1.81  insns per cycle        
+   295,889,350,781 branches                  # 2728.328 M/sec                  
+     9,916,019,016 branch-misses             #    3.35% of all branches        
 
-     109.170179470 seconds time elapsed
+     108.436444869 seconds time elapsed
 
 ./out/GCD.clang.enableVC.out: Segmentation fault
 
  Performance counter stats for './out/GCD.clang.enableVC.out 100000':
 
-     109452.938514 task-clock (msec)         #    1.000 CPUs utilized          
-             9,794 context-switches          #    0.089 K/sec                  
+     108219.584745 task-clock (msec)         #    1.000 CPUs utilized          
+             9,846 context-switches          #    0.091 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-            34,306 page-faults               #    0.313 K/sec                  
-   420,165,549,443 cycles                    #    3.839 GHz                    
+            22,042 page-faults               #    0.204 K/sec                  
+   420,276,851,089 cycles                    #    3.884 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-   759,673,167,895 instructions              #    1.81  insns per cycle        
-   295,896,478,510 branches                  # 2703.413 M/sec                  
-     9,915,891,253 branch-misses             #    3.35% of all branches        
+   759,630,231,447 instructions              #    1.81  insns per cycle        
+   295,889,339,115 branches                  # 2734.157 M/sec                  
+     9,930,035,204 branch-misses             #    3.36% of all branches        
 
-     109.437275135 seconds time elapsed
+     108.205124093 seconds time elapsed
 
 ./out/GCD.clang.enableVC.out: Segmentation fault
 
  Performance counter stats for './out/GCD.clang.enableVC.out 100000':
 
-     109270.891728 task-clock (msec)         #    1.000 CPUs utilized          
-             9,756 context-switches          #    0.089 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-            34,306 page-faults               #    0.314 K/sec                  
-   420,425,924,074 cycles                    #    3.848 GHz                    
+     108232.808137 task-clock (msec)         #    1.000 CPUs utilized          
+             9,876 context-switches          #    0.091 K/sec                  
+                 5 cpu-migrations            #    0.000 K/sec                  
+            22,553 page-faults               #    0.208 K/sec                  
+   420,162,891,996 cycles                    #    3.882 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-   759,665,621,167 instructions              #    1.81  insns per cycle        
-   295,895,153,727 branches                  # 2707.905 M/sec                  
-     9,932,081,002 branch-misses             #    3.36% of all branches        
+   759,646,096,273 instructions              #    1.81  insns per cycle        
+   295,892,151,485 branches                  # 2733.849 M/sec                  
+     9,917,045,287 branch-misses             #    3.35% of all branches        
 
-     109.259856155 seconds time elapsed
-
-./out/GCD.clang.enableVC.out: Segmentation fault
-
- Performance counter stats for './out/GCD.clang.enableVC.out 100000':
-
-     109128.106158 task-clock (msec)         #    1.000 CPUs utilized          
-             9,761 context-switches          #    0.089 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-            34,817 page-faults               #    0.319 K/sec                  
-   420,259,781,981 cycles                    #    3.851 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-   759,671,582,971 instructions              #    1.81  insns per cycle        
-   295,896,183,926 branches                  # 2711.457 M/sec                  
-     9,922,426,757 branch-misses             #    3.35% of all branches        
-
-     109.131245920 seconds time elapsed
+     108.217316264 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -357,7 +357,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 800.000
+cpu MHz		: 1200.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

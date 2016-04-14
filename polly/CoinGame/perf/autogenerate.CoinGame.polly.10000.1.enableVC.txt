@@ -1,182 +1,172 @@
 Enable loop vectorization...Compile C code using polly with 1 threads...The total amount of money (maximum) Alice gets is 25000000
-The total amount of money (maximum) Bob gets is 24995000
 
  Performance counter stats for './out/CoinGame.polly.enableVC.out 10000':
 
-        326.498901 task-clock (msec)         #    0.986 CPUs utilized          
-                34 context-switches          #    0.104 K/sec                  
-                 1 cpu-migrations            #    0.003 K/sec                  
-             1,299 page-faults               #    0.004 M/sec                  
-     1,232,355,759 cycles                    #    3.774 GHz                    
+        346.143909 task-clock (msec)         #    0.987 CPUs utilized          
+                39 context-switches          #    0.113 K/sec                  
+                 2 cpu-migrations            #    0.006 K/sec                  
+               787 page-faults               #    0.002 M/sec                  
+     1,311,191,705 cycles                    #    3.788 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     2,958,420,283 instructions              #    2.40  insns per cycle        
-       415,952,906 branches                  # 1273.979 M/sec                  
-            31,091 branch-misses             #    0.01% of all branches        
+     2,957,093,541 instructions              #    2.26  insns per cycle        
+       415,735,854 branches                  # 1201.049 M/sec                  
+            24,322 branch-misses             #    0.01% of all branches        
 
-       0.330974778 seconds time elapsed
+       0.350732059 seconds time elapsed
 
 The total amount of money (maximum) Alice gets is 25000000
-The total amount of money (maximum) Bob gets is 24995000
 
  Performance counter stats for './out/CoinGame.polly.enableVC.out 10000':
 
-        329.203210 task-clock (msec)         #    0.988 CPUs utilized          
-                30 context-switches          #    0.091 K/sec                  
+        334.321767 task-clock (msec)         #    0.989 CPUs utilized          
+                34 context-switches          #    0.102 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             1,299 page-faults               #    0.004 M/sec                  
-     1,266,066,529 cycles                    #    3.846 GHz                    
+             1,298 page-faults               #    0.004 M/sec                  
+     1,264,052,307 cycles                    #    3.781 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     2,958,335,300 instructions              #    2.34  insns per cycle        
-       415,940,707 branches                  # 1263.477 M/sec                  
-            29,828 branch-misses             #    0.01% of all branches        
+     2,958,377,128 instructions              #    2.34  insns per cycle        
+       415,949,710 branches                  # 1244.160 M/sec                  
+            22,674 branch-misses             #    0.01% of all branches        
 
-       0.333337023 seconds time elapsed
+       0.338036138 seconds time elapsed
 
 The total amount of money (maximum) Alice gets is 25000000
-The total amount of money (maximum) Bob gets is 24995000
 
  Performance counter stats for './out/CoinGame.polly.enableVC.out 10000':
 
-        331.153228 task-clock (msec)         #    0.989 CPUs utilized          
-                41 context-switches          #    0.124 K/sec                  
+        337.060834 task-clock (msec)         #    0.988 CPUs utilized          
+                37 context-switches          #    0.110 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               788 page-faults               #    0.002 M/sec                  
-     1,257,294,997 cycles                    #    3.797 GHz                    
+             1,298 page-faults               #    0.004 M/sec                  
+     1,276,345,217 cycles                    #    3.787 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     2,957,012,621 instructions              #    2.35  insns per cycle        
-       415,719,705 branches                  # 1255.370 M/sec                  
-            28,635 branch-misses             #    0.01% of all branches        
+     2,958,382,564 instructions              #    2.32  insns per cycle        
+       415,946,224 branches                  # 1234.039 M/sec                  
+            22,441 branch-misses             #    0.01% of all branches        
 
-       0.334732536 seconds time elapsed
+       0.341171062 seconds time elapsed
 
 The total amount of money (maximum) Alice gets is 25000000
-The total amount of money (maximum) Bob gets is 24995000
 
  Performance counter stats for './out/CoinGame.polly.enableVC.out 10000':
 
-        339.445163 task-clock (msec)         #    0.987 CPUs utilized          
-                37 context-switches          #    0.109 K/sec                  
+        341.111061 task-clock (msec)         #    0.990 CPUs utilized          
+                42 context-switches          #    0.123 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               788 page-faults               #    0.002 M/sec                  
-     1,264,604,343 cycles                    #    3.726 GHz                    
+               786 page-faults               #    0.002 M/sec                  
+     1,252,585,028 cycles                    #    3.672 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     2,956,962,587 instructions              #    2.34  insns per cycle        
-       415,712,716 branches                  # 1224.683 M/sec                  
-            29,166 branch-misses             #    0.01% of all branches        
+     2,956,993,944 instructions              #    2.36  insns per cycle        
+       415,719,066 branches                  # 1218.721 M/sec                  
+            21,589 branch-misses             #    0.01% of all branches        
 
-       0.343856979 seconds time elapsed
+       0.344681983 seconds time elapsed
 
 The total amount of money (maximum) Alice gets is 25000000
-The total amount of money (maximum) Bob gets is 24995000
 
  Performance counter stats for './out/CoinGame.polly.enableVC.out 10000':
 
-        335.613108 task-clock (msec)         #    0.988 CPUs utilized          
-                35 context-switches          #    0.104 K/sec                  
+        356.734123 task-clock (msec)         #    0.989 CPUs utilized          
+                39 context-switches          #    0.109 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               788 page-faults               #    0.002 M/sec                  
-     1,257,721,834 cycles                    #    3.748 GHz                    
+               787 page-faults               #    0.002 M/sec                  
+     1,323,238,615 cycles                    #    3.709 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     2,956,969,060 instructions              #    2.35  insns per cycle        
-       415,713,216 branches                  # 1238.668 M/sec                  
-            28,452 branch-misses             #    0.01% of all branches        
+     2,956,988,294 instructions              #    2.23  insns per cycle        
+       415,717,787 branches                  # 1165.343 M/sec                  
+            21,874 branch-misses             #    0.01% of all branches        
 
-       0.339630217 seconds time elapsed
+       0.360692162 seconds time elapsed
 
 The total amount of money (maximum) Alice gets is 25000000
-The total amount of money (maximum) Bob gets is 24995000
 
  Performance counter stats for './out/CoinGame.polly.enableVC.out 10000':
 
-        338.182173 task-clock (msec)         #    0.988 CPUs utilized          
-                40 context-switches          #    0.118 K/sec                  
+        332.656627 task-clock (msec)         #    0.990 CPUs utilized          
+                34 context-switches          #    0.102 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             1,299 page-faults               #    0.004 M/sec                  
-     1,270,230,252 cycles                    #    3.756 GHz                    
+               787 page-faults               #    0.002 M/sec                  
+     1,258,120,362 cycles                    #    3.782 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     2,958,397,916 instructions              #    2.33  insns per cycle        
-       415,954,249 branches                  # 1229.971 M/sec                  
-            29,379 branch-misses             #    0.01% of all branches        
+     2,956,957,096 instructions              #    2.35  insns per cycle        
+       415,711,891 branches                  # 1249.673 M/sec                  
+            20,785 branch-misses             #    0.00% of all branches        
 
-       0.342192944 seconds time elapsed
+       0.336124230 seconds time elapsed
 
 The total amount of money (maximum) Alice gets is 25000000
-The total amount of money (maximum) Bob gets is 24995000
 
  Performance counter stats for './out/CoinGame.polly.enableVC.out 10000':
 
-        337.238003 task-clock (msec)         #    0.988 CPUs utilized          
-                31 context-switches          #    0.092 K/sec                  
+        339.313721 task-clock (msec)         #    0.985 CPUs utilized          
+                30 context-switches          #    0.088 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               788 page-faults               #    0.002 M/sec                  
-     1,258,962,108 cycles                    #    3.733 GHz                    
+               787 page-faults               #    0.002 M/sec                  
+     1,272,917,652 cycles                    #    3.751 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     2,956,972,773 instructions              #    2.35  insns per cycle        
-       415,712,990 branches                  # 1232.699 M/sec                  
-            29,698 branch-misses             #    0.01% of all branches        
+     2,956,943,423 instructions              #    2.32  insns per cycle        
+       415,709,311 branches                  # 1225.147 M/sec                  
+            21,774 branch-misses             #    0.01% of all branches        
 
-       0.341336894 seconds time elapsed
+       0.344577169 seconds time elapsed
 
 The total amount of money (maximum) Alice gets is 25000000
-The total amount of money (maximum) Bob gets is 24995000
 
  Performance counter stats for './out/CoinGame.polly.enableVC.out 10000':
 
-        340.529933 task-clock (msec)         #    0.987 CPUs utilized          
-                33 context-switches          #    0.097 K/sec                  
+        353.680732 task-clock (msec)         #    0.988 CPUs utilized          
+                33 context-switches          #    0.093 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             1,299 page-faults               #    0.004 M/sec                  
-     1,314,687,217 cycles                    #    3.861 GHz                    
+             1,298 page-faults               #    0.004 M/sec                  
+     1,322,197,088 cycles                    #    3.738 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     2,958,387,417 instructions              #    2.25  insns per cycle        
-       415,950,076 branches                  # 1221.479 M/sec                  
-            29,121 branch-misses             #    0.01% of all branches        
+     2,958,376,414 instructions              #    2.24  insns per cycle        
+       415,950,333 branches                  # 1176.062 M/sec                  
+            22,281 branch-misses             #    0.01% of all branches        
 
-       0.344859097 seconds time elapsed
+       0.357974717 seconds time elapsed
 
 The total amount of money (maximum) Alice gets is 25000000
-The total amount of money (maximum) Bob gets is 24995000
 
  Performance counter stats for './out/CoinGame.polly.enableVC.out 10000':
 
-        349.623283 task-clock (msec)         #    0.989 CPUs utilized          
-                40 context-switches          #    0.114 K/sec                  
+        350.113565 task-clock (msec)         #    0.990 CPUs utilized          
+                38 context-switches          #    0.109 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               788 page-faults               #    0.002 M/sec                  
-     1,329,198,886 cycles                    #    3.802 GHz                    
+               787 page-faults               #    0.002 M/sec                  
+     1,327,527,447 cycles                    #    3.792 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     2,957,015,480 instructions              #    2.22  insns per cycle        
-       415,721,185 branches                  # 1189.055 M/sec                  
-            28,268 branch-misses             #    0.01% of all branches        
+     2,957,014,837 instructions              #    2.23  insns per cycle        
+       415,720,544 branches                  # 1187.388 M/sec                  
+            22,213 branch-misses             #    0.01% of all branches        
 
-       0.353646823 seconds time elapsed
+       0.353624780 seconds time elapsed
 
 The total amount of money (maximum) Alice gets is 25000000
-The total amount of money (maximum) Bob gets is 24995000
 
  Performance counter stats for './out/CoinGame.polly.enableVC.out 10000':
 
-        354.746489 task-clock (msec)         #    0.989 CPUs utilized          
-                37 context-switches          #    0.104 K/sec                  
+        358.183130 task-clock (msec)         #    0.988 CPUs utilized          
+                40 context-switches          #    0.112 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               788 page-faults               #    0.002 M/sec                  
-     1,330,725,702 cycles                    #    3.751 GHz                    
+             1,298 page-faults               #    0.004 M/sec                  
+     1,322,403,349 cycles                    #    3.692 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     2,956,970,219 instructions              #    2.22  insns per cycle        
-       415,717,007 branches                  # 1171.871 M/sec                  
-            28,123 branch-misses             #    0.01% of all branches        
+     2,958,415,763 instructions              #    2.24  insns per cycle        
+       415,956,941 branches                  # 1161.297 M/sec                  
+            21,735 branch-misses             #    0.01% of all branches        
 
-       0.358666441 seconds time elapsed
+       0.362703917 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -367,7 +357,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 2700.000
+cpu MHz		: 3000.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

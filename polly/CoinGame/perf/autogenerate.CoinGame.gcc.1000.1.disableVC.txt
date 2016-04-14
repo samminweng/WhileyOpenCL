@@ -1,182 +1,172 @@
 Enable loop vectorization...Compile C code using gcc with 1 threads...The total amount of money (maximum) Alice gets is 250000
-The total amount of money (maximum) Bob gets is 249500
 
  Performance counter stats for './out/CoinGame.gcc.disableVC.out 1000':
 
-          2.978114 task-clock (msec)         #    0.439 CPUs utilized          
-                 3 context-switches          #    0.001 M/sec                  
+          4.387467 task-clock (msec)         #    0.501 CPUs utilized          
+                 3 context-switches          #    0.684 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             1,079 page-faults               #    0.362 M/sec                  
-        10,433,489 cycles                    #    3.503 GHz                    
+               568 page-faults               #    0.129 M/sec                  
+         8,266,994 cycles                    #    1.884 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-        18,701,606 instructions              #    1.79  insns per cycle        
-         3,693,295 branches                  # 1240.146 M/sec                  
-             9,171 branch-misses             #    0.25% of all branches        
+        17,245,916 instructions              #    2.09  insns per cycle        
+         3,456,273 branches                  #  787.760 M/sec                  
+             8,894 branch-misses             #    0.26% of all branches        
 
-       0.006788079 seconds time elapsed
+       0.008759157 seconds time elapsed
 
 The total amount of money (maximum) Alice gets is 250000
-The total amount of money (maximum) Bob gets is 249500
 
  Performance counter stats for './out/CoinGame.gcc.disableVC.out 1000':
 
-          2.452374 task-clock (msec)         #    0.444 CPUs utilized          
-                 2 context-switches          #    0.816 K/sec                  
+          6.238124 task-clock (msec)         #    0.621 CPUs utilized          
+                 2 context-switches          #    0.321 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               568 page-faults               #    0.232 M/sec                  
-         8,673,127 cycles                    #    3.537 GHz                    
+               568 page-faults               #    0.091 M/sec                  
+         8,330,933 cycles                    #    1.335 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-        17,257,513 instructions              #    1.99  insns per cycle        
-         3,457,639 branches                  # 1409.915 M/sec                  
-             8,227 branch-misses             #    0.24% of all branches        
+        17,257,559 instructions              #    2.07  insns per cycle        
+         3,454,671 branches                  #  553.800 M/sec                  
+             8,275 branch-misses             #    0.24% of all branches        
 
-       0.005519886 seconds time elapsed
+       0.010037411 seconds time elapsed
 
 The total amount of money (maximum) Alice gets is 250000
-The total amount of money (maximum) Bob gets is 249500
 
  Performance counter stats for './out/CoinGame.gcc.disableVC.out 1000':
 
-          2.439241 task-clock (msec)         #    0.422 CPUs utilized          
-                 1 context-switches          #    0.410 K/sec                  
+          4.336366 task-clock (msec)         #    0.520 CPUs utilized          
+                 1 context-switches          #    0.231 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               568 page-faults               #    0.233 M/sec                  
-         8,582,212 cycles                    #    3.518 GHz                    
+               568 page-faults               #    0.131 M/sec                  
+         8,204,966 cycles                    #    1.892 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-        17,226,382 instructions              #    2.01  insns per cycle        
-         3,451,441 branches                  # 1414.965 M/sec                  
-             7,989 branch-misses             #    0.23% of all branches        
+        17,231,026 instructions              #    2.10  insns per cycle        
+         3,450,914 branches                  #  795.808 M/sec                  
+             8,075 branch-misses             #    0.23% of all branches        
 
-       0.005784671 seconds time elapsed
+       0.008344756 seconds time elapsed
 
 The total amount of money (maximum) Alice gets is 250000
-The total amount of money (maximum) Bob gets is 249500
 
  Performance counter stats for './out/CoinGame.gcc.disableVC.out 1000':
 
-          2.873749 task-clock (msec)         #    0.477 CPUs utilized          
-                 2 context-switches          #    0.696 K/sec                  
+          4.319205 task-clock (msec)         #    0.561 CPUs utilized          
+                 2 context-switches          #    0.463 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             1,079 page-faults               #    0.375 M/sec                  
-        10,285,363 cycles                    #    3.579 GHz                    
+               568 page-faults               #    0.132 M/sec                  
+         8,170,111 cycles                    #    1.892 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-        18,655,013 instructions              #    1.81  insns per cycle        
-         3,690,158 branches                  # 1284.092 M/sec                  
-             8,653 branch-misses             #    0.23% of all branches        
+        17,251,812 instructions              #    2.11  insns per cycle        
+         3,453,579 branches                  #  799.587 M/sec                  
+             8,230 branch-misses             #    0.24% of all branches        
 
-       0.006023165 seconds time elapsed
+       0.007703125 seconds time elapsed
 
 The total amount of money (maximum) Alice gets is 250000
-The total amount of money (maximum) Bob gets is 249500
 
  Performance counter stats for './out/CoinGame.gcc.disableVC.out 1000':
 
-          2.391241 task-clock (msec)         #    0.406 CPUs utilized          
-                 2 context-switches          #    0.836 K/sec                  
+          4.356898 task-clock (msec)         #    0.521 CPUs utilized          
+                 2 context-switches          #    0.459 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               568 page-faults               #    0.238 M/sec                  
-         8,588,505 cycles                    #    3.592 GHz                    
+               568 page-faults               #    0.130 M/sec                  
+         8,242,094 cycles                    #    1.892 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-        17,216,079 instructions              #    2.00  insns per cycle        
-         3,452,753 branches                  # 1443.917 M/sec                  
-             8,319 branch-misses             #    0.24% of all branches        
+        17,254,071 instructions              #    2.09  insns per cycle        
+         3,454,003 branches                  #  792.767 M/sec                  
+             8,322 branch-misses             #    0.24% of all branches        
 
-       0.005895476 seconds time elapsed
+       0.008366377 seconds time elapsed
 
 The total amount of money (maximum) Alice gets is 250000
-The total amount of money (maximum) Bob gets is 249500
 
  Performance counter stats for './out/CoinGame.gcc.disableVC.out 1000':
 
-          2.481093 task-clock (msec)         #    0.442 CPUs utilized          
-                 2 context-switches          #    0.806 K/sec                  
+          3.938633 task-clock (msec)         #    0.460 CPUs utilized          
+                 1 context-switches          #    0.254 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               568 page-faults               #    0.229 M/sec                  
-         8,720,174 cycles                    #    3.515 GHz                    
+               568 page-faults               #    0.144 M/sec                  
+         8,237,735 cycles                    #    2.092 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-        17,265,352 instructions              #    1.98  insns per cycle        
-         3,456,685 branches                  # 1393.211 M/sec                  
-             8,433 branch-misses             #    0.24% of all branches        
+        17,217,284 instructions              #    2.09  insns per cycle        
+         3,452,152 branches                  #  876.485 M/sec                  
+             7,315 branch-misses             #    0.21% of all branches        
 
-       0.005616049 seconds time elapsed
+       0.008556204 seconds time elapsed
 
 The total amount of money (maximum) Alice gets is 250000
-The total amount of money (maximum) Bob gets is 249500
 
  Performance counter stats for './out/CoinGame.gcc.disableVC.out 1000':
 
-          2.434573 task-clock (msec)         #    0.432 CPUs utilized          
-                 2 context-switches          #    0.821 K/sec                  
+          3.658429 task-clock (msec)         #    0.503 CPUs utilized          
+                 2 context-switches          #    0.547 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               568 page-faults               #    0.233 M/sec                  
-         8,607,756 cycles                    #    3.536 GHz                    
+               568 page-faults               #    0.155 M/sec                  
+         8,255,678 cycles                    #    2.257 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-        17,272,352 instructions              #    2.01  insns per cycle        
-         3,457,863 branches                  # 1420.316 M/sec                  
-             7,806 branch-misses             #    0.23% of all branches        
+        17,229,316 instructions              #    2.09  insns per cycle        
+         3,454,121 branches                  #  944.154 M/sec                  
+             8,090 branch-misses             #    0.23% of all branches        
 
-       0.005640781 seconds time elapsed
+       0.007271994 seconds time elapsed
 
 The total amount of money (maximum) Alice gets is 250000
-The total amount of money (maximum) Bob gets is 249500
 
  Performance counter stats for './out/CoinGame.gcc.disableVC.out 1000':
 
-          2.427765 task-clock (msec)         #    0.406 CPUs utilized          
-                 2 context-switches          #    0.824 K/sec                  
+          3.019138 task-clock (msec)         #    0.385 CPUs utilized          
+                 2 context-switches          #    0.662 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               568 page-faults               #    0.234 M/sec                  
-         8,655,433 cycles                    #    3.565 GHz                    
+               568 page-faults               #    0.188 M/sec                  
+         8,270,937 cycles                    #    2.740 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-        17,257,368 instructions              #    1.99  insns per cycle        
-         3,454,613 branches                  # 1422.960 M/sec                  
-             8,246 branch-misses             #    0.24% of all branches        
+        17,216,751 instructions              #    2.08  insns per cycle        
+         3,450,781 branches                  # 1142.969 M/sec                  
+             8,176 branch-misses             #    0.24% of all branches        
 
-       0.005983542 seconds time elapsed
+       0.007846749 seconds time elapsed
 
 The total amount of money (maximum) Alice gets is 250000
-The total amount of money (maximum) Bob gets is 249500
 
  Performance counter stats for './out/CoinGame.gcc.disableVC.out 1000':
 
-          2.529087 task-clock (msec)         #    0.433 CPUs utilized          
-                 1 context-switches          #    0.395 K/sec                  
+          5.235096 task-clock (msec)         #    0.558 CPUs utilized          
+                 3 context-switches          #    0.573 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               568 page-faults               #    0.225 M/sec                  
-         8,591,076 cycles                    #    3.397 GHz                    
+               568 page-faults               #    0.108 M/sec                  
+         8,306,241 cycles                    #    1.587 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-        17,222,909 instructions              #    2.00  insns per cycle        
-         3,452,745 branches                  # 1365.214 M/sec                  
-             7,923 branch-misses             #    0.23% of all branches        
+        17,217,883 instructions              #    2.07  insns per cycle        
+         3,450,794 branches                  #  659.165 M/sec                  
+             8,283 branch-misses             #    0.24% of all branches        
 
-       0.005841501 seconds time elapsed
+       0.009386200 seconds time elapsed
 
 The total amount of money (maximum) Alice gets is 250000
-The total amount of money (maximum) Bob gets is 249500
 
  Performance counter stats for './out/CoinGame.gcc.disableVC.out 1000':
 
-          2.417691 task-clock (msec)         #    0.439 CPUs utilized          
-                 2 context-switches          #    0.827 K/sec                  
+          5.342145 task-clock (msec)         #    0.570 CPUs utilized          
+                 2 context-switches          #    0.374 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               568 page-faults               #    0.235 M/sec                  
-         8,544,033 cycles                    #    3.534 GHz                    
+               568 page-faults               #    0.106 M/sec                  
+         8,120,431 cycles                    #    1.520 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-        17,260,878 instructions              #    2.02  insns per cycle        
-         3,460,286 branches                  # 1431.236 M/sec                  
-             8,408 branch-misses             #    0.24% of all branches        
+        17,253,215 instructions              #    2.12  insns per cycle        
+         3,454,261 branches                  #  646.606 M/sec                  
+             7,408 branch-misses             #    0.21% of all branches        
 
-       0.005507426 seconds time elapsed
+       0.009366661 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -263,7 +253,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 3401.000
+cpu MHz		: 800.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -289,7 +279,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 1000.000
+cpu MHz		: 800.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -341,7 +331,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 800.000
+cpu MHz		: 1000.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -367,7 +357,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 1400.000
+cpu MHz		: 2100.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

@@ -2,171 +2,171 @@ Enable loop vectorization...Compile C code using polly with 1 threads..../out/Co
 
  Performance counter stats for './out/CoinGame.polly.enableVC.out 100000':
 
-        967.254089 task-clock (msec)         #    0.998 CPUs utilized          
+        964.814153 task-clock (msec)         #    0.998 CPUs utilized          
                 90 context-switches          #    0.093 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-            34,820 page-faults               #    0.036 M/sec                  
-     3,625,772,059 cycles                    #    3.749 GHz                    
+                 2 cpu-migrations            #    0.002 K/sec                  
+            11,313 page-faults               #    0.012 M/sec                  
+     3,643,001,935 cycles                    #    3.776 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     1,565,680,501 instructions              #    0.43  insns per cycle        
-       230,957,507 branches                  #  238.776 M/sec                  
-            80,981 branch-misses             #    0.04% of all branches        
+     1,495,639,128 instructions              #    0.41  insns per cycle        
+       219,350,402 branches                  #  227.350 M/sec                  
+            62,229 branch-misses             #    0.03% of all branches        
 
-       0.968835965 seconds time elapsed
+       0.966616188 seconds time elapsed
 
 ./out/CoinGame.polly.enableVC.out: Segmentation fault
 
  Performance counter stats for './out/CoinGame.polly.enableVC.out 100000':
 
-        951.968843 task-clock (msec)         #    0.999 CPUs utilized          
-                85 context-switches          #    0.089 K/sec                  
+        972.571779 task-clock (msec)         #    0.999 CPUs utilized          
+                92 context-switches          #    0.095 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-            34,820 page-faults               #    0.037 M/sec                  
-     3,663,110,628 cycles                    #    3.848 GHz                    
+            11,824 page-faults               #    0.012 M/sec                  
+     3,680,751,136 cycles                    #    3.785 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     1,565,626,265 instructions              #    0.43  insns per cycle        
-       230,948,505 branches                  #  242.601 M/sec                  
-            81,603 branch-misses             #    0.04% of all branches        
+     1,510,919,449 instructions              #    0.41  insns per cycle        
+       222,027,095 branches                  #  228.289 M/sec                  
+            70,884 branch-misses             #    0.03% of all branches        
 
-       0.953116459 seconds time elapsed
+       0.973842881 seconds time elapsed
 
 ./out/CoinGame.polly.enableVC.out: Segmentation fault
 
  Performance counter stats for './out/CoinGame.polly.enableVC.out 100000':
 
-        975.322225 task-clock (msec)         #    0.999 CPUs utilized          
-                90 context-switches          #    0.092 K/sec                  
+        969.274578 task-clock (msec)         #    0.999 CPUs utilized          
+                96 context-switches          #    0.099 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-            34,820 page-faults               #    0.036 M/sec                  
-     3,746,073,091 cycles                    #    3.841 GHz                    
+            11,312 page-faults               #    0.012 M/sec                  
+     3,642,938,729 cycles                    #    3.758 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     1,565,636,144 instructions              #    0.42  insns per cycle        
-       230,949,892 branches                  #  236.793 M/sec                  
-            83,924 branch-misses             #    0.04% of all branches        
+     1,495,589,923 instructions              #    0.41  insns per cycle        
+       219,341,600 branches                  #  226.295 M/sec                  
+            61,083 branch-misses             #    0.03% of all branches        
 
-       0.976167722 seconds time elapsed
+       0.970186061 seconds time elapsed
 
 ./out/CoinGame.polly.enableVC.out: Segmentation fault
 
  Performance counter stats for './out/CoinGame.polly.enableVC.out 100000':
 
-        972.207700 task-clock (msec)         #    0.999 CPUs utilized          
-                87 context-switches          #    0.089 K/sec                  
+        967.940324 task-clock (msec)         #    0.999 CPUs utilized          
+                88 context-switches          #    0.091 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-            34,820 page-faults               #    0.036 M/sec                  
-     3,747,018,871 cycles                    #    3.854 GHz                    
+            11,313 page-faults               #    0.012 M/sec                  
+     3,659,353,380 cycles                    #    3.781 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     1,565,649,758 instructions              #    0.42  insns per cycle        
-       230,951,813 branches                  #  237.554 M/sec                  
-            83,407 branch-misses             #    0.04% of all branches        
+     1,495,561,039 instructions              #    0.41  insns per cycle        
+       219,336,189 branches                  #  226.601 M/sec                  
+            61,767 branch-misses             #    0.03% of all branches        
 
-       0.973150228 seconds time elapsed
+       0.969169230 seconds time elapsed
 
 ./out/CoinGame.polly.enableVC.out: Segmentation fault
 
  Performance counter stats for './out/CoinGame.polly.enableVC.out 100000':
 
-        979.342874 task-clock (msec)         #    0.999 CPUs utilized          
-                99 context-switches          #    0.101 K/sec                  
+        950.115966 task-clock (msec)         #    0.999 CPUs utilized          
+                87 context-switches          #    0.092 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-            34,820 page-faults               #    0.036 M/sec                  
-     3,693,084,320 cycles                    #    3.771 GHz                    
+            11,313 page-faults               #    0.012 M/sec                  
+     3,648,725,586 cycles                    #    3.840 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     1,565,698,946 instructions              #    0.42  insns per cycle        
-       230,962,092 branches                  #  235.834 M/sec                  
-            87,087 branch-misses             #    0.04% of all branches        
+     1,495,539,705 instructions              #    0.41  insns per cycle        
+       219,332,876 branches                  #  230.849 M/sec                  
+            61,373 branch-misses             #    0.03% of all branches        
 
-       0.980420531 seconds time elapsed
+       0.951350057 seconds time elapsed
 
 ./out/CoinGame.polly.enableVC.out: Segmentation fault
 
  Performance counter stats for './out/CoinGame.polly.enableVC.out 100000':
 
-        978.269202 task-clock (msec)         #    0.999 CPUs utilized          
-                92 context-switches          #    0.094 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-            34,820 page-faults               #    0.036 M/sec                  
-     3,678,854,929 cycles                    #    3.761 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-     1,560,914,316 instructions              #    0.42  insns per cycle        
-       230,114,121 branches                  #  235.226 M/sec                  
-            81,707 branch-misses             #    0.04% of all branches        
-
-       0.979692650 seconds time elapsed
-
-./out/CoinGame.polly.enableVC.out: Segmentation fault
-
- Performance counter stats for './out/CoinGame.polly.enableVC.out 100000':
-
-        956.458459 task-clock (msec)         #    0.999 CPUs utilized          
+        958.184518 task-clock (msec)         #    0.999 CPUs utilized          
                 94 context-switches          #    0.098 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-            34,820 page-faults               #    0.036 M/sec                  
-     3,682,554,690 cycles                    #    3.850 GHz                    
+            11,313 page-faults               #    0.012 M/sec                  
+     3,630,310,095 cycles                    #    3.789 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     1,565,693,877 instructions              #    0.43  insns per cycle        
-       230,959,735 branches                  #  241.474 M/sec                  
-            86,048 branch-misses             #    0.04% of all branches        
+     1,495,551,522 instructions              #    0.41  insns per cycle        
+       219,335,508 branches                  #  228.907 M/sec                  
+            60,275 branch-misses             #    0.03% of all branches        
 
-       0.957491896 seconds time elapsed
+       0.959318700 seconds time elapsed
 
 ./out/CoinGame.polly.enableVC.out: Segmentation fault
 
  Performance counter stats for './out/CoinGame.polly.enableVC.out 100000':
 
-        956.314338 task-clock (msec)         #    0.999 CPUs utilized          
-                91 context-switches          #    0.095 K/sec                  
+        953.977346 task-clock (msec)         #    0.998 CPUs utilized          
+                94 context-switches          #    0.099 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-            34,820 page-faults               #    0.036 M/sec                  
-     3,652,821,228 cycles                    #    3.820 GHz                    
+            11,313 page-faults               #    0.012 M/sec                  
+     3,638,846,739 cycles                    #    3.814 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     1,565,646,531 instructions              #    0.43  insns per cycle        
-       230,952,504 branches                  #  241.503 M/sec                  
-            82,468 branch-misses             #    0.04% of all branches        
+     1,495,560,729 instructions              #    0.41  insns per cycle        
+       219,336,558 branches                  #  229.918 M/sec                  
+            61,609 branch-misses             #    0.03% of all branches        
 
-       0.957227779 seconds time elapsed
+       0.955524858 seconds time elapsed
 
 ./out/CoinGame.polly.enableVC.out: Segmentation fault
 
  Performance counter stats for './out/CoinGame.polly.enableVC.out 100000':
 
-        977.351830 task-clock (msec)         #    0.999 CPUs utilized          
-                94 context-switches          #    0.096 K/sec                  
+        960.079540 task-clock (msec)         #    0.999 CPUs utilized          
+                82 context-switches          #    0.085 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-            34,820 page-faults               #    0.036 M/sec                  
-     3,703,740,478 cycles                    #    3.790 GHz                    
+            11,313 page-faults               #    0.012 M/sec                  
+     3,638,802,200 cycles                    #    3.790 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     1,565,684,916 instructions              #    0.42  insns per cycle        
-       230,958,254 branches                  #  236.310 M/sec                  
-            81,658 branch-misses             #    0.04% of all branches        
+     1,509,027,632 instructions              #    0.41  insns per cycle        
+       221,692,762 branches                  #  230.911 M/sec                  
+            67,984 branch-misses             #    0.03% of all branches        
 
-       0.978672847 seconds time elapsed
+       0.961187523 seconds time elapsed
 
 ./out/CoinGame.polly.enableVC.out: Segmentation fault
 
  Performance counter stats for './out/CoinGame.polly.enableVC.out 100000':
 
-        960.736459 task-clock (msec)         #    0.999 CPUs utilized          
-                89 context-switches          #    0.093 K/sec                  
+        965.773968 task-clock (msec)         #    0.998 CPUs utilized          
+                96 context-switches          #    0.099 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-            35,331 page-faults               #    0.037 M/sec                  
-     3,653,724,493 cycles                    #    3.803 GHz                    
+            11,313 page-faults               #    0.012 M/sec                  
+     3,658,842,551 cycles                    #    3.789 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-     1,567,059,860 instructions              #    0.43  insns per cycle        
-       231,184,330 branches                  #  240.632 M/sec                  
-            85,881 branch-misses             #    0.04% of all branches        
+     1,495,597,691 instructions              #    0.41  insns per cycle        
+       219,342,840 branches                  #  227.116 M/sec                  
+            59,724 branch-misses             #    0.03% of all branches        
 
-       0.961657179 seconds time elapsed
+       0.968069199 seconds time elapsed
+
+./out/CoinGame.polly.enableVC.out: Segmentation fault
+
+ Performance counter stats for './out/CoinGame.polly.enableVC.out 100000':
+
+        957.422064 task-clock (msec)         #    0.999 CPUs utilized          
+                95 context-switches          #    0.099 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+            11,824 page-faults               #    0.012 M/sec                  
+     3,625,762,028 cycles                    #    3.787 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+     1,496,960,561 instructions              #    0.41  insns per cycle        
+       219,569,384 branches                  #  229.334 M/sec                  
+            60,763 branch-misses             #    0.03% of all branches        
+
+       0.958405372 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel

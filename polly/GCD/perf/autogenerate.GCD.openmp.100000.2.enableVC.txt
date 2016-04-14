@@ -2,171 +2,171 @@ Enable loop vectorization...Compile C code using openmp with 2 threads..../out/G
 
  Performance counter stats for './out/GCD.openmp.enableVC.out 100000':
 
-     104463.364901 task-clock (msec)         #    1.000 CPUs utilized          
-             9,390 context-switches          #    0.090 K/sec                  
-                13 cpu-migrations            #    0.000 K/sec                  
-            34,350 page-faults               #    0.329 K/sec                  
-   405,505,760,645 cycles                    #    3.882 GHz                    
+     104804.576778 task-clock (msec)         #    1.000 CPUs utilized          
+             9,533 context-switches          #    0.091 K/sec                  
+                11 cpu-migrations            #    0.000 K/sec                  
+            10,844 page-faults               #    0.103 K/sec                  
+   405,431,384,341 cycles                    #    3.868 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-   759,671,180,775 instructions              #    1.87  insns per cycle        
-   295,896,138,020 branches                  # 2832.535 M/sec                  
-     8,993,438,012 branch-misses             #    3.04% of all branches        
+   759,603,473,072 instructions              #    1.87  insns per cycle        
+   295,884,973,962 branches                  # 2823.207 M/sec                  
+     8,995,397,731 branch-misses             #    3.04% of all branches        
 
-     104.448258763 seconds time elapsed
+     104.790344350 seconds time elapsed
 
 ./out/GCD.openmp.enableVC.out: Segmentation fault
 
  Performance counter stats for './out/GCD.openmp.enableVC.out 100000':
 
-     104456.258049 task-clock (msec)         #    1.000 CPUs utilized          
-             9,356 context-switches          #    0.090 K/sec                  
-                 1 cpu-migrations            #    0.000 K/sec                  
-            34,861 page-faults               #    0.334 K/sec                  
-   405,568,379,733 cycles                    #    3.883 GHz                    
+     104374.922160 task-clock (msec)         #    1.000 CPUs utilized          
+             9,458 context-switches          #    0.091 K/sec                  
+                 2 cpu-migrations            #    0.000 K/sec                  
+            11,355 page-faults               #    0.109 K/sec                  
+   405,494,241,312 cycles                    #    3.885 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-   759,665,896,539 instructions              #    1.87  insns per cycle        
-   295,895,173,700 branches                  # 2832.718 M/sec                  
-     8,993,057,737 branch-misses             #    3.04% of all branches        
+   759,595,826,298 instructions              #    1.87  insns per cycle        
+   295,883,565,087 branches                  # 2834.815 M/sec                  
+     8,993,558,994 branch-misses             #    3.04% of all branches        
 
-     104.441441616 seconds time elapsed
+     104.361399495 seconds time elapsed
 
 ./out/GCD.openmp.enableVC.out: Segmentation fault
 
  Performance counter stats for './out/GCD.openmp.enableVC.out 100000':
 
-     104486.730632 task-clock (msec)         #    1.000 CPUs utilized          
-             9,316 context-switches          #    0.089 K/sec                  
-                 1 cpu-migrations            #    0.000 K/sec                  
-            34,350 page-faults               #    0.329 K/sec                  
-   405,565,585,508 cycles                    #    3.882 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-   759,664,379,248 instructions              #    1.87  insns per cycle        
-   295,894,921,157 branches                  # 2831.890 M/sec                  
-     8,993,290,536 branch-misses             #    3.04% of all branches        
-
-     104.472591753 seconds time elapsed
-
-./out/GCD.openmp.enableVC.out: Segmentation fault
-
- Performance counter stats for './out/GCD.openmp.enableVC.out 100000':
-
-     104428.003551 task-clock (msec)         #    1.000 CPUs utilized          
-             9,439 context-switches          #    0.090 K/sec                  
+     104476.215760 task-clock (msec)         #    1.000 CPUs utilized          
+             9,614 context-switches          #    0.092 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-            34,350 page-faults               #    0.329 K/sec                  
-   405,485,211,352 cycles                    #    3.883 GHz                    
+            11,355 page-faults               #    0.109 K/sec                  
+   405,476,809,325 cycles                    #    3.881 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-   759,664,722,606 instructions              #    1.87  insns per cycle        
-   295,895,001,153 branches                  # 2833.483 M/sec                  
-     8,994,068,579 branch-misses             #    3.04% of all branches        
+   759,596,417,303 instructions              #    1.87  insns per cycle        
+   295,883,663,595 branches                  # 2832.067 M/sec                  
+     8,993,870,486 branch-misses             #    3.04% of all branches        
 
-     104.413453204 seconds time elapsed
+     104.462886004 seconds time elapsed
 
 ./out/GCD.openmp.enableVC.out: Segmentation fault
 
  Performance counter stats for './out/GCD.openmp.enableVC.out 100000':
 
-     104431.473615 task-clock (msec)         #    1.000 CPUs utilized          
-             9,351 context-switches          #    0.090 K/sec                  
+     104484.409063 task-clock (msec)         #    1.000 CPUs utilized          
+             9,521 context-switches          #    0.091 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-            34,350 page-faults               #    0.329 K/sec                  
-   405,520,543,548 cycles                    #    3.883 GHz                    
+            11,355 page-faults               #    0.109 K/sec                  
+   405,471,507,620 cycles                    #    3.881 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-   759,664,060,752 instructions              #    1.87  insns per cycle        
-   295,894,888,900 branches                  # 2833.388 M/sec                  
-     8,993,788,626 branch-misses             #    3.04% of all branches        
+   759,621,723,935 instructions              #    1.87  insns per cycle        
+   295,888,375,271 branches                  # 2831.890 M/sec                  
+     8,994,643,457 branch-misses             #    3.04% of all branches        
 
-     104.416546517 seconds time elapsed
+     104.470917115 seconds time elapsed
 
 ./out/GCD.openmp.enableVC.out: Segmentation fault
 
  Performance counter stats for './out/GCD.openmp.enableVC.out 100000':
 
-     104449.467920 task-clock (msec)         #    1.000 CPUs utilized          
-             9,377 context-switches          #    0.090 K/sec                  
+     104480.700525 task-clock (msec)         #    1.000 CPUs utilized          
+             9,506 context-switches          #    0.091 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-            34,350 page-faults               #    0.329 K/sec                  
-   405,479,940,811 cycles                    #    3.882 GHz                    
+            11,355 page-faults               #    0.109 K/sec                  
+   405,516,931,659 cycles                    #    3.881 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-   759,664,223,554 instructions              #    1.87  insns per cycle        
-   295,894,929,446 branches                  # 2832.900 M/sec                  
-     8,994,484,950 branch-misses             #    3.04% of all branches        
+   759,596,790,882 instructions              #    1.87  insns per cycle        
+   295,883,738,958 branches                  # 2831.946 M/sec                  
+     8,993,029,628 branch-misses             #    3.04% of all branches        
 
-     104.434761500 seconds time elapsed
+     104.466204276 seconds time elapsed
 
 ./out/GCD.openmp.enableVC.out: Segmentation fault
 
  Performance counter stats for './out/GCD.openmp.enableVC.out 100000':
 
-     104457.539310 task-clock (msec)         #    1.000 CPUs utilized          
-             9,591 context-switches          #    0.092 K/sec                  
+     104410.855686 task-clock (msec)         #    1.000 CPUs utilized          
+             9,469 context-switches          #    0.091 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-            34,350 page-faults               #    0.329 K/sec                  
-   405,499,061,622 cycles                    #    3.882 GHz                    
+            10,333 page-faults               #    0.099 K/sec                  
+   405,418,576,107 cycles                    #    3.883 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-   759,660,320,687 instructions              #    1.87  insns per cycle        
-   295,894,249,810 branches                  # 2832.675 M/sec                  
-     8,994,357,506 branch-misses             #    3.04% of all branches        
+   759,593,821,829 instructions              #    1.87  insns per cycle        
+   295,883,250,261 branches                  # 2833.836 M/sec                  
+     8,993,248,764 branch-misses             #    3.04% of all branches        
 
-     104.444326384 seconds time elapsed
+     104.397217544 seconds time elapsed
 
 ./out/GCD.openmp.enableVC.out: Segmentation fault
 
  Performance counter stats for './out/GCD.openmp.enableVC.out 100000':
 
-     104465.452733 task-clock (msec)         #    1.000 CPUs utilized          
-             9,397 context-switches          #    0.090 K/sec                  
+     104448.847893 task-clock (msec)         #    1.000 CPUs utilized          
+             9,501 context-switches          #    0.091 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-            34,350 page-faults               #    0.329 K/sec                  
-   405,565,490,374 cycles                    #    3.882 GHz                    
+            10,844 page-faults               #    0.104 K/sec                  
+   405,531,443,843 cycles                    #    3.883 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-   759,664,305,116 instructions              #    1.87  insns per cycle        
-   295,894,940,250 branches                  # 2832.467 M/sec                  
-     8,993,608,389 branch-misses             #    3.04% of all branches        
+   759,595,439,297 instructions              #    1.87  insns per cycle        
+   295,883,515,577 branches                  # 2832.808 M/sec                  
+     8,993,543,807 branch-misses             #    3.04% of all branches        
 
-     104.450378876 seconds time elapsed
+     104.434677051 seconds time elapsed
 
 ./out/GCD.openmp.enableVC.out: Segmentation fault
 
  Performance counter stats for './out/GCD.openmp.enableVC.out 100000':
 
-     104487.968862 task-clock (msec)         #    1.000 CPUs utilized          
-             9,346 context-switches          #    0.089 K/sec                  
+     104489.163741 task-clock (msec)         #    1.000 CPUs utilized          
+             9,485 context-switches          #    0.091 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-            34,350 page-faults               #    0.329 K/sec                  
-   405,600,654,162 cycles                    #    3.882 GHz                    
+            11,355 page-faults               #    0.109 K/sec                  
+   405,516,574,990 cycles                    #    3.881 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-   759,664,124,796 instructions              #    1.87  insns per cycle        
-   295,894,910,795 branches                  # 2831.856 M/sec                  
-     8,993,588,320 branch-misses             #    3.04% of all branches        
+   759,596,589,578 instructions              #    1.87  insns per cycle        
+   295,883,699,770 branches                  # 2831.717 M/sec                  
+     8,992,907,786 branch-misses             #    3.04% of all branches        
 
-     104.472765828 seconds time elapsed
+     104.474912964 seconds time elapsed
 
 ./out/GCD.openmp.enableVC.out: Segmentation fault
 
  Performance counter stats for './out/GCD.openmp.enableVC.out 100000':
 
-     104500.835512 task-clock (msec)         #    1.000 CPUs utilized          
-             9,365 context-switches          #    0.090 K/sec                  
+     104645.443214 task-clock (msec)         #    1.000 CPUs utilized          
+             9,457 context-switches          #    0.090 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-            34,350 page-faults               #    0.329 K/sec                  
-   405,616,672,989 cycles                    #    3.881 GHz                    
+            10,844 page-faults               #    0.104 K/sec                  
+   405,522,136,544 cycles                    #    3.875 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-   759,664,413,490 instructions              #    1.87  insns per cycle        
-   295,894,949,810 branches                  # 2831.508 M/sec                  
-     8,993,020,912 branch-misses             #    3.04% of all branches        
+   759,595,066,649 instructions              #    1.87  insns per cycle        
+   295,883,473,602 branches                  # 2827.486 M/sec                  
+     8,992,999,215 branch-misses             #    3.04% of all branches        
 
-     104.486109171 seconds time elapsed
+     104.631570738 seconds time elapsed
+
+./out/GCD.openmp.enableVC.out: Segmentation fault
+
+ Performance counter stats for './out/GCD.openmp.enableVC.out 100000':
+
+     104509.864724 task-clock (msec)         #    1.000 CPUs utilized          
+             9,450 context-switches          #    0.090 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+            10,844 page-faults               #    0.104 K/sec                  
+   405,421,430,308 cycles                    #    3.879 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+   759,594,925,931 instructions              #    1.87  insns per cycle        
+   295,883,424,273 branches                  # 2831.153 M/sec                  
+     8,993,293,863 branch-misses             #    3.04% of all branches        
+
+     104.495608321 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -357,7 +357,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 3401.000
+cpu MHz		: 800.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

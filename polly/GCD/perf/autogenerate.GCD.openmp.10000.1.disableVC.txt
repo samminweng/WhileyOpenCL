@@ -2,171 +2,171 @@ Enable loop vectorization...Compile C code using openmp with 1 threads...SUM:684
 
  Performance counter stats for './out/GCD.openmp.disableVC.out 10000':
 
-       5925.276704 task-clock (msec)         #    0.999 CPUs utilized          
-               538 context-switches          #    0.091 K/sec                  
-                 4 cpu-migrations            #    0.001 K/sec                  
-             1,344 page-faults               #    0.227 K/sec                  
-    22,969,616,534 cycles                    #    3.877 GHz                    
+       5961.580418 task-clock (msec)         #    0.999 CPUs utilized          
+               546 context-switches          #    0.092 K/sec                  
+                 3 cpu-migrations            #    0.001 K/sec                  
+               833 page-faults               #    0.140 K/sec                  
+    22,969,389,549 cycles                    #    3.853 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,955,209,202 instructions              #    1.61  insns per cycle        
-    14,174,839,915 branches                  # 2392.266 M/sec                  
-       604,968,584 branch-misses             #    4.27% of all branches        
+    36,953,746,048 instructions              #    1.61  insns per cycle        
+    14,174,596,511 branches                  # 2377.658 M/sec                  
+       604,992,940 branch-misses             #    4.27% of all branches        
 
-       5.929694543 seconds time elapsed
+       5.965205879 seconds time elapsed
 
 SUM:684257280
 
  Performance counter stats for './out/GCD.openmp.disableVC.out 10000':
 
-       5977.916464 task-clock (msec)         #    0.999 CPUs utilized          
-               562 context-switches          #    0.094 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-             1,344 page-faults               #    0.225 K/sec                  
-    22,978,345,664 cycles                    #    3.844 GHz                    
+       5939.797544 task-clock (msec)         #    0.998 CPUs utilized          
+               551 context-switches          #    0.093 K/sec                  
+                 1 cpu-migrations            #    0.000 K/sec                  
+               833 page-faults               #    0.140 K/sec                  
+    22,965,235,922 cycles                    #    3.866 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,954,884,125 instructions              #    1.61  insns per cycle        
-    14,174,779,297 branches                  # 2371.191 M/sec                  
-       604,966,740 branch-misses             #    4.27% of all branches        
+    36,953,380,233 instructions              #    1.61  insns per cycle        
+    14,174,530,371 branches                  # 2386.366 M/sec                  
+       605,063,917 branch-misses             #    4.27% of all branches        
 
-       5.981877866 seconds time elapsed
+       5.952390673 seconds time elapsed
 
 SUM:684257280
 
  Performance counter stats for './out/GCD.openmp.disableVC.out 10000':
 
-       5959.235962 task-clock (msec)         #    0.999 CPUs utilized          
+       5951.772880 task-clock (msec)         #    0.996 CPUs utilized          
                547 context-switches          #    0.092 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
              1,344 page-faults               #    0.226 K/sec                  
-    22,975,471,627 cycles                    #    3.855 GHz                    
+    22,966,729,300 cycles                    #    3.859 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,954,785,289 instructions              #    1.61  insns per cycle        
-    14,174,760,122 branches                  # 2378.620 M/sec                  
-       604,954,592 branch-misses             #    4.27% of all branches        
+    36,954,780,487 instructions              #    1.61  insns per cycle        
+    14,174,761,712 branches                  # 2381.603 M/sec                  
+       605,094,825 branch-misses             #    4.27% of all branches        
 
-       5.963408140 seconds time elapsed
+       5.977907577 seconds time elapsed
 
 SUM:684257280
 
  Performance counter stats for './out/GCD.openmp.disableVC.out 10000':
 
-       5916.258523 task-clock (msec)         #    0.999 CPUs utilized          
-               546 context-switches          #    0.092 K/sec                  
+       5932.607435 task-clock (msec)         #    0.999 CPUs utilized          
+               579 context-switches          #    0.098 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
              1,344 page-faults               #    0.227 K/sec                  
-    22,958,235,161 cycles                    #    3.881 GHz                    
+    22,966,337,389 cycles                    #    3.871 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,954,762,729 instructions              #    1.61  insns per cycle        
-    14,174,756,924 branches                  # 2395.899 M/sec                  
-       605,074,581 branch-misses             #    4.27% of all branches        
+    36,954,887,260 instructions              #    1.61  insns per cycle        
+    14,174,777,959 branches                  # 2389.300 M/sec                  
+       604,991,926 branch-misses             #    4.27% of all branches        
 
-       5.921096466 seconds time elapsed
+       5.935893956 seconds time elapsed
 
 SUM:684257280
 
  Performance counter stats for './out/GCD.openmp.disableVC.out 10000':
 
-       5966.912040 task-clock (msec)         #    0.999 CPUs utilized          
-               529 context-switches          #    0.089 K/sec                  
+       5929.768097 task-clock (msec)         #    0.995 CPUs utilized          
+               544 context-switches          #    0.092 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             1,344 page-faults               #    0.225 K/sec                  
-    22,965,047,045 cycles                    #    3.849 GHz                    
+               833 page-faults               #    0.140 K/sec                  
+    22,965,816,628 cycles                    #    3.873 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,954,701,638 instructions              #    1.61  insns per cycle        
-    14,174,746,094 branches                  # 2375.558 M/sec                  
-       604,982,717 branch-misses             #    4.27% of all branches        
+    36,953,315,043 instructions              #    1.61  insns per cycle        
+    14,174,517,110 branches                  # 2390.400 M/sec                  
+       604,970,992 branch-misses             #    4.27% of all branches        
 
-       5.971792971 seconds time elapsed
+       5.957420362 seconds time elapsed
 
 SUM:684257280
 
  Performance counter stats for './out/GCD.openmp.disableVC.out 10000':
 
-       5959.831090 task-clock (msec)         #    0.999 CPUs utilized          
-               532 context-switches          #    0.089 K/sec                  
+       5939.641203 task-clock (msec)         #    0.999 CPUs utilized          
+               552 context-switches          #    0.093 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
              1,344 page-faults               #    0.226 K/sec                  
-    22,965,834,859 cycles                    #    3.853 GHz                    
+    22,966,430,066 cycles                    #    3.867 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,954,684,814 instructions              #    1.61  insns per cycle        
-    14,174,742,515 branches                  # 2378.380 M/sec                  
-       605,020,526 branch-misses             #    4.27% of all branches        
+    36,954,779,083 instructions              #    1.61  insns per cycle        
+    14,174,758,223 branches                  # 2386.467 M/sec                  
+       605,017,805 branch-misses             #    4.27% of all branches        
 
-       5.963331297 seconds time elapsed
+       5.943621282 seconds time elapsed
 
 SUM:684257280
 
  Performance counter stats for './out/GCD.openmp.disableVC.out 10000':
 
-       5979.855619 task-clock (msec)         #    0.999 CPUs utilized          
-               534 context-switches          #    0.089 K/sec                  
+       6000.071012 task-clock (msec)         #    0.999 CPUs utilized          
+               573 context-switches          #    0.095 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
                833 page-faults               #    0.139 K/sec                  
-    22,969,285,741 cycles                    #    3.841 GHz                    
+    22,968,962,485 cycles                    #    3.828 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,953,302,364 instructions              #    1.61  insns per cycle        
-    14,174,513,904 branches                  # 2370.377 M/sec                  
-       605,044,532 branch-misses             #    4.27% of all branches        
+    36,953,465,987 instructions              #    1.61  insns per cycle        
+    14,174,549,279 branches                  # 2362.397 M/sec                  
+       605,042,121 branch-misses             #    4.27% of all branches        
 
-       5.983863094 seconds time elapsed
+       6.003138707 seconds time elapsed
 
 SUM:684257280
 
  Performance counter stats for './out/GCD.openmp.disableVC.out 10000':
 
-       5921.657357 task-clock (msec)         #    0.999 CPUs utilized          
-               527 context-switches          #    0.089 K/sec                  
+       6031.023831 task-clock (msec)         #    0.999 CPUs utilized          
+               552 context-switches          #    0.092 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             1,344 page-faults               #    0.227 K/sec                  
-    22,966,126,563 cycles                    #    3.878 GHz                    
+             1,344 page-faults               #    0.223 K/sec                  
+    22,972,211,113 cycles                    #    3.809 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,954,646,356 instructions              #    1.61  insns per cycle        
-    14,174,736,982 branches                  # 2393.711 M/sec                  
-       604,941,872 branch-misses             #    4.27% of all branches        
+    36,954,850,675 instructions              #    1.61  insns per cycle        
+    14,174,772,956 branches                  # 2350.310 M/sec                  
+       604,891,208 branch-misses             #    4.27% of all branches        
 
-       5.927160144 seconds time elapsed
+       6.034663622 seconds time elapsed
 
 SUM:684257280
 
  Performance counter stats for './out/GCD.openmp.disableVC.out 10000':
 
-       5926.628143 task-clock (msec)         #    0.999 CPUs utilized          
-               527 context-switches          #    0.089 K/sec                  
+       5975.067790 task-clock (msec)         #    0.999 CPUs utilized          
+               553 context-switches          #    0.093 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             1,344 page-faults               #    0.227 K/sec                  
-    22,970,634,477 cycles                    #    3.876 GHz                    
+             1,344 page-faults               #    0.225 K/sec                  
+    22,956,532,360 cycles                    #    3.842 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,954,652,078 instructions              #    1.61  insns per cycle        
-    14,174,735,436 branches                  # 2391.703 M/sec                  
-       604,976,966 branch-misses             #    4.27% of all branches        
+    36,954,812,185 instructions              #    1.61  insns per cycle        
+    14,174,763,849 branches                  # 2372.318 M/sec                  
+       605,133,189 branch-misses             #    4.27% of all branches        
 
-       5.930319683 seconds time elapsed
+       5.982262658 seconds time elapsed
 
 SUM:684257280
 
  Performance counter stats for './out/GCD.openmp.disableVC.out 10000':
 
-       5923.601308 task-clock (msec)         #    0.999 CPUs utilized          
-               530 context-switches          #    0.089 K/sec                  
+       5932.300827 task-clock (msec)         #    0.999 CPUs utilized          
+               533 context-switches          #    0.090 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             1,344 page-faults               #    0.227 K/sec                  
-    22,962,227,468 cycles                    #    3.876 GHz                    
+               833 page-faults               #    0.140 K/sec                  
+    22,957,010,720 cycles                    #    3.870 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,954,669,275 instructions              #    1.61  insns per cycle        
-    14,174,737,767 branches                  # 2392.926 M/sec                  
-       605,146,106 branch-misses             #    4.27% of all branches        
+    36,953,262,440 instructions              #    1.61  insns per cycle        
+    14,174,508,097 branches                  # 2389.378 M/sec                  
+       605,077,910 branch-misses             #    4.27% of all branches        
 
-       5.927309376 seconds time elapsed
+       5.936337690 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -357,7 +357,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 2100.000
+cpu MHz		: 2300.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

@@ -2,171 +2,171 @@ Enable loop vectorization...Compile C code using clang with 1 threads...fail to 
 
  Performance counter stats for './out/GCD.clang.disableVC.out 1000000':
 
-          3.868007 task-clock (msec)         #    0.511 CPUs utilized          
-                 3 context-switches          #    0.776 K/sec                  
+          5.805255 task-clock (msec)         #    0.566 CPUs utilized          
+                 3 context-switches          #    0.517 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             1,073 page-faults               #    0.277 M/sec                  
-         7,312,170 cycles                    #    1.890 GHz                    
+               562 page-faults               #    0.097 M/sec                  
+         5,772,095 cycles                    #    0.994 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         7,393,383 instructions              #    1.01  insns per cycle        
-           934,364 branches                  #  241.562 M/sec                  
-             8,138 branch-misses             #    0.87% of all branches        
+         5,978,115 instructions              #    1.04  insns per cycle        
+           702,280 branches                  #  120.973 M/sec                  
+             7,814 branch-misses             #    1.11% of all branches        
 
-       0.007576173 seconds time elapsed
+       0.010263865 seconds time elapsed
 
 fail to allocate the memory at gen1DArray function in Util.c
 
  Performance counter stats for './out/GCD.clang.disableVC.out 1000000':
 
-          3.499530 task-clock (msec)         #    0.523 CPUs utilized          
-                 2 context-switches          #    0.572 K/sec                  
+          2.232998 task-clock (msec)         #    0.386 CPUs utilized          
+                 1 context-switches          #    0.448 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               561 page-faults               #    0.160 M/sec                  
-         5,754,883 cycles                    #    1.644 GHz                    
+               562 page-faults               #    0.252 M/sec                  
+         5,951,369 cycles                    #    2.665 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         5,968,512 instructions              #    1.04  insns per cycle        
-           700,869 branches                  #  200.275 M/sec                  
-             7,395 branch-misses             #    1.06% of all branches        
+         5,972,497 instructions              #    1.00  insns per cycle        
+           700,810 branches                  #  313.843 M/sec                  
+             7,255 branch-misses             #    1.04% of all branches        
 
-       0.006689418 seconds time elapsed
+       0.005790304 seconds time elapsed
 
 fail to allocate the memory at gen1DArray function in Util.c
 
  Performance counter stats for './out/GCD.clang.disableVC.out 1000000':
 
-          3.663261 task-clock (msec)         #    0.527 CPUs utilized          
-                 2 context-switches          #    0.546 K/sec                  
+          4.991635 task-clock (msec)         #    0.555 CPUs utilized          
+                 2 context-switches          #    0.401 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               562 page-faults               #    0.153 M/sec                  
-         5,722,384 cycles                    #    1.562 GHz                    
+             1,073 page-faults               #    0.215 M/sec                  
+         7,027,242 cycles                    #    1.408 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         5,927,199 instructions              #    1.04  insns per cycle        
-           694,744 branches                  #  189.652 M/sec                  
-             7,230 branch-misses             #    1.04% of all branches        
+         7,347,504 instructions              #    1.05  insns per cycle        
+           927,908 branches                  #  185.893 M/sec                  
+             7,662 branch-misses             #    0.83% of all branches        
 
-       0.006947479 seconds time elapsed
+       0.008986914 seconds time elapsed
 
 fail to allocate the memory at gen1DArray function in Util.c
 
  Performance counter stats for './out/GCD.clang.disableVC.out 1000000':
 
-          3.617916 task-clock (msec)         #    0.512 CPUs utilized          
-                 2 context-switches          #    0.553 K/sec                  
+          3.027033 task-clock (msec)         #    0.385 CPUs utilized          
+                 2 context-switches          #    0.661 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               561 page-faults               #    0.155 M/sec                  
-         5,695,976 cycles                    #    1.574 GHz                    
+               561 page-faults               #    0.185 M/sec                  
+         5,722,371 cycles                    #    1.890 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         5,952,926 instructions              #    1.05  insns per cycle        
-           698,876 branches                  #  193.171 M/sec                  
-             7,324 branch-misses             #    1.05% of all branches        
+         5,936,727 instructions              #    1.04  insns per cycle        
+           695,929 branches                  #  229.905 M/sec                  
+             7,206 branch-misses             #    1.04% of all branches        
 
-       0.007064721 seconds time elapsed
+       0.007857183 seconds time elapsed
 
 fail to allocate the memory at gen1DArray function in Util.c
 
  Performance counter stats for './out/GCD.clang.disableVC.out 1000000':
 
-          4.267982 task-clock (msec)         #    0.549 CPUs utilized          
-                 2 context-switches          #    0.469 K/sec                  
+          3.824469 task-clock (msec)         #    0.488 CPUs utilized          
+                 2 context-switches          #    0.523 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             1,073 page-faults               #    0.251 M/sec                  
-         7,099,316 cycles                    #    1.663 GHz                    
+               562 page-faults               #    0.147 M/sec                  
+         5,767,040 cycles                    #    1.508 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         7,365,602 instructions              #    1.04  insns per cycle        
-           934,882 branches                  #  219.045 M/sec                  
-             7,746 branch-misses             #    0.83% of all branches        
+         5,972,646 instructions              #    1.04  insns per cycle        
+           699,164 branches                  #  182.813 M/sec                  
+             7,268 branch-misses             #    1.04% of all branches        
 
-       0.007776472 seconds time elapsed
+       0.007840126 seconds time elapsed
 
 fail to allocate the memory at gen1DArray function in Util.c
 
  Performance counter stats for './out/GCD.clang.disableVC.out 1000000':
 
-          3.806296 task-clock (msec)         #    0.539 CPUs utilized          
-                 2 context-switches          #    0.525 K/sec                  
+          3.050756 task-clock (msec)         #    0.462 CPUs utilized          
+                 2 context-switches          #    0.656 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               562 page-faults               #    0.148 M/sec                  
-         5,706,745 cycles                    #    1.499 GHz                    
+               562 page-faults               #    0.184 M/sec                  
+         5,782,637 cycles                    #    1.895 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         5,965,536 instructions              #    1.05  insns per cycle        
-           698,171 branches                  #  183.425 M/sec                  
-             7,266 branch-misses             #    1.04% of all branches        
+         5,963,267 instructions              #    1.03  insns per cycle        
+           697,285 branches                  #  228.561 M/sec                  
+             7,318 branch-misses             #    1.05% of all branches        
 
-       0.007062365 seconds time elapsed
+       0.006596652 seconds time elapsed
 
 fail to allocate the memory at gen1DArray function in Util.c
 
  Performance counter stats for './out/GCD.clang.disableVC.out 1000000':
 
-          2.792347 task-clock (msec)         #    0.461 CPUs utilized          
-                 1 context-switches          #    0.358 K/sec                  
+          3.082301 task-clock (msec)         #    0.460 CPUs utilized          
+                 2 context-switches          #    0.649 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               562 page-faults               #    0.201 M/sec                  
-         5,836,403 cycles                    #    2.090 GHz                    
+               562 page-faults               #    0.182 M/sec                  
+         5,825,706 cycles                    #    1.890 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         5,969,589 instructions              #    1.02  insns per cycle        
-           698,652 branches                  #  250.202 M/sec                  
-             7,180 branch-misses             #    1.03% of all branches        
+         5,973,096 instructions              #    1.03  insns per cycle        
+           699,166 branches                  #  226.832 M/sec                  
+             7,429 branch-misses             #    1.06% of all branches        
 
-       0.006059003 seconds time elapsed
+       0.006697115 seconds time elapsed
 
 fail to allocate the memory at gen1DArray function in Util.c
 
  Performance counter stats for './out/GCD.clang.disableVC.out 1000000':
 
-          2.950922 task-clock (msec)         #    0.466 CPUs utilized          
-                 2 context-switches          #    0.678 K/sec                  
+          2.561005 task-clock (msec)         #    0.425 CPUs utilized          
+                 1 context-switches          #    0.390 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               562 page-faults               #    0.190 M/sec                  
-         5,849,211 cycles                    #    1.982 GHz                    
+               562 page-faults               #    0.219 M/sec                  
+         5,862,458 cycles                    #    2.289 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         5,975,530 instructions              #    1.02  insns per cycle        
-           699,660 branches                  #  237.099 M/sec                  
-             7,213 branch-misses             #    1.03% of all branches        
+         5,948,014 instructions              #    1.01  insns per cycle        
+           698,789 branches                  #  272.857 M/sec                  
+             7,220 branch-misses             #    1.03% of all branches        
 
-       0.006327715 seconds time elapsed
+       0.006022532 seconds time elapsed
 
 fail to allocate the memory at gen1DArray function in Util.c
 
  Performance counter stats for './out/GCD.clang.disableVC.out 1000000':
 
-          3.763819 task-clock (msec)         #    0.508 CPUs utilized          
-                 2 context-switches          #    0.531 K/sec                  
+          2.587524 task-clock (msec)         #    0.424 CPUs utilized          
+                 2 context-switches          #    0.773 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               562 page-faults               #    0.149 M/sec                  
-         5,751,230 cycles                    #    1.528 GHz                    
+               562 page-faults               #    0.217 M/sec                  
+         5,919,313 cycles                    #    2.288 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         5,950,377 instructions              #    1.03  insns per cycle        
-           698,789 branches                  #  185.660 M/sec                  
-             7,394 branch-misses             #    1.06% of all branches        
+         5,977,246 instructions              #    1.01  insns per cycle        
+           699,838 branches                  #  270.466 M/sec                  
+             7,309 branch-misses             #    1.04% of all branches        
 
-       0.007406452 seconds time elapsed
+       0.006099635 seconds time elapsed
 
 fail to allocate the memory at gen1DArray function in Util.c
 
  Performance counter stats for './out/GCD.clang.disableVC.out 1000000':
 
-          4.733820 task-clock (msec)         #    0.590 CPUs utilized          
-                 2 context-switches          #    0.422 K/sec                  
+          2.550302 task-clock (msec)         #    0.441 CPUs utilized          
+                 1 context-switches          #    0.392 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             1,073 page-faults               #    0.227 M/sec                  
-         7,090,594 cycles                    #    1.498 GHz                    
+               562 page-faults               #    0.220 M/sec                  
+         5,837,594 cycles                    #    2.289 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-         7,360,161 instructions              #    1.04  insns per cycle        
-           929,685 branches                  #  196.392 M/sec                  
-             7,814 branch-misses             #    0.84% of all branches        
+         5,953,551 instructions              #    1.02  insns per cycle        
+           699,718 branches                  #  274.367 M/sec                  
+             7,255 branch-misses             #    1.04% of all branches        
 
-       0.008018900 seconds time elapsed
+       0.005781291 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -279,7 +279,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 800.000
+cpu MHz		: 2300.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -331,7 +331,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 800.000
+cpu MHz		: 1900.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -357,7 +357,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 1400.000
+cpu MHz		: 1900.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

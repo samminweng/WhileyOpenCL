@@ -2,171 +2,171 @@ Enable loop vectorization...Compile C code using clang with 1 threads...SUM:6842
 
  Performance counter stats for './out/GCD.clang.disableVC.out 10000':
 
-       6256.187950 task-clock (msec)         #    0.997 CPUs utilized          
-               557 context-switches          #    0.089 K/sec                  
-                 2 cpu-migrations            #    0.000 K/sec                  
-             1,297 page-faults               #    0.207 K/sec                  
-    24,138,856,254 cycles                    #    3.858 GHz                    
+       6225.923474 task-clock (msec)         #    0.999 CPUs utilized          
+               588 context-switches          #    0.094 K/sec                  
+                 1 cpu-migrations            #    0.000 K/sec                  
+               785 page-faults               #    0.126 K/sec                  
+    24,129,520,535 cycles                    #    3.876 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,955,185,528 instructions              #    1.53  insns per cycle        
-    14,174,830,121 branches                  # 2265.730 M/sec                  
-       673,406,073 branch-misses             #    4.75% of all branches        
+    36,954,060,946 instructions              #    1.53  insns per cycle        
+    14,174,651,676 branches                  # 2276.715 M/sec                  
+       672,655,516 branch-misses             #    4.75% of all branches        
 
-       6.276570408 seconds time elapsed
+       6.229583643 seconds time elapsed
 
 SUM:684257280
 
  Performance counter stats for './out/GCD.clang.disableVC.out 10000':
 
-       6285.930489 task-clock (msec)         #    0.999 CPUs utilized          
-               557 context-switches          #    0.089 K/sec                  
+       6219.773440 task-clock (msec)         #    0.999 CPUs utilized          
+               556 context-switches          #    0.089 K/sec                  
+                 1 cpu-migrations            #    0.000 K/sec                  
+             1,297 page-faults               #    0.209 K/sec                  
+    24,127,601,210 cycles                    #    3.879 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    36,954,814,869 instructions              #    1.53  insns per cycle        
+    14,174,759,749 branches                  # 2278.983 M/sec                  
+       673,452,821 branch-misses             #    4.75% of all branches        
+
+       6.223455073 seconds time elapsed
+
+SUM:684257280
+
+ Performance counter stats for './out/GCD.clang.disableVC.out 10000':
+
+       6287.614116 task-clock (msec)         #    0.999 CPUs utilized          
+               590 context-switches          #    0.094 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
                786 page-faults               #    0.125 K/sec                  
-    24,138,035,010 cycles                    #    3.840 GHz                    
+    24,112,705,728 cycles                    #    3.835 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,953,426,986 instructions              #    1.53  insns per cycle        
-    14,174,532,063 branches                  # 2254.962 M/sec                  
-       673,363,599 branch-misses             #    4.75% of all branches        
+    36,953,537,683 instructions              #    1.53  insns per cycle        
+    14,174,556,721 branches                  # 2254.362 M/sec                  
+       672,110,698 branch-misses             #    4.74% of all branches        
 
-       6.291046202 seconds time elapsed
+       6.290965262 seconds time elapsed
 
 SUM:684257280
 
  Performance counter stats for './out/GCD.clang.disableVC.out 10000':
 
-       6257.231544 task-clock (msec)         #    0.999 CPUs utilized          
-               617 context-switches          #    0.099 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-               786 page-faults               #    0.126 K/sec                  
-    24,139,524,975 cycles                    #    3.858 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-    36,953,625,400 instructions              #    1.53  insns per cycle        
-    14,174,569,911 branches                  # 2265.310 M/sec                  
-       673,364,175 branch-misses             #    4.75% of all branches        
-
-       6.261095398 seconds time elapsed
-
-SUM:684257280
-
- Performance counter stats for './out/GCD.clang.disableVC.out 10000':
-
-       6230.727753 task-clock (msec)         #    0.999 CPUs utilized          
-               556 context-switches          #    0.089 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-             1,297 page-faults               #    0.208 K/sec                  
-    24,131,737,402 cycles                    #    3.873 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-    36,954,830,243 instructions              #    1.53  insns per cycle        
-    14,174,764,715 branches                  # 2274.977 M/sec                  
-       673,586,903 branch-misses             #    4.75% of all branches        
-
-       6.234499579 seconds time elapsed
-
-SUM:684257280
-
- Performance counter stats for './out/GCD.clang.disableVC.out 10000':
-
-       6221.787974 task-clock (msec)         #    0.999 CPUs utilized          
+       6236.608415 task-clock (msec)         #    0.999 CPUs utilized          
                560 context-switches          #    0.090 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               786 page-faults               #    0.126 K/sec                  
-    24,136,984,043 cycles                    #    3.879 GHz                    
+             1,297 page-faults               #    0.208 K/sec                  
+    24,123,900,302 cycles                    #    3.868 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,953,402,118 instructions              #    1.53  insns per cycle        
-    14,174,529,391 branches                  # 2278.208 M/sec                  
-       673,491,720 branch-misses             #    4.75% of all branches        
+    36,954,850,499 instructions              #    1.53  insns per cycle        
+    14,174,766,165 branches                  # 2272.832 M/sec                  
+       672,909,655 branch-misses             #    4.75% of all branches        
 
-       6.225643824 seconds time elapsed
+       6.241127590 seconds time elapsed
 
 SUM:684257280
 
  Performance counter stats for './out/GCD.clang.disableVC.out 10000':
 
-       6273.997791 task-clock (msec)         #    0.999 CPUs utilized          
-               562 context-switches          #    0.090 K/sec                  
+       6222.221152 task-clock (msec)         #    0.999 CPUs utilized          
+               571 context-switches          #    0.092 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               786 page-faults               #    0.126 K/sec                  
+    24,130,009,901 cycles                    #    3.878 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    36,953,451,931 instructions              #    1.53  insns per cycle        
+    14,174,540,011 branches                  # 2278.051 M/sec                  
+       673,276,329 branch-misses             #    4.75% of all branches        
+
+       6.226025683 seconds time elapsed
+
+SUM:684257280
+
+ Performance counter stats for './out/GCD.clang.disableVC.out 10000':
+
+       6241.861579 task-clock (msec)         #    0.999 CPUs utilized          
+               584 context-switches          #    0.094 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+             1,297 page-faults               #    0.208 K/sec                  
+    24,189,961,804 cycles                    #    3.875 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    36,954,914,845 instructions              #    1.53  insns per cycle        
+    14,174,779,353 branches                  # 2270.922 M/sec                  
+       673,351,214 branch-misses             #    4.75% of all branches        
+
+       6.245195474 seconds time elapsed
+
+SUM:684257280
+
+ Performance counter stats for './out/GCD.clang.disableVC.out 10000':
+
+       6226.751497 task-clock (msec)         #    0.999 CPUs utilized          
+               608 context-switches          #    0.098 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+             1,297 page-faults               #    0.208 K/sec                  
+    24,141,963,347 cycles                    #    3.877 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    36,955,005,231 instructions              #    1.53  insns per cycle        
+    14,174,798,900 branches                  # 2276.436 M/sec                  
+       673,384,805 branch-misses             #    4.75% of all branches        
+
+       6.231626576 seconds time elapsed
+
+SUM:684257280
+
+ Performance counter stats for './out/GCD.clang.disableVC.out 10000':
+
+       6265.820121 task-clock (msec)         #    0.987 CPUs utilized          
+               576 context-switches          #    0.092 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
                786 page-faults               #    0.125 K/sec                  
-    24,133,975,799 cycles                    #    3.847 GHz                    
+    24,132,261,464 cycles                    #    3.851 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,953,449,698 instructions              #    1.53  insns per cycle        
-    14,174,536,125 branches                  # 2259.251 M/sec                  
-       673,447,418 branch-misses             #    4.75% of all branches        
+    36,953,499,872 instructions              #    1.53  insns per cycle        
+    14,174,546,012 branches                  # 2262.201 M/sec                  
+       673,098,620 branch-misses             #    4.75% of all branches        
 
-       6.277278866 seconds time elapsed
+       6.346891570 seconds time elapsed
 
 SUM:684257280
 
  Performance counter stats for './out/GCD.clang.disableVC.out 10000':
 
-       6242.972834 task-clock (msec)         #    0.999 CPUs utilized          
-               559 context-switches          #    0.090 K/sec                  
+       6223.575530 task-clock (msec)         #    0.999 CPUs utilized          
+               561 context-switches          #    0.090 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
                786 page-faults               #    0.126 K/sec                  
-    24,139,400,629 cycles                    #    3.867 GHz                    
+    24,124,570,782 cycles                    #    3.876 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,953,390,300 instructions              #    1.53  insns per cycle        
-    14,174,525,692 branches                  # 2270.477 M/sec                  
-       673,400,561 branch-misses             #    4.75% of all branches        
+    36,953,254,217 instructions              #    1.53  insns per cycle        
+    14,174,516,696 branches                  # 2277.552 M/sec                  
+       673,219,607 branch-misses             #    4.75% of all branches        
 
-       6.247739185 seconds time elapsed
+       6.226739739 seconds time elapsed
 
 SUM:684257280
 
  Performance counter stats for './out/GCD.clang.disableVC.out 10000':
 
-       6221.670195 task-clock (msec)         #    0.999 CPUs utilized          
-               567 context-switches          #    0.091 K/sec                  
+       6328.404387 task-clock (msec)         #    0.998 CPUs utilized          
+               583 context-switches          #    0.092 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               786 page-faults               #    0.126 K/sec                  
-    24,130,295,403 cycles                    #    3.878 GHz                    
+               785 page-faults               #    0.124 K/sec                  
+    24,105,273,361 cycles                    #    3.809 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,953,278,449 instructions              #    1.53  insns per cycle        
-    14,174,517,306 branches                  # 2278.250 M/sec                  
-       673,086,996 branch-misses             #    4.75% of all branches        
+    36,953,580,294 instructions              #    1.53  insns per cycle        
+    14,174,560,816 branches                  # 2239.832 M/sec                  
+       672,265,502 branch-misses             #    4.74% of all branches        
 
-       6.227141677 seconds time elapsed
-
-SUM:684257280
-
- Performance counter stats for './out/GCD.clang.disableVC.out 10000':
-
-       6219.461182 task-clock (msec)         #    0.999 CPUs utilized          
-               564 context-switches          #    0.091 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-             1,297 page-faults               #    0.209 K/sec                  
-    24,128,058,372 cycles                    #    3.879 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-    36,954,796,828 instructions              #    1.53  insns per cycle        
-    14,174,758,952 branches                  # 2279.098 M/sec                  
-       673,499,210 branch-misses             #    4.75% of all branches        
-
-       6.225141984 seconds time elapsed
-
-SUM:684257280
-
- Performance counter stats for './out/GCD.clang.disableVC.out 10000':
-
-       6237.707343 task-clock (msec)         #    0.999 CPUs utilized          
-               566 context-switches          #    0.091 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-               785 page-faults               #    0.126 K/sec                  
-    24,110,018,834 cycles                    #    3.865 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-    36,953,433,682 instructions              #    1.53  insns per cycle        
-    14,174,533,196 branches                  # 2272.395 M/sec                  
-       672,362,189 branch-misses             #    4.74% of all branches        
-
-       6.242893162 seconds time elapsed
+       6.342249490 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -357,7 +357,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 1900.000
+cpu MHz		: 800.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
