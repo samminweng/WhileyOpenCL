@@ -5,14 +5,6 @@ import whiley.io.File
  * Implements Euclid's algorithm for finding the greatest common divisor of two numbers
  */
 type nat is (int x) where x >= 0
-/*function init(int n) -> int[]:
-    int[] data = [0;n]
-    int i = 0    
-    while i < n:
-        data[i] = data[i] + i
-        i = i + 1
-    return data
-*/
 
 // Euclid's algorithm
 function gcd(int a, int b) -> int:
@@ -38,7 +30,8 @@ function gcd_cached(int a, int b, int n, int[] gcds) -> int:
                 a = a - b
             else:
                 b = b - a
-            return gcds[a*n+b]
+            // use cached gcd (a = 2 b = 1)  
+            return gcds[a*n+b]  
 
 method main(System.Console sys):
     int n = 10
