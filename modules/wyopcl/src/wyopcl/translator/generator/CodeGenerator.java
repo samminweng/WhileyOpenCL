@@ -1,7 +1,5 @@
 package wyopcl.translator.generator;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -9,13 +7,9 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import wyil.attributes.VariableDeclarations;
 import wyil.lang.Code;
@@ -32,15 +26,11 @@ import wyil.lang.Codes.NewRecord;
 import wyil.lang.Codes.UnaryOperator;
 import wyil.lang.Constant;
 import wyil.lang.Type;
-import wyil.lang.Type.Union;
 import wyil.lang.WyilFile;
 import wyil.lang.WyilFile.FunctionOrMethod;
-import wyil.transforms.LiveVariablesAnalysis.Env;
 import wyopcl.Configuration;
-import wyopcl.translator.bound.BasicBlock;
 import wyopcl.translator.copy.CopyEliminationAnalyzer;
 import wyopcl.translator.deallocate.DeallocationAnalyzer;
-import wyopcl.translator.generator.CodeStores.CodeStore;
 
 /**
  * Takes a list of functional byte-code and converts it into C code.
@@ -1197,32 +1187,32 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			String print_name = stores.getField(code.operand(0), function);
 			// Get the input
 			String input = stores.getVar(code.operand(1), function);
-			Type type = stores.getRawType(code.operand(1), function);
-			int dimension = stores.getArrayDimension(type);
+			Type input_type = stores.getRawType(code.operand(1), function);
+			String f_s ="%lld";// Specify the format to 'printf' function, e.g. '%lld'
 			switch (print_name) {
 			case "print":
-				statement.add(indent + "printf(\"%lld\", " + input + ");");
+				statement.add(indent + "printf(\""+f_s+"\", " + input + ");");
 				break;
 			case "print_s":
+				int dimension = stores.getArrayDimension(input_type);
 				statement.add(indent + "printf_s(_" + dimension + "DARRAY_PARAM(" + input + "));");
 				break;
 			case "println_s":
+				dimension = stores.getArrayDimension(input_type);
 				statement.add(indent + "println_s(_" + dimension + "DARRAY_PARAM(" + input + "));");
 				break;
 			case "println":
 				// Check input's type to call different println function.
-				if (type instanceof Type.Int) {
-					statement.add(indent + "printf(\"%lld\\n\", " + input + ");");
-				} else if (type instanceof Type.Array) {
+				if (input_type instanceof Type.Int) {
+					statement.add(indent + "printf(\""+f_s+"\\n\", " + input + ");");
+				} else if (input_type instanceof Type.Array) {
 					statement.add(indent + "_1DARRAY_PRINT(" + input + ");");
-					// statement.add(indent+"printf_array(_"+dimension+"DARRAY_PARAM("
-					// + input + "));");
-				} else if (type instanceof Type.Nominal) {
-					Type.Nominal nominal = (Type.Nominal) type;
+				} else if (input_type instanceof Type.Nominal) {
+					Type.Nominal nominal = (Type.Nominal) input_type;
 					// Print out a user-defined type structure
 					statement.add(indent + "printf_" + nominal.name().name() + "(" + input + ");");
-				} else if (type instanceof Type.Union) {
-					statement.add(indent + "printf(\"%d\\n\", " + input + ");");
+				} else if (input_type instanceof Type.Union) {
+					statement.add(indent + "printf(\""+f_s+"\\n\", " + input + ");");
 				} else {
 					throw new RuntimeException("Not implemented." + code);
 				}
@@ -1231,7 +1221,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				throw new RuntimeException("Not implemented." + code);
 			}
 		} else {
-			// throw new RuntimeException("Not implemented." + code);
+			throw new RuntimeException("Not implemented." + code);
 		}
 		stores.addAllStatements(code, statement, function);
 	}
