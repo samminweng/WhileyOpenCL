@@ -44,7 +44,7 @@ runExecutables(){
     llc "llvm/$program.$opt.ll" -o "assembly/$program.$opt.s"
     if [[ $opt == *"openmp"* ]]
     then
-    	export OMP_NUM_THREADS=$num_threads
+    	export OMP_NUM_THREADS=2 ### Run the program using two threads.
     	### Use 'gcc' to compile .s file and link with 'libUtil.a'
     	clang "assembly/$program.$opt.s" Util.c -lgomp -o "out/$program.$opt.out" 
 	else
@@ -76,8 +76,7 @@ cleanup(){
 clang_polly(){
 	c_type=$1
 	program=$2
-	num_threads=$3
-	parameter=$4
+	parameter=$3
 	mkdir -p "out" # Store the executables.
 	rm -rf "out"/*
 
@@ -130,7 +129,7 @@ clang_polly(){
 	        -S -emit-llvm $program.c -o "llvm/$program.polly.disablevc.ll"
 	runExecutables $program "polly.disablevc" $parameter
 
-	echo -e -n "[4] Run ${BOLD}${GREEN} Polly-Optimized OpenMP ${RESET} executables with $num_threads threads" && read
+	echo -e -n "[4] Run ${BOLD}${GREEN} Polly-Optimized OpenMP ${RESET} executables with 2 threads" && read
 	pollycc -g -O3 -fno-vectorize\
 	        -mllvm -polly -S -emit-llvm\
 	        -mllvm -polly-parallel -lgomp $program.c -o "llvm/$program.openmp.disablevc.ll"
@@ -152,7 +151,7 @@ clang_polly(){
 	        -S -emit-llvm $program.c -o "llvm/$program.polly.enablevc.ll"
 	runExecutables $program "polly.enablevc" $parameter
 
-	echo -e -n "[4] Run ${BOLD}${GREEN} Polly-Optimized OpenMP ${RESET} executables with $num_threads threads" && read
+	echo -e -n "[4] Run ${BOLD}${GREEN} Polly-Optimized OpenMP ${RESET} executables with 2 threads" && read
 	pollycc -g -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine -S -emit-llvm\
 	        -mllvm -polly-parallel -lgomp $program.c -o "llvm/$program.openmp.enablevc.ll"
 	runExecutables $program "openmp.enablevc" $parameter 2
@@ -193,9 +192,10 @@ exec(){
 	cd ../../../
 }
 
-###exec autogenerate1 MatrixMult 2 1000  ### Determine matrix size from cmd line argument
-###exec autogenerate2 MatrixMult 2 1000  ### Determine matrix size from cmd line argument
-exec autogenerate GCD 2 10  ### Determine matrix size from cmd line argument
+###exec autogenerate1 MatrixMult 1000  ### Determine matrix size from cmd line argument
+###exec autogenerate2 MatrixMult 1000  
+exec autogenerate GCD 100  ### Use Euclid's algorithm
+exec autogenerate1 GCD 100 ### Cached the divisors
 ###exec autogenerate CoinGame 2 1000
 
 

@@ -16,6 +16,22 @@ function gcd(int a, int b) -> int:
         else:
             b = b - a
     return a
+// The constraint of this function is input data array is in acending order  
+// its value is the array index, e.g. data = [0, 1, 2, 3, 4]
+function gcd_cached(int a, int b, int n, int[] gcds) -> int:
+    if(a == 0):
+        return b
+    else:
+        if(b == 0): // Conside the case of 'b = 0'
+            return a
+        else:
+            // Use the cached GCD results
+            if(a > b):// a = 3 b =1
+                a = a - b
+            else:
+                b = b - a
+            // use cached gcd (a = 2 b = 1)  
+            return gcds[a*n+b]
 
 method main(System.Console sys):
     int|null max = Int.parse(sys.args[0])
@@ -23,21 +39,25 @@ method main(System.Console sys):
         int n = max
         sys.out.print_s("N = ")
         sys.out.println(n)
+        int[] gcds = [0;n*n] 
         int sum = 0
         int i = 0
         while i < n:
             int j = 0
             while j < n:
+                gcds[i*n+j] = gcd_cached(i, j, n, gcds)
+                // Check the cached gcd value
+                //assert gcds[i*n+j] == gcd(i, j)
                 //sys.out.print_s("Number: ")
                 //sys.out.print(i)
                 //sys.out.print_s(" Number: ")
                 //sys.out.print(j)
                 //sys.out.print_s(" GCD:")
-                //sys.out.println(gcd(i, j))
-                sum = sum + gcd(i, j)
+                //sys.out.println(gcds[i*n+j])
+                sum = sum + gcds[i*n+j]
                 j = j + 1
             i = i + 1
         sys.out.print_s("Sum: ")
         sys.out.println(sum)
-        sys.out.println_s("Pass Euclid GCD test case")
+        sys.out.println_s("Pass cached Euclid GCD test case")
         
