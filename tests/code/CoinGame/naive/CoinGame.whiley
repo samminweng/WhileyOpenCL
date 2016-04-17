@@ -1,7 +1,10 @@
 import whiley.lang.*
+import whiley.io.File
 
-// Initialize the line of coins 
-function init(int n) -> int[]:
+// The 'coins' array can be skipped 
+// because the coin value is the same as the index
+// Initialize the line of coins
+/*function init(int n) -> int[]:
     int[] coins = [0;n]
     // Fill in Matrix
     int i = 0    
@@ -9,9 +12,11 @@ function init(int n) -> int[]:
         coins[i] = coins[i] + i
         i = i + 1
     return coins
+*/
 
 // Simulate how the game is played. Alice goes first and Bob second.
-method play(System.Console sys, int[] moves, int[] coins, int n):
+// Note coin value is the same as the array index, e.g. [0, 1, 2, 3, 4]
+method play(System.Console sys, int[] moves, int n):
 	int left =0 // From the left
 	int right = n-1 // From the right
 	int i = 0
@@ -20,10 +25,10 @@ method play(System.Console sys, int[] moves, int[] coins, int n):
 	while i< n:
 		int coin = 0
 		if (moves[(left+1)*n+right] <= moves[left*n+right-1]):
-			coin = coins[left] // Pick coins[i]
+			coin = left // Pick coins[left]
 			left = left + 1
 		else:
-			coin = coins[right] // Pick coins[j]
+			coin = right // Pick coins[right]
 			right = right - 1
 
 		if i%2 == 0:
@@ -48,9 +53,9 @@ method play(System.Console sys, int[] moves, int[] coins, int n):
 	sys.out.print_s("The total amount of money (maximum) Bob gets is ")
 	sys.out.println(sum_bob)
 
-// Use dynamic programming to find moves for 
-function findMoves(int[] coins, int n) -> int[]:
-	int[] moves = [0;n*n]
+// Use dynamic programming to find moves for Alice
+// The coins are an array, starting from 0 upto n
+function findMoves(int[] moves, int n) -> int[]:
 	int s = 0
 	while s < n:
 		int j = s
@@ -77,10 +82,10 @@ function findMoves(int[] coins, int n) -> int[]:
 				z = y
 			
 			// Pick the coins.
-			if (coins[i] + x > coins[j] + z):
-				moves[i*n+j] = coins[i] + x// Pick V[i]
+			if (i + x > j + z):
+				moves[i*n+j] = i + x// Pick coins[i] = i
 			else:
-				moves[i*n+j] = coins[j] + z// Pick V[j]
+				moves[i*n+j] = j + z// Pick coins[j] = j
 			
 			j = j + 1
 			i = i + 1
@@ -90,13 +95,12 @@ function findMoves(int[] coins, int n) -> int[]:
 	return moves
 
 method main(System.Console sys):
-	int n = 10
-	int[] coins = init(n)
-	int[] moves = findMoves(coins, n)
-	int sum_alice = moves[n-1]
-	//play(sys, moves, coins, n)
-	sys.out.print_s("The total amount of money (maximum) Alice gets is ")
-	sys.out.println(sum_alice)
-	// Verify Alice's sum
-	assert sum_alice == 25
+    int n = 10
+    int[] moves = [0;n*n]
+    moves = findMoves(moves, n) // Pass 'moves' array to the function 
+    play(sys, moves, n)
+    int sum_alice = moves[n-1]
+    sys.out.print_s("The total amount of money (maximum) Alice gets is ")
+    sys.out.println(sum_alice)
 
+    	

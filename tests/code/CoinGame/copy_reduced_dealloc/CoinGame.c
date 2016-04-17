@@ -1,68 +1,12 @@
 #include "CoinGame.h"
-long long* init(long long n){
-	_DECL_1DARRAY(_1);
-	_DECL_OWNERSHIP(_1);
-	_DECL_1DARRAY(coins);
-	_DECL_OWNERSHIP(coins);
-	long long i = 0;
-	long long _4 = 0;
-	_DECL_1DARRAY(_5);
-	_DECL_OWNERSHIP(_5);
-	long long _6 = 0;
-	long long _7 = 0;
-	long long _8 = 0;
-	long long _9 = 0;
-	long long _10 = 0;
-	//const %4 = 0 : int
-	_4 = 0;
-	//arraygen %5 = [4; 0] : int[]
-	_FREE(_5);
-	_GEN_1DARRAY(_5, n, _4);
-	_ADD_OWNERSHIP(_5);
-	//assign %2 = %5  : int[]
-	_FREE(coins);
-	_1DARRAY_UPDATE(coins, _5);
-	_ADD_OWNERSHIP(coins);
-	_REMOVE_OWNERSHIP(_5);
-	//const %6 = 0 : int
-	_6 = 0;
-	//assign %3 = %6  : int
-	i = _6;
-	//loop (%2, %3, %7, %8, %9, %10)
-	while(true){
-		//ifge %3, %0 goto blklab0 : int
-		if(i>=n){goto blklab0;}
-		//indexof %7 = %2, %3 : int[]
-		_7=coins[i];
-		//add %8 = %7, %3 : int
-		_8=_7+i;
-		//update %2[%3] = %8 : int[] -> int[]
-		coins[i] = _8;
-		//const %9 = 1 : int
-		_9 = 1;
-		//add %10 = %3, %9 : int
-		_10=i+_9;
-		//assign %3 = %10  : int
-		i = _10;
-//.blklab1
-blklab1:;
-	}
-//.blklab0
-blklab0:;
-	//return %2
-	_FREE(_1);
-	_FREE(_5);
-	return coins;
-	//return
-}
-
-void play(FILE* sys, _DECL_1DARRAY_PARAM(moves), _DECL_OWNERSHIP_PARAM(moves), _DECL_1DARRAY_PARAM(coins), _DECL_OWNERSHIP_PARAM(coins), long long n){
+void play(FILE* sys, _DECL_1DARRAY_PARAM(moves), _DECL_OWNERSHIP_PARAM(moves), long long n){
 	long long left = 0;
 	long long right = 0;
 	long long i = 0;
 	long long sum_alice = 0;
 	long long sum_bob = 0;
 	long long coin = 0;
+	long long _9 = 0;
 	long long _10 = 0;
 	long long _11 = 0;
 	long long _12 = 0;
@@ -86,279 +30,269 @@ void play(FILE* sys, _DECL_1DARRAY_PARAM(moves), _DECL_OWNERSHIP_PARAM(moves), _
 	long long _30 = 0;
 	long long _31 = 0;
 	long long _32 = 0;
-	long long _33 = 0;
-	long long _34 = 0;
-	long long _35 = 0;
+	void* _33;
+	_DECL_1DARRAY(_35);
+	_DECL_OWNERSHIP(_35);
 	void* _36;
 	_DECL_1DARRAY(_38);
 	_DECL_OWNERSHIP(_38);
 	void* _39;
-	_DECL_1DARRAY(_41);
-	_DECL_OWNERSHIP(_41);
-	void* _42;
+	void* _41;
+	_DECL_1DARRAY(_43);
+	_DECL_OWNERSHIP(_43);
 	void* _44;
-	_DECL_1DARRAY(_46);
-	_DECL_OWNERSHIP(_46);
-	void* _47;
-	void* _49;
-	_DECL_1DARRAY(_51);
-	_DECL_OWNERSHIP(_51);
+	void* _46;
+	_DECL_1DARRAY(_48);
+	_DECL_OWNERSHIP(_48);
+	long long _49 = 0;
+	long long _50 = 0;
+	long long _51 = 0;
 	long long _52 = 0;
-	long long _53 = 0;
-	long long _54 = 0;
-	long long _55 = 0;
-	void* _56;
-	_DECL_1DARRAY(_58);
-	_DECL_OWNERSHIP(_58);
-	long long _59 = 0;
-	void* _60;
-	_DECL_1DARRAY(_62);
-	_DECL_OWNERSHIP(_62);
-	long long _63 = 0;
-	long long _64 = 0;
+	void* _53;
+	_DECL_1DARRAY(_55);
+	_DECL_OWNERSHIP(_55);
+	long long _56 = 0;
+	void* _57;
+	_DECL_1DARRAY(_59);
+	_DECL_OWNERSHIP(_59);
+	long long _60 = 0;
+	long long _61 = 0;
+	void* _62;
+	_DECL_1DARRAY(_64);
+	_DECL_OWNERSHIP(_64);
 	void* _65;
-	_DECL_1DARRAY(_67);
-	_DECL_OWNERSHIP(_67);
-	void* _68;
-	//const %10 = 0 : int
-	_10 = 0;
-	//assign %4 = %10  : int
-	left = _10;
-	//const %11 = 1 : int
-	_11 = 1;
-	//sub %12 = %3, %11 : int
-	_12=n-_11;
+	//const %9 = 0 : int
+	_9 = 0;
+	//assign %3 = %9  : int
+	left = _9;
+	//const %10 = 1 : int
+	_10 = 1;
+	//sub %11 = %2, %10 : int
+	_11=n-_10;
+	//assign %4 = %11  : int
+	right = _11;
+	//const %12 = 0 : int
+	_12 = 0;
 	//assign %5 = %12  : int
-	right = _12;
+	i = _12;
 	//const %13 = 0 : int
 	_13 = 0;
 	//assign %6 = %13  : int
-	i = _13;
+	sum_alice = _13;
 	//const %14 = 0 : int
 	_14 = 0;
 	//assign %7 = %14  : int
-	sum_alice = _14;
-	//const %15 = 0 : int
-	_15 = 0;
-	//assign %8 = %15  : int
-	sum_bob = _15;
-	//loop (%4, %5, %6, %7, %8, %9, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42, %43, %44, %45, %46, %47, %48, %49, %50, %51, %52, %53, %54, %55, %56, %57, %58, %59, %60, %61, %62, %63, %64)
+	sum_bob = _14;
+	//loop (%3, %4, %5, %6, %7, %8, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42, %43, %44, %45, %46, %47, %48, %49, %50, %51, %52, %53, %54, %55, %56, %57, %58, %59, %60, %61)
 	while(true){
-		//ifge %6, %3 goto blklab2 : int
-		if(i>=n){goto blklab2;}
-		//const %16 = 0 : int
-		_16 = 0;
-		//assign %9 = %16  : int
-		coin = _16;
-		//const %17 = 1 : int
-		_17 = 1;
-		//add %18 = %4, %17 : int
-		_18=left+_17;
-		//mul %19 = %18, %3 : int
-		_19=_18*n;
-		//add %20 = %19, %5 : int
-		_20=_19+right;
-		//indexof %21 = %1, %20 : int[]
-		_21=moves[_20];
-		//mul %22 = %4, %3 : int
-		_22=left*n;
-		//add %23 = %22, %5 : int
-		_23=_22+right;
-		//const %24 = 1 : int
-		_24 = 1;
-		//sub %25 = %23, %24 : int
-		_25=_23-_24;
-		//indexof %26 = %1, %25 : int[]
-		_26=moves[_25];
-		//ifgt %21, %26 goto blklab4 : int
-		if(_21>_26){goto blklab4;}
-		//indexof %27 = %2, %4 : int[]
-		_27=coins[left];
-		//assign %9 = %27  : int
-		coin = _27;
+		//ifge %5, %2 goto blklab0 : int
+		if(i>=n){goto blklab0;}
+		//const %15 = 0 : int
+		_15 = 0;
+		//assign %8 = %15  : int
+		coin = _15;
+		//const %16 = 1 : int
+		_16 = 1;
+		//add %17 = %3, %16 : int
+		_17=left+_16;
+		//mul %18 = %17, %2 : int
+		_18=_17*n;
+		//add %19 = %18, %4 : int
+		_19=_18+right;
+		//indexof %20 = %1, %19 : int[]
+		_20=moves[_19];
+		//mul %21 = %3, %2 : int
+		_21=left*n;
+		//add %22 = %21, %4 : int
+		_22=_21+right;
+		//const %23 = 1 : int
+		_23 = 1;
+		//sub %24 = %22, %23 : int
+		_24=_22-_23;
+		//indexof %25 = %1, %24 : int[]
+		_25=moves[_24];
+		//ifgt %20, %25 goto blklab2 : int
+		if(_20>_25){goto blklab2;}
+		//assign %8 = %3  : int
+		coin = left;
+		//const %26 = 1 : int
+		_26 = 1;
+		//add %27 = %3, %26 : int
+		_27=left+_26;
+		//assign %3 = %27  : int
+		left = _27;
+		//goto blklab3
+		goto blklab3;
+//.blklab2
+blklab2:;
+		//assign %8 = %4  : int
+		coin = right;
 		//const %28 = 1 : int
 		_28 = 1;
-		//add %29 = %4, %28 : int
-		_29=left+_28;
+		//sub %29 = %4, %28 : int
+		_29=right-_28;
 		//assign %4 = %29  : int
-		left = _29;
+		right = _29;
+//.blklab3
+blklab3:;
+		//const %30 = 2 : int
+		_30 = 2;
+		//rem %31 = %5, %30 : int
+		_31=i%_30;
+		//const %32 = 0 : int
+		_32 = 0;
+		//ifne %31, %32 goto blklab4 : int
+		if(_31!=_32){goto blklab4;}
+		//fieldload %33 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+		//fieldload %34 = %33 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+		//const %35 = [65,108,105,99,101,32,116,97,107,101,32,99,111,105,110,32,40,32] : int[]
+		_FREE(_35);
+		_NEW_ARRAY(_35, 18);
+		_35[0] = 65; _35[1] = 108; _35[2] = 105; _35[3] = 99; _35[4] = 101; _35[5] = 32; _35[6] = 116; _35[7] = 97; _35[8] = 107; _35[9] = 101; _35[10] = 32; _35[11] = 99; _35[12] = 111; _35[13] = 105; _35[14] = 110; _35[15] = 32; _35[16] = 40; _35[17] = 32; 
+		_ADD_OWNERSHIP(_35);
+		//indirectinvoke () = %34 (%35) : method(int[])->()
+		printf_s(_1DARRAY_PARAM(_35));
 		//goto blklab5
 		goto blklab5;
 //.blklab4
 blklab4:;
-		//indexof %30 = %2, %5 : int[]
-		_30=coins[right];
-		//assign %9 = %30  : int
-		coin = _30;
-		//const %31 = 1 : int
-		_31 = 1;
-		//sub %32 = %5, %31 : int
-		_32=right-_31;
-		//assign %5 = %32  : int
-		right = _32;
-//.blklab5
-blklab5:;
-		//const %33 = 2 : int
-		_33 = 2;
-		//rem %34 = %6, %33 : int
-		_34=i%_33;
-		//const %35 = 0 : int
-		_35 = 0;
-		//ifne %34, %35 goto blklab6 : int
-		if(_34!=_35){goto blklab6;}
 		//fieldload %36 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 		//fieldload %37 = %36 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-		//const %38 = [65,108,105,99,101,32,116,97,107,101,32,99,111,105,110,32,40,32] : int[]
+		//const %38 = [66,111,98,32,116,97,107,101,32,99,111,105,110,32,40,32] : int[]
 		_FREE(_38);
-		_NEW_ARRAY(_38, 18);
-		_38[0] = 65; _38[1] = 108; _38[2] = 105; _38[3] = 99; _38[4] = 101; _38[5] = 32; _38[6] = 116; _38[7] = 97; _38[8] = 107; _38[9] = 101; _38[10] = 32; _38[11] = 99; _38[12] = 111; _38[13] = 105; _38[14] = 110; _38[15] = 32; _38[16] = 40; _38[17] = 32; 
+		_NEW_ARRAY(_38, 16);
+		_38[0] = 66; _38[1] = 111; _38[2] = 98; _38[3] = 32; _38[4] = 116; _38[5] = 97; _38[6] = 107; _38[7] = 101; _38[8] = 32; _38[9] = 99; _38[10] = 111; _38[11] = 105; _38[12] = 110; _38[13] = 32; _38[14] = 40; _38[15] = 32; 
 		_ADD_OWNERSHIP(_38);
 		//indirectinvoke () = %37 (%38) : method(int[])->()
 		printf_s(_1DARRAY_PARAM(_38));
+//.blklab5
+blklab5:;
+		//fieldload %39 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+		//fieldload %40 = %39 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+		//indirectinvoke () = %40 (%5) : method(any)->()
+		printf("%lld", i);
+		//fieldload %41 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+		//fieldload %42 = %41 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+		//const %43 = [32,44,32] : int[]
+		_FREE(_43);
+		_NEW_ARRAY(_43, 3);
+		_43[0] = 32; _43[1] = 44; _43[2] = 32; 
+		_ADD_OWNERSHIP(_43);
+		//indirectinvoke () = %42 (%43) : method(int[])->()
+		printf_s(_1DARRAY_PARAM(_43));
+		//fieldload %44 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+		//fieldload %45 = %44 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+		//indirectinvoke () = %45 (%8) : method(any)->()
+		printf("%lld", coin);
+		//fieldload %46 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+		//fieldload %47 = %46 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+		//const %48 = [32,41] : int[]
+		_FREE(_48);
+		_NEW_ARRAY(_48, 2);
+		_48[0] = 32; _48[1] = 41; 
+		_ADD_OWNERSHIP(_48);
+		//indirectinvoke () = %47 (%48) : method(int[])->()
+		printf_s(_1DARRAY_PARAM(_48));
+		//const %49 = 2 : int
+		_49 = 2;
+		//rem %50 = %5, %49 : int
+		_50=i%_49;
+		//const %51 = 0 : int
+		_51 = 0;
+		//ifne %50, %51 goto blklab6 : int
+		if(_50!=_51){goto blklab6;}
+		//add %52 = %6, %8 : int
+		_52=sum_alice+coin;
+		//assign %6 = %52  : int
+		sum_alice = _52;
+		//fieldload %53 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+		//fieldload %54 = %53 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+		//const %55 = [44,32] : int[]
+		_FREE(_55);
+		_NEW_ARRAY(_55, 2);
+		_55[0] = 44; _55[1] = 32; 
+		_ADD_OWNERSHIP(_55);
+		//indirectinvoke () = %54 (%55) : method(int[])->()
+		printf_s(_1DARRAY_PARAM(_55));
 		//goto blklab7
 		goto blklab7;
 //.blklab6
 blklab6:;
-		//fieldload %39 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-		//fieldload %40 = %39 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-		//const %41 = [66,111,98,32,116,97,107,101,32,99,111,105,110,32,40,32] : int[]
-		_FREE(_41);
-		_NEW_ARRAY(_41, 16);
-		_41[0] = 66; _41[1] = 111; _41[2] = 98; _41[3] = 32; _41[4] = 116; _41[5] = 97; _41[6] = 107; _41[7] = 101; _41[8] = 32; _41[9] = 99; _41[10] = 111; _41[11] = 105; _41[12] = 110; _41[13] = 32; _41[14] = 40; _41[15] = 32; 
-		_ADD_OWNERSHIP(_41);
-		//indirectinvoke () = %40 (%41) : method(int[])->()
-		printf_s(_1DARRAY_PARAM(_41));
+		//add %56 = %7, %8 : int
+		_56=sum_bob+coin;
+		//assign %7 = %56  : int
+		sum_bob = _56;
+		//fieldload %57 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+		//fieldload %58 = %57 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+		//const %59 = [32] : int[]
+		_FREE(_59);
+		_NEW_ARRAY(_59, 1);
+		_59[0] = 32; 
+		_ADD_OWNERSHIP(_59);
+		//indirectinvoke () = %58 (%59) : method(int[])->()
+		println_s(_1DARRAY_PARAM(_59));
 //.blklab7
 blklab7:;
-		//fieldload %42 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-		//fieldload %43 = %42 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-		//indirectinvoke () = %43 (%6) : method(any)->()
-		printf("%lld", i);
-		//fieldload %44 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-		//fieldload %45 = %44 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-		//const %46 = [32,44,32] : int[]
-		_FREE(_46);
-		_NEW_ARRAY(_46, 3);
-		_46[0] = 32; _46[1] = 44; _46[2] = 32; 
-		_ADD_OWNERSHIP(_46);
-		//indirectinvoke () = %45 (%46) : method(int[])->()
-		printf_s(_1DARRAY_PARAM(_46));
-		//fieldload %47 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-		//fieldload %48 = %47 print : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-		//indirectinvoke () = %48 (%9) : method(any)->()
-		printf("%lld", coin);
-		//fieldload %49 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-		//fieldload %50 = %49 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-		//const %51 = [32,41] : int[]
-		_FREE(_51);
-		_NEW_ARRAY(_51, 2);
-		_51[0] = 32; _51[1] = 41; 
-		_ADD_OWNERSHIP(_51);
-		//indirectinvoke () = %50 (%51) : method(int[])->()
-		printf_s(_1DARRAY_PARAM(_51));
-		//const %52 = 2 : int
-		_52 = 2;
-		//rem %53 = %6, %52 : int
-		_53=i%_52;
-		//const %54 = 0 : int
-		_54 = 0;
-		//ifne %53, %54 goto blklab8 : int
-		if(_53!=_54){goto blklab8;}
-		//add %55 = %7, %9 : int
-		_55=sum_alice+coin;
-		//assign %7 = %55  : int
-		sum_alice = _55;
-		//fieldload %56 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-		//fieldload %57 = %56 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-		//const %58 = [44,32] : int[]
-		_FREE(_58);
-		_NEW_ARRAY(_58, 2);
-		_58[0] = 44; _58[1] = 32; 
-		_ADD_OWNERSHIP(_58);
-		//indirectinvoke () = %57 (%58) : method(int[])->()
-		printf_s(_1DARRAY_PARAM(_58));
-		//goto blklab9
-		goto blklab9;
-//.blklab8
-blklab8:;
-		//add %59 = %8, %9 : int
-		_59=sum_bob+coin;
-		//assign %8 = %59  : int
-		sum_bob = _59;
-		//fieldload %60 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-		//fieldload %61 = %60 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-		//const %62 = [32] : int[]
-		_FREE(_62);
-		_NEW_ARRAY(_62, 1);
-		_62[0] = 32; 
-		_ADD_OWNERSHIP(_62);
-		//indirectinvoke () = %61 (%62) : method(int[])->()
-		println_s(_1DARRAY_PARAM(_62));
-//.blklab9
-blklab9:;
-		//const %63 = 1 : int
-		_63 = 1;
-		//add %64 = %6, %63 : int
-		_64=i+_63;
-		//assign %6 = %64  : int
-		i = _64;
-//.blklab3
-blklab3:;
+		//const %60 = 1 : int
+		_60 = 1;
+		//add %61 = %5, %60 : int
+		_61=i+_60;
+		//assign %5 = %61  : int
+		i = _61;
+//.blklab1
+blklab1:;
 	}
-//.blklab2
-blklab2:;
+//.blklab0
+blklab0:;
 	//assert
 	{
-		//ifge %7, %8 goto blklab10 : int
-		if(sum_alice>=sum_bob){goto blklab10;}
+		//ifge %6, %7 goto blklab8 : int
+		if(sum_alice>=sum_bob){goto blklab8;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
-//.blklab10
-blklab10:;
+//.blklab8
+blklab8:;
 	//assert
 	}
+	//fieldload %62 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %63 = %62 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %64 = [84,104,101,32,116,111,116,97,108,32,97,109,111,117,110,116,32,111,102,32,109,111,110,101,121,32,40,109,97,120,105,109,117,109,41,32,66,111,98,32,103,101,116,115,32,105,115,32] : int[]
+	_FREE(_64);
+	_NEW_ARRAY(_64, 48);
+	_64[0] = 84; _64[1] = 104; _64[2] = 101; _64[3] = 32; _64[4] = 116; _64[5] = 111; _64[6] = 116; _64[7] = 97; _64[8] = 108; _64[9] = 32; _64[10] = 97; _64[11] = 109; _64[12] = 111; _64[13] = 117; _64[14] = 110; _64[15] = 116; _64[16] = 32; _64[17] = 111; _64[18] = 102; _64[19] = 32; _64[20] = 109; _64[21] = 111; _64[22] = 110; _64[23] = 101; _64[24] = 121; _64[25] = 32; _64[26] = 40; _64[27] = 109; _64[28] = 97; _64[29] = 120; _64[30] = 105; _64[31] = 109; _64[32] = 117; _64[33] = 109; _64[34] = 41; _64[35] = 32; _64[36] = 66; _64[37] = 111; _64[38] = 98; _64[39] = 32; _64[40] = 103; _64[41] = 101; _64[42] = 116; _64[43] = 115; _64[44] = 32; _64[45] = 105; _64[46] = 115; _64[47] = 32; 
+	_ADD_OWNERSHIP(_64);
+	//indirectinvoke () = %63 (%64) : method(int[])->()
+	printf_s(_1DARRAY_PARAM(_64));
 	//fieldload %65 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %66 = %65 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %67 = [84,104,101,32,116,111,116,97,108,32,97,109,111,117,110,116,32,111,102,32,109,111,110,101,121,32,40,109,97,120,105,109,117,109,41,32,66,111,98,32,103,101,116,115,32,105,115,32] : int[]
-	_FREE(_67);
-	_NEW_ARRAY(_67, 48);
-	_67[0] = 84; _67[1] = 104; _67[2] = 101; _67[3] = 32; _67[4] = 116; _67[5] = 111; _67[6] = 116; _67[7] = 97; _67[8] = 108; _67[9] = 32; _67[10] = 97; _67[11] = 109; _67[12] = 111; _67[13] = 117; _67[14] = 110; _67[15] = 116; _67[16] = 32; _67[17] = 111; _67[18] = 102; _67[19] = 32; _67[20] = 109; _67[21] = 111; _67[22] = 110; _67[23] = 101; _67[24] = 121; _67[25] = 32; _67[26] = 40; _67[27] = 109; _67[28] = 97; _67[29] = 120; _67[30] = 105; _67[31] = 109; _67[32] = 117; _67[33] = 109; _67[34] = 41; _67[35] = 32; _67[36] = 66; _67[37] = 111; _67[38] = 98; _67[39] = 32; _67[40] = 103; _67[41] = 101; _67[42] = 116; _67[43] = 115; _67[44] = 32; _67[45] = 105; _67[46] = 115; _67[47] = 32; 
-	_ADD_OWNERSHIP(_67);
-	//indirectinvoke () = %66 (%67) : method(int[])->()
-	printf_s(_1DARRAY_PARAM(_67));
-	//fieldload %68 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %69 = %68 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//indirectinvoke () = %69 (%8) : method(any)->()
+	//fieldload %66 = %65 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//indirectinvoke () = %66 (%7) : method(any)->()
 	printf("%lld\n", sum_bob);
 	//return
 	_FREE(moves);
-	_FREE(coins);
+	_FREE(_35);
 	_FREE(_38);
-	_FREE(_41);
-	_FREE(_46);
-	_FREE(_51);
-	_FREE(_58);
-	_FREE(_62);
-	_FREE(_67);
+	_FREE(_43);
+	_FREE(_48);
+	_FREE(_55);
+	_FREE(_59);
+	_FREE(_64);
 	return;
 }
 
-long long* findMoves(_DECL_1DARRAY_PARAM(coins), _DECL_OWNERSHIP_PARAM(coins), long long n){
+long long* findMoves(_DECL_1DARRAY_PARAM(moves), _DECL_OWNERSHIP_PARAM(moves), long long n){
 	_DECL_1DARRAY(_2);
 	_DECL_OWNERSHIP(_2);
-	_DECL_1DARRAY(moves);
-	_DECL_OWNERSHIP(moves);
 	long long s = 0;
 	long long j = 0;
 	long long i = 0;
 	long long y = 0;
 	long long x = 0;
 	long long z = 0;
+	long long _9 = 0;
 	long long _10 = 0;
 	long long _11 = 0;
-	_DECL_1DARRAY(_12);
-	_DECL_OWNERSHIP(_12);
+	long long _12 = 0;
 	long long _13 = 0;
 	long long _14 = 0;
 	long long _15 = 0;
@@ -401,299 +335,260 @@ long long* findMoves(_DECL_1DARRAY_PARAM(coins), _DECL_OWNERSHIP_PARAM(coins), l
 	long long _52 = 0;
 	long long _53 = 0;
 	long long _54 = 0;
-	long long _55 = 0;
-	long long _56 = 0;
-	long long _57 = 0;
-	long long _58 = 0;
-	long long _59 = 0;
-	long long _60 = 0;
-	long long _61 = 0;
-	long long _62 = 0;
-	//const %10 = 0 : int
-	_10 = 0;
-	//mul %11 = %1, %1 : int
-	_11=n*n;
-	//arraygen %12 = [10; 11] : int[]
-	_FREE(_12);
-	_GEN_1DARRAY(_12, _11, _10);
-	_ADD_OWNERSHIP(_12);
-	//assign %3 = %12  : int[]
-	_FREE(moves);
-	_1DARRAY_UPDATE(moves, _12);
-	_ADD_OWNERSHIP(moves);
-	_REMOVE_OWNERSHIP(_12);
-	//const %13 = 0 : int
-	_13 = 0;
-	//assign %4 = %13  : int
-	s = _13;
-	//loop (%3, %4, %5, %6, %7, %8, %9, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42, %43, %44, %45, %46, %47, %48, %49, %50, %51, %52, %53, %54, %55, %56, %57, %58, %59, %60, %61, %62)
+	//const %9 = 0 : int
+	_9 = 0;
+	//assign %3 = %9  : int
+	s = _9;
+	//loop (%0, %3, %4, %5, %6, %7, %8, %10, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42, %43, %44, %45, %46, %47, %48, %49, %50, %51, %52, %53, %54)
 	while(true){
-		//ifge %4, %1 goto blklab11 : int
-		if(s>=n){goto blklab11;}
-		//assign %5 = %4  : int
+		//ifge %3, %1 goto blklab9 : int
+		if(s>=n){goto blklab9;}
+		//assign %4 = %3  : int
 		j = s;
-		//const %14 = 0 : int
-		_14 = 0;
-		//assign %6 = %14  : int
-		i = _14;
-		//loop (%3, %5, %6, %7, %8, %9, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42, %43, %44, %45, %46, %47, %48, %49, %50, %51, %52, %53, %54, %55, %56, %57, %58, %59, %60)
+		//const %10 = 0 : int
+		_10 = 0;
+		//assign %5 = %10  : int
+		i = _10;
+		//loop (%0, %4, %5, %6, %7, %8, %11, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33, %34, %35, %36, %37, %38, %39, %40, %41, %42, %43, %44, %45, %46, %47, %48, %49, %50, %51, %52)
 		while(true){
-			//ifge %5, %1 goto blklab13 : int
-			if(j>=n){goto blklab13;}
-			//const %15 = 0 : int
-			_15 = 0;
-			//assign %7 = %15  : int
-			y = _15;
-			//const %16 = 1 : int
-			_16 = 1;
-			//add %17 = %6, %16 : int
-			_17=i+_16;
-			//ifge %17, %1 goto blklab15 : int
-			if(_17>=n){goto blklab15;}
-			//const %18 = 1 : int
-			_18 = 1;
-			//sub %19 = %5, %18 : int
-			_19=j-_18;
-			//const %20 = 0 : int
-			_20 = 0;
-			//iflt %19, %20 goto blklab15 : int
-			if(_19<_20){goto blklab15;}
+			//ifge %4, %1 goto blklab11 : int
+			if(j>=n){goto blklab11;}
+			//const %11 = 0 : int
+			_11 = 0;
+			//assign %6 = %11  : int
+			y = _11;
+			//const %12 = 1 : int
+			_12 = 1;
+			//add %13 = %5, %12 : int
+			_13=i+_12;
+			//ifge %13, %1 goto blklab13 : int
+			if(_13>=n){goto blklab13;}
+			//const %14 = 1 : int
+			_14 = 1;
+			//sub %15 = %4, %14 : int
+			_15=j-_14;
+			//const %16 = 0 : int
+			_16 = 0;
+			//iflt %15, %16 goto blklab13 : int
+			if(_15<_16){goto blklab13;}
+			//const %17 = 1 : int
+			_17 = 1;
+			//add %18 = %5, %17 : int
+			_18=i+_17;
+			//mul %19 = %18, %1 : int
+			_19=_18*n;
+			//add %20 = %19, %4 : int
+			_20=_19+j;
 			//const %21 = 1 : int
 			_21 = 1;
-			//add %22 = %6, %21 : int
-			_22=i+_21;
-			//mul %23 = %22, %1 : int
-			_23=_22*n;
-			//add %24 = %23, %5 : int
-			_24=_23+j;
-			//const %25 = 1 : int
-			_25 = 1;
-			//sub %26 = %24, %25 : int
-			_26=_24-_25;
-			//indexof %27 = %3, %26 : int[]
-			_27=moves[_26];
-			//assign %7 = %27  : int
-			y = _27;
-//.blklab15
-blklab15:;
-			//const %28 = 0 : int
-			_28 = 0;
-			//assign %8 = %28  : int
-			x = _28;
-			//const %29 = 2 : int
-			_29 = 2;
-			//add %30 = %6, %29 : int
-			_30=i+_29;
-			//ifge %30, %1 goto blklab16 : int
-			if(_30>=n){goto blklab16;}
-			//const %31 = 2 : int
-			_31 = 2;
-			//add %32 = %6, %31 : int
-			_32=i+_31;
-			//mul %33 = %32, %1 : int
-			_33=_32*n;
-			//add %34 = %33, %5 : int
-			_34=_33+j;
-			//indexof %35 = %3, %34 : int[]
-			_35=moves[_34];
-			//assign %8 = %35  : int
-			x = _35;
-//.blklab16
-blklab16:;
-			//const %36 = 0 : int
-			_36 = 0;
-			//assign %9 = %36  : int
-			z = _36;
-			//const %37 = 1 : int
-			_37 = 1;
-			//sub %38 = %5, %37 : int
-			_38=j-_37;
-			//const %39 = 0 : int
-			_39 = 0;
-			//ifle %38, %39 goto blklab17 : int
-			if(_38<=_39){goto blklab17;}
-			//mul %40 = %6, %1 : int
-			_40=i*n;
-			//add %41 = %40, %5 : int
-			_41=_40+j;
-			//const %42 = 2 : int
-			_42 = 2;
-			//sub %43 = %41, %42 : int
-			_43=_41-_42;
-			//indexof %44 = %3, %43 : int[]
-			_44=moves[_43];
-			//assign %9 = %44  : int
-			z = _44;
-//.blklab17
-blklab17:;
-			//ifle %8, %7 goto blklab18 : int
-			if(x<=y){goto blklab18;}
-			//assign %8 = %7  : int
-			x = y;
-//.blklab18
-blklab18:;
-			//ifle %9, %7 goto blklab19 : int
-			if(z<=y){goto blklab19;}
-			//assign %9 = %7  : int
-			z = y;
-//.blklab19
-blklab19:;
-			//indexof %45 = %0, %6 : int[]
-			_45=coins[i];
-			//add %46 = %45, %8 : int
-			_46=_45+x;
-			//indexof %47 = %0, %5 : int[]
-			_47=coins[j];
-			//add %48 = %47, %9 : int
-			_48=_47+z;
-			//ifle %46, %48 goto blklab20 : int
-			if(_46<=_48){goto blklab20;}
-			//indexof %49 = %0, %6 : int[]
-			_49=coins[i];
-			//add %50 = %49, %8 : int
-			_50=_49+x;
-			//mul %51 = %6, %1 : int
-			_51=i*n;
-			//add %52 = %51, %5 : int
-			_52=_51+j;
-			//update %3[%52] = %50 : int[] -> int[]
-			moves[_52] = _50;
-			//goto blklab21
-			goto blklab21;
-//.blklab20
-blklab20:;
-			//indexof %53 = %0, %5 : int[]
-			_53=coins[j];
-			//add %54 = %53, %9 : int
-			_54=_53+z;
-			//mul %55 = %6, %1 : int
-			_55=i*n;
-			//add %56 = %55, %5 : int
-			_56=_55+j;
-			//update %3[%56] = %54 : int[] -> int[]
-			moves[_56] = _54;
-//.blklab21
-blklab21:;
-			//const %57 = 1 : int
-			_57 = 1;
-			//add %58 = %5, %57 : int
-			_58=j+_57;
-			//assign %5 = %58  : int
-			j = _58;
-			//const %59 = 1 : int
-			_59 = 1;
-			//add %60 = %6, %59 : int
-			_60=i+_59;
-			//assign %6 = %60  : int
-			i = _60;
-//.blklab14
-blklab14:;
-		}
+			//sub %22 = %20, %21 : int
+			_22=_20-_21;
+			//indexof %23 = %0, %22 : int[]
+			_23=moves[_22];
+			//assign %6 = %23  : int
+			y = _23;
 //.blklab13
 blklab13:;
-		//const %61 = 1 : int
-		_61 = 1;
-		//add %62 = %4, %61 : int
-		_62=s+_61;
-		//assign %4 = %62  : int
-		s = _62;
+			//const %24 = 0 : int
+			_24 = 0;
+			//assign %7 = %24  : int
+			x = _24;
+			//const %25 = 2 : int
+			_25 = 2;
+			//add %26 = %5, %25 : int
+			_26=i+_25;
+			//ifge %26, %1 goto blklab14 : int
+			if(_26>=n){goto blklab14;}
+			//const %27 = 2 : int
+			_27 = 2;
+			//add %28 = %5, %27 : int
+			_28=i+_27;
+			//mul %29 = %28, %1 : int
+			_29=_28*n;
+			//add %30 = %29, %4 : int
+			_30=_29+j;
+			//indexof %31 = %0, %30 : int[]
+			_31=moves[_30];
+			//assign %7 = %31  : int
+			x = _31;
+//.blklab14
+blklab14:;
+			//const %32 = 0 : int
+			_32 = 0;
+			//assign %8 = %32  : int
+			z = _32;
+			//const %33 = 1 : int
+			_33 = 1;
+			//sub %34 = %4, %33 : int
+			_34=j-_33;
+			//const %35 = 0 : int
+			_35 = 0;
+			//ifle %34, %35 goto blklab15 : int
+			if(_34<=_35){goto blklab15;}
+			//mul %36 = %5, %1 : int
+			_36=i*n;
+			//add %37 = %36, %4 : int
+			_37=_36+j;
+			//const %38 = 2 : int
+			_38 = 2;
+			//sub %39 = %37, %38 : int
+			_39=_37-_38;
+			//indexof %40 = %0, %39 : int[]
+			_40=moves[_39];
+			//assign %8 = %40  : int
+			z = _40;
+//.blklab15
+blklab15:;
+			//ifle %7, %6 goto blklab16 : int
+			if(x<=y){goto blklab16;}
+			//assign %7 = %6  : int
+			x = y;
+//.blklab16
+blklab16:;
+			//ifle %8, %6 goto blklab17 : int
+			if(z<=y){goto blklab17;}
+			//assign %8 = %6  : int
+			z = y;
+//.blklab17
+blklab17:;
+			//add %41 = %5, %7 : int
+			_41=i+x;
+			//add %42 = %4, %8 : int
+			_42=j+z;
+			//ifle %41, %42 goto blklab18 : int
+			if(_41<=_42){goto blklab18;}
+			//add %43 = %5, %7 : int
+			_43=i+x;
+			//mul %44 = %5, %1 : int
+			_44=i*n;
+			//add %45 = %44, %4 : int
+			_45=_44+j;
+			//update %0[%45] = %43 : int[] -> int[]
+			moves[_45] = _43;
+			//goto blklab19
+			goto blklab19;
+//.blklab18
+blklab18:;
+			//add %46 = %4, %8 : int
+			_46=j+z;
+			//mul %47 = %5, %1 : int
+			_47=i*n;
+			//add %48 = %47, %4 : int
+			_48=_47+j;
+			//update %0[%48] = %46 : int[] -> int[]
+			moves[_48] = _46;
+//.blklab19
+blklab19:;
+			//const %49 = 1 : int
+			_49 = 1;
+			//add %50 = %4, %49 : int
+			_50=j+_49;
+			//assign %4 = %50  : int
+			j = _50;
+			//const %51 = 1 : int
+			_51 = 1;
+			//add %52 = %5, %51 : int
+			_52=i+_51;
+			//assign %5 = %52  : int
+			i = _52;
 //.blklab12
 blklab12:;
-	}
+		}
 //.blklab11
 blklab11:;
-	//return %3
-	_FREE(coins);
+		//const %53 = 1 : int
+		_53 = 1;
+		//add %54 = %3, %53 : int
+		_54=s+_53;
+		//assign %3 = %54  : int
+		s = _54;
+//.blklab10
+blklab10:;
+	}
+//.blklab9
+blklab9:;
+	//return %0
 	_FREE(_2);
-	_FREE(_12);
 	return moves;
 	//return
 }
 
 int main(int argc, char** args){
 	long long n = 0;
-	_DECL_1DARRAY(coins);
-	_DECL_OWNERSHIP(coins);
 	_DECL_1DARRAY(moves);
 	_DECL_OWNERSHIP(moves);
 	long long sum_alice = 0;
+	long long _4 = 0;
 	long long _5 = 0;
-	_DECL_1DARRAY(_6);
-	_DECL_OWNERSHIP(_6);
+	long long _6 = 0;
 	_DECL_1DARRAY(_7);
 	_DECL_OWNERSHIP(_7);
-	long long _8 = 0;
+	_DECL_1DARRAY(_8);
+	_DECL_OWNERSHIP(_8);
 	long long _9 = 0;
 	long long _10 = 0;
-	void* _11;
-	_DECL_1DARRAY(_13);
-	_DECL_OWNERSHIP(_13);
-	void* _14;
-	long long _16 = 0;
-	//const %5 = 10 : int
-	_5 = 10;
-	//assign %1 = %5  : int
-	n = _5;
-	//invoke (%6) = (%1) CoinGame:init : function(int)->(int[])
-	_FREE(_6);
-	_6 = init(n);
-	_ADD_OWNERSHIP(_6);
-	//assign %2 = %6  : int[]
-	_FREE(coins);
-	_1DARRAY_UPDATE(coins, _6);
-	_ADD_OWNERSHIP(coins);
-	_REMOVE_OWNERSHIP(_6);
-	//invoke (%7) = (%2, %1) CoinGame:findMoves : function(int[],int)->(int[])
+	long long _11 = 0;
+	void* _12;
+	_DECL_1DARRAY(_14);
+	_DECL_OWNERSHIP(_14);
+	void* _15;
+	//const %4 = 10 : int
+	_4 = 10;
+	//assign %1 = %4  : int
+	n = _4;
+	//const %5 = 0 : int
+	_5 = 0;
+	//mul %6 = %1, %1 : int
+	_6=n*n;
+	//arraygen %7 = [5; 6] : int[]
 	_FREE(_7);
-	_ADD_OWNERSHIP(coins);
-	_1DARRAY_SIZE(_7, coins);
-	_7 = findMoves(_1DARRAY_PARAM(coins), false, n);
+	_GEN_1DARRAY(_7, _6, _5);
 	_ADD_OWNERSHIP(_7);
-	//assign %3 = %7  : int[]
+	//assign %2 = %7  : int[]
 	_FREE(moves);
 	_1DARRAY_UPDATE(moves, _7);
 	_ADD_OWNERSHIP(moves);
 	_REMOVE_OWNERSHIP(_7);
-	//const %8 = 1 : int
-	_8 = 1;
-	//sub %9 = %1, %8 : int
-	_9=n-_8;
-	//indexof %10 = %3, %9 : int[]
-	_10=moves[_9];
-	//assign %4 = %10  : int
-	sum_alice = _10;
-	//fieldload %11 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %12 = %11 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//const %13 = [84,104,101,32,116,111,116,97,108,32,97,109,111,117,110,116,32,111,102,32,109,111,110,101,121,32,40,109,97,120,105,109,117,109,41,32,65,108,105,99,101,32,103,101,116,115,32,105,115,32] : int[]
-	_FREE(_13);
-	_NEW_ARRAY(_13, 50);
-	_13[0] = 84; _13[1] = 104; _13[2] = 101; _13[3] = 32; _13[4] = 116; _13[5] = 111; _13[6] = 116; _13[7] = 97; _13[8] = 108; _13[9] = 32; _13[10] = 97; _13[11] = 109; _13[12] = 111; _13[13] = 117; _13[14] = 110; _13[15] = 116; _13[16] = 32; _13[17] = 111; _13[18] = 102; _13[19] = 32; _13[20] = 109; _13[21] = 111; _13[22] = 110; _13[23] = 101; _13[24] = 121; _13[25] = 32; _13[26] = 40; _13[27] = 109; _13[28] = 97; _13[29] = 120; _13[30] = 105; _13[31] = 109; _13[32] = 117; _13[33] = 109; _13[34] = 41; _13[35] = 32; _13[36] = 65; _13[37] = 108; _13[38] = 105; _13[39] = 99; _13[40] = 101; _13[41] = 32; _13[42] = 103; _13[43] = 101; _13[44] = 116; _13[45] = 115; _13[46] = 32; _13[47] = 105; _13[48] = 115; _13[49] = 32; 
-	_ADD_OWNERSHIP(_13);
-	//indirectinvoke () = %12 (%13) : method(int[])->()
-	printf_s(_1DARRAY_PARAM(_13));
-	//fieldload %14 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
-	//fieldload %15 = %14 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
-	//indirectinvoke () = %15 (%4) : method(any)->()
-	printf("%lld\n", sum_alice);
-	//assert
-	{
-		//const %16 = 25 : int
-		_16 = 25;
-		//ifeq %4, %16 goto blklab22 : int
-		if(sum_alice==_16){goto blklab22;}
-		//fail
-		fprintf(stderr,"fail");
-		exit(-1);
-//.blklab22
-blklab22:;
-	//assert
-	}
-	//return
-	_FREE(coins);
+	//invoke (%8) = (%2, %1) CoinGame:findMoves : function(int[],int)->(int[])
+	_FREE(_8);
+	_REMOVE_OWNERSHIP(moves);
+	_1DARRAY_SIZE(_8, moves);
+	_8 = findMoves(_1DARRAY_PARAM(moves), true, n);
+	_ADD_OWNERSHIP(_8);
+	//assign %2 = %8  : int[]
 	_FREE(moves);
-	_FREE(_6);
+	_1DARRAY_UPDATE(moves, _8);
+	_ADD_OWNERSHIP(moves);
+	_REMOVE_OWNERSHIP(_8);
+	//invoke () = (%0, %2, %1) CoinGame:play : method(whiley/lang/System:Console,int[],int)->()
+	_ADD_OWNERSHIP(moves);
+play(stdout, _1DARRAY_PARAM(moves), false, n);
+	//const %9 = 1 : int
+	_9 = 1;
+	//sub %10 = %1, %9 : int
+	_10=n-_9;
+	//indexof %11 = %2, %10 : int[]
+	_11=moves[_10];
+	//assign %3 = %11  : int
+	sum_alice = _11;
+	//fieldload %12 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %13 = %12 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//const %14 = [84,104,101,32,116,111,116,97,108,32,97,109,111,117,110,116,32,111,102,32,109,111,110,101,121,32,40,109,97,120,105,109,117,109,41,32,65,108,105,99,101,32,103,101,116,115,32,105,115,32] : int[]
+	_FREE(_14);
+	_NEW_ARRAY(_14, 50);
+	_14[0] = 84; _14[1] = 104; _14[2] = 101; _14[3] = 32; _14[4] = 116; _14[5] = 111; _14[6] = 116; _14[7] = 97; _14[8] = 108; _14[9] = 32; _14[10] = 97; _14[11] = 109; _14[12] = 111; _14[13] = 117; _14[14] = 110; _14[15] = 116; _14[16] = 32; _14[17] = 111; _14[18] = 102; _14[19] = 32; _14[20] = 109; _14[21] = 111; _14[22] = 110; _14[23] = 101; _14[24] = 121; _14[25] = 32; _14[26] = 40; _14[27] = 109; _14[28] = 97; _14[29] = 120; _14[30] = 105; _14[31] = 109; _14[32] = 117; _14[33] = 109; _14[34] = 41; _14[35] = 32; _14[36] = 65; _14[37] = 108; _14[38] = 105; _14[39] = 99; _14[40] = 101; _14[41] = 32; _14[42] = 103; _14[43] = 101; _14[44] = 116; _14[45] = 115; _14[46] = 32; _14[47] = 105; _14[48] = 115; _14[49] = 32; 
+	_ADD_OWNERSHIP(_14);
+	//indirectinvoke () = %13 (%14) : method(int[])->()
+	printf_s(_1DARRAY_PARAM(_14));
+	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
+	//fieldload %16 = %15 println : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
+	//indirectinvoke () = %16 (%3) : method(any)->()
+	printf("%lld\n", sum_alice);
+	//return
+	_FREE(moves);
 	_FREE(_7);
-	_FREE(_13);
+	_FREE(_8);
+	_FREE(_14);
 	exit(0);
 }
 
