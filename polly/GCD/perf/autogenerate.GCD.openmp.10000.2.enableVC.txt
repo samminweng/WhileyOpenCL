@@ -1,172 +1,192 @@
-Enable loop vectorization...Compile C code using openmp with 2 threads...SUM:684257280
+Enable loop vectorization...Compile C code using openmp with 2 threads...N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
 
  Performance counter stats for './out/GCD.openmp.enableVC.out 10000':
 
-       5919.051986 task-clock (msec)         #    0.999 CPUs utilized          
-               534 context-switches          #    0.090 K/sec                  
+       5757.313604 task-clock (msec)         #    0.999 CPUs utilized          
+               523 context-switches          #    0.091 K/sec                  
+                 2 cpu-migrations            #    0.000 K/sec                  
+               192 page-faults               #    0.033 K/sec                  
+    22,309,252,746 cycles                    #    3.875 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    28,073,127,774 instructions              #    1.26  insns per cycle        
+    11,067,550,578 branches                  # 1922.346 M/sec                  
+       706,563,834 branch-misses             #    6.38% of all branches        
+
+       5.761397770 seconds time elapsed
+
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
+
+ Performance counter stats for './out/GCD.openmp.enableVC.out 10000':
+
+       5805.279684 task-clock (msec)         #    0.999 CPUs utilized          
+               509 context-switches          #    0.088 K/sec                  
                  1 cpu-migrations            #    0.000 K/sec                  
-               832 page-faults               #    0.141 K/sec                  
-    22,946,438,735 cycles                    #    3.877 GHz                    
+               192 page-faults               #    0.033 K/sec                  
+    22,305,625,285 cycles                    #    3.842 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,897,565,030 instructions              #    1.61  insns per cycle        
-    14,155,853,091 branches                  # 2391.574 M/sec                  
-       605,089,876 branch-misses             #    4.27% of all branches        
+    28,072,868,082 instructions              #    1.26  insns per cycle        
+    11,067,503,004 branches                  # 1906.455 M/sec                  
+       706,248,733 branch-misses             #    6.38% of all branches        
 
-       5.923009948 seconds time elapsed
+       5.808601202 seconds time elapsed
 
-SUM:684257280
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
 
  Performance counter stats for './out/GCD.openmp.enableVC.out 10000':
 
-       5949.095109 task-clock (msec)         #    0.999 CPUs utilized          
-               546 context-switches          #    0.092 K/sec                  
+       5752.926810 task-clock (msec)         #    0.999 CPUs utilized          
+               567 context-switches          #    0.099 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               832 page-faults               #    0.140 K/sec                  
-    22,975,761,424 cycles                    #    3.862 GHz                    
+               192 page-faults               #    0.033 K/sec                  
+    22,299,571,528 cycles                    #    3.876 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,897,302,756 instructions              #    1.61  insns per cycle        
-    14,155,806,640 branches                  # 2379.489 M/sec                  
-       604,965,668 branch-misses             #    4.27% of all branches        
+    28,073,041,141 instructions              #    1.26  insns per cycle        
+    11,067,536,292 branches                  # 1923.810 M/sec                  
+       705,777,069 branch-misses             #    6.38% of all branches        
 
-       5.952773243 seconds time elapsed
+       5.758236945 seconds time elapsed
 
-SUM:684257280
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
 
  Performance counter stats for './out/GCD.openmp.enableVC.out 10000':
 
-       5927.541060 task-clock (msec)         #    1.000 CPUs utilized          
-               530 context-switches          #    0.089 K/sec                  
+       5827.390265 task-clock (msec)         #    0.999 CPUs utilized          
+               525 context-switches          #    0.090 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             1,343 page-faults               #    0.227 K/sec                  
-    22,969,751,680 cycles                    #    3.875 GHz                    
+               192 page-faults               #    0.033 K/sec                  
+    22,311,085,074 cycles                    #    3.829 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,898,579,308 instructions              #    1.61  insns per cycle        
-    14,156,014,197 branches                  # 2388.176 M/sec                  
-       605,027,108 branch-misses             #    4.27% of all branches        
+    28,072,932,066 instructions              #    1.26  insns per cycle        
+    11,067,515,337 branches                  # 1899.223 M/sec                  
+       706,569,492 branch-misses             #    6.38% of all branches        
 
-       5.930396256 seconds time elapsed
+       5.830747593 seconds time elapsed
 
-SUM:684257280
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
 
  Performance counter stats for './out/GCD.openmp.enableVC.out 10000':
 
-       5939.734661 task-clock (msec)         #    0.999 CPUs utilized          
-               544 context-switches          #    0.092 K/sec                  
+       5813.438163 task-clock (msec)         #    1.000 CPUs utilized          
+               521 context-switches          #    0.090 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               832 page-faults               #    0.140 K/sec                  
-    22,965,171,526 cycles                    #    3.866 GHz                    
+               192 page-faults               #    0.033 K/sec                  
+    22,297,557,688 cycles                    #    3.836 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,897,233,144 instructions              #    1.61  insns per cycle        
-    14,155,790,593 branches                  # 2383.236 M/sec                  
-       604,928,010 branch-misses             #    4.27% of all branches        
+    28,072,909,437 instructions              #    1.26  insns per cycle        
+    11,067,511,378 branches                  # 1903.781 M/sec                  
+       705,781,373 branch-misses             #    6.38% of all branches        
 
-       5.944150385 seconds time elapsed
+       5.816232886 seconds time elapsed
 
-SUM:684257280
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
 
  Performance counter stats for './out/GCD.openmp.enableVC.out 10000':
 
-       5942.290858 task-clock (msec)         #    0.999 CPUs utilized          
-               537 context-switches          #    0.090 K/sec                  
+       5763.095461 task-clock (msec)         #    0.998 CPUs utilized          
+               520 context-switches          #    0.090 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             1,343 page-faults               #    0.226 K/sec                  
-    22,967,686,910 cycles                    #    3.865 GHz                    
+               192 page-faults               #    0.033 K/sec                  
+    22,300,379,472 cycles                    #    3.870 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,898,659,706 instructions              #    1.61  insns per cycle        
-    14,156,029,872 branches                  # 2382.251 M/sec                  
-       604,948,226 branch-misses             #    4.27% of all branches        
+    28,072,869,829 instructions              #    1.26  insns per cycle        
+    11,067,504,563 branches                  # 1920.410 M/sec                  
+       705,934,152 branch-misses             #    6.38% of all branches        
 
-       5.946399494 seconds time elapsed
+       5.775922741 seconds time elapsed
 
-SUM:684257280
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
 
  Performance counter stats for './out/GCD.openmp.enableVC.out 10000':
 
-       5931.532390 task-clock (msec)         #    0.999 CPUs utilized          
-               525 context-switches          #    0.089 K/sec                  
+       5778.093009 task-clock (msec)         #    0.999 CPUs utilized          
+               514 context-switches          #    0.089 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               832 page-faults               #    0.140 K/sec                  
-    22,963,060,835 cycles                    #    3.871 GHz                    
+               192 page-faults               #    0.033 K/sec                  
+    22,307,586,871 cycles                    #    3.861 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,897,292,751 instructions              #    1.61  insns per cycle        
-    14,155,802,506 branches                  # 2386.534 M/sec                  
-       605,067,568 branch-misses             #    4.27% of all branches        
+    28,072,853,778 instructions              #    1.26  insns per cycle        
+    11,067,501,124 branches                  # 1915.425 M/sec                  
+       706,269,232 branch-misses             #    6.38% of all branches        
 
-       5.935871606 seconds time elapsed
+       5.781942976 seconds time elapsed
 
-SUM:684257280
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
 
  Performance counter stats for './out/GCD.openmp.enableVC.out 10000':
 
-       5940.346110 task-clock (msec)         #    0.999 CPUs utilized          
-               549 context-switches          #    0.092 K/sec                  
+       5749.991372 task-clock (msec)         #    0.999 CPUs utilized          
+               521 context-switches          #    0.091 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               832 page-faults               #    0.140 K/sec                  
-    22,967,020,383 cycles                    #    3.866 GHz                    
+               192 page-faults               #    0.033 K/sec                  
+    22,298,807,257 cycles                    #    3.878 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,897,272,819 instructions              #    1.61  insns per cycle        
-    14,155,800,328 branches                  # 2382.993 M/sec                  
-       605,005,640 branch-misses             #    4.27% of all branches        
+    28,072,835,748 instructions              #    1.26  insns per cycle        
+    11,067,499,322 branches                  # 1924.785 M/sec                  
+       706,193,757 branch-misses             #    6.38% of all branches        
 
-       5.944006660 seconds time elapsed
+       5.753190037 seconds time elapsed
 
-SUM:684257280
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
 
  Performance counter stats for './out/GCD.openmp.enableVC.out 10000':
 
-       6003.533744 task-clock (msec)         #    0.999 CPUs utilized          
-               561 context-switches          #    0.093 K/sec                  
+       5756.915852 task-clock (msec)         #    0.999 CPUs utilized          
+               518 context-switches          #    0.090 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               832 page-faults               #    0.139 K/sec                  
-    22,970,658,364 cycles                    #    3.826 GHz                    
+               192 page-faults               #    0.033 K/sec                  
+    22,302,357,633 cycles                    #    3.874 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,897,386,058 instructions              #    1.61  insns per cycle        
-    14,155,820,762 branches                  # 2357.915 M/sec                  
-       604,979,657 branch-misses             #    4.27% of all branches        
+    28,072,877,215 instructions              #    1.26  insns per cycle        
+    11,067,505,173 branches                  # 1922.471 M/sec                  
+       705,945,824 branch-misses             #    6.38% of all branches        
 
-       6.007917302 seconds time elapsed
+       5.760245644 seconds time elapsed
 
-SUM:684257280
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
 
  Performance counter stats for './out/GCD.openmp.enableVC.out 10000':
 
-       5949.790477 task-clock (msec)         #    0.999 CPUs utilized          
-               557 context-switches          #    0.094 K/sec                  
+       5771.187879 task-clock (msec)         #    0.998 CPUs utilized          
+               521 context-switches          #    0.090 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               832 page-faults               #    0.140 K/sec                  
-    22,968,695,134 cycles                    #    3.860 GHz                    
+               192 page-faults               #    0.033 K/sec                  
+    22,300,716,245 cycles                    #    3.864 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,897,338,500 instructions              #    1.61  insns per cycle        
-    14,155,809,439 branches                  # 2379.211 M/sec                  
-       604,973,047 branch-misses             #    4.27% of all branches        
+    28,072,851,889 instructions              #    1.26  insns per cycle        
+    11,067,502,671 branches                  # 1917.717 M/sec                  
+       705,788,668 branch-misses             #    6.38% of all branches        
 
-       5.953806159 seconds time elapsed
-
-SUM:684257280
-
- Performance counter stats for './out/GCD.openmp.enableVC.out 10000':
-
-       6040.174050 task-clock (msec)         #    0.999 CPUs utilized          
-               549 context-switches          #    0.091 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-               832 page-faults               #    0.138 K/sec                  
-    22,964,063,492 cycles                    #    3.802 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-    36,897,397,710 instructions              #    1.61  insns per cycle        
-    14,155,820,996 branches                  # 2343.611 M/sec                  
-       605,117,643 branch-misses             #    4.27% of all branches        
-
-       6.044523195 seconds time elapsed
+       5.781071511 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -357,7 +377,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 1900.000
+cpu MHz		: 1700.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

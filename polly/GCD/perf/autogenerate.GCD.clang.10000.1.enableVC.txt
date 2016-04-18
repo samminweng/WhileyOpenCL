@@ -1,172 +1,192 @@
-Enable loop vectorization...Compile C code using clang with 1 threads...SUM:684257280
+Enable loop vectorization...Compile C code using clang with 1 threads...N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
 
  Performance counter stats for './out/GCD.clang.enableVC.out 10000':
 
-       6231.551639 task-clock (msec)         #    0.999 CPUs utilized          
-               566 context-switches          #    0.091 K/sec                  
-                 3 cpu-migrations            #    0.000 K/sec                  
-             1,297 page-faults               #    0.208 K/sec                  
-    24,105,413,431 cycles                    #    3.868 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-    36,899,319,078 instructions              #    1.53  insns per cycle        
-    14,156,145,413 branches                  # 2271.689 M/sec                  
-       672,446,970 branch-misses             #    4.75% of all branches        
-
-       6.235695341 seconds time elapsed
-
-SUM:684257280
-
- Performance counter stats for './out/GCD.clang.enableVC.out 10000':
-
-       6219.167883 task-clock (msec)         #    1.000 CPUs utilized          
-               560 context-switches          #    0.090 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-               786 page-faults               #    0.126 K/sec                  
-    24,129,490,943 cycles                    #    3.880 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-    36,897,367,746 instructions              #    1.53  insns per cycle        
-    14,155,811,205 branches                  # 2276.158 M/sec                  
-       673,090,156 branch-misses             #    4.75% of all branches        
-
-       6.221722763 seconds time elapsed
-
-SUM:684257280
-
- Performance counter stats for './out/GCD.clang.enableVC.out 10000':
-
-       6218.163938 task-clock (msec)         #    0.999 CPUs utilized          
-               565 context-switches          #    0.091 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-             1,297 page-faults               #    0.209 K/sec                  
-    24,114,657,486 cycles                    #    3.878 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-    36,898,785,699 instructions              #    1.53  insns per cycle        
-    14,156,042,943 branches                  # 2276.563 M/sec                  
-       673,235,612 branch-misses             #    4.76% of all branches        
-
-       6.221609781 seconds time elapsed
-
-SUM:684257280
-
- Performance counter stats for './out/GCD.clang.enableVC.out 10000':
-
-       6275.194324 task-clock (msec)         #    0.999 CPUs utilized          
-               557 context-switches          #    0.089 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-             1,297 page-faults               #    0.207 K/sec                  
-    24,122,240,478 cycles                    #    3.844 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-    36,898,843,737 instructions              #    1.53  insns per cycle        
-    14,156,055,111 branches                  # 2255.875 M/sec                  
-       673,302,345 branch-misses             #    4.76% of all branches        
-
-       6.278670136 seconds time elapsed
-
-SUM:684257280
-
- Performance counter stats for './out/GCD.clang.enableVC.out 10000':
-
-       6235.474076 task-clock (msec)         #    0.999 CPUs utilized          
-               589 context-switches          #    0.094 K/sec                  
+       5742.960922 task-clock (msec)         #    0.999 CPUs utilized          
+               521 context-switches          #    0.091 K/sec                  
                  1 cpu-migrations            #    0.000 K/sec                  
-             1,297 page-faults               #    0.208 K/sec                  
-    24,118,953,345 cycles                    #    3.868 GHz                    
+               146 page-faults               #    0.025 K/sec                  
+    22,223,664,336 cycles                    #    3.870 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,898,921,159 instructions              #    1.53  insns per cycle        
-    14,156,068,431 branches                  # 2270.247 M/sec                  
-       673,185,347 branch-misses             #    4.76% of all branches        
+    28,072,934,157 instructions              #    1.26  insns per cycle        
+    11,067,509,936 branches                  # 1927.144 M/sec                  
+       700,123,184 branch-misses             #    6.33% of all branches        
 
-       6.239380008 seconds time elapsed
+       5.746569236 seconds time elapsed
 
-SUM:684257280
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
 
  Performance counter stats for './out/GCD.clang.enableVC.out 10000':
 
-       6239.431585 task-clock (msec)         #    0.999 CPUs utilized          
-               601 context-switches          #    0.096 K/sec                  
+       5746.385993 task-clock (msec)         #    0.999 CPUs utilized          
+               508 context-switches          #    0.088 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               785 page-faults               #    0.126 K/sec                  
-    24,119,076,798 cycles                    #    3.866 GHz                    
+               146 page-faults               #    0.025 K/sec                  
+    22,228,112,102 cycles                    #    3.868 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,897,510,638 instructions              #    1.53  insns per cycle        
-    14,155,838,101 branches                  # 2268.770 M/sec                  
-       673,404,422 branch-misses             #    4.76% of all branches        
+    28,072,594,188 instructions              #    1.26  insns per cycle        
+    11,067,448,494 branches                  # 1925.984 M/sec                  
+       701,257,463 branch-misses             #    6.34% of all branches        
 
-       6.242694036 seconds time elapsed
+       5.751476975 seconds time elapsed
 
-SUM:684257280
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
 
  Performance counter stats for './out/GCD.clang.enableVC.out 10000':
 
-       6240.011278 task-clock (msec)         #    0.999 CPUs utilized          
-               615 context-switches          #    0.099 K/sec                  
-                 1 cpu-migrations            #    0.000 K/sec                  
-               786 page-faults               #    0.126 K/sec                  
-    24,121,735,253 cycles                    #    3.866 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-    36,897,562,798 instructions              #    1.53  insns per cycle        
-    14,155,849,024 branches                  # 2268.561 M/sec                  
-       673,404,224 branch-misses             #    4.76% of all branches        
-
-       6.244285287 seconds time elapsed
-
-SUM:684257280
-
- Performance counter stats for './out/GCD.clang.enableVC.out 10000':
-
-       6225.544464 task-clock (msec)         #    0.999 CPUs utilized          
-               581 context-switches          #    0.093 K/sec                  
-                 1 cpu-migrations            #    0.000 K/sec                  
-             1,296 page-faults               #    0.208 K/sec                  
-    24,109,955,641 cycles                    #    3.873 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-    36,898,842,865 instructions              #    1.53  insns per cycle        
-    14,156,053,038 branches                  # 2273.866 M/sec                  
-       672,454,490 branch-misses             #    4.75% of all branches        
-
-       6.228927585 seconds time elapsed
-
-SUM:684257280
-
- Performance counter stats for './out/GCD.clang.enableVC.out 10000':
-
-       6232.703838 task-clock (msec)         #    0.999 CPUs utilized          
-               568 context-switches          #    0.091 K/sec                  
+       5746.922018 task-clock (msec)         #    0.997 CPUs utilized          
+               507 context-switches          #    0.088 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             1,297 page-faults               #    0.208 K/sec                  
-    24,127,599,152 cycles                    #    3.871 GHz                    
+               146 page-faults               #    0.025 K/sec                  
+    22,225,185,103 cycles                    #    3.867 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,898,756,501 instructions              #    1.53  insns per cycle        
-    14,156,042,195 branches                  # 2271.252 M/sec                  
-       673,333,337 branch-misses             #    4.76% of all branches        
+    28,072,578,577 instructions              #    1.26  insns per cycle        
+    11,067,446,498 branches                  # 1925.804 M/sec                  
+       700,739,690 branch-misses             #    6.33% of all branches        
 
-       6.235938372 seconds time elapsed
+       5.765563549 seconds time elapsed
 
-SUM:684257280
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
 
  Performance counter stats for './out/GCD.clang.enableVC.out 10000':
 
-       6262.101820 task-clock (msec)         #    1.000 CPUs utilized          
-               569 context-switches          #    0.091 K/sec                  
+       5730.293874 task-clock (msec)         #    0.999 CPUs utilized          
+               514 context-switches          #    0.090 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             1,297 page-faults               #    0.207 K/sec                  
-    24,124,442,645 cycles                    #    3.852 GHz                    
+               146 page-faults               #    0.025 K/sec                  
+    22,224,956,377 cycles                    #    3.879 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,898,837,475 instructions              #    1.53  insns per cycle        
-    14,156,051,103 branches                  # 2260.591 M/sec                  
-       673,219,272 branch-misses             #    4.76% of all branches        
+    28,072,583,798 instructions              #    1.26  insns per cycle        
+    11,067,448,430 branches                  # 1931.393 M/sec                  
+       700,799,045 branch-misses             #    6.33% of all branches        
 
-       6.265084300 seconds time elapsed
+       5.735486710 seconds time elapsed
+
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
+
+ Performance counter stats for './out/GCD.clang.enableVC.out 10000':
+
+       5745.148579 task-clock (msec)         #    0.999 CPUs utilized          
+               538 context-switches          #    0.094 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               145 page-faults               #    0.025 K/sec                  
+    22,226,476,313 cycles                    #    3.869 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    28,072,684,170 instructions              #    1.26  insns per cycle        
+    11,067,466,579 branches                  # 1926.402 M/sec                  
+       700,639,881 branch-misses             #    6.33% of all branches        
+
+       5.751180340 seconds time elapsed
+
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
+
+ Performance counter stats for './out/GCD.clang.enableVC.out 10000':
+
+       5741.472746 task-clock (msec)         #    0.999 CPUs utilized          
+               522 context-switches          #    0.091 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               146 page-faults               #    0.025 K/sec                  
+    22,227,196,131 cycles                    #    3.871 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    28,072,632,495 instructions              #    1.26  insns per cycle        
+    11,067,457,053 branches                  # 1927.634 M/sec                  
+       700,877,685 branch-misses             #    6.33% of all branches        
+
+       5.745529649 seconds time elapsed
+
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
+
+ Performance counter stats for './out/GCD.clang.enableVC.out 10000':
+
+       5735.026884 task-clock (msec)         #    0.998 CPUs utilized          
+               529 context-switches          #    0.092 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               146 page-faults               #    0.025 K/sec                  
+    22,227,316,901 cycles                    #    3.876 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    28,072,641,573 instructions              #    1.26  insns per cycle        
+    11,067,458,777 branches                  # 1929.801 M/sec                  
+       700,775,302 branch-misses             #    6.33% of all branches        
+
+       5.748458100 seconds time elapsed
+
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
+
+ Performance counter stats for './out/GCD.clang.enableVC.out 10000':
+
+       5758.117938 task-clock (msec)         #    0.995 CPUs utilized          
+               533 context-switches          #    0.093 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               146 page-faults               #    0.025 K/sec                  
+    22,226,802,072 cycles                    #    3.860 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    28,072,693,494 instructions              #    1.26  insns per cycle        
+    11,067,467,902 branches                  # 1922.063 M/sec                  
+       700,760,707 branch-misses             #    6.33% of all branches        
+
+       5.787144935 seconds time elapsed
+
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
+
+ Performance counter stats for './out/GCD.clang.enableVC.out 10000':
+
+       5731.910983 task-clock (msec)         #    0.999 CPUs utilized          
+               511 context-switches          #    0.089 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               146 page-faults               #    0.025 K/sec                  
+    22,225,904,443 cycles                    #    3.878 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    28,072,592,942 instructions              #    1.26  insns per cycle        
+    11,067,449,933 branches                  # 1930.848 M/sec                  
+       700,685,691 branch-misses             #    6.33% of all branches        
+
+       5.737109936 seconds time elapsed
+
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
+
+ Performance counter stats for './out/GCD.clang.enableVC.out 10000':
+
+       5739.495870 task-clock (msec)         #    0.999 CPUs utilized          
+               521 context-switches          #    0.091 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               146 page-faults               #    0.025 K/sec                  
+    22,227,332,233 cycles                    #    3.873 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    28,072,622,583 instructions              #    1.26  insns per cycle        
+    11,067,455,348 branches                  # 1928.297 M/sec                  
+       701,020,870 branch-misses             #    6.33% of all branches        
+
+       5.744097415 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -227,7 +247,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 800.000
+cpu MHz		: 3401.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -357,7 +377,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 800.000
+cpu MHz		: 1200.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8

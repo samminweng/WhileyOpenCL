@@ -1,192 +1,182 @@
-Enable loop vectorization...Compile C code using openmp with 2 threads...N = 1000
-Sum: 5432880
-Pass Euclid GCD test case
+Enable loop vectorization...Compile C code using clang with 1 threads...The total amount of money (maximum) Alice gets is 400000000
+Pass CoinGame test case
 
- Performance counter stats for './out/GCD.openmp.enableVC.out 1000':
+ Performance counter stats for './out/CoinGame.clang.enableVC.out 40000':
 
-         49.302944 task-clock (msec)         #    0.926 CPUs utilized          
-                 9 context-switches          #    0.183 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-               192 page-faults               #    0.004 M/sec                  
-       156,737,328 cycles                    #    3.179 GHz                    
+       4936.914741 task-clock (msec)         #    0.996 CPUs utilized          
+               451 context-switches          #    0.091 K/sec                  
+                 2 cpu-migrations            #    0.000 K/sec                  
+             6,514 page-faults               #    0.001 M/sec                  
+    18,916,284,946 cycles                    #    3.832 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-       165,458,963 instructions              #    1.06  insns per cycle        
-        64,403,039 branches                  # 1306.272 M/sec                  
-         5,664,939 branch-misses             #    8.80% of all branches        
+    31,284,384,646 instructions              #    1.65  insns per cycle        
+     5,046,900,306 branches                  # 1022.278 M/sec                  
+           115,502 branch-misses             #    0.00% of all branches        
 
-       0.053263670 seconds time elapsed
+       4.955233775 seconds time elapsed
 
-N = 1000
-Sum: 5432880
-Pass Euclid GCD test case
+The total amount of money (maximum) Alice gets is 400000000
+Pass CoinGame test case
 
- Performance counter stats for './out/GCD.openmp.enableVC.out 1000':
+ Performance counter stats for './out/CoinGame.clang.enableVC.out 40000':
 
-         53.928257 task-clock (msec)         #    0.929 CPUs utilized          
-                 6 context-switches          #    0.111 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-               192 page-faults               #    0.004 M/sec                  
-       156,648,181 cycles                    #    2.905 GHz                    
+       4951.046097 task-clock (msec)         #    0.998 CPUs utilized          
+               467 context-switches          #    0.094 K/sec                  
+                 1 cpu-migrations            #    0.000 K/sec                  
+             7,026 page-faults               #    0.001 M/sec                  
+    19,153,600,031 cycles                    #    3.869 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-       165,391,597 instructions              #    1.06  insns per cycle        
-        64,391,960 branches                  # 1194.030 M/sec                  
-         5,666,208 branch-misses             #    8.80% of all branches        
+    31,285,626,188 instructions              #    1.63  insns per cycle        
+     5,047,103,106 branches                  # 1019.401 M/sec                  
+           114,162 branch-misses             #    0.00% of all branches        
 
-       0.058051736 seconds time elapsed
+       4.959206294 seconds time elapsed
 
-N = 1000
-Sum: 5432880
-Pass Euclid GCD test case
+The total amount of money (maximum) Alice gets is 400000000
+Pass CoinGame test case
 
- Performance counter stats for './out/GCD.openmp.enableVC.out 1000':
+ Performance counter stats for './out/CoinGame.clang.enableVC.out 40000':
 
-         46.617346 task-clock (msec)         #    0.856 CPUs utilized          
-                 8 context-switches          #    0.172 K/sec                  
+       5018.644080 task-clock (msec)         #    0.998 CPUs utilized          
+               471 context-switches          #    0.094 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               192 page-faults               #    0.004 M/sec                  
-       156,669,743 cycles                    #    3.361 GHz                    
+             7,026 page-faults               #    0.001 M/sec                  
+    19,101,296,123 cycles                    #    3.806 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-       165,410,327 instructions              #    1.06  insns per cycle        
-        64,394,942 branches                  # 1381.352 M/sec                  
-         5,671,525 branch-misses             #    8.81% of all branches        
+    31,285,685,442 instructions              #    1.64  insns per cycle        
+     5,047,110,406 branches                  # 1005.672 M/sec                  
+           112,526 branch-misses             #    0.00% of all branches        
 
-       0.054450012 seconds time elapsed
+       5.026729962 seconds time elapsed
 
-N = 1000
-Sum: 5432880
-Pass Euclid GCD test case
+The total amount of money (maximum) Alice gets is 400000000
+Pass CoinGame test case
 
- Performance counter stats for './out/GCD.openmp.enableVC.out 1000':
+ Performance counter stats for './out/CoinGame.clang.enableVC.out 40000':
 
-         48.454065 task-clock (msec)         #    0.890 CPUs utilized          
-                 5 context-switches          #    0.103 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-               192 page-faults               #    0.004 M/sec                  
-       156,545,351 cycles                    #    3.231 GHz                    
+       5024.110466 task-clock (msec)         #    0.999 CPUs utilized          
+               452 context-switches          #    0.090 K/sec                  
+                 1 cpu-migrations            #    0.000 K/sec                  
+             6,515 page-faults               #    0.001 M/sec                  
+    19,058,565,185 cycles                    #    3.793 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-       165,368,095 instructions              #    1.06  insns per cycle        
-        64,388,315 branches                  # 1328.853 M/sec                  
-         5,664,699 branch-misses             #    8.80% of all branches        
+    31,284,204,223 instructions              #    1.64  insns per cycle        
+     5,046,865,882 branches                  # 1004.529 M/sec                  
+           109,218 branch-misses             #    0.00% of all branches        
 
-       0.054461069 seconds time elapsed
+       5.030061127 seconds time elapsed
 
-N = 1000
-Sum: 5432880
-Pass Euclid GCD test case
+The total amount of money (maximum) Alice gets is 400000000
+Pass CoinGame test case
 
- Performance counter stats for './out/GCD.openmp.enableVC.out 1000':
+ Performance counter stats for './out/CoinGame.clang.enableVC.out 40000':
 
-         43.730741 task-clock (msec)         #    0.875 CPUs utilized          
-                 6 context-switches          #    0.137 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-               192 page-faults               #    0.004 M/sec                  
-       156,635,495 cycles                    #    3.582 GHz                    
+       4953.825746 task-clock (msec)         #    0.999 CPUs utilized          
+               451 context-switches          #    0.091 K/sec                  
+                 1 cpu-migrations            #    0.000 K/sec                  
+             7,025 page-faults               #    0.001 M/sec                  
+    19,175,685,395 cycles                    #    3.871 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-       165,383,908 instructions              #    1.06  insns per cycle        
-        64,391,071 branches                  # 1472.444 M/sec                  
-         5,662,746 branch-misses             #    8.79% of all branches        
+    31,285,570,956 instructions              #    1.63  insns per cycle        
+     5,047,090,062 branches                  # 1018.827 M/sec                  
+           114,633 branch-misses             #    0.00% of all branches        
 
-       0.049965446 seconds time elapsed
+       4.959935975 seconds time elapsed
 
-N = 1000
-Sum: 5432880
-Pass Euclid GCD test case
+The total amount of money (maximum) Alice gets is 400000000
+Pass CoinGame test case
 
- Performance counter stats for './out/GCD.openmp.enableVC.out 1000':
+ Performance counter stats for './out/CoinGame.clang.enableVC.out 40000':
 
-         46.608551 task-clock (msec)         #    0.935 CPUs utilized          
-                 7 context-switches          #    0.150 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-               192 page-faults               #    0.004 M/sec                  
-       156,725,879 cycles                    #    3.363 GHz                    
+       4959.891818 task-clock (msec)         #    0.999 CPUs utilized          
+               443 context-switches          #    0.089 K/sec                  
+                 1 cpu-migrations            #    0.000 K/sec                  
+             6,515 page-faults               #    0.001 M/sec                  
+    19,123,589,865 cycles                    #    3.856 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-       165,413,323 instructions              #    1.06  insns per cycle        
-        64,395,372 branches                  # 1381.621 M/sec                  
-         5,672,777 branch-misses             #    8.81% of all branches        
+    31,284,106,509 instructions              #    1.64  insns per cycle        
+     5,046,848,361 branches                  # 1017.532 M/sec                  
+           110,087 branch-misses             #    0.00% of all branches        
 
-       0.049858562 seconds time elapsed
+       4.966961163 seconds time elapsed
 
-N = 1000
-Sum: 5432880
-Pass Euclid GCD test case
+The total amount of money (maximum) Alice gets is 400000000
+Pass CoinGame test case
 
- Performance counter stats for './out/GCD.openmp.enableVC.out 1000':
+ Performance counter stats for './out/CoinGame.clang.enableVC.out 40000':
 
-         48.112123 task-clock (msec)         #    0.918 CPUs utilized          
-                11 context-switches          #    0.229 K/sec                  
+       4932.566029 task-clock (msec)         #    0.999 CPUs utilized          
+               438 context-switches          #    0.089 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               192 page-faults               #    0.004 M/sec                  
-       156,479,157 cycles                    #    3.252 GHz                    
+             6,515 page-faults               #    0.001 M/sec                  
+    19,072,618,659 cycles                    #    3.867 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-       165,414,175 instructions              #    1.06  insns per cycle        
-        64,396,317 branches                  # 1338.463 M/sec                  
-         5,647,736 branch-misses             #    8.77% of all branches        
+    31,284,076,490 instructions              #    1.64  insns per cycle        
+     5,046,842,762 branches                  # 1023.168 M/sec                  
+           110,524 branch-misses             #    0.00% of all branches        
 
-       0.052394610 seconds time elapsed
+       4.938860116 seconds time elapsed
 
-N = 1000
-Sum: 5432880
-Pass Euclid GCD test case
+The total amount of money (maximum) Alice gets is 400000000
+Pass CoinGame test case
 
- Performance counter stats for './out/GCD.openmp.enableVC.out 1000':
+ Performance counter stats for './out/CoinGame.clang.enableVC.out 40000':
 
-         47.978324 task-clock (msec)         #    0.933 CPUs utilized          
-                10 context-switches          #    0.208 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-               192 page-faults               #    0.004 M/sec                  
-       156,566,904 cycles                    #    3.263 GHz                    
+       4910.221514 task-clock (msec)         #    0.999 CPUs utilized          
+               428 context-switches          #    0.087 K/sec                  
+                 1 cpu-migrations            #    0.000 K/sec                  
+             6,515 page-faults               #    0.001 M/sec                  
+    19,022,918,435 cycles                    #    3.874 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-       165,423,212 instructions              #    1.06  insns per cycle        
-        64,397,209 branches                  # 1342.215 M/sec                  
-         5,660,201 branch-misses             #    8.79% of all branches        
+    31,284,018,838 instructions              #    1.64  insns per cycle        
+     5,046,831,965 branches                  # 1027.822 M/sec                  
+           112,045 branch-misses             #    0.00% of all branches        
 
-       0.051448992 seconds time elapsed
+       4.917480652 seconds time elapsed
 
-N = 1000
-Sum: 5432880
-Pass Euclid GCD test case
+The total amount of money (maximum) Alice gets is 400000000
+Pass CoinGame test case
 
- Performance counter stats for './out/GCD.openmp.enableVC.out 1000':
+ Performance counter stats for './out/CoinGame.clang.enableVC.out 40000':
 
-         48.456541 task-clock (msec)         #    0.925 CPUs utilized          
-                10 context-switches          #    0.206 K/sec                  
-                 0 cpu-migrations            #    0.000 K/sec                  
-               192 page-faults               #    0.004 M/sec                  
-       156,598,006 cycles                    #    3.232 GHz                    
+       4940.770008 task-clock (msec)         #    0.999 CPUs utilized          
+               446 context-switches          #    0.090 K/sec                  
+                 1 cpu-migrations            #    0.000 K/sec                  
+             7,026 page-faults               #    0.001 M/sec                  
+    19,119,966,693 cycles                    #    3.870 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-       165,407,206 instructions              #    1.06  insns per cycle        
-        64,395,162 branches                  # 1328.926 M/sec                  
-         5,644,299 branch-misses             #    8.77% of all branches        
+    31,285,520,688 instructions              #    1.64  insns per cycle        
+     5,047,086,140 branches                  # 1021.518 M/sec                  
+           113,349 branch-misses             #    0.00% of all branches        
 
-       0.052370399 seconds time elapsed
+       4.946865222 seconds time elapsed
 
-N = 1000
-Sum: 5432880
-Pass Euclid GCD test case
+The total amount of money (maximum) Alice gets is 400000000
+Pass CoinGame test case
 
- Performance counter stats for './out/GCD.openmp.enableVC.out 1000':
+ Performance counter stats for './out/CoinGame.clang.enableVC.out 40000':
 
-         48.403539 task-clock (msec)         #    0.840 CPUs utilized          
-                11 context-switches          #    0.227 K/sec                  
+       4992.779373 task-clock (msec)         #    0.999 CPUs utilized          
+               449 context-switches          #    0.090 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               192 page-faults               #    0.004 M/sec                  
-       156,586,162 cycles                    #    3.235 GHz                    
+             6,515 page-faults               #    0.001 M/sec                  
+    19,141,342,181 cycles                    #    3.834 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-       165,424,254 instructions              #    1.06  insns per cycle        
-        64,397,558 branches                  # 1330.431 M/sec                  
-         5,668,102 branch-misses             #    8.80% of all branches        
+    31,284,182,890 instructions              #    1.63  insns per cycle        
+     5,046,862,050 branches                  # 1010.832 M/sec                  
+           111,626 branch-misses             #    0.00% of all branches        
 
-       0.057649879 seconds time elapsed
+       4.999030328 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -221,7 +211,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 1000.000
+cpu MHz		: 800.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -377,7 +367,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 3200.000
+cpu MHz		: 800.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
@@ -396,4 +386,3 @@ cache_alignment	: 64
 address sizes	: 39 bits physical, 48 bits virtual
 power management:
 
-Optimize C code using OpenMP code with 2 threads...

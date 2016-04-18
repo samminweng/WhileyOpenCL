@@ -1,172 +1,192 @@
-Enable loop vectorization...Compile C code using polly with 1 threads...SUM:684257280
+Enable loop vectorization...Compile C code using polly with 1 threads...N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
 
  Performance counter stats for './out/GCD.polly.enableVC.out 10000':
 
-       6242.318620 task-clock (msec)         #    0.999 CPUs utilized          
-               570 context-switches          #    0.091 K/sec                  
-                 7 cpu-migrations            #    0.001 K/sec                  
-               786 page-faults               #    0.126 K/sec                  
-    24,127,273,627 cycles                    #    3.865 GHz                    
-   <not supported> stalled-cycles-frontend 
-   <not supported> stalled-cycles-backend  
-    36,897,778,248 instructions              #    1.53  insns per cycle        
-    14,155,887,647 branches                  # 2267.729 M/sec                  
-       673,235,691 branch-misses             #    4.76% of all branches        
-
-       6.245685127 seconds time elapsed
-
-SUM:684257280
-
- Performance counter stats for './out/GCD.polly.enableVC.out 10000':
-
-       6233.839858 task-clock (msec)         #    0.999 CPUs utilized          
-               597 context-switches          #    0.096 K/sec                  
+       5741.264992 task-clock (msec)         #    0.999 CPUs utilized          
+               533 context-switches          #    0.093 K/sec                  
                  1 cpu-migrations            #    0.000 K/sec                  
-             1,297 page-faults               #    0.208 K/sec                  
-    24,118,759,192 cycles                    #    3.869 GHz                    
+               146 page-faults               #    0.025 K/sec                  
+    22,227,553,887 cycles                    #    3.872 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,898,934,745 instructions              #    1.53  insns per cycle        
-    14,156,072,974 branches                  # 2270.843 M/sec                  
-       672,706,727 branch-misses             #    4.75% of all branches        
+    28,073,090,672 instructions              #    1.26  insns per cycle        
+    11,067,538,017 branches                  # 1927.718 M/sec                  
+       700,687,102 branch-misses             #    6.33% of all branches        
 
-       6.237851995 seconds time elapsed
+       5.745505401 seconds time elapsed
 
-SUM:684257280
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
 
  Performance counter stats for './out/GCD.polly.enableVC.out 10000':
 
-       6244.724639 task-clock (msec)         #    1.000 CPUs utilized          
-               581 context-switches          #    0.093 K/sec                  
+       5776.222654 task-clock (msec)         #    1.000 CPUs utilized          
+               516 context-switches          #    0.089 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             1,297 page-faults               #    0.208 K/sec                  
-    24,112,995,873 cycles                    #    3.861 GHz                    
+               146 page-faults               #    0.025 K/sec                  
+    22,224,451,955 cycles                    #    3.848 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,898,874,921 instructions              #    1.53  insns per cycle        
-    14,156,059,253 branches                  # 2266.883 M/sec                  
-       673,196,042 branch-misses             #    4.76% of all branches        
+    28,072,635,202 instructions              #    1.26  insns per cycle        
+    11,067,456,245 branches                  # 1916.037 M/sec                  
+       701,065,851 branch-misses             #    6.33% of all branches        
 
-       6.247841967 seconds time elapsed
+       5.778852051 seconds time elapsed
 
-SUM:684257280
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
 
  Performance counter stats for './out/GCD.polly.enableVC.out 10000':
 
-       6243.692776 task-clock (msec)         #    1.000 CPUs utilized          
-               572 context-switches          #    0.092 K/sec                  
+       5760.562753 task-clock (msec)         #    0.999 CPUs utilized          
+               509 context-switches          #    0.088 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             1,297 page-faults               #    0.208 K/sec                  
-    24,125,947,438 cycles                    #    3.864 GHz                    
+               146 page-faults               #    0.025 K/sec                  
+    22,224,414,433 cycles                    #    3.858 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,898,851,677 instructions              #    1.53  insns per cycle        
-    14,156,057,873 branches                  # 2267.257 M/sec                  
-       673,553,211 branch-misses             #    4.76% of all branches        
+    28,072,586,830 instructions              #    1.26  insns per cycle        
+    11,067,446,875 branches                  # 1921.244 M/sec                  
+       700,929,557 branch-misses             #    6.33% of all branches        
 
-       6.246775520 seconds time elapsed
+       5.765138006 seconds time elapsed
 
-SUM:684257280
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
 
  Performance counter stats for './out/GCD.polly.enableVC.out 10000':
 
-       6261.108566 task-clock (msec)         #    0.999 CPUs utilized          
-               620 context-switches          #    0.099 K/sec                  
+       5781.166994 task-clock (msec)         #    0.999 CPUs utilized          
+               516 context-switches          #    0.089 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               786 page-faults               #    0.126 K/sec                  
-    24,130,236,915 cycles                    #    3.854 GHz                    
+               146 page-faults               #    0.025 K/sec                  
+    22,224,532,226 cycles                    #    3.844 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,897,574,685 instructions              #    1.53  insns per cycle        
-    14,155,851,439 branches                  # 2260.918 M/sec                  
-       673,311,521 branch-misses             #    4.76% of all branches        
+    28,072,631,810 instructions              #    1.26  insns per cycle        
+    11,067,455,272 branches                  # 1914.398 M/sec                  
+       700,623,005 branch-misses             #    6.33% of all branches        
 
-       6.265441757 seconds time elapsed
+       5.784986940 seconds time elapsed
 
-SUM:684257280
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
 
  Performance counter stats for './out/GCD.polly.enableVC.out 10000':
 
-       6243.926909 task-clock (msec)         #    0.999 CPUs utilized          
-               579 context-switches          #    0.093 K/sec                  
+       5767.967553 task-clock (msec)         #    0.999 CPUs utilized          
+               519 context-switches          #    0.090 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-               786 page-faults               #    0.126 K/sec                  
-    24,128,413,252 cycles                    #    3.864 GHz                    
+               146 page-faults               #    0.025 K/sec                  
+    22,224,165,567 cycles                    #    3.853 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,897,382,384 instructions              #    1.53  insns per cycle        
-    14,155,817,941 branches                  # 2267.134 M/sec                  
-       673,328,940 branch-misses             #    4.76% of all branches        
+    28,072,633,230 instructions              #    1.26  insns per cycle        
+    11,067,456,089 branches                  # 1918.779 M/sec                  
+       700,687,443 branch-misses             #    6.33% of all branches        
 
-       6.247627465 seconds time elapsed
+       5.771491253 seconds time elapsed
 
-SUM:684257280
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
 
  Performance counter stats for './out/GCD.polly.enableVC.out 10000':
 
-       6260.283912 task-clock (msec)         #    0.999 CPUs utilized          
-               563 context-switches          #    0.090 K/sec                  
+       5766.344202 task-clock (msec)         #    0.996 CPUs utilized          
+               539 context-switches          #    0.093 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             1,297 page-faults               #    0.207 K/sec                  
-    24,120,063,255 cycles                    #    3.853 GHz                    
+               146 page-faults               #    0.025 K/sec                  
+    22,226,445,764 cycles                    #    3.855 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,898,822,734 instructions              #    1.53  insns per cycle        
-    14,156,053,489 branches                  # 2261.248 M/sec                  
-       672,573,734 branch-misses             #    4.75% of all branches        
+    28,072,707,674 instructions              #    1.26  insns per cycle        
+    11,067,470,324 branches                  # 1919.322 M/sec                  
+       700,497,241 branch-misses             #    6.33% of all branches        
 
-       6.264581455 seconds time elapsed
+       5.790645755 seconds time elapsed
 
-SUM:684257280
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
 
  Performance counter stats for './out/GCD.polly.enableVC.out 10000':
 
-       6237.712766 task-clock (msec)         #    0.999 CPUs utilized          
-               577 context-switches          #    0.093 K/sec                  
+       5739.193474 task-clock (msec)         #    0.999 CPUs utilized          
+               558 context-switches          #    0.097 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             1,297 page-faults               #    0.208 K/sec                  
-    24,119,896,009 cycles                    #    3.867 GHz                    
+               146 page-faults               #    0.025 K/sec                  
+    22,223,860,962 cycles                    #    3.872 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,898,840,589 instructions              #    1.53  insns per cycle        
-    14,156,054,118 branches                  # 2269.430 M/sec                  
-       673,326,940 branch-misses             #    4.76% of all branches        
+    28,072,748,488 instructions              #    1.26  insns per cycle        
+    11,067,477,576 branches                  # 1928.403 M/sec                  
+       700,861,303 branch-misses             #    6.33% of all branches        
 
-       6.241926077 seconds time elapsed
+       5.742952317 seconds time elapsed
 
-SUM:684257280
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
 
  Performance counter stats for './out/GCD.polly.enableVC.out 10000':
 
-       6276.317719 task-clock (msec)         #    1.000 CPUs utilized          
-               565 context-switches          #    0.090 K/sec                  
+       5729.136231 task-clock (msec)         #    0.999 CPUs utilized          
+               504 context-switches          #    0.088 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             1,297 page-faults               #    0.207 K/sec                  
-    24,115,564,512 cycles                    #    3.842 GHz                    
+               146 page-faults               #    0.025 K/sec                  
+    22,224,042,072 cycles                    #    3.879 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,898,839,636 instructions              #    1.53  insns per cycle        
-    14,156,053,088 branches                  # 2255.471 M/sec                  
-       673,018,765 branch-misses             #    4.75% of all branches        
+    28,072,548,356 instructions              #    1.26  insns per cycle        
+    11,067,439,864 branches                  # 1931.782 M/sec                  
+       700,629,748 branch-misses             #    6.33% of all branches        
 
-       6.279455400 seconds time elapsed
+       5.732410513 seconds time elapsed
 
-SUM:684257280
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
 
  Performance counter stats for './out/GCD.polly.enableVC.out 10000':
 
-       6232.762225 task-clock (msec)         #    0.999 CPUs utilized          
-               572 context-switches          #    0.092 K/sec                  
+       5750.212398 task-clock (msec)         #    0.999 CPUs utilized          
+               527 context-switches          #    0.092 K/sec                  
                  0 cpu-migrations            #    0.000 K/sec                  
-             1,297 page-faults               #    0.208 K/sec                  
-    24,120,487,814 cycles                    #    3.870 GHz                    
+               146 page-faults               #    0.025 K/sec                  
+    22,222,418,587 cycles                    #    3.865 GHz                    
    <not supported> stalled-cycles-frontend 
    <not supported> stalled-cycles-backend  
-    36,898,848,309 instructions              #    1.53  insns per cycle        
-    14,156,057,905 branches                  # 2271.233 M/sec                  
-       673,540,595 branch-misses             #    4.76% of all branches        
+    28,072,654,180 instructions              #    1.26  insns per cycle        
+    11,067,460,160 branches                  # 1924.705 M/sec                  
+       700,402,846 branch-misses             #    6.33% of all branches        
 
-       6.236606931 seconds time elapsed
+       5.753364968 seconds time elapsed
+
+N = 10000
+Sum: 684257280
+Pass Euclid GCD test case
+
+ Performance counter stats for './out/GCD.polly.enableVC.out 10000':
+
+       5798.237445 task-clock (msec)         #    1.000 CPUs utilized          
+               526 context-switches          #    0.091 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               146 page-faults               #    0.025 K/sec                  
+    22,226,095,479 cycles                    #    3.833 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+    28,072,687,713 instructions              #    1.26  insns per cycle        
+    11,067,466,094 branches                  # 1908.764 M/sec                  
+       700,749,080 branch-misses             #    6.33% of all branches        
+
+       5.801114757 seconds time elapsed
 
 processor	: 0
 vendor_id	: GenuineIntel
@@ -357,7 +377,7 @@ model		: 60
 model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
 stepping	: 3
 microcode	: 0x16
-cpu MHz		: 1900.000
+cpu MHz		: 2500.000
 cache size	: 8192 KB
 physical id	: 0
 siblings	: 8
