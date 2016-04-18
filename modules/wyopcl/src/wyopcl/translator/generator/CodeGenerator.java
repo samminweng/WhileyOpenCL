@@ -104,25 +104,33 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			if (type instanceof Type.FunctionOrMethod) {
 				// Skip translation
 			} else {
-				if (type instanceof Type.Array || (type instanceof Type.Reference
-						&& ((Type.Reference) type).element() instanceof Type.Array)) {
-					// Declare array variable
-					int dimension = stores.getArrayDimension(type);
-					declarations.add(indent + "_DECL_" + dimension + "DARRAY(" + var + ");");
+				if (type instanceof Type.Null) {
+					// Skip translation for null-typed variables.
 				} else if (type instanceof Type.Int) {
 					String translateType = CodeGeneratorHelper.translateType(type, stores);
 					declarations.add(indent + translateType + " " + var + " = 0;");
-				} else if (type instanceof Type.Record) {
+				} else if (type instanceof Type.Array) {
+					// Check elm type is an integer
+					Type elm_type = stores.getArrayElementType((Type.Array) type);
+					if (stores.isIntType(elm_type)) {
+						int dimension = stores.getArrayDimension(type);
+						// Declare array variable
+						declarations.add(indent + "_DECL_" + dimension + "DARRAY(" + var + ");");
+					} else {
+						String translateType = CodeGeneratorHelper.translateType(elm_type, stores);
+						declarations.add(indent + translateType + "* " + var + ";");
+						declarations.add(indent + "long long " + var + "_size = 0;");
+						// throw new RuntimeException("Not implemented");
+					}
+
+				} else if (type instanceof Type.Reference && ((Type.Reference) type).element() instanceof Type.Array) {
+					// Declare array variable
+					int dimension = stores.getArrayDimension(type);
+					declarations.add(indent + "_DECL_" + dimension + "DARRAY(" + var + ");");
+				} else if (type instanceof Type.Record || type instanceof Type.Nominal || type instanceof Type.Union
+						|| type instanceof Type.Bool) {
 					String translateType = CodeGeneratorHelper.translateType(type, stores);
 					declarations.add(indent + translateType + " " + var + ";");
-				} else if (type instanceof Type.Nominal) {
-					String translateType = CodeGeneratorHelper.translateType(type, stores);
-					declarations.add(indent + translateType + " " + var + ";");
-				} else if (type instanceof Type.Union) {
-					String translateType = CodeGeneratorHelper.translateType(type, stores);
-					declarations.add(indent + translateType + " " + var + ";");
-				} else if (type instanceof Type.Null) {
-					// Skip translation for null-typed variables.
 				} else {
 					throw new RuntimeException("Not implemented");
 				}
@@ -204,9 +212,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				Type parameter_type = params.get(op);
 				String var = stores.getVar(op, function);
 				if (parameter_type instanceof Type.Array) {
-					// Add extra 'size' variable for array variable
-					int dimension = stores.getArrayDimension(parameter_type);
-					parameters.add("_DECL_" + dimension + "DARRAY_PARAM(" + var + ")");
+					Type elm_type = stores.getArrayElementType((Type.Array)parameter_type);
+					if(stores.isIntType(elm_type)){
+						// Add extra 'size' variable for array variable
+						int dimension = stores.getArrayDimension(parameter_type);
+						parameters.add("_DECL_" + dimension + "DARRAY_PARAM(" + var + ")");
+					}else{
+						// E.g. POS* var, long long var_size 
+						String elem_type = CodeGeneratorHelper.translateType(parameter_type, stores);
+						parameters.add(elem_type + " " +  var + ", long long " + var + "_size");
+					}
+					
 				} else {
 					if (parameter_type instanceof Type.Function) {
 						// Add lambda function pointer
@@ -517,13 +533,21 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			} else if (parameter_type instanceof Type.Int || stores.isIntType(parameter_type)) {
 				statement.add(parameter);
 			} else if (parameter_type instanceof Type.Array) {
+				Type elm = stores.getArrayElementType((Type.Array)parameter_type);
+
 				boolean isCopyEliminated = isCopyEliminated(operand, code, function);
+
 				int dimension = stores.getArrayDimension(parameter_type);
 				if (isCopyEliminated) {
 					statement.add("_" + dimension + "DARRAY_PARAM(" + parameter + ")");
 				} else {
-					statement.add("_" + dimension + "DARRAY_COPY_PARAM(" + parameter + ")");
+					if (stores.isIntType(elm)) {
+						statement.add("_" + dimension + "DARRAY_COPY_PARAM(" + parameter + ")");
+					} else {
+						throw new RuntimeException("Not implemented");
+					}
 				}
+
 				// Append ownership to the function call
 				this.deallocatedAnalyzer.ifPresent(a -> {
 					Optional<HashMap<String, Boolean>> ownership = a.computeCallParameterOwnership(operand, code,
@@ -620,10 +644,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Translate built-in Whiley functions using macros.
 		if (code.name.module().toString().contains("whiley/lang")) {
 			String lhs = stores.getVar(code.target(0), function);
+			String rhs = stores.getVar(code.operand(0), function);
 			switch (code.name.name()) {
 			// Parse a string into an integer.
 			case "parse":
-				String rhs = stores.getVar(code.operand(0), function);
 				statement.add(indent + "_STR_TO_INT(" + lhs + ", " + rhs + ");");
 				break;
 			// Slice an array into a new sub-array at given starting and ending
@@ -642,7 +666,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						.ifPresent(a -> statement.add(indent + a.addOwnership(code.target(0), function, this.stores)));
 				break;
 			case "toString":
-				statement.add(indent + lhs + " = " + code.operand(0) + ";");
+				statement.add(indent + lhs + " = " + rhs + ";");
+				break;
+			case "abs":
+				// Use 'abs' function to return the absolute value of 'rhs'
+				statement.add(indent + lhs + " = abs(" + rhs + ");");
 				break;
 			default:
 				throw new RuntimeException("Un-implemented code:" + code);
@@ -944,7 +972,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(Codes.Return code, FunctionOrMethod function) {
 		List<String> statements = new ArrayList<String>();
 		String indent = stores.getIndent(function);
-		
+
 		// Add return statements
 		if (function.isFunction()) {
 			// Generate a statement that returns a value to a calling function
@@ -954,7 +982,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					statements.addAll(a.freeAllMemory(code, function, stores));
 				});
 				statements.add(indent + "return " + stores.getVar(code.operand(0), function) + ";");
-			} 
+			}
 			// Skip the translation of return statement for a function
 		} else {
 			// Generate system exit statement
@@ -966,13 +994,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// Add 'exit(0);'
 				statements.add(indent + "exit(0);");
 			} else {
-				if(code.operands().length ==0){
+				if (code.operands().length == 0) {
 					// Add the code to deallocate all ownership variables.
 					this.deallocatedAnalyzer.ifPresent(a -> {
 						statements.addAll(a.freeAllMemory(code, function, stores));
 					});
 					statements.add(indent + "return;");
-				}else{
+				} else {
 					throw new RuntimeException("Not implemented for return statement in a method");
 				}
 			}
@@ -1188,10 +1216,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Get the input
 			String input = stores.getVar(code.operand(1), function);
 			Type input_type = stores.getRawType(code.operand(1), function);
-			String f_s ="%lld";// Specify the format to 'printf' function, e.g. '%lld'
+			String f_s = "%lld";// Specify the format to 'printf' function, e.g.
+								// '%lld'
 			switch (print_name) {
 			case "print":
-				statement.add(indent + "printf(\""+f_s+"\", " + input + ");");
+				statement.add(indent + "printf(\"" + f_s + "\", " + input + ");");
 				break;
 			case "print_s":
 				int dimension = stores.getArrayDimension(input_type);
@@ -1204,7 +1233,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			case "println":
 				// Check input's type to call different println function.
 				if (input_type instanceof Type.Int) {
-					statement.add(indent + "printf(\""+f_s+"\\n\", " + input + ");");
+					statement.add(indent + "printf(\"" + f_s + "\\n\", " + input + ");");
 				} else if (input_type instanceof Type.Array) {
 					statement.add(indent + "_1DARRAY_PRINT(" + input + ");");
 				} else if (input_type instanceof Type.Nominal) {
@@ -1212,7 +1241,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					// Print out a user-defined type structure
 					statement.add(indent + "printf_" + nominal.name().name() + "(" + input + ");");
 				} else if (input_type instanceof Type.Union) {
-					statement.add(indent + "printf(\""+f_s+"\\n\", " + input + ");");
+					statement.add(indent + "printf(\"" + f_s + "\\n\", " + input + ");");
 				} else {
 					throw new RuntimeException("Not implemented." + code);
 				}
@@ -1459,17 +1488,35 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 		String indent = stores.getIndent(function);
 		String lhs = stores.getVar(code.target(0), function);
-		Type lhs_type = stores.getRawType(code.target(0), function);
+		Type.Array lhs_type = (Type.Array) stores.getRawType(code.target(0), function);
 		String rhs = stores.getVar(code.operand(0), function);
 		String size = stores.getVar(code.operand(1), function);
 		List<String> statement = new ArrayList<String>();
-		int dimension = stores.getArrayDimension(lhs_type);
 
 		// Deallocate lhs variable
 		this.deallocatedAnalyzer.ifPresent(
 				a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, code.type(0), stores)));
-		// Generate the array with size and values.
-		statement.add(indent + "_GEN_" + dimension + "DARRAY(" + lhs + ", " + size + ", " + rhs + ");");
+		Type elm_type = stores.getArrayElementType(lhs_type);
+		
+		if (stores.isIntType(elm_type)) {
+			// Generate array of integers
+			int dimension = stores.getArrayDimension(lhs_type);
+			// Generate the array with size and values.
+			statement.add(indent + "_GEN_" + dimension + "DARRAY(" + lhs + ", " + size + ", " + rhs + ");");
+		} else {
+			// Generate array of structures
+			String translateType = CodeGeneratorHelper.translateType(lhs_type.element(), stores);
+			// _a = malloc(n*sizeof(POS));
+			statement.add(indent + lhs + " = malloc(" + size + "*sizeof(" + translateType + "));");
+			// copy the rhs to each element in
+			// for(int _a_i =0;_a_i<n;_a_i++){ _a[_a_i] = copy_POS(b);}
+			String arr_i = lhs + "_i";
+			statement.add(indent + "for(int " + arr_i + "=0;" + arr_i + "<" + size + ";" + arr_i + "++){" + lhs + "["
+					+ arr_i + "] = copy_" + translateType.replace("*", "") + "(" + rhs + ");" + "}");
+			// _a_size = n;
+			statement.add(indent + lhs + "_size = " + size + ";");
+		}
+
 		// Assign ownership to lhs variable.
 		this.deallocatedAnalyzer
 				.ifPresent(a -> statement.add(indent + a.addOwnership(code.target(0), function, stores)));

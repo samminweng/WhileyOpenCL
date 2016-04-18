@@ -73,7 +73,8 @@ public class CodeGenerationTestCase {
 				"MatrixMult2",
 				"MatrixMult3",
 				"gcd",
-				"CoinGame"
+				"CoinGame",
+				"nqueens"
 				//"lambda"
 		});
 	}

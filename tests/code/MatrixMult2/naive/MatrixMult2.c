@@ -142,7 +142,8 @@ void print_mat(FILE* sys, Matrix* a){
 	long long _21 = 0;
 	long long _22 = 0;
 	void* _23;
-	_DECL_1DARRAY(_25);
+	void** _25;
+	long long _25_size = 0;
 	//const %6 = 0 : int
 	_6 = 0;
 	//assign %2 = %6  : int

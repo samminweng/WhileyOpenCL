@@ -210,7 +210,11 @@ public final class BaseTestUtil {
 			throw new AssertionError("Fails to create the " + destDir + " folder");
 		}
 	}
-
+	/**
+	 * Use GCC C99 standard to compile the generated C code into executables.
+	 * @param testcase
+	 * @param destDir
+	 */
 	private void compileAndRunCCode(String testcase, Path destDir){
 		// Get Operation System.
 		// 4. Compile and run the C code.
@@ -220,10 +224,10 @@ public final class BaseTestUtil {
 			String path = System.getenv("PATH");// Get PATH environment variable.
 			if (path.contains("MinGW")) {
 				// Check the exit value. If not 0, the compilation has errors.
-				assertEquals(runCmd("cmd /c gcc *.c  -o " + testcase + ".out", destDir), 0);
+				assertEquals(runCmd("cmd /c gcc -std=c99 *.c  -o " + testcase + ".out", destDir), 0);
 			} else if (path.contains("cygwin")) {
 				// Gcc is a link (Windows command does not get it), so call its actual name (i.e. gcc-3 or gcc-4)
-				assertEquals(runCmd("cmd /c gcc-4 *.c  -o " + testcase + ".out", destDir), 0);
+				assertEquals(runCmd("cmd /c gcc-4 -std=c99 *.c  -o " + testcase + ".out", destDir), 0);
 				// Run the output file.
 				//assertEquals(runCmd("cmd /c " + testcase + ".out", destDir), 0);
 			} else {
@@ -233,9 +237,8 @@ public final class BaseTestUtil {
 			// Run the output file.
 			assertEquals(runCmd("cmd /c " + testcase + ".out", destDir), 0);
 		} else {
-			//runCmd("cd "+destDir, destDir);
-			// Compile the C program into *.out and place it in current working directory
-			assertEquals(runCmd("gcc Util.c " +testcase+".c -o " + testcase + ".out", destDir), 0);
+			// Use C99 standard to Compile the C program into *.out and place it in current working directory
+			assertEquals(runCmd("gcc -std=c99 Util.c " +testcase+".c -o " + testcase + ".out", destDir), 0);
 			// Run the generated out file
 			assertEquals(runCmd("./" + testcase + ".out", destDir), 0);
 		}
@@ -318,32 +321,7 @@ public final class BaseTestUtil {
 			assertEquals(Files.exists(Paths.get(destDir + File.separator + testcase + ".h")), true);
 
 			// Get Operation System.
-			// 4. Compile and run the C code.
-			if (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0) {
-				// This option requires the Cygwin and gcc, or MinGW
-				// Compile the *.c using GCC
-				String path = System.getenv("PATH");// Get PATH environment variable.
-				if (path.contains("MinGW")) {
-					// Check the exit value. If not 0, the compilation has errors.
-					assertEquals(runCmd("cmd /c gcc *.c  -o " + testcase + ".out", destDir), 0);
-				} else if (path.contains("cygwin")) {
-					// Gcc is a link (Windows command does not get it), so call its actual name (i.e. gcc-3 or gcc-4)
-					assertEquals(runCmd("cmd /c gcc-4 *.c  -o " + testcase + ".out", destDir), 0);
-					// Run the output file.
-					//assertEquals(runCmd("cmd /c " + testcase + ".out", destDir), 0);
-				} else {
-					throw new RuntimeException("Missing C compiler, such as gcc or MinGW.");
-				}
-			
-				// Run the output file.
-				assertEquals(runCmd("cmd /c " + testcase + ".out", destDir), 0);
-			} else {
-				//runCmd("cd "+destDir, destDir);
-				// Compile the C program into *.out and place it in current working directory
-				assertEquals(runCmd("gcc Util.c " +testcase+".c -o " + testcase + ".out", destDir), 0);
-				// Run the generated out file
-				assertEquals(runCmd("./" + testcase + ".out", destDir), 0);
-			}
+			compileAndRunCCode(testcase, destDir);
 			
 			// Delete the Wyil files inside folder
 			Files.deleteIfExists(FileSystems.getDefault().getPath(sourceDir + testcase + ".wyil"));
