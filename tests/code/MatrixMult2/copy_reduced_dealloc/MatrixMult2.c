@@ -165,7 +165,8 @@ void print_mat(FILE* sys, Matrix* a, _DECL_OWNERSHIP_PARAM(a)){
 	long long _21 = 0;
 	long long _22 = 0;
 	void* _23;
-	_DECL_1DARRAY(_25);
+	void** _25;
+	long long _25_size = 0;
 	_DECL_OWNERSHIP(_25);
 	//const %6 = 0 : int
 	_6 = 0;

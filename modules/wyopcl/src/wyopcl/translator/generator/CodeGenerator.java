@@ -109,8 +109,21 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				} else if (type instanceof Type.Int) {
 					String translateType = CodeGeneratorHelper.translateType(type, stores);
 					declarations.add(indent + translateType + " " + var + " = 0;");
-				} else if (type instanceof Type.Array || (type instanceof Type.Reference
-						&& ((Type.Reference) type).element() instanceof Type.Array)) {
+				} else if (type instanceof Type.Array) {
+					// Check elm type is an integer
+					Type elm_type = stores.getArrayElementType((Type.Array) type);
+					if (stores.isIntType(elm_type)) {
+						int dimension = stores.getArrayDimension(type);
+						// Declare array variable
+						declarations.add(indent + "_DECL_" + dimension + "DARRAY(" + var + ");");
+					} else {
+						String translateType = CodeGeneratorHelper.translateType(elm_type, stores);
+						declarations.add(indent + translateType + "* " + var + ";");
+						declarations.add(indent + "long long " + var + "_size = 0;");
+						// throw new RuntimeException("Not implemented");
+					}
+
+				} else if (type instanceof Type.Reference && ((Type.Reference) type).element() instanceof Type.Array) {
 					// Declare array variable
 					int dimension = stores.getArrayDimension(type);
 					declarations.add(indent + "_DECL_" + dimension + "DARRAY(" + var + ");");
@@ -199,9 +212,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				Type parameter_type = params.get(op);
 				String var = stores.getVar(op, function);
 				if (parameter_type instanceof Type.Array) {
-					// Add extra 'size' variable for array variable
-					int dimension = stores.getArrayDimension(parameter_type);
-					parameters.add("_DECL_" + dimension + "DARRAY_PARAM(" + var + ")");
+					Type elm_type = stores.getArrayElementType((Type.Array)parameter_type);
+					if(stores.isIntType(elm_type)){
+						// Add extra 'size' variable for array variable
+						int dimension = stores.getArrayDimension(parameter_type);
+						parameters.add("_DECL_" + dimension + "DARRAY_PARAM(" + var + ")");
+					}else{
+						// E.g. POS* var, long long var_size 
+						String elem_type = CodeGeneratorHelper.translateType(parameter_type, stores);
+						parameters.add(elem_type + " " +  var + ", long long " + var + "_size");
+					}
+					
 				} else {
 					if (parameter_type instanceof Type.Function) {
 						// Add lambda function pointer
@@ -512,13 +533,21 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			} else if (parameter_type instanceof Type.Int || stores.isIntType(parameter_type)) {
 				statement.add(parameter);
 			} else if (parameter_type instanceof Type.Array) {
+				Type elm = stores.getArrayElementType((Type.Array)parameter_type);
+
 				boolean isCopyEliminated = isCopyEliminated(operand, code, function);
+
 				int dimension = stores.getArrayDimension(parameter_type);
 				if (isCopyEliminated) {
 					statement.add("_" + dimension + "DARRAY_PARAM(" + parameter + ")");
 				} else {
-					statement.add("_" + dimension + "DARRAY_COPY_PARAM(" + parameter + ")");
+					if (stores.isIntType(elm)) {
+						statement.add("_" + dimension + "DARRAY_COPY_PARAM(" + parameter + ")");
+					} else {
+						throw new RuntimeException("Not implemented");
+					}
 				}
+
 				// Append ownership to the function call
 				this.deallocatedAnalyzer.ifPresent(a -> {
 					Optional<HashMap<String, Boolean>> ownership = a.computeCallParameterOwnership(operand, code,
@@ -1459,17 +1488,35 @@ public class CodeGenerator extends AbstractCodeGenerator {
 
 		String indent = stores.getIndent(function);
 		String lhs = stores.getVar(code.target(0), function);
-		Type lhs_type = stores.getRawType(code.target(0), function);
+		Type.Array lhs_type = (Type.Array) stores.getRawType(code.target(0), function);
 		String rhs = stores.getVar(code.operand(0), function);
 		String size = stores.getVar(code.operand(1), function);
 		List<String> statement = new ArrayList<String>();
-		int dimension = stores.getArrayDimension(lhs_type);
 
 		// Deallocate lhs variable
 		this.deallocatedAnalyzer.ifPresent(
 				a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, code.type(0), stores)));
-		// Generate the array with size and values.
-		statement.add(indent + "_GEN_" + dimension + "DARRAY(" + lhs + ", " + size + ", " + rhs + ");");
+		Type elm_type = stores.getArrayElementType(lhs_type);
+		
+		if (stores.isIntType(elm_type)) {
+			// Generate array of integers
+			int dimension = stores.getArrayDimension(lhs_type);
+			// Generate the array with size and values.
+			statement.add(indent + "_GEN_" + dimension + "DARRAY(" + lhs + ", " + size + ", " + rhs + ");");
+		} else {
+			// Generate array of structures
+			String translateType = CodeGeneratorHelper.translateType(lhs_type.element(), stores);
+			// _a = malloc(n*sizeof(POS));
+			statement.add(indent + lhs + " = malloc(" + size + "*sizeof(" + translateType + "));");
+			// copy the rhs to each element in
+			// for(int _a_i =0;_a_i<n;_a_i++){ _a[_a_i] = copy_POS(b);}
+			String arr_i = lhs + "_i";
+			statement.add(indent + "for(int " + arr_i + "=0;" + arr_i + "<" + size + ";" + arr_i + "++){" + lhs + "["
+					+ arr_i + "] = copy_" + translateType.replace("*", "") + "(" + rhs + ");" + "}");
+			// _a_size = n;
+			statement.add(indent + lhs + "_size = " + size + ";");
+		}
+
 		// Assign ownership to lhs variable.
 		this.deallocatedAnalyzer
 				.ifPresent(a -> statement.add(indent + a.addOwnership(code.target(0), function, stores)));

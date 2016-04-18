@@ -239,7 +239,8 @@ void printMat(FILE* sys, Matrix* A, _DECL_OWNERSHIP_PARAM(A)){
 	long long _18 = 0;
 	long long _19 = 0;
 	void* _20;
-	_DECL_1DARRAY(_22);
+	void** _22;
+	long long _22_size = 0;
 	_DECL_OWNERSHIP(_22);
 	//const %4 = 0 : int
 	_4 = 0;

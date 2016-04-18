@@ -221,6 +221,8 @@ public class CodeStores {
 				return true;
 			}
 		}
+		
+		
 		return false;
 	}
 	
@@ -253,6 +255,19 @@ public class CodeStores {
 		}
 	}
 	
+	/**
+	 * Extract the basic element type of an array type (recursively).
+	 * @param type
+	 * @return
+	 */
+	protected Type getArrayElementType(Type.Array type){
+		Type elmType = type.element();
+		if(elmType instanceof Type.Array){
+			return getArrayElementType((Type.Array)elmType);
+		}
+		
+		return elmType;
+	}
 	
 	/**
 	 * Check if the type of given register is an array or record (excluding 'print' fields)

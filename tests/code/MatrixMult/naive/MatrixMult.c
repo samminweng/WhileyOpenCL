@@ -197,7 +197,8 @@ void printMat(FILE* sys, Matrix* A){
 	long long _18 = 0;
 	long long _19 = 0;
 	void* _20;
-	_DECL_1DARRAY(_22);
+	void** _22;
+	long long _22_size = 0;
 	//const %4 = 0 : int
 	_4 = 0;
 	//assign %2 = %4  : int
