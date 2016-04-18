@@ -104,25 +104,20 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			if (type instanceof Type.FunctionOrMethod) {
 				// Skip translation
 			} else {
-				if (type instanceof Type.Array || (type instanceof Type.Reference
+				if (type instanceof Type.Null) {
+					// Skip translation for null-typed variables.
+				} else if (type instanceof Type.Int) {
+					String translateType = CodeGeneratorHelper.translateType(type, stores);
+					declarations.add(indent + translateType + " " + var + " = 0;");
+				} else if (type instanceof Type.Array || (type instanceof Type.Reference
 						&& ((Type.Reference) type).element() instanceof Type.Array)) {
 					// Declare array variable
 					int dimension = stores.getArrayDimension(type);
 					declarations.add(indent + "_DECL_" + dimension + "DARRAY(" + var + ");");
-				} else if (type instanceof Type.Int) {
-					String translateType = CodeGeneratorHelper.translateType(type, stores);
-					declarations.add(indent + translateType + " " + var + " = 0;");
-				} else if (type instanceof Type.Record) {
+				} else if (type instanceof Type.Record || type instanceof Type.Nominal || type instanceof Type.Union
+						|| type instanceof Type.Bool) {
 					String translateType = CodeGeneratorHelper.translateType(type, stores);
 					declarations.add(indent + translateType + " " + var + ";");
-				} else if (type instanceof Type.Nominal) {
-					String translateType = CodeGeneratorHelper.translateType(type, stores);
-					declarations.add(indent + translateType + " " + var + ";");
-				} else if (type instanceof Type.Union) {
-					String translateType = CodeGeneratorHelper.translateType(type, stores);
-					declarations.add(indent + translateType + " " + var + ";");
-				} else if (type instanceof Type.Null) {
-					// Skip translation for null-typed variables.
 				} else {
 					throw new RuntimeException("Not implemented");
 				}
@@ -948,7 +943,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	protected void translate(Codes.Return code, FunctionOrMethod function) {
 		List<String> statements = new ArrayList<String>();
 		String indent = stores.getIndent(function);
-		
+
 		// Add return statements
 		if (function.isFunction()) {
 			// Generate a statement that returns a value to a calling function
@@ -958,7 +953,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					statements.addAll(a.freeAllMemory(code, function, stores));
 				});
 				statements.add(indent + "return " + stores.getVar(code.operand(0), function) + ";");
-			} 
+			}
 			// Skip the translation of return statement for a function
 		} else {
 			// Generate system exit statement
@@ -970,13 +965,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				// Add 'exit(0);'
 				statements.add(indent + "exit(0);");
 			} else {
-				if(code.operands().length ==0){
+				if (code.operands().length == 0) {
 					// Add the code to deallocate all ownership variables.
 					this.deallocatedAnalyzer.ifPresent(a -> {
 						statements.addAll(a.freeAllMemory(code, function, stores));
 					});
 					statements.add(indent + "return;");
-				}else{
+				} else {
 					throw new RuntimeException("Not implemented for return statement in a method");
 				}
 			}
@@ -1192,10 +1187,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Get the input
 			String input = stores.getVar(code.operand(1), function);
 			Type input_type = stores.getRawType(code.operand(1), function);
-			String f_s ="%lld";// Specify the format to 'printf' function, e.g. '%lld'
+			String f_s = "%lld";// Specify the format to 'printf' function, e.g.
+								// '%lld'
 			switch (print_name) {
 			case "print":
-				statement.add(indent + "printf(\""+f_s+"\", " + input + ");");
+				statement.add(indent + "printf(\"" + f_s + "\", " + input + ");");
 				break;
 			case "print_s":
 				int dimension = stores.getArrayDimension(input_type);
@@ -1208,7 +1204,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			case "println":
 				// Check input's type to call different println function.
 				if (input_type instanceof Type.Int) {
-					statement.add(indent + "printf(\""+f_s+"\\n\", " + input + ");");
+					statement.add(indent + "printf(\"" + f_s + "\\n\", " + input + ");");
 				} else if (input_type instanceof Type.Array) {
 					statement.add(indent + "_1DARRAY_PRINT(" + input + ");");
 				} else if (input_type instanceof Type.Nominal) {
@@ -1216,7 +1212,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					// Print out a user-defined type structure
 					statement.add(indent + "printf_" + nominal.name().name() + "(" + input + ");");
 				} else if (input_type instanceof Type.Union) {
-					statement.add(indent + "printf(\""+f_s+"\\n\", " + input + ");");
+					statement.add(indent + "printf(\"" + f_s + "\\n\", " + input + ");");
 				} else {
 					throw new RuntimeException("Not implemented." + code);
 				}

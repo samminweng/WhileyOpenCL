@@ -266,7 +266,8 @@ public class CodeStores {
 		if(type instanceof Type.Array){
 			return true;
 		}else{
-			if(isIntType(type) || type instanceof Type.Null || type instanceof Type.FunctionOrMethod){
+			if(isIntType(type) || type instanceof Type.Null || type instanceof Type.FunctionOrMethod ||
+					type instanceof Type.Bool){
 				return false;			
 			}else if(type instanceof Type.Record){
 				Type.Record record = (Type.Record)type;

@@ -375,6 +375,10 @@ public final class CodeGeneratorHelper {
 			str += ")";
 			return str;
 		}
+		
+		if(type instanceof Type.Bool){
+			return "bool";
+		}
 	
 		throw new RuntimeException("Not Implemented!");
 	}
