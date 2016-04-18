@@ -50,26 +50,26 @@ compileProgram(){
     	### Compile C code into executables
 	case "$opt" in
 		"gcc")
-			gcc -O3 -fno-tree-vectorize $program.c Util.c -o "out/$program.$opt.disableVC.out"
+			###gcc -O3 -fno-tree-vectorize $program.c Util.c -o "out/$program.$opt.disableVC.out"
 			gcc -O3 $program.c Util.c -o "out/$program.$opt.enableVC.out"
 			;;
 		"clang")
-			clang -O3 -fno-vectorize $program.c Util.c -o "out/$program.$opt.disableVC.out"
+			###clang -O3 -fno-vectorize $program.c Util.c -o "out/$program.$opt.disableVC.out"
 			clang -O3 $program.c Util.c -o "out/$program.$opt.enableVC.out"
 			;;
 		"polly")
-			pollycc -O3 -fno-vectorize -mllvm -polly $program.c Util.c -o "out/$program.$opt.disableVC.out"
+			###pollycc -O3 -fno-vectorize -mllvm -polly $program.c Util.c -o "out/$program.$opt.disableVC.out"
 			pollycc -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine $program.c Util.c -o "out/$program.$opt.enableVC.out"
 			;;
 		"openmp")
 			echo "Optimize C code using OpenMP code with $OMP_NUM_THREADS threads..." >> $result
-			pollycc -O3 -fno-vectorize -mllvm -polly -mllvm -polly-parallel -lgomp $program.c Util.c -o "out/$program.$opt.disableVC.out"
+			###pollycc -O3 -fno-vectorize -mllvm -polly -mllvm -polly-parallel -lgomp $program.c Util.c -o "out/$program.$opt.disableVC.out"
 			pollycc -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine -mllvm -polly-parallel -lgomp $program.c Util.c -o "out/$program.$opt.enableVC.out"
 			;;
 	esac
 	###read -p "Press [Enter] to continue..."
-	result="$PWD/../../perf/$c_type.$program.$opt.$parameter.$num_threads.disableVC.txt"
-	run "./out/$program.$opt.disableVC.out" $result $opt $num_threads "diableVC"
+	##result="$PWD/../../perf/$c_type.$program.$opt.$parameter.$num_threads.disableVC.txt"
+	###run "./out/$program.$opt.disableVC.out" $result $opt $num_threads "diableVC"
 
 	result="$PWD/../../perf/$c_type.$program.$opt.$parameter.$num_threads.enableVC.txt"
 	run "./out/$program.$opt.enableVC.out" $result $opt $num_threads "enableVC"
@@ -105,14 +105,21 @@ init(){
 init autogenerate GCD
 exec autogenerate GCD 1000
 exec autogenerate GCD 10000
-exec autogenerate GCD 100000
-exec autogenerate GCD 1000000
+exec autogenerate GCD 20000
+exec autogenerate GCD 30000
+exec autogenerate GCD 40000
+exec autogenerate1 GCD 1000
+exec autogenerate1 GCD 10000
+exec autogenerate1 GCD 20000
+exec autogenerate1 GCD 30000
+exec autogenerate1 GCD 40000
 ### Benchmark Autogenerate CoinGame
 init autogenerate CoinGame
 exec autogenerate CoinGame 1000
 exec autogenerate CoinGame 10000
-exec autogenerate CoinGame 100000
-exec autogenerate CoinGame 1000000
+exec autogenerate CoinGame 20000
+exec autogenerate CoinGame 30000
+exec autogenerate CoinGame 40000
 
 ### Benchmark Autogenerate1 and autogenerate2 MatrixMult
 # ### Autogenerate1 MatrixMult
