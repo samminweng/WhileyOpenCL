@@ -620,10 +620,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		// Translate built-in Whiley functions using macros.
 		if (code.name.module().toString().contains("whiley/lang")) {
 			String lhs = stores.getVar(code.target(0), function);
+			String rhs = stores.getVar(code.operand(0), function);
 			switch (code.name.name()) {
 			// Parse a string into an integer.
 			case "parse":
-				String rhs = stores.getVar(code.operand(0), function);
 				statement.add(indent + "_STR_TO_INT(" + lhs + ", " + rhs + ");");
 				break;
 			// Slice an array into a new sub-array at given starting and ending
@@ -642,7 +642,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 						.ifPresent(a -> statement.add(indent + a.addOwnership(code.target(0), function, this.stores)));
 				break;
 			case "toString":
-				statement.add(indent + lhs + " = " + code.operand(0) + ";");
+				statement.add(indent + lhs + " = " + rhs + ";");
+				break;
+			case "abs":
+				// Use 'abs' function to return the absolute value of 'rhs'
+				statement.add(indent + lhs + " = abs(" + rhs + ");");
 				break;
 			default:
 				throw new RuntimeException("Un-implemented code:" + code);
