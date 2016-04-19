@@ -1,0 +1,398 @@
+Enable loop vectorization...Compile C code using clang with 1 threads...N = 1000
+Sum: 5432880
+Pass Euclid GCD test case
+
+ Performance counter stats for './out/GCD.clang.enableVC.out 1000':
+
+         49.820926 task-clock (msec)         #    0.929 CPUs utilized          
+                11 context-switches          #    0.221 K/sec                  
+                 1 cpu-migrations            #    0.020 K/sec                  
+               146 page-faults               #    0.003 M/sec                  
+       156,566,368 cycles                    #    3.143 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+       165,245,714 instructions              #    1.06  insns per cycle        
+        64,360,436 branches                  # 1291.835 M/sec                  
+         5,654,028 branch-misses             #    8.78% of all branches        
+
+       0.053655187 seconds time elapsed
+
+N = 1000
+Sum: 5432880
+Pass Euclid GCD test case
+
+ Performance counter stats for './out/GCD.clang.enableVC.out 1000':
+
+         43.429532 task-clock (msec)         #    0.932 CPUs utilized          
+                 9 context-switches          #    0.207 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               146 page-faults               #    0.003 M/sec                  
+       156,440,022 cycles                    #    3.602 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+       165,183,903 instructions              #    1.06  insns per cycle        
+        64,349,674 branches                  # 1481.703 M/sec                  
+         5,650,454 branch-misses             #    8.78% of all branches        
+
+       0.046602403 seconds time elapsed
+
+N = 1000
+Sum: 5432880
+Pass Euclid GCD test case
+
+ Performance counter stats for './out/GCD.clang.enableVC.out 1000':
+
+         48.659638 task-clock (msec)         #    0.937 CPUs utilized          
+                10 context-switches          #    0.206 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               146 page-faults               #    0.003 M/sec                  
+       156,290,755 cycles                    #    3.212 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+       165,196,083 instructions              #    1.06  insns per cycle        
+        64,351,621 branches                  # 1322.485 M/sec                  
+         5,640,269 branch-misses             #    8.76% of all branches        
+
+       0.051947311 seconds time elapsed
+
+N = 1000
+Sum: 5432880
+Pass Euclid GCD test case
+
+ Performance counter stats for './out/GCD.clang.enableVC.out 1000':
+
+         49.545355 task-clock (msec)         #    0.931 CPUs utilized          
+                11 context-switches          #    0.222 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               146 page-faults               #    0.003 M/sec                  
+       156,372,713 cycles                    #    3.156 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+       165,199,480 instructions              #    1.06  insns per cycle        
+        64,352,571 branches                  # 1298.862 M/sec                  
+         5,647,218 branch-misses             #    8.78% of all branches        
+
+       0.053207635 seconds time elapsed
+
+N = 1000
+Sum: 5432880
+Pass Euclid GCD test case
+
+ Performance counter stats for './out/GCD.clang.enableVC.out 1000':
+
+         48.531641 task-clock (msec)         #    0.928 CPUs utilized          
+                10 context-switches          #    0.206 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               146 page-faults               #    0.003 M/sec                  
+       156,402,135 cycles                    #    3.223 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+       165,195,392 instructions              #    1.06  insns per cycle        
+        64,352,083 branches                  # 1325.982 M/sec                  
+         5,658,479 branch-misses             #    8.79% of all branches        
+
+       0.052316026 seconds time elapsed
+
+N = 1000
+Sum: 5432880
+Pass Euclid GCD test case
+
+ Performance counter stats for './out/GCD.clang.enableVC.out 1000':
+
+         51.023732 task-clock (msec)         #    0.941 CPUs utilized          
+                11 context-switches          #    0.216 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               146 page-faults               #    0.003 M/sec                  
+       156,365,062 cycles                    #    3.065 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+       165,195,842 instructions              #    1.06  insns per cycle        
+        64,352,564 branches                  # 1261.228 M/sec                  
+         5,659,516 branch-misses             #    8.79% of all branches        
+
+       0.054247005 seconds time elapsed
+
+N = 1000
+Sum: 5432880
+Pass Euclid GCD test case
+
+ Performance counter stats for './out/GCD.clang.enableVC.out 1000':
+
+         46.546804 task-clock (msec)         #    0.934 CPUs utilized          
+                10 context-switches          #    0.215 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               146 page-faults               #    0.003 M/sec                  
+       156,399,481 cycles                    #    3.360 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+       165,196,703 instructions              #    1.06  insns per cycle        
+        64,352,078 branches                  # 1382.524 M/sec                  
+         5,651,357 branch-misses             #    8.78% of all branches        
+
+       0.049827395 seconds time elapsed
+
+N = 1000
+Sum: 5432880
+Pass Euclid GCD test case
+
+ Performance counter stats for './out/GCD.clang.enableVC.out 1000':
+
+         48.071814 task-clock (msec)         #    0.936 CPUs utilized          
+                 9 context-switches          #    0.187 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               146 page-faults               #    0.003 M/sec                  
+       156,319,910 cycles                    #    3.252 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+       165,198,999 instructions              #    1.06  insns per cycle        
+        64,351,935 branches                  # 1338.663 M/sec                  
+         5,626,010 branch-misses             #    8.74% of all branches        
+
+       0.051347970 seconds time elapsed
+
+N = 1000
+Sum: 5432880
+Pass Euclid GCD test case
+
+ Performance counter stats for './out/GCD.clang.enableVC.out 1000':
+
+         47.284487 task-clock (msec)         #    0.927 CPUs utilized          
+                10 context-switches          #    0.211 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               145 page-faults               #    0.003 M/sec                  
+       156,327,416 cycles                    #    3.306 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+       165,195,534 instructions              #    1.06  insns per cycle        
+        64,351,399 branches                  # 1360.941 M/sec                  
+         5,655,622 branch-misses             #    8.79% of all branches        
+
+       0.050996009 seconds time elapsed
+
+N = 1000
+Sum: 5432880
+Pass Euclid GCD test case
+
+ Performance counter stats for './out/GCD.clang.enableVC.out 1000':
+
+         47.791381 task-clock (msec)         #    0.925 CPUs utilized          
+                 9 context-switches          #    0.188 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               146 page-faults               #    0.003 M/sec                  
+       156,312,538 cycles                    #    3.271 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+       165,190,160 instructions              #    1.06  insns per cycle        
+        64,350,812 branches                  # 1346.494 M/sec                  
+         5,654,982 branch-misses             #    8.79% of all branches        
+
+       0.051654098 seconds time elapsed
+
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 0
+cpu cores	: 4
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 1
+cpu cores	: 4
+apicid		: 2
+initial apicid	: 2
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 2
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 2
+cpu cores	: 4
+apicid		: 4
+initial apicid	: 4
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 3
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 3
+cpu cores	: 4
+apicid		: 6
+initial apicid	: 6
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 4
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 0
+cpu cores	: 4
+apicid		: 1
+initial apicid	: 1
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 5
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 1
+cpu cores	: 4
+apicid		: 3
+initial apicid	: 3
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 6
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 2
+cpu cores	: 4
+apicid		: 5
+initial apicid	: 5
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+
+processor	: 7
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 60
+model name	: Intel(R) Core(TM) i7-4770 CPU @ 3.40GHz
+stepping	: 3
+microcode	: 0x16
+cpu MHz		: 2800.000
+cache size	: 8192 KB
+physical id	: 0
+siblings	: 8
+core id		: 3
+cpu cores	: 4
+apicid		: 7
+initial apicid	: 7
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 13
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc arch_perfmon pebs bts rep_good nopl xtopology nonstop_tsc aperfmperf eagerfpu pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 fma cx16 xtpr pdcm pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm ida arat epb xsaveopt pln pts dtherm tpr_shadow vnmi flexpriority ept vpid fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm
+bogomips	: 6784.95
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 39 bits physical, 48 bits virtual
+power management:
+

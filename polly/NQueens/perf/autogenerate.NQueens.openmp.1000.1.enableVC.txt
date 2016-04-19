@@ -1,0 +1,34 @@
+Enable loop vectorization...Compile C code using openmp with 1 threads..../out/NQueens.openmp.enableVC.out: Interrupt
+
+ Performance counter stats for './out/NQueens.openmp.enableVC.out 1000':
+
+     384706.945579 task-clock (msec)         #    1.000 CPUs utilized          
+            35,331 context-switches          #    0.092 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               206 page-faults               #    0.001 K/sec                  
+ 1,490,871,700,804 cycles                    #    3.875 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+ 4,443,709,661,481 instructions              #    2.98  insns per cycle        
+ 1,065,430,482,395 branches                  # 2769.460 M/sec                  
+        79,602,235 branch-misses             #    0.01% of all branches        
+
+     384.631367262 seconds time elapsed
+
+./out/NQueens.openmp.enableVC.out: Interrupt
+
+ Performance counter stats for './out/NQueens.openmp.enableVC.out 1000':
+
+        479.345912 task-clock (msec)         #    0.997 CPUs utilized          
+                49 context-switches          #    0.102 K/sec                  
+                 0 cpu-migrations            #    0.000 K/sec                  
+               200 page-faults               #    0.417 K/sec                  
+     1,773,618,942 cycles                    #    3.700 GHz                    
+   <not supported> stalled-cycles-frontend 
+   <not supported> stalled-cycles-backend  
+     5,234,574,268 instructions              #    2.95  insns per cycle        
+     1,230,077,236 branches                  # 2566.158 M/sec                  
+           179,609 branch-misses             #    0.01% of all branches        
+
+       0.480878316 seconds time elapsed
+
