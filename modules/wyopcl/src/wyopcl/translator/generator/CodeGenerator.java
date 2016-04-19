@@ -674,8 +674,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statement.add(indent + lhs + " = " + rhs + ";");
 				break;
 			case "abs":
-				// Use 'abs' function to return the absolute value of 'rhs'
-				statement.add(indent + lhs + " = abs(" + rhs + ");");
+				// Use 'llabs' function to return the absolute value of 'rhs'
+				// because the rhs is a long long integer.
+				statement.add(indent + lhs + " = llabs(" + rhs + ");");
 				break;
 			default:
 				throw new RuntimeException("Un-implemented code:" + code);
