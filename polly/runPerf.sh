@@ -47,7 +47,8 @@ compileProgram(){
 		./../../../../bin/wyopcl -code -copy -dealloc "$program.whiley"
 	fi
    	###read -p "Press [Enter] to continue..."
-    	### Compile C code into executables
+    mkdir "out"
+    ### Compile C code into executables
 	case "$opt" in
 		"gcc")
 			###gcc -O3 -fno-tree-vectorize $program.c Util.c -o "out/$program.$opt.disableVC.out"
