@@ -75,6 +75,8 @@ clang_polly(){
 	mkdir -p "out" # Store the executables.
 	rm -rf "out"/*
 
+	mkdir -p "assembly" ## Store the assembly code (*.s)
+	mkdir -p "llvm"  ## Store the llvm code (*.ll)
 	### Compile Util.c to Util.o (object file)
 	clang -c Util.c -o Util.o 
     ar -cvq libUtil.a Util.o
@@ -82,7 +84,7 @@ clang_polly(){
 	pollycc -g -O3 -mllvm -polly -o "out"/$program.polly.out\
 	        -mllvm -polly-dot -mllvm -polly-show $program.c libUtil.a
 	
-	### Export JSCoP
+	### Export JSCoP	
 	pollycc -S -emit-llvm $program.c -o "llvm/$program.preopt.ll.tmp" && ## compile C to llvm
 	opt -S -polly-canonicalize -polly-report "llvm/$program.preopt.ll.tmp" > "llvm/$program.preopt.ll" &&
 	opt -basicaa -polly-export-jscop "llvm/$program.preopt.ll" &&
@@ -191,9 +193,10 @@ exec(){
 
 ###exec autogenerate1 MatrixMult 1000  ### Determine matrix size from cmd line argument
 ###exec autogenerate2 MatrixMult 1000  
-exec autogenerate GCD 100  ### Use Euclid's algorithm
-exec autogenerate1 GCD 100 ### Cached the divisors
-exec autogenerate CoinGame 10
+##exec autogenerate GCD 100  ### Use Euclid's algorithm
+##exec autogenerate1 GCD 100 ### Cached the divisors
+##exec autogenerate CoinGame 10
+exec autogenerate NQueens 10
 
 
 

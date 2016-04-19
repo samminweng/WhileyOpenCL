@@ -47,7 +47,7 @@ compileProgram(){
 		./../../../../bin/wyopcl -code -copy -dealloc "$program.whiley"
 	fi
    	###read -p "Press [Enter] to continue..."
-    mkdir "out"
+    mkdir -p "out"
     ### Compile C code into executables
 	case "$opt" in
 		"gcc")
@@ -95,9 +95,8 @@ exec(){
 init(){
 	c_type=$1
 	program=$2
-	perf_dir="$PWD/$program/perf"
-	mkdir -p "$perf_dir"
-	rm -rf "$perf_dir/"*.*
+	mkdir -p "$PWD/$program/perf"
+	rm -rf "$PWD/$program/perf/"*.*
 	mkdir -p "$PWD/$program/impl/$c_type/out" ## Create 'out' folder
 	rm -rf "$PWD/$program/impl/$c_type/out/"*.*
 	#read -p "Press [Enter] to continue..."
@@ -122,6 +121,15 @@ exec autogenerate CoinGame 20000
 exec autogenerate CoinGame 30000
 exec autogenerate CoinGame 40000
 
+### Benchmark Autogenerate NQueens
+init autogenerate NQueens
+exec autogenerate NQueens 1000
+exec autogenerate NQueens 10000
+exec autogenerate NQueens 100000
+exec autogenerate NQueens 1000000
+exec autogenerate NQueens 10000000
+exec autogenerate NQueens 100000000
+exec autogenerate NQueens 1000000000
 ### Benchmark Autogenerate1 and autogenerate2 MatrixMult
 # ### Autogenerate1 MatrixMult
 # init autogenerate1 MatrixMult

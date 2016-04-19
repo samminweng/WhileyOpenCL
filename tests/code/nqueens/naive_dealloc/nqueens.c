@@ -60,13 +60,13 @@ blklab0:;
 	//sub %12 = %5, %2 : int
 	_12=c-col;
 	//invoke (%11) = (%12) whiley/lang/Math:abs : function(int)->(int)
-	_11 = abs(_12);
+	_11 = llabs(_12);
 	//assign %6 = %11  : int
 	colDiff = _11;
 	//sub %14 = %4, %1 : int
 	_14=r-row;
 	//invoke (%13) = (%14) whiley/lang/Math:abs : function(int)->(int)
-	_13 = abs(_14);
+	_13 = llabs(_14);
 	//assign %7 = %13  : int
 	rowDiff = _13;
 	//ifeq %6, %7 goto blklab2 : int

@@ -1,0 +1,29 @@
+digraph "Scop Graph for 'conflict' function" {
+	label="Scop Graph for 'conflict' function";
+
+	Node0xac9f390 [shape=record,label="{entry:\l  br label %entry.split, !dbg !161\l}"];
+	Node0xac9f390 -> Node0xacd0e60;
+	Node0xacd0e60 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata %struct.POS* %p, i64 0, metadata\l... !44, metadata !162), !dbg !161\l  tail call void @llvm.dbg.value(metadata i1 %p_has_ownership, i64 0, metadata\l... !45, metadata !163), !dbg !164\l  tail call void @llvm.dbg.value(metadata i64 %row, i64 0, metadata !46,\l... metadata !162), !dbg !165\l  tail call void @llvm.dbg.value(metadata i64 %col, i64 0, metadata !47,\l... metadata !162), !dbg !166\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !49, metadata\l... !162), !dbg !167\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !50, metadata\l... !162), !dbg !168\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !51, metadata\l... !162), !dbg !169\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !52, metadata\l... !162), !dbg !170\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !53, metadata\l... !162), !dbg !171\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !54, metadata\l... !162), !dbg !172\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !56, metadata\l... !162), !dbg !173\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !57, metadata\l... !162), !dbg !174\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !58, metadata\l... !162), !dbg !175\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !59, metadata\l... !162), !dbg !176\l  %r1 = getelementptr inbounds %struct.POS, %struct.POS* %p, i64 0, i32 0,\l... !dbg !177\l  %0 = load i64, i64* %r1, align 8, !dbg !177, !tbaa !178\l  tail call void @llvm.dbg.value(metadata i64 %0, i64 0, metadata !53,\l... metadata !162), !dbg !171\l  tail call void @llvm.dbg.value(metadata i64 %0, i64 0, metadata !49,\l... metadata !162), !dbg !167\l  %c2 = getelementptr inbounds %struct.POS, %struct.POS* %p, i64 0, i32 1,\l... !dbg !183\l  %1 = load i64, i64* %c2, align 8, !dbg !183, !tbaa !184\l  tail call void @llvm.dbg.value(metadata i64 %1, i64 0, metadata !54,\l... metadata !162), !dbg !172\l  tail call void @llvm.dbg.value(metadata i64 %1, i64 0, metadata !50,\l... metadata !162), !dbg !168\l  %cmp = icmp eq i64 %0, %row, !dbg !185\l  %cmp3 = icmp eq i64 %1, %col, !dbg !187\l  %or.cond = or i1 %cmp, %cmp3, !dbg !189\l  br i1 %or.cond, label %cleanup, label %blklab0, !dbg !189\l}"];
+	Node0xacd0e60 -> Node0xac9bfe0;
+	Node0xacd0e60 -> Node0xacc3790;
+	Node0xac9bfe0 [shape=record,label="{cleanup:                                          \l  %retval.0 = phi i64 [ %., %blklab0 ], [ 1, %entry.split ]\l  ret i64 %retval.0, !dbg !198\l}"];
+	Node0xacc3790 [shape=record,label="{blklab0:                                          \l  %sub = sub nsw i64 %1, %col, !dbg !190\l  tail call void @llvm.dbg.value(metadata i64 %sub, i64 0, metadata !57,\l... metadata !162), !dbg !174\l  %ispos = icmp sgt i64 %sub, -1, !dbg !191\l  %neg = sub i64 0, %sub, !dbg !191\l  %2 = select i1 %ispos, i64 %sub, i64 %neg, !dbg !191\l  tail call void @llvm.dbg.value(metadata i64 %2, i64 0, metadata !56,\l... metadata !162), !dbg !173\l  tail call void @llvm.dbg.value(metadata i64 %2, i64 0, metadata !51,\l... metadata !162), !dbg !169\l  %sub6 = sub nsw i64 %0, %row, !dbg !192\l  tail call void @llvm.dbg.value(metadata i64 %sub6, i64 0, metadata !59,\l... metadata !162), !dbg !176\l  %ispos41 = icmp sgt i64 %sub6, -1, !dbg !193\l  %neg42 = sub i64 0, %sub6, !dbg !193\l  %3 = select i1 %ispos41, i64 %sub6, i64 %neg42, !dbg !193\l  tail call void @llvm.dbg.value(metadata i64 %3, i64 0, metadata !58,\l... metadata !162), !dbg !175\l  tail call void @llvm.dbg.value(metadata i64 %3, i64 0, metadata !52,\l... metadata !162), !dbg !170\l  %cmp8 = icmp eq i64 %2, %3, !dbg !194\l  %. = zext i1 %cmp8 to i64, !dbg !196\l  br label %cleanup, !dbg !197\l}"];
+	Node0xacc3790 -> Node0xac9bfe0;
+	colorscheme = "paired12"
+        subgraph cluster_0xacc30f0 {
+          label = "NQueens.c:26-87
+";
+          style = solid;
+          color = 1
+          subgraph cluster_0xacbf930 {
+            label = "NQueens.c:26-85
+";
+            style = solid;
+            color = 6
+            Node0xacd0e60;
+            Node0xacc3790;
+          }
+          Node0xac9f390;
+          Node0xac9bfe0;
+        }
+}

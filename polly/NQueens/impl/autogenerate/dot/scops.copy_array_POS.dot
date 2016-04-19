@@ -1,0 +1,42 @@
+digraph "Scop Graph for 'copy_array_POS' function" {
+	label="Scop Graph for 'copy_array_POS' function";
+
+	Node0xacc2dd0 [shape=record,label="{entry:\l  br label %entry.split, !dbg !161\l}"];
+	Node0xacc2dd0 -> Node0xacfd090;
+	Node0xacfd090 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata %struct.POS** %_POS, i64 0, metadata\l... !25, metadata !162), !dbg !161\l  tail call void @llvm.dbg.value(metadata i64 %_POS_size, i64 0, metadata !26,\l... metadata !162), !dbg !163\l  %mul = shl i64 %_POS_size, 3, !dbg !164\l  %call = tail call noalias i8* @malloc(i64 %mul) #7, !dbg !165\l  %0 = bitcast i8* %call to %struct.POS**, !dbg !167\l  tail call void @llvm.dbg.value(metadata %struct.POS** %0, i64 0, metadata\l... !27, metadata !162), !dbg !168\l  tail call void @llvm.dbg.value(metadata i32 0, i64 0, metadata !28, metadata\l... !162), !dbg !169\l  %cmp12 = icmp sgt i64 %_POS_size, 0, !dbg !170\l  br i1 %cmp12, label %for.body.lr.ph, label %for.cond.cleanup, !dbg !173\l}"];
+	Node0xacfd090 -> Node0xaca5a50;
+	Node0xacfd090 -> Node0xaca3060;
+	Node0xaca5a50 [shape=record,label="{for.body.lr.ph:                                   \l  br label %for.body, !dbg !173\l}"];
+	Node0xaca5a50 -> Node0xadb7720;
+	Node0xadb7720 [shape=record,label="{for.body:                                         \l  %indvars.iv = phi i64 [ 0, %for.body.lr.ph ], [ %indvars.iv.next, %for.body ]\l  %arrayidx = getelementptr inbounds %struct.POS*, %struct.POS** %_POS, i64\l... %indvars.iv, !dbg !175\l  %1 = load %struct.POS*, %struct.POS** %arrayidx, align 8, !dbg !175, !tbaa\l... !177\l  %call2 = tail call %struct.POS* @copy_POS(%struct.POS* %1), !dbg !181\l  %arrayidx4 = getelementptr inbounds %struct.POS*, %struct.POS** %0, i64\l... %indvars.iv, !dbg !182\l  store %struct.POS* %call2, %struct.POS** %arrayidx4, align 8, !dbg !183,\l... !tbaa !177\l  %indvars.iv.next = add nuw nsw i64 %indvars.iv, 1, !dbg !173\l  tail call void @llvm.dbg.value(metadata !2, i64 0, metadata !28, metadata\l... !162), !dbg !169\l  %exitcond = icmp ne i64 %indvars.iv.next, %_POS_size, !dbg !173\l  br i1 %exitcond, label %for.body, label\l... %for.cond.for.cond.cleanup_crit_edge, !dbg !173\l}"];
+	Node0xadb7720 -> Node0xadb7720[constraint=false];
+	Node0xadb7720 -> Node0xac9dd00;
+	Node0xac9dd00 [shape=record,label="{for.cond.for.cond.cleanup_crit_edge:              \l  br label %for.cond.cleanup, !dbg !173\l}"];
+	Node0xac9dd00 -> Node0xaca3060;
+	Node0xaca3060 [shape=record,label="{for.cond.cleanup:                                 \l  ret %struct.POS** %0, !dbg !174\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xaccd410 {
+          label = "NQueens.c:8-13
+";
+          style = solid;
+          color = 1
+          subgraph cluster_0xad01820 {
+            label = "NQueens.c:8-11
+Call instruction:   %call = tail call noalias i8* @malloc(i64 %mul) #7, !dbg !165";
+            style = solid;
+            color = 6
+            subgraph cluster_0xacf1990 {
+              label = "NQueens.c:10-11
+Call instruction:   %call2 = tail call %struct.POS* @copy_POS(%struct.POS* %1), !dbg !181";
+              style = solid;
+              color = 5
+              Node0xadb7720;
+            }
+            Node0xacfd090;
+            Node0xaca5a50;
+            Node0xac9dd00;
+          }
+          Node0xacc2dd0;
+          Node0xaca3060;
+        }
+}

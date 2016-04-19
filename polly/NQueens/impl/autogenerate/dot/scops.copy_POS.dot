@@ -1,0 +1,16 @@
+digraph "Scop Graph for 'copy_POS' function" {
+	label="Scop Graph for 'copy_POS' function";
+
+	Node0xaca7880 [shape=record,label="{entry:\l  br label %entry.split, !dbg !161\l}"];
+	Node0xaca7880 -> Node0xacab7d0;
+	Node0xacab7d0 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata %struct.POS* %_POS, i64 0, metadata\l... !18, metadata !162), !dbg !161\l  %call = tail call noalias i8* @malloc(i64 16) #7, !dbg !163\l  %0 = bitcast i8* %call to %struct.POS*, !dbg !165\l  tail call void @llvm.dbg.value(metadata %struct.POS* %0, i64 0, metadata\l... !19, metadata !162), !dbg !166\l  %r = getelementptr inbounds %struct.POS, %struct.POS* %_POS, i64 0, i32 0,\l... !dbg !167\l  %1 = load i64, i64* %r, align 8, !dbg !167, !tbaa !168\l  %r1 = bitcast i8* %call to i64*, !dbg !173\l  store i64 %1, i64* %r1, align 8, !dbg !174, !tbaa !168\l  %c = getelementptr inbounds %struct.POS, %struct.POS* %_POS, i64 0, i32 1,\l... !dbg !175\l  %2 = load i64, i64* %c, align 8, !dbg !175, !tbaa !176\l  %c2 = getelementptr inbounds i8, i8* %call, i64 8, !dbg !177\l  %3 = bitcast i8* %c2 to i64*, !dbg !177\l  store i64 %2, i64* %3, align 8, !dbg !178, !tbaa !176\l  ret %struct.POS* %0, !dbg !179\l}"];
+	colorscheme = "paired12"
+        subgraph cluster_0xacb2b00 {
+          label = "NQueens.c:2-6
+";
+          style = solid;
+          color = 1
+          Node0xaca7880;
+          Node0xacab7d0;
+        }
+}
