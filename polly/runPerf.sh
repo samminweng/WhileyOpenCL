@@ -52,7 +52,7 @@ compileProgram(){
 	case "$opt" in
 		"gcc")
 			###gcc -O3 -fno-tree-vectorize $program.c Util.c -o "out/$program.$opt.disableVC.out"
-			gcc -O3 $program.c Util.c -o "out/$program.$opt.enableVC.out"
+			gcc -std=c99 -O3 $program.c Util.c -o "out/$program.$opt.enableVC.out"
 			;;
 		"clang")
 			###clang -O3 -fno-vectorize $program.c Util.c -o "out/$program.$opt.disableVC.out"
@@ -101,25 +101,25 @@ init(){
 	rm -rf "$PWD/$program/impl/$c_type/out/"*.*
 	#read -p "Press [Enter] to continue..."
 }
-### Benchmark Autogenerate GCD
-init autogenerate GCD
-exec autogenerate GCD 1000
-exec autogenerate GCD 10000
-exec autogenerate GCD 20000
-exec autogenerate GCD 30000
-exec autogenerate GCD 40000
-exec autogenerate1 GCD 1000
-exec autogenerate1 GCD 10000
-exec autogenerate1 GCD 20000
-exec autogenerate1 GCD 30000
-exec autogenerate1 GCD 40000
-### Benchmark Autogenerate CoinGame
-init autogenerate CoinGame
-exec autogenerate CoinGame 1000
-exec autogenerate CoinGame 10000
-exec autogenerate CoinGame 20000
-exec autogenerate CoinGame 30000
-exec autogenerate CoinGame 40000
+# ### Benchmark Autogenerate GCD
+# init autogenerate GCD
+# exec autogenerate GCD 1000
+# exec autogenerate GCD 10000
+# exec autogenerate GCD 20000
+# exec autogenerate GCD 30000
+# exec autogenerate GCD 40000
+# exec autogenerate1 GCD 1000
+# exec autogenerate1 GCD 10000
+# exec autogenerate1 GCD 20000
+# exec autogenerate1 GCD 30000
+# exec autogenerate1 GCD 40000
+# ### Benchmark Autogenerate CoinGame
+# init autogenerate CoinGame
+# exec autogenerate CoinGame 1000
+# exec autogenerate CoinGame 10000
+# exec autogenerate CoinGame 20000
+# exec autogenerate CoinGame 30000
+# exec autogenerate CoinGame 40000
 
 ### Benchmark Autogenerate NQueens
 init autogenerate NQueens
