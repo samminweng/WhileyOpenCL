@@ -5,6 +5,13 @@ POS* copy_POS(POS* _POS){
 	new_POS->c = _POS->c;
 	return new_POS;
 }
+POS** copy_array_POS(POS** _POS, long long _POS_size){
+	POS** new_POS = malloc(_POS_size*sizeof(POS*));
+	for(int i=0;i<_POS_size;i++){
+		new_POS[i] = copy_POS(_POS[i]);
+	}
+	return new_POS;
+}
 void free_POS(POS* pos){
 	free(pos);
 }

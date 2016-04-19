@@ -544,7 +544,11 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					if (stores.isIntType(elm)) {
 						statement.add("_" + dimension + "DARRAY_COPY_PARAM(" + parameter + ")");
 					} else {
-						throw new RuntimeException("Not implemented");
+						String elm_type = CodeGeneratorHelper.translateType(elm, stores).replace("*", "");
+						// Copy the rhs and rhs size
+						statement.add("copy_array_"+elm_type+"("+parameter+", "+parameter+"_size), "+parameter+"_size");
+						
+						//throw new RuntimeException("Not implemented");
 					}
 				}
 

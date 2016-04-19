@@ -6,6 +6,13 @@ Matrix* copy_Matrix(Matrix* _Matrix){
 	new_Matrix->height = _Matrix->height;
 	return new_Matrix;
 }
+Matrix** copy_array_Matrix(Matrix** _Matrix, long long _Matrix_size){
+	Matrix** new_Matrix = malloc(_Matrix_size*sizeof(Matrix*));
+	for(int i=0;i<_Matrix_size;i++){
+		new_Matrix[i] = copy_Matrix(_Matrix[i]);
+	}
+	return new_Matrix;
+}
 void free_Matrix(Matrix* matrix){
 	free(matrix->data);
 	free(matrix);

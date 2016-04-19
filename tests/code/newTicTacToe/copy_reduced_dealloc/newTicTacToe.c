@@ -5,6 +5,13 @@ Board* copy_Board(Board* _Board){
 	new_Board->move = _Board->move;
 	return new_Board;
 }
+Board** copy_array_Board(Board** _Board, long long _Board_size){
+	Board** new_Board = malloc(_Board_size*sizeof(Board*));
+	for(int i=0;i<_Board_size;i++){
+		new_Board[i] = copy_Board(_Board[i]);
+	}
+	return new_Board;
+}
 void free_Board(Board* board){
 	free(board->pieces);
 	free(board);

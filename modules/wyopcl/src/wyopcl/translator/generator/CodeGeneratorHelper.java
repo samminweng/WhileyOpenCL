@@ -179,6 +179,51 @@ public final class CodeGeneratorHelper {
 
 		return statement;
 	}
+	
+	
+	/**
+	 * Given an array of structures and array size, make a copy of an array of structures.
+	 * <pre><code>
+	 *  POS** copy_array_POS(POS** _POS, long long _POS_size){
+	 *		POS** new_array_POS = malloc(_POS_size*sizeof(POS*));
+	 *		for(int i=0;i< _POS_size;i++){
+	 *			new_array_POS[i]= copy_POS(_POS[i]);
+	 *		}
+     *
+	 *		return new_array_POS;
+	 *	}
+	 *  
+	 * @param type
+	 * @param stores
+	 * @return
+	 */
+	private static List<String> generateStructArrayCopy(Type type, CodeStores stores){
+		List<String> statement = new ArrayList<String>();
+		String struct = translateType(type, stores).replace("*", "");
+		String parameter = "_"+struct;
+		String size = parameter+"_size";
+		String new_copy = "new_"+struct;
+		// Define the function signature, e.g. 'POS** copy_array_POS(POS** _POS, long long _POS_size){
+		statement.add(struct+"** "+"copy_array_"+ struct+ "(" + struct + "** "+parameter+", long long "+ size+"){");
+
+		// Create an array of structure pointers, e.g. 'POS** new_array_POS = malloc(_POS_size*sizeof(POS*));'
+		statement.add("\t"+struct+"** "+new_copy+" = malloc("+size+"*sizeof("+struct+"*));");// Allocate the input in heap memory, which require manual de-allocation.
+		
+		// Generate the for loop to create each structure pointer, e.g. 'for(int i=0;i< _POS_size;i++){
+		statement.add("\tfor(int i=0;i<"+size+";i++){");
+		
+		// Copy each structure pointer, e.g. 'new_array_POS[i]= copy_POS(_POS[i]);
+		statement.add("\t\t"+new_copy+"[i] = copy_"+struct+"("+parameter+"[i]);");
+		
+		statement.add("\t}");
+		
+		// Add return statement
+		statement.add("\treturn "+new_copy+";");
+		statement.add("}");
+
+		return statement;
+	}
+	
 
 	/**
 	 * Get the operator of accessing a structure member w.r.t. input type.  
@@ -393,6 +438,7 @@ public final class CodeGeneratorHelper {
 	protected static List<String> generateStructFunction(Type type, CodeStores stores){
 		List<String> statements = new ArrayList<String>();
 		statements.addAll(generateStructCopy(type, stores));
+		statements.addAll(generateStructArrayCopy(type, stores));
 		statements.addAll(generateStructFree(type, stores));
 		statements.addAll(generateStructPrintf(type, stores));
 
