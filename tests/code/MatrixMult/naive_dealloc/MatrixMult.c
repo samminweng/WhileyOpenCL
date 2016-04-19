@@ -40,7 +40,6 @@ Matrix* matrix(long long width, long long height, _DECL_2DARRAY_PARAM(data), _DE
 	_4->width = width;
 	_ADD_OWNERSHIP(_4);
 	//return %4
-	_FREE2DArray(data);
 	_FREE_STRUCT(r, Matrix);
 	return _4;
 	//return
@@ -211,8 +210,6 @@ blklab13:;
 	_34 = matrix(_35, _36, _2DARRAY_COPY_PARAM(C_data), false);
 	_ADD_OWNERSHIP(_34);
 	//return %34
-	_FREE_STRUCT(A, Matrix);
-	_FREE_STRUCT(B, Matrix);
 	_FREE_STRUCT(C, Matrix);
 	_FREE2DArray(C_data);
 	_FREE(_10);
@@ -321,7 +318,6 @@ blklab20:;
 //.blklab19
 blklab19:;
 	//return
-	_FREE_STRUCT(A, Matrix);
 	_FREE2DArray(_10);
 	_FREE(_11);
 	_FREE(_15);

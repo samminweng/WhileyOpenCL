@@ -196,7 +196,7 @@ blklab14:;
 			//ifge %7, %1 goto blklab12 : int
 			if(i>=n){goto blklab12;}
 			//indexof %19 = %0, %7 : {int c,int r}[]
-			_19=queens[i];
+			_19 = copy_POS(queens[i]);
 			//assign %8 = %19  : {int c,int r}
 			p = copy_POS(_19);
 			//invoke (%20) = (%8, %1, %5) nqueens:conflict : function(nqueens:POS,int,int)->(bool)
@@ -292,8 +292,8 @@ int main(int argc, char** args){
 	void* _23;
 	void* _25;
 	_DECL_1DARRAY(_27);
-	//const %4 = 2 : int
-	_4 = 2;
+	//const %4 = 10 : int
+	_4 = 10;
 	//assign %1 = %4  : int
 	n = _4;
 	//const %5 = 0 : int
@@ -318,8 +318,8 @@ int main(int argc, char** args){
 	num_solutions = _9;
 	//assert
 	{
-		//const %11 = 0 : int
-		_11 = 0;
+		//const %11 = 724 : int
+		_11 = 724;
 		//ifeq %3, %11 goto blklab20 : int
 		if(num_solutions==_11){goto blklab20;}
 		//fail

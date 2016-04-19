@@ -37,10 +37,14 @@ public class DeallocationAnalyzer extends Analyzer {
 	
 	/**
 	 * Get a list of ownership variables and generate the code to free all of them
+	 * Note that the deallocation of function input parameters are skipped by default.
+	 * Thus, the deallocation releases all the local variables, excluding input parameters. 
+	 *
 	 * @param code
 	 * @param function
 	 * @param stores
 	 * @return
+	 *
 	 */
 	public List<String> freeAllMemory(Codes.Return code, FunctionOrMethod function, CodeStores stores){
 		List<String> statements = new ArrayList<String>();
@@ -48,19 +52,24 @@ public class DeallocationAnalyzer extends Analyzer {
 		// Get all registers
 		List<Integer> registers = stores.getAllVars(function);
 		
+	
+		
+		// Skip the return values
+		int ret = -1;
 		if(code.operands().length >0){
-			// Transfer out the return value's register
-			registers.remove(registers.indexOf(code.operand(0)));
+			ret = code.operand(0);
 		}
 		
-		
 		String indent = stores.getIndent(function);
-		
-		for(int register: registers){
-			Type var_type = stores.getRawType(register, function);
-			if(var_type != null){
-				String var = stores.getVar(register, function);
-				statements.add(indent + CodeGeneratorHelper.addDeallocatedCode(var, var_type, stores));
+		// Skip the deallocation of function parameters.
+		for(int r=function.type().params().size();r<registers.size();r++){
+			// Skip the deallocation for return value.
+			if(r != ret){
+				Type var_type = stores.getRawType(r, function);
+				if(var_type != null){
+					String var = stores.getVar(r, function);
+					statements.add(indent + CodeGeneratorHelper.addDeallocatedCode(var, var_type, stores));
+				}
 			}
 		}
 
@@ -89,6 +98,10 @@ public class DeallocationAnalyzer extends Analyzer {
 				// Add rhs to ownership set
 				statements.add(indent + addOwnership(assign.operand(0), function, stores));
 			}
+		}else if(code instanceof Codes.IndexOf){
+			Codes.IndexOf indexOf = (Codes.IndexOf)code;
+			// Add lhs to ownership set
+			statements.add(indent + addOwnership(indexOf.target(0), function, stores));
 		}else{
 			throw new RuntimeException("Not implemented");
 		}

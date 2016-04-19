@@ -269,7 +269,6 @@ blklab8:;
 	//indirectinvoke () = %66 (%7) : method(any)->()
 	printf("%lld\n", sum_bob);
 	//return
-	_FREE(moves);
 	_FREE(_35);
 	_FREE(_38);
 	_FREE(_43);

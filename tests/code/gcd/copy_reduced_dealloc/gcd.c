@@ -73,7 +73,6 @@ long long gcd_cached(long long a, long long b, long long n, _DECL_1DARRAY_PARAM(
 	//ifne %0, %5 goto blklab7 : int
 	if(a!=_5){goto blklab7;}
 	//return %1
-	_FREE(gcds);
 	return b;
 	//goto blklab8
 	goto blklab8;
@@ -84,7 +83,6 @@ blklab7:;
 	//ifne %1, %6 goto blklab9 : int
 	if(b!=_6){goto blklab9;}
 	//return %0
-	_FREE(gcds);
 	return a;
 	//goto blklab10
 	goto blklab10;
@@ -113,7 +111,6 @@ blklab12:;
 	//indexof %11 = %3, %10 : int[]
 	_11=gcds[_10];
 	//return %11
-	_FREE(gcds);
 	return _11;
 //.blklab10
 blklab10:;

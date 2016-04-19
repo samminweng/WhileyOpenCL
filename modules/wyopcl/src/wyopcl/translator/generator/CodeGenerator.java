@@ -212,17 +212,17 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				Type parameter_type = params.get(op);
 				String var = stores.getVar(op, function);
 				if (parameter_type instanceof Type.Array) {
-					Type elm_type = stores.getArrayElementType((Type.Array)parameter_type);
-					if(stores.isIntType(elm_type)){
+					Type elm_type = stores.getArrayElementType((Type.Array) parameter_type);
+					if (stores.isIntType(elm_type)) {
 						// Add extra 'size' variable for array variable
 						int dimension = stores.getArrayDimension(parameter_type);
 						parameters.add("_DECL_" + dimension + "DARRAY_PARAM(" + var + ")");
-					}else{
-						// E.g. POS* var, long long var_size 
+					} else {
+						// E.g. POS* var, long long var_size
 						String elem_type = CodeGeneratorHelper.translateType(parameter_type, stores);
-						parameters.add(elem_type + " " +  var + ", long long " + var + "_size");
+						parameters.add(elem_type + " " + var + ", long long " + var + "_size");
 					}
-					
+
 				} else {
 					if (parameter_type instanceof Type.Function) {
 						// Add lambda function pointer
@@ -533,7 +533,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			} else if (parameter_type instanceof Type.Int || stores.isIntType(parameter_type)) {
 				statement.add(parameter);
 			} else if (parameter_type instanceof Type.Array) {
-				Type elm = stores.getArrayElementType((Type.Array)parameter_type);
+				Type elm = stores.getArrayElementType((Type.Array) parameter_type);
 
 				boolean isCopyEliminated = isCopyEliminated(operand, code, function);
 
@@ -546,9 +546,10 @@ public class CodeGenerator extends AbstractCodeGenerator {
 					} else {
 						String elm_type = CodeGeneratorHelper.translateType(elm, stores).replace("*", "");
 						// Copy the rhs and rhs size
-						statement.add("copy_array_"+elm_type+"("+parameter+", "+parameter+"_size), "+parameter+"_size");
-						
-						//throw new RuntimeException("Not implemented");
+						statement.add("copy_array_" + elm_type + "(" + parameter + ", " + parameter + "_size), "
+								+ parameter + "_size");
+
+						// throw new RuntimeException("Not implemented");
 					}
 				}
 
@@ -692,6 +693,9 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Add or transfer out the parameters that do not have the copy
 			for (int register : code.operands()) {
 				this.deallocatedAnalyzer.ifPresent(a -> {
+					// Check if the function call is a recursive function,
+					String caller = function.name();
+					String callee = code.name.name();
 					Optional<HashMap<String, Boolean>> ownership = a.computeCallParameterOwnership(register, code,
 							function, stores, copyAnalyzer);
 					ownership.ifPresent(o -> {
@@ -1033,11 +1037,36 @@ public class CodeGenerator extends AbstractCodeGenerator {
 	 * @param code
 	 */
 	protected void translate(Codes.IndexOf code, FunctionOrMethod function) {
-		stores.addStatement(code,
-				stores.getIndent(function) + stores.getVar(code.target(0), function) + "="
-						+ stores.getVar(code.operand(0), function) + "[" + stores.getVar(code.operand(1), function)
-						+ "];",
-				function);
+		// Check the type of array element
+		Type.Array arr_type = (Type.Array) stores.getRawType(code.operand(0), function);
+		List<String> statement = new ArrayList<String>();
+
+		Type elmType = stores.getArrayElementType(arr_type);
+		String indent = stores.getIndent(function);
+		String lhs = stores.getVar(code.target(0), function);
+		Type lhs_type = stores.getRawType(code.operand(0), function);
+		String rhs = stores.getVar(code.operand(0), function);
+		String index = stores.getVar(code.operand(1), function);
+		if (!stores.isIntType(elmType)) {
+			String struct = CodeGeneratorHelper.translateType(elmType, stores).replace("*", "");
+			// Free the lhs
+			this.deallocatedAnalyzer.ifPresent(
+					a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, lhs_type, stores)));
+			// Copy the rhs and assign the copied to lhs, e.g. a =
+			// copy_POS(b[i]);
+			statement.add(indent + lhs + " = copy_" + struct + "(" + rhs + "[" + index + "]);");
+			// For IndexOf code, the copy is always made to conform the
+			// functional programming.
+			boolean isCopyEliminated = false;
+			this.deallocatedAnalyzer.ifPresent(
+					a -> statement.addAll(a.computeOwnership(indent, isCopyEliminated, code, function, stores)));
+
+		} else {
+			// Assign rhs to rhs without any copy, e.g. a = b[i];
+			statement.add(indent + lhs + "=" + rhs + "[" + index + "];");
+		}
+
+		stores.addAllStatements(code, statement, function);
 	}
 
 	/**
@@ -1501,7 +1530,7 @@ public class CodeGenerator extends AbstractCodeGenerator {
 		this.deallocatedAnalyzer.ifPresent(
 				a -> statement.add(indent + CodeGeneratorHelper.addDeallocatedCode(lhs, code.type(0), stores)));
 		Type elm_type = stores.getArrayElementType(lhs_type);
-		
+
 		if (stores.isIntType(elm_type)) {
 			// Generate array of integers
 			int dimension = stores.getArrayDimension(lhs_type);

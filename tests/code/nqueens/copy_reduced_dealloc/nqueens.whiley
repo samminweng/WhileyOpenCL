@@ -46,12 +46,12 @@ requires dim == |queens|:
         return num_solutions
 
 method main(System.Console sys):
-    int n = 2
+    int n = 10
     POS[] init = [{r:0, c:0}; n]
     int num_solutions = run(init, 0, n)
     // Given n queens on an n × n board, the total number of solutions is listed as below link.
     // https://en.wikipedia.org/wiki/Eight_queens_puzzle
-    assert num_solutions == 0 
+    assert num_solutions == 724
     sys.out.println_s("N-Queen Problem on a N X N Board.")
     sys.out.print_s("N = ")
     sys.out.println(n)

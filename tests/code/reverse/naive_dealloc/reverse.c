@@ -86,7 +86,6 @@ blklab1:;
 //.blklab0
 blklab0:;
 	//return %3
-	_FREE(ls);
 	_FREE(_1);
 	_FREE(_8);
 	return r;

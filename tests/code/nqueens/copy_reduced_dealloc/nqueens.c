@@ -54,7 +54,6 @@ blklab1:;
 	//const %10 = true : bool
 	_10 = true;
 	//return %10
-	_FREE_STRUCT(p, POS);
 	return _10;
 //.blklab0
 blklab0:;
@@ -83,7 +82,6 @@ blklab2:;
 //.blklab3
 blklab3:;
 	//return %15
-	_FREE_STRUCT(p, POS);
 	return _15;
 	//return
 }
@@ -127,7 +125,6 @@ long long run(POS** queens, long long queens_size, _DECL_OWNERSHIP_PARAM(queens)
 	//const %9 = 1 : int
 	_9 = 1;
 	//return %9
-	_FREE(queens);
 	_FREE_STRUCT(p, POS);
 	_FREE_STRUCT(_19, POS);
 	_FREE_STRUCT(_26, POS);
@@ -205,7 +202,9 @@ blklab14:;
 			//ifge %7, %1 goto blklab12 : int
 			if(i>=n){goto blklab12;}
 			//indexof %19 = %0, %7 : {int c,int r}[]
-			_19=queens[i];
+			_FREE(_19);
+			_19 = copy_POS(queens[i]);
+			_ADD_OWNERSHIP(_19);
 			//assign %8 = %19  : {int c,int r}
 			_FREE_STRUCT(p, POS);
 			p = _19;
@@ -278,7 +277,6 @@ blklab9:;
 //.blklab8
 blklab8:;
 	//return %4
-	_FREE(queens);
 	_FREE_STRUCT(p, POS);
 	_FREE_STRUCT(_19, POS);
 	_FREE_STRUCT(_26, POS);
@@ -319,8 +317,8 @@ int main(int argc, char** args){
 	void* _25;
 	_DECL_1DARRAY(_27);
 	_DECL_OWNERSHIP(_27);
-	//const %4 = 2 : int
-	_4 = 2;
+	//const %4 = 10 : int
+	_4 = 10;
 	//assign %1 = %4  : int
 	n = _4;
 	//const %5 = 0 : int
@@ -353,8 +351,8 @@ int main(int argc, char** args){
 	num_solutions = _9;
 	//assert
 	{
-		//const %11 = 0 : int
-		_11 = 0;
+		//const %11 = 724 : int
+		_11 = 724;
 		//ifeq %3, %11 goto blklab20 : int
 		if(num_solutions==_11){goto blklab20;}
 		//fail
