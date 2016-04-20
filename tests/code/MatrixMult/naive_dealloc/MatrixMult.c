@@ -40,6 +40,7 @@ Matrix* matrix(long long width, long long height, _DECL_2DARRAY_PARAM(data), _DE
 	_4->width = width;
 	_ADD_OWNERSHIP(_4);
 	//return %4
+	_FREE2DArray(data);
 	_FREE_STRUCT(r, Matrix);
 	return _4;
 	//return
@@ -206,10 +207,11 @@ blklab13:;
 	_36 = A->height;
 	//invoke (%34) = (%35, %36, %3) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[][])->(MatrixMult:Matrix)
 	_FREE_STRUCT(_34, Matrix);
-	_ADD_OWNERSHIP(C_data);
 	_34 = matrix(_35, _36, _2DARRAY_COPY_PARAM(C_data), false);
 	_ADD_OWNERSHIP(_34);
 	//return %34
+	_FREE_STRUCT(A, Matrix);
+	_FREE_STRUCT(B, Matrix);
 	_FREE_STRUCT(C, Matrix);
 	_FREE2DArray(C_data);
 	_FREE(_10);
@@ -318,6 +320,7 @@ blklab20:;
 //.blklab19
 blklab19:;
 	//return
+	_FREE_STRUCT(A, Matrix);
 	_FREE2DArray(_10);
 	_FREE(_11);
 	_FREE(_15);
@@ -402,7 +405,6 @@ blklab24:;
 blklab23:;
 	//invoke (%15) = (%1, %0, %3) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[][])->(MatrixMult:Matrix)
 	_FREE_STRUCT(_15, Matrix);
-	_ADD_OWNERSHIP(rows);
 	_15 = matrix(width, height, _2DARRAY_COPY_PARAM(rows), false);
 	_ADD_OWNERSHIP(_15);
 	//return %15
@@ -488,8 +490,6 @@ int main(int argc, char** args){
 	_ADD_OWNERSHIP(_7);
 	//invoke (%8) = (%2, %3) MatrixMult:multiply : function(MatrixMult:Matrix,MatrixMult:Matrix)->(MatrixMult:Matrix)
 	_FREE_STRUCT(_8, Matrix);
-	_ADD_OWNERSHIP(A);
-	_ADD_OWNERSHIP(B);
 	_8 = multiply(_STRUCT_COPY_PARAM(A, Matrix), false, _STRUCT_COPY_PARAM(B, Matrix), false);
 	_ADD_OWNERSHIP(_8);
 	//assign %4 = %8  : {int[][] data,int height,int width}
@@ -589,7 +589,6 @@ blklab29:;
 	//assert
 	}
 	//invoke () = (%0, %4) MatrixMult:printMat : method(whiley/lang/System:Console,MatrixMult:Matrix)->()
-	_ADD_OWNERSHIP(C);
 printMat(stdout, _STRUCT_COPY_PARAM(C, Matrix), false);
 	//fieldload %35 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %36 = %35 println_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

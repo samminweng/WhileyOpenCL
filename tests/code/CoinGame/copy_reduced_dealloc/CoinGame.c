@@ -269,6 +269,7 @@ blklab8:;
 	//indirectinvoke () = %66 (%7) : method(any)->()
 	printf("%lld\n", sum_bob);
 	//return
+	_FREE(moves);
 	_FREE(_35);
 	_FREE(_38);
 	_FREE(_43);
@@ -560,7 +561,6 @@ int main(int argc, char** args){
 	_ADD_OWNERSHIP(moves);
 	_REMOVE_OWNERSHIP(_8);
 	//invoke () = (%0, %2, %1) CoinGame:play : method(whiley/lang/System:Console,int[],int)->()
-	_ADD_OWNERSHIP(moves);
 play(stdout, _1DARRAY_PARAM(moves), false, n);
 	//const %9 = 1 : int
 	_9 = 1;

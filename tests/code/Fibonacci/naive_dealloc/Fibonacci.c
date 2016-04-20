@@ -44,7 +44,6 @@ blklab0:;
 	_10=n-_9;
 	//invoke (%8) = (%0, %10) Fibonacci:fibonacci : function(int[],int)->(int[])
 	_FREE(_8);
-	_ADD_OWNERSHIP(ls);
 	_1DARRAY_SIZE(_8, ls);
 	_8 = fibonacci(_1DARRAY_COPY_PARAM(ls), true, _10);
 	_ADD_OWNERSHIP(_8);
@@ -127,7 +126,6 @@ int main(int argc, char** args){
 	_8=max-_7;
 	//invoke (%6) = (%2, %8) Fibonacci:fibonacci : function(int[],int)->(int[])
 	_FREE(_6);
-	_ADD_OWNERSHIP(arr);
 	_1DARRAY_SIZE(_6, arr);
 	_6 = fibonacci(_1DARRAY_COPY_PARAM(arr), true, _8);
 	_ADD_OWNERSHIP(_6);

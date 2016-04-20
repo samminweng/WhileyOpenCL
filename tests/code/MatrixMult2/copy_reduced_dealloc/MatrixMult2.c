@@ -40,6 +40,7 @@ Matrix* matrix(long long width, long long height, _DECL_1DARRAY_PARAM(data), _DE
 	_4->width = width;
 	_ADD_OWNERSHIP(_4);
 	//return %4
+	_FREE(data);
 	_FREE_STRUCT(r, Matrix);
 	return _4;
 	//return
@@ -137,7 +138,6 @@ blklab3:;
 blklab2:;
 	//invoke (%21) = (%0, %1, %3) MatrixMult2:matrix : function(MatrixMult2:nat,MatrixMult2:nat,int[])->(MatrixMult2:Matrix)
 	_FREE_STRUCT(_21, Matrix);
-	_ADD_OWNERSHIP(data);
 	_21 = matrix(width, height, _1DARRAY_PARAM(data), false);
 	_ADD_OWNERSHIP(_21);
 	//return %21
@@ -252,6 +252,7 @@ blklab7:;
 //.blklab6
 blklab6:;
 	//return
+	_FREE_STRUCT(a, Matrix);
 	_FREE(_12);
 	_FREE(_18);
 	_FREE(_25);
@@ -432,10 +433,11 @@ blklab14:;
 blklab13:;
 	//invoke (%40) = (%3, %4, %5) MatrixMult2:matrix : function(MatrixMult2:nat,MatrixMult2:nat,int[])->(MatrixMult2:Matrix)
 	_FREE_STRUCT(_40, Matrix);
-	_ADD_OWNERSHIP(data);
 	_40 = matrix(width, height, _1DARRAY_PARAM(data), false);
 	_ADD_OWNERSHIP(_40);
 	//return %40
+	_FREE_STRUCT(a, Matrix);
+	_FREE_STRUCT(b, Matrix);
 	_FREE_STRUCT(c, Matrix);
 	_FREE(data);
 	_FREE(a_data);
@@ -574,8 +576,6 @@ int main(int argc, char** args){
 	_REMOVE_OWNERSHIP(_13);
 	//invoke (%16) = (%1, %2) MatrixMult2:mat_mult : function(MatrixMult2:Matrix,MatrixMult2:Matrix)->(MatrixMult2:Matrix)
 	_FREE_STRUCT(_16, Matrix);
-	_ADD_OWNERSHIP(A);
-	_ADD_OWNERSHIP(B);
 	_16 = mat_mult(_STRUCT_PARAM(A), false, _STRUCT_PARAM(B), false);
 	_ADD_OWNERSHIP(_16);
 	//assign %3 = %16  : {int[] data,int height,int width}
@@ -703,7 +703,6 @@ blklab21:;
 	//assert
 	}
 	//invoke () = (%0, %3) MatrixMult2:print_mat : method(whiley/lang/System:Console,MatrixMult2:Matrix)->()
-	_ADD_OWNERSHIP(C);
 print_mat(stdout, _STRUCT_PARAM(C), false);
 	//fieldload %57 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %58 = %57 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}

@@ -54,6 +54,7 @@ blklab1:;
 	//const %10 = true : bool
 	_10 = true;
 	//return %10
+	_FREE_STRUCT(p, POS);
 	return _10;
 //.blklab0
 blklab0:;
@@ -82,6 +83,7 @@ blklab2:;
 //.blklab3
 blklab3:;
 	//return %15
+	_FREE_STRUCT(p, POS);
 	return _15;
 	//return
 }
@@ -125,6 +127,7 @@ long long run(POS** queens, long long queens_size, _DECL_OWNERSHIP_PARAM(queens)
 	//const %9 = 1 : int
 	_9 = 1;
 	//return %9
+	_FREE(queens);
 	_FREE_STRUCT(p, POS);
 	_FREE_STRUCT(_19, POS);
 	_FREE_STRUCT(_26, POS);
@@ -211,7 +214,6 @@ blklab14:;
 			_ADD_OWNERSHIP(p);
 			_ADD_OWNERSHIP(_19);
 			//invoke (%20) = (%8, %1, %5) nqueens:conflict : function(nqueens:POS,int,int)->(bool)
-			_ADD_OWNERSHIP(p);
 			_20 = conflict(_STRUCT_COPY_PARAM(p, POS), false, n, col);
 			//const %21 = true : bool
 			_21 = true;
@@ -257,7 +259,6 @@ blklab12:;
 		//add %29 = %1, %28 : int
 		_29=n+_28;
 		//invoke (%27) = (%0, %29, %2) nqueens:run : function(nqueens:POS[],int,int)->(int)
-		_ADD_OWNERSHIP(queens);
 		_27 = run(copy_array_POS(queens, queens_size), queens_size, false, _29, dim);
 		//add %30 = %4, %27 : int
 		_30=num_solutions+_27;
@@ -277,6 +278,7 @@ blklab9:;
 //.blklab8
 blklab8:;
 	//return %4
+	_FREE(queens);
 	_FREE_STRUCT(p, POS);
 	_FREE_STRUCT(_19, POS);
 	_FREE_STRUCT(_26, POS);
@@ -345,7 +347,6 @@ int main(int argc, char** args){
 	//const %10 = 0 : int
 	_10 = 0;
 	//invoke (%9) = (%2, %10, %1) nqueens:run : function(nqueens:POS[],int,int)->(int)
-	_ADD_OWNERSHIP(init);
 	_9 = run(copy_array_POS(init, init_size), init_size, false, _10, n);
 	//assign %3 = %9  : int
 	num_solutions = _9;

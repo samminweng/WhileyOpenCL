@@ -694,17 +694,13 @@ public class CodeGenerator extends AbstractCodeGenerator {
 			// Add or transfer out the parameters that do not have the copy
 			for (int register : code.operands()) {
 				this.deallocatedAnalyzer.ifPresent(a -> {
-					// Check if the function call is a recursive function,
-					String caller = function.name();
-					String callee = code.name.name();
 					Optional<HashMap<String, Boolean>> ownership = a.computeCallParameterOwnership(register, code,
 							function, stores, copyAnalyzer);
 					ownership.ifPresent(o -> {
 						// Get caller ownership
 						boolean caller_own = o.get("caller");
-						if (caller_own) {
-							statement.add(indent + a.addOwnership(register, function, stores));
-						} else {
+						if(!caller_own){
+							// The ownership is transferred from caller to calling function
 							statement.add(indent + a.transferOwnership(register, function, stores));
 						}
 					});

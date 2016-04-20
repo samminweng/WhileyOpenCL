@@ -129,6 +129,7 @@ blklab12:;
 //.blklab11
 blklab11:;
 	//return %3
+	_FREE(pieces);
 	return count;
 	//return
 }

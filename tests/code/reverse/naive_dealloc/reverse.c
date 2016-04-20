@@ -86,6 +86,7 @@ blklab1:;
 //.blklab0
 blklab0:;
 	//return %3
+	_FREE(ls);
 	_FREE(_1);
 	_FREE(_8);
 	return r;
@@ -151,7 +152,6 @@ int main(int argc, char** args){
 	_ADD_OWNERSHIP(_11);
 	//invoke (%5) = (%11) reverse:reverse : function(int[])->(int[])
 	_FREE(_5);
-	_ADD_OWNERSHIP(_11);
 	_1DARRAY_SIZE(_5, _11);
 	_5 = reverse(_1DARRAY_COPY_PARAM(_11), false);
 	_ADD_OWNERSHIP(_5);
@@ -230,7 +230,6 @@ blklab6:;
 blklab5:;
 	//invoke (%27) = (%4) reverse:reverse : function(int[])->(int[])
 	_FREE(_27);
-	_ADD_OWNERSHIP(arr);
 	_1DARRAY_SIZE(_27, arr);
 	_27 = reverse(_1DARRAY_COPY_PARAM(arr), false);
 	_ADD_OWNERSHIP(_27);

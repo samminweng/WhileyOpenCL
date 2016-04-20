@@ -73,6 +73,7 @@ long long gcd_cached(long long a, long long b, long long n, _DECL_1DARRAY_PARAM(
 	//ifne %0, %5 goto blklab7 : int
 	if(a!=_5){goto blklab7;}
 	//return %1
+	_FREE(gcds);
 	return b;
 	//goto blklab8
 	goto blklab8;
@@ -83,6 +84,7 @@ blklab7:;
 	//ifne %1, %6 goto blklab9 : int
 	if(b!=_6){goto blklab9;}
 	//return %0
+	_FREE(gcds);
 	return a;
 	//goto blklab10
 	goto blklab10;
@@ -111,6 +113,7 @@ blklab12:;
 	//indexof %11 = %3, %10 : int[]
 	_11=gcds[_10];
 	//return %11
+	_FREE(gcds);
 	return _11;
 //.blklab10
 blklab10:;
@@ -209,7 +212,6 @@ int main(int argc, char** args){
 			//ifge %4, %1 goto blklab15 : int
 			if(j>=n){goto blklab15;}
 			//invoke (%16) = (%3, %4, %1, %2) gcd:gcd_cached : function(int,int,int,int[])->(int)
-			_ADD_OWNERSHIP(gcds);
 			_16 = gcd_cached(i, j, n, _1DARRAY_PARAM(gcds), false);
 			//mul %17 = %3, %1 : int
 			_17=i*n;

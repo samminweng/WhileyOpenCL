@@ -51,9 +51,7 @@ public class DeallocationAnalyzer extends Analyzer {
 		
 		// Get all registers
 		List<Integer> registers = stores.getAllVars(function);
-		
-	
-		
+			
 		// Skip the return values
 		int ret = -1;
 		if(code.operands().length >0){
@@ -62,7 +60,7 @@ public class DeallocationAnalyzer extends Analyzer {
 		
 		String indent = stores.getIndent(function);
 		// Skip the deallocation of function parameters.
-		for(int r=function.type().params().size();r<registers.size();r++){
+		for(int r : registers){
 			// Skip the deallocation for return value.
 			if(r != ret){
 				Type var_type = stores.getRawType(r, function);
