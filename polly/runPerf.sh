@@ -122,14 +122,23 @@ init(){
 # exec autogenerate CoinGame 40000
 
 ### Benchmark Autogenerate NQueens
-init autogenerate NQueens
-exec autogenerate NQueens 1000
-exec autogenerate NQueens 10000
-exec autogenerate NQueens 100000
-exec autogenerate NQueens 1000000
-exec autogenerate NQueens 10000000
-exec autogenerate NQueens 100000000
-exec autogenerate NQueens 1000000000
+#init autogenerate NQueens
+#exec autogenerate NQueens 1
+#exec autogenerate NQueens 5
+#exec autogenerate NQueens 10
+#exec autogenerate NQueens 15
+exec autogenerate NQueens 11
+exec autogenerate NQueens 12
+exec autogenerate NQueens 13
+exec autogenerate NQueens 14
+exec autogenerate NQueens 9
+exec autogenerate NQueens 8
+exec autogenerate NQueens 7
+exec autogenerate NQueens 6
+exec autogenerate NQueens 4
+exec autogenerate NQueens 3
+exec autogenerate NQueens 2
+
 ### Benchmark Autogenerate1 and autogenerate2 MatrixMult
 # ### Autogenerate1 MatrixMult
 # init autogenerate1 MatrixMult
