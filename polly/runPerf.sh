@@ -19,9 +19,15 @@ run(){
 	echo -e -n "Compile C code using $opt with $OMP_NUM_THREADS threads..." >> $result
 
 	### Repeat running the executables.
-	for i in {1..10}
+	for i in {1..1}
 	do
-		timeout $TIMEOUT perf stat $executables $parameter >>$result 2>> $result
+		##timeout $TIMEOUT perf stat $executables $parameter >>$result 2>> $result
+		echo "Beginning the $executables with  $parameter" >>$result
+	        start=`date +%s`
+		$executables $parameter
+		end=`date +%s`
+		runtime=$((end-start))
+		printf '\nParameter:%s\tExecutionTime:%s\tseconds.\n' $parameter  $runtime >> $result
 	done
 	### Output the hardware info.
 	cat /proc/cpuinfo >> $result
@@ -127,17 +133,12 @@ init(){
 #exec autogenerate NQueens 5
 #exec autogenerate NQueens 10
 #exec autogenerate NQueens 15
-exec autogenerate NQueens 11
-exec autogenerate NQueens 12
-exec autogenerate NQueens 13
-exec autogenerate NQueens 14
-exec autogenerate NQueens 9
-exec autogenerate NQueens 8
-exec autogenerate NQueens 7
-exec autogenerate NQueens 6
-exec autogenerate NQueens 4
-exec autogenerate NQueens 3
-exec autogenerate NQueens 2
+exec autogenerate NQueens 16
+exec autogenerate NQueens 18
+exec autogenerate NQueens 20
+exec autogenerate NQueens 22
+exec autogenerate NQueens 24
+exec autogenerate NQueens 25
 
 ### Benchmark Autogenerate1 and autogenerate2 MatrixMult
 # ### Autogenerate1 MatrixMult
