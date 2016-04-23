@@ -6,6 +6,13 @@ Matrix* copy_Matrix(Matrix* _Matrix){
 	new_Matrix->height = _Matrix->height;
 	return new_Matrix;
 }
+Matrix** copy_array_Matrix(Matrix** _Matrix, long long _Matrix_size){
+	Matrix** new_Matrix = malloc(_Matrix_size*sizeof(Matrix*));
+	for(int i=0;i<_Matrix_size;i++){
+		new_Matrix[i] = copy_Matrix(_Matrix[i]);
+	}
+	return new_Matrix;
+}
 void free_Matrix(Matrix* matrix){
 	free(matrix->data);
 	free(matrix);
@@ -131,7 +138,6 @@ blklab3:;
 blklab2:;
 	//invoke (%21) = (%0, %1, %3) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[])->(MatrixMult:Matrix)
 	_FREE_STRUCT(_21, Matrix);
-	_ADD_OWNERSHIP(data);
 	_21 = matrix(width, height, _1DARRAY_PARAM(data), false);
 	_ADD_OWNERSHIP(_21);
 	//return %21
@@ -165,7 +171,8 @@ void print_mat(FILE* sys, Matrix* a, _DECL_OWNERSHIP_PARAM(a)){
 	long long _21 = 0;
 	long long _22 = 0;
 	void* _23;
-	_DECL_1DARRAY(_25);
+	void** _25;
+	long long _25_size = 0;
 	_DECL_OWNERSHIP(_25);
 	//const %6 = 0 : int
 	_6 = 0;
@@ -426,7 +433,6 @@ blklab14:;
 blklab13:;
 	//invoke (%40) = (%3, %4, %5) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[])->(MatrixMult:Matrix)
 	_FREE_STRUCT(_40, Matrix);
-	_ADD_OWNERSHIP(data);
 	_40 = matrix(width, height, _1DARRAY_PARAM(data), false);
 	_ADD_OWNERSHIP(_40);
 	//return %40
@@ -565,8 +571,6 @@ int main(int argc, char** args){
 	_REMOVE_OWNERSHIP(_16);
 	//invoke (%17) = (%3, %4) MatrixMult:mat_mult : function(MatrixMult:Matrix,MatrixMult:Matrix)->(MatrixMult:Matrix)
 	_FREE_STRUCT(_17, Matrix);
-	_ADD_OWNERSHIP(A);
-	_ADD_OWNERSHIP(B);
 	_17 = mat_mult(_STRUCT_PARAM(A), false, _STRUCT_PARAM(B), false);
 	_ADD_OWNERSHIP(_17);
 	//assign %5 = %17  : {int[] data,int height,int width}

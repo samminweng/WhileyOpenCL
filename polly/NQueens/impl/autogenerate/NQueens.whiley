@@ -34,9 +34,10 @@ requires dim == |queens|:
             int i = 0
             while i < n where n < |queens| && i >= 0 && dim == |queens|:
                 POS p = queens[i]
-                if conflict(p,n,col):
-                    solution = false
-                    break
+                solution &= !conflict(p,n,col)
+                //if conflict(p,n,col):
+                //   solution = false
+                //    break
                 i = i + 1
             if solution == true:
                 queens[n] = {r:n, c:col}

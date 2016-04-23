@@ -16,7 +16,7 @@ import whiley.io.File
 
 // Simulate how the game is played. Alice goes first and Bob second.
 // Note coin value is the same as the array index, e.g. [0, 1, 2, 3, 4]
-method play(System.Console sys, int[] moves, int n):
+/*method play(System.Console sys, int[] moves, int n):
 	int left =0 // From the left
 	int right = n-1 // From the right
 	int i = 0
@@ -52,15 +52,15 @@ method play(System.Console sys, int[] moves, int n):
 	assert sum_alice >= sum_bob
 	sys.out.print_s("The total amount of money (maximum) Bob gets is ")
 	sys.out.println(sum_bob)
-
+*/
 // Use dynamic programming to find moves for Alice
 // The coins are an array, starting from 0 upto n
 function findMoves(int[] moves, int n) -> int[]:
 	int s = 0
-	while s < n:
+	while s < n: // i0: s => 0<=s < n
 		int j = s
-		int i = 0
-		while j < n:
+		int i = 0 // i1: i => 0 <=i < n -s 
+		while j < n:  // j = i + s 
 			int y = 0
 			if (i + 1 < n && j - 1 >= 0):
 				y = moves[(i + 1)*n+j - 1]

@@ -108,11 +108,10 @@ clang_polly(){
 	pollycc -g -O3 -mllvm -polly -o "out"/$program.polly.out\
 	        -mllvm -debug-only=polly-scops $program.c libUtil.a
 
-	echo -e -n "${GREEN}[*]Show the optimized AST${RESET}" && read 
+	echo -e -n "${GREEN}[*]Show the optimized AST${RESET}" && read
 	pollycc -g -O3 -mllvm -polly -o "out"/$program.polly.out\
 	        -mllvm -debug-only=polly-ast -mllvm -polly-process-unprofitable\
 	        $program.c libUtil.a
-
 
 	### Generate executables with disabled vectorizer
 	# echo -e -n "${GREEN}[*] Run Benchmark with diabled Vectorizer${RESET}" && read
@@ -155,11 +154,12 @@ clang_polly(){
 	pollycc -g -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine\
 	        -S -emit-llvm -mllvm -polly-process-unprofitable\
 	        $program.c -o "llvm/$program.polly.enablevc.ll"
+
 	runExecutables $program "polly.enablevc" $parameter
 
 	echo -e -n "[4] Run ${BOLD}${GREEN} Polly-Optimized OpenMP ${RESET} executables with 2 threads" && read
 	pollycc -g -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine -S -emit-llvm\
-	        -mllvm -polly-parallel -mllvm -polly-process-unprofitable\
+	        -mllvm -polly-parallel -mllvm -polly-process-unprofitable -mllvm -polly-parallel-force\
 	        $program.c -o "llvm/$program.openmp.enablevc.ll"
 	runExecutables $program "openmp.enablevc" $parameter 2
 
@@ -191,12 +191,12 @@ exec(){
 	cd ../../../
 }
 
-###exec autogenerate1 MatrixMult 1000  ### Determine matrix size from cmd line argument
+exec autogenerate1 MatrixMult 100  ### Determine matrix size from cmd line argument
 ###exec autogenerate2 MatrixMult 1000  
 ##exec autogenerate GCD 100  ### Use Euclid's algorithm
 ##exec autogenerate1 GCD 100 ### Cached the divisors
-##exec autogenerate CoinGame 10
-exec autogenerate NQueens 10
+exec autogenerate CoinGame 2000
+##exec autogenerate NQueens 10
 
 
 

@@ -24,7 +24,7 @@
                "relation" : "[n] -> { Stmt_if_end11[i0, i1] -> MemRef_y_0__phi[] }"
             }
          ],
-         "domain" : "[n] -> { Stmt_if_end11[i0, i1] : i0 >= 0 and i1 >= 0 and -i0 < i1 < n - i0 and i1 <= -2 + n }",
+         "domain" : "[n] -> { Stmt_if_end11[i0, i1] : n > 0 and i0 >= 0 and i1 >= 0 and -i0 < i1 < n - i0 and i1 <= -2 + n }",
          "name" : "Stmt_if_end11",
          "schedule" : "[n] -> { Stmt_if_end11[i0, i1] -> [i0, i1, 1] }"
       },
@@ -32,20 +32,20 @@
          "accesses" : [
             {
                "kind" : "read",
-               "relation" : "[n] -> { Stmt_blklab13[i0, i1] -> MemRef_y_0__phi[] }"
+               "relation" : "[n] -> { Stmt_blklab4[i0, i1] -> MemRef_y_0__phi[] }"
             },
             {
                "kind" : "write",
-               "relation" : "[n] -> { Stmt_blklab13[i0, i1] -> MemRef_x_0__phi[] }"
+               "relation" : "[n] -> { Stmt_blklab4[i0, i1] -> MemRef_x_0__phi[] }"
             },
             {
                "kind" : "write",
-               "relation" : "[n] -> { Stmt_blklab13[i0, i1] -> MemRef_y_0[] }"
+               "relation" : "[n] -> { Stmt_blklab4[i0, i1] -> MemRef_y_0[] }"
             }
          ],
-         "domain" : "[n] -> { Stmt_blklab13[i0, i1] : i0 >= 0 and i1 >= 0 and -i0 < i1 < n - i0 and i1 <= -2 + n; Stmt_blklab13[0, 0] : n > 0; Stmt_blklab13[0, -1 + n] : n > 0 }",
-         "name" : "Stmt_blklab13",
-         "schedule" : "[n] -> { Stmt_blklab13[i0, i1] -> [i0, i1, 2] : -i0 < i1 <= -2 + n; Stmt_blklab13[0, 0] -> [0, 0, 2]; Stmt_blklab13[0, -1 + n] -> [0, -1 + n, 2] }"
+         "domain" : "[n] -> { Stmt_blklab4[i0, i1] : i0 >= 0 and 0 <= i1 < n - i0 }",
+         "name" : "Stmt_blklab4",
+         "schedule" : "[n] -> { Stmt_blklab4[i0, i1] -> [i0, i1, 2] }"
       },
       {
          "accesses" : [
@@ -58,28 +58,28 @@
                "relation" : "[n] -> { Stmt_if_end18[i0, i1] -> MemRef_x_0__phi[] }"
             }
          ],
-         "domain" : "[n] -> { Stmt_if_end18[i0, i1] : i0 >= 0 and i1 >= 0 and -i0 < i1 < n - i0 and i1 <= -3 + n; Stmt_if_end18[0, 0] : n >= 3 }",
+         "domain" : "[n] -> { Stmt_if_end18[i0, i1] : i0 >= 0 and 0 <= i1 < n - i0 and i1 <= -3 + n }",
          "name" : "Stmt_if_end18",
-         "schedule" : "[n] -> { Stmt_if_end18[i0, i1] -> [i0, i1, 3] : i1 > -i0; Stmt_if_end18[0, 0] -> [0, 0, 3] }"
+         "schedule" : "[n] -> { Stmt_if_end18[i0, i1] -> [i0, i1, 3] }"
       },
       {
          "accesses" : [
             {
                "kind" : "read",
-               "relation" : "[n] -> { Stmt_blklab14[i0, i1] -> MemRef_x_0__phi[] }"
+               "relation" : "[n] -> { Stmt_blklab5[i0, i1] -> MemRef_x_0__phi[] }"
             },
             {
                "kind" : "write",
-               "relation" : "[n] -> { Stmt_blklab14[i0, i1] -> MemRef_z_0__phi[] }"
+               "relation" : "[n] -> { Stmt_blklab5[i0, i1] -> MemRef_z_0__phi[] }"
             },
             {
                "kind" : "write",
-               "relation" : "[n] -> { Stmt_blklab14[i0, i1] -> MemRef_x_0[] }"
+               "relation" : "[n] -> { Stmt_blklab5[i0, i1] -> MemRef_x_0[] }"
             }
          ],
-         "domain" : "[n] -> { Stmt_blklab14[i0, i1] : i0 >= 0 and i1 >= 0 and -i0 < i1 < n - i0 and i1 <= -2 + n; Stmt_blklab14[0, 0] : n > 0; Stmt_blklab14[0, -1 + n] : n > 0 }",
-         "name" : "Stmt_blklab14",
-         "schedule" : "[n] -> { Stmt_blklab14[i0, i1] -> [i0, i1, 4] : -i0 < i1 <= -2 + n; Stmt_blklab14[0, 0] -> [0, 0, 4]; Stmt_blklab14[0, -1 + n] -> [0, -1 + n, 4] }"
+         "domain" : "[n] -> { Stmt_blklab5[i0, i1] : i0 >= 0 and 0 <= i1 < n - i0 }",
+         "name" : "Stmt_blklab5",
+         "schedule" : "[n] -> { Stmt_blklab5[i0, i1] -> [i0, i1, 4] }"
       },
       {
          "accesses" : [
@@ -92,7 +92,7 @@
                "relation" : "[n] -> { Stmt_if_end26[i0, i1] -> MemRef_z_0__phi[] }"
             }
          ],
-         "domain" : "[n] -> { Stmt_if_end26[i0, i1] : i0 >= 0 and i1 >= 0 and 2 - i0 <= i1 < n - i0 and i1 < n }",
+         "domain" : "[n] -> { Stmt_if_end26[i0, i1] : n > 0 and i0 >= 0 and i1 >= 0 and 2 - i0 <= i1 < n - i0 }",
          "name" : "Stmt_if_end26",
          "schedule" : "[n] -> { Stmt_if_end26[i0, i1] -> [i0, i1, 5] }"
       },
@@ -100,28 +100,28 @@
          "accesses" : [
             {
                "kind" : "read",
-               "relation" : "[n] -> { Stmt_blklab15__TO__blklab12[i0, i1] -> MemRef_z_0__phi[] }"
+               "relation" : "[n] -> { Stmt_blklab6__TO__blklab3[i0, i1] -> MemRef_z_0__phi[] }"
             },
             {
                "kind" : "read",
-               "relation" : "[n] -> { Stmt_blklab15__TO__blklab12[i0, i1] -> MemRef_x_0[] }"
+               "relation" : "[n] -> { Stmt_blklab6__TO__blklab3[i0, i1] -> MemRef_x_0[] }"
             },
             {
                "kind" : "read",
-               "relation" : "[n] -> { Stmt_blklab15__TO__blklab12[i0, i1] -> MemRef_y_0[] }"
+               "relation" : "[n] -> { Stmt_blklab6__TO__blklab3[i0, i1] -> MemRef_y_0[] }"
             },
             {
                "kind" : "write",
-               "relation" : "[n] -> { Stmt_blklab15__TO__blklab12[i0, i1] -> MemRef_moves[i1, i0 + i1] }"
+               "relation" : "[n] -> { Stmt_blklab6__TO__blklab3[i0, i1] -> MemRef_moves[i1, i0 + i1] }"
             },
             {
                "kind" : "write",
-               "relation" : "[n] -> { Stmt_blklab15__TO__blklab12[i0, i1] -> MemRef_moves[i1, i0 + i1] }"
+               "relation" : "[n] -> { Stmt_blklab6__TO__blklab3[i0, i1] -> MemRef_moves[i1, i0 + i1] }"
             }
          ],
-         "domain" : "[n] -> { Stmt_blklab15__TO__blklab12[i0, i1] : i0 >= 0 and i0 >= 3 - n and i1 >= 0 and -i0 < i1 < n - i0; Stmt_blklab15__TO__blklab12[0, 0] : n > 0; Stmt_blklab15__TO__blklab12[0, -1 + n] : n > 0 }",
-         "name" : "Stmt_blklab15__TO__blklab12",
-         "schedule" : "[n] -> { Stmt_blklab15__TO__blklab12[i0, i1] -> [i0, i1, 6] : i0 >= 3 - n and i1 > -i0; Stmt_blklab15__TO__blklab12[0, 0] -> [0, 0, 6]; Stmt_blklab15__TO__blklab12[0, -1 + n] -> [0, -1 + n, 6] }"
+         "domain" : "[n] -> { Stmt_blklab6__TO__blklab3[i0, i1] : i0 >= 0 and 0 <= i1 < n - i0 }",
+         "name" : "Stmt_blklab6__TO__blklab3",
+         "schedule" : "[n] -> { Stmt_blklab6__TO__blklab3[i0, i1] -> [i0, i1, 6] }"
       }
    ]
 }
