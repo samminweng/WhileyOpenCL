@@ -90,7 +90,7 @@ long long run(POS** queens, long long queens_size, long long n, long long dim){
 	long long _3 = 0;
 	long long num_solutions = 0;
 	long long col = 0;
-	long long solution;
+	long long isSolution;
 	long long i = 0;
 	POS* p;
 	long long _9 = 0;
@@ -107,16 +107,17 @@ long long run(POS** queens, long long queens_size, long long n, long long dim){
 	long long _20;
 	long long _21;
 	long long _22;
-	long long _23 = 0;
+	long long _23;
 	long long _24 = 0;
-	long long _25;
-	POS* _26;
-	long long _27 = 0;
+	long long _25 = 0;
+	long long _26;
+	POS* _27;
 	long long _28 = 0;
 	long long _29 = 0;
 	long long _30 = 0;
 	long long _31 = 0;
 	long long _32 = 0;
+	long long _33 = 0;
 	//ifne %2, %1 goto blklab6 : int
 	if(dim!=n){goto blklab6;}
 	//const %9 = 1 : int
@@ -135,7 +136,7 @@ blklab6:;
 	_11 = 0;
 	//assign %5 = %11  : int
 	col = _11;
-	//loop (%0, %4, %5, %6, %7, %8, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32)
+	//loop (%0, %4, %5, %6, %7, %8, %12, %13, %14, %15, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25, %26, %27, %28, %29, %30, %31, %32, %33)
 	while(true){
 		//invariant
 		{
@@ -161,12 +162,12 @@ blklab10:;
 		//const %14 = true : bool
 		_14 = true;
 		//assign %6 = %14  : bool
-		solution = _14;
+		isSolution = _14;
 		//const %15 = 0 : int
 		_15 = 0;
 		//assign %7 = %15  : int
 		i = _15;
-		//loop (%6, %7, %8, %16, %17, %18, %19, %20, %21, %22, %23, %24)
+		//loop (%6, %7, %8, %16, %17, %18, %19, %20, %21, %22, %23, %24, %25)
 		while(true){
 			//invariant
 			{
@@ -199,63 +200,77 @@ blklab14:;
 			_19 = copy_POS(queens[i]);
 			//assign %8 = %19  : {int c,int r}
 			p = copy_POS(_19);
-			//invoke (%20) = (%8, %1, %5) nqueens:conflict : function(nqueens:POS,int,int)->(bool)
-			_20 = conflict(_STRUCT_COPY_PARAM(p, POS), n, col);
-			//const %21 = true : bool
-			_21 = true;
-			//ifeq %20, %21 goto blklab18 : bool
-			if(_20==_21){goto blklab18;}
+			//const %20 = true : bool
+			_20 = true;
+			//ifeq %6, %20 goto blklab20 : bool
+			if(isSolution==_20){goto blklab20;}
+			//goto blklab19
+			goto blklab19;
+//.blklab20
+blklab20:;
+			//invoke (%21) = (%8, %1, %5) nqueens:conflict : function(nqueens:POS,int,int)->(bool)
+			_21 = conflict(_STRUCT_COPY_PARAM(p, POS), n, col);
+			//const %22 = true : bool
+			_22 = true;
+			//ifeq %21, %22 goto blklab21 : bool
+			if(_21==_22){goto blklab21;}
 			//goto blklab17
 			goto blklab17;
-//.blklab18
-blklab18:;
-			//const %22 = false : bool
-			_22 = false;
-			//assign %6 = %22  : bool
-			solution = _22;
-			//goto blklab12
-			goto blklab12;
+//.blklab21
+blklab21:;
+//.blklab19
+blklab19:;
+			//const %23 = false : bool
+			_23 = false;
+			//goto blklab18
+			goto blklab18;
 //.blklab17
 blklab17:;
-			//const %23 = 1 : int
-			_23 = 1;
-			//add %24 = %7, %23 : int
-			_24=i+_23;
-			//assign %7 = %24  : int
-			i = _24;
+			//const %23 = true : bool
+			_23 = true;
+//.blklab18
+blklab18:;
+			//assign %6 = %23  : bool
+			isSolution = _23;
+			//const %24 = 1 : int
+			_24 = 1;
+			//add %25 = %7, %24 : int
+			_25=i+_24;
+			//assign %7 = %25  : int
+			i = _25;
 //.blklab13
 blklab13:;
 		}
 //.blklab12
 blklab12:;
-		//const %25 = true : bool
-		_25 = true;
-		//ifne %6, %25 goto blklab19 : bool
-		if(solution!=_25){goto blklab19;}
-		//newrecord %26 = (%5, %1) : {int c,int r}
-		_26 = malloc(sizeof(POS));
-		_26->c = col;
-		_26->r = n;
-		//update %0[%1] = %26 : {int c,int r}[] -> {int c,int r}[]
-		queens[n] = _26;
-		//const %28 = 1 : int
-		_28 = 1;
-		//add %29 = %1, %28 : int
-		_29=n+_28;
-		//invoke (%27) = (%0, %29, %2) nqueens:run : function(nqueens:POS[],int,int)->(int)
-		_27 = run(copy_array_POS(queens, queens_size), queens_size, _29, dim);
-		//add %30 = %4, %27 : int
-		_30=num_solutions+_27;
-		//assign %4 = %30  : int
-		num_solutions = _30;
-//.blklab19
-blklab19:;
-		//const %31 = 1 : int
-		_31 = 1;
-		//add %32 = %5, %31 : int
-		_32=col+_31;
-		//assign %5 = %32  : int
-		col = _32;
+		//const %26 = true : bool
+		_26 = true;
+		//ifne %6, %26 goto blklab22 : bool
+		if(isSolution!=_26){goto blklab22;}
+		//newrecord %27 = (%5, %1) : {int c,int r}
+		_27 = malloc(sizeof(POS));
+		_27->c = col;
+		_27->r = n;
+		//update %0[%1] = %27 : {int c,int r}[] -> {int c,int r}[]
+		queens[n] = _27;
+		//const %29 = 1 : int
+		_29 = 1;
+		//add %30 = %1, %29 : int
+		_30=n+_29;
+		//invoke (%28) = (%0, %30, %2) nqueens:run : function(nqueens:POS[],int,int)->(int)
+		_28 = run(copy_array_POS(queens, queens_size), queens_size, _30, dim);
+		//add %31 = %4, %28 : int
+		_31=num_solutions+_28;
+		//assign %4 = %31  : int
+		num_solutions = _31;
+//.blklab22
+blklab22:;
+		//const %32 = 1 : int
+		_32 = 1;
+		//add %33 = %5, %32 : int
+		_33=col+_32;
+		//assign %5 = %33  : int
+		col = _33;
 //.blklab9
 blklab9:;
 	}
@@ -320,13 +335,13 @@ int main(int argc, char** args){
 	{
 		//const %11 = 724 : int
 		_11 = 724;
-		//ifeq %3, %11 goto blklab20 : int
-		if(num_solutions==_11){goto blklab20;}
+		//ifeq %3, %11 goto blklab23 : int
+		if(num_solutions==_11){goto blklab23;}
 		//fail
 		fprintf(stderr,"fail");
 		exit(-1);
-//.blklab20
-blklab20:;
+//.blklab23
+blklab23:;
 	//assert
 	}
 	//fieldload %12 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}

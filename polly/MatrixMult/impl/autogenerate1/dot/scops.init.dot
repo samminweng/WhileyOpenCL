@@ -1,73 +1,73 @@
 digraph "Scop Graph for 'init' function" {
 	label="Scop Graph for 'init' function";
 
-	Node0xaab6140 [shape=record,label="{entry:\l  br label %entry.split, !dbg !52\l}"];
-	Node0xaab6140 -> Node0xaab1560;
-	Node0xaab1560 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata i64 %width, i64 0, metadata !23,\l... metadata !53), !dbg !52\l  tail call void @llvm.dbg.value(metadata i64 %height, i64 0, metadata !24,\l... metadata !53), !dbg !54\l  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !26, metadata\l... !53), !dbg !55\l  tail call void @llvm.dbg.value(metadata i64* null, i64 0, metadata !28,\l... metadata !53), !dbg !56\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !29, metadata\l... !53), !dbg !56\l  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !30, metadata\l... !53), !dbg !57\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !31, metadata\l... !53), !dbg !58\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !32, metadata\l... !53), !dbg !59\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !33, metadata\l... !53), !dbg !60\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !34, metadata\l... !53), !dbg !61\l  tail call void @llvm.dbg.value(metadata i64* null, i64 0, metadata !35,\l... metadata !53), !dbg !62\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !36, metadata\l... !53), !dbg !62\l  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !37, metadata\l... !53), !dbg !63\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !38, metadata\l... !53), !dbg !64\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !39, metadata\l... !53), !dbg !65\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !40, metadata\l... !53), !dbg !66\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !41, metadata\l... !53), !dbg !67\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !42, metadata\l... !53), !dbg !68\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !43, metadata\l... !53), !dbg !69\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !44, metadata\l... !53), !dbg !70\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !45, metadata\l... !53), !dbg !71\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !46, metadata\l... !53), !dbg !72\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !47, metadata\l... !53), !dbg !73\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !48, metadata\l... !53), !dbg !74\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !49, metadata\l... !53), !dbg !75\l  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !51, metadata\l... !53), !dbg !76\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !33, metadata\l... !53), !dbg !60\l  %mul = mul nsw i64 %height, %width, !dbg !77\l  tail call void @llvm.dbg.value(metadata i64 %mul, i64 0, metadata !34,\l... metadata !53), !dbg !61\l  tail call void @llvm.dbg.value(metadata i64 %mul, i64 0, metadata !36,\l... metadata !53), !dbg !62\l  %conv1 = trunc i64 %mul to i32, !dbg !78\l  %call = tail call i64* @gen1DArray(i32 0, i32 %conv1) #6, !dbg !78\l  tail call void @llvm.dbg.value(metadata i64* %call, i64 0, metadata !35,\l... metadata !53), !dbg !62\l  tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !37, metadata\l... !53), !dbg !63\l  tail call void @llvm.dbg.value(metadata i64 %mul, i64 0, metadata !29,\l... metadata !53), !dbg !56\l  tail call void @llvm.dbg.value(metadata i64* %call, i64 0, metadata !28,\l... metadata !53), !dbg !56\l  tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !30, metadata\l... !53), !dbg !57\l  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !37, metadata\l... !53), !dbg !63\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !38, metadata\l... !53), !dbg !64\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !31, metadata\l... !53), !dbg !58\l  %cmp81 = icmp sgt i64 %height, 0, !dbg !79\l  br i1 %cmp81, label %while.cond8.preheader.lr.ph, label %if.end23, !dbg !82\l}"];
-	Node0xaab1560 -> Node0xaa83d80;
-	Node0xaab1560 -> Node0xaa50bb0;
-	Node0xaa83d80 [shape=record,label="{while.cond8.preheader.lr.ph:                      \l  br label %while.cond8.preheader, !dbg !82\l}"];
-	Node0xaa83d80 -> Node0xaa8df30;
-	Node0xaa8df30 [shape=record,label="{while.cond8.preheader:                            \l  %i.082 = phi i64 [ 0, %while.cond8.preheader.lr.ph ], [ %add20, %blklab4 ]\l  %cmp1079 = icmp sgt i64 %width, 0, !dbg !83\l  br i1 %cmp1079, label %if.end13.lr.ph, label %blklab4, !dbg !86\l}"];
-	Node0xaa8df30 -> Node0xaa98e00;
-	Node0xaa8df30 -> Node0xaa9eb00;
-	Node0xaa98e00 [shape=record,label="{if.end13.lr.ph:                                   \l  br label %if.end13, !dbg !86\l}"];
-	Node0xaa98e00 -> Node0xaa9cf90;
-	Node0xaa9cf90 [shape=record,label="{if.end13:                                         \l  %j.080 = phi i64 [ 0, %if.end13.lr.ph ], [ %add19, %if.end13 ]\l  %mul14 = mul nsw i64 %i.082, %width, !dbg !87\l  tail call void @llvm.dbg.value(metadata i64 %mul14, i64 0, metadata !40,\l... metadata !53), !dbg !66\l  %add = add nsw i64 %j.080, %mul14, !dbg !88\l  tail call void @llvm.dbg.value(metadata i64 %add, i64 0, metadata !41,\l... metadata !53), !dbg !67\l  %arrayidx = getelementptr inbounds i64, i64* %call, i64 %add, !dbg !89\l  %0 = load i64, i64* %arrayidx, align 8, !dbg !89, !tbaa !90\l  tail call void @llvm.dbg.value(metadata i64 %0, i64 0, metadata !42,\l... metadata !53), !dbg !68\l  %add15 = add nsw i64 %0, %i.082, !dbg !94\l  tail call void @llvm.dbg.value(metadata i64 %add15, i64 0, metadata !43,\l... metadata !53), !dbg !69\l  tail call void @llvm.dbg.value(metadata i64 %mul14, i64 0, metadata !44,\l... metadata !53), !dbg !70\l  tail call void @llvm.dbg.value(metadata i64 %add, i64 0, metadata !45,\l... metadata !53), !dbg !71\l  store i64 %add15, i64* %arrayidx, align 8, !dbg !95, !tbaa !90\l  tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !46, metadata\l... !53), !dbg !72\l  %add19 = add nuw nsw i64 %j.080, 1, !dbg !96\l  tail call void @llvm.dbg.value(metadata i64 %add19, i64 0, metadata !47,\l... metadata !53), !dbg !73\l  tail call void @llvm.dbg.value(metadata i64 %add19, i64 0, metadata !32,\l... metadata !53), !dbg !59\l  %exitcond = icmp ne i64 %add19, %width, !dbg !86\l  br i1 %exitcond, label %if.end13, label %while.cond8.blklab4_crit_edge, !dbg\l... !86\l}"];
-	Node0xaa9cf90 -> Node0xaa9cf90[constraint=false];
-	Node0xaa9cf90 -> Node0xaad7d00;
-	Node0xaad7d00 [shape=record,label="{while.cond8.blklab4_crit_edge:                    \l  br label %blklab4, !dbg !86\l}"];
-	Node0xaad7d00 -> Node0xaa9eb00;
-	Node0xaa9eb00 [shape=record,label="{blklab4:                                          \l  tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !48, metadata\l... !53), !dbg !74\l  %add20 = add nuw nsw i64 %i.082, 1, !dbg !97\l  tail call void @llvm.dbg.value(metadata i64 %add20, i64 0, metadata !49,\l... metadata !53), !dbg !75\l  tail call void @llvm.dbg.value(metadata i64 %add20, i64 0, metadata !31,\l... metadata !53), !dbg !58\l  %exitcond84 = icmp ne i64 %add20, %height, !dbg !82\l  br i1 %exitcond84, label %while.cond8.preheader, label\l... %while.cond.if.end23_crit_edge, !dbg !82\l}"];
-	Node0xaa9eb00 -> Node0xaa8df30[constraint=false];
-	Node0xaa9eb00 -> Node0xaa8b3d0;
-	Node0xaa8b3d0 [shape=record,label="{while.cond.if.end23_crit_edge:                    \l  br label %if.end23, !dbg !82\l}"];
-	Node0xaa8b3d0 -> Node0xaa50bb0;
-	Node0xaa50bb0 [shape=record,label="{if.end23:                                         \l  %call24 = tail call %struct.Matrix* @matrix(i64 %width, i64 %height, i64*\l... %call, i64 %mul, i1 zeroext false), !dbg !98\l  tail call void @llvm.dbg.value(metadata %struct.Matrix* %call24, i64 0,\l... metadata !50, metadata !53), !dbg !99\l  tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !51, metadata\l... !53), !dbg !76\l  %1 = bitcast i64* %call to i8*, !dbg !100\l  tail call void @free(i8* %1) #6, !dbg !100\l  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !30, metadata\l... !53), !dbg !57\l  ret %struct.Matrix* %call24, !dbg !104\l}"];
+	Node0xa196cd0 [shape=record,label="{entry:\l  br label %entry.split, !dbg !52\l}"];
+	Node0xa196cd0 -> Node0xa09ca00;
+	Node0xa09ca00 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata i64 %width, i64 0, metadata !23,\l... metadata !53), !dbg !52\l  tail call void @llvm.dbg.value(metadata i64 %height, i64 0, metadata !24,\l... metadata !53), !dbg !54\l  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !26, metadata\l... !53), !dbg !55\l  tail call void @llvm.dbg.value(metadata i64* null, i64 0, metadata !28,\l... metadata !53), !dbg !56\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !29, metadata\l... !53), !dbg !56\l  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !30, metadata\l... !53), !dbg !57\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !31, metadata\l... !53), !dbg !58\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !32, metadata\l... !53), !dbg !59\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !33, metadata\l... !53), !dbg !60\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !34, metadata\l... !53), !dbg !61\l  tail call void @llvm.dbg.value(metadata i64* null, i64 0, metadata !35,\l... metadata !53), !dbg !62\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !36, metadata\l... !53), !dbg !62\l  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !37, metadata\l... !53), !dbg !63\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !38, metadata\l... !53), !dbg !64\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !39, metadata\l... !53), !dbg !65\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !40, metadata\l... !53), !dbg !66\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !41, metadata\l... !53), !dbg !67\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !42, metadata\l... !53), !dbg !68\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !43, metadata\l... !53), !dbg !69\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !44, metadata\l... !53), !dbg !70\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !45, metadata\l... !53), !dbg !71\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !46, metadata\l... !53), !dbg !72\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !47, metadata\l... !53), !dbg !73\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !48, metadata\l... !53), !dbg !74\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !49, metadata\l... !53), !dbg !75\l  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !51, metadata\l... !53), !dbg !76\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !33, metadata\l... !53), !dbg !60\l  %mul = mul nsw i64 %height, %width, !dbg !77\l  tail call void @llvm.dbg.value(metadata i64 %mul, i64 0, metadata !34,\l... metadata !53), !dbg !61\l  tail call void @llvm.dbg.value(metadata i64 %mul, i64 0, metadata !36,\l... metadata !53), !dbg !62\l  %conv1 = trunc i64 %mul to i32, !dbg !78\l  %call = tail call i64* @gen1DArray(i32 0, i32 %conv1) #6, !dbg !78\l  tail call void @llvm.dbg.value(metadata i64* %call, i64 0, metadata !35,\l... metadata !53), !dbg !62\l  tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !37, metadata\l... !53), !dbg !63\l  tail call void @llvm.dbg.value(metadata i64 %mul, i64 0, metadata !29,\l... metadata !53), !dbg !56\l  tail call void @llvm.dbg.value(metadata i64* %call, i64 0, metadata !28,\l... metadata !53), !dbg !56\l  tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !30, metadata\l... !53), !dbg !57\l  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !37, metadata\l... !53), !dbg !63\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !38, metadata\l... !53), !dbg !64\l  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !31, metadata\l... !53), !dbg !58\l  %cmp81 = icmp sgt i64 %height, 0, !dbg !79\l  br i1 %cmp81, label %while.cond8.preheader.lr.ph, label %if.end23, !dbg !82\l}"];
+	Node0xa09ca00 -> Node0xa09a710;
+	Node0xa09ca00 -> Node0xa0f2300;
+	Node0xa09a710 [shape=record,label="{while.cond8.preheader.lr.ph:                      \l  br label %while.cond8.preheader, !dbg !82\l}"];
+	Node0xa09a710 -> Node0xa0f6fc0;
+	Node0xa0f6fc0 [shape=record,label="{while.cond8.preheader:                            \l  %i.082 = phi i64 [ 0, %while.cond8.preheader.lr.ph ], [ %add20, %blklab4 ]\l  %cmp1079 = icmp sgt i64 %width, 0, !dbg !83\l  br i1 %cmp1079, label %if.end13.lr.ph, label %blklab4, !dbg !86\l}"];
+	Node0xa0f6fc0 -> Node0xa1d83f0;
+	Node0xa0f6fc0 -> Node0xa06e310;
+	Node0xa1d83f0 [shape=record,label="{if.end13.lr.ph:                                   \l  br label %if.end13, !dbg !86\l}"];
+	Node0xa1d83f0 -> Node0xa09ed80;
+	Node0xa09ed80 [shape=record,label="{if.end13:                                         \l  %j.080 = phi i64 [ 0, %if.end13.lr.ph ], [ %add19, %if.end13 ]\l  %mul14 = mul nsw i64 %i.082, %width, !dbg !87\l  tail call void @llvm.dbg.value(metadata i64 %mul14, i64 0, metadata !40,\l... metadata !53), !dbg !66\l  %add = add nsw i64 %j.080, %mul14, !dbg !88\l  tail call void @llvm.dbg.value(metadata i64 %add, i64 0, metadata !41,\l... metadata !53), !dbg !67\l  %arrayidx = getelementptr inbounds i64, i64* %call, i64 %add, !dbg !89\l  %0 = load i64, i64* %arrayidx, align 8, !dbg !89, !tbaa !90\l  tail call void @llvm.dbg.value(metadata i64 %0, i64 0, metadata !42,\l... metadata !53), !dbg !68\l  %add15 = add nsw i64 %0, %i.082, !dbg !94\l  tail call void @llvm.dbg.value(metadata i64 %add15, i64 0, metadata !43,\l... metadata !53), !dbg !69\l  tail call void @llvm.dbg.value(metadata i64 %mul14, i64 0, metadata !44,\l... metadata !53), !dbg !70\l  tail call void @llvm.dbg.value(metadata i64 %add, i64 0, metadata !45,\l... metadata !53), !dbg !71\l  store i64 %add15, i64* %arrayidx, align 8, !dbg !95, !tbaa !90\l  tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !46, metadata\l... !53), !dbg !72\l  %add19 = add nuw nsw i64 %j.080, 1, !dbg !96\l  tail call void @llvm.dbg.value(metadata i64 %add19, i64 0, metadata !47,\l... metadata !53), !dbg !73\l  tail call void @llvm.dbg.value(metadata i64 %add19, i64 0, metadata !32,\l... metadata !53), !dbg !59\l  %exitcond = icmp ne i64 %add19, %width, !dbg !86\l  br i1 %exitcond, label %if.end13, label %while.cond8.blklab4_crit_edge, !dbg\l... !86\l}"];
+	Node0xa09ed80 -> Node0xa09ed80[constraint=false];
+	Node0xa09ed80 -> Node0xa0b3030;
+	Node0xa0b3030 [shape=record,label="{while.cond8.blklab4_crit_edge:                    \l  br label %blklab4, !dbg !86\l}"];
+	Node0xa0b3030 -> Node0xa06e310;
+	Node0xa06e310 [shape=record,label="{blklab4:                                          \l  tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !48, metadata\l... !53), !dbg !74\l  %add20 = add nuw nsw i64 %i.082, 1, !dbg !97\l  tail call void @llvm.dbg.value(metadata i64 %add20, i64 0, metadata !49,\l... metadata !53), !dbg !75\l  tail call void @llvm.dbg.value(metadata i64 %add20, i64 0, metadata !31,\l... metadata !53), !dbg !58\l  %exitcond84 = icmp ne i64 %add20, %height, !dbg !82\l  br i1 %exitcond84, label %while.cond8.preheader, label\l... %while.cond.if.end23_crit_edge, !dbg !82\l}"];
+	Node0xa06e310 -> Node0xa0f6fc0[constraint=false];
+	Node0xa06e310 -> Node0xa0ece80;
+	Node0xa0ece80 [shape=record,label="{while.cond.if.end23_crit_edge:                    \l  br label %if.end23, !dbg !82\l}"];
+	Node0xa0ece80 -> Node0xa0f2300;
+	Node0xa0f2300 [shape=record,label="{if.end23:                                         \l  %call24 = tail call %struct.Matrix* @matrix(i64 %width, i64 %height, i64*\l... %call, i64 %mul, i1 zeroext false), !dbg !98\l  tail call void @llvm.dbg.value(metadata %struct.Matrix* %call24, i64 0,\l... metadata !50, metadata !53), !dbg !99\l  tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !51, metadata\l... !53), !dbg !76\l  %1 = bitcast i64* %call to i8*, !dbg !100\l  tail call void @free(i8* %1) #6, !dbg !100\l  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !30, metadata\l... !53), !dbg !57\l  ret %struct.Matrix* %call24, !dbg !104\l}"];
 	colorscheme = "paired12"
-        subgraph cluster_0xab05ef0 {
+        subgraph cluster_0xa120ef0 {
           label = "MatrixMult.c:49-147
 ";
           style = solid;
           color = 1
-          subgraph cluster_0xab009b0 {
+          subgraph cluster_0xa11b9b0 {
             label = "MatrixMult.c:49-131
 Call instruction:   %call = tail call i64* @gen1DArray(i32 0, i32 %conv1) #6, !dbg !78";
             style = solid;
             color = 6
-            subgraph cluster_0xaa9cb00 {
+            subgraph cluster_0xa0b36e0 {
               label = "MatrixMult.c:54-131
 ";
               style = filled;
-              color = 3              subgraph cluster_0xab1f440 {
+              color = 3              subgraph cluster_0xa13a440 {
                 label = "MatrixMult.c:54-131
 ";
                 style = solid;
                 color = 7
-                subgraph cluster_0xab20570 {
+                subgraph cluster_0xa13b570 {
                   label = "MatrixMult.c:55-120
 ";
                   style = solid;
                   color = 9
-                  subgraph cluster_0xab21780 {
+                  subgraph cluster_0xa13c780 {
                     label = "MatrixMult.c:55-120
 ";
                     style = solid;
                     color = 11
-                    Node0xaa9cf90;
+                    Node0xa09ed80;
                   }
-                  Node0xaa8df30;
-                  Node0xaa98e00;
-                  Node0xaad7d00;
+                  Node0xa0f6fc0;
+                  Node0xa1d83f0;
+                  Node0xa0b3030;
                 }
-                Node0xaa9eb00;
+                Node0xa06e310;
               }
-              Node0xaa8b3d0;
+              Node0xa0ece80;
             }
-            Node0xaab1560;
-            Node0xaa83d80;
+            Node0xa09ca00;
+            Node0xa09a710;
           }
-          Node0xaab6140;
-          Node0xaa50bb0;
+          Node0xa196cd0;
+          Node0xa0f2300;
         }
 }

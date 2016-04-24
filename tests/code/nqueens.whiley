@@ -30,20 +30,22 @@ requires dim == |queens|:
         int num_solutions = 0 // Count the total number of solutions
         int col = 0
         while col < dim where n < |queens| && dim == |queens|:
-            bool solution = true
+            bool isSolution = true
             int i = 0
             while i < n where n < |queens| && i >= 0 && dim == |queens|:
                 POS p = queens[i]
-                if conflict(p,n,col):
-                    solution = false
-                    break
+                isSolution = isSolution && !conflict(p,n,col)
+                //if conflict(p,n,col):
+                //   solution = false
+                //    break
                 i = i + 1
-            if solution == true:
+            if isSolution == true:
                 queens[n] = {r:n, c:col}
                 num_solutions = num_solutions + run(queens, n+1, dim) 
                 //solutions = append(solutions,run(queens,n+1,dim))
             col = col + 1
         return num_solutions
+
 
 method main(System.Console sys):
     int n = 10
