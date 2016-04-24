@@ -1,0 +1,29 @@
+digraph "Scop Graph for 'isPowerof2' function" {
+	label="Scop Graph for 'isPowerof2' function";
+
+	Node0xa60c210 [shape=record,label="{entry:\l  br label %entry.split, !dbg !33\l}"];
+	Node0xa60c210 -> Node0xa616840;
+	Node0xa616840 [shape=record,label="{entry.split:                                      \l  tail call void @llvm.dbg.value(metadata i64 %value, i64 0, metadata !32,\l... metadata !34), !dbg !33\l  %cmp = icmp eq i64 %value, 0, !dbg !35\l  br i1 %cmp, label %return, label %land.rhs, !dbg !37\l}"];
+	Node0xa616840 -> Node0xa61fea0;
+	Node0xa616840 -> Node0xa654be0;
+	Node0xa61fea0 [shape=record,label="{return:                                           \l  %retval.0 = phi i32 [ %land.ext, %land.rhs ], [ 1, %entry.split ]\l  ret i32 %retval.0, !dbg !45\l}"];
+	Node0xa654be0 [shape=record,label="{land.rhs:                                         \l  %sub = add nsw i64 %value, -1, !dbg !38\l  %and = and i64 %sub, %value, !dbg !40\l  %lnot = icmp eq i64 %and, 0, !dbg !41\l  %land.ext = zext i1 %lnot to i32, !dbg !42\l  br label %return, !dbg !44\l}"];
+	Node0xa654be0 -> Node0xa61fea0;
+	colorscheme = "paired12"
+        subgraph cluster_0xa633930 {
+          label = "Util.c:309-314
+";
+          style = solid;
+          color = 1
+          subgraph cluster_0xa61d310 {
+            label = "Util.c:309-313
+";
+            style = solid;
+            color = 6
+            Node0xa616840;
+            Node0xa654be0;
+          }
+          Node0xa60c210;
+          Node0xa61fea0;
+        }
+}

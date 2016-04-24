@@ -171,7 +171,7 @@ void print_mat(FILE* sys, Matrix* a, _DECL_OWNERSHIP_PARAM(a)){
 	long long _21 = 0;
 	long long _22 = 0;
 	void* _23;
-	void** _25;
+	void* _25;
 	long long _25_size = 0;
 	_DECL_OWNERSHIP(_25);
 	//const %6 = 0 : int
@@ -245,7 +245,7 @@ blklab8:;
 		_NEW_ARRAY(_25, 0);
 		_ADD_OWNERSHIP(_25);
 		//indirectinvoke () = %24 (%25) : method(int[])->()
-		println_s(_1DARRAY_PARAM(_25));
+		println_s(_25, _25_size);
 //.blklab7
 blklab7:;
 	}
@@ -720,7 +720,7 @@ blklab22:;
 	_63[0] = 80; _63[1] = 97; _63[2] = 115; _63[3] = 115; _63[4] = 32; _63[5] = 77; _63[6] = 97; _63[7] = 116; _63[8] = 114; _63[9] = 105; _63[10] = 120; _63[11] = 77; _63[12] = 117; _63[13] = 108; _63[14] = 116; _63[15] = 32; _63[16] = 116; _63[17] = 101; _63[18] = 115; _63[19] = 116; _63[20] = 32; _63[21] = 99; _63[22] = 97; _63[23] = 115; _63[24] = 101; 
 	_ADD_OWNERSHIP(_63);
 	//indirectinvoke () = %62 (%63) : method(int[])->()
-	println_s(_1DARRAY_PARAM(_63));
+	println_s(_63, _63_size);
 //.blklab19
 blklab19:;
 	//return

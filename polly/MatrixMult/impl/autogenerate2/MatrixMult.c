@@ -6,6 +6,13 @@ Matrix* copy_Matrix(Matrix* _Matrix){
 	new_Matrix->height = _Matrix->height;
 	return new_Matrix;
 }
+Matrix** copy_array_Matrix(Matrix** _Matrix, long long _Matrix_size){
+	Matrix** new_Matrix = malloc(_Matrix_size*sizeof(Matrix*));
+	for(int i=0;i<_Matrix_size;i++){
+		new_Matrix[i] = copy_Matrix(_Matrix[i]);
+	}
+	return new_Matrix;
+}
 void free_Matrix(Matrix* matrix){
 	free(matrix->data);
 	free(matrix);
@@ -131,7 +138,6 @@ blklab3:;
 blklab2:;
 	//invoke (%21) = (%0, %1, %3) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[])->(MatrixMult:Matrix)
 	_FREE_STRUCT(_21, Matrix);
-	_ADD_OWNERSHIP(data);
 	_21 = matrix(width, height, _1DARRAY_PARAM(data), false);
 	_ADD_OWNERSHIP(_21);
 	//return %21
@@ -165,7 +171,8 @@ void print_mat(FILE* sys, Matrix* a, _DECL_OWNERSHIP_PARAM(a)){
 	long long _21 = 0;
 	long long _22 = 0;
 	void* _23;
-	_DECL_1DARRAY(_25);
+	void* _25;
+	long long _25_size = 0;
 	_DECL_OWNERSHIP(_25);
 	//const %6 = 0 : int
 	_6 = 0;
@@ -238,7 +245,7 @@ blklab8:;
 		_NEW_ARRAY(_25, 0);
 		_ADD_OWNERSHIP(_25);
 		//indirectinvoke () = %24 (%25) : method(int[])->()
-		println_s(_1DARRAY_PARAM(_25));
+		println_s(_25, _25_size);
 //.blklab7
 blklab7:;
 	}
@@ -521,7 +528,6 @@ blklab18:;
 blklab17:;
 	//invoke (%58) = (%3, %4, %5) MatrixMult:matrix : function(MatrixMult:nat,MatrixMult:nat,int[])->(MatrixMult:Matrix)
 	_FREE_STRUCT(_58, Matrix);
-	_ADD_OWNERSHIP(data);
 	_58 = matrix(width, height, _1DARRAY_PARAM(data), false);
 	_ADD_OWNERSHIP(_58);
 	//return %58
@@ -662,8 +668,6 @@ int main(int argc, char** args){
 	_REMOVE_OWNERSHIP(_16);
 	//invoke (%17) = (%3, %4) MatrixMult:mat_mult : function(MatrixMult:Matrix,MatrixMult:Matrix)->(MatrixMult:Matrix)
 	_FREE_STRUCT(_17, Matrix);
-	_ADD_OWNERSHIP(A);
-	_ADD_OWNERSHIP(B);
 	_17 = mat_mult(_STRUCT_PARAM(A), false, _STRUCT_PARAM(B), false);
 	_ADD_OWNERSHIP(_17);
 	//assign %5 = %17  : {int[] data,int height,int width}
@@ -813,7 +817,7 @@ blklab26:;
 	_63[0] = 80; _63[1] = 97; _63[2] = 115; _63[3] = 115; _63[4] = 32; _63[5] = 77; _63[6] = 97; _63[7] = 116; _63[8] = 114; _63[9] = 105; _63[10] = 120; _63[11] = 77; _63[12] = 117; _63[13] = 108; _63[14] = 116; _63[15] = 32; _63[16] = 116; _63[17] = 101; _63[18] = 115; _63[19] = 116; _63[20] = 32; _63[21] = 99; _63[22] = 97; _63[23] = 115; _63[24] = 101; 
 	_ADD_OWNERSHIP(_63);
 	//indirectinvoke () = %62 (%63) : method(int[])->()
-	println_s(_1DARRAY_PARAM(_63));
+	println_s(_63, _63_size);
 //.blklab23
 blklab23:;
 	//return

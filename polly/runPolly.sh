@@ -82,7 +82,7 @@ clang_polly(){
     ar -cvq libUtil.a Util.o
 	echo -e -n "${GREEN}[*] Export SCoP in DOTs and JSCoP${RESET}" && read
 	pollycc -g -O3 -mllvm -polly -o "out"/$program.polly.out\
-	        -mllvm -polly-dot -mllvm -polly-show $program.c libUtil.a
+	        -mllvm -polly-dot -mllvm -polly-show $program.c Util.c
 	
 	### Export JSCoP	
 	pollycc -S -emit-llvm $program.c -o "llvm/$program.preopt.ll.tmp" && ## compile C to llvm
@@ -192,7 +192,7 @@ exec(){
 }
 
 exec autogenerate1 MatrixMult 100  ### Determine matrix size from cmd line argument
-###exec autogenerate2 MatrixMult 1000  
+exec autogenerate2 MatrixMult 100 
 ##exec autogenerate GCD 100  ### Use Euclid's algorithm
 ##exec autogenerate1 GCD 100 ### Cached the divisors
 exec autogenerate CoinGame 2000

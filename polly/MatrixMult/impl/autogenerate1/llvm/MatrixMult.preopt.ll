@@ -233,8 +233,8 @@ entry.split:                                      ; preds = %entry
   %0 = load i64, i64* %width1, align 8
   %height2 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0, i32 3
   %1 = load i64, i64* %height2, align 8
-  %cmp13 = icmp sgt i64 %1, 0
-  br i1 %cmp13, label %while.body4.preheader.lr.ph, label %blklab6
+  %cmp12 = icmp sgt i64 %1, 0
+  br i1 %cmp12, label %while.body4.preheader.lr.ph, label %blklab6
 
 while.body4.preheader.lr.ph:                      ; preds = %entry.split
   br label %while.body4.preheader
@@ -242,58 +242,58 @@ while.body4.preheader.lr.ph:                      ; preds = %entry.split
 while.body4.preheader:                            ; preds = %while.body4.preheader.lr.ph, %if.end21
   %_25_has_ownership.019 = phi i1 [ false, %while.body4.preheader.lr.ph ], [ true, %if.end21 ]
   %i.017 = phi i64 [ 0, %while.body4.preheader.lr.ph ], [ %add18, %if.end21 ]
-  %2 = phi i8* [ undef, %while.body4.preheader.lr.ph ], [ %call22, %if.end21 ]
-  %_12.016 = phi i64* [ null, %while.body4.preheader.lr.ph ], [ %_12.1.lcssa, %if.end21 ]
-  %_12_has_ownership.015 = phi i8 [ 0, %while.body4.preheader.lr.ph ], [ %_12_has_ownership.1.lcssa, %if.end21 ]
-  %3 = phi i8* [ null, %while.body4.preheader.lr.ph ], [ %.lcssa1, %if.end21 ]
-  %4 = phi i8* [ null, %while.body4.preheader.lr.ph ], [ %.lcssa, %if.end21 ]
-  %_18_has_ownership.014 = phi i8 [ 0, %while.body4.preheader.lr.ph ], [ %_18_has_ownership.1.lcssa, %if.end21 ]
-  %cmp54 = icmp sgt i64 %0, 0
-  br i1 %cmp54, label %if.end7.lr.ph, label %blklab8
+  %_25.016 = phi i8* [ undef, %while.body4.preheader.lr.ph ], [ %call22, %if.end21 ]
+  %_12.015 = phi i64* [ null, %while.body4.preheader.lr.ph ], [ %_12.1.lcssa, %if.end21 ]
+  %_12_has_ownership.014 = phi i8 [ 0, %while.body4.preheader.lr.ph ], [ %_12_has_ownership.1.lcssa, %if.end21 ]
+  %2 = phi i8* [ null, %while.body4.preheader.lr.ph ], [ %.lcssa1, %if.end21 ]
+  %3 = phi i8* [ null, %while.body4.preheader.lr.ph ], [ %.lcssa, %if.end21 ]
+  %_18_has_ownership.013 = phi i8 [ 0, %while.body4.preheader.lr.ph ], [ %_18_has_ownership.1.lcssa, %if.end21 ]
+  %cmp53 = icmp sgt i64 %0, 0
+  br i1 %cmp53, label %if.end7.lr.ph, label %blklab8
 
 if.end7.lr.ph:                                    ; preds = %while.body4.preheader
   br label %if.end7
 
 if.end7:                                          ; preds = %if.end7.lr.ph, %if.end14
-  %j.08 = phi i64 [ 0, %if.end7.lr.ph ], [ %add17, %if.end14 ]
-  %_12.17 = phi i64* [ %_12.016, %if.end7.lr.ph ], [ %call, %if.end14 ]
-  %_12_has_ownership.16 = phi i8 [ %_12_has_ownership.015, %if.end7.lr.ph ], [ 1, %if.end14 ]
-  %5 = phi i8* [ %4, %if.end7.lr.ph ], [ %call15, %if.end14 ]
-  %_18_has_ownership.15 = phi i8 [ %_18_has_ownership.014, %if.end7.lr.ph ], [ 1, %if.end14 ]
-  %6 = and i8 %_12_has_ownership.16, 1
-  %tobool = icmp eq i8 %6, 0
+  %j.07 = phi i64 [ 0, %if.end7.lr.ph ], [ %add17, %if.end14 ]
+  %_12.16 = phi i64* [ %_12.015, %if.end7.lr.ph ], [ %call, %if.end14 ]
+  %_12_has_ownership.15 = phi i8 [ %_12_has_ownership.014, %if.end7.lr.ph ], [ 1, %if.end14 ]
+  %4 = phi i8* [ %3, %if.end7.lr.ph ], [ %call15, %if.end14 ]
+  %_18_has_ownership.14 = phi i8 [ %_18_has_ownership.013, %if.end7.lr.ph ], [ 1, %if.end14 ]
+  %5 = and i8 %_12_has_ownership.15, 1
+  %tobool = icmp eq i8 %5, 0
   br i1 %tobool, label %if.end9, label %if.then8
 
 if.then8:                                         ; preds = %if.end7
-  %7 = bitcast i64* %_12.17 to i8*
-  tail call void @free(i8* %7) #4
+  %6 = bitcast i64* %_12.16 to i8*
+  tail call void @free(i8* %6) #4
   br label %if.end9
 
 if.end9:                                          ; preds = %if.end7, %if.then8
   %data = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0, i32 0
-  %8 = load i64*, i64** %data, align 8
+  %7 = load i64*, i64** %data, align 8
   %data_size10 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0, i32 1
-  %9 = load i64, i64* %data_size10, align 8
-  %call = tail call i64* @copy(i64* %8, i64 %9) #4
+  %8 = load i64, i64* %data_size10, align 8
+  %call = tail call i64* @copy(i64* %7, i64 %8) #4
   %mul = mul nsw i64 %i.017, %0
-  %add = add nsw i64 %j.08, %mul
+  %add = add nsw i64 %j.07, %mul
   %arrayidx = getelementptr inbounds i64, i64* %call, i64 %add
-  %10 = load i64, i64* %arrayidx, align 8
-  %call11 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.3, i64 0, i64 0), i64 %10) #4
-  %11 = and i8 %_18_has_ownership.15, 1
-  %tobool12 = icmp eq i8 %11, 0
+  %9 = load i64, i64* %arrayidx, align 8
+  %call11 = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.3, i64 0, i64 0), i64 %9) #4
+  %10 = and i8 %_18_has_ownership.14, 1
+  %tobool12 = icmp eq i8 %10, 0
   br i1 %tobool12, label %if.end14, label %if.then13
 
 if.then13:                                        ; preds = %if.end9
-  tail call void @free(i8* %5) #4
+  tail call void @free(i8* %4) #4
   br label %if.end14
 
 if.end14:                                         ; preds = %if.end9, %if.then13
   %call15 = tail call noalias i8* @malloc(i64 8) #4
-  %12 = bitcast i8* %call15 to i64*
-  store i64 32, i64* %12, align 8
-  tail call void @printf_s(i64* %12, i64 1) #4
-  %add17 = add nuw nsw i64 %j.08, 1
+  %11 = bitcast i8* %call15 to i64*
+  store i64 32, i64* %11, align 8
+  tail call void @printf_s(i64* %11, i64 1) #4
+  %add17 = add nuw nsw i64 %j.07, 1
   %exitcond = icmp ne i64 %add17, %0
   br i1 %exitcond, label %if.end7, label %while.body4.blklab8_crit_edge
 
@@ -303,22 +303,22 @@ while.body4.blklab8_crit_edge:                    ; preds = %if.end14
   br label %blklab8
 
 blklab8:                                          ; preds = %while.body4.blklab8_crit_edge, %while.body4.preheader
-  %_12.1.lcssa = phi i64* [ %call.lcssa, %while.body4.blklab8_crit_edge ], [ %_12.016, %while.body4.preheader ]
-  %_12_has_ownership.1.lcssa = phi i8 [ 1, %while.body4.blklab8_crit_edge ], [ %_12_has_ownership.015, %while.body4.preheader ]
-  %.lcssa1 = phi i8* [ %call15.lcssa, %while.body4.blklab8_crit_edge ], [ %3, %while.body4.preheader ]
-  %.lcssa = phi i8* [ %call15.lcssa, %while.body4.blklab8_crit_edge ], [ %4, %while.body4.preheader ]
-  %_18_has_ownership.1.lcssa = phi i8 [ 1, %while.body4.blklab8_crit_edge ], [ %_18_has_ownership.014, %while.body4.preheader ]
+  %_12.1.lcssa = phi i64* [ %call.lcssa, %while.body4.blklab8_crit_edge ], [ %_12.015, %while.body4.preheader ]
+  %_12_has_ownership.1.lcssa = phi i8 [ 1, %while.body4.blklab8_crit_edge ], [ %_12_has_ownership.014, %while.body4.preheader ]
+  %.lcssa1 = phi i8* [ %call15.lcssa, %while.body4.blklab8_crit_edge ], [ %2, %while.body4.preheader ]
+  %.lcssa = phi i8* [ %call15.lcssa, %while.body4.blklab8_crit_edge ], [ %3, %while.body4.preheader ]
+  %_18_has_ownership.1.lcssa = phi i8 [ 1, %while.body4.blklab8_crit_edge ], [ %_18_has_ownership.013, %while.body4.preheader ]
   %add18 = add nuw nsw i64 %i.017, 1
   br i1 %_25_has_ownership.019, label %if.then20, label %if.end21
 
 if.then20:                                        ; preds = %blklab8
-  tail call void @free(i8* %2) #4
+  tail call void @free(i8* %_25.016) #4
   br label %if.end21
 
 if.end21:                                         ; preds = %if.then20, %blklab8
   %call22 = tail call noalias i8* @malloc(i64 0) #4
-  %13 = bitcast i8* %call22 to i64*
-  tail call void @println_s(i64* %13, i64 0) #4
+  %12 = bitcast i8* %call22 to i64*
+  tail call void @println_s(i64* %12, i64 0) #4
   %exitcond26 = icmp ne i64 %add18, %1
   br i1 %exitcond26, label %while.body4.preheader, label %while.body.blklab6_crit_edge
 
@@ -332,7 +332,7 @@ while.body.blklab6_crit_edge:                     ; preds = %if.end21
 
 blklab6:                                          ; preds = %while.body.blklab6_crit_edge, %entry.split
   %_25_has_ownership.0.lcssa = phi i1 [ true, %while.body.blklab6_crit_edge ], [ false, %entry.split ]
-  %.lcssa3 = phi i8* [ %call22.lcssa, %while.body.blklab6_crit_edge ], [ undef, %entry.split ]
+  %_25.0.lcssa = phi i8* [ %call22.lcssa, %while.body.blklab6_crit_edge ], [ undef, %entry.split ]
   %_12.0.lcssa = phi i64* [ %_12.1.lcssa.lcssa, %while.body.blklab6_crit_edge ], [ null, %entry.split ]
   %_12_has_ownership.0.lcssa = phi i8 [ %_12_has_ownership.1.lcssa.lcssa, %while.body.blklab6_crit_edge ], [ 0, %entry.split ]
   %.lcssa2 = phi i8* [ %.lcssa1.lcssa, %while.body.blklab6_crit_edge ], [ null, %entry.split ]
@@ -344,18 +344,18 @@ if.then24:                                        ; preds = %blklab6
   br label %if.end25
 
 if.end25:                                         ; preds = %if.then24, %blklab6
-  %14 = and i8 %_12_has_ownership.0.lcssa, 1
-  %tobool26 = icmp eq i8 %14, 0
+  %13 = and i8 %_12_has_ownership.0.lcssa, 1
+  %tobool26 = icmp eq i8 %13, 0
   br i1 %tobool26, label %if.end28, label %if.then27
 
 if.then27:                                        ; preds = %if.end25
-  %15 = bitcast i64* %_12.0.lcssa to i8*
-  tail call void @free(i8* %15) #4
+  %14 = bitcast i64* %_12.0.lcssa to i8*
+  tail call void @free(i8* %14) #4
   br label %if.end28
 
 if.end28:                                         ; preds = %if.end25, %if.then27
-  %16 = and i8 %_18_has_ownership.0.lcssa, 1
-  %tobool29 = icmp eq i8 %16, 0
+  %15 = and i8 %_18_has_ownership.0.lcssa, 1
+  %tobool29 = icmp eq i8 %15, 0
   br i1 %tobool29, label %if.end31, label %if.then30
 
 if.then30:                                        ; preds = %if.end28
@@ -366,7 +366,7 @@ if.end31:                                         ; preds = %if.end28, %if.then3
   br i1 %_25_has_ownership.0.lcssa, label %if.then33, label %if.end34
 
 if.then33:                                        ; preds = %if.end31
-  tail call void @free(i8* %.lcssa3) #4
+  tail call void @free(i8* %_25.0.lcssa) #4
   br label %if.end34
 
 if.end34:                                         ; preds = %if.then33, %if.end31

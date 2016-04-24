@@ -428,163 +428,165 @@ declare i64* @gen1DArray(i32, i32) #2
 ; Function Attrs: nounwind uwtable
 define void @print_mat(%struct._IO_FILE* nocapture readnone %sys, %struct.Matrix* nocapture %a, i1 zeroext %a_has_ownership) #0 !dbg !236 {
 entry:
-  tail call void @llvm.dbg.value(metadata %struct._IO_FILE* %sys, i64 0, metadata !301, metadata !25), !dbg !332
-  tail call void @llvm.dbg.value(metadata %struct.Matrix* %a, i64 0, metadata !302, metadata !25), !dbg !333
-  tail call void @llvm.dbg.value(metadata i1 %a_has_ownership, i64 0, metadata !303, metadata !125), !dbg !334
-  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !304, metadata !25), !dbg !335
-  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !305, metadata !25), !dbg !336
-  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !306, metadata !25), !dbg !337
-  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !307, metadata !25), !dbg !338
-  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !308, metadata !25), !dbg !339
-  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !309, metadata !25), !dbg !340
-  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !310, metadata !25), !dbg !341
-  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !311, metadata !25), !dbg !342
-  tail call void @llvm.dbg.value(metadata i64* null, i64 0, metadata !313, metadata !25), !dbg !343
-  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !314, metadata !25), !dbg !343
-  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !315, metadata !25), !dbg !344
-  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !316, metadata !25), !dbg !345
-  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !317, metadata !25), !dbg !346
-  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !318, metadata !25), !dbg !347
-  tail call void @llvm.dbg.value(metadata i64* null, i64 0, metadata !320, metadata !25), !dbg !348
-  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !321, metadata !25), !dbg !348
-  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !322, metadata !25), !dbg !349
-  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !323, metadata !25), !dbg !350
-  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !324, metadata !25), !dbg !351
-  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !325, metadata !25), !dbg !352
-  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !326, metadata !25), !dbg !353
-  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !330, metadata !25), !dbg !354
-  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !331, metadata !25), !dbg !355
-  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !308, metadata !25), !dbg !339
-  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !304, metadata !25), !dbg !335
-  %width1 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0, i32 2, !dbg !356
-  %0 = load i64, i64* %width1, align 8, !dbg !356, !tbaa !100
-  tail call void @llvm.dbg.value(metadata i64 %0, i64 0, metadata !309, metadata !25), !dbg !340
-  tail call void @llvm.dbg.value(metadata i64 %0, i64 0, metadata !305, metadata !25), !dbg !336
-  %height2 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0, i32 3, !dbg !357
-  %1 = load i64, i64* %height2, align 8, !dbg !357, !tbaa !104
-  tail call void @llvm.dbg.value(metadata i64 %1, i64 0, metadata !310, metadata !25), !dbg !341
-  tail call void @llvm.dbg.value(metadata i64 %1, i64 0, metadata !306, metadata !25), !dbg !337
-  %cmp91 = icmp sgt i64 %1, 0, !dbg !358
-  br i1 %cmp91, label %while.cond3.preheader.preheader, label %blklab6, !dbg !361
+  tail call void @llvm.dbg.value(metadata %struct._IO_FILE* %sys, i64 0, metadata !301, metadata !25), !dbg !331
+  tail call void @llvm.dbg.value(metadata %struct.Matrix* %a, i64 0, metadata !302, metadata !25), !dbg !332
+  tail call void @llvm.dbg.value(metadata i1 %a_has_ownership, i64 0, metadata !303, metadata !125), !dbg !333
+  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !304, metadata !25), !dbg !334
+  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !305, metadata !25), !dbg !335
+  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !306, metadata !25), !dbg !336
+  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !307, metadata !25), !dbg !337
+  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !308, metadata !25), !dbg !338
+  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !309, metadata !25), !dbg !339
+  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !310, metadata !25), !dbg !340
+  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !311, metadata !25), !dbg !341
+  tail call void @llvm.dbg.value(metadata i64* null, i64 0, metadata !313, metadata !25), !dbg !342
+  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !314, metadata !25), !dbg !342
+  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !315, metadata !25), !dbg !343
+  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !316, metadata !25), !dbg !344
+  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !317, metadata !25), !dbg !345
+  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !318, metadata !25), !dbg !346
+  tail call void @llvm.dbg.value(metadata i64* null, i64 0, metadata !320, metadata !25), !dbg !347
+  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !321, metadata !25), !dbg !347
+  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !322, metadata !25), !dbg !348
+  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !323, metadata !25), !dbg !349
+  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !324, metadata !25), !dbg !350
+  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !325, metadata !25), !dbg !351
+  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !326, metadata !25), !dbg !352
+  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !329, metadata !25), !dbg !353
+  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !330, metadata !25), !dbg !354
+  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !308, metadata !25), !dbg !338
+  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !304, metadata !25), !dbg !334
+  %width1 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0, i32 2, !dbg !355
+  %0 = load i64, i64* %width1, align 8, !dbg !355, !tbaa !100
+  tail call void @llvm.dbg.value(metadata i64 %0, i64 0, metadata !309, metadata !25), !dbg !339
+  tail call void @llvm.dbg.value(metadata i64 %0, i64 0, metadata !305, metadata !25), !dbg !335
+  %height2 = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0, i32 3, !dbg !356
+  %1 = load i64, i64* %height2, align 8, !dbg !356, !tbaa !104
+  tail call void @llvm.dbg.value(metadata i64 %1, i64 0, metadata !310, metadata !25), !dbg !340
+  tail call void @llvm.dbg.value(metadata i64 %1, i64 0, metadata !306, metadata !25), !dbg !336
+  %cmp90 = icmp sgt i64 %1, 0, !dbg !357
+  br i1 %cmp90, label %while.cond3.preheader.preheader, label %blklab6, !dbg !360
 
 while.cond3.preheader.preheader:                  ; preds = %entry
-  %cmp582 = icmp sgt i64 %0, 0, !dbg !362
-  %data_size = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0, i32 1, !dbg !365
-  %data = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0, i32 0, !dbg !365
-  br i1 %cmp582, label %while.cond3.preheader.us.preheader, label %while.cond3.preheader.preheader111, !dbg !366
+  %cmp581 = icmp sgt i64 %0, 0, !dbg !361
+  %data_size = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0, i32 1, !dbg !364
+  %data = getelementptr inbounds %struct.Matrix, %struct.Matrix* %a, i64 0, i32 0, !dbg !364
+  br i1 %cmp581, label %while.cond3.preheader.us.preheader, label %while.cond3.preheader.preheader111, !dbg !365
 
 while.cond3.preheader.preheader111:               ; preds = %while.cond3.preheader.preheader
-  br label %while.cond3.preheader, !dbg !352
+  br label %while.cond3.preheader, !dbg !351
 
 while.cond3.preheader.us.preheader:               ; preds = %while.cond3.preheader.preheader
-  br label %while.cond3.preheader.us, !dbg !367
+  br label %while.cond3.preheader.us, !dbg !366
 
 while.cond3.preheader.us:                         ; preds = %while.cond3.preheader.us.preheader, %if.end21.us
   %_25_has_ownership.097.us = phi i1 [ true, %if.end21.us ], [ false, %while.cond3.preheader.us.preheader ]
-  %2 = phi i8* [ %call22.us, %if.end21.us ], [ undef, %while.cond3.preheader.us.preheader ]
-  %_18_has_ownership.096.us = phi i8 [ 1, %if.end21.us ], [ 0, %while.cond3.preheader.us.preheader ]
-  %3 = phi i8* [ %call15.us.lcssa, %if.end21.us ], [ null, %while.cond3.preheader.us.preheader ]
-  %i.094.us = phi i64 [ %add18.us, %if.end21.us ], [ 0, %while.cond3.preheader.us.preheader ]
-  %_12.092.us = phi i64* [ %call.us.lcssa, %if.end21.us ], [ null, %while.cond3.preheader.us.preheader ]
-  %mul.us = mul nsw i64 %i.094.us, %0, !dbg !367
-  br label %if.end7.us, !dbg !368
+  %_25.096.us = phi i8* [ %call22.us, %if.end21.us ], [ undef, %while.cond3.preheader.us.preheader ]
+  %_18_has_ownership.095.us = phi i8 [ 1, %if.end21.us ], [ 0, %while.cond3.preheader.us.preheader ]
+  %2 = phi i8* [ %call15.us.lcssa, %if.end21.us ], [ null, %while.cond3.preheader.us.preheader ]
+  %i.093.us = phi i64 [ %add18.us, %if.end21.us ], [ 0, %while.cond3.preheader.us.preheader ]
+  %_12.091.us = phi i64* [ %call.us.lcssa, %if.end21.us ], [ null, %while.cond3.preheader.us.preheader ]
+  %mul.us = mul nsw i64 %i.093.us, %0, !dbg !366
+  br label %if.end7.us, !dbg !367
 
 if.end7.us:                                       ; preds = %while.cond3.preheader.us, %if.end14.us
-  %_18_has_ownership.186.us = phi i8 [ 1, %if.end14.us ], [ %_18_has_ownership.096.us, %while.cond3.preheader.us ]
-  %4 = phi i8* [ %call15.us, %if.end14.us ], [ %3, %while.cond3.preheader.us ]
-  %_12.184.us = phi i64* [ %call.us, %if.end14.us ], [ %_12.092.us, %while.cond3.preheader.us ]
-  %j.083.us = phi i64 [ %add17.us, %if.end14.us ], [ 0, %while.cond3.preheader.us ]
-  %5 = and i8 %_18_has_ownership.186.us, 1, !dbg !368
-  %tobool.us = icmp eq i8 %5, 0, !dbg !368
-  br i1 %tobool.us, label %if.end9.us, label %if.then8.us, !dbg !370
+  %_18_has_ownership.185.us = phi i8 [ 1, %if.end14.us ], [ %_18_has_ownership.095.us, %while.cond3.preheader.us ]
+  %3 = phi i8* [ %call15.us, %if.end14.us ], [ %2, %while.cond3.preheader.us ]
+  %_12.183.us = phi i64* [ %call.us, %if.end14.us ], [ %_12.091.us, %while.cond3.preheader.us ]
+  %j.082.us = phi i64 [ %add17.us, %if.end14.us ], [ 0, %while.cond3.preheader.us ]
+  %4 = and i8 %_18_has_ownership.185.us, 1, !dbg !367
+  %tobool.us = icmp eq i8 %4, 0, !dbg !367
+  br i1 %tobool.us, label %if.end9.us, label %if.then8.us, !dbg !369
 
 if.then8.us:                                      ; preds = %if.end7.us
-  %6 = bitcast i64* %_12.184.us to i8*, !dbg !371
-  tail call void @free(i8* %6) #7, !dbg !371
-  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !315, metadata !25), !dbg !344
-  br label %if.end9.us, !dbg !371
+  %5 = bitcast i64* %_12.183.us to i8*, !dbg !370
+  tail call void @free(i8* %5) #7, !dbg !370
+  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !315, metadata !25), !dbg !343
+  br label %if.end9.us, !dbg !370
 
 if.end9.us:                                       ; preds = %if.then8.us, %if.end7.us
-  %7 = load i64*, i64** %data, align 8, !dbg !365, !tbaa !38
-  %8 = load i64, i64* %data_size, align 8, !dbg !365, !tbaa !32
-  %call.us = tail call i64* @copy(i64* %7, i64 %8) #7, !dbg !365
-  tail call void @llvm.dbg.value(metadata i64* %call.us, i64 0, metadata !313, metadata !25), !dbg !343
-  tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !315, metadata !25), !dbg !344
-  tail call void @llvm.dbg.value(metadata i64 %mul.us, i64 0, metadata !316, metadata !25), !dbg !345
-  %add.us = add nsw i64 %j.083.us, %mul.us, !dbg !374
-  tail call void @llvm.dbg.value(metadata i64 %add.us, i64 0, metadata !317, metadata !25), !dbg !346
-  %arrayidx.us = getelementptr inbounds i64, i64* %call.us, i64 %add.us, !dbg !375
-  %9 = load i64, i64* %arrayidx.us, align 8, !dbg !375, !tbaa !41
-  tail call void @llvm.dbg.value(metadata i64 %9, i64 0, metadata !318, metadata !25), !dbg !347
-  %call11.us = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.3, i64 0, i64 0), i64 %9), !dbg !376
-  br i1 %tobool.us, label %if.end14.us, label %if.then13.us, !dbg !377
+  %6 = load i64*, i64** %data, align 8, !dbg !364, !tbaa !38
+  %7 = load i64, i64* %data_size, align 8, !dbg !364, !tbaa !32
+  %call.us = tail call i64* @copy(i64* %6, i64 %7) #7, !dbg !364
+  tail call void @llvm.dbg.value(metadata i64* %call.us, i64 0, metadata !313, metadata !25), !dbg !342
+  tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !315, metadata !25), !dbg !343
+  tail call void @llvm.dbg.value(metadata i64 %mul.us, i64 0, metadata !316, metadata !25), !dbg !344
+  %add.us = add nsw i64 %j.082.us, %mul.us, !dbg !373
+  tail call void @llvm.dbg.value(metadata i64 %add.us, i64 0, metadata !317, metadata !25), !dbg !345
+  %arrayidx.us = getelementptr inbounds i64, i64* %call.us, i64 %add.us, !dbg !374
+  %8 = load i64, i64* %arrayidx.us, align 8, !dbg !374, !tbaa !41
+  tail call void @llvm.dbg.value(metadata i64 %8, i64 0, metadata !318, metadata !25), !dbg !346
+  %call11.us = tail call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @.str.3, i64 0, i64 0), i64 %8), !dbg !375
+  br i1 %tobool.us, label %if.end14.us, label %if.then13.us, !dbg !376
 
 if.then13.us:                                     ; preds = %if.end9.us
-  tail call void @free(i8* %4) #7, !dbg !378
-  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !322, metadata !25), !dbg !349
-  br label %if.end14.us, !dbg !378
+  tail call void @free(i8* %3) #7, !dbg !377
+  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !322, metadata !25), !dbg !348
+  br label %if.end14.us, !dbg !377
 
 if.end14.us:                                      ; preds = %if.then13.us, %if.end9.us
-  tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !321, metadata !25), !dbg !348
-  %call15.us = tail call noalias i8* @malloc(i64 8) #7, !dbg !382
-  %10 = bitcast i8* %call15.us to i64*, !dbg !382
-  tail call void @llvm.dbg.value(metadata i64* %10, i64 0, metadata !320, metadata !25), !dbg !348
-  store i64 32, i64* %10, align 8, !dbg !383, !tbaa !41
-  tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !322, metadata !25), !dbg !349
-  tail call void @printf_s(i64* %10, i64 1) #7, !dbg !384
-  tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !323, metadata !25), !dbg !350
-  %add17.us = add nuw nsw i64 %j.083.us, 1, !dbg !385
-  tail call void @llvm.dbg.value(metadata i64 %add17.us, i64 0, metadata !324, metadata !25), !dbg !351
-  tail call void @llvm.dbg.value(metadata i64 %add17.us, i64 0, metadata !307, metadata !25), !dbg !338
-  %exitcond.us = icmp eq i64 %add17.us, %0, !dbg !366
-  br i1 %exitcond.us, label %blklab8.loopexit.us, label %if.end7.us, !dbg !366
+  tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !321, metadata !25), !dbg !347
+  %call15.us = tail call noalias i8* @malloc(i64 8) #7, !dbg !381
+  %9 = bitcast i8* %call15.us to i64*, !dbg !381
+  tail call void @llvm.dbg.value(metadata i64* %9, i64 0, metadata !320, metadata !25), !dbg !347
+  store i64 32, i64* %9, align 8, !dbg !382, !tbaa !41
+  tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !322, metadata !25), !dbg !348
+  tail call void @printf_s(i64* %9, i64 1) #7, !dbg !383
+  tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !323, metadata !25), !dbg !349
+  %add17.us = add nuw nsw i64 %j.082.us, 1, !dbg !384
+  tail call void @llvm.dbg.value(metadata i64 %add17.us, i64 0, metadata !324, metadata !25), !dbg !350
+  tail call void @llvm.dbg.value(metadata i64 %add17.us, i64 0, metadata !307, metadata !25), !dbg !337
+  %exitcond.us = icmp eq i64 %add17.us, %0, !dbg !365
+  br i1 %exitcond.us, label %blklab8.loopexit.us, label %if.end7.us, !dbg !365
 
 if.then20.us:                                     ; preds = %blklab8.loopexit.us
-  tail call void @free(i8* %2) #7, !dbg !386
-  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !331, metadata !25), !dbg !355
-  br label %if.end21.us, !dbg !386
+  tail call void @free(i8* %_25.096.us) #7, !dbg !385
+  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !330, metadata !25), !dbg !354
+  br label %if.end21.us, !dbg !385
 
 if.end21.us:                                      ; preds = %if.then20.us, %blklab8.loopexit.us
-  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !330, metadata !25), !dbg !354
-  %call22.us = tail call noalias i8* @malloc(i64 0) #7, !dbg !390
-  tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !331, metadata !25), !dbg !355
-  %11 = bitcast i8* %call22.us to i64*, !dbg !391
-  tail call void @println_s(i64* %11, i64 0) #7, !dbg !392
-  %exitcond104.us = icmp eq i64 %add18.us, %1, !dbg !361
-  br i1 %exitcond104.us, label %blklab6.loopexit, label %while.cond3.preheader.us, !dbg !361
+  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !329, metadata !25), !dbg !353
+  %call22.us = tail call noalias i8* @malloc(i64 0) #7, !dbg !389
+  tail call void @llvm.dbg.value(metadata i8* %call22.us, i64 0, metadata !328, metadata !25), !dbg !390
+  tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !330, metadata !25), !dbg !354
+  %10 = bitcast i8* %call22.us to i64*, !dbg !391
+  tail call void @println_s(i64* %10, i64 0) #7, !dbg !392
+  %exitcond104.us = icmp eq i64 %add18.us, %1, !dbg !360
+  br i1 %exitcond104.us, label %blklab6.loopexit, label %while.cond3.preheader.us, !dbg !360
 
 blklab8.loopexit.us:                              ; preds = %if.end14.us
   %call15.us.lcssa = phi i8* [ %call15.us, %if.end14.us ]
   %call.us.lcssa = phi i64* [ %call.us, %if.end14.us ]
-  tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !325, metadata !25), !dbg !352
-  %add18.us = add nuw nsw i64 %i.094.us, 1, !dbg !393
-  tail call void @llvm.dbg.value(metadata i64 %add18.us, i64 0, metadata !326, metadata !25), !dbg !353
-  tail call void @llvm.dbg.value(metadata i64 %add18.us, i64 0, metadata !304, metadata !25), !dbg !335
+  tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !325, metadata !25), !dbg !351
+  %add18.us = add nuw nsw i64 %i.093.us, 1, !dbg !393
+  tail call void @llvm.dbg.value(metadata i64 %add18.us, i64 0, metadata !326, metadata !25), !dbg !352
+  tail call void @llvm.dbg.value(metadata i64 %add18.us, i64 0, metadata !304, metadata !25), !dbg !334
   br i1 %_25_has_ownership.097.us, label %if.then20.us, label %if.end21.us, !dbg !394
 
 while.cond3.preheader:                            ; preds = %while.cond3.preheader.preheader111, %if.end21
   %_25_has_ownership.097 = phi i1 [ true, %if.end21 ], [ false, %while.cond3.preheader.preheader111 ]
-  %12 = phi i8* [ %call22, %if.end21 ], [ undef, %while.cond3.preheader.preheader111 ]
-  %i.094 = phi i64 [ %add18, %if.end21 ], [ 0, %while.cond3.preheader.preheader111 ]
-  tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !325, metadata !25), !dbg !352
-  %add18 = add nuw nsw i64 %i.094, 1, !dbg !393
-  tail call void @llvm.dbg.value(metadata i64 %add18, i64 0, metadata !326, metadata !25), !dbg !353
-  tail call void @llvm.dbg.value(metadata i64 %add18, i64 0, metadata !304, metadata !25), !dbg !335
+  %_25.096 = phi i8* [ %call22, %if.end21 ], [ undef, %while.cond3.preheader.preheader111 ]
+  %i.093 = phi i64 [ %add18, %if.end21 ], [ 0, %while.cond3.preheader.preheader111 ]
+  tail call void @llvm.dbg.value(metadata i64 1, i64 0, metadata !325, metadata !25), !dbg !351
+  %add18 = add nuw nsw i64 %i.093, 1, !dbg !393
+  tail call void @llvm.dbg.value(metadata i64 %add18, i64 0, metadata !326, metadata !25), !dbg !352
+  tail call void @llvm.dbg.value(metadata i64 %add18, i64 0, metadata !304, metadata !25), !dbg !334
   br i1 %_25_has_ownership.097, label %if.then20, label %if.end21, !dbg !394
 
 if.then20:                                        ; preds = %while.cond3.preheader
-  tail call void @free(i8* %12) #7, !dbg !386
-  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !331, metadata !25), !dbg !355
-  br label %if.end21, !dbg !386
+  tail call void @free(i8* %_25.096) #7, !dbg !385
+  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !330, metadata !25), !dbg !354
+  br label %if.end21, !dbg !385
 
 if.end21:                                         ; preds = %if.then20, %while.cond3.preheader
-  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !330, metadata !25), !dbg !354
-  %call22 = tail call noalias i8* @malloc(i64 0) #7, !dbg !390
-  tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !331, metadata !25), !dbg !355
-  %13 = bitcast i8* %call22 to i64*, !dbg !391
-  tail call void @println_s(i64* %13, i64 0) #7, !dbg !392
-  %exitcond104 = icmp eq i64 %add18, %1, !dbg !361
-  br i1 %exitcond104, label %blklab6.loopexit112, label %while.cond3.preheader, !dbg !361
+  tail call void @llvm.dbg.value(metadata i64 0, i64 0, metadata !329, metadata !25), !dbg !353
+  %call22 = tail call noalias i8* @malloc(i64 0) #7, !dbg !389
+  tail call void @llvm.dbg.value(metadata i8* %call22, i64 0, metadata !328, metadata !25), !dbg !390
+  tail call void @llvm.dbg.value(metadata i8 1, i64 0, metadata !330, metadata !25), !dbg !354
+  %11 = bitcast i8* %call22 to i64*, !dbg !391
+  tail call void @println_s(i64* %11, i64 0) #7, !dbg !392
+  %exitcond104 = icmp eq i64 %add18, %1, !dbg !360
+  br i1 %exitcond104, label %blklab6.loopexit112, label %while.cond3.preheader, !dbg !360
 
 blklab6.loopexit:                                 ; preds = %if.end21.us
   %call22.us.lcssa = phi i8* [ %call22.us, %if.end21.us ]
@@ -599,7 +601,7 @@ blklab6.loopexit112:                              ; preds = %if.end21
 
 blklab6:                                          ; preds = %blklab6.loopexit112, %blklab6.loopexit, %entry
   %_25_has_ownership.0.lcssa = phi i1 [ false, %entry ], [ true, %blklab6.loopexit ], [ true, %blklab6.loopexit112 ]
-  %.lcssa81 = phi i8* [ undef, %entry ], [ %call22.us.lcssa, %blklab6.loopexit ], [ %call22.lcssa, %blklab6.loopexit112 ]
+  %_25.0.lcssa = phi i8* [ undef, %entry ], [ %call22.us.lcssa, %blklab6.loopexit ], [ %call22.lcssa, %blklab6.loopexit112 ]
   %_18_has_ownership.0.lcssa = phi i8 [ 0, %entry ], [ 1, %blklab6.loopexit ], [ 0, %blklab6.loopexit112 ]
   %.lcssa80 = phi i8* [ null, %entry ], [ %call15.us.lcssa.lcssa, %blklab6.loopexit ], [ null, %blklab6.loopexit112 ]
   %_12.0.lcssa = phi i8* [ null, %entry ], [ %phitmp, %blklab6.loopexit ], [ null, %blklab6.loopexit112 ]
@@ -607,12 +609,12 @@ blklab6:                                          ; preds = %blklab6.loopexit112
 
 if.then24:                                        ; preds = %blklab6
   tail call void @llvm.dbg.value(metadata %struct.Matrix* %a, i64 0, metadata !84, metadata !25) #7, !dbg !396
-  %14 = bitcast %struct.Matrix* %a to i8**, !dbg !401
-  %15 = load i8*, i8** %14, align 8, !dbg !401, !tbaa !38
-  tail call void @free(i8* %15) #7, !dbg !402
-  %16 = bitcast %struct.Matrix* %a to i8*, !dbg !403
-  tail call void @free(i8* %16) #7, !dbg !404
-  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !303, metadata !25), !dbg !334
+  %12 = bitcast %struct.Matrix* %a to i8**, !dbg !401
+  %13 = load i8*, i8** %12, align 8, !dbg !401, !tbaa !38
+  tail call void @free(i8* %13) #7, !dbg !402
+  %14 = bitcast %struct.Matrix* %a to i8*, !dbg !403
+  tail call void @free(i8* %14) #7, !dbg !404
+  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !303, metadata !25), !dbg !333
   br label %if.end25, !dbg !405
 
 if.end25:                                         ; preds = %if.then24, %blklab6
@@ -621,17 +623,17 @@ if.end25:                                         ; preds = %if.then24, %blklab6
 
 if.then27:                                        ; preds = %if.end25
   tail call void @free(i8* %_12.0.lcssa) #7, !dbg !407
-  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !315, metadata !25), !dbg !344
+  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !315, metadata !25), !dbg !343
   tail call void @free(i8* %.lcssa80) #7, !dbg !411
-  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !322, metadata !25), !dbg !349
+  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !322, metadata !25), !dbg !348
   br label %if.end31, !dbg !411
 
 if.end31:                                         ; preds = %if.end25, %if.then27
   br i1 %_25_has_ownership.0.lcssa, label %if.then33, label %if.end34, !dbg !415
 
 if.then33:                                        ; preds = %if.end31
-  tail call void @free(i8* %.lcssa81) #7, !dbg !416
-  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !331, metadata !25), !dbg !355
+  tail call void @free(i8* %_25.0.lcssa) #7, !dbg !416
+  tail call void @llvm.dbg.value(metadata i8 0, i64 0, metadata !330, metadata !25), !dbg !354
   br label %if.end34, !dbg !416
 
 if.end34:                                         ; preds = %if.then33, %if.end31
@@ -2037,7 +2039,7 @@ attributes #9 = { noreturn nounwind }
 !297 = !DICompositeType(tag: DW_TAG_array_type, baseType: !248, size: 160, align: 8, elements: !298)
 !298 = !{!299}
 !299 = !DISubrange(count: 20)
-!300 = !{!301, !302, !303, !304, !305, !306, !307, !308, !309, !310, !311, !312, !313, !314, !315, !316, !317, !318, !319, !320, !321, !322, !323, !324, !325, !326, !327, !328, !330, !331}
+!300 = !{!301, !302, !303, !304, !305, !306, !307, !308, !309, !310, !311, !312, !313, !314, !315, !316, !317, !318, !319, !320, !321, !322, !323, !324, !325, !326, !327, !328, !329, !330}
 !301 = !DILocalVariable(name: "sys", arg: 1, scope: !236, file: !1, line: 151, type: !239)
 !302 = !DILocalVariable(name: "a", arg: 2, scope: !236, file: !1, line: 151, type: !11)
 !303 = !DILocalVariable(name: "a_has_ownership", arg: 3, scope: !236, file: !1, line: 151, type: !111)
@@ -2065,73 +2067,73 @@ attributes #9 = { noreturn nounwind }
 !325 = !DILocalVariable(name: "_21", scope: !236, file: !1, line: 171, type: !18)
 !326 = !DILocalVariable(name: "_22", scope: !236, file: !1, line: 172, type: !18)
 !327 = !DILocalVariable(name: "_23", scope: !236, file: !1, line: 173, type: !4)
-!328 = !DILocalVariable(name: "_25", scope: !236, file: !1, line: 174, type: !329)
-!329 = !DIDerivedType(tag: DW_TAG_pointer_type, baseType: !4, size: 64, align: 64)
-!330 = !DILocalVariable(name: "_25_size", scope: !236, file: !1, line: 175, type: !18)
-!331 = !DILocalVariable(name: "_25_has_ownership", scope: !236, file: !1, line: 176, type: !111)
-!332 = !DILocation(line: 151, column: 22, scope: !236)
-!333 = !DILocation(line: 151, column: 35, scope: !236)
-!334 = !DILocation(line: 151, column: 38, scope: !236)
-!335 = !DILocation(line: 152, column: 12, scope: !236)
-!336 = !DILocation(line: 153, column: 12, scope: !236)
-!337 = !DILocation(line: 154, column: 12, scope: !236)
-!338 = !DILocation(line: 155, column: 12, scope: !236)
-!339 = !DILocation(line: 156, column: 12, scope: !236)
-!340 = !DILocation(line: 157, column: 12, scope: !236)
-!341 = !DILocation(line: 158, column: 12, scope: !236)
-!342 = !DILocation(line: 159, column: 12, scope: !236)
-!343 = !DILocation(line: 161, column: 2, scope: !236)
-!344 = !DILocation(line: 162, column: 2, scope: !236)
-!345 = !DILocation(line: 163, column: 12, scope: !236)
-!346 = !DILocation(line: 164, column: 12, scope: !236)
-!347 = !DILocation(line: 165, column: 12, scope: !236)
-!348 = !DILocation(line: 167, column: 2, scope: !236)
-!349 = !DILocation(line: 168, column: 2, scope: !236)
-!350 = !DILocation(line: 169, column: 12, scope: !236)
-!351 = !DILocation(line: 170, column: 12, scope: !236)
-!352 = !DILocation(line: 171, column: 12, scope: !236)
-!353 = !DILocation(line: 172, column: 12, scope: !236)
-!354 = !DILocation(line: 175, column: 12, scope: !236)
-!355 = !DILocation(line: 176, column: 2, scope: !236)
-!356 = !DILocation(line: 182, column: 10, scope: !236)
-!357 = !DILocation(line: 186, column: 10, scope: !236)
-!358 = !DILocation(line: 192, column: 7, scope: !359)
-!359 = distinct !DILexicalBlock(scope: !360, file: !1, line: 192, column: 6)
-!360 = distinct !DILexicalBlock(scope: !236, file: !1, line: 190, column: 13)
-!361 = !DILocation(line: 192, column: 6, scope: !360)
-!362 = !DILocation(line: 200, column: 8, scope: !363)
-!363 = distinct !DILexicalBlock(scope: !364, file: !1, line: 200, column: 7)
-!364 = distinct !DILexicalBlock(scope: !360, file: !1, line: 198, column: 14)
-!365 = !DILocation(line: 205, column: 4, scope: !364)
-!366 = !DILocation(line: 200, column: 7, scope: !364)
-!367 = !DILocation(line: 208, column: 9, scope: !364)
-!368 = !DILocation(line: 204, column: 4, scope: !369)
-!369 = distinct !DILexicalBlock(scope: !364, file: !1, line: 204, column: 4)
-!370 = !DILocation(line: 204, column: 4, scope: !364)
-!371 = !DILocation(line: 204, column: 4, scope: !372)
-!372 = !DILexicalBlockFile(scope: !373, file: !1, discriminator: 1)
-!373 = distinct !DILexicalBlock(scope: !369, file: !1, line: 204, column: 4)
-!374 = !DILocation(line: 210, column: 11, scope: !364)
-!375 = !DILocation(line: 212, column: 8, scope: !364)
-!376 = !DILocation(line: 214, column: 4, scope: !364)
-!377 = !DILocation(line: 218, column: 4, scope: !364)
-!378 = !DILocation(line: 218, column: 4, scope: !379)
-!379 = !DILexicalBlockFile(scope: !380, file: !1, discriminator: 1)
-!380 = distinct !DILexicalBlock(scope: !381, file: !1, line: 218, column: 4)
-!381 = distinct !DILexicalBlock(scope: !364, file: !1, line: 218, column: 4)
-!382 = !DILocation(line: 219, column: 4, scope: !364)
-!383 = !DILocation(line: 220, column: 11, scope: !364)
-!384 = !DILocation(line: 223, column: 4, scope: !364)
-!385 = !DILocation(line: 227, column: 9, scope: !364)
-!386 = !DILocation(line: 244, column: 3, scope: !387)
-!387 = !DILexicalBlockFile(scope: !388, file: !1, discriminator: 1)
-!388 = distinct !DILexicalBlock(scope: !389, file: !1, line: 244, column: 3)
-!389 = distinct !DILexicalBlock(scope: !360, file: !1, line: 244, column: 3)
-!390 = !DILocation(line: 245, column: 3, scope: !360)
-!391 = !DILocation(line: 248, column: 13, scope: !360)
-!392 = !DILocation(line: 248, column: 3, scope: !360)
-!393 = !DILocation(line: 238, column: 8, scope: !360)
-!394 = !DILocation(line: 244, column: 3, scope: !360)
+!328 = !DILocalVariable(name: "_25", scope: !236, file: !1, line: 174, type: !4)
+!329 = !DILocalVariable(name: "_25_size", scope: !236, file: !1, line: 175, type: !18)
+!330 = !DILocalVariable(name: "_25_has_ownership", scope: !236, file: !1, line: 176, type: !111)
+!331 = !DILocation(line: 151, column: 22, scope: !236)
+!332 = !DILocation(line: 151, column: 35, scope: !236)
+!333 = !DILocation(line: 151, column: 38, scope: !236)
+!334 = !DILocation(line: 152, column: 12, scope: !236)
+!335 = !DILocation(line: 153, column: 12, scope: !236)
+!336 = !DILocation(line: 154, column: 12, scope: !236)
+!337 = !DILocation(line: 155, column: 12, scope: !236)
+!338 = !DILocation(line: 156, column: 12, scope: !236)
+!339 = !DILocation(line: 157, column: 12, scope: !236)
+!340 = !DILocation(line: 158, column: 12, scope: !236)
+!341 = !DILocation(line: 159, column: 12, scope: !236)
+!342 = !DILocation(line: 161, column: 2, scope: !236)
+!343 = !DILocation(line: 162, column: 2, scope: !236)
+!344 = !DILocation(line: 163, column: 12, scope: !236)
+!345 = !DILocation(line: 164, column: 12, scope: !236)
+!346 = !DILocation(line: 165, column: 12, scope: !236)
+!347 = !DILocation(line: 167, column: 2, scope: !236)
+!348 = !DILocation(line: 168, column: 2, scope: !236)
+!349 = !DILocation(line: 169, column: 12, scope: !236)
+!350 = !DILocation(line: 170, column: 12, scope: !236)
+!351 = !DILocation(line: 171, column: 12, scope: !236)
+!352 = !DILocation(line: 172, column: 12, scope: !236)
+!353 = !DILocation(line: 175, column: 12, scope: !236)
+!354 = !DILocation(line: 176, column: 2, scope: !236)
+!355 = !DILocation(line: 182, column: 10, scope: !236)
+!356 = !DILocation(line: 186, column: 10, scope: !236)
+!357 = !DILocation(line: 192, column: 7, scope: !358)
+!358 = distinct !DILexicalBlock(scope: !359, file: !1, line: 192, column: 6)
+!359 = distinct !DILexicalBlock(scope: !236, file: !1, line: 190, column: 13)
+!360 = !DILocation(line: 192, column: 6, scope: !359)
+!361 = !DILocation(line: 200, column: 8, scope: !362)
+!362 = distinct !DILexicalBlock(scope: !363, file: !1, line: 200, column: 7)
+!363 = distinct !DILexicalBlock(scope: !359, file: !1, line: 198, column: 14)
+!364 = !DILocation(line: 205, column: 4, scope: !363)
+!365 = !DILocation(line: 200, column: 7, scope: !363)
+!366 = !DILocation(line: 208, column: 9, scope: !363)
+!367 = !DILocation(line: 204, column: 4, scope: !368)
+!368 = distinct !DILexicalBlock(scope: !363, file: !1, line: 204, column: 4)
+!369 = !DILocation(line: 204, column: 4, scope: !363)
+!370 = !DILocation(line: 204, column: 4, scope: !371)
+!371 = !DILexicalBlockFile(scope: !372, file: !1, discriminator: 1)
+!372 = distinct !DILexicalBlock(scope: !368, file: !1, line: 204, column: 4)
+!373 = !DILocation(line: 210, column: 11, scope: !363)
+!374 = !DILocation(line: 212, column: 8, scope: !363)
+!375 = !DILocation(line: 214, column: 4, scope: !363)
+!376 = !DILocation(line: 218, column: 4, scope: !363)
+!377 = !DILocation(line: 218, column: 4, scope: !378)
+!378 = !DILexicalBlockFile(scope: !379, file: !1, discriminator: 1)
+!379 = distinct !DILexicalBlock(scope: !380, file: !1, line: 218, column: 4)
+!380 = distinct !DILexicalBlock(scope: !363, file: !1, line: 218, column: 4)
+!381 = !DILocation(line: 219, column: 4, scope: !363)
+!382 = !DILocation(line: 220, column: 11, scope: !363)
+!383 = !DILocation(line: 223, column: 4, scope: !363)
+!384 = !DILocation(line: 227, column: 9, scope: !363)
+!385 = !DILocation(line: 244, column: 3, scope: !386)
+!386 = !DILexicalBlockFile(scope: !387, file: !1, discriminator: 1)
+!387 = distinct !DILexicalBlock(scope: !388, file: !1, line: 244, column: 3)
+!388 = distinct !DILexicalBlock(scope: !359, file: !1, line: 244, column: 3)
+!389 = !DILocation(line: 245, column: 3, scope: !359)
+!390 = !DILocation(line: 174, column: 8, scope: !236)
+!391 = !DILocation(line: 248, column: 13, scope: !359)
+!392 = !DILocation(line: 248, column: 3, scope: !359)
+!393 = !DILocation(line: 238, column: 8, scope: !359)
+!394 = !DILocation(line: 244, column: 3, scope: !359)
 !395 = !DILocation(line: 255, column: 2, scope: !236)
 !396 = !DILocation(line: 16, column: 26, scope: !80, inlinedAt: !397)
 !397 = distinct !DILocation(line: 255, column: 2, scope: !398)
