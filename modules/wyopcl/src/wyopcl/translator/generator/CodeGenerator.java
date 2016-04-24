@@ -1257,8 +1257,8 @@ public class CodeGenerator extends AbstractCodeGenerator {
 				statement.add(indent + "printf_s(_" + dimension + "DARRAY_PARAM(" + input + "));");
 				break;
 			case "println_s":
-				dimension = stores.getArrayDimension(input_type);
-				statement.add(indent + "println_s(_" + dimension + "DARRAY_PARAM(" + input + "));");
+				//dimension = stores.getArrayDimension(input_type);
+				statement.add(indent + "println_s(" + input + ", "+ input + "_size);");
 				break;
 			case "println":
 				// Check input's type to call different println function.

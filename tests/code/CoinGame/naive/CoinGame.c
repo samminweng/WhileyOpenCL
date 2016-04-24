@@ -211,7 +211,7 @@ blklab6:;
 		_NEW_ARRAY(_59, 1);
 		_59[0] = 32; 
 		//indirectinvoke () = %58 (%59) : method(int[])->()
-		println_s(_1DARRAY_PARAM(_59));
+		println_s(_59, _59_size);
 //.blklab7
 blklab7:;
 		//const %60 = 1 : int

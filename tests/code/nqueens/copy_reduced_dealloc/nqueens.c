@@ -371,7 +371,7 @@ blklab20:;
 	_14[0] = 78; _14[1] = 45; _14[2] = 81; _14[3] = 117; _14[4] = 101; _14[5] = 101; _14[6] = 110; _14[7] = 32; _14[8] = 80; _14[9] = 114; _14[10] = 111; _14[11] = 98; _14[12] = 108; _14[13] = 101; _14[14] = 109; _14[15] = 32; _14[16] = 111; _14[17] = 110; _14[18] = 32; _14[19] = 97; _14[20] = 32; _14[21] = 78; _14[22] = 32; _14[23] = 88; _14[24] = 32; _14[25] = 78; _14[26] = 32; _14[27] = 66; _14[28] = 111; _14[29] = 97; _14[30] = 114; _14[31] = 100; _14[32] = 46; 
 	_ADD_OWNERSHIP(_14);
 	//indirectinvoke () = %13 (%14) : method(int[])->()
-	println_s(_1DARRAY_PARAM(_14));
+	println_s(_14, _14_size);
 	//fieldload %15 = %0 out : {int[][] args,{method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s} out}
 	//fieldload %16 = %15 print_s : {method(any)->() print,method(int[])->() print_s,method(any)->() println,method(int[])->() println_s}
 	//const %17 = [78,32,61,32] : int[]
@@ -406,7 +406,7 @@ blklab20:;
 	_27[0] = 32; _27[1] = 115; _27[2] = 111; _27[3] = 108; _27[4] = 117; _27[5] = 116; _27[6] = 105; _27[7] = 111; _27[8] = 110; _27[9] = 115; _27[10] = 46; 
 	_ADD_OWNERSHIP(_27);
 	//indirectinvoke () = %26 (%27) : method(int[])->()
-	println_s(_1DARRAY_PARAM(_27));
+	println_s(_27, _27_size);
 	//return
 	_FREE(init);
 	_FREE_STRUCT(_7, POS);

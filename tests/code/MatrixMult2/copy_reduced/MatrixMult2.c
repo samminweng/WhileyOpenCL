@@ -149,7 +149,7 @@ void print_mat(FILE* sys, Matrix* a){
 	long long _21 = 0;
 	long long _22 = 0;
 	void* _23;
-	void** _25;
+	void* _25;
 	long long _25_size = 0;
 	//const %6 = 0 : int
 	_6 = 0;
@@ -216,7 +216,7 @@ blklab8:;
 		//const %25 = [] : void[]
 		_NEW_ARRAY(_25, 0);
 		//indirectinvoke () = %24 (%25) : method(int[])->()
-		println_s(_1DARRAY_PARAM(_25));
+		println_s(_25, _25_size);
 //.blklab7
 blklab7:;
 	}
@@ -640,7 +640,7 @@ print_mat(stdout, _STRUCT_PARAM(C));
 	_NEW_ARRAY(_75, 26);
 	_75[0] = 80; _75[1] = 97; _75[2] = 115; _75[3] = 115; _75[4] = 32; _75[5] = 77; _75[6] = 97; _75[7] = 116; _75[8] = 114; _75[9] = 105; _75[10] = 120; _75[11] = 77; _75[12] = 117; _75[13] = 108; _75[14] = 116; _75[15] = 50; _75[16] = 32; _75[17] = 116; _75[18] = 101; _75[19] = 115; _75[20] = 116; _75[21] = 32; _75[22] = 99; _75[23] = 97; _75[24] = 115; _75[25] = 101; 
 	//indirectinvoke () = %74 (%75) : method(int[])->()
-	println_s(_1DARRAY_PARAM(_75));
+	println_s(_75, _75_size);
 	//return
 	exit(0);
 }

@@ -355,7 +355,7 @@ public final class CodeGeneratorHelper {
 		}
 
 		if (type instanceof Type.Void) {
-			return "void*";
+			return "void";
 		}
 
 		if (type instanceof Type.Record) {
