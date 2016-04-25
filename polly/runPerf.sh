@@ -19,15 +19,15 @@ run(){
 	echo -e -n "Compile C code using $opt with $OMP_NUM_THREADS threads..." >> $result
 
 	### Repeat running the executables.
-	for i in {1..1}
+	for i in {1..10}
 	do
-		##timeout $TIMEOUT perf stat $executables $parameter >>$result 2>> $result
-		echo "Beginning the $executables with  $parameter" >>$result
-	        start=`date +%s`
-		$executables $parameter
-		end=`date +%s`
-		runtime=$((end-start))
-		printf '\nParameter:%s\tExecutionTime:%s\tseconds.\n' $parameter  $runtime >> $result
+		timeout $TIMEOUT perf stat $executables $parameter >>$result 2>> $result
+		##echo "Beginning the $executables with  $parameter" >>$result
+	        ##start=`date +%s`
+		##$executables $parameter
+		##end=`date +%s`
+		##runtime=$((end-start))
+		##printf '\nParameter:%s\tExecutionTime:%s\tseconds.\n' $parameter  $runtime >> $result
 	done
 	### Output the hardware info.
 	cat /proc/cpuinfo >> $result
@@ -42,19 +42,19 @@ compileProgram(){
 	opt=$4
 	num_threads=$5
 	### Creating a static library ('Util.o') with GCC (http://www.cs.dartmouth.edu/~campbell/cs50/buildlib.html)
-    utildir="$PWD/../../../../tests/code"
+    	utildir="$PWD/../../../../tests/code"
 	### cp "$program/$program.whiley" $utildir/Util.c $utildir/Util.h $workingdir
 	cp $utildir/Util.c $utildir/Util.h $PWD
-    #clang -c Util.c -o Util.o ### Compile Util.c to Util.o (object file)
-    #ar -cvq libUtil.a Util.o
-    if [[ $c_type == *"autogenerate"* ]]
+    	#clang -c Util.c -o Util.o ### Compile Util.c to Util.o (object file)
+    	#ar -cvq libUtil.a Util.o
+    	if [[ $c_type == *"autogenerate"* ]]
 	then
 		### Translate Whiley program into C code 
 		./../../../../bin/wyopcl -code -copy -dealloc "$program.whiley"
 	fi
    	###read -p "Press [Enter] to continue..."
-    mkdir -p "out"
-    ### Compile C code into executables
+    	mkdir -p "out"
+    	### Compile C code into executables
 	case "$opt" in
 		"gcc")
 			###gcc -O3 -fno-tree-vectorize $program.c Util.c -o "out/$program.$opt.disableVC.out"
@@ -128,17 +128,16 @@ init(){
 # exec autogenerate CoinGame 40000
 
 ### Benchmark Autogenerate NQueens
-#init autogenerate NQueens
-#exec autogenerate NQueens 1
-#exec autogenerate NQueens 5
-#exec autogenerate NQueens 10
-#exec autogenerate NQueens 15
-exec autogenerate NQueens 16
-exec autogenerate NQueens 18
-exec autogenerate NQueens 20
-exec autogenerate NQueens 22
-exec autogenerate NQueens 24
-exec autogenerate NQueens 25
+init autogenerate NQueens
+exec autogenerate NQueens 1
+exec autogenerate NQueens 2
+exec autogenerate NQueens 4
+exec autogenerate NQueens 6
+exec autogenerate NQueens 8
+exec autogenerate NQueens 10
+exec autogenerate NQueens 12
+exec autogenerate NQueens 14
+exec autogenerate NQueens 15
 
 ### Benchmark Autogenerate1 and autogenerate2 MatrixMult
 # ### Autogenerate1 MatrixMult
