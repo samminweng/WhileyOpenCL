@@ -65,13 +65,14 @@ compileProgram(){
 			clang -O3 $program.c Util.c -o "out/$program.$opt.enableVC.out"
 			;;
 		"polly")
-			###pollycc -O3 -fno-vectorize -mllvm -polly $program.c Util.c -o "out/$program.$opt.disableVC.out"
-			pollycc -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine $program.c Util.c -o "out/$program.$opt.enableVC.out"
+			###'-polly-process-unprofitable' option forces Polly to generate sequential code
+			pollycc -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine -mllvm -polly-process-unprofitable $program.c Util.c -o "out/$program.$opt.enableVC.out"
 			;;
 		"openmp")
 			echo "Optimize C code using OpenMP code with $OMP_NUM_THREADS threads..." >> $result
-			###pollycc -O3 -fno-vectorize -mllvm -polly -mllvm -polly-parallel -lgomp $program.c Util.c -o "out/$program.$opt.disableVC.out"
-			pollycc -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine -mllvm -polly-parallel -lgomp $program.c Util.c -o "out/$program.$opt.enableVC.out"
+			### '-polly-parallel-force' forces Polly to generate OpenMP code
+			pollycc -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine -mllvm -polly-parallel -mllvm -polly-process-unprofitable -mllvm -polly-parallel-force\ 
+			        -lgomp $program.c Util.c -o "out/$program.$opt.enableVC.out"
 			;;
 	esac
 	###read -p "Press [Enter] to continue..."
