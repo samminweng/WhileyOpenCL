@@ -72,7 +72,7 @@ compileProgram(){
 			echo "Optimize C code using OpenMP code with $OMP_NUM_THREADS threads..." >> $result
 			### '-polly-parallel-force' forces Polly to generate OpenMP code
 			pollycc -O3 -mllvm -polly -mllvm -polly-vectorizer=stripmine -mllvm -polly-parallel -lgomp\
-                                -mllvm -polly-process-unprofitable -mllvm -polly-parallel-force\
+                        -mllvm -polly-process-unprofitable -mllvm -polly-parallel-force\
 			        $program.c Util.c -o "out/$program.$opt.enableVC.out"
 			;;
 	esac
