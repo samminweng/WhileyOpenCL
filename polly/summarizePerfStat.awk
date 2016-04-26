@@ -55,13 +55,13 @@ BEGIN {
 	# Test case name
 	testcases="NQueens";
 	# Code Optimizations
-	c_types="autogenerate autogenerate1";
+	c_types="autogenerate_copyonly autogenerate_copyfree";
 	# Polly optimiz
 	polly_opts="gcc clang polly openmp"
 	# Parameters
 	##parameters["CoinGame"] = "1000 10000 20000 30000 40000";
 	##parameters["GCD"] = "1000 10000 20000 30000 40000";
-	parameters["NQueens"] = "1 2 4 6 8 10 12";
+	parameters["NQueens"] = "1 2 4 6 8 10 12 14 15";
 	threads="1 2 4";
 	vcs="enablevc";
 	cpu_utils[""] = "";
