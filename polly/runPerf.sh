@@ -154,24 +154,26 @@ init(){
 #exec autogenerate CoinGame 40000
 
 ### Benchmark Autogenerate NQueens
-init autogenerate NQueens
-exec autogenerate_copyonly NQueens 1
-exec autogenerate_copyonly NQueens 2
-exec autogenerate_copyonly NQueens 4
-exec autogenerate_copyonly NQueens 6
-exec autogenerate_copyonly NQueens 8
-exec autogenerate_copyonly NQueens 12
-exec autogenerate_copyonly NQueens 14
-exec autogenerate_copyonly NQueens 15
+#init autogenerate NQueens
+#exec autogenerate_copyonly NQueens 1
+#exec autogenerate_copyonly NQueens 2
+#exec autogenerate_copyonly NQueens 4
+#exec autogenerate_copyonly NQueens 6
+#exec autogenerate_copyonly NQueens 8
+exec autogenerate_copyonly NQueens 10
+#exec autogenerate_copyonly NQueens 12
+#exec autogenerate_copyonly NQueens 14
+#exec autogenerate_copyonly NQueens 15
 
-exec autogenerate_copyfree NQueens 1
-exec autogenerate_copyfree NQueens 2 
-exec autogenerate_copyfree NQueens 4 
-exec autogenerate_copyfree NQueens 6 
-exec autogenerate_copyfree NQueens 8 
-exec autogenerate_copyfree NQueens 12 
-exec autogenerate_copyfree NQueens 14
-exec autogenerate_copyfree NQueens 15
+#exec autogenerate_copyfree NQueens 1
+#exec autogenerate_copyfree NQueens 2 
+#exec autogenerate_copyfree NQueens 4 
+#exec autogenerate_copyfree NQueens 6 
+#exec autogenerate_copyfree NQueens 8
+exec autogenerate_copyfree NQueens 10 
+#exec autogenerate_copyfree NQueens 12 
+#exec autogenerate_copyfree NQueens 14
+#exec autogenerate_copyfree NQueens 15
 
 ### Benchmark Autogenerate1 and autogenerate2 MatrixMult
 # ### Autogenerate1 MatrixMult
